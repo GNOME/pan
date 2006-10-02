@@ -1,0 +1,399 @@
+1.0 "Asieoniezi"
+
+0.116
+ 358654 pan-0.115 fails to compile - error in article.{c,h} (Jack Cuyler)
+ 358710 Tasks has an empty tooltip when idle (Adrian Yee)
+ 358717 Order of files added to queue (Adrian Yee)
+ 358211 Get New Headers expands selected collapsed thread (Douglas Bollinger)
+
+0.115
+ 358077 cut memory use in half for large binaries groups (Charles)
+ 358204 20% of group loading time is spent in unnecessary trim() (Charles)
+ 357863 marking an article unread does not update grouplist. (Christophe)
+ 349012 header pane's mouse drag-select now works in gtk+ 2.10. (Douglas Bollinger)
+ 358305 make tasks window clearer (Pavel)
+
+0.114 "You'll Have to Go Sideways"
+ 356805 fix 0.112 - 0.113 lockups. (George Sherwood, Robert Marshall)
+ 356834 crash: Cannot allocate memory during pthread_create (Axion)
+ 356023 can't read an article with [XX/XX] in the subject (Artur Jachacy)
+ 357236 save another 3MB from startup overhead. (Charles)
+ 356798 save another 2MB from startup overhead. (Charles)
+ 357073 uninitialized memory errors in body pane. (valgrind)
+ 357698 new followups mangled quoted non-UTF-8 text. (Artur Jachacy, Christophe)
+ 356835 display utf-7 text correctly. (Artur Jachacy)
+ 345838 pan commandline not closing after ctrl-c. (Axion)
+ 357230 simleys (emoticons) break links (Flammie Pirinen)
+ 356827 delete attachment when deleting article (Kevin Brammer)
+
+0.113 "0.113 is one of Nakata's favorites"
+ 356070 News servers not merging properly. (Alen Williams, Adam Huffman)
+ 356206 crash when deleting messages (David Kelly)
+ 349044 save settings periodically to safeguard against data loss. (Glyn Parker)
+ 354405 fix 0.112 Windows 2000 regression. (K Haley)
+ 356626 Edit/Select Article Body doesn't work. (Lionel Elie Mamane)
+ 356325 save a little memory. (Charles)
+ 350530 save-attachments dialog's group prefs radiobutton (Jeff Berman, Walt)
+ 355335 updated french translation. (Frederic Bezies, Christophe Gisquet)
+
+0.112 "Elijah Craig"
+ 348188 0.111 breaks `disable threading' (Artur Jachacy)
+ 354560 0.111 crashes OS X on `get new headers' (Dave Chand)
+ 353957 0.110 expands threads when reading root article (Christophe Lambin)
+ 349710 moved 'disable smooth scrolling' to Prefs dialog. (Christian Lohmaier)
+ 351104 0.107 unable to save article text (Christophe Lambin)
+ 353624 crash when deleting active tasks. (Douglas Bollinger)
+ 347632 down news server locks up Pan (John Mellor, Jason Auvenshine)
+ 353486 server connection(s) screw up after awhile (Simon Morgan, K Haley)
+ 354317 "add and rescore" doesn't remove 'plonked' posts (Jack Cuyler)
+ 354140 "get new" + "show matching..." broken. (Christophe Lambin, Adam Warner)
+ 354200 pan crashes when view doesn't get applied (Douglas Bollinger)
+ 354231 new French translation (Frederic Bezies)
+ 353158 File save stopping before complete (Steve, Ronald)
+ 352043 Can't undo a watch or ignore rule. (Frederic Bezies)
+
+0.111 "Tweedy"
+ 352337 scroll bar at the end of headers list. (Dave Chand)
+ 353334 reduce xover memory usage (csv4me)
+ 353407 Queue goes out of order after restart (Damian)
+ 353222 Supersede features is busted. No text quoted. (Frederic Bezies)
+ 353191 Pan 0.110 opens only 1 connection to server (Stéphane BERTHELOT)
+ 353386 Group update order is "wrong" (Bruce Bowler)
+ 353083 Reading articles should always be on top of the queue (Thomas Fricke)
+ 353604 build failure on FreeBSD. (Olaf 'Rhialto' Seibert)
+ 353622 crash on deleting posts during xover (Christohpe GISQUET)
+ 353972 Pan adds another Re: in some replies (Artur Jachacy)
+ 353635 URLs not preceded by http:// cause problems (Bill Baker)
+ 353630 URL containing https:// does not highlight, is not clickable (Bill Baker)
+ 353577 0.110: crash on entering next news group (Anonymous)
+
+0.110 "Beable Beable"
+ 352116 Crash when images are left-clicked (Kim, Phil Richards, walt)
+ 352155 "Show matching articles Threads" not applied on startup (Benjamin Esham)
+ 352179 Alt + g shortcut double booked (Kim)
+ 345626 'queued' triangle in header pane is inconsistent (Jeff Berman)
+ 353018 Some phrases are italicised incorrectly; "/usr/bin/pan" (Benjamin Esham)
+ 352798 '%g' option didn't work in the group-prefs save path. (Kevin Brammer)
+ 352170 Huge speedups when processing large task queues. (Samuli Kärkkäinen)
+ 351258 Updated French translation. (Frederic Bezies)
+ 351701 Can't back out of Posting Profile creation (Samuli Kärkkäinen)
+ 353042 Prefs dialog refers to "OS/X" rather than "OS X" (Benjamin Esham)
+ 352232 link with gthread to make gmime happy (Philippe Morey)
+ 352092 can't compile Pan in a separate directory from the source. (K Haley)
+
+0.109 "Beable"
+ 351573 GNKSA: allow users to send mail from Pan (Charles)
+ 351577 GNKSA: allow users to cancel and supersede their own articles. (Charles)
+ 351804 0.108 crash sometimes when reading or following-up. (Sam Morris)
+ 351574 GNKSA: show interesting Newsgroups, Followup-To, and Reply-To headers.
+ 351576 GNKSA: honor followup-to, reply-to headers correctly. (Charles)
+ 351245 "browse" button in save dialog sets wrong directory sometimes. (Charles)
+ 351301 0.108 didn't build on gtk+ < 2.6. (Jeff Berman)
+ 351289 0.108 didn't build on Windows. (Artur Jachacy)
+ 351228 0.108's "default windows browser" didn't work. (Darren Albers)
+ 351735 fix gcc 3.2.x build error. (Christian Lohmaier)
+ 351312 Oscillating size-to-fit. (Per Hedeland)
+ 351244 save-ui.cc wasn't marked for translation. (Frederic Bezies)
+ 351520 fix rpmlint warnings. (Roger Pao)
+ 351316 Text error in View|Layout menu. (Duncan)
+ 351888 Missing header in posts: content-transfer-encoding. (Frederic Bezies)
+ 351258 Updated French translation. (Frederic Bezies)
+ 351238 Organize global menus and context menus similarly (Samuli Kärkkäinen)
+ 351365 GNKSA followup to subject "RE:" gives a subject "Re: RE" (Charles)
+ 351024 Improve the Windows version w/icons, metadata (Christophe Gisquet)
+ 351033 make header text selectable in the body pane. (Danny Milo)
+ 350501 handle sigterm gracefully. (Soren Boll Overgaard)
+
+0.108 "Mama's little Joyboy loves lobster, lobster"
+ 348925 Let users specify which web browser to use for links. (Dave Chand)
+ 350796 Fixed crash on reading articles. (Jeremy Messenger)
+ 351120 Fixed display of multipart yEnc images. (Per Hedeland)
+ 350514 Non-UTF-8 clean message bodies weren't quoted in replies in 0.107. (Artur Jachacy)
+ 350501 handle sigquit and sigint gracefully. (Joshua Kwan, Soren Boll Overgaard)
+ 350511 Name in the attribution line is garbled somtimes. (Artur Jachacy)
+ 349009 "Show matching articles' Threads" option wasn't being saved (Douglas Bollinger)
+ 350971 area to the right of a URL link is clickable. (Artur Jachacy)
+ 349710 Add preferences setting to turn off smooth scrolling. (Duncan)
+ 350609 Updated French translation. (Frederic Bezies and Christophe Gisquet)
+ 350598 Can't put compose window behind the reader window. (Ken Bloom)
+ 350803 configure script portability changes. (Christophe Gisquet)
+ 350984 more configure script portability changes. (Christophe Gisquet)
+ 350541 follow freedesktop.org standards for desktop file location. (Frederic Bezies)
+ 350956 follow freedesktop.org standards for the desktop categories list. (Jeremy Messenger)
+ 350531 fix grammar errors in "Save Articles" window. (Jeff Berman)
+
+0.107 "Umi De No Jisatsu"
+ 349784 When server returns a 482, make it clear to the user. (Volker Wysk)
+ 350309 Ellipsize text that doesn't fit into a column in the header pane. (Baris Cicek)
+ 350063 New French translation. (Frederic Bezies)
+ 349797 Make behavior for 'read more' a preference option (Shining Chaos)
+ 349751 Tasks window can't be put behind main window (Daniel Hobe)
+ 350040 Add --with-gnome and --with-gtkspell arguments to configure script. (Sven Wegener)
+ 349752 Multiple task and log windows could be opened. (Daniel Hobe)
+ 349753 0.106: post window's warning dialog (#349312) appears when posting succeeds. (Duncan)
+ 349721 Fixed problems with changing the Subject or Newsgroups header in followups. (Duncan)
+ 350371 When 'show all headers' is on, those headers were included in new followups. (gbzzl)
+ 349850 No way to make servers go back online after an error occurs. (Sam Guidice)
+ 346579 Some articles with mislabeled character encodings weren't shown. (Artur Jachacy)
+ 350485 Poor handling of noise in multipart uu messages. (Per Hedeland) 
+ 349734 followup quoting error (odd character in "From:" header issue?) (Duncan)
+ 349700 Fixed bug when queueing multiparts that had missing parts. (K. Haley)
+ 350026 The group preferences dialog wasn't marked for translation. (Frederic Bezies)
+
+0.106 "Dum Maro Dum"
+ 348458 'space' now goes to the next article, not the next unread article. (Artur Jachacy)
+ 349022 couldn't mark a collapsed thread as read. (Artur Jachacy)
+ 349312 warn if closing the Post dialog and text hasn't been saved or posted. (Sandy Weicks)
+ 348881 crashed when the group's sort order got corrupted. (XioNox)
+ 349597 crashed when the queue is very large. (Alen Williams)
+ 349053 crashed when the scorefile had headers that Pan didn't recognize. (Lin)
+ 349498 multipart corruption in datafiles. (K Haley)
+ 345626 the header pane didn't always show cached/queued states. (Jeff Berman, Ken Geis)
+ 349016 Articles scoring -9999 were shown when matching by thread. (Douglas Bollinger)
+ 349145 "pan --nzb" didn't exit when 'close' was pressed. (K Haley)
+ 349495 header pane sorting didn't stick when changing groups.  (Christophe)
+ 349550 if 'mark all read when leaving group' is checked, do it when exiting Pan too. (Damian)
+
+0.105 "Churchill's Chevy Nova"
+ 348667 add a profile setting to specify which server to post articles through. (David Shochat)
+ 348660 0.14 feature: let users remap keyboard accelerators via ~/.pan2/accels.txt (Duncan)
+ 348704 0.14 feature: "add similar articles to selection" (Charles)
+ 342034 0.14 feature: shift-g and g to go to next group and unread group. (Jim Henderson)
+ 342032 0.14 feature: keyboard accels for get-new and get-new-in-subscribed. (Jim Henderson)
+ 348437 revived 0.14 feature: per-group save paths. (Darren Albers)
+ 348707 desensitize the "group properties" menu button when no group selected. (Kevin Gottsman)
+ 348178 remember user settings in the 'download headers' dialog. (Dave Chand)
+ 348676 add groupname to 'download headers' dialog for easier identification. (Jeff Berman)
+ 348441 posting profiles dialog: let users browse for their sig file. (Artur Jachacy)
+ 348669 posting profiles dialog: double-clicking a profile pops up its edit window. (Duncan)
+ 348802 filtering by 'fetched/cached' didn't work. (Ufuk YILDIRIM)
+ 337319 news servers couldn't be deleted. (Soren Boll Overgaard)
+ 348447 fixed 0.104 overflow & crash. (Artur Jachacy)
+ 348451 fixed 0.104 `next article' failed if no article was selected. (Artur Jachacy)
+ 348472 fixed 0.104 build error w/gtk 2.4. (Kevin Gottsman)
+
+
+0.104 "YES, OK! I *AM* COMMUNIST SPICE!!!  NOW THAT YOU KNOW,
+       I AM VERY TICKLE YOU AND THEN YOU ARE DIE!!!" 
+* added option to toggle the 0.103 'size to fit' feature. (Brad Sims, #347268)
+* when the disk is full, show a warning dialog and go offline. (Phil Wlazlo, #347654)
+* lower memory overhead (again!) in the group and header panes.
+* the 'save' dialog's default action is now 'save', not 'cancel'. (Kelly Martin)
+* by default, store the scorefile in ~/.pan2 rather than ~/News. (Sam Morris, #347713)
+* 0.14 feature: periodic keepalive messages to idle connections. (Christophe, #342492)
+* 0.14 feature: header pane shows hidden/unread child counts. (Douglas Bollinger, #347036)
+* revived 0.14 feature: "delete group's articles" (Steve Welch, #346986)
+* revived 0.14 feature: header pane 'wraparound' (Artur Jachacy, #347758)
+* revived 0.14 feature: toggled header pane threading on/off (Artur Jachacy, #348188)
+* fixed crash when reordering tasks via the task pane. (Alen Williams, #347272)
+* fixed 0.103 memory leak when reading articles. (Valgrind)
+* fixed 0.102 code that significantly slowed down group loading. (Charles, #347275)
+* fixed 0.100 build error with gcc 3.2.3.  (Christian Lohmaier)
+* fixed ETA bug in the task pane. (Richard Gilbert, #347007)
+* don't "jump" in the header pane when getting new articles. (S. Mazzola, #347862)
+
+0.103 "Eldarfaroth"
+* scale-to-fit of oversized images a la firefox. (Darren Albers, #346165)
+* revived 0.14 feature: the old "save as..." dialog.
+* pop up the 'download headers' dialog when entering an empty group.
+* when loading a group, give keyboard focus to the header pane. (Jeff Berman, #342975)
+* remember the body pane's expander state between sessions. (Jeff Berman, #342976)
+* 'save' tasks now show their target direectory in the task manager. (Carl Soderstrom, #106763)
+* Follow Gnome HiG by having a View->Toolbar checkbox to toggle the toolbar. (Charles, #110953)
+* "show matching articles' threads" didn't work. (Douglas Bollinger, #346408)
+* Pan was confused about some headers' encodings and showed them badly. (Artur Jachacy #346426)
+* non-ascii characters were sometimes not handled gracefully. (Søren Boll Overgaard, #337317)
+* bracketed urls were parsed incorrectly. (Artur Jachacy, #346543)
+* header pane wasn't properly repositioned after deleting articles. (Jeff Berman, #342985)
+* fixed minor 0.101 bug in highlighting bold/italic/underline text. (Charles, #346718)
+* fixed selection 'jumping' when changing filters. (Duncan)
+* the new scoring rule dialog didn't behave nicely. (Søren Boll Overgaard, #338727)
+* fixed NetBSD build errors. (Olaf Seibert. #346993)
+* fixed group description warnings on Windows. (K Haley, #346604)
+
+0.102 "From the years of neon through iodine"
+* let users set charsets when posting articles. (Frederic Bezies, #345330)
+* added ETA, bytes remaining to task window. (F. Ingelrest, #346339)
+* remember size of task and event windows. (Jeff Berman, #345628)
+* improved header pane sorting for a.b.m.divx. (Mike Corbett, #346069)
+* data files were being opened in the wrong mode under Windows. (K Haley, #345941)
+* fixed 0.101 bug that broke handling of URLs clicked on in the body pane. (Bigfoot, #345867)
+* fixed crash when downloading articles with invalid `bytes' fields. (Alen Williams, #343257)
+* fixed utf8 string corruption and crash when sorting by subject. (Artur Jachacy, #345784)
+* "edit preferences" jumped to the group pane when in tabbed mode. (Martin Zuziak, #342517)
+
+0.101 "A pulse of dying power in a clenching plastic fist"
+* added to add text file, plaintext, and script/command signatures. (ERACC, #345555)
+* extra headers for outgoing posts can now be added per-posting profile. (Mike Dee)
+* added `edit posting profiles' to the main edit menu.  (Mike Dee)
+* added toggle to enable/disable spellchecking in the posting window. (Frank Olieu)
+* sort the event window's list s.t. the latest events are visible. (Jeff Berman, #345630)
+* better handling of *bold*, /italic/, and _underlined_ text. (Kelsey Bjarnason, #345705)
+* "rot13 selected text" didn't work. (Artur Jachacy, #342149)
+* multipart yEnc pictures are now displayed properly.  (and was *that* a fun bug.)
+* multiple attachments in a single article weren't always displayed.  (Walt, #345450)
+* custom fonts in the group pane weren't applied on startup.  (Stijn Declercq)
+* fixed off-by-one error in scoring articles by Lines or Bytes.
+* more Win2K support goodness from Christophe Guisquet and Mike Houwers.
+* close the 'about' dialog gracefully in gtk >= 2.9.  (Yanko Kaneti, #345292)
+* about a dozen minor memory leaks fixed. (Valgrind)
+
+0.100 "Hey, I like this. Early nothing!"
+* added `download last N days' in the 'get headers' dialog.
+* show per-server bandwidth and idle/active connection counts in the status tooltip. (Duncan)
+* merged the two toolbars so that the group pane's toolbar is harder to obscure. (Chris)
+* the save-attachments "save" button draws focus now. (Kevin Gottsman, #345026)
+* fixed bug that didn't mark saved articles as read. (Keith Richie)
+* fixed 0.99 typo that removed "Get New Headers in Subscribed Groups" from the toolbar. (Chris)
+* some nntp servers don't allow `group' command before `mode reader'. (Keith Trudell, #343814)
+* fixed crash on corrupt group data files. (Stephan Walter, #344211)
+* fixed crash on corrupt xover lines. (Thomas Meyer, #343624)
+* fixed 0.99 gi18n.h build errors. (John Aldrich)
+* fixed 0.99 refresh error in the group pane. (Chris)
+* expired headers are no longer marked as unread. (K. Haley, patch. #343163)
+* new headers downloaded didn't honor the "expand threads" prefs setting. (Jack Cuyler, #67282)
+* applied Windows 2K patch by Christophe GISQUET. (#311663)
+
+0.99 "Fat man, you shoot a great game of pool."
+* added Message-Id filtering in the header pane. (Derrick Everett, #342442)
+* remember window maximized state between sessions. (Chris Maaskant)
+* added preferences option to expand all threads when entering a group. (Motor)
+* Pan's first Bulgarian translation, courtesy of Yavor Doganov!
+* When reading a group for the first time, a "download headers" pops up. (Walt)
+* Added a group pane toolbar button for the "download headers" button.
+* Users of gtk < 2.6 now have an `about' dialog. (Kevin Gottsman, #342484)
+* statusbar tooltip bar to show active/idle connection counts. (Jeff Berman, #342984)
+* many i18n fixes by Yanko Kaneti. (#340999)
+* fixed tooltip error for the cached messages filter button. (Walt)
+* the group pane's scrollbar was broken to gtk 2.6 users. (dhj, #342647)
+* highlight email addresses, and handle their being clicked, correctly. (Chris, #342893)
+* fixed incorrect coloring of low-scoring articles. (Chris)
+* the header pane no longer `jumps' when deleting articles. (Jeff Berman, #342985)
+
+0.98 "The plain old chaos of undifferentiated weirdness."
+* added optional `bytes' column to the header pane. (Steven David Ruiz)
+* remember the user-specified sort order between sessions. (Coran Fisher)
+* ignore "Re: " when sorting headers by subject. (Charles)
+* filtering in large groups is now /very/ fast. (Charles)
+* deleting a lot of articles in a group is now /very/ fast too. (Charles)
+* small speedups elsewhere. (Charles)
+* fixed crash-on-shutdown bug. (Jim Henderson, Artur Jachacy)
+* fixed broken tree expander buttons in the group & header panes. (Walt, doktorseven, Duncan)
+* fixed 0.97 bug that sorted child articles backwards. (Artur Jachacy)
+
+0.97 Atoz and Tanda
+Usability
+* remember pane geometry, and header pane column widths, between sessions.
+* allow rearrange and hide/show header pane columns. (Bill Pier, Duncan, Les Newell)
+* lots of speed improvements: startup, shutdown, and group/header panes. (Charles)
+* fix wiki-style-boldfacing in quoted text. (Christophe)
+* set a window manager `role' for each different Pan window. (Duncan)
+* fixed crash-on-startup bug. (#340966, Alen Williams)
+* don't corrupt data files when writing them and the disk is full. (#339977, Adam Huffman)
+* fixed a crash when sorting article by subject. (Walt, Artur Jachacy)
+* fixed crash when disabling a toolbar filter that was enabled at startup. (Charles)
+* non-root nodes in the header pane should be sorted by age. (#108757, Artur Jachacy)
+* fixed bug that kept some articles from being decoded. (Jarek Sobieszek, Sam)
+* fixed the `losing subscribed groups' bug. (Christophe)
+
+0.96: "Afghanistan Banana Stand."
+Usability
+* another round of speed and memory optimizations. (Charles)
+* cleanups in the `posting preferences' dialog. (Christophe)
+* use the right monospace font in the post-article dialog. (Christophe)
+* added a config-file option to increase the disk cache. (Duncan, K. Haley)
+* fixed crash on very, very long References: header. (Flammie Pirinen)
+* don't crash on SIGPIPE. (Sam Guidice)
+* fixed Windows crash when reading some mime messages. (Artur Jachacy)
+* fixed 0.95 memory errors. (Valgrind)
+* fixed 0.95 pan_tree_store_iter_children() assertion failure. (Sami Haahtinen)
+* fixed issue with regular expression metachars in watch/ignore thread. (Christophe)
+* fixed 0.95 error that broke header pane navigation.  (Sami Haahtinen, Walt)
+* fixed bug that sorted unsubscribed chunks of newsgroups incorrectly in the group pane.
+* fixed 0.95 compile error when building with gtk 2.4. (Kevin Gottsman)
+* fixed 0.95 compile error when building on Windows.  (Artur Jachacy, K. Haley)
+
+0.95: "I feel clean now. My whole body's just a-quivering with cleanness!"
+* set priorities for multiserver - primary or backup server. (Lyle, Chris Maaskant)
+* faster loading and filtering in the group and header panes.
+* faster decoding than 0.93 and 0.94. (Ulrich "boo")
+* fit more rows into the group and header panes. (Per Hedeland)
+* put color hints in `score' column if there's a high-scoring article hidden in the tree.
+* fixed another tail recursion crash in large newsgroups. (Sinan Karasu)
+* fixed an idle socket crash.  (Dave Chand)
+* watch/ignore thread works again. (Chris Maaskant)
+* try to decode as much of an incomplete multipart as possible. (Ulrich "boo")
+* when possible, fetch articles via `ARTICLE nnn' instead of `ARTICLE <message-id>',
+  because some servers have problems with the latter form.  (Duncan)
+* `delete article' now deletes subthreads of non-expanded articles like the old Pan did. (Sam)
+* expand "other groups" if it has groups matching a search criteria. (Matt McAdoo)
+* scoring by "Newsgroups:" header works now. (Tehrasha Darkon)
+* some multiparts were broken because uulib couldn't suss out the part order. (Ulrich "boo")
+* fixed minor build error on FreeBSD. (Per Hedeland)
+* fixed iterator invalidation crash. (Dave Chand)
+
+0.94: Ready! Fire! Aim!
+* return of the preferences dialog, part 2: colors. (Jim Henderson, Duncan)
+* use gnome-hig-correct name ("Quit"), shortcut (control-Q) for exiting Pan. (Henri Naccache)
+* removed dupliate toolbar buttons.
+* 'mark-article-unread' and 'download-selected-articles' are back. (Duncan)
+* when starting up Pan with a tabbed layout, make the group pane visible. (Robert Marshall)
+* fixed stack corruption when a group had more than about 40,000 root articles. (Sinan Karasu)
+* fixed nzb assertion "`parts.size() > index' failed." (Rich "budman"; pdxsam)
+* fixed nzb bug that gave some files too many parts. (Ulrich "Boo")
+* some multipart mime messages were not displayed properly. (Sam Morris)
+* fixed a couple of OS/X shutdown crashes. (Dave Chand)
+* fixed keyboard shortcut between 'mark-article-read' and 'use-monospace-font' (Duncan)
+* fixed resize error in tabbed layout mode. (Robert Marshall, Eric Ortega)
+* handle groups with ':' in their name in newsgroup.dsc and newsgroup.ynm. (Motor)
+* fixed X-Face error in Windows. (Artur Jachacy)
+* some preferences, like window layout, weren't loaded properly. (Matt Braymiller)
+* URLs containing commas didn't link correctly. (Henri Naccache)
+* fixed a handful of small memory leaks. (Dave Chand, valgrind)
+
+0.93: "It's Like Living Inside a Bouncy Castle!"
+* return of the preferences dialog, part 1: mouse, pane layout, fonts, header downloads.
+* in the header pane, keep child nodes sorted by date.
+* `delete article' was in the wrong place in the menus. (Sam)
+* `read-selected-article' now expands the article's subtree in the header pane.
+* groupname abbreviation off by default. (Motor)
+* `mark read' is back. (Christian Lohmaier)
+* when shortening names in the group pane, shorten discussion
+  groups like "alt.something.d" to "a.something.d", not "a.s.d". (Duncan)
+* fixed crash when adding some news servers' group lists. (Søren Boll Overgaard)
+* fixed threading error. (Christophe)
+* fixed crash when loading groups with munged References: headers. (Christophe, others)
+* fixed crash when reading articles with oddly-munged From: headers. (Christophe)
+* fixed crash when reading articles with non-ascii Subject: headers. (Christophe)
+* running configure no longer requires perl's XML::Parser. (K Haley)
+
+0.92: "I hope the demons pluck your eyes out and use them for marbles!"
+* added score-by-crosspost-count to the Add Score dialog. (Alexander Content)
+* horziontal scrollbar in gruop pane when not all text can be displayed. (Christophe)
+* reintroduced "get new headers for subscribed groups" from 0.14.x (Christian Lohmaier, others)
+* reintroduced more of 0.14.x's toolbar buttons.
+* pan remembers its window dimensions, pane sizes, and toggle settings again now.
+* fixed newsrc underflow/overflow corruption. (Christophe)
+* fixed "Can't determine this article's charset" error. (Artur Jachacy)
+* posts were incorrectly formatted. (Christophe, Artur)
+* on windows, dates in the header pane looked wrong. (Kevin Gottsman)
+* fixed crashes when the Score file was filtering by Xref header.  (Rinaldi J Montessi)
+* fixed underflow error that said empty groups had millions of unread articles.  (K Haley)
+* fixed off-by-one that kept 'get new headers' from getting the latest article. (Christophe)
+* incorrectly gave "Error - message appears to have no new content"
+  when non-Latin/Latin 1 characters were used. (Artur Jachacy)
+* removed ANNOUNCE.html from pan.spec.in (Adam Huffman)
+* in url.cc the glib.h include needs to be moved above the #ifdef,
+  otherwise G_OS_WIN32 is not defined.  (K Haley)
+* replaced `uint' to `unsigned int'. (K Haley)
+
+0.91: "I'm lost. I'm drunk. I'm impure. What a life!"
+* added automatic authentication. (Jim Henderson)
+* in tabbed mode, jump to the right tab when loading a group or article. (Robert Marshall)
+* "Single-click selects, rather than loads,..." (Steven Adeff)
+* fixed crash when downloading header with false positive multipart subject (henri naccache)
+* fixed missing References header in followups (Jim Henderson)
+* article deletion didn't work. (Darren Albers)
+* fixed rpm spec file errors. (Adam)
+* fixed 64-bit build errors. (Jon v/d Kamp, Steven Adeff)
+* fixed OS/X build errors. (Dave Chand)

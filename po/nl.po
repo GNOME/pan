@@ -1,0 +1,5043 @@
+# Pan nl.po
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# mendel <mendel@mobach.nl>, 2000. (This dude is Thaaaaa mannn)
+# Dennis Smit <synap@area101.penguin.nl>, 2000.
+# Almer S. Tigelaar <almer1@dds.nl>, 2000.
+# Reinout van Schouwen <reinout@cs.vu.nl>, 2002, 2003
+# Tino Meinen <a.t.meinen@chello.nl>, 2003, 2004, 2005
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pan\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-18 10:27-0500\n"
+"PO-Revision-Date: 2005-02-17 21:03+0100\n"
+"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
+"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: pan.desktop.in.h:1
+msgid "Pan Newsreader"
+msgstr "Pan nieuwslezer"
+
+#: pan.desktop.in.h:2
+msgid "Read News from Usenet"
+msgstr "Nieuws van Usenet lezen"
+
+#: pan/data-impl/data-impl.cc:82
+#, c-format
+msgid "Loaded data backend in %.1f seconds"
+msgstr ""
+
+#: pan/data-impl/data-io.cc:220 pan/data-impl/data-io.cc:241
+#: pan/data/article-cache.cc:236 pan/data/article-cache.cc:246
+#: pan/gui/post-ui.cc:1261
+#, fuzzy, c-format
+msgid "Unable to save \"%s\" %s"
+msgstr "Kan groep niet instellen: %s"
+
+#: pan/data-impl/groups.cc:92
+#, fuzzy, c-format
+msgid "Skipping newsrc file for server \"%s\""
+msgstr "Bezig met ophalen nieuwe groepen an server \"%s\""
+
+#: pan/data-impl/headers.cc:551
+#, fuzzy, c-format
+msgid "Expired %lu old articles from \"%s\""
+msgstr "%u Artikelen uit `%s' verlopen"
+
+#: pan/data-impl/headers.cc:558
+#, c-format
+msgid ""
+"Unsupported data version for %s headers: %d.\n"
+"Are you running an old version of Pan by accident?"
+msgstr ""
+"Niet ondersteunde gegevensversie voor %s kopteksten: %d.\n"
+"Draait u per ongeluk een oude versie van Pan?"
+
+#: pan/data-impl/headers.cc:573
+#, fuzzy, c-format
+msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
+msgstr "%u artikelen geladen voor groep \"%s\" in %.1f seconden (%.0f art/sec)"
+
+#: pan/data-impl/headers.cc:797
+#, fuzzy, c-format
+msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgstr "%d Artikelen in \"%s\" opgeslagen in %.1f seconden (%.0f art/sec)"
+
+#: pan/data-impl/headers.cc:1089
+#, fuzzy, c-format
+msgid "Added %lu articles to %s."
+msgstr "%u Artikelen uit `%s' verlopen"
+
+#: pan/data-impl/profiles.cc:173
+#, fuzzy, c-format
+msgid "Error reading \"%s\": %s"
+msgstr "Er is een fout opgetreden bij het lezen van bestand \"%s\": %s"
+
+#: pan/data-impl/server.cc:296
+#, fuzzy, c-format
+msgid "Error loading newsserver information: %s"
+msgstr ""
+"Er is een fout opgetreden bij het interpreteren van de opdrachtregel voor "
+"\"web-browser\": %s"
+
+#: pan/data/article-cache.cc:148
+#, fuzzy, c-format
+msgid "Error opening directory: \"%s\": %s"
+msgstr "Er is een fout opgetreden bij het openen van de map \"%s\": %s)"
+
+#: pan/data/article-cache.cc:364 pan/general/line-reader.cc:24
+#, fuzzy, c-format
+msgid "Error opening file \"%s\" %s"
+msgstr "Er is een fout opgetreden bij het openen van bestand \"%s\": %s"
+
+#: pan/data/article-cache.cc:395 pan/gui/post-ui.cc:1028
+#, c-format
+msgid "Error reading file \"%s\": %s"
+msgstr "Er is een fout opgetreden bij het lezen van bestand \"%s\": %s"
+
+#: pan/data/filter-info.cc:152
+#, fuzzy
+msgid "article doesn't have attachments"
+msgstr "Artikel heeft geen complete bijlagen"
+
+#: pan/data/filter-info.cc:156
+#, fuzzy
+msgid "the article has attachments"
+msgstr "Artikel heeft geen bijlagen"
+
+#: pan/data/filter-info.cc:160
+#, fuzzy
+msgid "the article isn't cached locally"
+msgstr "Artikelinhoud niet lokaal gebufferd"
+
+#: pan/data/filter-info.cc:164
+#, fuzzy
+msgid "the article is cached locally"
+msgstr "Artikelinhoud is lokaal gebufferd"
+
+#: pan/data/filter-info.cc:168
+#, fuzzy
+msgid "the article wasn't posted by you"
+msgstr "Artikel is niet door mij geplaatst"
+
+#: pan/data/filter-info.cc:172
+#, fuzzy
+msgid "the article was posted by you"
+msgstr "Artikel is door mij geplaatst"
+
+#: pan/data/filter-info.cc:176
+#, fuzzy
+msgid "the article has been read"
+msgstr "Artikel is ongelezen"
+
+#: pan/data/filter-info.cc:180
+#, fuzzy
+msgid "the article hasn't been read"
+msgstr "Artikel is ongelezen"
+
+#: pan/data/filter-info.cc:184
+#, fuzzy, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "Artikel is minder dan %d byte lang"
+
+#: pan/data/filter-info.cc:189
+#, fuzzy, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "Artikel is minder dan %d byte lang"
+
+#: pan/data/filter-info.cc:194
+#, fuzzy, c-format
+msgid "the article is less than %ld lines long"
+msgstr "Artikel is minder dan %d regels lang"
+
+#: pan/data/filter-info.cc:199
+#, fuzzy, c-format
+msgid "the article is at least %ld lines long"
+msgstr "Artikel is minder dan %d regels lang"
+
+#: pan/data/filter-info.cc:204
+#, fuzzy, c-format
+msgid "the article is less than %ld days old"
+msgstr "Artikel is meer dan %d dagen oud"
+
+#: pan/data/filter-info.cc:209
+#, fuzzy, c-format
+msgid "the article is at least %ld days old"
+msgstr "Artikel is tenminste N dagen _oud:"
+
+#: pan/data/filter-info.cc:214
+#, fuzzy, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "Artikel is geplaatst in minder dan %d groepen"
+
+#: pan/data/filter-info.cc:219
+#, fuzzy, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "Artikel is in meer dan N groepen ge_plaatst:"
+
+#: pan/data/filter-info.cc:224
+#, fuzzy, c-format
+msgid "the article's score is less than %ld"
+msgstr "score zetten op"
+
+#: pan/data/filter-info.cc:229
+#, fuzzy, c-format
+msgid "the article's score is %ld or higher"
+msgstr "score zetten op"
+
+#: pan/data/filter-info.cc:238 pan/data/filter-info.cc:248
+#, fuzzy, c-format
+msgid "%s doesn't contain \"%s\""
+msgstr "bevat niet"
+
+#: pan/data/filter-info.cc:239 pan/data/filter-info.cc:249
+#, c-format
+msgid "%s isn't \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:240 pan/data/filter-info.cc:250
+#, fuzzy, c-format
+msgid "%s doesn't begin with \"%s\""
+msgstr "eindigt niet met"
+
+#: pan/data/filter-info.cc:241 pan/data/filter-info.cc:251
+#, fuzzy, c-format
+msgid "%s doesn't end with \"%s\""
+msgstr "eindigt niet met"
+
+#: pan/data/filter-info.cc:242 pan/data/filter-info.cc:252
+#, c-format
+msgid "%s doesn't match the regex \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:264
+#, fuzzy, c-format
+msgid "%s contains \"%s\""
+msgstr "bevat"
+
+#: pan/data/filter-info.cc:265
+#, c-format
+msgid "%s is \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:266
+#, c-format
+msgid "%s begins with \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:267
+#, fuzzy, c-format
+msgid "%s ends with \"%s\""
+msgstr "eindigt met"
+
+#: pan/data/filter-info.cc:268
+#, fuzzy, c-format
+msgid "%s matches the regex \"%s\""
+msgstr "komt overeen met de reguliere expressie"
+
+#: pan/data/filter-info.cc:274
+msgid "Any of these tests fail:"
+msgstr ""
+
+#: pan/data/filter-info.cc:281
+msgid "All of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:288
+msgid "None of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:295
+msgid "Any of these tests pass:"
+msgstr ""
+
+#: pan/data/scorefile.cc:299
+#, fuzzy, c-format
+msgid ""
+"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
+"'Expires: DD-MM-YYYY'."
+msgstr "ik verwacht: 'Verloopt: MM/DD/YYYY' of 'Verloopt: DD-MM-YYYY'"
+
+#: pan/data/scorefile.cc:302
+#, c-format
+msgid "Expired old score from %*.*s, line %d"
+msgstr ""
+
+#: pan/data/scorefile.cc:373
+#, c-format
+msgid "Error reading score in %*.*s, line %d: unexpected line."
+msgstr ""
+
+#: pan/data/scorefile.cc:421
+#, c-format
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
+msgstr ""
+
+#. build the locale strings
+#: pan/general/e-util.cc:213
+msgid "%l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:214
+msgid "Today %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:215
+msgid "%a %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:216
+msgid "%b %d %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:217
+msgid "%b %d %Y"
+msgstr ""
+
+#: pan/general/e-util.cc:242
+msgid "?"
+msgstr ""
+
+#: pan/general/file-util.cc:139
+#, fuzzy, c-format
+msgid "Creating directory \"%s\""
+msgstr "Er is een fout opgetreden bij het openen van de map \"%s\": %s)"
+
+#: pan/general/file-util.cc:142
+#, c-format
+msgid "Couldn't create directory \"%s\": %s"
+msgstr "Kon map \"%s\" niet aanmaken: %s"
+
+#: pan/general/text-match.cc:210
+#, fuzzy
+msgid ""
+"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
+"fail."
+msgstr ""
+"De versie van libpcre op uw systeem ondersteunt geen UTF-8.  Reguliere "
+"expressies in UTF-8 kunnen mislukken."
+
+#: pan/general/text-match.cc:221
+#, c-format
+msgid "Can't use regular expression \"%s\": %s at position %d"
+msgstr "Kan reguliere expressie \"%s\" niet gebruiken: %s op positie %d"
+
+#: pan/general/text-match.cc:229
+#, c-format
+msgid "Can't use regular expression \"%s\": %s"
+msgstr "Kan reguliere expressie \"%s\" niet gebruiken: %s"
+
+#: pan/gui/actions.cc:258 pan/gui/post-ui.cc:238
+#, fuzzy
+msgid "_File"
+msgstr "/_Bestand"
+
+#: pan/gui/actions.cc:259 pan/gui/post-ui.cc:239
+#, fuzzy
+msgid "_Edit"
+msgstr "/Be_werken"
+
+#: pan/gui/actions.cc:260 pan/gui/prefs-ui.cc:460
+#, fuzzy
+msgid "_Layout"
+msgstr "Paneel-i_ndeling"
+
+#: pan/gui/actions.cc:261
+#, fuzzy
+msgid "_Group Pane"
+msgstr "Groepenpaneel"
+
+#: pan/gui/actions.cc:262
+#, fuzzy
+msgid "_Header Pane"
+msgstr "Kopteksten-paneel"
+
+#: pan/gui/actions.cc:263
+#, fuzzy
+msgid "_Body Pane"
+msgstr "Inhoud-paneel"
+
+#: pan/gui/actions.cc:264
+#, fuzzy
+msgid "_View"
+msgstr "/Beel_d"
+
+#: pan/gui/actions.cc:265
+msgid "Character _Encoding"
+msgstr ""
+
+#: pan/gui/actions.cc:266
+#, fuzzy
+msgid "Filte_r"
+msgstr "/_Filter"
+
+#: pan/gui/actions.cc:267
+#, fuzzy
+msgid "_Go"
+msgstr "/_Ga naar"
+
+#: pan/gui/actions.cc:268
+#, fuzzy
+msgid "_Actions"
+msgstr "Acties"
+
+#: pan/gui/actions.cc:269
+#, fuzzy
+msgid "_Articles"
+msgstr "/_Artikelen"
+
+#: pan/gui/actions.cc:270
+#, fuzzy
+msgid "_Groups"
+msgstr "Groepen"
+
+#: pan/gui/actions.cc:271 pan/gui/actions.cc:272
+msgid "_Post"
+msgstr "_Plaatsen"
+
+#: pan/gui/actions.cc:273 pan/gui/save-ui.cc:202
+msgid "_Help"
+msgstr "_Hulp"
+
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "_Read Group"
+msgstr "/Groep ver_wijderen"
+
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "Read Selected Group"
+msgstr "Volgende ongelezen groep lezen"
+
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "_Mark Group _Read"
+msgstr "/Groep markeren als ge_lezen"
+
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "Mark Selected Groups Read"
+msgstr "/Groep markeren als ge_lezen"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "_Delete Group's Articles"
+msgstr "/Artikelen in groep _verwijderen"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "Delete Selected Groups' Articles"
+msgstr "/Artikelen in groep _verwijderen"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New _Headers in Selected Groups"
+msgstr "Nieuwe kopteksten in geselecteerde groepen ophalen"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New Headers for Selected Groups"
+msgstr "Nieuwe kopteksten in geselecteerde groepen ophalen"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New _Headers in Subscribed Groups"
+msgstr "Nieuwe kopteksten in geabonneerde groepen ophalen"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New Headers for Subscribed Groups"
+msgstr "Nieuwe kopteksten in geabonneerde groepen ophalen"
+
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get _Headers..."
+msgstr "/Nieuwe _kopteksten ophalen"
+
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get Headers from Server"
+msgstr "%d Groepen van server \"%s\" opgehaald"
+
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Refresh Group List"
+msgstr "Bezig met verversen van groep \"%s\""
+
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Get a new Group list from the Server"
+msgstr "Bezig met ophalen nieuwe groepen an server \"%s\""
+
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "_Subscribe"
+msgstr "/_Abonneren"
+
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "Subscribe to Selected Groups"
+msgstr "Geabonneerde nieuwsgroepen"
+
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "_Unsubscribe"
+msgstr "/A_fmelden"
+
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "Unsubscribe from Selected Groups"
+msgstr "Geabonneerde nieuwsgroepen"
+
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "_Save Articles..."
+msgstr "Artikel opslaan als..."
+
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "Save Selected Articles..."
+msgstr "Bijlagen opslaan"
+
+#: pan/gui/actions.cc:286
+msgid "_Import NZB Files..."
+msgstr ""
+
+#: pan/gui/actions.cc:287
+#, fuzzy
+msgid "_Cancel Last Task"
+msgstr "Laatste taak annuleren"
+
+#: pan/gui/actions.cc:287
+msgid "Cancel Last Task"
+msgstr "Laatste taak annuleren"
+
+#: pan/gui/actions.cc:288
+#, fuzzy
+msgid "_Task Manager..."
+msgstr "/_Bestand/_Taakbeheer..."
+
+#: pan/gui/actions.cc:289
+msgid "_Event Log..."
+msgstr ""
+
+#: pan/gui/actions.cc:290
+#, fuzzy
+msgid "_Quit"
+msgstr "/Be_werken"
+
+#: pan/gui/actions.cc:292
+#, fuzzy
+msgid "Select _All Articles"
+msgstr "/Be_werken/Alle _artikelen selecteren"
+
+#: pan/gui/actions.cc:293
+#, fuzzy
+msgid "_Deselect All Articles"
+msgstr "/Be_werken/Alle artikelen _deselecteren"
+
+#: pan/gui/actions.cc:294
+#, fuzzy
+msgid "Add Su_bthreads to Selection"
+msgstr "/Be_werken/_Subdiscussies aan selectie toevoegen"
+
+#: pan/gui/actions.cc:295
+#, fuzzy
+msgid "Add _Threads to Selection"
+msgstr "/Be_werken/_Discussies aan selectie toevoegen"
+
+#: pan/gui/actions.cc:296
+#, fuzzy
+msgid "Add _Similar Artilces to Selection"
+msgstr "/Be_werken/_Discussies aan selectie toevoegen"
+
+#: pan/gui/actions.cc:297
+#, fuzzy
+msgid "Select Article _Body"
+msgstr "/Be_werken/Artikel_inhoud selecteren"
+
+#: pan/gui/actions.cc:298
+#, fuzzy
+msgid "Edit _Preferences..."
+msgstr "/Be_werken/_Voorkeuren..."
+
+#: pan/gui/actions.cc:299
+#, fuzzy
+msgid "Edit _Group Preferences..."
+msgstr "/Be_werken/_Voorkeuren..."
+
+#: pan/gui/actions.cc:300
+#, fuzzy
+msgid "Edit P_osting Profiles..."
+msgstr "/_Plaatsen/_Profielen voor plaatsing..."
+
+#: pan/gui/actions.cc:301
+#, fuzzy
+msgid "Edit _News Servers..."
+msgstr "Newsserver"
+
+#: pan/gui/actions.cc:303
+#, fuzzy
+msgid "Jump to _Group Tab"
+msgstr "/Beel_d/Naar _groepen-tabblad springen"
+
+#: pan/gui/actions.cc:304
+#, fuzzy
+msgid "Jump to _Header Tab"
+msgstr "/Beel_d/Naar _kopteksten-tabblad springen"
+
+#: pan/gui/actions.cc:305
+#, fuzzy
+msgid "Jump to _Body Tab"
+msgstr "/B_eeld/Naar _inhoud-tabblad springen"
+
+#: pan/gui/actions.cc:306
+#, fuzzy
+msgid "_Rot13 Selected Text"
+msgstr "Geselecteerde tekst Rot13-coderen"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear _Header Pane"
+msgstr "Kopteksten-paneel"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear Header Pane"
+msgstr "Kopteksten-paneel"
+
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear _Body Pane"
+msgstr "Inhoud-paneel"
+
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear Body Pane"
+msgstr "_Inhoud-paneel"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download _Selected Article"
+msgstr "Geselecteerde artikelen ophalen"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download Selected Article"
+msgstr "Geselecteerde artikelen ophalen"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read _Selected Article"
+msgstr "Geselecteerde artikelen ophalen"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read Selected Article"
+msgstr "Geselecteerde artikelen ophalen"
+
+#: pan/gui/actions.cc:313
+#, fuzzy
+msgid "Read _More"
+msgstr "Meer lezen"
+
+#: pan/gui/actions.cc:313
+msgid "Read More"
+msgstr "Meer lezen"
+
+#: pan/gui/actions.cc:314
+msgid "Read _Back"
+msgstr ""
+
+#: pan/gui/actions.cc:314
+#, fuzzy
+msgid "Read Back"
+msgstr "/_Ga naar/Teruglezen"
+
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next _Unread Group"
+msgstr "/_Ga naar/Volgende ongelezen _groep"
+
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next Unread Group"
+msgstr "/_Ga naar/Volgende ongelezen _groep"
+
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next _Group"
+msgstr "/_Ga naar/Volge_nde groep"
+
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next Group"
+msgstr "/_Ga naar/Volge_nde groep"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next _Unread Article"
+msgstr "/_Ga naar/_Volgende ongelezen artikel"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next Unread Article"
+msgstr "Volgend ongelezen artikel lezen"
+
+#: pan/gui/actions.cc:318
+#, fuzzy
+msgid "Next _Article"
+msgstr "/_Ga naar/Volgende _artikel"
+
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next _Watched Article"
+msgstr "/_Ga naar/Volgende be_waakte artikel"
+
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next Watched Article"
+msgstr "/_Ga naar/Volgende be_waakte artikel"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread _Thread"
+msgstr "/_Ga naar/Volgende ongelezen _discussie"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread Thread"
+msgstr "Volgende ongelezen discussie lezen"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Threa_d"
+msgstr "/_Ga naar/Volgende dis_cussie"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Thread"
+msgstr "/_Ga naar/Volgende dis_cussie"
+
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Pre_vious Article"
+msgstr "/_Ga naar/_Vorig artikel"
+
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Previous Article"
+msgstr "/_Ga naar/_Vorig artikel"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous _Thread"
+msgstr "/_Ga naar/Vo_rige discussie"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous Thread"
+msgstr "/_Ga naar/Vo_rige discussie"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "_Parent Article"
+msgstr "/_Ga naar/_Ouder-artikel"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "Parent Article"
+msgstr "/_Ga naar/_Ouder-artikel"
+
+#: pan/gui/actions.cc:326
+#, fuzzy
+msgid "_Plonk Author"
+msgstr "/_Artikelen/_Auteur niet meer tonen (Plonk)"
+
+#: pan/gui/actions.cc:327
+#, fuzzy
+msgid "_Watch Thread"
+msgstr "/Discussie be_waken"
+
+#: pan/gui/actions.cc:328
+#, fuzzy
+msgid "_Ignore Thread"
+msgstr "/Discussie _negeren"
+
+#: pan/gui/actions.cc:329
+#, fuzzy
+msgid "View Article's S_core"
+msgstr "/_Artikelscores tonen"
+
+#: pan/gui/actions.cc:330
+#, fuzzy
+msgid "_Add a _Scoring Rule"
+msgstr "Een nieuwe score toevoegen"
+
+#: pan/gui/actions.cc:331
+#, fuzzy
+msgid "Cance_l Article..."
+msgstr "Bezig met annuleren artikel"
+
+#: pan/gui/actions.cc:332
+#, fuzzy
+msgid "_Supersede Article..."
+msgstr "/Artikel opslaan _als..."
+
+#: pan/gui/actions.cc:333
+#, fuzzy
+msgid "_Delete Article"
+msgstr "Artikel _verwijderen"
+
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "_Mark Article as Read"
+msgstr "Artikel is gelezen"
+
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "Mark Article as Read"
+msgstr "Artikel is gelezen"
+
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as _Unread"
+msgstr "Artikel is ongelezen"
+
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as Unread"
+msgstr "Artikel is ongelezen"
+
+#: pan/gui/actions.cc:337
+#, fuzzy
+msgid "_Post to Newsgroup"
+msgstr "In nieuwsgroep plaatsen"
+
+#: pan/gui/actions.cc:337
+msgid "Post to Newsgroup"
+msgstr "In nieuwsgroep plaatsen"
+
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "_Followup to  Newsgroup"
+msgstr "/_Plaatsen/_Opvolgen naar nieuwsgroep..."
+
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "Followup to Newsgroup"
+msgstr "/_Plaatsen/_Opvolgen naar nieuwsgroep..."
+
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "_Reply to Author"
+msgstr "/_Artikelen/_Auteur niet meer tonen (Plonk)"
+
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "Reply to Author"
+msgstr "/_Artikelen/_Auteur niet meer tonen (Plonk)"
+
+#: pan/gui/actions.cc:341
+#, fuzzy
+msgid "_Pan Home Page..."
+msgstr "/_Hulp/Pan _homepage..."
+
+#: pan/gui/actions.cc:342
+#, fuzzy
+msgid "Give _Feedback or Report a Bug..."
+msgstr "/_Hulp/Rapporteer een _programmafout..."
+
+#: pan/gui/actions.cc:343
+msgid "_Tip Jar..."
+msgstr ""
+
+#: pan/gui/actions.cc:345 pan/gui/actions.cc:347
+#, fuzzy
+msgid "_About..."
+msgstr "/_Hulp/_Info..."
+
+#: pan/gui/actions.cc:361
+#, fuzzy
+msgid "_Thread Headers"
+msgstr "Meer Koppen"
+
+#: pan/gui/actions.cc:362
+#, fuzzy
+msgid "_Wrap Article Body"
+msgstr "/Beel_d/Regels in artikel a_fbreken"
+
+#: pan/gui/actions.cc:363
+#, fuzzy
+msgid "Mute _Quoted Text"
+msgstr "/Beel_d/Ge_citeerde tekst onderdrukken"
+
+#: pan/gui/actions.cc:364
+#, fuzzy
+msgid "Show All _Headers in Body Pane"
+msgstr "/Beel_d/Alle kopteksten in in_houd-paneel tonen"
+
+#: pan/gui/actions.cc:365
+#, fuzzy
+msgid "Show _Smilies as Graphics"
+msgstr "_Waarschuwing tonen:"
+
+#: pan/gui/actions.cc:366
+msgid "Show *Bold*, __Underlined__, and /Italic/"
+msgstr ""
+
+#: pan/gui/actions.cc:367
+msgid "Size Pictures to _Fit"
+msgstr ""
+
+#: pan/gui/actions.cc:368
+#, fuzzy
+msgid "Smooth Scrolling"
+msgstr "Vloeiend _schuiven met snelheid:"
+
+#: pan/gui/actions.cc:369
+#, fuzzy
+msgid "Use _Monospace Font"
+msgstr "Monospac_e lettertype:"
+
+#: pan/gui/actions.cc:371
+#, fuzzy
+msgid "_Work Online"
+msgstr "/_Bestand/On-_line werken"
+
+#: pan/gui/actions.cc:372
+#, fuzzy
+msgid "_Tabbed Layout"
+msgstr "/Beel_d/_Tabbladen-indeling"
+
+#: pan/gui/actions.cc:373
+#, fuzzy
+msgid "Show Group _Pane"
+msgstr "/Beel_d/Groe_pen-paneel tonen"
+
+#: pan/gui/actions.cc:374
+#, fuzzy
+msgid "Show Hea_der Pane"
+msgstr "/Beel_d/K_opteksten-paneel tonen"
+
+#: pan/gui/actions.cc:375
+#, fuzzy
+msgid "Show Bod_y Pane"
+msgstr "/Beel_d/I_nhoud-paneel tonen"
+
+#: pan/gui/actions.cc:376
+msgid "Show _Toolbar"
+msgstr ""
+
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate _Names in Group Pane"
+msgstr "/Beel_d/N_amen in groepen-paneel afkorten"
+
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate Newsgroup Names"
+msgstr "/Beel_d/N_amen in groepen-paneel afkorten"
+
+# Mogelijk: iets met 'doorlaten' toevoegen
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only _Unread Articles"
+msgstr "Alleen bij nieuwe artikelen"
+
+# Mogelijk: iets met 'doorlaten' toevoegen
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only Unread Articles"
+msgstr "Alleen bij nieuwe artikelen"
+
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only _Cached Articles"
+msgstr "Alleen bij gebufferde artikelen"
+
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only Cached Articles"
+msgstr "Alleen bij gebufferde artikelen"
+
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only _Complete Articles"
+msgstr "Alleen bij complete bijlagen"
+
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only Complete Articles"
+msgstr "Alleen bij complete bijlagen"
+
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only _My Articles"
+msgstr "Alleen bij mijn artikelen"
+
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only Articles Posted by Me"
+msgstr "Alleen bij mijn artikelen"
+
+#: pan/gui/actions.cc:383
+#, fuzzy
+msgid "Match Only _Watched Articles"
+msgstr "Alleen bij bewaakte artikelen"
+
+#: pan/gui/actions.cc:383
+msgid "Match Only Watched Articles"
+msgstr "Alleen bij bewaakte artikelen"
+
+#: pan/gui/actions.cc:385
+#, fuzzy
+msgid "Match Scores of 9999 (_Watched)"
+msgstr "/_Filter/Scores van 9999 (Bewaakt)"
+
+#: pan/gui/actions.cc:386
+#, fuzzy
+msgid "Match Scores of 5000...9998 (_High)"
+msgstr "/_Filter/Scores van 5000...9998 (Hoog)"
+
+#: pan/gui/actions.cc:387
+#, fuzzy
+msgid "Match Scores of 1...4999 (Me_dium)"
+msgstr "/_Filter/Scores van 1...4999 (Middel)"
+
+#: pan/gui/actions.cc:388
+#, fuzzy
+msgid "Match Scores of 0 (_Normal)"
+msgstr "/_Filter/Scores van 0 (Normaal)"
+
+#: pan/gui/actions.cc:389
+#, fuzzy
+msgid "Match Scores of -9998...-1 (_Low)"
+msgstr "/_Filter/Scores van -9998...-1 (Laag)"
+
+#: pan/gui/actions.cc:390
+#, fuzzy
+msgid "Match Scores of -9999 (_Ignored)"
+msgstr "/_Filter/Scores van -9999 (Genegeerd)"
+
+#: pan/gui/actions.cc:416
+#, fuzzy
+msgid "Show Matching _Articles"
+msgstr "/_Filter/Overeenkomende artikelen tonen"
+
+#: pan/gui/actions.cc:417
+#, fuzzy
+msgid "Show Matching Articles' _Threads"
+msgstr "/_Filter/Overeenkomende artikel-discussies tonen"
+
+#: pan/gui/actions.cc:418
+#, fuzzy
+msgid "Show Matching Articles' _Subthreads"
+msgstr "/_Filter/Overeenkomende artikel-subdiscussies tonen"
+
+#: pan/gui/actions.cc:435
+msgid "Baltic (ISO-8859-4)"
+msgstr ""
+
+#: pan/gui/actions.cc:436
+msgid "Baltic (ISO-8859-13)"
+msgstr ""
+
+#: pan/gui/actions.cc:437
+msgid "Baltic (Windows-1257)"
+msgstr ""
+
+#: pan/gui/actions.cc:438
+#, fuzzy
+msgid "Central European (ISO-8859-2)"
+msgstr "Centraal-Europees"
+
+#: pan/gui/actions.cc:439
+#, fuzzy
+msgid "Central European (Windows-1250)"
+msgstr "Centraal-Europees"
+
+#: pan/gui/actions.cc:440
+#, fuzzy
+msgid "Chinese Simplified (gb2312)"
+msgstr "Vereenvoudigd Chinees"
+
+#: pan/gui/actions.cc:441
+#, fuzzy
+msgid "Chinese Traditional (big5)"
+msgstr "Traditioneel Chinees"
+
+#: pan/gui/actions.cc:442
+msgid "Cyrillic (ISO-8859-5)"
+msgstr ""
+
+#: pan/gui/actions.cc:443
+msgid "Cyrillic (Windows-1251)"
+msgstr ""
+
+#: pan/gui/actions.cc:444
+#, fuzzy
+msgid "Cyrillic (KOI8-R)"
+msgstr "Cyrillisch"
+
+#: pan/gui/actions.cc:445
+#, fuzzy
+msgid "Cyrillic, Ukrainian (KOI8-U)"
+msgstr "Cyrillisch, Oekraïens"
+
+#: pan/gui/actions.cc:446
+msgid "Greek (ISO-8859-7)"
+msgstr ""
+
+#: pan/gui/actions.cc:447
+msgid "Japanese (ISO-2022-jp)"
+msgstr ""
+
+#: pan/gui/actions.cc:448
+msgid "Korean (euc-kr)"
+msgstr ""
+
+#: pan/gui/actions.cc:449
+msgid "Turkish (ISO-8859-9)"
+msgstr ""
+
+#: pan/gui/actions.cc:450
+msgid "Western (ISO-8859-1)"
+msgstr ""
+
+#: pan/gui/actions.cc:451
+#, fuzzy
+msgid "Western, New (ISO-8859-15)"
+msgstr "Westers, nieuw"
+
+#: pan/gui/actions.cc:452
+msgid "Western (Windows-1252)"
+msgstr ""
+
+#: pan/gui/actions.cc:453
+#, fuzzy
+msgid "Unicode (UTF-8)"
+msgstr "Unicode, UTF-8"
+
+#: pan/gui/body-pane.cc:855
+#, c-format
+msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
+msgstr ""
+
+#: pan/gui/body-pane.cc:856
+#, c-format
+msgid "Attachment not shown: MIME type %s/%s\n"
+msgstr ""
+
+#: pan/gui/body-pane.cc:936 pan/gui/header-pane.cc:1167
+#: pan/gui/header-pane.cc:1502 pan/gui/prefs-ui.cc:322
+#: pan/gui/score-add-ui.cc:136
+msgid "Subject"
+msgstr "Onderwerp"
+
+#: pan/gui/body-pane.cc:938
+#, fuzzy
+msgid "From"
+msgstr "Van"
+
+#: pan/gui/body-pane.cc:940 pan/gui/header-pane.cc:1579 pan/gui/log-ui.cc:206
+#: pan/gui/prefs-ui.cc:318
+msgid "Date"
+msgstr "Datum"
+
+#: pan/gui/body-pane.cc:947
+msgid "Newsgroups"
+msgstr "Nieuwsgroepen"
+
+#: pan/gui/body-pane.cc:952
+#, fuzzy
+msgid "Followup-To"
+msgstr "Opvolgen-naar"
+
+#: pan/gui/body-pane.cc:962
+msgid "Reply-To"
+msgstr "Antwoord-naar"
+
+#: pan/gui/body-pane.cc:988
+msgid " from "
+msgstr ""
+
+#: pan/gui/body-pane.cc:990
+msgid " at "
+msgstr ""
+
+#: pan/gui/dl-headers-ui.cc:102
+#, fuzzy
+msgid "Pan: "
+msgstr "Pan: Regels"
+
+#: pan/gui/dl-headers-ui.cc:128
+#, fuzzy
+msgid "Get the last N _days' headers: "
+msgstr "_Recente kopteksten ophalen: "
+
+#: pan/gui/dl-headers-ui.cc:136
+#, fuzzy
+msgid "Get _new headers"
+msgstr "/Nieuwe _kopteksten ophalen"
+
+#: pan/gui/dl-headers-ui.cc:140
+#, fuzzy
+msgid "Get _all headers"
+msgstr "_Alle kopteksten ophalen"
+
+#: pan/gui/dl-headers-ui.cc:144
+#, fuzzy
+msgid "Get the _latest N headers: "
+msgstr "_Recente kopteksten ophalen: "
+
+#: pan/gui/group-pane.cc:608
+#, fuzzy
+msgid "Group Name"
+msgstr "Groepenpaneel"
+
+#: pan/gui/group-pane.cc:700
+#, c-format
+msgid " (%lu)"
+msgstr ""
+
+#: pan/gui/group-pane.cc:829 pan/gui/header-pane.cc:1668
+#, fuzzy
+msgid "Clear the Filter"
+msgstr "Selecteer een filter:"
+
+#: pan/gui/group-pane.cc:857
+#, fuzzy
+msgid "Subscribed Groups"
+msgstr "Geabonneerde nieuwsgroepen"
+
+#: pan/gui/group-pane.cc:858
+#, fuzzy
+msgid "Other Groups"
+msgstr "Nieuwe groepen"
+
+#: pan/gui/group-pane.cc:900
+#, fuzzy
+msgid "Name"
+msgstr "_Naam:"
+
+#: pan/gui/group-prefs-dialog.cc:101
+#, fuzzy
+msgid "No Profiles defined in Edit|Posting Profiles."
+msgstr "/_Plaatsen/_Profielen voor plaatsing..."
+
+#: pan/gui/group-prefs-dialog.cc:129
+#, fuzzy
+msgid "Pan: Group Preferences"
+msgstr "Pan-voorkeuren"
+
+#: pan/gui/group-prefs-dialog.cc:143
+#, fuzzy, c-format
+msgid "Properties for %s"
+msgstr "Eigenschappen van \"%s\""
+
+#: pan/gui/group-prefs-dialog.cc:147
+#, fuzzy
+msgid "Character _encoding:"
+msgstr "_Codering:"
+
+#: pan/gui/group-prefs-dialog.cc:148
+#, fuzzy
+msgid "Directory for Saving Attachments"
+msgstr "Map voor opslaan bijlagen"
+
+#: pan/gui/group-prefs-dialog.cc:153
+#, fuzzy
+msgid "Directory for _saving attachments:"
+msgstr "Map voor opslaan bijlagen"
+
+#: pan/gui/group-prefs-dialog.cc:155
+#, fuzzy
+msgid "Posting _profile:"
+msgstr "Pan: Profiel"
+
+#: pan/gui/gui.cc:236
+msgid "Open the Task Manager"
+msgstr "Taakbeheer openen."
+
+#: pan/gui/gui.cc:257
+#, fuzzy
+msgid "Open the Event Log"
+msgstr "Statuslogboek openen"
+
+#: pan/gui/gui.cc:481
+#, fuzzy
+msgid "Save Attachments"
+msgstr "Bijlagen op_slaan"
+
+#: pan/gui/gui.cc:529
+msgid "Import NZB File(s)"
+msgstr ""
+
+#: pan/gui/gui.cc:605
+msgid ""
+"Pan is now offline. Please ensure that space is available, then use File|"
+"Work Online to continue."
+msgstr ""
+
+#: pan/gui/gui.cc:730 pan/gui/gui.cc:1092 pan/gui/gui.cc:1296
+msgid "Pan"
+msgstr ""
+
+#: pan/gui/gui.cc:902
+#, fuzzy
+msgid "Unable to supersede article."
+msgstr "/Artikel opslaan _als..."
+
+#: pan/gui/gui.cc:903 pan/gui/gui.cc:970
+msgid "The article doesn't match any of your posting profiles."
+msgstr ""
+
+#: pan/gui/gui.cc:944
+msgid "Revise and send this article to replace the old one."
+msgstr ""
+
+#: pan/gui/gui.cc:945 pan/gui/gui.cc:1005
+msgid "Be patient!  It will take time for your changes to take effect."
+msgstr ""
+
+#: pan/gui/gui.cc:969
+#, fuzzy
+msgid "Unable to cancel article."
+msgstr "Niet in staat thread te maken: %s"
+
+#: pan/gui/gui.cc:1004
+msgid "Send this article to ask your server to cancel your other one."
+msgstr ""
+
+#: pan/gui/gui.cc:1095 pan/gui/gui.cc:1115
+#, fuzzy
+msgid "Copyright © 2002-2006 Charles Kerr"
+msgstr "Copyright (C) 2003 Charles Kerr"
+
+#: pan/gui/gui.cc:1100
+msgid "translator-credits"
+msgstr ""
+
+#: pan/gui/gui.cc:1211
+#, fuzzy
+msgid "_1. Group Pane"
+msgstr "Groepenpaneel"
+
+#: pan/gui/gui.cc:1212
+#, fuzzy
+msgid "_2. Header Pane"
+msgstr "Kopteksten-paneel"
+
+#: pan/gui/gui.cc:1213
+#, fuzzy
+msgid "_3. Body Pane"
+msgstr "Inhoud-paneel"
+
+#: pan/gui/gui.cc:1298
+#, fuzzy, c-format
+msgid "Pan: %s"
+msgstr "Pan: Regels"
+
+#: pan/gui/gui.cc:1415
+msgid "Offline"
+msgstr "Off-line"
+
+#: pan/gui/gui.cc:1418
+#, c-format
+msgid "Closing %d connections"
+msgstr "Bezig met sluiten van %d verbindingen"
+
+#: pan/gui/gui.cc:1420 pan/gui/gui.cc:1450
+msgid "No Connections"
+msgstr "Geen verbindingen"
+
+#: pan/gui/gui.cc:1424
+msgid "Connecting"
+msgstr "Bezig met verbinden"
+
+#: pan/gui/gui.cc:1437
+#, c-format
+msgid "%s: %d idle, %d active @ %.1f KiBps"
+msgstr ""
+
+#: pan/gui/gui.cc:1493
+msgid "No Tasks"
+msgstr "Geen taken"
+
+#: pan/gui/gui.cc:1496
+#, c-format
+msgid "Tasks: %u/%u"
+msgstr "Taken: %u/%u"
+
+#: pan/gui/gui.cc:1497
+#, c-format
+msgid "%u Tasks Running, %u Tasks Total"
+msgstr "%u Taken draaiend, %u taken in totaal"
+
+#: pan/gui/gui.cc:1546
+msgid ""
+"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
+"then use \"File|Work Online\" to continue."
+msgstr ""
+
+#. less than a kibi...
+#: pan/gui/header-pane.cc:363 pan/gui/task-pane.cc:208
+#, c-format
+msgid "%lu B"
+msgstr ""
+
+#: pan/gui/header-pane.cc:365
+#, c-format
+msgid "%.1f KiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:367
+#, c-format
+msgid "%.1f MiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:369
+#, c-format
+msgid "%.1f GiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:1166
+msgid "Subject or Author"
+msgstr ""
+
+#: pan/gui/header-pane.cc:1168 pan/gui/header-pane.cc:1534
+#: pan/gui/prefs-ui.cc:316 pan/gui/score-add-ui.cc:137
+msgid "Author"
+msgstr "Auteur"
+
+#: pan/gui/header-pane.cc:1169
+#, fuzzy
+msgid "Message-ID"
+msgstr "_Bericht-ID:"
+
+#: pan/gui/header-pane.cc:1519 pan/gui/prefs-ui.cc:320
+msgid "Score"
+msgstr "Score"
+
+#: pan/gui/header-pane.cc:1549 pan/gui/prefs-ui.cc:319
+msgid "Lines"
+msgstr "Regels"
+
+#: pan/gui/header-pane.cc:1564 pan/gui/prefs-ui.cc:317
+msgid "Bytes"
+msgstr ""
+
+#: pan/gui/log-ui.cc:85
+msgid "Save Event List"
+msgstr ""
+
+#: pan/gui/log-ui.cc:167
+#, fuzzy
+msgid "Pan: Events"
+msgstr "Pan: Servers"
+
+#: pan/gui/log-ui.cc:216
+msgid "Message"
+msgstr "Bericht"
+
+#: pan/gui/pan.cc:120
+msgid ""
+"Thank you for trying Pan!\n"
+" \n"
+"To start newsreading, first Add a Server."
+msgstr ""
+
+#: pan/gui/pan.cc:141
+msgid ""
+"General Options\n"
+"  -h, --help               Show this usage page.\n"
+"\n"
+"URL Options\n"
+"  news:message-id          Show the specified article.\n"
+"  news:group.name          Show the specified newsgroup.\n"
+"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"\n"
+"NZB Batch Options\n"
+"  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
+"  -o path, --output=path   Path to save attachments listed in the nzb "
+"files.\n"
+"  --nogui                  Only show console output, not the download "
+"queue.\n"
+msgstr ""
+
+#: pan/gui/pan.cc:198
+msgid "Error: nzb arguments used without nzb files."
+msgstr ""
+
+#: pan/gui/pan.cc:203
+msgid "Error: --nogui used without nzb files or news:message-id."
+msgstr ""
+
+#: pan/gui/pan.cc:207
+#, fuzzy, c-format
+msgid "Pan %s started"
+msgstr "Pan %s gestart"
+
+#: pan/gui/pan.cc:223
+msgid "Please configure Pan's news servers before using it as an nzb client."
+msgstr ""
+
+#: pan/gui/post-ui.cc:86
+#, fuzzy, c-format
+msgid "Error setting spellchecker: %s"
+msgstr "Er is een fout opgetreden bij het schrijven naar de socket: %s"
+
+#: pan/gui/post-ui.cc:95
+msgid ""
+"<b>Spellchecker not found!</b>\n"
+" \n"
+"Was this copy of Pan compiled with GtkSpell enabled?"
+msgstr ""
+
+#: pan/gui/post-ui.cc:240
+#, fuzzy
+msgid "_Profile"
+msgstr "Profiel"
+
+#: pan/gui/post-ui.cc:241
+#, fuzzy
+msgid "Character Encoding"
+msgstr "_Codering:"
+
+#: pan/gui/post-ui.cc:242
+#, fuzzy
+msgid "Set Editor"
+msgstr "Editor"
+
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "_Send Article"
+msgstr "/_Ga naar/_Ouder-artikel"
+
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "Send Article Now"
+msgstr "Nu verzenden"
+
+#: pan/gui/post-ui.cc:245
+#, fuzzy
+msgid "Sa_ve Draft"
+msgstr "Bezig met opslaan artikelen"
+
+#: pan/gui/post-ui.cc:245
+msgid "Save as a Draft for Future Posting"
+msgstr ""
+
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "_Open Draft..."
+msgstr "/Artikel _lezen"
+
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "Open an Article Draft"
+msgstr "/Artikel _lezen"
+
+#: pan/gui/post-ui.cc:247
+msgid "Wrap _Now"
+msgstr ""
+
+#: pan/gui/post-ui.cc:247
+#, fuzzy
+msgid "Wrap the Article Body to 80 Columns"
+msgstr "/Beel_d/Regels in artikel a_fbreken"
+
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "_Close"
+msgstr "Kleuren"
+
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "Close Window"
+msgstr "Logvenster sluiten"
+
+#: pan/gui/post-ui.cc:249
+msgid "Cu_t"
+msgstr ""
+
+#: pan/gui/post-ui.cc:249
+#, fuzzy
+msgid "Cut Text"
+msgstr "Geciteerde tekst:"
+
+#: pan/gui/post-ui.cc:250
+msgid "_Copy"
+msgstr ""
+
+#: pan/gui/post-ui.cc:250
+#, fuzzy
+msgid "Copy Text"
+msgstr "Tekstregels afbreken"
+
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "_Paste"
+msgstr "_Plaatsen"
+
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "Paste Text"
+msgstr "Te_kst opslaan"
+
+#: pan/gui/post-ui.cc:252
+#, fuzzy
+msgid "_Rot13"
+msgstr "Rot13"
+
+#: pan/gui/post-ui.cc:252
+msgid "Rot13 Selected Text"
+msgstr "Geselecteerde tekst Rot13-coderen"
+
+#: pan/gui/post-ui.cc:253
+#, fuzzy
+msgid "Run _Editor"
+msgstr "Editor"
+
+#: pan/gui/post-ui.cc:254
+msgid "_Manage Editor List..."
+msgstr ""
+
+#: pan/gui/post-ui.cc:255
+#, fuzzy
+msgid "Manage Posting Pr_ofiles..."
+msgstr "/_Plaatsen/_Profielen voor plaatsing..."
+
+#: pan/gui/post-ui.cc:260
+#, fuzzy
+msgid "_Wrap Text"
+msgstr "Tekstregels afbreken"
+
+#: pan/gui/post-ui.cc:261
+msgid "Remember _Charset for This Group"
+msgstr ""
+
+#: pan/gui/post-ui.cc:262
+msgid "Check _Spelling"
+msgstr ""
+
+#: pan/gui/post-ui.cc:317 pan/gui/post-ui.cc:318 pan/gui/post-ui.cc:319
+msgid "Baltic"
+msgstr "Baltisch"
+
+#: pan/gui/post-ui.cc:320 pan/gui/post-ui.cc:321
+msgid "Central European"
+msgstr "Centraal-Europees"
+
+#: pan/gui/post-ui.cc:322
+msgid "Chinese Simplified"
+msgstr "Vereenvoudigd Chinees"
+
+#: pan/gui/post-ui.cc:323
+msgid "Chinese Traditional"
+msgstr "Traditioneel Chinees"
+
+#: pan/gui/post-ui.cc:324 pan/gui/post-ui.cc:325 pan/gui/post-ui.cc:326
+msgid "Cyrillic"
+msgstr "Cyrillisch"
+
+#: pan/gui/post-ui.cc:327
+msgid "Cyrillic, Ukrainian"
+msgstr "Cyrillisch, Oekraïens"
+
+#: pan/gui/post-ui.cc:328
+msgid "Greek"
+msgstr "Grieks"
+
+#: pan/gui/post-ui.cc:329
+msgid "Japanese"
+msgstr "Japans"
+
+#: pan/gui/post-ui.cc:330
+msgid "Korean"
+msgstr "Koreaans"
+
+#: pan/gui/post-ui.cc:331
+msgid "Turkish"
+msgstr "Turks"
+
+#: pan/gui/post-ui.cc:332 pan/gui/post-ui.cc:334
+msgid "Western"
+msgstr "Westers"
+
+#: pan/gui/post-ui.cc:333
+msgid "Western, New"
+msgstr "Westers, nieuw"
+
+#: pan/gui/post-ui.cc:335
+msgid "Unicode, UTF-8"
+msgstr "Unicode, UTF-8"
+
+#: pan/gui/post-ui.cc:431
+#, fuzzy, c-format
+msgid "Error loading post.ui: \"%s\""
+msgstr "Er is een fout opgetreden bij het lezen van de socket: %s"
+
+#: pan/gui/post-ui.cc:502
+msgid "Manage Editor List"
+msgstr ""
+
+#: pan/gui/post-ui.cc:509
+#, fuzzy
+msgid "Editors"
+msgstr "Editor"
+
+#: pan/gui/post-ui.cc:609
+msgid "Your changes will be lost!"
+msgstr ""
+
+#: pan/gui/post-ui.cc:610
+msgid "Close this window and lose your changes?"
+msgstr ""
+
+#: pan/gui/post-ui.cc:647
+msgid "There were problems with this post."
+msgstr ""
+
+#: pan/gui/post-ui.cc:649
+#, fuzzy
+msgid "Go Back"
+msgstr "/_Ga naar/Teruglezen"
+
+#: pan/gui/post-ui.cc:651
+msgid "Post Anyway"
+msgstr ""
+
+#: pan/gui/post-ui.cc:662
+#, fuzzy
+msgid "Go _Online"
+msgstr "Pan is on-line"
+
+#: pan/gui/post-ui.cc:834
+msgid ""
+"No posting server is set for this posting profile.\n"
+"Please edit the profile via Edit|Manage Posting Profiles."
+msgstr ""
+
+#: pan/gui/post-ui.cc:867
+#, fuzzy
+msgid "Pan is Offline."
+msgstr "Pan is off-line"
+
+#: pan/gui/post-ui.cc:868
+msgid "Go online to post the article?"
+msgstr ""
+
+#. *
+#. ***  Pop up a ``Posting'' Dialog...
+#. *
+#: pan/gui/post-ui.cc:881
+#, fuzzy
+msgid "Posting Article"
+msgstr "Bezig met plaatsen van artikel \"%s\""
+
+#: pan/gui/post-ui.cc:887
+msgid "Posting..."
+msgstr ""
+
+#: pan/gui/post-ui.cc:938
+msgid "Error opening temporary file"
+msgstr "Er is een fout opgetreden bij het openen van een tijdelijk bestand"
+
+#: pan/gui/post-ui.cc:958
+#, c-format
+msgid "Error writing article to temporary file: %s"
+msgstr ""
+"Er is een fout opgetreden bij het schrijven van het artikel naar een "
+"tijdelijk bestand: %s"
+
+#: pan/gui/post-ui.cc:977
+#, fuzzy, c-format
+msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
+msgstr ""
+"Er is een fout opgetreden bij het interpreteren van de opdrachtregel voor "
+"\"externe editor\": %s"
+
+#: pan/gui/post-ui.cc:1015
+#, c-format
+msgid "Error starting external editor: %s"
+msgstr "Er is een fout opgetreden bij het starten van de externe editor: %s"
+
+#: pan/gui/post-ui.cc:1070
+#, fuzzy
+msgid "Open Draft Article"
+msgstr "/Artikel _lezen"
+
+#: pan/gui/post-ui.cc:1233
+#, fuzzy
+msgid "Save Draft Article"
+msgstr "Bezig met opslaan artikelen"
+
+#: pan/gui/post-ui.cc:1390
+#, c-format
+msgid "Couldn't read signature file \"%s\": %s"
+msgstr "Kon ondertekeningsbestand \"%s\" niet lezen: %s"
+
+#: pan/gui/post-ui.cc:1411
+#, fuzzy, c-format
+msgid "Couldn't parse signature command \"%s\": %s"
+msgstr "Kon ondertekeningsbestand \"%s\" niet lezen: %s"
+
+#: pan/gui/post-ui.cc:1448
+#, fuzzy
+msgid "Couldn't convert signature to UTF-8."
+msgstr ""
+"Het ondertekeningsbestand '%s' kon niet worden omgezet naar UTF-8. De "
+"ondertekening moet in '%s' zijn"
+
+#: pan/gui/post-ui.cc:1790
+#, fuzzy
+msgid "Post Article"
+msgstr "_Artikel"
+
+#: pan/gui/post-ui.cc:1812
+#, fuzzy
+msgid "F_rom"
+msgstr "Van"
+
+#: pan/gui/post-ui.cc:1819
+#, fuzzy
+msgid "_Subject"
+msgstr "_Onderwerp:"
+
+#: pan/gui/post-ui.cc:1825
+#, fuzzy
+msgid "_Newsgroups"
+msgstr "/_Nieuwsgroepen"
+
+#: pan/gui/post-ui.cc:1832
+#, fuzzy
+msgid "_Mail To"
+msgstr "E-mail naar"
+
+#: pan/gui/post-ui.cc:1842
+msgid "One header per line, in the form HeaderName: Value"
+msgstr ""
+
+#: pan/gui/post-ui.cc:1845
+#, fuzzy
+msgid "_More Headers"
+msgstr "Meer Koppen"
+
+#: pan/gui/post-ui.cc:1867 pan/gui/profiles-dialog.cc:398
+#, c-format
+msgid "On %d, %n wrote:"
+msgstr "Op %d, schreef %n:"
+
+#: pan/gui/profiles-dialog.cc:102
+#, fuzzy
+msgid "Posting Profile"
+msgstr "Pan: Profiel"
+
+#: pan/gui/profiles-dialog.cc:110
+msgid "Profile Information"
+msgstr "Profielinformatie"
+
+#: pan/gui/profiles-dialog.cc:114
+msgid "_Profile Name:"
+msgstr "_Profielnaam:"
+
+#: pan/gui/profiles-dialog.cc:117
+msgid "Required Information"
+msgstr "Vereiste informatie"
+
+#: pan/gui/profiles-dialog.cc:121
+msgid "_Full Name:"
+msgstr "_Volledige naam:"
+
+#: pan/gui/profiles-dialog.cc:124
+msgid "_Email Address:"
+msgstr "_E-mailadres:"
+
+#: pan/gui/profiles-dialog.cc:126
+#, fuzzy
+msgid "_Post Articles via:"
+msgstr "_Artikel"
+
+#: pan/gui/profiles-dialog.cc:129
+#, fuzzy
+msgid "Signature"
+msgstr "_Ondertekeningsbestand:"
+
+#: pan/gui/profiles-dialog.cc:132
+#, fuzzy
+msgid "_Use a Signature"
+msgstr "_Ondertekeningsbestand:"
+
+#: pan/gui/profiles-dialog.cc:136
+#, fuzzy
+msgid "Signature File"
+msgstr "Ondertekeningsbestand selecteren"
+
+#: pan/gui/profiles-dialog.cc:139
+#, fuzzy
+msgid "_Signature:"
+msgstr "_Ondertekeningsbestand:"
+
+#: pan/gui/profiles-dialog.cc:144
+#, fuzzy
+msgid "Text File"
+msgstr "/_Ga naar/Volgende _artikel"
+
+#: pan/gui/profiles-dialog.cc:146
+#, fuzzy
+msgid "Text"
+msgstr "Tekst:"
+
+#: pan/gui/profiles-dialog.cc:148
+#, fuzzy
+msgid "Command"
+msgstr "Afdrukopdracht:"
+
+#: pan/gui/profiles-dialog.cc:158
+#, fuzzy
+msgid "Signature _Type:"
+msgstr "_Ondertekeningsbestand:"
+
+#: pan/gui/profiles-dialog.cc:161
+msgid "Optional Information"
+msgstr "Optionele infomatie"
+
+#: pan/gui/profiles-dialog.cc:169
+#, c-format
+msgid ""
+"%i for Message-ID\n"
+"%a for Author and Address\n"
+"%n for Author name\n"
+"%d for Date"
+msgstr ""
+"%i voor Bericht-ID\n"
+"%a voor Auteur en adres\n"
+"%n voor Auteurnaam\n"
+"%d voor Datum"
+
+#: pan/gui/profiles-dialog.cc:170
+msgid "_Attribution:"
+msgstr "_Toeschrijving:"
+
+#: pan/gui/profiles-dialog.cc:190
+msgid ""
+"Extra headers to be included in your posts, such as\n"
+"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
+"Organization: Your Organization"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:199
+#, fuzzy
+msgid "E_xtra Headers:"
+msgstr "Meer kopteksten"
+
+#: pan/gui/profiles-dialog.cc:253
+#, fuzzy
+msgid "Invalid email address."
+msgstr "Ongeldig adres \"%s\""
+
+#: pan/gui/profiles-dialog.cc:254
+msgid "Please use an address of the form joe@somewhere.org"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:399
+msgid "New Profile"
+msgstr "Nieuw profiel"
+
+#: pan/gui/profiles-dialog.cc:442
+#, fuzzy
+msgid "Posting Profiles"
+msgstr "/_Plaatsen/_Profielen voor plaatsing..."
+
+#: pan/gui/profiles-dialog.cc:458
+#, fuzzy
+msgid "Profiles"
+msgstr "Profiel"
+
+#: pan/gui/profiles-dialog.cc:482
+#, fuzzy
+msgid "Add a New Profile"
+msgstr "Nieuw profiel toevoegen"
+
+#: pan/gui/profiles-dialog.cc:493
+msgid "Edit the selected profile"
+msgstr "Geselecteerd profiel bewerken"
+
+#: pan/gui/profiles-dialog.cc:499
+msgid "Remove the selected profile"
+msgstr "Geselecteerd profiel verwijderen"
+
+#: pan/gui/prefs.cc:320
+#, fuzzy, c-format
+msgid "Couldn't parse %s color \"%s\""
+msgstr "Kon ondertekeningsopdracht \"%s\" niet interpreteren"
+
+#: pan/gui/prefs-ui.cc:159
+#, fuzzy
+msgid "Use GNOME Preferences"
+msgstr "Pan-voorkeuren"
+
+#: pan/gui/prefs-ui.cc:160
+#, fuzzy
+msgid "Use KDE Preferences"
+msgstr "Referenties"
+
+#: pan/gui/prefs-ui.cc:161
+#, fuzzy
+msgid "Use OS/X Preferences"
+msgstr "Referenties"
+
+#: pan/gui/prefs-ui.cc:162
+#, fuzzy
+msgid "Use Windows Preferences"
+msgstr "Pan-voorkeuren"
+
+#: pan/gui/prefs-ui.cc:163
+#, fuzzy
+msgid "Custom Command:"
+msgstr "Afdrukopdracht:"
+
+#: pan/gui/prefs-ui.cc:315
+#, fuzzy
+msgid "Action"
+msgstr "Acties"
+
+#  queue list
+#: pan/gui/prefs-ui.cc:321
+#, fuzzy
+msgid "State"
+msgstr "Status"
+
+#: pan/gui/prefs-ui.cc:354
+msgid "Enabled"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:358
+#, fuzzy
+msgid "Column Name"
+msgstr "Kolom"
+
+#: pan/gui/prefs-ui.cc:392
+#, fuzzy
+msgid "Pan: Preferences"
+msgstr "Pan-voorkeuren"
+
+#: pan/gui/prefs-ui.cc:404
+msgid "Mouse"
+msgstr "Muis"
+
+#: pan/gui/prefs-ui.cc:406
+#, fuzzy
+msgid "Single-click activates, rather than selects, _groups"
+msgstr "Een enkele klik selecteert _groepen, maar laadt ze niet"
+
+#: pan/gui/prefs-ui.cc:408
+#, fuzzy
+msgid "Single-click activates, rather than selects, _articles"
+msgstr "Een enkele klik selecteert _koppen, maar laadt ze niet"
+
+#: pan/gui/prefs-ui.cc:411
+#, fuzzy
+msgid "Groups"
+msgstr "Groepen"
+
+#: pan/gui/prefs-ui.cc:413
+#, fuzzy
+msgid "Get new headers in subscribed groups on _startup"
+msgstr "Nieuwe kopteksten in geabonneerde groepen ophalen"
+
+#: pan/gui/prefs-ui.cc:415
+#, fuzzy
+msgid "Get new headers when _entering group"
+msgstr "Nieuwe kopteksten ophalen bij het laden van een groe_p"
+
+#: pan/gui/prefs-ui.cc:417
+#, fuzzy
+msgid "Mark entire group _read when leaving group"
+msgstr ""
+"Artikelen van een groep als gele_zen markeren bij het verlaten van de groep"
+
+#: pan/gui/prefs-ui.cc:420
+#, fuzzy
+msgid "Articles"
+msgstr "/_Artikelen"
+
+#: pan/gui/prefs-ui.cc:421
+msgid "Space selects next article, not next unread"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:424
+#, fuzzy
+msgid "_Behavior"
+msgstr "_Gedrag"
+
+#: pan/gui/prefs-ui.cc:428
+msgid "Pane Layout"
+msgstr "Paneel-indeling"
+
+#: pan/gui/prefs-ui.cc:444
+msgid "Tasks"
+msgstr "Taken"
+
+#: pan/gui/prefs-ui.cc:447
+msgid "1=Groups, 2=Headers, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:449
+msgid "1=Groups, 2=Body, 3=Headers"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:451
+msgid "1=Headers, 2=Groups, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:453
+msgid "1=Headers, 2=Body, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:455
+msgid "1=Body, 2=Groups, 3=Headers"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:457
+msgid "1=Body, 2=Headers, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:464
+#, fuzzy
+msgid "Header Pane Columns"
+msgstr "Kopteksten-paneel"
+
+#: pan/gui/prefs-ui.cc:468
+#, fuzzy
+msgid "Threads"
+msgstr "Ge_lezen discussies:"
+
+#: pan/gui/prefs-ui.cc:470
+#, fuzzy
+msgid "E_xpand all threads when entering group"
+msgstr "Nieuwe kopteksten ophalen bij het laden van een groe_p"
+
+#: pan/gui/prefs-ui.cc:473
+#, fuzzy
+msgid "_Headers"
+msgstr "Kopteksten"
+
+#: pan/gui/prefs-ui.cc:477
+msgid "Fonts"
+msgstr "Lettertypen"
+
+#: pan/gui/prefs-ui.cc:479
+msgid "Use custom font in Group Pane:"
+msgstr "Aangepast lettertype gebruiken in Groeps-paneel:"
+
+#: pan/gui/prefs-ui.cc:484
+msgid "Use custom font in Header Pane:"
+msgstr "Aangepast lettertype gebruiken in Koptekst-paneel:"
+
+#: pan/gui/prefs-ui.cc:489
+msgid "Use custom font in Body Pane:"
+msgstr "Aangepast lettertype gebruiken in Inhouds-paneel:"
+
+#: pan/gui/prefs-ui.cc:494
+#, fuzzy
+msgid "Monospace font:"
+msgstr "Monospac_e lettertype:"
+
+#: pan/gui/prefs-ui.cc:498
+#, fuzzy
+msgid "_Fonts"
+msgstr "Lettertypen"
+
+#: pan/gui/prefs-ui.cc:502
+#, fuzzy
+msgid "Header Pane"
+msgstr "Kopteksten-paneel"
+
+#: pan/gui/prefs-ui.cc:505 pan/gui/prefs-ui.cc:511 pan/gui/prefs-ui.cc:517
+#: pan/gui/prefs-ui.cc:523 pan/gui/prefs-ui.cc:529
+msgid "Text:"
+msgstr "Tekst:"
+
+#: pan/gui/prefs-ui.cc:507 pan/gui/prefs-ui.cc:513 pan/gui/prefs-ui.cc:519
+#: pan/gui/prefs-ui.cc:525 pan/gui/prefs-ui.cc:531
+msgid "Background:"
+msgstr "Achtergrond:"
+
+#: pan/gui/prefs-ui.cc:509
+#, fuzzy
+msgid "Scores of 9999 or more:"
+msgstr "/_Filter/Scores van -9999 (Genegeerd)"
+
+#: pan/gui/prefs-ui.cc:515
+msgid "Scores from 5000 to 9998:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:521
+msgid "Scores from 1 to 4999:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:527
+msgid "Scores from -9998 to -1:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:533
+#, fuzzy
+msgid "Scores of -9999 or less:"
+msgstr "/_Filter/Scores van -9999 (Genegeerd)"
+
+#: pan/gui/prefs-ui.cc:535
+#, fuzzy
+msgid "Body Pane"
+msgstr "_Inhoud-paneel"
+
+#: pan/gui/prefs-ui.cc:541
+#, fuzzy
+msgid "Quoted Text:"
+msgstr "/Beel_d/Ge_citeerde tekst onderdrukken"
+
+#: pan/gui/prefs-ui.cc:542
+#, fuzzy
+msgid "URL:"
+msgstr "URLs:"
+
+#: pan/gui/prefs-ui.cc:543
+#, fuzzy
+msgid "Signature:"
+msgstr "_Ondertekeningsbestand:"
+
+#: pan/gui/prefs-ui.cc:545
+#, fuzzy
+msgid "_Colors"
+msgstr "Kleuren"
+
+#: pan/gui/prefs-ui.cc:549
+#, fuzzy
+msgid "Preferred Applications"
+msgstr "Toepassingen"
+
+#: pan/gui/prefs-ui.cc:553
+#, fuzzy
+msgid "_Web Browser:"
+msgstr "_Webbrowser (%s is een URL):"
+
+#: pan/gui/prefs-ui.cc:556
+#, fuzzy
+msgid "_Mail Reader:"
+msgstr "E-mailserver"
+
+#: pan/gui/prefs-ui.cc:558
+#, fuzzy
+msgid "A_pplications"
+msgstr "Toepassingen"
+
+#: pan/gui/save-ui.cc:61
+#, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+" \n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - groep als één map (alt.binaries.pictures.trains)\n"
+"%G - groep als geneste map (/alt/binaries/pictures/trains)\n"
+" \n"
+"\"/home/gebruiker/News/Pan/%g\" wordt\n"
+"\"/home/gebruiker/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/gebruiker/News/Pan/%G\" wordt\n"
+"\"/home/gebruiker/News/Pan/alt/binaries/pictures/trains\","
+
+#: pan/gui/save-ui.cc:156
+#, fuzzy
+msgid "Pan: Save Articles"
+msgstr "Pan: Opslaan als"
+
+#: pan/gui/save-ui.cc:173
+msgid "Files"
+msgstr "Bestanden"
+
+#: pan/gui/save-ui.cc:176
+#, fuzzy
+msgid "Save _Text"
+msgstr "Te_kst opslaan"
+
+#: pan/gui/save-ui.cc:179
+#, fuzzy
+msgid "Save _Attachments"
+msgstr "Bijlagen op_slaan"
+
+#: pan/gui/save-ui.cc:185
+#, fuzzy
+msgid "Path"
+msgstr "Delen"
+
+#: pan/gui/save-ui.cc:191
+msgid "C_ustom path:"
+msgstr ""
+
+#: pan/gui/save-ui.cc:195
+#, fuzzy
+msgid "Save Files to Path"
+msgstr "Bijlagen op_slaan"
+
+#: pan/gui/save-ui.cc:208
+#, fuzzy
+msgid "_Path:"
+msgstr "_Plaatsen"
+
+#: pan/gui/save-ui.cc:211
+#, c-format
+msgid "Group's _default path: %s"
+msgstr ""
+
+#: pan/gui/save-ui.cc:220
+#, fuzzy
+msgid "Group Management"
+msgstr "Groepenpaneel"
+
+#. sort by age
+#: pan/gui/save-ui.cc:224
+msgid "Add to the queue sorted by a_ge"
+msgstr ""
+
+#. top of queue
+#: pan/gui/save-ui.cc:229
+#, fuzzy
+msgid "Add to the _front of the queue"
+msgstr "Taak toevoegen _onderaan het taakoverzicht"
+
+#. bottom of queue
+#: pan/gui/save-ui.cc:234
+msgid "Add to the _back of the queue"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:86
+msgid "is more than"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:87
+msgid "is at most"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:109
+#, fuzzy
+msgid "increase the article's score by"
+msgstr "/Beel_d/Regels in artikel a_fbreken"
+
+#: pan/gui/score-add-ui.cc:110
+#, fuzzy
+msgid "decrease the article's score by"
+msgstr "/Beel_d/Regels in artikel a_fbreken"
+
+#: pan/gui/score-add-ui.cc:111
+#, fuzzy
+msgid "set the article's score to"
+msgstr "score zetten op"
+
+#: pan/gui/score-add-ui.cc:112
+#, fuzzy
+msgid "watch the article (set its score to 9999)"
+msgstr "_Bewaken (zet score op 9999)"
+
+#: pan/gui/score-add-ui.cc:113
+#, fuzzy
+msgid "ignore the article (set its score to -9999)"
+msgstr "_Negeren (zet score op -9999)"
+
+#: pan/gui/score-add-ui.cc:138
+#, fuzzy
+msgid "References"
+msgstr "_Referenties:"
+
+#: pan/gui/score-add-ui.cc:139
+#, fuzzy
+msgid "Line Count"
+msgstr "Regel %d, Kolom %d"
+
+#: pan/gui/score-add-ui.cc:140
+msgid "Byte Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:141
+msgid "Crosspost Group Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:142
+msgid "Age (in days)"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:164
+msgid "the next week"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:165
+msgid "the next month"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:166
+#, fuzzy
+msgid "forever"
+msgstr "Server"
+
+#: pan/gui/score-add-ui.cc:191
+msgid "contains"
+msgstr "bevat"
+
+#: pan/gui/score-add-ui.cc:192
+#, fuzzy
+msgid "doesn't contain"
+msgstr "bevat niet"
+
+#: pan/gui/score-add-ui.cc:193
+msgid "is"
+msgstr "is"
+
+#: pan/gui/score-add-ui.cc:194
+#, fuzzy
+msgid "isn't"
+msgstr "is niet"
+
+#: pan/gui/score-add-ui.cc:195
+msgid "starts with"
+msgstr "begint met"
+
+#: pan/gui/score-add-ui.cc:196
+msgid "ends with"
+msgstr "eindigt met"
+
+#: pan/gui/score-add-ui.cc:197
+#, fuzzy
+msgid "matches regex"
+msgstr "komt overeen met de reguliere expressie"
+
+#: pan/gui/score-add-ui.cc:525
+msgid "Add and Re_score"
+msgstr "Toevoegen en _herscoren"
+
+#: pan/gui/score-add-ui.cc:573
+#, fuzzy
+msgid "Pan: New Scoring Rule"
+msgstr "Pan: Regel bewerken"
+
+#: pan/gui/score-add-ui.cc:592
+#, fuzzy
+msgid "New Scoring Rule"
+msgstr "Nieuwe score"
+
+#: pan/gui/score-add-ui.cc:603
+msgid "If the group name"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:610
+#, fuzzy
+msgid "And the article's"
+msgstr "Regels per artikel:"
+
+#: pan/gui/score-add-ui.cc:622
+#, fuzzy
+msgid "Then"
+msgstr "Met dank aan"
+
+#: pan/gui/score-add-ui.cc:630
+#, fuzzy
+msgid "For"
+msgstr "Mappen"
+
+#: pan/gui/score-view-ui.cc:64
+msgid "Close and Re_score"
+msgstr "Sluiten en _herscoren"
+
+#: pan/gui/score-view-ui.cc:167
+#, fuzzy, c-format
+msgid "File %s, Lines %d - %d"
+msgstr "scorebestand %s, regel %d: %s (%s)"
+
+#: pan/gui/score-view-ui.cc:170
+#, fuzzy, c-format
+msgid "Name: \"%s\""
+msgstr "\"%s\" Bewaard"
+
+#: pan/gui/score-view-ui.cc:199
+#, fuzzy
+msgid "Pan: Article's Scores"
+msgstr "Pan: Artikelscores tonen"
+
+#: pan/gui/score-view-ui.cc:225
+#, fuzzy
+msgid "Add"
+msgstr "toevoegen"
+
+#: pan/gui/score-view-ui.cc:230
+msgid "New Score"
+msgstr "Nieuwe score"
+
+#: pan/gui/score-view-ui.cc:235
+msgid "Criteria"
+msgstr "Criteria"
+
+#: pan/gui/score-view-ui.cc:258
+#, fuzzy
+msgid "Add a New Scoring Rule"
+msgstr "Een nieuwe score toevoegen"
+
+#: pan/gui/score-view-ui.cc:265
+#, fuzzy
+msgid "Remove the Selected Scoring Rule"
+msgstr "De geselecteerde score verwijderen"
+
+#: pan/gui/server-ui.cc:162
+msgid "Please specify the server's address."
+msgstr ""
+
+#. create the dialog
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Add a Server"
+msgstr "Pan: Server aanpassen"
+
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Edit a Server's Settings"
+msgstr "Pan: Server aanpassen"
+
+#: pan/gui/server-ui.cc:222
+#, fuzzy
+msgid "Location"
+msgstr "Acties"
+
+#: pan/gui/server-ui.cc:226
+msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
+msgstr ""
+"Het feitelijke adres van de nieuwsserver, bijv \"niews.mijnnieuwsserver.com\""
+
+#: pan/gui/server-ui.cc:227
+msgid "_Address:"
+msgstr "_Adres:"
+
+#: pan/gui/server-ui.cc:231
+#, fuzzy
+msgid "The news server's port number.  Typically 119."
+msgstr "De poort van de nieuwsserver. Dit is bijna alijd 119."
+
+#: pan/gui/server-ui.cc:232
+msgid "Por_t:"
+msgstr "Poor_t:"
+
+#: pan/gui/server-ui.cc:235
+msgid "Login (if Required)"
+msgstr ""
+
+#: pan/gui/server-ui.cc:239
+msgid "_Username:"
+msgstr "_Gebruikersnaam:"
+
+#: pan/gui/server-ui.cc:240
+msgid ""
+"The username to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+#: pan/gui/server-ui.cc:244
+msgid "_Password:"
+msgstr "_Wachtwoord:"
+
+#: pan/gui/server-ui.cc:245
+msgid ""
+"The password to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+#: pan/gui/server-ui.cc:248
+#, fuzzy
+msgid "Settings"
+msgstr "Bezig met ophalen \"%s\""
+
+#: pan/gui/server-ui.cc:254
+msgid "Connection _Limit:"
+msgstr "Verbindings_limiet:"
+
+#: pan/gui/server-ui.cc:257
+msgid "After Two Weeks"
+msgstr ""
+
+#: pan/gui/server-ui.cc:258
+msgid "After One Month"
+msgstr ""
+
+#: pan/gui/server-ui.cc:259
+msgid "After Two Months"
+msgstr ""
+
+#: pan/gui/server-ui.cc:260
+#, fuzzy
+msgid "Never Expire Old Articles"
+msgstr "Nooit _verlopen"
+
+#: pan/gui/server-ui.cc:274
+#, fuzzy
+msgid "E_xpire Old Articles:"
+msgstr "Geselecteerde artikelen ophalen"
+
+#: pan/gui/server-ui.cc:277
+#, fuzzy
+msgid "Primary"
+msgstr "Prioriteit"
+
+#: pan/gui/server-ui.cc:278
+msgid "Fallback"
+msgstr ""
+
+#: pan/gui/server-ui.cc:292
+#, fuzzy
+msgid "Server Rank:"
+msgstr "Servers"
+
+#: pan/gui/server-ui.cc:296
+msgid ""
+"Fallback servers are used for articles that can't be found on the "
+"primaries.  One common approach is to use free servers as primaries and "
+"subscription servers as fallbacks."
+msgstr ""
+
+#: pan/gui/server-ui.cc:420
+#, c-format
+msgid "Really delete \"%s\"?"
+msgstr ""
+
+#. dialog
+#: pan/gui/server-ui.cc:492
+msgid "Pan: Servers"
+msgstr "Pan: Servers"
+
+#: pan/gui/server-ui.cc:512
+msgid "Servers"
+msgstr "Servers"
+
+#: pan/gui/server-ui.cc:538
+#, fuzzy
+msgid "Add a Server"
+msgstr "Nieuwe server toevoegen"
+
+#: pan/gui/server-ui.cc:548
+#, fuzzy
+msgid "Edit a Server's Settings"
+msgstr "Andere instellingen"
+
+#: pan/gui/server-ui.cc:555
+#, fuzzy
+msgid "Remove a Server"
+msgstr "Nieuwe server"
+
+#. less than a mebi...
+#: pan/gui/task-pane.cc:210
+#, c-format
+msgid "%.2f KiB"
+msgstr ""
+
+#. less than a gibi...
+#: pan/gui/task-pane.cc:212
+#, c-format
+msgid "%.2f MiB"
+msgstr ""
+
+#: pan/gui/task-pane.cc:214
+#, c-format
+msgid "%.2f GiB"
+msgstr ""
+
+#: pan/gui/task-pane.cc:250
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
+msgstr "Pan %s Taakbeheer (%d in wachtrij, %d draaiende, %d gestopt)"
+
+#: pan/gui/task-pane.cc:252
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running)"
+msgstr "Pan %s Taakbeheer (%d in wachtrij, %d draaiende)"
+
+#: pan/gui/task-pane.cc:254
+#, fuzzy
+msgid "Pan: Tasks"
+msgstr "Pan: Taakbeheer"
+
+#: pan/gui/task-pane.cc:268
+#, c-format
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
+msgstr ""
+
+#: pan/gui/task-pane.cc:326
+msgid "Running"
+msgstr "Draaiende"
+
+#: pan/gui/task-pane.cc:327
+msgid "Queued"
+msgstr "In de wachtrij"
+
+#: pan/gui/task-pane.cc:328
+msgid "Stopped"
+msgstr "Gestopt"
+
+#: pan/gui/task-pane.cc:329
+msgid "Removing"
+msgstr "Verwijderen"
+
+#: pan/gui/task-pane.cc:330
+msgid "Unknown"
+msgstr "Onbekend"
+
+#: pan/gui/task-pane.cc:354
+#, fuzzy, c-format
+msgid "%d%% Done; %d:%02d:%02d Remaining (%d @ %lu KiB/s)"
+msgstr "%d:%02d:%02d (%lu KiB/s)"
+
+#: pan/gui/task-pane.cc:358
+#, fuzzy, c-format
+msgid "%d%% Done; %s"
+msgstr "% Klaar"
+
+#: pan/gui/task-pane.cc:366
+#, fuzzy, c-format
+msgid "to %s"
+msgstr "%s - Info"
+
+#: pan/gui/task-pane.cc:433
+#, fuzzy
+msgid "Restart Tasks"
+msgstr "Geselecteerde taken herstarten"
+
+#: pan/gui/task-pane.cc:438
+#, fuzzy
+msgid "Stop Tasks"
+msgstr "Geen taken"
+
+#: pan/gui/task-pane.cc:443
+#, fuzzy
+msgid "Delete Tasks"
+msgstr "Spam verwijderen"
+
+#  queue list
+#: pan/gui/task-pane.cc:467
+msgid "Status"
+msgstr "Status"
+
+#: pan/gui/url.cc:92
+#, fuzzy, c-format
+msgid "Error starting URL: %s (Command was: %s)"
+msgstr ""
+"Er is een fout opgetreden bij het interpreteren van de opdrachtregel voor "
+"\"web-browser\": %s"
+
+#: pan/tasks/nntp.cc:214
+#, c-format
+msgid "Unable to set group: %s"
+msgstr "Kan groep niet instellen: %s"
+
+#: pan/tasks/nntp.cc:231
+#, c-format
+msgid "Error: %s"
+msgstr "Fout: %s"
+
+#: pan/tasks/socket-impl-gio.cc:112
+#, fuzzy, c-format
+msgid "Making a new connection to %*.*s"
+msgstr "\"blijf verbonden\" verstuurd naar %*.*s"
+
+#: pan/tasks/socket-impl-gio.cc:347
+#, fuzzy
+msgid "Unknown Error"
+msgstr "Onbekend"
+
+#: pan/tasks/socket-impl-gio.cc:348
+#, c-format
+msgid "Error reading from socket: %s"
+msgstr "Er is een fout opgetreden bij het lezen van de socket: %s"
+
+#: pan/tasks/task-article.cc:54 pan/tasks/task-article.cc:124
+#, fuzzy, c-format
+msgid "Saving %s"
+msgstr "Bewaren \"%s\""
+
+#: pan/tasks/task-article.cc:56
+#, fuzzy, c-format
+msgid "Reading %s"
+msgstr "Lezen"
+
+#: pan/tasks/task-article.cc:291
+msgid "Error initializing uulib"
+msgstr ""
+
+#: pan/tasks/task-article.cc:302
+#, fuzzy, c-format
+msgid "Couldn't load \"%s\": %s"
+msgstr "Kon map \"%s\" niet aanmaken: %s"
+
+#: pan/tasks/task-article.cc:335
+#, c-format
+msgid "Saved \"%s\""
+msgstr "\"%s\" Bewaard"
+
+#: pan/tasks/task-article.cc:339
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s. %s"
+msgstr "Er is een fout opgetreden bij het lezen van bestand \"%s\": %s"
+
+#: pan/tasks/task-article.cc:341
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s."
+msgstr "Er is een fout opgetreden bij het lezen van bestand \"%s\": %s"
+
+#: pan/tasks/task-groups.cc:40
+#, fuzzy, c-format
+msgid "Getting group list from \"%s\""
+msgstr "Bezig met ophalen van groepen van server \"%s\""
+
+# binnengehaald/opgehaald/verkregen/opgeslagen
+#: pan/tasks/task-groups.cc:121
+#, fuzzy, c-format
+msgid "Fetched %lu Groups"
+msgstr "%u groepen opgehaald"
+
+#: pan/tasks/task-post.cc:34
+#, fuzzy, c-format
+msgid "Posting \"%s\""
+msgstr "Bezig met ophalen \"%s\""
+
+#: pan/tasks/task-xover.cc:71
+#, c-format
+msgid "Getting all headers for \"%s\""
+msgstr "Bezig met ophalen alle kopteksten voor \"%s\""
+
+#: pan/tasks/task-xover.cc:73
+#, c-format
+msgid "Getting new headers for \"%s\""
+msgstr "Bezig met ophalen nieuwe kopteksten voor \"%s\""
+
+#. SAMPLE
+#: pan/tasks/task-xover.cc:75
+#, c-format
+msgid "Sampling headers for \"%s\""
+msgstr "Bezig met ophalen klaarmaken van kopteksten voor \"%s\""
+
+#: pan/tasks/task-xover.cc:321
+#, fuzzy, c-format
+msgid "%s (%lu parts, %lu articles)"
+msgstr " (%lu regels in %lu artikelen)"
+
+#: pan/usenet-utils/gnksa.cc:879
+#, c-format
+msgid "No email address provided; generating message-id with domain \"%s\""
+msgstr ""
+"Geen e-mailadres opgegeven; bericht-ID met domein \"%s\" wordt gegenereerd"
+
+#: pan/usenet-utils/message-check.cc:123
+#, fuzzy
+msgid "Warning: Reply seems to be top-posted."
+msgstr "WAARSCHUWING: Het antwoord lijkt boven het citaat te staan."
+
+#: pan/usenet-utils/message-check.cc:144
+#, fuzzy
+msgid "Warning: The signature marker should be \"-- \", not \"--\"."
+msgstr "WAARSCHUWING: Ondertekening-markering moet zijn \"-- \", niet \"--\"."
+
+#: pan/usenet-utils/message-check.cc:161
+#, fuzzy
+msgid "Warning: Signature prefix with no signature."
+msgstr "WAARSCHUWING: Ondertekening-voorvoegsel zonder ondertekening"
+
+#: pan/usenet-utils/message-check.cc:166
+#, fuzzy
+msgid "Warning: Signature is more than 4 lines long."
+msgstr "WAARSCHUWING: ondertekening is langer dan 4 regels"
+
+#: pan/usenet-utils/message-check.cc:171
+#, fuzzy
+msgid "Warning: Signature is more than 80 characters wide."
+msgstr "WAARSCHUWING: ondertekening is meer dan 80 tekens breed."
+
+#: pan/usenet-utils/message-check.cc:196
+#, fuzzy, c-format
+msgid "Warning: %d lines are more than 80 characters wide."
+msgstr "WAARSCHUWING: %d regels zijn meer dan 80 tekens breed."
+
+#: pan/usenet-utils/message-check.cc:219
+#, fuzzy
+msgid "Error: Message is empty."
+msgstr "FOUT: bericht is leeg."
+
+#: pan/usenet-utils/message-check.cc:254
+#, fuzzy
+msgid "Warning: The message is entirely quoted text!"
+msgstr "WAARSCHUWING: Het bericht is volledig geciteerd!"
+
+#: pan/usenet-utils/message-check.cc:255
+#, fuzzy
+msgid "Warning: The message is mostly quoted text."
+msgstr "WAARSCHUWING: Het grootste deel van de tekst is geciteerd"
+
+#: pan/usenet-utils/message-check.cc:305
+#, fuzzy
+msgid "Error: Message appears to have no new content."
+msgstr "FOUT: Bericht heeft geen nieuwe inhoud."
+
+#: pan/usenet-utils/message-check.cc:340 pan/usenet-utils/message-check.cc:375
+#, fuzzy, c-format
+msgid "Warning: Unknown group \"%s\"."
+msgstr "WAAARSCHUWING: Onbekende groep: \"%*.*s\"."
+
+#: pan/usenet-utils/message-check.cc:347
+#, fuzzy
+msgid "Warning: Following-Up to too many groups."
+msgstr "WAARSCHUWING: U volgt op naar te veel groepen."
+
+#: pan/usenet-utils/message-check.cc:358
+#, fuzzy
+msgid "Error: No Subject specified."
+msgstr "FOUT: Geen onderwerp aangegeven"
+
+#: pan/usenet-utils/message-check.cc:383
+#, fuzzy, c-format
+msgid "Warning: Group \"%s\" is read-only."
+msgstr "WAARSCHUWING: Groep \"%*.*s\" is alleen-lezen."
+
+#: pan/usenet-utils/message-check.cc:392
+#, fuzzy
+msgid "Error: Posting to a very large number of groups."
+msgstr "FOUT: U plaatst in een zeer groot aantal groepen."
+
+#: pan/usenet-utils/message-check.cc:397
+#, fuzzy
+msgid "Warning: Posting to a large number of groups."
+msgstr "WAARSCHUWING:  U plaatst in een groot aantal groepen."
+
+#: pan/usenet-utils/message-check.cc:404
+#, fuzzy
+msgid "Warning: Crossposting without setting Followup-To header."
+msgstr ""
+"WAARSCHUWING: U plaatst in meerdere groepen zonder Opvolgen-naar in te "
+"stellen."
+
+#: pan/usenet-utils/message-check.cc:428
+#, fuzzy
+msgid "Error: Bad email address."
+msgstr "_E-mailadres:"
+
+#: pan/usenet-utils/message-check.cc:437
+msgid "Warning: Most newsgroups frown upon HTML posts."
+msgstr ""
+
+#: pan/usenet-utils/message-check.cc:467
+#, fuzzy
+msgid "Error: No Recipients."
+msgstr "FOUT: Geen onderwerp aangegeven"
+
+#: pan/usenet-utils/text-massager.cc:309
+msgid "> [quoted text muted]"
+msgstr "> [geciteerde tekst onderdrukt]"
+
+#: pan/usenet-utils/utf8-utils.cc:252
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgstr ""
+
+#, fuzzy
+#~ msgid "_Posting"
+#~ msgstr "_Plaatsen"
+
+#, fuzzy
+#~ msgid "_Save Attachments..."
+#~ msgstr "Bijlagen op_slaan"
+
+#, fuzzy
+#~ msgid "Post New Article"
+#~ msgstr "_Artikel"
+
+#, fuzzy
+#~ msgid "Follow-up to Article"
+#~ msgstr "Opvolgen naar nieuwsgroep"
+
+#, fuzzy
+#~ msgid "_Post Article"
+#~ msgstr "_Artikel"
+
+#, fuzzy
+#~ msgid "Post this Article Now"
+#~ msgstr "Bezig met plaatsen van artikel \"%s\""
+
+#, fuzzy
+#~ msgid "Are you sure you want to close this window?"
+#~ msgstr ""
+#~ "Weet u zeker dat u deze %d groepen/mappen en hun artikelen wilt "
+#~ "verwijderen?"
+
+#, fuzzy
+#~ msgid "Error: No Newsgroups specified."
+#~ msgstr "FOUT: Geen ontvangers aangegeven."
+
+#, fuzzy
+#~ msgid "Message-Id"
+#~ msgstr "Bericht-ID"
+
+#, fuzzy
+#~ msgid "Saved newsrc files in %.1f seconds"
+#~ msgstr "%d Artikelen in \"%s\" opgeslagen in %.1f seconden (%.0f art/sec)"
+
+#, fuzzy
+#~ msgid "Use _Monospace Font in Body Pane"
+#~ msgstr "/Beel_d/Artikelinhoud in _monospatiëring-letter weergeven"
+
+#~ msgid "%d connections totaling %.1f KiB per second"
+#~ msgstr "%d verbindingen, bij elkaar %.1f KiB per seconde"
+
+#~ msgid ""
+#~ "Used when email replies to your posts should go somewhere other than the "
+#~ "email address above.  Because Reply-To: is relatively difficult for "
+#~ "spammers to harvest, it's polite give your email address here if you gave "
+#~ "an invalid email address above."
+#~ msgstr ""
+#~ "Wordt gebruikt als een antwoord-email op uw bericht ergens anders naar "
+#~ "toe moet worden gestuurd dan het bovenstaande emailadres.  Omdat Reply-"
+#~ "To: relatief moeilijk door spammers te misbruiken is, is het netjes om uw "
+#~ "emailadres hier te geven als u hierboven een ongeldig emailadres heeft "
+#~ "opgegeven."
+
+#~ msgid "_Reply-To Header:"
+#~ msgstr "_Antwoord-naar koptekst:"
+
+#~ msgid "Or_ganization Header:"
+#~ msgstr "Or_ganisatie-koptekst:"
+
+#, fuzzy
+#~ msgid "Attach this _Signature:"
+#~ msgstr "Ondertekening:"
+
+#~ msgid "Automatic Downloads"
+#~ msgstr "Automatisch ophalen"
+
+#, fuzzy
+#~ msgid "Save a_ttachments to path:"
+#~ msgstr "Bijlagen opslaan in:"
+
+#, fuzzy
+#~ msgid "Error decoding \"%s\": %s"
+#~ msgstr "Er is een fout opgetreden bij het lezen van bestand \"%s\": %s"
+
+#~ msgid "UNKNOWN"
+#~ msgstr "ONBEKEND"
+
+#, fuzzy
+#~ msgid "Decode can't access directory \"%s\""
+#~ msgstr "Decodering kan geen toegang krijgen tot pad \"%s\""
+
+#~ msgid "Could not decode article - file may be corrupt/incomplete"
+#~ msgstr "Kon artikel niet decoderen - bestand is wellicht corrupt/incompleet"
+
+#~ msgid "Checksum for `%s' part %d failed - file is corrupt"
+#~ msgstr "Controlesom voor `%s'-deel van %d klopt niet - bestand is corrupt"
+
+#~ msgid "Checksum for `%s' failed - file may be corrupt"
+#~ msgstr "Controlesom voor `%s' klopt niet - bestand is wellicht corrupt"
+
+#, fuzzy
+#~ msgid "Colors"
+#~ msgstr "Kleuren"
+
+#, fuzzy
+#~ msgid "Use custom colors in _Header Pane"
+#~ msgstr "Aangepast lettertype gebruiken in Koptekst-paneel:"
+
+#, fuzzy
+#~ msgid "Header Pane background:"
+#~ msgstr "Kopteksten-paneel scoren"
+
+#, fuzzy
+#~ msgid "Read articles:"
+#~ msgstr "Bezig met klaarmaken %d berichten"
+
+#, fuzzy
+#~ msgid "Unread articles:"
+#~ msgstr "_Ongelezen discussies:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unsupported data version (%d) for server properties.  Are you running an "
+#~ "old version of Pan by accident?"
+#~ msgstr ""
+#~ "Niet ondersteunde versie %d voor gegevensbestand \"%s\".\n"
+#~ "Draait u per ongeluk een oude versie van Pan?"
+
+#, fuzzy
+#~ msgid "Couldn't create temporary file: %s"
+#~ msgstr "Kon tijdelijk bestand niet creëren: %s"
+
+#~ msgid "Error renaming \"%s\" as \"%s\": %s."
+#~ msgstr ""
+#~ "Er is een fout opgetreden bij het hernoemen van \"%s\" naar \"%s\": %s."
+
+#~ msgid "Can't backup \"%s\" as \"%s\": %s"
+#~ msgstr "Kan geen backup maken van \"%s\" als \"%s\": %s"
+
+#~ msgid "Can't write to \"%s\": %s"
+#~ msgstr "Kan niet schrijven naar \"%s\": %s"
+
+#~ msgid "Body"
+#~ msgstr "Inhoud"
+
+#, fuzzy
+#~ msgid "Open a Draft Article from Disk"
+#~ msgstr "%u Artikelen uit `%s' verlopen"
+
+#, fuzzy
+#~ msgid "subject"
+#~ msgstr "Onderwerp"
+
+#, fuzzy
+#~ msgid "author"
+#~ msgstr "Auteur"
+
+#~ msgid "Change"
+#~ msgstr "Wijzigen"
+
+#~ msgid "Connections"
+#~ msgstr "Verbindingen"
+
+#, fuzzy
+#~ msgid "Active"
+#~ msgstr "Acties"
+
+#~ msgid ""
+#~ "Unable to cancel article: Couldn't find matching article in folder `pan."
+#~ "sent'!"
+#~ msgstr ""
+#~ "Niet in staat om artikel te annuleren: Kon geen overeenkomend artikel "
+#~ "vinden in map `pan.sent'!"
+
+#~ msgid ""
+#~ "Unable to supersede article: Couldn't find matching article in folder "
+#~ "`pan.sent'!"
+#~ msgstr ""
+#~ "Niet in staat om artikel te vervangen: Kon geen overeenkomend artikel "
+#~ "vinden in map `pan.sent'!"
+
+#~ msgid "You must download the article before you can cancel it."
+#~ msgstr "U dient een artikel eerst op te halen voordat u het kunt annuleren."
+
+#~ msgid "You must download the article before you can supersede it."
+#~ msgstr "U dient een artikel eerst op te halen voordat u het kunt vervangen."
+
+#~ msgid "Pan: Find Article"
+#~ msgstr "Pan: Artikel zoeken"
+
+#~ msgid "_Author:"
+#~ msgstr "_Auteur:"
+
+#~ msgid "Case Sensiti_ve"
+#~ msgstr "Hoofdletterge_voelig"
+
+#~ msgid "_Unread Only"
+#~ msgstr "Alleen _ongelezen"
+
+#~ msgid "Fin_d:"
+#~ msgstr "_Zoeken:"
+
+#~ msgid ""
+#~ "Type in a search string and press ENTER.\n"
+#~ "Wildcards are allowed."
+#~ msgstr ""
+#~ "Geef een zoeksleutel in en druk op ENTER.\n"
+#~ "Jokers zijn toegestaan."
+
+#~ msgid "/---"
+#~ msgstr "/---"
+
+#~ msgid "/Save Article A_ttachments"
+#~ msgstr "/_Bijlagen opslaan"
+
+#~ msgid "/_Manual Decode..."
+#~ msgstr "/_Handmatig decoderen..."
+
+#~ msgid "/D_ownload Flagged"
+#~ msgstr "/Gemarkeerde artikelen _ophalen"
+
+#~ msgid "/_Flag"
+#~ msgstr "/_Markeren"
+
+#~ msgid "/_Unflag"
+#~ msgstr "/_Demarkeren"
+
+#~ msgid "/_Create Score"
+#~ msgstr "/_Score aanmaken"
+
+#~ msgid "/Add S_et to Selection"
+#~ msgstr "/_Verzameling aan selectie toevoegen"
+
+#~ msgid "/_Copy to Folder"
+#~ msgstr "/_Kopiëren naar map"
+
+#~ msgid "/_Delete"
+#~ msgstr "/Verwij_deren"
+
+#~ msgid "Scoring Articles"
+#~ msgstr "Artikelen scoren"
+
+# filtreren/filteren
+#~ msgid "Filtering Articles"
+#~ msgstr "Berichten filteren"
+
+#~ msgid "Updating Header Pane..."
+#~ msgstr "Bezig met verversen kopteksten-paneel..."
+
+#~ msgid "Loading group \"%s\""
+#~ msgstr "Bezig met laden van groep \"%s\""
+
+#~ msgid "Flushing article cache... "
+#~ msgstr "Bezig met legen artikelbuffer... "
+
+#~ msgid "%d files erased."
+#~ msgstr "%d bestanden verwijderd."
+
+#~ msgid "Error saving article \"%s\" (is %s full?)"
+#~ msgstr ""
+#~ "Er is een fout opgetreden bij het opslaan van artikel \"%s\" (is %s vol?)"
+
+#~ msgid "Directory \"%s\" contains %.1f MB in %d files"
+#~ msgstr "De map \"%s\" bevat %.1f MB in %d bestanden"
+
+#~ msgid "Unparseable Subject"
+#~ msgstr "Onderwerp niet interpreteerbaar"
+
+#~ msgid "Couldn't parse a Message-ID from the raw message!"
+#~ msgstr "Geen bericht-ID aangetroffen bij de ontleding van het bericht!"
+
+#~ msgid "unknown@spammesenseless.com"
+#~ msgstr "onbekend@spammijmaarsuf.com"
+
+#~ msgid "Decoding \"%s\""
+#~ msgstr "Decoderen van \"%s\""
+
+#~ msgid "Can't create file \"%s\" %s"
+#~ msgstr "Kan bestand \"%s\" niet creëren %s"
+
+#~ msgid "Error saving file \"%s\" - is the disk full?"
+#~ msgstr ""
+#~ "Er is een fout opgetreden bij het opslaan van \"%s\" - is de schijf vol?"
+
+#~ msgid "Decoded \"%s\" from group \"%*.*s\", \"%s\""
+#~ msgstr "\"%s\" uit groep \"%*.*s\" gedecodeerd, \"%s\""
+
+#~ msgid "Loading %u of %d groups"
+#~ msgstr "Laden %u van %d groepen"
+
+#~ msgid ""
+#~ "Skipped %d groups due to possible corruption in \"%s\" and \"%s\".  You "
+#~ "may want to delete these files and get a new grouplist from your news "
+#~ "server."
+#~ msgstr ""
+#~ "%d Groepen overgeslagen vanwege mogelijke corruptie in \"%s\" en \"%s\". "
+#~ "U wilt deze bestanden misschien verwijderen en een nieuwe groepenlijst "
+#~ "ophalen van uw newsserver."
+
+#~ msgid "Loaded %d groups for server \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr ""
+#~ "%d Groepen geladen voor server \"%s\" in %.1f seconden (%.0f groepen/sec)"
+
+#~ msgid "Saved %d of %u groups"
+#~ msgstr "%d van %u groepen opgeslagen"
+
+#~ msgid "Error saving list of groups to \"%s\" - is the disk full?"
+#~ msgstr ""
+#~ "Er is een fout opgetreden bij het opslaan van de groepenlijst naar \"%s\" "
+#~ "- is de schijf vol?"
+
+#~ msgid "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr "Bewaard %d groepen in \"%s\" in %.1f seconden (%.0f groepen/sec)"
+
+#~ msgid "Loaded %d of %d articles"
+#~ msgstr "Laden %d van %d berichten"
+
+#~ msgid ""
+#~ "Pan skipped %d corrupt headers from the local cache for group \"%*.*s\"."
+#~ msgstr ""
+#~ "%d corrupte kopteksten uit de lokale buffer overgeslagen voor groep \"%*."
+#~ "*s\"."
+
+#~ msgid "You may want to empty this group and download fresh headers."
+#~ msgstr "U wilt misschien deze groep legen en nieuwe kopteksten ophalen."
+
+#~ msgid "The group will not be saved -- can't create file \"%s\""
+#~ msgstr ""
+#~ "De groep zal niet worden opgeslagen -- kan bestand \"%s\" niet creëren"
+
+#~ msgid "Unable to save headers for group \"%*.*s\" - is the disk full?"
+#~ msgstr ""
+#~ "Niet in staat om kopteksten voor groep \"%*.*s\" op te slaan - is de "
+#~ "schijf vol?"
+
+#~ msgid "(No Group)"
+#~ msgstr "(Geen groep)"
+
+#~ msgid "ERROR: invalid address \"%s\""
+#~ msgstr "FOUT: ongeldig adres \"%s\""
+
+#~ msgid "ERROR: Must have one author in From: line"
+#~ msgstr "FOUT: U dient één auteur in te vullen in de Van:-regel"
+
+#~ msgid "Imported %d groups (%d new) from \"%s\""
+#~ msgstr "%d Groepen (%d nieuw) van \"%s\" geïmporteerd"
+
+#~ msgid "Exported %d groups (%d subscribed) to \"%s\""
+#~ msgstr "%d Groepen (%d geabonneerd) geëxporteerd naar \"%s\""
+
+#~ msgid "Imported %d lines from Gnome config file"
+#~ msgstr "%d Regels geïmporteerd vanuit Gnome-configuratiebestand"
+
+#~ msgid "%s does not appear to be a valid datafile"
+#~ msgstr "%s lijkt geen geldig gegevensbestand te zijn"
+
+#~ msgid "Error converting string \"%*s\" to utf8: %d - %s"
+#~ msgstr ""
+#~ "Er is een fout opgetreden bij het converteren van tekenreeks \"%*s\": "
+#~ "naar utf8: %d - %s"
+
+#~ msgid "No name specified!"
+#~ msgstr "Geen naam opgegeven!"
+
+#~ msgid "Server is corrupt"
+#~ msgstr "Server is corrupt"
+
+#~ msgid "A Server with that name already exists."
+#~ msgstr "Een server met die naam bestaat reeds."
+
+#~ msgid "A newsreader for GNOME"
+#~ msgstr "Een nieuwslezer voor Gnome."
+
+#~ msgid "Programmer"
+#~ msgstr "Hoofdprogrammeur"
+
+#~ msgid "Project Originator, Programmer"
+#~ msgstr "Projectstichter, programmeur"
+
+#~ msgid "Programmer, 0.6 - 0.7"
+#~ msgstr "Programmeur, 0.6 - 0.7"
+
+#~ msgid ""
+#~ "Pan %s Translations\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Code or Patches\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Suggestions and Testing\n"
+#~ "%s\n"
+#~ msgstr ""
+#~ "Pan %s vertalingen\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s code of patches\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s suggesties en tests\n"
+#~ "%s\n"
+
+#~ msgid "Group Properties"
+#~ msgstr "Groepseigenschappen"
+
+#~ msgid "_Directory for saving articles:"
+#~ msgstr "_Map voor opslaan bijlagen:"
+
+#~ msgid "Default charse_t:"
+#~ msgstr "Standaard _codering:"
+
+#~ msgid "Pan: Download Headers for group `%s'"
+#~ msgstr "Pan: Kopteksten ophalen voor groep '%s'"
+
+#~ msgid "Pan: Download Headers"
+#~ msgstr "Pan: Kopteksten ophalen"
+
+#~ msgid "Download _new headers"
+#~ msgstr "_Nieuwe kopteksten ophalen"
+
+#~ msgid "_Download bodies too"
+#~ msgstr "Ook artikel_inhoud ophalen"
+
+#~ msgid "How should you appear when posting articles?"
+#~ msgstr "Hoe zou u moeten verschijnen bij het plaatsen van artikelen?"
+
+#~ msgid "Your _Name:"
+#~ msgstr "Uw _naam:"
+
+#~ msgid "Email _Address:"
+#~ msgstr "E-mail_adres:"
+
+#~ msgid "_Organization:"
+#~ msgstr "_Organisatie:"
+
+#~ msgid "default"
+#~ msgstr "standaard"
+
+#~ msgid "What mail server should Pan use?"
+#~ msgstr "Welke e-mailserver dient Pan te gebruiken?"
+
+#~ msgid "What news server should Pan use?"
+#~ msgstr "Welke newsserver dient Pan te gebruiken?"
+
+#~ msgid "Short name for Pan to show, e.g. \"mynewsserver\""
+#~ msgstr "Verkorte naam om te tonen, bijv. \"mijnnewsserver\""
+
+#~ msgid "Short _name for Pan to show:"
+#~ msgstr "Verkorte _naam om te tonen:"
+
+#~ msgid "Login"
+#~ msgstr "Aanmelden"
+
+#~ msgid "Server requires authori_zation"
+#~ msgstr "Mijn server vereist aanmelding"
+
+#~ msgid "Pan Setup Wizard"
+#~ msgstr "Pan Instellingen-wizard"
+
+#~ msgid "Thank you for trying Pan!"
+#~ msgstr "Bedankt dat u Pan uitprobeert!"
+
+#~ msgid ""
+#~ "Thank you for trying Pan!\n"
+#~ " \n"
+#~ "If you are new to Usenet,\n"
+#~ "%s\n"
+#~ "is a starting point to see what Usenet is,\n"
+#~ "where to find a free news server,\n"
+#~ "and how to use Pan.\n"
+#~ " \n"
+#~ "Since this is your first time running Pan,\n"
+#~ "we'll need to gather some information.\n"
+#~ msgstr ""
+#~ "Bedankt dat u Pan uitprobeert!\n"
+#~ "\n"
+#~ "Indien u onbekend bent met Usenet, is\n"
+#~ "%s\n"
+#~ "een startpunt om te zien wat Usenet is,\n"
+#~ "waar u een vrije newsserver kunt vinden,\n"
+#~ "en hoe u Pan gebruikt.\n"
+#~ " \n"
+#~ "Omdat dit de eerste keer is dat u Pan gebruikt,\n"
+#~ "is het nodig om wat informatie te verzamelen.\n"
+
+#~ msgid "About You"
+#~ msgstr "Info over u"
+
+#~ msgid "Ready!"
+#~ msgstr "Klaar!"
+
+#~ msgid ""
+#~ "You have successfully entered all of\n"
+#~ "the information required to set up Pan.\n"
+#~ "\n"
+#~ "To save these settings, click Save."
+#~ msgstr ""
+#~ "U heeft alle informatie ingevuld die\n"
+#~ "nodig is om Pan in te stellen.\n"
+#~ "\n"
+#~ "Om deze instellingen op te slaan klikt u op Opslaan."
+
+#~ msgid "About"
+#~ msgstr "Info"
+
+#~ msgid "License"
+#~ msgstr "Licentie"
+
+#~ msgid "Authors"
+#~ msgstr "Auteurs"
+
+#~ msgid "Thanks to"
+#~ msgstr "Met dank aan"
+
+#~ msgid "  (No conditions -- no articles will match)"
+#~ msgstr "  (Geen voorwaarden -- geen artikelen zullen overeenkomen)"
+
+#~ msgid "  (No conditions -- all articles will match)"
+#~ msgstr "  (Geen voorwaarden -- alle artikelen zullen overeenkomen)"
+
+#~ msgid "Pan: Edit Filter"
+#~ msgstr "Pan: Filter bewerken"
+
+#~ msgid "Filter name: "
+#~ msgstr "Filternaam:"
+
+#~ msgid "Show in Filter Menu"
+#~ msgstr "In Filter-menu tonen"
+
+#~ msgid "Move the selected line up one line"
+#~ msgstr "De geselecteerde regel een positie naar boven verplaatsen"
+
+#~ msgid "Move the selected line down one line"
+#~ msgstr "De geselecteerde regel een positie naar beneden verplaatsen"
+
+#~ msgid "Invert"
+#~ msgstr "Omkeren"
+
+#~ msgid "Invert the selected line"
+#~ msgstr "De geselecteerde regel omkeren"
+
+#~ msgid "All Of"
+#~ msgstr "Alle van"
+
+#~ msgid "Any Of"
+#~ msgstr "Eender welke van"
+
+#~ msgid "Delete the selected line"
+#~ msgstr "De geselecteerde regel verwijderen"
+
+#~ msgid "Add New Line to the Filter"
+#~ msgstr "Nieuwe regel toevoegen aan de filter"
+
+#~ msgid "New Filter Line"
+#~ msgstr "Nieuwe filterregel"
+
+#~ msgid "does not start with"
+#~ msgstr "begint niet met"
+
+#~ msgid "does not match regular expression"
+#~ msgstr "komt niet overeen met de reguliere expressie"
+
+#~ msgid "Article h_as"
+#~ msgstr "Artikel _heeft"
+
+#~ msgid "Attachments"
+#~ msgstr "Bijlagen"
+
+#~ msgid "Incomplete Attachments"
+#~ msgstr "Incomplete bijlagen"
+
+#~ msgid "No Attachments"
+#~ msgstr "Geen bijlagen"
+
+#~ msgid "Article _is"
+#~ msgstr "Artikel _is"
+
+#~ msgid "New"
+#~ msgstr "Nieuw"
+
+#~ msgid "Unread"
+#~ msgstr "Ongelezen"
+
+#~ msgid "Read"
+#~ msgstr "Gelezen"
+
+#~ msgid "Cached"
+#~ msgstr "Gebufferd"
+
+#~ msgid "Posted by Me"
+#~ msgstr "Door mij geplaatst"
+
+#~ msgid "Article has at _least N lines:"
+#~ msgstr "Artikel heeft _tenminste N regels:"
+
+#~ msgid "Article _score is at least"
+#~ msgstr "Artikel_score is tenminste"
+
+#~ msgid "Watched"
+#~ msgstr "Bewaakt"
+
+#~ msgid "High"
+#~ msgstr "Hoog"
+
+#~ msgid "Medium"
+#~ msgstr "Middel"
+
+# In overeenstemming met het menu waar ipv Zero: 'Normal' wordt gebruikt
+#~ msgid "Zero"
+#~ msgstr "Normaal"
+
+#~ msgid "Low"
+#~ msgstr "Laag"
+
+#~ msgid "Ignored"
+#~ msgstr "Genegeerd"
+
+#~ msgid ""
+#~ "This filter is still used by the following rules:\n"
+#~ "%s\n"
+#~ "Please remove this dependency  first."
+#~ msgstr ""
+#~ "Deze filter wordt nog steeds gebruikt door de volgende regels:\n"
+#~ "%s\n"
+#~ "Verwijdert u eerst deze afhankelijkheid."
+
+#~ msgid "Pan: Filters"
+#~ msgstr "Pan: Filters"
+
+#~ msgid "Filters"
+#~ msgstr "Filters"
+
+#~ msgid "Add a new filter"
+#~ msgstr "Nieuwe filter toevoegen"
+
+#~ msgid "Edit the selected filter"
+#~ msgstr "De geselecteerde filter bewerken"
+
+#~ msgid "Remove the selected filter"
+#~ msgstr "De geselecteerde filter verwijderen"
+
+#~ msgid "NONE OF:"
+#~ msgstr "GEEN VAN:"
+
+#~ msgid "ALL OF:"
+#~ msgstr "ALLE UIT:"
+
+#~ msgid "ANY OF:"
+#~ msgstr "WILLEKEURIGE UIT:"
+
+#~ msgid "Error"
+#~ msgstr "Fout"
+
+#~ msgid "Article has complete attachments"
+#~ msgstr "Artikel heeft complete bijlagen"
+
+#~ msgid "Article does not have incomplete attachments"
+#~ msgstr "Artikel heeft geen incomplete bijlagen"
+
+#~ msgid "Article has incomplete attachments"
+#~ msgstr "Artikel heeft incomplete bijlagen"
+
+#~ msgid "Article has complete or incomplete attachments"
+#~ msgstr "Artikel heeft complete of incomplete bijlagen"
+
+#~ msgid "Article is %d or more bytes long"
+#~ msgstr "Artikel is %d of meer byte lang"
+
+#~ msgid "Article is crossposted to at least %d groups"
+#~ msgstr "Artikel is geplaatst in tenminste %d groepen"
+
+#~ msgid "Article was posted in the last %d days"
+#~ msgstr "Artikel is geplaatst in de laatste %d dagen"
+
+#~ msgid "Article is %d or more lines long"
+#~ msgstr "Artikel is %d of meer regels lang"
+
+#~ msgid "Article is unread or old"
+#~ msgstr "Artikel is ongelezen of oud"
+
+#~ msgid "Article is new"
+#~ msgstr "Artikel is nieuw"
+
+#~ msgid "Article is new or read"
+#~ msgstr "Artikel is nieuw of gelezen"
+
+#~ msgid "Article is new or unread"
+#~ msgstr "Artikel is nieuw of ongelezen"
+
+#~ msgid "Xref"
+#~ msgstr "Xref"
+
+#~ msgid "watched"
+#~ msgstr "bewaakt"
+
+#~ msgid "high"
+#~ msgstr "hoog"
+
+#~ msgid "medium"
+#~ msgstr "medium"
+
+#~ msgid "zero"
+#~ msgstr "nul"
+
+#~ msgid "low"
+#~ msgstr "laag"
+
+#~ msgid "ignored"
+#~ msgstr "genegeerd"
+
+#~ msgid "Score filter will match anything"
+#~ msgstr "Scorefilter laat alles door"
+
+#~ msgid "Score filter will match nothing"
+#~ msgstr "Scorefilter laat niets door"
+
+#~ msgid "Article score one of: "
+#~ msgstr "Artikelscore een van: "
+
+#~ msgid "Wrote filters to \"%s\""
+#~ msgstr "Filters weggeschreven naar \"%s\""
+
+#~ msgid "Can't use regular expression \"%s\" from file \"%s\", line %d: %s"
+#~ msgstr ""
+#~ "Kan reguliere expressie \"%s\" niet gebruiken van bestand \"%s\", regel %"
+#~ "d: %s"
+
+#~ msgid "expired old score"
+#~ msgstr "verlopen oude score"
+
+#~ msgid "skipping unsupported criteria"
+#~ msgstr "niet ondersteunde criteria overslaan"
+
+#~ msgid "unexpected line."
+#~ msgstr "onverwachte regel."
+
+#~ msgid "Error reading file: "
+#~ msgstr "Fout bij lezen bestand :"
+
+#~ msgid "skipping score because it has no criteria"
+#~ msgstr "score wordt overgeslagen omdat het geen criteria bevat"
+
+#~ msgid ""
+#~ "Loaded %d score entries in %d sections in %.1f seconds (%.0f entries/sec)"
+#~ msgstr "%d scores in %d secties geladen in %.1f seconden (%.0f scores/sec)"
+
+#~ msgid "Error score to file \"%s\": %s"
+#~ msgstr "Fout bij score voor bestand \"%s\": %s"
+
+#~ msgid "Scored %d entries in %.1f seconds (%.0f articles/sec)"
+#~ msgstr "%d scores gemaakt in %.1f seconden (%.0f artikelen/sec)"
+
+#~ msgid "Error removing scorefile entry: %s"
+#~ msgstr "Er is een fout opgetreden bij het verwijderen van een score: %s"
+
+#~ msgid "Scorefile entry removed -- old scorefile \"%s\" backed up as \"%s\""
+#~ msgstr ""
+#~ "Score verwijderd -- Backup gemaakt van oud scorebestand \"%s\" in \"%s\""
+
+#~ msgid "Folder \"%*.*s\" already exists."
+#~ msgstr "Map \"%*.*s\" bestaat reeds."
+
+#~ msgid "Please don't begin folders with \"pan.\"; it confuses me."
+#~ msgstr ""
+#~ "Gelieve mapnamen niet met \"pan.\" te beginnen; dat vind ik niet lief."
+
+#~ msgid "Create New Folder"
+#~ msgstr "Nieuwe map creëren"
+
+#~ msgid "New Folder Name:"
+#~ msgstr "Naam voor nieuwe map:"
+
+#~ msgid "/Get New Headers and _Bodies"
+#~ msgstr "/Nieuwe kopteksten en _inhoud ophalen"
+
+#~ msgid "/Get New Headers in Subscribed Groups"
+#~ msgstr "/Nieuwe kopteksten in geabonneerde groepen ophalen"
+
+#~ msgid "/More Download _Options..."
+#~ msgstr "/Meer download-_opties..."
+
+#~ msgid "/Refresh Article _Counts"
+#~ msgstr "/Artikelte_llers verversen"
+
+#~ msgid "/Group _Properties..."
+#~ msgstr "/Groeps_eigenschappen..."
+
+#~ msgid " (Moderated)"
+#~ msgstr " (Gemodereerd)"
+
+#~ msgid " (Read-Only)"
+#~ msgstr " (Alleen-lezen)"
+
+#~ msgid "Subscribed"
+#~ msgstr "Geabonneerd"
+
+#~ msgid "All Groups"
+#~ msgstr "Alle groepen"
+
+#~ msgid ""
+#~ "We don't have a list of groups for \"%*.*s\".\n"
+#~ "Shall we download one?"
+#~ msgstr ""
+#~ "Er is geen groepenlijst van \"%*.*s\".\n"
+#~ "Wilt u deze ophalen?"
+
+#~ msgid "Total"
+#~ msgstr "Totaal"
+
+#~ msgid "Description"
+#~ msgstr "Omschrijving"
+
+#~ msgid "F_ind:"
+#~ msgstr "_Zoeken:"
+
+#~ msgid ""
+#~ "Type in a group search string and press ENTER.  Wildcards are allowed."
+#~ msgstr ""
+#~ "Geef een groep-zoeksleutel in en druk op ENTER. Jokers zijn toegestaan."
+
+#~ msgid "(%u selected)"
+#~ msgstr "(%u geselecteerd)"
+
+#~ msgid "News server connection count: %d"
+#~ msgstr "Aantal verbindingen met newsserver: %d"
+
+#~ msgid "The Task Manager is Empty"
+#~ msgstr "Het taakbeheer is leeg"
+
+#~ msgid "Connection"
+#~ msgstr "Verbinding"
+
+#~ msgid "Post"
+#~ msgstr "Plaatsen"
+
+#~ msgid "Get"
+#~ msgstr "Ophalen"
+
+#~ msgid "Mine"
+#~ msgstr "Mijn"
+
+#~ msgid "Net"
+#~ msgstr "Net"
+
+#~ msgid "/_File/_Save Article As..."
+#~ msgstr "/_Bestand/Artikel opslaan _als..."
+
+#~ msgid "/_File/Save Article A_ttachments"
+#~ msgstr "/_Bestand/_Bijlagen opslaan"
+
+#~ msgid "/_File/Manual _Decode..."
+#~ msgstr "/_Bestand/_Handmatig decoderen..."
+
+#~ msgid "/_File/_Print Article..."
+#~ msgstr "/_Bestand/Artikel a_fdrukken..."
+
+#~ msgid "/_File/---"
+#~ msgstr "/_Bestand/---"
+
+#~ msgid "/_File/_Cancel Last Task"
+#~ msgstr "/_Bestand/_Laatste taak annuleren"
+
+#~ msgid "/_File/Log _Viewer..."
+#~ msgstr "/_Bestand/_Logboek-weergave..."
+
+#~ msgid "/_File/_New Folder..."
+#~ msgstr "/_Bestand/_Nieuwe map..."
+
+#~ msgid "/_File/Delete _Folder..."
+#~ msgstr "/_Bestand/Map _verwijderen..."
+
+#~ msgid "/_File/_Edit Article in Folder"
+#~ msgstr "/_Bestand/Artikel in _map bewerken"
+
+#~ msgid "/_File/E_xit"
+#~ msgstr "/_Bestand/A_fsluiten"
+
+#~ msgid "/_File/_Quit"
+#~ msgstr "/_Bestand/Sl_uiten"
+
+#~ msgid "/_Edit/Select all"
+#~ msgstr "/Be_werken/Alles selecteren"
+
+#~ msgid "/_Edit/Deselect all"
+#~ msgstr "/Be_werken/Alles deselecteren"
+
+#~ msgid "/_Edit/---"
+#~ msgstr "/Be_werken/---"
+
+#~ msgid "/_Edit/Select all _Groups"
+#~ msgstr "/Be_werken/Alle _groepen selecteren"
+
+#~ msgid "/_Edit/Add S_ubscribed to Selection"
+#~ msgstr "/Be_werken/Gea_bonneerde toevoegen aan selectie"
+
+#~ msgid "/_Edit/Deselect all G_roups"
+#~ msgstr "/Be_werken/Alle g_roepen deselecteren"
+
+#~ msgid "/_Edit/Add S_et to Selection"
+#~ msgstr "/Be_werken/_Verzameling aan selectie toevoegen"
+
+#~ msgid "/_Edit/_Find..."
+#~ msgstr "/Be_werken/_Zoeken..."
+
+#~ msgid "/_Edit/Find _Next"
+#~ msgstr "/Be_werken/Volgende z_oeken"
+
+#~ msgid "/_View/---"
+#~ msgstr "/Beel_d/---"
+
+#~ msgid "/_View/Thr_ead Header Pane"
+#~ msgstr "/Beel_d/D_iscussies vormen in kopteksten-paneel"
+
+#~ msgid "/_View/_Rot13 Selected Text"
+#~ msgstr "/Beel_d/Geselecteerde tekst _Rot13"
+
+#~ msgid "/_View/E_xpand Selected Threads"
+#~ msgstr "/Beel_d/Geselecteerde discussies _uitklappen"
+
+#~ msgid "/_View/C_ollapse Selected Threads"
+#~ msgstr "/Beel_d/Ge_selecteerde discussies inklappen"
+
+#~ msgid "/Filte_r/Custom _Filters..."
+#~ msgstr "/_Filter/_Eigen filters..."
+
+#~ msgid "/Filte_r/_Rules..."
+#~ msgstr "/_Filter/_Regels..."
+
+#~ msgid "/Filte_r/_Edit Scorefile..."
+#~ msgstr "/_Filter/Scorebestand be_werken..."
+
+#~ msgid "/Filte_r/---"
+#~ msgstr "/_Filter/---"
+
+#~ msgid "/Filte_r/Match Only _Cached Articles"
+#~ msgstr "/_Filter/Alleen ge_bufferde artikelen"
+
+#~ msgid "/Filte_r/Match Only _Text Articles"
+#~ msgstr "/_Filter/Alleen artikelen met _tekst"
+
+#~ msgid "/Filte_r/Match Only _Binary Attachment Articles"
+#~ msgstr "/_Filter/Alleen artikelen met _binaire bijlagen"
+
+#~ msgid "/Filte_r/Match Only _My Articles"
+#~ msgstr "/_Filter/Alleen _mijn artikelen"
+
+#~ msgid "/Filte_r/Match _New Articles"
+#~ msgstr "/_Filter/_Nieuwe artikelen"
+
+#~ msgid "/Filte_r/Match _Unread Articles"
+#~ msgstr "/_Filter/_Ongelezen artikelen"
+
+#~ msgid "/Filte_r/Match _Read Articles"
+#~ msgstr "/_Filter/Ge_lezen artikelen"
+
+#~ msgid "/_Go/Read More"
+#~ msgstr "/_Ga naar/Meer lezen"
+
+#~ msgid "/_Go/---"
+#~ msgstr "/_Ga naar/---"
+
+#~ msgid "/_Go/Next _New Article"
+#~ msgstr "/_Ga naar/Volgende _nieuwe artikel"
+
+#~ msgid "/_Go/Next N_ew Thread"
+#~ msgstr "/_Ga naar/Volgende _nieuwe discussie"
+
+#~ msgid "/_Go/Previous Article _Read"
+#~ msgstr "/_Ga naar/Vorige ge_lezen artikel"
+
+#~ msgid "/_Servers"
+#~ msgstr "/_Servers"
+
+#~ msgid "/_Servers/News _Servers..."
+#~ msgstr "/_Servers/_Nieuwsservers..."
+
+#~ msgid "/_Servers/---"
+#~ msgstr "/_Servers/---"
+
+#~ msgid "/_Servers/Get List of Groups"
+#~ msgstr "/_Servers/Lijst van alle groepen ophalen"
+
+#~ msgid "/_Newsgroups/Mark Group _Read"
+#~ msgstr "/_Nieuwsgroepen/Groep markeren als ge_lezen"
+
+#~ msgid "/_Newsgroups/_Delete Group's Articles"
+#~ msgstr "/_Nieuwsgroepen/Artikelen in groep _verwijderen"
+
+#~ msgid "/_Newsgroups/---"
+#~ msgstr "/_Nieuwsgroepen/---"
+
+#~ msgid "/_Newsgroups/Get New _Headers"
+#~ msgstr "/_Nieuwsgroepen/Nieuwe _kopteksten ophalen"
+
+#~ msgid "/_Newsgroups/Get New Headers and _Bodies"
+#~ msgstr "/_Nieuwsgroepen/Nieuwe kopteksten en _inhoud ophalen"
+
+#~ msgid "/_Newsgroups/More Download _Options..."
+#~ msgstr "/_Nieuwsgroepen/Meer download-_opties..."
+
+#~ msgid "/_Newsgroups/Refresh Article _Counts"
+#~ msgstr "/_Nieuwsgroepen/Artikel_tellers verversen"
+
+#~ msgid "/_Newsgroups/Get New Headers in Subscribed _Groups"
+#~ msgstr "/_Nieuwsgroepen/Nieuwe kopteksten in _geabonneerde groepen ophalen"
+
+#~ msgid "/_Newsgroups/_Subscribe"
+#~ msgstr "/_Nieuwsgroepen/_Abonneren"
+
+#~ msgid "/_Newsgroups/_Unsubscribe"
+#~ msgstr "/_Nieuwsgroepen/Af_melden"
+
+#~ msgid "/_Newsgroups/Group _Properties..."
+#~ msgstr "/_Nieuwsgroepen/Groeps_eigenschappen..."
+
+#~ msgid "/_Newsgroups/Dele_te Group"
+#~ msgstr "/_Nieuwsgroepen/Groep ver_wijderen"
+
+#~ msgid "/_Articles/Mark _Read"
+#~ msgstr "/_Artikelen/Markeren als ge_lezen"
+
+#~ msgid "/_Articles/Mark _Unread"
+#~ msgstr "/_Artikelen/Markeren als _ongelezen"
+
+#~ msgid "/_Articles/---"
+#~ msgstr "/_Artikelen/---"
+
+#~ msgid "/_Articles/D_ownload Flagged"
+#~ msgstr "/_Artikelen/Gemarkeerde artikelen _ophalen"
+
+#~ msgid "/_Articles/_Flag"
+#~ msgstr "/_Artikelen/_Markeren"
+
+#~ msgid "/_Articles/U_nflag"
+#~ msgstr "/_Artikelen/_Demarkeren"
+
+#~ msgid "/_Articles/Down_load"
+#~ msgstr "/_Artikelen/Op_halen"
+
+#~ msgid "/_Articles/_Watch Thread"
+#~ msgstr "/_Artikelen/Discussie be_waken"
+
+#~ msgid "/_Articles/_Ignore Thread"
+#~ msgstr "/_Artikelen/Discussie ne_geren"
+
+#~ msgid "/_Articles/_View Article's Scores"
+#~ msgstr "/_Artikelen/Artikel_scores tonen"
+
+#~ msgid "/_Articles/_Create Score..."
+#~ msgstr "/_Artikelen/Score _aanmaken..."
+
+#~ msgid "/_Articles/Cancel..."
+#~ msgstr "/_Artikelen/Annuleren..."
+
+#~ msgid "/_Articles/Supersed_e..."
+#~ msgstr "/_Artikelen/_Vervangen..."
+
+#~ msgid "/_Articles/_Delete"
+#~ msgstr "/_Artikelen/Verwij_deren"
+
+#~ msgid "/_Post"
+#~ msgstr "/_Plaatsen"
+
+#~ msgid "/_Post/_Post to Newsgroup..."
+#~ msgstr "/_Plaatsen/In nieuwsgroep _plaatsen..."
+
+#~ msgid "/_Post/_Reply by Email..."
+#~ msgstr "/_Plaatsen/_Antwoorden per e-mail..."
+
+#~ msgid "/_Post/For_ward by Email..."
+#~ msgstr "/_Plaatsen/Doo_rsturen per e-mail..."
+
+#~ msgid "/_Post/---"
+#~ msgstr "/_Plaatsen/---"
+
+#~ msgid "/_Post/Send Pending _Messages"
+#~ msgstr "/_Plaatsen/Wachtende _berichten verzenden"
+
+#~ msgid "/_Help"
+#~ msgstr "/_Hulp"
+
+#~ msgid "/_Help/---"
+#~ msgstr "/_Hulp/---"
+
+#~ msgid ""
+#~ "When posting to Usenet, your article's Message-ID contains a domain "
+#~ "name.  You can set a custom domain name here, or leave it blank to let "
+#~ "Pan use the domain name from your email address."
+#~ msgstr ""
+#~ "Als u Usenet gebruikt, bevat uw Bericht-ID een domeinnaam.  U kunt hier "
+#~ "een aanpaste domeinnaam instellen, of het leeg laten zodat Pan het "
+#~ "domeinnaam van uw emailadres gebruikt."
+
+#~ msgid "Message-ID _Domain Name:"
+#~ msgstr "Bericht-ID _domeinnaam:"
+
+#~ msgid "The default charset set for articles posted with this profile"
+#~ msgstr ""
+#~ "De standaard teken-codering voor artikelen geplaatst met dit profiel"
+
+#~ msgid "Pan: Edit Profile"
+#~ msgstr "Pan: Profiel bewerken"
+
+#~ msgid "_User Profile"
+#~ msgstr "_Gebruikersprofiel"
+
+#~ msgid "Cus_tom Headers"
+#~ msgstr "_Aangepaste kopteksten"
+
+#~ msgid "You must specify a username or disable authorization."
+#~ msgstr "U moet een gebruikersnaam opgeven of geen autorisatie gebruiken."
+
+#~ msgid ""
+#~ "Your real name contained double quotes.\n"
+#~ "Converting into single quotes."
+#~ msgstr ""
+#~ "Uw echte naam bevatte dubbele aanhalingstekens.\n"
+#~ "Deze worden omgezet naar enkele aanhalingstekens."
+
+#~ msgid "You need at least one profile"
+#~ msgstr "U heeft tenminste één profiel nodig"
+
+#~ msgid "Use the selected profile to create a new profile"
+#~ msgstr "Een nieuw profiel creëren gebaseerd op het geselecteerde profiel"
+
+#~ msgid "Wrote profiles to \"%s\""
+#~ msgstr "Profielen naar \"%s\" weggeschreven"
+
+#~ msgid "Save the log to a file"
+#~ msgstr "Het logboek in een bestand opslaan"
+
+#~ msgid "/_File/_Save..."
+#~ msgstr "/_Bestand/_Opslaan..."
+
+#~ msgid "/_File/Clea_r"
+#~ msgstr "/_Bestand/Wi_ssen"
+
+#~ msgid "/_File/_Close"
+#~ msgstr "/_Bestand/S_luiten"
+
+#~ msgid "Pan: Status Log"
+#~ msgstr "Pan: Status-logboek"
+
+#~ msgid "Clear the log window"
+#~ msgstr "Logvenster wissen"
+
+#~ msgid "Time"
+#~ msgstr "Tijd"
+
+#~ msgid "Log Entry"
+#~ msgstr "Log melding"
+
+#~ msgid "Post anyway, despite these problems?"
+#~ msgstr "Toch plaatsen, ondanks deze problemen?"
+
+#~ msgid "Post anyway, despite this problem?"
+#~ msgstr "Toch plaatsen, ondanks dit probleem?"
+
+#~ msgid "/_File/_Save Changes"
+#~ msgstr "/_Bestand/Veranderingen _opslaan"
+
+#~ msgid "/_File/Save _As..."
+#~ msgstr "/_Bestand/Opslaan _als..."
+
+#~ msgid "/_Edit/Cu_t"
+#~ msgstr "/Be_werken/K_nippen"
+
+#~ msgid "/_Edit/_Copy"
+#~ msgstr "/Be_werken/_Kopiëren"
+
+#~ msgid "/_Edit/_Paste"
+#~ msgstr "/Be_werken/_Plakken"
+
+#~ msgid "/_Edit/_Rot13 Selected Text"
+#~ msgstr "/Be_werken/Geselecteerde tekst _Rot13-coderen"
+
+#~ msgid "/_Edit/Edit with E_xternal Editor"
+#~ msgstr "/Be_werken/Met e_xterne editor bewerken"
+
+#~ msgid "/_File/Send Now"
+#~ msgstr "/_Bestand/Nu verzenden"
+
+#~ msgid "/_File/Send Later"
+#~ msgstr "/_Bestand/Later verzenden"
+
+#~ msgid "Send Later"
+#~ msgstr "Later verzenden"
+
+#~ msgid "Rewrap"
+#~ msgstr "Regels opnieuw afbreken"
+
+#~ msgid "Turn line wrap on/off"
+#~ msgstr "Regelafbreking in-/uitschakelen"
+
+#~ msgid "Edit with an External Editor"
+#~ msgstr "Bewerken met externe editor"
+
+#~ msgid "Mime (single-part posts only)"
+#~ msgstr "Mime (alleen enkeldelige artikelen)"
+
+#~ msgid " (%lu lines in 1 article)"
+#~ msgstr "(%lu regels in 1 artikel)"
+
+#~ msgid "UUEncoded (universally accepted)"
+#~ msgstr "UUEncoded (algemeen geaccepteerd)"
+
+#~ msgid "yEnc (30 percent smaller than UUEnc but less universal)"
+#~ msgstr "yEnc (30 procent kleiner dan UUEnc maar minder gebruikelijk)"
+
+#~ msgid "Select the file to attach."
+#~ msgstr "Selecteert u het bij te voegen bestand."
+
+#~ msgid "Files to Attach"
+#~ msgstr "Bij te voegen bestanden"
+
+#~ msgid "Filename"
+#~ msgstr "Bestandsnaam"
+
+#~ msgid "Kilobytes"
+#~ msgstr "Kilobytes"
+
+#~ msgid "Add a File to the Attachment List"
+#~ msgstr "Bestand toevoegen aan bijlagenlijst"
+
+#~ msgid "Remove a File from the Attachment List"
+#~ msgstr "Een bestand uit de bijlagenlijst verwijderen"
+
+#~ msgid "Estimated Article Size"
+#~ msgstr "Geschatte artikelgrootte"
+
+#~ msgid ""
+#~ "The newsgroups where replies to your message should go.  This is only "
+#~ "needed if it differs from the \"Post To Groups\" header. \n"
+#~ "To direct all replies to your email address, use \"Followup-To: poster\""
+#~ msgstr ""
+#~ "De nieuwsgroepen waar antwoorden op uw bericht naartoe moeten. Dit is "
+#~ "slechts nodig wanneer het verschilt van de\n"
+#~ "\"Nieuwsgroepen\"-koptekst.\n"
+#~ "Om alle antwoorden naar uw e-mailadres door te verwijzen gebruikt u "
+#~ "\"Antwoord-naar: poster\""
+
+#~ msgid ""
+#~ "The email account where mail replies to your posted message should go.  "
+#~ "This is only needed if it differs from the \"From\" header."
+#~ msgstr ""
+#~ "Het e-mailaccount waar e-mailantwoorden naartoe moeten.  Dit is slechts "
+#~ "nodig wanneer het verschilt van de \"Van\"-koptekst."
+
+#~ msgid "Organization"
+#~ msgstr "Organisatie"
+
+#~ msgid "The organization you're associated with."
+#~ msgstr "De organisatie waarvoor u werkt."
+
+#~ msgid "Charset"
+#~ msgstr "Karakterset"
+
+#~ msgid "Custom Headers"
+#~ msgstr "Aangepaste kopteksten"
+
+#~ msgid "Add \"User-Agent\" header"
+#~ msgstr "\"Gebruikersagent\"-koptekst toevoegen"
+
+#~ msgid "Add \"Message-Id\" header"
+#~ msgstr "\"Bericht-Id\"-koptekst toevoegen "
+
+#~ msgid ""
+#~ "Could not convert \"%s\" to UTF-8. Article may not display correctly."
+#~ msgstr ""
+#~ "Het is onmogelijk \"%s\" naar UTF-8 te converteren. Het artikel is "
+#~ "wellicht niet correct leesbaar."
+
+#~ msgid "\"Followup-To: poster\": sending email to author."
+#~ msgstr "\"Opvolgen-naar: poster\": e-mail wordt naar auteur verzonden."
+
+#~ msgid "\"Followup-To:\" contains an email address: sending email to author."
+#~ msgstr ""
+#~ "\"Opvolgen-naar:\" bevat een e-mailadres: e-mail wordt naar auteur "
+#~ "verzonden."
+
+#~ msgid "New Message"
+#~ msgstr "Nieuw bericht"
+
+#~ msgid ""
+#~ "ERROR: line %d, column %d uses a character not specified in charset \"%s"
+#~ "\" -- possibly change your charset in \"More Headers\" to \"%s\" instead?"
+#~ msgstr ""
+#~ "FOUT: regel %d, kolom %d gebruikt een teken die niet in de codering \"%s"
+#~ "\" is gespecificeerd - wellicht kunt u de codering in \"Meer Koptekst\" "
+#~ "in \"%s\" veranderen?"
+
+#~ msgid "Save message to file"
+#~ msgstr "Bewaar bericht in bestand"
+
+#~ msgid ""
+#~ "Message uses characters not specified in charset '%s' - possibly use '%s' "
+#~ "instead?"
+#~ msgstr ""
+#~ "Er komen karakters voor in dit bericht die niet gespecificeerd zijn in "
+#~ "karakterset '%s' - mogelijk kunt u '%s' in plaats ervan gebruiken?"
+
+#~ msgid "The command line was: %s"
+#~ msgstr "De opdrachtregel was: %s"
+
+#~ msgid "Select Color"
+#~ msgstr "Selecteer een kleur"
+
+#~ msgid "_Browse..."
+#~ msgstr "_Bladeren..."
+
+#~ msgid "Select Font"
+#~ msgstr "Selecteer een lettertype"
+
+#~ msgid "Font Family"
+#~ msgstr "Lettertypefamilie"
+
+#~ msgid "  --resume         Resume tasks from last session without prompting"
+#~ msgstr ""
+#~ "  --resume         Taken van de vorige sessie hervatten zonder vragen"
+
+#~ msgid "  --version        Prints Pan's version number"
+#~ msgstr "  --version        Geeft Pan's versienummer"
+
+#~ msgid "  --help           Prints this message and exits"
+#~ msgstr "  --help           Geeft dit bericht en sluit af"
+
+#~ msgid ""
+#~ "  --debug          Turns on the most commonly-used options for a bug "
+#~ "report"
+#~ msgstr ""
+#~ "  --debug          Zet de meestgebruikte opties aan voor het maken van "
+#~ "een foutrapport"
+
+#~ msgid ""
+#~ "  --mute           Debugging tool to send new posts to console, not the "
+#~ "server"
+#~ msgstr ""
+#~ "  --mute           Debug-tool waarmee nieuwe beichten naar het console "
+#~ "worden gestuurd in plaats van de server"
+
+#~ msgid "  --debug-cache    Print debugging messages for the article cache"
+#~ msgstr "  --debug-cache    Geeft debug-berichten voor de artikelcache"
+
+#~ msgid ""
+#~ "  --debug-sockets  Print debugging messages when talking to the news "
+#~ "server"
+#~ msgstr ""
+#~ "  --debug-sockets  Geeft debug-berichten bij het communiceren met de "
+#~ "server"
+
+#~ msgid ""
+#~ "  --debug-queue    Print debugging messages related to managing tasks"
+#~ msgstr ""
+#~ "  --debug-queue    Geeft debug-berichten met betrekking to beheers-taken"
+
+#~ msgid ""
+#~ "  --debug-decode   Print debugging messages related to decoding "
+#~ "attachments"
+#~ msgstr ""
+#~ "  --debug-decode   Geeft debug-berichten met betrekking tot het decoderen "
+#~ "van bijlagen"
+
+#~ msgid "  --debug-newsrc   Print debugging messages related to .newsrc files"
+#~ msgstr ""
+#~ "  --debug-newsrc   Geeft debug-berichten met betrekking tot .newsrc "
+#~ "bestanden"
+
+#~ msgid ""
+#~ "  --debug-gnksa    Print debugging messages related to gnksa correctness"
+#~ msgstr ""
+#~ "  --debug-gnksa    Geeft debug-berichten met betrekking to gnksa "
+#~ "correctheid"
+
+#~ msgid ""
+#~ "  --debug-trace    Print debugging messages when entering/leaving "
+#~ "functions"
+#~ msgstr ""
+#~ "  --debug-trace    Geeft debug-berichten bij het binnengaan/verlaten van "
+#~ "functies"
+
+#~ msgid ""
+#~ "  --debug-lock     Print debugging messages related to threaded gui locks"
+#~ msgstr ""
+#~ "  --debug-lock     Geeft debug-berichten met betrekking tot 'threaded gui "
+#~ "locks'"
+
+#~ msgid ""
+#~ "  --debug-object   Print debugging messages related to refcounted objects"
+#~ msgstr ""
+#~ "  --debug-object   Geeft debug-berichten met betrekking tot 'refcounted' "
+#~ "objecten"
+
+#~ msgid "Error reading from socket."
+#~ msgstr "Fout bij lezen van socket."
+
+#~ msgid "Error writing to socket."
+#~ msgstr "Fout bij schrijven naar socket."
+
+#~ msgid "pan.sent"
+#~ msgstr "pan.sent"
+
+#~ msgid "pan.sendlater"
+#~ msgstr "pan.sendlater"
+
+#~ msgid "Spellchecking disabled: gtkspell_init() failed with status %d"
+#~ msgstr ""
+#~ "Spellingscontrole uitgeschakeld: gtkspell_init() mislukte met status %d"
+
+#~ msgid "Restored %d tasks from last session"
+#~ msgstr "%d taken van de vorige sessie hersteld"
+
+#~ msgid ""
+#~ "Some tasks were still queued the last time Pan exited.  Do you want to "
+#~ "resume those tasks?"
+#~ msgstr ""
+#~ "Bepaalde taken stonden nog in de wachtrij bij de laatste keer dat Pan "
+#~ "werd afgesloten.  Wilt u deze taken hervatten?"
+
+#~ msgid "_Resume"
+#~ msgstr "_Doorgaan"
+
+#~ msgid ""
+#~ "%a - abbreviated weekday name\n"
+#~ "%A - full weekday name\n"
+#~ "%b - abbreviated month name\n"
+#~ "%B - full month name\n"
+#~ "%c - local date & time\n"
+#~ "%d - day of the month\n"
+#~ "%H - hour (24-hour clock)\n"
+#~ "%I - hour (12-hour clock)\n"
+#~ "%j - day of the year (001-366)\n"
+#~ "%m - month (01-12)\n"
+#~ "%M - minute (00-59)\n"
+#~ "%p - local equivalent of AM/PM\n"
+#~ "%S - second (00-61)\n"
+#~ "%x - local date\n"
+#~ "%X - local time\n"
+#~ "%y - two-digit year\n"
+#~ "%Y - four-digit year\n"
+#~ "%% - %"
+#~ msgstr ""
+#~ "%a - afgekorte naam van de dag van de week\n"
+#~ "%A - volledige naam van de dag van de week\n"
+#~ "%b - afgekorte naam van de maand\n"
+#~ "%B - volledige naam van de maand\n"
+#~ "%c - lokale datum & tijd\n"
+#~ "%d - dag van de maand\n"
+#~ "%H - uur (24-uurs klok)\n"
+#~ "%I - uur (12-uurs klok)\n"
+#~ "%j - dag van het jaar (001-366)\n"
+#~ "%m - maand (01-12)\n"
+#~ "%M - minuut (00-59)\n"
+#~ "%p - lokaal equivalent van AM/PM\n"
+#~ "%S - seconde (00-61)\n"
+#~ "%x - lokale datum\n"
+#~ "%X - lokale tijd\n"
+#~ "%y - tweecijferig jaar\n"
+#~ "%Y - viercijferig jaar\n"
+#~ "%% - %"
+
+#~ msgid "Color the \"sub_ject\" column"
+#~ msgstr "De \"_onderwerp\" kolom kleuren"
+
+#~ msgid "Articles with a Score of 9999 or higher:"
+#~ msgstr "Artikelen met een score van 9999 of hoger:"
+
+#~ msgid "Articles with a Score between 5000 and 9998:"
+#~ msgstr "Artikelen met een score tussen de 5000 en 9998:"
+
+#~ msgid "Articles with a Score between 1 and 4999:"
+#~ msgstr "Artikelen met een score tussen de 1 en 4999:"
+
+#~ msgid "Articles with a Score between -9998 and -1:"
+#~ msgstr "Artikelen met een score tussen de -9998 en -1:"
+
+#~ msgid "Articles with a Score of -9999 or lower:"
+#~ msgstr "Artikelen met een score van -9999 of lager:"
+
+#~ msgid "_1:"
+#~ msgstr "_1:"
+
+#~ msgid "_2:"
+#~ msgstr "_2:"
+
+#~ msgid "_3:"
+#~ msgstr "_3:"
+
+#~ msgid "Pane Order"
+#~ msgstr "Paneelvolgorde"
+
+#~ msgid "Action State"
+#~ msgstr "Actiestatus"
+
+#~ msgid "Article State"
+#~ msgstr "Artikelstatus"
+
+#~ msgid "Column Layout"
+#~ msgstr "Kolomindeling"
+
+#~ msgid "When a Followup subject header changes, show as _new thread"
+#~ msgstr ""
+#~ "Als een opvolgartikel het onderwerp verandert, weergeven als _nieuwe "
+#~ "discussie"
+
+#~ msgid "E_xpand all threads by default"
+#~ msgstr "Alle discussies standaard uit_klappen"
+
+# samengestelde ipv meerdelige?
+#~ msgid "Show complete _multipart posts as a single article"
+#~ msgstr "Complete _meerdelige artikelen als enkel artikel tonen"
+
+#~ msgid "Date Forma_t:"
+#~ msgstr "_Datumformaat:"
+
+#~ msgid "Show \"%s\" header"
+#~ msgstr "\"%s\"-koptekst tonen"
+
+#~ msgid "Newsreader"
+#~ msgstr "Nieuwslezer"
+
+#~ msgid "Characters denoting _quoted text:"
+#~ msgstr "Karakters die ge_citeerde tekst aangeven:"
+
+#~ msgid "Download new headers from s_ubscribed groups when starting Pan"
+#~ msgstr ""
+#~ "Nieuwe kopteksten ophalen vanuit de geabonneerde groepen bij het _starten "
+#~ "van Pan"
+
+#~ msgid ""
+#~ "Download new headers and bod_ies from subscribed groups when starting Pan"
+#~ msgstr ""
+#~ "Nieuwe kopteksten en a_rtikelinhoud ophalen vanuit de geabonneerde "
+#~ "groepen bij het starten van Pan"
+
+#~ msgid "Download Directory"
+#~ msgstr "Downloadmap"
+
+#~ msgid "Save a_ttachments in directory:"
+#~ msgstr "Bijlagen opslaan in _map:"
+
+#~ msgid "Automatically remove _failed tasks from the task manager"
+#~ msgstr "Automatisch mi_slukte taken uit het taakbeheer verwijderen"
+
+#~ msgid "Article Cache"
+#~ msgstr "Artikelbuffer"
+
+#~ msgid "_Erase cache when exiting Pan"
+#~ msgstr "Buffer _legen wanneer Pan wordt afgesloten"
+
+#~ msgid "Ma_ximum Cache Size (Megs):"
+#~ msgstr "Ma_ximum buffergrootte (MB's):"
+
+#~ msgid "_Editor (%t is filename):"
+#~ msgstr "_Editor (%t is een bestandsnaam):"
+
+#~ msgid ""
+#~ "Scorefile _Editor:\n"
+#~ "(%t is filename, %n is line number)"
+#~ msgstr ""
+#~ "Scorebestand _editor:\n"
+#~ "(%t is een bestandsnaam, %n is een regelnummer)"
+
+#~ msgid "Scorefile"
+#~ msgstr "Scorebestand"
+
+#~ msgid "Score_file"
+#~ msgstr "Score_bestand"
+
+#~ msgid "Sending Mail"
+#~ msgstr "Versturen van e-mail"
+
+#~ msgid "Mail Server Add_ress:"
+#~ msgstr "A_dres van e-mailserver:"
+
+#~ msgid "Mail Server Por_t:"
+#~ msgstr "_Poort van e-mailserver:"
+
+#~ msgid "Hea_der Pane"
+#~ msgstr "_Kopteksten-paneel"
+
+#~ msgid "A_pps & Mail"
+#~ msgstr "Toepassingen & mail"
+
+#~ msgid "Pan: Print"
+#~ msgstr "Pan: Afdrukken"
+
+#~ msgid "You haven't loaded an article to print."
+#~ msgstr "U heeft geen artikel geladen om af te drukken."
+
+#~ msgid ""
+#~ "%s\n"
+#~ "\n"
+#~ "Matches: %u\n"
+#~ "Group: %s\n"
+#~ "Rule: %s"
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Overeenkomsten: %u\n"
+#~ "Groep: %s\n"
+#~ "Regel: %s"
+
+#~ msgid "Mark as"
+#~ msgstr "Markeren als"
+
+#~ msgid "_Flag body for download"
+#~ msgstr "Inhoud _vlaggen om op te halen"
+
+#~ msgid "_Retrieve Body"
+#~ msgstr "_Inhoud ophalen"
+
+#~ msgid "_Watch thread (highlights the thread)"
+#~ msgstr "Discussie _bewaken (laat discussie oplichten)"
+
+#~ msgid "_Ignore thread (hides the thread by default)"
+#~ msgstr "Discussie _negeren (verbergt discussie standaard)"
+
+#~ msgid "Edit Filters"
+#~ msgstr "Filters bewerken"
+
+#~ msgid "Rule applies to all newsgroups"
+#~ msgstr "Regel geldt voor alle nieuwsgroepen"
+
+#~ msgid "Wildcard group specification:"
+#~ msgstr "Joker-groepspecificatie:"
+
+#~ msgid "(e.g., *anime*)"
+#~ msgstr "(bijv., *anime*)"
+
+#~ msgid "Rule applies to specific newsgroups:"
+#~ msgstr "Regel geldt voor specifieke nieuwsgroepen:"
+
+#~ msgid "Rule applies to:"
+#~ msgstr "Regel geldt voor:"
+
+#~ msgid "Rule Name:"
+#~ msgstr "Regelnaam:"
+
+#~ msgid "Apply to Incoming"
+#~ msgstr "Toepassen op binnenkomende"
+
+#~ msgid ""
+#~ "If enabled, this rule will be applied to headers when they are downloaded."
+#~ msgstr ""
+#~ "Indien ingeschakeld zal deze regel toegepast worden op kopteksten wanneer "
+#~ "deze worden opgehaald."
+
+#~ msgid "New Rule"
+#~ msgstr "Nieuwe regel"
+
+#~ msgid "Delete Articles by Bozos"
+#~ msgstr "Artikelen van sukkels verwijderen"
+
+#~ msgid "Applying rule to selected groups"
+#~ msgstr "Bezig met toepassen van de regel op de geselecteerde groepen"
+
+#~ msgid "Applying rule \"%s\" to group \"%s\""
+#~ msgstr "Bezig met toepassen regel \"%s\" op groep \"%s\""
+
+#~ msgid "Rules"
+#~ msgstr "Regels"
+
+#~ msgid "Hit Ratio"
+#~ msgstr "Treffers"
+
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Selected\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "Toepassen op\n"
+#~ "geselecteerde\n"
+#~ "groepen"
+
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Subscribed\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "Toepassen op\n"
+#~ "geabonneerde\n"
+#~ "groepen"
+
+#~ msgid "Wrote rules to \"%s\""
+#~ msgstr "Regels naar \"%s\" weggeschreven"
+
+#~ msgid ""
+#~ "Can't find filter \"%s\" needed by rule \"%s\", so no articles match."
+#~ msgstr ""
+#~ "Kan filter \"%s\" niet vinden, welke benodigd is door regel \"%s\", dus "
+#~ "er komen geen artikelen overeen."
+
+#~ msgid "%u articles match rule %s"
+#~ msgstr "%u artikelen voldoen aan regel %s"
+
+#~ msgid "Pan: Manual Decode"
+#~ msgstr "Pan: Handmatig decoderen"
+
+#~ msgid "Save Files in Directory"
+#~ msgstr "Bestanden opslaan in map"
+
+#~ msgid "_Directory:"
+#~ msgstr "_Map:"
+
+#~ msgid "Add to the _top of the Task Manager's List"
+#~ msgstr "Taak toevoegen _bovenaan het taakoverzicht"
+
+#~ msgid "Criterion \"%s\" is selected, but empty."
+#~ msgstr "Criterium \"%s\" is geselecteerd, maar leeg."
+
+#~ msgid "No criteria are selected."
+#~ msgstr "Geen criteria geselecteerd."
+
+#~ msgid "Pan: Add to Scorefile"
+#~ msgstr "Pan: Aan scorebestand toevoegen"
+
+#~ msgid "Group"
+#~ msgstr "Groep"
+
+#~ msgid "Su_bject:"
+#~ msgstr "_Onderwerp:"
+
+#~ msgid "A_uthor:"
+#~ msgstr "_Auteur:"
+
+#~ msgid "_Lines:"
+#~ msgstr "Re_gels_"
+
+#~ msgid "at least N lines long"
+#~ msgstr "tenminste N regels lang"
+
+#~ msgid "less than N lines long"
+#~ msgstr "minder dan N regels lang"
+
+# Veranderen
+#~ msgid "Chan_ge Score:"
+#~ msgstr "Score _aanpassen:"
+
+#~ msgid "subtract"
+#~ msgstr "aftrekken"
+
+#~ msgid "Expire in N _days:"
+#~ msgstr "Verlopen in N _dagen:"
+
+# aanpassen hier beter dan bewerken
+#~ msgid "Edit the selected score"
+#~ msgstr "De geselecteerde score aanpassen"
+
+#~ msgid "You must specify an address."
+#~ msgstr "U moet een adres opgeven."
+
+#~ msgid "You must specify a password or disable authorization."
+#~ msgstr "U moet een wachtwoord opgeven of geen autorisatie gebruiken."
+
+#~ msgid "You must specify a .newsrc filename or disable newsrc support."
+#~ msgstr ""
+#~ "U moet een .newsrc bestandsnaam opgeven of ondersteuning voor newsrc "
+#~ "uitzetten."
+
+#~ msgid "Newsrc"
+#~ msgstr "Newsrc"
+
+#~ msgid "Us_e .newsrc file"
+#~ msgstr ".newsrc-bestand gebruiken"
+
+#~ msgid "Select .newsrc File"
+#~ msgstr "Selecteer het .newsrc-bestand"
+
+#~ msgid "_Filename:"
+#~ msgstr "_Bestandsnaam:"
+
+#~ msgid "Edit the selected server"
+#~ msgstr "De geselecteerde server bewerken"
+
+#~ msgid "Remove the selected server"
+#~ msgstr "De geselecteerde server verwijderen"
+
+#~ msgid "Got unexpected response from mail server: expected %d; got %s"
+#~ msgstr "Onbekend antwoord van mailserver: verwacht %d; krijg %s"
+
+#~ msgid "Sending mail"
+#~ msgstr "Bezig met verzenden e-mail"
+
+#~ msgid "No known recipients"
+#~ msgstr "Geen bekende ontvangers"
+
+#~ msgid "Mail sent!"
+#~ msgstr "E-mail verzonden!"
+
+#~ msgid "Handshaking with mail server"
+#~ msgstr "Bezig met e-mailserver handshake"
+
+#~ msgid "Connecting to mail server"
+#~ msgstr "Bezig met verbinden met e-mailserver"
+
+#~ msgid "Unable to connect to mail server \"%*.*s\""
+#~ msgstr "Kan niet verbinden met e-mailserver \"%*.*s\""
+
+#~ msgid "Mail server not ready"
+#~ msgstr "E-mailserver niet gereed"
+
+#~ msgid "New connection %p for %s, port %d"
+#~ msgstr "Nieuwe verbinding %p voor %s, poort %d"
+
+#~ msgid "Downloading %u articles"
+#~ msgstr "Bezig met ophalen van %u artikelen"
+
+#~ msgid "Downloading 1 article"
+#~ msgstr "Bezig met ophalen van 1 artikel"
+
+#~ msgid "Downloading %d articles"
+#~ msgstr "Downloaden van %d artikelen"
+
+#~ msgid "\"%s\""
+#~ msgstr "\"%s\""
+
+#~ msgid "Article %s (%s) canceled"
+#~ msgstr "Artikel %s (%s) geannuleerd"
+
+#~ msgid "Updating article counts for %u groups from server \"%s\""
+#~ msgstr ""
+#~ "Bezig met vernieuwen artikeltellers voor %u groepen van server \"%s\""
+
+#~ msgid "Got %d group descriptions"
+#~ msgstr "%d groepsomschrijvingen opgehaald"
+
+#~ msgid "Fetching group descriptions"
+#~ msgstr "Ophalen groepsomschrijvingen"
+
+#~ msgid "Getting %d new groups from server \"%s\""
+#~ msgstr "Bezig met ophalen van %d nieuwe groepen van server \"%s\""
+
+#~ msgid "Corrupt header skipped: %s"
+#~ msgstr "Corrupte koptekst overgeslagen: %s"
+
+#~ msgid "Fetched %u headers for \"%s\""
+#~ msgstr "%u Kopteksten voor \"%s\" opgehaald"
+
+#~ msgid "New %lu of %lu"
+#~ msgstr "Nieuw %lu uit %lu"
+
+#~ msgid "Sampling %lu of %lu"
+#~ msgstr "Bezig met klaarmaken berichtkop %lu van %lu"
+
+#~ msgid "All %lu of %lu"
+#~ msgstr "Alle %lu uit %lu"
+
+#~ msgid "Not Queued"
+#~ msgstr "Niet in de wachtrij"
+
+#~ msgid "Stopping"
+#~ msgstr "Stoppende"
+
+#~ msgid "Pan %s Task Manager"
+#~ msgstr "Pan %s Taakbeheer"
+
+#~ msgid "Move Selected Task(s) Up"
+#~ msgstr "Geselecteerde taken omhoog verplaatsen"
+
+#~ msgid "Move Selected Task(s) to Top"
+#~ msgstr "Geselecteerde taken bovenaan zetten"
+
+#~ msgid "Move Selected Task(s) Down"
+#~ msgstr "Geselecteerde taken omlaag verplaatsen"
+
+#~ msgid "Move Selected Task(s) to Bottom"
+#~ msgstr "Geselecteerde taken onderaan zetten"
+
+#~ msgid "Stop Selected Task(s)"
+#~ msgstr "Geselecteerde taken afbreken"
+
+#~ msgid "Delete Selected Task(s)"
+#~ msgstr "Geselecteerde taken verwijderen"
+
+#~ msgid "Time Remaining"
+#~ msgstr "Overblijvende tijd"
+
+#~ msgid "Article \"%s\" posted."
+#~ msgstr "Artikel \"%s\" is geplaatst."
+
+#~ msgid "Article \"%s\" not posted."
+#~ msgstr "Artikel \"%s\" is niet geplaatst."
+
+#~ msgid "Usenet posting failed.  "
+#~ msgstr "Verzenden van nieuwsgroepbericht mislukt.  "
+
+#~ msgid "Check Tools|Log Viewer for more information.  "
+#~ msgstr "Zie Extra|Logboek-weergave voor meer informatie.  "
+
+#~ msgid "Your message was saved in the folder \"pan.sendlater\""
+#~ msgstr "Uw bericht is opgeslagen in de map \"pan.sendlater\""
+
+#~ msgid "Saving Attachments"
+#~ msgstr "Bezig met opslaan bijlagen"
+
+#~ msgid "Save Article can't access path \"%s\""
+#~ msgstr "Artikel opslaan heeft geen toegang tot het pad \"%s\""
+
+#~ msgid "Saved article body to \"%s\""
+#~ msgstr "Artikelinhoud opgeslagen naar \"%s\""
+
+#~ msgid "X-Newsreader"
+#~ msgstr "X-Nieuwslezer"
+
+#~ msgid "X-Mailer"
+#~ msgstr "X-Mailprogramma"
+
+#~ msgid "User-Agent"
+#~ msgstr "Gebruikersagent"
+
+#~ msgid ""
+#~ "Pan %s\n"
+#~ "Copyright (c) %d by Charles Kerr\n"
+#~ "\n"
+#~ "If you find a bug, please report it.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Pan %s\n"
+#~ "Copyright © %d Charles Kerr\n"
+#~ "\n"
+#~ "Als u een fout ontdekt, rapporteer deze dan aub.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "http://pan.rebelbase.com/ - Pan Homepage\n"
+#~ "http://pan.rebelbase.com/bugs/ - Report a Bug\n"
+#~ "http://pan.rebelbase.com/download/ - Upgrade\n"
+#~ "\n"
+#~ msgstr ""
+#~ "http://pan.rebelbase.com/ - Pan Homepage\n"
+#~ "http://pan.rebelbase.com/bugs/ - Een fout rapporteren\n"
+#~ "http://pan.rebelbase.com/download/ - Upgraden\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "This program is free software; you can redistribute it\n"
+#~ "and/or modify it under the terms of the GNU General Public\n"
+#~ "License as published by the Free Software Foundation;\n"
+#~ "version 2 of the License.\n"
+#~ "\n"
+#~ "This program is distributed in the hope that it will be\n"
+#~ "useful, but WITHOUT ANY WARRANTY; without even the implied\n"
+#~ "warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR\n"
+#~ "PURPOSE.  See the GNU General Public License for more\n"
+#~ "details.\n"
+#~ "\n"
+#~ "The GNU Public License can be found from the menu above\n"
+#~ "in Help|About|License."
+#~ msgstr ""
+#~ "Dit programma is vrije software; u kunt het verspreiden\n"
+#~ "en/of veranderen onder de voorwaarden die gesteld zijn in de\n"
+#~ "GNU General Public License die gepubliceerd is bij de \n"
+#~ "Free Software Foundation; versie 2 van de licentie.\n"
+#~ "\n"
+#~ "Dit programma is verspreid in de hoop dat het nuttig zal\n"
+#~ "zijn, maar ZONDER ENIGE GARANTIE; zonder zelfs een\n"
+#~ "geïmliceerde garantie van VERKOOPBAARHEID of GESCHIKTHEID\n"
+#~ "VOOR EEN BEPAALD DOEL.  Zie de GNU General Public License\n"
+#~ "voor verdere details.\n"
+#~ "\n"
+#~ "De GNU Public License vindt u via het menu hierboven in \n"
+#~ "Hulp|Info|Licentie."
+
+#~ msgid "Error starting external browser: %s"
+#~ msgstr ""
+#~ "Er is een fout opgetreden bij het starten van de externe browser: %s"
+
+#~ msgid "Error starting external scorefile editor: %s"
+#~ msgstr ""
+#~ "Er is een fout opgetreden bij het starten van de externe editor voor het "
+#~ "scorebestand: %s"
+
+#~ msgid "<More>"
+#~ msgstr "<Meer>"
+
+#~ msgid "/_Tools"
+#~ msgstr "/E_xtra"
+
+#~ msgid "/_Tools/---"
+#~ msgstr "/E_xtra/---"
+
+#~ msgid "/_Servers/Get List of _New Groups"
+#~ msgstr "/_Servers/Lijst van _nieuwe nieuwsgroepen ophalen"
+
+#~ msgid "NNTP handshake failed: %s"
+#~ msgstr "NNTP 'handshake' mislukt: %s"
+
+#~ msgid "Handshake failed: %s"
+#~ msgstr "Handshake mislukt: %s"
+
+#~ msgid "Handshake: %s"
+#~ msgstr "Handshake: %s"
+
+#~ msgid "Authentication failed: bad handshake for SPA password"
+#~ msgstr "Aanmelding mislukt: ongeldige handshake voor SPA-wachtwoord"
+
+#~ msgid "Bad SPA handshake: %s"
+#~ msgstr "Ongeldige SPA-handshake: %s"
+
+#~ msgid "Authentication failed: need a password"
+#~ msgstr "Authenticatie mislukt: Een wachtwoord is vereist"
+
+#~ msgid "Authentication failed: %s"
+#~ msgstr "Authenticatie mislukt: %s"
+
+#~ msgid "%*.*s handshake failed: %s"
+#~ msgstr "%*.*s handshake mislukt: %s"
+
+#~ msgid "No supported authentication mechanism"
+#~ msgstr "Geen ondersteund aanmeldingsmechanisme"
+
+#~ msgid "No password found!"
+#~ msgstr "Geen wachtwoord gevonden!"
+
+#~ msgid "MODE READER check failed: %s"
+#~ msgstr "MODE LEZER controle mislukt: %s"
+
+#~ msgid "Posting failed.  Server said: %s"
+#~ msgstr "Plaatsing is mislukt. De server zei: %s"
+
+#~ msgid "Posting complete.  Server said: %s"
+#~ msgstr "Plaatsing compleet. De server zei: %s"
+
+#~ msgid "Getting article \"%s\" body failed: %s"
+#~ msgstr "Ophalen van inhoud van artikel \"%s\" mislukt: %s"
+
+#~ msgid "Getting header list failed: %s"
+#~ msgstr "Koppen lijst ophalen mislukt: %s"
+
+#~ msgid "Getting %d of %d"
+#~ msgstr "Bezig met ophalen %d van %d"
+
+#~ msgid "Sending Keepalive"
+#~ msgstr "Bezig met verzenden 'blijf leven'"
+
+#~ msgid "Disconnecting Idle"
+#~ msgstr "Bezig met verbreken van inactieve verbinding"
+
+#~ msgid "Disconnecting one connection from `%s' after %d seconds idle"
+#~ msgstr ""
+#~ "Bezig met verbreken van een verbinding van `%s' na %d seconden "
+#~ "inactiviteit"
+
+#~ msgid "Connection to %*.*s, port %d failed: %s"
+#~ msgstr "Verbinding met %*.*s, poort %d mislukt: %s"
+
+#~ msgid "Downloading %d"
+#~ msgstr "Bezig met ophalen %d"
+
+#~ msgid "Updated counts for %u groups out of %u"
+#~ msgstr "Totalen voor %u uit %u groepen vernieuwd"
+
+#~ msgid "Unable to update counts for group \"%s\""
+#~ msgstr "Niet in staat de artikeltellers te vernieuwen voor groep \"%s\""
+
+#~ msgid "Adding groups to server \"%s\""
+#~ msgstr "Bezig met toevoegen van groepen bij server \"%s\""
+
+#~ msgid "List Newsgroups failed: %s"
+#~ msgstr "Vergaren van Lijst van Nieuwsgroepen mislukt: %s"
+
+#~ msgid "New groups retrieval failed: %s"
+#~ msgstr "Ophalen van nieuwe groepen mislukt: %s"
+
+#~ msgid "No new articles in group \"%s\""
+#~ msgstr "Geen nieuwe berichten in groep \"%s\""
+
+#~ msgid "[This is an email copy of a Usenet post to \"%s\"]"
+#~ msgstr "[Dit is een e-mailkopie van een nieuwsgroepbericht naar \"%s\"]"
+
+#~ msgid "Email \"%s\" sent."
+#~ msgstr "E-mailbericht \"%s\" is verzonden."
+
+#~ msgid "Email \"%s\" not sent."
+#~ msgstr "E-mailbericht \"%s\" is niet verzonden."
+
+#~ msgid "Posting and mailing article \"%s\""
+#~ msgstr "Bezig met plaatsen en e-mailen van artikel \"%s\""
+
+#~ msgid "Mailing article \"%s\""
+#~ msgstr "Bezig met e-mailen van artikel \"%s\""
+
+#~ msgid "Email send failed.  "
+#~ msgstr "Verzenden van e-mail mislukt.  "
+
+#~ msgid "Saving `%s'"
+#~ msgstr "Bezig met bewaren `%s'"
+
+#~ msgid "Incomplete Profile."
+#~ msgstr "Incompleet profiel"
+
+#~ msgid "No articles found for group \"%s\""
+#~ msgstr "Geen berichten gevonden voor groep \"%s\""

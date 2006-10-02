@@ -1,0 +1,199 @@
+This file is hideously out-of-date.
+Use http://bugzilla.gnome.org/buglist.cgi?product=Pan instead.
+
+=============================================================================
+Unsorted
+=============================================================================
+
+[ ] Alen Williams <alen_williams@address4life.com>
+    When using the article filter in a  news group, it would be nice if
+    there could be a .not. or invert button somewhere. So if the filter is
+    "Banana", then I'd like to be able to hit the button and select all the
+    articles (so I can delete them or mark them read) that DON'T have Banana
+    in there...
+
+[ ] Martin Wulffeld <tranquil@mail.dk>
+    1) When in a thread and you press minus several times the thread should
+    continue collapsing until at the 'root' of the thread. It's a pain to
+    have to move to a part of the thread for collapsing it further.
+
+[ ] Martin Wulffeld <tranquil@mail.dk>
+    6) Ignoring a thread Pan should automatically move to the next unread  
+    thread/message.
+
+[ ] Martin Wulffeld <tranquil@mail.dk>
+    12) Maybe I didn't look close enough but I can't find a purging
+    mechanism!?
+
+[ ] Jacob Gorban <j_gorban@yahoo.com>
+    1. Steps to reproduce:
+    Select a thread which has several replies. Press the [+] button on
+    the left of it. Select one of the early replies and press on
+    [+] again to close the thread.
+    Result:
+    In the thread (header) pane the cursor will be on a line which is         
+    (number of replies - number of previously selected reply)       
+    higher than the thread where it was opened.
+
+[ ] "lock" an article to prevent purging of header & body
+
+[ ] Garry Knight
+    Rule to search cached article body
+
+[ ] Wendell Dingus" <wendell@BISonline.com>
+    Yesterday I opened a group and tagged the
+    first 3 files at the top of the list. I inadvertantly also had the "minus
+    sign - book pic - name of group" at the top of the article pane selected. I
+    pressed SHIFT-S and nothing. I did so a few times before realizing I had the
+    group name selected also. No biggie, just might confuse someone...
+
+[ ] Adam Warner <iconsult@ihug.co.nz>
+    For example, I just posted to nz.test and aus.test (nz.test; aus.test).
+    If I follow up to nz.test then the cross-posting works.
+    However if I follow up to aus.test then I am only posting to aus.test.
+    This is a verified problem. There also appears to be an issue where
+    replies to a cross-post are only seen in one of the newsgroups.
+
+[ ] Jordan Nelson (pan-users)
+    It would be very helpful if you could configure Pan to run a system call
+    (like a perl script or something) with the filename of the just-decoded
+    file as the first argument.  This could allow for doing whatever you want
+    to a file, such as automatically sorting it, logging it to a database,
+    etc.  Am I making any sense?
+
+[ ] Paul Smith <ozric99.nospam@lineone.net>
+    I've selected the "use single click preview" option but am not getting
+    the effect I'd like.  I'd like to press N to go to the next unread
+    message and display it in the preview pane similar to pressing Ctrl-U in
+    Outlook Express, but I still seem to have to actually click on the
+    message in the thread pane to display it in the preview pane.  Is there
+    something I'm doing wrong?  Apologies if I've missed something obvious.                         
+
+[ ] When you go back to the articles tab from the message tab, the
+    view is down at the bottom of the window instead of up at the
+    current article, where it should be.
+
+[ ] Martin Cosgrave <martian@marsbard.com>
+    It would be nice to have some sort of bandwidth limitation; since the
+    news server is usually the closest thing it seems to get high bitrates
+    at the expense of other more distant services.
+
+[ ] Simon Templar <simont@infomaniak.ch>
+    Decode a random group of articles selected by user
+
+[ ] Doug Palmer <doug@charvolant.org>
+    And for a difficult one. Is it possible to set up a rule action which says
+    'delete/mark as read this article and all the followups to this article
+    (or depth-n followups)'? This would be very useful in conjunction with a
+    spam/bozo filter. There are certain bozos that post in such a way as to
+    almost guarantee that the replies spiral into a mess of off-topic flaming.
+    Actually, depth-n followups would probably be the most useful, as things
+    settle down after a while; setting it to depth-1 would take care of most
+    problems. It wouldn't matter too much if this action gets things wrong
+    from time to time, as articles expire. But it would save a lot of pruning
+    time on potentially interesting megathreads.
+
+[ ] Spoiler
+    Some time ago I implemented spoiler-support for pan, it's easy
+    enough - when you encounter "^L" (control-l, formfeed), you "mute"
+    the following text - you can copy most of the code from the
+    mute-quoted-text routine.  It's common in all newsgroups discussing
+    tv-shows for example. 
+
+[ ] Cross-posted articles
+    If I read article x in group y and it was xposted to group z, then 
+    ant tit to be marked read when I enter group z.  I know this requires
+    database-synching of the different groups which, probably, is a PITA,
+    but it's really neat.  Maybe one could do this through a filter?
+    mark read if article was already read in other group or something?
+
+[ ] "Dan Stromberg" <strombrg@nis.acs.uci.edu> 
+    Is there a way of piping an article through a filter?  trn does this
+    with the "|" command - I've found it really useful.  Even better than
+    that would be if there were a way of configuring pan so you have a
+    configurable button you can click that you've preassociated a command
+    with, that'll do the pipe without having to type the command each time.
+    I'm particularly interested in this so that I can pipe the ascii diagrams
+    in rec.games.go to a filter that makes the diagrams more presentable.
+    But this could also be helpful with unsharing source code and such too.
+
+[ ] Convenient jumping from one newsgroup to another from a post's newsgroups
+    header (ie, viewing a crossposted message thread in all it's newsgroups)
+
+[ ] replace ^I with spaces when posting a message to skip tab damage
+
+[ ] I'd like to select the whole text of the message (like ctrl-a in (Francesco)
+
+[ ] For the newsgroup list pane, I find it irritating to have to set the
+    properties for each of the groups I subscribe, I rather liked Agent's way
+    of setting default properties for all of the subscribed newsgroups, and
+    being able to 'adjust' using the property for a particular newsgroup to
+    override the default properties.
+
+[ ] Andreas Scherbaum <ads@htl.de>
+    And another thing, more a feature request: is it possible to get
+    a window to fetch a single message from server with a given
+    message-id? Most references to other articles coming this way
+    so it would be nice to give pan the message id and it will
+    fetch the message from the news server and display it.
+
+[ ] Japie <House-Mouse@hetnet.nl>
+    a wish for Pan, wich is already more than complete.
+    -showing emoticons as images. (like mozilla does)
+
+[ ] Jan Schaumann
+    do we want Pan to support "posted-and-mailed" -
+    http://www.newsreaders.com/tech/draft-zawinski-p%26m.txt ?
+
+[ ] Jan Schaumann
+    do we want Pan to support "mail-copies-to" -
+    http://www.newsreaders.com/misc/mail-copies-to.html ?
+
+[ ] Jan Schaumann
+    do we want pan to support spoilers -
+    http://www.newsreaders.com/spoilers/ ?
+
+[ ] Jim Henderson <jhenderson@bigfoot.com>
+    Date/time is an option I like to have available, though, since I use
+    Netscape to read the same groups at work and know what time I'm caught
+    up through on the two servers I use most...
+    (Analysis: plugging in date/time into a rule and saving the rule to
+    have to apply it would be annoying; better to have the 'apply' button
+    let the user fill in fields somehow)
+
+[ ] Jason Baietto <jason@metrolink.com>
+    I absolutely love pan, but I have a minor feature request.
+    Can you add resettable per-server download counters so that
+    I can keep track of how many megabytes I've downloaded from
+    a given server?  Pan makes it so easy to download stuff that
+    I've exceeded my nntp provider's limits twice now.
+    Thanks in advance and thanks for a terrific product.
+
+[ ] Matthew Lenz <hohlraum@nocturnal.org>
+    i dunno how newshark does this, but it associates a 'life' percentage
+    to articles and gives you an idea as to how much longer a specific article
+    (or binary post cluster) will be around before being dropped from the
+    server.  It also lets you sort by this percentage in the download pane.
+    (so you can be sure to download the oldest article first)
+
+[ ] Matthew Lenz <hohlraum@nocturnal.org>
+    preview a binary attachment.  (for example only download and decode the
+    first N number of parts and then launch in associated viewer.)
+
+[ ] Add support for SSL. <http://www.moxienet.com/lynx/> has patches for SLL
+    support in Lynx, which points the way pretty nicely.  (Note to users:
+    I need an account on an SSL news server;  please mail charles@superpimp.org
+    if you can provide one for testing.)
+
+[ ] Jan Schaumann <jschauma@netmeister.org>
+    Shortcut to edit a message in pan.sendlater, possibly 'e'
+    (Analysis: just make it more prominent in the menus)
+
+[ ] search headers from multiple groups
+
+[ ] delete old articles as a group grows to larger than N articles
+
+[ ] pan-users: single-click to open all threads  (>2x)
+
+[ ] pan-users: extern app to pass messages through before they're posted.
+

@@ -1,0 +1,6036 @@
+# pan zh_CN.po
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# zipeco <zipeco@btamail.net.cn>, 2002.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: pan\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-18 10:27-0500\n"
+"PO-Revision-Date: 2002-08-18 19:01+0800\n"
+"Last-Translator: zipeco <zipeco@btamail.net.cn>\n"
+"Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# pan/prefs.c:1816
+#: pan.desktop.in.h:1
+#, fuzzy
+msgid "Pan Newsreader"
+msgstr "新闻阅读器"
+
+#: pan.desktop.in.h:2
+msgid "Read News from Usenet"
+msgstr ""
+
+#: pan/data-impl/data-impl.cc:82
+#, c-format
+msgid "Loaded data backend in %.1f seconds"
+msgstr ""
+
+# pan/nntp.c:481 pan/nntp.c:785
+#: pan/data-impl/data-io.cc:220 pan/data-impl/data-io.cc:241
+#: pan/data/article-cache.cc:236 pan/data/article-cache.cc:246
+#: pan/gui/post-ui.cc:1261
+#, fuzzy, c-format
+msgid "Unable to save \"%s\" %s"
+msgstr "不能设置组“%s”：%s"
+
+# pan/task-grouplist.c:471
+#: pan/data-impl/groups.cc:92
+#, fuzzy, c-format
+msgid "Skipping newsrc file for server \"%s\""
+msgstr "正在从服务器“%2$s”中获取%1$d个新组"
+
+# pan/article-actions.c:567
+#: pan/data-impl/headers.cc:551
+#, fuzzy, c-format
+msgid "Expired %lu old articles from \"%s\""
+msgstr "从“%2$s”中删除了 %1$u 篇文章"
+
+# pan/base/file-headers.c:215
+#: pan/data-impl/headers.cc:558
+#, c-format
+msgid ""
+"Unsupported data version for %s headers: %d.\n"
+"Are you running an old version of Pan by accident?"
+msgstr ""
+"%s标题中有未被支持的数据版本: %d。\n"
+"您意外地运行着老版本的Pan么?"
+
+#: pan/data-impl/headers.cc:573
+#, fuzzy, c-format
+msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
+msgstr "用时%3$.1f秒为“%2$s”组加载了%1$d篇文章（%4$.0f篇/秒）"
+
+# msgstr "%3$.1f秒内在“%2$s”中保存了%1$d篇文章(%4$.0f篇/秒)"
+# pan/base/file-headers.c:732
+#: pan/data-impl/headers.cc:797
+#, fuzzy, c-format
+msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgstr "用时%3$.1f秒在“%2$s”中保存了%1$d篇文章（%4$.0f篇/秒）"
+
+# pan/article-actions.c:567
+#: pan/data-impl/headers.cc:1089
+#, fuzzy, c-format
+msgid "Added %lu articles to %s."
+msgstr "从“%2$s”中删除了 %1$u 篇文章"
+
+# pan/base/acache.c:197
+#: pan/data-impl/profiles.cc:173
+#, fuzzy, c-format
+msgid "Error reading \"%s\": %s"
+msgstr "读文件出错“%s”: %s。"
+
+# pan/base/newsrc-port.c:105
+#: pan/data-impl/server.cc:296
+#, fuzzy, c-format
+msgid "Error loading newsserver information: %s"
+msgstr "读被编辑文件时出错：“%s”"
+
+# pan/base/acache.c:197
+#: pan/data/article-cache.cc:148
+#, fuzzy, c-format
+msgid "Error opening directory: \"%s\": %s"
+msgstr "读文件出错“%s”: %s。"
+
+# pan/base/acache.c:197
+#: pan/data/article-cache.cc:364 pan/general/line-reader.cc:24
+#, fuzzy, c-format
+msgid "Error opening file \"%s\" %s"
+msgstr "读文件出错“%s”: %s。"
+
+# pan/base/acache.c:197
+#: pan/data/article-cache.cc:395 pan/gui/post-ui.cc:1028
+#, c-format
+msgid "Error reading file \"%s\": %s"
+msgstr "读文件出错“%s”: %s。"
+
+# pan/filters/filter-binary.c:63
+#: pan/data/filter-info.cc:152
+#, fuzzy
+msgid "article doesn't have attachments"
+msgstr "文章没有完整的附件"
+
+# pan/filters/filter-binary.c:77
+#: pan/data/filter-info.cc:156
+#, fuzzy
+msgid "the article has attachments"
+msgstr "文章不包含附件"
+
+# pan/filters/filter-cached.c:52
+#: pan/data/filter-info.cc:160
+#, fuzzy
+msgid "the article isn't cached locally"
+msgstr "文章的主体没在本地缓存"
+
+# pan/filters/filter-cached.c:54
+#: pan/data/filter-info.cc:164
+#, fuzzy
+msgid "the article is cached locally"
+msgstr "文章的主体已在本地缓存"
+
+# pan/filters/filter-mine.c:50
+#: pan/data/filter-info.cc:168
+#, fuzzy
+msgid "the article wasn't posted by you"
+msgstr "不是自己张贴的文章"
+
+# pan/filters/filter-mine.c:51
+#: pan/data/filter-info.cc:172
+#, fuzzy
+msgid "the article was posted by you"
+msgstr "自己张贴的文章"
+
+# pan/filter-edit-ui.c:780
+#: pan/data/filter-info.cc:176
+#, fuzzy
+msgid "the article has been read"
+msgstr "文章已被"
+
+# pan/filter-edit-ui.c:780
+#: pan/data/filter-info.cc:180
+#, fuzzy
+msgid "the article hasn't been read"
+msgstr "文章已被"
+
+# pan/filters/filter-linecount.c:54
+#: pan/data/filter-info.cc:184
+#, fuzzy, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "文章长度少于%d行"
+
+# pan/filter-edit-ui.c:905
+#: pan/data/filter-info.cc:189
+#, fuzzy, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "文章已被张贴N天(_O)"
+
+# pan/filters/filter-linecount.c:54
+#: pan/data/filter-info.cc:194
+#, fuzzy, c-format
+msgid "the article is less than %ld lines long"
+msgstr "文章长度少于%d行"
+
+# pan/filters/filter-linecount.c:54
+#: pan/data/filter-info.cc:199
+#, fuzzy, c-format
+msgid "the article is at least %ld lines long"
+msgstr "文章长度少于%d行"
+
+# pan/filters/filter-date.c:58
+#: pan/data/filter-info.cc:204
+#, fuzzy, c-format
+msgid "the article is less than %ld days old"
+msgstr "文章已被张贴%d天"
+
+# pan/filter-edit-ui.c:905
+#: pan/data/filter-info.cc:209
+#, fuzzy, c-format
+msgid "the article is at least %ld days old"
+msgstr "文章已被张贴N天(_O)"
+
+# pan/filters/filter-crosspost.c:54
+#: pan/data/filter-info.cc:214
+#, fuzzy, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "文章已在少于%d个组中张贴"
+
+# pan/filter-edit-ui.c:895
+#: pan/data/filter-info.cc:219
+#, fuzzy, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "文章至少已在N个组中张贴：(_P)"
+
+# pan/filters/filter-score.c:54
+#: pan/data/filter-info.cc:224
+#, fuzzy, c-format
+msgid "the article's score is less than %ld"
+msgstr "文章的得分少于%d"
+
+# pan/filters/filter-score.c:56
+#: pan/data/filter-info.cc:229
+#, fuzzy, c-format
+msgid "the article's score is %ld or higher"
+msgstr "文章的得分为%d或者更高"
+
+#: pan/data/filter-info.cc:238 pan/data/filter-info.cc:248
+#, c-format
+msgid "%s doesn't contain \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:239 pan/data/filter-info.cc:249
+#, c-format
+msgid "%s isn't \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:240 pan/data/filter-info.cc:250
+#, c-format
+msgid "%s doesn't begin with \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:241 pan/data/filter-info.cc:251
+#, c-format
+msgid "%s doesn't end with \"%s\""
+msgstr ""
+
+# pan/filters/filter-phrase.c:71
+#: pan/data/filter-info.cc:242 pan/data/filter-info.cc:252
+#, fuzzy, c-format
+msgid "%s doesn't match the regex \"%s\""
+msgstr "主题与字串“%s”不符"
+
+# pan/gui.c:1615 pan/task-manager.c:418
+#: pan/data/filter-info.cc:264
+#, fuzzy, c-format
+msgid "%s contains \"%s\""
+msgstr "连接"
+
+#: pan/data/filter-info.cc:265
+#, c-format
+msgid "%s is \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:266
+#, c-format
+msgid "%s begins with \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:267
+#, c-format
+msgid "%s ends with \"%s\""
+msgstr ""
+
+# pan/filters/filter-phrase.c:73
+#: pan/data/filter-info.cc:268
+#, fuzzy, c-format
+msgid "%s matches the regex \"%s\""
+msgstr "主题与字串“%s”相符"
+
+#: pan/data/filter-info.cc:274
+msgid "Any of these tests fail:"
+msgstr ""
+
+#: pan/data/filter-info.cc:281
+msgid "All of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:288
+msgid "None of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:295
+msgid "Any of these tests pass:"
+msgstr ""
+
+#: pan/data/scorefile.cc:299
+#, c-format
+msgid ""
+"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
+"'Expires: DD-MM-YYYY'."
+msgstr ""
+
+#: pan/data/scorefile.cc:302
+#, c-format
+msgid "Expired old score from %*.*s, line %d"
+msgstr ""
+
+#: pan/data/scorefile.cc:373
+#, c-format
+msgid "Error reading score in %*.*s, line %d: unexpected line."
+msgstr ""
+
+#: pan/data/scorefile.cc:421
+#, c-format
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
+msgstr ""
+
+#. build the locale strings
+#: pan/general/e-util.cc:213
+msgid "%l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:214
+msgid "Today %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:215
+msgid "%a %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:216
+msgid "%b %d %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:217
+msgid "%b %d %Y"
+msgstr ""
+
+#: pan/general/e-util.cc:242
+msgid "?"
+msgstr ""
+
+# pan/base/file-headers.c:423 pan/base/file-headers.c:542
+#: pan/general/file-util.cc:139
+#, fuzzy, c-format
+msgid "Creating directory \"%s\""
+msgstr "不能创建目录“%s”"
+
+# pan/base/util-file.c:224
+#: pan/general/file-util.cc:142
+#, c-format
+msgid "Couldn't create directory \"%s\": %s"
+msgstr "不能创建目录“%s”：%s"
+
+#: pan/general/text-match.cc:210
+msgid ""
+"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
+"fail."
+msgstr ""
+
+# pan/filters/filter-phrase.c:81
+#: pan/general/text-match.cc:221
+#, fuzzy, c-format
+msgid "Can't use regular expression \"%s\": %s at position %d"
+msgstr "作者与正则表达式“%s”相符"
+
+# pan/filters/filter-phrase.c:81
+#: pan/general/text-match.cc:229
+#, fuzzy, c-format
+msgid "Can't use regular expression \"%s\": %s"
+msgstr "作者与正则表达式“%s”相符"
+
+# pan/dialogs/dialog-log-viewer.c:134 pan/gui.c:1925 pan/message-window.c:294
+#: pan/gui/actions.cc:258 pan/gui/post-ui.cc:238
+#, fuzzy
+msgid "_File"
+msgstr "/文件(_F)"
+
+# pan/gui.c:1938 pan/message-window.c:299 pan/message-window.c:316
+#: pan/gui/actions.cc:259 pan/gui/post-ui.cc:239
+msgid "_Edit"
+msgstr "编辑(_E)"
+
+# pan/prefs.c:2345
+#: pan/gui/actions.cc:260 pan/gui/prefs-ui.cc:460
+#, fuzzy
+msgid "_Layout"
+msgstr "布局"
+
+# pan/prefs.c:2191
+#: pan/gui/actions.cc:261
+#, fuzzy
+msgid "_Group Pane"
+msgstr "组列表窗格"
+
+#: pan/gui/actions.cc:262
+#, fuzzy
+msgid "_Header Pane"
+msgstr "标题窗格"
+
+# pan/prefs.c:2193
+#: pan/gui/actions.cc:263
+#, fuzzy
+msgid "_Body Pane"
+msgstr "信体窗格"
+
+# pan/gui.c:1959
+#: pan/gui/actions.cc:264
+#, fuzzy
+msgid "_View"
+msgstr "/查看(_V)"
+
+#: pan/gui/actions.cc:265
+msgid "Character _Encoding"
+msgstr ""
+
+# pan/gui.c:2065
+#: pan/gui/actions.cc:266
+#, fuzzy
+msgid "Filte_r"
+msgstr "/过滤器(_R)"
+
+# pan/gui.c:1996
+#: pan/gui/actions.cc:267
+#, fuzzy
+msgid "_Go"
+msgstr "/转到(_G)"
+
+# pan/rules/rule-edit-ui.c:814
+#: pan/gui/actions.cc:268
+#, fuzzy
+msgid "_Actions"
+msgstr "操作"
+
+# pan/gui.c:2016
+#: pan/gui/actions.cc:269
+#, fuzzy
+msgid "_Articles"
+msgstr "/文章(_A)"
+
+# pan/grouplist.c:643 pan/grouplist.c:680 pan/gui-notebook.c:58
+#: pan/gui/actions.cc:270
+#, fuzzy
+msgid "_Groups"
+msgstr "组"
+
+# pan/gui.c:2100
+#: pan/gui/actions.cc:271 pan/gui/actions.cc:272
+#, fuzzy
+msgid "_Post"
+msgstr "/张贴(_P)"
+
+# pan/gui.c:2109
+#: pan/gui/actions.cc:273 pan/gui/save-ui.cc:202
+msgid "_Help"
+msgstr "帮助(_H)"
+
+# pan/prefs.c:2383 pan/prefs.c:2396
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "_Read Group"
+msgstr "删除组(_T)"
+
+# pan/gui.c:2062
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "Read Selected Group"
+msgstr "阅读下一个未阅读的组"
+
+# pan/grouplist.c:57
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "_Mark Group _Read"
+msgstr "/标记组为已读(_R)"
+
+# pan/grouplist.c:57
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "Mark Selected Groups Read"
+msgstr "/标记组为已读(_R)"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "_Delete Group's Articles"
+msgstr "删除组内全部文章(_D)"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "Delete Selected Groups' Articles"
+msgstr "删除组内全部文章(_D)"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New _Headers in Selected Groups"
+msgstr "获得全部所选择组内的新文章标题"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New Headers for Selected Groups"
+msgstr "获得全部所选择组内的新文章标题"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New _Headers in Subscribed Groups"
+msgstr "获得全部所订阅组内的新文章标题"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New Headers for Subscribed Groups"
+msgstr "获得全部所订阅组内的新文章标题"
+
+# pan/dialogs/dialog-headers.c:168
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get _Headers..."
+msgstr "获取新的标题(_H)"
+
+# pan/task-grouplist.c:394
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get Headers from Server"
+msgstr "从服务器“%2$s”找到%1$d个组"
+
+# pan/articlelist.c:3311
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Refresh Group List"
+msgstr "正在刷新组“%s”"
+
+# pan/task-grouplist.c:483
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Get a new Group list from the Server"
+msgstr "从服务器“%2$s”中找到%1$d个新组"
+
+# pan/grouplist.c:67
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "_Subscribe"
+msgstr "/订阅(_S)"
+
+# pan/rules/rule-edit-ui.c:622
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "Subscribe to Selected Groups"
+msgstr "已订阅的新闻组"
+
+# pan/grouplist.c:68
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "_Unsubscribe"
+msgstr "/退订(_U)"
+
+# pan/rules/rule-edit-ui.c:622
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "Unsubscribe from Selected Groups"
+msgstr "已订阅的新闻组"
+
+# pan/articlelist.c:3146
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "_Save Articles..."
+msgstr "另存文章为..."
+
+# pan/articlelist.c:3147
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "Save Selected Articles..."
+msgstr "保存文章附件"
+
+#: pan/gui/actions.cc:286
+msgid "_Import NZB Files..."
+msgstr ""
+
+# pan/task-manager.c:787
+#: pan/gui/actions.cc:287
+#, fuzzy
+msgid "_Cancel Last Task"
+msgstr "终止上一个任务"
+
+# pan/task-manager.c:787
+#: pan/gui/actions.cc:287
+msgid "Cancel Last Task"
+msgstr "终止上一个任务"
+
+# pan/gui.c:1961
+#: pan/gui/actions.cc:288
+#, fuzzy
+msgid "_Task Manager..."
+msgstr "/工具(_T)/任务管理器(_T)..."
+
+#: pan/gui/actions.cc:289
+msgid "_Event Log..."
+msgstr ""
+
+# pan/gui.c:1938 pan/message-window.c:299 pan/message-window.c:316
+#: pan/gui/actions.cc:290
+#, fuzzy
+msgid "_Quit"
+msgstr "编辑(_E)"
+
+# pan/gui.c:1943
+#: pan/gui/actions.cc:292
+#, fuzzy
+msgid "Select _All Articles"
+msgstr "/编辑(_E)/选择全部文章(_A)"
+
+# pan/gui.c:1946
+#: pan/gui/actions.cc:293
+#, fuzzy
+msgid "_Deselect All Articles"
+msgstr "/编辑(_E)/取消选择全部文章(_L)"
+
+# pan/gui.c:1945
+#: pan/gui/actions.cc:294
+#, fuzzy
+msgid "Add Su_bthreads to Selection"
+msgstr "/编辑(_E)/添加子话题到选中内容(_S)"
+
+# pan/gui.c:1945
+#: pan/gui/actions.cc:295
+#, fuzzy
+msgid "Add _Threads to Selection"
+msgstr "/编辑(_E)/给选中的添加话题(_T)"
+
+# pan/gui.c:1945
+#: pan/gui/actions.cc:296
+#, fuzzy
+msgid "Add _Similar Artilces to Selection"
+msgstr "/编辑(_E)/给选中的添加话题(_T)"
+
+# pan/gui.c:1948
+#: pan/gui/actions.cc:297
+#, fuzzy
+msgid "Select Article _Body"
+msgstr "/编辑(_E)/选择文章主体(_B)"
+
+# pan/gui.c:1957
+#: pan/gui/actions.cc:298
+#, fuzzy
+msgid "Edit _Preferences..."
+msgstr "/编辑(_E)/选项(_P)..."
+
+# pan/gui.c:1957
+#: pan/gui/actions.cc:299
+#, fuzzy
+msgid "Edit _Group Preferences..."
+msgstr "/编辑(_E)/选项(_P)..."
+
+# pan/gui.c:1931
+#: pan/gui/actions.cc:300
+#, fuzzy
+msgid "Edit P_osting Profiles..."
+msgstr "/工具(_T)/张贴选项(_P)..."
+
+# pan/gui.c:1957
+#: pan/gui/actions.cc:301
+#, fuzzy
+msgid "Edit _News Servers..."
+msgstr "/编辑(_E)/选项(_P)..."
+
+# pan/gui.c:1965
+#: pan/gui/actions.cc:303
+#, fuzzy
+msgid "Jump to _Group Tab"
+msgstr "/查看(_V)/跳转到组卡片(_G)"
+
+# pan/gui.c:1966
+#: pan/gui/actions.cc:304
+#, fuzzy
+msgid "Jump to _Header Tab"
+msgstr "/查看(_V)/跳转到标题卡片(_H)"
+
+# pan/gui.c:1977
+#: pan/gui/actions.cc:305
+#, fuzzy
+msgid "Jump to _Body Tab"
+msgstr "/查看(_V)/跳转到信体卡片(_T)"
+
+# pan/message-window.c:433
+#: pan/gui/actions.cc:306
+#, fuzzy
+msgid "_Rot13 Selected Text"
+msgstr "Rot13选中文本"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear _Header Pane"
+msgstr "标题窗格"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear Header Pane"
+msgstr "标题窗格"
+
+# pan/prefs.c:2193
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear _Body Pane"
+msgstr "信体窗格"
+
+# pan/prefs.c:2193
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear Body Pane"
+msgstr "信体窗格"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download _Selected Article"
+msgstr "获取选中的文章"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download Selected Article"
+msgstr "获取选中的文章"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read _Selected Article"
+msgstr "获取选中的文章"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read Selected Article"
+msgstr "获取选中的文章"
+
+# pan/filter-edit-ui.c:861 pan/rules/rule-edit-ui.c:154
+#: pan/gui/actions.cc:313
+#, fuzzy
+msgid "Read _More"
+msgstr "阅读更多"
+
+# pan/filter-edit-ui.c:861 pan/rules/rule-edit-ui.c:154
+#: pan/gui/actions.cc:313
+msgid "Read More"
+msgstr "阅读更多"
+
+#: pan/gui/actions.cc:314
+msgid "Read _Back"
+msgstr ""
+
+# pan/filter-edit-ui.c:861 pan/rules/rule-edit-ui.c:154
+#: pan/gui/actions.cc:314
+#, fuzzy
+msgid "Read Back"
+msgstr "阅读"
+
+# pan/gui.c:2062
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next _Unread Group"
+msgstr "/转到(_G)/下一个未阅读的组(_G)"
+
+# pan/gui.c:2062
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next Unread Group"
+msgstr "/转到(_G)/下一个未阅读的组(_G)"
+
+# pan/gui.c:2063
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next _Group"
+msgstr "/转到(_G)/下一个组(_E)"
+
+# pan/gui.c:2063
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next Group"
+msgstr "/转到(_G)/下一个组(_E)"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next _Unread Article"
+msgstr "阅读下一篇未读的文章"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next Unread Article"
+msgstr "阅读下一篇未读的文章"
+
+#: pan/gui/actions.cc:318
+#, fuzzy
+msgid "Next _Article"
+msgstr "/转到(_G)/下一篇文章(_X)"
+
+# pan/article-toolbar.c:712
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next _Watched Article"
+msgstr "仅显示要跟踪的文章"
+
+# pan/article-toolbar.c:712
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next Watched Article"
+msgstr "仅显示要跟踪的文章"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread _Thread"
+msgstr "/转到(_G)/下一条未阅读的话题(_T)"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread Thread"
+msgstr "阅读下一条未阅读的话题"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Threa_d"
+msgstr "/转到(_G)/下一条话题(_D)"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Thread"
+msgstr "/转到(_G)/下一条话题(_D)"
+
+# pan/gui.c:2056
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Pre_vious Article"
+msgstr "//转到(_G)/前一篇文章(_V)"
+
+# pan/gui.c:2056
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Previous Article"
+msgstr "//转到(_G)/前一篇文章(_V)"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous _Thread"
+msgstr "/转到(_G)/前一条话题(_U)"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous Thread"
+msgstr "/转到(_G)/前一条话题(_U)"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "_Parent Article"
+msgstr "/转到(_G)/上一级文章(_P)"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "Parent Article"
+msgstr "/转到(_G)/上一级文章(_P)"
+
+# pan/article-toolbar.c:872 pan/articlelist.c:935 pan/filter-edit-ui.c:753
+# pan/prefs.c:1809 pan/task-save.c:651
+#: pan/gui/actions.cc:326
+#, fuzzy
+msgid "_Plonk Author"
+msgstr "作者"
+
+# pan/prefs.c:2072
+#: pan/gui/actions.cc:327
+#, fuzzy
+msgid "_Watch Thread"
+msgstr "跟踪的话题"
+
+# pan/prefs.c:2070
+#: pan/gui/actions.cc:328
+#, fuzzy
+msgid "_Ignore Thread"
+msgstr "忽略的话题"
+
+# pan/save-ui.c:280
+#: pan/gui/actions.cc:329
+#, fuzzy
+msgid "View Article's S_core"
+msgstr "Pan：保存附件为"
+
+# pan/filter-ui.c:395
+#: pan/gui/actions.cc:330
+#, fuzzy
+msgid "_Add a _Scoring Rule"
+msgstr "添加一个新的过滤器"
+
+# pan/article-actions.c:171
+#: pan/gui/actions.cc:331
+#, fuzzy
+msgid "Cance_l Article..."
+msgstr "正在取消文章"
+
+# pan/articlelist.c:3146
+#: pan/gui/actions.cc:332
+#, fuzzy
+msgid "_Supersede Article..."
+msgstr "/另存文章为(_S)..."
+
+# pan/rules/rule-edit-ui.c:191
+#: pan/gui/actions.cc:333
+#, fuzzy
+msgid "_Delete Article"
+msgstr "删除文章(_D)"
+
+# pan/filters/filter-read.c:51
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "_Mark Article as Read"
+msgstr "已读文章"
+
+# pan/filters/filter-read.c:51
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "Mark Article as Read"
+msgstr "已读文章"
+
+# pan/filters/filter-read.c:50
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as _Unread"
+msgstr "未读文章"
+
+# pan/filters/filter-read.c:50
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as Unread"
+msgstr "未读文章"
+
+# pan/gui.c:2102
+#: pan/gui/actions.cc:337
+#, fuzzy
+msgid "_Post to Newsgroup"
+msgstr "张贴到新闻组"
+
+# pan/gui.c:2102
+#: pan/gui/actions.cc:337
+msgid "Post to Newsgroup"
+msgstr "张贴到新闻组"
+
+# pan/gui.c:2103
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "_Followup to  Newsgroup"
+msgstr "/张贴(_P)/跟贴到新闻组(_F)"
+
+# pan/gui.c:2103
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "Followup to Newsgroup"
+msgstr "/张贴(_P)/跟贴到新闻组(_F)"
+
+# pan/article-toolbar.c:872 pan/articlelist.c:935 pan/filter-edit-ui.c:753
+# pan/prefs.c:1809 pan/task-save.c:651
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "_Reply to Author"
+msgstr "作者"
+
+# pan/article-toolbar.c:872 pan/articlelist.c:935 pan/filter-edit-ui.c:753
+# pan/prefs.c:1809 pan/task-save.c:651
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "Reply to Author"
+msgstr "作者"
+
+# pan/gui.c:2111
+#: pan/gui/actions.cc:341
+#, fuzzy
+msgid "_Pan Home Page..."
+msgstr "/帮助(_H)/Pan主页(_H)..."
+
+# pan/gui.c:2115
+#: pan/gui/actions.cc:342
+#, fuzzy
+msgid "Give _Feedback or Report a Bug..."
+msgstr "/帮助(_H)/报告Bug(_B)..."
+
+#: pan/gui/actions.cc:343
+msgid "_Tip Jar..."
+msgstr ""
+
+# pan/gui.c:2117
+#: pan/gui/actions.cc:345 pan/gui/actions.cc:347
+#, fuzzy
+msgid "_About..."
+msgstr "/帮助(_H)/关于(_A)..."
+
+# pan/message-window.c:1193
+#: pan/gui/actions.cc:361
+#, fuzzy
+msgid "_Thread Headers"
+msgstr "更多的标题"
+
+# pan/gui.c:1976
+#: pan/gui/actions.cc:362
+#, fuzzy
+msgid "_Wrap Article Body"
+msgstr "/查看(_V)/填充(自动换行)文章主体(_W)"
+
+# pan/gui.c:1977
+#: pan/gui/actions.cc:363
+#, fuzzy
+msgid "Mute _Quoted Text"
+msgstr "/查看(_V)/屏蔽引用的文字(_Q)"
+
+# pan/gui.c:1978
+#: pan/gui/actions.cc:364
+#, fuzzy
+msgid "Show All _Headers in Body Pane"
+msgstr "/查看(_V)/在文章窗格中显示全部标题(_H)"
+
+#: pan/gui/actions.cc:365
+#, fuzzy
+msgid "Show _Smilies as Graphics"
+msgstr "显示警示(_L)："
+
+#: pan/gui/actions.cc:366
+msgid "Show *Bold*, __Underlined__, and /Italic/"
+msgstr ""
+
+#: pan/gui/actions.cc:367
+msgid "Size Pictures to _Fit"
+msgstr ""
+
+# pan/prefs.c:1957
+#: pan/gui/actions.cc:368
+#, fuzzy
+msgid "Smooth Scrolling"
+msgstr "平滑卷屏的速度："
+
+# pan/gui.c:1979
+#: pan/gui/actions.cc:369
+#, fuzzy
+msgid "Use _Monospace Font"
+msgstr "/查看(_V)/在文章窗格中使用固定字宽字体(_M)"
+
+# pan/dialogs/dialog-log-viewer.c:138
+#: pan/gui/actions.cc:371
+#, fuzzy
+msgid "_Work Online"
+msgstr "/文件(_F)/在线工作(_L)"
+
+#: pan/gui/actions.cc:372
+#, fuzzy
+msgid "_Tabbed Layout"
+msgstr "查看(_V)/卡片样式(_T)"
+
+# pan/gui.c:1969
+#: pan/gui/actions.cc:373
+#, fuzzy
+msgid "Show Group _Pane"
+msgstr "/查看(_V)/显示组窗格(_P)"
+
+# pan/gui.c:1970
+#: pan/gui/actions.cc:374
+#, fuzzy
+msgid "Show Hea_der Pane"
+msgstr "/查看(_V)/显示标题窗格(_D)"
+
+# pan/gui.c:1969
+#: pan/gui/actions.cc:375
+#, fuzzy
+msgid "Show Bod_y Pane"
+msgstr "/查看(_V)/显示信体窗格(_Y)"
+
+#: pan/gui/actions.cc:376
+msgid "Show _Toolbar"
+msgstr ""
+
+# pan/gui.c:1973
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate _Names in Group Pane"
+msgstr "/查看(_V)/在组窗格中缩写名字(_N)"
+
+# pan/gui.c:1973
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate Newsgroup Names"
+msgstr "/查看(_V)/在组窗格中缩写名字(_N)"
+
+# pan/gui.c:2079
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only _Unread Articles"
+msgstr "/过滤器(_R)/匹配未读的文章(_U)"
+
+# pan/gui.c:2079
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only Unread Articles"
+msgstr "/过滤器(_R)/匹配未读的文章(_U)"
+
+# pan/article-toolbar.c:712
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only _Cached Articles"
+msgstr "仅显示被缓存的文章"
+
+# pan/article-toolbar.c:712
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only Cached Articles"
+msgstr "仅显示被缓存的文章"
+
+# pan/filter-edit-ui.c:841
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only _Complete Articles"
+msgstr "仅显示完整的附件"
+
+# pan/filter-edit-ui.c:841
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only Complete Articles"
+msgstr "仅显示完整的附件"
+
+# pan/article-toolbar.c:709
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only _My Articles"
+msgstr "仅显示新的文章"
+
+# pan/filters/filter-mine.c:51
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only Articles Posted by Me"
+msgstr "自己张贴的文章"
+
+# pan/article-toolbar.c:712
+#: pan/gui/actions.cc:383
+#, fuzzy
+msgid "Match Only _Watched Articles"
+msgstr "仅显示要跟踪的文章"
+
+# pan/article-toolbar.c:712
+#: pan/gui/actions.cc:383
+#, fuzzy
+msgid "Match Only Watched Articles"
+msgstr "仅显示要跟踪的文章"
+
+#: pan/gui/actions.cc:385
+msgid "Match Scores of 9999 (_Watched)"
+msgstr ""
+
+#: pan/gui/actions.cc:386
+msgid "Match Scores of 5000...9998 (_High)"
+msgstr ""
+
+#: pan/gui/actions.cc:387
+msgid "Match Scores of 1...4999 (Me_dium)"
+msgstr ""
+
+#: pan/gui/actions.cc:388
+msgid "Match Scores of 0 (_Normal)"
+msgstr ""
+
+#: pan/gui/actions.cc:389
+msgid "Match Scores of -9998...-1 (_Low)"
+msgstr ""
+
+#: pan/gui/actions.cc:390
+msgid "Match Scores of -9999 (_Ignored)"
+msgstr ""
+
+# pan/article-toolbar.c:666
+#: pan/gui/actions.cc:416
+#, fuzzy
+msgid "Show Matching _Articles"
+msgstr "/过滤器(_R)/显示匹配的文章"
+
+# pan/article-toolbar.c:666
+#: pan/gui/actions.cc:417
+#, fuzzy
+msgid "Show Matching Articles' _Threads"
+msgstr "/过滤器(_R)/显示匹配的文章"
+
+# pan/article-toolbar.c:674
+#: pan/gui/actions.cc:418
+#, fuzzy
+msgid "Show Matching Articles' _Subthreads"
+msgstr "/过滤器(_R)/显示匹配的文章及其回复"
+
+#: pan/gui/actions.cc:435
+msgid "Baltic (ISO-8859-4)"
+msgstr ""
+
+#: pan/gui/actions.cc:436
+msgid "Baltic (ISO-8859-13)"
+msgstr ""
+
+#: pan/gui/actions.cc:437
+msgid "Baltic (Windows-1257)"
+msgstr ""
+
+#: pan/gui/actions.cc:438
+#, fuzzy
+msgid "Central European (ISO-8859-2)"
+msgstr "中欧"
+
+#: pan/gui/actions.cc:439
+#, fuzzy
+msgid "Central European (Windows-1250)"
+msgstr "中欧"
+
+# pan/message-window.c:119
+#: pan/gui/actions.cc:440
+#, fuzzy
+msgid "Chinese Simplified (gb2312)"
+msgstr "简体中文"
+
+# pan/message-window.c:120
+#: pan/gui/actions.cc:441
+#, fuzzy
+msgid "Chinese Traditional (big5)"
+msgstr "繁体中文"
+
+#: pan/gui/actions.cc:442
+msgid "Cyrillic (ISO-8859-5)"
+msgstr ""
+
+#: pan/gui/actions.cc:443
+msgid "Cyrillic (Windows-1251)"
+msgstr ""
+
+#: pan/gui/actions.cc:444
+#, fuzzy
+msgid "Cyrillic (KOI8-R)"
+msgstr "古斯拉夫语"
+
+# pan/message-window.c:145
+#: pan/gui/actions.cc:445
+#, fuzzy
+msgid "Cyrillic, Ukrainian (KOI8-U)"
+msgstr "古斯拉夫语，乌克兰语"
+
+#: pan/gui/actions.cc:446
+msgid "Greek (ISO-8859-7)"
+msgstr ""
+
+#: pan/gui/actions.cc:447
+msgid "Japanese (ISO-2022-jp)"
+msgstr ""
+
+#: pan/gui/actions.cc:448
+msgid "Korean (euc-kr)"
+msgstr ""
+
+#: pan/gui/actions.cc:449
+msgid "Turkish (ISO-8859-9)"
+msgstr ""
+
+#: pan/gui/actions.cc:450
+msgid "Western (ISO-8859-1)"
+msgstr ""
+
+#: pan/gui/actions.cc:451
+#, fuzzy
+msgid "Western, New (ISO-8859-15)"
+msgstr "西方,新"
+
+#: pan/gui/actions.cc:452
+msgid "Western (Windows-1252)"
+msgstr ""
+
+#: pan/gui/actions.cc:453
+#, fuzzy
+msgid "Unicode (UTF-8)"
+msgstr "Unicode, UTF-8"
+
+#: pan/gui/body-pane.cc:855
+#, c-format
+msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
+msgstr ""
+
+#: pan/gui/body-pane.cc:856
+#, c-format
+msgid "Attachment not shown: MIME type %s/%s\n"
+msgstr ""
+
+# pan/article-toolbar.c:871 pan/articlelist.c:933 pan/filter-edit-ui.c:748
+# pan/prefs.c:1817 pan/task-save.c:649
+#: pan/gui/body-pane.cc:936 pan/gui/header-pane.cc:1167
+#: pan/gui/header-pane.cc:1502 pan/gui/prefs-ui.cc:322
+#: pan/gui/score-add-ui.cc:136
+msgid "Subject"
+msgstr "主题"
+
+# pan/message-window.c:1136
+#: pan/gui/body-pane.cc:938
+#, fuzzy
+msgid "From"
+msgstr "发信人"
+
+# pan/articlelist.c:936 pan/prefs.c:1810 pan/task-save.c:652
+#: pan/gui/body-pane.cc:940 pan/gui/header-pane.cc:1579 pan/gui/log-ui.cc:206
+#: pan/gui/prefs-ui.cc:318
+msgid "Date"
+msgstr "日期"
+
+# pan/rules/rule-edit-ui.c:808
+#: pan/gui/body-pane.cc:947
+msgid "Newsgroups"
+msgstr "新闻组"
+
+#: pan/gui/body-pane.cc:952
+#, fuzzy
+msgid "Followup-To"
+msgstr "另外发送到"
+
+# pan/gui-headers.c:282
+#: pan/gui/body-pane.cc:962
+msgid "Reply-To"
+msgstr "回复给"
+
+#: pan/gui/body-pane.cc:988
+msgid " from "
+msgstr ""
+
+#: pan/gui/body-pane.cc:990
+msgid " at "
+msgstr ""
+
+#: pan/gui/dl-headers-ui.cc:102
+#, fuzzy
+msgid "Pan: "
+msgstr "Pan "
+
+# pan/dialogs/dialog-headers.c:168
+#: pan/gui/dl-headers-ui.cc:128
+#, fuzzy
+msgid "Get the last N _days' headers: "
+msgstr "下载新的标题"
+
+# pan/dialogs/dialog-headers.c:168
+#: pan/gui/dl-headers-ui.cc:136
+#, fuzzy
+msgid "Get _new headers"
+msgstr "获取新的标题(_H)"
+
+# pan/nntp.c:860
+#: pan/gui/dl-headers-ui.cc:140
+#, fuzzy
+msgid "Get _all headers"
+msgstr "正在为“%s”获取所有标题"
+
+# pan/dialogs/dialog-headers.c:168
+#: pan/gui/dl-headers-ui.cc:144
+#, fuzzy
+msgid "Get the _latest N headers: "
+msgstr "下载新的标题"
+
+# pan/prefs.c:2191
+#: pan/gui/group-pane.cc:608
+#, fuzzy
+msgid "Group Name"
+msgstr "组列表窗格"
+
+#: pan/gui/group-pane.cc:700
+#, c-format
+msgid " (%lu)"
+msgstr ""
+
+# pan/rules/rule-edit-ui.c:486
+#: pan/gui/group-pane.cc:829 pan/gui/header-pane.cc:1668
+#, fuzzy
+msgid "Clear the Filter"
+msgstr "选择过滤器："
+
+# pan/rules/rule-edit-ui.c:622
+#: pan/gui/group-pane.cc:857
+#, fuzzy
+msgid "Subscribed Groups"
+msgstr "已订阅的新闻组"
+
+# pan/grouplist.c:532 pan/grouplist.c:937
+#: pan/gui/group-pane.cc:858
+#, fuzzy
+msgid "Other Groups"
+msgstr "新的组"
+
+# pan/prefs.c:2912
+#: pan/gui/group-pane.cc:900
+msgid "Name"
+msgstr "名称"
+
+# pan/gui.c:1931
+#: pan/gui/group-prefs-dialog.cc:101
+#, fuzzy
+msgid "No Profiles defined in Edit|Posting Profiles."
+msgstr "/工具(_T)/张贴选项(_P)..."
+
+# pan/prefs.c:3024
+#: pan/gui/group-prefs-dialog.cc:129
+#, fuzzy
+msgid "Pan: Group Preferences"
+msgstr "Pan：参数设置"
+
+# pan/dialogs/dialog-group-props.c:173
+#: pan/gui/group-prefs-dialog.cc:143
+#, fuzzy, c-format
+msgid "Properties for %s"
+msgstr "“%s”的属性"
+
+#: pan/gui/group-prefs-dialog.cc:147
+msgid "Character _encoding:"
+msgstr ""
+
+# pan/dialogs/dialog-group-props.c:128
+#: pan/gui/group-prefs-dialog.cc:148
+#, fuzzy
+msgid "Directory for Saving Attachments"
+msgstr "用于保存附件的目录"
+
+# pan/dialogs/dialog-group-props.c:128
+#: pan/gui/group-prefs-dialog.cc:153
+#, fuzzy
+msgid "Directory for _saving attachments:"
+msgstr "用于保存附件的目录"
+
+# pan/identities/identity-ui.c:436
+#: pan/gui/group-prefs-dialog.cc:155
+#, fuzzy
+msgid "Posting _profile:"
+msgstr "Pan：Profile"
+
+# pan/gui.c:652
+#: pan/gui/gui.cc:236
+msgid "Open the Task Manager"
+msgstr "打开任务管理器"
+
+# pan/gui.c:684
+#: pan/gui/gui.cc:257
+#, fuzzy
+msgid "Open the Event Log"
+msgstr "打开状态日志"
+
+# pan/rules/rule-edit-ui.c:164
+#: pan/gui/gui.cc:481
+#, fuzzy
+msgid "Save Attachments"
+msgstr "保存附件于："
+
+#: pan/gui/gui.cc:529
+msgid "Import NZB File(s)"
+msgstr ""
+
+#: pan/gui/gui.cc:605
+msgid ""
+"Pan is now offline. Please ensure that space is available, then use File|"
+"Work Online to continue."
+msgstr ""
+
+#: pan/gui/gui.cc:730 pan/gui/gui.cc:1092 pan/gui/gui.cc:1296
+msgid "Pan"
+msgstr "Pan"
+
+# pan/articlelist.c:3146
+#: pan/gui/gui.cc:902
+#, fuzzy
+msgid "Unable to supersede article."
+msgstr "/另存文章为(_S)..."
+
+#: pan/gui/gui.cc:903 pan/gui/gui.cc:970
+msgid "The article doesn't match any of your posting profiles."
+msgstr ""
+
+#: pan/gui/gui.cc:944
+msgid "Revise and send this article to replace the old one."
+msgstr ""
+
+#: pan/gui/gui.cc:945 pan/gui/gui.cc:1005
+msgid "Be patient!  It will take time for your changes to take effect."
+msgstr ""
+
+# pan/article-actions.c:171
+#: pan/gui/gui.cc:969
+#, fuzzy
+msgid "Unable to cancel article."
+msgstr "正在取消文章"
+
+#: pan/gui/gui.cc:1004
+msgid "Send this article to ask your server to cancel your other one."
+msgstr ""
+
+# pan/dialogs/dialog-about.c:53
+#: pan/gui/gui.cc:1095 pan/gui/gui.cc:1115
+#, fuzzy
+msgid "Copyright © 2002-2006 Charles Kerr"
+msgstr "版权所有 (C) 2002, Charles Kerr"
+
+#: pan/gui/gui.cc:1100
+msgid "translator-credits"
+msgstr ""
+
+# pan/prefs.c:2191
+#: pan/gui/gui.cc:1211
+#, fuzzy
+msgid "_1. Group Pane"
+msgstr "组列表窗格"
+
+#: pan/gui/gui.cc:1212
+#, fuzzy
+msgid "_2. Header Pane"
+msgstr "标题窗格"
+
+# pan/prefs.c:2193
+#: pan/gui/gui.cc:1213
+#, fuzzy
+msgid "_3. Body Pane"
+msgstr "信体窗格"
+
+#: pan/gui/gui.cc:1298
+#, fuzzy, c-format
+msgid "Pan: %s"
+msgstr "Pan "
+
+# pan/gui.c:1620 pan/task-manager.c:426
+#: pan/gui/gui.cc:1415
+msgid "Offline"
+msgstr "离线"
+
+# pan/gui.c:1621
+#: pan/gui/gui.cc:1418
+#, c-format
+msgid "Closing %d connections"
+msgstr "正在关闭%d连接"
+
+# pan/gui.c:1621
+#: pan/gui/gui.cc:1420 pan/gui/gui.cc:1450
+msgid "No Connections"
+msgstr "没有连接"
+
+# pan/gui.c:1615 pan/task-manager.c:418
+#: pan/gui/gui.cc:1424
+msgid "Connecting"
+msgstr "正在连接"
+
+#: pan/gui/gui.cc:1437
+#, c-format
+msgid "%s: %d idle, %d active @ %.1f KiBps"
+msgstr ""
+
+# pan/gui.c:1719
+#: pan/gui/gui.cc:1493
+msgid "No Tasks"
+msgstr "没有任务"
+
+# pan/gui.c:1722
+#: pan/gui/gui.cc:1496
+#, c-format
+msgid "Tasks: %u/%u"
+msgstr "任务：%u/%u"
+
+# pan/gui.c:1723
+#: pan/gui/gui.cc:1497
+#, c-format
+msgid "%u Tasks Running, %u Tasks Total"
+msgstr "%u个任务正在运行，总共%u个任务"
+
+#: pan/gui/gui.cc:1546
+msgid ""
+"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
+"then use \"File|Work Online\" to continue."
+msgstr ""
+
+#. less than a kibi...
+#: pan/gui/header-pane.cc:363 pan/gui/task-pane.cc:208
+#, c-format
+msgid "%lu B"
+msgstr ""
+
+#: pan/gui/header-pane.cc:365
+#, c-format
+msgid "%.1f KiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:367
+#, c-format
+msgid "%.1f MiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:369
+#, c-format
+msgid "%.1f GiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:1166
+msgid "Subject or Author"
+msgstr ""
+
+# pan/article-toolbar.c:872 pan/articlelist.c:935 pan/filter-edit-ui.c:753
+# pan/prefs.c:1809 pan/task-save.c:651
+#: pan/gui/header-pane.cc:1168 pan/gui/header-pane.cc:1534
+#: pan/gui/prefs-ui.cc:316 pan/gui/score-add-ui.cc:137
+msgid "Author"
+msgstr "作者"
+
+# pan/article-toolbar.c:873 pan/filter-edit-ui.c:758
+#: pan/gui/header-pane.cc:1169
+msgid "Message-ID"
+msgstr "信息号"
+
+#: pan/gui/header-pane.cc:1519 pan/gui/prefs-ui.cc:320
+msgid "Score"
+msgstr ""
+
+# pan/articlelist.c:934 pan/task-save.c:650
+#: pan/gui/header-pane.cc:1549 pan/gui/prefs-ui.cc:319
+msgid "Lines"
+msgstr "行数"
+
+#: pan/gui/header-pane.cc:1564 pan/gui/prefs-ui.cc:317
+msgid "Bytes"
+msgstr ""
+
+#: pan/gui/log-ui.cc:85
+msgid "Save Event List"
+msgstr ""
+
+# pan/prefs.c:2812
+#: pan/gui/log-ui.cc:167
+#, fuzzy
+msgid "Pan: Events"
+msgstr "Pan：服务器"
+
+# pan/gui-notebook.c:60 pan/message-window.c:1191
+#: pan/gui/log-ui.cc:216
+msgid "Message"
+msgstr "信息"
+
+#: pan/gui/pan.cc:120
+msgid ""
+"Thank you for trying Pan!\n"
+" \n"
+"To start newsreading, first Add a Server."
+msgstr ""
+
+#: pan/gui/pan.cc:141
+msgid ""
+"General Options\n"
+"  -h, --help               Show this usage page.\n"
+"\n"
+"URL Options\n"
+"  news:message-id          Show the specified article.\n"
+"  news:group.name          Show the specified newsgroup.\n"
+"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"\n"
+"NZB Batch Options\n"
+"  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
+"  -o path, --output=path   Path to save attachments listed in the nzb "
+"files.\n"
+"  --nogui                  Only show console output, not the download "
+"queue.\n"
+msgstr ""
+
+#: pan/gui/pan.cc:198
+msgid "Error: nzb arguments used without nzb files."
+msgstr ""
+
+#: pan/gui/pan.cc:203
+msgid "Error: --nogui used without nzb files or news:message-id."
+msgstr ""
+
+# pan/pan.c:176
+#: pan/gui/pan.cc:207
+#, fuzzy, c-format
+msgid "Pan %s started"
+msgstr "Pan %s 启动"
+
+#: pan/gui/pan.cc:223
+msgid "Please configure Pan's news servers before using it as an nzb client."
+msgstr ""
+
+# pan/message-window.c:440
+#: pan/gui/post-ui.cc:86
+#, fuzzy, c-format
+msgid "Error setting spellchecker: %s"
+msgstr "启动外部编辑器编辑出错：“%s”"
+
+#: pan/gui/post-ui.cc:95
+msgid ""
+"<b>Spellchecker not found!</b>\n"
+" \n"
+"Was this copy of Pan compiled with GtkSpell enabled?"
+msgstr ""
+
+# pan/identities/identity-ui.c:449
+#: pan/gui/post-ui.cc:240
+#, fuzzy
+msgid "_Profile"
+msgstr "Profile"
+
+#: pan/gui/post-ui.cc:241
+msgid "Character Encoding"
+msgstr ""
+
+# pan/message-window.c:440
+#: pan/gui/post-ui.cc:242
+#, fuzzy
+msgid "Set Editor"
+msgstr "编辑器"
+
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "_Send Article"
+msgstr "/转到(_G)/上一级文章(_P)"
+
+# pan/message-window.c:399
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "Send Article Now"
+msgstr "现在发送"
+
+# pan/save-ui.c:351
+#: pan/gui/post-ui.cc:245
+#, fuzzy
+msgid "Sa_ve Draft"
+msgstr "保存文章文本(_X)"
+
+#: pan/gui/post-ui.cc:245
+msgid "Save as a Draft for Future Posting"
+msgstr ""
+
+# pan/articlelist.c:3143
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "_Open Draft..."
+msgstr "/阅读文章(_R)"
+
+# pan/articlelist.c:3143
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "Open an Article Draft"
+msgstr "/阅读文章(_R)"
+
+#: pan/gui/post-ui.cc:247
+msgid "Wrap _Now"
+msgstr ""
+
+# pan/gui.c:1976
+#: pan/gui/post-ui.cc:247
+#, fuzzy
+msgid "Wrap the Article Body to 80 Columns"
+msgstr "/查看(_V)/填充(自动换行)文章主体(_W)"
+
+# pan/prefs.c:1921 pan/prefs.c:2074
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "_Close"
+msgstr "颜色"
+
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "Close Window"
+msgstr "关闭日志窗口。"
+
+#: pan/gui/post-ui.cc:249
+msgid "Cu_t"
+msgstr ""
+
+# pan/prefs.c:1917
+#: pan/gui/post-ui.cc:249
+#, fuzzy
+msgid "Cut Text"
+msgstr "引用的文本3"
+
+# pan/identities/identity-ui.c:475
+#: pan/gui/post-ui.cc:250
+#, fuzzy
+msgid "_Copy"
+msgstr "复制自(_C)"
+
+# pan/message-window.c:424
+#: pan/gui/post-ui.cc:250
+#, fuzzy
+msgid "Copy Text"
+msgstr "文字换行"
+
+# pan/gui.c:2100
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "_Paste"
+msgstr "/张贴(_P)"
+
+# pan/message-window.c:424
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "Paste Text"
+msgstr "文字换行"
+
+# pan/message-window.c:433
+#: pan/gui/post-ui.cc:252
+#, fuzzy
+msgid "_Rot13"
+msgstr "Rot13"
+
+# pan/message-window.c:433
+#: pan/gui/post-ui.cc:252
+msgid "Rot13 Selected Text"
+msgstr "Rot13选中文本"
+
+# pan/message-window.c:440
+#: pan/gui/post-ui.cc:253
+#, fuzzy
+msgid "Run _Editor"
+msgstr "编辑器"
+
+#: pan/gui/post-ui.cc:254
+msgid "_Manage Editor List..."
+msgstr ""
+
+# pan/gui.c:1931
+#: pan/gui/post-ui.cc:255
+#, fuzzy
+msgid "Manage Posting Pr_ofiles..."
+msgstr "/工具(_T)/张贴选项(_P)..."
+
+# pan/message-window.c:424
+#: pan/gui/post-ui.cc:260
+#, fuzzy
+msgid "_Wrap Text"
+msgstr "文字换行"
+
+#: pan/gui/post-ui.cc:261
+msgid "Remember _Charset for This Group"
+msgstr ""
+
+#: pan/gui/post-ui.cc:262
+msgid "Check _Spelling"
+msgstr ""
+
+#: pan/gui/post-ui.cc:317 pan/gui/post-ui.cc:318 pan/gui/post-ui.cc:319
+msgid "Baltic"
+msgstr "波罗的语"
+
+#: pan/gui/post-ui.cc:320 pan/gui/post-ui.cc:321
+msgid "Central European"
+msgstr "中欧"
+
+# pan/message-window.c:119
+#: pan/gui/post-ui.cc:322
+msgid "Chinese Simplified"
+msgstr "简体中文"
+
+# pan/message-window.c:120
+#: pan/gui/post-ui.cc:323
+msgid "Chinese Traditional"
+msgstr "繁体中文"
+
+#: pan/gui/post-ui.cc:324 pan/gui/post-ui.cc:325 pan/gui/post-ui.cc:326
+msgid "Cyrillic"
+msgstr "古斯拉夫语"
+
+# pan/message-window.c:145
+#: pan/gui/post-ui.cc:327
+msgid "Cyrillic, Ukrainian"
+msgstr "古斯拉夫语，乌克兰语"
+
+# pan/message-window.c:128
+#: pan/gui/post-ui.cc:328
+msgid "Greek"
+msgstr "希腊语"
+
+# pan/message-window.c:131
+#: pan/gui/post-ui.cc:329
+msgid "Japanese"
+msgstr "日语"
+
+# pan/message-window.c:132
+#: pan/gui/post-ui.cc:330
+msgid "Korean"
+msgstr "朝鲜语"
+
+# pan/message-window.c:144
+#: pan/gui/post-ui.cc:331
+msgid "Turkish"
+msgstr "土耳其语"
+
+#: pan/gui/post-ui.cc:332 pan/gui/post-ui.cc:334
+msgid "Western"
+msgstr "西方"
+
+#: pan/gui/post-ui.cc:333
+msgid "Western, New"
+msgstr "西方,新"
+
+#: pan/gui/post-ui.cc:335
+msgid "Unicode, UTF-8"
+msgstr "Unicode, UTF-8"
+
+# pan/pan.c:121
+#: pan/gui/post-ui.cc:431
+#, fuzzy, c-format
+msgid "Error loading post.ui: \"%s\""
+msgstr "读套接字错。"
+
+#: pan/gui/post-ui.cc:502
+msgid "Manage Editor List"
+msgstr ""
+
+# pan/filter-ui.c:399 pan/identities/identity-ui.c:482
+# pan/rules/rule-ui.c:513
+#: pan/gui/post-ui.cc:509
+#, fuzzy
+msgid "Editors"
+msgstr "编辑"
+
+#: pan/gui/post-ui.cc:609
+msgid "Your changes will be lost!"
+msgstr ""
+
+#: pan/gui/post-ui.cc:610
+msgid "Close this window and lose your changes?"
+msgstr ""
+
+#: pan/gui/post-ui.cc:647
+msgid "There were problems with this post."
+msgstr ""
+
+#: pan/gui/post-ui.cc:649
+msgid "Go Back"
+msgstr ""
+
+#: pan/gui/post-ui.cc:651
+msgid "Post Anyway"
+msgstr ""
+
+#: pan/gui/post-ui.cc:662
+#, fuzzy
+msgid "Go _Online"
+msgstr "Pan当前为在线"
+
+#: pan/gui/post-ui.cc:834
+msgid ""
+"No posting server is set for this posting profile.\n"
+"Please edit the profile via Edit|Manage Posting Profiles."
+msgstr ""
+
+# pan/gui.c:1620 pan/task-manager.c:426
+#: pan/gui/post-ui.cc:867
+#, fuzzy
+msgid "Pan is Offline."
+msgstr "Pan当前为离线"
+
+#: pan/gui/post-ui.cc:868
+msgid "Go online to post the article?"
+msgstr ""
+
+# pan/articlelist.c:3455
+#. *
+#. ***  Pop up a ``Posting'' Dialog...
+#. *
+#: pan/gui/post-ui.cc:881
+#, fuzzy
+msgid "Posting Article"
+msgstr "正在排序文章"
+
+# pan/gui.c:2100
+#: pan/gui/post-ui.cc:887
+#, fuzzy
+msgid "Posting..."
+msgstr "张贴"
+
+# pan/base/newsrc-port.c:105
+#: pan/gui/post-ui.cc:938
+#, fuzzy
+msgid "Error opening temporary file"
+msgstr "打开临时文件“%s”时出错"
+
+#: pan/gui/post-ui.cc:958
+#, c-format
+msgid "Error writing article to temporary file: %s"
+msgstr "写入文章到临时文件时出错：“%s”"
+
+#: pan/gui/post-ui.cc:977
+#, fuzzy, c-format
+msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
+msgstr "解析“外部编辑器”命令行：“%s”"
+
+# pan/message-window.c:440
+#: pan/gui/post-ui.cc:1015
+#, c-format
+msgid "Error starting external editor: %s"
+msgstr "启动外部编辑器编辑出错：“%s”"
+
+# pan/articlelist.c:3143
+#: pan/gui/post-ui.cc:1070
+#, fuzzy
+msgid "Open Draft Article"
+msgstr "/阅读文章(_R)"
+
+# pan/save-ui.c:351
+#: pan/gui/post-ui.cc:1233
+#, fuzzy
+msgid "Save Draft Article"
+msgstr "保存文章文本(_X)"
+
+# pan/base/util-file.c:224
+#: pan/gui/post-ui.cc:1390
+#, c-format
+msgid "Couldn't read signature file \"%s\": %s"
+msgstr "不能阅读签名文件“%s”：%s"
+
+# pan/base/util-file.c:224
+#: pan/gui/post-ui.cc:1411
+#, fuzzy, c-format
+msgid "Couldn't parse signature command \"%s\": %s"
+msgstr "不能运行签名程序“%s”：%s"
+
+# pan/base/util-file.c:224
+#: pan/gui/post-ui.cc:1448
+#, fuzzy
+msgid "Couldn't convert signature to UTF-8."
+msgstr "不能运行签名程序“%s”：%s"
+
+# pan/articlelist.c:3455
+#: pan/gui/post-ui.cc:1790
+#, fuzzy
+msgid "Post Article"
+msgstr "正在排序文章"
+
+# pan/message-window.c:1136
+#: pan/gui/post-ui.cc:1812
+#, fuzzy
+msgid "F_rom"
+msgstr "发信人"
+
+# pan/article-toolbar.c:871 pan/articlelist.c:933 pan/filter-edit-ui.c:748
+# pan/prefs.c:1817 pan/task-save.c:649
+#: pan/gui/post-ui.cc:1819
+#, fuzzy
+msgid "_Subject"
+msgstr "主题"
+
+# pan/rules/rule-edit-ui.c:808
+#: pan/gui/post-ui.cc:1825
+#, fuzzy
+msgid "_Newsgroups"
+msgstr "新闻组(_N)"
+
+# pan/message-window.c:1169
+#: pan/gui/post-ui.cc:1832
+#, fuzzy
+msgid "_Mail To"
+msgstr "收信人"
+
+#: pan/gui/post-ui.cc:1842
+msgid "One header per line, in the form HeaderName: Value"
+msgstr ""
+
+# pan/message-window.c:1193
+#: pan/gui/post-ui.cc:1845
+#, fuzzy
+msgid "_More Headers"
+msgstr "更多的标题"
+
+# pan/identities/identity-edit-ui.c:311 pan/identities/identity.c:48
+#: pan/gui/post-ui.cc:1867 pan/gui/profiles-dialog.cc:398
+#, c-format
+msgid "On %d, %n wrote:"
+msgstr "于 %d，%n写到："
+
+# pan/identities/identity-ui.c:436
+#: pan/gui/profiles-dialog.cc:102
+#, fuzzy
+msgid "Posting Profile"
+msgstr "Pan：Profile"
+
+# pan/identities/identity-edit-ui.c:123
+#: pan/gui/profiles-dialog.cc:110
+msgid "Profile Information"
+msgstr "Profile 信息"
+
+# pan/dialogs/dialog-newuser.c:693 pan/identities/identity-edit-ui.c:133
+# pan/prefs.c:1340
+#: pan/gui/profiles-dialog.cc:114
+#, fuzzy
+msgid "_Profile Name:"
+msgstr "Profile名称"
+
+# pan/identities/identity-edit-ui.c:155
+#: pan/gui/profiles-dialog.cc:117
+msgid "Required Information"
+msgstr "必要的信息："
+
+# pan/rules/rule-edit-ui.c:789
+#: pan/gui/profiles-dialog.cc:121
+#, fuzzy
+msgid "_Full Name:"
+msgstr "规则名称："
+
+# pan/dialogs/dialog-newuser.c:349
+#: pan/gui/profiles-dialog.cc:124
+#, fuzzy
+msgid "_Email Address:"
+msgstr "电子邮件地址："
+
+# pan/filter-edit-ui.c:742
+#: pan/gui/profiles-dialog.cc:126
+#, fuzzy
+msgid "_Post Articles via:"
+msgstr "文章(_A)"
+
+# pan/identities/identity-edit-ui.c:242
+#: pan/gui/profiles-dialog.cc:129
+#, fuzzy
+msgid "Signature"
+msgstr "签名文件："
+
+#: pan/gui/profiles-dialog.cc:132
+msgid "_Use a Signature"
+msgstr ""
+
+# pan/identities/identity-edit-ui.c:242
+#: pan/gui/profiles-dialog.cc:136
+#, fuzzy
+msgid "Signature File"
+msgstr "签名文件："
+
+#: pan/gui/profiles-dialog.cc:139
+msgid "_Signature:"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:144
+#, fuzzy
+msgid "Text File"
+msgstr "/转到(_G)/下一篇文章(_X)"
+
+# pan/prefs.c:1917
+#: pan/gui/profiles-dialog.cc:146
+#, fuzzy
+msgid "Text"
+msgstr "引用的文本3"
+
+# pan/print.c:180
+#: pan/gui/profiles-dialog.cc:148
+#, fuzzy
+msgid "Command"
+msgstr "打印命令："
+
+#: pan/gui/profiles-dialog.cc:158
+msgid "Signature _Type:"
+msgstr ""
+
+# pan/identities/identity-edit-ui.c:186
+#: pan/gui/profiles-dialog.cc:161
+msgid "Optional Information"
+msgstr "可选信息"
+
+#: pan/gui/profiles-dialog.cc:169
+#, c-format
+msgid ""
+"%i for Message-ID\n"
+"%a for Author and Address\n"
+"%n for Author name\n"
+"%d for Date"
+msgstr ""
+
+# pan/identities/identity-edit-ui.c:228
+#: pan/gui/profiles-dialog.cc:170
+#, fuzzy
+msgid "_Attribution:"
+msgstr "贡献者："
+
+#: pan/gui/profiles-dialog.cc:190
+msgid ""
+"Extra headers to be included in your posts, such as\n"
+"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
+"Organization: Your Organization"
+msgstr ""
+
+# pan/message-window.c:1193
+#: pan/gui/profiles-dialog.cc:199
+#, fuzzy
+msgid "E_xtra Headers:"
+msgstr "更多的标题"
+
+# pan/dialogs/dialog-newuser.c:349
+#: pan/gui/profiles-dialog.cc:253
+#, fuzzy
+msgid "Invalid email address."
+msgstr "电子邮件地址："
+
+#: pan/gui/profiles-dialog.cc:254
+msgid "Please use an address of the form joe@somewhere.org"
+msgstr ""
+
+# pan/identities/identity-ui.c:314
+#: pan/gui/profiles-dialog.cc:399
+msgid "New Profile"
+msgstr "新建Profile"
+
+# pan/gui.c:1931
+#: pan/gui/profiles-dialog.cc:442
+#, fuzzy
+msgid "Posting Profiles"
+msgstr "/工具(_T)/张贴选项(_P)..."
+
+# pan/identities/identity-ui.c:449
+#: pan/gui/profiles-dialog.cc:458
+#, fuzzy
+msgid "Profiles"
+msgstr "Profile"
+
+# pan/identities/identity-ui.c:471
+#: pan/gui/profiles-dialog.cc:482
+#, fuzzy
+msgid "Add a New Profile"
+msgstr "添加新Profile"
+
+# pan/identities/identity-ui.c:484
+#: pan/gui/profiles-dialog.cc:493
+msgid "Edit the selected profile"
+msgstr "编辑选中的Profile"
+
+# pan/identities/identity-ui.c:491
+#: pan/gui/profiles-dialog.cc:499
+msgid "Remove the selected profile"
+msgstr "删除选中的Profile"
+
+# pan/task-body.c:227
+#: pan/gui/prefs.cc:320
+#, fuzzy, c-format
+msgid "Couldn't parse %s color \"%s\""
+msgstr "不能解析签名命令“%s”"
+
+# pan/prefs.c:3024
+#: pan/gui/prefs-ui.cc:159
+#, fuzzy
+msgid "Use GNOME Preferences"
+msgstr "在线参数"
+
+# pan/prefs.c:3024
+#: pan/gui/prefs-ui.cc:160
+#, fuzzy
+msgid "Use KDE Preferences"
+msgstr "在线参数"
+
+# pan/prefs.c:3024
+#: pan/gui/prefs-ui.cc:161
+#, fuzzy
+msgid "Use OS/X Preferences"
+msgstr "在线参数"
+
+# pan/prefs.c:3024
+#: pan/gui/prefs-ui.cc:162
+#, fuzzy
+msgid "Use Windows Preferences"
+msgstr "过程参数"
+
+# pan/print.c:180
+#: pan/gui/prefs-ui.cc:163
+#, fuzzy
+msgid "Custom Command:"
+msgstr "打印命令："
+
+# pan/rules/rule-edit-ui.c:814
+#: pan/gui/prefs-ui.cc:315
+#, fuzzy
+msgid "Action"
+msgstr "操作"
+
+# pan/task-manager.c:794
+#: pan/gui/prefs-ui.cc:321
+#, fuzzy
+msgid "State"
+msgstr "状态"
+
+# pan/task-manager.c:412
+#: pan/gui/prefs-ui.cc:354
+#, fuzzy
+msgid "Enabled"
+msgstr "失败"
+
+# pan/prefs.c:2191
+#: pan/gui/prefs-ui.cc:358
+#, fuzzy
+msgid "Column Name"
+msgstr "组列表窗格"
+
+# pan/prefs.c:3024
+#: pan/gui/prefs-ui.cc:392
+msgid "Pan: Preferences"
+msgstr "Pan：参数设置"
+
+#: pan/gui/prefs-ui.cc:404
+msgid "Mouse"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:406
+#, fuzzy
+msgid "Single-click activates, rather than selects, _groups"
+msgstr "单击选中，不是激活，组和文章"
+
+#: pan/gui/prefs-ui.cc:408
+#, fuzzy
+msgid "Single-click activates, rather than selects, _articles"
+msgstr "单击选中，不是激活，组和文章"
+
+# pan/grouplist.c:643 pan/grouplist.c:680 pan/gui-notebook.c:58
+#: pan/gui/prefs-ui.cc:411
+#, fuzzy
+msgid "Groups"
+msgstr "组"
+
+#: pan/gui/prefs-ui.cc:413
+#, fuzzy
+msgid "Get new headers in subscribed groups on _startup"
+msgstr "获得全部所订阅组内的新文章标题"
+
+#: pan/gui/prefs-ui.cc:415
+#, fuzzy
+msgid "Get new headers when _entering group"
+msgstr "获得全部所选择组内的新文章标题"
+
+#: pan/gui/prefs-ui.cc:417
+msgid "Mark entire group _read when leaving group"
+msgstr ""
+
+# pan/gui.c:2016
+#: pan/gui/prefs-ui.cc:420
+#, fuzzy
+msgid "Articles"
+msgstr "/文章(_A)"
+
+#: pan/gui/prefs-ui.cc:421
+msgid "Space selects next article, not next unread"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:424
+msgid "_Behavior"
+msgstr ""
+
+# pan/prefs.c:3057
+#: pan/gui/prefs-ui.cc:428
+#, fuzzy
+msgid "Pane Layout"
+msgstr "显示 - 窗格布局"
+
+# pan/gui.c:1719
+#: pan/gui/prefs-ui.cc:444
+msgid "Tasks"
+msgstr "任务"
+
+#: pan/gui/prefs-ui.cc:447
+msgid "1=Groups, 2=Headers, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:449
+msgid "1=Groups, 2=Body, 3=Headers"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:451
+msgid "1=Headers, 2=Groups, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:453
+msgid "1=Headers, 2=Body, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:455
+msgid "1=Body, 2=Groups, 3=Headers"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:457
+msgid "1=Body, 2=Headers, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:464
+#, fuzzy
+msgid "Header Pane Columns"
+msgstr "标题窗格"
+
+#: pan/gui/prefs-ui.cc:468
+#, fuzzy
+msgid "Threads"
+msgstr "/转到(_G)/下一条话题(_D)"
+
+#: pan/gui/prefs-ui.cc:470
+#, fuzzy
+msgid "E_xpand all threads when entering group"
+msgstr "获得全部所选择组内的新文章标题"
+
+# pan/message-window.c:1193
+#: pan/gui/prefs-ui.cc:473
+#, fuzzy
+msgid "_Headers"
+msgstr "标题"
+
+# pan/prefs.c:1888 pan/prefs.c:2057 pan/prefs.c:2422
+#: pan/gui/prefs-ui.cc:477
+msgid "Fonts"
+msgstr "字体"
+
+# pan/save-ui.c:379 pan/save-ui.c:426
+#: pan/gui/prefs-ui.cc:479
+#, fuzzy
+msgid "Use custom font in Group Pane:"
+msgstr "使用自定义文件名"
+
+# pan/save-ui.c:379 pan/save-ui.c:426
+#: pan/gui/prefs-ui.cc:484
+#, fuzzy
+msgid "Use custom font in Header Pane:"
+msgstr "使用自定义文件名"
+
+# pan/save-ui.c:379 pan/save-ui.c:426
+#: pan/gui/prefs-ui.cc:489
+#, fuzzy
+msgid "Use custom font in Body Pane:"
+msgstr "使用自定义文件名"
+
+#: pan/gui/prefs-ui.cc:494
+msgid "Monospace font:"
+msgstr ""
+
+# pan/prefs.c:1888 pan/prefs.c:2057 pan/prefs.c:2422
+#: pan/gui/prefs-ui.cc:498
+#, fuzzy
+msgid "_Fonts"
+msgstr "字体"
+
+#: pan/gui/prefs-ui.cc:502
+#, fuzzy
+msgid "Header Pane"
+msgstr "标题窗格"
+
+# pan/prefs.c:1917
+#: pan/gui/prefs-ui.cc:505 pan/gui/prefs-ui.cc:511 pan/gui/prefs-ui.cc:517
+#: pan/gui/prefs-ui.cc:523 pan/gui/prefs-ui.cc:529
+#, fuzzy
+msgid "Text:"
+msgstr "引用的文本3"
+
+# pan/prefs.c:1898
+#: pan/gui/prefs-ui.cc:507 pan/gui/prefs-ui.cc:513 pan/gui/prefs-ui.cc:519
+#: pan/gui/prefs-ui.cc:525 pan/gui/prefs-ui.cc:531
+#, fuzzy
+msgid "Background:"
+msgstr "信体背景"
+
+#: pan/gui/prefs-ui.cc:509
+msgid "Scores of 9999 or more:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:515
+msgid "Scores from 5000 to 9998:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:521
+msgid "Scores from 1 to 4999:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:527
+msgid "Scores from -9998 to -1:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:533
+msgid "Scores of -9999 or less:"
+msgstr ""
+
+# pan/prefs.c:2193
+#: pan/gui/prefs-ui.cc:535
+#, fuzzy
+msgid "Body Pane"
+msgstr "信体窗格"
+
+# pan/prefs.c:1913
+#: pan/gui/prefs-ui.cc:541
+#, fuzzy
+msgid "Quoted Text:"
+msgstr "引用的文本1"
+
+# pan/prefs.c:1919
+#: pan/gui/prefs-ui.cc:542
+#, fuzzy
+msgid "URL:"
+msgstr "URLs"
+
+#: pan/gui/prefs-ui.cc:543
+msgid "Signature:"
+msgstr ""
+
+# pan/prefs.c:1921 pan/prefs.c:2074
+#: pan/gui/prefs-ui.cc:545
+#, fuzzy
+msgid "_Colors"
+msgstr "颜色"
+
+#: pan/gui/prefs-ui.cc:549
+#, fuzzy
+msgid "Preferred Applications"
+msgstr "外部应用程序"
+
+# pan/pan-file-entry.c:66
+#: pan/gui/prefs-ui.cc:553
+#, fuzzy
+msgid "_Web Browser:"
+msgstr "浏览(_B)..."
+
+# pan/prefs.c:2812
+#: pan/gui/prefs-ui.cc:556
+#, fuzzy
+msgid "_Mail Reader:"
+msgstr "邮件服务器"
+
+#: pan/gui/prefs-ui.cc:558
+#, fuzzy
+msgid "A_pplications"
+msgstr "外部应用程序"
+
+#: pan/gui/save-ui.cc:61
+#, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+" \n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - 把组作为一个目录 (alt.binaries.pictures.trains)\n"
+"%G - 把组作为一个嵌套的目录 (/alt/binaries/pictures/trains)\n"
+" \n"
+"\"/home/user/News/Pan/%g\" 变成\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", 并且\n"
+"\"/home/user/News/Pan/%G\" 变成\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+
+# pan/articlelist.c:3146
+#: pan/gui/save-ui.cc:156
+#, fuzzy
+msgid "Pan: Save Articles"
+msgstr "另存文章为..."
+
+# pan/filter-ui.c:373 pan/rules/rule-edit-ui.c:811
+#: pan/gui/save-ui.cc:173
+msgid "Files"
+msgstr "文件"
+
+# pan/message-window.c:424
+#: pan/gui/save-ui.cc:176
+#, fuzzy
+msgid "Save _Text"
+msgstr "文字换行"
+
+# pan/rules/rule-edit-ui.c:164
+#: pan/gui/save-ui.cc:179
+#, fuzzy
+msgid "Save _Attachments"
+msgstr "保存附件于："
+
+# pan/message-window.c:890
+#: pan/gui/save-ui.cc:185
+#, fuzzy
+msgid "Path"
+msgstr "局部"
+
+#: pan/gui/save-ui.cc:191
+msgid "C_ustom path:"
+msgstr ""
+
+# pan/rules/rule-edit-ui.c:164
+#: pan/gui/save-ui.cc:195
+#, fuzzy
+msgid "Save Files to Path"
+msgstr "保存附件于："
+
+# pan/gui.c:2100
+#: pan/gui/save-ui.cc:208
+#, fuzzy
+msgid "_Path:"
+msgstr "/张贴(_P)"
+
+#: pan/gui/save-ui.cc:211
+#, c-format
+msgid "Group's _default path: %s"
+msgstr ""
+
+# pan/prefs.c:2191
+#: pan/gui/save-ui.cc:220
+#, fuzzy
+msgid "Group Management"
+msgstr "组窗格字体"
+
+#. sort by age
+#: pan/gui/save-ui.cc:224
+msgid "Add to the queue sorted by a_ge"
+msgstr ""
+
+# pan/save-ui.c:452
+#. top of queue
+#: pan/gui/save-ui.cc:229
+#, fuzzy
+msgid "Add to the _front of the queue"
+msgstr "添加任务到任务管理器的后面(_O)"
+
+# pan/save-ui.c:459
+#. bottom of queue
+#: pan/gui/save-ui.cc:234
+#, fuzzy
+msgid "Add to the _back of the queue"
+msgstr "添加任务到任务管理器的后面"
+
+#: pan/gui/score-add-ui.cc:86
+msgid "is more than"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:87
+msgid "is at most"
+msgstr ""
+
+# pan/gui.c:1976
+#: pan/gui/score-add-ui.cc:109
+#, fuzzy
+msgid "increase the article's score by"
+msgstr "/查看(_V)/填充(自动换行)文章主体(_W)"
+
+# pan/gui.c:1976
+#: pan/gui/score-add-ui.cc:110
+#, fuzzy
+msgid "decrease the article's score by"
+msgstr "/查看(_V)/填充(自动换行)文章主体(_W)"
+
+# pan/save-ui.c:418
+#: pan/gui/score-add-ui.cc:111
+#, fuzzy
+msgid "set the article's score to"
+msgstr "使用文章主题"
+
+# pan/save-ui.c:418
+#: pan/gui/score-add-ui.cc:112
+#, fuzzy
+msgid "watch the article (set its score to 9999)"
+msgstr "使用文章主题"
+
+#: pan/gui/score-add-ui.cc:113
+msgid "ignore the article (set its score to -9999)"
+msgstr ""
+
+# pan/gui-headers.c:271
+#: pan/gui/score-add-ui.cc:138
+#, fuzzy
+msgid "References"
+msgstr "参考"
+
+#: pan/gui/score-add-ui.cc:139
+msgid "Line Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:140
+msgid "Byte Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:141
+msgid "Crosspost Group Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:142
+msgid "Age (in days)"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:164
+msgid "the next week"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:165
+msgid "the next month"
+msgstr ""
+
+# pan/task-manager.c:775 pan/task-manager.c:796
+#: pan/gui/score-add-ui.cc:166
+#, fuzzy
+msgid "forever"
+msgstr "服务器"
+
+# pan/gui.c:1615 pan/task-manager.c:418
+#: pan/gui/score-add-ui.cc:191
+#, fuzzy
+msgid "contains"
+msgstr "连接"
+
+#: pan/gui/score-add-ui.cc:192
+msgid "doesn't contain"
+msgstr ""
+
+# pan/prefs.c:1461
+#: pan/gui/score-add-ui.cc:193
+#, fuzzy
+msgid "is"
+msgstr "杂项"
+
+#: pan/gui/score-add-ui.cc:194
+msgid "isn't"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:195
+msgid "starts with"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:196
+msgid "ends with"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:197
+msgid "matches regex"
+msgstr ""
+
+# pan/filter-ui.c:395
+#: pan/gui/score-add-ui.cc:525
+#, fuzzy
+msgid "Add and Re_score"
+msgstr "添加一个新服务器"
+
+# pan/rules/rule-edit-ui.c:775
+#: pan/gui/score-add-ui.cc:573
+#, fuzzy
+msgid "Pan: New Scoring Rule"
+msgstr "Pan：编辑规则"
+
+# pan/rules/rule-edit-ui.c:818
+#: pan/gui/score-add-ui.cc:592
+#, fuzzy
+msgid "New Scoring Rule"
+msgstr "新建规则"
+
+#: pan/gui/score-add-ui.cc:603
+msgid "If the group name"
+msgstr ""
+
+# pan/message-window.c:898
+#: pan/gui/score-add-ui.cc:610
+#, fuzzy
+msgid "And the article's"
+msgstr "每篇文章的行数："
+
+# pan/dialogs/dialog-about.c:89
+#: pan/gui/score-add-ui.cc:622
+#, fuzzy
+msgid "Then"
+msgstr "感谢"
+
+# pan/grouplist.c:533 pan/grouplist.c:938
+#: pan/gui/score-add-ui.cc:630
+#, fuzzy
+msgid "For"
+msgstr "文件夹"
+
+#: pan/gui/score-view-ui.cc:64
+#, fuzzy
+msgid "Close and Re_score"
+msgstr "关闭日志窗口。"
+
+#: pan/gui/score-view-ui.cc:167
+#, c-format
+msgid "File %s, Lines %d - %d"
+msgstr ""
+
+# pan/base/decode.c:458
+#: pan/gui/score-view-ui.cc:170
+#, fuzzy, c-format
+msgid "Name: \"%s\""
+msgstr "保存的“%s”"
+
+# pan/save-ui.c:280
+#: pan/gui/score-view-ui.cc:199
+#, fuzzy
+msgid "Pan: Article's Scores"
+msgstr "Pan：保存附件为"
+
+# pan/filter-ui.c:393 pan/identities/identity-ui.c:469
+# pan/rules/rule-ui.c:507
+#: pan/gui/score-view-ui.cc:225
+#, fuzzy
+msgid "Add"
+msgstr "添加新的"
+
+# pan/dialogs/dialog-newuser.c:686 pan/prefs.c:2584
+#: pan/gui/score-view-ui.cc:230
+#, fuzzy
+msgid "New Score"
+msgstr "新闻服务器"
+
+#: pan/gui/score-view-ui.cc:235
+msgid "Criteria"
+msgstr ""
+
+# pan/filter-ui.c:395
+#: pan/gui/score-view-ui.cc:258
+#, fuzzy
+msgid "Add a New Scoring Rule"
+msgstr "添加一个新的过滤器"
+
+# pan/identities/identity-ui.c:491
+#: pan/gui/score-view-ui.cc:265
+#, fuzzy
+msgid "Remove the Selected Scoring Rule"
+msgstr "删除选中的Profile"
+
+#: pan/gui/server-ui.cc:162
+msgid "Please specify the server's address."
+msgstr ""
+
+# pan/prefs.c:1309
+#. create the dialog
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Add a Server"
+msgstr "Pan：编辑服务器"
+
+# pan/prefs.c:1309
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Edit a Server's Settings"
+msgstr "Pan：编辑服务器"
+
+# pan/save-ui.c:292
+#: pan/gui/server-ui.cc:222
+msgid "Location"
+msgstr "位置"
+
+#: pan/gui/server-ui.cc:226
+msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
+msgstr ""
+
+# pan/prefs.c:2913
+#: pan/gui/server-ui.cc:227
+msgid "_Address:"
+msgstr "地址(_A)："
+
+#: pan/gui/server-ui.cc:231
+msgid "The news server's port number.  Typically 119."
+msgstr ""
+
+# pan/dialogs/dialog-newuser.c:493 pan/prefs.c:2802
+#: pan/gui/server-ui.cc:232
+msgid "Por_t:"
+msgstr "端口(_T)："
+
+#: pan/gui/server-ui.cc:235
+msgid "Login (if Required)"
+msgstr ""
+
+# pan/prefs.c:1420
+#: pan/gui/server-ui.cc:239
+msgid "_Username:"
+msgstr "用户名(_U)："
+
+#: pan/gui/server-ui.cc:240
+msgid ""
+"The username to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+# pan/dialogs/dialog-newuser.c:518
+#: pan/gui/server-ui.cc:244
+msgid "_Password:"
+msgstr "密码(_P)："
+
+#: pan/gui/server-ui.cc:245
+msgid ""
+"The password to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+# pan/base/decode.c:369
+#: pan/gui/server-ui.cc:248
+#, fuzzy
+msgid "Settings"
+msgstr "正在获取“%s”"
+
+# pan/gui.c:1615 pan/task-manager.c:418
+#: pan/gui/server-ui.cc:254
+msgid "Connection _Limit:"
+msgstr "连接限制(_L)："
+
+#: pan/gui/server-ui.cc:257
+msgid "After Two Weeks"
+msgstr ""
+
+#: pan/gui/server-ui.cc:258
+msgid "After One Month"
+msgstr ""
+
+#: pan/gui/server-ui.cc:259
+msgid "After Two Months"
+msgstr ""
+
+#: pan/gui/server-ui.cc:260
+#, fuzzy
+msgid "Never Expire Old Articles"
+msgstr "获取选中的文章"
+
+#: pan/gui/server-ui.cc:274
+#, fuzzy
+msgid "E_xpire Old Articles:"
+msgstr "获取选中的文章"
+
+# pan/save-ui.c:446
+#: pan/gui/server-ui.cc:277
+#, fuzzy
+msgid "Primary"
+msgstr "优先权"
+
+#: pan/gui/server-ui.cc:278
+msgid "Fallback"
+msgstr ""
+
+# pan/prefs.c:1376
+#: pan/gui/server-ui.cc:292
+#, fuzzy
+msgid "Server Rank:"
+msgstr "服务器端口："
+
+#: pan/gui/server-ui.cc:296
+msgid ""
+"Fallback servers are used for articles that can't be found on the "
+"primaries.  One common approach is to use free servers as primaries and "
+"subscription servers as fallbacks."
+msgstr ""
+
+#: pan/gui/server-ui.cc:420
+#, c-format
+msgid "Really delete \"%s\"?"
+msgstr ""
+
+# pan/prefs.c:2812
+#. dialog
+#: pan/gui/server-ui.cc:492
+msgid "Pan: Servers"
+msgstr "Pan：服务器"
+
+# pan/task-manager.c:775 pan/task-manager.c:796
+#: pan/gui/server-ui.cc:512
+msgid "Servers"
+msgstr "服务器"
+
+# pan/filter-ui.c:395
+#: pan/gui/server-ui.cc:538
+#, fuzzy
+msgid "Add a Server"
+msgstr "添加一个新服务器"
+
+#: pan/gui/server-ui.cc:548
+msgid "Edit a Server's Settings"
+msgstr ""
+
+# pan/dialogs/dialog-newuser.c:686 pan/prefs.c:2584
+#: pan/gui/server-ui.cc:555
+#, fuzzy
+msgid "Remove a Server"
+msgstr "新服务器"
+
+#. less than a mebi...
+#: pan/gui/task-pane.cc:210
+#, c-format
+msgid "%.2f KiB"
+msgstr ""
+
+#. less than a gibi...
+#: pan/gui/task-pane.cc:212
+#, c-format
+msgid "%.2f MiB"
+msgstr ""
+
+#: pan/gui/task-pane.cc:214
+#, c-format
+msgid "%.2f GiB"
+msgstr ""
+
+# pan/task-manager.c:614
+#: pan/gui/task-pane.cc:250
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
+msgstr "Pan%s任务管理器(%d个在队列中, %d个在运行, %d个失败)"
+
+# pan/task-manager.c:616
+#: pan/gui/task-pane.cc:252
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running)"
+msgstr "Pan%s任务管理器(%d个在队列中, %d个在运行"
+
+# pan/task-manager.c:870
+#: pan/gui/task-pane.cc:254
+#, fuzzy
+msgid "Pan: Tasks"
+msgstr "Pan：任务管理器"
+
+#: pan/gui/task-pane.cc:268
+#, c-format
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
+msgstr ""
+
+# pan/task-manager.c:409
+#: pan/gui/task-pane.cc:326
+msgid "Running"
+msgstr "正在运行"
+
+# pan/task-manager.c:406
+#: pan/gui/task-pane.cc:327
+msgid "Queued"
+msgstr "在队列中"
+
+#: pan/gui/task-pane.cc:328
+msgid "Stopped"
+msgstr ""
+
+# pan/filter-ui.c:406 pan/identities/identity-ui.c:489
+# pan/rules/rule-ui.c:520
+#: pan/gui/task-pane.cc:329
+#, fuzzy
+msgid "Removing"
+msgstr "移除"
+
+# pan/base/base-prefs.c:36
+#: pan/gui/task-pane.cc:330
+msgid "Unknown"
+msgstr "未知"
+
+#: pan/gui/task-pane.cc:354
+#, fuzzy, c-format
+msgid "%d%% Done; %d:%02d:%02d Remaining (%d @ %lu KiB/s)"
+msgstr "%d:%02d:%02d (%.2f KB/s)"
+
+# pan/task-manager.c:795
+#: pan/gui/task-pane.cc:358
+#, fuzzy, c-format
+msgid "%d%% Done; %s"
+msgstr "%完成"
+
+# pan/dialogs/pan-about.c:93
+#: pan/gui/task-pane.cc:366
+#, fuzzy, c-format
+msgid "to %s"
+msgstr "关于%s"
+
+#: pan/gui/task-pane.cc:433
+msgid "Restart Tasks"
+msgstr ""
+
+# pan/gui.c:1719
+#: pan/gui/task-pane.cc:438
+#, fuzzy
+msgid "Stop Tasks"
+msgstr "没有任务"
+
+# pan/rules/rule-manager.c:108
+#: pan/gui/task-pane.cc:443
+#, fuzzy
+msgid "Delete Tasks"
+msgstr "删除垃圾邮件"
+
+# pan/task-manager.c:794
+#: pan/gui/task-pane.cc:467
+msgid "Status"
+msgstr "状态"
+
+#: pan/gui/url.cc:92
+#, fuzzy, c-format
+msgid "Error starting URL: %s (Command was: %s)"
+msgstr "解析“外部编辑器”命令行：“%s”"
+
+# pan/nntp.c:481 pan/nntp.c:785
+#: pan/tasks/nntp.cc:214
+#, fuzzy, c-format
+msgid "Unable to set group: %s"
+msgstr "不能设置组“%s”：%s"
+
+# pan/filters/filter-aggregate.c:72 pan/filters/filter-binary.c:79
+# pan/filters/filter-phrase.c:104 pan/filters/filter-saved.c:79
+# pan/filters/filter-thread.c:75 pan/prefs.c:2194 pan/task-headers.c:447
+#: pan/tasks/nntp.cc:231
+#, fuzzy, c-format
+msgid "Error: %s"
+msgstr "错误"
+
+#: pan/tasks/socket-impl-gio.cc:112
+#, c-format
+msgid "Making a new connection to %*.*s"
+msgstr ""
+
+# pan/base/base-prefs.c:36
+#: pan/tasks/socket-impl-gio.cc:347
+#, fuzzy
+msgid "Unknown Error"
+msgstr "未知"
+
+# pan/pan.c:121
+#: pan/tasks/socket-impl-gio.cc:348
+#, fuzzy, c-format
+msgid "Error reading from socket: %s"
+msgstr "读套接字错。"
+
+# pan/task-save.c:102
+#: pan/tasks/task-article.cc:54 pan/tasks/task-article.cc:124
+#, fuzzy, c-format
+msgid "Saving %s"
+msgstr "正在保存“%s”"
+
+# pan/filter-edit-ui.c:861 pan/rules/rule-edit-ui.c:154
+#: pan/tasks/task-article.cc:56
+#, fuzzy, c-format
+msgid "Reading %s"
+msgstr "阅读"
+
+#: pan/tasks/task-article.cc:291
+msgid "Error initializing uulib"
+msgstr ""
+
+# pan/base/util-file.c:224
+#: pan/tasks/task-article.cc:302
+#, fuzzy, c-format
+msgid "Couldn't load \"%s\": %s"
+msgstr "不能创建目录“%s”：%s"
+
+# pan/base/decode.c:458
+#: pan/tasks/task-article.cc:335
+#, c-format
+msgid "Saved \"%s\""
+msgstr "保存的“%s”"
+
+# pan/base/acache.c:197
+#: pan/tasks/task-article.cc:339
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s. %s"
+msgstr "读文件出错“%s”: %s。"
+
+# pan/base/acache.c:197
+#: pan/tasks/task-article.cc:341
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s."
+msgstr "读文件出错“%s”: %s。"
+
+# pan/task-grouplist.c:423
+#: pan/tasks/task-groups.cc:40
+#, fuzzy, c-format
+msgid "Getting group list from \"%s\""
+msgstr "正在从服务器“%s”中获取信的组"
+
+# pan/task-headers.c:304
+#: pan/tasks/task-groups.cc:121
+#, fuzzy, c-format
+msgid "Fetched %lu Groups"
+msgstr "为“%2$s”取来%1$u个标题"
+
+# pan/base/decode.c:369
+#: pan/tasks/task-post.cc:34
+#, fuzzy, c-format
+msgid "Posting \"%s\""
+msgstr "正在获取“%s”"
+
+# pan/task-grouplist.c:423
+#: pan/tasks/task-xover.cc:71
+#, fuzzy, c-format
+msgid "Getting all headers for \"%s\""
+msgstr "正在为“%s”获取新标题"
+
+# pan/task-grouplist.c:423
+#: pan/tasks/task-xover.cc:73
+#, c-format
+msgid "Getting new headers for \"%s\""
+msgstr "正在为“%s”获取新标题"
+
+#. SAMPLE
+#: pan/tasks/task-xover.cc:75
+#, c-format
+msgid "Sampling headers for \"%s\""
+msgstr "为“%s”获取标题"
+
+# pan/message-window.c:709 pan/message-window.c:727 pan/message-window.c:742
+#: pan/tasks/task-xover.cc:321
+#, fuzzy, c-format
+msgid "%s (%lu parts, %lu articles)"
+msgstr " (%2$lu篇文章中包含%1$lu行)"
+
+# pan/base/gnksa.c:957
+#: pan/usenet-utils/gnksa.cc:879
+#, c-format
+msgid "No email address provided; generating message-id with domain \"%s\""
+msgstr "没有提供电子邮件地址；正在用域名“%s”创建消息号"
+
+#: pan/usenet-utils/message-check.cc:123
+msgid "Warning: Reply seems to be top-posted."
+msgstr ""
+
+#: pan/usenet-utils/message-check.cc:144
+msgid "Warning: The signature marker should be \"-- \", not \"--\"."
+msgstr ""
+
+# pan/base/message-check.c:97
+#: pan/usenet-utils/message-check.cc:161
+#, fuzzy
+msgid "Warning: Signature prefix with no signature."
+msgstr "警告：称谓不需要签名。"
+
+# pan/base/message-check.c:104
+#: pan/usenet-utils/message-check.cc:166
+#, fuzzy
+msgid "Warning: Signature is more than 4 lines long."
+msgstr "警告：签名超过了4行"
+
+# pan/base/message-check.c:104
+#: pan/usenet-utils/message-check.cc:171
+#, fuzzy
+msgid "Warning: Signature is more than 80 characters wide."
+msgstr "警告：签名超过了4行"
+
+# pan/base/message-check.c:144
+#: pan/usenet-utils/message-check.cc:196
+#, fuzzy, c-format
+msgid "Warning: %d lines are more than 80 characters wide."
+msgstr "警告：消息中%d行超过80个字符。"
+
+# pan/base/message-check.c:179
+#: pan/usenet-utils/message-check.cc:219
+#, fuzzy
+msgid "Error: Message is empty."
+msgstr "错误：消息是空的。"
+
+# pan/base/message-check.c:228
+#: pan/usenet-utils/message-check.cc:254
+#, fuzzy
+msgid "Warning: The message is entirely quoted text!"
+msgstr "警告：消息全是引用的文本！"
+
+# pan/base/message-check.c:229
+#: pan/usenet-utils/message-check.cc:255
+#, fuzzy
+msgid "Warning: The message is mostly quoted text."
+msgstr "警告：消息大部分是引用的文本！"
+
+# pan/base/message-check.c:320
+#: pan/usenet-utils/message-check.cc:305
+#, fuzzy
+msgid "Error: Message appears to have no new content."
+msgstr "错误：似乎消息没有新的内容。"
+
+# pan/base/message-check.c:369 pan/base/message-check.c:422
+#: pan/usenet-utils/message-check.cc:340 pan/usenet-utils/message-check.cc:375
+#, fuzzy, c-format
+msgid "Warning: Unknown group \"%s\"."
+msgstr "警告：未知的组：“%s”。"
+
+# pan/base/message-check.c:378
+#: pan/usenet-utils/message-check.cc:347
+#, fuzzy
+msgid "Warning: Following-Up to too many groups."
+msgstr "警告：跟随的组太多。"
+
+# pan/base/message-check.c:394
+#: pan/usenet-utils/message-check.cc:358
+#, fuzzy
+msgid "Error: No Subject specified."
+msgstr "错误：没有指定主题。"
+
+# pan/base/message-check.c:428
+#: pan/usenet-utils/message-check.cc:383
+#, fuzzy, c-format
+msgid "Warning: Group \"%s\" is read-only."
+msgstr "警告：组“%s”是只读的。"
+
+# pan/base/message-check.c:443
+#: pan/usenet-utils/message-check.cc:392
+#, fuzzy
+msgid "Error: Posting to a very large number of groups."
+msgstr "错误：要张贴到太多的组。"
+
+# pan/base/message-check.c:450
+#: pan/usenet-utils/message-check.cc:397
+#, fuzzy
+msgid "Warning: Posting to a large number of groups."
+msgstr "警告：要张贴到太多的组。"
+
+# pan/base/message-check.c:459
+#: pan/usenet-utils/message-check.cc:404
+#, fuzzy
+msgid "Warning: Crossposting without setting Followup-To header."
+msgstr "警告：交叉张贴时没有设定同时发送项。"
+
+# pan/dialogs/dialog-newuser.c:349
+#: pan/usenet-utils/message-check.cc:428
+#, fuzzy
+msgid "Error: Bad email address."
+msgstr "电子邮件地址："
+
+#: pan/usenet-utils/message-check.cc:437
+msgid "Warning: Most newsgroups frown upon HTML posts."
+msgstr ""
+
+# pan/base/message-check.c:394
+#: pan/usenet-utils/message-check.cc:467
+#, fuzzy
+msgid "Error: No Recipients."
+msgstr "错误：没有指定主题。"
+
+# pan/base/util-wrap.c:294
+#: pan/usenet-utils/text-massager.cc:309
+msgid "> [quoted text muted]"
+msgstr "> [引用的文本被删除]"
+
+#: pan/usenet-utils/utf8-utils.cc:252
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgstr ""
+
+# pan/gui.c:2100
+#, fuzzy
+#~ msgid "_Posting"
+#~ msgstr "张贴"
+
+# pan/rules/rule-edit-ui.c:164
+#, fuzzy
+#~ msgid "_Save Attachments..."
+#~ msgstr "保存附件于："
+
+# pan/articlelist.c:3455
+#, fuzzy
+#~ msgid "Post New Article"
+#~ msgstr "正在排序文章"
+
+# pan/gui.c:2103
+#, fuzzy
+#~ msgid "Follow-up to Article"
+#~ msgstr "随贴到新闻组"
+
+# pan/filter-edit-ui.c:742
+#, fuzzy
+#~ msgid "_Post Article"
+#~ msgstr "文章(_A)"
+
+# pan/message-send.c:345
+#, fuzzy
+#~ msgid "Post this Article Now"
+#~ msgstr "正在张贴文章“%s”"
+
+# pan/group-action.c:282
+#, fuzzy
+#~ msgid "Are you sure you want to close this window?"
+#~ msgstr "您确定要删除这些%d组/文件夹及其文章么?"
+
+# pan/base/message-check.c:581
+#, fuzzy
+#~ msgid "Error: No Newsgroups specified."
+#~ msgstr "错误：没有制定收信人。"
+
+# pan/prefs.c:1812
+#~ msgid "Message-Id"
+#~ msgstr "消息号"
+
+# msgstr "%3$.1f秒内在“%2$s”中保存了%1$d篇文章(%4$.0f篇/秒)"
+# pan/base/file-headers.c:732
+#, fuzzy
+#~ msgid "Saved newsrc files in %.1f seconds"
+#~ msgstr "用时%3$.1f秒在“%2$s”中保存了%1$d篇文章（%4$.0f篇/秒）"
+
+# pan/gui.c:1611
+#, fuzzy
+#~ msgid "%d connections totaling %.1f KiB per second"
+#~ msgstr "%d个连接，总共%.1f KB/s"
+
+# pan/message-window.c:1013
+#, fuzzy
+#~ msgid "_Reply-To Header:"
+#~ msgstr "回复标题："
+
+# pan/dialogs/dialog-newuser.c:314 pan/identities/identity-edit-ui.c:218
+# pan/message-window.c:1032
+#, fuzzy
+#~ msgid "Or_ganization Header:"
+#~ msgstr "单位标题："
+
+# pan/gui.c:2029
+#, fuzzy
+#~ msgid "Automatic Downloads"
+#~ msgstr "/文章(_A)/下载(_L)"
+
+# pan/rules/rule-edit-ui.c:164
+#, fuzzy
+#~ msgid "Save a_ttachments to path:"
+#~ msgstr "保存附件于："
+
+# pan/base/acache.c:197
+#, fuzzy
+#~ msgid "Error decoding \"%s\": %s"
+#~ msgstr "读文件出错“%s”: %s。"
+
+# pan/base/decode.c:86 pan/task-save.c:294
+#~ msgid "UNKNOWN"
+#~ msgstr "未知"
+
+# pan/base/decode.c:403
+#, fuzzy
+#~ msgid "Decode can't access directory \"%s\""
+#~ msgstr "解码时不能访问路径“%s”"
+
+# pan/base/decode.c:443
+#~ msgid "Could not decode article - file may be corrupt/incomplete"
+#~ msgstr "不能解码文章-文件可能有冲突或不完整"
+
+# pan/base/decode.c:465
+#~ msgid "Checksum for `%s' part %d failed - file is corrupt"
+#~ msgstr "“%s”的%d部分校验和错误-文件有冲突"
+
+# pan/base/decode.c:469
+#~ msgid "Checksum for `%s' failed - file may be corrupt"
+#~ msgstr "“%s”的校验和错误-文件可能有冲突"
+
+# pan/prefs.c:2072
+#, fuzzy
+#~ msgid "_Watch Subthread"
+#~ msgstr "/跟踪话题(_W)"
+
+# pan/prefs.c:2070
+#, fuzzy
+#~ msgid "_Ignore Subthread"
+#~ msgstr "/忽略话题(_I)"
+
+# pan/prefs.c:1921 pan/prefs.c:2074
+#, fuzzy
+#~ msgid "Colors"
+#~ msgstr "颜色"
+
+# pan/prefs.c:1900
+#, fuzzy
+#~ msgid "Header Pane background:"
+#~ msgstr "使用预设背景"
+
+# pan/task-headers.c:431
+#, fuzzy
+#~ msgid "Read articles:"
+#~ msgstr "正在获取%d篇文章"
+
+# pan/message-window.c:898
+#, fuzzy
+#~ msgid "Unread articles:"
+#~ msgstr "每篇文章的行数："
+
+# pan/base/file-grouplist.c:272
+#, fuzzy
+#~ msgid ""
+#~ "Unsupported data version (%d) for server properties.  Are you running an "
+#~ "old version of Pan by accident?"
+#~ msgstr ""
+#~ "“%2$s”数据文件有不被支持的数据版本%1$d。\n"
+#~ "您意外地运行着老版本的Pan么?"
+
+# pan/base/util-file.c:224
+#, fuzzy
+#~ msgid "Couldn't create temporary file: %s"
+#~ msgstr "不能创建临时文件：%s"
+
+# pan/base/util-file.c:435
+#~ msgid "Error renaming \"%s\" as \"%s\": %s."
+#~ msgstr "重命名“%s”为“%s”时失败: %s。"
+
+# pan/base/util-file.c:435
+#, fuzzy
+#~ msgid "Can't backup \"%s\" as \"%s\": %s"
+#~ msgstr "重命名“%s”为“%s”时失败: %s。"
+
+# pan/rules/rule-xml.c:265
+#~ msgid "Can't write to \"%s\": %s"
+#~ msgstr "无法将规则写入到“%s”：%s"
+
+#~ msgid "Body"
+#~ msgstr "信体"
+
+# pan/base/group.c:903
+#, fuzzy
+#~ msgid "Open a Draft Article from Disk"
+#~ msgstr "从“%2$s”中终止%1$u篇文章"
+
+# pan/article-toolbar.c:871 pan/articlelist.c:933 pan/filter-edit-ui.c:748
+# pan/prefs.c:1817 pan/task-save.c:649
+#, fuzzy
+#~ msgid "subject"
+#~ msgstr "主题"
+
+# pan/article-toolbar.c:872 pan/articlelist.c:935 pan/filter-edit-ui.c:753
+# pan/prefs.c:1809 pan/task-save.c:651
+#, fuzzy
+#~ msgid "author"
+#~ msgstr "作者"
+
+# pan/message-window.c:1048
+#, fuzzy
+#~ msgid "Change"
+#~ msgstr "字符集"
+
+# pan/gui.c:1615 pan/task-manager.c:418
+#, fuzzy
+#~ msgid "Connections"
+#~ msgstr "连接"
+
+# pan/rules/rule-edit-ui.c:814
+#, fuzzy
+#~ msgid "Active"
+#~ msgstr "操作"
+
+# pan/article-actions.c:158
+#~ msgid "Article %s (%s) canceled"
+#~ msgstr "取消了文章 %s (%s)"
+
+# pan/article-actions.c:197
+#~ msgid ""
+#~ "Unable to cancel article: Couldn't find matching article in folder `pan."
+#~ "sent'!"
+#~ msgstr "无法取消文章：无法在文件夹“pan.sent”中找到匹配的文章！"
+
+# pan/article-actions.c:231
+#~ msgid ""
+#~ "Unable to supersede article: Couldn't find matching article in folder "
+#~ "`pan.sent'!"
+#~ msgstr "无法暂停写作：无法在文件夹“pan.sent”中找到匹配的文章！"
+
+# pan/article-filter-ui.c:176
+#~ msgid ""
+#~ "Addresses and Subjects can be changed before being added\n"
+#~ "to the Spam/Bozo filters.\n"
+#~ "\n"
+#~ "For example, a subject of `-->MAKE MONEY FAST<--' will\n"
+#~ "likely find more spam if shortened to just `MAKE MONEY FAST'.\n"
+#~ "\n"
+#~ "Likewise, \"Dudley Dursley\" <ddursley@spambot.com>' could\n"
+#~ "be shortened to `<ddurseley@spambot.com>' or even `<*@spambot.com>'.\n"
+#~ "\n"
+#~ "Wildcards are supported and comparisons are case-insensitive.\n"
+#~ "For more complex pattern matching, enable the regular expression\n"
+#~ "button.  http://pan.rebelbase.com/regexp.txt for a tutorial.\n"
+#~ msgstr ""
+#~ "在把地址和主题加入到垃圾邮件过滤器之前可以修改。\n"
+#~ "\n"
+#~ "比如, 简化主题“-->MAKE MONEY FAST<--”为“MAKE MONEY FAST”可以截获更多的垃圾"
+#~ "邮件。\n"
+#~ "\n"
+#~ "同样,“Dudley Dursley <ddursley@spambot.com>”可以简化为“<ddurseley@spambot."
+#~ "com>”, 甚至更短如“<*@spambot.com>”。\n"
+#~ "\n"
+#~ "支持通配符,比对时不区分大小写。\n"
+#~ "需要更复杂过滤类型, 选中规则表达式按钮。教程见http://pan.rebelbase.com/"
+#~ "regexp.txt。\n"
+
+# ，fuzzy on Filter Out
+# pan/article-filter-ui.c:218
+#~ msgid "Pan: Filter Out Articles"
+#~ msgstr "Pan：过滤文章"
+
+# pan/article-filter-ui.c:237
+#~ msgid "Add Author to Bozo Filter"
+#~ msgstr "将作者添加到Bozo过滤器"
+
+# pan/filter-edit-ui.c:769
+#~ msgid "Regular Expression"
+#~ msgstr "正则表达式"
+
+# pan/article-filter-ui.c:253
+#~ msgid "Add Author to Spam Filter"
+#~ msgstr "将作者添加到垃圾邮件过滤器"
+
+# pan/article-filter-ui.c:269
+#~ msgid "Add Subject to Spam Filter"
+#~ msgstr "将主题添加到垃圾邮件过滤器"
+
+# pan/article-find.c:324
+#~ msgid "Pan: Find Message"
+#~ msgstr "Pan：查找信息"
+
+# pan/article-find.c:396
+#~ msgid "Unread Only"
+#~ msgstr "只包含未读的"
+
+# pan/article-find.c:410
+#~ msgid "Case Sensitive"
+#~ msgstr "区分大小写"
+
+# pan/grouplist.c:687
+#~ msgid "Find:"
+#~ msgstr "查找："
+
+# pan/grouplist.c:696
+#~ msgid ""
+#~ "Type in a search string and press ENTER.\n"
+#~ "Wildcards are allowed."
+#~ msgstr "键入字符串并按回车键开始在组中搜索。允许使用通配符。"
+
+#~ msgid "You must download the article before you can cancel it."
+#~ msgstr "您必须在下载文章后才能取消它。"
+
+#~ msgid "You must download the article before you can supersede it."
+#~ msgstr "您必须在下载文章后才能取代它。"
+
+# pan/articlelist.c:3144 pan/articlelist.c:3148 pan/articlelist.c:3154
+# pan/grouplist.c:58 pan/grouplist.c:63 pan/grouplist.c:66 pan/grouplist.c:69
+# pan/grouplist.c:71
+#~ msgid "/---"
+#~ msgstr "/---"
+
+# pan/articlelist.c:3147
+#~ msgid "/Save Article A_ttachments"
+#~ msgstr "/保存文章的附件(_T)"
+
+# pan/articlelist.c:3149
+#~ msgid "/D_ownload Flagged"
+#~ msgstr "/下载被标记的文章(_O)"
+
+# pan/articlelist.c:3150
+#~ msgid "/_Flag"
+#~ msgstr "/做标记(_F)"
+
+# pan/articlelist.c:3152
+#~ msgid "/_Unflag"
+#~ msgstr "/取消标记(_U)"
+
+#~ msgid "/Add to Bo_zo or Spam Filter..."
+#~ msgstr "加入Bozo或者垃圾邮件过滤器(_Z)..."
+
+#~ msgid "/_Copy to Folder"
+#~ msgstr "/复制到文件夹(_C)"
+
+# pan/articlelist.c:3155
+#~ msgid "/_Delete"
+#~ msgstr "/删除(_D)"
+
+# pan/articlelist.c:3492
+#~ msgid "Loading group \"%s\""
+#~ msgstr "正在加载组“%s”"
+
+# pan/articlelist.c:3463
+#~ msgid "Filtering Articles"
+#~ msgstr "正在过滤文章"
+
+# pan/articlelist.c:3468
+#~ msgid "Updating Header Pane..."
+#~ msgstr "正在更新标题窗格..."
+
+# pan/base/acache.c:361
+#~ msgid "Error saving article \"%s\" (is %s full?)"
+#~ msgstr "保存文章出错“%s”（%s满了？）"
+
+# msgstr "文章缓存区里有%2$d个文件，占用%1$.1f MB"
+# pan/base/acache.c:230
+#~ msgid "Directory \"%s\" contains %.1f MB in %d files"
+#~ msgstr "目录“%s”共占用%.1f MB，有%d个文件"
+
+#~ msgid "Don't know what to do with header \"%s\""
+#~ msgstr "不能处理头“%s”"
+
+# pan/base/article.c:1301
+#~ msgid "Couldn't parse a Message-ID from the raw message!"
+#~ msgstr "从原始信息中不能解析出信息号! "
+
+# pan/base/article.c:1305
+#~ msgid "Unparseable Subject"
+#~ msgstr "无法解析的主题"
+
+# pan/base/util-file.c:325
+#~ msgid "unknown@spammesenseless.com"
+#~ msgstr "unknown@spammesenseless.com"
+
+# pan/base/decode.c:369
+#~ msgid "Decoding \"%s\""
+#~ msgstr "正在解码“%s”"
+
+# pan/base/decode.c:431
+#~ msgid "Decode unable to create file \"%s\" %s"
+#~ msgstr "解码时不能创建文件“%s” %s"
+
+# pan/base/acache.c:361
+#~ msgid "Error saving file \"%s\" - is the disk full?"
+#~ msgstr "保存文章“%s”出错－磁盘满了？"
+
+# pan/base/decode.c:481
+#~ msgid "Decoded \"%s\" from group \"%s\", \"%s\""
+#~ msgstr "从组“%2$s”解码得到“%1$s”, “%3$s”"
+
+# pan/base/file-grouplist.c:266
+#~ msgid "Loading %u of %d groups"
+#~ msgstr "正在加载%2$d个组的第%1$u个"
+
+#~ msgid ""
+#~ "Skipped %d groups due to possible corruption in \"%s\" and \"%s\".  You "
+#~ "may want to delete these files and get a new grouplist from your news "
+#~ "server."
+#~ msgstr ""
+#~ "在“%2$s”和“%3$s”中跳过了%1$d个组。 您可能希望删除这些文件并从新的服务器获"
+#~ "取新的组列表。"
+
+#~ msgid "Loaded %d groups for server \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr "用时%3$.1f秒为“%2$s”服务器加载了%1$d个组（%4$.0f组/秒）"
+
+# pan/base/file-grouplist.c:450
+#~ msgid "Saved %d of %u groups"
+#~ msgstr "保存了%2$u个组中的%1$d个"
+
+# pan/base/acache.c:361
+#~ msgid "Error saving list of groups to \"%s\" - is the disk full?"
+#~ msgstr "保存组列表到“%s”出错－磁盘满了？"
+
+# msgstr "%3$.1f秒内从服务器“%2$s”保存了%1$d个组(%4$.0f个/秒)"
+# pan/base/file-grouplist.c:560
+#~ msgid "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr "用时%3$.1f秒在“%2$s”服务器中保存了%1$d个组（%4$.0f组/秒）"
+
+# pan/base/file-headers.c:187
+#~ msgid "Loaded %d of %d articles"
+#~ msgstr "加载了%2$d篇文章中的%1$d篇"
+
+# pan/base/file-headers.c:201
+#~ msgid ""
+#~ "Pan skipped %d corrupt headers from the local cache for group \"%s\"."
+#~ msgstr ""
+#~ "Pan从组%2$s的本地缓存中跳过了%1$d个标题被破坏的文章。\n"
+#~ "您可以清空这个组而下载新的标题。"
+
+# pan/base/file-headers.c:201
+#~ msgid "You may want to empty this group and download fresh headers."
+#~ msgstr ""
+#~ "Pan从组%2$s的本地缓存中跳过了%1$d个标题被破坏的文章。\n"
+#~ "您可以清空这个组而下载新的标题。"
+
+# pan/base/file-headers.c:435 pan/base/file-headers.c:554
+# pan/base/file-headers.c:566
+#~ msgid "The group will not be saved -- can't create file \"%s\""
+#~ msgstr "组将不能保存--不能创建文件“%s”"
+
+#~ msgid "Unable to save headers for group \"%s\" - is the disk full?"
+#~ msgstr "不能保存组“%s”的头信息--检查磁盘是否已满？"
+
+# pan/base/group.c:1013
+#~ msgid "(No Group)"
+#~ msgstr "(没有组)"
+
+#~ msgid ""
+#~ "ERROR: message uses characters not specified in charset '%s' - possibly "
+#~ "use '%s' instead?"
+#~ msgstr "错误：消息中使用了字符集“%s”没有定义的字符 - 可以用“%s”代替么？"
+
+# pan/base/message-check.c:434
+#~ msgid ""
+#~ "INFORMATION: Please be aware that posts to \"%s\" will not appear until "
+#~ "approved by the group's moderator."
+#~ msgstr "提示：请注意，在组的管理者未审定之前，张贴到“%s”的文章将不被显示。"
+
+# pan/base/message-check.c:487
+#~ msgid "ERROR: invalid address \"%s\""
+#~ msgstr "错误：无效的地址“%s”"
+
+# pan/base/message-check.c:570
+#~ msgid "ERROR: Must have one author in From: line"
+#~ msgstr "错误：在“发信人”栏中必须有一位作者"
+
+# pan/base/newsrc-port.c:173
+#~ msgid "Imported %d groups (%d new) from \"%s\""
+#~ msgstr "从“%3$s”中导入%1$d个组(%2$d个新组)"
+
+# pan/base/newsrc-port.c:221
+#~ msgid "Couldn't create file \"%s\" to export newsrc file %s"
+#~ msgstr "导出newsrc文件%2$s时，不能创建文件“%1$s”"
+
+# pan/base/newsrc-port.c:270
+#~ msgid "Exported %d groups (%d subscribed) to \"%s\""
+#~ msgstr "导出%d个组(%d个是订阅的)到“%s”"
+
+# pan/base/pan-config.c:529
+#~ msgid "Imported %d lines from Gnome config file"
+#~ msgstr "从~/.gnome/Pan导入%d行"
+
+# pan/base/pan-config.c:567
+#~ msgid "%s does not appear to be a valid datafile"
+#~ msgstr "%s似乎不是一个有效的数据文件"
+
+# pan/base/util-file.c:242
+#~ msgid "Unable to access or create directory \"%s\""
+#~ msgstr "不能创建目录“%s”"
+
+# pan/base/util-file.c:405 pan/base/util-file.c:410
+#~ msgid "Can't open file \"%s\""
+#~ msgstr "不能打开文件“%s”"
+
+# pan/dialogs/dialog-about.c:52
+#~ msgid "A newsreader for GNOME"
+#~ msgstr "GNOME下的新闻阅读器"
+
+# pan/dialogs/dialog-about.c:60
+#~ msgid "Programmer"
+#~ msgstr "程序员"
+
+# pan/dialogs/dialog-about.c:62
+#~ msgid "Programmer & Documentation"
+#~ msgstr "编程和文档"
+
+# pan/dialogs/dialog-about.c:64
+#~ msgid "Project Originator, Programmer"
+#~ msgstr "项目创始人，程序员"
+
+# pan/dialogs/dialog-about.c:66
+#~ msgid "Programmer, 0.6 - 0.7"
+#~ msgstr "编程, 0.6 - 0.7"
+
+#~ msgid ""
+#~ "Pan %s Translations\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Code or Patches\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Suggestions and Testing\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Contributors to previous versions are listed at\n"
+#~ "http://pan.rebelbase.com/CREDITS"
+#~ msgstr ""
+#~ "Pan %s 翻译\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s 编程或改进\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s 建议和测试\n"
+#~ "%s\n"
+#~ "\n"
+#~ "对先前版本做贡献者的名单列在\n"
+#~ "http://pan.rebelbase.com/CREDITS"
+
+#~ msgid "Default charset:"
+#~ msgstr "预设字符集："
+
+# pan/dialogs/dialog-headers.c:155
+#~ msgid "Pan: Download Headers for group `%s'"
+#~ msgstr "Pan: 从组“%s”中下载标题"
+
+# pan/dialogs/dialog-headers.c:168
+#~ msgid "Pan: Download Headers"
+#~ msgstr "Pan：下载标题"
+
+# pan/dialogs/dialog-headers.c:168
+#~ msgid "Download new headers"
+#~ msgstr "下载新的标题"
+
+# pan/dialogs/dialog-headers.c:173
+#~ msgid "Download all Headers"
+#~ msgstr "下载全部标题"
+
+# pan/dialogs/dialog-headers.c:197
+#~ msgid "Download Article Bodies too"
+#~ msgstr "同时下载文章主体"
+
+# pan/dialogs/dialog-log-viewer.c:101
+#~ msgid "Save the log to a file"
+#~ msgstr "保存此日志到文件"
+
+# pan/dialogs/dialog-log-viewer.c:135
+#~ msgid "/_File/_Save..."
+#~ msgstr "/文件(_F)/保存(_S)..."
+
+# pan/dialogs/dialog-log-viewer.c:136
+#~ msgid "/_File/Clea_r"
+#~ msgstr "/文件(_F)/清除(_R)"
+
+# pan/dialogs/dialog-log-viewer.c:137 pan/gui.c:1926 pan/gui.c:1930
+# pan/gui.c:1932 pan/message-window.c:297 pan/message-window.c:312
+# pan/message-window.c:314
+#~ msgid "/_File/---"
+#~ msgstr "/文件(_F)/---"
+
+# pan/dialogs/dialog-log-viewer.c:138
+#~ msgid "/_File/_Close"
+#~ msgstr "/文件(_F)/关闭(_C)"
+
+# pan/gui.c:684
+#~ msgid "Pan: Status Log"
+#~ msgstr "Pan：状态日志"
+
+# pan/dialogs/dialog-log-viewer.c:282 pan/dialogs/dialog-log-viewer.c:286
+#~ msgid "Clear the log window"
+#~ msgstr "清除日志窗口。"
+
+# pan/dialogs/dialog-log-viewer.c:298
+#~ msgid "Time"
+#~ msgstr "时间"
+
+# pan/dialogs/dialog-log-viewer.c:299
+#~ msgid "Log Entry"
+#~ msgstr "日志入口"
+
+# pan/dialogs/dialog-newuser.c:290
+#~ msgid ""
+#~ "When you post a message to a newsgroup, your display name will appear in "
+#~ "the From field.  Type your name in as you would like it to appear."
+#~ msgstr ""
+#~ "当您向新闻组张贴消息时，您的名字将显示在“自”栏。如果您希望显示，请键入您的"
+#~ "名字。"
+
+# pan/dialogs/dialog-newuser.c:296
+#~ msgid "Display Name:"
+#~ msgstr "显示名称："
+
+# pan/dialogs/dialog-newuser.c:304
+#~ msgid "For example: John Doe"
+#~ msgstr "例如：John Doe"
+
+# pan/dialogs/dialog-newuser.c:308
+#~ msgid ""
+#~ "If you belong to an organization and would like for your organization's "
+#~ "name to appear with your posts, type in your organization name below.  "
+#~ "This information is optional, you may leave it blank."
+#~ msgstr ""
+#~ "如果您属于一个组织，并且乐于在您的消息中显示组织的名称，请在下面键入组织名"
+#~ "称。此信息是可选的，您可以空着它。"
+
+# pan/dialogs/dialog-newuser.c:314 pan/identities/identity-edit-ui.c:218
+# pan/message-window.c:1032
+#~ msgid "Organization:"
+#~ msgstr "单位："
+
+# pan/dialogs/dialog-newuser.c:343
+#~ msgid ""
+#~ "People can reply to your posts by sending you an email message at the "
+#~ "following address."
+#~ msgstr "其它人回复您张贴的消息时，向如下地址发送电子邮件。"
+
+# pan/dialogs/dialog-newuser.c:358
+#~ msgid "For example: user@host.com"
+#~ msgstr "例如: user@host.com"
+
+# pan/dialogs/dialog-newuser.c:362
+#~ msgid ""
+#~ "Please enter the name of the mail server to use when sending email "
+#~ "messages."
+#~ msgstr "请输入发送电子邮件消息时使用的邮件服务器名称。"
+
+# pan/dialogs/dialog-newuser.c:368
+#~ msgid "SMTP Server:"
+#~ msgstr "SMTP服务器："
+
+# pan/dialogs/dialog-newuser.c:380
+#~ msgid "SMTP Port:"
+#~ msgstr "SMTP端口："
+
+# pan/dialogs/dialog-newuser.c:453
+#~ msgid "default"
+#~ msgstr "预设"
+
+# pan/dialogs/dialog-newuser.c:474
+#~ msgid "Type the name of your Internet news server."
+#~ msgstr "键入您使用的互联网新闻服务器的名称。"
+
+# pan/dialogs/dialog-newuser.c:480
+#~ msgid "News (NNTP) server:"
+#~ msgstr "新闻 (NNTP)服务器："
+
+# pan/dialogs/dialog-newuser.c:493 pan/prefs.c:2802
+#~ msgid "Port:"
+#~ msgstr "端口："
+
+# pan/dialogs/dialog-newuser.c:501
+#~ msgid ""
+#~ "If you must log on to your news (NNTP) server, then select the check box "
+#~ "below."
+#~ msgstr "如果您必须登录您的新闻(NNTP)服务器，那么请选择下面的检查框。"
+
+# pan/dialogs/dialog-newuser.c:507
+#~ msgid "My server requires a password."
+#~ msgstr "我的服务器要求一个密码。"
+
+# pan/dialogs/dialog-newuser.c:511
+#~ msgid "Account name:"
+#~ msgstr "账户名称："
+
+# pan/dialogs/dialog-newuser.c:518
+#~ msgid "Password:"
+#~ msgstr "密码："
+
+# pan/dialogs/dialog-newuser.c:547
+#~ msgid ""
+#~ "Type in the name you would like Pan to show when referring to this "
+#~ "profile you have just setup.  You can name the profile anything you want "
+#~ "to."
+#~ msgstr ""
+#~ "键入您刚建立的Pan使用此Profile时要显示的名称。您可以任意命名此Profile。"
+
+# pan/dialogs/dialog-newuser.c:553
+#~ msgid "Profile name:"
+#~ msgstr "Profile名称："
+
+# pan/dialogs/dialog-newuser.c:563
+#~ msgid "For example: UUNET Server"
+#~ msgstr "例如：UUNET服务器"
+
+# pan/dialogs/dialog-newuser.c:634
+#~ msgid "Pan Setup Wizard"
+#~ msgstr "Pan安装向导"
+
+# pan/dialogs/dialog-newuser.c:660
+#~ msgid "Thank you for trying Pan!"
+#~ msgstr "感谢您试用Pan!"
+
+# pan/dialogs/dialog-newuser.c:667
+#~ msgid ""
+#~ "Thank you for trying Pan!\n"
+#~ " \n"
+#~ "If you are new to Usenet,\n"
+#~ "http://pan.rebelbase.com/intro.php\n"
+#~ "is a starting point to see what Usenet is,\n"
+#~ "where to find a free news server,\n"
+#~ "and how to use Pan.\n"
+#~ " \n"
+#~ "Since this is your first time running Pan,\n"
+#~ " we'll need to gather some information.\n"
+#~ msgstr ""
+#~ "感谢您使用Pan!\n"
+#~ " \n"
+#~ "如果您刚接触Usenet,\n"
+#~ "http://pan.rebelbase.com/intro.php\n"
+#~ "提供了什么是Usenet,\n"
+#~ "到那里寻找免费的新闻服务器,\n"
+#~ "以及如何使用Pan等信息。\n"
+#~ " \n"
+#~ "这是您第一次运行Pan,\n"
+#~ "我们需要收集一些信息.\n"
+
+# pan/dialogs/dialog-newuser.c:679
+#~ msgid "Email"
+#~ msgstr "电子邮件地址"
+
+# pan/filter-edit-ui.c:861 pan/rules/rule-edit-ui.c:154
+#~ msgid "Ready!"
+#~ msgstr "准备好了！"
+
+# pan/dialogs/dialog-newuser.c:700
+#~ msgid ""
+#~ "You have successfully entered all of\n"
+#~ "the information required to set up Pan.\n"
+#~ "\n"
+#~ "To save these settings, click Save."
+#~ msgstr ""
+#~ "您已经成功地输入了建立Pan所需要的全部信息。\n"
+#~ "\n"
+#~ "要保存这些设定，点击'保存'。"
+
+# pan/dialogs/pan-about.c:163
+#~ msgid "About"
+#~ msgstr "关于"
+
+# pan/dialogs/pan-about.c:182
+#~ msgid "License"
+#~ msgstr "许可"
+
+# pan/dialogs/pan-about.c:270
+#~ msgid "Authors"
+#~ msgstr "作者"
+
+# pan/dialogs/pan-about.c:290
+#~ msgid "Thanks to"
+#~ msgstr "致谢"
+
+# pan/filter-edit-ui.c:181 pan/rules/rule-edit-ui.c:356
+#~ msgid "  (No conditions -- no articles will match)"
+#~ msgstr "  (没设条件 -- 不会有匹配的文章"
+
+# pan/filter-edit-ui.c:183 pan/rules/rule-edit-ui.c:358
+#~ msgid "  (No conditions -- all articles will match)"
+#~ msgstr "  (没有条件 --所有文章均将为匹配的"
+
+# pan/filter-edit-ui.c:656
+#~ msgid "Pan: Edit Filter"
+#~ msgstr "Pan：编辑过滤器"
+
+# pan/filter-edit-ui.c:670
+#~ msgid "Filter name: "
+#~ msgstr "过滤器名称："
+
+# pan/filter-edit-ui.c:677
+#~ msgid "Show in Filter Menu"
+#~ msgstr "在过滤器菜单中显示"
+
+# pan/filter-edit-ui.c:701
+#~ msgid "Move the selected line up one line"
+#~ msgstr "选定的行向上移动一行"
+
+# pan/filter-edit-ui.c:705
+#~ msgid "Move the selected line down one line"
+#~ msgstr "选定的行向下移动一行"
+
+# pan/filter-edit-ui.c:706
+#~ msgid "Negate"
+#~ msgstr "放弃"
+
+# pan/filter-edit-ui.c:709
+#~ msgid "Negate the selected line"
+#~ msgstr "放弃选定的行"
+
+# pan/filter-edit-ui.c:710
+#~ msgid "AND"
+#~ msgstr "与"
+
+# pan/filter-edit-ui.c:713
+#~ msgid "OR"
+#~ msgstr "或"
+
+# pan/filter-edit-ui.c:719
+#~ msgid "Delete the selected line"
+#~ msgstr "删除选中的行"
+
+# pan/filter-edit-ui.c:727
+#~ msgid "Add New Line to the Filter"
+#~ msgstr "给过滤器添加新的规则行"
+
+# pan/filter-edit-ui.c:731
+#~ msgid "New Filter Line"
+#~ msgstr "新建过滤器规则行"
+
+# pan/filter-edit-ui.c:764
+#~ msgid "contains the phrase"
+#~ msgstr "包含表达式"
+
+# pan/filter-edit-ui.c:770
+#~ msgid ""
+#~ "See http://pan.rebelbase.com/regexp.txt for a tutorial on how to use "
+#~ "regular expressions.  If regular expressions are turned off, a simple "
+#~ "case-insensitive wildcard match is used."
+#~ msgstr ""
+#~ "如何使用正则表达式的教程请参见http://pan.rebelbase.com/regexp.txt。如果关"
+#~ "闭了正则表达式，则使用简单的区分大小写的通配符规则。"
+
+# pan/filter-edit-ui.c:774
+#~ msgid "(%s for user-specified text)"
+#~ msgstr "（%s为用户制定的文本）"
+
+# pan/filter-edit-ui.c:786
+#~ msgid "Saved"
+#~ msgstr "保存的"
+
+# pan/filter-edit-ui.c:791
+#~ msgid "Queued for Saving"
+#~ msgstr "排队等待保存"
+
+# pan/filter-edit-ui.c:796
+#~ msgid "Neither Saved nor Queued"
+#~ msgstr "既没有保存也没有排队的"
+
+# pan/filter-edit-ui.c:805
+#~ msgid "Article _thread is"
+#~ msgstr "文章的话题是(_T)"
+
+# pan/filter-edit-ui.c:811
+#~ msgid "Watched"
+#~ msgstr "跟踪的"
+
+# pan/filter-edit-ui.c:816
+#~ msgid "Ignored"
+#~ msgstr "忽略的"
+
+# pan/filter-edit-ui.c:821
+#~ msgid "Neither Watched nor Ignored"
+#~ msgstr "即不是跟踪的也不是忽略的"
+
+# pan/filter-edit-ui.c:830
+#~ msgid "Article h_as"
+#~ msgstr "文章被(_A)"
+
+# pan/filter-edit-ui.c:836 pan/message-window.c:1195 pan/save-ui.c:398
+#~ msgid "Attachments"
+#~ msgstr "附件"
+
+# pan/filter-edit-ui.c:841
+#~ msgid "Incomplete Attachments"
+#~ msgstr "不完整的附件"
+
+# pan/filter-edit-ui.c:846
+#~ msgid "No Attachments"
+#~ msgstr "没有附件"
+
+# pan/filter-edit-ui.c:855
+#~ msgid "Article _is"
+#~ msgstr "文章是(_I)"
+
+# pan/filter-edit-ui.c:866
+#~ msgid "New"
+#~ msgstr "新建"
+
+# pan/grouplist.c:644 pan/rules/rule-edit-ui.c:156
+#~ msgid "Unread"
+#~ msgstr "未读"
+
+# pan/prefs.c:3055
+#~ msgid "Cached"
+#~ msgstr "被缓存"
+
+# pan/filter-edit-ui.c:876
+#~ msgid "Posted by Me"
+#~ msgstr "自己张贴的"
+
+# pan/filter-edit-ui.c:885
+#~ msgid "Article has at _least N lines:"
+#~ msgstr "文章至少于有N行：(_L)"
+
+# pan/filter-edit-ui.c:915
+#~ msgid "Article _score is at least"
+#~ msgstr "文章的分值至少是(_S)"
+
+# pan/filter-ui.c:199
+#~ msgid ""
+#~ "This filter is still used by the following rules:\n"
+#~ "%s\n"
+#~ "Please remove this dependency  first."
+#~ msgstr ""
+#~ "该过滤器仍被如下的规则使用：\n"
+#~ "%s\n"
+#~ "请先移除该依赖关系。"
+
+# pan/filter-ui.c:360
+#~ msgid "Pan: Filters"
+#~ msgstr "Pan：过滤器"
+
+# pan/filter-ui.c:373 pan/rules/rule-edit-ui.c:811
+#~ msgid "Filters"
+#~ msgstr "过滤器"
+
+# pan/filter-ui.c:401
+#~ msgid "Edit the selected filter"
+#~ msgstr "编辑选中的过滤器"
+
+# pan/filter-ui.c:408
+#~ msgid "Remove the selected filter"
+#~ msgstr "移除选定的过滤器"
+
+# pan/filters/filter-aggregate.c:62
+#~ msgid "NONE OF:"
+#~ msgstr "没有一个："
+
+# pan/filters/filter-aggregate.c:64
+#~ msgid "ALL OF:"
+#~ msgstr "所有："
+
+# pan/filters/filter-aggregate.c:68
+#~ msgid "NOT ANY OF:"
+#~ msgstr "不是任何一个："
+
+# pan/filters/filter-aggregate.c:70
+#~ msgid "ANY OF:"
+#~ msgstr "任何一个："
+
+# pan/filters/filter-binary.c:65
+#~ msgid "Article has complete attachments"
+#~ msgstr "文章包括完整的附件"
+
+# pan/filters/filter-binary.c:69
+#~ msgid "Article does not have incomplete attachments"
+#~ msgstr "文章不包括不完整的附件"
+
+# pan/filters/filter-binary.c:71
+#~ msgid "Article has incomplete attachments"
+#~ msgstr "文章包括不完整的附件"
+
+# pan/filters/filter-binary.c:75
+#~ msgid "Article has complete or incomplete attachments"
+#~ msgstr "文章包括完整的及不完整的附件"
+
+# pan/filters/filter-crosspost.c:56
+#~ msgid "Article is crossposted to at least %d groups"
+#~ msgstr "文章至少已在%d个组中张贴"
+
+# pan/filters/filter-date.c:56
+#~ msgid "Article was posted in the last %d days"
+#~ msgstr "文章在前%d天已被张贴"
+
+# pan/filters/filter-linecount.c:56
+#~ msgid "Article is %d or more lines long"
+#~ msgstr "文章长度为%d行或者更长"
+
+# pan/filters/filter-manager.c:106
+#~ msgid "Spam"
+#~ msgstr "垃圾邮件"
+
+# pan/filters/filter-read.c:50
+#~ msgid "Article is unread or old"
+#~ msgstr "未读或过时文章"
+
+# pan/filters/filter-new.c:56
+#~ msgid "Article is new"
+#~ msgstr "新文章"
+
+# pan/filters/filter-read.c:50
+#~ msgid "Article is new or read"
+#~ msgstr "新文章或读过的"
+
+# pan/filters/filter-read.c:50
+#~ msgid "Article is new or unread"
+#~ msgstr "新的或未读文章"
+
+# pan/filters/filter-phrase.c:79
+#~ msgid "Subject doesn't match the regular expression \"%s\""
+#~ msgstr "主题与正则表达式“%s”不符"
+
+# pan/filters/filter-phrase.c:81
+#~ msgid "Subject matches the regular expression \"%s\""
+#~ msgstr "主题与正则表达式“%s”相符"
+
+# pan/filters/filter-phrase.c:79
+#~ msgid "Author doesn't match regular expression \"%s\""
+#~ msgstr "作者与正则表达式“%s”不符"
+
+# pan/filters/filter-phrase.c:85
+#~ msgid "Author doesn't match phrase \"%s\""
+#~ msgstr "作者与字串“%s”不符"
+
+# pan/filters/filter-phrase.c:87
+#~ msgid "Author matches phrase \"%s\""
+#~ msgstr "作者与字串“%s”相符"
+
+# pan/filters/filter-phrase.c:93
+#~ msgid "Message-ID doesn't match regular expression \"%s\""
+#~ msgstr "消息号与正则表达式“%s”不符"
+
+# pan/filters/filter-phrase.c:95
+#~ msgid "Message-ID matches regular expression \"%s\""
+#~ msgstr "消息号与正则表达式“%s”相符"
+
+# pan/filters/filter-phrase.c:99
+#~ msgid "Message-ID doesn't match phrase \"%s\""
+#~ msgstr "消息号与字串“%s”不符"
+
+# pan/filters/filter-phrase.c:101
+#~ msgid "Message-ID matches phrase \"%s\""
+#~ msgstr "消息号与字串“%s”相符"
+
+# pan/filters/filter-saved.c:63
+#~ msgid "Article has not been saved or decoded"
+#~ msgstr "文章未被保存或解码"
+
+# pan/filters/filter-saved.c:65
+#~ msgid "Article has been saved or decoded"
+#~ msgstr "文章已被保存或解码"
+
+# pan/filters/filter-saved.c:69
+#~ msgid "Article is not queued for saving or decoding"
+#~ msgstr "文章未排入保存或解码的队列"
+
+# pan/filters/filter-saved.c:71
+#~ msgid "Article is queued for saving or decoding"
+#~ msgstr "文章已排入保存或解码的队列"
+
+# pan/filters/filter-saved.c:75
+#~ msgid "Article is either saved or queued for saving"
+#~ msgstr "文章未被保存也没有排入保存队列"
+
+# pan/filters/filter-saved.c:77
+#~ msgid "Article is neither saved nor queued for saving"
+#~ msgstr "文章未被保存也没有排入保存队列"
+
+# pan/filters/filter-thread.c:59
+#~ msgid "Thread isn't watched"
+#~ msgstr "话题未被跟踪"
+
+# pan/filters/filter-thread.c:61
+#~ msgid "Thread is watched"
+#~ msgstr "话题已被跟踪"
+
+# pan/filters/filter-thread.c:65
+#~ msgid "Thread isn't ignored"
+#~ msgstr "话题未被忽略"
+
+# pan/filters/filter-thread.c:67
+#~ msgid "Thread is ignored"
+#~ msgstr "话题已被忽略"
+
+# pan/filters/filter-thread.c:71
+#~ msgid "Thread is watched or ignored"
+#~ msgstr "话题已被跟踪或被忽略"
+
+# pan/filters/filter-thread.c:73
+#~ msgid "Thread is neither watched nor ignored"
+#~ msgstr "话题即未被跟踪也未被忽略"
+
+# pan/filters/filter-xml.c:532
+#~ msgid "Wrote filters to \"%s\""
+#~ msgstr "写过滤器到“%s”"
+
+# pan/group-ui.c:145
+#~ msgid "Invalid folder name: \"%s\""
+#~ msgstr "不合法的文件夹名称:“%s”"
+
+# pan/group-ui.c:154
+#~ msgid "Folder \"%s\" already exists."
+#~ msgstr "文件夹“%s”已经存在。"
+
+# pan/group-ui.c:161
+#~ msgid "Please don't begin folders with \"pan.\"; it confuses me."
+#~ msgstr "请不要以“pan.”作为文件夹的开始位置；否则会搞乱程序本身。"
+
+# pan/group-ui.c:186
+#~ msgid "Create New Folder"
+#~ msgstr "创建一个新的文件夹"
+
+# pan/group-ui.c:193
+#~ msgid "New Folder Name:"
+#~ msgstr "新文件夹名称："
+
+#~ msgid "/Get New Headers and _Bodies"
+#~ msgstr "/获取新的标题和信体(_B)"
+
+# pan/grouplist.c:64
+#~ msgid "/More Download _Options..."
+#~ msgstr "/更多的下载选项(_O)..."
+
+# pan/grouplist.c:65
+#~ msgid "/Refresh Article _Counts"
+#~ msgstr "/刷新文章计数器(_C)"
+
+# pan/gui.c:2011
+#~ msgid "/Group _Properties..."
+#~ msgstr "/组参数(_P)..."
+
+# pan/grouplist.c:135
+#~ msgid " (Moderated)"
+#~ msgstr " (监管的)"
+
+# pan/grouplist.c:141
+#~ msgid " (Read-Only)"
+#~ msgstr " (只读)"
+
+# pan/grouplist.c:530 pan/grouplist.c:936
+#~ msgid "All Groups"
+#~ msgstr "全部组"
+
+# pan/grouplist.c:531
+#~ msgid "Subscribed"
+#~ msgstr "已订阅的"
+
+# pan/grouplist.c:645
+#~ msgid "Total"
+#~ msgstr "全部"
+
+# pan/grouplist.c:646 pan/task-manager.c:798
+#~ msgid "Description"
+#~ msgstr "描述"
+
+# pan/grouplist.c:696
+#~ msgid ""
+#~ "Type in a group search string and press ENTER.  Wildcards are allowed."
+#~ msgstr "键入字符串并按回车键开始在组中搜索。允许使用通配符。"
+
+# pan/grouplist.c:1028
+#~ msgid ""
+#~ "We don't have a list of groups for \"%s\".\n"
+#~ "Shall we get download it?"
+#~ msgstr ""
+#~ "我们没有服务器“%s”的讨论组列表。\n"
+#~ "需要下载么？"
+
+# pan/gui-headers.c:134
+#~ msgid "<More>"
+#~ msgstr "<更多>"
+
+# pan/prefs.c:1816
+#~ msgid "X-Newsreader"
+#~ msgstr "X-新闻阅读器"
+
+# pan/dialogs/dialog-newuser.c:679
+#~ msgid "X-Mailer"
+#~ msgstr "X-电子邮件地址"
+
+#~ msgid "User-Agent"
+#~ msgstr "用户代理"
+
+#~ msgid " (%u selected)"
+#~ msgstr "（选中了%u）"
+
+# pan/smtp.c:445
+#~ msgid "Connecting to news server"
+#~ msgstr "正在连接新闻服务器"
+
+# pan/gui.c:1652
+#~ msgid "News server connection count: %d"
+#~ msgstr "新闻服务器连接数：%d"
+
+# pan/gui.c:1720
+#~ msgid "The Task Manager is Empty"
+#~ msgstr "任务管理器没有任务"
+
+# pan/gui.c:2100
+#~ msgid "Post"
+#~ msgstr "张贴"
+
+#~ msgid "Get"
+#~ msgstr "获取"
+
+#~ msgid "Mine"
+#~ msgstr "我的"
+
+#~ msgid "Show Only My Posts"
+#~ msgstr "仅现实我所张贴的"
+
+# pan/filter-edit-ui.c:866
+#~ msgid "Net"
+#~ msgstr "网络"
+
+# pan/gui.c:1928
+#~ msgid "/_File/_Save Article As..."
+#~ msgstr "/文件(_F)/另存文章为(_S)..."
+
+# pan/gui.c:1929
+#~ msgid "/_File/Save Article A_ttachments"
+#~ msgstr "/文件(_F)/保存文章附件(_T)"
+
+# pan/gui.c:2045
+#~ msgid "/_File/_Delete Last Task"
+#~ msgstr "/文件(_F)/删除上一个任务(_D)"
+
+# pan/gui.c:1931
+#~ msgid "/_File/_Print Article..."
+#~ msgstr "/文件(_F)/打印文章(_P)..."
+
+# pan/gui.c:1933
+#~ msgid "/_File/_New Folder..."
+#~ msgstr "/文件(_F)/新建文件夹(_N)..."
+
+# pan/gui.c:1934
+#~ msgid "/_File/Delete _Folder..."
+#~ msgstr "/文件(_F)/删除文件夹(_F)..."
+
+# pan/gui.c:1935
+#~ msgid "/_File/_Edit Article in Folder"
+#~ msgstr "/文件(_F)/编辑文件夹中的文章(_E)"
+
+# pan/gui.c:1936
+#~ msgid "/_File/E_xit"
+#~ msgstr "/文件(_F)/退出(_X)"
+
+# pan/gui.c:1938 pan/message-window.c:299 pan/message-window.c:316
+#~ msgid "/_Edit"
+#~ msgstr "/编辑(_E)"
+
+# pan/gui.c:1940
+#~ msgid "/_Edit/Select all"
+#~ msgstr "/编辑(_E)/选择全部"
+
+# pan/gui.c:1941
+#~ msgid "/_Edit/Deselect all"
+#~ msgstr "/编辑(_E)/取消对全部的选择"
+
+# pan/gui.c:1939 pan/gui.c:1942 pan/gui.c:1947 pan/gui.c:1949 pan/gui.c:1952
+# pan/message-window.c:303 pan/message-window.c:320 pan/message-window.c:323
+#~ msgid "/_Edit/---"
+#~ msgstr "/编辑(_E)/---"
+
+# pan/gui.c:1940
+#~ msgid "/_Edit/Select all _Groups"
+#~ msgstr "/编辑(_E)/选择全部组(_G)"
+
+# pan/gui.c:1945
+#~ msgid "/_Edit/Add S_ubscribed to Selection"
+#~ msgstr "/编辑(_E)/添加订阅到选中内容(_U)"
+
+# pan/gui.c:1941
+#~ msgid "/_Edit/Deselect all G_roups"
+#~ msgstr "/编辑(_E)/取消对全部组的选择(_R)"
+
+# pan/gui.c:1950
+#~ msgid "/_Edit/_Find..."
+#~ msgstr "/编辑(_E)/查找(_F)..."
+
+# pan/gui.c:1950
+#~ msgid "/_Edit/Find _Next"
+#~ msgstr "/编辑(_E)/查找下一个(_N)"
+
+# pan/gui.c:1960 pan/gui.c:1963 pan/gui.c:1968 pan/gui.c:1972 pan/gui.c:1980
+#~ msgid "/_View/---"
+#~ msgstr "/查看(_V)/---"
+
+# pan/gui.c:1974
+#~ msgid "/_View/Thr_ead Header Pane"
+#~ msgstr "/查看(_V)/索引标题窗格(_E)"
+
+# pan/message-window.c:304 pan/message-window.c:321
+#~ msgid "/_View/_Rot13 Selected Text"
+#~ msgstr "/查看(_V)/Rot13选中文本(_R)"
+
+# pan/gui.c:1981
+#~ msgid "/_View/E_xpand Selected Threads"
+#~ msgstr "/查看(_V)/扩展选中的话题(_X)"
+
+# pan/gui.c:1983
+#~ msgid "/_View/C_ollapse Selected Threads"
+#~ msgstr "/查看(_V)/放弃选中的话题"
+
+# pan/gui.c:2066 pan/gui.c:2077 pan/gui.c:2081 pan/gui.c:2085 pan/gui.c:2089
+# pan/gui.c:2092 pan/gui.c:2095
+#~ msgid "/Filte_r/---"
+#~ msgstr "/过滤器(_R)/---"
+
+# pan/article-toolbar.c:683
+#~ msgid "/Filte_r/Show Matching Articles and References"
+#~ msgstr "/过滤器(_R)/显示匹配的文章及其参考"
+
+# pan/article-toolbar.c:692
+#~ msgid "/Filte_r/Show Threads with Matching Articles"
+#~ msgstr "/过滤器(_R)/显示匹配文章的话题"
+
+# pan/gui.c:2078
+#~ msgid "/Filte_r/Match _New Articles"
+#~ msgstr "/过滤器(_R)/匹配新的文章(_N)"
+
+# pan/gui.c:2080
+#~ msgid "/Filte_r/Match _Read Articles"
+#~ msgstr "/过滤器(_R)/匹配读过的文章"
+
+# pan/gui.c:2090
+#~ msgid "/Filte_r/Match Articles which are _Cached"
+#~ msgstr "/过滤器(_R)/匹配在本地缓存过的文章(_C)"
+
+# pan/gui.c:2091
+#~ msgid "/Filte_r/Match Articles which are not Cache_d"
+#~ msgstr "/过滤器(_R)/匹配没在本地缓存过的文章(_D)"
+
+# pan/gui.c:2082
+#~ msgid "/Filte_r/Match Articles with Complete _Attachments"
+#~ msgstr "/过滤器(_R)/匹配包括完整附件的文章(_A)"
+
+# pan/gui.c:2083
+#~ msgid "/Filte_r/Match Articles with I_ncomplete Attachments"
+#~ msgstr "/过滤器(_R)/匹配包括不完整附件的文章(_N)"
+
+# pan/gui.c:2084
+#~ msgid "/Filte_r/Match Articles with No A_ttachments"
+#~ msgstr "/过滤器(_R)/匹配不包含附件文章(_T)"
+
+# pan/gui.c:2093
+#~ msgid "/Filte_r/Match Articles Written by _Me"
+#~ msgstr "/过滤器(_R)/匹配自己张贴的文章(_M)"
+
+# pan/gui.c:2094
+#~ msgid "/Filte_r/Match Articles Written by _Other People"
+#~ msgstr "/过滤器(_R)/匹配其他人张贴的文章(_O)"
+
+# pan/gui.c:2096
+#~ msgid "/Filte_r/Match _Watched Threads"
+#~ msgstr "/过滤器(_R)/匹配被跟踪的话题(_W)"
+
+# pan/gui.c:2097
+#~ msgid "/Filte_r/Match _Ignored Threads"
+#~ msgstr "/过滤器(_R)/匹配被忽略的话题(_I)"
+
+# pan/gui.c:2098
+#~ msgid "/Filte_r/Match Threads N_either Watched nor Ignored"
+#~ msgstr "/过滤器(_R)/匹配既未被跟踪也未被忽略的话题(_E)"
+
+# pan/articlelist.c:3143
+#~ msgid "/_Go/Read More"
+#~ msgstr "/转到(_G)/阅读更多"
+
+# pan/gui.c:1997 pan/gui.c:1999 pan/gui.c:2004 pan/gui.c:2007 pan/gui.c:2010
+# pan/gui.c:2012
+#~ msgid "/_Go/---"
+#~ msgstr "/转到(_G)/---"
+
+#~ msgid "/_Go/_Next Unread Article"
+#~ msgstr "/转到(_G)/下一篇未读的文章(_N)"
+
+# pan/gui.c:2056
+#~ msgid "/_Go/Previous Article _Read"
+#~ msgstr "/转到(_G)/读过的前一篇文章(_R)"
+
+#~ msgid "/_Go/T_op of Thread"
+#~ msgstr "/转到(_G)/初始话题(_O)"
+
+# pan/gui.c:1986
+#~ msgid "/_Servers"
+#~ msgstr "/服务器(_S)"
+
+# pan/gui.c:1988
+#~ msgid "/_Servers/Select _Server"
+#~ msgstr "/服务器(_S)/选择服务器(_S)"
+
+# pan/gui.c:1987 pan/gui.c:1989 pan/gui.c:1992
+#~ msgid "/_Servers/---"
+#~ msgstr "/服务器(_S)/---"
+
+# pan/gui.c:1990
+#~ msgid "/_Servers/Get List of _All Groups..."
+#~ msgstr "/服务器(_S)/获取全部组的列表(_A)..."
+
+# pan/gui.c:1991
+#~ msgid "/_Servers/Get List of _New Groups..."
+#~ msgstr "/服务器(_S)/获取新组的列表(_N)..."
+
+# pan/gui.c:1998
+#~ msgid "/_Newsgroups/Mark Group _Read"
+#~ msgstr "/新闻组(_N)/标记组为已读(_R)"
+
+# pan/gui.c:2002
+#~ msgid "/_Newsgroups/_Delete Group's Articles"
+#~ msgstr "/新闻组(_N)/删除组内文章(_D)"
+
+# pan/gui.c:1997 pan/gui.c:1999 pan/gui.c:2004 pan/gui.c:2007 pan/gui.c:2010
+# pan/gui.c:2012
+#~ msgid "/_Newsgroups/---"
+#~ msgstr "/新闻组(_N)/---"
+
+# pan/gui.c:2001
+#~ msgid "/_Newsgroups/Get New _Headers"
+#~ msgstr "/新闻组(_N)/获得新文章标题(_H)"
+
+# pan/gui.c:2001
+#~ msgid "/_Newsgroups/Get New Headers and _Bodies"
+#~ msgstr "/新闻组(_N)/获得新文章标题及内容(_B)"
+
+# pan/gui.c:2005
+#~ msgid "/_Newsgroups/More Download _Options..."
+#~ msgstr "/新闻组(_N)/更多的下载选项(_O)..."
+
+# pan/gui.c:2006
+#~ msgid "/_Newsgroups/Refresh Article _Counts"
+#~ msgstr "/新闻组(_N)/刷新文章计数器(_C)"
+
+# pan/gui.c:2008
+#~ msgid "/_Newsgroups/_Subscribe"
+#~ msgstr "/新闻组(_N)/订阅(_S)"
+
+# pan/gui.c:2009
+#~ msgid "/_Newsgroups/_Unsubscribe"
+#~ msgstr "/新闻组(_N)/退订(_U)"
+
+# pan/gui.c:2011
+#~ msgid "/_Newsgroups/Group _Properties..."
+#~ msgstr "/新闻组(_N)/组参数(_P)..."
+
+# pan/gui.c:2014
+#~ msgid "/_Newsgroups/Dele_te Group"
+#~ msgstr "/新闻组(_N)/删除组(_T)"
+
+# pan/gui.c:2018
+#~ msgid "/_Articles/Mark _Read"
+#~ msgstr "/文章(_A)/标记为已读(_R)"
+
+# pan/gui.c:2020
+#~ msgid "/_Articles/Mark _Unread"
+#~ msgstr "/文章(_A)/标记为未读(_U)"
+
+# pan/gui.c:2017 pan/gui.c:2022 pan/gui.c:2028 pan/gui.c:2031 pan/gui.c:2035
+# pan/gui.c:2040 pan/gui.c:2043
+#~ msgid "/_Articles/---"
+#~ msgstr "/文章(_A)/---"
+
+# pan/gui.c:2023
+#~ msgid "/_Articles/D_ownload Flagged"
+#~ msgstr "/文章(_A)/下载标记的(_O)"
+
+# pan/gui.c:2024
+#~ msgid "/_Articles/_Flag"
+#~ msgstr "/文章(_A)/标记(_F)"
+
+# pan/gui.c:2026
+#~ msgid "/_Articles/U_nflag"
+#~ msgstr "/文章(_A)/取消标记(N)"
+
+# pan/gui.c:2032
+#~ msgid "/_Articles/_Watch Thread"
+#~ msgstr "/文章(_A)/跟踪话题(_W)"
+
+# pan/gui.c:2033
+#~ msgid "/_Articles/_Ignore Thread"
+#~ msgstr "/文章(_A)/忽略话题(_I)"
+
+# pan/gui.c:2034
+#~ msgid "/_Articles/Add to Bo_zo or Spam Filter..."
+#~ msgstr "/文章(_A)/加入Bo_zo或者垃圾邮件过滤器..."
+
+# pan/gui.c:2041
+#~ msgid "/_Articles/_Cancel..."
+#~ msgstr "/文章(_A)/取消(_C)..."
+
+# pan/gui.c:2042
+#~ msgid "/_Articles/_Supersede..."
+#~ msgstr "/文章(_A)/延期(_S)..."
+
+# pan/gui.c:2044
+#~ msgid "/_Articles/_Delete"
+#~ msgstr "/文章(_A)/删除(_D)"
+
+# pan/gui.c:2102
+#~ msgid "/_Post/_Post to Newsgroup"
+#~ msgstr "/张贴(_P)/张贴到新闻组(_P)"
+
+# pan/gui.c:2104
+#~ msgid "/_Post/_Reply by Email"
+#~ msgstr "/张贴(_P)/用电子邮件回复(_R)"
+
+# pan/gui.c:2105
+#~ msgid "/_Post/Followup _and Reply"
+#~ msgstr "/张贴(_P)/跟贴回复(_A)"
+
+# pan/gui.c:2106
+#~ msgid "/_Post/For_ward Article by Email"
+#~ msgstr "/张贴(_P)/用电子邮件转发文章(_W)"
+
+# pan/gui.c:2101
+#~ msgid "/_Post/---"
+#~ msgstr "/张贴(_P)/---"
+
+# pan/gui.c:2107
+#~ msgid "/_Post/Send Pending _Messages"
+#~ msgstr "/张贴(_P)/发送未决的消息(_M)"
+
+# pan/gui.c:2100
+#~ msgid "/_Tools"
+#~ msgstr "/工具(_T)"
+
+# pan/gui.c:2101
+#~ msgid "/_Tools/---"
+#~ msgstr "/工具(_T)/---"
+
+# pan/gui.c:2072
+#~ msgid "/_Tools/Custom _Filters..."
+#~ msgstr "/工具(_T)/自定义过滤器(_F).../"
+
+# pan/gui.c:1954
+#~ msgid "/_Tools/_Rules..."
+#~ msgstr "/工具(_T)/规则(_R)..."
+
+# pan/gui.c:1954
+#~ msgid "/_Tools/_Servers..."
+#~ msgstr "/工具(_T)/服务器(_S)..."
+
+# pan/gui.c:1962
+#~ msgid "/_Tools/_Log Viewer..."
+#~ msgstr "/工具(_T)/日志阅览器(_L)..."
+
+# pan/gui.c:2109
+#~ msgid "/_Help"
+#~ msgstr "/帮助(_H)"
+
+# pan/gui.c:2112
+#~ msgid "/_Help/Online Users` _Manual..."
+#~ msgstr "/帮助(_H)/在线用户手册(_M)..."
+
+# pan/gui.c:2110 pan/gui.c:2113 pan/gui.c:2116
+#~ msgid "/_Help/---"
+#~ msgstr "/帮助(_H)/---"
+
+# pan/gui.c:2114
+#~ msgid "/_Help/_Feedback..."
+#~ msgstr "/帮助(_H)/反馈(_F)..."
+
+# pan/identities/identity-edit-ui.c:144
+#~ msgid "Make this the default profile for news"
+#~ msgstr "将它作为新闻服务的缺省 profile"
+
+# pan/identities/identity-edit-ui.c:150
+#~ msgid "Make this the default profile for mail"
+#~ msgstr "将它作为邮件服务的缺省 profile"
+
+# pan/identities/identity-edit-ui.c:165
+#~ msgid "Full user name:"
+#~ msgstr "用户全名："
+
+# pan/article-find.c:375
+#~ msgid "Message-ID domain name:"
+#~ msgstr "信息号域名："
+
+# pan/identities/identity-edit-ui.c:415 pan/identities/identity-edit-ui.c:547
+# pan/message-window.c:1097
+#~ msgid "Custom Headers"
+#~ msgstr "自定义标题"
+
+# pan/identities/identity-edit-ui.c:530
+#~ msgid "Pan: Edit Profile"
+#~ msgstr "Pan：编辑Profile"
+
+# pan/identities/identity-edit-ui.c:544
+#~ msgid "User Profile"
+#~ msgstr "用户Profile"
+
+# pan/identities/identity-edit-ui.c:584
+#~ msgid ""
+#~ "Your real name contained double quotes.\n"
+#~ "Converting into single quotes."
+#~ msgstr ""
+#~ "您的真实名字里包含双引号。\n"
+#~ "转换为单引号。"
+
+# pan/identities/identity-ui.c:208
+#~ msgid "You need at least one profile"
+#~ msgstr "您需要至少一个Profile"
+
+# pan/identities/identity-ui.c:249 pan/identities/identity-ui.c:346
+#~ msgid "Incomplete Profile."
+#~ msgstr "不完整的Profile。"
+
+# pan/identities/identity-ui.c:477
+#~ msgid "Use the selected profile to create a new profile"
+#~ msgstr "用选中的 profile 创建新的 profile"
+
+# pan/identities/identity-xml.c:286
+#~ msgid "Wrote profiles to \"%s\""
+#~ msgstr "把Profile写入到“%s”"
+
+# pan/message-check-ui.c:92
+#~ msgid "Post anyway, despite these problems?"
+#~ msgstr "尽管存在这些问题, 仍然张贴?"
+
+# pan/message-check-ui.c:93
+#~ msgid "Post anyway, despite this problem?"
+#~ msgstr "尽管存在这个问题, 仍然张贴?"
+
+# pan/message-window.c:295
+#~ msgid "/_File/_Save Changes"
+#~ msgstr "/文件(_F)/保存变动(_S)"
+
+# pan/message-window.c:296 pan/message-window.c:313
+#~ msgid "/_File/Save _As..."
+#~ msgstr "/文件(_F)/另存为(_A)..."
+
+# pan/message-window.c:300 pan/message-window.c:317
+#~ msgid "/_Edit/Cu_t"
+#~ msgstr "/编辑(_E)/剪切(_T)"
+
+# pan/message-window.c:301 pan/message-window.c:318
+#~ msgid "/_Edit/_Copy"
+#~ msgstr "/编辑(_E)/拷贝(_C)"
+
+# pan/message-window.c:302 pan/message-window.c:319
+#~ msgid "/_Edit/_Paste"
+#~ msgstr "/编辑(_E)/粘贴(_P)"
+
+# pan/message-window.c:304 pan/message-window.c:321
+#~ msgid "/_Edit/_Rot13 Selected Text"
+#~ msgstr "/编辑(_E)/Rot13选中文本(_R)"
+
+# pan/message-window.c:305 pan/message-window.c:322
+#~ msgid "/_Edit/Edit with E_xternal Editor"
+#~ msgstr "/编辑(_E)/使用外部编辑器编辑(_X)"
+
+# pan/message-window.c:310
+#~ msgid "/_File/Send Now"
+#~ msgstr "/文件(_F)/现在发送"
+
+# pan/message-window.c:311
+#~ msgid "/_File/Send Later"
+#~ msgstr "/文件(_F)/迟后发送"
+
+# pan/message-window.c:296 pan/message-window.c:313
+#~ msgid "/_File/Save As..."
+#~ msgstr "/文件(_F)/另存为..."
+
+# pan/message-window.c:406
+#~ msgid "Send Later"
+#~ msgstr "迟后发送"
+
+# pan/message-window.c:415
+#~ msgid "Rewrap"
+#~ msgstr "重新换行"
+
+# pan/message-window.c:424
+#~ msgid "Turn line wrap on/off"
+#~ msgstr "打开/关闭消息主体文字换行的开关"
+
+# pan/message-window.c:440
+#~ msgid "Edit with an External Editor"
+#~ msgstr "使用外部编辑器编辑"
+
+# pan/message-window.c:926
+#~ msgid "Mime (single-part posts only)"
+#~ msgstr "Mime (仅对包含一个部分的张贴有效)"
+
+# pan/message-window.c:707 pan/message-window.c:725 pan/message-window.c:740
+#~ msgid " (%lu lines in 1 article)"
+#~ msgstr " (一篇文章中包含%lu行)"
+
+# pan/message-window.c:920
+#~ msgid "UUEncoded (universally accepted)"
+#~ msgstr "UU编码的（最好的通用性）"
+
+# pan/message-window.c:923
+#~ msgid "yEnc (30 percent smaller than UUEnc but less universal)"
+#~ msgstr "yEnc (比UU编码体积减小30%，但通用性略低)"
+
+# pan/message-window.c:782
+#~ msgid "Select the file to attach."
+#~ msgstr "选择要作为附件的文件。"
+
+# pan/message-window.c:839
+#~ msgid "Files to Attach"
+#~ msgstr "作为附件的文件"
+
+# pan/message-window.c:848
+#~ msgid "Filename"
+#~ msgstr "文件名"
+
+# pan/message-window.c:849
+#~ msgid "Kilobytes"
+#~ msgstr "千比特"
+
+# pan/message-window.c:874
+#~ msgid "Add a File to the Attachment List"
+#~ msgstr "在附件列表中添加文件"
+
+# pan/message-window.c:883
+#~ msgid "Remove a File from the Attachment List"
+#~ msgstr "从附件列表中移除文件"
+
+# pan/message-window.c:912
+#~ msgid "Estimated Article Size"
+#~ msgstr "估计的文章大小"
+
+# pan/message-window.c:998
+#~ msgid ""
+#~ "The newsgroups where replies to your message should go.  This is only "
+#~ "needed if it differs from the \"Post To Groups\" header. \n"
+#~ "To direct all replies to your email address, use \"Followup-To: poster\""
+#~ msgstr ""
+#~ "如果回复组与“张贴到组”不同，应该写明。\n"
+#~ "使用“Followup-To: 张贴人”告诉回复的电子邮件地址"
+
+# pan/message-window.c:1018
+#~ msgid ""
+#~ "The email account where mail replies to your posted message should go.  "
+#~ "This is only needed if it differs from the \"From\" header."
+#~ msgstr "如果回复地址与“发信人”地址不同，应该写明。"
+
+# pan/dialogs/dialog-newuser.c:314 pan/identities/identity-edit-ui.c:218
+# pan/message-window.c:1032
+#~ msgid "Organization"
+#~ msgstr "单位"
+
+# pan/message-window.c:1037
+#~ msgid "The organization you're associated with."
+#~ msgstr "您所属的单位。"
+
+# pan/message-window.c:1089
+#~ msgid "Don't add \"User-Agent\" header"
+#~ msgstr "不要添加“用户代理”识别标题"
+
+# pan/message-window.c:1919
+#~ msgid "\"Followup-To: poster\": sending email to author."
+#~ msgstr "“Followup-To: 张贴人”: 正在给作者发送电子邮件。"
+
+# pan/message-window.c:1942
+#~ msgid "\"Followup-To:\" contains an email address: sending email to author."
+#~ msgstr "“Followup-To: ”包含一个电子邮件地址：正在给作者发送电子邮件。"
+
+# pan/message-window.c:2075
+#~ msgid "New Message"
+#~ msgstr "新信息"
+
+# pan/message-window.c:2766
+#~ msgid "Save message to file"
+#~ msgstr "保存消息到文件"
+
+#~ msgid ""
+#~ "Message uses characters not specified in charset '%s' - possibly use '%s' "
+#~ "instead?"
+#~ msgstr "消息中使用了字符集里没定义的字符“%s”- 可以使用“%s”代替么？"
+
+#~ msgid "The command line was: %s"
+#~ msgstr "命令行内容为：“%s”"
+
+# pan/nntp.c:193
+#~ msgid "QUIT failed: %s"
+#~ msgstr "退出失败：%s"
+
+# pan/nntp.c:224
+#~ msgid "Handshake: %s"
+#~ msgstr "握手：%s"
+
+# pan/nntp.c:226
+#~ msgid "NNTP handshake failed: %s"
+#~ msgstr "NNTP握手失败：%s"
+
+# pan/nntp.c:227
+#~ msgid "Handshake failed: %s"
+#~ msgstr "握手失败：%s"
+
+# pan/nntp.c:272
+#~ msgid "Authentication failed: bad handshake for SPA password"
+#~ msgstr "授权失败：SPA密码不对"
+
+# pan/nntp.c:284
+#~ msgid "Bad SPA handshake: %s"
+#~ msgstr "失败的SPA握手：%s"
+
+# pan/nntp.c:292 pan/nntp.c:395
+#~ msgid "Authentication failed: need a password"
+#~ msgstr "授权失败：需要密码"
+
+# pan/nntp.c:313 pan/nntp.c:387 pan/nntp.c:404
+#~ msgid "Authentication failed: %s"
+#~ msgstr "授权失败：%s"
+
+# pan/nntp.c:353
+#~ msgid "Unsupported authentication mechanism: %s"
+#~ msgstr "不支持的授权方式：%s"
+
+# pan/nntp.c:367
+#~ msgid "No supported authentication mechanism"
+#~ msgstr "没有可支持的授权方式"
+
+# pan/nntp.c:447
+#~ msgid "MODE READER check failed: %s"
+#~ msgstr "阅读模式检查失败：%s"
+
+# pan/nntp.c:520
+#~ msgid "Posting failed.  Server said: %s"
+#~ msgstr "张贴失败。服务器提示：%s"
+
+# pan/nntp.c:527
+#~ msgid "Posting complete.  Server said: %s"
+#~ msgstr "张贴完成。服务器提示：%s"
+
+# pan/nntp.c:553
+#~ msgid "\"stay connected\" sent to %s"
+#~ msgstr "“保持连接”发送到%s"
+
+# pan/nntp.c:627
+#~ msgid "Getting article \"%s\" body failed: %s"
+#~ msgstr "获得文章“%s”内容失败：%s"
+
+# pan/nntp.c:850
+#~ msgid "No articles found for group \"%s\""
+#~ msgstr "没有发现组“%s”的文章"
+
+# pan/nntp.c:860
+#~ msgid "Getting header list failed: %s"
+#~ msgstr "获取标题列表失败：%s"
+
+# pan/nntp.c:967
+#~ msgid "Corrupt header skipped: %s"
+#~ msgstr "被破坏的标题跳过：%s"
+
+# pan/nntp.c:1134
+#~ msgid "Getting %d of %d"
+#~ msgstr "正在获取%2$d的%1$d"
+
+# pan/pan-color-picker.c:55
+#~ msgid "Select Color"
+#~ msgstr "选择颜色"
+
+# pan/pan-font-picker.c:52
+#~ msgid "Select Font"
+#~ msgstr "选择字体"
+
+# pan/pan-font-picker.c:71
+#~ msgid "Font Family"
+#~ msgstr "字体集"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "  --version        Prints Pan's version number\n"
+#~ "  --help           Prints this message and exits\n"
+#~ "  --debug          Turns on the most commonly-useful options for a bug "
+#~ "report\n"
+#~ "\n"
+#~ "  --mute           Debugging tool to send new posts to console, not the "
+#~ "server\n"
+#~ "  --debug-cache    Print debugging messages for the article cache\n"
+#~ "  --debug-sockets  Print debugging messages when talking to the news "
+#~ "server\n"
+#~ "  --debug-queue    Print debugging messages related to managing tasks\n"
+#~ "  --debug-decode   Print debugging messages related to decoding "
+#~ "attachments\n"
+#~ "  --debug-newsrc   Print debugging messages related to .newsrc files\n"
+#~ "  --debug-gnksa    Print debugging messages related to gnksa correctness\n"
+#~ "  --debug-trace    Print debugging messages when entering/leaving "
+#~ "functions\n"
+#~ "  --debug-lock     Print debugging messages related to threaded gui "
+#~ "locks\n"
+#~ "  --debug-object   Print debugging messages related to refcounted "
+#~ "objects\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "  --version        显示Pan的版本号\n"
+#~ "  --help           显示本帮助并退出\n"
+#~ "  --debug          打开最常用选项以方便找错report\n"
+#~ "\n"
+#~ "  --mute           发送新文章到控制台而非到服务器的调试工具\n"
+#~ "  --debug-cache    显示有关文章缓存的调试信息\n"
+#~ "  --debug-sockets  显示有关与新闻服务器对话的调试信息\n"
+#~ "  --debug-queue    显示有关任务管理的调试信息\n"
+#~ "  --debug-decode   显示有关解码附件的调试信息\n"
+#~ "  --debug-newsrc   显示有关 .newsrc 文件的调试信息\n"
+#~ "  --debug-gnksa    显示有关 gnksa 修正的调试信息\n"
+#~ "  --debug-trace    显示有关进入/离开功能的调试信息\n"
+#~ "  --debug-lock     显示有关 gui 线程锁定的调试信息\n"
+#~ "  --debug-object   显示有关 refcounted objects 的调试信息\n"
+#~ "\n"
+
+# pan/pan.c:122
+#~ msgid "Error writing to socket."
+#~ msgstr "写套接字错。"
+
+# pan/pan.c:123
+#~ msgid "pan.sent"
+#~ msgstr "pan.发送"
+
+# pan/pan.c:124
+#~ msgid "pan.sendlater"
+#~ msgstr "pan.迟后发送"
+
+#~ msgid "Spellchecking disabled: gtkspell_init() failed with status %d"
+#~ msgstr "拼写检查是被禁止的：gtkspell_init()失败，其状态为 %d"
+
+#~ msgid ""
+#~ "Pan appears to have crashed or been killed the last time it was run.  Do "
+#~ "you want to revert to the last session's task list?"
+#~ msgstr "Pan在上次运行时崩溃或者是被终止。您希望回复到上次时的任务列表么？"
+
+# pan/group-ui.c:104
+#~ msgid "Restored %d tasks from \"%s\""
+#~ msgstr "从“%2$s”中恢复个 %1$d 任务"
+
+# pan/prefs.c:296
+#~ msgid ""
+#~ "%a - abbreviated weekday name\n"
+#~ "%A - full weekday name\n"
+#~ "%b - abbreviated month name\n"
+#~ "%B - full month name\n"
+#~ "%c - local date & time\n"
+#~ "%d - day of the month\n"
+#~ "%H - hour (24-hour clock)\n"
+#~ "%I - hour (12-hour clock)\n"
+#~ "%j - day of the year (001-366)\n"
+#~ "%m - month (01-12)\n"
+#~ "%M - minute (00-59)\n"
+#~ "%p - local equivalent of AM/PM\n"
+#~ "%S - second (00-61)\n"
+#~ "%x - local date\n"
+#~ "%X - local time\n"
+#~ "%y - two-digit year\n"
+#~ "%Y - four-digit year\n"
+#~ "%% - %"
+#~ msgstr ""
+#~ "%a - 日简称\n"
+#~ "%A - 日简称\n"
+#~ "%b - 月简称\n"
+#~ "%B - 月简称\n"
+#~ "%c - 当地日期 & 时间\n"
+#~ "%d - 月中的日\n"
+#~ "%H - 小时 (24-小时)\n"
+#~ "%I - 小时 (12-小时)\n"
+#~ "%j - 年中的日(001-366)\n"
+#~ "%m - 月 (01-12)\n"
+#~ "%M - 分钟 (00-59)\n"
+#~ "%p - 当地AM/PM的对等叫法\n"
+#~ "%S - 秒 (00-61)\n"
+#~ "%x - 当地日期\n"
+#~ "%X - 当地时间\n"
+#~ "%y - 两位数年\n"
+#~ "%Y - 四位数年\n"
+#~ "%% - %"
+
+# pan/prefs.c:1647
+#~ msgid "Editor (%t will be replaced with filename)"
+#~ msgstr "外部编辑器 (%t将被文件名代替)"
+
+# pan/prefs.c:1679
+#~ msgid "Web Browser (%s will be replaced with URL)"
+#~ msgstr "外部网页浏览器 (%s将被URL代替)"
+
+# pan/prefs.c:2528
+#~ msgid "Maximum total number of connections:"
+#~ msgstr "最大连接总数："
+
+# pan/prefs.c:2539
+#~ msgid "Maximum number of task retries before giving up:"
+#~ msgstr "放弃前任务再试的最大数"
+
+# pan/prefs.c:2675
+#~ msgid "Download Directory:"
+#~ msgstr "下载目录："
+
+# pan/prefs.c:2680
+#~ msgid "Download Directory"
+#~ msgstr "下载目录"
+
+# pan/prefs.c:1607
+#~ msgid "Automatically remove failed tasks from the task manager"
+#~ msgstr "从任务管理器中自动移除失败的任务"
+
+# pan/prefs.c:1984 pan/prefs.c:2130 pan/prefs.c:2439
+#~ msgid "Other Options"
+#~ msgstr "其他选项"
+
+#~ msgid "Download new headers from subscribed groups when starting Pan"
+#~ msgstr "启动 Pan 时从订阅的组下载新的标题"
+
+#~ msgid ""
+#~ "Download new headers and bodies from subscribed groups when starting Pan"
+#~ msgstr "启动 Pan 时从订阅的组下载新的标题和内容"
+
+# pan/prefs.c:1816
+#~ msgid "Newsreader"
+#~ msgstr "新闻阅读器"
+
+# pan/prefs.c:1838
+#~ msgid "Headers to Show"
+#~ msgstr "要显示的标题"
+
+# pan/prefs.c:1884
+#~ msgid "Message Body"
+#~ msgstr "消息主体"
+
+# pan/prefs.c:1886
+#~ msgid "Message Body (Monospace)"
+#~ msgstr "消息主体(单间隔)"
+
+# pan/prefs.c:1906
+#~ msgid "Body Foreground"
+#~ msgstr "信体前景"
+
+# pan/prefs.c:1908
+#~ msgid "Use default foreground"
+#~ msgstr "使用预设前景"
+
+# pan/prefs.c:1915
+#~ msgid "Quoted Text 2"
+#~ msgstr "引用的文本2"
+
+# pan/prefs.c:1933
+#~ msgid "Characters which denote quoted text:"
+#~ msgstr "表明为引用文字的标志"
+
+# pan/prefs.c:1984 pan/prefs.c:2130 pan/prefs.c:2439
+#~ msgid "Options"
+#~ msgstr "选项"
+
+# pan/prefs.c:2053
+#~ msgid "Old Articles with no New Replies"
+#~ msgstr "没有新的回复的旧的文章"
+
+# pan/prefs.c:2055
+#~ msgid "New Articles / Articles with New Replies"
+#~ msgstr "新的文章/包含新回复的文章"
+
+# pan/prefs.c:2066
+#~ msgid "Unread Articles / Articles with Unread Replies"
+#~ msgstr "未阅读的文章/包含未阅读回复的文章"
+
+# pan/prefs.c:2068
+#~ msgid "Read Articles with no Unread Replies"
+#~ msgstr "阅读不包含未阅读回复的文章"
+
+# pan/prefs.c:2087
+#~ msgid "When a Followup subject header changes, show as new thread"
+#~ msgstr "当跟贴改变主题时，显示为新的话题"
+
+# pan/prefs.c:2094
+#~ msgid "Expand all threads by default"
+#~ msgstr "默认扩展全部话题"
+
+# pan/article-toolbar.c:726
+#~ msgid "Show complete multipart posts as a single article"
+#~ msgstr "将完整的多部文章显示为单一文章"
+
+# pan/prefs.c:1943 pan/prefs.c:2116
+#~ msgid "Date format:"
+#~ msgstr "日期格式："
+
+# pan/prefs.c:2263
+#~ msgid "Selected layout: "
+#~ msgstr "选择的布局："
+
+# pan/prefs.c:2298
+#~ msgid "Assigned panes: "
+#~ msgstr "指定的窗格："
+
+# pan/prefs.c:2433
+#~ msgid "Download New Headers when Loading a Group"
+#~ msgstr "当加载组时下载新的标题"
+
+# pan/prefs.c:2709
+#~ msgid "%d files deleted."
+#~ msgstr "删除了个文件 %d 。"
+
+#~ msgid "The cache stores articles locally for offline reading."
+#~ msgstr "用于离线阅读而在本地保存文章的缓存。"
+
+#~ msgid "Maximum Cache Size (Megs):"
+#~ msgstr "最大缓存容量(兆)："
+
+# pan/prefs.c:2756
+#~ msgid "Clear Cache Now"
+#~ msgstr "现在清空缓冲"
+
+# pan/prefs.c:2766
+#~ msgid "Clear Cache when exiting Pan"
+#~ msgstr "当退出Pan时清除缓冲区"
+
+# pan/prefs.c:2772
+#~ msgid "Article Cache"
+#~ msgstr "文章缓冲"
+
+# pan/prefs.c:2913
+#~ msgid "Address"
+#~ msgstr "地址"
+
+# pan/dialogs/dialog-newuser.c:493 pan/prefs.c:2802
+#~ msgid "Port"
+#~ msgstr "端口"
+
+# pan/prefs.c:3055
+#~ msgid "Cache"
+#~ msgstr "缓存"
+
+# pan/prefs.c:3058
+#~ msgid "Display - Group Pane"
+#~ msgstr "显示 - 组窗格"
+
+# pan/prefs.c:3061
+#~ msgid "Display - Header Pane"
+#~ msgstr "显示 - 标题窗格"
+
+# pan/prefs.c:3061
+#~ msgid "Display - Body Pane"
+#~ msgstr "显示 - 信体窗格"
+
+# pan/prefs.c:3061
+#~ msgid "Display - Headers"
+#~ msgstr "显示 - 标题"
+
+# pan/prefs.c:3062
+#~ msgid "General"
+#~ msgstr "摘要"
+
+# pan/print.c:166
+#~ msgid "Pan: Print"
+#~ msgstr "Pan：打印"
+
+# pan/print.c:236
+#~ msgid "You haven't loaded an article to print."
+#~ msgstr "您没有加载要打印的文章。"
+
+# pan/queue.c:848
+#~ msgid "Unable to connect to server %s:%d\n"
+#~ msgstr "不能连接到服务器%s:%d\n"
+
+# pan/queue.c:850
+#~ msgid "No server address specified in the Preferences"
+#~ msgstr "在选项中没有制定服务器地址"
+
+# pan/queue.c:953
+#~ msgid "Connect Failure"
+#~ msgstr "联机失败"
+
+# pan/queue.c:1053
+#~ msgid "Sending 'stay connected' request"
+#~ msgstr "发送“保持联机”请求"
+
+# pan/queue.c:1059
+#~ msgid "Disconnecting"
+#~ msgstr "正在断开连接"
+
+# pan/queue.c:1140
+#~ msgid "Closing connection %p after %d seconds idle"
+#~ msgstr "空闲%2$d秒后关闭连接%1$p"
+
+# pan/rules/rule-action.c:233
+#~ msgid ""
+#~ "%s\n"
+#~ "\n"
+#~ "Matches: %u\n"
+#~ "Group: %s\n"
+#~ "Rule: %s"
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "匹配：%u\n"
+#~ "组：%s\n"
+#~ "规则：%s"
+
+# pan/rules/rule-edit-ui.c:151
+#~ msgid "Mark as"
+#~ msgstr "标记为"
+
+# pan/rules/rule-edit-ui.c:171
+#~ msgid "_Flag body for download"
+#~ msgstr "标记要下载的信体(_F)"
+
+# pan/rules/rule-edit-ui.c:176
+#~ msgid "_Retrieve Body"
+#~ msgstr "重新得到信体(_R)"
+
+# pan/rules/rule-edit-ui.c:181
+#~ msgid "_Watch thread (highlights the thread)"
+#~ msgstr "跟踪话题_W(加亮话题)"
+
+# pan/rules/rule-edit-ui.c:186
+#~ msgid "_Ignore thread (hides the thread by default)"
+#~ msgstr "忽略话题(缺省为隐藏话题)(_I)"
+
+# pan/rules/rule-edit-ui.c:478
+#~ msgid "Edit Filters"
+#~ msgstr "编辑过滤器"
+
+# pan/rules/rule-edit-ui.c:592
+#~ msgid "Rule applies to all newsgroups"
+#~ msgstr "规则应用到所有新闻组"
+
+# pan/rules/rule-edit-ui.c:598
+#~ msgid "Wildcard group specification:"
+#~ msgstr "通配符组指定："
+
+# pan/rules/rule-edit-ui.c:601
+#~ msgid "(e.g., *anime*)"
+#~ msgstr "(例如，*anime*)"
+
+# pan/rules/rule-edit-ui.c:606
+#~ msgid "Rule applies to specific newsgroups:"
+#~ msgstr "规则应用到指定的新闻组："
+
+# pan/rules/rule-edit-ui.c:636
+#~ msgid "Rule applies to:"
+#~ msgstr "规则应用到："
+
+#~ msgid "Apply to Incoming"
+#~ msgstr "应用到引入内容"
+
+# pan/rules/rule-edit-ui.c:798
+#~ msgid ""
+#~ "If enabled, this rule will be applied to headers when they are downloaded."
+#~ msgstr "如果选中，当标题被下载时，此规则将起作用。"
+
+# pan/rules/rule-manager.c:107
+#~ msgid "Delete Articles by Bozos"
+#~ msgstr "删除Bozos的文章"
+
+# pan/rules/rule-ui.c:341
+#~ msgid "Applying rule to selected groups"
+#~ msgstr "正在将规则应用到选中的组"
+
+# pan/rules/rule-ui.c:370
+#~ msgid "Applying rule \"%s\" to group \"%s\""
+#~ msgstr "正在将规则“%s”应用到组“%s”"
+
+# pan/rules/rule-ui.c:472
+#~ msgid "Pan: Rules"
+#~ msgstr "Pan：规则"
+
+# pan/rules/rule-ui.c:485
+#~ msgid "Rules"
+#~ msgstr "规则"
+
+# pan/rules/rule-ui.c:486
+#~ msgid "Hit Ratio"
+#~ msgstr "命中率"
+
+# pan/rules/rule-ui.c:527
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Selected\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "应用到\n"
+#~ "选中的\n"
+#~ "组"
+
+# pan/rules/rule-ui.c:534
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Subscribed\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "应用到\n"
+#~ "已订阅\n"
+#~ "组"
+
+# pan/rules/rule-xml.c:260
+#~ msgid "Wrote rules to \"%s\""
+#~ msgstr "将规则写入到“%s”"
+
+# pan/rules/rule.c:285
+#~ msgid ""
+#~ "Can't find filter \"%s\" needed by rule \"%s\", so no articles match."
+#~ msgstr "无法找到规则“%2$s”所需要的过滤器“%1$s”，所以没有匹配的文章。"
+
+# pan/rules/rule.c:295
+#~ msgid "%u articles match rule %s"
+#~ msgstr "匹配规则 %2$s 的文章有 %1$u 个"
+
+# pan/articlelist.c:3147
+#~ msgid "Save Article _Attachments"
+#~ msgstr "保存文章附件(_A)"
+
+# pan/prefs.c:3056
+#~ msgid "_Directory:"
+#~ msgstr "目录(_D)"
+
+# pan/save-ui.c:318
+#~ msgid "Save Files in Directory"
+#~ msgstr "保存文件在目录中"
+
+# pan/save-ui.c:452
+#~ msgid "Add to the _top of the Task Manager's List"
+#~ msgstr "添加任务到任务管理器的前面(_T)"
+
+# pan/smtp.c:80
+#~ msgid "Got unexpected response from mail server: expected %d; got %s"
+#~ msgstr "从邮件服务器得到未预料的响应：期望的为%d，得到的是%s"
+
+# pan/smtp.c:237
+#~ msgid "Sending mail"
+#~ msgstr "正在发送邮件"
+
+# pan/smtp.c:294
+#~ msgid "No known recipients"
+#~ msgstr "没有已知的收件人"
+
+# pan/smtp.c:379
+#~ msgid "Mail sent!"
+#~ msgstr "邮件已经送出！"
+
+# pan/smtp.c:397
+#~ msgid "Handshaking with mail server"
+#~ msgstr "正在与邮件服务器握手"
+
+# pan/smtp.c:445
+#~ msgid "Connecting to mail server"
+#~ msgstr "正在连接邮件服务器"
+
+# pan/smtp.c:451
+#~ msgid "Unable to connect to mail server \"%s\""
+#~ msgstr "不能连接到邮件服务器“%s”"
+
+# pan/smtp.c:459
+#~ msgid "Mail server not ready"
+#~ msgstr "邮件服务器没有准备好"
+
+# pan/prefs.c:2912
+#~ msgid "_Name:"
+#~ msgstr "名称(_N)："
+
+# pan/prefs.c:1400
+#~ msgid "Authorization"
+#~ msgstr "授权"
+
+# pan/prefs.c:2593
+#~ msgid "_Reserve a connection for reading articles"
+#~ msgstr "保留一个连接以阅读文章(_R)"
+
+# pan/dialogs/dialog-newuser.c:507
+#~ msgid "Server requires authori_zation"
+#~ msgstr "服务器要求认证(_Z)"
+
+# pan/prefs.c:2863
+#~ msgid "Us_e .newsrc file"
+#~ msgstr "使用.newsrc文件"
+
+# pan/message-window.c:848
+#~ msgid "_Filename:"
+#~ msgstr "文件名(_F)："
+
+# pan/newsrc-ui.c:82
+#~ msgid "Select .newsrc File"
+#~ msgstr "选择.newsrc文件"
+
+# pan/prefs.c:1486
+#~ msgid "_Generate Message-ID"
+#~ msgstr "产生消息号(_G)"
+
+# pan/filter-ui.c:401
+#~ msgid "Edit the selected server"
+#~ msgstr "编辑选中的服务器"
+
+# pan/filter-ui.c:408
+#~ msgid "Remove the selected server"
+#~ msgstr "移除选定的服务器"
+
+# pan/sockets.c:148
+#~ msgid "Can't resolve %s: %s"
+#~ msgstr "不能解析%s：%s"
+
+# pan/sockets.c:158
+#~ msgid "Can't connect to %s: %s"
+#~ msgstr "不能连接到%s：%s"
+
+# pan/sockets.c:166
+#~ msgid "Connection to %s, port %d failed: %s"
+#~ msgstr "连接到%s，端口%d失败：%s"
+
+# pan/sockets.c:179
+#~ msgid "New connection %p for %s, port %d, sockfd %d"
+#~ msgstr "对%2$s的新连接%1$p，端口%3$d，套接字文件描述符%4$d"
+
+# pan/sockets.c:250
+#~ msgid "Timed out waiting to read from the server."
+#~ msgstr "从服务器读时等待超时。"
+
+# pan/sockets.c:267
+#~ msgid "Lost connection to server"
+#~ msgstr "丢失到服务器的连接"
+
+# pan/sockets.c:274
+#~ msgid "Error: reading from socket returned %d."
+#~ msgstr "错误：从套接字读时返回%d。"
+
+# pan/sockets.c:321
+#~ msgid "socket [%p] failed its read"
+#~ msgstr "套接字[%p]读失败"
+
+# pan/sockets.c:394
+#~ msgid "Timed out waiting for the go-ahead to write to the server"
+#~ msgstr "等待继续信号以写入服务器时超时"
+
+# pan/sockets.c:403
+#~ msgid "An error occurred writing to the server."
+#~ msgstr "写入服务器时产生错误。"
+
+# pan/task-bodies.c:177
+#~ msgid "Downloading %d articles"
+#~ msgstr "正在下载%d篇文章"
+
+# pan/task-group-count.c:130
+#~ msgid "Updating article counts for %u groups from server \"%s\""
+#~ msgstr "正在更新服务器“%2$s”组%1$u的文章计数器"
+
+# pan/task-group-count.c:159
+#~ msgid "Updated counts for %u groups out of %u"
+#~ msgstr "更新全部%2$u组中的%1$u个组的计数器"
+
+# pan/task-group-count.c:177
+#~ msgid "Unable to update counts for group \"%s\""
+#~ msgstr "不能更新组“%s”的计数器"
+
+# pan/task-grouplist.c:394
+#~ msgid "Getting all groups from server \"%s\""
+#~ msgstr "正在从服务器“%s”中获取所有的组"
+
+# pan/task-grouplist.c:394
+#~ msgid "Got %s groups from server \"%s\""
+#~ msgstr "从服务器“%2$s”找到%1$s个组"
+
+# pan/task-grouplist.c:190
+#~ msgid "Adding groups to server \"%s\""
+#~ msgstr "正在添加组到服务器“%s”"
+
+# pan/task-grouplist.c:329
+#~ msgid "List Newsgroups failed: %s"
+#~ msgstr "列表新闻服务器是失败: %s"
+
+# pan/task-grouplist.c:364
+#~ msgid "Got %s descriptions from server \"%s\""
+#~ msgstr "从服务器“%2$s”中找到%1$s个描述"
+
+# pan/task-grouplist.c:443
+#~ msgid "New groups retrieval failed: %s"
+#~ msgstr "新组恢复失败: %s"
+
+# pan/task-headers.c:418
+#~ msgid "No new articles in group \"%s\""
+#~ msgstr "组“%s”中没有新的文章"
+
+# pan/task-headers.c:424
+#~ msgid "New %lu of %lu"
+#~ msgstr "全部%2$lu个中新的%1$lu个"
+
+# pan/task-headers.c:434
+#~ msgid "Sampling %lu of %lu"
+#~ msgstr "正在获取全部%2$lu个中的第%1$lu个"
+
+# pan/task-headers.c:440
+#~ msgid "All %lu of %lu"
+#~ msgstr "全部%2$lu个中的第%1$lu个"
+
+# pan/task-manager.c:403
+#~ msgid "Not Queued"
+#~ msgstr "没有在队列中"
+
+# pan/task-manager.c:415
+#~ msgid "Aborting"
+#~ msgstr "异常终止"
+
+# pan/task-manager.c:421
+#~ msgid "???"
+#~ msgstr "???"
+
+# pan/task-manager.c:430
+#~ msgid "%s (%d tries)"
+#~ msgstr "%s (%d次尝试)"
+
+# pan/task-manager.c:618
+#~ msgid "Pan %s Task Manager"
+#~ msgstr "Pan%s任务管理器"
+
+# pan/task-manager.c:732
+#~ msgid "Move Selected Task(s) Up"
+#~ msgstr "选定的任务向上移动"
+
+# pan/task-manager.c:736
+#~ msgid "Move Selected Task(s) to Top"
+#~ msgstr "移动选定的任务到顶部"
+
+# pan/task-manager.c:743
+#~ msgid "Move Selected Task(s) Down"
+#~ msgstr "选定的任务向下移动"
+
+# pan/task-manager.c:747
+#~ msgid "Move Selected Task(s) to Bottom"
+#~ msgstr "选定的任务移动到底部"
+
+# pan/task-manager.c:754
+#~ msgid "Restart selected stopped/failed Task(s)"
+#~ msgstr "重新启动被选中的被停止的/失败的任务"
+
+# pan/task-manager.c:732
+#~ msgid "Stop Selected Task(s)"
+#~ msgstr "停止选定的任务"
+
+# pan/task-manager.c:782
+#~ msgid "Delete Selected Task(s)"
+#~ msgstr "删除选中的任务"
+
+#~ msgid "Time Remaining"
+#~ msgstr "剩余时间"
+
+# pan/message-send.c:462
+#~ msgid "[This is an email copy of a Usenet post to \"%s\"]"
+#~ msgstr "[这是张贴在“%s”用户组的电子邮件备份]"
+
+# pan/message-send.c:471
+#~ msgid "Email \"%s\" sent."
+#~ msgstr "电子邮件“%s”已经发出。"
+
+# pan/message-send.c:476
+#~ msgid "Email \"%s\" not sent."
+#~ msgstr "电子邮件“%s”没有发出。"
+
+# pan/filters/filter-mine.c:51
+#~ msgid "Article \"%s\" posted."
+#~ msgstr "文章“%s”已被张贴。"
+
+# pan/filters/filter-mine.c:50
+#~ msgid "Article \"%s\" not posted."
+#~ msgstr "文章“%s”没被张贴。"
+
+# pan/message-send.c:343
+#~ msgid "Posting and mailing article \"%s\""
+#~ msgstr "正在张贴文章“%s”"
+
+# pan/message-send.c:347
+#~ msgid "Mailing article \"%s\""
+#~ msgstr "正在邮寄文章“%s”"
+
+# pan/message-send.c:395
+#~ msgid "Email send failed.\n"
+#~ msgstr "电子邮件发送失败。\n"
+
+# pan/message-send.c:397
+#~ msgid "Usenet posting failed.\n"
+#~ msgstr "用户组张贴失败。\n"
+
+#~ msgid "Check Tools|Log Viewer for more information.\n"
+#~ msgstr "检查工具|日志浏览器以获取更多信息。\n"
+
+# pan/message-send.c:401
+#~ msgid "Your message was saved in the folder \"pan.sendlater\""
+#~ msgstr "您的消息保存在文件夹“pan.sendlater”中"
+
+# pan/task-save.c:418
+#~ msgid "Unable to save \"%s\": the article(s) couldn't be downloaded."
+#~ msgstr "不能保存“%s”：文章不能被下载。"
+
+# pan/base/decode.c:403
+#~ msgid "Save Article can't access path \"%s\""
+#~ msgstr "保存文章时不能访问路径“%s”"
+
+# pan/base/file-headers.c:423 pan/base/file-headers.c:542
+#~ msgid "Can't create file \"%s\" %s"
+#~ msgstr "不能创建目录“%s”%s"
+
+# pan/task-save.c:482
+#~ msgid "Saved article body to \"%s\""
+#~ msgstr "文章主体保存到“%s”"
+
+#~ msgid "Could not open \"%s\" for writing: %s\n"
+#~ msgstr "不能打开文件“%s”来写入： %s\n"
+
+# pan/gui.c:640
+#~ msgid "Open the Connection Manager"
+#~ msgstr "打开连接管理器"
+
+# pan/gui.c:1993
+#~ msgid "/_Servers/_Import .newsrc..."
+#~ msgstr "/服务器(_S)/导入.newsrc(_I)..."
+
+# pan/gui.c:1994
+#~ msgid "/_Servers/_Export .newsrc..."
+#~ msgstr "/服务器(_S)/导出.newsrc(_E)..."
+
+# pan/gui.c:1956
+#~ msgid "/_Tools/_Online Settings..."
+#~ msgstr "/工具(_T)/在线状态设定(_O)..."
+
+# pan/filter-ui.c:393 pan/identities/identity-ui.c:469
+# pan/rules/rule-ui.c:507
+#~ msgid "Add _New"
+#~ msgstr "添加新的(_N)"
+
+# pan/filter-ui.c:406 pan/identities/identity-ui.c:489
+# pan/rules/rule-ui.c:520
+#~ msgid "_Remove"
+#~ msgstr "移除(_R)"
+
+# pan/newsrc-ui.c:73
+#~ msgid "Pan: Import .newsrc File"
+#~ msgstr "Pan：导入.newsrc文件"
+
+# pan/newsrc-ui.c:127
+#~ msgid "Pan: Export .newsrc File"
+#~ msgstr "Pan：导出.newsrc文件"
+
+# pan/newsrc-ui.c:136
+#~ msgid "Select .newsrc file to write:"
+#~ msgstr "选择写.newsrc文件："
+
+# pan/prefs.c:1197 pan/prefs.c:1241
+#~ msgid "Not Named"
+#~ msgstr "没有命名"
+
+# pan/prefs.c:1198 pan/prefs.c:1242
+#~ msgid "No Address"
+#~ msgstr "没有地址"
+
+# pan/prefs.c:1332
+#~ msgid "Server Information"
+#~ msgstr "服务器信息"
+
+# pan/prefs.c:1360
+#~ msgid "Server address:"
+#~ msgstr "服务器地址："
+
+# pan/prefs.c:1408
+#~ msgid "My server requires my user name and password"
+#~ msgstr "我的服务器要求输入我的用户名和密码"
+
+# pan/prefs.c:1468
+#~ msgid "Idle Seconds Before Timeout:"
+#~ msgstr "时间到前的空闲秒数："
+
+# pan/prefs.c:1950 pan/prefs.c:2123
+#~ msgid "Help"
+#~ msgstr "帮助"
+
+#~ msgid "Wrap text at column"
+#~ msgstr "在栏中自动换行"
+
+# pan/prefs.c:2587
+#~ msgid ""
+#~ "Maximum\n"
+#~ "Connections"
+#~ msgstr ""
+#~ "最大\n"
+#~ "连接数"
+
+# pan/prefs.c:2639
+#~ msgid "Reserve"
+#~ msgstr "保留"
+
+# pan/prefs.c:3024
+#~ msgid "Per-Server Preferences"
+#~ msgstr "每个服务器参数"
+
+# pan/prefs.c:2846
+#~ msgid ""
+#~ "Newsreaders use .newsrc files to remember which articles\n"
+#~ "you've read and which groups you're subscribed to.  Automatically\n"
+#~ "importing/exporting .newsrc files lets you share them between Pan and "
+#~ "other newsreaders."
+#~ msgstr ""
+#~ "新闻阅读程序使用 .newsrc 文件以记录您阅读过的文章和订阅的组。\n"
+#~ "自动导入/导出 .newsrc 文件以您在 Pan 和其他新闻阅读程序间共享，"
+
+# pan/prefs.c:2853
+#~ msgid "Import/Export .newsrc files automatically"
+#~ msgstr "自动导入/导出 .newsrc 文件"
+
+# pan/prefs.c:2876
+#~ msgid "read/write subscribed groups only"
+#~ msgstr "只读/写订阅的组"
+
+# pan/prefs.c:2881
+#~ msgid ""
+#~ "Many users prefer to save memory and disk space by only keeping "
+#~ "subscribed groups in their .newsrc file."
+#~ msgstr "大多数用户愿意只在.newsrc文件中保存订阅的组，以节省内存和硬盘空间。"
+
+# pan/prefs.c:2893 pan/prefs.c:3063
+#~ msgid ".Newsrc Files"
+#~ msgstr ".Newsrc文件"
+
+# pan/prefs.c:2937
+#~ msgid "New..."
+#~ msgstr "新建..."
+
+# pan/prefs.c:2943
+#~ msgid "Edit..."
+#~ msgstr "编辑..."
+
+# pan/prefs.c:2949
+#~ msgid "Delete"
+#~ msgstr "删除"
+
+# pan/prefs.c:3065
+#~ msgid "Servers - News"
+#~ msgstr "服务器-新闻"
+
+# pan/prefs.c:3066
+#~ msgid "Servers - Mail"
+#~ msgstr "服务器-邮件"
+
+# pan/save-ui.c:333
+#~ msgid "Add \"/%s\" to path"
+#~ msgstr "添加“/%s”到路径中"
+
+# pan/save-ui.c:357
+#~ msgid "Don't save article text"
+#~ msgstr "不保存文章文本"
+
+# pan/save-ui.c:364
+#~ msgid "Use Message-ID header"
+#~ msgstr "使用消息号标题"
+
+# pan/save-ui.c:371
+#~ msgid "Use subject header"
+#~ msgstr "使用主题标题"
+
+# pan/save-ui.c:383 pan/save-ui.c:430
+#~ msgid "Specify filename"
+#~ msgstr "指定文件名"
+
+# pan/save-ui.c:404
+#~ msgid "Don't save attachments"
+#~ msgstr "不保存附件"
+
+# pan/save-ui.c:411
+#~ msgid "Use encoded filename"
+#~ msgstr "使用加密的文件名"
+
+# pan/task-manager.c:775
+#~ msgid "Set Per-Server Connection Limits"
+#~ msgstr "设置每个服务器连接数的限制"

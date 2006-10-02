@@ -1,0 +1,5081 @@
+# Translation of pan to Czech
+# Copyright (C) 2001, 2002,2003 Free Software Foundation, Inc.
+# Copyright (C) 2005 Miloslav Trmac <mitr@volny.cz>
+# Michal Bukovjan <bukm@centrum.cz>, 2002,2003.
+# Miloslav Trmac <mitr@volny.cz>, 2003, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pan VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-18 10:27-0500\n"
+"PO-Revision-Date: 2005-03-11 15:38+0100\n"
+"Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
+"Language-Team: Czech <cs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: pan.desktop.in.h:1
+msgid "Pan Newsreader"
+msgstr "Program pro čtení diskusních skupin Pan"
+
+#: pan.desktop.in.h:2
+msgid "Read News from Usenet"
+msgstr "Čtení zpráv diskusních skupin ze sítě Usenet"
+
+#: pan/data-impl/data-impl.cc:82
+#, c-format
+msgid "Loaded data backend in %.1f seconds"
+msgstr ""
+
+#: pan/data-impl/data-io.cc:220 pan/data-impl/data-io.cc:241
+#: pan/data/article-cache.cc:236 pan/data/article-cache.cc:246
+#: pan/gui/post-ui.cc:1261
+#, fuzzy, c-format
+msgid "Unable to save \"%s\" %s"
+msgstr "Nemohu nastavit skupinu: %s"
+
+#: pan/data-impl/groups.cc:92
+#, fuzzy, c-format
+msgid "Skipping newsrc file for server \"%s\""
+msgstr "Získávám nové skupiny ze serveru \"%s\""
+
+#: pan/data-impl/headers.cc:551
+#, fuzzy, c-format
+msgid "Expired %lu old articles from \"%s\""
+msgstr "Přidáno %lu částí, %lu příspěvků do \"%s\""
+
+#: pan/data-impl/headers.cc:558
+#, c-format
+msgid ""
+"Unsupported data version for %s headers: %d.\n"
+"Are you running an old version of Pan by accident?"
+msgstr ""
+"Nepodporovaná verze dat pro hlavičky %s: %d.\n"
+"Nemáte náhodou spuštěnou starší verzi programu Pan?"
+
+#: pan/data-impl/headers.cc:573
+#, fuzzy, c-format
+msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
+msgstr "Načteno %u příspěvků pro skupinu \"%s\" za %.1f sekund (%.0f přísp./s)"
+
+#: pan/data-impl/headers.cc:797
+#, fuzzy, c-format
+msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgstr ""
+"Uloženo %lu částí, %d příspěvků v \"%s\" za %.1f sekund (%.0f přísp./s)"
+
+#: pan/data-impl/headers.cc:1089
+#, fuzzy, c-format
+msgid "Added %lu articles to %s."
+msgstr "Přidáno %lu částí, %lu příspěvků do \"%s\""
+
+#: pan/data-impl/profiles.cc:173
+#, fuzzy, c-format
+msgid "Error reading \"%s\": %s"
+msgstr "Chyba při čtení souboru \"%s\": %s"
+
+#: pan/data-impl/server.cc:296
+#, fuzzy, c-format
+msgid "Error loading newsserver information: %s"
+msgstr "Chyba při analýze příkazového řádku \"web browser\": %s"
+
+#: pan/data/article-cache.cc:148
+#, fuzzy, c-format
+msgid "Error opening directory: \"%s\": %s"
+msgstr "Chyba při otvírání adresáře \"%s\": %s)"
+
+#: pan/data/article-cache.cc:364 pan/general/line-reader.cc:24
+#, fuzzy, c-format
+msgid "Error opening file \"%s\" %s"
+msgstr "Chyba při otvírání souboru \"%s\": %s"
+
+#: pan/data/article-cache.cc:395 pan/gui/post-ui.cc:1028
+#, c-format
+msgid "Error reading file \"%s\": %s"
+msgstr "Chyba při čtení souboru \"%s\": %s"
+
+#: pan/data/filter-info.cc:152
+#, fuzzy
+msgid "article doesn't have attachments"
+msgstr "Příspěvek nemá úplné přílohy"
+
+#: pan/data/filter-info.cc:156
+#, fuzzy
+msgid "the article has attachments"
+msgstr "Příspěvek nemá přílohy"
+
+#: pan/data/filter-info.cc:160
+#, fuzzy
+msgid "the article isn't cached locally"
+msgstr "Tělo příspěvku není dočasně uloženo lokálně"
+
+#: pan/data/filter-info.cc:164
+#, fuzzy
+msgid "the article is cached locally"
+msgstr "Tělo příspěvku je dočasně uloženo lokálně"
+
+#: pan/data/filter-info.cc:168
+#, fuzzy
+msgid "the article wasn't posted by you"
+msgstr "Příspěvek nebyl poslán ode mne"
+
+#: pan/data/filter-info.cc:172
+#, fuzzy
+msgid "the article was posted by you"
+msgstr "Příspěvek byl poslán ode mne"
+
+#: pan/data/filter-info.cc:176
+#, fuzzy
+msgid "the article has been read"
+msgstr "Příspěvek je nepřečtený"
+
+#: pan/data/filter-info.cc:180
+#, fuzzy
+msgid "the article hasn't been read"
+msgstr "Příspěvek je nepřečtený"
+
+#: pan/data/filter-info.cc:184
+#, fuzzy, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "Příspěvek je kratší než %d bajtů"
+
+#: pan/data/filter-info.cc:189
+#, fuzzy, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "Příspěvek je kratší než %d bajtů"
+
+#: pan/data/filter-info.cc:194
+#, fuzzy, c-format
+msgid "the article is less than %ld lines long"
+msgstr "Příspěvek je kratší než %d řádků"
+
+#: pan/data/filter-info.cc:199
+#, fuzzy, c-format
+msgid "the article is at least %ld lines long"
+msgstr "Příspěvek je kratší než %d řádků"
+
+#: pan/data/filter-info.cc:204
+#, fuzzy, c-format
+msgid "the article is less than %ld days old"
+msgstr "Příspěvek je starší více než %d dní"
+
+#: pan/data/filter-info.cc:209
+#, fuzzy, c-format
+msgid "the article is at least %ld days old"
+msgstr "Příspěvek je starý _alespoň N dní"
+
+#: pan/data/filter-info.cc:214
+#, fuzzy, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "Příspěvek je poslán do méně než %d skupin"
+
+#: pan/data/filter-info.cc:219
+#, fuzzy, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "Příspěvek byl _poslán alespoň do N diskusních skupin:"
+
+#: pan/data/filter-info.cc:224
+#, fuzzy, c-format
+msgid "the article's score is less than %ld"
+msgstr "nastavit skóre na"
+
+#: pan/data/filter-info.cc:229
+#, fuzzy, c-format
+msgid "the article's score is %ld or higher"
+msgstr "nastavit skóre na"
+
+#: pan/data/filter-info.cc:238 pan/data/filter-info.cc:248
+#, fuzzy, c-format
+msgid "%s doesn't contain \"%s\""
+msgstr "neobsahuje"
+
+#: pan/data/filter-info.cc:239 pan/data/filter-info.cc:249
+#, c-format
+msgid "%s isn't \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:240 pan/data/filter-info.cc:250
+#, fuzzy, c-format
+msgid "%s doesn't begin with \"%s\""
+msgstr "nekončí s"
+
+#: pan/data/filter-info.cc:241 pan/data/filter-info.cc:251
+#, fuzzy, c-format
+msgid "%s doesn't end with \"%s\""
+msgstr "nekončí s"
+
+#: pan/data/filter-info.cc:242 pan/data/filter-info.cc:252
+#, c-format
+msgid "%s doesn't match the regex \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:264
+#, fuzzy, c-format
+msgid "%s contains \"%s\""
+msgstr "obsahuje"
+
+#: pan/data/filter-info.cc:265
+#, c-format
+msgid "%s is \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:266
+#, c-format
+msgid "%s begins with \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:267
+#, fuzzy, c-format
+msgid "%s ends with \"%s\""
+msgstr "končí s"
+
+#: pan/data/filter-info.cc:268
+#, fuzzy, c-format
+msgid "%s matches the regex \"%s\""
+msgstr "vyhovuje regulárnímu výrazu"
+
+#: pan/data/filter-info.cc:274
+msgid "Any of these tests fail:"
+msgstr ""
+
+#: pan/data/filter-info.cc:281
+msgid "All of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:288
+msgid "None of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:295
+msgid "Any of these tests pass:"
+msgstr ""
+
+#: pan/data/scorefile.cc:299
+#, fuzzy, c-format
+msgid ""
+"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
+"'Expires: DD-MM-YYYY'."
+msgstr "očekává se 'Expires: MM/DD/YYYY' nebo 'Expires: DD-MM-YYYY'"
+
+#: pan/data/scorefile.cc:302
+#, c-format
+msgid "Expired old score from %*.*s, line %d"
+msgstr ""
+
+#: pan/data/scorefile.cc:373
+#, c-format
+msgid "Error reading score in %*.*s, line %d: unexpected line."
+msgstr ""
+
+#: pan/data/scorefile.cc:421
+#, c-format
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
+msgstr ""
+
+#. build the locale strings
+#: pan/general/e-util.cc:213
+msgid "%l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:214
+msgid "Today %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:215
+msgid "%a %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:216
+msgid "%b %d %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:217
+msgid "%b %d %Y"
+msgstr ""
+
+#: pan/general/e-util.cc:242
+msgid "?"
+msgstr ""
+
+#: pan/general/file-util.cc:139
+#, fuzzy, c-format
+msgid "Creating directory \"%s\""
+msgstr "Chyba při otvírání adresáře \"%s\": %s)"
+
+#: pan/general/file-util.cc:142
+#, c-format
+msgid "Couldn't create directory \"%s\": %s"
+msgstr "Nelze vytvořit adresář \"%s\": %s"
+
+#: pan/general/text-match.cc:210
+#, fuzzy
+msgid ""
+"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
+"fail."
+msgstr ""
+"Kopie libpcre ve vašem systému nepodporuje UTF-8. Regulární výrazy s UTF-8 "
+"mohou selhat."
+
+#: pan/general/text-match.cc:221
+#, c-format
+msgid "Can't use regular expression \"%s\": %s at position %d"
+msgstr "Nemohu použít regulární výraz \"%s\": %s na pozici %d"
+
+#: pan/general/text-match.cc:229
+#, c-format
+msgid "Can't use regular expression \"%s\": %s"
+msgstr "Nemohu použít regulární výraz \"%s\": %s"
+
+#: pan/gui/actions.cc:258 pan/gui/post-ui.cc:238
+#, fuzzy
+msgid "_File"
+msgstr "/_Soubor"
+
+#: pan/gui/actions.cc:259 pan/gui/post-ui.cc:239
+#, fuzzy
+msgid "_Edit"
+msgstr "/_Upravit"
+
+#: pan/gui/actions.cc:260 pan/gui/prefs-ui.cc:460
+#, fuzzy
+msgid "_Layout"
+msgstr "Roz_ložení panelu"
+
+#: pan/gui/actions.cc:261
+#, fuzzy
+msgid "_Group Pane"
+msgstr "Panel skupin"
+
+#: pan/gui/actions.cc:262
+#, fuzzy
+msgid "_Header Pane"
+msgstr "Panel hlaviček"
+
+#: pan/gui/actions.cc:263
+#, fuzzy
+msgid "_Body Pane"
+msgstr "Panel těla"
+
+#: pan/gui/actions.cc:264
+#, fuzzy
+msgid "_View"
+msgstr "/_Zobrazit"
+
+#: pan/gui/actions.cc:265
+msgid "Character _Encoding"
+msgstr ""
+
+#: pan/gui/actions.cc:266
+#, fuzzy
+msgid "Filte_r"
+msgstr "/Filt_r"
+
+#: pan/gui/actions.cc:267
+#, fuzzy
+msgid "_Go"
+msgstr "/_Přejít"
+
+#: pan/gui/actions.cc:268
+#, fuzzy
+msgid "_Actions"
+msgstr "Akce"
+
+#: pan/gui/actions.cc:269
+#, fuzzy
+msgid "_Articles"
+msgstr "/Příspě_vky"
+
+#: pan/gui/actions.cc:270
+#, fuzzy
+msgid "_Groups"
+msgstr "Skupiny"
+
+#: pan/gui/actions.cc:271 pan/gui/actions.cc:272
+msgid "_Post"
+msgstr "_Poslat"
+
+#: pan/gui/actions.cc:273 pan/gui/save-ui.cc:202
+msgid "_Help"
+msgstr "_Nápověda"
+
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "_Read Group"
+msgstr "/Vy_mazat skupinu"
+
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "Read Selected Group"
+msgstr "Přečíst následující nepřečtenou skupinu"
+
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "_Mark Group _Read"
+msgstr "/Označit skupinu jako p_řečtenou"
+
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "Mark Selected Groups Read"
+msgstr "/Označit skupinu jako p_řečtenou"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "_Delete Group's Articles"
+msgstr "/_Vymazat příspěvky ze skupiny"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "Delete Selected Groups' Articles"
+msgstr "/_Vymazat příspěvky ze skupiny"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New _Headers in Selected Groups"
+msgstr "Stáhnout nové hlavičky v označených skupinách"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New Headers for Selected Groups"
+msgstr "Stáhnout nové hlavičky v označených skupinách"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New _Headers in Subscribed Groups"
+msgstr "Stáhnout nové hlavičky v přihlášených skupinách"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New Headers for Subscribed Groups"
+msgstr "Stáhnout nové hlavičky v přihlášených skupinách"
+
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get _Headers..."
+msgstr "/Stáhnout nové _hlavičky"
+
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get Headers from Server"
+msgstr "Získáno %d skupin ze serveru \"%s\""
+
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Refresh Group List"
+msgstr "Obnovuji skupinu \"%s\""
+
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Get a new Group list from the Server"
+msgstr "Získávám nové skupiny ze serveru \"%s\""
+
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "_Subscribe"
+msgstr "/Přihlá_sit"
+
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "Subscribe to Selected Groups"
+msgstr "Přihlášené diskusní skupiny"
+
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "_Unsubscribe"
+msgstr "/_Odhlásit"
+
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "Unsubscribe from Selected Groups"
+msgstr "Přihlášené diskusní skupiny"
+
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "_Save Articles..."
+msgstr "Uložit příspěvek jako..."
+
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "Save Selected Articles..."
+msgstr "Uložit přílohy příspěvku"
+
+#: pan/gui/actions.cc:286
+msgid "_Import NZB Files..."
+msgstr ""
+
+#: pan/gui/actions.cc:287
+#, fuzzy
+msgid "_Cancel Last Task"
+msgstr "Zrušit poslední úlohu"
+
+#: pan/gui/actions.cc:287
+msgid "Cancel Last Task"
+msgstr "Zrušit poslední úlohu"
+
+#: pan/gui/actions.cc:288
+#, fuzzy
+msgid "_Task Manager..."
+msgstr "/_Soubor/Správce úlo_h..."
+
+#: pan/gui/actions.cc:289
+msgid "_Event Log..."
+msgstr ""
+
+#: pan/gui/actions.cc:290
+#, fuzzy
+msgid "_Quit"
+msgstr "/_Upravit"
+
+#: pan/gui/actions.cc:292
+#, fuzzy
+msgid "Select _All Articles"
+msgstr "/_Upravit/Ozn_ačit všechny příspěvky"
+
+#: pan/gui/actions.cc:293
+#, fuzzy
+msgid "_Deselect All Articles"
+msgstr "/_Upravit/Odznačit vše_chny příspěvky"
+
+#: pan/gui/actions.cc:294
+#, fuzzy
+msgid "Add Su_bthreads to Selection"
+msgstr "/_Upravit/Přidat _podvlákna do výběru"
+
+#: pan/gui/actions.cc:295
+#, fuzzy
+msgid "Add _Threads to Selection"
+msgstr "/_Upravit/Přidat _vlákna do výběru"
+
+#: pan/gui/actions.cc:296
+#, fuzzy
+msgid "Add _Similar Artilces to Selection"
+msgstr "/_Upravit/Přidat _vlákna do výběru"
+
+#: pan/gui/actions.cc:297
+#, fuzzy
+msgid "Select Article _Body"
+msgstr "/_Upravit/Vy_brat tělo příspěvku"
+
+#: pan/gui/actions.cc:298
+#, fuzzy
+msgid "Edit _Preferences..."
+msgstr "/_Upravit/Nas_tavení..."
+
+#: pan/gui/actions.cc:299
+#, fuzzy
+msgid "Edit _Group Preferences..."
+msgstr "/_Upravit/Nas_tavení..."
+
+#: pan/gui/actions.cc:300
+#, fuzzy
+msgid "Edit P_osting Profiles..."
+msgstr "/P_oslat/_Profily posílaní..."
+
+#: pan/gui/actions.cc:301
+#, fuzzy
+msgid "Edit _News Servers..."
+msgstr "Server diskusních skupin"
+
+#: pan/gui/actions.cc:303
+#, fuzzy
+msgid "Jump to _Group Tab"
+msgstr "/_Zobrazit/Přejít na záložku _skupin"
+
+#: pan/gui/actions.cc:304
+#, fuzzy
+msgid "Jump to _Header Tab"
+msgstr "/_Zobrazit/Přejít na záložku _hlaviček"
+
+#: pan/gui/actions.cc:305
+#, fuzzy
+msgid "Jump to _Body Tab"
+msgstr "/_Zobrazit/Přejít na záložku _těla"
+
+#: pan/gui/actions.cc:306
+#, fuzzy
+msgid "_Rot13 Selected Text"
+msgstr "Rot13 označený text"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear _Header Pane"
+msgstr "Panel hlaviček"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear Header Pane"
+msgstr "Panel hlaviček"
+
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear _Body Pane"
+msgstr "Panel těla"
+
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear Body Pane"
+msgstr "Panel _těla"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download _Selected Article"
+msgstr "Stáhnout označené příspěvky"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download Selected Article"
+msgstr "Stáhnout označené příspěvky"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read _Selected Article"
+msgstr "Stáhnout označené příspěvky"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read Selected Article"
+msgstr "Stáhnout označené příspěvky"
+
+#: pan/gui/actions.cc:313
+#, fuzzy
+msgid "Read _More"
+msgstr "Přečíst více"
+
+#: pan/gui/actions.cc:313
+msgid "Read More"
+msgstr "Přečíst více"
+
+#: pan/gui/actions.cc:314
+msgid "Read _Back"
+msgstr ""
+
+#: pan/gui/actions.cc:314
+#, fuzzy
+msgid "Read Back"
+msgstr "/_Přejít/Číst zpět"
+
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next _Unread Group"
+msgstr "/_Přejít/Následující nepřečtená _skupina"
+
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next Unread Group"
+msgstr "/_Přejít/Následující nepřečtená _skupina"
+
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next _Group"
+msgstr "/_Přejít/Násled_ující skupina"
+
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next Group"
+msgstr "/_Přejít/Násled_ující skupina"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next _Unread Article"
+msgstr "/_Přejít/_Následující nepřečtený příspěvek"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next Unread Article"
+msgstr "Přečíst následující nepřečtený příspěvek"
+
+#: pan/gui/actions.cc:318
+#, fuzzy
+msgid "Next _Article"
+msgstr "/_Přejít/Následující příspěve_k"
+
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next _Watched Article"
+msgstr "/_Přejít/Následující _sledovaný příspěvek"
+
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next Watched Article"
+msgstr "/_Přejít/Následující _sledovaný příspěvek"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread _Thread"
+msgstr "/_Přejít/Následující nepřeč_tené vlákno"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread Thread"
+msgstr "Přečíst následující nepřečtené vlákno"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Threa_d"
+msgstr "/_Přejít/Násle_dující vlákno"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Thread"
+msgstr "/_Přejít/Násle_dující vlákno"
+
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Pre_vious Article"
+msgstr "/_Přejít/Před_cházející příspěvek"
+
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Previous Article"
+msgstr "/_Přejít/Před_cházející příspěvek"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous _Thread"
+msgstr "/_Přejít/Předcháze_jící vlákno"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous Thread"
+msgstr "/_Přejít/Předcháze_jící vlákno"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "_Parent Article"
+msgstr "/_Přejít/Rodičovský _příspěvek"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "Parent Article"
+msgstr "/_Přejít/Rodičovský _příspěvek"
+
+#: pan/gui/actions.cc:326
+#, fuzzy
+msgid "_Plonk Author"
+msgstr "/Příspě_vky/I_gnorovat autora"
+
+#: pan/gui/actions.cc:327
+#, fuzzy
+msgid "_Watch Thread"
+msgstr "/Sledovat _vlákno"
+
+#: pan/gui/actions.cc:328
+#, fuzzy
+msgid "_Ignore Thread"
+msgstr "/_Ignorovat vlákno"
+
+#: pan/gui/actions.cc:329
+#, fuzzy
+msgid "View Article's S_core"
+msgstr "/_Zobrazit skóre příspěvku"
+
+#: pan/gui/actions.cc:330
+#, fuzzy
+msgid "_Add a _Scoring Rule"
+msgstr "Přidat nové skóre"
+
+#: pan/gui/actions.cc:331
+#, fuzzy
+msgid "Cance_l Article..."
+msgstr "Zrušení příspěvku"
+
+#: pan/gui/actions.cc:332
+#, fuzzy
+msgid "_Supersede Article..."
+msgstr "/_Uložit příspěvek jako..."
+
+#: pan/gui/actions.cc:333
+#, fuzzy
+msgid "_Delete Article"
+msgstr "_Vymazat příspěvek"
+
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "_Mark Article as Read"
+msgstr "Příspěvek je přečtený"
+
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "Mark Article as Read"
+msgstr "Příspěvek je přečtený"
+
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as _Unread"
+msgstr "Příspěvek je nepřečtený"
+
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as Unread"
+msgstr "Příspěvek je nepřečtený"
+
+#: pan/gui/actions.cc:337
+#, fuzzy
+msgid "_Post to Newsgroup"
+msgstr "Poslat do diskusní skupiny"
+
+#: pan/gui/actions.cc:337
+msgid "Post to Newsgroup"
+msgstr "Poslat do diskusní skupiny"
+
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "_Followup to  Newsgroup"
+msgstr "/P_oslat/Po_kračovat v diskusní skupině..."
+
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "Followup to Newsgroup"
+msgstr "/P_oslat/Po_kračovat v diskusní skupině..."
+
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "_Reply to Author"
+msgstr "/Příspě_vky/I_gnorovat autora"
+
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "Reply to Author"
+msgstr "/Příspě_vky/I_gnorovat autora"
+
+#: pan/gui/actions.cc:341
+#, fuzzy
+msgid "_Pan Home Page..."
+msgstr "/_Nápověda/Domo_vská stránka programu Pan..."
+
+#: pan/gui/actions.cc:342
+#, fuzzy
+msgid "Give _Feedback or Report a Bug..."
+msgstr "/_Nápověda/Oznámit chy_bu..."
+
+#: pan/gui/actions.cc:343
+msgid "_Tip Jar..."
+msgstr ""
+
+#: pan/gui/actions.cc:345 pan/gui/actions.cc:347
+#, fuzzy
+msgid "_About..."
+msgstr "/_Nápověda/_O programu..."
+
+#: pan/gui/actions.cc:361
+#, fuzzy
+msgid "_Thread Headers"
+msgstr "Více hlaviček"
+
+#: pan/gui/actions.cc:362
+#, fuzzy
+msgid "_Wrap Article Body"
+msgstr "/_Zobrazit/_Zalomit tělo příspěvku"
+
+#: pan/gui/actions.cc:363
+#, fuzzy
+msgid "Mute _Quoted Text"
+msgstr "/_Zobrazit/Potlačit _citovaný text"
+
+#: pan/gui/actions.cc:364
+#, fuzzy
+msgid "Show All _Headers in Body Pane"
+msgstr "/_Zobrazit/Zobrazit všechny _hlavičky v panelu těla"
+
+#: pan/gui/actions.cc:365
+#, fuzzy
+msgid "Show _Smilies as Graphics"
+msgstr "Zobrazit v_arování:"
+
+#: pan/gui/actions.cc:366
+msgid "Show *Bold*, __Underlined__, and /Italic/"
+msgstr ""
+
+#: pan/gui/actions.cc:367
+msgid "Size Pictures to _Fit"
+msgstr ""
+
+#: pan/gui/actions.cc:368
+#, fuzzy
+msgid "Smooth Scrolling"
+msgstr "Hladké posouvání _rychlostí:"
+
+#: pan/gui/actions.cc:369
+#, fuzzy
+msgid "Use _Monospace Font"
+msgstr "N_eproporcionální písmo:"
+
+#: pan/gui/actions.cc:371
+#, fuzzy
+msgid "_Work Online"
+msgstr "/_Soubor/Pracovat _připojený"
+
+#: pan/gui/actions.cc:372
+#, fuzzy
+msgid "_Tabbed Layout"
+msgstr "/_Zobrazit/_Vzhled se záložkami"
+
+#: pan/gui/actions.cc:373
+#, fuzzy
+msgid "Show Group _Pane"
+msgstr "/_Zobrazit/Zobrazit _panel skupin"
+
+#: pan/gui/actions.cc:374
+#, fuzzy
+msgid "Show Hea_der Pane"
+msgstr "/_Zobrazit/Zobrazit panel hlaviče_k"
+
+#: pan/gui/actions.cc:375
+#, fuzzy
+msgid "Show Bod_y Pane"
+msgstr "/_Zobrazit/Zobrazit panel tě_la"
+
+#: pan/gui/actions.cc:376
+msgid "Show _Toolbar"
+msgstr ""
+
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate _Names in Group Pane"
+msgstr "/_Zobrazit/Zkrátit _názvy v panelu skupin"
+
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate Newsgroup Names"
+msgstr "/_Zobrazit/Zkrátit _názvy v panelu skupin"
+
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only _Unread Articles"
+msgstr "Vyhovují pouze nové příspěvky"
+
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only Unread Articles"
+msgstr "Vyhovují pouze nové příspěvky"
+
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only _Cached Articles"
+msgstr "Vyhovují pouze příspěvky uložené ve vyrovnávací paměti"
+
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only Cached Articles"
+msgstr "Vyhovují pouze příspěvky uložené ve vyrovnávací paměti"
+
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only _Complete Articles"
+msgstr "Vyhovují pouze úplné přílohy"
+
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only Complete Articles"
+msgstr "Vyhovují pouze úplné přílohy"
+
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only _My Articles"
+msgstr "Vyhovují pouze mé příspěvky"
+
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only Articles Posted by Me"
+msgstr "Vyhovují pouze mé příspěvky"
+
+#: pan/gui/actions.cc:383
+#, fuzzy
+msgid "Match Only _Watched Articles"
+msgstr "Vyhovují pouze sledované příspěvky"
+
+#: pan/gui/actions.cc:383
+msgid "Match Only Watched Articles"
+msgstr "Vyhovují pouze sledované příspěvky"
+
+#: pan/gui/actions.cc:385
+#, fuzzy
+msgid "Match Scores of 9999 (_Watched)"
+msgstr "/Filt_r/Vyhovují příspěvky se skóre 9999 (sledované)"
+
+#: pan/gui/actions.cc:386
+#, fuzzy
+msgid "Match Scores of 5000...9998 (_High)"
+msgstr "/Filt_r/Vyhovují příspěvky se skóre 5000...9998 (vysoké)"
+
+#: pan/gui/actions.cc:387
+#, fuzzy
+msgid "Match Scores of 1...4999 (Me_dium)"
+msgstr "/Filt_r/Vyhovují příspěvky se skóre 1...4999 (střední)"
+
+#: pan/gui/actions.cc:388
+#, fuzzy
+msgid "Match Scores of 0 (_Normal)"
+msgstr "/Filt_r/Vyhovují příspěvky se skóre 0 (normální)"
+
+#: pan/gui/actions.cc:389
+#, fuzzy
+msgid "Match Scores of -9998...-1 (_Low)"
+msgstr "/Filt_r/Vyhovují příspěvky se skóre -9998...-1 (nízké)"
+
+#: pan/gui/actions.cc:390
+#, fuzzy
+msgid "Match Scores of -9999 (_Ignored)"
+msgstr "/Filt_r/Vyhovují příspěvky se skóre -9999 (ignorované)"
+
+#: pan/gui/actions.cc:416
+#, fuzzy
+msgid "Show Matching _Articles"
+msgstr "/Filt_r/Zobrazit odpovídající příspěvky"
+
+#: pan/gui/actions.cc:417
+#, fuzzy
+msgid "Show Matching Articles' _Threads"
+msgstr "/Filt_r/Zobrazit vlákna odpovídajících příspěvků"
+
+#: pan/gui/actions.cc:418
+#, fuzzy
+msgid "Show Matching Articles' _Subthreads"
+msgstr "/Filt_r/Zobrazit podvlákna odpovídajících příspěvků"
+
+#: pan/gui/actions.cc:435
+msgid "Baltic (ISO-8859-4)"
+msgstr ""
+
+#: pan/gui/actions.cc:436
+msgid "Baltic (ISO-8859-13)"
+msgstr ""
+
+#: pan/gui/actions.cc:437
+msgid "Baltic (Windows-1257)"
+msgstr ""
+
+#: pan/gui/actions.cc:438
+#, fuzzy
+msgid "Central European (ISO-8859-2)"
+msgstr "Středoevropské"
+
+#: pan/gui/actions.cc:439
+#, fuzzy
+msgid "Central European (Windows-1250)"
+msgstr "Středoevropské"
+
+#: pan/gui/actions.cc:440
+#, fuzzy
+msgid "Chinese Simplified (gb2312)"
+msgstr "Čínsky (zjednodušeně)"
+
+#: pan/gui/actions.cc:441
+#, fuzzy
+msgid "Chinese Traditional (big5)"
+msgstr "Čínsky (tradičně)"
+
+#: pan/gui/actions.cc:442
+msgid "Cyrillic (ISO-8859-5)"
+msgstr ""
+
+#: pan/gui/actions.cc:443
+msgid "Cyrillic (Windows-1251)"
+msgstr ""
+
+#: pan/gui/actions.cc:444
+#, fuzzy
+msgid "Cyrillic (KOI8-R)"
+msgstr "Azbuka"
+
+#: pan/gui/actions.cc:445
+#, fuzzy
+msgid "Cyrillic, Ukrainian (KOI8-U)"
+msgstr "Azbuka, Ukrajinská"
+
+#: pan/gui/actions.cc:446
+msgid "Greek (ISO-8859-7)"
+msgstr ""
+
+#: pan/gui/actions.cc:447
+msgid "Japanese (ISO-2022-jp)"
+msgstr ""
+
+#: pan/gui/actions.cc:448
+msgid "Korean (euc-kr)"
+msgstr ""
+
+#: pan/gui/actions.cc:449
+msgid "Turkish (ISO-8859-9)"
+msgstr ""
+
+#: pan/gui/actions.cc:450
+msgid "Western (ISO-8859-1)"
+msgstr ""
+
+#: pan/gui/actions.cc:451
+#, fuzzy
+msgid "Western, New (ISO-8859-15)"
+msgstr "Západní, Nové"
+
+#: pan/gui/actions.cc:452
+msgid "Western (Windows-1252)"
+msgstr ""
+
+#: pan/gui/actions.cc:453
+#, fuzzy
+msgid "Unicode (UTF-8)"
+msgstr "Unicode, UTF-8"
+
+#: pan/gui/body-pane.cc:855
+#, c-format
+msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
+msgstr ""
+
+#: pan/gui/body-pane.cc:856
+#, c-format
+msgid "Attachment not shown: MIME type %s/%s\n"
+msgstr ""
+
+#: pan/gui/body-pane.cc:936 pan/gui/header-pane.cc:1167
+#: pan/gui/header-pane.cc:1502 pan/gui/prefs-ui.cc:322
+#: pan/gui/score-add-ui.cc:136
+msgid "Subject"
+msgstr "Předmět"
+
+#: pan/gui/body-pane.cc:938
+#, fuzzy
+msgid "From"
+msgstr "Od"
+
+#: pan/gui/body-pane.cc:940 pan/gui/header-pane.cc:1579 pan/gui/log-ui.cc:206
+#: pan/gui/prefs-ui.cc:318
+msgid "Date"
+msgstr "Datum"
+
+#: pan/gui/body-pane.cc:947
+msgid "Newsgroups"
+msgstr "Diskusní skupiny"
+
+#: pan/gui/body-pane.cc:952
+#, fuzzy
+msgid "Followup-To"
+msgstr "Pokračovat-do"
+
+#: pan/gui/body-pane.cc:962
+msgid "Reply-To"
+msgstr "Odpověď-pro"
+
+#: pan/gui/body-pane.cc:988
+msgid " from "
+msgstr ""
+
+#: pan/gui/body-pane.cc:990
+msgid " at "
+msgstr ""
+
+#: pan/gui/dl-headers-ui.cc:102
+#, fuzzy
+msgid "Pan: "
+msgstr "Pan: Pravidla"
+
+#: pan/gui/dl-headers-ui.cc:128
+#, fuzzy
+msgid "Get the last N _days' headers: "
+msgstr "Stáhnout ne_dávné hlavičky:"
+
+#: pan/gui/dl-headers-ui.cc:136
+#, fuzzy
+msgid "Get _new headers"
+msgstr "/Stáhnout nové _hlavičky"
+
+#: pan/gui/dl-headers-ui.cc:140
+#, fuzzy
+msgid "Get _all headers"
+msgstr "Stáhnout všechny hl_avičky"
+
+#: pan/gui/dl-headers-ui.cc:144
+#, fuzzy
+msgid "Get the _latest N headers: "
+msgstr "Stáhnout ne_dávné hlavičky:"
+
+#: pan/gui/group-pane.cc:608
+#, fuzzy
+msgid "Group Name"
+msgstr "Panel skupin"
+
+#: pan/gui/group-pane.cc:700
+#, c-format
+msgid " (%lu)"
+msgstr ""
+
+#: pan/gui/group-pane.cc:829 pan/gui/header-pane.cc:1668
+#, fuzzy
+msgid "Clear the Filter"
+msgstr "Vybrat filtr:"
+
+#: pan/gui/group-pane.cc:857
+#, fuzzy
+msgid "Subscribed Groups"
+msgstr "Přihlášené diskusní skupiny"
+
+#: pan/gui/group-pane.cc:858
+#, fuzzy
+msgid "Other Groups"
+msgstr "Nové skupiny"
+
+#: pan/gui/group-pane.cc:900
+#, fuzzy
+msgid "Name"
+msgstr "_Název:"
+
+#: pan/gui/group-prefs-dialog.cc:101
+#, fuzzy
+msgid "No Profiles defined in Edit|Posting Profiles."
+msgstr "/P_oslat/_Profily posílaní..."
+
+#: pan/gui/group-prefs-dialog.cc:129
+#, fuzzy
+msgid "Pan: Group Preferences"
+msgstr "Nastavení Pan"
+
+#: pan/gui/group-prefs-dialog.cc:143
+#, fuzzy, c-format
+msgid "Properties for %s"
+msgstr "Vlastnosti pro \"%s\""
+
+#: pan/gui/group-prefs-dialog.cc:147
+#, fuzzy
+msgid "Character _encoding:"
+msgstr "_Znaková sada:"
+
+#: pan/gui/group-prefs-dialog.cc:148
+#, fuzzy
+msgid "Directory for Saving Attachments"
+msgstr "Adresář pro ukládání příloh"
+
+#: pan/gui/group-prefs-dialog.cc:153
+#, fuzzy
+msgid "Directory for _saving attachments:"
+msgstr "Adresář pro ukládání příloh"
+
+#: pan/gui/group-prefs-dialog.cc:155
+#, fuzzy
+msgid "Posting _profile:"
+msgstr "Pan: Profil"
+
+#: pan/gui/gui.cc:236
+msgid "Open the Task Manager"
+msgstr "Otevřít Správce úloh"
+
+#: pan/gui/gui.cc:257
+#, fuzzy
+msgid "Open the Event Log"
+msgstr "Otevřít Záznamy stavu"
+
+#: pan/gui/gui.cc:481
+#, fuzzy
+msgid "Save Attachments"
+msgstr "Uložit _přílohy"
+
+#: pan/gui/gui.cc:529
+msgid "Import NZB File(s)"
+msgstr ""
+
+#: pan/gui/gui.cc:605
+msgid ""
+"Pan is now offline. Please ensure that space is available, then use File|"
+"Work Online to continue."
+msgstr ""
+
+#: pan/gui/gui.cc:730 pan/gui/gui.cc:1092 pan/gui/gui.cc:1296
+msgid "Pan"
+msgstr ""
+
+#: pan/gui/gui.cc:902
+#, fuzzy
+msgid "Unable to supersede article."
+msgstr "/_Uložit příspěvek jako..."
+
+#: pan/gui/gui.cc:903 pan/gui/gui.cc:970
+msgid "The article doesn't match any of your posting profiles."
+msgstr ""
+
+#: pan/gui/gui.cc:944
+msgid "Revise and send this article to replace the old one."
+msgstr ""
+
+#: pan/gui/gui.cc:945 pan/gui/gui.cc:1005
+msgid "Be patient!  It will take time for your changes to take effect."
+msgstr ""
+
+#: pan/gui/gui.cc:969
+#, fuzzy
+msgid "Unable to cancel article."
+msgstr "Zrušení příspěvku"
+
+#: pan/gui/gui.cc:1004
+msgid "Send this article to ask your server to cancel your other one."
+msgstr ""
+
+#: pan/gui/gui.cc:1095 pan/gui/gui.cc:1115
+#, fuzzy
+msgid "Copyright © 2002-2006 Charles Kerr"
+msgstr "Copyright © 2003 Charles Kerr"
+
+#: pan/gui/gui.cc:1100
+msgid "translator-credits"
+msgstr ""
+
+#: pan/gui/gui.cc:1211
+#, fuzzy
+msgid "_1. Group Pane"
+msgstr "Panel skupin"
+
+#: pan/gui/gui.cc:1212
+#, fuzzy
+msgid "_2. Header Pane"
+msgstr "Panel hlaviček"
+
+#: pan/gui/gui.cc:1213
+#, fuzzy
+msgid "_3. Body Pane"
+msgstr "Panel těla"
+
+#: pan/gui/gui.cc:1298
+#, fuzzy, c-format
+msgid "Pan: %s"
+msgstr "Pan: Pravidla"
+
+#: pan/gui/gui.cc:1415
+msgid "Offline"
+msgstr "Nepřipojený"
+
+#: pan/gui/gui.cc:1418
+#, c-format
+msgid "Closing %d connections"
+msgstr "Zavírám %d spojení"
+
+#: pan/gui/gui.cc:1420 pan/gui/gui.cc:1450
+msgid "No Connections"
+msgstr "Bez spojení"
+
+#: pan/gui/gui.cc:1424
+msgid "Connecting"
+msgstr "Připojuji se"
+
+#: pan/gui/gui.cc:1437
+#, c-format
+msgid "%s: %d idle, %d active @ %.1f KiBps"
+msgstr ""
+
+#: pan/gui/gui.cc:1493
+msgid "No Tasks"
+msgstr "Žádné úlohy"
+
+#: pan/gui/gui.cc:1496
+#, c-format
+msgid "Tasks: %u/%u"
+msgstr "Úlohy: %u/%u"
+
+#: pan/gui/gui.cc:1497
+#, c-format
+msgid "%u Tasks Running, %u Tasks Total"
+msgstr "%u běžících úloh, %u úloh celkem"
+
+#: pan/gui/gui.cc:1546
+msgid ""
+"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
+"then use \"File|Work Online\" to continue."
+msgstr ""
+
+#. less than a kibi...
+#: pan/gui/header-pane.cc:363 pan/gui/task-pane.cc:208
+#, fuzzy, c-format
+msgid "%lu B"
+msgstr "%lu nových"
+
+#: pan/gui/header-pane.cc:365
+#, c-format
+msgid "%.1f KiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:367
+#, c-format
+msgid "%.1f MiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:369
+#, c-format
+msgid "%.1f GiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:1166
+msgid "Subject or Author"
+msgstr ""
+
+#: pan/gui/header-pane.cc:1168 pan/gui/header-pane.cc:1534
+#: pan/gui/prefs-ui.cc:316 pan/gui/score-add-ui.cc:137
+msgid "Author"
+msgstr "Autor"
+
+#: pan/gui/header-pane.cc:1169
+#, fuzzy
+msgid "Message-ID"
+msgstr "_ID-zprávy"
+
+#: pan/gui/header-pane.cc:1519 pan/gui/prefs-ui.cc:320
+msgid "Score"
+msgstr "Skóre"
+
+#: pan/gui/header-pane.cc:1549 pan/gui/prefs-ui.cc:319
+msgid "Lines"
+msgstr "Řádků"
+
+#: pan/gui/header-pane.cc:1564 pan/gui/prefs-ui.cc:317
+msgid "Bytes"
+msgstr ""
+
+#: pan/gui/log-ui.cc:85
+msgid "Save Event List"
+msgstr ""
+
+#: pan/gui/log-ui.cc:167
+#, fuzzy
+msgid "Pan: Events"
+msgstr "Pan: Servery"
+
+#: pan/gui/log-ui.cc:216
+msgid "Message"
+msgstr "Zpráva"
+
+#: pan/gui/pan.cc:120
+msgid ""
+"Thank you for trying Pan!\n"
+" \n"
+"To start newsreading, first Add a Server."
+msgstr ""
+
+#: pan/gui/pan.cc:141
+msgid ""
+"General Options\n"
+"  -h, --help               Show this usage page.\n"
+"\n"
+"URL Options\n"
+"  news:message-id          Show the specified article.\n"
+"  news:group.name          Show the specified newsgroup.\n"
+"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"\n"
+"NZB Batch Options\n"
+"  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
+"  -o path, --output=path   Path to save attachments listed in the nzb "
+"files.\n"
+"  --nogui                  Only show console output, not the download "
+"queue.\n"
+msgstr ""
+
+#: pan/gui/pan.cc:198
+msgid "Error: nzb arguments used without nzb files."
+msgstr ""
+
+#: pan/gui/pan.cc:203
+msgid "Error: --nogui used without nzb files or news:message-id."
+msgstr ""
+
+#: pan/gui/pan.cc:207
+#, fuzzy, c-format
+msgid "Pan %s started"
+msgstr "Pan %s spuštěn"
+
+#: pan/gui/pan.cc:223
+msgid "Please configure Pan's news servers before using it as an nzb client."
+msgstr ""
+
+#: pan/gui/post-ui.cc:86
+#, fuzzy, c-format
+msgid "Error setting spellchecker: %s"
+msgstr "Chyba při zápisu do soketu %s"
+
+#: pan/gui/post-ui.cc:95
+msgid ""
+"<b>Spellchecker not found!</b>\n"
+" \n"
+"Was this copy of Pan compiled with GtkSpell enabled?"
+msgstr ""
+
+#: pan/gui/post-ui.cc:240
+#, fuzzy
+msgid "_Profile"
+msgstr "Profil"
+
+#: pan/gui/post-ui.cc:241
+#, fuzzy
+msgid "Character Encoding"
+msgstr "_Znaková sada:"
+
+#: pan/gui/post-ui.cc:242
+#, fuzzy
+msgid "Set Editor"
+msgstr "Editor"
+
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "_Send Article"
+msgstr "/_Přejít/Rodičovský _příspěvek"
+
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "Send Article Now"
+msgstr "Poslat hned"
+
+#: pan/gui/post-ui.cc:245
+#, fuzzy
+msgid "Sa_ve Draft"
+msgstr "Ukládám příspěvky"
+
+#: pan/gui/post-ui.cc:245
+msgid "Save as a Draft for Future Posting"
+msgstr ""
+
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "_Open Draft..."
+msgstr "/_Přečíst příspěvek"
+
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "Open an Article Draft"
+msgstr "/_Přečíst příspěvek"
+
+#: pan/gui/post-ui.cc:247
+msgid "Wrap _Now"
+msgstr ""
+
+#: pan/gui/post-ui.cc:247
+#, fuzzy
+msgid "Wrap the Article Body to 80 Columns"
+msgstr "/_Zobrazit/_Zalomit tělo příspěvku"
+
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "_Close"
+msgstr "Barvy"
+
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "Close Window"
+msgstr "Zavřít okno se záznamy"
+
+#: pan/gui/post-ui.cc:249
+msgid "Cu_t"
+msgstr ""
+
+#: pan/gui/post-ui.cc:249
+#, fuzzy
+msgid "Cut Text"
+msgstr "Citovaný text:"
+
+#: pan/gui/post-ui.cc:250
+msgid "_Copy"
+msgstr ""
+
+#: pan/gui/post-ui.cc:250
+#, fuzzy
+msgid "Copy Text"
+msgstr "Zalomit text"
+
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "_Paste"
+msgstr "_Poslat"
+
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "Paste Text"
+msgstr "Uložit te_xt"
+
+#: pan/gui/post-ui.cc:252
+#, fuzzy
+msgid "_Rot13"
+msgstr "Rot13"
+
+#: pan/gui/post-ui.cc:252
+msgid "Rot13 Selected Text"
+msgstr "Rot13 označený text"
+
+#: pan/gui/post-ui.cc:253
+#, fuzzy
+msgid "Run _Editor"
+msgstr "Editor"
+
+#: pan/gui/post-ui.cc:254
+msgid "_Manage Editor List..."
+msgstr ""
+
+#: pan/gui/post-ui.cc:255
+#, fuzzy
+msgid "Manage Posting Pr_ofiles..."
+msgstr "/P_oslat/_Profily posílaní..."
+
+#: pan/gui/post-ui.cc:260
+#, fuzzy
+msgid "_Wrap Text"
+msgstr "Zalomit text"
+
+#: pan/gui/post-ui.cc:261
+msgid "Remember _Charset for This Group"
+msgstr ""
+
+#: pan/gui/post-ui.cc:262
+msgid "Check _Spelling"
+msgstr ""
+
+#: pan/gui/post-ui.cc:317 pan/gui/post-ui.cc:318 pan/gui/post-ui.cc:319
+msgid "Baltic"
+msgstr "Pobaltské"
+
+#: pan/gui/post-ui.cc:320 pan/gui/post-ui.cc:321
+msgid "Central European"
+msgstr "Středoevropské"
+
+#: pan/gui/post-ui.cc:322
+msgid "Chinese Simplified"
+msgstr "Čínsky (zjednodušeně)"
+
+#: pan/gui/post-ui.cc:323
+msgid "Chinese Traditional"
+msgstr "Čínsky (tradičně)"
+
+#: pan/gui/post-ui.cc:324 pan/gui/post-ui.cc:325 pan/gui/post-ui.cc:326
+msgid "Cyrillic"
+msgstr "Azbuka"
+
+#: pan/gui/post-ui.cc:327
+msgid "Cyrillic, Ukrainian"
+msgstr "Azbuka, Ukrajinská"
+
+#: pan/gui/post-ui.cc:328
+msgid "Greek"
+msgstr "Řecky"
+
+#: pan/gui/post-ui.cc:329
+msgid "Japanese"
+msgstr "Japonsky"
+
+#: pan/gui/post-ui.cc:330
+msgid "Korean"
+msgstr "Korejsky"
+
+#: pan/gui/post-ui.cc:331
+msgid "Turkish"
+msgstr "Turecky"
+
+#: pan/gui/post-ui.cc:332 pan/gui/post-ui.cc:334
+msgid "Western"
+msgstr "Západní"
+
+#: pan/gui/post-ui.cc:333
+msgid "Western, New"
+msgstr "Západní, Nové"
+
+#: pan/gui/post-ui.cc:335
+msgid "Unicode, UTF-8"
+msgstr "Unicode, UTF-8"
+
+#: pan/gui/post-ui.cc:431
+#, fuzzy, c-format
+msgid "Error loading post.ui: \"%s\""
+msgstr "Chyba při čtení ze soketu: %s"
+
+#: pan/gui/post-ui.cc:502
+msgid "Manage Editor List"
+msgstr ""
+
+#: pan/gui/post-ui.cc:509
+#, fuzzy
+msgid "Editors"
+msgstr "Editor"
+
+#: pan/gui/post-ui.cc:609
+msgid "Your changes will be lost!"
+msgstr ""
+
+#: pan/gui/post-ui.cc:610
+msgid "Close this window and lose your changes?"
+msgstr ""
+
+#: pan/gui/post-ui.cc:647
+msgid "There were problems with this post."
+msgstr ""
+
+#: pan/gui/post-ui.cc:649
+#, fuzzy
+msgid "Go Back"
+msgstr "/_Přejít/Číst zpět"
+
+#: pan/gui/post-ui.cc:651
+msgid "Post Anyway"
+msgstr ""
+
+#: pan/gui/post-ui.cc:662
+#, fuzzy
+msgid "Go _Online"
+msgstr "Pan je připojen"
+
+#: pan/gui/post-ui.cc:834
+msgid ""
+"No posting server is set for this posting profile.\n"
+"Please edit the profile via Edit|Manage Posting Profiles."
+msgstr ""
+
+#: pan/gui/post-ui.cc:867
+#, fuzzy
+msgid "Pan is Offline."
+msgstr "Pan je nepřipojen"
+
+#: pan/gui/post-ui.cc:868
+msgid "Go online to post the article?"
+msgstr ""
+
+#. *
+#. ***  Pop up a ``Posting'' Dialog...
+#. *
+#: pan/gui/post-ui.cc:881
+#, fuzzy
+msgid "Posting Article"
+msgstr "Posílám příspěvek \"%s\""
+
+#: pan/gui/post-ui.cc:887
+msgid "Posting..."
+msgstr ""
+
+#: pan/gui/post-ui.cc:938
+msgid "Error opening temporary file"
+msgstr "Chyba při otevírání dočasného souboru"
+
+#: pan/gui/post-ui.cc:958
+#, c-format
+msgid "Error writing article to temporary file: %s"
+msgstr "Chyba při zápisu příspěvku do dočasného souboru: %s"
+
+#: pan/gui/post-ui.cc:977
+#, fuzzy, c-format
+msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
+msgstr "Chyba při analýze příkazového řádku \"externí editor\": %s"
+
+#: pan/gui/post-ui.cc:1015
+#, c-format
+msgid "Error starting external editor: %s"
+msgstr "Chyba při spouštění externího editoru: %s"
+
+#: pan/gui/post-ui.cc:1070
+#, fuzzy
+msgid "Open Draft Article"
+msgstr "/_Přečíst příspěvek"
+
+#: pan/gui/post-ui.cc:1233
+#, fuzzy
+msgid "Save Draft Article"
+msgstr "Ukládám příspěvky"
+
+#: pan/gui/post-ui.cc:1390
+#, c-format
+msgid "Couldn't read signature file \"%s\": %s"
+msgstr "Nelze načíst soubor s podpisem \"%s\": %s"
+
+#: pan/gui/post-ui.cc:1411
+#, fuzzy, c-format
+msgid "Couldn't parse signature command \"%s\": %s"
+msgstr "Nelze načíst soubor s podpisem \"%s\": %s"
+
+#: pan/gui/post-ui.cc:1448
+#, fuzzy
+msgid "Couldn't convert signature to UTF-8."
+msgstr ""
+"Nemohu konvertovat soubor s podpisem '%s' do UTF-8. Soubor s podpisem musí "
+"být v '%s'"
+
+#: pan/gui/post-ui.cc:1790
+#, fuzzy
+msgid "Post Article"
+msgstr "_Příspěvek"
+
+#: pan/gui/post-ui.cc:1812
+#, fuzzy
+msgid "F_rom"
+msgstr "Od"
+
+#: pan/gui/post-ui.cc:1819
+#, fuzzy
+msgid "_Subject"
+msgstr "_Předmět"
+
+#: pan/gui/post-ui.cc:1825
+#, fuzzy
+msgid "_Newsgroups"
+msgstr "/_Diskusní skupiny"
+
+#: pan/gui/post-ui.cc:1832
+#, fuzzy
+msgid "_Mail To"
+msgstr "Pošta pro"
+
+#: pan/gui/post-ui.cc:1842
+msgid "One header per line, in the form HeaderName: Value"
+msgstr ""
+
+#: pan/gui/post-ui.cc:1845
+#, fuzzy
+msgid "_More Headers"
+msgstr "Více hlaviček"
+
+#: pan/gui/post-ui.cc:1867 pan/gui/profiles-dialog.cc:398
+#, c-format
+msgid "On %d, %n wrote:"
+msgstr "V %d, %n napsal(a):"
+
+#: pan/gui/profiles-dialog.cc:102
+#, fuzzy
+msgid "Posting Profile"
+msgstr "Pan: Profil"
+
+#: pan/gui/profiles-dialog.cc:110
+msgid "Profile Information"
+msgstr "Informace o profilu"
+
+#: pan/gui/profiles-dialog.cc:114
+msgid "_Profile Name:"
+msgstr "Název _profilu:"
+
+#: pan/gui/profiles-dialog.cc:117
+msgid "Required Information"
+msgstr "Povinné informace"
+
+#: pan/gui/profiles-dialog.cc:121
+msgid "_Full Name:"
+msgstr "_Celé jméno:"
+
+#: pan/gui/profiles-dialog.cc:124
+msgid "_Email Address:"
+msgstr "Adresa e_lektronické pošty:"
+
+#: pan/gui/profiles-dialog.cc:126
+#, fuzzy
+msgid "_Post Articles via:"
+msgstr "_Příspěvek"
+
+#: pan/gui/profiles-dialog.cc:129
+#, fuzzy
+msgid "Signature"
+msgstr "_Soubor s podpisem:"
+
+#: pan/gui/profiles-dialog.cc:132
+#, fuzzy
+msgid "_Use a Signature"
+msgstr "_Soubor s podpisem:"
+
+#: pan/gui/profiles-dialog.cc:136
+#, fuzzy
+msgid "Signature File"
+msgstr "Vyberte soubor s podpisem"
+
+#: pan/gui/profiles-dialog.cc:139
+#, fuzzy
+msgid "_Signature:"
+msgstr "_Soubor s podpisem:"
+
+#: pan/gui/profiles-dialog.cc:144
+#, fuzzy
+msgid "Text File"
+msgstr "/_Přejít/Následující příspěve_k"
+
+#: pan/gui/profiles-dialog.cc:146
+#, fuzzy
+msgid "Text"
+msgstr "Text:"
+
+#: pan/gui/profiles-dialog.cc:148
+#, fuzzy
+msgid "Command"
+msgstr "Příkaz pro tisk:"
+
+#: pan/gui/profiles-dialog.cc:158
+#, fuzzy
+msgid "Signature _Type:"
+msgstr "_Soubor s podpisem:"
+
+#: pan/gui/profiles-dialog.cc:161
+msgid "Optional Information"
+msgstr "Volitelné informace"
+
+#: pan/gui/profiles-dialog.cc:169
+#, c-format
+msgid ""
+"%i for Message-ID\n"
+"%a for Author and Address\n"
+"%n for Author name\n"
+"%d for Date"
+msgstr ""
+"%i pro Message-ID\n"
+"%a pro autora a adresu\n"
+"%n pro jméno autora\n"
+"%d pro datum"
+
+#: pan/gui/profiles-dialog.cc:170
+msgid "_Attribution:"
+msgstr "Přiř_azení:"
+
+#: pan/gui/profiles-dialog.cc:190
+msgid ""
+"Extra headers to be included in your posts, such as\n"
+"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
+"Organization: Your Organization"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:199
+#, fuzzy
+msgid "E_xtra Headers:"
+msgstr "Další hlavičky"
+
+#: pan/gui/profiles-dialog.cc:253
+#, fuzzy
+msgid "Invalid email address."
+msgstr "Neplatná adresa \"%s\""
+
+#: pan/gui/profiles-dialog.cc:254
+msgid "Please use an address of the form joe@somewhere.org"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:399
+msgid "New Profile"
+msgstr "Nový profil"
+
+#: pan/gui/profiles-dialog.cc:442
+#, fuzzy
+msgid "Posting Profiles"
+msgstr "/P_oslat/_Profily posílaní..."
+
+#: pan/gui/profiles-dialog.cc:458
+#, fuzzy
+msgid "Profiles"
+msgstr "Profil"
+
+#: pan/gui/profiles-dialog.cc:482
+#, fuzzy
+msgid "Add a New Profile"
+msgstr "Přidat nový profil"
+
+#: pan/gui/profiles-dialog.cc:493
+msgid "Edit the selected profile"
+msgstr "Upravit vybraný profil"
+
+#: pan/gui/profiles-dialog.cc:499
+msgid "Remove the selected profile"
+msgstr "Odstranit vybraný profil"
+
+#: pan/gui/prefs.cc:320
+#, fuzzy, c-format
+msgid "Couldn't parse %s color \"%s\""
+msgstr "Nelze analyzovat příkaz podpisu \"%s\""
+
+#: pan/gui/prefs-ui.cc:159
+#, fuzzy
+msgid "Use GNOME Preferences"
+msgstr "Nastavení Pan"
+
+#: pan/gui/prefs-ui.cc:160
+#, fuzzy
+msgid "Use KDE Preferences"
+msgstr "Odkazy"
+
+#: pan/gui/prefs-ui.cc:161
+#, fuzzy
+msgid "Use OS/X Preferences"
+msgstr "Odkazy"
+
+#: pan/gui/prefs-ui.cc:162
+#, fuzzy
+msgid "Use Windows Preferences"
+msgstr "Nastavení Pan"
+
+#: pan/gui/prefs-ui.cc:163
+#, fuzzy
+msgid "Custom Command:"
+msgstr "Příkaz pro tisk:"
+
+#: pan/gui/prefs-ui.cc:315
+#, fuzzy
+msgid "Action"
+msgstr "Akce"
+
+#: pan/gui/prefs-ui.cc:321
+#, fuzzy
+msgid "State"
+msgstr "Stav"
+
+#: pan/gui/prefs-ui.cc:354
+msgid "Enabled"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:358
+#, fuzzy
+msgid "Column Name"
+msgstr "Sloupec"
+
+#: pan/gui/prefs-ui.cc:392
+#, fuzzy
+msgid "Pan: Preferences"
+msgstr "Nastavení Pan"
+
+#: pan/gui/prefs-ui.cc:404
+msgid "Mouse"
+msgstr "Myš"
+
+#: pan/gui/prefs-ui.cc:406
+#, fuzzy
+msgid "Single-click activates, rather than selects, _groups"
+msgstr "_Jedno kliknutí nenačte, ale pouze vybere skupiny"
+
+#: pan/gui/prefs-ui.cc:408
+#, fuzzy
+msgid "Single-click activates, rather than selects, _articles"
+msgstr "Jedno kliknutí nenačte, ale pouze vybere h_lavičky"
+
+#: pan/gui/prefs-ui.cc:411
+#, fuzzy
+msgid "Groups"
+msgstr "Skupiny"
+
+#: pan/gui/prefs-ui.cc:413
+#, fuzzy
+msgid "Get new headers in subscribed groups on _startup"
+msgstr "Stáhnout nové hlavičky v přihlášených skupinách"
+
+#: pan/gui/prefs-ui.cc:415
+#, fuzzy
+msgid "Get new headers when _entering group"
+msgstr "Stahovat nové hlavičky otevření s_kupiny"
+
+#: pan/gui/prefs-ui.cc:417
+#, fuzzy
+msgid "Mark entire group _read when leaving group"
+msgstr "_Označit příspěvky skupiny jako přečtené při opuštění skupiny"
+
+#: pan/gui/prefs-ui.cc:420
+#, fuzzy
+msgid "Articles"
+msgstr "/Příspě_vky"
+
+#: pan/gui/prefs-ui.cc:421
+msgid "Space selects next article, not next unread"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:424
+#, fuzzy
+msgid "_Behavior"
+msgstr "Cho_vání"
+
+#: pan/gui/prefs-ui.cc:428
+msgid "Pane Layout"
+msgstr "Rozložení panelu"
+
+#: pan/gui/prefs-ui.cc:444
+msgid "Tasks"
+msgstr "Úlohy"
+
+#: pan/gui/prefs-ui.cc:447
+msgid "1=Groups, 2=Headers, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:449
+msgid "1=Groups, 2=Body, 3=Headers"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:451
+msgid "1=Headers, 2=Groups, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:453
+msgid "1=Headers, 2=Body, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:455
+msgid "1=Body, 2=Groups, 3=Headers"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:457
+msgid "1=Body, 2=Headers, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:464
+#, fuzzy
+msgid "Header Pane Columns"
+msgstr "Panel hlaviček"
+
+#: pan/gui/prefs-ui.cc:468
+#, fuzzy
+msgid "Threads"
+msgstr "_Přečtená vlákna:"
+
+#: pan/gui/prefs-ui.cc:470
+#, fuzzy
+msgid "E_xpand all threads when entering group"
+msgstr "Stahovat nové hlavičky otevření s_kupiny"
+
+#: pan/gui/prefs-ui.cc:473
+#, fuzzy
+msgid "_Headers"
+msgstr "Hlavičky"
+
+#: pan/gui/prefs-ui.cc:477
+msgid "Fonts"
+msgstr "Písma"
+
+#: pan/gui/prefs-ui.cc:479
+msgid "Use custom font in Group Pane:"
+msgstr "Použít vlastní písmo v panelu skupin:"
+
+#: pan/gui/prefs-ui.cc:484
+msgid "Use custom font in Header Pane:"
+msgstr "Použít vlastní písmo v panelu hlaviček:"
+
+#: pan/gui/prefs-ui.cc:489
+msgid "Use custom font in Body Pane:"
+msgstr "Použít vlastní písmo v panelu těla:"
+
+#: pan/gui/prefs-ui.cc:494
+#, fuzzy
+msgid "Monospace font:"
+msgstr "N_eproporcionální písmo:"
+
+#: pan/gui/prefs-ui.cc:498
+#, fuzzy
+msgid "_Fonts"
+msgstr "Písma"
+
+#: pan/gui/prefs-ui.cc:502
+#, fuzzy
+msgid "Header Pane"
+msgstr "Panel hlaviček"
+
+#: pan/gui/prefs-ui.cc:505 pan/gui/prefs-ui.cc:511 pan/gui/prefs-ui.cc:517
+#: pan/gui/prefs-ui.cc:523 pan/gui/prefs-ui.cc:529
+msgid "Text:"
+msgstr "Text:"
+
+#: pan/gui/prefs-ui.cc:507 pan/gui/prefs-ui.cc:513 pan/gui/prefs-ui.cc:519
+#: pan/gui/prefs-ui.cc:525 pan/gui/prefs-ui.cc:531
+msgid "Background:"
+msgstr "Pozadí:"
+
+#: pan/gui/prefs-ui.cc:509
+#, fuzzy
+msgid "Scores of 9999 or more:"
+msgstr "/Filt_r/Vyhovují příspěvky se skóre -9999 (ignorované)"
+
+#: pan/gui/prefs-ui.cc:515
+msgid "Scores from 5000 to 9998:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:521
+msgid "Scores from 1 to 4999:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:527
+msgid "Scores from -9998 to -1:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:533
+#, fuzzy
+msgid "Scores of -9999 or less:"
+msgstr "/Filt_r/Vyhovují příspěvky se skóre -9999 (ignorované)"
+
+#: pan/gui/prefs-ui.cc:535
+#, fuzzy
+msgid "Body Pane"
+msgstr "Panel _těla"
+
+#: pan/gui/prefs-ui.cc:541
+#, fuzzy
+msgid "Quoted Text:"
+msgstr "/_Zobrazit/Potlačit _citovaný text"
+
+#: pan/gui/prefs-ui.cc:542
+#, fuzzy
+msgid "URL:"
+msgstr "URL:"
+
+#: pan/gui/prefs-ui.cc:543
+#, fuzzy
+msgid "Signature:"
+msgstr "_Soubor s podpisem:"
+
+#: pan/gui/prefs-ui.cc:545
+#, fuzzy
+msgid "_Colors"
+msgstr "Barvy"
+
+#: pan/gui/prefs-ui.cc:549
+#, fuzzy
+msgid "Preferred Applications"
+msgstr "Aplikace"
+
+#: pan/gui/prefs-ui.cc:553
+#, fuzzy
+msgid "_Web Browser:"
+msgstr "Nové skupiny"
+
+#: pan/gui/prefs-ui.cc:556
+#, fuzzy
+msgid "_Mail Reader:"
+msgstr "Poštovní server"
+
+#: pan/gui/prefs-ui.cc:558
+#, fuzzy
+msgid "A_pplications"
+msgstr "Aplikace"
+
+#: pan/gui/save-ui.cc:61
+#, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+" \n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - skupina jako jeden adresář (alt.binaries.pictures.trains)\n"
+"%G - skupina jako vnořené adresáře (/alt/binaries/pictures/trains)\n"
+" \n"
+"\"/home/user/News/Pan/%g\" bude\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\"\n"
+"a \"/home/user/News/Pan/%G\" bude\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+
+#: pan/gui/save-ui.cc:156
+#, fuzzy
+msgid "Pan: Save Articles"
+msgstr "Pan: Uložit jako"
+
+#: pan/gui/save-ui.cc:173
+msgid "Files"
+msgstr "Soubory"
+
+#: pan/gui/save-ui.cc:176
+#, fuzzy
+msgid "Save _Text"
+msgstr "Uložit te_xt"
+
+#: pan/gui/save-ui.cc:179
+#, fuzzy
+msgid "Save _Attachments"
+msgstr "Uložit _přílohy"
+
+#: pan/gui/save-ui.cc:185
+#, fuzzy
+msgid "Path"
+msgstr "Části"
+
+#: pan/gui/save-ui.cc:191
+msgid "C_ustom path:"
+msgstr ""
+
+#: pan/gui/save-ui.cc:195
+#, fuzzy
+msgid "Save Files to Path"
+msgstr "Uložit _přílohy"
+
+#: pan/gui/save-ui.cc:208
+#, fuzzy
+msgid "_Path:"
+msgstr "_Poslat"
+
+#: pan/gui/save-ui.cc:211
+#, c-format
+msgid "Group's _default path: %s"
+msgstr ""
+
+#: pan/gui/save-ui.cc:220
+#, fuzzy
+msgid "Group Management"
+msgstr "Panel skupin"
+
+#. sort by age
+#: pan/gui/save-ui.cc:224
+msgid "Add to the queue sorted by a_ge"
+msgstr ""
+
+#. top of queue
+#: pan/gui/save-ui.cc:229
+#, fuzzy
+msgid "Add to the _front of the queue"
+msgstr "Přidat úlohu na k_onec řady správce úloh"
+
+#. bottom of queue
+#: pan/gui/save-ui.cc:234
+msgid "Add to the _back of the queue"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:86
+msgid "is more than"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:87
+msgid "is at most"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:109
+#, fuzzy
+msgid "increase the article's score by"
+msgstr "/_Zobrazit/_Zalomit tělo příspěvku"
+
+#: pan/gui/score-add-ui.cc:110
+#, fuzzy
+msgid "decrease the article's score by"
+msgstr "/_Zobrazit/_Zalomit tělo příspěvku"
+
+#: pan/gui/score-add-ui.cc:111
+#, fuzzy
+msgid "set the article's score to"
+msgstr "nastavit skóre na"
+
+#: pan/gui/score-add-ui.cc:112
+#, fuzzy
+msgid "watch the article (set its score to 9999)"
+msgstr "_Sledovat (nastavit skóre na 9999)"
+
+#: pan/gui/score-add-ui.cc:113
+#, fuzzy
+msgid "ignore the article (set its score to -9999)"
+msgstr "_Ignorovat (nastavit skóre na -9999)"
+
+#: pan/gui/score-add-ui.cc:138
+#, fuzzy
+msgid "References"
+msgstr "_Odkazy:"
+
+#: pan/gui/score-add-ui.cc:139
+#, fuzzy
+msgid "Line Count"
+msgstr "Řádek %d, Sloupec %d"
+
+#: pan/gui/score-add-ui.cc:140
+msgid "Byte Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:141
+msgid "Crosspost Group Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:142
+msgid "Age (in days)"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:164
+msgid "the next week"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:165
+msgid "the next month"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:166
+#, fuzzy
+msgid "forever"
+msgstr "Server"
+
+#: pan/gui/score-add-ui.cc:191
+msgid "contains"
+msgstr "obsahuje"
+
+#: pan/gui/score-add-ui.cc:192
+#, fuzzy
+msgid "doesn't contain"
+msgstr "neobsahuje"
+
+#: pan/gui/score-add-ui.cc:193
+msgid "is"
+msgstr "je"
+
+#: pan/gui/score-add-ui.cc:194
+#, fuzzy
+msgid "isn't"
+msgstr "není"
+
+#: pan/gui/score-add-ui.cc:195
+msgid "starts with"
+msgstr "začíná s"
+
+#: pan/gui/score-add-ui.cc:196
+msgid "ends with"
+msgstr "končí s"
+
+#: pan/gui/score-add-ui.cc:197
+#, fuzzy
+msgid "matches regex"
+msgstr "vyhovuje regulárnímu výrazu"
+
+#: pan/gui/score-add-ui.cc:525
+msgid "Add and Re_score"
+msgstr "Přidat a znovu o_hodnotit"
+
+#: pan/gui/score-add-ui.cc:573
+#, fuzzy
+msgid "Pan: New Scoring Rule"
+msgstr "Pan: Upravit pravidlo"
+
+#: pan/gui/score-add-ui.cc:592
+#, fuzzy
+msgid "New Scoring Rule"
+msgstr "Nové skóre"
+
+#: pan/gui/score-add-ui.cc:603
+msgid "If the group name"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:610
+#, fuzzy
+msgid "And the article's"
+msgstr "Stahují příspěvky"
+
+#: pan/gui/score-add-ui.cc:622
+#, fuzzy
+msgid "Then"
+msgstr "Poděkování"
+
+#: pan/gui/score-add-ui.cc:630
+#, fuzzy
+msgid "For"
+msgstr "Složky"
+
+#: pan/gui/score-view-ui.cc:64
+msgid "Close and Re_score"
+msgstr "Zavřít a _znovu ohodnotit"
+
+#: pan/gui/score-view-ui.cc:167
+#, fuzzy, c-format
+msgid "File %s, Lines %d - %d"
+msgstr "soubor se skóre %s, řádek %d: %s (%s)"
+
+#: pan/gui/score-view-ui.cc:170
+#, fuzzy, c-format
+msgid "Name: \"%s\""
+msgstr "Uložen \"%s\""
+
+#: pan/gui/score-view-ui.cc:199
+#, fuzzy
+msgid "Pan: Article's Scores"
+msgstr "Pan: Zobrazit skóre příspěvků"
+
+#: pan/gui/score-view-ui.cc:225
+#, fuzzy
+msgid "Add"
+msgstr "přidat"
+
+#: pan/gui/score-view-ui.cc:230
+msgid "New Score"
+msgstr "Nové skóre"
+
+#: pan/gui/score-view-ui.cc:235
+msgid "Criteria"
+msgstr "Kritéria"
+
+#: pan/gui/score-view-ui.cc:258
+#, fuzzy
+msgid "Add a New Scoring Rule"
+msgstr "Přidat nové skóre"
+
+#: pan/gui/score-view-ui.cc:265
+#, fuzzy
+msgid "Remove the Selected Scoring Rule"
+msgstr "Odstranit vybrané skóre"
+
+#: pan/gui/server-ui.cc:162
+msgid "Please specify the server's address."
+msgstr ""
+
+#. create the dialog
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Add a Server"
+msgstr "Pan: Upravit server"
+
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Edit a Server's Settings"
+msgstr "Pan: Upravit server"
+
+#: pan/gui/server-ui.cc:222
+#, fuzzy
+msgid "Location"
+msgstr "Akce"
+
+#: pan/gui/server-ui.cc:226
+msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
+msgstr ""
+"Skutečná adresa serveru diskusních skupin, např. \"news.mynewsserver.com\""
+
+#: pan/gui/server-ui.cc:227
+msgid "_Address:"
+msgstr "_Adresa:"
+
+#: pan/gui/server-ui.cc:231
+#, fuzzy
+msgid "The news server's port number.  Typically 119."
+msgstr "Port serveru diskusních skupin. Toto je téměř vždy 119."
+
+#: pan/gui/server-ui.cc:232
+msgid "Por_t:"
+msgstr "Por_t:"
+
+#: pan/gui/server-ui.cc:235
+msgid "Login (if Required)"
+msgstr ""
+
+#: pan/gui/server-ui.cc:239
+msgid "_Username:"
+msgstr "Přihlašovací _jméno:"
+
+#: pan/gui/server-ui.cc:240
+msgid ""
+"The username to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+#: pan/gui/server-ui.cc:244
+msgid "_Password:"
+msgstr "_Heslo:"
+
+#: pan/gui/server-ui.cc:245
+msgid ""
+"The password to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+#: pan/gui/server-ui.cc:248
+#, fuzzy
+msgid "Settings"
+msgstr "Získávám \"%s\""
+
+#: pan/gui/server-ui.cc:254
+msgid "Connection _Limit:"
+msgstr "_Limit spojení:"
+
+#: pan/gui/server-ui.cc:257
+msgid "After Two Weeks"
+msgstr ""
+
+#: pan/gui/server-ui.cc:258
+msgid "After One Month"
+msgstr ""
+
+#: pan/gui/server-ui.cc:259
+msgid "After Two Months"
+msgstr ""
+
+#: pan/gui/server-ui.cc:260
+#, fuzzy
+msgid "Never Expire Old Articles"
+msgstr "Nikdy ne_vyprší"
+
+#: pan/gui/server-ui.cc:274
+#, fuzzy
+msgid "E_xpire Old Articles:"
+msgstr "Stáhnout označené příspěvky"
+
+#: pan/gui/server-ui.cc:277
+#, fuzzy
+msgid "Primary"
+msgstr "Priorita"
+
+#: pan/gui/server-ui.cc:278
+msgid "Fallback"
+msgstr ""
+
+#: pan/gui/server-ui.cc:292
+#, fuzzy
+msgid "Server Rank:"
+msgstr "Servery"
+
+#: pan/gui/server-ui.cc:296
+msgid ""
+"Fallback servers are used for articles that can't be found on the "
+"primaries.  One common approach is to use free servers as primaries and "
+"subscription servers as fallbacks."
+msgstr ""
+
+#: pan/gui/server-ui.cc:420
+#, c-format
+msgid "Really delete \"%s\"?"
+msgstr ""
+
+#. dialog
+#: pan/gui/server-ui.cc:492
+msgid "Pan: Servers"
+msgstr "Pan: Servery"
+
+#: pan/gui/server-ui.cc:512
+msgid "Servers"
+msgstr "Servery"
+
+#: pan/gui/server-ui.cc:538
+#, fuzzy
+msgid "Add a Server"
+msgstr "Přidat nový server"
+
+#: pan/gui/server-ui.cc:548
+#, fuzzy
+msgid "Edit a Server's Settings"
+msgstr "Ostatní volby"
+
+#: pan/gui/server-ui.cc:555
+#, fuzzy
+msgid "Remove a Server"
+msgstr "Nový server"
+
+#. less than a mebi...
+#: pan/gui/task-pane.cc:210
+#, c-format
+msgid "%.2f KiB"
+msgstr ""
+
+#. less than a gibi...
+#: pan/gui/task-pane.cc:212
+#, c-format
+msgid "%.2f MiB"
+msgstr ""
+
+#: pan/gui/task-pane.cc:214
+#, c-format
+msgid "%.2f GiB"
+msgstr ""
+
+#: pan/gui/task-pane.cc:250
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
+msgstr "Správce úloh programu Pan %s (%d v řadě, %d běží, %d zastaveno)"
+
+#: pan/gui/task-pane.cc:252
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running)"
+msgstr "Správce úloh programu Pan %s (%d v řadě, %d běží)"
+
+#: pan/gui/task-pane.cc:254
+#, fuzzy
+msgid "Pan: Tasks"
+msgstr "Pan: Správce úloh"
+
+#: pan/gui/task-pane.cc:268
+#, c-format
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
+msgstr ""
+
+#: pan/gui/task-pane.cc:326
+msgid "Running"
+msgstr "Běží"
+
+#: pan/gui/task-pane.cc:327
+msgid "Queued"
+msgstr "Zařazen"
+
+#: pan/gui/task-pane.cc:328
+msgid "Stopped"
+msgstr "Zastaven"
+
+#: pan/gui/task-pane.cc:329
+msgid "Removing"
+msgstr "Odstraňuji"
+
+#: pan/gui/task-pane.cc:330
+msgid "Unknown"
+msgstr "Neznámý"
+
+#: pan/gui/task-pane.cc:354
+#, fuzzy, c-format
+msgid "%d%% Done; %d:%02d:%02d Remaining (%d @ %lu KiB/s)"
+msgstr "%d:%02d:%02d (%lu KiB/s)"
+
+#: pan/gui/task-pane.cc:358
+#, fuzzy, c-format
+msgid "%d%% Done; %s"
+msgstr "% hotovo"
+
+#: pan/gui/task-pane.cc:366
+#, fuzzy, c-format
+msgid "to %s"
+msgstr "O programu %s"
+
+#: pan/gui/task-pane.cc:433
+#, fuzzy
+msgid "Restart Tasks"
+msgstr "Restartovat vybrané úlohy"
+
+#: pan/gui/task-pane.cc:438
+#, fuzzy
+msgid "Stop Tasks"
+msgstr "Žádné úlohy"
+
+#: pan/gui/task-pane.cc:443
+#, fuzzy
+msgid "Delete Tasks"
+msgstr "Vymazat spam"
+
+#: pan/gui/task-pane.cc:467
+msgid "Status"
+msgstr "Stav"
+
+#: pan/gui/url.cc:92
+#, fuzzy, c-format
+msgid "Error starting URL: %s (Command was: %s)"
+msgstr "Chyba při analýze příkazového řádku \"web browser\": %s"
+
+#: pan/tasks/nntp.cc:214
+#, c-format
+msgid "Unable to set group: %s"
+msgstr "Nemohu nastavit skupinu: %s"
+
+#: pan/tasks/nntp.cc:231
+#, c-format
+msgid "Error: %s"
+msgstr "Chyba: %s"
+
+#: pan/tasks/socket-impl-gio.cc:112
+#, fuzzy, c-format
+msgid "Making a new connection to %*.*s"
+msgstr "\"zůstaň spojený\" posláno serveru %*.*s"
+
+#: pan/tasks/socket-impl-gio.cc:347
+#, fuzzy
+msgid "Unknown Error"
+msgstr "Neznámý"
+
+#: pan/tasks/socket-impl-gio.cc:348
+#, c-format
+msgid "Error reading from socket: %s"
+msgstr "Chyba při čtení ze soketu: %s"
+
+#: pan/tasks/task-article.cc:54 pan/tasks/task-article.cc:124
+#, fuzzy, c-format
+msgid "Saving %s"
+msgstr "Ukládám \"%s\""
+
+#: pan/tasks/task-article.cc:56
+#, fuzzy, c-format
+msgid "Reading %s"
+msgstr "Čtení"
+
+#: pan/tasks/task-article.cc:291
+msgid "Error initializing uulib"
+msgstr ""
+
+#: pan/tasks/task-article.cc:302
+#, fuzzy, c-format
+msgid "Couldn't load \"%s\": %s"
+msgstr "Nelze vytvořit adresář \"%s\": %s"
+
+#: pan/tasks/task-article.cc:335
+#, c-format
+msgid "Saved \"%s\""
+msgstr "Uložen \"%s\""
+
+#: pan/tasks/task-article.cc:339
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s. %s"
+msgstr "Chyba při čtení souboru \"%s\": %s"
+
+#: pan/tasks/task-article.cc:341
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s."
+msgstr "Chyba při čtení souboru \"%s\": %s"
+
+#: pan/tasks/task-groups.cc:40
+#, fuzzy, c-format
+msgid "Getting group list from \"%s\""
+msgstr "Získávám skupiny ze serveru \"%s\""
+
+#: pan/tasks/task-groups.cc:121
+#, fuzzy, c-format
+msgid "Fetched %lu Groups"
+msgstr "Získáno %u skupin"
+
+#: pan/tasks/task-post.cc:34
+#, fuzzy, c-format
+msgid "Posting \"%s\""
+msgstr "Získávám \"%s\""
+
+#: pan/tasks/task-xover.cc:71
+#, c-format
+msgid "Getting all headers for \"%s\""
+msgstr "Získávám všechny hlavičky pro \"%s\""
+
+#: pan/tasks/task-xover.cc:73
+#, c-format
+msgid "Getting new headers for \"%s\""
+msgstr "Získávám nové hlavičky pro \"%s\""
+
+#. SAMPLE
+#: pan/tasks/task-xover.cc:75
+#, c-format
+msgid "Sampling headers for \"%s\""
+msgstr "Sestavuji hlavičky pro \"%s\""
+
+#: pan/tasks/task-xover.cc:321
+#, fuzzy, c-format
+msgid "%s (%lu parts, %lu articles)"
+msgstr "%lu částí, %lu příspěvků"
+
+#: pan/usenet-utils/gnksa.cc:879
+#, c-format
+msgid "No email address provided; generating message-id with domain \"%s\""
+msgstr ""
+"Nebyla poskytnuta adresa elektronické pošty; generuji message-id s doménou "
+"\"%s\""
+
+#: pan/usenet-utils/message-check.cc:123
+#, fuzzy
+msgid "Warning: Reply seems to be top-posted."
+msgstr "UPOZORNĚNÍ: Odpověď je zřejmě na začátku."
+
+#: pan/usenet-utils/message-check.cc:144
+#, fuzzy
+msgid "Warning: The signature marker should be \"-- \", not \"--\"."
+msgstr "UPOZORNĚNÍ: Oddělovač podpisu by měl být \"-- \", ne \"--\"."
+
+#: pan/usenet-utils/message-check.cc:161
+#, fuzzy
+msgid "Warning: Signature prefix with no signature."
+msgstr "UPOZORNĚNÍ: Oddělovač podpisu bez podpisu."
+
+#: pan/usenet-utils/message-check.cc:166
+#, fuzzy
+msgid "Warning: Signature is more than 4 lines long."
+msgstr "UPOZORNĚNÍ: Podpis je delší než 4 řádky"
+
+#: pan/usenet-utils/message-check.cc:171
+#, fuzzy
+msgid "Warning: Signature is more than 80 characters wide."
+msgstr "UPOZORNĚNÍ: Podpis je delší než 80 znaků."
+
+#: pan/usenet-utils/message-check.cc:196
+#, fuzzy, c-format
+msgid "Warning: %d lines are more than 80 characters wide."
+msgstr "UPOZORNĚNÍ: %d řádků je delších než 80 znaků."
+
+#: pan/usenet-utils/message-check.cc:219
+#, fuzzy
+msgid "Error: Message is empty."
+msgstr "CHYBA: Zpráva je prázdná."
+
+#: pan/usenet-utils/message-check.cc:254
+#, fuzzy
+msgid "Warning: The message is entirely quoted text!"
+msgstr "UPOZORNĚNÍ: Zpráva obsahuje pouze citovaný text!"
+
+#: pan/usenet-utils/message-check.cc:255
+#, fuzzy
+msgid "Warning: The message is mostly quoted text."
+msgstr "UPOZORNĚNÍ: Většina zprávy je pouze citovaný text."
+
+#: pan/usenet-utils/message-check.cc:305
+#, fuzzy
+msgid "Error: Message appears to have no new content."
+msgstr "CHYBA: Zdá se, že zpráva nemá žádný nový obsah."
+
+#: pan/usenet-utils/message-check.cc:340 pan/usenet-utils/message-check.cc:375
+#, fuzzy, c-format
+msgid "Warning: Unknown group \"%s\"."
+msgstr "UPOZORNĚNÍ: Neznámá skupina: \"%s\"."
+
+#: pan/usenet-utils/message-check.cc:347
+#, fuzzy
+msgid "Warning: Following-Up to too many groups."
+msgstr "UPOZORNĚNÍ: Pokračování do příliš mnoha skupin."
+
+#: pan/usenet-utils/message-check.cc:358
+#, fuzzy
+msgid "Error: No Subject specified."
+msgstr "CHYBA: Není vyplněný předmět."
+
+#: pan/usenet-utils/message-check.cc:383
+#, fuzzy, c-format
+msgid "Warning: Group \"%s\" is read-only."
+msgstr "UPOZORNĚNÍ: Skupina \"%s\" je jen pro čtení."
+
+#: pan/usenet-utils/message-check.cc:392
+#, fuzzy
+msgid "Error: Posting to a very large number of groups."
+msgstr "CHYBA: Posíláte do příliš velkého počtu skupin."
+
+#: pan/usenet-utils/message-check.cc:397
+#, fuzzy
+msgid "Warning: Posting to a large number of groups."
+msgstr "UPOZORNĚNÍ: Posíláte do velkého počtu skupin."
+
+#: pan/usenet-utils/message-check.cc:404
+#, fuzzy
+msgid "Warning: Crossposting without setting Followup-To header."
+msgstr ""
+"UPOZORNĚNÍ: Posílaní do více diskusních skupin bez nastavení Pokračovat-do "
+"(Followup-To)."
+
+#: pan/usenet-utils/message-check.cc:428
+#, fuzzy
+msgid "Error: Bad email address."
+msgstr "Adresa e_lektronické pošty:"
+
+#: pan/usenet-utils/message-check.cc:437
+msgid "Warning: Most newsgroups frown upon HTML posts."
+msgstr ""
+
+#: pan/usenet-utils/message-check.cc:467
+#, fuzzy
+msgid "Error: No Recipients."
+msgstr "CHYBA: Není vyplněný předmět."
+
+#: pan/usenet-utils/text-massager.cc:309
+msgid "> [quoted text muted]"
+msgstr "> [citovaný text potlačený]"
+
+#: pan/usenet-utils/utf8-utils.cc:252
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Post New Article"
+#~ msgstr "_Příspěvek"
+
+#, fuzzy
+#~ msgid "Follow-up to Article"
+#~ msgstr "Pokračovat v diskusní skupině"
+
+#, fuzzy
+#~ msgid "_Post Article"
+#~ msgstr "_Příspěvek"
+
+#, fuzzy
+#~ msgid "Post this Article Now"
+#~ msgstr "Posílám příspěvek \"%s\""
+
+#, fuzzy
+#~ msgid "Are you sure you want to close this window?"
+#~ msgstr ""
+#~ "Jste si jisti, že chcete odstranit těchto %d skupin/složek a jejich "
+#~ "příspěvky?"
+
+#, fuzzy
+#~ msgid "Default KDE Browser"
+#~ msgstr "Výchozí _znaková sada:"
+
+#, fuzzy
+#~ msgid "Error: No Newsgroups specified."
+#~ msgstr "CHYBA: Nebyli zadáni příjemci."
+
+#, fuzzy
+#~ msgid "_Posting"
+#~ msgstr "_Poslat"
+
+#, fuzzy
+#~ msgid "_Save Attachments..."
+#~ msgstr "Uložit _přílohy"
+
+#, fuzzy
+#~ msgid "Message-Id"
+#~ msgstr "ID-zprávy"
+
+#, fuzzy
+#~ msgid "Saved newsrc files in %.1f seconds"
+#~ msgstr "Ohodnoceno %d příspěvků za %.1f sekund (%.0f příspěvků/s)"
+
+#, fuzzy
+#~ msgid "Use _Monospace Font in Body Pane"
+#~ msgstr "/_Zobrazit/Použít nepropor_cionální písmo v panelu těla"
+
+#~ msgid "%d connections totaling %.1f KiB per second"
+#~ msgstr "%d spojení, celkem %.1f KiB za sekundu"
+
+#~ msgid ""
+#~ "Used when email replies to your posts should go somewhere other than the "
+#~ "email address above.  Because Reply-To: is relatively difficult for "
+#~ "spammers to harvest, it's polite give your email address here if you gave "
+#~ "an invalid email address above."
+#~ msgstr ""
+#~ "Používá se, když by měly odpovědi na vaše příspěvky elektronickou poštou "
+#~ "měly jít někam jinam než na výše uvedenou adresu. Protože pro spammery je "
+#~ "relativně složité sbírat Reply-To:, je zdvořilé udat zde vaši adresu "
+#~ "elektonické pošty, pokud výše máte neplatnou adresu."
+
+#~ msgid "_Reply-To Header:"
+#~ msgstr "Hlavička Odpověď-p_ro:"
+
+#~ msgid "Or_ganization Header:"
+#~ msgstr "Hlavička or_ganizace:"
+
+#, fuzzy
+#~ msgid "Attach this _Signature:"
+#~ msgstr "Podpis:"
+
+#~ msgid "Automatic Downloads"
+#~ msgstr "Automatické stahování"
+
+#, fuzzy
+#~ msgid "Save a_ttachments to path:"
+#~ msgstr "Uložit přílohy do:"
+
+#, fuzzy
+#~ msgid "Error decoding \"%s\": %s"
+#~ msgstr "Chyba při čtení souboru \"%s\": %s"
+
+#~ msgid "UNKNOWN"
+#~ msgstr "NEZNÁMÝ"
+
+#, fuzzy
+#~ msgid "Decode can't access directory \"%s\""
+#~ msgstr "Dekódování nemůže přistupovat k cestě \"%s\""
+
+#~ msgid "Could not decode article - file may be corrupt/incomplete"
+#~ msgstr "Nelze dekódovat příspěvek - soubor může být poškozený/nekompletní"
+
+#~ msgid "Checksum for `%s' part %d failed - file is corrupt"
+#~ msgstr "Kontrolní součet pro \"%s\", část %d selhal - soubor je poškozený"
+
+#~ msgid "Checksum for `%s' failed - file may be corrupt"
+#~ msgstr "Kontrolní součet pro \"%s\" selhal - soubor může být poškozený"
+
+#, fuzzy
+#~ msgid "Colors"
+#~ msgstr "Barvy"
+
+#, fuzzy
+#~ msgid "Use custom colors in _Header Pane"
+#~ msgstr "Použít vlastní písmo v panelu hlaviček:"
+
+#, fuzzy
+#~ msgid "Header Pane background:"
+#~ msgstr "Skóre v panelu hlaviček"
+
+#, fuzzy
+#~ msgid "Read articles:"
+#~ msgstr "Sestavuji %d příspěvků"
+
+#, fuzzy
+#~ msgid "Unread articles:"
+#~ msgstr "_Nepřečtená vlákna:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unsupported data version (%d) for server properties.  Are you running an "
+#~ "old version of Pan by accident?"
+#~ msgstr ""
+#~ "Nepodporovaná verze dat %d pro datový soubor \"%s\".\n"
+#~ "Nemáte náhodou spuštěnou starší verzi programu Pan?"
+
+#, fuzzy
+#~ msgid "Couldn't create temporary file: %s"
+#~ msgstr "Nelze vytvořit dočasný soubor: %s"
+
+#~ msgid "Error renaming \"%s\" as \"%s\": %s."
+#~ msgstr "Chyba při přejmenování \"%s\" na \"%s\": %s."
+
+#~ msgid "Can't backup \"%s\" as \"%s\": %s"
+#~ msgstr "Chyba při zálohování \"%s\" jako \"%s\": %s."
+
+#~ msgid "Can't write to \"%s\": %s"
+#~ msgstr "Nelze zapisovat do \"%s\": %s"
+
+#~ msgid "Body"
+#~ msgstr "Tělo"
+
+#, fuzzy
+#~ msgid "Open a Draft Article from Disk"
+#~ msgstr "Vypršela platnost %u příspěvků z \"%s\""
+
+#, fuzzy
+#~ msgid "subject"
+#~ msgstr "Předmět"
+
+#, fuzzy
+#~ msgid "author"
+#~ msgstr "Autor"
+
+#~ msgid "Change"
+#~ msgstr "Změnit"
+
+#~ msgid "Connections"
+#~ msgstr "Spojení"
+
+#, fuzzy
+#~ msgid "Active"
+#~ msgstr "Akce"
+
+#~ msgid ""
+#~ "Unable to cancel article: Couldn't find matching article in folder `pan."
+#~ "sent'!"
+#~ msgstr ""
+#~ "Nemohu zrušit příspěvek: Nelze nalézt odpovídající příspěvek ve složce"
+#~ "\"pan.odeslané\"!"
+
+#~ msgid ""
+#~ "Unable to supersede article: Couldn't find matching article in folder "
+#~ "`pan.sent'!"
+#~ msgstr ""
+#~ "Nemohu nahradit příspěvek: Nelze nalézt příslušný příspěvek ve složce"
+#~ "\"pan.odeslané\"!"
+
+#~ msgid "You must download the article before you can cancel it."
+#~ msgstr "Příspěvek musíte stáhnout než ho budete moci zrušit."
+
+#~ msgid "You must download the article before you can supersede it."
+#~ msgstr "Příspěvek musíte stáhnout než ho budete moci nahradit."
+
+#~ msgid "Pan: Find Article"
+#~ msgstr "Pan: Hledat příspěvek"
+
+#~ msgid "_Author:"
+#~ msgstr "_Autor"
+
+#~ msgid "Case Sensiti_ve"
+#~ msgstr "Rozlišovat _velká a malá písmena"
+
+#~ msgid "_Unread Only"
+#~ msgstr "Po_uze nepřečtené"
+
+#~ msgid "Fin_d:"
+#~ msgstr "_Hledat:"
+
+#~ msgid ""
+#~ "Type in a search string and press ENTER.\n"
+#~ "Wildcards are allowed."
+#~ msgstr ""
+#~ "Zadejte řetězec, který chcete vyhledat, a stiskněte ENTER.\n"
+#~ "Můžete použít divoké karty (? a *)."
+
+#~ msgid "/---"
+#~ msgstr "/---"
+
+#~ msgid "/Save Article A_ttachments"
+#~ msgstr "/Uložit _přílohy příspěvku"
+
+#~ msgid "/_Manual Decode..."
+#~ msgstr "/_Ruční dekódování..."
+
+#~ msgid "/D_ownload Flagged"
+#~ msgstr "/Stáhnout _označené"
+
+#~ msgid "/_Flag"
+#~ msgstr "/O_značit"
+
+#~ msgid "/_Unflag"
+#~ msgstr "/O_dznačit"
+
+#~ msgid "/_Create Score"
+#~ msgstr "/V_ytvořit skóre"
+
+#~ msgid "/Add S_et to Selection"
+#~ msgstr "/Přidat _množinu do výběru"
+
+#~ msgid "/_Copy to Folder"
+#~ msgstr "/_Kopírovat do složky"
+
+#~ msgid "/_Delete"
+#~ msgstr "/_Vymazat"
+
+#~ msgid "Scoring Articles"
+#~ msgstr "Vyhodnocování příspěvků"
+
+#~ msgid "Filtering Articles"
+#~ msgstr "Filtrování příspěvků"
+
+#~ msgid "Updating Header Pane..."
+#~ msgstr "Aktualizuji panel hlaviček..."
+
+#~ msgid "Loading group \"%s\""
+#~ msgstr "Nahrávám skupinu \"%s\""
+
+#~ msgid "Flushing article cache... "
+#~ msgstr "Čistí se vyrovnávací paměť příspěvků... "
+
+#~ msgid "%d files erased."
+#~ msgstr "%d souborů vymazáno."
+
+#~ msgid "Error saving article \"%s\" (is %s full?)"
+#~ msgstr "Chyba při ukládání příspěvku \"%s\" (%s je plný?)"
+
+#~ msgid "Directory \"%s\" contains %.1f MB in %d files"
+#~ msgstr "Adresář \"%s\" zabírá %.1f MB (%d souborů)"
+
+#~ msgid "Unparseable Subject"
+#~ msgstr "Nezpracovatelný předmět"
+
+#~ msgid "Couldn't parse a Message-ID from the raw message!"
+#~ msgstr "Nelze získat ID zprávy (Message-ID) z původní zprávy!"
+
+#~ msgid "unknown@spammesenseless.com"
+#~ msgstr "neznamy@neotravuj.cz"
+
+#~ msgid "Decoding \"%s\""
+#~ msgstr "Dekóduji \"%s\""
+
+#~ msgid "Can't create file \"%s\" %s"
+#~ msgstr "Nelze vytvořit soubor \"%s\" %s"
+
+#~ msgid "Error saving file \"%s\" - is the disk full?"
+#~ msgstr "Chyba při ukládání souboru \"%s\" - disk je plný?"
+
+#~ msgid "Decoded \"%s\" from group \"%s\", \"%s\""
+#~ msgstr "Dekódován \"%s\" ze skupiny \"%s\", \"%s\""
+
+#~ msgid "Loading %u of %d groups"
+#~ msgstr "Načítám %u ze %d skupin"
+
+#~ msgid ""
+#~ "Skipped %d groups due to possible corruption in \"%s\" and \"%s\".  You "
+#~ "may want to delete these files and get a new grouplist from your news "
+#~ "server."
+#~ msgstr ""
+#~ "Přeskočeno %d skupin kvůli možnému poškození v \"%s\" a \"%s\". Možná "
+#~ "byste měli vymazat tyto soubory a získat nový seznam skupin z vašeho "
+#~ "serveru diskusních skupin."
+
+#~ msgid "Loaded %d groups for server \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr "Načteno %d skupin pro server \"%s\" za %.1f sekund (%.0f skupin/s)"
+
+#~ msgid "Saved %d of %u groups"
+#~ msgstr "Uloženo %d z %u skupin"
+
+#~ msgid "Error saving list of groups to \"%s\" - is the disk full?"
+#~ msgstr "Chyba při ukládání seznamu skupin do \"%s\" - disk je plný?"
+
+#~ msgid "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr "Uloženo %d skupin v \"%s\" za %.1f sekund (%.0f skupin/s)"
+
+#~ msgid "Skipped unsupported old data file for group \"%s\"."
+#~ msgstr "Přeskočen nepodporovaný starý soubor dat pro skupinu \"%s\"."
+
+#~ msgid "Loaded %d of %d articles"
+#~ msgstr "Načteno %d z %d příspěvků"
+
+#~ msgid ""
+#~ "Pan skipped %d corrupt headers from the local cache for group \"%*.*s\"."
+#~ msgstr ""
+#~ "Pan přeskočil %d poškozených hlaviček v lokální vyrovnávací paměti pro "
+#~ "skupinu \"%*.*s\"."
+
+#~ msgid "You may want to empty this group and download fresh headers."
+#~ msgstr "Asi byste měli vyprázdnit tuto skupinu a stáhnout hlavičky znovu."
+
+#~ msgid ""
+#~ "Loaded %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+#~ msgstr ""
+#~ "Načteno %lu částí, %lu příspevků v \"%s\" za %.1f seknud (%.0f přísp./s)"
+
+#~ msgid "The group will not be saved -- can't create file \"%s\""
+#~ msgstr "Skupina nebude uložena -- nelze vytvořit soubor \"%s\""
+
+#~ msgid "Unable to save headers for group \"%*.*s\" - is the disk full?"
+#~ msgstr "Nelze uložit hlavičky pro skupinu \"%*.*s\" - disk je plný?"
+
+#~ msgid "(No Group)"
+#~ msgstr "(Bez skupiny)"
+
+#~ msgid "ERROR: invalid address \"%s\""
+#~ msgstr "CHYBA: neplatná adresa \"%s\""
+
+#~ msgid "ERROR: Must have one author in From: line"
+#~ msgstr "CHYBA: Musíte zadat pouze jediného autora v řádku Od:"
+
+#~ msgid "Imported %d groups (%d new) from \"%s\""
+#~ msgstr "Importováno %d skupin (%d nových) z \"%s\""
+
+#~ msgid "Exported %d groups (%d subscribed) to \"%s\""
+#~ msgstr "Exportováno %d skupin (%d přihlášených) do \"%s\""
+
+#~ msgid "Imported %d lines from Gnome config file"
+#~ msgstr "Importováno %d řádků ze souboru s nastavením GNOME"
+
+#~ msgid "%s does not appear to be a valid datafile"
+#~ msgstr "%s nevypadá jako platný datový soubor"
+
+#~ msgid "Error converting string \"%*s\" to utf8: %d - %s"
+#~ msgstr "Chyba při převodu řetězce \"%*s\" na utf8: %d - %s"
+
+#~ msgid "No name specified!"
+#~ msgstr "Nebyl zadán název!"
+
+#~ msgid "pan.sent"
+#~ msgstr "pan.odeslané"
+
+#~ msgid "pan.sendlater"
+#~ msgstr "pan.odeslatpozději"
+
+#~ msgid "Server is corrupt"
+#~ msgstr "Server je poškozen"
+
+#~ msgid "A Server with that name already exists."
+#~ msgstr "Server s tímto názvem již existuje."
+
+#~ msgid "A newsreader for GNOME"
+#~ msgstr "Klient diskusních skupin pro GNOME"
+
+#~ msgid "Programmer"
+#~ msgstr "Programátor"
+
+#~ msgid "Project Originator, Programmer"
+#~ msgstr "Zakladatel projektu, programátor"
+
+#~ msgid "Programmer, 0.6 - 0.7"
+#~ msgstr "Programátor, 0.6 - 0.7"
+
+#~ msgid ""
+#~ "Pan %s Translations\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Code or Patches\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Suggestions and Testing\n"
+#~ "%s\n"
+#~ msgstr ""
+#~ "Pan %s - překlady\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s - kód nebo opravy\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s - nápady a testování\n"
+#~ "%s\n"
+
+#~ msgid "Group Properties"
+#~ msgstr "Vlastnosti skupiny"
+
+#~ msgid "_Directory for saving articles:"
+#~ msgstr "_Adresář pro ukládání příspěvků:"
+
+#~ msgid "Pan: Download Headers for group `%s'"
+#~ msgstr "Pan: Stáhnout hlavičky pro skupinu \"%s\""
+
+#~ msgid "Pan: Download Headers"
+#~ msgstr "Pan: Stáhnout hlavičky"
+
+#~ msgid "Download _new headers"
+#~ msgstr "Stáhnout _nové hlavičky"
+
+#~ msgid "_Download bodies too"
+#~ msgstr "Stáhnout též tě_la příspěvků"
+
+#~ msgid "How should you appear when posting articles?"
+#~ msgstr "Jaké jméno se má objevit při posílání příspěvků?"
+
+#~ msgid "Your _Name:"
+#~ msgstr "Vaše _jméno"
+
+#~ msgid "Email _Address:"
+#~ msgstr "Adresa _elektronické pošty:"
+
+#~ msgid "_Organization:"
+#~ msgstr "_Organizace:"
+
+#~ msgid "default"
+#~ msgstr "výchozí"
+
+#~ msgid "What mail server should Pan use?"
+#~ msgstr "Jaký poštovní server má Pan používat?"
+
+#~ msgid "What news server should Pan use?"
+#~ msgstr "Jaký news server má Pan používat?"
+
+#~ msgid "Short name for Pan to show, e.g. \"mynewsserver\""
+#~ msgstr "Krátký název, který bude Pan zobrazovat, např. \"mynewsserver\""
+
+#~ msgid "Short _name for Pan to show:"
+#~ msgstr "Krátký _název, který bude zobrazovat Pan:"
+
+#~ msgid "Login"
+#~ msgstr "Přihlášení"
+
+#~ msgid "Server requires authori_zation"
+#~ msgstr "Ser_ver vyžaduje ověření"
+
+#~ msgid "Pan Setup Wizard"
+#~ msgstr "Průvodce nastavením programu Pan"
+
+#~ msgid "Thank you for trying Pan!"
+#~ msgstr "Děkujeme, že zkoušíte program Pan!"
+
+#~ msgid ""
+#~ "Thank you for trying Pan!\n"
+#~ " \n"
+#~ "If you are new to Usenet,\n"
+#~ "%s\n"
+#~ "is a starting point to see what Usenet is,\n"
+#~ "where to find a free news server,\n"
+#~ "and how to use Pan.\n"
+#~ " \n"
+#~ "Since this is your first time running Pan,\n"
+#~ "we'll need to gather some information.\n"
+#~ msgstr ""
+#~ "Děkujeme, že zkoušíte program Pan!\n"
+#~ " \n"
+#~ "Pokud jste nováčkem v síti Usenet, na adrese\n"
+#~ "%s\n"
+#~ "si můžete přečíst, co to síť Usenet je, kde nalézt\n"
+#~ "volně dostupný server diskusních skupin\n"
+#~ "a jak používat program Pan.\n"
+#~ " \n"
+#~ "Pokud je toto vaše první spuštění programu Pan,\n"
+#~ "bude třeba získat nějaké informace.\n"
+
+#~ msgid "About You"
+#~ msgstr "O vás"
+
+#~ msgid "Ready!"
+#~ msgstr "Připraven!"
+
+#~ msgid ""
+#~ "You have successfully entered all of\n"
+#~ "the information required to set up Pan.\n"
+#~ "\n"
+#~ "To save these settings, click Save."
+#~ msgstr ""
+#~ "Úspěšně jste zadali všechny informace\n"
+#~ "potřebné pro nastavení programu Pan.\n"
+#~ "\n"
+#~ "Chcete-li toto nastavení uložit, stiskněte Uložit."
+
+#~ msgid "About"
+#~ msgstr "O programu"
+
+#~ msgid "License"
+#~ msgstr "Licence"
+
+#~ msgid "Authors"
+#~ msgstr "Autoři"
+
+#~ msgid "Thanks to"
+#~ msgstr "Poděkovaní"
+
+#~ msgid "  (No conditions -- no articles will match)"
+#~ msgstr "  (Bez podmínek -- žádné příspěvky nevyhoví)"
+
+#~ msgid "  (No conditions -- all articles will match)"
+#~ msgstr "  (Bez podmínek -- všechny příspěvky vyhoví)"
+
+#~ msgid "Pan: Edit Filter"
+#~ msgstr "Pan: Upravit filtr"
+
+#~ msgid "Filter name: "
+#~ msgstr "Název filtru: "
+
+#~ msgid "Show in Filter Menu"
+#~ msgstr "Zobrazit v menu Filtr"
+
+#~ msgid "Move the selected line up one line"
+#~ msgstr "Přesunout vybraný řádek o jeden výše"
+
+#~ msgid "Move the selected line down one line"
+#~ msgstr "Přesunout vybraný řádek o jeden níže"
+
+#~ msgid "Invert"
+#~ msgstr "Invertovat"
+
+#~ msgid "Invert the selected line"
+#~ msgstr "Invertovat vybraný řádek"
+
+#~ msgid "All Of"
+#~ msgstr "Vše z"
+
+#~ msgid "Any Of"
+#~ msgstr "Cokoli z"
+
+#~ msgid "Delete the selected line"
+#~ msgstr "Vymazat vybraný řádek"
+
+#~ msgid "Add New Line to the Filter"
+#~ msgstr "Přidat nový řádek do filtru"
+
+#~ msgid "New Filter Line"
+#~ msgstr "Nový řádek filtru"
+
+#~ msgid "does not start with"
+#~ msgstr "nezačíná s"
+
+#~ msgid "does not match regular expression"
+#~ msgstr "nevyhovuje regulárnímu výrazu"
+
+#~ msgid "Article h_as"
+#~ msgstr "Příspěvek m_ěl"
+
+#~ msgid "Attachments"
+#~ msgstr "Přílohy"
+
+#~ msgid "Incomplete Attachments"
+#~ msgstr "Neúplné přílohy"
+
+#~ msgid "No Attachments"
+#~ msgstr "Bez příloh"
+
+#~ msgid "Article _is"
+#~ msgstr "Příspěvek _je"
+
+#~ msgid "New"
+#~ msgstr "Nový"
+
+#~ msgid "Unread"
+#~ msgstr "Nepřečtený"
+
+#~ msgid "Read"
+#~ msgstr "Přečtený"
+
+#~ msgid "Cached"
+#~ msgstr "Ve vyrovnávací paměti"
+
+#~ msgid "Posted by Me"
+#~ msgstr "Poslaný mnou"
+
+#~ msgid "Article has at _least N lines:"
+#~ msgstr "Příspěvek má ale_spoň N řádků:"
+
+#~ msgid "Article _score is at least"
+#~ msgstr "Ohodnocení pří_spěvku je alespoň"
+
+#~ msgid "Watched"
+#~ msgstr "Sledované"
+
+#~ msgid "High"
+#~ msgstr "Vysoké"
+
+#~ msgid "Medium"
+#~ msgstr "Střední"
+
+#~ msgid "Zero"
+#~ msgstr "Nulové"
+
+#~ msgid "Low"
+#~ msgstr "Nízké"
+
+#~ msgid "Ignored"
+#~ msgstr "Ignorované"
+
+#~ msgid ""
+#~ "This filter is still used by the following rules:\n"
+#~ "%s\n"
+#~ "Please remove this dependency  first."
+#~ msgstr ""
+#~ "Tento filtr je stále používán v těchto pravidlech:\n"
+#~ "%s\n"
+#~ "Odstraňte nejdříve, prosím, tyto závislosti."
+
+#~ msgid "Pan: Filters"
+#~ msgstr "Pan: Filtry"
+
+#~ msgid "Filters"
+#~ msgstr "Filtry"
+
+#~ msgid "Add a new filter"
+#~ msgstr "Přidat nový filtr"
+
+#~ msgid "Edit the selected filter"
+#~ msgstr "Upravit vybraný filtr"
+
+#~ msgid "Remove the selected filter"
+#~ msgstr "Odstranit vybraný filtr"
+
+#~ msgid "NONE OF:"
+#~ msgstr "NIC Z:"
+
+#~ msgid "ALL OF:"
+#~ msgstr "VŠECHNY Z:"
+
+#~ msgid "ANY OF:"
+#~ msgstr "NĚKTERÉ Z:"
+
+#~ msgid "Error"
+#~ msgstr "Chyba"
+
+#~ msgid "Article has complete attachments"
+#~ msgstr "Příspěvek má úplné přílohy"
+
+#~ msgid "Article does not have incomplete attachments"
+#~ msgstr "Příspěvek nemá neúplné přílohy"
+
+#~ msgid "Article has incomplete attachments"
+#~ msgstr "Příspěvek má neúplné přílohy"
+
+#~ msgid "Article has complete or incomplete attachments"
+#~ msgstr "Příspěvek má úplné nebo neúplné přílohy"
+
+#~ msgid "Article is %d or more bytes long"
+#~ msgstr "Příspěvek má %d a více bajtů"
+
+#~ msgid "Article is crossposted to at least %d groups"
+#~ msgstr "Příspěvek je poslán do více než %d skupin"
+
+#~ msgid "Article was posted in the last %d days"
+#~ msgstr "Příspěvek byl poslán v posledních %d dnech"
+
+#~ msgid "Article is %d or more lines long"
+#~ msgstr "Příspěvek má %d a více řádků"
+
+#~ msgid "Article is unread or old"
+#~ msgstr "Příspěvek je nepřečtený nebo starý"
+
+#~ msgid "Article is new"
+#~ msgstr "Příspěvek je nový"
+
+#~ msgid "Article is new or read"
+#~ msgstr "Příspěvek je nový nebo přečtený"
+
+#~ msgid "Article is new or unread"
+#~ msgstr "Příspěvek je nový nebo nepřečtený"
+
+#~ msgid "Xref"
+#~ msgstr "Xref"
+
+#~ msgid "watched"
+#~ msgstr "sledované"
+
+#~ msgid "high"
+#~ msgstr "vysoké"
+
+#~ msgid "medium"
+#~ msgstr "střední"
+
+#~ msgid "zero"
+#~ msgstr "nulové"
+
+#~ msgid "low"
+#~ msgstr "nízké"
+
+#~ msgid "ignored"
+#~ msgstr "ignorované"
+
+#~ msgid "Score filter will match anything"
+#~ msgstr "Filtru skóre bude odpovídat cokoli"
+
+#~ msgid "Score filter will match nothing"
+#~ msgstr "Filtru skóre nebude odpovídat nic"
+
+#~ msgid "Article score one of: "
+#~ msgstr "Skóre příspěvku je jedno z: "
+
+#~ msgid "Wrote filters to \"%s\""
+#~ msgstr "Filtry byly zapsány do \"%s\""
+
+#~ msgid "Can't use regular expression \"%s\" from file \"%s\", line %d: %s"
+#~ msgstr ""
+#~ "Nemohu použít regulární výraz \"%s\" ze souboru \"%s\", řádek %d: %s"
+
+#~ msgid "expired old score"
+#~ msgstr "vypršené staré skóre"
+
+#~ msgid "skipping unsupported criteria"
+#~ msgstr "přeskakuji nepodporovaná kritéria"
+
+#~ msgid "unexpected line."
+#~ msgstr "neočekávaný řádek"
+
+#~ msgid "Error reading file: "
+#~ msgstr "Chyba při čtení souboru: "
+
+#~ msgid "skipping score because it has no criteria"
+#~ msgstr "přeskakuji skóre, protože nemá kritéria"
+
+#~ msgid ""
+#~ "Loaded %d score entries in %d sections in %.1f seconds (%.0f entries/sec)"
+#~ msgstr ""
+#~ "Načteno %d záznamů skóre v %d sekcích za %.1f sekund (%.0f záznamů/s)"
+
+#~ msgid "Error score to file \"%s\": %s"
+#~ msgstr "Chyba skóre do souboru \"%s\": %s"
+
+#~ msgid "Error removing scorefile entry: %s"
+#~ msgstr "Chyba při odstraňování záznamu ze souboru skóre: %s"
+
+#~ msgid "Scorefile entry removed -- old scorefile \"%s\" backed up as \"%s\""
+#~ msgstr ""
+#~ "Záznam ze souboru se skóre odstraněn -- starý soubor se skóre \"%s\" "
+#~ "uložen jako \"%s\""
+
+#~ msgid "Folder \"%*s\" already exists."
+#~ msgstr "Adresář \"%*s\" již existuje."
+
+#~ msgid "Please don't begin folders with \"pan.\"; it confuses me."
+#~ msgstr "Prosím nezačínejte název složky na \"pan.\"; to mě hrozně plete."
+
+#~ msgid "Create New Folder"
+#~ msgstr "Vytvořit novou složku"
+
+#~ msgid "New Folder Name:"
+#~ msgstr "Název nové složky:"
+
+#~ msgid "/Get New Headers and _Bodies"
+#~ msgstr "/Stáhnout nové hlavičky a _těla"
+
+#~ msgid "/Get New Headers in Subscribed Groups"
+#~ msgstr "/Stáhnout nové hlavičky v přihlášených skupinách"
+
+#~ msgid "/More Download _Options..."
+#~ msgstr "/Více m_ožností pro stahování..."
+
+#~ msgid "/Refresh Article _Counts"
+#~ msgstr "/Obno_vit počty příspěvků"
+
+#~ msgid "/Group _Properties..."
+#~ msgstr "/V_lastnosti skupiny..."
+
+#~ msgid " (Moderated)"
+#~ msgstr " (Moderovaná)"
+
+#~ msgid " (Read-Only)"
+#~ msgstr " (pouze pro čtení)"
+
+#~ msgid "Subscribed"
+#~ msgstr "Přihlášené"
+
+#~ msgid "All Groups"
+#~ msgstr "Všechny skupiny"
+
+#~ msgid ""
+#~ "We don't have a list of groups for \"%*.*s\".\n"
+#~ "Shall we download one?"
+#~ msgstr ""
+#~ "Nemáme seznam skupin pro \"%*.*s\".\n"
+#~ "Mám ho stáhnout?"
+
+#~ msgid "Total"
+#~ msgstr "Celkem"
+
+#~ msgid "Description"
+#~ msgstr "Popis"
+
+#~ msgid "F_ind:"
+#~ msgstr "_Hledat:"
+
+#~ msgid ""
+#~ "Type in a group search string and press ENTER.  Wildcards are allowed."
+#~ msgstr ""
+#~ "Zadejte řetězec, který chcete vyhledat ve skupinách a stiskněte ENTER. "
+#~ "Můžete použít divoké karty (? a *)."
+
+#~ msgid "(%u selected)"
+#~ msgstr "(%u vybraných)"
+
+#~ msgid "We now have %d connections to news servers"
+#~ msgstr "Nyní máme %d spojení k serverům diskusních skupin"
+
+#~ msgid "The Task Manager is Empty"
+#~ msgstr "Správce úloh je prázdný"
+
+#~ msgid "Connection"
+#~ msgstr "Spojení"
+
+#~ msgid "Post"
+#~ msgstr "Poslat"
+
+#~ msgid "Get"
+#~ msgstr "Stáhnout"
+
+#~ msgid "Mine"
+#~ msgstr "Moje"
+
+#~ msgid "Net"
+#~ msgstr "Síť"
+
+#~ msgid "/_File/_Save Article As..."
+#~ msgstr "/_Soubor/_Uložit příspěvek jako..."
+
+#~ msgid "/_File/Save Article A_ttachments"
+#~ msgstr "/_Soubor/Uložit _přílohy příspěvku"
+
+#~ msgid "/_File/Manual _Decode..."
+#~ msgstr "/_Soubor/_Ruční dekódování..."
+
+#~ msgid "/_File/_Print Article..."
+#~ msgstr "/_Soubor/Vytisknout _příspěvek..."
+
+#~ msgid "/_File/---"
+#~ msgstr "/_Soubor/---"
+
+#~ msgid "/_File/_Cancel Last Task"
+#~ msgstr "/_Soubor/Sto_rnovat poslední úlohu"
+
+#~ msgid "/_File/Log _Viewer..."
+#~ msgstr "/_Soubor/Proh_lížeč záznamů..."
+
+#~ msgid "/_File/_New Folder..."
+#~ msgstr "/_Soubor/_Nová složka..."
+
+#~ msgid "/_File/Delete _Folder..."
+#~ msgstr "/_Soubor/Vymazat slož_ku..."
+
+#~ msgid "/_File/_Edit Article in Folder"
+#~ msgstr "/_Soubor/Upravit příspěv_ek ve složce"
+
+#~ msgid "/_File/E_xit"
+#~ msgstr "/_Soubor/Kone_c"
+
+#~ msgid "/_File/_Quit"
+#~ msgstr "/_Soubor/Kone_c"
+
+#~ msgid "/_Edit/Select all"
+#~ msgstr "/_Upravit/Vybrat všechny"
+
+#~ msgid "/_Edit/Deselect all"
+#~ msgstr "/_Upravit/Odznačit všechny"
+
+#~ msgid "/_Edit/---"
+#~ msgstr "/_Upravit/---"
+
+#~ msgid "/_Edit/Select all _Groups"
+#~ msgstr "/_Upravit/Vybrat všechny _skupiny"
+
+#~ msgid "/_Edit/Add S_ubscribed to Selection"
+#~ msgstr "/_Upravit/Přidat přihlášené do výběr_u"
+
+#~ msgid "/_Edit/Deselect all G_roups"
+#~ msgstr "/_Upravit/O_dznačit všechny skupiny"
+
+#~ msgid "/_Edit/Add S_et to Selection"
+#~ msgstr "/_Upravit/Přidat _množinu do výběru"
+
+#~ msgid "/_Edit/_Find..."
+#~ msgstr "/_Upravit/Na_jít..."
+
+#~ msgid "/_Edit/Find _Next"
+#~ msgstr "/_Upravit/_Najít další"
+
+#~ msgid "/_View/---"
+#~ msgstr "/_Zobrazit/---"
+
+#~ msgid "/_View/Thr_ead Header Pane"
+#~ msgstr "/_Zobrazit/Pan_el hlaviček vláken"
+
+#~ msgid "/_View/_Rot13 Selected Text"
+#~ msgstr "/_Upravit/_Rot13 označený text"
+
+#~ msgid "/_View/E_xpand Selected Threads"
+#~ msgstr "/_Zobrazit/Roz_balit označená vlákna"
+
+#~ msgid "/_View/C_ollapse Selected Threads"
+#~ msgstr "/_Zobrazit/Sbalit _označená vlákna"
+
+#~ msgid "/Filte_r/Custom _Filters..."
+#~ msgstr "/Filt_r/Vlastní _filtry..."
+
+#~ msgid "/Filte_r/_Rules..."
+#~ msgstr "/Filt_r/P_ravidla..."
+
+#~ msgid "/Filte_r/_Edit Scorefile..."
+#~ msgstr "/Filt_r/_Upravit soubor se skóre..."
+
+#~ msgid "/Filte_r/---"
+#~ msgstr "/Filt_r/---"
+
+#~ msgid "/Filte_r/Match Only _Cached Articles"
+#~ msgstr "/Filt_r/Vyhovují jen příspěvky ve _vyrovnávací paměti"
+
+#~ msgid "/Filte_r/Match Only _Text Articles"
+#~ msgstr "/Filt_r/Vyhovují jen _textové příspěvky"
+
+#~ msgid "/Filte_r/Match Only _Binary Attachment Articles"
+#~ msgstr "/Filt_r/Vyhovují jen příspěvky s _binární přílohou"
+
+#~ msgid "/Filte_r/Match Only _My Articles"
+#~ msgstr "/Filt_r/Vyhovují jen _mé příspěvky"
+
+#~ msgid "/Filte_r/Match _New Articles"
+#~ msgstr "/Filt_r/Vyhovují _nové příspěvky"
+
+#~ msgid "/Filte_r/Match _Unread Articles"
+#~ msgstr "/Filt_r/Vyhovují n_epřečtené příspěvky"
+
+#~ msgid "/Filte_r/Match _Read Articles"
+#~ msgstr "/Filt_r/Vyhovují _přečtené příspěvky"
+
+#~ msgid "/_Go/Read More"
+#~ msgstr "/_Přejít/Číst více"
+
+#~ msgid "/_Go/---"
+#~ msgstr "/_Přejít/---"
+
+#~ msgid "/_Go/Next _New Article"
+#~ msgstr "/_Přejít/Následující n_ový příspěvek"
+
+#~ msgid "/_Go/Next N_ew Thread"
+#~ msgstr "/_Přejít/Následující nové _vlákno"
+
+#~ msgid "/_Go/Previous Article _Read"
+#~ msgstr "/_Přejít/Předcho_zí čtený příspěvek"
+
+#~ msgid "/_Servers"
+#~ msgstr "/Se_rvery"
+
+#~ msgid "/_Servers/News _Servers..."
+#~ msgstr "/Se_rvery/_Servery diskusních skupin..."
+
+#~ msgid "/_Servers/---"
+#~ msgstr "/Se_rvery/---"
+
+#~ msgid "/_Servers/Get List of Groups"
+#~ msgstr "/Se_rvery/Získat seznam skupin"
+
+#~ msgid "/_Newsgroups/Mark Group _Read"
+#~ msgstr "/_Diskusní skupiny/Označit skupinu jako př_ečtenou"
+
+#~ msgid "/_Newsgroups/_Delete Group's Articles"
+#~ msgstr "/_Diskusní skupiny/_Vymazat příspěvky ze skupiny"
+
+#~ msgid "/_Newsgroups/---"
+#~ msgstr "/_Diskusní skupiny/---"
+
+#~ msgid "/_Newsgroups/Get New _Headers"
+#~ msgstr "/_Diskusní skupiny/Získat nové _hlavičky"
+
+#~ msgid "/_Newsgroups/Get New Headers and _Bodies"
+#~ msgstr "/_Diskusní skupiny/Získat _nové hlavičky a těla"
+
+#~ msgid "/_Newsgroups/More Download _Options..."
+#~ msgstr "/_Diskusní skupiny/Více m_ožností stahování..."
+
+#~ msgid "/_Newsgroups/Refresh Article _Counts"
+#~ msgstr "/_Diskusní skupiny/Obnovit _počty příspěvků"
+
+#~ msgid "/_Newsgroups/Get New Headers in Subscribed _Groups"
+#~ msgstr "/_Diskusní skupiny/_Získat nové hlavičky v přihlášených skupinách"
+
+#~ msgid "/_Newsgroups/_Subscribe"
+#~ msgstr "/_Diskusní skupiny/Přihlá_sit"
+
+#~ msgid "/_Newsgroups/_Unsubscribe"
+#~ msgstr "/_Diskusní skupiny/O_dhlásit"
+
+#~ msgid "/_Newsgroups/Group _Properties..."
+#~ msgstr "/_Diskusní skupiny/V_lastnosti skupiny..."
+
+#~ msgid "/_Newsgroups/Dele_te Group"
+#~ msgstr "/_Diskusní skupiny/O_dstranit skupinu"
+
+#~ msgid "/_Articles/Mark _Read"
+#~ msgstr "/Příspě_vky/Označit jako _přečtené"
+
+#~ msgid "/_Articles/Mark _Unread"
+#~ msgstr "/Příspě_vky/Označit jako _nepřečtené"
+
+#~ msgid "/_Articles/---"
+#~ msgstr "/Příspě_vky/---"
+
+#~ msgid "/_Articles/D_ownload Flagged"
+#~ msgstr "/Příspě_vky/Stáhnout _označené"
+
+#~ msgid "/_Articles/_Flag"
+#~ msgstr "/Příspě_vky/O_značit"
+
+#~ msgid "/_Articles/U_nflag"
+#~ msgstr "/Příspě_vky/O_dznačit"
+
+#~ msgid "/_Articles/Down_load"
+#~ msgstr "/Příspě_vky/_Stáhnout"
+
+#~ msgid "/_Articles/_Watch Thread"
+#~ msgstr "/Příspě_vky/Sledovat _vlákno"
+
+#~ msgid "/_Articles/_Ignore Thread"
+#~ msgstr "/Příspě_vky/_Ignorovat vlákno"
+
+#~ msgid "/_Articles/_View Article's Scores"
+#~ msgstr "/Příspě_vky/_Zobrazit skóre příspěvku"
+
+#~ msgid "/_Articles/_Create Score..."
+#~ msgstr "/Příspě_vky/V_ytvořit skóre..."
+
+#~ msgid "/_Articles/Cancel..."
+#~ msgstr "/Příspě_vky/Stornovat..."
+
+#~ msgid "/_Articles/Supersed_e..."
+#~ msgstr "/Příspě_vky/Na_hradit..."
+
+#~ msgid "/_Articles/_Delete"
+#~ msgstr "/Příspě_vky/O_dstranit"
+
+#~ msgid "/_Post"
+#~ msgstr "/P_oslat"
+
+#~ msgid "/_Post/_Post to Newsgroup..."
+#~ msgstr "/P_oslat/_Poslat do diskusní skupiny..."
+
+#~ msgid "/_Post/_Reply by Email..."
+#~ msgstr "/P_oslat/Odpovědět elekt_ronickou poštou..."
+
+#~ msgid "/_Post/For_ward by Email..."
+#~ msgstr "/P_oslat/Přepos_lat příspěvek elektronickou poštou..."
+
+#~ msgid "/_Post/---"
+#~ msgstr "/P_oslat/---"
+
+#~ msgid "/_Post/Send Pending _Messages"
+#~ msgstr "/P_oslat/Poslat ulože_né zprávy"
+
+#~ msgid "/_Help"
+#~ msgstr "/_Nápověda"
+
+#~ msgid "/_Help/---"
+#~ msgstr "/_Nápověda/---"
+
+#~ msgid "%s (%u) [%d missing pieces]"
+#~ msgstr "%s (%u) [%d částí chybí]"
+
+#~ msgid "%s [%d missing pieces]"
+#~ msgstr "%s [%d částí chybí]"
+
+#~ msgid ""
+#~ "When posting to Usenet, your article's Message-ID contains a domain "
+#~ "name.  You can set a custom domain name here, or leave it blank to let "
+#~ "Pan use the domain name from your email address."
+#~ msgstr ""
+#~ "Při posílání na Usenet obsahuje Message-ID vašeho příspěvku název domény. "
+#~ "Můžete zde nastavit vlastní název domény nebo jej nechat prázdný, aby Pan "
+#~ "použil název domény z vaší adresy elektronické pošty."
+
+#~ msgid "Message-ID _Domain Name:"
+#~ msgstr "Název _domény ID-zprávy:"
+
+#~ msgid "The default charset set for articles posted with this profile"
+#~ msgstr "Implicitní znaková sada pro příspěvky posílané s tímto profilem"
+
+#~ msgid "Pan: Edit Profile"
+#~ msgstr "Pan: Upravit profil"
+
+#~ msgid "_User Profile"
+#~ msgstr "Profil _uživatele"
+
+#~ msgid "Cus_tom Headers"
+#~ msgstr "Uživa_telsky definované hlavičky"
+
+#~ msgid "You must specify a username or disable authorization."
+#~ msgstr "Musíte zadat jméno uživatele nebo zakázat autorizaci."
+
+#~ msgid ""
+#~ "Your real name contained double quotes.\n"
+#~ "Converting into single quotes."
+#~ msgstr ""
+#~ "Vaše jméno obsahuje uvozovky.\n"
+#~ "Převádím je na apostrofy."
+
+#~ msgid "You need at least one profile"
+#~ msgstr "Potřebujete alespoň jeden profil"
+
+#~ msgid "Use the selected profile to create a new profile"
+#~ msgstr "Použít vybraný profil na vytvoření nového profilu"
+
+#~ msgid "Wrote profiles to \"%s\""
+#~ msgstr "Profily byly uloženy do \"%s\""
+
+#~ msgid "Save the log to a file"
+#~ msgstr "Uložit záznamy do souboru"
+
+#~ msgid "/_File/_Save..."
+#~ msgstr "/_Soubor/_Uložit..."
+
+#~ msgid "/_File/Clea_r"
+#~ msgstr "/_Soubor/Vyčis_tit"
+
+#~ msgid "/_File/_Close"
+#~ msgstr "/_Soubor/_Zavřít"
+
+#~ msgid "Pan: Status Log"
+#~ msgstr "Pan: Záznamy stavu"
+
+#~ msgid "Clear the log window"
+#~ msgstr "Vymazat okno se záznamy"
+
+#~ msgid "Time"
+#~ msgstr "Čas"
+
+#~ msgid "Log Entry"
+#~ msgstr "Záznam"
+
+#~ msgid "Post anyway, despite these problems?"
+#~ msgstr "Poslat i přes tyto problémy?"
+
+#~ msgid "Post anyway, despite this problem?"
+#~ msgstr "Poslat i přes tento problém?"
+
+#~ msgid "/_File/_Save Changes"
+#~ msgstr "/_Soubor/_Uložit změny"
+
+#~ msgid "/_File/Save _As..."
+#~ msgstr "/_Soubor/Uložit j_ako..."
+
+#~ msgid "/_Edit/Cu_t"
+#~ msgstr "/_Upravit/_Vyjmout"
+
+#~ msgid "/_Edit/_Copy"
+#~ msgstr "/_Upravit/_Kopírovat"
+
+#~ msgid "/_Edit/_Paste"
+#~ msgstr "/_Upravit/V_ložit"
+
+#~ msgid "/_Edit/_Rot13 Selected Text"
+#~ msgstr "/_Upravit/_Rot13 označený text"
+
+#~ msgid "/_Edit/Edit with E_xternal Editor"
+#~ msgstr "/_Upravit/Upravit e_xterním editorem"
+
+#~ msgid "/_File/Send Now"
+#~ msgstr "/_Soubor/Poslat hned"
+
+#~ msgid "/_File/Send Later"
+#~ msgstr "/_Soubor/Poslat později"
+
+#~ msgid "Send Later"
+#~ msgstr "Poslat později"
+
+#~ msgid "Rewrap"
+#~ msgstr "Znovu zalomit"
+
+#~ msgid "Turn line wrap on/off"
+#~ msgstr "Zapnout/vypnout zalamování řádků"
+
+#~ msgid "Edit with an External Editor"
+#~ msgstr "Upravit externím editorem"
+
+#~ msgid "Mime (single-part posts only)"
+#~ msgstr "MIME (pouze jednodílné příspěvky)"
+
+#~ msgid " (%lu lines in 1 article)"
+#~ msgstr "(%lu řádků v 1 příspěvku)"
+
+#~ msgid " (%lu lines in %lu articles)"
+#~ msgstr "(%lu řádků v %lu příspěvcích)"
+
+#~ msgid "UUEncoded (universally accepted)"
+#~ msgstr "UU kódované (všeobecně používané)"
+
+#~ msgid "yEnc (30 percent smaller than UUEnc but less universal)"
+#~ msgstr "yEnc (o 30 procent menší než UU kódování, ale méně používané)"
+
+#~ msgid "Select the file to attach."
+#~ msgstr "Vyberte soubor pro připojení."
+
+#~ msgid "Files to Attach"
+#~ msgstr "Soubory pro připojení"
+
+#~ msgid "Filename"
+#~ msgstr "Název souboru"
+
+#~ msgid "Kilobytes"
+#~ msgstr "Kilobajty"
+
+#~ msgid "Add a File to the Attachment List"
+#~ msgstr "Přidat soubor do seznamu příloh"
+
+#~ msgid "Remove a File from the Attachment List"
+#~ msgstr "Odstranit soubor ze seznamu příloh"
+
+#~ msgid "Lines per article:"
+#~ msgstr "Řádků v příspěvku:"
+
+#~ msgid "Estimated Article Size"
+#~ msgstr "Odhadovaná velikost příspěvku"
+
+#~ msgid ""
+#~ "The newsgroups where replies to your message should go.  This is only "
+#~ "needed if it differs from the \"Post To Groups\" header. \n"
+#~ "To direct all replies to your email address, use \"Followup-To: poster\""
+#~ msgstr ""
+#~ "Diskusní skupiny, do kterých mají chodit odpovědi na vaše zprávy. To je "
+#~ "potřeba pouze tehdy, pokud jsou odlišné od hlavičky \"Poslat do skupin"
+#~ "\". \n"
+#~ "Pokud chcete nasměrovat všechny odpovědi na vaši adresu elektronické "
+#~ "pošty, použijte \"Pokračovat-do: přispěvatel\""
+
+#~ msgid ""
+#~ "The email account where mail replies to your posted message should go.  "
+#~ "This is only needed if it differs from the \"From\" header."
+#~ msgstr ""
+#~ "Adresa elektronické pošty, na kterou mají chodit poštovní odpovědi na "
+#~ "vámi poslané zprávy. Je potřeba pouze tehdy, pokud se liší od hlavičky "
+#~ "\"Od\"."
+
+#~ msgid "Organization"
+#~ msgstr "Organizace"
+
+#~ msgid "The organization you're associated with."
+#~ msgstr "Organizace, které jste členem."
+
+#~ msgid "Charset"
+#~ msgstr "Znaková sada"
+
+#~ msgid "Custom Headers"
+#~ msgstr "Uživatelsky definované hlavičky"
+
+#~ msgid "Add \"User-Agent\" header"
+#~ msgstr "Přidat hlavičku \"User-Agent\""
+
+#~ msgid "Add \"Message-Id\" header"
+#~ msgstr "Přidat hlavičku \"Message-Id\""
+
+#~ msgid ""
+#~ "Could not convert \"%s\" to UTF-8. Article may not display correctly."
+#~ msgstr ""
+#~ "Nemohu konvertovat \"%s\" do UTF-8. Příspěvek se možná nezobrazí správně."
+
+#~ msgid "\"Followup-To: poster\": sending email to author."
+#~ msgstr ""
+#~ "\"Pokračovat-do: přispěvatel\": posílám elektronickou poštu autorovi."
+
+#~ msgid "\"Followup-To:\" contains an email address: sending email to author."
+#~ msgstr ""
+#~ "\"Pokračovat-do:\": obsahuje adresu elektronické pošty: posílám "
+#~ "elektronickou poštu autorovi."
+
+#~ msgid "New Message"
+#~ msgstr "Nová zpráva"
+
+#~ msgid ""
+#~ "ERROR: line %d, column %d uses a character not specified in charset \"%s"
+#~ "\" -- possibly change your charset in \"More Headers\" to \"%s\" instead?"
+#~ msgstr ""
+#~ "CHYBA: řádek %d, sloupec %d obsahuje znak neuvedený ve znakové sadě \"%s"
+#~ "\" -- možná zkuste změnit znakovou sadu ve \"Více hlaviček\" na \"%s\"?"
+
+#~ msgid "Save message to file"
+#~ msgstr "Uložit zprávu do souboru"
+
+#~ msgid ""
+#~ "Message uses characters not specified in charset '%s' - possibly use '%s' "
+#~ "instead?"
+#~ msgstr ""
+#~ "Ve zprávě jsou použité znaky, které nejsou uvedené ve znakové sadě '%s' - "
+#~ "použít místo nich '%s'?"
+
+#~ msgid "The command line was: %s"
+#~ msgstr "Příkazový řádek byl: %s"
+
+#~ msgid "Select Color"
+#~ msgstr "Vybrat barvu"
+
+#~ msgid "_Browse..."
+#~ msgstr "Pro_bírat..."
+
+#~ msgid "Select Font"
+#~ msgstr "Vybrat písmo"
+
+#~ msgid "Font Family"
+#~ msgstr "Rodina písma"
+
+#~ msgid "  --resume         Resume tasks from last session without prompting"
+#~ msgstr "  --resume         Obnovit úkoly z předchozího sezení bez ptaní"
+
+#~ msgid "  --version        Prints Pan's version number"
+#~ msgstr "  --version        Vytiskne číslo verze Panu"
+
+#~ msgid "  --help           Prints this message and exits"
+#~ msgstr "  --help           Vytiskne tuto zprávu a skončí"
+
+#~ msgid ""
+#~ "  --debug          Turns on the most commonly-used options for a bug "
+#~ "report"
+#~ msgstr ""
+#~ "  --debug          Zapne nejčastěji používané přepínače pro hlášení chyby"
+
+#~ msgid ""
+#~ "  --mute           Debugging tool to send new posts to console, not the "
+#~ "server"
+#~ msgstr ""
+#~ "  --mute           Ladicí nástroj pro posílání nových příspěvků na "
+#~ "konzolu, ne na server"
+
+#~ msgid "  --debug-cache    Print debugging messages for the article cache"
+#~ msgstr "  --debug-cache    Tisknout ladicí zprávy pro cache příspěvků"
+
+#~ msgid ""
+#~ "  --debug-sockets  Print debugging messages when talking to the news "
+#~ "server"
+#~ msgstr ""
+#~ "  --debug-sockets  Tisknout ladicí zprávy při komunikaci s serverem "
+#~ "diskusních skupin"
+
+#~ msgid ""
+#~ "  --debug-queue    Print debugging messages related to managing tasks"
+#~ msgstr ""
+#~ "  --debug-queue    Tisknout ladicí zprávy související se správou úloh"
+
+#~ msgid ""
+#~ "  --debug-decode   Print debugging messages related to decoding "
+#~ "attachments"
+#~ msgstr ""
+#~ "  --debug-decode   Tisknout ladicí zprávy související s dekódováním příloh"
+
+#~ msgid "  --debug-newsrc   Print debugging messages related to .newsrc files"
+#~ msgstr ""
+#~ "  --debug-newsrc   Tisknout ladicí zprávy související se soubory .newsrc"
+
+#~ msgid ""
+#~ "  --debug-gnksa    Print debugging messages related to gnksa correctness"
+#~ msgstr ""
+#~ "  --debug-gnksa    Tisknout ladicí zprávy související se správností gnksa"
+
+#~ msgid ""
+#~ "  --debug-trace    Print debugging messages when entering/leaving "
+#~ "functions"
+#~ msgstr ""
+#~ "  --debug-trace    Tisknout ladicí zprávy při vstupu/opuštění funkcí"
+
+#~ msgid ""
+#~ "  --debug-lock     Print debugging messages related to threaded gui locks"
+#~ msgstr ""
+#~ "  --debug-lock     Tisknout ladicí zprávy související se zamykáním GUI "
+#~ "vlákny"
+
+#~ msgid ""
+#~ "  --debug-object   Print debugging messages related to refcounted objects"
+#~ msgstr ""
+#~ "  --debug-object   Tisknout ladicí zprávy související s objekty s "
+#~ "počítanými odkazy"
+
+#~ msgid "Error reading from socket."
+#~ msgstr "Chyba při čtení ze soketu."
+
+#~ msgid "Error writing to socket."
+#~ msgstr "Chyba při zápisu do soketu."
+
+#~ msgid "Spellchecking disabled: gtkspell_init() failed with status %d"
+#~ msgstr ""
+#~ "Kontrola pravopisu vypnuta: volání gtkspell_init() selhalo se stavem %d"
+
+#~ msgid "Restored %d tasks from last session"
+#~ msgstr "Obnoveno %d úloh z posledního sezení"
+
+#~ msgid ""
+#~ "Some tasks were still queued the last time Pan exited.  Do you want to "
+#~ "resume those tasks?"
+#~ msgstr ""
+#~ "Při posledním ukončení Pan byly některé úlohy ještě ve frontě. Chcete v "
+#~ "nich pokračovat?"
+
+#~ msgid "_Resume"
+#~ msgstr "_Pokračovat"
+
+#~ msgid ""
+#~ "%a - abbreviated weekday name\n"
+#~ "%A - full weekday name\n"
+#~ "%b - abbreviated month name\n"
+#~ "%B - full month name\n"
+#~ "%c - local date & time\n"
+#~ "%d - day of the month\n"
+#~ "%H - hour (24-hour clock)\n"
+#~ "%I - hour (12-hour clock)\n"
+#~ "%j - day of the year (001-366)\n"
+#~ "%m - month (01-12)\n"
+#~ "%M - minute (00-59)\n"
+#~ "%p - local equivalent of AM/PM\n"
+#~ "%S - second (00-61)\n"
+#~ "%x - local date\n"
+#~ "%X - local time\n"
+#~ "%y - two-digit year\n"
+#~ "%Y - four-digit year\n"
+#~ "%% - %"
+#~ msgstr ""
+#~ "%a - zkrácený název dne v týdnu\n"
+#~ "%A - celý název dne v týdnu\n"
+#~ "%b - zkrácený název měsíce\n"
+#~ "%B - celý název měsíce\n"
+#~ "%c - místní datum a čas\n"
+#~ "%d - den v měsíci\n"
+#~ "%H - hodina (24hodinový čas)\n"
+#~ "%I - hodina (12hodinový čas)\n"
+#~ "%j - den v roce (001-366)\n"
+#~ "%m - měsíc (01-12)\n"
+#~ "%M - minuta (00-59)\n"
+#~ "%p - místní ekvivalent zkratek AM/PM\n"
+#~ "%S - sekunda (00-61)\n"
+#~ "%x - místní datum\n"
+#~ "%X - místní čas\n"
+#~ "%y - dvojciferný rok\n"
+#~ "%Y - čtyřciferný rok\n"
+#~ "%% - %"
+
+#~ msgid "Color the \"sub_ject\" column"
+#~ msgstr "Vybarvit sloupec s \"před_mětem\""
+
+#~ msgid "Articles with a Score of 9999 or higher:"
+#~ msgstr "Příspěvky se skóre 9999 nebo vyšším:"
+
+#~ msgid "Articles with a Score between 5000 and 9998:"
+#~ msgstr "Příspěvky se skóre mezi 5000 a 9998:"
+
+#~ msgid "Articles with a Score between 1 and 4999:"
+#~ msgstr "Příspěvky se skóre mezi 1 a 4999:"
+
+#~ msgid "Articles with a Score between -9998 and -1:"
+#~ msgstr "Příspěvky se skóre mezi -9998 a -1:"
+
+#~ msgid "Articles with a Score of -9999 or lower:"
+#~ msgstr "Příspěvky se skóre -9999 a nižším:"
+
+#~ msgid "_1:"
+#~ msgstr "_1:"
+
+#~ msgid "_2:"
+#~ msgstr "_2:"
+
+#~ msgid "_3:"
+#~ msgstr "_3:"
+
+#~ msgid "Pane Order"
+#~ msgstr "Pořadí panelů"
+
+#~ msgid "Action State"
+#~ msgstr "Stav akce"
+
+#~ msgid "Article State"
+#~ msgstr "Stav příspěvku"
+
+#~ msgid "Column Layout"
+#~ msgstr "Rozložení sloupců"
+
+#~ msgid "When a Followup subject header changes, show as _new thread"
+#~ msgstr ""
+#~ "Pokud se změní předmět sledovaného příspěvku, zobrazit jako nové _vlákno"
+
+#~ msgid "E_xpand all threads by default"
+#~ msgstr "Standardně roz_balit všechna vlákna"
+
+#~ msgid "Date Forma_t:"
+#~ msgstr "_Formát data:"
+
+#~ msgid "Show \"%s\" header"
+#~ msgstr "Zobrazovat hlavičku \"%s\""
+
+#~ msgid "Newsreader"
+#~ msgstr "Klient diskusních skupin"
+
+#~ msgid "Characters denoting _quoted text:"
+#~ msgstr "_Znaky označující citovaný text:"
+
+#~ msgid "Download new headers from s_ubscribed groups when starting Pan"
+#~ msgstr ""
+#~ "Stáhnout nové hlavičky z přihlášených sk_upin při spuštění programu Pan"
+
+#~ msgid ""
+#~ "Download new headers and bod_ies from subscribed groups when starting Pan"
+#~ msgstr ""
+#~ "Stáhnout nové hlavičky a _těla z přihlášených skupin při spuštění "
+#~ "programu Pan"
+
+#~ msgid "Download Directory"
+#~ msgstr "Adresář pro stahování"
+
+#~ msgid "Save a_ttachments in directory:"
+#~ msgstr "Uložit přílohy do _adresáře:"
+
+#~ msgid "Automatically remove _failed tasks from the task manager"
+#~ msgstr "Automati_cky odstranit nezdařené úlohy ze správce úloh"
+
+#~ msgid "Article Cache"
+#~ msgstr "Vyrovnávací paměť příspěvků"
+
+#~ msgid "_Erase cache when exiting Pan"
+#~ msgstr "_Vyčistit vyrovnávací paměť při ukončení programu Pan"
+
+#~ msgid "Ma_ximum Cache Size (Megs):"
+#~ msgstr "Ma_ximální velikost vyrovnávací paměti (v MB):"
+
+#~ msgid "_Web Browser (%s is URL):"
+#~ msgstr "Prohlížeč _WWW stránek (%s je URL):"
+
+#~ msgid "_Editor (%t is filename):"
+#~ msgstr "_Editor (%t znamená název souboru):"
+
+#~ msgid ""
+#~ "Scorefile _Editor:\n"
+#~ "(%t is filename, %n is line number)"
+#~ msgstr ""
+#~ "_Editor souborů se skóre:\n"
+#~ "(%t představuje název souboru, %n číslo řádku)"
+
+#~ msgid "Scorefile"
+#~ msgstr "Soubor se skóre"
+
+#~ msgid "Score_file"
+#~ msgstr "Sou_bor se skóre"
+
+#~ msgid "Sending Mail"
+#~ msgstr "Posílání pošty"
+
+#~ msgid "Mail Server Add_ress:"
+#~ msgstr "Ad_resa poštovního serveru:"
+
+#~ msgid "Mail Server Por_t:"
+#~ msgstr "_Port poštovního serveru:"
+
+#~ msgid "Hea_der Pane"
+#~ msgstr "Panel _hlaviček"
+
+#~ msgid "A_pps & Mail"
+#~ msgstr "A_plikace a pošta"
+
+#~ msgid "Pan: Print"
+#~ msgstr "Pan: Tisk"
+
+#~ msgid "You haven't loaded an article to print."
+#~ msgstr "Nemáte načtený příspěvek určený pro tisk."
+
+#~ msgid ""
+#~ "%s\n"
+#~ "\n"
+#~ "Matches: %u\n"
+#~ "Group: %s\n"
+#~ "Rule: %s"
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Vyhovuje: %u\n"
+#~ "Skupina: %s\n"
+#~ "Pravidlo: %s"
+
+#~ msgid "Mark as"
+#~ msgstr "Označit jako"
+
+#~ msgid "_Flag body for download"
+#~ msgstr "_Označit tělo pro stažení"
+
+#~ msgid "_Retrieve Body"
+#~ msgstr "_Získat tělo"
+
+#~ msgid "_Watch thread (highlights the thread)"
+#~ msgstr "_Sledovat vlákno (zvýrazní vlákno)"
+
+#~ msgid "_Ignore thread (hides the thread by default)"
+#~ msgstr "_Ignorovat vlákno (standardně skryje vlákno)"
+
+#~ msgid "Edit Filters"
+#~ msgstr "Upravit filtry"
+
+#~ msgid "Rule applies to all newsgroups"
+#~ msgstr "Pravidlo se použije na všechny diskusní skupiny"
+
+#~ msgid "Wildcard group specification:"
+#~ msgstr "Určení skupin pomocí divokých karet (? a *):"
+
+#~ msgid "(e.g., *anime*)"
+#~ msgstr "(např. *pokus*)"
+
+#~ msgid "Rule applies to specific newsgroups:"
+#~ msgstr "Pravidlo se použije na vybrané diskusní skupiny:"
+
+#~ msgid "Rule applies to:"
+#~ msgstr "Pravidlo se použije na:"
+
+#~ msgid "Rule Name:"
+#~ msgstr "Název pravidla:"
+
+#~ msgid "Apply to Incoming"
+#~ msgstr "Aplikovat na příchozí"
+
+#~ msgid ""
+#~ "If enabled, this rule will be applied to headers when they are downloaded."
+#~ msgstr ""
+#~ "Toto pravidlo, pokud je povolené, se použije na hlavičky při jejich "
+#~ "stahování."
+
+#~ msgid "New Rule"
+#~ msgstr "Nové pravidlo"
+
+#~ msgid "Delete Articles by Bozos"
+#~ msgstr "Vymazat příspěvky od šašků"
+
+#~ msgid "Applying rule to selected groups"
+#~ msgstr "Aplikuji pravidlo na vybrané skupiny"
+
+#~ msgid "Applying rule \"%s\" to group \"%s\""
+#~ msgstr "Aplikuji pravidlo \"%s\" na skupinu \"%s\""
+
+#~ msgid "Rules"
+#~ msgstr "Pravidla"
+
+#~ msgid "Hit Ratio"
+#~ msgstr "Poměr zásahů"
+
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Selected\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "Použít na\n"
+#~ "vybrané\n"
+#~ "skupiny"
+
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Subscribed\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "Použít na\n"
+#~ "přihlášené\n"
+#~ "skupiny"
+
+#~ msgid "Wrote rules to \"%s\""
+#~ msgstr "Pravidla zapsána do \"%s\""
+
+#~ msgid ""
+#~ "Can't find filter \"%s\" needed by rule \"%s\", so no articles match."
+#~ msgstr ""
+#~ "Nelze nalézt filtr \"%s\" potřebný pro pravidlo \"%s\", a proto žádné "
+#~ "příspěvky nevyhovují."
+
+#~ msgid "%u articles match rule %s"
+#~ msgstr "%u příspěvků vyhovuje pravidlu %s"
+
+#~ msgid "Pan: Manual Decode"
+#~ msgstr "Pan: Ruční dekódování"
+
+#~ msgid "Save Files in Directory"
+#~ msgstr "Uložit soubory do adresáře"
+
+#~ msgid "_Directory:"
+#~ msgstr "A_dresář:"
+
+#~ msgid "Add to the _top of the Task Manager's List"
+#~ msgstr "Přidat úlohu na začá_tek řady správce úloh"
+
+#~ msgid "Criterion \"%s\" is selected, but empty."
+#~ msgstr "Kritérium \"%s\" je vybráno, ale prázdné."
+
+#~ msgid "No criteria are selected."
+#~ msgstr "Nejsou vybrána žádná kritéria."
+
+#~ msgid "Pan: Add to Scorefile"
+#~ msgstr "Pan: Přidat do souboru se skóre"
+
+#~ msgid "Group"
+#~ msgstr "Skupina"
+
+#~ msgid "Su_bject:"
+#~ msgstr "_Předmět:"
+
+#~ msgid "A_uthor:"
+#~ msgstr "A_utor:"
+
+#~ msgid "_Lines:"
+#~ msgstr "Řá_dky:"
+
+#~ msgid "at least N lines long"
+#~ msgstr "alespoň N řádků dlouhý"
+
+#~ msgid "less than N lines long"
+#~ msgstr "kratší než N řádků"
+
+#~ msgid "Chan_ge Score:"
+#~ msgstr "Z_měnit skóre:"
+
+#~ msgid "subtract"
+#~ msgstr "odečíst"
+
+#~ msgid "Expire in N _days:"
+#~ msgstr "Vyprší za N _dní:"
+
+#~ msgid "Edit the selected score"
+#~ msgstr "Upravit vybrané skóre"
+
+#~ msgid "You must specify an address."
+#~ msgstr "Musíte určit adresu."
+
+#~ msgid "You must specify a password or disable authorization."
+#~ msgstr "Musíte zadat heslo nebo zakázat autorizaci."
+
+#~ msgid "You must specify a .newsrc filename or disable newsrc support."
+#~ msgstr "Musíte zadat název souboru .newsrc nebo zakázat podporu newsrc."
+
+#~ msgid "Newsrc"
+#~ msgstr "Newsrc"
+
+#~ msgid "Us_e .newsrc file"
+#~ msgstr "Použít soubor .n_ewsrc"
+
+#~ msgid "Select .newsrc File"
+#~ msgstr "Vyberte soubor .newsrc"
+
+#~ msgid "_Filename:"
+#~ msgstr "Název _souboru:"
+
+#~ msgid "Edit the selected server"
+#~ msgstr "Upravit vybraný server"
+
+#~ msgid "Remove the selected server"
+#~ msgstr "Odstranit vybraný server"
+
+#~ msgid "Got unexpected response from mail server: expected %d; got %s"
+#~ msgstr ""
+#~ "Přijata nečekaná odpověď od poštovního serveru: čekal jsem %d; obdržel %s"
+
+#~ msgid "Sending mail"
+#~ msgstr "Posílám poštu"
+
+#~ msgid "No known recipients"
+#~ msgstr "Žádní známí příjemci"
+
+#~ msgid "Mail sent!"
+#~ msgstr "Pošta odeslána!"
+
+#~ msgid "Handshaking with mail server"
+#~ msgstr "Navazuji spojení s poštovním serverem"
+
+#~ msgid "Connecting to mail server"
+#~ msgstr "Připojuji se k poštovnímu serveru"
+
+#~ msgid "Unable to connect to mail server \"%*.*s\""
+#~ msgstr "Nelze se spojit s poštovním serverem \"%*.*s\""
+
+#~ msgid "Mail server not ready"
+#~ msgstr "Poštovní server není připraven"
+
+#~ msgid "New connection %p for %s, port %d"
+#~ msgstr "Nové spojení %p pro %s, port %d"
+
+#~ msgid "Downloading %u articles"
+#~ msgstr "Stahuji %u příspěvků"
+
+#~ msgid "Downloading 1 article"
+#~ msgstr "Stahuji 1 příspěvek"
+
+#~ msgid "Downloading %d articles"
+#~ msgstr "Stahuji %d příspěvků"
+
+#~ msgid "\"%s\""
+#~ msgstr "\"%s\""
+
+#~ msgid "Article %s (%s) canceled"
+#~ msgstr "Příspěvek %s (%s) zrušen"
+
+#~ msgid "Updating article counts for %u groups from server \"%s\""
+#~ msgstr "Aktualizuji počty příspěvků pro %u skupin ze serveru \"%s\""
+
+#~ msgid "Got %d group descriptions"
+#~ msgstr "Získáno %d popisů skupin"
+
+#~ msgid "Fetching group descriptions"
+#~ msgstr "Stahuji popisy skupin"
+
+#~ msgid "Getting %d new groups from server \"%s\""
+#~ msgstr "Získávám %d nových skupin ze serveru \"%s\""
+
+#~ msgid "Corrupt header skipped: "
+#~ msgstr "Přeskočena poškozená hlavička: "
+
+#~ msgid "Not Queued"
+#~ msgstr "Není zařazen"
+
+#~ msgid "Stopping"
+#~ msgstr "Zastavuji"
+
+#~ msgid "Pan %s Task Manager"
+#~ msgstr "Správce úloh programu Pan %s"
+
+#~ msgid "Move Selected Task(s) Up"
+#~ msgstr "Přesunout vybrané úlohy výše"
+
+#~ msgid "Move Selected Task(s) to Top"
+#~ msgstr "Přesunout vybrané úlohy nahoru"
+
+#~ msgid "Move Selected Task(s) Down"
+#~ msgstr "Přesunout vybrané úlohy níže"
+
+#~ msgid "Move Selected Task(s) to Bottom"
+#~ msgstr "Přesunout vybrané úlohy dolů"
+
+#~ msgid "Stop Selected Task(s)"
+#~ msgstr "Zastavit vybrané úlohy"
+
+#~ msgid "Delete Selected Task(s)"
+#~ msgstr "Vymazat vybrané úlohy"
+
+#~ msgid "Time Remaining"
+#~ msgstr "Zbývající čas"
+
+#~ msgid "Article \"%s\" posted."
+#~ msgstr "Příspěvek \"%s\" byl poslán."
+
+#~ msgid "Article \"%s\" not posted."
+#~ msgstr "Příspěvek \"%s\" nebyl poslán."
+
+#~ msgid "Usenet posting failed.  "
+#~ msgstr "Posílání do sítě Usenet selhalo.   "
+
+#~ msgid "Check Tools|Log Viewer for more information.  "
+#~ msgstr "Podívejte se na Nástroje|Prohlížeč záznamů pro více informací.   "
+
+#~ msgid "Your message was saved in the folder \"pan.sendlater\""
+#~ msgstr "Vaše zpráva byla uložena ve složce \"pan.poslatpozději\""
+
+#~ msgid "Saving Attachments"
+#~ msgstr "Ukládám přílohy"
+
+#~ msgid "Save Article can't access path \"%s\""
+#~ msgstr "Ukládání příspěvku nemůže přistupovat k cestě \"%s\""
+
+#~ msgid "Saved article body to \"%s\""
+#~ msgstr "Tělo příspěvku bylo uloženo v \"%s\""
+
+#~ msgid "X-Newsreader"
+#~ msgstr "X-Klient-diskusních-skupin"
+
+#~ msgid "X-Mailer"
+#~ msgstr "X-Klient-elektronické-pošty"
+
+#~ msgid "User-Agent"
+#~ msgstr "Agent-uživatele"
+
+#~ msgid ""
+#~ "Pan %s\n"
+#~ "Copyright (c) %d by Charles Kerr\n"
+#~ "\n"
+#~ "If you find a bug, please report it.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Pan %s\n"
+#~ "Copyright © %d Charles Kerr\n"
+#~ "\n"
+#~ "Pokud najdete chybu, nahlaste ji prosím.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "http://pan.rebelbase.com/ - Pan Homepage\n"
+#~ "http://pan.rebelbase.com/bugs/ - Report a Bug\n"
+#~ "http://pan.rebelbase.com/download/ - Upgrade\n"
+#~ "\n"
+#~ msgstr ""
+#~ "http://pan.rebelbase.com/ - Domovská stránka Pan\n"
+#~ "http://pan.rebelbase.com/bugs/ - Nahlaste chybu\n"
+#~ "http://pan.rebelbase.com/download/ - Aktualizace\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "This program is free software; you can redistribute it\n"
+#~ "and/or modify it under the terms of the GNU General Public\n"
+#~ "License as published by the Free Software Foundation;\n"
+#~ "version 2 of the License.\n"
+#~ "\n"
+#~ "This program is distributed in the hope that it will be\n"
+#~ "useful, but WITHOUT ANY WARRANTY; without even the implied\n"
+#~ "warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR\n"
+#~ "PURPOSE.  See the GNU General Public License for more\n"
+#~ "details.\n"
+#~ "\n"
+#~ "The GNU Public License can be found from the menu above\n"
+#~ "in Help|About|License."
+#~ msgstr ""
+#~ "Tento program je volně šiřitelný software; lze jej šířit\n"
+#~ "nebo upravovat za podmínek GNU General Public\n"
+#~ "License, jak je publikovaná nadací Free Software Foundation;\n"
+#~ "licence verze 2.\n"
+#~ "\n"
+#~ "Tento program je šířen v naději, že bude užitečný,\n"
+#~ "ale BEZ JAKÉKOLI ZÁRUKY, včetně implicitní\n"
+#~ "záruky OBCHODOVATELNOSTI nebo VHODNOSTI PRO SPECIFICKÝ\n"
+#~ "ÚČEL. Více podrobností lze nalézt v GNU General Public License.\n"
+#~ "\n"
+#~ "Licenci GNU Public License lze nalézt z menu pod položkou\n"
+#~ "Nápověda|O aplikaci|Licence."
+
+#~ msgid "Error starting external browser: %s"
+#~ msgstr "Chyba při spouštění externího prohlížeče: %s"
+
+#~ msgid "Error starting external scorefile editor: %s"
+#~ msgstr "Chyba při spouštění externího editoru souboru skóre: %s"
+
+#~ msgid "News server connection count: %d"
+#~ msgstr "Počet spojení na server diskusních skupin: %d"
+
+#~ msgid "Show complete _multipart posts as a single article"
+#~ msgstr "Zobrazit úplné více_dílné příspěvky jako jeden příspěvek"
+
+#~ msgid "Fetched %u headers for \"%s\""
+#~ msgstr "Získáno %u hlaviček pro \"%s\""
+
+#~ msgid "New %lu of %lu"
+#~ msgstr "Nových %lu z %lu"
+
+#~ msgid "Sampling %lu of %lu"
+#~ msgstr "Sestavuji %lu z %lu"
+
+#~ msgid "All %lu of %lu"
+#~ msgstr "Všechny %lu z %lu"
+
+#~ msgid "<More>"
+#~ msgstr "<Více>"
+
+#~ msgid "/_Tools"
+#~ msgstr "/Nás_troje"
+
+#~ msgid "/_Tools/---"
+#~ msgstr "/Nás_troje/---"
+
+#~ msgid "/_Servers/Get List of _New Groups"
+#~ msgstr "/Se_rvery/Získat seznam _nových skupin"
+
+#~ msgid "NNTP handshake failed: %s"
+#~ msgstr "Vytvoření NNTP spojení selhalo: %s"
+
+#~ msgid "Handshake failed: %s"
+#~ msgstr "Vytvoření spojení selhalo: %s"
+
+#~ msgid "Handshake: %s"
+#~ msgstr "Vytvoření spojení: %s"
+
+#~ msgid "Authentication failed: bad handshake for SPA password"
+#~ msgstr "Ověření totožnosti selhalo: chybné navázání spojení pro heslo SPA"
+
+#~ msgid "Bad SPA handshake: %s"
+#~ msgstr "Chybné vytvoření spojení SPA: %s"
+
+#~ msgid "Authentication failed: need a password"
+#~ msgstr "Ověření totožnosti selhalo: potřebujete heslo"
+
+#~ msgid "Authentication failed: %s"
+#~ msgstr "Ověření totožnosti selhalo: %s"
+
+#~ msgid "%*.*s handshake failed: %s"
+#~ msgstr "Vytvoření spojení %*.*s selhalo: %s"
+
+#~ msgid "No supported authentication mechanism"
+#~ msgstr "Není podporovaný mechanismus ověření totožnosti"
+
+#~ msgid "No password found!"
+#~ msgstr "Nenalezeno heslo!"
+
+#~ msgid "MODE READER check failed: %s"
+#~ msgstr "Kontrola MODE READER selhala: %s"
+
+#~ msgid "Posting failed.  Server said: %s"
+#~ msgstr "Posílaní selhalo. Server odpověděl: %s"
+
+#~ msgid "Posting complete.  Server said: %s"
+#~ msgstr "Posílaní ukončeno. Server odpověděl: %s"
+
+#~ msgid "Getting article \"%s\" body failed: %s"
+#~ msgstr "Získávání těla zprávy \"%s\" selhalo: %s"
+
+#~ msgid "Getting header list failed: %s"
+#~ msgstr "Získávání seznamu hlaviček selhalo: %s"
+
+#~ msgid "Getting %d of %d"
+#~ msgstr "Získávám %d z %d"
+
+#~ msgid "Sending Keepalive"
+#~ msgstr "Posílání keepalive"
+
+#~ msgid "Disconnecting Idle"
+#~ msgstr "Odpojuji nečinné"
+
+#~ msgid "Disconnecting one connection from `%s' after %d seconds idle"
+#~ msgstr "Odpojuji jedno spojení z `%s' po %d sekundách nečinnosti"
+
+#~ msgid "Connection to %*.*s, port %d failed: %s"
+#~ msgstr "Spojení s %*.*s, port %d selhalo: %s"
+
+#~ msgid "Downloading %d"
+#~ msgstr "Stahuji %d"
+
+#~ msgid "Updated counts for %u groups out of %u"
+#~ msgstr "Aktualizovány počty pro %u skupin z %u"
+
+#~ msgid "Unable to update counts for group \"%s\""
+#~ msgstr "Nelze aktualizovat počty pro skupinu \"%s\""
+
+#~ msgid "Adding groups to server \"%s\""
+#~ msgstr "Přidávám skupiny serveru \"%s\""
+
+#~ msgid "List Newsgroups failed: %s"
+#~ msgstr "Získání seznamu diskusních skupin selhalo: %s"
+
+#~ msgid "New groups retrieval failed: %s"
+#~ msgstr "Získávání nových skupin selhalo: %s"
+
+#~ msgid "No new articles in group \"%s\""
+#~ msgstr "Ve skupině \"%s\" nejsou nové příspěvky"
+
+#~ msgid "[This is an email copy of a Usenet post to \"%s\"]"
+#~ msgstr "[Tato zpráva je kopií příspěvku sítě Usenet do \"%s\"]"
+
+#~ msgid "Email \"%s\" sent."
+#~ msgstr "Elektronická pošta \"%s\" odeslána."
+
+#~ msgid "Email \"%s\" not sent."
+#~ msgstr "Elektronická pošta \"%s\" nebyla odeslána."
+
+#~ msgid "Posting and mailing article \"%s\""
+#~ msgstr "Posílám příspěvek do diskusní skupiny i elektronickou poštou \"%s\""
+
+#~ msgid "Mailing article \"%s\""
+#~ msgstr "Posílám příspěvek elektronickou poštou \"%s\""
+
+#~ msgid "Email send failed.  "
+#~ msgstr "Posílání elektronické pošty selhalo.   "
+
+#~ msgid "Saving `%s'"
+#~ msgstr "Ukládám `%s'"
+
+#~ msgid "Incomplete Profile."
+#~ msgstr "Nekompletní profil."
+
+#~ msgid "No articles found for group \"%s\""
+#~ msgstr "Nebyly nalezeny žádné příspěvky pro skupinu \"%s\""
+
+#~ msgid "/_Go/T_op of Thread"
+#~ msgstr "/_Přejít/Začát_ek vlákna"
+
+#~ msgid "/_Post/Followup _and Reply"
+#~ msgstr "/P_oslat/Pokračovat _a odpovědět"
+
+#~ msgid "/_Help/Online Users` _Manual..."
+#~ msgstr "/_Nápověda/Online uživatelský _manuál..."
+
+#~ msgid "/_Help/_Feedback..."
+#~ msgstr "/_Nápověda/_Zpětná vazba..."
+
+#~ msgid "Start Pan in o_nline mode"
+#~ msgstr "_Spustit Pan v připojeném režimu"
+
+#~ msgid "Lifespan"
+#~ msgstr "Životnost"
+
+#~ msgid "/_Go/Next High-_Score Article"
+#~ msgstr "/_Přejít/Následující příspěvek s vysokým _skóre"
+
+#~ msgid "/Filte_r/Show Matching Articles and Replies"
+#~ msgstr "/Filt_r/Zobrazit odpovídající příspěvky a odpovědi"
+
+#~ msgid "/Filte_r/Show Matching Articles and References"
+#~ msgstr "/Filt_r/Zobrazit odpovídající příspěvky a odkazy"
+
+#~ msgid "/Filte_r/Match Articles which are not Cache_d"
+#~ msgstr "/Filt_r/Vyhovují příspěvky neuložené l_okálně"
+
+#~ msgid "/Filte_r/Match Articles with Complete _Attachments"
+#~ msgstr "/Filt_r/Vyhovují příspěvky s úplnými přílo_hami"
+
+#~ msgid "/Filte_r/Match Articles with I_ncomplete Attachments"
+#~ msgstr "/Filt_r/Vyhovují příspěvky s neúplný_mi přílohami"
+
+#~ msgid "/Filte_r/Match Articles with No A_ttachments"
+#~ msgstr "/Filt_r/Vyhovují příspěvky _bez příloh"
+
+#~ msgid "/Filte_r/Match Articles Written by _Other People"
+#~ msgstr "/Filt_r/Vyhovují příspěvky od o_statních"
+
+#~ msgid "Make this the default profile for _news"
+#~ msgstr "Učinit tento profil výchozí pro diskus_ní skupiny"
+
+#~ msgid "Make this the default profile for _mail"
+#~ msgstr "Učinit tento profil výchozí pro _elektronickou poštu"
+
+#~ msgid ""
+#~ "INFORMATION: Please be aware that posts to \"%*.*s\" will not appear "
+#~ "until approved by the group's moderator."
+#~ msgstr ""
+#~ "INFORMACE: Uvědomte si, prosím, že příspěvky se v \"%*.*s\" neobjeví, "
+#~ "dokud nebudou povoleny moderátorem skupiny."
+
+#~ msgid "Show Only Replies to My Articles"
+#~ msgstr "Zobrazit pouze odpovědi na mé příspěvky"
+
+#~ msgid "Invalid folder name: \"%s\""
+#~ msgstr "Neplatný název složky: \"%s\""
