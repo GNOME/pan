@@ -344,8 +344,8 @@ namespace Loki
 #endif // ASSOCVECTOR_INC_
 
 // $Log$
-// Revision 1.1  2006/10/02 20:45:55  csk
-// Initial revision
+// Revision 1.1.1.1  2006/10/02 20:45:55  csk
+// Pan, a Usenet Newsreader
 //
 // Revision 1.5  2006/01/16 19:05:09  rich_sposato
 // Added cvs keywords.
