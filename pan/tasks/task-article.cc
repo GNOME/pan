@@ -347,8 +347,17 @@ TaskArticle :: on_finished ()
                                 : "pan-saved-file");
           if (i) {
             char buf[32];
-            g_snprintf (buf, sizeof(buf), "-%d", i);
-            basename += buf;
+            g_snprintf (buf, sizeof(buf), "_copy_%d", i+1); // we don't want "_copy_1"
+            // try to preserve any extension
+            std::string::size_type dotwhere = basename.find_last_of(".");
+            if (dotwhere != basename.npos) {// if we found a dot
+          	  std::string bn (basename, 0, dotwhere); // everything before the last dot
+          	  std::string sf (basename, dotwhere, basename.npos); // the rest
+          	  // add in a substring to make it unique and enable things like "rm -f *_copy_*"
+          	  basename = bn + buf + sf;
+            }else{
+          	  basename += buf;
+            }
           }
           fname = _save_path.empty()
             ? g_strdup (basename.c_str())
