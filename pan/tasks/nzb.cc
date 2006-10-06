@@ -116,7 +116,6 @@ namespace
           mc.a.message_id = mid;
       Article::Part& part (mc.parts[mc.number]);
       part.bytes = mc.bytes;
-      part.lines = 0ul; // nzb doesn't specify this...
       part.set_message_id (mc.a.message_id, mid);
     }
 

@@ -259,7 +259,8 @@ DataImpl :: xover_add (const Quark         & server,
     for (cit it(range.first), end(range.second); it!=end && art_mid.empty(); ++it) {
       const Quark& candidate_mid (it->second);
       const Article* candidate (h->find_article (candidate_mid));
-      if ((candidate->author == author)
+      if (candidate
+          && (candidate->author == author)
           && ((int)candidate->parts.size() == part_count)
           && (h->find_parent_message_id(candidate->message_id) == parent))
         art_mid = candidate_mid;

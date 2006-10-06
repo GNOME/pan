@@ -140,7 +140,7 @@ namespace pan
       bool empty() const { return impl == 0; }
       bool operator== (const char * that) const { return !strcmp(c_str(), that); }
       bool operator!= (const char * that) const { return !(*this == that); }
-      bool operator== (const StringView& that) const { return to_view()==that; }
+      bool operator== (const StringView& that) const { return impl ? (that == *impl->view) : that.empty(); }
       bool operator!= (const StringView& that) const { return !(*this == that); }
       bool operator== (const Quark& q) const { return impl == q.impl; }
       bool operator!= (const Quark& q) const { return impl != q.impl; }
