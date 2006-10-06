@@ -20,6 +20,7 @@
 #ifndef __SocketGIO_h__
 #define __SocketGIO_h__
 
+#include <string>
 #include <glib.h>
 #include <pan/tasks/socket.h>
 
@@ -45,9 +46,10 @@ namespace pan
       Listener * _listener;
       GString * _out_buf;
       GString * _in_buf;
+      std::string _partial_line;
 
     private:
-      enum WatchMode { READ_NOW, READ_LATER, WRITE_NOW, IGNORE_NOW };
+      enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };
       void set_watch_mode (WatchMode mode);
       static gboolean gio_func (GIOChannel*, GIOCondition, gpointer);
       static gboolean timeout_func (gpointer);

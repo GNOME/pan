@@ -271,7 +271,7 @@ namespace
       if (g_io_channel_get_encoding (channel) != NULL)
         g_io_channel_set_encoding (channel, NULL, NULL);
       g_io_channel_set_buffered (channel, true);
-      g_io_channel_set_line_term (channel, "\r\n", 2);
+      g_io_channel_set_line_term (channel, "\n", 1);
     }
 
     return channel;
@@ -359,11 +359,13 @@ GIOChannelSocket :: do_read ()
    while (more && !_abort_flag)
    {
       const GIOStatus status (g_io_channel_read_line_string (_channel, g, NULL, &err));
-#ifdef DEBUG_SOCKET_IO
-      std::cerr << LINE_ID << " channel " << _channel << " read [" << g->str << "], status was " << status << std::endl;
-#endif
       if (status == G_IO_STATUS_NORMAL)
       {
+         if (!_partial_line.empty()) {
+           g_string_prepend_len (g, _partial_line.c_str(), _partial_line.size());
+           _partial_line.clear ();
+         }
+
          debug ("read [" << g->str << "]");
          increment_xfer_byte_count (g->len);
          // strip off \r\n
@@ -373,8 +375,13 @@ GIOChannelSocket :: do_read ()
       }
       else if (status == G_IO_STATUS_AGAIN)
       {
-         set_watch_mode (READ_LATER);
-         more = false;
+         // see if we've got a partial line buffered up
+         if (_channel->read_buf && _channel->read_buf->len) {
+           _partial_line.assign (_channel->read_buf->str, _channel->read_buf->len);
+           g_string_set_size (_channel->read_buf, 0);
+         }
+         // more to come
+         return true;
       }
       else
       {
@@ -500,18 +507,13 @@ GIOChannelSocket :: read_later (gpointer self_gp)
 
 namespace
 {
-  // smaller numbers are faster here, but when I go smaller than this
-  // the CPU load seems to grow disproportionately...
-  const double SECONDS_TO_SLEEP_ON_EAGAIN (0.2);
-
-  const unsigned int SLEEP_MSEC ((unsigned int)(SECONDS_TO_SLEEP_ON_EAGAIN * 1000.0));
-
   const unsigned int TIMEOUT_SECS (30);
 }
 
 void
 GIOChannelSocket :: set_watch_mode (WatchMode mode)
 {
+  _partial_line.clear ();
   debug ("socket " << this << " calling set_watch_mode " << mode << "; _channel is " << _channel);
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
@@ -529,11 +531,6 @@ GIOChannelSocket :: set_watch_mode (WatchMode mode)
       cond = (int)G_IO_IN | (int)G_IO_ERR | (int)G_IO_HUP | (int)G_IO_NVAL;
       _tag_watch = g_io_add_watch (_channel, (GIOCondition)cond, gio_func, this);
       _tag_timeout = g_timeout_add (TIMEOUT_SECS*1000, timeout_func, this);
-      break;
-
-    case READ_LATER:
-      debug("channel " << _channel << " setting mode read later");
-      _tag_watch = g_timeout_add (SLEEP_MSEC, read_later, this);
       break;
 
     case WRITE_NOW:
