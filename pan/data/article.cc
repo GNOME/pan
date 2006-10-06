@@ -31,49 +31,29 @@ using namespace pan;
 Article :: PartState
 Article :: get_part_state () const
 {
-  if (lazy_size != parts.size())
-  {
-    // not a multipart
-    if (!is_binary)
-      part_state = SINGLE;
+  PartState part_state (SINGLE);
 
-    // someone's posted a followup to a multipart
-    else if (!is_line_count_ge(250) && has_reply_leader(subject.to_string()))
-      part_state = SINGLE;
+  // not a multipart
+  if (!is_binary)
+    part_state = SINGLE;
 
-    // someone's posted a "000/124" info message
-    else if (parts.empty())
-      part_state = SINGLE;
+  // someone's posted a followup to a multipart
+  else if (!is_line_count_ge(250) && has_reply_leader(subject.to_string()))
+    part_state = SINGLE;
 
-    // a multipart
-    else {
-      part_state = COMPLETE;
-      for (Article::parts_t::const_iterator it(parts.begin()), end(parts.end()); part_state==COMPLETE && it!=end; ++it)
-        if (it->empty())
-          part_state = INCOMPLETE;
-    }
+  // someone's posted a "000/124" info message
+  else if (parts.empty())
+    part_state = SINGLE;
+
+  // a multipart
+  else {
+    part_state = COMPLETE;
+    for (Article::parts_t::const_iterator it(parts.begin()), end(parts.end()); part_state==COMPLETE && it!=end; ++it)
+      if (it->empty())
+        part_state = INCOMPLETE;
   }
 
   return part_state;
-}
-
-bool
-Article :: is_line_count_ge (unsigned int test) const
-{
-  unsigned int lines (0);
-  foreach_const (parts_t, parts, it)
-    if (((lines += it->lines)) >= test)
-      return true;
-  return false;
-}
-
-unsigned int
-Article :: get_line_count () const
-{
-  unsigned int lines (0);
-  foreach_const (parts_t, parts, it)
-    lines += it->lines;
-  return lines;
 }
 
 unsigned int
@@ -123,19 +103,19 @@ Article :: set_part_count (unsigned int count)
 }
 
 Article :: Part&
-Article :: get_part (size_t number)
+Article :: get_part (unsigned int number)
 {
   //std::cerr << LINE_ID << " parts.size() " << parts.size() << " number " << number << std::endl;
-  const size_t index (number - 1);
+  const unsigned int index (number - 1);
   assert (parts.size() > index);
   return parts[index];
 }
 
 const Article :: Part&
-Article :: get_part (size_t number) const
+Article :: get_part (unsigned int number) const
 {
   //std::cerr << LINE_ID << " parts.size() " << parts.size() << " number " << number << std::endl;
-  const size_t index (number - 1);
+  const unsigned int index (number - 1);
   assert (parts.size() > index);
   return parts[index];
 }
@@ -216,9 +196,7 @@ namespace
 void
 Article :: Part :: clear ()
 {
-  lines = 0;
   bytes = 0;
-
   g_free (packed_message_id);
   packed_message_id = 0;
 }
@@ -227,14 +205,12 @@ void
 Article :: Part :: swap (Part& that)
 {
   std::swap (bytes, that.bytes);
-  std::swap (lines, that.lines);
   std::swap (packed_message_id, that.packed_message_id);
 }
 
 Article :: Part :: Part (const Part& that):
   packed_message_id (clone_packed_mid (that.packed_message_id)),
-  bytes (that.bytes),
-  lines (that.lines)
+  bytes (that.bytes)
 {
 }
 
@@ -242,7 +218,6 @@ Article :: Part&
 Article :: Part :: operator= (const Part& that)
 {
   bytes = that.bytes;
-  lines = that.lines;
   g_free (packed_message_id);
   packed_message_id = clone_packed_mid (that.packed_message_id);
   return *this;
@@ -278,7 +253,5 @@ Article :: clear ()
   xref.clear ();
   score = 0;
   parts.clear ();
-  lazy_size = 0;
-  part_state = SINGLE;
   is_binary = false;
 }

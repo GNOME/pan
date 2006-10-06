@@ -396,6 +396,7 @@ void
 DataImpl :: load_part (const Quark          & group,
                        const Quark          & mid,
                        size_t                 number,
+                       size_t                 lines,
                        Article::Part        & new_part)
 {
    GroupHeaders * h = get_group_headers (group);
@@ -404,8 +405,10 @@ DataImpl :: load_part (const Quark          & group,
    pan_return_if_fail (a != NULL);
 
    Article::Part& old_part (a->get_part (number));
-   if (old_part.empty())
+   if (old_part.empty()) {
        old_part.swap (new_part);
+       a->lines += lines;
+   }
 }
 
 namespace
@@ -450,7 +453,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
     } while (!line.empty() && *line.str=='#');
 
     const int version (atoi (line.str));
-    if (version==1)
+    if (version==1 || version==2)
     {
       // build the symbolic server / group lookup table
       in->getline (line);
@@ -547,6 +550,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
           s.ltrim(); s.pop_token (tok); total_part_count = atoi(tok.str);
           s.ltrim(); s.pop_token (tok); found_part_count = atoi(tok.str);
         }
+        s.ltrim(); if (s.pop_token (tok)) a.lines = view_to_ul (tok); // this field was added in 0.115
         if (!expired)
           a.set_part_count (total_part_count);
 
@@ -566,7 +570,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
             s.pop_token (tok);
             p.set_message_id (a.message_id, (tok.len==1 && *tok.str=='"') ? a.message_id.to_view() : tok);
             s.pop_token(tok); p.bytes = view_to_ul (tok);
-            s.pop_token(tok); p.lines = view_to_ul (tok);
+            if (s.pop_token(tok)) a.lines += view_to_ul (tok); // this field was removed in 0.115
           }
         }
 
@@ -710,7 +714,7 @@ DataImpl :: save_headers (DataIO                       & data_io,
             "#\n"
             "# B. A shorthand table for the most freqent author names.\n"
             "#    This is formatted just like the other shorthand table.\n"
-            "#    (It's sorted by post count, so by coincidence it's also a most-frequent-posters list...)\n"
+            "#    (sorted by post count, so it's also a most-frequent-posters list...)\n"
             "#\n"
             "# C. The group's headers section.\n"
             "#    The first line tells the number of articles to follow,\n"
@@ -718,17 +722,18 @@ DataImpl :: save_headers (DataIO                       & data_io,
             "#    1. message-id\n"
             "#    2. subject\n"
             "#    3. author\n"
-            "#    4. references.  (This line is skipped if the Article has an empty References header.)\n"
-            "#    5. time-posted.  This is a time_t (i.e., http://en.wikipedia.org/wiki/Unix_time)\n"
-            "#    6. xref line, formatted as server1:group1:number1 server2:group2:number2 ... and using section 1's shorthands.\n"
-            "#    7. has-attachments [parts-total-count parts-found-count]\n"
-            "#       If has-attachments isn't 't' (for true), the other two fields are both '1' by definition.\n"
-            "#       If the other two fields are equal, then the article is `complete'.\n"
-            "#    8. One line per parts-found-count: part-index message-id byte-count line-count\n"
+            "#    4. references. This line is omitted if the Article has an empty References header.\n"
+            "#    5. time-posted. This is a time_t (see http://en.wikipedia.org/wiki/Unix_time)\n"
+            "#    6. xref line, server1:group1:number1 server2:group2:number2 ...\n"
+            "#    7. has-attachments [parts-total-count parts-found-count] line-count\n"
+            "#       If has-attachments isn't 't' (for true), fields 2 and 3 are omitted.\n"
+            "#       If fields 2 and 3 are equal, the article is `complete'.\n"
+            "#    8. One line per parts-found-count: part-index message-id byte-count\n"
             "#       a 'message-id' of '\"' is shorthand meaning use the message-id from line 1.\n"
             "#\n";
 
-    *out << "1\t # file format version number\n";
+    // lines moved from line 8 to line 7 in 0.115, causing version 2
+    *out << "2\t # file format version number\n";
 
     // xref lookup section
     typedef std::map<Quark,unsigned long> frequency_t;
@@ -782,10 +787,11 @@ DataImpl :: save_headers (DataIO                       & data_io,
             ++foundPartCount;
         *out << ' ' << a->get_part_count() << ' ' << foundPartCount;
       }
-      *out << "\n";
+      *out << ' ' << a->lines << '\n';
 
       // one line per foundPartCount (part-index message-id bytes lines)
       int number (0);
+      bool first (true);
       foreach_const (Article::parts_t, a->parts, pit) {
         ++number;
         if (!pit->empty()) {
@@ -797,9 +803,8 @@ DataImpl :: save_headers (DataIO                       & data_io,
             *out << '"';
           else
             *out << tmp;
-          *out << ' ' << p.bytes
-               << ' ' << p.lines
-               << '\n';
+          *out << ' ' << p.bytes << '\n';
+           first = false;
         }
       }
     }

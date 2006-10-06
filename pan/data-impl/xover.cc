@@ -301,9 +301,8 @@ DataImpl :: xover_add (const Quark         & server,
     const int number (part_count<2 ? 1 : part_index);
     Article::Part part;
     part.bytes = byte_count;
-    part.lines = line_count;
     part.set_message_id (art_mid, message_id);
-    load_part (group, art_mid, number, part);
+    load_part (group, art_mid, number, line_count, part);
   }
 
   ++workarea._batch_parts_size;

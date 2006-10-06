@@ -58,13 +58,12 @@ namespace pan
 
         public:
           unsigned long bytes;
-          unsigned int lines;
 
         public:
           void set_message_id (const Quark& key, const StringView& mid);
           std::string get_message_id (const Quark& key) const;
 
-          Part(): packed_message_id(0), bytes(0), lines(0) {}
+          Part(): packed_message_id(0), bytes(0) {}
           ~Part() { clear(); }
 
           bool empty () const { return !packed_message_id; }
@@ -77,8 +76,8 @@ namespace pan
 
       typedef std::vector<Part> parts_t;
 
-      Part& get_part (size_t part_number);
-      const Part& get_part (size_t part_number) const;
+      Part& get_part (unsigned int part_number);
+      const Part& get_part (unsigned int part_number) const;
       void set_part_count (unsigned int);
       typedef std::vector<Quark> mid_sequence_t;
       mid_sequence_t get_part_mids () const;
@@ -93,25 +92,23 @@ namespace pan
       enum PartState { SINGLE, INCOMPLETE, COMPLETE };
       PartState get_part_state () const;
       unsigned int get_crosspost_count () const;
-      unsigned int get_line_count () const;
+      unsigned long get_line_count () const { return lines; }
       unsigned long get_byte_count () const;
-      bool is_line_count_ge (unsigned int) const;
+      bool is_line_count_ge (size_t test) const { return lines >= test; }
       bool is_byte_count_ge (unsigned long) const;
       unsigned int get_part_count () const { return parts.size(); }
 
       time_t time_posted;
+      unsigned long lines;
       Xref xref;
       int score;
       parts_t parts;
 
     public:
-      Article (): time_posted(0), score(0), lazy_size(0), part_state(SINGLE), is_binary(false) {}
+      Article (): time_posted(0), lines(0), score(0), is_binary(false) {}
       ~Article () {}
       void clear ();
 
-    private:
-      unsigned int lazy_size;
-      mutable PartState part_state : 2;
     public:
       bool is_binary;
   };

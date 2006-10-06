@@ -37,7 +37,7 @@ using namespace pan;
 namespace
 {
   typedef std::vector<Task*> tasks_t;
-  typedef std::map<size_t,Article::Part> number_to_part_t;
+  typedef std::map<unsigned int,Article::Part> number_to_part_t;
 
   struct MyContext
   {
