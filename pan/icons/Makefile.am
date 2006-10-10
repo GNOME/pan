@@ -18,6 +18,7 @@ stock_images = \
 	icon_filter_only_attachments.png \
 	icon_filter_only_cached.png \
 	icon_filter_only_me.png \
+	icon_filter_only_unread.png \
 	icon_filter_only_watched.png \
 	icon_get_dialog.png \
 	icon_get_flagged.png \
@@ -28,7 +29,6 @@ stock_images = \
 	icon_layout_3.png \
 	icon_layout_4.png \
 	icon_layout_5.png \
-	icon_online.png \
 	icon_pan_logo.png \
 	icon_pan_about_logo.png \
 	icon_pan.png \
