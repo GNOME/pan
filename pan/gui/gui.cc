@@ -1351,7 +1351,7 @@ void GUI :: do_read_selected_group ()
     if (!total)
       activate_action ("download-headers");
     else if (_prefs.get_flag("get-new-headers-when-entering-group", true))
-      _queue.add_task (new TaskXOver (_data, group, TaskXOver::NEW));
+      _queue.add_task (new TaskXOver (_data, group, TaskXOver::NEW), Queue::TOP);
   }
 }
 void GUI :: do_mark_selected_groups_read ()
@@ -1370,7 +1370,7 @@ void GUI :: do_xover_selected_groups ()
 {
   const quarks_t group_names (_group_pane->get_full_selection ());
   foreach_const (quarks_t, group_names, it)
-    _queue.add_task (new TaskXOver (_data, *it, TaskXOver::NEW));
+    _queue.add_task (new TaskXOver (_data, *it, TaskXOver::NEW), Queue::TOP);
 }
 
 void GUI :: do_xover_subscribed_groups ()
@@ -1379,7 +1379,7 @@ void GUI :: do_xover_subscribed_groups ()
   quarks_v groups;
   _data.get_subscribed_groups (groups);
   foreach_const_r (quarks_v, groups, it)
-    _queue.add_task (new TaskXOver (_data, *it, TaskXOver::NEW));
+    _queue.add_task (new TaskXOver (_data, *it, TaskXOver::NEW), Queue::TOP);
 }
 
 void GUI :: do_download_headers ()
