@@ -150,7 +150,6 @@ const char * fallback_ui_file =
 "    <toolitem action='get-new-headers-in-subscribed-groups'/>\n"
 "    <toolitem action='get-new-headers-in-selected-groups'/>\n"
 "    <separator />\n"
-"    <toolitem action='shorten-group-names' />\n"
 "    <separator name='group-pane-filter'/>\n"
 "    <separator />\n"
 "    <toolitem action='post'/>\n"

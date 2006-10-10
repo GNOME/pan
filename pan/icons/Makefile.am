@@ -1,6 +1,5 @@
 
 stock_images = \
-	icon_article_new.png \
 	icon_article_read.png \
 	icon_article_unread.png \
 	icon_binary_complete.png \
@@ -19,11 +18,9 @@ stock_images = \
 	icon_filter_only_attachments.png \
 	icon_filter_only_cached.png \
 	icon_filter_only_me.png \
-	icon_filter_only_new.png \
 	icon_filter_only_watched.png \
 	icon_get_dialog.png \
 	icon_get_flagged.png \
-	icon_get_new.png \
 	icon_get_selected.png \
 	icon_get_subscribed.png \
 	icon_layout_1.png \
@@ -38,8 +35,6 @@ stock_images = \
 	icon_read_group.png \
 	icon_read_more.png \
 	icon_read_less.png \
-	icon_read_new_article.png \
-	icon_read_new_thread.png \
 	icon_read_unread_article.png \
 	icon_read_unread_thread.png \
 	icon_score.png \

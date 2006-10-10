@@ -93,7 +93,6 @@ namespace
   {
     ICON_READ,
     ICON_UNREAD,
-    ICON_NEW,
     ICON_COMPLETE,
     ICON_COMPLETE_READ,
     ICON_INCOMPLETE,
@@ -109,7 +108,6 @@ namespace
    {
       { icon_article_read,           0 },
       { icon_article_unread,         0 },
-      { icon_article_new,            0 },
       { icon_binary_complete,        0 },
       { icon_binary_complete_read,   0 },
       { icon_binary_incomplete,      0 },

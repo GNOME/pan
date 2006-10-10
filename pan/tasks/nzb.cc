@@ -229,7 +229,9 @@ NZB :: nzb_to_xml (std::ostream             & out,
   foreach_const (tasks_t, tasks, it)
   {
     TaskArticle * task (dynamic_cast<TaskArticle*>(*it));
-    if (!task)
+    if (!task) // not a download task...
+      continue;
+    if (task->get_save_path().empty()) // this task is for reading, not saving...
       continue;
 
     const Article& a (task->get_article());

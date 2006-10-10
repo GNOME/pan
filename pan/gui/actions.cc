@@ -48,7 +48,6 @@ namespace
 
   const BuiltinIconInfo my_builtin_icons [] =
   {
-    { icon_article_new, "ICON_ARTICLE_NEW" },
     { icon_article_read, "ICON_ARTICLE_READ" },
     { icon_article_unread, "ICON_ARTICLE_UNREAD" },
     { icon_bluecheck, "ICON_BLUECHECK" }, 
@@ -59,10 +58,8 @@ namespace
     { icon_filter_only_attachments, "ICON_ONLY_ATTACHMENTS" }, 
     { icon_filter_only_cached, "ICON_ONLY_CACHED" }, 
     { icon_filter_only_me, "ICON_ONLY_ME" }, 
-    { icon_filter_only_new, "ICON_ONLY_NEW" }, 
     { icon_filter_only_watched, "ICON_ONLY_WATCHED" }, 
     { icon_get_dialog, "ICON_GET_DIALOG" }, 
-    { icon_get_new, "ICON_GET_NEW" }, 
     { icon_get_selected, "ICON_GET_SELECTED" }, 
     { icon_get_subscribed, "ICON_GET_SUBSCRIBED" }, 
     { icon_online, "ICON_ONLINE" }, 
@@ -70,8 +67,6 @@ namespace
     { icon_read_group, "ICON_READ_GROUP" }, 
     { icon_read_more, "ICON_READ_MORE" }, 
     { icon_read_less, "ICON_READ_LESS" }, 
-    { icon_read_new_article, "ICON_READ_NEW_ARTICLE" }, 
-    { icon_read_new_thread, "ICON_READ_NEW_THREAD" }, 
     { icon_read_unread_article, "ICON_READ_UNREAD_ARTICLE" }, 
     { icon_read_unread_thread, "ICON_READ_UNREAD_THREAD" }, 
     { icon_score, "ICON_SCORE" }, 
@@ -330,7 +325,7 @@ namespace
     { "view-article-score", "ICON_SCORE", N_("Edit Article's Watch/Ignore/Score ..."), "<control><shift>C", NULL, G_CALLBACK(do_show_score_dialog) },
     { "add-article-score", "ICON_SCORE", N_("_Add a _Scoring Rule ..."), "S", NULL, G_CALLBACK(do_show_new_score_dialog) },
     { "cancel-article", GTK_STOCK_CANCEL, N_("Cance_l Article ..."), NULL, NULL, G_CALLBACK(do_cancel_article) },
-    { "supersede-article", GTK_STOCK_CONVERT, N_("_Supersede Article ..."), NULL, NULL, G_CALLBACK(do_supersede_article) },
+    { "supersede-article", NULL, N_("_Supersede Article ..."), NULL, NULL, G_CALLBACK(do_supersede_article) },
     { "delete-article", GTK_STOCK_DELETE, N_("_Delete Article"), "Delete", NULL, G_CALLBACK(do_delete_article) },
     { "mark-article-read", "ICON_ARTICLE_READ", N_("_Mark Article as Read"), "M", N_("Mark Article as Read"), G_CALLBACK(do_mark_article_read) },
     { "mark-article-unread", "ICON_ARTICLE_UNREAD", N_("Mark Article as _Unread"), "<control>M", N_("Mark Article as Unread"), G_CALLBACK(do_mark_article_unread) },
