@@ -187,9 +187,9 @@ pan :: header_to_utf8 (const StringView  & header,
   if (!is_encoded)
     return content_to_utf8 (header, fallback_charset1, fallback_charset2);
   else {
-    const std::string tmp (header.str, header.len);
-    char * decoded (g_mime_utils_8bit_header_decode ((const guchar*) tmp.c_str()));
-    const std::string ret (content_to_utf8 (decoded, fallback_charset1, fallback_charset2));
+    std::string ret (content_to_utf8 (header, fallback_charset1, fallback_charset2));
+    char * decoded (g_mime_utils_8bit_header_decode ((const guchar*) ret.c_str()));
+    ret.assign(decoded);
     g_free (decoded);
     return ret;
   }
