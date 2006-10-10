@@ -65,7 +65,7 @@ namespace pan
         public:
           virtual ~Listener () { };
           virtual void on_pool_has_nntp_available (const Quark& server) = 0;
-          virtual void on_pool_error (const Quark& server, const std::string& message) = 0;
+          virtual void on_pool_error (const Quark& server, const StringView& message) = 0;
       };
 
       void add_listener (Listener * l) { _listeners.insert (l); }
@@ -73,7 +73,7 @@ namespace pan
       void request_nntp ();
 
     private: //  NNTP::Listener
-      virtual void on_nntp_done (NNTP*, Health);
+      virtual void on_nntp_done (NNTP*, Health, const StringView&);
 
     private: // ServerInfo::Listener
       virtual void on_server_limits_changed (const Quark& server, int max_connections);
@@ -87,7 +87,7 @@ namespace pan
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
           (*it++)->on_pool_has_nntp_available (_server);
       }
-      void fire_pool_error (const std::string& message) {
+      void fire_pool_error (const StringView& message) {
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
           (*it++)->on_pool_error (_server, message);
       }

@@ -126,8 +126,9 @@ TaskGroups :: on_nntp_line (NNTP               * nntp,
 }
 
 void
-TaskGroups :: on_nntp_done (NNTP    * nntp,
-                            Health    health)
+TaskGroups :: on_nntp_done (NNTP              * nntp,
+                            Health              health,
+                            const StringView  & response)
 {
   debug ("groups task got an on_nntp_done() from " << nntp->_server);
 

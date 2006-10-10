@@ -46,7 +46,7 @@ namespace pan
       virtual void use_nntp (NNTP * nntp);
 
     private: // NNTP::Listener's virtual functions
-      virtual void on_nntp_done (NNTP*, Health);
+      virtual void on_nntp_done (NNTP*, Health, const StringView&);
 
     private: // implementation
       Quark _server;

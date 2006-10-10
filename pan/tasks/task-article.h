@@ -61,7 +61,7 @@ namespace pan
 
     private: // NNTP::Listener subclass
       virtual void on_nntp_line  (NNTP*, const StringView&);
-      virtual void on_nntp_done  (NNTP*, Health);
+      virtual void on_nntp_done  (NNTP*, Health, const StringView&);
 
     protected:
       const Quark _save_path;

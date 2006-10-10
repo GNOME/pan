@@ -48,7 +48,7 @@ namespace pan
       virtual void on_queue_connection_count_changed (Queue&, int count);
       virtual void on_queue_size_changed (Queue&, int active, int total);
       virtual void on_queue_online_changed (Queue&, bool online);
-      virtual void on_queue_error (Queue&, const std::string& message) { }
+      virtual void on_queue_error (Queue&, const StringView& message) { }
 
     private:
       Queue& _queue;

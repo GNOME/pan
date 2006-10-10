@@ -1558,7 +1558,7 @@ GUI :: on_queue_online_changed (Queue& q, bool is_online)
   toggle_action ("work-online", is_online);
 }
 void
-GUI :: on_queue_error (Queue& q, const std::string& message)
+GUI :: on_queue_error (Queue& q, const StringView& message)
 {
   toggle_action ("work-online", false);
 

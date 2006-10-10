@@ -62,14 +62,16 @@ TaskPost :: use_nntp (NNTP * nntp)
 }
 
 void
-TaskPost :: on_nntp_done (NNTP    * nntp,
-                          Health    health)
+TaskPost :: on_nntp_done (NNTP              * nntp,
+                          Health              health,
+                          const StringView  & response)
 {
   _state.set_health (health);
   if (health == RETRY) 
     _state.set_need_nntp (_server);
   else {
     _state.set_completed ();
+    set_error (response);
     set_finished (health);
   }
 

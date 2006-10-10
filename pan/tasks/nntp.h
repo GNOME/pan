@@ -79,7 +79,8 @@ namespace pan
          *               perhaps the article has expired.
          */
         virtual void on_nntp_done  (NNTP               * nntp,
-                                    Health               health) {}
+                                    Health               health,
+                                    const StringView   & response) {}
 
         /**
          * Called whenever an NNTP object sets the current group.
@@ -253,7 +254,7 @@ namespace pan
       std::string _previous_command;
       void write_next_command ();
 
-      void fire_done_func (Health);
+      void fire_done_func (Health, const StringView& response);
 
     private: // private socket listener funcs, for socket handshake
 

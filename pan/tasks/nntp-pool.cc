@@ -140,23 +140,29 @@ NNTP_Pool :: on_socket_created (const StringView& host, int port, bool ok, Socke
 }
 
 void
-NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health)
+NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response)
 {
    debug ("NNTP_Pool: on_nntp_done()");
+
+   if (health == FAIL) // news server isn't accepting our connection!
+   {
+     const std::string addr (_server_info.get_server_address (_server));
+     std::string s;
+     char buf[4096];
+     snprintf (buf, sizeof(buf), _("Unable to connect to \"%s\""), addr.c_str());
+     s = buf;
+     if (!response.empty()) {
+       s += ":\n";
+       s.append (response.str, response.len);
+     }
+     fire_pool_error (s.c_str());
+   }
 
    if (health != OK)
    {
       delete nntp->_socket;
       delete nntp;
       nntp = 0;
-   }
-
-   if (health == FAIL) // news server isn't accepting our connection!
-   {
-     const std::string addr (_server_info.get_server_address (_server));
-     char buf[512];
-     snprintf (buf, sizeof(buf), _("Unable to connect to \"%s\""), addr.c_str());
-     fire_pool_error (buf);
    }
 
    _connection_pending = false;
@@ -234,7 +240,7 @@ namespace
     public:
       NoopListener (NNTP::Source * s, bool b): source(s), force_not_ok(b) {}
       virtual ~NoopListener() {}
-      virtual void on_nntp_done  (NNTP * nntp, Health health) {
+      virtual void on_nntp_done  (NNTP * nntp, Health health, const StringView& response) {
         source->check_in (nntp, (health==OK) && !force_not_ok);
         delete this;
       }

@@ -70,7 +70,7 @@ Queue :: on_pool_has_nntp_available (const Quark& server)
 }
 
 void
-Queue :: on_pool_error (const Quark& server, const std::string& message)
+Queue :: on_pool_error (const Quark& server, const StringView& message)
 {
   fire_queue_error (message);
 }
@@ -330,7 +330,7 @@ Queue :: on_set_item_moved (TaskSet& container, Task*& task, int new_pos, int ol
 ***/
 
 void
-Queue :: fire_queue_error (const std::string& message)
+Queue :: fire_queue_error (const StringView& message)
 {
   for (lit it(_listeners.begin()), end(_listeners.end()); it!=end; )
     (*it++)->on_queue_error (*this, message);

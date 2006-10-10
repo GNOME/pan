@@ -234,8 +234,9 @@ TaskArticle :: on_nntp_line  (NNTP               * nntp,
 }
 
 void
-TaskArticle :: on_nntp_done  (NNTP    * nntp,
-                              Health    health)
+TaskArticle :: on_nntp_done  (NNTP             * nntp,
+                              Health             health,
+                              const StringView & response)
 {
   // find the Needed using this nntp...
   needed_t::iterator it;

@@ -135,7 +135,7 @@ namespace pan
         virtual void on_queue_connection_count_changed (Queue&, int count) = 0;
         virtual void on_queue_size_changed (Queue&, int active, int total) = 0;
         virtual void on_queue_online_changed (Queue&, bool online) = 0;
-        virtual void on_queue_error (Queue&, const std::string& message) = 0;
+        virtual void on_queue_error (Queue&, const StringView& message) = 0;
       };
       void add_listener (Listener *l) { _listeners.insert(l); }
       void remove_listener (Listener *l) { _listeners.erase(l); }
@@ -145,7 +145,7 @@ namespace pan
 
     private: // inherited from NNTP_Pool::Listener
       virtual void on_pool_has_nntp_available (const Quark& server);
-      virtual void on_pool_error (const Quark& server, const std::string& message);
+      virtual void on_pool_error (const Quark& server, const StringView& message);
 
     protected:
       void process_task (Task *);
@@ -177,7 +177,7 @@ namespace pan
       void fire_connection_count_changed (int count);
       void fire_size_changed (int active, int total);
       void fire_online_changed (bool online);
-      void fire_queue_error (const std::string& message);
+      void fire_queue_error (const StringView& message);
 
     private:
       typedef Loki::AssocVector<Quark,NNTP_Pool*> pools_t;

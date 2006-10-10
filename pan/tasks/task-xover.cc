@@ -327,8 +327,9 @@ TaskXOver :: on_nntp_line (NNTP               * nntp,
 }
 
 void
-TaskXOver :: on_nntp_done (NNTP           * nntp,
-                           Health           health)
+TaskXOver :: on_nntp_done (NNTP              * nntp,
+                           Health              health,
+                           const StringView  & response)
 {
   //std::cerr << LINE_ID << " nntp " << nntp->_server << " (" << nntp << ") done; checking in.  health==" << health << std::endl;
   update_work (true);

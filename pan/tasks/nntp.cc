@@ -97,14 +97,14 @@ namespace
 }
 
 void
-NNTP :: fire_done_func (Health health)
+NNTP :: fire_done_func (Health health, const StringView& response)
 {
    if (_listener)
    {
       Listener * l = _listener;
       debug ("I (" << (void*)this << ") am setting my _listener to 0");
       _listener = 0;
-      l->on_nntp_done (this, health);
+      l->on_nntp_done (this, health, response);
    }
 }
 
@@ -248,11 +248,11 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
 
    bool more;
    switch (state) {
-      case CMD_FAIL: fire_done_func (FAIL); more = false; break;
-      case CMD_DONE: if (_commands.empty()) fire_done_func (OK); more = false; break;
+      case CMD_FAIL: fire_done_func (FAIL, line); more = false; break;
+      case CMD_DONE: if (_commands.empty()) fire_done_func (OK, line); more = false; break;
       case CMD_MORE: more = true; break; // keep listining for more on this command
       case CMD_NEXT: more = false; break; // no more responses on this command; wait for next...
-      case CMD_RETRY: fire_done_func (RETRY); more = false; break;
+      case CMD_RETRY: fire_done_func (RETRY, line); more = false; break;
       default: abort(); break;
    }
    return more;
@@ -261,14 +261,14 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
 void
 NNTP :: on_socket_abort (Socket * sock)
 {
-   fire_done_func (FAIL);
+   fire_done_func (FAIL, StringView());
 }
 
 void
 NNTP :: on_socket_error (Socket * sock)
 {
    _socket_error = true;
-   fire_done_func (RETRY);
+   fire_done_func (RETRY, StringView());
 }
 
 namespace

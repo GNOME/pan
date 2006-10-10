@@ -806,6 +806,18 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
     maybe_mail_message (message);
 }
 
+void
+PostUI :: on_progress_error (Progress&, const StringView& message)
+{
+  GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
+                                          GTK_DIALOG_DESTROY_WITH_PARENT,
+                                          GTK_MESSAGE_ERROR,
+                                          GTK_BUTTONS_CLOSE, "%s", message.to_string().c_str());
+  g_signal_connect_swapped (d, "response", 
+                            G_CALLBACK(gtk_widget_destroy), d);
+  gtk_widget_show (d);
+}
+
 bool
 PostUI :: maybe_post_message (GMimeMessage * message)
 {

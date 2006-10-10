@@ -48,7 +48,7 @@ namespace pan
 
     private: // NNTP::Listener
       virtual void on_nntp_line (NNTP*, const StringView&);
-      virtual void on_nntp_done (NNTP*, Health);
+      virtual void on_nntp_done (NNTP*, Health, const StringView&);
       virtual void on_nntp_group (NNTP*, const Quark&, unsigned long, unsigned long, unsigned long);
 
     private: // implementation - minitasks
