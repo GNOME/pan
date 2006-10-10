@@ -274,10 +274,14 @@ namespace
 {
   void uu_log (void* unused, char* message, int severity)
   {
+    char * pch (g_locale_to_utf8 (message, -1, 0, 0, 0));
+
     if (severity == UUMSG_PANIC || severity==UUMSG_FATAL || severity==UUMSG_ERROR)
-      Log :: add_err (message);
+      Log :: add_err (pch ? pch : message);
     else if (severity == UUMSG_WARNING || severity==UUMSG_NOTE)
-      Log :: add_info (message);
+      Log :: add_info (pch ? pch : message);
+
+    g_free (pch);
   }
 }
 

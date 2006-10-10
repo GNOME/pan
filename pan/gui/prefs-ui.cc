@@ -517,7 +517,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-fg", "black", prefs));
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-bg", "red", prefs));
+    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-bg", "cyan", prefs));
     HIG :: workarea_add_row (t, &row, _("Scores from 1 to 4999:"), h);
     h = gtk_hbox_new (false, PAD);
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));

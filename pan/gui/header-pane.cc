@@ -232,7 +232,7 @@ HeaderPane :: render_score (GtkTreeViewColumn * col,
     bg = prefs.get_color_str ("score-color-high-bg", "yellow");
   } else if (score >= 1) {
     fg = prefs.get_color_str ("score-color-medium-fg", "black");
-    bg = prefs.get_color_str ("score-color-medium-bg", "red");
+    bg = prefs.get_color_str ("score-color-medium-bg", "cyan");
   } else if (score <= -9999) {
     fg = prefs.get_color_str ("score-color-ignored-fg", "dark grey");
     bg = prefs.get_color_str ("score-color-ignored-bg", "black");

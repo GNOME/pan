@@ -31,6 +31,8 @@ int main (void)
 
   quarks_t groups_our_server_has;
   groups_our_server_has.insert ("alt.test");
+  groups_our_server_has.insert ("alt.religion.kibology");
+  groups_our_server_has.insert ("alt.binaries.sounds.mp3.indie");
 
   // populate a simple article
   std::string attribution ("Someone wrote");
@@ -181,7 +183,17 @@ int main (void)
   check (e[0] == "Warning: Unknown group \"unknown.group\".")
   g_mime_message_set_header (msg, "Newsgroups", "alt.test");
 
-  // newsgroups
+  // newsgroups w/o followup
+  g_mime_message_set_header (msg, "Newsgroups", "alt.test,alt.religion.kibology,alt.binaries.sounds.mp3.indie");
+  g_mime_header_remove (GMIME_OBJECT(msg)->headers, "Followup-To");
+  MessageCheck :: message_check (msg, attribution, groups_our_server_has, errors, goodness);
+  e.assign (errors.begin(), errors.end());
+  check (errors.size() == 1)
+  check (goodness.is_warn())
+  check (e[0] == "Warning: Crossposting without setting Followup-To header.")
+
+  // unknown follow-up
+  g_mime_message_set_header (msg, "Newsgroups", "alt.test");
   g_mime_message_set_header (msg, "Followup-To", "alt.test,unknown.group");
   MessageCheck :: message_check (msg, attribution, groups_our_server_has, errors, goodness);
   e.assign (errors.begin(), errors.end());
