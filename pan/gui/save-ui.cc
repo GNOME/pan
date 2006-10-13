@@ -34,9 +34,6 @@ extern "C" {
 
 using namespace pan;
 
-bool SaveDialog :: _save_text (false);
-bool SaveDialog :: _save_attachments (true);
-
 namespace
 {
   std::string expand_download_dir (const char * dir, const StringView& group)
@@ -113,9 +110,13 @@ SaveDialog :: response_cb (GtkDialog * dialog,
 
     // get the save mode
     int save_mode (0);
-    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->_save_text_check)))
+    const bool save_text (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->_save_text_check)));
+    self->_prefs.set_flag ("save-text", save_text);
+    if (save_text)
       save_mode |= TaskArticle::RAW;
-    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->_save_attachments_check)))
+    const bool save_attachments (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->_save_attachments_check)));
+    self->_prefs.set_flag ("save-attachments", save_attachments);
+    if (save_attachments)
       save_mode |= TaskArticle::DECODE;
 
     // make the tasks... 
@@ -198,10 +199,12 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
   HIG::workarea_add_section_title (t, &row, _("Files"));
     HIG :: workarea_add_section_spacer (t, row, 3);
 
-    w = HIG :: workarea_add_wide_checkbutton (t, &row, _("Save _Text"), _save_text);
+    const bool save_text (_prefs.get_flag ("save-text", false));
+    w = HIG :: workarea_add_wide_checkbutton (t, &row, _("Save _Text"), save_text);
     _save_text_check = w;
 
-    w = HIG :: workarea_add_wide_checkbutton (t, &row, _("Save _Attachments"), _save_attachments);
+    const bool save_attachments (_prefs.get_flag ("save-attachments", true));
+    w = HIG :: workarea_add_wide_checkbutton (t, &row, _("Save _Attachments"), save_attachments);
     _save_attachments_check = w;
 
   if (have_group_default)

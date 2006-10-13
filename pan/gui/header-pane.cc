@@ -1604,6 +1604,7 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   g_signal_connect (w, "popup-menu", G_CALLBACK(on_popup_menu), this);
   g_signal_connect (w, "row-activated", G_CALLBACK(on_row_activated), this);
   GtkWidget * scroll = gtk_scrolled_window_new (0, 0);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER(scroll), w);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scroll), GTK_SHADOW_IN);
 
