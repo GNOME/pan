@@ -936,7 +936,7 @@ void GUI :: do_supersede_article ()
   g_object_unref (content_object);
   g_object_unref (stream);
 
-  PostUI * post = PostUI :: create_window (get_window(_root), _data, _queue, _data, _data, new_message, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, new_message, _prefs, _group_prefs);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -999,7 +999,7 @@ void GUI :: do_cancel_article ()
   g_object_unref (stream);
   g_free (cancel_message);
 
-  PostUI * post = PostUI :: create_window (get_window(_root), _data, _queue, _data, _data, cancel, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, cancel, _prefs, _group_prefs);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -1062,7 +1062,7 @@ GUI :: do_post ()
   g_mime_message_set_mime_part (message, GMIME_OBJECT(part));
   g_object_unref (part);
 
-  PostUI * post = PostUI :: create_window (get_window(_root), _data, _queue, _data, _data, message, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
   if (post)
     gtk_widget_show_all (post->root());
   g_object_unref (message);
@@ -1072,7 +1072,7 @@ void GUI :: do_followup_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (false);
   if (message) {
-    PostUI * post = PostUI :: create_window(get_window(_root), _data, _queue, _data, _data, message, _prefs, _group_prefs);
+    PostUI * post = PostUI :: create_window(0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);
@@ -1082,7 +1082,7 @@ void GUI :: do_reply_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (true);
   if (message) {
-    PostUI * post = PostUI :: create_window (get_window(_root), _data, _queue, _data, _data, message, _prefs, _group_prefs);
+    PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);
