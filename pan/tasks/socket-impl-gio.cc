@@ -377,7 +377,7 @@ GIOChannelSocket :: do_read ()
       {
          // see if we've got a partial line buffered up
          if (_channel->read_buf && _channel->read_buf->len) {
-           _partial_line.assign (_channel->read_buf->str, _channel->read_buf->len);
+           _partial_line.append (_channel->read_buf->str, _channel->read_buf->len);
            g_string_set_size (_channel->read_buf, 0);
          }
          // more to come
