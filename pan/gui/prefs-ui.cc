@@ -29,6 +29,7 @@ extern "C" {
 #include "pad.h"
 #include "pan-file-entry.h"
 #include "prefs-ui.h"
+#include "tango-colors.h"
 #include "url.h"
 
 using namespace pan;
@@ -505,29 +506,29 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-watched-fg", "black", prefs));
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-watched-bg", "green", prefs));
+    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-watched-bg", TANGO_CHAMELEON_LIGHT, prefs));
     HIG :: workarea_add_row (t, &row, _("Scores of 9999 or more:"), h);
     h = gtk_hbox_new (false, PAD);
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-high-fg", "black", prefs));
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-high-bg", "yellow", prefs));
+    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-high-bg", TANGO_BUTTER_LIGHT, prefs));
     HIG :: workarea_add_row (t, &row, _("Scores from 5000 to 9998:"), h);
     h = gtk_hbox_new (false, PAD);
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-fg", "black", prefs));
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-bg", "cyan", prefs));
+    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-bg", TANGO_SKY_BLUE_LIGHT, prefs));
     HIG :: workarea_add_row (t, &row, _("Scores from 1 to 4999:"), h);
     h = gtk_hbox_new (false, PAD);
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
-    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-low-fg", "light grey", prefs));
+    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-low-fg", TANGO_ALUMINUM_2, prefs));
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-low-bg", "black", prefs));
     HIG :: workarea_add_row (t, &row, _("Scores from -9998 to -1:"), h);
     h = gtk_hbox_new (false, PAD);
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
-    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-ignored-fg", "dark grey", prefs));
+    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-ignored-fg", TANGO_ALUMINUM_4, prefs));
     gtk_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-ignored-bg", "black", prefs));
     HIG :: workarea_add_row (t, &row, _("Scores of -9999 or less:"), h);
@@ -535,12 +536,12 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_add_section_title (t, &row, _("Body Pane"));
     HIG :: workarea_add_section_spacer (t, row, 3);
     h = gtk_hbox_new (false, PAD_SMALL);
-    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-1", "#550077", prefs));
-    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-2", "#006600", prefs));
-    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-3", "#bb5500", prefs));
+    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-1", TANGO_CHAMELEON_DARK, prefs));
+    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-2", TANGO_ORANGE_DARK, prefs));
+    gtk_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-3", TANGO_PLUM_DARK, prefs));
     HIG :: workarea_add_row (t, &row, _("Quoted Text:"), h);
-    HIG :: workarea_add_row (t, &row, _("URL:"), new_color_button ("body-pane-color-url", "#0000ff", prefs));
-    HIG :: workarea_add_row (t, &row, _("Signature:"), new_color_button ("body-pane-color-signature", "#00AAAA", prefs));
+    HIG :: workarea_add_row (t, &row, _("URL:"), new_color_button ("body-pane-color-url", TANGO_SKY_BLUE_DARK, prefs));
+    HIG :: workarea_add_row (t, &row, _("Signature:"), new_color_button ("body-pane-color-signature", TANGO_SKY_BLUE_LIGHT, prefs));
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Colors")));
 

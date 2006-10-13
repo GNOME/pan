@@ -61,6 +61,7 @@ noinst_HEADERS = \
  score-add-ui.h \
  score-view-ui.h \
  server-ui.h \
+ tango-colors.h \
  task-pane.h \
  url.h \
  xface.h

@@ -37,6 +37,7 @@ extern "C" {
 #include <pan/icons/pan-pixbufs.h>
 #include "body-pane.h"
 #include "pad.h"
+#include "tango-colors.h"
 #include "xface.h"
 #include "url.h"
 
@@ -167,16 +168,27 @@ namespace
     {
       created = true;
       GdkDisplay * display (gtk_widget_get_display (w));
-      GdkPixbuf * in (gdk_pixbuf_new_from_inline (-1, icon_zoom_in, false, 0));
-      GdkPixbuf * out (gdk_pixbuf_new_from_inline (-1, icon_zoom_out, false, 0));
+
+      int width, height;
+      GtkStyle * style (gtk_widget_get_style (w));
+      const GtkIconSize size (GTK_ICON_SIZE_LARGE_TOOLBAR);
+      const GtkTextDirection dir (GTK_TEXT_DIR_NONE);
+      const GtkStateType state (GTK_STATE_PRELIGHT);
+
+      GtkIconSet * icon_set = gtk_style_lookup_icon_set (style, GTK_STOCK_ZOOM_IN);
+      GdkPixbuf * pixbuf = gtk_icon_set_render_icon (icon_set, style, dir, state, size, w, NULL);
+      g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, NULL);
+      cursors[CURSOR_ZOOM_IN] = gdk_cursor_new_from_pixbuf (display, pixbuf, width/2, height/2);
+      g_object_unref (G_OBJECT(pixbuf));
+
+      icon_set = gtk_style_lookup_icon_set (style, GTK_STOCK_ZOOM_OUT);
+      pixbuf = gtk_icon_set_render_icon (icon_set, style, dir, state, size, w, NULL);
+      g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, NULL);
+      cursors[CURSOR_ZOOM_OUT] = gdk_cursor_new_from_pixbuf (display, pixbuf, width/2, height/2);
+      g_object_unref (G_OBJECT(pixbuf));
 
       cursors[CURSOR_IBEAM] = gdk_cursor_new (GDK_XTERM);
       cursors[CURSOR_HREF] = gdk_cursor_new (GDK_HAND2);
-      cursors[CURSOR_ZOOM_IN] = gdk_cursor_new_from_pixbuf (display, in, 20, 18);
-      cursors[CURSOR_ZOOM_OUT] = gdk_cursor_new_from_pixbuf (display, out, 20, 18);
-
-      g_object_unref (out);
-      g_object_unref (in);
 
       g_atexit (free_cursors);
     }
@@ -417,19 +429,19 @@ namespace
       NULL);
     g_object_set (get_or_create_tag (table, "url"),
       "underline", PANGO_UNDERLINE_SINGLE,
-      "foreground", p.get_color_str ("body-pane-color-url", "#0000ff").c_str(),
+      "foreground", p.get_color_str ("body-pane-color-url", TANGO_SKY_BLUE_DARK).c_str(),
       NULL);
     g_object_set (get_or_create_tag (table, "quote_1"),
-      "foreground", p.get_color_str ("body-pane-color-quote-1", "#550077").c_str(),
+      "foreground", p.get_color_str ("body-pane-color-quote-1", TANGO_CHAMELEON_DARK).c_str(),
       NULL);
     g_object_set (get_or_create_tag (table, "quote_2"),
-      "foreground", p.get_color_str ("body-pane-color-quote-2", "#006600").c_str(),
+      "foreground", p.get_color_str ("body-pane-color-quote-2", TANGO_ORANGE_DARK).c_str(),
       NULL);
     g_object_set (get_or_create_tag (table, "quote_3"),
-      "foreground", p.get_color_str ("body-pane-color-quote-3", "#bb5500").c_str(),
+      "foreground", p.get_color_str ("body-pane-color-quote-3", TANGO_PLUM_DARK).c_str(),
       NULL);
     g_object_set (get_or_create_tag (table, "signature"),
-      "foreground", p.get_color_str ("body-pane-color-signature", "#00AAAA").c_str(),
+      "foreground", p.get_color_str ("body-pane-color-signature", TANGO_SKY_BLUE_LIGHT).c_str(),
       NULL);
   }
 }

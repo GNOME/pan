@@ -39,6 +39,8 @@ extern "C" {
 #include <pan/icons/pan-pixbufs.h>
 #include "header-pane.h"
 #include "pad.h"
+#include "prefs-ui.h"
+#include "tango-colors.h"
 
 using namespace pan;
 
@@ -224,18 +226,18 @@ HeaderPane :: render_score (GtkTreeViewColumn * col,
   std::string bg, fg;
   if (score >= 9999) {
     fg = prefs.get_color_str ("score-color-watched-fg", "black");
-    bg = prefs.get_color_str ("score-color-watched-bg", "green");
+    bg = prefs.get_color_str ("score-color-watched-bg", TANGO_CHAMELEON_LIGHT);
   } else if (score >= 5000) {
     fg = prefs.get_color_str ("score-color-high-fg", "black");
-    bg = prefs.get_color_str ("score-color-high-bg", "yellow");
+    bg = prefs.get_color_str ("score-color-high-bg", TANGO_BUTTER_LIGHT);
   } else if (score >= 1) {
     fg = prefs.get_color_str ("score-color-medium-fg", "black");
-    bg = prefs.get_color_str ("score-color-medium-bg", "cyan");
+    bg = prefs.get_color_str ("score-color-medium-bg", TANGO_SKY_BLUE_LIGHT);
   } else if (score <= -9999) {
-    fg = prefs.get_color_str ("score-color-ignored-fg", "dark grey");
+    fg = prefs.get_color_str ("score-color-ignored-fg", TANGO_ALUMINUM_4);
     bg = prefs.get_color_str ("score-color-ignored-bg", "black");
   } else if (score <= -1) {
-    fg = prefs.get_color_str ("score-color-low-fg", "light grey");
+    fg = prefs.get_color_str ("score-color-low-fg", TANGO_ALUMINUM_2);
     bg = prefs.get_color_str ("score-color-low-bg", "black");
   }
 
