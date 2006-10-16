@@ -654,6 +654,47 @@ PostUI :: check_message (const Quark& server, GMimeMessage * msg)
   return response == GTK_RESPONSE_APPLY;
 }
 
+bool
+PostUI :: check_charset ()
+{
+  const std::string charset (!_charset.empty() ? _charset : "UTF-8");
+  // GtkTextBuffer is in UTF-8, so posting in UTF-8 is ok
+  if (charset == "UTF-8")
+    return true;
+
+  // Check if body can be posted in the selected charset 
+  std::string body = get_text(_body_buf);
+  char *tmp = g_convert (body.c_str(), -1, charset.c_str(), "UTF-8", NULL, NULL, NULL);
+  if (tmp) {
+    g_free(tmp);
+    return true;
+  }
+
+  // Wrong charset. Let GMime guess the best charset.
+  const char * best_charset = g_mime_charset_best (body.c_str(), strlen (body.c_str()));
+  if (best_charset == NULL) best_charset = "ISO-8859-1";
+  // GMime reports (some) charsets in lower case. Pan always uses uppercase.
+  tmp = g_ascii_strup (best_charset, -1);
+
+  // Prompt the user
+  char * msg = g_strdup_printf (_("Message uses characters not specified in charset '%s' - possibly use '%s' "), charset.c_str(), tmp);
+  GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
+                                          GTK_DIALOG_DESTROY_WITH_PARENT,
+                                          GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE, 
+										  NULL);
+  HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
+                           _("There were problems with this post."),
+                           msg);
+  gtk_dialog_add_button (GTK_DIALOG(d), _("Go Back"), GTK_RESPONSE_CANCEL);
+  const int response = gtk_dialog_run (GTK_DIALOG(d));
+  gtk_widget_destroy (d);
+  g_free (tmp);
+  g_free (msg);
+  
+  return false;
+}
+
+
 namespace
 {
   GtkWidget * new_go_online_button ()
@@ -703,6 +744,8 @@ namespace
 void
 PostUI :: send_now ()
 {
+  if (!check_charset())
+    return;
   GMimeMessage * message (new_message_from_ui (POSTING));
   if (!maybe_post_message (message))
     g_object_unref (G_OBJECT(message));

@@ -117,6 +117,7 @@ namespace pan
       enum Mode { DRAFTING, POSTING };
       GMimeMessage * new_message_from_ui (Mode mode);
       bool check_message (const Quark& server, GMimeMessage*);
+      bool check_charset ();
 
     private:
       unsigned long _group_entry_changed_id;
