@@ -47,6 +47,7 @@ namespace pan
       GString * _out_buf;
       GString * _in_buf;
       std::string _partial_line;
+      bool _io_performed;
 
     private:
       enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };

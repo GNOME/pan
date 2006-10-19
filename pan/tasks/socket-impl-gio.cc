@@ -290,7 +290,8 @@ GIOChannelSocket :: GIOChannelSocket ( ):
    _tag_timeout (0),
    _listener (0),
    _out_buf (g_string_new (NULL)),
-   _in_buf (g_string_new (NULL))
+   _in_buf (g_string_new (NULL)),
+   _io_performed (false)
 {
    debug ("GIOChannelSocket ctor " << (void*)this);
 }
@@ -358,7 +359,9 @@ GIOChannelSocket :: do_read ()
    bool more (true);
    while (more && !_abort_flag)
    {
+      _io_performed = true;
       const GIOStatus status (g_io_channel_read_line_string (_channel, g, NULL, &err));
+
       if (status == G_IO_STATUS_NORMAL)
       {
          if (!_partial_line.empty()) {
@@ -421,6 +424,7 @@ GIOChannelSocket :: do_write ()
       std::cerr << LINE_ID << " channel " << _channel << " writing [" << StringView(g->str,g->len>=2?g->len-2:g->len) << "]" << std::endl;
 #endif
 
+      _io_performed = true;
       GError * err = 0;
       gsize out = 0;
       GIOStatus status = g->len
@@ -458,9 +462,17 @@ gboolean
 GIOChannelSocket :: timeout_func (gpointer sock_gp)
 {
   GIOChannelSocket * self (static_cast<GIOChannelSocket*>(sock_gp));
-  debug ("error: channel " << self->_channel << " not responding.");
-  gio_func (self->_channel, G_IO_ERR, sock_gp);
-  return false;
+
+  if (!self->_io_performed)
+  {
+    debug ("error: channel " << self->_channel << " not responding.");
+    gio_func (self->_channel, G_IO_ERR, sock_gp);
+    return false;
+  }
+
+  // wait another TIMEOUT_SECS and check again.
+  self->_io_performed = false;
+  return true;
 }
 
 gboolean
@@ -493,6 +505,8 @@ GIOChannelSocket :: gio_func (GIOChannel * channel, GIOCondition cond, gpointer 
    }
 
    debug ("gio_func exit " << self << " with retval " << gimmie_more);
+   if (!gimmie_more)
+     remove_source (self->_tag_timeout);
    return gimmie_more;
 }
 
@@ -531,6 +545,7 @@ GIOChannelSocket :: set_watch_mode (WatchMode mode)
       cond = (int)G_IO_IN | (int)G_IO_ERR | (int)G_IO_HUP | (int)G_IO_NVAL;
       _tag_watch = g_io_add_watch (_channel, (GIOCondition)cond, gio_func, this);
       _tag_timeout = g_timeout_add (TIMEOUT_SECS*1000, timeout_func, this);
+      _io_performed = false;
       break;
 
     case WRITE_NOW:
@@ -538,6 +553,7 @@ GIOChannelSocket :: set_watch_mode (WatchMode mode)
       cond = (int)G_IO_OUT | (int)G_IO_ERR | (int)G_IO_HUP | (int)G_IO_NVAL;
       _tag_watch = g_io_add_watch (_channel, (GIOCondition)cond, gio_func, this);
       _tag_timeout = g_timeout_add (TIMEOUT_SECS*1000, timeout_func, this);
+      _io_performed = false;
       break;
   }
 

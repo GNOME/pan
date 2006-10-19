@@ -221,25 +221,22 @@ Queue :: process_task (Task * task)
     debug ("working");
     // do nothing
   }
-  else // _work == NEED_NNTP
+  else while (state._work == Task::NEED_NNTP)
   {
-    for (;;) // feed it as many connections as it wants and we've got
-    {
-      // make the requests...
-      const Task::State::unique_servers_t& servers (state._servers);
-      foreach_const (Task::State::unique_servers_t, servers, it)
-        get_pool(*it).request_nntp ();
+    // make the requests...
+    const Task::State::unique_servers_t& servers (state._servers);
+    foreach_const (Task::State::unique_servers_t, servers, it)
+      get_pool(*it).request_nntp ();
 
-      Quark server;
-      if (!find_best_server (servers, server))
-        break;
+    Quark server;
+    if (!find_best_server (servers, server))
+      break;
 
-      NNTP * nntp (get_pool(server).check_out ());
-      if (!nntp)
-        break;
+    NNTP * nntp (get_pool(server).check_out ());
+    if (!nntp)
+      break;
 
-      give_task_a_connection (task, nntp);
-    }
+    give_task_a_connection (task, nntp);
   }
 }
 
