@@ -645,13 +645,15 @@ GNKSA :: get_short_author_name (const StringView& author)
   StringView addr, name;
   GNKSA::do_check_from (author, addr, name, false);
 
-  StringView s;
-  if (!name.empty())
-    StringView(name).pop_token(s,'@');
-  else if (!addr.empty())
-    StringView(addr).pop_token(s,'@');
-  else
-    s = author;
+  // if we have just one of (name, addr) then
+  // there was probably a problem parsing...
+  // try to trim out the address by looking for '@'
+
+  StringView s (author);
+       if (name.empty() && !addr.empty()) StringView(addr).pop_token(s,'@');
+  else if (addr.empty() && !name.empty()) StringView(name).pop_token(s,'@');
+  else if (!name.empty()) s = name;
+  else if (!addr.empty()) s = addr;
 
   s.trim ();
   if (s.len>2 && s.front()=='"' && s.back()=='"')

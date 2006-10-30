@@ -257,6 +257,13 @@ main (void)
   StringView v = GNKSA :: get_short_author_name ("\"@nermos\" <anermosathotmaildotcom@>");
   check (v.len != ULONG_MAX)
 
+  v = GNKSA :: get_short_author_name ("fclefrad@yahoo.com");
+  check (v == "fclefrad")
+
+  v = GNKSA :: get_short_author_name ("\"Ch@rvelle\" <fclefrad@yahoo.com>");
+  check (v == "Ch@rvelle")
+
+
 
 	/* test addresses */
 	if (1)
