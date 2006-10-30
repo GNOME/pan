@@ -833,8 +833,12 @@ void GUI :: do_show_score_dialog ()
 
 void GUI :: set_selected_thread_score (int score)
 {
-  Quark group (_header_pane->get_group());
   const Article* article (_header_pane->get_first_selected_article ());
+  // If no article is selected
+  if (!article)
+    return;
+
+  Quark group (_header_pane->get_group());
   std::string references;
   _data.get_article_references (group, article, references);
   StringView v(references), tok;

@@ -1478,7 +1478,7 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     }
 
     // Subject:
-    StringView v = g_mime_message_get_subject (_message);
+    StringView v = g_mime_message_get_header (_message, "Subject");
     std::string h = header_to_utf8 (v, message_charset, group_charset);
     std::string val (normalize_subject_re (h));
     if (val.find ("Re:") != 0) // add "Re: " if we don't have one
@@ -1487,7 +1487,7 @@ BodyPane :: create_followup_or_reply (bool is_reply)
 
     // attribution lines
 
-    const char * cpch = g_mime_message_get_sender (_message);
+    const char * cpch = g_mime_message_get_header (_message, "From");
     h = header_to_utf8 (cpch, message_charset, group_charset);
     g_mime_message_add_header (msg, "X-Draft-Attribution-Author", h.c_str());
 

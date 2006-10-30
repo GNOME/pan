@@ -1202,7 +1202,7 @@ PostUI :: new_message_from_ui (Mode mode)
     profile.get_from_header (s);
     g_free (pch);
   }
-  g_mime_message_add_header (msg, "From", s.c_str());
+  g_mime_message_set_sender (msg, s.c_str());
 
   // headers from the ui: Subject
   const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
