@@ -1063,10 +1063,8 @@ PanTreeStore :: reparent (Row  * new_parent,
 
   GtkTreeModel * model (GTK_TREE_MODEL(this));
 
-  //Row * old_parent (row->parent);
   if (!new_parent)
     new_parent = root;
-  const int new_parent_old_n_children (new_parent->n_children());
 
   // remove our subtree's toplevel from its old parent
   rows_t tmp;
@@ -1074,6 +1072,7 @@ PanTreeStore :: reparent (Row  * new_parent,
   remove_siblings (tmp, false);
 
   // add the subtree's toplevel to its new parent row
+  const int new_parent_old_n_children (new_parent->n_children());
   position = std::min (position, new_parent_old_n_children);
   new_parent->children.insert (new_parent->children.begin()+position, row);
   renumber_children (new_parent, position);
