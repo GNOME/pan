@@ -1369,20 +1369,29 @@ BodyPane :: read_more_or_less (bool more)
 
 namespace
 {
-  // "Re: RE: Re: Re: foo" --> "Re: foo"
-  StringView normalize_subject_re (const StringView& v_in)
+  // (1) strip redundant leading Re: and RE:
+  // (2) ensure the remaining Re: has a lowercase e
+
+  std::string normalize_subject_re (const StringView& v_in)
   {
-    StringView ret, v(v_in);
+    StringView v(v_in), prev(v_in);
     for (;;) {
       v.ltrim ();
-      ret = v;
-      if (v.strstr("Re:") == v.str)
-        v.eat_chars (3);
-      else if (v.strstr("RE:") == v.str)
-        v.eat_chars (3);
+      StringView tmp (v);
+      if (tmp.strstr("Re:") == tmp.str)
+        tmp.eat_chars (3);
+      else if (v.strstr("RE:") == tmp.str)
+        tmp.eat_chars (3);
       else
         break;
+      prev = v;
+      v = tmp;
     }
+
+    std::string ret (prev.str, prev.len);
+    if (!ret.find("RE:")) // force lowercase 'e'
+      ret.replace (0, 3, "Re:");
+
     return ret;
   }
 
@@ -1471,12 +1480,9 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     // Subject:
     StringView v = g_mime_message_get_subject (_message);
     std::string h = header_to_utf8 (v, message_charset, group_charset);
-    v = normalize_subject_re (h);
-    std::string val (v.str, v.len);
-    if (!val.find("RE:") || !val.find ("Re:"))
-      val.replace (0, 3, "Re:"); // be polite & force lowercase 'e'
-    else
-      val.insert (0, "Re: "); // no Re: -- add one.
+    std::string val (normalize_subject_re (h));
+    if (val.find ("Re:") != 0) // add "Re: " if we don't have one
+      val.insert (0, "Re: ");
     g_mime_message_set_subject (msg, val.c_str());
 
     // attribution lines
