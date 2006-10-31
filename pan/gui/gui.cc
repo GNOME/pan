@@ -146,8 +146,8 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   _header_pane (0),
   _body_pane (0),
   _ui_manager (gtk_ui_manager_new ()),
-  _info_image (gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_BUTTON)),
-  _error_image (gtk_image_new_from_stock (GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_BUTTON)),
+  _info_image (gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU)),
+  _error_image (gtk_image_new_from_stock (GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_MENU)),
   _connection_size_eventbox (0),
   _connection_size_label (0),
   _queue_size_label (0),
@@ -217,7 +217,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   gtk_box_pack_start (GTK_BOX(_root), w, false, false, 0);
   gtk_widget_show (w);
 
-  GtkWidget * status_bar (gtk_hbox_new (FALSE, PAD_SMALL));
+  GtkWidget * status_bar (gtk_hbox_new (FALSE, 0));
 
   // connection status
   w = _connection_size_label = gtk_label_new (NULL);
@@ -226,18 +226,21 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   gtk_container_add (GTK_CONTAINER(_connection_size_eventbox), w);
   w = _connection_size_eventbox;
   GtkWidget * frame = gtk_frame_new (NULL);
+  gtk_container_set_border_width (GTK_CONTAINER(frame), 0);
   gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(frame), w);
   gtk_box_pack_start (GTK_BOX(status_bar), frame, FALSE, FALSE, 0);
 
   // queue
-  _queue_size_label = gtk_label_new (NULL);
+  w = _queue_size_label = gtk_label_new (NULL);
+  gtk_misc_set_padding (GTK_MISC(w), PAD, 0);
   w = _queue_size_button = gtk_button_new();
   gtk_tooltips_set_tip (GTK_TOOLTIPS(_ttips), w, _("Open the Task Manager"), NULL);
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
   g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(show_task_window_cb), this);
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
   frame = gtk_frame_new (NULL);
+  gtk_container_set_border_width (GTK_CONTAINER(frame), 0);
   gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(frame), w);
   gtk_box_pack_start (GTK_BOX(status_bar), frame, FALSE, FALSE, 0);
@@ -597,7 +600,7 @@ void GUI :: on_log_entry_added (const Log::Entry& e)
   if (e.severity & Log::PAN_SEVERITY_ERROR)
     set_bin_child (_event_log_button, _error_image);
 
-  if (e.severity & Log::PAN_SEVERITY_URGENT) {
+  if (_queue.is_online() && (e.severity & Log::PAN_SEVERITY_URGENT)) {
     std::string msg (e.message);
     if (msg.find ("ENOSPC") != e.message.npos) {
       msg.erase (msg.find ("ENOSPC"), 6);
@@ -1564,12 +1567,15 @@ GUI :: on_queue_online_changed (Queue& q, bool is_online)
 void
 GUI :: on_queue_error (Queue& q, const StringView& message)
 {
-  toggle_action ("work-online", false);
+  if (_queue.is_online())
+  {
+    toggle_action ("work-online", false);
 
-  std::string s (message);
-  s += "\n \n";
-  s += _("Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue.");
-  Log::add_urgent_va ("%s", s.c_str());
+    std::string s (message);
+    s += "\n \n";
+    s += _("Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue.");
+    Log::add_urgent_va ("%s", s.c_str());
+  }
 }
 
 
