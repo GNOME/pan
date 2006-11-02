@@ -403,7 +403,7 @@ PanTreeStore :: sortable_has_sort_func (GtkTreeSortable *sortable, gint col)
 struct
 PanTreeStore :: SortRowInfo
 {
-  int oldpos;
+  int pos;
   Row * row;
   GtkTreeIter iter;
 };
@@ -444,9 +444,11 @@ PanTreeStore :: row_compare_func (gconstpointer a_gpointer,
 void
 PanTreeStore :: sort_children (SortInfo  & sort_info,
                                Row       * parent,
-                               bool        recurse)
+                               bool        recurse,
+                               int         mode)
 {
   g_assert (parent);
+  g_assert (mode==FLIP || mode==SORT);
 
   const int n (parent->n_children());
   if (n < 2) // no need to sort
@@ -455,17 +457,18 @@ PanTreeStore :: sort_children (SortInfo  & sort_info,
   // build a temporary array to sort
   SortRowInfo * sort_array = new SortRowInfo [n];
   for (int i=0; i<n; ++i) {
-    SortRowInfo& row_info = sort_array[i];
-    row_info.oldpos = i;
+    SortRowInfo& row_info (sort_array[mode==SORT ? i : n-1-i]);
+    row_info.pos = i;
     row_info.row = parent->children[i];
     set_iter (&row_info.iter, row_info.row);
   }
 
-  // sort 'em...
-  SortData help (this, sort_info, order);
-  g_qsort_with_data (sort_array,
-                     n, sizeof(SortRowInfo),
-                     row_compare_func, &help);
+  if (mode==SORT) {
+    SortData help (this, sort_info, order);
+    g_qsort_with_data (sort_array,
+		       n, sizeof(SortRowInfo),
+		       row_compare_func, &help);
+  }
 
   // update the child indices...
   bool reordered (false);
@@ -482,19 +485,20 @@ PanTreeStore :: sort_children (SortInfo  & sort_info,
   {
     int * new_order (new int [n]);
     for (int i=0; i<n; ++i)
-      new_order[i] = sort_array[i].oldpos;
+      new_order[i] = sort_array[i].pos;
 
+    GtkTreeModel * model (GTK_TREE_MODEL(this));
     if (parent == root)
     {
       GtkTreePath * path (gtk_tree_path_new ());
-      gtk_tree_model_rows_reordered (help.model, path, 0, new_order);
+      gtk_tree_model_rows_reordered (model, path, 0, new_order);
       gtk_tree_path_free (path);
     }
     else
     {
       GtkTreeIter it (get_iter (parent));
       GtkTreePath * path (get_path (parent));
-      gtk_tree_model_rows_reordered (help.model, path, &it, new_order);
+      gtk_tree_model_rows_reordered (model, path, &it, new_order);
       gtk_tree_path_free (path);
     }
 
@@ -504,16 +508,16 @@ PanTreeStore :: sort_children (SortInfo  & sort_info,
   delete [] sort_array;
 
   for (int i=0; recurse && i<n; ++i)
-    sort_children (sort_info, parent->children[i], recurse);
+    sort_children (sort_info, parent->children[i], recurse, mode);
 }
 
 void
-PanTreeStore :: sort ()
+PanTreeStore :: sort (int mode)
 {
   if (!sort_paused && (sort_column_id != GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID))
   {
     g_assert (sortable_has_sort_func (GTK_TREE_SORTABLE(this), sort_column_id));
-    sort_children ((*sort_info)[sort_column_id], root, true);
+    sort_children ((*sort_info)[sort_column_id], root, true, mode);
   }
 }
 
@@ -535,11 +539,12 @@ PanTreeStore :: sortable_set_sort_column_id (GtkTreeSortable * sortable,
     g_return_if_fail (tree->sort_info->find(sort_column_id)->second.sort_func != 0);
   }
 
+  const bool flip (sort_column_id == tree->sort_column_id);
   tree->sort_paused = 0;
   tree->sort_column_id = sort_column_id;
   tree->order = order;
   gtk_tree_sortable_sort_column_changed (sortable);
-  tree->sort ();
+  tree->sort (flip ? FLIP : SORT);
 }
 
 gboolean

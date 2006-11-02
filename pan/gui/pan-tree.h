@@ -230,7 +230,6 @@ struct PanTreeStore
 
   public:
 
-    void sort ();
     void pause_sorting () { ++sort_paused; }
     void resume_sorting () { if (!--sort_paused) sort (); }
 
@@ -287,6 +286,9 @@ struct PanTreeStore
   ****/
 
   private:
+
+    enum { SORT, FLIP };
+    void sort (int mode=SORT);
 
     /**
      * Per-row sorting information, as set by
@@ -435,7 +437,7 @@ struct PanTreeStore
   private:
     struct SortData;
     struct SortRowInfo;
-    void sort_children (SortInfo&, Row* parent, bool recurse);
+    void sort_children (SortInfo&, Row* parent, bool recurse, int mode);
     static int row_compare_func (gconstpointer, gconstpointer, gpointer);
 
   private:
