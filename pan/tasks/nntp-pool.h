@@ -95,7 +95,7 @@ namespace pan
       ServerInfo& _server_info;
       const Quark _server;
       Socket::Creator * _socket_creator;
-      bool _connection_pending;
+      int _pending_connections;
       int _max_connections;
 
       struct PoolItem {
@@ -106,6 +106,13 @@ namespace pan
       typedef std::vector<PoolItem> pool_items_t;
       pool_items_t _pool_items;
       int _active_count;
+
+    private:
+
+      time_t _time_to_allow_new_connections;
+      bool new_connections_are_allowed () const;
+      void disallow_new_connections_for_n_seconds (int n);
+      void allow_new_connections ();
 
       typedef std::set<Listener*> listeners_t;
       listeners_t _listeners;

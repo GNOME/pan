@@ -686,7 +686,7 @@ PostUI :: check_charset ()
                            _("There were problems with this post."),
                            msg);
   gtk_dialog_add_button (GTK_DIALOG(d), _("Go Back"), GTK_RESPONSE_CANCEL);
-  const int response = gtk_dialog_run (GTK_DIALOG(d));
+  gtk_dialog_run (GTK_DIALOG(d));
   gtk_widget_destroy (d);
   g_free (tmp);
   g_free (msg);

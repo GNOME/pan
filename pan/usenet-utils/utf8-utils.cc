@@ -245,7 +245,7 @@ pan :: content_to_utf8 (const StringView  & content,
 
       // try each charset in turn
       foreach_const (strings_t, encodings, it) {
-        char * tmp = g_convert (content.str, content.len, "UTF-8", it->c_str(), 0, 0, 0);
+        char * tmp = g_mime_charset_strndup ("UTF-8", it->c_str(), content.str, content.len);
         if (tmp) {
           ret = tmp;
           g_free (tmp);

@@ -606,7 +606,7 @@ GIOChannelSocket :: Creator :: create_socket (const StringView & host,
 
   static GThreadPool * pool (0);
   if (!pool)
-    pool = g_thread_pool_new (create_socket_thread_func, 0, 1, true, 0);
+    pool = g_thread_pool_new (create_socket_thread_func, 0, 4, true, 0);
 
   // farm this out to a worker thread so that the main thread
   // doesn't block while we open the socket.

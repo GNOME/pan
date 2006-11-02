@@ -22,9 +22,19 @@
 #include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/foreach.h>
+#include <pan/general/log.h>
 #include "nntp-pool.h"
 
 using namespace pan;
+
+namespace
+{
+  const int MAX_IDLE_SECS (30);
+
+  const int HUP_IDLE_SECS (90);
+
+  const int TOO_MANY_CONNECTIONS_LOCKOUT_SECS (120);
+}
 
 NNTP_Pool :: NNTP_Pool (const Quark        & server,
                         ServerInfo         & server_info,
@@ -32,9 +42,10 @@ NNTP_Pool :: NNTP_Pool (const Quark        & server,
   _server_info (server_info),
   _server (server),
   _socket_creator (creator),
-  _connection_pending (false),
+  _pending_connections (0),
   _max_connections (_server_info.get_server_limits (_server)),
-  _active_count (0)
+  _active_count (0),
+  _time_to_allow_new_connections (0)
 {
   _server_info.add_listener (this);
 }
@@ -47,6 +58,28 @@ NNTP_Pool :: ~NNTP_Pool ()
     delete it->nntp->_socket;
     delete it->nntp;
   }
+}
+
+/***
+****
+***/
+
+bool
+NNTP_Pool :: new_connections_are_allowed () const
+{
+  return _time_to_allow_new_connections <= time(0);
+}
+
+void
+NNTP_Pool :: disallow_new_connections_for_n_seconds (int n)
+{
+  _time_to_allow_new_connections = time(0) + n;
+}
+
+void
+NNTP_Pool :: allow_new_connections ()
+{
+  _time_to_allow_new_connections = 0;
 }
 
 /***
@@ -101,6 +134,7 @@ NNTP_Pool :: check_in (NNTP * nntp, bool is_ok)
       delete it->nntp->_socket;
       delete it->nntp;
       _pool_items.erase (it);
+      allow_new_connections (); // to make up for this one
     }
   }
 }
@@ -126,7 +160,7 @@ NNTP_Pool :: on_socket_created (const StringView& host, int port, bool ok, Socke
   if (!ok)
   {
     delete socket;
-    _connection_pending = false;
+    --_pending_connections;
   }
   else
   {
@@ -146,16 +180,33 @@ NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response
 
    if (health == FAIL) // news server isn't accepting our connection!
    {
-     const std::string addr (_server_info.get_server_address (_server));
-     std::string s;
-     char buf[4096];
-     snprintf (buf, sizeof(buf), _("Unable to connect to \"%s\""), addr.c_str());
-     s = buf;
-     if (!response.empty()) {
-       s += ":\n";
-       s.append (response.str, response.len);
+     std::string s (response.str, response.len);
+     foreach (std::string, s, it) *it = tolower (*it);
+
+     // too many connections.
+     // there doesn't seem to be a reliable way to test for this:
+     // response can be 502, 400, or 451... and the error messages
+     // vary from server to server
+
+     if (   (s.find ("too many") != s.npos)
+         || (s.find ("limit reached") != s.npos)
+         || (s.find ("maximum number of connections") != s.npos))
+     {
+       disallow_new_connections_for_n_seconds (TOO_MANY_CONNECTIONS_LOCKOUT_SECS);
      }
-     fire_pool_error (s.c_str());
+     else
+     {
+       const std::string addr (_server_info.get_server_address (_server));
+       std::string s;
+       char buf[4096];
+       snprintf (buf, sizeof(buf), _("Unable to connect to \"%s\""), addr.c_str());
+       s = buf;
+       if (!response.empty()) {
+         s += ":\n";
+         s.append (response.str, response.len);
+       }
+       fire_pool_error (s.c_str());
+     }
    }
 
    if (health != OK)
@@ -165,7 +216,7 @@ NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response
       nntp = 0;
    }
 
-   _connection_pending = false;
+   --_pending_connections;
 
    // if success...
    if (nntp != 0)
@@ -191,7 +242,7 @@ NNTP_Pool :: get_counts (int& setme_active,
   setme_active = _active_count;
   setme_idle = _pool_items.size() - _active_count;
   setme_max = _max_connections;
-  setme_pending  = _connection_pending ? 1 : 0;
+  setme_pending  = _pending_connections;
 }
 
 
@@ -209,11 +260,11 @@ NNTP_Pool :: request_nntp ()
             << "max: " << max << ' ' << std::endl;
 #endif
 
-  if (!idle && !pending && active<max)
+  if (!idle && ((pending+active)<max) && new_connections_are_allowed())
   {
     debug ("trying to create a socket");
 
-    _connection_pending = true;
+    ++_pending_connections;
     std::string address;
     int port;
     _server_info.get_server_addr (_server, address, port);
@@ -224,10 +275,6 @@ NNTP_Pool :: request_nntp ()
 /**
 ***
 **/
-
-static const int MAX_IDLE_SECS (30);
-
-static const int HUP_IDLE_SECS (90);
 
 namespace
 {
