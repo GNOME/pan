@@ -16,13 +16,10 @@
 
 /* @(#) $Id$ */
 
-#include "zutil.h"      /* for STDC and FAR definitions */
-
 #define local static
 
 /* Find a four-byte integer type for crc32_little() and crc32_big(). */
 #ifndef NOBYFOUR
-#  ifdef STDC           /* need ANSI C limits.h to determine sizes */
 #    include <limits.h>
 #    define BYFOUR
 #    if (UINT_MAX == 0xffffffffUL)
@@ -38,17 +35,16 @@
 #        endif
 #      endif
 #    endif
-#  endif /* STDC */
 #endif /* !NOBYFOUR */
 
 /* Definitions for doing the crc four data bytes at a time. */
 #ifdef BYFOUR
 #  define REV(w) (((w)>>24)+(((w)>>8)&0xff00)+ \
                 (((w)&0xff00)<<8)+(((w)&0xff)<<24))
-   local unsigned long crc32_little OF((unsigned long,
-                        const unsigned char FAR *, unsigned));
-   local unsigned long crc32_big OF((unsigned long,
-                        const unsigned char FAR *, unsigned));
+   local unsigned long crc32_little (unsigned long,
+                        const unsigned char FAR *, unsigned);
+   local unsigned long crc32_big (unsigned long,
+                        const unsigned char FAR *, unsigned);
 #  define TBLS 8
 #else
 #  define TBLS 1
@@ -492,17 +488,17 @@ static const unsigned long FAR crc_table[TBLS][256] =
   }
 };
 
+#include <stddef.h> /* for NULL */
+#include "crc32.h"
+
 /* ========================================================================= */
 #define DO1 crc = crc_table[0][((int)crc ^ (*buf++)) & 0xff] ^ (crc >> 8)
 #define DO8 DO1; DO1; DO1; DO1; DO1; DO1; DO1; DO1
 
 /* ========================================================================= */
-unsigned long ZEXPORT crc32(crc, buf, len)
-    unsigned long crc;
-    const unsigned char FAR *buf;
-    unsigned len;
+unsigned long crc32(unsigned long crc, const unsigned char * buf, unsigned int len)
 {
-    if (buf == Z_NULL) return 0UL;
+    if (buf == NULL) return 0UL;
 
 #ifdef DYNAMIC_CRC_TABLE
     if (crc_table_empty)
