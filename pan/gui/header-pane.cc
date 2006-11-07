@@ -725,16 +725,18 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
 
   // removed...
   if (!diffs.removed.empty()) {
-    PanTreeStore::rows_t rows;
-    rows.reserve (diffs.removed.size());
-    foreach_const (quarks_t, diffs.removed, qit) {
-      mid_to_row_t::iterator it (_mid_to_row.find (*qit));
-      if (it!=_mid_to_row.end()) {
-        rows.push_back (*it);
-        _mid_to_row.erase (it);
-      }
-    }
-    _tree_store->remove (rows);
+    RowLessThan o;
+    std::vector<Row*> keep;
+    PanTreeStore::rows_t kill;
+    std::set_difference (_mid_to_row.begin(), _mid_to_row.end(),
+                         diffs.removed.begin(), diffs.removed.end(),
+                         inserter (keep, keep.begin()), o);
+    std::set_difference (_mid_to_row.begin(), _mid_to_row.end(),
+                         keep.begin(), keep.end(),
+                         inserter (kill, kill.begin()), o);
+    g_assert (keep.size() + kill.size() == _mid_to_row.size());
+    _tree_store->remove (kill);
+    _mid_to_row.get_container().swap (keep);
   }
 
   // changed...

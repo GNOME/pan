@@ -112,8 +112,8 @@ namespace pan
           tasks_t tasks;
           TaskState get_state (Task* task) const {
             if (_removing.count(task)) return REMOVING;
-            if (_running.count(task)) return RUNNING;
             if (_stopped.count(task)) return STOPPED;
+            if (_running.count(task)) return RUNNING;
             if (_queued.count(task)) return QUEUED;
             return STOPPED;
           }

@@ -1179,16 +1179,10 @@ struct PanTreeStore :: RowCompareByChildPos {
   }
 };
 
-// note that the siblings passed in here must
-// be sorted from highest child index to lowest child index
 void
-PanTreeStore :: remove_siblings (const rows_t& siblings_in,
+PanTreeStore :: remove_siblings (const rows_t& siblings,
                                  bool          delete_rows)
 {
-  RowCompareByChildPos compare_index;
-  rows_t siblings (siblings_in);
-  std::sort (siblings.begin(), siblings.end(), compare_index);
-  
   // entry assertions
   g_assert (!siblings.empty());
   Row * parent (siblings[0]->parent);
@@ -1196,42 +1190,36 @@ PanTreeStore :: remove_siblings (const rows_t& siblings_in,
   foreach_const (rows_t, siblings, it)
     g_assert ((*it)->parent == parent); // all are siblings
 
-  // walk through all the siblings and unthread them.
-  // NOTE: we walk through from high child_index to low
-  // so that subsequent removals won't mess up the
-  // indices that we place into "removed_indices"
-  std::vector<int> removed_indices;
-  removed_indices.reserve (siblings.size());
+  // unthread the doomed rows
+  std::set<int> removed_indices;
   GtkTreeModel * model (GTK_TREE_MODEL(this));
   GtkTreePath * path (get_path (parent));
-  foreach_const_r (rows_t, siblings, nit)
-  {
-    // this sibling...
+  foreach_const (rows_t, siblings, nit) {
     Row * row (*nit);
-    //g_assert (row->parent);
-    //g_assert (row->parent == parent);
-
-    // unlink this row
-    const int pos (row->child_index);
-    removed_indices.push_back (pos);
+    removed_indices.insert (row->child_index);
     row->parent = 0;
     row->child_index = -1;
-    parent->children.erase (parent->children.begin() + pos);
+  }
 
-    // free `row' and all its descendants
-    if (delete_rows) {
+  // remove the dead rows; re-index the live ones
+  int pos (0);
+  rows_t keepers;
+  keepers.reserve (parent->n_children());
+  foreach_const (rows_t, parent->children, it) {
+    Row * row (*it);
+    if (row->parent) {
+      row->child_index = pos++;
+      keepers.push_back (row);
+    } else if (delete_rows) {
       FreeRowWalker walk (this);
       GtkTreeIter iter (get_iter (row));
       postfix_walk (walk, &iter);
     }
   }
-
-  // renumber the surviving children
-  std::sort (removed_indices.begin(), removed_indices.end());
-  renumber_children (parent, removed_indices.front());
+  parent->children.swap (keepers);
 
   // fire removal signal for child
-  foreach_const_r (std::vector<int>, removed_indices, it) {
+  foreach_const_r (std::set<int>, removed_indices, it) {
     gtk_tree_path_append_index (path, *it);
     gtk_tree_model_row_deleted (model, path);
     gtk_tree_path_up (path);

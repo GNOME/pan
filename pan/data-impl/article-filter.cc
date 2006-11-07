@@ -31,14 +31,14 @@ ArticleFilter :: get_header (const Article& a, const Quark& header_name) const
 {
   StringView value;
 
-  if      (header_name == subject)    value = a.subject.c_str();
-  else if (header_name == from)       value = a.author.c_str();
-  else if (header_name == message_Id) value = a.message_id.c_str();
-  else if (header_name == message_ID) value = a.message_id.c_str();
+  if      (header_name == subject)    a.subject.to_view (value);
+  else if (header_name == from)       a.author.to_view (value);
+  else if (header_name == message_Id) a.message_id.to_view (value);
+  else if (header_name == message_ID) a.message_id.to_view (value);
   else {
     std::cerr << LINE_ID << ' ' << PACKAGE_STRING << " is misparsing \"" << header_name << "\".\n"
               << "Please file a bug report to http://bugzilla.gnome.org/enter_bug.cgi?product=Pan\n";
-    value = "";
+    value.clear ();
   }
 
   return value;
