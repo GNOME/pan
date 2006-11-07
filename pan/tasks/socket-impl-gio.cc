@@ -246,7 +246,7 @@ namespace
           continue;
 
         // and make a connection
-        if (::connect (sockfd, ans->ai_addr, ans->ai_addrlen) < 0) {
+        if (::connect (sockfd, walk->ai_addr, walk->ai_addrlen) < 0) {
           g_message ("Connect failed: %s", g_strerror(errno));
           closesocket (sockfd);
           sockfd = -1;
