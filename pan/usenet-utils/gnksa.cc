@@ -816,7 +816,8 @@ GNKSA :: trim_references (const StringView& refs, size_t cutoff)
 
    std::string s;
    s.insert (s.end(), left.begin(), left.end());
-   s += ' ';
+   if (!myrefs.empty())
+     s += ' ';
    s.insert (s.end(), myrefs.begin(), myrefs.end());
    assert (s.size() <= cutoff);
    return s;

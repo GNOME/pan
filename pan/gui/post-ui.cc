@@ -953,7 +953,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   _post_task = new TaskPost (server, message);
   _post_task->add_listener (this);
   
-  _queue.add_task (_post_task);
+  _queue.add_task (_post_task, Queue::TOP);
 
   /**
   ***  Maybe remember the charsets.
