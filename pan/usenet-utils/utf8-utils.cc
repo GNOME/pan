@@ -168,11 +168,9 @@ pan :: clean_utf8 (const StringView& in_arg)
 
   const char *end;
   while (!g_utf8_validate (in.str, in.len, &end)) {
-    if (end > in.str) {
-      const int good_len (end - in.str);
-      out.append (in.str, good_len);
-      in.eat_chars (good_len + 1);
-    }
+    const gssize good_len (end - in.str);
+    out.append (in.str, good_len);
+    in.eat_chars (good_len + 1);
     out += '?';
   }
 
