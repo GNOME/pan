@@ -65,6 +65,8 @@ namespace
 
     if (response == GTK_RESPONSE_ACCEPT)
     {
+      const bool mark_read (state->prefs.get_flag ("mark-group-read-before-xover", false));
+
       foreach_const (quarks_t, state->groups, it) {
         Task * task;
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(state->all_headers_rb)))
@@ -75,7 +77,9 @@ namespace
           task = new TaskXOver (state->data, *it, TaskXOver::SAMPLE, n_headers);
         else // n days
           task = new TaskXOver (state->data, *it, TaskXOver::DAYS, n_days);
-        state->queue.add_task (task);
+        if (mark_read)
+          state->data.mark_group_read (*it);
+        state->queue.add_task (task, Queue::TOP);
       }
     }
 

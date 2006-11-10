@@ -313,12 +313,10 @@ ProfilesImpl :: has_profiles () const
 bool
 ProfilesImpl :: has_from_header (const StringView& from) const
 {
-  std::string s;
-  foreach_const (profiles_t, profiles, it) {
-    it->second.get_from_header (s);
-    if (from == s)
+  foreach_const (profiles_t, profiles, it)
+    if (from.strstr (it->second.address))
       return true;
-  }
+
   return false;
 }
 

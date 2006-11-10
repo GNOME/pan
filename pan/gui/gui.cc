@@ -903,6 +903,7 @@ void GUI :: do_supersede_article ()
   // did this user post the message?
   const char * sender (g_mime_message_get_sender (message));
   const bool user_posted_this (_data.has_from_header (sender));
+  
   if (!user_posted_this) {
     GtkWidget * w = gtk_message_dialog_new (
       get_window(_root),
@@ -1357,8 +1358,11 @@ void GUI :: do_read_selected_group ()
     _data.get_group_counts (group, unread, total);
     if (!total)
       activate_action ("download-headers");
-    else if (_prefs.get_flag("get-new-headers-when-entering-group", true))
+    else if (_prefs.get_flag("get-new-headers-when-entering-group", true)) {
+      if (_prefs.get_flag ("mark-group-read-before-xover", false))
+        _data.mark_group_read (group);
       _queue.add_task (new TaskXOver (_data, group, TaskXOver::NEW), Queue::TOP);
+    }
   }
 }
 void GUI :: do_mark_selected_groups_read ()
@@ -1376,8 +1380,12 @@ void GUI :: do_clear_selected_groups ()
 void GUI :: do_xover_selected_groups ()
 {
   const quarks_t group_names (_group_pane->get_full_selection ());
-  foreach_const (quarks_t, group_names, it)
+  const bool mark_read (_prefs.get_flag ("mark-group-read-before-xover", false));
+  foreach_const (quarks_t, group_names, it) {
+    if (mark_read)
+      _data.mark_group_read (*it);
     _queue.add_task (new TaskXOver (_data, *it, TaskXOver::NEW), Queue::TOP);
+  }
 }
 
 void GUI :: do_xover_subscribed_groups ()
@@ -1385,8 +1393,12 @@ void GUI :: do_xover_subscribed_groups ()
   typedef std::vector<Quark> quarks_v;
   quarks_v groups;
   _data.get_subscribed_groups (groups);
-  foreach_const_r (quarks_v, groups, it)
+  const bool mark_read (_prefs.get_flag ("mark-group-read-before-xover", false));
+  foreach_const_r (quarks_v, groups, it) {
+    if (mark_read)
+      _data.mark_group_read (*it);
     _queue.add_task (new TaskXOver (_data, *it, TaskXOver::NEW), Queue::TOP);
+  }
 }
 
 void GUI :: do_download_headers ()
