@@ -468,9 +468,9 @@ DataImpl :: MyTree :: add_articles (const const_nodes_v& nodes_in)
                                  dend(descendants.end());
     while (nit!=nend && dit!=dend) {
       if (nit->second->_mid < (*dit)->_mid)
-        nit = _nodes.lower_bound ((*dit)->_mid);
+        ++nit;
       else if ((*dit)->_mid < nit->second->_mid)
-        dit = std::lower_bound (dit, dend, nit->second->_mid, compare);
+        ++dit;
       else {
         g_assert (nit->second->_mid == (*dit)->_mid);
         descend.push_back (TwoNodes (*dit, nit->second));
