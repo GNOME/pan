@@ -335,6 +335,18 @@ namespace pan
       typedef std::vector<ArticleNode*> nodes_v;
       typedef std::vector<const ArticleNode*> const_nodes_v;
 
+      struct NodeWeakOrdering
+      {
+        typedef std::pair<Quark,ArticleNode*> nodes_t_element;
+
+        bool operator () (const nodes_t_element& a, const Quark& b) const {
+          return a.first < b;
+        }
+        bool operator () (const Quark& a, const nodes_t_element& b) const {
+          return a < b.first;
+        }
+      };
+
       struct GroupHeaders
       {
         int _ref;

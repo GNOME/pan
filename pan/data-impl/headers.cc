@@ -202,23 +202,15 @@ DataImpl :: find_nodes (const quarks_t           & mids,
                         nodes_t                  & nodes,
                         nodes_v                  & setme)
 {
-  nodes_t::iterator nit(nodes.begin()), nend(nodes.end());
-  quarks_t::const_iterator mit(mids.begin()), mend(mids.end());
+  NodeWeakOrdering o;
+  nodes_t tmp;
+  std::set_intersection (nodes.begin(), nodes.end(),
+                         mids.begin(), mids.end(),
+                         std::inserter (tmp, tmp.begin()), o);
 
-  while (mit!=mend && nit!=nend) {
-    const Quark& m_mid (*mit);
-    const Quark& n_mid (nit->second->_mid);
-    if (m_mid < n_mid)
-      mit = std::lower_bound (mit, mend, n_mid);
-    else if (n_mid < m_mid)
-      nit = nodes.lower_bound (m_mid);
-    else {
-      g_assert (m_mid == n_mid);
-      setme.push_back (nit->second);
-      ++mit;
-      ++nit;
-    }
-  }
+  setme.reserve (tmp.size());
+  foreach_const (nodes_t, tmp, it)
+    setme.push_back (it->second);
 }
 
 void
@@ -226,23 +218,15 @@ DataImpl :: find_nodes (const quarks_t           & mids,
                         const nodes_t            & nodes,
                         const_nodes_v            & setme)
 {
-  nodes_t::const_iterator nit(nodes.begin()), nend(nodes.end());
-  quarks_t::const_iterator mit(mids.begin()), mend(mids.end());
+  NodeWeakOrdering o;
+  nodes_t tmp;
+  std::set_intersection (nodes.begin(), nodes.end(),
+                         mids.begin(), mids.end(),
+                         std::inserter (tmp, tmp.begin()), o);
 
-  while (mit!=mend && nit!=nend) {
-    const Quark& m_mid (*mit);
-    const Quark& n_mid (nit->second->_mid);
-    if (m_mid < n_mid)
-      mit = std::lower_bound (mit, mend, n_mid);
-    else if (n_mid < m_mid)
-      nit = nodes.lower_bound (m_mid);
-    else {
-      g_assert (m_mid == n_mid);
-      setme.push_back (nit->second);
-      ++mit;
-      ++nit;
-    }
-  }
+  setme.reserve (tmp.size());
+  foreach_const (nodes_t, tmp, it)
+    setme.push_back (it->second);
 }
 
 /*******
