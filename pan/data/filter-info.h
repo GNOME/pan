@@ -20,7 +20,7 @@
 #ifndef __Filter_Info_h__
 #define __Filter_Info_h__
 
-#include <vector>
+#include <deque>
 #include <pan/general/quark.h>
 #include <pan/general/string-view.h>
 #include <pan/general/text-match.h>
@@ -73,7 +73,7 @@ namespace pan
       TextMatch _text;
 
       /** Convenience typedef. */
-      typedef std::vector<FilterInfo> aggregates_t;
+      typedef std::deque<FilterInfo> aggregates_t;
 
       /** When `_type' is AGGREGATE_OR or AGGREGATE_AND,
           these are the filters being or'ed or and'ed together. */

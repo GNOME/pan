@@ -232,7 +232,10 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
       name = name.substr (0, name.strchr('%')); // skip trailing comments
       name.trim ();
 
-      Item item;
+      std::deque<Item>& items (context.current_section->items);
+      items.resize (items.size() + 1);
+      Item& item (items.back());
+       
       item.name.assign (name.str, name.len);
       item.filename = filename;
       item.begin_line = line_number;
@@ -242,8 +245,6 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
         item.test.set_type_aggregate_and ();
       else
         item.test.set_type_aggregate_or ();
-
-      context.current_section->items.push_back (item);
     }
 
     // begin nested condition
@@ -326,7 +327,10 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
       StringView val (line.substr (delimiter+1, 0));
       val.trim ();
 
-      FilterInfo test;
+      FilterInfo::aggregates_t& aggregates (context.get_current_test()->_aggregates);
+      aggregates.resize (aggregates.size() + 1);
+      FilterInfo& test (aggregates.back());
+ 
       if (!key.strncasecmp ("Lines", 5))
       {
         // "Lines: 5"  matches articles with > 5 lines.
@@ -365,7 +369,6 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
         test.set_type_text (key, d);
       }
       test._negate = negate;
-      context.get_current_test()->_aggregates.push_back (test);
     }
 
     // error
@@ -429,7 +432,7 @@ Scorefile :: get_matching_sections (const StringView& groupname, std::vector<con
   foreach_const (sections_t, _sections, sit)
   {
     bool match (false);
-    foreach_const (std::vector<TextMatch>, sit->groups, git) {
+    foreach_const (std::deque<TextMatch>, sit->groups, git) {
       match = git->test (groupname);
       if (sit->negate) match = !match;
       if (match) break;

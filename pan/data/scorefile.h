@@ -20,6 +20,7 @@
 #ifndef __SCORE_H__
 #define __SCORE_H__
 
+#include <deque>
 #include <pan/general/text-match.h>
 #include <pan/general/line-reader.h>
 #include <pan/data/filter-info.h>
@@ -108,7 +109,7 @@ namespace pan
         Item(): begin_line(0), end_line(0), value(0), value_assign_flag(false), expired(false) {}
         std::string describe() const { return test.describe(); }
       };
-      typedef std::vector<Item> items_t;
+      typedef std::deque<Item> items_t;
 
       /**
        * Represents a slrn scorefile's section, where a group of rules are to be applied
@@ -119,10 +120,10 @@ namespace pan
       struct Section {
         std::string name;
         bool negate;
-        std::vector<TextMatch> groups;
-        std::vector<Item> items;
+        std::deque<TextMatch> groups;
+        std::deque<Item> items;
       };
-      typedef std::vector<Section> sections_t;
+      typedef std::deque<Section> sections_t;
     public:
       const sections_t& get_sections () const { return _sections; }
       void get_matching_sections (const StringView& groupname, std::vector<const Section*>& setme) const;

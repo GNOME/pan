@@ -1134,7 +1134,7 @@ HeaderPane :: rebuild_filter (const std::string& text, int mode)
 
 //for (size_t i=0; i<ranges.size(); ++i) std::cerr << LINE_ID << " range [" << ranges[i].first << "..." << ranges[i].second << "]" << std::endl;
 
-  std::vector<FilterInfo> filters;
+  std::deque<FilterInfo> filters;
   for (size_t i=0; i<ranges.size(); ++i) {
     const range_t& range (ranges[i]);
     const bool low_bound (range.first == INT_MIN);
