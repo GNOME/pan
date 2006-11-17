@@ -552,15 +552,8 @@ IsKnownHeader (char *line)
   int retval = 0;
   if (line && *line)
   {
-    char *space = strchr (line, ' ');
-    int len;
-    if (space)
-    {
-      len = space - line;
-      *space = '\0';
-    }
-    else
-      len = strlen (line);
+    const char * pch = strchr (line, ' ');
+    const int len = pch ? pch-line : strlen(line);
     if (len <= max_width)
     {
       // buf holds a lowercase version of `line'
@@ -578,8 +571,6 @@ IsKnownHeader (char *line)
       else if (bsearch (&pch, knownmimeheaders, n_mime, sizeof(char*), bsearch_strcmp) != NULL)
         retval = 2;
     }
-    if (space)
-      *space = ' ';
   }
 
   return retval;
