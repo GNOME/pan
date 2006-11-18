@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-04 05:16+0100\n"
-"PO-Revision-Date: 2006-11-04 12:26+0100\n"
+"POT-Creation-Date: 2006-11-17 03:16+0000\n"
+"PO-Revision-Date: 2006-11-18 22:43+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -46,12 +46,12 @@ msgstr "Kunde inte spara \"%s\" %s"
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "Hoppar över newsrc-filen för servern \"%s\""
 
-#: ../pan/data-impl/headers.cc:590
+#: ../pan/data-impl/headers.cc:574
 #, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr "Tog bort %lu artiklar från \"%s\""
 
-#: ../pan/data-impl/headers.cc:597
+#: ../pan/data-impl/headers.cc:581
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
@@ -60,17 +60,17 @@ msgstr ""
 "Dataversionen stöds inte för %s-rubriker: %d.\n"
 "Kör du en gammal version av Pan av misstag?"
 
-#: ../pan/data-impl/headers.cc:612
+#: ../pan/data-impl/headers.cc:596
 #, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr "Läste in %lu artiklar för \"%s\" på %.1f sekunder (%.0f artiklar/sekund)"
 
-#: ../pan/data-impl/headers.cc:840
+#: ../pan/data-impl/headers.cc:824
 #, c-format
 msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
 msgstr "Sparade %lu delar, %lu artiklar i \"%s\" på %.1f sekunder (%.0f artiklar/sekund)"
 
-#: ../pan/data-impl/headers.cc:1134
+#: ../pan/data-impl/headers.cc:1118
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "Lade till %lu artiklar till %s."
@@ -251,22 +251,22 @@ msgstr "Inget av dessa tester lyckas:"
 msgid "Any of these tests pass:"
 msgstr "Något av dessa tester lyckas:"
 
-#: ../pan/data/scorefile.cc:299
+#: ../pan/data/scorefile.cc:300
 #, c-format
 msgid "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or 'Expires: DD-MM-YYYY'."
 msgstr "Fel vid läsning av poäng i %*.*s, rad %d: förväntade \"Expires: MM/DD/YYYY\" eller \"Expires: DD-MM-YYYY\"."
 
-#: ../pan/data/scorefile.cc:302
+#: ../pan/data/scorefile.cc:303
 #, c-format
 msgid "Expired old score from %*.*s, line %d"
 msgstr "Gammalt poäng togs bort från %*.*s, rad %d"
 
-#: ../pan/data/scorefile.cc:373
+#: ../pan/data/scorefile.cc:376
 #, c-format
 msgid "Error reading score in %*.*s, line %d: unexpected line."
 msgstr "Fel vid läsning av poäng i %*.*s, rad %d: oväntad rad."
 
-#: ../pan/data/scorefile.cc:421
+#: ../pan/data/scorefile.cc:424
 #, c-format
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr "Läste %lu poängregler i %lu sektioner från \"%s\""
@@ -977,8 +977,8 @@ msgid "Attachment not shown: MIME type %s/%s\n"
 msgstr "Bilagan visas inte: Mime-typ %s/%s\n"
 
 #: ../pan/gui/body-pane.cc:960
-#: ../pan/gui/header-pane.cc:1042
-#: ../pan/gui/header-pane.cc:1377
+#: ../pan/gui/header-pane.cc:1044
+#: ../pan/gui/header-pane.cc:1379
 #: ../pan/gui/prefs-ui.cc:323
 #: ../pan/gui/score-add-ui.cc:141
 msgid "Subject"
@@ -989,7 +989,7 @@ msgid "From"
 msgstr "Från"
 
 #: ../pan/gui/body-pane.cc:964
-#: ../pan/gui/header-pane.cc:1454
+#: ../pan/gui/header-pane.cc:1456
 #: ../pan/gui/log-ui.cc:206
 #: ../pan/gui/prefs-ui.cc:319
 msgid "Date"
@@ -1015,23 +1015,99 @@ msgstr " från "
 msgid " at "
 msgstr " den "
 
-#: ../pan/gui/dl-headers-ui.cc:102
+#: ../pan/gui/charset-picker.cc:39
+#: ../pan/gui/charset-picker.cc:40
+#: ../pan/gui/charset-picker.cc:41
+#: ../pan/gui/post-ui.cc:317
+#: ../pan/gui/post-ui.cc:318
+#: ../pan/gui/post-ui.cc:319
+msgid "Baltic"
+msgstr "Baltisk"
+
+#: ../pan/gui/charset-picker.cc:42
+#: ../pan/gui/charset-picker.cc:43
+#: ../pan/gui/post-ui.cc:320
+#: ../pan/gui/post-ui.cc:321
+msgid "Central European"
+msgstr "Centraleuropeisk"
+
+#: ../pan/gui/charset-picker.cc:44
+#: ../pan/gui/post-ui.cc:322
+msgid "Chinese Simplified"
+msgstr "Förenklad kinesiska"
+
+#: ../pan/gui/charset-picker.cc:45
+#: ../pan/gui/post-ui.cc:323
+msgid "Chinese Traditional"
+msgstr "Traditionell kinesiska"
+
+#: ../pan/gui/charset-picker.cc:46
+#: ../pan/gui/charset-picker.cc:47
+#: ../pan/gui/charset-picker.cc:48
+#: ../pan/gui/post-ui.cc:324
+#: ../pan/gui/post-ui.cc:325
+#: ../pan/gui/post-ui.cc:326
+msgid "Cyrillic"
+msgstr "Kyrillisk"
+
+#: ../pan/gui/charset-picker.cc:49
+#: ../pan/gui/post-ui.cc:327
+msgid "Cyrillic, Ukrainian"
+msgstr "Kyrillisk, ukrainsk"
+
+#: ../pan/gui/charset-picker.cc:50
+#: ../pan/gui/post-ui.cc:328
+msgid "Greek"
+msgstr "Grekiska"
+
+#: ../pan/gui/charset-picker.cc:51
+#: ../pan/gui/post-ui.cc:329
+msgid "Japanese"
+msgstr "Japanska"
+
+#: ../pan/gui/charset-picker.cc:52
+#: ../pan/gui/post-ui.cc:330
+msgid "Korean"
+msgstr "Koreanska"
+
+#: ../pan/gui/charset-picker.cc:53
+#: ../pan/gui/post-ui.cc:331
+msgid "Turkish"
+msgstr "Turkiska"
+
+#: ../pan/gui/charset-picker.cc:54
+#: ../pan/gui/charset-picker.cc:56
+#: ../pan/gui/post-ui.cc:332
+#: ../pan/gui/post-ui.cc:334
+msgid "Western"
+msgstr "Västlig"
+
+#: ../pan/gui/charset-picker.cc:55
+#: ../pan/gui/post-ui.cc:333
+msgid "Western, New"
+msgstr "Västlig, ny"
+
+#: ../pan/gui/charset-picker.cc:57
+msgid "Unicode"
+msgstr "Unicode"
+
+#: ../pan/gui/dl-headers-ui.cc:106
 msgid "Pan: "
 msgstr "Pan: "
 
-#: ../pan/gui/dl-headers-ui.cc:128
+#: ../pan/gui/dl-headers-ui.cc:132
 msgid "Get the last N _days' headers: "
 msgstr "Hämta rubriker för de N senaste dagarna: "
 
-#: ../pan/gui/dl-headers-ui.cc:136
+#: ../pan/gui/dl-headers-ui.cc:140
 msgid "Get _new headers"
 msgstr "Hämta _nya rubriker"
 
-#: ../pan/gui/dl-headers-ui.cc:140
+#: ../pan/gui/dl-headers-ui.cc:144
 msgid "Get _all headers"
 msgstr "Hämta _alla rubriker"
 
-#: ../pan/gui/dl-headers-ui.cc:144
+#: ../pan/gui/dl-headers-ui.cc:148
 msgid "Get the _latest N headers: "
 msgstr "Hämta _senaste rubriker: "
 
@@ -1045,7 +1121,7 @@ msgid " (%lu)"
 msgstr " (%lu)"
 
 #: ../pan/gui/group-pane.cc:794
-#: ../pan/gui/header-pane.cc:1543
+#: ../pan/gui/header-pane.cc:1545
 msgid "Clear the Filter"
 msgstr "Töm filtret"
 
@@ -1111,43 +1187,43 @@ msgid "Pan is now offline. Please ensure that space is available, then use File|
 msgstr "Pan är nu frånkopplad. Kontrollera att utrymme finns tillgängligt, använd sedan Arkiv|Arbeta ansluten för att fortsätta."
 
 #: ../pan/gui/gui.cc:737
-#: ../pan/gui/gui.cc:1117
-#: ../pan/gui/gui.cc:1321
+#: ../pan/gui/gui.cc:1118
+#: ../pan/gui/gui.cc:1322
 msgid "Pan"
 msgstr "Pan"
 
-#: ../pan/gui/gui.cc:913
+#: ../pan/gui/gui.cc:914
 msgid "Unable to supersede article."
 msgstr "Kunde inte ersätta artikel."
 
-#: ../pan/gui/gui.cc:914
-#: ../pan/gui/gui.cc:984
+#: ../pan/gui/gui.cc:915
+#: ../pan/gui/gui.cc:985
 msgid "The article doesn't match any of your posting profiles."
 msgstr "Artikeln matchar inte någon av dina postandeprofiler."
 
-#: ../pan/gui/gui.cc:957
+#: ../pan/gui/gui.cc:958
 msgid "Revise and send this article to replace the old one."
 msgstr "Granska och skicka den här artikeln för att ersätta den gamla."
 
-#: ../pan/gui/gui.cc:958
-#: ../pan/gui/gui.cc:1021
+#: ../pan/gui/gui.cc:959
+#: ../pan/gui/gui.cc:1022
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr "Var god vänta!  Det kan ta lite tid innan dina ändringar blir aktiva."
 
-#: ../pan/gui/gui.cc:983
+#: ../pan/gui/gui.cc:984
 msgid "Unable to cancel article."
 msgstr "Kunde inte avbryta artikel."
 
-#: ../pan/gui/gui.cc:1020
+#: ../pan/gui/gui.cc:1021
 msgid "Send this article to ask your server to cancel your other one."
 msgstr "Skicka den här artikeln för att fråga din server att avbryta den andra artikeln."
 
-#: ../pan/gui/gui.cc:1120
-#: ../pan/gui/gui.cc:1140
+#: ../pan/gui/gui.cc:1121
+#: ../pan/gui/gui.cc:1141
 msgid "Copyright © 2002-2006 Charles Kerr"
 msgstr "Copyright © 2002-2006 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1125
+#: ../pan/gui/gui.cc:1126
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander\n"
@@ -1157,62 +1233,62 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "tp-sv@listor.tp-sv.se"
 
-#: ../pan/gui/gui.cc:1236
+#: ../pan/gui/gui.cc:1237
 msgid "_1. Group Pane"
 msgstr "_1. Gruppanel"
 
-#: ../pan/gui/gui.cc:1237
+#: ../pan/gui/gui.cc:1238
 msgid "_2. Header Pane"
 msgstr "_2. Rubrikpanel"
 
-#: ../pan/gui/gui.cc:1238
+#: ../pan/gui/gui.cc:1239
 msgid "_3. Body Pane"
 msgstr "_3. Artikelpanel"
 
-#: ../pan/gui/gui.cc:1323
+#: ../pan/gui/gui.cc:1324
 #, c-format
 msgid "Pan: %s"
 msgstr "Pan: %s"
 
-#: ../pan/gui/gui.cc:1445
+#: ../pan/gui/gui.cc:1457
 msgid "Offline"
 msgstr "Frånkopplad"
 
-#: ../pan/gui/gui.cc:1448
+#: ../pan/gui/gui.cc:1460
 #, c-format
 msgid "Closing %d connections"
 msgstr "Stänger %d anslutningar"
 
-#: ../pan/gui/gui.cc:1450
-#: ../pan/gui/gui.cc:1480
+#: ../pan/gui/gui.cc:1462
+#: ../pan/gui/gui.cc:1492
 msgid "No Connections"
 msgstr "Inga anslutningar"
 
-#: ../pan/gui/gui.cc:1454
+#: ../pan/gui/gui.cc:1466
 msgid "Connecting"
 msgstr "Ansluter"
 
-#: ../pan/gui/gui.cc:1467
+#: ../pan/gui/gui.cc:1479
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d overksamma, %d aktiva @ %.1f KiBps"
 
 #. build the format strings
-#: ../pan/gui/gui.cc:1522
+#: ../pan/gui/gui.cc:1534
 #, c-format
 msgid "%u Tasks Running, %u Tasks Total"
 msgstr "%u uppgifter kör, %u uppgifter totalt"
 
-#: ../pan/gui/gui.cc:1524
+#: ../pan/gui/gui.cc:1536
 msgid "No Tasks"
 msgstr "Inga uppgifter"
 
-#: ../pan/gui/gui.cc:1526
+#: ../pan/gui/gui.cc:1538
 #, c-format
 msgid "Tasks: %u/%u"
 msgstr "Uppgifter: %u/%u"
 
-#: ../pan/gui/gui.cc:1576
+#: ../pan/gui/gui.cc:1588
 msgid "Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue."
 msgstr "Pan är nu i frånkopplat läge. Se \"Arkiv|Händelselogg\" och rätta till problemet, använd sedan \"Arkiv|Anslutet läge\" för att fortsätta."
 
@@ -1238,32 +1314,32 @@ msgstr "%.1f MiB"
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
-#: ../pan/gui/header-pane.cc:1041
+#: ../pan/gui/header-pane.cc:1043
 msgid "Subject or Author"
 msgstr "Ämne eller författare"
 
-#: ../pan/gui/header-pane.cc:1043
-#: ../pan/gui/header-pane.cc:1409
+#: ../pan/gui/header-pane.cc:1045
+#: ../pan/gui/header-pane.cc:1411
 #: ../pan/gui/prefs-ui.cc:317
 #: ../pan/gui/score-add-ui.cc:142
 msgid "Author"
 msgstr "Författare"
 
-#: ../pan/gui/header-pane.cc:1044
+#: ../pan/gui/header-pane.cc:1046
 msgid "Message-ID"
 msgstr "Meddelande-id"
 
-#: ../pan/gui/header-pane.cc:1394
+#: ../pan/gui/header-pane.cc:1396
 #: ../pan/gui/prefs-ui.cc:321
 msgid "Score"
 msgstr "Poäng"
 
-#: ../pan/gui/header-pane.cc:1424
+#: ../pan/gui/header-pane.cc:1426
 #: ../pan/gui/prefs-ui.cc:320
 msgid "Lines"
 msgstr "Rader"
 
-#: ../pan/gui/header-pane.cc:1439
+#: ../pan/gui/header-pane.cc:1441
 #: ../pan/gui/prefs-ui.cc:318
 msgid "Bytes"
 msgstr "Byte"
@@ -1335,6 +1411,10 @@ msgstr "Pan %s startade"
 #: ../pan/gui/pan.cc:249
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr "Konfigurera Pans diskussionsgruppservrar innan den används som en nzb-klient."
+
+#: ../pan/gui/pan-file-entry.cc:75
+msgid "_Browse..."
+msgstr "_Bläddra..."
 
 #: ../pan/gui/post-ui.cc:86
 #, c-format
@@ -1458,60 +1538,6 @@ msgstr "Kom ihåg _teckenuppsättning för den här gruppen"
 #: ../pan/gui/post-ui.cc:262
 msgid "Check _Spelling"
 msgstr "Kontrollera _stavning"
-
-#: ../pan/gui/post-ui.cc:317
-#: ../pan/gui/post-ui.cc:318
-#: ../pan/gui/post-ui.cc:319
-msgid "Baltic"
-msgstr "Baltisk"
-
-#: ../pan/gui/post-ui.cc:320
-#: ../pan/gui/post-ui.cc:321
-msgid "Central European"
-msgstr "Centraleuropeisk"
-
-#: ../pan/gui/post-ui.cc:322
-msgid "Chinese Simplified"
-msgstr "Förenklad kinesiska"
-
-#: ../pan/gui/post-ui.cc:323
-msgid "Chinese Traditional"
-msgstr "Traditionell kinesiska"
-
-#: ../pan/gui/post-ui.cc:324
-#: ../pan/gui/post-ui.cc:325
-#: ../pan/gui/post-ui.cc:326
-msgid "Cyrillic"
-msgstr "Kyrillisk"
-
-#: ../pan/gui/post-ui.cc:327
-msgid "Cyrillic, Ukrainian"
-msgstr "Kyrillisk, ukrainsk"
-
-#: ../pan/gui/post-ui.cc:328
-msgid "Greek"
-msgstr "Grekiska"
-
-#: ../pan/gui/post-ui.cc:329
-msgid "Japanese"
-msgstr "Japanska"
-
-#: ../pan/gui/post-ui.cc:330
-msgid "Korean"
-msgstr "Koreanska"
-
-#: ../pan/gui/post-ui.cc:331
-msgid "Turkish"
-msgstr "Turkiska"
-
-#: ../pan/gui/post-ui.cc:332
-#: ../pan/gui/post-ui.cc:334
-msgid "Western"
-msgstr "Västlig"
-
-#: ../pan/gui/post-ui.cc:333
-msgid "Western, New"
-msgstr "Västlig, ny"
 
 #: ../pan/gui/post-ui.cc:335
 msgid "Unicode, UTF-8"
@@ -2481,6 +2507,11 @@ msgstr "Kan inte ställa in grupp: %s"
 msgid "Error: %s"
 msgstr "Fel: %s"
 
+#: ../pan/tasks/nntp-pool.cc:202
+#, c-format
+msgid "Unable to connect to \"%s\""
+msgstr "Kunde inte ansluta till \"%s\""
+
 #: ../pan/tasks/socket-impl-gio.cc:391
 msgid "Unknown Error"
 msgstr "Okänt fel"
@@ -2574,7 +2605,7 @@ msgstr "Provar rubriker för \"%s\""
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu delar, %lu artiklar)"
 
-#: ../pan/usenet-utils/gnksa.cc:881
+#: ../pan/usenet-utils/gnksa.cc:882
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr "Ingen e-postadress angiven; genererar meddelande-id med domänen \"%s\""
@@ -2667,7 +2698,7 @@ msgstr "Fel: Inga mottagare."
 msgid "> [quoted text muted]"
 msgstr "> [citerad text tystad]"
 
-#: ../pan/usenet-utils/utf8-utils.cc:264
+#: ../pan/usenet-utils/utf8-utils.cc:262
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr "Kunde inte fastställa artikelns kodning. Icke-UTF8-tecken togs bort."
 
