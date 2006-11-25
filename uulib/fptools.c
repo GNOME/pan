@@ -448,13 +448,16 @@ _FP_cutdir (char *filename)
 char * TOOLEXPORT
 _FP_fgets (char *buf, int n, FILE *stream)
 {
+  int len;
+  char * pch;
+
   *buf = '\0';
   if (!fgets (buf, n, stream))
     return NULL;
 
   assert (*buf);
-  const int len = strlen (buf);
-  char * pch = buf + len - 1;
+  len = strlen (buf);
+  pch = buf + len - 1;
   if (*pch != '\n') // eof -- ensure we end with a LF
     memcpy (pch, "\n", 2);
   else if ((pch!=buf) && (pch[-1] == '\r')) // got CRLF -- strip the CR
