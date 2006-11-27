@@ -1523,29 +1523,39 @@ PostUI :: apply_profile ()
 
 namespace
 {
+  void replace (std::string        & in,
+                const std::string  & from,
+                const std::string  & to)
+  {
+    std::string out;
+    std::string::size_type b(0), e(0);
+    for (;;) {
+      e = in.find (from, b);
+      if (e == std::string::npos) {
+        out.append (in, b, std::string::npos);
+        break;
+      } else {
+        out.append (in, b, e-b);
+        out.append (to);
+        b = e + from.size();
+      }
+    }
+    in = out;
+  }
+
   bool do_attribution_substitutions (const StringView & mid,
                                      const StringView & date,
                                      const StringView & from,
                                      std::string& attrib)
   {
-    std::string::size_type pos;
-
     if (mid.empty() && date.empty() && from.empty()) // not a follow-up; attribution not needed
       return false;
 
-    while (!mid.empty() && (((pos = attrib.find ("%i"))) != std::string::npos))
-      attrib.replace (pos, 2, mid);
-
-    while (!date.empty() && (((pos = attrib.find ("%d"))) != std::string::npos))
-      attrib.replace (pos, 2, date);
-
-    while (!from.empty() && (((pos = attrib.find ("%a"))) != std::string::npos))
-      attrib.replace (pos, 2, from);
-
-    StringView brief = GNKSA :: get_short_author_name (from);
-    while (!brief.empty() && (((pos = attrib.find ("%n"))) != std::string::npos))
-      attrib.replace (pos, 2, brief.str, brief.len);
-
+    const StringView brief = GNKSA :: get_short_author_name (from);
+    replace (attrib, "%i", mid);
+    replace (attrib, "%d", date);
+    replace (attrib, "%a", from);
+    replace (attrib, "%n", brief.to_string());
     return true;
   }
 }
