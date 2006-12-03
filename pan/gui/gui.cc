@@ -480,6 +480,8 @@ namespace
   {
     if (prev_path.empty())
       prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
+    if (!file :: file_exists (prev_path.c_str()))
+      prev_path = g_get_home_dir ();
 
     GtkWidget * w = gtk_file_chooser_dialog_new (_("Save Attachments"), parent,
                                                  GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
