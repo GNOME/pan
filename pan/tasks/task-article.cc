@@ -327,7 +327,6 @@ TaskArticle :: on_finished ()
     {
       UUSetMsgCallback (NULL, uu_log);
       UUSetOption (UUOPT_DESPERATE, 1, NULL); // keep incompletes -- they're still useful to par2
-      UUSetOption (UUOPT_FAST, 1, NULL); // yes, each input file is exactly one newsgroup posting
 
       int i (0);
       foreach_const (ArticleCache::strings_t, filenames, it) {
