@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-18 10:27-0500\n"
+"POT-Creation-Date: 2006-12-17 13:49-0500\n"
 "PO-Revision-Date: 2005-03-15 22:33-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -16,37 +16,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pan.desktop.in.h:1
+#: ../pan.desktop.in.h:1
 msgid "Pan Newsreader"
 msgstr "Pan Newsreader"
 
-#: pan.desktop.in.h:2
+#: ../pan.desktop.in.h:2
 msgid "Read News from Usenet"
 msgstr "Read News from Usenet"
 
-#: pan/data-impl/data-impl.cc:82
+#. load_group_descriptions (*_data_io);
+#: ../pan/data-impl/data-impl.cc:87
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
-msgstr ""
+msgstr "Loaded data backend in %.1f seconds"
 
-#: pan/data-impl/data-io.cc:220 pan/data-impl/data-io.cc:241
-#: pan/data/article-cache.cc:236 pan/data/article-cache.cc:246
-#: pan/gui/post-ui.cc:1261
-#, fuzzy, c-format
+#: ../pan/data-impl/data-io.cc:220 ../pan/data-impl/data-io.cc:241
+#: ../pan/data/article-cache.cc:236 ../pan/data/article-cache.cc:246
+#: ../pan/gui/post-ui.cc:1316
+#, c-format
 msgid "Unable to save \"%s\" %s"
-msgstr "Unable to set group: %s"
+msgstr "Unable to save \"%s\" %s"
 
-#: pan/data-impl/groups.cc:92
-#, fuzzy, c-format
+#: ../pan/data-impl/groups.cc:92
+#, c-format
 msgid "Skipping newsrc file for server \"%s\""
-msgstr "Getting %d new groups from server \"%s\""
+msgstr "Skipping newsrc file for server \"%s\""
 
-#: pan/data-impl/headers.cc:551
-#, fuzzy, c-format
+#: ../pan/data-impl/headers.cc:574
+#, c-format
 msgid "Expired %lu old articles from \"%s\""
-msgstr "Added %lu parts, %lu articles in \"%s\""
+msgstr "Expired %lu old articles from \"%s\""
 
-#: pan/data-impl/headers.cc:558
+#: ../pan/data-impl/headers.cc:581
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
@@ -55,1400 +56,1275 @@ msgstr ""
 "Unsupported data version for %s headers: %d.\n"
 "Are you running an old version of Pan by accident?"
 
-#: pan/data-impl/headers.cc:573
-#, fuzzy, c-format
+#: ../pan/data-impl/headers.cc:596
+#, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
-msgstr ""
-"Loaded %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgstr "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 
-#: pan/data-impl/headers.cc:797
-#, fuzzy, c-format
+#: ../pan/data-impl/headers.cc:824
+#, c-format
 msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
-msgstr "Saved %lu parts, %d articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgstr "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
 
-#: pan/data-impl/headers.cc:1089
-#, fuzzy, c-format
+#: ../pan/data-impl/headers.cc:1118
+#, c-format
 msgid "Added %lu articles to %s."
-msgstr "Added %lu parts, %lu articles in \"%s\""
+msgstr "Added %lu articles to %s."
 
-#: pan/data-impl/profiles.cc:173
-#, fuzzy, c-format
-msgid "Error reading \"%s\": %s"
-msgstr "Error reading file \"%s\": %s"
-
-#: pan/data-impl/server.cc:296
-#, fuzzy, c-format
-msgid "Error loading newsserver information: %s"
-msgstr "Error parsing \"web browser\" command line: %s"
-
-#: pan/data/article-cache.cc:148
-#, fuzzy, c-format
-msgid "Error opening directory: \"%s\": %s"
-msgstr "Error opening directory \"%s\": %s)"
-
-#: pan/data/article-cache.cc:364 pan/general/line-reader.cc:24
-#, fuzzy, c-format
-msgid "Error opening file \"%s\" %s"
-msgstr "Error opening file \"%s\": %s"
-
-#: pan/data/article-cache.cc:395 pan/gui/post-ui.cc:1028
+#: ../pan/data-impl/profiles.cc:173 ../pan/data/article-cache.cc:377
+#: ../pan/gui/post-ui.cc:1083
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Error reading file \"%s\": %s"
 
-#: pan/data/filter-info.cc:152
-#, fuzzy
+#: ../pan/data-impl/server.cc:296
+#, c-format
+msgid "Error loading newsserver information: %s"
+msgstr "Error loading newsserver information: %s"
+
+#: ../pan/data/article-cache.cc:148
+#, c-format
+msgid "Error opening directory: \"%s\": %s"
+msgstr "Error opening directory: \"%s\": %s"
+
+#: ../pan/data/article-cache.cc:346 ../pan/general/line-reader.cc:24
+#, c-format
+msgid "Error opening file \"%s\" %s"
+msgstr "Error opening file \"%s\" %s"
+
+#: ../pan/data/filter-info.cc:152
 msgid "article doesn't have attachments"
-msgstr "Article does not have complete attachments"
+msgstr "article doesn't have attachments"
 
-#: pan/data/filter-info.cc:156
-#, fuzzy
+#: ../pan/data/filter-info.cc:156
 msgid "the article has attachments"
-msgstr "Article has no attachments"
+msgstr "the article has attachments"
 
-#: pan/data/filter-info.cc:160
-#, fuzzy
+#: ../pan/data/filter-info.cc:160
 msgid "the article isn't cached locally"
-msgstr "Article body is not cached locally"
+msgstr "the article isn't cached locally"
 
-#: pan/data/filter-info.cc:164
-#, fuzzy
+#: ../pan/data/filter-info.cc:164
 msgid "the article is cached locally"
-msgstr "Article body is cached locally"
+msgstr "the article is cached locally"
 
-#: pan/data/filter-info.cc:168
-#, fuzzy
+#: ../pan/data/filter-info.cc:168
 msgid "the article wasn't posted by you"
-msgstr "Article was not posted by me"
+msgstr "the article wasn't posted by you"
 
-#: pan/data/filter-info.cc:172
-#, fuzzy
+#: ../pan/data/filter-info.cc:172
 msgid "the article was posted by you"
-msgstr "Article was posted by me"
+msgstr "the article was posted by you"
 
-#: pan/data/filter-info.cc:176
-#, fuzzy
+#: ../pan/data/filter-info.cc:176
 msgid "the article has been read"
-msgstr "Article is unread"
+msgstr "the article has been read"
 
-#: pan/data/filter-info.cc:180
-#, fuzzy
+#: ../pan/data/filter-info.cc:180
 msgid "the article hasn't been read"
-msgstr "Article is unread"
+msgstr "the article hasn't been read"
 
-#: pan/data/filter-info.cc:184
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:184
+#, c-format
 msgid "the article is less than %ld bytes long"
-msgstr "Article is less than %d bytes long"
+msgstr "the article is less than %ld bytes long"
 
-#: pan/data/filter-info.cc:189
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:189
+#, c-format
 msgid "the article is at least %ld bytes long"
-msgstr "Article is less than %d bytes long"
+msgstr "the article is at least %ld bytes long"
 
-#: pan/data/filter-info.cc:194
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:194
+#, c-format
 msgid "the article is less than %ld lines long"
-msgstr "Article is less than %d lines long"
+msgstr "the article is less than %ld lines long"
 
-#: pan/data/filter-info.cc:199
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:199
+#, c-format
 msgid "the article is at least %ld lines long"
-msgstr "Article is less than %d lines long"
+msgstr "the article is at least %ld lines long"
 
-#: pan/data/filter-info.cc:204
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:204
+#, c-format
 msgid "the article is less than %ld days old"
-msgstr "Article is more than %d days old"
+msgstr "the article is less than %ld days old"
 
-#: pan/data/filter-info.cc:209
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:209
+#, c-format
 msgid "the article is at least %ld days old"
-msgstr "Article is at least N days _old"
+msgstr "the article is at least %ld days old"
 
-#: pan/data/filter-info.cc:214
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:214
+#, c-format
 msgid "the article was posted to less than %ld groups"
-msgstr "Article is crossposted to less than %d groups"
+msgstr "the article was posted to less than %ld groups"
 
-#: pan/data/filter-info.cc:219
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:219
+#, c-format
 msgid "the article was posted to at least %ld groups"
-msgstr "Article was _posted to at least N groups:"
+msgstr "the article was posted to at least %ld groups"
 
-#: pan/data/filter-info.cc:224
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:224
+#, c-format
 msgid "the article's score is less than %ld"
-msgstr "set score to"
+msgstr "the article's score is less than %ld"
 
-#: pan/data/filter-info.cc:229
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:229
+#, c-format
 msgid "the article's score is %ld or higher"
-msgstr "set score to"
+msgstr "the article's score is %ld or higher"
 
-#: pan/data/filter-info.cc:238 pan/data/filter-info.cc:248
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:238 ../pan/data/filter-info.cc:248
+#, c-format
 msgid "%s doesn't contain \"%s\""
-msgstr "does not contain"
+msgstr "%s doesn't contain \"%s\""
 
-#: pan/data/filter-info.cc:239 pan/data/filter-info.cc:249
+#: ../pan/data/filter-info.cc:239 ../pan/data/filter-info.cc:249
 #, c-format
 msgid "%s isn't \"%s\""
-msgstr ""
+msgstr "%s isn't \"%s\""
 
-#: pan/data/filter-info.cc:240 pan/data/filter-info.cc:250
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:240 ../pan/data/filter-info.cc:250
+#, c-format
 msgid "%s doesn't begin with \"%s\""
-msgstr "does not end with"
+msgstr "%s doesn't begin with \"%s\""
 
-#: pan/data/filter-info.cc:241 pan/data/filter-info.cc:251
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:241 ../pan/data/filter-info.cc:251
+#, c-format
 msgid "%s doesn't end with \"%s\""
-msgstr "does not end with"
+msgstr "%s doesn't end with \"%s\""
 
-#: pan/data/filter-info.cc:242 pan/data/filter-info.cc:252
+#: ../pan/data/filter-info.cc:242 ../pan/data/filter-info.cc:252
 #, c-format
 msgid "%s doesn't match the regex \"%s\""
-msgstr ""
+msgstr "%s doesn't match the regex \"%s\""
 
-#: pan/data/filter-info.cc:264
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:264
+#, c-format
 msgid "%s contains \"%s\""
-msgstr "contains"
+msgstr "%s contains \"%s\""
 
-#: pan/data/filter-info.cc:265
+#: ../pan/data/filter-info.cc:265
 #, c-format
 msgid "%s is \"%s\""
-msgstr ""
+msgstr "%s is \"%s\""
 
-#: pan/data/filter-info.cc:266
+#: ../pan/data/filter-info.cc:266
 #, c-format
 msgid "%s begins with \"%s\""
-msgstr ""
+msgstr "%s begins with \"%s\""
 
-#: pan/data/filter-info.cc:267
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:267
+#, c-format
 msgid "%s ends with \"%s\""
-msgstr "ends with"
+msgstr "%s ends with \"%s\""
 
-#: pan/data/filter-info.cc:268
-#, fuzzy, c-format
+#: ../pan/data/filter-info.cc:268
+#, c-format
 msgid "%s matches the regex \"%s\""
-msgstr "matches regular expression"
+msgstr "%s matches the regex \"%s\""
 
-#: pan/data/filter-info.cc:274
+#: ../pan/data/filter-info.cc:274
 msgid "Any of these tests fail:"
-msgstr ""
+msgstr "Any of these tests fail:"
 
-#: pan/data/filter-info.cc:281
+#: ../pan/data/filter-info.cc:281
 msgid "All of these tests pass:"
-msgstr ""
+msgstr "All of these tests pass:"
 
-#: pan/data/filter-info.cc:288
+#: ../pan/data/filter-info.cc:288
 msgid "None of these tests pass:"
-msgstr ""
+msgstr "None of these tests pass:"
 
-#: pan/data/filter-info.cc:295
+#: ../pan/data/filter-info.cc:295
 msgid "Any of these tests pass:"
-msgstr ""
+msgstr "Any of these tests pass:"
 
-#: pan/data/scorefile.cc:299
-#, fuzzy, c-format
+#: ../pan/data/scorefile.cc:300
+#, c-format
 msgid ""
 "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
 "'Expires: DD-MM-YYYY'."
-msgstr "expecting 'Expires: MM/DD/YYYY' or 'Expires: DD-MM-YYYY'"
+msgstr ""
+"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
+"'Expires: DD-MM-YYYY'."
 
-#: pan/data/scorefile.cc:302
+#: ../pan/data/scorefile.cc:303
 #, c-format
 msgid "Expired old score from %*.*s, line %d"
-msgstr ""
+msgstr "Expired old score from %*.*s, line %d"
 
-#: pan/data/scorefile.cc:373
+#: ../pan/data/scorefile.cc:376
 #, c-format
 msgid "Error reading score in %*.*s, line %d: unexpected line."
-msgstr ""
+msgstr "Error reading score in %*.*s, line %d: unexpected line."
 
-#: pan/data/scorefile.cc:421
+#: ../pan/data/scorefile.cc:424
 #, c-format
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
-msgstr ""
+msgstr "Read %lu scoring rules in %lu sections from \"%s\""
 
 #. build the locale strings
-#: pan/general/e-util.cc:213
+#: ../pan/general/e-util.cc:213
 msgid "%l:%M %p"
-msgstr ""
+msgstr "%H:%M"
 
-#: pan/general/e-util.cc:214
+#: ../pan/general/e-util.cc:214
 msgid "Today %l:%M %p"
-msgstr ""
+msgstr "Today %H:%M"
 
-#: pan/general/e-util.cc:215
+#: ../pan/general/e-util.cc:215
 msgid "%a %l:%M %p"
-msgstr ""
+msgstr "%a %H:%M"
 
-#: pan/general/e-util.cc:216
+#: ../pan/general/e-util.cc:216
 msgid "%b %d %l:%M %p"
-msgstr ""
+msgstr "%d %b %H:%M"
 
-#: pan/general/e-util.cc:217
+#: ../pan/general/e-util.cc:217
 msgid "%b %d %Y"
-msgstr ""
+msgstr "%d %b %Y"
 
-#: pan/general/e-util.cc:242
+#: ../pan/general/e-util.cc:242
 msgid "?"
-msgstr ""
+msgstr "?"
 
-#: pan/general/file-util.cc:139
-#, fuzzy, c-format
+#: ../pan/general/file-util.cc:139
+#, c-format
 msgid "Creating directory \"%s\""
-msgstr "Error opening directory \"%s\": %s)"
+msgstr "Creating directory \"%s\""
 
-#: pan/general/file-util.cc:142
+#: ../pan/general/file-util.cc:142
 #, c-format
 msgid "Couldn't create directory \"%s\": %s"
 msgstr "Could not create directory \"%s\": %s"
 
-#: pan/general/text-match.cc:210
-#, fuzzy
+#: ../pan/general/text-match.cc:210
 msgid ""
 "Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
 "fail."
 msgstr ""
-"Your system's copy of libpcre does not support UTF-8.  UTF-8 regular "
-"expressions may fail."
+"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
+"fail."
 
-#: pan/general/text-match.cc:221
+#: ../pan/general/text-match.cc:221
 #, c-format
 msgid "Can't use regular expression \"%s\": %s at position %d"
 msgstr "Cannot use regular expression \"%s\": %s at position %d"
 
-#: pan/general/text-match.cc:229
+#: ../pan/general/text-match.cc:229
 #, c-format
 msgid "Can't use regular expression \"%s\": %s"
 msgstr "Cannot use regular expression \"%s\": %s"
 
-#: pan/gui/actions.cc:258 pan/gui/post-ui.cc:238
-#, fuzzy
+#: ../pan/gui/actions.cc:254 ../pan/gui/post-ui.cc:238
 msgid "_File"
-msgstr "/_File"
+msgstr "_File"
 
-#: pan/gui/actions.cc:259 pan/gui/post-ui.cc:239
-#, fuzzy
+#: ../pan/gui/actions.cc:255 ../pan/gui/post-ui.cc:239
 msgid "_Edit"
-msgstr "/_Edit"
+msgstr "_Edit"
 
-#: pan/gui/actions.cc:260 pan/gui/prefs-ui.cc:460
-#, fuzzy
+#: ../pan/gui/actions.cc:256 ../pan/gui/prefs-ui.cc:466
 msgid "_Layout"
-msgstr "Pane _Layout"
+msgstr "_Layout"
 
-#: pan/gui/actions.cc:261
-#, fuzzy
+#: ../pan/gui/actions.cc:257
 msgid "_Group Pane"
-msgstr "Group Pane"
+msgstr "_Group Pane"
 
-#: pan/gui/actions.cc:262
-#, fuzzy
+#: ../pan/gui/actions.cc:258
 msgid "_Header Pane"
-msgstr "Header Pane"
+msgstr "_Header Pane"
 
-#: pan/gui/actions.cc:263
-#, fuzzy
+#: ../pan/gui/actions.cc:259
 msgid "_Body Pane"
-msgstr "Body Pane"
+msgstr "_Body Pane"
 
-#: pan/gui/actions.cc:264
-#, fuzzy
+#: ../pan/gui/actions.cc:260
 msgid "_View"
-msgstr "/_View"
+msgstr "_View"
 
-#: pan/gui/actions.cc:265
+#: ../pan/gui/actions.cc:261
 msgid "Character _Encoding"
-msgstr ""
+msgstr "Character _Encoding"
 
-#: pan/gui/actions.cc:266
-#, fuzzy
+#: ../pan/gui/actions.cc:262
 msgid "Filte_r"
-msgstr "/Filte_r"
+msgstr "Filte_r"
 
-#: pan/gui/actions.cc:267
-#, fuzzy
+#: ../pan/gui/actions.cc:263
 msgid "_Go"
-msgstr "/_Go"
+msgstr "_Go"
 
-#: pan/gui/actions.cc:268
-#, fuzzy
+#: ../pan/gui/actions.cc:264
 msgid "_Actions"
-msgstr "Actions"
+msgstr "_Actions"
 
-#: pan/gui/actions.cc:269
-#, fuzzy
+#: ../pan/gui/actions.cc:265
 msgid "_Articles"
-msgstr "/_Articles"
+msgstr "_Articles"
 
-#: pan/gui/actions.cc:270
-#, fuzzy
-msgid "_Groups"
-msgstr "Groups"
+#: ../pan/gui/actions.cc:266
+msgid "G_roups"
+msgstr "G_roups"
 
-#: pan/gui/actions.cc:271 pan/gui/actions.cc:272
+#: ../pan/gui/actions.cc:267 ../pan/gui/actions.cc:268
 msgid "_Post"
 msgstr "_Post"
 
-#: pan/gui/actions.cc:273 pan/gui/save-ui.cc:202
+#: ../pan/gui/actions.cc:269 ../pan/gui/save-ui.cc:234
 msgid "_Help"
 msgstr "_Help"
 
-#: pan/gui/actions.cc:274
-#, fuzzy
+#: ../pan/gui/actions.cc:270
 msgid "_Read Group"
-msgstr "/Dele_te Group"
+msgstr "_Read Group"
 
-#: pan/gui/actions.cc:274
-#, fuzzy
+#: ../pan/gui/actions.cc:270
 msgid "Read Selected Group"
-msgstr "Read Next Unread Group"
+msgstr "Read Selected Group"
 
-#: pan/gui/actions.cc:275
-#, fuzzy
+#: ../pan/gui/actions.cc:271
 msgid "_Mark Group _Read"
-msgstr "/Mark Group _Read"
+msgstr "_Mark Group _Read"
 
-#: pan/gui/actions.cc:275
-#, fuzzy
-msgid "Mark Selected Groups Read"
-msgstr "/Mark Group _Read"
+#: ../pan/gui/actions.cc:271
+msgid "Mark Selected Group Read"
+msgstr "Mark Selected Group Read"
 
-#: pan/gui/actions.cc:276
-#, fuzzy
+#: ../pan/gui/actions.cc:272
 msgid "_Delete Group's Articles"
-msgstr "/_Delete Group's Articles"
+msgstr "_Delete Group's Articles"
 
-#: pan/gui/actions.cc:276
-#, fuzzy
-msgid "Delete Selected Groups' Articles"
-msgstr "/_Delete Group's Articles"
+#: ../pan/gui/actions.cc:272
+msgid "Delete Selected Group's Articles"
+msgstr "Delete Selected Group's Articles"
 
-#: pan/gui/actions.cc:277
-#, fuzzy
-msgid "Get New _Headers in Selected Groups"
-msgstr "Get New Headers in Selected Groups"
+#: ../pan/gui/actions.cc:273
+msgid "Get New _Headers in Selected Group"
+msgstr "Get New _Headers in Selected Group"
 
-#: pan/gui/actions.cc:277
-#, fuzzy
-msgid "Get New Headers for Selected Groups"
-msgstr "Get New Headers in Selected Groups"
+#: ../pan/gui/actions.cc:273
+msgid "Get New Headers for Selected Group"
+msgstr "Get New Headers for Selected Group"
 
-#: pan/gui/actions.cc:278
-#, fuzzy
+#: ../pan/gui/actions.cc:274
 msgid "Get New _Headers in Subscribed Groups"
-msgstr "Get New Headers in Subscribed Groups"
+msgstr "Get New _Headers in Subscribed Groups"
 
-#: pan/gui/actions.cc:278
-#, fuzzy
+#: ../pan/gui/actions.cc:274
 msgid "Get New Headers for Subscribed Groups"
-msgstr "Get New Headers in Subscribed Groups"
+msgstr "Get New Headers for Subscribed Groups"
 
-#: pan/gui/actions.cc:279
-#, fuzzy
-msgid "Get _Headers..."
-msgstr "/Get New _Headers"
+#: ../pan/gui/actions.cc:275
+msgid "Get _Headers ..."
+msgstr "Get _Headers ..."
 
-#: pan/gui/actions.cc:279
-#, fuzzy
+#: ../pan/gui/actions.cc:275
 msgid "Get Headers from Server"
-msgstr "Got %d groups from server \"%s\""
+msgstr "Get Headers from Server"
 
-#: pan/gui/actions.cc:280
-#, fuzzy
+#: ../pan/gui/actions.cc:276
 msgid "Refresh Group List"
-msgstr "Refreshing Group \"%s\""
+msgstr "Refresh Group List"
 
-#: pan/gui/actions.cc:280
-#, fuzzy
+#: ../pan/gui/actions.cc:276
 msgid "Get a new Group list from the Server"
-msgstr "Getting %d new groups from server \"%s\""
+msgstr "Get a new Group list from the Server"
 
-#: pan/gui/actions.cc:281
-#, fuzzy
+#: ../pan/gui/actions.cc:277
 msgid "_Subscribe"
-msgstr "/_Subscribe"
+msgstr "_Subscribe"
 
-#: pan/gui/actions.cc:281
-#, fuzzy
-msgid "Subscribe to Selected Groups"
-msgstr "Subscribed Newsgroups"
+#: ../pan/gui/actions.cc:277
+msgid "Subscribe to Selected Group"
+msgstr "Subscribe to Selected Group"
 
-#: pan/gui/actions.cc:282
-#, fuzzy
+#: ../pan/gui/actions.cc:278
 msgid "_Unsubscribe"
-msgstr "/_Unsubscribe"
+msgstr "_Unsubscribe"
 
-#: pan/gui/actions.cc:282
-#, fuzzy
-msgid "Unsubscribe from Selected Groups"
-msgstr "Subscribed Newsgroups"
+#: ../pan/gui/actions.cc:278
+msgid "Unsubscribe from Selected Group"
+msgstr "Unsubscribe from Selected Group"
 
-#: pan/gui/actions.cc:284
-#, fuzzy
-msgid "_Save Articles..."
-msgstr "Save Article As..."
+#: ../pan/gui/actions.cc:280
+msgid "_Save Articles ..."
+msgstr "_Save Articles..."
 
-#: pan/gui/actions.cc:284
-#, fuzzy
-msgid "Save Selected Articles..."
-msgstr "Save Article Attachments"
+#: ../pan/gui/actions.cc:280
+msgid "Save Selected Articles ..."
+msgstr "Save Selected Articles..."
 
-#: pan/gui/actions.cc:286
-msgid "_Import NZB Files..."
-msgstr ""
+#: ../pan/gui/actions.cc:282
+msgid "_Import NZB Files ..."
+msgstr "_Import NZB Files..."
 
-#: pan/gui/actions.cc:287
-#, fuzzy
+#: ../pan/gui/actions.cc:283
 msgid "_Cancel Last Task"
-msgstr "Cancel Last Task"
+msgstr "_Cancel Last Task"
 
-#: pan/gui/actions.cc:287
+#: ../pan/gui/actions.cc:283
 msgid "Cancel Last Task"
 msgstr "Cancel Last Task"
 
-#: pan/gui/actions.cc:288
-#, fuzzy
-msgid "_Task Manager..."
-msgstr "/_File/Task _Manager..."
+#: ../pan/gui/actions.cc:284
+msgid "_Task Manager"
+msgstr "_Task Manager"
 
-#: pan/gui/actions.cc:289
-msgid "_Event Log..."
-msgstr ""
+#: ../pan/gui/actions.cc:285
+msgid "_Event Log"
+msgstr "_Event Log"
 
-#: pan/gui/actions.cc:290
-#, fuzzy
+#: ../pan/gui/actions.cc:286
 msgid "_Quit"
-msgstr "/_Edit"
+msgstr "_Quit"
 
-#: pan/gui/actions.cc:292
-#, fuzzy
+#: ../pan/gui/actions.cc:288
 msgid "Select _All Articles"
-msgstr "/_Edit/Select all _Articles"
+msgstr "Select _All Articles"
 
-#: pan/gui/actions.cc:293
-#, fuzzy
+#: ../pan/gui/actions.cc:289
 msgid "_Deselect All Articles"
-msgstr "/_Edit/Deselect a_ll Articles"
+msgstr "_Deselect All Articles"
 
-#: pan/gui/actions.cc:294
-#, fuzzy
+#: ../pan/gui/actions.cc:290
 msgid "Add Su_bthreads to Selection"
-msgstr "/_Edit/Add _Subthreads to Selection"
+msgstr "Add Su_bthreads to Selection"
 
-#: pan/gui/actions.cc:295
-#, fuzzy
+#: ../pan/gui/actions.cc:291
 msgid "Add _Threads to Selection"
-msgstr "/_Edit/Add _Threads to Selection"
+msgstr "Add _Threads to Selection"
 
-#: pan/gui/actions.cc:296
-#, fuzzy
-msgid "Add _Similar Artilces to Selection"
-msgstr "/_Edit/Add _Threads to Selection"
+#: ../pan/gui/actions.cc:292
+msgid "Add _Similar Articles to Selection"
+msgstr "Add _Similar Articles to Selection"
 
-#: pan/gui/actions.cc:297
-#, fuzzy
+#: ../pan/gui/actions.cc:293
 msgid "Select Article _Body"
-msgstr "/_Edit/Select Article _Body"
+msgstr "Select Article _Body"
 
-#: pan/gui/actions.cc:298
-#, fuzzy
-msgid "Edit _Preferences..."
-msgstr "/_Edit/_Preferences..."
+#: ../pan/gui/actions.cc:294
+msgid "Edit _Preferences"
+msgstr "Edit _Preferences"
 
-#: pan/gui/actions.cc:299
-#, fuzzy
-msgid "Edit _Group Preferences..."
-msgstr "/_Edit/_Preferences..."
+#: ../pan/gui/actions.cc:295
+msgid "Edit _Group Preferences"
+msgstr "Edit _Group Preferences"
 
-#: pan/gui/actions.cc:300
-#, fuzzy
-msgid "Edit P_osting Profiles..."
-msgstr "/_Post/Posting Pr_ofiles..."
+#: ../pan/gui/actions.cc:296
+msgid "Edit P_osting Profiles"
+msgstr "Edit P_osting Profiles"
 
-#: pan/gui/actions.cc:301
-#, fuzzy
-msgid "Edit _News Servers..."
-msgstr "News Server"
+#: ../pan/gui/actions.cc:297
+msgid "Edit _News Servers"
+msgstr "Edit _News Servers"
 
-#: pan/gui/actions.cc:303
-#, fuzzy
+#: ../pan/gui/actions.cc:299
 msgid "Jump to _Group Tab"
-msgstr "/_View/Jump to _Group Tab"
+msgstr "Jump to _Group Tab"
 
-#: pan/gui/actions.cc:304
-#, fuzzy
+#: ../pan/gui/actions.cc:300
 msgid "Jump to _Header Tab"
-msgstr "/_View/Jump to _Header Tab"
+msgstr "Jump to _Header Tab"
 
-#: pan/gui/actions.cc:305
-#, fuzzy
+#: ../pan/gui/actions.cc:301
 msgid "Jump to _Body Tab"
-msgstr "/_View/Jump to _Body Tab"
+msgstr "Jump to _Body Tab"
 
-#: pan/gui/actions.cc:306
-#, fuzzy
+#: ../pan/gui/actions.cc:302
 msgid "_Rot13 Selected Text"
-msgstr "Rot13 Selected Text"
+msgstr "_Rot13 Selected Text"
 
-#: pan/gui/actions.cc:308
-#, fuzzy
+#: ../pan/gui/actions.cc:304
 msgid "Clear _Header Pane"
-msgstr "Header Pane"
+msgstr "Clear _Header Pane"
 
-#: pan/gui/actions.cc:308
-#, fuzzy
+#: ../pan/gui/actions.cc:304
 msgid "Clear Header Pane"
-msgstr "Header Pane"
+msgstr "Clear Header Pane"
 
-#: pan/gui/actions.cc:309
-#, fuzzy
+#: ../pan/gui/actions.cc:305
 msgid "Clear _Body Pane"
-msgstr "Body Pane"
+msgstr "Clear _Body Pane"
 
-#: pan/gui/actions.cc:309
-#, fuzzy
+#: ../pan/gui/actions.cc:305
 msgid "Clear Body Pane"
-msgstr "Bod_y Pane"
+msgstr "Clear Body Pane"
 
-#: pan/gui/actions.cc:311
-#, fuzzy
-msgid "Download _Selected Article"
-msgstr "Get Selected Articles"
+#: ../pan/gui/actions.cc:307
+msgid "Cache Article"
+msgstr "Cache Article"
 
-#: pan/gui/actions.cc:311
-#, fuzzy
-msgid "Download Selected Article"
-msgstr "Get Selected Articles"
+#: ../pan/gui/actions.cc:308
+msgid "Read Article"
+msgstr "Read Article"
 
-#: pan/gui/actions.cc:312
-#, fuzzy
-msgid "Read _Selected Article"
-msgstr "Get Selected Articles"
-
-#: pan/gui/actions.cc:312
-#, fuzzy
-msgid "Read Selected Article"
-msgstr "Get Selected Articles"
-
-#: pan/gui/actions.cc:313
-#, fuzzy
+#: ../pan/gui/actions.cc:309
 msgid "Read _More"
-msgstr "Read More"
+msgstr "Read _More"
 
-#: pan/gui/actions.cc:313
+#: ../pan/gui/actions.cc:309
 msgid "Read More"
 msgstr "Read More"
 
-#: pan/gui/actions.cc:314
+#: ../pan/gui/actions.cc:310
 msgid "Read _Back"
-msgstr ""
+msgstr "Read _Back"
 
-#: pan/gui/actions.cc:314
-#, fuzzy
+#: ../pan/gui/actions.cc:310
 msgid "Read Back"
-msgstr "/_Go/Read Back"
+msgstr "Read Back"
 
-#: pan/gui/actions.cc:315
-#, fuzzy
+#: ../pan/gui/actions.cc:311
 msgid "Next _Unread Group"
-msgstr "/_Go/Next Unread _Group"
+msgstr "Next _Unread Group"
 
-#: pan/gui/actions.cc:315
-#, fuzzy
+#: ../pan/gui/actions.cc:311
 msgid "Next Unread Group"
-msgstr "/_Go/Next Unread _Group"
+msgstr "Next Unread Group"
 
-#: pan/gui/actions.cc:316
-#, fuzzy
+#: ../pan/gui/actions.cc:312
 msgid "Next _Group"
-msgstr "/_Go/N_ext Group"
+msgstr "Next _Group"
 
-#: pan/gui/actions.cc:316
-#, fuzzy
+#: ../pan/gui/actions.cc:312
 msgid "Next Group"
-msgstr "/_Go/N_ext Group"
+msgstr "Next Group"
 
-#: pan/gui/actions.cc:317
-#, fuzzy
+#: ../pan/gui/actions.cc:313
 msgid "Next _Unread Article"
-msgstr "/_Go/Next _Unread Article"
+msgstr "Next _Unread Article"
 
-#: pan/gui/actions.cc:317
-#, fuzzy
+#: ../pan/gui/actions.cc:313
 msgid "Next Unread Article"
-msgstr "Read Next Unread Article"
+msgstr "Next Unread Article"
 
-#: pan/gui/actions.cc:318
-#, fuzzy
+#: ../pan/gui/actions.cc:314
 msgid "Next _Article"
-msgstr "/_Go/Next _Article"
+msgstr "Next _Article"
 
-#: pan/gui/actions.cc:319
-#, fuzzy
+#: ../pan/gui/actions.cc:315
 msgid "Next _Watched Article"
-msgstr "/_Go/Next _Watched Article"
+msgstr "Next _Watched Article"
 
-#: pan/gui/actions.cc:319
-#, fuzzy
+#: ../pan/gui/actions.cc:315
 msgid "Next Watched Article"
-msgstr "/_Go/Next _Watched Article"
+msgstr "Next Watched Article"
 
-#: pan/gui/actions.cc:320
-#, fuzzy
+#: ../pan/gui/actions.cc:316
 msgid "Next Unread _Thread"
-msgstr "/_Go/Next Unread _Thread"
+msgstr "Next Unread _Thread"
 
-#: pan/gui/actions.cc:320
-#, fuzzy
+#: ../pan/gui/actions.cc:316
 msgid "Next Unread Thread"
-msgstr "Read Next Unread Thread"
+msgstr "Next Unread Thread"
 
-#: pan/gui/actions.cc:321
-#, fuzzy
+#: ../pan/gui/actions.cc:317
 msgid "Next Threa_d"
-msgstr "/_Go/Next Threa_d"
+msgstr "Next Threa_d"
 
-#: pan/gui/actions.cc:321
-#, fuzzy
+#: ../pan/gui/actions.cc:317
 msgid "Next Thread"
-msgstr "/_Go/Next Threa_d"
+msgstr "Next Thread"
 
-#: pan/gui/actions.cc:322
-#, fuzzy
+#: ../pan/gui/actions.cc:318
 msgid "Pre_vious Article"
-msgstr "/_Go/Pre_vious Article"
+msgstr "Pre_vious Article"
 
-#: pan/gui/actions.cc:322
-#, fuzzy
+#: ../pan/gui/actions.cc:318
 msgid "Previous Article"
-msgstr "/_Go/Pre_vious Article"
+msgstr "Previous Article"
 
-#: pan/gui/actions.cc:323
-#, fuzzy
+#: ../pan/gui/actions.cc:319
 msgid "Previous _Thread"
-msgstr "/_Go/Previous Thread"
+msgstr "Previous _Thread"
 
-#: pan/gui/actions.cc:323
-#, fuzzy
+#: ../pan/gui/actions.cc:319
 msgid "Previous Thread"
-msgstr "/_Go/Previous Thread"
+msgstr "Previous Thread"
 
-#: pan/gui/actions.cc:324
-#, fuzzy
+#: ../pan/gui/actions.cc:320
 msgid "_Parent Article"
-msgstr "/_Go/_Parent Article"
+msgstr "_Parent Article"
 
-#: pan/gui/actions.cc:324
-#, fuzzy
+#: ../pan/gui/actions.cc:320
 msgid "Parent Article"
-msgstr "/_Go/_Parent Article"
+msgstr "Parent Article"
 
-#: pan/gui/actions.cc:326
-#, fuzzy
-msgid "_Plonk Author"
-msgstr "/_Articles/_Plonk Author"
+#: ../pan/gui/actions.cc:322
+msgid "Ignore _Author"
+msgstr "Ignore _Author"
 
-#: pan/gui/actions.cc:327
-#, fuzzy
+#: ../pan/gui/actions.cc:323
 msgid "_Watch Thread"
-msgstr "/_Watch Thread"
+msgstr "_Watch Thread"
 
-#: pan/gui/actions.cc:328
-#, fuzzy
+#: ../pan/gui/actions.cc:324
 msgid "_Ignore Thread"
-msgstr "/_Ignore Thread"
+msgstr "_Ignore Thread"
 
-#: pan/gui/actions.cc:329
-#, fuzzy
-msgid "View Article's S_core"
-msgstr "/_View Article's Scores"
+#: ../pan/gui/actions.cc:325
+msgid "Edit Article's Watch/Ignore/Score ..."
+msgstr "Edit Article's Watch/Ignore/Score..."
 
-#: pan/gui/actions.cc:330
-#, fuzzy
-msgid "_Add a _Scoring Rule"
-msgstr "Add a new score"
+#: ../pan/gui/actions.cc:326
+msgid "_Add a _Scoring Rule ..."
+msgstr "_Add a _Scoring Rule..."
 
-#: pan/gui/actions.cc:331
-#, fuzzy
-msgid "Cance_l Article..."
-msgstr "Canceling article"
+#: ../pan/gui/actions.cc:327
+msgid "Cance_l Article ..."
+msgstr "Cance_l Article..."
 
-#: pan/gui/actions.cc:332
-#, fuzzy
-msgid "_Supersede Article..."
-msgstr "/_Save Article As..."
+#: ../pan/gui/actions.cc:328
+msgid "_Supersede Article ..."
+msgstr "_Supersede Article..."
 
-#: pan/gui/actions.cc:333
-#, fuzzy
+#: ../pan/gui/actions.cc:329
 msgid "_Delete Article"
-msgstr "_Delete article"
+msgstr "_Delete Article"
 
-#: pan/gui/actions.cc:334
-#, fuzzy
+#: ../pan/gui/actions.cc:330
 msgid "_Mark Article as Read"
-msgstr "Article is read"
+msgstr "_Mark Article as Read"
 
-#: pan/gui/actions.cc:334
-#, fuzzy
+#: ../pan/gui/actions.cc:330
 msgid "Mark Article as Read"
-msgstr "Article is read"
+msgstr "Mark Article as Read"
 
-#: pan/gui/actions.cc:335
-#, fuzzy
+#: ../pan/gui/actions.cc:331
 msgid "Mark Article as _Unread"
-msgstr "Article is unread"
+msgstr "Mark Article as _Unread"
 
-#: pan/gui/actions.cc:335
-#, fuzzy
+#: ../pan/gui/actions.cc:331
 msgid "Mark Article as Unread"
-msgstr "Article is unread"
+msgstr "Mark Article as Unread"
 
-#: pan/gui/actions.cc:337
-#, fuzzy
+#: ../pan/gui/actions.cc:333
 msgid "_Post to Newsgroup"
-msgstr "Post to Newsgroup"
+msgstr "_Post to Newsgroup"
 
-#: pan/gui/actions.cc:337
+#: ../pan/gui/actions.cc:333
 msgid "Post to Newsgroup"
 msgstr "Post to Newsgroup"
 
-#: pan/gui/actions.cc:338
-#, fuzzy
+#: ../pan/gui/actions.cc:334
 msgid "_Followup to  Newsgroup"
-msgstr "/_Post/_Followup to Newsgroup..."
+msgstr "_Followup to Newsgroup"
 
-#: pan/gui/actions.cc:338
-#, fuzzy
+#: ../pan/gui/actions.cc:334
 msgid "Followup to Newsgroup"
-msgstr "/_Post/_Followup to Newsgroup..."
+msgstr "Followup to Newsgroup"
 
-#: pan/gui/actions.cc:339
-#, fuzzy
-msgid "_Reply to Author"
-msgstr "/_Articles/_Plonk Author"
+#: ../pan/gui/actions.cc:335
+msgid "_Reply to Author in Mail"
+msgstr "_Reply to Author in Mail"
 
-#: pan/gui/actions.cc:339
-#, fuzzy
-msgid "Reply to Author"
-msgstr "/_Articles/_Plonk Author"
+#: ../pan/gui/actions.cc:335
+msgid "Reply to Author in Mail"
+msgstr "Reply to Author in Mail"
 
-#: pan/gui/actions.cc:341
-#, fuzzy
-msgid "_Pan Home Page..."
-msgstr "/_Help/Pan _Home Page..."
+#: ../pan/gui/actions.cc:337
+msgid "_Pan Home Page"
+msgstr "_Pan Home Page"
 
-#: pan/gui/actions.cc:342
-#, fuzzy
-msgid "Give _Feedback or Report a Bug..."
-msgstr "/_Help/Report a _Bug..."
+#: ../pan/gui/actions.cc:338
+msgid "Give _Feedback or Report a Bug ..."
+msgstr "Give _Feedback or Report a Bug..."
 
-#: pan/gui/actions.cc:343
-msgid "_Tip Jar..."
-msgstr ""
+#: ../pan/gui/actions.cc:339
+msgid "_Tip Jar ..."
+msgstr "_Tip Jar..."
 
-#: pan/gui/actions.cc:345 pan/gui/actions.cc:347
-#, fuzzy
-msgid "_About..."
-msgstr "/_Help/_About..."
+#: ../pan/gui/actions.cc:341 ../pan/gui/actions.cc:343
+msgid "_About"
+msgstr "_About"
 
-#: pan/gui/actions.cc:361
-#, fuzzy
+#: ../pan/gui/actions.cc:357
 msgid "_Thread Headers"
-msgstr "More Headers"
+msgstr "_Thread Headers"
 
-#: pan/gui/actions.cc:362
-#, fuzzy
+#: ../pan/gui/actions.cc:358
 msgid "_Wrap Article Body"
-msgstr "/_View/_Wrap Article Body"
+msgstr "_Wrap Article Body"
 
-#: pan/gui/actions.cc:363
-#, fuzzy
+#: ../pan/gui/actions.cc:359
 msgid "Mute _Quoted Text"
-msgstr "/_View/Mute _Quoted Text"
+msgstr "Mute _Quoted Text"
 
-#: pan/gui/actions.cc:364
-#, fuzzy
+#: ../pan/gui/actions.cc:360
 msgid "Show All _Headers in Body Pane"
-msgstr "/_View/Show All _Headers in Body Pane"
+msgstr "Show All _Headers in Body Pane"
 
-#: pan/gui/actions.cc:365
-#, fuzzy
+#: ../pan/gui/actions.cc:361
 msgid "Show _Smilies as Graphics"
-msgstr "Show a_lert:"
+msgstr "Show _Smilies as Graphics"
 
-#: pan/gui/actions.cc:366
+#: ../pan/gui/actions.cc:362
 msgid "Show *Bold*, __Underlined__, and /Italic/"
-msgstr ""
+msgstr "Show *Bold*, __Underlined__, and /Italic/"
 
-#: pan/gui/actions.cc:367
+#: ../pan/gui/actions.cc:363
 msgid "Size Pictures to _Fit"
-msgstr ""
+msgstr "Size Pictures to _Fit"
 
-#: pan/gui/actions.cc:368
-#, fuzzy
-msgid "Smooth Scrolling"
-msgstr "S_mooth scrolling at speed:"
-
-#: pan/gui/actions.cc:369
-#, fuzzy
+#: ../pan/gui/actions.cc:364
 msgid "Use _Monospace Font"
-msgstr "Monospac_e font:"
+msgstr "Use _Monospace Font"
 
-#: pan/gui/actions.cc:371
-#, fuzzy
+#: ../pan/gui/actions.cc:366
 msgid "_Work Online"
-msgstr "/_File/Work On_line"
+msgstr "_Work Online"
 
-#: pan/gui/actions.cc:372
-#, fuzzy
+#: ../pan/gui/actions.cc:367
 msgid "_Tabbed Layout"
-msgstr "/_View/_Tabbed Layout"
+msgstr "_Tabbed Layout"
 
-#: pan/gui/actions.cc:373
-#, fuzzy
+#: ../pan/gui/actions.cc:368
 msgid "Show Group _Pane"
-msgstr "/_View/Show Group _Pane"
+msgstr "Show Group _Pane"
 
-#: pan/gui/actions.cc:374
-#, fuzzy
+#: ../pan/gui/actions.cc:369
 msgid "Show Hea_der Pane"
-msgstr "/_View/Show Hea_der Pane"
+msgstr "Show Hea_der Pane"
 
-#: pan/gui/actions.cc:375
-#, fuzzy
+#: ../pan/gui/actions.cc:370
 msgid "Show Bod_y Pane"
-msgstr "/_View/Show Bod_y Pane"
+msgstr "Show Bod_y Pane"
 
-#: pan/gui/actions.cc:376
+#: ../pan/gui/actions.cc:371
 msgid "Show _Toolbar"
-msgstr ""
+msgstr "Show _Toolbar"
 
-#: pan/gui/actions.cc:377
-#, fuzzy
+#: ../pan/gui/actions.cc:372
 msgid "Abbreviate _Names in Group Pane"
-msgstr "/_View/Abbreviate _Names in Group Pane"
+msgstr "Abbreviate _Names in Group Pane"
 
-#: pan/gui/actions.cc:377
-#, fuzzy
+#: ../pan/gui/actions.cc:372
 msgid "Abbreviate Newsgroup Names"
-msgstr "/_View/Abbreviate _Names in Group Pane"
+msgstr "Abbreviate Newsgroup Names"
 
-#: pan/gui/actions.cc:379
-#, fuzzy
+#: ../pan/gui/actions.cc:374
 msgid "Match Only _Unread Articles"
-msgstr "Match Only New Articles"
+msgstr "Match Only _Unread Articles"
 
-#: pan/gui/actions.cc:379
-#, fuzzy
+#: ../pan/gui/actions.cc:374
 msgid "Match Only Unread Articles"
-msgstr "Match Only New Articles"
+msgstr "Match Only Unread Articles"
 
-#: pan/gui/actions.cc:380
-#, fuzzy
+#: ../pan/gui/actions.cc:375
 msgid "Match Only _Cached Articles"
-msgstr "Match Only Cached Articles"
+msgstr "Match Only _Cached Articles"
 
-#: pan/gui/actions.cc:380
-#, fuzzy
+#: ../pan/gui/actions.cc:375
 msgid "Match Only Cached Articles"
 msgstr "Match Only Cached Articles"
 
-#: pan/gui/actions.cc:381
-#, fuzzy
+#: ../pan/gui/actions.cc:376
 msgid "Match Only _Complete Articles"
-msgstr "Match Only Complete Attachments"
+msgstr "Match Only _Complete Articles"
 
-#: pan/gui/actions.cc:381
-#, fuzzy
+#: ../pan/gui/actions.cc:376
 msgid "Match Only Complete Articles"
-msgstr "Match Only Complete Attachments"
+msgstr "Match Only Complete Articles"
 
-#: pan/gui/actions.cc:382
-#, fuzzy
+#: ../pan/gui/actions.cc:377
 msgid "Match Only _My Articles"
-msgstr "Match Only My Articles"
+msgstr "Match Only _My Articles"
 
-#: pan/gui/actions.cc:382
-#, fuzzy
+#: ../pan/gui/actions.cc:377
 msgid "Match Only Articles Posted by Me"
-msgstr "Match Only My Articles"
+msgstr "Match Only Articles Posted by Me"
 
-#: pan/gui/actions.cc:383
-#, fuzzy
+#: ../pan/gui/actions.cc:378
 msgid "Match Only _Watched Articles"
-msgstr "Match Only Watched Articles"
+msgstr "Match Only _Watched Articles"
 
-#: pan/gui/actions.cc:383
+#: ../pan/gui/actions.cc:378
 msgid "Match Only Watched Articles"
 msgstr "Match Only Watched Articles"
 
-#: pan/gui/actions.cc:385
-#, fuzzy
+#: ../pan/gui/actions.cc:380
 msgid "Match Scores of 9999 (_Watched)"
-msgstr "/Filte_r/Match Scores of 9999 (Watched)"
+msgstr "Match Scores of 9999 (_Watched)"
 
-#: pan/gui/actions.cc:386
-#, fuzzy
+#: ../pan/gui/actions.cc:381
 msgid "Match Scores of 5000...9998 (_High)"
-msgstr "/Filte_r/Match Scores in 5000...9998 (High)"
+msgstr "Match Scores of 5000...9998 (_High)"
 
-#: pan/gui/actions.cc:387
-#, fuzzy
+#: ../pan/gui/actions.cc:382
 msgid "Match Scores of 1...4999 (Me_dium)"
-msgstr "/Filte_r/Match Scores in 1...4999 (Medium)"
+msgstr "Match Scores of 1...4999 (Me_dium)"
 
-#: pan/gui/actions.cc:388
-#, fuzzy
+#: ../pan/gui/actions.cc:383
 msgid "Match Scores of 0 (_Normal)"
-msgstr "/Filte_r/Match Scores of 0 (Normal)"
+msgstr "Match Scores of 0 (_Normal)"
 
-#: pan/gui/actions.cc:389
-#, fuzzy
+#: ../pan/gui/actions.cc:384
 msgid "Match Scores of -9998...-1 (_Low)"
-msgstr "/Filte_r/Match Scores in -9998...-1 (Low)"
+msgstr "Match Scores of -9998...-1 (_Low)"
 
-#: pan/gui/actions.cc:390
-#, fuzzy
+#: ../pan/gui/actions.cc:385
 msgid "Match Scores of -9999 (_Ignored)"
-msgstr "/Filte_r/Match Scores of -9999 (Ignored)"
+msgstr "Match Scores of -9999 (_Ignored)"
 
-#: pan/gui/actions.cc:416
-#, fuzzy
+#: ../pan/gui/actions.cc:411
 msgid "Show Matching _Articles"
-msgstr "/Filte_r/Show Matching Articles"
+msgstr "Show Matching _Articles"
 
-#: pan/gui/actions.cc:417
-#, fuzzy
+#: ../pan/gui/actions.cc:412
 msgid "Show Matching Articles' _Threads"
-msgstr "/Filte_r/Show Matching Articles' Threads"
+msgstr "Show Matching Articles' _Threads"
 
-#: pan/gui/actions.cc:418
-#, fuzzy
+#: ../pan/gui/actions.cc:413
 msgid "Show Matching Articles' _Subthreads"
-msgstr "/Filte_r/Show Matching Articles' Subthreads"
+msgstr "Show Matching Articles' _Subthreads"
 
-#: pan/gui/actions.cc:435
+#: ../pan/gui/actions.cc:430
 msgid "Baltic (ISO-8859-4)"
-msgstr ""
+msgstr "Baltic (ISO-8859-4)"
 
-#: pan/gui/actions.cc:436
+#: ../pan/gui/actions.cc:431
 msgid "Baltic (ISO-8859-13)"
-msgstr ""
+msgstr "Baltic (ISO-8859-13)"
 
-#: pan/gui/actions.cc:437
+#: ../pan/gui/actions.cc:432
 msgid "Baltic (Windows-1257)"
-msgstr ""
+msgstr "Baltic (Windows-1257)"
 
-#: pan/gui/actions.cc:438
-#, fuzzy
+#: ../pan/gui/actions.cc:433
 msgid "Central European (ISO-8859-2)"
-msgstr "Central European"
+msgstr "Central European (ISO-8859-2)"
 
-#: pan/gui/actions.cc:439
-#, fuzzy
+#: ../pan/gui/actions.cc:434
 msgid "Central European (Windows-1250)"
-msgstr "Central European"
+msgstr "Central European (Windows-1250)"
 
-#: pan/gui/actions.cc:440
-#, fuzzy
+#: ../pan/gui/actions.cc:435
 msgid "Chinese Simplified (gb2312)"
-msgstr "Chinese Simplified"
+msgstr "Chinese Simplified (gb2312)"
 
-#: pan/gui/actions.cc:441
-#, fuzzy
+#: ../pan/gui/actions.cc:436
 msgid "Chinese Traditional (big5)"
-msgstr "Chinese Traditional"
+msgstr "Chinese Traditional (big5)"
 
-#: pan/gui/actions.cc:442
+#: ../pan/gui/actions.cc:437
 msgid "Cyrillic (ISO-8859-5)"
-msgstr ""
+msgstr "Cyrillic (ISO-8859-5)"
 
-#: pan/gui/actions.cc:443
+#: ../pan/gui/actions.cc:438
 msgid "Cyrillic (Windows-1251)"
-msgstr ""
+msgstr "Cyrillic (Windows-1251)"
 
-#: pan/gui/actions.cc:444
-#, fuzzy
+#: ../pan/gui/actions.cc:439
 msgid "Cyrillic (KOI8-R)"
-msgstr "Cyrillic"
+msgstr "Cyrillic (KOI8-R)"
 
-#: pan/gui/actions.cc:445
-#, fuzzy
+#: ../pan/gui/actions.cc:440
 msgid "Cyrillic, Ukrainian (KOI8-U)"
-msgstr "Cyrillic, Ukrainian"
+msgstr "Cyrillic, Ukrainian (KOI8-U)"
 
-#: pan/gui/actions.cc:446
+#: ../pan/gui/actions.cc:441
 msgid "Greek (ISO-8859-7)"
-msgstr ""
+msgstr "Greek (ISO-8859-7)"
 
-#: pan/gui/actions.cc:447
+#: ../pan/gui/actions.cc:442
 msgid "Japanese (ISO-2022-jp)"
-msgstr ""
+msgstr "Japanese (ISO-2022-jp)"
 
-#: pan/gui/actions.cc:448
+#: ../pan/gui/actions.cc:443
 msgid "Korean (euc-kr)"
-msgstr ""
+msgstr "Korean (euc-kr)"
 
-#: pan/gui/actions.cc:449
+#: ../pan/gui/actions.cc:444
 msgid "Turkish (ISO-8859-9)"
-msgstr ""
+msgstr "Turkish (ISO-8859-9)"
 
-#: pan/gui/actions.cc:450
+#: ../pan/gui/actions.cc:445
 msgid "Western (ISO-8859-1)"
-msgstr ""
+msgstr "Western (ISO-8859-1)"
 
-#: pan/gui/actions.cc:451
-#, fuzzy
+#: ../pan/gui/actions.cc:446
 msgid "Western, New (ISO-8859-15)"
-msgstr "Western, New"
+msgstr "Western, New (ISO-8859-15)"
 
-#: pan/gui/actions.cc:452
+#: ../pan/gui/actions.cc:447
 msgid "Western (Windows-1252)"
-msgstr ""
+msgstr "Western (Windows-1252)"
 
-#: pan/gui/actions.cc:453
-#, fuzzy
+#: ../pan/gui/actions.cc:448
 msgid "Unicode (UTF-8)"
-msgstr "Unicode, UTF-8"
+msgstr "Unicode (UTF-8)"
 
-#: pan/gui/body-pane.cc:855
+#: ../pan/gui/body-pane.cc:879
 #, c-format
 msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
-msgstr ""
+msgstr "Attachment not shown: MIME type %s/%s; filename %s\n"
 
-#: pan/gui/body-pane.cc:856
+#: ../pan/gui/body-pane.cc:880
 #, c-format
 msgid "Attachment not shown: MIME type %s/%s\n"
-msgstr ""
+msgstr "Attachment not shown: MIME type %s/%s\n"
 
-#: pan/gui/body-pane.cc:936 pan/gui/header-pane.cc:1167
-#: pan/gui/header-pane.cc:1502 pan/gui/prefs-ui.cc:322
-#: pan/gui/score-add-ui.cc:136
+#: ../pan/gui/body-pane.cc:960 ../pan/gui/header-pane.cc:1044
+#: ../pan/gui/header-pane.cc:1379 ../pan/gui/prefs-ui.cc:323
+#: ../pan/gui/score-add-ui.cc:141
 msgid "Subject"
 msgstr "Subject"
 
-#: pan/gui/body-pane.cc:938
-#, fuzzy
+#: ../pan/gui/body-pane.cc:962
 msgid "From"
 msgstr "From"
 
-#: pan/gui/body-pane.cc:940 pan/gui/header-pane.cc:1579 pan/gui/log-ui.cc:206
-#: pan/gui/prefs-ui.cc:318
+#: ../pan/gui/body-pane.cc:964 ../pan/gui/header-pane.cc:1456
+#: ../pan/gui/log-ui.cc:206 ../pan/gui/prefs-ui.cc:319
 msgid "Date"
 msgstr "Date"
 
-#: pan/gui/body-pane.cc:947
+#: ../pan/gui/body-pane.cc:971
 msgid "Newsgroups"
 msgstr "Newsgroups"
 
-#: pan/gui/body-pane.cc:952
-#, fuzzy
+#: ../pan/gui/body-pane.cc:976
 msgid "Followup-To"
 msgstr "Followup-To"
 
-#: pan/gui/body-pane.cc:962
+#: ../pan/gui/body-pane.cc:986
 msgid "Reply-To"
 msgstr "Reply-To"
 
-#: pan/gui/body-pane.cc:988
+#: ../pan/gui/body-pane.cc:1012
 msgid " from "
-msgstr ""
+msgstr " from "
 
-#: pan/gui/body-pane.cc:990
+#: ../pan/gui/body-pane.cc:1014
 msgid " at "
-msgstr ""
+msgstr " at "
 
-#: pan/gui/dl-headers-ui.cc:102
-#, fuzzy
+#: ../pan/gui/charset-picker.cc:39 ../pan/gui/charset-picker.cc:40
+#: ../pan/gui/charset-picker.cc:41 ../pan/gui/post-ui.cc:317
+#: ../pan/gui/post-ui.cc:318 ../pan/gui/post-ui.cc:319
+msgid "Baltic"
+msgstr "Baltic"
+
+#: ../pan/gui/charset-picker.cc:42 ../pan/gui/charset-picker.cc:43
+#: ../pan/gui/post-ui.cc:320 ../pan/gui/post-ui.cc:321
+msgid "Central European"
+msgstr "Central European"
+
+#: ../pan/gui/charset-picker.cc:44 ../pan/gui/post-ui.cc:322
+msgid "Chinese Simplified"
+msgstr "Chinese Simplified"
+
+#: ../pan/gui/charset-picker.cc:45 ../pan/gui/post-ui.cc:323
+msgid "Chinese Traditional"
+msgstr "Chinese Traditional"
+
+#: ../pan/gui/charset-picker.cc:46 ../pan/gui/charset-picker.cc:47
+#: ../pan/gui/charset-picker.cc:48 ../pan/gui/post-ui.cc:324
+#: ../pan/gui/post-ui.cc:325 ../pan/gui/post-ui.cc:326
+msgid "Cyrillic"
+msgstr "Cyrillic"
+
+#: ../pan/gui/charset-picker.cc:49 ../pan/gui/post-ui.cc:327
+msgid "Cyrillic, Ukrainian"
+msgstr "Cyrillic, Ukrainian"
+
+#: ../pan/gui/charset-picker.cc:50 ../pan/gui/post-ui.cc:328
+msgid "Greek"
+msgstr "Greek"
+
+#: ../pan/gui/charset-picker.cc:51 ../pan/gui/post-ui.cc:329
+msgid "Japanese"
+msgstr "Japanese"
+
+#: ../pan/gui/charset-picker.cc:52 ../pan/gui/post-ui.cc:330
+msgid "Korean"
+msgstr "Korean"
+
+#: ../pan/gui/charset-picker.cc:53 ../pan/gui/post-ui.cc:331
+msgid "Turkish"
+msgstr "Turkish"
+
+#: ../pan/gui/charset-picker.cc:54 ../pan/gui/charset-picker.cc:56
+#: ../pan/gui/post-ui.cc:332 ../pan/gui/post-ui.cc:334
+msgid "Western"
+msgstr "Western"
+
+#: ../pan/gui/charset-picker.cc:55 ../pan/gui/post-ui.cc:333
+msgid "Western, New"
+msgstr "Western, New"
+
+#: ../pan/gui/charset-picker.cc:57
+msgid "Unicode"
+msgstr "Unicode"
+
+#: ../pan/gui/dl-headers-ui.cc:106
 msgid "Pan: "
-msgstr "Pan: Rules"
+msgstr "Pan: "
 
-#: pan/gui/dl-headers-ui.cc:128
-#, fuzzy
+#: ../pan/gui/dl-headers-ui.cc:132
 msgid "Get the last N _days' headers: "
-msgstr "Download _recent headers: "
+msgstr "Get the last N _days' headers: "
 
-#: pan/gui/dl-headers-ui.cc:136
-#, fuzzy
+#: ../pan/gui/dl-headers-ui.cc:140
 msgid "Get _new headers"
-msgstr "/Get New _Headers"
+msgstr "Get _new headers"
 
-#: pan/gui/dl-headers-ui.cc:140
-#, fuzzy
+#: ../pan/gui/dl-headers-ui.cc:144
 msgid "Get _all headers"
-msgstr "Download _all headers"
+msgstr "Get _all headers"
 
-#: pan/gui/dl-headers-ui.cc:144
-#, fuzzy
+#: ../pan/gui/dl-headers-ui.cc:148
 msgid "Get the _latest N headers: "
-msgstr "Download _recent headers: "
+msgstr "Get the _latest N headers: "
 
-#: pan/gui/group-pane.cc:608
-#, fuzzy
+#: ../pan/gui/group-pane.cc:576
 msgid "Group Name"
-msgstr "Group Pane"
+msgstr "Group Name"
 
-#: pan/gui/group-pane.cc:700
+#: ../pan/gui/group-pane.cc:668
 #, c-format
 msgid " (%lu)"
-msgstr ""
+msgstr " (%lu)"
 
-#: pan/gui/group-pane.cc:829 pan/gui/header-pane.cc:1668
-#, fuzzy
+#: ../pan/gui/group-pane.cc:794 ../pan/gui/header-pane.cc:1545
 msgid "Clear the Filter"
-msgstr "Select Filter:"
+msgstr "Clear the Filter"
 
-#: pan/gui/group-pane.cc:857
-#, fuzzy
+#: ../pan/gui/group-pane.cc:822
 msgid "Subscribed Groups"
-msgstr "Subscribed Newsgroups"
+msgstr "Subscribed Groups"
 
-#: pan/gui/group-pane.cc:858
-#, fuzzy
+#: ../pan/gui/group-pane.cc:823
 msgid "Other Groups"
-msgstr "New Groups"
+msgstr "Other Groups"
 
-#: pan/gui/group-pane.cc:900
-#, fuzzy
+#: ../pan/gui/group-pane.cc:865
 msgid "Name"
-msgstr "_Name:"
+msgstr "Name"
 
-#: pan/gui/group-prefs-dialog.cc:101
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:101
 msgid "No Profiles defined in Edit|Posting Profiles."
-msgstr "/_Post/Posting Pr_ofiles..."
+msgstr "No Profiles defined in Edit|Posting Profiles."
 
-#: pan/gui/group-prefs-dialog.cc:129
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:129
 msgid "Pan: Group Preferences"
-msgstr "Pan Preferences"
+msgstr "Pan: Group Preferences"
 
-#: pan/gui/group-prefs-dialog.cc:143
-#, fuzzy, c-format
+#: ../pan/gui/group-prefs-dialog.cc:143
+#, c-format
 msgid "Properties for %s"
-msgstr "Properties for \"%s\""
+msgstr "Properties for %s"
 
-#: pan/gui/group-prefs-dialog.cc:147
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:147
 msgid "Character _encoding:"
-msgstr "C_haracter Set:"
+msgstr "Character _encoding:"
 
-#: pan/gui/group-prefs-dialog.cc:148
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:148
 msgid "Directory for Saving Attachments"
-msgstr "Directory for saving attachments"
+msgstr "Directory for Saving Attachments"
 
-#: pan/gui/group-prefs-dialog.cc:153
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:153
 msgid "Directory for _saving attachments:"
-msgstr "Directory for saving attachments"
+msgstr "Directory for _saving attachments:"
 
-#: pan/gui/group-prefs-dialog.cc:155
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:155
 msgid "Posting _profile:"
-msgstr "Pan: Profile"
+msgstr "Posting _profile:"
 
-#: pan/gui/gui.cc:236
+#: ../pan/gui/gui.cc:238
 msgid "Open the Task Manager"
 msgstr "Open the Task Manager"
 
-#: pan/gui/gui.cc:257
-#, fuzzy
+#: ../pan/gui/gui.cc:260
 msgid "Open the Event Log"
-msgstr "Open the Status Log"
+msgstr "Open the Event Log"
 
-#: pan/gui/gui.cc:481
-#, fuzzy
+#: ../pan/gui/gui.cc:486
 msgid "Save Attachments"
-msgstr "Save _Attachments"
+msgstr "Save Attachments"
 
-#: pan/gui/gui.cc:529
+#: ../pan/gui/gui.cc:534
 msgid "Import NZB File(s)"
-msgstr ""
+msgstr "Import NZB File(s)"
 
-#: pan/gui/gui.cc:605
+#: ../pan/gui/gui.cc:610
 msgid ""
 "Pan is now offline. Please ensure that space is available, then use File|"
 "Work Online to continue."
 msgstr ""
+"Pan is now offline. Please ensure that space is available, then use File|"
+"Work Online to continue."
 
-#: pan/gui/gui.cc:730 pan/gui/gui.cc:1092 pan/gui/gui.cc:1296
+#: ../pan/gui/gui.cc:739 ../pan/gui/gui.cc:1120 ../pan/gui/gui.cc:1324
 msgid "Pan"
-msgstr ""
+msgstr "Pan"
 
-#: pan/gui/gui.cc:902
-#, fuzzy
+#: ../pan/gui/gui.cc:916
 msgid "Unable to supersede article."
-msgstr "/_Save Article As..."
+msgstr "Unable to supersede article."
 
-#: pan/gui/gui.cc:903 pan/gui/gui.cc:970
+#: ../pan/gui/gui.cc:917 ../pan/gui/gui.cc:987
 msgid "The article doesn't match any of your posting profiles."
-msgstr ""
+msgstr "The article doesn't match any of your posting profiles."
 
-#: pan/gui/gui.cc:944
+#: ../pan/gui/gui.cc:960
 msgid "Revise and send this article to replace the old one."
-msgstr ""
+msgstr "Revise and send this article to replace the old one."
 
-#: pan/gui/gui.cc:945 pan/gui/gui.cc:1005
+#: ../pan/gui/gui.cc:961 ../pan/gui/gui.cc:1024
 msgid "Be patient!  It will take time for your changes to take effect."
-msgstr ""
+msgstr "Be patient!  It will take time for your changes to take effect."
 
-#: pan/gui/gui.cc:969
-#, fuzzy
+#: ../pan/gui/gui.cc:986
 msgid "Unable to cancel article."
-msgstr "Canceling article"
+msgstr "Unable to cancel article."
 
-#: pan/gui/gui.cc:1004
+#: ../pan/gui/gui.cc:1023
 msgid "Send this article to ask your server to cancel your other one."
-msgstr ""
+msgstr "Send this article to ask your server to cancel your other one."
 
-#: pan/gui/gui.cc:1095 pan/gui/gui.cc:1115
-#, fuzzy
+#: ../pan/gui/gui.cc:1123 ../pan/gui/gui.cc:1143
 msgid "Copyright © 2002-2006 Charles Kerr"
-msgstr "Copyright (C) 2003 Charles Kerr"
+msgstr "Copyright © 2002-2006 Charles Kerr"
 
-#: pan/gui/gui.cc:1100
+#: ../pan/gui/gui.cc:1128
 msgid "translator-credits"
-msgstr ""
+msgstr "Adam Weinberger <adamw@gnome.org>"
 
-#: pan/gui/gui.cc:1211
-#, fuzzy
+#: ../pan/gui/gui.cc:1239
 msgid "_1. Group Pane"
-msgstr "Group Pane"
+msgstr "_1. Group Pane"
 
-#: pan/gui/gui.cc:1212
-#, fuzzy
+#: ../pan/gui/gui.cc:1240
 msgid "_2. Header Pane"
-msgstr "Header Pane"
+msgstr "_2. Header Pane"
 
-#: pan/gui/gui.cc:1213
-#, fuzzy
+#: ../pan/gui/gui.cc:1241
 msgid "_3. Body Pane"
-msgstr "Body Pane"
+msgstr "_3. Body Pane"
 
-#: pan/gui/gui.cc:1298
-#, fuzzy, c-format
+#: ../pan/gui/gui.cc:1326
+#, c-format
 msgid "Pan: %s"
-msgstr "Pan: Rules"
+msgstr "Pan: %s"
 
-#: pan/gui/gui.cc:1415
+#: ../pan/gui/gui.cc:1459
 msgid "Offline"
 msgstr "Offline"
 
-#: pan/gui/gui.cc:1418
+#: ../pan/gui/gui.cc:1462
 #, c-format
 msgid "Closing %d connections"
 msgstr "Closing %d connections"
 
-#: pan/gui/gui.cc:1420 pan/gui/gui.cc:1450
+#: ../pan/gui/gui.cc:1464 ../pan/gui/gui.cc:1494
 msgid "No Connections"
 msgstr "No Connections"
 
-#: pan/gui/gui.cc:1424
-#, fuzzy
+#: ../pan/gui/gui.cc:1468
 msgid "Connecting"
-msgstr "Connection"
+msgstr "Connecting"
 
-#: pan/gui/gui.cc:1437
+#: ../pan/gui/gui.cc:1481
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
-msgstr ""
+msgstr "%s: %d idle, %d active @ %.1f KiBps"
 
-#: pan/gui/gui.cc:1493
-msgid "No Tasks"
-msgstr "No Tasks"
-
-#: pan/gui/gui.cc:1496
-#, c-format
-msgid "Tasks: %u/%u"
-msgstr "Tasks: %u/%u"
-
-#: pan/gui/gui.cc:1497
+#. build the format strings
+#: ../pan/gui/gui.cc:1536
 #, c-format
 msgid "%u Tasks Running, %u Tasks Total"
 msgstr "%u Tasks Running, %u Tasks Total"
 
-#: pan/gui/gui.cc:1546
+#: ../pan/gui/gui.cc:1538
+msgid "No Tasks"
+msgstr "No Tasks"
+
+#: ../pan/gui/gui.cc:1540
+#, c-format
+msgid "Tasks: %u/%u"
+msgstr "Tasks: %u/%u"
+
+#: ../pan/gui/gui.cc:1590
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
 msgstr ""
+"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
+"then use \"File|Work Online\" to continue."
 
 #. less than a kibi...
-#: pan/gui/header-pane.cc:363 pan/gui/task-pane.cc:208
+#: ../pan/gui/header-pane.cc:267 ../pan/gui/task-pane.cc:208
 #, c-format
 msgid "%lu B"
-msgstr ""
+msgstr "%lu B"
 
-#: pan/gui/header-pane.cc:365
+#: ../pan/gui/header-pane.cc:269
 #, c-format
 msgid "%.1f KiB"
-msgstr ""
+msgstr "%.1f KB"
 
-#: pan/gui/header-pane.cc:367
+#: ../pan/gui/header-pane.cc:271
 #, c-format
 msgid "%.1f MiB"
-msgstr ""
+msgstr "%.1f MB"
 
-#: pan/gui/header-pane.cc:369
+#: ../pan/gui/header-pane.cc:273
 #, c-format
 msgid "%.1f GiB"
-msgstr ""
+msgstr "%.1f GB"
 
-#: pan/gui/header-pane.cc:1166
+#: ../pan/gui/header-pane.cc:1043
 msgid "Subject or Author"
-msgstr ""
+msgstr "Subject or Author"
 
-#: pan/gui/header-pane.cc:1168 pan/gui/header-pane.cc:1534
-#: pan/gui/prefs-ui.cc:316 pan/gui/score-add-ui.cc:137
+#: ../pan/gui/header-pane.cc:1045 ../pan/gui/header-pane.cc:1411
+#: ../pan/gui/prefs-ui.cc:317 ../pan/gui/score-add-ui.cc:142
 msgid "Author"
 msgstr "Author"
 
-#: pan/gui/header-pane.cc:1169
-#, fuzzy
+#: ../pan/gui/header-pane.cc:1046
 msgid "Message-ID"
-msgstr "_Message-ID:"
+msgstr "Message-ID"
 
-#: pan/gui/header-pane.cc:1519 pan/gui/prefs-ui.cc:320
+#: ../pan/gui/header-pane.cc:1396 ../pan/gui/prefs-ui.cc:321
 msgid "Score"
 msgstr "Score"
 
-#: pan/gui/header-pane.cc:1549 pan/gui/prefs-ui.cc:319
+#: ../pan/gui/header-pane.cc:1426 ../pan/gui/prefs-ui.cc:320
 msgid "Lines"
 msgstr "Lines"
 
-#: pan/gui/header-pane.cc:1564 pan/gui/prefs-ui.cc:317
+#: ../pan/gui/header-pane.cc:1441 ../pan/gui/prefs-ui.cc:318
 msgid "Bytes"
-msgstr ""
+msgstr "Bytes"
 
-#: pan/gui/log-ui.cc:85
+#: ../pan/gui/log-ui.cc:85
 msgid "Save Event List"
-msgstr ""
+msgstr "Save Event List"
 
-#: pan/gui/log-ui.cc:167
-#, fuzzy
+#: ../pan/gui/log-ui.cc:167
 msgid "Pan: Events"
-msgstr "Pan: Servers"
+msgstr "Pan: Events"
 
-#: pan/gui/log-ui.cc:216
+#: ../pan/gui/log-ui.cc:216
 msgid "Message"
 msgstr "Message"
 
-#: pan/gui/pan.cc:120
+#: ../pan/gui/pan.cc:143
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
 "To start newsreading, first Add a Server."
 msgstr ""
+"Thank you for trying Pan!\n"
+" \n"
+"To start newsreading, first Add a Server."
 
-#: pan/gui/pan.cc:141
+#: ../pan/gui/pan.cc:164
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -1465,441 +1341,380 @@ msgid ""
 "  --nogui                  Only show console output, not the download "
 "queue.\n"
 msgstr ""
+"General Options\n"
+"  -h, --help               Show this usage page.\n"
+"\n"
+"URL Options\n"
+"  news:message-id          Show the specified article.\n"
+"  news:group.name          Show the specified newsgroup.\n"
+"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"\n"
+"NZB Batch Options\n"
+"  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
+"  -o path, --output=path   Path to save attachments listed in the nzb "
+"files.\n"
+"  --nogui                  Only show console output, not the download "
+"queue.\n"
 
-#: pan/gui/pan.cc:198
+#: ../pan/gui/pan.cc:224
 msgid "Error: nzb arguments used without nzb files."
-msgstr ""
+msgstr "Error: nzb arguments used without nzb files."
 
-#: pan/gui/pan.cc:203
+#: ../pan/gui/pan.cc:229
 msgid "Error: --nogui used without nzb files or news:message-id."
-msgstr ""
+msgstr "Error: --nogui used without nzb files or news:message-id."
 
-#: pan/gui/pan.cc:207
-#, fuzzy, c-format
+#: ../pan/gui/pan.cc:233
+#, c-format
 msgid "Pan %s started"
-msgstr "Pan %s Started"
+msgstr "Pan %s started"
 
-#: pan/gui/pan.cc:223
+#: ../pan/gui/pan.cc:249
 msgid "Please configure Pan's news servers before using it as an nzb client."
-msgstr ""
+msgstr "Please configure Pan's news servers before using it as an nzb client."
 
-#: pan/gui/post-ui.cc:86
-#, fuzzy, c-format
+#: ../pan/gui/pan-file-entry.cc:75
+msgid "_Browse..."
+msgstr "_Browse..."
+
+#: ../pan/gui/post-ui.cc:86
+#, c-format
 msgid "Error setting spellchecker: %s"
-msgstr "Error removing scorefile entry: %s"
+msgstr "Error setting spellchecker: %s"
 
-#: pan/gui/post-ui.cc:95
+#: ../pan/gui/post-ui.cc:95
 msgid ""
 "<b>Spellchecker not found!</b>\n"
 " \n"
 "Was this copy of Pan compiled with GtkSpell enabled?"
 msgstr ""
+"<b>Spellchecker not found!</b>\n"
+" \n"
+"Was this copy of Pan compiled with GtkSpell enabled?"
 
-#: pan/gui/post-ui.cc:240
-#, fuzzy
+#: ../pan/gui/post-ui.cc:240
 msgid "_Profile"
-msgstr "Profile"
+msgstr "_Profile"
 
-#: pan/gui/post-ui.cc:241
-#, fuzzy
+#: ../pan/gui/post-ui.cc:241
 msgid "Character Encoding"
-msgstr "C_haracter Set:"
+msgstr "Character Encoding"
 
-#: pan/gui/post-ui.cc:242
-#, fuzzy
+#: ../pan/gui/post-ui.cc:242
 msgid "Set Editor"
-msgstr "Editor"
+msgstr "Set Editor"
 
-#: pan/gui/post-ui.cc:244
-#, fuzzy
+#: ../pan/gui/post-ui.cc:244
 msgid "_Send Article"
-msgstr "/_Go/_Parent Article"
+msgstr "_Send Article"
 
-#: pan/gui/post-ui.cc:244
-#, fuzzy
+#: ../pan/gui/post-ui.cc:244
 msgid "Send Article Now"
-msgstr "Send Now"
+msgstr "Send Article Now"
 
-#: pan/gui/post-ui.cc:245
-#, fuzzy
+#: ../pan/gui/post-ui.cc:245
 msgid "Sa_ve Draft"
-msgstr "Saving Articles"
+msgstr "Sa_ve Draft"
 
-#: pan/gui/post-ui.cc:245
+#: ../pan/gui/post-ui.cc:245
 msgid "Save as a Draft for Future Posting"
-msgstr ""
+msgstr "Save as a Draft for Future Posting"
 
-#: pan/gui/post-ui.cc:246
-#, fuzzy
+#: ../pan/gui/post-ui.cc:246
 msgid "_Open Draft..."
-msgstr "/_Read Article"
+msgstr "_Open Draft..."
 
-#: pan/gui/post-ui.cc:246
-#, fuzzy
+#: ../pan/gui/post-ui.cc:246
 msgid "Open an Article Draft"
-msgstr "/_Read Article"
+msgstr "Open an Article Draft"
 
-#: pan/gui/post-ui.cc:247
+#: ../pan/gui/post-ui.cc:247
 msgid "Wrap _Now"
-msgstr ""
+msgstr "Wrap _Now"
 
-#: pan/gui/post-ui.cc:247
-#, fuzzy
+#: ../pan/gui/post-ui.cc:247
 msgid "Wrap the Article Body to 80 Columns"
-msgstr "/_View/_Wrap Article Body"
+msgstr "Wrap the Article Body to 80 Columns"
 
-#: pan/gui/post-ui.cc:248
-#, fuzzy
+#: ../pan/gui/post-ui.cc:248
 msgid "_Close"
-msgstr "Colours"
+msgstr "_Close"
 
-#: pan/gui/post-ui.cc:248
-#, fuzzy
+#: ../pan/gui/post-ui.cc:248
 msgid "Close Window"
-msgstr "Close the log window"
+msgstr "Close Window"
 
-#: pan/gui/post-ui.cc:249
+#: ../pan/gui/post-ui.cc:249
 msgid "Cu_t"
-msgstr ""
+msgstr "Cu_t"
 
-#: pan/gui/post-ui.cc:249
-#, fuzzy
+#: ../pan/gui/post-ui.cc:249
 msgid "Cut Text"
-msgstr "Quoted Text:"
+msgstr "Cut Text"
 
-#: pan/gui/post-ui.cc:250
+#: ../pan/gui/post-ui.cc:250
 msgid "_Copy"
-msgstr ""
+msgstr "_Copy"
 
-#: pan/gui/post-ui.cc:250
-#, fuzzy
+#: ../pan/gui/post-ui.cc:250
 msgid "Copy Text"
-msgstr "Wrap Text"
+msgstr "Copy Text"
 
-#: pan/gui/post-ui.cc:251
-#, fuzzy
+#: ../pan/gui/post-ui.cc:251
 msgid "_Paste"
-msgstr "_Post"
+msgstr "_Paste"
 
-#: pan/gui/post-ui.cc:251
-#, fuzzy
+#: ../pan/gui/post-ui.cc:251
 msgid "Paste Text"
-msgstr "Save Te_xt"
+msgstr "Paste Text"
 
-#: pan/gui/post-ui.cc:252
-#, fuzzy
+#: ../pan/gui/post-ui.cc:252
 msgid "_Rot13"
-msgstr "Rot13"
+msgstr "_Rot13"
 
-#: pan/gui/post-ui.cc:252
+#: ../pan/gui/post-ui.cc:252
 msgid "Rot13 Selected Text"
 msgstr "Rot13 Selected Text"
 
-#: pan/gui/post-ui.cc:253
-#, fuzzy
+#: ../pan/gui/post-ui.cc:253
 msgid "Run _Editor"
-msgstr "Editor"
+msgstr "Run _Editor"
 
-#: pan/gui/post-ui.cc:254
+#: ../pan/gui/post-ui.cc:254
 msgid "_Manage Editor List..."
-msgstr ""
+msgstr "_Manage Editor List..."
 
-#: pan/gui/post-ui.cc:255
-#, fuzzy
+#: ../pan/gui/post-ui.cc:255
 msgid "Manage Posting Pr_ofiles..."
-msgstr "/_Post/Posting Pr_ofiles..."
+msgstr "Manage Posting Pr_ofiles..."
 
-#: pan/gui/post-ui.cc:260
-#, fuzzy
+#: ../pan/gui/post-ui.cc:260
 msgid "_Wrap Text"
-msgstr "Wrap Text"
+msgstr "_Wrap Text"
 
-#: pan/gui/post-ui.cc:261
+#: ../pan/gui/post-ui.cc:261
 msgid "Remember _Charset for This Group"
-msgstr ""
+msgstr "Remember _Charset for This Group"
 
-#: pan/gui/post-ui.cc:262
+#: ../pan/gui/post-ui.cc:262
 msgid "Check _Spelling"
-msgstr ""
+msgstr "Check _Spelling"
 
-#: pan/gui/post-ui.cc:317 pan/gui/post-ui.cc:318 pan/gui/post-ui.cc:319
-msgid "Baltic"
-msgstr "Baltic"
-
-#: pan/gui/post-ui.cc:320 pan/gui/post-ui.cc:321
-msgid "Central European"
-msgstr "Central European"
-
-#: pan/gui/post-ui.cc:322
-msgid "Chinese Simplified"
-msgstr "Chinese Simplified"
-
-#: pan/gui/post-ui.cc:323
-msgid "Chinese Traditional"
-msgstr "Chinese Traditional"
-
-#: pan/gui/post-ui.cc:324 pan/gui/post-ui.cc:325 pan/gui/post-ui.cc:326
-msgid "Cyrillic"
-msgstr "Cyrillic"
-
-#: pan/gui/post-ui.cc:327
-msgid "Cyrillic, Ukrainian"
-msgstr "Cyrillic, Ukrainian"
-
-#: pan/gui/post-ui.cc:328
-msgid "Greek"
-msgstr "Greek"
-
-#: pan/gui/post-ui.cc:329
-msgid "Japanese"
-msgstr "Japanese"
-
-#: pan/gui/post-ui.cc:330
-msgid "Korean"
-msgstr "Korean"
-
-#: pan/gui/post-ui.cc:331
-msgid "Turkish"
-msgstr "Turkish"
-
-#: pan/gui/post-ui.cc:332 pan/gui/post-ui.cc:334
-msgid "Western"
-msgstr "Western"
-
-#: pan/gui/post-ui.cc:333
-msgid "Western, New"
-msgstr "Western, New"
-
-#: pan/gui/post-ui.cc:335
+#: ../pan/gui/post-ui.cc:335
 msgid "Unicode, UTF-8"
 msgstr "Unicode, UTF-8"
 
-#: pan/gui/post-ui.cc:431
-#, fuzzy, c-format
+#: ../pan/gui/post-ui.cc:431
+#, c-format
 msgid "Error loading post.ui: \"%s\""
-msgstr "Error reading from socket: %s"
+msgstr "Error loading post.ui: \"%s\""
 
-#: pan/gui/post-ui.cc:502
+#: ../pan/gui/post-ui.cc:502
 msgid "Manage Editor List"
-msgstr ""
+msgstr "Manage Editor List"
 
-#: pan/gui/post-ui.cc:509
-#, fuzzy
+#: ../pan/gui/post-ui.cc:509
 msgid "Editors"
-msgstr "Editor"
+msgstr "Editors"
 
-#: pan/gui/post-ui.cc:609
+#: ../pan/gui/post-ui.cc:609
 msgid "Your changes will be lost!"
-msgstr ""
+msgstr "Your changes will be lost!"
 
-#: pan/gui/post-ui.cc:610
+#: ../pan/gui/post-ui.cc:610
 msgid "Close this window and lose your changes?"
-msgstr ""
+msgstr "Close this window and lose your changes?"
 
-#: pan/gui/post-ui.cc:647
+#: ../pan/gui/post-ui.cc:647 ../pan/gui/post-ui.cc:686
 msgid "There were problems with this post."
-msgstr ""
+msgstr "There were problems with this post."
 
-#: pan/gui/post-ui.cc:649
-#, fuzzy
+#: ../pan/gui/post-ui.cc:649 ../pan/gui/post-ui.cc:688
 msgid "Go Back"
-msgstr "/_Go/Read Back"
+msgstr "Go Back"
 
-#: pan/gui/post-ui.cc:651
+#: ../pan/gui/post-ui.cc:651
 msgid "Post Anyway"
+msgstr "Post Anyway"
+
+#. Prompt the user
+#: ../pan/gui/post-ui.cc:680
+#, c-format
+msgid ""
+"Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr ""
+"Message uses characters not specified in charset '%s' - possibly use '%s' "
 
-#: pan/gui/post-ui.cc:662
-#, fuzzy
+#: ../pan/gui/post-ui.cc:703
 msgid "Go _Online"
-msgstr "Pan is Online"
+msgstr "Go _Online"
 
-#: pan/gui/post-ui.cc:834
+#: ../pan/gui/post-ui.cc:889
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
 msgstr ""
+"No posting server is set for this posting profile.\n"
+"Please edit the profile via Edit|Manage Posting Profiles."
 
-#: pan/gui/post-ui.cc:867
-#, fuzzy
+#: ../pan/gui/post-ui.cc:922
 msgid "Pan is Offline."
-msgstr "Pan is Offline"
+msgstr "Pan is Offline."
 
-#: pan/gui/post-ui.cc:868
+#: ../pan/gui/post-ui.cc:923
 msgid "Go online to post the article?"
-msgstr ""
+msgstr "Go online to post the article?"
 
 #. *
 #. ***  Pop up a ``Posting'' Dialog...
 #. *
-#: pan/gui/post-ui.cc:881
-#, fuzzy
+#: ../pan/gui/post-ui.cc:936
 msgid "Posting Article"
-msgstr "Posting article \"%s\""
+msgstr "Posting Article"
 
-#: pan/gui/post-ui.cc:887
+#: ../pan/gui/post-ui.cc:942
 msgid "Posting..."
-msgstr ""
+msgstr "Posting..."
 
-#: pan/gui/post-ui.cc:938
+#: ../pan/gui/post-ui.cc:993
 msgid "Error opening temporary file"
 msgstr "Error opening temporary file"
 
-#: pan/gui/post-ui.cc:958
+#: ../pan/gui/post-ui.cc:1013
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Error writing article to temporary file: %s"
 
-#: pan/gui/post-ui.cc:977
-#, fuzzy, c-format
+#: ../pan/gui/post-ui.cc:1032
+#, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
-msgstr "Error parsing \"external editor\" command line: %s"
+msgstr "Error parsing \"external editor\" command line: %s (Command was: %s)"
 
-#: pan/gui/post-ui.cc:1015
+#: ../pan/gui/post-ui.cc:1070
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Error starting external editor: %s"
 
-#: pan/gui/post-ui.cc:1070
-#, fuzzy
+#: ../pan/gui/post-ui.cc:1125
 msgid "Open Draft Article"
-msgstr "/_Read Article"
+msgstr "Open Draft Article"
 
-#: pan/gui/post-ui.cc:1233
-#, fuzzy
+#: ../pan/gui/post-ui.cc:1288
 msgid "Save Draft Article"
-msgstr "Saving Articles"
+msgstr "Save Draft Article"
 
-#: pan/gui/post-ui.cc:1390
+#: ../pan/gui/post-ui.cc:1445
 #, c-format
 msgid "Couldn't read signature file \"%s\": %s"
 msgstr "Could not read signature file \"%s\": %s"
 
-#: pan/gui/post-ui.cc:1411
-#, fuzzy, c-format
+#: ../pan/gui/post-ui.cc:1466
+#, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
-msgstr "Could not read signature file \"%s\": %s"
+msgstr "Couldn't parse signature command \"%s\": %s"
 
-#: pan/gui/post-ui.cc:1448
-#, fuzzy
+#: ../pan/gui/post-ui.cc:1503
 msgid "Couldn't convert signature to UTF-8."
-msgstr ""
-"Could not convert signature file '%s' to UTF-8. Signature must be in '%s'"
+msgstr "Couldn't convert signature to UTF-8."
 
-#: pan/gui/post-ui.cc:1790
-#, fuzzy
+#: ../pan/gui/post-ui.cc:1857
 msgid "Post Article"
-msgstr "_Article"
+msgstr "Post Article"
 
-#: pan/gui/post-ui.cc:1812
-#, fuzzy
+#: ../pan/gui/post-ui.cc:1883
 msgid "F_rom"
-msgstr "From"
+msgstr "F_rom"
 
-#: pan/gui/post-ui.cc:1819
-#, fuzzy
+#: ../pan/gui/post-ui.cc:1890
 msgid "_Subject"
-msgstr "_Subject:"
+msgstr "_Subject"
 
-#: pan/gui/post-ui.cc:1825
-#, fuzzy
+#: ../pan/gui/post-ui.cc:1896
 msgid "_Newsgroups"
-msgstr "/_Newsgroups"
+msgstr "_Newsgroups"
 
-#: pan/gui/post-ui.cc:1832
-#, fuzzy
+#: ../pan/gui/post-ui.cc:1903
 msgid "_Mail To"
-msgstr "Mail To"
+msgstr "_Mail To"
 
-#: pan/gui/post-ui.cc:1842
+#: ../pan/gui/post-ui.cc:1913
 msgid "One header per line, in the form HeaderName: Value"
-msgstr ""
+msgstr "One header per line, in the form HeaderName: Value"
 
-#: pan/gui/post-ui.cc:1845
-#, fuzzy
+#: ../pan/gui/post-ui.cc:1916
 msgid "_More Headers"
-msgstr "More Headers"
+msgstr "_More Headers"
 
-#: pan/gui/post-ui.cc:1867 pan/gui/profiles-dialog.cc:398
+#: ../pan/gui/post-ui.cc:1969 ../pan/gui/profiles-dialog.cc:404
 #, c-format
 msgid "On %d, %n wrote:"
 msgstr "On %d, %n wrote:"
 
-#: pan/gui/profiles-dialog.cc:102
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:102
 msgid "Posting Profile"
-msgstr "Pan: Profile"
+msgstr "Posting Profile"
 
-#: pan/gui/profiles-dialog.cc:110
+#: ../pan/gui/profiles-dialog.cc:112
 msgid "Profile Information"
 msgstr "Profile Information"
 
-#: pan/gui/profiles-dialog.cc:114
+#: ../pan/gui/profiles-dialog.cc:116
 msgid "_Profile Name:"
 msgstr "_Profile Name:"
 
-#: pan/gui/profiles-dialog.cc:117
+#: ../pan/gui/profiles-dialog.cc:119
 msgid "Required Information"
 msgstr "Required Information"
 
-#: pan/gui/profiles-dialog.cc:121
+#: ../pan/gui/profiles-dialog.cc:123
 msgid "_Full Name:"
 msgstr "_Full Name:"
 
-#: pan/gui/profiles-dialog.cc:124
+#: ../pan/gui/profiles-dialog.cc:126
 msgid "_Email Address:"
 msgstr "_Email Address:"
 
-#: pan/gui/profiles-dialog.cc:126
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:128
 msgid "_Post Articles via:"
-msgstr "_Article"
+msgstr "_Post Articles via:"
 
-#: pan/gui/profiles-dialog.cc:129
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:131
 msgid "Signature"
-msgstr "_Signature File:"
+msgstr "Signature"
 
-#: pan/gui/profiles-dialog.cc:132
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:134
 msgid "_Use a Signature"
-msgstr "_Signature File:"
+msgstr "_Use a Signature"
 
-#: pan/gui/profiles-dialog.cc:136
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:138
 msgid "Signature File"
-msgstr "Select Signature File"
+msgstr "Signature File"
 
-#: pan/gui/profiles-dialog.cc:139
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:141
 msgid "_Signature:"
-msgstr "_Signature File:"
+msgstr "_Signature:"
 
-#: pan/gui/profiles-dialog.cc:144
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:146
 msgid "Text File"
-msgstr "/_Go/Next _Article"
+msgstr "Text File"
 
-#: pan/gui/profiles-dialog.cc:146
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:148
 msgid "Text"
-msgstr "Text:"
+msgstr "Text"
 
-#: pan/gui/profiles-dialog.cc:148
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:150
 msgid "Command"
-msgstr "Print Command:"
+msgstr "Command"
 
-#: pan/gui/profiles-dialog.cc:158
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:160
 msgid "Signature _Type:"
-msgstr "_Signature File:"
+msgstr "Signature _Type:"
 
-#: pan/gui/profiles-dialog.cc:161
+#: ../pan/gui/profiles-dialog.cc:163
 msgid "Optional Information"
 msgstr "Optional Information"
 
-#: pan/gui/profiles-dialog.cc:169
+#: ../pan/gui/profiles-dialog.cc:171
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -1912,321 +1727,286 @@ msgstr ""
 "%n for Author name\n"
 "%d for Date"
 
-#: pan/gui/profiles-dialog.cc:170
+#: ../pan/gui/profiles-dialog.cc:172
 msgid "_Attribution:"
 msgstr "_Attribution:"
 
-#: pan/gui/profiles-dialog.cc:190
+#: ../pan/gui/profiles-dialog.cc:192
 msgid ""
 "Extra headers to be included in your posts, such as\n"
 "Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
 "Organization: Your Organization"
 msgstr ""
+"Extra headers to be included in your posts, such as\n"
+"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
+"Organization: Your Organization"
 
-#: pan/gui/profiles-dialog.cc:199
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:201
 msgid "E_xtra Headers:"
-msgstr "Extra Headers"
+msgstr "E_xtra Headers:"
 
-#: pan/gui/profiles-dialog.cc:253
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:258
 msgid "Invalid email address."
-msgstr "Invalid address \"%s\""
+msgstr "Invalid email address."
 
-#: pan/gui/profiles-dialog.cc:254
+#: ../pan/gui/profiles-dialog.cc:259
 msgid "Please use an address of the form joe@somewhere.org"
-msgstr ""
+msgstr "Please use an address of the form joe@somewhere.org"
 
-#: pan/gui/profiles-dialog.cc:399
+#: ../pan/gui/profiles-dialog.cc:405
 msgid "New Profile"
 msgstr "New Profile"
 
-#: pan/gui/profiles-dialog.cc:442
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:451
 msgid "Posting Profiles"
-msgstr "/_Post/Posting Pr_ofiles..."
+msgstr "Posting Profiles"
 
-#: pan/gui/profiles-dialog.cc:458
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:467
 msgid "Profiles"
-msgstr "Profile"
+msgstr "Profiles"
 
-#: pan/gui/profiles-dialog.cc:482
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:491
 msgid "Add a New Profile"
-msgstr "Add a new profile"
+msgstr "Add a New Profile"
 
-#: pan/gui/profiles-dialog.cc:493
+#: ../pan/gui/profiles-dialog.cc:502
 msgid "Edit the selected profile"
 msgstr "Edit the selected profile"
 
-#: pan/gui/profiles-dialog.cc:499
+#: ../pan/gui/profiles-dialog.cc:508
 msgid "Remove the selected profile"
 msgstr "Remove the selected profile"
 
-#: pan/gui/prefs.cc:320
-#, fuzzy, c-format
+#: ../pan/gui/prefs.cc:320
+#, c-format
 msgid "Couldn't parse %s color \"%s\""
-msgstr "Could not parse signature command \"%s\""
+msgstr "Couldn't parse %s colour \"%s\""
 
-#: pan/gui/prefs-ui.cc:159
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:160
 msgid "Use GNOME Preferences"
-msgstr "Pan Preferences"
+msgstr "Use GNOME Preferences"
 
-#: pan/gui/prefs-ui.cc:160
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:161
 msgid "Use KDE Preferences"
-msgstr "References"
+msgstr "Use KDE Preferences"
 
-#: pan/gui/prefs-ui.cc:161
-#, fuzzy
-msgid "Use OS/X Preferences"
-msgstr "References"
+#: ../pan/gui/prefs-ui.cc:162
+msgid "Use OS X Preferences"
+msgstr "Use OS X Preferences"
 
-#: pan/gui/prefs-ui.cc:162
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:163
 msgid "Use Windows Preferences"
-msgstr "Pan Preferences"
+msgstr "Use Windows Preferences"
 
-#: pan/gui/prefs-ui.cc:163
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:164
 msgid "Custom Command:"
-msgstr "Print Command:"
+msgstr "Custom Command:"
 
-#: pan/gui/prefs-ui.cc:315
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:316
 msgid "Action"
-msgstr "Actions"
+msgstr "Action"
 
-#: pan/gui/prefs-ui.cc:321
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:322
 msgid "State"
-msgstr "Status"
+msgstr "State"
 
-#: pan/gui/prefs-ui.cc:354
+#: ../pan/gui/prefs-ui.cc:355
 msgid "Enabled"
-msgstr ""
+msgstr "Enabled"
 
-#: pan/gui/prefs-ui.cc:358
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:359
 msgid "Column Name"
-msgstr "Column"
+msgstr "Column Name"
 
-#: pan/gui/prefs-ui.cc:392
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:393
 msgid "Pan: Preferences"
-msgstr "Pan Preferences"
+msgstr "Pan: Preferences"
 
-#: pan/gui/prefs-ui.cc:404
+#: ../pan/gui/prefs-ui.cc:405
 msgid "Mouse"
 msgstr "Mouse"
 
-#: pan/gui/prefs-ui.cc:406
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:407
 msgid "Single-click activates, rather than selects, _groups"
-msgstr "Single-clic_k selects, rather than loads, groups"
+msgstr "Single-click activates, rather than selects, _groups"
 
-#: pan/gui/prefs-ui.cc:408
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:409
 msgid "Single-click activates, rather than selects, _articles"
-msgstr "Single-click selects, rather than loads, heade_rs"
+msgstr "Single-click activates, rather than selects, _articles"
 
-#: pan/gui/prefs-ui.cc:411
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:412
 msgid "Groups"
 msgstr "Groups"
 
-#: pan/gui/prefs-ui.cc:413
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:414
 msgid "Get new headers in subscribed groups on _startup"
-msgstr "Get New Headers in Subscribed Groups"
+msgstr "Get new headers in subscribed groups on _startup"
 
-#: pan/gui/prefs-ui.cc:415
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:416
 msgid "Get new headers when _entering group"
-msgstr "Download new headers when entering a _group"
+msgstr "Get new headers when _entering group"
 
-#: pan/gui/prefs-ui.cc:417
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:418
 msgid "Mark entire group _read when leaving group"
-msgstr "_Mark group's articles read when leaving a group"
+msgstr "Mark entire group _read when leaving group"
 
-#: pan/gui/prefs-ui.cc:420
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:420
+msgid "E_xpand all threads when entering group"
+msgstr "E_xpand all threads when entering group"
+
+#: ../pan/gui/prefs-ui.cc:423
 msgid "Articles"
-msgstr "/_Articles"
+msgstr "Articles"
 
-#: pan/gui/prefs-ui.cc:421
-msgid "Space selects next article, not next unread"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:425
+msgid "Space selects next article rather than next unread"
+msgstr "Space selects next article rather than next unread"
 
-#: pan/gui/prefs-ui.cc:424
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:427
+msgid "Smooth scrolling"
+msgstr "Smooth scrolling"
+
+#: ../pan/gui/prefs-ui.cc:430
 msgid "_Behavior"
-msgstr "Beha_viour"
+msgstr "_Behaviour"
 
-#: pan/gui/prefs-ui.cc:428
+#: ../pan/gui/prefs-ui.cc:434
 msgid "Pane Layout"
 msgstr "Pane Layout"
 
-#: pan/gui/prefs-ui.cc:444
+#: ../pan/gui/prefs-ui.cc:450
 msgid "Tasks"
 msgstr "Tasks"
 
-#: pan/gui/prefs-ui.cc:447
+#: ../pan/gui/prefs-ui.cc:453
 msgid "1=Groups, 2=Headers, 3=Body"
-msgstr ""
+msgstr "1=Groups, 2=Headers, 3=Body"
 
-#: pan/gui/prefs-ui.cc:449
+#: ../pan/gui/prefs-ui.cc:455
 msgid "1=Groups, 2=Body, 3=Headers"
-msgstr ""
+msgstr "1=Groups, 2=Body, 3=Headers"
 
-#: pan/gui/prefs-ui.cc:451
+#: ../pan/gui/prefs-ui.cc:457
 msgid "1=Headers, 2=Groups, 3=Body"
-msgstr ""
+msgstr "1=Headers, 2=Groups, 3=Body"
 
-#: pan/gui/prefs-ui.cc:453
+#: ../pan/gui/prefs-ui.cc:459
 msgid "1=Headers, 2=Body, 3=Groups"
-msgstr ""
+msgstr "1=Headers, 2=Body, 3=Groups"
 
-#: pan/gui/prefs-ui.cc:455
+#: ../pan/gui/prefs-ui.cc:461
 msgid "1=Body, 2=Groups, 3=Headers"
-msgstr ""
+msgstr "1=Body, 2=Groups, 3=Headers"
 
-#: pan/gui/prefs-ui.cc:457
+#: ../pan/gui/prefs-ui.cc:463
 msgid "1=Body, 2=Headers, 3=Groups"
-msgstr ""
+msgstr "1=Body, 2=Headers, 3=Groups"
 
-#: pan/gui/prefs-ui.cc:464
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:470
 msgid "Header Pane Columns"
-msgstr "Header Pane"
+msgstr "Header Pane Columns"
 
-#: pan/gui/prefs-ui.cc:468
-#, fuzzy
-msgid "Threads"
-msgstr "_Read Threads:"
-
-#: pan/gui/prefs-ui.cc:470
-#, fuzzy
-msgid "E_xpand all threads when entering group"
-msgstr "Download new headers when entering a _group"
-
-#: pan/gui/prefs-ui.cc:473
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:474
 msgid "_Headers"
-msgstr "Headers"
+msgstr "_Headers"
 
-#: pan/gui/prefs-ui.cc:477
+#: ../pan/gui/prefs-ui.cc:478
 msgid "Fonts"
 msgstr "Fonts"
 
-#: pan/gui/prefs-ui.cc:479
+#: ../pan/gui/prefs-ui.cc:480
 msgid "Use custom font in Group Pane:"
 msgstr "Use custom font in Group Pane:"
 
-#: pan/gui/prefs-ui.cc:484
+#: ../pan/gui/prefs-ui.cc:485
 msgid "Use custom font in Header Pane:"
 msgstr "Use custom font in Header Pane:"
 
-#: pan/gui/prefs-ui.cc:489
+#: ../pan/gui/prefs-ui.cc:490
 msgid "Use custom font in Body Pane:"
 msgstr "Use custom font in Body Pane:"
 
-#: pan/gui/prefs-ui.cc:494
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:495
 msgid "Monospace font:"
-msgstr "Monospac_e font:"
+msgstr "Monospace font:"
 
-#: pan/gui/prefs-ui.cc:498
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:499
 msgid "_Fonts"
-msgstr "Fonts"
+msgstr "_Fonts"
 
-#: pan/gui/prefs-ui.cc:502
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:503
 msgid "Header Pane"
 msgstr "Header Pane"
 
-#: pan/gui/prefs-ui.cc:505 pan/gui/prefs-ui.cc:511 pan/gui/prefs-ui.cc:517
-#: pan/gui/prefs-ui.cc:523 pan/gui/prefs-ui.cc:529
+#: ../pan/gui/prefs-ui.cc:506 ../pan/gui/prefs-ui.cc:512
+#: ../pan/gui/prefs-ui.cc:518 ../pan/gui/prefs-ui.cc:524
+#: ../pan/gui/prefs-ui.cc:530
 msgid "Text:"
 msgstr "Text:"
 
-#: pan/gui/prefs-ui.cc:507 pan/gui/prefs-ui.cc:513 pan/gui/prefs-ui.cc:519
-#: pan/gui/prefs-ui.cc:525 pan/gui/prefs-ui.cc:531
+#: ../pan/gui/prefs-ui.cc:508 ../pan/gui/prefs-ui.cc:514
+#: ../pan/gui/prefs-ui.cc:520 ../pan/gui/prefs-ui.cc:526
+#: ../pan/gui/prefs-ui.cc:532
 msgid "Background:"
 msgstr "Background:"
 
-#: pan/gui/prefs-ui.cc:509
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:510
 msgid "Scores of 9999 or more:"
-msgstr "/Filte_r/Match Scores of -9999 (Ignored)"
+msgstr "Scores of 9999 or more:"
 
-#: pan/gui/prefs-ui.cc:515
+#: ../pan/gui/prefs-ui.cc:516
 msgid "Scores from 5000 to 9998:"
-msgstr ""
+msgstr "Scores from 5000 to 9998:"
 
-#: pan/gui/prefs-ui.cc:521
+#: ../pan/gui/prefs-ui.cc:522
 msgid "Scores from 1 to 4999:"
-msgstr ""
+msgstr "Scores from 1 to 4999:"
 
-#: pan/gui/prefs-ui.cc:527
+#: ../pan/gui/prefs-ui.cc:528
 msgid "Scores from -9998 to -1:"
-msgstr ""
+msgstr "Scores from -9998 to -1:"
 
-#: pan/gui/prefs-ui.cc:533
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:534
 msgid "Scores of -9999 or less:"
-msgstr "/Filte_r/Match Scores of -9999 (Ignored)"
+msgstr "Scores of -9999 or less:"
 
-#: pan/gui/prefs-ui.cc:535
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:536
 msgid "Body Pane"
-msgstr "Bod_y Pane"
+msgstr "Body Pane"
 
-#: pan/gui/prefs-ui.cc:541
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:542
 msgid "Quoted Text:"
-msgstr "/_View/Mute _Quoted Text"
+msgstr "Quoted Text:"
 
-#: pan/gui/prefs-ui.cc:542
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:543
 msgid "URL:"
-msgstr "URLs:"
+msgstr "URL:"
 
-#: pan/gui/prefs-ui.cc:543
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:544
 msgid "Signature:"
-msgstr "_Signature File:"
+msgstr "Signature:"
 
-#: pan/gui/prefs-ui.cc:545
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:546
 msgid "_Colors"
-msgstr "Colours"
+msgstr "_Colours"
 
-#: pan/gui/prefs-ui.cc:549
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:550
 msgid "Preferred Applications"
-msgstr "Applications"
+msgstr "Preferred Applications"
 
-#: pan/gui/prefs-ui.cc:553
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:554
 msgid "_Web Browser:"
-msgstr "New Groups"
+msgstr "_Web Browser:"
 
-#: pan/gui/prefs-ui.cc:556
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:557
 msgid "_Mail Reader:"
-msgstr "Mail Server"
+msgstr "_Mail Reader:"
 
-#: pan/gui/prefs-ui.cc:558
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:559
 msgid "A_pplications"
-msgstr "Applications"
+msgstr "A_pplications"
 
-#: pan/gui/save-ui.cc:61
+#: ../pan/gui/save-ui.cc:58
 #, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
@@ -2245,2602 +2025,648 @@ msgstr ""
 "\"/home/user/News/Pan/%G\" becomes\n"
 "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 
-#: pan/gui/save-ui.cc:156
-#, fuzzy
+#: ../pan/gui/save-ui.cc:182
 msgid "Pan: Save Articles"
-msgstr "Pan: Save As"
+msgstr "Pan: Save Articles"
 
-#: pan/gui/save-ui.cc:173
+#: ../pan/gui/save-ui.cc:199
 msgid "Files"
 msgstr "Files"
 
-#: pan/gui/save-ui.cc:176
-#, fuzzy
+#: ../pan/gui/save-ui.cc:203
 msgid "Save _Text"
-msgstr "Save Te_xt"
+msgstr "Save _Text"
 
-#: pan/gui/save-ui.cc:179
-#, fuzzy
+#: ../pan/gui/save-ui.cc:207
 msgid "Save _Attachments"
 msgstr "Save _Attachments"
 
-#: pan/gui/save-ui.cc:185
-#, fuzzy
+#: ../pan/gui/save-ui.cc:213
 msgid "Path"
-msgstr "Parts"
+msgstr "Path"
 
-#: pan/gui/save-ui.cc:191
+#: ../pan/gui/save-ui.cc:222
 msgid "C_ustom path:"
-msgstr ""
+msgstr "C_ustom path:"
 
-#: pan/gui/save-ui.cc:195
-#, fuzzy
+#: ../pan/gui/save-ui.cc:226
 msgid "Save Files to Path"
-msgstr "Save _Attachments"
+msgstr "Save Files to Path"
 
-#: pan/gui/save-ui.cc:208
-#, fuzzy
+#: ../pan/gui/save-ui.cc:240
 msgid "_Path:"
-msgstr "_Post"
+msgstr "_Path:"
 
-#: pan/gui/save-ui.cc:211
+#: ../pan/gui/save-ui.cc:243
 #, c-format
 msgid "Group's _default path: %s"
-msgstr ""
+msgstr "Group's _default path: %s"
 
-#: pan/gui/save-ui.cc:220
-#, fuzzy
-msgid "Group Management"
-msgstr "Group Pane"
+#: ../pan/gui/save-ui.cc:253
+msgid "Priority"
+msgstr "Priority"
 
 #. sort by age
-#: pan/gui/save-ui.cc:224
+#: ../pan/gui/save-ui.cc:257
 msgid "Add to the queue sorted by a_ge"
-msgstr ""
+msgstr "Add to the queue sorted by a_ge"
 
 #. top of queue
-#: pan/gui/save-ui.cc:229
-#, fuzzy
+#: ../pan/gui/save-ui.cc:262
 msgid "Add to the _front of the queue"
-msgstr "Add to the b_ottom of the Task Manager's List"
+msgstr "Add to the _front of the queue"
 
 #. bottom of queue
-#: pan/gui/save-ui.cc:234
+#: ../pan/gui/save-ui.cc:267
 msgid "Add to the _back of the queue"
-msgstr ""
+msgstr "Add to the _back of the queue"
 
-#: pan/gui/score-add-ui.cc:86
+#: ../pan/gui/score-add-ui.cc:91
 msgid "is more than"
-msgstr ""
+msgstr "is more than"
 
-#: pan/gui/score-add-ui.cc:87
+#: ../pan/gui/score-add-ui.cc:92
 msgid "is at most"
-msgstr ""
+msgstr "is at most"
 
-#: pan/gui/score-add-ui.cc:109
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:114
 msgid "increase the article's score by"
-msgstr "/_View/_Wrap Article Body"
+msgstr "increase the article's score by"
 
-#: pan/gui/score-add-ui.cc:110
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:115
 msgid "decrease the article's score by"
-msgstr "/_View/_Wrap Article Body"
+msgstr "decrease the article's score by"
 
-#: pan/gui/score-add-ui.cc:111
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:116
 msgid "set the article's score to"
-msgstr "set score to"
+msgstr "set the article's score to"
 
-#: pan/gui/score-add-ui.cc:112
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:117
 msgid "watch the article (set its score to 9999)"
-msgstr "_Watch (set score to 9999)"
+msgstr "watch the article (set its score to 9999)"
 
-#: pan/gui/score-add-ui.cc:113
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:118
 msgid "ignore the article (set its score to -9999)"
-msgstr "_Ignore (set score to -9999)"
+msgstr "ignore the article (set its score to -9999)"
 
-#: pan/gui/score-add-ui.cc:138
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:143
 msgid "References"
-msgstr "_References:"
+msgstr "References"
 
-#: pan/gui/score-add-ui.cc:139
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:144
 msgid "Line Count"
-msgstr "Line %d, Column %d"
+msgstr "Line Count"
 
-#: pan/gui/score-add-ui.cc:140
+#: ../pan/gui/score-add-ui.cc:145
 msgid "Byte Count"
-msgstr ""
+msgstr "Byte Count"
 
-#: pan/gui/score-add-ui.cc:141
+#: ../pan/gui/score-add-ui.cc:146
 msgid "Crosspost Group Count"
-msgstr ""
+msgstr "Crosspost Group Count"
 
-#: pan/gui/score-add-ui.cc:142
+#: ../pan/gui/score-add-ui.cc:147
 msgid "Age (in days)"
-msgstr ""
+msgstr "Age (in days)"
 
-#: pan/gui/score-add-ui.cc:164
+#: ../pan/gui/score-add-ui.cc:169
 msgid "the next week"
-msgstr ""
+msgstr "the next week"
 
-#: pan/gui/score-add-ui.cc:165
+#: ../pan/gui/score-add-ui.cc:170
 msgid "the next month"
-msgstr ""
+msgstr "the next month"
 
-#: pan/gui/score-add-ui.cc:166
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:171
 msgid "forever"
-msgstr "Server"
+msgstr "forever"
 
-#: pan/gui/score-add-ui.cc:191
+#: ../pan/gui/score-add-ui.cc:196
 msgid "contains"
 msgstr "contains"
 
-#: pan/gui/score-add-ui.cc:192
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:197
 msgid "doesn't contain"
-msgstr "does not contain"
+msgstr "doesn't contain"
 
-#: pan/gui/score-add-ui.cc:193
+#: ../pan/gui/score-add-ui.cc:198
 msgid "is"
 msgstr "is"
 
-#: pan/gui/score-add-ui.cc:194
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:199
 msgid "isn't"
-msgstr "is not"
+msgstr "isn't"
 
-#: pan/gui/score-add-ui.cc:195
+#: ../pan/gui/score-add-ui.cc:200
 msgid "starts with"
 msgstr "starts with"
 
-#: pan/gui/score-add-ui.cc:196
+#: ../pan/gui/score-add-ui.cc:201
 msgid "ends with"
 msgstr "ends with"
 
-#: pan/gui/score-add-ui.cc:197
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:202
 msgid "matches regex"
-msgstr "matches regular expression"
+msgstr "matches regex"
 
-#: pan/gui/score-add-ui.cc:525
+#: ../pan/gui/score-add-ui.cc:484
+msgid "Another rule already sets this article's score."
+msgstr "Another rule already sets this article's score."
+
+#: ../pan/gui/score-add-ui.cc:485
+msgid "You may want to go back or delete the old rule."
+msgstr "You may want to go back or delete the old rule."
+
+#: ../pan/gui/score-add-ui.cc:576
 msgid "Add and Re_score"
 msgstr "Add and Re_score"
 
-#: pan/gui/score-add-ui.cc:573
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:625
 msgid "Pan: New Scoring Rule"
-msgstr "Pan: Edit Rule"
+msgstr "Pan: New Scoring Rule"
 
-#: pan/gui/score-add-ui.cc:592
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:644
 msgid "New Scoring Rule"
-msgstr "New Score"
+msgstr "New Scoring Rule"
 
-#: pan/gui/score-add-ui.cc:603
+#: ../pan/gui/score-add-ui.cc:655
 msgid "If the group name"
-msgstr ""
+msgstr "If the group name"
 
-#: pan/gui/score-add-ui.cc:610
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:662
 msgid "And the article's"
-msgstr "Fetching articles"
+msgstr "And the article's"
 
-#: pan/gui/score-add-ui.cc:622
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:674
 msgid "Then"
-msgstr "Thanks"
+msgstr "Then"
 
-#: pan/gui/score-add-ui.cc:630
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:682
 msgid "For"
-msgstr "Folders"
+msgstr "For"
 
-#: pan/gui/score-view-ui.cc:64
+#: ../pan/gui/score-view-ui.cc:63
 msgid "Close and Re_score"
 msgstr "Close and Re_score"
 
-#: pan/gui/score-view-ui.cc:167
-#, fuzzy, c-format
+#: ../pan/gui/score-view-ui.cc:166
+#, c-format
 msgid "File %s, Lines %d - %d"
-msgstr "scorefile %s, line %d: %s (%s)"
+msgstr "File %s, Lines %d - %d"
 
-#: pan/gui/score-view-ui.cc:170
-#, fuzzy, c-format
+#: ../pan/gui/score-view-ui.cc:169
+#, c-format
 msgid "Name: \"%s\""
-msgstr "Saved \"%s\""
+msgstr "Name: \"%s\""
 
-#: pan/gui/score-view-ui.cc:199
-#, fuzzy
+#: ../pan/gui/score-view-ui.cc:198
 msgid "Pan: Article's Scores"
-msgstr "Pan: View Article Scores"
+msgstr "Pan: Article's Scores"
 
-#: pan/gui/score-view-ui.cc:225
-#, fuzzy
+#: ../pan/gui/score-view-ui.cc:224
 msgid "Add"
-msgstr "add"
+msgstr "Add"
 
-#: pan/gui/score-view-ui.cc:230
+#: ../pan/gui/score-view-ui.cc:229
 msgid "New Score"
 msgstr "New Score"
 
-#: pan/gui/score-view-ui.cc:235
+#: ../pan/gui/score-view-ui.cc:234
 msgid "Criteria"
 msgstr "Criteria"
 
-#: pan/gui/score-view-ui.cc:258
-#, fuzzy
+#: ../pan/gui/score-view-ui.cc:257
 msgid "Add a New Scoring Rule"
-msgstr "Add a new score"
+msgstr "Add a New Scoring Rule"
 
-#: pan/gui/score-view-ui.cc:265
-#, fuzzy
+#: ../pan/gui/score-view-ui.cc:264
 msgid "Remove the Selected Scoring Rule"
-msgstr "Remove the selected score"
+msgstr "Remove the Selected Scoring Rule"
 
-#: pan/gui/server-ui.cc:162
+#: ../pan/gui/server-ui.cc:162
 msgid "Please specify the server's address."
-msgstr ""
+msgstr "Please specify the server's address."
 
 #. create the dialog
-#: pan/gui/server-ui.cc:201
-#, fuzzy
+#: ../pan/gui/server-ui.cc:201
 msgid "Pan: Add a Server"
-msgstr "Pan: Edit Server"
+msgstr "Pan: Add a Server"
 
-#: pan/gui/server-ui.cc:201
-#, fuzzy
+#: ../pan/gui/server-ui.cc:201
 msgid "Pan: Edit a Server's Settings"
-msgstr "Pan: Edit Server"
+msgstr "Pan: Edit a Server's Settings"
 
-#: pan/gui/server-ui.cc:222
-#, fuzzy
+#: ../pan/gui/server-ui.cc:222
 msgid "Location"
-msgstr "Actions"
+msgstr "Location"
 
-#: pan/gui/server-ui.cc:226
+#: ../pan/gui/server-ui.cc:226
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr "The news server's actual address, e.g. \"news.mynewsserver.com\""
 
-#: pan/gui/server-ui.cc:227
+#: ../pan/gui/server-ui.cc:227
 msgid "_Address:"
 msgstr "_Address:"
 
-#: pan/gui/server-ui.cc:231
-#, fuzzy
+#: ../pan/gui/server-ui.cc:231
 msgid "The news server's port number.  Typically 119."
-msgstr "The news server's port.  This is almost always 119."
+msgstr "The news server's port number (typically 119)."
 
-#: pan/gui/server-ui.cc:232
+#: ../pan/gui/server-ui.cc:232
 msgid "Por_t:"
 msgstr "Por_t:"
 
-#: pan/gui/server-ui.cc:235
+#: ../pan/gui/server-ui.cc:235
 msgid "Login (if Required)"
-msgstr ""
+msgstr "Login (if Required)"
 
-#: pan/gui/server-ui.cc:239
+#: ../pan/gui/server-ui.cc:239
 msgid "_Username:"
 msgstr "_Username:"
 
-#: pan/gui/server-ui.cc:240
+#: ../pan/gui/server-ui.cc:240
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
+"The username to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
 
-#: pan/gui/server-ui.cc:244
+#: ../pan/gui/server-ui.cc:244
 msgid "_Password:"
 msgstr "_Password:"
 
-#: pan/gui/server-ui.cc:245
+#: ../pan/gui/server-ui.cc:245
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
+"The password to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
 
-#: pan/gui/server-ui.cc:248
-#, fuzzy
+#: ../pan/gui/server-ui.cc:248
 msgid "Settings"
-msgstr "Stopping"
+msgstr "Settings"
 
-#: pan/gui/server-ui.cc:254
+#: ../pan/gui/server-ui.cc:254
 msgid "Connection _Limit:"
 msgstr "Connection _Limit:"
 
-#: pan/gui/server-ui.cc:257
+#: ../pan/gui/server-ui.cc:257
 msgid "After Two Weeks"
-msgstr ""
+msgstr "After Two Weeks"
 
-#: pan/gui/server-ui.cc:258
+#: ../pan/gui/server-ui.cc:258
 msgid "After One Month"
-msgstr ""
+msgstr "After One Month"
 
-#: pan/gui/server-ui.cc:259
+#: ../pan/gui/server-ui.cc:259
 msgid "After Two Months"
-msgstr ""
+msgstr "After Two Months"
 
-#: pan/gui/server-ui.cc:260
-#, fuzzy
+#: ../pan/gui/server-ui.cc:260
 msgid "Never Expire Old Articles"
-msgstr "Ne_ver Expire"
+msgstr "Never Expire Old Articles"
 
-#: pan/gui/server-ui.cc:274
-#, fuzzy
+#: ../pan/gui/server-ui.cc:274
 msgid "E_xpire Old Articles:"
-msgstr "Get Selected Articles"
+msgstr "E_xpire Old Articles:"
 
-#: pan/gui/server-ui.cc:277
-#, fuzzy
+#: ../pan/gui/server-ui.cc:277
 msgid "Primary"
-msgstr "Priority"
+msgstr "Primary"
 
-#: pan/gui/server-ui.cc:278
+#: ../pan/gui/server-ui.cc:278
 msgid "Fallback"
-msgstr ""
+msgstr "Fallback"
 
-#: pan/gui/server-ui.cc:292
-#, fuzzy
+#: ../pan/gui/server-ui.cc:292
 msgid "Server Rank:"
-msgstr "Servers"
+msgstr "Server Rank:"
 
-#: pan/gui/server-ui.cc:296
+#: ../pan/gui/server-ui.cc:296
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
 "subscription servers as fallbacks."
 msgstr ""
+"Fallback servers are used for articles that can't be found on the "
+"primaries.  One common approach is to use free servers as primaries and "
+"subscription servers as fallbacks."
 
-#: pan/gui/server-ui.cc:420
+#: ../pan/gui/server-ui.cc:420
 #, c-format
 msgid "Really delete \"%s\"?"
-msgstr ""
+msgstr "Really delete \"%s\"?"
 
 #. dialog
-#: pan/gui/server-ui.cc:492
+#: ../pan/gui/server-ui.cc:492
 msgid "Pan: Servers"
 msgstr "Pan: Servers"
 
-#: pan/gui/server-ui.cc:512
+#: ../pan/gui/server-ui.cc:512
 msgid "Servers"
 msgstr "Servers"
 
-#: pan/gui/server-ui.cc:538
-#, fuzzy
+#: ../pan/gui/server-ui.cc:538
 msgid "Add a Server"
-msgstr "Add a new server"
+msgstr "Add a Server"
 
-#: pan/gui/server-ui.cc:548
-#, fuzzy
+#: ../pan/gui/server-ui.cc:548
 msgid "Edit a Server's Settings"
-msgstr "Other Settings"
+msgstr "Edit a Server's Settings"
 
-#: pan/gui/server-ui.cc:555
-#, fuzzy
+#: ../pan/gui/server-ui.cc:555
 msgid "Remove a Server"
-msgstr "New Server"
+msgstr "Remove a Server"
 
 #. less than a mebi...
-#: pan/gui/task-pane.cc:210
+#: ../pan/gui/task-pane.cc:210
 #, c-format
 msgid "%.2f KiB"
-msgstr ""
+msgstr "%.2f KB"
 
 #. less than a gibi...
-#: pan/gui/task-pane.cc:212
+#: ../pan/gui/task-pane.cc:212
 #, c-format
 msgid "%.2f MiB"
-msgstr ""
+msgstr "%.2f MB"
 
-#: pan/gui/task-pane.cc:214
+#: ../pan/gui/task-pane.cc:214
 #, c-format
 msgid "%.2f GiB"
-msgstr ""
+msgstr "%.2f GB"
 
-#: pan/gui/task-pane.cc:250
-#, fuzzy, c-format
+#: ../pan/gui/task-pane.cc:251
+#, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
-msgstr "Pan %s Task Manager (%d Queued, %d Running, %d Stopped)"
+msgstr "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 
-#: pan/gui/task-pane.cc:252
-#, fuzzy, c-format
+#: ../pan/gui/task-pane.cc:253
+#, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
-msgstr "Pan %s Task Manager (%d Queued, %d Running)"
+msgstr "Pan: Tasks (%d Queued, %d Running)"
 
-#: pan/gui/task-pane.cc:254
-#, fuzzy
+#: ../pan/gui/task-pane.cc:255
 msgid "Pan: Tasks"
-msgstr "Pan: Task Manager"
+msgstr "Pan: Tasks"
 
-#: pan/gui/task-pane.cc:268
+#: ../pan/gui/task-pane.cc:269
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
-msgstr ""
+msgstr "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 
-#: pan/gui/task-pane.cc:326
+#: ../pan/gui/task-pane.cc:327
 msgid "Running"
 msgstr "Running"
 
-#: pan/gui/task-pane.cc:327
+#: ../pan/gui/task-pane.cc:328
 msgid "Queued"
 msgstr "Queued"
 
-#: pan/gui/task-pane.cc:328
+#: ../pan/gui/task-pane.cc:329
 msgid "Stopped"
 msgstr "Stopped"
 
-#: pan/gui/task-pane.cc:329
+#: ../pan/gui/task-pane.cc:330
 msgid "Removing"
 msgstr "Removing"
 
-#: pan/gui/task-pane.cc:330
+#: ../pan/gui/task-pane.cc:331
 msgid "Unknown"
 msgstr "Unknown"
 
-#: pan/gui/task-pane.cc:354
-#, fuzzy, c-format
-msgid "%d%% Done; %d:%02d:%02d Remaining (%d @ %lu KiB/s)"
-msgstr "%d:%02d:%02d (%lu KB/s)"
+#: ../pan/gui/task-pane.cc:357
+#, c-format
+msgid "%d%% Done"
+msgstr "%d%% Done"
 
-#: pan/gui/task-pane.cc:358
-#, fuzzy, c-format
-msgid "%d%% Done; %s"
-msgstr "% Done"
+#: ../pan/gui/task-pane.cc:363
+#, c-format
+msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
+msgstr "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 
-#: pan/gui/task-pane.cc:366
-#, fuzzy, c-format
-msgid "to %s"
-msgstr "About %s"
-
-#: pan/gui/task-pane.cc:433
-#, fuzzy
+#: ../pan/gui/task-pane.cc:440
 msgid "Restart Tasks"
-msgstr "Restart Selected Task(s)"
+msgstr "Restart Tasks"
 
-#: pan/gui/task-pane.cc:438
-#, fuzzy
+#: ../pan/gui/task-pane.cc:445
 msgid "Stop Tasks"
-msgstr "No Tasks"
+msgstr "Stop Tasks"
 
-#: pan/gui/task-pane.cc:443
-#, fuzzy
+#: ../pan/gui/task-pane.cc:450
 msgid "Delete Tasks"
-msgstr "Delete Spam"
+msgstr "Delete Tasks"
 
-#: pan/gui/task-pane.cc:467
+#: ../pan/gui/task-pane.cc:474
 msgid "Status"
 msgstr "Status"
 
-#: pan/gui/url.cc:92
-#, fuzzy, c-format
+#: ../pan/gui/url.cc:92
+#, c-format
 msgid "Error starting URL: %s (Command was: %s)"
-msgstr "Error parsing \"web browser\" command line: %s"
+msgstr "Error starting URL: %s (Command was: %s)"
 
-#: pan/tasks/nntp.cc:214
+#: ../pan/tasks/nntp.cc:209
 #, c-format
 msgid "Unable to set group: %s"
 msgstr "Unable to set group: %s"
 
-#: pan/tasks/nntp.cc:231
+#: ../pan/tasks/nntp.cc:226
 #, c-format
 msgid "Error: %s"
 msgstr "Error: %s"
 
-#: pan/tasks/socket-impl-gio.cc:112
+#: ../pan/tasks/nntp-pool.cc:202
 #, c-format
-msgid "Making a new connection to %*.*s"
-msgstr ""
+msgid "Unable to connect to \"%s\""
+msgstr "Unable to connect to \"%s\""
 
-#: pan/tasks/socket-impl-gio.cc:347
-#, fuzzy
+#: ../pan/tasks/socket-impl-gio.cc:391
 msgid "Unknown Error"
-msgstr "Unknown"
+msgstr "Unknown Error"
 
-#: pan/tasks/socket-impl-gio.cc:348
+#: ../pan/tasks/socket-impl-gio.cc:392
 #, c-format
 msgid "Error reading from socket: %s"
 msgstr "Error reading from socket: %s"
 
-#: pan/tasks/task-article.cc:54 pan/tasks/task-article.cc:124
-#, fuzzy, c-format
+#: ../pan/tasks/task-article.cc:54 ../pan/tasks/task-article.cc:127
+#, c-format
 msgid "Saving %s"
-msgstr "Saving \"%s\""
+msgstr "Saving %s"
 
-#: pan/tasks/task-article.cc:56
-#, fuzzy, c-format
+#: ../pan/tasks/task-article.cc:56
+#, c-format
 msgid "Reading %s"
-msgstr "Reading"
+msgstr "Reading %s"
 
-#: pan/tasks/task-article.cc:291
+#: ../pan/tasks/task-article.cc:308
+#, c-format
+msgid "Couldn't save file \"%s\": %s"
+msgstr "Couldn't save file \"%s\": %s"
+
+#: ../pan/tasks/task-article.cc:325
 msgid "Error initializing uulib"
-msgstr ""
+msgstr "Error initializing uulib"
 
-#: pan/tasks/task-article.cc:302
-#, fuzzy, c-format
+#: ../pan/tasks/task-article.cc:334
+#, c-format
 msgid "Couldn't load \"%s\": %s"
-msgstr "Could not create directory \"%s\": %s"
+msgstr "Couldn't load \"%s\": %s"
 
-#: pan/tasks/task-article.cc:335
+#: ../pan/tasks/task-article.cc:376
 #, c-format
 msgid "Saved \"%s\""
 msgstr "Saved \"%s\""
 
-#: pan/tasks/task-article.cc:339
-#, fuzzy, c-format
+#: ../pan/tasks/task-article.cc:380
+#, c-format
 msgid ""
 "Error saving \"%s\":\n"
 "%s. %s"
-msgstr "Error reading file \"%s\": %s"
+msgstr ""
+"Error saving \"%s\":\n"
+"%s. %s"
 
-#: pan/tasks/task-article.cc:341
-#, fuzzy, c-format
+#: ../pan/tasks/task-article.cc:382
+#, c-format
 msgid ""
 "Error saving \"%s\":\n"
 "%s."
-msgstr "Error reading file \"%s\": %s"
+msgstr ""
+"Error saving \"%s\":\n"
+"%s."
 
-#: pan/tasks/task-groups.cc:40
-#, fuzzy, c-format
+#: ../pan/tasks/task-groups.cc:40
+#, c-format
 msgid "Getting group list from \"%s\""
-msgstr "Getting groups from server \"%s\""
+msgstr "Getting group list from \"%s\""
 
-#: pan/tasks/task-groups.cc:121
-#, fuzzy, c-format
+#: ../pan/tasks/task-groups.cc:121
+#, c-format
 msgid "Fetched %lu Groups"
-msgstr "Got %u groups"
+msgstr "Fetched %lu Groups"
 
-#: pan/tasks/task-post.cc:34
-#, fuzzy, c-format
+#: ../pan/tasks/task-post.cc:34
+#, c-format
 msgid "Posting \"%s\""
-msgstr "Decoding \"%s\""
+msgstr "Posting \"%s\""
 
-#: pan/tasks/task-xover.cc:71
+#: ../pan/tasks/task-xover.cc:71
 #, c-format
 msgid "Getting all headers for \"%s\""
 msgstr "Getting all headers for \"%s\""
 
-#: pan/tasks/task-xover.cc:73
+#: ../pan/tasks/task-xover.cc:73
 #, c-format
 msgid "Getting new headers for \"%s\""
 msgstr "Getting new headers for \"%s\""
 
 #. SAMPLE
-#: pan/tasks/task-xover.cc:75
+#: ../pan/tasks/task-xover.cc:75
 #, c-format
 msgid "Sampling headers for \"%s\""
 msgstr "Sampling headers for \"%s\""
 
-#: pan/tasks/task-xover.cc:321
-#, fuzzy, c-format
+#: ../pan/tasks/task-xover.cc:323
+#, c-format
 msgid "%s (%lu parts, %lu articles)"
-msgstr "%lu Parts, %lu Articles"
+msgstr "%s (%lu parts, %lu articles)"
 
-#: pan/usenet-utils/gnksa.cc:879
+#: ../pan/usenet-utils/gnksa.cc:882
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr "No email address provided; generating message-id with domain \"%s\""
 
-#: pan/usenet-utils/message-check.cc:123
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:123
 msgid "Warning: Reply seems to be top-posted."
-msgstr "WARNING: Reply seems to be top-posted."
+msgstr "Warning: Reply seems to be top-posted."
 
-#: pan/usenet-utils/message-check.cc:144
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:144
 msgid "Warning: The signature marker should be \"-- \", not \"--\"."
-msgstr "WARNING: The signature marker should be \"-- \", not \"--\"."
+msgstr "Warning: The signature marker should be \"-- \", not \"--\"."
 
-#: pan/usenet-utils/message-check.cc:161
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:161
 msgid "Warning: Signature prefix with no signature."
-msgstr "WARNING: Signature prefix with no signature."
+msgstr "Warning: Signature prefix with no signature."
 
-#: pan/usenet-utils/message-check.cc:166
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:166
 msgid "Warning: Signature is more than 4 lines long."
-msgstr "WARNING: Signature is more than 4 lines long"
+msgstr "Warning: Signature is more than 4 lines long."
 
-#: pan/usenet-utils/message-check.cc:171
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:171
 msgid "Warning: Signature is more than 80 characters wide."
-msgstr "WARNING: Signature is more than 80 characters wide."
+msgstr "Warning: Signature is more than 80 characters wide."
 
-#: pan/usenet-utils/message-check.cc:196
-#, fuzzy, c-format
+#: ../pan/usenet-utils/message-check.cc:196
+#, c-format
 msgid "Warning: %d lines are more than 80 characters wide."
-msgstr "WARNING: %d lines are more than 80 characters wide."
+msgstr "Warning: %d lines are more than 80 characters wide."
 
-#: pan/usenet-utils/message-check.cc:219
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:219
 msgid "Error: Message is empty."
-msgstr "ERROR: Message is empty."
+msgstr "Error: Message is empty."
 
-#: pan/usenet-utils/message-check.cc:254
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:254
 msgid "Warning: The message is entirely quoted text!"
-msgstr "WARNING: The message is entirely quoted text!"
+msgstr "Warning: The message is entirely quoted text!"
 
-#: pan/usenet-utils/message-check.cc:255
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:255
 msgid "Warning: The message is mostly quoted text."
-msgstr "WARNING: The message is mostly quoted text."
+msgstr "Warning: The message is mostly quoted text."
 
-#: pan/usenet-utils/message-check.cc:305
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:305
 msgid "Error: Message appears to have no new content."
-msgstr "ERROR: Message appears to have no new content."
+msgstr "Error: Message appears to have no new content."
 
-#: pan/usenet-utils/message-check.cc:340 pan/usenet-utils/message-check.cc:375
-#, fuzzy, c-format
+#: ../pan/usenet-utils/message-check.cc:340
+#: ../pan/usenet-utils/message-check.cc:375
+#, c-format
 msgid "Warning: Unknown group \"%s\"."
-msgstr "WARNING: Unknown group: \"%s\"."
+msgstr "Warning: Unknown group \"%s\"."
 
-#: pan/usenet-utils/message-check.cc:347
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:347
 msgid "Warning: Following-Up to too many groups."
-msgstr "WARNING: Following-Up too many groups."
+msgstr "Warning: Following-Up to too many groups."
 
-#: pan/usenet-utils/message-check.cc:358
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:358
 msgid "Error: No Subject specified."
-msgstr "ERROR: No subject specified."
+msgstr "Error: No Subject specified."
 
-#: pan/usenet-utils/message-check.cc:383
-#, fuzzy, c-format
+#: ../pan/usenet-utils/message-check.cc:383
+#, c-format
 msgid "Warning: Group \"%s\" is read-only."
-msgstr "WARNING: Group \"%s\" is read-only."
+msgstr "Warning: Group \"%s\" is read-only."
 
-#: pan/usenet-utils/message-check.cc:392
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:392
 msgid "Error: Posting to a very large number of groups."
-msgstr "ERROR: Posting to a very large number of groups."
+msgstr "Error: Posting to a very large number of groups."
 
-#: pan/usenet-utils/message-check.cc:397
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:397
 msgid "Warning: Posting to a large number of groups."
-msgstr "WARNING: Posting to a large number of groups."
+msgstr "Warning: Posting to a large number of groups."
 
-#: pan/usenet-utils/message-check.cc:404
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:404
 msgid "Warning: Crossposting without setting Followup-To header."
-msgstr "WARNING: Crossposting without setting Followup-To."
+msgstr "Warning: Crossposting without setting Followup-To header."
 
-#: pan/usenet-utils/message-check.cc:428
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:428
 msgid "Error: Bad email address."
-msgstr "_Email Address:"
+msgstr "Error: Bad email address."
 
-#: pan/usenet-utils/message-check.cc:437
+#: ../pan/usenet-utils/message-check.cc:437
 msgid "Warning: Most newsgroups frown upon HTML posts."
-msgstr ""
+msgstr "Warning: Most newsgroups frown upon HTML posts."
 
-#: pan/usenet-utils/message-check.cc:467
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:467
 msgid "Error: No Recipients."
-msgstr "ERROR: No subject specified."
+msgstr "Error: No Recipients."
 
-#: pan/usenet-utils/text-massager.cc:309
+#: ../pan/usenet-utils/text-massager.cc:309
 msgid "> [quoted text muted]"
 msgstr "> [quoted text muted]"
 
-#: pan/usenet-utils/utf8-utils.cc:252
+#: ../pan/usenet-utils/utf8-utils.cc:262
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
-msgstr ""
-
-#, fuzzy
-#~ msgid "Post New Article"
-#~ msgstr "_Article"
-
-#, fuzzy
-#~ msgid "Follow-up to Article"
-#~ msgstr "Followup to Newsgroup"
-
-#, fuzzy
-#~ msgid "_Post Article"
-#~ msgstr "_Article"
-
-#, fuzzy
-#~ msgid "Post this Article Now"
-#~ msgstr "Posting article \"%s\""
-
-#, fuzzy
-#~ msgid "Are you sure you want to close this window?"
-#~ msgstr ""
-#~ "Are you sure you want to delete these %d groups/folders and their "
-#~ "articles?"
-
-#, fuzzy
-#~ msgid "Default KDE Browser"
-#~ msgstr "Default charse_t:"
-
-#, fuzzy
-#~ msgid "Error: No Newsgroups specified."
-#~ msgstr "ERROR: No recipients specified."
-
-#, fuzzy
-#~ msgid "_Posting"
-#~ msgstr "_Post"
-
-#, fuzzy
-#~ msgid "_Save Attachments..."
-#~ msgstr "Save _Attachments"
-
-#, fuzzy
-#~ msgid "Message-Id"
-#~ msgstr "Message-ID"
-
-#, fuzzy
-#~ msgid "Saved newsrc files in %.1f seconds"
-#~ msgstr "Scored %d articles in %.1f seconds (%.0f art/sec)"
-
-#, fuzzy
-#~ msgid "Use _Monospace Font in Body Pane"
-#~ msgstr "/_View/Use _Monospace Font in Body Pane"
-
-#~ msgid "%d connections totaling %.1f KiB per second"
-#~ msgstr "%d connections totalling %.1f KB per second"
-
-#~ msgid ""
-#~ "Used when email replies to your posts should go somewhere other than the "
-#~ "email address above.  Because Reply-To: is relatively difficult for "
-#~ "spammers to harvest, it's polite give your email address here if you gave "
-#~ "an invalid email address above."
-#~ msgstr ""
-#~ "Used when email replies to your posts should go somewhere other than the "
-#~ "email address above.  Because Reply-To: is relatively difficult for "
-#~ "spammers to harvest, it's polite give your email address here if you gave "
-#~ "an invalid email address above."
-
-#~ msgid "_Reply-To Header:"
-#~ msgstr "_Reply-To Header:"
-
-#~ msgid "Or_ganization Header:"
-#~ msgstr "Or_ganization Header:"
-
-#, fuzzy
-#~ msgid "Attach this _Signature:"
-#~ msgstr "Signature:"
-
-#~ msgid "Automatic Downloads"
-#~ msgstr "Automatic Downloads"
-
-#, fuzzy
-#~ msgid "Save a_ttachments to path:"
-#~ msgstr "Save attachments in:"
-
-#, fuzzy
-#~ msgid "Error decoding \"%s\": %s"
-#~ msgstr "Error reading file \"%s\": %s"
-
-#~ msgid "UNKNOWN"
-#~ msgstr "UNKNOWN"
-
-#, fuzzy
-#~ msgid "Decode can't access directory \"%s\""
-#~ msgstr "Decode cannot access path \"%s\""
-
-#~ msgid "Could not decode article - file may be corrupt/incomplete"
-#~ msgstr "Could not decode article - file may be corrupt/incomplete"
-
-#~ msgid "Checksum for `%s' part %d failed - file is corrupt"
-#~ msgstr "Checksum for `%s' part %d failed - file is corrupt"
-
-#~ msgid "Checksum for `%s' failed - file may be corrupt"
-#~ msgstr "Checksum for `%s' failed - file may be corrupt"
-
-#, fuzzy
-#~ msgid "Colors"
-#~ msgstr "Colours"
-
-#, fuzzy
-#~ msgid "Use custom colors in _Header Pane"
-#~ msgstr "Use custom font in Header Pane:"
-
-#, fuzzy
-#~ msgid "Header Pane background:"
-#~ msgstr "Header Pane Scoring"
-
-#, fuzzy
-#~ msgid "Read articles:"
-#~ msgstr "Fetching articles"
-
-#, fuzzy
-#~ msgid "Unread articles:"
-#~ msgstr "_Unread Threads:"
-
-#, fuzzy
-#~ msgid ""
-#~ "Unsupported data version (%d) for server properties.  Are you running an "
-#~ "old version of Pan by accident?"
-#~ msgstr ""
-#~ "Unsupported data version %d for \"%s\" data file.\n"
-#~ "Are you running an old version of Pan by accident?"
-
-#, fuzzy
-#~ msgid "Couldn't create temporary file: %s"
-#~ msgstr "Could not create temporary file: %s"
-
-#~ msgid "Error renaming \"%s\" as \"%s\": %s."
-#~ msgstr "Error renaming \"%s\" as \"%s\": %s."
-
-#~ msgid "Can't backup \"%s\" as \"%s\": %s"
-#~ msgstr "Cannot backup \"%s\" as \"%s\": %s"
-
-#~ msgid "Can't write to \"%s\": %s"
-#~ msgstr "Cannot write to \"%s\": %s"
-
-#~ msgid "Body"
-#~ msgstr "Body"
-
-#, fuzzy
-#~ msgid "Open a Draft Article from Disk"
-#~ msgstr "Expired %u articles from `%s'"
-
-#, fuzzy
-#~ msgid "subject"
-#~ msgstr "Subject"
-
-#, fuzzy
-#~ msgid "author"
-#~ msgstr "Author"
-
-#~ msgid "Change"
-#~ msgstr "Change"
-
-#~ msgid "Connections"
-#~ msgstr "Connections"
-
-#, fuzzy
-#~ msgid "Active"
-#~ msgstr "Actions"
-
-#~ msgid ""
-#~ "Unable to cancel article: Couldn't find matching article in folder `pan."
-#~ "sent'!"
-#~ msgstr ""
-#~ "Unable to cancel article: Could not find matching article in folder `pan."
-#~ "sent'!"
-
-#~ msgid ""
-#~ "Unable to supersede article: Couldn't find matching article in folder "
-#~ "`pan.sent'!"
-#~ msgstr ""
-#~ "Unable to supersede article: Could not find matching article in folder "
-#~ "`pan.sent'!"
-
-#~ msgid "You must download the article before you can cancel it."
-#~ msgstr "You must download the article before you can cancel it."
-
-#~ msgid "You must download the article before you can supersede it."
-#~ msgstr "You must download the article before you can supersede it."
-
-#~ msgid "Pan: Find Article"
-#~ msgstr "Pan: Find Article"
-
-#~ msgid "_Author:"
-#~ msgstr "_Author:"
-
-#~ msgid "Case Sensiti_ve"
-#~ msgstr "Case Sensiti_ve"
-
-#~ msgid "_Unread Only"
-#~ msgstr "_Unread Only"
-
-#~ msgid "Fin_d:"
-#~ msgstr "Fin_d:"
-
-#~ msgid ""
-#~ "Type in a search string and press ENTER.\n"
-#~ "Wildcards are allowed."
-#~ msgstr ""
-#~ "Type in a search string and press ENTER.\n"
-#~ "Wildcards are allowed."
-
-#~ msgid "/---"
-#~ msgstr "/---"
-
-#~ msgid "/Save Article A_ttachments"
-#~ msgstr "/Save Article A_ttachments"
-
-#~ msgid "/_Manual Decode..."
-#~ msgstr "/_Manual Decode..."
-
-#~ msgid "/D_ownload Flagged"
-#~ msgstr "/D_ownload Flagged"
-
-#~ msgid "/_Flag"
-#~ msgstr "/_Flag"
-
-#~ msgid "/_Unflag"
-#~ msgstr "/_Unflag"
-
-#~ msgid "/_Create Score"
-#~ msgstr "/_Create Score"
-
-#~ msgid "/Add S_et to Selection"
-#~ msgstr "/Add S_et to Selection"
-
-#~ msgid "/_Copy to Folder"
-#~ msgstr "/_Copy to Folder"
-
-#~ msgid "/_Delete"
-#~ msgstr "/_Delete"
-
-#~ msgid "Scoring Articles"
-#~ msgstr "Scoring Articles"
-
-#~ msgid "Filtering Articles"
-#~ msgstr "Filtering Articles"
-
-#~ msgid "Updating Header Pane..."
-#~ msgstr "Updating Header Pane..."
-
-#~ msgid "Loading group \"%s\""
-#~ msgstr "Loading group \"%s\""
-
-#~ msgid "Flushing article cache... "
-#~ msgstr "Flushing article cache... "
-
-#~ msgid "%d files erased."
-#~ msgstr "%d files erased."
-
-#~ msgid "Error saving article \"%s\" (is %s full?)"
-#~ msgstr "Error saving article \"%s\" (is %s full?)"
-
-#~ msgid "Directory \"%s\" contains %.1f MB in %d files"
-#~ msgstr "Directory \"%s\" contains %.1f MB in %d files"
-
-#~ msgid "Unparseable Subject"
-#~ msgstr "Unparseable Subject"
-
-#~ msgid "Couldn't parse a Message-ID from the raw message!"
-#~ msgstr "Could not parse a Message-ID from the raw message!"
-
-#~ msgid "unknown@spammesenseless.com"
-#~ msgstr "unknown@spammesenseless.com"
-
-#~ msgid "Can't create file \"%s\" %s"
-#~ msgstr "Cannot create file \"%s\" %s"
-
-#~ msgid "Error saving file \"%s\" - is the disk full?"
-#~ msgstr "Error saving file \"%s\" - is the disk full?"
-
-#~ msgid "Decoded \"%s\" from group \"%s\", \"%s\""
-#~ msgstr "Decoded \"%s\" from group \"%s\", \"%s\""
-
-#~ msgid "Loading %u of %d groups"
-#~ msgstr "Loading %u of %d groups"
-
-#~ msgid ""
-#~ "Skipped %d groups due to possible corruption in \"%s\" and \"%s\".  You "
-#~ "may want to delete these files and get a new grouplist from your news "
-#~ "server."
-#~ msgstr ""
-#~ "Skipped %d groups due to possible corruption in \"%s\" and \"%s\".  You "
-#~ "may want to delete these files and get a new grouplist from your news "
-#~ "server."
-
-#~ msgid "Loaded %d groups for server \"%s\" in %.1f seconds (%.0f groups/sec)"
-#~ msgstr ""
-#~ "Loaded %d groups for server \"%s\" in %.1f seconds (%.0f groups/sec)"
-
-#~ msgid "Saved %d of %u groups"
-#~ msgstr "Saved %d of %u groups"
-
-#~ msgid "Error saving list of groups to \"%s\" - is the disk full?"
-#~ msgstr "Error saving list of groups to \"%s\" - is the disk full?"
-
-#~ msgid "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
-#~ msgstr "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
-
-#~ msgid "Skipped unsupported old data file for group \"%s\"."
-#~ msgstr "Skipped unsupported old data file for group \"%s\"."
-
-#~ msgid "Loaded %d of %d articles"
-#~ msgstr "Loaded %d of %d articles"
-
-#~ msgid ""
-#~ "Pan skipped %d corrupt headers from the local cache for group \"%*.*s\"."
-#~ msgstr ""
-#~ "Pan skipped %d corrupt headers from the local cache for group \"%*.*s\"."
-
-#~ msgid "You may want to empty this group and download fresh headers."
-#~ msgstr "You may want to empty this group and download fresh headers."
-
-#~ msgid "The group will not be saved -- can't create file \"%s\""
-#~ msgstr "The group will not be saved -- cannot create file \"%s\""
-
-#~ msgid "Unable to save headers for group \"%*.*s\" - is the disk full?"
-#~ msgstr "Unable to save headers for group \"%*.*s\" - is the disk full?"
-
-#~ msgid "(No Group)"
-#~ msgstr "(No Group)"
-
-#~ msgid "ERROR: invalid address \"%s\""
-#~ msgstr "ERROR: invalid address \"%s\""
-
-#~ msgid "ERROR: Must have one author in From: line"
-#~ msgstr "ERROR: Must have one author in From: line"
-
-#~ msgid "Imported %d groups (%d new) from \"%s\""
-#~ msgstr "Imported %d groups (%d new) from \"%s\""
-
-#~ msgid "Exported %d groups (%d subscribed) to \"%s\""
-#~ msgstr "Exported %d groups (%d subscribed) to \"%s\""
-
-#~ msgid "Imported %d lines from Gnome config file"
-#~ msgstr "Imported %d lines from Gnome config file"
-
-#~ msgid "%s does not appear to be a valid datafile"
-#~ msgstr "%s does not appear to be a valid datafile"
-
-#~ msgid "Error converting string \"%*s\" to utf8: %d - %s"
-#~ msgstr "Error converting string \"%*s\" to utf8: %d - %s"
-
-#~ msgid "No name specified!"
-#~ msgstr "No name specified!"
-
-#~ msgid "pan.sent"
-#~ msgstr "pan.sent"
-
-#~ msgid "pan.sendlater"
-#~ msgstr "pan.sendlater"
-
-#~ msgid "Server is corrupt"
-#~ msgstr "Server is corrupt"
-
-#~ msgid "A Server with that name already exists."
-#~ msgstr "A Server with that name already exists."
-
-#~ msgid "A newsreader for GNOME"
-#~ msgstr "A newsreader for GNOME"
-
-#~ msgid "Programmer"
-#~ msgstr "Programmer"
-
-#~ msgid "Project Originator, Programmer"
-#~ msgstr "Project Originator, Programmer"
-
-#~ msgid "Programmer, 0.6 - 0.7"
-#~ msgstr "Programmer, 0.6 - 0.7"
-
-#~ msgid ""
-#~ "Pan %s Translations\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Pan %s Code or Patches\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Pan %s Suggestions and Testing\n"
-#~ "%s\n"
-#~ msgstr ""
-#~ "Pan %s Translations\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Pan %s Code or Patches\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Pan %s Suggestions and Testing\n"
-#~ "%s\n"
-
-#~ msgid "Group Properties"
-#~ msgstr "Group Properties"
-
-#~ msgid "_Directory for saving articles:"
-#~ msgstr "_Directory for saving articles:"
-
-#~ msgid "Pan: Download Headers for group `%s'"
-#~ msgstr "Pan: Download Headers for group `%s'"
-
-#~ msgid "Pan: Download Headers"
-#~ msgstr "Pan: Download Headers"
-
-#~ msgid "Download _new headers"
-#~ msgstr "Download _new headers"
-
-#~ msgid "_Download bodies too"
-#~ msgstr "_Download bodies too"
-
-#~ msgid "How should you appear when posting articles?"
-#~ msgstr "How should you appear when posting articles?"
-
-#~ msgid "Your _Name:"
-#~ msgstr "Your _Name:"
-
-#~ msgid "Email _Address:"
-#~ msgstr "Email _Address:"
-
-#~ msgid "_Organization:"
-#~ msgstr "_Organization:"
-
-#~ msgid "default"
-#~ msgstr "default"
-
-#~ msgid "What mail server should Pan use?"
-#~ msgstr "What mail server should Pan use?"
-
-#~ msgid "What news server should Pan use?"
-#~ msgstr "What news server should Pan use?"
-
-#~ msgid "Short name for Pan to show, e.g. \"mynewsserver\""
-#~ msgstr "Short name for Pan to show, e.g. \"mynewsserver\""
-
-#~ msgid "Short _name for Pan to show:"
-#~ msgstr "Short _name for Pan to show:"
-
-#~ msgid "Login"
-#~ msgstr "Login"
-
-#~ msgid "Server requires authori_zation"
-#~ msgstr "Server requires authori_zation"
-
-#~ msgid "Pan Setup Wizard"
-#~ msgstr "Pan Setup Wizard"
-
-#~ msgid "Thank you for trying Pan!"
-#~ msgstr "Thank you for trying Pan!"
-
-#~ msgid ""
-#~ "Thank you for trying Pan!\n"
-#~ " \n"
-#~ "If you are new to Usenet,\n"
-#~ "%s\n"
-#~ "is a starting point to see what Usenet is,\n"
-#~ "where to find a free news server,\n"
-#~ "and how to use Pan.\n"
-#~ " \n"
-#~ "Since this is your first time running Pan,\n"
-#~ "we'll need to gather some information.\n"
-#~ msgstr ""
-#~ "Thank you for trying Pan!\n"
-#~ " \n"
-#~ "If you are new to Usenet,\n"
-#~ "%s\n"
-#~ "is a starting point to see what Usenet is,\n"
-#~ "where to find a free news server,\n"
-#~ "and how to use Pan.\n"
-#~ " \n"
-#~ "Since this is your first time running Pan,\n"
-#~ "we'll need to gather some information.\n"
-
-#~ msgid "About You"
-#~ msgstr "About You"
-
-#~ msgid "Ready!"
-#~ msgstr "Ready!"
-
-#~ msgid ""
-#~ "You have successfully entered all of\n"
-#~ "the information required to set up Pan.\n"
-#~ "\n"
-#~ "To save these settings, click Save."
-#~ msgstr ""
-#~ "You have successfully entered all of\n"
-#~ "the information required to set up Pan.\n"
-#~ "\n"
-#~ "To save these settings, click Save."
-
-#~ msgid "About"
-#~ msgstr "About"
-
-#~ msgid "License"
-#~ msgstr "Licence"
-
-#~ msgid "Authors"
-#~ msgstr "Authors"
-
-#~ msgid "Thanks to"
-#~ msgstr "Thanks to"
-
-#~ msgid "  (No conditions -- no articles will match)"
-#~ msgstr "  (No conditions -- no articles will match)"
-
-#~ msgid "  (No conditions -- all articles will match)"
-#~ msgstr "  (No conditions -- all articles will match)"
-
-#~ msgid "Pan: Edit Filter"
-#~ msgstr "Pan: Edit Filter"
-
-#~ msgid "Filter name: "
-#~ msgstr "Filter name: "
-
-#~ msgid "Show in Filter Menu"
-#~ msgstr "Show in Filter Menu"
-
-#~ msgid "Move the selected line up one line"
-#~ msgstr "Move the selected line up one line"
-
-#~ msgid "Move the selected line down one line"
-#~ msgstr "Move the selected line down one line"
-
-#~ msgid "Invert"
-#~ msgstr "Invert"
-
-#~ msgid "Invert the selected line"
-#~ msgstr "Invert the selected line"
-
-#~ msgid "All Of"
-#~ msgstr "All Of"
-
-#~ msgid "Any Of"
-#~ msgstr "Any Of"
-
-#~ msgid "Delete the selected line"
-#~ msgstr "Delete the selected line"
-
-#~ msgid "Add New Line to the Filter"
-#~ msgstr "Add New Line to the Filter"
-
-#~ msgid "New Filter Line"
-#~ msgstr "New Filter Line"
-
-#~ msgid "does not start with"
-#~ msgstr "does not start with"
-
-#~ msgid "does not match regular expression"
-#~ msgstr "does not match regular expression"
-
-#~ msgid "Article h_as"
-#~ msgstr "Article h_as"
-
-#~ msgid "Attachments"
-#~ msgstr "Attachments"
-
-#~ msgid "Incomplete Attachments"
-#~ msgstr "Incomplete Attachments"
-
-#~ msgid "No Attachments"
-#~ msgstr "No Attachments"
-
-#~ msgid "Article _is"
-#~ msgstr "Article _is"
-
-#~ msgid "New"
-#~ msgstr "New"
-
-#~ msgid "Unread"
-#~ msgstr "Unread"
-
-#~ msgid "Read"
-#~ msgstr "Read"
-
-#~ msgid "Cached"
-#~ msgstr "Cached"
-
-#~ msgid "Posted by Me"
-#~ msgstr "Posted by Me"
-
-#~ msgid "Article has at _least N lines:"
-#~ msgstr "Article has at _least N lines:"
-
-#~ msgid "Article _score is at least"
-#~ msgstr "Article _score is at least"
-
-#~ msgid "Watched"
-#~ msgstr "Watched"
-
-#~ msgid "High"
-#~ msgstr "High"
-
-#~ msgid "Medium"
-#~ msgstr "Medium"
-
-#~ msgid "Zero"
-#~ msgstr "Zero"
-
-#~ msgid "Low"
-#~ msgstr "Low"
-
-#~ msgid "Ignored"
-#~ msgstr "Ignored"
-
-#~ msgid ""
-#~ "This filter is still used by the following rules:\n"
-#~ "%s\n"
-#~ "Please remove this dependency  first."
-#~ msgstr ""
-#~ "This filter is still used by the following rules:\n"
-#~ "%s\n"
-#~ "Please remove this dependency  first."
-
-#~ msgid "Pan: Filters"
-#~ msgstr "Pan: Filters"
-
-#~ msgid "Filters"
-#~ msgstr "Filters"
-
-#~ msgid "Add a new filter"
-#~ msgstr "Add a new filter"
-
-#~ msgid "Edit the selected filter"
-#~ msgstr "Edit the selected filter"
-
-#~ msgid "Remove the selected filter"
-#~ msgstr "Remove the selected filter"
-
-#~ msgid "NONE OF:"
-#~ msgstr "NONE OF:"
-
-#~ msgid "ALL OF:"
-#~ msgstr "ALL OF:"
-
-#~ msgid "ANY OF:"
-#~ msgstr "ANY OF:"
-
-#~ msgid "Error"
-#~ msgstr "Error"
-
-#~ msgid "Article has complete attachments"
-#~ msgstr "Article has complete attachments"
-
-#~ msgid "Article does not have incomplete attachments"
-#~ msgstr "Article does not have incomplete attachments"
-
-#~ msgid "Article has incomplete attachments"
-#~ msgstr "Article has incomplete attachments"
-
-#~ msgid "Article has complete or incomplete attachments"
-#~ msgstr "Article has complete or incomplete attachments"
-
-#~ msgid "Article is %d or more bytes long"
-#~ msgstr "Article is %d or more bytes long"
-
-#~ msgid "Article is crossposted to at least %d groups"
-#~ msgstr "Article is crossposted to at least %d groups"
-
-#~ msgid "Article was posted in the last %d days"
-#~ msgstr "Article was posted in the last %d days"
-
-#~ msgid "Article is %d or more lines long"
-#~ msgstr "Article is %d or more lines long"
-
-#~ msgid "Article is unread or old"
-#~ msgstr "Article is unread or old"
-
-#~ msgid "Article is new"
-#~ msgstr "Article is new"
-
-#~ msgid "Article is new or read"
-#~ msgstr "Article is new or read"
-
-#~ msgid "Article is new or unread"
-#~ msgstr "Article is new or unread"
-
-#~ msgid "Xref"
-#~ msgstr "Xref"
-
-#~ msgid "watched"
-#~ msgstr "watched"
-
-#~ msgid "high"
-#~ msgstr "high"
-
-#~ msgid "medium"
-#~ msgstr "medium"
-
-#~ msgid "zero"
-#~ msgstr "zero"
-
-#~ msgid "low"
-#~ msgstr "low"
-
-#~ msgid "ignored"
-#~ msgstr "ignored"
-
-#~ msgid "Score filter will match anything"
-#~ msgstr "Score filter will match anything"
-
-#~ msgid "Score filter will match nothing"
-#~ msgstr "Score filter will match nothing"
-
-#~ msgid "Article score one of: "
-#~ msgstr "Article score one of: "
-
-#~ msgid "Wrote filters to \"%s\""
-#~ msgstr "Wrote filters to \"%s\""
-
-#~ msgid "Can't use regular expression \"%s\" from file \"%s\", line %d: %s"
-#~ msgstr "Cannot use regular expression \"%s\" from file \"%s\", line %d: %s"
-
-#~ msgid "expired old score"
-#~ msgstr "expired old score"
-
-#~ msgid "skipping unsupported criteria"
-#~ msgstr "skipping unsupported criteria"
-
-#~ msgid "unexpected line."
-#~ msgstr "unexpected line."
-
-#~ msgid "Error reading file: "
-#~ msgstr "Error reading file: "
-
-#~ msgid "skipping score because it has no criteria"
-#~ msgstr "skipping score because it has no criteria"
-
-#~ msgid ""
-#~ "Loaded %d score entries in %d sections in %.1f seconds (%.0f entries/sec)"
-#~ msgstr ""
-#~ "Loaded %d score entries in %d sections in %.1f seconds (%.0f entries/sec)"
-
-#~ msgid "Error score to file \"%s\": %s"
-#~ msgstr "Error score to file \"%s\": %s"
-
-#~ msgid "Scorefile entry removed -- old scorefile \"%s\" backed up as \"%s\""
-#~ msgstr "Scorefile entry removed -- old scorefile \"%s\" backed up as \"%s\""
-
-#~ msgid "Folder \"%*s\" already exists."
-#~ msgstr "Folder \"%*s\" already exists."
-
-#~ msgid "Please don't begin folders with \"pan.\"; it confuses me."
-#~ msgstr "Please do not begin folder names with \"pan.\""
-
-#~ msgid "Create New Folder"
-#~ msgstr "Create New Folder"
-
-#~ msgid "New Folder Name:"
-#~ msgstr "New Folder Name:"
-
-#~ msgid "/Get New Headers and _Bodies"
-#~ msgstr "/Get New Headers and _Bodies"
-
-#~ msgid "/Get New Headers in Subscribed Groups"
-#~ msgstr "/Get New Headers in Subscribed Groups"
-
-#~ msgid "/More Download _Options..."
-#~ msgstr "/More Download _Options..."
-
-#~ msgid "/Refresh Article _Counts"
-#~ msgstr "/Refresh Article _Counts"
-
-#~ msgid "/Group _Properties..."
-#~ msgstr "/Group _Properties..."
-
-#~ msgid " (Moderated)"
-#~ msgstr " (Moderated)"
-
-#~ msgid " (Read-Only)"
-#~ msgstr " (Read-Only)"
-
-#~ msgid "Subscribed"
-#~ msgstr "Subscribed"
-
-#~ msgid "All Groups"
-#~ msgstr "All Groups"
-
-#~ msgid ""
-#~ "We don't have a list of groups for \"%*.*s\".\n"
-#~ "Shall we download one?"
-#~ msgstr ""
-#~ "Group list not present for \"%*.*s\".\n"
-#~ "Download one now?"
-
-#~ msgid "Total"
-#~ msgstr "Total"
-
-#~ msgid "Description"
-#~ msgstr "Description"
-
-#~ msgid "F_ind:"
-#~ msgstr "F_ind:"
-
-#~ msgid ""
-#~ "Type in a group search string and press ENTER.  Wildcards are allowed."
-#~ msgstr ""
-#~ "Type in a group search string and press ENTER.  Wildcards are allowed."
-
-#~ msgid "(%u selected)"
-#~ msgstr "(%u selected)"
-
-#~ msgid "We now have %d connections to news servers"
-#~ msgstr "We now have %d connections to news servers"
-
-#~ msgid "The Task Manager is Empty"
-#~ msgstr "The Task Manager is Empty"
-
-#~ msgid "Post"
-#~ msgstr "Post"
-
-#~ msgid "Get"
-#~ msgstr "Get"
-
-#~ msgid "Mine"
-#~ msgstr "Mine"
-
-#~ msgid "Net"
-#~ msgstr "Net"
-
-#~ msgid "/_File/_Save Article As..."
-#~ msgstr "/_File/_Save Article As..."
-
-#~ msgid "/_File/Save Article A_ttachments"
-#~ msgstr "/_File/Save Article A_ttachments"
-
-#~ msgid "/_File/Manual _Decode..."
-#~ msgstr "/_File/Manual _Decode..."
-
-#~ msgid "/_File/_Print Article..."
-#~ msgstr "/_File/_Print Article..."
-
-#~ msgid "/_File/---"
-#~ msgstr "/_File/---"
-
-#~ msgid "/_File/_Cancel Last Task"
-#~ msgstr "/_File/_Cancel Last Task"
-
-#~ msgid "/_File/Log _Viewer..."
-#~ msgstr "/_File/Log _Viewer..."
-
-#~ msgid "/_File/_New Folder..."
-#~ msgstr "/_File/_New Folder..."
-
-#~ msgid "/_File/Delete _Folder..."
-#~ msgstr "/_File/Delete _Folder..."
-
-#~ msgid "/_File/_Edit Article in Folder"
-#~ msgstr "/_File/_Edit Article in Folder"
-
-#~ msgid "/_File/E_xit"
-#~ msgstr "/_File/E_xit"
-
-#~ msgid "/_File/_Quit"
-#~ msgstr "/_File/_Quit"
-
-#~ msgid "/_Edit/Select all"
-#~ msgstr "/_Edit/Select all"
-
-#~ msgid "/_Edit/Deselect all"
-#~ msgstr "/_Edit/Deselect all"
-
-#~ msgid "/_Edit/---"
-#~ msgstr "/_Edit/---"
-
-#~ msgid "/_Edit/Select all _Groups"
-#~ msgstr "/_Edit/Select all _Groups"
-
-#~ msgid "/_Edit/Add S_ubscribed to Selection"
-#~ msgstr "/_Edit/Add S_ubscribed to Selection"
-
-#~ msgid "/_Edit/Deselect all G_roups"
-#~ msgstr "/_Edit/Deselect all G_roups"
-
-#~ msgid "/_Edit/Add S_et to Selection"
-#~ msgstr "/_Edit/Add S_et to Selection"
-
-#~ msgid "/_Edit/_Find..."
-#~ msgstr "/_Edit/_Find..."
-
-#~ msgid "/_Edit/Find _Next"
-#~ msgstr "/_Edit/Find _Next"
-
-#~ msgid "/_View/---"
-#~ msgstr "/_View/---"
-
-#~ msgid "/_View/Thr_ead Header Pane"
-#~ msgstr "/_View/Thr_ead Header Pane"
-
-#~ msgid "/_View/_Rot13 Selected Text"
-#~ msgstr "/_View/_Rot13 Selected Text"
-
-#~ msgid "/_View/E_xpand Selected Threads"
-#~ msgstr "/_View/E_xpand Selected Threads"
-
-#~ msgid "/_View/C_ollapse Selected Threads"
-#~ msgstr "/_View/C_ollapse Selected Threads"
-
-#~ msgid "/Filte_r/Custom _Filters..."
-#~ msgstr "/Filte_r/Custom _Filters..."
-
-#~ msgid "/Filte_r/_Rules..."
-#~ msgstr "/Filte_r/_Rules..."
-
-#~ msgid "/Filte_r/_Edit Scorefile..."
-#~ msgstr "/Filte_r/_Edit Scorefile..."
-
-#~ msgid "/Filte_r/---"
-#~ msgstr "/Filte_r/---"
-
-#~ msgid "/Filte_r/Match Only _Cached Articles"
-#~ msgstr "/Filte_r/Match Only _Cached Articles"
-
-#~ msgid "/Filte_r/Match Only _Text Articles"
-#~ msgstr "/Filte_r/Match Only _Text Articles"
-
-#~ msgid "/Filte_r/Match Only _Binary Attachment Articles"
-#~ msgstr "/Filte_r/Match Only _Binary Attachment Articles"
-
-#~ msgid "/Filte_r/Match Only _My Articles"
-#~ msgstr "/Filte_r/Match Only _My Articles"
-
-#~ msgid "/Filte_r/Match _New Articles"
-#~ msgstr "/Filte_r/Match _New Articles"
-
-#~ msgid "/Filte_r/Match _Unread Articles"
-#~ msgstr "/Filte_r/Match _Unread Articles"
-
-#~ msgid "/Filte_r/Match _Read Articles"
-#~ msgstr "/Filte_r/Match _Read Articles"
-
-#~ msgid "/_Go/Read More"
-#~ msgstr "/_Go/Read More"
-
-#~ msgid "/_Go/---"
-#~ msgstr "/_Go/---"
-
-#~ msgid "/_Go/Next _New Article"
-#~ msgstr "/_Go/Next _New Article"
-
-#~ msgid "/_Go/Next N_ew Thread"
-#~ msgstr "/_Go/Next N_ew Thread"
-
-#~ msgid "/_Go/Previous Article _Read"
-#~ msgstr "/_Go/Previous Article _Read"
-
-#~ msgid "/_Servers"
-#~ msgstr "/_Servers"
-
-#~ msgid "/_Servers/News _Servers..."
-#~ msgstr "/_Servers/News _Servers..."
-
-#~ msgid "/_Servers/---"
-#~ msgstr "/_Servers/---"
-
-#~ msgid "/_Servers/Get List of Groups"
-#~ msgstr "/_Servers/Get List of Groups"
-
-#~ msgid "/_Newsgroups/Mark Group _Read"
-#~ msgstr "/_Newsgroups/Mark Group _Read"
-
-#~ msgid "/_Newsgroups/_Delete Group's Articles"
-#~ msgstr "/_Newsgroups/_Delete Group's Articles"
-
-#~ msgid "/_Newsgroups/---"
-#~ msgstr "/_Newsgroups/---"
-
-#~ msgid "/_Newsgroups/Get New _Headers"
-#~ msgstr "/_Newsgroups/Get New _Headers"
-
-#~ msgid "/_Newsgroups/Get New Headers and _Bodies"
-#~ msgstr "/_Newsgroups/Get New Headers and _Bodies"
-
-#~ msgid "/_Newsgroups/More Download _Options..."
-#~ msgstr "/_Newsgroups/More Download _Options..."
-
-#~ msgid "/_Newsgroups/Refresh Article _Counts"
-#~ msgstr "/_Newsgroups/Refresh Article _Counts"
-
-#~ msgid "/_Newsgroups/Get New Headers in Subscribed _Groups"
-#~ msgstr "/_Newsgroups/Get New Headers in Subscribed _Groups"
-
-#~ msgid "/_Newsgroups/_Subscribe"
-#~ msgstr "/_Newsgroups/_Subscribe"
-
-#~ msgid "/_Newsgroups/_Unsubscribe"
-#~ msgstr "/_Newsgroups/_Unsubscribe"
-
-#~ msgid "/_Newsgroups/Group _Properties..."
-#~ msgstr "/_Newsgroups/Group _Properties..."
-
-#~ msgid "/_Newsgroups/Dele_te Group"
-#~ msgstr "/_Newsgroups/Dele_te Group"
-
-#~ msgid "/_Articles/Mark _Read"
-#~ msgstr "/_Articles/Mark _Read"
-
-#~ msgid "/_Articles/Mark _Unread"
-#~ msgstr "/_Articles/Mark _Unread"
-
-#~ msgid "/_Articles/---"
-#~ msgstr "/_Articles/---"
-
-#~ msgid "/_Articles/D_ownload Flagged"
-#~ msgstr "/_Articles/D_ownload Flagged"
-
-#~ msgid "/_Articles/_Flag"
-#~ msgstr "/_Articles/_Flag"
-
-#~ msgid "/_Articles/U_nflag"
-#~ msgstr "/_Articles/U_nflag"
-
-#~ msgid "/_Articles/Down_load"
-#~ msgstr "/_Articles/Down_load"
-
-#~ msgid "/_Articles/_Watch Thread"
-#~ msgstr "/_Articles/_Watch Thread"
-
-#~ msgid "/_Articles/_Ignore Thread"
-#~ msgstr "/_Articles/_Ignore Thread"
-
-#~ msgid "/_Articles/_View Article's Scores"
-#~ msgstr "/_Articles/_View Article's Scores"
-
-#~ msgid "/_Articles/_Create Score..."
-#~ msgstr "/_Articles/_Create Score..."
-
-#~ msgid "/_Articles/Cancel..."
-#~ msgstr "/_Articles/Cancel..."
-
-#~ msgid "/_Articles/Supersed_e..."
-#~ msgstr "/_Articles/Supersed_e..."
-
-#~ msgid "/_Articles/_Delete"
-#~ msgstr "/_Articles/_Delete"
-
-#~ msgid "/_Post"
-#~ msgstr "/_Post"
-
-#~ msgid "/_Post/_Post to Newsgroup..."
-#~ msgstr "/_Post/_Post to Newsgroup..."
-
-#~ msgid "/_Post/_Reply by Email..."
-#~ msgstr "/_Post/_Reply by Email..."
-
-#~ msgid "/_Post/For_ward by Email..."
-#~ msgstr "/_Post/For_ward by Email..."
-
-#~ msgid "/_Post/---"
-#~ msgstr "/_Post/---"
-
-#~ msgid "/_Post/Send Pending _Messages"
-#~ msgstr "/_Post/Send Pending _Messages"
-
-#~ msgid "/_Help"
-#~ msgstr "/_Help"
-
-#~ msgid "/_Help/---"
-#~ msgstr "/_Help/---"
-
-#~ msgid "%s (%u) [%d missing pieces]"
-#~ msgstr "%s (%u) [%d missing pieces]"
-
-#~ msgid "%s [%d missing pieces]"
-#~ msgstr "%s [%d missing pieces]"
-
-#~ msgid ""
-#~ "When posting to Usenet, your article's Message-ID contains a domain "
-#~ "name.  You can set a custom domain name here, or leave it blank to let "
-#~ "Pan use the domain name from your email address."
-#~ msgstr ""
-#~ "When posting to Usenet, your article's Message-ID contains a domain "
-#~ "name.  You can set a custom domain name here, or leave it blank to let "
-#~ "Pan use the domain name from your email address."
-
-#~ msgid "Message-ID _Domain Name:"
-#~ msgstr "Message-ID _Domain Name:"
-
-#~ msgid "The default charset set for articles posted with this profile"
-#~ msgstr "The default charset set for articles posted with this profile"
-
-#~ msgid "Pan: Edit Profile"
-#~ msgstr "Pan: Edit Profile"
-
-#~ msgid "_User Profile"
-#~ msgstr "_User Profile"
-
-#~ msgid "Cus_tom Headers"
-#~ msgstr "Cus_tom Headers"
-
-#~ msgid "You must specify a username or disable authorization."
-#~ msgstr "You must specify a username or disable authorization."
-
-#~ msgid ""
-#~ "Your real name contained double quotes.\n"
-#~ "Converting into single quotes."
-#~ msgstr ""
-#~ "Your real name contained double quotes.\n"
-#~ "Converting into single quotes."
-
-#~ msgid "You need at least one profile"
-#~ msgstr "You need at least one profile"
-
-#~ msgid "Use the selected profile to create a new profile"
-#~ msgstr "Use the selected profile to create a new profile"
-
-#~ msgid "Wrote profiles to \"%s\""
-#~ msgstr "Wrote profiles to \"%s\""
-
-#~ msgid "Save the log to a file"
-#~ msgstr "Save the log to a file"
-
-#~ msgid "/_File/_Save..."
-#~ msgstr "/_File/_Save..."
-
-#~ msgid "/_File/Clea_r"
-#~ msgstr "/_File/Clea_r"
-
-#~ msgid "/_File/_Close"
-#~ msgstr "/_File/_Close"
-
-#~ msgid "Pan: Status Log"
-#~ msgstr "Pan: Status Log"
-
-#~ msgid "Clear the log window"
-#~ msgstr "Clear the log window"
-
-#~ msgid "Time"
-#~ msgstr "Time"
-
-#~ msgid "Log Entry"
-#~ msgstr "Log Entry"
-
-#~ msgid "Post anyway, despite these problems?"
-#~ msgstr "Post anyway, despite these problems?"
-
-#~ msgid "Post anyway, despite this problem?"
-#~ msgstr "Post anyway, despite this problem?"
-
-#~ msgid "/_File/_Save Changes"
-#~ msgstr "/_File/_Save Changes"
-
-#~ msgid "/_File/Save _As..."
-#~ msgstr "/_File/Save _As..."
-
-#~ msgid "/_Edit/Cu_t"
-#~ msgstr "/_Edit/Cu_t"
-
-#~ msgid "/_Edit/_Copy"
-#~ msgstr "/_Edit/_Copy"
-
-#~ msgid "/_Edit/_Paste"
-#~ msgstr "/_Edit/_Paste"
-
-#~ msgid "/_Edit/_Rot13 Selected Text"
-#~ msgstr "/_Edit/_Rot13 Selected Text"
-
-#~ msgid "/_Edit/Edit with E_xternal Editor"
-#~ msgstr "/_Edit/Edit with E_xternal Editor"
-
-#~ msgid "/_File/Send Now"
-#~ msgstr "/_File/Send Now"
-
-#~ msgid "/_File/Send Later"
-#~ msgstr "/_File/Send Later"
-
-#~ msgid "Send Later"
-#~ msgstr "Send Later"
-
-#~ msgid "Rewrap"
-#~ msgstr "Rewrap"
-
-#~ msgid "Turn line wrap on/off"
-#~ msgstr "Turn line wrap on/off"
-
-#~ msgid "Edit with an External Editor"
-#~ msgstr "Edit with an External Editor"
-
-#~ msgid "Mime (single-part posts only)"
-#~ msgstr "Mime (single-part posts only)"
-
-#~ msgid " (%lu lines in 1 article)"
-#~ msgstr " (%lu lines in 1 article)"
-
-#~ msgid " (%lu lines in %lu articles)"
-#~ msgstr " (%lu lines in %lu articles)"
-
-#~ msgid "UUEncoded (universally accepted)"
-#~ msgstr "UUEncoded (universally accepted)"
-
-#~ msgid "yEnc (30 percent smaller than UUEnc but less universal)"
-#~ msgstr "yEnc (30 percent smaller than UUEnc but less universal)"
-
-#~ msgid "Select the file to attach."
-#~ msgstr "Select the file to attach."
-
-#~ msgid "Files to Attach"
-#~ msgstr "Files to Attach"
-
-#~ msgid "Filename"
-#~ msgstr "Filename"
-
-#~ msgid "Kilobytes"
-#~ msgstr "Kilobytes"
-
-#~ msgid "Add a File to the Attachment List"
-#~ msgstr "Add a File to the Attachment List"
-
-#~ msgid "Remove a File from the Attachment List"
-#~ msgstr "Remove a File from the Attachment List"
-
-#~ msgid "Lines per article:"
-#~ msgstr "Lines per article:"
-
-#~ msgid "Estimated Article Size"
-#~ msgstr "Estimated Article Size"
-
-#~ msgid ""
-#~ "The newsgroups where replies to your message should go.  This is only "
-#~ "needed if it differs from the \"Post To Groups\" header. \n"
-#~ "To direct all replies to your email address, use \"Followup-To: poster\""
-#~ msgstr ""
-#~ "The newsgroups where replies to your message should go.  This is only "
-#~ "needed if it differs from the \"Post To Groups\" header. \n"
-#~ "To direct all replies to your email address, use \"Followup-To: poster\""
-
-#~ msgid ""
-#~ "The email account where mail replies to your posted message should go.  "
-#~ "This is only needed if it differs from the \"From\" header."
-#~ msgstr ""
-#~ "The email account where mail replies to your posted message should go.  "
-#~ "This is only needed if it differs from the \"From\" header."
-
-#~ msgid "Organization"
-#~ msgstr "Organization"
-
-#~ msgid "The organization you're associated with."
-#~ msgstr "The organization you're associated with."
-
-#~ msgid "Charset"
-#~ msgstr "Charset"
-
-#~ msgid "Custom Headers"
-#~ msgstr "Custom Headers"
-
-#~ msgid "Add \"User-Agent\" header"
-#~ msgstr "Add \"User-Agent\" header"
-
-#~ msgid "Add \"Message-Id\" header"
-#~ msgstr "Add \"Message-Id\" header"
-
-#~ msgid ""
-#~ "Could not convert \"%s\" to UTF-8. Article may not display correctly."
-#~ msgstr ""
-#~ "Could not convert \"%s\" to UTF-8. Article may not display correctly."
-
-#~ msgid "\"Followup-To: poster\": sending email to author."
-#~ msgstr "\"Followup-To: poster\": sending email to author."
-
-#~ msgid "\"Followup-To:\" contains an email address: sending email to author."
-#~ msgstr ""
-#~ "\"Followup-To:\" contains an email address: sending email to author."
-
-#~ msgid "New Message"
-#~ msgstr "New Message"
-
-#~ msgid ""
-#~ "ERROR: line %d, column %d uses a character not specified in charset \"%s"
-#~ "\" -- possibly change your charset in \"More Headers\" to \"%s\" instead?"
-#~ msgstr ""
-#~ "ERROR: line %d, column %d uses a character not specified in charset \"%s"
-#~ "\" -- possibly change your charset in \"More Headers\" to \"%s\" instead?"
-
-#~ msgid "Save message to file"
-#~ msgstr "Save message to file"
-
-#~ msgid ""
-#~ "Message uses characters not specified in charset '%s' - possibly use '%s' "
-#~ "instead?"
-#~ msgstr ""
-#~ "Message uses characters not specified in charset '%s' - possibly use '%s' "
-#~ "instead?"
-
-#~ msgid "The command line was: %s"
-#~ msgstr "The command line was: %s"
-
-#~ msgid "Select Color"
-#~ msgstr "Select Colour"
-
-#~ msgid "_Browse..."
-#~ msgstr "_Browse..."
-
-#~ msgid "Select Font"
-#~ msgstr "Select Font"
-
-#~ msgid "Font Family"
-#~ msgstr "Font Family"
-
-#~ msgid "  --resume         Resume tasks from last session without prompting"
-#~ msgstr "  --resume         Resume tasks from last session without prompting"
-
-#~ msgid "  --version        Prints Pan's version number"
-#~ msgstr "  --version        Prints Pan's version number"
-
-#~ msgid "  --help           Prints this message and exits"
-#~ msgstr "  --help           Prints this message and exits"
-
-#~ msgid ""
-#~ "  --debug          Turns on the most commonly-used options for a bug "
-#~ "report"
-#~ msgstr ""
-#~ "  --debug          Turns on the most commonly-used options for a bug "
-#~ "report"
-
-#~ msgid ""
-#~ "  --mute           Debugging tool to send new posts to console, not the "
-#~ "server"
-#~ msgstr ""
-#~ "  --mute           Debugging tool to send new posts to console, not the "
-#~ "server"
-
-#~ msgid "  --debug-cache    Print debugging messages for the article cache"
-#~ msgstr "  --debug-cache    Print debugging messages for the article cache"
-
-#~ msgid ""
-#~ "  --debug-sockets  Print debugging messages when talking to the news "
-#~ "server"
-#~ msgstr ""
-#~ "  --debug-sockets  Print debugging messages when talking to the news "
-#~ "server"
-
-#~ msgid ""
-#~ "  --debug-queue    Print debugging messages related to managing tasks"
-#~ msgstr ""
-#~ "  --debug-queue    Print debugging messages related to managing tasks"
-
-#~ msgid ""
-#~ "  --debug-decode   Print debugging messages related to decoding "
-#~ "attachments"
-#~ msgstr ""
-#~ "  --debug-decode   Print debugging messages related to decoding "
-#~ "attachments"
-
-#~ msgid "  --debug-newsrc   Print debugging messages related to .newsrc files"
-#~ msgstr ""
-#~ "  --debug-newsrc   Print debugging messages related to .newsrc files"
-
-#~ msgid ""
-#~ "  --debug-gnksa    Print debugging messages related to gnksa correctness"
-#~ msgstr ""
-#~ "  --debug-gnksa    Print debugging messages related to gnksa correctness"
-
-#~ msgid ""
-#~ "  --debug-trace    Print debugging messages when entering/leaving "
-#~ "functions"
-#~ msgstr ""
-#~ "  --debug-trace    Print debugging messages when entering/leaving "
-#~ "functions"
-
-#~ msgid ""
-#~ "  --debug-lock     Print debugging messages related to threaded gui locks"
-#~ msgstr ""
-#~ "  --debug-lock     Print debugging messages related to threaded gui locks"
-
-#~ msgid ""
-#~ "  --debug-object   Print debugging messages related to refcounted objects"
-#~ msgstr ""
-#~ "  --debug-object   Print debugging messages related to refcounted objects"
-
-#~ msgid "Error reading from socket."
-#~ msgstr "Error reading from socket."
-
-#~ msgid "Error writing to socket."
-#~ msgstr "Error writing to socket."
-
-#~ msgid "Spellchecking disabled: gtkspell_init() failed with status %d"
-#~ msgstr "Spellchecking disabled: gtkspell_init() failed with status %d"
-
-#~ msgid "Restored %d tasks from last session"
-#~ msgstr "Restored %d tasks from last session"
-
-#~ msgid ""
-#~ "Some tasks were still queued the last time Pan exited.  Do you want to "
-#~ "resume those tasks?"
-#~ msgstr ""
-#~ "Some tasks were still queued the last time Pan exited.  Do you want to "
-#~ "resume those tasks?"
-
-#~ msgid "_Resume"
-#~ msgstr "_Resume"
-
-#~ msgid ""
-#~ "%a - abbreviated weekday name\n"
-#~ "%A - full weekday name\n"
-#~ "%b - abbreviated month name\n"
-#~ "%B - full month name\n"
-#~ "%c - local date & time\n"
-#~ "%d - day of the month\n"
-#~ "%H - hour (24-hour clock)\n"
-#~ "%I - hour (12-hour clock)\n"
-#~ "%j - day of the year (001-366)\n"
-#~ "%m - month (01-12)\n"
-#~ "%M - minute (00-59)\n"
-#~ "%p - local equivalent of AM/PM\n"
-#~ "%S - second (00-61)\n"
-#~ "%x - local date\n"
-#~ "%X - local time\n"
-#~ "%y - two-digit year\n"
-#~ "%Y - four-digit year\n"
-#~ "%% - %"
-#~ msgstr ""
-#~ "%a - abbreviated weekday name\n"
-#~ "%A - full weekday name\n"
-#~ "%b - abbreviated month name\n"
-#~ "%B - full month name\n"
-#~ "%c - local date & time\n"
-#~ "%d - day of the month\n"
-#~ "%H - hour (24-hour clock)\n"
-#~ "%I - hour (12-hour clock)\n"
-#~ "%j - day of the year (001-366)\n"
-#~ "%m - month (01-12)\n"
-#~ "%M - minute (00-59)\n"
-#~ "%p - local equivalent of AM/PM\n"
-#~ "%S - second (00-61)\n"
-#~ "%x - local date\n"
-#~ "%X - local time\n"
-#~ "%y - two-digit year\n"
-#~ "%Y - four-digit year\n"
-#~ "%% - %"
-
-#~ msgid "Color the \"sub_ject\" column"
-#~ msgstr "Colour the \"sub_ject\" column"
-
-#~ msgid "Articles with a Score of 9999 or higher:"
-#~ msgstr "Articles with a Score of 9999 or higher:"
-
-#~ msgid "Articles with a Score between 5000 and 9998:"
-#~ msgstr "Articles with a Score between 5000 and 9998:"
-
-#~ msgid "Articles with a Score between 1 and 4999:"
-#~ msgstr "Articles with a Score between 1 and 4999:"
-
-#~ msgid "Articles with a Score between -9998 and -1:"
-#~ msgstr "Articles with a Score between -9998 and -1:"
-
-#~ msgid "Articles with a Score of -9999 or lower:"
-#~ msgstr "Articles with a Score of -9999 or lower:"
-
-#~ msgid "_1:"
-#~ msgstr "_1:"
-
-#~ msgid "_2:"
-#~ msgstr "_2:"
-
-#~ msgid "_3:"
-#~ msgstr "_3:"
-
-#~ msgid "Pane Order"
-#~ msgstr "Pane Order"
-
-#~ msgid "Action State"
-#~ msgstr "Action State"
-
-#~ msgid "Article State"
-#~ msgstr "Article State"
-
-#~ msgid "Column Layout"
-#~ msgstr "Column Layout"
-
-#~ msgid "When a Followup subject header changes, show as _new thread"
-#~ msgstr "When a Followup subject header changes, show as _new thread"
-
-#~ msgid "E_xpand all threads by default"
-#~ msgstr "E_xpand all threads by default"
-
-#~ msgid "Date Forma_t:"
-#~ msgstr "Date Forma_t:"
-
-#~ msgid "Show \"%s\" header"
-#~ msgstr "Show \"%s\" header"
-
-#~ msgid "Newsreader"
-#~ msgstr "Newsreader"
-
-#~ msgid "Characters denoting _quoted text:"
-#~ msgstr "Characters denoting _quoted text:"
-
-#~ msgid "Download new headers from s_ubscribed groups when starting Pan"
-#~ msgstr "Download new headers from s_ubscribed groups when starting Pan"
-
-#~ msgid ""
-#~ "Download new headers and bod_ies from subscribed groups when starting Pan"
-#~ msgstr ""
-#~ "Download new headers and bod_ies from subscribed groups when starting Pan"
-
-#~ msgid "Download Directory"
-#~ msgstr "Download Directory"
-
-#~ msgid "Save a_ttachments in directory:"
-#~ msgstr "Save a_ttachments in directory:"
-
-#~ msgid "Automatically remove _failed tasks from the task manager"
-#~ msgstr "Automatically remove _failed tasks from the task manager"
-
-#~ msgid "Article Cache"
-#~ msgstr "Article Cache"
-
-#~ msgid "_Erase cache when exiting Pan"
-#~ msgstr "_Erase cache when exiting Pan"
-
-#~ msgid "Ma_ximum Cache Size (Megs):"
-#~ msgstr "Ma_ximum Cache Size (Megs):"
-
-#~ msgid "_Web Browser (%s is URL):"
-#~ msgstr "_Web Browser (%s is URL):"
-
-#~ msgid "_Editor (%t is filename):"
-#~ msgstr "_Editor (%t is filename):"
-
-#~ msgid ""
-#~ "Scorefile _Editor:\n"
-#~ "(%t is filename, %n is line number)"
-#~ msgstr ""
-#~ "Scorefile _Editor:\n"
-#~ "(%t is filename, %n is line number)"
-
-#~ msgid "Scorefile"
-#~ msgstr "Scorefile"
-
-#~ msgid "Score_file"
-#~ msgstr "Score_file"
-
-#~ msgid "Sending Mail"
-#~ msgstr "Sending Mail"
-
-#~ msgid "Mail Server Add_ress:"
-#~ msgstr "Mail Server Add_ress:"
-
-#~ msgid "Mail Server Por_t:"
-#~ msgstr "Mail Server Por_t:"
-
-#~ msgid "Hea_der Pane"
-#~ msgstr "Hea_der Pane"
-
-#~ msgid "A_pps & Mail"
-#~ msgstr "A_pps & Mail"
-
-#~ msgid "Pan: Print"
-#~ msgstr "Pan: Print"
-
-#~ msgid "You haven't loaded an article to print."
-#~ msgstr "You have not loaded an article to print."
-
-#~ msgid ""
-#~ "%s\n"
-#~ "\n"
-#~ "Matches: %u\n"
-#~ "Group: %s\n"
-#~ "Rule: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "\n"
-#~ "Matches: %u\n"
-#~ "Group: %s\n"
-#~ "Rule: %s"
-
-#~ msgid "Mark as"
-#~ msgstr "Mark as"
-
-#~ msgid "_Flag body for download"
-#~ msgstr "_Flag body for download"
-
-#~ msgid "_Retrieve Body"
-#~ msgstr "_Retrieve Body"
-
-#~ msgid "_Watch thread (highlights the thread)"
-#~ msgstr "_Watch thread (highlights the thread)"
-
-#~ msgid "_Ignore thread (hides the thread by default)"
-#~ msgstr "_Ignore thread (hides the thread by default)"
-
-#~ msgid "Edit Filters"
-#~ msgstr "Edit Filters"
-
-#~ msgid "Rule applies to all newsgroups"
-#~ msgstr "Rule applies to all newsgroups"
-
-#~ msgid "Wildcard group specification:"
-#~ msgstr "Wildcard group specification:"
-
-#~ msgid "(e.g., *anime*)"
-#~ msgstr "(e.g., *anime*)"
-
-#~ msgid "Rule applies to specific newsgroups:"
-#~ msgstr "Rule applies to specific newsgroups:"
-
-#~ msgid "Rule applies to:"
-#~ msgstr "Rule applies to:"
-
-#~ msgid "Rule Name:"
-#~ msgstr "Rule Name:"
-
-#~ msgid "Apply to Incoming"
-#~ msgstr "Apply to Incoming"
-
-#~ msgid ""
-#~ "If enabled, this rule will be applied to headers when they are downloaded."
-#~ msgstr ""
-#~ "If enabled, this rule will be applied to headers when they are downloaded."
-
-#~ msgid "New Rule"
-#~ msgstr "New Rule"
-
-#~ msgid "Delete Articles by Bozos"
-#~ msgstr "Delete Articles by Bozos"
-
-#~ msgid "Applying rule to selected groups"
-#~ msgstr "Applying rule to selected groups"
-
-#~ msgid "Applying rule \"%s\" to group \"%s\""
-#~ msgstr "Applying rule \"%s\" to group \"%s\""
-
-#~ msgid "Rules"
-#~ msgstr "Rules"
-
-#~ msgid "Hit Ratio"
-#~ msgstr "Hit Ratio"
-
-#~ msgid ""
-#~ "Apply to\n"
-#~ "Selected\n"
-#~ "Groups"
-#~ msgstr ""
-#~ "Apply to\n"
-#~ "Selected\n"
-#~ "Groups"
-
-#~ msgid ""
-#~ "Apply to\n"
-#~ "Subscribed\n"
-#~ "Groups"
-#~ msgstr ""
-#~ "Apply to\n"
-#~ "Subscribed\n"
-#~ "Groups"
-
-#~ msgid "Wrote rules to \"%s\""
-#~ msgstr "Wrote rules to \"%s\""
-
-#~ msgid ""
-#~ "Can't find filter \"%s\" needed by rule \"%s\", so no articles match."
-#~ msgstr ""
-#~ "Cannot find filter \"%s\" needed by rule \"%s\", so no articles match."
-
-#~ msgid "%u articles match rule %s"
-#~ msgstr "%u articles match rule %s"
-
-#~ msgid "Pan: Manual Decode"
-#~ msgstr "Pan: Manual Decode"
-
-#~ msgid "Save Files in Directory"
-#~ msgstr "Save Files in Directory"
-
-#~ msgid "_Directory:"
-#~ msgstr "_Directory:"
-
-#~ msgid "Add to the _top of the Task Manager's List"
-#~ msgstr "Add to the _top of the Task Manager's List"
-
-#~ msgid "Criterion \"%s\" is selected, but empty."
-#~ msgstr "Criterion \"%s\" is selected, but empty."
-
-#~ msgid "No criteria are selected."
-#~ msgstr "No criteria are selected."
-
-#~ msgid "Pan: Add to Scorefile"
-#~ msgstr "Pan: Add to Scorefile"
-
-#~ msgid "Group"
-#~ msgstr "Group"
-
-#~ msgid "Su_bject:"
-#~ msgstr "Su_bject:"
-
-#~ msgid "A_uthor:"
-#~ msgstr "A_uthor:"
-
-#~ msgid "_Lines:"
-#~ msgstr "_Lines:"
-
-#~ msgid "at least N lines long"
-#~ msgstr "at least N lines long"
-
-#~ msgid "less than N lines long"
-#~ msgstr "less than N lines long"
-
-#~ msgid "Chan_ge Score:"
-#~ msgstr "Chan_ge Score:"
-
-#~ msgid "subtract"
-#~ msgstr "subtract"
-
-#~ msgid "Expire in N _days:"
-#~ msgstr "Expire in N _days:"
-
-#~ msgid "Edit the selected score"
-#~ msgstr "Edit the selected score"
-
-#~ msgid "You must specify an address."
-#~ msgstr "You must specify an address."
-
-#~ msgid "You must specify a password or disable authorization."
-#~ msgstr "You must specify a password or disable authorization."
-
-#~ msgid "You must specify a .newsrc filename or disable newsrc support."
-#~ msgstr "You must specify a .newsrc filename or disable newsrc support."
-
-#~ msgid "Newsrc"
-#~ msgstr "Newsrc"
-
-#~ msgid "Us_e .newsrc file"
-#~ msgstr "Us_e .newsrc file"
-
-#~ msgid "Select .newsrc File"
-#~ msgstr "Select .newsrc File"
-
-#~ msgid "_Filename:"
-#~ msgstr "_Filename:"
-
-#~ msgid "Edit the selected server"
-#~ msgstr "Edit the selected server"
-
-#~ msgid "Remove the selected server"
-#~ msgstr "Remove the selected server"
-
-#~ msgid "Got unexpected response from mail server: expected %d; got %s"
-#~ msgstr "Got unexpected response from mail server: expected %d; got %s"
-
-#~ msgid "Sending mail"
-#~ msgstr "Sending mail"
-
-#~ msgid "No known recipients"
-#~ msgstr "No known recipients"
-
-#~ msgid "Mail sent!"
-#~ msgstr "Mail sent!"
-
-#~ msgid "Handshaking with mail server"
-#~ msgstr "Handshaking with mail server"
-
-#~ msgid "Connecting to mail server"
-#~ msgstr "Connecting to mail server"
-
-#~ msgid "Unable to connect to mail server \"%*.*s\""
-#~ msgstr "Unable to connect to mail server \"%*.*s\""
-
-#~ msgid "Mail server not ready"
-#~ msgstr "Mail server not ready"
-
-#~ msgid "New connection %p for %s, port %d"
-#~ msgstr "New connection %p for %s, port %d"
-
-#~ msgid "Downloading %u articles"
-#~ msgstr "Downloading %u articles"
-
-#~ msgid "Downloading 1 article"
-#~ msgstr "Downloading 1 article"
-
-#~ msgid "Downloading %d articles"
-#~ msgstr "Downloading %d articles"
-
-#~ msgid "\"%s\""
-#~ msgstr "\"%s\""
-
-#~ msgid "Article %s (%s) canceled"
-#~ msgstr "Article %s (%s) canceled"
-
-#~ msgid "Updating article counts for %u groups from server \"%s\""
-#~ msgstr "Updating article counts for %u groups from server \"%s\""
-
-#~ msgid "Got %d group descriptions"
-#~ msgstr "Got %d group descriptions"
-
-#~ msgid "Fetching group descriptions"
-#~ msgstr "Fetching group descriptions"
-
-#~ msgid "Corrupt header skipped: "
-#~ msgstr "Corrupt header skipped: "
-
-#~ msgid "%lu Articles"
-#~ msgstr "%lu Articles"
-
-#~ msgid "Not Queued"
-#~ msgstr "Not Queued"
-
-#~ msgid "Pan %s Task Manager"
-#~ msgstr "Pan %s Task Manager"
-
-#~ msgid "Move Selected Task(s) Up"
-#~ msgstr "Move Selected Task(s) Up"
-
-#~ msgid "Move Selected Task(s) to Top"
-#~ msgstr "Move Selected Task(s) to Top"
-
-#~ msgid "Move Selected Task(s) Down"
-#~ msgstr "Move Selected Task(s) Down"
-
-#~ msgid "Move Selected Task(s) to Bottom"
-#~ msgstr "Move Selected Task(s) to Bottom"
-
-#~ msgid "Stop Selected Task(s)"
-#~ msgstr "Stop Selected Task(s)"
-
-#~ msgid "Delete Selected Task(s)"
-#~ msgstr "Delete Selected Task(s)"
-
-#~ msgid "Time Remaining"
-#~ msgstr "Time Remaining"
-
-#~ msgid "Article \"%s\" posted."
-#~ msgstr "Article \"%s\" posted."
-
-#~ msgid "Article \"%s\" not posted."
-#~ msgstr "Article \"%s\" not posted."
-
-#~ msgid "Usenet posting failed.  "
-#~ msgstr "Usenet posting failed.  "
-
-#~ msgid "Check Tools|Log Viewer for more information.  "
-#~ msgstr "Check Tools|Log Viewer for more information.  "
-
-#~ msgid "Your message was saved in the folder \"pan.sendlater\""
-#~ msgstr "Your message was saved in the folder \"pan.sendlater\""
-
-#~ msgid "Saving Attachments"
-#~ msgstr "Saving Attachments"
-
-#~ msgid "Save Article can't access path \"%s\""
-#~ msgstr "Save Article cannot access path \"%s\""
-
-#~ msgid "Saved article body to \"%s\""
-#~ msgstr "Saved article body to \"%s\""
-
-#~ msgid "X-Newsreader"
-#~ msgstr "X-Newsreader"
-
-#~ msgid "X-Mailer"
-#~ msgstr "X-Mailer"
-
-#~ msgid "User-Agent"
-#~ msgstr "User-Agent"
-
-#~ msgid ""
-#~ "Pan %s\n"
-#~ "Copyright (c) %d by Charles Kerr\n"
-#~ "\n"
-#~ "If you find a bug, please report it.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Pan %s\n"
-#~ "Copyright (c) %d by Charles Kerr\n"
-#~ "\n"
-#~ "If you find a bug, please report it.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "http://pan.rebelbase.com/ - Pan Homepage\n"
-#~ "http://pan.rebelbase.com/bugs/ - Report a Bug\n"
-#~ "http://pan.rebelbase.com/download/ - Upgrade\n"
-#~ "\n"
-#~ msgstr ""
-#~ "http://pan.rebelbase.com/ - Pan Homepage\n"
-#~ "http://pan.rebelbase.com/bugs/ - Report a Bug\n"
-#~ "http://pan.rebelbase.com/download/ - Upgrade\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it\n"
-#~ "and/or modify it under the terms of the GNU General Public\n"
-#~ "License as published by the Free Software Foundation;\n"
-#~ "version 2 of the License.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be\n"
-#~ "useful, but WITHOUT ANY WARRANTY; without even the implied\n"
-#~ "warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR\n"
-#~ "PURPOSE.  See the GNU General Public License for more\n"
-#~ "details.\n"
-#~ "\n"
-#~ "The GNU Public License can be found from the menu above\n"
-#~ "in Help|About|License."
-#~ msgstr ""
-#~ "This program is free software; you can redistribute it\n"
-#~ "and/or modify it under the terms of the GNU General Public\n"
-#~ "Licence as published by the Free Software Foundation;\n"
-#~ "version 2 of the Licence.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be\n"
-#~ "useful, but WITHOUT ANY WARRANTY; without even the implied\n"
-#~ "warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR\n"
-#~ "PURPOSE.  See the GNU General Public Licence for more\n"
-#~ "details.\n"
-#~ "\n"
-#~ "The GNU Public Licence can be found from the menu above\n"
-#~ "in Help|About|Licence."
-
-#~ msgid "Error starting external browser: %s"
-#~ msgstr "Error starting external browser: %s"
-
-#~ msgid "Error starting external scorefile editor: %s"
-#~ msgstr "Error starting external scorefile editor: %s"
+msgstr "Couldn't determine article encoding.  Non-UTF8 characters were removed."
