@@ -6,8 +6,8 @@ msgid ""
 ""
 msgstr "Project-Id-Version: pan2 HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-18 04:58+0200\n"
-"PO-Revision-Date: 2006-10-18 17:55+0930\n"
+"POT-Creation-Date: 2006-12-23 22:33+0100\n"
+"PO-Revision-Date: 2006-12-24 17:11+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -44,12 +44,12 @@ msgstr "Không thể lưu « %s » %s"
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "Đang bỏ qua tập tin tài nguyên tin tức « newsrc » cho máy phục vụ « %s »"
 
-#: ../pan/data-impl/headers.cc:590
+#: ../pan/data-impl/headers.cc:574
 #, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr "Mới bỏ %lu bài đã hết hạn ra « %s »"
 
-#: ../pan/data-impl/headers.cc:597
+#: ../pan/data-impl/headers.cc:581
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
@@ -57,17 +57,17 @@ msgid ""
 msgstr "Phiên bản dữ liệu không được hỗ trợ cho dòng đầu kiểu %s: %d.\n"
 "Có phải bạn tình nguyện cờ đang chạy một phiên bản cũ của Pan không?"
 
-#: ../pan/data-impl/headers.cc:612
+#: ../pan/data-impl/headers.cc:596
 #, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr "Mới tải %lu bài cho « %s » trong %.1f giây (%.0f bài/giây)"
 
-#: ../pan/data-impl/headers.cc:840
+#: ../pan/data-impl/headers.cc:824
 #, c-format
 msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
 msgstr "Đã lưu %lu phần, %lu bài vào « %s » trong %.1f giây (%.0f bài/giây)"
 
-#: ../pan/data-impl/headers.cc:1134
+#: ../pan/data-impl/headers.cc:1118
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "Mới thêm %lu bài vào %s."
@@ -248,7 +248,7 @@ msgstr "Mọi sự thử thất bại:"
 msgid "Any of these tests pass:"
 msgstr "Sự thử nào là thành công:"
 
-#: ../pan/data/scorefile.cc:299
+#: ../pan/data/scorefile.cc:300
 #, c-format
 msgid ""
 "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
@@ -256,17 +256,17 @@ msgid ""
 msgstr "Gặp lỗi khi đọc điểm trong %*.*s, dòng %d: ngờ dạng « Hết hạn: TT/Ng/NNNN » "
 "hay « Hết hạn: Ng-TT-NNNN »."
 
-#: ../pan/data/scorefile.cc:302
+#: ../pan/data/scorefile.cc:303
 #, c-format
 msgid "Expired old score from %*.*s, line %d"
 msgstr "Làm hết hạn điểm cũ từ %*.*s, dòng %d"
 
-#: ../pan/data/scorefile.cc:373
+#: ../pan/data/scorefile.cc:376
 #, c-format
 msgid "Error reading score in %*.*s, line %d: unexpected line."
 msgstr "Gặp lỗi khi đọc điểm trong %*.*s, dòng %d: dòng bất thường."
 
-#: ../pan/data/scorefile.cc:421
+#: ../pan/data/scorefile.cc:424
 #, c-format
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr "Đã đọc %lu quy tắc ghi điểm trong %lu phần từ « %s »"
@@ -980,8 +980,8 @@ msgid "Attachment not shown: MIME type %s/%s\n"
 msgstr "Không hiển thị đồ đính kèm: kiểu MIME %s/%s\n"
 
 #: ../pan/gui/body-pane.cc:960
-#: ../pan/gui/header-pane.cc:1042
-#: ../pan/gui/header-pane.cc:1377
+#: ../pan/gui/header-pane.cc:1044
+#: ../pan/gui/header-pane.cc:1379
 #: ../pan/gui/prefs-ui.cc:323
 #: ../pan/gui/score-add-ui.cc:141
 msgid "Subject"
@@ -992,7 +992,7 @@ msgid "From"
 msgstr "Từ"
 
 #: ../pan/gui/body-pane.cc:964
-#: ../pan/gui/header-pane.cc:1454
+#: ../pan/gui/header-pane.cc:1456
 #: ../pan/gui/log-ui.cc:206
 #: ../pan/gui/prefs-ui.cc:319
 msgid "Date"
@@ -1018,23 +1018,99 @@ msgstr " từ "
 msgid " at "
 msgstr " tại "
 
-#: ../pan/gui/dl-headers-ui.cc:102
+#: ../pan/gui/charset-picker.cc:39
+#: ../pan/gui/charset-picker.cc:40
+#: ../pan/gui/charset-picker.cc:41
+#: ../pan/gui/post-ui.cc:317
+#: ../pan/gui/post-ui.cc:318
+#: ../pan/gui/post-ui.cc:319
+msgid "Baltic"
+msgstr "Ban-tích"
+
+#: ../pan/gui/charset-picker.cc:42
+#: ../pan/gui/charset-picker.cc:43
+#: ../pan/gui/post-ui.cc:320
+#: ../pan/gui/post-ui.cc:321
+msgid "Central European"
+msgstr "Vùng Trung Âu"
+
+#: ../pan/gui/charset-picker.cc:44
+#: ../pan/gui/post-ui.cc:322
+msgid "Chinese Simplified"
+msgstr "Tiếng Trung phổ thông"
+
+#: ../pan/gui/charset-picker.cc:45
+#: ../pan/gui/post-ui.cc:323
+msgid "Chinese Traditional"
+msgstr "Tiếng Trung truyền thống"
+
+#: ../pan/gui/charset-picker.cc:46
+#: ../pan/gui/charset-picker.cc:47
+#: ../pan/gui/charset-picker.cc:48
+#: ../pan/gui/post-ui.cc:324
+#: ../pan/gui/post-ui.cc:325
+#: ../pan/gui/post-ui.cc:326
+msgid "Cyrillic"
+msgstr "Ki-rin"
+
+#: ../pan/gui/charset-picker.cc:49
+#: ../pan/gui/post-ui.cc:327
+msgid "Cyrillic, Ukrainian"
+msgstr "Ki-rin/U-cợ-rainh"
+
+#: ../pan/gui/charset-picker.cc:50
+#: ../pan/gui/post-ui.cc:328
+msgid "Greek"
+msgstr "Hy Lạp"
+
+#: ../pan/gui/charset-picker.cc:51
+#: ../pan/gui/post-ui.cc:329
+msgid "Japanese"
+msgstr "Nhật"
+
+#: ../pan/gui/charset-picker.cc:52
+#: ../pan/gui/post-ui.cc:330
+msgid "Korean"
+msgstr "Hàn"
+
+#: ../pan/gui/charset-picker.cc:53
+#: ../pan/gui/post-ui.cc:331
+msgid "Turkish"
+msgstr "Thổ Nhĩ Kỳ"
+
+#: ../pan/gui/charset-picker.cc:54
+#: ../pan/gui/charset-picker.cc:56
+#: ../pan/gui/post-ui.cc:332
+#: ../pan/gui/post-ui.cc:334
+msgid "Western"
+msgstr "Phương Tây"
+
+#: ../pan/gui/charset-picker.cc:55
+#: ../pan/gui/post-ui.cc:333
+msgid "Western, New"
+msgstr "Phương Tây Mới"
+
+#: ../pan/gui/charset-picker.cc:57
+msgid "Unicode"
+msgstr "Unicode"
+
+#: ../pan/gui/dl-headers-ui.cc:106
 msgid "Pan: "
 msgstr "Pan: "
 
-#: ../pan/gui/dl-headers-ui.cc:128
+#: ../pan/gui/dl-headers-ui.cc:132
 msgid "Get the last N _days' headers: "
 msgstr "Lấy các _dòng đầu của N ngày qua: "
 
-#: ../pan/gui/dl-headers-ui.cc:136
+#: ../pan/gui/dl-headers-ui.cc:140
 msgid "Get _new headers"
 msgstr "Lấy các dò_ng đầu mới"
 
-#: ../pan/gui/dl-headers-ui.cc:140
+#: ../pan/gui/dl-headers-ui.cc:144
 msgid "Get _all headers"
 msgstr "Lấy _mọi dòng đầu"
 
-#: ../pan/gui/dl-headers-ui.cc:144
+#: ../pan/gui/dl-headers-ui.cc:148
 msgid "Get the _latest N headers: "
 msgstr "_Lấy các dòng đầu N mới nhất: "
 
@@ -1048,7 +1124,7 @@ msgid " (%lu)"
 msgstr " (%lu)"
 
 #: ../pan/gui/group-pane.cc:794
-#: ../pan/gui/header-pane.cc:1543
+#: ../pan/gui/header-pane.cc:1545
 msgid "Clear the Filter"
 msgstr "Xoá bộ lọc"
 
@@ -1093,23 +1169,23 @@ msgstr "Thư mục nơi cần _lưu đồ đính kèm"
 msgid "Posting _profile:"
 msgstr "_Hồ sơ gởi:"
 
-#: ../pan/gui/gui.cc:236
+#: ../pan/gui/gui.cc:238
 msgid "Open the Task Manager"
 msgstr "Mở Bộ Quản lý Tác vụ"
 
-#: ../pan/gui/gui.cc:257
+#: ../pan/gui/gui.cc:260
 msgid "Open the Event Log"
 msgstr "Mở Bản Ghi Sự Kiện"
 
-#: ../pan/gui/gui.cc:481
+#: ../pan/gui/gui.cc:486
 msgid "Save Attachments"
 msgstr "Lưu các đồ đính kèm"
 
-#: ../pan/gui/gui.cc:529
+#: ../pan/gui/gui.cc:534
 msgid "Import NZB File(s)"
 msgstr "Nhập các tập tin NZB"
 
-#: ../pan/gui/gui.cc:605
+#: ../pan/gui/gui.cc:610
 msgid ""
 "Pan is now offline. Please ensure that space is available, then use File|"
 "Work Online to continue."
@@ -1119,103 +1195,103 @@ msgstr "Pan hiện thời nằm ngoại tuyến. Hãy đảm bảo có đủ ch�
 # 48x48/emblems/emblem-plan.icon.in.h:1
 # 48x48/emblems/emblem-plan.icon.in.h:1
 # Name: don't translate / Tên: đừng dịch
-#: ../pan/gui/gui.cc:734
-#: ../pan/gui/gui.cc:1110
-#: ../pan/gui/gui.cc:1314
+#: ../pan/gui/gui.cc:739
+#: ../pan/gui/gui.cc:1120
+#: ../pan/gui/gui.cc:1324
 msgid "Pan"
 msgstr "Pan"
 
-#: ../pan/gui/gui.cc:906
+#: ../pan/gui/gui.cc:916
 msgid "Unable to supersede article."
 msgstr "Không thể thay thế bài cũ."
 
-#: ../pan/gui/gui.cc:907
-#: ../pan/gui/gui.cc:977
+#: ../pan/gui/gui.cc:917
+#: ../pan/gui/gui.cc:987
 msgid "The article doesn't match any of your posting profiles."
 msgstr "Bài này không khớp với hồ sơ gởi nào của bạn."
 
-#: ../pan/gui/gui.cc:950
+#: ../pan/gui/gui.cc:960
 msgid "Revise and send this article to replace the old one."
 msgstr "Xem lại và gởi bài này để thay thế bài cũ."
 
-#: ../pan/gui/gui.cc:951
-#: ../pan/gui/gui.cc:1014
+#: ../pan/gui/gui.cc:961
+#: ../pan/gui/gui.cc:1024
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr "Hãy đợi ...  trong khi các thay đổi có tác dụng."
 
-#: ../pan/gui/gui.cc:976
+#: ../pan/gui/gui.cc:986
 msgid "Unable to cancel article."
 msgstr "Không thể thôi bài."
 
-#: ../pan/gui/gui.cc:1013
+#: ../pan/gui/gui.cc:1023
 msgid "Send this article to ask your server to cancel your other one."
 msgstr "Gởi bài này để yêu cầu máy phục vụ thôi bài khác."
 
-#: ../pan/gui/gui.cc:1113
-#: ../pan/gui/gui.cc:1133
+#: ../pan/gui/gui.cc:1123
+#: ../pan/gui/gui.cc:1143
 msgid "Copyright © 2002-2006 Charles Kerr"
 msgstr "Bản quyền © năm 2002-2006 của Charles Kerr"
 
-#: ../pan/gui/gui.cc:1118
+#: ../pan/gui/gui.cc:1128
 msgid "translator-credits"
 msgstr "Nhóm Việt hoá GNOME (http://gnomevi.sourceforge.net)"
 
-#: ../pan/gui/gui.cc:1229
+#: ../pan/gui/gui.cc:1239
 msgid "_1. Group Pane"
 msgstr "_1. Ô nhóm"
 
-#: ../pan/gui/gui.cc:1230
+#: ../pan/gui/gui.cc:1240
 msgid "_2. Header Pane"
 msgstr "_2. Ô dòng đầu"
 
-#: ../pan/gui/gui.cc:1231
+#: ../pan/gui/gui.cc:1241
 msgid "_3. Body Pane"
 msgstr "_3. Ô thân"
 
-#: ../pan/gui/gui.cc:1316
+#: ../pan/gui/gui.cc:1326
 #, c-format
 msgid "Pan: %s"
 msgstr "Pan: %s"
 
-#: ../pan/gui/gui.cc:1438
+#: ../pan/gui/gui.cc:1459
 msgid "Offline"
 msgstr "Ngoại tuyến"
 
-#: ../pan/gui/gui.cc:1441
+#: ../pan/gui/gui.cc:1462
 #, c-format
 msgid "Closing %d connections"
 msgstr "Đang đóng %d kết nối"
 
-#: ../pan/gui/gui.cc:1443
-#: ../pan/gui/gui.cc:1473
+#: ../pan/gui/gui.cc:1464
+#: ../pan/gui/gui.cc:1494
 msgid "No Connections"
 msgstr "Không có kết nối"
 
-#: ../pan/gui/gui.cc:1447
+#: ../pan/gui/gui.cc:1468
 msgid "Connecting"
 msgstr "Đang kết nối"
 
-#: ../pan/gui/gui.cc:1460
+#: ../pan/gui/gui.cc:1481
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d nghỉ, %d hoạt động @ %.1f KiBps"
 
 #.build the format strings
-#: ../pan/gui/gui.cc:1515
+#: ../pan/gui/gui.cc:1536
 #, c-format
 msgid "%u Tasks Running, %u Tasks Total"
 msgstr "%u tác vụ đang chạy, tổng cộng %u"
 
-#: ../pan/gui/gui.cc:1517
+#: ../pan/gui/gui.cc:1538
 msgid "No Tasks"
 msgstr "Không có tác vụ"
 
-#: ../pan/gui/gui.cc:1519
+#: ../pan/gui/gui.cc:1540
 #, c-format
 msgid "Tasks: %u/%u"
 msgstr "Tác vụ : %u/%u"
 
-#: ../pan/gui/gui.cc:1567
+#: ../pan/gui/gui.cc:1590
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1244,32 +1320,32 @@ msgstr "%.1f MiB"
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
-#: ../pan/gui/header-pane.cc:1041
+#: ../pan/gui/header-pane.cc:1043
 msgid "Subject or Author"
 msgstr "Chủ đề hay Tác giả"
 
-#: ../pan/gui/header-pane.cc:1043
-#: ../pan/gui/header-pane.cc:1409
+#: ../pan/gui/header-pane.cc:1045
+#: ../pan/gui/header-pane.cc:1411
 #: ../pan/gui/prefs-ui.cc:317
 #: ../pan/gui/score-add-ui.cc:142
 msgid "Author"
 msgstr "Tác giả"
 
-#: ../pan/gui/header-pane.cc:1044
+#: ../pan/gui/header-pane.cc:1046
 msgid "Message-ID"
 msgstr "ID thông điệp"
 
-#: ../pan/gui/header-pane.cc:1394
+#: ../pan/gui/header-pane.cc:1396
 #: ../pan/gui/prefs-ui.cc:321
 msgid "Score"
 msgstr "Điểm"
 
-#: ../pan/gui/header-pane.cc:1424
+#: ../pan/gui/header-pane.cc:1426
 #: ../pan/gui/prefs-ui.cc:320
 msgid "Lines"
 msgstr "Đường"
 
-#: ../pan/gui/header-pane.cc:1439
+#: ../pan/gui/header-pane.cc:1441
 #: ../pan/gui/prefs-ui.cc:318
 msgid "Bytes"
 msgstr "Byte"
@@ -1346,6 +1422,10 @@ msgstr "Pan %s đã khởi chạy"
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr "Hãy cấu hình các máy phục vụ tin tức của Pan trước khi sử dụng nó như là ứng "
 "dụng khách NZB."
+
+#: ../pan/gui/pan-file-entry.cc:75
+msgid "_Browse..."
+msgstr "_Duyệt..."
 
 #: ../pan/gui/post-ui.cc:86
 #, c-format
@@ -1470,60 +1550,6 @@ msgstr "Nhớ bộ _ký tự cho nhóm này"
 msgid "Check _Spelling"
 msgstr "Kiểm tra _chính tả"
 
-#: ../pan/gui/post-ui.cc:317
-#: ../pan/gui/post-ui.cc:318
-#: ../pan/gui/post-ui.cc:319
-msgid "Baltic"
-msgstr "Ban-tích"
-
-#: ../pan/gui/post-ui.cc:320
-#: ../pan/gui/post-ui.cc:321
-msgid "Central European"
-msgstr "Vùng Trung Âu"
-
-#: ../pan/gui/post-ui.cc:322
-msgid "Chinese Simplified"
-msgstr "Tiếng Trung phổ thông"
-
-#: ../pan/gui/post-ui.cc:323
-msgid "Chinese Traditional"
-msgstr "Tiếng Trung truyền thống"
-
-#: ../pan/gui/post-ui.cc:324
-#: ../pan/gui/post-ui.cc:325
-#: ../pan/gui/post-ui.cc:326
-msgid "Cyrillic"
-msgstr "Ki-rin"
-
-#: ../pan/gui/post-ui.cc:327
-msgid "Cyrillic, Ukrainian"
-msgstr "Ki-rin/U-cợ-rainh"
-
-#: ../pan/gui/post-ui.cc:328
-msgid "Greek"
-msgstr "Hy Lạp"
-
-#: ../pan/gui/post-ui.cc:329
-msgid "Japanese"
-msgstr "Nhật"
-
-#: ../pan/gui/post-ui.cc:330
-msgid "Korean"
-msgstr "Hàn"
-
-#: ../pan/gui/post-ui.cc:331
-msgid "Turkish"
-msgstr "Thổ Nhĩ Kỳ"
-
-#: ../pan/gui/post-ui.cc:332
-#: ../pan/gui/post-ui.cc:334
-msgid "Western"
-msgstr "Phương Tây"
-
-#: ../pan/gui/post-ui.cc:333
-msgid "Western, New"
-msgstr "Phương Tây Mới"
-
 #: ../pan/gui/post-ui.cc:335
 msgid "Unicode, UTF-8"
 msgstr "Unicode, UTF-8"
@@ -1568,7 +1594,8 @@ msgstr "Vẫn gởi bài"
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
-msgstr "Thông điệp dùng các ký tự không nằm trong bộ ký tự « %s » — có thể sử dụng « %s »"
+msgstr "Thông điệp dùng các ký tự không nằm trong bộ ký tự « %s » — có thể sử dụng « "
+"%s »"
 
 #: ../pan/gui/post-ui.cc:703
 msgid "Go _Online"
@@ -1641,35 +1668,35 @@ msgstr "Không thể phân tách lệnh chữ ký « %s »: %s"
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Không thể chuyển đổi chữ ký sang UTF-8."
 
-#: ../pan/gui/post-ui.cc:1847
+#: ../pan/gui/post-ui.cc:1857
 msgid "Post Article"
 msgstr "Gởi bài"
 
-#: ../pan/gui/post-ui.cc:1873
+#: ../pan/gui/post-ui.cc:1883
 msgid "F_rom"
 msgstr "_Từ"
 
-#: ../pan/gui/post-ui.cc:1880
+#: ../pan/gui/post-ui.cc:1890
 msgid "_Subject"
 msgstr "_Chủ đề"
 
-#: ../pan/gui/post-ui.cc:1886
+#: ../pan/gui/post-ui.cc:1896
 msgid "_Newsgroups"
 msgstr "_Nhóm tin"
 
-#: ../pan/gui/post-ui.cc:1893
+#: ../pan/gui/post-ui.cc:1903
 msgid "_Mail To"
 msgstr "Gởi thư ch_o"
 
-#: ../pan/gui/post-ui.cc:1903
+#: ../pan/gui/post-ui.cc:1913
 msgid "One header per line, in the form HeaderName: Value"
 msgstr "Một dòng đầu trên mỗi dòng, dạng « Tên dòng đầu: giá trị »"
 
-#: ../pan/gui/post-ui.cc:1906
+#: ../pan/gui/post-ui.cc:1916
 msgid "_More Headers"
 msgstr "Dòng đầu thê_m"
 
-#: ../pan/gui/post-ui.cc:1959
+#: ../pan/gui/post-ui.cc:1969
 #: ../pan/gui/profiles-dialog.cc:404
 #, c-format
 msgid "On %d, %n wrote:"
@@ -2500,11 +2527,16 @@ msgstr "Không thể đặt nhóm: %s"
 msgid "Error: %s"
 msgstr "Lỗi: %s"
 
-#: ../pan/tasks/socket-impl-gio.cc:388
+#: ../pan/tasks/nntp-pool.cc:202
+#, c-format
+msgid "Unable to connect to \"%s\""
+msgstr "Không thể kết nối tới « %s »"
+
+#: ../pan/tasks/socket-impl-gio.cc:391
 msgid "Unknown Error"
 msgstr "Lỗi không rõ"
 
-#: ../pan/tasks/socket-impl-gio.cc:389
+#: ../pan/tasks/socket-impl-gio.cc:392
 #, c-format
 msgid "Error reading from socket: %s"
 msgstr "Gặp lỗi khi đọc từ ổ cắm: %s"
@@ -2529,17 +2561,17 @@ msgstr "Không thể lưu tập tin « %s »: %s"
 msgid "Error initializing uulib"
 msgstr "Gặp lỗi khi khởi tạo uulib"
 
-#: ../pan/tasks/task-article.cc:335
+#: ../pan/tasks/task-article.cc:334
 #, c-format
 msgid "Couldn't load \"%s\": %s"
 msgstr "Không thể tải « %s »: %s"
 
-#: ../pan/tasks/task-article.cc:377
+#: ../pan/tasks/task-article.cc:376
 #, c-format
 msgid "Saved \"%s\""
 msgstr "Mới lưu « %s »"
 
-#: ../pan/tasks/task-article.cc:381
+#: ../pan/tasks/task-article.cc:380
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -2547,7 +2579,7 @@ msgid ""
 msgstr "Gặp lỗi khi lưu « %s »:\n"
 "%s. %s"
 
-#: ../pan/tasks/task-article.cc:383
+#: ../pan/tasks/task-article.cc:382
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -2591,7 +2623,7 @@ msgstr "Đang lấy mẫu dòng đầu cho « %s »"
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu phần, %lu bài)"
 
-#: ../pan/usenet-utils/gnksa.cc:879
+#: ../pan/usenet-utils/gnksa.cc:882
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr "Chưa cung cấp địa chỉ thư điện tử nên đang phát sinh mã nhận diện thông điệp "
