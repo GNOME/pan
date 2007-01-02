@@ -505,4 +505,8 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
   gtk_widget_show_all (vbox);
   prefs.set_window ("tasks-window", GTK_WINDOW(_root), 200, 200, 550, 600);
   gtk_window_set_resizable (GTK_WINDOW(_root), true);
+
+  GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, icon_pan, FALSE, 0);
+  gtk_window_set_icon (GTK_WINDOW(_root), pixbuf);
+  g_object_unref (pixbuf);
 }
