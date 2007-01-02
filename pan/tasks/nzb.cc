@@ -29,6 +29,8 @@ extern "C" {
 #include <pan/general/quark.h>
 #include <pan/general/string-view.h>
 #include <pan/general/foreach.h>
+#include <pan/general/log.h>
+#include <pan/usenet-utils/utf8-utils.h>
 #include "nzb.h"
 #include "task-article.h"
 
@@ -151,7 +153,7 @@ namespace
 }
 
 void
-NZB :: tasks_from_nzb_string (const StringView      & nzb,
+NZB :: tasks_from_nzb_string (const StringView      & nzb_in,
                               const StringView      & save_path,
                               ArticleCache          & cache,
                               ArticleRead           & read,
@@ -159,6 +161,7 @@ NZB :: tasks_from_nzb_string (const StringView      & nzb,
                               const GroupServer     & gs,
                               std::vector<Task*>    & appendme)
 {
+  const std::string nzb (clean_utf8 (nzb_in));
   MyContext mc (cache, read, ranks, gs, save_path);
   GMarkupParser p;
   p.start_element = start_element;
@@ -169,8 +172,10 @@ NZB :: tasks_from_nzb_string (const StringView      & nzb,
   GMarkupParseContext* c (
     g_markup_parse_context_new (&p, (GMarkupParseFlags)0, &mc, 0));
   GError * gerr (0);
-  if (g_markup_parse_context_parse (c, nzb.str, nzb.len, &gerr)) {
-    // FIXME
+  g_markup_parse_context_parse (c, nzb.c_str(), nzb.size(), &gerr);
+  if (gerr) {
+    Log::add_urgent (gerr->message);
+    g_error_free (gerr);
   }
   g_markup_parse_context_free (c);
   appendme.insert (appendme.end(), mc.tasks.begin(), mc.tasks.end());
