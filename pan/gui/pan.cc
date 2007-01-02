@@ -167,12 +167,12 @@ _("General Options\n"
 "URL Options\n"
 "  news:message-id          Show the specified article.\n"
 "  news:group.name          Show the specified newsgroup.\n"
-"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
 "  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
 "  -o path, --output=path   Path to save attachments listed in the nzb files.\n"
-"  --nogui                  Only show console output, not the download queue.\n") << std::endl;
+"  --no-gui                 Only show console output, not the download queue.\n") << std::endl;
   }
 }
 
@@ -201,12 +201,14 @@ main (int argc, char *argv[])
     const char * tok (argv[i]);
     if (!memcmp(tok,"news:", 5))
       url = tok;
-    else if (!strcmp(tok,"--nogui")) 
+    else if (!strcmp(tok,"--no-gui") || !strcmp(tok,"--nogui"))
       gui = false;
     else if (!strcmp (tok, "--debug"))
       _debug_flag = true;
     else if (!strcmp (tok, "--nzb"))
       nzb = true;
+    else if (!strcmp (tok, "--version"))
+      { std::cerr << "Pan " << VERSION << '\n'; return 0; }
     else if (!strcmp (tok, "-o") && i<argc-1) 
       nzb_output_path = argv[++i];
     else if (!memcmp (tok, "--output=", 9))
@@ -226,7 +228,7 @@ main (int argc, char *argv[])
   }
 #endif
   if (!gui && nzb_files.empty() && url.empty()) {
-    std::cerr << _("Error: --nogui used without nzb files or news:message-id.") << std::endl;
+    std::cerr << _("Error: --no-gui used without nzb files or news:message-id.") << std::endl;
     return 0;
   }
 
