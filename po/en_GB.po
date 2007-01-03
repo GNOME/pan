@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-22 11:06+0100\n"
-"PO-Revision-Date: 2006-10-22 11:13-0000\n"
+"POT-Creation-Date: 2007-01-03 20:24+0000\n"
+"PO-Revision-Date: 2007-01-03 20:24-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,12 +43,12 @@ msgstr "Unable to save \"%s\" %s"
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "Skipping newsrc file for server \"%s\""
 
-#: ../pan/data-impl/headers.cc:590
+#: ../pan/data-impl/headers.cc:574
 #, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr "Expired %lu old articles from \"%s\""
 
-#: ../pan/data-impl/headers.cc:597
+#: ../pan/data-impl/headers.cc:581
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
@@ -57,17 +57,17 @@ msgstr ""
 "Unsupported data version for %s headers: %d.\n"
 "Are you running an old version of Pan by accident?"
 
-#: ../pan/data-impl/headers.cc:612
+#: ../pan/data-impl/headers.cc:596
 #, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 
-#: ../pan/data-impl/headers.cc:840
+#: ../pan/data-impl/headers.cc:824
 #, c-format
 msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
 msgstr "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
 
-#: ../pan/data-impl/headers.cc:1134
+#: ../pan/data-impl/headers.cc:1118
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "Added %lu articles to %s."
@@ -248,22 +248,22 @@ msgstr "None of these tests pass:"
 msgid "Any of these tests pass:"
 msgstr "Any of these tests pass:"
 
-#: ../pan/data/scorefile.cc:299
+#: ../pan/data/scorefile.cc:300
 #, c-format
 msgid "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or 'Expires: DD-MM-YYYY'."
 msgstr "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or 'Expires: DD-MM-YYYY'."
 
-#: ../pan/data/scorefile.cc:302
+#: ../pan/data/scorefile.cc:303
 #, c-format
 msgid "Expired old score from %*.*s, line %d"
 msgstr "Expired old score from %*.*s, line %d"
 
-#: ../pan/data/scorefile.cc:373
+#: ../pan/data/scorefile.cc:376
 #, c-format
 msgid "Error reading score in %*.*s, line %d: unexpected line."
 msgstr "Error reading score in %*.*s, line %d: unexpected line."
 
-#: ../pan/data/scorefile.cc:421
+#: ../pan/data/scorefile.cc:424
 #, c-format
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr "Read %lu scoring rules in %lu sections from \"%s\""
@@ -974,8 +974,8 @@ msgid "Attachment not shown: MIME type %s/%s\n"
 msgstr "Attachment not shown: MIME type %s/%s\n"
 
 #: ../pan/gui/body-pane.cc:960
-#: ../pan/gui/header-pane.cc:1042
-#: ../pan/gui/header-pane.cc:1377
+#: ../pan/gui/header-pane.cc:1044
+#: ../pan/gui/header-pane.cc:1379
 #: ../pan/gui/prefs-ui.cc:323
 #: ../pan/gui/score-add-ui.cc:141
 msgid "Subject"
@@ -986,7 +986,7 @@ msgid "From"
 msgstr "From"
 
 #: ../pan/gui/body-pane.cc:964
-#: ../pan/gui/header-pane.cc:1454
+#: ../pan/gui/header-pane.cc:1456
 #: ../pan/gui/log-ui.cc:206
 #: ../pan/gui/prefs-ui.cc:319
 msgid "Date"
@@ -1012,23 +1012,99 @@ msgstr " from "
 msgid " at "
 msgstr " at "
 
-#: ../pan/gui/dl-headers-ui.cc:102
+#: ../pan/gui/charset-picker.cc:39
+#: ../pan/gui/charset-picker.cc:40
+#: ../pan/gui/charset-picker.cc:41
+#: ../pan/gui/post-ui.cc:317
+#: ../pan/gui/post-ui.cc:318
+#: ../pan/gui/post-ui.cc:319
+msgid "Baltic"
+msgstr "Baltic"
+
+#: ../pan/gui/charset-picker.cc:42
+#: ../pan/gui/charset-picker.cc:43
+#: ../pan/gui/post-ui.cc:320
+#: ../pan/gui/post-ui.cc:321
+msgid "Central European"
+msgstr "Central European"
+
+#: ../pan/gui/charset-picker.cc:44
+#: ../pan/gui/post-ui.cc:322
+msgid "Chinese Simplified"
+msgstr "Chinese Simplified"
+
+#: ../pan/gui/charset-picker.cc:45
+#: ../pan/gui/post-ui.cc:323
+msgid "Chinese Traditional"
+msgstr "Chinese Traditional"
+
+#: ../pan/gui/charset-picker.cc:46
+#: ../pan/gui/charset-picker.cc:47
+#: ../pan/gui/charset-picker.cc:48
+#: ../pan/gui/post-ui.cc:324
+#: ../pan/gui/post-ui.cc:325
+#: ../pan/gui/post-ui.cc:326
+msgid "Cyrillic"
+msgstr "Cyrillic"
+
+#: ../pan/gui/charset-picker.cc:49
+#: ../pan/gui/post-ui.cc:327
+msgid "Cyrillic, Ukrainian"
+msgstr "Cyrillic, Ukrainian"
+
+#: ../pan/gui/charset-picker.cc:50
+#: ../pan/gui/post-ui.cc:328
+msgid "Greek"
+msgstr "Greek"
+
+#: ../pan/gui/charset-picker.cc:51
+#: ../pan/gui/post-ui.cc:329
+msgid "Japanese"
+msgstr "Japanese"
+
+#: ../pan/gui/charset-picker.cc:52
+#: ../pan/gui/post-ui.cc:330
+msgid "Korean"
+msgstr "Korean"
+
+#: ../pan/gui/charset-picker.cc:53
+#: ../pan/gui/post-ui.cc:331
+msgid "Turkish"
+msgstr "Turkish"
+
+#: ../pan/gui/charset-picker.cc:54
+#: ../pan/gui/charset-picker.cc:56
+#: ../pan/gui/post-ui.cc:332
+#: ../pan/gui/post-ui.cc:334
+msgid "Western"
+msgstr "Western"
+
+#: ../pan/gui/charset-picker.cc:55
+#: ../pan/gui/post-ui.cc:333
+msgid "Western, New"
+msgstr "Western, New"
+
+#: ../pan/gui/charset-picker.cc:57
+msgid "Unicode"
+msgstr "Unicode"
+
+#: ../pan/gui/dl-headers-ui.cc:106
 msgid "Pan: "
 msgstr "Pan: "
 
-#: ../pan/gui/dl-headers-ui.cc:128
+#: ../pan/gui/dl-headers-ui.cc:132
 msgid "Get the last N _days' headers: "
 msgstr "Get the last N _days' headers: "
 
-#: ../pan/gui/dl-headers-ui.cc:136
+#: ../pan/gui/dl-headers-ui.cc:140
 msgid "Get _new headers"
 msgstr "Get _new headers"
 
-#: ../pan/gui/dl-headers-ui.cc:140
+#: ../pan/gui/dl-headers-ui.cc:144
 msgid "Get _all headers"
 msgstr "Get _all headers"
 
-#: ../pan/gui/dl-headers-ui.cc:144
+#: ../pan/gui/dl-headers-ui.cc:148
 msgid "Get the _latest N headers: "
 msgstr "Get the _latest N headers: "
 
@@ -1042,7 +1118,7 @@ msgid " (%lu)"
 msgstr " (%lu)"
 
 #: ../pan/gui/group-pane.cc:794
-#: ../pan/gui/header-pane.cc:1543
+#: ../pan/gui/header-pane.cc:1545
 msgid "Clear the Filter"
 msgstr "Clear the Filter"
 
@@ -1087,126 +1163,126 @@ msgstr "Directory for _saving attachments:"
 msgid "Posting _profile:"
 msgstr "Posting _profile:"
 
-#: ../pan/gui/gui.cc:236
+#: ../pan/gui/gui.cc:238
 msgid "Open the Task Manager"
 msgstr "Open the Task Manager"
 
-#: ../pan/gui/gui.cc:257
+#: ../pan/gui/gui.cc:260
 msgid "Open the Event Log"
 msgstr "Open the Event Log"
 
-#: ../pan/gui/gui.cc:481
+#: ../pan/gui/gui.cc:486
 msgid "Save Attachments"
 msgstr "Save Attachments"
 
-#: ../pan/gui/gui.cc:529
+#: ../pan/gui/gui.cc:534
 msgid "Import NZB File(s)"
 msgstr "Import NZB File(s)"
 
-#: ../pan/gui/gui.cc:605
+#: ../pan/gui/gui.cc:610
 msgid "Pan is now offline. Please ensure that space is available, then use File|Work Online to continue."
 msgstr "Pan is now offline. Please ensure that space is available, then use File|Work Online to continue."
 
-#: ../pan/gui/gui.cc:734
-#: ../pan/gui/gui.cc:1110
-#: ../pan/gui/gui.cc:1314
+#: ../pan/gui/gui.cc:739
+#: ../pan/gui/gui.cc:1120
+#: ../pan/gui/gui.cc:1324
 msgid "Pan"
 msgstr "Pan"
 
-#: ../pan/gui/gui.cc:906
+#: ../pan/gui/gui.cc:916
 msgid "Unable to supersede article."
 msgstr "Unable to supersede article."
 
-#: ../pan/gui/gui.cc:907
-#: ../pan/gui/gui.cc:977
+#: ../pan/gui/gui.cc:917
+#: ../pan/gui/gui.cc:987
 msgid "The article doesn't match any of your posting profiles."
 msgstr "The article doesn't match any of your posting profiles."
 
-#: ../pan/gui/gui.cc:950
+#: ../pan/gui/gui.cc:960
 msgid "Revise and send this article to replace the old one."
 msgstr "Revise and send this article to replace the old one."
 
-#: ../pan/gui/gui.cc:951
-#: ../pan/gui/gui.cc:1014
+#: ../pan/gui/gui.cc:961
+#: ../pan/gui/gui.cc:1024
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr "Be patient!  It will take time for your changes to take effect."
 
-#: ../pan/gui/gui.cc:976
+#: ../pan/gui/gui.cc:986
 msgid "Unable to cancel article."
 msgstr "Unable to cancel article."
 
-#: ../pan/gui/gui.cc:1013
+#: ../pan/gui/gui.cc:1023
 msgid "Send this article to ask your server to cancel your other one."
 msgstr "Send this article to ask your server to cancel your other one."
 
-#: ../pan/gui/gui.cc:1113
-#: ../pan/gui/gui.cc:1133
+#: ../pan/gui/gui.cc:1123
+#: ../pan/gui/gui.cc:1143
 msgid "Copyright © 2002-2006 Charles Kerr"
 msgstr "Copyright © 2002-2006 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1118
+#: ../pan/gui/gui.cc:1128
 msgid "translator-credits"
 msgstr ""
 "Robert Brady <rwb197@zepler.org>\n"
 "Gareth Owen <gowen72@yahoo.com>\n"
 "David Lodge <dave@cirt.net>"
 
-#: ../pan/gui/gui.cc:1229
+#: ../pan/gui/gui.cc:1239
 msgid "_1. Group Pane"
 msgstr "_1. Group Pane"
 
-#: ../pan/gui/gui.cc:1230
+#: ../pan/gui/gui.cc:1240
 msgid "_2. Header Pane"
 msgstr "_2. Header Pane"
 
-#: ../pan/gui/gui.cc:1231
+#: ../pan/gui/gui.cc:1241
 msgid "_3. Body Pane"
 msgstr "_3. Body Pane"
 
-#: ../pan/gui/gui.cc:1316
+#: ../pan/gui/gui.cc:1326
 #, c-format
 msgid "Pan: %s"
 msgstr "Pan: %s"
 
-#: ../pan/gui/gui.cc:1438
+#: ../pan/gui/gui.cc:1459
 msgid "Offline"
 msgstr "Offline"
 
-#: ../pan/gui/gui.cc:1441
+#: ../pan/gui/gui.cc:1462
 #, c-format
 msgid "Closing %d connections"
 msgstr "Closing %d connections"
 
-#: ../pan/gui/gui.cc:1443
-#: ../pan/gui/gui.cc:1473
+#: ../pan/gui/gui.cc:1464
+#: ../pan/gui/gui.cc:1494
 msgid "No Connections"
 msgstr "No Connections"
 
-#: ../pan/gui/gui.cc:1447
+#: ../pan/gui/gui.cc:1468
 msgid "Connecting"
 msgstr "Connecting"
 
-#: ../pan/gui/gui.cc:1460
+#: ../pan/gui/gui.cc:1481
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d idle, %d active @ %.1f KiBps"
 
 #. build the format strings
-#: ../pan/gui/gui.cc:1515
+#: ../pan/gui/gui.cc:1536
 #, c-format
 msgid "%u Tasks Running, %u Tasks Total"
 msgstr "%u Tasks Running, %u Tasks Total"
 
-#: ../pan/gui/gui.cc:1517
+#: ../pan/gui/gui.cc:1538
 msgid "No Tasks"
 msgstr "No Tasks"
 
-#: ../pan/gui/gui.cc:1519
+#: ../pan/gui/gui.cc:1540
 #, c-format
 msgid "Tasks: %u/%u"
 msgstr "Tasks: %u/%u"
 
-#: ../pan/gui/gui.cc:1567
+#: ../pan/gui/gui.cc:1590
 msgid "Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue."
 msgstr "Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue."
 
@@ -1232,32 +1308,32 @@ msgstr "%.1f MB"
 msgid "%.1f GiB"
 msgstr "%.1f GB"
 
-#: ../pan/gui/header-pane.cc:1041
+#: ../pan/gui/header-pane.cc:1043
 msgid "Subject or Author"
 msgstr "Subject or Author"
 
-#: ../pan/gui/header-pane.cc:1043
-#: ../pan/gui/header-pane.cc:1409
+#: ../pan/gui/header-pane.cc:1045
+#: ../pan/gui/header-pane.cc:1411
 #: ../pan/gui/prefs-ui.cc:317
 #: ../pan/gui/score-add-ui.cc:142
 msgid "Author"
 msgstr "Author"
 
-#: ../pan/gui/header-pane.cc:1044
+#: ../pan/gui/header-pane.cc:1046
 msgid "Message-ID"
 msgstr "Message-ID"
 
-#: ../pan/gui/header-pane.cc:1394
+#: ../pan/gui/header-pane.cc:1396
 #: ../pan/gui/prefs-ui.cc:321
 msgid "Score"
 msgstr "Score"
 
-#: ../pan/gui/header-pane.cc:1424
+#: ../pan/gui/header-pane.cc:1426
 #: ../pan/gui/prefs-ui.cc:320
 msgid "Lines"
 msgstr "Lines"
 
-#: ../pan/gui/header-pane.cc:1439
+#: ../pan/gui/header-pane.cc:1441
 #: ../pan/gui/prefs-ui.cc:318
 msgid "Bytes"
 msgstr "Bytes"
@@ -1292,12 +1368,12 @@ msgid ""
 "URL Options\n"
 "  news:message-id          Show the specified article.\n"
 "  news:group.name          Show the specified newsgroup.\n"
-"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
 "  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
 "  -o path, --output=path   Path to save attachments listed in the nzb files.\n"
-"  --nogui                  Only show console output, not the download queue.\n"
+"  --no-gui                 Only show console output, not the download queue.\n"
 msgstr ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -1305,29 +1381,33 @@ msgstr ""
 "URL Options\n"
 "  news:message-id          Show the specified article.\n"
 "  news:group.name          Show the specified newsgroup.\n"
-"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
 "  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
 "  -o path, --output=path   Path to save attachments listed in the nzb files.\n"
-"  --nogui                  Only show console output, not the download queue.\n"
+"  --no-gui                 Only show console output, not the download queue.\n"
 
-#: ../pan/gui/pan.cc:224
+#: ../pan/gui/pan.cc:226
 msgid "Error: nzb arguments used without nzb files."
 msgstr "Error: nzb arguments used without nzb files."
 
-#: ../pan/gui/pan.cc:229
-msgid "Error: --nogui used without nzb files or news:message-id."
-msgstr "Error: --nogui used without nzb files or news:message-id."
+#: ../pan/gui/pan.cc:231
+msgid "Error: --no-gui used without nzb files or news:message-id."
+msgstr "Error: --no-gui used without nzb files or news:message-id."
 
-#: ../pan/gui/pan.cc:233
+#: ../pan/gui/pan.cc:235
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s started"
 
-#: ../pan/gui/pan.cc:249
+#: ../pan/gui/pan.cc:251
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr "Please configure Pan's news servers before using it as an nzb client."
+
+#: ../pan/gui/pan-file-entry.cc:75
+msgid "_Browse..."
+msgstr "_Browse..."
 
 #: ../pan/gui/post-ui.cc:86
 #, c-format
@@ -1452,60 +1532,6 @@ msgstr "Remember _Charset for This Group"
 msgid "Check _Spelling"
 msgstr "Check _Spelling"
 
-#: ../pan/gui/post-ui.cc:317
-#: ../pan/gui/post-ui.cc:318
-#: ../pan/gui/post-ui.cc:319
-msgid "Baltic"
-msgstr "Baltic"
-
-#: ../pan/gui/post-ui.cc:320
-#: ../pan/gui/post-ui.cc:321
-msgid "Central European"
-msgstr "Central European"
-
-#: ../pan/gui/post-ui.cc:322
-msgid "Chinese Simplified"
-msgstr "Chinese Simplified"
-
-#: ../pan/gui/post-ui.cc:323
-msgid "Chinese Traditional"
-msgstr "Chinese Traditional"
-
-#: ../pan/gui/post-ui.cc:324
-#: ../pan/gui/post-ui.cc:325
-#: ../pan/gui/post-ui.cc:326
-msgid "Cyrillic"
-msgstr "Cyrillic"
-
-#: ../pan/gui/post-ui.cc:327
-msgid "Cyrillic, Ukrainian"
-msgstr "Cyrillic, Ukrainian"
-
-#: ../pan/gui/post-ui.cc:328
-msgid "Greek"
-msgstr "Greek"
-
-#: ../pan/gui/post-ui.cc:329
-msgid "Japanese"
-msgstr "Japanese"
-
-#: ../pan/gui/post-ui.cc:330
-msgid "Korean"
-msgstr "Korean"
-
-#: ../pan/gui/post-ui.cc:331
-msgid "Turkish"
-msgstr "Turkish"
-
-#: ../pan/gui/post-ui.cc:332
-#: ../pan/gui/post-ui.cc:334
-msgid "Western"
-msgstr "Western"
-
-#: ../pan/gui/post-ui.cc:333
-msgid "Western, New"
-msgstr "Western, New"
-
 #: ../pan/gui/post-ui.cc:335
 msgid "Unicode, UTF-8"
 msgstr "Unicode, UTF-8"
@@ -1623,35 +1649,35 @@ msgstr "Couldn't parse signature command \"%s\": %s"
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Couldn't convert signature to UTF-8."
 
-#: ../pan/gui/post-ui.cc:1847
+#: ../pan/gui/post-ui.cc:1857
 msgid "Post Article"
 msgstr "Post Article"
 
-#: ../pan/gui/post-ui.cc:1873
+#: ../pan/gui/post-ui.cc:1883
 msgid "F_rom"
 msgstr "F_rom"
 
-#: ../pan/gui/post-ui.cc:1880
+#: ../pan/gui/post-ui.cc:1890
 msgid "_Subject"
 msgstr "_Subject"
 
-#: ../pan/gui/post-ui.cc:1886
+#: ../pan/gui/post-ui.cc:1896
 msgid "_Newsgroups"
 msgstr "_Newsgroups"
 
-#: ../pan/gui/post-ui.cc:1893
+#: ../pan/gui/post-ui.cc:1903
 msgid "_Mail To"
 msgstr "_Mail To"
 
-#: ../pan/gui/post-ui.cc:1903
+#: ../pan/gui/post-ui.cc:1913
 msgid "One header per line, in the form HeaderName: Value"
 msgstr "One header per line, in the form HeaderName: Value"
 
-#: ../pan/gui/post-ui.cc:1906
+#: ../pan/gui/post-ui.cc:1916
 msgid "_More Headers"
 msgstr "_More Headers"
 
-#: ../pan/gui/post-ui.cc:1959
+#: ../pan/gui/post-ui.cc:1969
 #: ../pan/gui/profiles-dialog.cc:404
 #, c-format
 msgid "On %d, %n wrote:"
@@ -2474,6 +2500,11 @@ msgstr "Unable to set group: %s"
 msgid "Error: %s"
 msgstr "Error: %s"
 
+#: ../pan/tasks/nntp-pool.cc:202
+#, c-format
+msgid "Unable to connect to \"%s\""
+msgstr "Unable to connect to \"%s\""
+
 #: ../pan/tasks/socket-impl-gio.cc:391
 msgid "Unknown Error"
 msgstr "Unknown Error"
@@ -2503,17 +2534,17 @@ msgstr "Couldn't save file \"%s\": %s"
 msgid "Error initializing uulib"
 msgstr "Error initializing uulib"
 
-#: ../pan/tasks/task-article.cc:335
+#: ../pan/tasks/task-article.cc:334
 #, c-format
 msgid "Couldn't load \"%s\": %s"
 msgstr "Couldn't load \"%s\": %s"
 
-#: ../pan/tasks/task-article.cc:377
+#: ../pan/tasks/task-article.cc:376
 #, c-format
 msgid "Saved \"%s\""
 msgstr "Saved \"%s\""
 
-#: ../pan/tasks/task-article.cc:381
+#: ../pan/tasks/task-article.cc:380
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -2522,7 +2553,7 @@ msgstr ""
 "Error saving \"%s\":\n"
 "%s. %s"
 
-#: ../pan/tasks/task-article.cc:383
+#: ../pan/tasks/task-article.cc:382
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -2567,7 +2598,7 @@ msgstr "Sampling headers for \"%s\""
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu parts, %lu articles)"
 
-#: ../pan/usenet-utils/gnksa.cc:879
+#: ../pan/usenet-utils/gnksa.cc:882
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr "No email address provided; generating message-id with domain \"%s\""
@@ -3637,8 +3668,6 @@ msgstr "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 #~ msgstr "The command line was: %s"
 #~ msgid "Select Color"
 #~ msgstr "Select Colour"
-#~ msgid "_Browse..."
-#~ msgstr "_Browse..."
 #~ msgid "Select Font"
 #~ msgstr "Select Font"
 #~ msgid "Font Family"
@@ -3980,8 +4009,6 @@ msgstr "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 #~ msgstr "Handshaking with mail server"
 #~ msgid "Connecting to mail server"
 #~ msgstr "Connecting to mail server"
-#~ msgid "Unable to connect to mail server \"%*.*s\""
-#~ msgstr "Unable to connect to mail server \"%*.*s\""
 #~ msgid "Mail server not ready"
 #~ msgstr "Mail server not ready"
 #~ msgid "New connection %p for %s, port %d"
