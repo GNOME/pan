@@ -275,7 +275,8 @@ namespace
     if (gtk_text_iter_has_tag (&iter, url_tag))
     {
       GtkTextIter begin(iter), end(iter);
-      gtk_text_iter_backward_to_tag_toggle (&begin, NULL);
+      if (!gtk_text_iter_begins_tag (&begin, url_tag))
+        gtk_text_iter_backward_to_tag_toggle (&begin, NULL);
       gtk_text_iter_forward_to_tag_toggle (&end, NULL);
       retval = gtk_text_iter_get_text (&begin, &end);
     }
