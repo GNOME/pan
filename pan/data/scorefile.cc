@@ -365,7 +365,7 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
         TextMatch::Description d;
         d.type = TextMatch::REGEX;
         d.case_sensitive = case_sensitive;
-        d.text = val.to_string();
+        d.text.assign (val.str, val.len);
         test.set_type_text (key, d);
       }
       test._negate = negate;

@@ -38,7 +38,7 @@ Article :: get_part_state () const
     part_state = SINGLE;
 
   // someone's posted a followup to a multipart
-  else if (!is_line_count_ge(250) && has_reply_leader(subject.to_string()))
+  else if (!is_line_count_ge(250) && has_reply_leader(subject.to_view()))
     part_state = SINGLE;
 
   // someone's posted a "000/124" info message

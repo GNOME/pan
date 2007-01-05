@@ -217,7 +217,7 @@ ProfilesImpl :: serialize (std::ostream& out) const
     out << indent(depth++) << "<profile name=\"" << escaped(it->first) << "\">\n";
     out << indent(depth) << "<username>" << escaped(it->second.username) << "</username>\n";
     out << indent(depth) << "<address>" << escaped(it->second.address) << "</address>\n";
-    out << indent(depth) << "<server>" << escaped(it->second.posting_server.to_string()) << "</server>\n";
+    out << indent(depth) << "<server>" << escaped(it->second.posting_server.to_view()) << "</server>\n";
     if (!it->second.signature_file.empty()) {
       const char * type;
       switch (it->second.sig_type) {

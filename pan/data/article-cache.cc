@@ -137,7 +137,7 @@ namespace
 *****/
 
 ArticleCache :: ArticleCache (const StringView& path, size_t max_megs):
-   _path (path.to_string()),
+   _path (path.str, path.len),
    _max_megs (max_megs),
    _current_bytes (0ul)
 {
@@ -213,7 +213,7 @@ ArticleCache :: get_filename (char * buf, int buflen, const Quark& mid) const
 {
    char basename[PATH_MAX];
    *buf = '\0';
-   message_id_to_filename (basename, sizeof(basename), mid.to_string());
+   message_id_to_filename (basename, sizeof(basename), mid.to_view());
    g_snprintf (buf, buflen, "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, basename);
    return buf && *buf ? buf : 0;
 };
