@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan2 HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-28 11:06+0300\n"
-"PO-Revision-Date: 2006-10-17 16:17+0300\n"
+"POT-Creation-Date: 2007-01-06 19:26+0200\n"
+"PO-Revision-Date: 2007-01-06 19:27+0200\n"
 "Last-Translator: Yavor Doganov <yavor@doganov.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -44,12 +44,12 @@ msgstr "Неуспех при запазването на „%s“ %s"
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "Пропускане на файл newsrc за сървър „%s“"
 
-#: ../pan/data-impl/headers.cc:590
+#: ../pan/data-impl/headers.cc:574
 #, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr "%lu стари статии от „%s“ са отбелязани с изтекла валидност"
 
-#: ../pan/data-impl/headers.cc:597
+#: ../pan/data-impl/headers.cc:581
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
@@ -58,18 +58,18 @@ msgstr ""
 "Неподдържана версия на данни за %s заглавия: %d.\n"
 "Да не би случайно да ползвате стара версия на Pan?"
 
-#: ../pan/data-impl/headers.cc:612
+#: ../pan/data-impl/headers.cc:596
 #, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr "Заредени са %lu статии за „%s“ за %.1f секунди (%.0f статии/сек)"
 
-#: ../pan/data-impl/headers.cc:840
+#: ../pan/data-impl/headers.cc:824
 #, c-format
 msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
 msgstr ""
 "Запазени са %lu части, %lu статии в „%s“ за %.1f секунди (%.0f статии/сек)"
 
-#: ../pan/data-impl/headers.cc:1134
+#: ../pan/data-impl/headers.cc:1118
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "Добавени са %lu статии към „%s“."
@@ -243,7 +243,7 @@ msgstr "Нито една от тези проби не минава:"
 msgid "Any of these tests pass:"
 msgstr "Която и да е от тези проби минава:"
 
-#: ../pan/data/scorefile.cc:299
+#: ../pan/data/scorefile.cc:300
 #, c-format
 msgid ""
 "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
@@ -252,17 +252,17 @@ msgstr ""
 "Грешка при четене на точки в %*.*s, ред %d: очаква се „Изтича на: ММ/ДД/"
 "ГГГГ“ или „Изтича на: ДД-ММ-ГГГГ“."
 
-#: ../pan/data/scorefile.cc:302
+#: ../pan/data/scorefile.cc:303
 #, c-format
 msgid "Expired old score from %*.*s, line %d"
 msgstr "Изтекли стари точки от %*.*s, ред %d"
 
-#: ../pan/data/scorefile.cc:373
+#: ../pan/data/scorefile.cc:376
 #, c-format
 msgid "Error reading score in %*.*s, line %d: unexpected line."
 msgstr "Грешка при четене на точки в %*.*s, ред %d: неочакван ред."
 
-#: ../pan/data/scorefile.cc:421
+#: ../pan/data/scorefile.cc:424
 #, c-format
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr "Прочетени са %lu правила за точкуване в %lu секции от „%s“"
@@ -960,68 +960,126 @@ msgstr "Западноевропейско (Windows-1252)"
 msgid "Unicode (UTF-8)"
 msgstr "Уникод (UTF-8)"
 
-#: ../pan/gui/body-pane.cc:879
+#: ../pan/gui/body-pane.cc:880
 #, c-format
 msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
 msgstr "Прикрепеният файл не е показан: тип MIME %s/%s; файл %s\n"
 
-#: ../pan/gui/body-pane.cc:880
+#: ../pan/gui/body-pane.cc:881
 #, c-format
 msgid "Attachment not shown: MIME type %s/%s\n"
 msgstr "Прикрепеният файл не е показан: тип MIME %s/%s\n"
 
-#: ../pan/gui/body-pane.cc:960 ../pan/gui/header-pane.cc:1042
-#: ../pan/gui/header-pane.cc:1377 ../pan/gui/prefs-ui.cc:323
+#: ../pan/gui/body-pane.cc:961 ../pan/gui/header-pane.cc:1044
+#: ../pan/gui/header-pane.cc:1379 ../pan/gui/prefs-ui.cc:323
 #: ../pan/gui/score-add-ui.cc:141
 msgid "Subject"
 msgstr "Тема"
 
-#: ../pan/gui/body-pane.cc:962
+#: ../pan/gui/body-pane.cc:963
 msgid "From"
 msgstr "От"
 
-#: ../pan/gui/body-pane.cc:964 ../pan/gui/header-pane.cc:1454
+#: ../pan/gui/body-pane.cc:965 ../pan/gui/header-pane.cc:1456
 #: ../pan/gui/log-ui.cc:206 ../pan/gui/prefs-ui.cc:319
 msgid "Date"
 msgstr "Дата"
 
-#: ../pan/gui/body-pane.cc:971
+#: ../pan/gui/body-pane.cc:972
 msgid "Newsgroups"
 msgstr "Групи за новини"
 
-#: ../pan/gui/body-pane.cc:976
+#: ../pan/gui/body-pane.cc:977
 msgid "Followup-To"
 msgstr "Отговор"
 
-#: ../pan/gui/body-pane.cc:986
+#: ../pan/gui/body-pane.cc:987
 msgid "Reply-To"
 msgstr "Отговор-до"
 
-#: ../pan/gui/body-pane.cc:1012
+#: ../pan/gui/body-pane.cc:1013
 msgid " from "
 msgstr " от "
 
-#: ../pan/gui/body-pane.cc:1014
+#: ../pan/gui/body-pane.cc:1015
 msgid " at "
 msgstr " на "
 
-#: ../pan/gui/dl-headers-ui.cc:102
+#: ../pan/gui/charset-picker.cc:39 ../pan/gui/charset-picker.cc:40
+#: ../pan/gui/charset-picker.cc:41 ../pan/gui/post-ui.cc:317
+#: ../pan/gui/post-ui.cc:318 ../pan/gui/post-ui.cc:319
+msgid "Baltic"
+msgstr "Балтийско"
+
+#: ../pan/gui/charset-picker.cc:42 ../pan/gui/charset-picker.cc:43
+#: ../pan/gui/post-ui.cc:320 ../pan/gui/post-ui.cc:321
+msgid "Central European"
+msgstr "Централно-европейско"
+
+#: ../pan/gui/charset-picker.cc:44 ../pan/gui/post-ui.cc:322
+msgid "Chinese Simplified"
+msgstr "Китайски опростен"
+
+#: ../pan/gui/charset-picker.cc:45 ../pan/gui/post-ui.cc:323
+msgid "Chinese Traditional"
+msgstr "Китайски традиционен"
+
+#: ../pan/gui/charset-picker.cc:46 ../pan/gui/charset-picker.cc:47
+#: ../pan/gui/charset-picker.cc:48 ../pan/gui/post-ui.cc:324
+#: ../pan/gui/post-ui.cc:325 ../pan/gui/post-ui.cc:326
+msgid "Cyrillic"
+msgstr "Кирилица"
+
+#: ../pan/gui/charset-picker.cc:49 ../pan/gui/post-ui.cc:327
+msgid "Cyrillic, Ukrainian"
+msgstr "Кирилица, украински"
+
+#: ../pan/gui/charset-picker.cc:50 ../pan/gui/post-ui.cc:328
+msgid "Greek"
+msgstr "Гръцко"
+
+#: ../pan/gui/charset-picker.cc:51 ../pan/gui/post-ui.cc:329
+msgid "Japanese"
+msgstr "Японско"
+
+#: ../pan/gui/charset-picker.cc:52 ../pan/gui/post-ui.cc:330
+msgid "Korean"
+msgstr "Корейско"
+
+#: ../pan/gui/charset-picker.cc:53 ../pan/gui/post-ui.cc:331
+msgid "Turkish"
+msgstr "Турско"
+
+#: ../pan/gui/charset-picker.cc:54 ../pan/gui/charset-picker.cc:56
+#: ../pan/gui/post-ui.cc:332 ../pan/gui/post-ui.cc:334
+msgid "Western"
+msgstr "Западноевропейско"
+
+#: ../pan/gui/charset-picker.cc:55 ../pan/gui/post-ui.cc:333
+msgid "Western, New"
+msgstr "Западноевропейско, ново"
+
+#: ../pan/gui/charset-picker.cc:57
+msgid "Unicode"
+msgstr "Уникод"
+
+#: ../pan/gui/dl-headers-ui.cc:106
 msgid "Pan: "
 msgstr "Pan: "
 
-#: ../pan/gui/dl-headers-ui.cc:128
+#: ../pan/gui/dl-headers-ui.cc:132
 msgid "Get the last N _days' headers: "
 msgstr "Изтегляне на заглавията от последните N _дни: "
 
-#: ../pan/gui/dl-headers-ui.cc:136
+#: ../pan/gui/dl-headers-ui.cc:140
 msgid "Get _new headers"
 msgstr "Изтегляне на нови _заглавия"
 
-#: ../pan/gui/dl-headers-ui.cc:140
+#: ../pan/gui/dl-headers-ui.cc:144
 msgid "Get _all headers"
 msgstr "Изтегляне на _всички заглавия"
 
-#: ../pan/gui/dl-headers-ui.cc:144
+#: ../pan/gui/dl-headers-ui.cc:148
 msgid "Get the _latest N headers: "
 msgstr "Изтегляне на _последните N заглавия: "
 
@@ -1034,7 +1092,7 @@ msgstr "Име на група"
 msgid " (%lu)"
 msgstr " (%lu)"
 
-#: ../pan/gui/group-pane.cc:794 ../pan/gui/header-pane.cc:1543
+#: ../pan/gui/group-pane.cc:794 ../pan/gui/header-pane.cc:1545
 msgid "Clear the Filter"
 msgstr "Изчистване на филтъра"
 
@@ -1080,23 +1138,23 @@ msgstr "Папка за _запазване на прикрепените фай
 msgid "Posting _profile:"
 msgstr "_Профил за изпращане:"
 
-#: ../pan/gui/gui.cc:236
+#: ../pan/gui/gui.cc:238
 msgid "Open the Task Manager"
 msgstr "Отваряне на мениджъра за задачи"
 
-#: ../pan/gui/gui.cc:257
+#: ../pan/gui/gui.cc:260
 msgid "Open the Event Log"
 msgstr "Отваряне на дневника за събитията"
 
-#: ../pan/gui/gui.cc:481
+#: ../pan/gui/gui.cc:486
 msgid "Save Attachments"
 msgstr "Запазване на прикрепените файлове"
 
-#: ../pan/gui/gui.cc:529
+#: ../pan/gui/gui.cc:534
 msgid "Import NZB File(s)"
 msgstr "Внасяне на файл(ове), формат NZB"
 
-#: ../pan/gui/gui.cc:605
+#: ../pan/gui/gui.cc:610
 msgid ""
 "Pan is now offline. Please ensure that space is available, then use File|"
 "Work Online to continue."
@@ -1104,40 +1162,40 @@ msgstr ""
 "Pan е в режим „Изключен“.  Уверете се, че има достатъчно място, и "
 "използвайте Файл|Работа в режим „Включен“, за да продължите."
 
-#: ../pan/gui/gui.cc:734 ../pan/gui/gui.cc:1110 ../pan/gui/gui.cc:1314
+#: ../pan/gui/gui.cc:739 ../pan/gui/gui.cc:1120 ../pan/gui/gui.cc:1324
 msgid "Pan"
 msgstr "Pan"
 
-#: ../pan/gui/gui.cc:906
+#: ../pan/gui/gui.cc:916
 msgid "Unable to supersede article."
 msgstr "Неуспех при замяната на статията."
 
-#: ../pan/gui/gui.cc:907 ../pan/gui/gui.cc:977
+#: ../pan/gui/gui.cc:917 ../pan/gui/gui.cc:987
 msgid "The article doesn't match any of your posting profiles."
 msgstr "Статията не съвпада с нито един от профилите за изпращане."
 
-#: ../pan/gui/gui.cc:950
+#: ../pan/gui/gui.cc:960
 msgid "Revise and send this article to replace the old one."
 msgstr "Промяна и изпращане на тази статия като замяна на старата."
 
-#: ../pan/gui/gui.cc:951 ../pan/gui/gui.cc:1014
+#: ../pan/gui/gui.cc:961 ../pan/gui/gui.cc:1024
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
 "Бъдете търпеливи! Ще мине известно време, преди промените да влязат в сила."
 
-#: ../pan/gui/gui.cc:976
+#: ../pan/gui/gui.cc:986
 msgid "Unable to cancel article."
 msgstr "Неуспех при отмяната на статията."
 
-#: ../pan/gui/gui.cc:1013
+#: ../pan/gui/gui.cc:1023
 msgid "Send this article to ask your server to cancel your other one."
 msgstr "Изпратете тази статия, за да поискате от сървъра да отмени другата."
 
-#: ../pan/gui/gui.cc:1113 ../pan/gui/gui.cc:1133
+#: ../pan/gui/gui.cc:1123 ../pan/gui/gui.cc:1143
 msgid "Copyright © 2002-2006 Charles Kerr"
 msgstr "Авторски права © 2002-2006 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1118
+#: ../pan/gui/gui.cc:1128
 msgid "translator-credits"
 msgstr ""
 "Явор Доганов <yavor@doganov.org>\n"
@@ -1146,61 +1204,61 @@ msgstr ""
 "Научете повече за нас на http://gnome.cult.bg\n"
 "Докладвайте за грешки на http://gnome.cult.bg/bugs"
 
-#: ../pan/gui/gui.cc:1229
+#: ../pan/gui/gui.cc:1239
 msgid "_1. Group Pane"
 msgstr "_1. Плот с групи"
 
-#: ../pan/gui/gui.cc:1230
+#: ../pan/gui/gui.cc:1240
 msgid "_2. Header Pane"
 msgstr "_2. Плот със заглавия"
 
-#: ../pan/gui/gui.cc:1231
+#: ../pan/gui/gui.cc:1241
 msgid "_3. Body Pane"
 msgstr "_3. Плот със съобщения"
 
-#: ../pan/gui/gui.cc:1316
+#: ../pan/gui/gui.cc:1326
 #, c-format
 msgid "Pan: %s"
 msgstr "Pan: %s"
 
-#: ../pan/gui/gui.cc:1438
+#: ../pan/gui/gui.cc:1459
 msgid "Offline"
 msgstr "Изключен"
 
-#: ../pan/gui/gui.cc:1441
+#: ../pan/gui/gui.cc:1462
 #, c-format
 msgid "Closing %d connections"
 msgstr "Прекъсване на %d свързвания"
 
-#: ../pan/gui/gui.cc:1443 ../pan/gui/gui.cc:1473
+#: ../pan/gui/gui.cc:1464 ../pan/gui/gui.cc:1494
 msgid "No Connections"
 msgstr "Няма свързвания"
 
-#: ../pan/gui/gui.cc:1447
+#: ../pan/gui/gui.cc:1468
 msgid "Connecting"
 msgstr "Свързване"
 
-#: ../pan/gui/gui.cc:1460
+#: ../pan/gui/gui.cc:1481
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d в покой, %d активни @ %.1f KiB/сек"
 
 #. build the format strings
-#: ../pan/gui/gui.cc:1515
+#: ../pan/gui/gui.cc:1536
 #, c-format
 msgid "%u Tasks Running, %u Tasks Total"
 msgstr "%u задачи се изпълняват, %u задачи общо"
 
-#: ../pan/gui/gui.cc:1517
+#: ../pan/gui/gui.cc:1538
 msgid "No Tasks"
 msgstr "Няма задачи"
 
-#: ../pan/gui/gui.cc:1519
+#: ../pan/gui/gui.cc:1540
 #, c-format
 msgid "Tasks: %u/%u"
 msgstr "Задачи: %u/%u"
 
-#: ../pan/gui/gui.cc:1567
+#: ../pan/gui/gui.cc:1590
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1230,28 +1288,28 @@ msgstr "%.1f MiB"
 msgid "%.1f GiB"
 msgstr "%.1f GiB"
 
-#: ../pan/gui/header-pane.cc:1041
+#: ../pan/gui/header-pane.cc:1043
 msgid "Subject or Author"
 msgstr "Тема или автор"
 
-#: ../pan/gui/header-pane.cc:1043 ../pan/gui/header-pane.cc:1409
+#: ../pan/gui/header-pane.cc:1045 ../pan/gui/header-pane.cc:1411
 #: ../pan/gui/prefs-ui.cc:317 ../pan/gui/score-add-ui.cc:142
 msgid "Author"
 msgstr "Автор"
 
-#: ../pan/gui/header-pane.cc:1044
+#: ../pan/gui/header-pane.cc:1046
 msgid "Message-ID"
 msgstr "Идентификатор на съобщението"
 
-#: ../pan/gui/header-pane.cc:1394 ../pan/gui/prefs-ui.cc:321
+#: ../pan/gui/header-pane.cc:1396 ../pan/gui/prefs-ui.cc:321
 msgid "Score"
 msgstr "Точки"
 
-#: ../pan/gui/header-pane.cc:1424 ../pan/gui/prefs-ui.cc:320
+#: ../pan/gui/header-pane.cc:1426 ../pan/gui/prefs-ui.cc:320
 msgid "Lines"
 msgstr "Редове"
 
-#: ../pan/gui/header-pane.cc:1439 ../pan/gui/prefs-ui.cc:318
+#: ../pan/gui/header-pane.cc:1441 ../pan/gui/prefs-ui.cc:318
 msgid "Bytes"
 msgstr "Байтове"
 
@@ -1285,13 +1343,13 @@ msgid ""
 "URL Options\n"
 "  news:message-id          Show the specified article.\n"
 "  news:group.name          Show the specified newsgroup.\n"
-"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
 "  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
 "  -o path, --output=path   Path to save attachments listed in the nzb "
 "files.\n"
-"  --nogui                  Only show console output, not the download "
+"  --no-gui                 Only show console output, not the download "
 "queue.\n"
 msgstr ""
 "Общи опции\n"
@@ -1300,34 +1358,38 @@ msgstr ""
 "Опции за адрес\n"
 "  news:message-id          Показване на указаната статия.\n"
 "  news:group.name          Показване на указаната група за новини.\n"
-"  --nogui                  При news:message-id, показване на стандартния "
+"  --no-gui                 При news:message-id, показване на стандартния "
 "изход.\n"
 "\n"
 "Опции за изпълнение на NZB\n"
 "  --nzb файл1 файл2 ...    Обработка на файлове без стартиране на Pan.\n"
 "  -o път, --output=път     Път за запазване на прикрепените файлове.\n"
-"  --nogui                  Изход само от конзолата, не опашката за "
+"  --no-gui                 Изход само от конзолата, не от опашката за "
 "изтегляне.\n"
 
-#: ../pan/gui/pan.cc:224
+#: ../pan/gui/pan.cc:226
 msgid "Error: nzb arguments used without nzb files."
 msgstr "Грешка: използвани са аргументи за nzb без файлове."
 
-#: ../pan/gui/pan.cc:229
-msgid "Error: --nogui used without nzb files or news:message-id."
+#: ../pan/gui/pan.cc:231
+msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr ""
-"Грешка: използвана е опцията --nogui без файлове nzb или news:message-id."
+"Грешка: използвана е опцията --no-gui без файлове nzb или news:message-id."
 
-#: ../pan/gui/pan.cc:233
+#: ../pan/gui/pan.cc:235
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s е стартиран"
 
-#: ../pan/gui/pan.cc:249
+#: ../pan/gui/pan.cc:251
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Конфигурирайте сървърите за новини на Pan преди да го използвате като клиент "
 "за nzb."
+
+#: ../pan/gui/pan-file-entry.cc:75
+msgid "_Browse..."
+msgstr "_Разглеждане..."
 
 #: ../pan/gui/post-ui.cc:86
 #, c-format
@@ -1452,56 +1514,6 @@ msgstr "_Запомняне на кодирането за тази група"
 msgid "Check _Spelling"
 msgstr "Проверка на пра_вописа"
 
-#: ../pan/gui/post-ui.cc:317 ../pan/gui/post-ui.cc:318
-#: ../pan/gui/post-ui.cc:319
-msgid "Baltic"
-msgstr "Балтийско"
-
-#: ../pan/gui/post-ui.cc:320 ../pan/gui/post-ui.cc:321
-msgid "Central European"
-msgstr "Централно-европейско"
-
-#: ../pan/gui/post-ui.cc:322
-msgid "Chinese Simplified"
-msgstr "Китайски опростен"
-
-#: ../pan/gui/post-ui.cc:323
-msgid "Chinese Traditional"
-msgstr "Китайски традиционен"
-
-#: ../pan/gui/post-ui.cc:324 ../pan/gui/post-ui.cc:325
-#: ../pan/gui/post-ui.cc:326
-msgid "Cyrillic"
-msgstr "Кирилица"
-
-#: ../pan/gui/post-ui.cc:327
-msgid "Cyrillic, Ukrainian"
-msgstr "Кирилица, украински"
-
-#: ../pan/gui/post-ui.cc:328
-msgid "Greek"
-msgstr "Гръцко"
-
-#: ../pan/gui/post-ui.cc:329
-msgid "Japanese"
-msgstr "Японско"
-
-#: ../pan/gui/post-ui.cc:330
-msgid "Korean"
-msgstr "Корейско"
-
-#: ../pan/gui/post-ui.cc:331
-msgid "Turkish"
-msgstr "Турско"
-
-#: ../pan/gui/post-ui.cc:332 ../pan/gui/post-ui.cc:334
-msgid "Western"
-msgstr "Западноевропейско"
-
-#: ../pan/gui/post-ui.cc:333
-msgid "Western, New"
-msgstr "Западноевропейско, ново"
-
 #: ../pan/gui/post-ui.cc:335
 msgid "Unicode, UTF-8"
 msgstr "Уникод, UTF-8"
@@ -1622,35 +1634,35 @@ msgstr "Неуспех при анализирането на команда з�
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Неуспех при конвертирането на подписа в UTF-8."
 
-#: ../pan/gui/post-ui.cc:1847
+#: ../pan/gui/post-ui.cc:1857
 msgid "Post Article"
 msgstr "Изпращане на статията"
 
-#: ../pan/gui/post-ui.cc:1873
+#: ../pan/gui/post-ui.cc:1883
 msgid "F_rom"
 msgstr "_От"
 
-#: ../pan/gui/post-ui.cc:1880
+#: ../pan/gui/post-ui.cc:1890
 msgid "_Subject"
 msgstr "_Тема"
 
-#: ../pan/gui/post-ui.cc:1886
+#: ../pan/gui/post-ui.cc:1896
 msgid "_Newsgroups"
 msgstr "_Групи за новини"
 
-#: ../pan/gui/post-ui.cc:1893
+#: ../pan/gui/post-ui.cc:1903
 msgid "_Mail To"
 msgstr "_Поща до"
 
-#: ../pan/gui/post-ui.cc:1903
+#: ../pan/gui/post-ui.cc:1913
 msgid "One header per line, in the form HeaderName: Value"
 msgstr "Една заглавна част на ред, под формата на ИмеНаЗаглавнаЧаст: Стойност"
 
-#: ../pan/gui/post-ui.cc:1906
+#: ../pan/gui/post-ui.cc:1916
 msgid "_More Headers"
 msgstr "Повече заглавни _части"
 
-#: ../pan/gui/post-ui.cc:1959 ../pan/gui/profiles-dialog.cc:404
+#: ../pan/gui/post-ui.cc:1969 ../pan/gui/profiles-dialog.cc:404
 #, c-format
 msgid "On %d, %n wrote:"
 msgstr "В %d, %n написа:"
@@ -2482,6 +2494,11 @@ msgstr "Неуспех при настройването на група: %s"
 msgid "Error: %s"
 msgstr "Грешка: %s"
 
+#: ../pan/tasks/nntp-pool.cc:202
+#, c-format
+msgid "Unable to connect to \"%s\""
+msgstr "Неуспех при свързването с „%s“"
+
 #: ../pan/tasks/socket-impl-gio.cc:391
 msgid "Unknown Error"
 msgstr "Неизвестна грешка"
@@ -2510,17 +2527,17 @@ msgstr "Неуспех при запазването на файла „%s“: %
 msgid "Error initializing uulib"
 msgstr "Грешка при инициализиране на uulib"
 
-#: ../pan/tasks/task-article.cc:335
+#: ../pan/tasks/task-article.cc:334
 #, c-format
 msgid "Couldn't load \"%s\": %s"
 msgstr "Неуспех при зареждане на „%s“: %s"
 
-#: ../pan/tasks/task-article.cc:377
+#: ../pan/tasks/task-article.cc:376
 #, c-format
 msgid "Saved \"%s\""
 msgstr "Запазено е „%s“"
 
-#: ../pan/tasks/task-article.cc:381
+#: ../pan/tasks/task-article.cc:380
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -2529,7 +2546,7 @@ msgstr ""
 "Грешка при запазване на „%s“:\n"
 "%s. %s"
 
-#: ../pan/tasks/task-article.cc:383
+#: ../pan/tasks/task-article.cc:382
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -2574,7 +2591,7 @@ msgstr "Подреждане на заглавия за „%s“"
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu части, %lu статии)"
 
-#: ../pan/usenet-utils/gnksa.cc:879
+#: ../pan/usenet-utils/gnksa.cc:882
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr ""
