@@ -1130,6 +1130,8 @@ void GUI :: do_about_pan ()
   const gchar * authors [] = { "Charles Kerr", 0 };
   GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
+  GdkPixbuf * icon = gdk_pixbuf_new_from_inline (-1, icon_pan, FALSE, 0);
+  gtk_window_set_icon (GTK_WINDOW(w), icon); 
   gtk_about_dialog_set_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE);
@@ -1142,6 +1144,7 @@ void GUI :: do_about_pan ()
   g_signal_connect (G_OBJECT (w), "response", G_CALLBACK (gtk_widget_destroy), NULL);
   gtk_widget_show_all (GTK_WIDGET(w));
   g_object_unref (logo);
+  g_object_unref (icon);
 #else
   GtkWidget * dialog = gtk_dialog_new_with_buttons (PACKAGE_STRING,
                                                     GTK_WINDOW (get_window (_root)),
