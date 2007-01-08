@@ -39,6 +39,7 @@ extern "C" {
 #include <pan/usenet-utils/utf8-utils.h>
 #include <pan/data/data.h>
 #include <pan/tasks/task-post.h>
+#include <pan/icons/pan-pixbufs.h>
 #include "pad.h"
 #include "hig.h"
 #include "post-ui.h"
@@ -1853,6 +1854,9 @@ PostUI :: PostUI (GtkWindow    * parent,
   g_signal_connect (_root, "delete-event", G_CALLBACK(delete_event_cb), this);
   gtk_window_set_role (GTK_WINDOW(_root), "pan-post-window");
   gtk_window_set_title (GTK_WINDOW(_root), _("Post Article"));
+  GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, icon_pan, FALSE, 0);
+  gtk_window_set_icon (GTK_WINDOW(_root), pixbuf); 
+  g_object_unref (G_OBJECT(pixbuf));
   g_object_set_data_full (G_OBJECT(_root), "post-ui", this, delete_post_ui);
   if (parent) {
     gtk_window_set_transient_for (GTK_WINDOW(_root), parent);
