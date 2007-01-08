@@ -64,14 +64,13 @@ Log :: fire_cleared () {
 void
 Log :: add (Severity severity, const char * msg)
 {
-   Entry e;
-   e.date = time(NULL);
-   e.severity = severity;
-   e.message = msg;
-   _entries.push_back (e);
-   fire_entry_added (e);
-
-   //std::cerr << "log entry: [" << msg << ']' << std::endl;
+  _entries.resize (_entries.size() + 1);
+  Entry& e (_entries.back());
+  e.date = time(NULL);
+  e.severity = severity;
+  e.message = msg;
+  fire_entry_added (e);
+  //std::cerr << "log entry: [" << msg << ']' << std::endl;
 }
 
 void

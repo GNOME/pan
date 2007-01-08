@@ -246,6 +246,7 @@ DataImpl :: xover_add (const Quark         & server,
   int part_index, part_count;
   std::string multipart_subject;
   find_parts (subject, group, line_count, part_index, part_count, multipart_subject);
+  const Quark multipart_subject_quark (multipart_subject);
   Quark art_mid;
 
   if (part_count > 1)
@@ -255,7 +256,7 @@ DataImpl :: xover_add (const Quark         & server,
     parent.trim ();
 
     typedef XOverEntry::subject_to_mid_t::const_iterator cit;
-    const std::pair<cit,cit> range (workarea._subject_lookup.equal_range (multipart_subject));
+    const std::pair<cit,cit> range (workarea._subject_lookup.equal_range (multipart_subject_quark));
     for (cit it(range.first), end(range.second); it!=end && art_mid.empty(); ++it) {
       const Quark& candidate_mid (it->second);
       const Article* candidate (h->find_article (candidate_mid));
@@ -272,7 +273,7 @@ DataImpl :: xover_add (const Quark         & server,
     art_mid = message_id;
 
     if (part_count > 1)
-      workarea._subject_lookup.insert(std::pair<Quark,Quark>(multipart_subject, art_mid));
+      workarea._subject_lookup.insert(std::pair<Quark,Quark>(multipart_subject_quark, art_mid));
 
     // if we don't already have this article...
     if (!h->find_article (art_mid))
@@ -280,7 +281,7 @@ DataImpl :: xover_add (const Quark         & server,
       //std::cerr << LINE_ID << " We didn't have this article yet, so creating an instance..." << std::endl;
       Article& a (h->alloc_new_article());
       a.author = author;
-      a.subject = multipart_subject;
+      a.subject = multipart_subject_quark;
       a.message_id = art_mid;
       a.is_binary = part_count >= 1;
       a.set_part_count (a.is_binary ? part_count : 1);

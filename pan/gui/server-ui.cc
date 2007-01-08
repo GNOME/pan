@@ -215,6 +215,9 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
   **/
 
   GtkTooltips * ttips = gtk_tooltips_new ();
+  g_object_ref_sink_pan (G_OBJECT(ttips));
+  g_object_weak_ref (G_OBJECT(dialog), (GWeakNotify)g_object_unref, ttips);
+
 
   int row (0);
   GtkWidget * t (HIG::workarea_create ());
@@ -485,7 +488,6 @@ namespace
 GtkWidget*
 pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
 {
-  GtkTooltips * tips = gtk_tooltips_new ();
   ServerListDialog * d = new ServerListDialog (data, queue);
 
   // dialog
@@ -498,6 +500,10 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   gtk_window_set_policy (GTK_WINDOW(w), TRUE, TRUE, TRUE);
   g_signal_connect (GTK_OBJECT(w), "response", G_CALLBACK(server_list_dialog_response_cb), d);
   g_object_set_data_full (G_OBJECT(w), "dialog", d, delete_server_list_dialog);
+
+  GtkTooltips * tips = gtk_tooltips_new ();
+  g_object_ref_sink_pan (G_OBJECT(tips));
+  g_object_weak_ref (G_OBJECT(w), (GWeakNotify)g_object_unref, tips);
 
   // workarea
   GtkWidget * hbox = gtk_hbox_new (FALSE, PAD);

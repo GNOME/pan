@@ -55,6 +55,20 @@ extern "C" {
 #include "task-pane.h"
 #include "url.h"
 
+namespace pan
+{
+  void
+  g_object_ref_sink_pan (GObject * o)
+  {
+#if GLIB_CHECK_VERSION(2,10,0)
+    g_object_ref_sink (o);
+#else
+    g_object_ref (o);
+    gtk_object_sink (GTK_OBJECT(o));
+#endif
+  }
+}
+
 using namespace pan;
 
 namespace
@@ -155,6 +169,9 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   _taskbar (0),
   _ttips (gtk_tooltips_new ())
 {
+  g_object_ref_sink_pan (G_OBJECT(_ttips));
+  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, _ttips);
+
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
 #if 0
   GError * gerr (0);
@@ -296,10 +313,6 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
     activate_action ("get-new-headers-in-subscribed-groups");
 
   _prefs.add_listener (this);
-
-  g_object_ref (_ttips);
-  gtk_object_sink (GTK_OBJECT(_ttips));
-  g_signal_connect_swapped (_root, "destroy", G_CALLBACK(g_object_unref), _ttips);
 
   gtk_accel_map_load (get_accel_filename().c_str());
 }

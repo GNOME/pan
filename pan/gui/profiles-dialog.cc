@@ -97,8 +97,6 @@ ProfileDialog :: ProfileDialog (const Data         & data,
                                 const Profile      & profile,
                                 GtkWindow          * parent)
 {
-  GtkTooltips * ttips = gtk_tooltips_new ();
-
   _root = gtk_dialog_new_with_buttons (_("Posting Profile"), parent,
                                        GTK_DIALOG_DESTROY_WITH_PARENT,
                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -106,6 +104,10 @@ ProfileDialog :: ProfileDialog (const Data         & data,
                                        NULL);
   gtk_dialog_set_default_response (GTK_DIALOG(_root), GTK_RESPONSE_OK); 
   gtk_window_set_role (GTK_WINDOW(_root), "pan-edit-profile-dialog");
+
+  GtkTooltips * ttips = gtk_tooltips_new ();
+  g_object_ref_sink_pan (G_OBJECT(ttips));
+  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, ttips);
 
   int row (0);
   GtkWidget *t = HIG :: workarea_create ();
@@ -177,12 +179,15 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     const int columns (60), rows(10);
     PangoFontDescription *pfd (pango_font_description_from_string ("Monospace 10"));
     PangoContext * context = gtk_widget_create_pango_context (w);
-    std::string line (columns, 'A');
     pango_context_set_font_description (context, pfd);
+    std::string line (columns, 'A');
     PangoLayout * layout = pango_layout_new (context);
     pango_layout_set_text (layout, line.c_str(), line.size());
     PangoRectangle r;
     pango_layout_get_extents (layout, &r, 0);
+    g_object_unref (layout);
+    g_object_unref (context);
+    pango_font_description_free (pfd);
     gtk_widget_set_size_request (w, PANGO_PIXELS(r.width), PANGO_PIXELS(r.height*rows));
     std::string s;
     foreach_const (Profile::headers_t, profile.headers, it)
@@ -308,6 +313,7 @@ ProfileDialog :: get_profile (std::string& profile_name, Profile& profile)
         profile.headers[header] = value;
     }
   }
+  g_free (text);
 }
 
 /******
@@ -482,6 +488,8 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
 
   // button box
   GtkTooltips * tips = gtk_tooltips_new ();
+  g_object_ref_sink_pan (G_OBJECT(tips));
+  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, tips);
   GtkWidget * bbox = gtk_vbox_new (FALSE, PAD_SMALL);
   gtk_box_pack_start (GTK_BOX (hbox), bbox, false, false, 0);
 

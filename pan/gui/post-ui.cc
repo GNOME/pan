@@ -461,9 +461,9 @@ PostUI :: set_charset (const StringView& charset)
   {
     _charset = new_charset;
 
-    char unique_name[512];
-    g_snprintf (unique_name, sizeof(unique_name), "charset-%*.*s", charset.len, charset.len, charset.str);
-    GtkAction * action = gtk_action_group_get_action (_agroup, unique_name);
+    std::string unique_name ("charset-");
+    unique_name.append (charset.str, charset.len);
+    GtkAction * action = gtk_action_group_get_action (_agroup, unique_name.c_str());
     gtk_toggle_action_set_active (GTK_TOGGLE_ACTION(action), true);
   }
 }
@@ -1845,8 +1845,6 @@ PostUI :: PostUI (GtkWindow    * parent,
   _group_entry_changed_id (0),
   _group_entry_changed_idle_tag (0)
 {
-  GtkTooltips * tips = gtk_tooltips_new ();
-
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != 0);
 
@@ -1860,6 +1858,10 @@ PostUI :: PostUI (GtkWindow    * parent,
     gtk_window_set_transient_for (GTK_WINDOW(_root), parent);
     gtk_window_set_position (GTK_WINDOW(_root), GTK_WIN_POS_CENTER_ON_PARENT);
   }
+
+  GtkTooltips * tips = gtk_tooltips_new ();
+  g_object_ref_sink_pan (G_OBJECT(tips));
+  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, tips);
 
   // populate the window
   GtkWidget * vbox = gtk_vbox_new (false, PAD_SMALL);

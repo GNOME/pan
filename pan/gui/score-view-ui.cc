@@ -193,13 +193,15 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
   _article (article),
   _root (0)
 {
-  GtkTooltips * tips = gtk_tooltips_new ();
-
   GtkWidget * w = _root = gtk_dialog_new_with_buttons (_("Pan: Article's Scores"),
 	                                               parent,
 	                                               GTK_DIALOG_DESTROY_WITH_PARENT,
 	                                               GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
 	                                               NULL);
+  GtkTooltips * tips = gtk_tooltips_new ();
+  g_object_ref_sink_pan (G_OBJECT(tips));
+  g_object_weak_ref (G_OBJECT(w), (GWeakNotify)g_object_unref, tips);
+
   GtkWidget * button = create_rescore_button ();
   gtk_widget_show (button); 
   gtk_dialog_add_action_widget (GTK_DIALOG(w), button, GTK_RESPONSE_APPLY);

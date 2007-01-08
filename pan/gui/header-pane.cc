@@ -1534,8 +1534,10 @@ HeaderPane :: create_filter_entry ()
   gtk_container_add (GTK_CONTAINER(search_mode_button), image);
   gtk_button_set_relief (GTK_BUTTON(search_mode_button), GTK_RELIEF_NONE);
 
-  GtkTooltips * tips = gtk_tooltips_new ();
   GtkWidget * w = gtk_button_new ();
+  GtkTooltips * tips = gtk_tooltips_new ();
+  g_object_ref_sink_pan (G_OBJECT(tips));
+  g_object_weak_ref (G_OBJECT(w), (GWeakNotify)g_object_unref, tips);
   g_object_set_data (G_OBJECT(w), "entry", entry);
   g_object_set_data (G_OBJECT(entry), "reset-button", w);
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
@@ -1544,11 +1546,6 @@ HeaderPane :: create_filter_entry ()
   gtk_container_add (GTK_CONTAINER(w), image);
   gtk_tooltips_set_tip (GTK_TOOLTIPS(tips), w, _("Clear the Filter"), NULL);
   gtk_widget_set_sensitive (w, false);
-
-  // when the button's destroyed, free the tips too
-  g_object_ref (tips);
-  gtk_object_sink (GTK_OBJECT (tips));
-  g_signal_connect_swapped (w, "destroy", G_CALLBACK(g_object_unref), tips);
 
   GtkWidget * box = gtk_hbox_new (false, 0);
   gtk_box_pack_start (GTK_BOX(box), search_mode_button, false, false, 0);

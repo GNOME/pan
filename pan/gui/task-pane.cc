@@ -409,6 +409,8 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
   _root = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
   GtkTooltips * ttips = gtk_tooltips_new ();
+  g_object_ref_sink_pan (G_OBJECT(ttips));
+  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, ttips);
 
   GtkWidget * vbox = gtk_vbox_new (false, PAD);
 

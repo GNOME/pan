@@ -350,6 +350,7 @@ namespace
     info->prefs = &prefs;
     info->view = GTK_TREE_VIEW(view);
     info->sel = sel;
+    g_object_weak_ref (G_OBJECT(view), (GWeakNotify)g_free, info);
 
     GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE, NULL));
     GtkTreeViewColumn * col = gtk_tree_view_column_new_with_attributes (_("Enabled"), r, "active", 0, NULL);
