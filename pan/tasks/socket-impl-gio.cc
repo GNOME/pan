@@ -29,12 +29,14 @@
 #include <string>
 #include <cerrno>
 #include <cstring>
-#include <unistd.h>
 
 extern "C" {
+  #include <unistd.h>
   #include <glib.h>
   #include <glib/gi18n.h>
 }
+
+#include <pan/general/file-util.h>
 
 #ifdef G_OS_WIN32
   // this #define is necessary for mingw
@@ -184,7 +186,7 @@ namespace
       // try opening the socket
       sockfd = socket (AF_INET, SOCK_STREAM, 0 /*IPPROTO_TCP*/);
       if (sockfd < 0) {
-        g_message ("couldn't create a socket.");
+        g_message ("Couldn't create a socket to %*.*s, port %d: %s", host.len, host.len, host.str, port, file::pan_strerror(errno));
         return 0;
       }
 
@@ -247,7 +249,7 @@ namespace
 
         // and make a connection
         if (::connect (sockfd, walk->ai_addr, walk->ai_addrlen) < 0) {
-          g_message ("Connect failed: %s", g_strerror(errno));
+          g_message ("Connection to %*.*s, port %d failed: %s", host.len, host.len, host.str, port, file::pan_strerror(errno));
           closesocket (sockfd);
           sockfd = -1;
         }
