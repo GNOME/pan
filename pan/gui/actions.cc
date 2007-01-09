@@ -495,6 +495,7 @@ pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p)
                                       18, // UTF-8
                                       G_CALLBACK(charset_cb), NULL);
   gtk_ui_manager_insert_action_group (ui_manager, action_group, 0);
+  g_object_unref (G_OBJECT(action_group));
 
 #if 1
   int merge_id = gtk_ui_manager_new_merge_id (ui_manager);

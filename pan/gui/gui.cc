@@ -356,6 +356,7 @@ GUI :: ~GUI ()
 
   foreach (std::set<GtkWidget*>, unref, it)
     gtk_widget_unref (*it);
+  g_object_unref (G_OBJECT(_ui_manager));
 }
 
 /***
