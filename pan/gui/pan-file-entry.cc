@@ -72,7 +72,7 @@ pan :: file_entry_new (const char * title, int chooser_action)
   GtkWidget * hbox = gtk_hbox_new (false, PAD);
   GtkWidget * e = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX(hbox), e, true, true, 0);
-  GtkWidget * b = gtk_button_new_with_mnemonic (_("_Browse..."));
+  GtkWidget * b = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   g_signal_connect (b, "clicked", G_CALLBACK(entry_clicked_cb), hbox);
   gtk_box_pack_start (GTK_BOX(hbox), b, false, false, 0);
 

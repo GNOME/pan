@@ -60,14 +60,9 @@ namespace pan
       Queue& _queue;
       const Quark _group;
       GtkWidget * _root;
-      GtkWidget * _save_text_check;
-      GtkWidget * _save_attachments_check;
       GtkWidget * _save_path_entry;
       GtkWidget * _save_custom_path_radio;
       GtkWidget * _save_group_path_radio;
-      GtkWidget * _position_age_radio;
-      GtkWidget * _position_top_radio;
-      GtkWidget * _position_bottom_radio;
       std::vector<Article> _articles;
 
     private:

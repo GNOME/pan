@@ -109,15 +109,11 @@ SaveDialog :: response_cb (GtkDialog * dialog,
     path = expand_download_dir (path.c_str(), self->_group.to_view());
 
     // get the save mode
-    int save_mode (0);
-    const bool save_text (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->_save_text_check)));
-    self->_prefs.set_flag ("save-text", save_text);
-    if (save_text)
-      save_mode |= TaskArticle::RAW;
-    const bool save_attachments (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->_save_attachments_check)));
-    self->_prefs.set_flag ("save-attachments", save_attachments);
-    if (save_attachments)
-      save_mode |= TaskArticle::DECODE;
+    int save_mode;
+    std::string s (self->_prefs.get_string ("save-article-mode", "save-attachments"));
+    if      (s == "save-text")                 save_mode = TaskArticle::RAW;
+    else if (s == "save-attachments-and-text") save_mode = TaskArticle::DECODE | TaskArticle::RAW;
+    else                                       save_mode = TaskArticle::DECODE;
 
     // make the tasks... 
     Queue::tasks_t tasks;
@@ -132,17 +128,15 @@ SaveDialog :: response_cb (GtkDialog * dialog,
                                         path));
 
     // get the queue mode...
-    Queue::AddMode mode;
-    if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->_position_top_radio)))
-      mode = Queue::TOP;
-    else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->_position_bottom_radio)))
-      mode = Queue::BOTTOM;
-    else
-      mode = Queue::AGE;
+    Queue::AddMode queue_mode;
+    s = self->_prefs.get_string ("save-article-priority", "age");
+    if      (s == "top")    queue_mode = Queue::TOP;
+    else if (s == "bottom") queue_mode = Queue::BOTTOM;
+    else                    queue_mode = Queue::AGE;
 
     // queue up the tasks...
     if (!tasks.empty())
-      self->_queue.add_tasks (tasks, mode);
+      self->_queue.add_tasks (tasks, queue_mode);
   }
 
   gtk_widget_destroy (GTK_WIDGET(dialog));
@@ -154,6 +148,69 @@ namespace
   {
     if (radio_or_null)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(radio_or_null), true);
+  }
+
+  void combo_box_selection_changed (GtkComboBox * combo, gpointer prefs, const char * key)
+  {
+    GtkTreeIter iter;
+    gtk_combo_box_get_active_iter (combo, &iter);
+    GtkTreeModel * model (gtk_combo_box_get_model (combo));
+    char * s (0);
+    gtk_tree_model_get (model, &iter, 0, &s, -1);
+    static_cast<Prefs*>(prefs)->set_string (key, s);
+    g_free (s);
+  }
+
+  void mode_combo_box_selection_changed (GtkComboBox * combo, gpointer prefs)
+  {
+    combo_box_selection_changed (combo, prefs, "save-article-mode");
+  }
+
+  void priority_combo_box_selection_changed (GtkComboBox * combo, gpointer prefs)
+  {
+    combo_box_selection_changed (combo, prefs, "save-article-priority");
+  }
+
+  GtkWidget* create_combo_box (Prefs& prefs, const char * key, const char * fallback, ...)
+  {
+    const std::string active_str (prefs.get_string (key, fallback));
+    int active (-1);
+    GtkListStore * store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+    va_list args;
+    va_start (args, fallback);
+    for (int i=0;; ++i) {
+      const char * key_str = va_arg (args, const char*);
+      if (!key_str) break;
+      const char * gui_str = va_arg (args, const char*);
+      GtkTreeIter iter;
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter, 0, key_str, 1, gui_str, -1);
+      if (active_str == key_str) active = i;
+    }
+    GtkWidget * w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
+    GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 1, NULL);
+    gtk_combo_box_set_active (GTK_COMBO_BOX(w), active);
+    return w;
+  }
+
+  GtkWidget* create_mode_combo_box (Prefs& prefs)
+  {
+    return create_combo_box (prefs, "save-article-mode", "save-attachments",
+                             "save-attachments", _("Save attachments"),
+                             "save-text", _("Save text"),
+                             "save-attachments-and-text", _("Save attachments and Text"),
+                             NULL);
+  }
+
+  GtkWidget* create_priority_combo_box (Prefs& prefs)
+  {
+    return create_combo_box (prefs, "save-article-priority", "age",
+                             "age", _("Add to the queue sorted by date posted"),
+                             "top", _("Add to the front of the queue"),
+                             "bottom", _("Add to the back of the queue"),
+                             NULL);
   }
 }
 
@@ -196,77 +253,51 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
   int row (0);
   GtkWidget *t, *w, *h;
   t = HIG :: workarea_create ();
-  HIG::workarea_add_section_title (t, &row, _("Files"));
-    HIG :: workarea_add_section_spacer (t, row, 3);
 
-    const bool save_text (_prefs.get_flag ("save-text", false));
-    w = HIG :: workarea_add_wide_checkbutton (t, &row, _("Save _Text"), save_text);
-    _save_text_check = w;
+  HIG :: workarea_add_section_spacer (t, row, have_group_default?4:3);
 
-    const bool save_attachments (_prefs.get_flag ("save-attachments", true));
-    w = HIG :: workarea_add_wide_checkbutton (t, &row, _("Save _Attachments"), save_attachments);
-    _save_attachments_check = w;
-
-  if (have_group_default)
-  {
-    HIG::workarea_add_section_divider (t, &row);
-    HIG::workarea_add_section_title (t, &row, _("Path"));
-      HIG::workarea_add_section_spacer (t, row, 2);
-  }
-
-    if (path_mode==PATH_GROUP && !have_group_default)
+  if (path_mode==PATH_GROUP && !have_group_default)
       path_mode = PATH_ENTRY;
 
-    h = gtk_hbox_new (FALSE, 0);
-    if (have_group_default) {
-      w = _save_custom_path_radio = gtk_radio_button_new_with_mnemonic (NULL, _("C_ustom path:"));
-      gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), path_mode==PATH_ENTRY);
-    }
-    w = _save_path_entry = file_entry_new (_("Save Files to Path"));
-    gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
-    std::string path (_prefs.get_string ("default-save-attachments-path", ""));
-    if (path.empty())
-      path = g_get_home_dir ();
-    file_entry_set (w, path.c_str());
-    g_signal_connect (file_entry_gtk_entry(w), "changed", G_CALLBACK(entry_changed_cb), _save_custom_path_radio);
-    gtk_widget_set_usize (GTK_WIDGET(w), 400, 0);
-    w = gtk_button_new_with_mnemonic (_("_Help"));
+  h = gtk_hbox_new (FALSE, 0);
+  if (have_group_default) {
+    w = _save_custom_path_radio = gtk_radio_button_new_with_mnemonic (NULL, _("_Location:"));
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
-    g_signal_connect_swapped (w, "clicked", G_CALLBACK (show_group_substitution_help_dialog), dialog);
-    if (have_group_default)
-      HIG :: workarea_add_wide_control (t, &row, h);
-    else
-      HIG :: workarea_add_row (t, &row, _("_Path:"), h, file_entry_gtk_entry(_save_path_entry));
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), path_mode==PATH_ENTRY);
+  }
+  w = _save_path_entry = file_entry_new (_("Save Articles"));
+  gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
+  std::string path (_prefs.get_string ("default-save-attachments-path", ""));
+  if (path.empty())
+    path = g_get_home_dir ();
+  file_entry_set (w, path.c_str());
+  g_signal_connect (file_entry_gtk_entry(w), "changed", G_CALLBACK(entry_changed_cb), _save_custom_path_radio);
+  gtk_widget_set_usize (GTK_WIDGET(w), 400, 0);
+  w = gtk_button_new_from_stock (GTK_STOCK_HELP);
+  gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
+  g_signal_connect_swapped (w, "clicked", G_CALLBACK (show_group_substitution_help_dialog), dialog);
+  if (have_group_default)
+    HIG :: workarea_add_wide_control (t, &row, h);
+  else
+    HIG :: workarea_add_row (t, &row, _("_Location:"), h, file_entry_gtk_entry(_save_path_entry));
 
-    if (have_group_default) {
-      char * pch = g_strdup_printf (_("Group's _default path: %s"), group_path.c_str());
-      w = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON(_save_custom_path_radio), pch);
-      _save_group_path_radio = w;
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), path_mode==PATH_GROUP);
-      g_object_set_data_full (G_OBJECT(w), "default-group-save-path", g_strdup(group_path.c_str()), g_free);
-      g_free (pch);
-      HIG :: workarea_add_wide_control (t, &row, w);
-    }
-
-  HIG::workarea_add_section_divider (t, &row);
-  HIG::workarea_add_section_title (t, &row, _("Priority"));
-    HIG::workarea_add_section_spacer (t, row, 3);
-
-    // sort by age
-    w = _position_age_radio = gtk_radio_button_new_with_mnemonic (NULL, _("Add to the queue sorted by a_ge"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), true);
+  if (have_group_default) {
+    char * pch = g_strdup_printf (_("_Group's path: %s"), group_path.c_str());
+    w = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON(_save_custom_path_radio), pch);
+    _save_group_path_radio = w;
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), path_mode==PATH_GROUP);
+    g_object_set_data_full (G_OBJECT(w), "default-group-save-path", g_strdup(group_path.c_str()), g_free);
+    g_free (pch);
     HIG :: workarea_add_wide_control (t, &row, w);
+  }
 
-    // top of queue
-    w = _position_top_radio = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON(w), _("Add to the _front of the queue"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), false);
-    HIG :: workarea_add_wide_control (t, &row, w);
+  w = create_mode_combo_box (prefs);
+  g_signal_connect (w,  "changed", G_CALLBACK(mode_combo_box_selection_changed), &prefs);
+  w = HIG :: workarea_add_row (t, &row, _("_Action:"), w);
 
-    // bottom of queue
-    w = _position_bottom_radio = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON(w), _("Add to the _back of the queue"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), false);
-    HIG :: workarea_add_wide_control (t, &row, w);
+  w = create_priority_combo_box (prefs);
+  g_signal_connect (w,  "changed", G_CALLBACK(priority_combo_box_selection_changed), &prefs);
+  w = HIG :: workarea_add_row (t, &row, _("_Priority:"), w);
 
   gtk_widget_show_all (t);
   gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->vbox), t, true, true, 0);
