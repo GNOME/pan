@@ -120,7 +120,7 @@ SaveDialog :: response_cb (GtkDialog * dialog,
       save_mode |= TaskArticle::DECODE;
 
     // make the tasks... 
-    std::vector<Task*> tasks;
+    Queue::tasks_t tasks;
     foreach_const (std::vector<Article>, self->_articles, it)
       tasks.push_back (new TaskArticle (self->_server_rank,
                                         self->_group_server,

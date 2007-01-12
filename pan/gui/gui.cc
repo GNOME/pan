@@ -564,7 +564,7 @@ void GUI :: do_import_tasks ()
   gtk_widget_destroy (dialog);
 
   // if we're importing files, build the tasks...
-  std::vector<Task*> tasks;
+  Queue::tasks_t tasks;
   if (!filenames.empty()) {
     const std::string path (get_save_attachments_path_from_user (get_window(_root), _prefs));
     if (!path.empty())
@@ -743,10 +743,13 @@ void GUI :: do_read_selected_article ()
 }
 void GUI :: do_download_selected_article ()
 {
-  typedef std::set<const Article*> article_set_t;
-  const article_set_t articles (_header_pane->get_full_selection ());
-  foreach_const (article_set_t, articles, it)
-    _queue.add_task (new TaskArticle (_data, _data, **it, _cache, _data, this));
+  typedef std::vector<const Article*> article_vector_t;
+  const article_vector_t articles (_header_pane->get_full_selection_v ());
+  Queue::tasks_t tasks;
+  foreach_const (article_vector_t, articles, it)
+    tasks.push_back (new TaskArticle (_data, _data, **it, _cache, _data, this));
+  if (!tasks.empty())
+    _queue.add_tasks (tasks, Queue::TOP);
 }
 void GUI :: do_clear_header_pane ()
 {
@@ -1428,7 +1431,7 @@ void GUI :: do_download_headers ()
 
 void GUI :: do_refresh_groups ()
 {
-  std::vector<Task*> tasks;
+  Queue::tasks_t tasks;
 
   const quarks_t servers (_data.get_servers ());
   foreach_const_r (quarks_t, servers, it)
