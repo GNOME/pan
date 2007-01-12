@@ -201,26 +201,30 @@ DataImpl :: MyTree :: apply_filter (const const_nodes_v& candidates)
       accumulate_descendants (d, *it);
     //std::cerr << LINE_ID << " expands into " << d.size() << " articles\n";
 
+    const_nodes_v fail2;
     pass.clear ();
     foreach_const (unique_nodes_t, d, it) {
       const Article * a ((*it)->_article);
       if (a->score > -9999 || _data._article_filter.test_article (_data, _filter, _group, *a))
         pass.push_back (*it); // pass is now sorted by mid because d was too
       else
-        fail.push_back (*it); // fail is now unsorted and may have duplicates
+        fail2.push_back (*it); // fail2 is sorted by mid because d was too
     }
 
-    // fail cleanup: remove duplicates
-    std::sort (fail.begin(), fail.end(), compare);
-    fail.erase (std::unique (fail.begin(), fail.end()), fail.end());
-
-    // fail cleanup: remove newly-passing articles
+    // fail cleanup: add fail2 and remove duplicates.
+    // both are sorted by mid, so set_union will do the job
     const_nodes_v tmp;
-    tmp.reserve (fail.size());
+    tmp.reserve (fail.size() + fail2.size());
+    std::set_union (fail.begin(), fail.end(),
+                    fail2.begin(), fail2.end(),
+                    inserter (tmp, tmp.begin()), compare);
+    fail.swap (tmp);
+	 
+    // fail cleanup: remove newly-passing articles
+    tmp.clear ();
     std::set_difference (fail.begin(), fail.end(),
                          pass.begin(), pass.end(),
-                         inserter (tmp, tmp.begin()),
-                         compare);
+                         inserter (tmp, tmp.begin()), compare);
     fail.swap (tmp);
     //std::cerr << LINE_ID << ' ' << pass.size() << " of "
     //          << (pass.size() + fail.size()) 
