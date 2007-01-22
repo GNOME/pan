@@ -1130,12 +1130,16 @@ HeaderPane :: rebuild_filter (const std::string& text, int mode)
   typedef std::pair<int,int> range_t;
   std::vector<range_t> ranges;
   ranges.reserve (6);
-  if (_action_manager.is_action_active("match-ignored-articles")) ranges.push_back (range_t(INT_MIN, -9999));
-  if (_action_manager.is_action_active("match-low-scoring-articles")) ranges.push_back (range_t(-9998, -1));
-  if (_action_manager.is_action_active("match-normal-scoring-articles")) ranges.push_back (range_t(0, 0));
-  if (_action_manager.is_action_active("match-medium-scoring-articles")) ranges.push_back (range_t(1, 4999));
-  if (_action_manager.is_action_active("match-high-scoring-articles")) ranges.push_back (range_t(5000, 9998));
-  if (_action_manager.is_action_active("match-watched-articles")) ranges.push_back (range_t(9999, INT_MAX));
+  if (_action_manager.is_action_active("match-only-watched-articles"))
+    ranges.push_back (range_t(9999, INT_MAX));
+  else {
+    if (_action_manager.is_action_active("match-ignored-articles")) ranges.push_back (range_t(INT_MIN, -9999));
+    if (_action_manager.is_action_active("match-low-scoring-articles")) ranges.push_back (range_t(-9998, -1));
+    if (_action_manager.is_action_active("match-normal-scoring-articles")) ranges.push_back (range_t(0, 0));
+    if (_action_manager.is_action_active("match-medium-scoring-articles")) ranges.push_back (range_t(1, 4999));
+    if (_action_manager.is_action_active("match-high-scoring-articles")) ranges.push_back (range_t(5000, 9998));
+    if (_action_manager.is_action_active("match-watched-articles")) ranges.push_back (range_t(9999, INT_MAX));
+  }
   for (size_t i=0; !ranges.empty() && i<ranges.size()-1; ) {
     if (ranges[i].second+1 != ranges[i+1].first)
       ++i;
