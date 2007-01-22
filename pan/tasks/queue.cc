@@ -527,6 +527,7 @@ Queue :: check_in (NNTP * nntp, bool is_ok)
   const Task::State state (task->get_state ());
 
   if (is_ok
+    && _is_online
     && (state._health!=FAIL)
     && (state._work==Task::NEED_NNTP)
     && !_removing.count(task)
