@@ -178,7 +178,7 @@ namespace
 
       err = WSAGetLastError();
       if (err || !ans) {
-        setme_err = get_last_err (err);	
+        setme_err = get_last_error (err);	
         return 0;
       }
 
