@@ -67,6 +67,7 @@ const char * fallback_ui_file =
 "        <menuitem action='show-smilies-as-graphics' />\n"
 "        <menuitem action='show-text-markup'/>\n"
 "        <menuitem action='size-pictures-to-fit'/>\n"
+"        <menuitem action='focus-on-image'/>\n"
 "      </menu>\n"
 "      <separator />\n"
 "      <menu action='character-encoding-menu'>\n"

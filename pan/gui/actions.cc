@@ -366,6 +366,8 @@ namespace
     { "show-text-markup",         NULL, N_("Show *Bold*, __Underlined__, and /Italic/"), NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
     { "size-pictures-to-fit",     NULL, N_("Size Pictures to _Fit"),          NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
     { "monospace-font-enabled",   NULL, N_("Use _Monospace Font"),             "C", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
+    { "focus-on-image",           NULL, N_("Set Focus to Images"),            NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
+
 
     { "work-online", "ICON_ONLINE", N_("_Work Online"), "L", NULL, G_CALLBACK(do_work_online), true },
     { "tabbed-layout", GTK_STOCK_JUMP_TO, N_("_Tabbed Layout"), "Z", NULL, G_CALLBACK(do_tabbed_layout), false },

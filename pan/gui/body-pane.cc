@@ -1098,7 +1098,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   // if there was a picture, scroll to it.
   // otherwise scroll to the top of the body.
   GtkTextMark * mark = gtk_text_buffer_get_mark (_buffer, FIRST_PICTURE);
-  if (mark)
+  if (mark && _prefs.get_flag ("focus-on-image", true))
     gtk_text_view_scroll_to_mark (GTK_TEXT_VIEW(_text), mark, 0.0, true, 0.0, 0.0);
   else {
     GtkTextIter iter;
