@@ -949,6 +949,7 @@ void GUI :: do_supersede_article ()
   g_mime_message_set_sender (new_message, g_mime_message_get_sender (message));
   g_mime_message_set_subject (new_message, g_mime_message_get_subject (message));
   g_mime_message_set_header (new_message, "Newsgroups", g_mime_message_get_header (message, "Newsgroups"));
+  g_mime_message_set_header (new_message, "References", g_mime_message_get_header (message, "References"));
   if ((cpch = g_mime_message_get_reply_to (message)))
               g_mime_message_set_reply_to (new_message, cpch);
   if ((cpch = g_mime_message_get_header (message,     "Followup-To")))
