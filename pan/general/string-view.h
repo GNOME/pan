@@ -124,8 +124,8 @@ namespace pan
          int strcmp (const char * s, size_t l) const {
             return strcmp (str, len, s, l); }
 
-         char* strchr (char needle) const {
-            return strchr (str, len, needle); }
+         char* strchr (char needle, size_t p=0) const {
+            return p<len ? strchr (str+p, len, needle) : 0; }
 
          char* strrchr (char needle) const {
             return strrchr (str, len, needle); }

@@ -248,10 +248,6 @@ HeaderPane :: render_score (GtkTreeViewColumn * col,
                           NULL);
 }
 
-#define KIBI 1024
-#define MEBI 1048576
-#define GIBI 1073741824
-
 void
 HeaderPane :: render_bytes (GtkTreeViewColumn * col,
                             GtkCellRenderer   * renderer,
@@ -262,15 +258,19 @@ HeaderPane :: render_bytes (GtkTreeViewColumn * col,
   unsigned long bytes (0);
   gtk_tree_model_get (model, iter, COL_BYTES, &bytes, -1);
 
+  static const unsigned long KIBI (1024ul);
+  static const unsigned long MEBI (1048576ul);
+  static const unsigned long GIBI (1073741824ul);
+
   char buf[128];
   if (bytes < KIBI)
-    g_snprintf (buf, sizeof(buf), _("%lu B"), bytes);
+    g_snprintf (buf, sizeof(buf), "%lu B", bytes);
   else if (bytes < MEBI)
-    g_snprintf (buf, sizeof(buf), _("%.1f KiB"), (double)bytes/KIBI);
+    g_snprintf (buf, sizeof(buf), "%.0f KiB", (double)bytes/KIBI);
   else if (bytes < GIBI)
-    g_snprintf (buf, sizeof(buf), _("%.1f MiB"), (double)bytes/MEBI);
+    g_snprintf (buf, sizeof(buf), "%.1f MiB", (double)bytes/MEBI);
   else
-    g_snprintf (buf, sizeof(buf), _("%.1f GiB"), (double)bytes/GIBI);
+    g_snprintf (buf, sizeof(buf), "%.2f GiB", (double)bytes/GIBI);
 
   g_object_set (renderer, "text", buf, NULL);
 }

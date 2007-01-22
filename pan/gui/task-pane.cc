@@ -194,24 +194,19 @@ namespace
   static const unsigned long MEBI (1048576ul);
   static const unsigned long GIBI (1073741824ul);
 
-  /**
-   * @param kibi bytes left to download / 1024
-   * @param bytes bytes left to download % 1024
-   */
   char*
-  render_bytes (unsigned long kibi, unsigned long bytes)
+  render_bytes (unsigned long bytes)
   {
     static char buf[128];
 
-    g_assert (bytes < KIBI);
-    if (!kibi) // less than a kibi...
-      g_snprintf (buf, sizeof(buf), _("%lu B"), bytes);
-    else if (kibi < KIBI) // less than a mebi...
-      g_snprintf (buf, sizeof(buf), _("%.2f KiB"), (double)kibi);
-    else if (kibi < MEBI) // less than a gibi...
-      g_snprintf (buf, sizeof(buf), _("%.2f MiB"), (double)kibi/KIBI);
-    else if (kibi < GIBI)
-      g_snprintf (buf, sizeof(buf), _("%.2f GiB"), (double)kibi/MEBI);
+    if (bytes < KIBI)
+      g_snprintf (buf, sizeof(buf), "%lu B", bytes);
+    else if (bytes < MEBI)
+      g_snprintf (buf, sizeof(buf), "%.0f KiB", (double)bytes/KIBI);
+    else if (bytes < GIBI)
+      g_snprintf (buf, sizeof(buf), "%.1f MiB", (double)bytes/MEBI);
+    else
+      g_snprintf (buf, sizeof(buf), "%.2f GiB", (double)bytes/GIBI);
 
     return buf;
   }
@@ -224,9 +219,7 @@ TaskPane :: update_status (const task_states_t& tasks)
   int queued_count (0);
   int stopped_count (0);
   int running_count (0);
-
   unsigned long bytes (0);
-  unsigned long KiB (0);
   foreach_const (tasks_t, tasks.tasks, it)
   {
     Task * task (*it);
@@ -238,11 +231,8 @@ TaskPane :: update_status (const task_states_t& tasks)
     else if (state == Queue::QUEUED)
       ++queued_count;
 
-    if (state==Queue::RUNNING || state==Queue::QUEUED) {
+    if (state==Queue::RUNNING || state==Queue::QUEUED)
       bytes += task->get_bytes_remaining ();
-      KiB += bytes / 1024ul;
-      bytes %= 1024ul;
-    }
   }
 
   // titlebar
@@ -260,14 +250,28 @@ TaskPane :: update_status (const task_states_t& tasks)
   double KiBps (_queue.get_speed_KiBps ());
   int hours(0), minutes(0), seconds(0);
   if (task_count) {
-    unsigned long tmp = (unsigned long)(KiB / KiBps);
+    const double KiB ((double)bytes / KIBI);
+    unsigned long tmp ((unsigned long)(KiB / KiBps));
     seconds = tmp % 60ul; tmp /= 60ul;
     minutes = tmp % 60ul; tmp /= 60ul;
     hours   = tmp;
   }
+  g_snprintf (buf, sizeof(buf), _("%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"),
+              task_count, render_bytes(bytes), KiBps, hours, minutes, seconds);
+  std::string line (buf);
 
-  g_snprintf (buf, sizeof(buf), _("%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"), task_count, render_bytes(KiB,bytes), KiBps, hours, minutes, seconds);
-  gtk_label_set_text (GTK_LABEL(_status_label), buf);
+  const tasks_t tasks_selected (get_selected_tasks ());
+  const unsigned long selected_count (tasks_selected.size());
+  if (selected_count) {
+    unsigned long selected_bytes (0ul);
+    foreach_const (tasks_t, tasks_selected, it)
+      selected_bytes += (*it)->get_bytes_remaining ();
+    g_snprintf (buf, sizeof(buf), _("%lu selected, %s"), selected_count, render_bytes(selected_bytes));
+    line += '\n';
+    line += buf;
+  }
+
+  gtk_label_set_text (GTK_LABEL(_status_label), line.c_str());
 }
 
 gboolean
