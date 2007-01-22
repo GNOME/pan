@@ -293,6 +293,9 @@ main (int argc, char *argv[])
       g_object_unref (pixbuf);
       run_pan_in_window (cache, data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
+
+    if (prefs.get_flag("clear-article-cache-on-shutdown", false))
+      cache.clear ();
   }
 
   g_mime_shutdown ();

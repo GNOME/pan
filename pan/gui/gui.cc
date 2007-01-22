@@ -1058,6 +1058,12 @@ void GUI :: do_delete_article ()
     if ((*it)->message_id == mid)
       _body_pane->clear ();
 }
+
+void GUI :: do_clear_article_cache ()
+{
+  _cache.clear ();
+}
+
 void GUI :: do_mark_article_read ()
 {
   const std::set<const Article*> article_set (_header_pane->get_nested_selection ());

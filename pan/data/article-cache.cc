@@ -284,7 +284,6 @@ ArticleCache :: release (const mid_sequence_t& mids)
 ****
 ***/
 
-
 void
 ArticleCache :: expire_to_size ()
 {
@@ -292,7 +291,18 @@ ArticleCache :: expire_to_size ()
   const double buffer_zone (0.8);
   size_t max_bytes (_max_megs * 1024 * 1024);
   max_bytes = (size_t) ((double)max_bytes * buffer_zone);
+  expire_to_size (max_bytes);
+}
 
+void
+ArticleCache :: clear ()
+{
+  expire_to_size (0);
+}
+
+void
+ArticleCache :: expire_to_size (size_t max_bytes)
+{
   quarks_t removed;
   if (_current_bytes > max_bytes)
   {

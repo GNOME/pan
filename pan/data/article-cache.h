@@ -65,6 +65,7 @@ namespace pan
       void reserve (const mid_sequence_t& mids);
       void release (const mid_sequence_t& mids);
       void expire_to_size ();
+      void clear ();
 
       GMimeMessage* get_message (const mid_sequence_t&);
 
@@ -98,7 +99,9 @@ namespace pan
 
       struct MsgInfoCompare {
         bool operator()(const MsgInfo& a, const MsgInfo& b) const {
-          return a._date < b._date;
+          if (a._date != b._date)
+            return a._date < b._date;
+          return a._message_id < b._message_id;
         }
       };
 
@@ -111,6 +114,8 @@ namespace pan
 
       void fire_added (const Quark& mid);
       void fire_removed (const quarks_t& mid);
+
+      void expire_to_size (size_t max_bytes);
 
       char* get_filename (char* buf, int buflen, const Quark& mid) const;
       GMimeStream* get_message_file_stream (const Quark& mid) const;

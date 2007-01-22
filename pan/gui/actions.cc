@@ -155,6 +155,7 @@ namespace
   void do_cancel_article               (GtkAction * a) { pan_ui->do_cancel_article(); }
   void do_supersede_article            (GtkAction * a) { pan_ui->do_supersede_article(); }
   void do_delete_article               (GtkAction * a) { pan_ui->do_delete_article(); }
+  void do_clear_article_cache          (GtkAction * a) { pan_ui->do_clear_article_cache(); }
   void do_mark_article_read            (GtkAction * a) { pan_ui->do_mark_article_read(); }
   void do_mark_article_unread          (GtkAction * a) { pan_ui->do_mark_article_unread(); }
   void do_post                         (GtkAction * a) { pan_ui->do_post(); }
@@ -327,6 +328,7 @@ namespace
     { "cancel-article", NULL, N_("Cance_l Article ..."), NULL, NULL, G_CALLBACK(do_cancel_article) },
     { "supersede-article", NULL, N_("_Supersede Article ..."), NULL, NULL, G_CALLBACK(do_supersede_article) },
     { "delete-article", GTK_STOCK_DELETE, N_("_Delete Article"), "Delete", NULL, G_CALLBACK(do_delete_article) },
+    { "clear-article-cache", NULL, N_("Clear Article Cache"), NULL, NULL, G_CALLBACK(do_clear_article_cache) },
     { "mark-article-read", "ICON_ARTICLE_READ", N_("_Mark Article as Read"), "M", N_("Mark Article as Read"), G_CALLBACK(do_mark_article_read) },
     { "mark-article-unread", "ICON_ARTICLE_UNREAD", N_("Mark Article as _Unread"), "<control>M", N_("Mark Article as Unread"), G_CALLBACK(do_mark_article_unread) },
 

@@ -66,6 +66,7 @@ namespace pan
     virtual void do_cancel_article () = 0;
     virtual void do_supersede_article () = 0;
     virtual void do_delete_article () = 0;
+    virtual void do_clear_article_cache () = 0;
     virtual void do_mark_article_read () = 0;
     virtual void do_mark_article_unread () = 0;
     virtual void do_post () = 0;
