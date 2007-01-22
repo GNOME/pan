@@ -86,6 +86,7 @@ namespace pan
     virtual void do_show_servers_dialog () = 0;
     virtual void do_show_score_dialog () = 0;
     virtual void do_show_new_score_dialog () = 0;
+    virtual void do_show_selected_article_info () = 0;
 
     virtual void do_read_selected_group () = 0;
     virtual void do_mark_selected_groups_read () = 0;

@@ -105,6 +105,7 @@ namespace pan
       virtual void do_read_previous_thread ();
       virtual void do_read_parent_article ();
       virtual void do_show_servers_dialog ();
+      virtual void do_show_selected_article_info ();
       virtual void do_plonk ();
       virtual void do_watch ();
       virtual void do_ignore ();

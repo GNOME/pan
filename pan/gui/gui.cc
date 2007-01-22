@@ -20,10 +20,12 @@
 #include <config.h>
 #include <map>
 #include <string>
+#include <sstream>
 extern "C" {
   #include <glib/gi18n.h>
 }
 #include <pan/general/debug.h>
+#include <pan/general/e-util.h>
 #include <pan/general/file-util.h>
 #include <pan/general/foreach.h>
 #include <pan/data/scorefile.h>
@@ -1339,6 +1341,59 @@ void GUI :: do_show_matches (const Data::ShowType show_type)
 {
   _header_pane->set_show_type (show_type);
 }
+
+void GUI :: do_show_selected_article_info ()
+{
+  const Article* a = _header_pane->get_first_selected_article ();
+
+  if (a != 0)
+  {
+    // date
+    EvolutionDateMaker date_maker;
+    char * date = date_maker.get_date_string (a->time_posted);
+
+    // article parts
+    std::vector<int> missing_parts;
+    int i = 0;
+    foreach_const (Article::parts_t, a->parts, it) {
+      ++i;
+      if (it->empty())
+        missing_parts.push_back (i);
+    }
+    char msg[512];
+    *msg = '\0';
+    std::ostringstream s;
+    if (i > 1) {
+      if (missing_parts.empty())
+        g_snprintf (msg, sizeof(msg), _("This article has all %d parts."), i);
+      else
+        g_snprintf (msg, sizeof(msg), _("This article is missing %d of its %d parts:"), (int)missing_parts.size(), i);
+      foreach_const (std::vector<int>, missing_parts, it)
+        s << ' ' << *it;
+    }
+
+    GtkWidget * w = gtk_message_dialog_new_with_markup (
+      get_window(_root),
+      GTK_DIALOG_DESTROY_WITH_PARENT,
+      GTK_MESSAGE_INFO,
+      GTK_BUTTONS_CLOSE,
+        "<b>%s</b>: %s\n" "<b>%s</b>: %s\n"
+        "<b>%s</b>: %s\n" "<b>%s</b>: %s\n"
+        "<b>%s</b>: %lu\n" "<b>%s</b>: %lu\n"
+        "\n"
+        "%s" "%s",
+        _("Subject"), a->subject.c_str(), _("From"), a->author.c_str(),
+        _("Date"), date, _("Message-ID"), a->message_id.c_str(),
+        _("Lines"), a->get_line_count(), _("Bytes"), a->get_byte_count(),
+        msg, s.str().c_str());
+    g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
+    gtk_widget_show_all (w);
+
+    // cleanup
+    g_free (date);
+  }
+}
+
 void GUI :: do_quit ()
 {
   gtk_main_quit ();

@@ -134,6 +134,7 @@ namespace
   void do_rot13_selected_text          (GtkAction * a) { pan_ui->do_rot13_selected_text(); }
   void do_download_selected_article    (GtkAction * a) { pan_ui->do_download_selected_article(); }
   void do_read_selected_article        (GtkAction * a) { pan_ui->do_read_selected_article(); }
+  void do_show_selected_article_info   (GtkAction * a) { pan_ui->do_show_selected_article_info(); }
   void do_read_more                    (GtkAction * a) { pan_ui->do_read_more(); }
   void do_read_less                    (GtkAction * a) { pan_ui->do_read_less(); }
   void do_read_next_unread_group       (GtkAction * a) { pan_ui->do_read_next_unread_group(); }
@@ -307,6 +308,7 @@ namespace
 
     { "download-selected-article", "ICON_DISK", N_("Cache Article"), NULL, N_("Cache Article"), G_CALLBACK(do_download_selected_article) },
     { "read-selected-article", "ICON_READ_MORE", N_("Read Article"), NULL, N_("Read Article"), G_CALLBACK(do_read_selected_article) },
+    { "show-selected-article-info", NULL, N_("Show Article Information"), NULL, N_("Show Article Information"), G_CALLBACK(do_show_selected_article_info) },
     { "read-more", "ICON_READ_MORE", N_("Read _More"), "space", N_("Read More"), G_CALLBACK(do_read_more) },
     { "read-less", "ICON_READ_LESS", N_("Read _Back"), "BackSpace", N_("Read Back"), G_CALLBACK(do_read_less) },
     { "read-next-unread-group", "ICON_READ_UNREAD_GROUP", N_("Next _Unread Group"), "G", N_("Next Unread Group"), G_CALLBACK(do_read_next_unread_group) },
