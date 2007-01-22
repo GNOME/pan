@@ -703,30 +703,56 @@ namespace
       gtk_text_buffer_apply_tag_by_name (buffer, last_quote_tag.c_str(), &mark_start, &mark_end);
     }
 
+    // apply markup
     const StringView v_all (body);
-    if (do_markup) {
+    if (do_markup)
+    {
+      bool is_patch = false;
+      std::set<const char*> already_processed;
       StringView v(body), line;
-      while (v.pop_token (line, '\n')) {
-        const char * prev (0);
-        for (;;) {
+      while (v.pop_token (line, '\n'))
+      {
+        // if we detect that this message contains a patch,
+        // turn off markup for the rest of the article.
+        if (!is_patch)
+          is_patch = (line.strstr("--- ")==line.str) || (line.strstr("@@ ")==line.str);
+        if (is_patch)
+          continue;
+
+        for (;;)
+        {
+          // find the first markup character.
+          // if we've already used it,
+          // or if it was preceeded by something not a space or punctuation,
+          // then keep looking.
           const char * b (line.strpbrk ("_*/"));
-          if (!b) break;
-          // if it's a new character, and (the first char in the line OR previous char is space/punctuation)
-          if (b != prev && (b==&line.front() || (isspace(b[-1] || ispunct(b[-1]))))) {
-            const StringView lineleft (line.substr (b+1, 0));
-            const char * e = lineleft.strchr (*b);
-            // if there's a closing character and (it's the last character OR the following character is space/punctuation)
-            if (e && (e==&lineleft.back() || (isspace(e[1]) || ispunct(e[1])))) {
-              const char * type (0);
-              switch (*b) {
-                case '*': type = "bold"; break;
-                case '_': type = "underline"; break;
-                case '/': type = "italic"; break;
-              }
-              set_section_tag (buffer, &start, v_all, StringView(b,e+1), type, ADD);
-            }
-            prev = e;
+          if (!b)
+            break;
+          if (already_processed.count(b) ||
+              (b!=&line.front() && !isspace(b[-1]) && !ispunct(b[-1]))) {
+            line.eat_chars (b+1-line.str);
+            continue;
           }
+
+          // find the ending corresponding markup character.
+          // if it was followed by something not a space or punctuation, keep looking.
+          const char * e = b;
+          while ((e = line.strchr (*b, 1+(e-line.str)))) {
+            if (e==&line.back() || isspace(e[1]) || ispunct(e[1]) || strchr("_*/", e[1]))
+              break;
+          }
+
+          if (e) {
+            already_processed.insert (e);
+            const char * type (0);
+            switch (*b) {
+              case '*': type = "bold"; break;
+              case '_': type = "underline"; break;
+              case '/': type = "italic"; break;
+            }
+            set_section_tag (buffer, &start, v_all, StringView(b,e+1), type, ADD);
+          }
+
           line.eat_chars (b+1-line.str);
         }
       }
