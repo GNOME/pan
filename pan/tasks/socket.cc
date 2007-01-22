@@ -17,10 +17,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <stdarg.h>
 #include <config.h>
+#include <cstdarg>
 #include <ctime>
-#include <glib.h>
+#include <cmath>
+extern "C" {
+  #include <glib.h>
+}
 #include <pan/general/debug.h>
 #include <pan/general/string-view.h>
 #include "socket.h"
@@ -28,8 +31,9 @@
 using namespace pan;
 
 Socket :: Socket ():
-  _byte_count (0ul),
-  _time_started (time(0)),
+  _bytes_since_last_check (0),
+  _time_of_last_check (time(0)),
+  _speed_KiBps (0.0),
   _abort_flag (false)
 {
 }
@@ -50,21 +54,31 @@ double
 Socket :: get_speed_KiBps () const
 {
   const time_t now (time(0));
-  const int diff_secs (std::max ((time_t)1, now-_time_started));
-  return (_byte_count/1024.0) / diff_secs;
+  if (now == _time_of_last_check)
+    return _speed_KiBps;
+
+  const int delta = now - _time_of_last_check;
+  const double current_speed = (_bytes_since_last_check/1024.0) / delta;
+  _time_of_last_check = now;
+  _bytes_since_last_check = 0;
+
+  _speed_KiBps = (std::fabs(_speed_KiBps)<0.0001)
+    ? current_speed // if no previous speed, no need to smooth
+    : (_speed_KiBps*0.9 + current_speed*0.1); // calculate 'smoothed average' of 10 readings
+  return _speed_KiBps;
 }
 
 void
 Socket :: reset_speed_counter ()
 {
-  _byte_count = 0ul;
-  _time_started = time (0);
+  _time_of_last_check = time(0);
+  _bytes_since_last_check = 0;
 }
 
 void
 Socket :: increment_xfer_byte_count (unsigned long byte_count)
 {
-   _byte_count += byte_count;
+   _bytes_since_last_check += byte_count;
 }
 
 void

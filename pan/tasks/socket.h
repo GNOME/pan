@@ -60,8 +60,9 @@ namespace pan
 
     protected:
       void increment_xfer_byte_count (unsigned long byte_count);
-      unsigned long _byte_count;
-      time_t _time_started;
+      mutable unsigned long _bytes_since_last_check;
+      mutable time_t _time_of_last_check;
+      mutable double _speed_KiBps; 
       bool _abort_flag;
 
     public:
