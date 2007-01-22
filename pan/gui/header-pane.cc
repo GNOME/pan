@@ -514,9 +514,44 @@ namespace
   }
 }
 
+struct HeaderPane::SelectFirstArticle: public PanTreeStore::WalkFunctor
+{
+  GtkTreeView * tree_view;
+  GtkTreeSelection * tree_selection;
+  const quarks_t mids;
+  const bool do_scroll;
+  SelectFirstArticle (GtkTreeView * v, GtkTreeSelection *sel, const quarks_t& m, bool scroll):
+    tree_view(v), tree_selection(sel), mids(m), do_scroll(scroll) {}
+  virtual ~SelectFirstArticle () {}
+  virtual bool operator()(PanTreeStore *store, PanTreeStore::Row* r, GtkTreeIter *iter, GtkTreePath *unused) {
+    Row * row (dynamic_cast<Row*>(r));
+    const Article * article (row->article);
+    if (mids.count (article->message_id)) {
+      GtkTreePath * path = gtk_tree_model_get_path (GTK_TREE_MODEL(store), iter);
+      gtk_tree_view_expand_row (tree_view, path, true);
+      gtk_tree_view_expand_to_path (tree_view, path);
+      if (do_scroll) {
+        gtk_tree_view_set_cursor (tree_view, path, NULL, false);
+        gtk_tree_view_scroll_to_cell (tree_view, path, NULL, true, 0.5f, 0.0f);
+        gtk_tree_selection_select_path (tree_selection, path);
+      }
+      gtk_tree_path_free (path);
+      return false;
+    }
+    return true;
+  }
+};
+
 void
 HeaderPane :: rebuild ()
 {
+  quarks_t selectme;
+  if (1) {
+    const articles_t old_selection (get_full_selection ());
+    foreach_const (articles_t, old_selection, it)
+      selectme.insert ((*it)->message_id);
+  }
+
   _mid_to_row.clear ();
   _tree_store = build_model (_group, _atree, NULL);
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE(_tree_store),
@@ -530,6 +565,12 @@ HeaderPane :: rebuild ()
 
   if (_prefs.get_flag ("expand-threads-when-entering-group", false))
     gtk_tree_view_expand_all (view);
+
+  if (!selectme.empty()) {
+    GtkTreeSelection * sel = gtk_tree_view_get_selection (view);
+    SelectFirstArticle walker (view, sel, selectme, true);
+    _tree_store->walk (walker);
+  }
 }
 
 bool
@@ -627,44 +668,16 @@ namespace
     }
   };
 
-  struct RememberArticles: public RowActionFunctor
+  struct RememberMessageId: public RowActionFunctor
   {
-    articles_t& articles;
-    RememberArticles (articles_t& a): articles(a) {}
-    virtual ~RememberArticles() {}
+    quarks_t& mids;
+    RememberMessageId (quarks_t& m): mids(m) {}
+    virtual ~RememberMessageId() {}
     virtual void operator() (GtkTreeModel* model, GtkTreeIter* it, const Article& article) {
-      articles.insert (&article);
+      mids.insert (article.message_id);
     }
   };
 }
-
-struct HeaderPane::SelectFirstArticle: public PanTreeStore::WalkFunctor
-{
-  GtkTreeView * tree_view;
-  GtkTreeSelection * tree_selection;
-  const articles_t& articles;
-  const bool do_scroll;
-  SelectFirstArticle (GtkTreeView * v, GtkTreeSelection *sel, const articles_t& a, bool scroll):
-    tree_view(v), tree_selection(sel), articles(a), do_scroll(scroll) {}
-  virtual ~SelectFirstArticle () {}
-  virtual bool operator()(PanTreeStore *store, PanTreeStore::Row* r, GtkTreeIter *iter, GtkTreePath *unused) {
-    Row * row (dynamic_cast<Row*>(r));
-    const Article * article (row->article);
-    if (articles.count (article)) {
-      GtkTreePath * path = gtk_tree_model_get_path (GTK_TREE_MODEL(store), iter);
-      gtk_tree_view_expand_row (tree_view, path, true);
-      gtk_tree_view_expand_to_path (tree_view, path);
-      if (do_scroll) {
-        gtk_tree_view_set_cursor (tree_view, path, NULL, false);
-        gtk_tree_view_scroll_to_cell (tree_view, path, NULL, true, 0.5f, 0.0f);
-        gtk_tree_selection_select_path (tree_selection, path);
-      }
-      gtk_tree_path_free (path);
-      return false;
-    }
-    return true;
-  }
-};
 
 void
 HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
@@ -676,7 +689,7 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
   const bool rows_added_or_removed (!diffs.added.empty()
                                  || !diffs.reparented.empty()
                                  || !diffs.removed.empty());
-  articles_t selectme;
+  quarks_t selectme;
   if (rows_added_or_removed)
   {
     // we might need to change the selection after the update.
@@ -692,7 +705,7 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
       // so select the first article after the
       // deleted ones...
       ArticleIsNotInSet tester (diffs.removed);
-      RememberArticles actor (selectme);
+      RememberMessageId actor (selectme);
       action_next_if (tester, actor);
     }
   }
