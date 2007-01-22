@@ -48,7 +48,7 @@ namespace pan
       };
 
     public:
-      virtual bool open (const StringView& address, int port) = 0;
+      virtual bool open (const StringView& address, int port, std::string& setme_err) = 0;
       virtual void write_command (const StringView& chars, Listener *) = 0;
 
     public:

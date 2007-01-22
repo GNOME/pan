@@ -37,6 +37,7 @@ extern "C" {
 }
 
 #include <pan/general/file-util.h>
+#include <pan/general/log.h>
 
 #ifdef G_OS_WIN32
   // this #define is necessary for mingw
@@ -52,8 +53,8 @@ extern "C" {
     return buf;
   }
 
-  static void
-  PrintLastError (int err)
+  static const char*
+  get_last_error (int err)
   {
     const char * msg = 0;
     switch(err) {
@@ -69,8 +70,7 @@ extern "C" {
       case 11001: msg = "Host not found"; break;
       default: msg = "Connect failed";
     }
-    g_message (msg);
-    OutputDebugString (msg);
+    return msg;
   }
 
 #else
@@ -155,7 +155,7 @@ namespace
   }
 
   GIOChannel *
-  create_channel (const StringView& host, int port)
+  create_channel (const StringView& host_in, int port, std::string& setme_err)
   {
     int err;
     int sockfd;
@@ -165,30 +165,27 @@ namespace
 #endif
 
     // get an addrinfo for the host 
-    char hostbuf[128];
+    const std::string host (host_in.str, host_in.len);
     char portbuf[32];
-    g_snprintf (hostbuf, sizeof(hostbuf), "%*.*s", host.len, host.len, host.str);
     g_snprintf (portbuf, sizeof(portbuf), "%d", port);
 
 #ifdef G_OS_WIN32 // windows might not have getaddrinfo...
     if (!p_getaddrinfo)
     {
-      struct hostent * ans = isalpha (hostbuf[0])
-        ? gethostbyname (hostbuf)
-        : gethostbyaddr (hostbuf, host.len, AF_INET);
+      struct hostent * ans = isalpha (host[0])
+        ? gethostbyname (host.c_str())
+        : gethostbyaddr (host.c_str(), host.size(), AF_INET);
 
       err = WSAGetLastError();
       if (err || !ans) {
-        PrintLastError(err);	
+        setme_err = get_last_err (err);	
         return 0;
       }
 
       // try opening the socket
       sockfd = socket (AF_INET, SOCK_STREAM, 0 /*IPPROTO_TCP*/);
-      if (sockfd < 0) {
-        g_message ("Couldn't create a socket to %*.*s, port %d: %s", host.len, host.len, host.str, port, file::pan_strerror(errno));
+      if (sockfd < 0)
         return 0;
-      }
 
       // Try connecting
       int i = 0;
@@ -201,40 +198,41 @@ namespace
         memcpy (&server.sin_addr, addr, ans->h_length);
         server.sin_family = AF_INET;
         server.sin_port = htons(port);
-        g_snprintf (hostbuf, sizeof(hostbuf),
-                    "Trying host %u.%u.%u.%u, port %d\n",
-                    addr[0], addr[1], addr[2], addr[3], port);
-        OutputDebugString (hostbuf);
         ++i;
-
         err = connect (sockfd,(struct sockaddr*)&server, sizeof(server));
-        if (err) PrintLastError(err);
       }
 
-      if (!err)
-        OutputDebugString ("Connection seems to be opened");
-      else {
+      if (err) {
         closesocket (sockfd);
-        PrintLastError(err);
-        return NULL;
+        setme_err = get_last_error (err);
+        return 0;
       }
     }
     else
 #endif // #ifdef G_OS_WIN32 ...
     {
+      errno = 0;
       struct addrinfo hints;
       memset (&hints, 0, sizeof(struct addrinfo));
       hints.ai_flags = 0;
       hints.ai_family = 0;
       hints.ai_socktype = SOCK_STREAM;
       struct addrinfo * ans;
-      err = p_getaddrinfo (hostbuf, portbuf, &hints, &ans);
+      err = p_getaddrinfo (host.c_str(), portbuf, &hints, &ans);
       if (err != 0) {
-        g_message ("Lookup error: %s", gai_strerror(err));
+        char buf[512];
+        snprintf (buf, sizeof(buf), _("Pan can't find the server at %s."), host.c_str());
+        setme_err = buf;
+        if (errno) {
+          setme_err += " (";
+          setme_err += file :: pan_strerror (err);
+          setme_err += ")";
+        }
         return 0;
       }
 
       // try to open a socket on any ipv4 or ipv6 addresses we found
+      errno = 0;
       sockfd = -1;
       for (struct addrinfo * walk(ans); walk && sockfd<0; walk=walk->ai_next)
       {
@@ -249,7 +247,6 @@ namespace
 
         // and make a connection
         if (::connect (sockfd, walk->ai_addr, walk->ai_addrlen) < 0) {
-          g_message ("Connection to %*.*s, port %d failed: %s", host.len, host.len, host.str, port, file::pan_strerror(errno));
           closesocket (sockfd);
           sockfd = -1;
         }
@@ -260,22 +257,29 @@ namespace
     }
 
     // create the giochannel...
-    GIOChannel * channel (0);
-    if (sockfd < 0)
-      g_message ("couldn't create a socket.");
-    else {
-#ifndef G_OS_WIN32
-      channel = g_io_channel_unix_new (sockfd);
-      g_io_channel_set_flags (channel, G_IO_FLAG_NONBLOCK, NULL);
-#else
-      channel = g_io_channel_win32_new_socket (sockfd);
-#endif
-      if (g_io_channel_get_encoding (channel) != NULL)
-        g_io_channel_set_encoding (channel, NULL, NULL);
-      g_io_channel_set_buffered (channel, true);
-      g_io_channel_set_line_term (channel, "\n", 1);
+    if (sockfd < 0) {
+      char buf[512];
+      snprintf (buf, sizeof(buf), _("Pan can't connect to the server at %s."), host.c_str());
+      setme_err = buf;
+      if (errno) {
+        setme_err += " (";
+        setme_err += file :: pan_strerror (err);
+        setme_err += ")";
+      }
+      return 0;
     }
 
+    GIOChannel * channel (0);
+#ifndef G_OS_WIN32
+    channel = g_io_channel_unix_new (sockfd);
+    g_io_channel_set_flags (channel, G_IO_FLAG_NONBLOCK, NULL);
+#else
+    channel = g_io_channel_win32_new_socket (sockfd);
+#endif
+    if (g_io_channel_get_encoding (channel) != NULL)
+      g_io_channel_set_encoding (channel, NULL, NULL);
+    g_io_channel_set_buffered (channel, true);
+    g_io_channel_set_line_term (channel, "\n", 1);
     return channel;
   }
 }
@@ -330,9 +334,9 @@ GIOChannelSocket :: ~GIOChannelSocket ()
 }
 
 bool
-GIOChannelSocket :: open (const StringView& address, int port)
+GIOChannelSocket :: open (const StringView& address, int port, std::string& setme_err)
 {
-  _channel = create_channel (address, port);
+  _channel = create_channel (address, port, setme_err);
   return _channel != 0;
 }
 
@@ -572,6 +576,7 @@ namespace
 
     bool ok;
     Socket * socket;
+    std::string err;
 
     ThreadInfo (const StringView& h, int p, Socket::Creator::Listener *l):
       host(h), port(p), listener(l), ok(false), socket(0) {}
@@ -580,6 +585,8 @@ namespace
   gboolean socket_created_idle (gpointer info_gpointer)
   {
     ThreadInfo * info (static_cast<ThreadInfo*>(info_gpointer));
+    if (!info->err.empty())
+      Log :: add_err (info->err.c_str());
     info->listener->on_socket_created (info->host, info->port, info->ok, info->socket);
     delete info;
     return false;
@@ -590,7 +597,7 @@ namespace
     //std::cerr << LINE_ID << " creating a socket in worker thread...\n";
     ThreadInfo * info (static_cast<ThreadInfo*>(info_gpointer));
     info->socket = new GIOChannelSocket ();
-    info->ok = info->socket->open (info->host, info->port);
+    info->ok = info->socket->open (info->host, info->port, info->err);
     g_idle_add (socket_created_idle, info); // pass results to main thread...
   }
 }

@@ -36,7 +36,7 @@ namespace pan
     public:
       GIOChannelSocket ();
       virtual ~GIOChannelSocket ();
-      virtual bool open (const StringView& address, int port);
+      virtual bool open (const StringView& address, int port, std::string& setme_err);
       virtual void write_command (const StringView& chars, Listener *);
 
     private:
