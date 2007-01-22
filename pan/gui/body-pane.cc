@@ -381,12 +381,30 @@ namespace
           if (!gtk_text_iter_begins_tag (&iter, pix_tag))
             gtk_text_iter_backward_to_tag_toggle (&iter, pix_tag);
           g_assert (gtk_text_iter_begins_tag (&iter, pix_tag));
+
+          // percent_x,percent_y reflect where the user clicked in the picture
+          GdkRectangle rec;
+          gtk_text_view_get_iter_location (GTK_TEXT_VIEW(w), &iter, &rec);
+          int buf_x, buf_y;
+          gtk_text_view_window_to_buffer_coords (GTK_TEXT_VIEW(w), GTK_TEXT_WINDOW_WIDGET,
+                                                 (gint)event->x, (gint)event->y, &buf_x, &buf_y);
+          const double percent_x = (buf_x - rec.x) / (double)rec.width;
+          const double percent_y = (buf_y - rec.y) / (double)rec.height;
+
+           // resize the picture and refresh `iter'
           const int offset (gtk_text_iter_get_offset (&iter));
           GtkTextBuffer * buf (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)));
           const bool fullsize (toggle_fullsize_flag (buf));
           resize_picture_at_iter (buf, &iter, fullsize, &w->allocation, pix_tag);
           gtk_text_iter_set_offset (&iter, offset);
           set_cursor_from_iter (event->window, w, &iter);
+
+          // x2,y2 are to position percent_x,percent_y in the middle of the window.
+          GtkTextMark * mark = gtk_text_buffer_create_mark (buf, NULL, &iter, true);
+          const double x2 = CLAMP ((percent_x + (percent_x - 0.5)), 0.0, 1.0);
+          const double y2 = CLAMP ((percent_y + (percent_y - 0.5)), 0.0, 1.0);
+          gtk_text_view_scroll_to_mark (GTK_TEXT_VIEW(w), mark, 0.0, true, x2, y2);
+          gtk_text_buffer_delete_mark (buf, mark);
         }
       }
     }
