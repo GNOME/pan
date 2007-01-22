@@ -180,7 +180,7 @@ int main (void)
   e.assign (errors.begin(), errors.end());
   check (errors.size() == 1)
   check (goodness.is_warn())
-  check (e[0] == "Warning: Unknown group \"unknown.group\".")
+  check (e[0] == "Warning: The posting profile's server doesn't carry newsgroup\n\t\"unknown.group\".\n\tIf the group name is correct, switch profiles in the \"From:\"\n\tline or edit the profile with \"Edit|Manage Posting Profiles\".")
   g_mime_message_set_header (msg, "Newsgroups", "alt.test");
 
   // newsgroups w/o followup
@@ -199,7 +199,7 @@ int main (void)
   e.assign (errors.begin(), errors.end());
   check (errors.size() == 1)
   check (goodness.is_warn ())
-  check (e[0] == "Warning: Unknown group \"unknown.group\".")
+  check (e[0] == "Warning: The posting profile's server doesn't carry newsgroup\n\t\"unknown.group\".\n\tIf the group name is correct, switch profiles in the \"From:\"\n\tline or edit the profile with \"Edit|Manage Posting Profiles\".")
   g_mime_object_remove_header (GMIME_OBJECT(msg), "Followup-To");
 
   // top posting
