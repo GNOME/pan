@@ -411,12 +411,14 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
   HIG::workarea_add_section_divider (t, &row);
   HIG::workarea_add_section_title (t, &row, _("Groups"));
-    HIG::workarea_add_section_spacer (t, row, 4);
+    HIG::workarea_add_section_spacer (t, row, 5);
     w = new_check_button (_("Get new headers in subscribed groups on _startup"), "get-new-headers-on-startup", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Get new headers when _entering group"), "get-new-headers-when-entering-group", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Mark entire group _read when leaving group"), "mark-group-read-when-leaving-group", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
+    w = new_check_button (_("Mark entire group read before getting _new headers"), "mark-group-read-before-xover", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("E_xpand all threads when entering group"), "expand-threads-when-entering-group", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
