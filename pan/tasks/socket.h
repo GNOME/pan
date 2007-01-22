@@ -57,6 +57,7 @@ namespace pan
       void reset_speed_counter ();
       void set_abort_flag (bool b);
       bool is_abort_set () const;
+      virtual void get_host (std::string& setme) const = 0;
 
     protected:
       void increment_xfer_byte_count (unsigned long byte_count);

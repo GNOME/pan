@@ -336,8 +336,15 @@ GIOChannelSocket :: ~GIOChannelSocket ()
 bool
 GIOChannelSocket :: open (const StringView& address, int port, std::string& setme_err)
 {
+  _host.assign (address.str, address.len);
   _channel = create_channel (address, port, setme_err);
   return _channel != 0;
+}
+
+void
+GIOChannelSocket :: get_host (std::string& setme) const
+{
+  setme = _host;
 }
 
 void
