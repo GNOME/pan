@@ -497,18 +497,14 @@ GIOChannelSocket :: gio_func (GIOChannel * channel, GIOCondition cond, gpointer 
       self->_listener->on_socket_error (self);
       gimmie_more = false;
    }
-   else if (cond & G_IO_IN)
+   else // G_IO_IN or G_IO_OUT
    {
-      gimmie_more = self->do_read ();
-   }
-   else // G_IO_OUT
-   {
-      gimmie_more = self->do_write ();
+      gimmie_more = (cond & G_IO_IN) ? self->do_read ()
+                                     : self->do_write ();
+      if (!gimmie_more)
+        remove_source (self->_tag_timeout);
    }
 
-   debug ("gio_func exit " << self << " with retval " << gimmie_more);
-   if (!gimmie_more)
-     remove_source (self->_tag_timeout);
    return gimmie_more;
 }
 
