@@ -163,7 +163,7 @@ ScoreView :: tree_view_refresh ()
 
     // build the criteria column: file & line numbers, optional name, criteria
     GString * criteria = g_string_new (0);
-    g_string_printf (criteria, _("File %s, Lines %d - %d"), item.filename.c_str(), item.begin_line, item.end_line);
+    g_string_printf (criteria, _("File %s, Lines %d - %d"), item.filename.c_str(), (int)item.begin_line, (int)item.end_line);
     g_string_append_c (criteria, '\n');
     if (!item.name.empty()) {
       g_string_append_printf (criteria, _("Name: \"%s\""), item.name.c_str());

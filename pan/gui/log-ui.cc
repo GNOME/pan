@@ -18,6 +18,8 @@
  */
 
 #include <config.h>
+#include <ostream>
+#include <fstream>
 extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
@@ -92,13 +94,13 @@ namespace
       {
         char * fname = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (d));
         const Log::entries_t& entries (Log::get().get_entries());
-        FILE * fp = fopen (fname, "w+");
+        std::ofstream out (fname, std::ios_base::out|std::ios_base::trunc);
         foreach_const (Log::entries_t, entries, it) {
           StringView date (ctime (&it->date));
           --date.len; // trim off the \n
-          fprintf (fp, "%*.*s - %s\n", date.len, date.len, date.str, it->message.c_str());
+          out << date << " - " << it->message << '\n';
         }
-        fclose (fp);
+        out.close ();
         g_free (fname);
       }
       gtk_widget_destroy (d);
