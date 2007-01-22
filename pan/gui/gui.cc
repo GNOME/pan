@@ -489,32 +489,33 @@ GUI :: disable_accelerators_when_focused (GtkWidget * w) const
 namespace
 {
   static std::string prev_path;
+}
 
-  std::string get_save_attachments_path_from_user (GtkWindow * parent, const Prefs& prefs)
-  {
-    if (prev_path.empty())
-      prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
-    if (!file :: file_exists (prev_path.c_str()))
-      prev_path = g_get_home_dir ();
+std::string
+GUI :: prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs)
+{
+  if (prev_path.empty())
+    prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
+  if (!file :: file_exists (prev_path.c_str()))
+    prev_path = g_get_home_dir ();
 
-    GtkWidget * w = gtk_file_chooser_dialog_new (_("Save Attachments"), parent,
-                                                 GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-                                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                                 GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-                                                 NULL);
-    gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_ACCEPT);
-    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER(w), prev_path.c_str());
-    const int response (gtk_dialog_run (GTK_DIALOG(w)));
-    std::string path;
-    if (response == GTK_RESPONSE_ACCEPT) {
-      char * tmp = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w));
-      prev_path = path = tmp;
-      g_free (tmp);
-    }
-
-    gtk_widget_destroy(w);
-    return path;
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB's Files"), parent,
+                                               GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                                               GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                               GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+                                               NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_ACCEPT);
+  gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER(w), prev_path.c_str());
+  const int response (gtk_dialog_run (GTK_DIALOG(w)));
+  std::string path;
+  if (response == GTK_RESPONSE_ACCEPT) {
+    char * tmp = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w));
+    prev_path = path = tmp;
+    g_free (tmp);
   }
+
+  gtk_widget_destroy(w);
+  return path;
 }
 
 void GUI :: do_save_articles ()
@@ -566,7 +567,7 @@ void GUI :: do_import_tasks ()
   // if we're importing files, build the tasks...
   Queue::tasks_t tasks;
   if (!filenames.empty()) {
-    const std::string path (get_save_attachments_path_from_user (get_window(_root), _prefs));
+    const std::string path (prompt_user_for_save_path (get_window(_root), _prefs));
     if (!path.empty())
       foreach_const (strings_t, filenames, it)
         NZB :: tasks_from_nzb_file (*it, path, _cache, _data, _data, _data, tasks);

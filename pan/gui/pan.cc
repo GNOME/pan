@@ -189,12 +189,9 @@ main (int argc, char *argv[])
 
   bool gui(true), nzb(false);
   std::string url;
+  std::string nzb_output_path;
   typedef std::vector<std::string> strings_t;
   strings_t nzb_files;
-
-  char * pch = g_get_current_dir ();
-  std::string nzb_output_path = pch;
-  g_free (pch);
 
   for (int i=1; i<argc; ++i)
   {
@@ -221,12 +218,6 @@ main (int argc, char *argv[])
     }
   }
 
-#if 0
-  if (nzb && nzb_files.empty()) {
-    std::cerr << _("Error: nzb arguments used without nzb files.") << std::endl;
-    return 0;
-  }
-#endif
   if (!gui && nzb_files.empty() && url.empty()) {
     std::cerr << _("Error: --no-gui used without nzb files or news:message-id.") << std::endl;
     return 0;
@@ -259,6 +250,13 @@ main (int argc, char *argv[])
 
     if (nzb)
     {
+      // if no save path was specified, either prompt for one or
+      // use the user's home directory as a fallback.
+      if (nzb_output_path.empty() && gui)
+        nzb_output_path = GUI::prompt_user_for_save_path (NULL, prefs);
+      if (nzb_output_path.empty()) // user pressed `cancel' when prompted
+        return 0;
+
       // load the nzb files...
       std::vector<Task*> tasks;
       foreach_const (strings_t, nzb_files, it)

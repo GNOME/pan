@@ -146,6 +146,9 @@ namespace pan
       virtual void do_unsubscribe_selected_groups ();
       virtual void do_set_charset (const char *);
 
+    public:
+      static std::string prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs);
+
 
     private: // Queue::Listener
       friend class Queue;
