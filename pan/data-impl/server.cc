@@ -21,6 +21,7 @@
 #include <unistd.h>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include <map>
 #include <set>
 #include <vector>
@@ -29,6 +30,7 @@ extern "C" {
   #include <glib/gi18n.h>
 }
 #include <pan/general/debug.h>
+#include <pan/general/file-util.h>
 #include <pan/general/foreach.h>
 #include <pan/general/log.h>
 #include <pan/general/messages.h>
@@ -45,13 +47,14 @@ DataImpl :: delete_server (const Quark& server_in)
 {
   const Quark server (server_in);
 
-  // delete server from disk
-  _servers.erase (server);
-  save_server_properties (*_data_io);
-  _data_io->erase_newsrc (server);
-
-  // reload from disk
-  rebuild_backend ();
+  if (_servers.count (server))
+  {
+    const std::string newsrc_filename (_servers[server].newsrc_filename);
+    _servers.erase (server);
+    save_server_properties (*_data_io);
+    std::remove (newsrc_filename.c_str());
+    rebuild_backend ();
+  }
 }
 
 Quark
@@ -311,6 +314,12 @@ DataImpl :: load_server_properties (const DataIO& source)
     s.max_connections = to_int (kv["connection-limit"], 2);
     s.article_expiration_age = to_int(kv["expire-articles-n-days-old"], 31);
     s.rank = to_int(kv["rank"], 1);
+    s.newsrc_filename = kv["newsrc"];
+    if (s.newsrc_filename.empty()) { // set a default filename
+      std::ostringstream o;
+      o << file::get_pan_home() << G_DIR_SEPARATOR << "newsrc-" << it->first;
+      s.newsrc_filename = o.str ();
+    }
   }
 
   save_server_properties (*const_cast<DataIO*>(&source));
@@ -356,6 +365,7 @@ DataImpl :: save_server_properties (DataIO& data_io) const
          << indent(depth) << "<password>" << escaped(s->password) << "</password>\n"
          << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
          << indent(depth) << "<connection-limit>" << s->max_connections << "</connection-limit>\n"
+         << indent(depth) << "<newsrc>" << s->newsrc_filename << "</newsrc>\n"
          << indent(depth) << "<rank>" << s->rank << "</rank>\n";
     *out << indent(--depth) << "</server>\n";
   }

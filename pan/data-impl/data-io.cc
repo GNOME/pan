@@ -76,13 +76,6 @@ namespace
     g_free (filename);
     return retval;
   }
-
-  std::string get_newsrc_filename (const Quark& server)
-  {
-    std::string tmp ("newsrc-");
-    tmp +=  server;
-    return get_pan_home_file (tmp.c_str());
-  }
 }
 
 std::string
@@ -119,20 +112,6 @@ DataIO :: get_server_filename () const
   return get_pan_home_file ("servers.xml");
 }
 
-quarks_t
-DataIO :: get_newsrc_servers () const
-{
-  quarks_t servers;
-  const std::string pan_home (file::get_pan_home ());
-  GDir * dir (g_dir_open (pan_home.c_str(), 0, NULL));
-  const char * fname;
-  while (dir && ((fname = g_dir_read_name (dir))))
-    if (!strncmp (fname, "newsrc-", 7))
-      servers.insert (fname+7);
-  g_dir_close (dir);
-  return servers;
-}
-
 /****
 *****
 ****/
@@ -144,13 +123,6 @@ DataIO :: clear_group_headers (const Quark& group)
   std::remove (filename.c_str());
 }
 
-void
-DataIO :: erase_newsrc (const Quark& server)
-{
-  const std::string filename (get_newsrc_filename (server));
-  std::remove (filename.c_str());
-}
-
 /****
 *****
 ****/
@@ -159,48 +131,38 @@ LineReader*
 DataIO :: read_tasks () const
 {
   const std::string filename (get_tasks_filename ());
-  FileLineReader * in (0);
-  if (file :: file_exists (filename.c_str()))
-    in = new FileLineReader (filename.c_str());
-  return in;
+  return file::file_exists(filename.c_str()) ? read_file(filename) : 0;
 }
 
 LineReader*
 DataIO :: read_group_descriptions () const
 {
-   const std::string filename (get_group_descriptions_filename ());
-   return new FileLineReader (filename.c_str());
+   return read_file (get_group_descriptions_filename ());
 }
 
 LineReader*
 DataIO :: read_group_permissions () const
 {
-   const std::string filename (get_group_permissions_filename ());
-   return new FileLineReader (filename.c_str());
+   return read_file (get_group_permissions_filename ());
 }
 
 LineReader*
 DataIO :: read_group_xovers () const
 {
-   const std::string filename (get_group_xovers_filename ());
-   return new FileLineReader (filename.c_str());
+  return read_file (get_group_xovers_filename ());
 }
 
 LineReader*
 DataIO :: read_group_headers (const Quark& group) const
 {
   const std::string filename (get_group_headers_filename (group));
-  FileLineReader * in (0);
-  if (file :: file_exists (filename.c_str()))
-    in = new FileLineReader (filename.c_str());
-  return in;
+  return file::file_exists(filename.c_str()) ? read_file(filename) : 0;
 }
 
 LineReader*
-DataIO :: read_newsrc (const Quark& server) const
+DataIO :: read_file (const StringView& filename) const
 {
-  const std::string filename (get_newsrc_filename (server));
-  return new FileLineReader (filename.c_str());
+  return new FileLineReader (filename);
 }
 
 /****
@@ -247,43 +209,43 @@ namespace
 std::ostream*
 DataIO :: write_tasks ()
 {
-  return get_ostream (get_tasks_filename ());
+  return write_file (get_tasks_filename ());
 }
 
 std::ostream*
 DataIO :: write_server_properties ()
 {
-  return get_ostream (get_server_filename());
+  return write_file (get_server_filename());
 }
 
 std::ostream*
 DataIO :: write_group_xovers ()
 {
-  return get_ostream (get_group_xovers_filename ());
+  return write_file (get_group_xovers_filename ());
 }
 
 std::ostream*
 DataIO :: write_group_descriptions ()
 {
-  return get_ostream (get_group_descriptions_filename ());
+  return write_file (get_group_descriptions_filename ());
 }
 
 std::ostream*
 DataIO :: write_group_permissions ()
 {
-  return get_ostream (get_group_permissions_filename ());
+  return write_file (get_group_permissions_filename ());
 }
 
 std::ostream*
 DataIO :: write_group_headers (const Quark& group)
 {
-  return get_ostream (get_group_headers_filename (group));
+  return write_file (get_group_headers_filename (group));
 }
 
 std::ostream*
-DataIO :: write_newsrc (const Quark& server)
+DataIO :: write_file (const StringView& filename)
 {
-  return get_ostream (get_newsrc_filename (server));
+  return get_ostream (filename);
 }
 
 void

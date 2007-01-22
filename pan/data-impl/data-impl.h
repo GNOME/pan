@@ -94,6 +94,7 @@ namespace pan
          std::string username;
          std::string password;
          std::string host;
+         std::string newsrc_filename;
          int port;
          int article_expiration_age;
          int max_connections;

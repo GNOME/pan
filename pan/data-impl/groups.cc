@@ -162,10 +162,11 @@ DataImpl :: load_newsrc_files (const DataIO& data_io)
   s.clear ();
   u.clear ();
 
-  const quarks_t servers (data_io.get_newsrc_servers ());
-  foreach_const (quarks_t, servers, sit) {
-    LineReader * in (data_io.read_newsrc (*sit));
-    load_newsrc (*sit, in, s, u);
+  foreach_const (servers_t, _servers, sit) {
+    const Quark key (sit->first);
+    const std::string filename (sit->second.newsrc_filename);
+    LineReader * in (data_io.read_file (filename));
+    load_newsrc (key, in, s, u);
     delete in;
   }
 
@@ -202,7 +203,8 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
     const Quark& server (sit->first);
 
     // write this server's newsrc
-    std::ostream * out (data_io.write_newsrc (server));
+    const std::string& filename (sit->second.newsrc_filename);
+    std::ostream * out (data_io.write_file (filename));
     std::string newsrc_string;
     alpha_groups_t::const_iterator sub_it (_subscribed.begin());
     const alpha_groups_t::const_iterator sub_end(_subscribed.end());
