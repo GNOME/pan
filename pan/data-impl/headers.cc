@@ -136,10 +136,9 @@ DataImpl :: GroupHeaders :: build_references_header (const Article* article, std
   setme.clear ();
   const Quark& message_id (article->message_id);
   const ArticleNode * node (find_node (message_id));
-  StringView ancestor_mid;
   while (node->_parent != 0) {
     node = node->_parent;
-    node->_mid.to_view (ancestor_mid);
+    const StringView& ancestor_mid = node->_mid.to_view ();
     setme.insert (0, ancestor_mid.str, ancestor_mid.len);
     if (node->_parent)
       setme.insert (0, 1, ' ');

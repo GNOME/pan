@@ -52,8 +52,7 @@ Quark :: dump (std::ostream& o)
 std::ostream&
 pan::operator<< (std::ostream& os, const pan::Quark& s)
 {
-  StringView v;
-  s.to_view (v);
+  const StringView& v (s.to_view());
   os.write (v.str, v.len);
   return os;
 }

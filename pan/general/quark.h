@@ -151,16 +151,9 @@ namespace pan
         if (impl) s = *impl->view;
         return s;
       }
-      StringView to_view () const {
-        StringView v;
-        if (impl) v = *impl->view;
-        return v;
-      }
-      void to_view (StringView& setme) const {
-        if (impl)
-          setme = *impl->view;
-        else
-          setme.clear ();
+      const StringView& to_view () const {
+        static const StringView empty;
+        return impl ? *impl->view : empty;
       }
       const char* c_str () const { return impl ? impl->view->str : NULL; }
       operator const char* () const { return c_str(); }
