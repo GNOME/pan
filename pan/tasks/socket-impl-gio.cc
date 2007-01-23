@@ -263,7 +263,7 @@ namespace
       setme_err = buf;
       if (errno) {
         setme_err += " (";
-        setme_err += file :: pan_strerror (err);
+        setme_err += file :: pan_strerror (errno);
         setme_err += ")";
       }
       return 0;
@@ -401,8 +401,8 @@ GIOChannelSocket :: do_read ()
       }
       else
       {
-         const char * msg = err ? err->message : _("Unknown Error");
-         Log::add_err_va (_("Error reading from socket: %s"), msg);
+         const char * msg (err ? err->message : _("Unknown Error"));
+         Log::add_err_va (_("Error reading from %s: %s"), _host.c_str(), msg);
          if (err != NULL)
             g_clear_error (&err);
          _listener->on_socket_error (this);
