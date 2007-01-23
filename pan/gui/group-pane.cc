@@ -694,14 +694,16 @@ namespace
   struct NextGroupWalk: public PanTreeStore::WalkFunctor
   {
     const ActionManager& am;
+    GtkTreeView * view;
     GtkTreeSelection * sel;
     const Quark current_group;
     bool current_group_reached;
     const bool unread_only;
 
-    NextGroupWalk (const ActionManager& a, GtkTreeSelection * s, const Quark& g, bool unread):
+    NextGroupWalk (const ActionManager& a, GtkTreeView *v, const Quark& g, bool unread):
       am (a),
-      sel (s),
+      view (v),
+      sel (gtk_tree_view_get_selection (view)),
       current_group(g),  
       current_group_reached (g.empty()),
       unread_only (unread) { }
@@ -714,8 +716,14 @@ namespace
       const Quark& name (row->groupname);
       if (is_group (name)) {
         if (current_group_reached && (row->unread || !unread_only)) {
+          GtkTreePath * path = gtk_tree_model_get_path (GTK_TREE_MODEL(store), iter);
+          gtk_tree_view_expand_row (view, path, true);
+          gtk_tree_view_expand_to_path (view, path);
+          gtk_tree_view_set_cursor (view, path, NULL, false);
+          gtk_tree_view_scroll_to_cell (view, path, NULL, true, 0.5f, 0.0f);
           gtk_tree_selection_unselect_all (sel);
-          gtk_tree_selection_select_iter (sel, iter);
+          gtk_tree_selection_select_path (sel, path);
+          gtk_tree_path_free (path);
           am.activate_action ("read-selected-group");
           return false; // done
         }
@@ -731,9 +739,8 @@ void
 GroupPane :: read_next_unread_group ()
 {
   GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
-  GtkTreeSelection * sel (gtk_tree_view_get_selection (view));
   const Quark current_group (get_selection ());
-  NextGroupWalk walker (_action_manager, sel, current_group, true);
+  NextGroupWalk walker (_action_manager, view, current_group, true);
   _tree_store->walk (walker);
 }
 
@@ -741,9 +748,8 @@ void
 GroupPane :: read_next_group ()
 {
   GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
-  GtkTreeSelection * sel (gtk_tree_view_get_selection (view));
   const Quark current_group (get_selection ());
-  NextGroupWalk walker (_action_manager, sel, current_group, false);
+  NextGroupWalk walker (_action_manager, view, current_group, false);
   _tree_store->walk (walker);
 }
 
