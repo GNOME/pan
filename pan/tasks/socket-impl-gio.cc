@@ -225,7 +225,7 @@ namespace
         setme_err = buf;
         if (errno) {
           setme_err += " (";
-          setme_err += file :: pan_strerror (err);
+          setme_err += file :: pan_strerror (errno);
           setme_err += ")";
         }
         return 0;
