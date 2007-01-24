@@ -183,6 +183,7 @@ namespace
     GtkTextIter insert_iter;
     gtk_text_buffer_get_iter_at_mark (text_buffer, &insert_iter, mark);
     int char_offset (gtk_text_iter_get_offset (&insert_iter));
+    const int width_diff ((int)after.size() - (int)before.size());
 
     // swap the non-wrapped for the wrapped text
     gtk_text_buffer_delete (text_buffer, &line_begin_iter, &end_iter);
@@ -190,14 +191,14 @@ namespace
 
     // update the insert and selection_bound marks to
     // where they were before the swap
-    gtk_text_buffer_get_iter_at_offset (text_buffer, &insert_iter, char_offset);
+    gtk_text_buffer_get_iter_at_offset (text_buffer, &insert_iter, char_offset + width_diff);
     mark = gtk_text_buffer_get_mark (text_buffer, "insert");
     gtk_text_buffer_move_mark (text_buffer, mark, &insert_iter);
     mark = gtk_text_buffer_get_mark (text_buffer, "selection_bound");
     gtk_text_buffer_move_mark (text_buffer, mark, &insert_iter);
 
     // revalidate the insert_pos iterator
-    gtk_text_buffer_get_iter_at_offset (text_buffer, insert_pos, insert_iterator_pos);
+    gtk_text_buffer_get_iter_at_offset (text_buffer, insert_pos, insert_iterator_pos + width_diff);
 
     dampen_feedback = false;
   }
