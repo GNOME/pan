@@ -208,7 +208,9 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
       case GROUP_NONEXISTENT: {
          std::string host;
          _socket->get_host (host);
-         Log::add_err_va (_("Can't find group \%s\" on server \"%s\""), line.to_string().c_str(), host.c_str());
+         Log::add_err_va (_("Can't find group \"%s\" on %s"),
+                          line.to_string().c_str(),
+                          host.c_str());
          state = CMD_FAIL;
          break;
       }
@@ -225,8 +227,17 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
       case NO_GROUP_SELECTED:
       case ERROR_CMD_NOT_UNDERSTOOD:
       case ERROR_CMD_NOT_SUPPORTED:
-      case NO_PERMISSION:
-         Log::add_err_va (_("Error: %s"), line.to_string().c_str());
+      case NO_PERMISSION: {
+         std::string host;
+         _socket->get_host (host);
+         Log::add_err_va (_("Sending \"%s\" to %s returned an error: %s"),
+                          _previous_command.c_str(),
+                          host.c_str(),
+                          line.to_string().c_str());
+         state = CMD_FAIL;
+         break;
+      }
+
       case NO_SUCH_ARTICLE_NUMBER:
       case NO_SUCH_ARTICLE:
          state = CMD_FAIL;
@@ -237,10 +248,16 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
          state = CMD_RETRY;
          break;
 
-      default:
-         g_message ("I don't know how to handle this: [%s]", line.to_string().c_str());
+      default: {
+         std::string host;
+         _socket->get_host (host);
+         Log::add_err_va (_("Sending \"%s\" to %s returned an unrecognized response: \"%s\""),
+                          _previous_command.c_str(),
+                          host.c_str(),
+                          line.to_string().c_str());
          state = CMD_FAIL;
          break;
+      }
    }
 
    if ((state == CMD_DONE) && !_commands.empty())
