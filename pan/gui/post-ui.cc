@@ -1972,6 +1972,7 @@ PostUI :: create_window (GtkWindow    * parent,
   {
     Profile profile;
     profile.username = g_get_real_name ();
+    /* xgettext: no-c-format */
     profile.attribution = _("On %d, %n wrote:");
     ProfileDialog d (data, g_get_real_name(), profile, GTK_WINDOW(parent));
     const bool got_profile (ProfileDialog :: run_until_valid_or_cancel (d));

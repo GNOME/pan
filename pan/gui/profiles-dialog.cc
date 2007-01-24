@@ -407,6 +407,7 @@ ProfilesDialog :: create_new_profile ()
 {
   Profile profile;
   profile.username = g_get_real_name ();
+  /* xgettext: no-c-format */
   profile.attribution = _("On %d, %n wrote:");
   ProfileDialog d (_data, _("New Profile"), profile, GTK_WINDOW(_root));
   const bool do_rebuild = ProfileDialog :: run_until_valid_or_cancel (d);

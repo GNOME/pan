@@ -161,13 +161,14 @@ namespace
   /**
   **/
 
-  enum Days { WEEK=7, MONTH=30, FOREVER=0 };
+  enum Days { WEEK=7, MONTH=31, MONTHS=93, FOREVER=0 };
 
   GtkTreeModel* time_tree_model_new ()
   {
     struct { int type; const char * str; } items[] = {
-      { WEEK,       N_("the next week") },
-      { MONTH,      N_("the next month") },
+      { WEEK,       N_("for the next week") },
+      { MONTH,      N_("for the next month") },
+      { MONTHS,     N_("for the next three months") },
       { FOREVER,    N_("forever") },
     };
 
@@ -671,7 +672,7 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
     GtkObject * a = gtk_adjustment_new (100, INT_MIN, INT_MAX, 1.0, 1.0, 1.0);
     w = _score_spin = gtk_spin_button_new (GTK_ADJUSTMENT(a), 100.0, 0u);
     gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
-    HIG::workarea_add_row (t, &row, _("Then"), h);
+    HIG::workarea_add_wide_control (t, &row, h);
     gtk_widget_show_all (h);
     g_signal_connect (_score_menu, "changed", G_CALLBACK(score_combo_changed_cb), w);
 
@@ -679,7 +680,7 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
     model = time_tree_model_new ();
     w = _duration_menu = value_combo_new (model);
     g_object_unref (model);
-    HIG::workarea_add_row (t, &row, _("For"), w);
+    HIG::workarea_add_wide_control (t, &row, w);
     gtk_widget_show (w);
 
   populate (group, article, mode);
