@@ -112,6 +112,19 @@ Queue :: upkeep ()
     _last_time_saved = now;
   }
 
+  // do upkeep on the first queued task.
+  // the CPU goes crazy if we run upkeep on _all_ queued tasks,
+  // but we need to run upkeep on at least one queued task
+  // the queue if it's gotten stuck from a bad connection.
+  // ref #352170, #354779
+  foreach_const (tasks_t, tmp, it) {
+    Task * task (*it);
+    if (task->get_state()._work == Task::NEED_NNTP) {
+      process_task (task);
+      break;
+    }
+  }
+
   // remove completed tasks.
   foreach_const (tasks_t, tmp, it) {
     Task * task  (*it);
