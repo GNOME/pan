@@ -372,9 +372,12 @@ TaskArticle :: on_finished ()
         }
 
         // decode the file...
-        if ((res = UUDecodeFile (item, fname)) == UURET_OK)
+        if ((res = UUDecodeFile (item, fname)) == UURET_OK) {
           Log::add_info_va (_("Saved \"%s\""), fname);
-        else {
+        } else if (res == UURET_NODATA) {
+          // silently let this error by... user probably tried to
+          // save attachements on a text-only post
+        } else {
           const int the_errno (UUGetOption (UUOPT_ERRNO, NULL, NULL, 0));
           if (res==UURET_IOERR && the_errno==ENOSPC)
             Log::add_urgent_va (_("Error saving \"%s\":\n%s. %s"), fname, file::pan_strerror(the_errno), "ENOSPC");
