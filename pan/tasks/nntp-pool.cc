@@ -264,11 +264,13 @@ NNTP_Pool :: request_nntp ()
   {
     debug ("trying to create a socket");
 
-    ++_pending_connections;
     std::string address;
     int port;
-    _server_info.get_server_addr (_server, address, port);
-    _socket_creator->create_socket (address, port, this);
+    if (_server_info.get_server_addr (_server, address, port))
+    {
+      ++_pending_connections;
+      _socket_creator->create_socket (address, port, this);
+    }
   }
 }
 
