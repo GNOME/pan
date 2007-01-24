@@ -34,6 +34,7 @@ extern "C" {
 }
 
 #include <pan/general/debug.h>
+#include <pan/general/file-util.h>
 #include <pan/general/foreach.h>
 #include <pan/general/log.h>
 #include <pan/general/messages.h>
@@ -165,9 +166,11 @@ DataImpl :: load_newsrc_files (const DataIO& data_io)
   foreach_const (servers_t, _servers, sit) {
     const Quark key (sit->first);
     const std::string filename (sit->second.newsrc_filename);
-    LineReader * in (data_io.read_file (filename));
-    load_newsrc (key, in, s, u);
-    delete in;
+    if (file::file_exists (filename.c_str())) {
+      LineReader * in (data_io.read_file (filename));
+      load_newsrc (key, in, s, u);
+      delete in;
+    }
   }
 
   // remove duplicates
