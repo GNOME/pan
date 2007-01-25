@@ -33,6 +33,7 @@ extern "C" {
 #include <pan/data/data.h>
 #include "group-pane.h"
 #include "pad.h"
+#include "sexy-icon-entry.h"
 
 using namespace pan;
 
@@ -605,10 +606,10 @@ namespace
     remove_activate_soon_tag ();
   }
 
-  void reset_entry_filter_cb (GtkWidget * button, gpointer pane_gpointer)
+  void clear_button_clicked_cb (SexyIconEntry *e, SexyIconEntryPosition icon_pos, int button, gpointer pane_gpointer)
   {
-    GtkWidget * e = GTK_WIDGET (g_object_get_data (G_OBJECT(button), "entry"));
-    set_search_entry (e, "");
+    set_search_entry (GTK_WIDGET(e), "");
+    refresh_search_entry (GTK_WIDGET(e));
     search_text.clear ();
     search_entry_activated (NULL, pane_gpointer);
   }
@@ -630,9 +631,6 @@ namespace
   {
     search_text = gtk_entry_get_text (GTK_ENTRY(e));
     bump_activate_soon_tag (static_cast<GroupPane*>(pane_gpointer));
-
-    GtkWidget * b (GTK_WIDGET (g_object_get_data (G_OBJECT(e), "reset-button")));
-    gtk_widget_set_sensitive (b, !search_text.empty());
   }
 }
 
@@ -778,32 +776,21 @@ namespace
 GtkWidget*
 GroupPane :: create_filter_entry ()
 {
-  GtkWidget * h = gtk_hbox_new (false, 0);
-  GtkWidget * entry = gtk_entry_new ();
+  GtkWidget * entry = sexy_icon_entry_new ();
+
+  GtkWidget * icon = gtk_image_new_from_stock(GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
+  sexy_icon_entry_set_icon (SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_SECONDARY, GTK_IMAGE(icon));
+  sexy_icon_entry_set_icon_highlight(SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_SECONDARY, true);
   gtk_widget_set_size_request (entry, 100, -1);
+
   _action_manager.disable_accelerators_when_focused (entry);
   g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), NULL);
   g_signal_connect (entry, "focus-out-event", G_CALLBACK(search_entry_focus_out_cb), NULL);
   g_signal_connect (entry, "activate", G_CALLBACK(search_entry_activated), this);
+  g_signal_connect (entry, "icon_released", G_CALLBACK(clear_button_clicked_cb), this);
   entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed_by_user), this);
   refresh_search_entry (entry);
-  gtk_box_pack_start (GTK_BOX(h), entry, 0, 0, false);
-
-  GtkWidget * w = gtk_button_new ();
-  GtkTooltips * tips = gtk_tooltips_new ();
-  g_object_ref_sink_pan (G_OBJECT(tips));
-  g_object_weak_ref (G_OBJECT(w), (GWeakNotify)g_object_unref, tips);
-  g_object_set_data (G_OBJECT(w), "entry", entry);
-  g_object_set_data (G_OBJECT(entry), "reset-button", w);
-  gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
-  g_signal_connect (w, "clicked", G_CALLBACK(reset_entry_filter_cb), this);
-  GtkWidget * image = gtk_image_new_from_stock (GTK_STOCK_CANCEL, GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER(w), image);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS(tips), w, _("Clear the Filter"), NULL);
-  gtk_box_pack_start (GTK_BOX(h), w, 0, 0, false);
-  gtk_widget_set_sensitive (w, false);
-
-  return h;
+  return entry;
 }
 
 void

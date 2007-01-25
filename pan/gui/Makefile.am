@@ -26,6 +26,7 @@ libpangui_a_SOURCES = \
  score-add-ui.cc \
  score-view-ui.cc \
  server-ui.cc \
+ sexy-icon-entry.cc \
  task-pane.cc \
  xface.c \
  url.cc
@@ -61,6 +62,7 @@ noinst_HEADERS = \
  score-add-ui.h \
  score-view-ui.h \
  server-ui.h \
+ sexy-icon-entry.h \
  tango-colors.h \
  task-pane.h \
  url.h \

@@ -40,6 +40,7 @@ extern "C" {
 #include "header-pane.h"
 #include "pad.h"
 #include "prefs-ui.h"
+#include "sexy-icon-entry.h"
 #include "tango-colors.h"
 
 using namespace pan;
@@ -1270,14 +1271,6 @@ namespace
     remove_activate_soon_tag ();
   }
 
-  void reset_entry_filter_cb (GtkWidget * button, gpointer pane_gpointer)
-  {
-    GtkWidget * e = GTK_WIDGET (g_object_get_data (G_OBJECT(button), "entry"));
-    set_search_entry (e, "");
-    search_text.clear ();
-    search_entry_activated (NULL, pane_gpointer);
-  }
-
   gboolean activated_timeout_cb (gpointer h_gpointer)
   {
     search_activate (static_cast<HeaderPane*>(h_gpointer));
@@ -1286,22 +1279,20 @@ namespace
   }
 
   // ensure there's exactly one activation timeout
-  // and that it's set to go off one second from now.
+  // and that it's set to go off in a half second from now.
   void bump_activate_soon_tag (HeaderPane * h)
   {
     remove_activate_soon_tag ();
-    activate_soon_tag = g_timeout_add (1000, activated_timeout_cb, h);
+    activate_soon_tag = g_timeout_add (500, activated_timeout_cb, h);
   }
 
   // when the user changes the filter text,
   // update our state variable and bump the activate timeout.
-  void search_entry_changed_by_user (GtkEditable * e, gpointer h_gpointer)
+  void search_entry_changed (GtkEditable * e, gpointer h_gpointer)
   {
     search_text = gtk_entry_get_text (GTK_ENTRY(e));
     bump_activate_soon_tag (static_cast<HeaderPane*>(h_gpointer));
-
-    GtkWidget * b (GTK_WIDGET (g_object_get_data (G_OBJECT(e), "reset-button")));
-    gtk_widget_set_sensitive (b, !search_text.empty());
+    refresh_search_entry (GTK_WIDGET(e));
   }
 
   // when the search mode is changed via the menu,
@@ -1319,14 +1310,22 @@ namespace
     }
   }
 
-  // this pops up the `author, subject, subject-or-author' menu
-  // when the search mode button is clicked.
-  void search_mode_button_clicked_cb (GtkButton * button, gpointer menu_g)
+  void entry_icon_released (SexyIconEntry *entry, SexyIconEntryPosition icon_pos, int button, gpointer menu)
   {
-    gtk_menu_popup (GTK_MENU(menu_g), 0, 0,
-                    0, 0,
-                    0, gtk_get_current_event_time());
+    if (icon_pos == SEXY_ICON_ENTRY_PRIMARY)
+      gtk_menu_popup (GTK_MENU(menu), 0, 0, 0, 0, 0, gtk_get_current_event_time());
   }
+
+  void entry_icon_released_2 (SexyIconEntry *entry, SexyIconEntryPosition icon_pos, int button, gpointer pane_gpointer)
+  {
+    if (icon_pos == SEXY_ICON_ENTRY_SECONDARY) {
+      set_search_entry (GTK_WIDGET(entry), "");
+      refresh_search_entry (GTK_WIDGET(entry));
+      search_text.clear ();
+      search_entry_activated (NULL, pane_gpointer);
+    }
+  }
+
 
   void ellipsize_if_supported (GObject * o)
   {
@@ -1524,14 +1523,21 @@ HeaderPane :: ~HeaderPane ()
 GtkWidget*
 HeaderPane :: create_filter_entry ()
 {
-  GtkWidget * entry = gtk_entry_new ();
+  GtkWidget * entry = sexy_icon_entry_new ();
   _action_manager.disable_accelerators_when_focused (entry);
   g_object_set_data (G_OBJECT(entry), "header-pane", this);
   g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), NULL);
   g_signal_connect (entry, "focus-out-event", G_CALLBACK(search_entry_focus_out_cb), NULL);
   g_signal_connect (entry, "activate", G_CALLBACK(search_entry_activated), this);
-  entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed_by_user), this);
-  refresh_search_entry (entry);
+  entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed), this);
+
+  GtkWidget * image = gtk_image_new_from_stock(GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
+  sexy_icon_entry_set_icon (SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_SECONDARY, GTK_IMAGE(image));
+  sexy_icon_entry_set_icon_highlight(SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_SECONDARY, true);
+
+  image = gtk_image_new_from_stock ("ICON_SEARCH_PULLDOWN", GTK_ICON_SIZE_MENU);
+  sexy_icon_entry_set_icon (SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_PRIMARY, GTK_IMAGE(image));
+  sexy_icon_entry_set_icon_highlight (SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_PRIMARY, TRUE);
 
   GtkWidget * menu = gtk_menu_new ();
   mode = 0;
@@ -1544,31 +1550,12 @@ HeaderPane :: create_filter_entry ()
     gtk_menu_shell_append (GTK_MENU_SHELL(menu), w);
     gtk_widget_show (w);
   }
+  g_signal_connect (entry, "icon-released", G_CALLBACK(entry_icon_released), menu);
+  g_signal_connect (entry, "icon-released", G_CALLBACK(entry_icon_released_2), this);
 
-  GtkWidget * search_mode_button = gtk_button_new ();
-  g_signal_connect (search_mode_button, "clicked", G_CALLBACK(search_mode_button_clicked_cb), menu);
-  GtkWidget * image = gtk_image_new_from_stock ("ICON_SEARCH_PULLDOWN", GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER(search_mode_button), image);
-  gtk_button_set_relief (GTK_BUTTON(search_mode_button), GTK_RELIEF_NONE);
+  refresh_search_entry (entry);
 
-  GtkWidget * w = gtk_button_new ();
-  GtkTooltips * tips = gtk_tooltips_new ();
-  g_object_ref_sink_pan (G_OBJECT(tips));
-  g_object_weak_ref (G_OBJECT(w), (GWeakNotify)g_object_unref, tips);
-  g_object_set_data (G_OBJECT(w), "entry", entry);
-  g_object_set_data (G_OBJECT(entry), "reset-button", w);
-  gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
-  g_signal_connect (w, "clicked", G_CALLBACK(reset_entry_filter_cb), this);
-  image = gtk_image_new_from_stock (GTK_STOCK_CANCEL, GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER(w), image);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS(tips), w, _("Clear the Filter"), NULL);
-  gtk_widget_set_sensitive (w, false);
-
-  GtkWidget * box = gtk_hbox_new (false, 0);
-  gtk_box_pack_start (GTK_BOX(box), search_mode_button, false, false, 0);
-  gtk_box_pack_start (GTK_BOX(box), entry, true, true, 0);
-  gtk_box_pack_start (GTK_BOX(box), w, false, false, 0);
-  return box;
+  return entry;
 }
 
 Data::ShowType _show_type;
