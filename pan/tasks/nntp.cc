@@ -202,18 +202,9 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
 
       case NO_POSTING:
       case POSTING_FAILED:
+      case GROUP_NONEXISTENT:
          state = CMD_FAIL;
          break;
-
-      case GROUP_NONEXISTENT: {
-         std::string host;
-         _socket->get_host (host);
-         Log::add_err_va (_("Can't find group \"%s\" on %s"),
-                          line.to_string().c_str(),
-                          host.c_str());
-         state = CMD_FAIL;
-         break;
-      }
 
       case XOVER_FOLLOWS:
       case ARTICLE_FOLLOWS:
