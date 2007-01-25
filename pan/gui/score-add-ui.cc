@@ -623,7 +623,10 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
   _group (group),
   _root (0)
 {
-  GtkWidget * w = _root = gtk_dialog_new_with_buttons (_("Pan: New Scoring Rule"),
+  std::string s (_("Pan"));
+  s += ": ";
+  s += _("New Scoring Rule");
+  GtkWidget * w = _root = gtk_dialog_new_with_buttons (s.c_str(),
     GTK_WINDOW(gtk_widget_get_toplevel(parent)),
     GTK_DIALOG_DESTROY_WITH_PARENT,
     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

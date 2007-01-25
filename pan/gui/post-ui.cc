@@ -247,10 +247,10 @@ namespace
     { "save-draft", GTK_STOCK_SAVE, N_("Sa_ve Draft"), "<control>s", N_("Save as a Draft for Future Posting"), G_CALLBACK(do_save) },
     { "open-draft", GTK_STOCK_OPEN, N_("_Open Draft..."), "<control>o", N_("Open an Article Draft"), G_CALLBACK(do_open) },
     { "rewrap", GTK_STOCK_JUSTIFY_FILL, N_("Wrap _Now"), NULL, N_("Wrap the Article Body to 80 Columns"), G_CALLBACK(do_wrap) },
-    { "close", GTK_STOCK_CLOSE, N_("_Close"), NULL, N_("Close Window"), G_CALLBACK(do_close) },
-    { "cut", GTK_STOCK_CUT, N_("Cu_t"), NULL, N_("Cut Text"), G_CALLBACK(do_cut) },
-    { "copy", GTK_STOCK_COPY, N_("_Copy"), NULL, N_("Copy Text"), G_CALLBACK(do_copy) },
-    { "paste", GTK_STOCK_PASTE, N_("_Paste"), NULL, N_("Paste Text"), G_CALLBACK(do_paste) },
+    { "close", GTK_STOCK_CLOSE, NULL, NULL, NULL, G_CALLBACK(do_close) },
+    { "cut", GTK_STOCK_CUT, NULL, NULL, NULL, G_CALLBACK(do_cut) },
+    { "copy", GTK_STOCK_COPY, NULL, NULL, NULL, G_CALLBACK(do_copy) },
+    { "paste", GTK_STOCK_PASTE, NULL, NULL, NULL, G_CALLBACK(do_paste) },
     { "rot13", GTK_STOCK_REFRESH, N_("_Rot13"), NULL, N_("Rot13 Selected Text"), G_CALLBACK(do_rot13) },
     { "run-editor", GTK_STOCK_JUMP_TO, N_("Run _Editor"), "<control>e", NULL, G_CALLBACK(do_edit) },
     { "manage-editors", NULL, N_("_Manage Editor List..."), NULL, NULL, G_CALLBACK(do_editors) },
@@ -430,7 +430,7 @@ PostUI :: add_actions (GtkWidget * box)
     gtk_ui_manager_add_ui_from_string (_uim, fallback_post_ui, -1, &err);
   }
   if (err) {
-    Log::add_err_va (_("Error loading post.ui: \"%s\""), err->message);
+    Log::add_err_va (_("Error reading file \"%s\": %s"), filename, err->message);
     g_clear_error (&err);
   }
   g_free (filename);

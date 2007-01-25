@@ -331,7 +331,7 @@ TaskArticle :: on_finished ()
       int i (0);
       foreach_const (ArticleCache::strings_t, filenames, it) {
         if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), 0, 0, ++i)) != UURET_OK)
-          Log::add_err_va (_("Couldn't load \"%s\": %s"), it->c_str(),
+          Log::add_err_va (_("Error reading from %s: %s"), it->c_str(),
             (res==UURET_IOERR) ?  file::pan_strerror (UUGetOption (UUOPT_ERRNO, NULL, NULL, 0)) : UUstrerror(res));
       }
 

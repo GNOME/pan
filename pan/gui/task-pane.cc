@@ -477,7 +477,7 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(_view), false);
   gtk_tree_view_set_rules_hint (GTK_TREE_VIEW(_view), true);
   GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
-  GtkTreeViewColumn * col = gtk_tree_view_column_new_with_attributes (_("Status"), renderer, NULL);
+  GtkTreeViewColumn * col = gtk_tree_view_column_new_with_attributes (_("State"), renderer, NULL);
   gtk_tree_view_column_set_cell_data_func (col, renderer, (GtkTreeCellDataFunc)render_state, &_queue, 0);
   gtk_tree_view_append_column (GTK_TREE_VIEW(_view), col);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_view));

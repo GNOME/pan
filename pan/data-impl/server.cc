@@ -296,7 +296,7 @@ DataImpl :: load_server_properties (const DataIO& source)
   if (txt!=0 && len!=0)
     g_markup_parse_context_parse (c, txt, len, &gerr);
   if (gerr) {
-    Log::add_err_va (_("Error loading newsserver information: %s"), gerr->message);
+    Log::add_err_va (_("Error reading file \"%s\": %s"), filename.c_str(), gerr->message);
     g_clear_error (&gerr);
   }
   g_markup_parse_context_free (c);

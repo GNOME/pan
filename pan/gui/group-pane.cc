@@ -665,7 +665,7 @@ namespace
     std::string group_name (do_shorten ? get_short_name(StringView(name)) : name.to_string());
     if (is_g && unread) {
       char buf[64];
-      g_snprintf (buf, sizeof(buf), _(" (%lu)"), unread);
+      g_snprintf (buf, sizeof(buf), " (%lu)", unread);
       group_name += buf;
     }
     //if (unread || total) {

@@ -103,7 +103,8 @@ pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
 {
   if (!groups.empty())
   {
-    std::string title (_("Pan: "));
+    std::string title (_("Pan"));
+    title += ": ";
     foreach_const (quarks_t, groups, it) {
       title +=  it->c_str();
       title += ", ";

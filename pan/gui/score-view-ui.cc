@@ -165,10 +165,8 @@ ScoreView :: tree_view_refresh ()
     GString * criteria = g_string_new (0);
     g_string_printf (criteria, _("File %s, Lines %d - %d"), item.filename.c_str(), (int)item.begin_line, (int)item.end_line);
     g_string_append_c (criteria, '\n');
-    if (!item.name.empty()) {
-      g_string_append_printf (criteria, _("Name: \"%s\""), item.name.c_str());
-      g_string_append_c (criteria, '\n');
-    }
+    if (!item.name.empty())
+      g_string_append_printf (criteria, "%s: \"%s\"\n", _("Name"), item.name.c_str());
     g_string_append (criteria, item.describe().c_str());
     if (criteria->str[criteria->len-1] == '\n')
       g_string_erase (criteria, criteria->len-1, 1);

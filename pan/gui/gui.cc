@@ -1403,13 +1403,12 @@ void GUI :: do_read_selected_group ()
   const Quark group (_group_pane->get_selection ());
 
   // update the titlebar
-  if (group.empty())
-    gtk_window_set_title (get_window(_root), _("Pan"));
-  else {
-    char * buf = g_strdup_printf (_("Pan: %s"), group.c_str());
-    gtk_window_set_title (get_window(_root), buf);
-    g_free (buf);
+  std::string s (_("Pan"));
+  if (!group.empty()) {
+    s += ": ";
+    s += group.c_str();
   }
+  gtk_window_set_title (get_window(_root), s.c_str());
 
   // set the charset encoding based upon that group's default
   if (!group.empty()) {
@@ -1620,7 +1619,7 @@ GUI :: set_queue_size_label (unsigned int running,
   if (!size)
     g_snprintf (str, sizeof(str), _("No Tasks"));
   else
-    g_snprintf (str, sizeof(str), _("Tasks: %u/%u"), running, size);
+    g_snprintf (str, sizeof(str), "%s: %u/%u", _("Tasks"), running, size);
 
   // update the gui
   gtk_label_set_text (GTK_LABEL(_queue_size_label), str);

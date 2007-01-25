@@ -221,7 +221,7 @@ namespace
       err = p_getaddrinfo (host.c_str(), portbuf, &hints, &ans);
       if (err != 0) {
         char buf[512];
-        snprintf (buf, sizeof(buf), _("Pan can't find the server at %s."), host.c_str());
+        snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), host.c_str());
         setme_err = buf;
         if (errno) {
           setme_err += " (";
@@ -259,7 +259,7 @@ namespace
     // create the giochannel...
     if (sockfd < 0) {
       char buf[512];
-      snprintf (buf, sizeof(buf), _("Pan can't connect to the server at %s."), host.c_str());
+      snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), host.c_str());
       setme_err = buf;
       if (errno) {
         setme_err += " (";
