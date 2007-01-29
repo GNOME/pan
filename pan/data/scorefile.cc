@@ -55,9 +55,11 @@ namespace
     if (v.empty())
       return 0;
 
+    const std::string tmp (v.str, v.len); // ensure zero termination for sscanf
+
     unsigned long mm, dd, yyyy;
-    if (((3 != sscanf (v.str, "%lu/%lu/%lu", &mm, &dd, &yyyy))
-      && (3 != sscanf (v.str, "%lu-%lu-%lu", &dd, &mm, &yyyy)))
+    if (((3 != sscanf (tmp.c_str(), "%lu/%lu/%lu", &mm, &dd, &yyyy))
+      && (3 != sscanf (tmp.c_str(), "%lu-%lu-%lu", &dd, &mm, &yyyy)))
       || (dd > 31)
       || (mm > 12)
       || (yyyy < 1900))
