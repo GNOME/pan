@@ -24,8 +24,8 @@
 #include <string>
 #include <vector>
 extern "C" {
-  #include <sys/types.h> // for umask
-  #include <sys/stat.h> // for umask
+  #include <sys/types.h> // for chmod
+  #include <sys/stat.h> // for chmod
   #include <glib.h>
   #include <glib/gi18n.h>
 }
@@ -367,11 +367,11 @@ ProfilesImpl :: add_profile (const std::string& profile_name, const Profile& pro
 void
 ProfilesImpl :: save () const
 {
-  const mode_t old_mask (umask (0177));
-  std::ofstream out (_data_io.get_posting_name().c_str());
-  umask (old_mask);
+  const std::string f (_data_io.get_posting_name());
+  std::ofstream out (f.c_str());
   serialize (out);
   out.close ();
+  ::chmod (f.c_str(), 0600);
 }
 
 ProfilesImpl :: ~ProfilesImpl ()

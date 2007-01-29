@@ -327,9 +327,9 @@ namespace
 
 GUI :: ~GUI ()
 {
-  const mode_t old_mask (umask (0177));
-  gtk_accel_map_save (get_accel_filename().c_str());
-  umask (old_mask);
+  const std::string accel_filename (get_accel_filename());
+  gtk_accel_map_save (accel_filename.c_str());
+  chmod (accel_filename.c_str(), 0600);
 
   if (hpane)
     _prefs.set_int ("main-window-hpane-position", gtk_paned_get_position(GTK_PANED(hpane)));

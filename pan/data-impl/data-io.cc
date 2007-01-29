@@ -176,10 +176,8 @@ namespace
   std::ostream* get_ostream (const std::string filename)
   {
     const std::string tmp (filename + ".tmp");
-    const mode_t old_mask (umask (0177));
     std::ofstream * o (new std::ofstream (
       tmp.c_str(), std::ios_base::out|std::ios_base::binary));
-    umask (old_mask);
 
     if (!o->good())
       Log::add_err_va (_("Unable to save \"%s\" %s"), filename.c_str(), "");
@@ -202,6 +200,7 @@ namespace
     if (ok) {
       ::remove (filename.c_str());
       ::rename (tmpfile.c_str(), filename.c_str());
+      ::chmod (filename.c_str(), 0600);
     } else {
       Log::add_err_va (_("Unable to save \"%s\" %s"), filename.c_str(), file::pan_strerror(my_errno));
       ::remove (tmpfile.c_str());

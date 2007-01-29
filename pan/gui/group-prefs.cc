@@ -19,8 +19,8 @@
 
 extern "C" {
   #include <config.h>
-  #include <sys/types.h> // umask
-  #include <sys/stat.h> // umask
+  #include <sys/types.h> // chmod
+  #include <sys/stat.h> // chmod
 }
 #include <iostream>
 #include <fstream>
@@ -116,10 +116,7 @@ GroupPrefs :: ~GroupPrefs ()
 void
 GroupPrefs :: save () const
 {
-  const mode_t old_mask (umask (0177));
   std::ofstream out (_filename.c_str());
-  umask (old_mask);
-
   out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
   foreach_const (group_prefs_t, _prefs, it) {
     out << "<group name=\"" << it->first << "\">\n";
@@ -129,6 +126,7 @@ GroupPrefs :: save () const
     out << "</group>\n";
   }
   out.close ();
+  chmod (_filename.c_str(), 0600);
 }
 
 namespace
