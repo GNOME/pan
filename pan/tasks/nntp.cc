@@ -219,10 +219,13 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
       case ERROR_CMD_NOT_UNDERSTOOD:
       case ERROR_CMD_NOT_SUPPORTED:
       case NO_PERMISSION: {
+         std::string cmd (_previous_command);
+         if (cmd.size()>=2 && cmd[cmd.size()-1]=='\n' && cmd[cmd.size()-2]=='\r')
+           cmd.resize (cmd.size()-2);
          std::string host;
          _socket->get_host (host);
          Log::add_err_va (_("Sending \"%s\" to %s returned an error: %s"),
-                          _previous_command.c_str(),
+                          cmd.c_str(),
                           host.c_str(),
                           line.to_string().c_str());
          state = CMD_FAIL;
@@ -240,6 +243,9 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
          break;
 
       default: {
+         std::string cmd (_previous_command);
+         if (cmd.size()>=2 && cmd[cmd.size()-1]=='\n' && cmd[cmd.size()-2]=='\r')
+           cmd.resize (cmd.size()-2);
          std::string host;
          _socket->get_host (host);
          Log::add_err_va (_("Sending \"%s\" to %s returned an unrecognized response: \"%s\""),
