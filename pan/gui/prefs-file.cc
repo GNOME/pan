@@ -22,6 +22,8 @@
 #include <fstream>
 #include <string>
 extern "C" {
+  #include <sys/types.h> // for umask
+  #include <sys/stat.h> // for umask
   #include <glib.h>
 }
 #include "prefs-file.h"
@@ -55,7 +57,9 @@ PrefsFile :: save () const
 {
   std::string s;
   to_string (0, s);
+  const mode_t old_mask (umask (0177));
   std::ofstream out (_filename.c_str());
+  umask (old_mask);
   out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
       << "<preferences>\n"
       << s

@@ -17,7 +17,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <config.h>
+extern "C" {
+  #include <config.h>
+  #include <sys/types.h> // umask
+  #include <sys/stat.h> // umask
+}
 #include <iostream>
 #include <fstream>
 #include <pan/general/foreach.h>
@@ -112,7 +116,10 @@ GroupPrefs :: ~GroupPrefs ()
 void
 GroupPrefs :: save () const
 {
+  const mode_t old_mask (umask (0177));
   std::ofstream out (_filename.c_str());
+  umask (old_mask);
+
   out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
   foreach_const (group_prefs_t, _prefs, it) {
     out << "<group name=\"" << it->first << "\">\n";

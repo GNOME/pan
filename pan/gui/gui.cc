@@ -327,7 +327,9 @@ namespace
 
 GUI :: ~GUI ()
 {
+  const mode_t old_mask (umask (0177));
   gtk_accel_map_save (get_accel_filename().c_str());
+  umask (old_mask);
 
   if (hpane)
     _prefs.set_int ("main-window-hpane-position", gtk_paned_get_position(GTK_PANED(hpane)));

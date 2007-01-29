@@ -18,13 +18,15 @@
  */
 
 #include <config.h>
-#include <errno.h>
+#include <cerrno>
 #include <fstream>
 #include <map>
 #include <vector>
 #include <string>
 #include <cmath>
 extern "C" {
+  #include <sys/types.h> // for umask
+  #include <sys/stat.h> // for umask
   #include <glib/gi18n.h>
   #include <glib/gmessages.h> // for g_assert
 }
@@ -967,7 +969,9 @@ DataImpl :: add_score (const StringView           & section_wildmat,
     const std::string str (_scorefile.build_score_string (
       section_wildmat, score_value, score_assign_flag, lifespan_days,
       all_items_must_be_true, items, item_count));
+    const mode_t old_mask (umask (0177));
     std::ofstream o (filename.c_str(), std::ofstream::app|std::ofstream::out);
+    umask (old_mask);
     o << '\n' << str << '\n';
     o.close ();
   }
@@ -998,7 +1002,9 @@ DataImpl :: comment_out_scorefile_line (const StringView    & filename,
   in.close ();
 
   // ..and back out again
+  const mode_t old_mask (umask (0177));
   std::ofstream o (filename.to_string().c_str(), std::ofstream::trunc|std::ofstream::out);
+  umask (old_mask);
   o << buf;
   o.close ();
 
