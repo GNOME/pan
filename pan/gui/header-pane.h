@@ -212,7 +212,7 @@ namespace pan
           // lazy instantation... it's expensive and user might never sort by this key
           char* get_collated_author () const {
             if (!collated_author)
-                 collated_author = do_collate (article->author.to_view());
+                 collated_author = do_collate (short_author.to_view());
             return collated_author;
           }
 
