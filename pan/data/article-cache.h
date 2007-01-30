@@ -64,7 +64,7 @@ namespace pan
       void add (const Quark& message_id, const StringView& article);
       void reserve (const mid_sequence_t& mids);
       void release (const mid_sequence_t& mids);
-      void expire_to_size ();
+      void resize ();
       void clear ();
 
       GMimeMessage* get_message (const mid_sequence_t&);
@@ -107,7 +107,7 @@ namespace pan
 
       std::string _path;
       size_t _max_megs;
-      unsigned long _current_bytes;
+      uint64_t _current_bytes;
 
       typedef std::set<Listener*> listeners_t;
       listeners_t _listeners;
@@ -115,7 +115,7 @@ namespace pan
       void fire_added (const Quark& mid);
       void fire_removed (const quarks_t& mid);
 
-      void expire_to_size (size_t max_bytes);
+      void resize (uint64_t max_bytes);
 
       char* get_filename (char* buf, int buflen, const Quark& mid) const;
       GMimeStream* get_message_file_stream (const Quark& mid) const;

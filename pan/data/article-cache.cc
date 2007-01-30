@@ -256,7 +256,7 @@ ArticleCache :: add (const Quark& message_id, const StringView& article)
       fire_added (message_id);
 
       _current_bytes += info._size;
-      expire_to_size ();
+      resize ();
     }
   }
 }
@@ -285,23 +285,23 @@ ArticleCache :: release (const mid_sequence_t& mids)
 ***/
 
 void
-ArticleCache :: expire_to_size ()
+ArticleCache :: resize ()
 {
   // let's shrink it to 80% of the maximum size
   const double buffer_zone (0.8);
-  size_t max_bytes (_max_megs * 1024 * 1024);
-  max_bytes = (size_t) ((double)max_bytes * buffer_zone);
-  expire_to_size (max_bytes);
+  uint64_t max_bytes (_max_megs * 1024 * 1024);
+  max_bytes = (uint64_t) ((double)max_bytes * buffer_zone);
+  resize (max_bytes);
 }
 
 void
 ArticleCache :: clear ()
 {
-  expire_to_size (0);
+  resize (0);
 }
 
 void
-ArticleCache :: expire_to_size (size_t max_bytes)
+ArticleCache :: resize (uint64_t max_bytes)
 {
   quarks_t removed;
   if (_current_bytes > max_bytes)
