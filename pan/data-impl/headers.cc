@@ -796,6 +796,7 @@ DataImpl :: save_headers (DataIO                       & data_io,
 
     success = !out->fail ();
     data_io.write_done (out);
+    save_group_xovers (data_io);
   }
 
   return success;
