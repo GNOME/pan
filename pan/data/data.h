@@ -267,6 +267,8 @@ namespace pan
         std::string description;
         /** y, n, or m for posting, no posting, moderated */
         char permission;
+
+        NewGroup(): permission('?') {}
       };
 
       /**

@@ -79,7 +79,7 @@ void
 TaskGroups :: on_nntp_line (NNTP               * nntp,
                             const StringView   & line)
 {
-  char permission ('?');
+  char permission ('y');
   std::string name_str;
   std::string desc_str;
 
@@ -110,10 +110,12 @@ TaskGroups :: on_nntp_line (NNTP               * nntp,
   if (!name.empty()) {
     const Quark name_quark (name);
     Data::NewGroup& ng (_new_groups[name_quark]);
-    ng.group = name_quark;
-    ng.description.assign (desc.str, desc.len);
-    if (permission != '?')
-      ng.permission = permission;
+    if (ng.group.empty())
+        ng.group = name_quark;
+    if (ng.description.empty())
+        ng.description.assign (desc.str, desc.len);
+    if (ng.permission == '?')
+        ng.permission = permission;
   }
 
   if (!(++_group_count % 100ul)) {
