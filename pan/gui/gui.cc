@@ -1232,8 +1232,28 @@ namespace
       w = NULL;
     return w;
   }
+
+  gboolean grab_focus_idle (gpointer w)
+  {
+    gtk_widget_grab_focus (GTK_WIDGET(w));
+    return false;
+  }
 }
 
+void
+GUI :: notebook_page_switched_cb (GtkNotebook * notebook, GtkNotebookPage * page, gint page_num, gpointer user_data)
+{
+  GUI * gui = static_cast<GUI*>(user_data);
+  GtkWidget * w;
+  switch (page_num) {
+    case 0: w = gui->_group_pane->get_default_focus_widget(); break;
+    case 1: w = gui->_header_pane->get_default_focus_widget(); break;
+    case 2: w = gui->_body_pane->get_default_focus_widget(); break;
+    default: g_assert (0 && "invalid page reached!"); break;
+  }
+  g_idle_add (grab_focus_idle, w);
+}
+ 
 void GUI :: do_tabbed_layout (bool tabbed)
 {
   if (hpane) {
@@ -1271,6 +1291,7 @@ void GUI :: do_tabbed_layout (bool tabbed)
     gtk_notebook_append_page (n, header_w, gtk_label_new_with_mnemonic (_("_2. Header Pane")));
     gtk_notebook_append_page (n, body_w, gtk_label_new_with_mnemonic (_("_3. Body Pane")));
     gtk_notebook_set_tab_border (n, PAD_SMALL);
+    g_signal_connect (n, "switch-page", G_CALLBACK(notebook_page_switched_cb), this);
   }
   else
   {

@@ -46,6 +46,7 @@ namespace pan
       BodyPane (Data&, ArticleCache&, Prefs&);
       ~BodyPane ();
       GtkWidget* root () { return _root; }
+      GtkWidget* get_default_focus_widget() { return _text; }
 
     private:
       virtual void on_prefs_flag_changed (const StringView& key, bool value);

@@ -52,6 +52,7 @@ namespace pan
       GroupPane (ActionManager&, Data&, Prefs&);
       ~GroupPane ();
       GtkWidget* root () { return _root; }
+      GtkWidget* get_default_focus_widget() { return _tree_view; }
       GtkWidget* create_filter_entry ();
       void set_name_collapse (bool);
       Quark get_selection () const;

@@ -104,6 +104,7 @@ namespace pan
 
     public:
       GtkWidget* root () { return _root; }
+      GtkWidget* get_default_focus_widget() { return _tree_view; }
       GtkWidget* create_filter_entry ();
       const Article* get_first_selected_article () const;
       std::set<const Article*> get_full_selection () const;

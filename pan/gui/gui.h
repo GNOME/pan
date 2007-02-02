@@ -221,6 +221,8 @@ namespace pan
 
       void score_add (int);
 
+      static void notebook_page_switched_cb (GtkNotebook*, GtkNotebookPage*, gint, gpointer);
+
     private:
       static void add_widget (GtkUIManager*, GtkWidget*, gpointer);
       static void server_list_dialog_destroyed_cb (GtkWidget*, gpointer);
