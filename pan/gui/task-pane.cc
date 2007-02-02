@@ -90,32 +90,31 @@ namespace
   }
 }
 
-void TaskPane :: up_clicked_cb (GtkToolButton* b, TaskPane* pane)
+void TaskPane :: up_clicked_cb (GtkButton* b, TaskPane* pane)
 {
   pane->_queue.move_up (pane->get_selected_tasks());
 }
-void TaskPane :: down_clicked_cb (GtkToolButton* b, TaskPane* pane)
+void TaskPane :: down_clicked_cb (GtkButton* b, TaskPane* pane)
 {
   pane->_queue.move_down (pane->get_selected_tasks());
 }
-void TaskPane :: top_clicked_cb (GtkToolButton* b, TaskPane* pane)
+void TaskPane :: top_clicked_cb (GtkButton* b, TaskPane* pane)
 {
   pane->_queue.move_top (pane->get_selected_tasks());
 }
-void TaskPane :: bottom_clicked_cb (GtkToolButton* b, TaskPane* pane)
+void TaskPane :: bottom_clicked_cb (GtkButton* b, TaskPane* pane)
 {
   pane->_queue.move_bottom (pane->get_selected_tasks());
 }
-void TaskPane :: stop_clicked_cb (GtkToolButton* b, TaskPane* pane)
+void TaskPane :: stop_clicked_cb (GtkButton* b, TaskPane* pane)
 {
   pane->_queue.stop_tasks (pane->get_selected_tasks());
 }
-void TaskPane :: delete_clicked_cb (GtkToolButton* b, TaskPane* pane)
+void TaskPane :: delete_clicked_cb (GtkButton* b, TaskPane* pane)
 {
   pane->_queue.remove_tasks (pane->get_selected_tasks());
 }
-
-void TaskPane :: restart_clicked_cb (GtkToolButton* b, TaskPane* pane)
+void TaskPane :: restart_clicked_cb (GtkButton* b, TaskPane* pane)
 {
   pane->_queue.restart_tasks (pane->get_selected_tasks());
 }
@@ -408,67 +407,57 @@ TaskPane :: ~TaskPane ()
   g_source_remove (_update_timeout_tag);
 }
 
+namespace
+{
+  GtkWidget * add_button (GtkWidget   * box,
+                                      const gchar * stock_id,
+                                      GCallback     callback,
+                                      gpointer      user_data)
+  {
+    GtkWidget * w = gtk_button_new_from_stock (stock_id);
+    gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
+    if (callback)
+      g_signal_connect (w, "clicked", callback, user_data);
+    gtk_box_pack_start (GTK_BOX(box), w, false, false, 0);
+    return w;
+  }
+}
+
 TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
 {
   _root = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
+  GtkWidget * w;
   GtkTooltips * ttips = gtk_tooltips_new ();
   g_object_ref_sink_pan (G_OBJECT(ttips));
   g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, ttips);
 
-  GtkWidget * vbox = gtk_vbox_new (false, PAD);
+  GtkWidget * vbox = gtk_vbox_new (false, 0);
 
-  GtkWidget * toolbar = gtk_toolbar_new ();
+    GtkWidget * buttons = gtk_hbox_new (false, PAD_SMALL);
+    add_button (buttons, GTK_STOCK_GO_UP, G_CALLBACK(up_clicked_cb), this);
+    add_button (buttons, GTK_STOCK_GOTO_TOP, G_CALLBACK(top_clicked_cb), this);
+    gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+    add_button (buttons, GTK_STOCK_GO_DOWN, G_CALLBACK(down_clicked_cb), this);
+    add_button (buttons, GTK_STOCK_GOTO_BOTTOM, G_CALLBACK(bottom_clicked_cb), this);
+    gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+    w = add_button (buttons, GTK_STOCK_REDO, G_CALLBACK(restart_clicked_cb), this);
+    gtk_tooltips_set_tip (ttips, w, _("Restart Tasks"), NULL);
+    w = add_button (buttons, GTK_STOCK_STOP, G_CALLBACK(stop_clicked_cb), this);
+    gtk_tooltips_set_tip (ttips, w, _("Stop Tasks"), NULL);
+    w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
+    gtk_tooltips_set_tip (ttips, w, _("Delete Tasks"), NULL);
+    gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+    w = add_button (buttons, GTK_STOCK_CLOSE, 0, 0);
+    g_signal_connect_swapped (w, "clicked", G_CALLBACK(gtk_widget_destroy), _root);
+    gtk_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new()); // eat h space
 
-    GtkToolItem * item = gtk_tool_button_new_from_stock (GTK_STOCK_GO_UP);
-    g_signal_connect (item, "clicked", G_CALLBACK(up_clicked_cb), this);
-    gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, -1);
-
-    item = gtk_tool_button_new_from_stock (GTK_STOCK_GOTO_TOP);
-    g_signal_connect (item, "clicked", G_CALLBACK(top_clicked_cb), this);
-    gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, -1);
-
-    item = gtk_separator_tool_item_new ();
-    gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, -1);
-
-    item = gtk_tool_button_new_from_stock (GTK_STOCK_GO_DOWN);
-    g_signal_connect (item, "clicked", G_CALLBACK(down_clicked_cb), this);
-    gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, -1);
-
-    item = gtk_tool_button_new_from_stock (GTK_STOCK_GOTO_BOTTOM);
-    g_signal_connect (item, "clicked", G_CALLBACK(bottom_clicked_cb), this);
-    gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, -1);
-
-    item = gtk_separator_tool_item_new ();
-    gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, -1);
-
-    item = gtk_tool_button_new_from_stock (GTK_STOCK_REDO);
-    gtk_tool_item_set_tooltip (item, ttips, _("Restart Tasks"), 0);
-    g_signal_connect (item, "clicked", G_CALLBACK(restart_clicked_cb), this);
-    gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, -1);
-
-    item = gtk_tool_button_new_from_stock (GTK_STOCK_STOP);
-    gtk_tool_item_set_tooltip (item, ttips, _("Stop Tasks"), 0);
-    g_signal_connect (item, "clicked", G_CALLBACK(stop_clicked_cb), this);
-    gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, -1);
-
-    item = gtk_tool_button_new_from_stock (GTK_STOCK_DELETE);
-    gtk_tool_item_set_tooltip (item, ttips, _("Delete Tasks"), 0);
-    g_signal_connect (item, "clicked", G_CALLBACK(delete_clicked_cb), this);
-    gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, -1);
-
-    item = gtk_separator_tool_item_new ();
-    gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, -1);
-
-    item = gtk_tool_button_new_from_stock (GTK_STOCK_CLOSE);
-    g_signal_connect_swapped (item, "clicked", G_CALLBACK(gtk_widget_destroy), _root);
-    gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, -1);
-
-  gtk_box_pack_start (GTK_BOX(vbox), toolbar, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
+  gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
 
   // statusbar
   GtkWidget * hbox = gtk_hbox_new (false, PAD);
-  GtkWidget * w = _status_label = gtk_label_new (0);
+  w = _status_label = gtk_label_new (0);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
   gtk_box_pack_start (GTK_BOX(vbox), hbox, false, false, PAD);
 

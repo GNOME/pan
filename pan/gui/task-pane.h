@@ -70,13 +70,13 @@ namespace pan
       typedef std::vector<Task*> task_list;
       task_list get_selected_tasks () const;
       static void get_selected_tasks_foreach (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer);
-      static void up_clicked_cb      (GtkToolButton*, TaskPane*);
-      static void down_clicked_cb    (GtkToolButton*, TaskPane*);
-      static void top_clicked_cb     (GtkToolButton*, TaskPane*);
-      static void bottom_clicked_cb  (GtkToolButton*, TaskPane*);
-      static void stop_clicked_cb    (GtkToolButton*, TaskPane*);
-      static void delete_clicked_cb  (GtkToolButton*, TaskPane*);
-      static void restart_clicked_cb (GtkToolButton*, TaskPane*);
+      static void up_clicked_cb      (GtkButton*, TaskPane*);
+      static void down_clicked_cb    (GtkButton*, TaskPane*);
+      static void top_clicked_cb     (GtkButton*, TaskPane*);
+      static void bottom_clicked_cb  (GtkButton*, TaskPane*);
+      static void stop_clicked_cb    (GtkButton*, TaskPane*);
+      static void delete_clicked_cb  (GtkButton*, TaskPane*);
+      static void restart_clicked_cb (GtkButton*, TaskPane*);
   };
 }
 
