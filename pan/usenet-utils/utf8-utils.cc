@@ -175,6 +175,7 @@ pan :: clean_utf8 (const StringView& in_arg)
   }
 
   out.append (in.str, in.len);
+  g_assert (g_utf8_validate (out.c_str(), out.size(), NULL));
   return out;
 }
 
@@ -183,16 +184,13 @@ pan :: header_to_utf8 (const StringView  & header,
                        const char        * fallback_charset1,
                        const char        * fallback_charset2)
 {
-  const bool is_encoded (header.strstr ("=?"));
-  if (!is_encoded)
-    return content_to_utf8 (header, fallback_charset1, fallback_charset2);
-  else {
-    std::string ret (content_to_utf8 (header, fallback_charset1, fallback_charset2));
-    char * decoded (g_mime_utils_8bit_header_decode ((const guchar*) ret.c_str()));
-    ret.assign(decoded);
+  std::string s = content_to_utf8 (header, fallback_charset1, fallback_charset2);
+  if (header.strstr ("=?")) {
+    char * decoded (g_mime_utils_8bit_header_decode ((const guchar*) s.c_str()));
+    s = clean_utf8 (decoded);
     g_free (decoded);
-    return ret;
   }
+  return s;
 }
 
 std::string
