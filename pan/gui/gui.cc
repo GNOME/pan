@@ -725,8 +725,8 @@ void GUI :: do_rot13_selected_text ()
 void GUI :: on_progress_finished (Progress & p, int status)
 {
   TaskArticle * ta = dynamic_cast<TaskArticle*>(&p);
-  if (status==OK && ta && ta->get_article().message_id == latest_read_article.message_id)
-    _body_pane->set_article (latest_read_article);
+  if (status==OK && ta)
+    _body_pane->set_article (ta->get_article());
 }
 
 void GUI :: do_read_selected_article ()
@@ -734,7 +734,6 @@ void GUI :: do_read_selected_article ()
   const Article* article (_header_pane->get_first_selected_article ());
   if (article)
   {
-    latest_read_article = *article;
     Task * t = new TaskArticle (_data, _data, *article, _cache, _data, this);
     _queue.add_task (t, Queue::TOP);
 

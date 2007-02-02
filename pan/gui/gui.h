@@ -169,7 +169,6 @@ namespace pan
       virtual void on_log_cleared () {}
 
     private: // Progress::Listener
-      Article latest_read_article;
       virtual void on_progress_finished (Progress&, int status);
 
     private:
