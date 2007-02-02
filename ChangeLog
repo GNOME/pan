@@ -18,8 +18,8 @@
  401449 sort-by-author doesn't work properly (Charles Hill, Jason Mack)
  402200 support large article cache sizes (Craig Ruff)
  400814 unable to mark some groups as read (Christophe)
- 403066 getting new groups, conditional jump depends on uninitialised value (Charles)
-
+ 403066 getting new groups, conditional jump on uninitialised value (Charles)
+ 402704 queue size too small in task-pane.cc (Shana)
 
 0.121 "Dortmunder"
  390784 crash when dragging over URL (Paul Williamson)
@@ -27,10 +27,10 @@
  398074 free memory read on socket error
  396523 fix minor compiler warnings
  395475 make the save dialog simpler and more consistent with other Gnome apps
- 393912 'cache article' processes selected articles in random order (Per Hedeland)
+ 393912 'cache article' downloads articles in random order (Per Hedeland)
  395069 faster thread filtering
  397409 remove unneeded temporary objects from Quark::to_view()
- 390735 prompt for save path if none specified when adding a nzb via command-line.
+ 390735 prompt for path if none specified when adding a nzb via command-line.
  380429 References: header gets lost when superseding an article.
  380902 Setting 'work offline' doesn't go offline if busy downloading
  350999 Switching header threading collapses threads, loses selection
@@ -38,7 +38,7 @@
  353453 position of a zoomed image should depend on where user clicked on image
  357631 watched threads filtering not persistent
  376759 request for task pane to show number and size of selected tasks
- 372013 use pan's error log, rather than g_message(), in connection worker threads
+ 372013 use pan's error log, not g_message(), in connection worker threads
  358925 download speeds aren't calculated accurately/correctly
  355805 add "mark group read before xover" to prefs dialog
  397348 new feature: preferences option to clear the article cache on exit

@@ -195,12 +195,12 @@ namespace
   static const unsigned long GIBI (1073741824ul);
 
   char*
-  render_bytes (unsigned long bytes)
+  render_bytes (guint64 bytes)
   {
     static char buf[128];
 
     if (bytes < KIBI)
-      g_snprintf (buf, sizeof(buf), "%lu B", bytes);
+      g_snprintf (buf, sizeof(buf), "%d B", (int)bytes);
     else if (bytes < MEBI)
       g_snprintf (buf, sizeof(buf), "%.0f KiB", (double)bytes/KIBI);
     else if (bytes < GIBI)
@@ -219,7 +219,7 @@ TaskPane :: update_status (const task_states_t& tasks)
   int queued_count (0);
   int stopped_count (0);
   int running_count (0);
-  unsigned long bytes (0);
+  guint64 bytes (0);
   foreach_const (tasks_t, tasks.tasks, it)
   {
     Task * task (*it);
