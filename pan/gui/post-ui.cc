@@ -1933,7 +1933,7 @@ PostUI :: PostUI (GtkWindow    * parent,
   // add the body text widget
   w = create_body_widget (_body_buf, _body_view, prefs);
   set_spellcheck_enabled (prefs.get_flag ("spellcheck-enabled", DEFAULT_SPELLCHECK_FLAG));
-  g_signal_connect (_body_buf, "insert-text", G_CALLBACK(text_was_inserted_cb), &_tm);
+  g_signal_connect_after (_body_buf, "insert-text", G_CALLBACK(text_was_inserted_cb), &_tm);
   gtk_box_pack_start (GTK_BOX(vbox), w, true, true, 0);
 
   set_message (message);
