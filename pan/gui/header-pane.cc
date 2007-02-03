@@ -585,6 +585,9 @@ HeaderPane :: set_group (const Quark& new_group)
     if (!_group.empty() && _prefs.get_flag ("mark-group-read-when-leaving-group", false))
       _data.mark_group_read (_group);
 
+    if (_atree)
+        _atree->remove_listener (this);
+
     if (_tree_store)
     {
       save_sort_order (_prefs, _tree_store);
@@ -595,12 +598,8 @@ HeaderPane :: set_group (const Quark& new_group)
 
     _group = new_group;
 
-    if (_atree)
-    {
-      _atree->remove_listener (this);
-      delete _atree;
-      _atree = 0;
-    }
+    delete _atree;
+    _atree = 0;
 
     if (!_group.empty())
     {
@@ -608,7 +607,6 @@ HeaderPane :: set_group (const Quark& new_group)
       _atree->add_listener (this);
 
       rebuild ();
-
 
       if (GTK_WIDGET_REALIZED(_tree_view))
         gtk_tree_view_scroll_to_point (GTK_TREE_VIEW(_tree_view), 0, 0);

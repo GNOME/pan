@@ -1203,17 +1203,15 @@ PanTreeStore :: remove_siblings (const rows_t& siblings,
 
   // remove the dead rows; re-index the live ones
   int pos (0);
-  rows_t keepers;
+  rows_t keepers, purged;
   keepers.reserve (parent->n_children());
   foreach_const (rows_t, parent->children, it) {
     Row * row (*it);
-    if (row->parent) {
+    if (!row->parent)
+      purged.push_back (row);
+    else {
       row->child_index = pos++;
       keepers.push_back (row);
-    } else if (delete_rows) {
-      FreeRowWalker walk (this);
-      GtkTreeIter iter (get_iter (row));
-      postfix_walk (walk, &iter);
     }
   }
   parent->children.swap (keepers);
@@ -1230,6 +1228,17 @@ PanTreeStore :: remove_siblings (const rows_t& siblings,
     GtkTreeIter pit;
     set_iter (&pit, parent);
     gtk_tree_model_row_has_child_toggled (model, path, &pit);
+  }
+
+  // clean up purged rows
+  if (delete_rows) {
+    foreach (rows_t, purged, it) {
+      Row * row (*it);
+      g_assert (row->child_index == -1);
+      FreeRowWalker walk (this);
+      GtkTreeIter iter (get_iter (row));
+      postfix_walk (walk, &iter);
+    }
   }
 
   gtk_tree_path_free (path);
