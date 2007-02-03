@@ -26,7 +26,7 @@ libpangui_a_SOURCES = \
  score-add-ui.cc \
  score-view-ui.cc \
  server-ui.cc \
- sexy-icon-entry.cc \
+ sexy-icon-entry.c \
  task-pane.cc \
  xface.c \
  url.cc
