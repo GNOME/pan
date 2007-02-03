@@ -47,7 +47,7 @@ namespace pan
       Listener * _listener;
       GString * _out_buf;
       GString * _in_buf;
-      std::string _partial_line;
+      std::string _partial_read;
       std::string _host;
       bool _io_performed;
 
@@ -55,10 +55,11 @@ namespace pan
       enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };
       void set_watch_mode (WatchMode mode);
       static gboolean gio_func (GIOChannel*, GIOCondition, gpointer);
+      gboolean gio_func (GIOChannel*, GIOCondition);
       static gboolean timeout_func (gpointer);
-      static gboolean read_later (gpointer);
-      bool do_read ();
-      bool do_write ();
+      enum DoResult { IO_ERR, IO_READ, IO_WRITE, IO_DONE };
+      DoResult do_read ();
+      DoResult do_write ();
 
     public:
 

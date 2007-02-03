@@ -224,7 +224,7 @@ Queue :: process_task (Task * task)
     debug ("stopped");
     // do nothing
   }
-  else if (state._health == FAIL)
+  else if (state._health == COMMAND_FAILED)
   {
     debug ("fail");
     // do nothing
@@ -265,7 +265,7 @@ Queue :: find_first_task_needing_server (const Quark& server)
   foreach (TaskSet, _tasks, it)
   {
     const Task::State& state ((*it)->get_state ());
-    if  ((state._health != FAIL)
+    if  ((state._health != COMMAND_FAILED)
       && (state._work == Task::NEED_NNTP)
       && (state._servers.count(server))
       && (!_stopped.count (*it))
@@ -530,7 +530,7 @@ Queue :: get_all_task_states (task_states_t& setme)
 }
 
 void
-Queue :: check_in (NNTP * nntp, bool is_ok)
+Queue :: check_in (NNTP * nntp, Health nntp_health)
 {
   Task * task (_nntp_to_task[nntp]);
 
@@ -539,10 +539,10 @@ Queue :: check_in (NNTP * nntp, bool is_ok)
   // returning the NNTP to the pool and checking it out again.
   const Task::State state (task->get_state ());
 
-  if (is_ok
+  if ((nntp_health != NETWORK_FAILED)
     && _is_online
-    && (state._health!=FAIL)
-    && (state._work==Task::NEED_NNTP)
+    && (state._health != COMMAND_FAILED)
+    && (state._work == Task::NEED_NNTP)
     && !_removing.count(task)
     && state._servers.count(nntp->_server)
     && find_first_task_needing_server(nntp->_server)==task)
@@ -563,7 +563,7 @@ Queue :: check_in (NNTP * nntp, bool is_ok)
     // return the nntp to the pool
     const Quark& servername (nntp->_server);
     NNTP_Pool& pool (get_pool (servername));
-    pool.check_in (nntp, is_ok);
+    pool.check_in (nntp, nntp_health);
 
     // what to do now with this task...
     process_task (task);

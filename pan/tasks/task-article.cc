@@ -191,7 +191,7 @@ TaskArticle :: use_nntp (NNTP * nntp)
     // maybe our needs-work list is out of date, so call update_work()
     // before giving the nntp back.
     update_work ();
-    check_in (nntp, true);
+    check_in (nntp, OK);
   }
   else
   {
@@ -253,11 +253,11 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
     ++_stats[nntp->_server];
   }
 
-  if (health == FAIL) // if server doesn't have that article...
+  if (health == COMMAND_FAILED) // if server doesn't have that article...
     it->xref.remove_server (nntp->_server);
 
   // if we got it or still have other options, we're okay
-  _state.set_health (health==FAIL && it->xref.empty() ? FAIL : OK);
+  _state.set_health (health==COMMAND_FAILED && it->xref.empty() ? COMMAND_FAILED : OK);
 
   if (health==OK)
     _needed.erase (it);
@@ -268,7 +268,7 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
   }
 
   update_work ();
-  check_in (nntp, health!=RETRY);
+  check_in (nntp, health);
 }
 
 namespace

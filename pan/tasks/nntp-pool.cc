@@ -113,9 +113,9 @@ NNTP_Pool :: check_out ()
 }
 
 void
-NNTP_Pool :: check_in (NNTP * nntp, bool is_ok)
+NNTP_Pool :: check_in (NNTP * nntp, Health health)
 {
-  debug ("nntp " << nntp << " is being checked in, is_ok is " << is_ok);
+  debug ("nntp " << nntp << " is being checked in, health is " << health);
 
   // find this nntp in _pool_items
   pool_items_t::iterator it;
@@ -126,15 +126,15 @@ NNTP_Pool :: check_in (NNTP * nntp, bool is_ok)
   // process the nntp if we have a match
   if (it != _pool_items.end()) {
     --_active_count;
-    if (is_ok) {
-      it->is_checked_in = true;
-      it->last_active_time = time (NULL);
-      fire_pool_has_nntp_available ();
-    } else {
+    if (health == NETWORK_FAILED) {
       delete it->nntp->_socket;
       delete it->nntp;
       _pool_items.erase (it);
       allow_new_connections (); // to make up for this one
+    } else {
+      it->is_checked_in = true;
+      it->last_active_time = time (NULL);
+      fire_pool_has_nntp_available ();
     }
   }
 }
@@ -178,7 +178,7 @@ NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response
 {
    debug ("NNTP_Pool: on_nntp_done()");
 
-   if (health == FAIL) // news server isn't accepting our connection!
+   if (health == COMMAND_FAILED) // news server isn't accepting our connection!
    {
      std::string s (response.str, response.len);
      foreach (std::string, s, it) *it = tolower (*it);
@@ -284,13 +284,13 @@ namespace
   {
     private:
       NNTP::Source * source;
-      const bool force_not_ok;
+      const bool hang_up;
 
     public:
-      NoopListener (NNTP::Source * s, bool b): source(s), force_not_ok(b) {}
+      NoopListener (NNTP::Source * s, bool b): source(s), hang_up(b) {}
       virtual ~NoopListener() {}
       virtual void on_nntp_done  (NNTP * nntp, Health health, const StringView& response) {
-        source->check_in (nntp, (health==OK) && !force_not_ok);
+        source->check_in (nntp, hang_up ? NETWORK_FAILED : health);
         delete this;
       }
   };

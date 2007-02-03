@@ -350,125 +350,109 @@ GIOChannelSocket :: get_host (std::string& setme) const
 void
 GIOChannelSocket :: write_command (const StringView& command, Listener * l)
 {
-   _listener = l;
+  _partial_read.clear ();
+  _listener = l;
 
-   g_string_truncate (_out_buf, 0);
-   if (!command.empty())
-      g_string_append_len (_out_buf, command.str, command.len);
+  g_string_truncate (_out_buf, 0);
+  if (!command.empty())
+    g_string_append_len (_out_buf, command.str, command.len);
 
-   set_watch_mode (WRITE_NOW);
-};
+  set_watch_mode (WRITE_NOW);
+}
 
 /***
 ****
 ***/
 
-bool
+GIOChannelSocket :: DoResult
 GIOChannelSocket :: do_read ()
 {
-   GError * err (0);
-   GString * g (_in_buf);
+  g_assert (!_out_buf->len);
 
-   bool more (true);
-   while (more && !_abort_flag)
-   {
-      _io_performed = true;
-      const GIOStatus status (g_io_channel_read_line_string (_channel, g, NULL, &err));
+  GError * err (0);
+  GString * g (_in_buf);
 
-      if (status == G_IO_STATUS_NORMAL)
-      {
-         if (!_partial_line.empty()) {
-           g_string_prepend_len (g, _partial_line.c_str(), _partial_line.size());
-           _partial_line.clear ();
-         }
+  bool more (true);
+  while (more && !_abort_flag)
+  {
+    _io_performed = true;
+    const GIOStatus status (g_io_channel_read_line_string (_channel, g, NULL, &err));
 
-         debug ("read [" << g->str << "]");
-         increment_xfer_byte_count (g->len);
-         // strip off \r\n
-         if (g->len>=2 && g->str[g->len-2]=='\r' && g->str[g->len-1]=='\n')
-            g_string_truncate (g, g->len-2);
-         more = _listener->on_socket_response (this, StringView (g->str, g->len));
+    if (status == G_IO_STATUS_NORMAL)
+    {
+      g_string_prepend_len (g, _partial_read.c_str(), _partial_read.size());
+      _partial_read.clear ();
+
+      debug ("read [" << g->str << "]");
+      increment_xfer_byte_count (g->len);
+      if (g_str_has_suffix (g->str, "\r\n"))
+        g_string_truncate (g, g->len-2);
+      more = _listener->on_socket_response (this, StringView (g->str, g->len));
+    }
+    else if (status == G_IO_STATUS_AGAIN)
+    {
+      // see if we've got a partial line buffered up
+      if (_channel->read_buf) {
+        _partial_read.append (_channel->read_buf->str, _channel->read_buf->len);
+        g_string_set_size (_channel->read_buf, 0);
       }
-      else if (status == G_IO_STATUS_AGAIN)
-      {
-         // see if we've got a partial line buffered up
-         if (_channel->read_buf && _channel->read_buf->len) {
-           _partial_line.append (_channel->read_buf->str, _channel->read_buf->len);
-           g_string_set_size (_channel->read_buf, 0);
-         }
-         // more to come
-         return true;
-      }
-      else
-      {
-         const char * msg (err ? err->message : _("Unknown Error"));
-         Log::add_err_va (_("Error reading from %s: %s"), _host.c_str(), msg);
-         if (err != NULL)
-            g_clear_error (&err);
-         _listener->on_socket_error (this);
-         more = false;
-      }
-   }
+      return IO_READ;
+    }
+    else
+    {
+      const char * msg (err ? err->message : _("Unknown Error"));
+      Log::add_err_va (_("Error reading from %s: %s"), _host.c_str(), msg);
+      if (err != NULL)
+        g_clear_error (&err);
+      return IO_ERR;
+    }
+  }
 
-   // if more is false, 'this' may have been deleted by the listeners...
-   // so don't touch _abort_flag or _listener unless we're clean here.
-   if (more && _abort_flag)
-      _listener->on_socket_abort (this);
-
-   return false;
+  return IO_DONE;
 }
  
 
-bool
+GIOChannelSocket :: DoResult
 GIOChannelSocket :: do_write ()
 {
-   bool finished;
+  g_assert (_partial_read.empty());
 
-   if (_abort_flag)
-   {
-      finished = true;
-      _listener->on_socket_abort (this);
-   }
-   else
-   {
-      GString * g = _out_buf;
-#if 0 // #ifdef DEBUG_SOCKET_IO
-      // -2 to trim out trailing \r\n
-      std::cerr << LINE_ID << " channel " << _channel << " writing [" << StringView(g->str,g->len>=2?g->len-2:g->len) << "]" << std::endl;
+  GString * g = _out_buf;
+
+#if 0
+  // #ifdef DEBUG_SOCKET_IO
+  // -2 to trim out trailing \r\n
+  std::cerr << LINE_ID << " channel " << _channel
+            << " writing ["<<StringView(g->str,g->len>=2?g->len-2:g->len)<< "]\n";
 #endif
 
-      _io_performed = true;
-      GError * err = 0;
-      gsize out = 0;
-      GIOStatus status = g->len
-         ? g_io_channel_write_chars (_channel, g->str, g->len, &out, &err)
-         : G_IO_STATUS_NORMAL;
-      debug ("socket " << this << " channel " << _channel << " maybe wrote [" << g->str << "]; status was " << status);
+  _io_performed = true;
+  GError * err = 0;
+  gsize out = 0;
+  GIOStatus status = g->len
+    ? g_io_channel_write_chars (_channel, g->str, g->len, &out, &err)
+    : G_IO_STATUS_NORMAL;
+  debug ("socket " << this << " channel " << _channel
+                   << " maybe wrote [" << g->str << "]; status was " << status);
 
-      if (status == G_IO_STATUS_NORMAL)
-         status = g_io_channel_flush (_channel, &err);
+  if (status == G_IO_STATUS_NORMAL)
+    status = g_io_channel_flush (_channel, &err);
 
-      if (err) {
-         Log::add_err (err->message);
-         g_clear_error (&err);
-         _listener->on_socket_error (this);
-         return false;
-      }
+  if (err) {
+    Log::add_err (err->message);
+    g_clear_error (&err);
+    return IO_ERR;
+  }
 
-      if (out > 0) {
-         increment_xfer_byte_count (out);
-         g_string_erase (g, 0, out);
-      }
+  if (out > 0) {
+    increment_xfer_byte_count (out);
+    g_string_erase (g, 0, out);
+  }
 
-      finished = (!g->len) && (status==G_IO_STATUS_NORMAL);
-      if (finished)
-         set_watch_mode (_listener ? READ_NOW : IGNORE_NOW);
-
-      if (finished)
-         debug ("channel " << _channel << " done writing");
-   }
-
-   return !finished;
+  const bool finished = (!g->len) && (status==G_IO_STATUS_NORMAL);
+  if (!finished) return IO_WRITE; // not done writing.
+  if (_listener) return IO_READ; // listener wants to read the server's response
+  return IO_DONE; // done writing and not listening to response.
 }
 
 gboolean
@@ -489,43 +473,39 @@ GIOChannelSocket :: timeout_func (gpointer sock_gp)
 }
 
 gboolean
-GIOChannelSocket :: gio_func (GIOChannel * channel, GIOCondition cond, gpointer sock_gp)
+GIOChannelSocket :: gio_func (GIOChannel   * channel,
+                              GIOCondition   cond,
+                              gpointer       sock_gp)
 {
-   bool gimmie_more;
-   GIOChannelSocket * self = static_cast<GIOChannelSocket*>(sock_gp);
-   debug ("gio_func: socket " << self << ", channel " << channel << ", cond " << cond);
-
-   if (self->_abort_flag)
-   {
-      self->set_watch_mode (IGNORE_NOW);
-      self->_listener->on_socket_abort (self);
-      gimmie_more = false;
-   }
-   else if (!(cond & (G_IO_IN | G_IO_OUT)))
-   {
-      debug ("socket " << self << " got err or hup; ignoring");
-      self->set_watch_mode (IGNORE_NOW);
-      self->_listener->on_socket_error (self);
-      gimmie_more = false;
-   }
-   else // G_IO_IN or G_IO_OUT
-   {
-      gimmie_more = (cond & G_IO_IN) ? self->do_read ()
-                                     : self->do_write ();
-      if (!gimmie_more)
-        remove_source (self->_tag_timeout);
-   }
-
-   return gimmie_more;
+  return static_cast<GIOChannelSocket*>(sock_gp)->gio_func (channel, cond);
 }
 
 gboolean
-GIOChannelSocket :: read_later (gpointer self_gp)
+GIOChannelSocket :: gio_func (GIOChannel   * channel,
+                              GIOCondition   cond)
 {
-   GIOChannelSocket * self = static_cast<GIOChannelSocket*>(self_gp);
-   debug ("socket " << self << " done sleeping; setting watch mode to read");
-   self->set_watch_mode (READ_NOW);
-   return false;
+  debug ("gio_func: sock " << this << ", channel " << channel << ", cond " << cond);
+
+  set_watch_mode (IGNORE_NOW);
+
+  if (_abort_flag)
+  {
+    _listener->on_socket_abort (this);
+  }
+  else if (!(cond & (G_IO_IN | G_IO_OUT)))
+  {
+    _listener->on_socket_error (this);
+  }
+  else // G_IO_IN or G_IO_OUT
+  {
+    const DoResult result = (cond & G_IO_IN) ? do_read () : do_write ();
+         if (_abort_flag)        _listener->on_socket_abort (this);
+    else if (result == IO_ERR)   _listener->on_socket_error (this);
+    else if (result == IO_READ)  set_watch_mode (READ_NOW);
+    else if (result == IO_WRITE) set_watch_mode (WRITE_NOW);
+  }
+
+  return false; // set_watch_now(IGNORE) cleared the tag that called this func
 }
 
 namespace
@@ -536,7 +516,6 @@ namespace
 void
 GIOChannelSocket :: set_watch_mode (WatchMode mode)
 {
-  _partial_line.clear ();
   debug ("socket " << this << " calling set_watch_mode " << mode << "; _channel is " << _channel);
   remove_source (_tag_watch);
   remove_source (_tag_timeout);

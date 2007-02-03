@@ -270,7 +270,7 @@ namespace pan
       struct Source {
         Source () {}
         virtual ~Source () {}
-        virtual void check_in (NNTP*, bool is_ok) = 0;
+        virtual void check_in (NNTP*, Health health) = 0;
       };
   };
 }

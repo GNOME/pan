@@ -134,9 +134,7 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
 {
   debug ("groups task got an on_nntp_done() from " << nntp->_server);
 
-  const bool is_ok (health == OK);
-
-  if (health == RETRY)
+  if (health == NETWORK_FAILED)
   {
     _state.set_need_nntp (_servername);
   }
@@ -162,5 +160,5 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
     }
   }
 
-  check_in (nntp, is_ok);
+  check_in (nntp, health);
 }

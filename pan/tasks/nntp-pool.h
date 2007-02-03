@@ -48,7 +48,7 @@ namespace pan
 
       virtual ~NNTP_Pool ();
 
-      virtual void check_in (NNTP*, bool is_ok);
+      virtual void check_in (NNTP*, Health);
       NNTP* check_out ();
       void abort_tasks ();
       void idle_upkeep ();

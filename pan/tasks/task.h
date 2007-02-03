@@ -115,7 +115,7 @@ namespace pan
 
          virtual void use_nntp (NNTP*) = 0;
 
-         void check_in (NNTP*, bool is_ok);
+         void check_in (NNTP*, Health);
 
          int get_nntp_count () const { return _nntp_to_source.size(); }
 

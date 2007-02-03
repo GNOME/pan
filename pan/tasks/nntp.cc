@@ -265,11 +265,11 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
 
    bool more;
    switch (state) {
-      case CMD_FAIL: fire_done_func (FAIL, line); more = false; break;
+      case CMD_FAIL: fire_done_func (COMMAND_FAILED, line); more = false; break;
       case CMD_DONE: if (_commands.empty()) fire_done_func (OK, line); more = false; break;
       case CMD_MORE: more = true; break; // keep listining for more on this command
       case CMD_NEXT: more = false; break; // no more responses on this command; wait for next...
-      case CMD_RETRY: fire_done_func (RETRY, line); more = false; break;
+      case CMD_RETRY: fire_done_func (NETWORK_FAILED, line); more = false; break;
       default: abort(); break;
    }
    return more;
@@ -278,14 +278,14 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
 void
 NNTP :: on_socket_abort (Socket * sock)
 {
-   fire_done_func (FAIL, StringView());
+   fire_done_func (NETWORK_FAILED, StringView());
 }
 
 void
 NNTP :: on_socket_error (Socket * sock)
 {
    _socket_error = true;
-   fire_done_func (RETRY, StringView());
+   fire_done_func (NETWORK_FAILED, StringView());
 }
 
 namespace

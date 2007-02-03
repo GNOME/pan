@@ -22,27 +22,28 @@
 
 namespace pan
 {
-   /**
-    * Possible health states of a Task.
-    *
-    * @ingroup tasks
-    */
-   enum Health
-   {
-      /** OK -- No error yet */
-      OK =  0,
+  /**
+   * Possible health states of a Task.
+   *
+   * @ingroup tasks
+   */
+  enum Health
+  {
+    /** The task's health is fine. */
+    OK,
 
-      /** Task failed for a transient reason like network failure.
-          The queue should leave this task as it is so that it
-          can retry itself when the network clears up. */
-      RETRY = -1,
+    /** The task has failed because of a bad connection.
+        The queue should leave this task as-is so that it
+        can retry when the network clears up. */
+    NETWORK_FAILED,
 
-      /** Task failed for a non-transient reason, such as
-          the article has expired from the news server
-          The queue should stop the task and let the user
-          decide what to do. */
-      FAIL = -2
-   };
+    /** The server has rejected a command sent by this task.
+        For example, an expired article can't be retrieved
+        or an article can't be posted due to no permissions.
+        The queue should stop the task and let the user
+        decide how to proceed. */
+    COMMAND_FAILED
+  };
 };
 
 #endif

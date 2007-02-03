@@ -141,7 +141,7 @@ namespace pan
       void remove_listener (Listener *l) { _listeners.erase(l); }
 
     public: // inherited from NNTP::Source
-      virtual void check_in (NNTP*, bool is_ok);
+      virtual void check_in (NNTP*, Health);
 
     private: // inherited from NNTP_Pool::Listener
       virtual void on_pool_has_nntp_available (const Quark& server);

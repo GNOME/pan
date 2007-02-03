@@ -45,7 +45,7 @@ Task :: give_nntp (NNTP::Source * source, NNTP* nntp)
 }
 
 void
-Task :: check_in (NNTP * nntp, bool is_ok)
+Task :: check_in (NNTP * nntp, Health health)
 {
    debug ("task " << this << " returning nntp " << nntp);
 
@@ -56,7 +56,7 @@ Task :: check_in (NNTP * nntp, bool is_ok)
       _nntp_to_source.erase (nntp);
       debug ("returned nntp " << nntp << " OK; task " << this << " now has " << _nntp_to_source.size() << " nntps");
 
-      source->check_in (nntp, is_ok);
+      source->check_in (nntp, health);
    }
 }
 

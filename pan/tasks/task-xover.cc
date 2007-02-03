@@ -140,7 +140,7 @@ TaskXOver :: use_nntp (NNTP* nntp)
   {
     debug ("That's interesting, I got a socket for " << server << " but have no use for it!");
     _state._servers.erase (server);
-    check_in (nntp, true);
+    check_in (nntp, OK);
   }
   else
   {
@@ -333,7 +333,7 @@ TaskXOver :: on_nntp_done (NNTP              * nntp,
 {
   //std::cerr << LINE_ID << " nntp " << nntp->_server << " (" << nntp << ") done; checking in.  health==" << health << std::endl;
   update_work (true);
-  check_in (nntp, health==OK);
+  check_in (nntp, health);
 }
 
 void

@@ -67,7 +67,8 @@ TaskPost :: on_nntp_done (NNTP              * nntp,
                           const StringView  & response)
 {
   _state.set_health (health);
-  if (health == RETRY) 
+
+  if (health == NETWORK_FAILED) 
     _state.set_need_nntp (_server);
   else {
     _state.set_completed ();
@@ -75,5 +76,5 @@ TaskPost :: on_nntp_done (NNTP              * nntp,
     set_finished (health);
   }
 
-  check_in (nntp, health==OK);
+  check_in (nntp, health);
 }
