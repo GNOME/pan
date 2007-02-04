@@ -183,12 +183,6 @@ DataImpl :: xover_ref (const Quark& group)
     if (a != 0)
       workarea._subject_lookup.insert (std::pair<Quark,Quark>(a->subject,mid));
   }
-
-  // FIXME: this could possibly cause a memory problem if
-  // user changes the scorefile while downloading new headers.
-  // it might be better to make a copy of these
-  // rather than just holding the pointers.
-  _scorefile.get_matching_sections (StringView(group), workarea.score_sections);
 }
 
 void
@@ -200,7 +194,7 @@ DataImpl :: xover_unref (const Quark& group)
     on_articles_added (group, workarea._added_batch);
     workarea._added_batch.clear();
 
-    on_articles_changed (workarea._changed_batch, true);
+    on_articles_changed (group, workarea._changed_batch, true);
     workarea._changed_batch.clear();
 
     xover_clear_workarea (group);
@@ -288,7 +282,6 @@ DataImpl :: xover_add (const Quark         & server,
       a.time_posted = time_posted.empty() ? 0 : g_mime_utils_header_decode_date (time_posted.str, NULL);
       a.xref.insert (server, xref);
       load_article (group, &a, references);
-      a.score = _article_filter.score_article (*this, workarea.score_sections, group, a); // score _after_ threading
       new_article = &a;
 
       workarea._added_batch.insert (art_mid);
@@ -316,12 +309,12 @@ DataImpl :: xover_add (const Quark         & server,
   ***  Maybe flush the batched changes
   **/
 
-  if (workarea._batch_parts_size >= 5000)
+  if (workarea._batch_parts_size >= 2000)
   //if (workarea._batch_parts_size >= 100) // torture test
   {
     on_articles_added (group, workarea._added_batch);
     workarea._added_batch.clear();
-    on_articles_changed (workarea._changed_batch, true);
+    on_articles_changed (group, workarea._changed_batch, true);
     workarea._changed_batch.clear();
     workarea._batch_parts_size = 0;
   }

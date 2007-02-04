@@ -454,7 +454,7 @@ namespace pan
       std::set<MyTree*> _trees;
       void on_articles_removed (const quarks_t& mids) const;
       void on_articles_added (const Quark& group, const quarks_t& mids);
-      void on_articles_changed (const quarks_t& mids, bool do_refilter) const;
+      void on_articles_changed (const Quark& group, const quarks_t& mids, bool do_refilter);
       void remove_articles_from_tree (MyTree*, const quarks_t& mids) const;
       void add_articles_to_tree (MyTree*, const quarks_t& mids);
 
@@ -536,9 +536,6 @@ namespace pan
         /** We must refcount because multiple server connections can
             be assigned to the same XOVER task. */
         int refcount;
-
-        /** This is for scoring the articles. */
-        ArticleFilter::sections_t score_sections;
 
         XOverEntry(): _batch_parts_size(0), refcount(0) { }
       };

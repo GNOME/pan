@@ -849,14 +849,12 @@ DataImpl :: mark_read (const Article  ** articles,
                        unsigned long     article_count,
                        bool              read)
 {
-  quarks_t mids;
   typedef std::map<Quark,quarks_t> group_to_changed_mids_t;
   group_to_changed_mids_t group_to_changed_mids;
 
   // set them to `read'...
   for (const Article **it(articles), **end(articles+article_count); it!=end; ++it) {
     const Article * article (*it);
-    mids.insert (article->message_id);
     foreach_const (Xref, article->xref, xit) {
       const bool old_state (_read_groups[xit->group][xit->server]._read.mark_one (xit->number, read));
       if (!old_state != !read)
@@ -874,10 +872,8 @@ DataImpl :: mark_read (const Article  ** articles,
     else
       g._unread_count += n;
     fire_group_counts (group, g._unread_count, g._article_count);
+    on_articles_changed (group, it->second, false);
   }
-
-  // fire an articles changed event...
-  on_articles_changed (mids, false);
 }
 
 
@@ -921,35 +917,16 @@ DataImpl :: rescore ()
   foreach (std::set<MyTree*>, _trees, it)
     groups.insert ((*it)->_group);
 
-  // rescore each group...
-  quarks_t changed_mids;
-  foreach_const (quarks_t, groups, git)
-  {
+  // "on_articles_changed" rescores the articles...
+  foreach_const (quarks_t, groups, git) {
+    quarks_t mids;
     const Quark& group (*git);
-    //std::cerr << LINE_ID << " rescoring " << group << std::endl;
-
-    ArticleFilter::sections_t score_sections;
-    _scorefile.get_matching_sections (StringView(group), score_sections);
-
     const GroupHeaders * h (get_group_headers (group));
-    foreach_const (nodes_t, h->_nodes, nit) {
-      Article * article (nit->second->_article);
-      if (article) {
-        const int old_score (article->score);
-        article->score = _article_filter.score_article (
-                                      *this, score_sections, group, *article);
-        if (old_score != article->score)
-          changed_mids.insert (article->message_id);
-      }
-    }
+    foreach_const (nodes_t, h->_nodes, nit)
+      mids.insert (mids.end(), nit->first);
+    if (!mids.empty())
+      on_articles_changed (group, mids, true);
   }
-
-  //std::cerr << LINE_ID << ' ' << changed_mids.size()
-  //                     << " articles changed score\n";
-
-  // event notification...
-  if (!changed_mids.empty())
-    on_articles_changed (changed_mids, true);
 }
 
 void
@@ -1109,8 +1086,23 @@ DataImpl :: on_articles_removed (const quarks_t& mids) const
 }
 
 void
-DataImpl :: on_articles_changed (const quarks_t& mids, bool do_refilter) const
+DataImpl :: on_articles_changed (const Quark& group, const quarks_t& mids, bool do_refilter)
 {
+  // rescore the changed articles...
+  GroupHeaders * gh (get_group_headers (group));
+  assert (gh);
+  ArticleFilter::sections_t sections;
+  _scorefile.get_matching_sections (group.to_view(), sections);
+  nodes_v nodes;
+  find_nodes (mids, gh->_nodes, nodes);
+  foreach (nodes_v, nodes, it) {
+    if ((*it)->_article) {
+      Article& a (*(*it)->_article);
+      a.score = _article_filter.score_article (*this, sections, group, a);
+    }
+  }
+
+  // notify the trees that the articles have changed...
   foreach (std::set<MyTree*>, _trees, it)
     (*it)->articles_changed (mids, do_refilter);
 }
