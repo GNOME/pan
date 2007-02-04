@@ -378,6 +378,12 @@ namespace
       }
     }
 
+    if (!queue->is_online()) {
+      char buf[512];
+      g_snprintf (buf, sizeof(buf), "[%s] ", _("Offline"));
+      status.insert (0, buf);
+    }
+
     char * str (0);
     if (state == Queue::RUNNING)
       str = g_markup_printf_escaped ("<b>%s</b>\n<small>%s</small>", description.c_str(), status.c_str());
