@@ -1194,11 +1194,16 @@ HeaderPane :: filter (const std::string& text, int mode)
 {
   rebuild_filter (text, mode);
 
-  if (_atree) {
+  if (_atree)
+  {
+    _wait.watch_cursor_on ();
+
     if (_filter._aggregates.empty())
       _atree->set_filter ();
     else
       _atree->set_filter (_show_type, &_filter);
+
+    _wait.watch_cursor_off ();
   }
 }
 
@@ -1562,11 +1567,13 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
                           Data                & data,
                           Queue               & queue,
                           ArticleCache        & cache,
-                          Prefs               & prefs):
+                          Prefs               & prefs,
+                          WaitUI              & wait):
   _action_manager (action_manager),
   _data (data),
   _queue (queue),
   _prefs (prefs),
+  _wait (wait),
   _atree (0),
   _root (0),
   _tree_view (0),

@@ -28,6 +28,7 @@
 #include <pan/gui/pan-ui.h>
 #include <pan/gui/prefs.h>
 #include <pan/gui/group-prefs.h>
+#include <pan/gui/wait.h>
 
 namespace pan
 {
@@ -43,6 +44,7 @@ namespace pan
   struct GUI:
     public virtual PanUI,
     public ActionManager,
+    public WaitUI,
     private Log::Listener,
     private Progress::Listener,
     private Queue::Listener,
@@ -171,12 +173,12 @@ namespace pan
     private: // Progress::Listener
       virtual void on_progress_finished (Progress&, int status);
 
-    private:
-      void set_selected_thread_score (int score);
+    public: // WaitUI
+      virtual void watch_cursor_on ();
+      virtual void watch_cursor_off ();
 
     private:
-      void watch_cursor_on ();
-      void watch_cursor_off ();
+      void set_selected_thread_score (int score);
 
     private:
       Data& _data;

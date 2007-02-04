@@ -195,7 +195,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
 
   //_group_pane = new GroupPane (*this, data, _prefs);
   _group_pane = new GroupPane (*this, data, _prefs);
-  _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs);
+  _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, *this);
   _body_pane = new BodyPane (data, _cache, _prefs);
 
   std::string path = "/ui/main-window-toolbar";

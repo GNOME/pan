@@ -66,6 +66,7 @@ noinst_HEADERS = \
  tango-colors.h \
  task-pane.h \
  url.h \
+ wait.h \
  xface.h
 
 EXTRA_DIST = \
