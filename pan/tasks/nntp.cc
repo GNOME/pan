@@ -156,20 +156,32 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
          state = CMD_DONE;
          break;
 
-      case AUTH_REQUIRED:
-         // must send username
-         _commands.push_front (_previous_command);
-         _socket->write_command_va (
-            this, "AUTHINFO USER %s\r\n", _username.c_str());
-         state = CMD_NEXT;
+      case AUTH_REQUIRED: { // must send username
+         if (!_username.empty()) {
+           _commands.push_front (_previous_command);
+           _socket->write_command_va (this, "AUTHINFO USER %s\r\n", _username.c_str());
+           state = CMD_NEXT;
+         } else {
+           std::string host;
+           _socket->get_host (host);
+           Log::add_err_va (_("%s requires a username, but none is set."), host.c_str());
+           state = CMD_FAIL;
+         }
          break;
+      }
 
-      case AUTH_NEED_MORE:
-         // must send password
-         _socket->write_command_va (
-            this, "AUTHINFO PASS %s\r\n", _password.c_str());
-         state = CMD_NEXT;
-         break;
+      case AUTH_NEED_MORE: { // must send password
+        if (!_password.empty()) {
+           _socket->write_command_va (this, "AUTHINFO PASS %s\r\n", _password.c_str());
+           state = CMD_NEXT;
+        } else {
+           std::string host;
+           _socket->get_host (host);
+           Log::add_err_va (_("%s requires a password, but none is set."), host.c_str());
+           state = CMD_FAIL;
+        }
+        break;
+      }
 
       case AUTH_ACCEPTED:
          state = CMD_DONE;
