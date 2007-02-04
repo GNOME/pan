@@ -54,8 +54,11 @@ namespace pan
       Queue& _queue;
       GtkWidget * _root;
       GtkWidget * _view;
+      GtkWidget * _online_image;
+      GtkWidget * _online_toggle;
       GtkWidget * _status_label;
       GtkListStore * _store;
+      gulong _online_toggle_handler;
       guint _update_timeout_tag;
       bool _dampen_move_feedback_loop;
 
@@ -70,6 +73,7 @@ namespace pan
       typedef std::vector<Task*> task_list;
       task_list get_selected_tasks () const;
       static void get_selected_tasks_foreach (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer);
+      static void online_toggled_cb  (GtkToggleButton*, Queue*);
       static void up_clicked_cb      (GtkButton*, TaskPane*);
       static void down_clicked_cb    (GtkButton*, TaskPane*);
       static void top_clicked_cb     (GtkButton*, TaskPane*);

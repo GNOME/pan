@@ -90,6 +90,10 @@ namespace
   }
 }
 
+void TaskPane :: online_toggled_cb (GtkToggleButton* b, Queue *queue)
+{
+  queue->set_online (gtk_toggle_button_get_active (b));
+}
 void TaskPane :: up_clicked_cb (GtkButton* b, TaskPane* pane)
 {
   pane->_queue.move_up (pane->get_selected_tasks());
@@ -180,7 +184,19 @@ TaskPane :: on_queue_task_moved (Queue& queue, Task& task, int new_index, int ol
 void TaskPane :: on_queue_task_active_changed (Queue&, Task&, bool active) { }
 void TaskPane :: on_queue_connection_count_changed (Queue&, int count) { }
 void TaskPane :: on_queue_size_changed (Queue&, int active, int total) { }
-void TaskPane :: on_queue_online_changed (Queue&, bool online) { }
+
+void TaskPane :: on_queue_online_changed (Queue&, bool online)
+{
+  g_signal_handler_block (_online_toggle, _online_toggle_handler);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(_online_toggle), online);
+  g_signal_handler_unblock (_online_toggle, _online_toggle_handler);
+
+#if GTK_CHECK_VERSION(2,6,0)
+  gtk_image_set_from_stock (GTK_IMAGE(_online_image),
+                            online ? GTK_STOCK_CONNECT : GTK_STOCK_DISCONNECT,
+                            GTK_ICON_SIZE_BUTTON);
+#endif
+}
 
 
 /***
@@ -441,6 +457,20 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
   GtkWidget * vbox = gtk_vbox_new (false, 0);
 
     GtkWidget * buttons = gtk_hbox_new (false, PAD_SMALL);
+
+    w = _online_toggle = gtk_check_button_new ();
+    _online_toggle_handler = g_signal_connect (w, "clicked", G_CALLBACK(online_toggled_cb), &queue);
+    GtkWidget * i = _online_image = gtk_image_new ();
+    GtkWidget * l = gtk_label_new_with_mnemonic (_("_Online"));
+    GtkWidget * v = gtk_hbox_new (false, PAD);
+    gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
+    on_queue_online_changed (queue, queue.is_online());
+    gtk_box_pack_start (GTK_BOX(v), i, 0, 0, 0);
+    gtk_box_pack_start (GTK_BOX(v), l, 0, 0, 0);
+    gtk_container_add (GTK_CONTAINER(w), v);
+    gtk_box_pack_start (GTK_BOX(buttons), w, false, false, 0);
+    gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+
     add_button (buttons, GTK_STOCK_GO_UP, G_CALLBACK(up_clicked_cb), this);
     add_button (buttons, GTK_STOCK_GOTO_TOP, G_CALLBACK(top_clicked_cb), this);
     gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
