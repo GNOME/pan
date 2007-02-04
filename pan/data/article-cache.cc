@@ -289,8 +289,8 @@ ArticleCache :: resize ()
 {
   // let's shrink it to 80% of the maximum size
   const double buffer_zone (0.8);
-  uint64_t max_bytes (_max_megs * 1024 * 1024);
-  max_bytes = (uint64_t) ((double)max_bytes * buffer_zone);
+  guint64 max_bytes (_max_megs * 1024 * 1024);
+  max_bytes = (guint64) ((double)max_bytes * buffer_zone);
   resize (max_bytes);
 }
 
@@ -301,7 +301,7 @@ ArticleCache :: clear ()
 }
 
 void
-ArticleCache :: resize (uint64_t max_bytes)
+ArticleCache :: resize (guint64 max_bytes)
 {
   quarks_t removed;
   if (_current_bytes > max_bytes)

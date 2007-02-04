@@ -22,6 +22,9 @@
 
 #include <map>
 #include <vector>
+extern "C" {
+  #include <glib/gtypes.h> // for guint64
+}
 #include <pan/general/string-view.h>
 #include <pan/general/quark.h>
 
@@ -107,7 +110,7 @@ namespace pan
 
       std::string _path;
       size_t _max_megs;
-      uint64_t _current_bytes;
+      guint64 _current_bytes;
 
       typedef std::set<Listener*> listeners_t;
       listeners_t _listeners;
@@ -115,7 +118,7 @@ namespace pan
       void fire_added (const Quark& mid);
       void fire_removed (const quarks_t& mid);
 
-      void resize (uint64_t max_bytes);
+      void resize (guint64 max_bytes);
 
       char* get_filename (char* buf, int buflen, const Quark& mid) const;
       GMimeStream* get_message_file_stream (const Quark& mid) const;
