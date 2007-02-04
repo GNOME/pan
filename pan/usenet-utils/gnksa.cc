@@ -349,8 +349,6 @@ gnksa_check_domain_literal (const StringView& domain)
 int
 GNKSA :: check_domain (const StringView& domain)
 {
-   debug (domain);
-
    if (domain.empty())
       return GNKSA::ZERO_LENGTH_LABEL;
 
@@ -622,20 +620,16 @@ GNKSA :: do_check_from (const StringView   & from,
 	                bool                 strict)
 {
    int addrtype = 0;
-   debug ("From [" << from << "]");
 
    // split from 
    addr.clear ();
    name.clear ();
    int retval = split_from (from, addr, name, addrtype, strict);
-   debug ("Name [" << name << "]");
-   debug ("Addr [" << addr << "]");
 
    // check address 
    if (retval==OK && !addr.empty())
       retval = check_address (addr);
 
-   debug ("GNKSA [" << retval << ']');
    return retval;
 }
 
