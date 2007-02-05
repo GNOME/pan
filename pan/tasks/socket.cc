@@ -54,17 +54,19 @@ double
 Socket :: get_speed_KiBps () const
 {
   const time_t now (time(0));
-  if (now == _time_of_last_check)
-    return _speed_KiBps;
 
-  const int delta = now - _time_of_last_check;
-  const double current_speed = (_bytes_since_last_check/1024.0) / delta;
-  _time_of_last_check = now;
-  _bytes_since_last_check = 0;
+  if (now > _time_of_last_check)
+  {
+    const int delta = now - _time_of_last_check;
+    const double current_speed = (_bytes_since_last_check/1024.0) / delta;
+    _time_of_last_check = now;
+    _bytes_since_last_check = 0;
 
-  _speed_KiBps = (std::fabs(_speed_KiBps)<0.0001)
-    ? current_speed // if no previous speed, no need to smooth
-    : (_speed_KiBps*0.9 + current_speed*0.1); // calculate 'smoothed average' of 10 readings
+    _speed_KiBps = (std::fabs(_speed_KiBps)<0.0001)
+      ? current_speed // if no previous speed, no need to smooth
+      : (_speed_KiBps*0.4 + current_speed*0.2); // smooth across 5 readings
+  }
+
   return _speed_KiBps;
 }
 
