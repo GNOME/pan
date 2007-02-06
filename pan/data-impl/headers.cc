@@ -1088,17 +1088,18 @@ DataImpl :: on_articles_removed (const quarks_t& mids) const
 void
 DataImpl :: on_articles_changed (const Quark& group, const quarks_t& mids, bool do_refilter)
 {
-  // rescore the changed articles...
+  // if the articles are loaded, rescore them...
   GroupHeaders * gh (get_group_headers (group));
-  assert (gh);
-  ArticleFilter::sections_t sections;
-  _scorefile.get_matching_sections (group.to_view(), sections);
-  nodes_v nodes;
-  find_nodes (mids, gh->_nodes, nodes);
-  foreach (nodes_v, nodes, it) {
-    if ((*it)->_article) {
-      Article& a (*(*it)->_article);
-      a.score = _article_filter.score_article (*this, sections, group, a);
+  if (gh) {
+    ArticleFilter::sections_t sections;
+    _scorefile.get_matching_sections (group.to_view(), sections);
+    nodes_v nodes;
+    find_nodes (mids, gh->_nodes, nodes);
+    foreach (nodes_v, nodes, it) {
+      if ((*it)->_article) {
+        Article& a (*(*it)->_article);
+        a.score = _article_filter.score_article (*this, sections, group, a);
+      }
     }
   }
 
