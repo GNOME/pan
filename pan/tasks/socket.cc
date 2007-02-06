@@ -64,7 +64,7 @@ Socket :: get_speed_KiBps () const
 
     _speed_KiBps = (std::fabs(_speed_KiBps)<0.0001)
       ? current_speed // if no previous speed, no need to smooth
-      : (_speed_KiBps*0.4 + current_speed*0.2); // smooth across 5 readings
+      : (_speed_KiBps*0.8 + current_speed*0.2); // smooth across 5 readings
   }
 
   return _speed_KiBps;
