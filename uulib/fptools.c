@@ -16,8 +16,6 @@
 #include <os2.h>
 #endif
 
-#include <assert.h>
-
 /*
  * This file provides replacements for some handy functions that aren't
  * available on all systems, like most of the <string.h> functions. They
@@ -432,50 +430,51 @@ _FP_cutdir (char *filename)
 }
 
 /*
- * My own fgets function.
- * It handles all kinds of line terminators properly:
- * LF (Unix), CRLF (DOS) and CR (Mac).
- * In all cases, the terminator is replaced by a single LF.
- *
- * buf is guaranteed to be zero-terminated when this function returns.
+ * My own fgets function. It handles all kinds of line terminators
+ * properly: LF (Unix), CRLF (DOS) and CR (Mac). In all cases, the
+ * terminator is replaced by a single LF
  *
  * Pan change:  sysprof says this function is standard uulib's biggest
  * hotspot, and with the per-char fgetc and feof it's easy to see why.
- * Pan doesn't run on OS9 anyway, so don't bother with that.
- * Looking for CRLF and LF will get us Unix, OSX, and DOS.
- * In all cases, the terminator is replaced by a single LF
+ * Pan doesn't run on OS 9 anyway, so don't bother with that.
+ * Looking for CRLF and LF will get us Unix, OS X, and Windows.
+ * In all cases, the terminator is replaced by a single LF.
  */
+
 char * TOOLEXPORT
 _FP_fgets (char *buf, int n, FILE *stream)
 {
   int len;
-  char * pch;
 
-  *buf = '\0';
   if (!fgets (buf, n, stream))
     return NULL;
 
-  assert (*buf);
-  len = strlen (buf);
-  pch = buf + len - 1;
-  if (*pch != '\n') // eof -- ensure we end with a LF
-    memcpy (pch, "\n", 2);
-  else if ((pch!=buf) && (pch[-1] == '\r')) // got CRLF -- strip the CR
-    memcpy (pch-1, "\n", 2);
+  // unless the string is so full we don't even have room for a \n,
+  // ensure that buf ends in \n, rather than nothing or \r\n.
   buf[n-1] = '\0'; // ensure zero termination
+  len = strlen (buf);
+  if (len && buf[len-1]=='\n') --len;
+  if (len && buf[len-1]=='\r') --len;
+  if (len<=n-2) memcpy (buf+len, "\n", 2);
 
-  // if a line break is coming up, eat it
-  if (len == n - 1) {
-    int c = fgetc (stream);
-    if (c == '\r')
-      c = fgetc (stream);
-    if (c != '\n')
+  /*
+   * If a line break is coming up, read it
+   */
+
+  if (!feof (stream)) {
+    int c;
+    if ((c = fgetc (stream)) == '\015' && !feof (stream)) {
+      if ((c = fgetc (stream)) != '\012' && !feof (stream)) {
+	ungetc (c, stream);
+      }
+    }
+    else if (c != '\012' && !feof (stream)) {
       ungetc (c, stream);
+    }
   }
 
   return buf;
 }
-
 
 /*
  * A replacement strerror function that just returns the error code
