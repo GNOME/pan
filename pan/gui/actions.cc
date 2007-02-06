@@ -50,8 +50,6 @@ namespace
   {
     { icon_article_read, "ICON_ARTICLE_READ" },
     { icon_article_unread, "ICON_ARTICLE_UNREAD" },
-    { icon_bluecheck, "ICON_BLUECHECK" }, 
-    { icon_blue_flag, "ICON_BLUE_FLAG" }, 
     { icon_compose_followup, "ICON_COMPOSE_FOLLOWUP" }, 
     { icon_compose_post, "ICON_COMPOSE_POST" }, 
     { icon_disk, "ICON_DISK" }, 
@@ -63,7 +61,6 @@ namespace
     { icon_get_dialog, "ICON_GET_DIALOG" }, 
     { icon_get_selected, "ICON_GET_SELECTED" }, 
     { icon_get_subscribed, "ICON_GET_SUBSCRIBED" }, 
-    { icon_pan, "ICON_PAN" }, 
     { icon_read_group, "ICON_READ_GROUP" }, 
     { icon_read_more, "ICON_READ_MORE" }, 
     { icon_read_less, "ICON_READ_LESS" }, 

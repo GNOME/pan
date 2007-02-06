@@ -289,7 +289,7 @@ main (int argc, char *argv[])
       prefs.set_window ("main-window", GTK_WINDOW(window), 100, 100, 900, 700);
       gtk_window_set_title (GTK_WINDOW(window), "Pan");
       gtk_window_set_resizable (GTK_WINDOW(window), true);
-      gtk_window_set_icon (GTK_WINDOW(window), pixbuf);
+      gtk_window_set_default_icon (pixbuf);
       g_object_unref (pixbuf);
       run_pan_in_window (cache, data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
