@@ -781,7 +781,7 @@ GroupPane :: create_filter_entry ()
   GtkWidget * icon = gtk_image_new_from_stock(GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
   sexy_icon_entry_set_icon (SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_SECONDARY, GTK_IMAGE(icon));
   sexy_icon_entry_set_icon_highlight(SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_SECONDARY, true);
-  gtk_widget_set_size_request (entry, 100, -1);
+  gtk_widget_set_size_request (entry, 133, -1);
 
   _action_manager.disable_accelerators_when_focused (entry);
   g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), NULL);
