@@ -20,10 +20,6 @@ FileLineReader :: FileLineReader (const StringView& filename):
   _alloc_size (INITIAL_BUF_SIZE),
   _fp (fopen (filename.to_string().c_str(), "rb"))
 {
-  if (!_fp)
-    Log::add_err_va (_("Error opening file \"%s\" %s"),
-                     filename.to_string().c_str(),
-                     file::pan_strerror(errno));
 }
 
 FileLineReader :: ~FileLineReader ()

@@ -60,17 +60,21 @@ DataImpl :: delete_server (const Quark& server_in)
 Quark
 DataImpl :: add_new_server ()
 {
-  Quark server;
+  // find a server ID that's not in use
+  Quark new_server;
   for (unsigned long i(1); ; ++i) {
     char buf[64];
     snprintf (buf, sizeof(buf), "%lu", i);
-    server = buf;
-    if (!_servers.count (server)) {
-      _servers[server];
+    new_server = buf;
+    if (!_servers.count (new_server))
       break;
-    }
   }
-  return server;
+
+  // add it to the _servers map and give it a default filename
+  std::ostringstream o;
+  o << file::get_pan_home() << G_DIR_SEPARATOR << "newsrc-" << new_server;
+  _servers[new_server].newsrc_filename = o.str ();
+  return new_server;
 }
 
 DataImpl :: Server*
