@@ -751,7 +751,7 @@ void GUI :: do_download_selected_article ()
   const article_vector_t articles (_header_pane->get_full_selection_v ());
   Queue::tasks_t tasks;
   foreach_const (article_vector_t, articles, it)
-    tasks.push_back (new TaskArticle (_data, _data, **it, _cache, _data, this));
+    tasks.push_back (new TaskArticle (_data, _data, **it, _cache, _data));
   if (!tasks.empty())
     _queue.add_tasks (tasks, Queue::TOP);
 }
