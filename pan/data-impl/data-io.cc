@@ -24,6 +24,7 @@
 #include <iostream>
 #include <fstream>
 extern "C" {
+  #include <unistd.h>
   #include <glib.h>
   #include <glib/gi18n.h>
 }
