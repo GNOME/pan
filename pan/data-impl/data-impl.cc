@@ -98,7 +98,8 @@ DataImpl :: save_state ()
 {
   if (!_unit_test)
   {
-    debug ("data-impl dtor saving newsrc...");
+    debug ("data-impl dtor saving xov, newsrc...");
+    save_group_xovers (*_data_io);
     save_newsrc_files (*_data_io);
   }
 }
