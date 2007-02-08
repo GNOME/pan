@@ -239,9 +239,9 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
   GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Pan: Save Articles"),
                                                     parent_window,
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-	                                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-	                                            GTK_STOCK_SAVE, GTK_RESPONSE_OK,
                                                     NULL);
+  gtk_dialog_add_button (GTK_DIALOG(dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
+  GtkWidget * focus = gtk_dialog_add_button (GTK_DIALOG(dialog), GTK_STOCK_SAVE, GTK_RESPONSE_OK);
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-save-articles-dialog");
   gtk_dialog_set_default_response (GTK_DIALOG(dialog), GTK_RESPONSE_OK);
   g_signal_connect (dialog, "response", G_CALLBACK(response_cb), this);
@@ -301,5 +301,6 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
 
   gtk_widget_show_all (t);
   gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->vbox), t, true, true, 0);
+  gtk_widget_grab_focus (focus);
   _root = dialog;
 }
