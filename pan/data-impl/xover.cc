@@ -20,7 +20,10 @@
 #include <config.h>
 #include <cmath>
 #include <fstream>
-#include <gmime/gmime.h>
+extern "C" {
+  #include <glib/gi18n.h>
+  #include <gmime/gmime.h>
+}
 #include <pan/general/debug.h>
 #include <pan/general/foreach.h>
 #include <pan/general/log.h>
@@ -226,8 +229,15 @@ DataImpl :: xover_add (const Quark         & server,
                        const unsigned long   line_count,
                        const StringView    & xref)
 {
-  const Article* new_article (0);
   GroupHeaders * h (get_group_headers (group));
+  if (!h) {
+    Log::add_err_va (_("Error reading from %s: unknown group \"%s\""),
+                     get_server_address(server).c_str(),
+                     group.c_str());
+    return 0;
+  }
+
+  const Article* new_article (0);
   h->_dirty = true;
   XOverEntry& workarea (xover_get_workarea (group));
   const std::string references (
@@ -245,6 +255,10 @@ DataImpl :: xover_add (const Quark         & server,
 
   if (part_count > 1)
   {
+    // walk through the articles we've already got for the group
+    // to see if there's already an Article allocated to this
+    // multipart.  If there is, we use it here instead of adding a new one
+
     StringView ref(references), parent;
     ref.pop_last_token (parent, ' ');
     parent.trim ();
@@ -256,8 +270,7 @@ DataImpl :: xover_add (const Quark         & server,
       const Article* candidate (h->find_article (candidate_mid));
       if (candidate
           && (candidate->author == author)
-          && ((int)candidate->parts.size() == part_count)
-          && (h->find_parent_message_id(candidate->message_id) == parent))
+          && ((int)candidate->parts.size() == part_count))
         art_mid = candidate_mid;
     }
   }
