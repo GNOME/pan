@@ -27,11 +27,6 @@
 #include <pan/gui/pan-tree.h>
 #include <pan/gui/prefs.h>
 
-namespace
-{
-  class MyRow;
-}
-
 namespace pan
 {
   /**
@@ -67,6 +62,11 @@ namespace pan
       GtkWidget * _root;
       GtkWidget * _tree_view;
       PanTreeStore * _tree_store;
+
+    private:
+      GtkTreePath* find_next_subscribed_group (bool unread_only);
+      void read_group (GtkTreePath*);
+      void read_next_group_impl (bool unread_only);
 
     private:
       static void do_popup_menu (GtkWidget*, GdkEventButton*, gpointer);

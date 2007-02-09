@@ -54,7 +54,7 @@ namespace
     public:
       virtual void get_value (int column, GValue* setme) {
         switch (column) {
-          case COL_UNREAD: set_value_ulong   (setme, unread); break;
+          case COL_UNREAD: set_value_ulong (setme, unread); break;
         }
       }
   };
@@ -687,68 +687,96 @@ GroupPane :: set_name_collapse (bool b)
 ****
 ***/
 
-namespace
+/**
+ * Walk circularly through the subscribed groups,
+ * looking for the next one after our current
+ * selection, possibly only ones with unread messages.
+ */
+GtkTreePath*
+GroupPane :: find_next_subscribed_group (bool unread_only)
 {
-  struct NextGroupWalk: public PanTreeStore::WalkFunctor
+  GtkTreeView * view (GTK_TREE_VIEW(_tree_view));
+  GtkTreeModel * model (gtk_tree_view_get_model (view));
+  GtkTreeSelection * selection (gtk_tree_view_get_selection (view));
+
+  // find how many subscribed groups the tree's got
+  GtkTreeIter sub_iter;
+  gtk_tree_model_iter_nth_child (model, &sub_iter, 0, 0); // 'sub' node
+  const int n_groups = gtk_tree_model_iter_n_children (model, &sub_iter);
+  if (n_groups < 1)
+    return 0;
+
+  // find the index of the current selection
+  // (or -1 if no subscribed groups are selected)
+  int start_pos = -1;
+  GtkTreeIter sel_iter;
+  if (gtk_tree_selection_get_selected (selection, 0, &sel_iter)) {
+    GtkTreePath * path = gtk_tree_model_get_path (model, &sel_iter);
+    gint depth = gtk_tree_path_get_depth (path);
+    gint* indices = gtk_tree_path_get_indices (path);
+    if (depth==2 && indices[0]==0) // a subscribed group is selected
+      start_pos = indices[1];
+    gtk_tree_path_free (path);
+  }
+
+  // loop through the `sub' node's children looking for
+  // groups that match our criteria.
+  int n = start_pos;
+  Quark group;
+  for (;;)
   {
-    const ActionManager& am;
-    GtkTreeView * view;
-    GtkTreeSelection * sel;
-    const Quark current_group;
-    bool current_group_reached;
-    const bool unread_only;
-
-    NextGroupWalk (const ActionManager& a, GtkTreeView *v, const Quark& g, bool unread):
-      am (a),
-      view (v),
-      sel (gtk_tree_view_get_selection (view)),
-      current_group(g),  
-      current_group_reached (g.empty()),
-      unread_only (unread) { }
-    virtual ~NextGroupWalk () { }
-
-    virtual bool operator()(PanTreeStore * store, PanTreeStore::Row * r,
-                            GtkTreeIter * iter, GtkTreePath * unused)
-    {
-      const MyRow * row (dynamic_cast<MyRow*>(r));
-      const Quark& name (row->groupname);
-      if (is_group (name)) {
-        if (current_group_reached && (row->unread || !unread_only)) {
-          GtkTreePath * path = gtk_tree_model_get_path (GTK_TREE_MODEL(store), iter);
-          gtk_tree_view_expand_row (view, path, true);
-          gtk_tree_view_expand_to_path (view, path);
-          gtk_tree_view_set_cursor (view, path, NULL, false);
-          gtk_tree_view_scroll_to_cell (view, path, NULL, true, 0.5f, 0.0f);
-          gtk_tree_selection_unselect_all (sel);
-          gtk_tree_selection_select_path (sel, path);
-          gtk_tree_path_free (path);
-          am.activate_action ("read-selected-group");
-          return false; // done
-        }
-        if (name == current_group)
-          current_group_reached = true;
-      }
-      return true; // keep marching
+    if (++n == n_groups) {
+      if (start_pos == -1)
+        return 0;
+      n = 0;
     }
-  };
+    if (n == start_pos)
+      return 0;
+
+    GtkTreeIter group_iter;
+    gtk_tree_model_iter_nth_child (model, &group_iter, &sub_iter, n);
+    const MyRow * row (dynamic_cast<MyRow*>(_tree_store->get_row (&group_iter)));
+    if (!unread_only || row->unread)
+      return gtk_tree_model_get_path (model, &group_iter);
+  }
 }
 
 void
+GroupPane :: read_group (GtkTreePath * path)
+{
+  g_assert (path);
+
+  GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
+  GtkTreeSelection * sel (gtk_tree_view_get_selection (view));
+
+  gtk_tree_view_expand_row (view, path, true);
+  gtk_tree_view_expand_to_path (view, path);
+  gtk_tree_view_set_cursor (view, path, NULL, false);
+  gtk_tree_view_scroll_to_cell (view, path, NULL, true, 0.5f, 0.0f);
+  gtk_tree_selection_unselect_all (sel);
+  gtk_tree_selection_select_path (sel, path);
+  _action_manager.activate_action ("read-selected-group");
+}
+
+void
+GroupPane :: read_next_group_impl (bool unread_only)
+{
+  GtkTreePath * path = find_next_subscribed_group (unread_only);
+  if (path) {
+    read_group (path);
+    gtk_tree_path_free (path);
+  }
+}
+void
 GroupPane :: read_next_unread_group ()
 {
-  GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
-  const Quark current_group (get_selection ());
-  NextGroupWalk walker (_action_manager, view, current_group, true);
-  _tree_store->walk (walker);
+  read_next_group_impl (true);
 }
 
 void
 GroupPane :: read_next_group ()
 {
-  GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
-  const Quark current_group (get_selection ());
-  NextGroupWalk walker (_action_manager, view, current_group, false);
-  _tree_store->walk (walker);
+  read_next_group_impl (false);
 }
 
 /***
