@@ -457,22 +457,6 @@ _FP_fgets (char *buf, int n, FILE *stream)
   if (len && buf[len-1]=='\r') --len;
   if (len<=n-2) memcpy (buf+len, "\n", 2);
 
-  /*
-   * If a line break is coming up, read it
-   */
-
-  if (!feof (stream)) {
-    int c;
-    if ((c = fgetc (stream)) == '\015' && !feof (stream)) {
-      if ((c = fgetc (stream)) != '\012' && !feof (stream)) {
-	ungetc (c, stream);
-      }
-    }
-    else if (c != '\012' && !feof (stream)) {
-      ungetc (c, stream);
-    }
-  }
-
   return buf;
 }
 
