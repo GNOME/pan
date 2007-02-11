@@ -123,6 +123,8 @@ namespace pan
 
     private:
       std::string get_body () const;
+      gulong body_view_realized_handler;
+      static void body_view_realized (GtkWidget*, gpointer);
 
     private:
       unsigned long _group_entry_changed_id;

@@ -1222,11 +1222,11 @@ namespace
     view = gtk_text_view_new ();
     buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW(view));
 
-    // force a monospace font, and size it to 75 cols x 30 rows
+    // force a monospace font, and size it to 80 cols x 30 rows
     const std::string str (prefs.get_string ("monospace-font", "Monospace 10"));
     PangoFontDescription *pfd (pango_font_description_from_string (str.c_str()));
     PangoContext * context = gtk_widget_create_pango_context (view);
-    const int column_width (75);
+    const int column_width (80);
     std::string line (column_width, 'A');
     pango_context_set_font_description (context, pfd);
     PangoLayout * layout = pango_layout_new (context);
@@ -1648,6 +1648,20 @@ PostUI :: set_message (GMimeMessage * message)
   apply_profile ();
 }
 
+/**
+ * We hold off on setting the body textbuffer until after
+ * the text view is realized so that GtkTreeView's text wrapping
+ * will work properly.
+ */
+void
+PostUI :: body_view_realized (GtkWidget * w, gpointer self_gpointer)
+{
+  PostUI * self (static_cast<PostUI*>(self_gpointer));
+  self->set_message (self->_message);
+  self->_unchanged_body = self->get_body ();
+  g_signal_handler_disconnect (w, self->body_view_realized_handler);
+}
+
 /***
 ****
 ***/
@@ -1845,9 +1859,12 @@ PostUI :: PostUI (GtkWindow    * parent,
   set_spellcheck_enabled (prefs.get_flag ("spellcheck-enabled", DEFAULT_SPELLCHECK_FLAG));
   gtk_box_pack_start (GTK_BOX(vbox), w, true, true, 0);
 
-  set_message (message);
-
-  _unchanged_body = get_body ();
+  // remember this message, but don't put it in the text view yet.
+  // we have to wait for it to be realized first so that wrapping
+  // will work correctly.
+  _message = message;
+  g_object_ref (G_OBJECT(_message));
+  body_view_realized_handler = g_signal_connect (_body_view, "realize", G_CALLBACK(body_view_realized), this);
 
   // set focus to the first non-populated widget
   GtkWidget * grab (0);
