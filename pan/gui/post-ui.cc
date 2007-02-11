@@ -782,14 +782,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   **/
 
   // get the profile...
-  Profile profile;
-  char * pch = gtk_combo_box_get_active_text (GTK_COMBO_BOX(_from_combo));
-  std::string s;
-  if (pch) {
-    _profiles.get_profile (pch, profile);
-    profile.get_from_header (s);
-    g_free (pch);
-  }
+  const Profile profile (get_current_profile ());
   // get the server associated with that profile...
   const Quark& server (profile.posting_server);
   // if the server's invalid, bitch about it to the user
@@ -1097,14 +1090,9 @@ PostUI :: new_message_from_ui (Mode mode)
   GMimeMessage * msg (g_mime_message_new (false));
 
   // headers from the ui: From
-  Profile profile;
-  char * pch = gtk_combo_box_get_active_text (GTK_COMBO_BOX(_from_combo));
+  const Profile profile (get_current_profile ());
   std::string s;
-  if (pch) {
-    _profiles.get_profile (pch, profile);
-    profile.get_from_header (s);
-    g_free (pch);
-  }
+  profile.get_from_header (s);
   g_mime_message_set_sender (msg, s.c_str());
 
   // headers from the ui: Subject
@@ -1131,7 +1119,7 @@ PostUI :: new_message_from_ui (Mode mode)
   GtkTextBuffer * buf (_headers_buf);
   GtkTextIter start, end;
   gtk_text_buffer_get_bounds (buf, &start, &end);
-  pch = gtk_text_buffer_get_text (buf, &start, &end, false);
+  char * pch = gtk_text_buffer_get_text (buf, &start, &end, false);
   StringView key, val, v(pch);
   v.trim ();
   while (v.pop_token (val, '\n') && val.pop_token(key,':')) {
@@ -1459,16 +1447,23 @@ namespace
   }
 }
 
-void
-PostUI :: apply_profile_to_body ()
+Profile
+PostUI :: get_current_profile ()
 {
-  // get the selected profile
   Profile profile;
   char * pch = gtk_combo_box_get_active_text (GTK_COMBO_BOX(_from_combo));
   if (pch) {
     _profiles.get_profile (pch, profile);
     g_free (pch);
   }
+  return profile;
+}
+
+void
+PostUI :: apply_profile_to_body ()
+{
+  // get the selected profile
+  const Profile profile (get_current_profile ());
   std::string attribution = profile.attribution;
   if (do_attribution_substitutions (_hidden_headers["X-Draft-Attribution-Id"],
                                     _hidden_headers["X-Draft-Attribution-Date"],
@@ -1554,12 +1549,7 @@ PostUI :: apply_profile_to_headers ()
       headers.erase (it->first);
 
   // get the new profile
-  Profile profile;
-  char * pch = gtk_combo_box_get_active_text (GTK_COMBO_BOX(_from_combo));
-  if (pch) {
-    _profiles.get_profile (pch, profile);
-    g_free (pch);
-  }
+  const Profile profile (get_current_profile ());
 
   // add all the headers from the new profile.
   _profile_headers = profile.headers;
@@ -1701,6 +1691,37 @@ PostUI :: group_entry_changed_cb (GtkEditable * w, gpointer ui_gpointer)
 ****
 ***/
 
+namespace
+{
+  static void render_from (GtkCellLayout    * cell_layout,
+                           GtkCellRenderer  * renderer,
+                           GtkTreeModel     * model,
+                           GtkTreeIter      * iter,
+                           gpointer           profiles)
+  {
+    std::string from;
+    std::string name;
+
+    char * key (0);
+    gtk_tree_model_get (model, iter, 0, &key, -1);
+    if (key) {
+      name = key;
+      Profile profile;
+      if (static_cast<Profiles*>(profiles)->get_profile (key, profile))
+        profile.get_from_header (from);
+      g_free (key);
+    }
+
+    char * name_escaped = g_markup_escape_text (name.c_str(), name.size());
+    char * from_escaped = g_markup_escape_text (from.c_str(), from.size());
+    char * pch = g_strdup_printf ("%s - <i>%s</i>", from_escaped, name_escaped);
+    g_object_set (renderer, "markup", pch, NULL);
+    g_free (pch);
+    g_free (from_escaped);
+    g_free (name_escaped);
+  }
+}
+
 PostUI :: ~PostUI ()
 {
   if (_group_entry_changed_idle_tag)
@@ -1775,6 +1796,10 @@ PostUI :: PostUI (GtkWindow    * parent,
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("F_rom"));
   l = HIG :: workarea_add_label (t, row, buf);
   w = _from_combo = gtk_combo_box_new_text ();
+  gtk_cell_layout_clear (GTK_CELL_LAYOUT(w));
+  GtkCellRenderer * r =  gtk_cell_renderer_text_new();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT(w), r, true);
+  gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT(w), r, render_from, &_profiles, 0);
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
   g_signal_connect (w, "changed", G_CALLBACK(on_from_combo_changed), this);
   gtk_table_attach (GTK_TABLE(t), w, 3, 4, row, row+1, fill, nofill, 0, 0);

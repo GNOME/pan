@@ -117,6 +117,7 @@ namespace pan
       void apply_profile_to_headers ();
       enum Mode { DRAFTING, POSTING };
       GMimeMessage * new_message_from_ui (Mode mode);
+      Profile get_current_profile ();
       bool check_message (const Quark& server, GMimeMessage*);
       bool check_charset ();
 
