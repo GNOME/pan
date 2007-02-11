@@ -115,6 +115,9 @@ namespace pan
       const Quark& get_group () { return _group; }
 
     private:
+      void select_message_id (const Quark& mid, bool do_scroll);
+
+    private:
       void rebuild ();
       void rebuild_article_action (const Quark& message_id);
       void rebuild_article_state  (const Quark& message_id);
@@ -317,7 +320,6 @@ namespace pan
       static int column_compare_func (GtkTreeModel*, GtkTreeIter*, GtkTreeIter*, gpointer);
     private:
       class CountUnread;
-      class SelectFirstArticle;
       class RowInserter;
       class SimilarWalk;
       void walk_and_collect (GtkTreeModel*, GtkTreeIter*, std::set<const Article*>&) const;

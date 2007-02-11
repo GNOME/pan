@@ -515,34 +515,6 @@ namespace
   }
 }
 
-struct HeaderPane::SelectFirstArticle: public PanTreeStore::WalkFunctor
-{
-  GtkTreeView * tree_view;
-  GtkTreeSelection * tree_selection;
-  const quarks_t mids;
-  const bool do_scroll;
-  SelectFirstArticle (GtkTreeView * v, GtkTreeSelection *sel, const quarks_t& m, bool scroll):
-    tree_view(v), tree_selection(sel), mids(m), do_scroll(scroll) {}
-  virtual ~SelectFirstArticle () {}
-  virtual bool operator()(PanTreeStore *store, PanTreeStore::Row* r, GtkTreeIter *iter, GtkTreePath *unused) {
-    Row * row (dynamic_cast<Row*>(r));
-    const Article * article (row->article);
-    if (mids.count (article->message_id)) {
-      GtkTreePath * path = gtk_tree_model_get_path (GTK_TREE_MODEL(store), iter);
-      gtk_tree_view_expand_row (tree_view, path, true);
-      gtk_tree_view_expand_to_path (tree_view, path);
-      if (do_scroll) {
-        gtk_tree_view_set_cursor (tree_view, path, NULL, false);
-        gtk_tree_view_scroll_to_cell (tree_view, path, NULL, true, 0.5f, 0.0f);
-        gtk_tree_selection_select_path (tree_selection, path);
-      }
-      gtk_tree_path_free (path);
-      return false;
-    }
-    return true;
-  }
-};
-
 void
 HeaderPane :: rebuild ()
 {
@@ -567,11 +539,8 @@ HeaderPane :: rebuild ()
   if (_prefs.get_flag ("expand-threads-when-entering-group", false))
     gtk_tree_view_expand_all (view);
 
-  if (!selectme.empty()) {
-    GtkTreeSelection * sel = gtk_tree_view_get_selection (view);
-    SelectFirstArticle walker (view, sel, selectme, true);
-    _tree_store->walk (walker);
-  }
+  if (!selectme.empty())
+    select_message_id (*selectme.begin(), true);
 }
 
 bool
@@ -679,34 +648,43 @@ namespace
 }
 
 void
+HeaderPane :: select_message_id (const Quark& mid, bool do_scroll)
+{
+  HeaderPane::Row * row = get_row (mid);
+  GtkTreePath * path (_tree_store->get_path(row));
+  GtkTreeView * view (GTK_TREE_VIEW(_tree_view));
+  gtk_tree_view_expand_row (view, path, true);
+  gtk_tree_view_expand_to_path (view, path);
+  if (do_scroll) {
+    gtk_tree_view_set_cursor (view, path, NULL, false);
+    gtk_tree_view_scroll_to_cell (view, path, NULL, true, 0.5f, 0.0f);
+  }
+  GtkTreeSelection * sel (gtk_tree_view_get_selection (view));
+  gtk_tree_selection_select_path (sel, path);
+  gtk_tree_path_free (path);
+}
+
+void
 HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
 {
   debug (diffs.added.size() << " article added; "
       << diffs.reparented.size() << " reparented; "
       << diffs.removed.size() << " removed");
 
-  const bool rows_added_or_removed (!diffs.added.empty()
-                                 || !diffs.reparented.empty()
-                                 || !diffs.removed.empty());
-  quarks_t selectme;
-  if (rows_added_or_removed)
-  {
-    // we might need to change the selection after the update.
-    const articles_t tmp (get_full_selection ());
+  // we might need to change the selection after the update.
+  const article_v old_selection (get_full_selection_v ());
+  quarks_t new_selection;
+  foreach_const (article_v, old_selection, it)
+    if (!diffs.removed.count ((*it)->message_id))
+        new_selection.insert ((*it)->message_id);
 
-    articles_t survivors;
-    foreach_const (articles_t, tmp, it)
-      if (!diffs.removed.count ((*it)->message_id))
-        survivors.insert (*it);
-
-    if (survivors.empty()) {
-      // none of the current selections survive,
-      // so select the first article after the
-      // deleted ones...
-      ArticleIsNotInSet tester (diffs.removed);
-      RememberMessageId actor (selectme);
-      action_next_if (tester, actor);
-    }
+  // if none of the current selection survived,
+  // we need to select something to replace the
+  // current selection.
+  if (!old_selection.empty() && new_selection.empty()) {
+    ArticleIsNotInSet tester (diffs.removed);
+    RememberMessageId actor (new_selection);
+    action_next_if (tester, actor);
   }
 
   // added...
@@ -715,10 +693,10 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
     const EvolutionDateMaker date_maker;
     PanTreeStore::parent_to_children_t tmp;
     foreach_const (Data::ArticleTree::Diffs::added_t, diffs.added, it)
-      create_row (date_maker, _atree->get_article(it->message_id));
+      create_row (date_maker, _atree->get_article(it->first));
     foreach_const (Data::ArticleTree::Diffs::added_t, diffs.added, it) {
-      Row * parent (do_thread ? get_row (it->parent) : 0);
-      Row * child (get_row (it->message_id));
+      Row * parent (do_thread ? get_row (it->second.parent) : 0);
+      Row * child (get_row (it->first));
       tmp[parent].push_back (child);
     }
     _tree_store->insert_sorted (tmp);
@@ -728,8 +706,8 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
   if (do_thread && !diffs.reparented.empty()) {
     PanTreeStore::parent_to_children_t tmp;
     foreach_const (Data::ArticleTree::Diffs::reparented_t, diffs.reparented, it) {
-      Row * parent (get_row (it->new_parent));
-      Row * child  (get_row (it->message_id));
+      Row * parent (get_row (it->second.new_parent));
+      Row * child  (get_row (it->second.message_id));
       tmp[parent].push_back (child);
     }
     _tree_store->reparent (tmp);
@@ -758,16 +736,13 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
   if (!diffs.added.empty() && _prefs.get_flag ("expand-threads-when-entering-group", false))
     gtk_tree_view_expand_all (GTK_TREE_VIEW(_tree_view));
 
-  // select the next article if one was deleted...
-  // when an xover task adds a batch of articles periodically,
-  // scrolling causes an irritating 'jump', but when you delete
-  // articles, you /want/ that jump to the next article.
-  // So, scroll in the latter case but not the former.
-  if (!selectme.empty()) {
-    const bool do_scroll (diffs.added.empty() && !diffs.removed.empty());
-    GtkTreeSelection * sel = gtk_tree_view_get_selection (GTK_TREE_VIEW(_tree_view));
-    SelectFirstArticle walk (GTK_TREE_VIEW(_tree_view), sel, selectme, do_scroll);
-    _tree_store->walk (walk);
+  // update our selection if necessary.
+  // if the new selection has just been added or reparented,
+  // scroll to it to ensure that it's visible on the screen.
+  if (!new_selection.empty()) {
+    const Quark mid (*new_selection.begin());
+    const bool do_scroll = diffs.added.count(mid) || diffs.reparented.count(mid);
+    select_message_id (mid, do_scroll);
   }
 }
 

@@ -385,7 +385,7 @@ namespace pan
               Quark parent;
             };
 
-            typedef std::list<Added> added_t;
+            typedef std::map<Quark,Added> added_t;
             added_t added;
 
             /**
@@ -405,7 +405,7 @@ namespace pan
               Quark new_parent;
             };
 
-            typedef std::list<Reparent> reparented_t;
+            typedef std::map<Quark,Reparent> reparented_t;
             reparented_t reparented;
 
             quarks_t removed;

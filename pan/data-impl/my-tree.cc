@@ -284,7 +284,7 @@ DataImpl :: MyTree :: remove_articles (const quarks_t& mids)
     if (n->_article && n->_parent && !n->_parent->_article)
     {
       // start filling out a diff entry
-      ArticleTree::Diffs::Reparent r;
+      Diffs::Reparent r;
       r.message_id = n->_mid;
       r.old_parent = n->_parent->_mid;
 
@@ -300,7 +300,8 @@ DataImpl :: MyTree :: remove_articles (const quarks_t& mids)
       }
       n->_parent = newparent;
 
-      diffs.reparented.push_back (r);
+      diffs.reparented.insert (diffs.reparented.end(),
+                               std::pair<Quark,Diffs::Reparent>(r.message_id, r));
     }
   }
 
@@ -434,7 +435,8 @@ DataImpl :: MyTree :: add_articles (const const_nodes_v& nodes_in)
       added.parent = parent->_mid;
     }
 
-    diffs.added.push_back (added);
+    diffs.added.insert (diffs.added.end(),
+                        std::pair<Quark,Diffs::Added>(added.message_id, added));
     //std::cerr << LINE_ID << " child " << added.message_id
     //                     << " has parent " << added.parent << std::endl;
   }
@@ -522,7 +524,8 @@ DataImpl :: MyTree :: add_articles (const const_nodes_v& nodes_in)
     tree_node->_parent = new_parent;
     reparent.message_id = tree_node->_mid;
     reparent.new_parent = new_parent->_mid;
-    diffs.reparented.push_back (reparent);
+    diffs.reparented.insert (diffs.reparented.end(),
+                             std::pair<Quark,Diffs::Reparent>(reparent.message_id, reparent));
     //std::cerr << LINE_ID << " REPARENTED: " << reparent.message_id
     //          << " has a new parent " << reparent.new_parent << std::endl;
   }
