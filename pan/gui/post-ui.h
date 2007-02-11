@@ -62,6 +62,7 @@ namespace pan
       void open_draft ();
       void send_now ();
       void close_window ();
+      void set_wrap_mode (bool wrap);
 
     private:
       void done_sending_message (GMimeMessage*, bool);
@@ -118,6 +119,9 @@ namespace pan
       GMimeMessage * new_message_from_ui (Mode mode);
       bool check_message (const Quark& server, GMimeMessage*);
       bool check_charset ();
+
+    private:
+      std::string get_body () const;
 
     private:
       unsigned long _group_entry_changed_id;

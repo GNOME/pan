@@ -112,97 +112,49 @@ PostUI :: set_spellcheck_enabled (bool enabled)
 ****  WRAP CODE
 ***/
 
-namespace
+/**
+ * get current the body.
+ * since Pan posts WYSIWYG, pull from the view's lines
+ * rather than just using text_buffer_get_text(start,end)
+ */
+std::string
+PostUI :: get_body () const
 {
-  bool wrap_is_enabled (true);
+  std::string body;
+  GtkTextBuffer * buf (_body_buf);
+  GtkTextView * view (GTK_TEXT_VIEW(_body_view));
 
-  void on_wrap_toggled (GtkToggleAction* toggle, gpointer unused)
-  {
-    wrap_is_enabled = gtk_toggle_action_get_active (toggle);
+  // walk through all the complete lines...
+  GtkTextIter body_start, body_end, line_start, line_end;
+  gtk_text_buffer_get_bounds (buf, &body_start, &body_end);
+  line_start = line_end = body_start;
+  while ((gtk_text_view_forward_display_line (view, &line_end))) {
+    char * line = gtk_text_buffer_get_text (buf, &line_start, &line_end, false);
+    line = g_strchomp (line); // erase trailing whitespace
+    body += line;
+    body += '\n';
+    g_free (line);
+    line_start = line_end;
   }
 
-  void
-  text_was_inserted_cb (GtkTextBuffer   * text_buffer,
-                        GtkTextIter     * insert_pos,
-                        char            * text,
-                        int               text_len,
-                        gpointer          tm_gpointer)
-  {
-    // dampen out a recursive event storm that would otherwise
-    // happen from us changing the text buffer by rewrapping the
-    // text here
-    static bool dampen_feedback (false);
+  // and maybe the last line doesn't have a linefeed yet...
+  char * last_line = gtk_text_buffer_get_text (buf, &line_start, &body_end, false);
+  if (last_line && *last_line)
+    body += last_line;
+  g_free (last_line);
 
-    if (dampen_feedback || !wrap_is_enabled)
-      return;
-
-    GtkTextIter line_begin_iter;
-    const TextMassager& tm (*static_cast<TextMassager*>(tm_gpointer));
-    const int line_number = gtk_text_iter_get_line (insert_pos);
-
-    // make sure the line length isn't too wide
-    gtk_text_buffer_get_iter_at_line (text_buffer, &line_begin_iter, line_number);
-    int line_length = gtk_text_iter_get_chars_in_line(&line_begin_iter);
-    if (line_length < tm.get_wrap_column())
-      return;
-
-    // we'll need to wrap all the way to the end of the paragraph to ensure
-    // the wrapping works right -- so look for an empty line...
-    GtkTextIter end_iter = line_begin_iter;
-    for (;;) {
-      if (!gtk_text_iter_forward_line (&end_iter))
-        break;
-      if (gtk_text_iter_get_chars_in_line (&end_iter) < 2)
-        break;
-    }
-
-    // move backward to the end of the previous word
-    gtk_text_iter_backward_word_start (&end_iter);
-    gtk_text_iter_forward_word_end (&end_iter);
-
-    // if the wrapped text is any different from the text already in
-    // the buffer, then replace the buffer's text with the wrapped version.
-    char * pch (gtk_text_buffer_get_text (text_buffer, &line_begin_iter, &end_iter, false));
-    std::string before = pch;
-    g_free (pch);
-    std::string after (tm.fill (before));
-    if (before == after)
-      return;
-
-    // okay, we need to rewrap.
-    dampen_feedback = true;
-
-    // remember where the insert pos was so that we can revalidate
-    // the iterator that was passed in
-    int insert_iterator_pos (gtk_text_iter_get_offset (insert_pos));
-
-    // get char_offset so that we can update insert and selection_bound
-    // marks after we make the change
-    GtkTextMark * mark (gtk_text_buffer_get_mark (text_buffer, "insert"));
-    GtkTextIter insert_iter;
-    gtk_text_buffer_get_iter_at_mark (text_buffer, &insert_iter, mark);
-    int char_offset (gtk_text_iter_get_offset (&insert_iter));
-    const int width_diff ((int)after.size() - (int)before.size());
-
-    // swap the non-wrapped for the wrapped text
-    gtk_text_buffer_delete (text_buffer, &line_begin_iter, &end_iter);
-    gtk_text_buffer_insert (text_buffer, &line_begin_iter, after.c_str(), -1);
-
-    // update the insert and selection_bound marks to
-    // where they were before the swap
-    gtk_text_buffer_get_iter_at_offset (text_buffer, &insert_iter, char_offset + width_diff);
-    mark = gtk_text_buffer_get_mark (text_buffer, "insert");
-    gtk_text_buffer_move_mark (text_buffer, mark, &insert_iter);
-    mark = gtk_text_buffer_get_mark (text_buffer, "selection_bound");
-    gtk_text_buffer_move_mark (text_buffer, mark, &insert_iter);
-
-    // revalidate the insert_pos iterator
-    gtk_text_buffer_get_iter_at_offset (text_buffer, insert_pos, insert_iterator_pos + width_diff);
-
-    dampen_feedback = false;
-  }
+  return body;
 }
 
+void
+PostUI :: set_wrap_mode (bool wrap)
+{
+  const std::string s (get_body());
+  gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
+
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(_body_view),
+                               wrap ? GTK_WRAP_WORD : GTK_WRAP_NONE);
+}
 
 /***
 ****  Menu and Toolbar
@@ -216,7 +168,6 @@ namespace
   void do_copy     (GtkAction * w, gpointer p) { g_signal_emit_by_name (get_focus(p), "copy_clipboard"); }
   void do_paste    (GtkAction * w, gpointer p) { g_signal_emit_by_name (get_focus(p), "paste_clipboard"); }
   void do_rot13    (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->rot13_selection(); }
-  void do_wrap     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->wrap_body (); }
   void do_edit     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->spawn_editor (); }
   void do_editors  (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->manage_editors (); }
   void do_profiles (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->manage_profiles (); }
@@ -224,6 +175,7 @@ namespace
   void do_save     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->save_draft (); }
   void do_open     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->open_draft (); }
   void do_close    (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->close_window (); }
+  void do_wrap     (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_wrap_mode (gtk_toggle_action_get_active (w)); }
 
   void editor_selected_cb (GtkRadioAction * action, GtkRadioAction * current, gpointer post_gpointer)
   {
@@ -245,7 +197,6 @@ namespace
     { "post-article", GTK_STOCK_EXECUTE, N_("_Send Article"), "<control>Return", N_("Send Article Now"), G_CALLBACK(do_send) },
     { "save-draft", GTK_STOCK_SAVE, N_("Sa_ve Draft"), "<control>s", N_("Save as a Draft for Future Posting"), G_CALLBACK(do_save) },
     { "open-draft", GTK_STOCK_OPEN, N_("_Open Draft..."), "<control>o", N_("Open an Article Draft"), G_CALLBACK(do_open) },
-    { "rewrap", GTK_STOCK_JUSTIFY_FILL, N_("Wrap _Now"), NULL, N_("Wrap the Article Body to 80 Columns"), G_CALLBACK(do_wrap) },
     { "close", GTK_STOCK_CLOSE, NULL, NULL, NULL, G_CALLBACK(do_close) },
     { "cut", GTK_STOCK_CUT, NULL, NULL, NULL, G_CALLBACK(do_cut) },
     { "copy", GTK_STOCK_COPY, NULL, NULL, NULL, G_CALLBACK(do_copy) },
@@ -258,7 +209,7 @@ namespace
 
   GtkToggleActionEntry toggle_entries[] =
   {
-    { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), NULL, NULL, G_CALLBACK(on_wrap_toggled), true },
+    { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), NULL, NULL, G_CALLBACK(do_wrap), true },
     { "remember-charset", NULL, N_("Remember _Charset for This Group"), NULL, NULL, G_CALLBACK(on_remember_charset_toggled), true },
     { "spellcheck", NULL, N_("Check _Spelling"), NULL, NULL, G_CALLBACK(on_spellcheck_toggled), true }
   };
@@ -479,23 +430,6 @@ PostUI :: manage_profiles ()
   apply_profile ();
 }
 
-namespace
-{
-  std::string get_text (GtkTextBuffer * buf)
-  {
-    std::string ret;
-
-    GtkTextIter start, end;
-    gtk_text_buffer_get_bounds (buf, &start, &end);
-    char * pch (gtk_text_buffer_get_text (buf, &start, &end, false));
-    if (pch)
-      ret = pch;
-    g_free (pch);
-
-    return ret;
-  }
-}
-
 void
 PostUI :: manage_editors ()
 {
@@ -533,7 +467,7 @@ PostUI :: manage_editors ()
 
   gtk_dialog_run (GTK_DIALOG (d));
 
-  const std::string text (get_text (buf));
+  const std::string text (get_body ());
   commands.clear ();
   StringView token, v (text);
   while (v.pop_token (token, '\n')) {
@@ -562,28 +496,6 @@ PostUI :: rot13_selection ()
   }
 } 
 
-void
-PostUI :: wrap_body ()
-{
-  // get the current body
-  GtkTextBuffer * buffer (_body_buf);
-  GtkTextIter start, end;
-  gtk_text_buffer_get_bounds (buffer, &start, &end);
-  char * body = gtk_text_buffer_get_text (buffer, &start, &end, false);
-
-  // wrap the body
-  const std::string new_body (_tm.fill( body));
-
-  // turn off our own wrapping while we fill the body pane */
-  const bool b (wrap_is_enabled);
-  wrap_is_enabled = false;
-  gtk_text_buffer_set_text (_body_buf, new_body.c_str(), new_body.size());
-  wrap_is_enabled = b;
-
-  // cleanup
-  g_free (body);
-}
-
 namespace
 {
   gboolean delete_event_cb (GtkWidget *w, GdkEvent *e, gpointer user_data)
@@ -598,7 +510,7 @@ PostUI :: close_window ()
 {
   bool destroy_flag (false);;
 
-  if (get_text (_body_buf) == _unchanged_body)
+  if (get_body() == _unchanged_body)
     destroy_flag = true;
 
   else {
@@ -664,7 +576,7 @@ PostUI :: check_charset ()
     return true;
 
   // Check if body can be posted in the selected charset 
-  std::string body = get_text(_body_buf);
+  const std::string body (get_body ());
   char *tmp = g_convert (body.c_str(), -1, charset.c_str(), "UTF-8", NULL, NULL, NULL);
   if (tmp) {
     g_free(tmp);
@@ -756,7 +668,7 @@ void
 PostUI :: done_sending_message (GMimeMessage * message, bool ok)
 {
   if (ok) {
-    _unchanged_body = get_text (_body_buf);
+    _unchanged_body = get_body ();
     close_window ();
   }
 
@@ -998,18 +910,10 @@ PostUI :: spawn_editor ()
     }
   }
 
-  // get the current article body
-  char * chars (0);
-  size_t len;
-  if (ok) {
-    GtkTextIter start, end;
-    gtk_text_buffer_get_bounds (buf, &start, &end);
-    chars = gtk_text_buffer_get_text (buf, &start, &end, false);
-    len = strlen (chars);
-  }
+  const std::string body (get_body ());
 
   if (ok) {
-    if (fwrite (chars, sizeof(char), len, fp) != len) {
+    if (fwrite (body.c_str(), sizeof(char), body.size(), fp) != body.size()) {
       ok = false;
       Log::add_err_va (_("Error writing article to temporary file: %s"), g_strerror(errno));
     }
@@ -1019,8 +923,6 @@ PostUI :: spawn_editor ()
     fclose (fp);
     fp = NULL;
   }
-
-  g_free (chars);
 
   // parse the command line
   int argc (0);
@@ -1245,15 +1147,11 @@ PostUI :: new_message_from_ui (Mode mode)
 
   // User-Agent
   if (!g_mime_message_get_header (msg, "User-Agent"))
-    g_mime_message_set_header (msg, "User-Agent", get_user_agent().c_str());
+       g_mime_message_set_header (msg, "User-Agent", get_user_agent().c_str());
 
   // body & charset
-  buf = _body_buf;
-  gtk_text_buffer_get_bounds (buf, &start, &end);
-  pch = gtk_text_buffer_get_text (buf, &start, &end, false);
-  pch = g_strstrip (pch);
-  GMimeStream * stream = g_mime_stream_mem_new_with_buffer (pch, strlen(pch));
-  g_free (pch);
+  std::string body (get_body());
+  GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
   const std::string charset ((mode==POSTING && !_charset.empty()) ? _charset : "UTF-8");
   if (charset != "UTF-8") {
     // add a wrapper to convert from UTF-8 to $charset
@@ -1323,7 +1221,7 @@ PostUI :: save_draft ()
     g_free (filename);
     g_object_unref (msg);
 
-    _unchanged_body = get_text (_body_buf);
+    _unchanged_body = get_body ();
   }
 
   gtk_widget_destroy (d);
@@ -1336,11 +1234,11 @@ namespace
     view = gtk_text_view_new ();
     buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW(view));
 
-    // force a monospace font, and size it to 80 cols x 30 rows
+    // force a monospace font, and size it to 75 cols x 30 rows
     const std::string str (prefs.get_string ("monospace-font", "Monospace 10"));
     PangoFontDescription *pfd (pango_font_description_from_string (str.c_str()));
     PangoContext * context = gtk_widget_create_pango_context (view);
-    const int column_width (80);
+    const int column_width (75);
     std::string line (column_width, 'A');
     pango_context_set_font_description (context, pfd);
     PangoLayout * layout = pango_layout_new (context);
@@ -1350,8 +1248,8 @@ namespace
     gtk_widget_set_size_request (view, PANGO_PIXELS(r.width),
                                        PANGO_PIXELS(r.height*30));
     gtk_widget_modify_font (view, pfd);
-    
-    gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(view), GTK_WRAP_NONE);
+   
+    gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(view), GTK_WRAP_WORD);
     gtk_text_view_set_editable (GTK_TEXT_VIEW(view), true);
     GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),
@@ -1580,15 +1478,7 @@ PostUI :: apply_profile_to_body ()
   else
     attribution.clear ();
 
-  // get current the body
-  GtkTextBuffer * buf (_body_buf);
-  GtkTextIter start, end;
-  gtk_text_buffer_get_bounds (buf, &start, &end);
-  pch = gtk_text_buffer_get_text (buf, &start, &end, false);
-  std::string body;
-  if (pch)
-    body = pch;
-  g_free (pch);
+  std::string body = get_body ();
 
   // replace the attribution
   const std::string old_attribution (_hidden_headers["X-Draft-Attribution"]);
@@ -1610,10 +1500,8 @@ PostUI :: apply_profile_to_body ()
   if (!GNKSA :: find_signature_delimiter (body, index))
     index = body.size();
   StringView v (body.c_str(), index);
-  v.trim ();
+  v.rtrim ();
   body.assign (v.str, v.len);
-  if (!body.empty())
-    body += "\n\n";
   const int insert_pos = body.size();
 
   // insert the new signature
@@ -1626,7 +1514,8 @@ PostUI :: apply_profile_to_body ()
     body += sig;
   }
 
-  gtk_text_buffer_set_text (buf, body.c_str(), body.size()); // FIXME: wrap
+  GtkTextBuffer * buf (_body_buf);
+  gtk_text_buffer_set_text (buf, body.c_str(), body.size());
 
   // set & scroll-to the insert point
   GtkTextIter iter;
@@ -1929,12 +1818,11 @@ PostUI :: PostUI (GtkWindow    * parent,
   // add the body text widget
   w = create_body_widget (_body_buf, _body_view, prefs);
   set_spellcheck_enabled (prefs.get_flag ("spellcheck-enabled", DEFAULT_SPELLCHECK_FLAG));
-  g_signal_connect_after (_body_buf, "insert-text", G_CALLBACK(text_was_inserted_cb), &_tm);
   gtk_box_pack_start (GTK_BOX(vbox), w, true, true, 0);
 
   set_message (message);
 
-  _unchanged_body = get_text (_body_buf);
+  _unchanged_body = get_body ();
 
   // set focus to the first non-populated widget
   GtkWidget * grab (0);
