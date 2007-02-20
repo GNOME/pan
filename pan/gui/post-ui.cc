@@ -130,10 +130,10 @@ PostUI :: get_body () const
   line_start = line_end = body_start;
   while ((gtk_text_view_forward_display_line (view, &line_end))) {
     char * line = gtk_text_buffer_get_text (buf, &line_start, &line_end, false);
-    line = g_strchomp (line); // erase trailing whitespace
     body += line;
-    body += '\n';
     g_free (line);
+    if (*body.rbegin() != '\n')
+      body += '\n';
     line_start = line_end;
   }
 
@@ -1215,45 +1215,66 @@ PostUI :: save_draft ()
   gtk_widget_destroy (d);
 }
 
-namespace
+void
+PostUI :: body_widget_resized_cb (GtkWidget      * w,
+                                  GtkAllocation  * allocation,
+                                  gpointer         self)
 {
-  GtkWidget* create_body_widget (GtkTextBuffer*& buf, GtkWidget*& view, const Prefs &prefs)
-  {
-    view = gtk_text_view_new ();
-    buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW(view));
+  gtk_text_view_set_right_margin (
+    GTK_TEXT_VIEW(w),
+    allocation->width - static_cast<PostUI*>(self)->_wrap_pixels);
+}
 
-    // force a monospace font, and size it to 80 cols x 30 rows
-    const std::string str (prefs.get_string ("monospace-font", "Monospace 10"));
-    PangoFontDescription *pfd (pango_font_description_from_string (str.c_str()));
-    PangoContext * context = gtk_widget_create_pango_context (view);
-    const int column_width (80);
-    std::string line (column_width, 'A');
-    pango_context_set_font_description (context, pfd);
-    PangoLayout * layout = pango_layout_new (context);
-    pango_layout_set_text (layout, line.c_str(), line.size());
-    PangoRectangle r;
-    pango_layout_get_extents (layout, &r, 0);
-    gtk_widget_set_size_request (view, PANGO_PIXELS(r.width),
-                                       PANGO_PIXELS(r.height*30));
-    gtk_widget_modify_font (view, pfd);
-   
-    gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(view), GTK_WRAP_WORD);
-    gtk_text_view_set_editable (GTK_TEXT_VIEW(view), true);
-    GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-    gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),
-                                         GTK_SHADOW_IN);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                    GTK_POLICY_AUTOMATIC,
-                                    GTK_POLICY_AUTOMATIC);
-    gtk_container_add (GTK_CONTAINER (scrolled_window), view);
+GtkWidget*
+PostUI :: create_body_widget (GtkTextBuffer*& buf, GtkWidget*& view, const Prefs &prefs)
+{
+  const int WRAP_COLS = 75;
+  const int VIEW_COLS = 80;
+  const int VIEW_ROWS = 30;
 
-    // cleanup
-    g_object_unref (G_OBJECT(layout));
-    g_object_unref (G_OBJECT(context));
-    pango_font_description_free (pfd);
+  view = gtk_text_view_new ();
+  buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW(view));
 
-    return scrolled_window;
-  }
+  // always use a monospace font in the compose window
+  const std::string str (prefs.get_string ("monospace-font", "Monospace 10"));
+  PangoFontDescription *pfd (pango_font_description_from_string (str.c_str()));
+  gtk_widget_modify_font (view, pfd);
+
+  // figure out how wide the text is before the wrap point
+  PangoContext * context = gtk_widget_create_pango_context (view);
+  pango_context_set_font_description (context, pfd);
+  PangoLayout * layout = pango_layout_new (context);
+  std::string s (WRAP_COLS, 'A');
+  pango_layout_set_text (layout, s.c_str(), s.size());
+  PangoRectangle r;
+  pango_layout_get_extents (layout, &r, 0);
+  _wrap_pixels = PANGO_PIXELS(r.width);
+
+  // figure out how wide we want to make the window
+  s.assign (VIEW_COLS, 'A');
+  pango_layout_set_text (layout, s.c_str(), s.size());
+  pango_layout_get_extents (layout, &r, 0);
+  gtk_widget_set_size_request (view, PANGO_PIXELS(r.width),
+                                     PANGO_PIXELS(r.height*VIEW_ROWS));
+ 
+  // set the rest of the text view's policy 
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(view), GTK_WRAP_WORD);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW(view), true);
+  GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),
+                                       GTK_SHADOW_IN);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), view);
+  g_signal_connect (view, "size-allocate", G_CALLBACK(body_widget_resized_cb), this);
+
+  // cleanup
+  g_object_unref (G_OBJECT(layout));
+  g_object_unref (G_OBJECT(context));
+  pango_font_description_free (pfd);
+
+  return scrolled_window;
 }
 
 void
@@ -1637,7 +1658,7 @@ PostUI :: set_message (GMimeMessage * message)
   int ignored;
   char * tmp = g_mime_message_get_body (message, true, &ignored);
   if (tmp) {
-    std::string s = tmp;
+    std::string s = TextMassager().fill (tmp);
     s += "\n\n";
     gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
   }
@@ -1646,6 +1667,23 @@ PostUI :: set_message (GMimeMessage * message)
   // apply the profiles
   update_profile_combobox ();
   apply_profile ();
+
+  // set focus to the first non-populated widget
+  GtkWidget * grab (0);
+  if (!grab) {
+    const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
+    if (!cpch || !*cpch)
+      grab = _subject_entry;
+  }
+  if (!grab) {
+    const StringView one (gtk_entry_get_text (GTK_ENTRY(_groups_entry)));
+    const StringView two (gtk_entry_get_text (GTK_ENTRY(_to_entry)));
+    if (one.empty() && two.empty())
+      grab = _groups_entry;
+  }
+  if (!grab)
+    grab = _body_view;
+  gtk_widget_grab_focus (grab);
 }
 
 /**
@@ -1654,12 +1692,12 @@ PostUI :: set_message (GMimeMessage * message)
  * will work properly.
  */
 void
-PostUI :: body_view_realized (GtkWidget * w, gpointer self_gpointer)
+PostUI :: body_view_realized_cb (GtkWidget * w, gpointer self_gpointer)
 {
-  PostUI * self (static_cast<PostUI*>(self_gpointer));
+  PostUI * self = static_cast<PostUI*>(self_gpointer);
   self->set_message (self->_message);
   self->_unchanged_body = self->get_body ();
-  g_signal_handler_disconnect (w, self->body_view_realized_handler);
+  g_signal_handler_disconnect (self->_body_view, self->body_view_realized_handler);
 }
 
 /***
@@ -1864,24 +1902,7 @@ PostUI :: PostUI (GtkWindow    * parent,
   // will work correctly.
   _message = message;
   g_object_ref (G_OBJECT(_message));
-  body_view_realized_handler = g_signal_connect (_body_view, "realize", G_CALLBACK(body_view_realized), this);
-
-  // set focus to the first non-populated widget
-  GtkWidget * grab (0);
-  if (!grab) {
-    const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
-    if (!cpch || !*cpch)
-      grab = _subject_entry;
-  }
-  if (!grab) {
-    const StringView one (gtk_entry_get_text (GTK_ENTRY(_groups_entry)));
-    const StringView two (gtk_entry_get_text (GTK_ENTRY(_to_entry)));
-    if (one.empty() && two.empty())
-      grab = _groups_entry;
-  }
-  if (!grab)
-    grab = _body_view;
-  gtk_widget_grab_focus (grab);
+  body_view_realized_handler = g_signal_connect (_body_view, "realize", G_CALLBACK(body_view_realized_cb), this);
 }
 
 PostUI*

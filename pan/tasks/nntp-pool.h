@@ -37,7 +37,6 @@ namespace pan
   class NNTP_Pool:
     public NNTP::Source,
     private NNTP::Listener,
-    private ServerInfo::Listener,
     private Socket::Creator::Listener
   {
     public:
@@ -75,9 +74,6 @@ namespace pan
     private: //  NNTP::Listener
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
 
-    private: // ServerInfo::Listener
-      virtual void on_server_limits_changed (const Quark& server, int max_connections);
-
     private: // Socket::Creator::Listener
       virtual void on_socket_created (const StringView& host, int port, bool ok, Socket*);
 
@@ -96,7 +92,6 @@ namespace pan
       const Quark _server;
       Socket::Creator * _socket_creator;
       int _pending_connections;
-      int _max_connections;
 
       struct PoolItem {
         NNTP * nntp;

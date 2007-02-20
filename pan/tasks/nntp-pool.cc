@@ -43,17 +43,13 @@ NNTP_Pool :: NNTP_Pool (const Quark        & server,
   _server (server),
   _socket_creator (creator),
   _pending_connections (0),
-  _max_connections (_server_info.get_server_limits (_server)),
   _active_count (0),
   _time_to_allow_new_connections (0)
 {
-  _server_info.add_listener (this);
 }
 
 NNTP_Pool :: ~NNTP_Pool ()
 {
-  _server_info.remove_listener (this);
-
   foreach (pool_items_t, _pool_items, it) {
     delete it->nntp->_socket;
     delete it->nntp;
@@ -124,30 +120,31 @@ NNTP_Pool :: check_in (NNTP * nntp, Health health)
       break;
 
   // process the nntp if we have a match
-  if (it != _pool_items.end()) {
+  if (it != _pool_items.end())
+  {
+    const bool bad_connection = (health == NETWORK_FAILED);
+    int active, idle, pending, max;
+    get_counts (active, idle, pending, max);
+    const bool too_many = (pending + active) > max;
+    const bool discard = bad_connection || too_many;
+
     --_active_count;
-    if (health == NETWORK_FAILED) {
+
+    if (discard)
+    {
       delete it->nntp->_socket;
       delete it->nntp;
       _pool_items.erase (it);
-      allow_new_connections (); // to make up for this one
-    } else {
+      if (bad_connection)
+        allow_new_connections (); // to make up for this one
+    }
+    else
+    {
       it->is_checked_in = true;
       it->last_active_time = time (NULL);
       fire_pool_has_nntp_available ();
     }
   }
-}
-
-/***
-****
-***/
-
-void
-NNTP_Pool :: on_server_limits_changed (const Quark& server, int max_connections)
-{
-  assert (server == _server);
-  _max_connections = max_connections;
 }
 
 /***
@@ -187,8 +184,11 @@ NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response
      // there doesn't seem to be a reliable way to test for this:
      // response can be 502, 400, or 451... and the error messages
      // vary from server to server
-
-     if (   (s.find ("too many") != s.npos)
+     if (   (s.find ("502") != s.npos)
+         || (s.find ("400") != s.npos)
+         || (s.find ("451") != s.npos)
+         || (s.find ("480") != s.npos) // http://bugzilla.gnome.org/show_bug.cgi?id=409085
+         || (s.find ("too many") != s.npos)
          || (s.find ("limit reached") != s.npos)
          || (s.find ("maximum number of connections") != s.npos))
      {
@@ -241,7 +241,7 @@ NNTP_Pool :: get_counts (int& setme_active,
 {
   setme_active = _active_count;
   setme_idle = _pool_items.size() - _active_count;
-  setme_max = _max_connections;
+  setme_max = _server_info.get_server_limits (_server);
   setme_pending  = _pending_connections;
 }
 

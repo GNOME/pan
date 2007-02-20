@@ -77,29 +77,6 @@ namespace pan
       virtual int get_server_limits (const Quark & server) const = 0;
 
       virtual int get_server_article_expiration_age  (const Quark  & server) const = 0;
-
-    public:
-
-      class Listener {
-        public:
-          virtual ~Listener () { }
-          virtual void on_server_limits_changed (const Quark& server, int max_connections) = 0;
-      };
-
-      void add_listener (Listener * l) { _listeners.insert (l); }
-      void remove_listener (Listener * l) { _listeners.erase (l); }
-
-    private:
-
-      typedef std::set<Listener*> listeners_t;
-      listeners_t _listeners;
-
-    protected:
-
-      void fire_server_limits_changed (const Quark& server, int max_connections) {
-        for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
-          (*it++)->on_server_limits_changed (server, max_connections);
-      }
   };
 }
 

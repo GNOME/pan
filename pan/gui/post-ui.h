@@ -108,6 +108,7 @@ namespace pan
       str2str_t _hidden_headers;
       str2str_t _profile_headers;
       std::string _unchanged_body;
+      int _wrap_pixels;
 
     private:
       void add_actions (GtkWidget* box);
@@ -124,7 +125,9 @@ namespace pan
     private:
       std::string get_body () const;
       gulong body_view_realized_handler;
-      static void body_view_realized (GtkWidget*, gpointer);
+      static void body_view_realized_cb (GtkWidget*, gpointer);
+      GtkWidget* create_body_widget (GtkTextBuffer*&, GtkWidget*&, const pan::Prefs&);
+      static void body_widget_resized_cb (GtkWidget*, GtkAllocation*, gpointer);
 
     private:
       unsigned long _group_entry_changed_id;
