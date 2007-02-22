@@ -92,7 +92,11 @@ namespace pan
       GtkWidget * _subject_entry;
       GtkWidget * _groups_entry;
       GtkWidget * _to_entry;
+      GtkWidget * _followupto_entry;
+      GtkWidget * _replyto_entry;
       GtkWidget * _body_view;
+      GtkWidget * _user_agent_check;
+      GtkWidget * _message_id_check;
       GtkTextBuffer * _body_buf;
       GtkTextBuffer * _headers_buf;
       GMimeMessage * _message;
@@ -109,6 +113,7 @@ namespace pan
       str2str_t _profile_headers;
       std::string _unchanged_body;
       int _wrap_pixels;
+      GtkTooltips * _ttips;
 
     private:
       void add_actions (GtkWidget* box);
@@ -121,6 +126,10 @@ namespace pan
       Profile get_current_profile ();
       bool check_message (const Quark& server, GMimeMessage*);
       bool check_charset ();
+
+    private:
+      GtkWidget* create_main_tab ();
+      GtkWidget* create_extras_tab ();
 
     private:
       std::string get_body () const;

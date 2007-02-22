@@ -125,6 +125,7 @@ namespace
       Profile& p (mc.profiles[mc.profile_name]);
       if (element_name == "signature_file") p.signature_file.assign (t.str, t.len);
       else if (element_name == "attribution") p.attribution.assign (t.str, t.len);
+      else if (element_name == "fqdn") p.fqdn.assign (t.str, t.len);
       else if (element_name == "username") p.username.assign (t.str, t.len);
       else if (element_name == "address") p.address.assign (t.str, t.len);
       else if (element_name == "server") p.posting_server = t;
@@ -234,6 +235,8 @@ ProfilesImpl :: serialize (std::ostream& out) const
     }
     if (!it->second.attribution.empty())
       out << indent(depth) << "<attribution>" << escaped(it->second.attribution) << "</attribution>\n";
+    if (!it->second.fqdn.empty())
+      out << indent(depth) << "<fqdn>" << escaped(it->second.fqdn) << "</fqdn>\n";
     if (!it->second.headers.empty()) {
       out << indent(depth++) << "<headers>\n";
       foreach_const (Profile::headers_t, it->second.headers, hit)

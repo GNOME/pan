@@ -163,11 +163,13 @@ ProfileDialog :: ProfileDialog (const Data         & data,
 
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Optional Information"));
-    HIG :: workarea_add_section_spacer (t, row, 2);
+    HIG :: workarea_add_section_spacer (t, row, 3);
 
-    //w = _msgid_fqdn_entry = gtk_entry_new ();
-    //gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), w, _("When posting to Usenet, your article's Message-ID contains a domain name.  You can set a custom domain name here, or leave it blank to let Pan use the domain name from your email address."), "");
-    //HIG :: workarea_add_row (t, &row, _("Message-ID _Domain Name:"), w, NULL);
+    w = _msgid_fqdn_entry = gtk_entry_new ();
+    set_entry (w, profile.fqdn);
+    gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), w, _("When posting to Usenet, your article's Message-ID contains a domain name.  You can set a custom domain name here, or leave it blank to let Pan use the domain name from your email address."), "");
+    HIG :: workarea_add_row (t, &row, _("Message-ID _Domain Name:"), w, NULL);
+
     w = _attribution_entry = gtk_entry_new ();
     set_entry (w, profile.attribution);
     gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), w, _("%i for Message-ID\n%a for Author and Address\n%n for Author name\n%d for Date"), "");
@@ -276,6 +278,7 @@ ProfileDialog :: get_profile (std::string& profile_name, Profile& profile)
   from_entry (_name_entry, profile_name);
   from_entry (_username_entry, profile.username);
   from_entry (_address_entry, profile.address);
+  from_entry (_msgid_fqdn_entry, profile.fqdn);
   from_entry (_attribution_entry, profile.attribution);
 
   profile.use_sigfile = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(_signature_file_check));

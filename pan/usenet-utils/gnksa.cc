@@ -834,9 +834,6 @@ GNKSA :: generate_message_id (const StringView& domain)
 {
    std::string s;
 
-   // start with '<'
-   s += '<';
-
    // add unique local part to message-id 
    s += "pan.";
    const time_t now (time(NULL));
@@ -850,9 +847,6 @@ GNKSA :: generate_message_id (const StringView& domain)
 
    // add domain
    s += domain.empty() ? default_domain : domain.to_string();
-
-   // end with '>'
-   s += '>';
 
    return s;
 }

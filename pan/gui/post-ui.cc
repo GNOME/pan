@@ -54,6 +54,9 @@ extern "C" {
 
 using namespace pan;
 
+#define USER_AGENT_PREFS_KEY "add-user-agent-header-when-posting"
+#define MESSAGE_ID_PREFS_KEY "add-message-id-header-when-posting"
+
 namespace
 {
   bool remember_charsets (true);
@@ -1052,13 +1055,9 @@ PostUI :: open_draft ()
 
 namespace
 {
-  std::string get_user_agent ()
+  const char * get_user_agent ()
   {
-    std::string s = PACKAGE_STRING;
-    s += " (";
-    s += VERSION_TITLE;
-    s += ')';
-    return s;
+    return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE ")";
   }
 
   bool header_has_dedicated_entry (const StringView& name)
@@ -1066,7 +1065,9 @@ namespace
     return (name == "Subject")
         || (name == "Newsgroups")
         || (name == "To")
-        || (name == "From");
+        || (name == "From")
+        || (name == "Followup-To")
+        || (name == "Reply-To");
   }
 
   bool extra_header_is_editable (const StringView& name,
@@ -1109,6 +1110,16 @@ PostUI :: new_message_from_ui (Mode mode)
   if (!groups.empty())
     g_mime_message_set_header (msg, "Newsgroups", groups.str);
 
+  // headers from the ui: Followup-To
+  const StringView followupto (gtk_entry_get_text (GTK_ENTRY(_followupto_entry)));
+  if (!followupto.empty())
+    g_mime_message_set_header (msg, "Followup-To", followupto.str);
+
+  // headers from the ui: Reply-To
+  const StringView replyto (gtk_entry_get_text (GTK_ENTRY(_replyto_entry)));
+  if (!replyto.empty())
+    g_mime_message_set_header (msg, "Reply-To", replyto.str);
+
   // add the 'hidden headers'
   foreach_const (str2str_t, _hidden_headers, it)
     if ((mode==DRAFTING) || (it->first.find ("X-Draft-")!=0))
@@ -1134,8 +1145,16 @@ PostUI :: new_message_from_ui (Mode mode)
   g_free (pch);
 
   // User-Agent
-  if (!g_mime_message_get_header (msg, "User-Agent"))
-       g_mime_message_set_header (msg, "User-Agent", get_user_agent().c_str());
+  if (mode==POSTING && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
+    g_mime_message_set_header (msg, "User-Agent", get_user_agent());
+
+  // Message-ID
+  if (mode==POSTING && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, true)) {
+    const std::string message_id = !profile.fqdn.empty()
+      ? GNKSA::generate_message_id (profile.fqdn)
+      : GNKSA::generate_message_id_from_email_address (profile.address);
+    g_mime_message_set_message_id (msg, message_id.c_str());
+  }
 
   // body & charset
   std::string body (get_body());
@@ -1639,8 +1658,16 @@ PostUI :: set_message (GMimeMessage * message)
   // update subject, newsgroups, to fields
   const char * cpch = g_mime_message_get_subject (message);
   gtk_entry_set_text (GTK_ENTRY(_subject_entry), cpch ? cpch : "");
+
   cpch = g_mime_message_get_header (message, "Newsgroups");
   gtk_entry_set_text (GTK_ENTRY(_groups_entry), cpch ? cpch : "");
+
+  cpch = g_mime_message_get_header (message, "Followup-To");
+  gtk_entry_set_text (GTK_ENTRY(_followupto_entry), cpch ? cpch : "");
+
+  cpch = g_mime_message_get_header (message, "Reply-To");
+  gtk_entry_set_text (GTK_ENTRY(_replyto_entry), cpch ? cpch : "");
+
   const InternetAddressList * addresses = g_mime_message_get_recipients (message, GMIME_RECIPIENT_TYPE_TO);
   char * pch  = internet_address_list_to_string (addresses, true);
   gtk_entry_set_text (GTK_ENTRY(_to_entry), pch ? pch : "");
@@ -1774,6 +1801,186 @@ namespace
   }
 }
 
+GtkWidget*
+PostUI :: create_main_tab ()
+{
+  const GtkAttachOptions fill ((GtkAttachOptions)(GTK_FILL|GTK_EXPAND|GTK_SHRINK));
+  char buf[512];
+  int row = -1;
+  GtkWidget *l, *w;
+  GtkWidget *t = gtk_table_new (4, 2, false);
+  gtk_table_set_col_spacings (GTK_TABLE(t), PAD);
+
+  // From
+
+  ++row;
+  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("F_rom"));
+  l = gtk_label_new_with_mnemonic (buf);
+  gtk_label_set_use_markup (GTK_LABEL(l), true);
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
+
+  w = _from_combo = gtk_combo_box_new_text ();
+  gtk_cell_layout_clear (GTK_CELL_LAYOUT(w));
+  GtkCellRenderer * r =  gtk_cell_renderer_text_new();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT(w), r, true);
+  gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT(w), r, render_from, &_profiles, 0);
+  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
+  g_signal_connect (w, "changed", G_CALLBACK(on_from_combo_changed), this);
+  gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fill, fill, 0, 0);
+
+  // Subject
+
+  ++row;
+  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Subject"));
+  l = gtk_label_new_with_mnemonic (buf);
+  gtk_label_set_use_markup (GTK_LABEL(l), true);
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
+
+  w = _subject_entry = gtk_entry_new ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
+  gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fill, fill, 0, 0);
+
+  // Newsgroup
+
+  ++row;
+  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Newsgroups"));
+  l = gtk_label_new_with_mnemonic (buf);
+  gtk_label_set_use_markup (GTK_LABEL(l), true);
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
+
+  w = _groups_entry = gtk_entry_new ();
+  _group_entry_changed_id = g_signal_connect (w, "changed", G_CALLBACK(group_entry_changed_cb), this);
+  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
+  gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fill, fill, 0, 0);
+
+  // Mail To
+
+  ++row;
+  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Mail To"));
+  l = gtk_label_new_with_mnemonic (buf);
+  gtk_label_set_use_markup (GTK_LABEL(l), true);
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
+
+  w = _to_entry = gtk_entry_new ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
+  gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fill, fill, 0, 0);
+
+  // Body
+
+  w = create_body_widget (_body_buf, _body_view, _prefs);
+  set_spellcheck_enabled (_prefs.get_flag ("spellcheck-enabled", DEFAULT_SPELLCHECK_FLAG));
+
+
+  GtkWidget * v = gtk_vbox_new (false, PAD);
+  gtk_container_set_border_width (GTK_CONTAINER(v), PAD);
+  gtk_box_pack_start (GTK_BOX(v), t, false, false, 0);
+  gtk_box_pack_start_defaults (GTK_BOX(v), w);
+  return v;
+}
+
+namespace
+{
+  void message_id_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer)
+  {
+    static_cast<Prefs*>(prefs_gpointer)->set_flag (MESSAGE_ID_PREFS_KEY, gtk_toggle_button_get_active(tb));
+  }
+  void user_agent_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer)
+  {
+    static_cast<Prefs*>(prefs_gpointer)->set_flag (USER_AGENT_PREFS_KEY, gtk_toggle_button_get_active(tb));
+  }
+}
+
+GtkWidget*
+PostUI :: create_extras_tab ()
+{
+  const GtkAttachOptions fill ((GtkAttachOptions)(GTK_FILL));
+  const GtkAttachOptions fe ((GtkAttachOptions)(GTK_FILL|GTK_EXPAND|GTK_SHRINK));
+  char buf[512];
+  int row = -1;
+  GtkWidget *l, *w;
+  GtkWidget *t = gtk_table_new (3, 2, false);
+  gtk_table_set_col_spacings (GTK_TABLE(t), PAD);
+
+  // Followup-To
+
+  ++row;
+  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Follo_wup-To"));
+  l = gtk_label_new_with_mnemonic (buf);
+  gtk_label_set_use_markup (GTK_LABEL(l), true);
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
+
+  w = _followupto_entry = gtk_entry_new ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
+  gtk_tooltips_set_tip (GTK_TOOLTIPS(_ttips), w, _("The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n\nTo direct all replies to your email address, use \"Followup-To: poster\""), 0);
+  gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
+
+  //  Reply-To
+
+  ++row;
+  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Reply-To"));
+  l = gtk_label_new_with_mnemonic (buf);
+  gtk_label_set_use_markup (GTK_LABEL(l), true);
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
+
+  w = _replyto_entry = gtk_entry_new ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
+  gtk_tooltips_set_tip (GTK_TOOLTIPS(_ttips), w, _("The email account where mail replies to your posted message should go.  This is only needed if it differs from the \"From\" header."), 0);
+  gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
+
+  //  Extra Headers
+
+  ++row;
+  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Custom Headers"));
+  l = gtk_label_new_with_mnemonic (buf);
+  gtk_label_set_use_markup (GTK_LABEL(l), true);
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.0f);
+  gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
+
+  ++row;
+  w = gtk_text_view_new ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
+  _headers_buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW(w));
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(w), GTK_WRAP_NONE);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW(w), true);
+  GtkWidget * scroll = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_container_add (GTK_CONTAINER(scroll), w);
+  GtkWidget * frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER(frame), scroll);
+  gtk_table_attach_defaults (GTK_TABLE(t), frame, 0, 2, row, row+1);
+
+
+  //  User-Agent
+
+  ++row;
+  w = _user_agent_check = gtk_check_button_new_with_mnemonic (_("Add \"_User-Agent\" header"));
+  bool b = _prefs.get_flag (USER_AGENT_PREFS_KEY, true);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
+  g_signal_connect (w, "toggled", G_CALLBACK(user_agent_toggled_cb), &_prefs);
+  gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
+
+  ++row;
+  w = _message_id_check = gtk_check_button_new_with_mnemonic (_("Add \"Message-_Id header"));
+  b = _prefs.get_flag (MESSAGE_ID_PREFS_KEY, true);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
+  g_signal_connect (w, "toggled", G_CALLBACK(message_id_toggled_cb), &_prefs);
+  gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
+
+
+  gtk_container_set_border_width (GTK_CONTAINER(t), PAD);
+  gtk_table_set_col_spacings (GTK_TABLE(t), PAD);
+  gtk_table_set_row_spacings (GTK_TABLE(t), PAD);
+  return t;
+}
+
+
 PostUI :: ~PostUI ()
 {
   if (_group_entry_changed_idle_tag)
@@ -1801,6 +2008,8 @@ PostUI :: PostUI (GtkWindow    * parent,
   _subject_entry (0),
   _groups_entry (0),
   _to_entry (0),
+  _followupto_entry (0),
+  _replyto_entry (0),
   _body_view (0),
   _body_buf (0),
   _message (0),
@@ -1822,9 +2031,9 @@ PostUI :: PostUI (GtkWindow    * parent,
     gtk_window_set_position (GTK_WINDOW(_root), GTK_WIN_POS_CENTER_ON_PARENT);
   }
 
-  GtkTooltips * tips = gtk_tooltips_new ();
-  g_object_ref_sink_pan (G_OBJECT(tips));
-  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, tips);
+  _ttips = gtk_tooltips_new ();
+  g_object_ref_sink_pan (G_OBJECT(_ttips));
+  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, _ttips);
 
   // populate the window
   GtkWidget * vbox = gtk_vbox_new (false, PAD_SMALL);
@@ -1835,67 +2044,10 @@ PostUI :: PostUI (GtkWindow    * parent,
   gtk_widget_show_all (vbox);
   gtk_container_add (GTK_CONTAINER(_root), vbox);
 
-  // add the headers table
-  const GtkAttachOptions fill ((GtkAttachOptions)(GTK_FILL|GTK_EXPAND|GTK_SHRINK));
-  const GtkAttachOptions nofill ((GtkAttachOptions)0);
-  char buf[512];
-  int row = 0;
-  GtkWidget *l, *t, *w;
-  t = HIG :: workarea_create ();
-  w = gtk_alignment_new (0.0f, 0.0f, 0.0f, 0.0f);
-  gtk_widget_set_size_request (w, 12u, 0u);
-  gtk_table_attach (GTK_TABLE(t), w, 2, 3, row, row+4, nofill, nofill, 0, 0);
-  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("F_rom"));
-  l = HIG :: workarea_add_label (t, row, buf);
-  w = _from_combo = gtk_combo_box_new_text ();
-  gtk_cell_layout_clear (GTK_CELL_LAYOUT(w));
-  GtkCellRenderer * r =  gtk_cell_renderer_text_new();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT(w), r, true);
-  gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT(w), r, render_from, &_profiles, 0);
-  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
-  g_signal_connect (w, "changed", G_CALLBACK(on_from_combo_changed), this);
-  gtk_table_attach (GTK_TABLE(t), w, 3, 4, row, row+1, fill, nofill, 0, 0);
-  ++row;
-  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Subject"));
-  l = HIG :: workarea_add_label (t, row, buf);
-  w = _subject_entry = gtk_entry_new ();
-  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
-  gtk_table_attach (GTK_TABLE(t), w, 3, 4, row, row+1, fill, nofill, 0, 0);
-  ++row;
-  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Newsgroups"));
-  l = HIG :: workarea_add_label (t, row, buf);
-  w = _groups_entry = gtk_entry_new ();
-  _group_entry_changed_id = g_signal_connect (w, "changed", G_CALLBACK(group_entry_changed_cb), this);
-  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
-  gtk_table_attach (GTK_TABLE(t), w, 3, 4, row, row+1, fill, nofill, 0, 0);
-  ++row;
-  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Mail To"));
-  l = HIG :: workarea_add_label (t, row, buf);
-  w = _to_entry = gtk_entry_new ();
-  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
-  gtk_table_attach (GTK_TABLE(t), w, 3, 4, row, row+1, fill, nofill, 0, 0);
-  ++row;
-  GtkWidget * frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_IN);
-  GtkWidget * v = gtk_text_view_new ();
-  gtk_text_view_set_accepts_tab (GTK_TEXT_VIEW(v), false);
-  gtk_tooltips_set_tip (tips, v, _("One header per line, in the form HeaderName: Value"), 0);
-  _headers_buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW(v));
-  gtk_container_add (GTK_CONTAINER(frame), v);
-  g_snprintf (buf, sizeof(buf), "<b>%s</b>", _("_More Headers"));
-  w = GTK_WIDGET (g_object_new (GTK_TYPE_EXPANDER,
-    "use-markup", TRUE,
-    "use-underline", TRUE,
-    "label", buf, NULL));
-  gtk_container_add (GTK_CONTAINER(w), frame);
-  gtk_table_attach (GTK_TABLE(t), w, 1, 4, row, row+1, fill, nofill, 0, 0);
-  ++row;
-  gtk_box_pack_start (GTK_BOX(vbox), t, false, false, 0);
-
-  // add the body text widget
-  w = create_body_widget (_body_buf, _body_view, prefs);
-  set_spellcheck_enabled (prefs.get_flag ("spellcheck-enabled", DEFAULT_SPELLCHECK_FLAG));
-  gtk_box_pack_start (GTK_BOX(vbox), w, true, true, 0);
+  GtkWidget * notebook = gtk_notebook_new ();
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_main_tab(), gtk_label_new_with_mnemonic(_("_Message")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_extras_tab(), gtk_label_new_with_mnemonic(_("More _Headers")));
+  gtk_box_pack_start_defaults (GTK_BOX(vbox), notebook);
 
   // remember this message, but don't put it in the text view yet.
   // we have to wait for it to be realized first so that wrapping
