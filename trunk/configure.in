@@ -1,0 +1,144 @@
+AC_INIT([pan],[0.125],[http://bugzilla.gnome.org/enter_bug.cgi?product=Pan])
+AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
+AC_DEFINE(VERSION_MINOR,125,[Minor part of version number])
+AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
+AC_DEFINE(VERSION_TITLE,["Potzrebie"],[Release Name])
+AC_PREREQ(2.54)
+
+AM_CONFIG_HEADER(config.h)
+AC_CONFIG_SRCDIR(pan/general/quark.cc)
+
+AM_INIT_AUTOMAKE(AC_PACKAGE_NAME,AC_PACKAGE_VERSION)
+AM_MAINTAINER_MODE
+
+dnl pcre, glib, gmime, and gtk are manditory prerequisites.
+dnl
+dnl GtkSpell is optional: GTKSPELL_REQUIRED refers to the minimum version
+dnl needed if you want to build Pan with spellchecking in the Post window.
+
+PCRE_REQUIRED=5.0
+GLIB_REQUIRED=2.4.0
+GMIME_REQUIRED=2.1.0
+GTK_REQUIRED=2.4.0
+GTKSPELL_REQUIRED=2.0.7
+AC_SUBST(PCRE_REQUIRED)
+AC_SUBST(GLIB_REQUIRED)
+AC_SUBST(GMIME_REQUIRED)
+AC_SUBST(GTK_REQUIRED)
+AC_SUBST(GTKSPELL_REQUIRED)
+
+AC_PROG_CXX
+AC_HEADER_STDC
+AC_HEADER_TIME
+AC_CHECK_FUNCS([localtime_r])
+AC_CXX_HAVE_EXT_HASH_MAP
+AC_PROG_AWK
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+AC_PROG_RANLIB
+
+dnl for libuu
+AC_CHECK_HEADERS([errno.h fcntl.h])
+
+AC_PROG_INTLTOOL([0.23],[no-xml])
+GETTEXT_PACKAGE=pan
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[Gettext package])
+ALL_LINGUAS="am ar az bg ca cs da de el en_CA en_GB es et fi fr ga gl hr hu it ja ko lt lv ms nb nl pl pt pt_BR ro ru sk sl sq sr sr@Latn sv tr uk vi zh_CN zh_TW"
+AM_GLIB_GNU_GETTEXT
+panlocaledir='${prefix}/${DATADIRNAME}/locale'
+
+PKG_CHECK_MODULES(PCRE,  libpcre      >= $PCRE_REQUIRED)
+AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
+PKG_CHECK_MODULES(GMIME, gmime-2.0    >= $GMIME_REQUIRED)
+AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
+
+
+gtkspell_msg=no
+AC_ARG_WITH(gtkspell, AC_HELP_STRING([--with-gtkspell], [Enable gtkspell support]), [want_gtkspell=$withval], [want_gtkspell=yes])
+if test "x$want_gtkspell" = "xyes" ; then
+	PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED],
+	                  [gtkspell_msg=yes
+	                  AC_DEFINE(HAVE_GTKSPELL,[1],[Spellcheck Library])],
+	                  [gtkspell_msg=no
+	                  AC_MSG_RESULT(no)])
+fi
+
+dnl Check to see if strftime supports the use of %l and %k
+AC_MSG_CHECKING(for %l and %k support in strftime)
+AC_TRY_RUN([
+#include <string.h>
+#include <time.h>
+int main(int argc, char **argv) {
+  char buf[10];
+  time_t rawtime = time(0);
+  struct tm *timeinfo = localtime (&rawtime);
+  strftime(buf, 10, "%l %k", timeinfo);
+  exit (strstr(buf, "l") || strstr(buf, "k") || !strcmp(buf," "));
+}],[
+AC_DEFINE(HAVE_LKSTRFTIME, 1, [strftime supports use of l and k])
+ac_cv_lkstrftime=yes
+],ac_cv_lkstrftime=no,ac_cv_lkstrftime=no)
+AC_MSG_RESULT($ac_cv_lkstrftime)
+
+
+dnl windows-specific stuff.
+AC_CANONICAL_HOST
+win32="no"
+case $host_os in
+
+	*darwin*|*rhapsody*)
+	AC_DEFINE(G_OS_DARWIN,[1],[Darwin])
+	;;
+
+	*cygwin|*mingw32*)
+	CXXFLAGS="$CXXFLAGS -mms-bitfields -mwin32 -mwindows"
+	CPPFLAGS="$CPPFLAGS -DWIN32_LEAN_AND_MEAN"
+	LIBS="$LIBS -lshell32 -lws2_32"
+	panlocaledir="locale"
+
+	if test -z "$host_alias"; then
+		hostaliaswindres=
+	else
+		hostaliaswindres="$host_alias-windres";
+	fi
+	AC_PATH_PROGS([WINDRES], [windres $hostaliaswindres $host_os-windres])
+	if test "x$WINDRES" = "x"; then
+		AC_MSG_ERROR([windres could not be found within your path.])
+	fi
+	AC_SUBST(WINDRES)
+	win32="yes"
+	;;
+esac
+AM_CONDITIONAL([HAVE_WIN32],[test "$win32" = "yes"])
+
+
+dnl build the output files
+AC_SUBST(panlocaledir)
+AC_CONFIG_FILES([Makefile
+                 pan.spec
+                 pan.iss
+                 README.windows
+                 po/Makefile.in
+                 uulib/Makefile
+                 pan/Makefile
+                 pan/general/Makefile
+                 pan/usenet-utils/Makefile
+                 pan/data/Makefile
+                 pan/data/decode-test-cache/Makefile
+                 pan/tasks/Makefile
+                 pan/icons/Makefile
+                 pan/data-impl/Makefile
+                 pan/gui/Makefile])
+
+AC_OUTPUT
+
+echo "
+
+Configuration:
+
+        Source code location:	${srcdir}
+        Compiler:		${CXX}
+        With GtkSpell:          ${gtkspell_msg}
+
+"

@@ -1,0 +1,5368 @@
+# Danish translation of Pan.
+# Copyright (c) 1999, 2000, 04 Free Software Foundation, Inc.
+# Kenneth Christiansen <kenneth@diku.dk>, 2000
+# Birger Langkjer <birger.langkjer@image.dk>, 1999, 2000.
+# Keld Simonsen <keld@dkuug.dk>, 2000, 2003.
+# Gitte Wange <gitte@babytutux.dk>, 2001
+# Søren Wedel Nielsen, 2004
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pan 0.14.2.91\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-18 10:27-0500\n"
+"PO-Revision-Date: 2004-06-05 21:03+0200\n"
+"Last-Translator: Søren Wedel Nielsen <swn@heko.dk>\n"
+"Language-Team:  <dansk@klid.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: pan.desktop.in.h:1
+msgid "Pan Newsreader"
+msgstr "Pan - nyhedsgruppelæser"
+
+#: pan.desktop.in.h:2
+msgid "Read News from Usenet"
+msgstr "Læs nyhedsgrupper fra Usenet"
+
+#: pan/data-impl/data-impl.cc:82
+#, c-format
+msgid "Loaded data backend in %.1f seconds"
+msgstr ""
+
+#: pan/data-impl/data-io.cc:220 pan/data-impl/data-io.cc:241
+#: pan/data/article-cache.cc:236 pan/data/article-cache.cc:246
+#: pan/gui/post-ui.cc:1261
+#, fuzzy, c-format
+msgid "Unable to save \"%s\" %s"
+msgstr "Kan ikke sætte gruppen \"%*.*s\": %s"
+
+#: pan/data-impl/groups.cc:92
+#, fuzzy, c-format
+msgid "Skipping newsrc file for server \"%s\""
+msgstr "Henter %d nye grupper fra serveren \"%s\""
+
+#: pan/data-impl/headers.cc:551
+#, fuzzy, c-format
+msgid "Expired %lu old articles from \"%s\""
+msgstr "Fjernede %u artikler fra \"%s\""
+
+#: pan/data-impl/headers.cc:558
+#, c-format
+msgid ""
+"Unsupported data version for %s headers: %d.\n"
+"Are you running an old version of Pan by accident?"
+msgstr ""
+"Dataversionen for %s hoveder understøttes ikke: %d \n"
+"Kører du tilfældigvis en gammel udgave af Pan?"
+
+#: pan/data-impl/headers.cc:573
+#, fuzzy, c-format
+msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
+msgstr ""
+"Indlæste %u artikler for gruppen \"%s\" på %.1f sekunder (%.0f artikler/"
+"sekund)"
+
+#: pan/data-impl/headers.cc:797
+#, fuzzy, c-format
+msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgstr "Gemte %d artikler i \"%s\" på %.1f sekunder (%.0f art/sek)"
+
+#: pan/data-impl/headers.cc:1089
+#, fuzzy, c-format
+msgid "Added %lu articles to %s."
+msgstr "Fjernede %u udløbede artikler fra \"%s\""
+
+#: pan/data-impl/profiles.cc:173
+#, fuzzy, c-format
+msgid "Error reading \"%s\": %s"
+msgstr "Fejl ved læsning af filen \"%s\": %s"
+
+#: pan/data-impl/server.cc:296
+#, fuzzy, c-format
+msgid "Error loading newsserver information: %s"
+msgstr "Fejl ved tolkning af \"weblæser\"-kommandolinje: %s"
+
+#: pan/data/article-cache.cc:148
+#, fuzzy, c-format
+msgid "Error opening directory: \"%s\": %s"
+msgstr "Fejl ved åbning af kataloget \"%s\": %s)"
+
+#: pan/data/article-cache.cc:364 pan/general/line-reader.cc:24
+#, fuzzy, c-format
+msgid "Error opening file \"%s\" %s"
+msgstr "Fejl ved åbning af filen \"%s\": %s"
+
+#: pan/data/article-cache.cc:395 pan/gui/post-ui.cc:1028
+#, c-format
+msgid "Error reading file \"%s\": %s"
+msgstr "Fejl ved læsning af filen \"%s\": %s"
+
+#: pan/data/filter-info.cc:152
+#, fuzzy
+msgid "article doesn't have attachments"
+msgstr "Artikel har ikke komplette vedhæftninger"
+
+#: pan/data/filter-info.cc:156
+#, fuzzy
+msgid "the article has attachments"
+msgstr "Artikel har ingen vedhæftninger"
+
+#: pan/data/filter-info.cc:160
+#, fuzzy
+msgid "the article isn't cached locally"
+msgstr "Artikelkrop er ikke i lokalt mellemlager"
+
+#: pan/data/filter-info.cc:164
+#, fuzzy
+msgid "the article is cached locally"
+msgstr "Artikelkrop er i lokalt mellemlager"
+
+#: pan/data/filter-info.cc:168
+#, fuzzy
+msgid "the article wasn't posted by you"
+msgstr "Artiklen publiceredes ikke af mig"
+
+#: pan/data/filter-info.cc:172
+#, fuzzy
+msgid "the article was posted by you"
+msgstr "Artiklen publiceredes af mig"
+
+#: pan/data/filter-info.cc:176
+#, fuzzy
+msgid "the article has been read"
+msgstr "Artiklen har været"
+
+#: pan/data/filter-info.cc:180
+#, fuzzy
+msgid "the article hasn't been read"
+msgstr "Artiklen har været"
+
+#: pan/data/filter-info.cc:184
+#, fuzzy, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "Artiklen er mindre end %d byte lang"
+
+#: pan/data/filter-info.cc:189
+#, fuzzy, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "Artiklen er mindre end %d byte lang"
+
+#: pan/data/filter-info.cc:194
+#, fuzzy, c-format
+msgid "the article is less than %ld lines long"
+msgstr "Artiklen er mindre end %d linjer lang"
+
+#: pan/data/filter-info.cc:199
+#, fuzzy, c-format
+msgid "the article is at least %ld lines long"
+msgstr "Artiklen er mindre end %d linjer lang"
+
+#: pan/data/filter-info.cc:204
+#, fuzzy, c-format
+msgid "the article is less than %ld days old"
+msgstr "Artiklen er mere end %d dage gammel"
+
+#: pan/data/filter-info.cc:209
+#, fuzzy, c-format
+msgid "the article is at least %ld days old"
+msgstr "Artiklen er mindst N dage _gammel"
+
+#: pan/data/filter-info.cc:214
+#, fuzzy, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "Artiklen var publiceret til mindre end %d grupper"
+
+#: pan/data/filter-info.cc:219
+#, fuzzy, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "Artiklen _publiceredes til mindst N grupper:"
+
+#: pan/data/filter-info.cc:224
+#, fuzzy, c-format
+msgid "the article's score is less than %ld"
+msgstr "Artikelens score er mindre end %d"
+
+#: pan/data/filter-info.cc:229
+#, fuzzy, c-format
+msgid "the article's score is %ld or higher"
+msgstr "sæt til"
+
+#: pan/data/filter-info.cc:238 pan/data/filter-info.cc:248
+#, fuzzy, c-format
+msgid "%s doesn't contain \"%s\""
+msgstr "indeholder ikke"
+
+#: pan/data/filter-info.cc:239 pan/data/filter-info.cc:249
+#, c-format
+msgid "%s isn't \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:240 pan/data/filter-info.cc:250
+#, fuzzy, c-format
+msgid "%s doesn't begin with \"%s\""
+msgstr "ender ikke med"
+
+#: pan/data/filter-info.cc:241 pan/data/filter-info.cc:251
+#, fuzzy, c-format
+msgid "%s doesn't end with \"%s\""
+msgstr "ender ikke med"
+
+#: pan/data/filter-info.cc:242 pan/data/filter-info.cc:252
+#, fuzzy, c-format
+msgid "%s doesn't match the regex \"%s\""
+msgstr "Emnet matcher ikke frasen \"%s\""
+
+#: pan/data/filter-info.cc:264
+#, fuzzy, c-format
+msgid "%s contains \"%s\""
+msgstr "indeholder"
+
+#: pan/data/filter-info.cc:265
+#, c-format
+msgid "%s is \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:266
+#, c-format
+msgid "%s begins with \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:267
+#, fuzzy, c-format
+msgid "%s ends with \"%s\""
+msgstr "ender med"
+
+#: pan/data/filter-info.cc:268
+#, fuzzy, c-format
+msgid "%s matches the regex \"%s\""
+msgstr "Emnet matcher frasen \"%s\""
+
+#: pan/data/filter-info.cc:274
+msgid "Any of these tests fail:"
+msgstr ""
+
+#: pan/data/filter-info.cc:281
+msgid "All of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:288
+msgid "None of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:295
+msgid "Any of these tests pass:"
+msgstr ""
+
+#: pan/data/scorefile.cc:299
+#, fuzzy, c-format
+msgid ""
+"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
+"'Expires: DD-MM-YYYY'."
+msgstr "Forventer 'Expires: MM/DD/YYYY' eller 'Expires: DD-MM-YYYY'"
+
+#: pan/data/scorefile.cc:302
+#, c-format
+msgid "Expired old score from %*.*s, line %d"
+msgstr ""
+
+#: pan/data/scorefile.cc:373
+#, c-format
+msgid "Error reading score in %*.*s, line %d: unexpected line."
+msgstr ""
+
+#: pan/data/scorefile.cc:421
+#, c-format
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
+msgstr ""
+
+#. build the locale strings
+#: pan/general/e-util.cc:213
+msgid "%l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:214
+msgid "Today %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:215
+msgid "%a %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:216
+msgid "%b %d %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:217
+msgid "%b %d %Y"
+msgstr ""
+
+#: pan/general/e-util.cc:242
+msgid "?"
+msgstr ""
+
+#: pan/general/file-util.cc:139
+#, fuzzy, c-format
+msgid "Creating directory \"%s\""
+msgstr "Fejl ved åbning af kataloget \"%s\": %s)"
+
+#: pan/general/file-util.cc:142
+#, c-format
+msgid "Couldn't create directory \"%s\": %s"
+msgstr "Kunne ikke oprette kataloget \"%s\": %s"
+
+#: pan/general/text-match.cc:210
+#, fuzzy
+msgid ""
+"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
+"fail."
+msgstr ""
+"Dit systems udgave af libpcre understøtter ikke UTF-8. Regulære udtryk der "
+"benytter UTF-8 vil muligvis ikke virke."
+
+#: pan/general/text-match.cc:221
+#, c-format
+msgid "Can't use regular expression \"%s\": %s at position %d"
+msgstr "Kan ikke bruge det regulære udtryk \"%s\": %s ved position %d"
+
+#: pan/general/text-match.cc:229
+#, c-format
+msgid "Can't use regular expression \"%s\": %s"
+msgstr "Kan ikke bruge det regulære udtryk \"%s\": %s"
+
+#: pan/gui/actions.cc:258 pan/gui/post-ui.cc:238
+#, fuzzy
+msgid "_File"
+msgstr "/_Arkiv"
+
+#: pan/gui/actions.cc:259 pan/gui/post-ui.cc:239
+#, fuzzy
+msgid "_Edit"
+msgstr "/_Redigér"
+
+#: pan/gui/actions.cc:260 pan/gui/prefs-ui.cc:460
+msgid "_Layout"
+msgstr "_Layout"
+
+#: pan/gui/actions.cc:261
+#, fuzzy
+msgid "_Group Pane"
+msgstr "Gruppepanel"
+
+#: pan/gui/actions.cc:262
+#, fuzzy
+msgid "_Header Pane"
+msgstr "_Hovedpanel:"
+
+#: pan/gui/actions.cc:263
+#, fuzzy
+msgid "_Body Pane"
+msgstr "Artikelpanel"
+
+#: pan/gui/actions.cc:264
+#, fuzzy
+msgid "_View"
+msgstr "/_Vis"
+
+#: pan/gui/actions.cc:265
+msgid "Character _Encoding"
+msgstr ""
+
+#: pan/gui/actions.cc:266
+#, fuzzy
+msgid "Filte_r"
+msgstr "/_Filtre"
+
+#: pan/gui/actions.cc:267
+#, fuzzy
+msgid "_Go"
+msgstr "/_Gå til"
+
+#: pan/gui/actions.cc:268
+#, fuzzy
+msgid "_Actions"
+msgstr "Handlinger"
+
+#: pan/gui/actions.cc:269
+#, fuzzy
+msgid "_Articles"
+msgstr "/Ar_tikler"
+
+#: pan/gui/actions.cc:270
+#, fuzzy
+msgid "_Groups"
+msgstr "Grupper"
+
+#: pan/gui/actions.cc:271 pan/gui/actions.cc:272
+msgid "_Post"
+msgstr "/_Send"
+
+#: pan/gui/actions.cc:273 pan/gui/save-ui.cc:202
+msgid "_Help"
+msgstr "_Hjælp"
+
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "_Read Group"
+msgstr "/_Fjern gruppe"
+
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "Read Selected Group"
+msgstr "Læs næste ulæste gruppe"
+
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "_Mark Group _Read"
+msgstr "/Markér gruppe som _læst"
+
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "Mark Selected Groups Read"
+msgstr "/Markér gruppe som _læst"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "_Delete Group's Articles"
+msgstr "/_Fjern gruppens artikler"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "Delete Selected Groups' Articles"
+msgstr "/_Fjern gruppens artikler"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New _Headers in Selected Groups"
+msgstr "Hent nye hoveder i markerede grupper"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New Headers for Selected Groups"
+msgstr "Hent nye hoveder i markerede grupper"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New _Headers in Subscribed Groups"
+msgstr "Hent nye hoveder i abonnerede grupper"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New Headers for Subscribed Groups"
+msgstr "Hent nye hoveder i abonnerede grupper"
+
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get _Headers..."
+msgstr "/_Hent nye hoveder"
+
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get Headers from Server"
+msgstr "Modtog %d grupper fra serveren \"%s\""
+
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Refresh Group List"
+msgstr "Genopfrisker gruppen \"%s\""
+
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Get a new Group list from the Server"
+msgstr "Henter %d nye grupper fra serveren \"%s\""
+
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "_Subscribe"
+msgstr "/_Abonnér"
+
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "Subscribe to Selected Groups"
+msgstr "Abonnerede nyhedsgrupper"
+
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "_Unsubscribe"
+msgstr "/_Opsig abonnement"
+
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "Unsubscribe from Selected Groups"
+msgstr "Abonnerede nyhedsgrupper"
+
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "_Save Articles..."
+msgstr "_Gem bilag som..."
+
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "Save Selected Articles..."
+msgstr "Gem artikel_bilag"
+
+#: pan/gui/actions.cc:286
+msgid "_Import NZB Files..."
+msgstr ""
+
+#: pan/gui/actions.cc:287
+#, fuzzy
+msgid "_Cancel Last Task"
+msgstr "Afbryd seneste opgave"
+
+#: pan/gui/actions.cc:287
+msgid "Cancel Last Task"
+msgstr "Afbryd seneste opgave"
+
+#: pan/gui/actions.cc:288
+#, fuzzy
+msgid "_Task Manager..."
+msgstr "/_Værktøjer/_Opgavehåndtering..."
+
+#: pan/gui/actions.cc:289
+msgid "_Event Log..."
+msgstr ""
+
+#: pan/gui/actions.cc:290
+#, fuzzy
+msgid "_Quit"
+msgstr "/_Redigér"
+
+#: pan/gui/actions.cc:292
+#, fuzzy
+msgid "Select _All Articles"
+msgstr "/_Redigér/Markér alle _artikler"
+
+#: pan/gui/actions.cc:293
+#, fuzzy
+msgid "_Deselect All Articles"
+msgstr "/_Redigér/Afmarkér a_lle artikler"
+
+#: pan/gui/actions.cc:294
+#, fuzzy
+msgid "Add Su_bthreads to Selection"
+msgstr "/_Redigér/Tilføj _undertråde til markeringen"
+
+#: pan/gui/actions.cc:295
+#, fuzzy
+msgid "Add _Threads to Selection"
+msgstr "/_Redigér/Tilføj _tråde til markeringen"
+
+#: pan/gui/actions.cc:296
+#, fuzzy
+msgid "Add _Similar Artilces to Selection"
+msgstr "/_Redigér/Tilføj _tråde til markeringen"
+
+#: pan/gui/actions.cc:297
+#, fuzzy
+msgid "Select Article _Body"
+msgstr "/_Redigér/Markér artikelte_kst"
+
+#: pan/gui/actions.cc:298
+#, fuzzy
+msgid "Edit _Preferences..."
+msgstr "/_Redigér/_Indstillinger..."
+
+#: pan/gui/actions.cc:299
+#, fuzzy
+msgid "Edit _Group Preferences..."
+msgstr "/_Redigér/_Indstillinger..."
+
+#: pan/gui/actions.cc:300
+#, fuzzy
+msgid "Edit P_osting Profiles..."
+msgstr "/_Værktøjer/_Afsenderprofiler..."
+
+#: pan/gui/actions.cc:301
+#, fuzzy
+msgid "Edit _News Servers..."
+msgstr "/_Værktøjer/_Nyhedsgruppeservere..."
+
+#: pan/gui/actions.cc:303
+#, fuzzy
+msgid "Jump to _Group Tab"
+msgstr "/_Vis/Hop til _gruppefane"
+
+#: pan/gui/actions.cc:304
+#, fuzzy
+msgid "Jump to _Header Tab"
+msgstr "/_Vis/Hop til _hovedfane"
+
+#: pan/gui/actions.cc:305
+#, fuzzy
+msgid "Jump to _Body Tab"
+msgstr "/_Vis/Hop til _artikeltekstfane"
+
+#: pan/gui/actions.cc:306
+#, fuzzy
+msgid "_Rot13 Selected Text"
+msgstr "Rot13 markeret tekst"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear _Header Pane"
+msgstr "_Hovedpanel:"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear Header Pane"
+msgstr "Hovedpanel"
+
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear _Body Pane"
+msgstr "Artikelpanel"
+
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear Body Pane"
+msgstr "_Artikelpanel"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download _Selected Article"
+msgstr "Hent markerede artikler"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download Selected Article"
+msgstr "Hent markerede artikler"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read _Selected Article"
+msgstr "Hent markerede artikler"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read Selected Article"
+msgstr "Hent markerede artikler"
+
+#: pan/gui/actions.cc:313
+#, fuzzy
+msgid "Read _More"
+msgstr "Læs mere"
+
+#: pan/gui/actions.cc:313
+msgid "Read More"
+msgstr "Læs mere"
+
+#: pan/gui/actions.cc:314
+msgid "Read _Back"
+msgstr ""
+
+#: pan/gui/actions.cc:314
+#, fuzzy
+msgid "Read Back"
+msgstr "/_Gå til/Blad tilbage"
+
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next _Unread Group"
+msgstr "/_Gå til/Næste ulæste _gruppe"
+
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next Unread Group"
+msgstr "/_Gå til/Næste ulæste _gruppe"
+
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next _Group"
+msgstr "/_Gå til/N_æste gruppe"
+
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next Group"
+msgstr "/_Gå til/N_æste gruppe"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next _Unread Article"
+msgstr "/_Gå til/_Næste ulæste artikel"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next Unread Article"
+msgstr "Læs næste ulæste artikel"
+
+#: pan/gui/actions.cc:318
+#, fuzzy
+msgid "Next _Article"
+msgstr "/_Gå til/N_æste artikel"
+
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next _Watched Article"
+msgstr "/_Gå til/Næste _overvågede artikel"
+
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next Watched Article"
+msgstr "/_Gå til/Næste _overvågede artikel"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread _Thread"
+msgstr "/_Gå til/Næste ulæste _tråd"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread Thread"
+msgstr "Læs næste ulæste tråd"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Threa_d"
+msgstr "/_Gå til/Næste t_råd"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Thread"
+msgstr "/_Gå til/Næste t_råd"
+
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Pre_vious Article"
+msgstr "/_Gå til/Fo_regående artikel"
+
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Previous Article"
+msgstr "/_Gå til/Fo_regående artikel"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous _Thread"
+msgstr "/_Gå til/Foreg_ående tråd"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous Thread"
+msgstr "/_Gå til/Foreg_ående tråd"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "_Parent Article"
+msgstr "/_Gå til/_Forælder-artikel"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "Parent Article"
+msgstr "/_Gå til/_Forælder-artikel"
+
+#: pan/gui/actions.cc:326
+#, fuzzy
+msgid "_Plonk Author"
+msgstr "/Ar_tikler/_Ignorer forfatter"
+
+#: pan/gui/actions.cc:327
+#, fuzzy
+msgid "_Watch Thread"
+msgstr "/_Overvåg tråd"
+
+#: pan/gui/actions.cc:328
+#, fuzzy
+msgid "_Ignore Thread"
+msgstr "/_Ignorér tråd"
+
+#: pan/gui/actions.cc:329
+#, fuzzy
+msgid "View Article's S_core"
+msgstr "/_Vis artiklens bedømmelse"
+
+#: pan/gui/actions.cc:330
+#, fuzzy
+msgid "_Add a _Scoring Rule"
+msgstr "Tilføj ny bedømmelse"
+
+#: pan/gui/actions.cc:331
+#, fuzzy
+msgid "Cance_l Article..."
+msgstr "Tilbagetrækker artikel"
+
+#: pan/gui/actions.cc:332
+#, fuzzy
+msgid "_Supersede Article..."
+msgstr "/_Arkiv/_Udskriv artikel..."
+
+#: pan/gui/actions.cc:333
+#, fuzzy
+msgid "_Delete Article"
+msgstr "_Slet artikel"
+
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "_Mark Article as Read"
+msgstr "Artiklen er læst"
+
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "Mark Article as Read"
+msgstr "Artiklen er læst"
+
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as _Unread"
+msgstr "Artiklen er ulæst"
+
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as Unread"
+msgstr "Artiklen er ulæst"
+
+#: pan/gui/actions.cc:337
+#, fuzzy
+msgid "_Post to Newsgroup"
+msgstr "Post til nyhedsgruppe"
+
+#: pan/gui/actions.cc:337
+msgid "Post to Newsgroup"
+msgstr "Post til nyhedsgruppe"
+
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "_Followup to  Newsgroup"
+msgstr "/_Post/_Følg op til nyhedsgruppe"
+
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "Followup to Newsgroup"
+msgstr "/_Post/_Følg op til nyhedsgruppe"
+
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "_Reply to Author"
+msgstr "/Ar_tikler/_Ignorer forfatter"
+
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "Reply to Author"
+msgstr "/Ar_tikler/_Ignorer forfatter"
+
+#: pan/gui/actions.cc:341
+#, fuzzy
+msgid "_Pan Home Page..."
+msgstr "/_Hjælp/Pans _hjemmeside..."
+
+#: pan/gui/actions.cc:342
+#, fuzzy
+msgid "Give _Feedback or Report a Bug..."
+msgstr "/_Hjælp/Indsend _fejlrapport..."
+
+#: pan/gui/actions.cc:343
+msgid "_Tip Jar..."
+msgstr ""
+
+#: pan/gui/actions.cc:345 pan/gui/actions.cc:347
+#, fuzzy
+msgid "_About..."
+msgstr "/_Hjælp/_Om..."
+
+#: pan/gui/actions.cc:361
+#, fuzzy
+msgid "_Thread Headers"
+msgstr "Brevhoved"
+
+#: pan/gui/actions.cc:362
+#, fuzzy
+msgid "_Wrap Article Body"
+msgstr "/_Vis/Linje_ombryd artikelteksten"
+
+#: pan/gui/actions.cc:363
+#, fuzzy
+msgid "Mute _Quoted Text"
+msgstr "/_Vis/Skjul _citeret tekst"
+
+#: pan/gui/actions.cc:364
+#, fuzzy
+msgid "Show All _Headers in Body Pane"
+msgstr "/_Vis/Vis alle _hoveder i artikelpanelet"
+
+#: pan/gui/actions.cc:365
+#, fuzzy
+msgid "Show _Smilies as Graphics"
+msgstr "Vis en advarse_l:"
+
+#: pan/gui/actions.cc:366
+msgid "Show *Bold*, __Underlined__, and /Italic/"
+msgstr ""
+
+#: pan/gui/actions.cc:367
+msgid "Size Pictures to _Fit"
+msgstr ""
+
+#: pan/gui/actions.cc:368
+#, fuzzy
+msgid "Smooth Scrolling"
+msgstr "Blød _rulning med hastigheden:"
+
+#: pan/gui/actions.cc:369
+#, fuzzy
+msgid "Use _Monospace Font"
+msgstr "Skrifttype med fast bredde:"
+
+#: pan/gui/actions.cc:371
+#, fuzzy
+msgid "_Work Online"
+msgstr "/_Arkiv/Arbejd _frakoblet"
+
+#: pan/gui/actions.cc:372
+#, fuzzy
+msgid "_Tabbed Layout"
+msgstr "/_Vis/_Fanelayout"
+
+#: pan/gui/actions.cc:373
+#, fuzzy
+msgid "Show Group _Pane"
+msgstr "/_Vis/Vis gruppe_panel"
+
+#: pan/gui/actions.cc:374
+#, fuzzy
+msgid "Show Hea_der Pane"
+msgstr "/_Vis/Vis hove_dpanel"
+
+#: pan/gui/actions.cc:375
+#, fuzzy
+msgid "Show Bod_y Pane"
+msgstr "/_Vis/Vis artikelte_kstpanel"
+
+#: pan/gui/actions.cc:376
+msgid "Show _Toolbar"
+msgstr ""
+
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate _Names in Group Pane"
+msgstr "/_Vis/Forkort _navn i gruppepanel"
+
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate Newsgroup Names"
+msgstr "/_Vis/Forkort _navn i gruppepanel"
+
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only _Unread Articles"
+msgstr "Vis kun nye artikler"
+
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only Unread Articles"
+msgstr "Vis kun nye artikler"
+
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only _Cached Articles"
+msgstr "Vis kun mellemlagrede artikler"
+
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only Cached Articles"
+msgstr "Vis kun mellemlagrede artikler"
+
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only _Complete Articles"
+msgstr "Vis kun fuldstændige bilag"
+
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only Complete Articles"
+msgstr "Vis kun fuldstændige bilag"
+
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only _My Articles"
+msgstr "Vis kun mine artikler"
+
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only Articles Posted by Me"
+msgstr "Vis kun mine artikler"
+
+#: pan/gui/actions.cc:383
+#, fuzzy
+msgid "Match Only _Watched Articles"
+msgstr "Vis kun overvågede artikler"
+
+#: pan/gui/actions.cc:383
+msgid "Match Only Watched Articles"
+msgstr "Vis kun overvågede artikler"
+
+#: pan/gui/actions.cc:385
+#, fuzzy
+msgid "Match Scores of 9999 (_Watched)"
+msgstr "/_Filtre/Udvælg bedømmelser på 9999 (_Overvåget)"
+
+#: pan/gui/actions.cc:386
+#, fuzzy
+msgid "Match Scores of 5000...9998 (_High)"
+msgstr "/_Filtre/Udvælg bedømmelser på 5000 - 9998 (_Høj)"
+
+#: pan/gui/actions.cc:387
+#, fuzzy
+msgid "Match Scores of 1...4999 (Me_dium)"
+msgstr "/_Filtre/Udvælg bedømmelser på 1 - 4999 (_Medium)"
+
+#: pan/gui/actions.cc:388
+#, fuzzy
+msgid "Match Scores of 0 (_Normal)"
+msgstr "/_Filtre/Udvælg bedømmelser på 0 (_Normal)"
+
+#: pan/gui/actions.cc:389
+#, fuzzy
+msgid "Match Scores of -9998...-1 (_Low)"
+msgstr "</_Filtre/Udvælg bedømmelser på -9998 - -1 (_Lav)"
+
+#: pan/gui/actions.cc:390
+#, fuzzy
+msgid "Match Scores of -9999 (_Ignored)"
+msgstr "/_Filtre/Udvælg bedømmelser på -9999 (_Ignoreret)"
+
+#: pan/gui/actions.cc:416
+#, fuzzy
+msgid "Show Matching _Articles"
+msgstr "/_Filtre/Vis udvalgte _artikler"
+
+#: pan/gui/actions.cc:417
+#, fuzzy
+msgid "Show Matching Articles' _Threads"
+msgstr "/_Filtre/Vis udvalgte artiklers _tråde"
+
+#: pan/gui/actions.cc:418
+#, fuzzy
+msgid "Show Matching Articles' _Subthreads"
+msgstr "/_Filtre/Vis udvalgte artiklers _undertråde"
+
+#: pan/gui/actions.cc:435
+msgid "Baltic (ISO-8859-4)"
+msgstr ""
+
+#: pan/gui/actions.cc:436
+msgid "Baltic (ISO-8859-13)"
+msgstr ""
+
+#: pan/gui/actions.cc:437
+msgid "Baltic (Windows-1257)"
+msgstr ""
+
+#: pan/gui/actions.cc:438
+#, fuzzy
+msgid "Central European (ISO-8859-2)"
+msgstr "Centraleuropæisk"
+
+#: pan/gui/actions.cc:439
+#, fuzzy
+msgid "Central European (Windows-1250)"
+msgstr "Centraleuropæisk"
+
+#: pan/gui/actions.cc:440
+#, fuzzy
+msgid "Chinese Simplified (gb2312)"
+msgstr "Forenklet kinesisk"
+
+#: pan/gui/actions.cc:441
+#, fuzzy
+msgid "Chinese Traditional (big5)"
+msgstr "Traditionel kinesisk"
+
+#: pan/gui/actions.cc:442
+msgid "Cyrillic (ISO-8859-5)"
+msgstr ""
+
+#: pan/gui/actions.cc:443
+msgid "Cyrillic (Windows-1251)"
+msgstr ""
+
+#: pan/gui/actions.cc:444
+#, fuzzy
+msgid "Cyrillic (KOI8-R)"
+msgstr "Kyrillisk"
+
+#: pan/gui/actions.cc:445
+#, fuzzy
+msgid "Cyrillic, Ukrainian (KOI8-U)"
+msgstr "Kyrillisk, ukrainsk"
+
+#: pan/gui/actions.cc:446
+msgid "Greek (ISO-8859-7)"
+msgstr ""
+
+#: pan/gui/actions.cc:447
+msgid "Japanese (ISO-2022-jp)"
+msgstr ""
+
+#: pan/gui/actions.cc:448
+msgid "Korean (euc-kr)"
+msgstr ""
+
+#: pan/gui/actions.cc:449
+msgid "Turkish (ISO-8859-9)"
+msgstr ""
+
+#: pan/gui/actions.cc:450
+msgid "Western (ISO-8859-1)"
+msgstr ""
+
+#: pan/gui/actions.cc:451
+#, fuzzy
+msgid "Western, New (ISO-8859-15)"
+msgstr "Vestlig, ny"
+
+#: pan/gui/actions.cc:452
+msgid "Western (Windows-1252)"
+msgstr ""
+
+#: pan/gui/actions.cc:453
+#, fuzzy
+msgid "Unicode (UTF-8)"
+msgstr "ISO 10646, UTF-8"
+
+#: pan/gui/body-pane.cc:855
+#, c-format
+msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
+msgstr ""
+
+#: pan/gui/body-pane.cc:856
+#, c-format
+msgid "Attachment not shown: MIME type %s/%s\n"
+msgstr ""
+
+#: pan/gui/body-pane.cc:936 pan/gui/header-pane.cc:1167
+#: pan/gui/header-pane.cc:1502 pan/gui/prefs-ui.cc:322
+#: pan/gui/score-add-ui.cc:136
+msgid "Subject"
+msgstr "Emne"
+
+#: pan/gui/body-pane.cc:938
+#, fuzzy
+msgid "From"
+msgstr "Fra"
+
+#: pan/gui/body-pane.cc:940 pan/gui/header-pane.cc:1579 pan/gui/log-ui.cc:206
+#: pan/gui/prefs-ui.cc:318
+msgid "Date"
+msgstr "Dato"
+
+#: pan/gui/body-pane.cc:947
+msgid "Newsgroups"
+msgstr "Nyhedsgrupper"
+
+#: pan/gui/body-pane.cc:952
+#, fuzzy
+msgid "Followup-To"
+msgstr "Opfølgning-til"
+
+#: pan/gui/body-pane.cc:962
+msgid "Reply-To"
+msgstr "Svar-til"
+
+#: pan/gui/body-pane.cc:988
+msgid " from "
+msgstr ""
+
+#: pan/gui/body-pane.cc:990
+msgid " at "
+msgstr ""
+
+#: pan/gui/dl-headers-ui.cc:102
+#, fuzzy
+msgid "Pan: "
+msgstr "Pan "
+
+#: pan/gui/dl-headers-ui.cc:128
+#, fuzzy
+msgid "Get the last N _days' headers: "
+msgstr "Hent _seneste hoveder: "
+
+#: pan/gui/dl-headers-ui.cc:136
+#, fuzzy
+msgid "Get _new headers"
+msgstr "/_Hent nye hoveder"
+
+#: pan/gui/dl-headers-ui.cc:140
+#, fuzzy
+msgid "Get _all headers"
+msgstr "Hent _alle hoveder"
+
+#: pan/gui/dl-headers-ui.cc:144
+#, fuzzy
+msgid "Get the _latest N headers: "
+msgstr "Hent _seneste hoveder: "
+
+#: pan/gui/group-pane.cc:608
+#, fuzzy
+msgid "Group Name"
+msgstr "Gruppepanel"
+
+#: pan/gui/group-pane.cc:700
+#, c-format
+msgid " (%lu)"
+msgstr ""
+
+#: pan/gui/group-pane.cc:829 pan/gui/header-pane.cc:1668
+#, fuzzy
+msgid "Clear the Filter"
+msgstr "Markér filter:"
+
+#: pan/gui/group-pane.cc:857
+#, fuzzy
+msgid "Subscribed Groups"
+msgstr "Abonnerede nyhedsgrupper"
+
+#: pan/gui/group-pane.cc:858
+#, fuzzy
+msgid "Other Groups"
+msgstr "Nye grupper"
+
+#: pan/gui/group-pane.cc:900
+#, fuzzy
+msgid "Name"
+msgstr "_Navn:"
+
+#: pan/gui/group-prefs-dialog.cc:101
+#, fuzzy
+msgid "No Profiles defined in Edit|Posting Profiles."
+msgstr "/_Værktøjer/_Afsenderprofiler..."
+
+#: pan/gui/group-prefs-dialog.cc:129
+#, fuzzy
+msgid "Pan: Group Preferences"
+msgstr "Pan indstillinger"
+
+#: pan/gui/group-prefs-dialog.cc:143
+#, fuzzy, c-format
+msgid "Properties for %s"
+msgstr "Egenskaber for \"%s\""
+
+#: pan/gui/group-prefs-dialog.cc:147
+#, fuzzy
+msgid "Character _encoding:"
+msgstr "Tegnsæt:"
+
+#: pan/gui/group-prefs-dialog.cc:148
+#, fuzzy
+msgid "Directory for Saving Attachments"
+msgstr "Katalog for gemning af bilag"
+
+#: pan/gui/group-prefs-dialog.cc:153
+#, fuzzy
+msgid "Directory for _saving attachments:"
+msgstr "Katalog for gemning af bilag"
+
+#: pan/gui/group-prefs-dialog.cc:155
+#, fuzzy
+msgid "Posting _profile:"
+msgstr "Pan: Profil"
+
+#: pan/gui/gui.cc:236
+msgid "Open the Task Manager"
+msgstr "Åbn opgavehåndteringen"
+
+#: pan/gui/gui.cc:257
+#, fuzzy
+msgid "Open the Event Log"
+msgstr "Åbn statusloggen"
+
+#: pan/gui/gui.cc:481
+msgid "Save Attachments"
+msgstr "Gem bilag"
+
+#: pan/gui/gui.cc:529
+msgid "Import NZB File(s)"
+msgstr ""
+
+#: pan/gui/gui.cc:605
+msgid ""
+"Pan is now offline. Please ensure that space is available, then use File|"
+"Work Online to continue."
+msgstr ""
+
+#: pan/gui/gui.cc:730 pan/gui/gui.cc:1092 pan/gui/gui.cc:1296
+#, fuzzy
+msgid "Pan"
+msgstr "Pan "
+
+#: pan/gui/gui.cc:902
+#, fuzzy
+msgid "Unable to supersede article."
+msgstr "/_Arkiv/_Udskriv artikel..."
+
+#: pan/gui/gui.cc:903 pan/gui/gui.cc:970
+msgid "The article doesn't match any of your posting profiles."
+msgstr ""
+
+#: pan/gui/gui.cc:944
+msgid "Revise and send this article to replace the old one."
+msgstr ""
+
+#: pan/gui/gui.cc:945 pan/gui/gui.cc:1005
+msgid "Be patient!  It will take time for your changes to take effect."
+msgstr ""
+
+#: pan/gui/gui.cc:969
+#, fuzzy
+msgid "Unable to cancel article."
+msgstr "Kan ikke oprette tråd: %s"
+
+#: pan/gui/gui.cc:1004
+msgid "Send this article to ask your server to cancel your other one."
+msgstr ""
+
+#: pan/gui/gui.cc:1095 pan/gui/gui.cc:1115
+#, fuzzy
+msgid "Copyright © 2002-2006 Charles Kerr"
+msgstr "Copyright © 2003 Charles Kerr"
+
+#: pan/gui/gui.cc:1100
+msgid "translator-credits"
+msgstr ""
+
+#: pan/gui/gui.cc:1211
+#, fuzzy
+msgid "_1. Group Pane"
+msgstr "Gruppepanel"
+
+#: pan/gui/gui.cc:1212
+#, fuzzy
+msgid "_2. Header Pane"
+msgstr "_Hovedpanel:"
+
+#: pan/gui/gui.cc:1213
+#, fuzzy
+msgid "_3. Body Pane"
+msgstr "Artikelpanel"
+
+#: pan/gui/gui.cc:1298
+#, fuzzy, c-format
+msgid "Pan: %s"
+msgstr "Pan "
+
+#: pan/gui/gui.cc:1415
+msgid "Offline"
+msgstr "Frakoblet"
+
+#: pan/gui/gui.cc:1418
+#, c-format
+msgid "Closing %d connections"
+msgstr "Lukker %d tilslutninger"
+
+#: pan/gui/gui.cc:1420 pan/gui/gui.cc:1450
+msgid "No Connections"
+msgstr "Ingen forbindelser"
+
+#: pan/gui/gui.cc:1424
+msgid "Connecting"
+msgstr "Forbinder"
+
+#: pan/gui/gui.cc:1437
+#, c-format
+msgid "%s: %d idle, %d active @ %.1f KiBps"
+msgstr ""
+
+#: pan/gui/gui.cc:1493
+msgid "No Tasks"
+msgstr "Ingen opgaver"
+
+#: pan/gui/gui.cc:1496
+#, c-format
+msgid "Tasks: %u/%u"
+msgstr "Opgaver: %u/%u"
+
+#: pan/gui/gui.cc:1497
+#, c-format
+msgid "%u Tasks Running, %u Tasks Total"
+msgstr "%u opgaver kører, %u opgaver totalt"
+
+#: pan/gui/gui.cc:1546
+msgid ""
+"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
+"then use \"File|Work Online\" to continue."
+msgstr ""
+
+#. less than a kibi...
+#: pan/gui/header-pane.cc:363 pan/gui/task-pane.cc:208
+#, c-format
+msgid "%lu B"
+msgstr ""
+
+#: pan/gui/header-pane.cc:365
+#, c-format
+msgid "%.1f KiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:367
+#, c-format
+msgid "%.1f MiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:369
+#, c-format
+msgid "%.1f GiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:1166
+msgid "Subject or Author"
+msgstr ""
+
+#: pan/gui/header-pane.cc:1168 pan/gui/header-pane.cc:1534
+#: pan/gui/prefs-ui.cc:316 pan/gui/score-add-ui.cc:137
+msgid "Author"
+msgstr "Afsender"
+
+#: pan/gui/header-pane.cc:1169
+#, fuzzy
+msgid "Message-ID"
+msgstr "_Meddelelses-ID:"
+
+#: pan/gui/header-pane.cc:1519 pan/gui/prefs-ui.cc:320
+msgid "Score"
+msgstr "Bedømmelse"
+
+#: pan/gui/header-pane.cc:1549 pan/gui/prefs-ui.cc:319
+msgid "Lines"
+msgstr "Linjer"
+
+#: pan/gui/header-pane.cc:1564 pan/gui/prefs-ui.cc:317
+msgid "Bytes"
+msgstr ""
+
+#: pan/gui/log-ui.cc:85
+msgid "Save Event List"
+msgstr ""
+
+#: pan/gui/log-ui.cc:167
+#, fuzzy
+msgid "Pan: Events"
+msgstr "Pan: Servere"
+
+#: pan/gui/log-ui.cc:216
+msgid "Message"
+msgstr "Artikel"
+
+#: pan/gui/pan.cc:120
+msgid ""
+"Thank you for trying Pan!\n"
+" \n"
+"To start newsreading, first Add a Server."
+msgstr ""
+
+#: pan/gui/pan.cc:141
+msgid ""
+"General Options\n"
+"  -h, --help               Show this usage page.\n"
+"\n"
+"URL Options\n"
+"  news:message-id          Show the specified article.\n"
+"  news:group.name          Show the specified newsgroup.\n"
+"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"\n"
+"NZB Batch Options\n"
+"  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
+"  -o path, --output=path   Path to save attachments listed in the nzb "
+"files.\n"
+"  --nogui                  Only show console output, not the download "
+"queue.\n"
+msgstr ""
+
+#: pan/gui/pan.cc:198
+msgid "Error: nzb arguments used without nzb files."
+msgstr ""
+
+#: pan/gui/pan.cc:203
+msgid "Error: --nogui used without nzb files or news:message-id."
+msgstr ""
+
+#: pan/gui/pan.cc:207
+#, fuzzy, c-format
+msgid "Pan %s started"
+msgstr "Pan %s startet"
+
+#: pan/gui/pan.cc:223
+msgid "Please configure Pan's news servers before using it as an nzb client."
+msgstr ""
+
+#: pan/gui/post-ui.cc:86
+#, fuzzy, c-format
+msgid "Error setting spellchecker: %s"
+msgstr "Fejl ved indstilling af sokkelkodning: %s"
+
+#: pan/gui/post-ui.cc:95
+msgid ""
+"<b>Spellchecker not found!</b>\n"
+" \n"
+"Was this copy of Pan compiled with GtkSpell enabled?"
+msgstr ""
+
+#: pan/gui/post-ui.cc:240
+#, fuzzy
+msgid "_Profile"
+msgstr "Profil"
+
+#: pan/gui/post-ui.cc:241
+#, fuzzy
+msgid "Character Encoding"
+msgstr "Tegnsæt:"
+
+#: pan/gui/post-ui.cc:242
+#, fuzzy
+msgid "Set Editor"
+msgstr "Redigering"
+
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "_Send Article"
+msgstr "/_Gå til/_Forælder-artikel"
+
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "Send Article Now"
+msgstr "Send nu"
+
+#: pan/gui/post-ui.cc:245
+#, fuzzy
+msgid "Sa_ve Draft"
+msgstr "Gem artikel som..."
+
+#: pan/gui/post-ui.cc:245
+msgid "Save as a Draft for Future Posting"
+msgstr ""
+
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "_Open Draft..."
+msgstr "/_Læs artikel"
+
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "Open an Article Draft"
+msgstr "/_Læs artikel"
+
+#: pan/gui/post-ui.cc:247
+msgid "Wrap _Now"
+msgstr ""
+
+#: pan/gui/post-ui.cc:247
+#, fuzzy
+msgid "Wrap the Article Body to 80 Columns"
+msgstr "/_Vis/Linje_ombryd artikelteksten"
+
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "_Close"
+msgstr "_Farver"
+
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "Close Window"
+msgstr "Luk logvinduet"
+
+#: pan/gui/post-ui.cc:249
+msgid "Cu_t"
+msgstr ""
+
+#: pan/gui/post-ui.cc:249
+#, fuzzy
+msgid "Cut Text"
+msgstr "Citeret tekst:"
+
+#: pan/gui/post-ui.cc:250
+msgid "_Copy"
+msgstr ""
+
+#: pan/gui/post-ui.cc:250
+#, fuzzy
+msgid "Copy Text"
+msgstr "Ombryd tekst"
+
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "_Paste"
+msgstr "/_Send"
+
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "Paste Text"
+msgstr "Gem artikelte_kst"
+
+#: pan/gui/post-ui.cc:252
+#, fuzzy
+msgid "_Rot13"
+msgstr "Rotér 13 tegn"
+
+#: pan/gui/post-ui.cc:252
+msgid "Rot13 Selected Text"
+msgstr "Rot13 markeret tekst"
+
+#: pan/gui/post-ui.cc:253
+#, fuzzy
+msgid "Run _Editor"
+msgstr "Redigering"
+
+#: pan/gui/post-ui.cc:254
+msgid "_Manage Editor List..."
+msgstr ""
+
+#: pan/gui/post-ui.cc:255
+#, fuzzy
+msgid "Manage Posting Pr_ofiles..."
+msgstr "/_Værktøjer/_Afsenderprofiler..."
+
+#: pan/gui/post-ui.cc:260
+#, fuzzy
+msgid "_Wrap Text"
+msgstr "Ombryd tekst"
+
+#: pan/gui/post-ui.cc:261
+msgid "Remember _Charset for This Group"
+msgstr ""
+
+#: pan/gui/post-ui.cc:262
+msgid "Check _Spelling"
+msgstr ""
+
+#: pan/gui/post-ui.cc:317 pan/gui/post-ui.cc:318 pan/gui/post-ui.cc:319
+msgid "Baltic"
+msgstr "Baltisk"
+
+#: pan/gui/post-ui.cc:320 pan/gui/post-ui.cc:321
+msgid "Central European"
+msgstr "Centraleuropæisk"
+
+#: pan/gui/post-ui.cc:322
+msgid "Chinese Simplified"
+msgstr "Forenklet kinesisk"
+
+#: pan/gui/post-ui.cc:323
+msgid "Chinese Traditional"
+msgstr "Traditionel kinesisk"
+
+#: pan/gui/post-ui.cc:324 pan/gui/post-ui.cc:325 pan/gui/post-ui.cc:326
+msgid "Cyrillic"
+msgstr "Kyrillisk"
+
+#: pan/gui/post-ui.cc:327
+msgid "Cyrillic, Ukrainian"
+msgstr "Kyrillisk, ukrainsk"
+
+#: pan/gui/post-ui.cc:328
+msgid "Greek"
+msgstr "Græsk"
+
+#: pan/gui/post-ui.cc:329
+msgid "Japanese"
+msgstr "Japansk"
+
+#: pan/gui/post-ui.cc:330
+msgid "Korean"
+msgstr "Koreansk"
+
+#: pan/gui/post-ui.cc:331
+msgid "Turkish"
+msgstr "Tyrkisk"
+
+#: pan/gui/post-ui.cc:332 pan/gui/post-ui.cc:334
+msgid "Western"
+msgstr "Vestlig"
+
+#: pan/gui/post-ui.cc:333
+msgid "Western, New"
+msgstr "Vestlig, ny"
+
+#: pan/gui/post-ui.cc:335
+msgid "Unicode, UTF-8"
+msgstr "ISO 10646, UTF-8"
+
+#: pan/gui/post-ui.cc:431
+#, fuzzy, c-format
+msgid "Error loading post.ui: \"%s\""
+msgstr "Fejl ved læsning fra sokkel: %s"
+
+#: pan/gui/post-ui.cc:502
+msgid "Manage Editor List"
+msgstr ""
+
+#: pan/gui/post-ui.cc:509
+#, fuzzy
+msgid "Editors"
+msgstr "Redigering"
+
+#: pan/gui/post-ui.cc:609
+msgid "Your changes will be lost!"
+msgstr ""
+
+#: pan/gui/post-ui.cc:610
+msgid "Close this window and lose your changes?"
+msgstr ""
+
+#: pan/gui/post-ui.cc:647
+msgid "There were problems with this post."
+msgstr ""
+
+#: pan/gui/post-ui.cc:649
+#, fuzzy
+msgid "Go Back"
+msgstr "/_Gå til/Blad tilbage"
+
+#: pan/gui/post-ui.cc:651
+msgid "Post Anyway"
+msgstr ""
+
+#: pan/gui/post-ui.cc:662
+#, fuzzy
+msgid "Go _Online"
+msgstr "Tilsluttet"
+
+#: pan/gui/post-ui.cc:834
+msgid ""
+"No posting server is set for this posting profile.\n"
+"Please edit the profile via Edit|Manage Posting Profiles."
+msgstr ""
+
+#: pan/gui/post-ui.cc:867
+#, fuzzy
+msgid "Pan is Offline."
+msgstr "Pan er frakoblet"
+
+#: pan/gui/post-ui.cc:868
+msgid "Go online to post the article?"
+msgstr ""
+
+#. *
+#. ***  Pop up a ``Posting'' Dialog...
+#. *
+#: pan/gui/post-ui.cc:881
+#, fuzzy
+msgid "Posting Article"
+msgstr "Poster artiklen \"%s\""
+
+#: pan/gui/post-ui.cc:887
+msgid "Posting..."
+msgstr ""
+
+#: pan/gui/post-ui.cc:938
+#, fuzzy
+msgid "Error opening temporary file"
+msgstr "Fejl ved åbningen af temporær fil: \"%s\""
+
+#: pan/gui/post-ui.cc:958
+#, c-format
+msgid "Error writing article to temporary file: %s"
+msgstr "Fejl ved skrivning af artikel til temporær fil: %s"
+
+#: pan/gui/post-ui.cc:977
+#, fuzzy, c-format
+msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
+msgstr "Fejl ved tolkning af \"external editor\"-kommandolinje: %s"
+
+#: pan/gui/post-ui.cc:1015
+#, c-format
+msgid "Error starting external editor: %s"
+msgstr "Fejl ved start af den eksterne redigerering: %s"
+
+#: pan/gui/post-ui.cc:1070
+#, fuzzy
+msgid "Open Draft Article"
+msgstr "/_Læs artikel"
+
+#: pan/gui/post-ui.cc:1233
+#, fuzzy
+msgid "Save Draft Article"
+msgstr "Gem artikel som..."
+
+#: pan/gui/post-ui.cc:1390
+#, c-format
+msgid "Couldn't read signature file \"%s\": %s"
+msgstr "Kunne ikke læse signaturfilen \"%s\": %s"
+
+#: pan/gui/post-ui.cc:1411
+#, fuzzy, c-format
+msgid "Couldn't parse signature command \"%s\": %s"
+msgstr "Kunne ikke køre signaturprogrammet \"%s\": %s"
+
+#: pan/gui/post-ui.cc:1448
+#, fuzzy
+msgid "Couldn't convert signature to UTF-8."
+msgstr ""
+"Kunne ikke konvertere signaturfilen \"%s\" til UTF-8. Signaturen skal være i "
+"\"%s\""
+
+#: pan/gui/post-ui.cc:1790
+#, fuzzy
+msgid "Post Article"
+msgstr "_Artikel"
+
+#: pan/gui/post-ui.cc:1812
+#, fuzzy
+msgid "F_rom"
+msgstr "Fra"
+
+#: pan/gui/post-ui.cc:1819
+#, fuzzy
+msgid "_Subject"
+msgstr "_Emne:"
+
+#: pan/gui/post-ui.cc:1825
+#, fuzzy
+msgid "_Newsgroups"
+msgstr "/_Nyhedsgrupper"
+
+#: pan/gui/post-ui.cc:1832
+#, fuzzy
+msgid "_Mail To"
+msgstr "E-post til"
+
+#: pan/gui/post-ui.cc:1842
+msgid "One header per line, in the form HeaderName: Value"
+msgstr ""
+
+#: pan/gui/post-ui.cc:1845
+#, fuzzy
+msgid "_More Headers"
+msgstr "Brevhoved"
+
+#: pan/gui/post-ui.cc:1867 pan/gui/profiles-dialog.cc:398
+#, c-format
+msgid "On %d, %n wrote:"
+msgstr "Den %d skrev %n:"
+
+#: pan/gui/profiles-dialog.cc:102
+#, fuzzy
+msgid "Posting Profile"
+msgstr "Pan: Profil"
+
+#: pan/gui/profiles-dialog.cc:110
+msgid "Profile Information"
+msgstr "Profilinformation"
+
+#: pan/gui/profiles-dialog.cc:114
+msgid "_Profile Name:"
+msgstr "_Profilnavn:"
+
+#: pan/gui/profiles-dialog.cc:117
+msgid "Required Information"
+msgstr "Nødvendig information"
+
+#: pan/gui/profiles-dialog.cc:121
+msgid "_Full Name:"
+msgstr "_Fulde navn:"
+
+#: pan/gui/profiles-dialog.cc:124
+msgid "_Email Address:"
+msgstr "_E-postadresse:"
+
+#: pan/gui/profiles-dialog.cc:126
+#, fuzzy
+msgid "_Post Articles via:"
+msgstr "_Artikel"
+
+#: pan/gui/profiles-dialog.cc:129
+#, fuzzy
+msgid "Signature"
+msgstr "_Signaturfil:"
+
+#: pan/gui/profiles-dialog.cc:132
+#, fuzzy
+msgid "_Use a Signature"
+msgstr "_Signaturfil:"
+
+#: pan/gui/profiles-dialog.cc:136
+#, fuzzy
+msgid "Signature File"
+msgstr "Vælg signaturfil"
+
+#: pan/gui/profiles-dialog.cc:139
+#, fuzzy
+msgid "_Signature:"
+msgstr "_Signaturfil:"
+
+#: pan/gui/profiles-dialog.cc:144
+#, fuzzy
+msgid "Text File"
+msgstr "/_Gå til/N_æste artikel"
+
+#: pan/gui/profiles-dialog.cc:146
+#, fuzzy
+msgid "Text"
+msgstr "Tekst:"
+
+#: pan/gui/profiles-dialog.cc:148
+#, fuzzy
+msgid "Command"
+msgstr "Printerkommando:"
+
+#: pan/gui/profiles-dialog.cc:158
+#, fuzzy
+msgid "Signature _Type:"
+msgstr "_Signaturfil:"
+
+#: pan/gui/profiles-dialog.cc:161
+msgid "Optional Information"
+msgstr "Valgfri information:"
+
+#: pan/gui/profiles-dialog.cc:169
+#, c-format
+msgid ""
+"%i for Message-ID\n"
+"%a for Author and Address\n"
+"%n for Author name\n"
+"%d for Date"
+msgstr ""
+"%i erstattes med Message-ID\n"
+"%a erstattes med forfatterens navn og adresse\n"
+"%n erstattes med forfatterens navn\n"
+"%d erstattes med datoen"
+
+#: pan/gui/profiles-dialog.cc:170
+msgid "_Attribution:"
+msgstr "_Tilskrivelse:"
+
+#: pan/gui/profiles-dialog.cc:190
+msgid ""
+"Extra headers to be included in your posts, such as\n"
+"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
+"Organization: Your Organization"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:199
+#, fuzzy
+msgid "E_xtra Headers:"
+msgstr "Ekstra brevhoved-felter"
+
+#: pan/gui/profiles-dialog.cc:253
+#, fuzzy
+msgid "Invalid email address."
+msgstr "Ugyldig adresse \"%s\""
+
+#: pan/gui/profiles-dialog.cc:254
+msgid "Please use an address of the form joe@somewhere.org"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:399
+msgid "New Profile"
+msgstr "Ny profil"
+
+#: pan/gui/profiles-dialog.cc:442
+#, fuzzy
+msgid "Posting Profiles"
+msgstr "/_Værktøjer/_Afsenderprofiler..."
+
+#: pan/gui/profiles-dialog.cc:458
+#, fuzzy
+msgid "Profiles"
+msgstr "Profil"
+
+#: pan/gui/profiles-dialog.cc:482
+#, fuzzy
+msgid "Add a New Profile"
+msgstr "Tilføj en ny profil"
+
+#: pan/gui/profiles-dialog.cc:493
+msgid "Edit the selected profile"
+msgstr "Redigér valgt profil"
+
+#: pan/gui/profiles-dialog.cc:499
+msgid "Remove the selected profile"
+msgstr "Fjern den valgte profil"
+
+#: pan/gui/prefs.cc:320
+#, fuzzy, c-format
+msgid "Couldn't parse %s color \"%s\""
+msgstr "Kunne ikke tolke signaturkommandoen \"%s\""
+
+#: pan/gui/prefs-ui.cc:159
+#, fuzzy
+msgid "Use GNOME Preferences"
+msgstr "Pan indstillinger"
+
+#: pan/gui/prefs-ui.cc:160
+#, fuzzy
+msgid "Use KDE Preferences"
+msgstr "Referencer"
+
+#: pan/gui/prefs-ui.cc:161
+#, fuzzy
+msgid "Use OS/X Preferences"
+msgstr "Referencer"
+
+#: pan/gui/prefs-ui.cc:162
+#, fuzzy
+msgid "Use Windows Preferences"
+msgstr "Pan indstillinger"
+
+#: pan/gui/prefs-ui.cc:163
+#, fuzzy
+msgid "Custom Command:"
+msgstr "Printerkommando:"
+
+#: pan/gui/prefs-ui.cc:315
+#, fuzzy
+msgid "Action"
+msgstr "Handlinger"
+
+#: pan/gui/prefs-ui.cc:321
+#, fuzzy
+msgid "State"
+msgstr "Status"
+
+#: pan/gui/prefs-ui.cc:354
+#, fuzzy
+msgid "Enabled"
+msgstr "Fejlede"
+
+#: pan/gui/prefs-ui.cc:358
+#, fuzzy
+msgid "Column Name"
+msgstr "Kolonne"
+
+#: pan/gui/prefs-ui.cc:392
+#, fuzzy
+msgid "Pan: Preferences"
+msgstr "Pan indstillinger"
+
+#: pan/gui/prefs-ui.cc:404
+msgid "Mouse"
+msgstr "Mus"
+
+#: pan/gui/prefs-ui.cc:406
+#, fuzzy
+msgid "Single-click activates, rather than selects, _groups"
+msgstr "Enkeltklik vælger _grupper i stedet for at aktivere dem"
+
+#: pan/gui/prefs-ui.cc:408
+#, fuzzy
+msgid "Single-click activates, rather than selects, _articles"
+msgstr "Enkeltklik vælger _artikler i stedet for at aktivere dem"
+
+#: pan/gui/prefs-ui.cc:411
+#, fuzzy
+msgid "Groups"
+msgstr "Grupper"
+
+#: pan/gui/prefs-ui.cc:413
+#, fuzzy
+msgid "Get new headers in subscribed groups on _startup"
+msgstr "Hent nye hoveder i abonnerede grupper"
+
+#: pan/gui/prefs-ui.cc:415
+#, fuzzy
+msgid "Get new headers when _entering group"
+msgstr "_Hent nye hoveder når en gruppe åbnes"
+
+#: pan/gui/prefs-ui.cc:417
+#, fuzzy
+msgid "Mark entire group _read when leaving group"
+msgstr "_Markér gruppens artikler som læst når den forlades"
+
+#: pan/gui/prefs-ui.cc:420
+#, fuzzy
+msgid "Articles"
+msgstr "/Ar_tikler"
+
+#: pan/gui/prefs-ui.cc:421
+msgid "Space selects next article, not next unread"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:424
+#, fuzzy
+msgid "_Behavior"
+msgstr "_Opførsel"
+
+#: pan/gui/prefs-ui.cc:428
+msgid "Pane Layout"
+msgstr "Panellayout"
+
+#: pan/gui/prefs-ui.cc:444
+msgid "Tasks"
+msgstr "Opgaver"
+
+#: pan/gui/prefs-ui.cc:447
+msgid "1=Groups, 2=Headers, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:449
+msgid "1=Groups, 2=Body, 3=Headers"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:451
+msgid "1=Headers, 2=Groups, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:453
+msgid "1=Headers, 2=Body, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:455
+msgid "1=Body, 2=Groups, 3=Headers"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:457
+msgid "1=Body, 2=Headers, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:464
+#, fuzzy
+msgid "Header Pane Columns"
+msgstr "Hovedpanel"
+
+#: pan/gui/prefs-ui.cc:468
+#, fuzzy
+msgid "Threads"
+msgstr "_Læste tråde:"
+
+#: pan/gui/prefs-ui.cc:470
+#, fuzzy
+msgid "E_xpand all threads when entering group"
+msgstr "_Hent nye hoveder når en gruppe åbnes"
+
+#: pan/gui/prefs-ui.cc:473
+#, fuzzy
+msgid "_Headers"
+msgstr "Hoveder"
+
+#: pan/gui/prefs-ui.cc:477
+msgid "Fonts"
+msgstr "Skrifttyper"
+
+#: pan/gui/prefs-ui.cc:479
+msgid "Use custom font in Group Pane:"
+msgstr "Brug egne skrifttyper i gruppepanelet:"
+
+#: pan/gui/prefs-ui.cc:484
+msgid "Use custom font in Header Pane:"
+msgstr "Brug egne skrifttyper i hovedpanelet:"
+
+#: pan/gui/prefs-ui.cc:489
+msgid "Use custom font in Body Pane:"
+msgstr "Brug egne skrifttyper i artikeltekstpanelet:"
+
+#: pan/gui/prefs-ui.cc:494
+#, fuzzy
+msgid "Monospace font:"
+msgstr "Skrifttype med fast bredde:"
+
+#: pan/gui/prefs-ui.cc:498
+#, fuzzy
+msgid "_Fonts"
+msgstr "Skrifttyper"
+
+#: pan/gui/prefs-ui.cc:502
+msgid "Header Pane"
+msgstr "Hovedpanel"
+
+#: pan/gui/prefs-ui.cc:505 pan/gui/prefs-ui.cc:511 pan/gui/prefs-ui.cc:517
+#: pan/gui/prefs-ui.cc:523 pan/gui/prefs-ui.cc:529
+msgid "Text:"
+msgstr "Tekst:"
+
+#: pan/gui/prefs-ui.cc:507 pan/gui/prefs-ui.cc:513 pan/gui/prefs-ui.cc:519
+#: pan/gui/prefs-ui.cc:525 pan/gui/prefs-ui.cc:531
+msgid "Background:"
+msgstr "Baggrund:"
+
+#: pan/gui/prefs-ui.cc:509
+#, fuzzy
+msgid "Scores of 9999 or more:"
+msgstr "/_Filtre/Udvælg bedømmelser på -9999 (_Ignoreret)"
+
+#: pan/gui/prefs-ui.cc:515
+msgid "Scores from 5000 to 9998:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:521
+msgid "Scores from 1 to 4999:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:527
+msgid "Scores from -9998 to -1:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:533
+#, fuzzy
+msgid "Scores of -9999 or less:"
+msgstr "/_Filtre/Udvælg bedømmelser på -9999 (_Ignoreret)"
+
+#: pan/gui/prefs-ui.cc:535
+#, fuzzy
+msgid "Body Pane"
+msgstr "_Artikelpanel"
+
+#: pan/gui/prefs-ui.cc:541
+#, fuzzy
+msgid "Quoted Text:"
+msgstr "Citeret tekst _2:"
+
+#: pan/gui/prefs-ui.cc:542
+#, fuzzy
+msgid "URL:"
+msgstr "Adresser:"
+
+#: pan/gui/prefs-ui.cc:543
+#, fuzzy
+msgid "Signature:"
+msgstr "_Signaturfil:"
+
+#: pan/gui/prefs-ui.cc:545
+#, fuzzy
+msgid "_Colors"
+msgstr "_Farver"
+
+#: pan/gui/prefs-ui.cc:549
+#, fuzzy
+msgid "Preferred Applications"
+msgstr "_Programmer"
+
+#: pan/gui/prefs-ui.cc:553
+#, fuzzy
+msgid "_Web Browser:"
+msgstr "Nye grupper"
+
+#: pan/gui/prefs-ui.cc:556
+#, fuzzy
+msgid "_Mail Reader:"
+msgstr "Postserver"
+
+#: pan/gui/prefs-ui.cc:558
+#, fuzzy
+msgid "A_pplications"
+msgstr "_Programmer"
+
+#: pan/gui/save-ui.cc:61
+#, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+" \n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - gruppe som et katalog (alt.binaries.pictures.trains)\n"
+"%G - gruppe som et hierarkisk katalog (/alt/binaries/pictures/trains)\n"
+" \n"
+"\"/home/bruger/News/Pan/%g\" bliver\n"
+"\"/home/bruger/News/Pan/alt.binaries.pictures.trains\", og\n"
+"\"/home/bruger/News/Pan/%G\" bliver\n"
+"\"/home/bruger/News/Pan/alt/binaries/pictures/trains\","
+
+#: pan/gui/save-ui.cc:156
+#, fuzzy
+msgid "Pan: Save Articles"
+msgstr "Pan: Gem som"
+
+#: pan/gui/save-ui.cc:173
+msgid "Files"
+msgstr "Filer"
+
+#: pan/gui/save-ui.cc:176
+#, fuzzy
+msgid "Save _Text"
+msgstr "Gem artikelte_kst"
+
+#: pan/gui/save-ui.cc:179
+msgid "Save _Attachments"
+msgstr "Gem _bilag"
+
+#: pan/gui/save-ui.cc:185
+#, fuzzy
+msgid "Path"
+msgstr "Dele"
+
+#: pan/gui/save-ui.cc:191
+msgid "C_ustom path:"
+msgstr ""
+
+#: pan/gui/save-ui.cc:195
+#, fuzzy
+msgid "Save Files to Path"
+msgstr "Gem bilag"
+
+#: pan/gui/save-ui.cc:208
+#, fuzzy
+msgid "_Path:"
+msgstr "/_Send"
+
+#: pan/gui/save-ui.cc:211
+#, c-format
+msgid "Group's _default path: %s"
+msgstr ""
+
+#: pan/gui/save-ui.cc:220
+#, fuzzy
+msgid "Group Management"
+msgstr "Gruppepanel"
+
+#. sort by age
+#: pan/gui/save-ui.cc:224
+msgid "Add to the queue sorted by a_ge"
+msgstr ""
+
+#. top of queue
+#: pan/gui/save-ui.cc:229
+#, fuzzy
+msgid "Add to the _front of the queue"
+msgstr "Tilføj _nederst i opgavehåndtererens liste"
+
+#. bottom of queue
+#: pan/gui/save-ui.cc:234
+msgid "Add to the _back of the queue"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:86
+msgid "is more than"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:87
+msgid "is at most"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:109
+#, fuzzy
+msgid "increase the article's score by"
+msgstr "/_Vis/Linje_ombryd artikelteksten"
+
+#: pan/gui/score-add-ui.cc:110
+#, fuzzy
+msgid "decrease the article's score by"
+msgstr "/_Vis/Linje_ombryd artikelteksten"
+
+#: pan/gui/score-add-ui.cc:111
+#, fuzzy
+msgid "set the article's score to"
+msgstr "sæt til"
+
+#: pan/gui/score-add-ui.cc:112
+#, fuzzy
+msgid "watch the article (set its score to 9999)"
+msgstr "_Overvåg (sæt til 9999)"
+
+#: pan/gui/score-add-ui.cc:113
+#, fuzzy
+msgid "ignore the article (set its score to -9999)"
+msgstr "_Ignorér (sæt til -9999)"
+
+#: pan/gui/score-add-ui.cc:138
+#, fuzzy
+msgid "References"
+msgstr "_Referencer"
+
+#: pan/gui/score-add-ui.cc:139
+#, fuzzy
+msgid "Line Count"
+msgstr "Linje %d, tegn %d"
+
+#: pan/gui/score-add-ui.cc:140
+msgid "Byte Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:141
+msgid "Crosspost Group Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:142
+msgid "Age (in days)"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:164
+msgid "the next week"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:165
+msgid "the next month"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:166
+#, fuzzy
+msgid "forever"
+msgstr "Server"
+
+#: pan/gui/score-add-ui.cc:191
+msgid "contains"
+msgstr "indeholder"
+
+#: pan/gui/score-add-ui.cc:192
+#, fuzzy
+msgid "doesn't contain"
+msgstr "indeholder ikke"
+
+#: pan/gui/score-add-ui.cc:193
+msgid "is"
+msgstr "er"
+
+#: pan/gui/score-add-ui.cc:194
+#, fuzzy
+msgid "isn't"
+msgstr "er ikke"
+
+#: pan/gui/score-add-ui.cc:195
+msgid "starts with"
+msgstr "begynder med"
+
+#: pan/gui/score-add-ui.cc:196
+msgid "ends with"
+msgstr "ender med"
+
+#: pan/gui/score-add-ui.cc:197
+#, fuzzy
+msgid "matches regex"
+msgstr "stemmer med det regulære udtryk"
+
+#: pan/gui/score-add-ui.cc:525
+msgid "Add and Re_score"
+msgstr "Tilføj og ombedøm"
+
+#: pan/gui/score-add-ui.cc:573
+#, fuzzy
+msgid "Pan: New Scoring Rule"
+msgstr "Pan: Redigér regel"
+
+#: pan/gui/score-add-ui.cc:592
+#, fuzzy
+msgid "New Scoring Rule"
+msgstr "Ny bedømmelse"
+
+#: pan/gui/score-add-ui.cc:603
+msgid "If the group name"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:610
+#, fuzzy
+msgid "And the article's"
+msgstr "Linjer per artikel:"
+
+#: pan/gui/score-add-ui.cc:622
+#, fuzzy
+msgid "Then"
+msgstr "Tak"
+
+#: pan/gui/score-add-ui.cc:630
+#, fuzzy
+msgid "For"
+msgstr "Mapper"
+
+#: pan/gui/score-view-ui.cc:64
+msgid "Close and Re_score"
+msgstr "Luk og _ombedøm"
+
+#: pan/gui/score-view-ui.cc:167
+#, fuzzy, c-format
+msgid "File %s, Lines %d - %d"
+msgstr "bedømmelsesfil %s, linje %d: %s (%s)"
+
+#: pan/gui/score-view-ui.cc:170
+#, fuzzy, c-format
+msgid "Name: \"%s\""
+msgstr "Gemte \"%s\""
+
+#: pan/gui/score-view-ui.cc:199
+#, fuzzy
+msgid "Pan: Article's Scores"
+msgstr "Pan: Vis artikelbedømmelser"
+
+#: pan/gui/score-view-ui.cc:225
+#, fuzzy
+msgid "Add"
+msgstr "forøg med"
+
+#: pan/gui/score-view-ui.cc:230
+msgid "New Score"
+msgstr "Ny bedømmelse"
+
+#: pan/gui/score-view-ui.cc:235
+msgid "Criteria"
+msgstr "Kriterium"
+
+#: pan/gui/score-view-ui.cc:258
+#, fuzzy
+msgid "Add a New Scoring Rule"
+msgstr "Tilføj ny bedømmelse"
+
+#: pan/gui/score-view-ui.cc:265
+#, fuzzy
+msgid "Remove the Selected Scoring Rule"
+msgstr "Fjern den markerede bedømmelse"
+
+#: pan/gui/server-ui.cc:162
+msgid "Please specify the server's address."
+msgstr ""
+
+#. create the dialog
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Add a Server"
+msgstr "Pan: Redigér server"
+
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Edit a Server's Settings"
+msgstr "Pan: Redigér server"
+
+#: pan/gui/server-ui.cc:222
+#, fuzzy
+msgid "Location"
+msgstr "Handlinger"
+
+#: pan/gui/server-ui.cc:226
+msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
+msgstr "Nyhedsserverens rigtige adresse, f.eks. \"news.udbyder.dk\""
+
+#: pan/gui/server-ui.cc:227
+msgid "_Address:"
+msgstr "_Adresse:"
+
+#: pan/gui/server-ui.cc:231
+#, fuzzy
+msgid "The news server's port number.  Typically 119."
+msgstr "Nyhedsserverens portnummer, næsten altid 119."
+
+#: pan/gui/server-ui.cc:232
+msgid "Por_t:"
+msgstr "Por_t:"
+
+#: pan/gui/server-ui.cc:235
+msgid "Login (if Required)"
+msgstr ""
+
+#: pan/gui/server-ui.cc:239
+msgid "_Username:"
+msgstr "_Brugernavn:"
+
+#: pan/gui/server-ui.cc:240
+msgid ""
+"The username to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+#: pan/gui/server-ui.cc:244
+msgid "_Password:"
+msgstr "_Adgangskode:"
+
+#: pan/gui/server-ui.cc:245
+msgid ""
+"The password to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+#: pan/gui/server-ui.cc:248
+#, fuzzy
+msgid "Settings"
+msgstr "Henter \"%s\""
+
+#: pan/gui/server-ui.cc:254
+msgid "Connection _Limit:"
+msgstr "Tilslutnings_begrænsning:"
+
+#: pan/gui/server-ui.cc:257
+msgid "After Two Weeks"
+msgstr ""
+
+#: pan/gui/server-ui.cc:258
+msgid "After One Month"
+msgstr ""
+
+#: pan/gui/server-ui.cc:259
+msgid "After Two Months"
+msgstr ""
+
+#: pan/gui/server-ui.cc:260
+#, fuzzy
+msgid "Never Expire Old Articles"
+msgstr "Udløber _aldrig"
+
+#: pan/gui/server-ui.cc:274
+#, fuzzy
+msgid "E_xpire Old Articles:"
+msgstr "Hent markerede artikler"
+
+#: pan/gui/server-ui.cc:277
+#, fuzzy
+msgid "Primary"
+msgstr "Prioritet"
+
+#: pan/gui/server-ui.cc:278
+msgid "Fallback"
+msgstr ""
+
+#: pan/gui/server-ui.cc:292
+#, fuzzy
+msgid "Server Rank:"
+msgstr "Servere"
+
+#: pan/gui/server-ui.cc:296
+msgid ""
+"Fallback servers are used for articles that can't be found on the "
+"primaries.  One common approach is to use free servers as primaries and "
+"subscription servers as fallbacks."
+msgstr ""
+
+#: pan/gui/server-ui.cc:420
+#, c-format
+msgid "Really delete \"%s\"?"
+msgstr ""
+
+#. dialog
+#: pan/gui/server-ui.cc:492
+msgid "Pan: Servers"
+msgstr "Pan: Servere"
+
+#: pan/gui/server-ui.cc:512
+msgid "Servers"
+msgstr "Servere"
+
+#: pan/gui/server-ui.cc:538
+#, fuzzy
+msgid "Add a Server"
+msgstr "Tilføj en ny server"
+
+#: pan/gui/server-ui.cc:548
+#, fuzzy
+msgid "Edit a Server's Settings"
+msgstr "Andre indstillinger"
+
+#: pan/gui/server-ui.cc:555
+#, fuzzy
+msgid "Remove a Server"
+msgstr "Ny server"
+
+#. less than a mebi...
+#: pan/gui/task-pane.cc:210
+#, c-format
+msgid "%.2f KiB"
+msgstr ""
+
+#. less than a gibi...
+#: pan/gui/task-pane.cc:212
+#, c-format
+msgid "%.2f MiB"
+msgstr ""
+
+#: pan/gui/task-pane.cc:214
+#, c-format
+msgid "%.2f GiB"
+msgstr ""
+
+#: pan/gui/task-pane.cc:250
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
+msgstr "Pan %s opgavehåndtering (%d i kø, %d kører, %d stoppet)"
+
+#: pan/gui/task-pane.cc:252
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running)"
+msgstr "Pan %s Opgavehåndtering (%d i kø, %d kører)"
+
+#: pan/gui/task-pane.cc:254
+#, fuzzy
+msgid "Pan: Tasks"
+msgstr "Pan: Opgavehåndtering"
+
+#: pan/gui/task-pane.cc:268
+#, c-format
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
+msgstr ""
+
+#: pan/gui/task-pane.cc:326
+msgid "Running"
+msgstr "Kører"
+
+#: pan/gui/task-pane.cc:327
+msgid "Queued"
+msgstr "I kø"
+
+#: pan/gui/task-pane.cc:328
+msgid "Stopped"
+msgstr "Stoppet"
+
+#: pan/gui/task-pane.cc:329
+msgid "Removing"
+msgstr "Fjerner"
+
+#: pan/gui/task-pane.cc:330
+msgid "Unknown"
+msgstr "Ukendt"
+
+#: pan/gui/task-pane.cc:354
+#, fuzzy, c-format
+msgid "%d%% Done; %d:%02d:%02d Remaining (%d @ %lu KiB/s)"
+msgstr "%d.%02d.%02d (%.2f kB/s)"
+
+#: pan/gui/task-pane.cc:358
+#, fuzzy, c-format
+msgid "%d%% Done; %s"
+msgstr "% gennemført"
+
+#: pan/gui/task-pane.cc:366
+#, fuzzy, c-format
+msgid "to %s"
+msgstr "Om %s"
+
+#: pan/gui/task-pane.cc:433
+#, fuzzy
+msgid "Restart Tasks"
+msgstr "Genstart valgte opgaver"
+
+#: pan/gui/task-pane.cc:438
+#, fuzzy
+msgid "Stop Tasks"
+msgstr "Ingen opgaver"
+
+#: pan/gui/task-pane.cc:443
+#, fuzzy
+msgid "Delete Tasks"
+msgstr "Slet spam"
+
+#: pan/gui/task-pane.cc:467
+msgid "Status"
+msgstr "Status"
+
+#: pan/gui/url.cc:92
+#, fuzzy, c-format
+msgid "Error starting URL: %s (Command was: %s)"
+msgstr "Fejl ved tolkning af \"weblæser\"-kommandolinje: %s"
+
+#: pan/tasks/nntp.cc:214
+#, fuzzy, c-format
+msgid "Unable to set group: %s"
+msgstr "Kan ikke sætte gruppen \"%*.*s\": %s"
+
+#: pan/tasks/nntp.cc:231
+#, fuzzy, c-format
+msgid "Error: %s"
+msgstr "Fejl"
+
+#: pan/tasks/socket-impl-gio.cc:112
+#, fuzzy, c-format
+msgid "Making a new connection to %*.*s"
+msgstr "Ny forbindelse %p for %*.*s, port %d"
+
+#: pan/tasks/socket-impl-gio.cc:347
+#, fuzzy
+msgid "Unknown Error"
+msgstr "Ukendt"
+
+#: pan/tasks/socket-impl-gio.cc:348
+#, c-format
+msgid "Error reading from socket: %s"
+msgstr "Fejl ved læsning fra sokkel: %s"
+
+#: pan/tasks/task-article.cc:54 pan/tasks/task-article.cc:124
+#, fuzzy, c-format
+msgid "Saving %s"
+msgstr "Gemmer  \"%s\""
+
+#: pan/tasks/task-article.cc:56
+#, fuzzy, c-format
+msgid "Reading %s"
+msgstr "Læser"
+
+#: pan/tasks/task-article.cc:291
+msgid "Error initializing uulib"
+msgstr ""
+
+#: pan/tasks/task-article.cc:302
+#, fuzzy, c-format
+msgid "Couldn't load \"%s\": %s"
+msgstr "Kunne ikke oprette kataloget \"%s\": %s"
+
+#: pan/tasks/task-article.cc:335
+#, c-format
+msgid "Saved \"%s\""
+msgstr "Gemte \"%s\""
+
+#: pan/tasks/task-article.cc:339
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s. %s"
+msgstr "Fejl ved læsning af filen \"%s\": %s"
+
+#: pan/tasks/task-article.cc:341
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s."
+msgstr "Fejl ved læsning af filen \"%s\": %s"
+
+#: pan/tasks/task-groups.cc:40
+#, fuzzy, c-format
+msgid "Getting group list from \"%s\""
+msgstr "Henter nye grupper fra serveren \"%s\""
+
+#: pan/tasks/task-groups.cc:121
+#, fuzzy, c-format
+msgid "Fetched %lu Groups"
+msgstr "Hentede %u hoveder for \"%s\""
+
+#: pan/tasks/task-post.cc:34
+#, fuzzy, c-format
+msgid "Posting \"%s\""
+msgstr "Henter \"%s\""
+
+#: pan/tasks/task-xover.cc:71
+#, c-format
+msgid "Getting all headers for \"%s\""
+msgstr "Henter alle hoveder for \"%s\""
+
+#: pan/tasks/task-xover.cc:73
+#, c-format
+msgid "Getting new headers for \"%s\""
+msgstr "Henter nye hoveder for \"%s\""
+
+#. SAMPLE
+#: pan/tasks/task-xover.cc:75
+#, c-format
+msgid "Sampling headers for \"%s\""
+msgstr "Udtrækker hoveder for \"%s\""
+
+#: pan/tasks/task-xover.cc:321
+#, fuzzy, c-format
+msgid "%s (%lu parts, %lu articles)"
+msgstr " (%lu linjer i %lu artikler)"
+
+#: pan/usenet-utils/gnksa.cc:879
+#, c-format
+msgid "No email address provided; generating message-id with domain \"%s\""
+msgstr ""
+"Ingen e-postadresse angivet; genererer meddelelses-ID med domænet \"%s\""
+
+#: pan/usenet-utils/message-check.cc:123
+#, fuzzy
+msgid "Warning: Reply seems to be top-posted."
+msgstr "ADVARSEL: Svaret ser ud til at være postet øverst."
+
+#: pan/usenet-utils/message-check.cc:144
+#, fuzzy
+msgid "Warning: The signature marker should be \"-- \", not \"--\"."
+msgstr "ADVARSEL: Signaturadskilleren skal være \"-- \", ikke \"--\"."
+
+#: pan/usenet-utils/message-check.cc:161
+#, fuzzy
+msgid "Warning: Signature prefix with no signature."
+msgstr "ADVARSEL: Signaturpræfiks uden signatur."
+
+#: pan/usenet-utils/message-check.cc:166
+#, fuzzy
+msgid "Warning: Signature is more than 4 lines long."
+msgstr "ADVARSEL: Signaturen er mere end 4 linjer lang"
+
+#: pan/usenet-utils/message-check.cc:171
+#, fuzzy
+msgid "Warning: Signature is more than 80 characters wide."
+msgstr "ADVARSEL: Signaturen er mere end 80 tegn bred."
+
+#: pan/usenet-utils/message-check.cc:196
+#, fuzzy, c-format
+msgid "Warning: %d lines are more than 80 characters wide."
+msgstr "ADVARSEL: %d linjer er mere end 80 tegn brede."
+
+#: pan/usenet-utils/message-check.cc:219
+#, fuzzy
+msgid "Error: Message is empty."
+msgstr "FEJL: Besked er tom."
+
+#: pan/usenet-utils/message-check.cc:254
+#, fuzzy
+msgid "Warning: The message is entirely quoted text!"
+msgstr "ADVARSEL: Artiklen består udelukkende af citeret tekst!"
+
+#: pan/usenet-utils/message-check.cc:255
+#, fuzzy
+msgid "Warning: The message is mostly quoted text."
+msgstr "ADVARSEL: Artiklen består mest af citeret tekst."
+
+#: pan/usenet-utils/message-check.cc:305
+#, fuzzy
+msgid "Error: Message appears to have no new content."
+msgstr "FEJL: Besked ser ud til ikke at have noget nyt indhold"
+
+#: pan/usenet-utils/message-check.cc:340 pan/usenet-utils/message-check.cc:375
+#, fuzzy, c-format
+msgid "Warning: Unknown group \"%s\"."
+msgstr "ADVARSEL: Ukendt gruppe: \"%*.*s\"."
+
+#: pan/usenet-utils/message-check.cc:347
+#, fuzzy
+msgid "Warning: Following-Up to too many groups."
+msgstr "ADVARSEL: Følger op til for mange grupper."
+
+#: pan/usenet-utils/message-check.cc:358
+#, fuzzy
+msgid "Error: No Subject specified."
+msgstr "FEJL: Intet emne angivet."
+
+#: pan/usenet-utils/message-check.cc:383
+#, fuzzy, c-format
+msgid "Warning: Group \"%s\" is read-only."
+msgstr "ADVARSEL: Gruppe: \"%*.*s\" er skrivebeskyttet."
+
+#: pan/usenet-utils/message-check.cc:392
+#, fuzzy
+msgid "Error: Posting to a very large number of groups."
+msgstr "FEJL: Du sender til et meget stort antal grupper."
+
+#: pan/usenet-utils/message-check.cc:397
+#, fuzzy
+msgid "Warning: Posting to a large number of groups."
+msgstr "ADVARSEL: Du sender til et stort antal grupper."
+
+#: pan/usenet-utils/message-check.cc:404
+#, fuzzy
+msgid "Warning: Crossposting without setting Followup-To header."
+msgstr "ADVARSEL: Du krydsposter uden at bruge opfølgning-til."
+
+#: pan/usenet-utils/message-check.cc:428
+#, fuzzy
+msgid "Error: Bad email address."
+msgstr "_E-postadresse:"
+
+#: pan/usenet-utils/message-check.cc:437
+msgid "Warning: Most newsgroups frown upon HTML posts."
+msgstr ""
+
+#: pan/usenet-utils/message-check.cc:467
+#, fuzzy
+msgid "Error: No Recipients."
+msgstr "FEJL: Intet emne angivet."
+
+#: pan/usenet-utils/text-massager.cc:309
+msgid "> [quoted text muted]"
+msgstr "> [citeret tekst udeladt]"
+
+#: pan/usenet-utils/utf8-utils.cc:252
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Post New Article"
+#~ msgstr "_Artikel"
+
+#, fuzzy
+#~ msgid "Follow-up to Article"
+#~ msgstr "Følg op til nyhedsgruppe"
+
+#, fuzzy
+#~ msgid "_Post Article"
+#~ msgstr "_Artikel"
+
+#, fuzzy
+#~ msgid "Post this Article Now"
+#~ msgstr "Poster artiklen \"%s\""
+
+#, fuzzy
+#~ msgid "Are you sure you want to close this window?"
+#~ msgstr ""
+#~ "Er du sikker på, at du vil slette disse %d grupper/mapper og deres "
+#~ "artikler?"
+
+#, fuzzy
+#~ msgid "Default KDE Browser"
+#~ msgstr "Standard_tegntabel:"
+
+#, fuzzy
+#~ msgid "Error: No Newsgroups specified."
+#~ msgstr "FEJL: Ingen modtagere angivet."
+
+#, fuzzy
+#~ msgid "_Posting"
+#~ msgstr "/_Send"
+
+#, fuzzy
+#~ msgid "Message-Id"
+#~ msgstr "Artikel-ID"
+
+#, fuzzy
+#~ msgid "Saved newsrc files in %.1f seconds"
+#~ msgstr "Gemte %d artikler i \"%s\" på %.1f sekunder (%.0f art/sek)"
+
+#, fuzzy
+#~ msgid "Use _Monospace Font in Body Pane"
+#~ msgstr "/_Vis/Brug skrifttype med fa_st bredde i artikelpanelet"
+
+#, fuzzy
+#~ msgid "%d connections totaling %.1f KiB per second"
+#~ msgstr "%d tilslutninger med totalt %.1f kB per sekund"
+
+#~ msgid ""
+#~ "Used when email replies to your posts should go somewhere other than the "
+#~ "email address above.  Because Reply-To: is relatively difficult for "
+#~ "spammers to harvest, it's polite give your email address here if you gave "
+#~ "an invalid email address above."
+#~ msgstr ""
+#~ "Bruges hvis e-post svar på dine beskeder skal sendes til en anden adresse "
+#~ "end den ovenstående. Eftersom Svar-Til: er forholdsvist svær at opsnappe "
+#~ "for spammere anses det for høfligt at angive din rigtige e-postadresse "
+#~ "her hvis du har angivet en ugyldig adresse ovenfor."
+
+#~ msgid "_Reply-To Header:"
+#~ msgstr "_Svar-til:"
+
+#~ msgid "Or_ganization Header:"
+#~ msgstr "Or_ganisation:"
+
+#, fuzzy
+#~ msgid "Attach this _Signature:"
+#~ msgstr "Underskrift:"
+
+#~ msgid "Automatic Downloads"
+#~ msgstr "Automatisk hentning"
+
+#, fuzzy
+#~ msgid "Save a_ttachments to path:"
+#~ msgstr "Gem bilag i:"
+
+#, fuzzy
+#~ msgid "Error decoding \"%s\": %s"
+#~ msgstr "Fejl ved læsning af filen \"%s\": %s"
+
+#~ msgid "UNKNOWN"
+#~ msgstr "UKENDT"
+
+#, fuzzy
+#~ msgid "Decode can't access directory \"%s\""
+#~ msgstr "Afkoderen kan ikke få adgang til søgestien \"%s\""
+
+#~ msgid "Could not decode article - file may be corrupt/incomplete"
+#~ msgstr "Kunne ikke afkode artiklen - filen kan være beskadiget/ufuldstændig"
+
+#~ msgid "Checksum for `%s' part %d failed - file is corrupt"
+#~ msgstr "Kontrolsum for \"%s\" del %d mislykkedes - filen er beskadiget"
+
+#~ msgid "Checksum for `%s' failed - file may be corrupt"
+#~ msgstr "Kontrolsum for \"%s\" mislykkedes - filen kan være beskadiget"
+
+#, fuzzy
+#~ msgid "Colors"
+#~ msgstr "_Farver"
+
+#, fuzzy
+#~ msgid "Use custom colors in _Header Pane"
+#~ msgstr "Brug egne skrifttyper i hovedpanelet:"
+
+#, fuzzy
+#~ msgid "Header Pane background:"
+#~ msgstr "Bedømmelser i hovedpanelet"
+
+#, fuzzy
+#~ msgid "Read articles:"
+#~ msgstr "Udtrækker %d artikler"
+
+#, fuzzy
+#~ msgid "Unread articles:"
+#~ msgstr "_Ulæste tråde:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unsupported data version (%d) for server properties.  Are you running an "
+#~ "old version of Pan by accident?"
+#~ msgstr ""
+#~ "Dataversionen %d understøttes ikke for datafilen \"%s\".\n"
+#~ "Kører du tilfældigvis en gammel version af Pan?"
+
+#, fuzzy
+#~ msgid "Couldn't create temporary file: %s"
+#~ msgstr "Kunne ikke oprette midlertidig fil: %s"
+
+#~ msgid "Error renaming \"%s\" as \"%s\": %s."
+#~ msgstr "Fejl ved omdøbning af \"%s\" til \"%s\": %s."
+
+#~ msgid "Can't backup \"%s\" as \"%s\": %s"
+#~ msgstr "Kan ikke sikkerhedskopiere \"%s\" til \"%s\": %s."
+
+#~ msgid "Can't write to \"%s\": %s"
+#~ msgstr "Kan ikke skrive til \"%s\": %s"
+
+#~ msgid "Body"
+#~ msgstr "Meddelelsestekst"
+
+#, fuzzy
+#~ msgid "Open a Draft Article from Disk"
+#~ msgstr "Fjernede %u udløbede artikler fra \"%s\""
+
+#, fuzzy
+#~ msgid "Editor Applications"
+#~ msgstr "Programmer"
+
+#, fuzzy
+#~ msgid "subject"
+#~ msgstr "Emne"
+
+#, fuzzy
+#~ msgid "author"
+#~ msgstr "Afsender"
+
+#~ msgid "Change"
+#~ msgstr "Ændring"
+
+#~ msgid "Connections"
+#~ msgstr "Tilslutninger"
+
+#, fuzzy
+#~ msgid "Active"
+#~ msgstr "Handlinger"
+
+#~ msgid ""
+#~ "Unable to cancel article: Couldn't find matching article in folder `pan."
+#~ "sent'!"
+#~ msgstr ""
+#~ "Kan ikke trække artikel tilbage: Kunne ikke finde tilsvarende artikel i "
+#~ "mappen `pan.sendt'!"
+
+#~ msgid ""
+#~ "Unable to supersede article: Couldn't find matching article in folder "
+#~ "`pan.sent'!"
+#~ msgstr ""
+#~ "Kan ikke erstatte artikel: Kunne ikke finde tilsvarende artikel i mappen "
+#~ "\"pan.sendt\"!"
+
+#~ msgid "You must download the article before you can cancel it."
+#~ msgstr "Du skal hente artiklen inden du kan trække den tilbage."
+
+#~ msgid "You must download the article before you can supersede it."
+#~ msgstr "Du skal hente artiklen inden du kan erstatte den."
+
+#~ msgid "Pan: Find Article"
+#~ msgstr "Pan: Find artikel"
+
+#~ msgid "_Author:"
+#~ msgstr "_Forfatter:"
+
+#~ msgid "Case Sensiti_ve"
+#~ msgstr "_Gør forskel på store og små bogstaver"
+
+#~ msgid "_Unread Only"
+#~ msgstr "Kun _ulæste"
+
+#~ msgid "Fin_d:"
+#~ msgstr "_Find:"
+
+#~ msgid ""
+#~ "Type in a search string and press ENTER.\n"
+#~ "Wildcards are allowed."
+#~ msgstr ""
+#~ "Indtast en søgestreng og tryk RETUR.\n"
+#~ "Jokertegn er tilladte."
+
+#~ msgid "/---"
+#~ msgstr "/---"
+
+#~ msgid "/Save A_ttachments"
+#~ msgstr "/Gem _bilag"
+
+#~ msgid "/_Manual Decode..."
+#~ msgstr "/_Manuel afkodning..."
+
+#~ msgid "/D_ownload Flagged"
+#~ msgstr "/H_ent flagede"
+
+#~ msgid "/_Flag"
+#~ msgstr "/_Flag"
+
+#~ msgid "/_Unflag"
+#~ msgstr "/_Fjern flag"
+
+#~ msgid "/_Create Score"
+#~ msgstr "Bedøm..."
+
+#~ msgid "/Add S_et to Selection"
+#~ msgstr "/_Tilføj artikelsæt til markering"
+
+#~ msgid "/_Copy to Folder"
+#~ msgstr "/_Kopiér til mappe"
+
+#~ msgid "/_Delete"
+#~ msgstr "/_Fjern"
+
+#~ msgid "Scoring Articles"
+#~ msgstr "Bedømmer artikler"
+
+#~ msgid "Filtering Articles"
+#~ msgstr "Filtrerer artikler"
+
+#~ msgid "Updating Header Pane..."
+#~ msgstr "Opdaterer hovedpanel..."
+
+#~ msgid "Loading group \"%s\""
+#~ msgstr "Indlæser gruppen \"%s\""
+
+#~ msgid "Flushing article cache... "
+#~ msgstr "Tømmer artikelcachen..."
+
+#~ msgid "%d files erased."
+#~ msgstr "%d filer fjernet."
+
+#~ msgid "Error saving article \"%s\" (is %s full?)"
+#~ msgstr "Fejl ved gemningen af artikel \"%s\" (er %s fuld?)"
+
+#~ msgid "Directory \"%s\" contains %.1f MB in %d files"
+#~ msgstr "Kataloget \"%s\" indeholder %.1f MB i %d filer"
+
+#~ msgid "Unparseable Subject"
+#~ msgstr "Ufortolkeligt emne"
+
+#~ msgid "Couldn't parse a Message-ID from the raw message!"
+#~ msgstr "Kunne ikke tolke et meddelelses-ID fra den rå meddelelse!"
+
+#~ msgid "unknown@spammesenseless.com"
+#~ msgstr "ukendt@spammer.dk"
+
+#~ msgid "Decoding \"%s\""
+#~ msgstr "Afkoder '%s'"
+
+#~ msgid "Can't create file \"%s\" %s"
+#~ msgstr "Kan ikke oprette filen \"%s\" %s"
+
+#~ msgid "Error saving file \"%s\" - is the disk full?"
+#~ msgstr "Fejl ved gemning af filen \"%s\" - er disken fuld?"
+
+#~ msgid "Decoded \"%s\" from group \"%*.*s\", \"%s\""
+#~ msgstr "Afkodede \"%s\" fra gruppen \"%*.*s\", \"%s\""
+
+#~ msgid "Loading %u of %d groups"
+#~ msgstr "Henter %u af %d grupper"
+
+#~ msgid ""
+#~ "Skipped %d groups due to possible corruption in \"%s\" and \"%s\".  You "
+#~ "may want to delete these files and get a new grouplist from your news "
+#~ "server."
+#~ msgstr ""
+#~ "Oversprang %d grupper på grund af mulig beskadigelse i \"%s\" og \"%s\". "
+#~ "Du vil måske gerne fjerne disse filer og hente en ny gruppeliste fra din "
+#~ "nyhedsgruppeserver."
+
+#~ msgid "Loaded %d groups for server \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr ""
+#~ "Indlæste %d grupper for serveren \"%s\" på %.1f sekunder (%.0f grupper/"
+#~ "sekund)"
+
+#~ msgid "Saved %d of %u groups"
+#~ msgstr "Gemte %d ud af %u grupper"
+
+#~ msgid "Error saving list of groups to \"%s\" - is the disk full?"
+#~ msgstr "Fejl ved gemning af gruppelisten til \"%s\" - er disken fuld?"
+
+#~ msgid "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr "Gemt %d grupper fra \"%s\" på %.1f sekunder (%.0f grupper/sek)"
+
+#~ msgid "Loaded %d of %d articles"
+#~ msgstr "Hentede %d af %d artikler"
+
+#~ msgid ""
+#~ "Pan skipped %d corrupt headers from the local cache for group \"%*.*s\"."
+#~ msgstr ""
+#~ "Pan oversprang %d fejlagtige hoveder fra den lokale cache for gruppen \"%"
+#~ "*.*s\"."
+
+#~ msgid "You may want to empty this group and download fresh headers."
+#~ msgstr "Du vil måske tømme denne gruppe og hente hovederne igen."
+
+#~ msgid "The group will not be saved -- can't create file \"%s\""
+#~ msgstr "Gruppen ikke blive gemt -- kan ikke oprette filen \"%s\""
+
+#~ msgid "Unable to save headers for group \"%*.*s\" - is the disk full?"
+#~ msgstr "Kan ikke opdatere hovederne for gruppen \"%*.*s\" - er disken fuld?"
+
+#~ msgid "(No Group)"
+#~ msgstr "(Ingen gruppe)"
+
+#~ msgid "ERROR: invalid address \"%s\""
+#~ msgstr "FEJL: ugyldig adresse \"%s\""
+
+#~ msgid "ERROR: Must have one author in From: line"
+#~ msgstr "FEJL: Skal have en afsender i Fra: linien"
+
+#~ msgid "Imported %d groups (%d new) from \"%s\""
+#~ msgstr "Importerede %d grupper (%d nye) fra \"%s\""
+
+#~ msgid "Exported %d groups (%d subscribed) to \"%s\""
+#~ msgstr "Eksporterede %d grupper (%d abonnerede) til \"%s\""
+
+#~ msgid "Imported %d lines from Gnome config file"
+#~ msgstr "Importerede %d linjer fra gammel Gnome-konfigurationsfil"
+
+#~ msgid "%s does not appear to be a valid datafile"
+#~ msgstr "%s ser ikke ud til at være en gyldig datafil"
+
+#~ msgid "Error converting string \"%*s\" to utf8: %d - %s"
+#~ msgstr "Fejl ved konvertering af strengen \"%*s\" til utf8: %d - %s"
+
+#~ msgid "No name specified!"
+#~ msgstr "Intet navn angivet!"
+
+#~ msgid "Server is corrupt"
+#~ msgstr "Serveren er ugyldig"
+
+#~ msgid "A Server with that name already exists."
+#~ msgstr "Der findes allerede en server med det navn."
+
+#~ msgid "A newsreader for GNOME"
+#~ msgstr "En nyhedslæser for Gnome."
+
+#~ msgid "Programmer"
+#~ msgstr "Udvikler"
+
+#~ msgid "Project Originator, Programmer"
+#~ msgstr "Projekt startet af, udvikler"
+
+#~ msgid "Programmer, 0.6 - 0.7"
+#~ msgstr "Udvikler, 0.6 - 0.7"
+
+#~ msgid ""
+#~ "Pan %s Translations\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Code or Patches\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Suggestions and Testing\n"
+#~ "%s\n"
+#~ msgstr ""
+#~ "Oversættelser af Pan %s\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Kode eller rettelser til Pan %s\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Forslag og afprøvning af Pan %s\n"
+#~ "%s\n"
+#~ "\n"
+
+#~ msgid "Group Properties"
+#~ msgstr "Gruppeegenskaber"
+
+#~ msgid "_Directory for saving articles:"
+#~ msgstr "Katalog for _gemning af artikler:"
+
+#~ msgid "Pan: Download Headers for group `%s'"
+#~ msgstr "Pan: Hent hoveder for gruppe %s"
+
+#~ msgid "Pan: Download Headers"
+#~ msgstr "Pan: Hent hoveder"
+
+#~ msgid "Download _new headers"
+#~ msgstr "Hent _nye hoveder"
+
+#~ msgid "_Download bodies too"
+#~ msgstr "_Hent også artikeltekster"
+
+#~ msgid "How should you appear when posting articles?"
+#~ msgstr "Hvordan skal du se ud når du poster artikler?"
+
+#~ msgid "Your _Name:"
+#~ msgstr "Dit _navn:"
+
+#~ msgid "Email _Address:"
+#~ msgstr "E-post_adresse:"
+
+#~ msgid "_Organization:"
+#~ msgstr "_Organisation:"
+
+#~ msgid "default"
+#~ msgstr "standard"
+
+#~ msgid "What mail server should Pan use?"
+#~ msgstr "Hvilken e-postserver skal Pan bruge?"
+
+#~ msgid "What news server should Pan use?"
+#~ msgstr "Hvilken nyhedsgruppeserver skal Pan bruge?"
+
+#~ msgid "Short name for Pan to show, e.g. \"mynewsserver\""
+#~ msgstr "Kort navn som Pan skal vise, f.eks. \"nyhedsserver\""
+
+#~ msgid "Short _name for Pan to show:"
+#~ msgstr "Kort_navn som Pan skal vise:"
+
+#~ msgid "Login"
+#~ msgstr "Indlogning"
+
+#~ msgid "Server requires authori_zation"
+#~ msgstr "Serveren kræver _godkendelse"
+
+#~ msgid "Pan Setup Wizard"
+#~ msgstr "Pan-opsætningsvejledning"
+
+#~ msgid "Thank you for trying Pan!"
+#~ msgstr "Tak for at du prøver Pan!"
+
+#~ msgid ""
+#~ "Thank you for trying Pan!\n"
+#~ " \n"
+#~ "If you are new to Usenet,\n"
+#~ "%s\n"
+#~ "is a starting point to see what Usenet is,\n"
+#~ "where to find a free news server,\n"
+#~ "and how to use Pan.\n"
+#~ " \n"
+#~ "Since this is your first time running Pan,\n"
+#~ "we'll need to gather some information.\n"
+#~ msgstr ""
+#~ "Tak for at du prøver Pan!\n"
+#~ "\n"
+#~ "Hvis dette er dit første bekendtskab med Usenet, er\n"
+#~ "%s\n"
+#~ "et godt udgangspunkt for at se hvad Usenet er, hvor\n"
+#~ "du kan finde en gratis nyhedsgruppeserver,\n"
+#~ "og hvordan du bruger Pan.\n"
+#~ "\n"
+#~ "Da dette er første gang du kører Pan\n"
+#~ "skal vi indhente en del information.\n"
+
+#~ msgid "About You"
+#~ msgstr "Om dig"
+
+#~ msgid "News Server"
+#~ msgstr "Nyhedsserver"
+
+#~ msgid "Ready!"
+#~ msgstr "Klar!"
+
+#~ msgid ""
+#~ "You have successfully entered all of\n"
+#~ "the information required to set up Pan.\n"
+#~ "\n"
+#~ "To save these settings, click Save."
+#~ msgstr ""
+#~ "Du har indtastet al information som\n"
+#~ "behøves for at opsætte Pan.\n"
+#~ "\n"
+#~ "For at gemme disse indstillinger\n"
+#~ "klikker du på Gem."
+
+#~ msgid "About"
+#~ msgstr "Om"
+
+#~ msgid "License"
+#~ msgstr "Licens"
+
+#~ msgid "Authors"
+#~ msgstr "Forfattere"
+
+#~ msgid "Thanks to"
+#~ msgstr "Tak til"
+
+#~ msgid "  (No conditions -- no articles will match)"
+#~ msgstr "  (Ingen betingelser -- ingen artikler vil passe)"
+
+#~ msgid "  (No conditions -- all articles will match)"
+#~ msgstr "  (Ingen betingelser -- alle artikler vil passe"
+
+#~ msgid "Pan: Edit Filter"
+#~ msgstr "Pan: Redigér filter"
+
+#~ msgid "Filter name: "
+#~ msgstr "Filternavn: "
+
+#~ msgid "Show in Filter Menu"
+#~ msgstr "Vis i filter menu"
+
+#~ msgid "Move the selected line up one line"
+#~ msgstr "Flyt den valgte linie en linie op"
+
+#~ msgid "Move the selected line down one line"
+#~ msgstr "Flyt den valgte linie en linie ned"
+
+#~ msgid "Invert"
+#~ msgstr "Modsat"
+
+#~ msgid "Invert the selected line"
+#~ msgstr "Udskift linje med det modsatte filter"
+
+#~ msgid "All Of"
+#~ msgstr "Alle af"
+
+#~ msgid "Any Of"
+#~ msgstr "Nogen af"
+
+#~ msgid "Delete the selected line"
+#~ msgstr "Slet den valgte linie"
+
+#~ msgid "Add New Line to the Filter"
+#~ msgstr "Tilføj ny linje til filtret"
+
+#~ msgid "New Filter Line"
+#~ msgstr "Ny filterlinje"
+
+#~ msgid "does not start with"
+#~ msgstr "begynder ikke med"
+
+#~ msgid "does not match regular expression"
+#~ msgstr "stemmer ikke med det regulære udtryk"
+
+#~ msgid "Article h_as"
+#~ msgstr "Artiklen ha_r"
+
+#~ msgid "Attachments"
+#~ msgstr "Bilag"
+
+#~ msgid "Incomplete Attachments"
+#~ msgstr "Ufærdige bilag"
+
+#~ msgid "No Attachments"
+#~ msgstr "Ingen bilag"
+
+#~ msgid "Article _is"
+#~ msgstr "Artiklen _er"
+
+#~ msgid "New"
+#~ msgstr "Ny"
+
+#~ msgid "Unread"
+#~ msgstr "Ulæst"
+
+#~ msgid "Read"
+#~ msgstr "Læst"
+
+#~ msgid "Cached"
+#~ msgstr "Mellemlagret"
+
+#~ msgid "Posted by Me"
+#~ msgstr "Postet af mig"
+
+#~ msgid "Article has at _least N lines:"
+#~ msgstr "Artiklen har _mindst N linjer:"
+
+#~ msgid "Article _score is at least"
+#~ msgstr "Artikelens _bedømmelse er mindst"
+
+#~ msgid "Watched"
+#~ msgstr "Overvåget"
+
+#~ msgid "High"
+#~ msgstr "Høj"
+
+#~ msgid "Medium"
+#~ msgstr "Medium"
+
+#~ msgid "Zero"
+#~ msgstr "Nul"
+
+#~ msgid "Low"
+#~ msgstr "Lav"
+
+#~ msgid "Ignored"
+#~ msgstr "Ignoreret"
+
+#~ msgid ""
+#~ "This filter is still used by the following rules:\n"
+#~ "%s\n"
+#~ "Please remove this dependency  first."
+#~ msgstr ""
+#~ "Dette filter bliver stadig brugt af følgende regler:\n"
+#~ "%s\n"
+#~ "Fjern venligst denne afhængighed først."
+
+#~ msgid "Pan: Filters"
+#~ msgstr "Pan: Filtre"
+
+#~ msgid "Filters"
+#~ msgstr "Filtre"
+
+#~ msgid "Add a new filter"
+#~ msgstr "Tilføj et nyt filter."
+
+#~ msgid "Edit the selected filter"
+#~ msgstr "Redigér det valgte filter"
+
+#~ msgid "Remove the selected filter"
+#~ msgstr "Fjern det markerede filter"
+
+#~ msgid "NONE OF:"
+#~ msgstr "INGEN AF:"
+
+#~ msgid "ALL OF:"
+#~ msgstr "ALLE AF:"
+
+#~ msgid "ANY OF:"
+#~ msgstr "HVILKENSOMHELST AF:"
+
+#~ msgid "Article has complete attachments"
+#~ msgstr "Artikel har komplette vedhæftninger"
+
+#~ msgid "Article does not have incomplete attachments"
+#~ msgstr "Artikel har ikke ukomplette vedhæftninger"
+
+#~ msgid "Article has incomplete attachments"
+#~ msgstr "Artikel har ukomplette vedhæftninger"
+
+#~ msgid "Article has complete or incomplete attachments"
+#~ msgstr "Artikel har komplette eller ukomplette vedhæftninger"
+
+#~ msgid "Article is %d or more bytes long"
+#~ msgstr "Artiklen er mindst %d byte lang"
+
+#~ msgid "Article is crossposted to at least %d groups"
+#~ msgstr "Artiklen var publiceret til mindst %d grupper"
+
+#~ msgid "Article was posted in the last %d days"
+#~ msgstr "Artiklen blev publiceret inden for de seneste %d dage"
+
+#~ msgid "Article is %d or more lines long"
+#~ msgstr "Artiklen er %d eller flere linjer lang"
+
+#~ msgid "Article is unread or old"
+#~ msgstr "Artiklen er ulæst eller gammel"
+
+#~ msgid "Article is new"
+#~ msgstr "Artiklen er ny"
+
+#~ msgid "Article is new or read"
+#~ msgstr "Artiklen er ny eller læst"
+
+#~ msgid "Article is new or unread"
+#~ msgstr "Artiklen er ny eller ulæst"
+
+#~ msgid "Xref"
+#~ msgstr "Xref"
+
+#~ msgid "watched"
+#~ msgstr "overvåget"
+
+#~ msgid "high"
+#~ msgstr "høj"
+
+#~ msgid "medium"
+#~ msgstr "medium"
+
+#~ msgid "zero"
+#~ msgstr "nul"
+
+#~ msgid "low"
+#~ msgstr "lav"
+
+#~ msgid "ignored"
+#~ msgstr "ignoreret"
+
+#~ msgid "Score filter will match anything"
+#~ msgstr "Bedømmelsesfilteret vil passe med alting"
+
+#~ msgid "Score filter will match nothing"
+#~ msgstr "Bedømmelses fileteret vil ikke passe med noget"
+
+#~ msgid "Article score one of: "
+#~ msgstr "Artiklens bedømmelse er en af: "
+
+#~ msgid "Wrote filters to \"%s\""
+#~ msgstr "Skrev filter til \"%s\""
+
+#~ msgid "Can't use regular expression \"%s\" from file \"%s\", line %d: %s"
+#~ msgstr ""
+#~ "Kan ikke bruge regulært udtryk \"%s\" fra filen \"%s\", linje %d: %s"
+
+#~ msgid "expired old score"
+#~ msgstr "gammel udløbet bedømmelse"
+
+#~ msgid "skipping unsupported criteria"
+#~ msgstr "springer ukendt kriterium over"
+
+#~ msgid "unexpected line."
+#~ msgstr "uforståelig linje."
+
+#~ msgid "Error reading file: "
+#~ msgstr "Fejl ved læsning af filen:"
+
+#~ msgid "skipping score because it has no criteria"
+#~ msgstr "springer bedømmelse over da den ikke har et kriterium"
+
+#~ msgid ""
+#~ "Loaded %d score entries in %d sections in %.1f seconds (%.0f entries/sec)"
+#~ msgstr ""
+#~ "Indlæste %d bedømmelseskriterier i %d afsnit på %.1f sekunder (%.0f "
+#~ "bedømmelser/sek)"
+
+#~ msgid "Error score to file \"%s\": %s"
+#~ msgstr "Fejl ved skrivning af bedømmelse til filen \"%s\": %s"
+
+#~ msgid "Scored %d entries in %.1f seconds (%.0f articles/sec)"
+#~ msgstr "Bedømte %d artikler på %.1f sekunder (%.0f artikler/sek)"
+
+#~ msgid "Error removing scorefile entry: %s"
+#~ msgstr "Fejl ved fjernelse af bedømmelse: %s"
+
+#~ msgid "Scorefile entry removed -- old scorefile \"%s\" backed up as \"%s\""
+#~ msgstr ""
+#~ "Bedømmelse fjernet fra bedømmelsesfilen - den gamle fil \"%s\" er gemt "
+#~ "som \"%s\""
+
+#~ msgid "Folder \"%*.*s\" already exists."
+#~ msgstr "Mappen \"%*.*s\" findes allerede."
+
+#~ msgid "Please don't begin folders with \"pan.\"; it confuses me."
+#~ msgstr "Begynd ikke mapper med \"pan.\", det gør mig forvirret."
+
+#~ msgid "Create New Folder"
+#~ msgstr "Opret ny mappe"
+
+#~ msgid "New Folder Name:"
+#~ msgstr "Nyt mappenavn:"
+
+#~ msgid "/Get New Headers and _Bodies"
+#~ msgstr "/Hent nye hoveder og _meddelelsestekster"
+
+#~ msgid "/Get New Headers in Subscribed Groups"
+#~ msgstr "/Hent nye hoveder i abonnerede grupper"
+
+#~ msgid "/More Download _Options..."
+#~ msgstr "/Flere hentnings_alternativer..."
+
+#~ msgid "/Refresh Article _Counts"
+#~ msgstr "/Opdatér arti_kelantal"
+
+#~ msgid "/Group _Properties..."
+#~ msgstr "/_Gruppeegenskaber..."
+
+#~ msgid " (Moderated)"
+#~ msgstr " (Modereret)"
+
+#~ msgid " (Read-Only)"
+#~ msgstr " (Skrivebeskyttet)"
+
+#~ msgid "Subscribed"
+#~ msgstr "Tilmeldt"
+
+#~ msgid "All Groups"
+#~ msgstr "Alle grupper"
+
+#~ msgid ""
+#~ "We don't have a list of groups for \"%*.*s\".\n"
+#~ "Shall we download one?"
+#~ msgstr ""
+#~ "Vi har ikke nogen gruppeliste for \"%*.*s\".\n"
+#~ "Skal vi hente den?"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "Description"
+#~ msgstr "Beskrivelse"
+
+#~ msgid "F_ind:"
+#~ msgstr "_Find:"
+
+#~ msgid ""
+#~ "Type in a group search string and press ENTER.  Wildcards are allowed."
+#~ msgstr ""
+#~ "Indtast en gruppesøgetekst og tryk RETUR.  Jokertegn (*?) er tilladt."
+
+#~ msgid "<More>"
+#~ msgstr "<Mere>"
+
+#~ msgid "X-Newsreader"
+#~ msgstr "X-nyhedsgruppelæser"
+
+#~ msgid "X-Mailer"
+#~ msgstr "X-Epostklient"
+
+#~ msgid "User-Agent"
+#~ msgstr "Brugeragent"
+
+#~ msgid "(%u selected)"
+#~ msgstr "(%u markerede)"
+
+#~ msgid "News server connection count: %d"
+#~ msgstr "Antal opkoblinger til nyhedsserveren: %d"
+
+#~ msgid "The Task Manager is Empty"
+#~ msgstr "Opgavehåndteringen er tom"
+
+#~ msgid "Pan is Online"
+#~ msgstr "Pan er opkoblet"
+
+#~ msgid "Connection"
+#~ msgstr "Tilslutning"
+
+#~ msgid "Post"
+#~ msgstr "Post"
+
+#~ msgid "Get"
+#~ msgstr "Hent"
+
+#~ msgid "Save Attachments As..."
+#~ msgstr "Gem bilag som..."
+
+#~ msgid "Mine"
+#~ msgstr "Mine"
+
+#~ msgid "Net"
+#~ msgstr "Net"
+
+#~ msgid "/_File/Save A_ttachments"
+#~ msgstr "/_Arkiv/_Gem bilag"
+
+#~ msgid "/_File/_Save Attachments As..."
+#~ msgstr "/_Arkiv/Gem bilag _som..."
+
+#~ msgid "/_File/_Manual Decode..."
+#~ msgstr "/_Arkiv/_Manuel afkodning..."
+
+#~ msgid "/_File/---"
+#~ msgstr "/_Arkiv/---"
+
+#~ msgid "/_File/_Cancel Last Task"
+#~ msgstr "/_Arkiv/Af_bryd seneste opgave"
+
+#~ msgid "/_File/_New Folder..."
+#~ msgstr "/_Arkiv/_Ny mappe..."
+
+#~ msgid "/_File/Delete _Folder..."
+#~ msgstr "/_Arkiv/Fjern _mappe..."
+
+#~ msgid "/_File/_Edit Article in Folder"
+#~ msgstr "/_Arkiv/_Redigér artikel i mappe"
+
+#~ msgid "/_File/E_xit"
+#~ msgstr "/_Arkiv/_Afslut"
+
+#~ msgid "/_File/_Quit"
+#~ msgstr "/_Arkiv/_Afslut"
+
+#~ msgid "/_Edit/Select all"
+#~ msgstr "/_Redigér/Markér alle"
+
+#~ msgid "/_Edit/Deselect all"
+#~ msgstr "/_Redigér/Afmarkér alle"
+
+#~ msgid "/_Edit/---"
+#~ msgstr "/_Redigér/---"
+
+#~ msgid "/_Edit/Select all _Groups"
+#~ msgstr "/_Redigér/Markér alle _grupper"
+
+#~ msgid "/_Edit/Add S_ubscribed to Selection"
+#~ msgstr "/_Redigér/Tilføj _abonnerede til markeringen"
+
+#~ msgid "/_Edit/Deselect all G_roups"
+#~ msgstr "/_Redigér/Afmarkér alle g_rupper"
+
+#~ msgid "/_Edit/Add S_et to Selection"
+#~ msgstr "/_Redigér/Tilføj _artikelsæt til markeringen"
+
+#~ msgid "/_Edit/_Find..."
+#~ msgstr "/_Redigér/_Find..."
+
+#~ msgid "/_Edit/Find _Next"
+#~ msgstr "/_Redigér/Find _næste"
+
+#~ msgid "/_View/---"
+#~ msgstr "/_Vis/---"
+
+#~ msgid "/_View/Thr_ead Header Pane"
+#~ msgstr "/_Vis/Tr_åde i hovedpanel"
+
+#~ msgid "/_View/_Rot13 Selected Text"
+#~ msgstr "/_Vis/_Rotér markeret tekst 13 tegn"
+
+#~ msgid "/_View/E_xpand Selected Threads"
+#~ msgstr "/_Vis/_Udfold markerede tråde"
+
+#~ msgid "/_View/C_ollapse Selected Threads"
+#~ msgstr "/_Vis/_Sammenfold markerede tråde"
+
+#~ msgid "/Filte_r/---"
+#~ msgstr "/_Filtre/---"
+
+#~ msgid "/Filte_r/Match Only _Cached Articles"
+#~ msgstr "/_Filtre/Udvælg kun mellem_lagrede artikler"
+
+#~ msgid "/Filte_r/Match Only _Text Articles"
+#~ msgstr "/_Filtre/Udvælg kun te_kstartikler"
+
+#~ msgid "/Filte_r/Match Only _Binary Attachment Articles"
+#~ msgstr "/_Filtre/Udvælg kun artikler med _bilag"
+
+#~ msgid "/Filte_r/Match Only _My Articles"
+#~ msgstr "/_Filtre/Udvælg kun _mine artikler"
+
+#~ msgid "/Filte_r/Match _New Articles"
+#~ msgstr "/_Filtre/Udvælg _nye artikler"
+
+#~ msgid "/Filte_r/Match _Unread Articles"
+#~ msgstr "/_Filtre/Udvælg _ulæste artikler"
+
+#~ msgid "/Filte_r/Match _Read Articles"
+#~ msgstr "/_Filtre/Udvælg _læste artikler"
+
+#~ msgid "/_Go/Read More"
+#~ msgstr "/_Gå til/Blad frem"
+
+#~ msgid "/_Go/---"
+#~ msgstr "/_Gå til/---"
+
+#~ msgid "/_Go/Next _New Article"
+#~ msgstr "/_Gå til/Næste n_ye artikel"
+
+#~ msgid "/_Go/Next N_ew Thread"
+#~ msgstr "/_Gå til/Næste nye trå_d"
+
+#~ msgid "/_Go/Previous Article _Read"
+#~ msgstr "/_Gå til/Foregående _læste artikel"
+
+#~ msgid "/_Servers"
+#~ msgstr "/_Servere"
+
+#~ msgid "/_Servers/Get List of _All Groups"
+#~ msgstr "/_Servere/Hent liste over _alle grupper"
+
+#~ msgid "/_Servers/Get List of _New Groups"
+#~ msgstr "/_Servere/Hent liste over _nye grupper"
+
+#~ msgid "/_Servers/---"
+#~ msgstr "/_Servere/---"
+
+#~ msgid "/_Newsgroups/Mark Group _Read"
+#~ msgstr "/_Nyhedsgrupper/Markér gruppe som _læst"
+
+#~ msgid "/_Newsgroups/_Delete Group's Articles"
+#~ msgstr "/_Nyhedsgrupper/Fjern gruppens artikler"
+
+#~ msgid "/_Newsgroups/---"
+#~ msgstr "/_Nyhedsgrupper/---"
+
+#~ msgid "/_Newsgroups/Get New _Headers"
+#~ msgstr "/_Nyhedsgrupper/Hent nye _hoveder"
+
+#~ msgid "/_Newsgroups/Get New Headers and _Bodies"
+#~ msgstr "/_Nyhedsgrupper/Hent nye hoveder og artikelte_kster"
+
+#~ msgid "/_Newsgroups/More Download _Options..."
+#~ msgstr "/_Nyhedsgrupper/Flere hentnings_alternativer..."
+
+#~ msgid "/_Newsgroups/Refresh Article _Counts"
+#~ msgstr "/_Nyhedsgrupper/Opdatér arti_kelantal"
+
+#~ msgid "/_Newsgroups/Get New Headers in Subscribed _Groups"
+#~ msgstr "/_Nyhedsgrupper/Hent nye hoveder i abonnerede _grupper"
+
+#~ msgid "/_Newsgroups/_Subscribe"
+#~ msgstr "/_Nyhedsgrupper/_Abonnér"
+
+#~ msgid "/_Newsgroups/_Unsubscribe"
+#~ msgstr "/_Nyhedsgrupper/_Opsig abonnement"
+
+#~ msgid "/_Newsgroups/Group _Properties..."
+#~ msgstr "/_Nyhedsgrupper/_Gruppeegenskaber..."
+
+#~ msgid "/_Newsgroups/Dele_te Group"
+#~ msgstr "/_Nyhedsgrupper/_Fjern gruppe"
+
+#~ msgid "/_Articles/Mark _Read"
+#~ msgstr "/Ar_tikler/Markér som _læst"
+
+#~ msgid "/_Articles/Mark _Unread"
+#~ msgstr "/Ar_tikler/Markér som _ulæst"
+
+#~ msgid "/_Articles/---"
+#~ msgstr "/Ar_tikler/---"
+
+#~ msgid "/_Articles/D_ownload Flagged"
+#~ msgstr "/Ar_tikler/H_ent flagede"
+
+#~ msgid "/_Articles/_Flag"
+#~ msgstr "/Ar_tikler/_Sæt flag"
+
+#~ msgid "/_Articles/U_nflag"
+#~ msgstr "/Ar_tikler/_Fjern flag"
+
+#~ msgid "/_Articles/Down_load"
+#~ msgstr "/Ar_tikler/He_nt"
+
+#~ msgid "/_Articles/_Watch Thread"
+#~ msgstr "/Ar_tikler/_Overvåg tråd"
+
+#~ msgid "/_Articles/_Ignore Thread"
+#~ msgstr "/Ar_tikler/_Ignorér tråd"
+
+#~ msgid "/_Articles/_View Article's Scores"
+#~ msgstr "/Ar_tikler/Vis artiklens be_dømmelse"
+
+#~ msgid "/_Articles/_Create Score..."
+#~ msgstr "/Ar_tikler/_Bedøm..."
+
+#~ msgid "/_Articles/Cancel..."
+#~ msgstr "/Ar_tikler/_Annullér..."
+
+#~ msgid "/_Articles/Supersed_e..."
+#~ msgstr "/Ar_tikler/_Erstat..."
+
+#~ msgid "/_Articles/_Delete"
+#~ msgstr "/Ar_tikler/_Fjern"
+
+#~ msgid "/_Post"
+#~ msgstr "/_Post"
+
+#~ msgid "/_Post/_Post to Newsgroup..."
+#~ msgstr "/_Post/_Ny artikel til nyhedsgruppe"
+
+#~ msgid "/_Post/_Reply by Email..."
+#~ msgstr "/_Post/_Svar med e-post"
+
+#~ msgid "/_Post/For_ward by Email..."
+#~ msgstr "/_Post/_Videresend artiklen med e-post"
+
+#~ msgid "/_Post/---"
+#~ msgstr "/_Post/---"
+
+#~ msgid "/_Post/Send Pending _Messages"
+#~ msgstr "/_Post/Send ventende _meddelelser"
+
+#~ msgid "/_Tools"
+#~ msgstr "/_Værktøjer"
+
+#~ msgid "/_Tools/---"
+#~ msgstr "/_Værktøjer/---"
+
+#~ msgid "/_Tools/Custom _Filters..."
+#~ msgstr "/_Værktøjer/Egne _filtre..."
+
+#~ msgid "/_Tools/_Rules..."
+#~ msgstr "/_Værktøjer/_Regler..."
+
+#~ msgid "/_Tools/_Edit Scorefile..."
+#~ msgstr "/_Værktøjer/_Rediger bedømmelsesfil..."
+
+#~ msgid "/_Tools/_Log Viewer..."
+#~ msgstr "/_Værktøjer/_Logviser..."
+
+#~ msgid "/_Help"
+#~ msgstr "/_Hjælp"
+
+#~ msgid "/_Help/---"
+#~ msgstr "/_Hjælp/---"
+
+#~ msgid ""
+#~ "When posting to Usenet, your article's Message-ID contains a domain "
+#~ "name.  You can set a custom domain name here, or leave it blank to let "
+#~ "Pan use the domain name from your email address."
+#~ msgstr ""
+#~ "Når du sender til Usenet indeholder din artikels Message-ID et "
+#~ "domænenavn. Du kan angive et selvvalgt domænenavn her, eller lade feltet "
+#~ "stå tomt og Pan indsætte domænenavnet fra din e-postadresse."
+
+#~ msgid "Message-ID _Domain Name:"
+#~ msgstr "_Domænenavn for meddelelses-ID:"
+
+#~ msgid "The default charset set for articles posted with this profile"
+#~ msgstr "Standardtegnsættet for artikler der sendes fra denne profil"
+
+#~ msgid "Pan: Edit Profile"
+#~ msgstr "Pan: Redigér profil"
+
+#~ msgid "_User Profile"
+#~ msgstr "_Brugerprofil"
+
+#~ msgid "Cus_tom Headers"
+#~ msgstr "_Eget brevhoved"
+
+#~ msgid "You must specify a username or disable authorization."
+#~ msgstr "Du skal angive et brugernavn, eller slå godkendelse fra."
+
+#~ msgid ""
+#~ "Your real name contained double quotes.\n"
+#~ "Converting into single quotes."
+#~ msgstr ""
+#~ "Dit fuldstændige navn indeholdt dobbelte anførselstegn.\n"
+#~ "Konverterer til enkelte anførselstegn."
+
+#~ msgid "You need at least one profile"
+#~ msgstr "Du skal bruge mindst en profil"
+
+#~ msgid "Use the selected profile to create a new profile"
+#~ msgstr "Brug den valgte profil til at lave en ny profil"
+
+#~ msgid "Wrote profiles to \"%s\""
+#~ msgstr "Skrev profiler til \"%s\""
+
+#~ msgid "Save the log to a file"
+#~ msgstr "Gem loggen i en fil"
+
+#~ msgid "/_File/_Save..."
+#~ msgstr "/_Arkiv/_Gem..."
+
+#~ msgid "/_File/Clea_r"
+#~ msgstr "/_Arkiv/T_øm"
+
+#~ msgid "/_File/_Close"
+#~ msgstr "/_Arkiv/_Luk"
+
+#~ msgid "Pan: Status Log"
+#~ msgstr "Pan: Statuslog"
+
+#~ msgid "Clear the log window"
+#~ msgstr "Tøm logvinduet"
+
+#~ msgid "Time"
+#~ msgstr "Tid"
+
+#~ msgid "Log Entry"
+#~ msgstr "Logbesked"
+
+#~ msgid "Post anyway, despite these problems?"
+#~ msgstr "Send alligevel, på trods af disse problemer?"
+
+#~ msgid "Post anyway, despite this problem?"
+#~ msgstr "Send alligevel, på trods af dette problem?"
+
+#~ msgid "/_File/_Save Changes"
+#~ msgstr "/_Arkiv/_Gem ændringer"
+
+#~ msgid "/_File/Save _As..."
+#~ msgstr "/_Arkiv/Gem so_m..."
+
+#~ msgid "/_Edit/Cu_t"
+#~ msgstr "/_Redigér/Klip _ud"
+
+#~ msgid "/_Edit/_Copy"
+#~ msgstr "/_Redigér/_Kopiér"
+
+#~ msgid "/_Edit/_Paste"
+#~ msgstr "/_Redigér/_Indsæt"
+
+#~ msgid "/_Edit/_Rot13 Selected Text"
+#~ msgstr "/_Redigér/_Rotér markeret tekst 13 tegn"
+
+#~ msgid "/_Edit/Edit with E_xternal Editor"
+#~ msgstr "/_Redigér/Redigér med e_kstern redigering"
+
+#~ msgid "/_File/Send Now"
+#~ msgstr "/_Arkiv/Send nu"
+
+#~ msgid "/_File/Send Later"
+#~ msgstr "/_Arkiv/Send senere"
+
+#~ msgid "Send Later"
+#~ msgstr "Send senere"
+
+#~ msgid "Rewrap"
+#~ msgstr "Genombryd"
+
+#~ msgid "Turn line wrap on/off"
+#~ msgstr "Aktivér/deaktivér linjeombrydning"
+
+#~ msgid "Edit with an External Editor"
+#~ msgstr "Redigér med ekstern redigering"
+
+#~ msgid "Mime (single-part posts only)"
+#~ msgstr "Mime (kun postninger med en MIME-del)"
+
+#~ msgid " (%lu lines in 1 article)"
+#~ msgstr " (%lu linjer i 1 artikel)"
+
+#~ msgid "UUEncoded (universally accepted)"
+#~ msgstr "UUEncoded (accepteres overalt)"
+
+#~ msgid "yEnc (30 percent smaller than UUEnc but less universal)"
+#~ msgstr "yEnc (30 procent mindre end UUEnc, men mindre almindeligt)"
+
+#~ msgid "Select the file to attach."
+#~ msgstr "Vælg fil at vedlægge."
+
+#~ msgid "Files to Attach"
+#~ msgstr "Filer at vedlægge"
+
+#~ msgid "Filename"
+#~ msgstr "Filnavn"
+
+#~ msgid "Kilobytes"
+#~ msgstr "kilobyte"
+
+#~ msgid "Add a File to the Attachment List"
+#~ msgstr "Tilføj en fil til bilagslisten"
+
+#~ msgid "Remove a File from the Attachment List"
+#~ msgstr "Fjern en fil fra bilagslisten"
+
+#~ msgid "Estimated Article Size"
+#~ msgstr "Beregnet artikelstørrelse"
+
+#~ msgid ""
+#~ "The newsgroups where replies to your message should go.  This is only "
+#~ "needed if it differs from the \"Post To Groups\" header. \n"
+#~ "To direct all replies to your email address, use \"Followup-To: poster\""
+#~ msgstr ""
+#~ "Nyhedsgrupperne hvortil svar på din publicerede meddelelse skal gå. Dette "
+#~ "behøves kun hvis det adskiller sig fra \"Post til grupper\"-hovedet.\n"
+#~ "For at lade alle svar gå til din e-postadresse kan du bruge \"Opfølgning-"
+#~ "til: afsender\""
+
+#~ msgid ""
+#~ "The email account where mail replies to your posted message should go.  "
+#~ "This is only needed if it differs from the \"From\" header."
+#~ msgstr ""
+#~ "Den e-postkonto hvortil e-postsvar til din publicerede meddelelse skal "
+#~ "gå. Dette behøves kun hvis det adskiller sig fra \"Fra\"-hovedet."
+
+#~ msgid "Organization"
+#~ msgstr "Organisation"
+
+#~ msgid "The organization you're associated with."
+#~ msgstr "Den organisation som du er tilknyttet."
+
+#~ msgid "Charset"
+#~ msgstr "Tegnsæt"
+
+#~ msgid "Custom Headers"
+#~ msgstr "Egendefinerede brevhovedfelter"
+
+#~ msgid "Add \"User-Agent\" header"
+#~ msgstr "Tilføj \"User-Agent\" til hovedet"
+
+#~ msgid "Add \"Message-Id\" header"
+#~ msgstr "Tilføj \"Message-Id\" til hovedet"
+
+#~ msgid ""
+#~ "Could not convert \"%s\" to UTF-8. Article may not display correctly."
+#~ msgstr ""
+#~ "Kunne ikke konvertere \"%s\" til UTF-8. Artiklen vises muligvis ikke "
+#~ "korrekt."
+
+#~ msgid "\"Followup-To: poster\": sending email to author."
+#~ msgstr "\"Opfølgning-til: afsender\": sender e-post til forfatteren."
+
+#~ msgid "\"Followup-To:\" contains an email address: sending email to author."
+#~ msgstr ""
+#~ "\"Opfølgning-til:\": indeholder en e-postadresse: sender e-post til "
+#~ "forfatteren."
+
+#~ msgid "New Message"
+#~ msgstr "Nyt meddelelse"
+
+#~ msgid ""
+#~ "ERROR: line %d, column %d uses a character not specified in charset \"%s"
+#~ "\" -- possibly change your charset in \"More Headers\" to \"%s\" instead?"
+#~ msgstr ""
+#~ "FEJL: linje %d, søjle %d bruger et tegn som ikke findes i tegnsættet \"%s"
+#~ "\" --- skift evt. tegnsæt under \"Brevhoved\" til \"%s\""
+
+#~ msgid "Save message to file"
+#~ msgstr "Gem artikel som fil"
+
+#~ msgid ""
+#~ "Message uses characters not specified in charset '%s' - possibly use '%s' "
+#~ "instead?"
+#~ msgstr ""
+#~ "Meddelelsen bruger tegn som ikke er angivet i tegnsættet \"%s\" - skal \"%"
+#~ "s\" muligvis bruges i stedet?"
+
+#~ msgid "The command line was: %s"
+#~ msgstr "Kommandolinjen var: %s"
+
+#~ msgid "NNTP handshake failed: %s"
+#~ msgstr "NNTP-håndtryk mislykkedes: %s"
+
+#~ msgid "Handshake failed: %s"
+#~ msgstr "Håndtryk mislykkedes: %s"
+
+#~ msgid "Handshake: %s"
+#~ msgstr "Håndtryk: %s"
+
+#~ msgid "Authentication failed: bad handshake for SPA password"
+#~ msgstr "Autentisering mislykkedes: fejlagtigt håndtryk for SPA-adgangskode"
+
+#~ msgid "Bad SPA handshake: %s"
+#~ msgstr "Fejlagtigt SPA-håndtryk: %s"
+
+#~ msgid "Authentication failed: need a password"
+#~ msgstr "Identitetsbekræftigelse mislykkedes: behøver en adgangskode"
+
+#~ msgid "Authentication failed: %s"
+#~ msgstr "Identitetsbekræftigelse mislykkedes: %s"
+
+#~ msgid "%*.*s handshake failed: %s"
+#~ msgstr "\"%*.*s\" forhandling mislykkedes: %s"
+
+#~ msgid "No supported authentication mechanism"
+#~ msgstr "Ingen autentiseringsmekanisme. som understøttes"
+
+#~ msgid "No password found!"
+#~ msgstr "Kan ikke finde kodeord!"
+
+#~ msgid "MODE READER check failed: %s"
+#~ msgstr "MODE READER-kontrol mislykkedes: %s"
+
+#~ msgid "Posting failed.  Server said: %s"
+#~ msgstr "Postning mislykkedes. Serveren sagde: %s"
+
+#~ msgid "Posting complete.  Server said: %s"
+#~ msgstr "Postning færdig. Serveren sagde: %s"
+
+#~ msgid "\"stay connected\" sent to %*.*s"
+#~ msgstr "\"forbliv forbundet\" sendt til %*.*s"
+
+#~ msgid "Getting article \"%s\" body failed: %s"
+#~ msgstr "Hentning af artikelteksten til \"%s\" mislykkedes: %s"
+
+#~ msgid "Getting header list failed: %s"
+#~ msgstr "Hentning af artikel-overskrifter mislykkedes: %s"
+
+#~ msgid "Corrupt header skipped: %s"
+#~ msgstr "Springer ødelagt artikelhoved over: %s"
+
+#~ msgid "Getting %d of %d"
+#~ msgstr "Henter %d af %d"
+
+#~ msgid "Select Color"
+#~ msgstr "Vælg farve"
+
+#~ msgid "_Browse..."
+#~ msgstr "_Gennemse..."
+
+#~ msgid "Select Font"
+#~ msgstr "Vælg skrifttype"
+
+#~ msgid "Font Family"
+#~ msgstr "Skrifttypefamilie"
+
+#~ msgid "  --version        Prints Pan's version number"
+#~ msgstr "  --version        Vis Pans versionsnummer"
+
+#~ msgid "  --help           Prints this message and exits"
+#~ msgstr "  --help           Vis denne meddelelse af afslut"
+
+#~ msgid ""
+#~ "  --debug          Turns on the most commonly-used options for a bug "
+#~ "report"
+#~ msgstr ""
+#~ "  --debug          Aktiverer de mest almindelige tilvalg\n"
+#~ "                   til brug ved fejlrapportering"
+
+#~ msgid ""
+#~ "  --mute           Debugging tool to send new posts to console, not the "
+#~ "server"
+#~ msgstr ""
+#~ "  --mute           Fejlsøgningsværktøj der sender nye artikler til "
+#~ "konsollen\n"
+#~ "                   i stedet for nyhedsserveren"
+
+#~ msgid "  --debug-cache    Print debugging messages for the article cache"
+#~ msgstr ""
+#~ "  --debug-cache    Vis fejlsøgningsbeskeder for artikelmellemlageret"
+
+#~ msgid ""
+#~ "  --debug-sockets  Print debugging messages when talking to the news "
+#~ "server"
+#~ msgstr ""
+#~ "  --debug-sockets  Vis fejlsøgningsbeskeder når der kommunikeres\n"
+#~ "                   med nyhedsserveren"
+
+#~ msgid ""
+#~ "  --debug-queue    Print debugging messages related to managing tasks"
+#~ msgstr ""
+#~ "  --debug-queue    Vis fejlsøgningsbeskeder om håndtering af opgaver."
+
+#~ msgid ""
+#~ "  --debug-decode   Print debugging messages related to decoding "
+#~ "attachments"
+#~ msgstr "  --debug-decode   Vis fejlsøgningsbeskeder om afkodning af bilag"
+
+#~ msgid "  --debug-newsrc   Print debugging messages related to .newsrc files"
+#~ msgstr "  --debug-newsrc   Vis fejlsøgningsbeskeder om .newsrc filer"
+
+#~ msgid ""
+#~ "  --debug-gnksa    Print debugging messages related to gnksa correctness"
+#~ msgstr "  --debug-gnksa    Vis fejlsøgningsbeskeder om gnksa overholdelse"
+
+#~ msgid ""
+#~ "  --debug-trace    Print debugging messages when entering/leaving "
+#~ "functions"
+#~ msgstr ""
+#~ "  --debug-trace    Vis fejlsøgningsbeskeder når programmet går ind i,\n"
+#~ "                   eller ud af funktioner"
+
+#~ msgid ""
+#~ "  --debug-lock     Print debugging messages related to threaded gui locks"
+#~ msgstr ""
+#~ "  --debug-lock     Vis fejlsøgningsbeskeder om låse i den\n"
+#~ "                   trådede brugergrænseflade"
+
+#~ msgid ""
+#~ "  --debug-object   Print debugging messages related to refcounted objects"
+#~ msgstr ""
+#~ "  --debug-object   Vis fejlsøgningsbeskeder om objekter med "
+#~ "referancetællere"
+
+#~ msgid "Error reading from socket."
+#~ msgstr "Fejl ved læsning fra sokkel."
+
+#~ msgid "Error writing to socket."
+#~ msgstr "Fejl ved skrivning til sokkel."
+
+#~ msgid "pan.sent"
+#~ msgstr "pan.sendt"
+
+#~ msgid "pan.sendlater"
+#~ msgstr "pan.sendsenere"
+
+#~ msgid "Spellchecking disabled: gtkspell_init() failed with status %d"
+#~ msgstr ""
+#~ "Stavningskontrol slået fra: gtkspell_init() mislykkedes med status %d"
+
+#~ msgid "Restored %d tasks from last session"
+#~ msgstr "Genskabte %d opgaver fra forrige brug"
+
+#~ msgid ""
+#~ "Some tasks were still queued the last time Pan exited.  Do you want to "
+#~ "resume those tasks?"
+#~ msgstr ""
+#~ "Der var stadigt opgaver i køen sidt Pan blev afsluttet. Ønsker du at "
+#~ "fortsætte med disse opgaver?"
+
+#~ msgid "_Resume"
+#~ msgstr "_Fortsæt"
+
+#~ msgid ""
+#~ "%a - abbreviated weekday name\n"
+#~ "%A - full weekday name\n"
+#~ "%b - abbreviated month name\n"
+#~ "%B - full month name\n"
+#~ "%c - local date & time\n"
+#~ "%d - day of the month\n"
+#~ "%H - hour (24-hour clock)\n"
+#~ "%I - hour (12-hour clock)\n"
+#~ "%j - day of the year (001-366)\n"
+#~ "%m - month (01-12)\n"
+#~ "%M - minute (00-59)\n"
+#~ "%p - local equivalent of AM/PM\n"
+#~ "%S - second (00-61)\n"
+#~ "%x - local date\n"
+#~ "%X - local time\n"
+#~ "%y - two-digit year\n"
+#~ "%Y - four-digit year\n"
+#~ "%% - %"
+#~ msgstr ""
+#~ "%a - forkortet ugenavn\n"
+#~ "%A - fuldt ugenavn\n"
+#~ "%b - forkortet månedsnavn\n"
+#~ "%B - fuldt månedsnavn\n"
+#~ "%c - lokal tid og dato\n"
+#~ "%d - dag i måneden\n"
+#~ "%H - timer (24-timers ur)\n"
+#~ "%I - timer (12-timers ur)\n"
+#~ "%j - dag i året (001-366)\n"
+#~ "%m - måned (01-12)\n"
+#~ "%M - minut (00-59)\n"
+#~ "%p - lokal AM/PM ækvivalent\n"
+#~ "%S - sekund (00-61)\n"
+#~ "%x - lokal dato\n"
+#~ "%X - lokal tid\n"
+#~ "%y - året med to tal\n"
+#~ "%Y - året med fire tal\n"
+#~ "%% - %"
+
+#~ msgid "Color the \"sub_ject\" column"
+#~ msgstr "Farvelæg \"_emne\"-kolonnen"
+
+#~ msgid "Articles with a Score of 9999 or higher:"
+#~ msgstr "Artikler med bedømmelse på 9999 eller højere"
+
+#~ msgid "Articles with a Score between 5000 and 9998:"
+#~ msgstr "Artikler med bedømmelse mellem 5000 og 9998:"
+
+#~ msgid "Articles with a Score between 1 and 4999:"
+#~ msgstr "Artikler med bedømmelse mellem 1 og 4999:"
+
+#~ msgid "Articles with a Score between -9998 and -1:"
+#~ msgstr "Artikler med bedømmelse mellem -9998 og -1:"
+
+#~ msgid "Articles with a Score of -9999 or lower:"
+#~ msgstr "Artikler med bedømmelse -9999 eller lavere:"
+
+#~ msgid "_1:"
+#~ msgstr "_1"
+
+#~ msgid "_2:"
+#~ msgstr "_2"
+
+#~ msgid "_3:"
+#~ msgstr "_3"
+
+#~ msgid "Pane Order"
+#~ msgstr "Panelorden"
+
+#~ msgid "Action State"
+#~ msgstr "Artikelhandlinger"
+
+#~ msgid "Article State"
+#~ msgstr "Artikeltilstand"
+
+#~ msgid "Column Layout"
+#~ msgstr "Kolonnelayout"
+
+#~ msgid "When a Followup subject header changes, show as _new thread"
+#~ msgstr "_Vis som en ny tråd når et opfølgningsemneshoved ændres"
+
+#~ msgid "E_xpand all threads by default"
+#~ msgstr "_Udfold alle tråde som standard"
+
+#~ msgid "Show complete _multipart posts as a single article"
+#~ msgstr "Vis komplette forsendelser i _flere dele som enkelt artikel"
+
+#~ msgid "Date Forma_t:"
+#~ msgstr "_Datoformat:"
+
+#~ msgid "Show \"%s\" header"
+#~ msgstr "Vis \"%s\"-hoved"
+
+#~ msgid "Newsreader"
+#~ msgstr "Nyhedsgruppelæser"
+
+#~ msgid "Characters denoting _quoted text:"
+#~ msgstr "Tegn som angiver _citeret tekst:"
+
+#~ msgid "Download new headers from s_ubscribed groups when starting Pan"
+#~ msgstr "Hent _nye hoveder fra abonnerede grupper når Pan startes"
+
+#~ msgid ""
+#~ "Download new headers and bod_ies from subscribed groups when starting Pan"
+#~ msgstr ""
+#~ "Hent nye hoveder _og artikeltekster fra abonnerede grupper når Pan startes"
+
+#~ msgid "Download Directory"
+#~ msgstr "Nedhentningskatalog"
+
+#~ msgid "Save a_ttachments in directory:"
+#~ msgstr "Gem bilag i folderen:"
+
+#~ msgid "Automatically remove _failed tasks from the task manager"
+#~ msgstr "_Fjern automatisk mislykkede opgaver fra opgavehåndtereren"
+
+#~ msgid "Article Cache"
+#~ msgstr "Artikel-mellemlager"
+
+#~ msgid "_Erase cache when exiting Pan"
+#~ msgstr "_Tøm mellemlageret når Pan afsluttes"
+
+#~ msgid "Ma_ximum Cache Size (Megs):"
+#~ msgstr "Ma_ksimal mellemlagerstørrelse (MB):"
+
+#~ msgid "_Web Browser (%s is URL):"
+#~ msgstr "_Weblæser (%s er URL):"
+
+#~ msgid "_Editor (%t is filename):"
+#~ msgstr "_TekstRedigering (%t er filnavn):"
+
+#~ msgid ""
+#~ "Scorefile _Editor:\n"
+#~ "(%t is filename, %n is line number)"
+#~ msgstr ""
+#~ "Bedømmelsesfil_redigering:\n"
+#~ "(%t er filnavnet, %n er linjenummeret)"
+
+#~ msgid "Scorefile"
+#~ msgstr "Bedømmelsesfil"
+
+#~ msgid "Score_file"
+#~ msgstr "_Bedømmelsesfil"
+
+#~ msgid "Sending Mail"
+#~ msgstr "E-post afsendelse"
+
+#~ msgid "Mail Server Add_ress:"
+#~ msgstr "E-postserverens _adresse:"
+
+#~ msgid "Mail Server Por_t:"
+#~ msgstr "E-postserverens _port:"
+
+#~ msgid "Pane _Layout"
+#~ msgstr "Panel_layout"
+
+#~ msgid "Hea_der Pane"
+#~ msgstr "_Hovedpanel"
+
+#~ msgid "A_pps & Mail"
+#~ msgstr "_Programmer og post"
+
+#~ msgid "Pan: Print"
+#~ msgstr "Pan: Udskriv"
+
+#~ msgid "You haven't loaded an article to print."
+#~ msgstr "Du har ikke indlæst en artikel til at udskrive."
+
+#~ msgid ""
+#~ "%s\n"
+#~ "\n"
+#~ "Matches: %u\n"
+#~ "Group: %s\n"
+#~ "Rule: %s"
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Træffere: %u\n"
+#~ "Gruppe: %s\n"
+#~ "Regel: %s"
+
+#~ msgid "Mark as"
+#~ msgstr "Markér som"
+
+#~ msgid "_Flag body for download"
+#~ msgstr "_Mærk artikelkroppen til hentning"
+
+#~ msgid "_Retrieve Body"
+#~ msgstr "_Hent artikeltekst"
+
+#~ msgid "_Watch thread (highlights the thread)"
+#~ msgstr "_Overvåg tråd (giver tråden en mere synlig farve)"
+
+#~ msgid "_Ignore thread (hides the thread by default)"
+#~ msgstr "_Ignorér tråd (skjul tråden som standard)"
+
+#~ msgid "Edit Filters"
+#~ msgstr "Redigér filtre"
+
+#~ msgid "Rule applies to all newsgroups"
+#~ msgstr "Regel gælder for alle nyhedsgrupper"
+
+#~ msgid "Wildcard group specification:"
+#~ msgstr "Jokertegngruppe-specifikation:"
+
+#~ msgid "(e.g., *anime*)"
+#~ msgstr "(f.eks. *anime*)"
+
+#~ msgid "Rule applies to specific newsgroups:"
+#~ msgstr "Regel gælder for specifikke nyhedsgrupper:"
+
+#~ msgid "Rule applies to:"
+#~ msgstr "Regel gælder for:"
+
+#~ msgid "Rule Name:"
+#~ msgstr "Regelnavn:"
+
+#~ msgid "Apply to Incoming"
+#~ msgstr "Anvend på indkommende"
+
+#~ msgid ""
+#~ "If enabled, this rule will be applied to headers when they are downloaded."
+#~ msgstr ""
+#~ "Hvis slået til, vil denne regel blive brugt i artikelhoveder, når de "
+#~ "bliver hentet."
+
+#~ msgid "New Rule"
+#~ msgstr "Ny regel"
+
+#~ msgid "Delete Articles by Bozos"
+#~ msgstr "Slet artikler fra ignoranter"
+
+#~ msgid "Applying rule to selected groups"
+#~ msgstr "Anvender regel på markerede grupper"
+
+#~ msgid "Applying rule \"%s\" to group \"%s\""
+#~ msgstr "Anvender regel \"%s\" på gruppen \"%s\""
+
+#~ msgid "Pan: Rules"
+#~ msgstr "Pan: Regler"
+
+#~ msgid "Rules"
+#~ msgstr "Regler"
+
+#~ msgid "Hit Ratio"
+#~ msgstr "Hitrate"
+
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Selected\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "Anvend på\n"
+#~ "markerede\n"
+#~ "grupper"
+
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Subscribed\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "Anvend på\n"
+#~ "abonnerede\n"
+#~ "grupper"
+
+#~ msgid "Wrote rules to \"%s\""
+#~ msgstr "Skrev regler til \"%s\""
+
+#~ msgid ""
+#~ "Can't find filter \"%s\" needed by rule \"%s\", so no articles match."
+#~ msgstr ""
+#~ "Kan ikke finde filtret \"%s\" som behøves af reglen \"%s\", så ingen "
+#~ "artikler matcher."
+
+#~ msgid "%u articles match rule %s"
+#~ msgstr "%u artikler matcher regel %s"
+
+#~ msgid "Pan: Manual Decode"
+#~ msgstr "Pan: Manuel afkodning"
+
+#~ msgid "Save Files in Directory"
+#~ msgstr "Gem filer i katalog"
+
+#~ msgid "_Directory:"
+#~ msgstr "_Katalog:"
+
+#~ msgid "Add to the _top of the Task Manager's List"
+#~ msgstr "Tilføj _øverst i opgavehåndtererens liste"
+
+#~ msgid "Criterion \"%s\" is selected, but empty."
+#~ msgstr "Kriteriet \"%s\" er valgt, men det er tomt."
+
+#~ msgid "No criteria are selected."
+#~ msgstr "Der er intet kriterium valgt."
+
+#~ msgid "Pan: Add to Scorefile"
+#~ msgstr "Pan: Tilføj til bedømmelsesfil"
+
+#~ msgid "Group"
+#~ msgstr "Gruppe"
+
+#~ msgid "Su_bject:"
+#~ msgstr "_Emne:"
+
+#~ msgid "A_uthor:"
+#~ msgstr "_Forfatter:"
+
+#~ msgid "_Lines:"
+#~ msgstr "_Linjer"
+
+#~ msgid "at least N lines long"
+#~ msgstr "mindst N linjer lang"
+
+#~ msgid "less than N lines long"
+#~ msgstr "mindre end N linjer lang"
+
+#~ msgid "Chan_ge Score:"
+#~ msgstr "_Korrigér bedømmelse:"
+
+#~ msgid "subtract"
+#~ msgstr "formindsk med"
+
+#~ msgid "Expire in N _days:"
+#~ msgstr "Udløber efter N _dage:"
+
+#~ msgid "Edit the selected score"
+#~ msgstr "Redigér den markerede bedømmelse"
+
+#~ msgid "You must specify an address."
+#~ msgstr "Du skal angive en adresse."
+
+#~ msgid "You must specify a password or disable authorization."
+#~ msgstr "Du skal angive et kodeord eller slå godkendelse fra."
+
+#~ msgid "You must specify a .newsrc filename or disable newsrc support."
+#~ msgstr "Du skal angive en .newsrc-fil eller slå newsrc fra."
+
+#~ msgid "Newsrc"
+#~ msgstr "Newsrc"
+
+#~ msgid "Us_e .newsrc file"
+#~ msgstr "_Brug .newsrc-fil"
+
+#~ msgid "Select .newsrc File"
+#~ msgstr "Vælg .newsrc-fil"
+
+#~ msgid "_Filename:"
+#~ msgstr "_Filnavn:"
+
+#~ msgid "Edit the selected server"
+#~ msgstr "Redigér den markerede server"
+
+#~ msgid "Remove the selected server"
+#~ msgstr "Fjern den markerede server"
+
+#~ msgid "Got unexpected response from mail server: expected %d; got %s"
+#~ msgstr "Fik uventet svar fra postserver: forventede %d; fik %s"
+
+#~ msgid "Sending mail"
+#~ msgstr "Sender e-post"
+
+#~ msgid "No known recipients"
+#~ msgstr "Ingen kendte modtagere"
+
+#~ msgid "Mail sent!"
+#~ msgstr "Brevet sendt!"
+
+#~ msgid "Handshaking with mail server"
+#~ msgstr "Giver håndtryk til postserveren"
+
+#~ msgid "Connecting to mail server"
+#~ msgstr "Forbinder til postserver"
+
+#~ msgid "Unable to connect to mail server \"%*.*s\""
+#~ msgstr "Kan ikke forbinde til e-postserveren \"%*.*s\""
+
+#~ msgid "Mail server not ready"
+#~ msgstr "E-postserveren er ikke klar"
+
+#~ msgid "Sending Keepalive"
+#~ msgstr "Sender \"Hold i live\""
+
+#~ msgid "Disconnecting Idle"
+#~ msgstr "Afbryder ubrugt"
+
+#~ msgid "Disconnecting one connection from `%s' after %d seconds idle"
+#~ msgstr "Lukker en forbindelse fra '%s' efter %d sekunder uden brug"
+
+#~ msgid "Connection to %*.*s, port %d failed: %s"
+#~ msgstr "Forbindelse til %*.*s, port %d mislykkedes: %s"
+
+#~ msgid "Error writing to socket: %s"
+#~ msgstr "Fejl ved skrivning til sokkel: %s"
+
+#~ msgid "Downloading %d"
+#~ msgstr "Henter %d"
+
+#~ msgid "\"%s\""
+#~ msgstr "\"%s\""
+
+#~ msgid "Downloading %u articles"
+#~ msgstr "Henter %u artikler"
+
+#~ msgid "Downloading 1 article"
+#~ msgstr "Henter 1 artikel"
+
+#~ msgid "Article %s (%s) canceled"
+#~ msgstr "Artiklen %s (%s) blev trukket tilbage"
+
+#~ msgid "Updating article counts for %u groups from server \"%s\""
+#~ msgstr "Opdaterer artikelantal for %u grupper fra serveren \"%s\""
+
+#~ msgid "Updated counts for %u groups out of %u"
+#~ msgstr "Opdaterede antal for %u grupper ud af %u"
+
+#~ msgid "Unable to update counts for group \"%s\""
+#~ msgstr "Kan ikke opdatere artikelantal for gruppen \"%s\""
+
+#~ msgid "Getting all groups from server \"%s\""
+#~ msgstr "Henter alle grupper fra serveren \"%s\""
+
+#~ msgid "Adding groups to server \"%s\""
+#~ msgstr "Tilføjer grupper til serveren \"%s\""
+
+#~ msgid "List Newsgroups failed: %s"
+#~ msgstr "Visning af nyhedsgrupper mislykkedes: %s"
+
+#~ msgid "Got %d descriptions from server \"%s\""
+#~ msgstr "Modtog %d beskrivelser fra serveren \"%s\""
+
+#~ msgid "New groups retrieval failed: %s"
+#~ msgstr "Modtagelse af nye grupper mislykkedes: %s"
+
+#~ msgid "No new articles in group \"%s\""
+#~ msgstr "Ingen nye artikler i gruppe '%s'"
+
+#~ msgid "New %lu of %lu"
+#~ msgstr "Ny %lu af %lu"
+
+#~ msgid "Sampling %lu of %lu"
+#~ msgstr "Udtrækker %lu af %lu"
+
+#~ msgid "All %lu of %lu"
+#~ msgstr "Alle %lu af %lu"
+
+#~ msgid "Not Queued"
+#~ msgstr "Ikke i kø"
+
+#~ msgid "Stopping"
+#~ msgstr "Stopper"
+
+#~ msgid "Pan %s Task Manager"
+#~ msgstr "Pan %s opgavehåndtering"
+
+#~ msgid "Move Selected Task(s) Up"
+#~ msgstr "Flyt valgte opgaver op"
+
+#~ msgid "Move Selected Task(s) to Top"
+#~ msgstr "Flyt markerede opgaver øverst"
+
+#~ msgid "Move Selected Task(s) Down"
+#~ msgstr "Flyt valgte opgaver ned"
+
+#~ msgid "Move Selected Task(s) to Bottom"
+#~ msgstr "Flyt markerede opgaver nederst"
+
+#~ msgid "Stop Selected Task(s)"
+#~ msgstr "Stop markerede opgaver"
+
+#~ msgid "Delete Selected Task(s)"
+#~ msgstr "Fjern markerede opgaver"
+
+#~ msgid "Time Remaining"
+#~ msgstr "Tilbageværende tid"
+
+#~ msgid "[This is an email copy of a Usenet post to \"%s\"]"
+#~ msgstr "[Dette er en epostkopi af en Usenet-publicering til \"%s\"]"
+
+#~ msgid "Email \"%s\" sent."
+#~ msgstr "E-postmeddelelsen \"%s\" sendt."
+
+#~ msgid "Email \"%s\" not sent."
+#~ msgstr "E-postmeddelelsen \"%s\" sendtes ikke."
+
+#~ msgid "Article \"%s\" posted."
+#~ msgstr "Artiklen \"%s\" postet."
+
+#~ msgid "Article \"%s\" not posted."
+#~ msgstr "Artiklen \"%s\" publiceredes ikke."
+
+#~ msgid "Posting and mailing article \"%s\""
+#~ msgstr "Poster og e-poster artiklen \"%s\""
+
+#~ msgid "Mailing article \"%s\""
+#~ msgstr "E-poster artiklen \"%s\""
+
+#~ msgid "Email send failed.  "
+#~ msgstr "Afsendelse af e-post mislykkedes.  "
+
+#~ msgid "Usenet posting failed.  "
+#~ msgstr "Usenet-publicering mislykkedes.  "
+
+#~ msgid "Check Tools|Log Viewer for more information.  "
+#~ msgstr "Se Værktøjer|Logviser for mere information."
+
+#~ msgid "Your message was saved in the folder \"pan.sendlater\""
+#~ msgstr "Din meddelelse gemtes i mappen \"pan.sendlater\""
+
+#~ msgid "Saving `%s'"
+#~ msgstr "Gemmer  \"%s\""
+
+#~ msgid "Saving Attachments"
+#~ msgstr "Gemmer artikelbilag"
+
+#~ msgid "Saving Articles"
+#~ msgstr "Gemmer artikler"
+
+#~ msgid "Save Article can't access path \"%s\""
+#~ msgstr "Gem artikel kan ikke få adgang til søgestien \"%s\""
+
+#~ msgid "Saved article body to \"%s\""
+#~ msgstr "Gemte artikeltekst i \"%s\""
+
+#~ msgid ""
+#~ "Pan %s\n"
+#~ "Copyright (c) %d by Charles Kerr\n"
+#~ "\n"
+#~ "If you find a bug, please report it.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Pan %s\n"
+#~ "Copyright (c) %d by Charles Kerr\n"
+#~ "\n"
+#~ "Rapporter venlist hvis du finder en fejl.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "http://pan.rebelbase.com/ - Pan Homepage\n"
+#~ "http://pan.rebelbase.com/bugs/ - Report a Bug\n"
+#~ "http://pan.rebelbase.com/download/ - Upgrade\n"
+#~ "\n"
+#~ msgstr ""
+#~ "http://pan.rebelbase.com/ - Pans hjemmeside\n"
+#~ "http://pan.rebelbase.com/bugs/ - Rapporter fejl\n"
+#~ "http://pan.rebelbase.com/download/ - Upgradér\n"
+
+#~ msgid ""
+#~ "This program is free software; you can redistribute it\n"
+#~ "and/or modify it under the terms of the GNU General Public\n"
+#~ "License as published by the Free Software Foundation;\n"
+#~ "version 2 of the License.\n"
+#~ "\n"
+#~ "This program is distributed in the hope that it will be\n"
+#~ "useful, but WITHOUT ANY WARRANTY; without even the implied\n"
+#~ "warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR\n"
+#~ "PURPOSE.  See the GNU General Public License for more\n"
+#~ "details.\n"
+#~ "\n"
+#~ "The GNU Public License can be found from the menu above\n"
+#~ "in Help|About|License."
+#~ msgstr ""
+#~ "This program is free software; you can redistribute it\n"
+#~ "and/or modify it under the terms of the GNU General Public\n"
+#~ "License as published by the Free Software Foundation;\n"
+#~ "version 2 of the License.\n"
+#~ "\n"
+#~ "This program is distributed in the hope that it will be\n"
+#~ "useful, but WITHOUT ANY WARRANTY; without even the implied\n"
+#~ "warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR\n"
+#~ "PURPOSE.  See the GNU General Public License for more\n"
+#~ "details.\n"
+#~ "\n"
+#~ "The GNU Public License kan findes i menuen under\n"
+#~ "Hjælp|Om|Licens"
+
+#~ msgid "Error starting external browser: %s"
+#~ msgstr "Fejl ved start af ekstern weblæser: %s"
+
+#~ msgid "Error starting external scorefile editor: %s"
+#~ msgstr "Fejl ved start af ekstern redigerering af bedømmelsesfil: %s"
+
+#~ msgid ""
+#~ "Addresses and Subjects can be changed before being added\n"
+#~ "to the Spam/Bozo filters.\n"
+#~ "\n"
+#~ "For example, a subject of `-->MAKE MONEY FAST<--' will\n"
+#~ "likely find more spam if shortened to just `MAKE MONEY FAST'.\n"
+#~ "\n"
+#~ "Likewise, \"Dudley Dursley\" <ddursley@spambot.com>' could\n"
+#~ "be shortened to `<ddurseley@spambot.com>' or even `<*@spambot.com>'.\n"
+#~ "\n"
+#~ "Wildcards are supported and comparisons are case-insensitive.\n"
+#~ "For more complex pattern matching, enable the regular expression\n"
+#~ "button.  http://pan.rebelbase.com/regexp.txt for a tutorial.\n"
+#~ msgstr ""
+#~ "Adresser og emnelinjer kan ændres inden de tilføjes i\n"
+#~ "spam- og ignorantfiltrene.\n"
+#~ "\n"
+#~ "For eksempel kan en emneslinje i stil med \"-->MAKE MONEY FAST<--\"\n"
+#~ "nok finde mere spam hvis det kortes ned til bare\n"
+#~ "\"MAKE MONEY FAST\".\n"
+#~ "\n"
+#~ "På samme måde kan \"Dudley Dursley <ddursley@spambot.com>\" kortes\n"
+#~ "ned til \"<ddursley@spambot.com>\" eller til og med \"<*@spambot.com>\".\n"
+#~ "\n"
+#~ "Jokertegn understøttes og sammenligninger adskiller ikke på store og små "
+#~ "bogstaver.\n"
+#~ "Brug knappen for regulære udtryk hvis du vil bruge mere kompleks\n"
+#~ "mønstermatchning. Se http://pan.rebelbase.com/regexp.txt for en "
+#~ "vejledning.\n"
+
+#~ msgid "Add Author to Bozo Filter"
+#~ msgstr "Tilføj afsenderen til ignorantliste"
+
+#~ msgid "Regular Expression"
+#~ msgstr "Regulært udtryk"
+
+#~ msgid "Add Author to Spam Filter"
+#~ msgstr "Tilføj afsenderen til spamfilter"
+
+#~ msgid "Add Subject to Spam Filter"
+#~ msgstr "Tilføj emne til spamfilter"
+
+#~ msgid "Pan: Find Message"
+#~ msgstr "Pan: Find artikel"
+
+#~ msgid "/Add to Bo_zo or Spam Filter..."
+#~ msgstr "/Tilføj i i_gnorant- eller spamfilter"
+
+#~ msgid "Don't know what to do with header \"%s\""
+#~ msgstr "Véd ikke hvad som skal gøres med hovedet \"%s\""
+
+#~ msgid ""
+#~ "INFORMATION: Please be aware that posts to \"%s\" will not appear until "
+#~ "approved by the group's moderator."
+#~ msgstr ""
+#~ "OPLYSNING: Vær venligst opmærksom på at publiceringer til '%s' ikke vil "
+#~ "blive vist, før de er godkendt af gruppens moderator."
+
+#~ msgid "Programmer & Documentation"
+#~ msgstr "Udvikler og dokumentation"
+
+#~ msgid "Negate"
+#~ msgstr "Modsat"
+
+#~ msgid "AND"
+#~ msgstr "OG"
+
+#~ msgid "OR"
+#~ msgstr "ELLER"
+
+#~ msgid "contains the phrase"
+#~ msgstr "indeholder frasen"
+
+#~ msgid ""
+#~ "See http://pan.rebelbase.com/regexp.txt for a tutorial on how to use "
+#~ "regular expressions.  If regular expressions are turned off, a simple "
+#~ "case-insensitive wildcard match is used."
+#~ msgstr ""
+#~ "Se http://pan.rebelbase.com/regexp.txt for en beskrivelse af, hvordan man "
+#~ "bruger regulære udtryk. Hvis regulære udtryk er deaktiveret, bliver en "
+#~ "simpel jokertegnssøgning brugt, som ikke ser forskel på store og små "
+#~ "bogstaver."
+
+#~ msgid "Saved"
+#~ msgstr "Gemt"
+
+#~ msgid "Queued for Saving"
+#~ msgstr "Kølagt for gemning"
+
+#~ msgid "Neither Saved nor Queued"
+#~ msgstr "Hverken gemt eller køet"
+
+#~ msgid "Article _thread is"
+#~ msgstr "Artikeltråd er"
+
+#~ msgid "Neither Watched nor Ignored"
+#~ msgstr "Ikke under overvågning eller ignoreret"
+
+#~ msgid "NOT ANY OF:"
+#~ msgstr "IKKE NOGEN AF:"
+
+#~ msgid "Bozos"
+#~ msgstr "Ignoranter"
+
+#~ msgid "Spam"
+#~ msgstr "Spam"
+
+#~ msgid "Subject doesn't match the regular expression \"%s\""
+#~ msgstr "Emnet matcher ikke det regulære udtryk \"%s\""
+
+#~ msgid "Subject matches the regular expression \"%s\""
+#~ msgstr "Emnet matcher det regulære udtryk \"%s\""
+
+#~ msgid "Author doesn't match phrase \"%s\""
+#~ msgstr "Forfatteren matcher ikke frasen \"%s\""
+
+#~ msgid "Author matches phrase \"%s\""
+#~ msgstr "Forfatteren matcher frasen \"%s\""
+
+#~ msgid "Message-ID doesn't match regular expression \"%s\""
+#~ msgstr "Meddelelses-ID matcher ikke det regulære udtryk \"%s\""
+
+#~ msgid "Message-ID matches regular expression \"%s\""
+#~ msgstr "Meddelelses-ID matcher det regulære udtryk \"%s\""
+
+#~ msgid "Message-ID doesn't match phrase \"%s\""
+#~ msgstr "Meddelelses-ID matcher ikke frasen \"%s\""
+
+#~ msgid "Message-ID matches phrase \"%s\""
+#~ msgstr "Meddelelses-ID matcher frasen \"%s\""
+
+#~ msgid "Article has not been saved or decoded"
+#~ msgstr "Artiklen er hverken blevet gemt eller afkodet"
+
+#~ msgid "Article has been saved or decoded"
+#~ msgstr "Artiklen er blevet gemt eller afkodet"
+
+#~ msgid "Article is not queued for saving or decoding"
+#~ msgstr "Artiklen er ikke i kø til at blive gemt eller afkodet"
+
+#~ msgid "Article is queued for saving or decoding"
+#~ msgstr "Artiklen er i kø til at blive gemt eller afkodet"
+
+#~ msgid "Article is either saved or queued for saving"
+#~ msgstr "Artiklen er enten gemt eller i kø til at blive gemt"
+
+#~ msgid "Article is neither saved nor queued for saving"
+#~ msgstr "Artikler er hverken gemt eller i kø til at blive gemt"
+
+#~ msgid "Thread isn't watched"
+#~ msgstr "Tråd bliver ikke overvåget"
+
+#~ msgid "Thread is watched"
+#~ msgstr "Tråden er under overvågning"
+
+#~ msgid "Thread isn't ignored"
+#~ msgstr "Tråd bliver ikke ignoreret"
+
+#~ msgid "Thread is ignored"
+#~ msgstr "Tråden bliver ignoreret"
+
+#~ msgid "Thread is watched or ignored"
+#~ msgstr "Tråd er under overvågning eller bliver ignoreret"
+
+#~ msgid "Thread is neither watched nor ignored"
+#~ msgstr "Tråd er hverken under overvågning eller bliver ignoreret"
+
+#~ msgid "Invalid folder name: \"%s\""
+#~ msgstr "Ugyldigt mappenavn: \"%s\""
+
+#~ msgid "/_Frameld"
+#~ msgstr "/_Opsig abonnement"
+
+#~ msgid "Connecting to news server"
+#~ msgstr "Forbinder til nyhedsgruppeserveren"
+
+#~ msgid "Show Only Replies to My Articles"
+#~ msgstr "Vis kun svar på mine artikler"
+
+#~ msgid "Show Only Watched Threads"
+#~ msgstr "Vis kun overvågede tråde"
+
+#~ msgid "/Filte_r/Show Matching Articles and Replies"
+#~ msgstr "/_Filter/Vis matchende artikler og svar"
+
+#~ msgid "/Filte_r/Show Matching Articles and References"
+#~ msgstr "/_Filter/Vis matchende artikler og referencer"
+
+#~ msgid "/Filte_r/Show Threads with Matching Articles"
+#~ msgstr "/_Filter/Vis tråde med matchende artikler"
+
+#~ msgid "/Filte_r/Match Articles which are not Cache_d"
+#~ msgstr "/_Filter/Match artikler som ikke er mellem_lagrede"
+
+#~ msgid "/Filte_r/Match Articles with Complete _Attachments"
+#~ msgstr "/_Filter/Match artikler med fuldstændige _bilag"
+
+#~ msgid "/Filte_r/Match Articles with I_ncomplete Attachments"
+#~ msgstr "/_Filter/Match artikler med u_fuldstændige bilag"
+
+#~ msgid "/Filte_r/Match Articles with No A_ttachments"
+#~ msgstr "/_Filter/Match artikler _uden bilag"
+
+#~ msgid "/Filte_r/Match Articles Written by _Other People"
+#~ msgstr "/_Filter/Match artikler skrevet af _andre personer"
+
+#~ msgid "/Filte_r/Match _Watched Threads"
+#~ msgstr "/_Filter/Match _overvågede tråde"
+
+#~ msgid "/Filte_r/Match Threads N_either Watched nor Ignored"
+#~ msgstr "/_Filter/Match tråde som hverk_en er overvågede eller ignorerede"
+
+#~ msgid "/_Go/T_op of Thread"
+#~ msgstr "/_Gå til/_Øverst i tråd"
+
+#~ msgid "/_Articles/Add to Bo_zo or Spam Filter..."
+#~ msgstr "/Ar_tikler/Tilføj i _ignorant- eller spamfilter..."
+
+#~ msgid "/_Post/Followup _and Reply"
+#~ msgstr "/_Post/Følg op _og svar"
+
+#~ msgid "/_Help/Online Users` _Manual..."
+#~ msgstr "/_Hjælp/Bruger_manual på webben..."
+
+#~ msgid "/_Help/_Feedback..."
+#~ msgstr "/_Hjælp/_Synspunkter og kommentarer..."
+
+#~ msgid "Make this the default profile for _news"
+#~ msgstr "Gør dette til standardprofilen for _nyhedsgrupper"
+
+#~ msgid "Make this the default profile for _mail"
+#~ msgstr "Gør dette til standardprofilen for _e-post"
+
+#~ msgid "The domain name to use for Message-ID generation"
+#~ msgstr "Domænenavnet der skal bruges for generering af meddelelses-ID"
+
+#~ msgid "Incomplete Profile."
+#~ msgstr "Ukomplet profil"
+
+#~ msgid "QUIT failed: %s"
+#~ msgstr "QUIT fejlede: %s"
+
+#~ msgid "Unsupported authentication mechanism: %s"
+#~ msgstr "Autentiseringsmekanismen understøttes ikke: %s"
+
+#~ msgid "No articles found for group \"%s\""
+#~ msgstr "Ingen artikler fundet i gruppe '%s'"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "  --version        Prints Pan's version number\n"
+#~ "  --help           Prints this message and exits\n"
+#~ "  --debug          Turns on the most commonly-useful options for a bug "
+#~ "report\n"
+#~ "\n"
+#~ "  --mute           Debugging tool to send new posts to console, not the "
+#~ "server\n"
+#~ "  --debug-cache    Print debugging messages for the article cache\n"
+#~ "  --debug-sockets  Print debugging messages when talking to the news "
+#~ "server\n"
+#~ "  --debug-queue    Print debugging messages related to managing tasks\n"
+#~ "  --debug-decode   Print debugging messages related to decoding "
+#~ "attachments\n"
+#~ "  --debug-newsrc   Print debugging messages related to .newsrc files\n"
+#~ "  --debug-gnksa    Print debugging messages related to gnksa correctness\n"
+#~ "  --debug-trace    Print debugging messages when entering/leaving "
+#~ "functions\n"
+#~ "  --debug-lock     Print debugging messages related to threaded gui "
+#~ "locks\n"
+#~ "  --debug-object   Print debugging messages related to refcounted "
+#~ "objects\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "  --version        Udskriver Pans versionsnummer\n"
+#~ "  --help           Udskriver denne meddelelse og afslutter\n"
+#~ "  --debug          Slår de almindeligste og nyttige flag til for\n"
+#~ "                   en fejlrapport\n"
+#~ "\n"
+#~ "  --mute           Fejlsøgningsværktøj sender nye postninger til\n"
+#~ "                   konsollen, ikke serveren\n"
+#~ "  --debug-cache    Udskriv fejlsøgningsmeddelelser for artikelcachen\n"
+#~ "  --debug-sockets  Udskriv fejlsøgningsmeddelelser ved samtale med\n"
+#~ "                   nyhedsgruppeserveren\n"
+#~ "  --debug-queue    Udskriv fejlsøgningsmeddelelser som er relaterede\n"
+#~ "                   til håndtering af opgaver\n"
+#~ "  --debug-decode   Udskriv fejlsøgningsmeddelelser som er relaterede\n"
+#~ "                   til afkodning af bilag\n"
+#~ "  --debug-newsrc   Udskriv fejlsøgningsmeddelelser som er relaterede\n"
+#~ "                   til .newsrc-filer\n"
+#~ "  --debug-gnksa    Udskriv fejlsøgningsmeddelelser som er relaterede\n"
+#~ "                   til gnksa-korrekthed\n"
+#~ "  --debug-trace    Udskriv fejlsøgningsmeddelelser ved indgang i/afgang "
+#~ "fra\n"
+#~ "                   funktioner\n"
+#~ "  --debug-lock     Udskriv fejlsøgningsmeddelelser som er relaterede\n"
+#~ "                   til låse for trådet brugergrænseflade\n"
+#~ "  --debug-object   Udskriv fejlsøgningsmeddelelser som er relaterede\n"
+#~ "                   til referencetællende objekter\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "Pan appears to have crashed or been killed the last time it was run.  Do "
+#~ "you want to revert to the last session's task list?"
+#~ msgstr ""
+#~ "Pan ser ud til at være gået ned eller være blevet dræbt sidste gang det "
+#~ "blev kørt. Vil du gå tilbage til den seneste sessions opgaveliste?"
+
+#~ msgid "Ma_ximum connections:"
+#~ msgstr "Ma_ksimalt antal tilslutninger:"
+
+#~ msgid "Maximum task retr_ies:"
+#~ msgstr "Maksimalt antal om_forsøg af opgaver:"
+
+#~ msgid "Do_wnload directory:"
+#~ msgstr "H_entningskatalog:"
+
+#~ msgid "_Start Pan in online mode"
+#~ msgstr "_Start Pan i tilsluttet tilstand"
+
+#~ msgid "Message _Body:"
+#~ msgstr "Meddelelses_tekst:"
+
+#~ msgid "Message Body (_Monospace):"
+#~ msgstr "Meddelelsestekst (_fast bredde):"
+
+#~ msgid "Quoted Text _1:"
+#~ msgstr "Citeret tekst _1:"
+
+#~ msgid "Appea_rance"
+#~ msgstr "_Udseende"
+
+#~ msgid "Displa_y"
+#~ msgstr "_Visning"
+
+#~ msgid "_Tasks"
+#~ msgstr "_Opgaver"
+
+#~ msgid "Cach_e"
+#~ msgstr "_Cache"
+
+#~ msgid "_Mail"
+#~ msgstr "_E-post"
+
+#~ msgid "Unable to connect to server %s: %d"
+#~ msgstr "Kan ikke tilslutte til serveren %s: %d"
+
+#~ msgid "No server address specified in the Preferences"
+#~ msgstr "Ingen serveradresse angivet i indstillingerne"
+
+#~ msgid "Connect Failure"
+#~ msgstr "Forbindelsesfejl"
+
+#~ msgid "Sending 'stay connected' request"
+#~ msgstr "Sender 'forbliv forbundet'-anmodning"
+
+#~ msgid "_Reserve a connection for reading articles"
+#~ msgstr "_Reservér en tilslutning for læsning af artikler"
+
+#~ msgid "Aborting"
+#~ msgstr "Afbryder"
+
+#~ msgid "???"
+#~ msgstr "???"
+
+#~ msgid "%s (%d tries)"
+#~ msgstr "%s (%d forsøg)"
+
+#~ msgid "Restart selected stopped/failed Task(s)"
+#~ msgstr "Genstart markerede stoppede/mislykkede opgaver"
+
+#~ msgid "Unable to save \"%s\": the article(s) couldn't be downloaded."
+#~ msgstr "Kan ikke gemme \"%s\": artiklerne kunne ikke hentes."

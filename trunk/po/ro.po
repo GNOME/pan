@@ -1,0 +1,4997 @@
+# Traducerea pan în română
+# Copyright (C) 2003 Free Software Foundation, Inc.
+# This file is distributed under the same license as the pan package.
+# Alina Valea <avalea@home.ro>, 2003.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: pan 0.14.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-18 10:27-0500\n"
+"PO-Revision-Date: 2004-05-09 21:42+0300\n"
+"Last-Translator: Alina Valea <avalea@home.ro>\n"
+"Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: pan.desktop.in.h:1
+msgid "Pan Newsreader"
+msgstr "Cititorul de ştiri Pan "
+
+#: pan.desktop.in.h:2
+msgid "Read News from Usenet"
+msgstr "Citeşte articole de pe Usenet"
+
+#: pan/data-impl/data-impl.cc:82
+#, c-format
+msgid "Loaded data backend in %.1f seconds"
+msgstr ""
+
+#: pan/data-impl/data-io.cc:220 pan/data-impl/data-io.cc:241
+#: pan/data/article-cache.cc:236 pan/data/article-cache.cc:246
+#: pan/gui/post-ui.cc:1261
+#, fuzzy, c-format
+msgid "Unable to save \"%s\" %s"
+msgstr "Nu pot defini grupul \"%*.*s\": %s"
+
+#: pan/data-impl/groups.cc:92
+#, fuzzy, c-format
+msgid "Skipping newsrc file for server \"%s\""
+msgstr "Descarc %d grupuri noi de la serverul \"%s\""
+
+#: pan/data-impl/headers.cc:551
+#, fuzzy, c-format
+msgid "Expired %lu old articles from \"%s\""
+msgstr "%u articole din `%s' au expirat."
+
+#: pan/data-impl/headers.cc:558
+#, c-format
+msgid ""
+"Unsupported data version for %s headers: %d.\n"
+"Are you running an old version of Pan by accident?"
+msgstr ""
+"Versiune de date nesuportată pentru antetele \"%s\": %d.\n"
+"Rulaţi cumva o versiune mai veche de Pan?"
+
+#: pan/data-impl/headers.cc:573
+#, fuzzy, c-format
+msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
+msgstr ""
+"Am încărcat %u articole pentru grupul \"%s\" în %.1f secunde (%.0f articole/"
+"sec)"
+
+#: pan/data-impl/headers.cc:797
+#, fuzzy, c-format
+msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgstr "Am salvat %d articole în \"%s\" în %.1f secunde (%.0f articole/sec)"
+
+#: pan/data-impl/headers.cc:1089
+#, fuzzy, c-format
+msgid "Added %lu articles to %s."
+msgstr "%u articole din `%s' au expirat."
+
+#: pan/data-impl/profiles.cc:173
+#, fuzzy, c-format
+msgid "Error reading \"%s\": %s"
+msgstr "Eroare la deschiderea fişierului \"%s\": %s"
+
+#: pan/data-impl/server.cc:296
+#, fuzzy, c-format
+msgid "Error loading newsserver information: %s"
+msgstr "Eroare la procesarea comenzii \"Navigator web\": %s"
+
+#: pan/data/article-cache.cc:148
+#, fuzzy, c-format
+msgid "Error opening directory: \"%s\": %s"
+msgstr "Eroare la deschiderea directorului \"%s\": %s"
+
+#: pan/data/article-cache.cc:364 pan/general/line-reader.cc:24
+#, fuzzy, c-format
+msgid "Error opening file \"%s\" %s"
+msgstr "Eroare la deschiderea fişierului \"%s\": %s"
+
+#: pan/data/article-cache.cc:395 pan/gui/post-ui.cc:1028
+#, c-format
+msgid "Error reading file \"%s\": %s"
+msgstr "Eroare la deschiderea fişierului \"%s\": %s"
+
+#: pan/data/filter-info.cc:152
+#, fuzzy
+msgid "article doesn't have attachments"
+msgstr "Articolul nu are ataşamente complete"
+
+#: pan/data/filter-info.cc:156
+#, fuzzy
+msgid "the article has attachments"
+msgstr "Articolul nu are ataşamente"
+
+#: pan/data/filter-info.cc:160
+#, fuzzy
+msgid "the article isn't cached locally"
+msgstr "Conţinutul articolului nu se găseşte în cache-ul local"
+
+#: pan/data/filter-info.cc:164
+#, fuzzy
+msgid "the article is cached locally"
+msgstr "Conţinutul articolului se găseşte în cache-ul local."
+
+#: pan/data/filter-info.cc:168
+#, fuzzy
+msgid "the article wasn't posted by you"
+msgstr "Articolul nu a fost trimis de mine"
+
+#: pan/data/filter-info.cc:172
+#, fuzzy
+msgid "the article was posted by you"
+msgstr "Articolul a fost trimis de mine"
+
+#: pan/data/filter-info.cc:176
+#, fuzzy
+msgid "the article has been read"
+msgstr "Articolul este necitit"
+
+#: pan/data/filter-info.cc:180
+#, fuzzy
+msgid "the article hasn't been read"
+msgstr "Articolul este necitit"
+
+#: pan/data/filter-info.cc:184
+#, fuzzy, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "Articolul e mai mic de %d octeţi"
+
+#: pan/data/filter-info.cc:189
+#, fuzzy, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "Articolul e mai mic de %d octeţi"
+
+#: pan/data/filter-info.cc:194
+#, fuzzy, c-format
+msgid "the article is less than %ld lines long"
+msgstr "Articolul are mai puţin de %d linii"
+
+#: pan/data/filter-info.cc:199
+#, fuzzy, c-format
+msgid "the article is at least %ld lines long"
+msgstr "Articolul are mai puţin de %d linii"
+
+#: pan/data/filter-info.cc:204
+#, fuzzy, c-format
+msgid "the article is less than %ld days old"
+msgstr "Articolul e mai vechi de %d zile"
+
+#: pan/data/filter-info.cc:209
+#, fuzzy, c-format
+msgid "the article is at least %ld days old"
+msgstr "Articolul este _vechi de cel puţin N zile"
+
+#: pan/data/filter-info.cc:214
+#, fuzzy, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "Articolul este trimis la mai puţin de %d grupuri"
+
+#: pan/data/filter-info.cc:219
+#, fuzzy, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "Articolul a fost tr_imis către cel puţin N grupuri:"
+
+#: pan/data/filter-info.cc:224
+#, fuzzy, c-format
+msgid "the article's score is less than %ld"
+msgstr "acordă punctajul de"
+
+#: pan/data/filter-info.cc:229
+#, fuzzy, c-format
+msgid "the article's score is %ld or higher"
+msgstr "acordă punctajul de"
+
+#: pan/data/filter-info.cc:238 pan/data/filter-info.cc:248
+#, fuzzy, c-format
+msgid "%s doesn't contain \"%s\""
+msgstr "nu conţine"
+
+#: pan/data/filter-info.cc:239 pan/data/filter-info.cc:249
+#, c-format
+msgid "%s isn't \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:240 pan/data/filter-info.cc:250
+#, fuzzy, c-format
+msgid "%s doesn't begin with \"%s\""
+msgstr "nu se termină cu"
+
+#: pan/data/filter-info.cc:241 pan/data/filter-info.cc:251
+#, fuzzy, c-format
+msgid "%s doesn't end with \"%s\""
+msgstr "nu se termină cu"
+
+#: pan/data/filter-info.cc:242 pan/data/filter-info.cc:252
+#, c-format
+msgid "%s doesn't match the regex \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:264
+#, fuzzy, c-format
+msgid "%s contains \"%s\""
+msgstr "conţine"
+
+#: pan/data/filter-info.cc:265
+#, c-format
+msgid "%s is \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:266
+#, c-format
+msgid "%s begins with \"%s\""
+msgstr ""
+
+#: pan/data/filter-info.cc:267
+#, fuzzy, c-format
+msgid "%s ends with \"%s\""
+msgstr "se termină cu"
+
+#: pan/data/filter-info.cc:268
+#, fuzzy, c-format
+msgid "%s matches the regex \"%s\""
+msgstr "corespunde expresiei regulate"
+
+#: pan/data/filter-info.cc:274
+msgid "Any of these tests fail:"
+msgstr ""
+
+#: pan/data/filter-info.cc:281
+msgid "All of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:288
+msgid "None of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:295
+msgid "Any of these tests pass:"
+msgstr ""
+
+#: pan/data/scorefile.cc:299
+#, fuzzy, c-format
+msgid ""
+"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
+"'Expires: DD-MM-YYYY'."
+msgstr "aştept 'Expiră la: LL/ZZ/AAAA' sau 'Expiră la: ZZ-LL-AAAA'"
+
+#: pan/data/scorefile.cc:302
+#, c-format
+msgid "Expired old score from %*.*s, line %d"
+msgstr ""
+
+#: pan/data/scorefile.cc:373
+#, c-format
+msgid "Error reading score in %*.*s, line %d: unexpected line."
+msgstr ""
+
+#: pan/data/scorefile.cc:421
+#, c-format
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
+msgstr ""
+
+#. build the locale strings
+#: pan/general/e-util.cc:213
+msgid "%l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:214
+msgid "Today %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:215
+msgid "%a %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:216
+msgid "%b %d %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:217
+msgid "%b %d %Y"
+msgstr ""
+
+#: pan/general/e-util.cc:242
+msgid "?"
+msgstr ""
+
+#: pan/general/file-util.cc:139
+#, fuzzy, c-format
+msgid "Creating directory \"%s\""
+msgstr "Eroare la deschiderea directorului \"%s\": %s"
+
+#: pan/general/file-util.cc:142
+#, c-format
+msgid "Couldn't create directory \"%s\": %s"
+msgstr "Nu am putut crea directorul \"%s\": %s"
+
+#: pan/general/text-match.cc:210
+#, fuzzy
+msgid ""
+"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
+"fail."
+msgstr ""
+"Versiunea libpcre pe care o folosiţi nu oferă suport pentru UTF-8. Este "
+"posibil să nu puteţi folosi expresii regulate UTF-8."
+
+#: pan/general/text-match.cc:221
+#, c-format
+msgid "Can't use regular expression \"%s\": %s at position %d"
+msgstr "Nu pot folosi expresia regulată \"%s\": %s în poziţia %d"
+
+#: pan/general/text-match.cc:229
+#, c-format
+msgid "Can't use regular expression \"%s\": %s"
+msgstr "Nu pot folosi expresia regulată \"%s\": %s"
+
+#: pan/gui/actions.cc:258 pan/gui/post-ui.cc:238
+#, fuzzy
+msgid "_File"
+msgstr "/_Fişier"
+
+#: pan/gui/actions.cc:259 pan/gui/post-ui.cc:239
+#, fuzzy
+msgid "_Edit"
+msgstr "/_Editare"
+
+#: pan/gui/actions.cc:260 pan/gui/prefs-ui.cc:460
+#, fuzzy
+msgid "_Layout"
+msgstr "Aran_jare panouri"
+
+#: pan/gui/actions.cc:261
+#, fuzzy
+msgid "_Group Pane"
+msgstr "Panou cu grupuri"
+
+#: pan/gui/actions.cc:262
+#, fuzzy
+msgid "_Header Pane"
+msgstr "Panou cu antete"
+
+#: pan/gui/actions.cc:263
+#, fuzzy
+msgid "_Body Pane"
+msgstr "Panou cu conţinut"
+
+#: pan/gui/actions.cc:264
+#, fuzzy
+msgid "_View"
+msgstr "/_Vizualizare"
+
+#: pan/gui/actions.cc:265
+msgid "Character _Encoding"
+msgstr ""
+
+#: pan/gui/actions.cc:266
+#, fuzzy
+msgid "Filte_r"
+msgstr "/Filtra_re"
+
+#: pan/gui/actions.cc:267
+#, fuzzy
+msgid "_Go"
+msgstr "/_Citire"
+
+#: pan/gui/actions.cc:268
+#, fuzzy
+msgid "_Actions"
+msgstr "Acţiuni"
+
+#: pan/gui/actions.cc:269
+#, fuzzy
+msgid "_Articles"
+msgstr "/_Articole"
+
+#: pan/gui/actions.cc:270
+#, fuzzy
+msgid "_Groups"
+msgstr "Grupuri"
+
+#: pan/gui/actions.cc:271 pan/gui/actions.cc:272
+msgid "_Post"
+msgstr "_Trimite"
+
+#: pan/gui/actions.cc:273 pan/gui/save-ui.cc:202
+msgid "_Help"
+msgstr "_Ajutor"
+
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "_Read Group"
+msgstr "/Ş_terge grupul"
+
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "Read Selected Group"
+msgstr "Citeşte următorul grup necitit"
+
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "_Mark Group _Read"
+msgstr "/Marchează grupul ca c_itit"
+
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "Mark Selected Groups Read"
+msgstr "/Marchează grupul ca c_itit"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "_Delete Group's Articles"
+msgstr "/Şter_ge articolele grupului"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "Delete Selected Groups' Articles"
+msgstr "/Şter_ge articolele grupului"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New _Headers in Selected Groups"
+msgstr "Descarcă antete noi de la grupurile selecţionate"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New Headers for Selected Groups"
+msgstr "Descarcă antete noi de la grupurile selecţionate"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New _Headers in Subscribed Groups"
+msgstr "Descarcă antete noi de la grupurile abonate"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New Headers for Subscribed Groups"
+msgstr "Descarcă antete noi de la grupurile abonate"
+
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get _Headers..."
+msgstr "/Descarcă _antete noi"
+
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get Headers from Server"
+msgstr "Am descărcat %d grupuri de la serverul \"%s\""
+
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Refresh Group List"
+msgstr "Actualizez grupul \"%s\""
+
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Get a new Group list from the Server"
+msgstr "Descarc %d grupuri noi de la serverul \"%s\""
+
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "_Subscribe"
+msgstr "/A_bonează"
+
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "Subscribe to Selected Groups"
+msgstr "Grupuri abonate"
+
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "_Unsubscribe"
+msgstr "/_Dezabonează"
+
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "Unsubscribe from Selected Groups"
+msgstr "Grupuri abonate"
+
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "_Save Articles..."
+msgstr "/_Salvează ataşamentele ca..."
+
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "Save Selected Articles..."
+msgstr "Descarcă articolele selecţionate"
+
+#: pan/gui/actions.cc:286
+msgid "_Import NZB Files..."
+msgstr ""
+
+#: pan/gui/actions.cc:287
+#, fuzzy
+msgid "_Cancel Last Task"
+msgstr "Opreşte ultimul proces"
+
+#: pan/gui/actions.cc:287
+msgid "Cancel Last Task"
+msgstr "Opreşte ultimul proces"
+
+#: pan/gui/actions.cc:288
+#, fuzzy
+msgid "_Task Manager..."
+msgstr "/_Unelte/Administrator de _procese..."
+
+#: pan/gui/actions.cc:289
+msgid "_Event Log..."
+msgstr ""
+
+#: pan/gui/actions.cc:290
+#, fuzzy
+msgid "_Quit"
+msgstr "/_Editare"
+
+#: pan/gui/actions.cc:292
+#, fuzzy
+msgid "Select _All Articles"
+msgstr "/_Editare/Selectează toate articolele"
+
+#: pan/gui/actions.cc:293
+#, fuzzy
+msgid "_Deselect All Articles"
+msgstr "/_Editare/Deselectează _toate articolele"
+
+#: pan/gui/actions.cc:294
+#, fuzzy
+msgid "Add Su_bthreads to Selection"
+msgstr "/_Editare/Adaugă _sub-firele de discuţie la selecţie"
+
+#: pan/gui/actions.cc:295
+#, fuzzy
+msgid "Add _Threads to Selection"
+msgstr "/_Editare/Adaugă _firele de discuţie la selecţie"
+
+#: pan/gui/actions.cc:296
+#, fuzzy
+msgid "Add _Similar Artilces to Selection"
+msgstr "/_Editare/Adaugă _firele de discuţie la selecţie"
+
+#: pan/gui/actions.cc:297
+#, fuzzy
+msgid "Select Article _Body"
+msgstr "/_Editare/Selectează c_onţinutul articolului"
+
+#: pan/gui/actions.cc:298
+#, fuzzy
+msgid "Edit _Preferences..."
+msgstr "/_Editare/_Preferinţe..."
+
+#: pan/gui/actions.cc:299
+#, fuzzy
+msgid "Edit _Group Preferences..."
+msgstr "/_Editare/_Preferinţe..."
+
+#: pan/gui/actions.cc:300
+#, fuzzy
+msgid "Edit P_osting Profiles..."
+msgstr "/_Unelte/Identităţi..."
+
+#: pan/gui/actions.cc:301
+#, fuzzy
+msgid "Edit _News Servers..."
+msgstr "/_Unelte/_Servere de ştiri"
+
+#: pan/gui/actions.cc:303
+#, fuzzy
+msgid "Jump to _Group Tab"
+msgstr "/_Vizualizare/Afişează tabul cu _grupuri"
+
+#: pan/gui/actions.cc:304
+#, fuzzy
+msgid "Jump to _Header Tab"
+msgstr "/_Vizualizare/Afişează tabul cu _antete"
+
+#: pan/gui/actions.cc:305
+#, fuzzy
+msgid "Jump to _Body Tab"
+msgstr "/_Vizualizare/Afişează tabul cu _conţinut"
+
+#: pan/gui/actions.cc:306
+#, fuzzy
+msgid "_Rot13 Selected Text"
+msgstr "Aplică Rot13 textului selectat"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear _Header Pane"
+msgstr "Panou cu antete"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear Header Pane"
+msgstr "Panou cu antete"
+
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear _Body Pane"
+msgstr "Panou cu conţinut"
+
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear Body Pane"
+msgstr "Panou cu _conţinut"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download _Selected Article"
+msgstr "Descarc 1 articol"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download Selected Article"
+msgstr "Descarc 1 articol"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read _Selected Article"
+msgstr "Citeşte următorul articol necitit"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read Selected Article"
+msgstr "Citeşte următorul articol necitit"
+
+#: pan/gui/actions.cc:313
+#, fuzzy
+msgid "Read _More"
+msgstr "Citeşte mai mult"
+
+#: pan/gui/actions.cc:313
+msgid "Read More"
+msgstr "Citeşte mai mult"
+
+#: pan/gui/actions.cc:314
+msgid "Read _Back"
+msgstr ""
+
+#: pan/gui/actions.cc:314
+#, fuzzy
+msgid "Read Back"
+msgstr "/_Citire/Citeşte înapoi"
+
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next _Unread Group"
+msgstr "/_Citire/Următorul grup nec_itit"
+
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next Unread Group"
+msgstr "/_Citire/Următorul grup nec_itit"
+
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next _Group"
+msgstr "/_Citire/Următorul _grup"
+
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next Group"
+msgstr "/_Citire/Următorul _grup"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next _Unread Article"
+msgstr "/_Citire/Următorul articol _necitit"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next Unread Article"
+msgstr "Citeşte următorul articol necitit"
+
+#: pan/gui/actions.cc:318
+#, fuzzy
+msgid "Next _Article"
+msgstr "/_Citire/Următorul _articol"
+
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next _Watched Article"
+msgstr "/_Citire/Următorul articol u_rmărit"
+
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next Watched Article"
+msgstr "/_Citire/Următorul articol u_rmărit"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread _Thread"
+msgstr "/_Citire/Următorul fir de discuţie n_ecitit"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread Thread"
+msgstr "Citeşte următorul fir de discuţie necitit"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Threa_d"
+msgstr "/_Citire/Următorul _fir de discuţie"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Thread"
+msgstr "/_Citire/Următorul _fir de discuţie"
+
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Pre_vious Article"
+msgstr "/_Citire/Artico_lul precedent"
+
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Previous Article"
+msgstr "/_Citire/Artico_lul precedent"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous _Thread"
+msgstr "/_Citire/Firul de discuţie prece_dent"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous Thread"
+msgstr "/_Citire/Firul de discuţie prece_dent"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "_Parent Article"
+msgstr "/_Citire/Articolul _părinte"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "Parent Article"
+msgstr "/_Citire/Articolul _părinte"
+
+#: pan/gui/actions.cc:326
+#, fuzzy
+msgid "_Plonk Author"
+msgstr "/_Articole/_Ignoră articolele autorului"
+
+#: pan/gui/actions.cc:327
+#, fuzzy
+msgid "_Watch Thread"
+msgstr "/_Urmăreşte firul de discuţie"
+
+#: pan/gui/actions.cc:328
+#, fuzzy
+msgid "_Ignore Thread"
+msgstr "/_Ignoră firul de discuţie"
+
+#: pan/gui/actions.cc:329
+#, fuzzy
+msgid "View Article's S_core"
+msgstr "/_Vizualizează punctajul articolului"
+
+#: pan/gui/actions.cc:330
+#, fuzzy
+msgid "_Add a _Scoring Rule"
+msgstr "Adaugă un nou punctaj"
+
+#: pan/gui/actions.cc:331
+#, fuzzy
+msgid "Cance_l Article..."
+msgstr "Anulez articolul"
+
+#: pan/gui/actions.cc:332
+#, fuzzy
+msgid "_Supersede Article..."
+msgstr "/_Fişier/_Tipăreşte articolul..."
+
+#: pan/gui/actions.cc:333
+#, fuzzy
+msgid "_Delete Article"
+msgstr "Ş_terge articol"
+
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "_Mark Article as Read"
+msgstr "Articolul este citit"
+
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "Mark Article as Read"
+msgstr "Articolul este citit"
+
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as _Unread"
+msgstr "Articolul este necitit"
+
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as Unread"
+msgstr "Articolul este necitit"
+
+#: pan/gui/actions.cc:337
+#, fuzzy
+msgid "_Post to Newsgroup"
+msgstr "Trimite către grupul de ştiri"
+
+#: pan/gui/actions.cc:337
+msgid "Post to Newsgroup"
+msgstr "Trimite către grupul de ştiri"
+
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "_Followup to  Newsgroup"
+msgstr "/_Trimite/Trimite _răspuns..."
+
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "Followup to Newsgroup"
+msgstr "/_Trimite/Trimite _răspuns..."
+
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "_Reply to Author"
+msgstr "/_Articole/_Ignoră articolele autorului"
+
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "Reply to Author"
+msgstr "/_Articole/_Ignoră articolele autorului"
+
+#: pan/gui/actions.cc:341
+#, fuzzy
+msgid "_Pan Home Page..."
+msgstr "/A_jutor/_Pagina web Pan"
+
+#: pan/gui/actions.cc:342
+#, fuzzy
+msgid "Give _Feedback or Report a Bug..."
+msgstr "/A_jutor/_Raportează o problemă.."
+
+#: pan/gui/actions.cc:343
+msgid "_Tip Jar..."
+msgstr ""
+
+#: pan/gui/actions.cc:345 pan/gui/actions.cc:347
+#, fuzzy
+msgid "_About..."
+msgstr "/A_jutor/Despre..."
+
+#: pan/gui/actions.cc:361
+#, fuzzy
+msgid "_Thread Headers"
+msgstr "Mai multe antete"
+
+#: pan/gui/actions.cc:362
+#, fuzzy
+msgid "_Wrap Article Body"
+msgstr "/_Vizualizare/R_earanjează conţinutul articolului"
+
+#: pan/gui/actions.cc:363
+#, fuzzy
+msgid "Mute _Quoted Text"
+msgstr "/_Vizualizare/Ascun_de textul citat"
+
+#: pan/gui/actions.cc:364
+#, fuzzy
+msgid "Show All _Headers in Body Pane"
+msgstr "/_Vizualizare/Afişea_ză toate antetele în panoul cu conţinut"
+
+#: pan/gui/actions.cc:365
+#, fuzzy
+msgid "Show _Smilies as Graphics"
+msgstr "Afişează a_lertă:"
+
+#: pan/gui/actions.cc:366
+msgid "Show *Bold*, __Underlined__, and /Italic/"
+msgstr ""
+
+#: pan/gui/actions.cc:367
+msgid "Size Pictures to _Fit"
+msgstr ""
+
+#: pan/gui/actions.cc:368
+#, fuzzy
+msgid "Smooth Scrolling"
+msgstr "De_rulare continuă la viteza:"
+
+#: pan/gui/actions.cc:369
+#, fuzzy
+msgid "Use _Monospace Font"
+msgstr "Caractere mo_nospaţiate:"
+
+#: pan/gui/actions.cc:371
+#, fuzzy
+msgid "_Work Online"
+msgstr "/_Fişier/Lucrează co_nectat"
+
+#: pan/gui/actions.cc:372
+#, fuzzy
+msgid "_Tabbed Layout"
+msgstr "/_Vizualizare/Paginare cu _taburi"
+
+#: pan/gui/actions.cc:373
+#, fuzzy
+msgid "Show Group _Pane"
+msgstr "/_Vizualizare/Afişează panoul cu g_rupuri"
+
+#: pan/gui/actions.cc:374
+#, fuzzy
+msgid "Show Hea_der Pane"
+msgstr "/_Vizualizare/Afişează panoul cu a_ntete"
+
+#: pan/gui/actions.cc:375
+#, fuzzy
+msgid "Show Bod_y Pane"
+msgstr "/_Vizualizare/Afişează panoul cu c_onţinut"
+
+#: pan/gui/actions.cc:376
+msgid "Show _Toolbar"
+msgstr ""
+
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate _Names in Group Pane"
+msgstr "/_Vizualizare/_Prescurtează numele din panoul cu grupuri"
+
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate Newsgroup Names"
+msgstr "/_Vizualizare/_Prescurtează numele din panoul cu grupuri"
+
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only _Unread Articles"
+msgstr "Afişează doar articolele noi"
+
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only Unread Articles"
+msgstr "Afişează doar articolele noi"
+
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only _Cached Articles"
+msgstr "Afişează doar articolele din cache"
+
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only Cached Articles"
+msgstr "Afişează doar articolele din cache"
+
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only _Complete Articles"
+msgstr "Afişează doar articolele cu ataşamentele complete"
+
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only Complete Articles"
+msgstr "Afişează doar articolele cu ataşamentele complete"
+
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only _My Articles"
+msgstr "Afişează doar articolele mele"
+
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only Articles Posted by Me"
+msgstr "Afişează doar articolele mele"
+
+#: pan/gui/actions.cc:383
+#, fuzzy
+msgid "Match Only _Watched Articles"
+msgstr "Afişează doar articolele urmărite"
+
+#: pan/gui/actions.cc:383
+msgid "Match Only Watched Articles"
+msgstr "Afişează doar articolele urmărite"
+
+#: pan/gui/actions.cc:385
+#, fuzzy
+msgid "Match Scores of 9999 (_Watched)"
+msgstr "/Filt_rare/Afişează articolele cu punctaj 9999 (Urmărit)"
+
+#: pan/gui/actions.cc:386
+#, fuzzy
+msgid "Match Scores of 5000...9998 (_High)"
+msgstr "/Filt_rare/Afişează articolele cu punctaj între 5000 şi 9998 (Mare)"
+
+#: pan/gui/actions.cc:387
+#, fuzzy
+msgid "Match Scores of 1...4999 (Me_dium)"
+msgstr "/Filt_rare/Afişează articolele cu punctaj între 1 şi 4999 (Mediu)"
+
+#: pan/gui/actions.cc:388
+#, fuzzy
+msgid "Match Scores of 0 (_Normal)"
+msgstr "/Filt_rare/Afişează articolele cu punctaj 0 (Normal)"
+
+#: pan/gui/actions.cc:389
+#, fuzzy
+msgid "Match Scores of -9998...-1 (_Low)"
+msgstr "/Filt_rare/Afişează articolele cu punctaj între -9998 şi -1 (Mic)"
+
+#: pan/gui/actions.cc:390
+#, fuzzy
+msgid "Match Scores of -9999 (_Ignored)"
+msgstr "/Filt_rare/Afişează articolele cu punctaj -9999 (Ignorat)"
+
+#: pan/gui/actions.cc:416
+#, fuzzy
+msgid "Show Matching _Articles"
+msgstr "/Filt_rare/Afişează articolele care corespund"
+
+#: pan/gui/actions.cc:417
+#, fuzzy
+msgid "Show Matching Articles' _Threads"
+msgstr "/Filt_rare/Afişează firele de discuţie ale articolelor care corespund"
+
+#: pan/gui/actions.cc:418
+#, fuzzy
+msgid "Show Matching Articles' _Subthreads"
+msgstr ""
+"/Filt_rare/Afişează sub-firele de discuţie ale articolelor care corespund"
+
+#: pan/gui/actions.cc:435
+msgid "Baltic (ISO-8859-4)"
+msgstr ""
+
+#: pan/gui/actions.cc:436
+msgid "Baltic (ISO-8859-13)"
+msgstr ""
+
+#: pan/gui/actions.cc:437
+msgid "Baltic (Windows-1257)"
+msgstr ""
+
+#: pan/gui/actions.cc:438
+#, fuzzy
+msgid "Central European (ISO-8859-2)"
+msgstr "Central European"
+
+#: pan/gui/actions.cc:439
+#, fuzzy
+msgid "Central European (Windows-1250)"
+msgstr "Central European"
+
+#: pan/gui/actions.cc:440
+#, fuzzy
+msgid "Chinese Simplified (gb2312)"
+msgstr "Chineza simplificată"
+
+#: pan/gui/actions.cc:441
+#, fuzzy
+msgid "Chinese Traditional (big5)"
+msgstr "Chineza tradiţională"
+
+#: pan/gui/actions.cc:442
+msgid "Cyrillic (ISO-8859-5)"
+msgstr ""
+
+#: pan/gui/actions.cc:443
+msgid "Cyrillic (Windows-1251)"
+msgstr ""
+
+#: pan/gui/actions.cc:444
+#, fuzzy
+msgid "Cyrillic (KOI8-R)"
+msgstr "Chirilic"
+
+#: pan/gui/actions.cc:445
+#, fuzzy
+msgid "Cyrillic, Ukrainian (KOI8-U)"
+msgstr "Chirilic, Ucrainian"
+
+#: pan/gui/actions.cc:446
+msgid "Greek (ISO-8859-7)"
+msgstr ""
+
+#: pan/gui/actions.cc:447
+msgid "Japanese (ISO-2022-jp)"
+msgstr ""
+
+#: pan/gui/actions.cc:448
+msgid "Korean (euc-kr)"
+msgstr ""
+
+#: pan/gui/actions.cc:449
+msgid "Turkish (ISO-8859-9)"
+msgstr ""
+
+#: pan/gui/actions.cc:450
+msgid "Western (ISO-8859-1)"
+msgstr ""
+
+#: pan/gui/actions.cc:451
+#, fuzzy
+msgid "Western, New (ISO-8859-15)"
+msgstr "Occidental, Nou"
+
+#: pan/gui/actions.cc:452
+msgid "Western (Windows-1252)"
+msgstr ""
+
+#: pan/gui/actions.cc:453
+#, fuzzy
+msgid "Unicode (UTF-8)"
+msgstr "Unicode, UTF-8"
+
+#: pan/gui/body-pane.cc:855
+#, c-format
+msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
+msgstr ""
+
+#: pan/gui/body-pane.cc:856
+#, c-format
+msgid "Attachment not shown: MIME type %s/%s\n"
+msgstr ""
+
+#: pan/gui/body-pane.cc:936 pan/gui/header-pane.cc:1167
+#: pan/gui/header-pane.cc:1502 pan/gui/prefs-ui.cc:322
+#: pan/gui/score-add-ui.cc:136
+msgid "Subject"
+msgstr "Subiect"
+
+#: pan/gui/body-pane.cc:938
+#, fuzzy
+msgid "From"
+msgstr "De la"
+
+#: pan/gui/body-pane.cc:940 pan/gui/header-pane.cc:1579 pan/gui/log-ui.cc:206
+#: pan/gui/prefs-ui.cc:318
+msgid "Date"
+msgstr "Data"
+
+#: pan/gui/body-pane.cc:947
+msgid "Newsgroups"
+msgstr "Grupuri de ştiri"
+
+#: pan/gui/body-pane.cc:952
+#, fuzzy
+msgid "Followup-To"
+msgstr "Continuare la"
+
+#: pan/gui/body-pane.cc:962
+msgid "Reply-To"
+msgstr "Răspunsuri la"
+
+#: pan/gui/body-pane.cc:988
+msgid " from "
+msgstr ""
+
+#: pan/gui/body-pane.cc:990
+msgid " at "
+msgstr ""
+
+#: pan/gui/dl-headers-ui.cc:102
+#, fuzzy
+msgid "Pan: "
+msgstr "Pan: Reguli"
+
+#: pan/gui/dl-headers-ui.cc:128
+#, fuzzy
+msgid "Get the last N _days' headers: "
+msgstr "Descarcă antetele _recente"
+
+#: pan/gui/dl-headers-ui.cc:136
+#, fuzzy
+msgid "Get _new headers"
+msgstr "/Descarcă _antete noi"
+
+#: pan/gui/dl-headers-ui.cc:140
+#, fuzzy
+msgid "Get _all headers"
+msgstr "Descarcă to_ate antetele"
+
+#: pan/gui/dl-headers-ui.cc:144
+#, fuzzy
+msgid "Get the _latest N headers: "
+msgstr "Descarcă antetele _recente"
+
+#: pan/gui/group-pane.cc:608
+#, fuzzy
+msgid "Group Name"
+msgstr "Panou cu grupuri"
+
+#: pan/gui/group-pane.cc:700
+#, c-format
+msgid " (%lu)"
+msgstr ""
+
+#: pan/gui/group-pane.cc:829 pan/gui/header-pane.cc:1668
+#, fuzzy
+msgid "Clear the Filter"
+msgstr "Selectare filtru:"
+
+#: pan/gui/group-pane.cc:857
+#, fuzzy
+msgid "Subscribed Groups"
+msgstr "Grupuri abonate"
+
+#: pan/gui/group-pane.cc:858
+#, fuzzy
+msgid "Other Groups"
+msgstr "Grupuri noi"
+
+#: pan/gui/group-pane.cc:900
+#, fuzzy
+msgid "Name"
+msgstr "_Nume:"
+
+#: pan/gui/group-prefs-dialog.cc:101
+#, fuzzy
+msgid "No Profiles defined in Edit|Posting Profiles."
+msgstr "/_Unelte/Identităţi..."
+
+#: pan/gui/group-prefs-dialog.cc:129
+#, fuzzy
+msgid "Pan: Group Preferences"
+msgstr "Preferinţe Pan"
+
+#: pan/gui/group-prefs-dialog.cc:143
+#, fuzzy, c-format
+msgid "Properties for %s"
+msgstr "Proprietăţile pentru \"%s\""
+
+#: pan/gui/group-prefs-dialog.cc:147
+#, fuzzy
+msgid "Character _encoding:"
+msgstr "Set de _caractere:"
+
+#: pan/gui/group-prefs-dialog.cc:148
+#, fuzzy
+msgid "Directory for Saving Attachments"
+msgstr "Directorul pentru salvarea ataşamentelor"
+
+#: pan/gui/group-prefs-dialog.cc:153
+#, fuzzy
+msgid "Directory for _saving attachments:"
+msgstr "Directorul pentru salvarea ataşamentelor"
+
+#: pan/gui/group-prefs-dialog.cc:155
+#, fuzzy
+msgid "Posting _profile:"
+msgstr "Pan: Identitate"
+
+#: pan/gui/gui.cc:236
+msgid "Open the Task Manager"
+msgstr "Deschide administratorul de procese"
+
+#: pan/gui/gui.cc:257
+#, fuzzy
+msgid "Open the Event Log"
+msgstr "Deschide jurnalul de stare"
+
+#: pan/gui/gui.cc:481
+msgid "Save Attachments"
+msgstr "Salvează ataşamentele"
+
+#: pan/gui/gui.cc:529
+msgid "Import NZB File(s)"
+msgstr ""
+
+#: pan/gui/gui.cc:605
+msgid ""
+"Pan is now offline. Please ensure that space is available, then use File|"
+"Work Online to continue."
+msgstr ""
+
+#: pan/gui/gui.cc:730 pan/gui/gui.cc:1092 pan/gui/gui.cc:1296
+msgid "Pan"
+msgstr ""
+
+#: pan/gui/gui.cc:902
+#, fuzzy
+msgid "Unable to supersede article."
+msgstr "/_Fişier/_Tipăreşte articolul..."
+
+#: pan/gui/gui.cc:903 pan/gui/gui.cc:970
+msgid "The article doesn't match any of your posting profiles."
+msgstr ""
+
+#: pan/gui/gui.cc:944
+msgid "Revise and send this article to replace the old one."
+msgstr ""
+
+#: pan/gui/gui.cc:945 pan/gui/gui.cc:1005
+msgid "Be patient!  It will take time for your changes to take effect."
+msgstr ""
+
+#: pan/gui/gui.cc:969
+#, fuzzy
+msgid "Unable to cancel article."
+msgstr "Nu pot crea firul de discuţie: %s"
+
+#: pan/gui/gui.cc:1004
+msgid "Send this article to ask your server to cancel your other one."
+msgstr ""
+
+#: pan/gui/gui.cc:1095 pan/gui/gui.cc:1115
+#, fuzzy
+msgid "Copyright © 2002-2006 Charles Kerr"
+msgstr "Copyright (C) 2003 Charles Kerr"
+
+#: pan/gui/gui.cc:1100
+msgid "translator-credits"
+msgstr ""
+
+#: pan/gui/gui.cc:1211
+#, fuzzy
+msgid "_1. Group Pane"
+msgstr "Panou cu grupuri"
+
+#: pan/gui/gui.cc:1212
+#, fuzzy
+msgid "_2. Header Pane"
+msgstr "Panou cu antete"
+
+#: pan/gui/gui.cc:1213
+#, fuzzy
+msgid "_3. Body Pane"
+msgstr "Panou cu conţinut"
+
+#: pan/gui/gui.cc:1298
+#, fuzzy, c-format
+msgid "Pan: %s"
+msgstr "Pan: Reguli"
+
+#: pan/gui/gui.cc:1415
+msgid "Offline"
+msgstr "Deconectat"
+
+#: pan/gui/gui.cc:1418
+#, c-format
+msgid "Closing %d connections"
+msgstr "Închid %d conexiuni"
+
+#: pan/gui/gui.cc:1420 pan/gui/gui.cc:1450
+msgid "No Connections"
+msgstr "Nici o conexiune"
+
+#: pan/gui/gui.cc:1424
+msgid "Connecting"
+msgstr "Conectare în curs"
+
+#: pan/gui/gui.cc:1437
+#, c-format
+msgid "%s: %d idle, %d active @ %.1f KiBps"
+msgstr ""
+
+#: pan/gui/gui.cc:1493
+msgid "No Tasks"
+msgstr "Nici un proces"
+
+#: pan/gui/gui.cc:1496
+#, c-format
+msgid "Tasks: %u/%u"
+msgstr "Procese: %u/%u"
+
+#: pan/gui/gui.cc:1497
+#, c-format
+msgid "%u Tasks Running, %u Tasks Total"
+msgstr "%u procese în execuţie, %u procese în total"
+
+#: pan/gui/gui.cc:1546
+msgid ""
+"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
+"then use \"File|Work Online\" to continue."
+msgstr ""
+
+#. less than a kibi...
+#: pan/gui/header-pane.cc:363 pan/gui/task-pane.cc:208
+#, c-format
+msgid "%lu B"
+msgstr ""
+
+#: pan/gui/header-pane.cc:365
+#, c-format
+msgid "%.1f KiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:367
+#, c-format
+msgid "%.1f MiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:369
+#, c-format
+msgid "%.1f GiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:1166
+msgid "Subject or Author"
+msgstr ""
+
+#: pan/gui/header-pane.cc:1168 pan/gui/header-pane.cc:1534
+#: pan/gui/prefs-ui.cc:316 pan/gui/score-add-ui.cc:137
+msgid "Author"
+msgstr "Autor"
+
+#: pan/gui/header-pane.cc:1169
+#, fuzzy
+msgid "Message-ID"
+msgstr "Identificator _mesaj"
+
+#: pan/gui/header-pane.cc:1519 pan/gui/prefs-ui.cc:320
+msgid "Score"
+msgstr "Punctaj"
+
+#: pan/gui/header-pane.cc:1549 pan/gui/prefs-ui.cc:319
+msgid "Lines"
+msgstr "Număr linii"
+
+#: pan/gui/header-pane.cc:1564 pan/gui/prefs-ui.cc:317
+msgid "Bytes"
+msgstr ""
+
+#: pan/gui/log-ui.cc:85
+msgid "Save Event List"
+msgstr ""
+
+#: pan/gui/log-ui.cc:167
+#, fuzzy
+msgid "Pan: Events"
+msgstr "Pan: Servere"
+
+#: pan/gui/log-ui.cc:216
+msgid "Message"
+msgstr "Mesaj"
+
+#: pan/gui/pan.cc:120
+msgid ""
+"Thank you for trying Pan!\n"
+" \n"
+"To start newsreading, first Add a Server."
+msgstr ""
+
+#: pan/gui/pan.cc:141
+msgid ""
+"General Options\n"
+"  -h, --help               Show this usage page.\n"
+"\n"
+"URL Options\n"
+"  news:message-id          Show the specified article.\n"
+"  news:group.name          Show the specified newsgroup.\n"
+"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"\n"
+"NZB Batch Options\n"
+"  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
+"  -o path, --output=path   Path to save attachments listed in the nzb "
+"files.\n"
+"  --nogui                  Only show console output, not the download "
+"queue.\n"
+msgstr ""
+
+#: pan/gui/pan.cc:198
+msgid "Error: nzb arguments used without nzb files."
+msgstr ""
+
+#: pan/gui/pan.cc:203
+msgid "Error: --nogui used without nzb files or news:message-id."
+msgstr ""
+
+#: pan/gui/pan.cc:207
+#, fuzzy, c-format
+msgid "Pan %s started"
+msgstr "Pan %s a pornit"
+
+#: pan/gui/pan.cc:223
+msgid "Please configure Pan's news servers before using it as an nzb client."
+msgstr ""
+
+#: pan/gui/post-ui.cc:86
+#, fuzzy, c-format
+msgid "Error setting spellchecker: %s"
+msgstr "Eroare la scrierea soclului %s"
+
+#: pan/gui/post-ui.cc:95
+msgid ""
+"<b>Spellchecker not found!</b>\n"
+" \n"
+"Was this copy of Pan compiled with GtkSpell enabled?"
+msgstr ""
+
+#: pan/gui/post-ui.cc:240
+#, fuzzy
+msgid "_Profile"
+msgstr "Identitate"
+
+#: pan/gui/post-ui.cc:241
+#, fuzzy
+msgid "Character Encoding"
+msgstr "Set de _caractere:"
+
+#: pan/gui/post-ui.cc:242
+#, fuzzy
+msgid "Set Editor"
+msgstr "Editor"
+
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "_Send Article"
+msgstr "/_Citire/Articolul _părinte"
+
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "Send Article Now"
+msgstr "Trimite acum"
+
+#: pan/gui/post-ui.cc:245
+#, fuzzy
+msgid "Sa_ve Draft"
+msgstr "Salvez articolele"
+
+#: pan/gui/post-ui.cc:245
+msgid "Save as a Draft for Future Posting"
+msgstr ""
+
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "_Open Draft..."
+msgstr "/_Citeşte articol"
+
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "Open an Article Draft"
+msgstr "/_Citeşte articol"
+
+#: pan/gui/post-ui.cc:247
+msgid "Wrap _Now"
+msgstr ""
+
+#: pan/gui/post-ui.cc:247
+#, fuzzy
+msgid "Wrap the Article Body to 80 Columns"
+msgstr "/_Vizualizare/R_earanjează conţinutul articolului"
+
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "_Close"
+msgstr "Culori"
+
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "Close Window"
+msgstr "Închide fereastra de jurnal."
+
+#: pan/gui/post-ui.cc:249
+msgid "Cu_t"
+msgstr ""
+
+#: pan/gui/post-ui.cc:249
+#, fuzzy
+msgid "Cut Text"
+msgstr "Text citat:"
+
+#: pan/gui/post-ui.cc:250
+msgid "_Copy"
+msgstr ""
+
+#: pan/gui/post-ui.cc:250
+#, fuzzy
+msgid "Copy Text"
+msgstr "Rearanjează text"
+
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "_Paste"
+msgstr "_Trimite"
+
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "Paste Text"
+msgstr "Salvează te_xt"
+
+#: pan/gui/post-ui.cc:252
+#, fuzzy
+msgid "_Rot13"
+msgstr "Aplică Rot13"
+
+#: pan/gui/post-ui.cc:252
+msgid "Rot13 Selected Text"
+msgstr "Aplică Rot13 textului selectat"
+
+#: pan/gui/post-ui.cc:253
+#, fuzzy
+msgid "Run _Editor"
+msgstr "Editor"
+
+#: pan/gui/post-ui.cc:254
+msgid "_Manage Editor List..."
+msgstr ""
+
+#: pan/gui/post-ui.cc:255
+#, fuzzy
+msgid "Manage Posting Pr_ofiles..."
+msgstr "/_Unelte/Identităţi..."
+
+#: pan/gui/post-ui.cc:260
+#, fuzzy
+msgid "_Wrap Text"
+msgstr "Rearanjează text"
+
+#: pan/gui/post-ui.cc:261
+msgid "Remember _Charset for This Group"
+msgstr ""
+
+#: pan/gui/post-ui.cc:262
+msgid "Check _Spelling"
+msgstr ""
+
+#: pan/gui/post-ui.cc:317 pan/gui/post-ui.cc:318 pan/gui/post-ui.cc:319
+msgid "Baltic"
+msgstr "Baltic"
+
+#: pan/gui/post-ui.cc:320 pan/gui/post-ui.cc:321
+msgid "Central European"
+msgstr "Central European"
+
+#: pan/gui/post-ui.cc:322
+msgid "Chinese Simplified"
+msgstr "Chineza simplificată"
+
+#: pan/gui/post-ui.cc:323
+msgid "Chinese Traditional"
+msgstr "Chineza tradiţională"
+
+#: pan/gui/post-ui.cc:324 pan/gui/post-ui.cc:325 pan/gui/post-ui.cc:326
+msgid "Cyrillic"
+msgstr "Chirilic"
+
+#: pan/gui/post-ui.cc:327
+msgid "Cyrillic, Ukrainian"
+msgstr "Chirilic, Ucrainian"
+
+#: pan/gui/post-ui.cc:328
+msgid "Greek"
+msgstr "Grec"
+
+#: pan/gui/post-ui.cc:329
+msgid "Japanese"
+msgstr "Japonez"
+
+#: pan/gui/post-ui.cc:330
+msgid "Korean"
+msgstr "Coreean"
+
+#: pan/gui/post-ui.cc:331
+msgid "Turkish"
+msgstr "Turc"
+
+#: pan/gui/post-ui.cc:332 pan/gui/post-ui.cc:334
+msgid "Western"
+msgstr "Occidental"
+
+#: pan/gui/post-ui.cc:333
+msgid "Western, New"
+msgstr "Occidental, Nou"
+
+#: pan/gui/post-ui.cc:335
+msgid "Unicode, UTF-8"
+msgstr "Unicode, UTF-8"
+
+#: pan/gui/post-ui.cc:431
+#, fuzzy, c-format
+msgid "Error loading post.ui: \"%s\""
+msgstr "Eroare la citirea soclului %s"
+
+#: pan/gui/post-ui.cc:502
+msgid "Manage Editor List"
+msgstr ""
+
+#: pan/gui/post-ui.cc:509
+#, fuzzy
+msgid "Editors"
+msgstr "Editor"
+
+#: pan/gui/post-ui.cc:609
+msgid "Your changes will be lost!"
+msgstr ""
+
+#: pan/gui/post-ui.cc:610
+msgid "Close this window and lose your changes?"
+msgstr ""
+
+#: pan/gui/post-ui.cc:647
+msgid "There were problems with this post."
+msgstr ""
+
+#: pan/gui/post-ui.cc:649
+#, fuzzy
+msgid "Go Back"
+msgstr "/_Citire/Citeşte înapoi"
+
+#: pan/gui/post-ui.cc:651
+msgid "Post Anyway"
+msgstr ""
+
+#: pan/gui/post-ui.cc:662
+#, fuzzy
+msgid "Go _Online"
+msgstr "Pan este conectat"
+
+#: pan/gui/post-ui.cc:834
+msgid ""
+"No posting server is set for this posting profile.\n"
+"Please edit the profile via Edit|Manage Posting Profiles."
+msgstr ""
+
+#: pan/gui/post-ui.cc:867
+#, fuzzy
+msgid "Pan is Offline."
+msgstr "Pan este deconectat"
+
+#: pan/gui/post-ui.cc:868
+msgid "Go online to post the article?"
+msgstr ""
+
+#. *
+#. ***  Pop up a ``Posting'' Dialog...
+#. *
+#: pan/gui/post-ui.cc:881
+#, fuzzy
+msgid "Posting Article"
+msgstr "Trimit articolul \"%s\""
+
+#: pan/gui/post-ui.cc:887
+msgid "Posting..."
+msgstr ""
+
+#: pan/gui/post-ui.cc:938
+#, fuzzy
+msgid "Error opening temporary file"
+msgstr "Eroare la deschiderea fişierului temporar: \"%s\""
+
+#: pan/gui/post-ui.cc:958
+#, c-format
+msgid "Error writing article to temporary file: %s"
+msgstr "Eroare la salvarea articolului în fişierul temporar: %s"
+
+#: pan/gui/post-ui.cc:977
+#, fuzzy, c-format
+msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
+msgstr "Eroare la procesarea comenzii \"editor extern\": %s"
+
+#: pan/gui/post-ui.cc:1015
+#, c-format
+msgid "Error starting external editor: %s"
+msgstr "Eroare la pornirea editorului extern: %s"
+
+#: pan/gui/post-ui.cc:1070
+#, fuzzy
+msgid "Open Draft Article"
+msgstr "/_Citeşte articol"
+
+#: pan/gui/post-ui.cc:1233
+#, fuzzy
+msgid "Save Draft Article"
+msgstr "Salvez articolele"
+
+#: pan/gui/post-ui.cc:1390
+#, c-format
+msgid "Couldn't read signature file \"%s\": %s"
+msgstr "Nu am putut citi fişierul cu semnătura \"%s\": %s"
+
+#: pan/gui/post-ui.cc:1411
+#, fuzzy, c-format
+msgid "Couldn't parse signature command \"%s\": %s"
+msgstr "Nu am putut citi fişierul cu semnătura \"%s\": %s"
+
+#: pan/gui/post-ui.cc:1448
+#, fuzzy
+msgid "Couldn't convert signature to UTF-8."
+msgstr ""
+"Nu am putut converti fişierul cu semnătura '%s' la UTF-8. Semnătura trebuie "
+"să fie în '%s'."
+
+#: pan/gui/post-ui.cc:1790
+#, fuzzy
+msgid "Post Article"
+msgstr "_Articol"
+
+#: pan/gui/post-ui.cc:1812
+#, fuzzy
+msgid "F_rom"
+msgstr "De la"
+
+#: pan/gui/post-ui.cc:1819
+#, fuzzy
+msgid "_Subject"
+msgstr "_Subiect"
+
+#: pan/gui/post-ui.cc:1825
+#, fuzzy
+msgid "_Newsgroups"
+msgstr "/_Grupuri"
+
+#: pan/gui/post-ui.cc:1832
+#, fuzzy
+msgid "_Mail To"
+msgstr "Trimite mail către"
+
+#: pan/gui/post-ui.cc:1842
+msgid "One header per line, in the form HeaderName: Value"
+msgstr ""
+
+#: pan/gui/post-ui.cc:1845
+#, fuzzy
+msgid "_More Headers"
+msgstr "Mai multe antete"
+
+#: pan/gui/post-ui.cc:1867 pan/gui/profiles-dialog.cc:398
+#, c-format
+msgid "On %d, %n wrote:"
+msgstr "În %d, %n a scris:"
+
+#: pan/gui/profiles-dialog.cc:102
+#, fuzzy
+msgid "Posting Profile"
+msgstr "Pan: Identitate"
+
+#: pan/gui/profiles-dialog.cc:110
+msgid "Profile Information"
+msgstr "Informaţii despre identitate"
+
+#: pan/gui/profiles-dialog.cc:114
+msgid "_Profile Name:"
+msgstr "_Nume:"
+
+#: pan/gui/profiles-dialog.cc:117
+msgid "Required Information"
+msgstr "Informaţii obligatorii"
+
+#: pan/gui/profiles-dialog.cc:121
+msgid "_Full Name:"
+msgstr "Nume _complet:"
+
+#: pan/gui/profiles-dialog.cc:124
+msgid "_Email Address:"
+msgstr "Adresă _email:"
+
+#: pan/gui/profiles-dialog.cc:126
+#, fuzzy
+msgid "_Post Articles via:"
+msgstr "_Articol"
+
+#: pan/gui/profiles-dialog.cc:129
+#, fuzzy
+msgid "Signature"
+msgstr "Fişier cu _semnătură:"
+
+#: pan/gui/profiles-dialog.cc:132
+#, fuzzy
+msgid "_Use a Signature"
+msgstr "Fişier cu _semnătură:"
+
+#: pan/gui/profiles-dialog.cc:136
+#, fuzzy
+msgid "Signature File"
+msgstr "Selectaţi fişierul cu semnătura"
+
+#: pan/gui/profiles-dialog.cc:139
+#, fuzzy
+msgid "_Signature:"
+msgstr "Fişier cu _semnătură:"
+
+#: pan/gui/profiles-dialog.cc:144
+#, fuzzy
+msgid "Text File"
+msgstr "/_Citire/Următorul _articol"
+
+#: pan/gui/profiles-dialog.cc:146
+#, fuzzy
+msgid "Text"
+msgstr "Text:"
+
+#: pan/gui/profiles-dialog.cc:148
+#, fuzzy
+msgid "Command"
+msgstr "Comandă de tipărire:"
+
+#: pan/gui/profiles-dialog.cc:158
+#, fuzzy
+msgid "Signature _Type:"
+msgstr "Fişier cu _semnătură:"
+
+#: pan/gui/profiles-dialog.cc:161
+msgid "Optional Information"
+msgstr "Informaţii opţionale"
+
+#: pan/gui/profiles-dialog.cc:169
+#, c-format
+msgid ""
+"%i for Message-ID\n"
+"%a for Author and Address\n"
+"%n for Author name\n"
+"%d for Date"
+msgstr ""
+"%i pentru identificator mesaj\n"
+"%a pentru autor şi adresă\n"
+"%n pentru numele autorului\n"
+"%d pentru dată"
+
+#: pan/gui/profiles-dialog.cc:170
+msgid "_Attribution:"
+msgstr "_Atribuire:"
+
+#: pan/gui/profiles-dialog.cc:190
+msgid ""
+"Extra headers to be included in your posts, such as\n"
+"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
+"Organization: Your Organization"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:199
+#, fuzzy
+msgid "E_xtra Headers:"
+msgstr "Antete suplimentare"
+
+#: pan/gui/profiles-dialog.cc:253
+#, fuzzy
+msgid "Invalid email address."
+msgstr "Adresă incorectă \"%s\""
+
+#: pan/gui/profiles-dialog.cc:254
+msgid "Please use an address of the form joe@somewhere.org"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:399
+msgid "New Profile"
+msgstr "Identitate nouă"
+
+#: pan/gui/profiles-dialog.cc:442
+#, fuzzy
+msgid "Posting Profiles"
+msgstr "/_Unelte/Identităţi..."
+
+#: pan/gui/profiles-dialog.cc:458
+#, fuzzy
+msgid "Profiles"
+msgstr "Identitate"
+
+#: pan/gui/profiles-dialog.cc:482
+#, fuzzy
+msgid "Add a New Profile"
+msgstr "Adaugă o nouă identitate"
+
+#: pan/gui/profiles-dialog.cc:493
+msgid "Edit the selected profile"
+msgstr "Editează datele din identitatea selectată"
+
+#: pan/gui/profiles-dialog.cc:499
+msgid "Remove the selected profile"
+msgstr "Şterge identitatea selectată"
+
+#: pan/gui/prefs.cc:320
+#, fuzzy, c-format
+msgid "Couldn't parse %s color \"%s\""
+msgstr "Nu am putut procesa semnătura \"%s\""
+
+#: pan/gui/prefs-ui.cc:159
+#, fuzzy
+msgid "Use GNOME Preferences"
+msgstr "Preferinţe Pan"
+
+#: pan/gui/prefs-ui.cc:160
+#, fuzzy
+msgid "Use KDE Preferences"
+msgstr "Referinţe"
+
+#: pan/gui/prefs-ui.cc:161
+#, fuzzy
+msgid "Use OS/X Preferences"
+msgstr "Referinţe"
+
+#: pan/gui/prefs-ui.cc:162
+#, fuzzy
+msgid "Use Windows Preferences"
+msgstr "Preferinţe Pan"
+
+#: pan/gui/prefs-ui.cc:163
+#, fuzzy
+msgid "Custom Command:"
+msgstr "Comandă de tipărire:"
+
+#: pan/gui/prefs-ui.cc:315
+#, fuzzy
+msgid "Action"
+msgstr "Acţiuni"
+
+#: pan/gui/prefs-ui.cc:321
+#, fuzzy
+msgid "State"
+msgstr "Stare"
+
+#: pan/gui/prefs-ui.cc:354
+msgid "Enabled"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:358
+#, fuzzy
+msgid "Column Name"
+msgstr "Coloana"
+
+#: pan/gui/prefs-ui.cc:392
+#, fuzzy
+msgid "Pan: Preferences"
+msgstr "Preferinţe Pan"
+
+#: pan/gui/prefs-ui.cc:404
+msgid "Mouse"
+msgstr "Mouse"
+
+#: pan/gui/prefs-ui.cc:406
+#, fuzzy
+msgid "Single-click activates, rather than selects, _groups"
+msgstr "Single-clic_k selectează în loc să descarce grupurile"
+
+#: pan/gui/prefs-ui.cc:408
+#, fuzzy
+msgid "Single-click activates, rather than selects, _articles"
+msgstr "Single-clic_k selectează în loc să descarce _antetele"
+
+#: pan/gui/prefs-ui.cc:411
+#, fuzzy
+msgid "Groups"
+msgstr "Grupuri"
+
+#: pan/gui/prefs-ui.cc:413
+#, fuzzy
+msgid "Get new headers in subscribed groups on _startup"
+msgstr "Descarcă antete noi de la grupurile abonate"
+
+#: pan/gui/prefs-ui.cc:415
+#, fuzzy
+msgid "Get new headers when _entering group"
+msgstr "Descarcă antete noi la accesarea unui _grup"
+
+#: pan/gui/prefs-ui.cc:417
+#, fuzzy
+msgid "Mark entire group _read when leaving group"
+msgstr "La părăsirea grupului, _marchează articolele grupului ca citite"
+
+#: pan/gui/prefs-ui.cc:420
+#, fuzzy
+msgid "Articles"
+msgstr "/_Articole"
+
+#: pan/gui/prefs-ui.cc:421
+msgid "Space selects next article, not next unread"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:424
+#, fuzzy
+msgid "_Behavior"
+msgstr "Com_portament"
+
+#: pan/gui/prefs-ui.cc:428
+msgid "Pane Layout"
+msgstr "Aranjare panouri"
+
+#: pan/gui/prefs-ui.cc:444
+msgid "Tasks"
+msgstr "Procese"
+
+#: pan/gui/prefs-ui.cc:447
+msgid "1=Groups, 2=Headers, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:449
+msgid "1=Groups, 2=Body, 3=Headers"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:451
+msgid "1=Headers, 2=Groups, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:453
+msgid "1=Headers, 2=Body, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:455
+msgid "1=Body, 2=Groups, 3=Headers"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:457
+msgid "1=Body, 2=Headers, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:464
+#, fuzzy
+msgid "Header Pane Columns"
+msgstr "Panou cu antete"
+
+#: pan/gui/prefs-ui.cc:468
+#, fuzzy
+msgid "Threads"
+msgstr "Fire de discuţie _citite:"
+
+#: pan/gui/prefs-ui.cc:470
+#, fuzzy
+msgid "E_xpand all threads when entering group"
+msgstr "Descarcă antete noi la accesarea unui _grup"
+
+#: pan/gui/prefs-ui.cc:473
+#, fuzzy
+msgid "_Headers"
+msgstr "Antete"
+
+#: pan/gui/prefs-ui.cc:477
+msgid "Fonts"
+msgstr "Caractere"
+
+#: pan/gui/prefs-ui.cc:479
+msgid "Use custom font in Group Pane:"
+msgstr "Foloseşte caractere personalizate în panoul cu grupuri"
+
+#: pan/gui/prefs-ui.cc:484
+msgid "Use custom font in Header Pane:"
+msgstr "Foloseşte caractere personalizate în panoul cu antete"
+
+#: pan/gui/prefs-ui.cc:489
+msgid "Use custom font in Body Pane:"
+msgstr "Foloseşte caractere personalizate în panoul cu conţinut"
+
+#: pan/gui/prefs-ui.cc:494
+#, fuzzy
+msgid "Monospace font:"
+msgstr "Caractere mo_nospaţiate:"
+
+#: pan/gui/prefs-ui.cc:498
+#, fuzzy
+msgid "_Fonts"
+msgstr "Caractere"
+
+#: pan/gui/prefs-ui.cc:502
+#, fuzzy
+msgid "Header Pane"
+msgstr "Panou cu antete"
+
+#: pan/gui/prefs-ui.cc:505 pan/gui/prefs-ui.cc:511 pan/gui/prefs-ui.cc:517
+#: pan/gui/prefs-ui.cc:523 pan/gui/prefs-ui.cc:529
+msgid "Text:"
+msgstr "Text:"
+
+#: pan/gui/prefs-ui.cc:507 pan/gui/prefs-ui.cc:513 pan/gui/prefs-ui.cc:519
+#: pan/gui/prefs-ui.cc:525 pan/gui/prefs-ui.cc:531
+msgid "Background:"
+msgstr "Fundal:"
+
+#: pan/gui/prefs-ui.cc:509
+#, fuzzy
+msgid "Scores of 9999 or more:"
+msgstr "/Filt_rare/Afişează articolele cu punctaj -9999 (Ignorat)"
+
+#: pan/gui/prefs-ui.cc:515
+msgid "Scores from 5000 to 9998:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:521
+msgid "Scores from 1 to 4999:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:527
+msgid "Scores from -9998 to -1:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:533
+#, fuzzy
+msgid "Scores of -9999 or less:"
+msgstr "/Filt_rare/Afişează articolele cu punctaj -9999 (Ignorat)"
+
+#: pan/gui/prefs-ui.cc:535
+#, fuzzy
+msgid "Body Pane"
+msgstr "Panou cu _conţinut"
+
+#: pan/gui/prefs-ui.cc:541
+#, fuzzy
+msgid "Quoted Text:"
+msgstr "/_Vizualizare/Ascun_de textul citat"
+
+#: pan/gui/prefs-ui.cc:542
+#, fuzzy
+msgid "URL:"
+msgstr "URL-uri:"
+
+#: pan/gui/prefs-ui.cc:543
+#, fuzzy
+msgid "Signature:"
+msgstr "Fişier cu _semnătură:"
+
+#: pan/gui/prefs-ui.cc:545
+#, fuzzy
+msgid "_Colors"
+msgstr "Culori"
+
+#: pan/gui/prefs-ui.cc:549
+#, fuzzy
+msgid "Preferred Applications"
+msgstr "Aplicaţii"
+
+#: pan/gui/prefs-ui.cc:553
+#, fuzzy
+msgid "_Web Browser:"
+msgstr "Navigator web (%s este un URL):"
+
+#: pan/gui/prefs-ui.cc:556
+#, fuzzy
+msgid "_Mail Reader:"
+msgstr "Server de mail"
+
+#: pan/gui/prefs-ui.cc:558
+#, fuzzy
+msgid "A_pplications"
+msgstr "Aplicaţii"
+
+#: pan/gui/save-ui.cc:61
+#, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+" \n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - grupează într-un singur director (alt.binaries.poze.trenuri)\n"
+"%G - grupează într-un director imbricat (alt/binaries/poze/trenuri)\n"
+"\n"
+"\"/home/utilizator/News/Pan/%g\" devine\n"
+"\"/home/utilizator/News/Pan/alt.binaries.poze.trenuri\", iar\n"
+"\"/home/utilizator/News/Pan/%G\" devine\n"
+"\"/home/utilizator/New/Pan/alt/binaries/poze/trenuri\"."
+
+#: pan/gui/save-ui.cc:156
+#, fuzzy
+msgid "Pan: Save Articles"
+msgstr "Pan: Salvare ataşamente"
+
+#: pan/gui/save-ui.cc:173
+msgid "Files"
+msgstr "Fişiere"
+
+#: pan/gui/save-ui.cc:176
+#, fuzzy
+msgid "Save _Text"
+msgstr "Salvează te_xt"
+
+#: pan/gui/save-ui.cc:179
+msgid "Save _Attachments"
+msgstr "Salvează _ataşamente"
+
+#: pan/gui/save-ui.cc:185
+#, fuzzy
+msgid "Path"
+msgstr "Părţi"
+
+#: pan/gui/save-ui.cc:191
+msgid "C_ustom path:"
+msgstr ""
+
+#: pan/gui/save-ui.cc:195
+#, fuzzy
+msgid "Save Files to Path"
+msgstr "Salvează ataşamentele"
+
+#: pan/gui/save-ui.cc:208
+#, fuzzy
+msgid "_Path:"
+msgstr "_Trimite"
+
+#: pan/gui/save-ui.cc:211
+#, c-format
+msgid "Group's _default path: %s"
+msgstr ""
+
+#: pan/gui/save-ui.cc:220
+#, fuzzy
+msgid "Group Management"
+msgstr "Panou cu grupuri"
+
+#. sort by age
+#: pan/gui/save-ui.cc:224
+msgid "Add to the queue sorted by a_ge"
+msgstr ""
+
+#. top of queue
+#: pan/gui/save-ui.cc:229
+#, fuzzy
+msgid "Add to the _front of the queue"
+msgstr "Adaugă la _sfârşitul listei administratorului de procese"
+
+#. bottom of queue
+#: pan/gui/save-ui.cc:234
+msgid "Add to the _back of the queue"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:86
+msgid "is more than"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:87
+msgid "is at most"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:109
+#, fuzzy
+msgid "increase the article's score by"
+msgstr "/_Vizualizare/R_earanjează conţinutul articolului"
+
+#: pan/gui/score-add-ui.cc:110
+#, fuzzy
+msgid "decrease the article's score by"
+msgstr "/_Vizualizare/R_earanjează conţinutul articolului"
+
+#: pan/gui/score-add-ui.cc:111
+#, fuzzy
+msgid "set the article's score to"
+msgstr "acordă punctajul de"
+
+#: pan/gui/score-add-ui.cc:112
+#, fuzzy
+msgid "watch the article (set its score to 9999)"
+msgstr "_Urmăreşte (acordă un punctaj de 9999)"
+
+#: pan/gui/score-add-ui.cc:113
+#, fuzzy
+msgid "ignore the article (set its score to -9999)"
+msgstr "_Ignoră (acordă un punctaj de -9999)"
+
+#: pan/gui/score-add-ui.cc:138
+#, fuzzy
+msgid "References"
+msgstr "_Referinţe:"
+
+#: pan/gui/score-add-ui.cc:139
+#, fuzzy
+msgid "Line Count"
+msgstr "Linia %d, coloana %d"
+
+#: pan/gui/score-add-ui.cc:140
+msgid "Byte Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:141
+msgid "Crosspost Group Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:142
+msgid "Age (in days)"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:164
+msgid "the next week"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:165
+msgid "the next month"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:166
+#, fuzzy
+msgid "forever"
+msgstr "Server"
+
+#: pan/gui/score-add-ui.cc:191
+msgid "contains"
+msgstr "conţine"
+
+#: pan/gui/score-add-ui.cc:192
+#, fuzzy
+msgid "doesn't contain"
+msgstr "nu conţine"
+
+#: pan/gui/score-add-ui.cc:193
+msgid "is"
+msgstr "este"
+
+#: pan/gui/score-add-ui.cc:194
+#, fuzzy
+msgid "isn't"
+msgstr "nu este"
+
+#: pan/gui/score-add-ui.cc:195
+msgid "starts with"
+msgstr "începe cu"
+
+#: pan/gui/score-add-ui.cc:196
+msgid "ends with"
+msgstr "se termină cu"
+
+#: pan/gui/score-add-ui.cc:197
+#, fuzzy
+msgid "matches regex"
+msgstr "corespunde expresiei regulate"
+
+#: pan/gui/score-add-ui.cc:525
+msgid "Add and Re_score"
+msgstr "Adaugă şi _recalculează"
+
+#: pan/gui/score-add-ui.cc:573
+#, fuzzy
+msgid "Pan: New Scoring Rule"
+msgstr "Pan: Editare regulă "
+
+#: pan/gui/score-add-ui.cc:592
+#, fuzzy
+msgid "New Scoring Rule"
+msgstr "Punctaj nou"
+
+#: pan/gui/score-add-ui.cc:603
+msgid "If the group name"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:610
+#, fuzzy
+msgid "And the article's"
+msgstr "Linii pe articol:"
+
+#: pan/gui/score-add-ui.cc:622
+#, fuzzy
+msgid "Then"
+msgstr "Mulţumiri"
+
+#: pan/gui/score-add-ui.cc:630
+#, fuzzy
+msgid "For"
+msgstr "Directoare"
+
+#: pan/gui/score-view-ui.cc:64
+msgid "Close and Re_score"
+msgstr "Închide şi re_puncteză"
+
+#: pan/gui/score-view-ui.cc:167
+#, fuzzy, c-format
+msgid "File %s, Lines %d - %d"
+msgstr "fişierul cu punctaje %s, linia %d: %s (%s)"
+
+#: pan/gui/score-view-ui.cc:170
+#, fuzzy, c-format
+msgid "Name: \"%s\""
+msgstr "Am salvat \"%s\""
+
+#: pan/gui/score-view-ui.cc:199
+#, fuzzy
+msgid "Pan: Article's Scores"
+msgstr "Pan: Vizualizare punctaje"
+
+#: pan/gui/score-view-ui.cc:225
+#, fuzzy
+msgid "Add"
+msgstr "adaugă"
+
+#: pan/gui/score-view-ui.cc:230
+msgid "New Score"
+msgstr "Punctaj nou"
+
+#: pan/gui/score-view-ui.cc:235
+msgid "Criteria"
+msgstr "Criterii"
+
+#: pan/gui/score-view-ui.cc:258
+#, fuzzy
+msgid "Add a New Scoring Rule"
+msgstr "Adaugă un nou punctaj"
+
+#: pan/gui/score-view-ui.cc:265
+#, fuzzy
+msgid "Remove the Selected Scoring Rule"
+msgstr "Şterge punctajul selectat"
+
+#: pan/gui/server-ui.cc:162
+msgid "Please specify the server's address."
+msgstr ""
+
+#. create the dialog
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Add a Server"
+msgstr "Pan: Editare server"
+
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Edit a Server's Settings"
+msgstr "Pan: Editare server"
+
+#: pan/gui/server-ui.cc:222
+#, fuzzy
+msgid "Location"
+msgstr "Acţiuni"
+
+#: pan/gui/server-ui.cc:226
+msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
+msgstr "Adresa serverului de ştiri, e.g. \"news.mynewsserver.com\""
+
+#: pan/gui/server-ui.cc:227
+msgid "_Address:"
+msgstr "_Adresă:"
+
+#: pan/gui/server-ui.cc:231
+#, fuzzy
+msgid "The news server's port number.  Typically 119."
+msgstr "Portul serverului de ştiri. Acesta e aproape întotdeauna 119."
+
+#: pan/gui/server-ui.cc:232
+msgid "Por_t:"
+msgstr "Por_t:"
+
+#: pan/gui/server-ui.cc:235
+msgid "Login (if Required)"
+msgstr ""
+
+#: pan/gui/server-ui.cc:239
+msgid "_Username:"
+msgstr "Nume _utilizator:"
+
+#: pan/gui/server-ui.cc:240
+msgid ""
+"The username to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+#: pan/gui/server-ui.cc:244
+msgid "_Password:"
+msgstr "_Parolă:"
+
+#: pan/gui/server-ui.cc:245
+msgid ""
+"The password to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+#: pan/gui/server-ui.cc:248
+#, fuzzy
+msgid "Settings"
+msgstr "Descarc \"%s\""
+
+#: pan/gui/server-ui.cc:254
+msgid "Connection _Limit:"
+msgstr "Număr _maxim de conexiuni:"
+
+#: pan/gui/server-ui.cc:257
+msgid "After Two Weeks"
+msgstr ""
+
+#: pan/gui/server-ui.cc:258
+msgid "After One Month"
+msgstr ""
+
+#: pan/gui/server-ui.cc:259
+msgid "After Two Months"
+msgstr ""
+
+#: pan/gui/server-ui.cc:260
+#, fuzzy
+msgid "Never Expire Old Articles"
+msgstr "Nu expiră _niciodată"
+
+#: pan/gui/server-ui.cc:274
+msgid "E_xpire Old Articles:"
+msgstr ""
+
+#: pan/gui/server-ui.cc:277
+#, fuzzy
+msgid "Primary"
+msgstr "Prioritate"
+
+#: pan/gui/server-ui.cc:278
+msgid "Fallback"
+msgstr ""
+
+#: pan/gui/server-ui.cc:292
+#, fuzzy
+msgid "Server Rank:"
+msgstr "Servere"
+
+#: pan/gui/server-ui.cc:296
+msgid ""
+"Fallback servers are used for articles that can't be found on the "
+"primaries.  One common approach is to use free servers as primaries and "
+"subscription servers as fallbacks."
+msgstr ""
+
+#: pan/gui/server-ui.cc:420
+#, c-format
+msgid "Really delete \"%s\"?"
+msgstr ""
+
+#. dialog
+#: pan/gui/server-ui.cc:492
+msgid "Pan: Servers"
+msgstr "Pan: Servere"
+
+#: pan/gui/server-ui.cc:512
+msgid "Servers"
+msgstr "Servere"
+
+#: pan/gui/server-ui.cc:538
+#, fuzzy
+msgid "Add a Server"
+msgstr "Adaugă un nou server"
+
+#: pan/gui/server-ui.cc:548
+#, fuzzy
+msgid "Edit a Server's Settings"
+msgstr "Alte setări"
+
+#: pan/gui/server-ui.cc:555
+#, fuzzy
+msgid "Remove a Server"
+msgstr "Server nou"
+
+#. less than a mebi...
+#: pan/gui/task-pane.cc:210
+#, c-format
+msgid "%.2f KiB"
+msgstr ""
+
+#. less than a gibi...
+#: pan/gui/task-pane.cc:212
+#, c-format
+msgid "%.2f MiB"
+msgstr ""
+
+#: pan/gui/task-pane.cc:214
+#, c-format
+msgid "%.2f GiB"
+msgstr ""
+
+#: pan/gui/task-pane.cc:250
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
+msgstr ""
+"Pan %s Administrator de Procese (%d în coadă, %d în execuţie, %d oprite)"
+
+#: pan/gui/task-pane.cc:252
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running)"
+msgstr "Pan %s Administrator de Procese (%d în coadă, %d în execuţie)"
+
+#: pan/gui/task-pane.cc:254
+#, fuzzy
+msgid "Pan: Tasks"
+msgstr "Pan: Administrator de Procese"
+
+#: pan/gui/task-pane.cc:268
+#, c-format
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
+msgstr ""
+
+#: pan/gui/task-pane.cc:326
+msgid "Running"
+msgstr "În execuţie"
+
+#: pan/gui/task-pane.cc:327
+msgid "Queued"
+msgstr "În coadă"
+
+#: pan/gui/task-pane.cc:328
+msgid "Stopped"
+msgstr "Oprit"
+
+#: pan/gui/task-pane.cc:329
+msgid "Removing"
+msgstr "În curs de ştergere"
+
+#: pan/gui/task-pane.cc:330
+msgid "Unknown"
+msgstr "Anonim"
+
+#: pan/gui/task-pane.cc:354
+#, fuzzy, c-format
+msgid "%d%% Done; %d:%02d:%02d Remaining (%d @ %lu KiB/s)"
+msgstr "%d:%02d:%02d (%.2f KB/s)"
+
+#: pan/gui/task-pane.cc:358
+#, fuzzy, c-format
+msgid "%d%% Done; %s"
+msgstr "% Terminate"
+
+#: pan/gui/task-pane.cc:366
+#, fuzzy, c-format
+msgid "to %s"
+msgstr "Despre %s"
+
+#: pan/gui/task-pane.cc:433
+#, fuzzy
+msgid "Restart Tasks"
+msgstr "Reporneşte procesele selectate"
+
+#: pan/gui/task-pane.cc:438
+#, fuzzy
+msgid "Stop Tasks"
+msgstr "Nici un proces"
+
+#: pan/gui/task-pane.cc:443
+#, fuzzy
+msgid "Delete Tasks"
+msgstr "Şterge mesajele spam"
+
+#: pan/gui/task-pane.cc:467
+msgid "Status"
+msgstr "Stare"
+
+#: pan/gui/url.cc:92
+#, fuzzy, c-format
+msgid "Error starting URL: %s (Command was: %s)"
+msgstr "Eroare la procesarea comenzii \"Navigator web\": %s"
+
+#: pan/tasks/nntp.cc:214
+#, fuzzy, c-format
+msgid "Unable to set group: %s"
+msgstr "Nu pot defini grupul \"%*.*s\": %s"
+
+#: pan/tasks/nntp.cc:231
+#, fuzzy, c-format
+msgid "Error: %s"
+msgstr "Eroare"
+
+#: pan/tasks/socket-impl-gio.cc:112
+#, fuzzy, c-format
+msgid "Making a new connection to %*.*s"
+msgstr "Conexiune nouă %p pentru %*.*s, portul %d"
+
+#: pan/tasks/socket-impl-gio.cc:347
+#, fuzzy
+msgid "Unknown Error"
+msgstr "Anonim"
+
+#: pan/tasks/socket-impl-gio.cc:348
+#, c-format
+msgid "Error reading from socket: %s"
+msgstr "Eroare la citirea soclului %s"
+
+#: pan/tasks/task-article.cc:54 pan/tasks/task-article.cc:124
+#, fuzzy, c-format
+msgid "Saving %s"
+msgstr "Salvez \"%s\""
+
+#: pan/tasks/task-article.cc:56
+#, fuzzy, c-format
+msgid "Reading %s"
+msgstr "Citeşte"
+
+#: pan/tasks/task-article.cc:291
+msgid "Error initializing uulib"
+msgstr ""
+
+#: pan/tasks/task-article.cc:302
+#, fuzzy, c-format
+msgid "Couldn't load \"%s\": %s"
+msgstr "Nu am putut crea directorul \"%s\": %s"
+
+#: pan/tasks/task-article.cc:335
+#, c-format
+msgid "Saved \"%s\""
+msgstr "Am salvat \"%s\""
+
+#: pan/tasks/task-article.cc:339
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s. %s"
+msgstr "Eroare la deschiderea fişierului \"%s\": %s"
+
+#: pan/tasks/task-article.cc:341
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s."
+msgstr "Eroare la deschiderea fişierului \"%s\": %s"
+
+#: pan/tasks/task-groups.cc:40
+#, fuzzy, c-format
+msgid "Getting group list from \"%s\""
+msgstr "Descarc grupurile noi de la serverul \"%s\""
+
+#: pan/tasks/task-groups.cc:121
+#, fuzzy, c-format
+msgid "Fetched %lu Groups"
+msgstr "Am descărcat %u antete pentru \"%s\""
+
+#: pan/tasks/task-post.cc:34
+#, fuzzy, c-format
+msgid "Posting \"%s\""
+msgstr "Descarc \"%s\""
+
+#: pan/tasks/task-xover.cc:71
+#, c-format
+msgid "Getting all headers for \"%s\""
+msgstr "Descarc toate antetele pentru \"%s\""
+
+#: pan/tasks/task-xover.cc:73
+#, c-format
+msgid "Getting new headers for \"%s\""
+msgstr "Descarc antetele noi pentru \"%s\""
+
+#. SAMPLE
+#: pan/tasks/task-xover.cc:75
+#, c-format
+msgid "Sampling headers for \"%s\""
+msgstr "Triez antetele pentru \"%s\""
+
+#: pan/tasks/task-xover.cc:321
+#, fuzzy, c-format
+msgid "%s (%lu parts, %lu articles)"
+msgstr " (%lu linii în %lu articole)"
+
+#: pan/usenet-utils/gnksa.cc:879
+#, c-format
+msgid "No email address provided; generating message-id with domain \"%s\""
+msgstr ""
+"Nu a fost furnizată nici o adresă de email; generez un identificator de "
+"mesaj cu domeniul \"%s\""
+
+#: pan/usenet-utils/message-check.cc:123
+#, fuzzy
+msgid "Warning: Reply seems to be top-posted."
+msgstr "ATENŢIE: Răspunsul pare a iniţia un nou fir de discuţie."
+
+#: pan/usenet-utils/message-check.cc:144
+#, fuzzy
+msgid "Warning: The signature marker should be \"-- \", not \"--\"."
+msgstr "ATENŢIE: Marcajul semnăturii ar trebui să fie \"-- \", nu \"--\"."
+
+#: pan/usenet-utils/message-check.cc:161
+#, fuzzy
+msgid "Warning: Signature prefix with no signature."
+msgstr "ATENŢIE: Prefix de semnătură fără semnătură."
+
+#: pan/usenet-utils/message-check.cc:166
+#, fuzzy
+msgid "Warning: Signature is more than 4 lines long."
+msgstr "ATENŢIE: Semnătura e mai lungă de 4 linii"
+
+#: pan/usenet-utils/message-check.cc:171
+#, fuzzy
+msgid "Warning: Signature is more than 80 characters wide."
+msgstr "ATENŢIE: Semnătura e mai lată de 80 de caractere."
+
+#: pan/usenet-utils/message-check.cc:196
+#, fuzzy, c-format
+msgid "Warning: %d lines are more than 80 characters wide."
+msgstr "ATENŢIE: %d linii sunt mai late de 80 de caractere."
+
+#: pan/usenet-utils/message-check.cc:219
+#, fuzzy
+msgid "Error: Message is empty."
+msgstr "EROARE: Mesajul este gol."
+
+#: pan/usenet-utils/message-check.cc:254
+#, fuzzy
+msgid "Warning: The message is entirely quoted text!"
+msgstr "ATENŢIE: Mesajul conţine doar text citat!"
+
+#: pan/usenet-utils/message-check.cc:255
+#, fuzzy
+msgid "Warning: The message is mostly quoted text."
+msgstr "ATENŢIE: Mesajul conţine aproape numai text citat."
+
+#: pan/usenet-utils/message-check.cc:305
+#, fuzzy
+msgid "Error: Message appears to have no new content."
+msgstr "EROARE: Mesajul pare a nu conţine nimic nou."
+
+#: pan/usenet-utils/message-check.cc:340 pan/usenet-utils/message-check.cc:375
+#, fuzzy, c-format
+msgid "Warning: Unknown group \"%s\"."
+msgstr "ATENŢIE: Grup necunoscut: \"%*.*s\"."
+
+#: pan/usenet-utils/message-check.cc:347
+#, fuzzy
+msgid "Warning: Following-Up to too many groups."
+msgstr "ATENŢIE: S-au indicat prea multe grupuri de continure a discuţiei."
+
+#: pan/usenet-utils/message-check.cc:358
+#, fuzzy
+msgid "Error: No Subject specified."
+msgstr "EROARE: Nu e specificat nici un subiect."
+
+#: pan/usenet-utils/message-check.cc:383
+#, fuzzy, c-format
+msgid "Warning: Group \"%s\" is read-only."
+msgstr "ATENŢIE: Grupul \"%*.*s\" se poate doar citi."
+
+#: pan/usenet-utils/message-check.cc:392
+#, fuzzy
+msgid "Error: Posting to a very large number of groups."
+msgstr "EROARE: Trimiterea se face către un număr foarte mare de grupuri."
+
+#: pan/usenet-utils/message-check.cc:397
+#, fuzzy
+msgid "Warning: Posting to a large number of groups."
+msgstr "ATENŢIE: Trimiterea se face către un număr mare de grupuri."
+
+#: pan/usenet-utils/message-check.cc:404
+#, fuzzy
+msgid "Warning: Crossposting without setting Followup-To header."
+msgstr ""
+"ATENŢIE: Trimiterea se face la mai multe grupuri fără a specifica grupurile "
+"de continuare a discuţiei."
+
+#: pan/usenet-utils/message-check.cc:428
+#, fuzzy
+msgid "Error: Bad email address."
+msgstr "Adresă _email:"
+
+#: pan/usenet-utils/message-check.cc:437
+msgid "Warning: Most newsgroups frown upon HTML posts."
+msgstr ""
+
+#: pan/usenet-utils/message-check.cc:467
+#, fuzzy
+msgid "Error: No Recipients."
+msgstr "EROARE: Nu e specificat nici un subiect."
+
+#: pan/usenet-utils/text-massager.cc:309
+msgid "> [quoted text muted]"
+msgstr "> [textul citat e ascuns]"
+
+#: pan/usenet-utils/utf8-utils.cc:252
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgstr ""
+
+#, fuzzy
+#~ msgid "_Posting"
+#~ msgstr "_Trimite"
+
+#, fuzzy
+#~ msgid "Post New Article"
+#~ msgstr "_Articol"
+
+#, fuzzy
+#~ msgid "Follow-up to Article"
+#~ msgstr "Trimite răspuns"
+
+#, fuzzy
+#~ msgid "_Post Article"
+#~ msgstr "_Articol"
+
+#, fuzzy
+#~ msgid "Post this Article Now"
+#~ msgstr "Trimit articolul \"%s\""
+
+#, fuzzy
+#~ msgid "Are you sure you want to close this window?"
+#~ msgstr ""
+#~ "Sigur doriţi să ştergeţi cele %d grupuri/directoare şi articolele lor?"
+
+#, fuzzy
+#~ msgid "Error: No Newsgroups specified."
+#~ msgstr "EROARE: Nu s-a specificat nici un destinatar."
+
+#, fuzzy
+#~ msgid "Message-Id"
+#~ msgstr "Identificator mesaj"
+
+#, fuzzy
+#~ msgid "Saved newsrc files in %.1f seconds"
+#~ msgstr "Am salvat %d articole în \"%s\" în %.1f secunde (%.0f articole/sec)"
+
+#, fuzzy
+#~ msgid "Use _Monospace Font in Body Pane"
+#~ msgstr ""
+#~ "/_Vizualizare/Foloseşte caractere _monospaţiate în panoul cu conţinut"
+
+#, fuzzy
+#~ msgid "%d connections totaling %.1f KiB per second"
+#~ msgstr "%d conexiuni însumând %.1f KB pe secundă"
+
+#~ msgid ""
+#~ "Used when email replies to your posts should go somewhere other than the "
+#~ "email address above.  Because Reply-To: is relatively difficult for "
+#~ "spammers to harvest, it's polite give your email address here if you gave "
+#~ "an invalid email address above."
+#~ msgstr ""
+#~ "Se foloseşte când nu doriţi să primiţi răspunsuri prin email la adresa de "
+#~ "mai sus. Deoarece informaţiile din antetul \"Răspunsuri la:\" sunt mai "
+#~ "greu de colectat de către spammeri, e politicos să completaţi aici adresa "
+#~ "reală de email, dacă cea de mai sus e invalidă. "
+
+#~ msgid "_Reply-To Header:"
+#~ msgstr "_Răspunsuri la:"
+
+#~ msgid "Or_ganization Header:"
+#~ msgstr "Or_ganizaţie"
+
+#, fuzzy
+#~ msgid "Attach this _Signature:"
+#~ msgstr "Semnătură:"
+
+#~ msgid "Automatic Downloads"
+#~ msgstr "Descărcare automată"
+
+#, fuzzy
+#~ msgid "Save a_ttachments to path:"
+#~ msgstr "Salvează ataşamentele în:"
+
+#, fuzzy
+#~ msgid "Error decoding \"%s\": %s"
+#~ msgstr "Eroare la deschiderea fişierului \"%s\": %s"
+
+#~ msgid "UNKNOWN"
+#~ msgstr "NECUNOSCUT"
+
+#, fuzzy
+#~ msgid "Decode can't access directory \"%s\""
+#~ msgstr "Decodificarea nu poate accesa calea \"%s\""
+
+#~ msgid "Could not decode article - file may be corrupt/incomplete"
+#~ msgstr ""
+#~ "Nu am putut decodifica articolul - fişierul poate fi corupt/incomplet"
+
+#~ msgid "Checksum for `%s' part %d failed - file is corrupt"
+#~ msgstr ""
+#~ "Suma de control pentru `%s' partea %d e incorectă - fişierul e corupt"
+
+#~ msgid "Checksum for `%s' failed - file may be corrupt"
+#~ msgstr "Suma de control pentru `%s' e incorectă - fişierul poate fi corupt"
+
+#, fuzzy
+#~ msgid "Colors"
+#~ msgstr "Culori"
+
+#, fuzzy
+#~ msgid "Use custom colors in _Header Pane"
+#~ msgstr "Foloseşte caractere personalizate în panoul cu antete"
+
+#, fuzzy
+#~ msgid "Header Pane background:"
+#~ msgstr "Panou cu punctaje"
+
+#, fuzzy
+#~ msgid "Read articles:"
+#~ msgstr "Triez %d articole"
+
+#, fuzzy
+#~ msgid "Unread articles:"
+#~ msgstr "Fire de discuţie _necitite:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Unsupported data version (%d) for server properties.  Are you running an "
+#~ "old version of Pan by accident?"
+#~ msgstr ""
+#~ "Versiune de date %d nesuportată pentru fişierul de date \"%s\".\n"
+#~ "Rulaţi cumva o versiune mai veche de Pan?"
+
+#, fuzzy
+#~ msgid "Couldn't create temporary file: %s"
+#~ msgstr "Nu am putut crea fişierul temporar \"%s\""
+
+#~ msgid "Error renaming \"%s\" as \"%s\": %s."
+#~ msgstr "Eroare la redenumirea fişierului \"%s\" în \"%s\": %s. "
+
+#~ msgid "Can't backup \"%s\" as \"%s\": %s"
+#~ msgstr "Nu pot salva \"%s\" ca \"%s\": %s"
+
+#~ msgid "Can't write to \"%s\": %s"
+#~ msgstr "Nu pot scrie în \"%s\": %s"
+
+#~ msgid "Body"
+#~ msgstr "Conţinut"
+
+#, fuzzy
+#~ msgid "Open a Draft Article from Disk"
+#~ msgstr "%u articole din `%s' au expirat."
+
+#, fuzzy
+#~ msgid "subject"
+#~ msgstr "Subiect"
+
+#, fuzzy
+#~ msgid "author"
+#~ msgstr "Autor"
+
+#~ msgid "Change"
+#~ msgstr "Schimbă"
+
+#~ msgid "Connections"
+#~ msgstr "Conexiuni"
+
+#, fuzzy
+#~ msgid "Active"
+#~ msgstr "Acţiuni"
+
+#~ msgid ""
+#~ "Unable to cancel article: Couldn't find matching article in folder `pan."
+#~ "sent'!"
+#~ msgstr ""
+#~ "Nu pot anula articolul: nu am găsit articolul corespunzător în directorul "
+#~ "`pan.sent'!"
+
+#~ msgid ""
+#~ "Unable to supersede article: Couldn't find matching article in folder "
+#~ "`pan.sent'!"
+#~ msgstr ""
+#~ "Nu pot actualiza articolul: nu am găsit articolul corespunzător în "
+#~ "directorul `pan.sent'!"
+
+#~ msgid "You must download the article before you can cancel it."
+#~ msgstr "Trebuie să descărcaţi articolul înainte de a-l anula"
+
+#~ msgid "You must download the article before you can supersede it."
+#~ msgstr "Trebuie să descărcaţi articolul înainte de a-l putea actualiza"
+
+#~ msgid "Pan: Find Article"
+#~ msgstr "Pan: Căutare articol"
+
+#~ msgid "_Author:"
+#~ msgstr "_Autor"
+
+#~ msgid "Case Sensiti_ve"
+#~ msgstr "Ţine cont de ma_juscule"
+
+#~ msgid "_Unread Only"
+#~ msgstr "Doar cele _necitite"
+
+#~ msgid "Fin_d:"
+#~ msgstr "Cau_tă:"
+
+#~ msgid ""
+#~ "Type in a search string and press ENTER.\n"
+#~ "Wildcards are allowed."
+#~ msgstr ""
+#~ "Introduceţi un şir de căutare şi apăsaţi ENTER.\n"
+#~ "Metacaracterele sunt permise."
+
+#~ msgid "/---"
+#~ msgstr "/---"
+
+#~ msgid "/Save A_ttachments"
+#~ msgstr "/Salvează a_taşamentele"
+
+#~ msgid "/_Manual Decode..."
+#~ msgstr "/D_ecodificare manuală..."
+
+#~ msgid "/D_ownload Flagged"
+#~ msgstr "/_Descarcă mesajele marcate"
+
+#~ msgid "/_Flag"
+#~ msgstr "/_Marchează"
+
+#~ msgid "/_Unflag"
+#~ msgstr "/Şterge marca_j"
+
+#~ msgid "/_Create Score"
+#~ msgstr "/_Acordă punctaj"
+
+#~ msgid "/Add S_et to Selection"
+#~ msgstr "/Selectea_ză tot firul de discuţie"
+
+#~ msgid "/_Copy to Folder"
+#~ msgstr "/_Copiază în directorul"
+
+#~ msgid "/_Delete"
+#~ msgstr "/Şte_rge"
+
+#~ msgid "Scoring Articles"
+#~ msgstr "Punctez articolele"
+
+#~ msgid "Filtering Articles"
+#~ msgstr "Filtrez articolele"
+
+#~ msgid "Updating Header Pane..."
+#~ msgstr "Actualizez panoul cu antete..."
+
+#~ msgid "Loading group \"%s\""
+#~ msgstr "Încarc grupul \"%s\""
+
+#~ msgid "Flushing article cache... "
+#~ msgstr "Golesc cache-ul de articole..."
+
+#~ msgid "%d files erased."
+#~ msgstr "%d fişiere şterse"
+
+#~ msgid "Error saving article \"%s\" (is %s full?)"
+#~ msgstr "Eroare la salvarea articolului \"%s\" (este %s plin?)"
+
+#~ msgid "Directory \"%s\" contains %.1f MB in %d files"
+#~ msgstr "Directorul \"%s\" conţine %.1f MB în %d fişiere"
+
+#~ msgid "Unparseable Subject"
+#~ msgstr "Subiect imposibil de procesat"
+
+#~ msgid "Couldn't parse a Message-ID from the raw message!"
+#~ msgstr "Nu am putut obţine un identificator de mesaj din mesajul original!"
+
+#~ msgid "unknown@spammesenseless.com"
+#~ msgstr "anonim@spammesenseless.com"
+
+#~ msgid "Decoding \"%s\""
+#~ msgstr "Decodific \"%s\""
+
+#~ msgid "Can't create file \"%s\" %s"
+#~ msgstr "Nu pot crea fişierul \"%s\" %s"
+
+#~ msgid "Error saving file \"%s\" - is the disk full?"
+#~ msgstr "Eroare la salvarea fişierului \"%s\" - este discul plin?"
+
+#~ msgid "Decoded \"%s\" from group \"%*.*s\", \"%s\""
+#~ msgstr "Am decodificat \"%s\" din grupul \"%*.*s\",\"%s\""
+
+#~ msgid "Loading %u of %d groups"
+#~ msgstr "Descarc %u din %d grupuri"
+
+#~ msgid ""
+#~ "Skipped %d groups due to possible corruption in \"%s\" and \"%s\".  You "
+#~ "may want to delete these files and get a new grouplist from your news "
+#~ "server."
+#~ msgstr ""
+#~ "Am ignorat %d grupuri din cauza unei posibile coruperi în \"%s\" şi \"%s"
+#~ "\". Ar fi bine să ştergeţi aceste fişiere şi să obţineti o nouă listă de "
+#~ "grupuri de la serverul de ştiri."
+
+#~ msgid "Loaded %d groups for server \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr ""
+#~ "Am încărcat %d grupuri de pe serverul \"%s\" în %.1f secunde (%.0f "
+#~ "grupuri/sec)"
+
+#~ msgid "Saved %d of %u groups"
+#~ msgstr "Am salvat %d din %u grupuri"
+
+#~ msgid "Error saving list of groups to \"%s\" - is the disk full?"
+#~ msgstr "Eroare la salvarea listei de grupuri în \"%s\" - este discul plin?"
+
+#~ msgid "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr "Am salvat %d grupuri în \"%s\" în %.1f secunde (%.0f grupuri/sec)"
+
+#~ msgid "Loaded %d of %d articles"
+#~ msgstr "Am descărcat %d din %d articole"
+
+#~ msgid ""
+#~ "Pan skipped %d corrupt headers from the local cache for group \"%*.*s\"."
+#~ msgstr ""
+#~ "Am ignorat %d antete corupte din cache-ul local al grupului \"%*.*s\"."
+
+#~ msgid "You may want to empty this group and download fresh headers."
+#~ msgstr "Ar fi bine să goliţi acest grup şi să descărcaţi antete noi."
+
+#~ msgid "The group will not be saved -- can't create file \"%s\""
+#~ msgstr "Grupul nu va fi salvat -- nu pot crea fişierul \"%s\""
+
+#~ msgid "Unable to save headers for group \"%*.*s\" - is the disk full?"
+#~ msgstr "Nu pot salva antetele pentru grupul \"%*.*s\" - este discul plin?"
+
+#~ msgid "(No Group)"
+#~ msgstr "(Nici un grup)"
+
+#~ msgid "ERROR: invalid address \"%s\""
+#~ msgstr "EROARE: adresă incorectă \"%s\""
+
+#~ msgid "ERROR: Must have one author in From: line"
+#~ msgstr "EROARE: Trebuie să existe un autor în câmpul De la:"
+
+#~ msgid "Imported %d groups (%d new) from \"%s\""
+#~ msgstr "Am importat %d grupuri (%d noi) din \"%s\""
+
+#~ msgid "Exported %d groups (%d subscribed) to \"%s\""
+#~ msgstr "Am salvat %d grupuri (%d abonate) în \"%s\""
+
+#~ msgid "Imported %d lines from Gnome config file"
+#~ msgstr "Am importat %d linii din fişierul de configurare Gnome"
+
+#~ msgid "%s does not appear to be a valid datafile"
+#~ msgstr "%s nu pare a fi un fişier de date valid"
+
+#~ msgid "Error converting string \"%*s\" to utf8: %d - %s"
+#~ msgstr "Eroare la conversia şirului \"%*s\" la utf8: %d - %s"
+
+#~ msgid "No name specified!"
+#~ msgstr "Nu e specificat nici un nume!"
+
+#~ msgid "Server is corrupt"
+#~ msgstr "Serverul e corupt"
+
+#~ msgid "A Server with that name already exists."
+#~ msgstr "Există deja un server cu acelaşi nume."
+
+#~ msgid "A newsreader for GNOME"
+#~ msgstr "Un cititor de ştiri pentru GNOME"
+
+#~ msgid "Programmer"
+#~ msgstr "Programator"
+
+#~ msgid "Project Originator, Programmer"
+#~ msgstr "Iniţiatorul proiectului, programator"
+
+#~ msgid "Programmer, 0.6 - 0.7"
+#~ msgstr "Programator, 0.6 - 0.7"
+
+#~ msgid ""
+#~ "Pan %s Translations\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Code or Patches\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Suggestions and Testing\n"
+#~ "%s\n"
+#~ msgstr ""
+#~ "Pan %s Traduceri\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Cod\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Sugestii şi testare\n"
+#~ "%s\n"
+
+#~ msgid "Group Properties"
+#~ msgstr "Proprietăţile grupului"
+
+#~ msgid "_Directory for saving articles:"
+#~ msgstr "_Directorul pentru salvarea articolelor:"
+
+#~ msgid "Default charse_t:"
+#~ msgstr "Se_tul de caractere implicit:"
+
+#~ msgid "Pan: Download Headers for group `%s'"
+#~ msgstr "Pan: Descărcare antete pentru grupul `%s'"
+
+#~ msgid "Pan: Download Headers"
+#~ msgstr "Pan: Descărcare antete"
+
+#~ msgid "Download _new headers"
+#~ msgstr "Descarcă antete _noi"
+
+#~ msgid "_Download bodies too"
+#~ msgstr "_Descarcă şi conţinutul mesajelor"
+
+#~ msgid "How should you appear when posting articles?"
+#~ msgstr "Cum doriţi să apăreţi când trimiteţi articolele?"
+
+#~ msgid "Your _Name:"
+#~ msgstr "_Numele dumnevoastră:"
+
+#~ msgid "Email _Address:"
+#~ msgstr "_Adresă de email:"
+
+#~ msgid "_Organization:"
+#~ msgstr "_Organizaţie:"
+
+#~ msgid "default"
+#~ msgstr "implicit"
+
+#~ msgid "What mail server should Pan use?"
+#~ msgstr "Ce server de mail ar trebui Pan să folosească?"
+
+#~ msgid "What news server should Pan use?"
+#~ msgstr "Ce server de ştiri ar trebui Pan să folosească?"
+
+#~ msgid "Short name for Pan to show, e.g. \"mynewsserver\""
+#~ msgstr "Numele prescurtat al serverului, e.g. \"serverulmeudeştiri\""
+
+#~ msgid "Short _name for Pan to show:"
+#~ msgstr "Numele _prescurtat al serverului:"
+
+#~ msgid "Login"
+#~ msgstr "Login"
+
+#~ msgid "Server requires authori_zation"
+#~ msgstr "Serverul necesită autori_zare"
+
+#~ msgid "Pan Setup Wizard"
+#~ msgstr "Vrăjitor configurare Pan"
+
+#~ msgid "Thank you for trying Pan!"
+#~ msgstr "Vă mulţumim că aţi încercat Pan!"
+
+#~ msgid ""
+#~ "Thank you for trying Pan!\n"
+#~ " \n"
+#~ "If you are new to Usenet,\n"
+#~ "%s\n"
+#~ "is a starting point to see what Usenet is,\n"
+#~ "where to find a free news server,\n"
+#~ "and how to use Pan.\n"
+#~ " \n"
+#~ "Since this is your first time running Pan,\n"
+#~ "we'll need to gather some information.\n"
+#~ msgstr ""
+#~ "Vă mulţumim că folosiţi Pan!\n"
+#~ "\n"
+#~ "Dacă nu aţi mai folosit Usenet,\n"
+#~ "%s\n"
+#~ "este un punct de plecare pentru a vedea ce este Usenet,\n"
+#~ "cum să găsiţi un server de ştiri gratuit\n"
+#~ "şi cum să folosiţi Pan.\n"
+#~ "\n"
+#~ "Deoarece acum folosiţi Pan pentru prima dată,\n"
+#~ "avem nevoie de unele informaţii.\n"
+
+#~ msgid "About You"
+#~ msgstr "Despre dumneavoastră"
+
+#~ msgid "News Server"
+#~ msgstr "Server de ştiri"
+
+#~ msgid "Ready!"
+#~ msgstr "Gata!"
+
+#~ msgid ""
+#~ "You have successfully entered all of\n"
+#~ "the information required to set up Pan.\n"
+#~ "\n"
+#~ "To save these settings, click Save."
+#~ msgstr ""
+#~ "Aţi introdus cu succes toate\n"
+#~ "informaţiile necesare pentru a\n"
+#~ "configura Pan.\n"
+#~ "\n"
+#~ "Pentru a salva aceste configurări, apăsaţi Salvează."
+
+#~ msgid "About"
+#~ msgstr "Despre"
+
+#~ msgid "License"
+#~ msgstr "Licenţă"
+
+#~ msgid "Authors"
+#~ msgstr "Autori"
+
+#~ msgid "Thanks to"
+#~ msgstr "Mulţumiri"
+
+#~ msgid "  (No conditions -- no articles will match)"
+#~ msgstr "  (Nici o condiţie -- nici un articol nu va corespunde)"
+
+#~ msgid "  (No conditions -- all articles will match)"
+#~ msgstr "  (Nici o condiţie -- toate articolele vor corespunde)"
+
+#~ msgid "Pan: Edit Filter"
+#~ msgstr "Pan: Editare filtru"
+
+#~ msgid "Filter name: "
+#~ msgstr "Nume filtru:"
+
+#~ msgid "Show in Filter Menu"
+#~ msgstr "Arată în meniul Filtrare"
+
+#~ msgid "Move the selected line up one line"
+#~ msgstr "Mută linia selectată mai sus cu o linie"
+
+#~ msgid "Move the selected line down one line"
+#~ msgstr "Mută linia selectată mai jos cu o linie"
+
+#~ msgid "Invert"
+#~ msgstr "Inversează"
+
+#~ msgid "Invert the selected line"
+#~ msgstr "Inversează linia selectată"
+
+#~ msgid "All Of"
+#~ msgstr "Toate"
+
+#~ msgid "Any Of"
+#~ msgstr "Oricare"
+
+#~ msgid "Delete the selected line"
+#~ msgstr "Şterge linia selectată"
+
+#~ msgid "Add New Line to the Filter"
+#~ msgstr "Adaugă un nou filtru"
+
+#~ msgid "New Filter Line"
+#~ msgstr "Filtru nou"
+
+#~ msgid "does not start with"
+#~ msgstr "nu începe cu"
+
+#~ msgid "does not match regular expression"
+#~ msgstr "nu corespunde expresiei regulate"
+
+#~ msgid "Article h_as"
+#~ msgstr "Articolul a_re"
+
+#~ msgid "Attachments"
+#~ msgstr "Ataşamente"
+
+#~ msgid "Incomplete Attachments"
+#~ msgstr "Ataşamente incomplete"
+
+#~ msgid "No Attachments"
+#~ msgstr "Nici un ataşament"
+
+#~ msgid "Article _is"
+#~ msgstr "Articolul _este"
+
+#~ msgid "New"
+#~ msgstr "Nou"
+
+#~ msgid "Unread"
+#~ msgstr "Necitit"
+
+#~ msgid "Read"
+#~ msgstr "Citit"
+
+#~ msgid "Cached"
+#~ msgstr "Aflat în cache"
+
+#~ msgid "Posted by Me"
+#~ msgstr "Trimis de mine"
+
+#~ msgid "Article has at _least N lines:"
+#~ msgstr "Articolul are cel puţin N li_nii:"
+
+#~ msgid "Article _score is at least"
+#~ msgstr "Puncta_jul articolului este cel puţin"
+
+#~ msgid "Watched"
+#~ msgstr "Urmărit"
+
+#~ msgid "High"
+#~ msgstr "Mare"
+
+#~ msgid "Medium"
+#~ msgstr "Mediu"
+
+#~ msgid "Zero"
+#~ msgstr "Zero"
+
+#~ msgid "Low"
+#~ msgstr "Mic"
+
+#~ msgid "Ignored"
+#~ msgstr "Ignorat"
+
+#~ msgid ""
+#~ "This filter is still used by the following rules:\n"
+#~ "%s\n"
+#~ "Please remove this dependency  first."
+#~ msgstr ""
+#~ "Acest filtru este încă folosit de următoarele reguli:\n"
+#~ "%s\n"
+#~ "Ştergeţi, vă rog, această dependinţă mai întâi."
+
+#~ msgid "Pan: Filters"
+#~ msgstr "Pan: Filtre"
+
+#~ msgid "Filters"
+#~ msgstr "Filtre"
+
+#~ msgid "Add a new filter"
+#~ msgstr "Adaugă un nou filtru"
+
+#~ msgid "Edit the selected filter"
+#~ msgstr "Editează filtrul selectat"
+
+#~ msgid "Remove the selected filter"
+#~ msgstr "Şterge filtrul selectat"
+
+#~ msgid "NONE OF:"
+#~ msgstr "NICI UNUL:"
+
+#~ msgid "ALL OF:"
+#~ msgstr "TOATE:"
+
+#~ msgid "ANY OF:"
+#~ msgstr "ORICARE:"
+
+#~ msgid "Article has complete attachments"
+#~ msgstr "Articolul are ataşamente complete"
+
+#~ msgid "Article does not have incomplete attachments"
+#~ msgstr "Articolul nu are ataşamente incomplete"
+
+#~ msgid "Article has incomplete attachments"
+#~ msgstr "Articolul are ataşamente incomplete"
+
+#~ msgid "Article has complete or incomplete attachments"
+#~ msgstr "Articolul are ataşamente complete sau incomplete"
+
+#~ msgid "Article is %d or more bytes long"
+#~ msgstr "Articolul e mai mare de %d octeţi"
+
+#~ msgid "Article is crossposted to at least %d groups"
+#~ msgstr "Articolul este trimis la cel puţin %d grupuri"
+
+#~ msgid "Article was posted in the last %d days"
+#~ msgstr "Articolul a fost trimis în ultimele %d zile"
+
+#~ msgid "Article is %d or more lines long"
+#~ msgstr "Articolul are mai mult de %d linii"
+
+#~ msgid "Article is unread or old"
+#~ msgstr "Articolul este necitit sau vechi"
+
+#~ msgid "Article is new"
+#~ msgstr "Articolul este nou"
+
+#~ msgid "Article is new or read"
+#~ msgstr "Articolul este nou sau citit"
+
+#~ msgid "Article is new or unread"
+#~ msgstr "Articolul este nou sau necitit"
+
+#~ msgid "Xref"
+#~ msgstr "Xref"
+
+#~ msgid "watched"
+#~ msgstr "urmărit"
+
+#~ msgid "high"
+#~ msgstr "mare"
+
+#~ msgid "medium"
+#~ msgstr "mediu"
+
+#~ msgid "zero"
+#~ msgstr "zero"
+
+#~ msgid "low"
+#~ msgstr "mic"
+
+#~ msgid "ignored"
+#~ msgstr "ignorat"
+
+#~ msgid "Score filter will match anything"
+#~ msgstr "Toate articolele corespund filtrului de punctaj"
+
+#~ msgid "Score filter will match nothing"
+#~ msgstr "Nici un articol nu corespunde filtrului de punctaj"
+
+#~ msgid "Article score one of: "
+#~ msgstr "Punctajul articolului este unul dintre:"
+
+#~ msgid "Wrote filters to \"%s\""
+#~ msgstr "Am salvat filtrele în \"%s\""
+
+#~ msgid "Can't use regular expression \"%s\" from file \"%s\", line %d: %s"
+#~ msgstr ""
+#~ "Nu pot folosi expresia regulată \"%s\" din fişierul \"%s\", linia %d: %s"
+
+#~ msgid "expired old score"
+#~ msgstr "punctaj vechi expirat"
+
+#~ msgid "skipping unsupported criteria"
+#~ msgstr "ignor criteriile nesuportate"
+
+#~ msgid "unexpected line."
+#~ msgstr "linie neaşteptată."
+
+#~ msgid "Error reading file: "
+#~ msgstr "Eroare la citirea fişierului:"
+
+#~ msgid "skipping score because it has no criteria"
+#~ msgstr "ignor punctajul pentru că nu are nici un criteriu"
+
+#~ msgid ""
+#~ "Loaded %d score entries in %d sections in %.1f seconds (%.0f entries/sec)"
+#~ msgstr ""
+#~ "Am încărcat %d punctaje în %d secţiuni în %.1f secunde (%.0f punctaje/sec)"
+
+#~ msgid "Error score to file \"%s\": %s"
+#~ msgstr "Punctaj eronat în fişierul \"%s\": %s"
+
+#~ msgid "Scored %d entries in %.1f seconds (%.0f articles/sec)"
+#~ msgstr "Am punctat %d articole în %.1f secunde (%.0f articole/sec)"
+
+#~ msgid "Error removing scorefile entry: %s"
+#~ msgstr "Eroare la ştergerea intrării din fişierul cu punctaje %s"
+
+#~ msgid "Scorefile entry removed -- old scorefile \"%s\" backed up as \"%s\""
+#~ msgstr ""
+#~ "Am şters intrarea din fişierul cu punctaje -- fişierul vechi \"%s\" a "
+#~ "fost salvat ca \"%s\""
+
+#~ msgid "Folder \"%*.*s\" already exists."
+#~ msgstr "Directorul \"%*.*s\" există deja."
+
+#~ msgid "Please don't begin folders with \"pan.\"; it confuses me."
+#~ msgstr ""
+#~ "Vă rog să nu începeţi numele fişierelor cu \"pan.\"; acest lucru îmi "
+#~ "creează probleme."
+
+#~ msgid "Create New Folder"
+#~ msgstr "Creare director nou"
+
+#~ msgid "New Folder Name:"
+#~ msgstr "Nume director nou:"
+
+#~ msgid "/Get New Headers and _Bodies"
+#~ msgstr "/Descarcă antete şi _conţinuturi noi"
+
+#~ msgid "/Get New Headers in Subscribed Groups"
+#~ msgstr "/Descarcă antete noi de la grupurile abonate"
+
+#~ msgid "/More Download _Options..."
+#~ msgstr "/Mai multe _opţiuni de descărcare..."
+
+#~ msgid "/Refresh Article _Counts"
+#~ msgstr "/Actualizează _numărul de articole"
+
+#~ msgid "/Group _Properties..."
+#~ msgstr "/_Proprietăţi grup"
+
+#~ msgid " (Moderated)"
+#~ msgstr "(Moderat)"
+
+#~ msgid " (Read-Only)"
+#~ msgstr "(Doar citire)"
+
+#~ msgid "Subscribed"
+#~ msgstr "Grupuri abonate"
+
+#~ msgid "All Groups"
+#~ msgstr "Toate grupurile"
+
+#~ msgid ""
+#~ "We don't have a list of groups for \"%*.*s\".\n"
+#~ "Shall we download one?"
+#~ msgstr ""
+#~ "Nu există o listă de grupuri pentru \"%*.*s\".\n"
+#~ "Să o descarc?"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "Description"
+#~ msgstr "Descriere"
+
+#~ msgid "F_ind:"
+#~ msgstr "Cau_tă:"
+
+#~ msgid ""
+#~ "Type in a group search string and press ENTER.  Wildcards are allowed."
+#~ msgstr ""
+#~ "Introduceţi un şir de căutare a grupului şi apăsaţi ENTER. "
+#~ "Metacaracterele sunt permise."
+
+#~ msgid "<More>"
+#~ msgstr "<Mai mult>"
+
+#~ msgid "X-Newsreader"
+#~ msgstr "X-Newsreader"
+
+#~ msgid "X-Mailer"
+#~ msgstr "X-Mailer"
+
+#~ msgid "User-Agent"
+#~ msgstr "Agent utilizator"
+
+#~ msgid "(%u selected)"
+#~ msgstr "(%u selectate)"
+
+#~ msgid "News server connection count: %d"
+#~ msgstr "Număr de conexiuni la serverul de ştiri: %d"
+
+#~ msgid "The Task Manager is Empty"
+#~ msgstr "Administratorul de procese este gol"
+
+#~ msgid "Connection"
+#~ msgstr "Conexiune"
+
+#~ msgid "Post"
+#~ msgstr "Trimite"
+
+#~ msgid "Get"
+#~ msgstr "Descarcă"
+
+#~ msgid "Save Attachments As..."
+#~ msgstr "Salvează ataşamentele ca..."
+
+#~ msgid "Mine"
+#~ msgstr "Ale mele"
+
+#~ msgid "Net"
+#~ msgstr "Reţea"
+
+#~ msgid "/_File/Save A_ttachments"
+#~ msgstr "/_Fişier/Salvează a_taşamentele"
+
+#~ msgid "/_File/_Save Attachments As..."
+#~ msgstr "/_Fişier/_Salvează ataşamentele ca..."
+
+#~ msgid "/_File/_Manual Decode..."
+#~ msgstr "/_Fişier/Decodificare _manuală..."
+
+#~ msgid "/_File/---"
+#~ msgstr "/_Fişier/---"
+
+#~ msgid "/_File/_Cancel Last Task"
+#~ msgstr "/_Fişier/_Opreşte ultimul proces"
+
+#~ msgid "/_File/_New Folder..."
+#~ msgstr "/_Fişier/_Director nou..."
+
+#~ msgid "/_File/Delete _Folder..."
+#~ msgstr "/_File/Şter_ge directorul..."
+
+#~ msgid "/_File/_Edit Article in Folder"
+#~ msgstr "/_Fişier/_Editează articolul într-un director"
+
+#~ msgid "/_File/E_xit"
+#~ msgstr "/_Fişier/_Ieşire"
+
+#~ msgid "/_File/_Quit"
+#~ msgstr "/_Fişier/_Ieşire"
+
+#~ msgid "/_Edit/Select all"
+#~ msgstr "/_Editare/Selectează tot"
+
+#~ msgid "/_Edit/Deselect all"
+#~ msgstr "/_Editare/Deselectează tot"
+
+#~ msgid "/_Edit/---"
+#~ msgstr "/_Editare/---"
+
+#~ msgid "/_Edit/Select all _Groups"
+#~ msgstr "/_Editare/Selectează toate _grupurile"
+
+#~ msgid "/_Edit/Add S_ubscribed to Selection"
+#~ msgstr "/_Editare/Adaugă grupurile _abonate la selecţie"
+
+#~ msgid "/_Edit/Deselect all G_roups"
+#~ msgstr "/_Editare/Deselectează toate g_rupurile"
+
+#~ msgid "/_Edit/Add S_et to Selection"
+#~ msgstr "/_Editare/Adaugă _setul la selecţie"
+
+#~ msgid "/_Edit/_Find..."
+#~ msgstr "/_Editare/_Caută..."
+
+#~ msgid "/_Edit/Find _Next"
+#~ msgstr "/_Editare/Caută _următorul"
+
+#~ msgid "/_View/---"
+#~ msgstr "/_Vizualizare/---"
+
+#~ msgid "/_View/Thr_ead Header Pane"
+#~ msgstr "/_Vizualizare/_Grupează articolele în panoul cu antete"
+
+#~ msgid "/_View/_Rot13 Selected Text"
+#~ msgstr "/_Vizualizare/Aplică _Rot13 textului selectat"
+
+#~ msgid "/_View/E_xpand Selected Threads"
+#~ msgstr "/_Vizualizare/E_xpandează firele de discuţie selectate "
+
+#~ msgid "/_View/C_ollapse Selected Threads"
+#~ msgstr "/_Vizualizare/Compactează _firele de discuţie selectate"
+
+#~ msgid "/Filte_r/---"
+#~ msgstr "/Filt_rare/---"
+
+#~ msgid "/Filte_r/Match Only _Cached Articles"
+#~ msgstr "/Filt_rare/Afişează numai articolele din _cache"
+
+#~ msgid "/Filte_r/Match Only _Text Articles"
+#~ msgstr "/Filt_rare/Afişează numai articolele în format _text"
+
+#~ msgid "/Filte_r/Match Only _Binary Attachment Articles"
+#~ msgstr "/Filt_rare/Afişează numai articolele cu ataşamente _binare"
+
+#~ msgid "/Filte_r/Match Only _My Articles"
+#~ msgstr "/Filt_rare/Afişează numai articolele _mele"
+
+#~ msgid "/Filte_r/Match _New Articles"
+#~ msgstr "/Filt_rare/Afişează articolele n_oi"
+
+#~ msgid "/Filte_r/Match _Unread Articles"
+#~ msgstr "/Filtr_rare/Afişează articolele n_ecitite"
+
+#~ msgid "/Filte_r/Match _Read Articles"
+#~ msgstr "/Filt_rare/Afişează articolele c_itite"
+
+#~ msgid "/_Go/Read More"
+#~ msgstr "/_Citire/Citeşte înainte"
+
+#~ msgid "/_Go/---"
+#~ msgstr "/_Citire/---"
+
+#~ msgid "/_Go/Next _New Article"
+#~ msgstr "/_Citire/Următorul articol n_ou"
+
+#~ msgid "/_Go/Next N_ew Thread"
+#~ msgstr "/_Citire/Următorul fir de discuţie no_u"
+
+#~ msgid "/_Go/Previous Article _Read"
+#~ msgstr "/_Citire/Precedentul articol _citit"
+
+#~ msgid "/_Servers"
+#~ msgstr "/_Servere"
+
+#~ msgid "/_Servers/Get List of _All Groups"
+#~ msgstr "/_Servere/Descarcă o listă cu _toate grupurile"
+
+#~ msgid "/_Servers/Get List of _New Groups"
+#~ msgstr "/_Servere/Descarcă o listă cu grupurile _noi"
+
+#~ msgid "/_Servers/---"
+#~ msgstr "/_Servere/---"
+
+#~ msgid "/_Newsgroups/Mark Group _Read"
+#~ msgstr "/_Grupuri/Marchează grupul ca _citit"
+
+#~ msgid "/_Newsgroups/_Delete Group's Articles"
+#~ msgstr "/_Grupuri/Şter_ge articolele grupului"
+
+#~ msgid "/_Newsgroups/---"
+#~ msgstr "/_Grupuri/---"
+
+#~ msgid "/_Newsgroups/Get New _Headers"
+#~ msgstr "/_Grupuri/Descarcă _antete noi"
+
+#~ msgid "/_Newsgroups/Get New Headers and _Bodies"
+#~ msgstr "/_Grupuri/Descarcă antete şi _conţinuturi noi"
+
+#~ msgid "/_Newsgroups/More Download _Options..."
+#~ msgstr "/_Grupuri/Mai multe _opţiuni de descărcare..."
+
+#~ msgid "/_Newsgroups/Refresh Article _Counts"
+#~ msgstr "/_Grupuri/Actualizează _numărul de articole"
+
+#~ msgid "/_Newsgroups/Get New Headers in Subscribed _Groups"
+#~ msgstr "/_Grupuri/Descarcă antete noi de la grupurile a_bonate"
+
+#~ msgid "/_Newsgroups/_Subscribe"
+#~ msgstr "/_Grupuri/Abonea_ză"
+
+#~ msgid "/_Newsgroups/_Unsubscribe"
+#~ msgstr "/_Grupuri/_Dezabonează"
+
+#~ msgid "/_Newsgroups/Group _Properties..."
+#~ msgstr "/_Grupuri/_Proprietăţile grupului..."
+
+#~ msgid "/_Newsgroups/Dele_te Group"
+#~ msgstr "/_Grupuri/Şte_rge grupul"
+
+#~ msgid "/_Articles/Mark _Read"
+#~ msgstr "/_Articole/Marchează ca _citit"
+
+#~ msgid "/_Articles/Mark _Unread"
+#~ msgstr "/_Articole/Marchează ca _necitit"
+
+#~ msgid "/_Articles/---"
+#~ msgstr "/_Articole/---"
+
+#~ msgid "/_Articles/D_ownload Flagged"
+#~ msgstr "/_Articole/Descarcă articolele _marcate"
+
+#~ msgid "/_Articles/_Flag"
+#~ msgstr "/_Articole/Marc_hează"
+
+#~ msgid "/_Articles/U_nflag"
+#~ msgstr "/_Articole/Şter_ge marcaj"
+
+#~ msgid "/_Articles/Down_load"
+#~ msgstr "/_Articole/De_scarcă"
+
+#~ msgid "/_Articles/_Watch Thread"
+#~ msgstr "/_Articole/Urmăreşte _firul de discuţie"
+
+#~ msgid "/_Articles/_Ignore Thread"
+#~ msgstr "/_Articole/_Ignoră firul de discu‪ţie"
+
+#~ msgid "/_Articles/_View Article's Scores"
+#~ msgstr "/_Articole/_Afişează punctajul articolului"
+
+#~ msgid "/_Articles/_Create Score..."
+#~ msgstr "/_Articole/Acordă _punctaj..."
+
+#~ msgid "/_Articles/Cancel..."
+#~ msgstr "/_Articole/Anulează..."
+
+#~ msgid "/_Articles/Supersed_e..."
+#~ msgstr "/_Articole/Actualizea_ză..."
+
+#~ msgid "/_Articles/_Delete"
+#~ msgstr "/_Articole/Şt_erge"
+
+#~ msgid "/_Post"
+#~ msgstr "/_Trimite"
+
+#~ msgid "/_Post/_Post to Newsgroup..."
+#~ msgstr "/_Trimite/Trimite un nou _articol..."
+
+#~ msgid "/_Post/_Reply by Email..."
+#~ msgstr "/_Trimite/Ră_spunde prin email..."
+
+#~ msgid "/_Post/For_ward by Email..."
+#~ msgstr "/_Trimite/Î_naintează prin email..."
+
+#~ msgid "/_Post/---"
+#~ msgstr "/_Trimite/---"
+
+#~ msgid "/_Post/Send Pending _Messages"
+#~ msgstr "/_Trimite/Trimite _mesajele în aşteptare"
+
+#~ msgid "/_Tools"
+#~ msgstr "/_Unelte"
+
+#~ msgid "/_Tools/---"
+#~ msgstr "/_Unelte/---"
+
+#~ msgid "/_Tools/Custom _Filters..."
+#~ msgstr "/_Unelte/Personalizare _filtre..."
+
+#~ msgid "/_Tools/_Rules..."
+#~ msgstr "/_Unelte/_Reguli..."
+
+#~ msgid "/_Tools/_Edit Scorefile..."
+#~ msgstr "/_Unelte/_Editează fişierul cu punctaje..."
+
+#~ msgid "/_Tools/_Log Viewer..."
+#~ msgstr "/_Unelte/Vizualizare _jurnal..."
+
+#~ msgid "/_Help"
+#~ msgstr "/A_jutor"
+
+#~ msgid "/_Help/---"
+#~ msgstr "/A_jutor/---"
+
+#~ msgid ""
+#~ "When posting to Usenet, your article's Message-ID contains a domain "
+#~ "name.  You can set a custom domain name here, or leave it blank to let "
+#~ "Pan use the domain name from your email address."
+#~ msgstr ""
+#~ "Când trimiteţi un articol către Usenet, identificatorul de mesaj al "
+#~ "articolului conţine un nume de domeniu. Puteţi configura aici un nume de "
+#~ "domeniu explicit sau să lăsaţi câmpul gol pentru ca Pan să folosească "
+#~ "numele de domeniu din adresa dumneavoastră de email."
+
+#~ msgid "Message-ID _Domain Name:"
+#~ msgstr "Nume _domeniu:"
+
+#~ msgid "The default charset set for articles posted with this profile"
+#~ msgstr ""
+#~ "Setul de caractere implicit pentru articolele trimise cu această "
+#~ "identitate"
+
+#~ msgid "Pan: Edit Profile"
+#~ msgstr "Pan: Editare identitate"
+
+#~ msgid "_User Profile"
+#~ msgstr "Identitate _utilizator:"
+
+#~ msgid "Cus_tom Headers"
+#~ msgstr "Personali_zare antete"
+
+#~ msgid "You must specify a username or disable authorization."
+#~ msgstr ""
+#~ "Trebuie specificat un nume de utilizator sau dezactivată autorizarea."
+
+#~ msgid ""
+#~ "Your real name contained double quotes.\n"
+#~ "Converting into single quotes."
+#~ msgstr ""
+#~ "Numele dumneavoastră real conţinea ghilimele duble. Convertesc în "
+#~ "ghilimele simple."
+
+#~ msgid "You need at least one profile"
+#~ msgstr "Este necesară cel puţin o identitate"
+
+#~ msgid "Use the selected profile to create a new profile"
+#~ msgstr ""
+#~ "Foloseşte datele din identitatea selectată pentru a crea o nouă identitate"
+
+#~ msgid "Wrote profiles to \"%s\""
+#~ msgstr "Am salvat identităţile în \\\"%s\\\""
+
+#~ msgid "Save the log to a file"
+#~ msgstr "Salvare jurnal în fişier"
+
+#~ msgid "/_File/_Save..."
+#~ msgstr "/_Fişier/_Salvează..."
+
+#~ msgid "/_File/Clea_r"
+#~ msgstr "/_Fişier/Go_leşte"
+
+#~ msgid "/_File/_Close"
+#~ msgstr "/_Fişier/Î_nchide"
+
+#~ msgid "Pan: Status Log"
+#~ msgstr "Pan: Jurnal de stare"
+
+#~ msgid "Clear the log window"
+#~ msgstr "Goleşte fereastra de jurnal."
+
+#~ msgid "Time"
+#~ msgstr "Ora"
+
+#~ msgid "Log Entry"
+#~ msgstr "Intrare jurnal"
+
+#~ msgid "Post anyway, despite these problems?"
+#~ msgstr "Trimit oricum, în ciuda acestor probleme?"
+
+#~ msgid "Post anyway, despite this problem?"
+#~ msgstr "Trimit oricum, în ciuda acestei probleme?"
+
+#~ msgid "/_File/_Save Changes"
+#~ msgstr "/_Fişier/_Salvează schimbările"
+
+#~ msgid "/_File/Save _As..."
+#~ msgstr "/_Fişier/Salvează _ca..."
+
+#~ msgid "/_Edit/Cu_t"
+#~ msgstr "/_Editare/_Taie"
+
+#~ msgid "/_Edit/_Copy"
+#~ msgstr "/_Editare/_Copiază"
+
+#~ msgid "/_Edit/_Paste"
+#~ msgstr "/_Editare/_Lipeşte"
+
+#~ msgid "/_Edit/_Rot13 Selected Text"
+#~ msgstr "/_Editare/Aplică _Rot13 textului selectat"
+
+#~ msgid "/_Edit/Edit with E_xternal Editor"
+#~ msgstr "/_Editare/Editează cu un editor e_xtern"
+
+#~ msgid "/_File/Send Now"
+#~ msgstr "/_Fişier/Trimite acum"
+
+#~ msgid "/_File/Send Later"
+#~ msgstr "/_Fişier/Trimite mai târziu"
+
+#~ msgid "Send Later"
+#~ msgstr "Trimite mai târziu"
+
+#~ msgid "Rewrap"
+#~ msgstr "Mergi la sfârşitul liniei"
+
+#~ msgid "Turn line wrap on/off"
+#~ msgstr "(Dez)activează rearanjarea textului"
+
+#~ msgid "Edit with an External Editor"
+#~ msgstr "Editează cu un editor extern"
+
+#~ msgid "Mime (single-part posts only)"
+#~ msgstr "Mime (doar articolele single-part)"
+
+#~ msgid " (%lu lines in 1 article)"
+#~ msgstr " (%lu linii în 1 articol)"
+
+#~ msgid "UUEncoded (universally accepted)"
+#~ msgstr "UUEncoded (acceptat universal)"
+
+#~ msgid "yEnc (30 percent smaller than UUEnc but less universal)"
+#~ msgstr "yEnc (cu 30 procente mai mic decât UUEnc, dar mai puţin universal)"
+
+#~ msgid "Select the file to attach."
+#~ msgstr "Selectează fişierul de ataşat."
+
+#~ msgid "Files to Attach"
+#~ msgstr "Fişiere de ataşat"
+
+#~ msgid "Filename"
+#~ msgstr "Nume fişier"
+
+#~ msgid "Kilobytes"
+#~ msgstr "Kiloocteţi"
+
+#~ msgid "Add a File to the Attachment List"
+#~ msgstr "Adaugă un fişier la lista de ataşamente"
+
+#~ msgid "Remove a File from the Attachment List"
+#~ msgstr "Şterge un fişier din lista de ataşamente"
+
+#~ msgid "Estimated Article Size"
+#~ msgstr "Dimensiunea estimată a fişierului"
+
+#~ msgid ""
+#~ "The newsgroups where replies to your message should go.  This is only "
+#~ "needed if it differs from the \"Post To Groups\" header. \n"
+#~ "To direct all replies to your email address, use \"Followup-To: poster\""
+#~ msgstr ""
+#~ "Grupurile de ştiri la care se vor primi răspunsurile la articolul "
+#~ "dumneavoastră. Se completează doar dacă diferă de cele din antetul "
+#~ "\"Grupuri de ştiri\". \n"
+#~ "Pentru a direcţiona toate răspunsurile la adresa dumneavoastră de email, "
+#~ "completaţi \"poster\" în acest câmp."
+
+#~ msgid ""
+#~ "The email account where mail replies to your posted message should go.  "
+#~ "This is only needed if it differs from the \"From\" header."
+#~ msgstr ""
+#~ "Adresa de email la care veţi primi răspunsurile la articolul "
+#~ "dumneavoastră. E necesară doar dacă diferă de cea din antetul \"De la\"."
+
+#~ msgid "Organization"
+#~ msgstr "Organizaţie"
+
+#~ msgid "The organization you're associated with."
+#~ msgstr "Organizaţia din care faceţi parte"
+
+#~ msgid "Charset"
+#~ msgstr "Set de caractere"
+
+#~ msgid "Custom Headers"
+#~ msgstr "Antete personalizate"
+
+#~ msgid "Add \"User-Agent\" header"
+#~ msgstr "Adaugă antetul \"Agent utilizator\""
+
+#~ msgid "Add \"Message-Id\" header"
+#~ msgstr "Adaugă antetul \"Identificator mesaj\""
+
+#~ msgid ""
+#~ "Could not convert \"%s\" to UTF-8. Article may not display correctly."
+#~ msgstr ""
+#~ "Nu am putut converti \"%s\" la UTF-8. Articolul poate fi afişat incorect."
+
+#~ msgid "\"Followup-To: poster\": sending email to author."
+#~ msgstr ""
+#~ "\"Continuare la:\" conţine cuvântul \"poster\": trimit email autorului."
+
+#~ msgid "\"Followup-To:\" contains an email address: sending email to author."
+#~ msgstr ""
+#~ "\"Continuare la:\" conţine o adresă de email: trimit email autorului."
+
+#~ msgid "New Message"
+#~ msgstr "Mesaj nou"
+
+#~ msgid ""
+#~ "ERROR: line %d, column %d uses a character not specified in charset \"%s"
+#~ "\" -- possibly change your charset in \"More Headers\" to \"%s\" instead?"
+#~ msgstr ""
+#~ "EROARE: linia %d, coloana %d foloseşte un caracter inexistent în setul de "
+#~ "caractere \"%s\" -- pot să înlocuiesc setul de caractere din \"Mai multe "
+#~ "antete\" cu \"%s\"?"
+
+#~ msgid "Save message to file"
+#~ msgstr "Salvează mesajul într-un fişier"
+
+#~ msgid ""
+#~ "Message uses characters not specified in charset '%s' - possibly use '%s' "
+#~ "instead?"
+#~ msgstr ""
+#~ "Mesajul foloseşte caractere inexistente în setul de caractere '%s' -- pot "
+#~ "să folosesc setul de caractere '%s'?"
+
+#~ msgid "The command line was: %s"
+#~ msgstr "Linia de comandă a fost: %s"
+
+#~ msgid "NNTP handshake failed: %s"
+#~ msgstr "Negocierea cu serverul NNTP a eşuat: %s"
+
+#~ msgid "Handshake failed: %s"
+#~ msgstr "Negocierea cu serverul a eşuat: %s"
+
+#~ msgid "Handshake: %s"
+#~ msgstr "Negocierea cu serverul: %s"
+
+#~ msgid "Authentication failed: bad handshake for SPA password"
+#~ msgstr "Autentificarea a eşuat: negociere greşită a parolei SPA"
+
+#~ msgid "Bad SPA handshake: %s"
+#~ msgstr "Negociere SPA greşită: %s"
+
+#~ msgid "Authentication failed: need a password"
+#~ msgstr "Autentificarea a eşuat: e necesară o parolă"
+
+#~ msgid "Authentication failed: %s"
+#~ msgstr "Autentificarea a eşuat: %s"
+
+#~ msgid "%*.*s handshake failed: %s"
+#~ msgstr "Negocierea %*.*s a eşuat: %s"
+
+#~ msgid "No supported authentication mechanism"
+#~ msgstr "Nu există nici un mecanism cunoscut de autentificare"
+
+#~ msgid "No password found!"
+#~ msgstr "Nu am găsit nici o parolă!"
+
+#~ msgid "MODE READER check failed: %s"
+#~ msgstr "Verificarea MODE READER a eşuat: %s"
+
+#~ msgid "Posting failed.  Server said: %s"
+#~ msgstr "Trimiterea a eşuat. Serverul a spus: %s"
+
+#~ msgid "Posting complete.  Server said: %s"
+#~ msgstr "Trimiterea s-a încheiat. Serverul a zis: %s"
+
+#~ msgid "\"stay connected\" sent to %*.*s"
+#~ msgstr "Comanda \"rămâi conectat\" a fost trimisă la %*.*s"
+
+#~ msgid "Getting article \"%s\" body failed: %s"
+#~ msgstr "Descărcarea conţinutului articolului \"%s\" a eşuat: %s"
+
+#~ msgid "Getting header list failed: %s"
+#~ msgstr "Descărcarea listei de antete a eşuat: %s"
+
+#~ msgid "Corrupt header skipped: %s"
+#~ msgstr "Antet corupt ignorat: %s"
+
+#~ msgid "Getting %d of %d"
+#~ msgstr "Descarc %d din %d"
+
+#~ msgid "Select Color"
+#~ msgstr "Selectează culoarea"
+
+#~ msgid "_Browse..."
+#~ msgstr "_Navighează..."
+
+#~ msgid "Select Font"
+#~ msgstr "Alege tipul de caractere"
+
+#~ msgid "Font Family"
+#~ msgstr "Familia de caractere"
+
+#~ msgid "  --version        Prints Pan's version number"
+#~ msgstr "  --version         Afişează versiunea Pan"
+
+#~ msgid "  --help           Prints this message and exits"
+#~ msgstr "  --help            Afişează acest mesaj"
+
+#~ msgid ""
+#~ "  --debug          Turns on the most commonly-used options for a bug "
+#~ "report"
+#~ msgstr ""
+#~ "  --debug           Activează opţiunile pentru raportarea unei probleme"
+
+#~ msgid ""
+#~ "  --mute           Debugging tool to send new posts to console, not the "
+#~ "server"
+#~ msgstr ""
+#~ "  --mute            Unealta de depanare va trimite articolele noi la "
+#~ "consolă, nu la server"
+
+#~ msgid "  --debug-cache    Print debugging messages for the article cache"
+#~ msgstr ""
+#~ "  --debug-cache     Afişează mesajele de depanare pentru cache-ul de "
+#~ "articole"
+
+#~ msgid ""
+#~ "  --debug-sockets  Print debugging messages when talking to the news "
+#~ "server"
+#~ msgstr ""
+#~ "  --debug-sockets   Afişează mesajele de depanare din timpul comunicării "
+#~ "cu serverul de ştiri"
+
+#~ msgid ""
+#~ "  --debug-queue    Print debugging messages related to managing tasks"
+#~ msgstr ""
+#~ "  --debug-queue     Afişează mesajele de depanare legate de administrarea "
+#~ "proceselor"
+
+#~ msgid ""
+#~ "  --debug-decode   Print debugging messages related to decoding "
+#~ "attachments"
+#~ msgstr ""
+#~ "  --debug-decode    Afişează mesajele de depanare legate de decodificarea "
+#~ "ataşamentelor"
+
+#~ msgid "  --debug-newsrc   Print debugging messages related to .newsrc files"
+#~ msgstr ""
+#~ "  --debug-newsrc    Afişează mesajele de depanare legate de fişierele ."
+#~ "newsrc"
+
+#~ msgid ""
+#~ "  --debug-gnksa    Print debugging messages related to gnksa correctness"
+#~ msgstr ""
+#~ "  --debug-gnksa     Afişează mesajele de depanare legate de "
+#~ "corectitudinea gnksa"
+
+#~ msgid ""
+#~ "  --debug-trace    Print debugging messages when entering/leaving "
+#~ "functions"
+#~ msgstr ""
+#~ "  --debug-trace     Afişează mesajele de depanare la intrarea/ieşirea din "
+#~ "funcţii"
+
+#~ msgid ""
+#~ "  --debug-lock     Print debugging messages related to threaded gui locks"
+#~ msgstr ""
+#~ "  --debug-lock      Afişează mesajele de depanare legate de blocarea "
+#~ "firelor de \n"
+#~ "                    execuţie ale interfeţei grafice"
+
+#~ msgid ""
+#~ "  --debug-object   Print debugging messages related to refcounted objects"
+#~ msgstr ""
+#~ "  --debug-object    Afişează mesajele de depanare legate de obiectele "
+#~ "refcounted"
+
+#~ msgid "Error reading from socket."
+#~ msgstr "Eroare la citirea soclului"
+
+#~ msgid "Error writing to socket."
+#~ msgstr "Eroare la scrierea soclului"
+
+#~ msgid "pan.sent"
+#~ msgstr "pan.sent"
+
+#~ msgid "pan.sendlater"
+#~ msgstr "pan.sendlater"
+
+#~ msgid "Spellchecking disabled: gtkspell_init() failed with status %d"
+#~ msgstr ""
+#~ "Verificarea ortografiei dezactivată: gtkspell_init() a eşuat cu statusul %"
+#~ "d"
+
+#~ msgid "Restored %d tasks from last session"
+#~ msgstr "Am restaurat %d procese din ultima sesiune"
+
+#~ msgid ""
+#~ "Some tasks were still queued the last time Pan exited.  Do you want to "
+#~ "resume those tasks?"
+#~ msgstr ""
+#~ "Unele procese au rămas activate la ultima folosire a Pan. Doriţi să le "
+#~ "reactivaţi?"
+
+#~ msgid "_Resume"
+#~ msgstr "_Reactivează"
+
+#~ msgid ""
+#~ "%a - abbreviated weekday name\n"
+#~ "%A - full weekday name\n"
+#~ "%b - abbreviated month name\n"
+#~ "%B - full month name\n"
+#~ "%c - local date & time\n"
+#~ "%d - day of the month\n"
+#~ "%H - hour (24-hour clock)\n"
+#~ "%I - hour (12-hour clock)\n"
+#~ "%j - day of the year (001-366)\n"
+#~ "%m - month (01-12)\n"
+#~ "%M - minute (00-59)\n"
+#~ "%p - local equivalent of AM/PM\n"
+#~ "%S - second (00-61)\n"
+#~ "%x - local date\n"
+#~ "%X - local time\n"
+#~ "%y - two-digit year\n"
+#~ "%Y - four-digit year\n"
+#~ "%% - %"
+#~ msgstr ""
+#~ "%a - numele prescurtat al săptămânii\n"
+#~ "%A - numele întreg al săptămânii\n"
+#~ "%b - numele prescurtat al lunii\n"
+#~ "%B - numele întreg al lunii\n"
+#~ "%c - data şi ora locale\n"
+#~ "%d - ziua lunii\n"
+#~ "%H - ora (de la 0 la 24)\n"
+#~ "%I - ora (de la 0 la 12)\n"
+#~ "%j - ziua anului (001-366)\n"
+#~ "%m - luna (01-12)\n"
+#~ "%M - minutul (00-59)\n"
+#~ "%p - echivalentul local al AM/PM\n"
+#~ "%S - secunda (00-60)\n"
+#~ "%x - data locală\n"
+#~ "%X - ora locală\n"
+#~ "%y - anul format din două cifre\n"
+#~ "%Y - anul format din patru cifre\n"
+#~ "%% - %"
+
+#~ msgid "Color the \"sub_ject\" column"
+#~ msgstr "Colorează coloana \"sub_iect\""
+
+#~ msgid "Articles with a Score of 9999 or higher:"
+#~ msgstr "Articole cu un punctaj de 9999 sau mai mare:"
+
+#~ msgid "Articles with a Score between 5000 and 9998:"
+#~ msgstr "Articole cu un punctaj între 5000 şi 9998:"
+
+#~ msgid "Articles with a Score between 1 and 4999:"
+#~ msgstr "Articole cu punctaj între 1 şi 4999:"
+
+#~ msgid "Articles with a Score between -9998 and -1:"
+#~ msgstr "Articole cu punctaj între -9998 şi -1:"
+
+#~ msgid "Articles with a Score of -9999 or lower:"
+#~ msgstr "Articole cu punctaj de -9999 sau mai mic:"
+
+#~ msgid "_1:"
+#~ msgstr "_1:"
+
+#~ msgid "_2:"
+#~ msgstr "_2:"
+
+#~ msgid "_3:"
+#~ msgstr "_3:"
+
+#~ msgid "Pane Order"
+#~ msgstr "Ordine panouri"
+
+#~ msgid "Action State"
+#~ msgstr "Starea acţiunilor"
+
+#~ msgid "Article State"
+#~ msgstr "Starea articolelor"
+
+#~ msgid "Column Layout"
+#~ msgstr "Aranjarea coloanelor"
+
+#~ msgid "When a Followup subject header changes, show as _new thread"
+#~ msgstr ""
+#~ "Când subiectul unui răspuns se schimbă, afişează ca un _nou fir de "
+#~ "discuţie"
+
+#~ msgid "E_xpand all threads by default"
+#~ msgstr "E_xpandează implicit toate firele de discuţie"
+
+#~ msgid "Show complete _multipart posts as a single article"
+#~ msgstr "Afişează articolele _multipart complete ca un singur articol"
+
+#~ msgid "Date Forma_t:"
+#~ msgstr "Forma_t dată:"
+
+#~ msgid "Show \"%s\" header"
+#~ msgstr "Afişează antetul \"%s\""
+
+#~ msgid "Newsreader"
+#~ msgstr "Cititor de ştiri"
+
+#~ msgid "Characters denoting _quoted text:"
+#~ msgstr "Ghilimele pentru textul _citat:"
+
+#~ msgid "Download new headers from s_ubscribed groups when starting Pan"
+#~ msgstr "La pornirea Pan, descarcă antete noi de la grupurile a_bonate"
+
+#~ msgid ""
+#~ "Download new headers and bod_ies from subscribed groups when starting Pan"
+#~ msgstr ""
+#~ "La pornirea Pan, descarcă antete şi conţinuturi noi de la grupurile "
+#~ "abonate"
+
+#~ msgid "Download Directory"
+#~ msgstr "Director de descărcare"
+
+#~ msgid "Save a_ttachments in directory:"
+#~ msgstr "Salvează a_taşamentele în directorul:"
+
+#~ msgid "Automatically remove _failed tasks from the task manager"
+#~ msgstr ""
+#~ "Şterge automat din administratorul de procese procesele care au eşuat"
+
+#~ msgid "Article Cache"
+#~ msgstr "Cache de articole"
+
+#~ msgid "_Erase cache when exiting Pan"
+#~ msgstr "Ş_terge cache-ul la ieşirea din Pan"
+
+#~ msgid "Ma_ximum Cache Size (Megs):"
+#~ msgstr "Dimensiunea m_aximă a cache-ului (megaocteţi):"
+
+#~ msgid "_Editor (%t is filename):"
+#~ msgstr "_Editor (%t este un nume de fişier):"
+
+#~ msgid ""
+#~ "Scorefile _Editor:\n"
+#~ "(%t is filename, %n is line number)"
+#~ msgstr ""
+#~ "_Editor de punctaje:\n"
+#~ "(%t este un nume de fişier, %n este numărul unei linii)"
+
+#~ msgid "Scorefile"
+#~ msgstr "Fişier cu punctaje"
+
+#~ msgid "Score_file"
+#~ msgstr "_Fişier cu punctaje"
+
+#~ msgid "Sending Mail"
+#~ msgstr "Email"
+
+#~ msgid "Mail Server Add_ress:"
+#~ msgstr "Ad_resă server de mail:"
+
+#~ msgid "Mail Server Por_t:"
+#~ msgstr "Por_t server de mail:"
+
+#~ msgid "Hea_der Pane"
+#~ msgstr "Panou cu _antete"
+
+#~ msgid "A_pps & Mail"
+#~ msgstr "A_plicaţii & Mail"
+
+#~ msgid "Pan: Print"
+#~ msgstr "Pan: Tipărire"
+
+#~ msgid "You haven't loaded an article to print."
+#~ msgstr "Nu aţi descărcat articolul pe care vreţi să-l tipăriţi."
+
+#~ msgid ""
+#~ "%s\n"
+#~ "\n"
+#~ "Matches: %u\n"
+#~ "Group: %s\n"
+#~ "Rule: %s"
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Articole găsite: %u\n"
+#~ "Grup: %s\n"
+#~ "Regulă: %s"
+
+#~ msgid "Mark as"
+#~ msgstr "Marchează ca"
+
+#~ msgid "_Flag body for download"
+#~ msgstr "_Marchează conţinutul pentru descărcare"
+
+#~ msgid "_Retrieve Body"
+#~ msgstr "_Descarcă conţinut"
+
+#~ msgid "_Watch thread (highlights the thread)"
+#~ msgstr "_Urmăreşte firul de discuţie (marchează firul de discuţie)"
+
+#~ msgid "_Ignore thread (hides the thread by default)"
+#~ msgstr "_Ignoră firul de discuţie (ascunde implicit firul de discuţie)"
+
+#~ msgid "Edit Filters"
+#~ msgstr "Editare filtre"
+
+#~ msgid "Rule applies to all newsgroups"
+#~ msgstr "Regula se aplică tuturor grupurilor"
+
+#~ msgid "Wildcard group specification:"
+#~ msgstr "Specificare grup cu metacaractere"
+
+#~ msgid "(e.g., *anime*)"
+#~ msgstr "(e.g., *anime*)"
+
+#~ msgid "Rule applies to specific newsgroups:"
+#~ msgstr "Regula se aplică unor grupuri specifice:"
+
+#~ msgid "Rule applies to:"
+#~ msgstr "Regula se aplică la:"
+
+#~ msgid "Rule Name:"
+#~ msgstr "Nume regulă:"
+
+#~ msgid "Apply to Incoming"
+#~ msgstr "Aplică mesajelor care vin"
+
+#~ msgid ""
+#~ "If enabled, this rule will be applied to headers when they are downloaded."
+#~ msgstr ""
+#~ "Dacă e activată, această regulă va fi aplicată antetelor la descărcare."
+
+#~ msgid "New Rule"
+#~ msgstr "Regulă nouă"
+
+#~ msgid "Delete Articles by Bozos"
+#~ msgstr "Şterge articolele de la proşti"
+
+#~ msgid "Applying rule to selected groups"
+#~ msgstr "Aplic regula grupurilor selectate"
+
+#~ msgid "Applying rule \"%s\" to group \"%s\""
+#~ msgstr "Aplic regula \"%s\" grupului \"%s\""
+
+#~ msgid "Rules"
+#~ msgstr "Reguli"
+
+#~ msgid "Hit Ratio"
+#~ msgstr "Nivel de succes"
+
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Selected\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "Aplică\n"
+#~ "grupurilor\n"
+#~ "selectate"
+
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Subscribed\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "Aplică\n"
+#~ "grupurilor\n"
+#~ "abonate"
+
+#~ msgid "Wrote rules to \"%s\""
+#~ msgstr "Am salvat regulile în \"%s\""
+
+#~ msgid ""
+#~ "Can't find filter \"%s\" needed by rule \"%s\", so no articles match."
+#~ msgstr ""
+#~ "Nu găsesc filtrul \"%s\" de care are nevoie regula \"%s\", astfel că nici "
+#~ "un articol nu corespunde."
+
+#~ msgid "%u articles match rule %s"
+#~ msgstr "%u articole corespund regulii %s"
+
+#~ msgid "Pan: Manual Decode"
+#~ msgstr "Pan: Decodificare manuală"
+
+#~ msgid "Save Files in Directory"
+#~ msgstr "Salvează fişierele într-un director"
+
+#~ msgid "_Directory:"
+#~ msgstr "_Director:"
+
+#~ msgid "Add to the _top of the Task Manager's List"
+#~ msgstr "Adaugă la î_nceputul listei administratorului de procese"
+
+#~ msgid "Criterion \"%s\" is selected, but empty."
+#~ msgstr "Criteriul \"%s\" este selectat, dar este gol."
+
+#~ msgid "No criteria are selected."
+#~ msgstr "Nici un criteriu selectat."
+
+#~ msgid "Pan: Add to Scorefile"
+#~ msgstr "Pan: Adăugare punctaj"
+
+#~ msgid "Group"
+#~ msgstr "Grup"
+
+#~ msgid "Su_bject:"
+#~ msgstr "Su_biect"
+
+#~ msgid "A_uthor:"
+#~ msgstr "A_utor:"
+
+#~ msgid "_Lines:"
+#~ msgstr "_Linii:"
+
+#~ msgid "at least N lines long"
+#~ msgstr "lung de cel puţin N linii"
+
+#~ msgid "less than N lines long"
+#~ msgstr "lung de mai puţin de N linii"
+
+#~ msgid "Chan_ge Score:"
+#~ msgstr "Schim_bă punctaj:"
+
+#~ msgid "subtract"
+#~ msgstr "scade"
+
+#~ msgid "Expire in N _days:"
+#~ msgstr "Expiră în N _zile:"
+
+#~ msgid "Edit the selected score"
+#~ msgstr "Editează punctajul selectat"
+
+#~ msgid "You must specify an address."
+#~ msgstr "Trebuie specificată o adresă."
+
+#~ msgid "You must specify a password or disable authorization."
+#~ msgstr "Trebui specificată o parolă sau dezactivată autorizarea."
+
+#~ msgid "You must specify a .newsrc filename or disable newsrc support."
+#~ msgstr ""
+#~ "Trebuie specificat un nume de fişier .newsrc sau dezactivat suportul "
+#~ "newsrc."
+
+#~ msgid "Newsrc"
+#~ msgstr "Newsrc"
+
+#~ msgid "Us_e .newsrc file"
+#~ msgstr "Folo_seşte fişierul .newsrc"
+
+#~ msgid "Select .newsrc File"
+#~ msgstr "Selectează fişierul .newsrc"
+
+#~ msgid "_Filename:"
+#~ msgstr "_Nume fişier:"
+
+#~ msgid "Edit the selected server"
+#~ msgstr "Editează serverul selectat"
+
+#~ msgid "Remove the selected server"
+#~ msgstr "Şterge serverul selectat"
+
+#~ msgid "Got unexpected response from mail server: expected %d; got %s"
+#~ msgstr ""
+#~ "Am primit un răspuns neaşteptat de la serverul de mail: am aşteptat %d; "
+#~ "am primit %s"
+
+#~ msgid "Sending mail"
+#~ msgstr "Trimit mail"
+
+#~ msgid "No known recipients"
+#~ msgstr "Nici un destinatar cunoscut"
+
+#~ msgid "Mail sent!"
+#~ msgstr "Mail trimis!"
+
+#~ msgid "Handshaking with mail server"
+#~ msgstr "Negociez cu serverul de mail"
+
+#~ msgid "Connecting to mail server"
+#~ msgstr "Mă conectez la serverul de mail"
+
+#~ msgid "Unable to connect to mail server \"%*.*s\""
+#~ msgstr "Nu mă pot conecta la serverul de mail \"%*.*s\""
+
+#~ msgid "Mail server not ready"
+#~ msgstr "Serverul de mail nu e pregătit"
+
+#~ msgid "Sending Keepalive"
+#~ msgstr "Trimit notificarea de prezenţă"
+
+#~ msgid "Disconnecting Idle"
+#~ msgstr "Închid conexiunile inactive"
+
+#~ msgid "Disconnecting one connection from `%s' after %d seconds idle"
+#~ msgstr "Închid conexiunea de la `%s' după %d secunde de inactivitate"
+
+#~ msgid "Connection to %*.*s, port %d failed: %s"
+#~ msgstr "Conectarea la %*.*s, portul %d a eşuat: %s"
+
+#~ msgid "Downloading %d"
+#~ msgstr "Descarc %d"
+
+#~ msgid "\"%s\""
+#~ msgstr "\"%s\""
+
+#~ msgid "Downloading %u articles"
+#~ msgstr "Descarc %u articole"
+
+#~ msgid "Article %s (%s) canceled"
+#~ msgstr "Articol %s (%s) anulat"
+
+#~ msgid "Updating article counts for %u groups from server \"%s\""
+#~ msgstr ""
+#~ "Actualizez numărul de articole pentru %u grupuri de la serverul \"%s\""
+
+#~ msgid "Updated counts for %u groups out of %u"
+#~ msgstr "Am actualizat numărul de articole pentru %u din %u grupuri"
+
+#~ msgid "Unable to update counts for group \"%s\""
+#~ msgstr "Nu pot actualiza numărul de articole pentru grupul \"%s\""
+
+#~ msgid "Getting all groups from server \"%s\""
+#~ msgstr "Descarc toate grupurile de la serverul \"%s\""
+
+#~ msgid "Adding groups to server \"%s\""
+#~ msgstr "Adaug grupuri la serverul \"%s\""
+
+#~ msgid "List Newsgroups failed: %s"
+#~ msgstr "Nu s-a putut obţine lista de grupuri: %s"
+
+#~ msgid "Got %d descriptions from server \"%s\""
+#~ msgstr "Am descărcat %d descrieri de la serverul \"%s\""
+
+#~ msgid "New groups retrieval failed: %s"
+#~ msgstr "Descărcarea grupurilor noi a eşuat: %s"
+
+#~ msgid "No new articles in group \"%s\""
+#~ msgstr "Nici un articol nou în grupul \"%s\""
+
+#~ msgid "New %lu of %lu"
+#~ msgstr "%lu noi din %lu"
+
+#~ msgid "Sampling %lu of %lu"
+#~ msgstr "Triez %lu din %lu"
+
+#~ msgid "All %lu of %lu"
+#~ msgstr "Toate %lu din %lu"
+
+#~ msgid "Not Queued"
+#~ msgstr "Nu e în coadă"
+
+#~ msgid "Stopping"
+#~ msgstr "În curs de oprire"
+
+#~ msgid "Pan %s Task Manager"
+#~ msgstr "Pan %s Administrator de Procese"
+
+#~ msgid "Move Selected Task(s) Up"
+#~ msgstr "Mută procesele selectate în sus"
+
+#~ msgid "Move Selected Task(s) to Top"
+#~ msgstr "Mută procesele selectate la început"
+
+#~ msgid "Move Selected Task(s) Down"
+#~ msgstr "Mută procesele selectate în jos"
+
+#~ msgid "Move Selected Task(s) to Bottom"
+#~ msgstr "Mută procesele selectate la sfârşit"
+
+#~ msgid "Stop Selected Task(s)"
+#~ msgstr "Opreşte procesele selectate"
+
+#~ msgid "Delete Selected Task(s)"
+#~ msgstr "Şterge procesele selectate"
+
+#~ msgid "Time Remaining"
+#~ msgstr "Timp rămas"
+
+#~ msgid "[This is an email copy of a Usenet post to \"%s\"]"
+#~ msgstr "[Aceasta este o copie email a unui articol trimis la \"%s\"]"
+
+#~ msgid "Email \"%s\" sent."
+#~ msgstr "Emailul \"%s\" a fost trimis."
+
+#~ msgid "Email \"%s\" not sent."
+#~ msgstr "Emailul \"%s\" nu a fost trimis."
+
+#~ msgid "Article \"%s\" posted."
+#~ msgstr "Articolul \"%s\" a fost trimis."
+
+#~ msgid "Article \"%s\" not posted."
+#~ msgstr "Articolul \"%s\" nu a fost trimis."
+
+#~ msgid "Posting and mailing article \"%s\""
+#~ msgstr "Trimit articolul \"%s\", inclusiv prin email"
+
+#~ msgid "Mailing article \"%s\""
+#~ msgstr "Trimit articolul \"%s\" prin email"
+
+#~ msgid "Email send failed.  "
+#~ msgstr "Trimiterea prin email a eşuat."
+
+#~ msgid "Usenet posting failed.  "
+#~ msgstr "Trimiterea către Usenet a eşuat."
+
+#~ msgid "Check Tools|Log Viewer for more information.  "
+#~ msgstr "Verificaţi Unelte|Vizualizare jurnal pentru mai multe informaţii."
+
+#~ msgid "Your message was saved in the folder \"pan.sendlater\""
+#~ msgstr "Mesajul dumneavoastră a fost salvat în directorul \"pan.sendlater\""
+
+#~ msgid "Saving `%s'"
+#~ msgstr "Salvez `%s'"
+
+#~ msgid "Saving Attachments"
+#~ msgstr "Salvez ataşamentele"
+
+#~ msgid "Save Article can't access path \"%s\""
+#~ msgstr "Salvarea articolului nu poate accesa calea \"%s\""
+
+#~ msgid "Saved article body to \"%s\""
+#~ msgstr "Am salvat conţinutul articolului în \"%s\""
+
+#~ msgid ""
+#~ "Pan %s\n"
+#~ "Copyright (c) %d by Charles Kerr\n"
+#~ "\n"
+#~ "If you find a bug, please report it.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Pan %s\n"
+#~ "Copyright (c) %d de Charles Kerr\n"
+#~ "\n"
+#~ "Dacă întâmpinaţi vreo problemă, vă rugăm să o raportaţi.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "http://pan.rebelbase.com/ - Pan Homepage\n"
+#~ "http://pan.rebelbase.com/bugs/ - Report a Bug\n"
+#~ "http://pan.rebelbase.com/download/ - Upgrade\n"
+#~ "\n"
+#~ msgstr ""
+#~ "http://pan.rebelbase.com/ - Pagina web Pan\n"
+#~ "http://pan.rebelbase.com/bugs/ - Raportaţi o problemă\n"
+#~ "http://pan.rebelbase.com/download/ - Upgrade\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "This program is free software; you can redistribute it\n"
+#~ "and/or modify it under the terms of the GNU General Public\n"
+#~ "License as published by the Free Software Foundation;\n"
+#~ "version 2 of the License.\n"
+#~ "\n"
+#~ "This program is distributed in the hope that it will be\n"
+#~ "useful, but WITHOUT ANY WARRANTY; without even the implied\n"
+#~ "warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR\n"
+#~ "PURPOSE.  See the GNU General Public License for more\n"
+#~ "details.\n"
+#~ "\n"
+#~ "The GNU Public License can be found from the menu above\n"
+#~ "in Help|About|License."
+#~ msgstr ""
+#~ "Acest program este liber; îl puteţi redistribui şi/sau modifica în\n"
+#~ "conformitate cu termenii Licenţei Publice Generale GNU aşa cum\n"
+#~ "este publicată de Free Software Foundation; versiunea 2 a\n"
+#~ "Licenţei.\n"
+#~ "\n"
+#~ "Acest program este distribuit cu speranţa că va fi util, dar FĂRĂ\n"
+#~ "NICI O GARANŢIE, fără garanţie implicită de vandabilitate sau\n"
+#~ "conformitate unui anumit scop.  Citiţi Licenţa Publică Generală\n"
+#~ "GNU pentru detalii.\n"
+#~ "\n"
+#~ "Licenţa Publică GNU se află în meniul Ajutor|Despre|Licenţă."
+
+#~ msgid "Error starting external browser: %s"
+#~ msgstr "Eroare la pornirea navigatorului extern: %s"
+
+#~ msgid "Error starting external scorefile editor: %s"
+#~ msgstr "Eroare la pornirea editorului de punctaje extern: %s"
+
+#~ msgid "Incomplete Profile."
+#~ msgstr "Date identitate incomplete."
+
+#~ msgid "No articles found for group \"%s\""
+#~ msgstr "Grupul \"%s\" nu conţine nici un articol"

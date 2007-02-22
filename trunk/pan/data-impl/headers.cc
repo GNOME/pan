@@ -1,0 +1,1172 @@
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/*
+ * Pan - A Newsreader for Gtk+
+ * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+#include <config.h>
+#include <cerrno>
+#include <fstream>
+#include <map>
+#include <vector>
+#include <string>
+#include <cmath>
+extern "C" {
+  #include <sys/types.h> // for chmod
+  #include <sys/stat.h> // for chmod
+  #include <glib/gi18n.h>
+  #include <glib/gmessages.h> // for g_assert
+}
+#include <pan/general/debug.h>
+#include <pan/general/foreach.h>
+#include <pan/general/log.h>
+#include <pan/general/messages.h>
+#include <pan/general/quark.h>
+#include <pan/general/time-elapsed.h>
+#include <pan/data/article.h>
+#include <pan/data/filter-info.h>
+#include "article-filter.h"
+#include "data-impl.h"
+
+using namespace pan;
+
+DataImpl :: GroupHeaders :: GroupHeaders ():
+  _ref (0),
+  _dirty (false)
+{
+}
+
+DataImpl :: GroupHeaders :: ~GroupHeaders ()
+{
+}
+
+DataImpl :: ArticleNode*
+DataImpl :: GroupHeaders :: find_node (const Quark& mid)
+{
+  ArticleNode * node (0);
+  nodes_t::iterator it (_nodes.find (mid));
+  if (it != _nodes.end())
+    node = it->second;
+  return node;
+}
+
+const DataImpl :: ArticleNode*
+DataImpl :: GroupHeaders :: find_node (const Quark& mid) const
+{
+  const ArticleNode * node (0);
+  nodes_t::const_iterator it (_nodes.find (mid));
+  if (it != _nodes.end())
+    node = it->second;
+  return node;
+}
+
+const Quark&
+DataImpl :: GroupHeaders :: find_parent_message_id (const Quark& mid) const
+{
+  const ArticleNode * node (find_node (mid));
+  if (node && node->_parent)
+    return node->_parent->_mid;
+
+  static const Quark empty_quark;
+  return empty_quark;
+}
+
+const Article*
+DataImpl :: GroupHeaders :: find_article (const Quark& message_id) const
+{
+  Article *a (0);
+
+  const ArticleNode * node (find_node (message_id));
+  if (node)
+    a = node->_article;
+
+  return a;
+}
+
+Article*
+DataImpl :: GroupHeaders :: find_article (const Quark& message_id)
+{
+  Article *a(0);
+
+  const ArticleNode * node (find_node (message_id));
+  if (node)
+    a = node->_article;
+
+  return a;
+}
+
+void
+DataImpl :: GroupHeaders :: remove_articles (const quarks_t& mids)
+{
+  nodes_v nodes;
+  find_nodes (mids, _nodes, nodes);
+  foreach (nodes_v, nodes, it)
+    (*it)->_article = 0;
+  _dirty = true;
+}
+  
+const DataImpl :: GroupHeaders*
+DataImpl :: get_group_headers (const Quark& group) const
+{
+   group_to_headers_t::const_iterator it (_group_to_headers.find(group));
+   return it==_group_to_headers.end() ? 0 : it->second;
+}
+
+DataImpl :: GroupHeaders*
+DataImpl :: get_group_headers (const Quark& group)
+{
+   group_to_headers_t::iterator it (_group_to_headers.find(group));
+   return it==_group_to_headers.end() ? 0 : it->second;
+}
+
+void
+DataImpl :: GroupHeaders :: build_references_header (const Article* article, std::string& setme) const
+{
+  setme.clear ();
+  const Quark& message_id (article->message_id);
+  const ArticleNode * node (find_node (message_id));
+  while (node->_parent != 0) {
+    node = node->_parent;
+    const StringView& ancestor_mid = node->_mid.to_view ();
+    setme.insert (0, ancestor_mid.str, ancestor_mid.len);
+    if (node->_parent)
+      setme.insert (0, 1, ' ');
+  }
+}
+
+void
+DataImpl :: get_article_references (const Quark& group, const Article* article, std::string& setme) const
+{
+  const GroupHeaders * h (get_group_headers (group));
+  if (!h)
+    setme.clear ();
+  else
+    h->build_references_header (article, setme);
+}
+
+void
+DataImpl :: free_group_headers_memory (const Quark& group)
+{
+  group_to_headers_t::iterator it (_group_to_headers.find (group));
+  if (it != _group_to_headers.end()) {
+    delete it->second;
+    _group_to_headers.erase (it);
+  }
+}
+
+void
+DataImpl :: ref_group (const Quark& group)
+{
+  GroupHeaders * h (get_group_headers (group));
+  if (!h)
+  {
+    h = _group_to_headers[group] = new GroupHeaders ();
+    load_headers (*_data_io, group);
+  }
+  ++h->_ref;
+  //std::cerr << LINE_ID << " group " << group << " refcount up to " << h->_ref << std::endl;
+}
+
+void
+DataImpl :: unref_group   (const Quark& group)
+{
+  GroupHeaders * h (get_group_headers (group));
+  pan_return_if_fail (h != 0);
+
+  --h->_ref;
+  //std::cerr << LINE_ID << " group " << group << " refcount down to " << h->_ref << std::endl;
+  if (h->_ref == 0)
+  {
+    if (h->_dirty) {
+      save_headers (*_data_io, group);
+    }
+    h->_dirty = false;
+    free_group_headers_memory (group);
+  }
+}
+
+void
+DataImpl :: find_nodes (const quarks_t           & mids,
+                        nodes_t                  & nodes,
+                        nodes_v                  & setme)
+{
+  NodeWeakOrdering o;
+  nodes_t tmp;
+  std::set_intersection (nodes.begin(), nodes.end(),
+                         mids.begin(), mids.end(),
+                         std::inserter (tmp, tmp.begin()), o);
+
+  setme.reserve (tmp.size());
+  foreach_const (nodes_t, tmp, it)
+    setme.push_back (it->second);
+}
+
+void
+DataImpl :: find_nodes (const quarks_t           & mids,
+                        const nodes_t            & nodes,
+                        const_nodes_v            & setme)
+{
+  NodeWeakOrdering o;
+  nodes_t tmp;
+  std::set_intersection (nodes.begin(), nodes.end(),
+                         mids.begin(), mids.end(),
+                         std::inserter (tmp, tmp.begin()), o);
+
+  setme.reserve (tmp.size());
+  foreach_const (nodes_t, tmp, it)
+    setme.push_back (it->second);
+}
+
+/*******
+********
+*******/
+
+// 'article' must have been instantiated by
+// GroupHeaders::alloc_new_article()!!
+void
+DataImpl :: load_article (const Quark       & group,
+                          Article           * article,
+                          const StringView  & references)
+              
+{
+#if 0
+  std::cerr << LINE_ID << " adding article "
+            << " subject [" << article->subject << ']'
+            << " mid [" << article->message_id <<  ']'
+            << " references [" << references << ']'
+            << std::endl;
+#endif
+
+  GroupHeaders * h (get_group_headers (group));
+  pan_return_if_fail (h!=0);
+
+  // populate the current node
+  const Quark& mid (article->message_id);
+  ArticleNode * node (h->_nodes[mid]);
+  if (!node) {
+    static const ArticleNode blank_node;
+    h->_node_chunk.push_back (blank_node);
+    node = h->_nodes[mid] = &h->_node_chunk.back();
+    node->_mid = mid;
+  }
+  assert (!node->_article);
+  node->_article = article;
+  ArticleNode * article_node = node;
+
+  // build nodes for each of the references
+  StringView tok, refs(references);
+  //std::cerr << LINE_ID << " references [" << refs << ']' << std::endl;
+  while (refs.pop_last_token (tok, ' '))
+  {
+    tok.trim ();
+    if (tok.empty())
+      break;
+
+    ArticleNode * old_parent_node (node->_parent);
+    const Quark old_parent_mid (old_parent_node ? old_parent_node->_mid : Quark());
+    const Quark new_parent_mid (tok);
+    //std::cerr << LINE_ID << " now we're working on " << new_parent_mid << std::endl;
+
+    if (new_parent_mid == old_parent_mid)
+    {
+      //std::cerr << LINE_ID << " our tree agrees with the References header here..." << std::endl;
+      node = node->_parent;
+      continue;
+    }
+
+    if (!old_parent_node)
+    {
+      //std::cerr << LINE_ID << " haven't mapped " << new_parent_mid << " before..." << std::endl;
+      ArticleNode * new_parent_node (h->_nodes[new_parent_mid]);
+      const bool found (new_parent_node != 0);
+      if (!found) {
+        //std::cerr << LINE_ID << " didn't find it; adding new node for " << new_parent_mid << std::endl;
+        static const ArticleNode blank_node;
+        h->_node_chunk.push_back (blank_node);
+        new_parent_node = h->_nodes[new_parent_mid] = &h->_node_chunk.back();
+        new_parent_node->_mid = new_parent_mid;
+      }
+      node->_parent = new_parent_node;
+      if (find_ancestor (new_parent_node, new_parent_mid)) {
+        node->_parent = 0;
+        //std::cerr << LINE_ID << " someone's been munging References headers to cause trouble!" << std::endl;
+        break;
+      }
+      new_parent_node->_children.push_front (node);
+      node = new_parent_node;
+      continue;
+    }
+
+    ArticleNode * tmp;
+    if ((tmp = find_ancestor (node, new_parent_mid)))
+    {
+      //std::cerr << LINE_ID << " this References header has a hole... jumping to " << tmp->_mid << std::endl;
+      node = tmp;
+      continue;
+    }
+
+    const char * cpch;
+    if ((cpch = refs.strstr (old_parent_mid.to_view())))
+    {
+      //std::cerr << LINE_ID << " this References header fills a hole of ours ... " << new_parent_mid << std::endl;
+
+      // unlink from old parent
+      old_parent_node->_children.remove (node);
+      node->_parent = 0;
+
+      // link to new parent
+      ArticleNode * new_parent_node (h->_nodes[new_parent_mid]);
+      const bool found (new_parent_node != 0);
+      if (!found) {
+        //std::cerr << LINE_ID << " didn't find it; adding new node for " << new_parent_mid << std::endl;
+        static const ArticleNode blank_node;
+        h->_node_chunk.push_back (blank_node);
+        new_parent_node = h->_nodes[new_parent_mid] = &h->_node_chunk.back();
+        new_parent_node->_mid = new_parent_mid;
+      }
+      node->_parent = new_parent_node;
+      if (find_ancestor (new_parent_node, new_parent_mid) != 0) {
+        node->_parent = 0;
+        //std::cerr << LINE_ID << " someone's been munging References headers to cause trouble!" << std::endl;
+        break;
+      }
+      new_parent_node->_children.push_front (node);
+      node = new_parent_node;
+      continue;
+    }
+  }
+
+  // recursion?
+  assert (find_ancestor(article_node, article->message_id) == 0);
+}
+
+#if 0
+std::string
+DataImpl :: get_references (const Quark& group, const Article& a) const
+{
+  std::string s;
+
+  GroupHeaders * h (get_group_headers (group));
+  pan_return_if_fail (h!=0);
+
+  const Quark& mid (a.message_id);
+  ArticleNode * node (h->_nodes[mid]);
+  node = node->parent;
+  while (node) {
+    if (!s.empty())
+      s.insert (0, 1, ' ');
+    const StringView v (node->_mid.to_view());
+    s.insert (0, v.str, v.len);
+    node = node->parent;
+  }
+std::cerr << "article " << a.message_id << " references " << s << std::endl;
+  return s;
+}
+#endif
+
+void
+DataImpl :: load_part (const Quark          & group,
+                       const Quark          & mid,
+                       size_t                 number,
+                       size_t                 lines,
+                       Article::Part        & new_part)
+{
+   GroupHeaders * h = get_group_headers (group);
+   Article * a (h->find_article (mid));
+
+   pan_return_if_fail (a != NULL);
+
+   Article::Part& old_part (a->get_part (number));
+   if (old_part.empty()) {
+       old_part.swap (new_part);
+       a->lines += lines;
+   }
+}
+
+namespace
+{
+  unsigned long view_to_ul (const StringView& view)
+  {
+    unsigned long val (0);
+    if (!view.empty()) {
+      errno = 0;
+      val = strtoul (view.str, 0, 10);
+      if (errno) val = 0ul;
+    }
+    return val;
+  }
+}
+
+void
+DataImpl :: load_headers (const DataIO   & data_io,
+                          const Quark    & group)
+{
+  TimeElapsed timer;
+
+  GroupHeaders * h (get_group_headers (group));
+  assert (h != 0);
+
+  unsigned long article_count (0);
+  unsigned long unread_count (0);
+  StringView line;
+  bool success (false);
+  quarks_t servers;
+
+  ArticleFilter::sections_t score_sections;
+  _scorefile.get_matching_sections (StringView(group), score_sections);
+
+  const char * groupname (group.c_str());
+  LineReader * in (data_io.read_group_headers (group));
+  if (in && !in->fail())
+  {
+    do { // skip past the comments at the top
+      in->getline (line);
+      line.trim ();
+    } while (!line.empty() && *line.str=='#');
+
+    const int version (atoi (line.str));
+    if (version==1 || version==2)
+    {
+      // build the symbolic server / group lookup table
+      in->getline (line);
+      int symbol_qty (atoi (line.str));
+      Quark xref_lookup[CHAR_MAX];
+      for (int i=0; i<symbol_qty; ++i) {
+        StringView key;
+        in->getline (line);
+        line.trim();
+        if (line.pop_token(key,'\t') && key.len==1)
+          xref_lookup[(int)*key.str] = line;
+      }
+
+      // build the author lookup table
+      in->getline (line);
+      symbol_qty = atoi (line.str);
+      Quark author_lookup[CHAR_MAX];
+      for (int i=0; i<symbol_qty; ++i) {
+        StringView key;
+        in->getline (line);
+        line.trim ();
+        if (line.pop_token(key,'\t') && key.len==1) {
+          author_lookup[(int)*key.str] = line;
+        }
+      }
+
+      Xref::targets_t targets;
+      std::vector<Xref::Target>& targets_v (targets.get_container());
+        
+      // each article in this group...
+      unsigned int expire_count (0);
+      in->getline (line);
+      //const unsigned long article_qty = view_to_ul (line); /* unused */
+      const time_t now (time (0));
+      for (;;)
+      {
+        // look for the beginning of an Article record.
+        // it'll be a message-id line with no leading whitespace.
+        StringView s;
+        if (!in->getline (s)) // end of file
+          break;
+        if (s.empty() || *s.str!='<') // not a message-id...
+          continue;
+
+        Article& a (h->alloc_new_article());
+        a.message_id = s;
+
+        // subject line
+        in->getline (s); s.ltrim(); a.subject = s;
+
+        // author line
+        in->getline (s); s.ltrim(); a.author = s.len==1 ? author_lookup[(int)*s.str] : Quark(s);
+
+        // optional references line
+        std::string references;
+        in->getline (s); s.ltrim();
+        if (!s.empty() && *s.str=='<') {
+          references = s;
+          in->getline (s); s.ltrim();
+        }
+
+        // date-posted line
+        a.time_posted = view_to_ul (s);
+        const int days_old ((now - a.time_posted) / (24*60*60));
+
+        // xref line
+        in->getline (s); s.ltrim();
+        const size_t max_targets (std::count (s.begin(), s.end(), ' ') + 1);
+        targets_v.resize (max_targets);
+        Xref::Target * target_it (&targets_v.front());
+        StringView tok, server_tok, group_tok;
+        while (s.pop_token (tok)) {
+          if (tok.pop_token(server_tok,':') && tok.pop_token(group_tok,':')) {
+            target_it->server = server_tok;
+            target_it->group = group_tok.len==1 ? xref_lookup[(int)*group_tok.str] : Quark(group_tok);
+            target_it->number = view_to_ul (tok);
+            const Server * server (find_server (target_it->server));
+            if (server && ((!server->article_expiration_age) || (days_old <= server->article_expiration_age)))
+              ++target_it;
+          }
+        }
+        targets_v.resize (target_it - &targets_v.front());
+        targets.sort();
+        const bool expired (targets.empty());
+        a.xref.swap (targets);
+
+        // is_binary [total_part_count found_part_count]
+        int total_part_count (1);
+        int found_part_count (1);
+        in->getline (s);
+        s.ltrim();
+        s.pop_token (tok); a.is_binary = !tok.empty() && tok.str[0]=='t';
+        if (a.is_binary) {
+          s.ltrim(); s.pop_token (tok); total_part_count = atoi(tok.str);
+          s.ltrim(); s.pop_token (tok); found_part_count = atoi(tok.str);
+        }
+        s.ltrim(); if (s.pop_token (tok)) a.lines = view_to_ul (tok); // this field was added in 0.115
+        if (!expired)
+          a.set_part_count (total_part_count);
+
+        // found parts...
+        for (int i(0), count(found_part_count); i<count; ++i)
+        {
+          const bool gotline (in->getline (s));
+
+          if (gotline && !expired)
+          {
+            StringView tok;
+            s.ltrim ();
+            s.pop_token (tok);
+            const unsigned long number (view_to_ul (tok));
+            Article::Part& p (a.get_part (number));
+            s.ltrim ();
+            s.pop_token (tok);
+            p.set_message_id (a.message_id, (tok.len==1 && *tok.str=='"') ? a.message_id.to_view() : tok);
+            s.pop_token(tok); p.bytes = view_to_ul (tok);
+            if (s.pop_token(tok)) a.lines += view_to_ul (tok); // this field was removed in 0.115
+          }
+        }
+
+        // add the article to the group if it hasn't all expired
+        if (expired)
+          ++expire_count;
+        else {
+          load_article (group, &a, references);
+          a.score = _article_filter.score_article (*this, score_sections, group, a); // score _after_ threading, so References: works
+          ++article_count;
+          if (!is_read(&a))
+            ++unread_count;
+        }
+      }
+
+      if (expire_count)
+        Log::add_info_va (_("Expired %lu old articles from \"%s\""), expire_count, group.c_str());
+
+      success = !in->fail();
+    }
+    else
+    {
+      Log::add_urgent_va (
+        _("Unsupported data version for %s headers: %d.\nAre you running an old version of Pan by accident?"),
+        groupname, version);
+    }
+  }
+  delete in;
+
+  // update the group's article count...
+  ReadGroup& g (_read_groups[group]);
+  g._unread_count = unread_count;
+  g._article_count = article_count;
+  fire_group_counts (group, unread_count, article_count);
+
+  if (success) {
+    const double seconds = timer.get_seconds_elapsed ();
+    Log::add_info_va (
+      _("Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"),
+      article_count, group.c_str(), seconds,
+      article_count/(fabs(seconds)<0.001?0.001:seconds));
+  }
+}
+
+namespace
+{
+  typedef std::map < pan::Quark, char > quark_to_symbol_t;
+
+  struct QuarkToSymbol {
+    ~QuarkToSymbol () {}
+    QuarkToSymbol (const quark_to_symbol_t& map): _map(map) { }
+    const quark_to_symbol_t _map;
+    const char* operator() (const Quark& quark) const {
+      static char buf[2];
+      quark_to_symbol_t::const_iterator it (_map.find (quark));
+      if (it == _map.end())
+        return quark.c_str();
+      buf[0] = it->second;
+      buf[1] = '\0';
+      return buf;
+    }
+  };
+
+  typedef std::map<Quark,unsigned long> frequency_t;
+
+  const char * lookup_symbols ("abcdefghijklmnopqrstuvwxyz"
+                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                               "1234567890!@#$%^&*()");
+
+  QuarkToSymbol build_qts (frequency_t& freq)
+  {
+    quark_to_symbol_t qts_map;
+    for (int i(0), len(strlen(lookup_symbols)); i<len && !freq.empty(); ++i)
+    {
+      // find the most frequently-used entry still in freq
+      unsigned long max (0);
+      Quark q;
+      foreach_const (frequency_t, freq, it) {
+        if (it->second > max) {
+          max = it->second;
+          q = it->first;
+        }
+      }
+      //std::cerr << "[" << q << "] occurred " << max << " times" << std::endl;
+      qts_map[q] = lookup_symbols[i];
+      freq.erase (q);
+    }
+    freq.clear ();
+    return QuarkToSymbol (qts_map);
+  }
+
+  void write_qts (std::ostream* out, const QuarkToSymbol& qts, const StringView& comment)
+  {
+    Quark quarks[UCHAR_MAX];
+    foreach_const (quark_to_symbol_t, qts._map, it)
+      quarks[(int)it->second] = it->first;
+
+    const size_t len (qts._map.size());
+    *out << len;
+    if (!comment.empty())
+      *out << "\t # " << comment << '\n';
+    for (size_t i(0); i!=len; ++i) {
+      const char ch (lookup_symbols[i]);
+      *out << '\t' << ch << '\t' << quarks[(int)ch] << '\n';
+    }
+  }
+}
+
+
+bool
+DataImpl :: save_headers (DataIO                       & data_io,
+                          const Quark                  & group,
+                          const std::vector<Article*>  & articles,
+                          unsigned long                & part_count,
+                          unsigned long                & article_count) const
+{
+  const char endl ('\n');
+  const GroupHeaders * h (get_group_headers (group));
+  assert (h != 0);
+
+  part_count = 0;
+  article_count = 0;
+
+  bool success;
+  if (_unit_test)
+  {
+    Log::add_info_va ("Not saving %s's headers because we're in unit test mode",
+                      group.c_str());
+    success = true;
+  }
+  else
+  {
+    std::ostream * out (data_io.write_group_headers(group));
+
+    *out << "#\n"
+            "# This file has three sections.\n"
+            "#\n"
+            "# A. A shorthand table for the most frequent groups in the xrefs.\n"
+            "#    The first line tells the number of elements to follow,\n"
+            "#    then one line per entry with a one-character shorthand and full name.\n"
+            "#\n"
+            "# B. A shorthand table for the most freqent author names.\n"
+            "#    This is formatted just like the other shorthand table.\n"
+            "#    (sorted by post count, so it's also a most-frequent-posters list...)\n"
+            "#\n"
+            "# C. The group's headers section.\n"
+            "#    The first line tells the number of articles to follow,\n"
+            "#    then articles which each have the following lines:\n"
+            "#    1. message-id\n"
+            "#    2. subject\n"
+            "#    3. author\n"
+            "#    4. references. This line is omitted if the Article has an empty References header.\n"
+            "#    5. time-posted. This is a time_t (see http://en.wikipedia.org/wiki/Unix_time)\n"
+            "#    6. xref line, server1:group1:number1 server2:group2:number2 ...\n"
+            "#    7. has-attachments [parts-total-count parts-found-count] line-count\n"
+            "#       If has-attachments isn't 't' (for true), fields 2 and 3 are omitted.\n"
+            "#       If fields 2 and 3 are equal, the article is `complete'.\n"
+            "#    8. One line per parts-found-count: part-index message-id byte-count\n"
+            "#       a 'message-id' of '\"' is shorthand meaning use the message-id from line 1.\n"
+            "#\n";
+
+    // lines moved from line 8 to line 7 in 0.115, causing version 2
+    *out << "2\t # file format version number\n";
+
+    // xref lookup section
+    typedef std::map<Quark,unsigned long> frequency_t;
+    frequency_t frequency;
+    foreach_const (std::vector<Article*>, articles, ait)
+      foreach_const (Xref, (*ait)->xref, xit)
+        ++frequency[xit->group];
+    const QuarkToSymbol xref_qts (build_qts (frequency));
+    write_qts (out, xref_qts, "xref shorthand count");
+
+    // author lookup section
+    frequency.clear ();
+    foreach_const (std::vector<Article*>, articles, ait)
+      ++frequency[(*ait)->author];
+    const QuarkToSymbol author_qts (build_qts (frequency));
+    write_qts (out, author_qts, "author shorthand count");
+
+    // header section
+    *out << articles.size() << endl;
+    std::string references;
+    foreach_const (std::vector<Article*>, articles, ait)
+    {
+      ++article_count;
+
+      const Article * a (*ait);
+      const Quark& message_id (a->message_id);
+      h->build_references_header (a, references);
+
+      // message-id, subject, author
+      *out << message_id << "\n\t"
+           << a->subject << "\n\t"
+           << author_qts(a->author) << "\n\t";
+      // references line *IF* the article has a References header
+      if (!references.empty())
+        *out << references << "\n\t";
+
+      // date
+      *out << a->time_posted << "\n\t";
+
+      // xref
+      foreach_const (Xref, a->xref, xit)
+        *out << xref_qts(xit->server) << ':' << xref_qts(xit->group) << ':' << xit->number << ' ';
+      *out << "\n\t";
+
+      // is_binary [total_part_count found_part_count]
+      *out << (a->is_binary ? 't' : 'f');
+      if (a->is_binary) {
+        int foundPartCount (0);
+        foreach_const (Article::parts_t, a->parts, pit)
+          if (!pit->empty())
+            ++foundPartCount;
+        *out << ' ' << a->get_part_count() << ' ' << foundPartCount;
+      }
+      *out << ' ' << a->lines << '\n';
+
+      // one line per foundPartCount (part-index message-id bytes lines)
+      int number (0);
+      bool first (true);
+      foreach_const (Article::parts_t, a->parts, pit) {
+        ++number;
+        if (!pit->empty()) {
+          ++part_count;
+          const Article::Part& p (*pit);
+          *out << '\t' << number << ' ';
+          const std::string tmp (p.get_message_id (message_id));
+          if (message_id.to_view() == tmp)
+            *out << '"';
+          else
+            *out << tmp;
+          *out << ' ' << p.bytes << '\n';
+           first = false;
+        }
+      }
+    }
+
+    success = !out->fail ();
+    data_io.write_done (out);
+    save_group_xovers (data_io);
+  }
+
+  return success;
+}
+
+void
+DataImpl :: save_headers (DataIO& data_io, const Quark& group) const
+{
+   pan_return_if_fail (!group.empty());
+
+   TimeElapsed timer;
+
+   // get a list of the articles
+   const GroupHeaders * h (get_group_headers (group));
+   std::vector<Article*> articles;
+   foreach_const (nodes_t, h->_nodes, it)
+      if (it->second->_article)
+         articles.push_back (it->second->_article);
+
+   unsigned long part_count (0ul);
+   unsigned long article_count (0ul);
+   const bool success (
+     save_headers(data_io, group, articles, part_count, article_count));
+   const double time_elapsed (timer.get_seconds_elapsed());
+   if (success)
+      Log::add_info_va (
+   _("Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"),
+         part_count,
+         article_count,
+         group.c_str(),
+         time_elapsed,
+         article_count/(fabs(time_elapsed)<0.001?0.001:time_elapsed));
+}
+
+
+
+/*******
+********
+*******/
+
+void
+DataImpl :: mark_read (const Article & a, bool read)
+{
+  const Article * aptr (&a);
+  mark_read (&aptr, 1, read);
+}
+
+void
+DataImpl :: mark_read (const Article  ** articles,
+                       unsigned long     article_count,
+                       bool              read)
+{
+  typedef std::map<Quark,quarks_t> group_to_changed_mids_t;
+  group_to_changed_mids_t group_to_changed_mids;
+
+  // set them to `read'...
+  for (const Article **it(articles), **end(articles+article_count); it!=end; ++it) {
+    const Article * article (*it);
+    foreach_const (Xref, article->xref, xit) {
+      const bool old_state (_read_groups[xit->group][xit->server]._read.mark_one (xit->number, read));
+      if (!old_state != !read)
+        group_to_changed_mids[xit->group].insert (article->message_id);
+    }
+  }
+
+  // update the affected groups' unread counts...
+  foreach_const (group_to_changed_mids_t, group_to_changed_mids, it) {
+    const Quark& group (it->first);
+    ReadGroup& g (_read_groups[group]);
+    const size_t n (it->second.size());
+    if (read)
+      g.decrement_unread (n);
+    else
+      g._unread_count += n;
+    fire_group_counts (group, g._unread_count, g._article_count);
+    on_articles_changed (group, it->second, false);
+  }
+}
+
+
+bool
+DataImpl :: is_read (const Article* a) const
+{
+  // if it's read on any server, the whole thing is read.
+  if (a != 0)  {
+    foreach_const (Xref, a->xref, xit) {
+      const ReadGroup::Server * rgs (find_read_group_server (xit->group, xit->server));
+      if (rgs && rgs->_read.is_marked (xit->number))
+        return true;
+    }
+  }
+
+  return false;
+}
+
+void
+DataImpl :: get_article_scores (const Quark         & group,
+                                const Article       & article,
+                                Scorefile::items_t  & setme) const
+{
+  ArticleFilter :: sections_t sections;
+  _scorefile.get_matching_sections (StringView(group), sections);
+  _article_filter.get_article_scores (*this, sections, group, article, setme);
+}
+
+void
+DataImpl :: rescore ()
+{
+  //std::cerr << LINE_ID << " rescoring... " << std::endl;
+  const std::string filename (_data_io->get_scorefile_name());
+
+  // reload the scorefile...
+  _scorefile.clear ();
+  _scorefile.parse_file (filename);
+
+  // enumerate the groups that need rescoring...
+  quarks_t groups;
+  foreach (std::set<MyTree*>, _trees, it)
+    groups.insert ((*it)->_group);
+
+  // "on_articles_changed" rescores the articles...
+  foreach_const (quarks_t, groups, git) {
+    quarks_t mids;
+    const Quark& group (*git);
+    const GroupHeaders * h (get_group_headers (group));
+    foreach_const (nodes_t, h->_nodes, nit)
+      mids.insert (mids.end(), nit->first);
+    if (!mids.empty())
+      on_articles_changed (group, mids, true);
+  }
+}
+
+void
+DataImpl :: add_score (const StringView           & section_wildmat,
+                       int                          score_value,
+                       bool                         score_assign_flag,
+                       int                          lifespan_days,
+                       bool                         all_items_must_be_true,
+                       const Scorefile::AddItem   * items,
+                       size_t                       item_count,
+                       bool                         do_rescore)
+{
+  const std::string filename (_data_io->get_scorefile_name());
+
+  if (item_count && items)
+  {
+    // append to the file...
+    const std::string str (_scorefile.build_score_string (
+      section_wildmat, score_value, score_assign_flag, lifespan_days,
+      all_items_must_be_true, items, item_count));
+    std::ofstream o (filename.c_str(), std::ofstream::app|std::ofstream::out);
+    o << '\n' << str << '\n';
+    o.close ();
+    ::chmod (filename.c_str(), 0600);
+  }
+
+  if (do_rescore)
+    rescore ();
+}
+
+void
+DataImpl :: comment_out_scorefile_line (const StringView    & filename,
+                                        size_t                begin_line,
+                                        size_t                end_line,
+                                        bool                  do_rescore)
+{
+  std::string buf;
+
+  // read the file in...
+  std::string line;
+  std::ifstream in (filename.to_string().c_str());
+  size_t line_number (0);
+  while (std::getline (in, line)) {
+    ++line_number;
+    if (begin_line<=line_number && line_number<=end_line)
+      buf += '#';
+    buf += line;
+    buf += '\n';
+  }
+  in.close ();
+
+  // ..and back out again
+  const std::string f (filename.str, filename.len);
+  std::ofstream o (f.c_str(), std::ofstream::trunc|std::ofstream::out);
+  o << buf;
+  o.close ();
+  ::chmod (f.c_str(), 0600);
+
+  // rescore
+  if (do_rescore)
+    rescore ();
+}
+
+
+/***************************************************************************
+****************************************************************************
+***************************************************************************/
+
+namespace
+{
+  /** used by delete_articles */
+  struct PerGroup {
+    quarks_t mids;
+    int unread;
+    int count;
+    PerGroup(): unread(0), count(0) {}
+  };
+}
+
+void
+DataImpl :: group_clear_articles (const Quark& group)
+{
+  // if they're in memory, remove them from there too...
+  GroupHeaders* headers (get_group_headers (group));
+  if (headers) {
+    unique_articles_t all;
+    foreach (nodes_t, headers->_nodes, it)
+      if (it->second->_article)
+        all.insert (it->second->_article);
+    delete_articles (all);
+  }
+
+  // reset GroupHeaders' memory...
+//  headers->_nodes.clear ();
+//  headers->_node_chunk.clear ();
+//  headers->_art_chunk.clear ();
+
+  // remove 'em from disk too.
+  _data_io->clear_group_headers (group);
+
+  // fire a 'count changed' event.
+  ReadGroup& g (_read_groups[group]);
+  g._article_count = 0;
+  g._unread_count = 0;
+  fire_group_counts (group, g._unread_count, g._article_count);
+}
+
+void
+DataImpl :: delete_articles (const unique_articles_t& articles)
+{
+  quarks_t all_mids;
+
+  // info we need to batch these deletions per group...
+  typedef std::map<Quark,PerGroup> per_groups_t;
+  per_groups_t per_groups;
+
+  // populate the per_groups map
+  foreach_const (unique_articles_t, articles, it) {
+    const Article * article (*it);
+    quarks_t groups;
+    foreach_const (Xref, article->xref, xit)
+      groups.insert (xit->group);
+    const bool was_read (is_read (article));
+    foreach_const (quarks_t, groups, git) {
+      PerGroup& per (per_groups[*git]);
+      ++per.count;
+      if (!was_read) ++per.unread;
+      per.mids.insert (article->message_id);
+      all_mids.insert (article->message_id);
+    }
+  }
+
+  // process each group
+  foreach (per_groups_t, per_groups, it)
+  {
+    // update the group's read/unread count...
+    const Quark& group (it->first);
+    ReadGroup& g (_read_groups[group]);
+    g.decrement_unread (it->second.unread);
+    g.decrement_count (it->second.count);
+    fire_group_counts (group, g._unread_count, g._article_count);
+
+    // remove the articles from our lookup table...
+    GroupHeaders * h (get_group_headers (group));
+    if (h) 
+      h->remove_articles (it->second.mids);
+  }
+
+  on_articles_removed (all_mids);
+}
+
+void
+DataImpl :: on_articles_removed (const quarks_t& mids) const
+{
+  foreach (std::set<MyTree*>, _trees, it)
+    (*it)->remove_articles (mids);
+}
+
+void
+DataImpl :: on_articles_changed (const Quark& group, const quarks_t& mids, bool do_refilter)
+{
+  // if the articles are loaded, rescore them...
+  GroupHeaders * gh (get_group_headers (group));
+  if (gh) {
+    ArticleFilter::sections_t sections;
+    _scorefile.get_matching_sections (group.to_view(), sections);
+    nodes_v nodes;
+    find_nodes (mids, gh->_nodes, nodes);
+    foreach (nodes_v, nodes, it) {
+      if ((*it)->_article) {
+        Article& a (*(*it)->_article);
+        a.score = _article_filter.score_article (*this, sections, group, a);
+      }
+    }
+  }
+
+  // notify the trees that the articles have changed...
+  foreach (std::set<MyTree*>, _trees, it)
+    (*it)->articles_changed (mids, do_refilter);
+}
+
+void
+DataImpl :: on_articles_added (const Quark& group, const quarks_t& mids)
+{
+  if (!mids.empty())
+  {
+    Log::add_info_va (_("Added %lu articles to %s."),
+                      mids.size(), group.c_str());
+
+    foreach (std::set<MyTree*>, _trees, it) {
+      debug ("This tree has a group " << (*it)->_group);
+      if ((*it)->_group == group) {
+        debug ("trying to add the articles to tree " << *it);
+        (*it)->add_articles (mids);
+      }
+    }
+
+    ReadGroup& g (_read_groups[group]);
+    g._article_count += mids.size ();
+    g._unread_count += mids.size ();
+    fire_group_counts (group, g._unread_count, g._article_count);
+  }
+}
+
+
+DataImpl::ArticleNode*
+DataImpl :: find_ancestor (ArticleNode * node,
+                           const Quark & ancestor_mid)
+{
+  ArticleNode * parent_node (node->_parent);
+  while (parent_node && (parent_node->_mid != ancestor_mid))
+    parent_node = parent_node->_parent;
+  return parent_node;
+}
+
+DataImpl::ArticleNode*
+DataImpl :: find_closest_ancestor (ArticleNode                  * node,
+                                   const unique_sorted_quarks_t & mid_pool)
+{
+  ArticleNode * parent_node (node->_parent);
+  while (parent_node && !mid_pool.count(parent_node->_mid))
+    parent_node = parent_node->_parent;
+  return parent_node;
+}
+
+const DataImpl::ArticleNode*
+DataImpl :: find_closest_ancestor (const ArticleNode             * node,
+                                   const unique_sorted_quarks_t  & mid_pool)
+{
+  const ArticleNode * parent_node (node->_parent);
+  while (parent_node && !mid_pool.count(parent_node->_mid))
+    parent_node = parent_node->_parent;
+  return parent_node;
+}
+
+Data::ArticleTree*
+DataImpl :: group_get_articles (const Quark       & group,
+                                const ShowType      show_type,
+                                const FilterInfo  * filter) const
+{
+  // cast const away for group_ref()... consider _groups mutable
+  return new MyTree (*const_cast<DataImpl*>(this), group, show_type, filter);
+}
