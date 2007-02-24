@@ -1083,6 +1083,17 @@ namespace
         && (name.strstr ("X-Draft-") != name.str);
     return keep;
   }
+
+  /**
+   * Works around a GMime bug that uses `Message-Id' rather than `Message-ID'
+   */
+  void pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
+  {
+    g_mime_message_add_header (msg, "Message-ID", mid);
+    char * bracketed = g_strdup_printf ("<%s>", mid);
+    g_mime_header_set (GMIME_OBJECT(msg)->headers, "Message-ID", bracketed);
+    g_free (bracketed);
+  }
 }
 
 GMimeMessage*
@@ -1149,11 +1160,11 @@ PostUI :: new_message_from_ui (Mode mode)
     g_mime_message_set_header (msg, "User-Agent", get_user_agent());
 
   // Message-ID
-  if (mode==POSTING && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, true)) {
+  if (mode==POSTING && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
     const std::string message_id = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
-    g_mime_message_set_message_id (msg, message_id.c_str());
+    pan_g_mime_message_set_message_id (msg, message_id.c_str());
   }
 
   // body & charset
@@ -1968,7 +1979,7 @@ PostUI :: create_extras_tab ()
 
   ++row;
   w = _message_id_check = gtk_check_button_new_with_mnemonic (_("Add \"Message-_Id header"));
-  b = _prefs.get_flag (MESSAGE_ID_PREFS_KEY, true);
+  b = _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
   g_signal_connect (w, "toggled", G_CALLBACK(message_id_toggled_cb), &_prefs);
   gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, GTK_FILL, GTK_FILL, 0, 0);

@@ -120,7 +120,7 @@ Article :: get_part (unsigned int number) const
   return parts[index];
 }
 
-/* Message-Ids in multipart articles are usually nearly identical, like this:
+/* Message-IDs in multipart articles are usually nearly identical, like this:
 **
 **   <JIudnQRwg-iopJbYnZ2dnUVZ_v-dnZ2d@giganews.com>
 **   <JIudnQdwg-ihpJbYnZ2dnUVZ_v-dnZ2d@giganews.com>
@@ -130,7 +130,7 @@ Article :: get_part (unsigned int number) const
 **   <JIudnQNwg-jFpJbYnZ2dnUVZ_v-dnZ2d@giganews.com>
 **
 ** In large newsgroups, _many_ megs can be saved by stripping out common text.
-** We assign Article::Part's Message-Id by passing in its real Message-Id and
+** We assign Article::Part's Message-ID by passing in its real Message-ID and
 ** a reference key (which currently is always the owner Article's message_id).
 ** The identical chars at the beginning (b) and end (e) of the two are counted.
 ** b and e have an upper bound of UCHAR_MAX (255).

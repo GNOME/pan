@@ -370,7 +370,7 @@ DataImpl :: MyTree :: add_articles (const const_nodes_v& nodes_in)
   ///  1. add the new articles
   ///
 
-  // sort the nodes by Message-Id
+  // sort the nodes by Message-ID
   // so that we can use `nodes' for set operations
   const_nodes_v nodes (nodes_in);
   std::sort (nodes.begin(), nodes.end(), compare);
