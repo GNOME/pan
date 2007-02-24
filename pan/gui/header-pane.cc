@@ -1335,7 +1335,6 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF,
         "xpad", xpad,
-        "ypad", 0,
         NULL));
       col = gtk_tree_view_column_new ();
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
@@ -1350,7 +1349,6 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF,
         "xpad", xpad,
-        "ypad", 0,
         NULL));
       col = gtk_tree_view_column_new ();
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
@@ -1363,7 +1361,6 @@ HeaderPane :: build_tree_columns ()
     else if (name == "subject")
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
-        "ypad", 0,
         "xpad", xpad,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
@@ -1379,7 +1376,6 @@ HeaderPane :: build_tree_columns ()
     else if (name == "score")
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
-        "ypad", 0,
         "xpad", xpad,
         "xalign", 1.0,
         NULL));
@@ -1396,7 +1392,6 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
-        "ypad", 0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
       col = gtk_tree_view_column_new_with_attributes (_("Author"), r, "text", COL_SHORT_AUTHOR, NULL);
@@ -1410,7 +1405,6 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
-        "ypad", 0,
         "xalign", 1.0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
@@ -1425,7 +1419,6 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
-        "ypad", 0,
         "xalign", 1.0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
@@ -1441,7 +1434,6 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
-        "ypad", 0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
       col = gtk_tree_view_column_new_with_attributes (_("Date"), r, "text", COL_DATE_STR, NULL);
