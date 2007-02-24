@@ -1570,16 +1570,12 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     }
     else
     {
-      // get the entire body...
+      // get the body; remove the sig
       h = get_utf8_body (_message, group_charset);
-
-      // remove the sig...
+      StringView v (h);
       int sig_index (0);
       if (GNKSA::find_signature_delimiter (h, sig_index) != GNKSA::SIG_NONE)
-        h[sig_index] = '\0';
-
-      // trim...
-      StringView v (h);
+        v.len = sig_index;
       v.trim ();
       h = std::string (v.str, v.len);
     }
@@ -1605,7 +1601,7 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     g_object_unref (wrapper);
     g_object_unref (part);
     g_object_unref (stream);
-//std::cerr << LINE_ID << " here is the modified clone\n" << g_mime_message_to_string(msg) << std::endl;
+//std::cerr << LINE_ID << " here is the modified clone\n [" << g_mime_message_to_string(msg) << ']' << std::endl;
   }
 
   return msg;

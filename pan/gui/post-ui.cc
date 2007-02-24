@@ -1551,6 +1551,8 @@ PostUI :: apply_profile_to_body ()
   StringView v (body.c_str(), index);
   v.rtrim ();
   body.assign (v.str, v.len);
+  if (!body.empty())
+    body += "\n\n"; // add linefeed to the last quoted line, and add a blank line between quoted and new text
   const int insert_pos = body.size();
 
   // insert the new signature
@@ -1573,7 +1575,7 @@ PostUI :: apply_profile_to_body ()
   gtk_text_buffer_move_mark_by_name (buf, "selection_bound", &iter);
   gtk_text_view_scroll_to_mark (GTK_TEXT_VIEW(_body_view),
                                 gtk_text_buffer_get_mark(buf, "insert"),
-                                0.0, false, 0.0, 0.0);
+                                0.0, true, 0.0, 0.5);
 }
 
 void
