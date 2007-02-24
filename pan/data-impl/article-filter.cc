@@ -116,11 +116,21 @@ ArticleFilter :: test_article (const Data        & data,
             if ((pass = criteria._text.test (xit->group.to_view())))
               break;
         }
+        else if (criteria._text._impl_text.find("(.*:){") != std::string::npos) // user is filtering by # of crossposts
+        {
+          const char * search = "(.*:){";
+          std::string::size_type pos = criteria._text._impl_text.find (search) + strlen(search);
+          const int ge = atoi (criteria._text._impl_text.c_str() + pos);
+          FilterInfo tmp;
+          tmp.set_type_crosspost_count_ge (ge);
+          pass = test_article (data, tmp, group, article);
+        }
         else if (criteria._text._impl_text.find(".*:.*") != std::string::npos) // user is filtering by # of crossposts?
         {
           const StringView v (criteria._text._impl_text);
+          const int ge = std::count (v.begin(), v.end(), ':');
           FilterInfo tmp;
-          tmp.set_type_crosspost_count_ge (std::count (v.begin(), v.end(), ':'));
+          tmp.set_type_crosspost_count_ge (ge);
           pass = test_article (data, tmp, group, article);
         }
         else // oh fine, then, user is doing some other damn thing with the xref header.  build one for them.

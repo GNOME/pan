@@ -161,14 +161,13 @@ namespace
   /**
   **/
 
-  enum Days { WEEK=7, MONTH=31, MONTHS=93, FOREVER=0 };
+  enum Days { MONTH=31, MONTHS=(31*6), FOREVER=0 };
 
   GtkTreeModel* time_tree_model_new ()
   {
     struct { int type; const char * str; } items[] = {
-      { WEEK,       N_("for the next week") },
       { MONTH,      N_("for the next month") },
-      { MONTHS,     N_("for the next three months") },
+      { MONTHS,     N_("for the next six months") },
       { FOREVER,    N_("forever") },
     };
 
@@ -409,11 +408,10 @@ ScoreAddDialog :: add_this_to_scorefile (bool do_rescore)
     {
       // Xref is of form server group1:number1 group2:number2
       // so to count the crossposts, test for some number of colons.
-      // for >= 1 groups, use *:* 
-      // for >= 2 groups, use *:*:*  (negate to test for < 2 groups...)
-      const int more_than = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON (_numeric_criteria_spin));
-      item.value = ".*";
-      for (int i=0; i<=more_than; ++i) item.value += ":.*";
+      const int gt = (int) gtk_spin_button_get_value (GTK_SPIN_BUTTON (_numeric_criteria_spin));
+      char buf[512];
+      snprintf (buf, sizeof(buf), "(.*:){%d} %% crossposted to %d or more groups ", gt+1, gt+1);
+      item.value = buf;
       item.negate = rel != VAL_GT;
     }
     else // lines, bytes
