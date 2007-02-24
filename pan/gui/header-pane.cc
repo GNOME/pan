@@ -540,7 +540,7 @@ HeaderPane :: rebuild ()
     gtk_tree_view_expand_all (view);
 
   if (!selectme.empty())
-    select_message_id (*selectme.begin(), true);
+    select_message_id (*selectme.begin());
 }
 
 bool
@@ -739,11 +739,8 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
   // update our selection if necessary.
   // if the new selection has just been added or reparented,
   // scroll to it to ensure that it's visible on the screen.
-  if (!new_selection.empty()) {
-    const Quark mid (*new_selection.begin());
-    const bool do_scroll = diffs.added.count(mid) || diffs.reparented.count(mid);
-    select_message_id (mid, do_scroll);
-  }
+  if (!new_selection.empty())
+    select_message_id (*new_selection.begin());
 }
 
 /****

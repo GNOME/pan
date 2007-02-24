@@ -115,7 +115,7 @@ namespace pan
       const Quark& get_group () { return _group; }
 
     private:
-      void select_message_id (const Quark& mid, bool do_scroll);
+      void select_message_id (const Quark& mid, bool do_scroll=true);
 
     private:
       void rebuild ();
