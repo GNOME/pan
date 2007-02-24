@@ -1022,16 +1022,19 @@ namespace
 void
 PostUI :: open_draft ()
 {
-  std::string& draft_filename (get_draft_filename ());
-
   GtkWidget * d = gtk_file_chooser_dialog_new (_("Open Draft Article"),
                                                GTK_WINDOW(_root),
                                                GTK_FILE_CHOOSER_ACTION_OPEN,
                                                GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                                GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
                                                NULL);
-  if (!gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER(d), draft_filename.c_str()))
+
+  std::string& draft_filename (get_draft_filename ());
+  if (g_file_test (draft_filename.c_str(), G_FILE_TEST_IS_DIR))
+    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER(d), draft_filename.c_str());
+  else
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER(d), draft_filename.c_str());
+
   if (gtk_dialog_run(GTK_DIALOG(d)) == GTK_RESPONSE_ACCEPT)
   {
     char * pch = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER(d));
@@ -1202,8 +1205,6 @@ PostUI :: new_message_from_ui (Mode mode)
 void
 PostUI :: save_draft ()
 {
-  std::string& draft_filename (get_draft_filename ());
-
   GtkWidget * d = gtk_file_chooser_dialog_new (
     _("Save Draft Article"),
     GTK_WINDOW(_root),
@@ -1213,13 +1214,17 @@ PostUI :: save_draft ()
     NULL);
   gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_ACCEPT);
 
-  if (!gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER(d), draft_filename.c_str()))
+  std::string& draft_filename (get_draft_filename ());
+  if (g_file_test (draft_filename.c_str(), G_FILE_TEST_IS_DIR))
+    gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER(d), draft_filename.c_str());
+  else
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER(d), draft_filename.c_str());
 
   if (gtk_dialog_run(GTK_DIALOG(d)) == GTK_RESPONSE_ACCEPT)
   {
     GMimeMessage * msg = new_message_from_ui (DRAFTING);
     char * filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER(d));
+    draft_filename = filename;
 
     errno = 0;
     std::ofstream o (filename);
