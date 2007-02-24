@@ -23,14 +23,14 @@
 #include <deque>
 #include <pan/general/text-match.h>
 #include <pan/general/line-reader.h>
-#include <pan/data/filter-info.h>
+#include <pan/usenet-utils/filter-info.h>
 
 namespace pan
 {
   /**
    * Handles slrn-style Score files.
    *
-   * @ingroup data
+   * @ingroup usenet_utils
    */
   struct Scorefile
   {

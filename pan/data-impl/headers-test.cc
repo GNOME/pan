@@ -4,8 +4,8 @@
 #include <pan/general/log.h>
 #include <pan/general/test.h>
 #include <pan/general/time-elapsed.h>
+#include <pan/usenet-utils/filter-info.h>
 #include <pan/data/article.h>
-#include <pan/data/filter-info.h>
 #include "data-impl.h"
 
 using namespace pan;

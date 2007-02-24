@@ -23,8 +23,8 @@
 #include <pan/general/debug.h>
 #include <pan/general/foreach.h>
 #include <pan/general/quark.h>
+#include <pan/usenet-utils/filter-info.h>
 #include <pan/data/article.h>
-#include <pan/data/filter-info.h>
 #include "article-filter.h"
 #include "data-impl.h"
 

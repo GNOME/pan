@@ -28,7 +28,7 @@ extern "C" {
 #include <pan/general/e-util.h>
 #include <pan/general/file-util.h>
 #include <pan/general/foreach.h>
-#include <pan/data/scorefile.h>
+#include <pan/usenet-utils/scorefile.h>
 #include <pan/tasks/task-article.h>
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>

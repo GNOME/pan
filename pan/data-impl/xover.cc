@@ -32,8 +32,6 @@ extern "C" {
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/data/article.h>
-#include <pan/data/filter-info.h>
-#include "article-filter.h"
 #include "data-impl.h"
 
 using namespace pan;

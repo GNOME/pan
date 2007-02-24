@@ -22,9 +22,9 @@
 #include <vector>
 #include <gtk/gtk.h>
 #include <pan/general/quark.h>
+#include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
-#include <pan/data/scorefile.h>
 
 namespace pan
 {

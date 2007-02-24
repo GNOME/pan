@@ -21,10 +21,10 @@
 #define __ArticleFilter_h__
 
 #include <pan/general/quark.h>
+#include <pan/usenet-utils/filter-info.h>
+#include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
-#include <pan/data/filter-info.h>
-#include <pan/data/scorefile.h>
 
 namespace pan
 {

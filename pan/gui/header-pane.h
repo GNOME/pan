@@ -24,7 +24,7 @@
 #include <pan/general/e-util.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/data.h>
-#include <pan/data/filter-info.h>
+#include <pan/usenet-utils/filter-info.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/tasks/queue.h>
 #include <pan/gui/action-manager.h>

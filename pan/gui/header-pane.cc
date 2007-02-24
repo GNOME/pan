@@ -32,10 +32,10 @@ extern "C" {
 #include <pan/general/foreach.h>
 #include <pan/general/quark.h>
 #include <pan/general/log.h>
+#include <pan/usenet-utils/filter-info.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
-#include <pan/data/filter-info.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "header-pane.h"
 #include "pad.h"

@@ -8,8 +8,6 @@ libdata_a_SOURCES = \
  article.cc \
  article-cache.cc \
  data.cc \
- filter-info.cc \
- scorefile.cc \
  xref.cc
 
 noinst_HEADERS = \
@@ -17,14 +15,11 @@ noinst_HEADERS = \
  article-cache.h \
  data.h \
  defgroup.h \
- filter-info.h \
- scorefile.h \
  server-info.h \
  xref.h 
 
 noinst_PROGRAMS = \
- xref-test \
- scorefile-test
+ xref-test 
 
 #dnl decode-test 
 #dnl decode_test_SOURCES = decode-test.cc
@@ -34,5 +29,3 @@ TESTS = $(noinst_PROGRAMS)
 TEST_LDADD = ./libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a @GMIME_LIBS@ @GLIB_LIBS@ @PCRE_LIBS@
 xref_test_SOURCES = xref-test.cc
 xref_test_LDADD = $(TEST_LDADD)
-scorefile_test_SOURCES = scorefile-test.cc
-scorefile_test_LDADD = $(TEST_LDADD)

@@ -32,10 +32,10 @@
 #include <pan/general/map-vector.h>
 #include <pan/general/sorted-vector.h>
 #include <pan/usenet-utils/numbers.h>
+#include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/data.h>
-#include <pan/data/scorefile.h>
 #include <pan/tasks/queue.h>
 #include <pan/data-impl/data-io.h>
 #include <pan/data-impl/article-filter.h>

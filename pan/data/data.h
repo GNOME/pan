@@ -27,9 +27,9 @@
 
 #include <pan/general/quark.h>
 #include <pan/general/string-view.h>
+#include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
-#include <pan/data/scorefile.h>
 #include <pan/data/server-info.h>
 
 namespace pan
