@@ -449,6 +449,9 @@ Queue :: add_tasks (const tasks_t& tasks, AddMode mode)
   tasks_t tmp (tasks);
   foreach (tasks_t, tmp, it)
     process_task (*it);
+
+  // maybe fire counts changed events...
+  fire_if_counts_have_changed ();
 }
 
 bool
@@ -503,6 +506,9 @@ Queue :: remove_task (Task * task)
     _tasks.remove (index);
     delete task;
   }
+
+  // maybe fire counts changed events...
+  fire_if_counts_have_changed ();
 }
 
 void

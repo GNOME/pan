@@ -194,7 +194,7 @@ namespace
     { "file-menu", NULL, N_("_File") },
     { "edit-menu", NULL, N_("_Edit") },
     { "profile-menu", NULL, N_("_Profile") },
-    { "charsets-menu", NULL, N_("Character Encoding") },
+    { "charsets-menu", NULL, N_("Set Character Encoding") },
     { "editors-menu", NULL, N_("Set Editor") },
     { "post-toolbar", NULL, "post" },
     { "post-article", GTK_STOCK_EXECUTE, N_("_Send Article"), "<control>Return", N_("Send Article Now"), G_CALLBACK(do_send) },
@@ -445,7 +445,7 @@ PostUI :: manage_editors ()
 
   char b[512], lab[512];
   g_snprintf (b, sizeof(b), _("Editors"));
-  g_snprintf (lab, sizeof(lab), "        <b>%s:</b>        ", b);
+  g_snprintf (lab, sizeof(lab), "\t\t\t<b>%s:</b>\t\t\t", b);
   GtkWidget * w = gtk_label_new (NULL);
   gtk_label_set_markup (GTK_LABEL(w), lab);
   gtk_box_pack_start (GTK_BOX(GTK_DIALOG(d)->vbox), w, false, false, 0);
@@ -470,7 +470,9 @@ PostUI :: manage_editors ()
 
   gtk_dialog_run (GTK_DIALOG (d));
 
-  const std::string text (get_body ());
+  GtkTextIter start, end;
+  gtk_text_buffer_get_bounds (buf, &start, &end);
+  char * text = gtk_text_buffer_get_text (buf, &start, &end, false);
   commands.clear ();
   StringView token, v (text);
   while (v.pop_token (token, '\n')) {
@@ -478,6 +480,7 @@ PostUI :: manage_editors ()
     if (!token.empty())
       commands.push_back (token.to_string());
   }
+  g_free (text);
 
   _profiles.set_editors (commands);
   add_editor_list ();
