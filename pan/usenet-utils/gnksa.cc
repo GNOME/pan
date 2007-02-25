@@ -468,6 +468,8 @@ namespace
 
 namespace
 {
+   enum { ADDRTYPE_ROUTE, ADDRTYPE_OLDSTYLE };
+
    int split_from (const StringView   & from,
                    StringView         & addr,
                    StringView         & name,
@@ -484,13 +486,13 @@ namespace
 
       // empty string
       if (myfrom.empty()) {
-         addrtype = GNKSA::ADDRTYPE_OLDSTYLE;
+         addrtype = ADDRTYPE_OLDSTYLE;
          return GNKSA::LPAREN_MISSING;
       }
 
       if (myfrom.back() == '>') // Charles Kerr <charles@rebelbase.com>
       {
-         addrtype = GNKSA::ADDRTYPE_ROUTE;
+         addrtype = ADDRTYPE_ROUTE;
 
          // get address part
          char * begin = myfrom.strrchr ('<');
@@ -517,7 +519,7 @@ namespace
       }
       else if ((lparen = myfrom.strchr('(')) != NULL) // charles@rebelbase.com (Charles Kerr)
       {
-         addrtype = GNKSA::ADDRTYPE_OLDSTYLE;
+         addrtype = ADDRTYPE_OLDSTYLE;
 
          // address part
          StringView myaddr (myfrom.substr (0, lparen));
@@ -656,32 +658,6 @@ GNKSA :: get_short_author_name (const StringView& author)
   return s;
 }
 
-
-/*****
-******
-*****/
-
-void
-GNKSA :: strip_realname (char * realname)
-{
-   // remove white spaces and wrapped parenthesis
-   StringView str (realname);
-   str.trim ();
-   if (!str.empty() && str.front()=='(') {
-      str = str.substr (str.begin()+1, NULL);
-      if (str.back() == ')')
-         str = str.substr (str.begin(), str.end()-1);
-   }
-
-   // strip out quotation marks
-   std::string buf;
-   for (StringView::const_iterator it=str.begin(), end=str.end(); it!=end; ++it)
-      if (*it != '"')
-         buf += *it;
-
-   // write it back
-   std::copy (buf.begin(), buf.end(), realname);
-}
 
 /*****
 ******
@@ -896,41 +872,6 @@ GNKSA :: generate_references (const StringView   & references,
    }
 
    return s;
-}
-
-/***
-****
-****  DATE
-****
-***/
-
-time_t
-GNKSA :: tzoffset_sec (time_t * now)
-{
-   struct tm gmt = *gmtime (now);
-   struct tm lt = *localtime (now);
-
-   int off = (lt.tm_hour - gmt.tm_hour) * 60 + lt.tm_min - gmt.tm_min;
-
-   if (lt.tm_year < gmt.tm_year)
-      off -= 24 * 60;
-   else if (lt.tm_year > gmt.tm_year)
-      off += 24 * 60;
-   else if (lt.tm_yday < gmt.tm_yday)
-      off -= 24 * 60;
-   else if (lt.tm_yday > gmt.tm_yday)
-      off += 24 * 60;
-
-   if (off >= 24 * 60)             /* should be impossible */
-      off = 23 * 60 + 59;     /* if not, insert silly value */
-   if (off <= -24 * 60)
-      off = -(23 * 60 + 59);
-   if (off > 13 * 60) 
-      off -= 24 * 60;
-   if (off < -12 * 60)
-      off += 24 * 60;
-
-   return off * 60;
 }
 
 /***

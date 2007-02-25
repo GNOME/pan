@@ -76,10 +76,6 @@ namespace pan
             ILLEGAL_PAREN_CHAR       = 405,
             INVALID_REALNAME         = 406,
             ILLEGAL_PLAIN_PHRASE     = 407,
-
-            // address types
-            ADDRTYPE_ROUTE           = 0,
-            ADDRTYPE_OLDSTYLE        = 1
          };
 
          static StringView get_short_author_name (const StringView& full);
@@ -94,8 +90,6 @@ namespace pan
 
          static int  check_domain    (const StringView  & domain);
 
-         static void strip_realname  (char              * realname);
-
          static std::string remove_broken_message_ids_from_references (const StringView& references);
 
          // GNKSA rule 7.  986 ==  998 chars - 12 for "References: "
@@ -107,8 +101,6 @@ namespace pan
          static std::string generate_message_id_from_email_address (const StringView& email);
 
          static std::string generate_message_id (const StringView& domain);
-
-         std::time_t  tzoffset_sec (std::time_t * time);
 
       public:
 
