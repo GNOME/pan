@@ -22,6 +22,7 @@ libpangui_a_SOURCES = \
  prefs-ui.cc \
  progress-view.cc \
  profiles-dialog.cc \
+ render-bytes.cc \
  save-ui.cc \
  score-add-ui.cc \
  score-view-ui.cc \
@@ -58,6 +59,7 @@ noinst_HEADERS = \
  post.ui.h \
  profiles-dialog.h \
  progress-view.h \
+ render-bytes.h \
  save-ui.h \
  score-add-ui.h \
  score-view-ui.h \

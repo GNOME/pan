@@ -29,6 +29,7 @@ extern "C" {
 #include <pan/tasks/queue.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "pad.h"
+#include "render-bytes.h"
 #include "task-pane.h"
 
 enum
@@ -198,36 +199,6 @@ void TaskPane :: on_queue_online_changed (Queue&, bool online)
 #endif
 }
 
-
-/***
-****
-***/
-
-namespace
-{
-  static const unsigned long KIBI (1024ul);
-  static const unsigned long MEBI (1048576ul);
-  static const unsigned long GIBI (1073741824ul);
-
-  char*
-  render_bytes (guint64 bytes)
-  {
-    static char buf[128];
-
-    if (bytes < KIBI)
-      g_snprintf (buf, sizeof(buf), "%d B", (int)bytes);
-    else if (bytes < MEBI)
-      g_snprintf (buf, sizeof(buf), "%.0f KiB", (double)bytes/KIBI);
-    else if (bytes < GIBI)
-      g_snprintf (buf, sizeof(buf), "%.1f MiB", (double)bytes/MEBI);
-    else
-      g_snprintf (buf, sizeof(buf), "%.2f GiB", (double)bytes/GIBI);
-
-    return buf;
-  }
-}
-
-
 void
 TaskPane :: update_status (const task_states_t& tasks)
 {
@@ -265,7 +236,7 @@ TaskPane :: update_status (const task_states_t& tasks)
   double KiBps (_queue.get_speed_KiBps ());
   int hours(0), minutes(0), seconds(0);
   if (task_count) {
-    const double KiB ((double)bytes / KIBI);
+    const double KiB ((double)bytes / 1024);
     unsigned long tmp ((unsigned long)(KiB / KiBps));
     seconds = tmp % 60ul; tmp /= 60ul;
     minutes = tmp % 60ul; tmp /= 60ul;

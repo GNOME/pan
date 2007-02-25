@@ -35,6 +35,7 @@ extern "C" {
 #include <pan/data/data.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "header-pane.h"
+#include "render-bytes.h"
 #include "sexy-icon-entry.h"
 #include "tango-colors.h"
 
@@ -237,22 +238,7 @@ HeaderPane :: render_bytes (GtkTreeViewColumn * col,
 {
   unsigned long bytes (0);
   gtk_tree_model_get (model, iter, COL_BYTES, &bytes, -1);
-
-  static const unsigned long KIBI (1024ul);
-  static const unsigned long MEBI (1048576ul);
-  static const unsigned long GIBI (1073741824ul);
-
-  char buf[128];
-  if (bytes < KIBI)
-    g_snprintf (buf, sizeof(buf), "%lu B", bytes);
-  else if (bytes < MEBI)
-    g_snprintf (buf, sizeof(buf), "%.0f KiB", (double)bytes/KIBI);
-  else if (bytes < GIBI)
-    g_snprintf (buf, sizeof(buf), "%.1f MiB", (double)bytes/MEBI);
-  else
-    g_snprintf (buf, sizeof(buf), "%.2f GiB", (double)bytes/GIBI);
-
-  g_object_set (renderer, "text", buf, NULL);
+  g_object_set (renderer, "text", pan::render_bytes(bytes), NULL);
 }
 
 struct HeaderPane::CountUnread: public PanTreeStore::WalkFunctor
@@ -716,8 +702,10 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
   // update our selection if necessary.
   // if the new selection has just been added or reparented,
   // scroll to it to ensure that it's visible on the screen.
-  if (!new_selection.empty())
-    select_message_id (*new_selection.begin());
+  if (!new_selection.empty()) {
+    const bool do_select = !diffs.added.empty() || !diffs.reparented.empty() || !diffs.removed.empty();
+    select_message_id (*new_selection.begin(), do_select);
+  }
 }
 
 /****
