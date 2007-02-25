@@ -157,8 +157,7 @@ namespace pan
       enum {
         COL_DATE_STR, COL_STATE, COL_ACTION, COL_SCORE,
         COL_LINES, COL_BYTES, COL_DATE, COL_ARTICLE_POINTER,
-        COL_COLLATED_SUBJECT, COL_COLLATED_AUTHOR, COL_SUBJECT,
-        COL_SHORT_AUTHOR, N_COLUMNS
+        COL_SUBJECT, COL_SHORT_AUTHOR, N_COLUMNS
       };
 
       class Row: public PanTreeStore::Row
@@ -249,8 +248,6 @@ namespace pan
               case COL_BYTES:            set_value_ulong (setme, article->get_byte_count()); break;
               case COL_DATE:             set_value_ulong (setme, (unsigned long)article->time_posted); break;
               case COL_ARTICLE_POINTER:  set_value_pointer (setme, (void*)article); break;
-              case COL_COLLATED_SUBJECT: set_value_static_string (setme, get_collated_subject()); break;
-              case COL_COLLATED_AUTHOR:  set_value_static_string (setme, get_collated_author()); break;
               case COL_SUBJECT:          set_value_static_string (setme, article->author.c_str()); break;
               case COL_SHORT_AUTHOR:     set_value_static_string (setme, short_author.c_str()); break;
             }

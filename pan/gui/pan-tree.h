@@ -158,6 +158,10 @@ struct PanTreeStore
         int child_index;
 
       private:
+        Row* get_last_descendant () {
+          return children.empty() ? this
+                                  : children.back()->get_last_descendant ();
+        }
         int n_children () const {
           return (int) children.size();
         }
@@ -197,6 +201,13 @@ struct PanTreeStore
 
     /** Build a GtkTreePath corresponding to the Row */
     GtkTreePath* get_path (const Row* row) const;
+
+    bool back (GtkTreeIter * iter);
+    bool front (GtkTreeIter * iter);
+    bool get_next (GtkTreeIter * iter);
+    bool get_prev (GtkTreeIter * iter);
+    Row*  get_next (Row * iter);
+    Row*  get_prev (Row * iter);
 
   public:
 
@@ -337,6 +348,8 @@ struct PanTreeStore
     void set_iter (GtkTreeIter*, const Row*);
 
     static void invalidate_iter (GtkTreeIter*);
+
+    bool set_or_invalidate (GtkTreeIter*, const Row*);
 
   private:
 

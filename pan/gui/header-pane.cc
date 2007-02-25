@@ -17,29 +17,24 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <config.h>
-#include <cassert>
-#include <cctype>
-#include <cmath>
-#include <algorithm>
-#include <functional>
 extern "C" {
+  #include <config.h>
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
 }
+#include <cctype>
+#include <cmath>
+#include <algorithm>
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
 #include <pan/general/foreach.h>
 #include <pan/general/quark.h>
 #include <pan/general/log.h>
 #include <pan/usenet-utils/filter-info.h>
-#include <pan/usenet-utils/gnksa.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "header-pane.h"
-#include "pad.h"
-#include "prefs-ui.h"
 #include "sexy-icon-entry.h"
 #include "tango-colors.h"
 
@@ -49,24 +44,13 @@ using namespace pan;
 *****
 ****/
 
-
 namespace
 {
   enum
   {
-    COL_DATE_STR,
-    COL_STATE,
-    COL_ACTION,
-    COL_SCORE,
-    COL_LINES,
-    COL_BYTES,
-    COL_DATE,
-    COL_ARTICLE_POINTER,
-    COL_COLLATED_SUBJECT,
-    COL_COLLATED_AUTHOR,
-    COL_SUBJECT,
-    COL_SHORT_AUTHOR,
-    N_COLUMNS
+    COL_DATE_STR, COL_STATE, COL_ACTION, COL_SCORE,
+    COL_LINES, COL_BYTES, COL_DATE, COL_ARTICLE_POINTER,
+    COL_SUBJECT, COL_SHORT_AUTHOR, N_COLUMNS
   };
 }
 
@@ -86,12 +70,6 @@ namespace
 {
   typedef std::set<const Article*> articles_t;
 
-  struct Icon
-  {
-    const guint8 * pixbuf_txt;
-    GdkPixbuf * pixbuf;
-  };
-
   enum
   {
     ICON_READ,
@@ -107,19 +85,21 @@ namespace
     ICON_QTY
    };
 
-   Icon _icons[ICON_QTY] =
-   {
-      { icon_article_read,           0 },
-      { icon_article_unread,         0 },
-      { icon_binary_complete,        0 },
-      { icon_binary_complete_read,   0 },
-      { icon_binary_incomplete,      0 },
-      { icon_binary_incomplete_read, 0 },
-      { icon_disk,                   0 },
-      { icon_bluecheck,              0 },
-      { icon_x,                      0 },
-      { icon_empty,                  0 }
-   };
+  struct Icon {
+    const guint8 * pixbuf_txt;
+    GdkPixbuf * pixbuf;
+  } _icons[ICON_QTY] = {
+    { icon_article_read,           0 },
+    { icon_article_unread,         0 },
+    { icon_binary_complete,        0 },
+    { icon_binary_complete_read,   0 },
+    { icon_binary_incomplete,      0 },
+    { icon_binary_incomplete_read, 0 },
+    { icon_disk,                   0 },
+    { icon_bluecheck,              0 },
+    { icon_x,                      0 },
+    { icon_empty,                  0 }
+  };
 
   const int
   get_article_state (const Data& data, const Article * a)
@@ -140,7 +120,7 @@ namespace
       retval = ICON_READ;
     else
       retval = ICON_UNREAD;
-                                                                                                                                              
+
     return retval;
   }
 
@@ -243,7 +223,6 @@ HeaderPane :: render_score (GtkTreeViewColumn * col,
   }
 
   g_object_set (renderer, "text", buf,
-  //                        "weight", PANGO_WEIGHT_NORMAL,
                           "background", (bg.empty() ? NULL : bg.c_str()),
                           "foreground", (fg.empty() ? NULL : fg.c_str()),
                           NULL);
@@ -336,11 +315,6 @@ HeaderPane :: render_subject (GtkTreeViewColumn * col,
     NULL);
 }
 
-namespace
-{
-  typedef std::vector<const Article*> article_v;
-}
-
 HeaderPane::Row*
 HeaderPane :: get_row (const Quark& message_id)
 {
@@ -361,6 +335,11 @@ HeaderPane :: create_row (const EvolutionDateMaker & e,
   g_assert (result.second);
   
   return row;
+}
+
+namespace
+{
+  typedef std::vector<const Article*> article_v;
 }
 
 void
@@ -483,8 +462,6 @@ HeaderPane :: build_model (const Quark               & group,
     G_TYPE_ULONG,   // bytes
     G_TYPE_ULONG,   //  date
     G_TYPE_POINTER, // article pointer
-    G_TYPE_STRING,  // collated subject (lazy)
-    G_TYPE_STRING,  // collated author (lazy)
     G_TYPE_STRING,  // subject
     G_TYPE_STRING); // short author
 
@@ -1335,6 +1312,7 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF,
         "xpad", xpad,
+        "ypad", 0,
         NULL));
       col = gtk_tree_view_column_new ();
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
@@ -1349,6 +1327,7 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF,
         "xpad", xpad,
+        "ypad", 0,
         NULL));
       col = gtk_tree_view_column_new ();
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
@@ -1362,6 +1341,7 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
+        "ypad", 0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
       col = gtk_tree_view_column_new_with_attributes (_("Subject"), r, NULL);
@@ -1377,6 +1357,7 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
+        "ypad", 0,
         "xalign", 1.0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
@@ -1392,6 +1373,7 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
+        "ypad", 0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
       col = gtk_tree_view_column_new_with_attributes (_("Author"), r, "text", COL_SHORT_AUTHOR, NULL);
@@ -1405,6 +1387,7 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
+        "ypad", 0,
         "xalign", 1.0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
@@ -1419,6 +1402,7 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
+        "ypad", 0,
         "xalign", 1.0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
@@ -1434,6 +1418,7 @@ HeaderPane :: build_tree_columns ()
     {
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
+        "ypad", 0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
       col = gtk_tree_view_column_new_with_attributes (_("Date"), r, "text", COL_DATE_STR, NULL);
@@ -1696,120 +1681,24 @@ namespace
   ***  Navigation Functors
   **/
 
-  struct TreeIteratorNext: public TreeIterFunctor
-  {
+  struct TreeIteratorNext: public TreeIterFunctor {
     virtual ~TreeIteratorNext () {}
-
-    virtual bool operator ()(GtkTreeModel * model, GtkTreeIter * iter) const
-    {
-      g_assert (model != 0);
-      g_assert (iter != 0);
-
-      // childen
-      GtkTreeIter tmp;
-      if (gtk_tree_model_iter_nth_child (model, &tmp, iter, 0)) {
-        *iter = tmp;
-        return true;
-      }
-
-      // siblings
-      GtkTreeIter up = *iter;
-      do {
-        tmp = up;
-        if (gtk_tree_model_iter_next (model, &up)) {
-          *iter = up;
-          return true;
-        }
-      } while (gtk_tree_model_iter_parent (model, &up, &tmp));
-
-      // if all else fails, return the first node
-      if (gtk_tree_model_get_iter_first (model, iter))
-        return true;
-
-      return false;
+    virtual bool operator ()(GtkTreeModel * model, GtkTreeIter * iter) const {
+      return PAN_TREE_STORE(model)->get_next (iter);
     }
-
     virtual bool front (GtkTreeModel* model, GtkTreeIter* setme) const {
-      const bool ok = gtk_tree_model_get_iter_first (model, setme);
-      return ok;
+      return PAN_TREE_STORE(model)->front (setme);
     }
   };
 
-  struct TreeIteratorPrev: public TreeIterFunctor
-  {
-    private:
-
-      // only works for iterators of a tree store.
-      // treestore's iter->user_data is a GNode pointer...
-      bool
-      tree_store_iter_equal (const GtkTreeIter * a, const GtkTreeIter * b) const
-      {
-        if (!a && !b) return true;
-        if (!a || !b) return false;
-        return a->user_data == b->user_data;
-      }
-
-      void
-      tree_model_iter_last_descendant (GtkTreeModel * model,
-                                       GtkTreeIter * setme,
-                                       GtkTreeIter * parent) const
-      {
-        GtkTreeIter march (*parent);
-        for (;;) {
-          const int n_children (gtk_tree_model_iter_n_children (model, &march));
-          if (!n_children) {
-            *setme = march;
-            return;
-          }
-          GtkTreeIter tmp;
-          gtk_tree_model_iter_nth_child (model, &tmp, &march, n_children-1);
-          march = tmp;
-        }
-      }
-
-    public:
-
-      virtual ~TreeIteratorPrev () {}
-
-      bool
-      operator()(GtkTreeModel * model, GtkTreeIter * iter) const
-      {
-        // get parent
-        GtkTreeIter parent;
-        const bool has_parent = gtk_tree_model_iter_parent (model, &parent, iter);
-
-        // get sibling
-        GtkTreeIter sibling;
-        gtk_tree_model_iter_children (model, &sibling, (has_parent ? &parent : 0));
-        if (tree_store_iter_equal (&sibling, iter)) { // iter is the first child
-          *iter = parent;
-          return has_parent;
-        }
-
-        // walk along siblings until we find the one prior to iter.
-        // gtk_tree_model_iter_prev() would have been nice here.
-        for (;;) {
-          GtkTreeIter tmp = sibling;
-          g_assert (gtk_tree_model_iter_next (model, &tmp));
-          if (tree_store_iter_equal (&tmp, iter))
-            break;
-          sibling = tmp;
-        }
-
-        // find the absolutely last child of the older sibling
-        tree_model_iter_last_descendant (model, iter, &sibling);
-        return true;
-      }
-
-      // aka gtk_tree_model_get_iter_last (model, setme);
-      virtual bool front (GtkTreeModel* model, GtkTreeIter* setme) const {
-        const int n (gtk_tree_model_iter_n_children (model, NULL));
-        GtkTreeIter tmp;
-        if (!gtk_tree_model_iter_nth_child (model, &tmp, NULL, n-1))
-          return false;
-        tree_model_iter_last_descendant (model, setme, &tmp);
-        return true;
-      }
+  struct TreeIteratorPrev: public TreeIterFunctor {
+    virtual ~TreeIteratorPrev () {}
+    bool operator()(GtkTreeModel * model, GtkTreeIter * iter) const {
+      return PAN_TREE_STORE(model)->get_prev (iter);
+    }
+    virtual bool front (GtkTreeModel* model, GtkTreeIter* setme) const {
+      return PAN_TREE_STORE(model)->back (setme);
+    }
   };
 
   /**

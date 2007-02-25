@@ -131,6 +131,17 @@ PanTreeStore :: invalidate_iter (GtkTreeIter * iter)
   iter->user_data2 = (void*) 0xDEADBEEF;
 }
 
+bool
+PanTreeStore :: set_or_invalidate (GtkTreeIter * iter, const Row * row)
+{
+  if (row)
+    set_iter (iter, row);
+  else
+    invalidate_iter (iter);
+  return row != 0;
+}
+
+
 /*****
 ******
 ******  implementing GtkTreeModel's interface
@@ -223,12 +234,7 @@ PanTreeStore :: model_iter_next (GtkTreeModel * model,
   Row * row (tree->get_row (iter));
   row = row->parent->nth_child (row->child_index + 1);
 
-  if (row)
-    tree->set_iter (iter, row);
-  else
-    invalidate_iter (iter);
-
-  return row != 0;
+  return tree->set_or_invalidate (iter, row);
 }
 
 gboolean
@@ -272,12 +278,7 @@ PanTreeStore :: model_iter_nth_child (GtkTreeModel * model,
   Row * row (parent ? tree->get_row(parent) : tree->root);
   row = row->nth_child (n);
 
-  if (row)
-    tree->set_iter (iter, row);
-  else
-    invalidate_iter (iter);
-
-  return row != 0;
+  return tree->set_or_invalidate (iter, row);
 }
 
 gboolean
@@ -328,12 +329,7 @@ PanTreeStore :: get_parent (GtkTreeIter * iter,
   g_return_val_if_fail (child->stamp == stamp, false);
 
   const Row * row (get_row (child));
-  const bool has_public_parent (row->parent != root);
-  if (has_public_parent)
-    set_iter (iter, row->parent);
-  else
-    invalidate_iter (iter);
-  return has_public_parent;
+  return set_or_invalidate (iter, row->parent!=root ? row->parent : 0);
 }
 
 bool
@@ -1314,4 +1310,62 @@ PanTreeStore :: postfix_walk (WalkFunctor   & walker,
                               bool            need_path)
 {
   walk (WALK_POSTFIX, walker, top, need_path);
+}
+
+/***
+****
+***/
+
+PanTreeStore :: Row*
+PanTreeStore :: get_prev (Row * row)
+{
+  if (!row || row==root)
+    return 0;
+  if (row->child_index==0)
+    return row->parent==root ? 0 : row->parent;
+  Row * sibling = row->parent->nth_child (row->child_index-1);
+  return sibling->get_last_descendant ();
+}
+
+PanTreeStore :: Row*
+PanTreeStore :: get_next (Row * row)
+{
+  // child
+  if (!row->children.empty())
+    return row->nth_child (0);
+
+  // sibling
+  while (row && row!=root) {
+    Row * sibling = row->parent->nth_child (row->child_index + 1);
+    if (sibling)
+      return sibling;
+    row = row->parent;
+  }
+
+  // if all else fails, just return the first node
+  return root->nth_child(0);
+}
+
+bool
+PanTreeStore :: get_prev (GtkTreeIter * iter)
+{
+  return set_or_invalidate (iter, get_prev(get_row(iter)));
+}
+
+bool
+PanTreeStore :: get_next (GtkTreeIter * iter)
+{
+  return set_or_invalidate (iter, get_next(get_row(iter)));
+}
+
+bool
+PanTreeStore :: back (GtkTreeIter * iter)
+{
+  return set_or_invalidate (iter, root->get_last_descendant());
+}
+
+bool
+PanTreeStore :: front (GtkTreeIter * iter)
+{
+  return set_or_invalidate (iter, get_next(root));
 }
