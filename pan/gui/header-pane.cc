@@ -616,14 +616,13 @@ HeaderPane :: select_message_id (const Quark& mid, bool do_scroll)
   HeaderPane::Row * row = get_row (mid);
   GtkTreePath * path (_tree_store->get_path(row));
   GtkTreeView * view (GTK_TREE_VIEW(_tree_view));
-  gtk_tree_view_expand_row (view, path, true);
   gtk_tree_view_expand_to_path (view, path);
+  GtkTreeSelection * sel (gtk_tree_view_get_selection (view));
+  gtk_tree_selection_select_path (sel, path);
   if (do_scroll) {
     gtk_tree_view_set_cursor (view, path, NULL, false);
     gtk_tree_view_scroll_to_cell (view, path, NULL, true, 0.5f, 0.0f);
   }
-  GtkTreeSelection * sel (gtk_tree_view_get_selection (view));
-  gtk_tree_selection_select_path (sel, path);
   gtk_tree_path_free (path);
 }
 
