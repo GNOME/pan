@@ -440,10 +440,12 @@ namespace pan
 
           /** the quirky way of incrementing 'it' is to prevent it from being
               invalidated if on_tree_change() calls remove_listener() */
-          void fire_diffs (const Diffs& diffs) const {
-            listeners_t::iterator it, e;
-            for (it=_listeners.begin(), e=_listeners.end(); it!=e; )
-              (*it++)->on_tree_change (diffs);
+          void fire_diffs (const Diffs& d) const {
+            if (!d.added.empty() || !d.removed.empty() || !d.reparented.empty() || !d.changed.empty()) {
+              listeners_t::iterator it, e;
+              for (it=_listeners.begin(), e=_listeners.end(); it!=e; )
+                (*it++)->on_tree_change (d);
+            }
           }
               
 
