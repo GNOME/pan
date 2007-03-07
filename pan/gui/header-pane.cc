@@ -640,6 +640,21 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
     if (!diffs.removed.count ((*it)->message_id))
         new_selection.insert ((*it)->message_id);
 
+  // if the old selection survived,
+  // is it visible on the screen?
+  bool selection_was_visible (true);
+  if (!new_selection.empty()) {
+    GtkTreeView *view (GTK_TREE_VIEW(_tree_view));
+    Row * row (get_row (*new_selection.begin()));
+    GtkTreePath *a(0), *b(0), *p (_tree_store->get_path (row));
+    gtk_tree_view_get_visible_range (view, &a, &b);
+    selection_was_visible = (gtk_tree_path_compare(a,p)<=0 &&
+                             gtk_tree_path_compare(p,b)<=0);
+    gtk_tree_path_free (a);
+    gtk_tree_path_free (b);
+    gtk_tree_path_free (p);
+  }
+
   // if none of the current selection survived,
   // we need to select something to replace the
   // current selection.
@@ -700,10 +715,12 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
 
   // update our selection if necessary.
   // if the new selection has just been added or reparented,
-  // scroll to it to ensure that it's visible on the screen.
+  // and it was visible on the screen before,
+  // then scroll to ensure it's still visible.
   if (!new_selection.empty()) {
-    const bool do_select = !diffs.added.empty() || !diffs.reparented.empty() || !diffs.removed.empty();
-    select_message_id (*new_selection.begin(), do_select);
+    const bool do_scroll = selection_was_visible
+            && (!diffs.added.empty() || !diffs.reparented.empty() || !diffs.removed.empty());
+    select_message_id (*new_selection.begin(), do_scroll);
   }
 }
 

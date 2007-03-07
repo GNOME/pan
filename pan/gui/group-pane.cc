@@ -840,8 +840,6 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs)
   sub_title_quark = new Quark (_("Subscribed Groups"));
   other_title_quark = new Quark (_("Other Groups"));
 
-  quarks_t groups;
-
   // build this first because _tree_view is needed for a callback...
   tree_iters_t iters;
   _tree_store = build_model (_data, NULL, iters, _group_rows);

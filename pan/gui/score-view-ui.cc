@@ -33,10 +33,6 @@ extern "C" {
 
 using namespace pan;
 
-ScoreView :: ~ScoreView ()
-{
-}
-
 namespace
 {
   void                                          
@@ -132,11 +128,6 @@ ScoreView :: tree_view_refresh ()
 {
   _items.clear ();
   _data.get_article_scores (_group, _article, _items);
-
-  //GtkTreeSelection * selection (gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view)));
-  //bool found_selected (false);
-  //GtkTreeIter selected_iter;
-  //ScoreViewItem * selected_item = get_selected_item (d);
 
   gtk_list_store_clear (_store);
 
@@ -267,5 +258,4 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
 
 
   tree_view_refresh ();
-  //button_refresh (d);
 }

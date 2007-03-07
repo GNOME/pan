@@ -40,7 +40,7 @@ namespace pan
       ScoreView (Data& data, GtkWindow* parent,
                  const Quark& group,
                  const Article& article);
-      ~ScoreView ();
+      ~ScoreView () {}
 
     public:
       GtkWidget* root() { return _root; }
