@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-09 13:12+0000\n"
-"PO-Revision-Date: 2007-02-09 13:12-0000\n"
+"POT-Creation-Date: 2007-03-10 16:42+0000\n"
+"PO-Revision-Date: 2007-03-10 16:42-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "Loaded data backend in %.1f seconds"
 #: ../pan/data-impl/data-io.cc:209
 #: ../pan/data/article-cache.cc:236
 #: ../pan/data/article-cache.cc:246
-#: ../pan/gui/post-ui.cc:1317
+#: ../pan/gui/post-ui.cc:1241
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Unable to save \"%s\" %s"
@@ -72,16 +72,16 @@ msgstr "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
 msgid "Added %lu articles to %s."
 msgstr "Added %lu articles to %s."
 
-#: ../pan/data-impl/profiles.cc:175
+#: ../pan/data-impl/profiles.cc:176
 #: ../pan/data-impl/server.cc:303
 #: ../pan/data/article-cache.cc:387
-#: ../pan/gui/post-ui.cc:432
-#: ../pan/gui/post-ui.cc:1084
+#: ../pan/gui/post-ui.cc:386
+#: ../pan/gui/post-ui.cc:985
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Error reading file \"%s\": %s"
 
-#: ../pan/data-impl/xover.cc:234
+#: ../pan/data-impl/xover.cc:232
 #, c-format
 msgid "Error reading from %s: unknown group \"%s\""
 msgstr "Error reading from %s: unknown group \"%s\""
@@ -95,179 +95,6 @@ msgstr "Error opening directory: \"%s\": %s"
 #, c-format
 msgid "Error opening file \"%s\" %s"
 msgstr "Error opening file \"%s\" %s"
-
-#: ../pan/data/filter-info.cc:152
-msgid "article doesn't have attachments"
-msgstr "article doesn't have attachments"
-
-#: ../pan/data/filter-info.cc:156
-msgid "the article has attachments"
-msgstr "the article has attachments"
-
-#: ../pan/data/filter-info.cc:160
-msgid "the article isn't cached locally"
-msgstr "the article isn't cached locally"
-
-#: ../pan/data/filter-info.cc:164
-msgid "the article is cached locally"
-msgstr "the article is cached locally"
-
-#: ../pan/data/filter-info.cc:168
-msgid "the article wasn't posted by you"
-msgstr "the article wasn't posted by you"
-
-#: ../pan/data/filter-info.cc:172
-msgid "the article was posted by you"
-msgstr "the article was posted by you"
-
-#: ../pan/data/filter-info.cc:176
-msgid "the article has been read"
-msgstr "the article has been read"
-
-#: ../pan/data/filter-info.cc:180
-msgid "the article hasn't been read"
-msgstr "the article hasn't been read"
-
-#: ../pan/data/filter-info.cc:184
-#, c-format
-msgid "the article is less than %ld bytes long"
-msgstr "the article is less than %ld bytes long"
-
-#: ../pan/data/filter-info.cc:189
-#, c-format
-msgid "the article is at least %ld bytes long"
-msgstr "the article is at least %ld bytes long"
-
-#: ../pan/data/filter-info.cc:194
-#, c-format
-msgid "the article is less than %ld lines long"
-msgstr "the article is less than %ld lines long"
-
-#: ../pan/data/filter-info.cc:199
-#, c-format
-msgid "the article is at least %ld lines long"
-msgstr "the article is at least %ld lines long"
-
-#: ../pan/data/filter-info.cc:204
-#, c-format
-msgid "the article is less than %ld days old"
-msgstr "the article is less than %ld days old"
-
-#: ../pan/data/filter-info.cc:209
-#, c-format
-msgid "the article is at least %ld days old"
-msgstr "the article is at least %ld days old"
-
-#: ../pan/data/filter-info.cc:214
-#, c-format
-msgid "the article was posted to less than %ld groups"
-msgstr "the article was posted to less than %ld groups"
-
-#: ../pan/data/filter-info.cc:219
-#, c-format
-msgid "the article was posted to at least %ld groups"
-msgstr "the article was posted to at least %ld groups"
-
-#: ../pan/data/filter-info.cc:224
-#, c-format
-msgid "the article's score is less than %ld"
-msgstr "the article's score is less than %ld"
-
-#: ../pan/data/filter-info.cc:229
-#, c-format
-msgid "the article's score is %ld or higher"
-msgstr "the article's score is %ld or higher"
-
-#: ../pan/data/filter-info.cc:238
-#: ../pan/data/filter-info.cc:248
-#, c-format
-msgid "%s doesn't contain \"%s\""
-msgstr "%s doesn't contain \"%s\""
-
-#: ../pan/data/filter-info.cc:239
-#: ../pan/data/filter-info.cc:249
-#, c-format
-msgid "%s isn't \"%s\""
-msgstr "%s isn't \"%s\""
-
-#: ../pan/data/filter-info.cc:240
-#: ../pan/data/filter-info.cc:250
-#, c-format
-msgid "%s doesn't begin with \"%s\""
-msgstr "%s doesn't begin with \"%s\""
-
-#: ../pan/data/filter-info.cc:241
-#: ../pan/data/filter-info.cc:251
-#, c-format
-msgid "%s doesn't end with \"%s\""
-msgstr "%s doesn't end with \"%s\""
-
-#: ../pan/data/filter-info.cc:242
-#: ../pan/data/filter-info.cc:252
-#, c-format
-msgid "%s doesn't match the regex \"%s\""
-msgstr "%s doesn't match the regex \"%s\""
-
-#: ../pan/data/filter-info.cc:264
-#, c-format
-msgid "%s contains \"%s\""
-msgstr "%s contains \"%s\""
-
-#: ../pan/data/filter-info.cc:265
-#, c-format
-msgid "%s is \"%s\""
-msgstr "%s is \"%s\""
-
-#: ../pan/data/filter-info.cc:266
-#, c-format
-msgid "%s begins with \"%s\""
-msgstr "%s begins with \"%s\""
-
-#: ../pan/data/filter-info.cc:267
-#, c-format
-msgid "%s ends with \"%s\""
-msgstr "%s ends with \"%s\""
-
-#: ../pan/data/filter-info.cc:268
-#, c-format
-msgid "%s matches the regex \"%s\""
-msgstr "%s matches the regex \"%s\""
-
-#: ../pan/data/filter-info.cc:274
-msgid "Any of these tests fail:"
-msgstr "Any of these tests fail:"
-
-#: ../pan/data/filter-info.cc:281
-msgid "All of these tests pass:"
-msgstr "All of these tests pass:"
-
-#: ../pan/data/filter-info.cc:288
-msgid "None of these tests pass:"
-msgstr "None of these tests pass:"
-
-#: ../pan/data/filter-info.cc:295
-msgid "Any of these tests pass:"
-msgstr "Any of these tests pass:"
-
-#: ../pan/data/scorefile.cc:302
-#, c-format
-msgid "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or 'Expires: DD-MM-YYYY'."
-msgstr "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or 'Expires: DD-MM-YYYY'."
-
-#: ../pan/data/scorefile.cc:305
-#, c-format
-msgid "Expired old score from %*.*s, line %d"
-msgstr "Expired old score from %*.*s, line %d"
-
-#: ../pan/data/scorefile.cc:378
-#, c-format
-msgid "Error reading score in %*.*s, line %d: unexpected line."
-msgstr "Error reading score in %*.*s, line %d: unexpected line."
-
-#: ../pan/data/scorefile.cc:426
-#, c-format
-msgid "Read %lu scoring rules in %lu sections from \"%s\""
-msgstr "Read %lu scoring rules in %lu sections from \"%s\""
 
 #. build the locale strings
 #: ../pan/general/e-util.cc:213
@@ -319,12 +146,12 @@ msgid "Can't use regular expression \"%s\": %s"
 msgstr "Can't use regular expression \"%s\": %s"
 
 #: ../pan/gui/actions.cc:253
-#: ../pan/gui/post-ui.cc:239
+#: ../pan/gui/post-ui.cc:194
 msgid "_File"
 msgstr "_File"
 
 #: ../pan/gui/actions.cc:254
-#: ../pan/gui/post-ui.cc:240
+#: ../pan/gui/post-ui.cc:195
 msgid "_Edit"
 msgstr "_Edit"
 
@@ -987,8 +814,8 @@ msgstr "Attachment not shown: MIME type %s/%s\n"
 
 #: ../pan/gui/body-pane.cc:1005
 #: ../pan/gui/gui.cc:1404
-#: ../pan/gui/header-pane.cc:1056
-#: ../pan/gui/header-pane.cc:1398
+#: ../pan/gui/header-pane.cc:1009
+#: ../pan/gui/header-pane.cc:1351
 #: ../pan/gui/prefs-ui.cc:323
 #: ../pan/gui/score-add-ui.cc:141
 msgid "Subject"
@@ -1001,7 +828,7 @@ msgstr "From"
 
 #: ../pan/gui/body-pane.cc:1009
 #: ../pan/gui/gui.cc:1405
-#: ../pan/gui/header-pane.cc:1475
+#: ../pan/gui/header-pane.cc:1428
 #: ../pan/gui/log-ui.cc:208
 #: ../pan/gui/prefs-ui.cc:319
 msgid "Date"
@@ -1030,72 +857,72 @@ msgstr " at "
 #: ../pan/gui/charset-picker.cc:39
 #: ../pan/gui/charset-picker.cc:40
 #: ../pan/gui/charset-picker.cc:41
-#: ../pan/gui/post-ui.cc:318
-#: ../pan/gui/post-ui.cc:319
-#: ../pan/gui/post-ui.cc:320
+#: ../pan/gui/post-ui.cc:272
+#: ../pan/gui/post-ui.cc:273
+#: ../pan/gui/post-ui.cc:274
 msgid "Baltic"
 msgstr "Baltic"
 
 #: ../pan/gui/charset-picker.cc:42
 #: ../pan/gui/charset-picker.cc:43
-#: ../pan/gui/post-ui.cc:321
-#: ../pan/gui/post-ui.cc:322
+#: ../pan/gui/post-ui.cc:275
+#: ../pan/gui/post-ui.cc:276
 msgid "Central European"
 msgstr "Central European"
 
 #: ../pan/gui/charset-picker.cc:44
-#: ../pan/gui/post-ui.cc:323
+#: ../pan/gui/post-ui.cc:277
 msgid "Chinese Simplified"
 msgstr "Chinese Simplified"
 
 #: ../pan/gui/charset-picker.cc:45
-#: ../pan/gui/post-ui.cc:324
+#: ../pan/gui/post-ui.cc:278
 msgid "Chinese Traditional"
 msgstr "Chinese Traditional"
 
 #: ../pan/gui/charset-picker.cc:46
 #: ../pan/gui/charset-picker.cc:47
 #: ../pan/gui/charset-picker.cc:48
-#: ../pan/gui/post-ui.cc:325
-#: ../pan/gui/post-ui.cc:326
-#: ../pan/gui/post-ui.cc:327
+#: ../pan/gui/post-ui.cc:279
+#: ../pan/gui/post-ui.cc:280
+#: ../pan/gui/post-ui.cc:281
 msgid "Cyrillic"
 msgstr "Cyrillic"
 
 #: ../pan/gui/charset-picker.cc:49
-#: ../pan/gui/post-ui.cc:328
+#: ../pan/gui/post-ui.cc:282
 msgid "Cyrillic, Ukrainian"
 msgstr "Cyrillic, Ukrainian"
 
 #: ../pan/gui/charset-picker.cc:50
-#: ../pan/gui/post-ui.cc:329
+#: ../pan/gui/post-ui.cc:283
 msgid "Greek"
 msgstr "Greek"
 
 #: ../pan/gui/charset-picker.cc:51
-#: ../pan/gui/post-ui.cc:330
+#: ../pan/gui/post-ui.cc:284
 msgid "Japanese"
 msgstr "Japanese"
 
 #: ../pan/gui/charset-picker.cc:52
-#: ../pan/gui/post-ui.cc:331
+#: ../pan/gui/post-ui.cc:285
 msgid "Korean"
 msgstr "Korean"
 
 #: ../pan/gui/charset-picker.cc:53
-#: ../pan/gui/post-ui.cc:332
+#: ../pan/gui/post-ui.cc:286
 msgid "Turkish"
 msgstr "Turkish"
 
 #: ../pan/gui/charset-picker.cc:54
 #: ../pan/gui/charset-picker.cc:56
-#: ../pan/gui/post-ui.cc:333
-#: ../pan/gui/post-ui.cc:335
+#: ../pan/gui/post-ui.cc:287
+#: ../pan/gui/post-ui.cc:289
 msgid "Western"
 msgstr "Western"
 
 #: ../pan/gui/charset-picker.cc:55
-#: ../pan/gui/post-ui.cc:334
+#: ../pan/gui/post-ui.cc:288
 msgid "Western, New"
 msgstr "Western, New"
 
@@ -1108,7 +935,7 @@ msgstr "Unicode"
 #: ../pan/gui/gui.cc:760
 #: ../pan/gui/gui.cc:1148
 #: ../pan/gui/gui.cc:1425
-#: ../pan/gui/score-add-ui.cc:626
+#: ../pan/gui/score-add-ui.cc:624
 msgid "Pan"
 msgstr "Pan"
 
@@ -1140,8 +967,8 @@ msgstr "Subscribed Groups"
 msgid "Other Groups"
 msgstr "Other Groups"
 
-#: ../pan/gui/group-pane.cc:883
-#: ../pan/gui/score-view-ui.cc:169
+#: ../pan/gui/group-pane.cc:881
+#: ../pan/gui/score-view-ui.cc:160
 msgid "Name"
 msgstr "Name"
 
@@ -1255,24 +1082,24 @@ msgid "This article is missing %d of its %d parts:"
 msgstr "This article is missing %d of its %d parts:"
 
 #: ../pan/gui/gui.cc:1405
-#: ../pan/gui/header-pane.cc:1058
+#: ../pan/gui/header-pane.cc:1011
 msgid "Message-ID"
 msgstr "Message-ID"
 
 #: ../pan/gui/gui.cc:1406
-#: ../pan/gui/header-pane.cc:1445
+#: ../pan/gui/header-pane.cc:1398
 #: ../pan/gui/prefs-ui.cc:320
 msgid "Lines"
 msgstr "Lines"
 
 #: ../pan/gui/gui.cc:1406
-#: ../pan/gui/header-pane.cc:1460
+#: ../pan/gui/header-pane.cc:1413
 #: ../pan/gui/prefs-ui.cc:318
 msgid "Bytes"
 msgstr "Bytes"
 
 #: ../pan/gui/gui.cc:1560
-#: ../pan/gui/task-pane.cc:399
+#: ../pan/gui/task-pane.cc:370
 msgid "Offline"
 msgstr "Offline"
 
@@ -1314,18 +1141,18 @@ msgstr "Tasks"
 msgid "Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue."
 msgstr "Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue."
 
-#: ../pan/gui/header-pane.cc:1055
+#: ../pan/gui/header-pane.cc:1008
 msgid "Subject or Author"
 msgstr "Subject or Author"
 
-#: ../pan/gui/header-pane.cc:1057
-#: ../pan/gui/header-pane.cc:1430
+#: ../pan/gui/header-pane.cc:1010
+#: ../pan/gui/header-pane.cc:1383
 #: ../pan/gui/prefs-ui.cc:317
 #: ../pan/gui/score-add-ui.cc:142
 msgid "Author"
 msgstr "Author"
 
-#: ../pan/gui/header-pane.cc:1415
+#: ../pan/gui/header-pane.cc:1368
 #: ../pan/gui/prefs-ui.cc:321
 msgid "Score"
 msgstr "Score"
@@ -1393,12 +1220,12 @@ msgstr "Pan %s started"
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr "Please configure Pan's news servers before using it as an nzb client."
 
-#: ../pan/gui/post-ui.cc:86
+#: ../pan/gui/post-ui.cc:89
 #, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "Error setting spellchecker: %s"
 
-#: ../pan/gui/post-ui.cc:95
+#: ../pan/gui/post-ui.cc:98
 msgid ""
 "<b>Spellchecker not found!</b>\n"
 " \n"
@@ -1408,127 +1235,119 @@ msgstr ""
 " \n"
 "Was this copy of Pan compiled with GtkSpell enabled?"
 
-#: ../pan/gui/post-ui.cc:241
+#: ../pan/gui/post-ui.cc:196
 msgid "_Profile"
 msgstr "_Profile"
 
-#: ../pan/gui/post-ui.cc:242
-msgid "Character Encoding"
-msgstr "Character Encoding"
+#: ../pan/gui/post-ui.cc:197
+msgid "Set Character Encoding"
+msgstr "Set Character Encoding"
 
-#: ../pan/gui/post-ui.cc:243
+#: ../pan/gui/post-ui.cc:198
 msgid "Set Editor"
 msgstr "Set Editor"
 
-#: ../pan/gui/post-ui.cc:245
+#: ../pan/gui/post-ui.cc:200
 msgid "_Send Article"
 msgstr "_Send Article"
 
-#: ../pan/gui/post-ui.cc:245
+#: ../pan/gui/post-ui.cc:200
 msgid "Send Article Now"
 msgstr "Send Article Now"
 
-#: ../pan/gui/post-ui.cc:246
+#: ../pan/gui/post-ui.cc:201
 msgid "Sa_ve Draft"
 msgstr "Sa_ve Draft"
 
-#: ../pan/gui/post-ui.cc:246
+#: ../pan/gui/post-ui.cc:201
 msgid "Save as a Draft for Future Posting"
 msgstr "Save as a Draft for Future Posting"
 
-#: ../pan/gui/post-ui.cc:247
+#: ../pan/gui/post-ui.cc:202
 msgid "_Open Draft..."
 msgstr "_Open Draft..."
 
-#: ../pan/gui/post-ui.cc:247
+#: ../pan/gui/post-ui.cc:202
 msgid "Open an Article Draft"
 msgstr "Open an Article Draft"
 
-#: ../pan/gui/post-ui.cc:248
-msgid "Wrap _Now"
-msgstr "Wrap _Now"
-
-#: ../pan/gui/post-ui.cc:248
-msgid "Wrap the Article Body to 80 Columns"
-msgstr "Wrap the Article Body to 80 Columns"
-
-#: ../pan/gui/post-ui.cc:253
+#: ../pan/gui/post-ui.cc:207
 msgid "_Rot13"
 msgstr "_Rot13"
 
-#: ../pan/gui/post-ui.cc:253
+#: ../pan/gui/post-ui.cc:207
 msgid "Rot13 Selected Text"
 msgstr "Rot13 Selected Text"
 
-#: ../pan/gui/post-ui.cc:254
+#: ../pan/gui/post-ui.cc:208
 msgid "Run _Editor"
 msgstr "Run _Editor"
 
-#: ../pan/gui/post-ui.cc:255
+#: ../pan/gui/post-ui.cc:209
 msgid "_Manage Editor List..."
 msgstr "_Manage Editor List..."
 
-#: ../pan/gui/post-ui.cc:256
+#: ../pan/gui/post-ui.cc:210
 msgid "Manage Posting Pr_ofiles..."
 msgstr "Manage Posting Pr_ofiles..."
 
-#: ../pan/gui/post-ui.cc:261
+#: ../pan/gui/post-ui.cc:215
 msgid "_Wrap Text"
 msgstr "_Wrap Text"
 
-#: ../pan/gui/post-ui.cc:262
+#: ../pan/gui/post-ui.cc:216
 msgid "Remember _Charset for This Group"
 msgstr "Remember _Charset for This Group"
 
-#: ../pan/gui/post-ui.cc:263
+#: ../pan/gui/post-ui.cc:217
 msgid "Check _Spelling"
 msgstr "Check _Spelling"
 
-#: ../pan/gui/post-ui.cc:336
+#: ../pan/gui/post-ui.cc:290
 msgid "Unicode, UTF-8"
 msgstr "Unicode, UTF-8"
 
-#: ../pan/gui/post-ui.cc:503
+#: ../pan/gui/post-ui.cc:440
 msgid "Manage Editor List"
 msgstr "Manage Editor List"
 
-#: ../pan/gui/post-ui.cc:510
+#: ../pan/gui/post-ui.cc:447
 msgid "Editors"
 msgstr "Editors"
 
-#: ../pan/gui/post-ui.cc:610
+#: ../pan/gui/post-ui.cc:528
 msgid "Your changes will be lost!"
 msgstr "Your changes will be lost!"
 
-#: ../pan/gui/post-ui.cc:611
+#: ../pan/gui/post-ui.cc:529
 msgid "Close this window and lose your changes?"
 msgstr "Close this window and lose your changes?"
 
-#: ../pan/gui/post-ui.cc:648
-#: ../pan/gui/post-ui.cc:687
+#: ../pan/gui/post-ui.cc:566
+#: ../pan/gui/post-ui.cc:605
 msgid "There were problems with this post."
 msgstr "There were problems with this post."
 
-#: ../pan/gui/post-ui.cc:650
-#: ../pan/gui/post-ui.cc:689
+#: ../pan/gui/post-ui.cc:568
+#: ../pan/gui/post-ui.cc:607
 msgid "Go Back"
 msgstr "Go Back"
 
-#: ../pan/gui/post-ui.cc:652
+#: ../pan/gui/post-ui.cc:570
 msgid "Post Anyway"
 msgstr "Post Anyway"
 
 #. Prompt the user
-#: ../pan/gui/post-ui.cc:681
+#: ../pan/gui/post-ui.cc:599
 #, c-format
 msgid "Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr "Message uses characters not specified in charset '%s' - possibly use '%s' "
 
-#: ../pan/gui/post-ui.cc:704
+#: ../pan/gui/post-ui.cc:622
 msgid "Go _Online"
 msgstr "Go _Online"
 
-#: ../pan/gui/post-ui.cc:890
+#: ../pan/gui/post-ui.cc:801
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1536,96 +1355,130 @@ msgstr ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
 
-#: ../pan/gui/post-ui.cc:923
+#: ../pan/gui/post-ui.cc:834
 msgid "Pan is Offline."
 msgstr "Pan is Offline."
 
-#: ../pan/gui/post-ui.cc:924
+#: ../pan/gui/post-ui.cc:835
 msgid "Go online to post the article?"
 msgstr "Go online to post the article?"
 
 #. *
 #. ***  Pop up a ``Posting'' Dialog...
 #. *
-#: ../pan/gui/post-ui.cc:937
+#: ../pan/gui/post-ui.cc:848
 msgid "Posting Article"
 msgstr "Posting Article"
 
-#: ../pan/gui/post-ui.cc:943
+#: ../pan/gui/post-ui.cc:854
 msgid "Posting..."
 msgstr "Posting..."
 
-#: ../pan/gui/post-ui.cc:994
+#: ../pan/gui/post-ui.cc:905
 msgid "Error opening temporary file"
 msgstr "Error opening temporary file"
 
-#: ../pan/gui/post-ui.cc:1014
+#: ../pan/gui/post-ui.cc:917
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Error writing article to temporary file: %s"
 
-#: ../pan/gui/post-ui.cc:1033
+#: ../pan/gui/post-ui.cc:934
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr "Error parsing \"external editor\" command line: %s (Command was: %s)"
 
-#: ../pan/gui/post-ui.cc:1071
+#: ../pan/gui/post-ui.cc:972
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Error starting external editor: %s"
 
-#: ../pan/gui/post-ui.cc:1126
+#: ../pan/gui/post-ui.cc:1025
 msgid "Open Draft Article"
 msgstr "Open Draft Article"
 
-#: ../pan/gui/post-ui.cc:1289
+#: ../pan/gui/post-ui.cc:1209
 msgid "Save Draft Article"
 msgstr "Save Draft Article"
 
-#: ../pan/gui/post-ui.cc:1446
+#: ../pan/gui/post-ui.cc:1391
 #, c-format
 msgid "Couldn't read signature file \"%s\": %s"
 msgstr "Couldn't read signature file \"%s\": %s"
 
-#: ../pan/gui/post-ui.cc:1467
+#: ../pan/gui/post-ui.cc:1412
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Couldn't parse signature command \"%s\": %s"
 
-#: ../pan/gui/post-ui.cc:1504
+#: ../pan/gui/post-ui.cc:1449
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Couldn't convert signature to UTF-8."
 
-#: ../pan/gui/post-ui.cc:1856
-msgid "Post Article"
-msgstr "Post Article"
-
-#: ../pan/gui/post-ui.cc:1886
+#: ../pan/gui/post-ui.cc:1838
 msgid "F_rom"
 msgstr "F_rom"
 
-#: ../pan/gui/post-ui.cc:1893
+#: ../pan/gui/post-ui.cc:1856
 msgid "_Subject"
 msgstr "_Subject"
 
-#: ../pan/gui/post-ui.cc:1899
+#: ../pan/gui/post-ui.cc:1869
 msgid "_Newsgroups"
 msgstr "_Newsgroups"
 
-#: ../pan/gui/post-ui.cc:1906
+#: ../pan/gui/post-ui.cc:1883
 msgid "_Mail To"
 msgstr "_Mail To"
 
-#: ../pan/gui/post-ui.cc:1916
-msgid "One header per line, in the form HeaderName: Value"
-msgstr "One header per line, in the form HeaderName: Value"
+#: ../pan/gui/post-ui.cc:1932
+msgid "Follo_wup-To"
+msgstr "Follo_wup-To"
 
-#: ../pan/gui/post-ui.cc:1919
-msgid "_More Headers"
-msgstr "_More Headers"
+#: ../pan/gui/post-ui.cc:1940
+msgid ""
+"The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n"
+"\n"
+"To direct all replies to your email address, use \"Followup-To: poster\""
+msgstr ""
+"The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n"
+"\n"
+"To direct all replies to your email address, use \"Followup-To: poster\""
 
-#: ../pan/gui/post-ui.cc:1973
-#: ../pan/gui/profiles-dialog.cc:411
+#: ../pan/gui/post-ui.cc:1946
+msgid "_Reply-To"
+msgstr "_Reply-To"
+
+#: ../pan/gui/post-ui.cc:1954
+msgid "The email account where mail replies to your posted message should go.  This is only needed if it differs from the \"From\" header."
+msgstr "The email account where mail replies to your posted message should go.  This is only needed if it differs from the \"From\" header."
+
+#: ../pan/gui/post-ui.cc:1960
+msgid "_Custom Headers"
+msgstr "_Custom Headers"
+
+#: ../pan/gui/post-ui.cc:1984
+msgid "Add \"_User-Agent\" header"
+msgstr "Add \"_User-Agent\" header"
+
+#: ../pan/gui/post-ui.cc:1991
+msgid "Add \"Message-_Id header"
+msgstr "Add \"Message-_Id header"
+
+#: ../pan/gui/post-ui.cc:2048
+msgid "Post Article"
+msgstr "Post Article"
+
+#: ../pan/gui/post-ui.cc:2069
+msgid "_Message"
+msgstr "_Message"
+
+#: ../pan/gui/post-ui.cc:2070
+msgid "More _Headers"
+msgstr "More _Headers"
+
+#: ../pan/gui/post-ui.cc:2097
+#: ../pan/gui/profiles-dialog.cc:414
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "On %d, %n wrote:"
@@ -1694,7 +1547,15 @@ msgstr "Signature _Type:"
 msgid "Optional Information"
 msgstr "Optional Information"
 
-#: ../pan/gui/profiles-dialog.cc:173
+#: ../pan/gui/profiles-dialog.cc:170
+msgid "When posting to Usenet, your article's Message-ID contains a domain name.  You can set a custom domain name here, or leave it blank to let Pan use the domain name from your email address."
+msgstr "When posting to Usenet, your article's Message-ID contains a domain name.  You can set a custom domain name here, or leave it blank to let Pan use the domain name from your email address."
+
+#: ../pan/gui/profiles-dialog.cc:171
+msgid "Message-ID _Domain Name:"
+msgstr "Message-ID _Domain Name:"
+
+#: ../pan/gui/profiles-dialog.cc:175
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -1707,11 +1568,11 @@ msgstr ""
 "%n for Author name\n"
 "%d for Date"
 
-#: ../pan/gui/profiles-dialog.cc:174
+#: ../pan/gui/profiles-dialog.cc:176
 msgid "_Attribution:"
 msgstr "_Attribution:"
 
-#: ../pan/gui/profiles-dialog.cc:197
+#: ../pan/gui/profiles-dialog.cc:199
 msgid ""
 "Extra headers to be included in your posts, such as\n"
 "Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
@@ -1721,39 +1582,39 @@ msgstr ""
 "Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
 "Organization: Your Organisation"
 
-#: ../pan/gui/profiles-dialog.cc:206
+#: ../pan/gui/profiles-dialog.cc:208
 msgid "E_xtra Headers:"
 msgstr "E_xtra Headers:"
 
-#: ../pan/gui/profiles-dialog.cc:263
+#: ../pan/gui/profiles-dialog.cc:265
 msgid "Invalid email address."
 msgstr "Invalid email address."
 
-#: ../pan/gui/profiles-dialog.cc:264
+#: ../pan/gui/profiles-dialog.cc:266
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Please use an address of the form joe@somewhere.org"
 
-#: ../pan/gui/profiles-dialog.cc:412
+#: ../pan/gui/profiles-dialog.cc:415
 msgid "New Profile"
 msgstr "New Profile"
 
-#: ../pan/gui/profiles-dialog.cc:458
+#: ../pan/gui/profiles-dialog.cc:461
 msgid "Posting Profiles"
 msgstr "Posting Profiles"
 
-#: ../pan/gui/profiles-dialog.cc:474
+#: ../pan/gui/profiles-dialog.cc:477
 msgid "Profiles"
 msgstr "Profiles"
 
-#: ../pan/gui/profiles-dialog.cc:500
+#: ../pan/gui/profiles-dialog.cc:503
 msgid "Add a New Profile"
 msgstr "Add a New Profile"
 
-#: ../pan/gui/profiles-dialog.cc:511
+#: ../pan/gui/profiles-dialog.cc:514
 msgid "Edit the selected profile"
 msgstr "Edit the selected profile"
 
-#: ../pan/gui/profiles-dialog.cc:517
+#: ../pan/gui/profiles-dialog.cc:520
 msgid "Remove the selected profile"
 msgstr "Remove the selected profile"
 
@@ -1787,7 +1648,7 @@ msgid "Action"
 msgstr "Action"
 
 #: ../pan/gui/prefs-ui.cc:322
-#: ../pan/gui/task-pane.cc:505
+#: ../pan/gui/task-pane.cc:476
 msgid "State"
 msgstr "State"
 
@@ -2113,104 +1974,100 @@ msgid "Age (in days)"
 msgstr "Age (in days)"
 
 #: ../pan/gui/score-add-ui.cc:169
-msgid "for the next week"
-msgstr "for the next week"
-
-#: ../pan/gui/score-add-ui.cc:170
 msgid "for the next month"
 msgstr "for the next month"
 
-#: ../pan/gui/score-add-ui.cc:171
-msgid "for the next three months"
-msgstr "for the next three months"
+#: ../pan/gui/score-add-ui.cc:170
+msgid "for the next six months"
+msgstr "for the next six months"
 
-#: ../pan/gui/score-add-ui.cc:172
+#: ../pan/gui/score-add-ui.cc:171
 msgid "forever"
 msgstr "forever"
 
-#: ../pan/gui/score-add-ui.cc:197
+#: ../pan/gui/score-add-ui.cc:196
 msgid "contains"
 msgstr "contains"
 
-#: ../pan/gui/score-add-ui.cc:198
+#: ../pan/gui/score-add-ui.cc:197
 msgid "doesn't contain"
 msgstr "doesn't contain"
 
-#: ../pan/gui/score-add-ui.cc:199
+#: ../pan/gui/score-add-ui.cc:198
 msgid "is"
 msgstr "is"
 
-#: ../pan/gui/score-add-ui.cc:200
+#: ../pan/gui/score-add-ui.cc:199
 msgid "isn't"
 msgstr "isn't"
 
-#: ../pan/gui/score-add-ui.cc:201
+#: ../pan/gui/score-add-ui.cc:200
 msgid "starts with"
 msgstr "starts with"
 
-#: ../pan/gui/score-add-ui.cc:202
+#: ../pan/gui/score-add-ui.cc:201
 msgid "ends with"
 msgstr "ends with"
 
-#: ../pan/gui/score-add-ui.cc:203
+#: ../pan/gui/score-add-ui.cc:202
 msgid "matches regex"
 msgstr "matches regex"
 
-#: ../pan/gui/score-add-ui.cc:485
+#: ../pan/gui/score-add-ui.cc:483
 msgid "Another rule already sets this article's score."
 msgstr "Another rule already sets this article's score."
 
-#: ../pan/gui/score-add-ui.cc:486
+#: ../pan/gui/score-add-ui.cc:484
 msgid "You may want to go back or delete the old rule."
 msgstr "You may want to go back or delete the old rule."
 
-#: ../pan/gui/score-add-ui.cc:577
+#: ../pan/gui/score-add-ui.cc:575
 msgid "Add and Re_score"
 msgstr "Add and Re_score"
 
-#: ../pan/gui/score-add-ui.cc:628
-#: ../pan/gui/score-add-ui.cc:648
+#: ../pan/gui/score-add-ui.cc:626
+#: ../pan/gui/score-add-ui.cc:646
 msgid "New Scoring Rule"
 msgstr "New Scoring Rule"
 
-#: ../pan/gui/score-add-ui.cc:659
+#: ../pan/gui/score-add-ui.cc:657
 msgid "If the group name"
 msgstr "If the group name"
 
-#: ../pan/gui/score-add-ui.cc:666
+#: ../pan/gui/score-add-ui.cc:664
 msgid "And the article's"
 msgstr "And the article's"
 
-#: ../pan/gui/score-view-ui.cc:63
+#: ../pan/gui/score-view-ui.cc:59
 msgid "Close and Re_score"
 msgstr "Close and Re_score"
 
-#: ../pan/gui/score-view-ui.cc:166
+#: ../pan/gui/score-view-ui.cc:157
 #, c-format
 msgid "File %s, Lines %d - %d"
 msgstr "File %s, Lines %d - %d"
 
-#: ../pan/gui/score-view-ui.cc:194
+#: ../pan/gui/score-view-ui.cc:185
 msgid "Pan: Article's Scores"
 msgstr "Pan: Article's Scores"
 
-#: ../pan/gui/score-view-ui.cc:224
+#: ../pan/gui/score-view-ui.cc:215
 msgid "Add"
 msgstr "Add"
 
-#: ../pan/gui/score-view-ui.cc:229
+#: ../pan/gui/score-view-ui.cc:220
 msgid "New Score"
 msgstr "New Score"
 
-#: ../pan/gui/score-view-ui.cc:234
+#: ../pan/gui/score-view-ui.cc:225
 msgid "Criteria"
 msgstr "Criteria"
 
-#: ../pan/gui/score-view-ui.cc:257
+#: ../pan/gui/score-view-ui.cc:248
 msgid "Add a New Scoring Rule"
 msgstr "Add a New Scoring Rule"
 
-#: ../pan/gui/score-view-ui.cc:264
+#: ../pan/gui/score-view-ui.cc:255
 msgid "Remove the Selected Scoring Rule"
 msgstr "Remove the Selected Scoring Rule"
 
@@ -2337,73 +2194,73 @@ msgstr "Edit a Server's Settings"
 msgid "Remove a Server"
 msgstr "Remove a Server"
 
-#: ../pan/gui/task-pane.cc:256
+#: ../pan/gui/task-pane.cc:227
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 
-#: ../pan/gui/task-pane.cc:258
+#: ../pan/gui/task-pane.cc:229
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan: Tasks (%d Queued, %d Running)"
 
-#: ../pan/gui/task-pane.cc:260
+#: ../pan/gui/task-pane.cc:231
 msgid "Pan: Tasks"
 msgstr "Pan: Tasks"
 
-#: ../pan/gui/task-pane.cc:274
+#: ../pan/gui/task-pane.cc:245
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu tasks, %s, %.1f KBps, ETA %d:%02d:%02d"
 
-#: ../pan/gui/task-pane.cc:284
+#: ../pan/gui/task-pane.cc:255
 #, c-format
 msgid "%lu selected, %s"
 msgstr "%lu selected, %s"
 
-#: ../pan/gui/task-pane.cc:346
+#: ../pan/gui/task-pane.cc:317
 msgid "Running"
 msgstr "Running"
 
-#: ../pan/gui/task-pane.cc:347
+#: ../pan/gui/task-pane.cc:318
 msgid "Queued"
 msgstr "Queued"
 
-#: ../pan/gui/task-pane.cc:348
+#: ../pan/gui/task-pane.cc:319
 msgid "Stopped"
 msgstr "Stopped"
 
-#: ../pan/gui/task-pane.cc:349
+#: ../pan/gui/task-pane.cc:320
 msgid "Removing"
 msgstr "Removing"
 
-#: ../pan/gui/task-pane.cc:350
+#: ../pan/gui/task-pane.cc:321
 msgid "Unknown"
 msgstr "Unknown"
 
-#: ../pan/gui/task-pane.cc:376
+#: ../pan/gui/task-pane.cc:347
 #, c-format
 msgid "%d%% Done"
 msgstr "%d%% Done"
 
-#: ../pan/gui/task-pane.cc:382
+#: ../pan/gui/task-pane.cc:353
 #, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 
-#: ../pan/gui/task-pane.cc:464
+#: ../pan/gui/task-pane.cc:435
 msgid "_Online"
 msgstr "_Online"
 
-#: ../pan/gui/task-pane.cc:481
+#: ../pan/gui/task-pane.cc:452
 msgid "Restart Tasks"
 msgstr "Restart Tasks"
 
-#: ../pan/gui/task-pane.cc:483
+#: ../pan/gui/task-pane.cc:454
 msgid "Stop Tasks"
 msgstr "Stop Tasks"
 
-#: ../pan/gui/task-pane.cc:485
+#: ../pan/gui/task-pane.cc:456
 msgid "Delete Tasks"
 msgstr "Delete Tasks"
 
@@ -2532,7 +2389,160 @@ msgstr "Sampling headers for \"%s\""
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu parts, %lu articles)"
 
-#: ../pan/usenet-utils/gnksa.cc:876
+#: ../pan/usenet-utils/filter-info.cc:152
+msgid "article doesn't have attachments"
+msgstr "article doesn't have attachments"
+
+#: ../pan/usenet-utils/filter-info.cc:156
+msgid "the article has attachments"
+msgstr "the article has attachments"
+
+#: ../pan/usenet-utils/filter-info.cc:160
+msgid "the article isn't cached locally"
+msgstr "the article isn't cached locally"
+
+#: ../pan/usenet-utils/filter-info.cc:164
+msgid "the article is cached locally"
+msgstr "the article is cached locally"
+
+#: ../pan/usenet-utils/filter-info.cc:168
+msgid "the article wasn't posted by you"
+msgstr "the article wasn't posted by you"
+
+#: ../pan/usenet-utils/filter-info.cc:172
+msgid "the article was posted by you"
+msgstr "the article was posted by you"
+
+#: ../pan/usenet-utils/filter-info.cc:176
+msgid "the article has been read"
+msgstr "the article has been read"
+
+#: ../pan/usenet-utils/filter-info.cc:180
+msgid "the article hasn't been read"
+msgstr "the article hasn't been read"
+
+#: ../pan/usenet-utils/filter-info.cc:184
+#, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "the article is less than %ld bytes long"
+
+#: ../pan/usenet-utils/filter-info.cc:189
+#, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "the article is at least %ld bytes long"
+
+#: ../pan/usenet-utils/filter-info.cc:194
+#, c-format
+msgid "the article is less than %ld lines long"
+msgstr "the article is less than %ld lines long"
+
+#: ../pan/usenet-utils/filter-info.cc:199
+#, c-format
+msgid "the article is at least %ld lines long"
+msgstr "the article is at least %ld lines long"
+
+#: ../pan/usenet-utils/filter-info.cc:204
+#, c-format
+msgid "the article is less than %ld days old"
+msgstr "the article is less than %ld days old"
+
+#: ../pan/usenet-utils/filter-info.cc:209
+#, c-format
+msgid "the article is at least %ld days old"
+msgstr "the article is at least %ld days old"
+
+#: ../pan/usenet-utils/filter-info.cc:214
+#, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "the article was posted to less than %ld groups"
+
+#: ../pan/usenet-utils/filter-info.cc:219
+#, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "the article was posted to at least %ld groups"
+
+#: ../pan/usenet-utils/filter-info.cc:224
+#, c-format
+msgid "the article's score is less than %ld"
+msgstr "the article's score is less than %ld"
+
+#: ../pan/usenet-utils/filter-info.cc:229
+#, c-format
+msgid "the article's score is %ld or higher"
+msgstr "the article's score is %ld or higher"
+
+#: ../pan/usenet-utils/filter-info.cc:238
+#: ../pan/usenet-utils/filter-info.cc:248
+#, c-format
+msgid "%s doesn't contain \"%s\""
+msgstr "%s doesn't contain \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:239
+#: ../pan/usenet-utils/filter-info.cc:249
+#, c-format
+msgid "%s isn't \"%s\""
+msgstr "%s isn't \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:240
+#: ../pan/usenet-utils/filter-info.cc:250
+#, c-format
+msgid "%s doesn't begin with \"%s\""
+msgstr "%s doesn't begin with \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:241
+#: ../pan/usenet-utils/filter-info.cc:251
+#, c-format
+msgid "%s doesn't end with \"%s\""
+msgstr "%s doesn't end with \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:242
+#: ../pan/usenet-utils/filter-info.cc:252
+#, c-format
+msgid "%s doesn't match the regex \"%s\""
+msgstr "%s doesn't match the regex \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:264
+#, c-format
+msgid "%s contains \"%s\""
+msgstr "%s contains \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:265
+#, c-format
+msgid "%s is \"%s\""
+msgstr "%s is \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:266
+#, c-format
+msgid "%s begins with \"%s\""
+msgstr "%s begins with \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:267
+#, c-format
+msgid "%s ends with \"%s\""
+msgstr "%s ends with \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:268
+#, c-format
+msgid "%s matches the regex \"%s\""
+msgstr "%s matches the regex \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:274
+msgid "Any of these tests fail:"
+msgstr "Any of these tests fail:"
+
+#: ../pan/usenet-utils/filter-info.cc:281
+msgid "All of these tests pass:"
+msgstr "All of these tests pass:"
+
+#: ../pan/usenet-utils/filter-info.cc:288
+msgid "None of these tests pass:"
+msgstr "None of these tests pass:"
+
+#: ../pan/usenet-utils/filter-info.cc:295
+msgid "Any of these tests pass:"
+msgstr "Any of these tests pass:"
+
+#: ../pan/usenet-utils/gnksa.cc:846
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr "No email address provided; generating message-id with domain \"%s\""
@@ -2629,6 +2639,26 @@ msgstr "Warning: Most newsgroups frown upon HTML posts."
 msgid "Error: No Recipients."
 msgstr "Error: No Recipients."
 
+#: ../pan/usenet-utils/scorefile.cc:302
+#, c-format
+msgid "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or 'Expires: DD-MM-YYYY'."
+msgstr "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or 'Expires: DD-MM-YYYY'."
+
+#: ../pan/usenet-utils/scorefile.cc:305
+#, c-format
+msgid "Expired old score from %*.*s, line %d"
+msgstr "Expired old score from %*.*s, line %d"
+
+#: ../pan/usenet-utils/scorefile.cc:378
+#, c-format
+msgid "Error reading score in %*.*s, line %d: unexpected line."
+msgstr "Error reading score in %*.*s, line %d: unexpected line."
+
+#: ../pan/usenet-utils/scorefile.cc:426
+#, c-format
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
+msgstr "Read %lu scoring rules in %lu sections from \"%s\""
+
 #: ../pan/usenet-utils/text-massager.cc:309
 msgid "> [quoted text muted]"
 msgstr "> [quoted text muted]"
@@ -2637,6 +2667,16 @@ msgstr "> [quoted text muted]"
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 
+#~ msgid "Wrap _Now"
+#~ msgstr "Wrap _Now"
+#~ msgid "Wrap the Article Body to 80 Columns"
+#~ msgstr "Wrap the Article Body to 80 Columns"
+#~ msgid "One header per line, in the form HeaderName: Value"
+#~ msgstr "One header per line, in the form HeaderName: Value"
+#~ msgid "for the next week"
+#~ msgstr "for the next week"
+#~ msgid "for the next three months"
+#~ msgstr "for the next three months"
 #~ msgid "Error loading newsserver information: %s"
 #~ msgstr "Error loading newsserver information: %s"
 #~ msgid "Pan: "
@@ -3538,16 +3578,6 @@ msgstr "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 #~ msgstr "%s (%u) [%d missing pieces]"
 #~ msgid "%s [%d missing pieces]"
 #~ msgstr "%s [%d missing pieces]"
-#~ msgid ""
-#~ "When posting to Usenet, your article's Message-ID contains a domain "
-#~ "name.  You can set a custom domain name here, or leave it blank to let "
-#~ "Pan use the domain name from your email address."
-#~ msgstr ""
-#~ "When posting to Usenet, your article's Message-ID contains a domain "
-#~ "name.  You can set a custom domain name here, or leave it blank to let "
-#~ "Pan use the domain name from your email address."
-#~ msgid "Message-ID _Domain Name:"
-#~ msgstr "Message-ID _Domain Name:"
 #~ msgid "The default charset set for articles posted with this profile"
 #~ msgstr "The default charset set for articles posted with this profile"
 #~ msgid "Pan: Edit Profile"
@@ -3642,32 +3672,12 @@ msgstr "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 #~ msgstr "Lines per article:"
 #~ msgid "Estimated Article Size"
 #~ msgstr "Estimated Article Size"
-#~ msgid ""
-#~ "The newsgroups where replies to your message should go.  This is only "
-#~ "needed if it differs from the \"Post To Groups\" header. \n"
-#~ "To direct all replies to your email address, use \"Followup-To: poster\""
-#~ msgstr ""
-#~ "The newsgroups where replies to your message should go.  This is only "
-#~ "needed if it differs from the \"Post To Groups\" header. \n"
-#~ "To direct all replies to your email address, use \"Followup-To: poster\""
-#~ msgid ""
-#~ "The email account where mail replies to your posted message should go.  "
-#~ "This is only needed if it differs from the \"From\" header."
-#~ msgstr ""
-#~ "The email account where mail replies to your posted message should go.  "
-#~ "This is only needed if it differs from the \"From\" header."
 #~ msgid "Organization"
 #~ msgstr "Organisation"
 #~ msgid "The organization you're associated with."
 #~ msgstr "The organisation you're associated with."
 #~ msgid "Charset"
 #~ msgstr "Charset"
-#~ msgid "Custom Headers"
-#~ msgstr "Custom Headers"
-#~ msgid "Add \"User-Agent\" header"
-#~ msgstr "Add \"User-Agent\" header"
-#~ msgid "Add \"Message-Id\" header"
-#~ msgstr "Add \"Message-Id\" header"
 #~ msgid ""
 #~ "Could not convert \"%s\" to UTF-8. Article may not display correctly."
 #~ msgstr ""
