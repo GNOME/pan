@@ -1617,6 +1617,13 @@ PostUI :: apply_profile_to_headers ()
   foreach_const (Profile::headers_t, profile.headers, it)
     headers[it->first] = it->second;
 
+  // if user has custom reply-to header, handle that here.
+  Profile::headers_t::iterator p = headers.find ("Reply-To");
+  if (p != headers.end()) {
+    gtk_entry_set_text (GTK_ENTRY(_replyto_entry), p->second.c_str());
+    headers.erase (p);
+  }
+
   // rewrite the extra headers pane
   std::string s;
   foreach_const (Profile::headers_t, headers, it)
