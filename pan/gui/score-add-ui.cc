@@ -549,26 +549,6 @@ ScoreAddDialog :: populate (const Quark& group, const Article& a, Mode mode)
 
 namespace
 {
-  const char * SENSITIVE_LIST ("sensitive_list");
-
-  void
-  refresh_enabled_states (GtkToggleButton * tb)
-  {
-    GSList * s = (GSList*) g_object_get_data (G_OBJECT(tb), SENSITIVE_LIST);
-    const bool active (gtk_toggle_button_get_active (tb));
-    for (GSList * l=s; l!=0; l=l->next)
-      gtk_widget_set_sensitive (GTK_WIDGET(l->data), active);
-  }
-
-  void
-  toggled_cb (GtkToggleButton * tb, gpointer user_data)
-  {
-    refresh_enabled_states (tb);
-  }
-}
-
-namespace
-{
   GtkWidget* create_rescore_button ()
   {
     GtkWidget * button = gtk_button_new ();
