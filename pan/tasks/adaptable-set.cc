@@ -77,7 +77,7 @@ for (typename add_beforeme_t::const_iterator it(add_beforeme.begin()), end(add_b
     std::cerr << *xit << ' ';
   std::cerr << std::endl;
 }
-#endif 
+#endif
 
   // add the new items to 'items'...
   for (typename add_beforeme_t::iterator it(add_beforeme.begin()), e(add_beforeme.end()); it!=e; ++it) {

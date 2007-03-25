@@ -38,7 +38,7 @@ struct MyArticleRead: public ArticleRead
 
 int main ()
 {
-  const char * test_1 = 
+  const char * test_1 =
      "<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>\n"
      "<!DOCTYPE nzb PUBLIC \"-//newzBin//DTD NZB 1.0//EN\" \"http://www.newzbin.com/DTD/nzb/nzb-1.0.dtd\">\n"
      "<nzb xmlns=\"http://www.newzbin.com/DTD/2003/nzb\">\n"
@@ -110,6 +110,6 @@ int main ()
 
   for (std::vector<Task*>::iterator it(tasks.begin()), end(tasks.end()); it!=end; ++it)
     delete *it;
-  
+
   return 0;
 }

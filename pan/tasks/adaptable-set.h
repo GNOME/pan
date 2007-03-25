@@ -28,7 +28,7 @@ namespace pan
   /**
    * A std::set-like container that allows items to be reordered..
    *
-   * The intent is for newly-added elements to be inserted into the 
+   * The intent is for newly-added elements to be inserted into the
    * proper ordered place but to let callers rearrange elements at will.
    * The subset of unmoved elements will remain ordered.
    *
@@ -59,7 +59,7 @@ namespace pan
     public:
       AdaptableSet () {}
       virtual ~AdaptableSet () {}
-      
+ 
     public:
       bool empty() const { return _items.empty(); }
       int size() const { return _items.size(); }

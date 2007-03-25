@@ -144,7 +144,7 @@ namespace
 
   void text (GMarkupParseContext *context,
              const gchar         *text,
-             gsize                text_len,  
+             gsize                text_len,
              gpointer             user_data,
              GError             **error)
   {
@@ -225,7 +225,7 @@ NZB :: nzb_to_xml (std::ostream             & out,
                    const std::vector<Task*> & tasks)
 {
   int depth (0);
-  
+
   out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
       << "<!DOCTYPE nzb PUBLIC \"-//newzBin//DTD NZB 1.0//EN\" \"http://www.newzbin.com/DTD/nzb/nzb-1.0.dtd\">\n"
       << indent(depth++)
@@ -254,7 +254,7 @@ NZB :: nzb_to_xml (std::ostream             & out,
       escaped (out, path.to_view());
       out << "</path>\n";
     }
-    
+
     // what groups was this crossposted in?
     quarks_t groups;
     foreach_const (Xref, a.xref, xit)

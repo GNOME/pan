@@ -44,7 +44,7 @@ Socket :: set_abort_flag (bool b)
    _abort_flag = b;
 }
 
-bool 
+bool
 Socket :: is_abort_set () const
 {
    return _abort_flag;

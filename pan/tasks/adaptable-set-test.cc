@@ -279,7 +279,7 @@ int main ()
   check (m[8] == 17)
   check (m[9] == 20)
   check (m[10] == 25)
- 
+
   // now after we've moved some items...
   m.move_up (3);
   m.move_up (7);
@@ -317,6 +317,6 @@ int main ()
   check (m[12] == 20)
   check (m[13] == 25)
   check (m[14] == 30)
-  
+ 
   return 0;
 }

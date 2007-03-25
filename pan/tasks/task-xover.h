@@ -62,7 +62,7 @@ namespace pan
       typedef std::deque<MiniTask> MiniTasks_t;
       typedef std::map<Quark,MiniTasks_t> server_to_minitasks_t;
       server_to_minitasks_t _server_to_minitasks;
-          
+
     private: // implementation
       Data& _data;
       const Quark _group;

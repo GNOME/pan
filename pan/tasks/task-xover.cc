@@ -71,7 +71,7 @@ namespace
       snprintf (buf, sizeof(buf), _("Getting all headers for \"%s\""), group.c_str());
     else if (mode == TaskXOver::NEW)
       snprintf (buf, sizeof(buf), _("Getting new headers for \"%s\""), group.c_str());
-    else // SAMPLE 
+    else // SAMPLE
       snprintf (buf, sizeof(buf), _("Sampling headers for \"%s\""), group.c_str());
     return std::string (buf);
   }
@@ -233,7 +233,7 @@ namespace
     if (!view.empty()) {
       errno = 0;
       ul = strtoul (view.str, 0, 10);
-      if (errno) 
+      if (errno)
         ul = 0ul;
     }
 
