@@ -25,6 +25,7 @@
 namespace pan
 {
   class StringView;
+  class WorkerPool;
 
   /**
    * Defines primitive interactions with a remote server:
@@ -63,7 +64,7 @@ namespace pan
       void increment_xfer_byte_count (unsigned long byte_count);
       mutable unsigned long _bytes_since_last_check;
       mutable time_t _time_of_last_check;
-      mutable double _speed_KiBps; 
+      mutable double _speed_KiBps;
       bool _abort_flag;
 
     public:
@@ -74,7 +75,7 @@ namespace pan
        * This is currently implemented in glib with the GIOSocketCreator,
        * but can also be implemented for unit tests or ports to other
        * libraries.
-       * 
+       *
        * @ingroup tasks
        */
       struct Creator
@@ -85,7 +86,7 @@ namespace pan
         };
 
         virtual ~Creator () { }
-        virtual void create_socket (const StringView& host, int port, Listener*) = 0;
+        virtual void create_socket (const StringView& host, int port, WorkerPool&, Listener*) = 0;
       };
   };
 }

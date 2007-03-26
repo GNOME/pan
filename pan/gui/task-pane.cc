@@ -210,11 +210,11 @@ TaskPane :: update_status (const task_states_t& tasks)
   {
     Task * task (*it);
     const Queue::TaskState state (tasks.get_state (task));
-    if (state == Queue::RUNNING)
+    if (state == Queue::RUNNING || state == Queue::DECODING)
       ++running_count;
     else if (state == Queue::STOPPED)
       ++stopped_count;
-    else if (state == Queue::QUEUED)
+    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE)
       ++queued_count;
 
     if (state==Queue::RUNNING || state==Queue::QUEUED)
@@ -315,6 +315,8 @@ namespace
     const char * state_str (0);
     switch (state) {
       case Queue::RUNNING:  state_str = _("Running"); break;
+      case Queue::DECODING: state_str = _("Decoding"); break;
+      case Queue::QUEUED_FOR_DECODE: state_str = _("Queued for Decode"); break;
       case Queue::QUEUED:   state_str = _("Queued"); break;
       case Queue::STOPPED:  state_str = _("Stopped"); break;
       case Queue::REMOVING: state_str = _("Removing"); break;
@@ -372,7 +374,7 @@ namespace
     }
 
     char * str (0);
-    if (state == Queue::RUNNING)
+    if (state == Queue::RUNNING || state == Queue::DECODING)
       str = g_markup_printf_escaped ("<b>%s</b>\n<small>%s</small>", description.c_str(), status.c_str());
     else
       str = g_markup_printf_escaped ("%s\n<small>%s</small>", description.c_str(), status.c_str());

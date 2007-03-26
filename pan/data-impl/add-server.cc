@@ -56,8 +56,9 @@ int main (int argc, char *argv[])
 
   // initialize the queue
   TaskArchive null_task_archive;
+  WorkerPool pool;
   GIOChannelSocket::Creator _socket_creator;
-  Queue queue (data, null_task_archive, &_socket_creator, true);
+  Queue queue (data, null_task_archive, &_socket_creator, pool, true);
   queue.add_task (new TaskGroups (data, servername));
 
   // start the event loop...

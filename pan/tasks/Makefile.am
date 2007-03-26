@@ -3,6 +3,7 @@ AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@
 noinst_LIBRARIES = libtasks.a
 
 libtasks_a_SOURCES = \
+  decoder.cc \
   task.cc \
   task-article.cc \
   task-groups.cc \
@@ -19,6 +20,7 @@ libtasks_a_SOURCES = \
 noinst_HEADERS = \
   adaptable-set.cc \
   adaptable-set.h \
+  decoder.h \
   defgroup.h \
   health.h \
   task.h \

@@ -29,10 +29,12 @@
 
 namespace pan
 {
+  struct WorkerPool;
+
   /**
    * A pool of NNTP connections to a particular server.
    *
-   * @ingroup tasks 
+   * @ingroup tasks
    */
   class NNTP_Pool:
     public NNTP::Source,
@@ -69,7 +71,7 @@ namespace pan
 
       void add_listener (Listener * l) { _listeners.insert (l); }
       void remove_listener (Listener * l) { _listeners.erase (l); }
-      void request_nntp ();
+      void request_nntp (WorkerPool&);
 
     private: //  NNTP::Listener
       virtual void on_nntp_done (NNTP*, Health, const StringView&);

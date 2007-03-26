@@ -1,0 +1,119 @@
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/*
+ * Pan - A Newsreader for Gtk+
+ * Copyright (C) 2002-2007 Charles Kerr <charles@rebelbase.com>
+ *
+ * This file
+ * Copyright (C) 2007 Calin Culianu <calin@ajvar.org>
+ * Copyright (C) 2007 Charles Kerr <charles@rebelbase.com>
+ *
+ * This file is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+#ifndef _Decoder_H_
+#define _Decoder_H_
+
+#include <list>
+#include <pan/general/locking.h>
+#include <pan/general/worker-pool.h>
+#include <pan/data/article-cache.h>
+#include <pan/tasks/task-article.h>
+extern "C" {
+#  define PROTOTYPES
+#  include <uulib/uudeview.h>
+};
+
+namespace pan
+{
+  /**
+   * Decodes attachments in a worker thread.
+   *
+   * @author Calin Culianu <calin@ajvar.org>
+   * @author Charles Kerr <charles@rebelbase.com>
+   * @ingroup tasks
+   * @see Queue
+   * @see TaskArticle
+   */
+  class Decoder : protected WorkerPool::Worker
+  {
+    public:
+
+      Decoder (WorkerPool&);
+      ~Decoder ();
+
+      /**
+       * Cancel the current decode, if there is one.
+       * The listener is notified via WorkerPool::Worker::on_work_cancelled().
+       */
+      void cancel() { WorkerPool::Worker::cancel();  }
+      /**
+       * Cancel the current decode, if there is one.
+       * The listener is *NOT* notified!  
+       * Use this if quitting app or if listener is or will be deleted.
+       */
+      void gracelessly_quit() { WorkerPool::Worker::gracelessly_quit();  }
+
+      typedef ArticleCache::strings_t strings_t;
+
+      void enqueue_work_in_thread (TaskArticle                    * task,
+                                   void                           * listener_data,
+                                   const Quark                    & save_path,
+                                   const strings_t                & input_files,
+                                   const TaskArticle::SaveMode    & save_mode);
+
+    public:
+
+      TaskArticle::SaveMode save_mode;
+      std::list<std::string> log_errors, log_infos;
+      bool mark_read;
+
+    private:
+
+      std::string save_path;
+      strings_t filenames;
+
+      /* The below values are automagically polled from the main thread
+         while the decode task is running, and updates are sent to the Task. */
+      Mutex mut;
+      volatile int percent;
+      std::string current_file; // the current file we are decoding, with path
+
+      TaskArticle * task;
+
+    protected:
+
+      /// from WorkerPool::Worker interface, saves article to filesystem
+      void do_work(void *);
+
+    private:
+
+      /// just clears member vars for another run in a different thread
+      void init (TaskArticle                 * task,
+                 const Quark                 & save_path,
+                 const strings_t             & filenames,
+                 const TaskArticle::SaveMode & save_mode);
+
+      static void uu_log(void *thiz, char *message, int severity);
+      static int uu_busy_poll(void * self, uuprogress *p);
+      /// updates Progress * object (aka task) about progress of decode step
+      static gboolean progress_update_timer_func(gpointer decoder);
+
+      WorkerPool& _worker_pool;
+      int _gsourceid;
+      void disable_progress_update();
+      void enable_progress_update();
+  };
+}
+
+#endif

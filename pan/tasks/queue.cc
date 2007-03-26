@@ -33,11 +33,15 @@ using namespace pan;
 
 Queue :: Queue (ServerInfo         & server_info,
                 TaskArchive        & archive,
-                Socket::Creator    * socket_creator, 
+                Socket::Creator    * socket_creator,
+                WorkerPool         & pool,
                 bool                 online):
   _server_info (server_info),
   _is_online (online),
   _socket_creator (socket_creator),
+  _worker_pool (pool),
+  _decoder (pool),
+  _decoder_task (0),
   _needs_saving (false),
   _last_time_saved (0),
   _archive (archive)
@@ -135,7 +139,7 @@ Queue :: upkeep ()
 
   // upkeep on running tasks... this lets us pop open
   // extra connections if the task can handle >1 connection
-  std::set<Task*> active; 
+  std::set<Task*> active;
   foreach (nntp_to_task_t, _nntp_to_task, it)
     active.insert (it->second);
   foreach (std::set<Task*>, active, it)
@@ -183,6 +187,8 @@ Queue :: get_task_counts (int& active, int& total)
   std::set<Task*> active_tasks;
   foreach_const (nntp_to_task_t, _nntp_to_task, it)
     active_tasks.insert (it->second);
+  if (_decoder_task)
+    active_tasks.insert (_decoder_task);
   active = active_tasks.size ();
   total = _tasks.size ();
 }
@@ -208,6 +214,7 @@ Queue :: process_task (Task * task)
   debug ("in process_task with a task of type " << task->get_type());
 
   const Task::State& state (task->get_state());
+  const bool was_active (task_is_active (task));
 
   if (state._work == Task::COMPLETED)
   {
@@ -222,7 +229,7 @@ Queue :: process_task (Task * task)
   else if (_stopped.count(task))
   {
     debug ("stopped");
-    // do nothing
+    task->stop();
   }
   else if (state._health == COMMAND_FAILED)
   {
@@ -234,12 +241,20 @@ Queue :: process_task (Task * task)
     debug ("working");
     // do nothing
   }
+  else if (state._work == Task::NEED_DECODER)
+  {
+    if (!_decoder_task)
+    {
+      _decoder_task = task;
+      task->give_decoder (this, &_decoder);
+    }
+  }
   else while (state._work == Task::NEED_NNTP)
   {
     // make the requests...
     const Task::State::unique_servers_t& servers (state._servers);
     foreach_const (Task::State::unique_servers_t, servers, it)
-      get_pool(*it).request_nntp ();
+      get_pool(*it).request_nntp (_worker_pool);
 
     Quark server;
     if (!find_best_server (servers, server))
@@ -251,6 +266,10 @@ Queue :: process_task (Task * task)
 
     give_task_a_connection (task, nntp);
   }
+
+  const bool is_active (task_is_active (task));
+  if (is_active != was_active)
+    fire_task_active_changed (task, is_active);
 }
 
 /***
@@ -258,25 +277,33 @@ Queue :: process_task (Task * task)
 ***/
 
 Task*
+Queue :: find_first_task_needing_decoder ()
+{
+  foreach (TaskSet, _tasks, it) {
+    const Task::State& state ((*it)->get_state ());
+    if  ((state._work == Task::NEED_DECODER)
+      && (!_stopped.count (*it))
+      && (!_removing.count (*it)))
+      return *it;
+  }
+
+  return 0;
+}
+
+Task*
 Queue :: find_first_task_needing_server (const Quark& server)
 {
-  Task * retval (0);
-
-  foreach (TaskSet, _tasks, it)
-  {
+  foreach (TaskSet, _tasks, it) {
     const Task::State& state ((*it)->get_state ());
     if  ((state._health != COMMAND_FAILED)
       && (state._work == Task::NEED_NNTP)
       && (state._servers.count(server))
       && (!_stopped.count (*it))
       && (!_removing.count (*it)))
-    {
-      retval = *it;
-      break;
-    }
+      return *it;
   }
 
-  return retval;
+  return 0;
 }
 
 bool
@@ -404,8 +431,10 @@ Queue :: stop_tasks (const tasks_t& tasks)
 {
   foreach_const (tasks_t, tasks, it) {
     Task * task (*it);
-    if (_tasks.index_of (task) != -1)
+    if (_tasks.index_of (task) != -1) {
       _stopped.insert (task);
+      process_task (task);
+    }
   }
 }
 
@@ -470,6 +499,9 @@ Queue :: remove_latest_task ()
 bool
 Queue :: task_is_active (const Task * task) const
 {
+  if (task && task==_decoder_task)
+    return true;
+
   bool task_has_nntp (false);
   foreach_const (nntp_to_task_t, _nntp_to_task, it)
     if ((task_has_nntp = task==it->second))
@@ -490,9 +522,10 @@ Queue :: remove_task (Task * task)
   const int index (_tasks.index_of (task));
   pan_return_if_fail (index != -1);
 
-  if (task_is_active (task)) // wait for the NNTPs to finish
+  if (task_is_active (task)) // wait for the Task to finish
   {
-    debug ("can't delete this task right now because it's got server connections");
+    debug ("can't delete this task right now because it's active");
+    task->stop();
     _removing.insert (task);
   }
   else // no NNTPs working, we can remove right now.
@@ -514,8 +547,19 @@ Queue :: remove_task (Task * task)
 void
 Queue :: get_all_task_states (task_states_t& setme)
 {
-  setme.tasks.clear ();
-  setme.tasks.insert (setme.tasks.begin(), _tasks.begin(), _tasks.end());
+  setme.tasks.clear();
+  setme.tasks.reserve(_tasks.size());
+
+  std::vector<Task *> & need_decode = setme._need_decode.get_container();
+  need_decode.clear();
+  need_decode.reserve(setme.tasks.capacity());
+
+  foreach(TaskSet, _tasks, it) {
+    setme.tasks.push_back(*it);
+    if ((*it)->get_state()._work == Task::NEED_DECODER)
+      need_decode.push_back(*it);
+  }
+  setme._need_decode.sort();
 
   setme._queued.get_container() = setme.tasks;
   setme._queued.sort ();
@@ -529,10 +573,12 @@ Queue :: get_all_task_states (task_states_t& setme)
   removing.insert (removing.end(), _removing.begin(), _removing.end());
 
   std::vector<Task*>& running (setme._running.get_container());
-  std::set<Task*> tmp; 
+  std::set<Task*> tmp;
   foreach (nntp_to_task_t, _nntp_to_task, it) tmp.insert (it->second);
   running.clear ();
   running.insert (running.end(), tmp.begin(), tmp.end());
+
+  setme._decoding = _decoder_task;
 }
 
 void
@@ -561,10 +607,9 @@ Queue :: check_in (NNTP * nntp, Health nntp_health)
     Task * task (_nntp_to_task[nntp]);
     _nntp_to_task.erase (nntp);
 
-    // take care of the task's state
-    const bool is_active (task_is_active (task));
-    if (!is_active) // if it's not active anymore...
-      fire_task_active_changed (task, is_active);
+    // notify the listeners if the task isn't active anymore...
+    if (!task_is_active (task))
+      fire_task_active_changed (task, false);
 
     // return the nntp to the pool
     const Quark& servername (nntp->_server);
@@ -574,6 +619,25 @@ Queue :: check_in (NNTP * nntp, Health nntp_health)
     // what to do now with this task...
     process_task (task);
   }
+}
+
+void
+Queue :: check_in (Decoder* decoder, Task* task)
+{
+  // take care of our decoder counting...
+  _decoder_task = 0;
+
+  // notify the listeners if the task isn't active anymore...
+  if (!task_is_active (task))
+    fire_task_active_changed (task, false);
+
+  // pass our worker thread on to another task
+  Task * next = find_first_task_needing_decoder ();
+  if (next && (next!=task))
+    process_task (next);
+
+  // what to do now with this task...
+  process_task (task);
 }
 
 void

@@ -24,7 +24,6 @@
 ******/
 
 #include <config.h>
-#include <map>
 #include <iostream>
 #include <string>
 #include <cerrno>
@@ -38,6 +37,7 @@ extern "C" {
 
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
+#include <pan/general/worker-pool.h>
 
 #ifdef G_OS_WIN32
   // this #define is necessary for mingw
@@ -91,14 +91,14 @@ extern "C" {
 
 using namespace pan;
 
-namespace 
+namespace
 {
   typedef int (*t_getaddrinfo)(const char *,const char *, const struct addrinfo*, struct addrinfo **);
   t_getaddrinfo p_getaddrinfo (0);
 
   typedef void (*t_freeaddrinfo)(struct addrinfo*);
   t_freeaddrinfo p_freeaddrinfo (0);
-  
+
   void ensure_module_inited (void)
   {
     static bool inited (false);
@@ -107,19 +107,19 @@ namespace
     {
       p_freeaddrinfo=NULL;
       p_getaddrinfo=NULL;
-      
+
 #ifdef G_OS_WIN32
       WSADATA wsaData;
       WSAStartup(MAKEWORD(2,2), &wsaData);
-      
+
       char sysdir[MAX_PATH], path[MAX_PATH+8];
-      
+
       if(GetSystemDirectory(sysdir,MAX_PATH)!=0)
       {
         HMODULE lib=NULL;
         FARPROC pfunc=NULL;
         const char *libs[]={"ws2_32","wship6",NULL};
-        
+
         for(const char **p=libs;*p!=NULL;++p)
         {
           g_snprintf(path,MAX_PATH+8,"%s\\%s",sysdir,*p);
@@ -164,7 +164,7 @@ namespace
     signal (SIGPIPE, SIG_IGN);
 #endif
 
-    // get an addrinfo for the host 
+    // get an addrinfo for the host
     const std::string host (host_in.str, host_in.len);
     char portbuf[32];
     g_snprintf (portbuf, sizeof(portbuf), "%d", port);
@@ -178,7 +178,7 @@ namespace
 
       err = WSAGetLastError();
       if (err || !ans) {
-        setme_err = get_last_error (err);	
+        setme_err = get_last_error (err);
         return 0;
       }
 
@@ -290,7 +290,7 @@ namespace
 *****
 ****/
 
-GIOChannelSocket :: GIOChannelSocket ( ):
+GIOChannelSocket :: GIOChannelSocket ():
    _channel (0),
    _tag_watch (0),
    _tag_timeout (0),
@@ -383,7 +383,7 @@ GIOChannelSocket :: do_read ()
       g_string_prepend_len (g, _partial_read.c_str(), _partial_read.size());
       _partial_read.clear ();
 
-      debug ("read [" << g->str << "]");
+      debug_v ("read [" << g->str << "]"); // verbose debug, if --debug --debug was on the command-line
       increment_xfer_byte_count (g->len);
       if (g_str_has_suffix (g->str, "\r\n"))
         g_string_truncate (g, g->len-2);
@@ -410,7 +410,7 @@ GIOChannelSocket :: do_read ()
 
   return IO_DONE;
 }
- 
+
 
 GIOChannelSocket :: DoResult
 GIOChannelSocket :: do_write ()
@@ -554,7 +554,8 @@ GIOChannelSocket :: set_watch_mode (WatchMode mode)
 
 namespace
 {
-  struct ThreadInfo
+  struct ThreadWorker : public WorkerPool::Worker,
+                        public WorkerPool::Worker::Listener
   {
     std::string host;
     int port;
@@ -564,44 +565,33 @@ namespace
     Socket * socket;
     std::string err;
 
-    ThreadInfo (const StringView& h, int p, Socket::Creator::Listener *l):
+    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l):
       host(h), port(p), listener(l), ok(false), socket(0) {}
+
+    void do_work (void *ignored)
+    {
+      socket = new GIOChannelSocket ();
+      ok = socket->open (host, port, err);
+    }
+
+    /** called in main thread after do_work() is done */
+    void on_work_complete (void *ignored)
+    {
+      // pass results to main thread...
+      if (!err.empty())   Log :: add_err (err.c_str());
+      listener->on_socket_created (host, port, ok, socket);
+    }
   };
-
-  gboolean socket_created_idle (gpointer info_gpointer)
-  {
-    ThreadInfo * info (static_cast<ThreadInfo*>(info_gpointer));
-    if (!info->err.empty())
-      Log :: add_err (info->err.c_str());
-    info->listener->on_socket_created (info->host, info->port, info->ok, info->socket);
-    delete info;
-    return false;
-  }
-
-  void create_socket_thread_func (gpointer info_gpointer, gpointer unused)
-  {
-    //std::cerr << LINE_ID << " creating a socket in worker thread...\n";
-    ThreadInfo * info (static_cast<ThreadInfo*>(info_gpointer));
-    info->socket = new GIOChannelSocket ();
-    info->ok = info->socket->open (info->host, info->port, info->err);
-    g_idle_add (socket_created_idle, info); // pass results to main thread...
-  }
 }
-  
+
 void
 GIOChannelSocket :: Creator :: create_socket (const StringView & host,
                                               int                port,
+                                              WorkerPool       & threadpool,
                                               Listener         * listener)
 {
   ensure_module_inited ();
 
-  static GThreadPool * pool (0);
-  if (!pool)
-    pool = g_thread_pool_new (create_socket_thread_func, 0, 4, true, 0);
-
-  // farm this out to a worker thread so that the main thread
-  // doesn't block while we open the socket.
-  g_thread_pool_push (pool, 
-                      new ThreadInfo (host, port, listener),
-                      NULL);
+  ThreadWorker * w = new ThreadWorker (host, port, listener);
+  threadpool.push_work (w, 0, w, true);
 }

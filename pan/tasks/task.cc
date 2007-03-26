@@ -60,18 +60,30 @@ Task :: check_in (NNTP * nntp, Health health)
    }
 }
 
-#if 0
-time_t
-Task :: get_oldest_article_time () const
+/***
+****
+***/
+
+void
+Task :: give_decoder (DecoderSource* s, Decoder* d)
 {
-   time_t oldest_time (~0);
-
-   for (articles_t::const_iterator it=_articles.begin(), end=_articles.end(); it!=end; ++it) {
-      const time_t t (it->get_oldest_part_time ());
-      if (t < oldest_time)
-         oldest_time = t;
-   }
-
-   return oldest_time;
+  _decoder_to_source[d] = s;
+  use_decoder (d);
 }
-#endif
+void
+Task :: use_decoder (Decoder * d)
+{
+  abort ();
+}
+void
+Task :: check_in (Decoder * d)
+{
+  decoder_to_source_t::iterator it (_decoder_to_source.find (d));
+
+  if (it != _decoder_to_source.end())
+  {
+    DecoderSource * s (it->second);
+    _decoder_to_source.erase (d);
+    s->check_in (d, this);
+  }
+}

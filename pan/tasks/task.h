@@ -29,6 +29,8 @@
 
 namespace pan
 {
+   class Decoder;
+
    /**
     * Base class for jobs that require NNTP interaction to be completed.
     * These wait their turn in the queue until an NNTP connection is available.
@@ -50,6 +52,8 @@ namespace pan
             COMPLETED,
             /** Task is waiting on an nntp connection */
             NEED_NNTP,
+            /** Task waiting for a decoder */
+            NEED_DECODER,
             /** Task is running */
             WORKING
          };
@@ -85,6 +89,9 @@ namespace pan
                void set_need_nntp (const Quark& server) {
                   _work=NEED_NNTP; _servers.clear(); _servers.insert(server); }
 
+               void set_need_decoder () {
+                   _work = NEED_DECODER; _servers.clear(); }
+
                void set_health (Health h) {
                   _health = h; }
 
@@ -95,8 +102,16 @@ namespace pan
 
       public:
 
-         /** Pass a NNTP connection to the Task so it can do some work */
+         /** Loan the task a NNTP connection */
          void give_nntp (NNTP::Source*, NNTP* nntp);
+
+         struct DecoderSource {
+           virtual ~DecoderSource() {}
+           virtual void check_in (Decoder*, Task*) = 0;
+         };
+
+         /** Loan the task a Decoder */
+         void give_decoder (DecoderSource*, Decoder*);
 
       public:
 
@@ -109,6 +124,9 @@ namespace pan
 
          virtual unsigned long get_bytes_remaining () const = 0;
 
+         /// stop a running task
+         virtual void stop () { }
+
       protected:
 
          State _state;
@@ -119,6 +137,10 @@ namespace pan
 
          int get_nntp_count () const { return _nntp_to_source.size(); }
 
+         virtual void use_decoder (Decoder*);
+
+         void check_in (Decoder*);
+
       private:
 
          /** What type this task is ("XOVER", "POST", "SAVE", "BODIES", etc...) */
@@ -128,7 +150,12 @@ namespace pan
          typedef Loki::AssocVector<NNTP*,NNTP::Source*> nntp_to_source_t;
          /** used in check_in() to remember where the nntp is to be returned */
          nntp_to_source_t _nntp_to_source;
+
+         /** typedef for _decoder_to_source */
+         typedef Loki::AssocVector<Decoder*,DecoderSource*> decoder_to_source_t;
+         /** used in check_in() to remember where the decoder is to be returned */
+         decoder_to_source_t _decoder_to_source;
    };
-};
+}
 
 #endif

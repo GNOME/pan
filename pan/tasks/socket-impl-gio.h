@@ -28,7 +28,7 @@ namespace pan
 {
   /**
    * glib implementation of Socket
-   * 
+   *
    * @ingroup tasks
    */
   class GIOChannelSocket: public Socket
@@ -69,7 +69,7 @@ namespace pan
       class Creator: public Socket::Creator {
         public:
           virtual ~Creator () { }
-          virtual void create_socket (const StringView& host, int port, Listener *l);
+          virtual void create_socket (const StringView& host, int port, WorkerPool&, Listener *l);
       };
   };
 }

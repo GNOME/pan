@@ -166,7 +166,7 @@ NNTP_Pool :: on_socket_created (const StringView& host, int port, bool ok, Socke
     std::string user, pass;
     _server_info.get_server_auth (_server, user, pass);
     NNTP * nntp = new NNTP (_server, user, pass, socket);
-    nntp->handshake (this); // 
+    nntp->handshake (this);
   }
 }
 
@@ -247,7 +247,7 @@ NNTP_Pool :: get_counts (int& setme_active,
 
 
 void
-NNTP_Pool :: request_nntp ()
+NNTP_Pool :: request_nntp (WorkerPool& threadpool)
 {
   int active, idle, pending, max;
   get_counts (active, idle, pending, max);
@@ -269,7 +269,7 @@ NNTP_Pool :: request_nntp ()
     if (_server_info.get_server_addr (_server, address, port))
     {
       ++_pending_connections;
-      _socket_creator->create_socket (address, port, this);
+      _socket_creator->create_socket (address, port, threadpool, this);
     }
   }
 }

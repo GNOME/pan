@@ -25,6 +25,7 @@
 namespace pan
 {
   extern bool _debug_flag;
+  extern bool _debug_verbose_flag;
 }
 
 #define LINE_ID '(' << __FILE__ << ':' << __LINE__ << ':' << __func__ << ')'
@@ -32,6 +33,12 @@ namespace pan
 #define debug(A) \
   do { \
     if (_debug_flag) \
+      std::cerr << LINE_ID << ' ' << A << '\n'; \
+  } while (0)
+
+#define debug_v(A) \
+  do { \
+    if (_debug_verbose_flag) \
       std::cerr << LINE_ID << ' ' << A << '\n'; \
   } while (0)
 

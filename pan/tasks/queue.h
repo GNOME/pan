@@ -25,6 +25,7 @@
 #include <vector>
 #include <pan/general/map-vector.h>
 #include <pan/general/quark.h>
+#include <pan/tasks/decoder.h>
 #include <pan/tasks/nntp-pool.h>
 #include <pan/tasks/socket.h>
 #include <pan/tasks/adaptable-set.h>
@@ -35,6 +36,7 @@ namespace pan
 {
   class NNTP;
   class ServerInfo;
+  class WorkerPool;
 
   /**
    * A Queue helper that saves tasks to disk and restores them from disk.
@@ -56,11 +58,12 @@ namespace pan
    */
   class Queue:
     public NNTP::Source,
+    public Task::DecoderSource,
     private NNTP_Pool::Listener,
     private AdaptableSet<Task*, TaskWeakOrdering>::Listener
   {
     public:
-      Queue (ServerInfo&, TaskArchive&, Socket::Creator*, bool online);
+      Queue (ServerInfo&, TaskArchive&, Socket::Creator*, WorkerPool&, bool online);
       virtual ~Queue ();
 
       typedef std::vector<Task*> tasks_t;
@@ -95,11 +98,12 @@ namespace pan
       void get_full_connection_counts (std::vector<ServerConnectionCounts>& setme) const;
 
     public:
-      enum TaskState { RUNNING, QUEUED, STOPPED, REMOVING };
+      enum TaskState { QUEUED, RUNNING, DECODING, STOPPED, REMOVING,
+                       QUEUED_FOR_DECODE };
 
       /**
        * An ordered collection of tasks and their corresponding TaskState s.
-       */ 
+       */
       struct task_states_t {
         friend class Queue;
         private:
@@ -108,12 +112,16 @@ namespace pan
           sorted_tasks_t _stopped;
           sorted_tasks_t _running;
           sorted_tasks_t _removing;
+          sorted_tasks_t _need_decode;
+          Task * _decoding;
         public:
           tasks_t tasks;
           TaskState get_state (Task* task) const {
+            if (_decoding && (task==_decoding)) return DECODING;
             if (_removing.count(task)) return REMOVING;
             if (_stopped.count(task)) return STOPPED;
             if (_running.count(task)) return RUNNING;
+            if (_need_decode.count(task)) return QUEUED_FOR_DECODE;
             if (_queued.count(task)) return QUEUED;
             return STOPPED;
           }
@@ -143,6 +151,9 @@ namespace pan
     public: // inherited from NNTP::Source
       virtual void check_in (NNTP*, Health);
 
+    public: // inherited from Task::DecoderSource
+      virtual void check_in (Decoder*, Task*);
+
     private: // inherited from NNTP_Pool::Listener
       virtual void on_pool_has_nntp_available (const Quark& server);
       virtual void on_pool_error (const Quark& server, const StringView& message);
@@ -153,6 +164,7 @@ namespace pan
       ServerInfo& _server_info;
       bool _is_online;
       Task* find_first_task_needing_server (const Quark& server);
+      Task* find_first_task_needing_decoder ();
       bool find_best_server (const Task::State::unique_servers_t& servers, Quark& setme);
       bool task_is_active (const Task*) const;
 
@@ -162,6 +174,9 @@ namespace pan
       std::set<Task*> _removing;
       std::set<Task*> _stopped;
       Socket::Creator * _socket_creator;
+      WorkerPool & _worker_pool;
+      Decoder _decoder;
+      Task * _decoder_task;
 
     protected:
       virtual void fire_tasks_added  (int index, int count);

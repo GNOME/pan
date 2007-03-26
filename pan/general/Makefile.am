@@ -11,7 +11,8 @@ libgeneralutils_a_SOURCES = \
  progress.cc \
  quark.cc \
  string-view.cc \
- text-match.cc
+ text-match.cc \
+ worker-pool.cc
 
 noinst_HEADERS = \
  debug.h \
@@ -20,6 +21,7 @@ noinst_HEADERS = \
  file-util.h \
  foreach.h \
  line-reader.h \
+ locking.h \
  log.h \
  map-vector.h \
  messages.h \
@@ -29,7 +31,8 @@ noinst_HEADERS = \
  string-view.h \
  test.h \
  text-match.h \
- time-elapsed.h
+ time-elapsed.h \
+ worker-pool.h 
 
 noinst_PROGRAMS = \
   progress-test \

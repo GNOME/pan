@@ -3,6 +3,10 @@
  * Pan - A Newsreader for Gtk+
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
+ * This file
+ * Copyright (C) 2007 Charles Kerr <charles@rebelbase.com>
+ * Copyright (C) 2007 Calin Culianu <calin@ajvar.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the License.
@@ -20,7 +24,7 @@
 #ifndef _TaskArticle_h_
 #define _TaskArticle_h_
 
-#include <map>
+#include <pan/general/worker-pool.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/data.h>
@@ -30,11 +34,15 @@
 
 namespace pan
 {
+  struct Decoder;
+
   /**
    * Task for downloading, and optionally decoding, articles
    * @ingroup tasks
    */
-  class TaskArticle: public Task, private NNTP::Listener
+  class TaskArticle: public Task,
+                     private NNTP::Listener,
+                     private WorkerPool::Worker::Listener
   {
     public: // life cycle
 
@@ -45,16 +53,25 @@ namespace pan
                    const Article      & article,
                    ArticleCache       & cache,
                    ArticleRead        & read,
-                   Task::Listener     * l=0,
+                   Progress::Listener* l=0,
                    SaveMode             save_mode = NONE,
                    const Quark        & save_path = Quark());
       virtual ~TaskArticle ();
       time_t get_time_posted () const { return _time_posted; }
       const Quark& get_save_path () const { return _save_path; }
       const Article& get_article () const { return _article; }
-        
+
     public: // Task subclass
-      virtual unsigned long get_bytes_remaining () const;
+      unsigned long get_bytes_remaining () const;
+      void stop ();
+
+      /** only call this for tasks in the NEED_DECODE state
+       * attempts to acquire the saver thread and start saving
+       * returns false if failed or true if the save process started
+       * (intended to be used with the Queue class). If true is returned,
+       * a side-effect is that the task is now in the DECODING state.
+       */
+      virtual void use_decoder (Decoder*);
 
     private: // Task subclass
       virtual void use_nntp (NNTP * nntp);
@@ -62,6 +79,10 @@ namespace pan
     private: // NNTP::Listener subclass
       virtual void on_nntp_line  (NNTP*, const StringView&);
       virtual void on_nntp_done  (NNTP*, Health, const StringView&);
+
+    private: // WorkerPool::Listener interface
+      void on_work_complete(void *);
+      void on_work_cancelled(void *);
 
     protected:
       const Quark _save_path;
@@ -71,13 +92,12 @@ namespace pan
       quarks_t _servers;
       const Article _article;
       const time_t _time_posted;
-      void on_finished ();
 
     private: // implementation
-      bool _finished_proc_has_run;
       const SaveMode _save_mode;
-      typedef std::map<Quark,int> stats_t;
-      stats_t _stats;
+      friend class Decoder;
+      Decoder * _decoder;
+      bool _decoder_has_run;
 
     private:
       struct Needed {
@@ -93,6 +113,7 @@ namespace pan
       needed_t _needed;
 
       void update_work ();
+
   };
 }
 

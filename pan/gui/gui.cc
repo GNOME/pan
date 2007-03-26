@@ -317,6 +317,17 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   _prefs.add_listener (this);
 
   gtk_accel_map_load (get_accel_filename().c_str());
+
+  { // make sure taskbar views have the right tasks in them -- 
+    // when Pan first starts, the active tasks are already running
+    Queue::task_states_t task_states;
+    queue.get_all_task_states(task_states);    
+    foreach(Queue::tasks_t, task_states.tasks, it) {
+      Queue::TaskState s = task_states.get_state(*it);
+      if (s == Queue::RUNNING || s == Queue::DECODING)
+        on_queue_task_active_changed (queue, *(*it), true);
+    }
+  }
 }
 
 namespace
@@ -1142,13 +1153,13 @@ void GUI :: do_tip_jar ()
 void GUI :: do_about_pan ()
 {
 #if GTK_CHECK_VERSION(2,6,0)
-  const gchar * authors [] = { "Charles Kerr", 0 };
+  const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com>", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", 0 };
   GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE);
-  gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2006 Charles Kerr"));
+  gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2007 Charles Kerr"));
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
   gtk_about_dialog_set_license (w, LICENSE);
@@ -1168,7 +1179,7 @@ void GUI :: do_about_pan ()
   gtk_box_pack_start (box, gtk_image_new_from_pixbuf (logo), false, false, PAD);
   gtk_box_pack_start (box, gtk_label_new("Pan " PACKAGE_VERSION), false, false, PAD);
   gtk_box_pack_start (box, gtk_label_new(VERSION_TITLE), false, false, 0);
-  gtk_box_pack_start (box, gtk_label_new(_("Copyright © 2002-2006 Charles Kerr")), false, false, 0);
+  gtk_box_pack_start (box, gtk_label_new(_("Copyright © 2002-2007 Charles Kerr")), false, false, 0);
   gtk_box_pack_start (box, gtk_label_new("http://pan.rebelbase.com/"), false, false, PAD);
   gtk_widget_show_all (dialog);
   g_signal_connect_swapped (dialog, "response", G_CALLBACK (gtk_widget_destroy), dialog);

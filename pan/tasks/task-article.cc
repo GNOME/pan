@@ -1,7 +1,11 @@
 /* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /*
  * Pan - A Newsreader for Gtk+
- * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
+ * Copyright (C) 2002-2007  Charles Kerr <charles@rebelbase.com>
+ *
+ * This File:
+ * Copyright (C) 2007 Charles Kerr <charles@rebelbase.com>
+ * Copyright (C) 2007 Calin Culianu <calin@ajvar.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,20 +24,16 @@
 #include <config.h>
 #include <algorithm>
 #include <cassert>
-#include <cerrno>
-#include <ostream>
-#include <sstream>
 extern "C" {
-  #define PROTOTYPES
-  #include <uulib/uudeview.h>
-  #include <glib/gi18n.h>
-};
+#include <glib/gi18n.h>
+}
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/foreach.h>
 #include <pan/general/log.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/data/article-cache.h>
+#include "decoder.h"
 #include "task-article.h"
 
 using namespace pan;
@@ -63,7 +63,7 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
                             const Article             & article,
                             ArticleCache              & cache,
                             ArticleRead               & read,
-                            Task::Listener            * listener,
+                            Progress::Listener        * listener,
                             SaveMode                    save_mode,
                             const Quark               & save_path):
   Task (save_path.empty() ? "BODIES" : "SAVE", get_description (article, !save_path.empty())),
@@ -73,8 +73,9 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   _read (read),
   _article (article),
   _time_posted (article.time_posted),
-  _finished_proc_has_run (false),
-  _save_mode (save_mode)
+  _save_mode (save_mode),
+  _decoder(0),
+  _decoder_has_run (false)
 {
   cache.reserve (article.get_part_mids());
 
@@ -125,12 +126,20 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
     set_status (article.subject.c_str());
   else
     set_status_va (_("Saving %s"), article.subject.c_str());
- 
+
   update_work ();
 }
 
 TaskArticle :: ~TaskArticle ()
 {
+  
+  if (_decoder) {
+    // NB: _decoder is active here if quitting pan .. so be sure to 
+    // be careful and notify _decoder that we mean business and are QUIT..
+    // this prevents the _decoder from calling any more methods on us (WorkerPool::Worker::Listener *)
+    _decoder->gracelessly_quit();
+  }
+  
   _cache.release (_article.get_part_mids());
 }
 
@@ -161,15 +170,22 @@ TaskArticle :: update_work ()
     _state.set_need_nntp (servers);
   else if (working)
     _state.set_working ();
-  else {
-    _state.set_completed ();
+  else if (_save_mode && !_decoder && !_decoder_has_run) {
+    _state.set_need_decoder ();
+    set_step(0);
+  } else if (!_save_mode || _decoder_has_run) {
+    _state.set_completed();
     set_finished (OK);
-  }
+  } else assert(0 && "hm, missed a state.");
+}
 
-  if (_state._work == COMPLETED && !_finished_proc_has_run) {
-    _finished_proc_has_run = true;
-    on_finished ();
-  }
+unsigned long
+TaskArticle :: get_bytes_remaining () const
+{
+  unsigned long bytes (0);
+  foreach_const (needed_t, _needed, it) // parts not fetched yet...
+    bytes += (it->part.bytes - it->buf.size());
+  return bytes;
 }
 
 /***
@@ -243,14 +259,13 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
   for (it=_needed.begin(); it!=_needed.end(); ++it)
     if (it->nntp == nntp)
       break;
-  g_assert (it != _needed.end());
+  assert (it != _needed.end());
 
   //std::cerr << LINE_ID << ' ' << it->part.message_id << " from " << nntp->_server << ": " << (health==OK ? "yes" : "no") << std::endl;
 
   if (health == OK) { // if download succeeded, save it in the cache
     const StringView view (&it->buf.front(), it->buf.size());
     _cache.add (it->part.get_message_id(_article.message_id), view);
-    ++_stats[nntp->_server];
   }
 
   if (health == COMMAND_FAILED) // if server doesn't have that article...
@@ -271,137 +286,70 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
   check_in (nntp, health);
 }
 
-namespace
+/***
+****
+***/
+
+void
+TaskArticle :: use_decoder (Decoder* decoder)
 {
-  void uu_log (void* unused, char* message, int severity)
-  {
-    char * pch (g_locale_to_utf8 (message, -1, 0, 0, 0));
+  if (_state._work != NEED_DECODER)
+    check_in (decoder);
 
-    if (severity == UUMSG_PANIC || severity==UUMSG_FATAL || severity==UUMSG_ERROR)
-      Log :: add_err (pch ? pch : message);
-    else if (severity == UUMSG_WARNING || severity==UUMSG_NOTE)
-      Log :: add_info (pch ? pch : message);
-
-    g_free (pch);
-  }
+  _decoder = decoder;
+  init_steps(100);
+  _state.set_working();
+  const Article::mid_sequence_t mids (_article.get_part_mids());
+  const ArticleCache :: strings_t filenames (_cache.get_filenames (mids));
+  _decoder->enqueue_work_in_thread (this, _decoder, _save_path, filenames, _save_mode);
+  set_status_va (_("Decoding %s"), _article.subject.c_str());
+  debug ("decoder thread was free, enqueued work");
 }
 
 void
-TaskArticle :: on_finished ()
+TaskArticle :: stop ()
 {
-  const Article::mid_sequence_t mids (_article.get_part_mids());
-  const ArticleCache :: strings_t filenames (_cache.get_filenames (mids));
-
-  if (_save_mode & RAW)
-  {
-    foreach_const (ArticleCache::strings_t, filenames, it)
-    {
-      gchar * contents (0);
-      gsize length (0);
-      if (g_file_get_contents (it->c_str(), &contents, &length, NULL) && length>0)
-      {
-        file :: ensure_dir_exists (_save_path.c_str());
-        gchar * basename (g_path_get_basename (it->c_str()));
-        gchar * filename (g_build_filename (_save_path.c_str(), basename, NULL));
-        FILE * fp = fopen (filename, "w+");
-        if (!fp)
-          Log::add_err_va (_("Couldn't save file \"%s\": %s"), filename, file::pan_strerror(errno));
-        else {
-          fwrite (contents, 1, (size_t)length, fp);
-          fclose (fp);
-        }
-        g_free (filename);
-        g_free (basename);
-      }
-      g_free (contents);
-    }
-  }
-
-  if (_save_mode & DECODE)
-  {
-    // decode
-    int res;
-    if (((res = UUInitialize())) != UURET_OK)
-      Log::add_err (_("Error initializing uulib"));
-    else
-    {
-      UUSetMsgCallback (NULL, uu_log);
-      UUSetOption (UUOPT_DESPERATE, 1, NULL); // keep incompletes -- they're still useful to par2
-
-      int i (0);
-      foreach_const (ArticleCache::strings_t, filenames, it) {
-        if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), 0, 0, ++i)) != UURET_OK)
-          Log::add_err_va (_("Error reading from %s: %s"), it->c_str(),
-            (res==UURET_IOERR) ?  file::pan_strerror (UUGetOption (UUOPT_ERRNO, NULL, NULL, 0)) : UUstrerror(res));
-      }
-
-      i = 0;
-      uulist * item;
-      while ((item = UUGetFileListItem (i++)))
-      {
-        // make sure the directory exists...
-        if (!_save_path.empty())
-          file :: ensure_dir_exists (_save_path.c_str());
-
-        // find a unique filename...
-        char * fname (0);
-        for (int i=0; ; ++i) {
-          std::string basename ((item->filename && *item->filename)
-                                ? item->filename
-                                : "pan-saved-file");
-          if (i) {
-            char buf[32];
-            g_snprintf (buf, sizeof(buf), "_copy_%d", i+1); // we don't want "_copy_1"
-            // try to preserve any extension
-            std::string::size_type dotwhere = basename.find_last_of(".");
-            if (dotwhere != basename.npos) {// if we found a dot
-          	  std::string bn (basename, 0, dotwhere); // everything before the last dot
-          	  std::string sf (basename, dotwhere, basename.npos); // the rest
-          	  // add in a substring to make it unique and enable things like "rm -f *_copy_*"
-          	  basename = bn + buf + sf;
-            }else{
-          	  basename += buf;
-            }
-          }
-          fname = _save_path.empty()
-            ? g_strdup (basename.c_str())
-            : g_build_filename (_save_path.c_str(), basename.c_str(), NULL);
-          if (!file::file_exists (fname))
-            break;
-          g_free (fname);
-        }
-
-        // decode the file...
-        if ((res = UUDecodeFile (item, fname)) == UURET_OK) {
-          Log::add_info_va (_("Saved \"%s\""), fname);
-        } else if (res == UURET_NODATA) {
-          // silently let this error by... user probably tried to
-          // save attachements on a text-only post
-        } else {
-          const int the_errno (UUGetOption (UUOPT_ERRNO, NULL, NULL, 0));
-          if (res==UURET_IOERR && the_errno==ENOSPC)
-            Log::add_urgent_va (_("Error saving \"%s\":\n%s. %s"), fname, file::pan_strerror(the_errno), "ENOSPC");
-          else
-            Log::add_err_va (_("Error saving \"%s\":\n%s."),
-                             fname,
-                             res==UURET_IOERR ? file::pan_strerror(the_errno) : UUstrerror(res));
-        }
-
-        // cleanup
-        g_free (fname);
-      }
-
-      _read.mark_read (_article);
-    }
-    UUCleanUp ();
-  }
+  if (_decoder)
+      _decoder->cancel();
 }
 
-unsigned long
-TaskArticle :: get_bytes_remaining () const
+// called in the main thread by WorkerPool if the worker was cancelled.
+void
+TaskArticle :: on_work_cancelled (void *data)
 {
-  unsigned long bytes (0);
-  foreach_const (needed_t, _needed, it) // parts not fetched yet...
-    bytes += (it->part.bytes - it->buf.size());
-  return bytes;
+  Decoder * d (_decoder);
+  _decoder = 0;
+  update_work ();
+  check_in (d);
+}
+
+// called in the main thread by WorkerPool if the worker completed.
+void
+TaskArticle :: on_work_complete (void *data)
+{
+  assert(_decoder);
+  if (!_decoder) return;
+
+  // the decoder is done... catch up on all housekeeping
+  // now that we're back in the main thread.
+
+  foreach_const(std::list<std::string>, _decoder->log_errors, it)
+    Log :: add_err(it->c_str());
+  foreach_const(std::list<std::string>, _decoder->log_infos, it)
+    Log :: add_info(it->c_str());
+
+  if (_decoder->mark_read)
+    _read.mark_read(_article);
+
+  if (!_decoder->log_errors.empty())
+    set_error (_decoder->log_errors.front());
+
+  _state.set_completed();
+  set_step (100);
+  _decoder_has_run = true;
+
+  Decoder * d (_decoder);
+  _decoder = 0;
+  update_work ();
+  check_in (d);
 }

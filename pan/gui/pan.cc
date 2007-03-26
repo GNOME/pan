@@ -27,6 +27,7 @@ extern "C" {
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/file-util.h>
+#include <pan/general/worker-pool.h>
 #include <pan/tasks/socket-impl-gio.h>
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/nzb.h>
@@ -183,7 +184,6 @@ main (int argc, char *argv[])
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 
-  g_thread_init (0);
   gtk_init (&argc, &argv);
   g_mime_init (GMIME_INIT_FLAG_UTF8);
 
@@ -200,9 +200,10 @@ main (int argc, char *argv[])
       url = tok;
     else if (!strcmp(tok,"--no-gui") || !strcmp(tok,"--nogui"))
       gui = false;
-    else if (!strcmp (tok, "--debug"))
-      _debug_flag = true;
-    else if (!strcmp (tok, "--nzb"))
+    else if (!strcmp (tok, "--debug")) { // do --debug --debug for verbose debug
+      if (_debug_flag) _debug_verbose_flag = true;
+      else _debug_flag = true;
+    } else if (!strcmp (tok, "--nzb"))
       nzb = true;
     else if (!strcmp (tok, "--version"))
       { std::cerr << "Pan " << VERSION << '\n'; return 0; }
@@ -244,8 +245,9 @@ main (int argc, char *argv[])
     }
 
     // instantiate the queue...
+    WorkerPool worker_pool (4, true);
     GIOChannelSocket::Creator socket_creator;
-    Queue queue (data, data, &socket_creator, prefs.get_flag("work-online",true));
+    Queue queue (data, data, &socket_creator, worker_pool, prefs.get_flag("work-online", true));
     g_timeout_add (5000, queue_upkeep_timer_cb, &queue);
 
     if (nzb)
@@ -293,6 +295,8 @@ main (int argc, char *argv[])
       g_object_unref (pixbuf);
       run_pan_in_window (cache, data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
+
+    WorkerPool::quitAllWorkers();
 
     if (prefs.get_flag("clear-article-cache-on-shutdown", false))
       cache.clear ();
