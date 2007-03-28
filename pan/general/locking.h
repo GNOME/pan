@@ -28,24 +28,32 @@ namespace pan
 {
   /***
    * A C++ wrapper for GMutex.
-   * @ingroup general
+   *
    * @author Calin Culianu <calin@ajvar.org>
+   * @ingroup general
    */
   class Mutex
   {
     private:
       GMutex * m;
       Mutex& operator= (const Mutex&); ///< unimplemented
+      Mutex (const Mutex&); ///< unimplemented
 
     public:
+
+      /** Create a new mutex */
       Mutex() {
         if (!g_thread_supported ()) g_thread_init (0);
         m = g_mutex_new ();
       }
+
+      /** Destroy the mutex */
       ~Mutex() { g_mutex_free(m); }
+
       /** Block until a lock is acquired */
       void lock() { g_mutex_lock(m); }
-      /** Unlock the mutex - make wake another thread waiting on it */
+
+      /** Unlock the mutex - may wake another thread waiting on it */
       void unlock() { g_mutex_unlock(m); }
   };
 }

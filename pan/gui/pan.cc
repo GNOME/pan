@@ -296,7 +296,7 @@ main (int argc, char *argv[])
       run_pan_in_window (cache, data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
 
-    WorkerPool::quitAllWorkers();
+    worker_pool.cancel_all_silently ();
 
     if (prefs.get_flag("clear-article-cache-on-shutdown", false))
       cache.clear ();

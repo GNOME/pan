@@ -25,9 +25,10 @@
 #define _Decoder_H_
 
 #include <list>
+#include <string>
+#include <vector>
 #include <pan/general/locking.h>
 #include <pan/general/worker-pool.h>
-#include <pan/data/article-cache.h>
 #include <pan/tasks/task-article.h>
 extern "C" {
 #  define PROTOTYPES
@@ -45,68 +46,45 @@ namespace pan
    * @see Queue
    * @see TaskArticle
    */
-  class Decoder : protected WorkerPool::Worker
+  class Decoder: public WorkerPool::Worker
   {
     public:
 
       Decoder (WorkerPool&);
+
       ~Decoder ();
 
-      /**
-       * Cancel the current decode, if there is one.
-       * The listener is notified via WorkerPool::Worker::on_work_cancelled().
-       */
-      void cancel() { WorkerPool::Worker::cancel();  }
-      /**
-       * Cancel the current decode, if there is one.
-       * The listener is *NOT* notified!  
-       * Use this if quitting app or if listener is or will be deleted.
-       */
-      void gracelessly_quit() { WorkerPool::Worker::gracelessly_quit();  }
+      typedef std::vector<std::string> strings_t;
 
-      typedef ArticleCache::strings_t strings_t;
-
-      void enqueue_work_in_thread (TaskArticle                    * task,
-                                   void                           * listener_data,
-                                   const Quark                    & save_path,
-                                   const strings_t                & input_files,
-                                   const TaskArticle::SaveMode    & save_mode);
+      void enqueue (TaskArticle                    * task,
+                    const Quark                    & save_path,
+                    const strings_t                & input_files,
+                    const TaskArticle::SaveMode    & save_mode);
 
     public:
 
-      TaskArticle::SaveMode save_mode;
       std::list<std::string> log_errors, log_infos;
       bool mark_read;
 
+    protected: // inherited from WorkerPool::Worker
+
+      void do_work();
+
     private:
 
+      TaskArticle * task;
       std::string save_path;
-      strings_t filenames;
+      strings_t input_files;
+      TaskArticle::SaveMode save_mode;
 
-      /* The below values are automagically polled from the main thread
-         while the decode task is running, and updates are sent to the Task. */
+      // These are set in the worker thread and polled in the main thread.
       Mutex mut;
       volatile int percent;
       std::string current_file; // the current file we are decoding, with path
 
-      TaskArticle * task;
-
-    protected:
-
-      /// from WorkerPool::Worker interface, saves article to filesystem
-      void do_work(void *);
-
-    private:
-
-      /// just clears member vars for another run in a different thread
-      void init (TaskArticle                 * task,
-                 const Quark                 & save_path,
-                 const strings_t             & filenames,
-                 const TaskArticle::SaveMode & save_mode);
-
       static void uu_log(void *thiz, char *message, int severity);
       static int uu_busy_poll(void * self, uuprogress *p);
-      /// updates Progress * object (aka task) about progress of decode step
+      /** tell our task about the decode's progress */
       static gboolean progress_update_timer_func(gpointer decoder);
 
       WorkerPool& _worker_pool;

@@ -193,6 +193,15 @@ Queue :: get_task_counts (int& active, int& total)
   total = _tasks.size ();
 }
 
+void
+Queue :: give_task_a_decoder (Task * task)
+{
+  const bool was_active (task_is_active (task));
+  _decoder_task = task;
+  if (!was_active)
+    fire_task_active_changed (task, true);
+  task->give_decoder (this, &_decoder); // it's active now...
+}
 
 void
 Queue :: give_task_a_connection (Task * task, NNTP * nntp)
@@ -214,7 +223,6 @@ Queue :: process_task (Task * task)
   debug ("in process_task with a task of type " << task->get_type());
 
   const Task::State& state (task->get_state());
-  const bool was_active (task_is_active (task));
 
   if (state._work == Task::COMPLETED)
   {
@@ -244,10 +252,7 @@ Queue :: process_task (Task * task)
   else if (state._work == Task::NEED_DECODER)
   {
     if (!_decoder_task)
-    {
-      _decoder_task = task;
-      task->give_decoder (this, &_decoder);
-    }
+      give_task_a_decoder (task);
   }
   else while (state._work == Task::NEED_NNTP)
   {
@@ -266,10 +271,6 @@ Queue :: process_task (Task * task)
 
     give_task_a_connection (task, nntp);
   }
-
-  const bool is_active (task_is_active (task));
-  if (is_active != was_active)
-    fire_task_active_changed (task, is_active);
 }
 
 /***

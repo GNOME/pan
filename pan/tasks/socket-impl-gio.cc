@@ -568,14 +568,14 @@ namespace
     ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l):
       host(h), port(p), listener(l), ok(false), socket(0) {}
 
-    void do_work (void *ignored)
+    void do_work ()
     {
       socket = new GIOChannelSocket ();
       ok = socket->open (host, port, err);
     }
 
     /** called in main thread after do_work() is done */
-    void on_work_complete (void *ignored)
+    void on_worker_done (bool cancelled)
     {
       // pass results to main thread...
       if (!err.empty())   Log :: add_err (err.c_str());
@@ -593,5 +593,5 @@ GIOChannelSocket :: Creator :: create_socket (const StringView & host,
   ensure_module_inited ();
 
   ThreadWorker * w = new ThreadWorker (host, port, listener);
-  threadpool.push_work (w, 0, w, true);
+  threadpool.push_work (w, w, true);
 }

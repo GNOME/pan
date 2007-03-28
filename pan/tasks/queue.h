@@ -160,6 +160,7 @@ namespace pan
 
     protected:
       void process_task (Task *);
+      void give_task_a_decoder (Task*);
       void give_task_a_connection (Task*, NNTP*);
       ServerInfo& _server_info;
       bool _is_online;

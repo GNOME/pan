@@ -604,13 +604,18 @@ namespace
 void GUI :: do_show_task_window ()
 {
   static TaskPane * task_pane (0);
-  if (task_pane)
-    gtk_window_present (GTK_WINDOW(task_pane->root()));
-  else {
+
+  if (!task_pane) {
     task_pane = new TaskPane (_queue, _prefs);
-    g_signal_connect (task_pane->root(), "destroy", G_CALLBACK(task_pane_destroyed_cb), &task_pane);
-    gtk_widget_show (task_pane->root());
+    g_signal_connect (task_pane->root(), "destroy",
+                      G_CALLBACK(task_pane_destroyed_cb), &task_pane);
   }
+
+  GtkWidget * w (task_pane->root());
+  if (GTK_WIDGET_VISIBLE(w))
+    gtk_widget_hide (w);
+  else
+    gtk_window_present (GTK_WINDOW(w));
 }
 
 namespace

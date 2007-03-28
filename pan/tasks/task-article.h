@@ -81,8 +81,7 @@ namespace pan
       virtual void on_nntp_done  (NNTP*, Health, const StringView&);
 
     private: // WorkerPool::Listener interface
-      void on_work_complete(void *);
-      void on_work_cancelled(void *);
+      void on_worker_done (bool cancelled);
 
     protected:
       const Quark _save_path;

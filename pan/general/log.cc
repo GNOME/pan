@@ -37,9 +37,7 @@ Log :: clear ()
 Log&
 Log :: get()
 {
-  static Log * log (0);
-  if (!log)
-    log = new Log ();
+  static Log * log = new Log;
   return *log;
 }
 

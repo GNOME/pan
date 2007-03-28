@@ -32,31 +32,9 @@ extern "C" {
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/foreach.h>
-#include <pan/data/article-cache.h>
 #include "decoder.h"
 
 using namespace pan;
-
-// re-initialize the object
-void
-Decoder :: init ( TaskArticle                 * t,
-                  const Quark                 & sp,
-                  const strings_t             & f,
-                  const TaskArticle::SaveMode & sm )
-{
-  disable_progress_update();
-  task = t;
-  save_path = sp.to_string();
-  filenames = f;
-  save_mode = sm;
-  mark_read = false;
-  log_errors.clear();
-  percent = 0;
-  current_file = "";
-  log_infos.clear();
-  please_stop = false; // clear WorkerPool::worker state...
-  quit = false; // clear more WorkerPool::worker state..
-}
 
 Decoder :: Decoder (WorkerPool& pool):
   _worker_pool (pool),
@@ -69,21 +47,21 @@ Decoder :: ~Decoder()
   disable_progress_update();
 }
 
+// save article IN A WORKER THREAD to avoid network stalls
 void
-Decoder :: do_work(void *ignored) // save article in another thread to avoid network stalls
+Decoder :: do_work()
 {
-  static const int bufsz = 4096;
+  const int bufsz = 4096;
   char buf[bufsz];
 
   enable_progress_update();
 
-  // NOTE THIS WHOLE METHOD RUNS IN ONE SEPARATE THREAD -- so be sure to keep that in mind..
   if (save_mode & TaskArticle::RAW)
   {
     int i = 0;
-    foreach_const (ArticleCache::strings_t, filenames, it)
+    foreach_const (strings_t, input_files, it)
     {
-      if (please_stop) break; // poll WorkerPool::Worker stop flag
+      if (was_cancelled()) break; // poll WorkerPool::Worker stop flag
 
       gchar * contents (0);
       gsize length (0);
@@ -95,7 +73,7 @@ Decoder :: do_work(void *ignored) // save article in another thread to avoid net
         FILE * fp = fopen (filename, "w+");
 
         mut.lock();
-        current_file = filename; // save the filename in class so that progress code can see it potentially
+        current_file = filename;
         mut.unlock();
 
         if (!fp) {
@@ -110,9 +88,8 @@ Decoder :: do_work(void *ignored) // save article in another thread to avoid net
       }
       g_free (contents);
 
-      // update percent for progress_update_timer_func
       mut.lock();
-      percent = ++i*100/filenames.size();
+      percent = ++i*100/input_files.size();
       mut.unlock();
     }
   }
@@ -120,17 +97,17 @@ Decoder :: do_work(void *ignored) // save article in another thread to avoid net
   if (save_mode & TaskArticle::DECODE)
   {
     // decode
-    int res, step = 0;
+    int res;
     if (((res = UUInitialize())) != UURET_OK)
       log_errors.push_back(_("Error initializing uulib")); // log error
     else
     {
       UUSetMsgCallback (this, uu_log);
-      UUSetOption (UUOPT_DESPERATE, 1, NULL); // keep incompletes -- they're still useful to par2
+      UUSetOption (UUOPT_DESPERATE, 1, NULL); // keep incompletes; they're useful to par2
 
       int i (0);
-      foreach_const (ArticleCache::strings_t, filenames, it) {
-        if (please_stop) break; // poll WorkerPool::Worker stop flag
+      foreach_const (strings_t, input_files, it) {
+        if (was_cancelled()) break;
         if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), 0, 0, ++i)) != UURET_OK) {
           g_snprintf(buf, bufsz,
                    _("Error reading from %s: %s"),
@@ -143,21 +120,18 @@ Decoder :: do_work(void *ignored) // save article in another thread to avoid net
         }
         mut.lock();
         // phase I of progress..
-        int tmp = percent = ++step*10/filenames.size(); // update percentage progress member .. not this goes up to 10% and the remaining 90% is calculated from the actually uuprogress given us by uulib
+        int tmp = percent = 10/input_files.size(); // update percentage progress member .. this goes up to 10% and the remaining 90% is calculated from the actually uuprogress given us by uulib
         mut.unlock();
         debug("uudecoder thread: first pass progress " << tmp << "%");
       }
 
-
-      i = 0;
-      uulist * item;
-
       UUSetBusyCallback (this, uu_busy_poll, 500); // .5 secs busy poll?
 
+      uulist * item;
       i = 0;
       while ((item = UUGetFileListItem (i++)))
       {
-        if (please_stop) break; // poll WorkerPool::Worker stop flag
+        if (was_cancelled()) break; // poll WorkerPool::Worker stop flag
 
         // make sure the directory exists...
         if (!save_path.empty())
@@ -220,7 +194,7 @@ Decoder :: do_work(void *ignored) // save article in another thread to avoid net
     UUCleanUp ();
   }
 
-  if (please_stop)
+  if (was_cancelled())
     debug("got notification to stop early, decode might not be finished..");
   disable_progress_update();
 }
@@ -245,14 +219,14 @@ int
 Decoder :: uu_busy_poll (void *data, uuprogress *p)
 {
   Decoder *self = reinterpret_cast<Decoder *>(data);
-  if (self->please_stop) {
+  if (self->was_cancelled()) {
     debug("uudecoder thread: got stop request, aborting early");
     return 1;
   }
 
   debug("uudecoder thread: uuprogress is " << p->percent << " percent on " << p->fsize << "b file `" << p->curfile << "' part " << p->partno << " of " << p->numparts);
 
-  assert(p->numparts); // this should always be nonzero unless something is totally wrong
+  assert(p->numparts);
 
   self->mut.lock();
 
@@ -276,19 +250,26 @@ Decoder :: uu_busy_poll (void *data, uuprogress *p)
 }
 
 void
-Decoder :: enqueue_work_in_thread (TaskArticle                 * listener,
-                                   void                        * listener_data,
-                                   const Quark                 & save_path,
-                                   const strings_t             & filenames,
-                                   const TaskArticle::SaveMode & save_mode)
+Decoder :: enqueue (TaskArticle                 * task,
+                    const Quark                 & save_path,
+                    const strings_t             & input_files,
+                    const TaskArticle::SaveMode & save_mode)
 {
-  init (listener, save_path, filenames,  save_mode);
+  disable_progress_update ();
+
+  this->task = task;
+  this->save_path = save_path;
+  this->input_files = input_files;
+  this->save_mode = save_mode;
+
+  mark_read = false;
+  percent = 0;
+  current_file.clear ();
+  log_infos.clear();
+  log_errors.clear();
 
   // gentlemen, start your saving...
-  _worker_pool.push_work (this,          /* who is the worker?         */
-                          listener_data, /* void* data passed listener */
-                          listener,      /* who is the listener?       */
-                          false          /* don't auto-delete worker   */);
+  _worker_pool.push_work (this, task, false);
 }
 
 gboolean

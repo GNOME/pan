@@ -132,13 +132,9 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
 
 TaskArticle :: ~TaskArticle ()
 {
-  
-  if (_decoder) {
-    // NB: _decoder is active here if quitting pan .. so be sure to 
-    // be careful and notify _decoder that we mean business and are QUIT..
-    // this prevents the _decoder from calling any more methods on us (WorkerPool::Worker::Listener *)
-    _decoder->gracelessly_quit();
-  }
+  // ensure our on_worker_done() doesn't get called after we're dead
+  if (_decoder)
+      _decoder->cancel_silently();
   
   _cache.release (_article.get_part_mids());
 }
@@ -301,7 +297,7 @@ TaskArticle :: use_decoder (Decoder* decoder)
   _state.set_working();
   const Article::mid_sequence_t mids (_article.get_part_mids());
   const ArticleCache :: strings_t filenames (_cache.get_filenames (mids));
-  _decoder->enqueue_work_in_thread (this, _decoder, _save_path, filenames, _save_mode);
+  _decoder->enqueue (this, _save_path, filenames, _save_mode);
   set_status_va (_("Decoding %s"), _article.subject.c_str());
   debug ("decoder thread was free, enqueued work");
 }
@@ -313,40 +309,33 @@ TaskArticle :: stop ()
       _decoder->cancel();
 }
 
-// called in the main thread by WorkerPool if the worker was cancelled.
+// called in the main thread by WorkerPool
 void
-TaskArticle :: on_work_cancelled (void *data)
-{
-  Decoder * d (_decoder);
-  _decoder = 0;
-  update_work ();
-  check_in (d);
-}
-
-// called in the main thread by WorkerPool if the worker completed.
-void
-TaskArticle :: on_work_complete (void *data)
+TaskArticle :: on_worker_done (bool cancelled)
 {
   assert(_decoder);
   if (!_decoder) return;
 
-  // the decoder is done... catch up on all housekeeping
-  // now that we're back in the main thread.
+  if (!cancelled)
+  {
+    // the decoder is done... catch up on all housekeeping
+    // now that we're back in the main thread.
 
-  foreach_const(std::list<std::string>, _decoder->log_errors, it)
-    Log :: add_err(it->c_str());
-  foreach_const(std::list<std::string>, _decoder->log_infos, it)
-    Log :: add_info(it->c_str());
+    foreach_const(std::list<std::string>, _decoder->log_errors, it)
+      Log :: add_err(it->c_str());
+    foreach_const(std::list<std::string>, _decoder->log_infos, it)
+      Log :: add_info(it->c_str());
 
-  if (_decoder->mark_read)
-    _read.mark_read(_article);
+    if (_decoder->mark_read)
+      _read.mark_read(_article);
 
-  if (!_decoder->log_errors.empty())
-    set_error (_decoder->log_errors.front());
+    if (!_decoder->log_errors.empty())
+      set_error (_decoder->log_errors.front());
 
-  _state.set_completed();
-  set_step (100);
-  _decoder_has_run = true;
+    _state.set_completed();
+    set_step (100);
+    _decoder_has_run = true;
+  }
 
   Decoder * d (_decoder);
   _decoder = 0;

@@ -23,9 +23,9 @@
 #ifndef _Worker_Pool_H_
 #define _Worker_Pool_H_
 
+#include <set>
 #include <glib/gtypes.h>
 #include <glib/gthreadpool.h>
-#include <set>
 
 namespace pan
 {
@@ -40,85 +40,83 @@ namespace pan
   {
     public:
 
-      /** Creates a pool of num_threads, -1 means no limit, if exclusive then 
-          the threads are always running and not shared with other pools 
-          (as in glib documentation) */
-      WorkerPool(int num_threads = -1, bool exclusive = false); 
+      /**
+       * Creates a pool of worker threads.
+       * @param num_threads -1 means no limit
+       * @param exclusive if true, don't share threads with other pools
+       */
+      WorkerPool (int num_threads=-1, bool exclusive=false);
 
-      ~WorkerPool(); ///< deletes all the threads, may or may not stop workers
-    
-      /** Call this on app exit to gracelessly notify all workers to die 
-       * and not clean up after themselves, etc */
-      static void quitAllWorkers(); 
+      /**
+       * Calls each of this pool's worker's cancel_silently().
+       * Use this if its worker's listeners are being deleted.
+       */
+      void cancel_all_silently ();
+
+      ~WorkerPool ();
+
+    public:
 
       class Worker
       {
         public:
-          Worker();
-          virtual ~Worker();
 
-          /** Notify of stop request -- called by stopAllWorkers(), 
-              Re-implement if you think you can force a better stop in your 
-              do_work function, otherwise it sets the flag please_stop,
-              which a particular implementation of this class may or may
-              not listen to in order to abort work early. */
-          virtual void cancel() { please_stop = true; }
-          /** Makes the worker quit ASAP and not notify any listeners.
-              Call this if you think the listeners will be destroyed or are 
-              already destroyed or when the app is exiting. */
-          virtual void gracelessly_quit() { cancel(); quit = true; }
+          Worker(): pool(0), listener(0),
+                    cancelled(false), silent(false),
+                    delete_worker(false) {}
 
-          virtual bool was_cancelled() const { return please_stop; }
-          virtual bool was_gracelessly_quit() const { return quit; }
+          virtual ~Worker() {}
 
-        public:
+          /** Sets the flag used in was_cancelled() */
+          virtual void cancel() { cancelled = true; }
+
+          /** Like cancel(), but also tells this worker to
+              not call its Listener's on_worker_done().
+              Use this if the listener is deleted. */
+          void cancel_silently() { cancel(); silent=true; }
+
+          /** Subclasses' do_work() methods should call this
+              periodically and stop working if it's true. */
+          virtual bool was_cancelled() const { return cancelled; }
 
           struct Listener {
-            virtual ~Listener() {};
-            /** Called in the context of the main thread after enqueued work is done.
-                `data' points to the data passed in when the work was enqueued. */
-            virtual void on_work_complete(void * data) = 0;
-            virtual void on_work_cancelled(void *data) {}
+            virtual ~Listener() {}
+            virtual void on_worker_done (bool was_cancelled)=0;
           };
 
         protected:
 
-          /** Re-implement in your classes to actually do the work.  Called,
-              by WorkerPool framework in a worker thread. */
-          virtual void do_work(void * data) = 0;
+          /** This function runs in a worker thread. */
+          virtual void do_work () = 0;
 
-          /** workers implementing do_work() should check this flag and if flag 
-              set, worker should try and stop what it was doing */
-          volatile bool please_stop, quit;
+        private:
+
           friend class WorkerPool;
+          WorkerPool * pool;
+          Listener * listener;
+          volatile bool cancelled, silent;
+          bool delete_worker;
+
+          static void worker_thread_func (gpointer worker, gpointer unused);
+          static gboolean main_thread_cleanup_cb (gpointer worker);
+          void main_thread_cleanup ();
       };
 
-      /** Calls w->do_work(data) for you in the worker thread.
-          When the work is completed, the optional listener is notified
-          *from the main thread*.  Optionally you can tell this function
-          to delete the Worker when the work is done as well.  If deleting,
-          the delete is done after the listener is notified in the main thread.*/
-      void push_work(Worker *w, void * data = 0, Worker::Listener * = 0, bool delete_worker_on_completion = false);
+      /**
+       * Enqueues a worker so its do_work() is called <b>in a worker thread</b>.
+       * After that, the following will be done <b>in the main thread</b>:
+       * 1. if a listener was provided, its on_work_done() method is called.
+       * 2. if delete_worker was true, the worker will be deleted.
+       */
+      void push_work (Worker*, Worker::Listener*, bool del_worker_when_done);
 
     private:
-      struct Work; 
 
-      static void thr_wrapper(gpointer data, gpointer user_data);
-      static gboolean finalize(gpointer data); /// called in main thread
-      void doWork(Work *); /**< Called in the context of the 
-                            worker thread to do work, deletes work when done */
-
-      mutable GThreadPool *tpool;
-
-      typedef std::set<Worker *> WorkerSet;
-      typedef std::set<Work *>   WorkSet;
+      GThreadPool * tpool;
+      typedef std::set<Worker*> WorkerSet;
       WorkerSet my_workers;
-      WorkSet   my_work;
-
-      /// guarded access to all_workers set -- may initialize heap-allocated static data
-      static WorkerSet & all_workers();  
-
       WorkerPool& operator= (WorkerPool&); // not implemented
+      WorkerPool (const WorkerPool&); // not implemented
   };
 }
 
