@@ -47,6 +47,34 @@ Decoder :: ~Decoder()
   disable_progress_update();
 }
 
+/***
+****
+***/
+
+void
+Decoder :: enqueue (TaskArticle                 * task,
+                    const Quark                 & save_path,
+                    const strings_t             & input_files,
+                    const TaskArticle::SaveMode & save_mode)
+{
+  disable_progress_update ();
+
+  this->task = task;
+  this->save_path = save_path;
+  this->input_files = input_files;
+  this->save_mode = save_mode;
+
+  mark_read = false;
+  percent = 0;
+  num_scanned_files = 0;
+  current_file.clear ();
+  log_infos.clear();
+  log_errors.clear();
+
+  // gentlemen, start your saving...
+  _worker_pool.push_work (this, task, false);
+}
+
 // save article IN A WORKER THREAD to avoid network stalls
 void
 Decoder :: do_work()
@@ -104,9 +132,11 @@ Decoder :: do_work()
     {
       UUSetMsgCallback (this, uu_log);
       UUSetOption (UUOPT_DESPERATE, 1, NULL); // keep incompletes; they're useful to par2
+      UUSetBusyCallback (this, uu_busy_poll, 500); // .5 secs busy poll?
 
       int i (0);
-      foreach_const (strings_t, input_files, it) {
+      foreach_const (strings_t, input_files, it)
+      {
         if (was_cancelled()) break;
         if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), 0, 0, ++i)) != UURET_OK) {
           g_snprintf(buf, bufsz,
@@ -118,14 +148,11 @@ Decoder :: do_work()
                    : UUstrerror(res));
           log_errors.push_back(buf); // log error
         }
-        mut.lock();
-        // phase I of progress..
-        int tmp = percent = 10/input_files.size(); // update percentage progress member .. this goes up to 10% and the remaining 90% is calculated from the actually uuprogress given us by uulib
-        mut.unlock();
-        debug("uudecoder thread: first pass progress " << tmp << "%");
-      }
 
-      UUSetBusyCallback (this, uu_busy_poll, 500); // .5 secs busy poll?
+        mut.lock();
+        num_scanned_files = i;
+        mut.unlock();
+      }
 
       uulist * item;
       i = 0;
@@ -194,101 +221,101 @@ Decoder :: do_work()
     UUCleanUp ();
   }
 
-  if (was_cancelled())
-    debug("got notification to stop early, decode might not be finished..");
   disable_progress_update();
 }
 
-/* static */
+/***
+****
+***/
+
 void
 Decoder :: uu_log (void* data, char* message, int severity)
 {
-    Decoder *self = reinterpret_cast<Decoder *>(data);
-    char * pch (g_locale_to_utf8 (message, -1, 0, 0, 0));
+  Decoder *self = static_cast<Decoder *>(data);
+  char * pch (g_locale_to_utf8 (message, -1, 0, 0, 0));
 
-    if (severity == UUMSG_PANIC || severity==UUMSG_FATAL || severity==UUMSG_ERROR)
-      self->log_errors.push_back (pch ? pch : message);
-    else if (severity == UUMSG_WARNING || severity==UUMSG_NOTE)
-      self->log_infos.push_back (pch ? pch : message);
+  if (severity == UUMSG_PANIC || severity==UUMSG_FATAL || severity==UUMSG_ERROR)
+    self->log_errors.push_back (pch ? pch : message);
+  else if (severity == UUMSG_WARNING || severity==UUMSG_NOTE)
+    self->log_infos.push_back (pch ? pch : message);
 
-    g_free (pch);
+  g_free (pch);
 }
 
-/* static */
-int
-Decoder :: uu_busy_poll (void *data, uuprogress *p)
+double
+Decoder :: get_percentage (const uuprogress& p) const
 {
-  Decoder *self = reinterpret_cast<Decoder *>(data);
-  if (self->was_cancelled()) {
-    debug("uudecoder thread: got stop request, aborting early");
-    return 1;
+  // These should add up to 100.
+  // We can tweak these as needed.  Calin sees more time spent
+  // in COPYING, but I'm seeing it in DECODING, so I've split
+  // the difference here and given them the same weight.
+  static const double WEIGHT_SCANNING = 10;
+  static const double WEIGHT_DECODING = 45;
+  static const double WEIGHT_COPYING = 45;
+
+  double base = 0;
+
+  if (p.action != UUACT_SCANNING)
+    base += WEIGHT_SCANNING;
+  else {
+    const double percent = (100.0 * num_scanned_files + p.percent) / input_files.size();
+    return base + (percent / (100.0/WEIGHT_SCANNING));
   }
 
-  debug("uudecoder thread: uuprogress is " << p->percent << " percent on " << p->fsize << "b file `" << p->curfile << "' part " << p->partno << " of " << p->numparts);
-
-  assert(p->numparts);
-
-  self->mut.lock();
-
-  double pct = p->percent;
-  if (p->numparts == 1) // we are in phase III of uudecode.. so pick up percent here by offsetting from 20.0% becasue Phase I and II each took 10%
-    self->percent =  int( pct = (pct/100.0) * (100.0-20.0) + 20.0 ); // complicated way to update percentage -- this is because the uudecode progress is reset to 0 for each phase so we have to fudge its value
-  else if(p->numparts) // phase II is here, it takes about 10% of total time (phase I was in the do_work function and it took also 10%)
-    self->percent = int(pct = 10 + p->partno*10/p->numparts);
-  else  { // something is wrong, this shouldn't be reached.. we have this here to guard against division by zero above
-    self->percent = int (pct); // noop
-    debug ("uudecoder thread got p->numparts == 0!  HELP!");
+  if (p.action != UUACT_DECODING)
+    base += WEIGHT_DECODING;
+  else {
+    // uudeview's documentation is wrong:
+    // the total percentage isn't (100*partno-percent)/numparts,
+    // it's (100*(partno-1) + percent)/numparts
+    const double percent = ((100.0 * (p.partno-1)) + p.percent) / p.numparts;
+    return base + (percent / (100.0/WEIGHT_DECODING));
   }
 
-  self->current_file = p->curfile;
-
-  self->mut.unlock();
-  
-  debug("uudecoder thread: calculated percent is " << pct);
+  if (p.action != UUACT_COPYING)
+    base += WEIGHT_COPYING;
+  else {
+    const double percent = p.percent;
+    return base + (percent / (100.0/WEIGHT_COPYING));
+  }
 
   return 0;
 }
 
-void
-Decoder :: enqueue (TaskArticle                 * task,
-                    const Quark                 & save_path,
-                    const strings_t             & input_files,
-                    const TaskArticle::SaveMode & save_mode)
+int
+Decoder :: uu_busy_poll (void * d, uuprogress *p)
 {
-  disable_progress_update ();
+  Decoder * self (static_cast<Decoder*>(d));
+  self->mut.lock();
+  self->percent = self->get_percentage(*p);
+  self->current_file = p->curfile;
+  self->mut.unlock();
 
-  this->task = task;
-  this->save_path = save_path;
-  this->input_files = input_files;
-  this->save_mode = save_mode;
-
-  mark_read = false;
-  percent = 0;
-  current_file.clear ();
-  log_infos.clear();
-  log_errors.clear();
-
-  // gentlemen, start your saving...
-  _worker_pool.push_work (this, task, false);
+  return self->was_cancelled(); // returning true tells uulib to abort
 }
 
+// this is called in the main thread
 gboolean
-Decoder :: progress_update_timer_func(gpointer decoder)
+Decoder :: progress_update_timer_func (gpointer decoder)
 {
-  Decoder *self = reinterpret_cast<Decoder *>(decoder);
+  Decoder *self = static_cast<Decoder *>(decoder);
   Task *task = self->task;
   if (!task || self->was_cancelled()) return false;
 
   self->mut.lock();
-  int percent = self->percent;
-  std::string f = self->current_file;
+  const double percent (self->percent);
+  const std::string f (self->current_file);
   self->mut.unlock();
-  task->set_step(percent);
+
+  task->set_step(int(percent));
   task->set_status_va (_("Decoding %s"), f.c_str());
-  debug("setting task progress to: " << percent << "% file: " << f);
 
   return true; // keep timer func running
 }
+
+/***
+****
+***/
 
 void
 Decoder :: enable_progress_update ()

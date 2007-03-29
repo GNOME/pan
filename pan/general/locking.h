@@ -42,10 +42,7 @@ namespace pan
     public:
 
       /** Create a new mutex */
-      Mutex() {
-        if (!g_thread_supported ()) g_thread_init (0);
-        m = g_mutex_new ();
-      }
+      Mutex(): m(g_mutex_new()) { }
 
       /** Destroy the mutex */
       ~Mutex() { g_mutex_free(m); }

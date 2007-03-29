@@ -657,13 +657,18 @@ void GUI :: on_log_entry_added (const Log::Entry& e)
 
 void GUI :: do_show_log_window ()
 {
-  static GtkWidget * log_window (0);
-  if (!log_window) {
-    log_window = log_dialog_new (_prefs, get_window (_root));
-    g_signal_connect (log_window, "destroy", G_CALLBACK(gtk_widget_destroyed), &log_window);
-  }
-  gtk_window_present (GTK_WINDOW(log_window));
   set_bin_child (_event_log_button, _info_image);
+
+  static GtkWidget * w (0);
+  if (!w) {
+    w = log_dialog_new (_prefs, get_window (_root));
+    g_signal_connect (w, "destroy", G_CALLBACK(gtk_widget_destroyed), &w);
+  }
+
+  if (GTK_WIDGET_VISIBLE(w))
+    gtk_widget_hide (w);
+  else
+    gtk_window_present (GTK_WINDOW(w));
 }
 void GUI :: do_select_all_articles ()
 {

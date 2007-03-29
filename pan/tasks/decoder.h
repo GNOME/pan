@@ -79,10 +79,12 @@ namespace pan
 
       // These are set in the worker thread and polled in the main thread.
       Mutex mut;
-      volatile int percent;
+      volatile double percent;
       std::string current_file; // the current file we are decoding, with path
+      volatile int num_scanned_files;
 
       static void uu_log(void *thiz, char *message, int severity);
+      double get_percentage (const uuprogress& p) const;
       static int uu_busy_poll(void * self, uuprogress *p);
       /** tell our task about the decode's progress */
       static gboolean progress_update_timer_func(gpointer decoder);

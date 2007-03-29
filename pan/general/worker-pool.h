@@ -48,7 +48,7 @@ namespace pan
       WorkerPool (int num_threads=-1, bool exclusive=false);
 
       /**
-       * Calls each of this pool's worker's cancel_silently().
+       * Calls each of this pool's workers' cancel_silently().
        * Use this if its worker's listeners are being deleted.
        */
       void cancel_all_silently ();
@@ -86,7 +86,6 @@ namespace pan
 
         protected:
 
-          /** This function runs in a worker thread. */
           virtual void do_work () = 0;
 
         private:

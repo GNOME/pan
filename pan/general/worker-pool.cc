@@ -30,7 +30,6 @@ using namespace pan;
 WorkerPool :: WorkerPool (int n, bool exclusive)
 {
   assert ((!exclusive || n>0) && "can't have unlimited exclusive threads!");
-  if (!g_thread_supported ()) g_thread_init (0);
   tpool = g_thread_pool_new (Worker::worker_thread_func, this, n, exclusive, 0);
 }
 
