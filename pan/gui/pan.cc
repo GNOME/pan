@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
+#include <memory> 
 #include <config.h>
 #include <signal.h>
 extern "C" {
@@ -159,6 +159,30 @@ namespace
     gtk_widget_destroy (GTK_WIDGET(window));
   }
 
+  /** Queue:::Listener that quits Pan via mainloop_exit()
+      when on_queue_size_changed() say the queue is empty.
+      See bugzilla bug #424248. */
+  struct PanKiller : public Queue::Listener
+  {
+    PanKiller(Queue & q) : q(q) { q.add_listener(this); }
+    ~PanKiller() { q.remove_listener(this); }
+
+    /** Method from Queue::Listener interface: quits program on zero sized Q*/
+    void on_queue_size_changed (Queue&, int active, int total) 
+      {  if (!active && !total) mainloop_quit();  }
+
+    // all below methods from Queue::Listener interface are noops
+    void on_queue_task_active_changed (Queue&, Task&, bool) {}
+    void on_queue_tasks_added (Queue&, int , int ) {}
+    void on_queue_task_removed (Queue&, Task&, int) {}
+    void on_queue_task_moved (Queue&, Task&, int, int) {}
+    void on_queue_connection_count_changed (Queue&, int) {}
+    void on_queue_online_changed (Queue&, bool) {}
+    void on_queue_error (Queue&, const StringView&) {}
+  private:
+    Queue & q;
+  };
+
   void usage ()
   {
     std::cerr << "Pan " << VERSION << "\n\n" <<
@@ -266,6 +290,9 @@ main (int argc, char *argv[])
         NZB :: tasks_from_nzb_file (*it, nzb_output_path, cache, data, data, data, tasks);
       queue.add_tasks (tasks, Queue::BOTTOM);
 
+      // iff non-gui mode, contains a PanKiller ptr to quit pan on queue empty
+      std::auto_ptr<PanKiller> killer;
+
       // don't open the full-blown Pan, just act as a nzb client,
       // with a gui or without.
       if (gui) {
@@ -276,6 +303,8 @@ main (int argc, char *argv[])
         g_signal_connect (G_OBJECT(w), "delete-event", G_CALLBACK(delete_event_cb), 0);
       } else {
         nongui_gmainloop = g_main_loop_new (NULL, false);
+        // create a PanKiller object -- which quits pan when the queue is done
+        killer.reset(new PanKiller(queue));
       }
       register_shutdown_signals ();
       mainloop ();
