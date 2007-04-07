@@ -30,7 +30,7 @@ extern "C" {
 #include <pan/general/string-view.h>
 #include <pan/general/foreach.h>
 #include <pan/general/log.h>
-#include <pan/usenet-utils/utf8-utils.h>
+#include <pan/general/utf8-utils.h>
 #include "nzb.h"
 #include "task-article.h"
 

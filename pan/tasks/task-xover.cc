@@ -27,7 +27,7 @@ extern "C" {
 #include <pan/general/debug.h>
 #include <pan/general/foreach.h>
 #include <pan/general/messages.h>
-#include <pan/usenet-utils/utf8-utils.h>
+#include <pan/general/utf8-utils.h>
 #include <pan/data/data.h>
 #include "nntp.h"
 #include "task-xover.h"

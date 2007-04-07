@@ -10,7 +10,6 @@ libusenetutils_a_SOURCES = \
  numbers.cc \
  scorefile.cc \
  text-massager.cc \
- utf8-utils.cc \
  url-find.cc
 
 noinst_HEADERS = \
@@ -22,7 +21,6 @@ noinst_HEADERS = \
  numbers.h \
  scorefile.h \
  text-massager.h \
- utf8-utils.h \
  url-find.h
 
 noinst_PROGRAMS = \

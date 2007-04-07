@@ -25,8 +25,8 @@ extern "C" {
 #include <pan/general/debug.h>
 #include <pan/general/foreach.h>
 #include <pan/general/messages.h>
+#include <pan/general/utf8-utils.h>
 #include <pan/data/data.h>
-#include <pan/usenet-utils/utf8-utils.h>
 #include "task-groups.h"
 
 using namespace pan;

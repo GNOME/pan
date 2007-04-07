@@ -30,9 +30,9 @@ extern "C" {
 #include <pan/general/debug.h>
 #include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/utf8-utils.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/usenet-utils/mime-utils.h>
-#include <pan/usenet-utils/utf8-utils.h>
 #include <pan/usenet-utils/url-find.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "body-pane.h"

@@ -26,7 +26,7 @@ extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
 }
-#include <pan/usenet-utils/utf8-utils.h>
+#include <pan/general/utf8-utils.h>
 #include "charset-picker.h"
 
 #define PAN_DEFAULT_CHARSET "UTF-8"

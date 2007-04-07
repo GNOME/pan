@@ -1,4 +1,4 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GLIB_CFLAGS@ @PCRE_CFLAGS@
+AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @PCRE_CFLAGS@
 
 noinst_LIBRARIES = libgeneralutils.a
 
@@ -12,6 +12,7 @@ libgeneralutils_a_SOURCES = \
  quark.cc \
  string-view.cc \
  text-match.cc \
+ utf8-utils.cc \
  worker-pool.cc
 
 noinst_HEADERS = \
@@ -32,6 +33,7 @@ noinst_HEADERS = \
  test.h \
  text-match.h \
  time-elapsed.h \
+ utf8-utils.h \
  worker-pool.h 
 
 noinst_PROGRAMS = \
@@ -41,7 +43,7 @@ noinst_PROGRAMS = \
   text-match-test
 
 TESTS = $(noinst_PROGRAMS)
-TEST_LDADD = ./libgeneralutils.a @GLIB_LIBS@ @PCRE_LIBS@
+TEST_LDADD = ./libgeneralutils.a @GMIME_CFLAGS@ @GLIB_LIBS@ @PCRE_LIBS@
 progress_test_SOURCES = progress-test.cc
 progress_test_LDADD = $(TEST_LDADD)
 quark_test_SOURCES = quark-test.cc
