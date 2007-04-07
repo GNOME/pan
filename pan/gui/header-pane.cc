@@ -1693,20 +1693,20 @@ namespace
   struct TreeIteratorNext: public TreeIterFunctor {
     virtual ~TreeIteratorNext () {}
     virtual bool operator ()(GtkTreeModel * model, GtkTreeIter * iter) const {
-      return PAN_TREE_STORE(model)->get_next (iter);
+      return model && PAN_TREE_STORE(model)->get_next (iter);
     }
     virtual bool front (GtkTreeModel* model, GtkTreeIter* setme) const {
-      return PAN_TREE_STORE(model)->front (setme);
+      return model && PAN_TREE_STORE(model)->front (setme);
     }
   };
 
   struct TreeIteratorPrev: public TreeIterFunctor {
     virtual ~TreeIteratorPrev () {}
     bool operator()(GtkTreeModel * model, GtkTreeIter * iter) const {
-      return PAN_TREE_STORE(model)->get_prev (iter);
+      return model && PAN_TREE_STORE(model)->get_prev (iter);
     }
     virtual bool front (GtkTreeModel* model, GtkTreeIter* setme) const {
-      return PAN_TREE_STORE(model)->back (setme);
+      return model && PAN_TREE_STORE(model)->back (setme);
     }
   };
 
