@@ -237,7 +237,7 @@ TaskPane :: update_status (const task_states_t& tasks)
   int hours(0), minutes(0), seconds(0);
   if (task_count) {
     const double KiB ((double)bytes / 1024);
-    unsigned long tmp ((unsigned long)(KiB / KiBps));
+    unsigned long tmp (KiBps>0.01 ? ((unsigned long)(KiB / KiBps)) : 0);
     seconds = tmp % 60ul; tmp /= 60ul;
     minutes = tmp % 60ul; tmp /= 60ul;
     hours   = tmp;

@@ -369,6 +369,8 @@ TaskXOver :: get_bytes_remaining () const
     minitasks_left += it->second.size();
 
   const double percent_done (_total_minitasks ? (1.0 - minitasks_left/(double)_total_minitasks) : 0.0);
+  if (percent_done < 0.1) // impossible to estimate
+    return 0;
   const unsigned long total_bytes = (unsigned long)(_bytes_so_far / percent_done);
   return total_bytes - _bytes_so_far;
 }
