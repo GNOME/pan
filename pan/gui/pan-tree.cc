@@ -852,7 +852,7 @@ struct PanTreeStore :: RowCompareByColumn
   {
     GtkTreeIter a_it (store->get_iter (a));
     GtkTreeIter b_it (store->get_iter (b));
-    int val = (sort_func)(model, &a_it, &b_it, user_data);
+    int val = sort_func ? (sort_func)(model, &a_it, &b_it, user_data) : (a<b);
     if (reverse) val = -val;
     return val < 0;
   }

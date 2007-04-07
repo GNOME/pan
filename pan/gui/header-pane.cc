@@ -490,9 +490,14 @@ HeaderPane :: rebuild ()
 
   _mid_to_row.clear ();
   _tree_store = build_model (_group, _atree, NULL);
+
+  const bool sort_ascending = _prefs.get_flag ("header-pane-sort-ascending", false);
+  int sort_column = _prefs.get_int ("header-pane-sort-column", COL_DATE);
+  if (sort_column<0 || sort_column>=N_COLUMNS) // safeguard against odd settings
+    sort_column = COL_DATE;
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE(_tree_store),
-                                        _prefs.get_int ("header-pane-sort-column", COL_DATE),
-                                        (_prefs.get_flag ("header-pane-sort-ascending", false) ? GTK_SORT_ASCENDING : GTK_SORT_DESCENDING));
+                                        sort_column,
+                                        sort_ascending ? GTK_SORT_ASCENDING : GTK_SORT_DESCENDING);
 
   GtkTreeModel * model (GTK_TREE_MODEL (_tree_store));
   GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
