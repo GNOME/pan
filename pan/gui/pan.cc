@@ -30,6 +30,7 @@ extern "C" {
 #include <pan/general/worker-pool.h>
 #include <pan/tasks/socket-impl-gio.h>
 #include <pan/tasks/task-groups.h>
+#include <pan/tasks/task-xover.h>
 #include <pan/tasks/nzb.h>
 #include <pan/data-impl/data-impl.h>
 #include <pan/icons/pan-pixbufs.h>
@@ -192,6 +193,7 @@ _("General Options\n"
 "URL Options\n"
 "  news:message-id          Show the specified article.\n"
 "  news:group.name          Show the specified newsgroup.\n"
+"  headers:group.name       Download new headers for the specified newsgroup.\n"
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -214,6 +216,7 @@ main (int argc, char *argv[])
 
   bool gui(true), nzb(false);
   std::string url;
+  std::string groups;
   std::string nzb_output_path;
   typedef std::vector<std::string> strings_t;
   strings_t nzb_files;
@@ -221,7 +224,9 @@ main (int argc, char *argv[])
   for (int i=1; i<argc; ++i)
   {
     const char * tok (argv[i]);
-    if (!memcmp(tok,"news:", 5))
+    if (!memcmp(tok,"headers:", 8))
+      groups = tok+8;
+    else if (!memcmp(tok,"news:", 5))
       url = tok;
     else if (!strcmp(tok,"--no-gui") || !strcmp(tok,"--nogui"))
       gui = false;
@@ -275,20 +280,27 @@ main (int argc, char *argv[])
     Queue queue (data, data, &socket_creator, worker_pool, prefs.get_flag("work-online", true));
     g_timeout_add (5000, queue_upkeep_timer_cb, &queue);
 
-    if (nzb)
+    if (nzb || !groups.empty())
     {
-      // if no save path was specified, either prompt for one or
-      // use the user's home directory as a fallback.
-      if (nzb_output_path.empty() && gui)
-        nzb_output_path = GUI::prompt_user_for_save_path (NULL, prefs);
-      if (nzb_output_path.empty()) // user pressed `cancel' when prompted
-        return 0;
+      StringView tok, v(groups);
+      while (v.pop_token(tok,','))
+        queue.add_task (new TaskXOver (data, tok, TaskXOver::NEW), Queue::BOTTOM);
 
-      // load the nzb files...
-      std::vector<Task*> tasks;
-      foreach_const (strings_t, nzb_files, it)
-        NZB :: tasks_from_nzb_file (*it, nzb_output_path, cache, data, data, data, tasks);
-      queue.add_tasks (tasks, Queue::BOTTOM);
+      if (nzb)
+      {
+        // if no save path was specified, either prompt for one or
+        // use the user's home directory as a fallback.
+        if (nzb_output_path.empty() && gui)
+          nzb_output_path = GUI::prompt_user_for_save_path (NULL, prefs);
+        if (nzb_output_path.empty()) // user pressed `cancel' when prompted
+          return 0;
+
+        // load the nzb files...
+        std::vector<Task*> tasks;
+        foreach_const (strings_t, nzb_files, it)
+          NZB :: tasks_from_nzb_file (*it, nzb_output_path, cache, data, data, data, tasks);
+        queue.add_tasks (tasks, Queue::BOTTOM);
+      }
 
       // iff non-gui mode, contains a PanKiller ptr to quit pan on queue empty
       std::auto_ptr<PanKiller> killer;

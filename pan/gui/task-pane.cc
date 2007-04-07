@@ -249,7 +249,7 @@ TaskPane :: update_status (const task_states_t& tasks)
   const tasks_t tasks_selected (get_selected_tasks ());
   const unsigned long selected_count (tasks_selected.size());
   if (selected_count) {
-    unsigned long selected_bytes (0ul);
+    guint64 selected_bytes (0ul);
     foreach_const (tasks_t, tasks_selected, it)
       selected_bytes += (*it)->get_bytes_remaining ();
     g_snprintf (buf, sizeof(buf), _("%lu selected, %s"), selected_count, render_bytes(selected_bytes));
