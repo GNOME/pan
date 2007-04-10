@@ -976,22 +976,12 @@ PostUI :: spawn_editor ()
   }
 
   // read the file contents back in
-  if (ok) {
-    GError * err (0);
-    char * body (0);
-    gsize body_len (0);
-    g_file_get_contents (fname, &body, &body_len, &err);
-    if (err != NULL) {
-      Log::add_err_va (_("Error reading file \"%s\": %s"), err->message, g_strerror(errno));
-      g_clear_error (&err);
-      ok = false;
-    } else {
-      GtkTextIter start, end;
-      gtk_text_buffer_get_bounds (buf, &start, &end);
-      gtk_text_buffer_delete (buf, &start, &end);
-      gtk_text_buffer_insert (buf, &start, body, body_len);
-    }
-    g_free (body);
+  std::string txt;
+  if (ok && file :: get_text_file_contents (fname, txt)) {
+    GtkTextIter start, end;
+    gtk_text_buffer_get_bounds (buf, &start, &end);
+    gtk_text_buffer_delete (buf, &start, &end);
+    gtk_text_buffer_insert (buf, &start, txt.c_str(), txt.size());
   }
 
   // cleanup
@@ -1041,9 +1031,10 @@ PostUI :: open_draft ()
     draft_filename = pch;
     g_free (pch);
 
-    if (g_file_get_contents (draft_filename.c_str(), &pch, NULL, NULL))
+    std::string txt;
+    if (file :: get_text_file_contents (draft_filename, txt))
     {
-      GMimeStream * stream = g_mime_stream_mem_new_with_buffer (pch, strlen(pch));
+      GMimeStream * stream = g_mime_stream_mem_new_with_buffer (txt.c_str(), txt.size());
       GMimeParser * parser = g_mime_parser_new_with_stream (stream);
       GMimeMessage * message = g_mime_parser_construct_message (parser);
       if (message) {
@@ -1052,7 +1043,6 @@ PostUI :: open_draft ()
       }
       g_object_unref (G_OBJECT(parser));
       g_object_unref (G_OBJECT(stream));
-      g_free (pch);
     }
 
   }
@@ -1377,20 +1367,15 @@ namespace
       return;
 
     char * pch = g_strndup (v.str, v.len);
-    char * sig = 0;
+    std::string sig;
 
     if (type == Profile::TEXT)
     {
-      sig = g_strdup (pch);
+      sig = pch;
     }
     else if (type == Profile::FILE)
     {
-      GError * err = NULL;
-      if (!g_file_get_contents (pch, &sig, NULL, &err))
-      {
-        Log::add_err_va (_("Couldn't read signature file \"%s\": %s"), pch, err->message);
-        g_error_free (err);
-      }
+      file :: get_text_file_contents (pch, sig);
     }
     else // command
     {
@@ -1422,7 +1407,7 @@ namespace
         int exit_status = 0;
 
         if (g_spawn_sync (NULL, argv, NULL, GSpawnFlags(0), NULL, NULL, &spawn_stdout, &spawn_stderr, &exit_status, NULL))
-          sig = g_strdup (spawn_stdout);
+          sig = spawn_stdout;
         if (spawn_stderr && *spawn_stderr)
           Log::add_err (spawn_stderr);
 
@@ -1438,25 +1423,16 @@ namespace
      * If we can't convert, clear the signature. Otherwise, we'd add an
      * charset-encoded sig (say 'iso-8859-1') to the body (in UTF-8),
      * which could result in a blank message in the composer window. */
-    if (sig!=NULL)
-    {
-      const std::string s (content_to_utf8 (sig));
-      g_free (sig);
-      sig = g_strndup (s.c_str(), s.size());
-    }
+    if (!sig.empty())
+      sig = content_to_utf8 (sig);
     else
-    {
       Log::add_err (_("Couldn't convert signature to UTF-8."));
-      g_free (sig);
-      sig = NULL;
-    }
 
-    if (sig)
+    if (!sig.empty())
       setme = sig;
 
     /* cleanup */
     g_free (pch);
-    g_free (sig);
   }
 }
 

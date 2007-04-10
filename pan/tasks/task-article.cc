@@ -227,7 +227,7 @@ TaskArticle :: use_nntp (NNTP * nntp)
 
 void
 TaskArticle :: on_nntp_line  (NNTP               * nntp,
-                             const StringView   & line)
+                              const StringView   & line_in)
 {
   // FIXME: ugh, this is called for _every line_...
   Needed * needed (0);
@@ -238,6 +238,11 @@ TaskArticle :: on_nntp_line  (NNTP               * nntp,
     }
   }
   assert (needed);
+
+  // some multiline headers have an extra linefeed... see bug #393589
+  StringView line (line_in);
+  if (line.len && line.str[line.len-1] == '\n')
+    line.truncate (line.len-1);
 
   Needed::buf_t& buf (needed->buf);
   buf.insert (buf.end(), line.begin(), line.end());

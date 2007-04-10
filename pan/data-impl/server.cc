@@ -284,9 +284,8 @@ DataImpl :: load_server_properties (const DataIO& source)
 {
   const std::string filename (source.get_server_filename());
 
-  gchar * txt (0);
-  gsize len (0);
-  g_file_get_contents (filename.c_str(), &txt, &len, 0);
+  std::string txt;
+  file :: get_text_file_contents (filename, txt);
 
   ServerParseContext spc;
   GMarkupParser p;
@@ -297,14 +296,13 @@ DataImpl :: load_server_properties (const DataIO& source)
   p.error = 0;
   GMarkupParseContext* c = g_markup_parse_context_new (&p, (GMarkupParseFlags)0, &spc, 0);
   GError * gerr (0);
-  if (txt!=0 && len!=0)
-    g_markup_parse_context_parse (c, txt, len, &gerr);
+  if (!txt.empty())
+    g_markup_parse_context_parse (c, txt.c_str(), txt.size(), &gerr);
   if (gerr) {
     Log::add_err_va (_("Error reading file \"%s\": %s"), filename.c_str(), gerr->message);
     g_clear_error (&gerr);
   }
   g_markup_parse_context_free (c);
-  g_free (txt);
 
   // populate the servers from the info we loaded...
   _servers.clear ();

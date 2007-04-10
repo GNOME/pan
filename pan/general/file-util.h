@@ -97,6 +97,17 @@ namespace pan
      * @return the filename pointer.
      */
     char* normalize_inplace (char * filename);
+
+     /**
+      * Given the location of a text file, read it in and massage it
+      * to the point where it should be usable -- convert CR/LF to LF,
+      * and ensure that it's UTF8-clean.
+      */
+     bool get_text_file_contents (const StringView  & filename,
+                                  std::string       & setme,
+                                  const char        * fallback_charset_1=0,
+                                  const char        * fallback_charset_2=0);
+
   };
 }
 

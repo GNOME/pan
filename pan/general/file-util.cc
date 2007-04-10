@@ -20,14 +20,8 @@
 #include <config.h>
 
 #include <cassert>
-#include <cstdio>
 #include <cerrno>
 #include <cctype>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <ctime>
-#include <iostream>
 
 extern "C"
 {
@@ -42,6 +36,7 @@ extern "C"
 #include "log.h"
 #include "messages.h"
 #include "file-util.h"
+#include "utf8-utils.h"
 
 using namespace pan;
 
@@ -299,4 +294,37 @@ file :: get_unique_fname ( const gchar *path, const gchar *fname)
    g_free (tail);
 
    return normalize_inplace (g_string_free (filename, FALSE));
+}
+
+/***
+****
+***/
+
+bool
+file :: get_text_file_contents (const StringView  & filename,
+                                std::string       & setme,
+                                const char        * fallback_charset_1,
+                                const char        * fallback_charset_2)
+{
+  // read in the file...
+  char * body (0);
+  gsize body_len (0);
+  GError * err (0);
+  const std::string fname (filename.str, filename.len);
+  g_file_get_contents (fname.c_str(), &body, &body_len, &err);
+  if (err) {
+    Log::add_err_va (_("Error reading file \"%s\": %s"), err->message, g_strerror(errno));
+    g_clear_error (&err);
+    return false;
+  }
+
+  // CRLF => LF
+  body_len = std::remove (body, body+body_len, '\r') - body;
+
+  // utf8
+  setme = content_to_utf8  (StringView (body, body_len),
+                            fallback_charset_1,
+                            fallback_charset_2);
+
+  return true;
 }

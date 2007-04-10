@@ -249,7 +249,7 @@ main (int argc, char *argv[])
     }
   }
 
-  if (!gui && nzb_files.empty() && url.empty()) {
+  if (!gui && nzb_files.empty() && url.empty() && groups.empty()) {
     std::cerr << _("Error: --no-gui used without nzb files or news:message-id.") << std::endl;
     return 0;
   }

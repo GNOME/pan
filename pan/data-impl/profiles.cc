@@ -31,6 +31,7 @@ extern "C" {
 }
 #include <pan/general/debug.h>
 #include <pan/general/string-view.h>
+#include <pan/general/file-util.h>
 #include <pan/general/foreach.h>
 #include <pan/general/log.h>
 #include "data-io.h"
@@ -158,9 +159,8 @@ ProfilesImpl :: clear ()
 void
 ProfilesImpl :: load (const StringView& filename)
 {
-  gchar * txt (0);
-  gsize len (0);
-  if (g_file_get_contents (filename.to_string().c_str(), &txt, &len, 0))
+  std::string txt;
+  if (file :: get_text_file_contents (filename, txt))
   {
     MyContext mc (editors, active_editor, profiles, active_profile);
     GMarkupParser p;
@@ -171,13 +171,12 @@ ProfilesImpl :: load (const StringView& filename)
     p.error = 0;
     GError * gerr (0);
     GMarkupParseContext* c (g_markup_parse_context_new (&p, (GMarkupParseFlags)0, &mc, 0));
-    g_markup_parse_context_parse (c, txt, len, &gerr);
+    g_markup_parse_context_parse (c, txt.c_str(), txt.size(), &gerr);
     if (gerr) {
       Log::add_err_va (_("Error reading file \"%s\": %s"), filename.to_string().c_str(), gerr->message);
       g_clear_error (&gerr);
     }
     g_markup_parse_context_free (c);
-    g_free (txt);
   }
 }
 

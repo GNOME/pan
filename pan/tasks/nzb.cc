@@ -26,10 +26,11 @@ extern "C" {
   #include <glib.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/quark.h>
-#include <pan/general/string-view.h>
+#include <pan/general/file-util.h>
 #include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/quark.h>
+#include <pan/general/string-view.h>
 #include <pan/general/utf8-utils.h>
 #include "nzb.h"
 #include "task-article.h"
@@ -190,11 +191,9 @@ NZB :: tasks_from_nzb_file (const StringView      & filename,
                             const GroupServer     & gs,
                             std::vector<Task*>    & appendme)
 {
-  gchar * txt (0);
-  gsize len (0);
-  if (g_file_get_contents (filename.to_string().c_str(), &txt, &len, 0))
-    tasks_from_nzb_string (StringView(txt,len), save_path, c, r, ranks, gs, appendme);
-  g_free (txt);
+  std::string nzb;
+  if (file :: get_text_file_contents (filename, nzb))
+    tasks_from_nzb_string (nzb, save_path, c, r, ranks, gs, appendme);
 }
 
 namespace

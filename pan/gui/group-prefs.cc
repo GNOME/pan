@@ -24,6 +24,7 @@ extern "C" {
 }
 #include <iostream>
 #include <fstream>
+#include <pan/general/file-util.h>
 #include <pan/general/foreach.h>
 #include "group-prefs.h"
 
@@ -198,9 +199,7 @@ GroupPrefs :: from_string (const StringView& xml)
 void
 GroupPrefs :: set_from_file (const StringView& filename)
 {
-  gchar * txt (0);
-  gsize len (0);
-  if (g_file_get_contents (filename.to_string().c_str(), &txt, &len, 0))
-    from_string (StringView(txt,len));
-  g_free (txt);
+  std::string s;
+  if (file :: get_text_file_contents (filename, s))
+    from_string (s);
 }

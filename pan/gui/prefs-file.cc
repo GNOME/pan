@@ -26,6 +26,7 @@ extern "C" {
   #include <sys/stat.h> // for chmod
   #include <glib.h>
 }
+#include <pan/general/file-util.h>
 #include "prefs-file.h"
 
 using namespace pan;
@@ -33,11 +34,9 @@ using namespace pan;
 void
 PrefsFile :: set_from_file (const StringView& filename)
 {
-  gchar * txt (0);
-  gsize len (0);
-  if (g_file_get_contents (filename.to_string().c_str(), &txt, &len, 0))
-    from_string (StringView(txt,len));
-  g_free (txt);
+  std::string s;
+  if (file :: get_text_file_contents (filename, s))
+    from_string (s);
 }
 
 
