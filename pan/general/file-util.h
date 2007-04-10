@@ -78,11 +78,12 @@ namespace pan
 
     /**
      * Attempt to make a filename safe for use.
-     * This is done by replacing illegal characters with '_'.
-     * This function assumes the input is UTF8 since gmime uses UTF8 interface.
-     * return value must be g_free'd.
+     * <ol>
+     * <li>Replacing illegal characters with '_'.
+     * <li>Ensure the resulting string is UTF8-safe
+     * </ol>
      */
-    gchar* sanitize (const gchar *fname);
+    std::string sanitize (const StringView& filename);
 
     /**
      * Check to see if the specifiled file exists.

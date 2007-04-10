@@ -33,6 +33,7 @@ extern "C"
   #include <glib/gi18n.h>
 }
 
+#include "debug.h"
 #include "log.h"
 #include "messages.h"
 #include "file-util.h"
@@ -168,47 +169,28 @@ file :: file_exists (const char * filename)
 *** This function assumes the input is UTF8 since gmime uses UTF8 interface.
 *** return value must be g_free'd.
 **/
-char*
-file :: sanitize (const char *fname)
+std::string
+file :: sanitize (const StringView& fname)
 {
-	/* characters to exclude from name */
-#ifdef G_OS_WIN32
-	static const gunichar excl[]={':','?','*','"','\'','/','<','>','|','/','\\',0};
-#else
-	static const gunichar excl[]={'/', '\\', 0};
-#endif
-	gunichar *name_32, *p;
-	glong i, len;
-	char *retval;
+std::cerr << LINE_ID << " in [" << fname << ']' << std::endl;
+  std::string ret;
 
-	/* sanity checks */
-	pan_return_val_if_fail(fname!=NULL,NULL);
+  // sanity checks
+  pan_return_val_if_fail (!fname.empty(), ret);
 
-	/* convert to unicode for easy access */
-	name_32 = g_utf8_to_ucs4_fast (fname, -1, &len);
-	
-	/* strip illegal characters */
-	for(p=name_32, i=0; i!=len; i++, p++) {
-		gunichar c=*p;
-		if(g_unichar_isalnum(c)) continue;
-		if(g_unichar_isspace(c)) continue;
-		if(g_unichar_ispunct(c)) {
-			const gunichar *t=excl;
-			for (;*t; t++)
-				if(c==*t) {
-					*p='_';
-					break;
-				}
-		}
-	}
+  ret = content_to_utf8(fname);
 
-	/* back to UTF8 */
-	retval = g_ucs4_to_utf8 (name_32, -1, NULL, NULL, NULL);
+  // strip illegal characters
+# ifdef G_OS_WIN32
+  static const char* illegal_chars = "/\\:?*\"\'<>|";
+# else
+  static const char* illegal_chars = "/\\";
+# endif
+  for (const char *pch(illegal_chars); *pch; ++pch)
+    std::replace (ret.begin(), ret.end(), *pch, '_');
 
-	/* cleanup */
-	g_free(name_32);
-
-	return retval;
+std::cerr << LINE_ID << " out [" << ret << ']' << std::endl;
+  return ret;
 }
 
 char*
@@ -234,15 +216,14 @@ file :: normalize_inplace (char * filename)
 char*
 file :: get_unique_fname ( const gchar *path, const gchar *fname)
 {
-   /* sanity checks */
+   // sanity checks
    pan_return_val_if_fail (is_nonempty_string (fname), NULL);
 
-   /* sanitize filename */
-   char * temp_fn = sanitize (fname);
-   GString * filename = g_string_new (temp_fn);
-   g_free(temp_fn);
+   // sanitize filename
+   std::string tmp = sanitize (fname);
+   GString * filename = g_string_new_len (tmp.c_str(), tmp.size());
 
-   /* add the directory & look for uniqueness */
+   // add the directory & look for uniqueness
    const char * front = filename->str;
    const char * lastdot = strrchr (front, '.');
    char * lead;

@@ -32,6 +32,7 @@ extern "C" {
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/foreach.h>
+#include <pan/general/utf8-utils.h>
 #include "decoder.h"
 
 using namespace pan;
@@ -140,12 +141,12 @@ Decoder :: do_work()
         if (was_cancelled()) break;
         if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), 0, 0, ++i)) != UURET_OK) {
           g_snprintf(buf, bufsz,
-                   _("Error reading from %s: %s"),
-                   it->c_str(),
-                   (res==UURET_IOERR)
-                   ?  file::pan_strerror (UUGetOption (UUOPT_ERRNO, NULL,
-                                                       NULL, 0))
-                   : UUstrerror(res));
+                     _("Error reading from %s: %s"),
+                     it->c_str(),
+                     (res==UURET_IOERR)
+                     ?  file::pan_strerror (UUGetOption (UUOPT_ERRNO, NULL,
+                                                         NULL, 0))
+                     : UUstrerror(res));
           log_errors.push_back(buf); // log error
         }
 
@@ -165,31 +166,11 @@ Decoder :: do_work()
           file :: ensure_dir_exists (save_path.c_str());
 
         // find a unique filename...
-        char * fname (0);
-        for (int i=0; ; ++i) {
-          std::string basename ((item->filename && *item->filename)
-                                ? item->filename
-                                : "pan-saved-file");
-          if (i) {
-            g_snprintf (buf, bufsz, "_copy_%d", i+1); // we don't want "_copy_1"
-            // try to preserve any extension
-            std::string::size_type dotwhere = basename.find_last_of(".");
-            if (dotwhere != basename.npos) {// if we found a dot
-          	  std::string bn (basename, 0, dotwhere); // everything before the last dot
-          	  std::string sf (basename, dotwhere, basename.npos); // the rest
-          	  // add in a substring to make it unique and enable things like "rm -f *_copy_*"
-          	  basename = bn + buf + sf;
-            }else{
-          	  basename += buf;
-            }
-          }
-          fname = save_path.empty()
-            ? g_strdup (basename.c_str())
-            : g_build_filename (save_path.c_str(), basename.c_str(), NULL);
-          if (!file::file_exists (fname))
-            break;
-          g_free (fname);
-        }
+        char * fname = file::get_unique_fname(save_path.c_str(), 
+                                              (item->filename 
+                                               && *item->filename)
+                                              ? item->filename
+                                              : "pan-saved-file" );
 
         // decode the file...
         if ((res = UUDecodeFile (item, fname)) == UURET_OK) {
@@ -304,7 +285,7 @@ Decoder :: progress_update_timer_func (gpointer decoder)
 
   self->mut.lock();
   const double percent (self->percent);
-  const std::string f (self->current_file);
+  const std::string f (content_to_utf8 (self->current_file));
   self->mut.unlock();
 
   task->set_step(int(percent));
