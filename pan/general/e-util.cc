@@ -173,7 +173,7 @@ EvolutionDateMaker :: e_utf8_strftime_fix_am_pm (char *s,
   if (!ret)
     return 0;
 
-  size_t sz;
+  gsize sz;
   char * buf = g_locale_to_utf8(s, ret, NULL, &sz, NULL);
   if (!buf)
     return 0;
