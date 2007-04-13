@@ -211,7 +211,6 @@ main (int argc, char *argv[])
   textdomain (GETTEXT_PACKAGE);
 
   g_thread_init (0);
-  gtk_init (&argc, &argv);
   g_mime_init (GMIME_INIT_FLAG_UTF8);
 
   bool gui(true), nzb(false);
@@ -248,6 +247,9 @@ main (int argc, char *argv[])
       nzb_files.push_back (tok);
     }
   }
+
+  if (gui)
+    gtk_init (&argc, &argv);
 
   if (!gui && nzb_files.empty() && url.empty() && groups.empty()) {
     std::cerr << _("Error: --no-gui used without nzb files or news:message-id.") << std::endl;

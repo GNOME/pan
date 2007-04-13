@@ -96,10 +96,17 @@ namespace
 
   void set_visible (GtkWidget * w, bool visible)
   {
-    if (visible)
-      gtk_widget_show (w);
-    else
+    if (!visible)
       gtk_widget_hide (w);
+    else if (GTK_IS_WINDOW(w))
+      gtk_window_present (GTK_WINDOW(w));
+    else
+      gtk_widget_show (w);
+  }
+
+  void toggle_visible (GtkWidget * w)
+  {
+    set_visible (w, !GTK_WIDGET_VISIBLE(w));
   }
 }
 
@@ -611,11 +618,7 @@ void GUI :: do_show_task_window ()
                       G_CALLBACK(task_pane_destroyed_cb), &task_pane);
   }
 
-  GtkWidget * w (task_pane->root());
-  if (GTK_WIDGET_VISIBLE(w))
-    gtk_widget_hide (w);
-  else
-    gtk_window_present (GTK_WINDOW(w));
+  toggle_visible (task_pane->root());
 }
 
 namespace
@@ -665,10 +668,7 @@ void GUI :: do_show_log_window ()
     g_signal_connect (w, "destroy", G_CALLBACK(gtk_widget_destroyed), &w);
   }
 
-  if (GTK_WIDGET_VISIBLE(w))
-    gtk_widget_hide (w);
-  else
-    gtk_window_present (GTK_WINDOW(w));
+  toggle_visible (w);
 }
 void GUI :: do_select_all_articles ()
 {
