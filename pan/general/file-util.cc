@@ -172,7 +172,6 @@ file :: file_exists (const char * filename)
 std::string
 file :: sanitize (const StringView& fname)
 {
-std::cerr << LINE_ID << " in [" << fname << ']' << std::endl;
   std::string ret;
 
   // sanity checks
@@ -189,7 +188,6 @@ std::cerr << LINE_ID << " in [" << fname << ']' << std::endl;
   for (const char *pch(illegal_chars); *pch; ++pch)
     std::replace (ret.begin(), ret.end(), *pch, '_');
 
-std::cerr << LINE_ID << " out [" << ret << ']' << std::endl;
   return ret;
 }
 
