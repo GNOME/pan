@@ -648,6 +648,7 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
   // if the old selection survived,
   // is it visible on the screen?
   bool selection_was_visible (true);
+#if GTK_CHECK_VERSION(2,8,0)
   if (!new_selection.empty()) {
     GtkTreeView *view (GTK_TREE_VIEW(_tree_view));
     Row * row (get_row (*new_selection.begin()));
@@ -659,6 +660,7 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
     gtk_tree_path_free (b);
     gtk_tree_path_free (p);
   }
+#endif
 
   // if none of the current selection survived,
   // we need to select something to replace the
