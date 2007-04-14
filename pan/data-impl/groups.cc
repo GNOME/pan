@@ -543,6 +543,7 @@ DataImpl :: mark_group_read (const Quark& groupname)
       it->second._read.mark_range (0, it->second._xover_high, true);
     }
     rg->_unread_count = 0;
+    save_group_xovers (*_data_io);
     fire_group_read (groupname);
   }
 }
