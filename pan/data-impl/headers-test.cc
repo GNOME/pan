@@ -12,55 +12,93 @@ using namespace pan;
 
 int main ()
 {
-   Quark q;
-   Article a1, a2, a3;
-   Data::ArticleTree * tree;
-   Data::ArticleTree::articles_t children;
-   const Article * a;
+  Data::ArticleTree * tree;
+  Data::ArticleTree::articles_t children;
+  const Article * a;
 
-   DataImpl data (true);
+  DataImpl data (true);
 
-   const Quark server ("w00tnewz");
-   const Quark server2 ("l33tnews");
-   const Quark group ("alt.religion.buddhism");
+  const Quark server ("w00tnewz");
+  const Quark server2 ("l33tnews");
+  const Quark group ("alt.religion.buddhism");
 
-   data.xover_ref (group);
+  data.xover_ref (group);
 
-   // TEST: can we add an article?
-   data.xover_add (server, group, "Subject", "Author", 0, "<article1@foo.com>", "", 40, 100, "");
-   tree = data.group_get_articles (group);
-std::cerr << "size is " << tree->size() << std::endl;
-   check (tree->size() == 1ul)
-   a = tree->get_article ("<article1@foo.com>");
-   check (a != 0);
-   check (a->subject == "Subject")
-   check (a->message_id == "<article1@foo.com>")
-   check (tree->get_parent(a->message_id) == 0)
-   delete tree;
+  // TEST: can we add an article?
+  data.xover_add (server, group, "Subject", "Author", 0, "<article1@foo.com>", "", 40, 100, "");
+  tree = data.group_get_articles (group);
+  check (tree->size() == 1ul)
+  a = tree->get_article ("<article1@foo.com>");
+  check (a != 0);
+  check (a->subject == "Subject")
+  check (a->message_id == "<article1@foo.com>")
+  check (tree->get_parent(a->message_id) == 0)
+  delete tree;
 
-   // TEST: can we add a child?
-   data.xover_add (server, group, "Re: Subject", "Author", 0, "<article2@blah.com>", "<article1@foo.com>", 40, 100, "");
-   tree = data.group_get_articles (group);
-   check (tree->size() == 2ul)
-   a = tree->get_article ("<article2@blah.com>");
-   check (a != 0)
-   check (a->subject == "Re: Subject")
-   check (a->author == "Author")
-   check (a->message_id == "<article2@blah.com>")
-   a = tree->get_parent (a->message_id);
-   check (a != 0)
-   check (a->message_id == "<article1@foo.com>")
-   check (a->subject == "Subject")
-   check (a->author == "Author")
-   check (tree->get_parent (a->message_id) == 0)
-   tree->get_children ("<article1@foo.com>", children);
-   check (children.size() == 1u)
-   check (children[0]->message_id == "<article2@blah.com>")
-   delete tree;
+  // TEST: can we add a child?
+  data.xover_add (server, group, "Re: Subject", "Author", 0, "<article2@blah.com>", "<article1@foo.com>", 40, 100, "");
+  tree = data.group_get_articles (group);
+  check (tree->size() == 2ul)
+  a = tree->get_article ("<article2@blah.com>");
+  check (a != 0)
+  check (a->subject == "Re: Subject")
+  check (a->author == "Author")
+  check (a->message_id == "<article2@blah.com>")
+  a = tree->get_parent (a->message_id);
+  check (a != 0)
+  check (a->message_id == "<article1@foo.com>")
+  check (a->subject == "Subject")
+  check (a->author == "Author")
+  check (tree->get_parent (a->message_id) == 0)
+  tree->get_children ("<article1@foo.com>", children);
+  check (children.size() == 1u)
+  check (children[0]->message_id == "<article2@blah.com>")
+  delete tree;
 
-   data.xover_unref (group);
+  data.xover_unref (group);
+
+
+  /****
+  *****
+  *****  XOVER + filtered tree
+  *****
+  ****/
+
+  a = 0;
+  data.group_clear_articles (group);
+  data.xover_ref (group);
+
+  // match articles whose subject has the letter 'a'
+  TextMatch::Description description;
+  description.type = TextMatch::CONTAINS;
+  description.text = "a";
+  FilterInfo filter_info;
+  filter_info.set_type_text ("Subject", description);
+
+  // show articles whose subject has the letter 'a'
+  tree = data.group_get_articles (group);
+  tree->set_filter (Data::SHOW_ARTICLES, &filter_info);
+  check (tree->size() == 0ul);
+
+  // TEST: add an article that passes the test and it appears
+  data.xover_add (server, group, "a subject", "Author", 0, "<article1@foo.com>", "", 40, 100, "");
+  data.xover_flush (group);
+  check (tree->size() == 1ul)
+  a = tree->get_article ("<article1@foo.com>");
+  check (a != 0);
+  check (a->message_id == "<article1@foo.com>")
+
+  // TEST: add an article that doesn't pass the test and doesn't appear
+  data.xover_add (server, group, "subject two", "Author", 0, "<article2@foo.com>", "", 40, 100, "");
+  check (tree->size() == 1ul)
+  check (tree->get_article ("<article1@foo.com>") != 0);
+  check (tree->get_article ("<article2@foo.com>") == 0);
+
+  data.xover_unref (group);
 
 #if 0
+   //Quark q;
+   //Article a1, a2, a3;
    quark_v children;
    //check (data.article_get_children (group, a1.message_id, children))
    //check (children.size() == 1u)

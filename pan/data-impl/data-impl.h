@@ -496,6 +496,8 @@ namespace pan
                                                size_t                end_line,
                                                bool                  do_rescore);
 
+      void rescore_articles (const Quark& group, const quarks_t mids);
+
       virtual void rescore ();
 
     private:
@@ -575,17 +577,20 @@ namespace pan
                                          const unsigned long    line_count,
                                          const StringView     & xref);
 
-      virtual void xover_unref   (const Quark          & group);
+      /** useful for xover unit testing */
+      virtual void xover_flush   (const Quark           & group);
 
-      virtual unsigned long get_xover_high (const Quark  & group,
-                                    const Quark  & server) const;
+      virtual void xover_unref   (const Quark           & group);
 
-      virtual void set_xover_high (const Quark  & group,
-                                   const Quark  & server,
+      virtual unsigned long get_xover_high (const Quark & group,
+                                            const Quark & server) const;
+
+      virtual void set_xover_high (const Quark          & group,
+                                   const Quark          & server,
                                    const unsigned long    high);
 
-       virtual void set_xover_low (const Quark    & group,
-                                   const Quark    & server,
+       virtual void set_xover_low (const Quark          & group,
+                                   const Quark          & server,
                                    const unsigned long    low);
 
 

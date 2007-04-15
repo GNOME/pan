@@ -193,6 +193,9 @@ DataImpl :: load_newsrc_files (const DataIO& data_io)
 void
 DataImpl :: save_newsrc_files (DataIO& data_io) const
 {
+  if (_unit_test)
+    return;
+
   // overly-complex optimization: both sit->second.groups and _subscribed
   // are both ordered by AlphabeticalQuarkOrdering.  
   // Where N==sit->second.groups.size() and M==_subscribed.size(),
@@ -279,6 +282,9 @@ DataImpl :: load_group_permissions (const DataIO& data_io)
 void
 DataImpl :: save_group_permissions (DataIO& data_io) const
 {
+  if (_unit_test)
+    return;
+
   std::ostream * out (data_io.write_group_permissions ());
 
   typedef std::map<Quark, char, AlphabeticalQuarkOrdering> tmp_t;
@@ -357,6 +363,9 @@ DataImpl :: load_group_xovers (const DataIO& data_io)
 void
 DataImpl :: save_group_descriptions (DataIO& data_io) const
 {
+  if (_unit_test)
+    return;
+
   assert (_descriptions_loaded);
 
   typedef std::map<Quark, std::string, AlphabeticalQuarkOrdering> tmp_t;
@@ -388,6 +397,9 @@ namespace
 void
 DataImpl :: save_group_xovers (DataIO& data_io) const
 {
+  if (_unit_test)
+    return;
+
   std::ostream * out (data_io.write_group_xovers ());
 
   // find the set of groups that have had an xover

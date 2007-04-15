@@ -187,17 +187,24 @@ DataImpl :: xover_ref (const Quark& group)
 }
 
 void
+DataImpl :: xover_flush (const Quark& group)
+{
+  XOverEntry& workarea (xover_get_workarea (group));
+
+  on_articles_added (group, workarea._added_batch);
+  workarea._added_batch.clear();
+  on_articles_changed (group, workarea._changed_batch, true);
+  workarea._changed_batch.clear();
+  workarea._batch_parts_size = 0;
+}
+
+void
 DataImpl :: xover_unref (const Quark& group)
 {
   XOverEntry& workarea (xover_get_workarea (group));
   if (!--workarea.refcount)
   {
-    on_articles_added (group, workarea._added_batch);
-    workarea._added_batch.clear();
-
-    on_articles_changed (group, workarea._changed_batch, true);
-    workarea._changed_batch.clear();
-
+    xover_flush (group);
     xover_clear_workarea (group);
   }
 
@@ -320,15 +327,9 @@ DataImpl :: xover_add (const Quark         & server,
   ***  Maybe flush the batched changes
   **/
 
-  if (workarea._batch_parts_size >= 2000)
   //if (workarea._batch_parts_size >= 100) // torture test
-  {
-    on_articles_added (group, workarea._added_batch);
-    workarea._added_batch.clear();
-    on_articles_changed (group, workarea._changed_batch, true);
-    workarea._changed_batch.clear();
-    workarea._batch_parts_size = 0;
-  }
+  if (workarea._batch_parts_size >= 2000)
+    xover_flush (group);
 
   return new_article;
 }

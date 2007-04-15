@@ -805,6 +805,9 @@ DataImpl :: save_headers (DataIO                       & data_io,
 void
 DataImpl :: save_headers (DataIO& data_io, const Quark& group) const
 {
+  if (_unit_test)
+    return;
+
    pan_return_if_fail (!group.empty());
 
    TimeElapsed timer;
@@ -900,6 +903,25 @@ DataImpl :: get_article_scores (const Quark         & group,
   ArticleFilter :: sections_t sections;
   _scorefile.get_matching_sections (StringView(group), sections);
   _article_filter.get_article_scores (*this, sections, group, article, setme);
+}
+
+void
+DataImpl :: rescore_articles (const Quark& group, const quarks_t mids)
+{
+  GroupHeaders * gh (get_group_headers (group));
+  if (!gh) // group isn't loaded
+    return;
+
+  ArticleFilter::sections_t sections;
+  _scorefile.get_matching_sections (group.to_view(), sections);
+  nodes_v nodes;
+  find_nodes (mids, gh->_nodes, nodes);
+  foreach (nodes_v, nodes, it) {
+    if ((*it)->_article) {
+      Article& a (*(*it)->_article);
+      a.score = _article_filter.score_article (*this, sections, group, a);
+    }
+  }
 }
 
 void
@@ -1088,20 +1110,7 @@ DataImpl :: on_articles_removed (const quarks_t& mids) const
 void
 DataImpl :: on_articles_changed (const Quark& group, const quarks_t& mids, bool do_refilter)
 {
-  // if the articles are loaded, rescore them...
-  GroupHeaders * gh (get_group_headers (group));
-  if (gh) {
-    ArticleFilter::sections_t sections;
-    _scorefile.get_matching_sections (group.to_view(), sections);
-    nodes_v nodes;
-    find_nodes (mids, gh->_nodes, nodes);
-    foreach (nodes_v, nodes, it) {
-      if ((*it)->_article) {
-        Article& a (*(*it)->_article);
-        a.score = _article_filter.score_article (*this, sections, group, a);
-      }
-    }
-  }
+  rescore_articles (group, mids);
 
   // notify the trees that the articles have changed...
   foreach (std::set<MyTree*>, _trees, it)
@@ -1115,6 +1124,8 @@ DataImpl :: on_articles_added (const Quark& group, const quarks_t& mids)
   {
     Log::add_info_va (_("Added %lu articles to %s."),
                       mids.size(), group.c_str());
+
+    rescore_articles (group, mids);
 
     foreach (std::set<MyTree*>, _trees, it) {
       debug ("This tree has a group " << (*it)->_group);
