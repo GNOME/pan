@@ -264,10 +264,6 @@ DataImpl :: xover_add (const Quark         & server,
     // to see if there's already an Article allocated to this
     // multipart.  If there is, we use it here instead of adding a new one
 
-    StringView ref(references), parent;
-    ref.pop_last_token (parent, ' ');
-    parent.trim ();
-
     typedef XOverEntry::subject_to_mid_t::const_iterator cit;
     const std::pair<cit,cit> range (workarea._subject_lookup.equal_range (multipart_subject_quark));
     for (cit it(range.first), end(range.second); it!=end && art_mid.empty(); ++it) {
