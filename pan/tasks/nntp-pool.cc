@@ -122,7 +122,7 @@ NNTP_Pool :: check_in (NNTP * nntp, Health health)
   // process the nntp if we have a match
   if (it != _pool_items.end())
   {
-    const bool bad_connection = (health == NETWORK_FAILED);
+    const bool bad_connection = (health == ERR_NETWORK);
     int active, idle, pending, max;
     get_counts (active, idle, pending, max);
     const bool too_many = (pending + active) > max;
@@ -175,7 +175,7 @@ NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response
 {
    debug ("NNTP_Pool: on_nntp_done()");
 
-   if (health == COMMAND_FAILED) // news server isn't accepting our connection!
+   if (health == ERR_COMMAND) // news server isn't accepting our connection!
    {
      std::string s (response.str, response.len);
      foreach (std::string, s, it) *it = tolower (*it);
@@ -290,7 +290,7 @@ namespace
       NoopListener (NNTP::Source * s, bool b): source(s), hang_up(b) {}
       virtual ~NoopListener() {}
       virtual void on_nntp_done  (NNTP * nntp, Health health, const StringView& response) {
-        source->check_in (nntp, hang_up ? NETWORK_FAILED : health);
+        source->check_in (nntp, hang_up ? ERR_NETWORK : health);
         delete this;
       }
   };

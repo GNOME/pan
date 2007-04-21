@@ -35,15 +35,22 @@ namespace pan
     /** The task has failed because of a bad connection.
         The queue should leave this task as-is so that it
         can retry when the network clears up. */
-    NETWORK_FAILED,
+    ERR_NETWORK,
 
     /** The server has rejected a command sent by this task.
         For example, an expired article can't be retrieved
         or an article can't be posted due to no permissions.
-        The queue should stop the task and let the user
-        decide how to proceed. */
-    COMMAND_FAILED
+        The queue should stop the task (but let other tasks
+        continue) and let the user decide how to proceed. */
+    ERR_COMMAND,
+
+    /** The task has failed because of some local
+        environment problem, such as disk full.
+        Further tasks are likely to fail for the
+        same reason, so the queue should go offline
+        until the user intervenes to fix the problem. */
+    ERR_LOCAL
   };
-};
+}
 
 #endif

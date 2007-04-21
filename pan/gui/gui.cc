@@ -641,18 +641,11 @@ void GUI :: on_log_entry_added (const Log::Entry& e)
     set_bin_child (_event_log_button, _error_image);
 
   if (_queue.is_online() && (e.severity & Log::PAN_SEVERITY_URGENT)) {
-    std::string msg (e.message);
-    if (msg.find ("ENOSPC") != e.message.npos) {
-      msg.erase (msg.find ("ENOSPC"), 6);
-      msg += ' ';
-      msg += _("Pan is now offline. Please ensure that space is available, then use File|Work Online to continue.");
-      toggle_action ("work-online", false);
-    }
     GtkWidget * w = gtk_message_dialog_new (get_window(_root),
                                             GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
                                             GTK_MESSAGE_ERROR,
                                             GTK_BUTTONS_CLOSE,
-                                            "%s", msg.c_str());
+                                            "%s", e.message.c_str());
     g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
     gtk_widget_show_all (w);
   }
@@ -1705,12 +1698,15 @@ GUI :: on_queue_error (Queue& q, const StringView& message)
 {
   if (_queue.is_online())
   {
-    toggle_action ("work-online", false);
-
-    std::string s (message);
-    s += "\n \n";
+    std::string s;
+    if (!message.empty()) {
+      s.assign (message.str, message.len);
+      s += "\n \n";
+    }
     s += _("Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue.");
     Log::add_urgent_va ("%s", s.c_str());
+
+    toggle_action ("work-online", false);
   }
 }
 

@@ -71,12 +71,8 @@ namespace pan
          * When this is called, the listener can safely clean up
          * anything associated with processing the command.
          *
-         * @param health if OK, the command was successful.
-         *               if RETRY, the command couldn't be processed
-         *               now but might be successful later --
-         *               perhaps there was a bad connection.
-         *               if FAIL, there's no point in retrying --
-         *               perhaps the article has expired.
+         * @param health returns OK, ERR_NETWORK, or ERR_SERVER.
+         *               ERR_LOCAL is never used here.
          */
         virtual void on_nntp_done  (NNTP               * nntp,
                                     Health               health,

@@ -214,7 +214,6 @@ Queue :: give_task_a_connection (Task * task, NNTP * nntp)
   task->give_nntp (this, nntp);
 }
 
-
 void
 Queue :: process_task (Task * task)
 {
@@ -239,7 +238,7 @@ Queue :: process_task (Task * task)
     debug ("stopped");
     task->stop();
   }
-  else if (state._health == COMMAND_FAILED)
+  else if ((state._health == ERR_COMMAND) || (state._health == ERR_LOCAL))
   {
     debug ("fail");
     // do nothing
@@ -254,7 +253,7 @@ Queue :: process_task (Task * task)
     if (!_decoder_task)
       give_task_a_decoder (task);
   }
-  else while (state._work == Task::NEED_NNTP)
+  else while (_is_online && (state._work == Task::NEED_NNTP))
   {
     // make the requests...
     const Task::State::unique_servers_t& servers (state._servers);
@@ -296,7 +295,7 @@ Queue :: find_first_task_needing_server (const Quark& server)
 {
   foreach (TaskSet, _tasks, it) {
     const Task::State& state ((*it)->get_state ());
-    if  ((state._health != COMMAND_FAILED)
+    if  (((state._health != ERR_COMMAND) && (state._health != ERR_LOCAL))
       && (state._work == Task::NEED_NNTP)
       && (state._servers.count(server))
       && (!_stopped.count (*it))
@@ -425,6 +424,9 @@ Queue :: set_online (bool online)
 {
   _is_online = online;
   fire_online_changed (_is_online);
+
+  if (_is_online)
+    upkeep ();
 }
 
 void
@@ -592,9 +594,9 @@ Queue :: check_in (NNTP * nntp, Health nntp_health)
   // returning the NNTP to the pool and checking it out again.
   const Task::State state (task->get_state ());
 
-  if ((nntp_health != NETWORK_FAILED)
+  if ((nntp_health != ERR_NETWORK)
     && _is_online
-    && (state._health != COMMAND_FAILED)
+    && ((state._health != ERR_COMMAND) && (state._health != ERR_LOCAL))
     && (state._work == Task::NEED_NNTP)
     && !_removing.count(task)
     && state._servers.count(nntp->_server)
@@ -611,6 +613,10 @@ Queue :: check_in (NNTP * nntp, Health nntp_health)
     // notify the listeners if the task isn't active anymore...
     if (!task_is_active (task))
       fire_task_active_changed (task, false);
+
+    // if we encountered a local error, fire an error message.
+    if (state._health == ERR_LOCAL)
+      fire_queue_error ("");
 
     // return the nntp to the pool
     const Quark& servername (nntp->_server);
@@ -631,6 +637,11 @@ Queue :: check_in (Decoder* decoder, Task* task)
   // notify the listeners if the task isn't active anymore...
   if (!task_is_active (task))
     fire_task_active_changed (task, false);
+
+  // if the task hit an error, fire an error message
+  const Task::State state (task->get_state ());
+  if (state._health == ERR_LOCAL)
+    fire_queue_error ("");
 
   // pass our worker thread on to another task
   Task * next = find_first_task_needing_decoder ();

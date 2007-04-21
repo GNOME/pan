@@ -68,7 +68,7 @@ TaskPost :: on_nntp_done (NNTP              * nntp,
 {
   _state.set_health (health);
 
-  if (health == NETWORK_FAILED)
+  if (health == ERR_NETWORK)
     _state.set_need_nntp (_server);
   else {
     _state.set_completed ();

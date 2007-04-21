@@ -183,7 +183,7 @@ Decoder :: do_work()
           const int the_errno (UUGetOption (UUOPT_ERRNO, NULL, NULL, 0));
           if (res==UURET_IOERR && the_errno==ENOSPC) {
             g_snprintf (buf, bufsz, _("Error saving \"%s\":\n%s. %s"), fname, file::pan_strerror(the_errno), "ENOSPC");
-            log_errors.push_back(buf); // log this to the error log -- used to be log_urgents but we decided against an urgent list because it can popup too many dialogs?  bug #420618 discussion..
+            log_severe.push_back(buf);
           } else {
             g_snprintf (buf, bufsz,_("Error saving \"%s\":\n%s."),
                              fname,
@@ -215,9 +215,11 @@ Decoder :: uu_log (void* data, char* message, int severity)
   Decoder *self = static_cast<Decoder *>(data);
   char * pch (g_locale_to_utf8 (message, -1, 0, 0, 0));
 
-  if (severity == UUMSG_PANIC || severity==UUMSG_FATAL || severity==UUMSG_ERROR)
+  if (severity==UUMSG_PANIC || severity==UUMSG_FATAL)
+    self->log_severe.push_back (pch ? pch : message);
+  else if (severity==UUMSG_ERROR)
     self->log_errors.push_back (pch ? pch : message);
-  else if (severity == UUMSG_WARNING || severity==UUMSG_NOTE)
+  else if (severity==UUMSG_WARNING || severity==UUMSG_NOTE)
     self->log_infos.push_back (pch ? pch : message);
 
   g_free (pch);

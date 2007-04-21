@@ -64,7 +64,7 @@ namespace pan
       typedef std::vector<Quark> mid_sequence_t;
 
       bool contains (const Quark& message_id) const;
-      void add (const Quark& message_id, const StringView& article);
+      bool add (const Quark& message_id, const StringView& article);
       void reserve (const mid_sequence_t& mids);
       void release (const mid_sequence_t& mids);
       void resize ();

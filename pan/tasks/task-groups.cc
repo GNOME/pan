@@ -134,7 +134,7 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
 {
   debug ("groups task got an on_nntp_done() from " << nntp->_server);
 
-  if (health == NETWORK_FAILED)
+  if (health == ERR_NETWORK)
   {
     _state.set_need_nntp (_servername);
   }

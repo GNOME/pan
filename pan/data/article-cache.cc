@@ -218,13 +218,13 @@ ArticleCache :: get_filename (char * buf, int buflen, const Quark& mid) const
    return buf && *buf ? buf : 0;
 };
 
-void
+bool
 ArticleCache :: add (const Quark& message_id, const StringView& article)
 {
   debug ("adding " << message_id << ", which is " << article.len << " bytes long");
 
-  pan_return_if_fail (!message_id.empty());
-  pan_return_if_fail (!article.empty());
+  pan_return_val_if_fail (!message_id.empty(), false);
+  pan_return_val_if_fail (!article.empty(), false);
 
   FILE * fp = 0;
   char filename[PATH_MAX];
@@ -235,6 +235,7 @@ ArticleCache :: add (const Quark& message_id, const StringView& article)
   {
       Log::add_err_va (_("Unable to save \"%s\" %s"),
                        filename, file::pan_strerror(errno));
+      return false;
   }
   else
   {
@@ -245,6 +246,7 @@ ArticleCache :: add (const Quark& message_id, const StringView& article)
     {
       Log::add_err_va (_("Unable to save \"%s\" %s"),
                        filename, file::pan_strerror(errno));
+      return false;
     }
     else
     {
@@ -259,6 +261,8 @@ ArticleCache :: add (const Quark& message_id, const StringView& article)
       resize ();
     }
   }
+
+  return true;
 }
 
 /***
