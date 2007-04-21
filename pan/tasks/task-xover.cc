@@ -80,7 +80,7 @@ namespace
 TaskXOver :: TaskXOver (Data         & data,
                         const Quark  & group,
                         Mode           mode,
-                        int            sample_size):
+                        unsigned long  sample_size):
   Task("XOVER", get_description(group,mode)),
   _data (data),
   _group (group),
@@ -195,6 +195,7 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
   if (_mode == ALL || _mode == DAYS)
     l = low;
   else if (_mode == SAMPLE) {
+    _sample_size = std::min (_sample_size, high-low);
     //std::cerr << LINE_ID << " and I want to sample " <<  _sample_size << " messages..." << std::endl;
     l = std::max (low, high+1-_sample_size);
   }

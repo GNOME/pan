@@ -37,7 +37,7 @@ namespace pan
   {
     public: // life cycle
       enum Mode { ALL, NEW, SAMPLE, DAYS };
-      TaskXOver (Data& data, const Quark& group, Mode mode=ALL, int sample_size=1000);
+      TaskXOver (Data& data, const Quark& group, Mode mode=ALL, unsigned long sample_size=1000);
       virtual ~TaskXOver ();
 
     public: // task subclass
@@ -68,7 +68,7 @@ namespace pan
       const Quark _group;
       std::string _short_group_name;
       Mode _mode;
-      int _sample_size;
+      unsigned long _sample_size;
       time_t _days_cutoff;
       bool _group_xover_is_reffed;
       typedef std::map<Quark,unsigned long> server_to_high_t;
