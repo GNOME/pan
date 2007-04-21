@@ -62,6 +62,7 @@ namespace pan
         public:
           void set_message_id (const Quark& key, const StringView& mid);
           std::string get_message_id (const Quark& key) const;
+          void get_message_id (const Quark& key, std::string& setme) const;
 
           Part(): packed_message_id(0), bytes(0) {}
           ~Part() { clear(); }
@@ -97,6 +98,8 @@ namespace pan
       bool is_line_count_ge (size_t test) const { return lines >= test; }
       bool is_byte_count_ge (unsigned long) const;
       unsigned int get_part_count () const { return parts.size(); }
+      bool has_part (unsigned int part_number) const
+        { return part_number!=0 && get_part_count() >= part_number; }
 
       time_t time_posted;
       unsigned long lines;

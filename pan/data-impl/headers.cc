@@ -190,9 +190,8 @@ DataImpl :: unref_group   (const Quark& group)
   //std::cerr << LINE_ID << " group " << group << " refcount down to " << h->_ref << std::endl;
   if (h->_ref == 0)
   {
-    if (h->_dirty) {
+    if (h->_dirty)
       save_headers (*_data_io, group);
-    }
     h->_dirty = false;
     free_group_headers_memory (group);
   }
@@ -522,7 +521,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
         }
         targets_v.resize (target_it - &targets_v.front());
         targets.sort();
-        const bool expired (targets.empty());
+        bool expired (targets.empty());
         a.xref.swap (targets);
 
         // is_binary [total_part_count found_part_count]
@@ -550,6 +549,10 @@ DataImpl :: load_headers (const DataIO   & data_io,
             s.ltrim ();
             s.pop_token (tok);
             const unsigned long number (view_to_ul (tok));
+            if (!a.has_part(number)) { // corrupted entry
+              expired = true;
+              break;
+            }
             Article::Part& p (a.get_part (number));
             s.ltrim ();
             s.pop_token (tok);
@@ -602,7 +605,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
 
 namespace
 {
-  typedef std::map < pan::Quark, char > quark_to_symbol_t;
+  typedef Loki::AssocVector < pan::Quark, char > quark_to_symbol_t;
 
   struct QuarkToSymbol {
     ~QuarkToSymbol () {}
@@ -619,7 +622,7 @@ namespace
     }
   };
 
-  typedef std::map<Quark,unsigned long> frequency_t;
+  typedef Loki::AssocVector<Quark,unsigned long> frequency_t;
 
   const char * lookup_symbols ("abcdefghijklmnopqrstuvwxyz"
                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -721,7 +724,6 @@ DataImpl :: save_headers (DataIO                       & data_io,
     *out << "2\t # file format version number\n";
 
     // xref lookup section
-    typedef std::map<Quark,unsigned long> frequency_t;
     frequency_t frequency;
     foreach_const (std::vector<Article*>, articles, ait)
       foreach_const (Xref, (*ait)->xref, xit)
@@ -739,6 +741,7 @@ DataImpl :: save_headers (DataIO                       & data_io,
     // header section
     *out << articles.size() << endl;
     std::string references;
+    std::string part_mid;
     foreach_const (std::vector<Article*>, articles, ait)
     {
       ++article_count;
@@ -783,11 +786,11 @@ DataImpl :: save_headers (DataIO                       & data_io,
           ++part_count;
           const Article::Part& p (*pit);
           *out << '\t' << number << ' ';
-          const std::string tmp (p.get_message_id (message_id));
-          if (message_id.to_view() == tmp)
+          p.get_message_id (message_id, part_mid);
+          if (message_id.to_view() == part_mid)
             *out << '"';
           else
-            *out << tmp;
+            *out << part_mid;
           *out << ' ' << p.bytes << '\n';
            first = false;
         }

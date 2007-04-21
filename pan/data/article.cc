@@ -142,17 +142,24 @@ void
 Article :: Part :: set_message_id (const Quark& key_mid, const StringView& mid)
 {
   const StringView key (key_mid.to_view());
+  const size_t minlen (std::min (mid.len, key.len));
 
-  size_t b, e;
-  for (b=0; b<UCHAR_MAX && b<key.len && b<mid.len; ++b)
-    if (key.str[b] != mid.str[b])
-      break;
-  for (e=0; e<UCHAR_MAX && b+e<key.len && b+e<mid.len; ++e)
-    if (key.str[key.len-1-e] != mid.str[mid.len-1-e])
-      break;
+  register const char * kc = key.str;
+  register const char * mc = mid.str;
+  register const char * ke = kc + std::min((size_t)UCHAR_MAX, minlen);
+  while (kc!=ke)
+    if (*kc++ != *mc++) { --kc; break; }
+  const size_t b (kc - key.str);
+
+  kc = &key.back();
+  mc = &mid.back();
+  ke = key.str + 1 + std::max (int(b), (int)minlen - UCHAR_MAX);
+  while (kc>ke)
+    if (*kc-- != *mc--) { ++kc; break; }
+  const size_t e (&key.back() - kc);
 
   const size_t n_kept (mid.len - e - b);
-  char *str(g_new(char,1+n_kept+1+1));
+  char *str(g_new(char,n_kept+3)); // +3 for the two lengths and '\0'
   str[0] = (char) b;
   str[1] = (char) e;
   memcpy (str+2, mid.str+b, n_kept);
@@ -169,6 +176,14 @@ std::string
 Article :: Part :: get_message_id (const Quark& key_mid) const
 {
   std::string setme;
+  get_message_id (key_mid, setme);
+  return setme;
+}
+
+void
+Article :: Part :: get_message_id (const Quark& key_mid, std::string& setme) const
+{
+  setme.clear ();
 
   if (packed_message_id)
   {
@@ -180,9 +195,8 @@ Article :: Part :: get_message_id (const Quark& key_mid) const
     setme.append (pch);
     setme.append (key.str + key.len - e, e);
   }
-
-  return setme;
 }
+
 
 namespace
 {
