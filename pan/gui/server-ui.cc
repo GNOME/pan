@@ -259,7 +259,8 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     struct { int type; const char * str; } items[] = {
       { 14,  N_("After Two Weeks") },
       { 31,  N_("After One Month") },
-      { 62,  N_("After Two Months") },
+      { (31*2),  N_("After Two Months") },
+      { (31*6),  N_("After Six Months") },
       { 0,   N_("Never Expire Old Articles") }
     };
     GtkListStore * store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
