@@ -153,7 +153,8 @@ Article :: Part :: set_message_id (const Quark& key_mid, const StringView& mid)
 
   kc = &key.back();
   mc = &mid.back();
-  ke = key.str + 1 + std::max (int(b), (int)minlen - (int)UCHAR_MAX);
+  ke = std::max (key.str + b + 1,
+                 key.str + key.len - UCHAR_MAX);
   while (kc>ke)
     if (*kc-- != *mc--) { ++kc; break; }
   const size_t e (&key.back() - kc);
