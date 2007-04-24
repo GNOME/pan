@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pan2 HEAD fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-27 21:57+0200\n"
-"PO-Revision-Date: 2007-03-27 22:00+0200\n"
-"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
+"POT-Creation-Date: 2007-04-24 22:19+0200\n"
+"PO-Revision-Date: 2007-04-24 22:25+0200\n"
+"Last-Translator: Jonathan Ernst <jonathan@ernstfamily.ch>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,8 +33,8 @@ msgid "Loaded data backend in %.1f seconds"
 msgstr "Moteur de données chargé en %.1f secondes"
 
 #: ../pan/data-impl/data-io.cc:185 ../pan/data-impl/data-io.cc:209
-#: ../pan/data/article-cache.cc:236 ../pan/data/article-cache.cc:246
-#: ../pan/gui/post-ui.cc:1241
+#: ../pan/data/article-cache.cc:236 ../pan/data/article-cache.cc:247
+#: ../pan/gui/post-ui.cc:1231
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Impossible de sauvegarder « %s » %s"
@@ -44,12 +44,12 @@ msgstr "Impossible de sauvegarder « %s » %s"
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "Saut du fichier newsrc pour le serveur « %s »"
 
-#: ../pan/data-impl/headers.cc:575
+#: ../pan/data-impl/headers.cc:578
 #, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr "%lu articles expirés de « %s »"
 
-#: ../pan/data-impl/headers.cc:582
+#: ../pan/data-impl/headers.cc:585
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
@@ -58,31 +58,31 @@ msgstr ""
 "Version de données non supporté pour les en-têtes %s : %d.\n"
 "Avez-vous lancé une ancienne version de Pan par mégarde ?"
 
-#: ../pan/data-impl/headers.cc:597
+#: ../pan/data-impl/headers.cc:600
 #, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr " %lu articles chargés dans « %s » en %.1f secondes (%.0f art/sec)"
 
-#: ../pan/data-impl/headers.cc:826
+#: ../pan/data-impl/headers.cc:832
 #, c-format
 msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
 msgstr ""
 "%lu parties et %lu articles enregistrés dans « %s » en %.1f secondes (%.0f "
 "art/sec)"
 
-#: ../pan/data-impl/headers.cc:1116
+#: ../pan/data-impl/headers.cc:1128
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "%lu articles ajoutés à « %s »"
 
-#: ../pan/data-impl/profiles.cc:176 ../pan/data-impl/server.cc:303
-#: ../pan/data/article-cache.cc:387 ../pan/gui/post-ui.cc:386
-#: ../pan/gui/post-ui.cc:985
+#: ../pan/data-impl/profiles.cc:176 ../pan/data-impl/server.cc:302
+#: ../pan/data/article-cache.cc:391 ../pan/general/file-util.cc:295
+#: ../pan/gui/post-ui.cc:386
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Erreur de lecture du fichier « %s » : %s"
 
-#: ../pan/data-impl/xover.cc:232
+#: ../pan/data-impl/xover.cc:239
 #, c-format
 msgid "Error reading from %s: unknown group \"%s\""
 msgstr "Erreur lors de la lecture depuis %s : groupe « %s » inconnu"
@@ -92,7 +92,7 @@ msgstr "Erreur lors de la lecture depuis %s : groupe « %s » inconnu"
 msgid "Error opening directory: \"%s\": %s"
 msgstr "Erreur à l'ouverture du répertoire « %s » : %s"
 
-#: ../pan/data/article-cache.cc:356
+#: ../pan/data/article-cache.cc:360
 #, c-format
 msgid "Error opening file \"%s\" %s"
 msgstr "Erreur lors de l'ouverture du fichier « %s » : %s"
@@ -122,12 +122,12 @@ msgstr "%d %b %Y"
 msgid "?"
 msgstr "?"
 
-#: ../pan/general/file-util.cc:139
+#: ../pan/general/file-util.cc:135
 #, c-format
 msgid "Creating directory \"%s\""
 msgstr "Création du répertoire « %s »"
 
-#: ../pan/general/file-util.cc:142
+#: ../pan/general/file-util.cc:138
 #, c-format
 msgid "Couldn't create directory \"%s\": %s"
 msgstr "Impossible de créer le répertoire « %s » : %s"
@@ -150,6 +150,12 @@ msgstr ""
 #, c-format
 msgid "Can't use regular expression \"%s\": %s"
 msgstr "Impossible d'utiliser l'expression régulière « %s » : %s"
+
+#: ../pan/general/utf8-utils.cc:260
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgstr ""
+"Impossible de déterminer le codage de l'article. Les caractères non UTF-8 "
+"ont été supprimés."
 
 #: ../pan/gui/actions.cc:253 ../pan/gui/post-ui.cc:194
 msgid "_File"
@@ -814,18 +820,18 @@ msgstr ""
 msgid "Attachment not shown: MIME type %s/%s\n"
 msgstr "La pièce jointe n'est pas affichée : type MIME %s/%s\n"
 
-#: ../pan/gui/body-pane.cc:1005 ../pan/gui/gui.cc:1415
-#: ../pan/gui/header-pane.cc:1009 ../pan/gui/header-pane.cc:1351
+#: ../pan/gui/body-pane.cc:1005 ../pan/gui/gui.cc:1418
+#: ../pan/gui/header-pane.cc:1016 ../pan/gui/header-pane.cc:1358
 #: ../pan/gui/prefs-ui.cc:323 ../pan/gui/score-add-ui.cc:141
 msgid "Subject"
 msgstr "Sujet"
 
-#: ../pan/gui/body-pane.cc:1007 ../pan/gui/gui.cc:1415
+#: ../pan/gui/body-pane.cc:1007 ../pan/gui/gui.cc:1418
 msgid "From"
 msgstr "De"
 
-#: ../pan/gui/body-pane.cc:1009 ../pan/gui/gui.cc:1416
-#: ../pan/gui/header-pane.cc:1428 ../pan/gui/log-ui.cc:208
+#: ../pan/gui/body-pane.cc:1009 ../pan/gui/gui.cc:1419
+#: ../pan/gui/header-pane.cc:1435 ../pan/gui/log-ui.cc:208
 #: ../pan/gui/prefs-ui.cc:319
 msgid "Date"
 msgstr "Date"
@@ -909,8 +915,8 @@ msgid "Unicode"
 msgstr "Unicode"
 
 #. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:771
-#: ../pan/gui/gui.cc:1159 ../pan/gui/gui.cc:1436
+#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:774
+#: ../pan/gui/gui.cc:1162 ../pan/gui/gui.cc:1439
 #: ../pan/gui/score-add-ui.cc:604
 msgid "Pan"
 msgstr "Pan"
@@ -976,141 +982,133 @@ msgstr "Répertoire pour l'enregi_strement des pièces jointes :"
 msgid "Posting _profile:"
 msgstr "_Profil de postage :"
 
-#: ../pan/gui/gui.cc:257
+#: ../pan/gui/gui.cc:264
 msgid "Open the Task Manager"
 msgstr "Ouvrir le gestionnaire de tâches"
 
-#: ../pan/gui/gui.cc:279
+#: ../pan/gui/gui.cc:286
 msgid "Open the Event Log"
 msgstr "Ouvrir le journal d'événements"
 
-#: ../pan/gui/gui.cc:517
+#: ../pan/gui/gui.cc:524
 msgid "Save NZB's Files"
 msgstr "Sauvegarder les fichiers des NZB"
 
-#: ../pan/gui/gui.cc:564
+#: ../pan/gui/gui.cc:571
 msgid "Import NZB File(s)"
 msgstr "Importer le(s) fichier(s) NZB"
 
-#: ../pan/gui/gui.cc:640
-msgid ""
-"Pan is now offline. Please ensure that space is available, then use File|"
-"Work Online to continue."
-msgstr ""
-"Pan est maintenant déconnecté. Assurez-vous qu'il y ait assez d'espace "
-"disponible, puis utilisez Fichier|Travailler en ligne pour continuer."
-
-#: ../pan/gui/gui.cc:948
+#: ../pan/gui/gui.cc:951
 msgid "Unable to supersede article."
 msgstr "Impossible de remplacer l'article."
 
-#: ../pan/gui/gui.cc:949 ../pan/gui/gui.cc:1020
+#: ../pan/gui/gui.cc:952 ../pan/gui/gui.cc:1023
 msgid "The article doesn't match any of your posting profiles."
 msgstr "L'article ne correspond à aucun de vos profils de postage."
 
-#: ../pan/gui/gui.cc:993
+#: ../pan/gui/gui.cc:996
 msgid "Revise and send this article to replace the old one."
 msgstr "Révisez cet article et renvoyez-le pour remplacer l'ancien."
 
-#: ../pan/gui/gui.cc:994 ../pan/gui/gui.cc:1057
+#: ../pan/gui/gui.cc:997 ../pan/gui/gui.cc:1060
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
 "Soyez patient ! Cela va prendre du temps pour que vos changements "
 "s'appliquent."
 
-#: ../pan/gui/gui.cc:1019
+#: ../pan/gui/gui.cc:1022
 msgid "Unable to cancel article."
 msgstr "Impossible d'annuler l'article."
 
-#: ../pan/gui/gui.cc:1056
+#: ../pan/gui/gui.cc:1059
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
 "Envoyez cet article pour demander à votre serveur d'annuler le précédent."
 
-#: ../pan/gui/gui.cc:1162 ../pan/gui/gui.cc:1182
+#: ../pan/gui/gui.cc:1165 ../pan/gui/gui.cc:1185
 msgid "Copyright © 2002-2007 Charles Kerr"
 msgstr "Copyright © 2002-2007 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1167
+#: ../pan/gui/gui.cc:1170
 msgid "translator-credits"
 msgstr ""
 "Jonathan Ernst <jonathan@ernstfamily.ch>\n"
 "Cyprien Le Pannérer <cyplp@free.fr>\n"
 "Claude Paroz <claude@2xlibre.net>"
 
-#: ../pan/gui/gui.cc:1298
+#: ../pan/gui/gui.cc:1301
 msgid "_1. Group Pane"
 msgstr "_1. Panneau des groupes"
 
-#: ../pan/gui/gui.cc:1299
+#: ../pan/gui/gui.cc:1302
 msgid "_2. Header Pane"
 msgstr "_2. Panneau des en-têtes"
 
-#: ../pan/gui/gui.cc:1300
+#: ../pan/gui/gui.cc:1303
 msgid "_3. Body Pane"
 msgstr "_3. Panneau du corps"
 
-#: ../pan/gui/gui.cc:1398
+#: ../pan/gui/gui.cc:1401
 #, c-format
 msgid "This article has all %d parts."
 msgstr "Cet article a toutes ses %d parties."
 
-#: ../pan/gui/gui.cc:1400
+#: ../pan/gui/gui.cc:1403
 #, c-format
 msgid "This article is missing %d of its %d parts:"
 msgstr "Il manque %d sur %d parties à cet article :"
 
-#: ../pan/gui/gui.cc:1416 ../pan/gui/header-pane.cc:1011
+#: ../pan/gui/gui.cc:1419 ../pan/gui/header-pane.cc:1018
 msgid "Message-ID"
 msgstr "ID de message"
 
-#: ../pan/gui/gui.cc:1417 ../pan/gui/header-pane.cc:1398
+#: ../pan/gui/gui.cc:1420 ../pan/gui/header-pane.cc:1405
 #: ../pan/gui/prefs-ui.cc:320
 msgid "Lines"
 msgstr "Lignes"
 
-#: ../pan/gui/gui.cc:1417 ../pan/gui/header-pane.cc:1413
+#: ../pan/gui/gui.cc:1420 ../pan/gui/header-pane.cc:1420
 #: ../pan/gui/prefs-ui.cc:318
 msgid "Bytes"
 msgstr "Octets"
 
-#: ../pan/gui/gui.cc:1571 ../pan/gui/task-pane.cc:372
+#: ../pan/gui/gui.cc:1574 ../pan/gui/task-pane.cc:372
 msgid "Offline"
 msgstr "Hors ligne"
 
-#: ../pan/gui/gui.cc:1574
+#: ../pan/gui/gui.cc:1577
 #, c-format
 msgid "Closing %d connections"
 msgstr "Fermeture de %d connexions"
 
-#: ../pan/gui/gui.cc:1576 ../pan/gui/gui.cc:1606
+#: ../pan/gui/gui.cc:1579 ../pan/gui/gui.cc:1609
 msgid "No Connections"
 msgstr "Aucune connexion"
 
-#: ../pan/gui/gui.cc:1580
+#: ../pan/gui/gui.cc:1583
 msgid "Connecting"
 msgstr "Connexion en cours"
 
-#: ../pan/gui/gui.cc:1593
+#: ../pan/gui/gui.cc:1596
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s : %d au repos, %d actifs @ %.1f Kio/s"
 
 #. build the format strings
-#: ../pan/gui/gui.cc:1648
+#: ../pan/gui/gui.cc:1651
 #, c-format
 msgid "%u Tasks Running, %u Tasks Total"
 msgstr "%u tâches en cours, %u tâches au total"
 
-#: ../pan/gui/gui.cc:1650
+#: ../pan/gui/gui.cc:1653
 msgid "No Tasks"
 msgstr "Aucune tâche"
 
-#: ../pan/gui/gui.cc:1652 ../pan/gui/prefs-ui.cc:455
+#: ../pan/gui/gui.cc:1655 ../pan/gui/prefs-ui.cc:455
 msgid "Tasks"
 msgstr "Tâches"
 
-#: ../pan/gui/gui.cc:1702
+#: ../pan/gui/gui.cc:1706
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1119,16 +1117,16 @@ msgstr ""
 "d'événements » et corrigez le problème, puis utilisez « Fichier|Travailler "
 "en ligne » pour continuer."
 
-#: ../pan/gui/header-pane.cc:1008
+#: ../pan/gui/header-pane.cc:1015
 msgid "Subject or Author"
 msgstr "Sujet ou auteur"
 
-#: ../pan/gui/header-pane.cc:1010 ../pan/gui/header-pane.cc:1383
+#: ../pan/gui/header-pane.cc:1017 ../pan/gui/header-pane.cc:1390
 #: ../pan/gui/prefs-ui.cc:317 ../pan/gui/score-add-ui.cc:142
 msgid "Author"
 msgstr "Auteur"
 
-#: ../pan/gui/header-pane.cc:1368 ../pan/gui/prefs-ui.cc:321
+#: ../pan/gui/header-pane.cc:1375 ../pan/gui/prefs-ui.cc:321
 msgid "Score"
 msgstr "Note"
 
@@ -1144,7 +1142,7 @@ msgstr "Pan : événements"
 msgid "Message"
 msgstr "Message"
 
-#: ../pan/gui/pan.cc:144
+#: ../pan/gui/pan.cc:145
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1154,7 +1152,7 @@ msgstr ""
 "\n"
 "Commencez par ajouter un serveur pour lire des nouvelles."
 
-#: ../pan/gui/pan.cc:165
+#: ../pan/gui/pan.cc:190
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -1162,6 +1160,8 @@ msgid ""
 "URL Options\n"
 "  news:message-id          Show the specified article.\n"
 "  news:group.name          Show the specified newsgroup.\n"
+"  headers:group.name       Download new headers for the specified "
+"newsgroup.\n"
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -1178,6 +1178,7 @@ msgstr ""
 "  news:message-id                       Affiche l'article spécifié.\n"
 "  news:nom.groupe                       Affiche le groupe de discussion "
 "spécifié.\n"
+"  headers:nom.groupe                    Télécharge les nouveaux en-têtes pour le groupe de discussion spécifié.\n"
 "  --no-gui                              Avec news:message-id, affiche "
 "l'article sur la sortie standard.\n"
 "\n"
@@ -1189,16 +1190,16 @@ msgstr ""
 "  --no-gui                              Affiche seulement la console de "
 "sortie et non la file de téléchargement.\n"
 
-#: ../pan/gui/pan.cc:223
+#: ../pan/gui/pan.cc:255
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Erreur : --no-gui utilisé sans fichiers nzb ou news:message-id."
 
-#: ../pan/gui/pan.cc:227
+#: ../pan/gui/pan.cc:259
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s démarré"
 
-#: ../pan/gui/pan.cc:243
+#: ../pan/gui/pan.cc:275
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Veuillez configurer les serveurs de nouvelles avant d'utiliser Pan comme "
@@ -1380,49 +1381,44 @@ msgstr ""
 msgid "Error starting external editor: %s"
 msgstr "Erreur de démarrage de l'éditeur externe : %s"
 
-#: ../pan/gui/post-ui.cc:1025
+#: ../pan/gui/post-ui.cc:1015
 msgid "Open Draft Article"
 msgstr "Ouvrir un brouillon d'article"
 
-#: ../pan/gui/post-ui.cc:1209
+#: ../pan/gui/post-ui.cc:1199
 msgid "Save Draft Article"
 msgstr "Enregistrer un brouillon d'article"
 
-#: ../pan/gui/post-ui.cc:1391
-#, c-format
-msgid "Couldn't read signature file \"%s\": %s"
-msgstr "Impossible de lire le fichier de signature « %s » : %s"
-
-#: ../pan/gui/post-ui.cc:1412
+#: ../pan/gui/post-ui.cc:1397
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Impossible d'analyser la commande de signature « %s » : %s"
 
-#: ../pan/gui/post-ui.cc:1449
+#: ../pan/gui/post-ui.cc:1429
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Impossible de convertir le fichier de signature en UTF-8."
 
-#: ../pan/gui/post-ui.cc:1845
+#: ../pan/gui/post-ui.cc:1821
 msgid "F_rom"
 msgstr "_De"
 
-#: ../pan/gui/post-ui.cc:1863
+#: ../pan/gui/post-ui.cc:1839
 msgid "_Subject"
 msgstr "_Sujet"
 
-#: ../pan/gui/post-ui.cc:1876
+#: ../pan/gui/post-ui.cc:1852
 msgid "_Newsgroups"
 msgstr "_Groupes de discussion"
 
-#: ../pan/gui/post-ui.cc:1890
+#: ../pan/gui/post-ui.cc:1866
 msgid "_Mail To"
 msgstr "É_crire à"
 
-#: ../pan/gui/post-ui.cc:1939
+#: ../pan/gui/post-ui.cc:1915
 msgid "Follo_wup-To"
 msgstr "Sui_vi à"
 
-#: ../pan/gui/post-ui.cc:1947
+#: ../pan/gui/post-ui.cc:1923
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1435,11 +1431,11 @@ msgstr ""
 "Pour rediriger toutes les réponses vers votre adresse électronique, utilisez "
 "« Suivi à : poster »."
 
-#: ../pan/gui/post-ui.cc:1953
+#: ../pan/gui/post-ui.cc:1929
 msgid "_Reply-To"
 msgstr "_Répondre à"
 
-#: ../pan/gui/post-ui.cc:1961
+#: ../pan/gui/post-ui.cc:1937
 msgid ""
 "The email account where mail replies to your posted message should go.  This "
 "is only needed if it differs from the \"From\" header."
@@ -1447,31 +1443,31 @@ msgstr ""
 "Le compte de messagerie destinataire des réponses à votre message. "
 "Uniquement nécessaire s'il est différent de l'en-tête « De »."
 
-#: ../pan/gui/post-ui.cc:1967
+#: ../pan/gui/post-ui.cc:1943
 msgid "_Custom Headers"
 msgstr "_En-têtes personnalisés"
 
-#: ../pan/gui/post-ui.cc:1991
+#: ../pan/gui/post-ui.cc:1967
 msgid "Add \"_User-Agent\" header"
 msgstr "Ajouter l'en-tête « _User-Agent »"
 
-#: ../pan/gui/post-ui.cc:1998
+#: ../pan/gui/post-ui.cc:1974
 msgid "Add \"Message-_Id header"
 msgstr "Ajouter l'en-tête « Message-_Id »"
 
-#: ../pan/gui/post-ui.cc:2055
+#: ../pan/gui/post-ui.cc:2031
 msgid "Post Article"
 msgstr "Poster un article"
 
-#: ../pan/gui/post-ui.cc:2076
+#: ../pan/gui/post-ui.cc:2052
 msgid "_Message"
 msgstr "_Message"
 
-#: ../pan/gui/post-ui.cc:2077
+#: ../pan/gui/post-ui.cc:2053
 msgid "More _Headers"
 msgstr "_En-têtes supplémentaires"
 
-#: ../pan/gui/post-ui.cc:2104 ../pan/gui/profiles-dialog.cc:414
+#: ../pan/gui/post-ui.cc:2080 ../pan/gui/profiles-dialog.cc:414
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "Le %d, %n a écrit :"
@@ -2150,26 +2146,30 @@ msgid "After Two Months"
 msgstr "Après deux mois"
 
 #: ../pan/gui/server-ui.cc:263
+msgid "After Six Months"
+msgstr "Après six mois"
+
+#: ../pan/gui/server-ui.cc:264
 msgid "Never Expire Old Articles"
 msgstr "Ne jamais expirer les vieux articles"
 
-#: ../pan/gui/server-ui.cc:277
+#: ../pan/gui/server-ui.cc:278
 msgid "E_xpire Old Articles:"
 msgstr "Expirer les vieux articles :"
 
-#: ../pan/gui/server-ui.cc:280
+#: ../pan/gui/server-ui.cc:281
 msgid "Primary"
 msgstr "Prioritaire"
 
-#: ../pan/gui/server-ui.cc:281
+#: ../pan/gui/server-ui.cc:282
 msgid "Fallback"
 msgstr "Secondaire"
 
-#: ../pan/gui/server-ui.cc:295
+#: ../pan/gui/server-ui.cc:296
 msgid "Server Rank:"
 msgstr "Rang du serveur :"
 
-#: ../pan/gui/server-ui.cc:299
+#: ../pan/gui/server-ui.cc:300
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -2180,29 +2180,29 @@ msgstr ""
 "comme serveurs prioritaires et les serveurs qui nécessitent un abonnement "
 "comme serveurs secondaires."
 
-#: ../pan/gui/server-ui.cc:423
+#: ../pan/gui/server-ui.cc:424
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "Vraiment supprimer « %s » ?"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:494
+#: ../pan/gui/server-ui.cc:495
 msgid "Pan: Servers"
 msgstr "Pan : serveurs"
 
-#: ../pan/gui/server-ui.cc:518
+#: ../pan/gui/server-ui.cc:519
 msgid "Servers"
 msgstr "Serveurs"
 
-#: ../pan/gui/server-ui.cc:544
+#: ../pan/gui/server-ui.cc:545
 msgid "Add a Server"
 msgstr "Ajouter un serveur"
 
-#: ../pan/gui/server-ui.cc:554
+#: ../pan/gui/server-ui.cc:555
 msgid "Edit a Server's Settings"
 msgstr "Éditer les paramètres d'un serveur"
 
-#: ../pan/gui/server-ui.cc:561
+#: ../pan/gui/server-ui.cc:562
 msgid "Remove a Server"
 msgstr "Supprimer un serveur"
 
@@ -2289,26 +2289,26 @@ msgstr "Supprimer les tâches"
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr "Erreur de lancement de l'URL : %s (la commande était : %s)"
 
-#: ../pan/tasks/decoder.cc:102
+#: ../pan/tasks/decoder.cc:109
 #, c-format
 msgid "Couldn't save file \"%s\": %s"
 msgstr "Impossible d'enregistrer le fichier « %s » : %s"
 
-#: ../pan/tasks/decoder.cc:125
+#: ../pan/tasks/decoder.cc:131
 msgid "Error initializing uulib"
 msgstr "Erreur d'initialisation de uulib"
 
-#: ../pan/tasks/decoder.cc:136 ../pan/tasks/socket-impl-gio.cc:404
+#: ../pan/tasks/decoder.cc:144 ../pan/tasks/socket-impl-gio.cc:404
 #, c-format
 msgid "Error reading from %s: %s"
 msgstr "Erreur lors de la lecture depuis %s : %s"
 
-#: ../pan/tasks/decoder.cc:195
+#: ../pan/tasks/decoder.cc:177
 #, c-format
 msgid "Saved \"%s\""
 msgstr "« %s » enregistré"
 
-#: ../pan/tasks/decoder.cc:203
+#: ../pan/tasks/decoder.cc:185
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -2317,7 +2317,7 @@ msgstr ""
 "Erreur lors de l'enregistrement de « %s » :\n"
 "%s. %s"
 
-#: ../pan/tasks/decoder.cc:206
+#: ../pan/tasks/decoder.cc:188
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -2326,7 +2326,7 @@ msgstr ""
 "Erreur lors de l'enregistrement de « %s » :\n"
 "%s."
 
-#: ../pan/tasks/decoder.cc:306 ../pan/tasks/task-article.cc:305
+#: ../pan/tasks/decoder.cc:294 ../pan/tasks/task-article.cc:309
 #, c-format
 msgid "Decoding %s"
 msgstr "Décodage de %s"
@@ -2408,7 +2408,7 @@ msgstr "Récupération des nouveaux en-têtes pour « %s »"
 msgid "Sampling headers for \"%s\""
 msgstr "Échantillonnage des en-têtes pour « %s »"
 
-#: ../pan/tasks/task-xover.cc:323
+#: ../pan/tasks/task-xover.cc:324
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu parties, %lu articles)"
@@ -2696,11 +2696,15 @@ msgstr "%lu règles de notation lues dans %lu sections depuis « %s »"
 msgid "> [quoted text muted]"
 msgstr "> [texte cité caché]"
 
-#: ../pan/usenet-utils/utf8-utils.cc:260
-msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
-msgstr ""
-"Impossible de déterminer le codage de l'article. Les caractères non UTF-8 "
-"ont été supprimés."
+#~ msgid ""
+#~ "Pan is now offline. Please ensure that space is available, then use File|"
+#~ "Work Online to continue."
+#~ msgstr ""
+#~ "Pan est maintenant déconnecté. Assurez-vous qu'il y ait assez d'espace "
+#~ "disponible, puis utilisez Fichier|Travailler en ligne pour continuer."
+
+#~ msgid "Couldn't read signature file \"%s\": %s"
+#~ msgstr "Impossible de lire le fichier de signature « %s » : %s"
 
 #~ msgid "Wrap _Now"
 #~ msgstr "Formater _maintenant"
