@@ -24,6 +24,8 @@
 #include <config.h>
 #include <algorithm>
 #include <cerrno>
+#include <ostream>
+#include <fstream>
 extern "C" {
 #  define PROTOTYPES
 #  include <uulib/uudeview.h>
@@ -159,6 +161,8 @@ Decoder :: do_work()
       i = 0;
       while ((item = UUGetFileListItem (i++)))
       {
+        file_errors.clear ();
+
         if (was_cancelled()) break; // poll WorkerPool::Worker stop flag
 
         // make sure the directory exists...
@@ -181,20 +185,24 @@ Decoder :: do_work()
           // save attachements on a text-only post
         } else {
           const int the_errno (UUGetOption (UUOPT_ERRNO, NULL, NULL, 0));
-          if (res==UURET_IOERR && the_errno==ENOSPC) {
-            g_snprintf (buf, bufsz, _("Error saving \"%s\":\n%s. %s"), fname, file::pan_strerror(the_errno), "ENOSPC");
-            log_severe.push_back(buf);
-          } else {
-            g_snprintf (buf, bufsz,_("Error saving \"%s\":\n%s."),
-                             fname,
-                             res==UURET_IOERR ? file::pan_strerror(the_errno) : UUstrerror(res));
-            log_errors.push_back(buf); // log error
-          }
+          g_snprintf (buf, bufsz,_("Error saving \"%s\":\n%s."),
+                      fname,
+                      res==UURET_IOERR ? file::pan_strerror(the_errno) : UUstrerror(res));
+          log_errors.push_back(buf); // log error
+        }
+
+        if (!file_errors.empty())
+        {
+          std::string errs_fname = fname;
+          errs_fname += ".ERRORS";
+          std::ofstream out (errs_fname.c_str(), std::ios_base::out|std::ios_base::trunc);
+          foreach_const (Decoder::log_t, file_errors, it)
+            out << *it << '\n';
+          out.close ();
         }
 
         // cleanup
         g_free (fname);
-
       }
 
       mark_read = true;
@@ -214,6 +222,9 @@ Decoder :: uu_log (void* data, char* message, int severity)
 {
   Decoder *self = static_cast<Decoder *>(data);
   char * pch (g_locale_to_utf8 (message, -1, 0, 0, 0));
+
+  if (severity >= UUMSG_WARNING)
+    self->file_errors.push_back (pch ? pch : message);
 
   if (severity==UUMSG_PANIC || severity==UUMSG_FATAL)
     self->log_severe.push_back (pch ? pch : message);

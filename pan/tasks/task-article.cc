@@ -140,14 +140,14 @@ TaskArticle :: ~TaskArticle ()
 }
 
 void
-TaskArticle :: update_work ()
+TaskArticle :: update_work (NNTP * checkin_pending)
 {
   // which servers could we use right now?
   int working (0);
   quarks_t servers;
   foreach (needed_t, _needed, nit) {
     Needed& n (*nit);
-    if (n.nntp)
+    if (n.nntp && n.nntp!=checkin_pending)
       ++working;
     else {
       quarks_t tmpservers;
@@ -199,10 +199,9 @@ TaskArticle :: use_nntp (NNTP * nntp)
 
   if (!needed)
   {
-    // couldn't find any work for this nntp...
-    // maybe our needs-work list is out of date, so call update_work()
-    // before giving the nntp back.
-    update_work ();
+    // std::cerr << LINE_ID << " hmm, why did I ask for server " << nntp->_server
+    //           << "?  I can't use it.  I'd better refresh my worklist." << std::endl;
+    update_work (nntp);
     check_in (nntp, OK);
   }
   else
@@ -255,8 +254,6 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
                               Health             health,
                               const StringView & response)
 {
-  bool err_local = false;
-
   // find the Needed using this nntp...
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
@@ -264,30 +261,42 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
       break;
   assert (it != _needed.end());
 
-  //std::cerr << LINE_ID << ' ' << it->part.message_id << " from " << nntp->_server << ": " << (health==OK ? "yes" : "no") << std::endl;
-
   if (health == OK) { // if download succeeded, save it in the cache
     const StringView view (&it->buf.front(), it->buf.size());
     if (!_cache.add (it->part.get_message_id(_article.message_id), view))
-      err_local = true;
+      health = ERR_LOCAL;
   }
 
-  if (health == ERR_COMMAND) // if server doesn't have that article...
-    it->xref.remove_server (nntp->_server);
+  // std::cerr << LINE_ID << ' ' << it->part.get_message_id(_article.message_id) << " from " << nntp->_server << ": health " << health << std::endl;
 
-  // if we got it or still have other options, we're okay
-  _state.set_health (health==ERR_COMMAND && it->xref.empty() ? ERR_COMMAND : OK);
+  switch (health)
+  {
+    case OK: // if we got the article successfully...
+      _needed.erase (it);
+      break;
 
-  if (health==OK)
-    _needed.erase (it);
-  else {
-    Needed::buf_t tmp;
-    it->buf.swap (tmp); // deallocates the space...
-    it->nntp = 0;
+    case ERR_NETWORK: // if the network is bad...
+    case ERR_LOCAL: // ...or if we got it but couldn't save it
+      it->reset ();
+      break;
+
+    case ERR_COMMAND: // if this one server doesn't have this part...
+      it->xref.remove_server (nntp->_server);
+      if (!it->xref.empty())
+        it->reset ();
+      else { // if none of our servers have this part, but keep going --
+             // an incomplete file gives us more PAR2 blocks than a missing one.
+        Log :: add_err_va (
+          _("Article \"%s\" is incomplete -- the news server(s) don't have part %s"),
+          _article.subject.c_str(),
+          it->part.get_message_id(_article.message_id).c_str());
+        _needed.erase (it);
+      }
+      break;
   }
-
-  update_work ();
-  check_in (nntp, err_local ? ERR_LOCAL : health);
+  
+  update_work (nntp);
+  check_in (nntp, health);
 }
 
 /***
@@ -329,11 +338,11 @@ TaskArticle :: on_worker_done (bool cancelled)
     // the decoder is done... catch up on all housekeeping
     // now that we're back in the main thread.
 
-    foreach_const(std::list<std::string>, _decoder->log_severe, it)
+    foreach_const(Decoder::log_t, _decoder->log_severe, it)
       Log :: add_err(it->c_str());
-    foreach_const(std::list<std::string>, _decoder->log_errors, it)
+    foreach_const(Decoder::log_t, _decoder->log_errors, it)
       Log :: add_err(it->c_str());
-    foreach_const(std::list<std::string>, _decoder->log_infos, it)
+    foreach_const(Decoder::log_t, _decoder->log_infos, it)
       Log :: add_info(it->c_str());
 
     if (_decoder->mark_read)

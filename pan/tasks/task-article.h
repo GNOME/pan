@@ -107,12 +107,16 @@ namespace pan
         buf_t buf;
         int rank;
         Needed (): nntp(0), rank(1) {}
+        void reset() {
+          buf_t tmp;
+          buf.swap (tmp); // deallocates space
+          nntp = 0;
+        }
       };
       typedef std::vector<Needed> needed_t;
       needed_t _needed;
 
-      void update_work ();
-
+      void update_work (NNTP* checkin_pending=0);
   };
 }
 

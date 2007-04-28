@@ -63,7 +63,8 @@ namespace pan
 
     public:
 
-      std::list<std::string> log_severe, log_errors, log_infos;
+      typedef std::list<std::string> log_t;
+      log_t log_severe, log_errors, log_infos, file_errors;
       bool mark_read;
 
     protected: // inherited from WorkerPool::Worker

@@ -88,6 +88,7 @@ static stringmap messages[] = {
   { S_SCAN_CANCEL,      "Scanning canceled" },
   { S_SIZE_MISMATCH,    "%s: Decoded size (%ld) does not match expected size (%ld)" },
   { S_PSIZE_MISMATCH,   "%s part %d: Decoded size (%ld) does not match expected size (%ld)" },
+  { S_PART_MISSING,     "%Part %d missing.  Decoded file probably corrupt." },
   { S_CRC_MISMATCH,     "CRC32 mismatch in %s. Decoded file probably corrupt." },
   { S_PCRC_MISMATCH,    "PCRC32 mismatch in %s part %d. Decoded file probably corrupt." },
 

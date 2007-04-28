@@ -1326,8 +1326,12 @@ UUDecode (uulist *data)
   if (data->state & UUFILE_NODATA)
     return UURET_NODATA;
 
-  if (data->state & UUFILE_NOBEGIN && !uu_desperate)
-    return UURET_NODATA;
+  if (data->state & UUFILE_NOBEGIN) {
+    if (!uu_desperate)
+      return UURET_NODATA;
+    UUMessage (uunconc_id, __LINE__, UUMSG_WARNING,
+               uustring(S_DATA_SUSPICIOUS));
+  }
 
   if (data->uudet == PT_ENCODED)
     mode = "wt";	/* open text files in text mode */
@@ -1374,8 +1378,10 @@ UUDecode (uulist *data)
    * it in desperate mode
    */
 
-  if ((data->state & UUFILE_NOBEGIN) && uu_desperate)
+  if ((data->state & UUFILE_NOBEGIN) && uu_desperate) {
+    UUMessage (uunconc_id, __LINE__, UUMSG_WARNING, uustring(S_DATA_SUSPICIOUS));
     state = DATA;
+  }
 
   (void) UUDecodeLine (NULL, NULL, 0);                   /* init */
   (void) UUbhwrite    (NULL, 0, 0, NULL);                /* dito */
@@ -1415,10 +1421,16 @@ UUDecode (uulist *data)
 
   iter = data->thisfile;
   while (iter) {
-    if (part != -1 && iter->partno != part+1 && !uu_desperate)
-      break;
-    else
-      part = iter->partno;
+
+    if (part==-1 && iter->partno!=1)
+       UUMessage (uunconc_id, __LINE__, UUMSG_WARNING, "Missing everything before part #%d", iter->partno);
+    if (part!=-1 && iter->partno!=part+1) {
+      if (!uu_desperate)
+        break;
+      UUMessage (uunconc_id, __LINE__, UUMSG_ERROR,
+                 uustring(S_PART_MISSING), part);
+    }
+    part = iter->partno;
 
     if (iter->data->sfname == NULL) {
       iter = iter->NEXT;
