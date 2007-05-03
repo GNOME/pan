@@ -1649,6 +1649,14 @@ namespace
   }
 }
 
+std::string
+PostUI :: utf8ize (const StringView& in) const
+{
+  const char * local_charset = 0;
+  g_get_charset (&local_charset);
+  return content_to_utf8 (in, _charset.c_str(), local_charset);
+}
+
 void
 PostUI :: set_message (GMimeMessage * message)
 {
@@ -1660,21 +1668,22 @@ PostUI :: set_message (GMimeMessage * message)
   _message = message;
 
   // update subject, newsgroups, to fields
-  const char * cpch = g_mime_message_get_subject (message);
-  gtk_entry_set_text (GTK_ENTRY(_subject_entry), cpch ? cpch : "");
+  std::string s = utf8ize (g_mime_message_get_subject (message));
+  gtk_entry_set_text (GTK_ENTRY(_subject_entry), s.c_str());
 
-  cpch = g_mime_message_get_header (message, "Newsgroups");
-  gtk_entry_set_text (GTK_ENTRY(_groups_entry), cpch ? cpch : "");
+  s = utf8ize (g_mime_message_get_header (message, "Newsgroups"));
+  gtk_entry_set_text (GTK_ENTRY(_groups_entry), s.c_str());
 
-  cpch = g_mime_message_get_header (message, "Followup-To");
-  gtk_entry_set_text (GTK_ENTRY(_followupto_entry), cpch ? cpch : "");
+  s = utf8ize (g_mime_message_get_header (message, "Followup-To"));
+  gtk_entry_set_text (GTK_ENTRY(_followupto_entry), s.c_str());
 
-  cpch = g_mime_message_get_header (message, "Reply-To");
-  gtk_entry_set_text (GTK_ENTRY(_replyto_entry), cpch ? cpch : "");
+  s = utf8ize (g_mime_message_get_header (message, "Reply-To"));
+  gtk_entry_set_text (GTK_ENTRY(_replyto_entry), s.c_str());
 
   const InternetAddressList * addresses = g_mime_message_get_recipients (message, GMIME_RECIPIENT_TYPE_TO);
   char * pch  = internet_address_list_to_string (addresses, true);
-  gtk_entry_set_text (GTK_ENTRY(_to_entry), pch ? pch : "");
+  s = utf8ize (pch);
+  gtk_entry_set_text (GTK_ENTRY(_to_entry), s.c_str());
   g_free (pch);
 
   // update 'other headers'
@@ -1682,18 +1691,20 @@ PostUI :: set_message (GMimeMessage * message)
   if (message->mime_part && g_mime_header_has_raw (message->mime_part->headers))
     g_mime_header_foreach (message->mime_part->headers, set_message_foreach_header_func, &data);
   g_mime_header_foreach (GMIME_OBJECT(message)->headers, set_message_foreach_header_func, &data);
-  gtk_text_buffer_set_text (_headers_buf, data.visible_headers.c_str(), -1);
+  s = utf8ize (data.visible_headers);
+  gtk_text_buffer_set_text (_headers_buf, s.c_str(), -1);
   _hidden_headers = data.hidden_headers;
 
   // update body
   int ignored;
   char * tmp = g_mime_message_get_body (message, true, &ignored);
-  if (tmp) {
-    std::string s = TextMassager().fill (tmp);
+  s = utf8ize (tmp);
+  g_free (tmp);
+  if (!s.empty()) {
+    s = TextMassager().fill (s);
     s += "\n\n";
     gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
   }
-  g_free (tmp);
 
   // apply the profiles
   update_profile_combobox ();

@@ -132,6 +132,7 @@ namespace pan
       GtkWidget* create_extras_tab ();
 
     private:
+      std::string utf8ize (const StringView&) const;
       std::string get_body () const;
       gulong body_view_realized_handler;
       static void body_view_realized_cb (GtkWidget*, gpointer);
