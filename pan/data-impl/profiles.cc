@@ -52,16 +52,11 @@ namespace
     std::string profile_name;
     std::string text;
     std::string header_name;
-    Profiles::strings_t& editors;
-    std::string& active_editor;
     profiles_t& profiles;
     std::string& active_profile;
 
-    MyContext(Profiles::strings_t& e, std::string& ae,
-              profiles_t& p, std::string& ap):
+    MyContext(profiles_t& p, std::string& ap):
       is_active (false),
-      editors (e),
-      active_editor (ae),
       profiles (p),
       active_profile (ap) {}
   };
@@ -76,12 +71,6 @@ namespace
   {
     MyContext& mc (*static_cast<MyContext*>(user_data));
     const std::string element_name (element_name_str);
-
-    if (element_name=="editor" || element_name=="profile") {
-      mc.is_active = false;
-      for (const char **k(attribute_names), **v(attribute_vals); *k && !mc.is_active; ++k, ++v)
-        mc.is_active = !strcmp (*k,"active");
-    }
 
     if (element_name=="profile") {
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
@@ -116,13 +105,7 @@ namespace
     StringView t (mc.text);
     t.trim ();
 
-    if (element_name == "editor") {
-      mc.editors.push_back (t);
-      if (mc.is_active)
-        mc.active_editor.assign (t.str, t.len);
-    }
-
-    else if (!mc.profile_name.empty()) {
+    if (!mc.profile_name.empty()) {
       Profile& p (mc.profiles[mc.profile_name]);
       if (element_name == "signature_file") p.signature_file.assign (t.str, t.len);
       else if (element_name == "attribution") p.attribution.assign (t.str, t.len);
@@ -151,9 +134,7 @@ void
 ProfilesImpl :: clear ()
 {
   profiles.clear ();
-  editors.clear ();
   active_profile.clear ();
-  active_editor.clear ();
 }
 
 void
@@ -162,7 +143,7 @@ ProfilesImpl :: load (const StringView& filename)
   std::string txt;
   if (file :: get_text_file_contents (filename, txt))
   {
-    MyContext mc (editors, active_editor, profiles, active_profile);
+    MyContext mc (profiles, active_profile);
     GMarkupParser p;
     p.start_element = start_element;
     p.end_element = end_element;
@@ -203,15 +184,6 @@ ProfilesImpl :: serialize (std::ostream& out) const
   // xml header... 
   out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
   out << indent(depth++) << "<posting>\n";
-
-  // editors...
-  out << '\n' << indent(depth++) << "<editors>\n";
-    foreach_const (strings_t, editors, it)
-      if (*it == active_editor)
-        out << indent(depth) << "<editor active=\"true\">" << escaped(*it) << "</editor>\n";
-      else
-        out << indent(depth) << "<editor>" << escaped(*it) << "</editor>\n";
-  out << indent(--depth) << "</editors>\n\n";
 
   // profiles...
   out << indent(depth++) << "<profiles>\n";
@@ -257,55 +229,6 @@ ProfilesImpl :: ProfilesImpl (DataIO& data_io):
 {
   // load from file...
   load (_data_io.get_posting_name());
-
-  // fallback editors
-  if (editors.empty()) {
-#ifdef G_OS_WIN32
-    editors.push_back ("notepad");
-    editors.push_back ("notepad2");
-    editors.push_back ("pfe");
-    active_editor = "notepad";
-#else
-    editors.push_back ("gedit");
-    editors.push_back ("gvim -f");
-    editors.push_back ("kwrite");
-    editors.push_back ("xterm -e vim");
-    active_editor = "gedit";
-#endif
-  }
-}
-
-void
-ProfilesImpl :: get_editors (strings_t& setme) const
-{
-  setme = editors;
-}
-
-const std::string&
-ProfilesImpl :: get_active_editor () const
-{
-  return active_editor;
-}
-
-bool
-ProfilesImpl :: has_editor (const StringView& cmd) const
-{
-  bool found (false);
-  foreach_const (Profiles::strings_t, editors, it)
-    if ((found = (cmd == *it)))
-      break;
-  return found;
-}
-
-void
-ProfilesImpl :: set_editors (const strings_t& e)
-{
-  editors = e;
-
-  if (!has_editor (active_editor))
-    active_editor = editors.front();
-
-  save ();
 }
 
 bool
@@ -341,15 +264,6 @@ ProfilesImpl :: get_profile (const std::string& key, Profile& setme) const
   if (found)
     setme = it->second;
   return found;
-}
-
-void
-ProfilesImpl :: set_active_editor (const StringView& active)
-{
-  if (has_editor (active))
-    active_editor = active;
-
-  save ();
 }
 
 void

@@ -44,10 +44,6 @@ namespace pan
       virtual ~ProfilesImpl ();
 
     public:
-      virtual void get_editors (strings_t& setme) const;
-      virtual const std::string& get_active_editor () const;
-
-    public:
       virtual std::set<std::string> get_profile_names () const;
       virtual bool has_profiles () const;
       virtual bool has_from_header (const StringView& from) const;
@@ -56,19 +52,14 @@ namespace pan
     public:
       virtual void delete_profile (const std::string& profile_name);
       virtual void add_profile (const std::string& profile_name, const Profile& profile);
-      virtual void set_editors (const strings_t&);
-      virtual void set_active_editor (const StringView&);
       
     private:
       void clear ();
       void load (const StringView& filename);
       void serialize (std::ostream&) const;
       void save () const;
-      bool has_editor (const StringView&) const;
 
     private:
-      strings_t editors;
-      std::string active_editor;
       typedef std::map<std::string,Profile> profiles_t;
       profiles_t profiles;
       std::string active_profile;

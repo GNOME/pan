@@ -53,9 +53,7 @@ namespace pan
       void rot13_selection ();
       void wrap_body ();
       void spawn_editor ();
-      void manage_editors ();
       void manage_profiles ();
-      void set_editor_command (const StringView&);
       void set_charset (const StringView&);
       void apply_profile ();
       void save_draft ();
@@ -63,6 +61,7 @@ namespace pan
       void send_now ();
       void close_window ();
       void set_wrap_mode (bool wrap);
+      void set_always_run_editor (bool);
 
     private:
       void done_sending_message (GMimeMessage*, bool);
@@ -70,7 +69,6 @@ namespace pan
       bool maybe_post_message (GMimeMessage*);
 
     private:
-      void add_editors_to_menu ();
       void update_widgetry ();
       void update_profile_combobox ();
       void populate_from_message (GMimeMessage*);
@@ -102,7 +100,6 @@ namespace pan
       GMimeMessage * _message;
       std::string _charset;
       TextMassager _tm;
-      std::set<unsigned int> _editor_ui_ids;
       GtkUIManager * _uim;
       GtkActionGroup * _agroup;
       std::string _signature;
@@ -117,7 +114,6 @@ namespace pan
 
     private:
       void add_actions (GtkWidget* box);
-      void add_editor_list ();
       void add_charset_list ();
       void apply_profile_to_body ();
       void apply_profile_to_headers ();

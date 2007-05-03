@@ -19,6 +19,8 @@
 #ifndef URL_SHOW_H
 #define URL_SHOW_H
 
+#include <set>
+#include <string>
 #include "prefs.h"
 
 namespace pan
@@ -26,6 +28,8 @@ namespace pan
   struct URL
   {
     static const char* get_environment ();
+
+    static void get_default_editors (std::set<std::string>& setme);
 
     enum Mode { WEB, MAIL, AUTO };
 

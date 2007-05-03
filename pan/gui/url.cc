@@ -48,6 +48,37 @@ URL :: get_environment ()
 }
 
 void
+URL :: get_default_editors (std::set<std::string>& editors)
+{
+  editors.clear ();
+
+  const std::string environment = URL :: get_environment ();
+  if (environment == "windows")
+  {
+    editors.insert ("notepad");
+    editors.insert ("notepad2");
+    editors.insert ("pfe");
+  }
+  else if (environment == "mac")
+  {
+    editors.insert ("edit -w");
+    editors.insert ("TextEdit");
+  }
+  else if (environment == "kde")
+  {
+    editors.insert ("kate");
+    editors.insert ("kwrite");
+  }
+  else // gnome and default
+  {
+    editors.insert ("gedit");
+    editors.insert ("gvim -f");
+    editors.insert ("xterm -e vim");
+  }
+}
+
+
+void
 URL :: open (const Prefs& prefs, const char * url, Mode mode)
 {
   g_return_if_fail (url && *url);

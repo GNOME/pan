@@ -150,13 +150,22 @@ PostUI :: get_body () const
 }
 
 void
+PostUI :: set_always_run_editor (bool run)
+{
+  _prefs.set_flag ("always-run-editor", run);
+}
+
+void
 PostUI :: set_wrap_mode (bool wrap)
 {
-  const std::string s (get_body());
-  gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
+  _prefs.set_flag ("compose-wrap-enabled", wrap);
 
-  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(_body_view),
-                               wrap ? GTK_WRAP_WORD : GTK_WRAP_NONE);
+  if (_body_buf) {
+    const std::string s (get_body());
+    gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
+    gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(_body_view),
+                                 wrap ? GTK_WRAP_WORD : GTK_WRAP_NONE);
+  }
 }
 
 /***
@@ -172,22 +181,13 @@ namespace
   void do_paste    (GtkAction * w, gpointer p) { g_signal_emit_by_name (get_focus(p), "paste_clipboard"); }
   void do_rot13    (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->rot13_selection(); }
   void do_edit     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->spawn_editor (); }
-  void do_editors  (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->manage_editors (); }
   void do_profiles (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->manage_profiles (); }
   void do_send     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->send_now (); }
   void do_save     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->save_draft (); }
   void do_open     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->open_draft (); }
   void do_close    (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->close_window (); }
   void do_wrap     (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_wrap_mode (gtk_toggle_action_get_active (w)); }
-
-  void editor_selected_cb (GtkRadioAction * action, GtkRadioAction * current, gpointer post_gpointer)
-  {
-    if (action == current)
-    {
-      const char * command = (const char*) g_object_get_data (G_OBJECT(action), "editor-command");
-      static_cast<PostUI*>(post_gpointer)->set_editor_command (command);
-    }
-  }
+  void do_edit2    (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_always_run_editor (gtk_toggle_action_get_active (w)); }
 
   GtkActionEntry entries[] =
   {
@@ -206,14 +206,14 @@ namespace
     { "paste", GTK_STOCK_PASTE, NULL, NULL, NULL, G_CALLBACK(do_paste) },
     { "rot13", GTK_STOCK_REFRESH, N_("_Rot13"), NULL, N_("Rot13 Selected Text"), G_CALLBACK(do_rot13) },
     { "run-editor", GTK_STOCK_JUMP_TO, N_("Run _Editor"), "<control>e", NULL, G_CALLBACK(do_edit) },
-    { "manage-editors", NULL, N_("_Manage Editor List..."), NULL, NULL, G_CALLBACK(do_editors) },
-    { "manage-profiles", NULL, N_("Manage Posting Pr_ofiles..."), NULL, NULL, G_CALLBACK(do_profiles) }
+    { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), NULL, NULL, G_CALLBACK(do_profiles) }
   };
 
   GtkToggleActionEntry toggle_entries[] =
   {
     { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), NULL, NULL, G_CALLBACK(do_wrap), true },
-    { "remember-charset", NULL, N_("Remember _Charset for This Group"), NULL, NULL, G_CALLBACK(on_remember_charset_toggled), true },
+    { "always-run-editor", NULL, N_("Always Run Editor"), NULL, NULL, G_CALLBACK(do_edit2), false },
+    { "remember-charset", NULL, N_("Remember Character Encoding for this Group"), NULL, NULL, G_CALLBACK(on_remember_charset_toggled), true },
     { "spellcheck", NULL, N_("Check _Spelling"), NULL, NULL, G_CALLBACK(on_spellcheck_toggled), true }
   };
 
@@ -323,53 +323,6 @@ PostUI :: add_charset_list ()
   }
 }
 
-typedef Profiles::strings_t strings_t;
-
-void
-PostUI :: add_editor_list ()
-{
-  // remove the old editor buttons...
-  typedef std::set<guint> unique_uints_t;
-  static unique_uints_t editor_ui_ids;
-  foreach_const (unique_uints_t, editor_ui_ids, it)
-    gtk_ui_manager_remove_ui (_uim, *it);
-
-  // add the new editor buttons...
-  strings_t commands;
-  _profiles.get_editors (commands);
-  const std::string& editor_command (_profiles.get_active_editor ());
-  GtkRadioAction * radio_group (0);
-  for (size_t i=0; i<commands.size(); ++i)
-  {
-    const char * cmd (commands[i].c_str());
-    char name[512], verb[512];
-    g_snprintf (name, sizeof(name), "%s", cmd);
-    g_snprintf (verb, sizeof(verb), "Edit With %s", cmd);
-
-    GtkAction * o = (GtkAction*) g_object_new (GTK_TYPE_RADIO_ACTION,
-       "name", verb,
-       "label", name,
-       "value", i,
-       "group", radio_group, NULL);
-    g_object_set_data_full (G_OBJECT(o), "editor-command", g_strdup(cmd), g_free);
-    radio_group = GTK_RADIO_ACTION (o);
-    const bool match (editor_command == cmd);
-    if (match)
-      gtk_toggle_action_set_active (GTK_TOGGLE_ACTION(o), true);
-    g_signal_connect (o, "changed", G_CALLBACK(editor_selected_cb), this);
-    gtk_action_group_add_action (_agroup, o);
-    g_object_unref (o);
-
-
-    const guint id (gtk_ui_manager_new_merge_id (_uim));
-    gtk_ui_manager_add_ui (_uim, id,
-                           "/post/edit-menu/editors-menu/editor-list",
-                            name, verb,
-                            GTK_UI_MANAGER_MENUITEM, false);
-    editor_ui_ids.insert (id);
-  }
-}
-
 void
 PostUI :: add_actions (GtkWidget * box)
 {
@@ -395,16 +348,15 @@ PostUI :: add_actions (GtkWidget * box)
   gtk_action_group_set_translation_domain (_agroup, NULL);
   gtk_action_group_add_actions (_agroup, entries, G_N_ELEMENTS(entries), this);
   gtk_action_group_add_toggle_actions (_agroup, toggle_entries, G_N_ELEMENTS(toggle_entries), this);
+  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "always-run-editor")),
+                                _prefs.get_flag ("always-run-editor", false));
+  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "spellcheck")),
+                                _prefs.get_flag ("spellcheck-enabled", DEFAULT_SPELLCHECK_FLAG));
+  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "wrap")),
+                                _prefs.get_flag ("compose-wrap-enabled", true));
   gtk_ui_manager_insert_action_group (_uim, _agroup, 0);
 
-  add_editor_list ();
   add_charset_list ();
-}
-
-void
-PostUI :: set_editor_command (const StringView& command)
-{
-  _profiles.set_active_editor (command);
 }
 
 void
@@ -431,61 +383,6 @@ PostUI :: manage_profiles ()
   gtk_widget_destroy (d.root());
   update_profile_combobox ();
   apply_profile ();
-}
-
-void
-PostUI :: manage_editors ()
-{
-  GtkWidget * d = gtk_dialog_new_with_buttons (
-    _("Manage Editor List"),
-    GTK_WINDOW(_root),
-    (GtkDialogFlags)(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
-    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-    NULL);
-
-  char b[512], lab[512];
-  g_snprintf (b, sizeof(b), _("Editors"));
-  g_snprintf (lab, sizeof(lab), "\t\t\t<b>%s:</b>\t\t\t", b);
-  GtkWidget * w = gtk_label_new (NULL);
-  gtk_label_set_markup (GTK_LABEL(w), lab);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(d)->vbox), w, false, false, 0);
-  gtk_widget_show (w);
-
-  std::string s;
-  strings_t commands;
-  _profiles.get_editors (commands);
-  foreach_const (strings_t, commands, it)
-    s += *it + "\n";
-
-  GtkWidget * frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_IN);
-
-  GtkTextBuffer * buf = gtk_text_buffer_new (NULL);
-  gtk_text_buffer_set_text (buf, s.c_str(), s.size());
-  w = gtk_text_view_new_with_buffer (buf);
-  gtk_container_add (GTK_CONTAINER(frame), w);
-  gtk_box_pack_start_defaults (GTK_BOX(GTK_DIALOG(d)->vbox), frame);
-  gtk_container_set_border_width (GTK_CONTAINER(frame), PAD_BIG);
-  gtk_widget_show_all (frame);
-
-  gtk_dialog_run (GTK_DIALOG (d));
-
-  GtkTextIter start, end;
-  gtk_text_buffer_get_bounds (buf, &start, &end);
-  char * text = gtk_text_buffer_get_text (buf, &start, &end, false);
-  commands.clear ();
-  StringView token, v (text);
-  while (v.pop_token (token, '\n')) {
-    token.trim ();
-    if (!token.empty())
-      commands.push_back (token.to_string());
-  }
-  g_free (text);
-
-  _profiles.set_editors (commands);
-  add_editor_list ();
-
-  gtk_widget_destroy (d);
 }
 
 void
@@ -927,7 +824,9 @@ PostUI :: spawn_editor ()
   int argc (0);
   char ** argv (0);
   if (ok) {
-    const std::string& editor (_profiles.get_active_editor());
+    std::set<std::string> editors;
+    URL :: get_default_editors (editors);
+    const std::string editor (_prefs.get_string ("editor", *editors.begin()));
     GError * err (0);
     g_shell_parse_argv (editor.c_str(), &argc, &argv, &err);
     if (err != NULL) {
@@ -988,6 +887,8 @@ PostUI :: spawn_editor ()
   ::remove (fname);
   g_free (fname);
   g_strfreev (argv);
+
+  gtk_window_present (GTK_WINDOW(root()));
 }
 
 namespace
@@ -1739,6 +1640,11 @@ PostUI :: body_view_realized_cb (GtkWidget * w, gpointer self_gpointer)
   PostUI * self = static_cast<PostUI*>(self_gpointer);
   self->set_message (self->_message);
   self->_unchanged_body = self->get_body ();
+  self->set_wrap_mode (self->_prefs.get_flag ("compose-wrap-enabled", true));
+
+  if (self->_prefs.get_flag ("always-run-editor", false))
+    self->spawn_editor ();
+
   g_signal_handler_disconnect (self->_body_view, self->body_view_realized_handler);
 }
 

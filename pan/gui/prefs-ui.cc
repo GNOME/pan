@@ -131,6 +131,31 @@ namespace
     }
   }
 
+  void set_prefs_string_from_combo_box_entry (GtkComboBox * c, gpointer user_data)
+  {
+    const char * key = (const char*) g_object_get_data (G_OBJECT(c), PREFS_KEY);
+    char * val = gtk_combo_box_get_active_text (c);
+    static_cast<Prefs*>(user_data)->set_string (key, val);
+    g_free (val);
+  }
+
+  GtkWidget* editor_new (Prefs& prefs)
+  {
+    std::set<std::string> editors;
+    URL :: get_default_editors (editors);
+    const char * key = "editor";
+    const std::string editor = prefs.get_string (key, *editors.begin());
+    editors.insert (editor);
+    GtkWidget * c = gtk_combo_box_entry_new_text ();
+    g_object_set_data_full (G_OBJECT(c), PREFS_KEY, g_strdup(key), g_free);
+    foreach_const (std::set<std::string>, editors, it)
+      gtk_combo_box_append_text (GTK_COMBO_BOX(c), it->c_str());
+    gtk_combo_box_set_active (GTK_COMBO_BOX(c),
+                              (int)std::distance (editors.begin(), editors.find(editor)));
+    g_signal_connect (c, "changed", G_CALLBACK(set_prefs_string_from_combo_box_entry), &prefs);
+    return c;
+  }
+
   void set_prefs_string_from_combobox (GtkComboBox * c, gpointer user_data)
   {
     Prefs * prefs (static_cast<Prefs*>(user_data));
@@ -553,13 +578,15 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Preferred Applications"));
-    HIG :: workarea_add_section_spacer (t, row, 2);
+    HIG :: workarea_add_section_spacer (t, row, 3);
     w = url_handler_new (prefs, "browser-mode", URL::get_environment(),
                                 "custom-browser", "firefox", b);
-    HIG :: workarea_add_row (t, &row, _("_Web Browser:"), w, b);
+    HIG :: workarea_add_row (t, &row, _("_Web Browser:"), w);
     w = url_handler_new (prefs, "mailer-mode", URL::get_environment(),
                                 "custom-mailer", "thunderbird", b);
-    HIG :: workarea_add_row (t, &row, _("_Mail Reader:"), w, b);
+    HIG :: workarea_add_row (t, &row, _("_Mail Reader:"), w);
+    w = editor_new (prefs);
+    HIG :: workarea_add_row (t, &row, _("_Text Editor:"), w);
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("A_pplications")));
 

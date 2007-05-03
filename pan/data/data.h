@@ -123,11 +123,6 @@ namespace pan
       virtual ~Profiles () {}
 
     public:
-      typedef std::vector<std::string> strings_t;
-      virtual void get_editors (strings_t& setme) const = 0;
-      virtual const std::string& get_active_editor () const = 0;
-
-    public:
       virtual std::set<std::string> get_profile_names () const = 0;
       virtual bool has_profiles () const = 0;
       virtual bool has_from_header (const StringView& from) const = 0;
@@ -136,8 +131,6 @@ namespace pan
     public:
       virtual void delete_profile (const std::string& profile_name) = 0;
       virtual void add_profile (const std::string& profile_name, const Profile& profile) = 0;
-      virtual void set_editors (const strings_t&) = 0;
-      virtual void set_active_editor (const StringView&) = 0;
       
     protected:
       Profiles () {}
