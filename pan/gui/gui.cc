@@ -740,7 +740,13 @@ void GUI :: on_progress_finished (Progress & p, int status)
 {
   TaskArticle * ta = dynamic_cast<TaskArticle*>(&p);
   if (status==OK && ta)
+  {
     _body_pane->set_article (ta->get_article());
+
+    // maybe update the tab
+    if (is_action_active ("tabbed-layout"))
+      activate_action ("jump-to-body-tab");
+  }
 }
 
 void GUI :: do_read_selected_article ()
@@ -748,15 +754,10 @@ void GUI :: do_read_selected_article ()
   const Article* article (_header_pane->get_first_selected_article ());
   if (article)
   {
-    Task * t = new TaskArticle (_data, _data, *article, _cache, _data, this);
-    _queue.add_task (t, Queue::TOP);
-
-    // expand its thread in the header pane
     _header_pane->expand_selected ();
 
-    // maybe update the tab
-    if (is_action_active ("tabbed-layout"))
-      activate_action ("jump-to-body-tab");
+    Task * t = new TaskArticle (_data, _data, *article, _cache, _data, this);
+    _queue.add_task (t, Queue::TOP);
   }
 }
 void GUI :: do_download_selected_article ()
