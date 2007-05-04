@@ -1205,8 +1205,8 @@ UUDecodePart (FILE *datain, FILE *dataout, int *state,
 	  count  = UUDecodeLine (line, oline, method);
 	  if (method == YENC_ENCODED) {
 	    if (yepartends)
-	      yepartcrc = crc32(yepartcrc, oline, count);
-	    yefilecrc = crc32(yefilecrc, oline, count);
+	      yepartcrc = crc32(yepartcrc, (unsigned char*)oline, count);
+	    yefilecrc = crc32(yefilecrc, (unsigned char*)oline, count);
 	    yepartsize += count;
 	  }
 	  vlc++; lc[1]++;

@@ -328,7 +328,7 @@ UUBusyPoll (void)
     }
   }
 #else
-  time_t now;
+  time_t now = time (NULL);
   long msecs;
 
   if (uu_BusyCallback) {
@@ -336,7 +336,6 @@ UUBusyPoll (void)
       msecs = 1;
     }
     else {
-      now   = time(NULL);
       msecs = 1000 * (now - uu_last_secs);
     }
 

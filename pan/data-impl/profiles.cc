@@ -73,6 +73,12 @@ namespace
     const std::string element_name (element_name_str);
 
     if (element_name=="profile") {
+      mc.is_active = false;
+      for (const char **k(attribute_names), **v(attribute_vals); *k && !mc.is_active; ++k, ++v)
+        mc.is_active = !strcmp (*k,"active");
+    }
+
+    if (element_name=="profile") {
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
         if (!strcmp(*k,"name"))
           mc.profile_name = *v;

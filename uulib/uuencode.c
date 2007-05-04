@@ -267,12 +267,12 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
 
   if (encoding == PT_ENCODED || encoding == QP_ENCODED) {
     while (!feof (infile) && (linperfile <= 0 || line < linperfile)) {
-      if (_FP_fgets (itemp, 255, infile) == NULL) {
+      if (_FP_fgets ((char*)itemp, 255, infile) == NULL) {
 	break;
       }
 
       itemp[255] = '\0';
-      count = strlen (itemp);
+      count = strlen ((char*)itemp);
 
       llen = 0;
       optr = otemp;
@@ -292,10 +292,10 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
 	 * If there is a line feed, replace by eolstring
 	 */
 	if (count > 0 && itemp[count-1] == '\n') {
+          const size_t n = strlen ((char*) eolstring);
 	  itemp[--count] = '\0';
 	  if (fwrite (itemp, 1, count, outfile) != count ||
-	      fwrite ((char *) eolstring, 1,
-		      strlen(eolstring), outfile) != strlen (eolstring)) {
+	      fwrite ((char *) eolstring, 1, n, outfile) != n) {
 	    return UURET_IOERR;
 	  }
 	}
@@ -341,7 +341,7 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
 
 	    if (fwrite (otemp, 1, llen, outfile) != llen ||
 		fwrite ((char *) eolstring, 1,
-			strlen(eolstring), outfile) != strlen (eolstring)) {
+			strlen((char*)eolstring), outfile) != strlen ((char*)eolstring)) {
 	      return UURET_IOERR;
 	    }
 
@@ -357,7 +357,7 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
 
 	      if (fwrite (otemp, 1, 3, outfile) != 3 ||
 		  fwrite ((char *) eolstring, 1,
-			  strlen(eolstring), outfile) != strlen (eolstring)) {
+			  strlen((char*)eolstring), outfile) != strlen ((char*)eolstring)) {
 		return UURET_IOERR;
 	      }
 	    }
@@ -389,7 +389,7 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
 	    
 	    if (fwrite (otemp, 1, llen, outfile) != llen ||
 		fwrite ((char *) eolstring, 1,
-			strlen(eolstring), outfile) != strlen (eolstring)) {
+			strlen((char*)eolstring), outfile) != strlen ((char*)eolstring)) {
 	      return UURET_IOERR;
 	    }
 	    
@@ -444,7 +444,7 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
 	if (llen > 127) {
 	  if (fwrite (otemp, 1, llen, outfile) != llen ||
 	      fwrite ((char *) eolstring, 1,
-		      strlen(eolstring), outfile) != strlen (eolstring)) {
+		      strlen((char*)eolstring), outfile) != strlen ((char*)eolstring)) {
 	    return UURET_IOERR;
 	  }
 	  llen = 0;
@@ -490,7 +490,7 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
     if (llen) {
       if (fwrite (otemp, 1, llen, outfile) != llen ||
 	  fwrite ((char *) eolstring, 1,
-		  strlen(eolstring), outfile) != strlen (eolstring)) {
+		  strlen((char*)eolstring), outfile) != strlen ((char*)eolstring)) {
 	return UURET_IOERR;
       }
     }
@@ -793,7 +793,7 @@ UUEncodePartial (FILE *outfile, FILE *infile,
 {
   mimemap *miter=mimetable;
   static FILE *theifile;
-  int themode, numparts;
+  int themode, numparts=1;
   struct stat finfo;
   long thesize;
   char *ptr;

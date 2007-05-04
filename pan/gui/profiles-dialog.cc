@@ -222,23 +222,6 @@ ProfileDialog :: ~ProfileDialog ()
 {
 }
 
-namespace
-{
-  void message_dialog_set_text (GtkMessageDialog * dialog,
-                                const char * primary,
-                                const char * secondary)
-  {
-#if GTK_CHECK_VERSION(2,6,0)
-    gtk_message_dialog_set_markup (dialog, primary);
-    gtk_message_dialog_format_secondary_text (dialog, "%s", secondary);
-#else
-    char * pch = g_strdup_printf ("<b>%s</b>\n\n%s", primary, secondary);
-    gtk_message_dialog_set_markup (dialog, pch);
-    g_free (pch);
-#endif
-  }
-}
-
 /*static*/ bool
 ProfileDialog :: run_until_valid_or_cancel (ProfileDialog& pd)
 {
@@ -261,9 +244,9 @@ ProfileDialog :: run_until_valid_or_cancel (ProfileDialog& pd)
         GTK_MESSAGE_ERROR,
         GTK_BUTTONS_CLOSE,
         NULL);
-      message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
-                               _("Invalid email address."),
-                               _("Please use an address of the form joe@somewhere.org"));
+      HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
+                                      _("Invalid email address."),
+                                      _("Please use an address of the form joe@somewhere.org"));
       gtk_dialog_run (GTK_DIALOG(d));
       gtk_widget_destroy (d);
       gtk_widget_grab_focus (pd._address_entry);

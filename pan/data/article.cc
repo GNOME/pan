@@ -141,30 +141,30 @@ Article :: get_part (unsigned int number) const
 void
 Article :: Part :: set_message_id (const Quark& key_mid, const StringView& mid)
 {
-  const StringView key (key_mid.to_view());
-  const size_t minlen (std::min (mid.len, key.len));
+  register size_t b=0, e=0;
+  register const char *k, *m;
+  const StringView& key (key_mid.to_view());
 
-  register const char * kc = key.str;
-  register const char * mc = mid.str;
-  register const char * ke = kc + std::min((size_t)UCHAR_MAX, minlen);
-  while (kc!=ke)
-    if (*kc++ != *mc++) { --kc; break; }
-  const size_t b (kc - key.str);
-
-  kc = &key.back();
-  mc = &mid.back();
-  ke = std::max (key.str + b + 1,
-                 key.str + key.len - UCHAR_MAX);
-  while (kc>ke)
-    if (*kc-- != *mc--) { ++kc; break; }
-  const size_t e (&key.back() - kc);
+  const size_t bmax = std::min (std::min (key.len, mid.len), size_t(UCHAR_MAX));
+  k = &key.front();
+  m = &mid.front();
+  for (; b!=bmax; ++b)
+    if (*k++ != *m++)
+      break;
+  
+  const size_t emax = bmax - b;
+  k = &key.back();
+  m = &mid.back();
+  for (; e!=emax; ++e)
+    if (*k-- != *m--)
+      break;
 
   const size_t n_kept (mid.len - e - b);
-  char *str(g_new(char,n_kept+3)); // +3 for the two lengths and '\0'
+  char *str = g_new (char, n_kept+3); // b + e + '\0'
   str[0] = (char) b;
   str[1] = (char) e;
   memcpy (str+2, mid.str+b, n_kept);
-  str[1+n_kept+1] = '\0';
+  str[n_kept+2] = '\0';
 
   g_free (packed_message_id);
   packed_message_id = str;

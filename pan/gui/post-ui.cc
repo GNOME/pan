@@ -1693,7 +1693,7 @@ PostUI :: create_main_tab ()
   // Mail To
 
   ++row;
-  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Mail To"));
+  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Mail _To"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
   gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);

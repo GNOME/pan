@@ -89,7 +89,7 @@ namespace
 
     d->server = server;
 
-    int port(119), max_conn(4), age(31), rank(1);
+    int port(119), max_conn(4), age(31*3), rank(1);
     std::string addr, user, pass;
     if (!server.empty()) {
       d->data.get_server_addr (server, addr, port);
@@ -261,6 +261,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
       { 14,  N_("After Two Weeks") },
       { 31,  N_("After One Month") },
       { (31*2),  N_("After Two Months") },
+      { (31*3),  N_("After Three Months") },
       { (31*6),  N_("After Six Months") },
       { 0,   N_("Never Expire Old Articles") }
     };
@@ -417,7 +418,6 @@ namespace
       std::string addr;
       d->data.get_server_addr (selected_server, addr, port);
 
-      // you don't /really/ wan to do this, do you?
       GtkWidget * w = gtk_message_dialog_new (GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(button))),
                                               GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
                                               GTK_MESSAGE_QUESTION,

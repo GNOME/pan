@@ -170,7 +170,7 @@ ScanHeaderLine (FILE *datei, char *initial)
 {
   char *ptr=uuscan_shlline;
   char *ptr2, *p1, *p2, *p3;
-  int llength, c;
+  int llength;
   long curpos;
   int hadcr;
 
@@ -202,7 +202,7 @@ ScanHeaderLine (FILE *datei, char *initial)
   }
 
   while (!feof (datei)) {
-    c = fgetc (datei);
+    char c = fgetc (datei);
     if (feof (datei))
       break;
 
@@ -309,6 +309,7 @@ ScanHeaderLine (FILE *datei, char *initial)
 	}
 
 	if (*p3 == '?' && *(p3+1) == '=') {
+          char c = -1;
 	  /*
 	   * Alright, we've found an RFC 1522 header field
 	   */

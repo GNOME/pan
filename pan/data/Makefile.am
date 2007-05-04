@@ -19,6 +19,7 @@ noinst_HEADERS = \
  xref.h 
 
 noinst_PROGRAMS = \
+ article-test \
  xref-test 
 
 #dnl decode-test 
@@ -29,3 +30,5 @@ TESTS = $(noinst_PROGRAMS)
 TEST_LDADD = ./libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a @GMIME_LIBS@ @GLIB_LIBS@ @PCRE_LIBS@
 xref_test_SOURCES = xref-test.cc
 xref_test_LDADD = $(TEST_LDADD)
+article_test_SOURCES = article-test.cc
+article_test_LDADD = $(TEST_LDADD)

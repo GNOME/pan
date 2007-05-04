@@ -605,65 +605,59 @@ DataImpl :: load_headers (const DataIO   & data_io,
 
 namespace
 {
-  typedef Loki::AssocVector < pan::Quark, char > quark_to_symbol_t;
+  const char * lookup_symbols ("abcdefghijklmnopqrstuvwxyz"
+                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                               "1234567890!@#$%^&*()");
 
-  struct QuarkToSymbol {
-    ~QuarkToSymbol () {}
-    QuarkToSymbol (const quark_to_symbol_t& map): _map(map) { }
-    const quark_to_symbol_t _map;
-    const char* operator() (const Quark& quark) const {
+  struct QuarkToSymbol
+  {
+    typedef Loki::AssocVector < pan::Quark, char > quark_to_symbol_t;
+    quark_to_symbol_t _map;
+
+    const char* operator() (const Quark& quark) const
+    {
       static char buf[2];
       quark_to_symbol_t::const_iterator it (_map.find (quark));
       if (it == _map.end())
         return quark.c_str();
+
       buf[0] = it->second;
       buf[1] = '\0';
       return buf;
+    }
+
+    void write (std::ostream& out, const StringView& comment) const
+    {
+      Quark quarks[UCHAR_MAX];
+      foreach_const (quark_to_symbol_t, _map, it)
+        quarks[(int)it->second] = it->first;
+
+      const size_t len (_map.size());
+      out << len;
+      if (!comment.empty())
+        out << "\t # " << comment << '\n';
+      for (size_t i(0); i!=len; ++i) {
+        const char ch (lookup_symbols[i]);
+        out << '\t' << ch << '\t' << quarks[(int)ch] << '\n';
+      }
     }
   };
 
   typedef Loki::AssocVector<Quark,unsigned long> frequency_t;
 
-  const char * lookup_symbols ("abcdefghijklmnopqrstuvwxyz"
-                               "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                               "1234567890!@#$%^&*()");
-
-  QuarkToSymbol build_qts (frequency_t& freq)
+  void build_qts (frequency_t& freq, QuarkToSymbol& setme)
   {
-    quark_to_symbol_t qts_map;
-    for (int i(0), len(strlen(lookup_symbols)); i<len && !freq.empty(); ++i)
-    {
-      // find the most frequently-used entry still in freq
-      unsigned long max (0);
-      Quark q;
-      foreach_const (frequency_t, freq, it) {
-        if (it->second > max) {
-          max = it->second;
-          q = it->first;
-        }
-      }
-      //std::cerr << "[" << q << "] occurred " << max << " times" << std::endl;
-      qts_map[q] = lookup_symbols[i];
-      freq.erase (q);
-    }
+    setme._map.clear ();
+
+    typedef std::multimap<unsigned long,Quark> counts_t;
+    counts_t counts;
+    foreach_const (frequency_t, freq, it)
+      counts.insert (std::pair<unsigned long,Quark>(it->second,it->first));
+
+    counts_t::const_reverse_iterator it=counts.rbegin(), end=counts.rend();
+    for (const char * pch=lookup_symbols; *pch && it!=end; ++pch, ++it)
+      setme._map[it->second] = *pch;
     freq.clear ();
-    return QuarkToSymbol (qts_map);
-  }
-
-  void write_qts (std::ostream* out, const QuarkToSymbol& qts, const StringView& comment)
-  {
-    Quark quarks[UCHAR_MAX];
-    foreach_const (quark_to_symbol_t, qts._map, it)
-      quarks[(int)it->second] = it->first;
-
-    const size_t len (qts._map.size());
-    *out << len;
-    if (!comment.empty())
-      *out << "\t # " << comment << '\n';
-    for (size_t i(0); i!=len; ++i) {
-      const char ch (lookup_symbols[i]);
-      *out << '\t' << ch << '\t' << quarks[(int)ch] << '\n';
-    }
   }
 }
 
@@ -728,15 +722,17 @@ DataImpl :: save_headers (DataIO                       & data_io,
     foreach_const (std::vector<Article*>, articles, ait)
       foreach_const (Xref, (*ait)->xref, xit)
         ++frequency[xit->group];
-    const QuarkToSymbol xref_qts (build_qts (frequency));
-    write_qts (out, xref_qts, "xref shorthand count");
+    QuarkToSymbol xref_qts;
+    build_qts (frequency, xref_qts);
+    xref_qts.write (*out, "xref shorthand count");
 
     // author lookup section
     frequency.clear ();
     foreach_const (std::vector<Article*>, articles, ait)
       ++frequency[(*ait)->author];
-    const QuarkToSymbol author_qts (build_qts (frequency));
-    write_qts (out, author_qts, "author shorthand count");
+    QuarkToSymbol author_qts;
+    build_qts (frequency, author_qts);
+    author_qts.write (*out, "author shorthand count");
 
     // header section
     *out << articles.size() << endl;
