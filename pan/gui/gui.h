@@ -70,6 +70,7 @@ namespace pan
       virtual void on_prefs_color_changed (const StringView& key, const GdkColor& value) { }
 
     public: // PanUI
+      virtual void do_prompt_for_charset ();
       virtual void do_save_articles ();
       virtual void do_print ();
       virtual void do_quit ();
@@ -148,7 +149,6 @@ namespace pan
       virtual void do_refresh_groups ();
       virtual void do_subscribe_selected_groups ();
       virtual void do_unsubscribe_selected_groups ();
-      virtual void do_set_charset (const char *);
 
     public:
       static std::string prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs);
@@ -210,7 +210,9 @@ namespace pan
       std::list<Task*> _active_tasks;
       GtkTooltips * _ttips;
 
-      std::string _fallback_charset;
+      std::string _charset;
+
+      void set_charset (const StringView& v);
 
       void upkeep ();
       guint upkeep_tag;

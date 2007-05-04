@@ -25,7 +25,7 @@ extern "C" {
 #include <pan/general/debug.h>
 #include <pan/general/foreach.h>
 #include <pan/data/data.h>
-#include "charset-picker.h"
+#include "e-charset-picker.h"
 #include "group-prefs-dialog.h"
 #include "hig.h"
 #include "pad.h"
@@ -58,8 +58,9 @@ void
 GroupPrefsDialog :: save_from_gui ()
 {
   // charset...
-  const std::string charset (charset_picker_get_charset (_charset));
-  _group_prefs.set_string (_group, "character-encoding", charset);
+  char * tmp = e_charset_picker_get_charset (_charset);
+  _group_prefs.set_string (_group, "character-encoding", tmp);
+  g_free (tmp);
 
   // posting profile...
   std::string profile;
@@ -143,7 +144,9 @@ GroupPrefsDialog :: GroupPrefsDialog (Data         & data,
   g_snprintf (buf, sizeof(buf), _("Properties for %s"), group.c_str());
   HIG::workarea_add_section_title (t, &row, buf);
     HIG :: workarea_add_section_spacer (t, row, 3);
-    w = _charset = charset_picker_new (_group_prefs.get_string (group, "character-encoding", "UTF-8").c_str());
+    _charset = e_charset_picker_new (_group_prefs.get_string (group, "character-encoding", "UTF-8").c_str());
+    w = gtk_option_menu_new ();
+    gtk_option_menu_set_menu (GTK_OPTION_MENU (w), _charset);
     HIG :: workarea_add_row (t, &row, _("Character _encoding:"), w);
     w = _save_path = file_entry_new (_("Directory for Saving Attachments"));
     char * pch = g_build_filename (g_get_home_dir(), "News", NULL);

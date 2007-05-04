@@ -500,7 +500,6 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
   // add button
   w = gtk_button_new_from_stock (GTK_STOCK_ADD);
   gtk_box_pack_start (GTK_BOX (bbox), w, false, false, 0);
-  gtk_tooltips_set_tip (tips, w, _("Add a New Profile"), NULL);
   gtk_signal_connect (GTK_OBJECT(w), "clicked", GTK_SIGNAL_FUNC(on_add_button), this);
 
   // edit button
@@ -511,13 +510,11 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
 #endif
   _edit_button = w;
   gtk_box_pack_start (GTK_BOX (bbox), w, false, false, 0);
-  gtk_tooltips_set_tip (tips, w, _("Edit the selected profile"), NULL);
   gtk_signal_connect (GTK_OBJECT(w), "clicked", GTK_SIGNAL_FUNC(on_edit_button), this);
 
   // remove button
   _remove_button = w = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
   gtk_box_pack_start (GTK_BOX (bbox), w, false, false, 0);
-  gtk_tooltips_set_tip (tips, w, _("Remove the selected profile"), NULL);
   gtk_signal_connect (GTK_OBJECT(w), "clicked", GTK_SIGNAL_FUNC(on_delete_button), this);
 
   // set sensitive buttons

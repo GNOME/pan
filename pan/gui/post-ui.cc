@@ -39,6 +39,7 @@ extern "C" {
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/data/data.h>
 #include <pan/tasks/task-post.h>
+#include "e-charset-picker.h"
 #include "pad.h"
 #include "hig.h"
 #include "post-ui.h"
@@ -185,6 +186,7 @@ namespace
   void do_send     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->send_now (); }
   void do_save     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->save_draft (); }
   void do_open     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->open_draft (); }
+  void do_charset  (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->prompt_for_charset (); }
   void do_close    (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->close_window (); }
   void do_wrap     (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_wrap_mode (gtk_toggle_action_get_active (w)); }
   void do_edit2    (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_always_run_editor (gtk_toggle_action_get_active (w)); }
@@ -194,10 +196,10 @@ namespace
     { "file-menu", NULL, N_("_File") },
     { "edit-menu", NULL, N_("_Edit") },
     { "profile-menu", NULL, N_("_Profile") },
-    { "charsets-menu", NULL, N_("Set Character Encoding") },
     { "editors-menu", NULL, N_("Set Editor") },
     { "post-toolbar", NULL, "post" },
     { "post-article", GTK_STOCK_EXECUTE, N_("_Send Article"), "<control>Return", N_("Send Article Now"), G_CALLBACK(do_send) },
+    { "set-charset", NULL, N_("Set Character _Encoding..."), NULL, NULL, G_CALLBACK(do_charset) },
     { "save-draft", GTK_STOCK_SAVE, N_("Sa_ve Draft"), "<control>s", N_("Save as a Draft for Future Posting"), G_CALLBACK(do_save) },
     { "open-draft", GTK_STOCK_OPEN, N_("_Open Draft..."), "<control>o", N_("Open an Article Draft"), G_CALLBACK(do_open) },
     { "close", GTK_STOCK_CLOSE, NULL, NULL, NULL, G_CALLBACK(do_close) },
@@ -228,99 +230,22 @@ namespace
     }
     gtk_box_pack_start (GTK_BOX(vbox), widget, false, false, 0);
   }
-
-  bool app_is_toggling_charset_action (false);
-}
-
-void
-PostUI :: charset_selected_cb_static (GtkRadioAction * action, GtkRadioAction * current, gpointer ui_gpointer)
-{
-  if (action == current)
-  {
-    const char * charset = (const char*) g_object_get_data (G_OBJECT(action), "charset");
-    static_cast<PostUI*>(ui_gpointer)->charset_selected_cb (charset);
-  }
-}
-
-void
-PostUI :: charset_selected_cb (const char * charset)
-{
-  // since user has specified a charset manually,
-  // we need to stop implicitly picking one
-  // whenever the newsgroups field changes.
-  if (_group_entry_changed_id && !app_is_toggling_charset_action) {
-    g_signal_handler_disconnect (_groups_entry, _group_entry_changed_id);
-    _group_entry_changed_id = 0;
-    if (_group_entry_changed_idle_tag) {
-      g_source_remove (_group_entry_changed_idle_tag);
-      _group_entry_changed_idle_tag = 0;
-    }
-  }
-
-  // set the charset
-  set_charset (charset);
 }
 
 #define DEFAULT_CHARSET  "UTF-8"
 
 void
-PostUI :: add_charset_list ()
+PostUI :: prompt_for_charset ()
 {
-  const struct CharsetStruct {
-    const char *charset, *name;
-  } charsets[] = {
-    {"ISO-8859-4",   N_("Baltic")},
-    {"ISO-8859-13",  N_("Baltic")},
-    {"windows-1257", N_("Baltic")},
-    {"ISO-8859-2",   N_("Central European")},
-    {"windows-1250", N_("Central European")},
-    {"gb2312",       N_("Chinese Simplified")},
-    {"big5",         N_("Chinese Traditional")},
-    {"ISO-8859-5",   N_("Cyrillic")},
-    {"windows-1251", N_("Cyrillic")},
-    {"KOI8-R",       N_("Cyrillic")},
-    {"KOI8-U",       N_("Cyrillic, Ukrainian")},
-    {"ISO-8859-7",   N_("Greek")},
-    {"ISO-2022-jp",  N_("Japanese")},
-    {"euc-kr",       N_("Korean")},
-    {"ISO-8859-9",   N_("Turkish")},
-    {"ISO-8859-1",   N_("Western")},
-    {"ISO-8859-15",  N_("Western, New")},
-    {"windows-1252", N_("Western")},
-    {"UTF-8",        N_("Unicode, UTF-8")}
-  };
+  if (_charset.empty())
+      _charset = DEFAULT_CHARSET;
 
-  GtkRadioAction * radio_group (0);
-  for (int i(0), count(G_N_ELEMENTS(charsets)); i<count; ++i)
-  {
-    char * label (g_strdup_printf ("%s (%s)", _(charsets[i].name), charsets[i].charset));
-    char * unique_name (g_strdup_printf ("charset-%s", charsets[i].charset));
-    GtkAction * o ((GtkAction*) g_object_new (GTK_TYPE_RADIO_ACTION,
-      "name", unique_name,
-      "label", label,
-      "value", i,
-      "group", radio_group, NULL));
-    g_object_set_data_full (G_OBJECT(o), "charset", g_strdup(charsets[i].charset), g_free);
-    radio_group = GTK_RADIO_ACTION (o);
-    const bool match (!strcmp (DEFAULT_CHARSET, charsets[i].charset));
-    if (match) {
-      const bool old_val (app_is_toggling_charset_action);
-      app_is_toggling_charset_action = true;
-      gtk_toggle_action_set_active (GTK_TOGGLE_ACTION(o), true);
-      app_is_toggling_charset_action = old_val;
-    }
-    g_signal_connect (o, "changed", G_CALLBACK(charset_selected_cb_static), this);
-    gtk_action_group_add_action (_agroup, o);
-    g_object_unref (o);
-
-    const guint id (gtk_ui_manager_new_merge_id (_uim));
-    gtk_ui_manager_add_ui (_uim, id,
-                           "/post/edit-menu/charsets-menu/charset-list",
-                            label, unique_name,
-                            GTK_UI_MANAGER_MENUITEM, false);
-    g_free (unique_name);
-    g_free (label);
-  }
+  char * tmp = e_charset_picker_dialog (_("Character Encoding"),
+                                        _("New Article's Encoding:"),
+                                        _charset.c_str(),
+                                        GTK_WINDOW(root()));
+  set_charset (tmp);
+  free (tmp);
 }
 
 void
@@ -355,24 +280,12 @@ PostUI :: add_actions (GtkWidget * box)
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "wrap")),
                                 _prefs.get_flag ("compose-wrap-enabled", true));
   gtk_ui_manager_insert_action_group (_uim, _agroup, 0);
-
-  add_charset_list ();
 }
 
 void
 PostUI :: set_charset (const StringView& charset)
 {
-  const std::string new_charset (charset);
-
-  if (_charset != new_charset)
-  {
-    _charset = new_charset;
-
-    std::string unique_name ("charset-");
-    unique_name.append (charset.str, charset.len);
-    GtkAction * action = gtk_action_group_get_action (_agroup, unique_name.c_str());
-    gtk_toggle_action_set_active (GTK_TOGGLE_ACTION(action), true);
-  }
+  _charset = charset;
 }
 
 void

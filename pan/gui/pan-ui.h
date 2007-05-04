@@ -30,6 +30,7 @@ namespace pan
   {
     PanUI() {}
     virtual ~PanUI() {}
+    virtual void do_prompt_for_charset () = 0;
     virtual void do_save_articles () = 0;
     virtual void do_print () = 0;
     virtual void do_import_tasks () = 0;
@@ -120,8 +121,6 @@ namespace pan
 #define MATCH_HIGH_SCORING    (1<<4)
 #define MATCH_WATCHED         (1<<5)
     virtual void do_match_on_score_state (int) = 0;
-
-    virtual void do_set_charset (const char *) = 0;
   };
 }
 

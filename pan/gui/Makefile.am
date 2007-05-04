@@ -5,8 +5,8 @@ noinst_LIBRARIES = libpangui.a
 libpangui_a_SOURCES = \
  actions.cc \
  body-pane.cc \
- charset-picker.cc \
  dl-headers-ui.cc \
+ e-charset-picker.c \
  group-pane.cc \
  group-prefs.cc \
  group-prefs-dialog.cc \
@@ -36,9 +36,9 @@ noinst_HEADERS = \
  action-manager.h \
  actions.h \
  body-pane.h \
- charset-picker.h \
  defgroup.h \
  dl-headers-ui.h \
+ e-charset-picker.h \
  group-pane.h \
  group-prefs.h \
  group-prefs-dialog.h \

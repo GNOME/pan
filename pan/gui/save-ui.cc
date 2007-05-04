@@ -200,7 +200,7 @@ namespace
     return create_combo_box (prefs, "save-article-mode", "save-attachments",
                              "save-attachments", _("Save attachments"),
                              "save-text", _("Save text"),
-                             "save-attachments-and-text", _("Save attachments and Text"),
+                             "save-attachments-and-text", _("Save attachments and text"),
                              NULL);
   }
 

@@ -198,13 +198,14 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
   ServerEditDialog * d (new ServerEditDialog (data, queue));
 
   // create the dialog
-  const char * title (server.empty() ? _("Pan: Add a Server") : _("Pan: Edit a Server's Settings"));
+  char * title = g_strdup_printf ("Pan: %s", server.empty() ? _("Add a Server") : _("Edit a Server's Settings"));
   GtkWidget * dialog = gtk_dialog_new_with_buttons (title,
                                                     GTK_WINDOW(window),
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                                     GTK_STOCK_OK, GTK_RESPONSE_OK,
                                                     NULL);
+  g_free (title);
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-edit-server-dialog");
   d->dialog = dialog;
   g_object_set_data_full (G_OBJECT(dialog), "dialog", d, delete_server_edit_dialog);
@@ -492,11 +493,12 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   ServerListDialog * d = new ServerListDialog (data, queue);
 
   // dialog
-  GtkWidget * w = d->dialog = gtk_dialog_new_with_buttons (_("Pan: Servers"),
-                                                           parent,
+  char * title = g_strdup_printf ("Pan: %s", _("Servers"));
+  GtkWidget * w = d->dialog = gtk_dialog_new_with_buttons (title, parent,
                                                            GTK_DIALOG_DESTROY_WITH_PARENT,
                                                            GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
                                                            NULL);
+  g_free (title);
   gtk_window_set_role (GTK_WINDOW(w), "pan-servers-dialog");
   gtk_window_set_policy (GTK_WINDOW(w), TRUE, TRUE, TRUE);
   g_signal_connect (GTK_OBJECT(w), "response", G_CALLBACK(server_list_dialog_response_cb), d);

@@ -36,6 +36,7 @@ extern "C" {
 #include <pan/icons/pan-pixbufs.h>
 #include "actions.h"
 #include "body-pane.h"
+#include "e-charset-picker.h"
 #include "dl-headers-ui.h"
 #include "group-pane.h"
 #include "group-prefs-dialog.h"
@@ -182,17 +183,8 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, _ttips);
 
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
-#if 0
-  GError * gerr (0);
-  gtk_ui_manager_add_ui_from_file (_ui_manager, filename, &gerr);
-  if (gerr)  {
-    Log::add_err (gerr->message);
-    g_clear_error (&gerr);
-  }
-#else
   if (!gtk_ui_manager_add_ui_from_file (_ui_manager, filename, NULL))
     gtk_ui_manager_add_ui_from_string (_ui_manager, fallback_ui_file, -1, NULL);
-#endif
   g_free (filename);
   g_signal_connect (_ui_manager, "add_widget", G_CALLBACK (add_widget), this);
   add_actions (this, _ui_manager, &prefs);
@@ -568,7 +560,7 @@ void GUI :: do_import_tasks ()
 {
   // get a list of files to import
   GtkWidget * dialog = gtk_file_chooser_dialog_new (
-    _("Import NZB File(s)"), get_window(_root),
+    _("Import NZB Files"), get_window(_root),
     GTK_FILE_CHOOSER_ACTION_OPEN,
     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
     GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
@@ -1445,11 +1437,8 @@ void GUI :: do_read_selected_group ()
   gtk_window_set_title (get_window(_root), s.c_str());
 
   // set the charset encoding based upon that group's default
-  if (!group.empty()) {
-    std::string charset (_group_prefs.get_string (group, "character-encoding", "UTF-8"));
-    charset.insert (0, "charset-");
-    toggle_action (charset.c_str(), true);
-  }
+  if (!group.empty())
+    set_charset (_group_prefs.get_string (group, "character-encoding", "UTF-8"));
 
   // update the header pane
   watch_cursor_on ();
@@ -1549,10 +1538,22 @@ void GUI :: do_unsubscribe_selected_groups ()
   foreach (quarks_t, group_names, it)
     _data.set_group_subscribed (*it, false);
 }
-void GUI :: do_set_charset (const char * charset)
+void GUI :: do_prompt_for_charset ()
 {
-  _fallback_charset = charset;
-  _body_pane->set_character_encoding (charset);
+  if (_charset.empty())
+      _charset = "UTF-8";
+
+  char * tmp = e_charset_picker_dialog (_("Character Encoding"),
+                                        _("Body Pane Encoding"),
+                                        _charset.c_str(),
+                                        get_window(root()));
+  set_charset (tmp);
+  free (tmp);
+}
+void GUI :: set_charset (const StringView& s)
+{
+  _charset.assign (s.str, s.len);
+  _body_pane->set_character_encoding (_charset.c_str());
 }
 
 /***

@@ -58,6 +58,7 @@ namespace pan
       void apply_profile ();
       void save_draft ();
       void open_draft ();
+      void prompt_for_charset ();
       void send_now ();
       void close_window ();
       void set_wrap_mode (bool wrap);
@@ -114,7 +115,6 @@ namespace pan
 
     private:
       void add_actions (GtkWidget* box);
-      void add_charset_list ();
       void apply_profile_to_body ();
       void apply_profile_to_headers ();
       enum Mode { DRAFTING, POSTING };
@@ -140,8 +140,6 @@ namespace pan
       unsigned int _group_entry_changed_idle_tag;
       static gboolean group_entry_changed_idle (gpointer);
       static void group_entry_changed_cb (GtkEditable*, gpointer);
-      static void charset_selected_cb_static (GtkRadioAction*, GtkRadioAction*, gpointer);
-      void charset_selected_cb (const char * charset);
 
     public:
       void set_spellcheck_enabled (bool);
