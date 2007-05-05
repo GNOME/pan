@@ -93,8 +93,15 @@ namespace pan
       void refresh_scroll_visible_state ();
       static gboolean show_idle_cb (gpointer p);
       static void show_cb (GtkWidget*, gpointer);
+      static void populate_popup_cb (GtkTextView*, GtkMenu*, gpointer);
+      void populate_popup (GtkTextView*, GtkMenu*);
+      static void copy_url_cb (GtkMenuItem*, gpointer);
+      void copy_url ();
+      static gboolean mouse_button_pressed_cb (GtkWidget*, GdkEventButton*, gpointer);
+      gboolean mouse_button_pressed (GtkWidget*, GdkEventButton*);
 
     private:
+      std::string _hover_url;
       GtkWidget * _expander;
       GtkWidget * _terse;
       GtkWidget * _verbose;

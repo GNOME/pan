@@ -244,9 +244,28 @@ namespace
     gtk_text_view_get_iter_at_location (text_view, setme, x, y);
   }
 
+  std::string get_url_from_iter (GtkWidget * w, GtkTextIter * iter)
+  {
+    std::string ret;
+    GtkTextTag * url_tag (get_named_tag_from_view (w, "url"));
+    if (gtk_text_iter_has_tag (iter, url_tag))
+    {
+      GtkTextIter begin(*iter), end(*iter);
+      if (!gtk_text_iter_begins_tag (&begin, url_tag))
+        gtk_text_iter_backward_to_tag_toggle (&begin, NULL);
+      gtk_text_iter_forward_to_tag_toggle (&end, NULL);
+      char * pch = gtk_text_iter_get_text (&begin, &end);
+      if (pch) {
+        ret = pch;
+        g_free (pch);
+      }
+    }
+    return ret;
+  }
+
   gboolean motion_notify_event (GtkWidget       * w,
                                 GdkEventMotion  * event,
-                                gpointer          unused)
+                                gpointer          hover_url)
   {
     if (event->window != NULL)
     {
@@ -260,28 +279,10 @@ namespace
       GtkTextIter iter;
       get_iter_from_event_coords (w, x, y, &iter);
       set_cursor_from_iter (event->window, w, &iter);
+      *static_cast<std::string*>(hover_url) = get_url_from_iter (w, &iter);
     }
 
     return false;
-  }
-
-  char* get_url_from_location (GtkWidget * w, int x, int y)
-  {
-    char * retval (0);
-
-    GtkTextIter iter;
-    GtkTextTag * url_tag (get_named_tag_from_view (w, "url"));
-    get_iter_from_event_coords (w, x, y, &iter);
-    if (gtk_text_iter_has_tag (&iter, url_tag))
-    {
-      GtkTextIter begin(iter), end(iter);
-      if (!gtk_text_iter_begins_tag (&begin, url_tag))
-        gtk_text_iter_backward_to_tag_toggle (&begin, NULL);
-      gtk_text_iter_forward_to_tag_toggle (&end, NULL);
-      retval = gtk_text_iter_get_text (&begin, &end);
-    }
-
-    return retval;
   }
 
   /* returns a GdkPixbuf of the scaled image.
@@ -353,63 +354,67 @@ namespace
 
     g_object_unref (new_scaled);
   }
+}
 
-  gboolean mouse_button_pressed (GtkWidget       * w,
-                                 GdkEventButton  * event,
-                                 gpointer          prefs)
-  {
-    g_return_val_if_fail (GTK_IS_TEXT_VIEW(w), false);
+gboolean
+BodyPane :: mouse_button_pressed_cb (GtkWidget *w, GdkEventButton *e, gpointer p)
+{
+  return static_cast<BodyPane*>(p)->mouse_button_pressed (w, e);
+}
 
-    if (event->button==1 || event->button==2) {
-      char * url (get_url_from_location (w, (int)event->x, (int)event->y));
-      if (url) {
-        /* this is a crude way of making sure that double-click
-         * doesn't open two or three browser windows. */
-        static time_t last_url_time (0);
-        const time_t this_url_time (time (0));
-        if (this_url_time != last_url_time) {
-          last_url_time = this_url_time;
-          URL :: open (*static_cast<Prefs*>(prefs), url);
-          g_free (url);
-        }
-      } else { // maybe we're zooming in/out on a pic...
-        GtkTextIter iter;
-        GtkTextTag * pix_tag (get_named_tag_from_view (w, "pixbuf"));
-        get_iter_from_event_coords (w, (int)event->x, (int)event->y, &iter);
-        if (gtk_text_iter_has_tag (&iter, pix_tag))
-        {
-          if (!gtk_text_iter_begins_tag (&iter, pix_tag))
-            gtk_text_iter_backward_to_tag_toggle (&iter, pix_tag);
-          g_assert (gtk_text_iter_begins_tag (&iter, pix_tag));
+gboolean
+BodyPane :: mouse_button_pressed (GtkWidget *w, GdkEventButton *event)
+{
+  g_return_val_if_fail (GTK_IS_TEXT_VIEW(w), false);
 
-          // percent_x,percent_y reflect where the user clicked in the picture
-          GdkRectangle rec;
-          gtk_text_view_get_iter_location (GTK_TEXT_VIEW(w), &iter, &rec);
-          int buf_x, buf_y;
-          gtk_text_view_window_to_buffer_coords (GTK_TEXT_VIEW(w), GTK_TEXT_WINDOW_WIDGET,
-                                                 (gint)event->x, (gint)event->y, &buf_x, &buf_y);
-          const double percent_x = (buf_x - rec.x) / (double)rec.width;
-          const double percent_y = (buf_y - rec.y) / (double)rec.height;
+  if (event->button==1 || event->button==2) {
+    const std::string& url (_hover_url);
+    if (!url.empty()) {
+      /* this is a crude way of making sure that double-click
+       * doesn't open two or three browser windows. */
+      static time_t last_url_time (0);
+      const time_t this_url_time (time (0));
+      if (this_url_time != last_url_time) {
+        last_url_time = this_url_time;
+        URL :: open (_prefs, url.c_str());
+      }
+    } else { // maybe we're zooming in/out on a pic...
+      GtkTextIter iter;
+      GtkTextTag * pix_tag (get_named_tag_from_view (w, "pixbuf"));
+      get_iter_from_event_coords (w, (int)event->x, (int)event->y, &iter);
+      if (gtk_text_iter_has_tag (&iter, pix_tag))
+      {
+        if (!gtk_text_iter_begins_tag (&iter, pix_tag))
+          gtk_text_iter_backward_to_tag_toggle (&iter, pix_tag);
+        g_assert (gtk_text_iter_begins_tag (&iter, pix_tag));
 
-           // resize the picture and refresh `iter'
-          const int offset (gtk_text_iter_get_offset (&iter));
-          GtkTextBuffer * buf (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)));
-          const bool fullsize (toggle_fullsize_flag (buf));
-          resize_picture_at_iter (buf, &iter, fullsize, &w->allocation, pix_tag);
-          gtk_text_iter_set_offset (&iter, offset);
-          set_cursor_from_iter (event->window, w, &iter);
+        // percent_x,percent_y reflect where the user clicked in the picture
+        GdkRectangle rec;
+        gtk_text_view_get_iter_location (GTK_TEXT_VIEW(w), &iter, &rec);
+        int buf_x, buf_y;
+        gtk_text_view_window_to_buffer_coords (GTK_TEXT_VIEW(w), GTK_TEXT_WINDOW_WIDGET,
+                                               (gint)event->x, (gint)event->y, &buf_x, &buf_y);
+        const double percent_x = (buf_x - rec.x) / (double)rec.width;
+        const double percent_y = (buf_y - rec.y) / (double)rec.height;
 
-          // x2,y2 are to position percent_x,percent_y in the middle of the window.
-          GtkTextMark * mark = gtk_text_buffer_create_mark (buf, NULL, &iter, true);
-          const double x2 = CLAMP ((percent_x + (percent_x - 0.5)), 0.0, 1.0);
-          const double y2 = CLAMP ((percent_y + (percent_y - 0.5)), 0.0, 1.0);
-          gtk_text_view_scroll_to_mark (GTK_TEXT_VIEW(w), mark, 0.0, true, x2, y2);
-          gtk_text_buffer_delete_mark (buf, mark);
-        }
+         // resize the picture and refresh `iter'
+        const int offset (gtk_text_iter_get_offset (&iter));
+        GtkTextBuffer * buf (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)));
+        const bool fullsize (toggle_fullsize_flag (buf));
+        resize_picture_at_iter (buf, &iter, fullsize, &w->allocation, pix_tag);
+        gtk_text_iter_set_offset (&iter, offset);
+        set_cursor_from_iter (event->window, w, &iter);
+
+        // x2,y2 are to position percent_x,percent_y in the middle of the window.
+        GtkTextMark * mark = gtk_text_buffer_create_mark (buf, NULL, &iter, true);
+        const double x2 = CLAMP ((percent_x + (percent_x - 0.5)), 0.0, 1.0);
+        const double y2 = CLAMP ((percent_y + (percent_y - 0.5)), 0.0, 1.0);
+        gtk_text_view_scroll_to_mark (GTK_TEXT_VIEW(w), mark, 0.0, true, x2, y2);
+        gtk_text_buffer_delete_mark (buf, mark);
       }
     }
-    return false;
   }
+  return false;
 }
 
 /***
@@ -1266,6 +1271,48 @@ BodyPane :: text_size_allocated (GtkWidget     * text,
 ****
 ***/
 
+void
+BodyPane :: copy_url_cb (GtkMenuItem *mi, gpointer pane)
+{
+  static_cast<BodyPane*>(pane)->copy_url ();
+}
+void
+BodyPane :: copy_url ()
+{
+  gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD),
+                          _hover_url.c_str(), _hover_url.size());
+}
+ 
+
+void
+BodyPane :: populate_popup_cb (GtkTextView *v, GtkMenu *m, gpointer pane)
+{
+  static_cast<BodyPane*>(pane)->populate_popup(v, m);
+}
+void
+BodyPane :: populate_popup (GtkTextView *v, GtkMenu *m)
+{
+  // menu separator comes first.
+  GtkWidget * mi = gtk_menu_item_new();
+  gtk_widget_show (mi);
+  gtk_menu_shell_prepend (GTK_MENU_SHELL(m), mi);
+
+  // then, on top of it, the suggestions menu.
+  const bool copy_url_enabled = !_hover_url.empty();
+  GtkWidget * img = gtk_image_new_from_stock (GTK_STOCK_COPY, GTK_ICON_SIZE_MENU);
+  mi = gtk_image_menu_item_new_with_mnemonic (_("Copy _URL"));
+  g_signal_connect (mi, "activate", G_CALLBACK(copy_url_cb), this);
+  gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
+  gtk_widget_set_sensitive (mi, copy_url_enabled);
+  gtk_widget_show_all (mi);
+  gtk_menu_shell_prepend (GTK_MENU_SHELL(m), mi);
+}
+
+
+/***
+****
+***/
+
 BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   _prefs (prefs),
   _data (data),
@@ -1346,10 +1393,11 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   _prefs.add_listener (this);
 
   // listen for user interaction
-  g_signal_connect (_text, "motion_notify_event", G_CALLBACK(motion_notify_event), 0);
-  g_signal_connect (_text, "button_press_event", G_CALLBACK(mouse_button_pressed), &_prefs);
+  g_signal_connect (_text, "motion_notify_event", G_CALLBACK(motion_notify_event), &_hover_url);
+  g_signal_connect (_text, "button_press_event", G_CALLBACK(mouse_button_pressed_cb), this);
   g_signal_connect (_text, "key_press_event", G_CALLBACK(text_key_pressed), _scroll);
   g_signal_connect (_text, "size_allocate", G_CALLBACK(text_size_allocated), this);
+  g_signal_connect (_text, "populate_popup", G_CALLBACK(populate_popup_cb), this);
   g_signal_connect (_root, "show", G_CALLBACK(show_cb), this);
 
   gtk_widget_show_all (_root);
