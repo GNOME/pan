@@ -565,6 +565,17 @@ void GUI :: do_import_tasks ()
     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
     GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
     NULL);
+
+  GtkFileFilter * filter = gtk_file_filter_new ();
+  gtk_file_filter_add_pattern (filter, "*.nzb");
+  gtk_file_filter_set_name (filter, _("NZB Files"));
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER(dialog), filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_filter_set_name (filter, _("All Files"));
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER(dialog), filter);
+
   gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER(dialog), true);
   typedef std::vector<std::string> strings_t;
   strings_t filenames;
