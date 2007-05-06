@@ -50,8 +50,8 @@ namespace pan
       GtkWidget* get_default_focus_widget() { return _tree_view; }
       GtkWidget* create_filter_entry ();
       void set_name_collapse (bool);
-      Quark get_selection () const;
-      quarks_t get_full_selection () const;
+      Quark get_first_selection () const;
+      quarks_v get_full_selection () const;
       void read_next_unread_group ();
       void read_next_group ();
 

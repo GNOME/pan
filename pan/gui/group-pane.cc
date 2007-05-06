@@ -113,23 +113,21 @@ namespace
 }
 
 Quark
-GroupPane :: get_selection () const
+GroupPane :: get_first_selection () const
 {
-   Quark groupname;
+  Quark group;
 
-   GtkTreeIter iter;
-   GtkTreeModel * model;
-   GtkTreeSelection * selection (gtk_tree_view_get_selection (GTK_TREE_VIEW(_tree_view)));
-   if (gtk_tree_selection_get_selected (selection, &model, &iter))
-     groupname = dynamic_cast<MyRow*>(_tree_store->get_row (&iter))->groupname;
+  const quarks_v groups (get_full_selection ());
+  if (!groups.empty())
+    group = groups.front();
 
-   return groupname;
+  return group;
 }
 
-quarks_t
+quarks_v
 GroupPane :: get_full_selection () const
 {
-  quarks_t groups;
+  quarks_v groups;
 
   // get a list of paths
   GtkTreeModel * model (0);
@@ -140,7 +138,7 @@ GroupPane :: get_full_selection () const
     GtkTreePath * path (static_cast<GtkTreePath*>(l->data));
     GtkTreeIter iter;
     if (gtk_tree_model_get_iter (model, &iter, path))
-      groups.insert (dynamic_cast<MyRow*>(_tree_store->get_row (&iter))->groupname);
+      groups.push_back (dynamic_cast<MyRow*>(_tree_store->get_row (&iter))->groupname);
   }
 
   // cleanup
@@ -235,9 +233,13 @@ GroupPane :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpoi
     GtkTreePath * path;
     if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW(treeview),
                                        (gint)event->x, (gint)event->y,
-                                       &path, NULL, NULL, NULL)) {
-      gtk_tree_selection_unselect_all (selection);
-      gtk_tree_selection_select_path (selection, path);
+                                       &path, NULL, NULL, NULL))
+    {
+      if (!gtk_tree_selection_path_is_selected (selection, path))
+      {
+        gtk_tree_selection_unselect_all (selection);
+        gtk_tree_selection_select_path (selection, path);
+      }
       gtk_tree_path_free (path);
     }
     do_popup_menu (treeview, event, userdata);
@@ -248,7 +250,8 @@ GroupPane :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpoi
            && (event->button == 1)
            && (event->send_event == false)
            && (event->window == gtk_tree_view_get_bin_window (GTK_TREE_VIEW(treeview)))
-           && !(event->state & (GDK_SHIFT_MASK|GDK_CONTROL_MASK|GDK_MOD1_MASK)))
+           && !(event->state & (GDK_SHIFT_MASK|GDK_CONTROL_MASK|GDK_MOD1_MASK))
+           && (pane->get_full_selection().size() == 1u))
   {
     GtkTreePath * path;
     GtkTreeViewColumn * col;
@@ -499,48 +502,39 @@ namespace
 void
 GroupPane :: set_filter (const std::string& search_text)
 {
-   GtkTreeView * view = GTK_TREE_VIEW(_tree_view);
+  GtkTreeView * view = GTK_TREE_VIEW(_tree_view);
 
-   // get the current selection
-   typedef std::set<GtkTreeRowReference*> sel_refs_t;
-   sel_refs_t sel_refs;
-   GtkTreeSelection * selection = gtk_tree_view_get_selection(view);
-   GList * tmp = gtk_tree_selection_get_selected_rows (selection, NULL);
-   GtkTreeModel * old_model = gtk_tree_view_get_model (view);
-   for (GList * l=tmp; l!=0; l=l->next) {
-      GtkTreePath * path = static_cast<GtkTreePath*>(l->data);
-      sel_refs.insert (gtk_tree_row_reference_new (old_model, path));
-      gtk_tree_path_free (path);
-   }
-   g_list_free (tmp);
+  // get the current selection
+  const quarks_v selected_groups (get_full_selection ());
 
-   // pmatch will point to a local TextMatch matching on the filter-phrase,
-   // or be a NULL pointer if the filter-phrase is empty
-   TextMatch match;
-   TextMatch * pmatch (0);
-   if (!search_text.empty()) {
-     match.set (search_text, TextMatch::CONTAINS, false);
-     pmatch = &match;
-   }
+  // pmatch will point to a local TextMatch matching on the filter-phrase,
+  // or be a NULL pointer if the filter-phrase is empty
+  TextMatch match;
+  TextMatch * pmatch (0);
+  if (!search_text.empty()) {
+    match.set (search_text, TextMatch::CONTAINS, false);
+    pmatch = &match;
+  }
 
-   // build and use the new store
-   tree_iters_t iters;
-   PanTreeStore * store = build_model (_data, pmatch, iters, _group_rows);
-   _tree_store = store;
-   gtk_tree_view_set_model(view, GTK_TREE_MODEL(store));
-   g_object_unref (G_OBJECT(store));
+  // build and use the new store
+  tree_iters_t iters;
+  PanTreeStore * store = build_model (_data, pmatch, iters, _group_rows);
+  _tree_store = store;
+  gtk_tree_view_set_model(view, GTK_TREE_MODEL(store));
+  g_object_unref (G_OBJECT(store));
 
-   // expand whatever paths need to be expanded
-   expand_iterators (iters, GTK_TREE_MODEL(store), GTK_TREE_VIEW(_tree_view));
+  // expand whatever paths need to be expanded
+  expand_iterators (iters, GTK_TREE_MODEL(store), GTK_TREE_VIEW(_tree_view));
 
-   // restore the selection
-   for (sel_refs_t::iterator it=sel_refs.begin(), end=sel_refs.end(); it!=end; ++it) {
-      GtkTreePath * path = gtk_tree_row_reference_get_path (*it);
-      gtk_tree_selection_select_path  (selection, path);
-      gtk_tree_path_free (path);
-      gtk_tree_row_reference_free (*it);
-   }
-   sel_refs.clear ();
+  // restore the selection
+  GtkTreeSelection * selection (gtk_tree_view_get_selection (view));
+  foreach_const (quarks_v, selected_groups, it) {
+    MyRow * row (find_row (*it));
+    if (row) {
+      GtkTreeIter iter = store->get_iter (row);
+      gtk_tree_selection_select_iter  (selection, &iter);
+    }
+  }
 }
 
 namespace
@@ -697,7 +691,6 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
 {
   GtkTreeView * view (GTK_TREE_VIEW(_tree_view));
   GtkTreeModel * model (gtk_tree_view_get_model (view));
-  GtkTreeSelection * selection (gtk_tree_view_get_selection (view));
 
   // find how many subscribed groups the tree's got
   GtkTreeIter sub_iter;
@@ -710,7 +703,10 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
   // (or -1 if no subscribed groups are selected)
   int start_pos = -1;
   GtkTreeIter sel_iter;
-  if (gtk_tree_selection_get_selected (selection, 0, &sel_iter)) {
+  const Quark group = get_first_selection ();
+  if (!group.empty()) {
+    const MyRow* row = find_row (group);
+    sel_iter = PAN_TREE_STORE(model)->get_iter (row);
     GtkTreePath * path = gtk_tree_model_get_path (model, &sel_iter);
     gint depth = gtk_tree_path_get_depth (path);
     gint* indices = gtk_tree_path_get_indices (path);
@@ -722,7 +718,6 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
   // loop through the `sub' node's children looking for
   // groups that match our criteria.
   int n = start_pos;
-  Quark group;
   for (;;)
   {
     if (++n == n_groups) {
@@ -825,7 +820,7 @@ void
 GroupPane :: on_selection_changed (GtkTreeSelection * sel, gpointer pane_gpointer)
 {
   GroupPane * self (static_cast<GroupPane*>(pane_gpointer));
-  Quark group (self->get_selection());
+  Quark group (self->get_first_selection());
   self->_action_manager.sensitize_action ("show-group-preferences-dialog", is_group(group));
 }
 
@@ -847,9 +842,13 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs)
   g_object_unref (G_OBJECT(_tree_store)); // will die with the view
   gtk_tree_view_set_enable_search (GTK_TREE_VIEW(_tree_view), false);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(_tree_view), false);
+#if GTK_CHECK_VERSION(2,10,0)
+  gtk_tree_view_set_rubber_banding (GTK_TREE_VIEW(_tree_view), true);
+#endif
   expand_iterators (iters, GTK_TREE_MODEL(_tree_store), GTK_TREE_VIEW(_tree_view));
 
   GtkTreeSelection * selection (gtk_tree_view_get_selection (GTK_TREE_VIEW(_tree_view)));
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
   gtk_tree_selection_set_select_function (selection, select_func, 0, 0);
   g_signal_connect (selection, "changed", G_CALLBACK(on_selection_changed), this);
   on_selection_changed (selection, this);

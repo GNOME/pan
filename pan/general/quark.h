@@ -26,6 +26,7 @@
 #include <set>
 #include <string>
 #include <climits>
+#include <vector>
 
 #if defined(HAVE_EXT_HASH_MAP)
 # include <ext/hash_map>
@@ -213,6 +214,8 @@ namespace pan
   std::ostream& operator<< (std::ostream& os, const Quark& s);
 
   typedef std::set<Quark> quarks_t;
+
+  typedef std::vector<Quark> quarks_v;
 
   /**
    * StrictWeakOrdering which sorts Quarks alphabetically.

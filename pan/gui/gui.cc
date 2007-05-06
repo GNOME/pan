@@ -697,9 +697,8 @@ void GUI :: do_show_preferences_dialog ()
 }
 void GUI :: do_show_group_preferences_dialog ()
 {
-  const Quark group (_group_pane->get_selection ());
-  if (!group.empty())
-  {
+  const Quark group (_group_pane->get_first_selection ());
+  if (!group.empty()) {
     GroupPrefsDialog * dialog = new GroupPrefsDialog (_data, group, _group_prefs, get_window(_root));
     gtk_widget_show (dialog->root());
   }
@@ -924,7 +923,7 @@ GUI :: score_add (int mode)
 {
   Quark group (_header_pane->get_group());
   if (group.empty())
-    group = _group_pane->get_selection();
+    group = _group_pane->get_first_selection();
 
   Article a;
   const Article* article (_header_pane->get_first_selected_article ());
@@ -1107,7 +1106,7 @@ GUI :: do_post ()
   // add newsgroup...
   Quark group (_header_pane->get_group ());
   if (group.empty())
-    group = _group_pane->get_selection ();
+    group = _group_pane->get_first_selection ();
   if (!group.empty())
     g_mime_message_add_header (message, "Newsgroups", group.c_str());
 
@@ -1437,7 +1436,7 @@ void GUI :: do_quit ()
 }
 void GUI :: do_read_selected_group ()
 {
-  const Quark group (_group_pane->get_selection ());
+  const Quark group (_group_pane->get_first_selection ());
 
   // update the titlebar
   std::string s (_("Pan"));
@@ -1485,21 +1484,22 @@ void GUI :: do_read_selected_group ()
 }
 void GUI :: do_mark_selected_groups_read ()
 {
-  const quarks_t group_names (_group_pane->get_full_selection ());
-  foreach_const (quarks_t, group_names, it)
+  const quarks_v group_names (_group_pane->get_full_selection ());
+  foreach_const (quarks_v, group_names, it)
     _data.mark_group_read (*it);
 }
 void GUI :: do_clear_selected_groups ()
 {
-  Quark group (_group_pane->get_selection());
-  _data.group_clear_articles (group);
+  const quarks_v groups (_group_pane->get_full_selection ());
+  foreach_const (quarks_v, groups, it)
+    _data.group_clear_articles (*it);
 }
 
 void GUI :: do_xover_selected_groups ()
 {
-  const quarks_t group_names (_group_pane->get_full_selection ());
+  const quarks_v groups (_group_pane->get_full_selection ());
   const bool mark_read (_prefs.get_flag ("mark-group-read-before-xover", false));
-  foreach_const (quarks_t, group_names, it) {
+  foreach_const (quarks_v, groups, it) {
     if (mark_read)
       _data.mark_group_read (*it);
     _queue.add_task (new TaskXOver (_data, *it, TaskXOver::NEW), Queue::TOP);
@@ -1521,7 +1521,8 @@ void GUI :: do_xover_subscribed_groups ()
 
 void GUI :: do_download_headers ()
 {
-  const quarks_t groups (_group_pane->get_full_selection ());
+  const quarks_v groups_v (_group_pane->get_full_selection ());
+  const quarks_t groups (groups_v.begin(), groups_v.end());
   headers_dialog (_data, _prefs, _queue, groups, get_window(_root));
 }
 
@@ -1539,14 +1540,14 @@ void GUI :: do_refresh_groups ()
 
 void GUI :: do_subscribe_selected_groups ()
 {
-  const quarks_t group_names (_group_pane->get_full_selection ());
-  foreach (quarks_t, group_names, it)
+  const quarks_v group_names (_group_pane->get_full_selection ());
+  foreach_const (quarks_v, group_names, it)
     _data.set_group_subscribed (*it, true);
 }
 void GUI :: do_unsubscribe_selected_groups ()
 {
-  const quarks_t group_names (_group_pane->get_full_selection ());
-  foreach (quarks_t, group_names, it)
+  const quarks_v groups (_group_pane->get_full_selection ());
+  foreach_const (quarks_v, groups, it)
     _data.set_group_subscribed (*it, false);
 }
 void GUI :: do_prompt_for_charset ()

@@ -937,9 +937,10 @@ HeaderPane :: on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gp
   else if (self->_prefs.get_flag("single-click-activates-article",true)
            && (event->type == GDK_BUTTON_RELEASE)
            && (event->button == 1)
-           && (event->window == gtk_tree_view_get_bin_window (tv))
            && (event->send_event == false)
-           && !(event->state & (GDK_SHIFT_MASK|GDK_CONTROL_MASK|GDK_MOD1_MASK)))
+           && (event->window == gtk_tree_view_get_bin_window (tv))
+           && !(event->state & (GDK_SHIFT_MASK|GDK_CONTROL_MASK|GDK_MOD1_MASK))
+           && (self->get_full_selection_v().size() == 1u))
   {
     GtkTreePath * path;
     GtkTreeViewColumn * col;
