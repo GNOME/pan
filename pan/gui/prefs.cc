@@ -196,11 +196,13 @@ Prefs :: get_geometry (const StringView& window_name, int& x, int& y, int& w, in
 void
 Prefs :: set_geometry (const StringView& key, int x, int y, int w, int h)
 {
-  Geometry& g (_window_to_geometry[key]);
-  g.x = x;
-  g.y = y;
-  g.w = w;
-  g.h = h;
+  if (x>=0 && y>=0) {
+    Geometry& g (_window_to_geometry[key]);
+    g.x = x;
+    g.y = y;
+    g.w = w;
+    g.h = h;
+  }
 }
 
 void
