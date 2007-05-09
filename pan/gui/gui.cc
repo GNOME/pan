@@ -519,7 +519,7 @@ GUI :: prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs)
                                                GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
                                                NULL);
   gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_ACCEPT);
-  gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER(w), prev_path.c_str());
+  gtk_file_chooser_select_filename (GTK_FILE_CHOOSER(w), prev_path.c_str());
   const int response (gtk_dialog_run (GTK_DIALOG(w)));
   std::string path;
   if (response == GTK_RESPONSE_ACCEPT) {
@@ -567,7 +567,7 @@ void GUI :: do_import_tasks ()
     NULL);
 
   GtkFileFilter * filter = gtk_file_filter_new ();
-  gtk_file_filter_add_pattern (filter, "*.nzb");
+  gtk_file_filter_add_pattern (filter, "*.[Nn][Zz][Bb]");
   gtk_file_filter_set_name (filter, _("NZB Files"));
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER(dialog), filter);
 
