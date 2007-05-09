@@ -185,7 +185,7 @@ Decoder :: do_work()
           // save attachements on a text-only post
         } else {
           const int the_errno (UUGetOption (UUOPT_ERRNO, NULL, NULL, 0));
-          g_snprintf (buf, bufsz,_("Error saving \"%s\":\n%s."),
+          g_snprintf (buf, bufsz,_("Error saving \"%s\": %s."),
                       fname,
                       res==UURET_IOERR ? file::pan_strerror(the_errno) : UUstrerror(res));
           log_errors.push_back(buf); // log error
@@ -226,11 +226,9 @@ Decoder :: uu_log (void* data, char* message, int severity)
   if (severity >= UUMSG_WARNING)
     self->file_errors.push_back (pch ? pch : message);
 
-  if (severity==UUMSG_PANIC || severity==UUMSG_FATAL)
-    self->log_severe.push_back (pch ? pch : message);
-  else if (severity==UUMSG_ERROR)
+  if (severity >= UUMSG_ERROR)
     self->log_errors.push_back (pch ? pch : message);
-  else if (severity==UUMSG_WARNING || severity==UUMSG_NOTE)
+  else
     self->log_infos.push_back (pch ? pch : message);
 
   g_free (pch);
