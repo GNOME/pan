@@ -332,6 +332,9 @@ namespace pan
       Row* get_row (const Quark& message_id);
 
     private:
+      static void on_selection_changed (GtkTreeSelection*, gpointer);
+
+    private:
       void find_next_iterator_from (GtkTreeModel            * model,
                                     GtkTreeIter             * start_pos,
                                     const TreeIterFunctor   & iterate_func,

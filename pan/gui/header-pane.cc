@@ -1522,6 +1522,32 @@ HeaderPane :: create_filter_entry ()
   return entry;
 }
 
+void
+HeaderPane :: on_selection_changed (GtkTreeSelection * sel, gpointer pane_gpointer)
+{
+  HeaderPane * self (static_cast<HeaderPane*>(pane_gpointer));
+  const bool have_article = self->get_first_selected_article() != 0;
+  static const char* actions_that_need_an_article[] = {
+    "download-selected-article",
+    "save-articles",
+    "read-selected-article",
+    "show-selected-article-info",
+    "mark-article-read",
+    "mark-article-unread",
+    "watch-thread",
+    "ignore-thread",
+    "plonk",
+    "view-article-score",
+    "delete-article",
+    "followup-to",
+    "reply-to",
+    "supersede-article",
+    "cancel-article"
+  };
+  for (int i=0, n=G_N_ELEMENTS(actions_that_need_an_article); i<n; ++i)
+    self->_action_manager.sensitize_action (actions_that_need_an_article[i], have_article);
+}
+
 Data::ShowType _show_type;
 
 HeaderPane :: HeaderPane (ActionManager       & action_manager,
@@ -1557,14 +1583,18 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   // build the view...
   GtkWidget * w = _tree_view = gtk_tree_view_new ();
   gtk_tree_view_set_enable_search (GTK_TREE_VIEW(w), false);
-  GtkTreeSelection * sel = gtk_tree_view_get_selection (GTK_TREE_VIEW(w));
-  gtk_tree_selection_set_mode (sel, GTK_SELECTION_MULTIPLE);
 #if GTK_CHECK_VERSION(2,8,0)
   gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW(w), true);
 #endif
 #if GTK_CHECK_VERSION(2,10,0)
   gtk_tree_view_set_rubber_banding (GTK_TREE_VIEW(w), true);
 #endif
+
+  GtkTreeSelection * sel = gtk_tree_view_get_selection (GTK_TREE_VIEW(w));
+  gtk_tree_selection_set_mode (sel, GTK_SELECTION_MULTIPLE);
+  g_signal_connect (sel, "changed", G_CALLBACK(on_selection_changed), this);
+  on_selection_changed (sel, this);
+
 
   g_signal_connect (w, "button-release-event", G_CALLBACK(on_button_pressed), this);
   g_signal_connect (w, "button-press-event", G_CALLBACK(on_button_pressed), this);

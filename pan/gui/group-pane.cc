@@ -821,7 +821,15 @@ GroupPane :: on_selection_changed (GtkTreeSelection * sel, gpointer pane_gpointe
 {
   GroupPane * self (static_cast<GroupPane*>(pane_gpointer));
   Quark group (self->get_first_selection());
-  self->_action_manager.sensitize_action ("show-group-preferences-dialog", is_group(group));
+  const bool have_group = is_group (group);
+  static const char* actions_that_require_a_group[] = {
+    "show-group-preferences-dialog",
+    "subscribe", "unsubscribe",
+    "read-selected-group", "mark-groups-read", "delete-groups-articles",
+    "get-new-headers-in-selected-groups", "download-headers"
+  };
+  for (int i=0, n=G_N_ELEMENTS(actions_that_require_a_group); i<n; ++i)
+    self->_action_manager.sensitize_action (actions_that_require_a_group[i], have_group);
 }
 
 GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs):
@@ -842,6 +850,9 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs)
   g_object_unref (G_OBJECT(_tree_store)); // will die with the view
   gtk_tree_view_set_enable_search (GTK_TREE_VIEW(_tree_view), false);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(_tree_view), false);
+#if GTK_CHECK_VERSION(2,8,0)
+  gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW(_tree_view), true);
+#endif
 #if GTK_CHECK_VERSION(2,10,0)
   gtk_tree_view_set_rubber_banding (GTK_TREE_VIEW(_tree_view), true);
 #endif
@@ -853,9 +864,6 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs)
   g_signal_connect (selection, "changed", G_CALLBACK(on_selection_changed), this);
   on_selection_changed (selection, this);
 
-#if GTK_CHECK_VERSION(2,8,0)
-  gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW(_tree_view), true);
-#endif
 
   g_signal_connect (_tree_view, "row_collapsed", G_CALLBACK(row_collapsed_or_expanded_cb), 0);
   g_signal_connect (_tree_view, "row_expanded", G_CALLBACK(row_collapsed_or_expanded_cb), 0);
