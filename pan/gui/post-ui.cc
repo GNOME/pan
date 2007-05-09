@@ -1551,9 +1551,9 @@ void
 PostUI :: body_view_realized_cb (GtkWidget * w, gpointer self_gpointer)
 {
   PostUI * self = static_cast<PostUI*>(self_gpointer);
+  self->set_wrap_mode (self->_prefs.get_flag ("compose-wrap-enabled", true));
   self->set_message (self->_message);
   self->_unchanged_body = self->get_body ();
-  self->set_wrap_mode (self->_prefs.get_flag ("compose-wrap-enabled", true));
 
   if (self->_prefs.get_flag ("always-run-editor", false))
     self->spawn_editor ();
