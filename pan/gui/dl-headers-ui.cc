@@ -105,11 +105,13 @@ pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
   {
     std::string title (_("Pan"));
     title += ": ";
-    foreach_const (quarks_t, groups, it) {
-      title +=  it->c_str();
-      title += ", ";
+    if (groups.size() == 1)
+      title += groups.begin()->c_str();
+    else {
+      char buf[64];
+      g_snprintf (buf, sizeof(buf), _("%d Groups"), (int)groups.size());
+      title += buf;
     }
-    title.resize (title.size()-2); // remove trailing ", "
     
     State * state = new State (data, prefs, queue);
     state->groups = groups;
