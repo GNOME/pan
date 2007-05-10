@@ -109,55 +109,6 @@ namespace
     gint loc_idx = get_closest_locale ();
     return loc_idx != -1 ? locales[loc_idx].charset : PAN_DEFAULT_CHARSET;
   }
-
-  char*
-  g_mime_charset_strndup (const char     * to_charset,
-                          const char     * from_charset,
-                          const char     * text,
-                          int              text_len)
-  {
-    char * retval (0);
-    GMimeFilter * charset_filter (g_mime_filter_charset_new (from_charset, to_charset));
-
-    if (charset_filter)
-    {
-      GMimeStream * in_stream;
-      GMimeStream * in_stream_filter;
-      GMimeStream * out_stream;
-      GByteArray * byte_array;
-
-      // set up an input stream with the desired charset filter
-      in_stream = g_mime_stream_mem_new_with_buffer (text, text_len);
-      in_stream_filter = g_mime_stream_filter_new_with_stream (in_stream);
-      g_mime_stream_filter_add (GMIME_STREAM_FILTER(in_stream_filter), charset_filter);
-
-      // set up an output stream attached to a byte array
-      byte_array = g_byte_array_new ();
-      out_stream = g_mime_stream_mem_new ();
-      g_mime_stream_mem_set_byte_array (GMIME_STREAM_MEM(out_stream), byte_array);
-
-      // write the input stream to the output stream
-      gssize out_len = g_mime_stream_write_to_stream (in_stream_filter, out_stream);
-
-      // if the write was successful, zero-terminate the string and return it.
-      if (out_len < 0) {
-        retval = NULL;
-        g_byte_array_free (byte_array, TRUE);
-      } else {
-        g_byte_array_append (byte_array, (guint8*)"", 1);
-        retval = (gchar*) byte_array->data;
-        g_byte_array_free (byte_array, FALSE);
-      }
-
-      // cleanup
-      g_object_unref (G_OBJECT(out_stream));
-      g_object_unref (G_OBJECT(in_stream_filter));
-      g_object_unref (G_OBJECT(charset_filter));
-      g_object_unref (G_OBJECT(in_stream));
-    }
-
-    return retval;
-  }
 }
 
 std::string
@@ -232,18 +183,16 @@ pan :: content_to_utf8 (const StringView  & content,
     if (ret.empty())
     {
       // build a list of charsets to try
-      typedef std::vector<std::string> strings_t;
-      strings_t encodings;
-      if (!c1.empty()) encodings.push_back (c1.str);
-      if (!c2.empty()) encodings.push_back (c2.str);
-      static const char* FALLBACK_ENCODINGS[] = { "CURRENT", "ISO-8859-15" };
-      encodings.insert (encodings.end(),
-                        FALLBACK_ENCODINGS,
-                        FALLBACK_ENCODINGS + G_N_ELEMENTS(FALLBACK_ENCODINGS));
+      size_t n = 0;
+      const char* encodings[4];
+      if (!c1.empty()) encodings[n++] = c1.str;
+      if (!c2.empty()) encodings[n++] = c2.str;
+      encodings[n++] = "CURRENT"; // try these when the user-supplied fallbacks fail...
+      encodings[n++] = "ISO-8859-15";
 
       // try each charset in turn
-      foreach_const (strings_t, encodings, it) {
-        char * tmp = g_mime_charset_strndup ("UTF-8", it->c_str(), content.str, content.len);
+      for (size_t i=0; i!=n; ++i) {
+        char * tmp = g_convert (content.str, content.len, "UTF-8", encodings[i], 0, 0, 0);
         if (tmp) {
           ret = tmp;
           g_free (tmp);

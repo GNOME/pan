@@ -93,37 +93,23 @@ StringView :: strstr (const char * haystack,
   if (!haystack)
     return NULL;
 
-   //pan_return_val_if_fail (haystack != NULL, NULL);
-   //pan_return_val_if_fail (needle != NULL, NULL);
-   assert (needle != NULL);
+  assert (needle != NULL);
                             
-   const char *p (haystack);
-   const char *end;
+  if (needle_len == 0)
+    return (char*) haystack;
                             
-   if (needle_len == 0)
-      return (char*) haystack;
-                            
-   if (haystack_len < needle_len)
-      return NULL;
-                            
-   end = haystack + haystack_len - needle_len;
-                            
-   while (*p && p <= end)
-   {
-      size_t  i;
-      for (i=0; i<needle_len; ++i)
-         if (p[i] != needle[i])
-            goto next;
-                               
-                               
-      return (char *)p;
-                               
-                               
-   next:
-      ++p;
-   }
-                         
-   return NULL;
+  if (haystack_len < needle_len)
+    return NULL;
+
+  const char * s = haystack;
+  const char * end = s + haystack_len;
+  while ((s = strchr (s, end-s, *needle))) {
+    if (((end-s) >= (int)needle_len) && !memcmp(s,needle,needle_len))
+      return (char*) s;
+    ++s;
+  }
+
+  return 0;
 }
 
 
