@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan2.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-06 03:16+0100\n"
-"PO-Revision-Date: 2007-05-06 19:35+0200\n"
+"POT-Creation-Date: 2007-05-09 20:06+0100\n"
+"PO-Revision-Date: 2007-05-10 14:55+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -223,16 +223,16 @@ msgid "_Read Group"
 msgstr "_Leer grupo"
 
 #: ../pan/gui/actions.cc:271
-msgid "_Mark Group _Read"
-msgstr "_Marcar el grupo como leído"
+msgid "_Mark Selected Groups _Read"
+msgstr "_Marcar los grupos seleccionados como leído"
 
 #: ../pan/gui/actions.cc:272
-msgid "_Delete Group's Articles"
-msgstr "_Borrar los artículos del grupo"
+msgid "_Delete Selected Groups' Articles"
+msgstr "_Borrar los artículos de los grupos seleccionados"
 
 #: ../pan/gui/actions.cc:273
-msgid "Get New _Headers in Selected Group"
-msgstr "Obtener _cabeceras nuevas en el grupo seleccionado"
+msgid "Get New _Headers in Selected Groups"
+msgstr "Obtener _cabeceras nuevas en los grupos seleccionados"
 
 #: ../pan/gui/actions.cc:274
 msgid "Get New _Headers in Subscribed Groups"
@@ -307,8 +307,8 @@ msgid "Edit _Preferences"
 msgstr "Editar prefere_ncias…"
 
 #: ../pan/gui/actions.cc:295
-msgid "Edit _Group Preferences"
-msgstr "Editar preferencias de _grupo"
+msgid "Edit Selected _Group's Preferences"
+msgstr "Editar preferencias de los _grupos seleccionados"
 
 #: ../pan/gui/actions.cc:296 ../pan/gui/post-ui.cc:211
 msgid "Edit P_osting Profiles"
@@ -604,18 +604,18 @@ msgstr "Adjunto no mostrado: tipo MIME %s/%s; nombre de archivo %s\n"
 msgid "Attachment not shown: MIME type %s/%s\n"
 msgstr "Adjunto no mostrado: tipo MIME %s/%s\n"
 
-#: ../pan/gui/body-pane.cc:1010 ../pan/gui/gui.cc:1422
-#: ../pan/gui/header-pane.cc:1016 ../pan/gui/header-pane.cc:1358
+#: ../pan/gui/body-pane.cc:1010 ../pan/gui/gui.cc:1421
+#: ../pan/gui/header-pane.cc:1017 ../pan/gui/header-pane.cc:1359
 #: ../pan/gui/prefs-ui.cc:348 ../pan/gui/score-add-ui.cc:141
 msgid "Subject"
 msgstr "Asunto"
 
-#: ../pan/gui/body-pane.cc:1012 ../pan/gui/gui.cc:1422
+#: ../pan/gui/body-pane.cc:1012 ../pan/gui/gui.cc:1421
 msgid "From"
 msgstr "De"
 
-#: ../pan/gui/body-pane.cc:1014 ../pan/gui/gui.cc:1423
-#: ../pan/gui/header-pane.cc:1435 ../pan/gui/log-ui.cc:208
+#: ../pan/gui/body-pane.cc:1014 ../pan/gui/gui.cc:1422
+#: ../pan/gui/header-pane.cc:1436 ../pan/gui/log-ui.cc:208
 #: ../pan/gui/prefs-ui.cc:344
 msgid "Date"
 msgstr "Fecha"
@@ -645,25 +645,30 @@ msgid "Copy _URL"
 msgstr "Copiar _URL"
 
 #. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:778
-#: ../pan/gui/gui.cc:1166 ../pan/gui/gui.cc:1443
+#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:777
+#: ../pan/gui/gui.cc:1165 ../pan/gui/gui.cc:1442
 #: ../pan/gui/score-add-ui.cc:604
 msgid "Pan"
 msgstr "Pan"
 
-#: ../pan/gui/dl-headers-ui.cc:133
+#: ../pan/gui/dl-headers-ui.cc:112
+#, c-format
+msgid "%d Groups"
+msgstr "%d grupos"
+
+#: ../pan/gui/dl-headers-ui.cc:135
 msgid "Get the last N _days' headers: "
 msgstr "Descargar cabeceras _recientes:"
 
-#: ../pan/gui/dl-headers-ui.cc:141
+#: ../pan/gui/dl-headers-ui.cc:143
 msgid "Get _new headers"
 msgstr "Obtener _cabeceras nuevas"
 
-#: ../pan/gui/dl-headers-ui.cc:145
+#: ../pan/gui/dl-headers-ui.cc:147
 msgid "Get _all headers"
 msgstr "Descargar t_odas las cabeceras"
 
-#: ../pan/gui/dl-headers-ui.cc:149
+#: ../pan/gui/dl-headers-ui.cc:151
 msgid "Get the _latest N headers: "
 msgstr "Descargar cabeceras _recientes:"
 
@@ -741,7 +746,7 @@ msgstr "Ucraniano"
 msgid "Visual"
 msgstr "Visual"
 
-#: ../pan/gui/e-charset-picker.c:214 ../pan/gui/gui.cc:1557
+#: ../pan/gui/e-charset-picker.c:214 ../pan/gui/gui.cc:1558
 #: ../pan/gui/post-ui.cc:243
 msgid "Character Encoding"
 msgstr "Codificación de caracteres"
@@ -754,19 +759,19 @@ msgstr "Introduzca el juego de caracteres a usar"
 msgid "Other..."
 msgstr "Otro…"
 
-#: ../pan/gui/group-pane.cc:577
+#: ../pan/gui/group-pane.cc:571
 msgid "Group Name"
 msgstr "Nombre del grupo"
 
-#: ../pan/gui/group-pane.cc:840
+#: ../pan/gui/group-pane.cc:843
 msgid "Subscribed Groups"
 msgstr "Grupos suscritos"
 
-#: ../pan/gui/group-pane.cc:841
+#: ../pan/gui/group-pane.cc:844
 msgid "Other Groups"
 msgstr "Otros grupos"
 
-#: ../pan/gui/group-pane.cc:881 ../pan/gui/score-view-ui.cc:160
+#: ../pan/gui/group-pane.cc:888 ../pan/gui/score-view-ui.cc:160
 msgid "Name"
 msgstr "Nombre"
 
@@ -823,117 +828,117 @@ msgstr "Archivos NZB"
 msgid "All Files"
 msgstr "Todos los archivos"
 
-#: ../pan/gui/gui.cc:955
+#: ../pan/gui/gui.cc:954
 msgid "Unable to supersede article."
 msgstr "No es posible sustituir el artículo."
 
-#: ../pan/gui/gui.cc:956 ../pan/gui/gui.cc:1027
+#: ../pan/gui/gui.cc:955 ../pan/gui/gui.cc:1026
 msgid "The article doesn't match any of your posting profiles."
 msgstr "El artículo no coincide con ninguno de sus perfiles de publicación."
 
-#: ../pan/gui/gui.cc:1000
+#: ../pan/gui/gui.cc:999
 msgid "Revise and send this article to replace the old one."
 msgstr "Revise y envíe este artículo para reemplazar el antiguo."
 
-#: ../pan/gui/gui.cc:1001 ../pan/gui/gui.cc:1064
+#: ../pan/gui/gui.cc:1000 ../pan/gui/gui.cc:1063
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr "Tenga paciencia. Llevará tiempo efectuar sus cambios."
 
-#: ../pan/gui/gui.cc:1026
+#: ../pan/gui/gui.cc:1025
 msgid "Unable to cancel article."
 msgstr "No se puede cancelar el artículo."
 
-#: ../pan/gui/gui.cc:1063
+#: ../pan/gui/gui.cc:1062
 msgid "Send this article to ask your server to cancel your other one."
 msgstr "Envíe este artículo para pedirle a su servidor que cancele el otro."
 
-#: ../pan/gui/gui.cc:1169 ../pan/gui/gui.cc:1189
+#: ../pan/gui/gui.cc:1168 ../pan/gui/gui.cc:1188
 msgid "Copyright © 2002-2007 Charles Kerr"
 msgstr "Copyright © 2002-2007 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1174
+#: ../pan/gui/gui.cc:1173
 msgid "translator-credits"
 msgstr ""
 "Jorge González <jorgegonz@svn.gnome.org>, 2007.\n"
 "Francisco Javier F. Serrador <serrador@openshine.com>"
 
-#: ../pan/gui/gui.cc:1305
+#: ../pan/gui/gui.cc:1304
 msgid "_1. Group Pane"
 msgstr "_1. Panel de grupo"
 
-#: ../pan/gui/gui.cc:1306
+#: ../pan/gui/gui.cc:1305
 msgid "_2. Header Pane"
 msgstr "_2. Panel de la cabecera"
 
-#: ../pan/gui/gui.cc:1307
+#: ../pan/gui/gui.cc:1306
 msgid "_3. Body Pane"
 msgstr "_3. Panel del cuerpo"
 
-#: ../pan/gui/gui.cc:1405
+#: ../pan/gui/gui.cc:1404
 #, c-format
 msgid "This article has all %d parts."
 msgstr "Este artículo tiene %d partes."
 
-#: ../pan/gui/gui.cc:1407
+#: ../pan/gui/gui.cc:1406
 #, c-format
 msgid "This article is missing %d of its %d parts:"
 msgstr "A este artículo le faltan %d de sus %d partes:"
 
-#: ../pan/gui/gui.cc:1423 ../pan/gui/header-pane.cc:1018
+#: ../pan/gui/gui.cc:1422 ../pan/gui/header-pane.cc:1019
 msgid "Message-ID"
 msgstr "ID del mensaje"
 
-#: ../pan/gui/gui.cc:1424 ../pan/gui/header-pane.cc:1405
+#: ../pan/gui/gui.cc:1423 ../pan/gui/header-pane.cc:1406
 #: ../pan/gui/prefs-ui.cc:345
 msgid "Lines"
 msgstr "Líneas"
 
-#: ../pan/gui/gui.cc:1424 ../pan/gui/header-pane.cc:1420
+#: ../pan/gui/gui.cc:1423 ../pan/gui/header-pane.cc:1421
 #: ../pan/gui/prefs-ui.cc:343
 msgid "Bytes"
 msgstr "Bytes"
 
-#: ../pan/gui/gui.cc:1558
+#: ../pan/gui/gui.cc:1559
 msgid "Body Pane Encoding"
 msgstr "Codificación del panel del cuerpo"
 
-#: ../pan/gui/gui.cc:1587 ../pan/gui/task-pane.cc:372
+#: ../pan/gui/gui.cc:1588 ../pan/gui/task-pane.cc:372
 msgid "Offline"
 msgstr "Desconectado"
 
-#: ../pan/gui/gui.cc:1590
+#: ../pan/gui/gui.cc:1591
 #, c-format
 msgid "Closing %d connections"
 msgstr "Cerrando %d conexiones"
 
-#: ../pan/gui/gui.cc:1592 ../pan/gui/gui.cc:1622
+#: ../pan/gui/gui.cc:1593 ../pan/gui/gui.cc:1623
 msgid "No Connections"
 msgstr "Sin conexiones"
 
-#: ../pan/gui/gui.cc:1596
+#: ../pan/gui/gui.cc:1597
 msgid "Connecting"
 msgstr "Conectando"
 
-#: ../pan/gui/gui.cc:1609
+#: ../pan/gui/gui.cc:1610
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d inactivos, %d activos @ %.1f KiBps"
 
 #. build the format strings
-#: ../pan/gui/gui.cc:1664
+#: ../pan/gui/gui.cc:1665
 #, c-format
 msgid "%u Tasks Running, %u Tasks Total"
 msgstr "%u tareas ejecutándose, %u tareas en total"
 
-#: ../pan/gui/gui.cc:1666
+#: ../pan/gui/gui.cc:1667
 msgid "No Tasks"
 msgstr "No hay tareas"
 
-#: ../pan/gui/gui.cc:1668 ../pan/gui/prefs-ui.cc:480
+#: ../pan/gui/gui.cc:1669 ../pan/gui/prefs-ui.cc:480
 msgid "Tasks"
 msgstr "Tareas"
 
-#: ../pan/gui/gui.cc:1719
+#: ../pan/gui/gui.cc:1720
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -941,16 +946,16 @@ msgstr ""
 "Pan está ahora desconectado. Vea «Archivo|Visor de sucesos» y corrija el "
 "problema, después use «Archivo|Trabajar conectado» para continuar"
 
-#: ../pan/gui/header-pane.cc:1015
+#: ../pan/gui/header-pane.cc:1016
 msgid "Subject or Author"
 msgstr "Asunto o autor"
 
-#: ../pan/gui/header-pane.cc:1017 ../pan/gui/header-pane.cc:1390
+#: ../pan/gui/header-pane.cc:1018 ../pan/gui/header-pane.cc:1391
 #: ../pan/gui/prefs-ui.cc:342 ../pan/gui/score-add-ui.cc:142
 msgid "Author"
 msgstr "Autor"
 
-#: ../pan/gui/header-pane.cc:1375 ../pan/gui/prefs-ui.cc:346
+#: ../pan/gui/header-pane.cc:1376 ../pan/gui/prefs-ui.cc:346
 msgid "Score"
 msgstr "Puntuación"
 
@@ -1411,7 +1416,7 @@ msgstr "Perfiles de publicación"
 msgid "Profiles"
 msgstr "Perfiles"
 
-#: ../pan/gui/prefs.cc:320
+#: ../pan/gui/prefs.cc:322
 #, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "No se ha podido analizar el color %s «%s»"
@@ -2098,14 +2103,10 @@ msgstr "«%s» guardado"
 
 #: ../pan/tasks/decoder.cc:188
 #, c-format
-msgid ""
-"Error saving \"%s\":\n"
-"%s."
-msgstr ""
-"Ocurrió un error al guardar «%s»:\n"
-"%s"
+msgid "Error saving \"%s\": %s."
+msgstr "Error al guardar «%s»: %s."
 
-#: ../pan/tasks/decoder.cc:305 ../pan/tasks/task-article.cc:318
+#: ../pan/tasks/decoder.cc:303 ../pan/tasks/task-article.cc:318
 #, c-format
 msgid "Decoding %s"
 msgstr "Decodificando %s"
