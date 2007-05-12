@@ -103,6 +103,7 @@ namespace pan
 
          bool operator== (const StringView& p) const { return !strcmp(p); }
          bool operator!= (const StringView& p) const { return !(*this == p); }
+         bool operator<  (const StringView& p) const { return strcmp(p)<0; }
 
          bool operator== (const char *s) const { return !strcmp(str,len,s,strlen(s)); }
          bool operator!= (const char *s) const { return  strcmp(str,len,s,strlen(s)); }
