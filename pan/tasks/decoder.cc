@@ -228,7 +228,7 @@ Decoder :: uu_log (void* data, char* message, int severity)
 
   if (severity >= UUMSG_ERROR)
     self->log_errors.push_back (pch ? pch : message);
-  else
+  else if (severity >= UUMSG_NOTE)
     self->log_infos.push_back (pch ? pch : message);
 
   g_free (pch);
