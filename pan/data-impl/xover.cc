@@ -195,7 +195,7 @@ DataImpl :: xover_flush (const Quark& group)
   workarea._added_batch.clear();
   on_articles_changed (group, workarea._changed_batch, true);
   workarea._changed_batch.clear();
-  workarea._batch_parts_size = 0;
+  workarea._last_flush_time = time(0);
 }
 
 void
@@ -314,8 +314,6 @@ DataImpl :: xover_add (const Quark         & server,
     load_part (group, art_mid, number, line_count, part);
   }
 
-  ++workarea._batch_parts_size;
-
   if (!workarea._added_batch.count(art_mid))
     workarea._changed_batch.insert(art_mid);
 
@@ -323,8 +321,7 @@ DataImpl :: xover_add (const Quark         & server,
   ***  Maybe flush the batched changes
   **/
 
-  //if (workarea._batch_parts_size >= 100) // torture test
-  if (workarea._batch_parts_size >= 2000)
+  if ((time(0) - workarea._last_flush_time) >= 10)
     xover_flush (group);
 
   return new_article;

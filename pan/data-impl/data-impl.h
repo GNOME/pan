@@ -515,7 +515,7 @@ namespace pan
        */
       struct XOverEntry
       {
-        int _batch_parts_size;
+        time_t _last_flush_time;
 
         /** These are the articles which have been recently added.
             The patch is periodically flushed to on_articles_added()
@@ -539,7 +539,7 @@ namespace pan
             be assigned to the same XOVER task. */
         int refcount;
 
-        XOverEntry(): _batch_parts_size(0), refcount(0) { }
+        XOverEntry(): _last_flush_time(0), refcount(0) { }
       };
 
       typedef Loki::AssocVector<Quark,XOverEntry> xovers_t;
