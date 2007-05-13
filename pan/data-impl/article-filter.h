@@ -48,7 +48,7 @@ namespace pan
       const Quark message_Id;
       const Quark message_ID;
 
-      const StringView& get_header (const Article& a, const Quark& header_name) const;
+      const StringView get_header (const Article& a, const Quark& header_name) const;
 
     public:
 

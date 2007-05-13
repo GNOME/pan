@@ -26,12 +26,12 @@
 
 using namespace pan;
 
-#if defined(HAVE_EXT_HASH_MAP)
+#if defined(HAVE_EXT_HASH_SET)
 // preallocate buckets.
 // this might not be portable?
-Quark::key_to_impl_t Quark::_lookup (300000);
+Quark::lookup_t Quark::_lookup (300000);
 #else
-Quark::key_to_impl_t Quark::_lookup;
+Quark::lookup_t Quark::_lookup;
 #endif
 
 /***
@@ -43,8 +43,8 @@ Quark :: dump (std::ostream& o)
 {
   if (size()) {
     o << "Existing Quarks: " << size() << ':' << std::endl;
-    for (key_to_impl_t::const_iterator it(_lookup.begin()), e(_lookup.end()); it!=e; ++it)
-        o << "  [" << it->first << "] (refcount " << it->second.refcount << ')' << std::endl;
+    for (lookup_t::const_iterator it(_lookup.begin()), e(_lookup.end()); it!=e; ++it)
+        o << "  [" << it->to_view() << "] (refcount " << it->refcount << ')' << std::endl;
     o << std::endl;
   }
 }

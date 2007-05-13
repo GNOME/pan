@@ -28,12 +28,16 @@
 #include <climits>
 #include <vector>
 
-#if defined(HAVE_EXT_HASH_MAP)
-# include <ext/hash_map>
+#if defined(HAVE_EXT_HASH_SET)
+# include <ext/hash_set>
 #else
-# include <map>
+# include <set>
 #endif
 #include <pan/general/string-view.h>
+
+#ifndef UINT32_MAX
+#define UINT32_MAX             (4294967295U)
+#endif
 
 #define get16bits(d) (*((const uint16_t *) (d)))
 
@@ -63,17 +67,29 @@ namespace pan
   {
     private:
 
+      struct Impl {
+        uint32_t refcount;
+        uint32_t len;
+        char * str;
+        Impl (): refcount(0), len(0), str(0) {}
+        Impl (const StringView& v): refcount(0), len(v.len), str(const_cast<char*>(v.str)) {}
+        StringView to_view () const { return StringView(str,len); }
+        bool operator() (const Impl& a, const Impl& b) const { return StringView(str,len) == StringView(b.str,b.len); }
+        bool operator== (const Impl& b) const { return StringView(str,len) == StringView(b.str,b.len); }
+      };
+
       struct StringViewHash
       {
         /**
          * Paul Hsieh's "SuperFastHash" algorithm, from
          * http://www.azillionmonkeys.com/qed/hash.html
          */
-        size_t operator()(const StringView& s) const
+        size_t operator()(const Impl& s) const
         {
           const char * data (s.str);
           int len (s.len);
-          uint32_t tmp, hash=s.len;
+
+          uint32_t tmp, hash=len;
           if (len <= 0 || data == NULL) return 0;
 
           int rem = len & 3;
@@ -116,47 +132,39 @@ namespace pan
         }
       };
 
-      struct Impl {
-        unsigned long refcount;
-        StringView * view;
-        Impl(): refcount(0), view(0) {}
-      };
 
-#if defined(HAVE_EXT_HASH_MAP)
-      typedef __gnu_cxx::hash_map < StringView, Impl, StringViewHash > key_to_impl_t;
+#if defined(HAVE_EXT_HASH_SET)
+      typedef __gnu_cxx::hash_set < Impl, StringViewHash > lookup_t;
 #else
-      typedef std::map<StringView, Impl> key_to_impl_t;
+      typedef std::set<Impl> lookup_t;
 #endif
-      static key_to_impl_t _lookup;
+      static lookup_t _lookup;
 
-      static Impl* init (const StringView& s) {
-        Impl impl;
-        std::pair<key_to_impl_t::iterator,bool> result (_lookup.insert (std::pair<StringView,Impl>(s,impl)));
-        key_to_impl_t::iterator& it (result.first);
+      static Impl* init (const StringView& s)
+      {
+        std::pair<lookup_t::iterator,bool> result (_lookup.insert (Impl(s)));
+        Impl * impl = const_cast<Impl*>(&*result.first);
         if (result.second)
         {
          // new item -- populate the entry with a new string
-          char * pch = (char*) malloc (s.len + 1);
-          memcpy (pch, s.str, s.len);
-          pch[s.len] = '\0';
-          StringView * view (const_cast<StringView*>(&it->first));
-
-          view->assign (pch, s.len); // key has same value, but now we own it.
-          it->second.view = view;
+          impl->str = new char [s.len + 1];
+          memcpy (impl->str, s.str, s.len);
+          impl->str[s.len] = '\0';
+          impl->len = s.len;
         }
-        assert (it->second.refcount!=ULONG_MAX);
-        ++it->second.refcount;
-        return &it->second;
+        assert (impl->refcount!=UINT32_MAX);
+        ++impl->refcount;
+        return impl;
       }
 
       void unref () {
         if (impl!=0) {
           assert (impl->refcount);
           if (!--impl->refcount) {
-            StringView view (*impl->view);
-            _lookup.erase (view);
+            const Impl tmp (*impl);
+            _lookup.erase (tmp);
             impl = 0;
-            free ((char*)view.str);
+            delete [] (char*)tmp.str;
           }
         }
       }
@@ -184,26 +192,23 @@ namespace pan
       ~Quark () { clear(); }
       void clear () { unref(); impl=0; }
       bool empty() const { return impl == 0; }
-      bool operator== (const char * that) const { return !strcmp(c_str(), that); }
+      bool operator== (const char * that) const {
+        const char * pch = c_str ();
+        if (!pch && !that) return true;
+        if (!pch || !that) return false;
+        return !strcmp(c_str(), that);
+      }
       bool operator!= (const char * that) const { return !(*this == that); }
-      bool operator== (const StringView& that) const { return impl ? (that == *impl->view) : that.empty(); }
-      bool operator!= (const StringView& that) const { return !(*this == that); }
+      bool operator== (const StringView& that) const { return impl ? !that.strcmp(impl->str,impl->len) :  that.empty(); }
+      bool operator!= (const StringView& that) const { return impl ?  that.strcmp(impl->str,impl->len) : !that.empty(); }
       bool operator== (const Quark& q) const { return impl == q.impl; }
       bool operator!= (const Quark& q) const { return impl != q.impl; }
       bool operator< (const Quark& q) const { return impl < q.impl; }
       bool operator! () const { return empty(); }
-      std::string to_string () const {
-        std::string s;
-        if (impl) s = *impl->view;
-        return s;
-      }
-      const StringView& to_view () const {
-        static const StringView empty;
-        return impl ? *impl->view : empty;
-      }
-      const char* c_str () const { return impl ? impl->view->str : NULL; }
+      const StringView to_view () const { return impl ? impl->to_view() : StringView(); }
+      const char* c_str () const { return impl ? impl->str : NULL; }
+      std::string to_string () const { return std::string (impl ? impl->str : ""); }
       operator const char* () const { return c_str(); }
-      //operator const std::string () const { return to_string(); }
 
       /** Number of unique strings being mapped.
           Included for debugging and regression tests... */

@@ -26,7 +26,7 @@
 
 using namespace pan;
 
-const StringView&
+const StringView
 ArticleFilter :: get_header (const Article& a, const Quark& header_name) const
 {
   static const StringView empty;
