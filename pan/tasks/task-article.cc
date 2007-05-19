@@ -335,6 +335,8 @@ TaskArticle :: on_worker_done (bool cancelled)
     // the decoder is done... catch up on all housekeeping
     // now that we're back in the main thread.
 
+    foreach_const(Decoder::log_t, _decoder->log_severe, it)
+      Log :: add_err(it->c_str());
     foreach_const(Decoder::log_t, _decoder->log_errors, it)
       Log :: add_err(it->c_str());
     foreach_const(Decoder::log_t, _decoder->log_infos, it)
@@ -343,10 +345,12 @@ TaskArticle :: on_worker_done (bool cancelled)
     if (_decoder->mark_read)
       _read.mark_read(_article);
 
-    if (!_decoder->log_errors.empty()) {
+    if (!_decoder->log_errors.empty())
       set_error (_decoder->log_errors.front());
+
+    if (!_decoder->log_severe.empty())
       _state.set_health (ERR_LOCAL);
-    } else {
+    else {
       _state.set_completed();
       set_step (100);
       _decoder_has_run = true;
