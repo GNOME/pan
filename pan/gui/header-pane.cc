@@ -1530,6 +1530,7 @@ HeaderPane :: on_selection_changed (GtkTreeSelection * sel, gpointer pane_gpoint
   static const char* actions_that_need_an_article[] = {
     "download-selected-article",
     "save-articles",
+    "save-articles-from-nzb",
     "read-selected-article",
     "show-selected-article-info",
     "mark-article-read",

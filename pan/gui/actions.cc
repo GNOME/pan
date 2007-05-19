@@ -109,6 +109,7 @@ namespace
   void do_subscribe_selected_groups    (GtkAction * a) { pan_ui->do_subscribe_selected_groups(); }
   void do_unsubscribe_selected_groups  (GtkAction * a) { pan_ui->do_unsubscribe_selected_groups(); }
   void do_save_articles                (GtkAction * a) { pan_ui->do_save_articles(); }
+  void do_save_articles_from_nzb       (GtkAction * a) { pan_ui->do_save_articles_from_nzb(); }
   void do_print                        (GtkAction * a) { pan_ui->do_print(); }
   void do_import_tasks                 (GtkAction * a) { pan_ui->do_import_tasks(); }
   void do_cancel_latest_task           (GtkAction * a) { pan_ui->do_cancel_latest_task(); }
@@ -278,6 +279,7 @@ namespace
     { "unsubscribe", NULL, N_("_Unsubscribe"), NULL, NULL, G_CALLBACK(do_unsubscribe_selected_groups) },
 
     { "save-articles", GTK_STOCK_SAVE, N_("_Save Articles..."), "<shift>S", NULL, G_CALLBACK(do_save_articles) },
+    { "save-articles-from-nzb", GTK_STOCK_SAVE, N_("_Save Articles from this NZB..."), NULL, NULL, G_CALLBACK(do_save_articles_from_nzb) },
     { "print", GTK_STOCK_PRINT, NULL, "<control>P", NULL, G_CALLBACK(do_print) },
     { "import-tasks", GTK_STOCK_OPEN, N_("_Import NZB Files..."), NULL, NULL, G_CALLBACK(do_import_tasks) },
     { "cancel-last-task", GTK_STOCK_CANCEL, N_("_Cancel Last Task"), "<control>Delete", NULL, G_CALLBACK(do_cancel_latest_task) },

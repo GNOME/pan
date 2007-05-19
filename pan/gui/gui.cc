@@ -548,6 +548,79 @@ void GUI :: do_save_articles ()
   }
 }
 
+namespace
+{
+  struct SaveArticlesFromNZB: public Progress::Listener
+  {
+    Data& _data;
+    Queue& _queue;
+    GtkWidget * _root;
+    Prefs& _prefs;
+    ArticleCache& _cache;
+    const Article _article;
+    const std::string _path;
+
+    SaveArticlesFromNZB (Data& d, Queue& q, GtkWidget *r, Prefs& p,
+                         ArticleCache& c, const Article& a, const std::string& path):
+      _data(d), _queue(q), _root(r), _prefs(p), _cache(c), _article(a), _path(path) {}
+
+    static void foreach_part_cb (GMimeObject *o, gpointer self)
+    {
+      static_cast<SaveArticlesFromNZB*>(self)->foreach_part (o);
+    }
+
+    void foreach_part (GMimeObject *o)
+    {
+      if (GMIME_IS_MULTIPART (o))
+      {
+        g_mime_multipart_foreach (GMIME_MULTIPART (o), foreach_part_cb, this);
+      }
+      else if (GMIME_IS_PART(o))
+      {
+        GMimePart * part (GMIME_PART (o));
+        GMimeDataWrapper * wrapper (g_mime_part_get_content_object (part));
+        GMimeStream * mem_stream (g_mime_stream_mem_new ());
+        g_mime_data_wrapper_write_to_stream (wrapper, mem_stream);
+        const GByteArray * buffer (GMIME_STREAM_MEM(mem_stream)->buffer);
+        const StringView nzb ((const char*)buffer->data, buffer->len);
+        Queue::tasks_t tasks;
+        NZB :: tasks_from_nzb_string (nzb, _path, _cache, _data, _data, _data, tasks);
+        if (!tasks.empty())
+          _queue.add_tasks (tasks, Queue::BOTTOM);
+        g_object_unref (mem_stream);
+        g_object_unref (wrapper);
+      }
+    }
+
+    virtual ~SaveArticlesFromNZB() {}
+    
+    virtual void on_progress_finished (Progress&, int status)
+    {
+      if (status == OK) {
+        GMimeMessage * message = _cache.get_message (_article.get_part_mids());
+        g_mime_message_foreach_part (message, foreach_part_cb, this);
+        g_object_unref (message);
+      }
+      delete this;
+    }
+  };
+}
+
+void GUI :: do_save_articles_from_nzb ()
+{
+  const Article* article (_header_pane->get_first_selected_article ());
+  if (article)
+  {
+    const std::string path (GUI :: prompt_user_for_save_path (get_window(_root), _prefs));
+    if (!path.empty())
+    {
+      SaveArticlesFromNZB * listener = new SaveArticlesFromNZB (_data, _queue, _root, _prefs, _cache, *article, path);
+      Task * t = new TaskArticle (_data, _data, *article, _cache, _data, listener);
+      _queue.add_task (t, Queue::TOP);
+    }
+  }
+}
+
 void GUI :: do_print ()
 {
   std::cerr << "FIXME " << LINE_ID << std::endl;

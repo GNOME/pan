@@ -72,6 +72,7 @@ namespace pan
     public: // PanUI
       virtual void do_prompt_for_charset ();
       virtual void do_save_articles ();
+      virtual void do_save_articles_from_nzb ();
       virtual void do_print ();
       virtual void do_quit ();
       virtual void do_import_tasks ();
