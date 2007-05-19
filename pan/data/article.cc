@@ -41,16 +41,13 @@ Article :: get_part_state () const
   else if (!is_line_count_ge(250) && has_reply_leader(subject.to_view()))
     part_state = SINGLE;
 
-  // someone's posted a "000/124" info message
-  else if (parts.empty())
-    part_state = SINGLE;
-
-  // a multipart
-  else {
-    part_state = COMPLETE;
-    for (Article::parts_t::const_iterator it(parts.begin()), end(parts.end()); part_state==COMPLETE && it!=end; ++it)
-      if (it->empty())
-        part_state = INCOMPLETE;
+  else  {
+    const Parts::number_t total = parts.get_total_part_count ();
+    const Parts::number_t found = parts.get_found_part_count ();
+    if (!found) // someone's posted a "000/124" info message
+      part_state = SINGLE;
+    else // a multipart..
+      part_state = total==found ? COMPLETE : INCOMPLETE;
   }
 
   return part_state;
@@ -66,25 +63,6 @@ Article :: get_crosspost_count () const
 }
 
 bool
-Article :: is_byte_count_ge (unsigned long test) const
-{
-  unsigned long bytes (0);
-  foreach_const (parts_t, parts, it)
-    if (((bytes += it->bytes)) >= test)
-      return true;
-  return false;
-}
-
-unsigned long
-Article :: get_byte_count () const
-{
-  unsigned long bytes (0);
-  foreach_const (parts_t, parts, it)
-    bytes += it->bytes;
-  return bytes;
-}
-
-bool
 Article :: has_reply_leader (const StringView& s)
 {
   return !s.empty()
@@ -95,166 +73,31 @@ Article :: has_reply_leader (const StringView& s)
     && s.str[3]==' ';
 }
 
-void
-Article :: set_part_count (unsigned int count)
+unsigned long
+Article :: get_byte_count () const
 {
-  assert (count > 0);
-  parts.resize (count);
+  unsigned long bytes = 0;
+  for (part_iterator it(pbegin()), end(pend()); it!=end; ++it)
+    bytes += it.bytes();
+  return bytes;
 }
 
-Article :: Part&
-Article :: get_part (unsigned int number)
+bool
+Article :: is_byte_count_ge (unsigned long test) const
 {
-  //std::cerr << LINE_ID << " parts.size() " << parts.size() << " number " << number << std::endl;
-  const unsigned int index (number - 1);
-  assert (parts.size() > index);
-  return parts[index];
+  unsigned long bytes = 0;
+  for (part_iterator it(pbegin()), end(pend()); it!=end; ++it)
+    if (((bytes += it.bytes())) >= test)
+      return true;
+  return false;
 }
-
-const Article :: Part&
-Article :: get_part (unsigned int number) const
-{
-  //std::cerr << LINE_ID << " parts.size() " << parts.size() << " number " << number << std::endl;
-  const unsigned int index (number - 1);
-  assert (parts.size() > index);
-  return parts[index];
-}
-
-/* Message-IDs in multipart articles are usually nearly identical, like this:
-**
-**   <JIudnQRwg-iopJbYnZ2dnUVZ_v-dnZ2d@giganews.com>
-**   <JIudnQdwg-ihpJbYnZ2dnUVZ_v-dnZ2d@giganews.com>
-**   <JIudnQZwg-jepJbYnZ2dnUVZ_v-dnZ2d@giganews.com>
-**   <JIudnQFwg-jXpJbYnZ2dnUVZ_v-dnZ2d@giganews.com>
-**   <JIudnQBwg-jMpJbYnZ2dnUVZ_v-dnZ2d@giganews.com>
-**   <JIudnQNwg-jFpJbYnZ2dnUVZ_v-dnZ2d@giganews.com>
-**
-** In large newsgroups, _many_ megs can be saved by stripping out common text.
-** We assign Article::Part's Message-ID by passing in its real Message-ID and
-** a reference key (which currently is always the owner Article's message_id).
-** The identical chars at the beginning (b) and end (e) of the two are counted.
-** b and e have an upper bound of UCHAR_MAX (255).
-** Article::Part::folded_message_id's first byte holds 'b', the second holds 'e',
-** and the remainder is a zero-terminated string with the unique middle characters.
-*/
-
-void
-Article :: Part :: set_message_id (const Quark& key_mid, const StringView& mid)
-{
-  register size_t b=0, e=0;
-  register const char *k, *m;
-  const StringView& key (key_mid.to_view());
-
-  const size_t bmax = std::min (std::min (key.len, mid.len), size_t(UCHAR_MAX));
-  k = &key.front();
-  m = &mid.front();
-  for (; b!=bmax; ++b)
-    if (*k++ != *m++)
-      break;
-  
-  const size_t emax = bmax - b;
-  k = &key.back();
-  m = &mid.back();
-  for (; e!=emax; ++e)
-    if (*k-- != *m--)
-      break;
-
-  const size_t n_kept (mid.len - e - b);
-  char *str = g_new (char, n_kept+3); // b + e + '\0'
-  str[0] = (char) b;
-  str[1] = (char) e;
-  memcpy (str+2, mid.str+b, n_kept);
-  str[n_kept+2] = '\0';
-
-  g_free (packed_message_id);
-  packed_message_id = str;
-
-  // check our work
-  //assert (mid == get_message_id(key));
-}
-
-std::string
-Article :: Part :: get_message_id (const Quark& key_mid) const
-{
-  std::string setme;
-  get_message_id (key_mid, setme);
-  return setme;
-}
-
-void
-Article :: Part :: get_message_id (const Quark& key_mid, std::string& setme) const
-{
-  setme.clear ();
-
-  if (packed_message_id)
-  {
-    const StringView key (key_mid.to_view());
-    const char * pch (packed_message_id);
-    const int b ((unsigned char) *pch++);
-    const int e ((unsigned char) *pch++);
-    setme.append (key.str, 0, b);
-    setme.append (pch);
-    setme.append (key.str + key.len - e, e);
-  }
-}
-
-
-namespace
-{
-  char* clone_packed_mid (const char * mid)
-  {
-    // 2 to pick up b and e; 1 to pick up the '\0'
-    return mid ? (char*) g_memdup (mid, 2+strlen(mid+2)+1) : 0;
-  }
-}
-
-void
-Article :: Part :: clear ()
-{
-  bytes = 0;
-  g_free (packed_message_id);
-  packed_message_id = 0;
-}
-
-void
-Article :: Part :: swap (Part& that)
-{
-  std::swap (bytes, that.bytes);
-  std::swap (packed_message_id, that.packed_message_id);
-}
-
-Article :: Part :: Part (const Part& that):
-  packed_message_id (clone_packed_mid (that.packed_message_id)),
-  bytes (that.bytes)
-{
-}
-
-Article :: Part&
-Article :: Part :: operator= (const Part& that)
-{
-  bytes = that.bytes;
-  g_free (packed_message_id);
-  packed_message_id = clone_packed_mid (that.packed_message_id);
-  return *this;
-}
-
-/***
-****
-***/
 
 Article :: mid_sequence_t
 Article :: get_part_mids () const
 {
   mid_sequence_t mids;
-  mids.reserve (parts.size());
-
-  const Quark& key (message_id);
-  foreach_const (parts_t, parts, it) {
-    const Part& p (*it);
-    if (!p.empty())
-      mids.push_back (p.get_message_id(key));
-  }
-
+  for (part_iterator it(pbegin()), end(pend()); it!=end; ++it)
+    mids.push_back (it.mid());
   return mids;
 }
 

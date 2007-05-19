@@ -8,6 +8,7 @@ libdata_a_SOURCES = \
  article.cc \
  article-cache.cc \
  data.cc \
+ parts.cc \
  xref.cc
 
 noinst_HEADERS = \
@@ -15,6 +16,7 @@ noinst_HEADERS = \
  article-cache.h \
  data.h \
  defgroup.h \
+ parts.h \
  server-info.h \
  xref.h 
 

@@ -1462,22 +1462,22 @@ void GUI :: do_show_selected_article_info ()
     char * date = date_maker.get_date_string (a->time_posted);
 
     // article parts
-    std::vector<int> missing_parts;
-    int i = 0;
-    foreach_const (Article::parts_t, a->parts, it) {
-      ++i;
-      if (it->empty())
-        missing_parts.push_back (i);
-    }
+    typedef Parts::number_t number_t;
+    std::set<number_t> missing_parts;
+    const number_t n_parts = a->get_total_part_count ();
+    for (number_t i=1; i<=n_parts; ++i)
+      missing_parts.insert (i);
+    for (Article::part_iterator it(a->pbegin()), e(a->pend()); it!=e; ++it)
+      missing_parts.erase (it.number());
     char msg[512];
     *msg = '\0';
     std::ostringstream s;
-    if (i > 1) {
+    if (n_parts > 1) {
       if (missing_parts.empty())
-        g_snprintf (msg, sizeof(msg), _("This article has all %d parts."), i);
+        g_snprintf (msg, sizeof(msg), _("This article has all %d parts."), (int)n_parts);
       else
-        g_snprintf (msg, sizeof(msg), _("This article is missing %d of its %d parts:"), (int)missing_parts.size(), i);
-      foreach_const (std::vector<int>, missing_parts, it)
+        g_snprintf (msg, sizeof(msg), _("This article is missing %d of its %d parts:"), (int)missing_parts.size(), (int)n_parts);
+      foreach_const (std::set<number_t>, missing_parts, it)
         s << ' ' << *it;
     }
 

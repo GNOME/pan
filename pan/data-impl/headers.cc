@@ -379,20 +379,17 @@ std::cerr << "article " << a.message_id << " references " << s << std::endl;
 void
 DataImpl :: load_part (const Quark          & group,
                        const Quark          & mid,
-                       size_t                 number,
-                       size_t                 lines,
-                       Article::Part        & new_part)
+                       int                    number,
+                       const StringView     & part_mid,
+                       unsigned long          lines,
+                       unsigned long          bytes)
 {
    GroupHeaders * h = get_group_headers (group);
    Article * a (h->find_article (mid));
+   pan_return_if_fail (a != 0);
 
-   pan_return_if_fail (a != NULL);
-
-   Article::Part& old_part (a->get_part (number));
-   if (old_part.empty()) {
-       old_part.swap (new_part);
-       a->lines += lines;
-   }
+   if (a->add_part (number, part_mid, bytes))
+     a->lines += lines;
 }
 
 namespace
@@ -472,6 +469,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
       in->getline (line);
       //const unsigned long article_qty = view_to_ul (line); /* unused */
       const time_t now (time (0));
+      PartBatch part_batch;
       for (;;)
       {
         // look for the beginning of an Article record.
@@ -513,7 +511,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
           if (tok.pop_token(server_tok,':') && tok.pop_token(group_tok,':')) {
             target_it->server = server_tok;
             target_it->group = group_tok.len==1 ? xref_lookup[(int)*group_tok.str] : Quark(group_tok);
-            target_it->number = view_to_ul (tok);
+            target_it->number = atoi (tok.str);
             const Server * server (find_server (target_it->server));
             if (server && ((!server->article_expiration_age) || (days_old <= server->article_expiration_age)))
               ++target_it;
@@ -534,11 +532,10 @@ DataImpl :: load_headers (const DataIO   & data_io,
           s.ltrim(); s.pop_token (tok); total_part_count = atoi(tok.str);
           s.ltrim(); s.pop_token (tok); found_part_count = atoi(tok.str);
         }
-        s.ltrim(); if (s.pop_token (tok)) a.lines = view_to_ul (tok); // this field was added in 0.115
-        if (!expired)
-          a.set_part_count (total_part_count);
+        s.ltrim(); if (s.pop_token (tok)) a.lines = atoi (tok.str); // this field was added in 0.115
 
         // found parts...
+        part_batch.init (a.message_id, total_part_count, found_part_count);
         for (int i(0), count(found_part_count); i<count; ++i)
         {
           const bool gotline (in->getline (s));
@@ -548,19 +545,25 @@ DataImpl :: load_headers (const DataIO   & data_io,
             StringView tok;
             s.ltrim ();
             s.pop_token (tok);
-            const unsigned long number (view_to_ul (tok));
-            if (!a.has_part(number)) { // corrupted entry
+            const int number (atoi (tok.str));
+            if (number > total_part_count) { // corrupted entry
               expired = true;
               break;
             }
-            Article::Part& p (a.get_part (number));
+            StringView part_mid;
+            unsigned long part_bytes (0);
             s.ltrim ();
-            s.pop_token (tok);
-            p.set_message_id (a.message_id, (tok.len==1 && *tok.str=='"') ? a.message_id.to_view() : tok);
-            s.pop_token(tok); p.bytes = view_to_ul (tok);
-            if (s.pop_token(tok)) a.lines += view_to_ul (tok); // this field was removed in 0.115
+            s.pop_token (part_mid);
+            if (part_mid.len==1 && *part_mid.str=='"')
+              part_mid = a.message_id.to_view ();
+            s.pop_token(tok); part_bytes = view_to_ul (tok);
+            part_batch.add_part (number, part_mid, part_bytes);
+
+            if (s.pop_token(tok)) a.lines += atoi (tok.str); // this field was removed in 0.115
           }
         }
+        if (!expired)
+          a.set_parts (part_batch);
 
         // add the article to the group if it hasn't all expired
         if (expired)
@@ -737,7 +740,6 @@ DataImpl :: save_headers (DataIO                       & data_io,
     // header section
     *out << articles.size() << endl;
     std::string references;
-    std::string part_mid;
     foreach_const (std::vector<Article*>, articles, ait)
     {
       ++article_count;
@@ -764,32 +766,20 @@ DataImpl :: save_headers (DataIO                       & data_io,
 
       // is_binary [total_part_count found_part_count]
       *out << (a->is_binary ? 't' : 'f');
-      if (a->is_binary) {
-        int foundPartCount (0);
-        foreach_const (Article::parts_t, a->parts, pit)
-          if (!pit->empty())
-            ++foundPartCount;
-        *out << ' ' << a->get_part_count() << ' ' << foundPartCount;
-      }
+      if (a->is_binary)
+        *out << ' ' << a->get_total_part_count() << ' ' << a->get_found_part_count();
       *out << ' ' << a->lines << '\n';
 
       // one line per foundPartCount (part-index message-id bytes lines)
-      int number (0);
-      bool first (true);
-      foreach_const (Article::parts_t, a->parts, pit) {
-        ++number;
-        if (!pit->empty()) {
-          ++part_count;
-          const Article::Part& p (*pit);
-          *out << '\t' << number << ' ';
-          p.get_message_id (message_id, part_mid);
-          if (message_id.to_view() == part_mid)
-            *out << '"';
-          else
-            *out << part_mid;
-          *out << ' ' << p.bytes << '\n';
-           first = false;
-        }
+      for (Article::part_iterator pit(a->pbegin()), end(a->pend()); pit!=end; ++pit) {
+        ++part_count;
+        const std::string& part_mid = pit.mid ();
+        *out << '\t' << pit.number() << ' ';
+        if (message_id.to_view() == part_mid)
+          *out << '"';
+        else
+          *out << part_mid;
+        *out << ' ' << pit.bytes() << '\n';
       }
     }
 

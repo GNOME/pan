@@ -96,27 +96,24 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   }
 
   unsigned long need_bytes(0), all_bytes(0);
-  foreach_const (Article::parts_t, article.parts, it)
+  for (Article::part_iterator i(article.pbegin()), e(article.pend()); i!=e; ++i)
   {
-    all_bytes += it->bytes;
+    all_bytes += i.bytes();
+    const std::string mid (i.mid ());
+    if (cache.contains (mid))
+      continue;
 
-    const std::string mid (it->get_message_id (article.message_id));
-    if (!it->empty() && !cache.contains (mid))
-    {
-      need_bytes += it->bytes;
-
-      Needed n;
-      n.part = *it;
-
-      // if we can keep the article-number from the main xref, do so.
-      // otherwise plug in `0' as a null article-number and we'll use
-      // `ARTICLE message-id' instead when talking to the server.
-      foreach_const (quarks_t, servers, sit)
-        foreach_const (quarks_t, groups, git)
-          n.xref.insert (*sit, *git, mid==article.message_id.to_string() ? article.xref.find_number(*sit,*git) : 0);
-
-      _needed.push_back (n);
-    }
+    need_bytes += i.bytes();
+    Needed n;
+    n.message_id = mid;
+    n.bytes = i.bytes();
+    // if we can keep the article-number from the main xref, do so.
+    // otherwise plug in `0' as a null article-number and we'll use
+    // `ARTICLE message-id' instead when talking to the server.
+    foreach_const (quarks_t, servers, sit)
+      foreach_const (quarks_t, groups, git)
+        n.xref.insert (*sit, *git, mid==article.message_id.to_string() ? article.xref.find_number(*sit,*git) : 0);
+    _needed.push_back (n);
   }
 
   // initialize our progress status...
@@ -180,7 +177,7 @@ TaskArticle :: get_bytes_remaining () const
 {
   unsigned long bytes (0);
   foreach_const (needed_t, _needed, it) // parts not fetched yet...
-    bytes += (it->part.bytes - it->buf.size());
+    bytes += (it->bytes - it->buf.size());
   return bytes;
 }
 
@@ -215,7 +212,7 @@ TaskArticle :: use_nntp (NNTP * nntp)
     if (number)
       nntp->article (group, number, this);
     else
-      nntp->article (group, needed->part.get_message_id(_article.message_id).c_str(), this);
+      nntp->article (group, needed->message_id.c_str(), this);
     update_work ();
   }
 }
@@ -263,11 +260,11 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
 
   if (health == OK) { // if download succeeded, save it in the cache
     const StringView view (&it->buf.front(), it->buf.size());
-    if (!_cache.add (it->part.get_message_id(_article.message_id), view))
+    if (!_cache.add (it->message_id, view))
       health = ERR_LOCAL;
   }
 
-  // std::cerr << LINE_ID << ' ' << it->part.get_message_id(_article.message_id) << " from " << nntp->_server << ": health " << health << std::endl;
+  // std::cerr << LINE_ID << ' ' << it->message_id << " from " << nntp->_server << ": health " << health << std::endl;
 
   switch (health)
   {
@@ -289,7 +286,7 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
         Log :: add_err_va (
           _("Article \"%s\" is incomplete -- the news server(s) don't have part %s"),
           _article.subject.c_str(),
-          it->part.get_message_id(_article.message_id).c_str());
+          it->message_id.c_str());
         _needed.erase (it);
       }
       break;

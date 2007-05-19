@@ -70,12 +70,16 @@ int main ()
   const Article a (dynamic_cast<TaskArticle*>(tasks[0])->get_article());
   check (a.author == "Joe Bloggs <bloggs@nowhere.example>")
   check (a.subject == "Here's your file!  abc-mr2a.r01 (1/2)")
-  check (a.parts.size() == 2)
+  check (a.get_total_part_count() == 2)
+  check (a.get_found_part_count() == 2)
   check (a.message_id == "<123456789abcdef@news.newzbin.com>")
   check (a.time_posted == 1071674882)
   check (a.xref.size() == 3)
-  check (a.parts[0].bytes == 102394)
-  check (a.parts[0].get_message_id(a.message_id) == "<123456789abcdef@news.newzbin.com>")
+  std::string part_mid;
+  Parts::bytes_t part_bytes;
+  check (a.get_part_info (1u, part_mid, part_bytes))
+  check (part_bytes == 102394)
+  check (part_mid == "<123456789abcdef@news.newzbin.com>")
   Quark group;
   unsigned long number;
   check (a.xref.find ("cox", group, number))
@@ -84,7 +88,8 @@ int main ()
   check (a.xref.find ("giganews", group, number))
   check (group=="alt.binaries.newzbin" || group=="alt.binaries.mojo")
   check (number==0)
-  check (a.parts[1].bytes == 4501)
+  check (a.get_part_info (2, part_mid, part_bytes))
+  check (part_bytes == 4501)
 
   std::ostringstream out_stream;
   NZB :: nzb_to_xml (out_stream, tasks);

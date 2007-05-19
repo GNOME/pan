@@ -40,7 +40,6 @@ using namespace pan;
 namespace
 {
   typedef std::vector<Task*> tasks_t;
-  typedef std::map<unsigned int,Article::Part> number_to_part_t;
 
   struct MyContext
   {
@@ -48,7 +47,7 @@ namespace
     std::string text;
     std::string path;
     Article a;
-    number_to_part_t parts;
+    PartBatch parts;
     tasks_t tasks;
     ArticleCache& cache;
     ArticleRead& read;
@@ -66,7 +65,6 @@ namespace
       groups.clear ();
       text.clear ();
       path.clear ();
-      parts.clear ();
       a.clear ();
       bytes = 0;
       number = 0;
@@ -115,22 +113,19 @@ namespace
 
     else if (!strcmp(element_name, "segment") && mc.number && !mc.text.empty()) {
       const std::string mid ("<" + mc.text + ">");
-      if (mc.a.message_id.empty())
-          mc.a.message_id = mid;
-      Article::Part& part (mc.parts[mc.number]);
-      part.bytes = mc.bytes;
-      part.set_message_id (mc.a.message_id, mid);
+      if (mc.a.message_id.empty()) {
+        mc.a.message_id = mid;
+        mc.parts.init (mid);
+      }
+      mc.parts.add_part (mc.number, mid, mc.bytes);
     }
 
     else if (!strcmp(element_name,"path"))
       mc.path = mc.text;
 
-    else if (!mc.parts.empty() && !strcmp (element_name, "file"))
+    else if (!strcmp (element_name, "file"))
     {
-      // populate mc.a.parts
-      mc.a.set_part_count (mc.parts.rbegin()->first);
-      foreach (number_to_part_t, mc.parts, it)
-        mc.a.get_part(it->first).swap (it->second);
+      mc.a.set_parts (mc.parts);
 
       foreach_const (quarks_t, mc.groups, git) {
         quarks_t servers;
@@ -265,17 +260,11 @@ NZB :: nzb_to_xml (std::ostream             & out,
 
     // now for the parts...
     out << indent(depth++) << "<segments>\n";
-    int part_number (0);
-    foreach_const (Article::parts_t, a.parts, pit)
+    for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
     {
-      ++part_number;
-
-      // incomplete multipart...
-      if (pit->empty())
-        continue;
+      std::string mid = it.mid ();
 
       // remove the surrounding < > as per nzb spec
-      std::string mid (pit->get_message_id (a.message_id));
       if (mid.size()>=2 && mid[0]=='<') {
         mid.erase (0, 1);
         mid.resize (mid.size()-1);
@@ -283,8 +272,8 @@ NZB :: nzb_to_xml (std::ostream             & out,
 
       // serialize this part
       out << indent(depth)
-          << "<segment" << " bytes=\"" << pit->bytes << '"'
-                        << " number=\"" << part_number << '"'
+          << "<segment" << " bytes=\"" << it.bytes() << '"'
+                        << " number=\"" << it.number() << '"'
                         << ">";
       escaped(out, mid);
       out  << "</segment>\n";

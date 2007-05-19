@@ -271,7 +271,7 @@ DataImpl :: xover_add (const Quark         & server,
       const Article* candidate (h->find_article (candidate_mid));
       if (candidate
           && (candidate->author == author)
-          && ((int)candidate->parts.size() == part_count))
+          && ((int)candidate->get_total_part_count() == part_count))
         art_mid = candidate_mid;
     }
   }
@@ -308,19 +308,15 @@ DataImpl :: xover_add (const Quark         & server,
 
   {
     const int number (part_count<2 ? 1 : part_index);
-    Article::Part part;
-    part.bytes = byte_count;
-    part.set_message_id (art_mid, message_id);
-    load_part (group, art_mid, number, line_count, part);
+    load_part (group, art_mid,
+               number, message_id,
+               line_count, byte_count);
   }
 
   if (!workarea._added_batch.count(art_mid))
     workarea._changed_batch.insert(art_mid);
 
-  /**
-  ***  Maybe flush the batched changes
-  **/
-
+  // maybe flush the batched changes
   if ((time(0) - workarea._last_flush_time) >= 10)
     xover_flush (group);
 

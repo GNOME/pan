@@ -20,10 +20,11 @@
 #ifndef __Article_h__
 #define __Article_h__
 
-#include <vector>
 #include <ctime>
+#include <vector>
 #include <pan/general/sorted-vector.h>
 #include <pan/general/quark.h>
+#include <pan/data/parts.h>
 #include <pan/data/xref.h>
 
 namespace pan
@@ -46,74 +47,50 @@ namespace pan
   class Article
   {
     public:
+      void set_parts (const PartBatch& b) { parts.set_parts(b); }
+      bool add_part (Parts::number_t num, const StringView& mid, Parts::bytes_t bytes) { return parts.add_part(num,mid,bytes,message_id); }
+      void set_part_count (Parts::number_t num) { parts.set_part_count(num); }
+      Parts::number_t get_total_part_count () const { return parts.get_total_part_count(); }
+      Parts::number_t get_found_part_count () const { return parts.get_found_part_count(); }
+      bool get_part_info (Parts::number_t      num,
+                          std::string & mid,
+                          Parts::bytes_t     & bytes) const { return parts.get_part_info(num,mid,bytes,message_id); }
 
-      /**
-       * The fields of a single part of a multipart Article.
-       * For other fields, refer to the parent Article object.
-       */
-      class Part
-      {
-        private:
-          char * packed_message_id;
+      typedef Parts::const_iterator part_iterator;
+      part_iterator pbegin() const { return parts.begin(message_id); }
+      part_iterator pend() const { return parts.end(message_id); }
 
-        public:
-          unsigned long bytes;
-
-        public:
-          void set_message_id (const Quark& key, const StringView& mid);
-          std::string get_message_id (const Quark& key) const;
-          void get_message_id (const Quark& key, std::string& setme) const;
-
-          Part(): packed_message_id(0), bytes(0) {}
-          ~Part() { clear(); }
-
-          bool empty () const { return !packed_message_id; }
-          void swap (Part&);
-          void clear ();
-
-          Part (const Part&);
-          Part& operator= (const Part&);
-      };
-
-      typedef std::vector<Part> parts_t;
-
-      Part& get_part (unsigned int part_number);
-      const Part& get_part (unsigned int part_number) const;
-      void set_part_count (unsigned int);
       typedef std::vector<Quark> mid_sequence_t;
       mid_sequence_t get_part_mids () const;
+      enum PartState { SINGLE, INCOMPLETE, COMPLETE };
+      PartState get_part_state () const;
 
     public:
+      bool is_binary;
       Quark message_id;
       Quark author;
       Quark subject;
       static bool has_reply_leader (const StringView&);
 
     public:
-      enum PartState { SINGLE, INCOMPLETE, COMPLETE };
-      PartState get_part_state () const;
       unsigned int get_crosspost_count () const;
       unsigned long get_line_count () const { return lines; }
-      unsigned long get_byte_count () const;
       bool is_line_count_ge (size_t test) const { return lines >= test; }
-      bool is_byte_count_ge (unsigned long) const;
-      unsigned int get_part_count () const { return parts.size(); }
-      bool has_part (unsigned int part_number) const
-        { return part_number!=0 && get_part_count() >= part_number; }
+      unsigned long get_byte_count () const;
+      bool is_byte_count_ge (unsigned long test) const;
 
-      time_t time_posted;
-      unsigned long lines;
-      Xref xref;
+      unsigned int lines;
       int score;
-      parts_t parts;
+      time_t time_posted;
+      Xref xref;
 
     public:
-      Article (): time_posted(0), lines(0), score(0), is_binary(false) {}
-      ~Article () {}
+      Article (): is_binary(false), lines(0), score(0), time_posted(0) {}
       void clear ();
 
-    public:
-      bool is_binary;
+    private:
+      Parts parts;
+
   };
 }
 

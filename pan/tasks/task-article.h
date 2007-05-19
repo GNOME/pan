@@ -100,7 +100,8 @@ namespace pan
 
     private:
       struct Needed {
-        Article::Part part;
+        std::string message_id;
+        unsigned long bytes;
         NNTP * nntp;
         Xref xref;
         typedef std::vector<char> buf_t;

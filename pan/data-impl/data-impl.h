@@ -297,7 +297,11 @@ namespace pan
           local GroupHeaders.  As a side-effect, the value of `part'
           after this call is undefined.  This is an ugly interface,
           but it's fast and only called by one client. */
-      void load_part (const Quark& g, const Quark& mid, size_t number, size_t lines, Article::Part& part);
+      void load_part (const Quark& g, const Quark& mid,
+                      int number,
+                      const StringView& part_mid,
+                      unsigned long lines,
+                      unsigned long bytes);
 
       void load_headers (const DataIO&, const Quark& group);
       void save_headers (DataIO&, const Quark& group) const;

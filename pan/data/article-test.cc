@@ -8,19 +8,22 @@ using namespace pan;
 
 #define test_message_id(s) \
   in = s; \
-  part.set_message_id (key, in); \
-  out = part.get_message_id (key); \
-  check (in == out)
+  a.add_part (++i, in, 1); \
+  check (a.get_part_info (i, out, bytes)) \
+  check (bytes == 1) \
+  check (out == in)
 
 int
 main (void)
 {
+  Parts::number_t i = 0;
+  Parts::bytes_t bytes;
   Quark key = "<abcd@efghijk.com>";
   std::string in, out;
 
   Article a;
+  a.message_id = key;
   a.set_part_count (2);
-  Article::Part& part (a.get_part(2));
 
   test_message_id (key.to_string()); // two equal strings
   test_message_id ("<abcdefg@efghijk.com>"); // extra in the middle...
