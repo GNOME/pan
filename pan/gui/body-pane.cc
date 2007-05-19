@@ -1468,7 +1468,7 @@ namespace
   std::string normalize_subject_re (const StringView& v_in)
   {
     StringView v(v_in), prev(v_in);
-    for (;;) {
+    while (!v.empty()) {
       v.ltrim ();
       StringView tmp (v);
       if (tmp.strstr("Re:") == tmp.str)
