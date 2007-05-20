@@ -797,68 +797,6 @@ namespace
 ****
 ***/
 
-/**
- * @parent: only needed for the headers so that we can construct a true
- * message/partial part.  This is actually only used for the first part,
- * so feel free to use %NULL for all parts after the first.
- *
- * Returns a partial mime part.
- */
-static GMimeMessagePartial*
-pan_fake_partial (GMimeMessage  * parent,
-                  GMimeStream   * content,
-                  const char    * id,
-                  int             number,
-                  int             total)
-{
-	GMimeMessagePartial * partial;
-	GMimeDataWrapper * wrapper;
-	GMimeStream * cat = NULL;
-
-	/* sanity clause */
-	pan_return_val_if_fail (content!=NULL, NULL);
-	pan_return_val_if_fail (is_nonempty_string(id), NULL);
-	pan_return_val_if_fail (number>0, NULL);
-	pan_return_val_if_fail (total>0, NULL);
-	pan_return_val_if_fail (total>=number, NULL);
-
-	/* if it's the first message, add the headers */
-	if (number == 1)
-	{
-		GMimeStream * stream;
-
-		/* fill "stream" with the parent's headers */
-		stream = g_mime_stream_mem_new ();
-		g_mime_header_write_to_stream (GMIME_OBJECT(parent)->headers, stream);
-		g_mime_stream_write (stream, "\n", 1);
-		g_mime_stream_reset (stream);
-
-		/* cat stream holds headers + body */
-		cat = g_mime_stream_cat_new ();
-		g_mime_stream_cat_add_source (GMIME_STREAM_CAT(cat), stream);
-		g_mime_stream_unref (stream);
-		g_mime_stream_cat_add_source (GMIME_STREAM_CAT(cat), content);
-
-		/* override the content variable s.t. headers get written too */
-		partial = g_mime_message_partial_new (id, number, total);
-		wrapper = g_mime_data_wrapper_new_with_stream (cat, GMIME_PART_ENCODING_DEFAULT);
-		g_mime_part_set_content_object (GMIME_PART(partial), wrapper);
-		g_object_unref (wrapper);
-		g_mime_stream_unref (cat);
-	}
-	else
-	{
-		partial = g_mime_message_partial_new (id, number, total);
-		wrapper = g_mime_data_wrapper_new_with_stream (content, GMIME_PART_ENCODING_DEFAULT);
-		g_mime_part_set_content_object (GMIME_PART(partial), wrapper);
-		g_object_unref (wrapper);
-	}
-
-	return partial;
-}
-
-
-
 GMimeMessage*
 mime :: construct_message (GMimeStream  ** istreams,
                            int             qty)
@@ -882,51 +820,32 @@ mime :: construct_message (GMimeStream  ** istreams,
   }
   g_object_unref (parser);
 
-  if (qty == 1) // make a single message
+  if (qty > 1) // fold multiparts together
   {
-    retval = messages[0];
-  }
-  else // make an array of message/partials that to reconstruct a single message
-  {
-    gpointer * unref = g_new (gpointer, qty);
-    GMimeMessagePartial ** partials  = g_new (GMimeMessagePartial*, qty);
-
+    GMimeStream * cat = g_mime_stream_cat_new ();
+    
     for (int i=0; i<qty; ++i)
     {
-      GMimeMessagePartial * partial;
-
-      if (GMIME_IS_MESSAGE_PARTIAL (messages[i]->mime_part))
-      {
-        partial = GMIME_MESSAGE_PARTIAL (messages[i]->mime_part);
-        unref[i] = messages[i];
-      }
-      else // make a partial
-      {
-        GMimeMessage * message = messages[i];
-        GMimeDataWrapper * wrapper = g_mime_part_get_content_object (GMIME_PART(message->mime_part));
-        GMimeStream * stream = g_mime_data_wrapper_get_stream ((GMimeDataWrapper*)wrapper);
-        partial = pan_fake_partial (message, stream, message_id, i+1, qty);
-        g_mime_stream_reset (stream);
-
-        g_object_unref (stream);
-        g_object_unref (wrapper);
-        g_object_unref (message);
-
-        unref[i] = partial;
-      }
-
-      partials[i] = partial;
+      GMimeMessage * message = messages[i];
+      GMimeDataWrapper * wrapper = g_mime_part_get_content_object (GMIME_PART(message->mime_part));
+      GMimeStream * stream = g_mime_data_wrapper_get_stream (wrapper);
+      g_mime_stream_reset (stream);
+      g_mime_stream_cat_add_source (GMIME_STREAM_CAT (cat), stream);
+      g_object_unref (stream);
+      g_object_unref (wrapper);
     }
 
-    // merge the message/partials together
-    retval = g_mime_message_partial_reconstruct_message (partials, qty);
-
-    // cleanup
-    for (int i=0; i<qty; ++i)
-      g_object_unref (unref[i]);
-    g_free (partials);
-    g_free (unref);
+    GMimeMessage * message = messages[0];
+    GMimeDataWrapper * wrapper = g_mime_part_get_content_object (GMIME_PART(message->mime_part));
+    std::cerr << LINE_ID << " calling reset on cat " << g_mime_stream_reset (cat) << std::endl;
+    g_mime_stream_reset (cat);
+    g_mime_data_wrapper_set_stream (wrapper, cat);
+    g_object_unref (cat);
   }
+
+  retval = messages[0];
+  for (int i=1; i<qty; ++i)
+    g_object_unref (messages[i]);
 
   // pick out yenc and uuenc data in text/plain messages
   if (retval != NULL)
