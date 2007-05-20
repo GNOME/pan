@@ -305,5 +305,6 @@ file :: get_text_file_contents (const StringView  & filename,
                             fallback_charset_1,
                             fallback_charset_2);
 
+  g_free (body);
   return true;
 }
