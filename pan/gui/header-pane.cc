@@ -745,26 +745,23 @@ HeaderPane :: get_first_selected_article () const
    return a;
 }
 
+void
+HeaderPane :: get_full_selection_v_foreach (GtkTreeModel * model,
+                                            GtkTreePath  * path,
+                                            GtkTreeIter  * iter,
+                                            gpointer       data)
+{
+  static_cast<article_v*>(data)->push_back (get_article (model, iter));
+}
+
 std::vector<const Article*>
 HeaderPane :: get_full_selection_v () const
 {
   std::vector<const Article*> articles;
-
-  // get a list of paths
-  GtkTreeModel * model (0);
-  GtkTreeSelection * selection (gtk_tree_view_get_selection (GTK_TREE_VIEW(_tree_view)));
-  GList * list (gtk_tree_selection_get_selected_rows (selection, &model));
-  for (GList *l(list); l; l=l->next) {
-     GtkTreePath * path (static_cast<GtkTreePath*>(l->data));
-     GtkTreeIter iter;
-     if (gtk_tree_model_get_iter (model, &iter, path))
-       articles.push_back (get_article (model, &iter));
-  }
-
-  // cleanup
-  g_list_foreach (list, (GFunc)gtk_tree_path_free, NULL);
-  g_list_free (list);
-
+  GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
+  gtk_tree_selection_selected_foreach (gtk_tree_view_get_selection (view),
+                                       get_full_selection_v_foreach,
+                                       &articles);
   return articles;
 }
 
@@ -1463,6 +1460,11 @@ HeaderPane :: set_show_type (const Data::ShowType show_type)
 
 HeaderPane :: ~HeaderPane ()
 {
+  if (_selection_changed_idle_tag) {
+    g_source_remove (_selection_changed_idle_tag);
+    _selection_changed_idle_tag  = 0;
+  }
+
   _cache.remove_listener (this);
   _queue.remove_listener (this);
   _prefs.remove_listener (this);
@@ -1523,9 +1525,18 @@ HeaderPane :: create_filter_entry ()
 }
 
 void
-HeaderPane :: on_selection_changed (GtkTreeSelection * sel, gpointer pane_gpointer)
+HeaderPane :: on_selection_changed (GtkTreeSelection * sel, gpointer self_gpointer)
 {
-  HeaderPane * self (static_cast<HeaderPane*>(pane_gpointer));
+  HeaderPane * self (static_cast<HeaderPane*>(self_gpointer));
+
+  if (!self->_selection_changed_idle_tag)
+       self->_selection_changed_idle_tag = g_idle_add (on_selection_changed_idle, self);
+}
+
+gboolean
+HeaderPane :: on_selection_changed_idle (gpointer self_gpointer)
+{
+  HeaderPane * self (static_cast<HeaderPane*>(self_gpointer));
   const bool have_article = self->get_first_selected_article() != 0;
   static const char* actions_that_need_an_article[] = {
     "download-selected-article",
@@ -1545,8 +1556,12 @@ HeaderPane :: on_selection_changed (GtkTreeSelection * sel, gpointer pane_gpoint
     "supersede-article",
     "cancel-article"
   };
+
   for (int i=0, n=G_N_ELEMENTS(actions_that_need_an_article); i<n; ++i)
     self->_action_manager.sensitize_action (actions_that_need_an_article[i], have_article);
+
+  self->_selection_changed_idle_tag = 0;
+  return false;
 }
 
 Data::ShowType _show_type;
@@ -1566,6 +1581,7 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _root (0),
   _tree_view (0),
   _tree_store (0),
+  _selection_changed_idle_tag (0),
   _cache (cache)
 {
   // init the icons

@@ -79,15 +79,16 @@ namespace
     register int b=0, e=0;
     register const char *k, *m;
     const StringView& key (key_mid.to_view());
+    const int shorter = (int) std::min (key.len, mid.len);
 
-    const int bmax = std::min ((int)std::min (key.len, mid.len), (int)UCHAR_MAX);
+    const int bmax = std::min (shorter, (int)UCHAR_MAX);
     k = &key.front();
     m = &mid.front();
     for (; b!=bmax; ++b)
       if (*k++ != *m++)
         break;
     
-    const int emax = bmax - b;
+    const int emax = std::min (shorter-b, (int)UCHAR_MAX);
     k = &key.back();
     m = &mid.back();
     for (; e!=emax; ++e)
@@ -105,20 +106,23 @@ namespace
                      const StringView  & mid,
                      const Quark       & key_mid)
   {
-    setme.clear ();
-
-    if (mid.len >= 2)
+    if (mid.len < 2)
     {
-      const StringView& key (key_mid.to_view());
-      const int b (mid.str[0]);
-      const int e (mid.str[1]);
-      if (b) setme.append (key.str, 0, b);
-      setme.append (mid.str+2, mid.len-2);
-      if (e) setme.append (key.str + key.len - e, e);
-      return mid.len-2 + b + e;
+      setme.clear ();
+      return 0;
     }
 
-    return 0;
+    const StringView& key (key_mid.to_view());
+    const int b (mid.str[0]);
+    const int e (mid.str[1]);
+    const int m (mid.len - 2);
+    const size_t n = b + e + m;
+    setme.resize (n);
+    char * pch = &setme[0];
+    memcpy (pch, key.str, b); pch += b;
+    memcpy (pch, mid.str+2, m); pch += m;
+    memcpy (pch, key.str+key.len-e, e);
+    return n;
   }
 }
 
@@ -187,8 +191,8 @@ Parts :: operator= (const Parts& that)
 
 void
 Parts :: unpack_message_id (std::string  & setme,
-                                   const Part   * part,
-                                   const Quark  & reference_mid) const
+                            const Part   * part,
+                            const Quark  & reference_mid) const
 {
   StringView v;
   v.str = part_mid_buf + part->mid_offset;

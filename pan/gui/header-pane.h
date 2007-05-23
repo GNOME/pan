@@ -297,6 +297,7 @@ namespace pan
       PanTreeStore * _tree_store;
       FilterInfo _filter;
       Data::ShowType _show_type;
+      guint _selection_changed_idle_tag;
 
     private:
       void rebuild_filter (const std::string&, int);
@@ -312,6 +313,7 @@ namespace pan
     private:
       void get_nested_foreach (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer) const;
       static void get_nested_foreach_static (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer);
+      static void get_full_selection_v_foreach (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer);
 
     private:
       static int column_compare_func (GtkTreeModel*, GtkTreeIter*, GtkTreeIter*, gpointer);
@@ -333,6 +335,7 @@ namespace pan
 
     private:
       static void on_selection_changed (GtkTreeSelection*, gpointer);
+      static gboolean on_selection_changed_idle (gpointer);
 
     private:
       void find_next_iterator_from (GtkTreeModel            * model,
