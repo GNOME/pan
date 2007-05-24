@@ -59,13 +59,13 @@ namespace
   struct Packer
   {
     int size() const { return midlen+3; } // three for for b, e, and '\0'
-    char b, e;
+    uint8_t b, e;
     const char * mid;
     size_t midlen;
     Packer(): b(0), e(0), mid(0), midlen(0) {}
     void pack (char* buf) const {
-      *buf++ = (char) b;
-      *buf++ = (char) e;
+      *buf++ = b;
+      *buf++ = e;
       memcpy (buf, mid, midlen);
       buf[midlen] = '\0';
     }
@@ -76,7 +76,7 @@ namespace
                    const StringView  & mid,
                    const Quark       & key_mid)
   {
-    register int b=0, e=0;
+    register uint8_t b=0, e=0;
     register const char *k, *m;
     const StringView& key (key_mid.to_view());
     const int shorter = (int) std::min (key.len, mid.len);
@@ -95,8 +95,8 @@ namespace
       if (*k-- != *m--)
         break;
 
-    setme.b = (char) b;
-    setme.e = (char) e;
+    setme.b = b;
+    setme.e = e;
     setme.mid = mid.str + b;
     setme.midlen = mid.len - e - b;
   }
@@ -113,9 +113,9 @@ namespace
     }
 
     const StringView& key (key_mid.to_view());
-    const int b (mid.str[0]);
-    const int e (mid.str[1]);
-    const int m (mid.len - 2);
+    const uint8_t b (mid.str[0]);
+    const uint8_t e (mid.str[1]);
+    const size_t m (mid.len - 2);
     const size_t n = b + e + m;
     setme.resize (n);
     char * pch = &setme[0];
