@@ -138,11 +138,14 @@ void
 StringView :: ltrim ()
 {
   // strip leading whitespace
-  while (!empty()) {
-    const gunichar ch (g_utf8_get_char (str));
-    if (!g_unichar_isspace (ch))
-      break;
-    eat_chars (g_unichar_to_utf8 (ch, 0));
+  if (!empty()) {
+    const char *p(str), *end(p+len);
+    while (p < end) {
+      if (!g_unichar_isspace (g_utf8_get_char (p)))
+        break;
+      p = g_utf8_next_char (p);
+    }
+    eat_chars (p-str);
   }
 }
 
