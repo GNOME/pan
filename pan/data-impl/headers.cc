@@ -688,37 +688,36 @@ DataImpl :: save_headers (DataIO                       & data_io,
   }
   else
   {
-    std::ostream * out (data_io.write_group_headers(group));
+    std::ostream& out (*data_io.write_group_headers(group));
 
-    *out << "#\n"
-            "# This file has three sections.\n"
-            "#\n"
-            "# A. A shorthand table for the most frequent groups in the xrefs.\n"
-            "#    The first line tells the number of elements to follow,\n"
-            "#    then one line per entry with a one-character shorthand and full name.\n"
-            "#\n"
-            "# B. A shorthand table for the most freqent author names.\n"
-            "#    This is formatted just like the other shorthand table.\n"
-            "#    (sorted by post count, so it's also a most-frequent-posters list...)\n"
-            "#\n"
-            "# C. The group's headers section.\n"
-            "#    The first line tells the number of articles to follow,\n"
-            "#    then articles which each have the following lines:\n"
-            "#    1. message-id\n"
-            "#    2. subject\n"
-            "#    3. author\n"
-            "#    4. references. This line is omitted if the Article has an empty References header.\n"
-            "#    5. time-posted. This is a time_t (see http://en.wikipedia.org/wiki/Unix_time)\n"
-            "#    6. xref line, server1:group1:number1 server2:group2:number2 ...\n"
-            "#    7. has-attachments [parts-total-count parts-found-count] line-count\n"
-            "#       If has-attachments isn't 't' (for true), fields 2 and 3 are omitted.\n"
-            "#       If fields 2 and 3 are equal, the article is `complete'.\n"
-            "#    8. One line per parts-found-count: part-index message-id byte-count\n"
-            "#       a 'message-id' of '\"' is shorthand meaning use the message-id from line 1.\n"
-            "#\n";
+    out << "#\n"
+           "# This file has three sections.\n"
+           "#\n"
+           "# A. A shorthand table for the most frequent groups in the xrefs.\n"
+           "#    The first line tells the number of elements to follow,\n"
+           "#    then one line per entry with a one-character shorthand and full name.\n"
+           "#\n"
+           "# B. A shorthand table for the most freqent author names.\n"
+           "#    This is formatted just like the other shorthand table.\n"
+           "#    (sorted by post count, so it's also a most-frequent-posters list...)\n"
+           "#\n"
+           "# C. The group's headers section.\n"
+           "#    The first line tells the number of articles to follow,\n"
+           "#    then articles which each have the following lines:\n"
+           "#    1. message-id\n"
+           "#    2. subject\n"
+           "#    3. author\n"
+           "#    4. references. This line is omitted if the Article has an empty References header.\n"
+           "#    5. time-posted. This is a time_t (see http://en.wikipedia.org/wiki/Unix_time)\n"
+           "#    6. xref line, server1:group1:number1 server2:group2:number2 ...\n"
+           "#    7. has-attachments [parts-total-count parts-found-count] line-count\n"
+           "#       If has-attachments isn't 't' (for true), fields 2 and 3 are omitted.\n"
+           "#       If fields 2 and 3 are equal, the article is `complete'.\n"
+           "#    8. One line per parts-found-count: part-index message-id byte-count\n"
+           "#\n";
 
     // lines moved from line 8 to line 7 in 0.115, causing version 2
-    *out << "2\t # file format version number\n";
+    out << "2\t # file format version number\n";
 
     // xref lookup section
     frequency_t frequency;
@@ -727,7 +726,7 @@ DataImpl :: save_headers (DataIO                       & data_io,
         ++frequency[xit->group];
     QuarkToSymbol xref_qts;
     build_qts (frequency, xref_qts);
-    xref_qts.write (*out, "xref shorthand count");
+    xref_qts.write (out, "xref shorthand count");
 
     // author lookup section
     frequency.clear ();
@@ -735,10 +734,10 @@ DataImpl :: save_headers (DataIO                       & data_io,
       ++frequency[(*ait)->author];
     QuarkToSymbol author_qts;
     build_qts (frequency, author_qts);
-    author_qts.write (*out, "author shorthand count");
+    author_qts.write (out, "author shorthand count");
 
     // header section
-    *out << articles.size() << endl;
+    out << articles.size() << endl;
     std::string references;
     foreach_const (std::vector<Article*>, articles, ait)
     {
@@ -749,42 +748,53 @@ DataImpl :: save_headers (DataIO                       & data_io,
       h->build_references_header (a, references);
 
       // message-id, subject, author
-      *out << message_id << "\n\t"
-           << a->subject << "\n\t"
-           << author_qts(a->author) << "\n\t";
+      out << message_id << "\n\t"
+          << a->subject << "\n\t"
+          << author_qts(a->author) << "\n\t";
       // references line *IF* the article has a References header
       if (!references.empty())
-        *out << references << "\n\t";
+        out << references << "\n\t";
 
       // date
-      *out << a->time_posted << "\n\t";
+      out << a->time_posted << "\n\t";
 
       // xref
-      foreach_const (Xref, a->xref, xit)
-        *out << xref_qts(xit->server) << ':' << xref_qts(xit->group) << ':' << xit->number << ' ';
-      *out << "\n\t";
+      foreach_const (Xref, a->xref, xit) {
+        out << xref_qts(xit->server);
+        out.put(':');
+        out << xref_qts(xit->group);
+        out.put(':');
+        out << xit->number;
+        out.put(' ');
+      }
+      out << "\n\t";
 
       // is_binary [total_part_count found_part_count]
-      *out << (a->is_binary ? 't' : 'f');
-      if (a->is_binary)
-        *out << ' ' << a->get_total_part_count() << ' ' << a->get_found_part_count();
-      *out << ' ' << a->lines << '\n';
+      out.put (a->is_binary ? 't' : 'f');
+      if (a->is_binary) {
+        out.put(' ');
+        out << a->get_total_part_count();
+        out.put(' ');
+        out << a->get_found_part_count();
+      }
+      out.put(' ');
+      out << a->lines;
+      out.put('\n');
 
       // one line per foundPartCount (part-index message-id bytes lines)
       for (Article::part_iterator pit(a->pbegin()), end(a->pend()); pit!=end; ++pit) {
+        out.put('\t'); out << pit.number();
+        out.put (' ');
+        out << pit.mid();
+        out.put (' ');
+        out << pit.bytes();
+        out.put ('\n');
         ++part_count;
-        const std::string& part_mid = pit.mid ();
-        *out << '\t' << pit.number() << ' ';
-        if (message_id.to_view() == part_mid)
-          *out << '"';
-        else
-          *out << part_mid;
-        *out << ' ' << pit.bytes() << '\n';
       }
     }
 
-    success = !out->fail ();
-    data_io.write_done (out);
+    success = !out.fail ();
+    data_io.write_done (&out);
     save_group_xovers (data_io);
   }
 
@@ -805,8 +815,8 @@ DataImpl :: save_headers (DataIO& data_io, const Quark& group) const
    const GroupHeaders * h (get_group_headers (group));
    std::vector<Article*> articles;
    foreach_const (nodes_t, h->_nodes, it)
-      if (it->second->_article)
-         articles.push_back (it->second->_article);
+     if (it->second->_article)
+       articles.push_back (it->second->_article);
 
    unsigned long part_count (0ul);
    unsigned long article_count (0ul);

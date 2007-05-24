@@ -210,7 +210,7 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
 
     // write this server's newsrc
     const std::string& filename (sit->second.newsrc_filename);
-    std::ostream * out (data_io.write_file (filename));
+    std::ostream& out (*data_io.write_file (filename));
     std::string newsrc_string;
     alpha_groups_t::const_iterator sub_it (_subscribed.begin());
     const alpha_groups_t::const_iterator sub_end(_subscribed.end());
@@ -221,20 +221,23 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
       //const bool subscribed (_subscribed.count (group));
       while (sub_it!=sub_end && o (*sub_it, group)) ++sub_it; // see comment for 'o' above
       const bool subscribed (sub_it!=sub_end && *sub_it==group);
-      *out << group << (subscribed ? ':' : '!');
+      out << group;
+      out.put (subscribed ? ':' : '!');
 
       // if the group's been read, save its read number ranges...
       const ReadGroup::Server * rgs (find_read_group_server (group, server));
       if (rgs != 0) {
         newsrc_string.clear ();
         rgs->_read.to_string (newsrc_string);
-        if (!newsrc_string.empty())
-          *out << ' ' << newsrc_string;
+        if (!newsrc_string.empty()) {
+          out.put (' ');
+          out << newsrc_string;
+        }
       }
 
-      *out << '\n';
+      out.put ('\n');
     }
-    data_io.write_done (out);
+    data_io.write_done (&out);
   }
 }
 
@@ -285,19 +288,23 @@ DataImpl :: save_group_permissions (DataIO& data_io) const
   if (_unit_test)
     return;
 
-  std::ostream * out (data_io.write_group_permissions ());
+  std::ostream& out (*data_io.write_group_permissions ());
 
   typedef std::map<Quark, char, AlphabeticalQuarkOrdering> tmp_t;
   tmp_t tmp;
   foreach_const (groups_t, _moderated, it) tmp[*it] = 'm';
   foreach_const (groups_t, _nopost, it) tmp[*it] = 'n';
   
-  *out << "# Permissions: y means posting ok; n means posting not okay; m means moderated.\n"
-       << "# Since almost all groups allow posting, Pan assumes that as the default.\n"
-       << "# Only moderated or no-posting groups are listed here.\n";
-  foreach_const (tmp_t, tmp, it)
-    *out << it->first << ':' << it->second << '\n';
-  data_io.write_done (out);
+  out << "# Permissions: y means posting ok; n means posting not okay; m means moderated.\n"
+      << "# Since almost all groups allow posting, Pan assumes that as the default.\n"
+      << "# Only moderated or no-posting groups are listed here.\n";
+  foreach_const (tmp_t, tmp, it) {
+    out << it->first;
+    out.put (':');
+    out << it->second;
+    out.put ('\n');
+  }
+  data_io.write_done (&out);
 }
 
 /***
@@ -373,10 +380,14 @@ DataImpl :: save_group_descriptions (DataIO& data_io) const
   foreach_const (descriptions_t, _descriptions, it)
     tmp[it->first] = it->second;
 
-  std::ostream * out (data_io.write_group_descriptions ());
-  foreach_const (tmp_t, tmp, it)
-    *out << it->first << ':' << it->second << '\n';
-  data_io.write_done (out);
+  std::ostream& out (*data_io.write_group_descriptions ());
+  foreach_const (tmp_t, tmp, it) {
+    out << it->first;
+    out.put (':');
+    out << it->second;
+    out.put ('\n');
+  }
+  data_io.write_done (&out);
 }
 
 namespace
@@ -400,7 +411,7 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
   if (_unit_test)
     return;
 
-  std::ostream * out (data_io.write_group_xovers ());
+  std::ostream& out (*data_io.write_group_xovers ());
 
   // find the set of groups that have had an xover
   typedef std::set<Quark, AlphabeticalQuarkOrdering> xgroups_t;
@@ -416,21 +427,30 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
       xgroups.insert (git->first);
   }
 
-  *out << "# groupname totalArticleCount unreadArticleCount [server:latestXoverHigh]*\n";
+  out << "# groupname totalArticleCount unreadArticleCount [server:latestXoverHigh]*\n";
 
   // foreach xgroup
   foreach_const (xgroups_t, xgroups, it)
   {
     const Quark groupname (*it);
     const ReadGroup& g (*find_read_group (groupname));
-    *out << groupname << ' ' << g._article_count << ' ' << g._unread_count;
-    foreach_const (ReadGroup::servers_t, g._servers, i)
-      if (i->second._xover_high)
-        *out << ' ' << i->first << ':' << i->second._xover_high;
-    *out << '\n';
+    out << groupname;
+    out.put (' ');
+    out << g._article_count;
+    out.put (' ');
+    out << g._unread_count;
+    foreach_const (ReadGroup::servers_t, g._servers, i) {
+      if (i->second._xover_high) {
+        out.put (' ');
+        out << i->first;
+        out.put (':');
+        out << i->second._xover_high;
+      }
+    }
+    out.put ('\n');
   }
 
-  data_io.write_done (out);
+  data_io.write_done (&out);
 }
 
 /****

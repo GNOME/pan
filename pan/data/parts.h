@@ -78,7 +78,7 @@ namespace pan
                           const Parts& p,
                           int pos=0): reference_mid(q), parts(p), n(pos) {}
           bool operator== (const const_iterator& that)
-                           const { return &parts==&that.parts && n == that.n; }
+                           const { return (n==that.n) && (&parts==&that.parts); }
           bool operator!= (const const_iterator& that)
                            const { return !(*this == that); }
           const_iterator& operator++() { ++n; return *this; }
