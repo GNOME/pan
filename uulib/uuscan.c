@@ -627,6 +627,7 @@ ScanData (FILE *datei, char *fname, int *errcode,
   long preheaders=0, oldposition;
   long yefilesize=0, yepartends=0;
   size_t dcc, bhopc;
+  int oldcheckheaders;
 
   *errcode = UURET_OK;
   (void) UUDecodeLine (NULL, NULL, 0);          /* init */
@@ -1014,10 +1015,13 @@ ScanData (FILE *datei, char *fname, int *errcode,
 	result->begin = 1;
       }
 
+      /* don't scan for headers inside a yenc block */
+      oldcheckheaders = checkheaders;
+      checkheaders = 0;
+
       /*
        * Don't want auto-detection
        */
-
       result->uudet = YENC_ENCODED;
       continue;
     }
@@ -1031,6 +1035,9 @@ ScanData (FILE *datei, char *fname, int *errcode,
       if (!uu_more_mime)
 	break;
 #endif
+
+      /* restore the checkheaders state we had before =ybegin */
+      checkheaders = oldcheckheaders;
       continue;
     }
 
