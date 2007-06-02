@@ -1844,7 +1844,7 @@ namespace
     ActionManager& _am;
     virtual void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article& a) {
       SelectFunctor::operator() (model, iter, a);
-      _am.activate_action ("read-selected-article");
+      maybe_activate_on_idle (_view, gtk_tree_model_get_path(model,iter), 0);
     }
   };
 }
