@@ -837,7 +837,6 @@ mime :: construct_message (GMimeStream  ** istreams,
 
     GMimeMessage * message = messages[0];
     GMimeDataWrapper * wrapper = g_mime_part_get_content_object (GMIME_PART(message->mime_part));
-    std::cerr << LINE_ID << " calling reset on cat " << g_mime_stream_reset (cat) << std::endl;
     g_mime_stream_reset (cat);
     g_mime_data_wrapper_set_stream (wrapper, cat);
     g_object_unref (wrapper);
