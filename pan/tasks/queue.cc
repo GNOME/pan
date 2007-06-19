@@ -752,3 +752,48 @@ Queue :: get_task_speed_KiBps (const Task  * task,
   setme_KiBps = KiBps;
   setme_connections = connections;
 }
+
+void
+Queue :: get_stats (unsigned long   & queued_count,
+                    unsigned long   & running_count,
+                    unsigned long   & stopped_count,
+                    uint64_t        & KiB_remain,
+                    double          & KiBps,
+                    int             & hours_remain,
+                    int             & minutes_remain,
+                    int             & seconds_remain)
+{
+  KiB_remain = 0;
+  KiBps = 0;
+  queued_count = running_count = stopped_count = 0;
+  hours_remain = minutes_remain = seconds_remain = 0;
+
+  task_states_t tasks;
+  get_all_task_states (tasks);
+  foreach_const (tasks_t, tasks.tasks, it)
+  {
+    Task * task (*it);
+
+    const Queue::TaskState state (tasks.get_state (task));
+    if (state == Queue::RUNNING || state == Queue::DECODING)
+      ++running_count;
+    else if (state == Queue::STOPPED)
+      ++stopped_count;
+    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE)
+      ++queued_count;
+
+    if (state==Queue::RUNNING || state==Queue::QUEUED)
+      KiB_remain += task->get_bytes_remaining ();
+  }
+
+  const unsigned long task_count (running_count + queued_count);
+  KiBps = get_speed_KiBps ();
+  if (task_count) {
+    const double KiB ((double)KiB_remain / 1024);
+    unsigned long tmp (KiBps>0.01 ? ((unsigned long)(KiB / KiBps)) : 0);
+    seconds_remain = tmp % 60ul; tmp /= 60ul;
+    minutes_remain = tmp % 60ul; tmp /= 60ul;
+    hours_remain   = tmp;
+  }
+}
+

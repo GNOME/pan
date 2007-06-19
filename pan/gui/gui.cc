@@ -53,6 +53,7 @@ extern "C" {
 #include "progress-view.h"
 #include "profiles-dialog.h"
 #include "post-ui.h"
+#include "render-bytes.h"
 #include "save-ui.h"
 #include "score-add-ui.h"
 #include "score-view-ui.h"
@@ -1736,12 +1737,22 @@ GUI :: set_queue_size_label (unsigned int running,
   char str[128];
   char tip[128];
 
-  // build the format strings
-  g_snprintf (tip, sizeof(tip), _("%u Tasks Running, %u Tasks Total"), running, size);
+  // build the button label
   if (!size)
     g_snprintf (str, sizeof(str), _("No Tasks"));
   else
     g_snprintf (str, sizeof(str), "%s: %u/%u", _("Tasks"), running, size);
+
+  // build the tooltip
+  gulong queued, unused, stopped;
+  guint64 KiB_remain;
+  double KiBps;
+  int hr, min, sec;
+  _queue.get_stats (queued, unused, stopped,
+                    KiB_remain, KiBps,
+                    hr, min, sec);
+  g_snprintf (tip, sizeof(tip), _("%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"),
+              (running+queued), render_bytes(KiB_remain), KiBps, hr, min, sec);
 
   // update the gui
   gtk_label_set_text (GTK_LABEL(_queue_size_label), str);

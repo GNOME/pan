@@ -96,6 +96,7 @@ namespace pan
         ServerConnectionCounts(): active(0), idle(0), connecting(0), KiBps(0.0) {}
       };
       void get_full_connection_counts (std::vector<ServerConnectionCounts>& setme) const;
+                                         
 
     public:
       enum TaskState { QUEUED, RUNNING, DECODING, STOPPED, REMOVING,
@@ -130,6 +131,14 @@ namespace pan
       const Task* operator[](size_t i) const { return _tasks[i]; }
       void get_all_task_states (task_states_t& setme);
       void get_task_counts (int& active, int& total);
+      void get_stats (unsigned long   & queued_count,
+                      unsigned long   & running_count,
+                      unsigned long   & stopped_count,
+                      uint64_t        & KiB_remain,
+                      double          & KiBps,
+                      int             & hours_remain,
+                      int             & minutes_remain,
+                      int             & seconds_remain);
 
     public:
 
