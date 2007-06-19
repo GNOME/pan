@@ -41,6 +41,19 @@ namespace
     delete static_cast<PrefsDialog*>(castme);
   }
 
+#if !GTK_CHECK_VERSION(2,6,0)
+  char* gtk_combo_box_get_active_text (GtkComboBox * combo_box)
+  {
+    char * text (0);
+    GtkTreeIter  iter;
+    if (gtk_combo_box_get_active_iter (combo_box, &iter)) {
+      GtkTreeModel * model = gtk_combo_box_get_model (combo_box);
+      gtk_tree_model_get (model, &iter, 0, &text, -1);
+    }
+    return text;
+  }
+#endif
+
   void response_cb (GtkDialog * dialog, int response, gpointer unused)
   {
     gtk_widget_destroy (GTK_WIDGET(dialog));

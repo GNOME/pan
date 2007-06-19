@@ -24,6 +24,8 @@
 #include <iostream>
 #include <fstream>
 extern "C" {
+  #include <sys/types.h> // for chmod
+  #include <sys/stat.h> // for chmod
   #include <unistd.h>
   #include <glib.h>
   #include <glib/gi18n.h>

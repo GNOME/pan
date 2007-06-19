@@ -53,6 +53,10 @@ extern "C" {
 #define DEFAULT_SPELLCHECK_FLAG false
 #endif
 
+#if !GTK_CHECK_VERSION(2,6,0)
+#define GTK_STOCK_EDIT GTK_STOCK_OPEN
+#endif
+
 using namespace pan;
 
 #define USER_AGENT_PREFS_KEY "add-user-agent-header-when-posting"
