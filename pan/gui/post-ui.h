@@ -103,7 +103,7 @@ namespace pan
       TextMassager _tm;
       GtkUIManager * _uim;
       GtkActionGroup * _agroup;
-      std::string _signature;
+      std::string _current_signature;
       GtkWidget * _post_dialog;
       TaskPost * _post_task;
       typedef std::map<std::string, std::string> str2str_t;

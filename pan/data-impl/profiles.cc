@@ -90,7 +90,7 @@ namespace
       Profile& p (mc.profiles[mc.profile_name]);
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
         if (!strcmp(*k,"active"))
-          p.use_sigfile = true;
+          p.use_sigfile = !strcmp (*v, "true");
         else if (!strcmp(*k,"type")) {
           if (!strcmp (*v, "file")) p.sig_type = p.FILE;
           else if (!strcmp (*v, "command")) p.sig_type = p.COMMAND;

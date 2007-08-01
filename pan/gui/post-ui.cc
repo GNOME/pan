@@ -1344,23 +1344,40 @@ PostUI :: apply_profile_to_body ()
   }
 
   // remove the last signature
-  int index;
-  if (!GNKSA :: find_signature_delimiter (body, index))
-    index = body.size();
-  StringView v (body.c_str(), index);
-  v.rtrim ();
-  body.assign (v.str, v.len);
-  if (!body.empty())
-    body += "\n\n"; // add linefeed to the last quoted line, and add a blank line between quoted and new text
-  const int insert_pos = body.size();
+  std::string::size_type pos = body.rfind (_current_signature);
+  if (pos != body.npos) {
+    body.resize (pos);
+    StringView v (body);
+    v.rtrim ();
+    body.assign (v.str, v.len);
+  }
 
-  // insert the new signature
+  // get the new signature
   std::string sig;
-  load_signature (profile.signature_file, profile.sig_type, sig);
-  if (!sig.empty()) {
+  if (profile.use_sigfile) {
+    load_signature (profile.signature_file, profile.sig_type, sig);
     int ignored;
     if (GNKSA::find_signature_delimiter (sig, ignored) == GNKSA::SIG_NONE)
-      body += "\n\n-- \n";
+      sig = std::string("\n\n-- \n") + sig;
+  }
+  _current_signature = sig;
+
+  // add the new signature, and empty space between the
+  // body (if present), the insert point, and the new signature
+  int insert_pos;
+  if (body.empty() && sig.empty()) {
+    insert_pos = 0;
+  } else if (body.empty()) {
+    insert_pos = 0;
+    body = "\n\n";
+    body += sig;
+  } else if (sig.empty()) {
+    body += "\n\n";
+    insert_pos = body.size();
+  } else {
+    body += "\n\n";
+    insert_pos = body.size();
+    body += "\n\n";
     body += sig;
   }
 

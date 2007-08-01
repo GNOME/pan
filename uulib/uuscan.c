@@ -627,7 +627,7 @@ ScanData (FILE *datei, char *fname, int *errcode,
   long preheaders=0, oldposition;
   long yefilesize=0, yepartends=0;
   size_t dcc, bhopc;
-  int oldcheckheaders;
+  int oldcheckheaders = 0;
 
   *errcode = UURET_OK;
   (void) UUDecodeLine (NULL, NULL, 0);          /* init */
