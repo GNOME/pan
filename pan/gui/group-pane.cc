@@ -68,23 +68,20 @@ namespace
   std::string
   get_short_name (const StringView& in)
   {
-    static const StringView moderated ("moderated");
-    static const StringView d ("d");
+    StringView myline, long_token_one, long_token_two;
 
-    StringView myline, long_token;
-
-    // find the long token -- use the last, unless that's "moderated" or "d"
+	// pop off the last two tokens
     myline = in;
-    myline.pop_last_token (long_token, '.');
-    if (!myline.empty() && (long_token==moderated || long_token==d))
-      myline.pop_last_token (long_token, '.');
+    myline.pop_last_token (long_token_two, '.');
+	if (!myline.empty())
+	  myline.pop_last_token (long_token_one, '.');
 
-    // build a new string where each token is shortened except for long_token
+    // build a new string where each token is shortened except for the long_tokens
     std::string out;
     myline = in;
     StringView tok;
     while (myline.pop_token (tok, '.')) {
-      out.insert (out.end(), tok.begin(), (tok==long_token ? tok.end() : tok.begin()+1));
+      out.insert (out.end(), tok.begin(), ((tok==long_token_one || tok==long_token_two) ? tok.end() : tok.begin()+1));
       out += '.';
     }
     if (!out.empty())
