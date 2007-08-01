@@ -148,6 +148,7 @@ namespace pan
         ~Part() { delete [] packed_mid; }
         Part (const Part&);
         Part& operator= (const Part&);
+        bool operator< (const Part& that) const { return number < that.number; }
       };
       Quark reference_mid;
       number_t n_parts_found;
@@ -159,6 +160,7 @@ namespace pan
     public:
       void init (const Quark& mid, number_t n_parts=0, number_t n_found=0);
       void add_part (number_t num, const StringView& mid, bytes_t bytes);
+      void sort ();
   };
 }
 

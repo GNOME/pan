@@ -125,6 +125,7 @@ namespace
 
     else if (!strcmp (element_name, "file"))
     {
+      mc.parts.sort ();
       mc.a.set_parts (mc.parts);
 
       foreach_const (quarks_t, mc.groups, git) {

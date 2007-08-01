@@ -362,3 +362,10 @@ PartBatch :: Part :: Part (const PartBatch::Part& that):
 {
   memcpy (packed_mid, that.packed_mid, len_used);
 }
+
+void
+PartBatch :: sort (void)
+{
+  std::sort (parts.begin (), parts.end ());
+}
+
