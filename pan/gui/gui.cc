@@ -1180,11 +1180,21 @@ GUI :: do_post ()
   GMimeMessage * message = g_mime_message_new (false);
 
   // add newsgroup...
-  Quark group (_header_pane->get_group ());
-  if (group.empty())
-    group = _group_pane->get_first_selection ();
-  if (!group.empty())
-    g_mime_message_add_header (message, "Newsgroups", group.c_str());
+  std::string newsgroups;
+  const quarks_v groups (_group_pane->get_full_selection ());
+  foreach_const (quarks_v, groups, it) {
+    newsgroups += *it;
+    newsgroups += ',';
+  }
+  if (!newsgroups.empty())
+    newsgroups.resize (newsgroups.size()-1); // erase trailing comma
+  if (newsgroups.empty()) {
+    const Quark group (_header_pane->get_group());
+    if (!group.empty())
+      newsgroups = group;
+  }
+  if (!newsgroups.empty())
+    g_mime_message_add_header (message, "Newsgroups", newsgroups.c_str());
 
   // content type
   GMimePart * part = g_mime_part_new ();
