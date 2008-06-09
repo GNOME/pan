@@ -27,8 +27,8 @@
 extern "C" {
   #include <sys/types.h> // for chmod
   #include <sys/stat.h> // for chmod
+  #include <glib.h> // for g_assert
   #include <glib/gi18n.h>
-  #include <glib/gmessages.h> // for g_assert
 }
 #include <pan/general/debug.h>
 #include <pan/general/foreach.h>
