@@ -23,6 +23,11 @@
 #include <iosfwd>
 #include <string>
 
+extern "C" 
+{
+  #include <string.h>
+}
+
 namespace pan
 {
    /**

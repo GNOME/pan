@@ -4,6 +4,10 @@
 #include <pan/general/string-view.h>
 #include <pan/general/test.h>
 #include "gnksa.h"
+extern "C"
+{
+  #include "limits.h"
+}
 
 using namespace pan;
 

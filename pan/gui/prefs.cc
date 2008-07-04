@@ -25,6 +25,7 @@
 extern "C" {
   #include <glib.h>
   #include <glib/gi18n.h>
+  #include <stdlib.h>
 }
 #include <pan/general/debug.h>
 #include <pan/general/foreach.h>

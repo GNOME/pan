@@ -24,6 +24,11 @@
 #include <pan/general/string-view.h>
 #include "socket-impl-scripted.h"
 
+extern "C"
+{
+  #include "stdlib.h"
+}
+
 using namespace pan;
 
 const std::string ScriptedSocket::ABORT ("[[[ABORT]]]");

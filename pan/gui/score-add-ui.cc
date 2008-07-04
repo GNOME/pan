@@ -21,6 +21,7 @@
 #include <cassert>
 extern "C" {
   #include <glib/gi18n.h>
+  #include "limits.h"
 }
 #include <pan/general/debug.h>
 #include <pan/general/text-match.h>

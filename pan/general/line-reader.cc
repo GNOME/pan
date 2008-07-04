@@ -1,6 +1,7 @@
 #include <config.h>
 #include <cstdio>
 extern "C"{ 
+  #include <stdlib.h>
   #include <glib/gi18n.h>
 }
 #include <cerrno>

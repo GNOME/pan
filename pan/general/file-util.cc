@@ -38,6 +38,7 @@ extern "C"
 #include "messages.h"
 #include "file-util.h"
 #include "utf8-utils.h"
+#include <algorithm>
 
 using namespace pan;
 

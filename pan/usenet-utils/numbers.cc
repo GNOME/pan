@@ -21,6 +21,7 @@
 #include <cctype>
 #include <pan/general/string-view.h>
 #include "numbers.h"
+#include <algorithm>
 
 using namespace pan;
 

@@ -24,6 +24,7 @@ extern "C" {
   #include <glib.h>
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
+  #include "limits.h"
 }
 #include <pan/general/foreach.h>
 #include <pan/general/quark.h>

@@ -40,6 +40,9 @@
 #endif
 
 #define get16bits(d) (*((const uint16_t *) (d)))
+extern "C"{ 
+  #include <string.h>
+}
 
 namespace pan
 {
@@ -231,7 +234,7 @@ namespace pan
       if (a.empty() && b.empty()) return false;
       if (a.empty()) return true;
       if (b.empty()) return false;
-      return std::strcmp (a.c_str(), b.c_str()) < 0;
+      return ::strcmp (a.c_str(), b.c_str()) < 0;
     }
     bool operator() (const Quark* a, const Quark* b) const {
       return (*this) (*a, *b);
