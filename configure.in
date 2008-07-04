@@ -40,11 +40,10 @@ AC_PROG_RANLIB
 dnl for libuu
 AC_CHECK_HEADERS([errno.h fcntl.h])
 
-AC_PROG_INTLTOOL([0.23],[no-xml])
+IT_PROG_INTLTOOL([0.35.5],[no-xml])
 GETTEXT_PACKAGE=pan
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[Gettext package])
-ALL_LINGUAS="am ar az bg ca cs da de dz el en_CA en_GB es et fi fr ga gl hr hu it ja ko lt lv ms nb nl oc pl pt pt_BR ro ru sk sl sq sr sr@Latn sv tr uk vi zh_CN zh_TW"
 AM_GLIB_GNU_GETTEXT
 panlocaledir='${prefix}/${DATADIRNAME}/locale'
 
