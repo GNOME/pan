@@ -141,10 +141,10 @@ namespace pan
         number_t number;
         bytes_t bytes;
         size_t len_used;
-        size_t len_alloced;
         char * packed_mid;
         Part(): number(0), bytes(0),
-                len_used(0), len_alloced(0), packed_mid(0) {}
+                len_used(0), packed_mid(0) {}
+        Part(number_t n, bytes_t b, size_t l);
         ~Part() { delete [] packed_mid; }
         Part (const Part&);
         Part& operator= (const Part&);

@@ -303,8 +303,7 @@ PartBatch :: init (const Quark  & mid,
   this->n_parts_total = n_parts_total;
   this->n_parts_found = 0; // they haven't been added yet
 
-  if (n_parts_found > parts.size())
-    parts.resize (n_parts_found);
+  parts.clear();
 }
 
 void
@@ -312,21 +311,10 @@ PartBatch :: add_part (number_t            number,
                        const StringView  & mid,
                        bytes_t             bytes)
 {
-  if (n_parts_found >= parts.size())
-    parts.resize (n_parts_found+1);
-
-  Part& p = *(&parts.front() + n_parts_found++);
-  p.number = number;
-  p.bytes = bytes;
 
   Packer packer;
   pack_message_id (packer, mid, reference_mid);
-  p.len_used = packer.size ();
-  if (p.len_alloced < p.len_used) {
-    delete [] p.packed_mid;
-    p.packed_mid = new char [p.len_used];
-    p.len_alloced = p.len_used;
-  }
+  Part p(number,bytes,packer.size());
   packer.pack (p.packed_mid);
   packed_mids_len += p.len_used;
 
@@ -337,8 +325,9 @@ PartBatch :: add_part (number_t            number,
   assert (mid == tmp);
 #endif
 
-  if (n_parts_total < n_parts_found)
+  if (n_parts_total < ++n_parts_found)
       n_parts_total = n_parts_found;
+  parts.push_back(p);
 }
 
 PartBatch :: Part&
@@ -346,7 +335,7 @@ PartBatch :: Part :: operator= (const PartBatch :: Part& that)
 {
   number =  that.number;
   bytes =  that.bytes;
-  len_used = len_alloced = that.len_used;
+  len_used = that.len_used;
   delete [] packed_mid;
   packed_mid = new char [len_used];
   memcpy (packed_mid, that.packed_mid, len_used);
@@ -357,10 +346,16 @@ PartBatch :: Part :: Part (const PartBatch::Part& that):
   number (that.number),
   bytes (that.bytes),
   len_used (that.len_used),
-  len_alloced (that.len_used),
   packed_mid (new char [len_used])
 {
   memcpy (packed_mid, that.packed_mid, len_used);
+}
+PartBatch :: Part :: Part (number_t n, bytes_t b, size_t l):
+    number(n),
+    bytes(b),
+    len_used(l),
+    packed_mid(new char [len_used])
+{
 }
 
 void
