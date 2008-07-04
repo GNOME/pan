@@ -20,11 +20,11 @@
 #include <config.h>
 #include <cstdlib>
 #include <cstring>
+#include <climits>
 extern "C" {
   #include <glib.h>
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
-  #include "limits.h"
 }
 #include <pan/general/foreach.h>
 #include <pan/general/quark.h>

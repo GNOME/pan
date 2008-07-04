@@ -21,12 +21,12 @@
 #include <string>
 #include <vector>
 #include <string.h>
-#include <glib.h>
 extern "C" {
 #include <glib/gi18n.h>
 }
 #include <locale.h>
 #include <gmime/gmime.h>
+#include <pan/general/gassert.h>
 #include <pan/general/debug.h>
 #include <pan/general/foreach.h>
 #include <pan/general/log.h>
@@ -91,7 +91,7 @@ namespace
       return 0;
 
     for (i = 0; i < G_N_ELEMENTS(locales); i++) {
-      for (j=0; locale[j] && locales[i].locale[j] == locale[j]; j++);
+      for (j=0; locale[j] && locales[i].locale[j] == locale[j]; j++) ;
       if (j > maxfit) {
         maxfit = j;
         maxpos = i;

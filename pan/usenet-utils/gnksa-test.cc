@@ -1,13 +1,10 @@
 #include <config.h>
+#include <climits>
 #include <iostream>
 #include <string>
 #include <pan/general/string-view.h>
 #include <pan/general/test.h>
 #include "gnksa.h"
-extern "C"
-{
-  #include "limits.h"
-}
 
 using namespace pan;
 

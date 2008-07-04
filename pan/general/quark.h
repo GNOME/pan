@@ -26,6 +26,7 @@
 #include <set>
 #include <string>
 #include <climits>
+#include <string>
 #include <vector>
 
 #if defined(HAVE_EXT_HASH_SET)
@@ -40,9 +41,6 @@
 #endif
 
 #define get16bits(d) (*((const uint16_t *) (d)))
-extern "C"{ 
-  #include <string.h>
-}
 
 namespace pan
 {

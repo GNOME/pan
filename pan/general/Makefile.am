@@ -21,6 +21,7 @@ noinst_HEADERS = \
  e-util.h \
  file-util.h \
  foreach.h \
+ gassert.h \
  line-reader.h \
  locking.h \
  log.h \

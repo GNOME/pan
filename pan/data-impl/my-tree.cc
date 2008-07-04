@@ -19,9 +19,9 @@
 
 #include <config.h>
 #include <cassert>
-#include <glib.h> // for g_assert
 #include <pan/general/debug.h>
 #include <pan/general/foreach.h>
+#include <pan/general/gassert.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/filter-info.h>
 #include <pan/data/article.h>

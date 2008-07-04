@@ -19,15 +19,11 @@
 
 #include <config.h>
 #include <cassert>
+#include <cstdlib>
 #include <pan/general/debug.h>
 #include <pan/general/messages.h>
 #include <pan/general/string-view.h>
 #include "socket-impl-scripted.h"
-
-extern "C"
-{
-  #include "stdlib.h"
-}
 
 using namespace pan;
 

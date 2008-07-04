@@ -26,7 +26,6 @@
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/data.h>
-#include <glib.h>
 #include <gtk/gtkwindow.h>
 #include "group-prefs.h"
 #include "prefs.h"

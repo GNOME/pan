@@ -1,7 +1,7 @@
 #include <config.h>
 #include <cstdio>
+#include <cstdlib>
 extern "C"{ 
-  #include <stdlib.h>
   #include <glib/gi18n.h>
 }
 #include <cerrno>

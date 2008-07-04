@@ -31,11 +31,11 @@
 
 extern "C" {
   #include <unistd.h>
-  #include <glib.h>
   #include <glib/gi18n.h>
 }
 
 #include <pan/general/file-util.h>
+#include <pan/general/gassert.h>
 #include <pan/general/log.h>
 #include <pan/general/worker-pool.h>
 

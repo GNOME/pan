@@ -26,10 +26,11 @@ extern "C" {
   #include <stddef.h>
   #include <stdio.h>
   #include <glib/gtypes.h>
-  #include <glib.h>
 }
 #include <pan/general/string-view.h>
 
+#include <glibconfig.h> // get the version number
+#include <glib/gutils.h> // get GLIB_CHECK_VERSION
 #if GLIB_CHECK_VERSION(2,6,0)
 extern "C" {
   #include <glib/gstdio.h>
