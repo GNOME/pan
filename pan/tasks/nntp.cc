@@ -63,6 +63,7 @@ namespace
 
       SERVER_READY               = 200,
       SERVER_READY_NO_POSTING    = 201,
+      SERVER_READY_STREAMING_OK  = 203,
 
       GOODBYE                    = 205,
 
@@ -147,6 +148,7 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
    {
       case SERVER_READY:
       case SERVER_READY_NO_POSTING:
+      case SERVER_READY_STREAMING_OK:
          state = CMD_DONE;
          break;
 
