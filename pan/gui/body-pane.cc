@@ -815,12 +815,38 @@ namespace
       GMimeStream * mem_stream (g_mime_stream_mem_new ());
       g_mime_data_wrapper_write_to_stream (wrapper, mem_stream);
       GByteArray * buffer (GMIME_STREAM_MEM(mem_stream)->buffer);
-      if (buffer->len)
-          gdk_pixbuf_loader_write (l, (guchar*)buffer->data, buffer->len, &err);
+      gsize bytesLeft = buffer->len;
+      guchar * data = buffer->data;
+
+      // ticket #467446 - workaround gdkpixbuf <= 2.12.x's 
+      // jpg loader bug (#494667) by feeding the loader in
+      // smaller chunks
+      while( bytesLeft > 0 )
+      {
+          const gsize n = MIN( 4096, bytesLeft );
+
+          gdk_pixbuf_loader_write (l, data, n, &err);
+          if (err) {
+            Log::add_err (err->message);
+            g_clear_error (&err);
+            break;
+          }
+
+          bytesLeft -= n;
+          data += n;
+      }
+
       g_object_unref (mem_stream);
       g_object_unref (wrapper);
     }
-  
+
+    // flush the loader
+    gdk_pixbuf_loader_close (l, &err);
+    if (err) {
+      Log::add_err (err->message);
+      g_clear_error (&err);
+    }
+
     // create the pixbuf
     GdkPixbuf * pixbuf (0);
     if (!err)
@@ -831,11 +857,6 @@ namespace
     }
 
     // cleanup
-    gdk_pixbuf_loader_close (l, &err);
-    if (err) {
-      Log::add_err (err->message);
-      g_clear_error (&err);
-    }
     if (pixbuf)
       g_object_ref (G_OBJECT(pixbuf));
     g_object_unref (G_OBJECT(l));
@@ -1210,7 +1231,7 @@ BodyPane :: show_idle_cb (gpointer pane)
   return false;
 }
 void
-BodyPane :: show_cb (GtkWidget* w, gpointer pane)
+BodyPane :: show_cb (GtkWidget* w G_GNUC_UNUSED, gpointer pane)
 {
   g_idle_add (show_idle_cb, pane);
 }
@@ -1259,8 +1280,8 @@ BodyPane :: text_size_allocated_idle ()
 }
 
 void
-BodyPane :: text_size_allocated (GtkWidget     * text,
-                                 GtkAllocation * allocation,
+BodyPane :: text_size_allocated (GtkWidget     * text        G_GNUC_UNUSED,
+                                 GtkAllocation * allocation  G_GNUC_UNUSED,
                                  gpointer        pane)
 {
   if (!text_size_allocated_idle_tag)
@@ -1272,7 +1293,7 @@ BodyPane :: text_size_allocated (GtkWidget     * text,
 ***/
 
 void
-BodyPane :: copy_url_cb (GtkMenuItem *mi, gpointer pane)
+BodyPane :: copy_url_cb (GtkMenuItem *mi G_GNUC_UNUSED, gpointer pane)
 {
   static_cast<BodyPane*>(pane)->copy_url ();
 }
@@ -1290,7 +1311,7 @@ BodyPane :: populate_popup_cb (GtkTextView *v, GtkMenu *m, gpointer pane)
   static_cast<BodyPane*>(pane)->populate_popup(v, m);
 }
 void
-BodyPane :: populate_popup (GtkTextView *v, GtkMenu *m)
+BodyPane :: populate_popup (GtkTextView *v G_GNUC_UNUSED, GtkMenu *m)
 {
   // menu separator comes first.
   GtkWidget * mi = gtk_menu_item_new();
@@ -1564,7 +1585,7 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     const std::string reply_to   (get_header (_message, "Reply-To",    message_charset, group_charset));
     if (is_reply || fup_to=="poster") {
       const std::string& to (reply_to.empty() ? from : reply_to);
-      g_mime_message_add_recipients_from_string (msg, GMIME_RECIPIENT_TYPE_TO, to.c_str());
+      g_mime_message_add_recipients_from_string (msg, (char*)GMIME_RECIPIENT_TYPE_TO, to.c_str());
     } else {
       const std::string& groups (fup_to.empty() ? newsgroups : fup_to);
       g_mime_message_add_header (msg, "Newsgroups", groups.c_str());
@@ -1678,7 +1699,7 @@ BodyPane :: refresh_fonts ()
 }
 
 void
-BodyPane :: on_prefs_flag_changed (const StringView& key, bool value)
+BodyPane :: on_prefs_flag_changed (const StringView& key, bool value G_GNUC_UNUSED)
 {
   if ((key=="body-pane-font-enabled") || (key=="monospace-font-enabled"))
     refresh_fonts ();
@@ -1690,7 +1711,7 @@ BodyPane :: on_prefs_flag_changed (const StringView& key, bool value)
 }
 
 void
-BodyPane :: on_prefs_string_changed (const StringView& key, const StringView& value)
+BodyPane :: on_prefs_string_changed (const StringView& key, const StringView& value G_GNUC_UNUSED)
 {
   if ((key=="body-pane-font") || (key=="monospace-font"))
     refresh_fonts ();
@@ -1698,7 +1719,7 @@ BodyPane :: on_prefs_string_changed (const StringView& key, const StringView& va
 }
 
 void
-BodyPane :: on_prefs_color_changed (const StringView& key, const GdkColor& color)
+BodyPane :: on_prefs_color_changed (const StringView& key, const GdkColor& color G_GNUC_UNUSED)
 {
   if (key.strstr ("body-pane-color") != 0)
     refresh_colors ();
