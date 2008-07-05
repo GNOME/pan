@@ -43,8 +43,6 @@
 #define UINT32_MAX             (4294967295U)
 #endif
 
-#define get16bits(d) (*((const uint16_t *) (d)))
-
 namespace pan
 {
   /**
@@ -84,6 +82,11 @@ namespace pan
 
       struct StringViewHash
       {
+        static uint16_t get16bits( const char * in )
+        {
+          return (in[0]<<8) | in[1];
+        }
+
         /**
          * Paul Hsieh's "SuperFastHash" algorithm, from
          * http://www.azillionmonkeys.com/qed/hash.html
