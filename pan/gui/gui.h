@@ -64,10 +64,10 @@ namespace pan
       virtual void disable_accelerators_when_focused (GtkWidget * entry) const;
 
     public: // Prefs::Listener
-      virtual void on_prefs_flag_changed (const StringView& key, bool value);
-      virtual void on_prefs_int_changed (const StringView& key, int value) { }
+      virtual void on_prefs_flag_changed   (const StringView& key, bool value);
+      virtual void on_prefs_int_changed    (const StringView&,     int) { }
       virtual void on_prefs_string_changed (const StringView& key, const StringView& value);
-      virtual void on_prefs_color_changed (const StringView& key, const GdkColor& value) { }
+      virtual void on_prefs_color_changed  (const StringView&,     const GdkColor&) { }
 
     public: // PanUI
       virtual void do_prompt_for_charset ();
@@ -158,9 +158,9 @@ namespace pan
     private: // Queue::Listener
       friend class Queue;
       virtual void on_queue_task_active_changed (Queue&, Task&, bool active);
-      virtual void on_queue_tasks_added (Queue&, int index, int count) { }
-      virtual void on_queue_task_removed (Queue&, Task&, int pos) { }
-      virtual void on_queue_task_moved (Queue&, Task&, int new_pos, int old_pos) { }
+      virtual void on_queue_tasks_added (Queue&, int index UNUSED, int count UNUSED) { }
+      virtual void on_queue_task_removed (Queue&, Task&, int pos UNUSED) { }
+      virtual void on_queue_task_moved (Queue&, Task&, int new_pos UNUSED, int old_pos UNUSED) { }
       virtual void on_queue_connection_count_changed (Queue&, int count);
       virtual void on_queue_size_changed (Queue&, int active, int total);
       virtual void on_queue_online_changed (Queue&, bool online);

@@ -28,8 +28,8 @@ extern "C" {
   #include <gmime/gmime.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/usenet-utils/mime-utils.h>

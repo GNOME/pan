@@ -24,7 +24,7 @@ struct MyFilenameToReader: public Scorefile::FilenameToReader
 };
 
 int
-main (int argc, char *argv[])
+main( )
 {
   MyFilenameToReader * my_ftr = new MyFilenameToReader ();
 

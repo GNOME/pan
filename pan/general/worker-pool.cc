@@ -22,7 +22,8 @@
  */
 #include <cassert>
 #include <glib/gmain.h> // for g_idle_add
-#include <pan/general/foreach.h>
+#include <pan/general/debug.h>
+#include <pan/general/macros.h>
 #include "worker-pool.h"
 
 using namespace pan;
@@ -68,7 +69,7 @@ WorkerPool :: push_work (Worker *w, Worker::Listener *l, bool delete_worker)
 }
 
 void
-WorkerPool :: Worker :: worker_thread_func (gpointer g, gpointer unused)
+WorkerPool :: Worker :: worker_thread_func (gpointer g, gpointer unused UNUSED)
 {
   static_cast<Worker*>(g)->do_work ();
   g_idle_add (main_thread_cleanup_cb, g); // jump to main_thread_cleanup_cb

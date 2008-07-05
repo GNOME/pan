@@ -24,7 +24,7 @@ extern "C" {
   #include <gtk/gtk.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/tasks/queue.h>
 #include <pan/icons/pan-pixbufs.h>
@@ -47,7 +47,7 @@ enum
 typedef Queue::tasks_t tasks_t;
 
 void
-TaskPane :: get_selected_tasks_foreach (GtkTreeModel *model, GtkTreePath *path, GtkTreeIter *iter, gpointer list_g)
+TaskPane :: get_selected_tasks_foreach (GtkTreeModel *model, GtkTreePath *, GtkTreeIter *iter, gpointer list_g)
 {
   Task * task (0);
   gtk_tree_model_get (model, iter, COL_TASK_POINTER, &task, -1);
@@ -95,31 +95,31 @@ void TaskPane :: online_toggled_cb (GtkToggleButton* b, Queue *queue)
 {
   queue->set_online (gtk_toggle_button_get_active (b));
 }
-void TaskPane :: up_clicked_cb (GtkButton* b, TaskPane* pane)
+void TaskPane :: up_clicked_cb (GtkButton*, TaskPane* pane)
 {
   pane->_queue.move_up (pane->get_selected_tasks());
 }
-void TaskPane :: down_clicked_cb (GtkButton* b, TaskPane* pane)
+void TaskPane :: down_clicked_cb (GtkButton*, TaskPane* pane)
 {
   pane->_queue.move_down (pane->get_selected_tasks());
 }
-void TaskPane :: top_clicked_cb (GtkButton* b, TaskPane* pane)
+void TaskPane :: top_clicked_cb (GtkButton*, TaskPane* pane)
 {
   pane->_queue.move_top (pane->get_selected_tasks());
 }
-void TaskPane :: bottom_clicked_cb (GtkButton* b, TaskPane* pane)
+void TaskPane :: bottom_clicked_cb (GtkButton*, TaskPane* pane)
 {
   pane->_queue.move_bottom (pane->get_selected_tasks());
 }
-void TaskPane :: stop_clicked_cb (GtkButton* b, TaskPane* pane)
+void TaskPane :: stop_clicked_cb (GtkButton*, TaskPane* pane)
 {
   pane->_queue.stop_tasks (pane->get_selected_tasks());
 }
-void TaskPane :: delete_clicked_cb (GtkButton* b, TaskPane* pane)
+void TaskPane :: delete_clicked_cb (GtkButton*, TaskPane* pane)
 {
   pane->_queue.remove_tasks (pane->get_selected_tasks());
 }
-void TaskPane :: restart_clicked_cb (GtkButton* b, TaskPane* pane)
+void TaskPane :: restart_clicked_cb (GtkButton*, TaskPane* pane)
 {
   pane->_queue.restart_tasks (pane->get_selected_tasks());
 }
@@ -157,7 +157,7 @@ TaskPane :: on_queue_tasks_added (Queue& queue, int index, int count)
 }
 
 void
-TaskPane :: on_queue_task_removed (Queue& queue, Task& task, int index)
+TaskPane :: on_queue_task_removed (Queue&, Task& task, int index)
 {
   const int list_index (find_task_index (_store, &task));
   assert (list_index == index);
@@ -167,7 +167,7 @@ TaskPane :: on_queue_task_removed (Queue& queue, Task& task, int index)
 }
 
 void
-TaskPane :: on_queue_task_moved (Queue& queue, Task& task, int new_index, int old_index)
+TaskPane :: on_queue_task_moved (Queue&, Task&, int new_index, int old_index)
 {
   const int count (gtk_tree_model_iter_n_children (GTK_TREE_MODEL(_store), NULL));
   std::vector<int> v (count);
@@ -182,9 +182,9 @@ TaskPane :: on_queue_task_moved (Queue& queue, Task& task, int new_index, int ol
   gtk_list_store_reorder (_store, &v.front());
 }
 
-void TaskPane :: on_queue_task_active_changed (Queue&, Task&, bool active) { }
-void TaskPane :: on_queue_connection_count_changed (Queue&, int count) { }
-void TaskPane :: on_queue_size_changed (Queue&, int active, int total) { }
+void TaskPane :: on_queue_task_active_changed (Queue&, Task&, bool) { }
+void TaskPane :: on_queue_connection_count_changed (Queue&, int) { }
+void TaskPane :: on_queue_size_changed (Queue&, int, int) { }
 
 void TaskPane :: on_queue_online_changed (Queue&, bool online)
 {
@@ -262,7 +262,7 @@ TaskPane :: update_status (const task_states_t& tasks)
 
 gboolean
 TaskPane :: periodic_refresh_foreach (GtkTreeModel    * model,
-                                      GtkTreePath     * path,
+                                      GtkTreePath     * ,
                                       GtkTreeIter     * iter,
                                       gpointer          states_gpointer)
 {
@@ -299,7 +299,7 @@ TaskPane :: periodic_refresh (gpointer pane_gpointer)
 namespace
 {
   void
-  render_state (GtkTreeViewColumn *col,
+  render_state (GtkTreeViewColumn *,
                 GtkCellRenderer *rend,
                 GtkTreeModel *model,
                 GtkTreeIter *iter,

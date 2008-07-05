@@ -42,4 +42,13 @@ namespace pan
       std::cerr << LINE_ID << ' ' << A << '\n'; \
   } while (0)
 
+#ifndef UNUSED
+#ifdef __GNUC__
+#define UNUSED __attribute__((unused))
+#else
+#define UNUSED
+#endif
+#endif
+
+
 #endif

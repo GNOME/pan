@@ -25,7 +25,7 @@ extern "C" {
 #include <glib/gi18n.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/general/string-view.h>
 #include "gnksa.h"
 #include "message-check.h"

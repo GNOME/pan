@@ -22,6 +22,7 @@
 
 #include <gtk/gtk.h>
 #include <pan/general/e-util.h>
+#include <pan/general/macros.h> // for UNUSED
 #include <pan/data/article-cache.h>
 #include <pan/data/data.h>
 #include <pan/usenet-utils/filter-info.h>
@@ -136,14 +137,14 @@ namespace pan
       virtual void on_prefs_color_changed  (const StringView&, const GdkColor&) {}
 
     private:
-      virtual void on_queue_task_active_changed (Queue&, Task&, bool active) { }
+      virtual void on_queue_task_active_changed (Queue&, Task&, bool active UNUSED) { }
       virtual void on_queue_tasks_added (Queue&, int index, int count);
       virtual void on_queue_task_removed (Queue&, Task&, int index);
-      virtual void on_queue_task_moved (Queue&, Task&, int new_index, int old_index) { }
-      virtual void on_queue_connection_count_changed (Queue&, int count) { }
-      virtual void on_queue_size_changed (Queue&, int active, int total) { }
-      virtual void on_queue_online_changed (Queue&, bool online) { }
-      virtual void on_queue_error (Queue&, const StringView& message) { }
+      virtual void on_queue_task_moved (Queue&, Task&, int new_index UNUSED, int old_index UNUSED) { }
+      virtual void on_queue_connection_count_changed (Queue&, int count UNUSED) { }
+      virtual void on_queue_size_changed (Queue&, int active UNUSED, int total UNUSED) { }
+      virtual void on_queue_online_changed (Queue&, bool online UNUSED) { }
+      virtual void on_queue_error (Queue&, const StringView& message UNUSED) { }
 
     private:
       virtual void on_cache_added (const Quark& mid);

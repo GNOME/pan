@@ -23,7 +23,7 @@ extern "C" {
   #include <glib/gi18n.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/data/data.h>
@@ -76,7 +76,7 @@ TaskGroups :: use_nntp (NNTP * nntp)
 }
 
 void
-TaskGroups :: on_nntp_line (NNTP               * nntp,
+TaskGroups :: on_nntp_line (NNTP               * nntp UNUSED,
                             const StringView   & line)
 {
   char permission ('y');
@@ -130,7 +130,7 @@ TaskGroups :: on_nntp_line (NNTP               * nntp,
 void
 TaskGroups :: on_nntp_done (NNTP              * nntp,
                             Health              health,
-                            const StringView  & response)
+                            const StringView  & response UNUSED)
 {
   debug ("groups task got an on_nntp_done() from " << nntp->_server);
 

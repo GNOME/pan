@@ -20,11 +20,10 @@ noinst_HEADERS = \
  defgroup.h \
  e-util.h \
  file-util.h \
- foreach.h \
- gassert.h \
  line-reader.h \
  locking.h \
  log.h \
+ macros.h \
  map-vector.h \
  messages.h \
  progress.h \

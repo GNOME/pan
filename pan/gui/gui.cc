@@ -29,7 +29,7 @@ extern "C" {
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
 #include <pan/general/file-util.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/usenet-utils/scorefile.h>
 #include <pan/tasks/task-article.h>
 #include <pan/tasks/task-groups.h>
@@ -87,7 +87,7 @@ namespace
   }
 
   void
-  parent_set_cb (GtkWidget * widget, GtkObject * old_parent, gpointer ui_manager_g)
+  parent_set_cb (GtkWidget * widget, GtkObject *, gpointer ui_manager_g)
   {
     GtkWidget * toplevel = gtk_widget_get_toplevel (widget);
     if (GTK_IS_WINDOW (toplevel))
@@ -115,7 +115,7 @@ namespace
 }
 
 void
-GUI :: add_widget (GtkUIManager * merge,
+GUI :: add_widget (GtkUIManager *,
                    GtkWidget    * widget,
                    gpointer       gui_g)
 {
@@ -140,12 +140,12 @@ GUI :: add_widget (GtkUIManager * merge,
   }
 }
 
-void GUI :: show_event_log_cb (GtkWidget * w, gpointer gui_gpointer)
+void GUI :: show_event_log_cb (GtkWidget *, gpointer gui_gpointer)
 {
   static_cast<GUI*>(gui_gpointer)->activate_action ("show-log-dialog");
 }
 
-void GUI :: show_task_window_cb (GtkWidget * w, gpointer gui_gpointer)
+void GUI :: show_task_window_cb (GtkWidget *, gpointer gui_gpointer)
 {
   static_cast<GUI*>(gui_gpointer)->activate_action ("show-task-window");
 }
@@ -473,7 +473,7 @@ GUI :: get_action_widget (const char * key) const
 namespace
 {
   gboolean focus_in_cb (GtkWidget     * w,
-                        GdkEventFocus * unused,
+                        GdkEventFocus * ,
                         gpointer        accel_group_g)
   {
     GtkAccelGroup * accel_group = static_cast<GtkAccelGroup*>(accel_group_g);
@@ -482,7 +482,7 @@ namespace
   }
 
   gboolean focus_out_cb (GtkWidget     * w,
-                         GdkEventFocus * unused,
+                         GdkEventFocus * ,
                          gpointer        accel_group_g)
   {
     GtkAccelGroup * accel_group = static_cast<GtkAccelGroup*>(accel_group_g);
@@ -680,7 +680,7 @@ void GUI :: do_import_tasks ()
 
 namespace
 {
-  void task_pane_destroyed_cb (GtkWidget * w, gpointer p)
+  void task_pane_destroyed_cb (GtkWidget *, gpointer p)
   {
     TaskPane ** task_pane (static_cast<TaskPane**>(p));
     *task_pane = 0;
@@ -919,7 +919,7 @@ void GUI ::  server_list_dialog_destroyed_cb (GtkWidget * w, gpointer self)
 
 // this queues up a grouplist task for any servers that
 // were added while the server list dialog was up.
-void GUI :: server_list_dialog_destroyed (GtkWidget * w)
+void GUI :: server_list_dialog_destroyed (GtkWidget *)
 {
   quarks_t empty_servers, all_servers (_data.get_servers());
   foreach_const (quarks_t, all_servers, it) {
@@ -1295,11 +1295,11 @@ namespace
 
   enum { HORIZONTAL, VERTICAL };
 
-  void hpane_destroy_cb (GtkWidget * w, gpointer user_data)
+  void hpane_destroy_cb (GtkWidget *, gpointer)
   {
     std::cerr << LINE_ID << std::endl;
   }
-  void vpane_destroy_cb (GtkWidget * w, gpointer user_data)
+  void vpane_destroy_cb (GtkWidget *, gpointer)
   {
     std::cerr << LINE_ID << std::endl;
   }
@@ -1341,7 +1341,7 @@ namespace
 }
 
 void
-GUI :: notebook_page_switched_cb (GtkNotebook * notebook, GtkNotebookPage * page, gint page_num, gpointer user_data)
+GUI :: notebook_page_switched_cb (GtkNotebook *, GtkNotebookPage *, gint page_num, gpointer user_data)
 {
   GUI * gui = static_cast<GUI*>(user_data);
   GtkWidget * w;
@@ -1453,11 +1453,11 @@ void GUI :: do_shorten_group_names (bool b)
   _group_pane->set_name_collapse (b);
 }
 
-void GUI :: do_match_only_unread_articles (bool b) { _header_pane->refilter (); }
-void GUI :: do_match_only_cached_articles (bool b) { _header_pane->refilter (); }
-void GUI :: do_match_only_binary_articles (bool b) { _header_pane->refilter (); }
-void GUI :: do_match_only_my_articles (bool b) { _header_pane->refilter (); }
-void GUI :: do_match_on_score_state (int state) { _header_pane->refilter (); }
+void GUI :: do_match_only_unread_articles (bool) { _header_pane->refilter (); }
+void GUI :: do_match_only_cached_articles (bool) { _header_pane->refilter (); }
+void GUI :: do_match_only_binary_articles (bool) { _header_pane->refilter (); }
+void GUI :: do_match_only_my_articles     (bool) { _header_pane->refilter (); }
+void GUI :: do_match_on_score_state       (int)  { _header_pane->refilter (); }
 
 void GUI :: do_show_matches (const Data::ShowType show_type)
 {
@@ -1770,7 +1770,7 @@ GUI :: set_queue_size_label (unsigned int running,
 }
 
 void
-GUI :: on_queue_task_active_changed (Queue& q, Task& t, bool is_active)
+GUI :: on_queue_task_active_changed (Queue&, Task& t, bool is_active)
 {
   // update our set of active tasks
   std::list<Task*>::iterator it (std::find (_active_tasks.begin(), _active_tasks.end(), &t));
@@ -1788,23 +1788,23 @@ GUI :: on_queue_task_active_changed (Queue& q, Task& t, bool is_active)
     _views[i]->set_progress (0);
 }
 void
-GUI :: on_queue_connection_count_changed (Queue& q, int count)
+GUI :: on_queue_connection_count_changed (Queue&, int)
 {
   //connection_size = count;
   refresh_connection_label ();
 }
 void
-GUI :: on_queue_size_changed (Queue& q, int active, int total)
+GUI :: on_queue_size_changed (Queue&, int active, int total)
 {
   set_queue_size_label (active, total);
 }
 void
-GUI :: on_queue_online_changed (Queue& q, bool is_online)
+GUI :: on_queue_online_changed (Queue&, bool is_online)
 {
   toggle_action ("work-online", is_online);
 }
 void
-GUI :: on_queue_error (Queue& q, const StringView& message)
+GUI :: on_queue_error (Queue&, const StringView& message)
 {
   if (_queue.is_online())
   {
@@ -1822,7 +1822,7 @@ GUI :: on_queue_error (Queue& q, const StringView& message)
 
 
 void
-GUI :: on_prefs_flag_changed (const StringView& key, bool value)
+GUI :: on_prefs_flag_changed (const StringView&, bool)
 {
 }
 void

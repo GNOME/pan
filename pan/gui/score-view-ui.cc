@@ -84,7 +84,7 @@ namespace
 }
 
 void
-ScoreView :: add_destroy_cb (GtkObject* unused, gpointer view_gpointer)
+ScoreView :: add_destroy_cb (GtkObject*, gpointer view_gpointer)
 {
   static_cast<ScoreView*>(view_gpointer)->tree_view_refresh ();
 }
@@ -96,7 +96,7 @@ ScoreView :: on_add ()
   gtk_widget_show (add->root());
 }
 void
-ScoreView :: add_clicked_cb (GtkWidget * button, gpointer view_gpointer)
+ScoreView :: add_clicked_cb (GtkWidget*, gpointer view_gpointer)
 {
   static_cast<ScoreView*>(view_gpointer)->on_add ();
 }
@@ -118,7 +118,7 @@ ScoreView :: on_remove ()
 }
 
 void
-ScoreView :: remove_clicked_cb (GtkWidget * button, gpointer view_gpointer)
+ScoreView :: remove_clicked_cb (GtkWidget*, gpointer view_gpointer)
 {
   static_cast<ScoreView*>(view_gpointer)->on_remove ();
 }

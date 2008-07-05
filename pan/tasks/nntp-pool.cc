@@ -21,8 +21,8 @@
 #include <ctime>
 #include <glib/gi18n.h>
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
 #include "nntp-pool.h"
 
 using namespace pan;
@@ -152,7 +152,10 @@ NNTP_Pool :: check_in (NNTP * nntp, Health health)
 ***/
 
 void
-NNTP_Pool :: on_socket_created (const StringView& host, int port, bool ok, Socket* socket)
+NNTP_Pool :: on_socket_created (const StringView  & host UNUSED,
+                                int                 port UNUSED,
+                                bool                ok,
+                                Socket            * socket)
 {
   if (!ok)
   {
@@ -289,7 +292,9 @@ namespace
     public:
       NoopListener (NNTP::Source * s, bool b): source(s), hang_up(b) {}
       virtual ~NoopListener() {}
-      virtual void on_nntp_done  (NNTP * nntp, Health health, const StringView& response) {
+      virtual void on_nntp_done  (NNTP * nntp,
+                                  Health health,
+                                  const StringView& response UNUSED) {
         source->check_in (nntp, hang_up ? ERR_NETWORK : health);
         delete this;
       }

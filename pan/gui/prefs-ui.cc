@@ -23,7 +23,7 @@ extern "C" {
   #include <gtk/gtk.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "hig.h"
 #include "pad.h"
@@ -54,7 +54,7 @@ namespace
   }
 #endif
 
-  void response_cb (GtkDialog * dialog, int response, gpointer unused)
+  void response_cb (GtkDialog * dialog, int, gpointer)
   {
     gtk_widget_destroy (GTK_WIDGET(dialog));
   }
@@ -299,7 +299,7 @@ namespace
     return s;
   }
 
-  void header_column_up_cb (GtkButton * b, gpointer user_data)
+  void header_column_up_cb (GtkButton *, gpointer user_data)
   {
     HeaderColInfo& info (*static_cast<HeaderColInfo*>(user_data));
     GtkTreeIter sel_iter;
@@ -314,7 +314,7 @@ namespace
     gtk_tree_path_free (path);
   }
 
-  void header_column_down_cb (GtkButton * b, gpointer user_data)
+  void header_column_down_cb (GtkButton *, gpointer user_data)
   {
     HeaderColInfo& info (*static_cast<HeaderColInfo*>(user_data));
     GtkTreeIter sel_iter;
@@ -326,7 +326,7 @@ namespace
     }
   }
 
-  void header_col_enabled_toggled_cb (GtkCellRendererToggle * cell,
+  void header_col_enabled_toggled_cb (GtkCellRendererToggle * ,
 	                              gchar                 * path_str,
 	                              gpointer                user_data)
   {

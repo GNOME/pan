@@ -70,7 +70,7 @@ TextMassager::set_quote_characters (const std::set<char>& chars)
 
    typedef std::set<char>::const_iterator c_cit;
    for (c_cit it=chars.begin(), end=chars.end(); it!=end; ++it)
-      _quote_characters[*it] = true;
+      _quote_characters[(int)*it] = true;
 }
 
 /****
@@ -345,8 +345,8 @@ TextMassager :: rot13_inplace (char * text)
    if (!inited)
    {
       inited = true;
-      char * plain ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-      char * roted ("nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM");
+      const char * plain ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+      const char * roted ("nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM");
       for (size_t i=0; i<UCHAR_MAX; ++i)
          translate[i] = (char)i;
       for (size_t i=0, len=strlen(plain); i!=len; ++i)

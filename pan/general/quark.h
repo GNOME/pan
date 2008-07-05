@@ -75,7 +75,7 @@ namespace pan
         Impl (): refcount(0), len(0), str(0) {}
         Impl (const StringView& v): refcount(0), len(v.len), str(const_cast<char*>(v.str)) {}
         StringView to_view () const { return StringView(str,len); }
-        bool operator() (const Impl& a, const Impl& b) const { return StringView(str,len) == StringView(b.str,b.len); }
+        //wtf? bool operator() (const Impl& a, const Impl& b) const { return StringView(str,len) == StringView(b.str,b.len); }
         bool operator== (const Impl& b) const { return StringView(str,len) == StringView(b.str,b.len); }
       };
 

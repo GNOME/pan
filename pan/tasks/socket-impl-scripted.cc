@@ -39,7 +39,7 @@ ScriptedSocket :: ~ScriptedSocket ()
 }
 
 bool
-ScriptedSocket :: open (const StringView& address, int port)
+ScriptedSocket :: open (const StringView& address UNUSED, int port UNUSED)
 {
   // FIXME: always succeeds right now; should have an ar in ctor to make it fail
   return true;

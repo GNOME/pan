@@ -27,6 +27,8 @@
 #include <string.h>
 #include <iconv.h>
 
+#include <glib/gmacros.h>
+
 #include <gtk/gtkhbox.h>
 #include <gtk/gtkvbox.h>
 #include <gtk/gtkentry.h>
@@ -193,7 +195,7 @@ add_other_charset (GtkWidget *menu, GtkWidget *other, const char *new_charset)
 }
 
 static void
-activate_entry (GtkWidget *entry, GtkDialog *dialog)
+activate_entry (GtkWidget *entry G_GNUC_UNUSED, GtkDialog *dialog)
 {
 	gtk_dialog_response (dialog, GTK_RESPONSE_OK);
 }

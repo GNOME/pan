@@ -28,7 +28,7 @@ extern "C" {
   #include <gtk/gtk.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/usenet-utils/gnksa.h>
 #include "hig.h"
 #include "pad.h"
@@ -419,14 +419,14 @@ ProfilesDialog :: refresh_buttons ()
 
 namespace
 {
-  void profiles_tree_view_selection_changed_cb (GtkTreeSelection * selection, gpointer user_data)
+  void profiles_tree_view_selection_changed_cb (GtkTreeSelection *, gpointer user_data)
   {
     ProfilesDialog *d = (ProfilesDialog *)user_data;
     d->refresh_buttons ();
   }
-  void tree_view_row_activated_cb (GtkTreeView        * view,
-                                   GtkTreePath        * path,
-                                   GtkTreeViewColumn  * col,
+  void tree_view_row_activated_cb (GtkTreeView        * ,
+                                   GtkTreePath        * ,
+                                   GtkTreeViewColumn  * ,
                                    gpointer             user_data)
   {
     on_edit_button (NULL, user_data);

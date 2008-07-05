@@ -23,6 +23,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <pan/general/debug.h>
 #include <pan/general/string-view.h>
 
 namespace pan
@@ -48,10 +49,10 @@ namespace pan
         Listener () {}
         virtual ~Listener () {}
         virtual void on_progress_pulse (Progress&) { }
-        virtual void on_progress_step (Progress&, int percentage) { }
+        virtual void on_progress_step (Progress&, int percentage UNUSED) { }
         virtual void on_progress_status (Progress&, const StringView&) { }
         virtual void on_progress_error (Progress&, const StringView&) { }
-        virtual void on_progress_finished (Progress&, int status) { }
+        virtual void on_progress_finished (Progress&, int status UNUSED) { }
       };
 
     private:

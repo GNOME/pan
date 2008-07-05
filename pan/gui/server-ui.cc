@@ -26,7 +26,7 @@ extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
 }
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
 #include "server-ui.h"
@@ -82,7 +82,7 @@ namespace
   }
 
   void
-  edit_dialog_populate (Data& data, const Quark& server, ServerEditDialog * d)
+  edit_dialog_populate (Data&, const Quark& server, ServerEditDialog * d)
   {
     // sanity clause
     g_return_if_fail (d!=0);
@@ -403,7 +403,7 @@ namespace
   }
 
   void
-  server_list_dialog_response_cb (GtkDialog * dialog, int response, gpointer user_data)
+  server_list_dialog_response_cb (GtkDialog * dialog, int, gpointer)
   {
     gtk_widget_destroy (GTK_WIDGET(dialog));
   }
@@ -441,7 +441,7 @@ namespace
   }
 
   void
-  server_edit_dialog_destroy_cb (GtkWidget * w, gpointer user_data)
+  server_edit_dialog_destroy_cb (GtkWidget *, gpointer user_data)
   {
     if (GTK_IS_WIDGET (user_data))
     {
@@ -451,7 +451,7 @@ namespace
   }
 
   void
-  add_button_clicked_cb (GtkButton * button, gpointer user_data)
+  add_button_clicked_cb (GtkButton *, gpointer user_data)
   {
     const Quark empty_quark;
     GtkWidget * list_dialog = GTK_WIDGET (user_data);
@@ -462,7 +462,7 @@ namespace
   }
 
   void
-  edit_button_clicked_cb (GtkButton * button, gpointer user_data)
+  edit_button_clicked_cb (GtkButton *, gpointer user_data)
   {
     GtkWidget * list_dialog = GTK_WIDGET (user_data);
     ServerListDialog * d = (ServerListDialog*) g_object_get_data (G_OBJECT(list_dialog), "dialog");
@@ -475,13 +475,13 @@ namespace
   }
 
   void
-  server_tree_view_row_activated_cb (GtkTreeView *view, GtkTreePath *path, GtkTreeViewColumn *col, gpointer user_data)
+  server_tree_view_row_activated_cb (GtkTreeView*, GtkTreePath*, GtkTreeViewColumn*, gpointer user_data)
   {
     edit_button_clicked_cb (NULL, user_data);	
   }
 
   void
-  server_tree_view_selection_changed_cb (GtkTreeSelection * selection, gpointer user_data)
+  server_tree_view_selection_changed_cb (GtkTreeSelection*, gpointer user_data)
   {
     button_refresh ((ServerListDialog*)user_data);
   }

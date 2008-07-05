@@ -26,7 +26,7 @@ extern "C" {
 }
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include "filter-info.h"
 #include "scorefile.h"
 

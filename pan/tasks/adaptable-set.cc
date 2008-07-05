@@ -26,7 +26,7 @@
 #include <ostream>
 #include <map>
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/tasks/adaptable-set.h>
 
 using namespace pan;

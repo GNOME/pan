@@ -30,8 +30,8 @@ extern "C" {
   #include <glib/gi18n.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/quark.h>
 #include <pan/general/time-elapsed.h>

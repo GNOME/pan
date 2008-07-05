@@ -86,7 +86,7 @@ ProgressView :: update_percentage_soon ()
        _progress_step_idle_tag = g_timeout_add (333, on_progress_step_idle, this);
 }
 void
-ProgressView :: on_progress_step (Progress& p, int of_100)
+ProgressView :: on_progress_step (Progress&, int)
 {
   update_percentage_soon ();
 }
@@ -104,7 +104,7 @@ ProgressView :: on_progress_status_idle (gpointer self_gpointer)
 }
 
 void
-ProgressView :: on_progress_status (Progress& p, const StringView& s)
+ProgressView :: on_progress_status (Progress&, const StringView&)
 {
   update_text_soon ();
 }

@@ -21,6 +21,7 @@
 #define __NNTP_h__
 
 #include <deque>
+#include <pan/general/macros.h> // for UNUSED
 #include <pan/general/quark.h>
 #include <pan/general/string-view.h>
 #include <pan/tasks/health.h>
@@ -60,8 +61,8 @@ namespace pan
          * such as a list of headers for an XOVER command or a list of
          * lines for an ARTICLE command.
          */
-        virtual void on_nntp_line  (NNTP               * nntp,
-                                    const StringView   & line) {}
+        virtual void on_nntp_line  (NNTP               * nntp UNUSED,
+                                    const StringView   & line UNUSED) {}
 
         /**
          * Called at the end of an NNTP command.  If the command was
@@ -74,18 +75,18 @@ namespace pan
          * @param health returns OK, ERR_NETWORK, or ERR_SERVER.
          *               ERR_LOCAL is never used here.
          */
-        virtual void on_nntp_done  (NNTP               * nntp,
-                                    Health               health,
-                                    const StringView   & response) {}
+        virtual void on_nntp_done  (NNTP               * nntp     UNUSED,
+                                    Health               health   UNUSED,
+                                    const StringView   & response UNUSED) {}
 
         /**
          * Called whenever an NNTP object sets the current group.
          */
-        virtual void on_nntp_group (NNTP               * nntp,
-                                    const Quark        & group,
-                                    unsigned long        estimated_qty,
-                                    unsigned long        low,
-                                    unsigned long        high) {}
+        virtual void on_nntp_group (NNTP               * nntp          UNUSED,
+                                    const Quark        & group         UNUSED,
+                                    unsigned long        estimated_qty UNUSED,
+                                    unsigned long        low           UNUSED,
+                                    unsigned long        high          UNUSED) {}
        };
 
       public:

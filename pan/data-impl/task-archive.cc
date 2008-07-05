@@ -20,7 +20,7 @@
 #include <config.h>
 #include <glib.h>
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/tasks/nzb.h>
 #include "data-impl.h"
 #include "data-io.h"

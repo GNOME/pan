@@ -29,8 +29,8 @@ extern "C" {
 }
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
-#include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/data/article-cache.h>
 #include "decoder.h"
@@ -249,7 +249,7 @@ TaskArticle :: on_nntp_line  (NNTP               * nntp,
 void
 TaskArticle :: on_nntp_done  (NNTP             * nntp,
                               Health             health,
-                              const StringView & response)
+                              const StringView & response UNUSED)
 {
   // find the Needed using this nntp...
   needed_t::iterator it;

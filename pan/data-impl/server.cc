@@ -31,8 +31,8 @@ extern "C" {
 }
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
-#include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include "data-impl.h"
 
@@ -238,12 +238,12 @@ namespace
     key_to_keyvals_t data;
   };
 
-  void start_element (GMarkupParseContext *context,
+  void start_element (GMarkupParseContext *context          UNUSED,
                       const gchar         *element_name,
                       const gchar        **attribute_names,
                       const gchar        **attribute_vals,
                       gpointer             user_data,
-                      GError             **error)
+                      GError             **error            UNUSED)
   {
     ServerParseContext& mc (*static_cast<ServerParseContext*>(user_data));
 
@@ -253,21 +253,21 @@ namespace
            mc.key = *v;
   }
 
-  void end_element (GMarkupParseContext *context,
+  void end_element (GMarkupParseContext *context        UNUSED,
                     const gchar         *element_name,
                     gpointer             user_data,
-                    GError             **error)
+                    GError             **error          UNUSED)
   {
     ServerParseContext& mc (*static_cast<ServerParseContext*>(user_data));
     if (!mc.key.empty())
       mc.data[mc.key][element_name] = mc.text;
   }
 
-  void text (GMarkupParseContext *context,
+  void text (GMarkupParseContext *context    UNUSED,
              const gchar         *text,
              gsize                text_len,  
              gpointer             user_data,
-             GError             **error)
+             GError             **error      UNUSED)
   {
     static_cast<ServerParseContext*>(user_data)->text.assign (text, text_len);
   }

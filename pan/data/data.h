@@ -25,6 +25,7 @@
 #include <map>
 #include <vector>
 
+#include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/general/string-view.h>
 #include <pan/usenet-utils/scorefile.h>
@@ -217,11 +218,12 @@ namespace pan
         virtual ~Listener () {}
 
         virtual void on_grouplist_rebuilt () {}
-        virtual void on_group_read (const Quark& group) {}
-        virtual void on_group_subscribe (const Quark& group, bool sub) {}
-        virtual void on_group_counts (const Quark& group,
-                                      unsigned long unread,
-                                      unsigned long total) {}
+        virtual void on_group_read (const Quark& group UNUSED) {}
+        virtual void on_group_subscribe (const Quark & group UNUSED,
+                                         bool          sub   UNUSED) {}
+        virtual void on_group_counts (const Quark& group   UNUSED,
+                                      unsigned long unread UNUSED,
+                                      unsigned long total  UNUSED) {}
       };
 
       void add_listener (Listener * l);

@@ -31,8 +31,8 @@ extern "C" {
 }
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
-#include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/usenet-utils/message-check.h>
@@ -66,7 +66,7 @@ namespace
 {
   bool remember_charsets (true);
 
-  void on_remember_charset_toggled (GtkToggleAction * toggle, gpointer post_g)
+  void on_remember_charset_toggled (GtkToggleAction * toggle, gpointer)
   {
     remember_charsets = gtk_toggle_action_get_active (toggle);
   }
@@ -181,17 +181,17 @@ namespace
 {
   GtkWidget* get_focus (gpointer p) { return gtk_window_get_focus(GTK_WINDOW(static_cast<PostUI*>(p)->root())); }
 
-  void do_cut      (GtkAction * w, gpointer p) { g_signal_emit_by_name (get_focus(p), "cut_clipboard"); }
-  void do_copy     (GtkAction * w, gpointer p) { g_signal_emit_by_name (get_focus(p), "copy_clipboard"); }
-  void do_paste    (GtkAction * w, gpointer p) { g_signal_emit_by_name (get_focus(p), "paste_clipboard"); }
-  void do_rot13    (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->rot13_selection(); }
-  void do_edit     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->spawn_editor (); }
-  void do_profiles (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->manage_profiles (); }
-  void do_send     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->send_now (); }
-  void do_save     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->save_draft (); }
-  void do_open     (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->open_draft (); }
-  void do_charset  (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->prompt_for_charset (); }
-  void do_close    (GtkAction * w, gpointer p) { static_cast<PostUI*>(p)->close_window (); }
+  void do_cut      (GtkAction*, gpointer p) { g_signal_emit_by_name (get_focus(p), "cut_clipboard"); }
+  void do_copy     (GtkAction*, gpointer p) { g_signal_emit_by_name (get_focus(p), "copy_clipboard"); }
+  void do_paste    (GtkAction*, gpointer p) { g_signal_emit_by_name (get_focus(p), "paste_clipboard"); }
+  void do_rot13    (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->rot13_selection(); }
+  void do_edit     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->spawn_editor (); }
+  void do_profiles (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->manage_profiles (); }
+  void do_send     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->send_now (); }
+  void do_save     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->save_draft (); }
+  void do_open     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->open_draft (); }
+  void do_charset  (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->prompt_for_charset (); }
+  void do_close    (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->close_window (); }
   void do_wrap     (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_wrap_mode (gtk_toggle_action_get_active (w)); }
   void do_edit2    (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_always_run_editor (gtk_toggle_action_get_active (w)); }
 
@@ -223,7 +223,7 @@ namespace
     { "spellcheck", NULL, N_("Check _Spelling"), NULL, NULL, G_CALLBACK(on_spellcheck_toggled), true }
   };
 
-  void add_widget (GtkUIManager* merge, GtkWidget* widget, gpointer vbox)
+  void add_widget (GtkUIManager*, GtkWidget* widget, gpointer vbox)
   {
     if (GTK_IS_TOOLBAR (widget)) {
       GtkWidget * handle_box = gtk_handle_box_new ();
@@ -318,7 +318,7 @@ PostUI :: rot13_selection ()
 
 namespace
 {
-  gboolean delete_event_cb (GtkWidget *w, GdkEvent *e, gpointer user_data)
+  gboolean delete_event_cb (GtkWidget*, GdkEvent*, gpointer user_data)
   {
     static_cast<PostUI*>(user_data)->close_window ();
     return true; // don't invoke the default handler that destroys the widget
@@ -505,9 +505,9 @@ namespace
       for (int i='0'; i<='9'; ++i) keep.insert(i); // always okay
       for (int i='a'; i<='z'; ++i) keep.insert(i); // always okay
       for (int i='A'; i<='Z'; ++i) keep.insert(i); // always okay
-      for (char *pch="$-_.+!*'(),"; *pch; ++pch) keep.insert(*pch); // okay in the right context
-      for (char *pch="$&+,/:;=?@"; *pch; ++pch) keep.erase(*pch); // reserved
-      for (char *pch="()"; *pch; ++pch) keep.erase(*pch); // gives thunderbird problems?
+      for (const char *pch="$-_.+!*'(),"; *pch; ++pch) keep.insert(*pch); // okay in the right context
+      for (const char *pch="$&+,/:;=?@"; *pch; ++pch) keep.erase(*pch); // reserved
+      for (const char *pch="()"; *pch; ++pch) keep.erase(*pch); // gives thunderbird problems?
     }
 
     std::string out;
@@ -1449,7 +1449,7 @@ namespace
     delete static_cast<PostUI*>(p);
   }
 
-  void on_from_combo_changed (GtkComboBox *widget, gpointer user_data)
+  void on_from_combo_changed (GtkComboBox*, gpointer user_data)
   {
     static_cast<PostUI*>(user_data)->apply_profile ();
   }
@@ -1569,7 +1569,7 @@ PostUI :: set_message (GMimeMessage * message)
  * will work properly.
  */
 void
-PostUI :: body_view_realized_cb (GtkWidget * w, gpointer self_gpointer)
+PostUI :: body_view_realized_cb (GtkWidget*, gpointer self_gpointer)
 {
   PostUI * self = static_cast<PostUI*>(self_gpointer);
   self->set_wrap_mode (self->_prefs.get_flag ("compose-wrap-enabled", true));
@@ -1613,7 +1613,7 @@ PostUI :: group_entry_changed_idle (gpointer ui_gpointer)
 }
 
 void
-PostUI :: group_entry_changed_cb (GtkEditable * w, gpointer ui_gpointer)
+PostUI :: group_entry_changed_cb (GtkEditable*, gpointer ui_gpointer)
 {
   PostUI * ui (static_cast<PostUI*>(ui_gpointer));
   unsigned int& tag (ui->_group_entry_changed_idle_tag);
@@ -1627,7 +1627,7 @@ PostUI :: group_entry_changed_cb (GtkEditable * w, gpointer ui_gpointer)
 
 namespace
 {
-  static void render_from (GtkCellLayout    * cell_layout,
+  static void render_from (GtkCellLayout    * ,
                            GtkCellRenderer  * renderer,
                            GtkTreeModel     * model,
                            GtkTreeIter      * iter,

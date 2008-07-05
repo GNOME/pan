@@ -35,8 +35,8 @@ extern "C" {
 }
 
 #include <pan/general/file-util.h>
-#include <pan/general/gassert.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
 #include <pan/general/worker-pool.h>
 
 #ifdef G_OS_WIN32
@@ -575,7 +575,7 @@ namespace
     }
 
     /** called in main thread after do_work() is done */
-    void on_worker_done (bool cancelled)
+    void on_worker_done (bool cancelled UNUSED)
     {
       // pass results to main thread...
       if (!err.empty())   Log :: add_err (err.c_str());

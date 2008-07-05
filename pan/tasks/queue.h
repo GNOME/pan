@@ -23,6 +23,7 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <pan/general/macros.h> // for UNUSED
 #include <pan/general/map-vector.h>
 #include <pan/general/quark.h>
 #include <pan/tasks/decoder.h>
@@ -46,8 +47,8 @@ namespace pan
    */
   struct TaskArchive {
     virtual ~TaskArchive () { }
-    virtual void save_tasks (const std::vector<Task*>& saveme) { }
-    virtual void load_tasks (std::vector<Task*>& setme) { }
+    virtual void save_tasks (const std::vector<Task*>& saveme UNUSED) { }
+    virtual void load_tasks (std::vector<Task*>& setme UNUSED) { }
   };
 
   /**

@@ -25,7 +25,7 @@ extern "C" {
 #include <iostream>
 #include <fstream>
 #include <pan/general/file-util.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include "group-prefs.h"
 
 using namespace pan;
@@ -168,10 +168,10 @@ GroupPrefs :: start_element (GMarkupParseContext *context,
 
 namespace
 {
-  void end_element (GMarkupParseContext *context,
+  void end_element (GMarkupParseContext *,
                     const gchar         *element_name,
-                    gpointer             user_data,
-                    GError             **error)
+                    gpointer             ,
+                    GError             **)
   {
     if (!strcmp (element_name, "group"))
       group.clear ();

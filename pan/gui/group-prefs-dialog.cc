@@ -23,7 +23,7 @@ extern "C" {
   #include <gtk/gtk.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/data/data.h>
 #include "e-charset-picker.h"
 #include "group-prefs-dialog.h"
@@ -77,7 +77,7 @@ GroupPrefsDialog :: save_from_gui ()
 
 void
 GroupPrefsDialog :: response_cb (GtkDialog  * dialog,
-                                 int          response,
+                                 int          ,
                                  gpointer     user_data)
 {
   static_cast<GroupPrefsDialog*>(user_data)->save_from_gui ();

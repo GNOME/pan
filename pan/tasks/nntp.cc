@@ -114,7 +114,7 @@ NNTP :: fire_done_func (Health health, const StringView& response)
 ***/
 
 bool
-NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
+NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 {
    enum State { CMD_FAIL, CMD_DONE, CMD_MORE, CMD_NEXT, CMD_RETRY };
    State state;
@@ -290,13 +290,13 @@ NNTP :: on_socket_response (Socket * sock, const StringView& line_in)
 }
 
 void
-NNTP :: on_socket_abort (Socket * sock)
+NNTP :: on_socket_abort (Socket * sock UNUSED)
 {
    fire_done_func (ERR_NETWORK, StringView());
 }
 
 void
-NNTP :: on_socket_error (Socket * sock)
+NNTP :: on_socket_error (Socket * sock UNUSED)
 {
    _socket_error = true;
    fire_done_func (ERR_NETWORK, StringView());

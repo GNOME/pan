@@ -98,73 +98,73 @@ namespace
 
   GtkActionGroup * _group (0);
 
-  void do_prompt_for_charset           (GtkAction * a) { pan_ui->do_prompt_for_charset(); }
-  void do_read_selected_group          (GtkAction * a) { pan_ui->do_read_selected_group(); }
-  void do_mark_selected_groups_read    (GtkAction * a) { pan_ui->do_mark_selected_groups_read(); }
-  void do_clear_selected_groups        (GtkAction * a) { pan_ui->do_clear_selected_groups(); }
-  void do_xover_selected_groups        (GtkAction * a) { pan_ui->do_xover_selected_groups(); }
-  void do_xover_subscribed_groups      (GtkAction * a) { pan_ui->do_xover_subscribed_groups(); }
-  void do_download_headers             (GtkAction * a) { pan_ui->do_download_headers(); }
-  void do_refresh_groups               (GtkAction * a) { pan_ui->do_refresh_groups(); }
-  void do_subscribe_selected_groups    (GtkAction * a) { pan_ui->do_subscribe_selected_groups(); }
-  void do_unsubscribe_selected_groups  (GtkAction * a) { pan_ui->do_unsubscribe_selected_groups(); }
-  void do_save_articles                (GtkAction * a) { pan_ui->do_save_articles(); }
-  void do_save_articles_from_nzb       (GtkAction * a) { pan_ui->do_save_articles_from_nzb(); }
-  void do_print                        (GtkAction * a) { pan_ui->do_print(); }
-  void do_import_tasks                 (GtkAction * a) { pan_ui->do_import_tasks(); }
-  void do_cancel_latest_task           (GtkAction * a) { pan_ui->do_cancel_latest_task(); }
-  void do_show_task_window             (GtkAction * a) { pan_ui->do_show_task_window(); }
-  void do_show_log_window              (GtkAction * a) { pan_ui->do_show_log_window(); }
-  void do_quit                         (GtkAction * a) { pan_ui->do_quit(); }
-  void do_clear_header_pane            (GtkAction * a) { pan_ui->do_clear_header_pane(); }
-  void do_clear_body_pane              (GtkAction * a) { pan_ui->do_clear_body_pane(); }
-  void do_select_all_articles          (GtkAction * a) { pan_ui->do_select_all_articles(); }
-  void do_unselect_all_articles        (GtkAction * a) { pan_ui->do_unselect_all_articles(); }
-  void do_add_subthreads_to_selection  (GtkAction * a) { pan_ui->do_add_subthreads_to_selection(); }
-  void do_add_threads_to_selection     (GtkAction * a) { pan_ui->do_add_threads_to_selection(); }
-  void do_add_similar_to_selection     (GtkAction * a) { pan_ui->do_add_similar_to_selection(); }
-  void do_select_article_body          (GtkAction * a) { pan_ui->do_select_article_body(); }
-  void do_show_preferences_dialog      (GtkAction * a) { pan_ui->do_show_preferences_dialog(); }
-  void do_show_group_preferences_dialog(GtkAction * a) { pan_ui->do_show_group_preferences_dialog(); }
-  void do_show_profiles_dialog         (GtkAction * a) { pan_ui->do_show_profiles_dialog(); }
-  void do_jump_to_group_tab            (GtkAction * a) { pan_ui->do_jump_to_group_tab(); }
-  void do_jump_to_header_tab           (GtkAction * a) { pan_ui->do_jump_to_header_tab(); }
-  void do_jump_to_body_tab             (GtkAction * a) { pan_ui->do_jump_to_body_tab(); }
-  void do_rot13_selected_text          (GtkAction * a) { pan_ui->do_rot13_selected_text(); }
-  void do_download_selected_article    (GtkAction * a) { pan_ui->do_download_selected_article(); }
-  void do_read_selected_article        (GtkAction * a) { pan_ui->do_read_selected_article(); }
-  void do_show_selected_article_info   (GtkAction * a) { pan_ui->do_show_selected_article_info(); }
-  void do_read_more                    (GtkAction * a) { pan_ui->do_read_more(); }
-  void do_read_less                    (GtkAction * a) { pan_ui->do_read_less(); }
-  void do_read_next_unread_group       (GtkAction * a) { pan_ui->do_read_next_unread_group(); }
-  void do_read_next_group              (GtkAction * a) { pan_ui->do_read_next_group(); }
-  void do_read_next_unread_article     (GtkAction * a) { pan_ui->do_read_next_unread_article(); }
-  void do_read_next_article            (GtkAction * a) { pan_ui->do_read_next_article(); }
-  void do_read_next_watched_article    (GtkAction * a) { pan_ui->do_read_next_watched_article(); }
-  void do_read_next_unread_thread      (GtkAction * a) { pan_ui->do_read_next_unread_thread(); }
-  void do_read_next_thread             (GtkAction * a) { pan_ui->do_read_next_thread(); }
-  void do_read_previous_article        (GtkAction * a) { pan_ui->do_read_previous_article(); }
-  void do_read_previous_thread         (GtkAction * a) { pan_ui->do_read_previous_thread(); }
-  void do_read_parent_article          (GtkAction * a) { pan_ui->do_read_parent_article(); }
-  void do_show_servers_dialog          (GtkAction * a) { pan_ui->do_show_servers_dialog(); }
-  void do_plonk                        (GtkAction * a) { pan_ui->do_plonk(); }
-  void do_ignore                       (GtkAction * a) { pan_ui->do_ignore(); }
-  void do_watch                        (GtkAction * a) { pan_ui->do_watch(); }
-  void do_show_score_dialog            (GtkAction * a) { pan_ui->do_show_score_dialog(); }
-  void do_show_new_score_dialog        (GtkAction * a) { pan_ui->do_show_new_score_dialog(); }
-  void do_cancel_article               (GtkAction * a) { pan_ui->do_cancel_article(); }
-  void do_supersede_article            (GtkAction * a) { pan_ui->do_supersede_article(); }
-  void do_delete_article               (GtkAction * a) { pan_ui->do_delete_article(); }
-  void do_clear_article_cache          (GtkAction * a) { pan_ui->do_clear_article_cache(); }
-  void do_mark_article_read            (GtkAction * a) { pan_ui->do_mark_article_read(); }
-  void do_mark_article_unread          (GtkAction * a) { pan_ui->do_mark_article_unread(); }
-  void do_post                         (GtkAction * a) { pan_ui->do_post(); }
-  void do_followup_to                  (GtkAction * a) { pan_ui->do_followup_to(); }
-  void do_reply_to                     (GtkAction * a) { pan_ui->do_reply_to(); }
-  void do_pan_web                      (GtkAction * a) { pan_ui->do_pan_web(); }
-  void do_bug_report                   (GtkAction * a) { pan_ui->do_bug_report(); }
-  void do_tip_jar                      (GtkAction * a) { pan_ui->do_tip_jar(); }
-  void do_about_pan                    (GtkAction * a) { pan_ui->do_about_pan(); }
+  void do_prompt_for_charset           (GtkAction*) { pan_ui->do_prompt_for_charset(); }
+  void do_read_selected_group          (GtkAction*) { pan_ui->do_read_selected_group(); }
+  void do_mark_selected_groups_read    (GtkAction*) { pan_ui->do_mark_selected_groups_read(); }
+  void do_clear_selected_groups        (GtkAction*) { pan_ui->do_clear_selected_groups(); }
+  void do_xover_selected_groups        (GtkAction*) { pan_ui->do_xover_selected_groups(); }
+  void do_xover_subscribed_groups      (GtkAction*) { pan_ui->do_xover_subscribed_groups(); }
+  void do_download_headers             (GtkAction*) { pan_ui->do_download_headers(); }
+  void do_refresh_groups               (GtkAction*) { pan_ui->do_refresh_groups(); }
+  void do_subscribe_selected_groups    (GtkAction*) { pan_ui->do_subscribe_selected_groups(); }
+  void do_unsubscribe_selected_groups  (GtkAction*) { pan_ui->do_unsubscribe_selected_groups(); }
+  void do_save_articles                (GtkAction*) { pan_ui->do_save_articles(); }
+  void do_save_articles_from_nzb       (GtkAction*) { pan_ui->do_save_articles_from_nzb(); }
+  void do_print                        (GtkAction*) { pan_ui->do_print(); }
+  void do_import_tasks                 (GtkAction*) { pan_ui->do_import_tasks(); }
+  void do_cancel_latest_task           (GtkAction*) { pan_ui->do_cancel_latest_task(); }
+  void do_show_task_window             (GtkAction*) { pan_ui->do_show_task_window(); }
+  void do_show_log_window              (GtkAction*) { pan_ui->do_show_log_window(); }
+  void do_quit                         (GtkAction*) { pan_ui->do_quit(); }
+  void do_clear_header_pane            (GtkAction*) { pan_ui->do_clear_header_pane(); }
+  void do_clear_body_pane              (GtkAction*) { pan_ui->do_clear_body_pane(); }
+  void do_select_all_articles          (GtkAction*) { pan_ui->do_select_all_articles(); }
+  void do_unselect_all_articles        (GtkAction*) { pan_ui->do_unselect_all_articles(); }
+  void do_add_subthreads_to_selection  (GtkAction*) { pan_ui->do_add_subthreads_to_selection(); }
+  void do_add_threads_to_selection     (GtkAction*) { pan_ui->do_add_threads_to_selection(); }
+  void do_add_similar_to_selection     (GtkAction*) { pan_ui->do_add_similar_to_selection(); }
+  void do_select_article_body          (GtkAction*) { pan_ui->do_select_article_body(); }
+  void do_show_preferences_dialog      (GtkAction*) { pan_ui->do_show_preferences_dialog(); }
+  void do_show_group_preferences_dialog(GtkAction*) { pan_ui->do_show_group_preferences_dialog(); }
+  void do_show_profiles_dialog         (GtkAction*) { pan_ui->do_show_profiles_dialog(); }
+  void do_jump_to_group_tab            (GtkAction*) { pan_ui->do_jump_to_group_tab(); }
+  void do_jump_to_header_tab           (GtkAction*) { pan_ui->do_jump_to_header_tab(); }
+  void do_jump_to_body_tab             (GtkAction*) { pan_ui->do_jump_to_body_tab(); }
+  void do_rot13_selected_text          (GtkAction*) { pan_ui->do_rot13_selected_text(); }
+  void do_download_selected_article    (GtkAction*) { pan_ui->do_download_selected_article(); }
+  void do_read_selected_article        (GtkAction*) { pan_ui->do_read_selected_article(); }
+  void do_show_selected_article_info   (GtkAction*) { pan_ui->do_show_selected_article_info(); }
+  void do_read_more                    (GtkAction*) { pan_ui->do_read_more(); }
+  void do_read_less                    (GtkAction*) { pan_ui->do_read_less(); }
+  void do_read_next_unread_group       (GtkAction*) { pan_ui->do_read_next_unread_group(); }
+  void do_read_next_group              (GtkAction*) { pan_ui->do_read_next_group(); }
+  void do_read_next_unread_article     (GtkAction*) { pan_ui->do_read_next_unread_article(); }
+  void do_read_next_article            (GtkAction*) { pan_ui->do_read_next_article(); }
+  void do_read_next_watched_article    (GtkAction*) { pan_ui->do_read_next_watched_article(); }
+  void do_read_next_unread_thread      (GtkAction*) { pan_ui->do_read_next_unread_thread(); }
+  void do_read_next_thread             (GtkAction*) { pan_ui->do_read_next_thread(); }
+  void do_read_previous_article        (GtkAction*) { pan_ui->do_read_previous_article(); }
+  void do_read_previous_thread         (GtkAction*) { pan_ui->do_read_previous_thread(); }
+  void do_read_parent_article          (GtkAction*) { pan_ui->do_read_parent_article(); }
+  void do_show_servers_dialog          (GtkAction*) { pan_ui->do_show_servers_dialog(); }
+  void do_plonk                        (GtkAction*) { pan_ui->do_plonk(); }
+  void do_ignore                       (GtkAction*) { pan_ui->do_ignore(); }
+  void do_watch                        (GtkAction*) { pan_ui->do_watch(); }
+  void do_show_score_dialog            (GtkAction*) { pan_ui->do_show_score_dialog(); }
+  void do_show_new_score_dialog        (GtkAction*) { pan_ui->do_show_new_score_dialog(); }
+  void do_cancel_article               (GtkAction*) { pan_ui->do_cancel_article(); }
+  void do_supersede_article            (GtkAction*) { pan_ui->do_supersede_article(); }
+  void do_delete_article               (GtkAction*) { pan_ui->do_delete_article(); }
+  void do_clear_article_cache          (GtkAction*) { pan_ui->do_clear_article_cache(); }
+  void do_mark_article_read            (GtkAction*) { pan_ui->do_mark_article_read(); }
+  void do_mark_article_unread          (GtkAction*) { pan_ui->do_mark_article_unread(); }
+  void do_post                         (GtkAction*) { pan_ui->do_post(); }
+  void do_followup_to                  (GtkAction*) { pan_ui->do_followup_to(); }
+  void do_reply_to                     (GtkAction*) { pan_ui->do_reply_to(); }
+  void do_pan_web                      (GtkAction*) { pan_ui->do_pan_web(); }
+  void do_bug_report                   (GtkAction*) { pan_ui->do_bug_report(); }
+  void do_tip_jar                      (GtkAction*) { pan_ui->do_tip_jar(); }
+  void do_about_pan                    (GtkAction*) { pan_ui->do_about_pan(); }
 
   void do_work_online         (GtkToggleAction * a) { pan_ui->do_work_online         (gtk_toggle_action_get_active(a)); }
   void do_tabbed_layout       (GtkToggleAction * a) { pan_ui->do_tabbed_layout       (gtk_toggle_action_get_active(a)); }
@@ -404,7 +404,7 @@ namespace
   static const char * show_strings[SHOW_N] = { "articles", "threads", "subthreads" };
 
   void
-  show_matches_cb (GtkAction *action, GtkRadioAction *current)
+  show_matches_cb (GtkAction*, GtkRadioAction *current)
   {
     const int mode (gtk_radio_action_get_current_value (current));
     g_assert (0<=mode && mode<SHOW_N);

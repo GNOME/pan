@@ -17,8 +17,48 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef __Pan_Assert_h__
-#define __Pan_Assert_h__
+#ifndef __Pan_Macros_h__
+#define __Pan_Macros_h__
+
+/**
+***  foreach
+**/
+
+#define foreach(Type,var,itname) \
+  for (Type::iterator itname(var.begin()), \
+                            itname##end(var.end()); itname!=itname##end; \
+                            ++itname)
+
+#define foreach_const(Type,var,itname) \
+  for (Type::const_iterator itname(var.begin()), \
+                            itname##end(var.end()); itname!=itname##end; \
+                            ++itname)
+
+#define foreach_r(Type,var,itname) \
+  for (Type::reverse_iterator itname(var.rbegin()), \
+                              itname##end(var.rend()); itname!=itname##end; \
+                              ++itname)
+
+#define foreach_const_r(Type,var,itname) \
+  for (Type::const_reverse_iterator itname(var.rbegin()), \
+                           itname##end(var.rend()); itname!=itname##end; \
+                           ++itname)
+
+/**
+***  UNUSED
+**/
+
+#ifndef UNUSED
+#ifdef __GNUC__
+#define UNUSED __attribute__((unused))
+#else
+#define UNUSED
+#endif
+#endif
+
+/**
+***  g_assert
+**/
 
 extern "C"
 {

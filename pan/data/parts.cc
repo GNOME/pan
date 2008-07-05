@@ -21,7 +21,7 @@
 #include <cassert>
 #include <algorithm>
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include "article.h"
 
 using namespace pan;
@@ -296,7 +296,7 @@ Parts :: add_part (number_t            num,
 void
 PartBatch :: init (const Quark  & mid,
                    number_t       n_parts_total,
-                   number_t       n_parts_found)
+                   number_t       n_parts_found UNUSED )
 {
   this->reference_mid = mid;
   this->packed_mids_len = 0;

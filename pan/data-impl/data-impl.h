@@ -27,8 +27,8 @@
 #include <vector>
 #include <deque>
 
-#include <pan/general/foreach.h>
 #include <pan/general/quark.h>
+#include <pan/general/macros.h>
 #include <pan/general/map-vector.h>
 #include <pan/general/sorted-vector.h>
 #include <pan/usenet-utils/numbers.h>

@@ -24,7 +24,7 @@
 #include <set>
 #include <gobject/gvaluecollector.h>
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include "pan-tree.h"
 
 #define IS_SORTED(tree) \
@@ -149,7 +149,7 @@ PanTreeStore :: set_or_invalidate (GtkTreeIter * iter, const Row * row)
 *****/
 
 GtkTreeModelFlags
-PanTreeStore :: model_get_flags (GtkTreeModel *tree_model)
+PanTreeStore :: model_get_flags (GtkTreeModel *)
 {
   return GTK_TREE_MODEL_ITERS_PERSIST;
 }
@@ -587,7 +587,7 @@ PanTreeStore :: FreeRowWalker: public PanTreeStore::WalkFunctor
   PanTreeStore * store;
   FreeRowWalker (PanTreeStore *t): store(t) {}
   virtual ~FreeRowWalker () {}
-  virtual bool operator()(PanTreeStore *s, Row *r, GtkTreeIter*it, GtkTreePath *p) {
+  virtual bool operator()(PanTreeStore *s, Row *r, GtkTreeIter*, GtkTreePath*) {
     if (store->row_dispose)
         store->row_dispose->row_dispose (s, r);
     else
@@ -666,7 +666,7 @@ PanTreeStore :: pan_tree_sortable_init (GtkTreeSortableIface *iface)
 namespace
 {
   class RootRow: public PanTreeStore::Row {
-    virtual void get_value (int column, GValue * setme) { /* unused */ }
+    virtual void get_value (int, GValue *) { /* unused */ }
   };
 }
 
@@ -1152,8 +1152,8 @@ struct PanTreeStore::ClearWalker: public PanTreeStore::WalkFunctor
   }
 
   virtual bool operator()(PanTreeStore* store,
-                          PanTreeStore::Row* row,
-                          GtkTreeIter* iter, GtkTreePath* path)
+                          PanTreeStore::Row*,
+                          GtkTreeIter* iter, GtkTreePath*)
   {
     clear_children (store, store->get_row(iter));
     return true;

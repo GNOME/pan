@@ -22,7 +22,7 @@ extern "C" {
   #include <glib.h>
   #include <glib/gi18n.h>
 }
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include "filter-info.h"
 
 using namespace pan;

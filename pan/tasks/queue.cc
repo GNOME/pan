@@ -19,7 +19,7 @@
 
 #include <config.h>
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/data/server-info.h>
 #include "queue.h"
@@ -74,7 +74,7 @@ Queue :: on_pool_has_nntp_available (const Quark& server)
 }
 
 void
-Queue :: on_pool_error (const Quark& server, const StringView& message)
+Queue :: on_pool_error (const Quark& server UNUSED, const StringView& message)
 {
   fire_queue_error (message);
 }
@@ -342,21 +342,21 @@ Queue :: find_best_server (const Task::State::unique_servers_t& servers, Quark& 
 ***/
 
 void
-Queue :: on_set_items_added (TaskSet& container, TaskSet::items_t& tasks, int pos)
+Queue :: on_set_items_added (TaskSet& container UNUSED, TaskSet::items_t& tasks, int pos)
 {
   _needs_saving = true;
   fire_tasks_added (pos, tasks.size());
 }
 
 void
-Queue :: on_set_item_removed (TaskSet& container, Task*& task, int pos)
+Queue :: on_set_item_removed (TaskSet& container UNUSED, Task*& task, int pos)
 {
   _needs_saving = true;
   fire_task_removed (task, pos);
 }
 
 void
-Queue :: on_set_item_moved (TaskSet& container, Task*& task, int new_pos, int old_pos)
+Queue :: on_set_item_moved (TaskSet& container UNUSED, Task*& task, int new_pos, int old_pos)
 {
   _needs_saving = true;
   fire_task_moved (task, new_pos, old_pos);
@@ -629,7 +629,7 @@ Queue :: check_in (NNTP * nntp, Health nntp_health)
 }
 
 void
-Queue :: check_in (Decoder* decoder, Task* task)
+Queue :: check_in (Decoder* decoder UNUSED, Task* task)
 {
   // take care of our decoder counting...
   _decoder_task = 0;

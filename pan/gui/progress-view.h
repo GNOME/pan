@@ -48,7 +48,7 @@ namespace pan
       virtual void on_progress_step (Progress&, int percentage);
       virtual void on_progress_status (Progress&, const StringView&);
       virtual void on_progress_error (Progress&, const StringView&);
-      virtual void on_progress_finished (Progress&, int status) { }
+      virtual void on_progress_finished (Progress&, int) { }
 
     private:
       void update_text_soon ();

@@ -20,7 +20,7 @@
 #include <config.h>
 #include <cassert>
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/data/data.h>
 #include "article-filter.h"
 

@@ -28,20 +28,20 @@ extern "C" {
   #include <glib/gi18n.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
 #include "prefs.h"
 
 using namespace pan;
 
 // called for open tags <foo bar='baz'>
 void
-Prefs :: start_element (GMarkupParseContext *context,
+Prefs :: start_element (GMarkupParseContext *,
                         const gchar         *element_name,
                         const gchar        **attribute_names,
                         const gchar        **attribute_vals,
                         gpointer             prefs_gpointer,
-                        GError             **error)
+                        GError             **)
 {
   const std::string s (element_name);
   Prefs& prefs (*static_cast<Prefs*>(prefs_gpointer));

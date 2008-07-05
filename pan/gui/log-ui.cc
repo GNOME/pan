@@ -24,8 +24,8 @@ extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
 }
-#include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
 #include <pan/general/string-view.h>
 #include "log-ui.h"
 #include "pad.h"
@@ -71,7 +71,7 @@ namespace
 namespace
 {
   void
-  log_response_cb (GtkDialog * dialog, int response, gpointer unused)
+  log_response_cb (GtkDialog * dialog, int response, gpointer )
   {
     if (response == GTK_RESPONSE_NO)
     {
@@ -135,7 +135,7 @@ namespace
 namespace
 {
   void
-  render_severity (GtkTreeViewColumn * col,
+  render_severity (GtkTreeViewColumn * ,
                    GtkCellRenderer   * renderer,
                    GtkTreeModel      * model,
                    GtkTreeIter       * iter,
@@ -148,11 +148,11 @@ namespace
   }
 
   void
-  render_date (GtkTreeViewColumn * col,
+  render_date (GtkTreeViewColumn * ,
                GtkCellRenderer   * renderer,
                GtkTreeModel      * model,
                GtkTreeIter       * iter,
-               gpointer            user_data)
+               gpointer            )
   {
     unsigned long date_ul;
     gtk_tree_model_get (model, iter, COL_DATE, &date_ul, -1);

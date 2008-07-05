@@ -32,8 +32,8 @@ extern "C" {
 #include <pan/general/debug.h>
 #include <pan/general/string-view.h>
 #include <pan/general/file-util.h>
-#include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
 #include "data-io.h"
 #include "profiles.h"
 
@@ -62,12 +62,12 @@ namespace
   };
 
   // called for open tags <foo bar='baz'>
-  void start_element (GMarkupParseContext * context,
+  void start_element (GMarkupParseContext * context           UNUSED,
                       const gchar         * element_name_str,
                       const gchar        ** attribute_names,
                       const gchar        ** attribute_vals,
                       gpointer              user_data,
-                      GError             ** error)
+                      GError             ** error             UNUSED)
   {
     MyContext& mc (*static_cast<MyContext*>(user_data));
     const std::string element_name (element_name_str);
@@ -101,10 +101,10 @@ namespace
   }
 
   // Called for close tags </foo>
-  void end_element    (GMarkupParseContext *context,
+  void end_element    (GMarkupParseContext *context           UNUSED,
                        const gchar         *element_name_str,
                        gpointer             user_data,
-                       GError             **error)
+                       GError             **error             UNUSED)
   {
     MyContext& mc (*static_cast<MyContext*>(user_data));
     const std::string element_name (element_name_str);
@@ -125,11 +125,11 @@ namespace
     }
   }
 
-  void text (GMarkupParseContext *context,
+  void text (GMarkupParseContext *context    UNUSED,
              const gchar         *text,
              gsize                text_len,  
              gpointer             user_data,
-             GError             **error)
+             GError             **error      UNUSED)
   {
     static_cast<MyContext*>(user_data)->text.assign (text, text_len);
   }

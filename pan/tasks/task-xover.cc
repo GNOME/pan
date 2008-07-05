@@ -25,7 +25,7 @@ extern "C" {
   #include <gmime/gmime-utils.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/data/data.h>
@@ -330,7 +330,7 @@ TaskXOver :: on_nntp_line (NNTP               * nntp,
 void
 TaskXOver :: on_nntp_done (NNTP              * nntp,
                            Health              health,
-                           const StringView  & response)
+                           const StringView  & response UNUSED)
 {
   //std::cerr << LINE_ID << " nntp " << nntp->_server << " (" << nntp << ") done; checking in.  health==" << health << std::endl;
   update_work (true);

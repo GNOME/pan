@@ -23,7 +23,7 @@ extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
 }
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/tasks/queue.h>
 #include <pan/tasks/task-xover.h>
 #include "dl-headers-ui.h"
@@ -87,7 +87,7 @@ namespace
   }
 
   int
-  spin_tickled_cb (GtkWidget * w, GdkEventFocus * event, gpointer user_data)
+  spin_tickled_cb (GtkWidget *, GdkEventFocus *, gpointer user_data)
   {
     // if a user clicked in the spinbutton window,
     // select the spinbutton radiobutton for them.

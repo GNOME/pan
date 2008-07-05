@@ -23,7 +23,7 @@ extern "C" {
   #include <gtk/gtk.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/icons/pan-pixbufs.h>
 #include <pan/tasks/task-article.h>
 #include <pan/tasks/queue.h>
@@ -144,7 +144,7 @@ SaveDialog :: response_cb (GtkDialog * dialog,
 
 namespace
 {
-  void entry_changed_cb (GtkEditable * ignored, gpointer radio_or_null)
+  void entry_changed_cb (GtkEditable*, gpointer radio_or_null)
   {
     if (radio_or_null)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(radio_or_null), true);

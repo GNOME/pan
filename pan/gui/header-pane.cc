@@ -27,9 +27,9 @@ extern "C" {
 #include <algorithm>
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
-#include <pan/general/foreach.h>
-#include <pan/general/quark.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
+#include <pan/general/quark.h>
 #include <pan/usenet-utils/filter-info.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
@@ -102,7 +102,7 @@ namespace
     { icon_empty,                  0 }
   };
 
-  const int
+  int
   get_article_state (const Data& data, const Article * a)
   {
     int retval;
@@ -143,11 +143,11 @@ namespace
 
 
 void
-HeaderPane :: render_action (GtkTreeViewColumn * col,
+HeaderPane :: render_action (GtkTreeViewColumn * ,
                              GtkCellRenderer   * renderer,
                              GtkTreeModel      * model,
                              GtkTreeIter       * iter,
-                             gpointer            user_data)
+                             gpointer            )
 {
   int index (0);
   gtk_tree_model_get (model, iter, COL_ACTION, &index, -1);
@@ -155,11 +155,11 @@ HeaderPane :: render_action (GtkTreeViewColumn * col,
 }
 
 void
-HeaderPane :: render_state (GtkTreeViewColumn * col,
+HeaderPane :: render_state (GtkTreeViewColumn * ,
                             GtkCellRenderer   * renderer,
                             GtkTreeModel      * model,
                             GtkTreeIter       * iter,
-                            gpointer            user_data)
+                            gpointer            )
 {
   int index (0);
   gtk_tree_model_get (model, iter, COL_STATE, &index, -1);
@@ -181,7 +181,7 @@ HeaderPane :: find_highest_followup_score (GtkTreeModel * model,
 }
 
 void
-HeaderPane :: render_score (GtkTreeViewColumn * col,
+HeaderPane :: render_score (GtkTreeViewColumn * ,
                             GtkCellRenderer   * renderer,
                             GtkTreeModel      * model,
                             GtkTreeIter       * iter,
@@ -230,11 +230,11 @@ HeaderPane :: render_score (GtkTreeViewColumn * col,
 }
 
 void
-HeaderPane :: render_bytes (GtkTreeViewColumn * col,
+HeaderPane :: render_bytes (GtkTreeViewColumn * ,
                             GtkCellRenderer   * renderer,
                             GtkTreeModel      * model,
                             GtkTreeIter       * iter,
-                            gpointer            user_data)
+                            gpointer            )
 {
   unsigned long bytes (0);
   gtk_tree_model_get (model, iter, COL_BYTES, &bytes, -1);
@@ -249,8 +249,8 @@ struct HeaderPane::CountUnread: public PanTreeStore::WalkFunctor
   CountUnread (const Row* top): top_row(top), unread_children(0) {}
   virtual ~CountUnread () {}
 
-  virtual bool operator()(PanTreeStore* store, PanTreeStore::Row* r,
-                          GtkTreeIter* iter, GtkTreePath* unused) {
+  virtual bool operator()(PanTreeStore*, PanTreeStore::Row* r,
+                          GtkTreeIter*, GtkTreePath* ) {
     const Row * row (dynamic_cast<Row*>(r));
     if (row!=top_row && !row->is_read)
       ++unread_children;
@@ -259,7 +259,7 @@ struct HeaderPane::CountUnread: public PanTreeStore::WalkFunctor
 };
 
 void
-HeaderPane :: render_subject (GtkTreeViewColumn * col,
+HeaderPane :: render_subject (GtkTreeViewColumn * ,
                               GtkCellRenderer   * renderer,
                               GtkTreeModel      * model,
                               GtkTreeIter       * iter,
@@ -358,7 +358,7 @@ int
 HeaderPane :: column_compare_func (GtkTreeModel  * model,
                                    GtkTreeIter   * iter_a,
                                    GtkTreeIter   * iter_b,
-                                   gpointer        userdata)
+                                   gpointer        )
 {
   int ret (0);
   const PanTreeStore * store (reinterpret_cast<PanTreeStore*>(model));
@@ -436,7 +436,7 @@ HeaderPane :: column_compare_func (GtkTreeModel  * model,
 PanTreeStore*
 HeaderPane :: build_model (const Quark               & group,
                            Data::ArticleTree         * atree,
-                           const TextMatch           * match)
+                           const TextMatch           * )
 {
   PanTreeStore * store = PanTreeStore :: new_tree (
     N_COLUMNS,
@@ -609,7 +609,7 @@ namespace
     quarks_t& mids;
     RememberMessageId (quarks_t& m): mids(m) {}
     virtual ~RememberMessageId() {}
-    virtual void operator() (GtkTreeModel* model, GtkTreeIter* it, const Article& article) {
+    virtual void operator() (GtkTreeModel*, GtkTreeIter*, const Article& article) {
       mids.insert (article.message_id);
     }
   };
@@ -747,7 +747,7 @@ HeaderPane :: get_first_selected_article () const
 
 void
 HeaderPane :: get_full_selection_v_foreach (GtkTreeModel * model,
-                                            GtkTreePath  * path,
+                                            GtkTreePath  * ,
                                             GtkTreeIter  * iter,
                                             gpointer       data)
 {
@@ -837,7 +837,7 @@ HeaderPane :: get_nested_selection () const
 ****/
 
 void
-HeaderPane ::  do_popup_menu (GtkWidget *treeview, GdkEventButton *event, gpointer pane_g)
+HeaderPane ::  do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g)
 {
   HeaderPane * self (static_cast<HeaderPane*>(pane_g));
   GtkWidget * menu (self->_action_manager.get_action_widget ("/header-pane-popup"));
@@ -858,14 +858,14 @@ namespace
 {
   bool row_collapsed_or_expanded (false);
 
-  void row_collapsed_cb (GtkTreeView *view, GtkTreeIter *iter,
-                         GtkTreePath *path, gpointer unused)
+  void row_collapsed_cb (GtkTreeView *, GtkTreeIter *,
+                         GtkTreePath *, gpointer )
   {
     row_collapsed_or_expanded = true;
   }
 
-  void row_expanded_cb (GtkTreeView *view, GtkTreeIter *iter,
-                        GtkTreePath *path, gpointer unused)
+  void row_expanded_cb (GtkTreeView *view, GtkTreeIter *,
+                        GtkTreePath *path, gpointer )
   {
     row_collapsed_or_expanded = true;
     gtk_tree_view_expand_row (view, path, true);
@@ -992,9 +992,9 @@ namespace
 }
 
 void
-HeaderPane :: on_row_activated (GtkTreeView          * treeview,
-                                GtkTreePath          * path,
-                                GtkTreeViewColumn    * col,
+HeaderPane :: on_row_activated (GtkTreeView          * ,
+                                GtkTreePath          * ,
+                                GtkTreeViewColumn    * ,
                                 gpointer               pane_g)
 {
   g_idle_add (on_row_activated_idle, pane_g);
@@ -1184,8 +1184,8 @@ namespace
   }
 
   gboolean search_entry_focus_in_cb (GtkWidget     * w,
-                                     GdkEventFocus * unused1,
-                                     gpointer        unused2)
+                                     GdkEventFocus * ,
+                                     gpointer        )
   {
     gtk_widget_modify_text (w, GTK_STATE_NORMAL, NULL); // resets
     set_search_entry (w, search_text.c_str());
@@ -1205,8 +1205,8 @@ namespace
   }
 
   gboolean search_entry_focus_out_cb (GtkWidget     * w,
-                                      GdkEventFocus * unused1,
-                                      gpointer        unused2)
+                                      GdkEventFocus * ,
+                                      gpointer        )
   {
     refresh_search_entry (w);
     return false;
@@ -1226,7 +1226,7 @@ namespace
     }
   }
 
-  void search_entry_activated (GtkEntry * entry, gpointer h_gpointer)
+  void search_entry_activated (GtkEntry *, gpointer h_gpointer)
   {
     search_activate (static_cast<HeaderPane*>(h_gpointer));
     remove_activate_soon_tag ();
@@ -1271,13 +1271,13 @@ namespace
     }
   }
 
-  void entry_icon_released (SexyIconEntry *entry, SexyIconEntryPosition icon_pos, int button, gpointer menu)
+  void entry_icon_released (SexyIconEntry*, SexyIconEntryPosition icon_pos, int, gpointer menu)
   {
     if (icon_pos == SEXY_ICON_ENTRY_PRIMARY)
       gtk_menu_popup (GTK_MENU(menu), 0, 0, 0, 0, 0, gtk_get_current_event_time());
   }
 
-  void entry_icon_released_2 (SexyIconEntry *entry, SexyIconEntryPosition icon_pos, int button, gpointer pane_gpointer)
+  void entry_icon_released_2 (SexyIconEntry *entry, SexyIconEntryPosition icon_pos, int, gpointer pane_gpointer)
   {
     if (icon_pos == SEXY_ICON_ENTRY_SECONDARY) {
       set_search_entry (GTK_WIDGET(entry), "");
@@ -1525,7 +1525,7 @@ HeaderPane :: create_filter_entry ()
 }
 
 void
-HeaderPane :: on_selection_changed (GtkTreeSelection * sel, gpointer self_gpointer)
+HeaderPane :: on_selection_changed (GtkTreeSelection*, gpointer self_gpointer)
 {
   HeaderPane * self (static_cast<HeaderPane*>(self_gpointer));
 
@@ -1767,7 +1767,7 @@ namespace
   struct ArticleExists: public ArticleTester {
     virtual ~ArticleExists() {}
     ArticleExists () {}
-    virtual bool operator()(const Article& a) const { return true; }
+    virtual bool operator()(const Article&) const { return true; }
   };
 
   struct ArticleIsParentOf: public ArticleTester {
@@ -1826,7 +1826,7 @@ namespace
     virtual ~SelectFunctor () {}
     SelectFunctor (GtkTreeView * view): _view(view) {}
     GtkTreeView * _view;
-    virtual void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article& a) {
+    virtual void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article&) {
       GtkTreeSelection * sel (gtk_tree_view_get_selection (_view));
       gtk_tree_selection_unselect_all (sel);
       GtkTreePath * path = gtk_tree_model_get_path (model, iter);
@@ -2001,7 +2001,7 @@ HeaderPane :: refresh_font ()
 }
 
 void
-HeaderPane :: on_prefs_flag_changed (const StringView& key, bool value)
+HeaderPane :: on_prefs_flag_changed (const StringView& key, bool)
 {
   if (key == "header-pane-font-enabled")
     refresh_font ();
@@ -2010,7 +2010,7 @@ HeaderPane :: on_prefs_flag_changed (const StringView& key, bool value)
 }
 
 void
-HeaderPane :: on_prefs_string_changed (const StringView& key, const StringView& value)
+HeaderPane :: on_prefs_string_changed (const StringView& key, const StringView&)
 {
   if (key == "header-pane-font")
     refresh_font ();
@@ -2043,7 +2043,7 @@ HeaderPane :: on_queue_tasks_added (Queue& queue, int index, int count)
 }
 
 void
-HeaderPane :: on_queue_task_removed (Queue& queue, Task& task, int index)
+HeaderPane :: on_queue_task_removed (Queue&, Task& task, int)
 {
   const TaskArticle * ta (dynamic_cast<const TaskArticle*>(&task));
   if (ta)
@@ -2076,8 +2076,8 @@ struct HeaderPane::SimilarWalk: public PanTreeStore::WalkFunctor
     SimilarWalk (GtkTreeSelection * s, const Article& a): selection(s), source(a) {}
 
   public:
-    virtual bool operator()(PanTreeStore * store, PanTreeStore::Row * row,
-			    GtkTreeIter * iter, GtkTreePath * unused) {
+    virtual bool operator()(PanTreeStore * store, PanTreeStore::Row *,
+			    GtkTreeIter * iter, GtkTreePath *) {
       const Article * article (get_article (GTK_TREE_MODEL(store), iter));
       if (similar (*article))
 	gtk_tree_selection_select_iter (selection, iter);

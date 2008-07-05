@@ -11,7 +11,7 @@ using namespace pan;
 
 struct MyServerRank: public ServerRank
 {
-  virtual int get_server_rank (const Quark& server) const { return 1; }
+  virtual int get_server_rank (const Quark&) const { return 1; }
 };
 
 struct MyGroupServer: public GroupServer
@@ -19,7 +19,7 @@ struct MyGroupServer: public GroupServer
   std::map<Quark,quarks_t>& g2s;
   MyGroupServer (std::map<Quark,quarks_t>& g): g2s(g) {}
   virtual ~MyGroupServer () {}
-  virtual void server_get_groups (const Quark& group, quarks_t& setme) const { /*ignored*/ }
+  virtual void server_get_groups (const Quark&, quarks_t&) const { /*ignored*/ }
   virtual void group_get_servers (const Quark& group, quarks_t& setme) const {
     setme.clear ();
     if (g2s.count (group))
@@ -30,9 +30,9 @@ struct MyGroupServer: public GroupServer
 struct MyArticleRead: public ArticleRead
 {
   virtual ~MyArticleRead () {}
-  virtual bool is_read (const Article* a) const { return false; }
+  virtual bool is_read (const Article*) const { return false; }
   virtual void mark_read (const Article&, bool read=true) {}
-  virtual void mark_read (const Article** articles, unsigned long article_count, bool read=true) {}
+  virtual void mark_read (const Article**, unsigned long, bool read=true) {}
 };
 
 

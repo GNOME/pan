@@ -28,7 +28,7 @@ extern "C"
   #include <gmime/gmime.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/string-view.h>
 #include "mime-utils.h"

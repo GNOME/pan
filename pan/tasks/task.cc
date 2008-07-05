@@ -71,7 +71,7 @@ Task :: give_decoder (DecoderSource* s, Decoder* d)
   use_decoder (d);
 }
 void
-Task :: use_decoder (Decoder * d)
+Task :: use_decoder (Decoder * d UNUSED)
 {
   abort ();
 }

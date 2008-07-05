@@ -33,7 +33,7 @@ extern "C" {
 };
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
-#include <pan/general/foreach.h>
+#include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
 #include "decoder.h"
 

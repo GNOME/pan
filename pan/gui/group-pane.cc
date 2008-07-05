@@ -25,8 +25,8 @@ extern "C" {
   #include <gtk/gtk.h>
 }
 #include <pan/general/debug.h>
-#include <pan/general/foreach.h>
 #include <pan/general/log.h>
+#include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/general/text-match.h>
 #include <pan/general/time-elapsed.h>
@@ -146,7 +146,7 @@ GroupPane :: get_full_selection () const
 }
 
 void
-GroupPane ::  do_popup_menu (GtkWidget *treeview, GdkEventButton *event, gpointer pane_g)
+GroupPane ::  do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g)
 {
   GroupPane * self (static_cast<GroupPane*>(pane_g));
   GtkWidget * menu (self->_action_manager.get_action_widget ("/group-pane-popup"));
@@ -166,9 +166,9 @@ namespace
 }
 
 void
-GroupPane :: on_row_activated (GtkTreeView          * treeview,
-                               GtkTreePath          * path,
-                               GtkTreeViewColumn    * col,
+GroupPane :: on_row_activated (GtkTreeView          * ,
+                               GtkTreePath          * ,
+                               GtkTreeViewColumn    * ,
                                gpointer               pane_g)
 {
   // user may have activated by selecting the row... wait for the GtkTreeSelection to catch up
@@ -179,7 +179,7 @@ namespace
 {
   bool row_collapsed_or_expanded (false);
 
-  void row_collapsed_or_expanded_cb (GtkTreeView *view, GtkTreeIter *iter, GtkTreePath *path, gpointer unused)
+  void row_collapsed_or_expanded_cb (GtkTreeView*, GtkTreeIter*, GtkTreePath*, gpointer)
   {
     row_collapsed_or_expanded = true;
   }
@@ -302,7 +302,7 @@ namespace
   }
 
   void
-  delete_rows (gpointer data, GObject * dead_object)
+  delete_rows (gpointer data, GObject*)
   {
     delete [] static_cast<MyRow*>(data);
   }
@@ -312,7 +312,7 @@ namespace
   struct NoopRowDispose: public PanTreeStore::RowDispose
   {
     virtual ~NoopRowDispose () { }
-    virtual void row_dispose (PanTreeStore *store, PanTreeStore::Row* row) { }
+    virtual void row_dispose (PanTreeStore*, PanTreeStore::Row*) { }
   };
 
   NoopRowDispose noop_row_dispose;
@@ -473,7 +473,7 @@ GroupPane :: on_group_read (const Quark& groupname)
        _dirty_groups_idle_tag = g_timeout_add (333, dirty_groups_idle, this);
 }
 void
-GroupPane :: on_group_counts (const Quark& groupname, unsigned long unread, unsigned long total)
+GroupPane :: on_group_counts (const Quark& groupname, unsigned long, unsigned long)
 {
   on_group_read (groupname);
 }
@@ -549,8 +549,8 @@ namespace
   }
 
   gboolean search_entry_focus_in_cb (GtkWidget     * w,
-                                     GdkEventFocus * unused1,
-                                     gpointer        unused2)
+                                     GdkEventFocus * ,
+                                     gpointer        )
   {
     gtk_widget_modify_text (w, GTK_STATE_NORMAL, NULL); // resets
     set_search_entry (w, search_text.c_str());
@@ -570,8 +570,8 @@ namespace
   }
 
   gboolean search_entry_focus_out_cb (GtkWidget     * w,
-                                      GdkEventFocus * unused1,
-                                      gpointer        unused2)
+                                      GdkEventFocus * ,
+                                      gpointer        )
   {
     refresh_search_entry (w);
     return false;
@@ -591,13 +591,13 @@ namespace
     }
   }
 
-  void search_entry_activated (GtkEntry * entry, gpointer pane_gpointer)
+  void search_entry_activated (GtkEntry*, gpointer pane_gpointer)
   {
     search_activate (static_cast<GroupPane*>(pane_gpointer));
     remove_activate_soon_tag ();
   }
 
-  void clear_button_clicked_cb (SexyIconEntry *e, SexyIconEntryPosition icon_pos, int button, gpointer pane_gpointer)
+  void clear_button_clicked_cb (SexyIconEntry *e, SexyIconEntryPosition, int, gpointer pane_gpointer)
   {
     set_search_entry (GTK_WIDGET(e), "");
     refresh_search_entry (GTK_WIDGET(e));
@@ -637,11 +637,11 @@ namespace
   bool shorten;
 
   void
-  render_group_name (GtkTreeViewColumn * col,
+  render_group_name (GtkTreeViewColumn * ,
                      GtkCellRenderer   * renderer,
                      GtkTreeModel      * model,
                      GtkTreeIter       * iter,
-                     gpointer            user_data)
+                     gpointer            )
   {
     PanTreeStore * tree (PAN_TREE_STORE(model));
     MyRow * row (dynamic_cast<MyRow*>(tree->get_row (iter)));
@@ -778,11 +778,11 @@ GroupPane :: read_next_group ()
 namespace
 {
   gboolean
-  select_func (GtkTreeSelection * selection,
+  select_func (GtkTreeSelection * ,
                GtkTreeModel     * model,
                GtkTreePath      * path,
-               gboolean           path_currently_selected,
-               gpointer           unused)
+               gboolean           ,
+               gpointer           )
   {
     GtkTreeIter iter;
     PanTreeStore * store (PAN_TREE_STORE(model));
@@ -814,7 +814,7 @@ GroupPane :: create_filter_entry ()
 }
 
 void
-GroupPane :: on_selection_changed (GtkTreeSelection * sel, gpointer pane_gpointer)
+GroupPane :: on_selection_changed (GtkTreeSelection*, gpointer pane_gpointer)
 {
   GroupPane * self (static_cast<GroupPane*>(pane_gpointer));
   Quark group (self->get_first_selection());
@@ -922,14 +922,14 @@ GroupPane :: refresh_font ()
 }
 
 void
-GroupPane :: on_prefs_flag_changed (const StringView& key, bool value)
+GroupPane :: on_prefs_flag_changed (const StringView& key, bool)
 {
   if (key == "group-pane-font-enabled")
     refresh_font ();
 }
 
 void
-GroupPane :: on_prefs_string_changed (const StringView& key, const StringView& value)
+GroupPane :: on_prefs_string_changed (const StringView& key, const StringView&)
 {
   if (key == "group-pane-font")
     refresh_font ();

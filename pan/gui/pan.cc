@@ -68,7 +68,7 @@ namespace
       gtk_main_quit ();
   }
 
-  gboolean delete_event_cb (GtkWidget *w, GdkEvent *e, gpointer user_data)
+  gboolean delete_event_cb (GtkWidget *, GdkEvent *, gpointer )
   {
     mainloop_quit ();
     return true; // don't invoke the default handler that destroys the widget
@@ -92,7 +92,7 @@ namespace
 #endif // G_OS_WIN32
   }
 
-  void destroy_cb (GtkWidget*w, gpointer user_data)
+  void destroy_cb (GtkWidget*, gpointer)
   {
     gtk_main_quit ();
   }
@@ -103,7 +103,7 @@ namespace
     Queue * queue;
   };
 
-  void add_grouplist_task (GtkObject *object, gpointer user_data)
+  void add_grouplist_task (GtkObject *, gpointer user_data)
   {
     DataAndQueue * foo (static_cast<DataAndQueue*>(user_data));
     const quarks_t new_servers (foo->data->get_servers());
