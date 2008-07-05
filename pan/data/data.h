@@ -537,7 +537,7 @@ namespace pan
                                          const Quark          & group,
                                          const StringView     & subject,
                                          const StringView     & author,
-                                         const StringView     & time,
+                                         const time_t           time,
                                          const StringView     & message_id,
                                          const StringView     & references,
                                          const unsigned long    byte_count,

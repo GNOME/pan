@@ -299,22 +299,23 @@ TaskXOver :: on_nntp_line (NNTP               * nntp,
 
   const char * fallback_charset = NULL; // FIXME
 
+  // are we done?
+  const time_t time_posted = g_mime_utils_header_decode_date (date.str, NULL);
+  if( _mode==DAYS && time_posted<_days_cutoff ) {
+    _server_to_minitasks[nntp->_server].clear ();
+    return;
+  }
+
   ++_parts_so_far;
 
   const Article * article = _data.xover_add (
     nntp->_server, nntp->_group,
     (header_is_nonencoded_utf8(subj) ? subj : header_to_utf8(subj,fallback_charset).c_str()),
     (header_is_nonencoded_utf8(author) ? author : header_to_utf8(author,fallback_charset).c_str()),
-    date, mid, ref, bytes, lines, xref);
+    time_posted, mid, ref, bytes, lines, xref);
 
   if (article)
-  {
     ++_articles_so_far;
-
-    // are we done?
-    if (_mode==DAYS && article->time_posted<_days_cutoff)
-      _server_to_minitasks[nntp->_server].clear ();
-  }
 
   // emit a status update
   int& prev = _last_xover_number[nntp];

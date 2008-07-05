@@ -227,7 +227,7 @@ DataImpl :: xover_add (const Quark         & server,
                        const Quark         & group,
                        const StringView    & subject,
                        const StringView    & author,
-                       const StringView    & time_posted,
+                       const time_t          time_posted,
                        const StringView    & message_id,
                        const StringView    & references_in,
                        const unsigned long   byte_count,
@@ -293,7 +293,7 @@ DataImpl :: xover_add (const Quark         & server,
       a.message_id = art_mid;
       a.is_binary = part_count >= 1;
       a.set_part_count (a.is_binary ? part_count : 1);
-      a.time_posted = time_posted.empty() ? 0 : g_mime_utils_header_decode_date (time_posted.str, NULL);
+      a.time_posted = time_posted;
       a.xref.insert (server, xref);
       load_article (group, &a, references);
       new_article = &a;
