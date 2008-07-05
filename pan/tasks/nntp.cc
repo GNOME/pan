@@ -20,6 +20,7 @@
 #include <config.h>
 #include <cassert>
 #include <cstdarg>
+#include <cstdlib> // abort, atoi, strtoul
 extern "C" {
   #include <glib.h>
   #include <glib/gi18n.h>

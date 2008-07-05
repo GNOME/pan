@@ -29,11 +29,14 @@
 #include <string>
 #include <vector>
 
-#if defined(HAVE_EXT_HASH_SET)
+#if defined(HAVE_TR1_UNORDERED_SET)
+# include <tr1/unordered_set>
+#elif defined(HAVE_EXT_HASH_SET)
 # include <ext/hash_set>
 #else
 # include <set>
 #endif
+
 #include <pan/general/string-view.h>
 
 #ifndef UINT32_MAX
@@ -134,8 +137,10 @@ namespace pan
       };
 
 
-#if defined(HAVE_EXT_HASH_SET)
-      typedef __gnu_cxx::hash_set < Impl, StringViewHash > lookup_t;
+#if defined(HAVE_TR1_UNORDERED_SET)
+      typedef std::tr1::unordered_set<Impl, StringViewHash> lookup_t;
+#elif defined(HAVE_EXT_HASH_SET)
+      typedef __gnu_cxx::hash_set<Impl, StringViewHash> lookup_t;
 #else
       typedef std::set<Impl> lookup_t;
 #endif

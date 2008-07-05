@@ -18,6 +18,8 @@
  */
 
 #include <config.h>
+#include <algorithm> // std::replace
+#include <cstdlib> // atoi, strtoul
 #include <iostream>
 #include <sstream>
 #include <string>
