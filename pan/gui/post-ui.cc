@@ -1076,7 +1076,6 @@ PostUI :: create_body_widget (GtkTextBuffer*& buf, GtkWidget*& view, const Prefs
 {
   const int WRAP_COLS = 75;
   const int VIEW_COLS = 80;
-  const int VIEW_ROWS = 30;
 
   view = gtk_text_view_new ();
   buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW(view));
@@ -1100,8 +1099,7 @@ PostUI :: create_body_widget (GtkTextBuffer*& buf, GtkWidget*& view, const Prefs
   s.assign (VIEW_COLS, 'A');
   pango_layout_set_text (layout, s.c_str(), s.size());
   pango_layout_get_extents (layout, &r, 0);
-  gtk_widget_set_size_request (view, PANGO_PIXELS(r.width),
-                                     PANGO_PIXELS(r.height*VIEW_ROWS));
+  gtk_widget_set_size_request (view, PANGO_PIXELS(r.width), -1 );
  
   // set the rest of the text view's policy 
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(view), GTK_WRAP_WORD);
@@ -1880,6 +1878,7 @@ PostUI :: PostUI (GtkWindow    * parent,
   g_signal_connect (_root, "delete-event", G_CALLBACK(delete_event_cb), this);
   gtk_window_set_role (GTK_WINDOW(_root), "pan-post-window");
   gtk_window_set_title (GTK_WINDOW(_root), _("Post Article"));
+  gtk_window_set_default_size (GTK_WINDOW(_root), -1, 450);
   g_object_set_data_full (G_OBJECT(_root), "post-ui", this, delete_post_ui);
   if (parent) {
     gtk_window_set_transient_for (GTK_WINDOW(_root), parent);
