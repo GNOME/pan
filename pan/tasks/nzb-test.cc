@@ -31,8 +31,8 @@ struct MyArticleRead: public ArticleRead
 {
   virtual ~MyArticleRead () {}
   virtual bool is_read (const Article*) const { return false; }
-  virtual void mark_read (const Article&, bool read=true) {}
-  virtual void mark_read (const Article**, unsigned long, bool read=true) {}
+  virtual void mark_read (const Article&, bool) {}
+  virtual void mark_read (const Article**, unsigned long, bool) {}
 };
 
 
