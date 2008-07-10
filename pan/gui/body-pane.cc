@@ -1363,7 +1363,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_object_sink (GTK_OBJECT(_terse));
   gtk_misc_set_alignment (GTK_MISC(_terse), 0.0f, 0.5f);
   gtk_label_set_use_markup (GTK_LABEL(_terse), true);
-  //gtk_label_set_selectable (GTK_LABEL(_terse), true);
+  gtk_label_set_selectable (GTK_LABEL(_terse), true);
 #if GTK_CHECK_VERSION(2,6,0)
   gtk_label_set_ellipsize (GTK_LABEL(_terse), PANGO_ELLIPSIZE_MIDDLE);
 #endif
@@ -1373,7 +1373,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   g_object_ref (_verbose);
   gtk_object_sink (GTK_OBJECT(_verbose));
   w = _headers = gtk_label_new ("Headers");
-  //gtk_label_set_selectable (GTK_LABEL(_headers), TRUE);
+  gtk_label_set_selectable (GTK_LABEL(_headers), TRUE);
   gtk_misc_set_alignment (GTK_MISC(w), 0.0f, 0.5f);
 #if GTK_CHECK_VERSION(2,6,0)
   gtk_label_set_ellipsize (GTK_LABEL(w), PANGO_ELLIPSIZE_MIDDLE);

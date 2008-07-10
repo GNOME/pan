@@ -1769,6 +1769,7 @@ PostUI :: create_extras_tab ()
 
   w = _followupto_entry = gtk_entry_new ();
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
+  /* i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english. */
   gtk_tooltips_set_tip (GTK_TOOLTIPS(_ttips), w, _("The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n\nTo direct all replies to your email address, use \"Followup-To: poster\""), 0);
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
 
