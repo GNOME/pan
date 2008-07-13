@@ -156,7 +156,7 @@ sexy_icon_entry_class_init(SexyIconEntryClass *klass)
 }
 
 static void
-sexy_icon_entry_editable_init(GtkEditableClass *iface)
+sexy_icon_entry_editable_init(GtkEditableClass *iface G_GNUC_UNUSED)
 {
 };
 
@@ -300,7 +300,7 @@ get_text_area_size(SexyIconEntry *entry, GtkAllocation *alloc)
 static void
 get_icon_allocation(SexyIconEntry *icon_entry,
 					gboolean left,
-					GtkAllocation *widget_alloc,
+					GtkAllocation *widget_alloc G_GNUC_UNUSED,
 					GtkAllocation *text_area_alloc,
 					GtkAllocation *allocation,
 					SexyIconEntryPosition *icon_pos)
@@ -647,7 +647,7 @@ sexy_icon_entry_expose(GtkWidget *widget, GdkEventExpose *event)
 }
 
 static void
-update_icon(GObject *obj, GParamSpec *param, SexyIconEntry *entry)
+update_icon(GObject *obj G_GNUC_UNUSED, GParamSpec *param, SexyIconEntry *entry)
 {
 	if (param != NULL)
 	{

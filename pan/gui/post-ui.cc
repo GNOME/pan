@@ -197,30 +197,30 @@ namespace
 
   GtkActionEntry entries[] =
   {
-    { "file-menu", NULL, N_("_File") },
-    { "edit-menu", NULL, N_("_Edit") },
-    { "profile-menu", NULL, N_("_Profile") },
-    { "editors-menu", NULL, N_("Set Editor") },
-    { "post-toolbar", NULL, "post" },
+    { "file-menu", 0, N_("_File"), 0, 0, 0 },
+    { "edit-menu", 0, N_("_Edit"), 0, 0, 0 },
+    { "profile-menu", 0, N_("_Profile"), 0, 0, 0 },
+    { "editors-menu", 0, N_("Set Editor"), 0, 0, 0 },
+    { "post-toolbar", 0, "post", 0, 0, 0 },
     { "post-article", GTK_STOCK_EXECUTE, N_("_Send Article"), "<control>Return", N_("Send Article Now"), G_CALLBACK(do_send) },
-    { "set-charset", NULL, N_("Set Character _Encoding..."), NULL, NULL, G_CALLBACK(do_charset) },
+    { "set-charset", 0, N_("Set Character _Encoding..."), 0, 0, G_CALLBACK(do_charset) },
     { "save-draft", GTK_STOCK_SAVE, N_("Sa_ve Draft"), "<control>s", N_("Save as a Draft for Future Posting"), G_CALLBACK(do_save) },
     { "open-draft", GTK_STOCK_OPEN, N_("_Open Draft..."), "<control>o", N_("Open an Article Draft"), G_CALLBACK(do_open) },
-    { "close", GTK_STOCK_CLOSE, NULL, NULL, NULL, G_CALLBACK(do_close) },
-    { "cut", GTK_STOCK_CUT, NULL, NULL, NULL, G_CALLBACK(do_cut) },
-    { "copy", GTK_STOCK_COPY, NULL, NULL, NULL, G_CALLBACK(do_copy) },
-    { "paste", GTK_STOCK_PASTE, NULL, NULL, NULL, G_CALLBACK(do_paste) },
-    { "rot13", GTK_STOCK_REFRESH, N_("_Rot13"), NULL, N_("Rot13 Selected Text"), G_CALLBACK(do_rot13) },
-    { "run-editor", GTK_STOCK_JUMP_TO, N_("Run _Editor"), "<control>e", NULL, G_CALLBACK(do_edit) },
-    { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), NULL, NULL, G_CALLBACK(do_profiles) }
+    { "close", GTK_STOCK_CLOSE, 0, 0, 0, G_CALLBACK(do_close) },
+    { "cut", GTK_STOCK_CUT, 0, 0, 0, G_CALLBACK(do_cut) },
+    { "copy", GTK_STOCK_COPY, 0, 0, 0, G_CALLBACK(do_copy) },
+    { "paste", GTK_STOCK_PASTE, 0, 0, 0, G_CALLBACK(do_paste) },
+    { "rot13", GTK_STOCK_REFRESH, N_("_Rot13"), 0, N_("Rot13 Selected Text"), G_CALLBACK(do_rot13) },
+    { "run-editor", GTK_STOCK_JUMP_TO, N_("Run _Editor"), "<control>e", 0, G_CALLBACK(do_edit) },
+    { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), 0, 0, G_CALLBACK(do_profiles) }
   };
 
   GtkToggleActionEntry toggle_entries[] =
   {
-    { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), NULL, NULL, G_CALLBACK(do_wrap), true },
-    { "always-run-editor", NULL, N_("Always Run Editor"), NULL, NULL, G_CALLBACK(do_edit2), false },
-    { "remember-charset", NULL, N_("Remember Character Encoding for this Group"), NULL, NULL, G_CALLBACK(on_remember_charset_toggled), true },
-    { "spellcheck", NULL, N_("Check _Spelling"), NULL, NULL, G_CALLBACK(on_spellcheck_toggled), true }
+    { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), 0, 0, G_CALLBACK(do_wrap), true },
+    { "always-run-editor", 0, N_("Always Run Editor"), 0, 0, G_CALLBACK(do_edit2), false },
+    { "remember-charset", 0, N_("Remember Character Encoding for this Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
+    { "spellcheck", 0, N_("Check _Spelling"), 0, 0, G_CALLBACK(on_spellcheck_toggled), true }
   };
 
   void add_widget (GtkUIManager*, GtkWidget* widget, gpointer vbox)
@@ -928,7 +928,7 @@ PostUI :: new_message_from_ui (Mode mode)
   // headers from the ui: To
   const StringView to (gtk_entry_get_text (GTK_ENTRY(_to_entry)));
   if (!to.empty())
-    g_mime_message_add_recipients_from_string (msg, GMIME_RECIPIENT_TYPE_TO, to.str);
+    g_mime_message_add_recipients_from_string (msg, (char*)GMIME_RECIPIENT_TYPE_TO, to.str);
 
   // headers from the ui: Newsgroups
   const StringView groups (gtk_entry_get_text (GTK_ENTRY(_groups_entry)));

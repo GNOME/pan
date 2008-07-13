@@ -704,7 +704,8 @@ PanTreeStore :: get_type ()
     NULL, // class_data
     sizeof (PanTreeStore),
     0, // n_preallocs
-    (GInstanceInitFunc) pan_tree_init
+    (GInstanceInitFunc) pan_tree_init,
+    0 // value_table
   };
 
   pan_tree_type = g_type_register_static (

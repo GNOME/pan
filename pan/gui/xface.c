@@ -113,10 +113,6 @@ typedef struct prob
 	WORD p_offset;
 } Prob;
 
-/* A stack of probability values */
-static Prob *ProbBuf[PIXELS * 2];
-static int NumProbs;
-
 /* Each face is encoded using 9 octrees of 16x16 each.  Each level of the
  * trees has varying probabilities of being white, grey or black.
  * The table below is based on sampling many faces */
@@ -143,11 +139,7 @@ static int status;
 
 static jmp_buf comp_env;
 
-static int AllBlack P((char *, int, int)) ;
-static int AllWhite P((char *, int, int)) ;
 static int BigPop P((Prob *)) ;
-/*static int compface P((char *)) ;*/
-static int Same P((char *, int, int)) ;
 static int uncompface P((char *)) ;
 
 static void BigAdd P((unsigned char)) ;
@@ -155,10 +147,7 @@ static void BigClear (void);
 static void BigDiv P((unsigned char, unsigned char *)) ;
 static void BigMul P((unsigned char)) ;
 static void BigRead P((char *)) ;
-static void Compress P((char *, int, int, int)) ;
 static void PopGreys P((char *, int, int)) ;
-static void PushGreys P((char *, int, int)) ;
-static void RevPush P((Prob *)) ;
 static void UnCompAll P((char *)) ;
 static void UnCompress P((char *, int, int, int)) ;
 static void UnGenFace (void);
@@ -621,10 +610,6 @@ static Guesses G
 }
 ;
 
-/* A stack of probability values */
-static Prob *ProbBuf[PIXELS * 2];
-static int NumProbs INIT(0);
-
 static Prob levels[4][3]
 =
 {
@@ -652,14 +637,6 @@ static jmp_buf comp_env;
 
 /** begin arith.c */
 
-static void
-RevPush(Prob * p)
-{
-	if (NumProbs >= PIXELS * 2 - 1)
-		longjmp(comp_env, ERR_INTERNAL);
-	ProbBuf[NumProbs++] = p;
-}
- 
 static int
 BigPop (register Prob * p)
 {
@@ -991,49 +968,6 @@ static void UnGenFace(void)
 
 /** begin compress.c */
 
-
-static int Same(register char * f,
-                register int wid,
-                register int hei)
-{
-	register char val, *row;
-	register int x;
-
-	val = *f;
-	while (hei--)
-	{
-		row = f;
-		x = wid;
-		while (x--)
-			if (*(row++) != val)
-				return(0);
-		f += WIDTH;
-	}
-	return 1;
-}
-
-static int AllBlack (char * f, int wid, int hei)
-{
-	if (wid > 3)
-	{
-		wid /= 2;
-		hei /= 2;
-		return (AllBlack(f, wid, hei) && AllBlack(f + wid, wid, hei) &&
-		  AllBlack(f + WIDTH * hei, wid, hei) &&
-		  AllBlack(f + WIDTH * hei + wid, wid, hei));
-	}
-	else
-		return (*f || *(f + 1) || *(f + WIDTH) || *(f + WIDTH + 1));
-}
-
-int
-AllWhite(f, wid, hei)
-char *f;
-int wid, hei;
-{
-	return ((*f == 0) && Same(f, wid, hei));
-}
-
 static void PopGreys(char * f, int wid, int hei)
 {
 	if (wid > 3)
@@ -1059,22 +993,6 @@ static void PopGreys(char * f, int wid, int hei)
 	}
 }
 
-static void PushGreys(char * f, int wid, int hei)
-{
-	if (wid > 3)
-	{
-		wid /= 2;
-		hei /= 2;
-		PushGreys(f, wid, hei);
-		PushGreys(f + wid, wid, hei);
-		PushGreys(f + WIDTH * hei, wid, hei);
-		PushGreys(f + WIDTH * hei + wid, wid, hei);
-	}
-	else
-		RevPush(freqs + *f + 2 * *(f + 1) + 4 * *(f + WIDTH) +
-		  8 * *(f + WIDTH + 1));
-}
-
 static void
 UnCompress(f, wid, hei, lev)
 register char *f;
@@ -1097,32 +1015,6 @@ register int wid, hei, lev;
 			UnCompress(f + wid + hei * WIDTH, wid, hei, lev);
 			return;
 	}
-}
-
-static void
-Compress(f, wid, hei, lev)
-register char *f;
-register int wid, hei, lev;
-{
-	if (AllWhite(f, wid, hei))
-	{
-		RevPush(&levels[lev][WHITE]);
-		return;
-	}
-	if (AllBlack(f, wid, hei))
-	{
-		RevPush(&levels[lev][BLACK]);
-		PushGreys(f, wid, hei);
-		return;
-	}
-	RevPush(&levels[lev][GREY]);
-	wid /= 2;
-	hei /= 2;
-	lev++;
-	Compress(f, wid, hei, lev);
-	Compress(f + wid, wid, hei, lev);
-	Compress(f + hei * WIDTH, wid, hei, lev);
-	Compress(f + wid + hei * WIDTH, wid, hei, lev);
 }
 
 static void
