@@ -711,8 +711,8 @@ mime :: guess_part_type_from_filename (const char   * filename,
 	}
 
 	if (*setme_type == NULL) {
-		*setme_type = "text";
-		*setme_subtype = "plain";
+		*setme_type = "application";
+		*setme_subtype = "octet-stream";
 	}
 }
 
