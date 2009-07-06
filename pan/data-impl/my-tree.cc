@@ -26,6 +26,7 @@
 #include <pan/data/article.h>
 #include "article-filter.h"
 #include "data-impl.h"
+#include "memchunk.h"
 
 using namespace pan;
 
@@ -388,13 +389,11 @@ DataImpl :: MyTree :: add_articles (const const_nodes_v& nodes_in)
   }
 
   // build new MyTree nodes for each of the articles being added
-  int node_index (_node_chunk.size());
-  _node_chunk.resize (_node_chunk.size() + nodes.size());
   nodes_v tree_nodes;
   tree_nodes.reserve (nodes.size());
   foreach_const (const_nodes_v, nodes, it) {
     const Article * a ((*it)->_article);
-    ArticleNode * node (&_node_chunk[node_index++]);
+    ArticleNode * node (_node_chunk.alloc());
     node->_mid = a->message_id;
     node->_article = const_cast<Article*>(a);
     //std::cerr << LINE_ID << " added " << node->_mid << " to the tree\n";
