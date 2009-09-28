@@ -33,9 +33,7 @@ ProgressView :: ProgressView ():
   _progressbar (gtk_progress_bar_new ()),
   _progress (0)
 {
-#if GTK_CHECK_VERSION(2,6,0)
   gtk_progress_bar_set_ellipsize (GTK_PROGRESS_BAR(_progressbar), PANGO_ELLIPSIZE_MIDDLE);
-#endif
   gtk_container_add (GTK_CONTAINER(_root), _progressbar);
   gtk_widget_show (_progressbar);
 }

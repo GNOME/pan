@@ -75,37 +75,6 @@ file :: pan_strerror (int error_number)
   return pch && *pch ? pch : "";
 }
 
-#if !GLIB_CHECK_VERSION(2,8,0)
-static int
-pan_mkdir (const char * path, gulong mode)
-{
-  int retval = 0;
-
-  pan_return_val_if_fail (is_nonempty_string(path), retval);
-
-  if (strlen(path)==2 && isalpha((guchar)path[0]) && path[1]==':')
-  {
-    /* smells like a windows pathname.. skipping */
-  }
-  else
-  {
-    errno = 0;
-#if GLIB_CHECK_VERSION(2,6,0)
-    retval = g_mkdir (path, mode);
-#elif defined(G_OS_WIN32)
-    retval = mkdir (path);
-#else
-    retval = mkdir (path, mode);
-#endif
-    if (errno == EEXIST)
-      retval = 0;
-  }
-	
-  return retval;
-}
-#endif
-
-
 bool
 file :: ensure_dir_exists (const StringView& dirname_sv)
 {
@@ -116,44 +85,7 @@ file :: ensure_dir_exists (const StringView& dirname_sv)
 
   const std::string dirname (dirname_sv.to_string());
   if (!g_file_test (dirname.c_str(), G_FILE_TEST_IS_DIR))
-  {
-#if GLIB_CHECK_VERSION(2,8,0)
     retval = !g_mkdir_with_parents (dirname.c_str(), 0755);
-#else
-    const char * in = dirname.c_str();
-    char * buf = g_new (char, dirname.size()+1);
-    char * out = buf;
-
-    *out++ = *in++;
-    for (;;)
-    {
-      if (*in=='\0' || *in==G_DIR_SEPARATOR)
-      {
-        *out = '\0';
-
-        if (!g_file_test (buf, G_FILE_TEST_IS_DIR))
-        {
-          Log :: add_info_va (_("Creating directory \"%s\""), buf);
-          if (pan_mkdir (buf, 0755))
-          {
-            Log::add_err_va (_("Couldn't create directory \"%s\": %s"), buf, pan_strerror (errno));
-            retval = FALSE;
-            break;
-          }
-        }
-      }
-
-      *out = *in;
-      if (!*in)
-        break;
-
-      ++out;
-      ++in;
-    }
-
-    g_free (buf);
-#endif
-  }
 
   return retval;
 }

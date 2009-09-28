@@ -64,30 +64,6 @@ extern "C" {
 namespace pan
 {
   void
-  g_object_ref_sink_pan (GObject * o)
-  {
-#if GLIB_CHECK_VERSION(2,10,0)
-    g_object_ref_sink (o);
-#else
-    g_object_ref (o);
-    gtk_object_sink (GTK_OBJECT(o));
-#endif
-  }
-
-  void
-  pan_widget_set_tooltip_text( GtkWidget * w, const char * tip )
-  {
-#if GTK_CHECK_VERSION( 2,12,0 )
-    gtk_widget_set_tooltip_text( w, tip );
-#else
-    static GtkTooltips * tips = NULL;
-    if( tips == NULL )
-        tips = gtk_tooltips_new( );
-    gtk_tooltips_set_tip( tips, w, tip, NULL );
-#endif
-  }
-
-  void
   pan_box_pack_start_defaults (GtkBox * box, GtkWidget * child)
   {
     gtk_box_pack_start( box, child, TRUE, TRUE, 0 );
@@ -271,7 +247,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   w = _queue_size_label = gtk_label_new (NULL);
   gtk_misc_set_padding (GTK_MISC(w), PAD, 0);
   w = _queue_size_button = gtk_button_new();
-  pan_widget_set_tooltip_text (w, _("Open the Task Manager"));
+  gtk_widget_set_tooltip_text (w, _("Open the Task Manager"));
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
   g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(show_task_window_cb), this);
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
@@ -293,7 +269,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
 
   // status 
   w = _event_log_button = gtk_button_new ();
-  pan_widget_set_tooltip_text (w, _("Open the Event Log"));
+  gtk_widget_set_tooltip_text (w, _("Open the Event Log"));
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
   gtk_box_pack_start (GTK_BOX(status_bar), w, false, false, 0);
   gtk_container_add (GTK_CONTAINER(w), _info_image);
@@ -309,8 +285,8 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   _queue.add_listener (this);
   Log::get().add_listener (this);
 
-  g_object_ref_sink_pan (G_OBJECT(_info_image));
-  g_object_ref_sink_pan (G_OBJECT(_error_image));
+  g_object_ref_sink (G_OBJECT(_info_image));
+  g_object_ref_sink (G_OBJECT(_error_image));
   g_object_ref (_group_pane->root());
   g_object_ref (_header_pane->root());
   g_object_ref (_body_pane->root());
@@ -1256,15 +1232,10 @@ void GUI :: do_tip_jar ()
 }
 void GUI :: do_about_pan ()
 {
-#if GTK_CHECK_VERSION(2,6,0)
   const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com>", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", 0 };
   GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
-#if GTK_CHECK_VERSION(2,12,0)
   gtk_about_dialog_set_program_name (w, _("Pan"));
-#else
-  gtk_about_dialog_set_name (w, _("Pan"));
-#endif
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE);
   gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2007 Charles Kerr"));
@@ -1276,23 +1247,6 @@ void GUI :: do_about_pan ()
   g_signal_connect (G_OBJECT (w), "response", G_CALLBACK (gtk_widget_destroy), NULL);
   gtk_widget_show_all (GTK_WIDGET(w));
   g_object_unref (logo);
-#else
-  GtkWidget * dialog = gtk_dialog_new_with_buttons (PACKAGE_STRING,
-                                                    GTK_WINDOW (get_window (_root)),
-                                                    GtkDialogFlags (GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
-                                                    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                                                    NULL);
-  GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
-  GtkBox * box = GTK_BOX(GTK_DIALOG(dialog)->vbox);
-  gtk_box_pack_start (box, gtk_image_new_from_pixbuf (logo), false, false, PAD);
-  gtk_box_pack_start (box, gtk_label_new("Pan " PACKAGE_VERSION), false, false, PAD);
-  gtk_box_pack_start (box, gtk_label_new(VERSION_TITLE), false, false, 0);
-  gtk_box_pack_start (box, gtk_label_new(_("Copyright © 2002-2007 Charles Kerr")), false, false, 0);
-  gtk_box_pack_start (box, gtk_label_new("http://pan.rebelbase.com/"), false, false, PAD);
-  gtk_widget_show_all (dialog);
-  g_signal_connect_swapped (dialog, "response", G_CALLBACK (gtk_widget_destroy), dialog);
-  g_object_unref (logo);
-#endif
 }
 
 void GUI :: do_work_online (bool b)
@@ -1726,7 +1680,7 @@ GUI :: refresh_connection_label ()
   }
 
   gtk_label_set_text (GTK_LABEL(_connection_size_label), str);
-  pan_widget_set_tooltip_text (_connection_size_eventbox, tip);
+  gtk_widget_set_tooltip_text (_connection_size_eventbox, tip);
 }
 
 namespace
@@ -1781,7 +1735,7 @@ GUI :: set_queue_size_label (unsigned int running,
 
   // update the gui
   gtk_label_set_text (GTK_LABEL(_queue_size_label), str);
-  pan_widget_set_tooltip_text (_queue_size_button, tip);
+  gtk_widget_set_tooltip_text (_queue_size_button, tip);
 }
 
 void

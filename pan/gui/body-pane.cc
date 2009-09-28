@@ -1063,10 +1063,8 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   s.resize (s.size()-1); // remove trailing linefeed
   gtk_label_set_markup (GTK_LABEL(_headers), s.c_str());
 
-#if GTK_CHECK_VERSION(2,6,0)
   // ellipsize mode is useless w/o this in expander...
   gtk_label_set_width_chars (GTK_LABEL(_headers), (int)w);
-#endif
 
   // set the x-face...
   GdkPixbuf * pixbuf (0);
@@ -1085,10 +1083,8 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   s += _(" at ");
   add_bold_header_value (s, message, "Date", fallback_charset);
   gtk_label_set_markup (GTK_LABEL(_terse), s.c_str());
-#if GTK_CHECK_VERSION(2,6,0)
   // ellipsize mode is useless w/o this in expander...
   gtk_label_set_width_chars (GTK_LABEL(_terse), (int)s.size());
-#endif
 
   // clear the text buffer...
   GtkTextIter start, end;
@@ -1359,23 +1355,19 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_box_pack_start (GTK_BOX(vbox), w, false, false, 0);
 
   _terse = gtk_label_new ("Expander");
-  g_object_ref_sink_pan (G_OBJECT(_terse));
+  g_object_ref_sink (G_OBJECT(_terse));
   gtk_misc_set_alignment (GTK_MISC(_terse), 0.0f, 0.5f);
   gtk_label_set_use_markup (GTK_LABEL(_terse), true);
   gtk_label_set_selectable (GTK_LABEL(_terse), true);
-#if GTK_CHECK_VERSION(2,6,0)
   gtk_label_set_ellipsize (GTK_LABEL(_terse), PANGO_ELLIPSIZE_MIDDLE);
-#endif
   gtk_widget_show (_terse);
 
   GtkWidget * hbox = _verbose = gtk_hbox_new (false, 0);
-  g_object_ref_sink_pan (G_OBJECT(_verbose));
+  g_object_ref_sink (G_OBJECT(_verbose));
   w = _headers = gtk_label_new ("Headers");
   gtk_label_set_selectable (GTK_LABEL(_headers), TRUE);
   gtk_misc_set_alignment (GTK_MISC(w), 0.0f, 0.5f);
-#if GTK_CHECK_VERSION(2,6,0)
   gtk_label_set_ellipsize (GTK_LABEL(w), PANGO_ELLIPSIZE_MIDDLE);
-#endif
   gtk_label_set_use_markup (GTK_LABEL(w), true);
   gtk_box_pack_start (GTK_BOX(hbox), w, true, true, PAD_SMALL);
   w = _xface = gtk_image_new ();

@@ -53,10 +53,6 @@ extern "C" {
 #define DEFAULT_SPELLCHECK_FLAG false
 #endif
 
-#if !GTK_CHECK_VERSION(2,6,0)
-#define GTK_STOCK_EDIT GTK_STOCK_OPEN
-#endif
-
 using namespace pan;
 
 #define USER_AGENT_PREFS_KEY "add-user-agent-header-when-posting"
@@ -457,21 +453,6 @@ namespace
   {
     g_source_remove (GPOINTER_TO_UINT(tag));
   }
-}
-
-namespace
-{
-#if !GTK_CHECK_VERSION(2,6,0)
-  char* gtk_combo_box_get_active_text (GtkComboBox * combo_box) {
-    char * text (0);
-    GtkTreeIter  iter;
-    if (gtk_combo_box_get_active_iter (combo_box, &iter)) {
-      GtkTreeModel * model = gtk_combo_box_get_model (combo_box);
-      gtk_tree_model_get (model, &iter, 0, &text, -1);
-    }
-    return text;
-  }
-#endif
 }
 
 void
@@ -1770,7 +1751,7 @@ PostUI :: create_extras_tab ()
   w = _followupto_entry = gtk_entry_new ();
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
   /* i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english. */
-pan_widget_set_tooltip_text (w, _("The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n\nTo direct all replies to your email address, use \"Followup-To: poster\""));
+gtk_widget_set_tooltip_text (w, _("The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n\nTo direct all replies to your email address, use \"Followup-To: poster\""));
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
 
   //  Reply-To
@@ -1784,7 +1765,7 @@ pan_widget_set_tooltip_text (w, _("The newsgroups where replies to your message 
 
   w = _replyto_entry = gtk_entry_new ();
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
-pan_widget_set_tooltip_text (w, _("The email account where mail replies to your posted message should go.  This is only needed if it differs from the \"From\" header."));
+gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your posted message should go.  This is only needed if it differs from the \"From\" header."));
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
 
   //  Extra Headers

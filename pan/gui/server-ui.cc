@@ -223,12 +223,12 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     HIG::workarea_add_section_spacer (t, row, 2);
 
     GtkWidget * w = d->address_entry = gtk_entry_new ();
-    pan_widget_set_tooltip_text( w, _("The news server's actual address, e.g. \"news.mynewsserver.com\""));
+    gtk_widget_set_tooltip_text( w, _("The news server's actual address, e.g. \"news.mynewsserver.com\""));
     HIG::workarea_add_row (t, &row, _("_Address:"), w, NULL);
 
     GtkAdjustment * a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 1.0, ULONG_MAX, 1.0, 1.0, 0.0));
     w = d->port_spin = gtk_spin_button_new (GTK_ADJUSTMENT(a), 1.0, 0u);
-    pan_widget_set_tooltip_text( w, _("The news server's port number.  Typically 119."));
+    gtk_widget_set_tooltip_text( w, _("The news server's port number.  Typically 119."));
     HIG::workarea_add_row (t, &row, _("Por_t:"), w, NULL);
 
   HIG::workarea_add_section_divider (t, &row);
@@ -237,12 +237,12 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
 
     w = d->auth_username_entry = gtk_entry_new ();
     HIG::workarea_add_row (t, &row, _("_Username:"), w, NULL);
-    pan_widget_set_tooltip_text( w, _("The username to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
+    gtk_widget_set_tooltip_text( w, _("The username to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
 
     w = d->auth_password_entry = gtk_entry_new ();
     gtk_entry_set_visibility (GTK_ENTRY(w), FALSE);
     HIG::workarea_add_row (t, &row, _("_Password:"), w, NULL);
-    pan_widget_set_tooltip_text( w, _("The password to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
+    gtk_widget_set_tooltip_text( w, _("The password to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
 
   HIG::workarea_add_section_divider (t, &row);
   HIG::workarea_add_section_title (t, &row, _("Settings"));
@@ -295,7 +295,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     GtkWidget * e = gtk_event_box_new ();
     gtk_container_add (GTK_CONTAINER(e), l);
     gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
-    pan_widget_set_tooltip_text( e, _("Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."));
+    gtk_widget_set_tooltip_text( e, _("Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."));
     HIG::workarea_add_row (t, &row, e, w);
 
   d->server = server;
@@ -536,24 +536,20 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   // add button
   w = gtk_button_new_from_stock (GTK_STOCK_ADD);
   gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
-  pan_widget_set_tooltip_text(w, _("Add a Server"));
+  gtk_widget_set_tooltip_text(w, _("Add a Server"));
   g_signal_connect (w, "clicked", G_CALLBACK(add_button_clicked_cb), d->dialog);
 
   // edit button
-#if GTK_CHECK_VERSION(2,6,0)
   w = gtk_button_new_from_stock (GTK_STOCK_EDIT);
-#else
-  w = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-#endif
   gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
-  pan_widget_set_tooltip_text(w, _("Edit a Server's Settings"));
+  gtk_widget_set_tooltip_text(w, _("Edit a Server's Settings"));
   g_signal_connect (w, "clicked", G_CALLBACK(edit_button_clicked_cb), d->dialog);
   d->edit_button = w;
 
   // remove button
   w = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
   gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
-  pan_widget_set_tooltip_text(w, _("Remove a Server"));
+  gtk_widget_set_tooltip_text(w, _("Remove a Server"));
   g_signal_connect (w, "clicked", G_CALLBACK(remove_button_clicked_cb), d);
   d->remove_button = w;
 

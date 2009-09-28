@@ -32,10 +32,6 @@ extern "C" {
 
 using namespace pan;
 
-#if !GTK_CHECK_VERSION(2,6,0)
-#define GTK_STOCK_EDIT GTK_STOCK_OPEN
-#endif
-
 /**
 *** Key - Value paired comboboxes
 **/

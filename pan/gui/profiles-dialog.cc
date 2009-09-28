@@ -163,12 +163,12 @@ ProfileDialog :: ProfileDialog (const Data         & data,
 
     w = _msgid_fqdn_entry = gtk_entry_new ();
     set_entry (w, profile.fqdn);
-    pan_widget_set_tooltip_text (w, _("When posting to Usenet, your article's Message-ID contains a domain name.  You can set a custom domain name here, or leave it blank to let Pan use the domain name from your email address."));
+    gtk_widget_set_tooltip_text (w, _("When posting to Usenet, your article's Message-ID contains a domain name.  You can set a custom domain name here, or leave it blank to let Pan use the domain name from your email address."));
     HIG :: workarea_add_row (t, &row, _("Message-ID _Domain Name:"), w, NULL);
 
     w = _attribution_entry = gtk_entry_new ();
     set_entry (w, profile.attribution);
-    pan_widget_set_tooltip_text (w, _("%i for Message-ID\n%a for Author and Address\n%n for Author name\n%d for Date"));
+    gtk_widget_set_tooltip_text (w, _("%i for Message-ID\n%a for Author and Address\n%n for Author name\n%d for Date"));
     HIG :: workarea_add_row (t, &row, _("_Attribution:"), w, NULL);
 
 
@@ -192,7 +192,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
       s += it->first + ": " + it->second + "\n";
     gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)), s.c_str(), s.size());
     GtkWidget * eventbox = gtk_event_box_new ();
-    pan_widget_set_tooltip_text (eventbox, _("Extra headers to be included in your posts, such as\nReply-To: \"Your Name\" <yourname@somewhere.com>\nOrganization: Your Organization"));
+    gtk_widget_set_tooltip_text (eventbox, _("Extra headers to be included in your posts, such as\nReply-To: \"Your Name\" <yourname@somewhere.com>\nOrganization: Your Organization"));
     GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),
                                          GTK_SHADOW_IN);
@@ -479,11 +479,7 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
   g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(on_add_button), this);
 
   // edit button
-#if GTK_CHECK_VERSION(2,6,0)
   w = gtk_button_new_from_stock (GTK_STOCK_EDIT);
-#else
-  w = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-#endif
   _edit_button = w;
   gtk_box_pack_start (GTK_BOX (bbox), w, false, false, 0);
   g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(on_edit_button), this);

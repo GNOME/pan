@@ -27,10 +27,6 @@ extern "C" {
 #include "score-add-ui.h"
 #include "score-view-ui.h"
 
-#if !GTK_CHECK_VERSION(2,6,0)
-#define GTK_STOCK_EDIT GTK_STOCK_OPEN
-#endif
-
 using namespace pan;
 
 namespace
@@ -241,14 +237,14 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
   // add button
   w = gtk_button_new_from_stock (GTK_STOCK_ADD);
   gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
-  pan_widget_set_tooltip_text (w, _("Add a New Scoring Rule"));
+  gtk_widget_set_tooltip_text (w, _("Add a New Scoring Rule"));
   gtk_widget_show (w);
   g_signal_connect (w, "clicked", G_CALLBACK(this->add_clicked_cb), this);
 
   // remove button
   w = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
   gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
-  pan_widget_set_tooltip_text (w, _("Remove the Selected Scoring Rule"));
+  gtk_widget_set_tooltip_text (w, _("Remove the Selected Scoring Rule"));
   gtk_widget_show (w);
   g_signal_connect (w, "clicked", G_CALLBACK(this->remove_clicked_cb), this);
 

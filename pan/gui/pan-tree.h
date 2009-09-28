@@ -24,10 +24,6 @@
 #include <vector>
 #include <gtk/gtk.h>
 
-#if !GTK_CHECK_VERSION(2,6,0)
-#define GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID (-2)
-#endif
-
 #define PAN_TREE_STORE_TYPE (PanTreeStore::get_type())
 #define PAN_TREE_STORE(obj) \
     (G_TYPE_CHECK_INSTANCE_CAST ((obj), PAN_TREE_STORE_TYPE, PanTreeStore))

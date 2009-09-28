@@ -845,12 +845,8 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs)
   g_object_unref (G_OBJECT(_tree_store)); // will die with the view
   gtk_tree_view_set_enable_search (GTK_TREE_VIEW(_tree_view), false);
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(_tree_view), false);
-#if GTK_CHECK_VERSION(2,8,0)
   gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW(_tree_view), true);
-#endif
-#if GTK_CHECK_VERSION(2,10,0)
   gtk_tree_view_set_rubber_banding (GTK_TREE_VIEW(_tree_view), true);
-#endif
   expand_iterators (iters, GTK_TREE_MODEL(_tree_store), GTK_TREE_VIEW(_tree_view));
 
   GtkTreeSelection * selection (gtk_tree_view_get_selection (GTK_TREE_VIEW(_tree_view)));

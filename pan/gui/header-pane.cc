@@ -647,7 +647,6 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
   // if the old selection survived,
   // is it visible on the screen?
   bool selection_was_visible (true);
-#if GTK_CHECK_VERSION(2,8,0)
   if (!new_selection.empty()) {
     GtkTreeView *view (GTK_TREE_VIEW(_tree_view));
     Row * row (get_row (*new_selection.begin()));
@@ -659,7 +658,6 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
     gtk_tree_path_free (b);
     gtk_tree_path_free (p);
   }
-#endif
 
   // if none of the current selection survived,
   // we need to select something to replace the
@@ -1289,9 +1287,7 @@ namespace
 
   void ellipsize_if_supported (GObject * o)
   {
-#if GTK_CHECK_VERSION(2,6,0)
     g_object_set (o, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
-#endif
   }
 }
 
@@ -1598,12 +1594,8 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   // build the view...
   GtkWidget * w = _tree_view = gtk_tree_view_new ();
   gtk_tree_view_set_enable_search (GTK_TREE_VIEW(w), false);
-#if GTK_CHECK_VERSION(2,8,0)
   gtk_tree_view_set_fixed_height_mode (GTK_TREE_VIEW(w), true);
-#endif
-#if GTK_CHECK_VERSION(2,10,0)
   gtk_tree_view_set_rubber_banding (GTK_TREE_VIEW(w), true);
-#endif
 
   GtkTreeSelection * sel = gtk_tree_view_get_selection (GTK_TREE_VIEW(w));
   gtk_tree_selection_set_mode (sel, GTK_SELECTION_MULTIPLE);

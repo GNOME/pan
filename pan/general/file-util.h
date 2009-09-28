@@ -26,15 +26,10 @@ extern "C" {
   #include <stddef.h>
   #include <stdio.h>
   #include <glib/gtypes.h>
+  #include <glib/gstdio.h>
 }
 #include <pan/general/string-view.h>
 
-#include <glibconfig.h> // get the version number
-#include <glib/gutils.h> // get GLIB_CHECK_VERSION
-#if GLIB_CHECK_VERSION(2,6,0)
-extern "C" {
-  #include <glib/gstdio.h>
-}
 #define g_freopen freopen
 #define g_fopen fopen
 #define g_rmdir rmdir
@@ -44,7 +39,6 @@ extern "C" {
 #define g_stat stat
 #define g_rename rename
 #define g_open open
-#endif
 
 namespace pan
 {

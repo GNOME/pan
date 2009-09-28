@@ -29,10 +29,6 @@ extern "C" {
 #include "pad.h"
 #include "gui.h"
 
-#if !GTK_CHECK_VERSION(2,6,0)
-#define GTK_STOCK_EDIT GTK_STOCK_OPEN
-#endif
-
 using pan::PanUI;
 
 namespace
@@ -596,17 +592,10 @@ namespace
       NULL,
       G_CALLBACK(do_tip_jar) },
 
-#if GTK_CHECK_VERSION(2,6,0)
     { "about-pan", GTK_STOCK_ABOUT,
       N_("_About"), NULL, 
       NULL,
       G_CALLBACK(do_about_pan) }
-#else
-    { "about-pan", NULL,
-      N_("_About"), NULL, 
-      NULL,
-      G_CALLBACK(do_about_pan) }
-#endif
   };
 
   void prefs_toggle_callback_impl (GtkToggleAction * action)
