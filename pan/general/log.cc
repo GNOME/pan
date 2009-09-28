@@ -20,6 +20,7 @@
 #include <config.h>
 #include <iostream>
 #include <cstdarg>
+#include <cstdio> // vsnprintf
 #include "log.h"
 
 using namespace pan;

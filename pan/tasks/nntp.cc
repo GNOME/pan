@@ -21,6 +21,7 @@
 #include <cassert>
 #include <cstdarg>
 #include <cstdlib> // abort, atoi, strtoul
+#include <cstdio> // snprintf
 extern "C" {
   #include <glib.h>
   #include <glib/gi18n.h>

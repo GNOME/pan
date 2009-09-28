@@ -19,9 +19,10 @@
 
 #include <config.h>
 #include <cctype>
+#include <cstdio> // snprintf
+#include <algorithm>
 #include <pan/general/string-view.h>
 #include "numbers.h"
-#include <algorithm>
 
 using namespace pan;
 

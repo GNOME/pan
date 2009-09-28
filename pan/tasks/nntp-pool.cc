@@ -19,6 +19,7 @@
 
 #include <config.h>
 #include <ctime>
+#include <cstdio> // snprintf
 #include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/log.h>

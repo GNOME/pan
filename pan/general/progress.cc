@@ -19,6 +19,7 @@
 
 #include <config.h>
 #include <cstdarg>
+#include <cstdio> // vsnprintf
 #include "progress.h"
 #include "string-view.h"
 
