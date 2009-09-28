@@ -312,6 +312,8 @@ main (int argc, char *argv[])
       if (gui) {
         TaskPane * pane = new TaskPane (queue, prefs);
         GtkWidget * w (pane->root());
+        GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, icon_pan, FALSE, 0);
+        gtk_window_set_default_icon (pixbuf);
         gtk_widget_show_all (w);
         g_signal_connect (w, "destroy", G_CALLBACK(destroy_cb), 0);
         g_signal_connect (G_OBJECT(w), "delete-event", G_CALLBACK(delete_event_cb), 0);
