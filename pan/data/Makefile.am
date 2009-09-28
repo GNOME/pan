@@ -29,7 +29,7 @@ noinst_PROGRAMS = \
 #dnl decode_test_LDADD = $(TEST_LDADD)
 
 TESTS = $(noinst_PROGRAMS)
-TEST_LDADD = ./libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a @GMIME_LIBS@ @GLIB_LIBS@ @PCRE_LIBS@
+TEST_LDADD = ./libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a @GMIME_LIBS@ @GLIB_LIBS@
 xref_test_SOURCES = xref-test.cc
 xref_test_LDADD = $(TEST_LDADD)
 article_test_SOURCES = article-test.cc

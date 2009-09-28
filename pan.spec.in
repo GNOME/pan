@@ -17,10 +17,8 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: glib2-devel >= @GLIB_REQUIRED@
 BuildRequires: gmime-devel >= @GMIME_REQUIRED@
 BuildRequires: gtk2-devel >= @GTK_REQUIRED@
-BuildRequires: pcre-devel >= @PCRE_REQUIRED@
 %{!?_without_gtkspell:BuildRequires: gtkspell-devel >= @GTKSPELL_REQUIRED@}
 
-Requires: pcre >= @PCRE_REQUIRED@
 Requires: glib2 >= @GLIB_REQUIRED@
 Requires: gmime >= @GMIME_REQUIRED@
 Requires: gtk2 >= @GTK_REQUIRED@

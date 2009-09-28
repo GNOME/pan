@@ -20,7 +20,6 @@
 #include <config.h>
 extern "C" {
   #include <ctype.h>
-  #include <pcre.h>
   #include <glib.h>
   #include <glib/gi18n.h>
 }
@@ -161,36 +160,19 @@ class pan::TextMatch::PcreInfo
 {
    public:
 
-      int ovector_bufsize;
-      int * ovector;
-      pcre * re;
-      pcre_extra * extra;
+      GRegex * re;
 
    public:
 
-      PcreInfo ():
-         ovector_bufsize(0),
-         ovector(0),
-         re(0),
-         extra(0)
-      {
-      }
+      PcreInfo (): re(0) { } 
 
-// this is kind of a hack that would (apparently) be solved
-// by building/finding a static libpcre.a for Win32 and linking
-// against that instead of against the pcre dll.
-#ifdef G_OS_WIN32
-#define pcre_free free
-#endif
+
+
 
       ~PcreInfo ()
       {
          if (re)
-            pcre_free (re);
-         if (extra)
-            pcre_free (extra);
-         if (ovector)
-            g_free (ovector);
+            g_regex_unref (re);
        }
 
     public:
@@ -198,44 +180,23 @@ class pan::TextMatch::PcreInfo
        bool set (const std::string&  pattern,
                  bool                case_sensitive)
        {
-          static int default_options (0);
-          static bool checked_pcre_for_utf8_support (false);
-          if (!checked_pcre_for_utf8_support) {
-             checked_pcre_for_utf8_support = true;
-             int i = 0;
-             pcre_config (PCRE_CONFIG_UTF8, &i);
-               if (i)
-                  default_options |= PCRE_UTF8;
-               else
-                  Log::add_err (_("Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may fail."));
-            }
+          GRegexCompileFlags options;
 
-            int options = default_options;
-            if (!case_sensitive)
-               options |= PCRE_CASELESS;
+          if (case_sensitive)
+            options = (GRegexCompileFlags)0;
+          else
+            options = (GRegexCompileFlags)G_REGEX_CASELESS;
 
-            const char *err = 0;
-            int err_offset = 0;
-            re = pcre_compile (pattern.c_str(), options, &err, &err_offset, NULL);
-            if (!re) {
-               Log::add_err_va (_("Can't use regular expression \"%s\": %s at position %d"),
-                  pattern.c_str(), err, err_offset);
-               return false;
-            }
+          GError * err = 0;
+          re = g_regex_new (pattern.c_str(), options, (GRegexMatchFlags)0, &err);
+          if (err) {
+            Log::add_err_va (_("Can't use regular expression \"%s\": %s"), pattern.c_str(), err->message);
+            g_error_free (err);
+            return false;
+          }
 
-    extra = pcre_study (re, 0, &err);
-    if (err) {
-      Log::add_err_va (
-        _("Can't use regular expression \"%s\": %s"), pattern.c_str(), err);
-      return false;
-    }
-
-    int capturecount = 0;
-    pcre_fullinfo (re, extra, PCRE_INFO_CAPTURECOUNT, &capturecount);
-    ovector_bufsize = 3 * (capturecount + 1); // +1 for safety; * 3 for pcre_exec's tuples
-    ovector = g_new (int, ovector_bufsize);
-    return true;
-  }
+          return true;
+       }
 };
 
 int
@@ -252,15 +213,14 @@ TextMatch :: my_regexec (const StringView& text) const
    }
 
    return _pcre_state != COMPILED
-      ? PCRE_ERROR_NOMATCH
-      : pcre_exec (_pcre_info->re,
-                   _pcre_info->extra,
-                   text.str,
-                   text.len,
-                   0,
-                   PCRE_NOTEMPTY,
-                   _pcre_info->ovector,
-                   _pcre_info->ovector_bufsize);
+      ? -1
+      : g_regex_match_full (_pcre_info->re,
+                            text.str,
+                            text.len,
+                            0,
+                            G_REGEX_MATCH_NOTEMPTY,
+                            NULL,
+                            NULL);
 }
 
 /*****

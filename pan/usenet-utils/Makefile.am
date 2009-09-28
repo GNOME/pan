@@ -32,7 +32,7 @@ noinst_PROGRAMS = \
  url-find-test
 
 TESTS = $(noinst_PROGRAMS)
-TEST_LDADD = ./libusenetutils.a ../general/libgeneralutils.a @GMIME_LIBS@ @GLIB_LIBS@ @PCRE_LIBS@
+TEST_LDADD = ./libusenetutils.a ../general/libgeneralutils.a @GMIME_LIBS@ @GLIB_LIBS@
 gnksa_test_SOURCES = gnksa-test.cc
 gnksa_test_LDADD = $(TEST_LDADD)
 message_check_test_SOURCES = message-check-test.cc

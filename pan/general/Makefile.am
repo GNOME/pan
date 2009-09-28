@@ -1,4 +1,4 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @PCRE_CFLAGS@
+AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@
 
 noinst_LIBRARIES = libgeneralutils.a
 
@@ -43,7 +43,7 @@ noinst_PROGRAMS = \
   text-match-test
 
 TESTS = $(noinst_PROGRAMS)
-TEST_LDADD = ./libgeneralutils.a @GMIME_CFLAGS@ @GLIB_LIBS@ @PCRE_LIBS@
+TEST_LDADD = ./libgeneralutils.a @GMIME_CFLAGS@ @GLIB_LIBS@
 progress_test_SOURCES = progress-test.cc
 progress_test_LDADD = $(TEST_LDADD)
 quark_test_SOURCES = quark-test.cc

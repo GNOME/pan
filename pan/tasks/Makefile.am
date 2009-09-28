@@ -48,7 +48,7 @@ TEST_LDADD = ./libtasks.a \
  ../usenet-utils/libusenetutils.a \
  ../general/libgeneralutils.a \
  ../../uulib/libuu.a \
- @GMIME_LIBS@ @GLIB_LIBS@ @PCRE_LIBS@
+ @GMIME_LIBS@ @GLIB_LIBS@
 
 adaptable_set_test_SOURCES = adaptable-set-test.cc
 nzb_test_SOURCES = nzb-test.cc
@@ -68,7 +68,7 @@ nzb_test_LDADD = $(TEST_LDADD)
 #   nntp-pool-test \
 #   queue-test
 #
-#TEST_LDADD = ./libtasks.a ../data/libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a ../../gmime/libgmime.a $(GLIB_LIBS) $(PCRE_LIBS_POSIX) $(PCRE_LIBS)
+#TEST_LDADD = ./libtasks.a ../data/libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a ../../gmime/libgmime.a $(GLIB_LIBS)
 #bootstrap_groups_SOURCES = bootstrap-groups.cc
 #bootstrap_groups_LDADD = $(TEST_LDADD)
 #bootstrap_headers_SOURCES = bootstrap-headers.cc
