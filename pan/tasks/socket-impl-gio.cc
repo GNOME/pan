@@ -166,9 +166,10 @@ namespace
 
     // get an addrinfo for the host
     const std::string host (host_in.str, host_in.len);
-    char portbuf[32];
+    char portbuf[32], hpbuf[255];
     g_snprintf (portbuf, sizeof(portbuf), "%d", port);
-
+    g_snprintf (hpbuf,sizeof(hpbuf),"%s:%s",host_in.str,portbuf);
+    
 #ifdef G_OS_WIN32 // windows might not have getaddrinfo...
     if (!p_getaddrinfo)
     {
@@ -221,7 +222,7 @@ namespace
       err = p_getaddrinfo (host.c_str(), portbuf, &hints, &ans);
       if (err != 0) {
         char buf[512];
-        snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), host.c_str());
+        snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
         setme_err = buf;
         if (errno) {
           setme_err += " (";
@@ -259,7 +260,7 @@ namespace
     // create the giochannel...
     if (sockfd < 0) {
       char buf[512];
-      snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), host.c_str());
+      snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
       setme_err = buf;
       if (errno) {
         setme_err += " (";

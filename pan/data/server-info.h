@@ -71,6 +71,7 @@ namespace pan
                                     std::string   & setme_address,
                                     int           & setme_port) const = 0;
 
+	  // only used for debug and loging output
       virtual std::string get_server_address (const Quark& servername) const = 0;
 
       /** If set_server_limits() has never been called, 2 is returned. */

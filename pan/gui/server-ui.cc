@@ -374,9 +374,7 @@ namespace
     foreach_const (quarks_t, servers, it)
     {
       const Quark& server (*it);
-      int port;
-      std::string addr;
-      d->data.get_server_addr (*it, addr, port);
+      std::string addr(d->data.get_server_address (*it));
 
       GtkTreeIter iter;
       gtk_list_store_append (d->servers_store, &iter);
