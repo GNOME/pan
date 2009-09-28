@@ -554,7 +554,7 @@ PanTreeStore :: sortable_set_sort_func (GtkTreeSortable        *sortable,
                                         gint                    col,
                                         GtkTreeIterCompareFunc  func,
                                         gpointer                data,
-                                        GtkDestroyNotify        destroy)
+                                        GDestroyNotify          destroy)
 {
   PanTreeStore * tree (PAN_TREE_STORE (sortable));
   g_return_if_fail (tree);
@@ -569,7 +569,7 @@ void
 PanTreeStore :: sortable_set_default_sort_func (GtkTreeSortable        * s,
                                                 GtkTreeIterCompareFunc   f,
                                                 gpointer                 p,
-                                                GtkDestroyNotify         d)
+                                                GDestroyNotify           d)
 {
   sortable_set_sort_func (s, GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, f, p, d);
 }

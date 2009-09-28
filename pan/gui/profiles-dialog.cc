@@ -105,10 +105,6 @@ ProfileDialog :: ProfileDialog (const Data         & data,
   gtk_dialog_set_default_response (GTK_DIALOG(_root), GTK_RESPONSE_OK); 
   gtk_window_set_role (GTK_WINDOW(_root), "pan-edit-profile-dialog");
 
-  GtkTooltips * ttips = gtk_tooltips_new ();
-  g_object_ref_sink_pan (G_OBJECT(ttips));
-  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, ttips);
-
   int row (0);
   GtkWidget *t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Profile Information"));
@@ -167,12 +163,12 @@ ProfileDialog :: ProfileDialog (const Data         & data,
 
     w = _msgid_fqdn_entry = gtk_entry_new ();
     set_entry (w, profile.fqdn);
-    gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), w, _("When posting to Usenet, your article's Message-ID contains a domain name.  You can set a custom domain name here, or leave it blank to let Pan use the domain name from your email address."), "");
+    pan_widget_set_tooltip_text (w, _("When posting to Usenet, your article's Message-ID contains a domain name.  You can set a custom domain name here, or leave it blank to let Pan use the domain name from your email address."));
     HIG :: workarea_add_row (t, &row, _("Message-ID _Domain Name:"), w, NULL);
 
     w = _attribution_entry = gtk_entry_new ();
     set_entry (w, profile.attribution);
-    gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), w, _("%i for Message-ID\n%a for Author and Address\n%n for Author name\n%d for Date"), "");
+    pan_widget_set_tooltip_text (w, _("%i for Message-ID\n%a for Author and Address\n%n for Author name\n%d for Date"));
     HIG :: workarea_add_row (t, &row, _("_Attribution:"), w, NULL);
 
 
@@ -196,7 +192,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
       s += it->first + ": " + it->second + "\n";
     gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)), s.c_str(), s.size());
     GtkWidget * eventbox = gtk_event_box_new ();
-    gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), eventbox, _("Extra headers to be included in your posts, such as\nReply-To: \"Your Name\" <yourname@somewhere.com>\nOrganization: Your Organization"), "");
+    pan_widget_set_tooltip_text (eventbox, _("Extra headers to be included in your posts, such as\nReply-To: \"Your Name\" <yourname@somewhere.com>\nOrganization: Your Organization"));
     GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),
                                          GTK_SHADOW_IN);
@@ -474,16 +470,13 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
   gtk_widget_set_size_request (w, 300, 300);
 
   // button box
-  GtkTooltips * tips = gtk_tooltips_new ();
-  g_object_ref_sink_pan (G_OBJECT(tips));
-  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, tips);
   GtkWidget * bbox = gtk_vbox_new (FALSE, PAD_SMALL);
   gtk_box_pack_start (GTK_BOX (hbox), bbox, false, false, 0);
 
   // add button
   w = gtk_button_new_from_stock (GTK_STOCK_ADD);
   gtk_box_pack_start (GTK_BOX (bbox), w, false, false, 0);
-  gtk_signal_connect (GTK_OBJECT(w), "clicked", GTK_SIGNAL_FUNC(on_add_button), this);
+  g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(on_add_button), this);
 
   // edit button
 #if GTK_CHECK_VERSION(2,6,0)
@@ -493,12 +486,12 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
 #endif
   _edit_button = w;
   gtk_box_pack_start (GTK_BOX (bbox), w, false, false, 0);
-  gtk_signal_connect (GTK_OBJECT(w), "clicked", GTK_SIGNAL_FUNC(on_edit_button), this);
+  g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(on_edit_button), this);
 
   // remove button
   _remove_button = w = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
   gtk_box_pack_start (GTK_BOX (bbox), w, false, false, 0);
-  gtk_signal_connect (GTK_OBJECT(w), "clicked", GTK_SIGNAL_FUNC(on_delete_button), this);
+  g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(on_delete_button), this);
 
   // set sensitive buttons
   refresh_buttons ();

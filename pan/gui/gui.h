@@ -209,7 +209,6 @@ namespace pan
       GtkWidget * _taskbar;
       std::vector<ProgressView*> _views;
       std::list<Task*> _active_tasks;
-      GtkTooltips * _ttips;
 
       std::string _charset;
 

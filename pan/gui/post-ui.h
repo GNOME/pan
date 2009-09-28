@@ -111,7 +111,6 @@ namespace pan
       str2str_t _profile_headers;
       std::string _unchanged_body;
       int _wrap_pixels;
-      GtkTooltips * _ttips;
 
     private:
       void add_actions (GtkWidget* box);

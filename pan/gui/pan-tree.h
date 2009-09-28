@@ -309,7 +309,7 @@ struct PanTreeStore
     {
       GtkTreeIterCompareFunc sort_func;
       gpointer user_data;
-      GtkDestroyNotify destroy_notify;
+      GDestroyNotify destroy_notify;
 
       SortInfo(): sort_func(0), user_data(0), destroy_notify(0) {}
       ~SortInfo() { clear(); }
@@ -323,7 +323,7 @@ struct PanTreeStore
 
       void assign (GtkTreeIterCompareFunc sort_func,
                    gpointer user_data,
-                   GtkDestroyNotify destroy_notify) {
+                   GDestroyNotify destroy_notify) {
         clear ();
         this->sort_func = sort_func;
         this->user_data = user_data;
@@ -438,13 +438,13 @@ struct PanTreeStore
                                                     gint,
                                                     GtkTreeIterCompareFunc,
                                                     gpointer,
-                                                    GtkDestroyNotify);
+                                                    GDestroyNotify);
     static gboolean sortable_has_sort_func         (GtkTreeSortable*,
                                                     gint);
     static void     sortable_set_default_sort_func (GtkTreeSortable*,
                                                     GtkTreeIterCompareFunc,
                                                     gpointer,
-                                                    GtkDestroyNotify);
+                                                    GDestroyNotify);
     static gboolean sortable_has_default_sort_func (GtkTreeSortable*);
  
   private:

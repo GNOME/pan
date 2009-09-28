@@ -222,7 +222,7 @@ pan :: log_dialog_new (Prefs& prefs, GtkWindow* window)
 
   gtk_widget_show (view);
   gtk_widget_show (scroll);
-  gtk_box_pack_start_defaults (GTK_BOX(GTK_DIALOG(dialog)->vbox), scroll);
+  pan_box_pack_start_defaults (GTK_BOX(GTK_DIALOG(dialog)->vbox), scroll);
 
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-events-dialog");
   prefs.set_window ("events-window", GTK_WINDOW(dialog), 150, 150, 600, 300);

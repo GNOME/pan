@@ -1089,12 +1089,18 @@ pan_gdk_pixbuf_create_from_x_face (GdkColormap* cmap, GdkDrawable *drawable, con
 
     if (!cmap)
       cmap = gdk_colormap_get_system ();
-    gdk_color_black (cmap, &black);
-    gdk_color_white (cmap, &white);
+
+    gdk_color_parse ("black", &black);
+    gdk_colormap_alloc_color (cmap, &black, FALSE, TRUE);
+    gdk_color_parse ("white", &white);
+    gdk_colormap_alloc_color (cmap, &white, FALSE, TRUE);
 
     pixmap = gdk_pixmap_create_from_data (drawable, bits, WIDTH, HEIGHT, -1, &white, &black);
     pixbuf = gdk_pixbuf_get_from_drawable (NULL, pixmap, cmap, 0, 0, 0, 0, WIDTH, HEIGHT);
-    gdk_bitmap_unref (pixmap);
+    g_object_unref (pixmap);
+
+    gdk_colormap_free_colors (cmap, &white, 1 );
+    gdk_colormap_free_colors (cmap, &black, 1 );
   }
 
   return pixbuf;

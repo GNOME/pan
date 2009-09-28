@@ -38,8 +38,8 @@ extern "C" {
 #include <pan/icons/pan-pixbufs.h>
 #include "actions.h"
 #include "body-pane.h"
-#include "e-charset-picker.h"
 #include "dl-headers-ui.h"
+#include "e-charset-dialog.h"
 #include "group-pane.h"
 #include "group-prefs-dialog.h"
 #include "header-pane.h"
@@ -72,6 +72,25 @@ namespace pan
     g_object_ref (o);
     gtk_object_sink (GTK_OBJECT(o));
 #endif
+  }
+
+  void
+  pan_widget_set_tooltip_text( GtkWidget * w, const char * tip )
+  {
+#if GTK_CHECK_VERSION( 2,12,0 )
+    gtk_widget_set_tooltip_text( w, tip );
+#else
+    static GtkTooltips * tips = NULL;
+    if( tips == NULL )
+        tips = gtk_tooltips_new( );
+    gtk_tooltips_set_tip( tips, w, tip, NULL );
+#endif
+  }
+
+  void
+  pan_box_pack_start_defaults (GtkBox * box, GtkWidget * child)
+  {
+    gtk_box_pack_start( box, child, TRUE, TRUE, 0 );
   }
 }
 
@@ -179,12 +198,8 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   _connection_size_label (0),
   _queue_size_label (0),
   _queue_size_button (0),
-  _taskbar (0),
-  _ttips (gtk_tooltips_new ())
+  _taskbar (0)
 {
-  g_object_ref_sink_pan (G_OBJECT(_ttips));
-  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, _ttips);
-
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
   if (!gtk_ui_manager_add_ui_from_file (_ui_manager, filename, NULL))
     gtk_ui_manager_add_ui_from_string (_ui_manager, fallback_ui_file, -1, NULL);
@@ -256,7 +271,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   w = _queue_size_label = gtk_label_new (NULL);
   gtk_misc_set_padding (GTK_MISC(w), PAD, 0);
   w = _queue_size_button = gtk_button_new();
-  gtk_tooltips_set_tip (GTK_TOOLTIPS(_ttips), w, _("Open the Task Manager"), NULL);
+  pan_widget_set_tooltip_text (w, _("Open the Task Manager"));
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
   g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(show_task_window_cb), this);
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
@@ -278,7 +293,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
 
   // status 
   w = _event_log_button = gtk_button_new ();
-  gtk_tooltips_set_tip (GTK_TOOLTIPS(_ttips), w, _("Open the Event Log"), NULL);
+  pan_widget_set_tooltip_text (w, _("Open the Event Log"));
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
   gtk_box_pack_start (GTK_BOX(status_bar), w, false, false, 0);
   gtk_container_add (GTK_CONTAINER(w), _info_image);
@@ -294,14 +309,11 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   _queue.add_listener (this);
   Log::get().add_listener (this);
 
-  gtk_widget_ref (_info_image);
-  gtk_widget_ref (_error_image);
-  gtk_widget_ref (_group_pane->root());
-  gtk_widget_ref (_header_pane->root());
-  gtk_widget_ref (_body_pane->root());
-
-  gtk_object_sink (GTK_OBJECT (_info_image));
-  gtk_object_sink (GTK_OBJECT (_error_image));
+  g_object_ref_sink_pan (G_OBJECT(_info_image));
+  g_object_ref_sink_pan (G_OBJECT(_error_image));
+  g_object_ref (_group_pane->root());
+  g_object_ref (_header_pane->root());
+  g_object_ref (_body_pane->root());
 
   do_work_online (is_action_active ("work-online"));
 
@@ -372,7 +384,7 @@ GUI :: ~GUI ()
     delete _views[i];
 
   foreach (std::set<GtkWidget*>, unref, it)
-    gtk_widget_unref (*it);
+    g_object_unref (*it);
   g_object_unref (G_OBJECT(_ui_manager));
 }
 
@@ -1248,7 +1260,11 @@ void GUI :: do_about_pan ()
   const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com>", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", 0 };
   GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
+#if GTK_CHECK_VERSION(2,12,0)
+  gtk_about_dialog_set_program_name (w, _("Pan"));
+#else
   gtk_about_dialog_set_name (w, _("Pan"));
+#endif
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE);
   gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2007 Charles Kerr"));
@@ -1376,7 +1392,7 @@ void GUI :: do_tabbed_layout (bool tabbed)
   remove_from_parent (body_w);
 
   // remove workarea's current child
-  GList * children = gtk_container_children (GTK_CONTAINER(_workarea_bin));
+  GList * children = gtk_container_get_children (GTK_CONTAINER(_workarea_bin));
   if (children) {
     gtk_container_remove (GTK_CONTAINER(_workarea_bin), GTK_WIDGET(children->data));
     g_list_free (children);
@@ -1390,7 +1406,6 @@ void GUI :: do_tabbed_layout (bool tabbed)
     gtk_notebook_append_page (n, group_w, gtk_label_new_with_mnemonic (_("_1. Group Pane")));
     gtk_notebook_append_page (n, header_w, gtk_label_new_with_mnemonic (_("_2. Header Pane")));
     gtk_notebook_append_page (n, body_w, gtk_label_new_with_mnemonic (_("_3. Body Pane")));
-    gtk_notebook_set_tab_border (n, PAD_SMALL);
     g_signal_connect (n, "switch-page", G_CALLBACK(notebook_page_switched_cb), this);
   }
   else
@@ -1641,10 +1656,10 @@ void GUI :: do_prompt_for_charset ()
   if (_charset.empty())
       _charset = "UTF-8";
 
-  char * tmp = e_charset_picker_dialog (_("Character Encoding"),
-                                        _("Body Pane Encoding"),
-                                        _charset.c_str(),
-                                        get_window(root()));
+  char * tmp = e_charset_dialog (_("Character Encoding"),
+                                 _("Body Pane Encoding"),
+                                 _charset.c_str(),
+                                 get_window(root()));
   set_charset (tmp);
   free (tmp);
 }
@@ -1711,7 +1726,7 @@ GUI :: refresh_connection_label ()
   }
 
   gtk_label_set_text (GTK_LABEL(_connection_size_label), str);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS(_ttips), _connection_size_eventbox, tip, NULL);
+  pan_widget_set_tooltip_text (_connection_size_eventbox, tip);
 }
 
 namespace
@@ -1744,8 +1759,8 @@ void
 GUI :: set_queue_size_label (unsigned int running,
                              unsigned int size)
 {
-  char str[128];
-  char tip[128];
+  char str[256];
+  char tip[256];
 
   // build the button label
   if (!size)
@@ -1766,7 +1781,7 @@ GUI :: set_queue_size_label (unsigned int running,
 
   // update the gui
   gtk_label_set_text (GTK_LABEL(_queue_size_label), str);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS(_ttips), _queue_size_button, tip, NULL);
+  pan_widget_set_tooltip_text (_queue_size_button, tip);
 }
 
 void

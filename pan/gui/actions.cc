@@ -89,7 +89,7 @@ namespace
 
       //std::cerr << "registered icon " << my_builtin_icons[i].name << std::endl;
 
-      gdk_pixbuf_unref (pixbuf);
+      g_object_unref (pixbuf);
       gtk_icon_set_unref (icon_set);
     }
 

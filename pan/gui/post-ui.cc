@@ -39,7 +39,7 @@ extern "C" {
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/data/data.h>
 #include <pan/tasks/task-post.h>
-#include "e-charset-picker.h"
+#include "e-charset-dialog.h"
 #include "pad.h"
 #include "hig.h"
 #include "post-ui.h"
@@ -244,10 +244,10 @@ PostUI :: prompt_for_charset ()
   if (_charset.empty())
       _charset = DEFAULT_CHARSET;
 
-  char * tmp = e_charset_picker_dialog (_("Character Encoding"),
-                                        _("New Article's Encoding:"),
-                                        _charset.c_str(),
-                                        GTK_WINDOW(root()));
+  char * tmp = e_charset_dialog (_("Character Encoding"),
+                                 _("New Article's Encoding:"),
+                                 _charset.c_str(),
+                                 GTK_WINDOW(root()));
   set_charset (tmp);
   free (tmp);
 }
@@ -1731,7 +1731,7 @@ PostUI :: create_main_tab ()
   GtkWidget * v = gtk_vbox_new (false, PAD);
   gtk_container_set_border_width (GTK_CONTAINER(v), PAD);
   gtk_box_pack_start (GTK_BOX(v), t, false, false, 0);
-  gtk_box_pack_start_defaults (GTK_BOX(v), w);
+  pan_box_pack_start_defaults (GTK_BOX(v), w);
   return v;
 }
 
@@ -1770,7 +1770,7 @@ PostUI :: create_extras_tab ()
   w = _followupto_entry = gtk_entry_new ();
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
   /* i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english. */
-  gtk_tooltips_set_tip (GTK_TOOLTIPS(_ttips), w, _("The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n\nTo direct all replies to your email address, use \"Followup-To: poster\""), 0);
+pan_widget_set_tooltip_text (w, _("The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n\nTo direct all replies to your email address, use \"Followup-To: poster\""));
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
 
   //  Reply-To
@@ -1784,7 +1784,7 @@ PostUI :: create_extras_tab ()
 
   w = _replyto_entry = gtk_entry_new ();
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS(_ttips), w, _("The email account where mail replies to your posted message should go.  This is only needed if it differs from the \"From\" header."), 0);
+pan_widget_set_tooltip_text (w, _("The email account where mail replies to your posted message should go.  This is only needed if it differs from the \"From\" header."));
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
 
   //  Extra Headers
@@ -1886,10 +1886,6 @@ PostUI :: PostUI (GtkWindow    * parent,
     gtk_window_set_position (GTK_WINDOW(_root), GTK_WIN_POS_CENTER_ON_PARENT);
   }
 
-  _ttips = gtk_tooltips_new ();
-  g_object_ref_sink_pan (G_OBJECT(_ttips));
-  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, _ttips);
-
   // populate the window
   GtkWidget * vbox = gtk_vbox_new (false, PAD_SMALL);
   GtkWidget * menu_vbox = gtk_vbox_new (false, PAD_SMALL);
@@ -1902,7 +1898,7 @@ PostUI :: PostUI (GtkWindow    * parent,
   GtkWidget * notebook = gtk_notebook_new ();
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_main_tab(), gtk_label_new_with_mnemonic(_("_Message")));
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_extras_tab(), gtk_label_new_with_mnemonic(_("More _Headers")));
-  gtk_box_pack_start_defaults (GTK_BOX(vbox), notebook);
+  pan_box_pack_start_defaults (GTK_BOX(vbox), notebook);
 
   // remember this message, but don't put it in the text view yet.
   // we have to wait for it to be realized first so that wrapping

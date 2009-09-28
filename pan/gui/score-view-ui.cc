@@ -187,14 +187,10 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
 	                                               GTK_DIALOG_DESTROY_WITH_PARENT,
 	                                               GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
 	                                               NULL);
-  GtkTooltips * tips = gtk_tooltips_new ();
-  g_object_ref_sink_pan (G_OBJECT(tips));
-  g_object_weak_ref (G_OBJECT(w), (GWeakNotify)g_object_unref, tips);
-
   GtkWidget * button = create_rescore_button ();
   gtk_widget_show (button); 
   gtk_dialog_add_action_widget (GTK_DIALOG(w), button, GTK_RESPONSE_APPLY);
-  gtk_window_set_policy (GTK_WINDOW(w), true, true, true);
+  gtk_window_set_resizable (GTK_WINDOW(w), true);
   g_signal_connect (GTK_OBJECT(w), "response", G_CALLBACK(response_cb), &data);
   g_object_set_data_full (G_OBJECT(w), "score_view", this, delete_score_view);
 
@@ -245,14 +241,14 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
   // add button
   w = gtk_button_new_from_stock (GTK_STOCK_ADD);
   gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tips, w, _("Add a New Scoring Rule"), NULL);
+  pan_widget_set_tooltip_text (w, _("Add a New Scoring Rule"));
   gtk_widget_show (w);
   g_signal_connect (w, "clicked", G_CALLBACK(this->add_clicked_cb), this);
 
   // remove button
   w = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
   gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tips, w, _("Remove the Selected Scoring Rule"), NULL);
+  pan_widget_set_tooltip_text (w, _("Remove the Selected Scoring Rule"));
   gtk_widget_show (w);
   g_signal_connect (w, "clicked", G_CALLBACK(this->remove_clicked_cb), this);
 

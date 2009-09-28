@@ -423,9 +423,6 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
   _root = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
   GtkWidget * w;
-  GtkTooltips * ttips = gtk_tooltips_new ();
-  g_object_ref_sink_pan (G_OBJECT(ttips));
-  g_object_weak_ref (G_OBJECT(_root), (GWeakNotify)g_object_unref, ttips);
 
   GtkWidget * vbox = gtk_vbox_new (false, 0);
 
@@ -451,15 +448,15 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
     add_button (buttons, GTK_STOCK_GOTO_BOTTOM, G_CALLBACK(bottom_clicked_cb), this);
     gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
     w = add_button (buttons, GTK_STOCK_REDO, G_CALLBACK(restart_clicked_cb), this);
-    gtk_tooltips_set_tip (ttips, w, _("Restart Tasks"), NULL);
+    pan_widget_set_tooltip_text( w, _("Restart Tasks"));
     w = add_button (buttons, GTK_STOCK_STOP, G_CALLBACK(stop_clicked_cb), this);
-    gtk_tooltips_set_tip (ttips, w, _("Stop Tasks"), NULL);
+    pan_widget_set_tooltip_text( w, _("Stop Tasks"));
     w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
-    gtk_tooltips_set_tip (ttips, w, _("Delete Tasks"), NULL);
+    pan_widget_set_tooltip_text( w, _("Delete Tasks"));
     gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
     w = add_button (buttons, GTK_STOCK_CLOSE, 0, 0);
     g_signal_connect_swapped (w, "clicked", G_CALLBACK(gtk_widget_destroy), _root);
-    gtk_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new()); // eat h space
+    pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new()); // eat h space
 
   gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
   gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);

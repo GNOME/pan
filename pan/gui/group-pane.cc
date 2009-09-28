@@ -33,7 +33,6 @@ extern "C" {
 #include <pan/data/data.h>
 #include "group-pane.h"
 #include "pad.h"
-#include "sexy-icon-entry.h"
 
 using namespace pan;
 
@@ -597,7 +596,7 @@ namespace
     remove_activate_soon_tag ();
   }
 
-  void clear_button_clicked_cb (SexyIconEntry *e, SexyIconEntryPosition, int, gpointer pane_gpointer)
+  void clear_button_clicked_cb (GtkEntry * e, GtkEntryIconPosition, GdkEventButton *, gpointer pane_gpointer)
   {
     set_search_entry (GTK_WIDGET(e), "");
     refresh_search_entry (GTK_WIDGET(e));
@@ -796,18 +795,17 @@ namespace
 GtkWidget*
 GroupPane :: create_filter_entry ()
 {
-  GtkWidget * entry = sexy_icon_entry_new ();
-
-  GtkWidget * icon = gtk_image_new_from_stock(GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
-  sexy_icon_entry_set_icon (SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_SECONDARY, GTK_IMAGE(icon));
-  sexy_icon_entry_set_icon_highlight(SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_SECONDARY, true);
+  GtkWidget * entry = gtk_entry_new ();
+  gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
+                                 GTK_ENTRY_ICON_SECONDARY,
+                                 GTK_STOCK_CLEAR );
   gtk_widget_set_size_request (entry, 133, -1);
 
   _action_manager.disable_accelerators_when_focused (entry);
   g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), NULL);
   g_signal_connect (entry, "focus-out-event", G_CALLBACK(search_entry_focus_out_cb), NULL);
   g_signal_connect (entry, "activate", G_CALLBACK(search_entry_activated), this);
-  g_signal_connect (entry, "icon_released", G_CALLBACK(clear_button_clicked_cb), this);
+  g_signal_connect (entry, "icon-release", G_CALLBACK(clear_button_clicked_cb), this);
   entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed_by_user), this);
   refresh_search_entry (entry);
   return entry;

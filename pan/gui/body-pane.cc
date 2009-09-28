@@ -158,7 +158,7 @@ namespace
   void free_cursors (void)
   {
     for (int i=0; i<CURSOR_QTY; ++i)
-      gdk_cursor_destroy (cursors[i]);
+      gdk_cursor_unref (cursors[i]);
   }
 
   void ensure_cursors_created (GtkWidget * w)
@@ -1359,8 +1359,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_box_pack_start (GTK_BOX(vbox), w, false, false, 0);
 
   _terse = gtk_label_new ("Expander");
-  g_object_ref (_terse);
-  gtk_object_sink (GTK_OBJECT(_terse));
+  g_object_ref_sink_pan (G_OBJECT(_terse));
   gtk_misc_set_alignment (GTK_MISC(_terse), 0.0f, 0.5f);
   gtk_label_set_use_markup (GTK_LABEL(_terse), true);
   gtk_label_set_selectable (GTK_LABEL(_terse), true);
@@ -1370,8 +1369,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_widget_show (_terse);
 
   GtkWidget * hbox = _verbose = gtk_hbox_new (false, 0);
-  g_object_ref (_verbose);
-  gtk_object_sink (GTK_OBJECT(_verbose));
+  g_object_ref_sink_pan (G_OBJECT(_verbose));
   w = _headers = gtk_label_new ("Headers");
   gtk_label_set_selectable (GTK_LABEL(_headers), TRUE);
   gtk_misc_set_alignment (GTK_MISC(w), 0.0f, 0.5f);

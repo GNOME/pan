@@ -272,7 +272,7 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
     path = g_get_home_dir ();
   file_entry_set (w, path.c_str());
   g_signal_connect (file_entry_gtk_entry(w), "changed", G_CALLBACK(entry_changed_cb), _save_custom_path_radio);
-  gtk_widget_set_usize (GTK_WIDGET(w), 400, 0);
+  gtk_widget_set_size_request (GTK_WIDGET(w), 400, 0);
   w = gtk_button_new_from_stock (GTK_STOCK_HELP);
   gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
   g_signal_connect_swapped (w, "clicked", G_CALLBACK (show_group_substitution_help_dialog), dialog);

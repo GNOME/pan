@@ -137,7 +137,7 @@ pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
     gtk_table_attach_defaults (GTK_TABLE(t), w, 0, 1, row, row+1);
     adj = GTK_ADJUSTMENT(gtk_adjustment_new (n_days, 1, INT_MAX, 1, 1, 0));
     state->n_days_spinbutton = x = gtk_spin_button_new (adj, 1, 0);
-    g_signal_connect (x, "focus_in_event", GTK_SIGNAL_FUNC(spin_tickled_cb), state->n_days_rb);
+    g_signal_connect (x, "focus_in_event", G_CALLBACK(spin_tickled_cb), state->n_days_rb);
     gtk_table_attach_defaults (GTK_TABLE(t), x, 1, 2, row, row+1);
     ++row;
     state->new_headers_rb = w = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON(w), _("Get _new headers"));
@@ -153,7 +153,7 @@ pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
     gtk_table_attach_defaults (GTK_TABLE(t), w, 0, 1, row, row+1);
     adj = GTK_ADJUSTMENT(gtk_adjustment_new (n_headers, 0, INT_MAX, 50, 50, 0));
     state->n_headers_spinbutton = x = gtk_spin_button_new (adj, 1, 0);
-    g_signal_connect (x, "focus_in_event", GTK_SIGNAL_FUNC(spin_tickled_cb), state->n_headers_rb);
+    g_signal_connect (x, "focus_in_event", G_CALLBACK(spin_tickled_cb), state->n_headers_rb);
     gtk_table_attach_defaults (GTK_TABLE(t), x, 1, 2, row, row+1);
 
     gtk_container_add (GTK_CONTAINER(GTK_DIALOG(state->dialog)->vbox), t);

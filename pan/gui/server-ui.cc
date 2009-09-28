@@ -216,11 +216,6 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
   ***  workarea
   **/
 
-  GtkTooltips * ttips = gtk_tooltips_new ();
-  g_object_ref_sink_pan (G_OBJECT(ttips));
-  g_object_weak_ref (G_OBJECT(dialog), (GWeakNotify)g_object_unref, ttips);
-
-
   int row (0);
   GtkWidget * t (HIG::workarea_create ());
   gtk_box_pack_start (GTK_BOX(GTK_DIALOG(d->dialog)->vbox), t, TRUE, TRUE, 0);
@@ -228,12 +223,12 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     HIG::workarea_add_section_spacer (t, row, 2);
 
     GtkWidget * w = d->address_entry = gtk_entry_new ();
-    gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), w, _("The news server's actual address, e.g. \"news.mynewsserver.com\""), NULL);
+    pan_widget_set_tooltip_text( w, _("The news server's actual address, e.g. \"news.mynewsserver.com\""));
     HIG::workarea_add_row (t, &row, _("_Address:"), w, NULL);
 
     GtkAdjustment * a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 1.0, ULONG_MAX, 1.0, 1.0, 0.0));
     w = d->port_spin = gtk_spin_button_new (GTK_ADJUSTMENT(a), 1.0, 0u);
-    gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), w, _("The news server's port number.  Typically 119."), NULL);
+    pan_widget_set_tooltip_text( w, _("The news server's port number.  Typically 119."));
     HIG::workarea_add_row (t, &row, _("Por_t:"), w, NULL);
 
   HIG::workarea_add_section_divider (t, &row);
@@ -242,12 +237,12 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
 
     w = d->auth_username_entry = gtk_entry_new ();
     HIG::workarea_add_row (t, &row, _("_Username:"), w, NULL);
-    gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), w, _("The username to give the server when asked.  If your server doesn't require authentication, you can leave this blank."), NULL);
+    pan_widget_set_tooltip_text( w, _("The username to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
 
     w = d->auth_password_entry = gtk_entry_new ();
     gtk_entry_set_visibility (GTK_ENTRY(w), FALSE);
     HIG::workarea_add_row (t, &row, _("_Password:"), w, NULL);
-    gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), w, _("The password to give the server when asked.  If your server doesn't require authentication, you can leave this blank."), NULL);
+    pan_widget_set_tooltip_text( w, _("The password to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
 
   HIG::workarea_add_section_divider (t, &row);
   HIG::workarea_add_section_title (t, &row, _("Settings"));
@@ -300,7 +295,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     GtkWidget * e = gtk_event_box_new ();
     gtk_container_add (GTK_CONTAINER(e), l);
     gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
-    gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), e, _("Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."), NULL);
+    pan_widget_set_tooltip_text( e, _("Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."));
     HIG::workarea_add_row (t, &row, e, w);
 
   d->server = server;
@@ -501,13 +496,9 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
                                                            NULL);
   g_free (title);
   gtk_window_set_role (GTK_WINDOW(w), "pan-servers-dialog");
-  gtk_window_set_policy (GTK_WINDOW(w), TRUE, TRUE, TRUE);
+  gtk_window_set_resizable (GTK_WINDOW(w), TRUE);
   g_signal_connect (GTK_OBJECT(w), "response", G_CALLBACK(server_list_dialog_response_cb), d);
   g_object_set_data_full (G_OBJECT(w), "dialog", d, delete_server_list_dialog);
-
-  GtkTooltips * tips = gtk_tooltips_new ();
-  g_object_ref_sink_pan (G_OBJECT(tips));
-  g_object_weak_ref (G_OBJECT(w), (GWeakNotify)g_object_unref, tips);
 
   // workarea
   GtkWidget * hbox = gtk_hbox_new (FALSE, PAD);
@@ -545,7 +536,7 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   // add button
   w = gtk_button_new_from_stock (GTK_STOCK_ADD);
   gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tips, w, _("Add a Server"), NULL);
+  pan_widget_set_tooltip_text(w, _("Add a Server"));
   g_signal_connect (w, "clicked", G_CALLBACK(add_button_clicked_cb), d->dialog);
 
   // edit button
@@ -555,14 +546,14 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   w = gtk_button_new_from_stock (GTK_STOCK_OPEN);
 #endif
   gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tips, w, _("Edit a Server's Settings"), NULL);
+  pan_widget_set_tooltip_text(w, _("Edit a Server's Settings"));
   g_signal_connect (w, "clicked", G_CALLBACK(edit_button_clicked_cb), d->dialog);
   d->edit_button = w;
 
   // remove button
   w = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
   gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
-  gtk_tooltips_set_tip (tips, w, _("Remove a Server"), NULL);
+  pan_widget_set_tooltip_text(w, _("Remove a Server"));
   g_signal_connect (w, "clicked", G_CALLBACK(remove_button_clicked_cb), d);
   d->remove_button = w;
 

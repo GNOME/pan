@@ -321,7 +321,7 @@ GIOChannelSocket :: ~GIOChannelSocket ()
 
   if (_channel)
   {
-    g_io_channel_close (_channel);
+    g_io_channel_shutdown (_channel, TRUE, NULL);
     g_io_channel_unref (_channel);
     _channel = 0;
   }

@@ -36,7 +36,6 @@ extern "C" {
 #include <pan/icons/pan-pixbufs.h>
 #include "header-pane.h"
 #include "render-bytes.h"
-#include "sexy-icon-entry.h"
 #include "tango-colors.h"
 
 using namespace pan;
@@ -1271,15 +1270,15 @@ namespace
     }
   }
 
-  void entry_icon_released (SexyIconEntry*, SexyIconEntryPosition icon_pos, int, gpointer menu)
+  void entry_icon_release (GtkEntry*, GtkEntryIconPosition icon_pos, GdkEventButton*, gpointer menu)
   {
-    if (icon_pos == SEXY_ICON_ENTRY_PRIMARY)
+    if (icon_pos == GTK_ENTRY_ICON_PRIMARY)
       gtk_menu_popup (GTK_MENU(menu), 0, 0, 0, 0, 0, gtk_get_current_event_time());
   }
 
-  void entry_icon_released_2 (SexyIconEntry *entry, SexyIconEntryPosition icon_pos, int, gpointer pane_gpointer)
+  void entry_icon_release_2 (GtkEntry *entry, GtkEntryIconPosition icon_pos, GdkEventButton*, gpointer pane_gpointer)
   {
-    if (icon_pos == SEXY_ICON_ENTRY_SECONDARY) {
+    if (icon_pos == GTK_ENTRY_ICON_SECONDARY) {
       set_search_entry (GTK_WIDGET(entry), "");
       refresh_search_entry (GTK_WIDGET(entry));
       search_text.clear ();
@@ -1489,7 +1488,7 @@ HeaderPane :: ~HeaderPane ()
 GtkWidget*
 HeaderPane :: create_filter_entry ()
 {
-  GtkWidget * entry = sexy_icon_entry_new ();
+  GtkWidget * entry = gtk_entry_new ();
   _action_manager.disable_accelerators_when_focused (entry);
   g_object_set_data (G_OBJECT(entry), "header-pane", this);
   g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), NULL);
@@ -1497,13 +1496,12 @@ HeaderPane :: create_filter_entry ()
   g_signal_connect (entry, "activate", G_CALLBACK(search_entry_activated), this);
   entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed), this);
 
-  GtkWidget * image = gtk_image_new_from_stock(GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
-  sexy_icon_entry_set_icon (SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_SECONDARY, GTK_IMAGE(image));
-  sexy_icon_entry_set_icon_highlight(SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_SECONDARY, true);
-
-  image = gtk_image_new_from_stock ("ICON_SEARCH_PULLDOWN", GTK_ICON_SIZE_MENU);
-  sexy_icon_entry_set_icon (SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_PRIMARY, GTK_IMAGE(image));
-  sexy_icon_entry_set_icon_highlight (SEXY_ICON_ENTRY(entry), SEXY_ICON_ENTRY_PRIMARY, TRUE);
+      gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
+                                   GTK_ENTRY_ICON_PRIMARY,
+                                   GTK_STOCK_FIND);
+   gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
+                                  GTK_ENTRY_ICON_SECONDARY,
+                                  GTK_STOCK_CLEAR );
 
   GtkWidget * menu = gtk_menu_new ();
   mode = 0;
@@ -1516,8 +1514,8 @@ HeaderPane :: create_filter_entry ()
     gtk_menu_shell_append (GTK_MENU_SHELL(menu), w);
     gtk_widget_show (w);
   }
-  g_signal_connect (entry, "icon-released", G_CALLBACK(entry_icon_released), menu);
-  g_signal_connect (entry, "icon-released", G_CALLBACK(entry_icon_released_2), this);
+  g_signal_connect (entry, "icon-release", G_CALLBACK(entry_icon_release), menu);
+  g_signal_connect (entry, "icon-release", G_CALLBACK(entry_icon_release_2), this);
 
   refresh_search_entry (entry);
 
