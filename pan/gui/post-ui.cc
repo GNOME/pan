@@ -211,13 +211,13 @@ namespace
     { "copy", GTK_STOCK_COPY, 0, 0, 0, G_CALLBACK(do_copy) },
     { "paste", GTK_STOCK_PASTE, 0, 0, 0, G_CALLBACK(do_paste) },
     { "rot13", GTK_STOCK_REFRESH, N_("_Rot13"), 0, N_("Rot13 Selected Text"), G_CALLBACK(do_rot13) },
-    { "run-editor", GTK_STOCK_JUMP_TO, N_("Run _Editor"), "<control>e", 0, G_CALLBACK(do_edit) },
+    { "run-editor", GTK_STOCK_JUMP_TO, N_("Run _Editor"), "<control>e", N_("Run Editor"), G_CALLBACK(do_edit) },
     { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), 0, 0, G_CALLBACK(do_profiles) }
   };
 
   GtkToggleActionEntry toggle_entries[] =
   {
-    { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), 0, 0, G_CALLBACK(do_wrap), true },
+    { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), 0, N_("Wrap Text"), G_CALLBACK(do_wrap), true },
     { "always-run-editor", 0, N_("Always Run Editor"), 0, 0, G_CALLBACK(do_edit2), false },
     { "remember-charset", 0, N_("Remember Character Encoding for this Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
     { "spellcheck", 0, N_("Check _Spelling"), 0, 0, G_CALLBACK(on_spellcheck_toggled), true }
