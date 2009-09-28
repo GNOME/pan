@@ -11,6 +11,8 @@ AC_CONFIG_SRCDIR(pan/general/quark.cc)
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME,AC_PACKAGE_VERSION)
 AM_MAINTAINER_MODE
 
+m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
+
 dnl pcre, glib, gmime, and gtk are manditory prerequisites.
 dnl
 dnl GtkSpell is optional: GTKSPELL_REQUIRED refers to the minimum version
