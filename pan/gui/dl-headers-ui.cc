@@ -135,7 +135,7 @@ pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
     state->n_days_rb         = w = gtk_radio_button_new_with_mnemonic (NULL, _("Get the last N _days' headers: "));
     gtk_button_set_alignment (GTK_BUTTON(w), 0.5, 0.0);
     gtk_table_attach_defaults (GTK_TABLE(t), w, 0, 1, row, row+1);
-    adj = GTK_ADJUSTMENT(gtk_adjustment_new (n_days, 1, INT_MAX, 1, 1, 1));
+    adj = GTK_ADJUSTMENT(gtk_adjustment_new (n_days, 1, INT_MAX, 1, 1, 0));
     state->n_days_spinbutton = x = gtk_spin_button_new (adj, 1, 0);
     g_signal_connect (x, "focus_in_event", GTK_SIGNAL_FUNC(spin_tickled_cb), state->n_days_rb);
     gtk_table_attach_defaults (GTK_TABLE(t), x, 1, 2, row, row+1);
@@ -151,7 +151,7 @@ pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
     state->n_headers_rb   = w = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON(w), _("Get the _latest N headers: "));
     gtk_button_set_alignment (GTK_BUTTON(w), 0.5, 0.0);
     gtk_table_attach_defaults (GTK_TABLE(t), w, 0, 1, row, row+1);
-    adj = GTK_ADJUSTMENT(gtk_adjustment_new (n_headers, 0, INT_MAX, 50, 50, 1));
+    adj = GTK_ADJUSTMENT(gtk_adjustment_new (n_headers, 0, INT_MAX, 50, 50, 0));
     state->n_headers_spinbutton = x = gtk_spin_button_new (adj, 1, 0);
     g_signal_connect (x, "focus_in_event", GTK_SIGNAL_FUNC(spin_tickled_cb), state->n_headers_rb);
     gtk_table_attach_defaults (GTK_TABLE(t), x, 1, 2, row, row+1);

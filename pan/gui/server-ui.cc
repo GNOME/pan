@@ -231,7 +231,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), w, _("The news server's actual address, e.g. \"news.mynewsserver.com\""), NULL);
     HIG::workarea_add_row (t, &row, _("_Address:"), w, NULL);
 
-    GtkAdjustment * a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 1.0, ULONG_MAX, 1.0, 1.0, 1.0));
+    GtkAdjustment * a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 1.0, ULONG_MAX, 1.0, 1.0, 0.0));
     w = d->port_spin = gtk_spin_button_new (GTK_ADJUSTMENT(a), 1.0, 0u);
     gtk_tooltips_set_tip (GTK_TOOLTIPS(ttips), w, _("The news server's port number.  Typically 119."), NULL);
     HIG::workarea_add_row (t, &row, _("Por_t:"), w, NULL);
@@ -254,7 +254,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     HIG::workarea_add_section_spacer (t, row, 2);
 
     const int DEFAULT_MAX_PER_SERVER (4);
-    a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 0.0, DEFAULT_MAX_PER_SERVER, 1.0, 1.0, 1.0));
+    a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 0.0, DEFAULT_MAX_PER_SERVER, 1.0, 1.0, 0.0));
     d->connection_limit_spin = w = gtk_spin_button_new (GTK_ADJUSTMENT(a), 1.0, 0u);
     HIG::workarea_add_row (t, &row, _("Connection _Limit:"), w, NULL);
 
