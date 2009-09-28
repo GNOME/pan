@@ -95,7 +95,7 @@ namespace
       ERROR_CMD_NOT_UNDERSTOOD   = 500,
       ERROR_CMD_NOT_SUPPORTED    = 501,
       NO_PERMISSION              = 502,
-      ERROR_TIMEOUT              = 503
+      FEATURE_NOT_SUPPORTED      = 503
    };
 }
 
@@ -234,7 +234,8 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
       case NO_GROUP_SELECTED:
       case ERROR_CMD_NOT_UNDERSTOOD:
       case ERROR_CMD_NOT_SUPPORTED:
-      case NO_PERMISSION: {
+      case NO_PERMISSION:
+      case FEATURE_NOT_SUPPORTED: {
          std::string cmd (_previous_command);
          if (cmd.size()>=2 && cmd[cmd.size()-1]=='\n' && cmd[cmd.size()-2]=='\r')
            cmd.resize (cmd.size()-2);
@@ -253,7 +254,6 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
          state = CMD_FAIL;
          break;
 
-      case ERROR_TIMEOUT:
       case TOO_MANY_CONNECTIONS:
          state = CMD_RETRY;
          break;
