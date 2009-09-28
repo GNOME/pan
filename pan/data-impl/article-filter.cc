@@ -22,6 +22,7 @@
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/data/data.h>
+#include <glib/gprintf.h>
 #include "article-filter.h"
 
 using namespace pan;
@@ -145,7 +146,7 @@ ArticleFilter :: test_article (const Data        & data,
             s += xit->group;
             s += ':';
             char buf[32];
-            snprintf (buf, sizeof(buf), "%lu", xit->number);
+            g_snprintf (buf, sizeof(buf), "%"G_GUINT64_FORMAT, xit->number);
             s += buf;
             s += ' ';
           }

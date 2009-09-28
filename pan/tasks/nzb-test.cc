@@ -81,7 +81,7 @@ int main ()
   check (part_bytes == 102394)
   check (part_mid == "<123456789abcdef@news.newzbin.com>")
   Quark group;
-  unsigned long number;
+  uint64_t number;
   check (a.xref.find ("cox", group, number))
   check (group == "alt.binaries.newzbin")
   check (number == 0)

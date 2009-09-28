@@ -42,7 +42,7 @@ main (void)
    **/
 
 #if 0
-   unsigned long number;
+   uint64_t number;
    check (s.find (s1, g1, number))
    check (number == 100)
    check (s.find (s2, g1, number))
@@ -105,7 +105,7 @@ main (void)
   check (s.size() == 2);
 
   Quark group;
-  unsigned long number (0ul);
+  uint64_t number (0ul);
   check (s.find ("netfront", group, number))
   check (number!=175094)
   check (number==10033 || number==107169)

@@ -556,8 +556,8 @@ namespace pan
        * run on the specified {server,group}, or 0 if it's never 
        * been run there.
        */
-      virtual unsigned long get_xover_high (const Quark  & group,
-                                    const Quark  & server) const = 0;
+      virtual uint64_t get_xover_high (const Quark  & group,
+                                       const Quark  & server) const = 0;
 
        /**
         * After an XOVER command has been run, its range should be set
@@ -567,7 +567,7 @@ namespace pan
         */
        virtual void set_xover_high (const Quark         & group,
                                     const Quark         & server,
-                                    const unsigned long    high) = 0;
+                                    const uint64_t    high) = 0;
 
        /**
         * Used to fold the Newsrc ranges together:
@@ -576,7 +576,7 @@ namespace pan
         */
        virtual void set_xover_low (const Quark         & group,
                                    const Quark         & server,
-                                   const unsigned long   low) = 0;
+                                   const uint64_t   low) = 0;
 
   };
 }

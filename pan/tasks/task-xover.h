@@ -49,14 +49,14 @@ namespace pan
     private: // NNTP::Listener
       virtual void on_nntp_line (NNTP*, const StringView&);
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
-      virtual void on_nntp_group (NNTP*, const Quark&, unsigned long, unsigned long, unsigned long);
+      virtual void on_nntp_group (NNTP*, const Quark&, unsigned long, uint64_t, uint64_t);
 
     private: // implementation - minitasks
       struct MiniTask {
         enum Type { GROUP, XOVER };
         Type _type;
-        unsigned long _low, _high;
-        MiniTask (Type type, unsigned long low=0ul, unsigned long high=0ul):
+        uint64_t _low, _high;
+        MiniTask (Type type, uint64_t low=0ul, uint64_t high=0ul):
           _type(type), _low(low), _high(high) {}
       };
       typedef std::deque<MiniTask> MiniTasks_t;
@@ -68,14 +68,14 @@ namespace pan
       const Quark _group;
       std::string _short_group_name;
       Mode _mode;
-      unsigned long _sample_size;
+      uint64_t _sample_size;
       time_t _days_cutoff;
       bool _group_xover_is_reffed;
-      typedef std::map<Quark,unsigned long> server_to_high_t;
+      typedef std::map<Quark,uint64_t> server_to_high_t;
       server_to_high_t _high;
       void update_work (bool subtract_one_from_nntp_count=false);
       std::set<Quark> _servers_that_got_xover_minitasks;
-      std::map<NNTP*,int> _last_xover_number;
+      std::map<NNTP*,uint64_t> _last_xover_number;
       unsigned long _bytes_so_far;
       unsigned long _parts_so_far;
       unsigned long _articles_so_far;

@@ -207,7 +207,7 @@ TaskArticle :: use_nntp (NNTP * nntp)
     needed->buf.clear ();
 
     Quark group;
-    unsigned long number (0ul);
+    uint64_t number (0ul);
     needed->xref.find (nntp->_server, group, number);
     if (number)
       nntp->article (group, number, this);

@@ -20,6 +20,7 @@
 #ifndef __NNTP_h__
 #define __NNTP_h__
 
+#include <stdint.h>
 #include <deque>
 #include <pan/general/macros.h> // for UNUSED
 #include <pan/general/quark.h>
@@ -85,8 +86,8 @@ namespace pan
         virtual void on_nntp_group (NNTP               * nntp          UNUSED,
                                     const Quark        & group         UNUSED,
                                     unsigned long        estimated_qty UNUSED,
-                                    unsigned long        low           UNUSED,
-                                    unsigned long        high          UNUSED) {}
+                                    uint64_t             low           UNUSED,
+                                    uint64_t             high          UNUSED) {}
        };
 
       public:
@@ -129,8 +130,8 @@ namespace pan
        * command is successful or not.
        */
       void xover            (const Quark        & group,
-                             unsigned long        low,
-                             unsigned long        high,
+                             uint64_t             low,
+                             uint64_t             high,
                              Listener           * l);
 
       /**
@@ -170,7 +171,7 @@ namespace pan
        * to change groups.
        */
       void article          (const Quark        & group,
-                             unsigned long        article_number,
+                             uint64_t             article_number,
                              Listener           * l);
 
       /**

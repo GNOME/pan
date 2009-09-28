@@ -20,6 +20,7 @@
 #ifndef __Xref_h__
 #define __Xref_h__
 
+#include <stdint.h>
 #include <algorithm>
 #include <pan/general/quark.h>
 #include <pan/general/sorted-vector.h>
@@ -47,7 +48,7 @@ namespace pan
       {
         Quark server;
         Quark group;
-        unsigned long number;
+        uint64_t number;
 
         Target (): number(0ul) { }
         bool operator== (const Target& t) const
@@ -57,7 +58,7 @@ namespace pan
           if (group != t.group) return group < t.group;
           return false;
         }
-        Target (const Quark& sq, const Quark& gq, unsigned long n):
+        Target (const Quark& sq, const Quark& gq, uint64_t n):
           server (sq), group (gq), number (n) { }
       };
 
@@ -70,15 +71,15 @@ namespace pan
     public:
       unsigned long size () const { return targets.size(); }
       bool empty () const { return targets.empty(); }
-      unsigned long find_number (const Quark& server, const Quark& group) const;
-      bool find (const Quark& server, Quark& setme_group, unsigned long& setme_number) const;
+      uint64_t find_number (const Quark& server, const Quark& group) const;
+      bool find (const Quark& server, Quark& setme_group, uint64_t& setme_number) const;
       bool has_server (const Quark& server) const;
       void get_servers (quarks_t& addme) const;
 
     public:
       void clear () { targets.clear(); }
       void remove_server (const Quark& server);
-      void remove_targets_less_than (const Quark& s, const Quark& g, unsigned long less_than_this);
+      void remove_targets_less_than (const Quark& s, const Quark& g, uint64_t less_than_this);
 
     public:
 
@@ -86,7 +87,7 @@ namespace pan
         targets.insert (a, b);
       }
       void insert (const Target& target) { targets.insert (target); }
-      void insert (const Quark& s, const Quark& g, unsigned long n) {targets.insert (Target(s,g,n));} 
+      void insert (const Quark& s, const Quark& g, uint64_t n) {targets.insert (Target(s,g,n));} 
       void insert (const Xref& xref) { insert (xref.begin(), xref.end()); }
 
       template<typename ForwardIterator> void assign (ForwardIterator a, ForwardIterator b) {

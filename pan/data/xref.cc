@@ -18,6 +18,7 @@
  */
 
 #include <config.h>
+#include <glib.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
@@ -42,7 +43,7 @@ Xref :: insert (const Quark             & server,
 
   // walk through the xrefs, of format "group1:number group2:number" 
   targets.reserve (targets.size() + std::count(xref.begin(), xref.end(), ':'));
-  StringView s, group;
+  StringView s;
   while (xref.pop_token (s)) {
     if (s.strchr (':') != 0) {
       StringView group_name;
@@ -50,7 +51,7 @@ Xref :: insert (const Quark             & server,
         Target t;
         t.server = server;
         t.group = group_name;
-        t.number = strtoul (s.str, NULL, 10);
+        t.number = g_ascii_strtoull (s.str, NULL, 10);
         targets.get_container().push_back (t);
       }
     }
@@ -73,7 +74,7 @@ Xref :: remove_server (const Quark& server)
 void
 Xref :: remove_targets_less_than (const Quark    & server,
                                   const Quark    & group,
-                                  unsigned long    n)
+                                  uint64_t         n)
 {
   std::vector<Target> t;
   t.reserve (targets.size());
@@ -105,7 +106,7 @@ Xref :: has_server (const Quark  & server) const
 bool
 Xref :: find (const Quark    & server,
               Quark          & setme_group,
-              unsigned long  & setme_number) const
+              uint64_t       & setme_number) const
 {
   Target tmp;
   tmp.server = server;
@@ -118,7 +119,7 @@ Xref :: find (const Quark    & server,
   return found;
 }
 
-unsigned long
+uint64_t
 Xref :: find_number (const Quark    & server,
                      const Quark    & group) const
 {

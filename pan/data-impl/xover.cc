@@ -215,7 +215,7 @@ DataImpl :: xover_unref (const Quark& group)
 void
 DataImpl :: set_xover_low (const Quark   & group,
                            const Quark   & server,
-                           const unsigned long   low)
+                           const uint64_t   low)
 {
   ReadGroup::Server * rgs (find_read_group_server (group, server));
   if (rgs != 0)

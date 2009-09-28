@@ -20,6 +20,7 @@
 #ifndef __Numbers_h__
 #define __Numbers_h__
 
+#include <stdint.h>
 #include <vector>
 #include <pan/general/string-view.h>
 
@@ -38,25 +39,25 @@ namespace pan
 
       /** Simple two-field struct defining a range. */
       struct Range {
-        unsigned long low;
-        unsigned long high;
+        uint64_t low;
+        uint64_t high;
         bool operator ==(const Range& that) const {
           return low==that.low && high==that.high;
         }
         Range (): low(0), high(0) {}
-        Range (unsigned long l, unsigned long h): low(l<h?l:h), high(h>l?h:l) {}
-        bool contains (unsigned long point) const {
+        Range (uint64_t l, uint64_t h): low(l<h?l:h), high(h>l?h:l) {}
+        bool contains (uint64_t point) const {
           return low<=point && point<=high;
         }
         bool contains (const Range& r) const {
           return low<=r.low && r.high<=high;
         }
-        int compare (unsigned long point) const {
+        int compare (uint64_t point) const {
           if (point < low) return -1;
           if (point > high) return 1;
           return 0;
         }
-        bool operator< (unsigned long point) const {
+        bool operator< (uint64_t point) const {
           return high < point;
         }
       };
@@ -65,8 +66,8 @@ namespace pan
       
     private:
       ranges_t _marked;
-      unsigned long mark_range (const Range&);
-      unsigned long unmark_range (const Range&);
+      uint64_t mark_range (const Range&);
+      uint64_t unmark_range (const Range&);
 
     public:
       bool operator== (const Numbers& that) const {
@@ -85,7 +86,7 @@ namespace pan
        * @param add true if we're adding the number, false if removing
        * @return the number's previous state in the set.
        */
-      bool mark_one (unsigned long number, bool add=true);
+      bool mark_one (uint64_t number, bool add=true);
 
       /**
        * Add or remove the specified range of numbers from the set.
@@ -96,7 +97,7 @@ namespace pan
        * @param add true if we're adding the numbers, false if removing
        * @return the quantity of numbers whose presence in the set changed.
        */
-      unsigned long mark_range (unsigned long low, unsigned long high, bool add=true);
+      uint64_t mark_range (uint64_t low, uint64_t high, bool add=true);
 
       /**
        * Mark numbers from a text string in to_str() and from_str() fromat.
@@ -108,7 +109,7 @@ namespace pan
       /**
        * @return true if the number is in this set, false otherwise
        */
-      bool is_marked (const unsigned long) const;
+      bool is_marked (const uint64_t) const;
 
       void clear ();
 
@@ -122,7 +123,7 @@ namespace pan
 
     public:
 
-      void clip (const unsigned long low, const unsigned long high);
+      void clip (const uint64_t low, const uint64_t high);
   };
 }
 

@@ -28,6 +28,7 @@
 #include <set>
 #include <vector>
 
+#include <glib.h>
 extern "C" {
   #include <unistd.h>
   #include <glib/gi18n.h>
@@ -360,7 +361,7 @@ DataImpl :: load_group_xovers (const DataIO& data_io)
 
         while (line.pop_token (xover))
           if (xover.pop_token(servername,':'))
-            g[servername]._xover_high = strtoul (xover.str, NULL, 10);
+            g[servername]._xover_high = g_ascii_strtoull (xover.str, NULL, 10);
       }
     }
   }
@@ -457,11 +458,11 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
 *****
 ****/
 
-unsigned long
+uint64_t
 DataImpl :: get_xover_high (const Quark  & groupname,
                             const Quark  & servername) const
 {
-  unsigned long high (0ul);
+  uint64_t high (0ul);
   const ReadGroup::Server * rgs (find_read_group_server (groupname, servername));
   if (rgs)
     high = rgs->_xover_high;
@@ -471,7 +472,7 @@ DataImpl :: get_xover_high (const Quark  & groupname,
 void
 DataImpl :: set_xover_high (const Quark & group,
                             const Quark & server,
-                            const unsigned long high)
+                            const uint64_t high)
 {
   //std::cerr << LINE_ID << "setting " << get_server_address(server) << ':' << group << " xover high to " << high << std::endl;
   ReadGroup::Server& rgs (_read_groups[group][server]);

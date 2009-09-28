@@ -172,8 +172,8 @@ void
 TaskXOver :: on_nntp_group (NNTP          * nntp,
                             const Quark   & group,
                             unsigned long   qty,
-                            unsigned long   low,
-                            unsigned long   high)
+                            uint64_t        low,
+                            uint64_t        high)
 {
   const Quark& servername (nntp->_server);
 
@@ -188,7 +188,7 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
          << " low " << low
          << " high " << high);
 
-  unsigned long l(low), h(high);
+  uint64_t l(low), h(high);
   _data.set_xover_low (group, nntp->_server, low);
   //std::cerr << LINE_ID << " This group's range is [" << low << "..." << high << ']' << std::endl;
 
@@ -200,7 +200,7 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
     l = std::max (low, high+1-_sample_size);
   }
   else { // NEW
-    unsigned long xh (_data.get_xover_high (group, nntp->_server));
+    uint64_t xh (_data.get_xover_high (group, nntp->_server));
     //std::cerr << LINE_ID << " current xover high is " << xh << std::endl;
     l = std::max (xh+1, low);
   }
@@ -211,7 +211,7 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
     add_steps (h-l);
     const int INCREMENT (1000);
     MiniTasks_t& minitasks (_server_to_minitasks[servername]);
-    for (unsigned long m=l; m<=h; m+=INCREMENT) {
+    for (uint64_t m=l; m<=h; m+=INCREMENT) {
       MiniTask mt (MiniTask::XOVER, m, m+INCREMENT);
       debug ("adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << ']');
       minitasks.push_front (mt);
@@ -240,6 +240,19 @@ namespace
 
     return ul;
   }
+  uint64_t view_to_ull (const StringView& view)
+  {
+    uint64_t ul = 0ul;
+
+    if (!view.empty()) {
+      errno = 0;
+      ul = g_ascii_strtoull (view.str, 0, 10);
+      if (errno)
+        ul = 0ul;
+    }
+
+    return ul;
+  }
 
   bool header_is_nonencoded_utf8 (const StringView& in)
   {
@@ -260,10 +273,11 @@ TaskXOver :: on_nntp_line (NNTP               * nntp,
   _bytes_so_far += line.len;
 
   unsigned int lines=0u;
-  unsigned long number=0ul, bytes=0ul;
+  unsigned long bytes=0ul;
+  uint64_t number=0;
   StringView subj, author, date, mid, ref, tmp, xref, l(line);
   bool ok = !l.empty();
-  ok = ok && l.pop_token (tmp, '\t');    if (ok) number = view_to_ul (tmp);
+  ok = ok && l.pop_token (tmp, '\t');    if (ok) number = view_to_ull (tmp);
   ok = ok && l.pop_token (subj, '\t');   if (ok) subj.trim ();
   ok = ok && l.pop_token (author, '\t'); if (ok) author.trim ();
   ok = ok && l.pop_token (date, '\t');   if (ok) date.trim ();
@@ -291,10 +305,12 @@ TaskXOver :: on_nntp_line (NNTP               * nntp,
   // if news server doesn't provide an xref, fake one
   char * buf (0);
   if (xref.empty())
-    xref = buf = g_strdup_printf ("%s %s:%lu",
-                       nntp->_server.c_str(), nntp->_group.c_str(), number);
+    xref = buf = g_strdup_printf ("%s %s:%"G_GUINT64_FORMAT,
+                                  nntp->_server.c_str(),
+                                  nntp->_group.c_str(),
+                                  number);
 
-  unsigned long& h (_high[nntp->_server]);
+  uint64_t& h (_high[nntp->_server]);
   h = std::max (h, number);
 
   const char * fallback_charset = NULL; // FIXME
@@ -318,7 +334,7 @@ TaskXOver :: on_nntp_line (NNTP               * nntp,
     ++_articles_so_far;
 
   // emit a status update
-  int& prev = _last_xover_number[nntp];
+  uint64_t& prev = _last_xover_number[nntp];
   increment_step (number - prev);
   prev = number;
   if (!(_parts_so_far % 500))

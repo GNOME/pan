@@ -198,7 +198,7 @@ namespace pan
          */
         struct Server {
           Numbers _read;
-          unsigned long _xover_high;
+          uint64_t _xover_high;
           Server(): _xover_high(0) {}
         };
         typedef Loki::AssocVector<Quark,Server> servers_t;
@@ -586,16 +586,16 @@ namespace pan
 
       virtual void xover_unref   (const Quark           & group);
 
-      virtual unsigned long get_xover_high (const Quark & group,
-                                            const Quark & server) const;
+      virtual uint64_t get_xover_high (const Quark & group,
+                                       const Quark & server) const;
 
       virtual void set_xover_high (const Quark          & group,
                                    const Quark          & server,
-                                   const unsigned long    high);
+                                   const uint64_t         high);
 
        virtual void set_xover_low (const Quark          & group,
                                    const Quark          & server,
-                                   const unsigned long    low);
+                                   const uint64_t         low);
 
 
     /**
