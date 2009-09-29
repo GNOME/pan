@@ -127,7 +127,8 @@ PostUI :: get_body () const
   std::string body;
   GtkTextBuffer * buf (_body_buf);
   GtkTextView * view (GTK_TEXT_VIEW(_body_view));
-
+  const bool wrap (_prefs.get_flag ("compose-wrap-enabled", false));
+  
   // walk through all the complete lines...
   GtkTextIter body_start, body_end, line_start, line_end;
   gtk_text_buffer_get_bounds (buf, &body_start, &body_end);
@@ -136,7 +137,7 @@ PostUI :: get_body () const
     char * line = gtk_text_buffer_get_text (buf, &line_start, &line_end, false);
     body += line;
     g_free (line);
-    if (*body.rbegin() != '\n')
+    if (wrap && *body.rbegin() != '\n')
       body += '\n';
     line_start = line_end;
   }
@@ -163,9 +164,9 @@ PostUI :: set_wrap_mode (bool wrap)
 
   if (_body_buf) {
     const std::string s (get_body());
-    gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
     gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(_body_view),
                                  wrap ? GTK_WRAP_WORD : GTK_WRAP_NONE);
+    gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
   }
 }
 
