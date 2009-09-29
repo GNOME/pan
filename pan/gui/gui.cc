@@ -913,7 +913,7 @@ void GUI :: server_list_dialog_destroyed (GtkWidget *)
   foreach_const (quarks_t, all_servers, it) {
     quarks_t tmp;
     _data.server_get_groups (*it, tmp);
-    if (tmp.empty())
+    if (tmp.empty() && _data.get_server_limits(*it))
       _queue.add_task (new TaskGroups (_data, *it));
   }
 }
@@ -1587,7 +1587,8 @@ void GUI :: do_refresh_groups ()
 
   const quarks_t servers (_data.get_servers ());
   foreach_const_r (quarks_t, servers, it)
-    tasks.push_back (new TaskGroups (_data, *it));
+    if (_data.get_server_limits(*it))
+      tasks.push_back (new TaskGroups (_data, *it));
 
   if (!tasks.empty())
     _queue.add_tasks (tasks);

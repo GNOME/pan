@@ -97,16 +97,17 @@ TaskXOver :: TaskXOver (Data         & data,
   debug ("ctor for " << group);
 
   // add a ``GROUP'' MiniTask for each server that has this group
+  // initialize the _high lookup table to boundaries
   const MiniTask group_minitask (MiniTask::GROUP);
   quarks_t servers;
   _data.group_get_servers (group, servers);
   foreach_const (quarks_t, servers, it)
-    _server_to_minitasks[*it].push_front (group_minitask);
+    if (_data.get_server_limits(*it))
+    {
+      _server_to_minitasks[*it].push_front (group_minitask);
+      _high[*it] = data.get_xover_high (group, *it);
+    }
   init_steps (0);
-
-  // initialize the _high lookup table to boundaries
-  foreach_const (quarks_t, servers, it)
-    _high[*it] = data.get_xover_high (group, *it);
 
   // tell the users what we're up to
   set_status (group.c_str());

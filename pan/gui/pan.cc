@@ -108,7 +108,8 @@ namespace
     DataAndQueue * foo (static_cast<DataAndQueue*>(user_data));
     const quarks_t new_servers (foo->data->get_servers());
     foreach_const (quarks_t, new_servers, it)
-      foo->queue->add_task (new TaskGroups (*foo->data, *it));
+      if (foo->data->get_server_limits(*it))
+        foo->queue->add_task (new TaskGroups (*foo->data, *it));
     g_free (foo);
   }
 
