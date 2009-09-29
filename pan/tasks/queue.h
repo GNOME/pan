@@ -64,7 +64,8 @@ namespace pan
     private AdaptableSet<Task*, TaskWeakOrdering>::Listener
   {
     public:
-      Queue (ServerInfo&, TaskArchive&, Socket::Creator*, WorkerPool&, bool online);
+      Queue (ServerInfo&, TaskArchive&, Socket::Creator*, WorkerPool&,
+             bool online, int save_delay_secs);
       virtual ~Queue ();
 
       typedef std::vector<Task*> tasks_t;
@@ -212,6 +213,8 @@ namespace pan
       void request_connections (const quarks_t& servers);
 
     private:
+      /** don't save tasks.nzb more frequently than this setting */
+      int _save_delay_secs;
       bool _needs_saving;
       time_t _last_time_saved;
       quarks_t _mids;

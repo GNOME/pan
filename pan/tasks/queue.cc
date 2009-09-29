@@ -35,13 +35,15 @@ Queue :: Queue (ServerInfo         & server_info,
                 TaskArchive        & archive,
                 Socket::Creator    * socket_creator,
                 WorkerPool         & pool,
-                bool                 online):
+                bool                 online,
+                int                  save_delay_secs):
   _server_info (server_info),
   _is_online (online),
   _socket_creator (socket_creator),
   _worker_pool (pool),
   _decoder (pool),
   _decoder_task (0),
+  _save_delay_secs (save_delay_secs),
   _needs_saving (false),
   _last_time_saved (0),
   _archive (archive)
@@ -106,14 +108,22 @@ Queue :: get_pool (const Quark& servername)
 void
 Queue :: upkeep ()
 {
+  const tasks_t tmp (_tasks.begin(), _tasks.end());
+  // remove completed tasks.
+  foreach_const (tasks_t, tmp, it) {
+    Task * task  (*it);
+    const Task::State& state (task->get_state());
+    if (state._work==Task::COMPLETED || _removing.count(task))
+      remove_task (task);
+  }
+
   // maybe save the task list.
   // only do it once in awhile to prevent thrashing.
-  const tasks_t tmp (_tasks.begin(), _tasks.end());
   const time_t now (time(0));
-  if (_needs_saving && _last_time_saved<(now-10)) {
+  if (_needs_saving && _last_time_saved<(now-_save_delay_secs)) {
     _archive.save_tasks (tmp);
     _needs_saving = false;
-    _last_time_saved = now;
+    _last_time_saved = time(0);
   }
 
   // do upkeep on the first queued task.
@@ -127,14 +137,6 @@ Queue :: upkeep ()
       process_task (task);
       break;
     }
-  }
-
-  // remove completed tasks.
-  foreach_const (tasks_t, tmp, it) {
-    Task * task  (*it);
-    const Task::State& state (task->get_state());
-    if (state._work==Task::COMPLETED || _removing.count(task))
-      remove_task (task);
   }
 
   // upkeep on running tasks... this lets us pop open
