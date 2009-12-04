@@ -19,6 +19,7 @@
 
 #include <config.h>
 #include <vector>
+#include <cstring>
 extern "C" {
 #include <glib/gi18n.h>
 }
@@ -201,21 +202,33 @@ namespace
                         int       column)
    {
       int pos = 0;
+      int space_len;
       char * linefeed_here = NULL;
 
       // walk through the entire string
       for (char *pch=str, *end=pch+len; pch!=end; )
       {
          // a linefeed could go here; remember this space
-         if (g_unichar_isspace (g_utf8_get_char (pch)) || *pch=='\n')
-            linefeed_here = pch;
+         gunichar ch = g_utf8_get_char (pch);
+         if (g_unichar_isspace ( ch ) || *pch=='\n')
+           if (g_unichar_break_type(ch) != G_UNICODE_BREAK_NON_BREAKING_GLUE)
+           {
+             linefeed_here = pch;
+             // not all spaces are single char
+             space_len = g_utf8_next_char (pch) - pch;
+           }
 
          // line's too long; add a linefeed if we can
          if (pos>=column && linefeed_here!=NULL)
          {
-            *linefeed_here = '\n';
-            pch = linefeed_here + 1;
+            const char nl[5]="   \n";
+            if( space_len == 1)
+              *linefeed_here = '\n';
+             else
+               memcpy( linefeed_here, 4 - space_len + nl, space_len);
+            pch = linefeed_here + space_len;
             linefeed_here = NULL;
+            space_len = 0;
             pos = 0;
          }
          else
