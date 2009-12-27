@@ -66,10 +66,13 @@ namespace pan
       PartState get_part_state () const;
 
     public:
-      bool is_binary;
       Quark message_id;
       Quark author;
       Quark subject;
+      time_t time_posted;
+      unsigned int lines;
+      int score;
+      bool is_binary;
       static bool has_reply_leader (const StringView&);
 
     public:
@@ -79,9 +82,6 @@ namespace pan
       unsigned long get_byte_count () const;
       bool is_byte_count_ge (unsigned long test) const;
 
-      unsigned int lines;
-      int score;
-      time_t time_posted;
       Xref xref;
 
     public:
