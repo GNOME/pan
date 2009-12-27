@@ -1546,8 +1546,8 @@ BodyPane :: create_followup_or_reply (bool is_reply)
   if (_message)
   {
     msg = g_mime_message_new (false);
-    GMimeObject msg_obj = (GMimeObject*)msg
-    GMimeObject _message_obj = (GMimeObject*)_message
+    GMimeObject *msg_obj = (GMimeObject*)msg;
+    GMimeObject *_message_obj = (GMimeObject*)_message;
 
     // fallback character encodings
     const char * group_charset (_charset.c_str());
