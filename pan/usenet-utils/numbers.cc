@@ -265,9 +265,9 @@ Numbers :: to_string (std::string & str) const
       Range r (*it);
 
       if (r.low == r.high)
-        g_snprintf (buf, sizeof(buf), "%"G_GUINT64_FORMAT, r.low);
+        g_snprintf (buf, sizeof(buf), "%"G_GUINT64_FORMAT",", r.low);
       else
-         g_snprintf (buf, sizeof(buf), "%"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT, r.low, r.high);
+         g_snprintf (buf, sizeof(buf), "%"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT",", r.low, r.high);
       str += buf;
    }
 
