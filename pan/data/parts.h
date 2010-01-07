@@ -47,7 +47,7 @@ namespace pan
   {
     public:
       typedef uint16_t number_t;
-      typedef uint16_t mid_offset_t;
+      typedef uint32_t mid_offset_t;
       typedef uint32_t bytes_t;
 
     private:
