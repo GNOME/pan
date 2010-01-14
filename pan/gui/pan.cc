@@ -25,6 +25,10 @@ extern "C" {
   #include <gtk/gtk.h>
   #include <gmime/gmime.h>
 }
+#ifdef G_OS_WIN32
+#define _WIN32_WINNT 0x0501
+#include <windows.h>
+#endif
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/file-util.h>
