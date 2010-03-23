@@ -2042,6 +2042,9 @@ HeaderPane :: on_queue_task_removed (Queue&, Task& task, int)
 void
 HeaderPane :: on_cache_added (const Quark& message_id)
 {
+  quarks_t q;
+  q.insert(message_id);
+  _data.rescore_articles ( _group, q );
   rebuild_article_action (message_id);
 }
 void
