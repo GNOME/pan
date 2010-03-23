@@ -40,6 +40,7 @@ FilterInfo :: clear ()
   _text.clear ();
   _aggregates.clear ();
   _negate = false;
+  _needs_body = false;
 }
 
 void
@@ -75,10 +76,19 @@ void
 FilterInfo :: set_type_text (const Quark                   & header,
                              const TextMatch::Description  & text)
 {
+  static const Quark subject("Subject"), from("From"),
+    xref("Xref"), references("References"), newsgroups("Newsgroups"),
+    message_Id("Message-Id"), message_ID("Message-ID");
+
   clear ();
   _type = TEXT;
   _header = header;
   _text.set (text);
+
+  if( !(header == subject || header == from || header == message_Id ||
+      header == message_ID || header ==  newsgroups || header == references ||
+      header ==  xref) )
+    _needs_body = true;
 }
 
 /****

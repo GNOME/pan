@@ -49,6 +49,7 @@ ArticleFilter :: test_article (const Data        & data,
                                const Quark       & group,
                                const Article     & article) const
 {
+  const ArticleCache & cache(data.get_cache());
   bool pass (false);
   switch (criteria._type)
   {
