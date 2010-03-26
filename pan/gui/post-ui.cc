@@ -859,7 +859,7 @@ namespace
     if (ua_extra)
       return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE "; " GIT_REV "; " PLATFORM_INFO ")";
     else
-      return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE ")";
+      return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE "; " GIT_REV ")";
   }
 
   bool header_has_dedicated_entry (const StringView& name)
