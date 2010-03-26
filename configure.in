@@ -5,6 +5,15 @@ AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
 AC_DEFINE(VERSION_TITLE,["House of Butterflies"],[Release Name])
 AC_PREREQ(2.54)
 
+GIT_BRANCH=`git --git-dir=$srcdir/.git symbolic-ref HEAD 2> /dev/null | awk -F/ '{print $NF}'`
+GIT_HASH=`git --git-dir=$srcdir/.git log -1 --pretty=format:%h`
+if test -z $GIT_BRANCH; then
+  GIT_REV="GIT $GIT_HASH"
+else
+  GIT_REV="GIT $GIT_BRANCH $GIT_HASH"
+fi
+AC_DEFINE_UNQUOTED([GIT_REV],["$GIT_REV"],[Git branch and hash])
+
 AM_CONFIG_HEADER(config.h)
 AC_CONFIG_SRCDIR(pan/general/quark.cc)
 
@@ -80,9 +89,11 @@ ac_cv_lkstrftime=yes
 ],ac_cv_lkstrftime=no,ac_cv_lkstrftime=no)
 AC_MSG_RESULT($ac_cv_lkstrftime)
 
+AC_CANONICAL_HOST
+
+AC_DEFINE_UNQUOTED([PLATFORM_INFO],["$host"],[uname cpu-vendor-platformbuild])
 
 dnl windows-specific stuff.
-AC_CANONICAL_HOST
 win32="no"
 case $host_os in
 

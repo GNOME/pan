@@ -57,6 +57,7 @@ using namespace pan;
 
 #define USER_AGENT_PREFS_KEY "add-user-agent-header-when-posting"
 #define MESSAGE_ID_PREFS_KEY "add-message-id-header-when-posting"
+#define USER_AGENT_EXTRA_PREFS_KEY "user-agent-extra-info"
 
 namespace
 {
@@ -851,9 +852,14 @@ PostUI :: open_draft ()
 
 namespace
 {
+  bool ua_extra=false;
+
   const char * get_user_agent ()
   {
-    return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE ")";
+    if (ua_extra)
+      return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE "; " GIT_REV "; " PLATFORM_INFO ")";
+    else
+      return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE ")";
   }
 
   bool header_has_dedicated_entry (const StringView& name)
@@ -1855,6 +1861,8 @@ PostUI :: PostUI (GtkWindow    * parent,
 {
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != 0);
+
+  ua_extra = prefs.get_flag(USER_AGENT_EXTRA_PREFS_KEY, false);
 
   // create the window
   _root = gtk_window_new (GTK_WINDOW_TOPLEVEL);
