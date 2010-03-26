@@ -5,12 +5,24 @@ AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
 AC_DEFINE(VERSION_TITLE,["House of Butterflies"],[Release Name])
 AC_PREREQ(2.54)
 
+dnl git-dir is used for building outside the src tree
 GIT_BRANCH=`git --git-dir=$srcdir/.git symbolic-ref HEAD 2> /dev/null | awk -F/ '{print $NF}'`
-GIT_HASH=`git --git-dir=$srcdir/.git log -1 --pretty=format:%h`
-if test -z $GIT_BRANCH; then
-  GIT_REV="GIT $GIT_HASH"
+GIT_HASH=`git --git-dir=$srcdir/.git log -1 --pretty=format:%h 2> /dev/null`
+if test ! -z $GIT_HASH; then
+	if test -z $GIT_BRANCH; then
+		GIT_REV="GIT $GIT_HASH"
+	else
+		GIT_REV="GIT $GIT_HASH $GIT_BRANCH"
+	fi
 else
-  GIT_REV="GIT $GIT_BRANCH $GIT_HASH"
+	dnl expanded by export-archive
+	GIT_HASH=$Format:%h$
+	GIT_BRANCH=`echo "$Format:%d$" | awk -F , '{print gensub("[[\(\)]]","","g",$NF)}' 2>/dev/null`
+	if test -z $GIT_BRANCH; then
+		GIT_REV="GIT $GIT_HASH"
+	else
+		GIT_REV="GIT $GIT_HASH $GIT_BRANCH"
+	fi
 fi
 AC_DEFINE_UNQUOTED([GIT_REV],["$GIT_REV"],[Git branch and hash])
 
