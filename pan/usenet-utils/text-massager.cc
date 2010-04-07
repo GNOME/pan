@@ -108,8 +108,99 @@ namespace
    typedef std::vector<Paragraph> paragraphs_t;
    typedef paragraphs_t::iterator p_it;
 
+   void merge_fixed (paragraphs_t &paragraphs, lines_t &lines, int wrap_col)
+   {
+     int prev_content_len = 0;
+     StringView cur_leader;
+     std::string cur_content;
+
+     for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
+     {
+        const Line& line (*it);
+        bool paragraph_end = true;
+        bool hard_break = false;
+
+        if (cur_content.empty() || line.leader==cur_leader)
+           paragraph_end = false;
+
+        if (line.content.empty()) {
+           hard_break = prev_content_len!=0;
+           paragraph_end = true;
+        }
+
+        // we usually don't want to wrap really short lines
+        if (prev_content_len && prev_content_len<(wrap_col/2))
+           paragraph_end = true;
+
+        if (paragraph_end) // the new line is a new paragraph, so save old
+        {
+           paragraphs.push_back (Paragraph (
+              cur_leader.str, cur_leader.len,
+              cur_content.c_str(), cur_content.size()));
+           cur_leader = line.leader;
+           cur_content = line.content.to_string();
+           if (hard_break) {
+              paragraphs.push_back (Paragraph (
+                 cur_leader.str, cur_leader.len, "", 0));
+            }
+        }
+        else // append to the content
+        {
+           if (!cur_content.empty())
+              cur_content += ' ';
+           cur_leader = line.leader;
+           cur_content.insert (cur_content.end(),
+                               line.content.begin(),
+                               line.content.end());
+        }
+
+        prev_content_len = line.content.len;
+     }
+   }
+
+  void merge_flowed (paragraphs_t &paragraphs, lines_t &lines)
+  {
+    StringView cur_leader;
+    std::string cur_content;
+    bool prev_flowed=true;
+
+    for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
+    {
+      const Line& line (*it);
+
+      if (line.leader != cur_leader)
+        prev_flowed = false;
+
+      if (!prev_flowed) // the new line is a new paragraph, so save old
+      {
+         paragraphs.push_back (Paragraph (
+            cur_leader.str, cur_leader.len,
+            cur_content.c_str(), cur_content.size()));
+         cur_leader = line.leader;
+         cur_content = line.content.to_string();
+      }
+      else // append to the content
+      {
+         if (!cur_content.empty())
+            cur_content += ' ';
+         cur_leader = line.leader;
+         cur_content.insert (cur_content.end(),
+                             line.content.begin(),
+                             line.content.end());
+      }
+      // flowed text ends with a space
+      if (line.content.len && line.content.str[line.content.len] == ' ')
+         prev_flowed = true;
+      else
+        prev_flowed = false;
+    }
+    //add final content
+    paragraphs.push_back (Paragraph (cur_leader.str, cur_leader.len,
+                            cur_content.c_str(), cur_content.size()));
+ }
+
    std::vector<Paragraph>
-   get_paragraphs (const TextMassager& tm, const StringView& body)
+   get_paragraphs (const TextMassager& tm, const StringView& body, bool flowed)
    {
       StringView mybody (body);
       StringView line;
@@ -141,52 +232,10 @@ namespace
       std::vector<Paragraph> paragraphs;
       if (!lines.empty())
       {
-         int prev_content_len = 0;
-         StringView cur_leader;
-         std::string cur_content;
-
-         for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
-         {
-            const Line& line (*it);
-            bool paragraph_end = true;
-            bool hard_break = false;
-
-            if (cur_content.empty() || line.leader==cur_leader)
-               paragraph_end = false;
-
-            if (line.content.empty()) {
-               hard_break = prev_content_len!=0;
-               paragraph_end = true;
-            }
-
-            // we usually don't want to wrap really short lines
-            if (prev_content_len && prev_content_len<(tm.get_wrap_column()/2))
-               paragraph_end = true;
-
-            if (paragraph_end) // the new line is a new paragraph, so save old
-            {
-               paragraphs.push_back (Paragraph (
-                  cur_leader.str, cur_leader.len,
-                  cur_content.c_str(), cur_content.size()));
-               cur_leader = line.leader;
-               cur_content = line.content.to_string();
-               if (hard_break) {
-                  paragraphs.push_back (Paragraph (
-                     cur_leader.str, cur_leader.len, "", 0));
-                }
-            }
-            else // append to the content
-            {
-               if (!cur_content.empty())
-                  cur_content += ' ';
-               cur_leader = line.leader;
-               cur_content.insert (cur_content.end(),
-                                   line.content.begin(),
-                                   line.content.end());
-            }
-
-            prev_content_len = line.content.len;
-         }
+        if (flowed)
+          merge_flowed(paragraphs, lines);
+        else
+          merge_fixed(paragraphs, lines, tm.get_wrap_column());
 
         // Remember that empty line we added back up at the top?
         // We remove it now
@@ -271,7 +320,7 @@ namespace
 }
 
 std::string
-TextMassager :: fill (const StringView& body) const
+TextMassager :: fill (const StringView& body, bool flowed) const
 {
    std::string retval;
 
@@ -291,7 +340,7 @@ TextMassager :: fill (const StringView& body) const
    typedef std::vector<std::string> strings_t;
    typedef strings_t::const_iterator strings_cit;
    strings_t lines;
-   paragraphs_t paragraphs (get_paragraphs (*this, tmp_body));
+   paragraphs_t paragraphs (get_paragraphs (*this, tmp_body, flowed));
    for (p_it it=paragraphs.begin(), end=paragraphs.end(); it!=end; ++it)
       fill_paragraph (*this, *it, lines);
 

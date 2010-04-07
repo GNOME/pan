@@ -34,6 +34,12 @@ int main (void)
    expected_out = "> a\n> b\n> c";
    check (out == expected_out);
 
+   /* flowed test */
+   in = "This is \na test of \nflowed text.\n\nA\n";
+   out = tm.fill (in, true);
+   expected_out = "This is a test of flowed text.\n\nA";
+   check (out == expected_out);
+
    /* wrap real-world 1 */
    in = 
 "Cybe R. Wizard wrote:\n"
