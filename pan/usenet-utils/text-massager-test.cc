@@ -71,11 +71,12 @@ int main (void)
 "Cybe R. Wizard wrote:\n"
 "\n"
 "> Nice to know it works, right, and that's why I\n"
-"> tried it. I ran SETI@home under win95 for a\n"
-"> while but on my Pentium 166 it's not really\n"
-"> worth it.  It took upwards of 500 hours to do\n"
-"> one WU running full time in the background. Will\n"
-"> the Linux version do better???\n"
+"> tried it.\n"
+"> I ran SETI@home under win95 for a while but on\n"
+"> my Pentium 166 it's not really worth it.  It\n"
+"> took upwards of 500 hours to do one WU running\n"
+"> full time in the background.\n"
+"> Will the Linux version do better???\n"
 "\n"
 "500 hours seems like an awfully long time to me...\n"
 "I'm running setiathome on all my systems, and on\n"
@@ -86,8 +87,8 @@ int main (void)
 "> that came with my Mandrake 7.2 the Galaxies 2.0\n"
 "> screensaver ran VERY slowly.  I had no real hope\n"
 "> that Codeweaver's wine would do any better but\n"
-"> the thing runs FASTER than under win95. I wonder\n"
-"> why that is...\n"
+"> the thing runs FASTER than under win95.\n"
+"> I wonder why that is...\n"
 "\n"
 "Heh, I remember OS/2 running Windows programs\n"
 "faster than windows did :^)\n"
@@ -99,6 +100,7 @@ int main (void)
 "\n"
 "Jan Eric";
    out = tm.fill (in);
+   std::cout<<out<<std::endl;
    check (out == expected_out);
 
    /* wrap real-world 2 */

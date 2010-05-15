@@ -111,9 +111,15 @@ namespace
    void merge_fixed (paragraphs_t &paragraphs, lines_t &lines, int wrap_col)
    {
      int prev_content_len = 0;
+     int max_len = wrap_col;
      StringView cur_leader;
      std::string cur_content;
 
+     for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
+     {
+       const Line& line (*it);
+       max_len = MAX(max_len, line.leader.len + line.content.len);
+     }
      for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
      {
         const Line& line (*it);
@@ -128,9 +134,15 @@ namespace
            paragraph_end = true;
         }
 
-        // we usually don't want to wrap really short lines
-        if (prev_content_len && prev_content_len<(wrap_col/2))
-           paragraph_end = true;
+        // if first word could have been wrapped onto previous line
+        // line but wasn't assume deliberate line break.
+        if (!paragraph_end && prev_content_len && line.content.len)
+        {
+          int space = max_len - (prev_content_len + line.leader.len) - 1;
+          if ( space > 0 && ((line.content.len < space)
+                              || g_utf8_strchr (line.content.str, space, ' ')) )
+            paragraph_end = true;
+        }
 
         if (paragraph_end) // the new line is a new paragraph, so save old
         {
