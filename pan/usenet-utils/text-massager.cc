@@ -19,6 +19,7 @@
 
 #include <config.h>
 #include <vector>
+#include <map>
 #include <cstring>
 #include <glib.h>
 extern "C" {
@@ -26,7 +27,7 @@ extern "C" {
 }
 #include <glib/gunicode.h>
 #include "text-massager.h"
-
+#include <pan/general/log.h>
 using namespace pan;
 
 TextMassager :: TextMassager ():
@@ -110,6 +111,8 @@ namespace
 
    void merge_fixed (paragraphs_t &paragraphs, lines_t &lines, int wrap_col)
    {
+     std::map<std::string, int> max_map;
+     std::map<std::string, int>::iterator map_end = max_map.end();
      int prev_content_len = 0;
      int max_len = wrap_col;
      StringView cur_leader;
@@ -118,8 +121,14 @@ namespace
      for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
      {
        const Line& line (*it);
-       max_len = MAX(max_len, line.leader.len + line.content.len);
+       int line_len = line.leader.len + line.content.len;
+       if (map_end != max_map.find(line.leader))
+         max_map[line.leader] = MAX(max_map[line.leader], line_len );
+       else
+         // use 12 as the minimum line length
+         max_map.insert( std::make_pair(line.leader, MAX(line_len, 12) ) );
      }
+
      for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
      {
         const Line& line (*it);
@@ -138,7 +147,7 @@ namespace
         // line but wasn't assume deliberate line break.
         if (!paragraph_end && prev_content_len && line.content.len)
         {
-          int space = max_len - (prev_content_len + line.leader.len) - 1;
+          int space = max_map[line.leader] - (prev_content_len + line.leader.len) - 1;
           if ( space > 0 && ((line.content.len < space)
                               || g_utf8_strchr (line.content.str, space, ' ')) )
             paragraph_end = true;
