@@ -1201,7 +1201,7 @@ namespace
 namespace
 {
   char *
-  pan_g_mime_part_get_content (const GMimePart *mime_part, size_t *len)
+  pan_g_mime_part_get_content (GMimePart *mime_part, size_t *len)
   {
     char *retval = NULL;
 

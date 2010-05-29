@@ -803,7 +803,7 @@ namespace
    * Generates a GtkPixmap object from a given GMimePart that contains an image.
    * Used for displaying attached pictures inline.
    */
-  GdkPixbuf* get_pixbuf_from_gmime_part (const GMimePart * part)
+  GdkPixbuf* get_pixbuf_from_gmime_part (GMimePart * part)
   {
     GdkPixbufLoader * l (gdk_pixbuf_loader_new ());
     GError * err (0);

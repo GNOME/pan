@@ -1472,6 +1472,16 @@ PostUI :: utf8ize (const StringView& in) const
   return content_to_utf8 (in, _charset.c_str(), local_charset);
 }
 
+#if GMIME_MINOR_VERSION == 4
+namespace {
+  inline GMimeStream* gmime_header_list_get_stream(GMimeHeaderList *hl)
+  {
+    // the name of this function was changed for 2.6
+    return gmime_header_list_has_raw(hl);
+  }
+}
+#endif
+
 void
 PostUI :: set_message (GMimeMessage * message)
 {
@@ -1506,7 +1516,7 @@ PostUI :: set_message (GMimeMessage * message)
   const char *name, *value;
   GMimeHeaderIter iter;
   
-  if (message->mime_part && g_mime_header_list_has_raw (message->mime_part->headers)) {
+  if (message->mime_part && g_mime_header_list_get_stream (message->mime_part->headers)) {
     if (g_mime_header_list_get_iter (message->mime_part->headers, &iter)) {
       do {
         value = g_mime_header_iter_get_value (&iter);
