@@ -372,46 +372,55 @@ pan :: subject_to_path (const char * subjectline)
 
   // delete everything after the last hyphen
   // (perhaps if >=3 hyphens, delete everything after the 2nd hyphen?)
-  if ((pos = val.rfind("-")) != val.npos)
-    val.erase(pos);
+  //if ((pos = val.rfind("-")) != val.npos)
+  //  val.erase(pos);
 
   // strip out newspost/Xnews-style multi-part strings
-  GRegex *mp1 =g_regex_new(" *[Ff]ile [0-9]+ *of *[0-9]+[: ]?", cf0, mf0, NULL);
-  str1 = g_regex_replace_literal(mp1, val.c_str(), -1, 0, "", mf0, NULL);
+  GRegex *mp1 =g_regex_new("\\s*(?:[Ff]ile|[Pp]ost) [0-9]+ *(?:of|_) *[0-9]+[: ]?", cf0, mf0, NULL);
+  str1 = g_regex_replace_literal(mp1, val.c_str(), -1, 0, " ", mf0, NULL);
   g_regex_unref(mp1);
 
   // and the rest
-  GRegex *mp2 =g_regex_new(" *[\[(]?[0-9]* *(of|/) *[0-9]+.", cf0, mf0, NULL);
+  GRegex *mp2 =g_regex_new("\\s*[\[(]?[0-9]+\\s*(?:of|/)\\s*[0-9]+.", cf0, mf0, NULL);
   str2 = g_regex_replace_literal(mp2, str1, -1, 0, "", mf0, NULL);
   g_free(str1);
   g_regex_unref(mp2);
 
-  // try to strip out the filename (fails if it contains spaces)
-  GRegex *fn =g_regex_new("(\"*[^ ]*\"* yEnc.*)|(\".+\")?", cf0, mf0, NULL);
+  // try to strip out the filename (may fail if it contains spaces)
+  GRegex *fn =g_regex_new("\"[^\"]+?\" yEnc.*" "|"
+                          "\\S++\\s++yEnc.*" "|"
+                          "\"[^\"]+?\\.\\w{2,}\"" "|"
+                          "\\S+\\.\\w{2,}", cf0, mf0, NULL);
   str1 = g_regex_replace_literal(fn, str2, -1, 0, "", mf0, NULL);
   g_free(str2);
   g_regex_unref(fn);
 
-  // try to strip out any byte counts, and trailing whitespace
-  GRegex *cnt =g_regex_new("(\\[?[0-9]+ *([Bb]ytes|[Kk][Bb]?)\\]?| $)", cf0, mf0, NULL);
+  // try to strip out any byte counts
+  GRegex *cnt =g_regex_new("\\[?[0-9]+ *(?:[Bb]ytes|[Kk][Bb]?)\\]?", cf0, mf0, NULL);
   str2 = g_regex_replace_literal(cnt, str1, -1, 0, "", mf0, NULL);
   g_free(str1);
   g_regex_unref(cnt);
 
   // remove any illegal / annoying characters
-  GRegex *badc =g_regex_new("(\\\\|/|\\<|\\>|\\||\\*)", cf0, mf0, NULL);
-  str1 = g_regex_replace_literal(badc, str2, -1, 0, "", mf0, NULL);
+  GRegex *badc =g_regex_new("[\\\\/<>|*?'\"]+", cf0, mf0, NULL);
+  str1 = g_regex_replace_literal(badc, str2, -1, 0, "_", mf0, NULL);
   g_free(str2);
   g_regex_unref(badc);
 
   // remove any extraneous whitespace / underscores
-  GRegex *ext =g_regex_new("[ _][ _]+", cf0, mf0, NULL);
-  str2 = g_regex_replace_literal(ext, str1, -1, 0, "", mf0, NULL);
+  GRegex *ext =g_regex_new("[\\s_\\.]+", cf0, mf0, NULL);
+  str2 = g_regex_replace_literal(ext, str1, -1, 0, "_", mf0, NULL);
   g_free(str1);
   g_regex_unref(ext);
 
-  val=str2;
+  // remove trailing junk
+  ext =g_regex_new("[_-]+$", cf0, mf0, NULL);
+  str1 = g_regex_replace_literal(ext, str2, -1, 0, "", mf0, NULL);
   g_free(str2);
+  g_regex_unref(ext);
+
+  val=str1;
+  g_free(str1);
   //std::cout << "\nSubject was: '" << subjectline << "'\nSubject now: '" << val << "'" << std::endl;
   return val;
 }
