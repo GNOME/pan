@@ -57,10 +57,10 @@ namespace pan
         bytes_t bytes;
         bool operator< (const Part& that) const { return number < that.number; }
       };
-      number_t n_parts_found;
       number_t n_parts_total;
       bytes_t part_mid_buf_len;
-      Part * parts;
+      typedef std::vector<Part> part_v;
+      part_v parts;
       char * part_mid_buf;
       void unpack_message_id (std::string  & setme,
                               const Part   * p,
@@ -72,7 +72,7 @@ namespace pan
           const Parts& parts;
           mutable std::string midbuf;
           int n;
-          const Part* get_part() const { return parts.parts + n; }
+          const Part& get_part() const { return parts.parts[n]; }
         public:
           const_iterator (const Quark& q,
                           const Parts& p,
@@ -84,10 +84,10 @@ namespace pan
           const_iterator& operator++() { ++n; return *this; }
           const_iterator operator++(int)
                              { const_iterator tmp=*this; ++*this; return tmp; }
-          bytes_t bytes() const { return get_part()->bytes; }
-          number_t number() const { return get_part()->number; }
+          bytes_t bytes() const { return get_part().bytes; }
+          number_t number() const { return get_part().number; }
           const std::string& mid() const {
-            parts.unpack_message_id (midbuf, get_part(), reference_mid);
+            parts.unpack_message_id (midbuf, &(get_part()), reference_mid);
             return midbuf;
           }
       };
@@ -95,7 +95,7 @@ namespace pan
       const_iterator begin(const Quark& q) const
                                         { return const_iterator(q,*this,0); }
       const_iterator end(const Quark& q) const
-                            { return const_iterator(q,*this,n_parts_found); }
+                            { return const_iterator(q, *this, parts.size()); }
 
     public:
       Parts ();
@@ -104,9 +104,9 @@ namespace pan
       Parts& operator= (const Parts&);
 
     public:
-      void set_part_count (number_t num) { n_parts_total = num; }
+      void set_part_count (number_t num) { n_parts_total = num; parts.reserve(num); }
       number_t get_total_part_count () const { return n_parts_total; }
-      number_t get_found_part_count () const { return n_parts_found; }
+      number_t get_found_part_count () const { return parts.size(); }
       void clear ();
       bool add_part (number_t num,
                      const StringView& mid,
