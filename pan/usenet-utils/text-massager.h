@@ -54,6 +54,14 @@ namespace pan
       int _wrap_column;
       char * _quote_characters;
   };
+
+ /**
+   * Used to convert a subject line to a path for saving articles.
+   *
+   * @ingroup usenet_utils
+   */
+  std::string subject_to_path (const char * subjectline);
+
 }
 
 #endif
