@@ -19,8 +19,8 @@ dnl GtkSpell is optional: GTKSPELL_REQUIRED refers to the minimum version
 dnl needed if you want to build Pan with spellchecking in the Post window.
 
 GLIB_REQUIRED=2.14.0
-GMIME_REQUIRED=2.1.9
-GTK_REQUIRED=2.12.0
+GMIME_REQUIRED=2.4.0
+GTK_REQUIRED=2.16.0
 GTKSPELL_REQUIRED=2.0.7
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GMIME_REQUIRED)
@@ -49,7 +49,8 @@ AM_GLIB_GNU_GETTEXT
 panlocaledir='${prefix}/${DATADIRNAME}/locale'
 
 AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
-PKG_CHECK_MODULES(GMIME, gmime-2.0    >= $GMIME_REQUIRED)
+PKG_CHECK_MODULES([GMIME], [ gmime-2.6    >= $GMIME_REQUIRED ], [],
+	[PKG_CHECK_MODULES( [GMIME], [gmime-2.4    >= $GMIME_REQUIRED] )] )
 AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
 
 

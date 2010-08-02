@@ -212,7 +212,7 @@ main (int argc, char *argv[])
   textdomain (GETTEXT_PACKAGE);
 
   g_thread_init (0);
-  g_mime_init (GMIME_INIT_FLAG_UTF8);
+  g_mime_init (GMIME_ENABLE_RFC2047_WORKAROUNDS);
 
   bool gui(true), nzb(false);
   std::string url;

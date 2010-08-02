@@ -803,7 +803,7 @@ namespace
    * Generates a GtkPixmap object from a given GMimePart that contains an image.
    * Used for displaying attached pictures inline.
    */
-  GdkPixbuf* get_pixbuf_from_gmime_part (const GMimePart * part)
+  GdkPixbuf* get_pixbuf_from_gmime_part (GMimePart * part)
   {
     GdkPixbufLoader * l (gdk_pixbuf_loader_new ());
     GError * err (0);
@@ -837,7 +837,6 @@ namespace
       }
 
       g_object_unref (mem_stream);
-      g_object_unref (wrapper);
     }
 
     // flush the loader
@@ -874,7 +873,7 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
     return;
 
   GMimePart * part = GMIME_PART (obj);
-  const GMimeContentType * type = g_mime_object_get_content_type (GMIME_OBJECT (part));
+  GMimeContentType * type = g_mime_object_get_content_type (GMIME_OBJECT (part));
 
   // decide whether or not this part is a picture
   bool is_image (g_mime_content_type_is_type (type, "image", "*"));
@@ -956,15 +955,11 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
   }
 }
 void
-BodyPane :: foreach_part_cb (GMimeObject* o, gpointer self)
+BodyPane :: foreach_part_cb (GMimeObject* /*parent*/, GMimeObject* o, gpointer self)
 {
-  if (GMIME_IS_MULTIPART (o))
-    g_mime_multipart_foreach (GMIME_MULTIPART (o), foreach_part_cb, self);
-  else {
-    BodyPane * pane = static_cast<BodyPane*>(self);
-    GtkWidget * w (pane->_text);
-    pane->append_part (o, &w->allocation);
-  }
+  BodyPane * pane = static_cast<BodyPane*>(self);
+  GtkWidget * w (pane->_text);
+  pane->append_part (o, &w->allocation);
 }
 
 
@@ -978,7 +973,7 @@ namespace
                               const char    * key,
                               const char    * fallback_charset)
   {
-    const char * val (message ? g_mime_message_get_header (message, key) : "");
+    const char * val (message ? g_mime_object_get_header ((GMimeObject *)message, key) : "");
     const std::string utf8_val (header_to_utf8 (val, fallback_charset));
     char * e (0);
     if (strcmp (key, "From"))
@@ -1015,7 +1010,7 @@ namespace
                           const char    * key,
                           const char    * fallback_charset)
   {
-    const char * val (msg ? g_mime_message_get_header (msg, key) : "");
+    const char * val (msg ? g_mime_object_get_header ((GMimeObject *) msg, key) : "");
     return add_header_line (s, key_i18n, key, val, fallback_charset);
   }
 }
@@ -1037,19 +1032,19 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
 
   // conditional headers...
   if (message) {
-    const StringView newsgroups (g_mime_message_get_header (message, "Newsgroups"));
+    const StringView newsgroups (g_mime_object_get_header ((GMimeObject *) message, "Newsgroups"));
     if (newsgroups.strchr(',')) {
       l = add_header_line (s, message, _("Newsgroups"), "Newsgroups", fallback_charset);
       w = std::max (w, l);
     }
-    const StringView followup_to (g_mime_message_get_header (message, "Followup-To"));
+    const StringView followup_to (g_mime_object_get_header ((GMimeObject *) message, "Followup-To"));
     if (!followup_to.empty() && (followup_to!=newsgroups)) {
       l = add_header_line (s, message, _("Followup-To"), "Followup-To", fallback_charset);
       w = std::max (w, l);
     }
-    const StringView reply_to (g_mime_message_get_header (message, "Reply-To"));
+    const StringView reply_to (g_mime_object_get_header ((GMimeObject *) message, "Reply-To"));
     if (!reply_to.empty()) {
-      const StringView from (g_mime_message_get_header (message, "From"));
+      const StringView from (g_mime_object_get_header ((GMimeObject *) message, "From"));
       StringView f_addr, f_name, rt_addr, rt_name;
       GNKSA :: do_check_from (from, f_addr, f_name, false);
       GNKSA :: do_check_from (reply_to, rt_addr, rt_name, false);
@@ -1068,7 +1063,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
 
   // set the x-face...
   GdkPixbuf * pixbuf (0);
-  const char * pch = message ? g_mime_message_get_header (message, "X-Face") : 0;
+  const char * pch = message ? g_mime_object_get_header ((GMimeObject *) message, "X-Face") : 0;
   if (pch && _xface->window)
     pixbuf = pan_gdk_pixbuf_create_from_x_face (gtk_widget_get_colormap(_xface), _xface->window, pch);
   gtk_image_set_from_pixbuf (GTK_IMAGE(_xface), pixbuf);
@@ -1097,7 +1092,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   // maybe add the headers
   const bool do_show_headers (_prefs.get_flag ("show-all-headers", false));
   if (message && do_show_headers) {
-    char * headers (g_mime_message_get_headers (message));
+    char * headers (g_mime_object_get_headers ((GMimeObject *) message));
     GtkTextIter end;
     gtk_text_buffer_get_end_iter (_buffer, &end);
     StringView line, v(headers);
@@ -1115,7 +1110,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
 
   // set the text buffer...
   if (message)
-    g_mime_message_foreach_part (message, foreach_part_cb, this);
+    g_mime_message_foreach (message, foreach_part_cb, this);
 
   // if there was a picture, scroll to it.
   // otherwise scroll to the top of the body.
@@ -1504,7 +1499,7 @@ namespace
                           const char   * fallback_charset_1,
                           const char   * fallback_charset_2)
   {
-    const StringView v (g_mime_message_get_header (msg, key));
+    const StringView v (g_mime_object_get_header ((GMimeObject *) msg, key));
     std::string s;
     if (!v.empty())
       s = header_to_utf8 (v, fallback_charset_1, fallback_charset_2);
@@ -1517,24 +1512,17 @@ namespace
     std::string body;
   };
 
-  void get_utf8_body_foreach_part (GMimeObject *o, gpointer user_data)
+  void get_utf8_body_foreach_part (GMimeObject* /*parent*/, GMimeObject *o,
+                                   gpointer user_data)
   {
-    if (GMIME_IS_MULTIPART(o))
+    GMimePart * part;
+    GMimeContentType * type = g_mime_object_get_content_type (o);
+    const bool is_text (g_mime_content_type_is_type (type, "text", "*"));
+    if (is_text)
     {
-      g_mime_multipart_foreach (GMIME_MULTIPART(o),
-                                get_utf8_body_foreach_part,
-                                user_data);
-    }
-    else
-    {
-      GMimePart * part = GMIME_PART (o);
-      const GMimeContentType * type = g_mime_object_get_content_type (o);
-      const bool is_text (g_mime_content_type_is_type (type, "text", "*"));
-      if (is_text)
-      {
-        ForeachPartData *data (static_cast<ForeachPartData*>(user_data));
-        data->body += mime_part_to_utf8 (part, data->fallback_charset.c_str());
-      }
+      part = GMIME_PART (o);
+      ForeachPartData *data (static_cast<ForeachPartData*>(user_data));
+      data->body += mime_part_to_utf8 (part, data->fallback_charset.c_str());
     }
   }
 
@@ -1545,7 +1533,7 @@ namespace
     if (fallback_charset)
       tmp.fallback_charset = fallback_charset;
     if (source)
-      g_mime_message_foreach_part (source, get_utf8_body_foreach_part, &tmp);
+      g_mime_message_foreach (source, get_utf8_body_foreach_part, &tmp);
     return tmp.body;
   }
 }
@@ -1558,10 +1546,12 @@ BodyPane :: create_followup_or_reply (bool is_reply)
   if (_message)
   {
     msg = g_mime_message_new (false);
+    GMimeObject *msg_obj = (GMimeObject*)msg;
+    GMimeObject *_message_obj = (GMimeObject*)_message;
 
     // fallback character encodings
     const char * group_charset (_charset.c_str());
-    const GMimeContentType * type (g_mime_object_get_content_type (GMIME_OBJECT(_message)));
+    GMimeContentType * type (g_mime_object_get_content_type (GMIME_OBJECT(_message)));
     const char * message_charset (type ? g_mime_content_type_get_parameter (type, "charset") : 0);
 
     ///
@@ -1575,14 +1565,14 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     const std::string reply_to   (get_header (_message, "Reply-To",    message_charset, group_charset));
     if (is_reply || fup_to=="poster") {
       const std::string& to (reply_to.empty() ? from : reply_to);
-      g_mime_message_add_recipients_from_string (msg, (char*)GMIME_RECIPIENT_TYPE_TO, to.c_str());
+      pan_g_mime_message_add_recipients_from_string (msg, GMIME_RECIPIENT_TYPE_TO, to.c_str());
     } else {
       const std::string& groups (fup_to.empty() ? newsgroups : fup_to);
-      g_mime_message_add_header (msg, "Newsgroups", groups.c_str());
+      g_mime_object_append_header ((GMimeObject *) msg, "Newsgroups", groups.c_str());
     }
 
     // Subject:
-    StringView v = g_mime_message_get_header (_message, "Subject");
+    StringView v = g_mime_object_get_header (_message_obj, "Subject");
     std::string h = header_to_utf8 (v, message_charset, group_charset);
     std::string val (normalize_subject_re (h));
     if (val.find ("Re:") != 0) // add "Re: " if we don't have one
@@ -1591,22 +1581,22 @@ BodyPane :: create_followup_or_reply (bool is_reply)
 
     // attribution lines
 
-    const char * cpch = g_mime_message_get_header (_message, "From");
+    const char * cpch = g_mime_object_get_header (_message_obj, "From");
     h = header_to_utf8 (cpch, message_charset, group_charset);
-    g_mime_message_add_header (msg, "X-Draft-Attribution-Author", h.c_str());
+    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Author", h.c_str());
 
     cpch = g_mime_message_get_message_id (_message);
     h = header_to_utf8 (cpch, message_charset, group_charset);
-    g_mime_message_add_header (msg, "X-Draft-Attribution-Id", h.c_str());
+    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Id", h.c_str());
 
-    char * tmp = g_mime_message_get_date_string (_message);
+    char * tmp = g_mime_message_get_date_as_string (_message);
     h = header_to_utf8 (tmp, message_charset, group_charset);
-    g_mime_message_add_header (msg, "X-Draft-Attribution-Date", h.c_str());
+    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Date", h.c_str());
     g_free (tmp);
 
     // references
     const char * header = "References";
-    v = g_mime_message_get_header (_message, header);
+    v = g_mime_object_get_header (_message_obj, header);
     val.assign (v.str, v.len);
     if (!val.empty())
       val += ' ';
@@ -1614,7 +1604,7 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     val += g_mime_message_get_message_id (_message);
     val += ">";
     val = GNKSA :: trim_references (val);
-    g_mime_message_add_header (msg, header, val.c_str());
+    g_mime_object_append_header (msg_obj, header, val.c_str());
 
     ///
     ///  BODY
@@ -1650,17 +1640,18 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     // set the clone's content object with our modified body
     GMimeStream * stream = g_mime_stream_mem_new ();
     g_mime_stream_write_string (stream, s.c_str());
-    GMimeDataWrapper * wrapper = g_mime_data_wrapper_new_with_stream (stream, GMIME_PART_ENCODING_8BIT);
+    GMimeDataWrapper * wrapper = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_8BIT);
     GMimePart * part = g_mime_part_new ();
     GMimeContentType * new_type = g_mime_content_type_new_from_string ("text/plain; charset=UTF-8");
-    g_mime_part_set_content_type (part, new_type);
+    g_mime_object_set_content_type ((GMimeObject *) part, new_type);
     g_mime_part_set_content_object (part, wrapper);
-    g_mime_part_set_encoding (part, GMIME_PART_ENCODING_8BIT);
+    g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
     g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
+    g_object_unref (new_type);
     g_object_unref (wrapper);
     g_object_unref (part);
     g_object_unref (stream);
-//std::cerr << LINE_ID << " here is the modified clone\n [" << g_mime_message_to_string(msg) << ']' << std::endl;
+//std::cerr << LINE_ID << " here is the modified clone\n [" << g_mime_object_to_string((GMimeObject *)msg) << ']' << std::endl;
   }
 
   return msg;

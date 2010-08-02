@@ -136,7 +136,7 @@ pan :: header_to_utf8 (const StringView  & header,
 {
   std::string s = content_to_utf8 (header, fallback_charset1, fallback_charset2);
   if (header.strstr ("=?")) {
-    char * decoded (g_mime_utils_8bit_header_decode ((const guchar*) s.c_str()));
+    char * decoded (g_mime_utils_header_decode_text ( s.c_str()));
     s = clean_utf8 (decoded);
     g_free (decoded);
   }
@@ -150,12 +150,17 @@ pan :: mime_part_to_utf8 (GMimePart     * part,
   std::string ret;
 
   g_return_val_if_fail (GMIME_IS_PART(part), ret);
+  const char * charset =
+    g_mime_object_get_content_type_parameter (GMIME_OBJECT (part), "charset");
+  GMimeDataWrapper * content = g_mime_part_get_content_object (part);
+  GMimeStream *stream = g_mime_stream_mem_new ();
 
-  size_t content_len (0);
-  const char * specified_charset (g_mime_object_get_content_type_parameter (GMIME_OBJECT (part), "charset"));
-  const char * content = g_mime_part_get_content (part, &content_len);
-  if (content && content_len)
-    ret = content_to_utf8 (StringView (content, content_len), specified_charset, fallback_charset);
+  g_mime_data_wrapper_write_to_stream (content, stream);
+  GByteArray *buf = ((GMimeStreamMem *) stream)->buffer;
+  ret = content_to_utf8 (StringView ((const char *) buf->data, buf->len),
+    charset, fallback_charset);
+
+  g_object_unref (stream);
 
   return ret;
 }
