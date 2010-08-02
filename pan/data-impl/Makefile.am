@@ -19,7 +19,8 @@ noinst_HEADERS = \
  data-impl.h \
  data-io.h \
  defgroup.h \
- profiles.h
+ profiles.h \
+ memchunk.h
 
 noinst_PROGRAMS = \
  add-server \

@@ -131,7 +131,6 @@ namespace
 ***/
 
 Parts :: Parts ():
-  n_parts_found (0),
   n_parts_total (0),
   part_mid_buf_len (0),
   parts (0),
@@ -142,19 +141,17 @@ Parts :: Parts ():
 void
 Parts :: clear ()
 {
-  delete [] parts;
-  parts = 0;
+  part_v tmp;
+  parts.swap(tmp);
 
   delete [] part_mid_buf;
   part_mid_buf = 0;
 
   part_mid_buf_len = 0;
-  n_parts_found = 0;
   n_parts_total = 0;
 }
 
 Parts :: Parts (const Parts& that):
-  n_parts_found (0),
   n_parts_total (0),
   part_mid_buf_len (0),
   parts (0),
@@ -168,19 +165,13 @@ Parts :: operator= (const Parts& that)
 {
   clear ();
 
-  n_parts_found = that.n_parts_found;
   n_parts_total = that.n_parts_total;
   part_mid_buf_len = that.part_mid_buf_len;
+  parts.reserve( n_parts_total );
+  parts = that.parts;
+  assert( parts.capacity() == n_parts_total );
   part_mid_buf = new char [part_mid_buf_len];
   memcpy (part_mid_buf, that.part_mid_buf, part_mid_buf_len);
-
-  Part * part = parts = new Part [n_parts_found];
-  const Part * that_part = that.parts;
-  for (size_t i=0; i<n_parts_found; ++i, ++part, ++that_part) {
-    part->number = that_part->number;
-    part->bytes = that_part->bytes;
-    part->mid_offset = that_part->mid_offset;
-  }
 
   return *this;
 }
@@ -208,11 +199,11 @@ Parts :: get_part_info (number_t        part_number,
 {
   Part findme;
   findme.number = part_number;
-  Part * p = std::lower_bound (parts, parts+n_parts_found, findme);
-  if ((p == parts+n_parts_found) || (p->number != part_number))
+  part_v::const_iterator p = std::lower_bound (parts.begin(), parts.end(), findme);
+  if ((p == parts.end()) || (p->number != part_number))
     return false;
 
-  unpack_message_id (setme_message_id, p, reference_mid);
+  unpack_message_id (setme_message_id, &(*p), reference_mid);
   setme_byte_count = p->bytes;
   return true;
 }
@@ -226,17 +217,19 @@ Parts :: set_parts (const PartBatch& p)
 {
   clear ();
 
-  n_parts_found = p.n_parts_found;
+  unsigned int n_parts_found = p.n_parts_found;
   n_parts_total = p.n_parts_total;
   part_mid_buf_len = p.packed_mids_len;
+  parts.reserve(n_parts_total);
 
   char * pch = part_mid_buf = new char [part_mid_buf_len];
-  Part * part = parts = new Part [n_parts_found];
+  Part part;
   PartBatch::parts_t::const_iterator in = p.parts.begin();
-  for (size_t i=0, n=n_parts_found; i<n; ++i, ++in, ++part) {
-    part->number = in->number;
-    part->bytes = in->bytes;
-    part->mid_offset = pch - part_mid_buf;
+  for (size_t i=0; i<n_parts_found; ++i, ++in) {
+    part.number = in->number;
+    part.bytes = in->bytes;
+    part.mid_offset = pch - part_mid_buf;
+    parts.push_back(part);
     memcpy (pch, in->packed_mid, in->len_used);
     pch += in->len_used;
   }
@@ -252,21 +245,13 @@ Parts :: add_part (number_t            num,
 {
   Part findme;
   findme.number = num;
-  Part * p = std::lower_bound (parts, parts+n_parts_found, findme);
-  if (p!=parts+n_parts_found && p->number == num) // we have it already
+  part_v::iterator p = std::lower_bound (parts.begin(), parts.end(), findme);
+  if (p!=parts.end() && p->number == num) // we have it already
     return false;
 
-  const int insert_index = (p - parts);
-  Part * buf = new Part [n_parts_found+1];
-  std::copy (parts, parts+insert_index, buf);
-  std::copy (parts+insert_index, parts+n_parts_found, buf+insert_index+1);
-  delete [] parts;
-  parts = buf;
-  buf += insert_index;
-  buf->number = num;
-  buf->bytes = bytes;
-  buf->mid_offset = part_mid_buf_len;
-  ++n_parts_found;
+  findme.bytes = bytes;
+  findme.mid_offset = part_mid_buf_len;
+  parts.insert(p, findme);
 
   Packer packer;
   pack_message_id (packer, mid, reference_mid);
@@ -304,6 +289,7 @@ PartBatch :: init (const Quark  & mid,
   this->n_parts_found = 0; // they haven't been added yet
 
   parts.clear();
+  parts.reserve(n_parts_total);
 }
 
 void
