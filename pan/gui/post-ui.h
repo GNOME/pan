@@ -142,6 +142,7 @@ namespace pan
 
     public:
       void set_spellcheck_enabled (bool);
+	  void spawn_editor_dead(char *);
 
   };
 }
