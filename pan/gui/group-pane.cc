@@ -835,6 +835,7 @@ GtkWidget*
 GroupPane :: create_filter_entry ()
 {
   GtkWidget * entry = gtk_entry_new ();
+  g_object_set_data (G_OBJECT(entry), "group-pane", this);
   gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
                                  GTK_ENTRY_ICON_SECONDARY,
                                  GTK_STOCK_CLEAR );
@@ -868,7 +869,6 @@ GroupPane :: create_filter_entry ()
     gtk_widget_show (w);
   }
   g_signal_connect (entry, "icon-release", G_CALLBACK(entry_icon_released), menu);
-  g_object_set_data (G_OBJECT(entry), "group-pane", this);
 
   refresh_search_entry (entry);
   return entry;
