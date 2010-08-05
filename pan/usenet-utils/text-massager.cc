@@ -361,19 +361,24 @@ TextMassager :: rot13_inplace (char * text)
 }
 
 std::string
-pan :: subject_to_path (const char * subjectline)
+pan :: subject_to_path (const char * subjectline, const std::string &seperator)
 {
   gchar *str1, *str2;
+  const char *sep;
   std::string val (subjectline);
   std::string::size_type pos;
   //stupid hack to silence the compiler
   GRegexCompileFlags cf0((GRegexCompileFlags)0);
   GRegexMatchFlags mf0((GRegexMatchFlags)0);
 
-  // delete everything after the last hyphen
-  // (perhaps if >=3 hyphens, delete everything after the 2nd hyphen?)
-  //if ((pos = val.rfind("-")) != val.npos)
-  //  val.erase(pos);
+  if (seperator.length() != 1)
+    sep = "-";
+  else switch (seperator[0]) {
+    case ' ':
+    case '-':
+    case '_': sep = seperator.c_str(); break;
+    default : sep = "-"; break;
+  }
 
   // strip out newspost/Xnews-style multi-part strings
   GRegex *mp1 =g_regex_new("\\s*(?:[Ff]ile|[Pp]ost) [0-9]+ *(?:of|_) *[0-9]+[: ]?", cf0, mf0, NULL);
@@ -407,9 +412,9 @@ pan :: subject_to_path (const char * subjectline)
   g_free(str2);
   g_regex_unref(badc);
 
-  // remove any extraneous whitespace / underscores
+  // remove any extraneous whitespace, '_', and '.'
   GRegex *ext =g_regex_new("[\\s_\\.]+", cf0, mf0, NULL);
-  str2 = g_regex_replace_literal(ext, str1, -1, 0, "_", mf0, NULL);
+  str2 = g_regex_replace_literal(ext, str1, -1, 0, sep, mf0, NULL);
   g_free(str1);
   g_regex_unref(ext);
 

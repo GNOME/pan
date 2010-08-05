@@ -53,14 +53,14 @@ namespace
     return val;
   }
 
-  std::string expand_download_dir_subject (const char * dir, const char * subjectline)
+  std::string expand_download_dir_subject (const char * dir, const char * subjectline, const std::string &sep)
   {
     std::string val (dir);
-    std::string sub (subject_to_path(subjectline));
+    std::string sub (subject_to_path(subjectline, sep));
     std::string::size_type pos;
 
     while (((pos = val.find ("%s"))) != val.npos)
-      val.replace (pos, 2, sub.c_str(), sub.length());
+      val.replace (pos, 2, sub);
 
     return val;
   }
@@ -133,12 +133,14 @@ SaveDialog :: response_cb (GtkDialog * dialog,
     else if (s == "save-attachments-and-text") save_mode = TaskArticle::DECODE | TaskArticle::RAW;
     else                                       save_mode = TaskArticle::DECODE;
 
+    std::string sep( self->_prefs.get_string("save-subj-seperator", "-") );
+
     // make the tasks... 
     Queue::tasks_t tasks;
     foreach_const (std::vector<Article>, self->_articles, it)
     {
       if (subject_in_path)
-        path = expand_download_dir_subject(opath.c_str(), it->subject);
+        path = expand_download_dir_subject(opath.c_str(), it->subject, sep);
       tasks.push_back (new TaskArticle (self->_server_rank,
                                         self->_group_server,
                                         *it,
