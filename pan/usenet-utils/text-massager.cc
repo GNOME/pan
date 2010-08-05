@@ -125,7 +125,8 @@ namespace
        if (map_end != max_map.find(line.leader))
          max_map[line.leader] = MAX(max_map[line.leader], line_len );
        else
-         max_map.insert( std::make_pair(line.leader, line_len) );
+         // use 12 as the minimum line length
+         max_map.insert( std::make_pair(line.leader, MAX(line_len, 12) ) );
      }
 
      for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
