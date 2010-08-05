@@ -347,6 +347,11 @@ PostUI :: close_window ()
     gtk_widget_destroy (d);
   }
 
+  int w,h;
+  gtk_window_get_size( GTK_WINDOW(_root), &w, &h);
+  _prefs.set_int("post-ui-width", w);
+  _prefs.set_int("post-ui-height", h);
+
   if (destroy_flag)
     gtk_widget_destroy (_root);
 }
@@ -1861,7 +1866,10 @@ PostUI :: PostUI (GtkWindow    * parent,
   g_signal_connect (_root, "delete-event", G_CALLBACK(delete_event_cb), this);
   gtk_window_set_role (GTK_WINDOW(_root), "pan-post-window");
   gtk_window_set_title (GTK_WINDOW(_root), _("Post Article"));
-  gtk_window_set_default_size (GTK_WINDOW(_root), -1, 450);
+  int w,h;
+  w = _prefs.get_int("post-ui-width", -1);
+  h = _prefs.get_int("post-ui-height", 450);
+  gtk_window_set_default_size (GTK_WINDOW(_root), w, h);
   g_object_set_data_full (G_OBJECT(_root), "post-ui", this, delete_post_ui);
   if (parent) {
     gtk_window_set_transient_for (GTK_WINDOW(_root), parent);
