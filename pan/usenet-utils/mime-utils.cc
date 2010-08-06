@@ -702,6 +702,7 @@ mime :: guess_part_type_from_filename (const char   * filename,
 	} suffixes[] = {
 		{ ".avi",   "video",        "vnd.msvideo" },
 		{ ".dtd",   "text",         "xml-dtd" },
+		{ ".flac",  "audio",        "ogg" },
 		{ ".gif",   "image",        "gif" },
 		{ ".htm",   "text",         "html" },
 		{ ".html",  "text",         "html" },
@@ -713,11 +714,17 @@ mime :: guess_part_type_from_filename (const char   * filename,
 		{ ".mpg",   "video",        "mpeg" },
 		{ ".mov",   "video",        "quicktime" },
 		{ ".nfo",   "text",         "plain" },
-		{ ".ogg",   "audio",        "x-vorbis" },
+		{ ".oga",   "audio",        "x-vorbis" },
+		{ ".ogg",   "audio",        "ogg" },
+		{ ".ogv",   "video",        "ogg" },
+		{ ".ogx",   "application",  "ogg" },
 		{ ".png",   "image",        "png" },
 		{ ".qt",    "video",        "quicktime" },
 		{ ".rar",   "application",  "x-rar" },
 		{ ".rv",    "video",        "vnd.rn-realvideo" },
+		{ ".scr",   "application",  "octet-stream" },
+		{ ".spx",   "audio",        "ogg" },
+		{ ".svg",   "image",        "svg+xml" },
 		{ ".tar",   "application",  "x-tar" },
 		{ ".tbz2",  "application",  "x-tar" },
 		{ ".tgz",   "application",  "x-tar" },
@@ -754,8 +761,8 @@ mime :: guess_part_type_from_filename (const char   * filename,
 	}
 
 	if (*setme_type == NULL) {
-		*setme_type = "text";
-		*setme_subtype = "plain";
+		*setme_type = "application";
+		*setme_subtype = "octet-stream";
 	}
 }
 

@@ -72,7 +72,8 @@ DataImpl :: add_new_server ()
 
   // add it to the _servers map and give it a default filename
   std::ostringstream o;
-  o << file::get_pan_home() << G_DIR_SEPARATOR << "newsrc-" << new_server;
+  //o << file::get_pan_home() << G_DIR_SEPARATOR << "newsrc-" << new_server;
+  o << "newsrc-" << new_server;
   _servers[new_server].newsrc_filename = o.str ();
   return new_server;
 }

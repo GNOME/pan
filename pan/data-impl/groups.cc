@@ -155,6 +155,20 @@ DataImpl :: load_newsrc (const Quark       & server,
   }
 }
 
+namespace {
+  inline std::string newsrc_fn(const std::string &base)
+  {
+    const char *fn = base.c_str();
+    if (g_path_is_absolute(fn))
+      return base;
+    const char *ph = file::get_pan_home().c_str();
+    char *temp = g_build_filename(ph, fn, 0);
+    std::string out(temp);
+    g_free(temp);
+    return out;
+  }
+}
+
 void
 DataImpl :: load_newsrc_files (const DataIO& data_io)
 {
@@ -166,7 +180,7 @@ DataImpl :: load_newsrc_files (const DataIO& data_io)
 
   foreach_const (servers_t, _servers, sit) {
     const Quark key (sit->first);
-    const std::string filename (sit->second.newsrc_filename);
+    const std::string filename = newsrc_fn (sit->second.newsrc_filename);
     if (file::file_exists (filename.c_str())) {
       LineReader * in (data_io.read_file (filename));
       load_newsrc (key, in, s, u);
@@ -210,7 +224,7 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
     const Quark& server (sit->first);
 
     // write this server's newsrc
-    const std::string& filename (sit->second.newsrc_filename);
+    const std::string filename = newsrc_fn (sit->second.newsrc_filename);
     std::ostream& out (*data_io.write_file (filename));
     std::string newsrc_string;
     alpha_groups_t::const_iterator sub_it (_subscribed.begin());
