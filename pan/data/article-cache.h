@@ -70,7 +70,7 @@ namespace pan
       void resize ();
       void clear ();
 
-      GMimeMessage* get_message (const mid_sequence_t&);
+      GMimeMessage* get_message (const mid_sequence_t&) const;
 
       typedef std::vector<std::string> strings_t;
       strings_t get_filenames (const mid_sequence_t&);
