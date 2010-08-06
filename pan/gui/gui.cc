@@ -1242,7 +1242,7 @@ void GUI :: do_about_pan ()
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
-  gtk_about_dialog_set_comments (w, VERSION_TITLE);
+  gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
   gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2007 Charles Kerr"));
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
