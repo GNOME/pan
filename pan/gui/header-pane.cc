@@ -1008,6 +1008,7 @@ namespace
   const char * mode_strings [] =
   {
     N_("Subject or Author"),
+    N_("Sub or Auth (regex)"),
     N_("Subject"),
     N_("Author"),
     N_("Message-ID"),
@@ -1016,6 +1017,7 @@ namespace
   enum
   {
     SUBJECT_OR_AUTHOR,
+    SUBJECT_OR_AUTHOR_REGEX,
     SUBJECT,
     AUTHOR,
     MESSAGE_ID
@@ -1047,6 +1049,14 @@ HeaderPane :: rebuild_filter (const std::string& text, int mode)
     else if (mode == SUBJECT_OR_AUTHOR) {
       FilterInfo f1, f2;
       entry_filter.set_type_aggregate_or ();
+      f1.set_type_text ("Subject", d);
+      f2.set_type_text ("From", d);
+      entry_filter._aggregates.push_back (f1);
+      entry_filter._aggregates.push_back (f2);
+    } else if (mode == SUBJECT_OR_AUTHOR_REGEX) {
+      FilterInfo f1, f2;
+      entry_filter.set_type_aggregate_or ();
+      d.type = TextMatch::REGEX;
       f1.set_type_text ("Subject", d);
       f2.set_type_text ("From", d);
       entry_filter._aggregates.push_back (f1);
@@ -1499,14 +1509,20 @@ HeaderPane :: create_filter_entry ()
                                   GTK_ENTRY_ICON_SECONDARY,
                                   GTK_STOCK_CLEAR );
 
+  bool regex = _prefs.get_flag ("use-regex", false);
   GtkWidget * menu = gtk_menu_new ();
-  mode = 0;
+  if (regex == true )
+    mode = 1;
+  else
+    mode = 0;
   GSList * l = 0;
   for (int i=0, qty=G_N_ELEMENTS(mode_strings); i<qty; ++i) {
     GtkWidget * w = gtk_radio_menu_item_new_with_label (l, _(mode_strings[i]));
     l = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM(w));
     g_object_set_data (G_OBJECT(w), "MODE", GINT_TO_POINTER(i));
     g_signal_connect (w, "toggled", G_CALLBACK(search_menu_toggled_cb),entry);
+    if (mode == i)
+      gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM(w), TRUE);
     gtk_menu_shell_append (GTK_MENU_SHELL(menu), w);
     gtk_widget_show (w);
   }

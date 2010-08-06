@@ -77,7 +77,7 @@ namespace pan
       void refresh_font ();
 
     public: // pretend these are private
-      void set_filter (const std::string& text);
+      void set_filter (const std::string& text, int mode);
       const ActionManager& _action_manager;
 
     private:
