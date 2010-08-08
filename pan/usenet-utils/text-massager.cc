@@ -394,45 +394,45 @@ pan :: subject_to_path (const char * subjectline, const std::string &seperator)
   }
 
   // strip out newspost/Xnews-style multi-part strings
-  GRegex *mp1 =g_regex_new("\\s*(?:[Ff]ile|[Pp]ost) [0-9]+ *(?:of|_) *[0-9]+[: ]?", cf0, mf0, NULL);
+  GRegex *mp1 =g_regex_new("\\s*(?:[Ff]ile|[Pp]ost)\\s[0-9]+\\s*(?:of|_)\\s*[0-9]+[:\\s]?", cf0, mf0, NULL);
   str1 = g_regex_replace_literal(mp1, val.c_str(), -1, 0, " ", mf0, NULL);
   g_regex_unref(mp1);
 
-  // and the rest
-  GRegex *mp2 =g_regex_new("\\s*[\[(]?[0-9]+\\s*(?:of|/)\\s*[0-9]+.", cf0, mf0, NULL);
+  // and the rest.  the last check is for pans collapsed part count
+  GRegex *mp2 =g_regex_new("\\s*([\[(]?'?[0-9]+'?\\s*(?:of|/)\\s*'?[0-9]+'?.)|\\(/[0-9]+\\)", cf0, mf0, NULL);
   str2 = g_regex_replace_literal(mp2, str1, -1, 0, "", mf0, NULL);
   g_free(str1);
   g_regex_unref(mp2);
 
   // try to strip out the filename (may fail if it contains spaces)
-  GRegex *fn =g_regex_new("\"[^\"]+?\" yEnc.*" "|"
-                          "\\S++\\s++yEnc.*" "|"
+  GRegex *fn =g_regex_new("\"[^\"]+?\" yEnc.*"    "|"
+                          "\\S++\\s++yEnc.*"      "|"
                           "\"[^\"]+?\\.\\w{2,}\"" "|"
-                          "\\S+\\.\\w{2,}", cf0, mf0, NULL);
+                          "\\S+\\.\\w{3,4}", cf0, mf0, NULL);
   str1 = g_regex_replace_literal(fn, str2, -1, 0, "", mf0, NULL);
   g_free(str2);
   g_regex_unref(fn);
 
   // try to strip out any byte counts
-  GRegex *cnt =g_regex_new("\\[?[0-9]+ *(?:[Bb]ytes|[Kk][Bb]?)\\]?", cf0, mf0, NULL);
+  GRegex *cnt =g_regex_new("\\[?[0-9]+\\s*(?:[Bb](ytes)?|[Kk][Bb]?)\\]?", cf0, mf0, NULL);
   str2 = g_regex_replace_literal(cnt, str1, -1, 0, "", mf0, NULL);
   g_free(str1);
   g_regex_unref(cnt);
 
   // remove any illegal / annoying characters
-  GRegex *badc =g_regex_new("[\\\\/<>|*?'\"]+", cf0, mf0, NULL);
-  str1 = g_regex_replace_literal(badc, str2, -1, 0, "_", mf0, NULL);
+  GRegex *badc =g_regex_new("[\\\\/<>|*?'\"\\.\\s]+", cf0, mf0, NULL);
+  str1 = g_regex_replace_literal(badc, str2, -1, 0, sep, mf0, NULL);
   g_free(str2);
   g_regex_unref(badc);
 
-  // remove any extraneous whitespace, '_', and '.'
-  GRegex *ext =g_regex_new("[\\s_\\.]+", cf0, mf0, NULL);
+  // remove any extraneous whitespace, '_', & '-'
+  GRegex *ext =g_regex_new("[\\s_-]{2,}", cf0, mf0, NULL);
   str2 = g_regex_replace_literal(ext, str1, -1, 0, sep, mf0, NULL);
   g_free(str1);
   g_regex_unref(ext);
 
-  // remove trailing junk
-  ext =g_regex_new("[_-]+$", cf0, mf0, NULL);
+  // remove leading & trailing junk
+  ext =g_regex_new("(^[\\s_-]+)|([\\s_-]+$)", cf0, mf0, NULL);
   str1 = g_regex_replace_literal(ext, str2, -1, 0, "", mf0, NULL);
   g_free(str2);
   g_regex_unref(ext);

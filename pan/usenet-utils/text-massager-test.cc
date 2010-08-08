@@ -32,7 +32,6 @@ int main (void)
    in = "> a\n> b\n> c";
    out = tm.fill (in);
    expected_out = "> a\n> b\n> c";
-   std::cout<<out<<"\n---\n"<<expected_out<<std::endl;
    check (out == expected_out);
 
    /* wrap real-world 1 */
@@ -214,7 +213,6 @@ int main (void)
    check (out == expected_out);
 
    // mute quoted test: realworld 2
-   check (out == expected_out);
    in =
 "In article <bl0D6.3171$Uo2.75315@zwoll1.home.nl>, \"Marcel Pol\"\n"
 "<mpol@nospam.gmx.net> wrote:\n"
@@ -264,7 +262,7 @@ int main (void)
 
    const char *in2, *sep="_";
    in2 = "prefix - one ...__   - two - three";
-   expected_out = "prefix_-_one_-_two_-_three";
+   expected_out = "prefix_one_two_three";
    out = pan::subject_to_path(in2, sep);
    //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
    check(out == expected_out);
@@ -309,7 +307,7 @@ int main (void)
    //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
    check(out == expected_out);
    in2 = "[ASDF-FDSE]  Name1 & Name2 - Spettertje - 01 title here  (thx AntA)  Post 6_6 - File 9_9 - aaspettertje01.sfv (1/1)";
-   expected_out = "[ASDF-FDSE]_Name1_&_Name2_-_Spettertje_-_01_title_here_(thx_AntA)";
+   expected_out = "[ASDF-FDSE]_Name1_&_Name2_Spettertje_01_title_here_(thx_AntA)";
    out = pan::subject_to_path(in2, sep);
    //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
    check(out == expected_out);
@@ -329,7 +327,12 @@ int main (void)
    //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
    check(out == expected_out);
    in2 = "one - two three [1/2] - \"00 - title spaces.foo\" yEnc (1/5)";
-   expected_out = "one_-_two_three";
+   expected_out = "one_two_three";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "one - two three [1/2] - \"00 - title spaces.foo\" (/5)";
+   expected_out = "one_two_three";
    out = pan::subject_to_path(in2, sep);
    //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
    check(out == expected_out);
