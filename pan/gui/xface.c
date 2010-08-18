@@ -1056,52 +1056,51 @@ uncompface(char * fbuf)
 
 /** end uncompface.c */
 
-GdkPixbuf*
-pan_gdk_pixbuf_create_from_x_face (GdkColormap* cmap, GdkDrawable *drawable, const char *text)
+GdkPixmap*
+pan_gdk_pixmap_create_from_x_face (GdkDrawable *widget, const char *text)
 {
   int status;
+  const int stride = cairo_format_stride_for_width( CAIRO_FORMAT_A1, WIDTH);
   char xface [2048];
-  GdkPixbuf * pixbuf = 0;
+  GdkPixmap * pixmap = NULL;
   
   g_strlcpy (xface, text, sizeof(xface));
   status = uncompface (xface);
   if (status >= 0)
   {
-    GdkPixmap * pixmap;
-    GdkColor black, white;
-    int i;
-    char *bits, *bp;
+    int i, l = stride * HEIGHT;
+    unsigned char *bits;
     const char *p;
 
     /* the compface library exports char F[], which uses a single
        byte per pixel to represent a 48x48 bitmap.  Yuck.
-       This loop written by Andy Piper. */
-    bp = bits = g_newa (char, PIXELS/8);
-    for (i=0, p=F; i<(PIXELS/8); ++i)
+       This loop written by Andy Piper.
+
+       modified to account for cairo stride.*/
+    bits = g_newa (char, l);
+    for (i=0, p=F; i<l; )
     {
       int n, b;
       /* reverse the bit order of each byte... */
       for (b=n=0; b<8; ++b)
         n |= ((*p++) << b);
-      n = ~n;
-      *bp++ = (char) n;
+      bits[i] = (unsigned char) n;
+      if( ++i % stride == WIDTH/8)
+        i = (i / stride + 1) * stride;
     }
 
-    if (!cmap)
-      cmap = gdk_colormap_get_system ();
+    cairo_surface_t *face = cairo_image_surface_create_for_data(bits, CAIRO_FORMAT_A1, WIDTH, HEIGHT, stride);
+    pixmap = gdk_pixmap_new(widget, WIDTH, HEIGHT, -1);
+    cairo_t *ct = gdk_cairo_create(pixmap);
+    cairo_set_source_rgb(ct, 1.0, 1.0, 1.0);
+    cairo_paint(ct);
+    cairo_set_source_surface(ct, face, 0, 0);
+    cairo_paint(ct);
+    cairo_surface_destroy(face);
+    cairo_destroy(ct);
 
-    gdk_color_parse ("black", &black);
-    gdk_colormap_alloc_color (cmap, &black, FALSE, TRUE);
-    gdk_color_parse ("white", &white);
-    gdk_colormap_alloc_color (cmap, &white, FALSE, TRUE);
-
-    pixmap = gdk_pixmap_create_from_data (drawable, bits, WIDTH, HEIGHT, -1, &white, &black);
-    pixbuf = gdk_pixbuf_get_from_drawable (NULL, pixmap, cmap, 0, 0, 0, 0, WIDTH, HEIGHT);
-    g_object_unref (pixmap);
-
-    gdk_colormap_free_colors (cmap, &white, 1 );
-    gdk_colormap_free_colors (cmap, &black, 1 );
+    g_free(bits);
   }
 
-  return pixbuf;
+  return pixmap;
 }

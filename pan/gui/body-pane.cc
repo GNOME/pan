@@ -1062,13 +1062,13 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   gtk_label_set_width_chars (GTK_LABEL(_headers), (int)w);
 
   // set the x-face...
-  GdkPixbuf * pixbuf (0);
+  GdkPixmap *pixmap = NULL;
   const char * pch = message ? g_mime_object_get_header ((GMimeObject *) message, "X-Face") : 0;
   if (pch && _xface->window)
-    pixbuf = pan_gdk_pixbuf_create_from_x_face (gtk_widget_get_colormap(_xface), _xface->window, pch);
-  gtk_image_set_from_pixbuf (GTK_IMAGE(_xface), pixbuf);
-  if (pixbuf)
-    g_object_unref (pixbuf);
+    pixmap = pan_gdk_pixmap_create_from_x_face (_xface->window, pch);
+  gtk_image_set_from_pixmap (GTK_IMAGE(_xface), pixmap, NULL);
+  if (pixmap)
+    g_object_unref (pixmap);
 
   // set the terse headers...
   s.clear ();
