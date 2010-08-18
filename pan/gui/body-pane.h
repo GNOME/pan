@@ -107,6 +107,7 @@ namespace pan
       GtkWidget * _verbose;
       GtkWidget * _headers;
       GtkWidget * _xface;
+      GtkWidget * _face;
       GtkTextBuffer * _buffer;
       GtkWidget * _root;
       GtkWidget * _text;

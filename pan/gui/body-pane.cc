@@ -27,6 +27,7 @@ extern "C" {
   #include <gdk/gdkkeysyms.h>
   #include <gmime/gmime.h>
 }
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
@@ -1062,13 +1063,30 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   gtk_label_set_width_chars (GTK_LABEL(_headers), (int)w);
 
   // set the x-face...
-  GdkPixmap *pixmap = NULL;
   const char * pch = message ? g_mime_object_get_header ((GMimeObject *) message, "X-Face") : 0;
   if (pch && _xface->window)
+  {
+    GdkPixmap *pixmap = NULL;
     pixmap = pan_gdk_pixmap_create_from_x_face (_xface->window, pch);
-  gtk_image_set_from_pixmap (GTK_IMAGE(_xface), pixmap, NULL);
-  if (pixmap)
+    gtk_image_set_from_pixmap (GTK_IMAGE(_xface), pixmap, NULL);
+    gtk_image_set_from_pixmap (GTK_IMAGE(_face), pixmap, NULL);
     g_object_unref (pixmap);
+  }
+  // set the face
+  pch = message ? g_mime_object_get_header ((GMimeObject *) message, "Face") : 0;
+  if (pch && _face->window)
+  {
+    GMimeEncoding dec;
+    g_mime_encoding_init_decode(&dec, GMIME_CONTENT_ENCODING_BASE64);
+    guchar buf[1024];
+    int len = g_mime_encoding_step(&dec, pch, strlen(pch), (char*)buf);
+    GdkPixbufLoader *pl = gdk_pixbuf_loader_new_with_type( "png", NULL);
+    gdk_pixbuf_loader_write(pl, buf, len, NULL);
+    gdk_pixbuf_loader_close(pl, NULL);
+    GdkPixbuf *pixbuf = gdk_pixbuf_loader_get_pixbuf(pl);
+    gtk_image_set_from_pixbuf (GTK_IMAGE(_face), pixbuf);
+    g_object_unref(pl);
+  }
 
   // set the terse headers...
   s.clear ();
@@ -1366,6 +1384,9 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_label_set_use_markup (GTK_LABEL(w), true);
   gtk_box_pack_start (GTK_BOX(hbox), w, true, true, PAD_SMALL);
   w = _xface = gtk_image_new ();
+  gtk_widget_set_size_request (w, 48, 48);
+  gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
+  w = _face = gtk_image_new ();
   gtk_widget_set_size_request (w, 48, 48);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
   gtk_widget_show_all (_verbose);
