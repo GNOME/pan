@@ -1063,6 +1063,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   gtk_label_set_width_chars (GTK_LABEL(_headers), (int)w);
 
   // set the x-face...
+  gtk_image_clear(GTK_IMAGE(_xface));
   const char * pch = message ? g_mime_object_get_header ((GMimeObject *) message, "X-Face") : 0;
   if (pch && _xface->window)
   {
@@ -1073,6 +1074,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     g_object_unref (pixmap);
   }
   // set the face
+  gtk_image_clear(GTK_IMAGE(_face));
   pch = message ? g_mime_object_get_header ((GMimeObject *) message, "Face") : 0;
   if (pch && _face->window)
   {
