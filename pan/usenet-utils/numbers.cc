@@ -22,7 +22,6 @@
 #include <cstdio> // snprintf
 #include <algorithm>
 #include <glib.h>
-#include <pan/general/string-view.h>
 #include "numbers.h"
 
 using namespace pan;
@@ -258,19 +257,22 @@ Numbers :: to_string () const
 void
 Numbers :: to_string (std::string & str) const
 {
+   std::string temp;
+   int bytes;
    char buf[64];
 
+   temp.reserve(24 * _marked.size() );
    for (r_cit it=_marked.begin(), end=_marked.end(); it!=end; ++it)
    {
       Range r (*it);
 
       if (r.low == r.high)
-        g_snprintf (buf, sizeof(buf), "%"G_GUINT64_FORMAT",", r.low);
+        bytes = g_snprintf (buf, sizeof(buf), "%"G_GUINT64_FORMAT",", r.low);
       else
-         g_snprintf (buf, sizeof(buf), "%"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT",", r.low, r.high);
-      str += buf;
+         bytes = g_snprintf (buf, sizeof(buf), "%"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT",", r.low, r.high);
+      temp.append(buf, bytes);
    }
 
-   if (!str.empty())
-      str.erase (--str.end()); // remove final comma
+   if (!temp.empty())
+      str.append(temp.begin(), --temp.end()); // remove final comma
 }
