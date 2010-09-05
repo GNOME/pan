@@ -361,8 +361,10 @@ HeaderPane :: column_compare_func (GtkTreeModel  * model,
 {
   int ret (0);
   const PanTreeStore * store (reinterpret_cast<PanTreeStore*>(model));
-  const Row& row_a (*dynamic_cast<const Row*>(store->get_row (iter_a)));
-  const Row& row_b (*dynamic_cast<const Row*>(store->get_row (iter_b)));
+  //const Row& row_a (*dynamic_cast<const Row*>(store->get_row (iter_a)));
+  //const Row& row_b (*dynamic_cast<const Row*>(store->get_row (iter_b)));
+  const Row& row_a (*static_cast<const Row*>(store->get_row (iter_a)));
+  const Row& row_b (*static_cast<const Row*>(store->get_row (iter_b)));
 
   int sortcol;
   GtkSortType order;
