@@ -109,7 +109,7 @@ namespace pan
       };
 
       std::string _path;
-      size_t _max_megs;
+      const size_t _max_megs;
       guint64 _current_bytes;
 
       typedef std::set<Listener*> listeners_t;
