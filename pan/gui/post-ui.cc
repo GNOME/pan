@@ -21,6 +21,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <unistd.h>
 extern "C" {
   #include <gmime/gmime.h>
   #include <glib/gi18n.h>
@@ -61,6 +62,10 @@ using namespace pan;
 
 namespace
 {
+#ifndef HAVE_CLOSE
+inline int close(int fd) {return _close(fd);}
+#endif
+
   bool remember_charsets (true);
 
   void on_remember_charset_toggled (GtkToggleAction * toggle, gpointer)
@@ -721,8 +726,10 @@ PostUI :: spawn_editor ()
     GError * err = NULL;
     const int fd (g_file_open_tmp ("pan_edit_XXXXXX", &fname, &err));
     if (fd != -1)
-      fp = fdopen (fd, "w");
-    else {
+    {
+      close(fd);
+      fp = g_fopen (fname, "w");
+    } else {
       Log::add_err (err && err->message ? err->message : _("Error opening temporary file"));
       if (err)
         g_clear_error (&err);
