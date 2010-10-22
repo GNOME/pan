@@ -619,7 +619,7 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
 
   int row = 0;
   GtkWidget * t = HIG :: workarea_create ();
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(_root)->vbox), t, true, true, 0);
+  gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(_root))), t, true, true, 0);
   HIG::workarea_add_section_title (t, &row, _("New Scoring Rule"));
     HIG::workarea_add_section_spacer (t, row, 4);
 

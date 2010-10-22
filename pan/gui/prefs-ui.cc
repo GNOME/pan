@@ -591,6 +591,6 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("A_pplications")));
 
   gtk_widget_show_all (notebook);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->vbox), notebook, true, true, 0);
+  gtk_box_pack_start (GTK_BOX(gtk_dialog_get_content_area( GTK_DIALOG(dialog))), notebook, true, true, 0);
   _root = dialog;
 }

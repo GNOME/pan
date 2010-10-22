@@ -655,11 +655,12 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   char buf[512];
   g_snprintf (buf, sizeof(buf), "<b>%s</b>", _("Posting..."));
   GtkWidget * w = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL, "use-markup", TRUE, "label", buf, NULL));
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(d)->vbox), w, false, false, PAD_SMALL);
+  GtkWidget *content = gtk_dialog_get_content_area(GTK_DIALOG(d));
+  gtk_box_pack_start (GTK_BOX(content), w, false, false, PAD_SMALL);
   w = gtk_progress_bar_new ();
   gtk_progress_bar_set_pulse_step (GTK_PROGRESS_BAR(w), 0.05);
   const guint tag = g_timeout_add (100, pulse_me, w);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(d)->vbox), w, false, false, PAD_SMALL);
+  gtk_box_pack_start (GTK_BOX(content), w, false, false, PAD_SMALL);
   g_object_set_data_full (G_OBJECT(d), "progressbar-timeout-tag", GUINT_TO_POINTER(tag), remove_progress_tag);
   _post_dialog = d;
   g_signal_connect (_post_dialog, "destroy", G_CALLBACK(gtk_widget_destroyed), &_post_dialog);

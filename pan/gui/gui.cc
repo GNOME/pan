@@ -106,7 +106,11 @@ namespace
 
   void toggle_visible (GtkWidget * w)
   {
+#if GTK_CHECK_VERSION(2,18,0)
+    set_visible (w, !gtk_widget_get_visible(w));
+#else
     set_visible (w, !GTK_WIDGET_VISIBLE(w));
+#endif
   }
 }
 
@@ -338,8 +342,8 @@ GUI :: ~GUI ()
   if (vpane)
     _prefs.set_int ("main-window-vpane-position", gtk_paned_get_position(GTK_PANED(vpane)));
 
-  const bool maximized = GTK_WIDGET(_root)->window
-                      && (gdk_window_get_state(_root->window) & GDK_WINDOW_STATE_MAXIMIZED);
+  const bool maximized = gtk_widget_get_window(_root)
+                      && (gdk_window_get_state( gtk_widget_get_window(_root)) & GDK_WINDOW_STATE_MAXIMIZED);
   _prefs.set_flag ("main-window-is-maximized", maximized);
 
   _prefs.remove_listener (this);
@@ -373,7 +377,7 @@ void
 GUI :: watch_cursor_on ()
 {
   GdkCursor * cursor = gdk_cursor_new (GDK_WATCH);
-  gdk_window_set_cursor (_root->window, cursor);
+  gdk_window_set_cursor ( gtk_widget_get_window(_root), cursor);
   gdk_cursor_unref (cursor);
   while (gtk_events_pending ())
     gtk_main_iteration ();
@@ -382,7 +386,7 @@ GUI :: watch_cursor_on ()
 void
 GUI :: watch_cursor_off ()
 {
-  gdk_window_set_cursor (_root->window, NULL);
+  gdk_window_set_cursor ( gtk_widget_get_window(_root), NULL);
 }
 
 /***
@@ -778,21 +782,21 @@ void GUI :: do_show_profiles_dialog ()
 void GUI :: do_jump_to_group_tab ()
 {
   toggle_action ("tabbed-layout", true);
-  GtkNotebook * n (GTK_NOTEBOOK (GTK_BIN (_workarea_bin)->child));
+  GtkNotebook * n (GTK_NOTEBOOK (gtk_bin_get_child( GTK_BIN (_workarea_bin))));
   gtk_notebook_set_current_page (n, 0);
 }
 
 void GUI :: do_jump_to_header_tab ()
 {
   toggle_action ("tabbed-layout", true);
-  GtkNotebook * n (GTK_NOTEBOOK (GTK_BIN (_workarea_bin)->child));
+  GtkNotebook * n (GTK_NOTEBOOK (gtk_bin_get_child( GTK_BIN (_workarea_bin))));
   gtk_notebook_set_current_page (n, 1);
 }
 
 void GUI :: do_jump_to_body_tab ()
 {
   toggle_action ("tabbed-layout", true);
-  GtkNotebook * n (GTK_NOTEBOOK (GTK_BIN (_workarea_bin)->child));
+  GtkNotebook * n (GTK_NOTEBOOK (gtk_bin_get_child( GTK_BIN (_workarea_bin))));
   gtk_notebook_set_current_page (n, 2);
 }
 
@@ -1264,8 +1268,9 @@ namespace
 {
   void remove_from_parent (GtkWidget * w)
   {
-    if (w->parent != 0)
-      gtk_container_remove (GTK_CONTAINER(w->parent), w);
+    GtkWidget *parent = gtk_widget_get_parent(w);
+    if (parent != 0)
+      gtk_container_remove (GTK_CONTAINER(parent), w);
   }
 
   enum { HORIZONTAL, VERTICAL };
@@ -1403,7 +1408,7 @@ void GUI :: do_tabbed_layout (bool tabbed)
   set_visible (body_w, is_action_active("show-body-pane"));
 
   if (tabbed)
-    gtk_notebook_set_current_page (GTK_NOTEBOOK(GTK_BIN(_workarea_bin)->child), 0);
+    gtk_notebook_set_current_page (GTK_NOTEBOOK( gtk_bin_get_child( GTK_BIN(_workarea_bin))), 0);
 }
 
 void GUI :: do_show_group_pane (bool b)

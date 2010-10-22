@@ -51,6 +51,13 @@ using namespace pan;
 **/
 namespace
 {
+#if !GTK_CHECK_VERSION(2,18,0)
+  void gtk_widget_get_allocation( GtkWidget *w, GtkAllocation *a)
+  {
+    *a = w->allocation;
+  }
+#endif
+
   class PixbufCache
   {
     private:
@@ -402,7 +409,9 @@ BodyPane :: mouse_button_pressed (GtkWidget *w, GdkEventButton *event)
         const int offset (gtk_text_iter_get_offset (&iter));
         GtkTextBuffer * buf (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)));
         const bool fullsize (toggle_fullsize_flag (buf));
-        resize_picture_at_iter (buf, &iter, fullsize, &w->allocation, pix_tag);
+        GtkAllocation aloc;
+        gtk_widget_get_allocation(w, &aloc);
+        resize_picture_at_iter (buf, &iter, fullsize, &aloc, pix_tag);
         gtk_text_iter_set_offset (&iter, offset);
         set_cursor_from_iter (event->window, w, &iter);
 
@@ -491,13 +500,13 @@ namespace
       gtk_text_view_place_cursor_onscreen (GTK_TEXT_VIEW(w));
       GtkAdjustment * adj = gtk_scrolled_window_get_vadjustment (
                                                       GTK_SCROLLED_WINDOW(scroll));
-      gdouble val = adj->value;
+      gdouble val = gtk_adjustment_get_value(adj);
       if (up)
-        val -= adj->step_increment;
+        val -= gtk_adjustment_get_step_increment(adj);
       else
-        val += adj->step_increment;
-      val = MAX(val, adj->lower);
-      val = MIN(val, adj->upper-adj->page_size);
+        val += gtk_adjustment_get_step_increment(adj);
+      val = MAX(val, gtk_adjustment_get_lower(adj) );
+      val = MIN(val, gtk_adjustment_get_upper(adj) - gtk_adjustment_get_page_size(adj) );
       gtk_adjustment_set_value (adj, val);
     }
 
@@ -960,7 +969,9 @@ BodyPane :: foreach_part_cb (GMimeObject* /*parent*/, GMimeObject* o, gpointer s
 {
   BodyPane * pane = static_cast<BodyPane*>(self);
   GtkWidget * w (pane->_text);
-  pane->append_part (o, &w->allocation);
+  GtkAllocation aloc;
+  gtk_widget_get_allocation(w, &aloc);
+  pane->append_part (o, &aloc);
 }
 
 
@@ -1226,9 +1237,9 @@ BodyPane :: refresh_scroll_visible_state ()
 {
   GtkScrolledWindow * w (GTK_SCROLLED_WINDOW (_scroll));
   GtkAdjustment * adj = gtk_scrolled_window_get_hadjustment (w);
-  _hscroll_visible = adj->page_size < adj->upper;
+  _hscroll_visible = gtk_adjustment_get_page_size(adj) < gtk_adjustment_get_upper(adj);
   adj = gtk_scrolled_window_get_vadjustment (w);
-  _vscroll_visible = adj->page_size < adj->upper;
+  _vscroll_visible = gtk_adjustment_get_page_size(adj) < gtk_adjustment_get_upper(adj);
 }
 
 // show*_cb exist to ensure that _hscroll_visible and _vscroll_visible
@@ -1279,9 +1290,13 @@ BodyPane :: text_size_allocated_idle ()
 
   // walk through the buffer looking for pictures to resize
   GtkTextTag * tag (get_named_tag_from_view (_text, "pixbuf"));
+  GtkAllocation aloc;
   for (;;) {
     if (gtk_text_iter_begins_tag (&iter, tag))
-      resize_picture_at_iter (buf, &iter, fullsize, &_text->allocation, tag);
+    {
+      gtk_widget_get_allocation(_text, &aloc);
+      resize_picture_at_iter (buf, &iter, fullsize, &aloc, tag);
+    }
     if (!gtk_text_iter_forward_char (&iter))
       break;
     if (!gtk_text_iter_forward_to_tag_toggle (&iter, tag))
@@ -1467,18 +1482,22 @@ BodyPane :: read_more_or_less (bool more)
   GtkAdjustment * v = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW(parent));
 
   // figure out how far we scroll
+  const double v_value = gtk_adjustment_get_value(v);
+  const double v_upper = gtk_adjustment_get_upper(v);
+  const double v_lower = gtk_adjustment_get_lower(v);
+  const double v_page_size = gtk_adjustment_get_page_size(v);
   const int arbitrary_font_height_pixels_hack (18);
-  const float inc (v->page_size - arbitrary_font_height_pixels_hack);
-  const gfloat val (CLAMP (v->value + (more ? inc : -inc),
-                           v->lower,
-                           MAX(v->upper,v->page_size)-MIN(v->upper,v->page_size)));
+  const float inc (v_page_size - arbitrary_font_height_pixels_hack);
+  const gfloat val (CLAMP (v_value + (more ? inc : -inc),
+                           v_lower,
+                           MAX(v_upper,v_page_size)-MIN(v_upper,v_page_size)));
 
   // if we can scroll, do so.
   bool handled (false);
-  if (v->upper>=v->page_size && val!=v->value)
+  if (v_upper>=v_page_size && val!=v_value)
   {
     if (_prefs.get_flag ("smooth-scrolling", true))
-      sylpheed_textview_smooth_scroll_do (v, v->value, val, smooth_scrolling_speed);
+      sylpheed_textview_smooth_scroll_do (v, v_value, val, smooth_scrolling_speed);
     else
       gtk_adjustment_set_value (v, val);
 

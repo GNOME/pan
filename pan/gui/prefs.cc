@@ -222,8 +222,8 @@ Prefs :: window_size_allocated_cb (GtkWidget      * widget,
 {
   const char * key ((const char*) g_object_get_data (G_OBJECT(widget), PREFS_WIDGET_KEY));
 
-  const bool maximized = GTK_WIDGET(widget)->window
-                      && (gdk_window_get_state(widget->window) & GDK_WINDOW_STATE_MAXIMIZED);
+  const bool maximized = gtk_widget_get_window(widget)
+                      && (gdk_window_get_state(gtk_widget_get_window(widget)) & GDK_WINDOW_STATE_MAXIMIZED);
   if (!maximized)
   {
     int x(0), y(0);

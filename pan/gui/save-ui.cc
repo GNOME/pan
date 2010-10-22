@@ -324,7 +324,7 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
   w = HIG :: workarea_add_row (t, &row, _("_Priority:"), w);
 
   gtk_widget_show_all (t);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->vbox), t, true, true, 0);
+  gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(dialog))), t, true, true, 0);
   gtk_widget_grab_focus (focus);
   _root = dialog;
 }

@@ -571,9 +571,16 @@ namespace
     return false;
   }
 
+#if !GTK_CHECK_VERSION(2,18,0)
+  bool gtk_widget_has_focus( GtkWidget *w)
+  {
+    return GTK_WIDGET_HAS_FOCUS(w);
+  }
+#endif
+
   void refresh_search_entry (GtkWidget * w)
   {
-    if (search_text.empty() && !GTK_WIDGET_HAS_FOCUS(w))
+    if (search_text.empty() && !gtk_widget_has_focus(w))
     {
       GdkColor c;
       c.pixel = 0;

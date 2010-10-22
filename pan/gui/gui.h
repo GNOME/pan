@@ -30,6 +30,12 @@
 #include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
 
+#ifdef GTK_DISABLE_DEPRECATED
+#if GTK_CHECK_VERSION(2,22,0)
+#define GtkNotebookPage void
+#endif
+#endif
+
 namespace pan
 {
   class GroupPane;
