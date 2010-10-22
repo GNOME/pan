@@ -1065,10 +1065,10 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   // set the x-face...
   gtk_image_clear(GTK_IMAGE(_xface));
   const char * pch = message ? g_mime_object_get_header ((GMimeObject *) message, "X-Face") : 0;
-  if (pch && _xface->window)
+  if (pch && gtk_widget_get_window(_xface) )
   {
     GdkPixmap *pixmap = NULL;
-    pixmap = pan_gdk_pixmap_create_from_x_face (_xface->window, pch);
+    pixmap = pan_gdk_pixmap_create_from_x_face ( gtk_widget_get_window(_xface), pch);
     gtk_image_set_from_pixmap (GTK_IMAGE(_xface), pixmap, NULL);
     gtk_image_set_from_pixmap (GTK_IMAGE(_face), pixmap, NULL);
     g_object_unref (pixmap);
@@ -1076,7 +1076,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   // set the face
   gtk_image_clear(GTK_IMAGE(_face));
   pch = message ? g_mime_object_get_header ((GMimeObject *) message, "Face") : 0;
-  if (pch && _face->window)
+  if (pch && gtk_widget_get_window(_face))
   {
     GMimeEncoding dec;
     g_mime_encoding_init_decode(&dec, GMIME_CONTENT_ENCODING_BASE64);

@@ -1077,7 +1077,8 @@ pan_gdk_pixmap_create_from_x_face (GdkDrawable *widget, const char *text)
        This loop written by Andy Piper.
 
        modified to account for cairo stride.*/
-    bits = g_newa (char, l);
+    cairo_surface_t *face = cairo_image_surface_create(CAIRO_FORMAT_A1, WIDTH, HEIGHT);
+    bits = cairo_image_surface_get_data(face);
     for (i=0, p=F; i<l; )
     {
       int n, b;
@@ -1088,8 +1089,8 @@ pan_gdk_pixmap_create_from_x_face (GdkDrawable *widget, const char *text)
       if( ++i % stride == WIDTH/8)
         i = (i / stride + 1) * stride;
     }
+    cairo_surface_mark_dirty(face);
 
-    cairo_surface_t *face = cairo_image_surface_create_for_data(bits, CAIRO_FORMAT_A1, WIDTH, HEIGHT, stride);
     pixmap = gdk_pixmap_new(widget, WIDTH, HEIGHT, -1);
     cairo_t *ct = gdk_cairo_create(pixmap);
     cairo_set_source_rgb(ct, 1.0, 1.0, 1.0);
@@ -1098,8 +1099,6 @@ pan_gdk_pixmap_create_from_x_face (GdkDrawable *widget, const char *text)
     cairo_paint(ct);
     cairo_surface_destroy(face);
     cairo_destroy(ct);
-
-    g_free(bits);
   }
 
   return pixmap;
