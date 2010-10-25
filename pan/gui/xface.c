@@ -1056,13 +1056,18 @@ uncompface(char * fbuf)
 
 /** end uncompface.c */
 
-GdkPixmap*
-pan_gdk_pixmap_create_from_x_face (GdkDrawable *widget, const char *text)
+static void destroy( guchar * m, gpointer p)
+{
+  g_free(m);
+}
+
+GdkPixbuf*
+pan_gdk_pixbuf_create_from_x_face (const char *text)
 {
   int status;
   const int stride = cairo_format_stride_for_width( CAIRO_FORMAT_A1, WIDTH);
   char xface [2048];
-  GdkPixmap * pixmap = NULL;
+  GdkPixbuf * pixbuf = NULL;
   
   g_strlcpy (xface, text, sizeof(xface));
   status = uncompface (xface);
@@ -1078,6 +1083,7 @@ pan_gdk_pixmap_create_from_x_face (GdkDrawable *widget, const char *text)
 
        modified to account for cairo stride.*/
     cairo_surface_t *face = cairo_image_surface_create(CAIRO_FORMAT_A1, WIDTH, HEIGHT);
+    cairo_surface_t *dest = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, WIDTH, HEIGHT);
     bits = cairo_image_surface_get_data(face);
     for (i=0, p=F; i<l; )
     {
@@ -1091,15 +1097,47 @@ pan_gdk_pixmap_create_from_x_face (GdkDrawable *widget, const char *text)
     }
     cairo_surface_mark_dirty(face);
 
-    pixmap = gdk_pixmap_new(widget, WIDTH, HEIGHT, -1);
-    cairo_t *ct = gdk_cairo_create(pixmap);
-    cairo_set_source_rgb(ct, 1.0, 1.0, 1.0);
+    cairo_t *ct = cairo_create(dest);
+    // white in the BW src is considered transparent by cairo
+    // so start with dest painted white.
+    cairo_set_source_rgba(ct, 1.0, 1.0, 1.0, 1.0);
     cairo_paint(ct);
     cairo_set_source_surface(ct, face, 0, 0);
     cairo_paint(ct);
-    cairo_surface_destroy(face);
+    cairo_surface_flush(dest);
+
+    int rs = cairo_image_surface_get_stride(dest);
+    int len = rs * HEIGHT;
+    bits = g_malloc( len );
+    /*
+     * cairo's data is a 32bit naitive endian ARGB int.
+     * pixbuf data is RGBA char array.
+     * on intel a simple memcpy will work.
+     */
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+    memcpy( bits, cairo_image_surface_get_data(dest)  , len );
+#else
+    {
+      unsigned char *src = cairo_image_surface_get_data(dest);
+      int h,w, o;
+      for(h=0;h<HEIGHT;h++)
+      {
+        o=rs*h;
+        for(w=o;w<o+rs;w+=4)
+        {
+          bits[w+3] = 0xff; //alpha
+          bits[w] = bits[w+1] = bits[w+2] = src[w+1];
+        }
+      }
+    }
+#endif
+    pixbuf = gdk_pixbuf_new_from_data( bits, GDK_COLORSPACE_RGB, TRUE, 8,
+      WIDTH, HEIGHT, rs, destroy, NULL);
+
     cairo_destroy(ct);
+    cairo_surface_destroy(dest);
+    cairo_surface_destroy(face);
   }
 
-  return pixmap;
+  return pixbuf;
 }

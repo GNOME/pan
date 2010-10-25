@@ -7,7 +7,7 @@
 G_BEGIN_DECLS
 
 /** @ingroup GUI */
-extern GdkPixmap*   pan_gdk_pixmap_create_from_x_face (GdkDrawable*, const char *);
+extern GdkPixbuf*   pan_gdk_pixbuf_create_from_x_face (const char *);
 
 G_END_DECLS
 
