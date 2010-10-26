@@ -501,8 +501,12 @@ GIOChannelSocket :: gio_func (GIOChannel   * channel,
   else // G_IO_IN or G_IO_OUT
   {
     const DoResult result = (cond & G_IO_IN) ? do_read () : do_write ();
-         if (_abort_flag)        _listener->on_socket_abort (this);
-    else if (result == IO_ERR)   _listener->on_socket_error (this);
+    /* I keep reading about crashes due to this check on OSX.
+     * _abort_flag is never set so this won't cause a problem.
+     * could be a bug in gcc 4.2.1.
+     */
+    /*if (_abort_flag)        _listener->on_socket_abort (this);
+    else*/ if (result == IO_ERR)   _listener->on_socket_error (this);
     else if (result == IO_READ)  set_watch_mode (READ_NOW);
     else if (result == IO_WRITE) set_watch_mode (WRITE_NOW);
   }
