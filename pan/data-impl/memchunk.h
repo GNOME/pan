@@ -45,7 +45,7 @@ namespace pan {
         return phead;
       }
 
-      MemChunk():chunks(0),head(0),phead(0),nelem(Chunk::size/sizeof(T)),count(0)
+      MemChunk():chunks(0),phead(0),head(0),nelem(Chunk::size/sizeof(T)),count(0)
       {grow();}
 
       ~MemChunk()
@@ -90,8 +90,6 @@ namespace pan {
       void grow()
       {
         Chunk *c=new Chunk;
-        T *p,*n=0;
-        int i;
 
         memset(c->mem,0,Chunk::size);
 

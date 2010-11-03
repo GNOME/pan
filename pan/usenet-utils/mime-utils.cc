@@ -499,7 +499,6 @@ separate_encoded_parts (GMimeStream  * istream, sep_state &state)
 
   sub_begin = 0;
   line = g_byte_array_sized_new (4096);
-  char *line_str, *pch;
 
   while ((line_len = stream_readln (istream, line, &linestart_pos)))
   {

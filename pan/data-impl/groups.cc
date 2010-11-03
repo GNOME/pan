@@ -162,7 +162,7 @@ namespace {
     if (g_path_is_absolute(fn))
       return base;
     const char *ph = file::get_pan_home().c_str();
-    char *temp = g_build_filename(ph, fn, 0);
+    char *temp = g_build_filename(ph, fn, NULL);
     std::string out(temp);
     g_free(temp);
     return out;

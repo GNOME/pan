@@ -379,7 +379,7 @@ pan :: subject_to_path (const char * subjectline, const std::string &seperator)
   gchar *str1, *str2;
   const char *sep;
   std::string val (subjectline);
-  std::string::size_type pos;
+  //std::string::size_type pos;
   //stupid hack to silence the compiler
   GRegexCompileFlags cf0((GRegexCompileFlags)0);
   GRegexMatchFlags mf0((GRegexMatchFlags)0);

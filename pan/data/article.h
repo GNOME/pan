@@ -85,7 +85,7 @@ namespace pan
       Xref xref;
 
     public:
-      Article (): is_binary(false), lines(0), score(0), time_posted(0) {}
+      Article (): time_posted(0), lines(0), score(0), is_binary(false)  {}
       void clear ();
 
     private:

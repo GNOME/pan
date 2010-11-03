@@ -44,6 +44,7 @@ extern "C" {
   #define _WIN32_WINNT 0x0501
   #include <ws2tcpip.h>
   #undef gai_strerror
+  /*
   #define gai_strerror(i) gai_strerror_does_not_link (i)
   static const char*
   gai_strerror_does_not_link (int errval)
@@ -52,7 +53,7 @@ extern "C" {
     g_snprintf (buf, sizeof(buf), "Winsock error %d", errval);
     return buf;
   }
-
+  */
   static const char*
   get_last_error (int err)
   {

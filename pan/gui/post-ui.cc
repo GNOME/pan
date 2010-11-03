@@ -716,7 +716,6 @@ namespace
 void
 PostUI :: spawn_editor ()
 {
-  GtkTextBuffer * buf (_body_buf);
   bool ok (true);
 
   // open a new tmp file
