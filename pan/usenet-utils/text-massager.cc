@@ -105,7 +105,6 @@ namespace
             content (c, clen) { }
    };
 
-
    typedef std::vector<Paragraph> paragraphs_t;
    typedef paragraphs_t::iterator p_it;
 
@@ -114,7 +113,7 @@ namespace
      std::map<std::string, int> max_map;
      std::map<std::string, int>::iterator map_end = max_map.end();
      int prev_content_len = 0;
-     int max_len = wrap_col;
+     //int max_len = wrap_col;
      StringView cur_leader;
      std::string cur_content;
 
@@ -147,7 +146,7 @@ namespace
         // line but wasn't assume deliberate line break.
         if (!paragraph_end && prev_content_len && line.content.len)
         {
-          int space = max_map[line.leader] - (prev_content_len + line.leader.len) - 1;
+          unsigned int space = max_map[line.leader] - (prev_content_len + line.leader.len) - 1;
           if ( space > 0 && ((line.content.len < space)
                               || g_utf8_strchr (line.content.str, space, ' ')) )
             paragraph_end = true;
@@ -393,7 +392,8 @@ TextMassager :: mute_quotes (const StringView& text) const
    const char * mute_str = _("> [quoted text muted]");
 
    StringView mytext (text);
-   StringView line;	
+   StringView line;
+
    bool last_line_was_quote = false;
    while (mytext.pop_token (line, '\n'))
    {
@@ -418,7 +418,6 @@ TextMassager :: mute_quotes (const StringView& text) const
 
    return retval;
 }
-
 
 char*
 TextMassager :: rot13_inplace (char * text)
