@@ -1056,51 +1056,87 @@ uncompface(char * fbuf)
 
 /** end uncompface.c */
 
+static void destroy( guchar * m, gpointer p)
+{
+  g_free(m);
+}
+
 GdkPixbuf*
-pan_gdk_pixbuf_create_from_x_face (GdkColormap* cmap, GdkDrawable *drawable, const char *text)
+pan_gdk_pixbuf_create_from_x_face (const char *text)
 {
   int status;
+  const int stride = cairo_format_stride_for_width( CAIRO_FORMAT_A1, WIDTH);
   char xface [2048];
-  GdkPixbuf * pixbuf = 0;
+  GdkPixbuf * pixbuf = NULL;
   
   g_strlcpy (xface, text, sizeof(xface));
   status = uncompface (xface);
   if (status >= 0)
   {
-    GdkPixmap * pixmap;
-    GdkColor black, white;
-    int i;
-    char *bits, *bp;
+    int i, l = stride * HEIGHT;
+    unsigned char *bits;
     const char *p;
 
     /* the compface library exports char F[], which uses a single
        byte per pixel to represent a 48x48 bitmap.  Yuck.
-       This loop written by Andy Piper. */
-    bp = bits = g_newa (char, PIXELS/8);
-    for (i=0, p=F; i<(PIXELS/8); ++i)
+       This loop written by Andy Piper.
+
+       modified to account for cairo stride.*/
+    cairo_surface_t *face = cairo_image_surface_create(CAIRO_FORMAT_A1, WIDTH, HEIGHT);
+    cairo_surface_t *dest = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, WIDTH, HEIGHT);
+    bits = cairo_image_surface_get_data(face);
+    for (i=0, p=F; i<l; )
     {
       int n, b;
       /* reverse the bit order of each byte... */
       for (b=n=0; b<8; ++b)
         n |= ((*p++) << b);
-      n = ~n;
-      *bp++ = (char) n;
+      bits[i] = (unsigned char) n;
+      if( ++i % stride == WIDTH/8)
+        i = (i / stride + 1) * stride;
     }
+    cairo_surface_mark_dirty(face);
 
-    if (!cmap)
-      cmap = gdk_colormap_get_system ();
+    cairo_t *ct = cairo_create(dest);
+    // white in the BW src is considered transparent by cairo
+    // so start with dest painted white.
+    cairo_set_source_rgba(ct, 1.0, 1.0, 1.0, 1.0);
+    cairo_paint(ct);
+    cairo_set_source_surface(ct, face, 0, 0);
+    cairo_paint(ct);
+    cairo_surface_flush(dest);
 
-    gdk_color_parse ("black", &black);
-    gdk_colormap_alloc_color (cmap, &black, FALSE, TRUE);
-    gdk_color_parse ("white", &white);
-    gdk_colormap_alloc_color (cmap, &white, FALSE, TRUE);
+    int rs = cairo_image_surface_get_stride(dest);
+    int len = rs * HEIGHT;
+    bits = g_malloc( len );
+    /*
+     * cairo's data is a 32bit naitive endian ARGB int.
+     * pixbuf data is RGBA char array.
+     * on intel a simple memcpy will work.
+     */
+#if G_BYTE_ORDER == G_LITTLE_ENDIAN
+    memcpy( bits, cairo_image_surface_get_data(dest)  , len );
+#else
+    {
+      unsigned char *src = cairo_image_surface_get_data(dest);
+      int h,w, o;
+      for(h=0;h<HEIGHT;h++)
+      {
+        o=rs*h;
+        for(w=o;w<o+rs;w+=4)
+        {
+          bits[w+3] = 0xff; //alpha
+          bits[w] = bits[w+1] = bits[w+2] = src[w+1];
+        }
+      }
+    }
+#endif
+    pixbuf = gdk_pixbuf_new_from_data( bits, GDK_COLORSPACE_RGB, TRUE, 8,
+      WIDTH, HEIGHT, rs, destroy, NULL);
 
-    pixmap = gdk_pixmap_create_from_data (drawable, bits, WIDTH, HEIGHT, -1, &white, &black);
-    pixbuf = gdk_pixbuf_get_from_drawable (NULL, pixmap, cmap, 0, 0, 0, 0, WIDTH, HEIGHT);
-    g_object_unref (pixmap);
-
-    gdk_colormap_free_colors (cmap, &white, 1 );
-    gdk_colormap_free_colors (cmap, &black, 1 );
+    cairo_destroy(ct);
+    cairo_surface_destroy(dest);
+    cairo_surface_destroy(face);
   }
 
   return pixbuf;
