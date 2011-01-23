@@ -20,7 +20,7 @@
 #ifndef SERVER_UI_H
 #define SERVER_UI_H
 
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 #include <pan/data/data.h>
 #include <pan/tasks/queue.h>
 

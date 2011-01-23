@@ -398,7 +398,7 @@ ArticleCache :: get_message_mem_stream (const Quark& mid) const
 }
 
 GMimeMessage*
-ArticleCache :: get_message (const mid_sequence_t& mids)
+ArticleCache :: get_message (const mid_sequence_t& mids) const
 {
    debug ("trying to get a message with " << mids.size() << " parts");
    GMimeMessage * retval = NULL;

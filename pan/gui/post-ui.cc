@@ -21,6 +21,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <unistd.h>
 extern "C" {
   #include <gmime/gmime.h>
   #include <glib/gi18n.h>
@@ -57,9 +58,14 @@ using namespace pan;
 
 #define USER_AGENT_PREFS_KEY "add-user-agent-header-when-posting"
 #define MESSAGE_ID_PREFS_KEY "add-message-id-header-when-posting"
+#define USER_AGENT_EXTRA_PREFS_KEY "user-agent-extra-info"
 
 namespace
 {
+#ifndef HAVE_CLOSE
+inline int close(int fd) {return _close(fd);}
+#endif
+
   bool remember_charsets (true);
 
   void on_remember_charset_toggled (GtkToggleAction * toggle, gpointer)
@@ -347,6 +353,11 @@ PostUI :: close_window ()
     gtk_widget_destroy (d);
   }
 
+  int w,h;
+  gtk_window_get_size( GTK_WINDOW(_root), &w, &h);
+  _prefs.set_int("post-ui-width", w);
+  _prefs.set_int("post-ui-height", h);
+
   if (destroy_flag)
     gtk_widget_destroy (_root);
 }
@@ -511,8 +522,8 @@ PostUI :: maybe_mail_message (GMimeMessage * message)
 {
   std::string url, to, groups;
   gboolean unused;
-  char * headers (g_mime_message_get_headers (message));
-  char * body (g_mime_message_get_body (message, true, &unused));
+  char * headers (g_mime_object_get_headers ((GMimeObject *) message));
+  char * body (pan_g_mime_message_get_body (message, &unused));
   StringView key, val, v(headers);
   v.trim ();
   while (v.pop_token (val, '\n') && val.pop_token(key,':')) {
@@ -611,7 +622,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   *** If this is email only, skip the rest of the posting...
   *** we only stayed this long to get check_message()
   **/
-  const StringView groups (g_mime_message_get_header (message, "Newsgroups"));
+  const StringView groups (g_mime_object_get_header ((GMimeObject *) message, "Newsgroups"));
   if (groups.empty()) {
     maybe_mail_message (message);
     return true;
@@ -649,11 +660,12 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   char buf[512];
   g_snprintf (buf, sizeof(buf), "<b>%s</b>", _("Posting..."));
   GtkWidget * w = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL, "use-markup", TRUE, "label", buf, NULL));
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(d)->vbox), w, false, false, PAD_SMALL);
+  GtkWidget *content = gtk_dialog_get_content_area(GTK_DIALOG(d));
+  gtk_box_pack_start (GTK_BOX(content), w, false, false, PAD_SMALL);
   w = gtk_progress_bar_new ();
   gtk_progress_bar_set_pulse_step (GTK_PROGRESS_BAR(w), 0.05);
   const guint tag = g_timeout_add (100, pulse_me, w);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(d)->vbox), w, false, false, PAD_SMALL);
+  gtk_box_pack_start (GTK_BOX(content), w, false, false, PAD_SMALL);
   g_object_set_data_full (G_OBJECT(d), "progressbar-timeout-tag", GUINT_TO_POINTER(tag), remove_progress_tag);
   _post_dialog = d;
   g_signal_connect (_post_dialog, "destroy", G_CALLBACK(gtk_widget_destroyed), &_post_dialog);
@@ -683,10 +695,27 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 ****
 ***/
 
+namespace
+{
+	typedef struct
+	{
+		GPid pid;
+		char *fname;
+		PostUI *pui;
+	} se_data;
+	
+	void child_watch_cb(GPid pid, gint status, gpointer data)
+	{
+		se_data *d=static_cast<se_data*>(data);
+		static_cast<PostUI*>(d->pui)->spawn_editor_dead(static_cast<char*>(d->fname));
+		g_spawn_close_pid(pid);
+		delete d;
+	}
+}
+
 void
 PostUI :: spawn_editor ()
 {
-  GtkTextBuffer * buf (_body_buf);
   bool ok (true);
 
   // open a new tmp file
@@ -696,8 +725,10 @@ PostUI :: spawn_editor ()
     GError * err = NULL;
     const int fd (g_file_open_tmp ("pan_edit_XXXXXX", &fname, &err));
     if (fd != -1)
-      fp = fdopen (fd, "w");
-    else {
+    {
+      close(fd);
+      fp = g_fopen (fname, "w");
+    } else {
       Log::add_err (err && err->message ? err->message : _("Error opening temporary file"));
       if (err)
         g_clear_error (&err);
@@ -765,17 +796,32 @@ PostUI :: spawn_editor ()
   // spawn off the external editor
   if (ok) {
     GError * err (0);
-    g_spawn_sync (0, argv, 0, G_SPAWN_SEARCH_PATH, 0, 0, 0, 0, 0, &err);
+    se_data *data=new se_data;
+    data->fname=fname;
+    data->pui=this;
+    g_spawn_async (0, argv, 0, (GSpawnFlags)(G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD), 0, 0, &data->pid, &err);
     if (err != NULL) {
       Log::add_err_va (_("Error starting external editor: %s"), err->message);
       g_clear_error (&err);
       ok = false;
+      delete data;
+    } else {
+      g_child_watch_add(data->pid,child_watch_cb,static_cast<gpointer>(data));
     }
+  } else {
+	  g_free(fname);
   }
 
+  g_strfreev (argv);
+}
+
+void PostUI::spawn_editor_dead(char *fname)
+{
+	GtkTextBuffer * buf (_body_buf);
+	
   // read the file contents back in
   std::string txt;
-  if (ok && file :: get_text_file_contents (fname, txt)) {
+  if (file :: get_text_file_contents (fname, txt)) {
     GtkTextIter start, end;
     gtk_text_buffer_get_bounds (buf, &start, &end);
     gtk_text_buffer_delete (buf, &start, &end);
@@ -785,7 +831,6 @@ PostUI :: spawn_editor ()
   // cleanup
   ::remove (fname);
   g_free (fname);
-  g_strfreev (argv);
 
   gtk_window_present (GTK_WINDOW(root()));
 }
@@ -851,9 +896,14 @@ PostUI :: open_draft ()
 
 namespace
 {
+  bool ua_extra=false;
+
   const char * get_user_agent ()
   {
-    return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE ")";
+    if (ua_extra)
+      return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE "; " GIT_REV "; " PLATFORM_INFO ")";
+    else
+      return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE "; " GIT_REV ")";
   }
 
   bool header_has_dedicated_entry (const StringView& name)
@@ -885,9 +935,9 @@ namespace
    */
   void pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
   {
-    g_mime_message_add_header (msg, "Message-ID", mid);
+    g_mime_object_append_header ((GMimeObject *) msg, "Message-ID", mid);
     char * bracketed = g_strdup_printf ("<%s>", mid);
-    g_mime_header_set (GMIME_OBJECT(msg)->headers, "Message-ID", bracketed);
+    g_mime_header_list_set (GMIME_OBJECT(msg)->headers, "Message-ID", bracketed);
     g_free (bracketed);
   }
 }
@@ -910,27 +960,27 @@ PostUI :: new_message_from_ui (Mode mode)
   // headers from the ui: To
   const StringView to (gtk_entry_get_text (GTK_ENTRY(_to_entry)));
   if (!to.empty())
-    g_mime_message_add_recipients_from_string (msg, (char*)GMIME_RECIPIENT_TYPE_TO, to.str);
+    pan_g_mime_message_add_recipients_from_string (msg, GMIME_RECIPIENT_TYPE_TO, to.str);
 
   // headers from the ui: Newsgroups
   const StringView groups (gtk_entry_get_text (GTK_ENTRY(_groups_entry)));
   if (!groups.empty())
-    g_mime_message_set_header (msg, "Newsgroups", groups.str);
+    g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", groups.str);
 
   // headers from the ui: Followup-To
   const StringView followupto (gtk_entry_get_text (GTK_ENTRY(_followupto_entry)));
   if (!followupto.empty())
-    g_mime_message_set_header (msg, "Followup-To", followupto.str);
+    g_mime_object_set_header ((GMimeObject *) msg, "Followup-To", followupto.str);
 
   // headers from the ui: Reply-To
   const StringView replyto (gtk_entry_get_text (GTK_ENTRY(_replyto_entry)));
   if (!replyto.empty())
-    g_mime_message_set_header (msg, "Reply-To", replyto.str);
+    g_mime_object_set_header ((GMimeObject *) msg, "Reply-To", replyto.str);
 
   // add the 'hidden headers'
   foreach_const (str2str_t, _hidden_headers, it)
     if ((mode==DRAFTING) || (it->first.find ("X-Draft-")!=0))
-      g_mime_message_set_header (msg, it->first.c_str(), it->second.c_str());
+      g_mime_object_set_header ((GMimeObject *) msg, it->first.c_str(), it->second.c_str());
 
   // build headers from the 'more headers' entry field
   std::map<std::string,std::string> headers;
@@ -946,14 +996,14 @@ PostUI :: new_message_from_ui (Mode mode)
     val.trim ();
     std::string key_str (key.to_string());
     if (extra_header_is_editable (key, val))
-      g_mime_message_set_header (msg, key.to_string().c_str(),
-                                      val.to_string().c_str());
+      g_mime_object_set_header ((GMimeObject *) msg, key.to_string().c_str(),
+                                val.to_string().c_str());
   }
   g_free (pch);
 
   // User-Agent
   if (mode==POSTING && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
-    g_mime_message_set_header (msg, "User-Agent", get_user_agent());
+    g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent());
 
   // Message-ID
   if (mode==POSTING && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
@@ -969,22 +1019,22 @@ PostUI :: new_message_from_ui (Mode mode)
   const std::string charset ((mode==POSTING && !_charset.empty()) ? _charset : "UTF-8");
   if (charset != "UTF-8") {
     // add a wrapper to convert from UTF-8 to $charset
-    GMimeStream * tmp = g_mime_stream_filter_new_with_stream (stream);
+    GMimeStream * tmp = g_mime_stream_filter_new (stream);
     g_object_unref (stream);
     GMimeFilter * filter = g_mime_filter_charset_new ("UTF-8", charset.c_str());
     g_mime_stream_filter_add (GMIME_STREAM_FILTER(tmp), filter);
     g_object_unref (filter);
     stream = tmp;
   }
-  GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_PART_ENCODING_DEFAULT);
+  GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   g_object_unref (stream);
   GMimePart * part = g_mime_part_new ();
   pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
   GMimeContentType * type = g_mime_content_type_new_from_string (pch);
   g_free (pch);
-  g_mime_part_set_content_type (part, type); // part owns type now. type isn't refcounted.
+  g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
   g_mime_part_set_content_object (part, content_object);
-  g_mime_part_set_encoding (part, GMIME_PART_ENCODING_8BIT);
+  g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
   g_object_unref (content_object);
   g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
   g_object_unref (part);
@@ -1018,7 +1068,7 @@ PostUI :: save_draft ()
 
     errno = 0;
     std::ofstream o (filename);
-    char * pch = g_mime_message_to_string (msg);
+    char * pch = g_mime_object_to_string ((GMimeObject *) msg);
     o << pch;
     o.close ();
 
@@ -1472,6 +1522,16 @@ PostUI :: utf8ize (const StringView& in) const
   return content_to_utf8 (in, _charset.c_str(), local_charset);
 }
 
+#if GMIME_MINOR_VERSION == 4
+namespace {
+  inline GMimeStream* gmime_header_list_get_stream(GMimeHeaderList *hl)
+  {
+    // the name of this function was changed for 2.6
+    return gmime_header_list_has_raw(hl);
+  }
+}
+#endif
+
 void
 PostUI :: set_message (GMimeMessage * message)
 {
@@ -1486,16 +1546,16 @@ PostUI :: set_message (GMimeMessage * message)
   std::string s = utf8ize (g_mime_message_get_subject (message));
   gtk_entry_set_text (GTK_ENTRY(_subject_entry), s.c_str());
 
-  s = utf8ize (g_mime_message_get_header (message, "Newsgroups"));
+  s = utf8ize (g_mime_object_get_header ((GMimeObject *) message, "Newsgroups"));
   gtk_entry_set_text (GTK_ENTRY(_groups_entry), s.c_str());
 
-  s = utf8ize (g_mime_message_get_header (message, "Followup-To"));
+  s = utf8ize (g_mime_object_get_header ((GMimeObject *) message, "Followup-To"));
   gtk_entry_set_text (GTK_ENTRY(_followupto_entry), s.c_str());
 
-  s = utf8ize (g_mime_message_get_header (message, "Reply-To"));
+  s = utf8ize (g_mime_object_get_header ((GMimeObject *) message, "Reply-To"));
   gtk_entry_set_text (GTK_ENTRY(_replyto_entry), s.c_str());
 
-  const InternetAddressList * addresses = g_mime_message_get_recipients (message, GMIME_RECIPIENT_TYPE_TO);
+  InternetAddressList * addresses = g_mime_message_get_recipients (message, GMIME_RECIPIENT_TYPE_TO);
   char * pch  = internet_address_list_to_string (addresses, true);
   s = utf8ize (pch);
   gtk_entry_set_text (GTK_ENTRY(_to_entry), s.c_str());
@@ -1503,16 +1563,34 @@ PostUI :: set_message (GMimeMessage * message)
 
   // update 'other headers'
   SetMessageForeachHeaderData data;
-  if (message->mime_part && g_mime_header_has_raw (message->mime_part->headers))
-    g_mime_header_foreach (message->mime_part->headers, set_message_foreach_header_func, &data);
-  g_mime_header_foreach (GMIME_OBJECT(message)->headers, set_message_foreach_header_func, &data);
+  const char *name, *value;
+  GMimeHeaderIter iter;
+  
+  if (message->mime_part && g_mime_header_list_get_stream (message->mime_part->headers)) {
+    if (g_mime_header_list_get_iter (message->mime_part->headers, &iter)) {
+      do {
+        value = g_mime_header_iter_get_value (&iter);
+        name = g_mime_header_iter_get_name (&iter);
+        set_message_foreach_header_func (name, value, &data);
+      } while (g_mime_header_iter_next (&iter));
+    }
+  }
+  
+  if (g_mime_header_list_get_iter (GMIME_OBJECT (message)->headers, &iter)) {
+    do {
+      value = g_mime_header_iter_get_value (&iter);
+      name = g_mime_header_iter_get_name (&iter);
+      set_message_foreach_header_func (name, value, &data);
+    } while (g_mime_header_iter_next (&iter));
+  }
+  
   s = utf8ize (data.visible_headers);
   gtk_text_buffer_set_text (_headers_buf, s.c_str(), -1);
   _hidden_headers = data.hidden_headers;
 
   // update body
   int ignored;
-  char * tmp = g_mime_message_get_body (message, true, &ignored);
+  char * tmp = pan_g_mime_message_get_body (message, &ignored);
   s = utf8ize (tmp);
   g_free (tmp);
   if (!s.empty()) {
@@ -1856,12 +1934,17 @@ PostUI :: PostUI (GtkWindow    * parent,
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != 0);
 
+  ua_extra = prefs.get_flag(USER_AGENT_EXTRA_PREFS_KEY, false);
+
   // create the window
   _root = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_signal_connect (_root, "delete-event", G_CALLBACK(delete_event_cb), this);
   gtk_window_set_role (GTK_WINDOW(_root), "pan-post-window");
   gtk_window_set_title (GTK_WINDOW(_root), _("Post Article"));
-  gtk_window_set_default_size (GTK_WINDOW(_root), -1, 450);
+  int w,h;
+  w = _prefs.get_int("post-ui-width", -1);
+  h = _prefs.get_int("post-ui-height", 450);
+  gtk_window_set_default_size (GTK_WINDOW(_root), w, h);
   g_object_set_data_full (G_OBJECT(_root), "post-ui", this, delete_post_ui);
   if (parent) {
     gtk_window_set_transient_for (GTK_WINDOW(_root), parent);

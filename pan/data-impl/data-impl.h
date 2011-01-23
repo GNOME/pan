@@ -40,6 +40,7 @@
 #include <pan/data-impl/data-io.h>
 #include <pan/data-impl/article-filter.h>
 #include <pan/data-impl/profiles.h>
+#include <pan/data-impl/memchunk.h>
 
 namespace pan
 {
@@ -357,8 +358,8 @@ namespace pan
         int _ref;
         bool _dirty;
         nodes_t _nodes;
-        std::deque<Article> _art_chunk;
-        std::deque<ArticleNode> _node_chunk;
+        MemChunk<Article> _art_chunk;
+        MemChunk<ArticleNode> _node_chunk;
 
         GroupHeaders();
         ~GroupHeaders ();
@@ -442,7 +443,7 @@ namespace pan
           const Quark _group;
           DataImpl & _data;
           nodes_t _nodes;
-          std::deque<ArticleNode> _node_chunk;
+          MemChunk<ArticleNode> _node_chunk;
           FilterInfo _filter;
           Data::ShowType _show_type;
           struct NodeMidCompare;
@@ -500,7 +501,7 @@ namespace pan
                                                size_t                end_line,
                                                bool                  do_rescore);
 
-      void rescore_articles (const Quark& group, const quarks_t mids);
+      virtual void rescore_articles (const Quark& group, const quarks_t mids);
 
       virtual void rescore ();
 

@@ -213,7 +213,6 @@ int main (void)
    check (out == expected_out);
 
    // mute quoted test: realworld 2
-   check (out == expected_out);
    in =
 "In article <bl0D6.3171$Uo2.75315@zwoll1.home.nl>, \"Marcel Pol\"\n"
 "<mpol@nospam.gmx.net> wrote:\n"
@@ -260,6 +259,83 @@ int main (void)
    expected_out = in;
    out = tm.mute_quotes (in);
    check (out == expected_out);
+
+   const char *in2, *sep="_";
+   in2 = "prefix - one ...__   - two - three";
+   expected_out = "prefix_one_two_three";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "prefix File 25 of 1000 one Post 1 _ 25: two file 1_10 end";
+   expected_out = "prefix_one_two_end";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "prefix [1 of 10] middle (2 / 20) end";
+   expected_out = "prefix_middle_end";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "prefix \" file name here\" yEnc ending";
+   expected_out = "prefix";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "prefix file name here yEnc ending";
+   expected_out = "prefix_file_name";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "prefix \"stuff \"\" file name here.sdf\" bar baz.gd ending";
+   expected_out = "prefix_stuff_bar_ending";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "prefix 2Kb one 3kB two 10 KB three 100 Bytes four [5 KB] end \t";
+   expected_out = "prefix_one_two_three_four_end";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "prefix / a \\ b < c > d | e * f ? g ' h \" end";
+   expected_out = "prefix_a_b_c_d_e_f_g_h_end";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "[foo]     K's    \"kpsh eg02b.jpg\" (0/2) 685k bar ";
+   expected_out = "[foo]_K_s_bar";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "[ASDF-FDSE]  Name1 & Name2 - Spettertje - 01 title here  (thx AntA)  Post 6_6 - File 9_9 - aaspettertje01.sfv (1/1)";
+   expected_out = "[ASDF-FDSE]_Name1_&_Name2_Spettertje_01_title_here_(thx_AntA)";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "Evil, Wicked Queen-e01.jpg(1/01)";
+   expected_out = "Evil,_Wicked";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "some text here...  and more... 123.jpg";
+   expected_out = "some_text_here_and_more";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "who are you? 123.jpg";
+   expected_out = "who_are_you";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "one - two three [1/2] - \"00 - title spaces.foo\" yEnc (1/5)";
+   expected_out = "one_two_three";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
+   in2 = "one - two three [1/2] - \"00 - title spaces.foo\" (/5)";
+   expected_out = "one_two_three";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
+   check(out == expected_out);
 
    // success
    return 0;

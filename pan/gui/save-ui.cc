@@ -27,6 +27,7 @@ extern "C" {
 #include <pan/icons/pan-pixbufs.h>
 #include <pan/tasks/task-article.h>
 #include <pan/tasks/queue.h>
+#include <pan/usenet-utils/text-massager.h>
 #include "hig.h"
 #include "pad.h"
 #include "pan-file-entry.h"
@@ -52,11 +53,25 @@ namespace
     return val;
   }
 
+  std::string expand_download_dir_subject (const char * dir, const char * subjectline, const std::string &sep)
+  {
+    std::string val (dir);
+    std::string sub (subject_to_path(subjectline, sep));
+    std::string::size_type pos;
+
+    while (((pos = val.find ("%s"))) != val.npos)
+      val.replace (pos, 2, sub);
+
+    return val;
+  }
+
+
   void
   show_group_substitution_help_dialog (gpointer window)
   {
     const char * str = _("%g - group as one directory (alt.binaries.pictures.trains)\n"
                          "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+                         "%s - subject line excerpt\n"
                          " \n"
                          "\"/home/user/News/Pan/%g\" becomes\n"
                          "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
@@ -89,6 +104,7 @@ SaveDialog :: response_cb (GtkDialog * dialog,
   if (response == GTK_RESPONSE_OK)
   {
     SaveDialog * self (static_cast<SaveDialog*>(user_data));
+    bool subject_in_path = false;
 
     // set the path mode based on what widgets exist & are set
     GtkWidget * gr (self->_save_group_path_radio);
@@ -99,14 +115,16 @@ SaveDialog :: response_cb (GtkDialog * dialog,
       path_mode = PATH_ENTRY;
 
     // get the save path
-    std::string path;
+    std::string path, opath;
     if (path_mode == PATH_GROUP)
       path = (const char*) g_object_get_data (G_OBJECT(gr), "default-group-save-path");
     else if (path_mode == PATH_ENTRY)  {
       path = pan :: file_entry_get (self->_save_path_entry);
       self->_prefs.set_string ("default-save-attachments-path", path);
     }
-    path = expand_download_dir (path.c_str(), self->_group.to_view());
+    path = opath = expand_download_dir (path.c_str(), self->_group.to_view());
+    if (path.find("%s") != path.npos)
+      subject_in_path = true;
 
     // get the save mode
     int save_mode;
@@ -115,9 +133,14 @@ SaveDialog :: response_cb (GtkDialog * dialog,
     else if (s == "save-attachments-and-text") save_mode = TaskArticle::DECODE | TaskArticle::RAW;
     else                                       save_mode = TaskArticle::DECODE;
 
+    std::string sep( self->_prefs.get_string("save-subj-seperator", "-") );
+
     // make the tasks... 
     Queue::tasks_t tasks;
     foreach_const (std::vector<Article>, self->_articles, it)
+    {
+      if (subject_in_path)
+        path = expand_download_dir_subject(opath.c_str(), it->subject, sep);
       tasks.push_back (new TaskArticle (self->_server_rank,
                                         self->_group_server,
                                         *it,
@@ -126,6 +149,7 @@ SaveDialog :: response_cb (GtkDialog * dialog,
                                         0,
                                         TaskArticle::SaveMode(save_mode),
                                         path));
+    }
 
     // get the queue mode...
     Queue::AddMode queue_mode;
@@ -300,7 +324,7 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
   w = HIG :: workarea_add_row (t, &row, _("_Priority:"), w);
 
   gtk_widget_show_all (t);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->vbox), t, true, true, 0);
+  gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(dialog))), t, true, true, 0);
   gtk_widget_grab_focus (focus);
   _root = dialog;
 }

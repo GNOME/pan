@@ -63,14 +63,18 @@ main( )
      "   {:\n"
      "     Subject: ^Re:\n"
      "     ~Subject: ^Re:.*\\c[a-z]\n"
-     "   }\n";
+     "   }\n"
+     "\n"
+     "[alt.filters]\n"
+     "   Score: -10\n"
+     "   foo: filter\n";
 
   const std::string filename = "/home/charles/News/Score";
   Scorefile scorefile (my_ftr);
   scorefile.parse_file (filename);
   const Scorefile::sections_t& sections (scorefile.get_sections());
 
-  check (sections.size() == 2)
+  check (sections.size() == 3)
   const Scorefile::Section& section (sections[0]);
   check (!section.negate)
   check (section.name == "news.software.readers")
@@ -217,7 +221,15 @@ main( )
   check (item.test._aggregates[1]._aggregates[1]._text.get_state().case_sensitive == false)
   check (item.test._aggregates[1]._aggregates[1]._text.get_state().text == "^Re:.*\\c[a-z]")
 
-
+//     "[alt.filters]\n"
+//     "   Score: -10\n"
+//     "   foo: filter\n";
+  const Scorefile::Section& s3 (sections[2]);
+  check (s3.negate == false)
+  check (s3.name == "alt.filters")
+  check (s3.items.size()==1)
+  item = s3.items[0];
+  check(item.test._needs_body == true)
 
 #if 0
   Scorefile::Item = sectionscheck 

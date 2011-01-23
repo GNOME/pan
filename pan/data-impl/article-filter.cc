@@ -22,6 +22,7 @@
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/data/data.h>
+#include <gmime/gmime.h>
 #include <glib/gprintf.h>
 #include "article-filter.h"
 
@@ -49,16 +50,19 @@ ArticleFilter :: test_article (const Data        & data,
                                const Quark       & group,
                                const Article     & article) const
 {
+  const ArticleCache & cache(data.get_cache());
   bool pass (false);
   switch (criteria._type)
   {
     case FilterInfo::AGGREGATE_AND:
       pass = true;
       foreach_const (FilterInfo::aggregates_t, criteria._aggregates, it) {
-        if (!test_article (data, *it, group, article)) {
-          pass = false;
-          break;
-        }
+        // assume test passes if test needs body but article not cached
+        if (!it->_needs_body || cache.contains(article.message_id) )
+          if (!test_article (data, *it, group, article)) {
+            pass = false;
+            break;
+          }
       }
       break;
 
@@ -68,10 +72,12 @@ ArticleFilter :: test_article (const Data        & data,
       else {
         pass = false;
         foreach_const (FilterInfo::aggregates_t, criteria._aggregates, it) {
-          if (test_article (data, *it, group, article)) {
-            pass = true;
-            break;
-          }
+          // assume test fails if test needs body but article not cached
+          if (!it->_needs_body || cache.contains(article.message_id) )
+            if (test_article (data, *it, group, article)) {
+              pass = true;
+              break;
+            }
         }
       }
       break;
@@ -119,7 +125,7 @@ ArticleFilter :: test_article (const Data        & data,
         }
         else if (criteria._text._impl_text.find("(.*:){") != std::string::npos) // user is filtering by # of crossposts
         {
-          const char * search = "(.*:){";
+          const char * search = "(.*:){";//}
           std::string::size_type pos = criteria._text._impl_text.find (search) + strlen(search);
           const int ge = atoi (criteria._text._impl_text.c_str() + pos);
           FilterInfo tmp;
@@ -177,7 +183,19 @@ ArticleFilter :: test_article (const Data        & data,
         pass = criteria._text.test (s);
       }
       else
-        pass = criteria._text.test (get_header(article, criteria._header));
+        if (!criteria._needs_body)
+          pass = criteria._text.test (get_header(article, criteria._header));
+        else
+        {
+          if (cache.contains(article.message_id)) {
+            ArticleCache::mid_sequence_t mid(1, article.message_id);
+            GMimeMessage *msg = cache.get_message(mid);
+            const char *hdr = g_mime_object_get_header(GMIME_OBJECT(msg), criteria._header);
+            pass = criteria._text.test (hdr);
+            g_object_unref(msg);
+          }
+          else pass = false;
+        }
       break;
 
     case FilterInfo::SCORE_GE:

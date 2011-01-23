@@ -361,8 +361,10 @@ HeaderPane :: column_compare_func (GtkTreeModel  * model,
 {
   int ret (0);
   const PanTreeStore * store (reinterpret_cast<PanTreeStore*>(model));
-  const Row& row_a (*dynamic_cast<const Row*>(store->get_row (iter_a)));
-  const Row& row_b (*dynamic_cast<const Row*>(store->get_row (iter_b)));
+  //const Row& row_a (*dynamic_cast<const Row*>(store->get_row (iter_a)));
+  //const Row& row_b (*dynamic_cast<const Row*>(store->get_row (iter_b)));
+  const Row& row_a (*static_cast<const Row*>(store->get_row (iter_a)));
+  const Row& row_b (*static_cast<const Row*>(store->get_row (iter_b)));
 
   int sortcol;
   GtkSortType order;
@@ -543,8 +545,11 @@ HeaderPane :: set_group (const Quark& new_group)
       _atree->add_listener (this);
 
       rebuild ();
-
+#ifndef GTK_WIDGET_REALIZED
+      if (gtk_widget_get_realized(_tree_view))
+#else
       if (GTK_WIDGET_REALIZED(_tree_view))
+#endif
         gtk_tree_view_scroll_to_point (GTK_TREE_VIEW(_tree_view), 0, 0);
     }
   }
@@ -1008,6 +1013,7 @@ namespace
   const char * mode_strings [] =
   {
     N_("Subject or Author"),
+    N_("Sub or Auth (regex)"),
     N_("Subject"),
     N_("Author"),
     N_("Message-ID"),
@@ -1016,6 +1022,7 @@ namespace
   enum
   {
     SUBJECT_OR_AUTHOR,
+    SUBJECT_OR_AUTHOR_REGEX,
     SUBJECT,
     AUTHOR,
     MESSAGE_ID
@@ -1047,6 +1054,14 @@ HeaderPane :: rebuild_filter (const std::string& text, int mode)
     else if (mode == SUBJECT_OR_AUTHOR) {
       FilterInfo f1, f2;
       entry_filter.set_type_aggregate_or ();
+      f1.set_type_text ("Subject", d);
+      f2.set_type_text ("From", d);
+      entry_filter._aggregates.push_back (f1);
+      entry_filter._aggregates.push_back (f2);
+    } else if (mode == SUBJECT_OR_AUTHOR_REGEX) {
+      FilterInfo f1, f2;
+      entry_filter.set_type_aggregate_or ();
+      d.type = TextMatch::REGEX;
       f1.set_type_text ("Subject", d);
       f2.set_type_text ("From", d);
       entry_filter._aggregates.push_back (f1);
@@ -1189,9 +1204,16 @@ namespace
     return false;
   }
 
+#if !GTK_CHECK_VERSION(2,18,0)
+  bool gtk_widget_has_focus( GtkWidget *w)
+  {
+    return GTK_WIDGET_HAS_FOCUS(w);
+  }
+#endif
+
   void refresh_search_entry (GtkWidget * w)
   {
-    if (search_text.empty() && !GTK_WIDGET_HAS_FOCUS(w))
+    if (search_text.empty() && !gtk_widget_has_focus(w))
     {
       GdkColor c;
       c.pixel = 0;
@@ -1499,14 +1521,20 @@ HeaderPane :: create_filter_entry ()
                                   GTK_ENTRY_ICON_SECONDARY,
                                   GTK_STOCK_CLEAR );
 
+  bool regex = _prefs.get_flag ("use-regex", false);
   GtkWidget * menu = gtk_menu_new ();
-  mode = 0;
+  if (regex == true )
+    mode = 1;
+  else
+    mode = 0;
   GSList * l = 0;
   for (int i=0, qty=G_N_ELEMENTS(mode_strings); i<qty; ++i) {
     GtkWidget * w = gtk_radio_menu_item_new_with_label (l, _(mode_strings[i]));
     l = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM(w));
     g_object_set_data (G_OBJECT(w), "MODE", GINT_TO_POINTER(i));
     g_signal_connect (w, "toggled", G_CALLBACK(search_menu_toggled_cb),entry);
+    if (mode == i)
+      gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM(w), TRUE);
     gtk_menu_shell_append (GTK_MENU_SHELL(menu), w);
     gtk_widget_show (w);
   }
@@ -2042,6 +2070,9 @@ HeaderPane :: on_queue_task_removed (Queue&, Task& task, int)
 void
 HeaderPane :: on_cache_added (const Quark& message_id)
 {
+  quarks_t q;
+  q.insert(message_id);
+  _data.rescore_articles ( _group, q );
   rebuild_article_action (message_id);
 }
 void

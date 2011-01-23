@@ -23,6 +23,7 @@
 #include <iosfwd>
 #include <string>
 #include <cstring>
+#include <glib.h>
 
 namespace pan
 {
@@ -114,9 +115,9 @@ namespace pan
 
          int strncasecmp (const char * p, unsigned int l) {
            if (len >= l)
-             return ::strncasecmp (str, p, l);
+             return g_ascii_strncasecmp (str, p, l);
            else {
-             int i = ::strncasecmp (str, p, len);
+             int i = g_ascii_strncasecmp (str, p, len);
              if (i)
                return i;
              return -1; // shorter, so less than p
