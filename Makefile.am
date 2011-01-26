@@ -6,13 +6,11 @@ DESKTOP_IN_FILES=pan.desktop.in
 DESKTOP_FILES=$(DESKTOP_IN_FILES:.desktop.in=.desktop)
 
 DISTCLEANFILES = \
+ gnome-doc-utils.make \
  intltool-extract \
  intltool-merge \
  intltool-update \
- pan.desktop \
- gnome-doc-utils.make
-
-DISTCHECK_CONFIGURE_FLAGS="--disable-scrollkeeper"
+ pan.desktop
 
 EXTRA_DIST = \
  README \
@@ -20,12 +18,15 @@ EXTRA_DIST = \
  README.mingw \
  ChangeLog \
  Pan.ico \
+ gnome-doc-utils.make \
+ m4 \
  pan.spec \
  pan.png \
  $(DESKTOP_IN_FILES) \
  $(DESKTOP_FILES) \
- intltool-extract.in intltool-merge.in intltool-update.in \
- gnome-doc-utils.make
+ intltool-extract.in intltool-merge.in intltool-update.in
+
+DISTCHECK_CONFIGURE_FLAGS="--disable-scrollkeeper"
 
 Productivitydir = $(datadir)/applications
 Productivity_DATA = $(DESKTOP_FILES)
