@@ -9,8 +9,10 @@ DISTCLEANFILES = \
  intltool-extract \
  intltool-merge \
  intltool-update \
- pan.desktop
+ pan.desktop \
+ gnome-doc-utils.make
 
+DISTCHECK_CONFIGURE_FLAGS="--disable-scrollkeeper"
 
 EXTRA_DIST = \
  README \
@@ -22,7 +24,8 @@ EXTRA_DIST = \
  pan.png \
  $(DESKTOP_IN_FILES) \
  $(DESKTOP_FILES) \
- intltool-extract.in intltool-merge.in intltool-update.in
+ intltool-extract.in intltool-merge.in intltool-update.in \
+ gnome-doc-utils.make
 
 Productivitydir = $(datadir)/applications
 Productivity_DATA = $(DESKTOP_FILES)
