@@ -1,4 +1,4 @@
-SUBDIRS = po uulib pan
+SUBDIRS = help po uulib pan
 
 @INTLTOOL_DESKTOP_RULE@
 
@@ -19,7 +19,6 @@ EXTRA_DIST = \
  ChangeLog \
  Pan.ico \
  gnome-doc-utils.make \
- m4 \
  pan.spec \
  pan.png \
  $(DESKTOP_IN_FILES) \
