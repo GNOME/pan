@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appversion "1.0">
   <!ENTITY manrevision "0.1">
   <!ENTITY date "December 2006">
   <!ENTITY app "<application>Pan</application>">
+  <!ENTITY appname "Pan">
   <!-- Information about the entities
        The legal.xml file contains legal information, there is no need to edit the file. 
        Use the appversion entity to specify the version of the application.
@@ -36,6 +37,7 @@
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
   <articleinfo> 
+    <abstract role="description"><para>Manual for the Pan Newsreader.</para></abstract>
     <title><application>Pan</application> Manual v1.0</title>       
 
     <copyright> 
@@ -61,9 +63,10 @@
    <!-- This file  contains link to license for the documentation (GNU FDL), and 
         other legal stuff such as "NO WARRANTY" statement. Please do not change 
 	any of this. -->
+    &legal;
 
     <authorgroup> 
-      <author> 
+      <author role="maintainer"> 
 		<firstname>Douglas</firstname> 
 		<surname>Bollinger</surname> 
 		<affiliation> 
