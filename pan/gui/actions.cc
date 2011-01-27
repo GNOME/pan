@@ -579,7 +579,7 @@ namespace
       G_CALLBACK(do_reply_to) },
 
     { "pan-manual", NULL,
-      N_("_Contents"), NULL, 
+      N_("_Contents"), "F1", 
       NULL,
       G_CALLBACK(do_pan_manual) },
 
