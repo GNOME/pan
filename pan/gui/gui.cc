@@ -1227,6 +1227,22 @@ void GUI :: do_reply_to ()
   }
 }
 
+void GUI :: do_pan_manual ()
+{
+  GError *error = NULL;
+
+  gtk_show_uri (NULL, "ghelp:pan",  gtk_get_current_event_time (), &error);
+
+      if (error) {
+    GtkWidget * w = gtk_message_dialog_new (get_window(_root),
+                                            GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+                                            GTK_MESSAGE_ERROR,
+                                            GTK_BUTTONS_CLOSE,
+                                            "%s");
+    g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
+    gtk_widget_show_all (w);
+  }
+}
 void GUI :: do_pan_web ()
 {
   URL :: open (_prefs, "http://pan.rebelbase.com/");
