@@ -22,7 +22,8 @@ EXTRA_DIST = \
  pan.png \
  $(DESKTOP_IN_FILES) \
  $(DESKTOP_FILES) \
- intltool-extract.in intltool-merge.in intltool-update.in
+ intltool-extract.in intltool-merge.in intltool-update.in \
+ pan_git_rev
 
 Productivitydir = $(datadir)/applications
 Productivity_DATA = $(DESKTOP_FILES)
