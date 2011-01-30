@@ -113,9 +113,9 @@ namespace
      std::map<std::string, int> max_map;
      std::map<std::string, int>::iterator map_end = max_map.end();
      int prev_content_len = 0;
-     //int max_len = wrap_col;
      StringView cur_leader;
      std::string cur_content;
+     bool prev_ends_with_punct = true;
 
      for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
      {
@@ -149,7 +149,8 @@ namespace
           unsigned int space = max_map[line.leader] - (prev_content_len + line.leader.len) - 1;
           if ( space > 0 && ((line.content.len < space)
                               || g_utf8_strchr (line.content.str, space, ' ')) )
-            paragraph_end = true;
+            //paragraph_end = true;
+            paragraph_end = prev_ends_with_punct;
         }
 
         if (paragraph_end) // the new line is a new paragraph, so save old
@@ -175,6 +176,11 @@ namespace
         }
 
         prev_content_len = line.content.len;
+        if ( prev_content_len > 1)
+          prev_ends_with_punct = g_unichar_ispunct ( g_utf8_get_char (
+            g_utf8_find_prev_char ( line.content.str, line.content.str + line.content.len )));
+        else
+          prev_ends_with_punct = true;
      }
    }
 
