@@ -31,6 +31,7 @@ extern "C" {
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/scorefile.h>
+#include <pan/usenet-utils/mime-utils.h>
 #include <pan/tasks/task-article.h>
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>
@@ -105,7 +106,11 @@ namespace
 
   void toggle_visible (GtkWidget * w)
   {
+#if GTK_CHECK_VERSION(2,18,0)
+    set_visible (w, !gtk_widget_get_visible(w));
+#else
     set_visible (w, !GTK_WIDGET_VISIBLE(w));
+#endif
   }
 }
 
@@ -337,8 +342,8 @@ GUI :: ~GUI ()
   if (vpane)
     _prefs.set_int ("main-window-vpane-position", gtk_paned_get_position(GTK_PANED(vpane)));
 
-  const bool maximized = GTK_WIDGET(_root)->window
-                      && (gdk_window_get_state(_root->window) & GDK_WINDOW_STATE_MAXIMIZED);
+  const bool maximized = gtk_widget_get_window(_root)
+                      && (gdk_window_get_state( gtk_widget_get_window(_root)) & GDK_WINDOW_STATE_MAXIMIZED);
   _prefs.set_flag ("main-window-is-maximized", maximized);
 
   _prefs.remove_listener (this);
@@ -372,7 +377,7 @@ void
 GUI :: watch_cursor_on ()
 {
   GdkCursor * cursor = gdk_cursor_new (GDK_WATCH);
-  gdk_window_set_cursor (_root->window, cursor);
+  gdk_window_set_cursor ( gtk_widget_get_window(_root), cursor);
   gdk_cursor_unref (cursor);
   while (gtk_events_pending ())
     gtk_main_iteration ();
@@ -381,7 +386,7 @@ GUI :: watch_cursor_on ()
 void
 GUI :: watch_cursor_off ()
 {
-  gdk_window_set_cursor (_root->window, NULL);
+  gdk_window_set_cursor ( gtk_widget_get_window(_root), NULL);
 }
 
 /***
@@ -555,7 +560,7 @@ namespace
                          ArticleCache& c, const Article& a, const std::string& path):
       _data(d), _queue(q), _root(r), _prefs(p), _cache(c), _article(a), _path(path) {}
 
-    static void foreach_part_cb (GMimeObject *o, gpointer self)
+    static void foreach_part_cb (GMimeObject */*parent*/, GMimeObject *o, gpointer self)
     {
       static_cast<SaveArticlesFromNZB*>(self)->foreach_part (o);
     }
@@ -579,7 +584,6 @@ namespace
         if (!tasks.empty())
           _queue.add_tasks (tasks, Queue::BOTTOM);
         g_object_unref (mem_stream);
-        g_object_unref (wrapper);
       }
     }
 
@@ -589,7 +593,7 @@ namespace
     {
       if (status == OK) {
         GMimeMessage * message = _cache.get_message (_article.get_part_mids());
-        g_mime_message_foreach_part (message, foreach_part_cb, this);
+        g_mime_message_foreach (message, foreach_part_cb, this);
         g_object_unref (message);
       }
       delete this;
@@ -778,21 +782,21 @@ void GUI :: do_show_profiles_dialog ()
 void GUI :: do_jump_to_group_tab ()
 {
   toggle_action ("tabbed-layout", true);
-  GtkNotebook * n (GTK_NOTEBOOK (GTK_BIN (_workarea_bin)->child));
+  GtkNotebook * n (GTK_NOTEBOOK (gtk_bin_get_child( GTK_BIN (_workarea_bin))));
   gtk_notebook_set_current_page (n, 0);
 }
 
 void GUI :: do_jump_to_header_tab ()
 {
   toggle_action ("tabbed-layout", true);
-  GtkNotebook * n (GTK_NOTEBOOK (GTK_BIN (_workarea_bin)->child));
+  GtkNotebook * n (GTK_NOTEBOOK (gtk_bin_get_child( GTK_BIN (_workarea_bin))));
   gtk_notebook_set_current_page (n, 1);
 }
 
 void GUI :: do_jump_to_body_tab ()
 {
   toggle_action ("tabbed-layout", true);
-  GtkNotebook * n (GTK_NOTEBOOK (GTK_BIN (_workarea_bin)->child));
+  GtkNotebook * n (GTK_NOTEBOOK (gtk_bin_get_child( GTK_BIN (_workarea_bin))));
   gtk_notebook_set_current_page (n, 2);
 }
 
@@ -1029,19 +1033,22 @@ void GUI :: do_supersede_article ()
   const char * cpch;
   char * old_mid (g_strdup_printf ("<%s>", g_mime_message_get_message_id(message)));
   GMimeMessage * new_message (g_mime_message_new (false));
-  g_mime_message_set_header (new_message, "Supersedes", old_mid);
+  GMimeObject * new_message_obj = (GMimeObject*)new_message;
+
+  g_mime_object_set_header (new_message_obj, "Supersedes", old_mid);
   g_mime_message_set_sender (new_message, g_mime_message_get_sender (message));
   g_mime_message_set_subject (new_message, g_mime_message_get_subject (message));
-  g_mime_message_set_header (new_message, "Newsgroups", g_mime_message_get_header (message, "Newsgroups"));
-  g_mime_message_set_header (new_message, "References", g_mime_message_get_header (message, "References"));
+  g_mime_object_set_header (new_message_obj, "Newsgroups", g_mime_object_get_header ((GMimeObject *)message, "Newsgroups"));
+  g_mime_object_set_header (new_message_obj, "References", g_mime_object_get_header ((GMimeObject *)message, "References"));
   if ((cpch = g_mime_message_get_reply_to (message)))
               g_mime_message_set_reply_to (new_message, cpch);
-  if ((cpch = g_mime_message_get_header (message,     "Followup-To")))
-              g_mime_message_set_header (new_message, "Followup-To", cpch);
+  if ((cpch = g_mime_object_get_header ((GMimeObject *)message,     "Followup-To")))
+              g_mime_object_set_header (new_message_obj, "Followup-To", cpch);
   gboolean  unused (false);
-  char * body (g_mime_message_get_body (message, true, &unused));
+  char * body (pan_g_mime_message_get_body (message, &unused));
   GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body, strlen(body));
-  GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_PART_ENCODING_DEFAULT);
+  g_free (body);
+  GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   GMimePart * part = g_mime_part_new ();
   g_mime_part_set_content_object (part, content_object);
   g_mime_message_set_mime_part (new_message, GMIME_OBJECT(part));
@@ -1099,11 +1106,11 @@ void GUI :: do_cancel_article ()
   char * cancel_message = g_strdup_printf ("cancel <%s>", g_mime_message_get_message_id(message));
   g_mime_message_set_sender (cancel, g_mime_message_get_sender (message));
   g_mime_message_set_subject (cancel, "Cancel");
-  g_mime_message_set_header (cancel, "Newsgroups", g_mime_message_get_header (message, "Newsgroups"));
-  g_mime_message_set_header (cancel, "Control", cancel_message);
+  g_mime_object_set_header ((GMimeObject *)cancel, "Newsgroups", g_mime_object_get_header ((GMimeObject *)message, "Newsgroups"));
+  g_mime_object_set_header ((GMimeObject *)cancel, "Control", cancel_message);
   const char * body ("Ignore\r\nArticle canceled by author using " PACKAGE_STRING "\r\n");
   GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body, strlen(body));
-  GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_PART_ENCODING_DEFAULT);
+  GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   GMimePart * part = g_mime_part_new ();
   g_mime_part_set_content_object (part, content_object);
   g_mime_message_set_mime_part (cancel, GMIME_OBJECT(part));
@@ -1182,12 +1189,14 @@ GUI :: do_post ()
       newsgroups = group;
   }
   if (!newsgroups.empty())
-    g_mime_message_add_header (message, "Newsgroups", newsgroups.c_str());
+    g_mime_object_append_header ((GMimeObject *) message, "Newsgroups", newsgroups.c_str());
 
   // content type
   GMimePart * part = g_mime_part_new ();
-  g_mime_part_set_content_type (part, g_mime_content_type_new_from_string ("text/plain; charset=UTF-8"));
-  g_mime_part_set_encoding (part, GMIME_PART_ENCODING_8BIT);
+  GMimeContentType *type = g_mime_content_type_new_from_string ("text/plain; charset=UTF-8");
+  g_mime_object_set_content_type ((GMimeObject *) part, type);
+  g_object_unref (type);
+  g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
   g_mime_message_set_mime_part (message, GMIME_OBJECT(part));
   g_object_unref (part);
 
@@ -1237,7 +1246,7 @@ void GUI :: do_about_pan ()
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
-  gtk_about_dialog_set_comments (w, VERSION_TITLE);
+  gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
   gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2007 Charles Kerr"));
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
@@ -1259,8 +1268,9 @@ namespace
 {
   void remove_from_parent (GtkWidget * w)
   {
-    if (w->parent != 0)
-      gtk_container_remove (GTK_CONTAINER(w->parent), w);
+    GtkWidget *parent = gtk_widget_get_parent(w);
+    if (parent != 0)
+      gtk_container_remove (GTK_CONTAINER(parent), w);
   }
 
   enum { HORIZONTAL, VERTICAL };
@@ -1398,7 +1408,7 @@ void GUI :: do_tabbed_layout (bool tabbed)
   set_visible (body_w, is_action_active("show-body-pane"));
 
   if (tabbed)
-    gtk_notebook_set_current_page (GTK_NOTEBOOK(GTK_BIN(_workarea_bin)->child), 0);
+    gtk_notebook_set_current_page (GTK_NOTEBOOK( gtk_bin_get_child( GTK_BIN(_workarea_bin))), 0);
 }
 
 void GUI :: do_show_group_pane (bool b)

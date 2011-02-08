@@ -493,10 +493,21 @@ namespace
       gtk_tree_path_free (path);
     }
   }
+  const char * mode_strings [] =
+  {
+    N_("Group"),
+    N_("Group (regex)")
+  };
+
+  enum
+  {
+    GROUP,
+    GROUP_REGEX
+  };
 }
 
 void
-GroupPane :: set_filter (const std::string& search_text)
+GroupPane :: set_filter (const std::string& search_text, int mode)
 {
   GtkTreeView * view = GTK_TREE_VIEW(_tree_view);
 
@@ -508,7 +519,10 @@ GroupPane :: set_filter (const std::string& search_text)
   TextMatch match;
   TextMatch * pmatch (0);
   if (!search_text.empty()) {
-    match.set (search_text, TextMatch::CONTAINS, false);
+    if (mode == GROUP)
+      match.set (search_text, TextMatch::CONTAINS, false);
+    else if (mode == GROUP_REGEX)
+      match.set (search_text, TextMatch::REGEX, false);
     pmatch = &match;
   }
 
@@ -539,6 +553,7 @@ namespace
   guint activate_soon_tag (0u);
 
   std::string search_text;
+  int mode;
 
  void set_search_entry (GtkWidget * entry, const char * s)
   {
@@ -556,15 +571,22 @@ namespace
     return false;
   }
 
+#if !GTK_CHECK_VERSION(2,18,0)
+  bool gtk_widget_has_focus( GtkWidget *w)
+  {
+    return GTK_WIDGET_HAS_FOCUS(w);
+  }
+#endif
+
   void refresh_search_entry (GtkWidget * w)
   {
-    if (search_text.empty() && !GTK_WIDGET_HAS_FOCUS(w))
+    if (search_text.empty() && !gtk_widget_has_focus(w))
     {
       GdkColor c;
       c.pixel = 0;
       c.red = c.green = c.blue = 0xAAAA; // light grey
       gtk_widget_modify_text (w, GTK_STATE_NORMAL, &c);
-      set_search_entry (w, _("Group Name"));
+      set_search_entry (w, _(mode_strings[mode]));
     }
   }
 
@@ -578,7 +600,7 @@ namespace
 
   void search_activate (GroupPane * pane)
   {
-    pane->set_filter (search_text);
+    pane->set_filter (search_text, mode);
   }
 
   void remove_activate_soon_tag ()
@@ -596,12 +618,21 @@ namespace
     remove_activate_soon_tag ();
   }
 
-  void clear_button_clicked_cb (GtkEntry * e, GtkEntryIconPosition, GdkEventButton *, gpointer pane_gpointer)
+  void entry_icon_released (GtkEntry*, GtkEntryIconPosition icon_pos, GdkEventButton *, gpointer menu)
   {
-    set_search_entry (GTK_WIDGET(e), "");
-    refresh_search_entry (GTK_WIDGET(e));
-    search_text.clear ();
-    search_entry_activated (NULL, pane_gpointer);
+    if (icon_pos == GTK_ENTRY_ICON_PRIMARY)
+      gtk_menu_popup (GTK_MENU(menu), 0, 0, 0, 0, 0, gtk_get_current_event_time());
+  }
+
+  void clear_button_clicked_cb (GtkEntry * e, GtkEntryIconPosition icon_pos, GdkEventButton *, gpointer pane_gpointer)
+  {
+    if (icon_pos == GTK_ENTRY_ICON_SECONDARY)
+    {
+      set_search_entry (GTK_WIDGET(e), "");
+      refresh_search_entry (GTK_WIDGET(e));
+      search_text.clear ();
+      search_entry_activated (NULL, pane_gpointer);
+    }
   }
 
   gboolean activated_timeout_cb (gpointer pane_gpointer)
@@ -621,6 +652,21 @@ namespace
   {
     search_text = gtk_entry_get_text (GTK_ENTRY(e));
     bump_activate_soon_tag (static_cast<GroupPane*>(pane_gpointer));
+  }
+
+  // when the search mode is changed via the menu,
+  // update our state variable and bump the activate timeout.
+  void search_menu_toggled_cb (GtkCheckMenuItem  * menu_item,
+                               gpointer            entry_g)
+  {
+    if (gtk_check_menu_item_get_active  (menu_item))
+    {
+      mode = GPOINTER_TO_INT (g_object_get_data (G_OBJECT(menu_item), "MODE"));
+      refresh_search_entry (GTK_WIDGET(entry_g));
+      GroupPane * h = (GroupPane*) g_object_get_data (
+                                             G_OBJECT(entry_g), "group-pane");
+      bump_activate_soon_tag (h);
+    }
   }
 }
 
@@ -656,7 +702,7 @@ namespace
       g_snprintf (buf, sizeof(buf), " (%lu)", unread);
       group_name += buf;
     }
-    //if (unread || total) {
+    //if (unread || total)
       //if (unread)
       //  g_snprintf (buf, sizeof(buf), _(" (%lu of %lu)"), unread, total);
       //else
@@ -796,17 +842,41 @@ GtkWidget*
 GroupPane :: create_filter_entry ()
 {
   GtkWidget * entry = gtk_entry_new ();
+  g_object_set_data (G_OBJECT(entry), "group-pane", this);
   gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
                                  GTK_ENTRY_ICON_SECONDARY,
                                  GTK_STOCK_CLEAR );
-  gtk_widget_set_size_request (entry, 133, -1);
-
+  gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
+                                 GTK_ENTRY_ICON_PRIMARY,
+                                 GTK_STOCK_FIND );
+//  gtk_widget_set_size_request (entry, 133, -1);
   _action_manager.disable_accelerators_when_focused (entry);
   g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), NULL);
   g_signal_connect (entry, "focus-out-event", G_CALLBACK(search_entry_focus_out_cb), NULL);
   g_signal_connect (entry, "activate", G_CALLBACK(search_entry_activated), this);
   g_signal_connect (entry, "icon-release", G_CALLBACK(clear_button_clicked_cb), this);
   entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed_by_user), this);
+
+  GtkWidget * menu = gtk_menu_new ();
+  bool regex = _prefs.get_flag ("use-regex", false);
+  if ( regex == true )
+    mode = 1;
+  else
+    mode = 0;
+  GSList * l = 0;
+  for (int i=0, qty=G_N_ELEMENTS(mode_strings); i<qty; ++i)
+  {
+    GtkWidget * w = gtk_radio_menu_item_new_with_label (l, _(mode_strings[i]));
+    l = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM(w));
+    g_object_set_data (G_OBJECT(w), "MODE", GINT_TO_POINTER(i));
+    g_signal_connect (w, "toggled", G_CALLBACK(search_menu_toggled_cb),entry);
+    if (mode == i)
+      gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM(w), TRUE);
+    gtk_menu_shell_append (GTK_MENU_SHELL(menu), w);
+    gtk_widget_show (w);
+  }
+  g_signal_connect (entry, "icon-release", G_CALLBACK(entry_icon_released), menu);
+
   refresh_search_entry (entry);
   return entry;
 }

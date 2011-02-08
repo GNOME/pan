@@ -205,7 +205,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
 
   on_sig_file_toggled (GTK_TOGGLE_BUTTON(_signature_file_check), _signature_file);
   on_sig_file_toggled (GTK_TOGGLE_BUTTON(_signature_file_check), _signature_file_combo);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(_root)->vbox), t, true, true, 0);
+  gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(_root))), t, true, true, 0);
   gtk_widget_show_all (t);
 
   if (parent != 0) {
@@ -447,7 +447,7 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
   // workarea
   GtkWidget * hbox = gtk_hbox_new (false, PAD);
   gtk_container_set_border_width (GTK_CONTAINER(hbox), PAD_BIG);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(_root)->vbox), hbox, true, true, 0);
+  gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(_root))), hbox, true, true, 0);
 
   // create the list
   GtkWidget * w = _view = gtk_tree_view_new ();

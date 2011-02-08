@@ -62,6 +62,12 @@ namespace pan
                                         std::string         & setme);
 
   };
+
+  char *pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html);
+  void pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, GMimeRecipientType type, const char *string);
+
 }
+
+
 
 #endif

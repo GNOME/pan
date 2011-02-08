@@ -19,6 +19,8 @@
 
 #include <config.h>
 #include <vector>
+#include <cstring>
+#include <glib.h>
 extern "C" {
 #include <glib/gi18n.h>
 }
@@ -201,21 +203,33 @@ namespace
                         int       column)
    {
       int pos = 0;
+      int space_len;
       char * linefeed_here = NULL;
 
       // walk through the entire string
       for (char *pch=str, *end=pch+len; pch!=end; )
       {
          // a linefeed could go here; remember this space
-         if (g_unichar_isspace (g_utf8_get_char (pch)) || *pch=='\n')
-            linefeed_here = pch;
+         gunichar ch = g_utf8_get_char (pch);
+         if (g_unichar_isspace ( ch ) || *pch=='\n')
+           if (g_unichar_break_type(ch) != G_UNICODE_BREAK_NON_BREAKING_GLUE)
+           {
+             linefeed_here = pch;
+             // not all spaces are single char
+             space_len = g_utf8_next_char (pch) - pch;
+           }
 
          // line's too long; add a linefeed if we can
          if (pos>=column && linefeed_here!=NULL)
          {
-            *linefeed_here = '\n';
-            pch = linefeed_here + 1;
+            const char nl[5]="   \n";
+            if( space_len == 1)
+              *linefeed_here = '\n';
+             else
+               memcpy( linefeed_here, 4 - space_len + nl, space_len);
+            pch = linefeed_here + space_len;
             linefeed_here = NULL;
+            space_len = 0;
             pos = 0;
          }
          else
@@ -357,4 +371,74 @@ TextMassager :: rot13_inplace (char * text)
       *text = translate[(unsigned char)*text];
 
    return text;
+}
+
+std::string
+pan :: subject_to_path (const char * subjectline, const std::string &seperator)
+{
+  gchar *str1, *str2;
+  const char *sep;
+  std::string val (subjectline);
+  //std::string::size_type pos;
+  //stupid hack to silence the compiler
+  GRegexCompileFlags cf0((GRegexCompileFlags)0);
+  GRegexMatchFlags mf0((GRegexMatchFlags)0);
+
+  if (seperator.length() != 1)
+    sep = "-";
+  else switch (seperator[0]) {
+    case ' ':
+    case '-':
+    case '_': sep = seperator.c_str(); break;
+    default : sep = "-"; break;
+  }
+
+  // strip out newspost/Xnews-style multi-part strings
+  GRegex *mp1 =g_regex_new("\\s*(?:[Ff]ile|[Pp]ost)\\s[0-9]+\\s*(?:of|_)\\s*[0-9]+[:\\s]?", cf0, mf0, NULL);
+  str1 = g_regex_replace_literal(mp1, val.c_str(), -1, 0, " ", mf0, NULL);
+  g_regex_unref(mp1);
+
+  // and the rest.  the last check is for pans collapsed part count
+  GRegex *mp2 =g_regex_new("\\s*([\[(]?'?[0-9]+'?\\s*(?:of|/)\\s*'?[0-9]+'?.)|\\(/[0-9]+\\)", cf0, mf0, NULL);
+  str2 = g_regex_replace_literal(mp2, str1, -1, 0, "", mf0, NULL);
+  g_free(str1);
+  g_regex_unref(mp2);
+
+  // try to strip out the filename (may fail if it contains spaces)
+  GRegex *fn =g_regex_new("\"[^\"]+?\" yEnc.*"    "|"
+                          "\\S++\\s++yEnc.*"      "|"
+                          "\"[^\"]+?\\.\\w{2,}\"" "|"
+                          "\\S+\\.\\w{3,4}", cf0, mf0, NULL);
+  str1 = g_regex_replace_literal(fn, str2, -1, 0, "", mf0, NULL);
+  g_free(str2);
+  g_regex_unref(fn);
+
+  // try to strip out any byte counts
+  GRegex *cnt =g_regex_new("\\[?[0-9]+\\s*(?:[Bb](ytes)?|[Kk][Bb]?)\\]?", cf0, mf0, NULL);
+  str2 = g_regex_replace_literal(cnt, str1, -1, 0, "", mf0, NULL);
+  g_free(str1);
+  g_regex_unref(cnt);
+
+  // remove any illegal / annoying characters
+  GRegex *badc =g_regex_new("[\\\\/<>|*?'\"\\.\\s]+", cf0, mf0, NULL);
+  str1 = g_regex_replace_literal(badc, str2, -1, 0, sep, mf0, NULL);
+  g_free(str2);
+  g_regex_unref(badc);
+
+  // remove any extraneous whitespace, '_', & '-'
+  GRegex *ext =g_regex_new("[\\s_-]{2,}", cf0, mf0, NULL);
+  str2 = g_regex_replace_literal(ext, str1, -1, 0, sep, mf0, NULL);
+  g_free(str1);
+  g_regex_unref(ext);
+
+  // remove leading & trailing junk
+  ext =g_regex_new("(^[\\s_-]+)|([\\s_-]+$)", cf0, mf0, NULL);
+  str1 = g_regex_replace_literal(ext, str2, -1, 0, "", mf0, NULL);
+  g_free(str2);
+  g_regex_unref(ext);
+
+  val=str1;
+  g_free(str1);
+  //std::cout << "\nSubject was: '" << subjectline << "'\nSubject now: '" << val << "'" << std::endl;
+  return val;
 }

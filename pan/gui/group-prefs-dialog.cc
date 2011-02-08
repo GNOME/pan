@@ -39,6 +39,13 @@ namespace
   {
     delete static_cast<GroupPrefsDialog*>(castme);
   }
+
+#if !GTK_CHECK_VERSION(2,18,0)
+  bool gtk_widget_get_sensitive( GtkWidget *w)
+  {
+    return GTK_WIDGET_SENSITIVE(w);
+  }
+#endif
 }
 
 void
@@ -50,7 +57,7 @@ GroupPrefsDialog :: save_from_gui ()
 
   // posting profile...
   std::string profile;
-  if (GTK_WIDGET_SENSITIVE (_profile)) {
+  if (gtk_widget_get_sensitive (_profile)) {
     char * pch (gtk_combo_box_get_active_text (GTK_COMBO_BOX(_profile)));
     _group_prefs.set_string (_group, "posting-profile", pch);
     g_free (pch);
@@ -141,9 +148,9 @@ GroupPrefsDialog :: GroupPrefsDialog (Data         & data,
     HIG :: workarea_add_row (t, &row, _("Directory for _saving attachments:"), w);
     w = _profile = create_profiles_combo_box (data, group, group_prefs);
     l = HIG :: workarea_add_row (t, &row, _("Posting _profile:"), w);
-    gtk_widget_set_sensitive (l, GTK_WIDGET_SENSITIVE(w));
+    gtk_widget_set_sensitive (l, gtk_widget_get_sensitive(w));
 
   gtk_widget_show_all (t);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->vbox), t, true, true, 0);
+  gtk_box_pack_start ( GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG( dialog))), t, true, true, 0);
   _root = dialog;
 }

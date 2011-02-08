@@ -55,7 +55,7 @@ e_charset_dialog (const char *title, const char *prompt,
 
 	vbox = gtk_vbox_new (FALSE, 6);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-	gtk_box_pack_start (GTK_BOX (dialog->vbox), vbox, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(dialog)), vbox, FALSE, FALSE, 0);
 	gtk_widget_show (vbox);
 
 	label = gtk_label_new (prompt);
@@ -78,8 +78,8 @@ e_charset_dialog (const char *title, const char *prompt,
 	gtk_box_pack_start (GTK_BOX (hbox), picker, TRUE, TRUE, 0);
 	gtk_widget_show (picker);
 
-	gtk_container_set_border_width (GTK_CONTAINER (dialog->vbox), 0);
-	gtk_container_set_border_width (GTK_CONTAINER (dialog->action_area), 12);
+	gtk_container_set_border_width (GTK_CONTAINER (gtk_dialog_get_content_area(dialog)), 0);
+	gtk_container_set_border_width (GTK_CONTAINER (gtk_dialog_get_action_area(dialog)), 12);
 
 	gtk_widget_show_all (GTK_WIDGET (dialog));
 

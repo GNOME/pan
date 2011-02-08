@@ -135,6 +135,7 @@ Decoder :: do_work()
     {
       UUSetMsgCallback (this, uu_log);
       UUSetOption (UUOPT_DESPERATE, 1, NULL); // keep incompletes; they're useful to par2
+      UUSetOption (UUOPT_IGNMODE, 1, NULL); // don't save file as executable
       UUSetBusyCallback (this, uu_busy_poll, 500); // .5 secs busy poll?
 
       int i (0);

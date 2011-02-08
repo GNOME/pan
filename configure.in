@@ -5,6 +5,32 @@ AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
 AC_DEFINE(VERSION_TITLE,["House of Butterflies"],[Release Name])
 AC_PREREQ(2.54)
 
+dnl expanded by export-archive
+GIT_HASH='$Format:%h$'
+if test '0' \< $GIT_HASH ;then
+	GIT_BRANCH=`echo '$Format:%d$' | awk -F , '{print gensub("[[\(\)]]","","g",$NF)}' 2>/dev/null`
+else
+dnl git-dir is used for building outside the src tree
+	GIT_HASH=`git --git-dir=$srcdir/.git log -1 --pretty=format:%h 2> /dev/null`
+	if test ! -z $GIT_HASH; then
+		GIT_BRANCH=`git --git-dir=$srcdir/.git symbolic-ref HEAD 2> /dev/null | awk -F/ '{print $NF}'`
+	fi
+fi
+if test ! -z $GIT_HASH; then
+	if test -z $GIT_BRANCH; then
+		GIT_REV="GIT $GIT_HASH"
+	else
+		GIT_REV="GIT $GIT_HASH $GIT_BRANCH"
+	fi
+	echo $GIT_REV > pan_git_rev
+elif test -f pan_git_rev; then
+	GIT_REV=`cat pan_git_rev`
+else
+	GIT_REV="Unknown"
+fi
+
+AC_DEFINE_UNQUOTED([GIT_REV],["$GIT_REV"],[Git branch and hash])
+
 AM_CONFIG_HEADER(config.h)
 AC_CONFIG_SRCDIR(pan/general/quark.cc)
 
@@ -19,8 +45,8 @@ dnl GtkSpell is optional: GTKSPELL_REQUIRED refers to the minimum version
 dnl needed if you want to build Pan with spellchecking in the Post window.
 
 GLIB_REQUIRED=2.14.0
-GMIME_REQUIRED=2.1.9
-GTK_REQUIRED=2.12.0
+GMIME_REQUIRED=2.4.0
+GTK_REQUIRED=2.16.0
 GTKSPELL_REQUIRED=2.0.7
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GMIME_REQUIRED)
@@ -30,7 +56,7 @@ AC_SUBST(GTKSPELL_REQUIRED)
 AC_PROG_CXX
 AC_HEADER_STDC
 AC_HEADER_TIME
-AC_CHECK_FUNCS([localtime_r])
+AC_CHECK_FUNCS([localtime_r close])
 AC_CXX_HEADER_TR1_UNORDERED_SET
 AC_CXX_HAVE_EXT_HASH_SET
 AC_PROG_AWK
@@ -49,7 +75,8 @@ AM_GLIB_GNU_GETTEXT
 panlocaledir='${prefix}/${DATADIRNAME}/locale'
 
 AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
-PKG_CHECK_MODULES(GMIME, gmime-2.0    >= $GMIME_REQUIRED)
+PKG_CHECK_MODULES([GMIME], [ gmime-2.6    >= $GMIME_REQUIRED ], [],
+	[PKG_CHECK_MODULES( [GMIME], [gmime-2.4    >= $GMIME_REQUIRED] )] )
 AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
 
 
@@ -80,9 +107,11 @@ ac_cv_lkstrftime=yes
 ],ac_cv_lkstrftime=no,ac_cv_lkstrftime=no)
 AC_MSG_RESULT($ac_cv_lkstrftime)
 
+AC_CANONICAL_HOST
+
+AC_DEFINE_UNQUOTED([PLATFORM_INFO],["$host"],[uname cpu-vendor-platformbuild])
 
 dnl windows-specific stuff.
-AC_CANONICAL_HOST
 win32="no"
 case $host_os in
 
@@ -91,7 +120,7 @@ case $host_os in
 	;;
 
 	*cygwin|*mingw32*)
-	CXXFLAGS="$CXXFLAGS -mms-bitfields -mwin32 -mwindows"
+	CXXFLAGS="$CXXFLAGS -mms-bitfields -mwin32"
 	CPPFLAGS="$CPPFLAGS -DWIN32_LEAN_AND_MEAN"
 	LIBS="$LIBS -lshell32 -lws2_32"
 	panlocaledir="locale"

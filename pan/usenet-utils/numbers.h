@@ -73,7 +73,7 @@ namespace pan
       bool operator== (const Numbers& that) const {
         return _marked == that._marked;
       }
-      Numbers () { }
+      Numbers () { _marked.reserve(16);}
       ~Numbers () { }
 
     public:

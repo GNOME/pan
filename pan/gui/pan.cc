@@ -16,7 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-#include <memory> 
+#include <memory>
+#include <fstream>
 #include <config.h>
 #include <signal.h>
 extern "C" {
@@ -24,6 +25,10 @@ extern "C" {
   #include <gtk/gtk.h>
   #include <gmime/gmime.h>
 }
+#ifdef G_OS_WIN32
+#define _WIN32_WINNT 0x0501
+#include <windows.h>
+#endif
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/file-util.h>
@@ -185,8 +190,43 @@ namespace
     Queue & q;
   };
 
+#ifdef G_OS_WIN32
+  void console()
+  {
+    using namespace std;
+    static bool done = false;
+    if ( done ) return;
+    done = true;
+
+    //AllocConsole();
+    if ( !AttachConsole( -1 ) ) return;
+    static ofstream out("CONOUT$");
+    static ofstream err("CONOUT$");
+    streambuf *tmp, *t2;
+
+    tmp = cout.rdbuf();
+    t2 = out.rdbuf();
+    cout.ios::rdbuf( t2 );
+    out.ios::rdbuf( tmp );
+
+    tmp = cerr.rdbuf();
+    t2 = err.rdbuf();
+    cerr.ios::rdbuf( t2 );
+    err.ios::rdbuf( tmp );
+
+    freopen( "CONOUT$", "w", stdout );
+    freopen( "CONOUT$", "w", stderr );
+  }
+#else
+  void console()
+  {
+    return;
+  }
+#endif
+
   void usage ()
   {
+    console();
     std::cerr << "Pan " << VERSION << "\n\n" <<
 _("General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -212,7 +252,7 @@ main (int argc, char *argv[])
   textdomain (GETTEXT_PACKAGE);
 
   g_thread_init (0);
-  g_mime_init (GMIME_INIT_FLAG_UTF8);
+  g_mime_init (GMIME_ENABLE_RFC2047_WORKAROUNDS);
 
   bool gui(true), nzb(false);
   std::string url;
@@ -231,6 +271,7 @@ main (int argc, char *argv[])
     else if (!strcmp(tok,"--no-gui") || !strcmp(tok,"--nogui"))
       gui = false;
     else if (!strcmp (tok, "--debug")) { // do --debug --debug for verbose debug
+      console();
       if (_debug_flag) _debug_verbose_flag = true;
       else _debug_flag = true;
     } else if (!strcmp (tok, "--nzb"))

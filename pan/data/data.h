@@ -498,6 +498,8 @@ namespace pan
                                                 size_t                end_line,
                                                 bool                  do_rescore) = 0;
 
+        virtual void rescore_articles (const Quark& group, const quarks_t mids) = 0;
+
         virtual void rescore () = 0;
 
 

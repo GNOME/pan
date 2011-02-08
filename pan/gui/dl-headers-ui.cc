@@ -156,7 +156,7 @@ pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
     g_signal_connect (x, "focus_in_event", G_CALLBACK(spin_tickled_cb), state->n_headers_rb);
     gtk_table_attach_defaults (GTK_TABLE(t), x, 1, 2, row, row+1);
 
-    gtk_container_add (GTK_CONTAINER(GTK_DIALOG(state->dialog)->vbox), t);
+    gtk_container_add ( GTK_CONTAINER( gtk_dialog_get_content_area( GTK_DIALOG(state->dialog))), t);
     g_signal_connect (state->dialog, "response", G_CALLBACK(response_cb), state);
     g_object_set_data_full (G_OBJECT(state->dialog), "state", state, delete_state);
     gtk_widget_show_all (state->dialog);

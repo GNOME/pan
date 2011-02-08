@@ -82,6 +82,9 @@ namespace pan
       /** When this is true, the results of the test should be negated. */
       bool _negate;
 
+      /** When this is true the test needs the article body. */
+      bool _needs_body;
+
     private:
       void set_type_is (Type type);
       void set_type_ge (Type type, unsigned long ge);

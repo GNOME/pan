@@ -944,7 +944,9 @@ DataImpl :: rescore ()
     const Quark& group (*git);
     const GroupHeaders * h (get_group_headers (group));
     foreach_const (nodes_t, h->_nodes, nit)
-      mids.insert (mids.end(), nit->first);
+      //only insert mids for nodes with articles
+      if (nit->second->_article)
+        mids.insert (mids.end(), nit->first);
     if (!mids.empty())
       on_articles_changed (group, mids, true);
   }

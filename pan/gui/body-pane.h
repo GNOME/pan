@@ -86,7 +86,7 @@ namespace pan
       void append_part (GMimeObject*, GtkAllocation*);
       static gboolean expander_activated_idle (gpointer self);
       static void expander_activated_cb (GtkExpander*, gpointer self);
-      static void foreach_part_cb (GMimeObject*, gpointer self);
+      static void foreach_part_cb (GMimeObject*, GMimeObject*, gpointer self);
       static void text_size_allocated (GtkWidget*, GtkAllocation*, gpointer);
       static gboolean text_size_allocated_idle_cb (gpointer p);
       void text_size_allocated_idle ();
@@ -107,6 +107,7 @@ namespace pan
       GtkWidget * _verbose;
       GtkWidget * _headers;
       GtkWidget * _xface;
+      GtkWidget * _face;
       GtkTextBuffer * _buffer;
       GtkWidget * _root;
       GtkWidget * _text;

@@ -218,7 +218,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
 
   int row (0);
   GtkWidget * t (HIG::workarea_create ());
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(d->dialog)->vbox), t, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(d->dialog))), t, TRUE, TRUE, 0);
   HIG::workarea_add_section_title (t, &row, _("Location"));
     HIG::workarea_add_section_spacer (t, row, 2);
 
@@ -501,7 +501,7 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   // workarea
   GtkWidget * hbox = gtk_hbox_new (FALSE, PAD);
   gtk_container_set_border_width (GTK_CONTAINER(hbox), 12);
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(w)->vbox), hbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(w))), hbox, TRUE, TRUE, 0);
 
 
   // create the list

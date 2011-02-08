@@ -78,6 +78,7 @@ namespace pan
         StringView to_view () const { return StringView(str,len); }
         //wtf? bool operator() (const Impl& a, const Impl& b) const { return StringView(str,len) == StringView(b.str,b.len); }
         bool operator== (const Impl& b) const { return StringView(str,len) == StringView(b.str,b.len); }
+        bool operator< (const Impl& b) const { return StringView(str,len) < StringView(b.str,b.len); }
       };
 
       struct StringViewHash

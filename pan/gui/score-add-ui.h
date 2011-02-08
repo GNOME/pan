@@ -1,8 +1,7 @@
 #ifndef __SCORE_ADD_UI_H__
 #define __SCORE_ADD_UI_H__
 
-#include <gtk/gtkdialog.h>
-#include <gtk/gtkwidget.h>
+#include <gtk/gtk.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
 

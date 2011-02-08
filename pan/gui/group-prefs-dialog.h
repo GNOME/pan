@@ -22,7 +22,7 @@
 
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
-#include <gtk/gtkwindow.h>
+#include <gtk/gtk.h>
 #include "group-prefs.h"
 
 namespace pan
