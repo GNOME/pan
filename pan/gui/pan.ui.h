@@ -65,6 +65,7 @@ const char * fallback_ui_file =
 "        <menuitem action='monospace-font-enabled' />\n"
 "        <menuitem action='show-smilies-as-graphics' />\n"
 "        <menuitem action='show-text-markup'/>\n"
+"        <menuitem action='highlight-urls'/>\n"
 "        <menuitem action='rot13-selected-text' />\n"
 "        <separator />\n"
 "        <menuitem action='size-pictures-to-fit'/>\n"
