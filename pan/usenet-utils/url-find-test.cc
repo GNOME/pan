@@ -23,9 +23,9 @@ main (void)
   check (url_find (in, out))
   check (out == "http://www.gtk.org/")
 
-  in = "Have you ever visited http://www.google.com/?";
+  in = "Have you ever visited https://www.google.com/?";
   check (url_find (in, out))
-  check (out == "http://www.google.com/")
+  check (out == "https://www.google.com/")
 
   in = "la la lawww.google.com sfadf";
   check (url_find (in, out))
@@ -35,9 +35,9 @@ main (void)
   check (url_find (in, out))
   check (out == "charles@rebelbase.com")
 
-  in = "Go visit ftp://ftp.gnome.org and get cool software!";
+  in = "Go visit ftps://ftp.gnome.org and get cool software!";
   check (url_find (in, out))
-  check (out == "ftp://ftp.gnome.org")
+  check (out == "ftps://ftp.gnome.org")
 
   in = "Go visit ftp.gnome.org and get cool software!";
   check (url_find (in, out))
@@ -66,9 +66,13 @@ main (void)
   check (url_find (in, out))
   check (out == "charles@rebelbase.com")
 
-  in = "blah blah <http://www.dobreprogramy.pl/pirat/dobreprogramy_pl(piratXXX).jpg>, only the";
+  in = "blah blah <http://www.dobreprogramy.pl/pirat/dobreprogramy_pl(piratXXX).jpg#frag>, only the";
   check (url_find (in, out))
-  check (out == "http://www.dobreprogramy.pl/pirat/dobreprogramy_pl(piratXXX).jpg")
+  check (out == "http://www.dobreprogramy.pl/pirat/dobreprogramy_pl(piratXXX).jpg#frag")
+
+  in = "Here is my email address: lost.foo_bar@rebelbase.com  Did you get it?";
+  check (url_find (in, out))
+  check (out == "lost.foo_bar@rebelbase.com")
 
 
   // success
