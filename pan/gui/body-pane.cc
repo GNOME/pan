@@ -671,7 +671,8 @@ namespace
                              const StringView    & body_in,
                              bool                  mute_quotes,
                              bool                  show_smilies,
-                             bool                  do_markup)
+                             bool                  do_markup,
+                             bool                  do_urls)
   {
     g_return_if_fail (buffer!=0);
     g_return_if_fail (GTK_IS_TEXT_BUFFER(buffer));
@@ -792,11 +793,13 @@ namespace
     }
     
     // colorize urls
-    StringView area;
-    StringView march (v_all);
-    while ((url_find (march, area))) {
-      set_section_tag (buffer, &start, v_all, area, "url", REPLACE);
-      march = march.substr (area.str + area.len, 0);
+    if (do_urls) {
+      StringView area;
+      StringView march (v_all);
+      while ((url_find (march, area))) {
+        set_section_tag (buffer, &start, v_all, area, "url", REPLACE);
+        march = march.substr (area.str + area.len, 0);
+      }
     }
 
     // do this last, since it alters the text instead of just marking it up
@@ -948,7 +951,8 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
     const bool do_mute (_prefs.get_flag ("mute-quoted-text", false));
     const bool do_smilies (_prefs.get_flag ("show-smilies-as-graphics", true));
     const bool do_markup (_prefs.get_flag ("show-text-markup", true));
-    append_text_buffer_nolock (&_tm, _buffer, str, do_mute, do_smilies, do_markup);
+    const bool do_urls (_prefs.get_flag ("highlight-urls", true));
+    append_text_buffer_nolock (&_tm, _buffer, str, do_mute, do_smilies, do_markup, do_urls);
     is_done = true;
   }
 
@@ -1728,7 +1732,8 @@ BodyPane :: on_prefs_flag_changed (const StringView& key, bool value G_GNUC_UNUS
 
   if ((key=="wrap-article-body") || (key=="mute-quoted-text") ||
       (key=="show-smilies-as-graphics") || (key=="show-all-headers") ||
-      (key=="size-pictures-to-fit") || (key=="show-text-markup"))
+      (key=="size-pictures-to-fit") || (key=="show-text-markup") ||
+      (key=="highlight-urls") )
     refresh ();
 }
 
