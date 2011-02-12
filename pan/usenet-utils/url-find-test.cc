@@ -74,6 +74,9 @@ main (void)
   check (url_find (in, out))
   check (out == "lost.foo_bar@rebelbase.com")
 
+  in = "A URl 'http://www.www.com'?";
+  check (url_find (in, out))
+  check (out == "http://www.www.com")
 
   // success
   return 0;

@@ -28,12 +28,19 @@ namespace {
     public:
       fooregex(): regex(NULL)
       {
-        regex = g_regex_new("(?:https?://|"
-          "ftps?(?:://|\\.)|" //ftp:// ftp.
-          "news:|"
-          "www\\.|"
-          "[[:alnum:]][[:alnum:]_\\.]*@)" //email
-          "[[:alnum:]\\.:/?#\\[\\]@!$&'()*+,;=\\-_%~]+" /* uri */,
+        // RFC1738
+        // unsafe in URL (always encoded):  {}|\^~[]`<>"
+        // reserved for schemas: ;/?:@=&
+        // % (hex encoding) # (fragment)
+        // allowed: a-z A-Z 0-9 $-_.+!*'(),
+        regex = g_regex_new("(?:"
+            "https?://|"
+            "ftps?(?:://|\\.)|" //ftp:// ftp.
+            "news:|nntp:|"
+            "www\\.|"
+            "[[:alnum:]][[:alnum:]_\\.]*@" //email
+          ")"
+          "[" "[:alnum:]$_\\-\\.!+*()',%#" ";:/?&=@" "]+" /* uri */,
           G_REGEX_OPTIMIZE, (GRegexMatchFlags)0, NULL);
       }
       ~fooregex()
@@ -68,7 +75,9 @@ pan :: url_find (const StringView& text, StringView& setme_url)
   // for urls at the end of a sentence.
   if (!setme_url.empty() && strchr("?!.,", setme_url.back()))
     --setme_url.len;
-
+  const char c = text.str[ start - 1 ];
+  if (c == '\'' && c == setme_url.back() )
+    --setme_url.len;
   return true;
 }
 
