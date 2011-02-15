@@ -1,8 +1,8 @@
-AC_INIT([pan],[0.133],[http://bugzilla.gnome.org/enter_bug.cgi?product=Pan])
+AC_INIT([pan],[0.134],[http://bugzilla.gnome.org/enter_bug.cgi?product=Pan])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
-AC_DEFINE(VERSION_MINOR,133,[Minor part of version number])
+AC_DEFINE(VERSION_MINOR,134,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
-AC_DEFINE(VERSION_TITLE,["House of Butterflies"],[Release Name])
+AC_DEFINE(VERSION_TITLE,["Wait for Me"],[Release Name])
 AC_PREREQ(2.54)
 
 dnl expanded by export-archive
@@ -39,7 +39,7 @@ AM_MAINTAINER_MODE
 
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
-dnl glib, gmime, and gtk are manditory prerequisites.
+dnl glib, gmime, and gtk are mandatory prerequisites.
 dnl
 dnl GtkSpell is optional: GTKSPELL_REQUIRED refers to the minimum version
 dnl needed if you want to build Pan with spellchecking in the Post window.
@@ -139,7 +139,6 @@ case $host_os in
 	;;
 esac
 AM_CONDITIONAL([HAVE_WIN32],[test "$win32" = "yes"])
-
 
 dnl build the output files
 AC_SUBST(panlocaledir)
