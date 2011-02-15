@@ -1,5 +1,69 @@
 1.0 "Asieoniezi"
 
+0.134 "Wait for Me"
+* Fix compilation with GCC 4.4. (Charles Kerr, #573722)
+* WARNING: setting an adjustment with non-zero page size is deprecated.
+  (Charles Kerr, #579753)
+* No window icon when running in NZB-mode. (Charles Kerr, #574419)
+* Remove deprecated glib/gdk/gtk calls to prepare for GNOME 3.
+  (Charles Kerr, #596648)
+* Use GRegex instead of PCRE. (Charles Kerr, #596653)
+* Tooltips missing from two 'Post Article' toolbar buttons.
+  (Charles Kerr, #548860)
+* Infinite loop with server that doesn't support LIST NEWSGROUPS.
+  (Charles Kerr, #545220)
+* 'Add port to server dialog' -- apply commits 862da67, af30418 from
+  lostcoder. (K. Haley, Charles Kerr, #527313)
+* Support 64 bit article numbers. (Charles Kerr, #549655)
+* Don't queue xover for 0 connections. (Charles Kerr, #596682)
+* Make wrapping honor changes in compose-wrap pref. (Charles Kerr, #596680)
+* Change nzb task saving delay & add pref. (Charles Kerr, #596683)
+* Port to GMime 2.4. (K. Haley, #541676)
+* Spawn editor asynchronously. (K. Haley, #465763)
+* Change allocation buffer for article tree. (K. Haley)
+* Save some more memory by re-ordering a few variables. (K. Haley)
+* Don't save files as executable. (K. Haley)
+* Fix handling of multibyte spaces in text-massager. (K. Haley)
+* Re-write multipart handling for viewing. (K. Haley)
+* Change default mime-type for incoming attachments. (K. Haley, #135734)
+* Add some additional mime types. (K. Haley)
+* Add memchunk.h to Makefile.am. (K. Haley)
+* GTK+ 2.16 required. (K. Haley)
+* Fix bug in multipart article mids. (K. Haley)
+* Add console support for windows. (K. Haley)
+* Update filter-info and scorefile-test to support non-overview headers.
+  (K. Haley)
+* Skip non-overview test if not cached. (K. Haley)
+* Make ArticleCache::get_message const. (K. Haley)
+* Allow scoring article on all headers. (K. Haley)
+* Promote rescore_articles to data interface. (K. Haley)
+* Update score when article is cached. (K. Haley)
+* Add regex support to search. (Jack Cuyler, K. Haley, #351196)
+* Additional info for about & User-Agent. (K. Haley, #424083)
+* Add support for compiling with gmime-2.5. (K. Haley)
+* Allow subject line use in save path. (K. Haley, #403797)
+* Improve regexes used for squashing subject line. (K. Haley)
+* Reduce memory allocation for multiparts. (K. Haley)
+* Allow newsrc paths relative to PAN_HOME. (K. Haley)
+* Save tasks on exit. (K. Haley, #609355)
+* Always show full revision info in UA hdr. (K. Haley)
+* Remember size of post window. (K. Haley)
+* Add tests for subject line. (K. Haley)
+* Make separator user configurable. (K. Haley)
+* Replace deprecated gdk_pixmap_create_from_data. (K. Haley)
+* Add support for Face header. (K. Haley)
+* Fix crash possibly due to change in cairo. (K. Haley)
+* Change from GdkPixmap to GdkPixbuf. (K. Haley)
+* Remove deprecated function through gtk 2.18. (K. Haley)
+* Compatibility with -std=c++0x. (K. Haley)
+* Fix crash in gio_func on OSX. (K. Haley)
+* Updated translations: Arabic (Djihed Afifi), Brazilian Portuguese (Flamarion
+  Jorge), Spanish (Jorge Gonzalez), Portuguese (Duarte Loreto), French (Claude
+  Paroz, Bruno Brouard), Catalan (Joan Duran), German (Mario Blättermann,
+  Andreas Kuhlen), Basque (Inaki Larranaga Murgoitio), Swedish (Daniel
+  Nylander), Czech (Petr Kovar), Slovenian (Andrej Žnidaršič), Danish (Joe
+  Hansen), Simplified Chinese (Aron Xu)
+
 0.133 "House of Butterflies"
  535413 fix heap overflow in pan when parsing .nzb files (Pavel Polischouk)
  467446 image viewer truncates image (Aaron Von Gauss)
