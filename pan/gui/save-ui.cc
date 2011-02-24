@@ -56,10 +56,14 @@ namespace
   std::string expand_download_dir_subject (const char * dir, const char * subjectline, const std::string &sep)
   {
     std::string val (dir);
-    std::string sub (subject_to_path(subjectline, sep));
+    std::string sub (subject_to_path(subjectline, false, sep));
     std::string::size_type pos;
 
     while (((pos = val.find ("%s"))) != val.npos)
+      val.replace (pos, 2, sub);
+
+    sub = subject_to_path(subjectline, true, sep);
+    while (((pos = val.find ("%S"))) != val.npos)
       val.replace (pos, 2, sub);
 
     return val;
@@ -72,6 +76,7 @@ namespace
     const char * str = _("%g - group as one directory (alt.binaries.pictures.trains)\n"
                          "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
                          "%s - subject line excerpt\n"
+                         "%S - subject line\n"
                          " \n"
                          "\"/home/user/News/Pan/%g\" becomes\n"
                          "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
@@ -123,7 +128,7 @@ SaveDialog :: response_cb (GtkDialog * dialog,
       self->_prefs.set_string ("default-save-attachments-path", path);
     }
     path = opath = expand_download_dir (path.c_str(), self->_group.to_view());
-    if (path.find("%s") != path.npos)
+    if ((path.find("%s") != path.npos) || (path.find("%S") != path.npos))
       subject_in_path = true;
 
     // get the save mode
