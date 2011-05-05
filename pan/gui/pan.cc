@@ -317,6 +317,7 @@ main (int argc, char *argv[])
       std::cerr << _("Please configure Pan's news servers before using it as an nzb client.") << std::endl;
        return 0;
     }
+    data.set_newsrc_autosave_timeout( prefs.get_int("newsrc-autosave-timeout-min", 10 ));
 
     // instantiate the queue...
     WorkerPool worker_pool (4, true);

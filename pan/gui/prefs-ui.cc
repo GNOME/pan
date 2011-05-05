@@ -89,6 +89,22 @@ namespace
     return r;
   }
 
+  void spin_value_changed_cb( GtkSpinButton *spin, gpointer data)
+  {
+    const char * key = (const char*) g_object_get_data (G_OBJECT(spin), PREFS_KEY);
+    Prefs *prefs = static_cast<Prefs*>(data);
+    prefs->set_int(key, gtk_spin_button_get_value_as_int(spin));
+  }
+  GtkWidget* new_spin_button (const char *key, int low, int high, Prefs &prefs)
+  {
+    guint tm = prefs.get_int(key, 5 );
+    GtkAdjustment *adj = (GtkAdjustment*) gtk_adjustment_new(tm, low, high, 1.0, 1.0, 0.0);
+    GtkWidget *w = gtk_spin_button_new( adj, 1.0, 0);
+    g_object_set_data_full(G_OBJECT(w), PREFS_KEY, g_strdup(key), g_free);
+    g_signal_connect (w, "value_changed", G_CALLBACK(spin_value_changed_cb), &prefs);
+    return w;
+  }
+
   GtkWidget* new_orient_radio (GtkWidget* prev, const char* label, const char* value, std::string& cur, Prefs& prefs)
   {
     GtkWidget * r = prev==0
@@ -449,13 +465,18 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
   HIG::workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Articles"));
-    HIG :: workarea_add_section_spacer (t, row, 3);
+    HIG :: workarea_add_section_spacer (t, row, 4);
     w = new_check_button (_("Space selects next article rather than next unread"), "space-selects-next-article", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Smooth scrolling"), "smooth-scrolling", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Clear article cache on shutdown"), "clear-article-cache-on-shutdown", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
+    w = new_spin_button ("newsrc-autosave-timeout-min", 0, 60, prefs);
+    l = gtk_label_new(_("Minutes to autosave newsrc files."));
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
+    HIG::workarea_add_row (t, &row, w, l);
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Behavior")));
 

@@ -208,6 +208,9 @@ DataImpl :: load_newsrc_files (const DataIO& data_io)
 void
 DataImpl :: save_newsrc_files (DataIO& data_io) const
 {
+  if (!in_newsrc_cb && newsrc_autosave_id)
+    g_source_remove( newsrc_autosave_id );
+
   if (_unit_test)
     return;
 
