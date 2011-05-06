@@ -21,6 +21,7 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <fstream>
 extern "C" {
   #include <sys/types.h> // for chmod
   #include <sys/stat.h> // for chmod
@@ -498,7 +499,7 @@ GUI :: disable_accelerators_when_focused (GtkWidget * w) const
 
 namespace
 {
-  static std::string prev_path;
+  static std::string prev_path, prev_file;
 }
 
 std::string
@@ -528,6 +529,39 @@ GUI :: prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs)
   return path;
 }
 
+std::string
+GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
+{
+	
+  if (prev_path.empty())
+    prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
+  if (!file :: file_exists (prev_path.c_str()))
+  prev_path = g_get_home_dir ();
+    prev_file = std::string(_("Untitled.nzb"));
+    
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB File as"),
+				      parent,
+				      GTK_FILE_CHOOSER_ACTION_SAVE,
+				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				      GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+				      NULL);
+	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (w), TRUE);
+	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
+	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (w), prev_file.c_str());
+	
+	std::string file;
+	const int response (gtk_dialog_run (GTK_DIALOG(w)));
+	if (response == GTK_RESPONSE_ACCEPT) {
+		char *tmp;
+		tmp = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w));
+		file=tmp;
+		g_free (tmp);
+	}
+	gtk_widget_destroy (w);
+
+  return file;
+}
+
 void GUI :: do_save_articles ()
 {
   std::string path;
@@ -542,6 +576,34 @@ void GUI :: do_save_articles ()
     SaveDialog * dialog = new SaveDialog (_prefs, _group_prefs, _data, _data, _cache, _data, _queue, get_window(_root), _header_pane->get_group(), copies);
     gtk_widget_show (dialog->root());
   }
+}
+
+
+void GUI :: do_save_articles_to_nzb ()
+{
+
+  std::string path;
+  const std::vector<const Article*> articles (_header_pane->get_full_selection_v ());
+
+  std::vector<Article> copies;
+  copies.reserve (articles.size());
+  foreach_const (std::vector<const Article*>, articles, it)
+    copies.push_back (**it);
+
+  const std::string file (GUI :: prompt_user_for_filename (get_window(_root), _prefs));
+    if (!file.empty()) {
+      Queue::tasks_t tasks;
+      std::string emptystring;
+      foreach_const (std::vector<Article>, copies, it)
+        tasks.push_back (new TaskArticle (_data, _data, *it, _cache, _data, 0, TaskArticle::RAW,emptystring));
+    
+          // write them to a file
+          std::ofstream tmp(file.c_str());
+          if (tmp.good()) {
+            NZB :: nzb_to_xml_file (tmp, tasks); 
+            tmp.close();
+          }
+    }
 }
 
 namespace

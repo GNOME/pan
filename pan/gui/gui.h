@@ -79,6 +79,7 @@ namespace pan
       virtual void do_prompt_for_charset ();
       virtual void do_save_articles ();
       virtual void do_save_articles_from_nzb ();
+      virtual void do_save_articles_to_nzb ();
       virtual void do_print ();
       virtual void do_quit ();
       virtual void do_import_tasks ();
@@ -159,7 +160,7 @@ namespace pan
 
     public:
       static std::string prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs);
-
+	  static std::string prompt_user_for_filename  (GtkWindow * parent, const Prefs& prefs);
 
     private: // Queue::Listener
       friend class Queue;
