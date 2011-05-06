@@ -33,6 +33,7 @@ namespace pan
     virtual void do_prompt_for_charset () = 0;
     virtual void do_save_articles () = 0;
     virtual void do_save_articles_from_nzb () = 0;
+    virtual void do_save_articles_to_nzb () = 0;
     virtual void do_print () = 0;
     virtual void do_import_tasks () = 0;
     virtual void do_cancel_latest_task () = 0;

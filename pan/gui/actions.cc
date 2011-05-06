@@ -106,6 +106,7 @@ namespace
   void do_unsubscribe_selected_groups  (GtkAction*) { pan_ui->do_unsubscribe_selected_groups(); }
   void do_save_articles                (GtkAction*) { pan_ui->do_save_articles(); }
   void do_save_articles_from_nzb       (GtkAction*) { pan_ui->do_save_articles_from_nzb(); }
+  void do_save_articles_to_nzb	       (GtkAction*) { pan_ui->do_save_articles_to_nzb(); }
   void do_print                        (GtkAction*) { pan_ui->do_print(); }
   void do_import_tasks                 (GtkAction*) { pan_ui->do_import_tasks(); }
   void do_cancel_latest_task           (GtkAction*) { pan_ui->do_cancel_latest_task(); }
@@ -323,6 +324,11 @@ namespace
       N_("_Save Articles from this NZB..."), NULL,
       N_("Save Articles from this NZB"),
       G_CALLBACK(do_save_articles_from_nzb) },
+
+    { "save-articles-to-nzb", GTK_STOCK_SAVE,
+      N_("_Save Articles to an NZB File..."), NULL,
+      N_("Save Articles to an NZB File"),
+      G_CALLBACK(do_save_articles_to_nzb) },
 
     { "print", GTK_STOCK_PRINT,
       NULL, "<control>P",

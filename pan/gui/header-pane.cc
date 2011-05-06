@@ -1564,6 +1564,7 @@ HeaderPane :: on_selection_changed_idle (gpointer self_gpointer)
     "download-selected-article",
     "save-articles",
     "save-articles-from-nzb",
+    "save-articles-to-nzb",
     "read-selected-article",
     "show-selected-article-info",
     "mark-article-read",
