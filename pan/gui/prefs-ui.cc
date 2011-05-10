@@ -31,6 +31,7 @@ extern "C" {
 #include "prefs-ui.h"
 #include "tango-colors.h"
 #include "url.h"
+#include "gtk_compat.h"
 
 using namespace pan;
 
@@ -147,10 +148,10 @@ namespace
     }
   }
 
-  void set_prefs_string_from_combo_box_entry (GtkComboBox * c, gpointer user_data)
+  void set_prefs_string_from_combo_box_entry (GtkComboBoxText * c, gpointer user_data)
   {
     const char * key = (const char*) g_object_get_data (G_OBJECT(c), PREFS_KEY);
-    char * val = gtk_combo_box_get_active_text (c);
+    char * val = gtk_combo_box_text_get_active_text (c);
     static_cast<Prefs*>(user_data)->set_string (key, val);
     g_free (val);
   }
@@ -162,10 +163,10 @@ namespace
     const char * key = "editor";
     const std::string editor = prefs.get_string (key, *editors.begin());
     editors.insert (editor);
-    GtkWidget * c = gtk_combo_box_entry_new_text ();
+    GtkWidget * c = gtk_combo_box_text_new_with_entry ();
     g_object_set_data_full (G_OBJECT(c), PREFS_KEY, g_strdup(key), g_free);
     foreach_const (std::set<std::string>, editors, it)
-      gtk_combo_box_append_text (GTK_COMBO_BOX(c), it->c_str());
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT(c), it->c_str());
     gtk_combo_box_set_active (GTK_COMBO_BOX(c),
                               (int)std::distance (editors.begin(), editors.find(editor)));
     g_signal_connect (c, "changed", G_CALLBACK(set_prefs_string_from_combo_box_entry), &prefs);

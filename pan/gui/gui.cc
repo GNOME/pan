@@ -1407,7 +1407,8 @@ void GUI :: do_tabbed_layout (bool tabbed)
     vpane = 0;
   }
 
-  gtk_widget_hide_all (_workarea_bin);
+  //gtk_widget_hide_all (_workarea_bin);
+  gtk_widget_hide (_workarea_bin);
 
   GtkWidget * group_w (_group_pane->root());
   GtkWidget * header_w (_header_pane->root());

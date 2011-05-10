@@ -47,6 +47,7 @@ extern "C" {
 #include "post.ui.h"
 #include "profiles-dialog.h"
 #include "url.h"
+#include "gtk_compat.h"
 
 #ifdef HAVE_GTKSPELL
 #define DEFAULT_SPELLCHECK_FLAG true
@@ -1158,8 +1159,8 @@ void
 PostUI :: update_profile_combobox ()
 {
   // get the old selection
-  GtkComboBox * combo (GTK_COMBO_BOX (_from_combo));
-  char * active_text = gtk_combo_box_get_active_text (combo);
+  GtkComboBoxText * combo (GTK_COMBO_BOX_TEXT (_from_combo));
+  char * active_text = gtk_combo_box_text_get_active_text (combo);
 
   // if there's not already a selection,
   // pull the default for the newsgroup
@@ -1178,9 +1179,9 @@ PostUI :: update_profile_combobox ()
   }
 
   // tear out the old entries
-  GtkTreeModel * model (gtk_combo_box_get_model (combo));
+  GtkTreeModel * model (gtk_combo_box_get_model (GTK_COMBO_BOX(combo)));
   for (int i(0), qty(gtk_tree_model_iter_n_children(model,0)); i<qty; ++i)
-    gtk_combo_box_remove_text (combo, 0);
+    gtk_combo_box_text_remove (combo, 0);
 
   // add the new entries
   typedef std::set<std::string> names_t;
@@ -1188,14 +1189,14 @@ PostUI :: update_profile_combobox ()
   int index (0);
   int sel_index (0);
   foreach_const (names_t, profile_names, it) {
-    gtk_combo_box_append_text (combo, it->c_str());
+    gtk_combo_box_text_append_text (combo, it->c_str());
     if (active_text && (*it == active_text))
       sel_index = index;
     ++index;
   }
  
   // ensure _something_ is selected...
-  gtk_combo_box_set_active (combo, sel_index);
+  gtk_combo_box_set_active (GTK_COMBO_BOX(combo), sel_index);
 
   // cleanup
   g_free (active_text);
@@ -1335,7 +1336,7 @@ Profile
 PostUI :: get_current_profile ()
 {
   Profile profile;
-  char * pch = gtk_combo_box_get_active_text (GTK_COMBO_BOX(_from_combo));
+  char * pch = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT(_from_combo));
   if (pch) {
     _profiles.get_profile (pch, profile);
     g_free (pch);
@@ -1734,7 +1735,7 @@ PostUI :: create_main_tab ()
   gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
-  w = _from_combo = gtk_combo_box_new_text ();
+  w = _from_combo = gtk_combo_box_text_new ();
   gtk_cell_layout_clear (GTK_CELL_LAYOUT(w));
   GtkCellRenderer * r =  gtk_cell_renderer_text_new();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT(w), r, true);

@@ -30,6 +30,7 @@ extern "C" {
 #include "hig.h"
 #include "pad.h"
 #include "pan-file-entry.h"
+#include "gtk_compat.h"
 
 using namespace pan;
 
@@ -47,7 +48,7 @@ namespace
   }
 #endif
 }
-
+  
 void
 GroupPrefsDialog :: save_from_gui ()
 {
@@ -58,7 +59,7 @@ GroupPrefsDialog :: save_from_gui ()
   // posting profile...
   std::string profile;
   if (gtk_widget_get_sensitive (_profile)) {
-    char * pch (gtk_combo_box_get_active_text (GTK_COMBO_BOX(_profile)));
+    char * pch (gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT(_profile)));
     _group_prefs.set_string (_group, "posting-profile", pch);
     g_free (pch);
   }
@@ -84,16 +85,16 @@ namespace
                              const Quark      & group,
                              const GroupPrefs & group_prefs)
   {
-    GtkWidget * w = gtk_combo_box_new_text ();
-    GtkComboBox * combo (GTK_COMBO_BOX (w));
+    GtkWidget * w = gtk_combo_box_text_new ();
+    GtkComboBoxText * combo (GTK_COMBO_BOX_TEXT (w));
 
     typedef std::set<std::string> unique_strings_t;
     const unique_strings_t profiles (data.get_profile_names ());
 
     if (profiles.empty())
     {
-      gtk_combo_box_append_text (combo, _("No Profiles defined in Edit|Posting Profiles."));
-      gtk_combo_box_set_active (combo, 0);
+      gtk_combo_box_text_append_text (combo, _("No Profiles defined in Edit|Posting Profiles."));
+      gtk_combo_box_set_active (GTK_COMBO_BOX(combo), 0);
       gtk_widget_set_sensitive (w, false);
     }
     else
@@ -104,9 +105,9 @@ namespace
         if (*it == s)
           sel_index = i;
         ++i;
-        gtk_combo_box_append_text (combo, it->c_str());
+        gtk_combo_box_text_append_text (combo, it->c_str());
       }
-      gtk_combo_box_set_active (combo, sel_index);
+      gtk_combo_box_set_active (GTK_COMBO_BOX(combo), sel_index);
     }
 
     return w;
