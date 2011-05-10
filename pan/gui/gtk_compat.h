@@ -14,7 +14,46 @@
 #ifndef PAN_GTK_COMPAT_H
 #define PAN_GTK_COMPAT_H
 
-namespace {
+#ifdef __cplusplus
+namespace
+{
+#endif
+#if !GTK_CHECK_VERSION(2,18,0)
+  void gtk_widget_get_allocation( GtkWidget *w, GtkAllocation *a)
+  {
+    *a = w->allocation;
+  }
+  bool gtk_widget_has_focus( GtkWidget *w)
+  {
+    return GTK_WIDGET_HAS_FOCUS(w);
+  }
+  bool gtk_widget_get_sensitive( GtkWidget *w)
+  {
+    return GTK_WIDGET_SENSITIVE(w);
+  }
+  bool gtk_widget_get_visible(GtkWidget *w)
+  {
+    return GTK_WIDGET_VISIBLE(w);
+  }
+  bool gtk_widget_is_toplevel(GtkWidget *w)
+  {
+    return GTK_WIDGET_TOPLEVEL(w);
+  }
+#endif
+
+#if !GTK_CHECK_VERSION(2,20,0)
+  gboolean gtk_widget_get_realized(GtkWidget *w)
+  {
+    return GTK_WIDGET_REALIZED(w);
+  }
+#endif
+
+#ifdef GTK_DISABLE_DEPRECATED
+#if GTK_CHECK_VERSION(2,22,0)
+#define GtkNotebookPage void
+#endif
+#endif
+
 #if !GTK_CHECK_VERSION(2,24,0)
 #define GTK_COMBO_BOX_TEXT(cb) GTK_COMBO_BOX(cb)
   typedef GtkComboBox GtkComboBoxText;
@@ -39,6 +78,8 @@ namespace {
     gtk_combo_box_remove_text(cb, p);
   }
 #endif
+#ifdef __cplusplus
 }
+#endif
   
 #endif

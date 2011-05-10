@@ -40,13 +40,6 @@ namespace
   {
     delete static_cast<GroupPrefsDialog*>(castme);
   }
-
-#if !GTK_CHECK_VERSION(2,18,0)
-  bool gtk_widget_get_sensitive( GtkWidget *w)
-  {
-    return GTK_WIDGET_SENSITIVE(w);
-  }
-#endif
 }
   
 void
