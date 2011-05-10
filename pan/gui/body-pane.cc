@@ -51,13 +51,6 @@ using namespace pan;
 **/
 namespace
 {
-#if !GTK_CHECK_VERSION(2,18,0)
-  void gtk_widget_get_allocation( GtkWidget *w, GtkAllocation *a)
-  {
-    *a = w->allocation;
-  }
-#endif
-
   class PixbufCache
   {
     private:

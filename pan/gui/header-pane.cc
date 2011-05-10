@@ -37,6 +37,7 @@ extern "C" {
 #include "header-pane.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
+#include "gtk_compat.h"
 
 using namespace pan;
 
@@ -545,11 +546,7 @@ HeaderPane :: set_group (const Quark& new_group)
       _atree->add_listener (this);
 
       rebuild ();
-#ifndef GTK_WIDGET_REALIZED
       if (gtk_widget_get_realized(_tree_view))
-#else
-      if (GTK_WIDGET_REALIZED(_tree_view))
-#endif
         gtk_tree_view_scroll_to_point (GTK_TREE_VIEW(_tree_view), 0, 0);
     }
   }
@@ -1203,13 +1200,6 @@ namespace
     set_search_entry (w, search_text.c_str());
     return false;
   }
-
-#if !GTK_CHECK_VERSION(2,18,0)
-  bool gtk_widget_has_focus( GtkWidget *w)
-  {
-    return GTK_WIDGET_HAS_FOCUS(w);
-  }
-#endif
 
   void refresh_search_entry (GtkWidget * w)
   {

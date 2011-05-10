@@ -62,6 +62,7 @@ extern "C" {
 #include "server-ui.h"
 #include "task-pane.h"
 #include "url.h"
+#include "gtk_compat.h"
 
 namespace pan
 {
@@ -107,11 +108,7 @@ namespace
 
   void toggle_visible (GtkWidget * w)
   {
-#if GTK_CHECK_VERSION(2,18,0)
     set_visible (w, !gtk_widget_get_visible(w));
-#else
-    set_visible (w, !GTK_WIDGET_VISIBLE(w));
-#endif
   }
 }
 
