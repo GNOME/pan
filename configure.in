@@ -47,6 +47,7 @@ dnl needed if you want to build Pan with spellchecking in the Post window.
 GLIB_REQUIRED=2.14.0
 GMIME_REQUIRED=2.4.0
 GTK_REQUIRED=2.16.0
+GTK3_REQUIRED=3.0.0
 GTKSPELL_REQUIRED=2.0.7
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GMIME_REQUIRED)
@@ -77,8 +78,17 @@ panlocaledir='${prefix}/${DATADIRNAME}/locale'
 AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
 PKG_CHECK_MODULES([GMIME], [ gmime-2.6    >= $GMIME_REQUIRED ], [],
 	[PKG_CHECK_MODULES( [GMIME], [gmime-2.4    >= $GMIME_REQUIRED] )] )
-AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
 
+gtk_msg=no
+AC_ARG_WITH(gtk3, AC_HELP_STRING([--with-gtk3], [Enable gtk3 support]), [want_gtk3=$withval], [want_gtk3=yes])
+if test "x$want_gtk3" = "xyes" ; then
+	PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= $GTK3_REQUIRED],
+	                  [gtk_msg="yes >= $GTK3_REQUIRED"
+	                  AC_DEFINE(HAVE_GTK,[1],[GTK 3.0])]
+	                  )
+else
+    AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
+fi
 
 gtkspell_msg=no
 AC_ARG_WITH(gtkspell, AC_HELP_STRING([--with-gtkspell], [Enable gtkspell support]), [want_gtkspell=$withval], [want_gtkspell=yes])
