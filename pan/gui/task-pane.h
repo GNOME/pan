@@ -66,7 +66,7 @@ namespace pan
       void update_status (const Queue::task_states_t&);
       static gboolean periodic_refresh_foreach (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer);
       static gboolean periodic_refresh (gpointer);
-      static void root_destroyed_cb (GtkObject, gpointer);
+      static void root_destroyed_cb (GtkWidget, gpointer);
 
 
     private:

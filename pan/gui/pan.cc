@@ -108,7 +108,7 @@ namespace
     Queue * queue;
   };
 
-  void add_grouplist_task (GtkObject *, gpointer user_data)
+  void add_grouplist_task (GtkWidget *, gpointer user_data)
   {
     DataAndQueue * foo (static_cast<DataAndQueue*>(user_data));
     const quarks_t new_servers (foo->data->get_servers());

@@ -78,6 +78,39 @@ namespace
     gtk_combo_box_remove_text(cb, p);
   }
 #endif
+
+#if !GTK_CHECK_VERSION(3,0,0)
+#ifndef GDK_KEY_Up
+#define GDK_KEY_Up GDK_Up
+#define GDK_KEY_KP_Up GDK_KP_Up
+#define GDK_KEY_Down GDK_Down
+#define GDK_KEY_KP_Down GDK_KP_Down
+#endif
+  typedef GtkStyle GtkStyleContext;
+  GtkStyleContext* gtk_widget_get_style_context(GtkWidget *w)
+  {
+    return gtk_widget_get_style(w);
+  }
+  GtkIconSet* gtk_style_context_lookup_icon_set(GtkStyleContext *s,
+      const char *id)
+  {
+
+    return gtk_style_lookup_icon_set(s,id);
+  }
+  void gtk_widget_override_font(GtkWidget *w, PangoFontDescription *f)
+  {
+    gtk_widget_modify_font(w,f);
+  }
+#endif
+#if GTK_CHECK_VERSION(3,0,0)
+#define GTK_OBJECT(w) w
+  typedef GtkWidget GtkObject;
+  void gdk_cursor_unref(GdkCursor *p)
+  {
+    g_object_unref(p);
+  }
+#endif
+
 #ifdef __cplusplus
 }
 #endif
