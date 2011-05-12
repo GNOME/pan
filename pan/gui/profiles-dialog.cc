@@ -476,18 +476,18 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
   // add button
   w = gtk_button_new_from_stock (GTK_STOCK_ADD);
   gtk_box_pack_start (GTK_BOX (bbox), w, false, false, 0);
-  g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(on_add_button), this);
+  g_signal_connect (w, "clicked", G_CALLBACK(on_add_button), this);
 
   // edit button
   w = gtk_button_new_from_stock (GTK_STOCK_EDIT);
   _edit_button = w;
   gtk_box_pack_start (GTK_BOX (bbox), w, false, false, 0);
-  g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(on_edit_button), this);
+  g_signal_connect (w, "clicked", G_CALLBACK(on_edit_button), this);
 
   // remove button
   _remove_button = w = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
   gtk_box_pack_start (GTK_BOX (bbox), w, false, false, 0);
-  g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(on_delete_button), this);
+  g_signal_connect (w, "clicked", G_CALLBACK(on_delete_button), this);
 
   // set sensitive buttons
   refresh_buttons ();

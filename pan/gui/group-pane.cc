@@ -33,6 +33,7 @@ extern "C" {
 #include <pan/data/data.h>
 #include "group-pane.h"
 #include "pad.h"
+#include "gtk_compat.h"
 
 using namespace pan;
 
@@ -566,7 +567,11 @@ namespace
                                      GdkEventFocus * ,
                                      gpointer        )
   {
+#if !GTK_CHECK_VERSION(3,0,0)
     gtk_widget_modify_text (w, GTK_STATE_NORMAL, NULL); // resets
+#else
+    gtk_widget_override_color(w, GTK_STATE_FLAG_NORMAL, NULL);
+#endif
     set_search_entry (w, search_text.c_str());
     return false;
   }
@@ -575,10 +580,16 @@ namespace
   {
     if (search_text.empty() && !gtk_widget_has_focus(w))
     {
+#if !GTK_CHECK_VERSION(3,0,0)
       GdkColor c;
       c.pixel = 0;
-      c.red = c.green = c.blue = 0xAAAA; // light grey
+      c.red = c.green = c.blue = 0xAAAA;
       gtk_widget_modify_text (w, GTK_STATE_NORMAL, &c);
+#else
+      GdkRGBA c;
+      gdk_rgba_parse (&c, "0xAAA");
+      gtk_widget_override_color(w, GTK_STATE_FLAG_NORMAL, &c);
+#endif
       set_search_entry (w, _(mode_strings[mode]));
     }
   }
@@ -969,11 +980,11 @@ void
 GroupPane :: refresh_font ()
 {
   if (!_prefs.get_flag ("group-pane-font-enabled", false))
-    gtk_widget_modify_font (_tree_view, 0);
+    gtk_widget_override_font (_tree_view, 0);
   else {
     const std::string str (_prefs.get_string ("group-pane-font", "Sans 10"));
     PangoFontDescription * pfd (pango_font_description_from_string (str.c_str()));
-    gtk_widget_modify_font (_tree_view, pfd);
+    gtk_widget_override_font (_tree_view, pfd);
     pango_font_description_free (pfd);
   }
 }

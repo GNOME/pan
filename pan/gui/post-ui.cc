@@ -1117,7 +1117,7 @@ PostUI :: create_body_widget (GtkTextBuffer*& buf, GtkWidget*& view, const Prefs
   // always use a monospace font in the compose window
   const std::string str (prefs.get_string ("monospace-font", "Monospace 10"));
   PangoFontDescription *pfd (pango_font_description_from_string (str.c_str()));
-  gtk_widget_modify_font (view, pfd);
+  gtk_widget_override_font (view, pfd);
 
   // figure out how wide the text is before the wrap point
   PangoContext * context = gtk_widget_create_pango_context (view);

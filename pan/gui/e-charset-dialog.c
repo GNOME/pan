@@ -50,7 +50,7 @@ e_charset_dialog (const char *title, const char *prompt,
 							  GTK_STOCK_OK, GTK_RESPONSE_OK,
 							  NULL));
 
-	gtk_dialog_set_has_separator (dialog, FALSE);
+	//gtk_dialog_set_has_separator (dialog, FALSE);
 	gtk_dialog_set_default_response (dialog, GTK_RESPONSE_OK);
 
 	vbox = gtk_vbox_new (FALSE, 6);

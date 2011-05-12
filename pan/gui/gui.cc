@@ -85,7 +85,7 @@ namespace
   }
 
   void
-  parent_set_cb (GtkWidget * widget, GtkObject *, gpointer ui_manager_g)
+  parent_set_cb (GtkWidget * widget, GtkWidget *, gpointer ui_manager_g)
   {
     GtkWidget * toplevel = gtk_widget_get_toplevel (widget);
     if (GTK_IS_WINDOW (toplevel))
@@ -252,7 +252,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   w = _queue_size_button = gtk_button_new();
   gtk_widget_set_tooltip_text (w, _("Open the Task Manager"));
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
-  g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(show_task_window_cb), this);
+  g_signal_connect (w, "clicked", G_CALLBACK(show_task_window_cb), this);
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
   frame = gtk_frame_new (NULL);
   gtk_container_set_border_width (GTK_CONTAINER(frame), 0);
