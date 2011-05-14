@@ -53,6 +53,11 @@ namespace pan
 
     static std::ostream&  nzb_to_xml (std::ostream             & out,
                                       const std::vector<Task*> & tasks);
+                                      
+    
+    static std::ostream&  nzb_to_xml_file (std::ostream             & out,
+                                      const std::vector<Task*> & tasks);
+
   };
 }
 

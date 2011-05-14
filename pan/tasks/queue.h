@@ -25,8 +25,8 @@
 #include <vector>
 #include <pan/general/macros.h> // for UNUSED
 #include <pan/general/map-vector.h>
-#include <pan/general/quark.h>
 #include <pan/tasks/decoder.h>
+#include <pan/general/quark.h>
 #include <pan/tasks/nntp-pool.h>
 #include <pan/tasks/socket.h>
 #include <pan/tasks/adaptable-set.h>
