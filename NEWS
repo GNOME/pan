@@ -1,0 +1,38 @@
+Pan 0.14.90 is the first beta of a ground-up rewrite of Pan in C++.
+
+Some of the best user-visible improvements:
+
+  * The memory footprint for large newsgroups has been cut by 2/3.  (A month's
+    worth of headers in a sample binaries group dropped from 283M to 94M.)
+  
+  * The time to download headers has been cut by 2/3 by parallelizing
+    the download across multiple conections to the server.  (In the same
+    sample group, downloading a months' worth of headers dropped from
+    17 minutes to 5 minutes.)
+
+  * The time to load large newsgroups from disk has been cut by 90%.
+    (In the same sample newsgroup, the time to load from disk
+    dropped from 14 seconds to 1.3 seconds.)
+
+  * Multiserver support.  Pan can now download files in parallel not just
+    with multiple connections to one server, but also to other servers.
+
+  * NZB support.  Pan can now import NZB files.  It can also be started in an
+    NZB client mode that doesn't create the newsreader window at all.
+
+  * All of the user interface windows and dialogs have been redesigned.
+
+
+Some of the best backend improvements:
+
+  * The source code's line count has dropped from 44,382 to 23,093 --
+    and is far cleaner.
+
+  * Fewer library prerequisites: Pan no longer requires GNet or libxml2.
+
+  * Better decoupling.
+    _ Unit tests that were impossible before, such as tasks running and
+      talking to a mock news server, can now be done.
+    _ Pan can now run 'headless' to process queued tasks.
+    _ The task and application layers are separated from the backend,
+      so a database backend could be added in the future if desired.

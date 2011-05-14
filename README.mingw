@@ -1,0 +1,149 @@
+The environment 
+===============
+installed mingw 5.0.2 with C++ and mingw-make from http://www.mingw.org/download.shtml
+installed msys 1.0.11-2004.04.03-1  from http://www.mingw.org/download.shtml
+installed msysDTK-1.0.1 (autoconf, automake, libtool...) from http://www.mingw.org/download.shtml
+
+.profile
+========
+Here is the .profile I use in my msys home directory:
+
+  echo "loading .profile"
+
+  export CFLAGS="$CFLAGS -ggdb3 -mms-bitfields"
+  export CXXFLAGS="$CXXFLAGS -ggdb3 -mms-bitfields"
+  export CPPFLAGS="$CPPFLAGS -I/c/mingw/include"
+  export PATH="$PATH:/c/mingw/bin"
+
+  export GTK_HOME="/opt/gtk"
+  export CPPFLAGS="$CPPFLAGS -I$GTK_HOME/include"
+  export PATH="$GTK_HOME/bin:$GTK_HOME/lib:$PATH"
+  export PKG_CONFIG_PATH="$GTK_HOME/lib/pkgconfig:$PKG_CONFIG_PATH"
+  export ACLOCAL_FLAGS="$ACLOCAL_FLAGS -I $GTK_HOME/share/aclocal"
+
+  export PCRE_HOME="/opt/pcre"
+  export CPPFLAGS="$CPPFLAGS -I$PCRE_HOME/include"
+  export PATH="$PATH:$PCRE_HOME/bin"
+  export PKG_CONFIG_PATH="$PCRE_HOME/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+  export GMIME_HOME="/opt/gmime"
+  export CPPFLAGS="$CPPFLAGS -I$GMIME_HOME/include"
+  export PATH="$GMIME_HOME/bin:$GMIME_HOME/lib:$PATH"
+  export PKG_CONFIG_PATH="$GMIME_HOME/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+
+PCRE
+====
+Like XNews and slrn, Pan uses the perl-compatable regex library.
+
+* Install PCRE from http://gnuwin32.sourceforge.net/downlinks/pcre.php
+               to c:\msys\1.0\opt\pcre.
+               You don't need any of the installer's start menu stuff for Pan.
+
+
+GTK
+===
+I used wget and unzip to grab the zipped windows gtk binaries from gtk.org.
+If you get them some other way then you won't need wget/unzip:
+
+* Install unzip from http://gnuwin32.sourceforge.net/downlinks/unzip.php
+                to c:\msys\1.0
+                You don't need any of the installer's start menu stuff for Pan.
+
+* Install wget from http://gnuwin32.sourceforge.net/downlinks/wget.php
+               to c:\msys\1.0
+               You don't need any of the installer's start menu stuff for Pan.
+
+* Go visit http://gimp-win.sourceforge.net/stable.html to find out what the
+  latest supported gtk runtime environment is.  (Example: right now it's 2.8)
+  That is the version of GTK that we will grab in the next step.
+
+* Copy gtk a set of the latest gtk windows zipfiles to c:\msys\1.0\opt\gtk .
+  Here are the files I got, though you should get newer versions if available.
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/atk-1.10.3.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/atk-dev-1.10.3.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/cairo-1.0.2.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/cairo-dev-1.0.2.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/glib-2.8.6.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/glib-dev-2.8.6.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/gtk+-2.8.13.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/gtk+-dev-2.8.13.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/pango-1.10.3.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/pango-dev-1.10.3.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/dependencies/gettext-0.14.5.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/dependencies/gettext-dev-0.14.5.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/dependencies/libiconv-1.9.1.bin.woe32.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/dependencies/libpng-1.2.8-bin.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/dependencies/pkg-config-0.20.zip
+  ftp://ftp.gtk.org/pub/gtk/v2.8/win32/dependencies/zlib123-dll.zip
+
+* % cd /opt/gtk
+  % for foo in *zip; do unzip "$foo"; done
+  % mv zlib1.dll bin/
+
+
+GMIME
+=====
+Get a GMime tarball into /opt/gmime and prepare to build it.
+
+  % mkdir -p /opt/gmime/src
+  % cd /opt/gmime/src
+  % wget http://spruce.sourceforge.net/gmime/sources/v2.1/gmime-2.1.19.tar.gz
+    (or newer, if available)
+  % tar xfz gmime*gz
+  % cd gmime*/
+
+GMime requires regular expressions.
+Since we're already using pcre, we can adapt GMime to use that:
+
+  * in tests/Makefile.am,
+    add /opt/pcre/lib/libpcreposix.dll.a /opt/pcre/lib/libpcre.dll
+    to the LDADDS line.
+
+  * in gmime-2.0.pc.in,
+    add /opt/pcre/lib/libpcreposix.a /opt/pcre/lib/libpcre.a
+    to the LIBS line.
+
+  * in gmime/gmime-parser.c:
+    - #include <regex.h>
+    + #include <pcre.h> // pick up PCRE_DATA_SCOPE macro used by pcreposix.h
+    + #include <pcreposix.h>
+
+GMime won't build under Windows without the following changes:
+
+  * in Makefile.am,
+    remove the line "SUBDIRS += dests docs"
+
+  * in gmime/Makefile.am,
+    remove the line with "gmime-gpg-context.c"
+
+  * in gmime/gmime-stream.h,
+    add #include <stdio.h> before #include <glib.h>
+
+  * in gmime/gmime-stream-fs.c,
+    replace "return fsync" with "return 0"
+
+Build and install GMime.
+
+  % ./configure --prefix=/opt/gmime \
+                --with-libiconv-prefix=/opt/gtk \
+                --disable-shared --enable-static
+    (how to fix the LIBICONV warning during configure?)
+  % make
+  % make install
+
+
+PAN
+===
+Pan itself is pretty painless.
+
+  % tar xfj pan-win.tar.bz2
+  % cd pan
+  % CXXFLAGS="-O -Wall -ggdb3" ./configure
+  % make
+
+You now have a working Pan binary in pan/gui/.
+Notice that when you run it, it looks like a theme-less gtk.
+If you now install the gimp gtk runtime, and copy the pcre dlls from
+/opt/pcre/bin/*dll to the pan executable's directory, you can fire up
+a gtk-wimp'ified version of Pan from outside of msys.
