@@ -134,6 +134,12 @@ namespace pan
                              uint64_t             high,
                              Listener           * l);
 
+      /* same as above, experimental header compression (!!!) */
+      void xzver            (const Quark        & group,
+                             uint64_t             low,
+                             uint64_t             high,
+                             Listener           * l);
+
       /**
        * Executes a LIST command: "LIST"
        *

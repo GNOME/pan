@@ -4,11 +4,13 @@ noinst_LIBRARIES = libtasks.a
 
 libtasks_a_SOURCES = \
   decoder.cc \
+  encoder.cc \
   task.cc \
   task-article.cc \
   task-groups.cc \
   task-post.cc \
   task-xover.cc \
+  task-upload.cc \
   nntp.cc \
   nzb.cc \
   queue.cc \
@@ -21,12 +23,14 @@ noinst_HEADERS = \
   adaptable-set.cc \
   adaptable-set.h \
   decoder.h \
+  encoder.h \
   defgroup.h \
   health.h \
   task.h \
   task-article.h \
   task-groups.h \
   task-post.h \
+  task-upload.h \
   task-weak-ordering.h \
   task-xover.h \
   nntp.h  \

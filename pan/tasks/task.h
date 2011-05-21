@@ -30,6 +30,7 @@
 namespace pan
 {
    class Decoder;
+   class Encoder;
 
    /**
     * Base class for jobs that require NNTP interaction to be completed.
@@ -52,8 +53,9 @@ namespace pan
             COMPLETED,
             /** Task is waiting on an nntp connection */
             NEED_NNTP,
-            /** Task waiting for a decoder */
+            /** Task waiting for a decoder/encoder */
             NEED_DECODER,
+            NEED_ENCODER,
             /** Task is running */
             WORKING
          };
@@ -92,6 +94,9 @@ namespace pan
                void set_need_decoder () {
                    _work = NEED_DECODER; _servers.clear(); }
 
+               void set_need_encoder () {
+                   _work = NEED_ENCODER; _servers.clear(); }
+
                void set_health (Health h) {
                   _health = h; }
 
@@ -109,9 +114,15 @@ namespace pan
            virtual ~DecoderSource() {}
            virtual void check_in (Decoder*, Task*) = 0;
          };
+         struct EncoderSource {
+           virtual ~EncoderSource() {}
+           virtual void check_in (Encoder*, Task*) = 0;
+         };
 
          /** Loan the task a Decoder */
          void give_decoder (DecoderSource*, Decoder*);
+
+         void give_encoder (EncoderSource*, Encoder*);
 
       public:
 
@@ -138,8 +149,10 @@ namespace pan
          int get_nntp_count () const { return _nntp_to_source.size(); }
 
          virtual void use_decoder (Decoder*);
+         virtual void use_encoder (Encoder*);
 
          void check_in (Decoder*);
+         void check_in (Encoder*);
 
       private:
 
@@ -151,10 +164,11 @@ namespace pan
          /** used in check_in() to remember where the nntp is to be returned */
          nntp_to_source_t _nntp_to_source;
 
-         /** typedef for _decoder_to_source */
          typedef Loki::AssocVector<Decoder*,DecoderSource*> decoder_to_source_t;
-         /** used in check_in() to remember where the decoder is to be returned */
+         typedef Loki::AssocVector<Encoder*,EncoderSource*> encoder_to_source_t;
+         /** used in check_in() to remember where the decoder/encoder is to be returned */
          decoder_to_source_t _decoder_to_source;
+         encoder_to_source_t _encoder_to_source;
    };
 }
 

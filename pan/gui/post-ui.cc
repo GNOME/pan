@@ -39,6 +39,7 @@ extern "C" {
 #include <pan/usenet-utils/message-check.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/data/data.h>
+#include <pan/gui/gui.h>
 #include <pan/tasks/task-post.h>
 #include "e-charset-dialog.h"
 #include "pad.h"
@@ -123,7 +124,7 @@ PostUI :: set_spellcheck_enabled (bool enabled)
 ***/
 
 /**
- * get current the body.
+ * get the current body.
  * since Pan posts WYSIWYG, pull from the view's lines
  * rather than just using text_buffer_get_text(start,end)
  */
@@ -134,7 +135,7 @@ PostUI :: get_body () const
   GtkTextBuffer * buf (_body_buf);
   GtkTextView * view (GTK_TEXT_VIEW(_body_view));
   const bool wrap (_prefs.get_flag ("compose-wrap-enabled", false));
-  
+
   // walk through all the complete lines...
   GtkTextIter body_start, body_end, line_start, line_end;
   gtk_text_buffer_get_bounds (buf, &body_start, &body_end);
@@ -197,6 +198,7 @@ namespace
   void do_close    (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->close_window (); }
   void do_wrap     (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_wrap_mode (gtk_toggle_action_get_active (w)); }
   void do_edit2    (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_always_run_editor (gtk_toggle_action_get_active (w)); }
+  void do_add_files(GtkAction*, gpointer p)          { static_cast<PostUI*>(p)->add_files (); }
 
   GtkActionEntry entries[] =
   {
@@ -215,7 +217,8 @@ namespace
     { "paste", GTK_STOCK_PASTE, 0, 0, 0, G_CALLBACK(do_paste) },
     { "rot13", GTK_STOCK_REFRESH, N_("_Rot13"), 0, N_("Rot13 Selected Text"), G_CALLBACK(do_rot13) },
     { "run-editor", GTK_STOCK_JUMP_TO, N_("Run _Editor"), "<control>e", N_("Run Editor"), G_CALLBACK(do_edit) },
-    { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), 0, 0, G_CALLBACK(do_profiles) }
+    { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), 0, 0, G_CALLBACK(do_profiles) },
+    { "add-files", GTK_STOCK_OPEN, N_("Add _Files to Queue"), "<control>O", N_("Add Files to Queue"), G_CALLBACK(do_add_files) },
   };
 
   GtkToggleActionEntry toggle_entries[] =
@@ -317,7 +320,7 @@ PostUI :: rot13_selection ()
     gtk_text_buffer_insert (_body_buf, &start, str, strlen(str));
     g_free (str);
   }
-} 
+}
 
 namespace
 {
@@ -329,14 +332,14 @@ namespace
 }
 
 void
-PostUI :: close_window ()
+PostUI :: close_window (bool flag)
 {
-  bool destroy_flag (false);;
+  bool destroy_flag (false || flag);
 
   if (get_body() == _unchanged_body)
     destroy_flag = true;
 
-  else {
+  else if (!flag) {
     GtkWidget * d = gtk_message_dialog_new (
       GTK_WINDOW(_root),
       GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -365,6 +368,9 @@ PostUI :: close_window ()
 bool
 PostUI :: check_message (const Quark& server, GMimeMessage * msg)
 {
+
+  std::cerr<<"check message\n";
+
   MessageCheck :: unique_strings_t errors;
   MessageCheck :: Goodness goodness;
 
@@ -403,7 +409,7 @@ PostUI :: check_charset ()
   if (charset == "UTF-8")
     return true;
 
-  // Check if body can be posted in the selected charset 
+  // Check if body can be posted in the selected charset
   const std::string body (get_body ());
   char *tmp = g_convert (body.c_str(), -1, charset.c_str(), "UTF-8", NULL, NULL, NULL);
   if (tmp) {
@@ -421,7 +427,7 @@ PostUI :: check_charset ()
   char * msg = g_strdup_printf (_("Message uses characters not specified in charset '%s' - possibly use '%s' "), charset.c_str(), tmp);
   GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
                                           GTK_DIALOG_DESTROY_WITH_PARENT,
-                                          GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE, 
+                                          GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
 										  NULL);
   HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
                            _("There were problems with this post."),
@@ -431,7 +437,7 @@ PostUI :: check_charset ()
   gtk_widget_destroy (d);
   g_free (tmp);
   g_free (msg);
-  
+
   return false;
 }
 
@@ -465,6 +471,14 @@ namespace
   {
     g_source_remove (GPOINTER_TO_UINT(tag));
   }
+}
+
+void
+PostUI :: add_files ()
+{
+  if (!check_charset())
+    return;
+  prompt_user_for_queueable_files (_file_queue, GTK_WINDOW (gtk_widget_get_toplevel(_root)), _prefs);
 }
 
 void
@@ -582,7 +596,7 @@ PostUI :: on_progress_error (Progress&, const StringView& message)
                                           GTK_DIALOG_DESTROY_WITH_PARENT,
                                           GTK_MESSAGE_ERROR,
                                           GTK_BUTTONS_CLOSE, "%s", message.to_string().c_str());
-  g_signal_connect_swapped (d, "response", 
+  g_signal_connect_swapped (d, "response",
                             G_CALLBACK(gtk_widget_destroy), d);
   gtk_widget_show (d);
 }
@@ -652,28 +666,43 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   /**
   ***  Pop up a ``Posting'' Dialog...
   **/
-  GtkWidget * d = gtk_dialog_new_with_buttons (_("Posting Article"),
-                                               GTK_WINDOW(_root),
-                                               GTK_DIALOG_DESTROY_WITH_PARENT,
-                                               //GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                               NULL);
-  char buf[512];
-  g_snprintf (buf, sizeof(buf), "<b>%s</b>", _("Posting..."));
-  GtkWidget * w = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL, "use-markup", TRUE, "label", buf, NULL));
-  GtkWidget *content = gtk_dialog_get_content_area(GTK_DIALOG(d));
-  gtk_box_pack_start (GTK_BOX(content), w, false, false, PAD_SMALL);
-  w = gtk_progress_bar_new ();
-  gtk_progress_bar_set_pulse_step (GTK_PROGRESS_BAR(w), 0.05);
-  const guint tag = g_timeout_add (100, pulse_me, w);
-  gtk_box_pack_start (GTK_BOX(content), w, false, false, PAD_SMALL);
-  g_object_set_data_full (G_OBJECT(d), "progressbar-timeout-tag", GUINT_TO_POINTER(tag), remove_progress_tag);
-  _post_dialog = d;
-  g_signal_connect (_post_dialog, "destroy", G_CALLBACK(gtk_widget_destroyed), &_post_dialog);
-  gtk_widget_show_all (d);
-  _post_task = new TaskPost (server, message);
-  _post_task->add_listener (this);
-  
-  _queue.add_task (_post_task, Queue::TOP);
+  if(_file_queue_empty)
+  {
+    GtkWidget * d = gtk_dialog_new_with_buttons (_("Posting Article"),
+                                                 GTK_WINDOW(_root),
+                                                 GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                 //GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                                 NULL);
+    char buf[512];
+    g_snprintf (buf, sizeof(buf), "<b>%s</b>", _("Posting..."));
+    GtkWidget * w = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL, "use-markup", TRUE, "label", buf, NULL));
+    GtkWidget *content = gtk_dialog_get_content_area(GTK_DIALOG(d));
+    gtk_box_pack_start (GTK_BOX(content), w, false, false, PAD_SMALL);
+    w = gtk_progress_bar_new ();
+    gtk_progress_bar_set_pulse_step (GTK_PROGRESS_BAR(w), 0.05);
+    const guint tag = g_timeout_add (100, pulse_me, w);
+    gtk_box_pack_start (GTK_BOX(content), w, false, false, PAD_SMALL);
+    g_object_set_data_full (G_OBJECT(d), "progressbar-timeout-tag", GUINT_TO_POINTER(tag), remove_progress_tag);
+    _post_dialog = d;
+    g_signal_connect (_post_dialog, "destroy", G_CALLBACK(gtk_widget_destroyed), &_post_dialog);
+    gtk_widget_show_all (d);
+  }
+
+  if (_file_queue_empty)
+  {
+    _post_task = new TaskPost (server, message);
+    _post_task->add_listener (this);
+    _queue.add_task (_post_task, Queue::TOP);
+  } else
+  {
+
+    _post_task = new TaskUpload (_file_queue,profile.posting_server,
+                                   new_message_from_ui(POSTING),0,TaskUpload::YENC);
+    _post_task->add_listener (this);
+    _queue.add_task (_post_task, Queue::BOTTOM);
+    close_window(true);
+  }
+
 
   /**
   ***  Maybe remember the charsets.
@@ -703,7 +732,7 @@ namespace
 		char *fname;
 		PostUI *pui;
 	} se_data;
-	
+
 	void child_watch_cb(GPid pid, gint status, gpointer data)
 	{
 		se_data *d=static_cast<se_data*>(data);
@@ -818,7 +847,7 @@ PostUI :: spawn_editor ()
 void PostUI::spawn_editor_dead(char *fname)
 {
 	GtkTextBuffer * buf (_body_buf);
-	
+
   // read the file contents back in
   std::string txt;
   if (file :: get_text_file_contents (fname, txt)) {
@@ -945,6 +974,9 @@ namespace
 GMimeMessage*
 PostUI :: new_message_from_ui (Mode mode)
 {
+
+  std::cerr<<" new message from ui\n";
+
   GMimeMessage * msg (g_mime_message_new (false));
 
   // headers from the ui: From
@@ -1132,8 +1164,8 @@ PostUI :: create_body_widget (GtkTextBuffer*& buf, GtkWidget*& view, const Prefs
   pango_layout_set_text (layout, s.c_str(), s.size());
   pango_layout_get_extents (layout, &r, 0);
   gtk_widget_set_size_request (view, PANGO_PIXELS(r.width), -1 );
- 
-  // set the rest of the text view's policy 
+
+  // set the rest of the text view's policy
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(view), GTK_WRAP_WORD);
   gtk_text_view_set_editable (GTK_TEXT_VIEW(view), true);
   GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -1160,6 +1192,7 @@ PostUI :: update_profile_combobox ()
   GtkComboBox * combo (GTK_COMBO_BOX (_from_combo));
   char * active_text = gtk_combo_box_get_active_text (combo);
 
+  std::cerr<<" update_profile combobox\n";
   // if there's not already a selection,
   // pull the default for the newsgroup
   if (!active_text)
@@ -1192,7 +1225,7 @@ PostUI :: update_profile_combobox ()
       sel_index = index;
     ++index;
   }
- 
+
   // ensure _something_ is selected...
   gtk_combo_box_set_active (combo, sel_index);
 
@@ -1364,7 +1397,7 @@ PostUI :: apply_profile_to_body ()
   {
     // scrub the attribution for UTF8 cleanness
     attribution = header_to_utf8 (attribution);
- 
+
     std::string::size_type pos = body.find (old_attribution);
     if (!old_attribution.empty() && (pos != std::string::npos))
       body.replace (pos, old_attribution.size(), attribution);
@@ -1484,6 +1517,11 @@ namespace
     static_cast<PostUI*>(user_data)->apply_profile ();
   }
 
+//  void on_filequeue_changed (GtkWidget*, gpointer data)
+//  {
+//    static_cast<PostUI*>(data)->update_filequeue_tab();
+//  }
+
   typedef std::map <std::string, std::string> str2str_t;
 
   struct SetMessageForeachHeaderData
@@ -1542,6 +1580,7 @@ PostUI :: set_message (GMimeMessage * message)
     g_object_unref (G_OBJECT(_message));
   _message = message;
 
+  std::cerr<<" set message \n";
   // update subject, newsgroups, to fields
   std::string s = utf8ize (g_mime_message_get_subject (message));
   gtk_entry_set_text (GTK_ENTRY(_subject_entry), s.c_str());
@@ -1565,7 +1604,7 @@ PostUI :: set_message (GMimeMessage * message)
   SetMessageForeachHeaderData data;
   const char *name, *value;
   GMimeHeaderIter iter;
-  
+
   if (message->mime_part && g_mime_header_list_get_stream (message->mime_part->headers)) {
     if (g_mime_header_list_get_iter (message->mime_part->headers, &iter)) {
       do {
@@ -1575,7 +1614,7 @@ PostUI :: set_message (GMimeMessage * message)
       } while (g_mime_header_iter_next (&iter));
     }
   }
-  
+
   if (g_mime_header_list_get_iter (GMIME_OBJECT (message)->headers, &iter)) {
     do {
       value = g_mime_header_iter_get_value (&iter);
@@ -1583,7 +1622,7 @@ PostUI :: set_message (GMimeMessage * message)
       set_message_foreach_header_func (name, value, &data);
     } while (g_mime_header_iter_next (&iter));
   }
-  
+
   s = utf8ize (data.visible_headers);
   gtk_text_buffer_set_text (_headers_buf, s.c_str(), -1);
   _hidden_headers = data.hidden_headers;
@@ -1650,6 +1689,7 @@ PostUI :: group_entry_changed_idle (gpointer ui_gpointer)
   PostUI * ui (static_cast<PostUI*>(ui_gpointer));
   std::string charset;
 
+  std::cerr<<" group entry changed idle\n";
   // find the first posting charset in the newsgroups in _groups_entry.
   const char * text = gtk_entry_get_text (GTK_ENTRY(ui->_groups_entry));
   StringView line(text), groupname;
@@ -1676,7 +1716,7 @@ PostUI :: group_entry_changed_cb (GtkEditable*, gpointer ui_gpointer)
   PostUI * ui (static_cast<PostUI*>(ui_gpointer));
   unsigned int& tag (ui->_group_entry_changed_idle_tag);
   if (!tag)
-    tag = g_timeout_add (2000, group_entry_changed_idle, ui);
+    tag = g_timeout_add (4000, group_entry_changed_idle, ui);
 }
 
 /***
@@ -1745,10 +1785,19 @@ PostUI :: create_main_tab ()
   // Subject
 
   ++row;
+  char str[512];
+  char tip[512];
+  g_snprintf (tip, sizeof(tip), _("The subject of the messsage can contain following regular expressions\n \
+                                  That are replaced automatically:\n \
+                                  $1 - File number of current file in queue\n\
+                                  $2 - Total queuesize\n\
+                                  $f - Filename\n\
+                                  $s - Filesize of current file"));
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Subject"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
   gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_widget_set_tooltip_text (l, tip);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   w = _subject_entry = gtk_entry_new ();
@@ -1758,6 +1807,7 @@ PostUI :: create_main_tab ()
   // Newsgroup
 
   ++row;
+  std::cerr<<" create main tab\n";
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Newsgroups"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
@@ -1830,7 +1880,7 @@ PostUI :: create_extras_tab ()
   w = _followupto_entry = gtk_entry_new ();
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
   /* i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english. */
-gtk_widget_set_tooltip_text (w, _("The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n\nTo direct all replies to your email address, use \"Followup-To: poster\""));
+  gtk_widget_set_tooltip_text (w, _("The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n\nTo direct all replies to your email address, use \"Followup-To: poster\""));
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
 
   //  Reply-To
@@ -1894,6 +1944,65 @@ gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your 
   return t;
 }
 
+// todo scroll,translations
+GtkWidget*
+PostUI :: create_filequeue_tab ()
+{
+  GtkWidget *w ;
+  GtkListStore *list_store;
+  GtkTreeIter   iter;
+  GtkCellRenderer *renderer;
+
+  GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+//  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),
+//                                       GTK_SHADOW_IN);
+//  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+//                                  GTK_POLICY_AUTOMATIC,
+//                                  GTK_POLICY_AUTOMATIC);
+//  gtk_box_pack_start(GTK_BOX(gtk_hbox_new(FALSE,1)),scrolled_window,TRUE,TRUE,2);
+
+  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_UINT);
+  w = _filequeue_store = gtk_tree_view_new_with_model (GTK_TREE_MODEL(list_store));
+
+//  gtk_container_add (GTK_CONTAINER (scrolled_window), w);
+
+  // add columns
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), -1,   "Filename", renderer,"text", 0,NULL);
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), -1,   "Size (kB)",renderer,"text", 1,NULL);
+
+  gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(w),TRUE);
+
+  return w;
+}
+
+void
+PostUI :: update_filequeue_tab()
+{
+  GtkWidget* w = _filequeue_store ;
+  GtkListStore    *store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(w)));
+  GtkTreeIter      iter;
+
+    gtk_list_store_clear(store);
+
+    FileQueue::articles_it it = _file_queue.begin();
+    std::cerr<<" filequeue tab\n";
+    int i(0);
+
+    for (; it != _file_queue.end(); ++it, ++i )
+    {
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter,
+                        0, (*it).filename.str,
+                        1, (*it).byte_count,
+                        -1);
+    }
+
+    _file_queue_empty = (i == 0);
+
+}
+
 
 PostUI :: ~PostUI ()
 {
@@ -1929,7 +2038,9 @@ PostUI :: PostUI (GtkWindow    * parent,
   _message (0),
   _charset (DEFAULT_CHARSET),
   _group_entry_changed_id (0),
-  _group_entry_changed_idle_tag (0)
+  _group_entry_changed_idle_tag (0),
+  //binpost
+  _file_queue_empty(true)
 {
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != 0);
@@ -1963,6 +2074,7 @@ PostUI :: PostUI (GtkWindow    * parent,
   GtkWidget * notebook = gtk_notebook_new ();
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_main_tab(), gtk_label_new_with_mnemonic(_("_Message")));
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_extras_tab(), gtk_label_new_with_mnemonic(_("More _Headers")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_filequeue_tab(), gtk_label_new_with_mnemonic(_("File _Queue")));
   pan_box_pack_start_defaults (GTK_BOX(vbox), notebook);
 
   // remember this message, but don't put it in the text view yet.
@@ -1974,7 +2086,7 @@ PostUI :: PostUI (GtkWindow    * parent,
 }
 
 PostUI*
-PostUI :: create_window (GtkWindow    * parent,
+PostUI :: create_window (GtkWidget    * parent,
                          Data         & data,
                          Queue        & queue,
                          GroupServer  & gs,
@@ -2002,5 +2114,46 @@ PostUI :: create_window (GtkWindow    * parent,
       return 0;
   }
 
-  return new PostUI (parent, data, queue, gs, profiles, message, prefs, group_prefs);
+  return new PostUI (0, data, queue, gs, profiles, message, prefs, group_prefs);
 }
+
+void
+PostUI :: prompt_user_for_queueable_files (FileQueue& queue, GtkWindow * parent, const Prefs& prefs)
+{
+  std::string prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
+
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Add files to queue"),
+				      parent,
+				      GTK_FILE_CHOOSER_ACTION_OPEN,
+				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+				      NULL);
+	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
+	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (w), true);
+	gtk_file_chooser_set_show_hidden (GTK_FILE_CHOOSER (w), false);
+
+	const int response (gtk_dialog_run (GTK_DIALOG(w)));
+	if (response == GTK_RESPONSE_ACCEPT) {
+		GSList * tmp_list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER (w));
+		if (_file_queue_empty) _file_queue_empty=!_file_queue_empty;
+		GSList * cur = g_slist_nth (tmp_list,0);
+    const Profile profile (get_current_profile ());
+    const StringView subject(gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
+    struct stat stat_buf;
+
+    for (; cur; cur = cur->next)
+		{
+		  const StringView filename((char*)cur->data);
+		  stat(filename.str,&stat_buf);
+
+      _file_queue.add(subject, StringView(profile.username),
+                      filename, (unsigned int)stat_buf.st_size/1024, 0, FileQueue::END); //kB
+		}
+  	g_slist_free (tmp_list);
+  }
+	gtk_widget_destroy (w);
+	update_filequeue_tab();
+}
+
+
+

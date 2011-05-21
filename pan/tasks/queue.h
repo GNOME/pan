@@ -26,6 +26,7 @@
 #include <pan/general/macros.h> // for UNUSED
 #include <pan/general/map-vector.h>
 #include <pan/tasks/decoder.h>
+#include <pan/tasks/encoder.h>
 #include <pan/general/quark.h>
 #include <pan/tasks/nntp-pool.h>
 #include <pan/tasks/socket.h>
@@ -60,6 +61,7 @@ namespace pan
   class Queue:
     public NNTP::Source,
     public Task::DecoderSource,
+    public Task::EncoderSource,
     private NNTP_Pool::Listener,
     private AdaptableSet<Task*, TaskWeakOrdering>::Listener
   {
@@ -98,11 +100,11 @@ namespace pan
         ServerConnectionCounts(): active(0), idle(0), connecting(0), KiBps(0.0) {}
       };
       void get_full_connection_counts (std::vector<ServerConnectionCounts>& setme) const;
-                                         
+
 
     public:
-      enum TaskState { QUEUED, RUNNING, DECODING, STOPPED, REMOVING,
-                       QUEUED_FOR_DECODE };
+      enum TaskState { QUEUED, RUNNING, DECODING, ENCODING, STOPPED, REMOVING,
+                       QUEUED_FOR_DECODE, QUEUED_FOR_ENCODE};
 
       /**
        * An ordered collection of tasks and their corresponding TaskState s.
@@ -116,15 +118,19 @@ namespace pan
           sorted_tasks_t _running;
           sorted_tasks_t _removing;
           sorted_tasks_t _need_decode;
+          sorted_tasks_t _need_encode;
           Task * _decoding;
+          Task * _encoding;
         public:
           tasks_t tasks;
           TaskState get_state (Task* task) const {
             if (_decoding && (task==_decoding)) return DECODING;
+            if (_decoding && (task==_encoding)) return ENCODING;
             if (_removing.count(task)) return REMOVING;
             if (_stopped.count(task)) return STOPPED;
             if (_running.count(task)) return RUNNING;
             if (_need_decode.count(task)) return QUEUED_FOR_DECODE;
+            if (_need_encode.count(task)) return QUEUED_FOR_ENCODE;
             if (_queued.count(task)) return QUEUED;
             return STOPPED;
           }
@@ -162,8 +168,9 @@ namespace pan
     public: // inherited from NNTP::Source
       virtual void check_in (NNTP*, Health);
 
-    public: // inherited from Task::DecoderSource
+    public: // inherited from Task::De/EncoderSource
       virtual void check_in (Decoder*, Task*);
+      virtual void check_in (Encoder*, Task*);
 
     private: // inherited from NNTP_Pool::Listener
       virtual void on_pool_has_nntp_available (const Quark& server);
@@ -172,11 +179,13 @@ namespace pan
     protected:
       void process_task (Task *);
       void give_task_a_decoder (Task*);
+      void give_task_a_encoder (Task*);
       void give_task_a_connection (Task*, NNTP*);
       ServerInfo& _server_info;
       bool _is_online;
       Task* find_first_task_needing_server (const Quark& server);
       Task* find_first_task_needing_decoder ();
+      Task* find_first_task_needing_encoder ();
       bool find_best_server (const Task::State::unique_servers_t& servers, Quark& setme);
       bool task_is_active (const Task*) const;
 
@@ -188,7 +197,9 @@ namespace pan
       Socket::Creator * _socket_creator;
       WorkerPool & _worker_pool;
       Decoder _decoder;
+      Encoder _encoder;
       Task * _decoder_task;
+      Task * _encoder_task;
 
     protected:
       virtual void fire_tasks_added  (int index, int count);

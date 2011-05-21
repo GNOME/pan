@@ -42,7 +42,9 @@ Queue :: Queue (ServerInfo         & server_info,
   _socket_creator (socket_creator),
   _worker_pool (pool),
   _decoder (pool),
+  _encoder (pool),
   _decoder_task (0),
+  _encoder_task (0),
   _save_delay_secs (save_delay_secs),
   _needs_saving (false),
   _last_time_saved (0),
@@ -200,6 +202,8 @@ Queue :: get_task_counts (int& active, int& total)
     active_tasks.insert (it->second);
   if (_decoder_task)
     active_tasks.insert (_decoder_task);
+  if (_encoder_task)
+    active_tasks.insert (_encoder_task);
   active = active_tasks.size ();
   total = _tasks.size ();
 }
@@ -212,6 +216,16 @@ Queue :: give_task_a_decoder (Task * task)
   if (!was_active)
     fire_task_active_changed (task, true);
   task->give_decoder (this, &_decoder); // it's active now...
+}
+
+void
+Queue :: give_task_a_encoder (Task * task)
+{
+  const bool was_active (task_is_active (task));
+  _encoder_task = task;
+  if (!was_active)
+    fire_task_active_changed (task, true);
+  task->give_encoder (this, &_encoder); // it's active now...
 }
 
 void
@@ -264,6 +278,12 @@ Queue :: process_task (Task * task)
     if (!_decoder_task)
       give_task_a_decoder (task);
   }
+  else if (state._work == Task::NEED_ENCODER)
+  {
+    if (!_encoder_task)
+      give_task_a_encoder (task);
+  }
+
   else while (_is_online && (state._work == Task::NEED_NNTP))
   {
     // make the requests...
@@ -293,6 +313,20 @@ Queue :: find_first_task_needing_decoder ()
   foreach (TaskSet, _tasks, it) {
     const Task::State& state ((*it)->get_state ());
     if  ((state._work == Task::NEED_DECODER)
+      && (!_stopped.count (*it))
+      && (!_removing.count (*it)))
+      return *it;
+  }
+
+  return 0;
+}
+
+Task*
+Queue :: find_first_task_needing_encoder ()
+{
+  foreach (TaskSet, _tasks, it) {
+    const Task::State& state ((*it)->get_state ());
+    if  ((state._work == Task::NEED_ENCODER)
       && (!_stopped.count (*it))
       && (!_removing.count (*it)))
       return *it;
@@ -664,6 +698,30 @@ Queue :: check_in (Decoder* decoder UNUSED, Task* task)
 }
 
 void
+Queue :: check_in (Encoder* decoder UNUSED, Task* task)
+{
+  // take care of our decoder counting...
+  _encoder_task = 0;
+
+  // notify the listeners if the task isn't active anymore...
+  if (!task_is_active (task))
+    fire_task_active_changed (task, false);
+
+  // if the task hit an error, fire an error message
+  const Task::State state (task->get_state ());
+  if (state._health == ERR_LOCAL)
+    fire_queue_error ("");
+
+  // pass our worker thread on to another task
+  Task * next = find_first_task_needing_encoder ();
+  if (next && (next!=task))
+    process_task (next);
+
+  // what to do now with this task...
+  process_task (task);
+}
+
+void
 Queue :: move_up (const tasks_t& tasks)
 {
   foreach_const (tasks_t, tasks, it) {
@@ -786,11 +844,11 @@ Queue :: get_stats (unsigned long   & queued_count,
     Task * task (*it);
 
     const Queue::TaskState state (tasks.get_state (task));
-    if (state == Queue::RUNNING || state == Queue::DECODING)
+    if (state == Queue::RUNNING || state == Queue::DECODING || state == Queue::ENCODING)
       ++running_count;
     else if (state == Queue::STOPPED)
       ++stopped_count;
-    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE)
+    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE || state == Queue::QUEUED_FOR_ENCODE)
       ++queued_count;
 
     if (state==Queue::RUNNING || state==Queue::QUEUED)

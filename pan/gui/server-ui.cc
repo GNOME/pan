@@ -53,6 +53,7 @@ namespace
     GtkWidget * auth_password_entry;
     GtkWidget * connection_limit_spin;
     GtkWidget * expiration_age_combo;
+    GtkWidget * xzver_compression_combo;
     GtkWidget * rank_combo;
     ServerEditDialog (Data& d, Queue& q): data(d), queue(q) {}
   };
@@ -216,10 +217,10 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
   ***  workarea
   **/
 
-  int row (0);
-  GtkWidget * t (HIG::workarea_create ());
-  gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(d->dialog))), t, TRUE, TRUE, 0);
-  HIG::workarea_add_section_title (t, &row, _("Location"));
+    int row (0);
+    GtkWidget * t (HIG::workarea_create ());
+    gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(d->dialog))), t, TRUE, TRUE, 0);
+    HIG::workarea_add_section_title (t, &row, _("Location"));
     HIG::workarea_add_section_spacer (t, row, 2);
 
     GtkWidget * w = d->address_entry = gtk_entry_new ();
@@ -231,8 +232,8 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     gtk_widget_set_tooltip_text( w, _("The news server's port number.  Typically 119."));
     HIG::workarea_add_row (t, &row, _("Por_t:"), w, NULL);
 
-  HIG::workarea_add_section_divider (t, &row);
-  HIG::workarea_add_section_title (t, &row, _("Login (if Required)"));
+    HIG::workarea_add_section_divider (t, &row);
+    HIG::workarea_add_section_title (t, &row, _("Login (if Required)"));
     HIG::workarea_add_section_spacer (t, row, 2);
 
     w = d->auth_username_entry = gtk_entry_new ();
@@ -244,15 +245,17 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     HIG::workarea_add_row (t, &row, _("_Password:"), w, NULL);
     gtk_widget_set_tooltip_text( w, _("The password to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
 
-  HIG::workarea_add_section_divider (t, &row);
-  HIG::workarea_add_section_title (t, &row, _("Settings"));
+    HIG::workarea_add_section_divider (t, &row);
+    HIG::workarea_add_section_title (t, &row, _("Settings"));
     HIG::workarea_add_section_spacer (t, row, 2);
 
+    // max connections
     const int DEFAULT_MAX_PER_SERVER (4);
     a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 0.0, DEFAULT_MAX_PER_SERVER, 1.0, 1.0, 0.0));
     d->connection_limit_spin = w = gtk_spin_button_new (GTK_ADJUSTMENT(a), 1.0, 0u);
     HIG::workarea_add_row (t, &row, _("Connection _Limit:"), w, NULL);
 
+    // expiration
     struct { int type; const char * str; } items[] = {
       { 14,  N_("After Two Weeks") },
       { 31,  N_("After One Month") },
@@ -275,6 +278,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
     HIG::workarea_add_row (t, &row, _("E_xpire Old Articles:"), w, NULL);
 
+    //rank
     struct { int rank; const char * str; } rank_items[] = {
       { 1, N_("Primary") },
       { 2, N_("Fallback") }
@@ -297,6 +301,25 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
     gtk_widget_set_tooltip_text( e, _("Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."));
     HIG::workarea_add_row (t, &row, e, w);
+
+    /* xzver settings */
+    struct { int type; const char * str; } xzver_options[] = {
+      { 0,  N_("No") },
+      { 1,  N_("Yes") }
+    };
+    store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+    for (unsigned int i(0); i<G_N_ELEMENTS(xzver_options); ++i) {
+      GtkTreeIter iter;
+      gtk_list_store_append (store,  &iter);
+      gtk_list_store_set (store, &iter, 0, _(xzver_options[i].str), 1, xzver_options[i].type, -1);
+    }
+    d->xzver_compression_combo = w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
+    g_object_unref (G_OBJECT(store));
+    GtkCellRenderer * renderer2 (gtk_cell_renderer_text_new ());
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer2, TRUE);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer2, "text", 0, NULL);
+    gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
+    HIG::workarea_add_row (t, &row, _("Serverside _Header-compression support:"), w, NULL);
 
   d->server = server;
   edit_dialog_populate (data, server, d);
@@ -416,7 +439,7 @@ namespace
                                               GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
                                               GTK_MESSAGE_QUESTION,
                                               GTK_BUTTONS_NONE,
-                                              _("Really delete \"%s\"?"), 
+                                              _("Really delete \"%s\"?"),
                                               addr.c_str());
       gtk_dialog_add_buttons (GTK_DIALOG(w),
                               GTK_STOCK_NO, GTK_RESPONSE_NO,
@@ -470,7 +493,7 @@ namespace
   void
   server_tree_view_row_activated_cb (GtkTreeView*, GtkTreePath*, GtkTreeViewColumn*, gpointer user_data)
   {
-    edit_button_clicked_cb (NULL, user_data);	
+    edit_button_clicked_cb (NULL, user_data);
   }
 
   void
@@ -513,7 +536,7 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   gtk_tree_view_append_column (GTK_TREE_VIEW (d->server_tree_view), column);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (d->server_tree_view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
-	
+
   // add callbacks
   g_signal_connect (GTK_TREE_VIEW (d->server_tree_view), "row-activated",
                     G_CALLBACK (server_tree_view_row_activated_cb), d->dialog);

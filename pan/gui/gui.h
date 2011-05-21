@@ -22,8 +22,9 @@
 #include <pan/general/log.h>
 #include <pan/general/progress.h>
 #include <pan/data/article-cache.h>
+#include <pan/data/file-queue.h>
 #include <pan/tasks/queue.h>
-
+#include <pan/gui/group-pane.h>
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-ui.h>
 #include <pan/gui/prefs.h>
@@ -104,6 +105,7 @@ namespace pan
       virtual void do_clear_body_pane ();
       virtual void do_read_selected_article ();
       virtual void do_read_more ();
+//      virtual void do_binpost ();
       virtual void do_read_less ();
       virtual void do_read_next_unread_group ();
       virtual void do_read_next_group ();
@@ -160,7 +162,7 @@ namespace pan
 
     public:
       static std::string prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs);
-	  static std::string prompt_user_for_filename  (GtkWindow * parent, const Prefs& prefs);
+      static std::string prompt_user_for_filename  (GtkWindow * parent, const Prefs& prefs);
 
     private: // Queue::Listener
       friend class Queue;

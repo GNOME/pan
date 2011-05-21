@@ -22,6 +22,7 @@
 
 #include <gmime/gmime-message.h>
 #include <pan/gui/prefs.h>
+#include <pan/data/file-queue.h>
 #include <pan/general/progress.h>
 #include <pan/tasks/queue.h>
 #include <pan/usenet-utils/text-massager.h>
@@ -39,9 +40,11 @@ namespace pan
   class PostUI: private Progress::Listener
   {
     public:
-      static PostUI* create_window (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
+      static PostUI* create_window (GtkWidget*, Data&, Queue&, GroupServer&, Profiles&,
                                     GMimeMessage*, Prefs&, GroupPrefs&);
-    
+
+      void prompt_user_for_queueable_files (FileQueue& queue, GtkWindow * parent, const Prefs& prefs);
+
     protected:
       PostUI (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
               GMimeMessage*, Prefs&, GroupPrefs&);
@@ -60,9 +63,11 @@ namespace pan
       void open_draft ();
       void prompt_for_charset ();
       void send_now ();
-      void close_window ();
+      void add_files ();
+      void close_window (bool flag=false);
       void set_wrap_mode (bool wrap);
       void set_always_run_editor (bool);
+      void update_filequeue_tab();
 
     private:
       void done_sending_message (GMimeMessage*, bool);
@@ -90,6 +95,9 @@ namespace pan
       GtkWidget * _from_combo;
       GtkWidget * _subject_entry;
       GtkWidget * _groups_entry;
+
+      GtkWidget * _filequeue_store;
+
       GtkWidget * _to_entry;
       GtkWidget * _followupto_entry;
       GtkWidget * _replyto_entry;
@@ -106,11 +114,16 @@ namespace pan
       std::string _current_signature;
       GtkWidget * _post_dialog;
       TaskPost * _post_task;
+      TaskUpload * _upload_task;
       typedef std::map<std::string, std::string> str2str_t;
       str2str_t _hidden_headers;
       str2str_t _profile_headers;
       std::string _unchanged_body;
       int _wrap_pixels;
+
+      /* binpost */
+      bool _file_queue_empty;
+      FileQueue _file_queue;
 
     private:
       void add_actions (GtkWidget* box);
@@ -125,6 +138,7 @@ namespace pan
     private:
       GtkWidget* create_main_tab ();
       GtkWidget* create_extras_tab ();
+      GtkWidget* create_filequeue_tab ();
 
     private:
       std::string utf8ize (const StringView&) const;
@@ -142,7 +156,7 @@ namespace pan
 
     public:
       void set_spellcheck_enabled (bool);
-	  void spawn_editor_dead(char *);
+      void spawn_editor_dead(char *);
 
   };
 }

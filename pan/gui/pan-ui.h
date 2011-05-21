@@ -52,6 +52,7 @@ namespace pan
     virtual void do_clear_body_pane () = 0;
     virtual void do_read_selected_article () = 0;
     virtual void do_read_more () = 0;
+//    virtual void do_binpost () = 0;
     virtual void do_read_less () = 0;
     virtual void do_read_next_unread_group () = 0;
     virtual void do_read_next_group () = 0;

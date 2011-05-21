@@ -132,7 +132,7 @@ TaskArticle :: ~TaskArticle ()
   // ensure our on_worker_done() doesn't get called after we're dead
   if (_decoder)
       _decoder->cancel_silently();
-  
+
   _cache.release (_article.get_part_mids());
 }
 
@@ -291,7 +291,7 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
       }
       break;
   }
-  
+
   update_work (nntp);
   check_in (nntp, health);
 }

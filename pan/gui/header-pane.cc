@@ -130,7 +130,7 @@ namespace
                       const Quark         & message_id)
   {
     int offset (ICON_EMPTY);
-      
+
     if (queue.contains (message_id))
       offset = ICON_QUEUED;
     else if (cache.contains (message_id))
@@ -318,7 +318,7 @@ HeaderPane :: create_row (const EvolutionDateMaker & e,
 
   std::pair<mid_to_row_t::iterator,bool> result (_mid_to_row.insert (row));
   g_assert (result.second);
-  
+
   return row;
 }
 
@@ -687,7 +687,7 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
     }
     _tree_store->insert_sorted (tmp);
   }
-     
+
   // reparent...
   if (do_thread && !diffs.reparented.empty()) {
     PanTreeStore::parent_to_children_t tmp;
@@ -919,7 +919,7 @@ HeaderPane :: on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gp
     GtkTreeSelection * selection = gtk_tree_view_get_selection(tv);
     GtkTreePath *path;
     if (gtk_tree_view_get_path_at_pos (tv,
-                                       (gint) event->x, 
+                                       (gint) event->x,
                                        (gint) event->y,
                                        &path, NULL, NULL, NULL))
     {
@@ -1631,7 +1631,6 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   g_signal_connect (sel, "changed", G_CALLBACK(on_selection_changed), this);
   on_selection_changed (sel, this);
 
-
   g_signal_connect (w, "button-release-event", G_CALLBACK(on_button_pressed), this);
   g_signal_connect (w, "button-press-event", G_CALLBACK(on_button_pressed), this);
   g_signal_connect (w, "row-collapsed", G_CALLBACK(row_collapsed_cb), NULL);
@@ -1869,7 +1868,7 @@ namespace
 }
 
 /**
-*** 
+***
 **/
 
 void

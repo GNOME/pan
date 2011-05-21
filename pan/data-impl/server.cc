@@ -110,7 +110,7 @@ DataImpl :: set_server_article_expiration_age  (const Quark  & server,
   save_server_properties (*_data_io);
 }
 
-  
+
 void
 DataImpl :: set_server_auth (const Quark       & server,
                              const StringView  & username,
@@ -171,7 +171,7 @@ DataImpl :: get_server_auth (const Quark   & server,
   }
   return found;
 }
-                                                                                             
+
 bool
 DataImpl :: get_server_addr (const Quark   & server,
                              std::string   & setme_host,
@@ -272,7 +272,7 @@ namespace
 
   void text (GMarkupParseContext *context    UNUSED,
              const gchar         *text,
-             gsize                text_len,  
+             gsize                text_len,
              gpointer             user_data,
              GError             **error      UNUSED)
   {
@@ -375,7 +375,10 @@ DataImpl :: save_server_properties (DataIO& data_io) const
          << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
          << indent(depth) << "<connection-limit>" << s->max_connections << "</connection-limit>\n"
          << indent(depth) << "<newsrc>" << s->newsrc_filename << "</newsrc>\n"
-         << indent(depth) << "<rank>" << s->rank << "</rank>\n";
+         << indent(depth) << "<rank>" << s->rank << "</rank>\n"
+         //todo
+         << indent(depth) << "<xzver>" << s->rank << "</xzver>\n";
+
     *out << indent(--depth) << "</server>\n";
   }
   *out << indent(--depth) << "</server-properties>\n";

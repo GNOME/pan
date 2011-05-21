@@ -9,7 +9,8 @@ libdata_a_SOURCES = \
  article-cache.cc \
  data.cc \
  parts.cc \
- xref.cc
+ xref.cc \
+ file-queue.cc
 
 noinst_HEADERS = \
  article.h \
@@ -18,13 +19,14 @@ noinst_HEADERS = \
  defgroup.h \
  parts.h \
  server-info.h \
- xref.h 
+ xref.h \
+ file-queue.h
 
 noinst_PROGRAMS = \
  article-test \
- xref-test 
+ xref-test
 
-#dnl decode-test 
+#dnl decode-test
 #dnl decode_test_SOURCES = decode-test.cc
 #dnl decode_test_LDADD = $(TEST_LDADD)
 

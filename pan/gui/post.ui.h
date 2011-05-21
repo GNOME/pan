@@ -1,4 +1,4 @@
-const char * fallback_post_ui = 
+const char * fallback_post_ui =
 "<ui>\n"
 "  <menubar name='post'>\n"
 "    <menu action='file-menu'>\n"
@@ -38,6 +38,8 @@ const char * fallback_post_ui =
 "    <separator />\n"
 "    <toolitem action='rot13' />\n"
 "    <toolitem action='run-editor' />\n"
+"    <separator />\n"
+"    <toolitem action='add-files' />\n"
 "  </toolbar>\n"
 "\n"
 "</ui>\n";

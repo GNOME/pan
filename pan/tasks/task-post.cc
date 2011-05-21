@@ -57,6 +57,7 @@ TaskPost :: use_nntp (NNTP * nntp)
   _state.set_working ();
 
   char * text = g_mime_object_to_string (GMIME_OBJECT(_message));
+  std::cerr<<text<<std::endl;
   nntp->post (text, this);
   g_free (text);
 }

@@ -63,7 +63,7 @@ file :: get_pan_home ()
       g_free (pch);
     }
   }
-                                                                                                                                
+
   file :: ensure_dir_exists (pan_home);
   return pan_home;
 }
