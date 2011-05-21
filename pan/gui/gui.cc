@@ -1804,6 +1804,7 @@ GUI :: set_queue_size_label (unsigned int running,
   _queue.get_stats (queued, unused, stopped,
                     KiB_remain, KiBps,
                     hr, min, sec);
+
   g_snprintf (tip, sizeof(tip), _("%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"),
               (running+queued), render_bytes(KiB_remain), KiBps, hr, min, sec);
 

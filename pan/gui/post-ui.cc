@@ -491,6 +491,17 @@ PostUI :: send_now ()
     g_object_unref (G_OBJECT(message));
 }
 
+//void
+//PostUI :: send_binfiles_now()
+//{
+//  if (!check_charset())
+//    return;
+//  GMimeMessage * message (new_message_from_ui (POSTING));
+//
+//  //change headers according to
+//  g_object_unref (G_OBJECT(message));
+//}
+
 void
 PostUI :: done_sending_message (GMimeMessage * message, bool ok)
 {
@@ -579,14 +590,33 @@ PostUI :: maybe_mail_message (GMimeMessage * message)
 void
 PostUI :: on_progress_finished (Progress&, int status) // posting finished
 {
+  int bufsz=2048;
+  char buf[bufsz];
+
   _post_task->remove_listener (this);
   gtk_widget_destroy (_post_dialog);
 
-  GMimeMessage * message (_post_task->get_message ());
-  if (status != OK) // error posting.. stop.
-    done_sending_message (message, false);
-  else
-    maybe_mail_message (message);
+  if (_file_queue_empty) {
+    GMimeMessage * message (((TaskPost*)_post_task)->get_message ());
+    if (status != OK) // error posting.. stop.
+      done_sending_message (message, false);
+    else
+      maybe_mail_message (message);
+  }
+//  else
+//  {
+//    GMimeMessage * message (((TaskUpload*)_upload_task)->get_message ());
+//    const char* g = _upload_task->get_groups();
+//    const char* f = _upload_task->get_filename();
+//    // log server response
+//    if (status == OK) {
+//      g_snprintf(buf, bufsz,_("Error uploading file \"%s\" to group(s) \"%s\" : %s"), f, g, message);
+//      Log :: add_err(buf);
+//    } else {
+//      g_snprintf(buf, bufsz,_("Successfully  uploaded \"%s\" to group(s) \"%s\"."), f, g);
+//      Log :: add_info(buf);
+//    }
+//  }
 }
 
 void
@@ -630,14 +660,14 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   **/
 
   if (!check_message (server, message))
-    return false;
+     return false;
 
   /**
   *** If this is email only, skip the rest of the posting...
   *** we only stayed this long to get check_message()
   **/
   const StringView groups (g_mime_object_get_header ((GMimeObject *) message, "Newsgroups"));
-  if (groups.empty()) {
+  if (groups.empty() && _file_queue_empty) {
     maybe_mail_message (message);
     return true;
   }
@@ -686,26 +716,28 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _post_dialog = d;
     g_signal_connect (_post_dialog, "destroy", G_CALLBACK(gtk_widget_destroyed), &_post_dialog);
     gtk_widget_show_all (d);
-  }
 
-  if (_file_queue_empty)
-  {
     _post_task = new TaskPost (server, message);
     _post_task->add_listener (this);
     _queue.add_task (_post_task, Queue::TOP);
   } else
   {
+    unsigned long i(0);
+    FileQueue::articles_it it = _file_queue.begin();
 
-    _post_task = new TaskUpload (_file_queue,profile.posting_server,
-                                   new_message_from_ui(POSTING),0,TaskUpload::YENC);
-    _post_task->add_listener (this);
-    _queue.add_task (_post_task, Queue::BOTTOM);
-    close_window(true);
+    for (; it != _file_queue.end(); it, ++it, ++i) {
+      GMimeMessage* msg = new_message_from_ui(POSTING);
+      _queue.add_task (new TaskUpload (*it,profile.posting_server,msg
+                                     ,0,TaskUpload::YENC,i),
+                                     Queue::BOTTOM);
+    }
+  //dbg
+//    close_window(true); // dont wait for the upload queue
   }
 
 
   /**
-  ***  Maybe remember the charsets.
+  ***  Maybe remember the charsets
   **/
   if (remember_charsets) {
     const char * text = gtk_entry_get_text (GTK_ENTRY(_groups_entry));
@@ -974,9 +1006,6 @@ namespace
 GMimeMessage*
 PostUI :: new_message_from_ui (Mode mode)
 {
-
-  std::cerr<<" new message from ui\n";
-
   GMimeMessage * msg (g_mime_message_new (false));
 
   // headers from the ui: From
@@ -1192,7 +1221,6 @@ PostUI :: update_profile_combobox ()
   GtkComboBox * combo (GTK_COMBO_BOX (_from_combo));
   char * active_text = gtk_combo_box_get_active_text (combo);
 
-  std::cerr<<" update_profile combobox\n";
   // if there's not already a selection,
   // pull the default for the newsgroup
   if (!active_text)
@@ -1580,7 +1608,6 @@ PostUI :: set_message (GMimeMessage * message)
     g_object_unref (G_OBJECT(_message));
   _message = message;
 
-  std::cerr<<" set message \n";
   // update subject, newsgroups, to fields
   std::string s = utf8ize (g_mime_message_get_subject (message));
   gtk_entry_set_text (GTK_ENTRY(_subject_entry), s.c_str());
@@ -1689,7 +1716,6 @@ PostUI :: group_entry_changed_idle (gpointer ui_gpointer)
   PostUI * ui (static_cast<PostUI*>(ui_gpointer));
   std::string charset;
 
-  std::cerr<<" group entry changed idle\n";
   // find the first posting charset in the newsgroups in _groups_entry.
   const char * text = gtk_entry_get_text (GTK_ENTRY(ui->_groups_entry));
   StringView line(text), groupname;
@@ -1785,19 +1811,10 @@ PostUI :: create_main_tab ()
   // Subject
 
   ++row;
-  char str[512];
-  char tip[512];
-  g_snprintf (tip, sizeof(tip), _("The subject of the messsage can contain following regular expressions\n \
-                                  That are replaced automatically:\n \
-                                  $1 - File number of current file in queue\n\
-                                  $2 - Total queuesize\n\
-                                  $f - Filename\n\
-                                  $s - Filesize of current file"));
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Subject"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
   gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
-  gtk_widget_set_tooltip_text (l, tip);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   w = _subject_entry = gtk_entry_new ();
@@ -1944,7 +1961,7 @@ gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your 
   return t;
 }
 
-// todo scroll,translations
+// todo scroll
 GtkWidget*
 PostUI :: create_filequeue_tab ()
 {
@@ -1968,9 +1985,9 @@ PostUI :: create_filequeue_tab ()
 
   // add columns
   renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), -1,   "Filename", renderer,"text", 0,NULL);
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), -1,   (_("Filename")), renderer,"text", 0,NULL);
   renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), -1,   "Size (kB)",renderer,"text", 1,NULL);
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), -1,   (_("Size (kB)")),renderer,"text", 1,NULL);
 
   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(w),TRUE);
 
@@ -1987,15 +2004,14 @@ PostUI :: update_filequeue_tab()
     gtk_list_store_clear(store);
 
     FileQueue::articles_it it = _file_queue.begin();
-    std::cerr<<" filequeue tab\n";
-    int i(0);
 
+    int i(0);
     for (; it != _file_queue.end(); ++it, ++i )
     {
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
-                        0, (*it).filename.str,
-                        1, (*it).byte_count,
+                        0, (*it)->basename,
+                        1, (*it)->byte_count,
                         -1);
     }
 
@@ -2143,11 +2159,7 @@ PostUI :: prompt_user_for_queueable_files (FileQueue& queue, GtkWindow * parent,
 
     for (; cur; cur = cur->next)
 		{
-		  const StringView filename((char*)cur->data);
-		  stat(filename.str,&stat_buf);
-
-      _file_queue.add(subject, StringView(profile.username),
-                      filename, (unsigned int)stat_buf.st_size/1024, 0, FileQueue::END); //kB
+      _file_queue.add((char*)cur->data, FileQueue::END);
 		}
   	g_slist_free (tmp_list);
   }

@@ -32,6 +32,7 @@
 #include <pan/tasks/socket.h>
 #include <pan/tasks/adaptable-set.h>
 #include <pan/tasks/task.h>
+#include <pan/tasks/encoder.h>
 #include <pan/tasks/task-weak-ordering.h>
 
 namespace pan
@@ -39,6 +40,8 @@ namespace pan
   class NNTP;
   class ServerInfo;
   class WorkerPool;
+  struct Encoder;
+  struct Decoder;
 
   /**
    * A Queue helper that saves tasks to disk and restores them from disk.

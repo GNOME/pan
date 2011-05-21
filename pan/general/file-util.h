@@ -49,6 +49,10 @@ namespace pan
    */
   namespace file
   {
+
+    /** Returns the directory for encoded files, should be temporary */
+    std::string get_pan_uulib_dir ();
+
     /** just like strerror but never returns NULL */
     const char * pan_strerror (int error_number);
 

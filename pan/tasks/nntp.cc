@@ -333,6 +333,14 @@ NNTP :: write_next_command ()
 ***/
 
 void
+NNTP :: help (Listener * l)
+{
+   _listener = l;
+   _commands.push_back ("HELP \r\n");
+   write_next_command();
+}
+
+void
 NNTP :: xzver (const Quark   & group,
                uint64_t        low,
                uint64_t        high,

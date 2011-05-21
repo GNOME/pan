@@ -49,6 +49,12 @@ using namespace pan;
 ***/
 
 std::string
+file :: get_pan_uulib_dir()
+{
+    return std::string("/home/imhotep/.pan2/uulib-encode-cache");
+}
+
+std::string
 file :: get_pan_home ()
 {
   static std::string pan_home;

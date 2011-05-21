@@ -63,6 +63,7 @@ WorkerPool :: push_work (Worker *w, Worker::Listener *l, bool delete_worker)
   w->silent = false;
   w->pool = this;
   w->listener = l;
+  if (!l) std::cerr<<"oops, listener in push_work is null!\n";
   w->delete_worker = delete_worker;
   my_workers.insert (w);
   g_thread_pool_push (tpool, w, 0); // jump to worker_thread_func

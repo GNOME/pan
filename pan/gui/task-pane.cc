@@ -240,6 +240,7 @@ TaskPane :: update_status (const task_states_t& tasks)
     minutes = tmp % 60ul; tmp /= 60ul;
     hours   = tmp;
   }
+
   g_snprintf (buf, sizeof(buf), _("%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"),
               task_count, render_bytes(bytes), KiBps, hours, minutes, seconds);
   std::string line (buf);

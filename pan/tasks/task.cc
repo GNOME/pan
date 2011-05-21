@@ -81,13 +81,13 @@ Task :: give_encoder (EncoderSource* s, Encoder* d)
 void
 Task :: use_decoder (Decoder * d UNUSED)
 {
-  abort ();
+  assert(0 && "oops, child class task.cc called!\n");
 }
 
 void
 Task :: use_encoder (Encoder * d UNUSED)
 {
-  abort ();
+  assert(0 && "oops, child class task.cc called!\n");
 }
 
 void

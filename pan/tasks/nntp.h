@@ -113,6 +113,11 @@ namespace pan
     public:
 
       /**
+       * Lists all available commands.
+       */
+      void help (Listener * l);
+
+      /**
        * Executes a handshake command.
        *
        * This is actually an empty string, but the
