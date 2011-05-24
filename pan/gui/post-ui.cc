@@ -508,8 +508,9 @@ namespace
       if (keep.count(*pch))
         out += *pch;
       else {
+        unsigned char uc = (unsigned char)*pch;
         char buf[8];
-        g_snprintf (buf, sizeof(buf), "%%%02x", (int)*pch);
+        g_snprintf (buf, sizeof(buf), "%%%02x", (int)uc);
         out += buf;
       }
     }
