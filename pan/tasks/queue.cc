@@ -550,9 +550,6 @@ Queue :: task_is_active (const Task * task) const
   if (task && task==_decoder_task)
     return true;
 
-  if (task && task==_encoder_task)
-    return true;
-
   bool task_has_nntp (false);
   foreach_const (nntp_to_task_t, _nntp_to_task, it)
     if ((task_has_nntp = task==it->second))
@@ -602,17 +599,13 @@ Queue :: get_all_task_states (task_states_t& setme)
   setme.tasks.reserve(_tasks.size());
 
   std::vector<Task *> & need_decode = setme._need_decode.get_container();
-  std::vector<Task *> & need_encode = setme._need_encode.get_container();
-  need_decode.clear(); need_encode.clear();
+  need_decode.clear();
   need_decode.reserve(setme.tasks.capacity());
-  need_encode.reserve(setme.tasks.capacity());
 
   foreach(TaskSet, _tasks, it) {
     setme.tasks.push_back(*it);
     if ((*it)->get_state()._work == Task::NEED_DECODER)
       need_decode.push_back(*it);
-    if ((*it)->get_state()._work == Task::NEED_ENCODER)
-      need_encode.push_back(*it);
   }
   setme._need_decode.sort();
 
@@ -634,7 +627,6 @@ Queue :: get_all_task_states (task_states_t& setme)
   running.insert (running.end(), tmp.begin(), tmp.end());
 
   setme._decoding = _decoder_task;
-  setme._encoding = _encoder_task;
 }
 
 void
@@ -686,7 +678,6 @@ Queue :: check_in (Decoder* decoder UNUSED, Task* task)
 {
   // take care of our decoder counting...
   _decoder_task = 0;
-  _encoder_task = 0;
 
   // notify the listeners if the task isn't active anymore...
   if (!task_is_active (task))
@@ -707,7 +698,7 @@ Queue :: check_in (Decoder* decoder UNUSED, Task* task)
 }
 
 void
-Queue :: check_in (Encoder* encoder UNUSED, Task* task)
+Queue :: check_in (Encoder* decoder UNUSED, Task* task)
 {
   // take care of our decoder counting...
   _encoder_task = 0;

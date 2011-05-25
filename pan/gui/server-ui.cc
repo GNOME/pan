@@ -133,7 +133,7 @@ namespace
       }
     } while (gtk_tree_model_iter_next(model, &iter));
 
-    // set the xzver combo box
+    // set the xzver combo
     combo = GTK_COMBO_BOX (d->xzver_compression_combo);
     model = gtk_combo_box_get_model (combo);
     if (gtk_tree_model_get_iter_first(model, &iter)) do {
@@ -172,10 +172,11 @@ namespace
       combo = GTK_COMBO_BOX (d->rank_combo);
       if (gtk_combo_box_get_active_iter (combo, &iter))
         gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &rank, -1);
-      int xzver(0);
+      int xzver (1);
       combo = GTK_COMBO_BOX (d->xzver_compression_combo);
       if (gtk_combo_box_get_active_iter (combo, &iter))
         gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &xzver, -1);
+
       const char * err_msg (0);
       if (addr.empty())
         err_msg = _("Please specify the server's address.");
@@ -197,7 +198,7 @@ namespace
         d->data.set_server_limits (d->server, max_conn);
         d->data.set_server_article_expiration_age (d->server, age);
         d->data.set_server_rank (d->server, rank);
-        d->data.set_server_xzver_support (d->server, xzver);
+        d->data.set_server_xzver_support(d->server, xzver);
         d->data.save_server_info(d->server);
         d->queue.upkeep ();
       }
@@ -338,7 +339,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer2, TRUE);
     gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer2, "text", 0, NULL);
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
-    HIG::workarea_add_row (t, &row, _("_Header-compression support (XZVER) :"), w, NULL);
+    HIG::workarea_add_row (t, &row, _("Serverside _Header-compression support:"), w, NULL);
 
   d->server = server;
   edit_dialog_populate (data, server, d);
