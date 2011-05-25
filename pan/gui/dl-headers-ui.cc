@@ -66,7 +66,7 @@ namespace
     if (response == GTK_RESPONSE_ACCEPT)
     {
       const bool mark_read (state->prefs.get_flag ("mark-group-read-before-xover", false));
-
+        // xzver
       foreach_const (quarks_t, state->groups, it) {
         Task * task;
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(state->all_headers_rb)))
@@ -112,7 +112,7 @@ pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
       g_snprintf (buf, sizeof(buf), _("%d Groups"), (int)groups.size());
       title += buf;
     }
-    
+
     State * state = new State (data, prefs, queue);
     state->groups = groups;
     state->dialog = gtk_dialog_new_with_buttons (
