@@ -22,10 +22,15 @@
 
 #include <map>
 #include <vector>
+#include <sstream>
+#include <iostream>
+#include <fstream>
 
+#include <pan/general/log.h>
 #include <pan/data/data.h>
 #include <pan/tasks/task.h>
 #include <pan/tasks/nntp.h>
+#include <pan/general/file-util.h>
 
 namespace pan
 {
@@ -48,6 +53,7 @@ namespace pan
 
     private: // NNTP::Listener
       virtual void on_nntp_line (NNTP*, const StringView&);
+      virtual void on_nntp_line_process (NNTP*, const StringView&);
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
       virtual void on_nntp_group (NNTP*, const Quark&, unsigned long, uint64_t, uint64_t);
 
@@ -61,7 +67,9 @@ namespace pan
       };
       typedef std::deque<MiniTask> MiniTasks_t;
       typedef std::map<Quark,MiniTasks_t> server_to_minitasks_t;
+      typedef std::map<Quark,std::string> stream_t;
       server_to_minitasks_t _server_to_minitasks;
+      stream_t _streams;
 
     private: // implementation
       Data& _data;
@@ -80,6 +88,10 @@ namespace pan
       unsigned long _parts_so_far;
       unsigned long _articles_so_far;
       unsigned long _total_minitasks;
+      unsigned long _need_decompress;
+      std::stringstream _stream;
+      quarks_t _servers; // dbg
+
   };
 }
 

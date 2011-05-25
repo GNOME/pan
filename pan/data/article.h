@@ -31,7 +31,7 @@ namespace pan
 {
   /**
    * A Usenet article, either single-part or multipart.
-   *
+   * 
    * To lessen the memory footprint of large binaries groups,
    * Pan folds multipart posts into a single Article object.
    * Only minimal information for any one part is kept
@@ -50,7 +50,6 @@ namespace pan
       void set_parts (const PartBatch& b) { parts.set_parts(b); }
       bool add_part (Parts::number_t num, const StringView& mid, Parts::bytes_t bytes) { return parts.add_part(num,mid,bytes,message_id); }
       void set_part_count (Parts::number_t num) { parts.set_part_count(num); }
-
       Parts::number_t get_total_part_count () const { return parts.get_total_part_count(); }
       Parts::number_t get_found_part_count () const { return parts.get_found_part_count(); }
       bool get_part_info (Parts::number_t      num,
@@ -87,7 +86,6 @@ namespace pan
 
     public:
       Article (): time_posted(0), lines(0), score(0), is_binary(false)  {}
-      Article (const bool bin): time_posted(0), lines(0), score(0), is_binary(bin)  {}
       void clear ();
 
     private:

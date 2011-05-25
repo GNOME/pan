@@ -49,10 +49,6 @@ namespace pan
    */
   namespace file
   {
-
-    /** Returns the directory for encoded files, should be temporary */
-    std::string get_pan_uulib_dir ();
-
     /** just like strerror but never returns NULL */
     const char * pan_strerror (int error_number);
 
@@ -61,6 +57,8 @@ namespace pan
      * if the PAN_HOME environmental variable isn't set.
      */
     std::string get_pan_home ();
+
+    std::string get_pan_uulib_dir();
 
     /**
      * If the specified directory doesn't exist, Pan tries to create it.

@@ -17,12 +17,18 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+int cnt = 0; //dbg
+
 #include <config.h>
 #include <cassert>
 #include <cerrno>
 extern "C" {
+  #include <stdio.h>
+  #define PROTOTYPES
+  #include <uulib/uudeview.h>
   #include <glib/gi18n.h>
   #include <gmime/gmime-utils.h>
+  #include <zlib.h>
 }
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
@@ -31,6 +37,7 @@ extern "C" {
 #include <pan/data/data.h>
 #include "nntp.h"
 #include "task-xover.h"
+#include "task-xzver.h"
 
 using namespace pan;
 
@@ -75,6 +82,38 @@ namespace
       snprintf (buf, sizeof(buf), _("Sampling headers for \"%s\""), group.c_str());
     return std::string (buf);
   }
+
+  void decompress(const Quark& server, std::string stream)
+  {
+    char buf[512];
+    int res(UURET_OK);
+    const char* server_string = server.to_string().c_str();
+    const char* uulib_dir = (file :: get_pan_uulib_dir()).c_str();
+
+    g_snprintf(buf,512,"%s/%s.%s", uulib_dir, "headers.gz.yenc",server_string);
+    std::ofstream out(buf);
+
+    out << "=ybegin line=128 size=-1 name=headers.gz\r\n";
+    out<< stream;
+    out << "\r\n=yend crc=FFFFFFFF\r\n.\r\n";
+    out.flush();
+    out.close();
+    UULoadFile (NULL, 0, 0);
+    g_snprintf(buf,512,"%s/%s.%s", uulib_dir, "headers.gz",server_string);
+    if ((res=UUDecodeFile(UUGetFileListItem (0), buf))==UURET_OK) {
+      gzFile zf = gzopen(buf,"rb");
+      g_snprintf(buf,512,"%s/%s.%s", uulib_dir, "headers",server_string);
+      std::ofstream gz_buf(buf);
+      int res_gz(0);
+      while (1)
+      {
+        if ((res_gz=gzread(zf,buf,512))<=0) break;
+        gz_buf<<buf;
+      }
+      gzclose(zf);
+      gz_buf.close();
+    }
+  }
 }
 
 TaskXOver :: TaskXOver (Data         & data,
@@ -92,18 +131,23 @@ TaskXOver :: TaskXOver (Data         & data,
   _bytes_so_far (0),
   _parts_so_far (0ul),
   _articles_so_far (0ul),
-  _total_minitasks (0)
+  _total_minitasks (0),
+  _need_decompress (0ul)
 {
-  debug ("ctor for " << group);
 
   // add a ``GROUP'' MiniTask for each server that has this group
   // initialize the _high lookup table to boundaries
   const MiniTask group_minitask (MiniTask::GROUP);
   quarks_t servers;
-  _data.group_get_servers (group, servers);
+  _data.group_get_servers (group, _servers);
+
+  //dbg
+  servers = _servers;
+
   foreach_const (quarks_t, servers, it)
     if (_data.get_server_limits(*it))
     {
+      if(_data.get_server_xzver_support(*it)==1) std::cerr<<"xzver support on server"<<*it<<std::endl;
       _server_to_minitasks[*it].push_front (group_minitask);
       _high[*it] = data.get_xover_high (group, *it);
     }
@@ -128,7 +172,9 @@ void
 TaskXOver :: use_nntp (NNTP* nntp)
 {
   const Quark& server (nntp->_server);
-  debug ("got an nntp from " << nntp->_server);
+
+  // test for compression
+  const bool compression (_data.get_server_xzver_support(server) == 1);
 
   // if this is the first nntp we've gotten, ref the xover data
   if (!_group_xover_is_reffed) {
@@ -156,7 +202,10 @@ TaskXOver :: use_nntp (NNTP* nntp)
       case MiniTask::XOVER:
         debug ("XOVER " << mt._low << '-' << mt._high << " to " << server);
         _last_xover_number[nntp] = mt._low;
-        nntp->xover (_group, mt._low, mt._high, this);
+        if (!compression)
+          nntp->xover (_group, mt._low, mt._high, this);
+        else
+          nntp->xzver (_group, mt._low, mt._high, this);
         break;
       default:
         assert (0);
@@ -176,13 +225,16 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
                             uint64_t        low,
                             uint64_t        high)
 {
-  const Quark& servername (nntp->_server);
+  const Quark& server (nntp->_server);
+
+  // test for compression
+  const bool compression (_data.get_server_xzver_support(server) == 1);
 
   // new connections can tickle this...
-  if (_servers_that_got_xover_minitasks.count(servername))
+  if (_servers_that_got_xover_minitasks.count(server))
     return;
 
-  _servers_that_got_xover_minitasks.insert (servername);
+  _servers_that_got_xover_minitasks.insert (server);
 
   debug ("got GROUP result from " << nntp->_server << " (" << nntp << "): "
          << " qty " << qty
@@ -210,14 +262,24 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
   {
     //std::cerr << LINE_ID << " okay, I'll try to get articles in [" << l << "..." << h << ']' << std::endl;
     add_steps (h-l);
-    const int INCREMENT (1000);
-    MiniTasks_t& minitasks (_server_to_minitasks[servername]);
+
+    int INCREMENT(0);
+
+    if (!compression)
+     INCREMENT = 1000;
+    else
+      INCREMENT = 10000;
+
+    MiniTasks_t& minitasks (_server_to_minitasks[server]);
     for (uint64_t m=l; m<=h; m+=INCREMENT) {
       MiniTask mt (MiniTask::XOVER, m, m+INCREMENT);
-      debug ("adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << ']');
+      debug ("adding MiniTask for " << server << ": xover [" << mt._low << '-' << mt._high << ']');
       minitasks.push_front (mt);
       ++_total_minitasks;
     }
+    // give server its stream
+
+
   }
   else
   {
@@ -266,6 +328,25 @@ namespace
 void
 TaskXOver :: on_nntp_line (NNTP               * nntp,
                            const StringView   & line)
+{
+    const bool compression (_data.get_server_xzver_support(nntp->_server) == 1);
+    if (!compression)
+      on_nntp_line_process(nntp,line);
+    else {
+      _streams[nntp->_server] += line.str;
+      _bytes_so_far += line.len;
+
+      // emit a status update
+      uint64_t& prev = _last_xover_number[nntp];
+      increment_step (1);
+      if (!(_parts_so_far % 500))
+        set_status_va (_("%s (%lu parts, %lu articles)"), _short_group_name.c_str(), _parts_so_far, _articles_so_far);
+    }
+}
+
+void
+TaskXOver :: on_nntp_line_process (NNTP               * nntp,
+                                   const StringView   & line)
 {
   pan_return_if_fail (nntp != 0);
   pan_return_if_fail (!nntp->_server.empty());
@@ -348,11 +429,12 @@ TaskXOver :: on_nntp_line (NNTP               * nntp,
 void
 TaskXOver :: on_nntp_done (NNTP              * nntp,
                            Health              health,
-                           const StringView  & response UNUSED)
+                           const StringView  & response)
 {
-  //std::cerr << LINE_ID << " nntp " << nntp->_server << " (" << nntp << ") done; checking in.  health==" << health << std::endl;
-  update_work (true);
-  check_in (nntp, health);
+
+    std::cerr<<"nntp done on server "<<nntp->_server<<std::endl;
+    update_work (true);
+    check_in (nntp, health);
 }
 
 void
@@ -361,6 +443,8 @@ TaskXOver :: update_work (bool subtract_one_from_nntp_count)
   int nntp_count (get_nntp_count ());
   if (subtract_one_from_nntp_count)
     --nntp_count;
+
+      std::cerr<<"update work "<<std::endl;
 
   // find any servers we still need
   quarks_t servers;
@@ -375,14 +459,20 @@ TaskXOver :: update_work (bool subtract_one_from_nntp_count)
   else if (nntp_count)
     _state.set_working ();
   else {
-    _state.set_completed ();
-    set_finished (OK);
+      foreach_const (stream_t, _streams, it)
+      {
+        decompress(it->first, it->second);
+//      feed_lines(_stream);
+      }
+      _state.set_completed ();
+      set_finished (OK);
   }
 }
 
 unsigned long
 TaskXOver :: get_bytes_remaining () const
 {
+  return 0ul;
   unsigned int minitasks_left (0);
   foreach_const (server_to_minitasks_t, _server_to_minitasks, it)
     minitasks_left += it->second.size();
@@ -391,5 +481,6 @@ TaskXOver :: get_bytes_remaining () const
   if (percent_done < 0.1) // impossible to estimate
     return 0;
   const unsigned long total_bytes = (unsigned long)(_bytes_so_far / percent_done);
+  std::cerr<<std::endl<<"bytes remaining: "<<total_bytes - _bytes_so_far<<", percent: "<<percent_done<<std::endl;
   return total_bytes - _bytes_so_far;
 }

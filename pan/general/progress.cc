@@ -31,8 +31,8 @@ using namespace pan;
 
 void
 Progress :: fire_percentage (int p) {
-//  for (listeners_cit it(_listeners.begin()), end(_listeners.end()); it!=end; )
-//    (*it++)->on_progress_step (*this, p);
+  for (listeners_cit it(_listeners.begin()), end(_listeners.end()); it!=end; )
+    (*it++)->on_progress_step (*this, p);
 }
 void
 Progress :: fire_pulse () {

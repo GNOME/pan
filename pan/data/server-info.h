@@ -61,6 +61,10 @@ namespace pan
       virtual void set_server_rank (const Quark& server,
                                     int          rank) = 0;
 
+      virtual void set_server_xzver_support (const Quark& server, const int val) = 0;
+
+      virtual void save_server_info (const Quark& server) = 0;
+
     public: // accessors
 
       virtual bool get_server_auth (const Quark   & servername,
@@ -78,6 +82,8 @@ namespace pan
       virtual int get_server_limits (const Quark & server) const = 0;
 
       virtual int get_server_article_expiration_age  (const Quark  & server) const = 0;
+
+      virtual int get_server_xzver_support (const Quark& server) const = 0;
   };
 }
 

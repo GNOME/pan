@@ -129,8 +129,8 @@ namespace pan
       void add_actions (GtkWidget* box);
       void apply_profile_to_body ();
       void apply_profile_to_headers ();
-      enum Mode { DRAFTING, POSTING };
-      GMimeMessage * new_message_from_ui (Mode mode);
+      enum Mode { DRAFTING, POSTING, BINPOST };
+      GMimeMessage * new_message_from_ui (Mode mode, std::string body);
       Profile get_current_profile ();
       bool check_message (const Quark& server, GMimeMessage*);
       bool check_charset ();

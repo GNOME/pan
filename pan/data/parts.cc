@@ -87,7 +87,7 @@ namespace
     for (; b!=bmax; ++b)
       if (*k++ != *m++)
         break;
-
+    
     const int emax = std::min (shorter-b, (int)UCHAR_MAX);
     k = &key.back();
     m = &mid.back();

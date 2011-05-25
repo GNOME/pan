@@ -54,51 +54,6 @@ namespace
    }
 };
 
-namespace
-{
-   enum
-   {
-      AUTH_REQUIRED              = 480,
-      AUTH_NEED_MORE             = 381,
-      AUTH_ACCEPTED              = 281,
-      AUTH_REJECTED              = 482,
-
-      SERVER_READY               = 200,
-      SERVER_READY_NO_POSTING    = 201,
-      SERVER_READY_STREAMING_OK  = 203,
-
-      GOODBYE                    = 205,
-
-      GROUP_RESPONSE             = 211,
-      GROUP_NONEXISTENT          = 411,
-
-      INFORMATION_FOLLOWS        = 215,
-
-      XOVER_FOLLOWS              = 224,
-      XOVER_NO_ARTICLES          = 420,
-
-      ARTICLE_FOLLOWS            = 220,
-
-      NEWGROUPS_FOLLOWS          = 231,
-
-      ARTICLE_POSTED_OK          = 240,
-      SEND_ARTICLE_NOW           = 340,
-      NO_POSTING                 = 440,
-      POSTING_FAILED             = 441,
-
-      TOO_MANY_CONNECTIONS       = 400,
-
-      NO_GROUP_SELECTED          = 412,
-      NO_SUCH_ARTICLE_NUMBER     = 423,
-      NO_SUCH_ARTICLE            = 430,
-
-      ERROR_CMD_NOT_UNDERSTOOD   = 500,
-      ERROR_CMD_NOT_SUPPORTED    = 501,
-      NO_PERMISSION              = 502,
-      FEATURE_NOT_SUPPORTED      = 503
-   };
-}
-
 void
 NNTP :: fire_done_func (Health health, const StringView& response)
 {
@@ -223,6 +178,8 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
          break;
 
       case XOVER_FOLLOWS:
+        if (_listener)
+            _listener->on_xover_follows (this, line);
       case ARTICLE_FOLLOWS:
       case NEWGROUPS_FOLLOWS:
       case INFORMATION_FOLLOWS:
@@ -233,6 +190,8 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
       case AUTH_REJECTED:
       case NO_GROUP_SELECTED:
       case ERROR_CMD_NOT_UNDERSTOOD:
+        if (_listener)
+          _listener->on_cmd_not_understood (this, line);
       case ERROR_CMD_NOT_SUPPORTED:
       case NO_PERMISSION:
       case FEATURE_NOT_SUPPORTED: {
@@ -283,7 +242,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    switch (state) {
       case CMD_FAIL: fire_done_func (ERR_COMMAND, line); more = false; break;
       case CMD_DONE: if (_commands.empty()) fire_done_func (OK, line); more = false; break;
-      case CMD_MORE: more = true; break; // keep listining for more on this command
+      case CMD_MORE: more = true; break; // keep listening for more on this command
       case CMD_NEXT: more = false; break; // no more responses on this command; wait for next...
       case CMD_RETRY: fire_done_func (ERR_NETWORK, line); more = false; break;
       default: abort(); break;

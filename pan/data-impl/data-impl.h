@@ -51,7 +51,7 @@ namespace pan
    *
    * Most of the files are stored in $PAN_HOME, which defaults to
    * $HOME/.pan2 if the PAN_HOME environmental variable isn't set.
-   * 
+   *
    * @ingroup data_impl
    */
   class DataImpl:
@@ -100,10 +100,11 @@ namespace pan
          int article_expiration_age;
          int max_connections;
          int rank;
+         int xzver;
          typedef sorted_vector<Quark,true,AlphabeticalQuarkOrdering> groups_t;
          groups_t groups;
 
-         Server(): port(119), article_expiration_age(31), max_connections(2), rank(1) {}
+         Server(): port(119), article_expiration_age(31), max_connections(2), rank(1), xzver(0) {}
       };
 
       typedef Loki::AssocVector<Quark,Server> servers_t;
@@ -123,11 +124,11 @@ namespace pan
       virtual void set_server_auth (const Quark       & server,
                                     const StringView  & username,
                                     const StringView  & password);
-                                                                                
+
       virtual void set_server_addr (const Quark       & server,
                                     const StringView  & host,
                                     const int           port);
-                                                                                
+
       virtual void set_server_limits (const Quark     & server,
                                       int               max_connections);
 
@@ -135,6 +136,10 @@ namespace pan
 
       virtual void set_server_article_expiration_age  (const Quark  & server,
                                                        int            days);
+
+      virtual void save_server_info (const Quark& server);
+
+      virtual void set_server_xzver_support (const Quark& server, const int val);
 
     public: // accessors
 
@@ -148,7 +153,7 @@ namespace pan
       virtual bool get_server_auth (const Quark   & server,
                                     std::string   & setme_username,
                                     std::string   & setme_password) const;
-                                                                                
+
       virtual bool get_server_addr (const Quark   & server,
                                     std::string   & setme_host,
                                     int           & setme_port) const;
@@ -160,6 +165,8 @@ namespace pan
       virtual int get_server_limits (const Quark & server) const;
 
       virtual int get_server_article_expiration_age  (const Quark  & server) const;
+
+      virtual int get_server_xzver_support (const Quark& server) const;
 
     /**
     *** GROUPS

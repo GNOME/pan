@@ -369,8 +369,6 @@ bool
 PostUI :: check_message (const Quark& server, GMimeMessage * msg)
 {
 
-  std::cerr<<"check message\n";
-
   MessageCheck :: unique_strings_t errors;
   MessageCheck :: Goodness goodness;
 
@@ -486,21 +484,10 @@ PostUI :: send_now ()
 {
   if (!check_charset())
     return;
-  GMimeMessage * message (new_message_from_ui (POSTING));
+  GMimeMessage * message (new_message_from_ui (POSTING,get_body()));
   if (!maybe_post_message (message))
     g_object_unref (G_OBJECT(message));
 }
-
-//void
-//PostUI :: send_binfiles_now()
-//{
-//  if (!check_charset())
-//    return;
-//  GMimeMessage * message (new_message_from_ui (POSTING));
-//
-//  //change headers according to
-//  g_object_unref (G_OBJECT(message));
-//}
 
 void
 PostUI :: done_sending_message (GMimeMessage * message, bool ok)
@@ -593,16 +580,18 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
   int bufsz=2048;
   char buf[bufsz];
 
-  _post_task->remove_listener (this);
-  gtk_widget_destroy (_post_dialog);
-
   if (_file_queue_empty) {
-    GMimeMessage * message (((TaskPost*)_post_task)->get_message ());
-    if (status != OK) // error posting.. stop.
-      done_sending_message (message, false);
-    else
-      maybe_mail_message (message);
+    _post_task->remove_listener (this);
+    gtk_widget_destroy (_post_dialog);
+
   }
+//  if (_file_queue_empty) {
+//    GMimeMessage * message (((TaskPost*)_post_task)->get_message ());
+//    if (status != OK) // error posting.. stop.
+//      done_sending_message (message, false);
+//    else
+//      maybe_mail_message (message);
+//  }
 //  else
 //  {
 //    GMimeMessage * message (((TaskUpload*)_upload_task)->get_message ());
@@ -726,13 +715,12 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     FileQueue::articles_it it = _file_queue.begin();
 
     for (; it != _file_queue.end(); it, ++it, ++i) {
-      GMimeMessage* msg = new_message_from_ui(POSTING);
-      _queue.add_task (new TaskUpload (*it,profile.posting_server,msg
-                                     ,0,TaskUpload::YENC,i),
-                                     Queue::BOTTOM);
+      // get message body first, later on the attachment's content is added to the message
+      GMimeMessage* msg = new_message_from_ui (BINPOST, get_body());
+      TaskUpload* t =new TaskUpload (*it,server,msg,0,TaskUpload::YENC,i);
+      _queue.add_task (t,Queue::BOTTOM);
     }
-  //dbg
-//    close_window(true); // dont wait for the upload queue
+    close_window(true); // dont wait for the upload queue
   }
 
 
@@ -1004,7 +992,7 @@ namespace
 }
 
 GMimeMessage*
-PostUI :: new_message_from_ui (Mode mode)
+PostUI :: new_message_from_ui (Mode mode, std::string body)
 {
   GMimeMessage * msg (g_mime_message_new (false));
 
@@ -1063,11 +1051,11 @@ PostUI :: new_message_from_ui (Mode mode)
   g_free (pch);
 
   // User-Agent
-  if (mode==POSTING && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
+  if ((mode==POSTING || mode == BINPOST ) && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
     g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent());
 
   // Message-ID
-  if (mode==POSTING && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
+  if ((mode==POSTING || mode == BINPOST ) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
     const std::string message_id = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
@@ -1075,10 +1063,9 @@ PostUI :: new_message_from_ui (Mode mode)
   }
 
   // body & charset
-  std::string body (get_body());
   GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
   const std::string charset ((mode==POSTING && !_charset.empty()) ? _charset : "UTF-8");
-  if (charset != "UTF-8") {
+  if (charset != "UTF-8") {  //dbg (??)
     // add a wrapper to convert from UTF-8 to $charset
     GMimeStream * tmp = g_mime_stream_filter_new (stream);
     g_object_unref (stream);
@@ -1090,7 +1077,12 @@ PostUI :: new_message_from_ui (Mode mode)
   GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   g_object_unref (stream);
   GMimePart * part = g_mime_part_new ();
-  pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+
+  if (mode==BINPOST)
+    pch = g_strdup_printf ("multipart/mixed; charset=%s", charset.c_str());
+  else
+    pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+
   GMimeContentType * type = g_mime_content_type_new_from_string (pch);
   g_free (pch);
   g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
@@ -1123,7 +1115,7 @@ PostUI :: save_draft ()
 
   if (gtk_dialog_run(GTK_DIALOG(d)) == GTK_RESPONSE_ACCEPT)
   {
-    GMimeMessage * msg = new_message_from_ui (DRAFTING);
+    GMimeMessage * msg = new_message_from_ui (DRAFTING, get_body());
     char * filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER(d));
     draft_filename = filename;
 
@@ -1824,7 +1816,6 @@ PostUI :: create_main_tab ()
   // Newsgroup
 
   ++row;
-  std::cerr<<" create main tab\n";
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("_Newsgroups"));
   l = gtk_label_new_with_mnemonic (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
@@ -2010,8 +2001,8 @@ PostUI :: update_filequeue_tab()
     {
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
-                        0, (*it)->basename,
-                        1, (*it)->byte_count,
+                        0, (*it).basename,
+                        1, (*it).byte_count/1024,
                         -1);
     }
 
@@ -2055,7 +2046,6 @@ PostUI :: PostUI (GtkWindow    * parent,
   _charset (DEFAULT_CHARSET),
   _group_entry_changed_id (0),
   _group_entry_changed_idle_tag (0),
-  //binpost
   _file_queue_empty(true)
 {
   g_assert (profiles.has_profiles());
@@ -2153,9 +2143,6 @@ PostUI :: prompt_user_for_queueable_files (FileQueue& queue, GtkWindow * parent,
 		GSList * tmp_list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER (w));
 		if (_file_queue_empty) _file_queue_empty=!_file_queue_empty;
 		GSList * cur = g_slist_nth (tmp_list,0);
-    const Profile profile (get_current_profile ());
-    const StringView subject(gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
-    struct stat stat_buf;
 
     for (; cur; cur = cur->next)
 		{

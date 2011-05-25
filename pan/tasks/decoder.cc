@@ -171,8 +171,8 @@ Decoder :: do_work()
           file :: ensure_dir_exists (save_path.c_str());
 
         // find a unique filename...
-        char * fname = file::get_unique_fname(save_path.c_str(),
-                                              (item->filename
+        char * fname = file::get_unique_fname(save_path.c_str(), 
+                                              (item->filename 
                                                && *item->filename)
                                               ? item->filename
                                               : "pan-saved-file" );
@@ -296,11 +296,13 @@ Decoder :: progress_update_timer_func (gpointer decoder)
   if (!task || self->was_cancelled()) return false;
 
   self->mut.lock();
-    const double percent (self->percent);
-    const std::string f (content_to_utf8 (self->current_file));
-    task->set_step(int(percent));
-    task->set_status_va (_("Decoding %s"), f.c_str());
+  const double percent (self->percent);
+  const std::string f (content_to_utf8 (self->current_file));
   self->mut.unlock();
+
+  task->set_step(int(percent));
+  task->set_status_va (_("Decoding %s"), f.c_str());
+
   return true; // keep timer func running
 }
 

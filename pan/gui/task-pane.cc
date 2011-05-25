@@ -208,11 +208,11 @@ TaskPane :: update_status (const task_states_t& tasks)
   {
     Task * task (*it);
     const Queue::TaskState state (tasks.get_state (task));
-    if (state == Queue::RUNNING || state == Queue::DECODING || state == Queue::ENCODING)
+    if (state == Queue::RUNNING || state == Queue::DECODING)
       ++running_count;
     else if (state == Queue::STOPPED)
       ++stopped_count;
-    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE || state == Queue::QUEUED_FOR_ENCODE)
+    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE)
       ++queued_count;
 
     if (state==Queue::RUNNING || state==Queue::QUEUED)
@@ -225,7 +225,7 @@ TaskPane :: update_status (const task_states_t& tasks)
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks (%d Queued, %d Running, %d Stopped)"), queued_count, running_count, stopped_count);
   else if (running_count || queued_count)
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks (%d Queued, %d Running)"), queued_count, running_count);
-  else
+  else 
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks"));
   gtk_window_set_title (GTK_WINDOW(_root), buf);
 
@@ -240,7 +240,6 @@ TaskPane :: update_status (const task_states_t& tasks)
     minutes = tmp % 60ul; tmp /= 60ul;
     hours   = tmp;
   }
-
   g_snprintf (buf, sizeof(buf), _("%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"),
               task_count, render_bytes(bytes), KiBps, hours, minutes, seconds);
   std::string line (buf);

@@ -1606,6 +1606,7 @@ void GUI :: do_read_selected_group ()
     else if (_prefs.get_flag("get-new-headers-when-entering-group", true)) {
       if (_prefs.get_flag ("mark-group-read-before-xover", false))
         _data.mark_group_read (group);
+//       todo xzver
       _queue.add_task (new TaskXOver (_data, group, TaskXOver::NEW), Queue::TOP);
     }
   }
@@ -1630,6 +1631,7 @@ void GUI :: do_xover_selected_groups ()
   foreach_const (quarks_v, groups, it) {
     if (mark_read)
       _data.mark_group_read (*it);
+      //todo xzver
     _queue.add_task (new TaskXOver (_data, *it, TaskXOver::NEW), Queue::TOP);
   }
 }
@@ -1642,6 +1644,7 @@ void GUI :: do_xover_subscribed_groups ()
   const bool mark_read (_prefs.get_flag ("mark-group-read-before-xover", false));
   foreach_const_r (quarks_v, groups, it) {
     if (mark_read)
+    //todo xzver
       _data.mark_group_read (*it);
     _queue.add_task (new TaskXOver (_data, *it, TaskXOver::NEW), Queue::TOP);
   }

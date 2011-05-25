@@ -34,14 +34,15 @@ namespace pan
    */
   struct TaskWeakOrdering
   {
-    const Quark BODIES, CANCEL, GROUPS, POST, SAVE, XOVER;
+    const Quark BODIES, CANCEL, GROUPS, POST, SAVE, XOVER, XZVER_TEST;
     TaskWeakOrdering ():
       BODIES ("BODIES"),
       CANCEL ("CANCEL"),
       GROUPS ("GROUPS"),
       POST ("POST"),
       SAVE ("SAVE"),
-      XOVER ("XOVER") {}
+      XOVER ("XOVER"),
+      XZVER_TEST ("XZVER_TEST") {}
 
     int get_rank_for_type (const Quark& type) const
     {
@@ -49,7 +50,7 @@ namespace pan
 
       if (type==BODIES || type==POST || type==CANCEL)
         rank = 0;
-      else if (type==XOVER || type==GROUPS)
+      else if (type==XOVER || type==GROUPS || type==XZVER_TEST)
         rank = 1;
       else if (type==SAVE)
         rank = 2;

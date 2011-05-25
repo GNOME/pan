@@ -64,7 +64,7 @@ namespace pan
    *
    * Also, a read article should change back to unread if it changes
    * from an incomplete multipart to a complete multipart as new
-   * parts are added to it. 
+   * parts are added to it.
    *
    * @ingroup data
    */
@@ -132,7 +132,7 @@ namespace pan
     public:
       virtual void delete_profile (const std::string& profile_name) = 0;
       virtual void add_profile (const std::string& profile_name, const Profile& profile) = 0;
-      
+
     protected:
       Profiles () {}
   };
@@ -168,9 +168,9 @@ namespace pan
 
     public:
 
-      virtual ArticleCache& get_cache () = 0; 
+      virtual ArticleCache& get_cache () = 0;
 
-      virtual const ArticleCache& get_cache () const = 0; 
+      virtual const ArticleCache& get_cache () const = 0;
 
     public:
 
@@ -191,6 +191,8 @@ namespace pan
       virtual void set_server_limits (const Quark     & server,
                                       int               max_connections) = 0;
 
+      virtual void set_server_xzver_support (const Quark& server, int setme) = 0;
+
       virtual bool get_server_addr (const Quark   & server,
                                     std::string   & setme_address,
                                     int           & setme_port) const = 0;
@@ -200,6 +202,8 @@ namespace pan
                                     std::string   & setme_password) const = 0;
 
       virtual int get_server_limits (const Quark & server) const = 0;
+
+      virtual int get_server_xzver_support (const Quark& server) const = 0;
 
     /*****************************************************************
     ***
@@ -354,7 +358,7 @@ namespace pan
            *
            * In the case of new articles, the Tree's existing filter
            * is applied to them and new articles that survive the filter
-           * are threaded into the tree. 
+           * are threaded into the tree.
            *
            * In the case of deleted articles, their children are
            * reparented to the youngest surviving ancestor and then the
@@ -442,7 +446,7 @@ namespace pan
                 (*it++)->on_tree_change (d);
             }
           }
-              
+
 
         /*************************************************************
         ***
@@ -555,7 +559,7 @@ namespace pan
 
       /**
        * Returns the high number of the most recent XOVER command
-       * run on the specified {server,group}, or 0 if it's never 
+       * run on the specified {server,group}, or 0 if it's never
        * been run there.
        */
       virtual uint64_t get_xover_high (const Quark  & group,
