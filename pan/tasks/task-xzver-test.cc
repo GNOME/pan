@@ -45,7 +45,7 @@ namespace
 }
 
 TaskXZVerTest :: TaskXZVerTest (Data         & data,
-                        const Quark  & server) :
+                                const Quark  & server) :
   Task("XOVER", get_description()),
   _data (data),
   _server (server)
@@ -68,17 +68,17 @@ TaskXZVerTest :: use_nntp (NNTP* nntp)
 
 void
 TaskXZVerTest :: on_nntp_group (NNTP          * nntp,
-                            const Quark   & group,
-                            unsigned long   qty,
-                            uint64_t        low,
-                            uint64_t        high)
+                                const Quark   & group,
+                                unsigned long   qty,
+                                uint64_t        low,
+                                uint64_t        high)
 {
   nntp->xzver(group, high-100, high,this);
 }
 
 void
 TaskXZVerTest :: on_nntp_line (NNTP               * nntp,
-                           const StringView   & line)
+                               const StringView   & line)
 {}
 
 void
