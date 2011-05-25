@@ -728,7 +728,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     for (; it != _file_queue.end(); it, ++it, ++i) {
       GMimeMessage* msg = new_message_from_ui(POSTING);
       _queue.add_task (new TaskUpload (*it,profile.posting_server,msg
-                                     ,0,TaskUpload::YENC,i),
+                                     ,0,TaskUpload::YENC),
                                      Queue::BOTTOM);
     }
   //dbg
@@ -2010,8 +2010,8 @@ PostUI :: update_filequeue_tab()
     {
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
-                        0, (*it)->basename,
-                        1, (*it)->byte_count,
+                        0, (*it).filename,
+                        1, (*it).byte_count/1024,
                         -1);
     }
 

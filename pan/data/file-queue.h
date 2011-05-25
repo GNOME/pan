@@ -36,7 +36,7 @@
 
 namespace pan {
 
-  class FileQueue: public Article
+  class FileQueue
   {
 
      public:
@@ -45,42 +45,29 @@ namespace pan {
 
         struct FileData
         {
-          StringView     subject;
-          StringView     author;
-          StringView     filename;
-          unsigned long  byte_count;
-          unsigned long  line_count;
-          Article        article;
+
+          const char     * filename;
+          unsigned long    byte_count;
           FileData() {}
         };
 
-        typedef std::vector<FileData>::iterator articles_it;
-        typedef std::vector<FileData> articles_v;
+        typedef std::list<FileData>::iterator articles_it;
+        typedef std::list<FileData> articles_v;
 
 
      articles_it end() { return _articles_v.end(); }
      articles_it begin() { return _articles_v.begin(); }
-     FileData get_front() { return _articles_v[0]; }
-     FileData get_at(int i) { return _articles_v[(i<0 || i>_articles_v.size()) ? 0 : i]; }
      bool empty() { return _articles_v.empty(); }
 
-     articles_v& v() { return _articles_v; }
 
      public:
       enum InsertType
       { BEGIN, END };
-     // article
-     public:
-      PartState get_part_state () const;
 
     //own
     public:
-      void add (const StringView    & subject,
-                const StringView    & author,
-                const StringView    & filename,
-                const unsigned long   byte_count,
-                const unsigned long   line_count,
-                FileQueue::InsertType type);
+      virtual void add (const char* filename,
+                  FileQueue::InsertType type);
 
     private:
       articles_v _articles_v;
@@ -88,22 +75,3 @@ namespace pan {
 }
 
 #endif
-
-// todo
-//void
-//TaskPane :: get_selected_tasks_foreach (GtkTreeModel *model, GtkTreePath *, GtkTreeIter *iter, gpointer list_g)
-//{
-//  Task * task (0);
-//  gtk_tree_model_get (model, iter, COL_TASK_POINTER, &task, -1);
-//  static_cast<tasks_t*>(list_g)->push_back (task);
-//}
-//
-//tasks_t
-//TaskPane :: get_selected_tasks () const
-//{
-//  tasks_t tasks;
-//  GtkTreeView * view (GTK_TREE_VIEW (_view));
-//  GtkTreeSelection * sel (gtk_tree_view_get_selection (view));
-//  gtk_tree_selection_selected_foreach (sel, get_selected_tasks_foreach, &tasks);
-//  return tasks;
-//}

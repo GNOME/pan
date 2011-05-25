@@ -17,8 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef __TASK_XOVER__H__
-#define __TASK_XOVER__H__
+#ifndef __TASK_XZVER_TEST_H__
+#define __TASK_XZVER_TEST_H__
 
 #include <map>
 #include <vector>
@@ -33,53 +33,28 @@ namespace pan
    * Task for downloading a some or all of a newsgroups' headers
    * @ingroup tasks
    */
-  class TaskXOver: public Task, private NNTP::Listener
+  class TaskXZVerTest: public Task, private NNTP::Listener
   {
     public: // life cycle
-      enum Mode { ALL, NEW, SAMPLE, DAYS };
-      TaskXOver (Data& data, const Quark& group, Mode mode=ALL, unsigned long sample_size=1000);
-      virtual ~TaskXOver ();
+      TaskXZVerTest (Data& data, const Quark& server);
+      virtual ~TaskXZVerTest ();
 
     public: // task subclass
-      virtual unsigned long get_bytes_remaining () const;
+      virtual unsigned long get_bytes_remaining () const { return 0ul;}
 
     protected: // task subclass
       virtual void use_nntp (NNTP * nntp);
 
     private: // NNTP::Listener
       virtual void on_nntp_line (NNTP*, const StringView&);
+      virtual void on_xover_follows (NNTP*, const StringView&);
+      virtual void on_what (NNTP*, const StringView&);
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
       virtual void on_nntp_group (NNTP*, const Quark&, unsigned long, uint64_t, uint64_t);
 
-    private: // implementation - minitasks
-      struct MiniTask {
-        enum Type { GROUP, XOVER };
-        Type _type;
-        uint64_t _low, _high;
-        MiniTask (Type type, uint64_t low=0ul, uint64_t high=0ul):
-          _type(type), _low(low), _high(high) {}
-      };
-      typedef std::deque<MiniTask> MiniTasks_t;
-      typedef std::map<Quark,MiniTasks_t> server_to_minitasks_t;
-      server_to_minitasks_t _server_to_minitasks;
-
     private: // implementation
       Data& _data;
-      const Quark _group;
-      std::string _short_group_name;
-      Mode _mode;
-      uint64_t _sample_size;
-      time_t _days_cutoff;
-      bool _group_xover_is_reffed;
-      typedef std::map<Quark,uint64_t> server_to_high_t;
-      server_to_high_t _high;
-      void update_work (bool subtract_one_from_nntp_count=false);
-      std::set<Quark> _servers_that_got_xover_minitasks;
-      std::map<NNTP*,uint64_t> _last_xover_number;
-      unsigned long _bytes_so_far;
-      unsigned long _parts_so_far;
-      unsigned long _articles_so_far;
-      unsigned long _total_minitasks;
+      const Quark _server;
   };
 }
 
