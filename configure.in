@@ -80,7 +80,7 @@ PKG_CHECK_MODULES([GMIME], [ gmime-2.6    >= $GMIME_REQUIRED ], [],
 	[PKG_CHECK_MODULES( [GMIME], [gmime-2.4    >= $GMIME_REQUIRED] )] )
 
 gtk_msg=no
-AC_ARG_WITH(gtk3, AC_HELP_STRING([--with-gtk3], [Enable gtk3 support]), [want_gtk3=$withval], [want_gtk3=yes])
+AC_ARG_WITH(gtk3, AC_HELP_STRING([--with-gtk3], [Enable gtk3 support]), [want_gtk3=$withval], [want_gtk3=no])
 if test "x$want_gtk3" = "xyes" ; then
 	PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= $GTK3_REQUIRED],
 	                  [gtk_msg="yes >= $GTK3_REQUIRED"
