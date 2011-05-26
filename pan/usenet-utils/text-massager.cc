@@ -19,6 +19,7 @@
 
 #include <config.h>
 #include <vector>
+#include <map>
 #include <cstring>
 #include <glib.h>
 extern "C" {
@@ -26,7 +27,7 @@ extern "C" {
 }
 #include <glib/gunicode.h>
 #include "text-massager.h"
-
+#include <pan/general/log.h>
 using namespace pan;
 
 TextMassager :: TextMassager ():
@@ -104,12 +105,128 @@ namespace
             content (c, clen) { }
    };
 
-
    typedef std::vector<Paragraph> paragraphs_t;
    typedef paragraphs_t::iterator p_it;
 
+   void merge_fixed (paragraphs_t &paragraphs, lines_t &lines, int wrap_col)
+   {
+     std::map<std::string, int> max_map;
+     std::map<std::string, int>::iterator map_end = max_map.end();
+     int prev_content_len = 0;
+     StringView cur_leader;
+     std::string cur_content;
+     bool prev_ends_with_punct = true;
+
+     for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
+     {
+       const Line& line (*it);
+       int line_len = line.leader.len + line.content.len;
+       if (map_end != max_map.find(line.leader))
+         max_map[line.leader] = MAX(max_map[line.leader], line_len );
+       else
+         // use 12 as the minimum line length
+         max_map.insert( std::make_pair(line.leader, MAX(line_len, 12) ) );
+     }
+
+     for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
+     {
+        const Line& line (*it);
+        bool paragraph_end = true;
+        bool hard_break = false;
+
+        if (cur_content.empty() || line.leader==cur_leader)
+           paragraph_end = false;
+
+        if (line.content.empty()) {
+           hard_break = prev_content_len!=0;
+           paragraph_end = true;
+        }
+
+        // if first word could have been wrapped onto previous line
+        // line but wasn't assume deliberate line break.
+        if (!paragraph_end && prev_content_len && line.content.len)
+        {
+          unsigned int space = max_map[line.leader] - (prev_content_len + line.leader.len) - 1;
+          if ( space > 0 && ((line.content.len < space)
+                              || g_utf8_strchr (line.content.str, space, ' ')) )
+            //paragraph_end = true;
+            paragraph_end = prev_ends_with_punct;
+        }
+
+        if (paragraph_end) // the new line is a new paragraph, so save old
+        {
+           paragraphs.push_back (Paragraph (
+              cur_leader.str, cur_leader.len,
+              cur_content.c_str(), cur_content.size()));
+           cur_leader = line.leader;
+           cur_content = line.content.to_string();
+           if (hard_break) {
+              paragraphs.push_back (Paragraph (
+                 cur_leader.str, cur_leader.len, "", 0));
+            }
+        }
+        else // append to the content
+        {
+           if (!cur_content.empty())
+              cur_content += ' ';
+           cur_leader = line.leader;
+           cur_content.insert (cur_content.end(),
+                               line.content.begin(),
+                               line.content.end());
+        }
+
+        prev_content_len = line.content.len;
+        if ( prev_content_len > 1)
+          prev_ends_with_punct = g_unichar_ispunct ( g_utf8_get_char (
+            g_utf8_find_prev_char ( line.content.str, line.content.str + line.content.len )));
+        else
+          prev_ends_with_punct = true;
+     }
+   }
+
+  void merge_flowed (paragraphs_t &paragraphs, lines_t &lines)
+  {
+    StringView cur_leader;
+    std::string cur_content;
+    bool prev_flowed=true;
+
+    for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
+    {
+      const Line& line (*it);
+
+      if (line.leader != cur_leader)
+        prev_flowed = false;
+
+      if (!prev_flowed) // the new line is a new paragraph, so save old
+      {
+         paragraphs.push_back (Paragraph (
+            cur_leader.str, cur_leader.len,
+            cur_content.c_str(), cur_content.size()));
+         cur_leader = line.leader;
+         cur_content = line.content.to_string();
+      }
+      else // append to the content
+      {
+         if (!cur_content.empty())
+            cur_content += ' ';
+         cur_leader = line.leader;
+         cur_content.insert (cur_content.end(),
+                             line.content.begin(),
+                             line.content.end());
+      }
+      // flowed text ends with a space
+      if (line.content.len && line.content.str[line.content.len] == ' ')
+         prev_flowed = true;
+      else
+        prev_flowed = false;
+    }
+    //add final content
+    paragraphs.push_back (Paragraph (cur_leader.str, cur_leader.len,
+                            cur_content.c_str(), cur_content.size()));
+ }
+
    std::vector<Paragraph>
-   get_paragraphs (const TextMassager& tm, const StringView& body)
+   get_paragraphs (const TextMassager& tm, const StringView& body, bool flowed)
    {
       StringView mybody (body);
       StringView line;
@@ -141,52 +258,10 @@ namespace
       std::vector<Paragraph> paragraphs;
       if (!lines.empty())
       {
-         int prev_content_len = 0;
-         StringView cur_leader;
-         std::string cur_content;
-
-         for (lines_cit it=lines.begin(), end=lines.end(); it!=end; ++it)
-         {
-            const Line& line (*it);
-            bool paragraph_end = true;
-            bool hard_break = false;
-
-            if (cur_content.empty() || line.leader==cur_leader)
-               paragraph_end = false;
-
-            if (line.content.empty()) {
-               hard_break = prev_content_len!=0;
-               paragraph_end = true;
-            }
-
-            // we usually don't want to wrap really short lines
-            if (prev_content_len && prev_content_len<(tm.get_wrap_column()/2))
-               paragraph_end = true;
-
-            if (paragraph_end) // the new line is a new paragraph, so save old
-            {
-               paragraphs.push_back (Paragraph (
-                  cur_leader.str, cur_leader.len,
-                  cur_content.c_str(), cur_content.size()));
-               cur_leader = line.leader;
-               cur_content = line.content.to_string();
-               if (hard_break) {
-                  paragraphs.push_back (Paragraph (
-                     cur_leader.str, cur_leader.len, "", 0));
-                }
-            }
-            else // append to the content
-            {
-               if (!cur_content.empty())
-                  cur_content += ' ';
-               cur_leader = line.leader;
-               cur_content.insert (cur_content.end(),
-                                   line.content.begin(),
-                                   line.content.end());
-            }
-
-            prev_content_len = line.content.len;
-         }
+        if (flowed)
+          merge_flowed(paragraphs, lines);
+        else
+          merge_fixed(paragraphs, lines, tm.get_wrap_column());
 
         // Remember that empty line we added back up at the top?
         // We remove it now
@@ -271,7 +346,7 @@ namespace
 }
 
 std::string
-TextMassager :: fill (const StringView& body) const
+TextMassager :: fill (const StringView& body, bool flowed) const
 {
    std::string retval;
 
@@ -291,7 +366,7 @@ TextMassager :: fill (const StringView& body) const
    typedef std::vector<std::string> strings_t;
    typedef strings_t::const_iterator strings_cit;
    strings_t lines;
-   paragraphs_t paragraphs (get_paragraphs (*this, tmp_body));
+   paragraphs_t paragraphs (get_paragraphs (*this, tmp_body, flowed));
    for (p_it it=paragraphs.begin(), end=paragraphs.end(); it!=end; ++it)
       fill_paragraph (*this, *it, lines);
 
@@ -323,7 +398,8 @@ TextMassager :: mute_quotes (const StringView& text) const
    const char * mute_str = _("> [quoted text muted]");
 
    StringView mytext (text);
-   StringView line;	
+   StringView line;
+
    bool last_line_was_quote = false;
    while (mytext.pop_token (line, '\n'))
    {
@@ -348,7 +424,6 @@ TextMassager :: mute_quotes (const StringView& text) const
 
    return retval;
 }
-
 
 char*
 TextMassager :: rot13_inplace (char * text)

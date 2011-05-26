@@ -198,6 +198,7 @@ namespace
   void do_close    (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->close_window (); }
   void do_wrap     (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_wrap_mode (gtk_toggle_action_get_active (w)); }
   void do_edit2    (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_always_run_editor (gtk_toggle_action_get_active (w)); }
+  void do_wrap_selected(GtkAction*, gpointer p) { static_cast<PostUI*>(p)->wrap_selection(); }
 
   GtkActionEntry entries[] =
   {
@@ -216,7 +217,8 @@ namespace
     { "paste", GTK_STOCK_PASTE, 0, 0, 0, G_CALLBACK(do_paste) },
     { "rot13", GTK_STOCK_REFRESH, N_("_Rot13"), 0, N_("Rot13 Selected Text"), G_CALLBACK(do_rot13) },
     { "run-editor", GTK_STOCK_JUMP_TO, N_("Run _Editor"), "<control>e", N_("Run Editor"), G_CALLBACK(do_edit) },
-    { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), 0, 0, G_CALLBACK(do_profiles) }
+    { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), 0, 0, G_CALLBACK(do_profiles) },
+    { "wrapselected", 0, N_("Wrap Selected"), 0, 0, G_CALLBACK(do_wrap_selected) }
   };
 
   GtkToggleActionEntry toggle_entries[] =
@@ -319,6 +321,21 @@ PostUI :: rot13_selection ()
     g_free (str);
   }
 } 
+
+void
+PostUI :: wrap_selection ()
+{
+  GtkTextIter start, end;
+  if (gtk_text_buffer_get_selection_bounds (_body_buf, &start, &end))
+  {
+    char * str (gtk_text_buffer_get_text (_body_buf, &start, &end, false));
+    std::string s(str);
+    s = _tm.fill(s);
+    gtk_text_buffer_delete (_body_buf, &start, &end);
+    gtk_text_buffer_insert (_body_buf, &start, s.c_str(), s.length() );
+    g_free (str);
+  }
+}
 
 namespace
 {
@@ -1567,7 +1584,7 @@ PostUI :: set_message (GMimeMessage * message)
   SetMessageForeachHeaderData data;
   const char *name, *value;
   GMimeHeaderIter iter;
-  
+
   if (message->mime_part && g_mime_header_list_get_stream (message->mime_part->headers)) {
     if (g_mime_header_list_get_iter (message->mime_part->headers, &iter)) {
       do {
@@ -1577,7 +1594,7 @@ PostUI :: set_message (GMimeMessage * message)
       } while (g_mime_header_iter_next (&iter));
     }
   }
-  
+
   if (g_mime_header_list_get_iter (GMIME_OBJECT (message)->headers, &iter)) {
     do {
       value = g_mime_header_iter_get_value (&iter);
@@ -1585,7 +1602,7 @@ PostUI :: set_message (GMimeMessage * message)
       set_message_foreach_header_func (name, value, &data);
     } while (g_mime_header_iter_next (&iter));
   }
-  
+
   s = utf8ize (data.visible_headers);
   gtk_text_buffer_set_text (_headers_buf, s.c_str(), -1);
   _hidden_headers = data.hidden_headers;
@@ -1596,8 +1613,10 @@ PostUI :: set_message (GMimeMessage * message)
   s = utf8ize (tmp);
   g_free (tmp);
   if (!s.empty()) {
-    s = TextMassager().fill (s);
-    s += "\n\n";
+    if (_prefs.get_flag ("compose-wrap-enabled", true)) {
+      s = TextMassager().fill (s);
+      s += "\n\n";
+    }
     gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
   }
 

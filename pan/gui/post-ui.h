@@ -51,6 +51,7 @@ namespace pan
     public:
       GtkWidget * root() { return _root; }
       void rot13_selection ();
+      void wrap_selection ();
       void wrap_body ();
       void spawn_editor ();
       void manage_profiles ();

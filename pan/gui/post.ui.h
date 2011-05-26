@@ -22,6 +22,7 @@ const char * fallback_post_ui =
 "      <menuitem action='always-run-editor' />\n"
 "      <separator />\n"
 "      <menuitem action='wrap' />\n"
+"      <menuitem action='wrapselected' />\n"
 "      <menuitem action='spellcheck' />\n"
 "      <separator />\n"
 "      <menuitem action='manage-profiles' />\n"

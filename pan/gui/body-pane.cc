@@ -950,10 +950,12 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
   else if (g_mime_content_type_is_type (type, "text", "*"))
   {
     const char * fallback_charset (_charset.c_str());
+    const char * p_flowed (g_mime_object_get_content_type_parameter(obj,"format"));
+    const bool flowed (g_strcmp0 (p_flowed, "flowed") == 0);
     std::string str = mime_part_to_utf8 (part, fallback_charset);
 
     if (!str.empty() && _prefs.get_flag ("wrap-article-body", false))
-      str = _tm.fill (str);
+      str = _tm.fill (str, flowed);
 
     const bool do_mute (_prefs.get_flag ("mute-quoted-text", false));
     const bool do_smilies (_prefs.get_flag ("show-smilies-as-graphics", true));

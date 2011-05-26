@@ -44,7 +44,7 @@ namespace pan
     public:
       static char* rot13_inplace (char * text);
       std::string mute_quotes (const StringView& text) const;
-      std::string fill (const StringView& text) const;
+      std::string fill (const StringView& text, bool flowed = false) const;
       int get_wrap_column () const { return _wrap_column; }
       bool is_quote_character (unsigned int unichar) const;
       std::set<char> get_quote_characters () const;
