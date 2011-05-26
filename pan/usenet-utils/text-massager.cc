@@ -408,7 +408,7 @@ pan :: subject_to_path (const char * subjectline, const std::string &seperator)
   GRegex *fn =g_regex_new("\"[^\"]+?\" yEnc.*"    "|"
                           "\\S++\\s++yEnc.*"      "|"
                           "\"[^\"]+?\\.\\w{2,}\"" "|"
-                          "\\S+\\.\\w{3,4}", cf0, mf0, NULL);
+                          "\\S+\\.\\w{2,4}", cf0, mf0, NULL);
   str1 = g_regex_replace_literal(fn, str2, -1, 0, "", mf0, NULL);
   g_free(str2);
   g_regex_unref(fn);
