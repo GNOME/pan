@@ -727,12 +727,9 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
     for (; it != _file_queue.end(); it, ++it, ++i) {
       GMimeMessage* msg = new_message_from_ui(POSTING);
-      _queue.add_task (new TaskUpload (*it,profile.posting_server,msg
-                                     ,0,TaskUpload::YENC),
-                                     Queue::BOTTOM);
+      _queue.add_task (new TaskUpload (*it,profile.posting_server,msg), Queue::BOTTOM);
     }
-  //dbg
-//    close_window(true); // dont wait for the upload queue
+    close_window(true); // dont wait for the upload queue
   }
 
 
@@ -1090,7 +1087,9 @@ PostUI :: new_message_from_ui (Mode mode)
   GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   g_object_unref (stream);
   GMimePart * part = g_mime_part_new ();
+  //todo ??
   pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+
   GMimeContentType * type = g_mime_content_type_new_from_string (pch);
   g_free (pch);
   g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.

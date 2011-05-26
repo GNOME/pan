@@ -155,7 +155,7 @@ namespace
     * @param filename if parse is successful, is set with the
     *        starting character of the filename.
     * @param line_len if parse is successful, is set with the line length
-    * @param part is parse is successful & set to the cuurent attachements
+    * @param part if parse is successful this is set to the current attachement's
     *       part number
     * @return 0 on success, -1 on failure
     */
@@ -171,10 +171,10 @@ namespace
 
       // part is optional
       int part_num = __yenc_extract_tag_val_int (b, YENC_TAG_PART);
-	
+
       int a_sz = __yenc_extract_tag_val_int( b, YENC_TAG_SIZE );
       pan_return_val_if_fail( a_sz != 0, -1 );
-	
+
       const char * fname = __yenc_extract_tag_val_char (b, YENC_TAG_NAME);
       pan_return_val_if_fail( fname, -1 );
 

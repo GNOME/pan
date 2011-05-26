@@ -47,14 +47,16 @@ namespace pan {
         {
 
           const char     * filename;
+          const char     * basename;
           unsigned long    byte_count;
+          unsigned long part_in_queue;
           FileData() {}
         };
 
         typedef std::list<FileData>::iterator articles_it;
         typedef std::list<FileData> articles_v;
 
-
+     size_t size() { return _articles_v.size(); }
      articles_it end() { return _articles_v.end(); }
      articles_it begin() { return _articles_v.begin(); }
      bool empty() { return _articles_v.empty(); }

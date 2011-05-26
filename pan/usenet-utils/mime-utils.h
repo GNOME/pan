@@ -31,7 +31,7 @@ namespace pan
 {
   /**
    * Utilities to build and parse GMimeMesasges.
-   * 
+   *
    * Most of nastiness this is to handle Usenet's use of chainging together
    * multiple articles as parts of a whole.  This code tries to build
    * a multipart GMimeMessage from multiple posts when necessary, and to

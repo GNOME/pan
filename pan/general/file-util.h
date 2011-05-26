@@ -58,7 +58,7 @@ namespace pan
      */
     std::string get_pan_home ();
 
-    std::string get_pan_uulib_dir();
+    std::string get_uulib_path();
 
     /**
      * If the specified directory doesn't exist, Pan tries to create it.

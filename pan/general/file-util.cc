@@ -49,7 +49,7 @@ using namespace pan;
 ***/
 
 std::string
-file :: get_pan_uulib_dir()
+file :: get_uulib_path()
 {
   char * pch (g_build_filename (file::get_pan_home().c_str(), "uulib-encode-cache", NULL));
   file :: ensure_dir_exists (pch);

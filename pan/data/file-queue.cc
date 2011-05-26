@@ -47,10 +47,12 @@ FileQueue :: add (const char* filename,
   static FileData a;
   struct stat sb;
   a.filename = filename;
+  a.basename = g_path_get_basename(filename);
   stat(filename,&sb);
   a.byte_count = sb.st_size;
+  a.part_in_queue = type == END ? _articles_v.size() : 1;
 
-  type == FileQueue::END ?
+  type == END ?
     _articles_v.push_back(a) :
     _articles_v.push_front(a);
 }

@@ -42,7 +42,8 @@ namespace pan
       POST ("POST"),
       SAVE ("SAVE"),
       XOVER ("XOVER"),
-      XZVER_TEST ("XZVER_TEST") {}
+      XZVER_TEST ("XZVER_TEST")
+      {}
 
     int get_rank_for_type (const Quark& type) const
     {
@@ -55,7 +56,7 @@ namespace pan
       else if (type==SAVE)
         rank = 2;
       else
-        assert (0 && "what is this type?");
+        rank = 2;
 
       return rank;
     }
