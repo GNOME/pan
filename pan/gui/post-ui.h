@@ -32,6 +32,7 @@ namespace pan
 {
   class Profiles;
   class TaskPost;
+  class FileQueue;
 
   /**
    * Dialog for posting new messages Pan's GTK GUI.
@@ -158,6 +159,21 @@ namespace pan
       void set_spellcheck_enabled (bool);
       void spawn_editor_dead(char *);
 
+    private:
+      FileQueue::articles_v  get_selected_files () const;
+      static void get_selected_files_foreach (GtkTreeModel*,
+                      GtkTreePath*, GtkTreeIter*, gpointer);
+      void remove_files(const FileQueue::articles_v& no);
+      static void up_clicked_cb      (GtkButton*, PostUI*);
+      static void down_clicked_cb    (GtkButton*, PostUI*);
+      static void top_clicked_cb     (GtkButton*, PostUI*);
+      static void bottom_clicked_cb  (GtkButton*, PostUI*);
+      static void delete_clicked_cb  (GtkButton*, PostUI*);
+
+      void move_up(const FileQueue::articles_v& no);
+      void move_down(const FileQueue::articles_v& no);
+      void move_top(const FileQueue::articles_v& no);
+      void move_bottom(const FileQueue::articles_v& no);
   };
 }
 

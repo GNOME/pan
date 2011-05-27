@@ -172,7 +172,7 @@ typedef struct {
   long foffset;			/* file offset -- internal use only        */
   long totsize;			/* file total size -- internal use only    */
 } uuprogress;
-  
+
 
 /*
  * Externally visible Functions
@@ -191,7 +191,7 @@ int	UUEXPORT UUGetOption		_ANSI_ARGS_((int, int *, char *, int));
 int	UUEXPORT UUSetOption		_ANSI_ARGS_((int, int, char *));
 char *	UUEXPORT UUstrerror		_ANSI_ARGS_((int));
 int	UUEXPORT UUSetMsgCallback	_ANSI_ARGS_((void *,
-						     void (*) (void *, 
+						     void (*) (void *,
 							       char *,
 							       int)));
 int	UUEXPORT UUSetBusyCallback	_ANSI_ARGS_((void *,
@@ -213,7 +213,7 @@ int	UUEXPORT UUDecodeToTemp		_ANSI_ARGS_((uulist *));
 int	UUEXPORT UURemoveTemp		_ANSI_ARGS_((uulist *));
 int	UUEXPORT UUDecodeFile		_ANSI_ARGS_((uulist *, char *));
 int	UUEXPORT UUInfoFile		_ANSI_ARGS_((uulist *, void *,
-						     int (*) (void *, 
+						     int (*) (void *,
 							      char *)));
 int	UUEXPORT UUSmerge		_ANSI_ARGS_((int));
 int	UUEXPORT UUCleanUp		_ANSI_ARGS_((void));

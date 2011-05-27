@@ -46,21 +46,21 @@ namespace pan {
         struct FileData
         {
 
-          const char     * filename;
-          const char     * basename;
+          std::string filename;
+          std::string basename;
           unsigned long    byte_count;
-          unsigned long part_in_queue;
           FileData() {}
         };
 
+        typedef std::list<FileData>::const_iterator articles_const_it;
         typedef std::list<FileData>::iterator articles_it;
         typedef std::list<FileData> articles_v;
 
      size_t size() { return _articles_v.size(); }
      articles_it end() { return _articles_v.end(); }
      articles_it begin() { return _articles_v.begin(); }
+     const articles_v& get_files() const { return _articles_v; }
      bool empty() { return _articles_v.empty(); }
-
 
      public:
       enum InsertType
@@ -68,8 +68,15 @@ namespace pan {
 
     //own
     public:
-      virtual void add (const char* filename,
+      void add (const char* filename,
                   FileQueue::InsertType type);
+
+      void remove(const articles_v& no);
+
+      void move_up(const articles_v& no);
+      void move_down(const articles_v& no);
+      void move_top(const articles_v& no);
+      void move_bottom(const articles_v& no);
 
     private:
       articles_v _articles_v;

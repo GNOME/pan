@@ -57,7 +57,9 @@ namespace pan
 
       TaskUpload ( const FileQueue::FileData & file_data,
                    const Quark               & server,
-                   GMimeMessage              * msg,
+                   std::string                 groups,
+                   std::string                 subject,
+                   std::string                 author,
                    Progress::Listener        * listener=0,
                    TaskUpload::EncodeMode enc     = YENC);
       virtual ~TaskUpload ();
@@ -91,10 +93,10 @@ namespace pan
       friend class Encoder;
       Encoder * _encoder;
       bool _encoder_has_run;
-      FileQueue::FileData _file_data;
-      const char* _basename;
+      const FileQueue::FileData _file_data;
+      const std::string _basename;
       TaskUpload::EncodeMode _encode_mode;
-      GMimeMessage * _msg;
+      std::string _groups, _subject, _author;
       int _parts; // filled in by encoder
       Mutex mut;
 
@@ -107,13 +109,11 @@ namespace pan
       };
       typedef std::deque<Needed> needed_t;
       needed_t _needed;
-      Needed _cur;
-
-      virtual std::string generate_yenc_headers(const Needed& n);
 
       void update_work (void);
   };
 
+// from mime-utils.cc
 namespace
 {
 

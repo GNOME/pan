@@ -28,6 +28,51 @@
 #include <pan/tasks/health.h>
 #include <pan/tasks/socket.h>
 
+namespace
+{
+   enum
+   {
+      AUTH_REQUIRED              = 480,
+      AUTH_NEED_MORE             = 381,
+      AUTH_ACCEPTED              = 281,
+      AUTH_REJECTED              = 482,
+
+      SERVER_READY               = 200,
+      SERVER_READY_NO_POSTING    = 201,
+      SERVER_READY_STREAMING_OK  = 203,
+
+      GOODBYE                    = 205,
+
+      GROUP_RESPONSE             = 211,
+      GROUP_NONEXISTENT          = 411,
+
+      INFORMATION_FOLLOWS        = 215,
+
+      XOVER_FOLLOWS              = 224,
+      XOVER_NO_ARTICLES          = 420,
+
+      ARTICLE_FOLLOWS            = 220,
+
+      NEWGROUPS_FOLLOWS          = 231,
+
+      ARTICLE_POSTED_OK          = 240,
+      SEND_ARTICLE_NOW           = 340,
+      NO_POSTING                 = 440,
+      POSTING_FAILED             = 441,
+
+      TOO_MANY_CONNECTIONS       = 400,
+
+      NO_GROUP_SELECTED          = 412,
+      NO_SUCH_ARTICLE_NUMBER     = 423,
+      NO_SUCH_ARTICLE            = 430,
+
+      ERROR_CMD_NOT_UNDERSTOOD   = 500,
+      ERROR_CMD_NOT_SUPPORTED    = 501,
+      NO_PERMISSION              = 502,
+      FEATURE_NOT_SUPPORTED      = 503
+   };
+}
+
 namespace pan
 {
   /**

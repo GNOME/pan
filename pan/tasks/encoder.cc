@@ -55,9 +55,12 @@ Encoder :: ~Encoder()
 ***/
 
 void
-Encoder :: enqueue (TaskUpload                     * task,
-                    const FileQueue::FileData      & file_data,
-                    TaskUpload::EncodeMode           enc)
+Encoder :: enqueue (TaskUpload                * task,
+                    const FileQueue::FileData & file_data,
+                    std::string               & groups,
+                    std::string               & subject,
+                    std::string               & author,
+                    const TaskUpload::EncodeMode    & enc)
 
 {
   disable_progress_update ();
@@ -65,14 +68,18 @@ Encoder :: enqueue (TaskUpload                     * task,
   this->task = task;
   this->file_data = file_data;
   this->encode_mode = encode_mode;
+  this->groups = groups;
+  this->subject = subject;
+  this->author = author;
 
-  mark_read = false;
+  std::cerr<<"encoder begin: "<<this->groups<<" "<<this->subject<<" "<<this->author<<" "<<std::endl;
+
   percent = 0;
   current_file.clear ();
   log_infos.clear();
   log_errors.clear();
 
-  // gentlemen, start your saving...
+  // gentlemen, start your encod'n...
   _worker_pool.push_work (this, task, false);
 }
 
@@ -102,14 +109,30 @@ Encoder :: do_work()
       UUSetMsgCallback (this, uu_log);
       UUSetBusyCallback (this, uu_busy_poll, 100);
 
-      char* basename = g_path_get_basename(file_data.filename);
+      const char* filename = file_data.filename.c_str();
+      const char* basename = g_path_get_basename(file_data.filename.c_str());
+
       g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename, cnt);
       outfile = fopen(buf,"wb");
       while (1) {
-        res = UUEncodePartial (outfile, NULL, (char*)file_data.filename, YENC_ENCODED,
-              buf, NULL, 0, cnt, 4000, &crcptr);
+        /*
+        UUE_PrepPartial (FILE *outfile, FILE *infile,
+        char *infname, int encoding,
+        char *outfname, int filemode,
+        int partno, long linperfile, long filesize,
+        char *destination, char *from, char *subject,
+        int isemail) */
+        res = UUE_PrepPartial (outfile, NULL, (char*)filename,YENC_ENCODED,
+                               (char*)basename,0644, cnt, 4000,
+                               file_data.byte_count, (char*)groups.c_str(),
+                               (char*)author.c_str(), (char*)subject.c_str(),
+                               0);
+
+//        res = UUEncodePartial( outfile, NULL, (char*)file_data.filename.c_str(),
+//                               YENC_ENCODED, (char*)file_data.basename.c_str(), const_cast<char*>("message/partial"),
+//                               0, cnt, 4000, &crcptr);
         if (outfile) fclose(outfile);
-        if (res == UURET_OK || res != UURET_CONT) break;
+        if (res != UURET_CONT) break;
         g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename, ++cnt);
         outfile = fopen(buf,"wb");
       }

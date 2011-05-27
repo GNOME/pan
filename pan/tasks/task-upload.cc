@@ -61,14 +61,18 @@ namespace
 
 TaskUpload :: TaskUpload ( const FileQueue::FileData & file_data,
                            const Quark               & server,
-                           GMimeMessage              * msg,
+                           std::string                 groups,
+                           std::string                 subject,
+                           std::string                 author,
                            Progress::Listener        * listener,
                            const TaskUpload::EncodeMode  enc):
-  Task ("UPLOAD", get_description(file_data.filename, true)),
+  Task ("UPLOAD", get_description(file_data.filename.c_str(), false)),
   _file_data(file_data),
-  _basename(g_path_get_basename(file_data.filename)),
+  _basename (file_data.basename),
   _server(server),
-  _msg(msg),
+  _groups(groups),
+  _subject (subject),
+  _author(author),
   _encoder(0),
   _encoder_has_run (false),
   _encode_mode(enc)
@@ -87,13 +91,8 @@ TaskUpload :: update_work (void)
     _state.set_need_encoder();
   } else if (_encoder_has_run && !_needed.empty())
   {
-    std::cout<<"need "<<_needed.size()<<std::endl;
-    mut.lock();
-      _cur = *_needed.begin();
-      if (!_needed.empty()) _needed.pop_front();
-    mut.unlock();
+    set_status_va (_("Uploading %s"), _basename.c_str());
     _state.set_need_nntp(_server);
-    set_status_va (_("Uploading %s"), _file_data.basename);
   } else if (_needed.empty())
   {
     _state.set_completed();
@@ -105,48 +104,23 @@ TaskUpload :: update_work (void)
 ****
 ***/
 
-std::string
-TaskUpload :: generate_yenc_headers(const Needed& n)
-{
-  std::stringstream res;
-  const int bufsz = 2048;
-  char buf[bufsz];
-  //modify msg to our needs
-  const char* subject = g_mime_object_get_header ((GMimeObject*)_msg, "Subject");
-  g_snprintf(buf,bufsz, "%s -- \"%s\" (%d/%d) YEnc",
-             subject, _file_data.basename, //_file_data.part_in_queue, _file_data.size(),
-             n.partno, _parts);
-  g_mime_object_set_header((GMimeObject*)_msg,"Subject", buf);
-
-  //append msg to result
-  res << g_mime_object_to_string((GMimeObject *)_msg);
-
-  //append yenc data to result
-  res<<"\r\n";
-
-  std::ifstream in(const_cast<char*>(n.filename.c_str()),  std::ifstream::in);
-  std::string line;
-  if (in.good())
-    std::getline(in, line);
-  int filesize = __yenc_extract_tag_val_int_base( line.c_str(), " size=", 0 );
-  g_snprintf(buf,bufsz,"=ybegin line=128 size=%s name=%s\r\n",
-             filesize, _basename);
-  res<<buf;
-  while (in.good())
-    res << (char) in.get();
-  res<<"\r\n.\r\n";
-  return res.str();
-}
-
 void
 TaskUpload :: use_nntp (NNTP * nntp)
 {
-    std::cerr<<"use nntp\n";
-    if (_needed.empty())
-      update_work();
+    Needed cur;
+      if (!_needed.empty()) {
+        cur = *(_needed.begin());
+      } else {
+        update_work();
+        return;
+      }
 
-    std::string res(generate_yenc_headers(_cur));
-    nntp->post(StringView(res), this);
+    std::stringstream tmp;
+    std::ifstream in(cur.filename.c_str(), std::ifstream::in);
+    while (in.good())
+      tmp << (char) in.get();
+    in.close();
+    nntp->post(StringView(tmp.str()), this);
     update_work ();
 }
 
@@ -157,16 +131,49 @@ TaskUpload :: use_nntp (NNTP * nntp)
 void
 TaskUpload :: on_nntp_line  (NNTP               * nntp,
                               const StringView   & line_in)
-{}
+{
+
+std::cerr<<"line "<<line_in<<std::cerr;
+
+}
 
 void
 TaskUpload :: on_nntp_done  (NNTP             * nntp,
-                              Health             health,
-                              const StringView & response)
+                             Health             health,
+                             const StringView & response)
 {
-  std::cerr<<"nntp done\n";
-  check_in (nntp, health);
-  increment_step(1);
+
+  switch (atoi(response.str))
+  {
+    case NO_POSTING:
+      Log :: add_err(_("Posting failed: No Posts allowed by server."));
+      this->stop();
+      break;
+    case POSTING_FAILED:
+      Log :: add_err_va (_("Posting failed: %s"), response.str);
+      break;
+    case ARTICLE_POSTED_OK:
+      if (_needed.empty())
+        Log :: add_info_va(_("Posting of file %s succesful: %s"),
+                           _file_data.basename.c_str(), response.str);
+      else
+        _needed.pop_front();
+      break;
+    case TOO_MANY_CONNECTIONS: //todo
+    break;
+  }
+
+  switch (health)
+  {
+    case OK:
+      check_in (nntp, health);
+      increment_step(1);
+      break;
+
+    case ERR_NETWORK:
+      _state.set_need_nntp(nntp->_server);
+      break;
+  }
   update_work();
 }
 
@@ -179,7 +186,7 @@ unsigned long
 TaskUpload :: get_bytes_remaining () const
 {
   unsigned long bytes (0);
-  foreach_const (needed_t, _needed, it) // parts not fetched yet...
+  foreach_const (needed_t, _needed, it)
     bytes += it->bytes;
   return bytes;
 }
@@ -194,7 +201,9 @@ TaskUpload :: use_encoder (Encoder* encoder)
   _encoder = encoder;
   init_steps(100);
   _state.set_working();
-  _encoder->enqueue (this, _file_data, YENC);
+
+  std::cerr<<"enqueue: "<<_groups<<" "<<_subject<<" "<<_author<<std::endl;
+  _encoder->enqueue (this, _file_data, _groups, _subject, _author, YENC);
   debug ("encoder thread was free, enqueued work");
 }
 
@@ -224,6 +233,7 @@ TaskUpload :: on_worker_done (bool cancelled)
     foreach_const(Encoder::log_t, _encoder->log_infos, it)
       Log :: add_info(it->c_str());
 
+
     if (!_encoder->log_errors.empty())
       set_error (_encoder->log_errors.front());
 
@@ -234,22 +244,21 @@ TaskUpload :: on_worker_done (bool cancelled)
       _parts = _encoder->parts;
       set_step (100);
       _encoder_has_run = true;
-      /*enqueue all parts into needed_t list.
+      /*enqueue all parts into the global needed_t list.
         update_work will then assign a pointer to the begin
         which will be used for an nntp upload.
         on nntp_done, the list is decreased by one member
        */
       static Needed n;
-      const int bufsz(2048);
-      char buf[bufsz];
+      char buf[2048];
       struct stat sb;
 
       for (int i=1;i<=_parts;i++)
       {
         n.partno = i;
-        g_snprintf(buf,bufsz,"%s/%s.%d",
+        g_snprintf(buf,sizeof(buf),"%s/%s.%d",
                    file::get_uulib_path().c_str(),
-                   _file_data.basename, i);
+                   _basename.c_str(), i);
         n.filename = buf;
         stat(buf, &sb);
         n.bytes = sb.st_size;

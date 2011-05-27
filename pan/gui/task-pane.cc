@@ -208,11 +208,13 @@ TaskPane :: update_status (const task_states_t& tasks)
   {
     Task * task (*it);
     const Queue::TaskState state (tasks.get_state (task));
-    if (state == Queue::RUNNING || state == Queue::DECODING)
+    if (state == Queue::RUNNING || state == Queue::DECODING
+        || state == Queue::ENCODING)
       ++running_count;
     else if (state == Queue::STOPPED)
       ++stopped_count;
-    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE)
+    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE
+             || state == Queue::QUEUED_FOR_ENCODE)
       ++queued_count;
 
     if (state==Queue::RUNNING || state==Queue::QUEUED)
@@ -225,7 +227,7 @@ TaskPane :: update_status (const task_states_t& tasks)
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks (%d Queued, %d Running, %d Stopped)"), queued_count, running_count, stopped_count);
   else if (running_count || queued_count)
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks (%d Queued, %d Running)"), queued_count, running_count);
-  else 
+  else
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks"));
   gtk_window_set_title (GTK_WINDOW(_root), buf);
 
@@ -314,7 +316,9 @@ namespace
     switch (state) {
       case Queue::RUNNING:  state_str = _("Running"); break;
       case Queue::DECODING: state_str = _("Decoding"); break;
+      case Queue::ENCODING: state_str = _("Encoding"); break;
       case Queue::QUEUED_FOR_DECODE: state_str = _("Queued for Decode"); break;
+      case Queue::QUEUED_FOR_ENCODE: state_str = _("Queued for Encode"); break;
       case Queue::QUEUED:   state_str = _("Queued"); break;
       case Queue::STOPPED:  state_str = _("Stopped"); break;
       case Queue::REMOVING: state_str = _("Removing"); break;
@@ -372,7 +376,8 @@ namespace
     }
 
     char * str (0);
-    if (state == Queue::RUNNING || state == Queue::DECODING)
+    if (state == Queue::RUNNING || state == Queue::DECODING
+        || state == Queue::ENCODING)
       str = g_markup_printf_escaped ("<b>%s</b>\n<small>%s</small>", description.c_str(), status.c_str());
     else
       str = g_markup_printf_escaped ("%s\n<small>%s</small>", description.c_str(), status.c_str());

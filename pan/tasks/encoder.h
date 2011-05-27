@@ -58,15 +58,17 @@ namespace pan
 
       typedef std::vector<std::string> strings_t;
 
-      void enqueue (TaskUpload                     * task,
-                    const FileQueue::FileData      & file_data,
-                    TaskUpload::EncodeMode     enc = TaskUpload::YENC);
+      void enqueue (TaskUpload                * task,
+                    const FileQueue::FileData & file_data,
+                    std::string               & groups,
+                    std::string               & subject,
+                    std::string               & author,
+                    const TaskUpload::EncodeMode    & enc = TaskUpload::YENC);
 
     public:
 
       typedef std::list<std::string> log_t;
       log_t log_severe, log_errors, log_infos, file_errors;
-      bool mark_read;
 
     protected: // inherited from WorkerPool::Worker
 
@@ -78,6 +80,7 @@ namespace pan
       TaskUpload * task;
       TaskUpload::EncodeMode encode_mode;
       FileQueue::FileData file_data;
+      std::string subject, author, groups;
 
       // These are set in the worker thread and polled in the main thread.
       Mutex mut;

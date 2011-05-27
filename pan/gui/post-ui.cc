@@ -369,8 +369,6 @@ bool
 PostUI :: check_message (const Quark& server, GMimeMessage * msg)
 {
 
-  std::cerr<<"check message\n";
-
   MessageCheck :: unique_strings_t errors;
   MessageCheck :: Goodness goodness;
 
@@ -603,20 +601,6 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
     else
       maybe_mail_message (message);
   }
-//  else
-//  {
-//    GMimeMessage * message (((TaskUpload*)_upload_task)->get_message ());
-//    const char* g = _upload_task->get_groups();
-//    const char* f = _upload_task->get_filename();
-//    // log server response
-//    if (status == OK) {
-//      g_snprintf(buf, bufsz,_("Error uploading file \"%s\" to group(s) \"%s\" : %s"), f, g, message);
-//      Log :: add_err(buf);
-//    } else {
-//      g_snprintf(buf, bufsz,_("Successfully  uploaded \"%s\" to group(s) \"%s\"."), f, g);
-//      Log :: add_info(buf);
-//    }
-//  }
 }
 
 void
@@ -659,7 +643,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   ***  Make sure the message is OK...
   **/
 
-  if (!check_message (server, message))
+  if (!_file_queue_empty && !check_message (server, message))
      return false;
 
   /**
@@ -720,14 +704,18 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _post_task = new TaskPost (server, message);
     _post_task->add_listener (this);
     _queue.add_task (_post_task, Queue::TOP);
-  } else
+  }
+  else
   {
-    unsigned long i(0);
     FileQueue::articles_it it = _file_queue.begin();
+    GMimeMessage* msg = new_message_from_ui(POSTING);
+    std::string groups = std::string(g_mime_object_get_header ((GMimeObject*)msg, "Newsgroups"));
+    std::string subject= std::string(g_mime_object_get_header ((GMimeObject*)msg, "Subject"));
+    std::string author;
+    profile.get_from_header (author);
 
-    for (; it != _file_queue.end(); it, ++it, ++i) {
-      GMimeMessage* msg = new_message_from_ui(POSTING);
-      _queue.add_task (new TaskUpload (*it,profile.posting_server,msg), Queue::BOTTOM);
+    for (; it != _file_queue.end(); ++it) {
+      _queue.add_task (new TaskUpload (*it,profile.posting_server,groups,subject,author), Queue::BOTTOM);
     }
     close_window(true); // dont wait for the upload queue
   }
@@ -1088,7 +1076,10 @@ PostUI :: new_message_from_ui (Mode mode)
   g_object_unref (stream);
   GMimePart * part = g_mime_part_new ();
   //todo ??
-  pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+  if (_file_queue_empty)
+    pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+  else
+    pch = g_strdup_printf ("message/partial; charset=%s", charset.c_str());
 
   GMimeContentType * type = g_mime_content_type_new_from_string (pch);
   g_free (pch);
@@ -1544,11 +1535,6 @@ namespace
     static_cast<PostUI*>(user_data)->apply_profile ();
   }
 
-//  void on_filequeue_changed (GtkWidget*, gpointer data)
-//  {
-//    static_cast<PostUI*>(data)->update_filequeue_tab();
-//  }
-
   typedef std::map <std::string, std::string> str2str_t;
 
   struct SetMessageForeachHeaderData
@@ -1960,7 +1946,111 @@ gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your 
   return t;
 }
 
-// todo scroll
+namespace
+{
+  GtkWidget * add_button (GtkWidget   * box,
+                                      const gchar * stock_id,
+                                      GCallback     callback,
+                                      gpointer      user_data)
+  {
+    GtkWidget * w = gtk_button_new_from_stock (stock_id);
+    gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
+    if (callback)
+      g_signal_connect (w, "clicked", callback, user_data);
+    gtk_box_pack_start (GTK_BOX(box), w, false, false, 0);
+    return w;
+  }
+}
+
+void
+PostUI :: get_selected_files_foreach (GtkTreeModel *model, GtkTreePath *, GtkTreeIter *iter, gpointer list_g)
+{
+  FileQueue::FileData* file (0);
+  gtk_tree_model_get (model, iter, 0, &file, -1);
+  std::cerr<<"foreach got "<<file->filename.c_str()<<std::endl;
+  static_cast<FileQueue*>(list_g)->add (file->filename.c_str(), FileQueue::END);
+}
+
+FileQueue::articles_v
+PostUI :: get_selected_files () const
+{
+  FileQueue files;
+  GtkTreeView * view (GTK_TREE_VIEW (_filequeue_store));
+  GtkTreeSelection * sel (gtk_tree_view_get_selection (view));
+  gtk_tree_selection_selected_foreach (sel, get_selected_files_foreach, &files);
+  return files.get_files();
+}
+
+void
+PostUI :: remove_files(const FileQueue::articles_v& no)
+{
+  _file_queue.remove(no);
+  update_filequeue_tab();
+}
+
+void
+PostUI :: move_up(const FileQueue::articles_v& no)
+{
+  _file_queue.move_up(no);
+}
+
+void
+PostUI :: move_down(const FileQueue::articles_v& no)
+{
+  _file_queue.move_down(no);
+}
+
+void
+PostUI :: move_top(const FileQueue::articles_v& no)
+{
+  _file_queue.move_top(no);
+}
+
+void
+PostUI :: move_bottom(const FileQueue::articles_v& no)
+{
+  _file_queue.move_bottom(no);
+}
+
+void PostUI :: up_clicked_cb (GtkButton*, PostUI* pane)
+{
+  pane->move_up (pane->get_selected_files());
+}
+void PostUI :: down_clicked_cb (GtkButton*, PostUI* pane)
+{
+  pane->move_down (pane->get_selected_files());
+}
+void PostUI :: top_clicked_cb (GtkButton*, PostUI* pane)
+{
+  pane->move_top (pane->get_selected_files());
+}
+void PostUI :: bottom_clicked_cb (GtkButton*, PostUI* pane)
+{
+  pane->move_bottom (pane->get_selected_files());
+}
+void PostUI :: delete_clicked_cb (GtkButton*, PostUI* pane)
+{
+  pane->remove_files (pane->get_selected_files());
+}
+
+namespace
+{
+  void
+  render_filename (GtkTreeViewColumn * ,
+                   GtkCellRenderer   * renderer,
+                   GtkTreeModel      * model,
+                   GtkTreeIter       * iter,
+                   gpointer)
+  {
+
+    FileQueue::FileData* fd;
+    unsigned int size;
+    gtk_tree_model_get (model, iter, 0, &fd, 1, &size, -1);
+    if (fd)
+      g_object_set (renderer, "text", fd->basename.c_str(), NULL);
+  }
+}
+
 GtkWidget*
 PostUI :: create_filequeue_tab ()
 {
@@ -1968,53 +2058,78 @@ PostUI :: create_filequeue_tab ()
   GtkListStore *list_store;
   GtkTreeIter   iter;
   GtkCellRenderer *renderer;
+  GtkWidget * vbox = gtk_vbox_new (false, 0);
+  GtkWidget * buttons = gtk_hbox_new (false, PAD_SMALL);
 
-  GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-//  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),
-//                                       GTK_SHADOW_IN);
-//  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-//                                  GTK_POLICY_AUTOMATIC,
-//                                  GTK_POLICY_AUTOMATIC);
-//  gtk_box_pack_start(GTK_BOX(gtk_hbox_new(FALSE,1)),scrolled_window,TRUE,TRUE,2);
+  // add button row
+  add_button (buttons, GTK_STOCK_GO_UP, G_CALLBACK(up_clicked_cb), this);
+  add_button (buttons, GTK_STOCK_GOTO_TOP, G_CALLBACK(top_clicked_cb), this);
+  gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+  add_button (buttons, GTK_STOCK_GO_DOWN, G_CALLBACK(down_clicked_cb), this);
+  add_button (buttons, GTK_STOCK_GOTO_BOTTOM, G_CALLBACK(bottom_clicked_cb), this);
+  gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+  w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
+  gtk_widget_set_tooltip_text( w, _("Delete from Queue"));
+  pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new());
 
-  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_UINT);
+  gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
+  gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
+
+  list_store = gtk_list_store_new (2, G_TYPE_POINTER, G_TYPE_UINT);
   w = _filequeue_store = gtk_tree_view_new_with_model (GTK_TREE_MODEL(list_store));
 
-//  gtk_container_add (GTK_CONTAINER (scrolled_window), w);
-
   // add columns
+   renderer = gtk_cell_renderer_text_new ();
+  gtk_tree_view_insert_column_with_data_func(
+            GTK_TREE_VIEW(w), 0, (_("Filename")), renderer,
+            render_filename, 0, 0);
   renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), -1,   (_("Filename")), renderer,"text", 0,NULL);
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), -1,   (_("Size (kB)")),renderer,"text", 1,NULL);
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), 1,
+                          (_("Size (kB)")),renderer,"text", 1,NULL);
 
+  //set hint and selection
   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(w),TRUE);
+  GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (w));
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 
-  return w;
+  //append scroll window
+  w = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER(w), _filequeue_store);
+  gtk_box_pack_start (GTK_BOX(vbox), w, true, true, 0);
+
+  return vbox;
 }
 
 void
 PostUI :: update_filequeue_tab()
 {
-  GtkWidget* w = _filequeue_store ;
-  GtkListStore    *store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(w)));
-  GtkTreeIter      iter;
+  GtkWidget    * w    = _filequeue_store ;
+  GtkListStore *store = GTK_LIST_STORE(
+                        gtk_tree_view_get_model(GTK_TREE_VIEW(w)));
+  GtkTreeIter   iter;
 
-    gtk_list_store_clear(store);
+  gtk_list_store_clear(store);
 
-    FileQueue::articles_it it = _file_queue.begin();
+  FileQueue::articles_it it = _file_queue.begin();
 
-    int i(0);
-    for (; it != _file_queue.end(); ++it, ++i )
-    {
-      gtk_list_store_append (store, &iter);
-      gtk_list_store_set (store, &iter,
-                        0, (*it).filename,
-                        1, (*it).byte_count/1024,
-                        -1);
-    }
+  int i(0);
+  FileQueue::FileData* fd(0);
+  for (; it != _file_queue.end(); ++it, ++i )
+  {
+    fd = &(*it);
+    std::cerr<<"updating file "<<fd->basename<<std::endl;
+    gtk_list_store_append (store, &iter);
+    gtk_list_store_set (store, &iter,
+                      0, fd,
+                      1, (*it).byte_count/1024,
+                      -1);
+  }
 
-    _file_queue_empty = (i == 0);
+  std::cerr<<"updated "<<i<<" elements in store.\n";
+
+  _file_queue_empty = (i == 0);
 
 }
 

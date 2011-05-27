@@ -19,6 +19,8 @@
 
 
 #include <algorithm>
+#include <iostream>
+#include <functional>
 
 #include <config.h>
 #include <pan/data/article.h>
@@ -46,17 +48,63 @@ FileQueue :: add (const char* filename,
 {
   static FileData a;
   struct stat sb;
-  a.filename = filename;
-  a.basename = g_path_get_basename(filename);
+  a.filename = std::string(filename);
+  a.basename = std::string(g_path_get_basename(filename));
   stat(filename,&sb);
   a.byte_count = sb.st_size;
-  a.part_in_queue = type == END ? _articles_v.size() : 1;
 
   type == END ?
     _articles_v.push_back(a) :
     _articles_v.push_front(a);
 }
 
+namespace
+{
+  struct FileNameEqual : public std::binary_function
+                         < std::string, std::string,bool >
+
+  {
+    bool operator() (std::string a, std::string b) {return (a==b);}
+  };
+}
+
+void
+FileQueue :: remove(const articles_v& no)
+{
+  articles_const_it it = no.begin();
+  articles_it vit = _articles_v.begin();
+  for ( ; it != no.end(); ++it)
+    for ( ; vit != _articles_v.end(); ++vit)
+      if (vit->filename == it->filename)
+        vit = _articles_v.erase(vit);
+
+}
+
+void
+FileQueue :: move_up(const articles_v& no)
+{
+
+}
+
+void
+FileQueue :: move_down(const articles_v& no)
+{
+
+}
+
+void
+FileQueue :: move_top(const articles_v& no)
+{
+
+//    foreach_const(articles_v, no, it)
+
+}
+
+void
+FileQueue :: move_bottom(const articles_v& no)
+{
+
+}
 
 
 
