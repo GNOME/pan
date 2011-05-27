@@ -643,8 +643,9 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   ***  Make sure the message is OK...
   **/
 
-  if (!_file_queue_empty && !check_message (server, message))
-     return false;
+  if (_file_queue_empty)
+    if (!check_message (server, message))
+      return false;
 
   /**
   *** If this is email only, skip the rest of the posting...

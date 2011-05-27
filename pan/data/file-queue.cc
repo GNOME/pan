@@ -71,13 +71,18 @@ namespace
 void
 FileQueue :: remove(const articles_v& no)
 {
-  articles_const_it it = no.begin();
-  articles_it vit = _articles_v.begin();
-  for ( ; it != no.end(); ++it)
-    for ( ; vit != _articles_v.end(); ++vit)
-      if (vit->filename == it->filename)
-        vit = _articles_v.erase(vit);
+  std::cerr<<"delete len "<<no.size()<<std::endl;
 
+  articles_const_it it = no.begin();
+  articles_it vit;
+  for ( ; it != no.end(); ++it) {
+    for ( vit = _articles_v.begin() ; vit != _articles_v.end(); ++vit) {
+      if (vit->filename == it->filename) {
+        std::cerr<<"deleting "<<it->filename<<std::endl;
+        vit = _articles_v.erase(vit);
+      }
+    }
+  }
 }
 
 void

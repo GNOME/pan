@@ -143,37 +143,37 @@ TaskUpload :: on_nntp_done  (NNTP             * nntp,
                              const StringView & response)
 {
 
-  switch (atoi(response.str))
-  {
-    case NO_POSTING:
-      Log :: add_err(_("Posting failed: No Posts allowed by server."));
-      this->stop();
-      break;
-    case POSTING_FAILED:
-      Log :: add_err_va (_("Posting failed: %s"), response.str);
-      break;
-    case ARTICLE_POSTED_OK:
+//  switch (atoi(response.str))
+//  {
+//    case NO_POSTING:
+//      Log :: add_err(_("Posting failed: No Posts allowed by server."));
+//      this->stop();
+//      break;
+//    case POSTING_FAILED:
+//      Log :: add_err_va (_("Posting failed: %s"), response.str);
+//      break;
+//    case ARTICLE_POSTED_OK:
       if (_needed.empty())
         Log :: add_info_va(_("Posting of file %s succesful: %s"),
                            _file_data.basename.c_str(), response.str);
       else
         _needed.pop_front();
-      break;
-    case TOO_MANY_CONNECTIONS: //todo
-    break;
-  }
+//      break;
+//    case TOO_MANY_CONNECTIONS: //todo
+//    break;
+//  }
 
-  switch (health)
-  {
-    case OK:
+//  switch (health)
+//  {
+//    case OK:
       check_in (nntp, health);
       increment_step(1);
-      break;
+//      break;
 
-    case ERR_NETWORK:
-      _state.set_need_nntp(nntp->_server);
-      break;
-  }
+//    case ERR_NETWORK:
+//      _state.set_need_nntp(nntp->_server);
+//      break;
+//  }
   update_work();
 }
 
