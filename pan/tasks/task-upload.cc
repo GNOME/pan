@@ -84,11 +84,23 @@ TaskUpload :: TaskUpload ( const FileQueue::FileData & file_data,
 }
 
 void
-TaskUpload :: update_work (void)
+TaskUpload :: update_work (NNTP* checkin_pending)
 {
+
+  int working(0);
+  foreach (needed_t, _needed, nit)
+  {
+    Needed& n (*nit);
+    if (n.nntp && n.nntp!=checkin_pending)
+      ++working;
+  }
+
   if (!_encoder && !_encoder_has_run)
   {
     _state.set_need_encoder();
+  } else if(working)
+  {
+    _state.set_working();
   } else if (_encoder_has_run && !_needed.empty())
   {
     set_status_va (_("Uploading %s"), _basename.c_str());
@@ -107,21 +119,30 @@ TaskUpload :: update_work (void)
 void
 TaskUpload :: use_nntp (NNTP * nntp)
 {
-    Needed cur;
-      if (!_needed.empty()) {
-        cur = *(_needed.begin());
-      } else {
-        update_work();
-        return;
-      }
+
+  Needed * needed (0);
+  needed_t::iterator it = _needed.begin();
+  for (; it != _needed.end(); ++it)
+    if (it->nntp==0)
+      needed = &*it;
+
+  if (!needed)
+  {
+    update_work (nntp);
+    check_in (nntp, OK);
+  }
+  else
+  {
+    needed->nntp = nntp;
 
     std::stringstream tmp;
-    std::ifstream in(cur.filename.c_str(), std::ifstream::in);
+    std::ifstream in(needed->filename.c_str(), std::ifstream::in);
     while (in.good())
       tmp << (char) in.get();
     in.close();
     nntp->post(StringView(tmp.str()), this);
     update_work ();
+  }
 }
 
 /***
@@ -143,38 +164,46 @@ TaskUpload :: on_nntp_done  (NNTP             * nntp,
                              const StringView & response)
 {
 
-//  switch (atoi(response.str))
-//  {
-//    case NO_POSTING:
-//      Log :: add_err(_("Posting failed: No Posts allowed by server."));
-//      this->stop();
-//      break;
-//    case POSTING_FAILED:
-//      Log :: add_err_va (_("Posting failed: %s"), response.str);
-//      break;
-//    case ARTICLE_POSTED_OK:
+  needed_t::iterator it;
+  for (it=_needed.begin(); it!=_needed.end(); ++it)
+    if (it->nntp == nntp)
+      break;
+
+  switch (atoi(response.str))
+  {
+    case NO_POSTING:
+      Log :: add_err(_("Posting failed: No Posts allowed by server."));
+      this->stop();
+      break;
+    case POSTING_FAILED:
+      Log :: add_err_va (_("Posting failed: %s"), response.str);
+      break;
+    case ARTICLE_POSTED_OK:
       if (_needed.empty())
         Log :: add_info_va(_("Posting of file %s succesful: %s"),
-                           _file_data.basename.c_str(), response.str);
-      else
-        _needed.pop_front();
-//      break;
-//    case TOO_MANY_CONNECTIONS: //todo
-//    break;
-//  }
+               _file_data.basename.c_str(), response.str);
+      break;
+    case TOO_MANY_CONNECTIONS:
+      // lockout for 120 secs, but try
+      _state.set_need_nntp(nntp->_server);
+      break;
+  }
 
-//  switch (health)
-//  {
-//    case OK:
-      check_in (nntp, health);
-      increment_step(1);
-//      break;
+  switch (health)
+  {
+    case OK:
+      _needed.erase (it);
+      break;
 
-//    case ERR_NETWORK:
-//      _state.set_need_nntp(nntp->_server);
-//      break;
-//  }
+    case ERR_NETWORK:
+      _state.set_need_nntp(nntp->_server);
+      break;
+  }
+
   update_work();
+  increment_step(1);
+  check_in (nntp, health);
+
 }
 
 /***
@@ -201,8 +230,6 @@ TaskUpload :: use_encoder (Encoder* encoder)
   _encoder = encoder;
   init_steps(100);
   _state.set_working();
-
-  std::cerr<<"enqueue: "<<_groups<<" "<<_subject<<" "<<_author<<std::endl;
   _encoder->enqueue (this, _file_data, _groups, _subject, _author, YENC);
   debug ("encoder thread was free, enqueued work");
 }

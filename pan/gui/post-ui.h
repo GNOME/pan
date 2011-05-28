@@ -70,6 +70,18 @@ namespace pan
       void set_always_run_editor (bool);
       void update_filequeue_tab();
 
+      //popup action entries
+      void remove_files (void);
+      void clear_list   (void);
+      void select_parts (void);
+      void move_up      (void);
+      void move_down    (void);
+      void move_top     (void);
+      void move_bottom  (void);
+
+      static void do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g);
+      static gboolean on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gpointer userdata);
+
     private:
       void done_sending_message (GMimeMessage*, bool);
       void maybe_mail_message (GMimeMessage*);
@@ -111,7 +123,7 @@ namespace pan
       std::string _charset;
       TextMassager _tm;
       GtkUIManager * _uim;
-      GtkActionGroup * _agroup;
+      GtkActionGroup * _agroup, * _pgroup;
       std::string _current_signature;
       GtkWidget * _post_dialog;
       TaskPost * _post_task;
@@ -160,20 +172,18 @@ namespace pan
       void spawn_editor_dead(char *);
 
     private:
-      FileQueue::articles_v  get_selected_files () const;
+      FileQueue::articles_v&  get_selected_files () const;
       static void get_selected_files_foreach (GtkTreeModel*,
                       GtkTreePath*, GtkTreeIter*, gpointer);
-      void remove_files(const FileQueue::articles_v& no);
+
+      int get_top() ;
+      int get_bottom() ;
+
       static void up_clicked_cb      (GtkButton*, PostUI*);
       static void down_clicked_cb    (GtkButton*, PostUI*);
       static void top_clicked_cb     (GtkButton*, PostUI*);
       static void bottom_clicked_cb  (GtkButton*, PostUI*);
       static void delete_clicked_cb  (GtkButton*, PostUI*);
-
-      void move_up(const FileQueue::articles_v& no);
-      void move_down(const FileQueue::articles_v& no);
-      void move_top(const FileQueue::articles_v& no);
-      void move_bottom(const FileQueue::articles_v& no);
   };
 }
 

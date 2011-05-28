@@ -221,6 +221,53 @@ namespace
     { "add-files", GTK_STOCK_OPEN, N_("Add _Files to Queue"), "<control>O", N_("Add Files to Queue"), G_CALLBACK(do_add_files) },
   };
 
+  void do_remove_files       (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->remove_files(); }
+  void do_clear_list         (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->clear_list(); }
+  void do_select_parts       (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->select_parts(); }
+  void do_move_up            (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->move_up(); }
+  void do_move_down          (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->move_down(); }
+  void do_move_top           (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->move_top(); }
+  void do_move_bottom        (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->move_bottom(); }
+
+  GtkActionEntry filequeue_popup_entries[] =
+  {
+
+    { "remove-files", NULL,
+      N_("Remove from Queue"), "",
+      N_("Remove from Queue"),
+      G_CALLBACK(do_remove_files) },
+
+    { "clear-list", NULL,
+      N_("Clear List"), "",
+      N_("Clear List"),
+      G_CALLBACK(do_clear_list) },
+
+    { "select-parts", NULL,
+      N_("Select needed Parts"), "",
+      N_("Select needed Parts"),
+      G_CALLBACK(do_select_parts) },
+
+    { "move-up", NULL,
+      N_("Move Up"), "",
+      N_("Move Up"),
+      G_CALLBACK(do_move_up) },
+
+    { "move-down", NULL,
+      N_("Move Down"), "",
+      N_("Move Down"),
+      G_CALLBACK(do_move_down) },
+
+    { "move-top", NULL,
+      N_("Move to Top"), "",
+      N_("Move to Top"),
+      G_CALLBACK(do_move_top) },
+
+    { "move-bottom", NULL,
+      N_("Move to Bottom"), "",
+      N_("Move to Bottom"),
+      G_CALLBACK(do_move_bottom) }
+  };
+
   GtkToggleActionEntry toggle_entries[] =
   {
     { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), 0, N_("Wrap Text"), G_CALLBACK(do_wrap), true },
@@ -259,6 +306,55 @@ PostUI :: prompt_for_charset ()
 }
 
 void
+PostUI::  do_popup_menu (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
+{
+  PostUI * self (static_cast<PostUI*>(userdata));
+  GtkWidget * menu (gtk_ui_manager_get_widget (self->_uim, "/filequeue-popup"));
+  gtk_menu_popup (GTK_MENU(menu), NULL, NULL, NULL, NULL,
+                  (event ? event->button : 0),
+                  (event ? event->time : 0));
+}
+
+namespace
+{
+  gboolean on_popup_menu (GtkWidget * treeview, gpointer userdata)
+  {
+    PostUI::do_popup_menu (treeview, NULL, userdata);
+    return true;
+  }
+}
+
+gboolean
+PostUI :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
+  {
+  if (event->type == GDK_BUTTON_PRESS  &&  event->button == 3)
+  {
+    if (1)
+    {
+      GtkTreeSelection *selection;
+      selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+      if (gtk_tree_selection_count_selected_rows(selection)  <= 1)
+      {
+         GtkTreePath *path;
+         /* Get tree path for row that was clicked */
+         if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
+                                           (gint) event->x,
+                                           (gint) event->y,
+                                           &path, NULL, NULL, NULL))
+         {
+           gtk_tree_selection_unselect_all(selection);
+           gtk_tree_selection_select_path(selection, path);
+           gtk_tree_path_free(path);
+         }
+      }
+    }
+    do_popup_menu(treeview, event, userdata);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+void
 PostUI :: add_actions (GtkWidget * box)
 {
   _uim = gtk_ui_manager_new ();
@@ -273,6 +369,7 @@ PostUI :: add_actions (GtkWidget * box)
   if (err) {
     Log::add_err_va (_("Error reading file \"%s\": %s"), filename, err->message);
     g_clear_error (&err);
+
   }
   g_free (filename);
 
@@ -290,6 +387,13 @@ PostUI :: add_actions (GtkWidget * box)
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "wrap")),
                                 _prefs.get_flag ("compose-wrap-enabled", true));
   gtk_ui_manager_insert_action_group (_uim, _agroup, 0);
+
+   //add popup actions
+  _pgroup = gtk_action_group_new ("fq");
+  gtk_action_group_set_translation_domain (_pgroup, NULL);
+  gtk_action_group_add_actions (_agroup, filequeue_popup_entries, G_N_ELEMENTS(filequeue_popup_entries), this);
+  gtk_ui_manager_insert_action_group (_uim, _pgroup, 0);
+
 }
 
 void
@@ -643,9 +747,8 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   ***  Make sure the message is OK...
   **/
 
-  if (_file_queue_empty)
-    if (!check_message (server, message))
-      return false;
+  if (!check_message (server, message))
+    return false;
 
   /**
   *** If this is email only, skip the rest of the posting...
@@ -1075,12 +1178,12 @@ PostUI :: new_message_from_ui (Mode mode)
   }
   GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   g_object_unref (stream);
+  /* NOTE (imhotep): Text gets ignored when posting binary data, ATM.
+   * Perhaps this could be changed but I don't really care right now. It would be the same message for all binary files
+   * anyway, so this would be kind of useless...
+   */
   GMimePart * part = g_mime_part_new ();
-  //todo ??
-  if (_file_queue_empty)
-    pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
-  else
-    pch = g_strdup_printf ("message/partial; charset=%s", charset.c_str());
+  pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
 
   GMimeContentType * type = g_mime_content_type_new_from_string (pch);
   g_free (pch);
@@ -1968,11 +2071,10 @@ PostUI :: get_selected_files_foreach (GtkTreeModel *model, GtkTreePath *, GtkTre
 {
   FileQueue::FileData* file (0);
   gtk_tree_model_get (model, iter, 0, &file, -1);
-  std::cerr<<"foreach got "<<file->filename.c_str()<<std::endl;
   static_cast<FileQueue*>(list_g)->add (file->filename.c_str(), FileQueue::END);
 }
 
-FileQueue::articles_v
+FileQueue::articles_v&
 PostUI :: get_selected_files () const
 {
   FileQueue files;
@@ -1982,56 +2084,93 @@ PostUI :: get_selected_files () const
   return files.get_files();
 }
 
-void
-PostUI :: remove_files(const FileQueue::articles_v& no)
+int
+PostUI :: get_top()
 {
-  _file_queue.remove(no);
+  int pos(0);
+
+  return pos;
+}
+
+int
+PostUI :: get_bottom()
+{
+  int pos(0);
+
+
+  return pos;
+}
+
+void
+PostUI :: remove_files(void)
+{
+  _file_queue.remove(get_selected_files());
   update_filequeue_tab();
 }
 
 void
-PostUI :: move_up(const FileQueue::articles_v& no)
+PostUI :: move_up(void)
 {
-  _file_queue.move_up(no);
+  _file_queue.move_up(get_selected_files(),get_top());
+  update_filequeue_tab();
 }
 
 void
-PostUI :: move_down(const FileQueue::articles_v& no)
+PostUI :: move_down(void)
 {
-  _file_queue.move_down(no);
+  _file_queue.move_down(get_selected_files(),get_bottom());
+  update_filequeue_tab();
 }
 
 void
-PostUI :: move_top(const FileQueue::articles_v& no)
+PostUI :: move_top(void)
 {
-  _file_queue.move_top(no);
+  _file_queue.move_top(get_selected_files());
+  update_filequeue_tab();
 }
 
 void
-PostUI :: move_bottom(const FileQueue::articles_v& no)
+PostUI :: move_bottom(void)
 {
-  _file_queue.move_bottom(no);
+  _file_queue.move_bottom(get_selected_files());
+  update_filequeue_tab();
+}
+
+void
+PostUI :: select_parts (void)
+{
+  //get parts from dialog result
+  //_file_queue.remove_parts(_parts_dialog->selection);
+  update_filequeue_tab();
+}
+
+void
+PostUI :: clear_list (void)
+{
+  _file_queue.clear();
+    update_filequeue_tab();
+
 }
 
 void PostUI :: up_clicked_cb (GtkButton*, PostUI* pane)
 {
-  pane->move_up (pane->get_selected_files());
+  pane->move_up ();
 }
 void PostUI :: down_clicked_cb (GtkButton*, PostUI* pane)
 {
-  pane->move_down (pane->get_selected_files());
+  pane->move_down ();
 }
 void PostUI :: top_clicked_cb (GtkButton*, PostUI* pane)
 {
-  pane->move_top (pane->get_selected_files());
+  pane->move_top ();
 }
 void PostUI :: bottom_clicked_cb (GtkButton*, PostUI* pane)
 {
-  pane->move_bottom (pane->get_selected_files());
+  pane->move_bottom ();
 }
 void PostUI :: delete_clicked_cb (GtkButton*, PostUI* pane)
 {
-  pane->remove_files (pane->get_selected_files());
+  pane->remove_files ();
 }
 
 namespace
@@ -2048,7 +2187,8 @@ namespace
     unsigned int size;
     gtk_tree_model_get (model, iter, 0, &fd, 1, &size, -1);
     if (fd)
-      g_object_set (renderer, "text", fd->basename.c_str(), NULL);
+      g_object_set (renderer, "text", fd->basename.c_str(),
+                    "weight", fd->all_parts ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_LIGHT, NULL);
   }
 }
 
@@ -2088,6 +2228,11 @@ PostUI :: create_filequeue_tab ()
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), 1,
                           (_("Size (kB)")),renderer,"text", 1,NULL);
 
+
+  // connect signals for popup menu
+  g_signal_connect (w, "popup-menu", G_CALLBACK(on_popup_menu), this);
+  g_signal_connect (w, "button-press-event", G_CALLBACK(on_button_pressed), this);
+
   //set hint and selection
   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(w),TRUE);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (w));
@@ -2099,6 +2244,7 @@ PostUI :: create_filequeue_tab ()
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(w), _filequeue_store);
   gtk_box_pack_start (GTK_BOX(vbox), w, true, true, 0);
+
 
   return vbox;
 }
@@ -2120,18 +2266,13 @@ PostUI :: update_filequeue_tab()
   for (; it != _file_queue.end(); ++it, ++i )
   {
     fd = &(*it);
-    std::cerr<<"updating file "<<fd->basename<<std::endl;
     gtk_list_store_append (store, &iter);
     gtk_list_store_set (store, &iter,
                       0, fd,
                       1, (*it).byte_count/1024,
                       -1);
   }
-
-  std::cerr<<"updated "<<i<<" elements in store.\n";
-
   _file_queue_empty = (i == 0);
-
 }
 
 

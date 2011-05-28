@@ -49,17 +49,24 @@ namespace pan {
           std::string filename;
           std::string basename;
           unsigned long    byte_count;
-          FileData() {}
+          bool all_parts;
+          std::set<int> parts;
+          FileData() { all_parts = true; }
         };
 
         typedef std::list<FileData>::const_iterator articles_const_it;
         typedef std::list<FileData>::iterator articles_it;
+        typedef std::list<FileData>::reverse_iterator articles_r_it;
         typedef std::list<FileData> articles_v;
 
      size_t size() { return _articles_v.size(); }
      articles_it end() { return _articles_v.end(); }
      articles_it begin() { return _articles_v.begin(); }
-     const articles_v& get_files() const { return _articles_v; }
+     //todo const
+     articles_v& get_files() { return _articles_v; }
+
+     void clear() { _articles_v.clear(); }
+
      bool empty() { return _articles_v.empty(); }
 
      public:
@@ -73,8 +80,8 @@ namespace pan {
 
       void remove(const articles_v& no);
 
-      void move_up(const articles_v& no);
-      void move_down(const articles_v& no);
+      void move_up(const articles_v& no, int pos);
+      void move_down(const articles_v& no, int pos);
       void move_top(const articles_v& no);
       void move_bottom(const articles_v& no);
 

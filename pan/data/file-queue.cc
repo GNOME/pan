@@ -58,27 +58,14 @@ FileQueue :: add (const char* filename,
     _articles_v.push_front(a);
 }
 
-namespace
-{
-  struct FileNameEqual : public std::binary_function
-                         < std::string, std::string,bool >
-
-  {
-    bool operator() (std::string a, std::string b) {return (a==b);}
-  };
-}
-
 void
 FileQueue :: remove(const articles_v& no)
 {
-  std::cerr<<"delete len "<<no.size()<<std::endl;
-
   articles_const_it it = no.begin();
   articles_it vit;
-  for ( ; it != no.end(); ++it) {
-    for ( vit = _articles_v.begin() ; vit != _articles_v.end(); ++vit) {
-      if (vit->filename == it->filename) {
-        std::cerr<<"deleting "<<it->filename<<std::endl;
+  for ( vit = _articles_v.begin() ; vit != _articles_v.end(); ++vit) {
+    for ( ; it != no.end(); ++it) {
+      if (vit->filename.compare(it->filename)==0) {
         vit = _articles_v.erase(vit);
       }
     }
@@ -86,29 +73,45 @@ FileQueue :: remove(const articles_v& no)
 }
 
 void
-FileQueue :: move_up(const articles_v& no)
+FileQueue :: move_up(const articles_v& no, int pos)
 {
+  if (size()==1) return;
+  articles_it it;
+  for (it = _articles_v.begin(); it != _articles_v.end(); ++it)
+  {
 
+  }
 }
 
 void
-FileQueue :: move_down(const articles_v& no)
+FileQueue :: move_down(const articles_v& no, int pos)
 {
+  if (size()==1) return;
+    articles_it it;
+  for (it = _articles_v.begin(); it != _articles_v.end(); ++it)
+  {
 
+  }
 }
 
 void
 FileQueue :: move_top(const articles_v& no)
 {
-
-//    foreach_const(articles_v, no, it)
-
+  if (size()==1) return;
+//  remove(no);
+//  articles_r_it rit;
+//  for ( rit=no.rbegin() ; rit != no.rend(); ++rit )
+//    _articles_v.push_front(*rit);
 }
 
 void
 FileQueue :: move_bottom(const articles_v& no)
 {
-
+  if (size()==1) return;
+//  remove(no);
+//  articles_const_it it;
+//  for ( it= no.begin() ; it != no.end(); ++it )
+//    _articles_v.push_back(*it);
 }
 
 

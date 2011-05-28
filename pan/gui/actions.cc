@@ -459,12 +459,6 @@ namespace
       N_("Read More"),
       G_CALLBACK(do_read_more) },
 
-    // todo icon, move!
-//    { "binpost", "ICON_READ_MORE",
-//      N_("Post binary files"), "space",
-//      N_("Post binary files"),
-//      G_CALLBACK(do_binpost) },
-
     { "read-less", "ICON_READ_LESS",
       N_("Read _Back"), "BackSpace",
       N_("Read Back"),

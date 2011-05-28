@@ -105,12 +105,13 @@ namespace pan
         std::string filename;
         unsigned long bytes;
         int partno;
-        Needed (): partno(0) {}
+        NNTP* nntp;
+        Needed (): nntp(0), partno(0) {}
       };
       typedef std::deque<Needed> needed_t;
       needed_t _needed;
 
-      void update_work (void);
+      void update_work (NNTP * checkin_pending = 0);
   };
 
 // from mime-utils.cc

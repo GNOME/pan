@@ -72,8 +72,6 @@ Encoder :: enqueue (TaskUpload                * task,
   this->subject = subject;
   this->author = author;
 
-  std::cerr<<"encoder begin: "<<this->groups<<" "<<this->subject<<" "<<this->author<<" "<<std::endl;
-
   percent = 0;
   current_file.clear ();
   log_infos.clear();
@@ -115,22 +113,22 @@ Encoder :: do_work()
       g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename, cnt);
       outfile = fopen(buf,"wb");
       while (1) {
-        /*
-        UUE_PrepPartial (FILE *outfile, FILE *infile,
-        char *infname, int encoding,
-        char *outfname, int filemode,
-        int partno, long linperfile, long filesize,
-        char *destination, char *from, char *subject,
-        int isemail) */
+
+        // skip not wanted parts of binary file
+        if (file_data.parts.end() != file_data.parts.find(cnt))
+        {
+          ++cnt;
+          res = UURET_CONT;
+          goto _end;
+        }
+        // 4000 lines SHOULD be OK for ANY nntp server ...
         res = UUE_PrepPartial (outfile, NULL, (char*)filename,YENC_ENCODED,
                                (char*)basename,0644, cnt, 4000,
                                file_data.byte_count, (char*)groups.c_str(),
                                (char*)author.c_str(), (char*)subject.c_str(),
                                0);
 
-//        res = UUEncodePartial( outfile, NULL, (char*)file_data.filename.c_str(),
-//                               YENC_ENCODED, (char*)file_data.basename.c_str(), const_cast<char*>("message/partial"),
-//                               0, cnt, 4000, &crcptr);
+        _end:
         if (outfile) fclose(outfile);
         if (res != UURET_CONT) break;
         g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename, ++cnt);
@@ -177,8 +175,9 @@ Encoder :: uu_log (void* data, char* message, int severity)
 double
 Encoder :: get_percentage (const uuprogress& p) const
 {
-  static const double WEIGHT_SCANNING = 30;
-  static const double WEIGHT_ENCODING = 70;
+  // don't know if this is accurate, but i just take a guess ;)
+  static const double WEIGHT_SCANNING = 50;
+  static const double WEIGHT_ENCODING = 50;
 
   double base = 0;
 
@@ -207,9 +206,9 @@ Encoder :: uu_busy_poll (void * d, uuprogress *p)
 {
   Encoder * self (static_cast<Encoder*>(d));
   self->mut.lock();
-  self->percent = self->get_percentage(*p);
-  self->current_file = p->curfile;
-  self->parts  = (int)p->numparts;
+    self->percent = self->get_percentage(*p);
+    self->current_file = p->curfile;
+    self->parts  = (int)p->numparts - self->file_data.parts.size();
   self->mut.unlock();
 
   return self->was_cancelled(); // returning true tells uulib to abort
