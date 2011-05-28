@@ -48,7 +48,7 @@ namespace
   }
 #endif
 
-#ifdef GTK_DISABLE_DEPRECATED
+#if defined(GTK_DISABLE_DEPRECATED) || GTK_CHECK_VERSION(3,0,0)
 #if GTK_CHECK_VERSION(2,22,0)
 #define GtkNotebookPage void
 #endif
