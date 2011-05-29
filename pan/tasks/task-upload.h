@@ -25,14 +25,14 @@
 #define _TaskUpload_h_
 
 #include <pan/general/worker-pool.h>
+#include <pan/general/locking.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/data.h>
-#include <pan/data/file-queue.h>
 #include <pan/data/xref.h>
 #include <pan/tasks/nntp.h>
 #include <pan/tasks/task.h>
-#include <deque>
+#include <set>
 
 namespace pan
 {
@@ -46,7 +46,17 @@ namespace pan
                      private NNTP::Listener,
                      private WorkerPool::Worker::Listener
   {
-    public: // life cycle
+    public:
+
+      struct Needed {
+        std::string filename;
+        unsigned long bytes;
+        int partno;
+        NNTP* nntp;
+        Needed (): nntp(0) {}
+      };
+
+      typedef std::deque<Needed> needed_t;
 
       enum EncodeMode
       {
@@ -55,18 +65,24 @@ namespace pan
         PLAIN
       };
 
-      TaskUpload ( const FileQueue::FileData & file_data,
+      // life cycle
+      TaskUpload ( const std::string         & filename,
                    const Quark               & server,
-                   std::string                 groups,
+                   quarks_t                  & groups,
                    std::string                 subject,
                    std::string                 author,
-                   Progress::Listener        * listener=0,
-                   TaskUpload::EncodeMode enc     = YENC);
+                   needed_t                  & todo,
+                   Progress::Listener        * listener= 0,
+                   TaskUpload::EncodeMode enc= YENC);
       virtual ~TaskUpload ();
 
     public: // Task subclass
       unsigned long get_bytes_remaining () const;
       void stop ();
+      const std::string& basename()  { return  _basename; }
+      const std::string& filename()  { return  _filename; }
+      const std::string& subject ()  { return  _subject;  }
+      unsigned long get_byte_count() { return _bytes;     }
 
       /** only call this for tasks in the NEED_DECODE state
        * attempts to acquire the saver thread and start saving
@@ -91,25 +107,22 @@ namespace pan
 
     private: // implementation
       friend class Encoder;
+      friend class NZB;
       Encoder * _encoder;
       bool _encoder_has_run;
-      const FileQueue::FileData _file_data;
-      const std::string _basename;
+      std::string _filename;
+      std::string _basename;
       TaskUpload::EncodeMode _encode_mode;
-      std::string _groups, _subject, _author;
-      int _parts; // filled in by encoder
+      quarks_t _groups;
+      std::string _subject, _author;
+      int _total_parts; // filled in by encoder
+      unsigned long _bytes;
       Mutex mut;
 
     private:
-      struct Needed {
-        std::string filename;
-        unsigned long bytes;
-        int partno;
-        NNTP* nntp;
-        Needed (): nntp(0), partno(0) {}
-      };
-      typedef std::deque<Needed> needed_t;
-      needed_t _needed;
+      needed_t       _needed;
+      needed_t       _extern;
+      std::set<int>  _parts;
 
       void update_work (NNTP * checkin_pending = 0);
   };

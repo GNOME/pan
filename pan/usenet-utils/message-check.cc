@@ -267,7 +267,7 @@ namespace
    * (2) Replace carriage returns in both the calculated attribution string
    *     and a temporary copy of the message body, so that we don't have to
    *     worry whether or not the attribution line's been wrapped.
-   * 
+   *
    * (3) Search for an occurance of the attribution string in the body.  If
    *     it's found, remove it from the temporary copy of the body so that
    *     it won't affect our line counts.
@@ -420,7 +420,8 @@ MessageCheck :: message_check (const GMimeMessage * message_const,
                                const StringView   & attribution,
                                const quarks_t     & groups_our_server_has,
                                unique_strings_t   & errors,
-                               Goodness           & goodness)
+                               Goodness           & goodness,
+                               bool                 binpost)
 {
   goodness.clear ();
   errors.clear ();
@@ -445,18 +446,23 @@ MessageCheck :: message_check (const GMimeMessage * message_const,
     errors.insert (_("Warning: Most newsgroups frown upon HTML posts."));
     goodness.raise_to_warn ();
   }
-  check_body (errors, goodness, tm, message, body, attribution);
+  if (!binpost)
+    check_body (errors, goodness, tm, message, body, attribution);
   g_free (body);
-  
+
   // check the optional followup-to...
   bool followup_to_set (false);
   const char * cpch = g_mime_object_get_header ((GMimeObject *) message, "Followup-To");
-  if (cpch && *cpch) {
-    quarks_t groups;
-    get_nntp_rcpts (cpch, groups);
-    followup_to_set = !groups.empty();
-    check_followup_to (errors, goodness, groups_our_server_has, groups);
-  }
+  if (!binpost)
+  {
+    if (cpch && *cpch) {
+      quarks_t groups;
+      get_nntp_rcpts (cpch, groups);
+      followup_to_set = !groups.empty();
+      check_followup_to (errors, goodness, groups_our_server_has, groups);
+    }
+  } else
+    followup_to_set = true;
 
   // check the groups...
   size_t group_qty (0);

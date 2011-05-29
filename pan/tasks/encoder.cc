@@ -56,7 +56,8 @@ Encoder :: ~Encoder()
 
 void
 Encoder :: enqueue (TaskUpload                * task,
-                    const FileQueue::FileData & file_data,
+                    std::string               & filename,
+                    std::string               & basename,
                     std::string               & groups,
                     std::string               & subject,
                     std::string               & author,
@@ -66,7 +67,8 @@ Encoder :: enqueue (TaskUpload                * task,
   disable_progress_update ();
 
   this->task = task;
-  this->file_data = file_data;
+  this->filename = filename;
+  this->basename = basename;
   this->encode_mode = encode_mode;
   this->groups = groups;
   this->subject = subject;
@@ -91,11 +93,7 @@ Encoder :: do_work()
   crc32_t crcptr;
 
   FILE* outfile, * infile ;
-
   std::string uulib(file :: get_uulib_path());
-
-  std::cerr<<"encoder starting...\n";
-
   enable_progress_update();
 
     int res;
@@ -107,31 +105,28 @@ Encoder :: do_work()
       UUSetMsgCallback (this, uu_log);
       UUSetBusyCallback (this, uu_busy_poll, 100);
 
-      const char* filename = file_data.filename.c_str();
-      const char* basename = g_path_get_basename(file_data.filename.c_str());
-
-      g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename, cnt);
+      g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename.c_str(), cnt);
       outfile = fopen(buf,"wb");
       while (1) {
 
         // skip not wanted parts of binary file
-        if (file_data.parts.end() != file_data.parts.find(cnt))
-        {
-          ++cnt;
-          res = UURET_CONT;
-          goto _end;
-        }
+//        if (parts->end() != parts->find(cnt))
+//        {
+//          ++cnt;
+//          res = UURET_CONT;
+//          goto _end;
+//        }
         // 4000 lines SHOULD be OK for ANY nntp server ...
-        res = UUE_PrepPartial (outfile, NULL, (char*)filename,YENC_ENCODED,
-                               (char*)basename,0644, cnt, 4000,
-                               file_data.byte_count, (char*)groups.c_str(),
+        res = UUE_PrepPartial (outfile, NULL, (char*)filename.c_str(),YENC_ENCODED,
+                               (char*)basename.c_str(),0644, cnt, 4000,
+                               0, (char*)groups.c_str(),
                                (char*)author.c_str(), (char*)subject.c_str(),
                                0);
 
         _end:
         if (outfile) fclose(outfile);
         if (res != UURET_CONT) break;
-        g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename, ++cnt);
+        g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename.c_str(), ++cnt);
         outfile = fopen(buf,"wb");
       }
 
@@ -139,7 +134,7 @@ Encoder :: do_work()
       {
         g_snprintf(buf, bufsz,
                    _("Error encoding %s: %s"),
-                   basename,
+                   basename.c_str(),
                    (res==UURET_IOERR)
                    ?  file::pan_strerror (UUGetOption (UUOPT_ERRNO, NULL,
                                                        NULL, 0))
@@ -208,7 +203,7 @@ Encoder :: uu_busy_poll (void * d, uuprogress *p)
   self->mut.lock();
     self->percent = self->get_percentage(*p);
     self->current_file = p->curfile;
-    self->parts  = (int)p->numparts - self->file_data.parts.size();
+    self->total_parts = p->numparts;
   self->mut.unlock();
 
   return self->was_cancelled(); // returning true tells uulib to abort

@@ -22,7 +22,6 @@
 
 #include <gmime/gmime-message.h>
 #include <pan/gui/prefs.h>
-#include <pan/data/file-queue.h>
 #include <pan/general/progress.h>
 #include <pan/tasks/queue.h>
 #include <pan/usenet-utils/text-massager.h>
@@ -33,6 +32,10 @@ namespace pan
   class Profiles;
   class TaskPost;
   class FileQueue;
+  class Queue;
+
+
+  typedef std::multiset<TaskUpload*> tasks_set;
 
   /**
    * Dialog for posting new messages Pan's GTK GUI.
@@ -44,7 +47,7 @@ namespace pan
       static PostUI* create_window (GtkWidget*, Data&, Queue&, GroupServer&, Profiles&,
                                     GMimeMessage*, Prefs&, GroupPrefs&);
 
-      void prompt_user_for_queueable_files (FileQueue& queue, GtkWindow * parent, const Prefs& prefs);
+      void prompt_user_for_queueable_files (tasks_set& queue, GtkWindow * parent, const Prefs& prefs);
 
     protected:
       PostUI (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
@@ -54,6 +57,7 @@ namespace pan
 
     public:
       GtkWidget * root() { return _root; }
+      GtkWidget * part_select() { return _part_select; }
       void rot13_selection ();
       void wrap_body ();
       void spawn_editor ();
@@ -71,13 +75,13 @@ namespace pan
       void update_filequeue_tab();
 
       //popup action entries
-      void remove_files (void);
-      void clear_list   (void);
-      void select_parts (void);
-      void move_up      (void);
-      void move_down    (void);
-      void move_top     (void);
-      void move_bottom  (void);
+      void remove_files ();
+      void clear_list   ();
+      void select_parts ();
+      void move_up      ();
+      void move_down    ();
+      void move_top     ();
+      void move_bottom  ();
 
       static void do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g);
       static gboolean on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gpointer userdata);
@@ -105,11 +109,13 @@ namespace pan
       Prefs& _prefs;
       GroupPrefs& _group_prefs;
       GtkWidget * _root;
+      GtkWidget * _part_select;
       GtkWidget * _from_combo;
       GtkWidget * _subject_entry;
       GtkWidget * _groups_entry;
 
       GtkWidget * _filequeue_store;
+      GtkWidget * _parts_store;
 
       GtkWidget * _to_entry;
       GtkWidget * _followupto_entry;
@@ -136,7 +142,7 @@ namespace pan
 
       /* binpost */
       bool _file_queue_empty;
-      FileQueue _file_queue;
+      tasks_set _file_queue_tasks;
 
     private:
       void add_actions (GtkWidget* box);
@@ -152,6 +158,8 @@ namespace pan
       GtkWidget* create_main_tab ();
       GtkWidget* create_extras_tab ();
       GtkWidget* create_filequeue_tab ();
+      GtkWidget* create_parts_tab (TaskUpload* ptr);
+      GtkWidget* create_log_tab ();
 
     private:
       std::string utf8ize (const StringView&) const;
@@ -171,8 +179,10 @@ namespace pan
       void set_spellcheck_enabled (bool);
       void spawn_editor_dead(char *);
 
+    public:
+      tasks_set  get_selected_files () const;
+
     private:
-      FileQueue::articles_v&  get_selected_files () const;
       static void get_selected_files_foreach (GtkTreeModel*,
                       GtkTreePath*, GtkTreeIter*, gpointer);
 

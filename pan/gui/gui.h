@@ -22,7 +22,6 @@
 #include <pan/general/log.h>
 #include <pan/general/progress.h>
 #include <pan/data/article-cache.h>
-#include <pan/data/file-queue.h>
 #include <pan/tasks/queue.h>
 #include <pan/gui/group-pane.h>
 #include <pan/gui/action-manager.h>

@@ -550,6 +550,9 @@ Queue :: task_is_active (const Task * task) const
   if (task && task==_decoder_task)
     return true;
 
+  if (task && task==_encoder_task)
+    return true;
+
   bool task_has_nntp (false);
   foreach_const (nntp_to_task_t, _nntp_to_task, it)
     if ((task_has_nntp = task==it->second))

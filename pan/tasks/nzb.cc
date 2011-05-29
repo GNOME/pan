@@ -34,6 +34,7 @@ extern "C" {
 #include <pan/general/utf8-utils.h>
 #include "nzb.h"
 #include "task-article.h"
+#include "task-upload.h"
 
 using namespace pan;
 
@@ -46,7 +47,10 @@ namespace
     quarks_t groups;
     std::string text;
     std::string path;
+    std::vector<std::string>  groups_str;    // TaskUpload
+    TaskUpload::needed_t needed_parts;       // TaskUpload
     Article a;
+    Quark posting_server;
     PartBatch parts;
     tasks_t tasks;
     ArticleCache& cache;
@@ -63,11 +67,13 @@ namespace
 
     void file_clear () {
       groups.clear ();
+      groups_str.clear();
       text.clear ();
       path.clear ();
       a.clear ();
       bytes = 0;
       number = 0;
+      needed_parts.clear();     // TaskUpload
     }
   };
 
@@ -90,6 +96,16 @@ namespace
       }
     }
 
+    else if (!strcmp (element_name, "upload")) {
+      mc.file_clear ();
+      for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
+             if (!strcmp (*k,"author"))  mc.a.author = *v;
+        else if (!strcmp (*k,"subject")) mc.a.subject = *v;
+        else if (!strcmp (*k,"server"))  mc.posting_server = Quark(*v);
+      }
+      std::cerr<<"upload begin tag\n";
+    }
+
     else if (!strcmp (element_name, "segment")) {
       mc.bytes = 0;
       mc.number = 0;
@@ -98,6 +114,17 @@ namespace
         else if (!strcmp (*k,"number")) mc.number = atoi (*v);
       }
     }
+
+    else if (!strcmp (element_name, "part")) {
+      mc.bytes = 0;
+      mc.number = 0;
+      for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
+             if (!strcmp (*k,"bytes"))  mc.bytes = strtoul (*v,0,10);
+        else if (!strcmp (*k,"number")) mc.number = atoi (*v);
+      }
+      std::cerr<<"part begin tag\n";
+    }
+
   }
 
   // Called for close tags </foo>
@@ -109,7 +136,10 @@ namespace
     MyContext& mc (*static_cast<MyContext*>(user_data));
 
     if (!strcmp(element_name, "group"))
+    {
       mc.groups.insert (Quark (mc.text));
+      mc.groups_str.push_back(mc.text);
+    }
 
     else if (!strcmp(element_name, "segment") && mc.number && !mc.text.empty()) {
       const std::string mid ("<" + mc.text + ">");
@@ -118,6 +148,15 @@ namespace
         mc.parts.init (mid);
       }
       mc.parts.add_part (mc.number, mid, mc.bytes);
+    }
+
+    else if (!strcmp(element_name, "part") && mc.number && !mc.text.empty()) {
+      TaskUpload::Needed n;
+      n.bytes = mc.bytes;
+      n.filename = mc.text;
+      n.partno = mc.number;
+      mc.needed_parts.push_back(n);
+      std::cerr<<"part end tag\n";
     }
 
     else if (!strcmp(element_name,"path"))
@@ -135,7 +174,15 @@ namespace
           mc.a.xref.insert (*sit, *git, 0);
       }
       const StringView p (mc.path.empty() ? mc.fallback_path : StringView(mc.path));
+      debug("adding taskarticle from nzb.\n");
       mc.tasks.push_back (new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, 0, TaskArticle::DECODE, p));
+
+    }
+    else if (!strcmp (element_name, "upload"))
+    {
+      debug("adding taskupload from nzb.\n");
+      mc.tasks.push_back (new TaskUpload (mc.path, const_cast<const Quark&>(mc.posting_server),
+                          mc.groups, mc.a.subject.to_string(), mc.a.author.to_string(), mc.needed_parts, 0, TaskUpload::YENC));
     }
   }
 
@@ -230,65 +277,113 @@ NZB :: nzb_to_xml (std::ostream             & out,
   foreach_const (tasks_t, tasks, it)
   {
     TaskArticle * task (dynamic_cast<TaskArticle*>(*it));
-    if (!task) // not a download task...
-      continue;
-    if (task->get_save_path().empty()) // this task is for reading, not saving...
-      continue;
-
-    const Article& a (task->get_article());
-    out << indent(depth++)
-        << "<file" << " poster=\"";
-    escaped (out, a.author.to_view());
-    out  << "\" date=\"" << a.time_posted << "\" subject=\"";
-    escaped (out, a.subject.to_view()) << "\">\n";
-
-    // path to save this to.
-    // This isn't part of the nzb spec.
-    const Quark& path (task->get_save_path());
-    if (!path.empty()) {
-      out << indent(depth) << "<path>";
-      escaped (out, path.to_view());
-      out << "</path>\n";
-    }
-
-    // what groups was this crossposted in?
-    quarks_t groups;
-    foreach_const (Xref, a.xref, xit)
-      groups.insert (xit->group);
-    out << indent(depth++) << "<groups>\n";
-    foreach_const (quarks_t, groups, git)
-      out << indent(depth) << "<group>" << *git << "</group>\n";
-    out << indent(--depth) << "</groups>\n";
-
-    // now for the parts...
-    out << indent(depth++) << "<segments>\n";
-    for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
+    if (task)
     {
-      std::string mid = it.mid ();
 
-      // remove the surrounding < > as per nzb spec
-      if (mid.size()>=2 && mid[0]=='<') {
-        mid.erase (0, 1);
-        mid.resize (mid.size()-1);
+      if (task->get_save_path().empty()) // this task is for reading, not saving...
+        continue;
+
+      const Article& a (task->get_article());
+      out << indent(depth++)
+          << "<file" << " poster=\"";
+      escaped (out, a.author.to_view());
+      out  << "\" date=\"" << a.time_posted << "\" subject=\"";
+      escaped (out, a.subject.to_view()) << "\">\n";
+
+      // path to save this to.
+      // This isn't part of the nzb spec.
+      const Quark& path (task->get_save_path());
+      if (!path.empty()) {
+        out << indent(depth) << "<path>";
+        escaped (out, path.to_view());
+        out << "</path>\n";
       }
 
-      // serialize this part
-      out << indent(depth)
-          << "<segment" << " bytes=\"" << it.bytes() << '"'
-                        << " number=\"" << it.number() << '"'
-                        << ">";
-      escaped(out, mid);
-      out  << "</segment>\n";
+      // what groups was this crossposted in?
+      quarks_t groups;
+      foreach_const (Xref, a.xref, xit)
+        groups.insert (xit->group);
+      out << indent(depth++) << "<groups>\n";
+      foreach_const (quarks_t, groups, git)
+        out << indent(depth) << "<group>" << *git << "</group>\n";
+      out << indent(--depth) << "</groups>\n";
+
+      // now for the parts...
+      out << indent(depth++) << "<segments>\n";
+      for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
+      {
+        std::string mid = it.mid ();
+
+        // remove the surrounding < > as per nzb spec
+        if (mid.size()>=2 && mid[0]=='<') {
+          mid.erase (0, 1);
+          mid.resize (mid.size()-1);
+        }
+
+        // serialize this part
+        out << indent(depth)
+            << "<segment" << " bytes=\"" << it.bytes() << '"'
+                          << " number=\"" << it.number() << '"'
+                          << ">";
+        escaped(out, mid);
+        out  << "</segment>\n";
+      }
+      out << indent(--depth) << "</segments>\n";
+      out << indent(--depth) << "</file>\n";
     }
-    out << indent(--depth) << "</segments>\n";
-    out << indent(--depth) << "</file>\n";
+    else
+    { // handle upload tasks
+      TaskUpload * task (dynamic_cast<TaskUpload*>(*it));
+      // not an upload task, move on
+      if (!task) continue;
+
+      std::vector<std::string> groups;
+
+      //info: author, subject, load path, parts to encode / post
+      out << indent(depth)
+          << "<upload" << " author=\"";
+      escaped (out, task->_author);
+      out  << "\" subject=\"";
+      escaped (out, task->_subject);
+      out  << "\" server=\"";
+      escaped (out, task->_server.to_string());
+      out  << "\" encoded=\"";
+      char buf[3];
+      g_snprintf(buf,3,"%d",(int)task->_encoder_has_run);
+      escaped (out, StringView(buf)) << "\">\n";
+      ++depth;
+      out << indent(depth)
+          << "<path>" << task->_filename << "</path>\n";
+      out  << indent(depth) << "<groups>\n";
+      ++depth;
+      foreach_const (quarks_t, task->_groups, it)
+      {
+        out << indent(depth)<<"<group>" << (*it).to_string() << "</group>\n";
+      }
+      --depth;
+      out  << indent(depth) << "</groups>\n";
+      out  << indent(depth) << "<parts>\n";
+      ++depth;
+
+      foreach_const (TaskUpload::needed_t, task->_needed, it)
+        out << indent(depth)
+            << "<part" << " bytes=\"" << (*it).bytes << '"'
+                       << " number=\"" << (*it).partno << '"'
+                       << ">" << (*it).filename<< "</part>\n";
+      --depth;
+      out  << indent(depth) << "</parts>\n";
+      --depth;
+      out << indent(depth) << "</upload>\n";
+
+
+    }
   }
 
   out << indent(--depth) << "</nzb>\n";
   return out;
 }
 
-/* Saves selected files to a chosen XML file */
+/* Saves selected article-info to a chosen XML file */
 std::ostream&
 NZB :: nzb_to_xml_file (std::ostream             & out,
                    const std::vector<Task*> & tasks)
@@ -303,7 +398,7 @@ NZB :: nzb_to_xml_file (std::ostream             & out,
   foreach_const (tasks_t, tasks, it)
   {
     TaskArticle * task (dynamic_cast<TaskArticle*>(*it));
-    if (!task) // not a download task...
+    if (!task) // not a download task, for example an upload task...
       continue;
 
     const Article& a (task->get_article());

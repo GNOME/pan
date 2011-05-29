@@ -36,6 +36,7 @@ extern "C" {
 #include <pan/tasks/socket-impl-gio.h>
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>
+#include <pan/tasks/task-xzver-test.h>
 #include <pan/tasks/nzb.h>
 #include <pan/data-impl/data-impl.h>
 #include <pan/icons/pan-pixbufs.h>
@@ -113,8 +114,10 @@ namespace
     DataAndQueue * foo (static_cast<DataAndQueue*>(user_data));
     const quarks_t new_servers (foo->data->get_servers());
     foreach_const (quarks_t, new_servers, it)
-      if (foo->data->get_server_limits(*it))
+      if (foo->data->get_server_limits(*it)) {
+        foo->queue->add_task (new TaskXZVerTest(*foo->data, *it));
         foo->queue->add_task (new TaskGroups (*foo->data, *it));
+      }
     g_free (foo);
   }
 
@@ -175,7 +178,7 @@ namespace
     ~PanKiller() { q.remove_listener(this); }
 
     /** Method from Queue::Listener interface: quits program on zero sized Q*/
-    void on_queue_size_changed (Queue&, int active, int total) 
+    void on_queue_size_changed (Queue&, int active, int total)
       {  if (!active && !total) mainloop_quit();  }
 
     // all below methods from Queue::Listener interface are noops
@@ -278,7 +281,7 @@ main (int argc, char *argv[])
       nzb = true;
     else if (!strcmp (tok, "--version"))
       { std::cerr << "Pan " << VERSION << '\n'; return 0; }
-    else if (!strcmp (tok, "-o") && i<argc-1) 
+    else if (!strcmp (tok, "-o") && i<argc-1)
       nzb_output_path = argv[++i];
     else if (!memcmp (tok, "--output=", 9))
       nzb_output_path = tok+9;

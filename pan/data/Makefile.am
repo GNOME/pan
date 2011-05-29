@@ -9,8 +9,7 @@ libdata_a_SOURCES = \
  article-cache.cc \
  data.cc \
  parts.cc \
- xref.cc \
- file-queue.cc
+ xref.cc
 
 noinst_HEADERS = \
  article.h \
@@ -19,8 +18,7 @@ noinst_HEADERS = \
  defgroup.h \
  parts.h \
  server-info.h \
- xref.h \
- file-queue.h
+ xref.h
 
 noinst_PROGRAMS = \
  article-test \

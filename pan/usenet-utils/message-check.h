@@ -58,7 +58,8 @@ namespace pan
                                  const StringView   & attribution,
                                  const quarks_t     & groups_our_server_has,
                                  unique_strings_t   & errors,
-                                 Goodness           & goodness);
+                                 Goodness           & goodness,
+                                 bool                 binpost = false);
   };
 }
 

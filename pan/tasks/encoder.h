@@ -59,7 +59,8 @@ namespace pan
       typedef std::vector<std::string> strings_t;
 
       void enqueue (TaskUpload                * task,
-                    const FileQueue::FileData & file_data,
+                    std::string               & filename,
+                    std::string               & basename,
                     std::string               & groups,
                     std::string               & subject,
                     std::string               & author,
@@ -76,17 +77,19 @@ namespace pan
 
     private:
 
+      std::set<int>* parts;
       friend class TaskUpload;
       TaskUpload * task;
       TaskUpload::EncodeMode encode_mode;
-      FileQueue::FileData file_data;
+      std::string   filename;
+      std::string   basename;
       std::string subject, author, groups;
 
       // These are set in the worker thread and polled in the main thread.
       Mutex mut;
       volatile double percent;
       std::string current_file; // the current file we are decoding, with path
-      int parts;
+      int total_parts;
 
       static void uu_log(void *thiz, char *message, int severity);
       double get_percentage (const uuprogress& p) const;
