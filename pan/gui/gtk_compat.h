@@ -105,10 +105,12 @@ namespace
 #if GTK_CHECK_VERSION(3,0,0)
 #define GTK_OBJECT(w) w
   typedef GtkWidget GtkObject;
+#ifdef GTK_DISABLE_DEPRECATED
   void gdk_cursor_unref(GdkCursor *p)
   {
     g_object_unref(p);
   }
+#endif
 #endif
 
 #ifdef __cplusplus
