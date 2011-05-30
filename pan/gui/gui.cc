@@ -626,11 +626,7 @@ namespace
 
     void foreach_part (GMimeObject *o)
     {
-      if (GMIME_IS_MULTIPART (o))
-      {
-        g_mime_multipart_foreach (GMIME_MULTIPART (o), foreach_part_cb, this);
-      }
-      else if (GMIME_IS_PART(o))
+      if (GMIME_IS_PART(o))
       {
         GMimePart * part (GMIME_PART (o));
         GMimeDataWrapper * wrapper (g_mime_part_get_content_object (part));
