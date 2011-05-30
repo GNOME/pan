@@ -117,7 +117,7 @@ DataImpl :: GroupHeaders :: remove_articles (const quarks_t& mids)
     (*it)->_article = 0;
   _dirty = true;
 }
-  
+
 const DataImpl :: GroupHeaders*
 DataImpl :: get_group_headers (const Quark& group) const
 {
@@ -239,7 +239,7 @@ void
 DataImpl :: load_article (const Quark       & group,
                           Article           * article,
                           const StringView  & references)
-              
+
 {
 #if 0
   std::cerr << LINE_ID << " adding article "
@@ -371,7 +371,7 @@ DataImpl :: get_references (const Quark& group, const Article& a) const
     s.insert (0, v.str, v.len);
     node = node->parent;
   }
-std::cerr << "article " << a.message_id << " references " << s << std::endl;
+//  std::cerr << "article " << a.message_id << " references " << s << std::endl;
   return s;
 }
 #endif
@@ -463,7 +463,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
 
       Xref::targets_t targets;
       std::vector<Xref::Target>& targets_v (targets.get_container());
-        
+
       // each article in this group...
       unsigned int expire_count (0);
       in->getline (line);
@@ -1094,7 +1094,7 @@ DataImpl :: delete_articles (const unique_articles_t& articles)
 
     // remove the articles from our lookup table...
     GroupHeaders * h (get_group_headers (group));
-    if (h) 
+    if (h)
       h->remove_articles (it->second.mids);
   }
 

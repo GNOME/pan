@@ -27,7 +27,7 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
-
+#include <cstdio>
 extern "C" {
 #include <glib/gi18n.h>
 }
@@ -44,14 +44,31 @@ using namespace pan;
 
 namespace
 {
-  std::string get_description (const char* name, bool enc)
+  std::string get_description (const char* name)
   {
     char buf[1024];
-    if (!enc)
-      snprintf (buf, sizeof(buf), _("Uploading %s"), name);
-    else
-      snprintf (buf, sizeof(buf), _("Encoding %s"), name);
-    return std::string (buf);
+    char * freeme = g_path_get_basename(name);
+    snprintf (buf, sizeof(buf), _("Uploading %s"), freeme);
+    g_free(freeme);
+    return buf;
+  }
+
+  std::string get_basename(const char* f)
+  {
+    char buf[1024];
+    char * freeme = g_path_get_basename(f);
+    snprintf (buf, sizeof(buf), _("%s"), freeme);
+    g_free(freeme);
+    return buf;
+  }
+}
+
+
+namespace
+{
+  void delete_cache(const TaskUpload::Needed& n)
+  {
+    unlink(n.filename.c_str());
   }
 }
 
@@ -64,20 +81,18 @@ TaskUpload :: TaskUpload ( const std::string         & filename,
                            quarks_t                  & groups,
                            std::string                 subject,
                            std::string                 author,
-                           needed_t                  & todo,
                            Progress::Listener        * listener,
                            const TaskUpload::EncodeMode  enc):
-  Task ("UPLOAD", get_description(filename.c_str(), true)),
+  Task ("UPLOAD", get_description(filename.c_str())),
   _filename(filename),
-  _basename (std::string(g_path_get_basename(filename.c_str()))),
+  _basename (g_path_get_basename(filename.c_str())),
   _server(server),
   _groups(groups),
   _subject (subject),
   _author(author),
   _encoder(0),
   _encoder_has_run (false),
-  _encode_mode(enc),
-  _extern(todo)
+  _encode_mode(enc)
 {
   if (listener != 0)
     add_listener (listener);
@@ -85,7 +100,6 @@ TaskUpload :: TaskUpload ( const std::string         & filename,
   struct stat sb;
   stat(filename.c_str(),&sb);
   _bytes = sb.st_size;
-
   update_work ();
 }
 
@@ -95,7 +109,7 @@ TaskUpload :: update_work (NNTP* checkin_pending)
 
   int working(0);
   foreach (needed_t, _needed, nit) {
-    Needed& n (*nit);
+    Needed& n (nit->second);
     if (n.nntp && n.nntp!=checkin_pending)
       ++working;
   }
@@ -126,8 +140,8 @@ TaskUpload :: use_nntp (NNTP * nntp)
 
   Needed * needed (0);
   for (needed_t::iterator it(_needed.begin()), end(_needed.end()); !needed && it!=end; ++it)
-    if (it->nntp==0)
-      needed = &*it;
+    if (it->second.nntp==0)
+      needed = &it->second;
 
   if (!needed)
   {
@@ -159,16 +173,6 @@ TaskUpload :: on_nntp_line  (NNTP               * nntp,
                               const StringView   & line_in)
 {}
 
-
-// delete cached files to avoid "disk full" problems
-namespace
-{
-  void delete_cache(const TaskUpload::Needed& n)
-  {
-    unlink(n.filename.c_str());
-  }
-}
-
 void
 TaskUpload :: on_nntp_done  (NNTP             * nntp,
                              Health             health,
@@ -177,10 +181,20 @@ TaskUpload :: on_nntp_done  (NNTP             * nntp,
 
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
-    if (it->nntp == nntp)
+    if (it->second.nntp == nntp)
       break;
 
-  bool post_ok(false);
+  switch (health)
+  {
+    case OK:
+      break;
+    /* if the connection was aborted with SIGPIPE, let this error silently by and
+     * let GIOSocket code handle this */
+    case ERR_NETWORK:
+      std::cerr<<"err network!\n";
+      it->second.reset();
+      goto _end;
+  }
 
   switch (atoi(response.str))
   {
@@ -192,7 +206,12 @@ TaskUpload :: on_nntp_done  (NNTP             * nntp,
       Log :: add_err_va (_("Posting of file %s failed: %s"), _basename.c_str(), response.str);
       break;
     case ARTICLE_POSTED_OK:
-      post_ok = true;
+      delete_cache(it->second);
+      _needed.erase (it);
+      increment_step(1);
+      if (_needed.empty())
+        Log :: add_info_va(_("Posting of file %s succesful: %s"),
+               _basename.c_str(), response.str);
       break;
     case TOO_MANY_CONNECTIONS:
       // lockout for 120 secs, but try
@@ -203,23 +222,8 @@ TaskUpload :: on_nntp_done  (NNTP             * nntp,
       break;
   }
 
-  switch (health)
-  {
-    case OK:
-      delete_cache(*it);
-      _needed.erase (it);
-        if (_needed.empty() && post_ok)
-        Log :: add_info_va(_("Posting of file %s succesful: %s"),
-               _basename.c_str(), response.str);
-      break;
-
-    case ERR_NETWORK:
-      _state.set_need_nntp(nntp->_server);
-      break;
-  }
-
-  update_work();
-  increment_step(1);
+  _end:
+  update_work(nntp);
   check_in (nntp, health);
 
 }
@@ -233,7 +237,7 @@ TaskUpload :: get_bytes_remaining () const
 {
   unsigned long bytes (0);
   foreach_const (needed_t, _needed, it)
-    bytes += it->bytes;
+    bytes += it->second.bytes;
   return bytes;
 }
 
@@ -263,8 +267,8 @@ TaskUpload :: use_encoder (Encoder* encoder)
 void
 TaskUpload :: stop ()
 {
-  if (_encoder)
-      _encoder->cancel();
+//  if (_encoder)
+//      _encoder->cancel();
 }
 
 // called in the main thread by WorkerPool
@@ -286,12 +290,20 @@ TaskUpload :: on_worker_done (bool cancelled)
     foreach_const(Encoder::log_t, _encoder->log_infos, it)
       Log :: add_info(it->c_str());
 
+    int num_errors = _encoder->log_severe.size() +
+                     _encoder->log_errors.size();
+
     if (!_encoder->log_errors.empty())
       set_error (_encoder->log_errors.front());
 
-    if (!_encoder->log_severe.empty())
-      _state.set_health (ERR_LOCAL);
-    else {
+    if (num_errors>0)
+    {
+      /* stop state if encoder has encountered errors */
+      _state.set_completed ();
+      set_finished(ERR_LOCAL);
+    }
+    else
+    {
       set_step (100);
       _encoder_has_run = true;
       _total_parts = _encoder->total_parts;
@@ -304,20 +316,37 @@ TaskUpload :: on_worker_done (bool cancelled)
       char buf[2048];
       struct stat sb;
 
-        for (int i=1; i<=_total_parts; ++i)
+      int total(0);
+      /* not found: skip, we don't need that part
+         found: if (partial) then assign the needed values
+      */
+      for (int i=1; i<=_total_parts; ++i)
+      {
+        needed_t::iterator it = _needed.find(i);
+        if (it == _needed.end())
+          continue;
+        else if (it->second.partial)
         {
           n.partno = i;
           g_snprintf(buf,sizeof(buf),"%s/%s.%d",
-                     file::get_uulib_path().c_str(),
-                     _basename.c_str(), i);
+                   file::get_uulib_path().c_str(),
+                   _basename.c_str(), i);
           n.filename = buf;
           stat(buf, &sb);
           n.bytes = sb.st_size;
-          _needed.push_back (n);
         }
+          ++total;
+      }
 
-      init_steps (_total_parts);
-      set_step (0);
+      if (total==0)
+      {
+        _state.set_completed();
+        set_finished(OK);
+      } else
+      {
+        init_steps (_total_parts);
+        set_step (total);
+      }
     }
   }
 

@@ -35,7 +35,7 @@ namespace pan
   class Queue;
 
 
-  typedef std::multiset<TaskUpload*> tasks_set;
+  typedef std::set<TaskUpload*> tasks_set;
 
   /**
    * Dialog for posting new messages Pan's GTK GUI.
@@ -58,6 +58,7 @@ namespace pan
     public:
       GtkWidget * root() { return _root; }
       GtkWidget * part_select() { return _part_select; }
+      GtkWidget * parts_store() { return _parts_store; }
       void rot13_selection ();
       void wrap_body ();
       void spawn_editor ();
@@ -73,6 +74,7 @@ namespace pan
       void set_wrap_mode (bool wrap);
       void set_always_run_editor (bool);
       void update_filequeue_tab();
+      void update_parts_tab();
 
       //popup action entries
       void remove_files ();
@@ -158,8 +160,15 @@ namespace pan
       GtkWidget* create_main_tab ();
       GtkWidget* create_extras_tab ();
       GtkWidget* create_filequeue_tab ();
-      GtkWidget* create_parts_tab (TaskUpload* ptr);
+      GtkWidget* create_parts_tab ();
       GtkWidget* create_log_tab ();
+      TaskUpload* _upload_ptr;
+      int _total_parts;
+      typedef std::map<int, TaskUpload::Needed> needed_t;
+      typedef std::pair<int, TaskUpload::Needed> needed_p;
+      typedef std::vector<needed_t> needed_v;
+      needed_v _needed_v;
+      int _upload_cursor;
 
     private:
       std::string utf8ize (const StringView&) const;
@@ -194,6 +203,12 @@ namespace pan
       static void top_clicked_cb     (GtkButton*, PostUI*);
       static void bottom_clicked_cb  (GtkButton*, PostUI*);
       static void delete_clicked_cb  (GtkButton*, PostUI*);
+      static void on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, gpointer user_data);
+
+    public:
+      TaskUpload* upload_ptr() { return _upload_ptr; }
+      int cursor() { return _upload_cursor; }
+
   };
 }
 

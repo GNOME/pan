@@ -26,6 +26,7 @@ extern "C" {
   #include <sys/types.h> // for chmod
   #include <sys/stat.h> // for chmod
   #include <glib/gi18n.h>
+  #include <dirent.h>
 }
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
@@ -184,6 +185,11 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   _queue_size_button (0),
   _taskbar (0)
 {
+
+  //clear uulib encode cache
+  ///TODO perhaps remember by crc32-ptr and then assign already saved parts??
+//  file :: uulib_cache_clear();
+
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
   if (!gtk_ui_manager_add_ui_from_file (_ui_manager, filename, NULL))
     gtk_ui_manager_add_ui_from_string (_ui_manager, fallback_ui_file, -1, NULL);

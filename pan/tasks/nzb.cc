@@ -51,6 +51,7 @@ namespace
     TaskUpload::needed_t needed_parts;       // TaskUpload
     Article a;
     Quark posting_server;
+    bool encoded;   // encoder was done already
     PartBatch parts;
     tasks_t tasks;
     ArticleCache& cache;
@@ -103,7 +104,6 @@ namespace
         else if (!strcmp (*k,"subject")) mc.a.subject = *v;
         else if (!strcmp (*k,"server"))  mc.posting_server = Quark(*v);
       }
-      std::cerr<<"upload begin tag\n";
     }
 
     else if (!strcmp (element_name, "segment")) {
@@ -122,9 +122,7 @@ namespace
              if (!strcmp (*k,"bytes"))  mc.bytes = strtoul (*v,0,10);
         else if (!strcmp (*k,"number")) mc.number = atoi (*v);
       }
-      std::cerr<<"part begin tag\n";
     }
-
   }
 
   // Called for close tags </foo>
@@ -155,8 +153,9 @@ namespace
       n.bytes = mc.bytes;
       n.filename = mc.text;
       n.partno = mc.number;
-      mc.needed_parts.push_back(n);
-      std::cerr<<"part end tag\n";
+      n.partial = false;
+      std::pair<int,TaskUpload::Needed> tmp(mc.number,n);
+      mc.needed_parts.insert(tmp);
     }
 
     else if (!strcmp(element_name,"path"))
@@ -181,8 +180,12 @@ namespace
     else if (!strcmp (element_name, "upload"))
     {
       debug("adding taskupload from nzb.\n");
-      mc.tasks.push_back (new TaskUpload (mc.path, const_cast<const Quark&>(mc.posting_server),
-                          mc.groups, mc.a.subject.to_string(), mc.a.author.to_string(), mc.needed_parts, 0, TaskUpload::YENC));
+      TaskUpload* tmp = new TaskUpload (mc.path, const_cast<const Quark&>(mc.posting_server),
+                          mc.groups, mc.a.subject.to_string(), mc.a.author.to_string(), 0, TaskUpload::YENC);
+       //update needed struct
+      foreach (TaskUpload::needed_t, mc.needed_parts, it)
+        tmp->needed().insert(*it);
+      mc.tasks.push_back (tmp);
     }
   }
 
@@ -346,11 +349,7 @@ NZB :: nzb_to_xml (std::ostream             & out,
       out  << "\" subject=\"";
       escaped (out, task->_subject);
       out  << "\" server=\"";
-      escaped (out, task->_server.to_string());
-      out  << "\" encoded=\"";
-      char buf[3];
-      g_snprintf(buf,3,"%d",(int)task->_encoder_has_run);
-      escaped (out, StringView(buf)) << "\">\n";
+      escaped (out, task->_server.to_string()) << "\">\n";
       ++depth;
       out << indent(depth)
           << "<path>" << task->_filename << "</path>\n";
@@ -367,9 +366,9 @@ NZB :: nzb_to_xml (std::ostream             & out,
 
       foreach_const (TaskUpload::needed_t, task->_needed, it)
         out << indent(depth)
-            << "<part" << " bytes=\"" << (*it).bytes << '"'
-                       << " number=\"" << (*it).partno << '"'
-                       << ">" << (*it).filename<< "</part>\n";
+            << "<part" << " bytes=\"" << (*it).second.bytes << '"'
+                       << " number=\"" << (*it).second.partno << '"'
+                       << ">" << (*it).second.filename<< "</part>\n";
       --depth;
       out  << indent(depth) << "</parts>\n";
       --depth;

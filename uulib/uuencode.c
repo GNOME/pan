@@ -1779,12 +1779,13 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
 
   _FP_free (subline);
 
+  /* pan change (imhotep): these could lead to SIGSEV, so I changed them to check for NULL pointers */
   if (infile==NULL) {
-    if (res != UURET_OK) {
+    if (res != UURET_OK && theifile) {
       fclose (theifile);
       return res;
     }
-    if (feof (theifile)) {
+    if (feof (theifile) && theifile) {
       fclose (theifile);
       return UURET_OK;
     }

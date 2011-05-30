@@ -60,6 +60,8 @@ namespace pan
 
     std::string get_uulib_path();
 
+    void uulib_cache_clear();
+
     /**
      * If the specified directory doesn't exist, Pan tries to create it.
      * @param path

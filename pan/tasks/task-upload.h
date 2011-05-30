@@ -53,10 +53,12 @@ namespace pan
         unsigned long bytes;
         int partno;
         NNTP* nntp;
-        Needed (): nntp(0) {}
+        bool partial;
+        Needed (): nntp(0), bytes(0) , partial(false) {}
+        void reset() { nntp = 0; }
       };
 
-      typedef std::deque<Needed> needed_t;
+      typedef std::map<int, Needed> needed_t;
 
       enum EncodeMode
       {
@@ -71,7 +73,6 @@ namespace pan
                    quarks_t                  & groups,
                    std::string                 subject,
                    std::string                 author,
-                   needed_t                  & todo,
                    Progress::Listener        * listener= 0,
                    TaskUpload::EncodeMode enc= YENC);
       virtual ~TaskUpload ();
@@ -83,14 +84,15 @@ namespace pan
       const std::string& filename()  { return  _filename; }
       const std::string& subject ()  { return  _subject;  }
       unsigned long get_byte_count() { return _bytes;     }
+      needed_t& needed()             { return _needed;    }
 
-      /** only call this for tasks in the NEED_DECODE state
-       * attempts to acquire the saver thread and start saving
-       * returns false if failed or true if the save process started
+      /** only call this for tasks in the NEED_ENCODE state
+       * attempts to acquire the encoder thread and start encoding
+       * returns false if failed or true if the encoding process started
        * (intended to be used with the Queue class). If true is returned,
-       * a side-effect is that the task is now in the DECODING state.
+       * a side-effect is that the task is now in the ENCODING state.
        */
-      virtual void use_encoder (Encoder*);
+    virtual void use_encoder (Encoder*);
 
     private: // Task subclass
       virtual void use_nntp (NNTP * nntp);
@@ -107,6 +109,7 @@ namespace pan
 
     private: // implementation
       friend class Encoder;
+      friend class PostUI;
       friend class NZB;
       Encoder * _encoder;
       bool _encoder_has_run;
@@ -118,13 +121,13 @@ namespace pan
       int _total_parts; // filled in by encoder
       unsigned long _bytes;
       Mutex mut;
+      int _pos_in_queue;
+      char* _tmp;   // for g_path etc...
 
     private:
       needed_t       _needed;
-      needed_t       _extern;
-      std::set<int>  _parts;
-
       void update_work (NNTP * checkin_pending = 0);
+
   };
 
 // from mime-utils.cc

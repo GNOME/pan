@@ -100,7 +100,6 @@ Encoder :: do_work()
     if (((res = UUInitialize())) != UURET_OK)
     {
       log_errors.push_back(_("Error initializing uulib")); // log error
-      this->cancel();
     } else {
       UUSetMsgCallback (this, uu_log);
       UUSetBusyCallback (this, uu_busy_poll, 100);
@@ -109,13 +108,6 @@ Encoder :: do_work()
       outfile = fopen(buf,"wb");
       while (1) {
 
-        // skip not wanted parts of binary file
-//        if (parts->end() != parts->find(cnt))
-//        {
-//          ++cnt;
-//          res = UURET_CONT;
-//          goto _end;
-//        }
         // 4000 lines SHOULD be OK for ANY nntp server ...
         res = UUE_PrepPartial (outfile, NULL, (char*)filename.c_str(),YENC_ENCODED,
                                (char*)basename.c_str(),0644, cnt, 4000,
@@ -154,6 +146,7 @@ void
 Encoder :: uu_log (void* data, char* message, int severity)
 {
   Encoder *self = static_cast<Encoder *>(data);
+  if (self->was_cancelled()) return;
   char * pch (g_locale_to_utf8 (message, -1, 0, 0, 0));
 
   if (severity >= UUMSG_WARNING)

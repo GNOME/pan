@@ -2033,8 +2033,42 @@ PostUI :: create_filequeue_tab ()
   return vbox;
 }
 
+void
+PostUI:: on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, gpointer user_data)
+{
+  PostUI* data(static_cast<PostUI*>(user_data));
+  GtkWidget    * w    = data->parts_store() ;
+  GtkListStore *store = GTK_LIST_STORE(
+                      gtk_tree_view_get_model(GTK_TREE_VIEW(w)));
+  GtkTreeModel * model = gtk_tree_view_get_model(GTK_TREE_VIEW(w));
+  int part(42);
+  GtkTreeIter  iter;
+  GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
+  gboolean enabled;
+
+  gtk_tree_model_get_iter (model, &iter, path);
+
+  gtk_tree_model_get (model, &iter, 0, &part, 1, &enabled, -1);
+
+  enabled ^= 1;
+  if (enabled==0)
+    data->upload_ptr()->needed().erase(part);
+  else
+  {
+    TaskUpload::Needed tmp;
+    tmp.partno = part;
+    tmp.partial = true;
+    data->upload_ptr()->needed().insert(std::pair<int, TaskUpload::Needed>(part,tmp));
+
+  }
+  gtk_list_store_set(GTK_LIST_STORE( model ), &iter, 1, false, -1);
+  gtk_tree_path_free (path);
+  data->update_parts_tab();
+}
+
+
 GtkWidget*
-PostUI :: create_parts_tab (TaskUpload* ptr)
+PostUI :: create_parts_tab ()
 {
 
   const GtkAttachOptions fill ((GtkAttachOptions)(GTK_FILL));
@@ -2047,69 +2081,83 @@ PostUI :: create_parts_tab (TaskUpload* ptr)
   GtkWidget *t = gtk_table_new (8, 2, false);
   gtk_table_set_col_spacings (GTK_TABLE(t), PAD);
 
-  ++row;  //empty line
+  ++row;  //1
   l = gtk_label_new (NULL);
   gtk_table_attach (GTK_TABLE(t), l, 0, 2, row, row+1, fe, fill, 0, 0);
 
-  ++row;  //1
+  ++row;  //2
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Filename"));
   l = gtk_label_new (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
   gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
-  g_snprintf (buf, sizeof(buf), "%s", ptr->basename().c_str());
+  g_snprintf (buf, sizeof(buf), "%s", _upload_ptr->basename().c_str());
   l = gtk_label_new (buf);
   gtk_misc_set_alignment (GTK_MISC(l), 0.5f, 0.5f);
   gtk_widget_set_tooltip_text (l, _("The current filename"));
   gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
 
-  ++row;  //2
+  ++row;  //3
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Subject Line"));
   l = gtk_label_new (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
   gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
-  g_snprintf (buf, sizeof(buf), "%s", ptr->subject().c_str());
+  g_snprintf (buf, sizeof(buf), "%s", _upload_ptr->subject().c_str());
   l = gtk_label_new (buf);
   gtk_misc_set_alignment (GTK_MISC(l), 0.5f, 0.5f);
   gtk_widget_set_tooltip_text (l, _("The current Subject Line"));
   gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
 
-  ++row;  //3
+  ++row;  //4
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Lines / File"));
   l = gtk_label_new (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
   gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
-  //todo make generic!!
+  ///TODO make generic!!
   g_snprintf (buf, sizeof(buf), "%d", 4000);
   l = gtk_label_new_with_mnemonic (buf);
   gtk_misc_set_alignment (GTK_MISC(l), 0.5f, 0.5f);
   gtk_widget_set_tooltip_text (l, _("The current Number of Lines per File"));
   gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
 
-  //4
+  ++row;   // 5
+  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Parts"));
+  l = gtk_label_new (buf);
+  gtk_label_set_use_markup (GTK_LABEL(l), true);
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+  gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
+  g_snprintf (buf, sizeof(buf), "%d", _total_parts);
+  l = gtk_label_new_with_mnemonic (buf);
+  gtk_misc_set_alignment (GTK_MISC(l), 0.5f, 0.5f);
+  gtk_widget_set_tooltip_text (l, _("The current Number of Parts of the queued File"));
+  gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
+
+  //6
   ++row;
   l = gtk_label_new (NULL);
   gtk_table_attach (GTK_TABLE(t), l, 0, 2, row, row+1, fe, fill, 0, 0);
 
 
-  //5
+  //7
   ++row;
-  gtk_table_attach (GTK_TABLE(gtk_hseparator_new()), l, 0, 2, row, row+1, fe, fill, 0, 0);
 
-
-  // 6
+  // 8
   //treeview for parts list
-  w = _parts_store = gtk_tree_view_new_with_model (GTK_TREE_MODEL(gtk_list_store_new (2, G_TYPE_BOOLEAN, G_TYPE_STRING)));
+  w = _parts_store = gtk_tree_view_new_with_model (GTK_TREE_MODEL(gtk_list_store_new (3,  G_TYPE_UINT, G_TYPE_BOOLEAN, G_TYPE_STRING)));
 
   // add columns
-  renderer = gtk_cell_renderer_toggle_new();
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), 0,
-                          (_("Part No.")),renderer,"active", 1,NULL);
   renderer = gtk_cell_renderer_text_new ();
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), 0,
+                          (_("No. ")),renderer,"text", 0,NULL);
+  renderer = gtk_cell_renderer_toggle_new();
+  g_signal_connect (G_OBJECT(renderer), "toggled", G_CALLBACK(on_parts_box_clicked_cb), this);
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), 1,
-                          (_("Filename")),renderer,"text", 1,NULL);
+                          (_("Enable/Disable")),renderer,"active", 1,NULL);
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), 2,
+                          (_("Filename")),renderer,"text", 2,NULL);
 
   //set hint and selection
   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(w),TRUE);
@@ -2120,14 +2168,10 @@ PostUI :: create_parts_tab (TaskUpload* ptr)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(w), _parts_store);
-  ++row;                                              //todo
-  gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+2, fe, fill, 0, 0);
-
-  //7: OK and close Buttons
   ++row;
+  gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, fe, fill, 0, 0);
 
   return t;
-
 }
 
 GtkWidget*
@@ -2249,7 +2293,10 @@ PostUI :: remove_files (void)
   tasks_set tasks = get_selected_files();
   tasks_set::iterator nit;
   for (nit = tasks.begin(); nit != tasks.end();nit, ++nit)
-    _file_queue_tasks.erase(*nit);
+    {
+       delete (*nit);
+      _file_queue_tasks.erase(*nit);
+    }
   update_filequeue_tab();
 }
 
@@ -2339,18 +2386,21 @@ PostUI :: ~PostUI ()
   g_object_unref (G_OBJECT(_message));
 }
 
+
+
 void
 PostUI :: select_parts ()
 {
 
-  TaskUpload* ptr(0);
   tasks_set set(get_selected_files());
-  ptr = *set.begin();
+  _upload_ptr = *set.begin();
+
+  if (!_upload_ptr) return;
+
+  _total_parts = (int) (((long)_upload_ptr->get_byte_count() + (4000*128-1)) / (4000*128));
+
   GtkWidget * w;
   GtkTreeIter iter;
-  const int total = (int) (((long)ptr->get_byte_count() + (4000*128-1)) / (4000*128));
-
-  std::cerr<<total<<std::endl;
 
   w = _part_select = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_signal_connect (_part_select, "delete-event", G_CALLBACK(delete_parts_cb), this);
@@ -2358,7 +2408,7 @@ PostUI :: select_parts ()
   gtk_window_set_title (GTK_WINDOW(w), _("Select Parts"));
   int x,h;
   x = 350;
-  h = 450;
+  h = 650;
   gtk_window_set_default_size (GTK_WINDOW(w), x, h);
 
   // populate the window
@@ -2366,25 +2416,34 @@ PostUI :: select_parts ()
   gtk_container_add (GTK_CONTAINER(w), vbox);
 
   GtkWidget * notebook = gtk_notebook_new ();
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_parts_tab(ptr), gtk_label_new_with_mnemonic(_("_Parts")));
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_log_tab(),   gtk_label_new_with_mnemonic(_("_Log")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_parts_tab(), gtk_label_new_with_mnemonic(_("_Parts")));
+//  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_log_tab(),   gtk_label_new_with_mnemonic(_("_Log")));
   pan_box_pack_start_defaults (GTK_BOX(vbox), notebook);
 
-  //populate parts tab
-  GtkListStore *store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(_parts_store)));
-  for (int i=1;i<=total+100;++i)
+  gtk_widget_show_all (w);
+  update_parts_tab();
+
+}
+
+void
+PostUI :: update_parts_tab()
+{
+  GtkWidget    * w    = _parts_store ;
+  GtkListStore *store = GTK_LIST_STORE(
+                        gtk_tree_view_get_model(GTK_TREE_VIEW(w)));
+  GtkTreeIter   iter;
+  gtk_list_store_clear(store);
+  gboolean res(FALSE);
+
+  for (int i=1;i<=_total_parts;++i)
   {
     gtk_list_store_append (store, &iter);
+    res = (_upload_ptr->_needed.find(i) != _upload_ptr->_needed.end()) ? TRUE : FALSE;
     gtk_list_store_set (store, &iter,
-                      0, true,
-                      1, ptr->basename().c_str(), -1);
+                      0, i,
+                      1, res,
+                      2, _upload_ptr->basename().c_str(), -1);
   }
-
-    gtk_widget_show_all (w);
-
-
-//  update_parts_tab();
-
 }
 
 PostUI :: PostUI (GtkWindow    * parent,
@@ -2414,7 +2473,10 @@ PostUI :: PostUI (GtkWindow    * parent,
   _charset (DEFAULT_CHARSET),
   _group_entry_changed_id (0),
   _group_entry_changed_idle_tag (0),
-  _file_queue_empty(true)
+  _file_queue_empty(true),
+  _upload_ptr(0),
+  _total_parts(0),
+  _upload_cursor(0)
 {
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != 0);
@@ -2534,13 +2596,22 @@ PostUI :: prompt_user_for_queueable_files (tasks_set& queue, GtkWindow * parent,
         groups.insert(groupname);
     }
 
-    for (; cur; cur = cur->next)
+    int i(0);
+    for (; cur; cur = cur->next, ++i)
 		{
-		  TaskUpload::needed_t tmp; //todo
-      _file_queue_tasks.insert(		  new TaskUpload(std::string((const char*)cur->data),
-                                     profile.posting_server,
-                                     groups, subject, author, tmp, 0,
-                                     TaskUpload::YENC));
+		  TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
+                               profile.posting_server,
+                               groups, subject, author, 0,
+                               TaskUpload::YENC);
+		  _file_queue_tasks.insert(tmp);
+      TaskUpload::Needed tmp2;
+      const int parts = (int) (((long)tmp->get_byte_count() + (4000*128-1)) / (4000*128));
+      for (int j=1; j<=parts; ++j)
+      {
+        tmp2.partial = true;
+        tmp2.partno = j;
+        tmp->needed().insert(needed_p(j,tmp2));
+      }
 		}
   	g_slist_free (tmp_list);
   }

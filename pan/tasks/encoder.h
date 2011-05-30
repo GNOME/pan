@@ -79,6 +79,7 @@ namespace pan
 
       std::set<int>* parts;
       friend class TaskUpload;
+      friend class PostUI;
       TaskUpload * task;
       TaskUpload::EncodeMode encode_mode;
       std::string   filename;
