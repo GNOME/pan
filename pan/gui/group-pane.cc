@@ -33,6 +33,7 @@ extern "C" {
 #include <pan/data/data.h>
 #include "group-pane.h"
 #include "pad.h"
+#include "gtk_compat.h"
 
 using namespace pan;
 

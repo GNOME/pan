@@ -63,7 +63,7 @@ namespace pan
       void on_remove ();
       static void add_clicked_cb (GtkWidget*, gpointer);
       void on_add ();
-      static void add_destroy_cb (GtkObject*, gpointer);
+      static void add_destroy_cb (GtkWidget*, gpointer);
   };
 }
 

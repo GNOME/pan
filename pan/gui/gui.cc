@@ -110,11 +110,7 @@ namespace
 
   void toggle_visible (GtkWidget * w)
   {
-#if GTK_CHECK_VERSION(2,18,0)
     set_visible (w, !gtk_widget_get_visible(w));
-#else
-    set_visible (w, !GTK_WIDGET_VISIBLE(w));
-#endif
   }
 }
 
@@ -200,6 +196,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   gtk_box_pack_start (GTK_BOX(_root), _menu_vbox, FALSE, FALSE, 0);
   gtk_widget_show (_menu_vbox);
 
+  //_group_pane = new GroupPane (*this, data, _prefs);
   _group_pane = new GroupPane (*this, data, _prefs);
   _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, *this);
   _body_pane = new BodyPane (data, _cache, _prefs);
@@ -262,7 +259,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   w = _queue_size_button = gtk_button_new();
   gtk_widget_set_tooltip_text (w, _("Open the Task Manager"));
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
-  g_signal_connect (GTK_OBJECT(w), "clicked", G_CALLBACK(show_task_window_cb), this);
+  g_signal_connect (w, "clicked", G_CALLBACK(show_task_window_cb), this);
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
   frame = gtk_frame_new (NULL);
   gtk_container_set_border_width (GTK_CONTAINER(frame), 0);
@@ -606,7 +603,7 @@ void GUI :: do_save_articles_to_nzb ()
 
       // write them to a file
       std::ofstream tmp(file.c_str());
-      if (tmp.good())
+          if (tmp.good()) {
         NZB :: nzb_to_xml_file (tmp, tasks);
       tmp.close();
     }
@@ -1125,7 +1122,7 @@ void GUI :: do_supersede_article ()
   g_object_unref (content_object);
   g_object_unref (stream);
 
-  PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, new_message, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, new_message, _prefs, _group_prefs);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -1188,7 +1185,7 @@ void GUI :: do_cancel_article ()
   g_object_unref (stream);
   g_free (cancel_message);
 
-  PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, cancel, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, cancel, _prefs, _group_prefs);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -1269,7 +1266,7 @@ GUI :: do_post ()
   g_mime_message_set_mime_part (message, GMIME_OBJECT(part));
   g_object_unref (part);
 
-  PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
   if (post)
     gtk_widget_show_all (post->root());
   g_object_unref (message);
@@ -1279,7 +1276,7 @@ void GUI :: do_followup_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (false);
   if (message) {
-    PostUI * post = PostUI :: create_window(_root, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+    PostUI * post = PostUI :: create_window(0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);
@@ -1289,7 +1286,7 @@ void GUI :: do_reply_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (true);
   if (message) {
-    PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+    PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);
@@ -1414,7 +1411,8 @@ void GUI :: do_tabbed_layout (bool tabbed)
     vpane = 0;
   }
 
-  gtk_widget_hide_all (_workarea_bin);
+  //gtk_widget_hide_all (_workarea_bin);
+  gtk_widget_hide (_workarea_bin);
 
   GtkWidget * group_w (_group_pane->root());
   GtkWidget * header_w (_header_pane->root());

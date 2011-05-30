@@ -37,6 +37,7 @@ extern "C" {
 #include "header-pane.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
+#include "gtk_compat.h"
 
 using namespace pan;
 
@@ -545,11 +546,7 @@ HeaderPane :: set_group (const Quark& new_group)
       _atree->add_listener (this);
 
       rebuild ();
-#ifndef GTK_WIDGET_REALIZED
       if (gtk_widget_get_realized(_tree_view))
-#else
-      if (GTK_WIDGET_REALIZED(_tree_view))
-#endif
         gtk_tree_view_scroll_to_point (GTK_TREE_VIEW(_tree_view), 0, 0);
     }
   }
@@ -1199,26 +1196,29 @@ namespace
                                      GdkEventFocus * ,
                                      gpointer        )
   {
+#if !GTK_CHECK_VERSION(3,0,0)
     gtk_widget_modify_text (w, GTK_STATE_NORMAL, NULL); // resets
+#else
+    gtk_widget_override_color (w, GTK_STATE_FLAG_NORMAL, NULL);
+#endif
     set_search_entry (w, search_text.c_str());
     return false;
   }
-
-#if !GTK_CHECK_VERSION(2,18,0)
-  bool gtk_widget_has_focus( GtkWidget *w)
-  {
-    return GTK_WIDGET_HAS_FOCUS(w);
-  }
-#endif
 
   void refresh_search_entry (GtkWidget * w)
   {
     if (search_text.empty() && !gtk_widget_has_focus(w))
     {
+#if !GTK_CHECK_VERSION(3,0,0)
       GdkColor c;
       c.pixel = 0;
       c.red = c.green = c.blue = 0xAAAA;
       gtk_widget_modify_text (w, GTK_STATE_NORMAL, &c);
+#else
+      GdkRGBA c;
+      gdk_rgba_parse (&c, "0xAAA");
+      gtk_widget_override_color(w, GTK_STATE_FLAG_NORMAL, &c);
+#endif
       set_search_entry (w, _(mode_strings[mode]));
     }
   }
@@ -1564,6 +1564,7 @@ HeaderPane :: on_selection_changed_idle (gpointer self_gpointer)
     "download-selected-article",
     "save-articles",
     "save-articles-from-nzb",
+    "save-articles-to-nzb",
     "read-selected-article",
     "show-selected-article-info",
     "mark-article-read",
@@ -2009,11 +2010,11 @@ void
 HeaderPane :: refresh_font ()
 {
   if (!_prefs.get_flag ("header-pane-font-enabled", false))
-    gtk_widget_modify_font (_tree_view, 0);
+    gtk_widget_override_font (_tree_view, 0);
   else {
     const std::string str (_prefs.get_string ("header-pane-font", "Sans 10"));
     PangoFontDescription * pfd (pango_font_description_from_string (str.c_str()));
-    gtk_widget_modify_font (_tree_view, pfd);
+    gtk_widget_override_font (_tree_view, pfd);
     pango_font_description_free (pfd);
   }
 }

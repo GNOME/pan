@@ -23,11 +23,72 @@
 #include "url-find.h"
 
 using namespace pan;
+namespace {
+  class fooregex {
+    public:
+      fooregex(): regex(NULL)
+      {
+        // RFC1738
+        // unsafe in URL (always encoded):  {}|\^~[]`<>"
+        // reserved for schemas: ;/?:@=&
+        // % (hex encoding) # (fragment)
+        // allowed: a-z A-Z 0-9 $-_.+!*'(),
+        regex = g_regex_new("(?:"
+            "https?://|"
+            "ftps?(?:://|\\.)|" //ftp:// ftp.
+            "news:|nntp:|"
+            "www\\.|"
+            "[[:alnum:]][[:alnum:]_\\.]*@" //email
+          ")"
+          "[" "[:alnum:]$_\\-\\.!+*()',%#" ";:/?&=@" "]+" /* uri */,
+          G_REGEX_OPTIMIZE, (GRegexMatchFlags)0, NULL);
+      }
+      ~fooregex()
+      {
+        g_regex_unref(regex);
+      }
+      operator GRegex*() {return regex;}
+
+      GRegex *regex;
+  };
+
+  fooregex regex;
+};
+
+bool
+pan :: url_find (const StringView& text, StringView& setme_url)
+{
+  if (text.empty())
+    return false;
+
+  GMatchInfo *match;
+
+  if (!g_regex_match(regex, text.str, (GRegexMatchFlags)0, &match))
+    return false;
+
+  int start,end;
+
+  g_match_info_fetch_pos(match, 0, &start, &end);
+  g_match_info_free(match);
+  setme_url.assign(text.str+start, end - start);
+
+  // for urls at the end of a sentence.
+  if (!setme_url.empty() && strchr("?!.,", setme_url.back()))
+    --setme_url.len;
+  const char c = text.str[ start - 1 ];
+  if (c == '\'' && c == setme_url.back() )
+    --setme_url.len;
+  return true;
+}
 
 // This is a cheap little hack that should eventually be replaced
 // with something more robust.
+namespace pan {
+bool url_findx (const StringView& text, StringView& setme_url);
+}
+
 bool
-pan :: url_find (const StringView& text, StringView& setme_url)
+pan :: url_findx (const StringView& text, StringView& setme_url)
 {
   if (text.empty())
     return false;
@@ -80,7 +141,7 @@ pan :: url_find (const StringView& text, StringView& setme_url)
     char ch (start[-1]);
     if (ch == '[') bracket = ']';
     else if (ch == '<') bracket = '>';
-  } 
+  }
 
   const char * pch;
   for (pch=start; pch!=text.end(); ++pch) {

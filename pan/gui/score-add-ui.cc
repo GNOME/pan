@@ -29,6 +29,7 @@ extern "C" {
 #include "pad.h"
 #include "score-add-ui.h"
 #include "score-view-ui.h"
+#include "gtk_compat.h"
 
 using namespace pan;
 
@@ -332,8 +333,8 @@ namespace
     gtk_box_pack_start (GTK_BOX(h), entry, true, true, 0);
     g_object_set_data (G_OBJECT(h), "entry", entry);
 
-    GtkObject * a = gtk_adjustment_new (100, -ULONG_MAX, ULONG_MAX, 1.0, 1.0, 0.0);
-    GtkWidget * spin = setme_spin = gtk_spin_button_new (GTK_ADJUSTMENT(a), 100.0, 0u);
+    GtkAdjustment * a = (GtkAdjustment*)gtk_adjustment_new (100, -ULONG_MAX, ULONG_MAX, 1.0, 1.0, 0.0);
+    GtkWidget * spin = setme_spin = gtk_spin_button_new (a, 100.0, 0u);
     gtk_box_pack_start (GTK_BOX(h), spin, false, false, 0);
     g_object_set_data (G_OBJECT(h), "spin", spin);
 
@@ -647,8 +648,8 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
     w = _score_menu = value_combo_new (model);
     g_object_unref (model);
     gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
-    GtkObject * a = gtk_adjustment_new (100, INT_MIN, INT_MAX, 1.0, 1.0, 0.0);
-    w = _score_spin = gtk_spin_button_new (GTK_ADJUSTMENT(a), 100.0, 0u);
+    GtkAdjustment * a = (GtkAdjustment*)gtk_adjustment_new (100, INT_MIN, INT_MAX, 1.0, 1.0, 0.0);
+    w = _score_spin = gtk_spin_button_new (a, 100.0, 0u);
     gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
     HIG::workarea_add_wide_control (t, &row, h);
     gtk_widget_show_all (h);

@@ -838,6 +838,17 @@ DataImpl :: save_headers (DataIO& data_io, const Quark& group) const
 /*******
 ********
 *******/
+namespace
+{
+  gboolean nrc_as_cb(gpointer ptr)
+  {
+    DataImpl *data = static_cast<DataImpl*>(ptr);
+    data->in_newsrc_cb = true;
+    data->save_newsrc_files();
+    data->in_newsrc_cb = false;
+    return FALSE;
+  }
+}
 
 void
 DataImpl :: mark_read (const Article & a, bool read)
@@ -876,6 +887,9 @@ DataImpl :: mark_read (const Article  ** articles,
     fire_group_counts (group, g._unread_count, g._article_count);
     on_articles_changed (group, it->second, false);
   }
+  
+  if( !newsrc_autosave_id && newsrc_autosave_timeout )
+    newsrc_autosave_id = g_timeout_add_seconds( newsrc_autosave_timeout * 60, nrc_as_cb, this);
 }
 
 
@@ -1094,7 +1108,7 @@ DataImpl :: delete_articles (const unique_articles_t& articles)
 
     // remove the articles from our lookup table...
     GroupHeaders * h (get_group_headers (group));
-    if (h)
+    if (h) 
       h->remove_articles (it->second.mids);
   }
 

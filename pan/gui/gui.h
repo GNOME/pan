@@ -23,18 +23,14 @@
 #include <pan/general/progress.h>
 #include <pan/data/article-cache.h>
 #include <pan/tasks/queue.h>
-#include <pan/gui/group-pane.h>
+
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-ui.h>
 #include <pan/gui/prefs.h>
 #include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
 
-#ifdef GTK_DISABLE_DEPRECATED
-#if GTK_CHECK_VERSION(2,22,0)
-#define GtkNotebookPage void
-#endif
-#endif
+#include "gtk_compat.h"
 
 namespace pan
 {
@@ -104,7 +100,6 @@ namespace pan
       virtual void do_clear_body_pane ();
       virtual void do_read_selected_article ();
       virtual void do_read_more ();
-//      virtual void do_binpost ();
       virtual void do_read_less ();
       virtual void do_read_next_unread_group ();
       virtual void do_read_next_group ();
