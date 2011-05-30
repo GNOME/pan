@@ -200,6 +200,7 @@ namespace
   void do_wrap     (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_wrap_mode (gtk_toggle_action_get_active (w)); }
   void do_edit2    (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_always_run_editor (gtk_toggle_action_get_active (w)); }
   void do_wrap_selected(GtkAction*, gpointer p) { static_cast<PostUI*>(p)->wrap_selection(); }
+  void do_add_files          (GtkAction*, gpointer p) {static_cast<PostUI*>(p)->add_files(); }
 
   GtkActionEntry entries[] =
   {

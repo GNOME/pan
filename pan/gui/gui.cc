@@ -603,7 +603,7 @@ void GUI :: do_save_articles_to_nzb ()
 
       // write them to a file
       std::ofstream tmp(file.c_str());
-          if (tmp.good()) {
+          if (tmp.good()) 
         NZB :: nzb_to_xml_file (tmp, tasks);
       tmp.close();
     }

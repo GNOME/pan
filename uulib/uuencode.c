@@ -1731,7 +1731,6 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
       crc = crc32(0L, Z_NULL, 0);
     crcptr = &crc;
     if (subject)
-      sprintf (subline, "- %s - %s (%03d/%03d)", oname, subject,
       sprintf (subline, "%s \"%s\" (%d/%d)", subject, oname,
 	       partno, numparts);
     else
