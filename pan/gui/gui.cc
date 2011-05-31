@@ -165,10 +165,11 @@ namespace
 }
 
 
-GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPrefs& group_prefs):
+GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, /*EncodeCache& encode_cache, */Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),
   _queue (queue),
   _cache (cache),
+//  _encode_cache (encode_cache),
   _prefs (prefs),
   _group_prefs (group_prefs),
   _root (gtk_vbox_new (FALSE, 0)),
@@ -185,10 +186,6 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   _queue_size_button (0),
   _taskbar (0)
 {
-
-  //clear uulib encode cache
-  ///TODO perhaps remember by crc32-ptr and then assign already saved parts??
-//  file :: uulib_cache_clear();
 
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
   if (!gtk_ui_manager_add_ui_from_file (_ui_manager, filename, NULL))
@@ -1125,7 +1122,7 @@ void GUI :: do_supersede_article ()
   g_object_unref (content_object);
   g_object_unref (stream);
 
-  PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, new_message, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, new_message, _prefs, _group_prefs, _cache);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -1188,7 +1185,7 @@ void GUI :: do_cancel_article ()
   g_object_unref (stream);
   g_free (cancel_message);
 
-  PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, cancel, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, cancel, _prefs, _group_prefs, _cache);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -1222,6 +1219,7 @@ void GUI :: do_delete_article ()
 void GUI :: do_clear_article_cache ()
 {
   _cache.clear ();
+//  _encode_cache.clear();
 }
 
 void GUI :: do_mark_article_read ()
@@ -1269,7 +1267,7 @@ GUI :: do_post ()
   g_mime_message_set_mime_part (message, GMIME_OBJECT(part));
   g_object_unref (part);
 
-  PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, message, _prefs, _group_prefs, _cache);
   if (post)
     gtk_widget_show_all (post->root());
   g_object_unref (message);
@@ -1279,7 +1277,7 @@ void GUI :: do_followup_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (false);
   if (message) {
-    PostUI * post = PostUI :: create_window(_root, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+    PostUI * post = PostUI :: create_window(_root, _data, _queue, _data, _data, message, _prefs, _group_prefs, _cache);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);
@@ -1289,7 +1287,7 @@ void GUI :: do_reply_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (true);
   if (message) {
-    PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+    PostUI * post = PostUI :: create_window (_root, _data, _queue, _data, _data, message, _prefs, _group_prefs, _cache);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);

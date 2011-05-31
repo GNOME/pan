@@ -31,7 +31,7 @@ namespace pan
 {
   /**
    * A Usenet article, either single-part or multipart.
-   * 
+   *
    * To lessen the memory footprint of large binaries groups,
    * Pan folds multipart posts into a single Article object.
    * Only minimal information for any one part is kept

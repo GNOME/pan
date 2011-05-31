@@ -128,6 +128,7 @@ namespace
   }
 
   void run_pan_in_window (ArticleCache  & cache,
+//                          EncodeCache   & encode_cache,
                           Data          & data,
                           Queue         & queue,
                           Prefs         & prefs,
@@ -137,7 +138,7 @@ namespace
     {
       const gulong delete_cb_id =  g_signal_connect (window, "delete-event", G_CALLBACK(delete_event_cb), 0);
 
-      GUI gui (data, queue, cache, prefs, group_prefs);
+      GUI gui (data, queue, cache, /*encode_cache,*/ prefs, group_prefs);
       gtk_container_add (GTK_CONTAINER(window), gui.root());
       gtk_widget_show (GTK_WIDGET(window));
 
@@ -316,6 +317,8 @@ main (int argc, char *argv[])
     const int cache_megs = prefs.get_int ("cache-size-megs", 10);
     DataImpl data (false, cache_megs);
     ArticleCache& cache (data.get_cache ());
+//    EncodeCache& encode_cache (data.get_encode_cache());
+
     if (nzb && data.get_servers().empty()) {
       std::cerr << _("Please configure Pan's news servers before using it as an nzb client.") << std::endl;
        return 0;
@@ -386,13 +389,15 @@ main (int argc, char *argv[])
       gtk_window_set_resizable (GTK_WINDOW(window), true);
       gtk_window_set_default_icon (pixbuf);
       g_object_unref (pixbuf);
-      run_pan_in_window (cache, data, queue, prefs, group_prefs, GTK_WINDOW(window));
+      run_pan_in_window (cache, /*encode_cache,*/ data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
 
     worker_pool.cancel_all_silently ();
 
-    if (prefs.get_flag("clear-article-cache-on-shutdown", false))
+    if (prefs.get_flag("clear-article-cache-on-shutdown", false)) {
       cache.clear ();
+//      encode_cache.clear();
+    }
   }
 
   g_mime_shutdown ();

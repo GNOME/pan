@@ -35,6 +35,7 @@
 #include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
+#include <pan/data/encode-cache.h>
 #include <pan/data/data.h>
 #include <pan/tasks/queue.h>
 #include <pan/data-impl/data-io.h>
@@ -71,7 +72,11 @@ namespace pan
     public:
       virtual ArticleCache& get_cache () { return _cache; }
       virtual const ArticleCache& get_cache () const { return _cache; }
+
+//      virtual EncodeCache& get_encode_cache () { return _encode_cache; }
+//      virtual const EncodeCache& get_encode_cache () const { return _encode_cache; }
     private:
+//      EncodeCache _encode_cache;
       ArticleCache _cache;
 
     private:

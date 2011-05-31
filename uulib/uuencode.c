@@ -1545,9 +1545,9 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 
   if (encoding == YENC_ENCODED) {
     if (subject)
-      sprintf (subline, "%s \"%s\" (1/1)", subject, oname);
+      sprintf (subline, "%s \"%s\"", subject, oname);
     else
-      sprintf (subline, "%s (1/1)", oname);
+      sprintf (subline, "%s ", oname);
   }
   else {
     if (subject)

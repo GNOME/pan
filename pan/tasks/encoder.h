@@ -90,7 +90,6 @@ namespace pan
       Mutex mut;
       volatile double percent;
       std::string current_file; // the current file we are decoding, with path
-      int total_parts;
 
       static void uu_log(void *thiz, char *message, int severity);
       double get_percentage (const uuprogress& p) const;

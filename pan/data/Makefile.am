@@ -6,6 +6,7 @@ noinst_LIBRARIES = libdata.a
 
 libdata_a_SOURCES = \
  article.cc \
+ encode-cache.cc \
  article-cache.cc \
  data.cc \
  parts.cc \
@@ -13,6 +14,7 @@ libdata_a_SOURCES = \
 
 noinst_HEADERS = \
  article.h \
+ encode-cache.h \
  article-cache.h \
  data.h \
  defgroup.h \

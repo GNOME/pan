@@ -25,6 +25,7 @@
 #include <pan/general/progress.h>
 #include <pan/tasks/queue.h>
 #include <pan/usenet-utils/text-massager.h>
+#include <pan/data/article-cache.h>
 #include "group-prefs.h"
 
 namespace pan
@@ -35,7 +36,7 @@ namespace pan
   class Queue;
 
 
-  typedef std::set<TaskUpload*> tasks_set;
+  typedef std::list<TaskUpload*> tasks_v;
 
   /**
    * Dialog for posting new messages Pan's GTK GUI.
@@ -45,13 +46,13 @@ namespace pan
   {
     public:
       static PostUI* create_window (GtkWidget*, Data&, Queue&, GroupServer&, Profiles&,
-                                    GMimeMessage*, Prefs&, GroupPrefs&);
+                                    GMimeMessage*, Prefs&, GroupPrefs&, ArticleCache&);
 
-      void prompt_user_for_queueable_files (tasks_set& queue, GtkWindow * parent, const Prefs& prefs);
+      void prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, const Prefs& prefs);
 
     protected:
       PostUI (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
-              GMimeMessage*, Prefs&, GroupPrefs&);
+              GMimeMessage*, Prefs&, GroupPrefs&, ArticleCache&);
     public:
       ~PostUI ();
 
@@ -144,7 +145,7 @@ namespace pan
 
       /* binpost */
       bool _file_queue_empty;
-      tasks_set _file_queue_tasks;
+      tasks_v _file_queue_tasks;
 
     private:
       void add_actions (GtkWidget* box);
@@ -184,12 +185,15 @@ namespace pan
       static gboolean group_entry_changed_idle (gpointer);
       static void group_entry_changed_cb (GtkEditable*, gpointer);
 
+    protected:
+      ArticleCache& _cache;
+
     public:
       void set_spellcheck_enabled (bool);
       void spawn_editor_dead(char *);
 
     public:
-      tasks_set  get_selected_files () const;
+      tasks_v  get_selected_files () const;
 
     private:
       static void get_selected_files_foreach (GtkTreeModel*,

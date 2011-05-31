@@ -180,11 +180,11 @@ namespace
     else if (!strcmp (element_name, "upload"))
     {
       debug("adding taskupload from nzb.\n");
-      TaskUpload* tmp = new TaskUpload (mc.path, const_cast<const Quark&>(mc.posting_server),
-                          mc.groups, mc.a.subject.to_string(), mc.a.author.to_string(), 0, TaskUpload::YENC);
-       //update needed struct
+      TaskUpload::needed_t tmp2;
       foreach (TaskUpload::needed_t, mc.needed_parts, it)
-        tmp->needed().insert(*it);
+        tmp2.insert(*it);
+      TaskUpload* tmp = new TaskUpload (mc.path, const_cast<const Quark&>(mc.posting_server), mc.cache,
+                          mc.groups, mc.a.subject.to_string(), mc.a.author.to_string(), &tmp2, 0, TaskUpload::YENC);
       mc.tasks.push_back (tmp);
     }
   }

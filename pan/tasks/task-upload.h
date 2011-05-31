@@ -48,6 +48,8 @@ namespace pan
   {
     public:
 
+      typedef std::vector<Quark> mid_sequence_t;
+
       struct Needed {
         std::string filename;
         unsigned long bytes;
@@ -70,9 +72,11 @@ namespace pan
       // life cycle
       TaskUpload ( const std::string         & filename,
                    const Quark               & server,
+                   ArticleCache              & cache,
                    quarks_t                  & groups,
                    std::string                 subject,
                    std::string                 author,
+                   needed_t                  * imported=0,
                    Progress::Listener        * listener= 0,
                    TaskUpload::EncodeMode enc= YENC);
       virtual ~TaskUpload ();
@@ -105,7 +109,7 @@ namespace pan
       void on_worker_done (bool cancelled);
 
     protected:
-      const Quark _server;
+      Quark _server;
 
     private: // implementation
       friend class Encoder;
@@ -118,11 +122,12 @@ namespace pan
       TaskUpload::EncodeMode _encode_mode;
       quarks_t _groups;
       std::string _subject, _author;
-      int _total_parts; // filled in by encoder
+      int _total_parts, _needed_parts;
       unsigned long _bytes;
       Mutex mut;
-      int _pos_in_queue;
-      char* _tmp;   // for g_path etc...
+      ArticleCache& _cache;
+
+      void build_needed_tasks(bool);
 
     private:
       needed_t       _needed;

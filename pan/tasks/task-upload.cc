@@ -64,13 +64,13 @@ namespace
 }
 
 
-namespace
-{
-  void delete_cache(const TaskUpload::Needed& n)
-  {
-    unlink(n.filename.c_str());
-  }
-}
+//namespace
+//{
+//  void delete_cache(const TaskUpload::Needed& n)
+//  {
+//    unlink(n.filename.c_str());
+//  }
+//}
 
 /***
 ****
@@ -78,15 +78,18 @@ namespace
 
 TaskUpload :: TaskUpload ( const std::string         & filename,
                            const Quark               & server,
+                           ArticleCache              & cache,
                            quarks_t                  & groups,
                            std::string                 subject,
                            std::string                 author,
+                           needed_t                  * imported,
                            Progress::Listener        * listener,
                            const TaskUpload::EncodeMode  enc):
   Task ("UPLOAD", get_description(filename.c_str())),
   _filename(filename),
   _basename (g_path_get_basename(filename.c_str())),
   _server(server),
+  _cache(cache),
   _groups(groups),
   _subject (subject),
   _author(author),
@@ -97,10 +100,53 @@ TaskUpload :: TaskUpload ( const std::string         & filename,
   if (listener != 0)
     add_listener (listener);
 
+  needed_t& tmp = *imported;
+  if (imported)
+    foreach (needed_t, tmp, nit)
+      _needed.insert(*nit);
+
   struct stat sb;
   stat(filename.c_str(),&sb);
   _bytes = sb.st_size;
+
+  build_needed_tasks(imported);
   update_work ();
+}
+
+void
+TaskUpload :: build_needed_tasks(bool imported)
+{
+
+  _total_parts = (int) (((long)get_byte_count() + (4000*128-1)) / (4000*128));
+  TaskUpload::Needed tmp;
+  char buf[2048];
+  struct stat sb;
+  const char* uulib = file::get_uulib_path().c_str();
+  mid_sequence_t names;
+  int cnt(0);
+
+  for (int i=1;i<=_total_parts; ++i)
+  {
+    if (imported)
+    {
+      needed_t::iterator it = _needed.find(i);
+      if (it == _needed.end())
+        continue;
+    }
+    tmp.partno = i;
+    g_snprintf(buf,sizeof(buf),"%s/%s.%d", uulib, _basename.c_str(), i);
+    tmp.filename = buf;
+    tmp.partial = false;
+    tmp.nntp = 0;
+    stat(buf, &sb);
+    tmp.bytes = (unsigned long)sb.st_size;
+    _needed.insert(std::pair<int,Needed>(i,tmp));
+    ++cnt;
+  }
+  _needed_parts = cnt;
+
+  // reserve cache
+  _cache.reserve (names);
 }
 
 void
@@ -108,22 +154,23 @@ TaskUpload :: update_work (NNTP* checkin_pending)
 {
 
   int working(0);
-  foreach (needed_t, _needed, nit) {
+  foreach (needed_t, _needed, nit)
+  {
     Needed& n (nit->second);
     if (n.nntp && n.nntp!=checkin_pending)
       ++working;
   }
 
-  if (!_encoder && !_encoder_has_run )
+  if (!_encoder && !_encoder_has_run)
   {
     _state.set_need_encoder();
-  } else if(working )
+  } else if(working)
   {
     _state.set_working();
   } else if (_encoder_has_run && !_needed.empty())
   {
     _state.set_need_nntp(_server);
-  } else if (_needed.empty() && _encoder_has_run )
+  } else if (_needed.empty())
   {
     _state.set_completed();
     set_finished(OK);
@@ -139,9 +186,15 @@ TaskUpload :: use_nntp (NNTP * nntp)
 {
 
   Needed * needed (0);
-  for (needed_t::iterator it(_needed.begin()), end(_needed.end()); !needed && it!=end; ++it)
-    if (it->second.nntp==0)
-      needed = &it->second;
+  foreach (needed_t, _needed, nit)
+  {
+      if (nit->second.nntp==0)
+      {
+        needed = &nit->second;
+        break;
+      }
+  }
+
 
   if (!needed)
   {
@@ -151,13 +204,15 @@ TaskUpload :: use_nntp (NNTP * nntp)
   else
   {
     needed->nntp = nntp;
-    set_status_va (_("Uploading \"%s\" - Part %d of %d"), _basename.c_str(), needed->partno, _total_parts);
+
+    set_status_va (_("Uploading %s - Part %d of %d"), _basename.c_str(), needed->partno, _total_parts);
+
     std::stringstream tmp;
     std::ifstream in(needed->filename.c_str(), std::ifstream::in);
-    char tmp_char;
-    while (in.good()) {
-      tmp << (tmp_char=(char) in.get());
-    }
+    if (in.bad())
+      debug("error with stream!!!\n");
+    while (in.good())
+      tmp << (char) in.get();
     in.close();
     nntp->post(StringView(tmp.str()), this);
     update_work ();
@@ -169,13 +224,14 @@ TaskUpload :: use_nntp (NNTP * nntp)
 ***/
 
 void
-TaskUpload :: on_nntp_line  (NNTP               * nntp,
-                              const StringView   & line_in)
+TaskUpload :: on_nntp_line (NNTP * nntp,
+                              const StringView & line_in)
 {}
 
+
 void
-TaskUpload :: on_nntp_done  (NNTP             * nntp,
-                             Health             health,
+TaskUpload :: on_nntp_done (NNTP * nntp,
+                             Health health,
                              const StringView & response)
 {
 
@@ -184,16 +240,20 @@ TaskUpload :: on_nntp_done  (NNTP             * nntp,
     if (it->second.nntp == nntp)
       break;
 
+  bool post_ok(false);
   switch (health)
   {
     case OK:
+      _needed.erase (it);
+      post_ok = true;
+      increment_step(1);
       break;
-    /* if the connection was aborted with SIGPIPE, let this error silently by and
-     * let GIOSocket code handle this */
     case ERR_NETWORK:
-      std::cerr<<"err network!\n";
-      it->second.reset();
-      goto _end;
+      _state.set_need_nntp(nntp->_server);
+      break;
+    case ERR_COMMAND:
+      _needed.erase (it);
+      break;
   }
 
   switch (atoi(response.str))
@@ -203,13 +263,10 @@ TaskUpload :: on_nntp_done  (NNTP             * nntp,
       this->stop();
       break;
     case POSTING_FAILED:
-      Log :: add_err_va (_("Posting of file %s failed: %s"), _basename.c_str(), response.str);
+      Log :: add_err_va (_("Posting failed: %s"), response.str);
       break;
     case ARTICLE_POSTED_OK:
-      delete_cache(it->second);
-      _needed.erase (it);
-      increment_step(1);
-      if (_needed.empty())
+      if (_needed.empty() && post_ok)
         Log :: add_info_va(_("Posting of file %s succesful: %s"),
                _basename.c_str(), response.str);
       break;
@@ -217,12 +274,9 @@ TaskUpload :: on_nntp_done  (NNTP             * nntp,
       // lockout for 120 secs, but try
       _state.set_need_nntp(nntp->_server);
       break;
-    default:
-      Log :: add_err_va (_("Got unknown response code: %s"),response.str);
-      break;
   }
 
-  _end:
+
   update_work(nntp);
   check_in (nntp, health);
 
@@ -237,7 +291,7 @@ TaskUpload :: get_bytes_remaining () const
 {
   unsigned long bytes (0);
   foreach_const (needed_t, _needed, it)
-    bytes += it->second.bytes;
+    bytes += (unsigned long)it->second.bytes;
   return bytes;
 }
 
@@ -255,7 +309,7 @@ TaskUpload :: use_encoder (Encoder* encoder)
   std::string groups;
   quarks_t::iterator it = _groups.begin();
   int i(0);
-  for (; it != _groups.end(); ++it, ++i)
+  for (; it != _groups.end(); it, ++it, ++i)
   {
     if (i<_groups.size()&& i>0 && _groups.size()>1) groups += ",";
     groups += (*it).to_string();
@@ -267,8 +321,8 @@ TaskUpload :: use_encoder (Encoder* encoder)
 void
 TaskUpload :: stop ()
 {
-//  if (_encoder)
-//      _encoder->cancel();
+  if (_encoder)
+      _encoder->cancel();
 }
 
 // called in the main thread by WorkerPool
@@ -290,63 +344,13 @@ TaskUpload :: on_worker_done (bool cancelled)
     foreach_const(Encoder::log_t, _encoder->log_infos, it)
       Log :: add_info(it->c_str());
 
-    int num_errors = _encoder->log_severe.size() +
-                     _encoder->log_errors.size();
-
     if (!_encoder->log_errors.empty())
       set_error (_encoder->log_errors.front());
 
-    if (num_errors>0)
     {
-      /* stop state if encoder has encountered errors */
-      _state.set_completed ();
-      set_finished(ERR_LOCAL);
-    }
-    else
-    {
-      set_step (100);
+      set_step (0);
+      init_steps(_needed_parts);
       _encoder_has_run = true;
-      _total_parts = _encoder->total_parts;
-      /*enqueue all parts into the global needed_t list.
-        update_work will then assign a pointer to the begin
-        which will be used for an nntp upload.
-        on nntp_done, the list is decreased by one member
-       */
-      Needed n;
-      char buf[2048];
-      struct stat sb;
-
-      int total(0);
-      /* not found: skip, we don't need that part
-         found: if (partial) then assign the needed values
-      */
-      for (int i=1; i<=_total_parts; ++i)
-      {
-        needed_t::iterator it = _needed.find(i);
-        if (it == _needed.end())
-          continue;
-        else if (it->second.partial)
-        {
-          n.partno = i;
-          g_snprintf(buf,sizeof(buf),"%s/%s.%d",
-                   file::get_uulib_path().c_str(),
-                   _basename.c_str(), i);
-          n.filename = buf;
-          stat(buf, &sb);
-          n.bytes = sb.st_size;
-        }
-          ++total;
-      }
-
-      if (total==0)
-      {
-        _state.set_completed();
-        set_finished(OK);
-      } else
-      {
-        init_steps (_total_parts);
-        set_step (total);
-      }
     }
   }
 

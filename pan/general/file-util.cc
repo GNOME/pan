@@ -60,50 +60,30 @@ file :: get_uulib_path()
   return path;
 }
 
-/// TODO perhaps implement another cache for uulib files ??
 // delete cached files to avoid "disk full" problems
 void
 file :: uulib_cache_clear ()
 {
-  DIR *dp;
-  struct dirent *ep;
-  struct stat st;
-  const char * dir = get_uulib_path().c_str();
-  std::cerr<<"opening dir : "<<dir<<std::endl;
-  dp = opendir (dir);
-  if (dp != NULL)
-  {
-    while (ep = readdir (dp))
-    {
-      stat(ep->d_name, &st);
-      if (S_ISDIR(st.st_mode) == 0) {
-        std::cerr<<"deleting file :"<<ep->d_name<<"\n";
-        unlink(ep->d_name);
-      }
-    }
-    (void) closedir (dp);
-  } else
-    std::cerr<<"error clearing uulib cache!\n";
-}
-
-//  void clear_cached_range (const char* file)
+//  DIR *dp;
+//  struct dirent *ep;
+//  struct stat st;
+//  const char * dir = get_uulib_path().c_str();
+//  std::cerr<<"opening dir : "<<dir<<std::endl;
+//  dp = opendir (dir);
+//  if (dp != NULL)
 //  {
-//    DIR *dp;
-//    struct dirent *ep;
-//    struct stat st;
-//    const char * dir = file :: get_uulib_path().c_str();
-//    dp = opendir (dir);
-//    if (dp != NULL)
+//    while (ep = readdir (dp))
 //    {
-//      while (ep = readdir (dp))
-//      {
-//        stat(ep->d_name, &st);
-//        if (S_ISDIR(st.st_mode) == 0 && strstr(file,ep->d_name))
-//          unlink(ep->d_name);
+//      stat(ep->d_name, &st);
+//      if (S_ISDIR(st.st_mode) == 0) {
+//        std::cerr<<"deleting file :"<<ep->d_name<<"\n";
+//        unlink(ep->d_name);
 //      }
-//      (void) closedir (dp);
 //    }
-//  }
+//    (void) closedir (dp);
+//  } else
+//    std::cerr<<"error clearing uulib cache!\n";
+}
 
 std::string
 file :: get_pan_home ()

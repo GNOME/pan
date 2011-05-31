@@ -102,7 +102,7 @@ Encoder :: do_work()
       log_errors.push_back(_("Error initializing uulib")); // log error
     } else {
       UUSetMsgCallback (this, uu_log);
-      UUSetBusyCallback (this, uu_busy_poll, 100);
+      UUSetBusyCallback (this, uu_busy_poll, 200);
 
       g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename.c_str(), cnt);
       outfile = fopen(buf,"wb");
@@ -115,7 +115,6 @@ Encoder :: do_work()
                                (char*)author.c_str(), (char*)subject.c_str(),
                                0);
 
-        _end:
         if (outfile) fclose(outfile);
         if (res != UURET_CONT) break;
         g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename.c_str(), ++cnt);
@@ -196,7 +195,6 @@ Encoder :: uu_busy_poll (void * d, uuprogress *p)
   self->mut.lock();
     self->percent = self->get_percentage(*p);
     self->current_file = p->curfile;
-    self->total_parts = p->numparts;
   self->mut.unlock();
 
   return self->was_cancelled(); // returning true tells uulib to abort
