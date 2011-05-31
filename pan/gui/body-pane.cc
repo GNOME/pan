@@ -24,6 +24,7 @@
 extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
+  #include <gdk/gdk.h>
   #include <gdk/gdkkeysyms.h>
   #include <gmime/gmime.h>
 }
@@ -41,6 +42,7 @@ extern "C" {
 #include "tango-colors.h"
 #include "xface.h"
 #include "url.h"
+#include "gtk_compat.h"
 
 #define FIRST_PICTURE "first-picture"
 
@@ -51,13 +53,6 @@ using namespace pan;
 **/
 namespace
 {
-#if !GTK_CHECK_VERSION(2,18,0)
-  void gtk_widget_get_allocation( GtkWidget *w, GtkAllocation *a)
-  {
-    *a = w->allocation;
-  }
-#endif
-
   class PixbufCache
   {
     private:
@@ -178,8 +173,9 @@ namespace
       GdkDisplay * display (gtk_widget_get_display (w));
 
       int width, height;
-      GtkStyle * style (gtk_widget_get_style (w));
       const GtkIconSize size (GTK_ICON_SIZE_LARGE_TOOLBAR);
+#if !GTK_CHECK_VERSION(3,0,0)
+      GtkStyle * style (gtk_widget_get_style (w));
       const GtkTextDirection dir (GTK_TEXT_DIR_NONE);
       const GtkStateType state (GTK_STATE_PRELIGHT);
 
@@ -194,6 +190,17 @@ namespace
       g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, NULL);
       cursors[CURSOR_ZOOM_OUT] = gdk_cursor_new_from_pixbuf (display, pixbuf, width/2, height/2);
       g_object_unref (G_OBJECT(pixbuf));
+#else
+      GdkPixbuf * pixbuf = gtk_widget_render_icon_pixbuf (w, GTK_STOCK_ZOOM_IN, size);
+      g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, NULL);
+      cursors[CURSOR_ZOOM_IN] = gdk_cursor_new_from_pixbuf (display, pixbuf, width/2, height/2);
+      g_object_unref (G_OBJECT(pixbuf));
+
+      pixbuf = gtk_widget_render_icon_pixbuf (w, GTK_STOCK_ZOOM_OUT, size);
+      g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, NULL);
+      cursors[CURSOR_ZOOM_OUT] = gdk_cursor_new_from_pixbuf (display, pixbuf, width/2, height/2);
+      g_object_unref (G_OBJECT(pixbuf));
+#endif
 
       cursors[CURSOR_IBEAM] = gdk_cursor_new (GDK_XTERM);
       cursors[CURSOR_HREF] = gdk_cursor_new (GDK_HAND2);
@@ -491,8 +498,8 @@ namespace
     gboolean handled (false);
 
     g_return_val_if_fail (GTK_IS_TEXT_VIEW(w), false);
-    const bool up = event->keyval==GDK_Up || event->keyval==GDK_KP_Up;
-    const bool down = event->keyval==GDK_Down || event->keyval==GDK_KP_Down;
+    const bool up = event->keyval==GDK_KEY_Up || event->keyval==GDK_KEY_KP_Up;
+    const bool down = event->keyval==GDK_KEY_Down || event->keyval==GDK_KEY_KP_Down;
 
     if (up || down)
     {
@@ -671,7 +678,8 @@ namespace
                              const StringView    & body_in,
                              bool                  mute_quotes,
                              bool                  show_smilies,
-                             bool                  do_markup)
+                             bool                  do_markup,
+                             bool                  do_urls)
   {
     g_return_if_fail (buffer!=0);
     g_return_if_fail (GTK_IS_TEXT_BUFFER(buffer));
@@ -792,11 +800,13 @@ namespace
     }
     
     // colorize urls
-    StringView area;
-    StringView march (v_all);
-    while ((url_find (march, area))) {
-      set_section_tag (buffer, &start, v_all, area, "url", REPLACE);
-      march = march.substr (area.str + area.len, 0);
+    if (do_urls) {
+      StringView area;
+      StringView march (v_all);
+      while ((url_find (march, area))) {
+        set_section_tag (buffer, &start, v_all, area, "url", REPLACE);
+        march = march.substr (area.str + area.len, 0);
+      }
     }
 
     // do this last, since it alters the text instead of just marking it up
@@ -940,15 +950,18 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
   else if (g_mime_content_type_is_type (type, "text", "*"))
   {
     const char * fallback_charset (_charset.c_str());
+    const char * p_flowed (g_mime_object_get_content_type_parameter(obj,"format"));
+    const bool flowed (g_strcmp0 (p_flowed, "flowed") == 0);
     std::string str = mime_part_to_utf8 (part, fallback_charset);
 
     if (!str.empty() && _prefs.get_flag ("wrap-article-body", false))
-      str = _tm.fill (str);
+      str = _tm.fill (str, flowed);
 
     const bool do_mute (_prefs.get_flag ("mute-quoted-text", false));
     const bool do_smilies (_prefs.get_flag ("show-smilies-as-graphics", true));
     const bool do_markup (_prefs.get_flag ("show-text-markup", true));
-    append_text_buffer_nolock (&_tm, _buffer, str, do_mute, do_smilies, do_markup);
+    const bool do_urls (_prefs.get_flag ("highlight-urls", true));
+    append_text_buffer_nolock (&_tm, _buffer, str, do_mute, do_smilies, do_markup, do_urls);
     is_done = true;
   }
 
@@ -1709,13 +1722,13 @@ BodyPane :: refresh_fonts ()
   const bool monospace_font_enabled = _prefs.get_flag ("monospace-font-enabled", false);
 
   if (!body_pane_font_enabled && !monospace_font_enabled)
-    gtk_widget_modify_font (_text, 0);
+    gtk_widget_override_font (_text, 0);
   else {
     const std::string str (monospace_font_enabled
       ? _prefs.get_string ("monospace-font", "Monospace 10")
       : _prefs.get_string ("body-pane-font", "Sans 10"));
     PangoFontDescription * pfd (pango_font_description_from_string (str.c_str()));
-    gtk_widget_modify_font (_text, pfd);
+    gtk_widget_override_font (_text, pfd);
     pango_font_description_free (pfd);
   }
 }
@@ -1728,7 +1741,8 @@ BodyPane :: on_prefs_flag_changed (const StringView& key, bool value G_GNUC_UNUS
 
   if ((key=="wrap-article-body") || (key=="mute-quoted-text") ||
       (key=="show-smilies-as-graphics") || (key=="show-all-headers") ||
-      (key=="size-pictures-to-fit") || (key=="show-text-markup"))
+      (key=="size-pictures-to-fit") || (key=="show-text-markup") ||
+      (key=="highlight-urls") )
     refresh ();
 }
 

@@ -45,7 +45,7 @@ namespace pan
   class PostUI: private Progress::Listener
   {
     public:
-      static PostUI* create_window (GtkWidget*, Data&, Queue&, GroupServer&, Profiles&,
+      static PostUI* create_window (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
                                     GMimeMessage*, Prefs&, GroupPrefs&, ArticleCache&);
 
       void prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, const Prefs& prefs);
@@ -61,6 +61,7 @@ namespace pan
       GtkWidget * part_select() { return _part_select; }
       GtkWidget * parts_store() { return _parts_store; }
       void rot13_selection ();
+      void wrap_selection ();
       void wrap_body ();
       void spawn_editor ();
       void manage_profiles ();

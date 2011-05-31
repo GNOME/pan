@@ -66,7 +66,9 @@ DataImpl :: DataImpl (bool unit_test, int cache_megs, DataIO * io):
 //  _encode_cache (get_encode_cache_path(), cache_megs),
   _unit_test (unit_test),
   _data_io (io),
-  _descriptions_loaded (false)
+  _descriptions_loaded (false),
+  newsrc_autosave_id (0),
+  newsrc_autosave_timeout (0)
 {
   rebuild_backend ();
 }

@@ -26,6 +26,7 @@ extern "C" {
 #include "pad.h"
 #include "score-add-ui.h"
 #include "score-view-ui.h"
+#include "gtk_compat.h"
 
 using namespace pan;
 
@@ -80,7 +81,7 @@ namespace
 }
 
 void
-ScoreView :: add_destroy_cb (GtkObject*, gpointer view_gpointer)
+ScoreView :: add_destroy_cb (GtkWidget*, gpointer view_gpointer)
 {
   static_cast<ScoreView*>(view_gpointer)->tree_view_refresh ();
 }

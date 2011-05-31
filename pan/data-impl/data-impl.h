@@ -626,6 +626,19 @@ namespace pan
     public:
 
       const ArticleFilter _article_filter;
+
+    private:
+      guint newsrc_autosave_id;
+      guint newsrc_autosave_timeout;
+    public:
+      bool in_newsrc_cb;
+      void set_newsrc_autosave_timeout(guint seconds)
+        {newsrc_autosave_timeout = seconds;}
+      void save_newsrc_files()
+      {
+        save_newsrc_files(*_data_io);
+        newsrc_autosave_id = 0;
+      }
   };
 }
 

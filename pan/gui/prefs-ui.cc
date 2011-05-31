@@ -31,6 +31,7 @@ extern "C" {
 #include "prefs-ui.h"
 #include "tango-colors.h"
 #include "url.h"
+#include "gtk_compat.h"
 
 using namespace pan;
 
@@ -89,6 +90,22 @@ namespace
     return r;
   }
 
+  void spin_value_changed_cb( GtkSpinButton *spin, gpointer data)
+  {
+    const char * key = (const char*) g_object_get_data (G_OBJECT(spin), PREFS_KEY);
+    Prefs *prefs = static_cast<Prefs*>(data);
+    prefs->set_int(key, gtk_spin_button_get_value_as_int(spin));
+  }
+  GtkWidget* new_spin_button (const char *key, int low, int high, Prefs &prefs)
+  {
+    guint tm = prefs.get_int(key, 5 );
+    GtkAdjustment *adj = (GtkAdjustment*) gtk_adjustment_new(tm, low, high, 1.0, 1.0, 1.0);
+    GtkWidget *w = gtk_spin_button_new( adj, 1.0, 0);
+    g_object_set_data_full(G_OBJECT(w), PREFS_KEY, g_strdup(key), g_free);
+    g_signal_connect (w, "value_changed", G_CALLBACK(spin_value_changed_cb), &prefs);
+    return w;
+  }
+
   GtkWidget* new_orient_radio (GtkWidget* prev, const char* label, const char* value, std::string& cur, Prefs& prefs)
   {
     GtkWidget * r = prev==0
@@ -131,10 +148,10 @@ namespace
     }
   }
 
-  void set_prefs_string_from_combo_box_entry (GtkComboBox * c, gpointer user_data)
+  void set_prefs_string_from_combo_box_entry (GtkComboBoxText * c, gpointer user_data)
   {
     const char * key = (const char*) g_object_get_data (G_OBJECT(c), PREFS_KEY);
-    char * val = gtk_combo_box_get_active_text (c);
+    char * val = gtk_combo_box_text_get_active_text (c);
     static_cast<Prefs*>(user_data)->set_string (key, val);
     g_free (val);
   }
@@ -146,10 +163,10 @@ namespace
     const char * key = "editor";
     const std::string editor = prefs.get_string (key, *editors.begin());
     editors.insert (editor);
-    GtkWidget * c = gtk_combo_box_entry_new_text ();
+    GtkWidget * c = gtk_combo_box_text_new_with_entry ();
     g_object_set_data_full (G_OBJECT(c), PREFS_KEY, g_strdup(key), g_free);
     foreach_const (std::set<std::string>, editors, it)
-      gtk_combo_box_append_text (GTK_COMBO_BOX(c), it->c_str());
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT(c), it->c_str());
     gtk_combo_box_set_active (GTK_COMBO_BOX(c),
                               (int)std::distance (editors.begin(), editors.find(editor)));
     g_signal_connect (c, "changed", G_CALLBACK(set_prefs_string_from_combo_box_entry), &prefs);
@@ -449,13 +466,16 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
   HIG::workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Articles"));
-    HIG :: workarea_add_section_spacer (t, row, 3);
+    HIG :: workarea_add_section_spacer (t, row, 4);
     w = new_check_button (_("Space selects next article rather than next unread"), "space-selects-next-article", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Smooth scrolling"), "smooth-scrolling", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Clear article cache on shutdown"), "clear-article-cache-on-shutdown", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
+    w = new_spin_button ("newsrc-autosave-timeout-min", 0, 60, prefs);
+    l = gtk_label_new(_("Minutes to autosave newsrc files."));
+    HIG::workarea_add_row (t, &row, l, w); 
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Behavior")));
 

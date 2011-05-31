@@ -48,6 +48,7 @@ extern "C" {
 #include "post.ui.h"
 #include "profiles-dialog.h"
 #include "url.h"
+#include "gtk_compat.h"
 
 #ifdef HAVE_GTKSPELL
 #define DEFAULT_SPELLCHECK_FLAG true
@@ -198,7 +199,8 @@ namespace
   void do_close    (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->close_window (); }
   void do_wrap     (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_wrap_mode (gtk_toggle_action_get_active (w)); }
   void do_edit2    (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_always_run_editor (gtk_toggle_action_get_active (w)); }
-  void do_add_files(GtkAction*, gpointer p)          { static_cast<PostUI*>(p)->add_files (); }
+  void do_wrap_selected(GtkAction*, gpointer p) { static_cast<PostUI*>(p)->wrap_selection(); }
+  void do_add_files          (GtkAction*, gpointer p) {static_cast<PostUI*>(p)->add_files(); }
 
   GtkActionEntry entries[] =
   {
@@ -426,6 +428,21 @@ PostUI :: rot13_selection ()
   }
 }
 
+void
+PostUI :: wrap_selection ()
+{
+  GtkTextIter start, end;
+  if (gtk_text_buffer_get_selection_bounds (_body_buf, &start, &end))
+  {
+    char * str (gtk_text_buffer_get_text (_body_buf, &start, &end, false));
+    std::string s(str);
+    s = _tm.fill(s);
+    gtk_text_buffer_delete (_body_buf, &start, &end);
+    gtk_text_buffer_insert (_body_buf, &start, s.c_str(), s.length() );
+    g_free (str);
+  }
+}
+
 namespace
 {
   gboolean delete_event_cb (GtkWidget*, GdkEvent*, gpointer user_data)
@@ -630,8 +647,9 @@ namespace
       if (keep.count(*pch))
         out += *pch;
       else {
+        unsigned char uc = (unsigned char)*pch;
         char buf[8];
-        g_snprintf (buf, sizeof(buf), "%%%02x", (int)*pch);
+        g_snprintf (buf, sizeof(buf), "%%%02x", (int)uc);
         out += buf;
       }
     }
@@ -687,20 +705,15 @@ PostUI :: maybe_mail_message (GMimeMessage * message)
 void
 PostUI :: on_progress_finished (Progress&, int status) // posting finished
 {
-  int bufsz=2048;
-  char buf[bufsz];
-
   _post_task->remove_listener (this);
   gtk_widget_destroy (_post_dialog);
 
-  if (_file_queue_empty) {
-    GMimeMessage * message (((TaskPost*)_post_task)->get_message ());
+  GMimeMessage * message (_post_task->get_message ());
     if (status != OK) // error posting.. stop.
       done_sending_message (message, false);
     else
       maybe_mail_message (message);
   }
-}
 
 void
 PostUI :: on_progress_error (Progress&, const StringView& message)
@@ -810,7 +823,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   }
 
   /**
-  ***  Maybe remember the charsets
+  ***  Maybe remember the charsets.
   **/
   if (remember_charsets) {
     const char * text = gtk_entry_get_text (GTK_ENTRY(_groups_entry));
@@ -1253,7 +1266,7 @@ PostUI :: create_body_widget (GtkTextBuffer*& buf, GtkWidget*& view, const Prefs
   // always use a monospace font in the compose window
   const std::string str (prefs.get_string ("monospace-font", "Monospace 10"));
   PangoFontDescription *pfd (pango_font_description_from_string (str.c_str()));
-  gtk_widget_modify_font (view, pfd);
+  gtk_widget_override_font (view, pfd);
 
   // figure out how wide the text is before the wrap point
   PangoContext * context = gtk_widget_create_pango_context (view);
@@ -1295,8 +1308,8 @@ void
 PostUI :: update_profile_combobox ()
 {
   // get the old selection
-  GtkComboBox * combo (GTK_COMBO_BOX (_from_combo));
-  char * active_text = gtk_combo_box_get_active_text (combo);
+  GtkComboBoxText * combo (GTK_COMBO_BOX_TEXT (_from_combo));
+  char * active_text = gtk_combo_box_text_get_active_text (combo);
 
   // if there's not already a selection,
   // pull the default for the newsgroup
@@ -1315,9 +1328,9 @@ PostUI :: update_profile_combobox ()
   }
 
   // tear out the old entries
-  GtkTreeModel * model (gtk_combo_box_get_model (combo));
+  GtkTreeModel * model (gtk_combo_box_get_model (GTK_COMBO_BOX(combo)));
   for (int i(0), qty(gtk_tree_model_iter_n_children(model,0)); i<qty; ++i)
-    gtk_combo_box_remove_text (combo, 0);
+    gtk_combo_box_text_remove (combo, 0);
 
   // add the new entries
   typedef std::set<std::string> names_t;
@@ -1325,14 +1338,14 @@ PostUI :: update_profile_combobox ()
   int index (0);
   int sel_index (0);
   foreach_const (names_t, profile_names, it) {
-    gtk_combo_box_append_text (combo, it->c_str());
+    gtk_combo_box_text_append_text (combo, it->c_str());
     if (active_text && (*it == active_text))
       sel_index = index;
     ++index;
   }
 
   // ensure _something_ is selected...
-  gtk_combo_box_set_active (combo, sel_index);
+  gtk_combo_box_set_active (GTK_COMBO_BOX(combo), sel_index);
 
   // cleanup
   g_free (active_text);
@@ -1472,7 +1485,7 @@ Profile
 PostUI :: get_current_profile ()
 {
   Profile profile;
-  char * pch = gtk_combo_box_get_active_text (GTK_COMBO_BOX(_from_combo));
+  char * pch = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT(_from_combo));
   if (pch) {
     _profiles.get_profile (pch, profile);
     g_free (pch);
@@ -1732,8 +1745,10 @@ PostUI :: set_message (GMimeMessage * message)
   s = utf8ize (tmp);
   g_free (tmp);
   if (!s.empty()) {
+    if (_prefs.get_flag ("compose-wrap-enabled", true)) {
     s = TextMassager().fill (s);
     s += "\n\n";
+    }
     gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
   }
 
@@ -1814,7 +1829,7 @@ PostUI :: group_entry_changed_cb (GtkEditable*, gpointer ui_gpointer)
   PostUI * ui (static_cast<PostUI*>(ui_gpointer));
   unsigned int& tag (ui->_group_entry_changed_idle_tag);
   if (!tag)
-    tag = g_timeout_add (4000, group_entry_changed_idle, ui);
+    tag = g_timeout_add (2000, group_entry_changed_idle, ui);
 }
 
 /***
@@ -1871,7 +1886,7 @@ PostUI :: create_main_tab ()
   gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
-  w = _from_combo = gtk_combo_box_new_text ();
+  w = _from_combo = gtk_combo_box_text_new ();
   gtk_cell_layout_clear (GTK_CELL_LAYOUT(w));
   GtkCellRenderer * r =  gtk_cell_renderer_text_new();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT(w), r, true);
@@ -2529,7 +2544,7 @@ PostUI :: PostUI (GtkWindow    * parent,
 }
 
 PostUI*
-PostUI :: create_window (GtkWidget    * parent,
+PostUI :: create_window (GtkWindow    * parent,
                          Data         & data,
                          Queue        & queue,
                          GroupServer  & gs,

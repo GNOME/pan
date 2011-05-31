@@ -109,7 +109,7 @@ namespace
     Queue * queue;
   };
 
-  void add_grouplist_task (GtkObject *, gpointer user_data)
+  void add_grouplist_task (GtkWidget *, gpointer user_data)
   {
     DataAndQueue * foo (static_cast<DataAndQueue*>(user_data));
     const quarks_t new_servers (foo->data->get_servers());
@@ -179,7 +179,7 @@ namespace
     ~PanKiller() { q.remove_listener(this); }
 
     /** Method from Queue::Listener interface: quits program on zero sized Q*/
-    void on_queue_size_changed (Queue&, int active, int total)
+    void on_queue_size_changed (Queue&, int active, int total) 
       {  if (!active && !total) mainloop_quit();  }
 
     // all below methods from Queue::Listener interface are noops
@@ -282,7 +282,7 @@ main (int argc, char *argv[])
       nzb = true;
     else if (!strcmp (tok, "--version"))
       { std::cerr << "Pan " << VERSION << '\n'; return 0; }
-    else if (!strcmp (tok, "-o") && i<argc-1)
+    else if (!strcmp (tok, "-o") && i<argc-1) 
       nzb_output_path = argv[++i];
     else if (!memcmp (tok, "--output=", 9))
       nzb_output_path = tok+9;
@@ -323,6 +323,7 @@ main (int argc, char *argv[])
       std::cerr << _("Please configure Pan's news servers before using it as an nzb client.") << std::endl;
        return 0;
     }
+    data.set_newsrc_autosave_timeout( prefs.get_int("newsrc-autosave-timeout-min", 10 ));
 
     // instantiate the queue...
     WorkerPool worker_pool (4, true);

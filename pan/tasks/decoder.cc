@@ -171,8 +171,8 @@ Decoder :: do_work()
           file :: ensure_dir_exists (save_path.c_str());
 
         // find a unique filename...
-        char * fname = file::get_unique_fname(save_path.c_str(),
-                                              (item->filename
+        char * fname = file::get_unique_fname(save_path.c_str(), 
+                                              (item->filename 
                                                && *item->filename)
                                               ? item->filename
                                               : "pan-saved-file" );
