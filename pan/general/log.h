@@ -39,6 +39,8 @@ namespace pan
         PAN_SEVERITY_URGENT = (1<<10)
       };
 
+
+
       /**
        * A log message specifying the message's text, severity, and time.
        * @see Log
@@ -47,11 +49,12 @@ namespace pan
       struct Entry {
         time_t date;
         Severity severity;
+        std::deque<Entry> messages;
         std::string message;
-        std::deque<Entry> list;
         Entry() {}
-        Entry(std::deque<Entry>& d) : list(d) {}
       };
+
+      void add_entry(Entry& e, std::deque<Entry>& list);
 
       /** Interface class for objects that listen to a Log's events */
       struct Listener {
@@ -67,15 +70,6 @@ namespace pan
       void add (Severity, const char *);
       void add_va (Severity, const char *, ...);
       const entries_t& get_entries () const { return _entries; }
-      void append_entries(entries_t& entries)
-      {
-        for (entries_t::iterator it = entries.begin(); it != entries.end(); ++it)
-        {
-          _entries.resize(entries.size()+1);
-          _entries.push_back(*it);
-        }
-      }
-      void add_entry(Entry& e, std::deque<Entry>& list);
       void clear ();
       void add_listener (Listener* l) { _listeners.insert(l); }
       void remove_listener (Listener* l) { _listeners.erase(l); }

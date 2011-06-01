@@ -95,7 +95,8 @@ TaskUpload :: TaskUpload ( const std::string         & filename,
   _author(author),
   _encoder(0),
   _encoder_has_run (false),
-  _encode_mode(enc)
+  _encode_mode(enc),
+  _lines_per_file(4000)
 {
   if (listener != 0)
     add_listener (listener);
@@ -229,30 +230,6 @@ TaskUpload :: on_nntp_line (NNTP * nntp,
                               const StringView & line_in)
 {}
 
-
-namespace
-{
-  void add_err_to_groups(std::deque<Log :: Entry> _logfile, const char* buf)
-  {
-    _logfile.resize(_logfile.size()+1);
-    Log :: Entry& e(_logfile.back());
-    e.severity = Log :: PAN_SEVERITY_ERROR;
-    e.date = time (NULL);
-    e.message = buf;
-    Log :: entry_added (e);
-  }
-
-  void add_info_to_groups(std::deque<Log :: Entry> _logfile, const char* buf)
-  {
-    _logfile.resize(_logfile.size()+1);
-    Log :: Entry& e(_logfile.back());
-    e.severity = Log :: PAN_SEVERITY_INFO;
-    e.date = time (NULL);
-    e.message = buf;
-    Log :: entry_added (e);
-  }
-}
-
 void
 TaskUpload :: on_nntp_done (NNTP * nntp,
                              Health health,
@@ -278,7 +255,6 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
     case ERR_NETWORK:
       goto _end;
     case ERR_COMMAND:
-      _severity_final = Log::PAN_SEVERITY_URGENT;
       delete_cache(it->second);
       _needed.erase (it);
       break;
@@ -289,43 +265,51 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
     case NO_POSTING:
       g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: No Posts allowed by server."),
                  _basename.c_str(), it->second.partno, _total_parts);
-      add_err_to_groups(_logfile, buf);
-       _severity_final = Log::PAN_SEVERITY_URGENT;
+      tmp.message = buf;
+      tmp.severity = Log :: PAN_SEVERITY_ERROR;
+      _logfile.push_back(tmp);
+      Log::add_entry_list (tmp, _logfile);
+      std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
       this->stop();
       break;
     case POSTING_FAILED:
       g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: %s"),
                  _basename.c_str(), it->second.partno, _total_parts, response.str);
-      add_err_to_groups(_logfile, buf);
-       _severity_final = Log::PAN_SEVERITY_URGENT;
+      tmp.severity = Log :: PAN_SEVERITY_ERROR;
+      tmp.message = buf;
+      _logfile.push_back(tmp);
+      std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
       break;
     case ARTICLE_POSTED_OK:
-
-      std::cerr<<"OK!\n";
-
+      tmp.severity = Log :: PAN_SEVERITY_INFO;
       if (post_ok && !_needed.empty())
       {
         g_snprintf(buf,sizeof(buf), _("Posting of file %s (Part %d of %d) succesful: %s"),
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
-        add_info_to_groups(_logfile, buf);
-        _severity_final = (Log :: Severity) (_severity_final | Log :: PAN_SEVERITY_INFO);
+        tmp.message = buf;
+        _logfile.push_back(tmp);
+        std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
       } else if (post_ok && _needed.empty())
       {
+        g_snprintf(buf,sizeof(buf), _("Posting of file %s (Part %d of %d) succesful: %s"),
+                   _basename.c_str(), it->second.partno, _total_parts, response.str);
+        tmp.message = buf;
+        _logfile.push_back(tmp);
         g_snprintf(buf,sizeof(buf), _("Posting of file %s succesful: %s"),
                    _basename.c_str(), response.str);
-        _severity_final = (Log :: Severity) (_severity_final | Log :: PAN_SEVERITY_INFO);
         tmp.message = buf;
-        tmp.date = time(NULL);
-        tmp.severity = _severity_final;
-        Log :: add_entry_list (tmp, _logfile);
+        _logfile.push_back(tmp);
+        Log::add_entry_list (tmp, _logfile);
+        std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
       } else
       {
         g_snprintf(buf,sizeof(buf), _("Posting of file %s not successful: Check the popup log!"),
                    _basename.c_str(), response.str);
         tmp.message = buf;
-        tmp.date = time(NULL);
-        tmp.severity = _severity_final;
-        Log :: add_entry_list (tmp, _logfile);
+        tmp.severity = Log :: PAN_SEVERITY_ERROR;
+        _logfile.push_back(tmp);
+        Log::add_entry_list (tmp, _logfile);
+        std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
       }
       break;
     case TOO_MANY_CONNECTIONS:

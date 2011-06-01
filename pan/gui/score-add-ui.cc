@@ -195,9 +195,9 @@ namespace
       { TextMatch::CONTAINS,    true,  N_("doesn't contain")},
       { TextMatch::IS,          false, N_("is")},
       { TextMatch::IS,          true,  N_("isn't")},
-      { TextMatch::BEGINS_WITH, false, N_("starts with")}, 
+      { TextMatch::BEGINS_WITH, false, N_("starts with")},
       { TextMatch::ENDS_WITH,   false, N_("ends with")},
-      { TextMatch::REGEX,       false, N_("matches regex")}, 
+      { TextMatch::REGEX,       false, N_("matches regex")},
     };
 
     GtkListStore * store = gtk_list_store_new (TEXT_MATCH_COLS, G_TYPE_STRING, G_TYPE_INT, G_TYPE_BOOLEAN);
@@ -319,7 +319,7 @@ namespace
 
     GtkTreeModel * model = field_tree_model_new ();
     GtkWidget * field = setme_field = value_combo_new (model);
-    g_object_unref (G_OBJECT(model)); 
+    g_object_unref (G_OBJECT(model));
     gtk_box_pack_start (GTK_BOX(h), field, false, false, 0);
     g_signal_connect (field, "changed", G_CALLBACK(field_changed_cb), h);
     g_object_set_data (G_OBJECT(h), "field", field);
@@ -353,7 +353,7 @@ namespace
 void
 ScoreAddDialog :: add_this_to_scorefile (bool do_rescore)
 {
-  
+
   // section
   bool negate (false);
   int value (0);
@@ -552,12 +552,12 @@ namespace
     GtkWidget * button = gtk_button_new ();
     GtkWidget * label = gtk_label_new_with_mnemonic (_("Add and Re_score"));
     gtk_label_set_mnemonic_widget (GTK_LABEL (label), GTK_WIDGET (button));
-			      
+
     GtkWidget * image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_BUTTON);
     GtkWidget * image2 = gtk_image_new_from_stock (GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
     GtkWidget * hbox = gtk_hbox_new (FALSE, 2);
     GtkWidget * align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-					        
+
     gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (hbox), image2, FALSE, FALSE, 0);
     gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -643,7 +643,7 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
     gtk_widget_show (w);
 
     // score
-    h = gtk_hbox_new (false, PAD_SMALL); 
+    h = gtk_hbox_new (false, PAD_SMALL);
     model = score_tree_model_new ();
     w = _score_menu = value_combo_new (model);
     g_object_unref (model);

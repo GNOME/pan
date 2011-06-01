@@ -190,6 +190,7 @@ namespace
   void do_copy     (GtkAction*, gpointer p) { g_signal_emit_by_name (get_focus(p), "copy_clipboard"); }
   void do_paste    (GtkAction*, gpointer p) { g_signal_emit_by_name (get_focus(p), "paste_clipboard"); }
   void do_rot13    (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->rot13_selection(); }
+  void do_save_upload (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->rot13_selection(); }
   void do_edit     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->spawn_editor (); }
   void do_profiles (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->manage_profiles (); }
   void do_send     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->send_now (); }
@@ -818,7 +819,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _queue.add_task (_post_task, Queue::TOP);
   } else {
      foreach_const (tasks_v, _file_queue_tasks, it)
-        _queue.add_task (*it, Queue::BOTTOM);
+      _queue.add_task (*it, Queue::BOTTOM);
      close_window(true); // dont wait for the upload queue
   }
 
@@ -1635,6 +1636,14 @@ namespace
     static_cast<PostUI*>(user_data)->apply_profile ();
   }
 
+  void on_lines_spin_changed_cb (GtkComboBox* box, gpointer user_data)
+  {
+    const int res (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(box)));
+
+    static_cast<PostUI*>(user_data)->upload_ptr()->set_lpf(res);
+  }
+
+
   typedef std::map <std::string, std::string> str2str_t;
 
   struct SetMessageForeachHeaderData
@@ -2010,11 +2019,16 @@ PostUI :: create_filequeue_tab ()
   gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
   w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
   gtk_widget_set_tooltip_text( w, _("Delete from Queue"));
+  gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+  add_button (buttons, GTK_STOCK_SELECT_ALL, 0, 0);
+  w = gtk_toggle_button_new_with_label(_("Save"));
+  gtk_box_pack_start (GTK_BOX(vbox), w, false, false, 0);
   pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new());
 
   gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
   gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
 
+  //add filestore
   list_store = gtk_list_store_new (3, G_TYPE_UINT, G_TYPE_POINTER, G_TYPE_UINT);
   w = _filequeue_store = gtk_tree_view_new_with_model (GTK_TREE_MODEL(list_store));
 
@@ -2129,12 +2143,13 @@ PostUI :: create_parts_tab ()
   gtk_label_set_use_markup (GTK_LABEL(l), true);
   gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
-  ///TODO make generic!!
-  g_snprintf (buf, sizeof(buf), "%d", 4000);
-  l = gtk_label_new_with_mnemonic (buf);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.5f, 0.5f);
-  gtk_widget_set_tooltip_text (l, _("The current Number of Lines per File"));
-  gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
+  GtkAdjustment * a = (GtkAdjustment*)gtk_adjustment_new (5000, 1500, INT_MAX, 1.0, 1.0, 0.0);
+  w = _lines_spin = gtk_spin_button_new (a, 1.0, 0u);
+  gtk_misc_set_alignment (GTK_MISC(w), 0.5f, 0.5f);
+  gtk_widget_set_tooltip_text (w, _("The current Number of Lines per File"));
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(w), _upload_ptr->_lines_per_file);
+  gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
+  g_signal_connect (w, "changed", G_CALLBACK(on_lines_spin_changed_cb), this);
 
   ++row;   // 5
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Parts"));
@@ -2152,7 +2167,6 @@ PostUI :: create_parts_tab ()
   ++row;
   l = gtk_label_new (NULL);
   gtk_table_attach (GTK_TABLE(t), l, 0, 2, row, row+1, fe, fill, 0, 0);
-
 
   //7
   ++row;
@@ -2369,6 +2383,12 @@ void PostUI :: delete_clicked_cb (GtkButton*, PostUI* pane)
 {
   pane->remove_files ();
 }
+
+//void PostUI :: save_clicked_cb (GtkButton*, Postui* pane)
+//{
+//  pane->
+//}
+
 
 void
 PostUI :: update_filequeue_tab()

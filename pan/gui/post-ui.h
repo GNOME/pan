@@ -120,6 +120,7 @@ namespace pan
 
       GtkWidget * _filequeue_store;
       GtkWidget * _parts_store;
+      GtkWidget * _lines_spin;
 
       GtkWidget * _to_entry;
       GtkWidget * _followupto_entry;

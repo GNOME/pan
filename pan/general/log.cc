@@ -64,12 +64,12 @@ void
 Log :: add_entry(Entry& e, std::deque<Entry>& list)
 {
   _entries.resize (_entries.size() + 1);
-  Entry& tmp (_entries.back());
-  tmp.date = e.date;
-  tmp.severity = e.severity;
-  tmp.message = e.message;
-  tmp.list = list;
-  fire_entry_added (tmp);
+  Entry& a (_entries.back());
+  a.date = time(NULL);
+  a.severity = e.severity;
+  a.message = e.message;
+  a.messages = list;
+  fire_entry_added (a);
 }
 
 void
@@ -81,7 +81,6 @@ Log :: add (Severity severity, const char * msg)
   e.severity = severity;
   e.message = msg;
   fire_entry_added (e);
-  //std::cerr << "log entry: [" << msg << ']' << std::endl;
 }
 
 void

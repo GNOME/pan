@@ -49,6 +49,8 @@ namespace pan
   {
     public:
 
+      void set_lpf (const int& setme ) { _lines_per_file = setme; }
+
       typedef std::vector<Quark> mid_sequence_t;
 
       struct Needed {
@@ -118,6 +120,7 @@ namespace pan
       friend class NZB;
       Encoder * _encoder;
       bool _encoder_has_run;
+      int _lines_per_file;
       std::string _filename;
       std::string _basename;
       TaskUpload::EncodeMode _encode_mode;
