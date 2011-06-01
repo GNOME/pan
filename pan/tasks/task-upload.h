@@ -27,7 +27,7 @@
 #include <pan/general/worker-pool.h>
 #include <pan/general/locking.h>
 #include <pan/data/article.h>
-#include <pan/data/article-cache.h>
+//#include <pan/data/article-cache.h>
 #include <pan/data/data.h>
 #include <pan/data/xref.h>
 #include <pan/tasks/nntp.h>
@@ -72,7 +72,7 @@ namespace pan
       // life cycle
       TaskUpload ( const std::string         & filename,
                    const Quark               & server,
-                   ArticleCache              & cache,
+//                   ArticleCache              & cache,
                    quarks_t                  & groups,
                    std::string                 subject,
                    std::string                 author,
@@ -125,7 +125,7 @@ namespace pan
       int _total_parts, _needed_parts;
       unsigned long _bytes;
       Mutex mut;
-      ArticleCache& _cache;
+//      ArticleCache& _cache;
 
       void build_needed_tasks(bool);
 

@@ -46,13 +46,13 @@ namespace pan
   {
     public:
       static PostUI* create_window (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
-                                    GMimeMessage*, Prefs&, GroupPrefs&, ArticleCache&);
+                                    GMimeMessage*, Prefs&, GroupPrefs&);//, ArticleCache&);
 
       void prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, const Prefs& prefs);
 
     protected:
       PostUI (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
-              GMimeMessage*, Prefs&, GroupPrefs&, ArticleCache&);
+              GMimeMessage*, Prefs&, GroupPrefs&);//, ArticleCache&);
     public:
       ~PostUI ();
 
@@ -186,8 +186,8 @@ namespace pan
       static gboolean group_entry_changed_idle (gpointer);
       static void group_entry_changed_cb (GtkEditable*, gpointer);
 
-    protected:
-      ArticleCache& _cache;
+//    protected:
+//      ArticleCache& _cache;
 
     public:
       void set_spellcheck_enabled (bool);

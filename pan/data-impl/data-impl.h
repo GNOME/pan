@@ -35,7 +35,6 @@
 #include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
-#include <pan/data/encode-cache.h>
 #include <pan/data/data.h>
 #include <pan/tasks/queue.h>
 #include <pan/data-impl/data-io.h>

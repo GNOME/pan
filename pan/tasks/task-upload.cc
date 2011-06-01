@@ -64,13 +64,13 @@ namespace
 }
 
 
-//namespace
-//{
-//  void delete_cache(const TaskUpload::Needed& n)
-//  {
-//    unlink(n.filename.c_str());
-//  }
-//}
+namespace
+{
+  void delete_cache(const TaskUpload::Needed& n)
+  {
+    unlink(n.filename.c_str());
+  }
+}
 
 /***
 ****
@@ -78,7 +78,7 @@ namespace
 
 TaskUpload :: TaskUpload ( const std::string         & filename,
                            const Quark               & server,
-                           ArticleCache              & cache,
+//                           ArticleCache              & cache,
                            quarks_t                  & groups,
                            std::string                 subject,
                            std::string                 author,
@@ -89,7 +89,7 @@ TaskUpload :: TaskUpload ( const std::string         & filename,
   _filename(filename),
   _basename (g_path_get_basename(filename.c_str())),
   _server(server),
-  _cache(cache),
+//  _cache(cache),
   _groups(groups),
   _subject (subject),
   _author(author),
@@ -146,7 +146,7 @@ TaskUpload :: build_needed_tasks(bool imported)
   _needed_parts = cnt;
 
   // reserve cache
-  _cache.reserve (names);
+//  _cache.reserve (names);
 }
 
 void
@@ -249,9 +249,11 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       increment_step(1);
       break;
     case ERR_NETWORK:
-      _state.set_need_nntp(nntp->_server);
-      break;
+//      update_work();
+//      check_in (nntp, health);
+      goto _end;
     case ERR_COMMAND:
+      delete_cache(it->second);
       _needed.erase (it);
       break;
   }
@@ -276,7 +278,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       break;
   }
 
-
+  _end:
   update_work(nntp);
   check_in (nntp, health);
 

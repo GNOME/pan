@@ -2314,7 +2314,6 @@ PostUI :: remove_files (void)
     _file_queue_tasks.remove(*nit);
     delete (ptr);
   }
-  std::cerr<<"tasks size: "<<_file_queue_tasks.size()<<std::endl;
   update_filequeue_tab();
 }
 
@@ -2473,15 +2472,17 @@ PostUI :: PostUI (GtkWindow    * parent,
                   Profiles     & profiles,
                   GMimeMessage * message,
                   Prefs        & prefs,
-                  GroupPrefs   & group_prefs,
-                  ArticleCache & cache):
+                  GroupPrefs   & group_prefs
+//                  ,
+//                  ArticleCache & cache):
+                  ):
   _data (data),
   _queue (queue),
   _gs (gs),
   _profiles (profiles),
   _prefs (prefs),
   _group_prefs (group_prefs),
-  _cache (cache),
+//  _cache (cache),
   _root (0),
   _from_combo (0),
   _subject_entry (0),
@@ -2551,8 +2552,9 @@ PostUI :: create_window (GtkWindow    * parent,
                          Profiles     & profiles,
                          GMimeMessage * message,
                          Prefs        & prefs,
-                         GroupPrefs   & group_prefs,
-                         ArticleCache & cache)
+                         GroupPrefs   & group_prefs)
+//                         ,
+//                         ArticleCache & cache)
 {
   // can't post without a profile...
   if (!profiles.has_profiles())
@@ -2573,7 +2575,7 @@ PostUI :: create_window (GtkWindow    * parent,
       return 0;
   }
 
-  return new PostUI (0, data, queue, gs, profiles, message, prefs, group_prefs, cache);
+  return new PostUI (0, data, queue, gs, profiles, message, prefs, group_prefs);//, cache);
 }
 
 void
@@ -2628,7 +2630,7 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
     for (; cur; cur = cur->next, ++i)
 		{
 		  TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
-                               profile.posting_server,  _cache,
+                               profile.posting_server,  //_cache,
                                groups, subject, author, 0, 0,
                                TaskUpload::YENC);
 		  _file_queue_tasks.push_back(tmp);
