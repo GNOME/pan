@@ -61,6 +61,18 @@ Log :: fire_cleared () {
 ***/
 
 void
+Log :: add_entry(Entry& e, std::deque<Entry>& list)
+{
+  _entries.resize (_entries.size() + 1);
+  Entry& tmp (_entries.back());
+  tmp.date = e.date;
+  tmp.severity = e.severity;
+  tmp.message = e.message;
+  tmp.list = list;
+  fire_entry_added (tmp);
+}
+
+void
 Log :: add (Severity severity, const char * msg)
 {
   _entries.resize (_entries.size() + 1);

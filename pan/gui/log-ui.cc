@@ -20,6 +20,7 @@
 #include <config.h>
 #include <ostream>
 #include <fstream>
+#include <iostream>
 extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
@@ -51,10 +52,10 @@ namespace
     virtual void on_log_entry_added (const Log::Entry& e) {
       GtkTreeIter iter;
       gtk_list_store_prepend (myStore, &iter);
-      gtk_list_store_set (myStore, &iter, 
+      gtk_list_store_set (myStore, &iter,
                           COL_SEVERITY, (e.severity & Log::PAN_SEVERITY_ERROR),
                           COL_DATE, (unsigned long)e.date,
-                          COL_MESSAGE, e.message.c_str(), -1);
+                          COL_MESSAGE, &e, -1);
     }
 
     virtual void on_log_cleared () {
@@ -110,22 +111,72 @@ namespace
 
 namespace
 {
+  std::string to_string(std::deque<Log::Entry> d)
+  {
+    std::string tmp;
+    foreach_const(std::deque<Log::Entry>, d, it)
+      tmp += it->message + "\n";
+    return tmp;
+  }
+}
+
+void
+pan ::  do_popup_menu (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
+{
+  GtkWidget    * w    = treeview;
+  GtkTreeModel * model = gtk_tree_view_get_model(GTK_TREE_VIEW(w));
+  GtkTreeIter  iter ;
+  GtkTreePath * path;
+  gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW(treeview),
+                                       (gint)event->x, (gint)event->y,
+                                       &path, NULL, NULL, NULL);
+  gtk_tree_model_get_iter(model,&iter,path);
+  Log::Entry* e;
+  gtk_tree_model_get (model, &iter, COL_MESSAGE, &e, -1);
+  if (!e->list.empty())
+  {
+
+    std::cerr<<"multi entry.\n";
+
+    GtkTextBuffer * tb;
+    std::string tmp (to_string(e->list));
+    int len = tmp.length();
+    gtk_text_buffer_set_text(tb, to_string(e->list).c_str(), len);
+    GtkWidget * w = gtk_text_view_new_with_buffer(tb);
+
+    gtk_widget_show_all(w);
+  }
+}
+
+gboolean
+pan :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
+{
+  if (event->type == GDK_BUTTON_PRESS && event->button == 3)
+  {
+      do_popup_menu (treeview, event, userdata);
+    return true;
+  }
+  return false;
+}
+
+namespace
+{
   GtkListStore*
   create_model ()
   {
     GtkListStore * store = gtk_list_store_new (N_COLS,
                                                G_TYPE_BOOLEAN, // true==error, false==info
                                                G_TYPE_ULONG, // date
-                                               G_TYPE_STRING); // message
+                                               G_TYPE_POINTER); // message
 
     const Log::entries_t& entries (Log::get().get_entries());
     foreach_const (Log::entries_t, entries, it) {
       GtkTreeIter iter;
       gtk_list_store_prepend (store, &iter);
-      gtk_list_store_set (store, &iter, 
+      gtk_list_store_set (store, &iter,
                           COL_SEVERITY, (it->severity & Log::PAN_SEVERITY_ERROR),
                           COL_DATE, (unsigned long)it->date,
-                          COL_MESSAGE, it->message.c_str(), -1);
+                          COL_MESSAGE, &*it, -1);
     }
 
     return store;
@@ -161,6 +212,20 @@ namespace
     s.resize (s.size()-1); // remove \n
     g_object_set (renderer, "text", s.c_str(), NULL);
   }
+
+    void
+  render_message (GtkTreeViewColumn * ,
+                  GtkCellRenderer   * renderer,
+                  GtkTreeModel      * model,
+                  GtkTreeIter       * iter,
+                  gpointer            )
+  {
+    Log::Entry* log_entry(0);
+    gtk_tree_model_get (model, iter, COL_MESSAGE, &log_entry, -1);
+    g_object_set (renderer, "text", log_entry ? log_entry->message.c_str() : "", NULL);
+  }
+
+
 }
 
 GtkWidget*
@@ -183,6 +248,7 @@ pan :: log_dialog_new (Prefs& prefs, GtkWindow* window)
 
   GtkListStore * store = create_model ();
   GtkWidget * view = gtk_tree_view_new_with_model (GTK_TREE_MODEL(store));
+
   g_object_set_data_full (G_OBJECT(view), "listener", new MyLogListener(store), delete_my_log_listener);
   GtkWidget * scroll = gtk_scrolled_window_new (0, 0);
   gtk_container_set_border_width (GTK_CONTAINER(scroll), PAD_BIG);
@@ -217,7 +283,8 @@ pan :: log_dialog_new (Prefs& prefs, GtkWindow* window)
   gtk_tree_view_column_set_sort_column_id (col, COL_MESSAGE);
   gtk_tree_view_column_set_title (col, _("Message"));
   gtk_tree_view_column_pack_start (col, text_renderer, true);
-  gtk_tree_view_column_set_attributes (col, text_renderer, "text", COL_MESSAGE, NULL);
+  gtk_tree_view_column_set_cell_data_func (col, text_renderer, render_message, 0, 0);
+//  gtk_tree_view_column_set_attributes (col, text_renderer, "text", COL_MESSAGE, NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW(view), col);
 
   gtk_widget_show (view);
@@ -229,6 +296,8 @@ pan :: log_dialog_new (Prefs& prefs, GtkWindow* window)
   gtk_window_set_resizable (GTK_WINDOW(dialog), true);
   if (window != 0)
     gtk_window_set_transient_for (GTK_WINDOW(dialog), window);
+
+  g_signal_connect (view, "button-press-event", G_CALLBACK(on_button_pressed), view);
 
   return dialog;
 }

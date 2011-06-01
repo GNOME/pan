@@ -29,6 +29,7 @@
 #include <pan/data/article.h>
 //#include <pan/data/article-cache.h>
 #include <pan/data/data.h>
+#include <pan/general/log.h>
 #include <pan/data/xref.h>
 #include <pan/tasks/nntp.h>
 #include <pan/tasks/task.h>
@@ -126,6 +127,8 @@ namespace pan
       unsigned long _bytes;
       Mutex mut;
 //      ArticleCache& _cache;
+      std::deque<Log::Entry> _logfile;   // for intermediate updates
+      Log :: Severity _severity_final;
 
       void build_needed_tasks(bool);
 

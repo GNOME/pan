@@ -2301,7 +2301,6 @@ PostUI :: get_selected_files () const
   return tasks;
 }
 
-/// TODO debug!
 void
 PostUI :: remove_files (void)
 {

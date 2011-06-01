@@ -174,6 +174,7 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   {
     _state.set_completed();
     set_finished(OK);
+
   }
 }
 
@@ -229,11 +230,37 @@ TaskUpload :: on_nntp_line (NNTP * nntp,
 {}
 
 
+namespace
+{
+  void add_err_to_groups(std::deque<Log :: Entry> _logfile, const char* buf)
+  {
+    _logfile.resize(_logfile.size()+1);
+    Log :: Entry& e(_logfile.back());
+    e.severity = Log :: PAN_SEVERITY_ERROR;
+    e.date = time (NULL);
+    e.message = buf;
+    Log :: entry_added (e);
+  }
+
+  void add_info_to_groups(std::deque<Log :: Entry> _logfile, const char* buf)
+  {
+    _logfile.resize(_logfile.size()+1);
+    Log :: Entry& e(_logfile.back());
+    e.severity = Log :: PAN_SEVERITY_INFO;
+    e.date = time (NULL);
+    e.message = buf;
+    Log :: entry_added (e);
+  }
+}
+
 void
 TaskUpload :: on_nntp_done (NNTP * nntp,
                              Health health,
                              const StringView & response)
 {
+
+  char buf[4096];
+  Log::Entry tmp;
 
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
@@ -249,10 +276,9 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       increment_step(1);
       break;
     case ERR_NETWORK:
-//      update_work();
-//      check_in (nntp, health);
       goto _end;
     case ERR_COMMAND:
+      _severity_final = Log::PAN_SEVERITY_URGENT;
       delete_cache(it->second);
       _needed.erase (it);
       break;
@@ -261,16 +287,46 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   switch (atoi(response.str))
   {
     case NO_POSTING:
-      Log :: add_err(_("Posting failed: No Posts allowed by server."));
+      g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: No Posts allowed by server."),
+                 _basename.c_str(), it->second.partno, _total_parts);
+      add_err_to_groups(_logfile, buf);
+       _severity_final = Log::PAN_SEVERITY_URGENT;
       this->stop();
       break;
     case POSTING_FAILED:
-      Log :: add_err_va (_("Posting failed: %s"), response.str);
+      g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: %s"),
+                 _basename.c_str(), it->second.partno, _total_parts, response.str);
+      add_err_to_groups(_logfile, buf);
+       _severity_final = Log::PAN_SEVERITY_URGENT;
       break;
     case ARTICLE_POSTED_OK:
-      if (_needed.empty() && post_ok)
-        Log :: add_info_va(_("Posting of file %s succesful: %s"),
-               _basename.c_str(), response.str);
+
+      std::cerr<<"OK!\n";
+
+      if (post_ok && !_needed.empty())
+      {
+        g_snprintf(buf,sizeof(buf), _("Posting of file %s (Part %d of %d) succesful: %s"),
+                   _basename.c_str(), it->second.partno, _total_parts, response.str);
+        add_info_to_groups(_logfile, buf);
+        _severity_final = (Log :: Severity) (_severity_final | Log :: PAN_SEVERITY_INFO);
+      } else if (post_ok && _needed.empty())
+      {
+        g_snprintf(buf,sizeof(buf), _("Posting of file %s succesful: %s"),
+                   _basename.c_str(), response.str);
+        _severity_final = (Log :: Severity) (_severity_final | Log :: PAN_SEVERITY_INFO);
+        tmp.message = buf;
+        tmp.date = time(NULL);
+        tmp.severity = _severity_final;
+        Log :: add_entry_list (tmp, _logfile);
+      } else
+      {
+        g_snprintf(buf,sizeof(buf), _("Posting of file %s not successful: Check the popup log!"),
+                   _basename.c_str(), response.str);
+        tmp.message = buf;
+        tmp.date = time(NULL);
+        tmp.severity = _severity_final;
+        Log :: add_entry_list (tmp, _logfile);
+      }
       break;
     case TOO_MANY_CONNECTIONS:
       // lockout for 120 secs, but try

@@ -48,6 +48,9 @@ namespace pan
         time_t date;
         Severity severity;
         std::string message;
+        std::deque<Entry> list;
+        Entry() {}
+        Entry(std::deque<Entry>& d) : list(d) {}
       };
 
       /** Interface class for objects that listen to a Log's events */
@@ -64,6 +67,15 @@ namespace pan
       void add (Severity, const char *);
       void add_va (Severity, const char *, ...);
       const entries_t& get_entries () const { return _entries; }
+      void append_entries(entries_t& entries)
+      {
+        for (entries_t::iterator it = entries.begin(); it != entries.end(); ++it)
+        {
+          _entries.resize(entries.size()+1);
+          _entries.push_back(*it);
+        }
+      }
+      void add_entry(Entry& e, std::deque<Entry>& list);
       void clear ();
       void add_listener (Listener* l) { _listeners.insert(l); }
       void remove_listener (Listener* l) { _listeners.erase(l); }
@@ -85,6 +97,9 @@ namespace pan
       static void add_err_va (const char *, ...);
       static void add_urgent (const char * s) { Log::get().add ((Severity)(PAN_SEVERITY_ERROR|PAN_SEVERITY_URGENT), s); }
       static void add_urgent_va (const char *, ...);
+      static void entry_added (const Entry& e) { Log::get().fire_entry_added(e); }
+
+      static void add_entry_list(Entry& e, std::deque<Entry>& list) { Log::get().add_entry (e, list); }
   };
 }
 
