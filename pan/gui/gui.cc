@@ -161,11 +161,11 @@ namespace
 }
 
 
-GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, /*EncodeCache& encode_cache, */Prefs& prefs, GroupPrefs& group_prefs):
+GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_cache, Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),
   _queue (queue),
   _cache (cache),
-//  _encode_cache (encode_cache),
+  _encode_cache (encode_cache),
   _prefs (prefs),
   _group_prefs (group_prefs),
   _root (gtk_vbox_new (FALSE, 0)),
@@ -600,7 +600,7 @@ void GUI :: do_save_articles_to_nzb ()
 
       // write them to a file
       std::ofstream tmp(file.c_str());
-          if (tmp.good()) 
+          if (tmp.good())
         NZB :: nzb_to_xml_file (tmp, tasks);
       tmp.close();
     }
@@ -615,12 +615,13 @@ namespace
     GtkWidget * _root;
     Prefs& _prefs;
     ArticleCache& _cache;
+    EncodeCache & _encode_cache;
     const Article _article;
     const std::string _path;
 
     SaveArticlesFromNZB (Data& d, Queue& q, GtkWidget *r, Prefs& p,
-                         ArticleCache& c, const Article& a, const std::string& path):
-      _data(d), _queue(q), _root(r), _prefs(p), _cache(c), _article(a), _path(path) {}
+                         ArticleCache& c, EncodeCache& ec, const Article& a, const std::string& path):
+      _data(d), _queue(q), _root(r), _prefs(p), _cache(c), _encode_cache(ec), _article(a), _path(path) {}
 
     static void foreach_part_cb (GMimeObject */*parent*/, GMimeObject *o, gpointer self)
     {
@@ -642,7 +643,7 @@ namespace
         const GByteArray * buffer (GMIME_STREAM_MEM(mem_stream)->buffer);
         const StringView nzb ((const char*)buffer->data, buffer->len);
         Queue::tasks_t tasks;
-        NZB :: tasks_from_nzb_string (nzb, _path, _cache, _data, _data, _data, tasks);
+        NZB :: tasks_from_nzb_string (nzb, _path, _cache, _encode_cache, _data, _data, _data, tasks);
         if (!tasks.empty())
           _queue.add_tasks (tasks, Queue::BOTTOM);
         g_object_unref (mem_stream);
@@ -671,7 +672,8 @@ void GUI :: do_save_articles_from_nzb ()
     const std::string path (GUI :: prompt_user_for_save_path (get_window(_root), _prefs));
     if (!path.empty())
     {
-      SaveArticlesFromNZB * listener = new SaveArticlesFromNZB (_data, _queue, _root, _prefs, _cache, *article, path);
+      SaveArticlesFromNZB * listener = new SaveArticlesFromNZB (_data, _queue, _root,
+                                                                _prefs, _cache, _encode_cache, *article, path);
       Task * t = new TaskArticle (_data, _data, *article, _cache, _data, listener);
       _queue.add_task (t, Queue::TOP);
     }
@@ -725,7 +727,7 @@ void GUI :: do_import_tasks ()
     const std::string path (prompt_user_for_save_path (get_window(_root), _prefs));
     if (!path.empty())
       foreach_const (strings_t, filenames, it)
-        NZB :: tasks_from_nzb_file (*it, path, _cache, _data, _data, _data, tasks);
+        NZB :: tasks_from_nzb_file (*it, path, _cache, _encode_cache, _data, _data, _data, tasks);
   }
 
   if (!tasks.empty())
@@ -1119,7 +1121,7 @@ void GUI :: do_supersede_article ()
   g_object_unref (content_object);
   g_object_unref (stream);
 
-  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, new_message, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, new_message, _prefs, _group_prefs, _encode_cache);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -1182,7 +1184,7 @@ void GUI :: do_cancel_article ()
   g_object_unref (stream);
   g_free (cancel_message);
 
-  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, cancel, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, cancel, _prefs, _group_prefs, _encode_cache);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -1216,7 +1218,7 @@ void GUI :: do_delete_article ()
 void GUI :: do_clear_article_cache ()
 {
   _cache.clear ();
-//  _encode_cache.clear();
+  _encode_cache.clear();
 }
 
 void GUI :: do_mark_article_read ()
@@ -1264,7 +1266,7 @@ GUI :: do_post ()
   g_mime_message_set_mime_part (message, GMIME_OBJECT(part));
   g_object_unref (part);
 
-  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
   if (post)
     gtk_widget_show_all (post->root());
   g_object_unref (message);
@@ -1274,7 +1276,7 @@ void GUI :: do_followup_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (false);
   if (message) {
-    PostUI * post = PostUI :: create_window(0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+    PostUI * post = PostUI :: create_window(0, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);
@@ -1284,7 +1286,7 @@ void GUI :: do_reply_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (true);
   if (message) {
-    PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+    PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);

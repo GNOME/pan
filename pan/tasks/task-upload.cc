@@ -36,7 +36,7 @@ extern "C" {
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/mime-utils.h>
-#include <pan/data/article-cache.h>
+#include <pan/data/encode-cache.h>
 #include "encoder.h"
 #include "task-upload.h"
 
@@ -53,24 +53,16 @@ namespace
     return buf;
   }
 
-  std::string get_basename(const char* f)
-  {
-    char buf[1024];
-    char * freeme = g_path_get_basename(f);
-    snprintf (buf, sizeof(buf), _("%s"), freeme);
-    g_free(freeme);
-    return buf;
-  }
+//  std::string get_basename(const char* f)
+//  {
+//    char buf[4096];
+//    char * freeme = g_path_get_basename(f);
+//    snprintf (buf, sizeof(buf), _("%s"), freeme);
+//    g_free(freeme);
+//    return buf;
+//  }
 }
 
-
-namespace
-{
-  void delete_cache(const TaskUpload::Needed& n)
-  {
-    unlink(n.filename.c_str());
-  }
-}
 
 /***
 ****
@@ -78,10 +70,11 @@ namespace
 
 TaskUpload :: TaskUpload ( const std::string         & filename,
                            const Quark               & server,
-//                           ArticleCache              & cache,
+                           EncodeCache               & cache,
                            quarks_t                  & groups,
                            std::string                 subject,
                            std::string                 author,
+                           Article                   & article,
                            needed_t                  * imported,
                            Progress::Listener        * listener,
                            const TaskUpload::EncodeMode  enc):
@@ -89,7 +82,7 @@ TaskUpload :: TaskUpload ( const std::string         & filename,
   _filename(filename),
   _basename (g_path_get_basename(filename.c_str())),
   _server(server),
-//  _cache(cache),
+  _cache(cache),
   _groups(groups),
   _subject (subject),
   _author(author),
@@ -111,6 +104,7 @@ TaskUpload :: TaskUpload ( const std::string         & filename,
   _bytes = sb.st_size;
 
   build_needed_tasks(imported);
+  _cache.reserve(_article.get_part_mids());
   update_work ();
 }
 
@@ -118,36 +112,46 @@ void
 TaskUpload :: build_needed_tasks(bool imported)
 {
 
-  _total_parts = (int) (((long)get_byte_count() + (4000*128-1)) / (4000*128));
-  TaskUpload::Needed tmp;
-  char buf[2048];
-  struct stat sb;
-  const char* uulib = file::get_uulib_path().c_str();
-  mid_sequence_t names;
-  int cnt(0);
+  char buf[4096];
+  char buf2[4096];
 
-  for (int i=1;i<=_total_parts; ++i)
+  _total_parts = (int) (((long)get_byte_count() + (4000*128-1)) / (4000*128));
+  int cnt(1);
+
+  quarks_t groups;
+  foreach_const (Xref, _article.xref, it)
+    groups.insert (it->group);
+
+  for (int i=1; i<=_total_parts; ++i)
   {
     if (imported)
     {
-      needed_t::iterator it = _needed.find(i);
-      if (it == _needed.end())
-        continue;
+    needed_t::iterator it = _needed.find(cnt);
+    if (it == _needed.end())
+      continue;
     }
-    tmp.partno = i;
-    g_snprintf(buf,sizeof(buf),"%s/%s.%d", uulib, _basename.c_str(), i);
-    tmp.filename = buf;
-    tmp.partial = false;
-    tmp.nntp = 0;
-    stat(buf, &sb);
-    tmp.bytes = (unsigned long)sb.st_size;
-    _needed.insert(std::pair<int,Needed>(i,tmp));
-    ++cnt;
+
+    g_snprintf(buf,sizeof(buf),"%s.%d", _filename.c_str(), i);
+    _article.add_part(i, StringView(buf), 0);
+  }
+
+  for (Article::part_iterator i(_article.pbegin()), e(_article.pend()); i!=e; ++i, ++cnt)
+  {
+    const std::string mid (i.mid ());
+
+    TaskUpload::Needed n;
+    n.message_id = mid;
+    n.bytes = i.bytes();
+    n.partno = cnt;
+
+    foreach_const (quarks_t, groups, git)
+      n.xref.insert (_server, *git, mid==_article.message_id.to_string()
+                     ? _article.xref.find_number(_server,*git) : 0);
+
+    std::cerr<<"needed insert "<<cnt<<std::endl;
+    _needed.insert(std::pair<int,Needed>(cnt,n));
   }
   _needed_parts = cnt;
-
-  // reserve cache
-//  _cache.reserve (names);
 }
 
 void
@@ -209,14 +213,9 @@ TaskUpload :: use_nntp (NNTP * nntp)
 
     set_status_va (_("Uploading %s - Part %d of %d"), _basename.c_str(), needed->partno, _total_parts);
 
-    std::stringstream tmp;
-    std::ifstream in(needed->filename.c_str(), std::ifstream::in);
-    if (in.bad())
-      debug("error with stream!!!\n");
-    while (in.good())
-      tmp << (char) in.get();
-    in.close();
-    nntp->post(StringView(tmp.str()), this);
+    std::string data;
+    _cache.get_data(data,needed->message_id.c_str());
+    nntp->post(StringView(data), this);
     update_work ();
   }
 }
@@ -248,14 +247,16 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   switch (health)
   {
     case OK:
+      // save to cache
       _needed.erase (it);
       post_ok = true;
       increment_step(1);
       break;
     case ERR_NETWORK:
+      //reset
+      it->second.nntp = 0;
       goto _end;
     case ERR_COMMAND:
-      delete_cache(it->second);
       _needed.erase (it);
       break;
   }
@@ -263,22 +264,13 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   switch (atoi(response.str))
   {
     case NO_POSTING:
-      g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: No Posts allowed by server."),
+      Log :: add_err_va (_("Posting of File %s (Part %d of %d) failed: No Posts allowed by server."),
                  _basename.c_str(), it->second.partno, _total_parts);
-      tmp.message = buf;
-      tmp.severity = Log :: PAN_SEVERITY_ERROR;
-      _logfile.push_back(tmp);
-      Log::add_entry_list (tmp, _logfile);
-      std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
       this->stop();
       break;
     case POSTING_FAILED:
-      g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: %s"),
+      Log :: add_err_va ( _("Posting of File %s (Part %d of %d) failed: %s"),
                  _basename.c_str(), it->second.partno, _total_parts, response.str);
-      tmp.severity = Log :: PAN_SEVERITY_ERROR;
-      tmp.message = buf;
-      _logfile.push_back(tmp);
-      std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
       break;
     case ARTICLE_POSTED_OK:
       tmp.severity = Log :: PAN_SEVERITY_INFO;
@@ -303,12 +295,8 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
         std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
       } else
       {
-        g_snprintf(buf,sizeof(buf), _("Posting of file %s not successful: Check the popup log!"),
+        Log :: add_err_va (_("Posting of file %s not successful: Check the popup log!"),
                    _basename.c_str(), response.str);
-        tmp.message = buf;
-        tmp.severity = Log :: PAN_SEVERITY_ERROR;
-        _logfile.push_back(tmp);
-        Log::add_entry_list (tmp, _logfile);
         std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
       }
       break;
@@ -356,7 +344,11 @@ TaskUpload :: use_encoder (Encoder* encoder)
     if (i<_groups.size()&& i>0 && _groups.size()>1) groups += ",";
     groups += (*it).to_string();
   }
-  _encoder->enqueue (this, _filename, _basename, groups, _subject, _author, YENC);
+  const Article::mid_sequence_t mids (_article.get_part_mids());
+  foreach_const (Article::mid_sequence_t, mids, it)
+    _cache.add(*it) ? std::cerr<<"fp valid!\n" :std::cerr<<"fp invalid!\n";
+  _encoder->enqueue (this, mids, &_cache, _filename, _basename,
+                     groups, _subject, _author, YENC);
   debug ("encoder thread was free, enqueued work");
 }
 
@@ -390,6 +382,7 @@ TaskUpload :: on_worker_done (bool cancelled)
       set_error (_encoder->log_errors.front());
 
     {
+      std::cerr<<_encoder->parts<<" "<<_total_parts<<std::endl;
       set_step (0);
       init_steps(_needed_parts);
       _encoder_has_run = true;

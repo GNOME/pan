@@ -143,7 +143,6 @@ namespace
                           COL_MESSAGE, &*it, -1);
       if (!it->messages.empty())
       {
-        std::cerr<<"multi\n";
         foreach_const (Log::entries_t, it->messages, lit)
         {
           gtk_tree_store_prepend (store, &child, &top );

@@ -31,6 +31,7 @@
 #include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
+#include <pan/data/encode-cache.h>
 #include <pan/data/server-info.h>
 
 namespace pan

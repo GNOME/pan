@@ -25,7 +25,7 @@
 #include <pan/general/progress.h>
 #include <pan/tasks/queue.h>
 #include <pan/usenet-utils/text-massager.h>
-#include <pan/data/article-cache.h>
+#include <pan/data/encode-cache.h>
 #include "group-prefs.h"
 
 namespace pan
@@ -46,13 +46,13 @@ namespace pan
   {
     public:
       static PostUI* create_window (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
-                                    GMimeMessage*, Prefs&, GroupPrefs&);//, ArticleCache&);
+                                    GMimeMessage*, Prefs&, GroupPrefs&, EncodeCache&);
 
       void prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, const Prefs& prefs);
 
     protected:
       PostUI (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
-              GMimeMessage*, Prefs&, GroupPrefs&);//, ArticleCache&);
+              GMimeMessage*, Prefs&, GroupPrefs&, EncodeCache&);
     public:
       ~PostUI ();
 
@@ -139,6 +139,7 @@ namespace pan
       GtkWidget * _post_dialog;
       TaskPost * _post_task;
       TaskUpload* _upload_task;
+      std::vector<Article*> _uploaded;
       typedef std::map<std::string, std::string> str2str_t;
       str2str_t _hidden_headers;
       str2str_t _profile_headers;
@@ -167,11 +168,6 @@ namespace pan
       GtkWidget* create_log_tab ();
       TaskUpload* _upload_ptr;
       int _total_parts;
-      typedef std::map<int, TaskUpload::Needed> needed_t;
-      typedef std::pair<int, TaskUpload::Needed> needed_p;
-      typedef std::vector<needed_t> needed_v;
-      needed_v _needed_v;
-      int _upload_cursor;
 
     private:
       std::string utf8ize (const StringView&) const;
@@ -187,8 +183,8 @@ namespace pan
       static gboolean group_entry_changed_idle (gpointer);
       static void group_entry_changed_cb (GtkEditable*, gpointer);
 
-//    protected:
-//      ArticleCache& _cache;
+    protected:
+      EncodeCache& _cache;
 
     public:
       void set_spellcheck_enabled (bool);
@@ -213,7 +209,6 @@ namespace pan
 
     public:
       TaskUpload* upload_ptr() { return _upload_ptr; }
-      int cursor() { return _upload_cursor; }
 
   };
 }

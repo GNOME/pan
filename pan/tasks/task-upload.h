@@ -27,7 +27,7 @@
 #include <pan/general/worker-pool.h>
 #include <pan/general/locking.h>
 #include <pan/data/article.h>
-//#include <pan/data/article-cache.h>
+#include <pan/data/encode-cache.h>
 #include <pan/data/data.h>
 #include <pan/general/log.h>
 #include <pan/data/xref.h>
@@ -59,6 +59,9 @@ namespace pan
         int partno;
         NNTP* nntp;
         bool partial;
+        std::string message_id;
+        Xref xref;
+
         Needed (): nntp(0), bytes(0) , partial(false) {}
         void reset() { nntp = 0; }
       };
@@ -75,13 +78,15 @@ namespace pan
       // life cycle
       TaskUpload ( const std::string         & filename,
                    const Quark               & server,
-//                   ArticleCache              & cache,
+                   EncodeCache               & cache,
                    quarks_t                  & groups,
                    std::string                 subject,
                    std::string                 author,
+                   Article                   & article,
                    needed_t                  * imported=0,
                    Progress::Listener        * listener= 0,
                    TaskUpload::EncodeMode enc= YENC);
+
       virtual ~TaskUpload ();
 
     public: // Task subclass
@@ -129,56 +134,16 @@ namespace pan
       int _total_parts, _needed_parts;
       unsigned long _bytes;
       Mutex mut;
-//      ArticleCache& _cache;
+      EncodeCache& _cache;
       std::deque<Log::Entry> _logfile;   // for intermediate updates
-      Log :: Severity _severity_final;
-
-      void build_needed_tasks(bool);
+      Article _article;
 
     private:
       needed_t       _needed;
       void update_work (NNTP * checkin_pending = 0);
+      void build_needed_tasks(bool);
 
   };
-
-// from mime-utils.cc
-namespace
-{
-
-     const char*
-   __yenc_extract_tag_val_char (const char * line, const char *tag)
-   {
-      const char * retval = NULL;
-
-      const char * tmp = strstr (line, tag);
-      if (tmp != NULL) {
-         tmp += strlen (tag);
-         if (*tmp != '\0')
-            retval = tmp;
-      }
-
-      return retval;
-   }
-
-  guint
-   __yenc_extract_tag_val_int_base (const char * line,
-                                    const char * tag,
-                                    int          base)
-   {
-      guint retval = 0;
-
-      const char * tmp = __yenc_extract_tag_val_char (line, tag);
-      if (tmp != NULL) {
-         char * tail = NULL;
-         retval = strtoul (tmp, &tail, base);
-         if (tmp == tail)
-            retval = 0;
-      }
-
-      return retval;
-   }
-}
-
 }
 
 #endif

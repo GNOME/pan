@@ -22,6 +22,7 @@
 #include <pan/general/log.h>
 #include <pan/general/progress.h>
 #include <pan/data/article-cache.h>
+#include <pan/data/encode-cache.h>
 #include <pan/tasks/queue.h>
 
 #include <pan/gui/action-manager.h>
@@ -53,7 +54,7 @@ namespace pan
     private Prefs::Listener
   {
     public:
-      GUI (Data& data, Queue&, ArticleCache&, /*EncodeCache&,*/ Prefs&, GroupPrefs&);
+      GUI (Data& data, Queue&, ArticleCache&, EncodeCache&, Prefs&, GroupPrefs&);
       virtual ~GUI ();
       GtkWidget* root () { return _root; }
 
@@ -188,7 +189,7 @@ namespace pan
       Data& _data;
       Queue& _queue;
       ArticleCache& _cache;
-//      EncodeCache& _encode_cache;
+      EncodeCache& _encode_cache;
       Prefs& _prefs;
       GroupPrefs& _group_prefs;
 

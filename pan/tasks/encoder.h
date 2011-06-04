@@ -27,6 +27,7 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <sstream>
 #include <pan/general/locking.h>
 #include <pan/general/worker-pool.h>
 #include <pan/tasks/task-upload.h>
@@ -58,12 +59,14 @@ namespace pan
 
       typedef std::vector<std::string> strings_t;
 
-      void enqueue (TaskUpload                * task,
-                    std::string               & filename,
-                    std::string               & basename,
-                    std::string               & groups,
-                    std::string               & subject,
-                    std::string               & author,
+      void enqueue (TaskUpload                      * task,
+                    const Article::mid_sequence_t   & mids,
+                    EncodeCache                     * cache,
+                    std::string                     & filename,
+                    std::string                     & basename,
+                    std::string                     & groups,
+                    std::string                     & subject,
+                    std::string                     & author,
                     const TaskUpload::EncodeMode    & enc = TaskUpload::YENC);
 
     public:
@@ -77,14 +80,15 @@ namespace pan
 
     private:
 
-      std::set<int>* parts;
       friend class TaskUpload;
       friend class PostUI;
+      int parts;
       TaskUpload * task;
       TaskUpload::EncodeMode encode_mode;
-      std::string   filename;
-      std::string   basename;
+      std::string   basename, filename;
       std::string subject, author, groups;
+      EncodeCache * cache;
+      Article::mid_sequence_t mids;
 
       // These are set in the worker thread and polled in the main thread.
       Mutex mut;

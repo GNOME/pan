@@ -50,11 +50,10 @@ namespace
     std::vector<std::string>  groups_str;    // TaskUpload
     TaskUpload::needed_t needed_parts;       // TaskUpload
     Article a;
-    Quark posting_server;
-    bool encoded;   // encoder was done already
     PartBatch parts;
     tasks_t tasks;
     ArticleCache& cache;
+    EncodeCache& encode_cache;
     ArticleRead& read;
     const ServerRank& ranks;
     const GroupServer& gs;
@@ -62,9 +61,9 @@ namespace
     size_t bytes;
     size_t number;
 
-    MyContext (ArticleCache& ac, ArticleRead& r,
+    MyContext (ArticleCache& ac, EncodeCache& ec, ArticleRead& r,
                const ServerRank& rank, const GroupServer& g, const StringView& p):
-      cache(ac), read(r), ranks(rank), gs(g), fallback_path(p) {}
+      cache(ac), encode_cache(ec), read(r), ranks(rank), gs(g), fallback_path(p) {}
 
     void file_clear () {
       groups.clear ();
@@ -102,7 +101,6 @@ namespace
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
              if (!strcmp (*k,"author"))  mc.a.author = *v;
         else if (!strcmp (*k,"subject")) mc.a.subject = *v;
-        else if (!strcmp (*k,"server"))  mc.posting_server = Quark(*v);
       }
     }
 
@@ -149,13 +147,18 @@ namespace
     }
 
     else if (!strcmp(element_name, "part") && mc.number && !mc.text.empty()) {
-      TaskUpload::Needed n;
-      n.bytes = mc.bytes;
-      n.filename = mc.text;
-      n.partno = mc.number;
-      n.partial = false;
-      std::pair<int,TaskUpload::Needed> tmp(mc.number,n);
-      mc.needed_parts.insert(tmp);
+//      TaskUpload::Needed n;
+//      n.bytes = mc.bytes;
+//      n.filename = mc.text;
+//      n.partno = mc.number;
+//      n.partial = false;
+//      std::pair<int,TaskUpload::Needed> tmp(mc.number,n);
+//      mc.needed_parts.insert(tmp);
+      if (mc.a.message_id.empty()) {
+        mc.a.message_id = mc.text;
+        mc.parts.init (mc.text);
+      }
+      mc.parts.add_part (mc.number, mc.text, mc.bytes);
     }
 
     else if (!strcmp(element_name,"path"))
@@ -180,11 +183,16 @@ namespace
     else if (!strcmp (element_name, "upload"))
     {
       debug("adding taskupload from nzb.\n");
-      TaskUpload::needed_t tmp2;
-      foreach (TaskUpload::needed_t, mc.needed_parts, it)
-        tmp2.insert(*it);
-      TaskUpload* tmp = new TaskUpload (mc.path, const_cast<const Quark&>(mc.posting_server), //mc.cache,
-                          mc.groups, mc.a.subject.to_string(), mc.a.author.to_string(), &tmp2, 0, TaskUpload::YENC);
+//      TaskUpload::needed_t tmp2;
+//      foreach (TaskUpload::needed_t, mc.needed_parts, it)
+//        tmp2.insert(*it);
+      mc.parts.sort ();
+      mc.a.set_parts (mc.parts);
+      foreach_const (quarks_t, mc.groups, git)
+        mc.a.xref.insert (Quark("dummy"), *git,0);
+
+      TaskUpload* tmp = new TaskUpload (mc.path, Quark("dummy"), mc.encode_cache,
+                          mc.groups, mc.a.subject.to_string(), mc.a.author.to_string(), mc.a, 0, 0, TaskUpload::YENC);
       mc.tasks.push_back (tmp);
     }
   }
@@ -203,13 +211,14 @@ void
 NZB :: tasks_from_nzb_string (const StringView      & nzb_in,
                               const StringView      & save_path,
                               ArticleCache          & cache,
+                              EncodeCache           & encode_cache,
                               ArticleRead           & read,
                               const ServerRank      & ranks,
                               const GroupServer     & gs,
                               std::vector<Task*>    & appendme)
 {
   const std::string nzb (clean_utf8 (nzb_in));
-  MyContext mc (cache, read, ranks, gs, save_path);
+  MyContext mc (cache, encode_cache, read, ranks, gs, save_path);
   GMarkupParser p;
   p.start_element = start_element;
   p.end_element = end_element;
@@ -232,6 +241,7 @@ void
 NZB :: tasks_from_nzb_file (const StringView      & filename,
                             const StringView      & save_path,
                             ArticleCache          & c,
+                            EncodeCache           & ec,
                             ArticleRead           & r,
                             const ServerRank      & ranks,
                             const GroupServer     & gs,
@@ -239,7 +249,7 @@ NZB :: tasks_from_nzb_file (const StringView      & filename,
 {
   std::string nzb;
   if (file :: get_text_file_contents (filename, nzb))
-    tasks_from_nzb_string (nzb, save_path, c, r, ranks, gs, appendme);
+    tasks_from_nzb_string (nzb, save_path, c, ec, r, ranks, gs, appendme);
 }
 
 namespace

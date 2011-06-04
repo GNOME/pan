@@ -55,24 +55,28 @@ Encoder :: ~Encoder()
 ***/
 
 void
-Encoder :: enqueue (TaskUpload                * task,
-                    std::string               & filename,
-                    std::string               & basename,
-                    std::string               & groups,
-                    std::string               & subject,
-                    std::string               & author,
+Encoder :: enqueue (TaskUpload                      * task,
+                    const Article::mid_sequence_t   & mids,
+                    EncodeCache                     * cache,
+                    std::string                     & filename,
+                    std::string                     & basename,
+                    std::string                     & groups,
+                    std::string                     & subject,
+                    std::string                     & author,
                     const TaskUpload::EncodeMode    & enc)
 
 {
   disable_progress_update ();
 
   this->task = task;
-  this->filename = filename;
   this->basename = basename;
+  this->filename = filename;
   this->encode_mode = encode_mode;
   this->groups = groups;
   this->subject = subject;
   this->author = author;
+  this-> mids = mids;
+  this->cache = cache;
 
   percent = 0;
   current_file.clear ();
@@ -83,17 +87,15 @@ Encoder :: enqueue (TaskUpload                * task,
   _worker_pool.push_work (this, task, false);
 }
 
-// save article IN A WORKER THREAD to avoid network stalls
 void
 Encoder :: do_work()
 {
   const int bufsz = 4096;
   char buf[bufsz], buf2[bufsz];
-  unsigned long cnt(1);
+  int cnt(1);
   crc32_t crcptr;
 
   FILE* outfile, * infile ;
-  std::string uulib(file :: get_uulib_path());
   enable_progress_update();
 
     int res;
@@ -104,21 +106,27 @@ Encoder :: do_work()
       UUSetMsgCallback (this, uu_log);
       UUSetBusyCallback (this, uu_busy_poll, 200);
 
-      g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename.c_str(), cnt);
-      outfile = fopen(buf,"wb");
-      while (1) {
+      foreach_const(Article::mid_sequence_t, mids, it) {
 
+        FILE * fp = cache->get_fp_from_mid(*it);
+        if (!(*it))
+        {
+          g_snprintf(buf, bufsz, _("Error loading %s from cache."), it->c_str());
+          log_errors.push_back(buf); // log error
+          ++cnt;
+          continue;
+        }
+        cache->get_filename(buf, *it);
+        std::cerr<<"do work "<<buf<<std::endl;
         // 4000 lines SHOULD be OK for ANY nntp server ...
-        res = UUE_PrepPartial (outfile, NULL, (char*)filename.c_str(),YENC_ENCODED,
-                               (char*)basename.c_str(),0644, cnt, 4000,
+        res = UUE_PrepPartial (fp, NULL, (char*)filename.c_str(),YENC_ENCODED,
+                               (char*)basename.c_str(),0644, cnt++, 4000,
                                0, (char*)groups.c_str(),
                                (char*)author.c_str(), (char*)subject.c_str(),
                                0);
-
-        if (outfile) fclose(outfile);
+        if (fp) fclose(fp);
+        std::cerr<<"encoder said : "<<UUstrerror(res)<<std::endl;
         if (res != UURET_CONT) break;
-        g_snprintf(buf,bufsz,"%s/%s.%d", uulib.c_str(), basename.c_str(), ++cnt);
-        outfile = fopen(buf,"wb");
       }
 
       if (res != UURET_OK)
@@ -195,6 +203,7 @@ Encoder :: uu_busy_poll (void * d, uuprogress *p)
   self->mut.lock();
     self->percent = self->get_percentage(*p);
     self->current_file = p->curfile;
+    self->parts = p->numparts;
   self->mut.unlock();
 
   return self->was_cancelled(); // returning true tells uulib to abort

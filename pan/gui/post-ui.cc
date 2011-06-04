@@ -2191,15 +2191,16 @@ PostUI :: create_parts_tab ()
   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(w),TRUE);
   gtk_tree_view_columns_autosize(GTK_TREE_VIEW(w));
 
+  ++row;
+  gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
+
   //append scroll window
   w = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER(w), _parts_store);
-  ++row;
-  gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, fe, fill, 0, 0);
+  gtk_container_add (GTK_CONTAINER(w), t);
 
-  return t;
+  return w;
 }
 
 GtkWidget*
@@ -2491,17 +2492,15 @@ PostUI :: PostUI (GtkWindow    * parent,
                   Profiles     & profiles,
                   GMimeMessage * message,
                   Prefs        & prefs,
-                  GroupPrefs   & group_prefs
-//                  ,
-//                  ArticleCache & cache):
-                  ):
+                  GroupPrefs   & group_prefs,
+                  EncodeCache  & cache):
   _data (data),
   _queue (queue),
   _gs (gs),
   _profiles (profiles),
   _prefs (prefs),
   _group_prefs (group_prefs),
-//  _cache (cache),
+  _cache (cache),
   _root (0),
   _from_combo (0),
   _subject_entry (0),
@@ -2517,8 +2516,7 @@ PostUI :: PostUI (GtkWindow    * parent,
   _group_entry_changed_idle_tag (0),
   _file_queue_empty(true),
   _upload_ptr(0),
-  _total_parts(0),
-  _upload_cursor(0)
+  _total_parts(0)
 {
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != 0);
@@ -2571,9 +2569,8 @@ PostUI :: create_window (GtkWindow    * parent,
                          Profiles     & profiles,
                          GMimeMessage * message,
                          Prefs        & prefs,
-                         GroupPrefs   & group_prefs)
-//                         ,
-//                         ArticleCache & cache)
+                         GroupPrefs   & group_prefs,
+                         EncodeCache  & cache)
 {
   // can't post without a profile...
   if (!profiles.has_profiles())
@@ -2594,7 +2591,7 @@ PostUI :: create_window (GtkWindow    * parent,
       return 0;
   }
 
-  return new PostUI (0, data, queue, gs, profiles, message, prefs, group_prefs);//, cache);
+  return new PostUI (0, data, queue, gs, profiles, message, prefs, group_prefs, cache);
 }
 
 void
@@ -2648,9 +2645,11 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
     int i(0);
     for (; cur; cur = cur->next, ++i)
 		{
+		  _uploaded.push_back(new Article());
+		  Article& a(*_uploaded.back());
 		  TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
-                               profile.posting_server,  //_cache,
-                               groups, subject, author, 0, 0,
+                               profile.posting_server, _cache,
+                               groups, subject, author, a, 0, 0,
                                TaskUpload::YENC);
 		  _file_queue_tasks.push_back(tmp);
 		}
