@@ -321,12 +321,12 @@ namespace
       G_CALLBACK(do_save_articles) },
 
     { "save-articles-from-nzb", GTK_STOCK_SAVE,
-      N_("_Save Articles from this NZB..."), NULL,
+      N_("Save Articles from this _NZB..."), "<control><shift>S",
       N_("Save Articles from this NZB"),
       G_CALLBACK(do_save_articles_from_nzb) },
 
     { "save-articles-to-nzb", GTK_STOCK_SAVE,
-      N_("_Save Articles to an NZB File..."), NULL,
+      N_("Save Articles to an NZB _File..."), "<control><shift>F",
       N_("Save Articles to an NZB File"),
       G_CALLBACK(do_save_articles_to_nzb) },
 

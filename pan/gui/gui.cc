@@ -536,7 +536,7 @@ GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
   prev_path = g_get_home_dir ();
     prev_file = std::string(_("Untitled.nzb"));
     
-  GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB File as"),
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB File as..."),
 				      parent,
 				      GTK_FILE_CHOOSER_ACTION_SAVE,
 				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
