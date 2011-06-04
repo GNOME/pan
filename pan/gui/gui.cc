@@ -1296,13 +1296,13 @@ void GUI :: do_tip_jar ()
 }
 void GUI :: do_about_pan ()
 {
-  const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com>", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", 0 };
+  const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com> - Pan Author", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", "K. Haley <haleykd@users.sf.net> - Contributor", "Petr Kovar	<pknbe@volny.cz> - Contributor", "Heinrich Mueller <eddie_v@gmx.de> - Contributor", "Christophe Lambin <chris@rebelbase.com> - Original Pan Development", "Matt Eagleson <matt@rebelbase.com> - Original Pan Development", 0 };
   GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
-  gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2007 Charles Kerr"));
+  gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2011 Charles Kerr and others"));
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
   gtk_about_dialog_set_license (w, LICENSE);
