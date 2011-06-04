@@ -68,16 +68,16 @@ namespace
 ****
 ***/
 
-TaskUpload :: TaskUpload ( const std::string         & filename,
-                           const Quark               & server,
-                           EncodeCache               & cache,
-                           quarks_t                  & groups,
-                           std::string                 subject,
-                           std::string                 author,
-                           Article                   & article,
-                           needed_t                  * imported,
-                           Progress::Listener        * listener,
-                           const TaskUpload::EncodeMode  enc):
+TaskUpload :: TaskUpload (const std::string         & filename,
+                          const Quark               & server,
+                          EncodeCache               & cache,
+                          quarks_t                  & groups,
+                          std::string                 subject,
+                          std::string                 author,
+                          Article                   & article,
+                          needed_t                  * imported,
+                          Progress::Listener        * listener,
+                          const TaskUpload::EncodeMode  enc):
   Task ("UPLOAD", get_description(filename.c_str())),
   _filename(filename),
   _basename (g_path_get_basename(filename.c_str())),
