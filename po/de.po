@@ -41,14 +41,16 @@ msgstr ""
 "Project-Id-Version: pan2 master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=pan2&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-05-29 13:03+0000\n"
-"PO-Revision-Date: 2011-06-02 21:14+0100\n"
+"POT-Creation-Date: 2011-06-05 00:58+0000\n"
+"PO-Revision-Date: 2011-06-05 14:19+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@freenet.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
 
 # D'accord, und so bleibt's jetzt, das Hinundhergehüpfe im Menü macht wahnsinnig. -bg
 #: ../pan.desktop.in.h:1
@@ -181,7 +183,7 @@ msgstr "An_ordnung"
 
 #: ../pan/gui/actions.cc:255
 msgid "_Group Pane"
-msgstr "_sudoGruppenliste"
+msgstr "_Gruppenliste"
 
 #: ../pan/gui/actions.cc:256
 msgid "_Header Pane"
@@ -308,7 +310,8 @@ msgid "Save Articles..."
 msgstr "Artikel speichern …"
 
 #: ../pan/gui/actions.cc:324
-msgid "_Save Articles from this NZB..."
+#| msgid "_Save Articles from this NZB..."
+msgid "Save Articles from this _NZB..."
 msgstr "Artikel dieses NZB _speichern …"
 
 #: ../pan/gui/actions.cc:325
@@ -316,12 +319,11 @@ msgid "Save Articles from this NZB"
 msgstr "Artikel von diesem NZB speichern"
 
 #: ../pan/gui/actions.cc:329
-#| msgid "_Save Articles from this NZB..."
-msgid "_Save Articles to an NZB File..."
+#| msgid "_Save Articles to an NZB File..."
+msgid "Save Articles to an NZB _File..."
 msgstr "Artikel in eine NZB-Datei _speichern …"
 
 #: ../pan/gui/actions.cc:330
-#| msgid "Save Articles from this NZB"
 msgid "Save Articles to an NZB File"
 msgstr "Artikel in eine NZB-Datei speichern"
 
@@ -726,17 +728,17 @@ msgstr ""
 msgid "Attachment not shown: MIME type %s/%s\n"
 msgstr "Anlage wird nicht angezeigt: MIME-Typ %s/%s\n"
 
-#: ../pan/gui/body-pane.cc:1051 ../pan/gui/gui.cc:1546
+#: ../pan/gui/body-pane.cc:1051 ../pan/gui/gui.cc:1542
 #: ../pan/gui/header-pane.cc:1014 ../pan/gui/header-pane.cc:1373
 #: ../pan/gui/prefs-ui.cc:365 ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
 msgstr "Betreff"
 
-#: ../pan/gui/body-pane.cc:1053 ../pan/gui/gui.cc:1546
+#: ../pan/gui/body-pane.cc:1053 ../pan/gui/gui.cc:1542
 msgid "From"
 msgstr "Von"
 
-#: ../pan/gui/body-pane.cc:1055 ../pan/gui/gui.cc:1547
+#: ../pan/gui/body-pane.cc:1055 ../pan/gui/gui.cc:1543
 #: ../pan/gui/header-pane.cc:1450 ../pan/gui/log-ui.cc:208
 #: ../pan/gui/prefs-ui.cc:361
 msgid "Date"
@@ -767,8 +769,8 @@ msgid "Copy _URL"
 msgstr "_Adresse kopieren"
 
 #. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:904 ../pan/gui/gui.cc:1306
-#: ../pan/gui/gui.cc:1567 ../pan/gui/score-add-ui.cc:602
+#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:900 ../pan/gui/gui.cc:1302
+#: ../pan/gui/gui.cc:1563 ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
 
@@ -879,7 +881,7 @@ msgstr "Ukrainisch"
 msgid "Visual"
 msgstr "Visuell"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:1684
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:1680
 #: ../pan/gui/post-ui.cc:253
 msgid "Character Encoding"
 msgstr "Zeichensatz"
@@ -958,55 +960,56 @@ msgid "Untitled.nzb"
 msgstr "Unbenannt.nzb"
 
 #: ../pan/gui/gui.cc:539
-#| msgid "Save NZB's Files"
-msgid "Save NZB File as"
-msgstr "NZB-Datei speichern unter"
+#| msgid "Save NZB File as"
+msgid "Save NZB File as..."
+msgstr "NZB-Datei speichern unter …"
 
-#: ../pan/gui/gui.cc:690
+#: ../pan/gui/gui.cc:686
 msgid "Import NZB Files"
 msgstr "NZB-Dateien importieren"
 
-#: ../pan/gui/gui.cc:698
+#: ../pan/gui/gui.cc:694
 msgid "NZB Files"
 msgstr "NZB-Dateien"
 
-#: ../pan/gui/gui.cc:703
+#: ../pan/gui/gui.cc:699
 msgid "All Files"
 msgstr "Alle Dateien"
 
-#: ../pan/gui/gui.cc:1081
+#: ../pan/gui/gui.cc:1077
 msgid "Unable to supersede article."
 msgstr "Artikel konnte nicht ersetzt werden."
 
-#: ../pan/gui/gui.cc:1082 ../pan/gui/gui.cc:1156
+#: ../pan/gui/gui.cc:1078 ../pan/gui/gui.cc:1152
 msgid "The article doesn't match any of your posting profiles."
 msgstr "Dieser Artikel trifft auf keines Ihrer Posting Profile zu."
 
-#: ../pan/gui/gui.cc:1129
+#: ../pan/gui/gui.cc:1125
 msgid "Revise and send this article to replace the old one."
 msgstr ""
 "Diesen Artikel revidieren und versenden, um die vorherige Version zu ersetzen"
 
-#: ../pan/gui/gui.cc:1130 ../pan/gui/gui.cc:1193
+#: ../pan/gui/gui.cc:1126 ../pan/gui/gui.cc:1189
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
 "Etwas Geduld bitte! Es dauert einige Zeit, bis Ihre Änderungen wirksam werden."
 
-#: ../pan/gui/gui.cc:1155
+#: ../pan/gui/gui.cc:1151
 msgid "Unable to cancel article."
 msgstr "Artikel konnte nicht widerrufen werden."
 
-#: ../pan/gui/gui.cc:1192
+#: ../pan/gui/gui.cc:1188
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
 "Diesen Artikel versenden, um den Server um den Widerruf der anderen Version "
 "zu bitten."
 
-#: ../pan/gui/gui.cc:1309
-msgid "Copyright © 2002-2007 Charles Kerr"
-msgstr "Copyright © 2002-2007 Charles Kerr"
+#: ../pan/gui/gui.cc:1305
+#| msgid "Copyright © 2002-2007 Charles Kerr"
+msgid "Copyright © 2002-2011 Charles Kerr and others"
+msgstr "Copyright © 2002-2011 Charles Kerr und andere"
 
-#: ../pan/gui/gui.cc:1314
+#: ../pan/gui/gui.cc:1310
 msgid "translator-credits"
 msgstr ""
 "Manuel Borchers <manuel.borchers@berlin.de>\n"
@@ -1018,86 +1021,86 @@ msgstr ""
 "Karsten Weiss <knweiss@gmx.de>\n"
 "Mario Blättermann <mariobl@freenet.de>"
 
-#: ../pan/gui/gui.cc:1430
+#: ../pan/gui/gui.cc:1426
 msgid "_1. Group Pane"
 msgstr "_1. Gruppenliste"
 
-#: ../pan/gui/gui.cc:1431
+#: ../pan/gui/gui.cc:1427
 msgid "_2. Header Pane"
 msgstr "_2. Kopfzeilenliste"
 
-#: ../pan/gui/gui.cc:1432
+#: ../pan/gui/gui.cc:1428
 msgid "_3. Body Pane"
 msgstr "_3. Artikeltext"
 
-#: ../pan/gui/gui.cc:1529
+#: ../pan/gui/gui.cc:1525
 #, c-format
 msgid "This article has all %d parts."
 msgstr "Artikel besitzt alle %d Anlagen."
 
-#: ../pan/gui/gui.cc:1531
+#: ../pan/gui/gui.cc:1527
 #, c-format
 msgid "This article is missing %d of its %d parts:"
 msgstr "Diesem Artikel fehlen %d seiner %d Teile:"
 
-#: ../pan/gui/gui.cc:1547 ../pan/gui/header-pane.cc:1016
+#: ../pan/gui/gui.cc:1543 ../pan/gui/header-pane.cc:1016
 msgid "Message-ID"
 msgstr "Nachrichtenkennung"
 
-#: ../pan/gui/gui.cc:1548 ../pan/gui/header-pane.cc:1420
+#: ../pan/gui/gui.cc:1544 ../pan/gui/header-pane.cc:1420
 #: ../pan/gui/prefs-ui.cc:362
 msgid "Lines"
 msgstr "Zeilen"
 
-#: ../pan/gui/gui.cc:1548 ../pan/gui/header-pane.cc:1435
+#: ../pan/gui/gui.cc:1544 ../pan/gui/header-pane.cc:1435
 #: ../pan/gui/prefs-ui.cc:360
 msgid "Bytes"
 msgstr "Bytes"
 
-#: ../pan/gui/gui.cc:1685
+#: ../pan/gui/gui.cc:1681
 msgid "Body Pane Encoding"
 msgstr "Kodierung des Artikeltexts"
 
-#: ../pan/gui/gui.cc:1714 ../pan/gui/task-pane.cc:370
+#: ../pan/gui/gui.cc:1710 ../pan/gui/task-pane.cc:370
 #, c-format
 msgid "Offline"
 msgstr "Offline"
 
-#: ../pan/gui/gui.cc:1717
+#: ../pan/gui/gui.cc:1713
 #, c-format
 msgid "Closing %d connections"
 msgstr "%d Verbindungen werden getrennt"
 
-#: ../pan/gui/gui.cc:1719 ../pan/gui/gui.cc:1749
+#: ../pan/gui/gui.cc:1715 ../pan/gui/gui.cc:1745
 #, c-format
 msgid "No Connections"
 msgstr "Keine Verbindungen"
 
-#: ../pan/gui/gui.cc:1723
+#: ../pan/gui/gui.cc:1719
 #, c-format
 msgid "Connecting"
 msgstr "Es wird verbunden"
 
-#: ../pan/gui/gui.cc:1736
+#: ../pan/gui/gui.cc:1732
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d untätig, %d aktiv @ %.1f KiBps"
 
-#: ../pan/gui/gui.cc:1792
+#: ../pan/gui/gui.cc:1788
 #, c-format
 msgid "No Tasks"
 msgstr "Keine Aufgaben"
 
-#: ../pan/gui/gui.cc:1794 ../pan/gui/prefs-ui.cc:502
+#: ../pan/gui/gui.cc:1790 ../pan/gui/prefs-ui.cc:502
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: ../pan/gui/gui.cc:1804 ../pan/gui/task-pane.cc:243
+#: ../pan/gui/gui.cc:1800 ../pan/gui/task-pane.cc:243
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu Aufgaben, %s, %.1f KiBps, ETA %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:1856
+#: ../pan/gui/gui.cc:1852
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1258,7 +1261,6 @@ msgid "Run Editor"
 msgstr "Editor starten"
 
 #: ../pan/gui/post-ui.cc:221
-#| msgid "Wrap Text"
 msgid "Wrap Selected"
 msgstr "Auswahl umbrechen"
 
