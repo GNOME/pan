@@ -26,10 +26,12 @@
 #include <cerrno>
 #include <ostream>
 #include <fstream>
+#include <sstream>
 extern "C" {
-#  define PROTOTYPES
-#  include <uulib/uudeview.h>
-#  include <glib/gi18n.h>
+#define PROTOTYPES
+#include <uulib/uudeview.h>
+#include <glib/gi18n.h>
+#include <sys/time.h>
 };
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
@@ -38,6 +40,39 @@ extern "C" {
 #include "encoder.h"
 
 using namespace pan;
+
+namespace
+{
+  void generate_unique_id (StringView& mid, std::string& filename, int cnt, std::string& s)
+  {
+    std::stringstream out;
+    struct stat sb;
+    struct timeval tv;
+
+    const char * pch = mid.strchr ('@');
+    StringView domain = mid.substr (pch+1, NULL);
+    pch = domain.strchr ('>');
+    domain = domain.substr (NULL, pch);
+    domain.trim ();
+
+    // add unique local part to message-id
+    out << "pan.";
+    const time_t now (time(NULL));
+    struct tm local_now = *gmtime (&now);
+    gettimeofday (&tv, NULL);
+    char buf[64];
+    std::strftime (buf, sizeof(buf), "%Y.%m.%d.%H.%M.%S", &local_now);
+    out << buf;
+    out << "." << tv.tv_sec << "." << tv.tv_usec << "." << tv.tv_sec*tv.tv_usec;
+
+    // delimit
+    out<< '@';
+
+    // add domain
+    out << domain;
+    s = out.str();
+  }
+}
 
 Encoder :: Encoder (WorkerPool& pool):
   _worker_pool (pool),
@@ -56,13 +91,14 @@ Encoder :: ~Encoder()
 
 void
 Encoder :: enqueue (TaskUpload                      * task,
-                    const Article::mid_sequence_t   & mids,
                     EncodeCache                     * cache,
+                    Article                           article,
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & groups,
                     std::string                     & subject,
                     std::string                     & author,
+                    std::string                       global_mid,
                     const TaskUpload::EncodeMode    & enc)
 
 {
@@ -75,8 +111,10 @@ Encoder :: enqueue (TaskUpload                      * task,
   this->groups = groups;
   this->subject = subject;
   this->author = author;
-  this-> mids = mids;
+  this->needed = &task->_needed;
+  this->global_mid = global_mid;
   this->cache = cache;
+  this->article = article;
 
   percent = 0;
   current_file.clear ();
@@ -94,8 +132,10 @@ Encoder :: do_work()
   char buf[bufsz], buf2[bufsz];
   int cnt(1);
   crc32_t crcptr;
-
+  struct stat sb;
+  std::string s;
   FILE* outfile, * infile ;
+
   enable_progress_update();
 
     int res;
@@ -106,27 +146,43 @@ Encoder :: do_work()
       UUSetMsgCallback (this, uu_log);
       UUSetBusyCallback (this, uu_busy_poll, 200);
 
-      foreach_const(Article::mid_sequence_t, mids, it) {
+      PartBatch batch;
+      batch.init(StringView(basename), needed->size(), 0);
+      int cnt(1);
+      Article* tmp = new Article(article);
 
-        FILE * fp = cache->get_fp_from_mid(*it);
-        if (!(*it))
+      /* build real subject line */
+      g_snprintf(buf, sizeof(buf), "\"%s\" - %s (/%03d)", basename.c_str(), subject.c_str(), needed->size());
+      tmp->subject = buf;
+
+      for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
+      {
+        FILE * fp = cache->get_fp_from_mid(it->second.message_id);
+        if (!fp)
         {
-          g_snprintf(buf, bufsz, _("Error loading %s from cache."), it->c_str());
+          g_snprintf(buf, bufsz, _("Error loading %s from cache."), it->second.message_id.c_str());
           log_errors.push_back(buf); // log error
-          ++cnt;
           continue;
         }
-        cache->get_filename(buf, *it);
-        std::cerr<<"do work "<<buf<<std::endl;
         // 4000 lines SHOULD be OK for ANY nntp server ...
+        StringView mid(global_mid);
+        generate_unique_id(mid, filename, cnt, s);
         res = UUE_PrepPartial (fp, NULL, (char*)filename.c_str(),YENC_ENCODED,
-                               (char*)basename.c_str(),0644, cnt++, 4000,
+                               (char*)basename.c_str(),0644, cnt, 4000,
                                0, (char*)groups.c_str(),
-                               (char*)author.c_str(), (char*)subject.c_str(),
-                               0);
-        if (fp) fclose(fp);
-        std::cerr<<"encoder said : "<<UUstrerror(res)<<std::endl;
+                               (char*)author.c_str(),
+                               (char*)subject.c_str(), (char*)s.c_str(), 0);
+
         if (res != UURET_CONT) break;
+
+        cache->finalize(it->second.message_id);
+        stat (it->second.message_id.c_str(), &sb);
+        it->second.bytes  = sb.st_size;
+        task->_all_bytes += sb.st_size;
+
+        std::cerr<<"add to batch: "<<it->second.message_id<<" "<<sb.st_size<<"\n";
+
+        batch.add_part(cnt, StringView(s), sb.st_size);
       }
 
       if (res != UURET_OK)
@@ -139,6 +195,11 @@ Encoder :: do_work()
                                                        NULL, 0))
                    : UUstrerror(res));
         log_errors.push_back(buf); // log error
+      } else
+      { // prepare article for upload list
+        batch.add_part(cnt, StringView(s), sb.st_size);
+        tmp->set_parts(batch);
+        task->_upload_list.push_back(tmp);
       }
     UUCleanUp ();
     }

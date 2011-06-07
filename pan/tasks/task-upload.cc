@@ -39,28 +39,31 @@ extern "C" {
 #include <pan/data/encode-cache.h>
 #include "encoder.h"
 #include "task-upload.h"
+#include "nzb.h"
 
 using namespace pan;
+
+///TODO refresh actual filesize inside article parts! (by encoder)
 
 namespace
 {
   std::string get_description (const char* name)
   {
-    char buf[1024];
+    char buf[4096];
     char * freeme = g_path_get_basename(name);
     snprintf (buf, sizeof(buf), _("Uploading %s"), freeme);
     g_free(freeme);
     return buf;
   }
 
-//  std::string get_basename(const char* f)
-//  {
-//    char buf[4096];
-//    char * freeme = g_path_get_basename(f);
-//    snprintf (buf, sizeof(buf), _("%s"), freeme);
-//    g_free(freeme);
-//    return buf;
-//  }
+  std::string get_basename(const char* f)
+  {
+    char buf[4096];
+    char * freeme = g_path_get_basename(f);
+    snprintf (buf, sizeof(buf), _("%s"), freeme);
+    g_free(freeme);
+    return buf;
+  }
 }
 
 
@@ -71,25 +74,25 @@ namespace
 TaskUpload :: TaskUpload (const std::string         & filename,
                           const Quark               & server,
                           EncodeCache               & cache,
-                          quarks_t                  & groups,
-                          std::string                 subject,
-                          std::string                 author,
-                          Article                   & article,
+                          Article                     article,
+                          std::string                 mid,
                           needed_t                  * imported,
                           Progress::Listener        * listener,
                           const TaskUpload::EncodeMode  enc):
   Task ("UPLOAD", get_description(filename.c_str())),
   _filename(filename),
-  _basename (g_path_get_basename(filename.c_str())),
+  _basename (get_basename(filename.c_str())),
   _server(server),
   _cache(cache),
-  _groups(groups),
-  _subject (subject),
-  _author(author),
+  _article(article),
+  _subject (article.subject.to_string()),
+  _author(article.author.to_string()),
   _encoder(0),
   _encoder_has_run (false),
   _encode_mode(enc),
-  _lines_per_file(4000)
+  _mid(mid),
+  _lines_per_file(4000),
+  _all_bytes(0)
 {
   if (listener != 0)
     add_listener (listener);
@@ -102,9 +105,8 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   struct stat sb;
   stat(filename.c_str(),&sb);
   _bytes = sb.st_size;
-
   build_needed_tasks(imported);
-  _cache.reserve(_article.get_part_mids());
+
   update_work ();
 }
 
@@ -112,46 +114,26 @@ void
 TaskUpload :: build_needed_tasks(bool imported)
 {
 
-  char buf[4096];
-  char buf2[4096];
-
   _total_parts = (int) (((long)get_byte_count() + (4000*128-1)) / (4000*128));
   int cnt(1);
 
   quarks_t groups;
   foreach_const (Xref, _article.xref, it)
-    groups.insert (it->group);
+    _groups.insert (it->group);
 
-  for (int i=1; i<=_total_parts; ++i)
+//  TaskUpload::Needed n;
+//  foreach_const (quarks_t, groups, git)
+//      n.xref.insert (_server, *git, StringView(buf)==_article.message_id.to_string()
+//                     ? _article.xref.find_number(_server,*git) : 0);
+  Article::mid_sequence_t mids;
+  foreach (needed_t, _needed, it)
   {
-    if (imported)
-    {
-    needed_t::iterator it = _needed.find(cnt);
-    if (it == _needed.end())
-      continue;
-    }
-
-    g_snprintf(buf,sizeof(buf),"%s.%d", _filename.c_str(), i);
-    _article.add_part(i, StringView(buf), 0);
+    mids.push_back(Quark(it->second.message_id));
+    _cache.add(Quark(it->second.message_id));
   }
+  _cache.reserve(mids);
+  _needed_parts = _needed.size();
 
-  for (Article::part_iterator i(_article.pbegin()), e(_article.pend()); i!=e; ++i, ++cnt)
-  {
-    const std::string mid (i.mid ());
-
-    TaskUpload::Needed n;
-    n.message_id = mid;
-    n.bytes = i.bytes();
-    n.partno = cnt;
-
-    foreach_const (quarks_t, groups, git)
-      n.xref.insert (_server, *git, mid==_article.message_id.to_string()
-                     ? _article.xref.find_number(_server,*git) : 0);
-
-    std::cerr<<"needed insert "<<cnt<<std::endl;
-    _needed.insert(std::pair<int,Needed>(cnt,n));
-  }
-  _needed_parts = cnt;
 }
 
 void
@@ -179,7 +161,6 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   {
     _state.set_completed();
     set_finished(OK);
-
   }
 }
 
@@ -200,7 +181,6 @@ TaskUpload :: use_nntp (NNTP * nntp)
         break;
       }
   }
-
 
   if (!needed)
   {
@@ -237,6 +217,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
 
   char buf[4096];
   Log::Entry tmp;
+  tmp.date = time(NULL);
 
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
@@ -248,13 +229,12 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   {
     case OK:
       // save to cache
+      increment_step(it->second.bytes);
       _needed.erase (it);
       post_ok = true;
-      increment_step(1);
       break;
     case ERR_NETWORK:
-      //reset
-      it->second.nntp = 0;
+      it->second.reset();
       goto _end;
     case ERR_COMMAND:
       _needed.erase (it);
@@ -269,8 +249,10 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       this->stop();
       break;
     case POSTING_FAILED:
-      Log :: add_err_va ( _("Posting of File %s (Part %d of %d) failed: %s"),
+      g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: %s"),
                  _basename.c_str(), it->second.partno, _total_parts, response.str);
+      tmp.message = buf;
+      _logfile.push_back(tmp);
       break;
     case ARTICLE_POSTED_OK:
       tmp.severity = Log :: PAN_SEVERITY_INFO;
@@ -280,7 +262,6 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
         tmp.message = buf;
         _logfile.push_back(tmp);
-        std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
       } else if (post_ok && _needed.empty())
       {
         g_snprintf(buf,sizeof(buf), _("Posting of file %s (Part %d of %d) succesful: %s"),
@@ -292,12 +273,13 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
         tmp.message = buf;
         _logfile.push_back(tmp);
         Log::add_entry_list (tmp, _logfile);
-        std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
+        _logfile.clear();
       } else
       {
+        Log::add_entry_list (tmp, _logfile);
+        _logfile.clear();
         Log :: add_err_va (_("Posting of file %s not successful: Check the popup log!"),
                    _basename.c_str(), response.str);
-        std::cerr<<LINE_ID<<" "<<_logfile.size()<<std::endl;
       }
       break;
     case TOO_MANY_CONNECTIONS:
@@ -344,11 +326,8 @@ TaskUpload :: use_encoder (Encoder* encoder)
     if (i<_groups.size()&& i>0 && _groups.size()>1) groups += ",";
     groups += (*it).to_string();
   }
-  const Article::mid_sequence_t mids (_article.get_part_mids());
-  foreach_const (Article::mid_sequence_t, mids, it)
-    _cache.add(*it) ? std::cerr<<"fp valid!\n" :std::cerr<<"fp invalid!\n";
-  _encoder->enqueue (this, mids, &_cache, _filename, _basename,
-                     groups, _subject, _author, YENC);
+  _encoder->enqueue (this, &_cache, _article, _filename, _basename,
+                     groups, _subject, _author, _mid, YENC);
   debug ("encoder thread was free, enqueued work");
 }
 
@@ -382,9 +361,8 @@ TaskUpload :: on_worker_done (bool cancelled)
       set_error (_encoder->log_errors.front());
 
     {
-      std::cerr<<_encoder->parts<<" "<<_total_parts<<std::endl;
       set_step (0);
-      init_steps(_needed_parts);
+      init_steps(_all_bytes);
       _encoder_has_run = true;
     }
   }
@@ -395,9 +373,24 @@ TaskUpload :: on_worker_done (bool cancelled)
   check_in (d);
 }
 
+namespace
+{
+  void add_to_upload_list(std::vector<Article*>& vec)
+  {
+    std::ofstream out("/home/imhotep/download_list", std::fstream::out | std::fstream::app);
+    NZB :: upload_list_to_xml_file (out, vec);
+    out.close();
+  }
+}
+
 TaskUpload :: ~TaskUpload ()
 {
   // ensure our on_worker_done() doesn't get called after we're dead
   if (_encoder)
       _encoder->cancel_silently();
+
+  _cache.release(_article.get_part_mids());
+  _cache.resize();
+
+  add_to_upload_list(_upload_list);
 }

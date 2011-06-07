@@ -60,13 +60,14 @@ namespace pan
       typedef std::vector<std::string> strings_t;
 
       void enqueue (TaskUpload                      * task,
-                    const Article::mid_sequence_t   & mids,
                     EncodeCache                     * cache,
+                    Article                           article,
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & groups,
                     std::string                     & subject,
                     std::string                     & author,
+                    std::string                       global_mid,
                     const TaskUpload::EncodeMode    & enc = TaskUpload::YENC);
 
     public:
@@ -86,9 +87,11 @@ namespace pan
       TaskUpload * task;
       TaskUpload::EncodeMode encode_mode;
       std::string   basename, filename;
-      std::string subject, author, groups;
+      std::string subject, author, groups, mid;
       EncodeCache * cache;
-      Article::mid_sequence_t mids;
+      TaskUpload::needed_t* needed;
+      std::string global_mid;
+      Article article;
 
       // These are set in the worker thread and polled in the main thread.
       Mutex mut;

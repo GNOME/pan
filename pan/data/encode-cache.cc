@@ -56,7 +56,6 @@ namespace
    {
       int partno();
       g_snprintf (buf, sizeof(buf), "%s.%d", mid.c_str(), partno);
-      std::cerr<<"ec mid to fn "<<buf<<"\n";
       return buf;
    }
 
@@ -97,7 +96,6 @@ namespace
       *out = '\0';
 
       return out - buf;
-      std::cerr<<"ec fn to mid "<<(out-buf)<<"\n";
    }
 };
 
@@ -119,32 +117,27 @@ EncodeCache :: EncodeCache (const StringView& path, size_t max_megs):
    }
    else
    {
-
-
-     ///TODO import articles, see nzb.ccc
-//      char filename[PATH_MAX];
-//      const char * fname;
-//      while ((fname = g_dir_read_name (dir)))
-//      {
-//         struct stat stat_p;
-//         g_snprintf (filename, sizeof(filename), "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, fname);
-//         if (!stat (filename, &stat_p))
-//         {
-//            char str[2048];
-//            const int len (filename_to_message_id (str, sizeof(str), fname));
-//            if (len != 0)
-//            {
-//               MsgInfo info;
-//               info._message_id = StringView (str, len);
-//               info._size = stat_p.st_size;
-//               info._date = stat_p.st_mtime;
-////               _current_bytes += info._size;
-//               _mid_to_info.insert (mid_to_info_t::value_type (info._message_id, info));
-//            }
-//         }
-//      }
-//      g_dir_close (dir);
-//      debug ("loaded " << _mid_to_info.size() << " articles into cache from " << _path);
+      char filename[PATH_MAX];
+      const char * fname;
+      while ((fname = g_dir_read_name (dir)))
+      {
+         struct stat stat_p;
+         g_snprintf (filename, sizeof(filename), "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, fname);
+         std::cerr<<"loaded "<<filename<<std::endl;
+         if (!stat (filename, &stat_p))
+         {
+           MsgInfo info;
+           info._message_id = filename;
+           info._size = stat_p.st_size;
+           info._date = stat_p.st_mtime;
+           _current_bytes += info._size;
+           _mid_to_info.insert (mid_to_info_t::value_type (info._message_id, info));
+         }
+      }
+      g_dir_close (dir);
+      std::cerr <<"loaded " << _mid_to_info.size() << " articles into encode-cache from "
+      << _path<<", size is : "<<_current_bytes<<" , max is "<<_max_megs * 1024 * 1024<<std::endl;
+      if (_current_bytes>_max_megs*1024*1024) resize();
    }
 }
 
@@ -186,15 +179,11 @@ EncodeCache :: get_filename (char* buf, const Quark& mid) const
    const char* base = g_path_get_basename(mid.c_str());
    g_snprintf (buf, PATH_MAX, "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, base);
    g_free((gpointer)base);
-   std::cerr<<"ec get_filename "<<buf<<"\n";
 }
 
-///TODO give function a reference to vector!!
 FILE*
 EncodeCache :: get_fp_from_mid(const Quark& mid)
 {
-  std::cerr<<"ec get_fp from mid "<<mid.c_str()<<"\n";
-  std::cerr<<"mid to info : "<<_mid_to_info[mid]._message_id<<std::endl;
   return _mid_to_info[mid]._fp;
 }
 
@@ -202,34 +191,27 @@ FILE*
 EncodeCache :: add (const Quark& message_id)
 {
 
-  std::cerr<<"ec add "<<message_id<<"\n";
-
   pan_return_val_if_fail (!message_id.empty(), false);
 
   FILE * fp = 0;
   char filename[PATH_MAX];
-  struct stat sb;
   get_filename (filename, message_id);
+  std::cerr<<"cache add "<<filename<<std::endl;
   fp = fopen (filename, "wb+");
 
   if (!fp)
   {
     Log::add_err_va (_("Unable to save \"%s\" %s"),
                      filename, file::pan_strerror(errno));
-  }
-  else
+  } else
   {
-    std::cerr<<"building msginfo\n";
     MsgInfo info;
     info._fp = fp;
     info._message_id = message_id;
-    stat (message_id, &sb);
-    info._size = sb.st_size;
+    info._size = 0;
     info._date = time(0);
-    _current_bytes += info._size;
     _mid_to_info.insert (mid_to_info_t::value_type (info._message_id, info));
-    fire_added (message_id);
-    resize ();
+
   }
   return fp;
 }
@@ -238,10 +220,20 @@ EncodeCache :: add (const Quark& message_id)
 ****
 ***/
 
+void EncodeCache :: finalize (const Quark& message_id)
+{
+  struct stat sb;
+  FILE * fp = get_fp_from_mid(message_id);
+  if (fp) fclose(fp);
+  stat (message_id, &sb);
+  _mid_to_info[message_id]._size = sb.st_size;
+  fire_added (message_id);
+  _current_bytes += sb.st_size;
+}
+
 void
 EncodeCache :: reserve (const mid_sequence_t& mids)
 {
-  std::cerr<<"ec reserve\n";
   foreach_const (mid_sequence_t, mids, it)
     ++_locks[*it];
 }
@@ -249,7 +241,7 @@ EncodeCache :: reserve (const mid_sequence_t& mids)
 void
 EncodeCache :: release (const mid_sequence_t& mids)
 {
-  std::cerr<<"ec release\n";
+  std::cerr<<"ec release"<<std::endl;
   foreach_const (mid_sequence_t, mids, it)
     if (!--_locks[*it])
       _locks.erase (*it);
@@ -282,8 +274,6 @@ EncodeCache :: get_data(std::string& data, const Quark& where)
   get_filename(buf, where);
   std::ifstream in(buf, std::ifstream::in);
   std::stringstream out;
-  if (in.bad())
-    std::cerr<<"error getting file "<<where.c_str()<<std::endl;
   while (in.good())
     out << (char) in.get();
 
@@ -313,7 +303,6 @@ EncodeCache :: resize (guint64 max_bytes)
         unlink (buf);
         _current_bytes -= it->_size;
         removed.insert (mid);
-        if (_mid_to_info[mid]._fp) fclose(_mid_to_info[mid]._fp);
         _mid_to_info.erase (mid);
       }
     }

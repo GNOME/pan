@@ -149,6 +149,8 @@ namespace pan
       /* binpost */
       bool _file_queue_empty;
       tasks_v _file_queue_tasks;
+      TaskUpload* _upload_ptr;
+      int _total_parts;
 
     private:
       void add_actions (GtkWidget* box);
@@ -166,8 +168,6 @@ namespace pan
       GtkWidget* create_filequeue_tab ();
       GtkWidget* create_parts_tab ();
       GtkWidget* create_log_tab ();
-      TaskUpload* _upload_ptr;
-      int _total_parts;
 
     private:
       std::string utf8ize (const StringView&) const;

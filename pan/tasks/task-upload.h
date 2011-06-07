@@ -49,20 +49,20 @@ namespace pan
   {
     public:
 
+      ///TODO SEE!
       void set_lpf (const int& setme ) { _lines_per_file = setme; }
+      const Article& get_article ()  { return _article; }
 
       typedef std::vector<Quark> mid_sequence_t;
 
       struct Needed {
-        std::string filename;
         unsigned long bytes;
         int partno;
         NNTP* nntp;
-        bool partial;
         std::string message_id;
         Xref xref;
-
-        Needed (): nntp(0), bytes(0) , partial(false) {}
+        bool encoded;
+        Needed (): nntp(0), bytes(0) , partno(1), encoded(false) {}
         void reset() { nntp = 0; }
       };
 
@@ -79,10 +79,8 @@ namespace pan
       TaskUpload ( const std::string         & filename,
                    const Quark               & server,
                    EncodeCache               & cache,
-                   quarks_t                  & groups,
-                   std::string                 subject,
-                   std::string                 author,
-                   Article                   & article,
+                   Article                     article,
+                   std::string                 mid,
                    needed_t                  * imported=0,
                    Progress::Listener        * listener= 0,
                    TaskUpload::EncodeMode enc= YENC);
@@ -137,6 +135,9 @@ namespace pan
       EncodeCache& _cache;
       std::deque<Log::Entry> _logfile;   // for intermediate updates
       Article _article;
+      std::string _mid;
+      unsigned long _all_bytes;
+      std::vector<Article*> _upload_list;
 
     private:
       needed_t       _needed;

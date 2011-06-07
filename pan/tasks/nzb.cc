@@ -57,6 +57,7 @@ namespace
     ArticleRead& read;
     const ServerRank& ranks;
     const GroupServer& gs;
+    Quark server;
     const StringView fallback_path;
     size_t bytes;
     size_t number;
@@ -101,6 +102,7 @@ namespace
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
              if (!strcmp (*k,"author"))  mc.a.author = *v;
         else if (!strcmp (*k,"subject")) mc.a.subject = *v;
+        else if (!strcmp (*k,"server"))  mc.server = *v;
       }
     }
 
@@ -147,18 +149,16 @@ namespace
     }
 
     else if (!strcmp(element_name, "part") && mc.number && !mc.text.empty()) {
-//      TaskUpload::Needed n;
-//      n.bytes = mc.bytes;
-//      n.filename = mc.text;
-//      n.partno = mc.number;
-//      n.partial = false;
-//      std::pair<int,TaskUpload::Needed> tmp(mc.number,n);
-//      mc.needed_parts.insert(tmp);
-      if (mc.a.message_id.empty()) {
-        mc.a.message_id = mc.text;
-        mc.parts.init (mc.text);
-      }
-      mc.parts.add_part (mc.number, mc.text, mc.bytes);
+//      if (mc.a.message_id.empty()) {
+//        mc.a.message_id = mc.text;
+//        mc.parts.init (mc.text);
+//      }
+      mc.a.message_id = mc.text;
+      TaskUpload::Needed n;
+      n.partno = mc.number;
+      n.message_id = mc.text;
+      n.bytes = mc.bytes;
+      mc.needed_parts.insert(std::pair<int, TaskUpload::Needed>(mc.number,n));
     }
 
     else if (!strcmp(element_name,"path"))
@@ -183,16 +183,13 @@ namespace
     else if (!strcmp (element_name, "upload"))
     {
       debug("adding taskupload from nzb.\n");
-//      TaskUpload::needed_t tmp2;
-//      foreach (TaskUpload::needed_t, mc.needed_parts, it)
-//        tmp2.insert(*it);
-      mc.parts.sort ();
-      mc.a.set_parts (mc.parts);
-      foreach_const (quarks_t, mc.groups, git)
-        mc.a.xref.insert (Quark("dummy"), *git,0);
+//      mc.parts.sort ();
+//      mc.a.set_parts (mc.parts);
+//      foreach_const (quarks_t, mc.groups, git)
+//        mc.a.xref.insert (mc.server, *git,0);
 
-      TaskUpload* tmp = new TaskUpload (mc.path, Quark("dummy"), mc.encode_cache,
-                          mc.groups, mc.a.subject.to_string(), mc.a.author.to_string(), mc.a, 0, 0, TaskUpload::YENC);
+      TaskUpload* tmp = new TaskUpload (mc.path, mc.server, mc.encode_cache,
+                          mc.a, mc.a.message_id.to_string() , &mc.needed_parts, 0, TaskUpload::YENC);
       mc.tasks.push_back (tmp);
     }
   }
@@ -350,7 +347,7 @@ NZB :: nzb_to_xml (std::ostream             & out,
       // not an upload task, move on
       if (!task) continue;
 
-      std::vector<std::string> groups;
+      const Article& a (task->get_article());
 
       //info: author, subject, load path, parts to encode / post
       out << indent(depth)
@@ -364,28 +361,88 @@ NZB :: nzb_to_xml (std::ostream             & out,
       out << indent(depth)
           << "<path>" << task->_filename << "</path>\n";
       out  << indent(depth) << "<groups>\n";
+
       ++depth;
-      foreach_const (quarks_t, task->_groups, it)
-      {
-        out << indent(depth)<<"<group>" << (*it).to_string() << "</group>\n";
-      }
+      foreach_const (quarks_t, task->_groups, git)
+        out << indent(depth) << "<group>" << *git << "</group>\n";
       --depth;
-      out  << indent(depth) << "</groups>\n";
+
+      out << indent(--depth) << "</groups>\n";
       out  << indent(depth) << "<parts>\n";
       ++depth;
 
-      foreach_const (TaskUpload::needed_t, task->_needed, it)
+      foreach (TaskUpload::needed_t, task->_needed, it)
+      {
         out << indent(depth)
-            << "<part" << " bytes=\"" << (*it).second.bytes << '"'
-                       << " number=\"" << (*it).second.partno << '"'
-                       << ">" << (*it).second.filename<< "</part>\n";
+            << "<part" << " bytes=\"" << it->second.bytes << '"'
+                          << " number=\"" << it->second.partno << '"'
+                          << ">";
+        escaped(out, it->second.message_id);
+        out  << "</part>\n";
+      }
       --depth;
       out  << indent(depth) << "</parts>\n";
-      --depth;
       out << indent(depth) << "</upload>\n";
-
-
     }
+  }
+  out << indent(--depth) << "</nzb>\n";
+  return out;
+}
+
+/* Saves upload_list to XML file for distribution */
+std::ostream&
+NZB :: upload_list_to_xml_file (std::ostream& out,
+                   const std::vector<Article*> & tasks)
+{
+int depth (0);
+
+  out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
+      << "<!DOCTYPE nzb PUBLIC \"-//newzBin//DTD NZB 1.0//EN\" \"http://www.newzbin.com/DTD/nzb/nzb-1.0.dtd\">\n"
+      << indent(depth++)
+      << "<nzb xmlns=\"http://www.newzbin.com/DTD/2003/nzb\">\n";
+
+  foreach_const (std::vector<Article*>, tasks, it)
+  {
+    Article * task (dynamic_cast<Article*>(*it));
+    const Article& a (*task);
+
+    out << indent(depth++)
+        << "<file" << " poster=\"";
+    escaped (out, a.author.to_view());
+    out  << "\" date=\"" << a.time_posted << "\" subject=\"";
+    escaped (out, a.subject.to_view()) << "\">\n";
+
+    // what groups was this crossposted in?
+    quarks_t groups;
+    foreach_const (Xref, a.xref, xit)
+      groups.insert (xit->group);
+    out << indent(depth++) << "<groups>\n";
+    foreach_const (quarks_t, groups, git)
+      out << indent(depth) << "<group>" << *git << "</group>\n";
+    out << indent(--depth) << "</groups>\n";
+
+    // now for the parts...
+    out << indent(depth++) << "<segments>\n";
+    for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
+    {
+      std::string mid = it.mid ();
+
+      // remove the surrounding < > as per nzb spec
+      if (mid.size()>=2 && mid[0]=='<') {
+        mid.erase (0, 1);
+        mid.resize (mid.size()-1);
+      }
+
+      // serialize this part
+      out << indent(depth)
+          << "<segment" << " bytes=\"" << it.bytes() << '"'
+                        << " number=\"" << it.number() << '"'
+                        << ">";
+      escaped(out, mid);
+      out  << "</segment>\n";
+    }
+    out << indent(--depth) << "</segments>\n";
+    out << indent(--depth) << "</file>\n";
   }
 
   out << indent(--depth) << "</nzb>\n";

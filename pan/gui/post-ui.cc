@@ -245,10 +245,10 @@ namespace
       N_("Clear List"),
       G_CALLBACK(do_clear_list) },
 
-    { "select-parts", NULL,
-      N_("Select needed Parts"), "",
-      N_("Select needed Parts"),
-      G_CALLBACK(do_select_parts) },
+//    { "select-parts", NULL,
+//      N_("Select needed Parts"), "",
+//      N_("Select needed Parts"),
+//      G_CALLBACK(do_select_parts) },
 
     { "move-up", NULL,
       N_("Move Up"), "",
@@ -2020,9 +2020,6 @@ PostUI :: create_filequeue_tab ()
   w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
   gtk_widget_set_tooltip_text( w, _("Delete from Queue"));
   gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
-  add_button (buttons, GTK_STOCK_SELECT_ALL, 0, 0);
-  w = gtk_toggle_button_new_with_label(_("Save"));
-  gtk_box_pack_start (GTK_BOX(vbox), w, false, false, 0);
   pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new());
 
   gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
@@ -2080,13 +2077,12 @@ PostUI:: on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, 
 
   enabled ^= 1;
   if (enabled==0)
-    data->upload_ptr()->needed().erase(part);
+    data->upload_ptr()->_needed.erase(part);
   else
   {
     TaskUpload::Needed tmp;
     tmp.partno = part;
-    tmp.partial = true;
-    data->upload_ptr()->needed().insert(std::pair<int, TaskUpload::Needed>(part,tmp));
+    data->upload_ptr()->_needed.insert(std::pair<int, TaskUpload::Needed>(part,tmp));
 
   }
   gtk_list_store_set(GTK_LIST_STORE( model ), &iter, 1, false, -1);
@@ -2168,11 +2164,9 @@ PostUI :: create_parts_tab ()
   l = gtk_label_new (NULL);
   gtk_table_attach (GTK_TABLE(t), l, 0, 2, row, row+1, fe, fill, 0, 0);
 
-  //7
-  ++row;
-
-  // 8
+  // 7
   //treeview for parts list
+  ++row;
   w = _parts_store = gtk_tree_view_new_with_model (GTK_TREE_MODEL(gtk_list_store_new (3,  G_TYPE_UINT, G_TYPE_BOOLEAN, G_TYPE_STRING)));
 
   // add columns
@@ -2191,8 +2185,7 @@ PostUI :: create_parts_tab ()
   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(w),TRUE);
   gtk_tree_view_columns_autosize(GTK_TREE_VIEW(w));
 
-  ++row;
-  gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
+  gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, fe, fill, 0, 0);
 
   //append scroll window
   w = gtk_scrolled_window_new (NULL, NULL);
@@ -2332,7 +2325,7 @@ PostUI :: remove_files (void)
 }
 
 
-
+///TODO!!
 void
 PostUI :: move_up (void)
 {
@@ -2384,11 +2377,6 @@ void PostUI :: delete_clicked_cb (GtkButton*, PostUI* pane)
 {
   pane->remove_files ();
 }
-
-//void PostUI :: save_clicked_cb (GtkButton*, Postui* pane)
-//{
-//  pane->
-//}
 
 
 void
@@ -2445,11 +2433,10 @@ PostUI :: select_parts ()
   g_signal_connect (_part_select, "delete-event", G_CALLBACK(delete_parts_cb), this);
   gtk_window_set_role (GTK_WINDOW(w), "pan-parts-window");
   gtk_window_set_title (GTK_WINDOW(w), _("Select Parts"));
-  int x,h;
-  x = 350;
-  h = 650;
-  gtk_window_set_default_size (GTK_WINDOW(w), x, h);
-
+  int x,y;
+  x = _prefs.get_int("post-ui-width", -1);
+  y = _prefs.get_int("post-ui-height", 450);
+  gtk_window_set_default_size (GTK_WINDOW(_root), x, y);
   // populate the window
   GtkWidget * vbox = gtk_vbox_new (false, PAD_SMALL);
   gtk_container_add (GTK_CONTAINER(w), vbox);
@@ -2597,6 +2584,9 @@ PostUI :: create_window (GtkWindow    * parent,
 void
 PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, const Prefs& prefs)
 {
+  char buf[4096];
+  struct stat sb;
+
   const Profile profile (get_current_profile ());
   GMimeMessage * message (new_message_from_ui (POSTING));
   if (!check_message(profile.posting_server, message))
@@ -2642,15 +2632,38 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
         groups.insert(groupname);
     }
 
-    int i(0);
-    for (; cur; cur = cur->next, ++i)
+    int cnt(1);
+    for (; cur; cur = cur->next, ++cnt)
 		{
-		  _uploaded.push_back(new Article());
-		  Article& a(*_uploaded.back());
+		  Article a;
+		  a.subject = subject;
+		  a.author = author;
+      stat ((const char*)cur->data,&sb);
+      int total = (int) (((long)sb.st_size + (4000*128-1)) / (4000*128));
+
+      char* basename = g_path_get_basename((const char*)cur->data);
+      TaskUpload::needed_t import;
+      TaskUpload::Needed n;
+      foreach_const (quarks_t, groups, git)
+         n.xref.insert (profile.posting_server, *git,0);
+      for (int i = 1; i <= total; ++i)
+      {
+        g_snprintf(buf,sizeof(buf),"%s.%d", basename, i);
+        n.message_id = buf;
+        n.partno = i;
+        import.insert(std::pair<int,TaskUpload::Needed>(i,n));
+      }
+      g_free(basename);
+
+      foreach_const (quarks_t, groups, git)
+        a.xref.insert (profile.posting_server, *git,0);
+
+      const std::string message_id = !profile.fqdn.empty()
+      ? GNKSA::generate_message_id (profile.fqdn)
+      : GNKSA::generate_message_id_from_email_address (profile.address);
 		  TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
-                               profile.posting_server, _cache,
-                               groups, subject, author, a, 0, 0,
-                               TaskUpload::YENC);
+                        profile.posting_server, _cache,
+                        a, message_id, &import, 0, TaskUpload::YENC);
 		  _file_queue_tasks.push_back(tmp);
 		}
   	g_slist_free (tmp_list);
