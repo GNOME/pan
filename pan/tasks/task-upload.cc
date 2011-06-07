@@ -43,8 +43,6 @@ extern "C" {
 
 using namespace pan;
 
-///TODO refresh actual filesize inside article parts! (by encoder)
-
 namespace
 {
   std::string get_description (const char* name)
@@ -66,6 +64,22 @@ namespace
   }
 }
 
+namespace
+{
+  std::string get_domain(const StringView& mid)
+  {
+    const char * pch = mid.strchr ('@');
+    StringView domain;
+    if (pch) domain = mid.substr (pch+1, NULL);
+    if (pch) pch = domain.strchr ('>');
+    if (pch) domain = domain.substr (NULL, pch);
+    domain.trim ();
+
+    std::cerr<<"generate domain : "<<domain<<std::endl;
+
+    return domain.to_string();
+  }
+}
 
 /***
 ****
@@ -75,7 +89,8 @@ TaskUpload :: TaskUpload (const std::string         & filename,
                           const Quark               & server,
                           EncodeCache               & cache,
                           Article                     article,
-                          std::string                 mid,
+                          std::string                 domain,
+                          std::string                 save_file,
                           needed_t                  * imported,
                           Progress::Listener        * listener,
                           const TaskUpload::EncodeMode  enc):
@@ -85,12 +100,13 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _server(server),
   _cache(cache),
   _article(article),
+  _domain(get_domain(StringView(domain))),
+  _save_file(save_file),
   _subject (article.subject.to_string()),
   _author(article.author.to_string()),
   _encoder(0),
   _encoder_has_run (false),
   _encode_mode(enc),
-  _mid(mid),
   _lines_per_file(4000),
   _all_bytes(0)
 {
@@ -121,10 +137,6 @@ TaskUpload :: build_needed_tasks(bool imported)
   foreach_const (Xref, _article.xref, it)
     _groups.insert (it->group);
 
-//  TaskUpload::Needed n;
-//  foreach_const (quarks_t, groups, git)
-//      n.xref.insert (_server, *git, StringView(buf)==_article.message_id.to_string()
-//                     ? _article.xref.find_number(_server,*git) : 0);
   Article::mid_sequence_t mids;
   foreach (needed_t, _needed, it)
   {
@@ -207,14 +219,14 @@ TaskUpload :: use_nntp (NNTP * nntp)
 void
 TaskUpload :: on_nntp_line (NNTP * nntp,
                               const StringView & line_in)
-{}
+{
+}
 
 void
 TaskUpload :: on_nntp_done (NNTP * nntp,
                              Health health,
                              const StringView & response)
 {
-
   char buf[4096];
   Log::Entry tmp;
   tmp.date = time(NULL);
@@ -274,17 +286,17 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
         _logfile.push_back(tmp);
         Log::add_entry_list (tmp, _logfile);
         _logfile.clear();
-      } else
-      {
-        Log::add_entry_list (tmp, _logfile);
-        _logfile.clear();
-        Log :: add_err_va (_("Posting of file %s not successful: Check the popup log!"),
-                   _basename.c_str(), response.str);
       }
-      break;
+
     case TOO_MANY_CONNECTIONS:
       // lockout for 120 secs, but try
       _state.set_need_nntp(nntp->_server);
+      break;
+    default:
+      Log::add_entry_list (tmp, _logfile);
+      _logfile.clear();
+      Log :: add_err_va (_("Posting of file %s not successful: Check the popup log!"),
+                 _basename.c_str(), response.str);
       break;
   }
 
@@ -327,7 +339,7 @@ TaskUpload :: use_encoder (Encoder* encoder)
     groups += (*it).to_string();
   }
   _encoder->enqueue (this, &_cache, _article, _filename, _basename,
-                     groups, _subject, _author, _mid, YENC);
+                     groups, _subject, _author, _domain, YENC);
   debug ("encoder thread was free, enqueued work");
 }
 
@@ -373,16 +385,6 @@ TaskUpload :: on_worker_done (bool cancelled)
   check_in (d);
 }
 
-namespace
-{
-  void add_to_upload_list(std::vector<Article*>& vec)
-  {
-    std::ofstream out("/home/imhotep/download_list", std::fstream::out | std::fstream::app);
-    NZB :: upload_list_to_xml_file (out, vec);
-    out.close();
-  }
-}
-
 TaskUpload :: ~TaskUpload ()
 {
   // ensure our on_worker_done() doesn't get called after we're dead
@@ -392,5 +394,10 @@ TaskUpload :: ~TaskUpload ()
   _cache.release(_article.get_part_mids());
   _cache.resize();
 
-  add_to_upload_list(_upload_list);
+  if (!_save_file.empty())
+  {
+     std::ofstream out(_save_file.c_str(), std::fstream::out | std::fstream::app);
+     NZB :: upload_list_to_xml_file (out, _upload_list);
+     out.close();
+  }
 }

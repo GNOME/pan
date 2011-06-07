@@ -49,6 +49,7 @@ namespace pan
                                     GMimeMessage*, Prefs&, GroupPrefs&, EncodeCache&);
 
       void prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, const Prefs& prefs);
+      std::string prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs);
 
     protected:
       PostUI (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
@@ -127,6 +128,7 @@ namespace pan
       GtkWidget * _replyto_entry;
       GtkWidget * _body_view;
       GtkWidget * _user_agent_check;
+      GtkWidget * _save_check;
       GtkWidget * _message_id_check;
       GtkTextBuffer * _body_buf;
       GtkTextBuffer * _headers_buf;
@@ -151,6 +153,7 @@ namespace pan
       tasks_v _file_queue_tasks;
       TaskUpload* _upload_ptr;
       int _total_parts;
+      std::string _save_file;
 
     private:
       void add_actions (GtkWidget* box);

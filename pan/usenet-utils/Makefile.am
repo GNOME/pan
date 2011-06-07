@@ -10,7 +10,8 @@ libusenetutils_a_SOURCES = \
  numbers.cc \
  scorefile.cc \
  text-massager.cc \
- url-find.cc
+ url-find.cc \
+ MersenneTwister.h
 
 noinst_HEADERS = \
  defgroup.h \

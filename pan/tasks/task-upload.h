@@ -80,7 +80,8 @@ namespace pan
                    const Quark               & server,
                    EncodeCache               & cache,
                    Article                     article,
-                   std::string                 mid,
+                   std::string                 domain,
+                   std::string                 save_file,
                    needed_t                  * imported=0,
                    Progress::Listener        * listener= 0,
                    TaskUpload::EncodeMode enc= YENC);
@@ -135,9 +136,10 @@ namespace pan
       EncodeCache& _cache;
       std::deque<Log::Entry> _logfile;   // for intermediate updates
       Article _article;
-      std::string _mid;
+      std::string _domain;
       unsigned long _all_bytes;
       std::vector<Article*> _upload_list;
+      std::string _save_file;
 
     private:
       needed_t       _needed;

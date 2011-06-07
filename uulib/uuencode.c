@@ -1491,13 +1491,13 @@ UUE_PrepSingle (FILE *outfile, FILE *infile,
 		char *infname, int encoding,
 		char *outfname, int filemode,
 		char *destination, char *from,
-		char *subject, int isemail)
+		char *subject, char* mid, int isemail)
 {
   return UUE_PrepSingleExt (outfile, infile,
 			    infname, encoding,
 			    outfname, filemode,
 			    destination, from,
-			    subject, NULL,
+			    subject, mid, NULL,
 			    isemail);
 }
 
@@ -1506,7 +1506,7 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 		   char *infname, int encoding,
 		   char *outfname, int filemode,
 		   char *destination, char *from,
-		   char *subject, char *replyto,
+		   char *subject, char* mid, char *replyto,
 		   int isemail)
 {
   mimemap *miter=mimetable;
@@ -1547,9 +1547,9 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 
   if (encoding == YENC_ENCODED) {
     if (subject)
-      sprintf (subline, "- %s - %s (001/001)", oname, subject);
+      sprintf (subline, "\"%s\" - %s (001/001)", oname, subject);
     else
-      sprintf (subline, "- %s - (001/001)", oname);
+      sprintf (subline, "\"%s\" - (001/001)", oname);
   }
   else {
     if (subject)
@@ -1568,6 +1568,12 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
   }
 
   fprintf (outfile, "Subject: %s%s", subline, eolstring);
+
+  if (mid)
+  {
+    fprintf(outfile, "Message-ID: <%s>%s", mid, eolstring);
+  }
+
 
   if (replyto) {
     fprintf (outfile, "Reply-To: %s%s", replyto, eolstring);
@@ -1709,7 +1715,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
       if (infile==NULL) fclose (theifile);
       return UUE_PrepSingleExt (outfile, infile, infname, encoding,
 				outfname, filemode, destination,
-				from, subject, replyto, isemail);
+				from, subject, mid, replyto, isemail);
     }
 
     /*
@@ -1761,10 +1767,10 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
 
   fprintf (outfile, "Subject: %s%s", subline, eolstring);
 
-//  if (mid)
-//  {
-//    fprintf(outfile, "Message-ID: <%s>%s", mid, eolstring);
-//  }
+  if (mid)
+  {
+    fprintf(outfile, "Message-ID: <%s>%s", mid, eolstring);
+  }
 
   if (replyto) {
     fprintf (outfile, "Reply-To: %s%s", replyto, eolstring);

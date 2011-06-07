@@ -123,7 +123,6 @@ EncodeCache :: EncodeCache (const StringView& path, size_t max_megs):
       {
          struct stat stat_p;
          g_snprintf (filename, sizeof(filename), "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, fname);
-         std::cerr<<"loaded "<<filename<<std::endl;
          if (!stat (filename, &stat_p))
          {
            MsgInfo info;
@@ -135,8 +134,6 @@ EncodeCache :: EncodeCache (const StringView& path, size_t max_megs):
          }
       }
       g_dir_close (dir);
-      std::cerr <<"loaded " << _mid_to_info.size() << " articles into encode-cache from "
-      << _path<<", size is : "<<_current_bytes<<" , max is "<<_max_megs * 1024 * 1024<<std::endl;
       if (_current_bytes>_max_megs*1024*1024) resize();
    }
 }
@@ -229,6 +226,7 @@ void EncodeCache :: finalize (const Quark& message_id)
   _mid_to_info[message_id]._size = sb.st_size;
   fire_added (message_id);
   _current_bytes += sb.st_size;
+  // resize();
 }
 
 void
@@ -241,7 +239,6 @@ EncodeCache :: reserve (const mid_sequence_t& mids)
 void
 EncodeCache :: release (const mid_sequence_t& mids)
 {
-  std::cerr<<"ec release"<<std::endl;
   foreach_const (mid_sequence_t, mids, it)
     if (!--_locks[*it])
       _locks.erase (*it);
@@ -308,9 +305,9 @@ EncodeCache :: resize (guint64 max_bytes)
     }
   }
 
-  std::cerr<< "cache expired " << removed.size() << " articles, "
-         "has " << _mid_to_info.size() << " active "
-         "and " << _locks.size() << " locked.\n";
+//  std::cerr<< "cache expired " << removed.size() << " articles, "
+//         "has " << _mid_to_info.size() << " active "
+//         "and " << _locks.size() << " locked.\n";
 
   if (!removed.empty())
     fire_removed (removed);

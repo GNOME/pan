@@ -47,8 +47,9 @@ namespace
     quarks_t groups;
     std::string text;
     std::string path;
-    std::vector<std::string>  groups_str;    // TaskUpload
-    TaskUpload::needed_t needed_parts;       // TaskUpload
+    std::vector<std::string>  groups_str;  // TaskUpload
+    TaskUpload::needed_t needed_parts;     // TaskUpload
+    std::string domain;                    // TaskUpload
     Article a;
     PartBatch parts;
     tasks_t tasks;
@@ -74,7 +75,8 @@ namespace
       a.clear ();
       bytes = 0;
       number = 0;
-      needed_parts.clear();     // TaskUpload
+      needed_parts.clear();   // TaskUpload
+      domain.clear();         // TaskUpload
     }
   };
 
@@ -103,6 +105,7 @@ namespace
              if (!strcmp (*k,"author"))  mc.a.author = *v;
         else if (!strcmp (*k,"subject")) mc.a.subject = *v;
         else if (!strcmp (*k,"server"))  mc.server = *v;
+        else if (!strcmp (*k,"domain"))  mc.domain = *v;
       }
     }
 
@@ -149,10 +152,6 @@ namespace
     }
 
     else if (!strcmp(element_name, "part") && mc.number && !mc.text.empty()) {
-//      if (mc.a.message_id.empty()) {
-//        mc.a.message_id = mc.text;
-//        mc.parts.init (mc.text);
-//      }
       mc.a.message_id = mc.text;
       TaskUpload::Needed n;
       n.partno = mc.number;
@@ -183,13 +182,11 @@ namespace
     else if (!strcmp (element_name, "upload"))
     {
       debug("adding taskupload from nzb.\n");
-//      mc.parts.sort ();
-//      mc.a.set_parts (mc.parts);
-//      foreach_const (quarks_t, mc.groups, git)
-//        mc.a.xref.insert (mc.server, *git,0);
-
-      TaskUpload* tmp = new TaskUpload (mc.path, mc.server, mc.encode_cache,
-                          mc.a, mc.a.message_id.to_string() , &mc.needed_parts, 0, TaskUpload::YENC);
+      foreach_const (quarks_t, mc.groups, git)
+        mc.a.xref.insert (mc.server, *git, 0);
+      TaskUpload* tmp = new TaskUpload (mc.path, mc.server, mc.encode_cache,mc.a,
+                                        mc.domain, std::string(""),
+                                        &mc.needed_parts, 0, TaskUpload::YENC);
       mc.tasks.push_back (tmp);
     }
   }
@@ -356,7 +353,9 @@ NZB :: nzb_to_xml (std::ostream             & out,
       out  << "\" subject=\"";
       escaped (out, task->_subject);
       out  << "\" server=\"";
-      escaped (out, task->_server.to_string()) << "\">\n";
+      escaped (out, task->_server.to_string());
+      out  << "\" domain=\"nospam@";
+      escaped (out, task->_domain) << "\">\n";
       ++depth;
       out << indent(depth)
           << "<path>" << task->_filename << "</path>\n";

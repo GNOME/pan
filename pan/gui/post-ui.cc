@@ -58,6 +58,7 @@ extern "C" {
 
 using namespace pan;
 
+#define QUEUE_SAVE_KEY "upload-queue-save-enabled"
 #define USER_AGENT_PREFS_KEY "add-user-agent-header-when-posting"
 #define MESSAGE_ID_PREFS_KEY "add-message-id-header-when-posting"
 #define USER_AGENT_EXTRA_PREFS_KEY "user-agent-extra-info"
@@ -1967,6 +1968,10 @@ namespace
   {
     static_cast<Prefs*>(prefs_gpointer)->set_flag (USER_AGENT_PREFS_KEY, gtk_toggle_button_get_active(tb));
   }
+  void queue_save_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer)
+  {
+    static_cast<Prefs*>(prefs_gpointer)->set_flag (QUEUE_SAVE_KEY, gtk_toggle_button_get_active(tb));
+  }
 }
 
 namespace
@@ -2020,6 +2025,11 @@ PostUI :: create_filequeue_tab ()
   w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
   gtk_widget_set_tooltip_text( w, _("Delete from Queue"));
   gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+  w = _save_check = gtk_check_button_new_with_mnemonic (_("Save queue to file"));
+  bool b = _prefs.get_flag (QUEUE_SAVE_KEY, true);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
+  g_signal_connect (w, "toggled", G_CALLBACK(queue_save_toggled_cb), &_prefs);
+  gtk_box_pack_start (GTK_BOX(buttons), w, 0, 0, 0);
   pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new());
 
   gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
@@ -2613,7 +2623,7 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
 		if (_file_queue_empty) _file_queue_empty=!_file_queue_empty;
 
 		GSList * cur = g_slist_nth (tmp_list,0);
-
+    gtk_widget_destroy (w);
     GMimeMessage* msg = new_message_from_ui(POSTING);
 
     char * tmp;
@@ -2632,6 +2642,10 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
         groups.insert(groupname);
     }
 
+    bool b = _prefs.get_flag (QUEUE_SAVE_KEY, true);
+    if (b)
+      _save_file = prompt_user_for_upload_nzb_dir (GTK_WINDOW (gtk_widget_get_toplevel(_root)), _prefs);
+
     int cnt(1);
     for (; cur; cur = cur->next, ++cnt)
 		{
@@ -2646,6 +2660,9 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
       TaskUpload::Needed n;
       foreach_const (quarks_t, groups, git)
          n.xref.insert (profile.posting_server, *git,0);
+      foreach_const (quarks_t, groups, git)
+         a.xref.insert (profile.posting_server, *git,0);
+
       for (int i = 1; i <= total; ++i)
       {
         g_snprintf(buf,sizeof(buf),"%s.%d", basename, i);
@@ -2661,17 +2678,60 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
       const std::string message_id = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
+
 		  TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
                         profile.posting_server, _cache,
-                        a, message_id, &import, 0, TaskUpload::YENC);
+                        a, message_id, _save_file, &import, 0, TaskUpload::YENC);
 		  _file_queue_tasks.push_back(tmp);
 		}
-  	g_slist_free (tmp_list);
+    g_slist_free (tmp_list);
+
   }
-	gtk_widget_destroy (w);
   g_object_unref (G_OBJECT(message));
 	update_filequeue_tab();
 }
+
+std::string
+PostUI :: prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs)
+{
+  char buf[4096];
+  struct stat sb;
+  std::string path;
+
+  std::string prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
+  if (!file :: file_exists (prev_path.c_str()))
+    prev_path = g_get_home_dir ();
+  std::string prev_file(_("Untitled.nzb"));
+
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Save Upload Queue as NZB File"),
+                                                GTK_WINDOW(parent),
+                                                GTK_FILE_CHOOSER_ACTION_SAVE,
+                                                GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                                GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+                                                NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_ACCEPT);
+  gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (w), TRUE);
+  gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
+  gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (w), prev_file.c_str());
+
+  GtkFileFilter * filter = gtk_file_filter_new ();
+  gtk_file_filter_add_pattern (filter, "*.[Nn][Zz][Bb]");
+  gtk_file_filter_set_name (filter, _("NZB Files"));
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER(w), filter);
+  gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER(w), false);
+  if (GTK_RESPONSE_ACCEPT == gtk_dialog_run(GTK_DIALOG(w)))
+  {
+    char * tmp = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w));
+    path = tmp;
+    g_free (tmp);
+  }
+
+  gtk_widget_destroy (w);
+  return path;
+
+}
+
+
 
 
 

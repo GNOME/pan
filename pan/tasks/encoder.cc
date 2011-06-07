@@ -37,48 +37,38 @@ extern "C" {
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
+#include <pan/usenet-utils/MersenneTwister.h>
 #include "encoder.h"
 
 using namespace pan;
 
-namespace
+
+/** generates a unique message-id for a usenet post, consisting of
+ *  the μsec since the Epoch and 2 random numbers from a Mersenne-Twister RNG + the internal part counter
+ *  source for RNG: http://www.jwz.org/doc/mid.html
+ */
+void
+Encoder :: generate_unique_id (StringView& mid, int cnt, std::string& s)
 {
-  void generate_unique_id (StringView& mid, std::string& filename, int cnt, std::string& s)
-  {
-    std::stringstream out;
-    struct stat sb;
-    struct timeval tv;
-
-    const char * pch = mid.strchr ('@');
-    StringView domain = mid.substr (pch+1, NULL);
-    pch = domain.strchr ('>');
-    domain = domain.substr (NULL, pch);
-    domain.trim ();
-
-    // add unique local part to message-id
-    out << "pan.";
-    const time_t now (time(NULL));
-    struct tm local_now = *gmtime (&now);
-    gettimeofday (&tv, NULL);
-    char buf[64];
-    std::strftime (buf, sizeof(buf), "%Y.%m.%d.%H.%M.%S", &local_now);
-    out << buf;
-    out << "." << tv.tv_sec << "." << tv.tv_usec << "." << tv.tv_sec*tv.tv_usec;
-
-    // delimit
-    out<< '@';
-
-    // add domain
-    out << domain;
-    s = out.str();
-  }
+  std::stringstream out;
+  struct stat sb;
+  struct timeval tv;
+  out << "pan$";
+  gettimeofday (&tv, NULL);
+  out << std::hex << tv.tv_usec << "$" << std::hex <<
+      mtrand.randInt() << "$" << std::hex << mtrand.randInt() <<std::hex << cnt;
+  // delimit
+  out<< '@';
+  // add domain
+  out << mid;
+  s = out.str();
 }
 
 Encoder :: Encoder (WorkerPool& pool):
   _worker_pool (pool),
   _gsourceid (-1)
-{
-}
+{}
+
 
 Encoder :: ~Encoder()
 {
@@ -155,8 +145,12 @@ Encoder :: do_work()
       g_snprintf(buf, sizeof(buf), "\"%s\" - %s (/%03d)", basename.c_str(), subject.c_str(), needed->size());
       tmp->subject = buf;
 
+      char cachename[4096];
       for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
       {
+
+        cache->get_filename(cachename, Quark(it->second.message_id));
+
         FILE * fp = cache->get_fp_from_mid(it->second.message_id);
         if (!fp)
         {
@@ -166,7 +160,7 @@ Encoder :: do_work()
         }
         // 4000 lines SHOULD be OK for ANY nntp server ...
         StringView mid(global_mid);
-        generate_unique_id(mid, filename, cnt, s);
+        generate_unique_id(mid, cnt, s);
         res = UUE_PrepPartial (fp, NULL, (char*)filename.c_str(),YENC_ENCODED,
                                (char*)basename.c_str(),0644, cnt, 4000,
                                0, (char*)groups.c_str(),
@@ -174,19 +168,16 @@ Encoder :: do_work()
                                (char*)subject.c_str(), (char*)s.c_str(), 0);
 
         if (res != UURET_CONT) break;
-
         cache->finalize(it->second.message_id);
-        stat (it->second.message_id.c_str(), &sb);
+        stat (cachename, &sb);
         it->second.bytes  = sb.st_size;
         task->_all_bytes += sb.st_size;
-
-        std::cerr<<"add to batch: "<<it->second.message_id<<" "<<sb.st_size<<"\n";
-
         batch.add_part(cnt, StringView(s), sb.st_size);
       }
 
       if (res != UURET_OK)
       {
+        unlink(cachename); //brute-force
         g_snprintf(buf, bufsz,
                    _("Error encoding %s: %s"),
                    basename.c_str(),

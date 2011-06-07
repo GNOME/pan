@@ -31,6 +31,8 @@
 #include <pan/general/locking.h>
 #include <pan/general/worker-pool.h>
 #include <pan/tasks/task-upload.h>
+#include <pan/usenet-utils/MersenneTwister.h>
+
 extern "C" {
 #  define PROTOTYPES
 #  include <uulib/uudeview.h>
@@ -92,6 +94,9 @@ namespace pan
       TaskUpload::needed_t* needed;
       std::string global_mid;
       Article article;
+      MTRand mtrand;
+
+      void generate_unique_id (StringView& mid, int cnt, std::string& s);
 
       // These are set in the worker thread and polled in the main thread.
       Mutex mut;
