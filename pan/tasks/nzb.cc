@@ -50,6 +50,7 @@ namespace
     std::vector<std::string>  groups_str;  // TaskUpload
     TaskUpload::needed_t needed_parts;     // TaskUpload
     std::string domain;                    // TaskUpload
+    std::string queue;
     Article a;
     PartBatch parts;
     tasks_t tasks;
@@ -77,6 +78,7 @@ namespace
       number = 0;
       needed_parts.clear();   // TaskUpload
       domain.clear();         // TaskUpload
+      queue.clear();
     }
   };
 
@@ -106,6 +108,7 @@ namespace
         else if (!strcmp (*k,"subject")) mc.a.subject = *v;
         else if (!strcmp (*k,"server"))  mc.server = *v;
         else if (!strcmp (*k,"domain"))  mc.domain = *v;
+        else if (!strcmp (*k,"queue"))  mc.queue = *v;
       }
     }
 
@@ -184,9 +187,16 @@ namespace
       debug("adding taskupload from nzb.\n");
       foreach_const (quarks_t, mc.groups, git)
         mc.a.xref.insert (mc.server, *git, 0);
+        ///TODO export/import missing values tp/from nzb
+      TaskUpload::UploadInfo format;
+      format.domain = mc.domain;
+      format.counter = true;
+      format.comment1 = true;
+      format.queue_length = 0;
+      format.queue_pos = 0;
+      ///TODO format.save_file =
       TaskUpload* tmp = new TaskUpload (mc.path, mc.server, mc.encode_cache,mc.a,
-                                        mc.domain, std::string(""),
-                                        &mc.needed_parts, 0, TaskUpload::YENC);
+                                        format, &mc.needed_parts, 0, TaskUpload::YENC);
       mc.tasks.push_back (tmp);
     }
   }
@@ -354,6 +364,8 @@ NZB :: nzb_to_xml (std::ostream             & out,
       escaped (out, task->_subject);
       out  << "\" server=\"";
       escaped (out, task->_server.to_string());
+      out  << "\" queue=\"";
+      escaped (out, task->_save_file);
       out  << "\" domain=\"nospam@";
       escaped (out, task->_domain) << "\">\n";
       ++depth;

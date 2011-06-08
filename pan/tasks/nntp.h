@@ -59,6 +59,7 @@ namespace
       SEND_ARTICLE_NOW           = 340,
       NO_POSTING                 = 440,
       POSTING_FAILED             = 441,
+      DUPE_ARTICLE               = 435,  // sent additionally to 441
 
       TOO_MANY_CONNECTIONS       = 400,
 

@@ -61,7 +61,7 @@ namespace pan
       typedef std::vector<Quark> mid_sequence_t;
 
       bool contains (const Quark& message_id) const;
-      FILE* add (const Quark& message_id);
+      void add (const Quark& message_id);
       void finalize (const Quark& message_id);
       void get_data(std::string& data, const Quark& where);
       void reserve (const mid_sequence_t& mids);
@@ -88,7 +88,6 @@ namespace pan
       std::map<Quark,int> _locks;
 
       struct MsgInfo {
-        FILE * _fp;
         Quark _message_id;
         size_t _size;
         time_t _date;

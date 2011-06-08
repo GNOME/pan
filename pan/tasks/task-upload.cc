@@ -75,8 +75,6 @@ namespace
     if (pch) domain = domain.substr (NULL, pch);
     domain.trim ();
 
-    std::cerr<<"generate domain : "<<domain<<std::endl;
-
     return domain.to_string();
   }
 }
@@ -89,8 +87,7 @@ TaskUpload :: TaskUpload (const std::string         & filename,
                           const Quark               & server,
                           EncodeCache               & cache,
                           Article                     article,
-                          std::string                 domain,
-                          std::string                 save_file,
+                          UploadInfo                  format,
                           needed_t                  * imported,
                           Progress::Listener        * listener,
                           const TaskUpload::EncodeMode  enc):
@@ -100,15 +97,18 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _server(server),
   _cache(cache),
   _article(article),
-  _domain(get_domain(StringView(domain))),
-  _save_file(save_file),
   _subject (article.subject.to_string()),
   _author(article.author.to_string()),
   _encoder(0),
   _encoder_has_run (false),
   _encode_mode(enc),
   _lines_per_file(4000),
-  _all_bytes(0)
+  _all_bytes(0),
+  _format(format),
+  _queue_pos(format.queue_pos),
+  _queue_length(format.queue_length),
+  _domain(get_domain(StringView(format.domain))),
+  _save_file(format.save_file)
 {
   if (listener != 0)
     add_listener (listener);
@@ -137,13 +137,12 @@ TaskUpload :: build_needed_tasks(bool imported)
   foreach_const (Xref, _article.xref, it)
     _groups.insert (it->group);
 
-  Article::mid_sequence_t mids;
   foreach (needed_t, _needed, it)
   {
-    mids.push_back(Quark(it->second.message_id));
+    _mids.push_back(Quark(it->second.message_id));
     _cache.add(Quark(it->second.message_id));
   }
-  _cache.reserve(mids);
+  _cache.reserve(_mids);
   _needed_parts = _needed.size();
 
 }
@@ -240,7 +239,6 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   switch (health)
   {
     case OK:
-      // save to cache
       increment_step(it->second.bytes);
       _needed.erase (it);
       post_ok = true;
@@ -249,6 +247,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       it->second.reset();
       goto _end;
     case ERR_COMMAND:
+      //std::cerr<<"err command : "<< _basename.c_str()<<" "<< it->second.partno<<" "<< _total_parts<<"\n";
       _needed.erase (it);
       break;
   }
@@ -261,10 +260,15 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       this->stop();
       break;
     case POSTING_FAILED:
-      g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: %s"),
-                 _basename.c_str(), it->second.partno, _total_parts, response.str);
-      tmp.message = buf;
-      _logfile.push_back(tmp);
+      if (health != OK)     // if we got a dupe, the health is OK, so skip that
+      {
+        tmp.severity = Log :: PAN_SEVERITY_ERROR;
+        //std::cerr<<"failed : "<<response<<std::endl;
+        g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: %s"),
+                   _basename.c_str(), it->second.partno, _total_parts, response.str);
+        tmp.message = buf;
+        _logfile.push_back(tmp);
+      }
       break;
     case ARTICLE_POSTED_OK:
       tmp.severity = Log :: PAN_SEVERITY_INFO;
@@ -280,8 +284,18 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
         tmp.message = buf;
         _logfile.push_back(tmp);
-        g_snprintf(buf,sizeof(buf), _("Posting of file %s succesful: %s"),
+
+        /* get error state for the whole upload: if one part failed, set global status to error */
+        bool error(false);
+        foreach_const (std::deque<Log::Entry>, _logfile, it)
+          error = (it->severity  == Log :: PAN_SEVERITY_ERROR);
+        if (!error)
+          g_snprintf(buf,sizeof(buf), _("Posting of file %s succesful: %s"),
                    _basename.c_str(), response.str);
+        else
+          g_snprintf(buf,sizeof(buf), _("Posting of file %s not completely successful: Check the popup log!"),
+                 _basename.c_str(), response.str);
+
         tmp.message = buf;
         _logfile.push_back(tmp);
         Log::add_entry_list (tmp, _logfile);
@@ -293,6 +307,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       _state.set_need_nntp(nntp->_server);
       break;
     default:
+      this->stop();
       Log::add_entry_list (tmp, _logfile);
       _logfile.clear();
       Log :: add_err_va (_("Posting of file %s not successful: Check the popup log!"),
@@ -338,8 +353,19 @@ TaskUpload :: use_encoder (Encoder* encoder)
     if (i<_groups.size()&& i>0 && _groups.size()>1) groups += ",";
     groups += (*it).to_string();
   }
+
+  /* build format string */
+  std::stringstream format_s;
+  format_s << (_format.comment1 ? _subject : "");
+  format_s << " \"%s\" yEnc "; // will be filled in by uuencode
+  format_s << " (%d/%d) ";     // will be filled in by uuencode
+  std::stringstream counter;
+  counter <<"[" << _queue_pos << "/" << _queue_length << "]";
+  format_s << (_format.counter ? counter.str() : "");
+  std::string format(format_s.str());
+
   _encoder->enqueue (this, &_cache, _article, _filename, _basename,
-                     groups, _subject, _author, _domain, YENC);
+                     groups, _subject, _author, format, _domain, YENC);
   debug ("encoder thread was free, enqueued work");
 }
 
@@ -391,7 +417,7 @@ TaskUpload :: ~TaskUpload ()
   if (_encoder)
       _encoder->cancel_silently();
 
-  _cache.release(_article.get_part_mids());
+  _cache.release(_mids);
   _cache.resize();
 
   if (!_save_file.empty())

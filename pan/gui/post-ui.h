@@ -61,6 +61,9 @@ namespace pan
       GtkWidget * root() { return _root; }
       GtkWidget * part_select() { return _part_select; }
       GtkWidget * parts_store() { return _parts_store; }
+
+      void check_file_save(bool val) { _check_file_save = val; }
+
       void rot13_selection ();
       void wrap_selection ();
       void wrap_body ();
@@ -154,6 +157,7 @@ namespace pan
       TaskUpload* _upload_ptr;
       int _total_parts;
       std::string _save_file;
+      bool _check_file_save;
 
     private:
       void add_actions (GtkWidget* box);
@@ -209,6 +213,7 @@ namespace pan
       static void bottom_clicked_cb  (GtkButton*, PostUI*);
       static void delete_clicked_cb  (GtkButton*, PostUI*);
       static void on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, gpointer user_data);
+      static void queue_save_toggled_cb (GtkToggleButton * tb, gpointer gp UNUSED);
 
     public:
       TaskUpload* upload_ptr() { return _upload_ptr; }

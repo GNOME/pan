@@ -1491,13 +1491,13 @@ UUE_PrepSingle (FILE *outfile, FILE *infile,
 		char *infname, int encoding,
 		char *outfname, int filemode,
 		char *destination, char *from,
-		char *subject, char* mid, int isemail)
+		char *subject, char* mid, char* format, int isemail)
 {
   return UUE_PrepSingleExt (outfile, infile,
 			    infname, encoding,
 			    outfname, filemode,
 			    destination, from,
-			    subject, mid, NULL,
+			    subject, mid, NULL, format,
 			    isemail);
 }
 
@@ -1506,7 +1506,7 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 		   char *infname, int encoding,
 		   char *outfname, int filemode,
 		   char *destination, char *from,
-		   char *subject, char* mid, char *replyto,
+		   char *subject, char* mid, char *replyto, char* format,
 		   int isemail)
 {
   mimemap *miter=mimetable;
@@ -1603,7 +1603,7 @@ UUE_PrepPartial (FILE *outfile, FILE *infile,
 		 char *infname, int encoding,
 		 char *outfname, int filemode,
 		 int partno, long linperfile, long filesize,
-		 char *destination, char *from, char *subject, char* mid,
+		 char *destination, char *from, char *subject, char* mid, char* format,
 		 int isemail)
 {
   return UUE_PrepPartialExt (outfile, infile,
@@ -1611,7 +1611,7 @@ UUE_PrepPartial (FILE *outfile, FILE *infile,
 			     outfname, filemode,
 			     partno, linperfile, filesize,
 			     destination,
-			     from, subject, mid, NULL,
+			     from, subject, mid, NULL, format,
 			     isemail);
 }
 
@@ -1621,7 +1621,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
 		    char *outfname, int filemode,
 		    int partno, long linperfile, long filesize,
 		    char *destination,
-		    char *from, char *subject, char* mid, char *replyto,
+		    char *from, char *subject, char* mid, char *replyto, char* format,
 		    int isemail)
 {
   static int numparts, themode;
@@ -1715,7 +1715,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
       if (infile==NULL) fclose (theifile);
       return UUE_PrepSingleExt (outfile, infile, infname, encoding,
 				outfname, filemode, destination,
-				from, subject, mid, replyto, isemail);
+				from, subject, mid, replyto, format, isemail);
     }
 
     /*
@@ -1735,16 +1735,15 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
   }
 
 
+  // [subject] "filename" yEnc (partnum/numparts) [size] [part/of]
   if (encoding == YENC_ENCODED) {
     if (partno == 1)
       crc = crc32(0L, Z_NULL, 0);
-    crcptr = &crc;
-    if (subject)
-      sprintf (subline, "\"%s\" - %s (%03d/%03d)", oname, subject,
-	       partno, numparts);
-    else
-      sprintf (subline, "\"%s\" - (%03d/%03d)", oname,
-	       partno, numparts);
+      crcptr = &crc;
+      sprintf (subline, format, oname, partno, numparts);
+//    else
+//      sprintf (subline, "\"%s\" - (%03d/%03d)", oname,
+//	       partno, numparts);
   }
   else {
     if (subject)

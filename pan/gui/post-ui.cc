@@ -246,10 +246,10 @@ namespace
       N_("Clear List"),
       G_CALLBACK(do_clear_list) },
 
-//    { "select-parts", NULL,
-//      N_("Select needed Parts"), "",
-//      N_("Select needed Parts"),
-//      G_CALLBACK(do_select_parts) },
+    { "select-parts", NULL,
+      N_("Select needed Parts"), "",
+      N_("Select needed Parts"),
+      G_CALLBACK(do_select_parts) },
 
     { "move-up", NULL,
       N_("Move Up"), "",
@@ -613,6 +613,8 @@ PostUI :: send_now ()
 {
   if (!check_charset())
     return;
+  if (_check_file_save || _prefs.get_flag(QUEUE_SAVE_KEY, false));
+    _save_file = prompt_user_for_upload_nzb_dir(GTK_WINDOW (gtk_widget_get_toplevel(_root)), _prefs);
   GMimeMessage * message (new_message_from_ui (POSTING));
   if (!maybe_post_message (message))
     g_object_unref (G_OBJECT(message));
@@ -1968,10 +1970,15 @@ namespace
   {
     static_cast<Prefs*>(prefs_gpointer)->set_flag (USER_AGENT_PREFS_KEY, gtk_toggle_button_get_active(tb));
   }
-  void queue_save_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer)
-  {
-    static_cast<Prefs*>(prefs_gpointer)->set_flag (QUEUE_SAVE_KEY, gtk_toggle_button_get_active(tb));
-  }
+
+
+}
+
+void
+PostUI :: queue_save_toggled_cb (GtkToggleButton * tb, gpointer gp)
+{
+  PostUI* self = static_cast<PostUI*>(gp);
+  self->check_file_save(gtk_toggle_button_get_active(tb));
 }
 
 namespace
@@ -2026,9 +2033,8 @@ PostUI :: create_filequeue_tab ()
   gtk_widget_set_tooltip_text( w, _("Delete from Queue"));
   gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
   w = _save_check = gtk_check_button_new_with_mnemonic (_("Save queue to file"));
-  bool b = _prefs.get_flag (QUEUE_SAVE_KEY, true);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
-  g_signal_connect (w, "toggled", G_CALLBACK(queue_save_toggled_cb), &_prefs);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), _prefs.get_flag(QUEUE_SAVE_KEY,false));
+  g_signal_connect (w, "toggled", G_CALLBACK(queue_save_toggled_cb), this);
   gtk_box_pack_start (GTK_BOX(buttons), w, 0, 0, 0);
   pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new());
 
@@ -2513,7 +2519,8 @@ PostUI :: PostUI (GtkWindow    * parent,
   _group_entry_changed_idle_tag (0),
   _file_queue_empty(true),
   _upload_ptr(0),
-  _total_parts(0)
+  _total_parts(0),
+  _check_file_save(false)
 {
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != 0);
@@ -2623,8 +2630,8 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
 		if (_file_queue_empty) _file_queue_empty=!_file_queue_empty;
 
 		GSList * cur = g_slist_nth (tmp_list,0);
+    GMimeMessage* msg = message;
     gtk_widget_destroy (w);
-    GMimeMessage* msg = new_message_from_ui(POSTING);
 
     char * tmp;
     tmp = (char*)g_mime_object_get_header ((GMimeObject*)msg, "Subject");
@@ -2642,9 +2649,14 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
         groups.insert(groupname);
     }
 
-    bool b = _prefs.get_flag (QUEUE_SAVE_KEY, true);
-    if (b)
-      _save_file = prompt_user_for_upload_nzb_dir (GTK_WINDOW (gtk_widget_get_toplevel(_root)), _prefs);
+    bool comment1 = _prefs.get_flag("upload-queue-append-subject-enabled",false);
+    bool counter  = _prefs.get_flag("upload-queue-append-partcounter-enabled",false);
+    TaskUpload::UploadInfo ui;
+    ui.comment1 = comment1;
+    ui.counter = counter;
+    ui.save_file = _save_file;
+    const int list_length = (int)g_slist_length(cur);
+    ui.queue_length = list_length;
 
     int cnt(1);
     for (; cur; cur = cur->next, ++cnt)
@@ -2675,18 +2687,20 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
       foreach_const (quarks_t, groups, git)
         a.xref.insert (profile.posting_server, *git,0);
 
-      const std::string message_id = !profile.fqdn.empty()
+      ui.queue_pos = cnt;
+      // generate domain name for upload
+      ui.domain = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
 
 		  TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
                         profile.posting_server, _cache,
-                        a, message_id, _save_file, &import, 0, TaskUpload::YENC);
+                        a, ui, &import, 0, TaskUpload::YENC);
 		  _file_queue_tasks.push_back(tmp);
 		}
     g_slist_free (tmp_list);
-
-  }
+  } else
+    gtk_widget_destroy (w);
   g_object_unref (G_OBJECT(message));
 	update_filequeue_tab();
 }
@@ -2724,7 +2738,8 @@ PostUI :: prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs
     char * tmp = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w));
     path = tmp;
     g_free (tmp);
-  }
+  } else
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(_save_check), false);
 
   gtk_widget_destroy (w);
   return path;

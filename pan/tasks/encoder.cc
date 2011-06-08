@@ -37,15 +37,13 @@ extern "C" {
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
-#include <pan/usenet-utils/MersenneTwister.h>
 #include "encoder.h"
 
 using namespace pan;
 
 
 /** generates a unique message-id for a usenet post, consisting of
- *  the μsec since the Epoch and 2 random numbers from a Mersenne-Twister RNG + the internal part counter
- *  source for RNG: http://www.jwz.org/doc/mid.html
+ *  the current date and time (in seconds resolution) and three random numbers + part count
  */
 void
 Encoder :: generate_unique_id (StringView& mid, int cnt, std::string& s)
@@ -53,14 +51,20 @@ Encoder :: generate_unique_id (StringView& mid, int cnt, std::string& s)
   std::stringstream out;
   struct stat sb;
   struct timeval tv;
+  const time_t now (time(NULL));
+  struct tm local_now = *gmtime (&now);
+  char buf[64];
+  std::strftime (buf, sizeof(buf), "%Y%m%d%H%M%S", &local_now);
   out << "pan$";
   gettimeofday (&tv, NULL);
-  out << std::hex << tv.tv_usec << "$" << std::hex <<
-      mtrand.randInt() << "$" << std::hex << mtrand.randInt() <<std::hex << cnt;
+  out << buf << "$" << std::hex << tv.tv_usec << "$" << std::hex
+      << mtrand.randInt() << "$" << std::hex << mtrand.randInt() << "$"
+      << std::hex << mtrand.randInt() << "$" << std::hex << cnt;
   // delimit
   out<< '@';
   // add domain
   out << mid;
+  //std::cerr << "rng : "<<out.str()<<std::endl;
   s = out.str();
 }
 
@@ -88,6 +92,7 @@ Encoder :: enqueue (TaskUpload                      * task,
                     std::string                     & groups,
                     std::string                     & subject,
                     std::string                     & author,
+                    std::string                     & format,
                     std::string                       global_mid,
                     const TaskUpload::EncodeMode    & enc)
 
@@ -105,11 +110,15 @@ Encoder :: enqueue (TaskUpload                      * task,
   this->global_mid = global_mid;
   this->cache = cache;
   this->article = article;
+  this->format = format;
 
   percent = 0;
   current_file.clear ();
   log_infos.clear();
   log_errors.clear();
+
+  // I don't know if this is bad, but practically, a new seed for every encoder (e.g. task) shouldn't be too much.
+  mtrand.seed();
 
   // gentlemen, start your encod'n...
   _worker_pool.push_work (this, task, false);
@@ -148,9 +157,6 @@ Encoder :: do_work()
       char cachename[4096];
       for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
       {
-
-        cache->get_filename(cachename, Quark(it->second.message_id));
-
         FILE * fp = cache->get_fp_from_mid(it->second.message_id);
         if (!fp)
         {
@@ -165,17 +171,19 @@ Encoder :: do_work()
                                (char*)basename.c_str(),0644, cnt, 4000,
                                0, (char*)groups.c_str(),
                                (char*)author.c_str(),
-                               (char*)subject.c_str(), (char*)s.c_str(), 0);
+                               (char*)subject.c_str(), (char*)s.c_str(), (char*)format.c_str(), 0);
 
-        if (res != UURET_CONT) break;
+        if (fp) fclose(fp);
         cache->finalize(it->second.message_id);
+        if (res != UURET_CONT) break;
+        cache->get_filename(cachename, Quark(it->second.message_id));
         stat (cachename, &sb);
         it->second.bytes  = sb.st_size;
         task->_all_bytes += sb.st_size;
         batch.add_part(cnt, StringView(s), sb.st_size);
       }
 
-      if (res != UURET_OK)
+      if (res != UURET_OK && res != UURET_CONT)
       {
         unlink(cachename); //brute-force
         g_snprintf(buf, bufsz,

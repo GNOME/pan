@@ -49,6 +49,15 @@ namespace pan
   {
     public:
 
+      struct UploadInfo
+      {
+        bool comment1, counter;
+        std::string    domain;
+        std::string    save_file;
+        int   queue_pos;
+        int   queue_length;
+      };
+
       ///TODO SEE!
       void set_lpf (const int& setme ) { _lines_per_file = setme; }
       const Article& get_article ()  { return _article; }
@@ -80,8 +89,7 @@ namespace pan
                    const Quark               & server,
                    EncodeCache               & cache,
                    Article                     article,
-                   std::string                 domain,
-                   std::string                 save_file,
+                   UploadInfo                  format,
                    needed_t                  * imported=0,
                    Progress::Listener        * listener= 0,
                    TaskUpload::EncodeMode enc= YENC);
@@ -130,6 +138,7 @@ namespace pan
       TaskUpload::EncodeMode _encode_mode;
       quarks_t _groups;
       std::string _subject, _author;
+      UploadInfo _format;
       int _total_parts, _needed_parts;
       unsigned long _bytes;
       Mutex mut;
@@ -140,6 +149,9 @@ namespace pan
       unsigned long _all_bytes;
       std::vector<Article*> _upload_list;
       std::string _save_file;
+      int  _queue_pos;
+      int  _queue_length;
+      Article::mid_sequence_t _mids;
 
     private:
       needed_t       _needed;

@@ -614,10 +614,15 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Upload Queue Options"));
   HIG :: workarea_add_section_spacer (t, row, 4);
-  w = new_check_button (_("Always save article information from Uploads to a file"), "upload-queue-save-enabled", false, prefs);
+  w = new_check_button (_("Always save article _information from Uploads to a file"), "upload-queue-save-enabled", false, prefs);
+  HIG :: workarea_add_wide_control (t, &row, w);
+  HIG :: workarea_add_section_title (t, &row, _("Upload Subject Line Appearance"));
+  w = new_check_button (_("Append [_partof/total parts] style counter"), "upload-queue-append-partcounter-enabled", false, prefs);
+  HIG :: workarea_add_wide_control (t, &row, w);
+  w = new_check_button (_("Append su_bject for all posts"), "upload-queue-append-subject-enabled", false, prefs);
   HIG :: workarea_add_wide_control (t, &row, w);
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("O_ptions for Uploads")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Upload options")));
 
   gtk_widget_show_all (notebook);
   gtk_box_pack_start (GTK_BOX(gtk_dialog_get_content_area( GTK_DIALOG(dialog))), notebook, true, true, 0);

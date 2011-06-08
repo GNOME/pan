@@ -173,6 +173,12 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 
       case NO_POSTING:
       case POSTING_FAILED:
+        // if we hit a dupe, we silently continue
+        if (line.strstr("435"))
+        {
+          state = CMD_DONE;
+          break;
+        }
       case GROUP_NONEXISTENT:
          state = CMD_FAIL;
          break;
@@ -240,7 +246,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 
    bool more;
    switch (state) {
-      case CMD_FAIL: fire_done_func (ERR_COMMAND, line); more = false; break;
+      case CMD_FAIL: std::cerr<<"firing err_cmd: "<<line.str<<std::endl; fire_done_func (ERR_COMMAND, line); more = false; break;
       case CMD_DONE: if (_commands.empty()) fire_done_func (OK, line); more = false; break;
       case CMD_MORE: more = true; break; // keep listining for more on this command
       case CMD_NEXT: more = false; break; // no more responses on this command; wait for next...
