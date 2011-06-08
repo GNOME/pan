@@ -357,7 +357,8 @@ TaskUpload :: use_encoder (Encoder* encoder)
   /* build format string */
   std::stringstream format_s;
   format_s << (_format.comment1 ? _subject : "");
-  format_s << " - \"%s\""; // will be filled in by uuencode
+  format_s << (_format.comment1 ? " - " : "");
+  format_s << "\"%s\""; // will be filled in by uuencode
   format_s << " (%d/%d) yEnc";     // will be filled in by uuencode
   std::string format(format_s.str());
   _encoder->enqueue (this, &_cache, _article, _filename, _basename,
