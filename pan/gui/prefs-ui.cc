@@ -617,8 +617,6 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   w = new_check_button (_("Always save article _information from Uploads to a file"), "upload-queue-save-enabled", false, prefs);
   HIG :: workarea_add_wide_control (t, &row, w);
   HIG :: workarea_add_section_title (t, &row, _("Upload Subject Line Appearance"));
-  w = new_check_button (_("Append [_partof/total parts] style counter"), "upload-queue-append-partcounter-enabled", false, prefs);
-  HIG :: workarea_add_wide_control (t, &row, w);
   w = new_check_button (_("Append su_bject for all posts"), "upload-queue-append-subject-enabled", false, prefs);
   HIG :: workarea_add_wide_control (t, &row, w);
   HIG :: workarea_finish (t, &row);

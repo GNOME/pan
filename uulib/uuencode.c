@@ -1569,6 +1569,7 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 
   fprintf (outfile, "Subject: %s%s", subline, eolstring);
 
+  // pan change (imhotep) : add unique mid for saving the upload queue to hdd
   if (mid)
   {
     fprintf(outfile, "Message-ID: <%s>%s", mid, eolstring);
@@ -1735,7 +1736,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
   }
 
 
-  // [subject] "filename" yEnc (partnum/numparts) [size] [part/of]
+  // [subject] - "filename" (partnum/numparts) yEnc
   if (encoding == YENC_ENCODED) {
     if (partno == 1)
       crc = crc32(0L, Z_NULL, 0);
@@ -1766,6 +1767,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
 
   fprintf (outfile, "Subject: %s%s", subline, eolstring);
 
+  // pan change (imhotep) : add unique mid for saving the upload queue to hdd
   if (mid)
   {
     fprintf(outfile, "Message-ID: <%s>%s", mid, eolstring);
