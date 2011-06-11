@@ -58,7 +58,6 @@ extern "C" {
 
 using namespace pan;
 
-#define QUEUE_SAVE_KEY "upload-queue-save-enabled"
 #define USER_AGENT_PREFS_KEY "add-user-agent-header-when-posting"
 #define MESSAGE_ID_PREFS_KEY "add-message-id-header-when-posting"
 #define USER_AGENT_EXTRA_PREFS_KEY "user-agent-extra-info"
@@ -613,8 +612,6 @@ PostUI :: send_now ()
 {
   if (!check_charset())
     return;
-  if (_check_file_save || _prefs.get_flag(QUEUE_SAVE_KEY, false));
-    _save_file = prompt_user_for_upload_nzb_dir(GTK_WINDOW (gtk_widget_get_toplevel(_root)), _prefs);
   GMimeMessage * message (new_message_from_ui (POSTING));
   if (!maybe_post_message (message))
     g_object_unref (G_OBJECT(message));
@@ -2031,11 +2028,6 @@ PostUI :: create_filequeue_tab ()
   gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
   w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
   gtk_widget_set_tooltip_text( w, _("Delete from Queue"));
-  gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
-  w = _save_check = gtk_check_button_new_with_mnemonic (_("Save queue to file"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), _prefs.get_flag(QUEUE_SAVE_KEY,false));
-  g_signal_connect (w, "toggled", G_CALLBACK(queue_save_toggled_cb), this);
-  gtk_box_pack_start (GTK_BOX(buttons), w, 0, 0, 0);
   pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new());
 
   gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
@@ -2654,7 +2646,6 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
     TaskUpload::UploadInfo ui;
     ui.comment1 = comment1;
     ui.counter = counter;
-    ui.save_file = _save_file;
     const int list_length = (int)g_slist_length(cur);
     ui.queue_length = list_length;
 
