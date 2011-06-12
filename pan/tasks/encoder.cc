@@ -127,6 +127,7 @@ Encoder :: enqueue (TaskUpload                      * task,
 void
 Encoder :: do_work()
 {
+
   const int bufsz = 4096;
   char buf[bufsz], buf2[bufsz];
   int cnt(1);
@@ -155,7 +156,7 @@ Encoder :: do_work()
       tmp->subject = buf;
 
       char cachename[4096];
-      for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
+      for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, it, ++cnt)
       {
         FILE * fp = cache->get_fp_from_mid(it->second.message_id);
         if (!fp)
@@ -165,13 +166,16 @@ Encoder :: do_work()
           continue;
         }
         // 4000 lines SHOULD be OK for ANY nntp server ...
-        StringView mid(global_mid);
-        generate_unique_id(mid, cnt, s);
+        if (!global_mid.empty())
+        {
+          StringView mid(global_mid);
+          generate_unique_id(mid, cnt, s);
+        }
         res = UUE_PrepPartial (fp, NULL, (char*)filename.c_str(),YENC_ENCODED,
                                (char*)basename.c_str(),0644, cnt, 4000,
                                0, (char*)groups.c_str(),
                                (char*)author.c_str(),
-                               (char*)subject.c_str(), (char*)s.c_str(), (char*)format.c_str(), 0);
+                               (char*)subject.c_str(), s.empty() ? NULL : (char*)s.c_str(), (char*)format.c_str(), 0);
 
         if (fp) fclose(fp);
         cache->finalize(it->second.message_id);
@@ -185,7 +189,6 @@ Encoder :: do_work()
 
       if (res != UURET_OK && res != UURET_CONT)
       {
-        unlink(cachename); //brute-force
         g_snprintf(buf, bufsz,
                    _("Error encoding %s: %s"),
                    basename.c_str(),

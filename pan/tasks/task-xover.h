@@ -22,10 +22,13 @@
 
 #include <map>
 #include <vector>
+#include <sstream>
 
 #include <pan/data/data.h>
 #include <pan/tasks/task.h>
 #include <pan/tasks/nntp.h>
+#include <fstream>
+#include <iostream>
 
 namespace pan
 {
@@ -47,6 +50,8 @@ namespace pan
       virtual void use_nntp (NNTP * nntp);
 
     private: // NNTP::Listener
+      void on_nntp_line_process (NNTP*, const StringView&);
+      void on_xover_follows (NNTP*, const StringView& line) { std::cerr<<line<<std::endl; }
       virtual void on_nntp_line (NNTP*, const StringView&);
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
       virtual void on_nntp_group (NNTP*, const Quark&, unsigned long, uint64_t, uint64_t);
@@ -80,6 +85,9 @@ namespace pan
       unsigned long _parts_so_far;
       unsigned long _articles_so_far;
       unsigned long _total_minitasks;
+      bool _xzver;
+      std::stringstream _headers;
+      std::ofstream _header_file;
   };
 }
 

@@ -311,9 +311,9 @@ namespace
   void check_body (unique_strings_t       & errors,
                    MessageCheck::Goodness & goodness,
                    const TextMassager     & tm,
-	           GMimeMessage           * message,
-	           const StringView       & body,
-	           const StringView       & attribution)
+                   GMimeMessage           * message,
+                   const StringView       & body,
+                   const StringView       & attribution)
   {
     check_empty         (errors, goodness, body);
     check_wide_body     (errors, goodness, body);

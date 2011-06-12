@@ -105,11 +105,10 @@ namespace pan
          int article_expiration_age;
          int max_connections;
          int rank;
-         int xzver;
          typedef sorted_vector<Quark,true,AlphabeticalQuarkOrdering> groups_t;
          groups_t groups;
 
-         Server(): port(119), article_expiration_age(31), max_connections(2), rank(1), xzver(0) {}
+         Server(): port(119), article_expiration_age(31), max_connections(2), rank(1) {}
       };
 
       typedef Loki::AssocVector<Quark,Server> servers_t;
@@ -144,8 +143,6 @@ namespace pan
 
       virtual void save_server_info (const Quark& server);
 
-      virtual void set_server_xzver_support (const Quark& server, const int val);
-
     public: // accessors
 
       virtual quarks_t get_servers () const {
@@ -170,8 +167,6 @@ namespace pan
       virtual int get_server_limits (const Quark & server) const;
 
       virtual int get_server_article_expiration_age  (const Quark  & server) const;
-
-      virtual int get_server_xzver_support (const Quark& server) const;
 
     /**
     *** GROUPS

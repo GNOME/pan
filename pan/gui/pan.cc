@@ -36,7 +36,6 @@ extern "C" {
 #include <pan/tasks/socket-impl-gio.h>
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>
-#include <pan/tasks/task-xzver-test.h>
 #include <pan/tasks/nzb.h>
 #include <pan/data-impl/data-impl.h>
 #include <pan/icons/pan-pixbufs.h>
@@ -114,10 +113,8 @@ namespace
     DataAndQueue * foo (static_cast<DataAndQueue*>(user_data));
     const quarks_t new_servers (foo->data->get_servers());
     foreach_const (quarks_t, new_servers, it)
-      if (foo->data->get_server_limits(*it)) {
-        foo->queue->add_task (new TaskXZVerTest(*foo->data, *it));
+      if (foo->data->get_server_limits(*it))
         foo->queue->add_task (new TaskGroups (*foo->data, *it));
-      }
     g_free (foo);
   }
 

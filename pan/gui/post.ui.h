@@ -1,8 +1,9 @@
-const char * fallback_post_ui = 
+const char * fallback_post_ui =
 "<ui>\n"
 "  <menubar name='post'>\n"
 "    <menu action='file-menu'>\n"
 "      <menuitem action='post-article' />\n"
+"      <menuitem action ='post-and-save-articles'  />\n"
 "      <separator />\n"
 "      <menuitem action='save-draft' />\n"
 "      <menuitem action='open-draft' />\n"
@@ -31,6 +32,7 @@ const char * fallback_post_ui =
 "\n"
 "  <toolbar name='post-toolbar'>\n"
 "    <toolitem action='post-article' />\n"
+"    <toolitem action='post-and-save-articles' />\n"
 "    <separator />\n"
 "    <toolitem action='save-draft' />\n"
 "    <toolitem action='open-draft' />\n"

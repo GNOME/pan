@@ -24,31 +24,36 @@
 #include <pan/gui/prefs.h>
 #include <pan/general/progress.h>
 #include <pan/tasks/queue.h>
+#include <pan/tasks/upload-queue.h>
 #include <pan/usenet-utils/text-massager.h>
 #include <pan/data/encode-cache.h>
+//#include <pan/tasks/upload-queue.h>
 #include "group-prefs.h"
 
 namespace pan
 {
   class Profiles;
   class TaskPost;
-  class FileQueue;
+  class UploadQueue;
   class Queue;
 
 
-  typedef std::list<TaskUpload*> tasks_v;
 
   /**
    * Dialog for posting new messages Pan's GTK GUI.
    * @ingroup GUI
    */
-  class PostUI: private Progress::Listener
+  class PostUI: private Progress::Listener,
+                private UploadQueue::Listener
   {
     public:
+
+      typedef std::vector<TaskUpload*> tasks_t;
+
       static PostUI* create_window (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
                                     GMimeMessage*, Prefs&, GroupPrefs&, EncodeCache&);
 
-      void prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, const Prefs& prefs);
+      void prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& prefs);
       std::string prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs);
 
     protected:
@@ -62,8 +67,6 @@ namespace pan
       GtkWidget * part_select() { return _part_select; }
       GtkWidget * parts_store() { return _parts_store; }
 
-      void check_file_save(bool val) { _check_file_save = val; }
-
       void rot13_selection ();
       void wrap_selection ();
       void wrap_body ();
@@ -75,11 +78,12 @@ namespace pan
       void open_draft ();
       void prompt_for_charset ();
       void send_now ();
+      void send_and_save_now ();
       void add_files ();
       void close_window (bool flag=false);
       void set_wrap_mode (bool wrap);
       void set_always_run_editor (bool);
-      void update_filequeue_tab();
+
       void update_parts_tab();
 
       //popup action entries
@@ -124,7 +128,6 @@ namespace pan
 
       GtkWidget * _filequeue_store;
       GtkWidget * _parts_store;
-      GtkWidget * _lines_spin;
 
       GtkWidget * _to_entry;
       GtkWidget * _followupto_entry;
@@ -153,11 +156,15 @@ namespace pan
 
       /* binpost */
       bool _file_queue_empty;
-      tasks_v _file_queue_tasks;
       TaskUpload* _upload_ptr;
       int _total_parts;
       std::string _save_file;
-      bool _check_file_save;
+
+    private:
+      friend class UploadQueue;
+      virtual void on_queue_tasks_added (UploadQueue&, int index, int count);
+      virtual void on_queue_task_removed (UploadQueue&, TaskUpload&, int index);
+      virtual void on_queue_task_moved (UploadQueue&, TaskUpload&, int new_index, int old_index);
 
     private:
       void add_actions (GtkWidget* box);
@@ -166,7 +173,7 @@ namespace pan
       enum Mode { DRAFTING, POSTING };
       GMimeMessage * new_message_from_ui (Mode mode);
       Profile get_current_profile ();
-      bool check_message (const Quark& server, GMimeMessage*);
+      bool check_message (const Quark& server, GMimeMessage*, bool binpost=false);
       bool check_charset ();
 
     private:
@@ -198,14 +205,11 @@ namespace pan
       void spawn_editor_dead(char *);
 
     public:
-      tasks_v  get_selected_files () const;
+      tasks_t  get_selected_files () const;
 
     private:
       static void get_selected_files_foreach (GtkTreeModel*,
                       GtkTreePath*, GtkTreeIter*, gpointer);
-
-      int get_top() ;
-      int get_bottom() ;
 
       static void up_clicked_cb      (GtkButton*, PostUI*);
       static void down_clicked_cb    (GtkButton*, PostUI*);
@@ -213,10 +217,10 @@ namespace pan
       static void bottom_clicked_cb  (GtkButton*, PostUI*);
       static void delete_clicked_cb  (GtkButton*, PostUI*);
       static void on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, gpointer user_data);
-      static void queue_save_toggled_cb (GtkToggleButton * tb, gpointer gp UNUSED);
 
-    public:
+    private:
       TaskUpload* upload_ptr() { return _upload_ptr; }
+      UploadQueue _upload_queue;
 
   };
 }

@@ -91,7 +91,7 @@ namespace pan
       std::string   basename, filename;
       std::string subject, author, groups, mid, format;
       EncodeCache * cache;
-      TaskUpload::needed_t* needed;
+      TaskUpload::needed_t * needed;
       std::string global_mid;
       Article article;
       MTRand mtrand;

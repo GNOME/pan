@@ -614,10 +614,12 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Upload Queue Options"));
   HIG :: workarea_add_section_spacer (t, row, 4);
-  w = new_check_button (_("Always save article _information from Uploads to a file"), "upload-queue-save-enabled", false, prefs);
+  w = new_check_button (_("Always save header _information to a file"), "upload-queue-save-enabled", false, prefs);
+  HIG :: workarea_add_wide_control (t, &row, w);
+  w = new_check_button (_("Always use a custom Message-ID for posts"), "upload-enable-custom-mid", false, prefs);
   HIG :: workarea_add_wide_control (t, &row, w);
   HIG :: workarea_add_section_title (t, &row, _("Upload Subject Line Appearance"));
-  w = new_check_button (_("Append su_bject for all posts"), "upload-queue-append-subject-enabled", false, prefs);
+  w = new_check_button (_("Append su_bject to all posts"), "upload-queue-append-subject-enabled", false, prefs);
   HIG :: workarea_add_wide_control (t, &row, w);
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Upload options")));

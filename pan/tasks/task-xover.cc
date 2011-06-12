@@ -21,9 +21,16 @@
 #include <cassert>
 #include <cerrno>
 extern "C" {
+  #define PROTOTYPES
+  #include <stdio.h>
+  #include <uulib/uudeview.h>
   #include <glib/gi18n.h>
   #include <gmime/gmime-utils.h>
+
 }
+#include <fstream>
+#include <iostream>
+#include <pan/usenet-utils/gzstream.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
@@ -92,8 +99,12 @@ TaskXOver :: TaskXOver (Data         & data,
   _bytes_so_far (0),
   _parts_so_far (0ul),
   _articles_so_far (0ul),
-  _total_minitasks (0)
+  _total_minitasks (0),
+  _xzver(true)
 {
+
+  _header_file.open("/home/imhotep/headers", std::ios::out | std::ios::app | std::ios::binary);
+
   debug ("ctor for " << group);
 
   // add a ``GROUP'' MiniTask for each server that has this group
@@ -156,7 +167,10 @@ TaskXOver :: use_nntp (NNTP* nntp)
       case MiniTask::XOVER:
         debug ("XOVER " << mt._low << '-' << mt._high << " to " << server);
         _last_xover_number[nntp] = mt._low;
-        nntp->xover (_group, mt._low, mt._high, this);
+        if (_xzver)
+          nntp->xzver (_group, mt._low, mt._high, this);
+        else
+          nntp->xover (_group, mt._low, mt._high, this);
         break;
       default:
         assert (0);
@@ -264,9 +278,24 @@ namespace
 }
 
 void
-TaskXOver :: on_nntp_line (NNTP               * nntp,
-                           const StringView   & line)
+TaskXOver :: on_nntp_line         (NNTP               * nntp,
+                                   const StringView   & line)
 {
+//  if (!_xzver)
+//  {
+//    on_nntp_line_process(nntp, line);
+//    return;
+//  }
+  // feed lines into header file
+  _header_file<<line;
+
+}
+
+void
+TaskXOver :: on_nntp_line_process (NNTP               * nntp,
+                                   const StringView   & line)
+{
+
   pan_return_if_fail (nntp != 0);
   pan_return_if_fail (!nntp->_server.empty());
   pan_return_if_fail (!nntp->_group.empty());
@@ -350,7 +379,41 @@ TaskXOver :: on_nntp_done (NNTP              * nntp,
                            Health              health,
                            const StringView  & response UNUSED)
 {
+
   //std::cerr << LINE_ID << " nntp " << nntp->_server << " (" << nntp << ") done; checking in.  health==" << health << std::endl;
+
+  // step 0 : save sstream to file
+
+  _header_file.close();
+
+  // step 1 : decompress
+//  igzstream in();
+//  char c;
+//  std::ofstream out("/home/imhotep/headers_decomp", std::ifstream::out);
+//  while ( in.get(c))
+//    std::cout << c;
+
+  // step 2 : decode
+  int res = UUInitialize();
+  std::cerr<<"uulib : "<<UUstrerror(res)<<std::endl;
+  res = UULoadFileWithPartNo (const_cast<char*>("/home/imhotep/headers_decomp"), 0, 0, 1);
+  std::cerr<<"uulib : "<<UUstrerror(res)<<std::endl;
+  uulist * item = UUGetFileListItem (1);
+  if (!item)
+    std::cerr<<"uulib : failed to get list item"<<std::endl;
+  res = UUDecodeFile (item, (const_cast<char*>("/home/imhotep/headers_ready")));
+  std::cerr<<"uulib : "<<UUstrerror(res)<<std::endl;
+  UUCleanUp();
+
+
+  // step 3 : feed to on_nntp_line
+  std::ifstream ready("/home/imhotep/headers_ready", std::ifstream::in);
+  char buf[2048];
+  while (ready.good())
+  {
+    ready.getline(buf,sizeof(buf));
+    on_nntp_line_process (nntp, StringView(buf));
+  }
   update_work (true);
   check_in (nntp, health);
 }

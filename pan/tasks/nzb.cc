@@ -187,16 +187,12 @@ namespace
       debug("adding taskupload from nzb.\n");
       foreach_const (quarks_t, mc.groups, git)
         mc.a.xref.insert (mc.server, *git, 0);
-        ///TODO export/import missing values tp/from nzb
+      ///TODO export/import missing values to/from nzb
       TaskUpload::UploadInfo format;
       format.domain = mc.domain;
-      format.counter = true;
       format.comment1 = true;
-      format.queue_length = 0;
-      format.queue_pos = 0;
-      ///TODO format.save_file =
       TaskUpload* tmp = new TaskUpload (mc.path, mc.server, mc.encode_cache,mc.a,
-                                        format, &mc.needed_parts, 0, TaskUpload::YENC);
+                                        format, mc.needed_parts, 0, TaskUpload::YENC);
       mc.tasks.push_back (tmp);
     }
   }

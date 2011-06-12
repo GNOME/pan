@@ -140,10 +140,10 @@ EncodeCache :: add (const Quark& message_id)
 ****
 ***/
 
-void EncodeCache :: finalize (const Quark& message_id)
+void EncodeCache :: finalize (std::string& message_id)
 {
   struct stat sb;
-  stat (message_id, &sb);
+  stat (message_id.c_str(), &sb);
   _mid_to_info[message_id]._size = sb.st_size;
   fire_added (message_id);
   _current_bytes += sb.st_size;
@@ -226,9 +226,9 @@ EncodeCache :: resize (guint64 max_bytes)
     }
   }
 
-  std::cerr<<"cache expired " << removed.size() << " articles, "
+  debug("cache expired " << removed.size() << " articles, "
         "has " << _mid_to_info.size() << " active "
-        "and " << _locks.size() << " locked.\n";
+        "and " << _locks.size() << " locked.\n");
 
   if (!removed.empty())
     fire_removed (removed);

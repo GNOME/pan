@@ -1,4 +1,5 @@
 AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@
+AM_LDFLAGS = ../../uulib/libuu.a -lz
 
 noinst_LIBRARIES = libtasks.a
 
@@ -10,11 +11,11 @@ libtasks_a_SOURCES = \
   task-groups.cc \
   task-post.cc \
   task-xover.cc \
-  task-xzver-test.cc \
   task-upload.cc \
   nntp.cc \
   nzb.cc \
   queue.cc \
+  upload-queue.cc \
   socket.cc \
   socket-impl-gio.cc \
   socket-impl-scripted.cc \
@@ -34,10 +35,10 @@ noinst_HEADERS = \
   task-upload.h \
   task-weak-ordering.h \
   task-xover.h \
-  task-xzver-test.h \
   nntp.h  \
   nzb.h  \
   queue.h  \
+  upload-queue.h \
   socket.h \
   socket-impl-gio.h \
   socket-impl-scripted.h \

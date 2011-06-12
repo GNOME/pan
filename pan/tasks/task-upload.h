@@ -51,15 +51,11 @@ namespace pan
 
       struct UploadInfo
       {
-        bool comment1, counter;
+        bool comment1;
         std::string    domain;
         std::string    save_file;
-        int   queue_pos;
-        int   queue_length;
       };
 
-      ///TODO SEE!
-      void set_lpf (const int& setme ) { _lines_per_file = setme; }
       const Article& get_article ()  { return _article; }
 
       typedef std::vector<Quark> mid_sequence_t;
@@ -90,7 +86,7 @@ namespace pan
                    EncodeCache               & cache,
                    Article                     article,
                    UploadInfo                  format,
-                   needed_t                  * imported=0,
+                   needed_t                  & imported,
                    Progress::Listener        * listener= 0,
                    TaskUpload::EncodeMode enc= YENC);
 
@@ -149,14 +145,15 @@ namespace pan
       unsigned long _all_bytes;
       std::vector<Article*> _upload_list;
       std::string _save_file;
-      int  _queue_pos;
-      int  _queue_length;
       Article::mid_sequence_t _mids;
 
     private:
       needed_t       _needed;
       void update_work (NNTP * checkin_pending = 0);
       void build_needed_tasks(bool);
+
+      std::string get_domain(const StringView&);
+      void set_domain(std::string d) { _domain = d; }
 
   };
 }

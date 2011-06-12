@@ -82,6 +82,83 @@ inline int close(int fd) {return _close(fd);}
   }
 }
 
+namespace
+{
+  int
+  find_task_index (GtkListStore * list, TaskUpload * task)
+  {
+    GtkTreeIter iter;
+    int index (0);
+
+    if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL(list), &iter)) do
+    {
+      TaskUpload * test;
+      gtk_tree_model_get (GTK_TREE_MODEL(list), &iter, 2, &test, -1);
+      if (test == task)
+        return index;
+      ++index;
+    }
+    while (gtk_tree_model_iter_next (GTK_TREE_MODEL(list), &iter));
+
+    // not found
+    return -1;
+  }
+}
+
+void
+PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
+{
+
+  GtkListStore *store = GTK_LIST_STORE(
+                      gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store)));
+
+  for (int i=0; i<count; ++i)
+  {
+    const int pos (index + i);
+    TaskUpload * task (_upload_queue[pos]);
+    if (!task) continue;
+    GtkTreeIter iter;
+    gtk_list_store_insert (store, &iter, pos);
+    gtk_list_store_set (store, &iter,
+                      0, pos+1,
+                      1, task->subject().c_str(),
+                      2, task,
+                      3, task->get_byte_count()/1024,
+                      -1);
+  }
+}
+
+void
+PostUI :: on_queue_task_removed (UploadQueue&, TaskUpload& task, int index)
+{
+  GtkListStore *store = GTK_LIST_STORE(
+                      gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store)));
+
+  const int list_index (find_task_index (store, &task));
+  assert (list_index == index);
+  GtkTreeIter iter;
+  gtk_tree_model_iter_nth_child (GTK_TREE_MODEL(store), &iter, NULL, index);
+  gtk_list_store_remove (store, &iter);
+}
+
+void
+PostUI :: on_queue_task_moved (UploadQueue&, TaskUpload&, int new_index, int old_index)
+{
+  GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store));
+  GtkListStore* store = GTK_LIST_STORE(model);
+  const int count (gtk_tree_model_iter_n_children (model, NULL));
+  std::vector<int> v (count);
+  for (int i=0; i<count; ++i) v[i] = i;
+  if (new_index < old_index) {
+    v.erase (v.begin()+old_index);
+    v.insert (v.begin()+new_index, old_index);
+  } else {
+    v.erase (v.begin()+old_index);
+    v.insert (v.begin()+new_index, old_index);
+  }
+  gtk_list_store_reorder (store, &v.front());
+}
+
 void
 PostUI :: set_spellcheck_enabled (bool enabled)
 {
@@ -194,6 +271,7 @@ namespace
   void do_edit     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->spawn_editor (); }
   void do_profiles (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->manage_profiles (); }
   void do_send     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->send_now (); }
+  void do_send_and_save (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->send_and_save_now (); }
   void do_save     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->save_draft (); }
   void do_open     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->open_draft (); }
   void do_charset  (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->prompt_for_charset (); }
@@ -211,6 +289,7 @@ namespace
     { "editors-menu", 0, N_("Set Editor"), 0, 0, 0 },
     { "post-toolbar", 0, "post", 0, 0, 0 },
     { "post-article", GTK_STOCK_EXECUTE, N_("_Send Article"), "<control>Return", N_("Send Article Now"), G_CALLBACK(do_send) },
+    { "post-and-save-articles", GTK_STOCK_FLOPPY, N_("_Send and Save Articles to NZB"), 0, N_("Send and Save Articles to NZB"), G_CALLBACK(do_send_and_save) },
     { "set-charset", 0, N_("Set Character _Encoding..."), 0, 0, G_CALLBACK(do_charset) },
     { "save-draft", GTK_STOCK_SAVE, N_("Sa_ve Draft"), "<control>s", N_("Save as a Draft for Future Posting"), G_CALLBACK(do_save) },
     { "open-draft", GTK_STOCK_OPEN, N_("_Open Draft..."), "<control>o", N_("Open an Article Draft"), G_CALLBACK(do_open) },
@@ -494,7 +573,7 @@ PostUI :: close_window (bool flag)
 }
 
 bool
-PostUI :: check_message (const Quark& server, GMimeMessage * msg)
+PostUI :: check_message (const Quark& server, GMimeMessage * msg, bool binpost)
 {
 
   MessageCheck :: unique_strings_t errors;
@@ -502,7 +581,9 @@ PostUI :: check_message (const Quark& server, GMimeMessage * msg)
 
   quarks_t groups_this_server_has;
   _gs.server_get_groups (server, groups_this_server_has);
-  MessageCheck :: message_check (msg, _hidden_headers["X-Draft-Attribution"], groups_this_server_has, errors, goodness, !_file_queue_empty);
+  /* skip some checks if the file queue is not empty or if the binpost flag is set, i.e. we want to upload binary data */
+  MessageCheck :: message_check (msg, _hidden_headers["X-Draft-Attribution"],
+                                 groups_this_server_has, errors, goodness, !_file_queue_empty || binpost);
 
   if (goodness.is_ok())
     return true;
@@ -604,14 +685,93 @@ PostUI :: add_files ()
 {
   if (!check_charset())
     return;
-  prompt_user_for_queueable_files (_file_queue_tasks, GTK_WINDOW (gtk_widget_get_toplevel(_root)), _prefs);
+  prompt_user_for_queueable_files (GTK_WINDOW (gtk_widget_get_toplevel(_root)), _prefs);
 }
 
 void
 PostUI :: send_now ()
 {
+  /* check for "always save" flag */
+  if (_prefs.get_flag("upload-queue-save-enabled", false) && !_file_queue_empty)
+  {
+    send_and_save_now();
+    return;
+  }
+
   if (!check_charset())
     return;
+  GMimeMessage * message (new_message_from_ui (POSTING));
+  if (!maybe_post_message (message))
+    g_object_unref (G_OBJECT(message));
+}
+
+namespace
+{
+  std::string
+  get_domain(const StringView& mid)
+  {
+    const char * pch = mid.strchr ('@');
+    StringView domain;
+    if (pch) domain = mid.substr (pch+1, NULL);
+    if (pch) pch = domain.strchr ('>');
+    if (pch) domain = domain.substr (NULL, pch);
+    domain.trim ();
+
+    return domain.to_string();
+  }
+}
+
+void
+PostUI :: send_and_save_now ()
+{
+
+  PostUI::tasks_t tasks;
+  _upload_queue.get_all_tasks(tasks);
+
+  if (!check_charset())
+    return;
+
+  if (_file_queue_empty || !_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false))
+  {
+    GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
+                                            GTK_DIALOG_DESTROY_WITH_PARENT,
+                                            GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE, NULL);
+    if (_file_queue_empty)
+    {
+      HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
+      _("The file queue is empty, so no files can be saved."),"");
+      gtk_dialog_add_button (GTK_DIALOG(d), _("Go Back"), GTK_RESPONSE_CANCEL);
+    }
+    else
+    {
+      HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
+      _("You wanted to save the queue, but the option for custom Message-IDs is disabled. \nCan`t continue because I need this data for the NZB file. \nEnable this option ?"),"");
+      gtk_dialog_add_button (GTK_DIALOG(d), _("Go Back"), GTK_RESPONSE_CANCEL);
+      gtk_dialog_add_button (GTK_DIALOG(d), _("Enable"), GTK_RESPONSE_APPLY);
+    }
+    const int response = gtk_dialog_run (GTK_DIALOG(d));
+    gtk_widget_destroy (d);
+    if (response == GTK_RESPONSE_APPLY)
+      _prefs.set_flag(MESSAGE_ID_PREFS_KEY, true);
+    else
+      return;
+
+    const Profile profile (get_current_profile ());
+    const std::string message_id = !profile.fqdn.empty()
+    ? GNKSA::generate_message_id (profile.fqdn)
+    : GNKSA::generate_message_id_from_email_address (profile.address);
+
+    std::string domain(get_domain(StringView(message_id)));
+    foreach (tasks_t, tasks, it)
+      (*it)->set_domain(domain);
+  }
+
+  _save_file.clear();
+  _save_file = prompt_user_for_upload_nzb_dir (GTK_WINDOW (gtk_widget_get_toplevel(_root)), _prefs);
+  // update all tasks in queue with save file
+  foreach (tasks_t, tasks, it)
+    (*it)->_save_file = _save_file;
+
   GMimeMessage * message (new_message_from_ui (POSTING));
   if (!maybe_post_message (message))
     g_object_unref (G_OBJECT(message));
@@ -818,7 +978,9 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _post_task->add_listener (this);
     _queue.add_task (_post_task, Queue::TOP);
   } else {
-     foreach_const (tasks_v, _file_queue_tasks, it)
+    PostUI::tasks_t tasks;
+    _upload_queue.get_all_tasks(tasks);
+    foreach (PostUI::tasks_t, tasks, it)
       _queue.add_task (*it, Queue::BOTTOM);
      close_window(true); // dont wait for the upload queue
   }
@@ -1636,14 +1798,6 @@ namespace
     static_cast<PostUI*>(user_data)->apply_profile ();
   }
 
-  void on_lines_spin_changed_cb (GtkComboBox* box, gpointer user_data)
-  {
-    const int res (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(box)));
-
-    static_cast<PostUI*>(user_data)->upload_ptr()->set_lpf(res);
-  }
-
-
   typedef std::map <std::string, std::string> str2str_t;
 
   struct SetMessageForeachHeaderData
@@ -1961,21 +2115,16 @@ namespace
 {
   void message_id_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer)
   {
-    static_cast<Prefs*>(prefs_gpointer)->set_flag (MESSAGE_ID_PREFS_KEY, gtk_toggle_button_get_active(tb));
+    // disable toggle if the user chose to always use a custom message id
+    Prefs* prefs = static_cast<Prefs*>(prefs_gpointer);
+    prefs->set_flag (MESSAGE_ID_PREFS_KEY, (gtk_toggle_button_get_active(tb) ||
+                                            prefs->get_flag("upload-enable-custom-mid",false)));
   }
   void user_agent_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer)
   {
     static_cast<Prefs*>(prefs_gpointer)->set_flag (USER_AGENT_PREFS_KEY, gtk_toggle_button_get_active(tb));
   }
 
-
-}
-
-void
-PostUI :: queue_save_toggled_cb (GtkToggleButton * tb, gpointer gp)
-{
-  PostUI* self = static_cast<PostUI*>(gp);
-  self->check_file_save(gtk_toggle_button_get_active(tb));
 }
 
 namespace
@@ -2002,9 +2151,25 @@ namespace
   {
 
     TaskUpload* fd(0);
-    gtk_tree_model_get (model, iter, 1, &fd, -1);
+    gtk_tree_model_get (model, iter, 2, &fd, -1);
     if (fd)
       g_object_set (renderer, "text", fd->basename().c_str(), NULL);
+  }
+
+  void
+  render_row_number (GtkTreeViewColumn * ,
+                   GtkCellRenderer   * renderer,
+                   GtkTreeModel      * model,
+                   GtkTreeIter       * iter,
+                   gpointer)
+  {
+
+    GtkTreePath * path = gtk_tree_model_get_path ( model , iter ) ;
+    int cnt = gtk_tree_path_get_indices ( path )[0]+1 ;
+    std::string tmp;
+    char buf[256];
+    g_snprintf(buf,sizeof(buf),"%d",cnt);
+    g_object_set (renderer, "text", buf, NULL);
   }
 
 }
@@ -2034,17 +2199,19 @@ PostUI :: create_filequeue_tab ()
   gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
 
   //add filestore
-  list_store = gtk_list_store_new (3, G_TYPE_UINT, G_TYPE_POINTER, G_TYPE_UINT);
+  list_store = gtk_list_store_new (4, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_UINT);
   w = _filequeue_store = gtk_tree_view_new_with_model (GTK_TREE_MODEL(list_store));
 
   // add columns
   renderer = gtk_cell_renderer_text_new ();
   GtkTreeView * t = GTK_TREE_VIEW(w);
-  gtk_tree_view_insert_column_with_attributes (t, 0,(_("No.")),renderer,"text", 0,NULL);
+  gtk_tree_view_insert_column_with_data_func(t, 0, (_("No.")), renderer, render_row_number, 0, 0);
   renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_insert_column_with_data_func(t, 1, (_("Filename")), renderer, render_filename, 0, 0);
+  gtk_tree_view_insert_column_with_attributes (t, 1,(_("Subject")),renderer,"text", 1,NULL);
   renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_insert_column_with_attributes (t, 2, (_("Size (kB)")),renderer,"text", 2,NULL);
+  gtk_tree_view_insert_column_with_data_func(t, 2, (_("Filename")), renderer, render_filename, 0, 0);
+  renderer = gtk_cell_renderer_text_new ();
+  gtk_tree_view_insert_column_with_attributes (t, 3, (_("Size (kB)")),renderer,"text", 3,NULL);
 
   // connect signals for popup menu
   g_signal_connect (w, "popup-menu", G_CALLBACK(on_popup_menu), this);
@@ -2093,7 +2260,7 @@ PostUI:: on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, 
     data->upload_ptr()->_needed.insert(std::pair<int, TaskUpload::Needed>(part,tmp));
 
   }
-  gtk_list_store_set(GTK_LIST_STORE( model ), &iter, 1, false, -1);
+  gtk_list_store_set(GTK_LIST_STORE( model ), &iter, 1, enabled, -1);
   gtk_tree_path_free (path);
   data->update_parts_tab();
 }
@@ -2113,11 +2280,11 @@ PostUI :: create_parts_tab ()
   GtkWidget *t = gtk_table_new (8, 2, false);
   gtk_table_set_col_spacings (GTK_TABLE(t), PAD);
 
-  ++row;  //1
+  ++row;
   l = gtk_label_new (NULL);
   gtk_table_attach (GTK_TABLE(t), l, 0, 2, row, row+1, fe, fill, 0, 0);
 
-  ++row;  //2
+  ++row;
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Filename"));
   l = gtk_label_new (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
@@ -2129,7 +2296,7 @@ PostUI :: create_parts_tab ()
   gtk_widget_set_tooltip_text (l, _("The current filename"));
   gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
 
-  ++row;  //3
+  ++row;
   g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Subject Line"));
   l = gtk_label_new (buf);
   gtk_label_set_use_markup (GTK_LABEL(l), true);
@@ -2141,38 +2308,10 @@ PostUI :: create_parts_tab ()
   gtk_widget_set_tooltip_text (l, _("The current Subject Line"));
   gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
 
-  ++row;  //4
-  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Lines / File"));
-  l = gtk_label_new (buf);
-  gtk_label_set_use_markup (GTK_LABEL(l), true);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
-  gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
-  GtkAdjustment * a = (GtkAdjustment*)gtk_adjustment_new (5000, 1500, INT_MAX, 1.0, 1.0, 0.0);
-  w = _lines_spin = gtk_spin_button_new (a, 1.0, 0u);
-  gtk_misc_set_alignment (GTK_MISC(w), 0.5f, 0.5f);
-  gtk_widget_set_tooltip_text (w, _("The current Number of Lines per File"));
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(w), _upload_ptr->_lines_per_file);
-  gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
-  g_signal_connect (w, "changed", G_CALLBACK(on_lines_spin_changed_cb), this);
-
-  ++row;   // 5
-  g_snprintf (buf, sizeof(buf), "<b>%s:</b>", _("Parts"));
-  l = gtk_label_new (buf);
-  gtk_label_set_use_markup (GTK_LABEL(l), true);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
-  gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
-  g_snprintf (buf, sizeof(buf), "%d", _total_parts);
-  l = gtk_label_new_with_mnemonic (buf);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.5f, 0.5f);
-  gtk_widget_set_tooltip_text (l, _("The current Number of Parts of the queued File"));
-  gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
-
-  //6
   ++row;
   l = gtk_label_new (NULL);
   gtk_table_attach (GTK_TABLE(t), l, 0, 2, row, row+1, fe, fill, 0, 0);
 
-  // 7
   //treeview for parts list
   ++row;
   w = _parts_store = gtk_tree_view_new_with_model (GTK_TREE_MODEL(gtk_list_store_new (3,  G_TYPE_UINT, G_TYPE_BOOLEAN, G_TYPE_STRING)));
@@ -2199,15 +2338,8 @@ PostUI :: create_parts_tab ()
   w = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER(w), t);
-
-  return w;
-}
-
-GtkWidget*
-PostUI :: create_log_tab ()
-{
-  GtkWidget *w;
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(w), t);
+//  gtk_container_add (GTK_CONTAINER(w), t);
 
   return w;
 }
@@ -2287,7 +2419,7 @@ gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your 
 
   ++row;
   w = _message_id_check = gtk_check_button_new_with_mnemonic (_("Add \"Message-_Id header"));
-  b = _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false);
+  b = _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false) || _prefs.get_flag("upload-enable-custom-mid",false);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
   g_signal_connect (w, "toggled", G_CALLBACK(message_id_toggled_cb), &_prefs);
   gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
@@ -2303,14 +2435,14 @@ void
 PostUI :: get_selected_files_foreach (GtkTreeModel *model, GtkTreePath *, GtkTreeIter *iter, gpointer list_g)
 {
   TaskUpload* file(0);
-  gtk_tree_model_get (model, iter, 1, &file, -1);
-  static_cast<tasks_v*>(list_g)->push_back (file);
+  gtk_tree_model_get (model, iter, 2, &file, -1);
+  static_cast<PostUI::tasks_t*>(list_g)->push_back (file);
 }
 
-tasks_v
+PostUI::tasks_t
 PostUI :: get_selected_files () const
 {
-  tasks_v tasks;
+  PostUI::tasks_t tasks;
   GtkTreeView * view (GTK_TREE_VIEW (_filequeue_store));
   GtkTreeSelection * sel (gtk_tree_view_get_selection (view));
   gtk_tree_selection_selected_foreach (sel, get_selected_files_foreach, &tasks);
@@ -2320,49 +2452,37 @@ PostUI :: get_selected_files () const
 void
 PostUI :: remove_files (void)
 {
-  tasks_v tasks = get_selected_files();
-
-  tasks_v::iterator nit;
-  for (nit = tasks.begin(); nit != tasks.end(); ++nit)
-  {
-    TaskUpload * ptr(*nit);
-    _file_queue_tasks.remove(*nit);
-    delete (ptr);
-  }
-  update_filequeue_tab();
+  _upload_queue.remove_tasks (get_selected_files());
 }
 
-
-///TODO!!
 void
 PostUI :: move_up (void)
 {
-
+  _upload_queue.move_up (get_selected_files());
 }
 
 void
 PostUI :: move_down (void)
 {
-
+  _upload_queue.move_down (get_selected_files());
 }
 
 void
 PostUI :: move_top (void)
 {
-
+  _upload_queue.move_top (get_selected_files());
 }
 
 void
 PostUI :: move_bottom (void)
 {
-
+  _upload_queue.move_bottom (get_selected_files());
 }
 
 void
 PostUI :: clear_list (void)
 {
-  _file_queue_tasks.clear();
-  update_filequeue_tab();
+  _upload_queue.clear();
 }
 
 void PostUI :: up_clicked_cb (GtkButton*, PostUI* pane)
@@ -2386,39 +2506,13 @@ void PostUI :: delete_clicked_cb (GtkButton*, PostUI* pane)
   pane->remove_files ();
 }
 
-
-void
-PostUI :: update_filequeue_tab()
-{
-  GtkWidget    * w    = _filequeue_store ;
-  GtkListStore *store = GTK_LIST_STORE(
-                        gtk_tree_view_get_model(GTK_TREE_VIEW(w)));
-  GtkTreeIter   iter;
-
-  gtk_list_store_clear(store);
-
-  tasks_v::iterator it = _file_queue_tasks.begin();
-
-  int i(1);
-  for (; it != _file_queue_tasks.end(); ++it, ++i)
-  {
-    gtk_list_store_append (store, &iter);
-    gtk_list_store_set (store, &iter,
-                      0, i,
-                      1, ((TaskUpload*)*it),
-                      2, ((TaskUpload*)*it)->get_byte_count()/1024,
-                      -1);
-  }
-  _file_queue_empty = (_file_queue_tasks.empty());
-}
-
-
 PostUI :: ~PostUI ()
 {
   if (_group_entry_changed_idle_tag)
     g_source_remove (_group_entry_changed_idle_tag);
-
   g_object_unref (G_OBJECT(_message));
+
+  _upload_queue.remove_listener (this);
 }
 
 
@@ -2427,8 +2521,8 @@ void
 PostUI :: select_parts ()
 {
 
-  tasks_v set(get_selected_files());
-  _upload_ptr = *set.begin();
+  PostUI::tasks_t set(get_selected_files());
+  _upload_ptr = set[0];
 
   if (!_upload_ptr) return;
 
@@ -2444,14 +2538,13 @@ PostUI :: select_parts ()
   int x,y;
   x = _prefs.get_int("post-ui-width", -1);
   y = _prefs.get_int("post-ui-height", 450);
-  gtk_window_set_default_size (GTK_WINDOW(_root), x, y);
+  gtk_window_set_default_size (GTK_WINDOW(w), x, y);
   // populate the window
   GtkWidget * vbox = gtk_vbox_new (false, PAD_SMALL);
   gtk_container_add (GTK_CONTAINER(w), vbox);
 
   GtkWidget * notebook = gtk_notebook_new ();
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_parts_tab(), gtk_label_new_with_mnemonic(_("_Parts")));
-//  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_log_tab(),   gtk_label_new_with_mnemonic(_("_Log")));
   pan_box_pack_start_defaults (GTK_BOX(vbox), notebook);
 
   gtk_widget_show_all (w);
@@ -2511,9 +2604,11 @@ PostUI :: PostUI (GtkWindow    * parent,
   _group_entry_changed_idle_tag (0),
   _file_queue_empty(true),
   _upload_ptr(0),
-  _total_parts(0),
-  _check_file_save(false)
+  _total_parts(0)
 {
+
+  _upload_queue.add_listener (this);
+
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != 0);
 
@@ -2591,18 +2686,20 @@ PostUI :: create_window (GtkWindow    * parent,
 }
 
 void
-PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, const Prefs& prefs)
+PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& prefs)
 {
   char buf[4096];
   struct stat sb;
 
   const Profile profile (get_current_profile ());
   GMimeMessage * message (new_message_from_ui (POSTING));
-  if (!check_message(profile.posting_server, message))
+  if (!check_message(profile.posting_server, message, true))
   {
     g_object_unref (G_OBJECT(message));
     return;
   }
+
+  PostUI::tasks_t tasks;
 
   std::string prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
 
@@ -2619,7 +2716,7 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
 	const int response (gtk_dialog_run (GTK_DIALOG(w)));
 	if (response == GTK_RESPONSE_ACCEPT) {
 		GSList * tmp_list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER (w));
-		if (_file_queue_empty) _file_queue_empty=!_file_queue_empty;
+
 
 		GSList * cur = g_slist_nth (tmp_list,0);
     GMimeMessage* msg = message;
@@ -2642,12 +2739,14 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
     }
 
     bool comment1 = _prefs.get_flag("upload-queue-append-subject-enabled",false);
-    bool counter  = _prefs.get_flag("upload-queue-append-partcounter-enabled",false);
     TaskUpload::UploadInfo ui;
     ui.comment1 = comment1;
-    ui.counter = counter;
-    const int list_length = (int)g_slist_length(cur);
-    ui.queue_length = list_length;
+    // generate domain name for upload if the flag is set
+    bool custom_mid(_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false));
+    if (custom_mid)
+      ui.domain = !profile.fqdn.empty()
+      ? GNKSA::generate_message_id (profile.fqdn)
+      : GNKSA::generate_message_id_from_email_address (profile.address);
 
     int cnt(1);
     for (; cur; cur = cur->next, ++cnt)
@@ -2661,8 +2760,6 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
       char* basename = g_path_get_basename((const char*)cur->data);
       TaskUpload::needed_t import;
       TaskUpload::Needed n;
-      foreach_const (quarks_t, groups, git)
-         n.xref.insert (profile.posting_server, *git,0);
       foreach_const (quarks_t, groups, git)
          a.xref.insert (profile.posting_server, *git,0);
 
@@ -2678,22 +2775,19 @@ PostUI :: prompt_user_for_queueable_files (tasks_v& queue, GtkWindow * parent, c
       foreach_const (quarks_t, groups, git)
         a.xref.insert (profile.posting_server, *git,0);
 
-      ui.queue_pos = cnt;
-      // generate domain name for upload
-      ui.domain = !profile.fqdn.empty()
-      ? GNKSA::generate_message_id (profile.fqdn)
-      : GNKSA::generate_message_id_from_email_address (profile.address);
-
 		  TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
                         profile.posting_server, _cache,
-                        a, ui, &import, 0, TaskUpload::YENC);
-		  _file_queue_tasks.push_back(tmp);
+                        a, ui, import, 0, TaskUpload::YENC);
+      _upload_queue.add_task(tmp);
 		}
+
+    if (_file_queue_empty) _file_queue_empty= false;
+
     g_slist_free (tmp_list);
   } else
     gtk_widget_destroy (w);
   g_object_unref (G_OBJECT(message));
-	update_filequeue_tab();
+
 }
 
 std::string
@@ -2729,6 +2823,8 @@ PostUI :: prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs
     char * tmp = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w));
     path = tmp;
     g_free (tmp);
+    //remove old file
+    unlink(path.c_str());
   } else
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(_save_check), false);
 
@@ -2736,8 +2832,3 @@ PostUI :: prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs
   return path;
 
 }
-
-
-
-
-

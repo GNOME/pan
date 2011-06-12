@@ -81,11 +81,12 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    if (line.len>=2 && line.str[line.len-2]=='\r' && line.str[line.len-1]=='\n')
       line.truncate (line.len-2);
 
-//debug ("_nntp_response_text: " << _nntp_response_text);
+//    std::cerr <<"_nntp_response_text: " << _nntp_response_text<<std::endl;
    if (_nntp_response_text)
    {
       if (line.len==1 && line.str[0]=='.') // end-of-list
       {
+        std::cerr<<"line end\n";
          state = CMD_DONE;
          _nntp_response_text = false;
       }
@@ -93,7 +94,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
       {
          state = CMD_MORE;
 
-         if (line.len>=2 && line.str[0]=='.' && line.str[1]=='.') // rfc 977: 2.4.1
+         if (line.len>=2 && line.str[0]=='.' && line.str[1]=='.' && !_xzver) // rfc 977: 2.4.1
             line.rtruncate (line.len-1);
 
          assert (_listener != 0);
@@ -186,6 +187,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
       case XOVER_FOLLOWS:
         if (_listener)
           _listener->on_xover_follows(this, line);
+        if (line.strstr("compressed")) _xzver = true;
       case ARTICLE_FOLLOWS:
       case NEWGROUPS_FOLLOWS:
       case INFORMATION_FOLLOWS:
@@ -196,8 +198,6 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
       case AUTH_REJECTED:
       case NO_GROUP_SELECTED:
       case ERROR_CMD_NOT_UNDERSTOOD:
-        if (_listener)
-          _listener->on_what(this, line);
       case ERROR_CMD_NOT_SUPPORTED:
       case NO_PERMISSION:
       case FEATURE_NOT_SUPPORTED: {
@@ -246,8 +246,8 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 
    bool more;
    switch (state) {
-      case CMD_FAIL: std::cerr<<"firing err_cmd: "<<line.str<<std::endl; fire_done_func (ERR_COMMAND, line); more = false; break;
-      case CMD_DONE: if (_commands.empty()) fire_done_func (OK, line); more = false; break;
+      case CMD_FAIL: fire_done_func (ERR_COMMAND, line); more = false; break;
+      case CMD_DONE: _xzver = false; if (_commands.empty()) fire_done_func (OK, line); more = false; break;
       case CMD_MORE: more = true; break; // keep listining for more on this command
       case CMD_NEXT: more = false; break; // no more responses on this command; wait for next...
       case CMD_RETRY: fire_done_func (ERR_NETWORK, line); more = false; break;
@@ -313,6 +313,8 @@ NNTP :: xzver (const Quark   & group,
 {
    _listener = l;
 
+  std::cerr<<"nntp xzver\n";
+
    if (group != _group)
       _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
 
@@ -320,7 +322,6 @@ NNTP :: xzver (const Quark   & group,
 
    write_next_command ();
 }
-
 
 void
 NNTP :: xover (const Quark   & group,

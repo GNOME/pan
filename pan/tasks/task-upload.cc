@@ -64,19 +64,17 @@ namespace
   }
 }
 
-namespace
+std::string
+TaskUpload :: get_domain(const StringView& mid)
 {
-  std::string get_domain(const StringView& mid)
-  {
-    const char * pch = mid.strchr ('@');
-    StringView domain;
-    if (pch) domain = mid.substr (pch+1, NULL);
-    if (pch) pch = domain.strchr ('>');
-    if (pch) domain = domain.substr (NULL, pch);
-    domain.trim ();
+  const char * pch = mid.strchr ('@');
+  StringView domain;
+  if (pch) domain = mid.substr (pch+1, NULL);
+  if (pch) pch = domain.strchr ('>');
+  if (pch) domain = domain.substr (NULL, pch);
+  domain.trim ();
 
-    return domain.to_string();
-  }
+  return domain.to_string();
 }
 
 /***
@@ -88,7 +86,7 @@ TaskUpload :: TaskUpload (const std::string         & filename,
                           EncodeCache               & cache,
                           Article                     article,
                           UploadInfo                  format,
-                          needed_t                  * imported,
+                          needed_t                  & imported,
                           Progress::Listener        * listener,
                           const TaskUpload::EncodeMode  enc):
   Task ("UPLOAD", get_description(filename.c_str())),
@@ -105,23 +103,21 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _lines_per_file(4000),
   _all_bytes(0),
   _format(format),
-  _queue_pos(format.queue_pos),
-  _queue_length(format.queue_length),
-  _domain(get_domain(StringView(format.domain))),
   _save_file(format.save_file)
 {
   if (listener != 0)
     add_listener (listener);
 
-  needed_t& tmp = *imported;
-  if (imported)
-    foreach (needed_t, tmp, nit)
+  if (!format.domain.empty())  _domain = get_domain(StringView(format.domain)) ;
+
+  if (!imported.empty())
+    foreach (needed_t, imported, nit)
       _needed.insert(*nit);
 
   struct stat sb;
   stat(filename.c_str(),&sb);
   _bytes = sb.st_size;
-  build_needed_tasks(imported);
+  build_needed_tasks(!imported.empty());
 
   update_work ();
 }
@@ -144,7 +140,6 @@ TaskUpload :: build_needed_tasks(bool imported)
   }
   _cache.reserve(_mids);
   _needed_parts = _needed.size();
-
 }
 
 void
@@ -247,7 +242,6 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       it->second.reset();
       goto _end;
     case ERR_COMMAND:
-      //std::cerr<<"err command : "<< _basename.c_str()<<" "<< it->second.partno<<" "<< _total_parts<<"\n";
       _needed.erase (it);
       break;
   }
@@ -263,7 +257,6 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       if (health != OK)     // if we got a dupe, the health is OK, so skip that
       {
         tmp.severity = Log :: PAN_SEVERITY_ERROR;
-        //std::cerr<<"failed : "<<response<<std::endl;
         g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: %s"),
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
         tmp.message = buf;
@@ -410,6 +403,7 @@ TaskUpload :: on_worker_done (bool cancelled)
 
 TaskUpload :: ~TaskUpload ()
 {
+
   // ensure our on_worker_done() doesn't get called after we're dead
   if (_encoder)
       _encoder->cancel_silently();
@@ -417,6 +411,7 @@ TaskUpload :: ~TaskUpload ()
   _cache.release(_mids);
   _cache.resize();
 
+  ///TODO properly enclose all tasks in nzb tags (listener needed ...(??) )
   if (!_save_file.empty())
   {
      std::ofstream out(_save_file.c_str(), std::fstream::out | std::fstream::app);

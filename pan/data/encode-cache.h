@@ -62,7 +62,7 @@ namespace pan
 
       bool contains (const Quark& message_id) const;
       void add (const Quark& message_id);
-      void finalize (const Quark& message_id);
+      void finalize (std::string& message_id);
       void get_data(std::string& data, const Quark& where);
       void reserve (const mid_sequence_t& mids);
       void release (const mid_sequence_t& mids);

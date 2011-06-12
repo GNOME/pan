@@ -192,8 +192,6 @@ namespace pan
       virtual void set_server_limits (const Quark     & server,
                                       int               max_connections) = 0;
 
-      virtual void set_server_xzver_support (const Quark& server, int setme) = 0;
-
       virtual bool get_server_addr (const Quark   & server,
                                     std::string   & setme_address,
                                     int           & setme_port) const = 0;
@@ -203,8 +201,6 @@ namespace pan
                                     std::string   & setme_password) const = 0;
 
       virtual int get_server_limits (const Quark & server) const = 0;
-
-      virtual int get_server_xzver_support (const Quark& server) const = 0;
 
     /*****************************************************************
     ***

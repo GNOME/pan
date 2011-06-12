@@ -107,17 +107,6 @@ DataImpl :: set_server_article_expiration_age  (const Quark  & server,
 
   s->article_expiration_age = std::max (0, days);
 
-//  save_server_properties (*_data_io);
-}
-
-void
-DataImpl :: set_server_xzver_support (const Quark& server, const int val)
-{
-  if (val<0 || val>1) return;
-  Server * s (find_server (server));
-  assert (s != 0);
-
-  s->xzver = val;
 
 }
 
@@ -132,7 +121,7 @@ DataImpl :: set_server_auth (const Quark       & server,
   s->username = username;
   s->password = password;
 
-//  save_server_properties (*_data_io);
+
 }
 
 void
@@ -144,7 +133,7 @@ DataImpl :: set_server_addr (const Quark       & server,
   assert (s != 0);
   s->host = host;
   s->port = port;
-//  save_server_properties (*_data_io);
+
 }
 
 
@@ -155,7 +144,7 @@ DataImpl :: set_server_limits (const Quark   & server,
   Server * s (find_server (server));
   assert (s != 0);
   s->max_connections = max_connections;
-//  save_server_properties (*_data_io);
+
 }
 
 void
@@ -165,7 +154,7 @@ DataImpl :: set_server_rank (const Quark   & server,
   Server * s (find_server (server));
   assert (s != 0);
   s->rank = rank;
-//  save_server_properties (*_data_io);
+
 }
 
 void
@@ -245,16 +234,6 @@ DataImpl :: get_server_article_expiration_age  (const Quark  & server) const
   if (s != 0)
     retval = s->article_expiration_age;
   return retval;
-}
-
-int
-DataImpl :: get_server_xzver_support  (const Quark  & server) const
-{
-  int ret(0);
-  const Server * s (find_server (server));
-  if (s != 0)
-    ret = s->xzver;
-  return ret;
 }
 
 /***
@@ -352,7 +331,6 @@ DataImpl :: load_server_properties (const DataIO& source)
     s.article_expiration_age = to_int(kv["expire-articles-n-days-old"], 31);
     s.rank = to_int(kv["rank"], 1);
     s.newsrc_filename = kv["newsrc"];
-    s.xzver = to_int(kv["xzver"],1);
     if (s.newsrc_filename.empty()) { // set a default filename
       std::ostringstream o;
       o << file::get_pan_home() << G_DIR_SEPARATOR << "newsrc-" << it->first;
@@ -404,8 +382,7 @@ DataImpl :: save_server_properties (DataIO& data_io) const
          << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
          << indent(depth) << "<connection-limit>" << s->max_connections << "</connection-limit>\n"
          << indent(depth) << "<newsrc>" << s->newsrc_filename << "</newsrc>\n"
-         << indent(depth) << "<rank>" << s->rank << "</rank>\n"
-         << indent(depth) << "<xzver>" << s->xzver << "</xzver>\n";
+         << indent(depth) << "<rank>" << s->rank << "</rank>\n";
 
     *out << indent(--depth) << "</server>\n";
   }

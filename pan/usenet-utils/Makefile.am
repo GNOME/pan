@@ -11,7 +11,8 @@ libusenetutils_a_SOURCES = \
  scorefile.cc \
  text-massager.cc \
  url-find.cc \
- MersenneTwister.h
+ MersenneTwister.h \
+ gzstream.cc
 
 noinst_HEADERS = \
  defgroup.h \
@@ -22,7 +23,8 @@ noinst_HEADERS = \
  numbers.h \
  scorefile.h \
  text-massager.h \
- url-find.h
+ url-find.h \
+ gzstream.h
 
 noinst_PROGRAMS = \
  gnksa-test \
