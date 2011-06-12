@@ -146,7 +146,7 @@ namespace pan
       std::string _current_signature;
       GtkWidget * _post_dialog;
       TaskPost * _post_task;
-      TaskUpload* _upload_task;
+      std::set<TaskUpload*> _upload_listeners;
       std::vector<Article*> _uploaded;
       typedef std::map<std::string, std::string> str2str_t;
       str2str_t _hidden_headers;

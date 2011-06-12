@@ -95,7 +95,6 @@ UploadQueue :: add_tasks (const tasks_t& tasks, AddMode mode)
 void
 UploadQueue :: remove_tasks (const tasks_t& tasks)
 {
-  std::cerr<<"remove tasks\n";
   foreach_const (tasks_t, tasks, it)
     remove_task (*it);
 }
@@ -103,7 +102,6 @@ UploadQueue :: remove_tasks (const tasks_t& tasks)
 void
 UploadQueue :: remove_task (TaskUpload * task)
 {
-  std::cerr<<"remove task\n";
   const int index (_tasks.index_of (task));
   pan_return_if_fail (index != -1);
   _tasks.remove (index);

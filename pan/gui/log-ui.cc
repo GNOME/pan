@@ -154,7 +154,6 @@ namespace
         }
       }
     }
-
     return store;
   }
 }
@@ -198,7 +197,11 @@ namespace
   {
     Log::Entry* log_entry(0);
     gtk_tree_model_get (model, iter, COL_MESSAGE, &log_entry, -1);
-    g_object_set (renderer, "text", log_entry ? log_entry->message.c_str() : "", NULL);
+    bool bold (log_entry->is_child);
+    g_object_set (renderer,
+                  "text", log_entry ? log_entry->message.c_str() : "",
+                  "weight", bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL,
+                  NULL);
   }
 
 

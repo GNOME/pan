@@ -39,6 +39,7 @@ extern "C" {
 #include <pan/usenet-utils/message-check.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/data/data.h>
+#include <pan/tasks/nzb.h>
 #include <pan/gui/gui.h>
 #include <pan/tasks/task-post.h>
 #include "e-charset-dialog.h"
@@ -866,6 +867,9 @@ PostUI :: maybe_mail_message (GMimeMessage * message)
 void
 PostUI :: on_progress_finished (Progress&, int status) // posting finished
 {
+
+  ///Listener for taskupload??
+
   _post_task->remove_listener (this);
   gtk_widget_destroy (_post_dialog);
 
@@ -874,7 +878,7 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
       done_sending_message (message, false);
     else
       maybe_mail_message (message);
-  }
+}
 
 void
 PostUI :: on_progress_error (Progress&, const StringView& message)
@@ -981,7 +985,11 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     PostUI::tasks_t tasks;
     _upload_queue.get_all_tasks(tasks);
     foreach (PostUI::tasks_t, tasks, it)
+    {
       _queue.add_task (*it, Queue::BOTTOM);
+//      (*it)->add_listener(this);
+//      _upload_listeners.insert(*it);
+    }
      close_window(true); // dont wait for the upload queue
   }
 

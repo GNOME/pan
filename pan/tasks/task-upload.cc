@@ -224,6 +224,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   char buf[4096];
   Log::Entry tmp;
   tmp.date = time(NULL);
+  tmp.is_child = true;
 
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
@@ -412,10 +413,11 @@ TaskUpload :: ~TaskUpload ()
   _cache.resize();
 
   ///TODO properly enclose all tasks in nzb tags (listener needed ...(??) )
-  if (!_save_file.empty())
-  {
-     std::ofstream out(_save_file.c_str(), std::fstream::out | std::fstream::app);
-     NZB :: upload_list_to_xml_file (out, _upload_list);
-     out.close();
-  }
+//  if (!_save_file.empty())
+//  {
+//     std::cerr<<"saving to file "<<_save_file<<std::endl;
+//     std::ofstream out(_save_file.c_str(), std::fstream::out | std::fstream::app);
+//     NZB :: upload_list_to_xml_file (out, _upload_list);
+//     out.close();
+//  }
 }

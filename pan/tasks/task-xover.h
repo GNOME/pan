@@ -51,7 +51,7 @@ namespace pan
 
     private: // NNTP::Listener
       void on_nntp_line_process (NNTP*, const StringView&);
-      void on_xover_follows (NNTP*, const StringView& line) { std::cerr<<line<<std::endl; }
+//      void on_xover_follows (NNTP*, const StringView& line) { std::cerr<<line<<std::endl; }
       virtual void on_nntp_line (NNTP*, const StringView&);
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
       virtual void on_nntp_group (NNTP*, const Quark&, unsigned long, uint64_t, uint64_t);
@@ -61,6 +61,7 @@ namespace pan
         enum Type { GROUP, XOVER };
         Type _type;
         uint64_t _low, _high;
+//        std::stringstream buf;
         MiniTask (Type type, uint64_t low=0ul, uint64_t high=0ul):
           _type(type), _low(low), _high(high) {}
       };
@@ -88,6 +89,8 @@ namespace pan
       bool _xzver;
       std::stringstream _headers;
       std::ofstream _header_file;
+
+      ArticleCache& _cache;
   };
 }
 

@@ -51,7 +51,8 @@ namespace pan
         Severity severity;
         std::deque<Entry> messages;
         std::string message;
-        Entry() {}
+        bool is_child;
+        Entry() : is_child(false) { }
       };
 
       void add_entry(Entry& e, std::deque<Entry>& list);

@@ -78,15 +78,14 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    StringView line (line_in);
 
    // strip off trailing \r\n
-   if (line.len>=2 && line.str[line.len-2]=='\r' && line.str[line.len-1]=='\n')
-      line.truncate (line.len-2);
+   if (line.len>=2 && line.str[line.len-2]=='\r' && line.str[line.len-1]=='\n' && !_xzver)
+     line.truncate (line.len-2);
 
 //    std::cerr <<"_nntp_response_text: " << _nntp_response_text<<std::endl;
    if (_nntp_response_text)
    {
       if (line.len==1 && line.str[0]=='.') // end-of-list
       {
-        std::cerr<<"line end\n";
          state = CMD_DONE;
          _nntp_response_text = false;
       }
@@ -313,8 +312,6 @@ NNTP :: xzver (const Quark   & group,
 {
    _listener = l;
 
-  std::cerr<<"nntp xzver\n";
-
    if (group != _group)
       _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
 
@@ -329,6 +326,7 @@ NNTP :: xover (const Quark   & group,
                uint64_t        high,
                Listener      * l)
 {
+  _xzver = false;
    _listener = l;
 
    if (group != _group)

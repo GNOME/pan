@@ -100,10 +100,11 @@ TaskXOver :: TaskXOver (Data         & data,
   _parts_so_far (0ul),
   _articles_so_far (0ul),
   _total_minitasks (0),
-  _xzver(true)
+  _xzver(false),
+  _cache(data.get_cache())
 {
 
-  _header_file.open("/home/imhotep/headers", std::ios::out | std::ios::app | std::ios::binary);
+  _header_file.open("/home/imhotep/headers", std::ios::out | std::ios::binary);
 
   debug ("ctor for " << group);
 
@@ -167,9 +168,9 @@ TaskXOver :: use_nntp (NNTP* nntp)
       case MiniTask::XOVER:
         debug ("XOVER " << mt._low << '-' << mt._high << " to " << server);
         _last_xover_number[nntp] = mt._low;
-        if (_xzver)
-          nntp->xzver (_group, mt._low, mt._high, this);
-        else
+//        if (_xzver)
+//          nntp->xzver (_group, mt._low, mt._high, this);
+//        else
           nntp->xover (_group, mt._low, mt._high, this);
         break;
       default:
@@ -283,11 +284,9 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
 {
 //  if (!_xzver)
 //  {
-//    on_nntp_line_process(nntp, line);
-//    return;
-//  }
-  // feed lines into header file
-  _header_file<<line;
+    on_nntp_line_process(nntp, line);
+//  } else
+//  _header_file<<line<<"\r\n";
 
 }
 
@@ -380,42 +379,40 @@ TaskXOver :: on_nntp_done (NNTP              * nntp,
                            const StringView  & response UNUSED)
 {
 
-  //std::cerr << LINE_ID << " nntp " << nntp->_server << " (" << nntp << ") done; checking in.  health==" << health << std::endl;
+//  _header_file.close();
 
-  // step 0 : save sstream to file
 
-  _header_file.close();
-
-  // step 1 : decompress
-//  igzstream in();
+  // step 1 : decode
+//  int res = UUInitialize();
+//  std::cerr<<"uulib : "<<UUstrerror(res)<<std::endl;
+//  res = UULoadFileWithPartNo (const_cast<char*>("/home/imhotep/headers"), 0, 0, -1);
+//  std::cerr<<"uulib : "<<UUstrerror(res)<<std::endl;
+//  res = UUDecodeFile (UUGetFileListItem (0), "/home/imhotep/headers_decoded");
+//  std::cerr<<"uulib : "<<UUstrerror(res)<<std::endl;
+//  res = UUDecodeFile (UUGetFileListItem (1), "/home/imhotep/headers_decoded");
+//  std::cerr<<"uulib : "<<UUstrerror(res)<<std::endl;
+//  UUCleanUp();
+//
+//  // step 2 : decompress
+//  igzstream in("/home/imhotep/headers_decoded");
 //  char c;
 //  std::ofstream out("/home/imhotep/headers_decomp", std::ifstream::out);
 //  while ( in.get(c))
-//    std::cout << c;
+//    out << c;
+//  out.close();
+//
+//  // step 3 : feed to on_nntp_line
+//  std::ifstream ready("/home/imhotep/headers_decomp", std::ifstream::in);
+//  char buf[2048];
+//  while (ready.good())
+//  {
+//    ready.getline(buf,sizeof(buf));
+//    on_nntp_line_process (nntp, StringView(buf));
+//  }
 
-  // step 2 : decode
-  int res = UUInitialize();
-  std::cerr<<"uulib : "<<UUstrerror(res)<<std::endl;
-  res = UULoadFileWithPartNo (const_cast<char*>("/home/imhotep/headers_decomp"), 0, 0, 1);
-  std::cerr<<"uulib : "<<UUstrerror(res)<<std::endl;
-  uulist * item = UUGetFileListItem (1);
-  if (!item)
-    std::cerr<<"uulib : failed to get list item"<<std::endl;
-  res = UUDecodeFile (item, (const_cast<char*>("/home/imhotep/headers_ready")));
-  std::cerr<<"uulib : "<<UUstrerror(res)<<std::endl;
-  UUCleanUp();
-
-
-  // step 3 : feed to on_nntp_line
-  std::ifstream ready("/home/imhotep/headers_ready", std::ifstream::in);
-  char buf[2048];
-  while (ready.good())
-  {
-    ready.getline(buf,sizeof(buf));
-    on_nntp_line_process (nntp, StringView(buf));
-  }
   update_work (true);
   check_in (nntp, health);
+
 }
 
 void
@@ -438,8 +435,8 @@ TaskXOver :: update_work (bool subtract_one_from_nntp_count)
   else if (nntp_count)
     _state.set_working ();
   else {
-    _state.set_completed ();
-    set_finished (OK);
+    _state.set_completed();
+    set_finished(OK);
   }
 }
 
