@@ -44,8 +44,8 @@ namespace pan
    * @ingroup tasks
    */
   class TaskUpload: public Task,
-                     private NNTP::Listener,
-                     private WorkerPool::Worker::Listener
+                    private NNTP::Listener,
+                    private WorkerPool::Worker::Listener
   {
     public:
 
@@ -128,7 +128,6 @@ namespace pan
       friend class NZB;
       Encoder * _encoder;
       bool _encoder_has_run;
-      int _lines_per_file;
       std::string _filename;
       std::string _basename;
       TaskUpload::EncodeMode _encode_mode;
@@ -137,7 +136,6 @@ namespace pan
       UploadInfo _format;
       int _total_parts, _needed_parts;
       unsigned long _bytes;
-      Mutex mut;
       EncodeCache& _cache;
       std::deque<Log::Entry> _logfile;   // for intermediate updates
       Article _article;
@@ -146,6 +144,7 @@ namespace pan
       std::vector<Article*> _upload_list;
       std::string _save_file;
       Article::mid_sequence_t _mids;
+      int _queue_pos;
 
     private:
       needed_t       _needed;

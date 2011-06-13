@@ -100,13 +100,11 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _encoder(0),
   _encoder_has_run (false),
   _encode_mode(enc),
-  _lines_per_file(4000),
   _all_bytes(0),
   _format(format),
-  _save_file(format.save_file)
+  _save_file(format.save_file),
+  _queue_pos(0)
 {
-  if (listener != 0)
-    add_listener (listener);
 
   if (!format.domain.empty())  _domain = get_domain(StringView(format.domain)) ;
 
@@ -126,7 +124,8 @@ void
 TaskUpload :: build_needed_tasks(bool imported)
 {
 
-  _total_parts = (int) (((long)get_byte_count() + (4000*128-1)) / (4000*128));
+  _total_parts = (int) (((long)get_byte_count() + (YENC_LINES_PER_FILE*YENC_HALF_LINE_LEN-1)) /
+                        (YENC_LINES_PER_FILE*YENC_HALF_LINE_LEN));
   int cnt(1);
 
   quarks_t groups;
@@ -166,7 +165,7 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   } else if (_needed.empty())
   {
     _state.set_completed();
-    set_finished(OK);
+    set_finished(_queue_pos);
   }
 }
 
@@ -355,7 +354,7 @@ TaskUpload :: use_encoder (Encoder* encoder)
   format_s << "\"%s\""; // will be filled in by uuencode
   format_s << " (%d/%d) yEnc";     // will be filled in by uuencode
   std::string format(format_s.str());
-  _encoder->enqueue (this, &_cache, _article, _filename, _basename,
+  _encoder->enqueue (this, &_cache, &_article, _filename, _basename,
                      groups, _subject, _author, format , _domain, YENC);
   debug ("encoder thread was free, enqueued work");
 }
@@ -411,13 +410,4 @@ TaskUpload :: ~TaskUpload ()
 
   _cache.release(_mids);
   _cache.resize();
-
-  ///TODO properly enclose all tasks in nzb tags (listener needed ...(??) )
-//  if (!_save_file.empty())
-//  {
-//     std::cerr<<"saving to file "<<_save_file<<std::endl;
-//     std::ofstream out(_save_file.c_str(), std::fstream::out | std::fstream::app);
-//     NZB :: upload_list_to_xml_file (out, _upload_list);
-//     out.close();
-//  }
 }

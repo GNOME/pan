@@ -86,7 +86,7 @@ Encoder :: ~Encoder()
 void
 Encoder :: enqueue (TaskUpload                      * task,
                     EncodeCache                     * cache,
-                    Article                           article,
+                    Article                         * article,
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & groups,
@@ -149,14 +149,14 @@ Encoder :: do_work()
       PartBatch batch;
       batch.init(StringView(basename), needed->size(), 0);
       int cnt(1);
-      Article* tmp = new Article(article);
+      Article* tmp = article;
 
       /* build real subject line */
       g_snprintf(buf, sizeof(buf), "\"%s\" - %s (/%03d)", basename.c_str(), subject.c_str(), needed->size());
       tmp->subject = buf;
 
       char cachename[4096];
-      for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, it, ++cnt)
+      for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
       {
         FILE * fp = cache->get_fp_from_mid(it->second.message_id);
         if (!fp)
@@ -178,13 +178,14 @@ Encoder :: do_work()
                                (char*)subject.c_str(), s.empty() ? NULL : (char*)s.c_str(), (char*)format.c_str(), 0);
 
         if (fp) fclose(fp);
+//        if (res != UURET_CONT && res != UURET_OK) break;
         cache->finalize(it->second.message_id);
-        if (res != UURET_CONT) break;
         cache->get_filename(cachename, Quark(it->second.message_id));
         stat (cachename, &sb);
         it->second.bytes  = sb.st_size;
         task->_all_bytes += sb.st_size;
         batch.add_part(cnt, StringView(s), sb.st_size);
+        if (res != UURET_CONT) break;
       }
 
       if (res != UURET_OK && res != UURET_CONT)
@@ -199,7 +200,6 @@ Encoder :: do_work()
         log_errors.push_back(buf); // log error
       } else
       { // prepare article for upload list
-        batch.add_part(cnt, StringView(s), sb.st_size);
         tmp->set_parts(batch);
         task->_upload_list.push_back(tmp);
       }
@@ -281,8 +281,8 @@ Encoder :: progress_update_timer_func (gpointer decoder)
   if (!task || self->was_cancelled()) return false;
 
   self->mut.lock();
-  const double percent (self->percent);
-  const std::string f (content_to_utf8 (self->current_file));
+    const double percent (self->percent);
+    const std::string f (content_to_utf8 (self->current_file));
   self->mut.unlock();
 
   task->set_step(int(percent));

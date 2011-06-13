@@ -135,14 +135,6 @@ namespace pan
                                     uint64_t             low           UNUSED,
                                     uint64_t             high          UNUSED) {}
 
-        // for xzver-test
-        virtual void on_xover_follows  (NNTP               * nntp UNUSED,
-                                        const StringView   & line UNUSED) {}
-
-
-        virtual void on_what        (NNTP               * nntp UNUSED,
-                                    const StringView    & line UNUSED) {}
-
        };
 
       public:
@@ -157,10 +149,8 @@ namespace pan
           _listener(0),
           _username(username),
           _password(password),
-          _nntp_response_text(false),
-          _xzver(false)
-       {
-       }
+          _nntp_response_text(false)
+       {}
 
        virtual ~NNTP ()
        {
@@ -194,24 +184,6 @@ namespace pan
                              uint64_t             low,
                              uint64_t             high,
                              Listener           * l);
-
-      /**
-       * Executes an XZVER command: "XZVER low-high"
-       *
-       * If successful, this will invoke Listener::on_nntp_line()
-       * for each article header line we get back.
-       *
-       * Listener::on_nntp_done() will be called whether the
-       * command is successful or not.
-       *
-       * The lines are zlib-compressed and then yenc-encoded,
-       * so we decode the file on HDD and uncompress it.
-       * After that, the file is fed back to Listener::on_nntp_line()
-       */
-      void xzver            (const Quark   & group,
-                             uint64_t        low,
-                             uint64_t        high,
-                             Listener      * l);
 
       /**
        * Executes a LIST command: "LIST"
@@ -338,8 +310,6 @@ namespace pan
       virtual bool on_socket_response (Socket*, const StringView& line);
       virtual void on_socket_error (Socket*);
       virtual void on_socket_abort (Socket*);
-
-      bool _xzver;
 
     public:
 

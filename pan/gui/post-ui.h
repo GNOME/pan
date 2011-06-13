@@ -27,7 +27,6 @@
 #include <pan/tasks/upload-queue.h>
 #include <pan/usenet-utils/text-massager.h>
 #include <pan/data/encode-cache.h>
-//#include <pan/tasks/upload-queue.h>
 #include "group-prefs.h"
 
 namespace pan
@@ -36,8 +35,6 @@ namespace pan
   class TaskPost;
   class UploadQueue;
   class Queue;
-
-
 
   /**
    * Dialog for posting new messages Pan's GTK GUI.
@@ -113,6 +110,9 @@ namespace pan
       virtual void on_progress_finished (Progress&, int status);
       virtual void on_progress_error (Progress&, const StringView&);
 
+      virtual void on_progress_step (Progress&, int p) {}
+      virtual void on_progress_status (Progress&, const StringView& s) {}
+
     private:
       Data& _data;
       Queue& _queue;
@@ -146,8 +146,7 @@ namespace pan
       std::string _current_signature;
       GtkWidget * _post_dialog;
       TaskPost * _post_task;
-      std::set<TaskUpload*> _upload_listeners;
-      std::vector<Article*> _uploaded;
+      std::vector<TaskUpload*> _upload_listeners;
       typedef std::map<std::string, std::string> str2str_t;
       str2str_t _hidden_headers;
       str2str_t _profile_headers;
@@ -221,7 +220,9 @@ namespace pan
     private:
       TaskUpload* upload_ptr() { return _upload_ptr; }
       UploadQueue _upload_queue;
-
+      Mutex mut;
+      int _running_uploads;
+      std::ofstream _out;
   };
 }
 

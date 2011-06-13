@@ -542,7 +542,7 @@ namespace
 void
 PostUI :: close_window (bool flag)
 {
-  bool destroy_flag (false || flag);
+  bool destroy_flag (flag);
 
   if (get_body() == _unchanged_body)
     destroy_flag = true;
@@ -769,7 +769,6 @@ PostUI :: send_and_save_now ()
 
   _save_file.clear();
   _save_file = prompt_user_for_upload_nzb_dir (GTK_WINDOW (gtk_widget_get_toplevel(_root)), _prefs);
-  // update all tasks in queue with save file
   foreach (tasks_t, tasks, it)
     (*it)->_save_file = _save_file;
 
@@ -868,16 +867,38 @@ void
 PostUI :: on_progress_finished (Progress&, int status) // posting finished
 {
 
-  ///Listener for taskupload??
-
-  _post_task->remove_listener (this);
-  gtk_widget_destroy (_post_dialog);
-
-  GMimeMessage * message (_post_task->get_message ());
+  if (_file_queue_empty)
+  {
+    _post_task->remove_listener (this);
+    GMimeMessage * message (_post_task->get_message ());
     if (status != OK) // error posting.. stop.
       done_sending_message (message, false);
     else
       maybe_mail_message (message);
+    gtk_widget_destroy (_post_dialog);
+  } else
+  {
+    if (!_save_file.empty())
+    {
+//      mut.lock();
+        int no = status;
+        std::cerr<<"saving to file "<<_save_file<<" from upload no. "<<no<<std::endl;
+        TaskUpload * ptr = _upload_queue[no];
+        std::cerr<<"saving to file (mutex) "<<_save_file<<std::endl;
+        if (ptr) NZB :: upload_list_to_xml_file (_out, ptr->_upload_list);
+        --_running_uploads;
+        std::cerr<<"running uploads now : "<<_running_uploads<<"\n";
+        if (_running_uploads==0 )
+        {
+          _out << "</nzb>\n";
+          _out.close();
+          close_window(true);
+        }
+//      mut.unlock();
+    }
+
+  }
+
 }
 
 void
@@ -891,6 +912,7 @@ PostUI :: on_progress_error (Progress&, const StringView& message)
                             G_CALLBACK(gtk_widget_destroy), d);
   gtk_widget_show (d);
 }
+
 
 bool
 PostUI :: maybe_post_message (GMimeMessage * message)
@@ -982,15 +1004,28 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _post_task->add_listener (this);
     _queue.add_task (_post_task, Queue::TOP);
   } else {
+
+    if (!_save_file.empty())
+    {
+      _out.open(_save_file.c_str(), std::fstream::out | std::fstream::app);
+      _out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
+      << "<!DOCTYPE nzb PUBLIC \"-//newzBin//DTD NZB 1.0//EN\" \"http://www.newzbin.com/DTD/nzb/nzb-1.0.dtd\">\n"
+      << "<nzb xmlns=\"http://www.newzbin.com/DTD/2003/nzb\">\n";
+    }
+
     PostUI::tasks_t tasks;
     _upload_queue.get_all_tasks(tasks);
+    int cnt(0);
+    _running_uploads = tasks.size();
+
     foreach (PostUI::tasks_t, tasks, it)
     {
+      (*it)->_queue_pos = cnt++;
       _queue.add_task (*it, Queue::BOTTOM);
-//      (*it)->add_listener(this);
-//      _upload_listeners.insert(*it);
+      (*it)->add_listener(this);
+      _upload_listeners.push_back(*it);
     }
-     close_window(true); // dont wait for the upload queue
+    gtk_widget_hide (_root); // dont wait for the upload queue
   }
 
   /**
@@ -2534,7 +2569,7 @@ PostUI :: select_parts ()
 
   if (!_upload_ptr) return;
 
-  _total_parts = (int) (((long)_upload_ptr->get_byte_count() + (4000*128-1)) / (4000*128));
+  _total_parts = (int) (((long)_upload_ptr->get_byte_count() + (4000*YENC_HALF_LINE_LEN-1)) / (4000*YENC_HALF_LINE_LEN));
 
   GtkWidget * w;
   GtkTreeIter iter;
@@ -2612,7 +2647,8 @@ PostUI :: PostUI (GtkWindow    * parent,
   _group_entry_changed_idle_tag (0),
   _file_queue_empty(true),
   _upload_ptr(0),
-  _total_parts(0)
+  _total_parts(0),
+  _running_uploads(0)
 {
 
   _upload_queue.add_listener (this);
@@ -2763,7 +2799,8 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 		  a.subject = subject;
 		  a.author = author;
       stat ((const char*)cur->data,&sb);
-      int total = (int) (((long)sb.st_size + (4000*128-1)) / (4000*128));
+      int total = (int) (((long)sb.st_size + (YENC_LINES_PER_FILE*YENC_HALF_LINE_LEN-1)) /
+                          (YENC_LINES_PER_FILE*YENC_HALF_LINE_LEN));
 
       char* basename = g_path_get_basename((const char*)cur->data);
       TaskUpload::needed_t import;

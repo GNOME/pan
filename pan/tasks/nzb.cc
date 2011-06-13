@@ -336,8 +336,8 @@ NZB :: nzb_to_xml (std::ostream             & out,
         // serialize this part
         out << indent(depth)
             << "<segment" << " bytes=\"" << it.bytes() << '"'
-                          << " number=\"" << it.number() << '"'
-                          << ">";
+            << " number=\"" << it.number() << '"'
+            << ">";
         escaped(out, mid);
         out  << "</segment>\n";
       }
@@ -382,8 +382,8 @@ NZB :: nzb_to_xml (std::ostream             & out,
       {
         out << indent(depth)
             << "<part" << " bytes=\"" << it->second.bytes << '"'
-                          << " number=\"" << it->second.partno << '"'
-                          << ">";
+            << " number=\"" << it->second.partno << '"'
+            << ">";
         escaped(out, it->second.message_id);
         out  << "</part>\n";
       }
@@ -402,11 +402,6 @@ NZB :: upload_list_to_xml_file (std::ostream& out,
                    const std::vector<Article*> & tasks)
 {
 int depth (0);
-
-  out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
-      << "<!DOCTYPE nzb PUBLIC \"-//newzBin//DTD NZB 1.0//EN\" \"http://www.newzbin.com/DTD/nzb/nzb-1.0.dtd\">\n"
-      << indent(depth++)
-      << "<nzb xmlns=\"http://www.newzbin.com/DTD/2003/nzb\">\n";
 
   foreach_const (std::vector<Article*>, tasks, it)
   {
@@ -432,7 +427,7 @@ int depth (0);
     out << indent(depth++) << "<segments>\n";
     for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
     {
-      std::string mid = it.mid ();
+      std::string mid  = it.mid ();
 
       // remove the surrounding < > as per nzb spec
       if (mid.size()>=2 && mid[0]=='<') {
@@ -451,8 +446,6 @@ int depth (0);
     out << indent(--depth) << "</segments>\n";
     out << indent(--depth) << "</file>\n";
   }
-
-  out << indent(--depth) << "</nzb>\n";
   return out;
 }
 

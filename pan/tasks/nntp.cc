@@ -78,7 +78,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    StringView line (line_in);
 
    // strip off trailing \r\n
-   if (line.len>=2 && line.str[line.len-2]=='\r' && line.str[line.len-1]=='\n' && !_xzver)
+   if (line.len>=2 && line.str[line.len-2]=='\r' && line.str[line.len-1]=='\n')
      line.truncate (line.len-2);
 
 //    std::cerr <<"_nntp_response_text: " << _nntp_response_text<<std::endl;
@@ -93,7 +93,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
       {
          state = CMD_MORE;
 
-         if (line.len>=2 && line.str[0]=='.' && line.str[1]=='.' && !_xzver) // rfc 977: 2.4.1
+         if (line.len>=2 && line.str[0]=='.' && line.str[1]=='.') // rfc 977: 2.4.1
             line.rtruncate (line.len-1);
 
          assert (_listener != 0);
@@ -184,9 +184,6 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
          break;
 
       case XOVER_FOLLOWS:
-        if (_listener)
-          _listener->on_xover_follows(this, line);
-        if (line.strstr("compressed")) _xzver = true;
       case ARTICLE_FOLLOWS:
       case NEWGROUPS_FOLLOWS:
       case INFORMATION_FOLLOWS:
@@ -246,7 +243,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    bool more;
    switch (state) {
       case CMD_FAIL: fire_done_func (ERR_COMMAND, line); more = false; break;
-      case CMD_DONE: _xzver = false; if (_commands.empty()) fire_done_func (OK, line); more = false; break;
+      case CMD_DONE: if (_commands.empty()) fire_done_func (OK, line); more = false; break;
       case CMD_MORE: more = true; break; // keep listining for more on this command
       case CMD_NEXT: more = false; break; // no more responses on this command; wait for next...
       case CMD_RETRY: fire_done_func (ERR_NETWORK, line); more = false; break;
@@ -305,28 +302,11 @@ NNTP :: help (Listener * l)
 }
 
 void
-NNTP :: xzver (const Quark   & group,
-               uint64_t        low,
-               uint64_t        high,
-               Listener      * l)
-{
-   _listener = l;
-
-   if (group != _group)
-      _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
-
-   _commands.push_back (build_command ("XZVER %"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT"\r\n", low, high));
-
-   write_next_command ();
-}
-
-void
 NNTP :: xover (const Quark   & group,
                uint64_t        low,
                uint64_t        high,
                Listener      * l)
 {
-  _xzver = false;
    _listener = l;
 
    if (group != _group)

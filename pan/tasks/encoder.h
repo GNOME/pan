@@ -63,7 +63,7 @@ namespace pan
 
       void enqueue (TaskUpload                      * task,
                     EncodeCache                     * cache,
-                    Article                           article,
+                    Article                         * article,
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & groups,
@@ -93,7 +93,7 @@ namespace pan
       EncodeCache * cache;
       TaskUpload::needed_t * needed;
       std::string global_mid;
-      Article article;
+      Article * article;
       MTRand mtrand;
 
       void generate_unique_id (StringView& mid, int cnt, std::string& s);
