@@ -31,7 +31,7 @@ stock_images = \
 	icon_layout_5.png \
 	icon_pan_logo.png \
 	icon_pan_about_logo.png \
-	icon_pan.png \
+  icon_pan.png \
 	icon_read_group.png \
 	icon_read_more.png \
 	icon_read_less.png \
@@ -45,7 +45,7 @@ stock_images = \
 	icon_mozilla_surprised.png \
 	icon_mozilla_tongueout.png \
 	icon_mozilla_wink.png
-    
+
 
 EXTRA_DIST = \
 	pan-template.xcf \

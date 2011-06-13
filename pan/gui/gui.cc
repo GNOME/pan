@@ -1310,9 +1310,8 @@ void GUI :: do_tip_jar ()
 void GUI :: do_about_pan ()
 {
   const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com>", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", 0 };
-  //  GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
-  // imhotep : new logo, try it :D (source is at pan/icons)
-  GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo_new, 0, 0);
+    GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
+//  GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo_new, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);

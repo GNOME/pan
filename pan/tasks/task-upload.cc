@@ -260,7 +260,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
         g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: %s"),
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
         tmp.message = buf;
-        _logfile.push_back(tmp);
+        _logfile.push_front(tmp);
       }
       break;
     case ARTICLE_POSTED_OK:
@@ -270,13 +270,13 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
         g_snprintf(buf,sizeof(buf), _("Posting of file %s (Part %d of %d) succesful: %s"),
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
         tmp.message = buf;
-        _logfile.push_back(tmp);
+        _logfile.push_front(tmp);
       } else if (post_ok && _needed.empty())
       {
         g_snprintf(buf,sizeof(buf), _("Posting of file %s (Part %d of %d) succesful: %s"),
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
         tmp.message = buf;
-        _logfile.push_back(tmp);
+        _logfile.push_front(tmp);
 
         /* get error state for the whole upload: if one part failed, set global status to error */
         bool error(false);
