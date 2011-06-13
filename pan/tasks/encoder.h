@@ -69,6 +69,7 @@ namespace pan
                     std::string                     & groups,
                     std::string                     & subject,
                     std::string                     & author,
+                    std::string                     & agent,
                     std::string                     & format,
                     std::string                       global_mid,
                     const TaskUpload::EncodeMode    & enc = TaskUpload::YENC);
@@ -89,7 +90,7 @@ namespace pan
       TaskUpload * task;
       TaskUpload::EncodeMode encode_mode;
       std::string   basename, filename;
-      std::string subject, author, groups, mid, format;
+      std::string subject, author, groups, mid, format, agent;
       EncodeCache * cache;
       TaskUpload::needed_t * needed;
       std::string global_mid;

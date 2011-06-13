@@ -1491,13 +1491,13 @@ UUE_PrepSingle (FILE *outfile, FILE *infile,
 		char *infname, int encoding,
 		char *outfname, int filemode,
 		char *destination, char *from,
-		char *subject, char* mid, char* format, int isemail)
+		char *subject, char* mid, char* format, char* agent, int isemail)
 {
   return UUE_PrepSingleExt (outfile, infile,
 			    infname, encoding,
 			    outfname, filemode,
 			    destination, from,
-			    subject, mid, NULL, format,
+			    subject, mid, NULL, format, agent,
 			    isemail);
 }
 
@@ -1506,7 +1506,7 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 		   char *infname, int encoding,
 		   char *outfname, int filemode,
 		   char *destination, char *from,
-		   char *subject, char* mid, char *replyto, char* format,
+		   char *subject, char* mid, char *replyto, char* format, char* agent,
 		   int isemail)
 {
   mimemap *miter=mimetable;
@@ -1569,10 +1569,15 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 
   fprintf (outfile, "Subject: %s%s", subline, eolstring);
 
-  // pan change (imhotep) : add unique mid for saving the upload queue to hdd
+  // pan change (imhotep) : add unique mid for saving the upload queue to hdd, add user agent
   if (mid)
   {
     fprintf(outfile, "Message-ID: <%s>%s", mid, eolstring);
+  }
+
+  if (agent)
+  {
+    fprintf(outfile, "User-Agent: %s%s", agent, eolstring);
   }
 
 
@@ -1604,7 +1609,7 @@ UUE_PrepPartial (FILE *outfile, FILE *infile,
 		 char *infname, int encoding,
 		 char *outfname, int filemode,
 		 int partno, long linperfile, long filesize,
-		 char *destination, char *from, char *subject, char* mid, char* format,
+		 char *destination, char *from, char *subject, char* mid, char* format, char* agent,
 		 int isemail)
 {
   return UUE_PrepPartialExt (outfile, infile,
@@ -1612,7 +1617,7 @@ UUE_PrepPartial (FILE *outfile, FILE *infile,
 			     outfname, filemode,
 			     partno, linperfile, filesize,
 			     destination,
-			     from, subject, mid, NULL, format,
+			     from, subject, mid, NULL, format, agent,
 			     isemail);
 }
 
@@ -1622,7 +1627,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
 		    char *outfname, int filemode,
 		    int partno, long linperfile, long filesize,
 		    char *destination,
-		    char *from, char *subject, char* mid, char *replyto, char* format,
+		    char *from, char *subject, char* mid, char *replyto, char* format, char* agent,
 		    int isemail)
 {
   static int numparts, themode;
@@ -1716,7 +1721,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
       if (infile==NULL) fclose (theifile);
       return UUE_PrepSingleExt (outfile, infile, infname, encoding,
 				outfname, filemode, destination,
-				from, subject, mid, replyto, format, isemail);
+				from, subject, mid, replyto, format, agent, isemail);
     }
 
     /*
@@ -1767,10 +1772,15 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
 
   fprintf (outfile, "Subject: %s%s", subline, eolstring);
 
-  // pan change (imhotep) : add unique mid for saving the upload queue to hdd
+  // pan change (imhotep) : add unique mid for saving the upload queue to hdd, add user agent
   if (mid)
   {
     fprintf(outfile, "Message-ID: <%s>%s", mid, eolstring);
+  }
+
+  if (agent)
+  {
+    fprintf(outfile, "User-Agent: %s%s", agent, eolstring);
   }
 
   if (replyto) {

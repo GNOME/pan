@@ -145,6 +145,7 @@ namespace pan
       std::string _save_file;
       Article::mid_sequence_t _mids;
       int _queue_pos;
+      std::string _agent;
 
     private:
       needed_t       _needed;

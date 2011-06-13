@@ -62,6 +62,11 @@ namespace
     g_free(freeme);
     return buf;
   }
+
+  const char * get_user_agent () //from post-ui.cc
+  {
+      return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE "; " GIT_REV ")";
+  }
 }
 
 std::string
@@ -103,6 +108,7 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _all_bytes(0),
   _format(format),
   _save_file(format.save_file),
+  _agent(get_user_agent()),
   _queue_pos(0)
 {
 
@@ -355,7 +361,7 @@ TaskUpload :: use_encoder (Encoder* encoder)
   format_s << " (%d/%d) yEnc";     // will be filled in by uuencode
   std::string format(format_s.str());
   _encoder->enqueue (this, &_cache, &_article, _filename, _basename,
-                     groups, _subject, _author, format , _domain, YENC);
+                     groups, _subject, _author, _agent, format , _domain, YENC);
   debug ("encoder thread was free, enqueued work");
 }
 

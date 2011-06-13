@@ -92,6 +92,7 @@ Encoder :: enqueue (TaskUpload                      * task,
                     std::string                     & groups,
                     std::string                     & subject,
                     std::string                     & author,
+                    std::string                     & agent,
                     std::string                     & format,
                     std::string                       global_mid,
                     const TaskUpload::EncodeMode    & enc)
@@ -106,6 +107,7 @@ Encoder :: enqueue (TaskUpload                      * task,
   this->groups = groups;
   this->subject = subject;
   this->author = author;
+  this->agent = agent;
   this->needed = &task->_needed;
   this->global_mid = global_mid;
   this->cache = cache;
@@ -175,7 +177,7 @@ Encoder :: do_work()
                                (char*)basename.c_str(),0644, cnt, 4000,
                                0, (char*)groups.c_str(),
                                (char*)author.c_str(),
-                               (char*)subject.c_str(), s.empty() ? NULL : (char*)s.c_str(), (char*)format.c_str(), 0);
+                               (char*)subject.c_str(), s.empty() ? NULL : (char*)s.c_str(), (char*)format.c_str(), agent.empty() ? NULL : (char*)agent.c_str(), 0);
 
         if (fp) fclose(fp);
 //        if (res != UURET_CONT && res != UURET_OK) break;

@@ -2462,7 +2462,7 @@ gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your 
 
   ++row;
   w = _message_id_check = gtk_check_button_new_with_mnemonic (_("Add \"Message-_Id header"));
-  b = _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false) || _prefs.get_flag("upload-enable-custom-mid",false);
+  b = _prefs.get_flag("upload-enable-custom-mid",false);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
   g_signal_connect (w, "toggled", G_CALLBACK(message_id_toggled_cb), &_prefs);
   gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
@@ -2785,6 +2785,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
     bool comment1 = _prefs.get_flag("upload-queue-append-subject-enabled",false);
     TaskUpload::UploadInfo ui;
     ui.comment1 = comment1;
+
     // generate domain name for upload if the flag is set
     bool custom_mid(_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false));
     if (custom_mid)
