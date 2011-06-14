@@ -30,7 +30,6 @@ extern "C" {
 }
 #include <fstream>
 #include <iostream>
-#include <pan/usenet-utils/gzstream.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
