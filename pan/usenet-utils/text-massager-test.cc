@@ -245,6 +245,72 @@ void test_folding()
   g_assert_cmpstr( out.c_str(), ==, expected_out.c_str());
 }
 
+    ">> Knode is not for me\n"
+    ">>     Question: What are the alternative apps. to Knode - \n"
+    ">>     especially in \n"
+    ">>     off-line readers?\n"
+    "> \n"
+    "> I dunno any good kde newsreaders. I do like pan a lot. It's a gnome/gtk \n"
+    "> thing though. But if you don't care too much about a gtk \n"
+    "> thing in qyour \n"
+    "> kde-desktop, check out pan.\n"
+    "> \n"
+    "> Btw, you can let a kde-theme be applied to gtk programs too.  My gtk \n"
+    "> programs look just like kde, with it's default theme.\n"
+    "> \n"
+    "> \n"
+    "> --\n"
+    "> Marcel Pol mpol@mpol.dhs.org\n"
+    "> \n"
+    "> ...my cow ate the CDs.\n"
+    "\n"
+    "Pan has been going through a lot of modifications recently so make sure \n"
+    "you get the latest version you can run \n"
+    "with your distro.\n";
+  expected_out =
+    "In article\n"
+    "<bl0D6.3171$Uo2.75315@zwoll1.home.nl>,\n"
+    "\"Marcel Pol\"\n"
+    "<mpol@nospam.gmx.net> wrote:\n"
+    "\n"
+    "> Recently \"Unknown\"\n"
+    "> <bill.m@no.spam.net> wrote:\n"
+    ">> Knode is not for me\n"
+    ">>     Question: What are the\n"
+    ">>     alternative apps. to\n"
+    ">>     Knode - especially in\n"
+    ">>     off-line readers?\n"
+    "> \n"
+    "> I dunno any good kde\n"
+    "> newsreaders. I do like pan a\n"
+    "> lot. It's a gnome/gtk thing\n"
+    "> though. But if you don't\n"
+    "> care too much about a gtk\n"
+    "> thing in qyour kde-desktop,\n"
+    "> check out pan.\n"
+    "> \n"
+    "> Btw, you can let a kde-theme\n"
+    "> be applied to gtk programs\n"
+    "> too.  My gtk programs look\n"
+    "> just like kde, with it's\n"
+    "> default theme.\n"
+    "> \n"
+    "> \n"
+    "> --\n"
+    "> Marcel Pol mpol@mpol.dhs.org\n"
+    "> \n"
+    "> ...my cow ate the CDs.\n"
+    "\n"
+    "Pan has been going through a\n"
+    "lot of modifications recently\n"
+    "so make sure you get the\n"
+    "latest version you can run\n"
+    "with your distro.";
+  tm.set_wrap_column (30);
+  out = tm.fill (in, true);
+  g_assert_cmpstr( out.c_str(), ==, expected_out.c_str());
+}
+
 void test_rot13()
 {
    std::string in;
@@ -423,11 +489,11 @@ void test_subj()
    expected_out = "one_two_three";
    out = pan::subject_to_path(in2, false, sep);
    g_assert_cmpstr( out.c_str(), ==, expected_out.c_str());
-   in2 = "one - two three [1/2] - \"00 - title spaces.foo\" yEnc (1/5)";
-   expected_out = "one_two_three_[1_2]_00_title_spaces.foo_yEnc_(1_5)";
-   out = pan::subject_to_path(in2, true, sep);
-   g_assert_cmpstr( out.c_str(), ==, expected_out.c_str());
-}
+   check(out == expected_out);
+   in2 = "one - two three [1/2] - \"00 - title spaces.foo\" (/5)";
+   expected_out = "one_two_three";
+   out = pan::subject_to_path(in2, sep);
+   //std::cout<<"input: '"<<in2<<"'\noutput: '"<<out<<"'\n"<<std::endl;
 
 int main (int argc, char **argv)
 {

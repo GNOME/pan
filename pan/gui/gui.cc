@@ -63,6 +63,7 @@ extern "C" {
 #include "server-ui.h"
 #include "task-pane.h"
 #include "url.h"
+#include "gtk_compat.h"
 
 #include "profiles-dialog.h"
 
@@ -87,7 +88,7 @@ namespace
   }
 
   void
-  parent_set_cb (GtkWidget * widget, GtkObject *, gpointer ui_manager_g)
+  parent_set_cb (GtkWidget * widget, GtkWidget *, gpointer ui_manager_g)
   {
     GtkWidget * toplevel = gtk_widget_get_toplevel (widget);
     if (GTK_IS_WINDOW (toplevel))
@@ -533,14 +534,14 @@ GUI :: prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs)
 std::string
 GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
 {
-
+	
   if (prev_path.empty())
     prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
   if (!file :: file_exists (prev_path.c_str()))
   prev_path = g_get_home_dir ();
     prev_file = std::string(_("Untitled.nzb"));
-
-  GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB File as"),
+    
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB File as..."),
 				      parent,
 				      GTK_FILE_CHOOSER_ACTION_SAVE,
 				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -549,7 +550,7 @@ GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
 	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (w), TRUE);
 	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
 	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (w), prev_file.c_str());
-
+	
 	std::string file;
 	const int response (gtk_dialog_run (GTK_DIALOG(w)));
 	if (response == GTK_RESPONSE_ACCEPT) {
@@ -597,12 +598,13 @@ void GUI :: do_save_articles_to_nzb ()
       std::string emptystring;
       foreach_const (std::vector<Article>, copies, it)
         tasks.push_back (new TaskArticle (_data, _data, *it, _cache, _data, 0, TaskArticle::RAW,emptystring));
-
-      // write them to a file
-      std::ofstream tmp(file.c_str());
-      if (tmp.good())
-        NZB :: nzb_to_xml_file (tmp, tasks);
-      tmp.close();
+    
+          // write them to a file
+          std::ofstream tmp(file.c_str());
+          if (tmp.good()) {
+            NZB :: nzb_to_xml_file (tmp, tasks); 
+          }
+          tmp.close ();
     }
 }
 
@@ -630,11 +632,7 @@ namespace
 
     void foreach_part (GMimeObject *o)
     {
-      if (GMIME_IS_MULTIPART (o))
-      {
-        g_mime_multipart_foreach (GMIME_MULTIPART (o), foreach_part_cb, this);
-      }
-      else if (GMIME_IS_PART(o))
+      if (GMIME_IS_PART(o))
       {
         GMimePart * part (GMIME_PART (o));
         GMimeDataWrapper * wrapper (g_mime_part_get_content_object (part));
@@ -1307,14 +1305,14 @@ void GUI :: do_tip_jar ()
 }
 void GUI :: do_about_pan ()
 {
-  const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com>", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", 0 };
+  const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com> - Pan Author", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", "K. Haley <haleykd@users.sf.net> - Contributor", "Petr Kovar <pknbe@volny.cz> - Contributor", "Heinrich Mueller <eddie_v@gmx.de> - Contributor", "Christophe Lambin <chris@rebelbase.com> - Original Pan Development", "Matt Eagleson <matt@rebelbase.com> - Original Pan Development", 0 };
     GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
 //  GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo_new, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
-  gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2007 Charles Kerr"));
+  gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2011 Charles Kerr and others"));
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
   gtk_about_dialog_set_license (w, LICENSE);

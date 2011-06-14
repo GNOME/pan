@@ -157,7 +157,7 @@ namespace pan
 
     public:
       static std::string prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs);
-      static std::string prompt_user_for_filename  (GtkWindow * parent, const Prefs& prefs);
+	  static std::string prompt_user_for_filename  (GtkWindow * parent, const Prefs& prefs);
 
     private: // Queue::Listener
       friend class Queue;

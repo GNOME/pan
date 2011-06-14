@@ -99,7 +99,7 @@ namespace
   GtkWidget* new_spin_button (const char *key, int low, int high, Prefs &prefs)
   {
     guint tm = prefs.get_int(key, 5 );
-    GtkAdjustment *adj = (GtkAdjustment*) gtk_adjustment_new(tm, low, high, 1.0, 1.0, 1.0);
+    GtkAdjustment *adj = (GtkAdjustment*) gtk_adjustment_new(tm, low, high, 1.0, 1.0, 0.0);
     GtkWidget *w = gtk_spin_button_new( adj, 1.0, 0);
     g_object_set_data_full(G_OBJECT(w), PREFS_KEY, g_strdup(key), g_free);
     g_signal_connect (w, "value_changed", G_CALLBACK(spin_value_changed_cb), &prefs);
@@ -475,7 +475,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_spin_button ("newsrc-autosave-timeout-min", 0, 60, prefs);
     l = gtk_label_new(_("Minutes to autosave newsrc files."));
-    HIG::workarea_add_row (t, &row, l, w);
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
+    HIG::workarea_add_row (t, &row, w, l);
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Behavior")));
 

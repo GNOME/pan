@@ -1950,8 +1950,8 @@ PostUI :: set_message (GMimeMessage * message)
   g_free (tmp);
   if (!s.empty()) {
     if (_prefs.get_flag ("compose-wrap-enabled", true)) {
-    s = TextMassager().fill (s);
-    s += "\n\n";
+      s = TextMassager().fill (s);
+      s += "\n\n";
     }
     gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
   }

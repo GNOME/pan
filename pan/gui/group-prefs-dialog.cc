@@ -41,7 +41,7 @@ namespace
     delete static_cast<GroupPrefsDialog*>(castme);
   }
 }
-
+  
 void
 GroupPrefsDialog :: save_from_gui ()
 {
