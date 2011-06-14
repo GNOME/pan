@@ -180,7 +180,7 @@ Encoder :: do_work()
                                (char*)subject.c_str(), s.empty() ? NULL : (char*)s.c_str(), (char*)format.c_str(), agent.empty() ? NULL : (char*)agent.c_str(), 0);
 
         if (fp) fclose(fp);
-//        if (res != UURET_CONT && res != UURET_OK) break;
+        if (res != UURET_CONT && res != UURET_OK) break;
         cache->finalize(it->second.message_id);
         cache->get_filename(cachename, Quark(it->second.message_id));
         stat (cachename, &sb);

@@ -369,6 +369,7 @@ NZB :: nzb_to_xml (std::ostream             & out,
           << "<path>" << task->_filename << "</path>\n";
       out  << indent(depth) << "<groups>\n";
 
+
       ++depth;
       foreach_const (quarks_t, task->_groups, git)
         out << indent(depth) << "<group>" << *git << "</group>\n";

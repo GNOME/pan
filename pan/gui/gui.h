@@ -31,8 +31,6 @@
 #include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
 
-#include <pan/usenet-utils/MersenneTwister.h>
-
 #include "gtk_compat.h"
 
 namespace pan
@@ -59,7 +57,6 @@ namespace pan
       GUI (Data& data, Queue&, ArticleCache&, EncodeCache&, Prefs&, GroupPrefs&);
       virtual ~GUI ();
       GtkWidget* root () { return _root; }
-//      MTRand mtrand;
 
     public: // ActionManager
       virtual bool is_action_active (const char * action_name) const;

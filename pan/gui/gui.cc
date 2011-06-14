@@ -183,8 +183,6 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
   _taskbar (0)
 {
 
-//  mtrand.seed(); // for mids
-
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
   if (!gtk_ui_manager_add_ui_from_file (_ui_manager, filename, NULL))
     gtk_ui_manager_add_ui_from_string (_ui_manager, fallback_ui_file, -1, NULL);

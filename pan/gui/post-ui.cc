@@ -866,7 +866,7 @@ PostUI :: maybe_mail_message (GMimeMessage * message)
 void
 PostUI :: on_progress_finished (Progress&, int status) // posting finished
 {
-
+  bool close(false);
   if (_file_queue_empty)
   {
     _post_task->remove_listener (this);
@@ -880,21 +880,19 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
   {
     if (!_save_file.empty())
     {
-//      mut.lock();
+      mut.lock();
         int no = status;
-        std::cerr<<"saving to file "<<_save_file<<" from upload no. "<<no<<std::endl;
         TaskUpload * ptr = _upload_queue[no];
-        std::cerr<<"saving to file (mutex) "<<_save_file<<std::endl;
         if (ptr) NZB :: upload_list_to_xml_file (_out, ptr->_upload_list);
         --_running_uploads;
-        std::cerr<<"running uploads now : "<<_running_uploads<<"\n";
         if (_running_uploads==0 )
         {
           _out << "</nzb>\n";
           _out.close();
-          close_window(true);
+          close = true;
         }
-//      mut.unlock();
+      mut.unlock();
+      if (close) close_window(true);
     }
 
   }
@@ -1025,7 +1023,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       (*it)->add_listener(this);
       _upload_listeners.push_back(*it);
     }
-    gtk_widget_hide (_root); // dont wait for the upload queue
+    gtk_widget_hide (_root); // hide the main window, we still need the class' data
   }
 
   /**
@@ -2793,8 +2791,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
 
-    int cnt(1);
-    for (; cur; cur = cur->next, ++cnt)
+    for (; cur; cur = cur->next)
 		{
 		  Article a;
 		  a.subject = subject;
@@ -2846,7 +2843,9 @@ PostUI :: prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs
   std::string prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
   if (!file :: file_exists (prev_path.c_str()))
     prev_path = g_get_home_dir ();
-  std::string prev_file(_("Untitled.nzb"));
+  const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
+  g_snprintf(buf,sizeof(buf), "%s.nzb", cpch ? cpch : "_(Untitled)");
+  std::string prev_file(buf);
 
   GtkWidget * w = gtk_file_chooser_dialog_new (_("Save Upload Queue as NZB File"),
                                                 GTK_WINDOW(parent),

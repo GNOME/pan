@@ -287,16 +287,15 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
         /* get error state for the whole upload: if one part failed, set global status to error */
         bool error(false);
         foreach_const (std::deque<Log::Entry>, _logfile, it)
-          error = (it->severity  == Log :: PAN_SEVERITY_ERROR);
+          if (it->severity  == Log :: PAN_SEVERITY_ERROR) error = true;
         if (!error)
           g_snprintf(buf,sizeof(buf), _("Posting of file %s succesful: %s"),
                    _basename.c_str(), response.str);
         else
-          g_snprintf(buf,sizeof(buf), _("Posting of file %s not completely successful: Check the popup log!"),
+          g_snprintf(buf,sizeof(buf), _("Posting of file %s not completely successful: Check the log (right-click on list item) !"),
                  _basename.c_str(), response.str);
 
         tmp.message = buf;
-        _logfile.push_back(tmp);
         Log::add_entry_list (tmp, _logfile);
         _logfile.clear();
       }
@@ -309,7 +308,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       this->stop();
       Log::add_entry_list (tmp, _logfile);
       _logfile.clear();
-      Log :: add_err_va (_("Posting of file %s not successful: Check the popup log!"),
+      Log :: add_err_va (_("Posting of file %s not successful: Check the log (right-click on list item) !"),
                  _basename.c_str(), response.str);
       break;
   }
@@ -361,7 +360,7 @@ TaskUpload :: use_encoder (Encoder* encoder)
   format_s << " (%d/%d) yEnc";     // will be filled in by uuencode
   std::string format(format_s.str());
   _encoder->enqueue (this, &_cache, &_article, _filename, _basename,
-                     groups, _subject, _author, _agent, format , _domain, YENC);
+                     groups, _subject, _author, _agent, format, _domain, YENC);
   debug ("encoder thread was free, enqueued work");
 }
 
