@@ -534,13 +534,13 @@ GUI :: prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs)
 std::string
 GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
 {
-	
+
   if (prev_path.empty())
     prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
   if (!file :: file_exists (prev_path.c_str()))
   prev_path = g_get_home_dir ();
     prev_file = std::string(_("Untitled.nzb"));
-    
+
   GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB File as..."),
 				      parent,
 				      GTK_FILE_CHOOSER_ACTION_SAVE,
@@ -550,7 +550,7 @@ GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
 	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (w), TRUE);
 	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
 	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (w), prev_file.c_str());
-	
+
 	std::string file;
 	const int response (gtk_dialog_run (GTK_DIALOG(w)));
 	if (response == GTK_RESPONSE_ACCEPT) {
@@ -598,11 +598,11 @@ void GUI :: do_save_articles_to_nzb ()
       std::string emptystring;
       foreach_const (std::vector<Article>, copies, it)
         tasks.push_back (new TaskArticle (_data, _data, *it, _cache, _data, 0, TaskArticle::RAW,emptystring));
-    
+
           // write them to a file
           std::ofstream tmp(file.c_str());
           if (tmp.good()) {
-            NZB :: nzb_to_xml_file (tmp, tasks); 
+            NZB :: nzb_to_xml_file (tmp, tasks);
           }
           tmp.close ();
     }
@@ -1305,7 +1305,9 @@ void GUI :: do_tip_jar ()
 }
 void GUI :: do_about_pan ()
 {
-  const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com> - Pan Author", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", "K. Haley <haleykd@users.sf.net> - Contributor", "Petr Kovar <pknbe@volny.cz> - Contributor", "Heinrich Mueller <eddie_v@gmx.de> - Contributor", "Christophe Lambin <chris@rebelbase.com> - Original Pan Development", "Matt Eagleson <matt@rebelbase.com> - Original Pan Development", 0 };
+  const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com> - Pan Author", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", "K. Haley <haleykd@users.sf.net> - Contributor",
+  "Petr Kovar <pknbe@volny.cz> - Contributor", "Heinrich Mueller <eddie_v@gmx.de> - Contributor", "Christophe Lambin <chris@rebelbase.com> - Original Pan Development",
+  "Matt Eagleson <matt@rebelbase.com> - Original Pan Development", 0 };
     GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
 //  GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo_new, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));

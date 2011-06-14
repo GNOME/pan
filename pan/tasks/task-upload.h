@@ -153,7 +153,6 @@ namespace pan
       void build_needed_tasks(bool);
 
       std::string get_domain(const StringView&);
-      void set_domain(std::string d) { _domain = d; }
 
   };
 }

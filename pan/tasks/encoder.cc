@@ -48,6 +48,7 @@ using namespace pan;
 void
 Encoder :: generate_unique_id (StringView& mid, int cnt, std::string& s)
 {
+
   std::stringstream out;
   struct stat sb;
   struct timeval tv;
@@ -66,6 +67,7 @@ Encoder :: generate_unique_id (StringView& mid, int cnt, std::string& s)
   out << mid;
   //std::cerr << "rng : "<<out.str()<<std::endl;
   s = out.str();
+  std::cerr<<"unique id : "<<mid<<" "<<cnt<<" "<<s<<std::endl;
 }
 
 Encoder :: Encoder (WorkerPool& pool):
@@ -168,11 +170,9 @@ Encoder :: do_work()
           continue;
         }
         // 4000 lines SHOULD be OK for ANY nntp server ...
+        StringView mid(global_mid);
         if (!global_mid.empty())
-        {
-          StringView mid(global_mid);
           generate_unique_id(mid, cnt, s);
-        }
         res = UUE_PrepPartial (fp, NULL, (char*)filename.c_str(),YENC_ENCODED,
                                (char*)basename.c_str(),0644, cnt, 4000,
                                0, (char*)groups.c_str(),

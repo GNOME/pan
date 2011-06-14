@@ -134,7 +134,6 @@ namespace pan
       GtkWidget * _replyto_entry;
       GtkWidget * _body_view;
       GtkWidget * _user_agent_check;
-      GtkWidget * _save_check;
       GtkWidget * _message_id_check;
       GtkTextBuffer * _body_buf;
       GtkTextBuffer * _headers_buf;
@@ -223,6 +222,10 @@ namespace pan
       Mutex mut;
       int _running_uploads;
       std::ofstream _out;
+      static void message_id_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer);
+      std::string get_domain(const StringView& mid);
+      bool update_queue_mids (bool enable=true);
+      bool update_queue_save_file ();
   };
 }
 

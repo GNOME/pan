@@ -31,7 +31,8 @@ stock_images = \
 	icon_layout_5.png \
 	icon_pan_logo.png \
 	icon_pan_about_logo.png \
-  icon_pan.png \
+	icon_pan_about_logo_new.png \
+	icon_pan.png \
 	icon_read_group.png \
 	icon_read_more.png \
 	icon_read_less.png \

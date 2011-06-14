@@ -40,14 +40,17 @@ UploadQueue :: UploadQueue ()
 UploadQueue :: ~UploadQueue ()
 {
 
+  //deletion is done by main queue.
+
 //  const tasks_t tmp (_tasks.begin(), _tasks.end());
 //  foreach_const (tasks_t, tmp, it) {
 //    TaskUpload * task  (*it);
 //    remove_task (task);
 //  }
-
+//
 //  foreach (TaskSet, _tasks, it)
 //    delete *it;
+//
 }
 
 void

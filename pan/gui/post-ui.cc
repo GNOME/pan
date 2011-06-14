@@ -692,13 +692,6 @@ PostUI :: add_files ()
 void
 PostUI :: send_now ()
 {
-  /* check for "always save" flag */
-  if (_prefs.get_flag("upload-queue-save-enabled", false) && !_file_queue_empty)
-  {
-    send_and_save_now();
-    return;
-  }
-
   if (!check_charset())
     return;
   GMimeMessage * message (new_message_from_ui (POSTING));
@@ -706,20 +699,17 @@ PostUI :: send_now ()
     g_object_unref (G_OBJECT(message));
 }
 
-namespace
+std::string
+PostUI :: get_domain(const StringView& mid)
 {
-  std::string
-  get_domain(const StringView& mid)
-  {
-    const char * pch = mid.strchr ('@');
-    StringView domain;
-    if (pch) domain = mid.substr (pch+1, NULL);
-    if (pch) pch = domain.strchr ('>');
-    if (pch) domain = domain.substr (NULL, pch);
-    domain.trim ();
+  const char * pch = mid.strchr ('@');
+  StringView domain;
+  if (pch) domain = mid.substr (pch+1, NULL);
+  if (pch) pch = domain.strchr ('>');
+  if (pch) domain = domain.substr (NULL, pch);
+  domain.trim ();
 
-    return domain.to_string();
-  }
+  return domain.to_string();
 }
 
 void
@@ -732,6 +722,9 @@ PostUI :: send_and_save_now ()
   if (!check_charset())
     return;
 
+  std::cerr<<"send and save now : "<<_file_queue_empty <<" "<< _prefs.get_flag(MESSAGE_ID_PREFS_KEY,false) << " "
+  <<(_file_queue_empty || !_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false))<<std::endl;
+
   if (_file_queue_empty || !_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false))
   {
     GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
@@ -743,7 +736,7 @@ PostUI :: send_and_save_now ()
       _("The file queue is empty, so no files can be saved."),"");
       gtk_dialog_add_button (GTK_DIALOG(d), _("Go Back"), GTK_RESPONSE_CANCEL);
     }
-    else
+    else if (!_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false))
     {
       HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
       _("You wanted to save the queue, but the option for custom Message-IDs is disabled. \nCan`t continue because I need this data for the NZB file. \nEnable this option ?"),"");
@@ -753,24 +746,13 @@ PostUI :: send_and_save_now ()
     const int response = gtk_dialog_run (GTK_DIALOG(d));
     gtk_widget_destroy (d);
     if (response == GTK_RESPONSE_APPLY)
-      _prefs.set_flag(MESSAGE_ID_PREFS_KEY, true);
+      update_queue_mids();
     else
       return;
 
-    const Profile profile (get_current_profile ());
-    const std::string message_id = !profile.fqdn.empty()
-    ? GNKSA::generate_message_id (profile.fqdn)
-    : GNKSA::generate_message_id_from_email_address (profile.address);
+    if (!update_queue_save_file ()) return;
 
-    std::string domain(get_domain(StringView(message_id)));
-    foreach (tasks_t, tasks, it)
-      (*it)->set_domain(domain);
   }
-
-  _save_file.clear();
-  _save_file = prompt_user_for_upload_nzb_dir (GTK_WINDOW (gtk_widget_get_toplevel(_root)), _prefs);
-  foreach (tasks_t, tasks, it)
-    (*it)->_save_file = _save_file;
 
   GMimeMessage * message (new_message_from_ui (POSTING));
   if (!maybe_post_message (message))
@@ -940,7 +922,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   ***  Make sure the message is OK...
   **/
 
-  if (!check_message (server, message))
+  if (!check_message (server, message, !_file_queue_empty))
     return false;
 
   /**
@@ -2152,20 +2134,63 @@ PostUI :: create_main_tab ()
   return v;
 }
 
+bool
+PostUI :: update_queue_mids (bool enable)
+{
+     PostUI::tasks_t tasks;
+    _upload_queue.get_all_tasks(tasks);
+
+    bool mid(enable);
+
+    if (mid)
+    {
+      const Profile profile (get_current_profile ());
+      std::string d = !profile.fqdn.empty()
+      ? GNKSA::generate_message_id (profile.fqdn)
+      : GNKSA::generate_message_id_from_email_address (profile.address);
+
+      std::string domain(get_domain(StringView(d)));
+      foreach (tasks_t, tasks, it)
+        (*it)->_domain = domain;
+      return true;
+    } else
+    {
+      foreach (tasks_t, tasks, it)
+        (*it)->_domain.clear();
+      return false;
+    }
+
+}
+
+bool
+PostUI :: update_queue_save_file ()
+{
+  PostUI::tasks_t tasks;
+  _upload_queue.get_all_tasks(tasks);
+  _save_file.clear();
+  _save_file = prompt_user_for_upload_nzb_dir (GTK_WINDOW (gtk_widget_get_toplevel(_root)), _prefs);
+
+  if (_save_file.empty()) return false;
+  foreach (tasks_t, tasks, it)
+    (*it)->_save_file = _save_file;
+  return true;
+}
+
+void
+PostUI :: message_id_toggled_cb (GtkToggleButton * tb, gpointer pointer)
+{
+  PostUI* post = static_cast<PostUI*>(pointer);
+  post->_prefs.set_flag (MESSAGE_ID_PREFS_KEY, gtk_toggle_button_get_active(tb));
+  post->update_queue_mids(gtk_toggle_button_get_active(tb));
+}
+
 namespace
 {
-  void message_id_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer)
+  void user_agent_toggled_cb (GtkToggleButton * tb, gpointer pointer)
   {
-    // disable toggle if the user chose to always use a custom message id
-    Prefs* prefs = static_cast<Prefs*>(prefs_gpointer);
-    prefs->set_flag (MESSAGE_ID_PREFS_KEY, (gtk_toggle_button_get_active(tb) ||
-                                            prefs->get_flag("upload-enable-custom-mid",false)));
+    Prefs* prefs = static_cast<Prefs*>(pointer);
+    prefs->set_flag (MESSAGE_ID_PREFS_KEY, gtk_toggle_button_get_active(tb));
   }
-  void user_agent_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer)
-  {
-    static_cast<Prefs*>(prefs_gpointer)->set_flag (USER_AGENT_PREFS_KEY, gtk_toggle_button_get_active(tb));
-  }
-
 }
 
 namespace
@@ -2460,9 +2485,9 @@ gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your 
 
   ++row;
   w = _message_id_check = gtk_check_button_new_with_mnemonic (_("Add \"Message-_Id header"));
-  b = _prefs.get_flag("upload-enable-custom-mid",false);
+  b = _prefs.get_flag(MESSAGE_ID_PREFS_KEY,false);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
-  g_signal_connect (w, "toggled", G_CALLBACK(message_id_toggled_cb), &_prefs);
+  g_signal_connect (w, "toggled", G_CALLBACK(message_id_toggled_cb), this);
   gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
 
@@ -2780,9 +2805,8 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
         groups.insert(groupname);
     }
 
-    bool comment1 = _prefs.get_flag("upload-queue-append-subject-enabled",false);
     TaskUpload::UploadInfo ui;
-    ui.comment1 = comment1;
+    ui.comment1 = _prefs.get_flag("upload-queue-append-subject-enabled",false);
 
     // generate domain name for upload if the flag is set
     bool custom_mid(_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false));
@@ -2871,7 +2895,7 @@ PostUI :: prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs
     //remove old file
     unlink(path.c_str());
   } else
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(_save_check), false);
+    path.clear();
 
   gtk_widget_destroy (w);
   return path;

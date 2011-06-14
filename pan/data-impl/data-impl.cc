@@ -61,7 +61,6 @@ namespace
 
 }
 
-///SEE
 DataImpl :: DataImpl (bool unit_test, int cache_megs, DataIO * io):
   ProfilesImpl (*io),
   _cache (get_cache_path(), cache_megs),
