@@ -750,9 +750,9 @@ PostUI :: send_and_save_now ()
     else
       return;
 
-    if (!update_queue_save_file ()) return;
-
   }
+
+   if (!update_queue_save_file ()) return;
 
   GMimeMessage * message (new_message_from_ui (POSTING));
   if (!maybe_post_message (message))
