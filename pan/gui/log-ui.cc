@@ -33,6 +33,8 @@ extern "C" {
 
 using namespace pan;
 
+///TODO : perhaps implement a tooltip for right-click?
+
 namespace
 {
   enum { COL_HIDDEN, COL_SEVERITY, COL_DATE, COL_MESSAGE, N_COLS };
@@ -57,6 +59,20 @@ namespace
                           COL_SEVERITY, (e.severity & Log::PAN_SEVERITY_ERROR),
                           COL_DATE, (unsigned long)e.date,
                           COL_MESSAGE, &e, -1);
+       if (!e.messages.empty())
+       {
+        GtkTreeIter child;
+
+        foreach_const (Log::entries_t, e.messages, lit)
+        {
+          gtk_tree_store_prepend (myStore, &child, &iter );
+          gtk_tree_store_set (myStore, &child,
+                          COL_HIDDEN, "",
+                          COL_SEVERITY, (lit->severity & Log::PAN_SEVERITY_ERROR),
+                          COL_DATE, (unsigned long)lit->date,
+                          COL_MESSAGE, &*lit, -1);
+        }
+      }
     }
 
     virtual void on_log_cleared () {

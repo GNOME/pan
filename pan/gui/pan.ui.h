@@ -202,6 +202,8 @@ const char * fallback_ui_file =
 "    <menuitem action='get-new-headers-in-selected-groups' />\n"
 "    <menuitem action='get-new-headers-in-subscribed-groups'/>\n"
 "    <separator />\n"
+"    <menuitem action='post' />\n"
+"    <separator />\n"
 "    <menuitem action='show-group-preferences-dialog' />\n"
 "    <separator />\n"
 "    <menuitem action='subscribe' />\n"
