@@ -2808,6 +2808,10 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
     TaskUpload::UploadInfo ui;
     ui.comment1 = _prefs.get_flag("upload-queue-append-subject-enabled",false);
 
+    // query lines per file value
+    ui.lpf = _prefs.get_int("upload-option-lpf",4000);
+    std::cerr<<"got "<<ui.lpf<<std::endl;
+
     // generate domain name for upload if the flag is set
     bool custom_mid(_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false));
     if (custom_mid)

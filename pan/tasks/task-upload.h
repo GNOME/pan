@@ -54,6 +54,7 @@ namespace pan
         bool comment1;
         std::string    domain;
         std::string    save_file;
+        int lpf;
       };
 
       const Article& get_article ()  { return _article; }
@@ -146,6 +147,7 @@ namespace pan
       Article::mid_sequence_t _mids;
       int _queue_pos;
       std::string _agent;
+      int _lpf;
 
     private:
       needed_t       _needed;

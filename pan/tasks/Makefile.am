@@ -44,22 +44,22 @@ noinst_HEADERS = \
   socket-impl-scripted.h \
   nntp-pool.h
 
-noinst_PROGRAMS = \
-  adaptable-set-test \
-  nzb-test
+#noinst_PROGRAMS = \
+#  adaptable-set-test \
+#  nzb-test
 
-TESTS = $(noinst_PROGRAMS)
+#TESTS = $(noinst_PROGRAMS)
 
-TEST_LDADD = ./libtasks.a \
- ../data/libdata.a \
- ../usenet-utils/libusenetutils.a \
- ../general/libgeneralutils.a \
- ../../uulib/libuu.a \
- @GMIME_LIBS@ @GLIB_LIBS@
+#TEST_LDADD = ./libtasks.a \
+# ../data/libdata.a \
+# ../usenet-utils/libusenetutils.a \
+# ../general/libgeneralutils.a \
+# ../../uulib/libuu.a \
+# @GMIME_LIBS@ @GLIB_LIBS@
 
-adaptable_set_test_SOURCES = adaptable-set-test.cc
-nzb_test_SOURCES = nzb-test.cc
-nzb_test_LDADD = $(TEST_LDADD)
+#adaptable_set_test_SOURCES = adaptable-set-test.cc
+#nzb_test_SOURCES = nzb-test.cc
+#nzb_test_LDADD = $(TEST_LDADD)
 
 # FIXME: these need to be moved up the food chain past data-impl
 #

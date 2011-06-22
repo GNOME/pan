@@ -109,7 +109,8 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _format(format),
   _save_file(format.save_file),
   _agent(get_user_agent()),
-  _queue_pos(0)
+  _queue_pos(0),
+  _lpf(format.lpf)
 {
 
   if (!format.domain.empty())  _domain = get_domain(StringView(format.domain)) ;
@@ -361,8 +362,9 @@ TaskUpload :: use_encoder (Encoder* encoder)
   format_s << "\"%s\""; // will be filled in by uuencode
   format_s << " (%d/%d) yEnc";     // will be filled in by uuencode
   std::string format(format_s.str());
+  std::cerr<<"_lpf : " <<_lpf<<std::endl;
   _encoder->enqueue (this, &_cache, &_article, _filename, _basename,
-                     groups, _subject, _author, _agent, format, _domain, YENC);
+                     groups, _subject, _author, _agent, format, _domain, _lpf, YENC);
   debug ("encoder thread was free, enqueued work");
 }
 

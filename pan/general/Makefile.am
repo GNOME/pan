@@ -36,19 +36,19 @@ noinst_HEADERS = \
  utf8-utils.h \
  worker-pool.h 
 
-noinst_PROGRAMS = \
-  progress-test \
-  quark-test \
-  string-view-test \
-  text-match-test
+#noinst_PROGRAMS = \
+#  progress-test \
+#  quark-test \
+#  string-view-test \
+#  text-match-test
 
-TESTS = $(noinst_PROGRAMS)
-TEST_LDADD = ./libgeneralutils.a @GMIME_CFLAGS@ @GLIB_LIBS@
-progress_test_SOURCES = progress-test.cc
-progress_test_LDADD = $(TEST_LDADD)
-quark_test_SOURCES = quark-test.cc
-quark_test_LDADD = $(TEST_LDADD)
-string_view_test_SOURCES = string-view-test.cc
-string_view_test_LDADD = $(TEST_LDADD)
-text_match_test_SOURCES = text-match-test.cc
-text_match_test_LDADD = $(TEST_LDADD)
+#TESTS = $(noinst_PROGRAMS)
+#TEST_LDADD = ./libgeneralutils.a @GMIME_CFLAGS@ @GLIB_LIBS@
+#progress_test_SOURCES = progress-test.cc
+#progress_test_LDADD = $(TEST_LDADD)
+#quark_test_SOURCES = quark-test.cc
+#quark_test_LDADD = $(TEST_LDADD)
+#string_view_test_SOURCES = string-view-test.cc
+#string_view_test_LDADD = $(TEST_LDADD)
+#text_match_test_SOURCES = text-match-test.cc
+#text_match_test_LDADD = $(TEST_LDADD)

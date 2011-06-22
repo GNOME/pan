@@ -72,6 +72,7 @@ namespace pan
                     std::string                     & agent,
                     std::string                     & format,
                     std::string                       global_mid,
+                    int                               lpf,
                     const TaskUpload::EncodeMode    & enc = TaskUpload::YENC);
 
     public:
@@ -91,6 +92,7 @@ namespace pan
       TaskUpload::EncodeMode encode_mode;
       std::string   basename, filename;
       std::string subject, author, groups, mid, format, agent;
+      int lpf;
       EncodeCache * cache;
       TaskUpload::needed_t * needed;
       std::string global_mid;

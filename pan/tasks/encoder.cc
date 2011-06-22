@@ -97,6 +97,7 @@ Encoder :: enqueue (TaskUpload                      * task,
                     std::string                     & agent,
                     std::string                     & format,
                     std::string                       global_mid,
+                    int                               lpf,
                     const TaskUpload::EncodeMode    & enc)
 
 {
@@ -115,6 +116,7 @@ Encoder :: enqueue (TaskUpload                      * task,
   this->cache = cache;
   this->article = article;
   this->format = format;
+  this->lpf = lpf;
 
   percent = 0;
   current_file.clear ();
@@ -169,12 +171,11 @@ Encoder :: do_work()
           log_errors.push_back(buf); // log error
           continue;
         }
-        // 4000 lines SHOULD be OK for ANY nntp server ...
         StringView mid(global_mid);
         if (!global_mid.empty())
           generate_unique_id(mid, cnt, s);
         res = UUE_PrepPartial (fp, NULL, (char*)filename.c_str(),YENC_ENCODED,
-                               (char*)basename.c_str(),0644, cnt, 4000,
+                               (char*)basename.c_str(),0644, cnt, lpf,
                                0, (char*)groups.c_str(),
                                (char*)author.c_str(),
                                (char*)subject.c_str(), s.empty() ? NULL : (char*)s.c_str(), (char*)format.c_str(), agent.empty() ? NULL : (char*)agent.c_str(), 0);

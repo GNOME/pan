@@ -51,6 +51,7 @@ namespace
     TaskUpload::needed_t needed_parts;     // TaskUpload
     std::string domain;                    // TaskUpload
     std::string queue;
+    int lpf;
     Article a;
     PartBatch parts;
     tasks_t tasks;
@@ -79,6 +80,7 @@ namespace
       needed_parts.clear();   // TaskUpload
       domain.clear();         // TaskUpload
       queue.clear();
+      lpf = 0;
     }
   };
 
@@ -104,11 +106,12 @@ namespace
     else if (!strcmp (element_name, "upload")) {
       mc.file_clear ();
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
-             if (!strcmp (*k,"author"))  mc.a.author = *v;
+             if (!strcmp (*k,"author"))  mc.a.author  = *v;
         else if (!strcmp (*k,"subject")) mc.a.subject = *v;
-        else if (!strcmp (*k,"server"))  mc.server = *v;
-        else if (!strcmp (*k,"domain"))  mc.domain = *v;
-        else if (!strcmp (*k,"queue"))  mc.queue = *v;
+        else if (!strcmp (*k,"server"))  mc.server    = *v;
+        else if (!strcmp (*k,"domain"))  mc.domain    = *v;
+        else if (!strcmp (*k,"queue"))   mc.queue     = *v;
+        else if (!strcmp (*k,"lpf"))     mc.lpf       = atoi(*v);
       }
     }
 
@@ -191,6 +194,7 @@ namespace
       TaskUpload::UploadInfo format;
       format.domain = mc.domain;
       format.comment1 = true;
+      format.lpf = mc.lpf;
       TaskUpload* tmp = new TaskUpload (mc.path, mc.server, mc.encode_cache,mc.a,
                                         format, mc.needed_parts, 0, TaskUpload::YENC);
       mc.tasks.push_back (tmp);
@@ -362,6 +366,10 @@ NZB :: nzb_to_xml (std::ostream             & out,
       escaped (out, task->_server.to_string());
       out  << "\" queue=\"";
       escaped (out, task->_save_file);
+      out  << "\" lpf=\"";
+      char buf[256];
+      g_snprintf(buf,sizeof(buf),"%d",task->_lpf);
+      escaped (out, buf);
       out  << "\" domain=\"nospam@";
       escaped (out, task->_domain) << "\">\n";
       ++depth;
