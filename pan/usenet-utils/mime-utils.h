@@ -47,7 +47,7 @@
 #define YENC_TAG_CRC32         " crc32="
 #define YENC_FULL_LINE_LEN     256
 #define YENC_HALF_LINE_LEN     128
-#define YENC_LINES_PER_FILE    4000
+//#define YENC_LINES_PER_FILE    4000
 #define YENC_ESC_NULL          "=@"
 #define YENC_ESC_TAB           "=I"
 #define YENC_ESC_LF            "=J"

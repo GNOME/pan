@@ -67,7 +67,6 @@ Encoder :: generate_unique_id (StringView& mid, int cnt, std::string& s)
   out << mid;
   //std::cerr << "rng : "<<out.str()<<std::endl;
   s = out.str();
-  std::cerr<<"unique id : "<<mid<<" "<<cnt<<" "<<s<<std::endl;
 }
 
 Encoder :: Encoder (WorkerPool& pool):
@@ -158,7 +157,7 @@ Encoder :: do_work()
       Article* tmp = article;
 
       /* build real subject line */
-      g_snprintf(buf, sizeof(buf), "\"%s\" - %s (/%03d)", basename.c_str(), subject.c_str(), needed->size());
+      g_snprintf(buf, sizeof(buf), "\"%s\" - %s (/%03d)", basename.c_str(), subject.c_str(), (int)needed->size());
       tmp->subject = buf;
 
       char cachename[4096];

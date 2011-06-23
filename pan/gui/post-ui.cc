@@ -722,9 +722,6 @@ PostUI :: send_and_save_now ()
   if (!check_charset())
     return;
 
-  std::cerr<<"send and save now : "<<_file_queue_empty <<" "<< _prefs.get_flag(MESSAGE_ID_PREFS_KEY,false) << " "
-  <<(_file_queue_empty || !_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false))<<std::endl;
-
   if (_file_queue_empty || !_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false))
   {
     GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
@@ -2592,7 +2589,8 @@ PostUI :: select_parts ()
 
   if (!_upload_ptr) return;
 
-  _total_parts = (int) (((long)_upload_ptr->get_byte_count() + (4000*YENC_HALF_LINE_LEN-1)) / (4000*YENC_HALF_LINE_LEN));
+  int lpf = lpf = _prefs.get_int("upload-option-lpf",4000);
+  _total_parts = (int) (((long)_upload_ptr->get_byte_count() + (lpf*YENC_HALF_LINE_LEN-1)) / (lpf*YENC_HALF_LINE_LEN));
 
   GtkWidget * w;
   GtkTreeIter iter;
@@ -2810,7 +2808,6 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 
     // query lines per file value
     ui.lpf = _prefs.get_int("upload-option-lpf",4000);
-    std::cerr<<"got "<<ui.lpf<<std::endl;
 
     // generate domain name for upload if the flag is set
     bool custom_mid(_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false));
@@ -2825,8 +2822,9 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 		  a.subject = subject;
 		  a.author = author;
       stat ((const char*)cur->data,&sb);
-      int total = (int) (((long)sb.st_size + (YENC_LINES_PER_FILE*YENC_HALF_LINE_LEN-1)) /
-                          (YENC_LINES_PER_FILE*YENC_HALF_LINE_LEN));
+      int lpf = _prefs.get_int("upload-option-lpf",4000);
+      int total = (int) (((long)sb.st_size + (lpf*YENC_HALF_LINE_LEN-1)) /
+                          (lpf*YENC_HALF_LINE_LEN));
 
       char* basename = g_path_get_basename((const char*)cur->data);
       TaskUpload::needed_t import;

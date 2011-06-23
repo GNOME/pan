@@ -131,8 +131,8 @@ void
 TaskUpload :: build_needed_tasks(bool imported)
 {
 
-  _total_parts = (int) (((long)get_byte_count() + (YENC_LINES_PER_FILE*YENC_HALF_LINE_LEN-1)) /
-                        (YENC_LINES_PER_FILE*YENC_HALF_LINE_LEN));
+  _total_parts = (int) (((long)get_byte_count() + (_lpf*YENC_HALF_LINE_LEN-1)) /
+                        (_lpf*YENC_HALF_LINE_LEN));
   int cnt(1);
 
   quarks_t groups;
@@ -362,7 +362,6 @@ TaskUpload :: use_encoder (Encoder* encoder)
   format_s << "\"%s\""; // will be filled in by uuencode
   format_s << " (%d/%d) yEnc";     // will be filled in by uuencode
   std::string format(format_s.str());
-  std::cerr<<"_lpf : " <<_lpf<<std::endl;
   _encoder->enqueue (this, &_cache, &_article, _filename, _basename,
                      groups, _subject, _author, _agent, format, _domain, _lpf, YENC);
   debug ("encoder thread was free, enqueued work");
