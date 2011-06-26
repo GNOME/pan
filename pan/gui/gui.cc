@@ -27,6 +27,7 @@ extern "C" {
   #include <sys/stat.h> // for chmod
   #include <glib/gi18n.h>
   #include <dirent.h>
+
 }
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
