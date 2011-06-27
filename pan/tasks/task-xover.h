@@ -83,7 +83,11 @@ namespace pan
       unsigned long _bytes_so_far;
       unsigned long _parts_so_far;
       unsigned long _articles_so_far;
-      unsigned long _total_minitasks;
+      unsigned long _lines_so_far;
+      unsigned long _total_minitasks, _working;
+
+
+      std::fstream _headers;
   };
 }
 

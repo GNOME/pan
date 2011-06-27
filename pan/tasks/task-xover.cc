@@ -34,6 +34,7 @@ extern "C" {
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/utf8-utils.h>
+#include <pan/general/file-util.h>
 #include <pan/data/data.h>
 #include "nntp.h"
 #include "task-xover.h"
@@ -83,6 +84,14 @@ namespace
   }
 }
 
+namespace
+{
+    void create_cachename(char* in, size_t len, const char* add)
+    {
+        g_snprintf(in, len, "%s%c%s",file::get_pan_home().c_str(), G_DIR_SEPARATOR , add);
+    }
+}
+
 TaskXOver :: TaskXOver (Data         & data,
                         const Quark  & group,
                         Mode           mode,
@@ -98,10 +107,16 @@ TaskXOver :: TaskXOver (Data         & data,
   _bytes_so_far (0),
   _parts_so_far (0ul),
   _articles_so_far (0ul),
-  _total_minitasks (0)
+  _lines_so_far (0ul),
+  _total_minitasks (0),
+  _working(0)
 {
 
   debug ("ctor for " << group);
+
+  char buf[2048];
+  create_cachename (buf,sizeof(buf), "headers");
+  _headers.open(buf, std::ios::out | std::ios::trunc);
 
   // add a ``GROUP'' MiniTask for each server that has this group
   // initialize the _high lookup table to boundaries
@@ -231,6 +246,7 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
     //std::cerr << LINE_ID << " nothing new here..." << std::endl;
     _high[nntp->_server] = high;
   }
+  _working = _total_minitasks;
 }
 
 namespace
@@ -274,12 +290,26 @@ void
 TaskXOver :: on_nntp_line         (NNTP               * nntp,
                                    const StringView   & line)
 {
+    _headers<<line<<"\r\n";
+    increment_step(1);
+    ++_lines_so_far;
+    _bytes_so_far += line.len;
+
+    if (!(_lines_so_far % 500))
+     set_status_va (_("%s (%lu Header Lines)"), _short_group_name.c_str(), _lines_so_far);
+
+}
+
+void
+TaskXOver :: on_nntp_line_process (NNTP               * nntp,
+                                   const StringView   & line)
+{
 
   pan_return_if_fail (nntp != 0);
   pan_return_if_fail (!nntp->_server.empty());
   pan_return_if_fail (!nntp->_group.empty());
 
-  _bytes_so_far += line.len;
+//  _bytes_so_far += line.len;
 
   unsigned int lines=0u;
   unsigned long bytes=0ul;
@@ -331,7 +361,7 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
     return;
   }
 
-  ++_parts_so_far;
+//  ++_parts_so_far;
 
   const Article * article = _data.xover_add (
     nntp->_server, nntp->_group,
@@ -339,15 +369,15 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
     (header_is_nonencoded_utf8(author) ? author : header_to_utf8(author,fallback_charset).c_str()),
     time_posted, mid, ref, bytes, lines, xref);
 
-  if (article)
-    ++_articles_so_far;
+//  if (article)
+//    ++_articles_so_far;
 
   // emit a status update
-  uint64_t& prev = _last_xover_number[nntp];
-  increment_step (number - prev);
-  prev = number;
-  if (!(_parts_so_far % 500))
-    set_status_va (_("%s (%lu parts, %lu articles)"), _short_group_name.c_str(), _parts_so_far, _articles_so_far);
+//  uint64_t& prev = _last_xover_number[nntp];
+//  increment_step (number - prev);
+//  prev = number;
+//  if (!(_parts_so_far % 500))
+//    set_status_va (_("%s (%lu parts, %lu articles)"), _short_group_name.c_str(), _parts_so_far, _articles_so_far);
 
   // cleanup
   g_free (buf);
@@ -360,6 +390,18 @@ TaskXOver :: on_nntp_done (NNTP              * nntp,
 {
   update_work (true);
   check_in (nntp, health);
+
+  --_working;
+
+  if (_working == 0)
+  {
+      char buf[2048];
+      create_cachename(buf,2048,"headers");
+      _headers.close();
+      _headers.open(buf, std::ifstream::in);
+      while (_headers.getline(buf,2048))
+        on_nntp_line_process(nntp,StringView(buf));
+  }
 }
 
 void
