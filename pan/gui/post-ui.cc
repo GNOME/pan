@@ -1223,6 +1223,27 @@ PostUI :: open_draft ()
   gtk_widget_destroy (d);
 }
 
+void
+PostUI :: import_draft (const char* fn)
+{
+    std::cerr<<fn<<std::endl;
+
+    std::string txt;
+    if (file :: get_text_file_contents (fn, txt))
+    {
+      GMimeStream * stream = g_mime_stream_mem_new_with_buffer (txt.c_str(), txt.size());
+      GMimeParser * parser = g_mime_parser_new_with_stream (stream);
+      GMimeMessage * message = g_mime_parser_construct_message (parser);
+      if (message) {
+        set_message (message);
+        g_object_unref (G_OBJECT(message));
+      }
+      g_object_unref (G_OBJECT(parser));
+      g_object_unref (G_OBJECT(stream));
+    }
+    std::cerr<<txt<<std::endl;
+}
+
 namespace
 {
   bool ua_extra=false;
@@ -2018,11 +2039,11 @@ PostUI :: group_entry_changed_cb (GtkEditable*, gpointer ui_gpointer)
 gboolean
 PostUI :: body_changed_idle (gpointer ui_gpointer)
 {
-  std::cerr<<"body changed idle\n";
   PostUI * ui (static_cast<PostUI*>(ui_gpointer));
+  std::cerr<<"body changed idle "<<ui->_draft_autosave_timeout <<"\n";
 
   ui->_body_changed_idle_tag = 0;
-  ui->_draft_autosave_id = g_timeout_add_seconds( ui->_draft_autosave_timeout * 60, draft_save_cb, ui);
+  ui->_draft_autosave_id = g_timeout_add_seconds( ui->_draft_autosave_timeout, draft_save_cb, ui);
 
   return false;
 }
@@ -2662,16 +2683,14 @@ PostUI :: update_parts_tab()
 gboolean
 PostUI::draft_save_cb(gpointer ptr)
 {
-
-    std::cerr<<"auto-saving draft\n";
-
     PostUI *data = static_cast<PostUI*>(ptr);
 //    data->in_newsrc_cb = true;
     GMimeMessage * msg = data->new_message_from_ui (DRAFTING);
     std::string& draft_filename (get_draft_filename ());
-    const char* filename = draft_filename.c_str();
+    char * filename = g_build_filename (draft_filename.c_str(), "autosave", NULL);
 
-    errno = 0;
+    std::cerr<<"auto-saving draft "<<filename<<"\n";
+
     std::ofstream o (filename);
     char * pch = g_mime_object_to_string ((GMimeObject *) msg);
     o << pch;
@@ -2679,6 +2698,7 @@ PostUI::draft_save_cb(gpointer ptr)
 
     g_free (pch);
     g_object_unref (msg);
+    g_free(filename);
 //    data->in_newsrc_cb = false;
 
     data->_unchanged_body = data->get_body ();
@@ -2730,6 +2750,15 @@ PostUI :: PostUI (GtkWindow    * parent,
   /* init timer for autosave */
   set_draft_autosave_timeout( prefs.get_int("draft-autosave-timeout-min", 10 ));
   _draft_autosave_id = g_timeout_add_seconds( _draft_autosave_timeout * 60, draft_save_cb, this);
+
+  /* import old draft from autosave file */
+  struct stat sb;
+  char *buf = g_build_filename(get_draft_filename().c_str(), "autosave", NULL);
+  stat (buf, &sb);
+  std::cerr<<"importing file "<<buf<<" "<<sb.st_size<<" "<<stat (buf, &sb)<<std::endl;
+  if (stat (buf, &sb)==0)
+    import_draft(buf);
+  g_free(buf);
 
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != 0);

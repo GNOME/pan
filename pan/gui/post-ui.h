@@ -73,6 +73,7 @@ namespace pan
       void apply_profile ();
       void save_draft ();
       void open_draft ();
+      void import_draft (const char* fn);
       void prompt_for_charset ();
       void send_now ();
       void send_and_save_now ();
