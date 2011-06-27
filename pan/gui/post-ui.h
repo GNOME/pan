@@ -190,8 +190,14 @@ namespace pan
       static void body_widget_resized_cb (GtkWidget*, GtkAllocation*, gpointer);
 
     private:
-      unsigned long _group_entry_changed_id;
+
+      unsigned long _body_changed_id;
+      unsigned int _body_changed_idle_tag;
+      static gboolean body_changed_idle (gpointer);
+      static void body_changed_cb (GtkEditable*, gpointer);
+
       unsigned int _group_entry_changed_idle_tag;
+      unsigned long _group_entry_changed_id;
       static gboolean group_entry_changed_idle (gpointer);
       static void group_entry_changed_cb (GtkEditable*, gpointer);
 
@@ -226,6 +232,15 @@ namespace pan
       std::string get_domain(const StringView& mid);
       bool update_queue_mids (bool enable=true);
       bool update_queue_save_file ();
+
+    private:
+      guint _draft_autosave_id;
+      guint _draft_autosave_timeout;
+      static gboolean draft_save_cb(gpointer ptr);
+
+    public:
+      void set_draft_autosave_timeout(guint seconds)
+        { _draft_autosave_timeout = seconds;}
   };
 }
 

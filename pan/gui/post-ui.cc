@@ -2015,6 +2015,28 @@ PostUI :: group_entry_changed_cb (GtkEditable*, gpointer ui_gpointer)
     tag = g_timeout_add (2000, group_entry_changed_idle, ui);
 }
 
+gboolean
+PostUI :: body_changed_idle (gpointer ui_gpointer)
+{
+  std::cerr<<"body changed idle\n";
+  PostUI * ui (static_cast<PostUI*>(ui_gpointer));
+
+  ui->_body_changed_idle_tag = 0;
+  ui->_draft_autosave_id = g_timeout_add_seconds( ui->_draft_autosave_timeout * 60, draft_save_cb, ui);
+
+  return false;
+}
+
+void
+PostUI :: body_changed_cb (GtkEditable*, gpointer ui_gpointer)
+{
+  std::cerr<<"body changed cb\n";
+  PostUI * ui (static_cast<PostUI*>(ui_gpointer));
+  unsigned int& tag (ui->_body_changed_idle_tag);
+  if (!tag)
+    tag = g_timeout_add (2000, body_changed_idle, ui);
+}
+
 /***
 ****
 ***/
@@ -2122,7 +2144,7 @@ PostUI :: create_main_tab ()
 
   w = create_body_widget (_body_buf, _body_view, _prefs);
   set_spellcheck_enabled (_prefs.get_flag ("spellcheck-enabled", DEFAULT_SPELLCHECK_FLAG));
-
+  _body_changed_id = g_signal_connect (_body_buf, "changed", G_CALLBACK(body_changed_cb), this);
 
   GtkWidget * v = gtk_vbox_new (false, PAD);
   gtk_container_set_border_width (GTK_CONTAINER(v), PAD);
@@ -2637,6 +2659,33 @@ PostUI :: update_parts_tab()
   }
 }
 
+gboolean
+PostUI::draft_save_cb(gpointer ptr)
+{
+
+    std::cerr<<"auto-saving draft\n";
+
+    PostUI *data = static_cast<PostUI*>(ptr);
+//    data->in_newsrc_cb = true;
+    GMimeMessage * msg = data->new_message_from_ui (DRAFTING);
+    std::string& draft_filename (get_draft_filename ());
+    const char* filename = draft_filename.c_str();
+
+    errno = 0;
+    std::ofstream o (filename);
+    char * pch = g_mime_object_to_string ((GMimeObject *) msg);
+    o << pch;
+    o.close ();
+
+    g_free (pch);
+    g_object_unref (msg);
+//    data->in_newsrc_cb = false;
+
+    data->_unchanged_body = data->get_body ();
+    g_source_remove( data->_draft_autosave_id );
+    return FALSE;
+}
+
 PostUI :: PostUI (GtkWindow    * parent,
                   Data         & data,
                   Queue        & queue,
@@ -2669,10 +2718,18 @@ PostUI :: PostUI (GtkWindow    * parent,
   _file_queue_empty(true),
   _upload_ptr(0),
   _total_parts(0),
-  _running_uploads(0)
+  _running_uploads(0),
+  _draft_autosave_id(0),
+  _draft_autosave_timeout(0),
+  _body_changed_id(0),
+  _body_changed_idle_tag(0)
 {
 
   _upload_queue.add_listener (this);
+
+  /* init timer for autosave */
+  set_draft_autosave_timeout( prefs.get_int("draft-autosave-timeout-min", 10 ));
+  _draft_autosave_id = g_timeout_add_seconds( _draft_autosave_timeout * 60, draft_save_cb, this);
 
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != 0);

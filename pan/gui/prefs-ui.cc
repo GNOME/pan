@@ -464,8 +464,8 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("E_xpand all threads when entering group"), "expand-threads-when-entering-group", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
-  HIG::workarea_add_section_divider (t, &row);
-  HIG :: workarea_add_section_title (t, &row, _("Articles"));
+    HIG::workarea_add_section_divider (t, &row);
+    HIG :: workarea_add_section_title (t, &row, _("Articles"));
     HIG :: workarea_add_section_spacer (t, row, 4);
     w = new_check_button (_("Space selects next article rather than next unread"), "space-selects-next-article", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
@@ -473,8 +473,16 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Clear article cache on shutdown"), "clear-article-cache-on-shutdown", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
+    HIG::workarea_add_section_divider (t, &row);
     w = new_spin_button ("newsrc-autosave-timeout-min", 0, 60, prefs);
     l = gtk_label_new(_("Minutes to autosave newsrc files."));
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
+    HIG::workarea_add_row (t, &row, w, l);
+    HIG::workarea_add_section_divider (t, &row);
+    HIG :: workarea_add_section_title (t, &row, _("Article Drafts"));
+    w = new_spin_button ("draft-autosave-timeout-min", 0, 60, prefs);
+    l = gtk_label_new(_("Minutes to autosave the current Article Draft."));
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
     HIG::workarea_add_row (t, &row, w, l);
