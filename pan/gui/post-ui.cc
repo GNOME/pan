@@ -1379,10 +1379,6 @@ PostUI :: new_message_from_ui (Mode mode)
   }
   GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   g_object_unref (stream);
-  /* NOTE (imhotep): Text gets ignored when posting binary data, ATM.
-   * Perhaps this could be changed but I don't really care right now. It would be the same message for all binary files
-   * anyway, so this would be kind of useless...
-   */
   GMimePart * part = g_mime_part_new ();
   pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
 
@@ -1900,7 +1896,6 @@ PostUI :: set_message (GMimeMessage * message)
 
   // update subject, newsgroups, to fields
   std::string s = utf8ize (g_mime_message_get_subject (message));
-  std::cerr<<"subject : "<<s<<std::endl;
   gtk_entry_set_text (GTK_ENTRY(_subject_entry), s.c_str());
 
   s = utf8ize (g_mime_object_get_header ((GMimeObject *) message, "Newsgroups"));
@@ -2050,7 +2045,6 @@ gboolean
 PostUI :: body_changed_idle (gpointer ui_gpointer)
 {
   PostUI * ui (static_cast<PostUI*>(ui_gpointer));
-  std::cerr<<"body changed idle "<<ui->_draft_autosave_timeout <<"\n";
 
   ui->_body_changed_idle_tag = 0;
   unsigned int& tag (ui->_draft_autosave_idle_tag);
@@ -2063,7 +2057,6 @@ PostUI :: body_changed_idle (gpointer ui_gpointer)
 void
 PostUI :: body_changed_cb (GtkEditable*, gpointer ui_gpointer)
 {
-  std::cerr<<"body changed cb\n";
   PostUI * ui (static_cast<PostUI*>(ui_gpointer));
   unsigned int& tag (ui->_body_changed_idle_tag);
   if (!tag)
@@ -2708,8 +2701,6 @@ PostUI::draft_save_cb(gpointer ptr)
     std::string& draft_filename (get_draft_filename ());
     char * filename = g_build_filename (draft_filename.c_str(), "autosave", NULL);
 
-    std::cerr<<"auto-saving draft "<<filename<<"\n";
-
     std::ofstream o (filename);
     char * pch = g_mime_object_to_string ((GMimeObject *) msg);
     o << pch;
@@ -2913,6 +2904,12 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
       ui.domain = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
+
+    // fill in message text
+    // NOTE: message text is saved on taskupload constructor, and doesn't change thereafter
+    // that means that if the user makes changes on the body buffer, they don't reflect in
+    // the upload!!
+    ui.buf = get_body ();
 
     for (; cur; cur = cur->next)
 	{

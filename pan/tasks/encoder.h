@@ -73,6 +73,7 @@ namespace pan
                     std::string                     & format,
                     std::string                       global_mid,
                     int                               lpf,
+                    std::string                       buf,
                     const TaskUpload::EncodeMode    & enc = TaskUpload::YENC);
 
     public:
@@ -98,6 +99,7 @@ namespace pan
       std::string global_mid;
       Article * article;
       MTRand mtrand;
+      std::string buffer;
 
       void generate_unique_id (StringView& mid, int cnt, std::string& s);
 

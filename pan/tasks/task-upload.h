@@ -52,8 +52,9 @@ namespace pan
       struct UploadInfo
       {
         bool comment1;
-        std::string    domain;
-        std::string    save_file;
+        std::string  domain;
+        std::string  save_file;
+        std::string  buf;
         int lpf;
       };
 

@@ -237,25 +237,25 @@ int	UUEXPORT UUEncodeToFile		_ANSI_ARGS_((FILE *, char *, int,
 int	UUEXPORT UUE_PrepSingle		_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, int,
-						     char *, char *, char*, char*, char*,
+						     char *, char *, char*, char*, char*, char*,
 						     char *, int));
 int	UUEXPORT UUE_PrepPartial	_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, int,
 						     int, long, long,
-						     char *, char *, char*, char*, char*, char*, int));
+						     char *, char *, char*, char*, char*, char*, char*, int));
 
 int	UUEXPORT UUE_PrepSingleExt	_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, int,
 						     char *, char *,
-						     char *, char *, char*, char*, char*,
+						     char *, char *, char*, char*, char*, char*,
 						     int));
 int	UUEXPORT UUE_PrepPartialExt	_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, int,
 						     int, long, long, char *, char*,
-						     char *, char *, char *,char*, char*,
+						     char *, char *, char *,char*, char*, char*,
 						     int));
 #ifdef __cplusplus
 }

@@ -1491,13 +1491,13 @@ UUE_PrepSingle (FILE *outfile, FILE *infile,
 		char *infname, int encoding,
 		char *outfname, int filemode,
 		char *destination, char *from,
-		char *subject, char* mid, char* format, char* agent, int isemail)
+		char *subject, char* mid, char* format, char* agent, char* buffer, int isemail)
 {
   return UUE_PrepSingleExt (outfile, infile,
 			    infname, encoding,
 			    outfname, filemode,
 			    destination, from,
-			    subject, mid, NULL, format, agent,
+			    subject, mid, NULL, format, agent, buffer,
 			    isemail);
 }
 
@@ -1506,7 +1506,7 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 		   char *infname, int encoding,
 		   char *outfname, int filemode,
 		   char *destination, char *from,
-		   char *subject, char* mid, char *replyto, char* format, char* agent,
+		   char *subject, char* mid, char *replyto, char* format, char* agent, char* buffer,
 		   int isemail)
 {
   mimemap *miter=mimetable;
@@ -1597,6 +1597,10 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 
   fprintf (outfile, "%s", eolstring);
 
+  // pan change (imhotep) : add preamble text
+  if (buffer)
+    fprintf (outfile, "%s%s%s%s", eolstring, buffer, eolstring, eolstring);
+
   res = UUEncodeToStream (outfile, infile, infname, encoding,
 			  outfname, filemode);
 
@@ -1609,7 +1613,7 @@ UUE_PrepPartial (FILE *outfile, FILE *infile,
 		 char *infname, int encoding,
 		 char *outfname, int filemode,
 		 int partno, long linperfile, long filesize,
-		 char *destination, char *from, char *subject, char* mid, char* format, char* agent,
+		 char *destination, char *from, char *subject, char* mid, char* format, char* agent, char* buffer,
 		 int isemail)
 {
   return UUE_PrepPartialExt (outfile, infile,
@@ -1617,7 +1621,7 @@ UUE_PrepPartial (FILE *outfile, FILE *infile,
 			     outfname, filemode,
 			     partno, linperfile, filesize,
 			     destination,
-			     from, subject, mid, NULL, format, agent,
+			     from, subject, mid, NULL, format, agent, buffer,
 			     isemail);
 }
 
@@ -1627,7 +1631,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
 		    char *outfname, int filemode,
 		    int partno, long linperfile, long filesize,
 		    char *destination,
-		    char *from, char *subject, char* mid, char *replyto, char* format, char* agent,
+		    char *from, char *subject, char* mid, char *replyto, char* format, char* agent, char* buffer,
 		    int isemail)
 {
   static int numparts, themode;
@@ -1721,7 +1725,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
       if (infile==NULL) fclose (theifile);
       return UUE_PrepSingleExt (outfile, infile, infname, encoding,
 				outfname, filemode, destination,
-				from, subject, mid, replyto, format, agent, isemail);
+				from, subject, mid, replyto, format, agent, buffer, isemail);
     }
 
     /*
@@ -1796,6 +1800,10 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
   }
 
   fprintf (outfile, "%s", eolstring);
+
+  // pan change (imhotep) : add preamble text
+  if (buffer)
+    fprintf (outfile, "%s%s%s%s", eolstring, buffer, eolstring, eolstring);
 
   res = UUEncodePartial (outfile, theifile,
 			 infname, encoding,

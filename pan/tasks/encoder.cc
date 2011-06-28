@@ -99,6 +99,7 @@ Encoder :: enqueue (TaskUpload                      * task,
                     std::string                     & format,
                     std::string                       global_mid,
                     int                               lpf,
+                    std::string                       buf,
                     const TaskUpload::EncodeMode    & enc)
 
 {
@@ -118,6 +119,7 @@ Encoder :: enqueue (TaskUpload                      * task,
   this->article = article;
   this->format = format;
   this->lpf = lpf;
+  this->buffer = buf;
 
   percent = 0;
   current_file.clear ();
@@ -175,11 +177,12 @@ Encoder :: do_work()
         StringView mid(global_mid);
         if (!global_mid.empty())
           generate_unique_id(mid, cnt, s);
+        std::cerr<<"buffer encode "<<(char*)buffer.c_str()<<std::endl;
         res = UUE_PrepPartial (fp, NULL, (char*)filename.c_str(),YENC_ENCODED,
                                (char*)basename.c_str(),0644, cnt, lpf,
-                               0, (char*)groups.c_str(),
-                               (char*)author.c_str(),
-                               (char*)subject.c_str(), s.empty() ? NULL : (char*)s.c_str(), (char*)format.c_str(), agent.empty() ? NULL : (char*)agent.c_str(), 0);
+                               0, (char*)groups.c_str(), (char*)author.c_str(),
+                               (char*)subject.c_str(), s.empty() ? NULL : (char*)s.c_str(), (char*)format.c_str(),
+                               agent.empty() ? NULL : (char*)agent.c_str(), (char*)buffer.c_str(), 0);
 
         if (fp) fclose(fp);
         if (res != UURET_CONT && res != UURET_OK) break;
@@ -191,8 +194,6 @@ Encoder :: do_work()
         batch.add_part(cnt, StringView(s), 0);//sb.st_size);
         if (res != UURET_CONT) break;
       }
-
-      std::cerr<<"debug "<<needed->size()<<" "<<cnt<<std::endl;
 
       if (res != UURET_OK && res != UURET_CONT)
       {
