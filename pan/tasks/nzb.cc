@@ -192,12 +192,14 @@ namespace
         mc.a.xref.insert (mc.server, *git, 0);
       ///TODO export/import missing values to/from nzb
       TaskUpload::UploadInfo format;
-      format.domain = mc.domain;
+//      format.domain = mc.domain;
       format.comment1 = true;
       format.lpf = mc.lpf;
-      TaskUpload* tmp = new TaskUpload (mc.path, mc.server, mc.encode_cache,mc.a,
-                                        format, mc.needed_parts, 0, TaskUpload::YENC);
-      mc.tasks.push_back (tmp);
+
+///TODO implement gmimemessage here
+//      TaskUpload* tmp = new TaskUpload (mc.path, mc.server, mc.encode_cache,mc.a,
+//                                        format, mc.needed_parts, 0, TaskUpload::YENC);
+//      mc.tasks.push_back (tmp);
     }
   }
 

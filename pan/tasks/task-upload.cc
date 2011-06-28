@@ -62,24 +62,6 @@ namespace
     g_free(freeme);
     return buf;
   }
-
-  const char * get_user_agent () //from post-ui.cc
-  {
-      return "Pan/" PACKAGE_VERSION " (" VERSION_TITLE "; " GIT_REV ")";
-  }
-}
-
-std::string
-TaskUpload :: get_domain(const StringView& mid)
-{
-  const char * pch = mid.strchr ('@');
-  StringView domain;
-  if (pch) domain = mid.substr (pch+1, NULL);
-  if (pch) pch = domain.strchr ('>');
-  if (pch) domain = domain.substr (NULL, pch);
-  domain.trim ();
-
-  return domain.to_string();
 }
 
 /***
@@ -92,6 +74,7 @@ TaskUpload :: TaskUpload (const std::string         & filename,
                           Article                     article,
                           UploadInfo                  format,
                           needed_t                  & imported,
+                          GMimeMessage *              msg,
                           Progress::Listener        * listener,
                           const TaskUpload::EncodeMode  enc):
   Task ("UPLOAD", get_description(filename.c_str())),
@@ -108,14 +91,14 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _all_bytes(0),
   _format(format),
   _save_file(format.save_file),
-  _agent(get_user_agent()),
+  _lpf(format.lpf),
   _queue_pos(0),
-  _lpf(format.lpf)
+  _msg (msg)
 {
 
-    std::cerr<<"body : "<<format.buf<<std::endl;
-
-  if (!format.domain.empty())  _domain = get_domain(StringView(format.domain)) ;
+//    char * pch = g_mime_object_to_string ((GMimeObject *) _msg);
+//    std::cerr<<"gmimemessage:\n"<<pch<<std::endl;
+//    g_free(pch);
 
   if (!imported.empty())
     foreach (needed_t, imported, nit)
@@ -133,8 +116,6 @@ void
 TaskUpload :: build_needed_tasks(bool imported)
 {
 
-  _total_parts = std::max(1, (int) (((long)get_byte_count() + (_lpf*YENC_HALF_LINE_LEN-1)) /
-                        (_lpf*YENC_HALF_LINE_LEN)));
   quarks_t groups;
   foreach_const (Xref, _article.xref, it)
     _groups.insert (it->group);
@@ -146,6 +127,8 @@ TaskUpload :: build_needed_tasks(bool imported)
   }
   _cache.reserve(_mids);
   _needed_parts = _needed.size();
+  //dbg
+  _total_parts = _needed_parts;
 }
 
 void
@@ -160,20 +143,26 @@ TaskUpload :: update_work (NNTP* checkin_pending)
       ++working;
   }
 
+  /* only need encode if mode is NOT plain */
   if (!_encoder && !_encoder_has_run)
   {
+    std::cerr<<"need encoder\n";
     _state.set_need_encoder();
   }
   else if(working)
   {
+      std::cerr<<"working\n";
     _state.set_working();
   }
   else if (_encoder_has_run && !_needed.empty())
   {
+      std::cerr<<"need nntp\n";
     _state.set_need_nntp(_server);
   }
   else if (_needed.empty())
   {
+
+      std::cerr<<"completed\n";
     _state.set_completed();
     set_finished(_queue_pos);
   }
@@ -182,6 +171,34 @@ TaskUpload :: update_work (NNTP* checkin_pending)
 /***
 ****
 ***/
+
+namespace
+{
+    void pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
+    {
+        g_mime_object_append_header ((GMimeObject *) msg, "Message-ID", mid);
+        char * bracketed = g_strdup_printf ("<%s>", mid);
+        g_mime_header_list_set (GMIME_OBJECT(msg)->headers, "Message-ID", bracketed);
+        g_free (bracketed);
+    }
+
+    void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d)
+    {
+        std::stringstream out;
+
+        //add headers to gmimemessage
+        if (!n->mid.empty()) pan_g_mime_message_set_message_id (msg, n->mid.c_str());
+
+        //extract body from gmimemessage
+        gboolean unused;
+        char * body (g_mime_object_to_string ((GMimeObject *) msg));
+        out<< body<<"\r\n";
+        std::cerr<<"message:\n"<<out.str()<<std::endl;
+        out<<d;
+        d = out.str();
+        std::cerr<<"message:\n"<<out.str()<<std::endl;
+    }
+}
 
 void
 TaskUpload :: use_nntp (NNTP * nntp)
@@ -210,6 +227,7 @@ TaskUpload :: use_nntp (NNTP * nntp)
 
     std::string data;
     _cache.get_data(data,needed->message_id.c_str());
+    prepend_headers(_msg,needed, data);
     nntp->post(StringView(data), this);
     update_work ();
   }
@@ -234,6 +252,8 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   Log::Entry tmp;
   tmp.date = time(NULL);
   tmp.is_child = true;
+
+  std::cerr<<"nntp done : "<<response<<std::endl;
 
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
@@ -358,15 +378,14 @@ TaskUpload :: use_encoder (Encoder* encoder)
     groups += (*it).to_string();
   }
 
-  /* build format string */
+  /* build format string for yEnc */
   std::stringstream format_s;
   format_s << (_format.comment1 ? _subject : "");
   format_s << (_format.comment1 ? " - " : "");
   format_s << "\"%s\""; // will be filled in by uuencode
   format_s << " (%d/%d) yEnc";     // will be filled in by uuencode
   std::string format(format_s.str());
-  _encoder->enqueue (this, &_cache, &_article, _filename, _basename,
-                     groups, _subject, _author, _agent, format, _domain, _lpf, _format.buf, YENC);
+  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _lpf, YENC);//_encode_mode);
   debug ("encoder thread was free, enqueued work");
 }
 
@@ -421,6 +440,8 @@ TaskUpload :: ~TaskUpload ()
   // ensure our on_worker_done() doesn't get called after we're dead
   if (_encoder)
       _encoder->cancel_silently();
+
+  g_object_unref (G_OBJECT(_msg));
 
   _cache.release(_mids);
   _cache.resize();

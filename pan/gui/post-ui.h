@@ -29,6 +29,8 @@
 #include <pan/data/encode-cache.h>
 #include "group-prefs.h"
 
+#include <pan/usenet-utils/MersenneTwister.h>
+
 namespace pan
 {
   class Profiles;
@@ -233,6 +235,9 @@ namespace pan
       std::string get_domain(const StringView& mid);
       bool update_queue_mids (bool enable=true);
       bool update_queue_save_file ();
+
+      void generate_unique_id (StringView& mid, int cnt, std::string& s);
+      MTRand mtrand;
 
     private:
       guint _draft_autosave_id;

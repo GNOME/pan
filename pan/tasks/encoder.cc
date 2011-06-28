@@ -44,33 +44,6 @@ extern "C" {
 using namespace pan;
 
 
-/** generates a unique message-id for a usenet post, consisting of
- *  the current date and time (in seconds resolution) and three random numbers + part count
- */
-void
-Encoder :: generate_unique_id (StringView& mid, int cnt, std::string& s)
-{
-
-  std::stringstream out;
-  struct stat sb;
-  struct timeval tv;
-  const time_t now (time(NULL));
-  struct tm local_now = *gmtime (&now);
-  char buf[64];
-  std::strftime (buf, sizeof(buf), "%Y%m%d%H%M%S", &local_now);
-  out << "pan$";
-  gettimeofday (&tv, NULL);
-  out << buf << "$" << std::hex << tv.tv_usec << "$" << std::hex
-      << mtrand.randInt() << "$" << std::hex << mtrand.randInt() << "$"
-      << std::hex << mtrand.randInt() << "$" << std::hex << cnt;
-  // delimit
-  out<< '@';
-  // add domain
-  out << mid;
-  //std::cerr << "rng : "<<out.str()<<std::endl;
-  s = out.str();
-}
-
 Encoder :: Encoder (WorkerPool& pool):
   _worker_pool (pool),
   _gsourceid (-1)
@@ -92,14 +65,7 @@ Encoder :: enqueue (TaskUpload                      * task,
                     Article                         * article,
                     std::string                     & filename,
                     std::string                     & basename,
-                    std::string                     & groups,
-                    std::string                     & subject,
-                    std::string                     & author,
-                    std::string                     & agent,
-                    std::string                     & format,
-                    std::string                       global_mid,
                     int                               lpf,
-                    std::string                       buf,
                     const TaskUpload::EncodeMode    & enc)
 
 {
@@ -109,25 +75,15 @@ Encoder :: enqueue (TaskUpload                      * task,
   this->basename = basename;
   this->filename = filename;
   this->encode_mode = encode_mode;
-  this->groups = groups;
-  this->subject = subject;
-  this->author = author;
-  this->agent = agent;
   this->needed = &task->_needed;
-  this->global_mid = global_mid;
   this->cache = cache;
   this->article = article;
-  this->format = format;
   this->lpf = lpf;
-  this->buffer = buf;
 
   percent = 0;
   current_file.clear ();
   log_infos.clear();
   log_errors.clear();
-
-  // I don't know if this is bad, but practically, a new seed for every encoder (e.g. task) shouldn't be too much.
-  mtrand.seed();
 
   // gentlemen, start your encod'n...
   _worker_pool.push_work (this, task, false);
@@ -145,7 +101,7 @@ Encoder :: do_work()
   std::string s;
   FILE* outfile, * infile ;
 
-  enable_progress_update();
+    enable_progress_update();
 
     int res;
     if (((res = UUInitialize())) != UURET_OK)
@@ -156,15 +112,18 @@ Encoder :: do_work()
       UUSetBusyCallback (this, uu_busy_poll, 200);
 
       PartBatch batch;
-      batch.init(StringView(basename), needed->size(), 0);
+      char cachename[4096];
       int cnt(1);
       Article* tmp = article;
 
-      /* build real subject line */
-      g_snprintf(buf, sizeof(buf), "\"%s\" - %s (/%03d)", basename.c_str(), subject.c_str(), (int)needed->size());
+      batch.init(StringView(basename), needed->size(), 0);
+
+      /* build real subject line for article*/
+      ///TODO should this be here??
+      g_snprintf(buf, sizeof(buf), "\"%s\" - %s (/%03d)", basename.c_str(), article->subject.to_string().c_str(), (int)needed->size());
       tmp->subject = buf;
 
-      char cachename[4096];
+
       for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
       {
         FILE * fp = cache->get_fp_from_mid(it->second.message_id);
@@ -174,15 +133,9 @@ Encoder :: do_work()
           log_errors.push_back(buf); // log error
           continue;
         }
-        StringView mid(global_mid);
-        if (!global_mid.empty())
-          generate_unique_id(mid, cnt, s);
-        std::cerr<<"buffer encode "<<(char*)buffer.c_str()<<std::endl;
-        res = UUE_PrepPartial (fp, NULL, (char*)filename.c_str(),YENC_ENCODED,
-                               (char*)basename.c_str(),0644, cnt, lpf,
-                               0, (char*)groups.c_str(), (char*)author.c_str(),
-                               (char*)subject.c_str(), s.empty() ? NULL : (char*)s.c_str(), (char*)format.c_str(),
-                               agent.empty() ? NULL : (char*)agent.c_str(), (char*)buffer.c_str(), 0);
+
+        crc32_t crc;
+        res = UUEncodePartial (fp, NULL, (char*)filename.c_str(),YENC_ENCODED, (char*)basename.c_str(), NULL, 0644, cnt, lpf,&crc);
 
         if (fp) fclose(fp);
         if (res != UURET_CONT && res != UURET_OK) break;
@@ -191,6 +144,7 @@ Encoder :: do_work()
         stat (cachename, &sb);
         it->second.bytes  = sb.st_size;
         task->_all_bytes += sb.st_size;
+        //dbg
         batch.add_part(cnt, StringView(s), 0);//sb.st_size);
         if (res != UURET_CONT) break;
       }
@@ -213,6 +167,7 @@ Encoder :: do_work()
     UUCleanUp ();
     }
   disable_progress_update();
+
 }
 
 /***

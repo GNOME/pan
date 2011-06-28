@@ -26,6 +26,7 @@ extern "C" {
   #include <gmime/gmime.h>
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
+  #include <sys/time.h>
 #ifdef HAVE_GTKSPELL
   #include <gtkspell/gtkspell.h>
 #endif
@@ -62,6 +63,33 @@ using namespace pan;
 #define USER_AGENT_PREFS_KEY "add-user-agent-header-when-posting"
 #define MESSAGE_ID_PREFS_KEY "add-message-id-header-when-posting"
 #define USER_AGENT_EXTRA_PREFS_KEY "user-agent-extra-info"
+
+/** generates a unique message-id for a usenet post, consisting of
+ *  the current date and time (in seconds resolution) and three random numbers + part count
+ */
+void
+PostUI :: generate_unique_id (StringView& mid, int cnt, std::string& s)
+{
+
+  std::stringstream out;
+  struct stat sb;
+  struct timeval tv;
+  const time_t now (time(NULL));
+  struct tm local_now = *gmtime (&now);
+  char buf[64];
+  std::strftime (buf, sizeof(buf), "%Y%m%d%H%M%S", &local_now);
+  out << "pan$";
+  gettimeofday (&tv, NULL);
+  out << buf << "$" << std::hex << tv.tv_usec << "$" << std::hex
+      << mtrand.randInt() << "$" << std::hex << mtrand.randInt() << "$"
+      << std::hex << mtrand.randInt() << "$" << std::hex << cnt;
+  // delimit
+  out<< '@';
+  // add domain
+  out << mid;
+  //std::cerr << "rng : "<<out.str()<<std::endl;
+  s = out.str();
+}
 
 namespace
 {
@@ -2756,6 +2784,8 @@ PostUI :: PostUI (GtkWindow    * parent,
   _body_changed_idle_tag(0)
 {
 
+  mtrand.seed();
+
   _upload_queue.add_listener (this);
 
   /* init timer for autosave */
@@ -2846,10 +2876,10 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
   struct stat sb;
 
   const Profile profile (get_current_profile ());
-  GMimeMessage * message (new_message_from_ui (POSTING));
-  if (!check_message(profile.posting_server, message, true))
+  GMimeMessage * tmp (new_message_from_ui (POSTING));
+  if (!check_message(profile.posting_server, tmp, true))
   {
-    g_object_unref (G_OBJECT(message));
+    g_object_unref (G_OBJECT(tmp));
     return;
   }
 
@@ -2869,88 +2899,82 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 
 	const int response (gtk_dialog_run (GTK_DIALOG(w)));
 	if (response == GTK_RESPONSE_ACCEPT) {
-		GSList * tmp_list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER (w));
+
+        GSList * tmp_list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER (w));
+        gtk_widget_destroy (w);
+
+        TaskUpload::UploadInfo ui;
+        ui.comment1 = _prefs.get_flag("upload-queue-append-subject-enabled",false);
+        // query lines per file value
+        ui.lpf = _prefs.get_int("upload-option-lpf",4000);
+
+        // generate domain name for upload if the flag is set
+        bool custom_mid(_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false));
+        std::string d;
+        if (custom_mid)
+          d = !profile.fqdn.empty()
+          ? GNKSA::generate_message_id (profile.fqdn)
+          : GNKSA::generate_message_id_from_email_address (profile.address);
+        StringView domain(d);
+
+        GSList * cur = g_slist_nth (tmp_list,0);
+        for (; cur; cur = cur->next)
+        {
+          GMimeMessage * msg (new_message_from_ui (POSTING));
+
+          //for nzb handling
+          Article a;
+          a.subject = utf8ize (g_mime_message_get_subject (msg));
+          std::string s;
+          profile.get_from_header(s);
+          a.author = s;
+
+          stat ((const char*)cur->data,&sb);
+          int lpf = _prefs.get_int("upload-option-lpf",4000);
+          int total = std::max(1, (int) (((long)sb.st_size + (lpf*YENC_HALF_LINE_LEN-1)) /
+                              (lpf*YENC_HALF_LINE_LEN)));
 
 
-		GSList * cur = g_slist_nth (tmp_list,0);
-    GMimeMessage* msg = message;
-    gtk_widget_destroy (w);
+          char* basename = g_path_get_basename((const char*)cur->data);
 
-    char * tmp;
-    tmp = (char*)g_mime_object_get_header ((GMimeObject*)msg, "Subject");
-    std::string subject= std::string(tmp ? tmp : "");
+          // build needed parts
+          TaskUpload::needed_t import;
+          TaskUpload::Needed n;
+///TODO for nzb.cc
+//          foreach_const (quarks_t, groups, git)
+//             a.xref.insert (profile.posting_server, *git,0);
 
-    std::string author;
-    profile.get_from_header (author);
+          for (int i = 1; i <= total; ++i)
+          {
+            if (custom_mid)
+            {
+                std::string out;
+                generate_unique_id(domain, i,out);
+                n.mid = out;
+            }
 
-    quarks_t groups;
-    char * text = (char*)gtk_entry_get_text (GTK_ENTRY(_groups_entry));
-    StringView line(text), groupname;
-    while (line.pop_token (groupname, ',')) {
-      groupname.trim ();
-      if (!groupname.empty())
-        groups.insert(groupname);
-    }
+            g_snprintf(buf,sizeof(buf),"%s.%d", basename, i);
+            n.message_id = buf;
+            n.partno = i;
+            import.insert(std::pair<int,TaskUpload::Needed>(i,n));
+          }
+          g_free(basename);
 
-    TaskUpload::UploadInfo ui;
-    ui.comment1 = _prefs.get_flag("upload-queue-append-subject-enabled",false);
-
-    // query lines per file value
-    ui.lpf = _prefs.get_int("upload-option-lpf",4000);
-
-    // generate domain name for upload if the flag is set
-    bool custom_mid(_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false));
-    if (custom_mid)
-      ui.domain = !profile.fqdn.empty()
-      ? GNKSA::generate_message_id (profile.fqdn)
-      : GNKSA::generate_message_id_from_email_address (profile.address);
-
-    // fill in message text
-    // NOTE: message text is saved on taskupload constructor, and doesn't change thereafter
-    // that means that if the user makes changes on the body buffer, they don't reflect in
-    // the upload!!
-    ui.buf = get_body ();
-
-    for (; cur; cur = cur->next)
-	{
-	  Article a;
-	  a.subject = subject;
-	  a.author = author;
-      stat ((const char*)cur->data,&sb);
-      int lpf = _prefs.get_int("upload-option-lpf",4000);
-      int total = std::max(1, (int) (((long)sb.st_size + (lpf*YENC_HALF_LINE_LEN-1)) /
-                          (lpf*YENC_HALF_LINE_LEN)));
-
-      char* basename = g_path_get_basename((const char*)cur->data);
-      TaskUpload::needed_t import;
-      TaskUpload::Needed n;
-      foreach_const (quarks_t, groups, git)
-         a.xref.insert (profile.posting_server, *git,0);
-
-      for (int i = 1; i <= total; ++i)
-      {
-        g_snprintf(buf,sizeof(buf),"%s.%d", basename, i);
-        n.message_id = buf;
-        n.partno = i;
-        import.insert(std::pair<int,TaskUpload::Needed>(i,n));
-      }
-      g_free(basename);
-
-      foreach_const (quarks_t, groups, git)
-        a.xref.insert (profile.posting_server, *git,0);
-
-		  TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
-                        profile.posting_server, _cache,
-                        a, ui, import, 0, TaskUpload::YENC);
-      _upload_queue.add_task(tmp);
-	}
+              TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
+                            profile.posting_server, _cache,
+                            ///TODO implement custom encode mode options
+                            a, ui, import, msg,0, TaskUpload::YENC);
+          _upload_queue.add_task(tmp);
+        }
 
     if (_file_queue_empty) _file_queue_empty= false;
-
     g_slist_free (tmp_list);
+
   } else
+
     gtk_widget_destroy (w);
-  g_object_unref (G_OBJECT(message));
+
+  g_object_unref (G_OBJECT(tmp));
 
 }
 
@@ -2996,5 +3020,4 @@ PostUI :: prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs
 
   gtk_widget_destroy (w);
   return path;
-
 }

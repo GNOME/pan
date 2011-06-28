@@ -1686,6 +1686,9 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
     }
     else {
       if (fstat (fileno (infile), &finfo) != 0) {
+
+	printf("debug: %lu %lu\n",((long)finfo.st_size+(linperfile*bpl[encoding]-1)), linperfile*bpl[encoding]);
+
 	if (filesize <= 0) {
 	  UUMessage (uuencode_id, __LINE__, UUMSG_WARNING,
 		     uustring (S_STAT_ONE_PART));

@@ -33,6 +33,12 @@
 #include <pan/data/xref.h>
 #include <pan/tasks/nntp.h>
 #include <pan/tasks/task.h>
+
+extern "C" {
+#define PROTOTYPES
+#include <uulib/uudeview.h>
+};
+
 #include <set>
 
 namespace pan
@@ -52,9 +58,8 @@ namespace pan
       struct UploadInfo
       {
         bool comment1;
-        std::string  domain;
         std::string  save_file;
-        std::string  buf;
+        std::string  mid;
         int lpf;
       };
 
@@ -67,6 +72,7 @@ namespace pan
         int partno;
         NNTP* nntp;
         std::string message_id;
+        std::string mid; // for rng
         Xref xref;
         bool encoded;
         Needed (): nntp(0), bytes(0) , partno(1), encoded(false) {}
@@ -77,9 +83,13 @@ namespace pan
 
       enum EncodeMode
       {
-        YENC = 0,
-        BASE64,
-        PLAIN
+        UUENC = UU_ENCODED,
+        YENC = YENC_ENCODED,
+        BASE64 = B64ENCODED,
+        PLAIN = PT_ENCODED,
+        XXENC = XX_ENCODED,
+        QPENC = QP_ENCODED,
+        BHENC = BH_ENCODED
       };
 
       // life cycle
@@ -89,6 +99,7 @@ namespace pan
                    Article                     article,
                    UploadInfo                  format,
                    needed_t                  & imported,
+                   GMimeMessage *              msg,
                    Progress::Listener        * listener= 0,
                    TaskUpload::EncodeMode enc= YENC);
 
@@ -155,7 +166,7 @@ namespace pan
       void update_work (NNTP * checkin_pending = 0);
       void build_needed_tasks(bool);
 
-      std::string get_domain(const StringView&);
+      GMimeMessage * _msg;
 
   };
 }

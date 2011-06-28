@@ -31,7 +31,6 @@
 #include <pan/general/locking.h>
 #include <pan/general/worker-pool.h>
 #include <pan/tasks/task-upload.h>
-#include <pan/usenet-utils/MersenneTwister.h>
 
 extern "C" {
 #  define PROTOTYPES
@@ -66,14 +65,7 @@ namespace pan
                     Article                         * article,
                     std::string                     & filename,
                     std::string                     & basename,
-                    std::string                     & groups,
-                    std::string                     & subject,
-                    std::string                     & author,
-                    std::string                     & agent,
-                    std::string                     & format,
-                    std::string                       global_mid,
                     int                               lpf,
-                    std::string                       buf,
                     const TaskUpload::EncodeMode    & enc = TaskUpload::YENC);
 
     public:
@@ -92,16 +84,10 @@ namespace pan
       TaskUpload * task;
       TaskUpload::EncodeMode encode_mode;
       std::string   basename, filename;
-      std::string subject, author, groups, mid, format, agent;
       int lpf;
       EncodeCache * cache;
       TaskUpload::needed_t * needed;
-      std::string global_mid;
       Article * article;
-      MTRand mtrand;
-      std::string buffer;
-
-      void generate_unique_id (StringView& mid, int cnt, std::string& s);
 
       // These are set in the worker thread and polled in the main thread.
       Mutex mut;
