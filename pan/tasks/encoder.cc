@@ -102,17 +102,6 @@ Encoder :: enqueue (TaskUpload                      * task,
                     const TaskUpload::EncodeMode    & enc)
 
 {
-
-
-//  if (needed->size() == 0)
-//  {
-//    char buf[2048];
-//    g_snprintf(buf, 2048, _("Error encoding %s: No parts selected to post"), basename.c_str());
-//    log_errors.clear();
-//    log_errors.push_back(buf); // log error
-//    return;
-//  }
-
   disable_progress_update ();
 
   this->task = task;

@@ -161,13 +161,16 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   if (!_encoder && !_encoder_has_run)
   {
     _state.set_need_encoder();
-  } else if(working)
+  }
+  else if(working)
   {
     _state.set_working();
-  } else if (_encoder_has_run && !_needed.empty())
+  }
+  else if (_encoder_has_run && !_needed.empty())
   {
     _state.set_need_nntp(_server);
-  } else if (_needed.empty())
+  }
+  else if (_needed.empty())
   {
     _state.set_completed();
     set_finished(_queue_pos);
