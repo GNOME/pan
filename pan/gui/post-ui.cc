@@ -1226,10 +1226,11 @@ PostUI :: open_draft ()
 void
 PostUI :: import_draft (const char* fn)
 {
-    std::cerr<<fn<<std::endl;
+    std::string& draft_filename (get_draft_filename ());
+    char * draft = g_build_filename (draft_filename.c_str(), "autosave", NULL);
 
     std::string txt;
-    if (file :: get_text_file_contents (fn, txt))
+    if (file :: get_text_file_contents (draft, txt))
     {
       GMimeStream * stream = g_mime_stream_mem_new_with_buffer (txt.c_str(), txt.size());
       GMimeParser * parser = g_mime_parser_new_with_stream (stream);
@@ -1241,7 +1242,7 @@ PostUI :: import_draft (const char* fn)
       g_object_unref (G_OBJECT(parser));
       g_object_unref (G_OBJECT(stream));
     }
-    std::cerr<<txt<<std::endl;
+    g_free (draft);
 }
 
 namespace
@@ -1305,7 +1306,7 @@ PostUI :: new_message_from_ui (Mode mode)
 
   // headers from the ui: Subject
   const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
-  g_mime_message_set_subject (msg, cpch);
+  if (cpch) g_mime_message_set_subject (msg, cpch);
 
   // headers from the ui: To
   const StringView to (gtk_entry_get_text (GTK_ENTRY(_to_entry)));
@@ -1899,6 +1900,7 @@ PostUI :: set_message (GMimeMessage * message)
 
   // update subject, newsgroups, to fields
   std::string s = utf8ize (g_mime_message_get_subject (message));
+  std::cerr<<"subject : "<<s<<std::endl;
   gtk_entry_set_text (GTK_ENTRY(_subject_entry), s.c_str());
 
   s = utf8ize (g_mime_object_get_header ((GMimeObject *) message, "Newsgroups"));
@@ -1991,6 +1993,14 @@ PostUI :: body_view_realized_cb (GtkWidget*, gpointer self_gpointer)
   self->set_message (self->_message);
   self->_unchanged_body = self->get_body ();
 
+  /* import old draft from autosave file */
+//  struct stat sb;
+//  char *buf = g_build_filename(get_draft_filename().c_str(), "autosave", NULL);
+//  if (stat (buf, &sb)==0)
+//    self->import_draft(buf);
+//    self->open_draft();
+//  g_free(buf);
+
   if (self->_prefs.get_flag ("always-run-editor", false))
     self->spawn_editor ();
 
@@ -2043,7 +2053,9 @@ PostUI :: body_changed_idle (gpointer ui_gpointer)
   std::cerr<<"body changed idle "<<ui->_draft_autosave_timeout <<"\n";
 
   ui->_body_changed_idle_tag = 0;
-  ui->_draft_autosave_id = g_timeout_add_seconds( ui->_draft_autosave_timeout, draft_save_cb, ui);
+  unsigned int& tag (ui->_draft_autosave_idle_tag);
+  if (!tag)
+    tag = g_timeout_add_seconds( ui->_draft_autosave_timeout, draft_save_cb, ui);
 
   return false;
 }
@@ -2616,6 +2628,12 @@ PostUI :: ~PostUI ()
 {
   if (_group_entry_changed_idle_tag)
     g_source_remove (_group_entry_changed_idle_tag);
+  if (_body_changed_idle_tag)
+    g_source_remove (_body_changed_idle_tag);
+  if (_draft_autosave_idle_tag)
+    g_source_remove (_draft_autosave_idle_tag);
+
+
   g_object_unref (G_OBJECT(_message));
 
   _upload_queue.remove_listener (this);
@@ -2633,7 +2651,7 @@ PostUI :: select_parts ()
   if (!_upload_ptr) return;
 
   int lpf = lpf = _prefs.get_int("upload-option-lpf",4000);
-  _total_parts = (int) (((long)_upload_ptr->get_byte_count() + (lpf*YENC_HALF_LINE_LEN-1)) / (lpf*YENC_HALF_LINE_LEN));
+  _total_parts = std::max(1, (int) (((long)_upload_ptr->get_byte_count() + (lpf*YENC_HALF_LINE_LEN-1)) / (lpf*YENC_HALF_LINE_LEN)));
 
   GtkWidget * w;
   GtkTreeIter iter;
@@ -2685,6 +2703,7 @@ PostUI::draft_save_cb(gpointer ptr)
 {
     PostUI *data = static_cast<PostUI*>(ptr);
 //    data->in_newsrc_cb = true;
+    if (!data) return true;
     GMimeMessage * msg = data->new_message_from_ui (DRAFTING);
     std::string& draft_filename (get_draft_filename ());
     char * filename = g_build_filename (draft_filename.c_str(), "autosave", NULL);
@@ -2702,8 +2721,8 @@ PostUI::draft_save_cb(gpointer ptr)
 //    data->in_newsrc_cb = false;
 
     data->_unchanged_body = data->get_body ();
-    g_source_remove( data->_draft_autosave_id );
-    return FALSE;
+    data->_draft_autosave_idle_tag = 0;
+    return false;
 }
 
 PostUI :: PostUI (GtkWindow    * parent,
@@ -2741,6 +2760,7 @@ PostUI :: PostUI (GtkWindow    * parent,
   _running_uploads(0),
   _draft_autosave_id(0),
   _draft_autosave_timeout(0),
+  _draft_autosave_idle_tag(0),
   _body_changed_id(0),
   _body_changed_idle_tag(0)
 {
@@ -2749,16 +2769,7 @@ PostUI :: PostUI (GtkWindow    * parent,
 
   /* init timer for autosave */
   set_draft_autosave_timeout( prefs.get_int("draft-autosave-timeout-min", 10 ));
-  _draft_autosave_id = g_timeout_add_seconds( _draft_autosave_timeout * 60, draft_save_cb, this);
-
-  /* import old draft from autosave file */
-  struct stat sb;
-  char *buf = g_build_filename(get_draft_filename().c_str(), "autosave", NULL);
-  stat (buf, &sb);
-  std::cerr<<"importing file "<<buf<<" "<<sb.st_size<<" "<<stat (buf, &sb)<<std::endl;
-  if (stat (buf, &sb)==0)
-    import_draft(buf);
-  g_free(buf);
+//  _draft_autosave_id = g_timeout_add_seconds( _draft_autosave_timeout * 60, draft_save_cb, this);
 
   g_assert (profiles.has_profiles());
   g_return_if_fail (message != 0);
@@ -2801,6 +2812,7 @@ PostUI :: PostUI (GtkWindow    * parent,
   _message = message;
   g_object_ref (G_OBJECT(_message));
   body_view_realized_handler = g_signal_connect (_body_view, "realize", G_CALLBACK(body_view_realized_cb), this);
+
 }
 
 PostUI*
@@ -2903,14 +2915,14 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
       : GNKSA::generate_message_id_from_email_address (profile.address);
 
     for (; cur; cur = cur->next)
-		{
-		  Article a;
-		  a.subject = subject;
-		  a.author = author;
+	{
+	  Article a;
+	  a.subject = subject;
+	  a.author = author;
       stat ((const char*)cur->data,&sb);
       int lpf = _prefs.get_int("upload-option-lpf",4000);
-      int total = (int) (((long)sb.st_size + (lpf*YENC_HALF_LINE_LEN-1)) /
-                          (lpf*YENC_HALF_LINE_LEN));
+      int total = std::max(1, (int) (((long)sb.st_size + (lpf*YENC_HALF_LINE_LEN-1)) /
+                          (lpf*YENC_HALF_LINE_LEN)));
 
       char* basename = g_path_get_basename((const char*)cur->data);
       TaskUpload::needed_t import;
@@ -2934,7 +2946,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
                         profile.posting_server, _cache,
                         a, ui, import, 0, TaskUpload::YENC);
       _upload_queue.add_task(tmp);
-		}
+	}
 
     if (_file_queue_empty) _file_queue_empty= false;
 

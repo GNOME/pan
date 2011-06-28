@@ -131,10 +131,8 @@ void
 TaskUpload :: build_needed_tasks(bool imported)
 {
 
-  _total_parts = (int) (((long)get_byte_count() + (_lpf*YENC_HALF_LINE_LEN-1)) /
-                        (_lpf*YENC_HALF_LINE_LEN));
-  int cnt(1);
-
+  _total_parts = std::max(1, (int) (((long)get_byte_count() + (_lpf*YENC_HALF_LINE_LEN-1)) /
+                        (_lpf*YENC_HALF_LINE_LEN)));
   quarks_t groups;
   foreach_const (Xref, _article.xref, it)
     _groups.insert (it->group);
@@ -396,6 +394,9 @@ TaskUpload :: on_worker_done (bool cancelled)
     if (!_encoder->log_errors.empty())
       set_error (_encoder->log_errors.front());
 
+    if (!_encoder->log_severe.empty())
+      _state.set_health (ERR_LOCAL);
+    else
     {
       set_step (0);
       init_steps(_all_bytes);

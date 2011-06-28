@@ -1215,7 +1215,7 @@ char *pan::pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html
   size_t len = 0;
 
   g_return_val_if_fail (GMIME_IS_MESSAGE (message), NULL);
-  g_return_val_if_fail (is_html != NULL, NULL);
+//  g_return_val_if_fail (is_html != NULL, NULL);
 
   type = g_mime_object_get_content_type (message->mime_part);
   if (GMIME_IS_MULTIPART (message->mime_part)) {

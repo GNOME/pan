@@ -237,6 +237,7 @@ namespace pan
     private:
       guint _draft_autosave_id;
       guint _draft_autosave_timeout;
+      guint _draft_autosave_idle_tag;
       static gboolean draft_save_cb(gpointer ptr);
 
     public:

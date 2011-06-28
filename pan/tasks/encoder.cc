@@ -27,12 +27,14 @@
 #include <ostream>
 #include <fstream>
 #include <sstream>
+
 extern "C" {
 #define PROTOTYPES
 #include <uulib/uudeview.h>
 #include <glib/gi18n.h>
 #include <sys/time.h>
 };
+
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
@@ -100,6 +102,17 @@ Encoder :: enqueue (TaskUpload                      * task,
                     const TaskUpload::EncodeMode    & enc)
 
 {
+
+
+//  if (needed->size() == 0)
+//  {
+//    char buf[2048];
+//    g_snprintf(buf, 2048, _("Error encoding %s: No parts selected to post"), basename.c_str());
+//    log_errors.clear();
+//    log_errors.push_back(buf); // log error
+//    return;
+//  }
+
   disable_progress_update ();
 
   this->task = task;
@@ -186,9 +199,11 @@ Encoder :: do_work()
         stat (cachename, &sb);
         it->second.bytes  = sb.st_size;
         task->_all_bytes += sb.st_size;
-        batch.add_part(cnt, StringView(s), sb.st_size);
+        batch.add_part(cnt, StringView(s), 0);//sb.st_size);
         if (res != UURET_CONT) break;
       }
+
+      std::cerr<<"debug "<<needed->size()<<" "<<cnt<<std::endl;
 
       if (res != UURET_OK && res != UURET_CONT)
       {
