@@ -1292,9 +1292,7 @@ PostUI :: open_draft ()
 void
 PostUI :: import_draft (const char* fn)
 {
-    std::string& draft_filename (get_draft_filename ());
-    char * draft = g_build_filename (draft_filename.c_str(), "autosave", NULL);
-
+    const char * draft = fn;
     std::string txt;
     if (file :: get_text_file_contents (draft, txt))
     {
@@ -1308,7 +1306,6 @@ PostUI :: import_draft (const char* fn)
       g_object_unref (G_OBJECT(parser));
       g_object_unref (G_OBJECT(stream));
     }
-    g_free (draft);
 }
 
 namespace
@@ -2039,17 +2036,17 @@ void
 PostUI :: body_view_realized_cb (GtkWidget*, gpointer self_gpointer)
 {
   PostUI * self = static_cast<PostUI*>(self_gpointer);
-  self->set_wrap_mode (self->_prefs.get_flag ("compose-wrap-enabled", true));
-  self->set_message (self->_message);
-  self->_unchanged_body = self->get_body ();
 
   /* import old draft from autosave file */
-//  struct stat sb;
-//  char *buf = g_build_filename(get_draft_filename().c_str(), "autosave", NULL);
-//  if (stat (buf, &sb)==0)
-//    self->import_draft(buf);
-//    self->open_draft();
-//  g_free(buf);
+  struct stat sb;
+  char *buf = g_build_filename(get_draft_filename().c_str(), "autosave", NULL);
+  if (stat (buf, &sb)==0)
+    self->import_draft(buf);
+  g_free(buf);
+
+  self->set_wrap_mode (self->_prefs.get_flag ("compose-wrap-enabled", false));
+  self->set_message (self->_message);
+  self->_unchanged_body = self->get_body ();
 
   if (self->_prefs.get_flag ("always-run-editor", false))
     self->spawn_editor ();
@@ -2728,23 +2725,23 @@ gboolean
 PostUI::draft_save_cb(gpointer ptr)
 {
     PostUI *data = static_cast<PostUI*>(ptr);
-//    data->in_newsrc_cb = true;
     if (!data) return true;
     GMimeMessage * msg = data->new_message_from_ui (DRAFTING);
     std::string& draft_filename (get_draft_filename ());
     char * filename = g_build_filename (draft_filename.c_str(), "autosave", NULL);
 
     std::ofstream o (filename);
-    char * pch = g_mime_object_to_string ((GMimeObject *) msg);
-    o << pch;
+    gboolean unused;
+    char * headers (g_mime_object_get_headers ((GMimeObject *) msg));
+    o << headers;
+    const std::string body (data->get_body ());
+    o << body;
     o.close ();
 
-    g_free (pch);
     g_object_unref (msg);
     g_free(filename);
-//    data->in_newsrc_cb = false;
 
-    data->_unchanged_body = data->get_body ();
+    data->_unchanged_body = body;
     data->_draft_autosave_idle_tag = 0;
     return false;
 }
