@@ -403,6 +403,6 @@ TaskUpload :: ~TaskUpload ()
       _encoder->cancel_silently();
 
   g_object_unref (G_OBJECT(_msg));
-//  _cache.release(_mids);
-//  _cache.resize();
+  _cache.release(_mids);
+  _cache.resize();
 }
