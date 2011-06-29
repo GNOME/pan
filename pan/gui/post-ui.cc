@@ -2616,7 +2616,7 @@ PostUI :: select_encode (GtkAction* a)
     foreach(tasks_t, tasks, it)
     {
       const char* f = (*it)->filename().c_str();
-      int total(get_total_lines (f,*it));
+      int total(get_total_parts (f,*it));
 
       (*it)->_encode_mode = tmp;
       (*it)->_total_parts = total;
@@ -2629,7 +2629,7 @@ PostUI :: select_encode (GtkAction* a)
 }
 
 int
-PostUI :: get_total_lines(const char* file, TaskUpload* it)
+PostUI :: get_total_parts(const char* file, TaskUpload* it)
 {
     struct stat sb;
     stat (file,&sb);
@@ -2691,7 +2691,14 @@ PostUI :: select_parts ()
   if (!_upload_ptr) return;
 
   int lpf = _prefs.get_int("upload-option-lpf",4000);
-  _total_parts = get_total_lines(_upload_ptr->_filename.c_str(), _upload_ptr);
+  int new_parts = get_total_parts(_upload_ptr->_filename.c_str(), _upload_ptr);
+  if (_total_parts != new_parts)
+  {
+    _upload_ptr->_wanted.clear();
+    for (int i=1;i<=new_parts;++i)
+      _upload_ptr->_wanted.insert(i);
+  }
+  _total_parts = new_parts;
 
   GtkWidget * w;
   GtkTreeIter iter;

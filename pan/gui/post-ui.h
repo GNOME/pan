@@ -245,7 +245,7 @@ namespace pan
       void generate_unique_id (StringView& mid, int cnt, std::string& s);
       MTRand mtrand;
 
-      int get_total_lines(const char* file, TaskUpload* it);
+      int get_total_parts(const char* file, TaskUpload* it);
 
     private:
       guint _draft_autosave_id;
