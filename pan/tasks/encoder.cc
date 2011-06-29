@@ -107,91 +107,91 @@ Encoder :: do_work()
   FILE * fp ;
   Article* tmp = article;
 
-    enable_progress_update();
+  enable_progress_update();
 
-    int res;
-    if (((res = UUInitialize())) != UURET_OK)
+  int res;
+  if (((res = UUInitialize())) != UURET_OK)
+  {
+    log_errors.push_back(_("Error initializing uulib")); // log error
+  } else {
+    UUSetMsgCallback (this, uu_log);
+    UUSetBusyCallback (this, uu_busy_poll, 200);
+
+
+
+    batch.init(StringView(basename), needed->size(), 0);
+
+    /* build real subject line for article*/
+    tmp->subject = subject;
+
+    for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
     {
-      log_errors.push_back(_("Error initializing uulib")); // log error
-    } else {
-      UUSetMsgCallback (this, uu_log);
-      UUSetBusyCallback (this, uu_busy_poll, 200);
-
-
-
-      batch.init(StringView(basename), needed->size(), 0);
-
-      /* build real subject line for article*/
-      tmp->subject = subject;
-
-      for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
+      int enc(YENC_ENCODED);
+      std::ofstream out;
+      std::string txt;
+      /* (encoding!=UU_ENCODED&&encoding!=XX_ENCODED&&encoding!=B64ENCODED&&
+     encoding!=PT_ENCODED&&encoding!=QP_ENCODED&&encoding!=YENC_ENCODED)) { */
+      switch (encode_mode)
       {
-        int enc(YENC_ENCODED);
-        std::ofstream out;
-        std::string txt;
-        /* (encoding!=UU_ENCODED&&encoding!=XX_ENCODED&&encoding!=B64ENCODED&&
-       encoding!=PT_ENCODED&&encoding!=QP_ENCODED&&encoding!=YENC_ENCODED)) { */
-        switch (encode_mode)
-        {
-            case TaskUpload::YENC:
-                enc = YENC_ENCODED;
-                break;
-            case TaskUpload::PLAIN:
-                file :: get_text_file_contents (filename, txt);
-                cache->get_filename(cachename, Quark(it->second.message_id));
-                out.open(cachename, std::ios::out);
-                out << txt;
-                out.close();
-                res = UURET_OK;
-                goto _no_encode;
-                break;
-            case TaskUpload::BASE64:
-                enc = B64ENCODED;
-                break;
-            default:
-                enc = YENC_ENCODED;
-                break;
-        }
-
-        fp = cache->get_fp_from_mid(it->second.message_id);
-        if (!fp)
-        {
-          g_snprintf(buf, bufsz, _("Error loading %s from cache."), it->second.message_id.c_str());
-          log_errors.push_back(buf); // log error
-          continue;
-        }
-
-        res = UUEncodePartial (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, lpf,&crc);
-
-        if (fp) fclose(fp);
-_no_encode:
-        if (res != UURET_CONT && res != UURET_OK) break;
-        cache->finalize(it->second.message_id);
-        cache->get_filename(cachename, Quark(it->second.message_id));
-        stat (cachename, &sb);
-        it->second.bytes  = sb.st_size;
-        task->_all_bytes += sb.st_size;
-        batch.add_part(cnt, StringView(it->second.mid), sb.st_size);
-        if (res != UURET_CONT) break;
+          case TaskUpload::YENC:
+              enc = YENC_ENCODED;
+              break;
+          case TaskUpload::PLAIN:
+              file :: get_text_file_contents (filename, txt);
+              cache->get_filename(cachename, Quark(it->second.message_id));
+              out.open(cachename, std::ios::out);
+              out << txt;
+              out.close();
+              res = UURET_OK;
+              goto _no_encode;
+              break;
+          case TaskUpload::BASE64:
+              enc = B64ENCODED;
+              break;
+          default:
+              enc = YENC_ENCODED;
+              break;
       }
 
-      if (res != UURET_OK && res != UURET_CONT)
+      fp = cache->get_fp_from_mid(it->second.message_id);
+      if (!fp)
       {
-        g_snprintf(buf, bufsz,
-                   _("Error encoding %s: %s"),
-                   basename.c_str(),
-                   (res==UURET_IOERR)
-                   ?  file::pan_strerror (UUGetOption (UUOPT_ERRNO, NULL,
-                                                       NULL, 0))
-                   : UUstrerror(res));
+        g_snprintf(buf, bufsz, _("Error loading %s from cache."), it->second.message_id.c_str());
         log_errors.push_back(buf); // log error
-      } else
-      { // prepare article for upload list
-        tmp->set_parts(batch);
-        task->_upload_list.push_back(tmp);
+        continue;
       }
-    UUCleanUp ();
+
+      res = UUEncodePartial (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, lpf,&crc);
+
+      if (fp) fclose(fp);
+_no_encode:
+      if (res != UURET_CONT && res != UURET_OK) break;
+      cache->finalize(it->second.message_id);
+      cache->get_filename(cachename, Quark(it->second.message_id));
+      stat (cachename, &sb);
+      it->second.bytes  = sb.st_size;
+      task->_all_bytes += sb.st_size;
+      batch.add_part(cnt, StringView(it->second.mid), sb.st_size);
+      if (res != UURET_CONT) break;
     }
+
+    if (res != UURET_OK && res != UURET_CONT)
+    {
+      g_snprintf(buf, bufsz,
+                 _("Error encoding %s: %s"),
+                 basename.c_str(),
+                 (res==UURET_IOERR)
+                 ?  file::pan_strerror (UUGetOption (UUOPT_ERRNO, NULL,
+                                                     NULL, 0))
+                 : UUstrerror(res));
+      log_errors.push_back(buf); // log error
+    } else
+    { // prepare article for upload list
+      tmp->set_parts(batch);
+      task->_upload_list.push_back(tmp);
+    }
+  UUCleanUp ();
+  }
   disable_progress_update();
 
 }
