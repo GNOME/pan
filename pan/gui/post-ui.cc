@@ -2038,11 +2038,11 @@ PostUI :: body_view_realized_cb (GtkWidget*, gpointer self_gpointer)
   PostUI * self = static_cast<PostUI*>(self_gpointer);
 
   /* import old draft from autosave file */
-  struct stat sb;
-  char *buf = g_build_filename(get_draft_filename().c_str(), "autosave", NULL);
-  if (stat (buf, &sb)==0)
-    self->import_draft(buf);
-  g_free(buf);
+//  struct stat sb;
+//  char *buf = g_build_filename(get_draft_filename().c_str(), "autosave", NULL);
+//  if (stat (buf, &sb)==0)
+//    self->import_draft(buf);
+//  g_free(buf);
 
   self->set_wrap_mode (self->_prefs.get_flag ("compose-wrap-enabled", false));
   self->set_message (self->_message);
