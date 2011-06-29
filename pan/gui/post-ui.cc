@@ -1045,21 +1045,21 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       stat (basename,&sb);
 
       int total = std::max(1, (int) (((long)sb.st_size + (lpf*bpl[(*it)->_encode_mode]-1)) /
-                  (lpf*bpl[(*it)->_encode_mode])));
+        (lpf*bpl[(*it)->_encode_mode])));
 
-      for (int i = 1; i <= total; ++i)
+      foreach (std::set<int>, (*it)->_wanted, pit)
       {
         if (custom_mid)
         {
             std::string out;
-            generate_unique_id(domain, i,out);
+            generate_unique_id(domain, *pit,out);
             n.mid = out;
         }
 
-        g_snprintf(buf,sizeof(buf),"%s.%d", basename, i);
+        g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);
         n.message_id = buf;
-        n.partno = i;
-        (*it)->needed().insert(std::pair<int,TaskUpload::Needed>(i,n));
+        n.partno = *pit;
+        (*it)->needed().insert(std::pair<int,TaskUpload::Needed>(*pit,n));
       }
       (*it)->build_needed_tasks();
 
@@ -2373,12 +2373,10 @@ PostUI:: on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, 
 
   enabled ^= 1;
   if (enabled==0)
-    data->upload_ptr()->_needed.erase(part);
+    data->upload_ptr()->_wanted.erase(part);
   else
   {
-    TaskUpload::Needed tmp;
-    tmp.partno = part;
-    data->upload_ptr()->_needed.insert(std::pair<int, TaskUpload::Needed>(part,tmp));
+    data->upload_ptr()->_wanted.insert(part);
 
   }
   gtk_list_store_set(GTK_LIST_STORE( model ), &iter, 1, enabled, -1);
@@ -2614,10 +2612,29 @@ PostUI :: select_encode (GtkAction* a)
     if (!strcmp(name, "base64"))
         tmp = TaskUpload::BASE64;
 
+    struct stat sb;
     foreach(tasks_t, tasks, it)
-        (*it)->_encode_mode = tmp;
+    {
+      const char* f = (*it)->filename().c_str();
+      int total(get_total_lines (f,*it));
 
+      (*it)->_encode_mode = tmp;
+      (*it)->_total_parts = total;
+      (*it)->_wanted.clear();
+      for (int i=1;i<=total;++i)
+        (*it)->_wanted.insert(i);
+
+    }
     update_filequeue_tab();
+}
+
+int
+PostUI :: get_total_lines(const char* file, TaskUpload* it)
+{
+    struct stat sb;
+    stat (file,&sb);
+    int lpf = _prefs.get_int("upload-option-lpf",4000);
+    return std::max(1, (int) (((long)sb.st_size + (lpf*bpl[it->_encode_mode]-1)) / (lpf*bpl[it->_encode_mode])));
 }
 
 void
@@ -2674,7 +2691,7 @@ PostUI :: select_parts ()
   if (!_upload_ptr) return;
 
   int lpf = _prefs.get_int("upload-option-lpf",4000);
-  _total_parts = std::max(1, (int) (((long)_upload_ptr->get_byte_count() + (lpf*bpl[_upload_ptr->_encode_mode]-1)) / (lpf*bpl[_upload_ptr->_encode_mode])));
+  _total_parts = get_total_lines(_upload_ptr->_filename.c_str(), _upload_ptr);
 
   GtkWidget * w;
   GtkTreeIter iter;
@@ -2713,7 +2730,7 @@ PostUI :: update_parts_tab()
   for (int i=1;i<=_total_parts;++i)
   {
     gtk_list_store_append (store, &iter);
-    res = (_upload_ptr->_needed.find(i) != _upload_ptr->_needed.end()) ? TRUE : FALSE;
+    res = (_upload_ptr->_wanted.find(i) != _upload_ptr->_wanted.end()) ? TRUE : FALSE;
     gtk_list_store_set (store, &iter,
                         0, i,
                         1, res,
@@ -2931,9 +2948,19 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
           foreach_const (quarks_t, groups, git)
              a.xref.insert (profile.posting_server, *git,0);
 
+          struct stat sb;
+          stat ((const char*)cur->data,&sb);
+          int lpf = _prefs.get_int("upload-option-lpf",4000);
+          int total = std::max(1, (int) (((long)sb.st_size + (lpf*bpl[TaskUpload::YENC]-1)) / (lpf*bpl[TaskUpload::YENC])));
+          ui.total = total;
+
           TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
                             profile.posting_server, _cache,
                             a, ui, msg,0, TaskUpload::YENC);
+
+          for (int i=1;i<=total; ++i)
+            tmp->_wanted.insert(i);
+
           _upload_queue.add_task(tmp);
         }
 

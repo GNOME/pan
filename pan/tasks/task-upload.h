@@ -61,6 +61,7 @@ namespace pan
         std::string  save_file;
         std::string  mid;
         int lpf;
+        int total;
       };
 
       const Article& get_article ()  { return _article; }
@@ -180,6 +181,7 @@ namespace pan
 
     public:
       void build_needed_tasks();
+      std::set<int> _wanted;
 
     private:
       GMimeMessage * _msg;

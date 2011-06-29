@@ -91,7 +91,8 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _format(format),
   _lpf(format.lpf),
   _queue_pos(0),
-  _msg (msg)
+  _msg (msg),
+  _total_parts(format.total)
 {
 
   struct stat sb;
@@ -110,9 +111,6 @@ TaskUpload :: build_needed_tasks()
     _cache.add(Quark(it->second.message_id));
   }
   _cache.reserve(_mids);
-
-  _needed_parts = _needed.size();
-  _total_parts = _needed_parts;
 
    /* build new master subject */
   char sub[2048];
@@ -256,7 +254,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   {
     case NO_POSTING:
       Log :: add_err_va (_("Posting of File %s (Part %d of %d) failed: No Posts allowed by server."),
-                 _basename.c_str(), it->second.partno, _total_parts);
+                 _basename.c_str(), it->second.partno,  _total_parts);
       this->stop();
       break;
     case POSTING_FAILED:
