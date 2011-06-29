@@ -105,11 +105,7 @@ namespace pan
     public: // Task subclass
       unsigned long get_bytes_remaining () const;
       void stop ();
-      const std::string& basename()  { return  _basename; }
-      const std::string& filename()  { return  _filename; }
-      const std::string& subject ()  { return  _subject;  }
-      unsigned long get_byte_count() { return _bytes;     }
-      needed_t& needed()             { return _needed;    }
+      const std::string& get_basename()  { return  _basename; }
       std::string enc_mode_to_str(EncodeMode& e)
       {
         std::string res;

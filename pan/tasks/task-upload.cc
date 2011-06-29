@@ -54,7 +54,7 @@ namespace
     return buf;
   }
 
-  std::string get_basename(const char* f)
+  std::string g_get_basename(const char* f)
   {
     char buf[4096];
     char * freeme = g_path_get_basename(f);
@@ -78,7 +78,7 @@ TaskUpload :: TaskUpload (const std::string         & filename,
                           const TaskUpload::EncodeMode  enc):
   Task ("UPLOAD", get_description(filename.c_str())),
   _filename(filename),
-  _basename (get_basename(filename.c_str())),
+  _basename (g_get_basename(filename.c_str())),
   _server(server),
   _cache(cache),
   _article(article),

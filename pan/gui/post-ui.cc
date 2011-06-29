@@ -148,9 +148,9 @@ PostUI :: update_filequeue_tab()
        gtk_list_store_insert (store, &iter, i);
        gtk_list_store_set (store, &iter,
                           0, i+1,
-                          1, task->subject().c_str(),
+                          1, task->_subject.c_str(),
                           2, task,
-                          3, task->get_byte_count()/1024,
+                          3, task->_bytes/1024,
                           4, task->encode_mode().c_str(),
                           -1);
    }
@@ -172,9 +172,9 @@ PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
     gtk_list_store_insert (store, &iter, pos);
     gtk_list_store_set (store, &iter,
                       0, pos+1,
-                      1, task->subject().c_str(),
+                      1, task->_subject.c_str(),
                       2, task,
-                      3, task->get_byte_count()/1024,
+                      3, task->_bytes/1024,
                       4, task->encode_mode().c_str(),
                       -1);
   }
@@ -1039,7 +1039,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
     foreach (PostUI::tasks_t, tasks, it)
     {
-      const char* basename = (*it)->filename().c_str();
+      const char* basename = (*it)->_filename.c_str();
       TaskUpload::Needed n;
 
       stat (basename,&sb);
@@ -1059,7 +1059,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
         g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);
         n.message_id = buf;
         n.partno = *pit;
-        (*it)->needed().insert(std::pair<int,TaskUpload::Needed>(*pit,n));
+        (*it)->_needed.insert(std::pair<int,TaskUpload::Needed>(*pit,n));
       }
       (*it)->build_needed_tasks();
 
@@ -2272,7 +2272,7 @@ namespace
     TaskUpload* fd(0);
     gtk_tree_model_get (model, iter, 2, &fd, -1);
     if (fd)
-      g_object_set (renderer, "text", fd->basename().c_str(), NULL);
+      g_object_set (renderer, "text", fd->get_basename().c_str(), NULL);
   }
 
   void
@@ -2373,10 +2373,10 @@ PostUI:: on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, 
 
   enabled ^= 1;
   if (enabled==0)
-    data->upload_ptr()->_wanted.erase(part);
+    data->_upload_ptr->_wanted.erase(part);
   else
   {
-    data->upload_ptr()->_wanted.insert(part);
+    data->_upload_ptr->_wanted.insert(part);
 
   }
   gtk_list_store_set(GTK_LIST_STORE( model ), &iter, 1, enabled, -1);
@@ -2409,7 +2409,7 @@ PostUI :: create_parts_tab ()
   gtk_label_set_use_markup (GTK_LABEL(l), true);
   gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
-  g_snprintf (buf, sizeof(buf), "%s", _upload_ptr->basename().c_str());
+  g_snprintf (buf, sizeof(buf), "%s", _upload_ptr->_basename.c_str());
   l = gtk_label_new (buf);
   gtk_misc_set_alignment (GTK_MISC(l), 0.5f, 0.5f);
   gtk_widget_set_tooltip_text (l, _("The current filename"));
@@ -2421,7 +2421,7 @@ PostUI :: create_parts_tab ()
   gtk_label_set_use_markup (GTK_LABEL(l), true);
   gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
   gtk_table_attach (GTK_TABLE(t), l, 0, 1, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
-  g_snprintf (buf, sizeof(buf), "%s", _upload_ptr->subject().c_str());
+  g_snprintf (buf, sizeof(buf), "%s", _upload_ptr->_subject.c_str());
   l = gtk_label_new (buf);
   gtk_misc_set_alignment (GTK_MISC(l), 0.5f, 0.5f);
   gtk_widget_set_tooltip_text (l, _("The current Subject Line"));
@@ -2615,7 +2615,7 @@ PostUI :: select_encode (GtkAction* a)
     struct stat sb;
     foreach(tasks_t, tasks, it)
     {
-      const char* f = (*it)->filename().c_str();
+      const char* f = (*it)->_filename.c_str();
       int total(get_total_parts (f,*it));
 
       (*it)->_encode_mode = tmp;
@@ -2741,7 +2741,7 @@ PostUI :: update_parts_tab()
     gtk_list_store_set (store, &iter,
                         0, i,
                         1, res,
-                        2, _upload_ptr->basename().c_str(), -1);
+                        2, _upload_ptr->_basename.c_str(), -1);
   }
 }
 
