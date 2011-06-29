@@ -102,7 +102,7 @@ Encoder :: do_work()
   struct stat sb;
   std::string s;
   FILE* outfile, * infile ;
-  PartBatch batch;
+//  PartBatch batch;
   char cachename[4096];
   FILE * fp ;
   Article* tmp = article;
@@ -117,7 +117,7 @@ Encoder :: do_work()
     UUSetMsgCallback (this, uu_log);
     UUSetBusyCallback (this, uu_busy_poll, 200);
 
-    batch.init(StringView(basename), needed->size(), 0);
+//    batch.init(StringView(basename), needed->size(), 0);
 
     /* build real subject line for article*/
     tmp->subject = subject;
@@ -170,7 +170,7 @@ _no_encode:
       it->second.cachename = cachename;
       it->second.bytes  = sb.st_size;
       task->_all_bytes += sb.st_size;
-      batch.add_part(cnt, StringView(it->second.mid), sb.st_size);
+      tmp->add_part(cnt, StringView(it->second.mid), sb.st_size);
       if (res != UURET_CONT) break;
     }
 
@@ -186,7 +186,7 @@ _no_encode:
       log_errors.push_back(buf); // log error
     } else
     { // prepare article for upload list
-      tmp->set_parts(batch);
+//      tmp->set_parts(batch);
       task->_upload_list.push_back(tmp);
     }
   UUCleanUp ();

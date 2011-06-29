@@ -1408,7 +1408,7 @@ PostUI :: new_message_from_ui (Mode mode)
   if (mode==POSTING && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
     g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent());
 
-  // Message-ID
+  // Message-ID for single text-only posts
   if (mode==POSTING && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
     const std::string message_id = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
@@ -1432,7 +1432,11 @@ PostUI :: new_message_from_ui (Mode mode)
   GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   g_object_unref (stream);
   GMimePart * part = g_mime_part_new ();
-  pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+  if (_file_queue_empty)
+    pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+  else
+    // http://tools.ietf.org/html/rfc2046#section-5.1.3
+    pch = g_strdup_printf ("multipart/mixed; charset=%s", charset.c_str());
 
   GMimeContentType * type = g_mime_content_type_new_from_string (pch);
   g_free (pch);

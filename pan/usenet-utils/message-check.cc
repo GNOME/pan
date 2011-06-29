@@ -442,10 +442,11 @@ MessageCheck :: message_check (const GMimeMessage * message_const,
   TextMassager tm;
   gboolean is_html;
   char * body = pan_g_mime_message_get_body (message, &is_html);
-  if (is_html) {
+  if (is_html && !binpost) {
     errors.insert (_("Warning: Most newsgroups frown upon HTML posts."));
     goodness.raise_to_warn ();
   }
+
   if (!binpost)
     check_body (errors, goodness, tm, message, body, attribution);
   g_free (body);
