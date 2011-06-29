@@ -121,6 +121,8 @@ TaskUpload :: build_needed_tasks()
 
 }
 
+static bool inited(false);
+
 void
 TaskUpload :: update_work (NNTP* checkin_pending)
 {
@@ -134,7 +136,7 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   }
 
   /* only need encode if mode is NOT plain */
-  if (!_encoder && !_encoder_has_run)
+  if (!_encoder && !_encoder_has_run && _msg)
   {
     _state.set_need_encoder();
   }
@@ -142,8 +144,22 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   {
     _state.set_working();
   }
-  else if (_encoder_has_run && !_needed.empty())
+  else if ((_encoder_has_run && !_needed.empty()) || !_msg)
   {
+    if (_msg && !inited)
+    {
+
+      std::string data;
+      foreach (needed_t, _needed, nit)
+      {
+        Needed& n (nit->second);
+        _cache.get_data(data,n.message_id.c_str());
+        prepend_headers(_msg,&n, data);
+        /* update cache file */
+        _cache.update_file (data,n.message_id.c_str());
+      }
+      inited = true;
+    }
     _state.set_need_nntp(_server);
   }
   else if (_needed.empty())
@@ -204,8 +220,7 @@ TaskUpload :: use_nntp (NNTP * nntp)
     set_status_va (_("Uploading %s - Part %d of %d"), _basename.c_str(), needed->partno, _total_parts);
 
     std::string data;
-    _cache.get_data(data,needed->message_id.c_str());
-    prepend_headers(_msg,needed, data);
+     _cache.get_data(data,needed->message_id.c_str());
     nntp->post(StringView(data), this);
     update_work ();
   }

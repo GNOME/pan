@@ -57,6 +57,7 @@ namespace pan
 
       FILE* get_fp_from_mid(const Quark& mid);
       void get_filename (char* buf, const Quark& mid) const;
+      bool update_file (std::string& data, const Quark& where);
 
       typedef std::vector<Quark> mid_sequence_t;
 
@@ -91,7 +92,8 @@ namespace pan
         Quark _message_id;
         size_t _size;
         time_t _date;
-        MsgInfo(): _size(0), _date(0) {}
+        FILE * _fp;
+        MsgInfo(): _size(0), _date(0), _fp(0) {}
       };
 
       typedef std::map<Quark,MsgInfo> mid_to_info_t;

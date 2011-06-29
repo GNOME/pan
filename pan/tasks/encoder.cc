@@ -117,8 +117,6 @@ Encoder :: do_work()
     UUSetMsgCallback (this, uu_log);
     UUSetBusyCallback (this, uu_busy_poll, 200);
 
-
-
     batch.init(StringView(basename), needed->size(), 0);
 
     /* build real subject line for article*/
@@ -169,6 +167,7 @@ _no_encode:
       cache->finalize(it->second.message_id);
       cache->get_filename(cachename, Quark(it->second.message_id));
       stat (cachename, &sb);
+      it->second.cachename = cachename;
       it->second.bytes  = sb.st_size;
       task->_all_bytes += sb.st_size;
       batch.add_part(cnt, StringView(it->second.mid), sb.st_size);

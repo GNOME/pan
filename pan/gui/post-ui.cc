@@ -183,8 +183,7 @@ PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
 void
 PostUI :: on_queue_task_removed (UploadQueue&, TaskUpload& task, int index)
 {
-  GtkListStore *store = GTK_LIST_STORE(
-                      gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store)));
+  GtkListStore *store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store)));
 
   const int list_index (find_task_index (store, &task));
   assert (list_index == index);

@@ -73,6 +73,7 @@ namespace pan
         NNTP* nntp;
         std::string message_id;
         std::string mid; // for rng
+        std::string cachename;
         Xref xref;
         bool encoded;
         Needed (): nntp(0), bytes(0) , partno(1), encoded(false) {}
@@ -155,6 +156,7 @@ namespace pan
       friend class Encoder;
       friend class PostUI;
       friend class NZB;
+      friend class MyContext;
       Encoder * _encoder;
       bool _encoder_has_run;
       std::string _filename;
@@ -172,12 +174,14 @@ namespace pan
       Article::mid_sequence_t _mids;
       int _queue_pos;
       int _lpf;
-
-    private:
       needed_t       _needed;
+
       void update_work (NNTP * checkin_pending = 0);
+
+    public:
       void build_needed_tasks();
 
+    private:
       GMimeMessage * _msg;
       void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d);
 

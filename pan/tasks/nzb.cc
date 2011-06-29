@@ -48,10 +48,9 @@ namespace
     quarks_t groups;
     std::string text;
     std::string path;
-    std::vector<std::string>  groups_str;  // TaskUpload
-    TaskUpload::needed_t needed_parts;     // TaskUpload
-    std::string domain;                    // TaskUpload
-    std::string queue;
+//    std::vector<std::string>  groups_str;  // TaskUpload
+//    TaskUpload::needed_t needed_parts;     // TaskUpload
+//    std::string queue;
     int lpf;
     Article a;
     PartBatch parts;
@@ -72,15 +71,15 @@ namespace
 
     void file_clear () {
       groups.clear ();
-      groups_str.clear();
+//      groups_str.clear();
       text.clear ();
       path.clear ();
       a.clear ();
       bytes = 0;
       number = 0;
-      needed_parts.clear();   // TaskUpload
-      domain.clear();         // TaskUpload
-      queue.clear();
+//      needed_parts.clear();   // TaskUpload
+//      domain.clear();         // TaskUpload
+//      queue.clear();
       lpf = 0;
     }
   };
@@ -104,17 +103,17 @@ namespace
       }
     }
 
-    else if (!strcmp (element_name, "upload")) {
-      mc.file_clear ();
-      for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
-             if (!strcmp (*k,"author"))  mc.a.author  = *v;
-        else if (!strcmp (*k,"subject")) mc.a.subject = *v;
-        else if (!strcmp (*k,"server"))  mc.server    = *v;
-        else if (!strcmp (*k,"domain"))  mc.domain    = *v;
-        else if (!strcmp (*k,"queue"))   mc.queue     = *v;
-        else if (!strcmp (*k,"lpf"))     mc.lpf       = atoi(*v);
-      }
-    }
+//    else if (!strcmp (element_name, "upload")) {
+//      mc.file_clear ();
+//      for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
+//             if (!strcmp (*k,"author"))  mc.a.author  = *v;
+//        else if (!strcmp (*k,"subject")) mc.a.subject = *v;
+//        else if (!strcmp (*k,"server"))  mc.server    = *v;
+//        else if (!strcmp (*k,"domain"))  mc.domain    = *v;
+//        else if (!strcmp (*k,"queue"))   mc.queue     = *v;
+//        else if (!strcmp (*k,"lpf"))     mc.lpf       = atoi(*v);
+//      }
+//    }
 
     else if (!strcmp (element_name, "segment")) {
       mc.bytes = 0;
@@ -125,14 +124,14 @@ namespace
       }
     }
 
-    else if (!strcmp (element_name, "part")) {
-      mc.bytes = 0;
-      mc.number = 0;
-      for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
-             if (!strcmp (*k,"bytes"))  mc.bytes = strtoul (*v,0,10);
-        else if (!strcmp (*k,"number")) mc.number = atoi (*v);
-      }
-    }
+//    else if (!strcmp (element_name, "part")) {
+//      mc.bytes = 0;
+//      mc.number = 0;
+//      for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
+//             if (!strcmp (*k,"bytes"))  mc.bytes = strtoul (*v,0,10);
+//        else if (!strcmp (*k,"number")) mc.number = atoi (*v);
+//      }
+//    }
   }
 
   // Called for close tags </foo>
@@ -146,7 +145,7 @@ namespace
     if (!strcmp(element_name, "group"))
     {
       mc.groups.insert (Quark (mc.text));
-      mc.groups_str.push_back(mc.text);
+//      mc.groups_str.push_back(mc.text);
     }
 
     else if (!strcmp(element_name, "segment") && mc.number && !mc.text.empty()) {
@@ -158,14 +157,14 @@ namespace
       mc.parts.add_part (mc.number, mid, mc.bytes);
     }
 
-    else if (!strcmp(element_name, "part") && mc.number && !mc.text.empty()) {
-      mc.a.message_id = mc.text;
-      TaskUpload::Needed n;
-      n.partno = mc.number;
-      n.message_id = mc.text;
-      n.bytes = mc.bytes;
-      mc.needed_parts.insert(std::pair<int, TaskUpload::Needed>(mc.number,n));
-    }
+//    else if (!strcmp(element_name, "part") && mc.number && !mc.text.empty()) {
+//      mc.a.message_id = mc.text;
+//      TaskUpload::Needed n;
+//      n.partno = mc.number;
+//      n.message_id = mc.text;
+//      n.bytes = mc.bytes;
+//      mc.needed_parts.insert(std::pair<int, TaskUpload::Needed>(mc.number,n));
+//    }
 
     else if (!strcmp(element_name,"path"))
       mc.path = mc.text;
@@ -186,22 +185,25 @@ namespace
       mc.tasks.push_back (new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, 0, TaskArticle::DECODE, p));
 
     }
-    else if (!strcmp (element_name, "upload"))
-    {
-      debug("adding taskupload from nzb.\n");
-      foreach_const (quarks_t, mc.groups, git)
-        mc.a.xref.insert (mc.server, *git, 0);
-      ///TODO export/import missing values to/from nzb
-      TaskUpload::UploadInfo format;
-//      format.domain = mc.domain;
-      format.comment1 = true;
-      format.lpf = mc.lpf;
-
-///TODO implement gmimemessage here
+//    else if (!strcmp (element_name, "upload"))
+//    {
+//      debug("adding taskupload from nzb.\n");
+//      foreach_const (quarks_t, mc.groups, git)
+//        mc.a.xref.insert (mc.server, *git, 0);
+//      TaskUpload::UploadInfo format;
+//      format.comment1 = true;
+//      format.lpf = mc.lpf;
+//
 //      TaskUpload* tmp = new TaskUpload (mc.path, mc.server, mc.encode_cache,mc.a,
-//                                        format, mc.needed_parts, 0, TaskUpload::YENC);
+//                                        format, 0, 0, TaskUpload::YENC);
+//
+//      /* build needed parts */
+//      foreach (TaskUpload::needed_t, mc.needed_parts, it)
+//        tmp->needed().insert(*it);
+//      tmp->build_needed_tasks();
+//
 //      mc.tasks.push_back (tmp);
-    }
+//    }
   }
 
   void text (GMarkupParseContext *context    UNUSED,
@@ -359,7 +361,6 @@ NZB :: nzb_to_xml (std::ostream             & out,
 //
 //      const Article& a (task->get_article());
 //
-//      //info: author, subject, load path, parts to encode / post
 //      out << indent(depth)
 //          << "<upload" << " author=\"";
 //      escaped (out, task->_author);
@@ -368,23 +369,21 @@ NZB :: nzb_to_xml (std::ostream             & out,
 //      out  << "\" server=\"";
 //      escaped (out, task->_server.to_string());
 //
-//      ///TODO
-////      out  << "\" queue=\"";
-////      escaped (out, task->_save_file);
+//      ///TODO _save_file
 //      out  << "\" lpf=\"";
 //      char buf[256];
 //      g_snprintf(buf,sizeof(buf),"%d",task->_lpf);
 //      escaped (out, buf);
+//      out <<"\">\n";
 //      ++depth;
 //      out << indent(depth)
 //          << "<path>" << task->_filename << "</path>\n";
 //      out  << indent(depth) << "<groups>\n";
 //
-//        ///TODO
-////      ++depth;
-////      foreach_const (quarks_t, task->_groups, git)
-////        out << indent(depth) << "<group>" << *git << "</group>\n";
-////      --depth;
+//      ++depth;
+//      foreach_const (Xref, task->_article.xref,  xit)
+//        out << indent(depth) << "<group>" << xit->group << "</group>\n";
+//      --depth;
 //
 //      out << indent(--depth) << "</groups>\n";
 //      out  << indent(depth) << "<parts>\n";
@@ -403,7 +402,6 @@ NZB :: nzb_to_xml (std::ostream             & out,
 //      out  << indent(depth) << "</parts>\n";
 //      out << indent(depth) << "</upload>\n";
 //    }
-//  }
   }
   out << indent(--depth) << "</nzb>\n";
   return out;

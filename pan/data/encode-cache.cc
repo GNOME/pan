@@ -70,10 +70,11 @@ EncodeCache :: EncodeCache (const StringView& path, size_t max_megs):
       while ((fname = g_dir_read_name (dir)))
       {
         g_snprintf (filename, sizeof(filename), "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, fname);
-        unlink(filename);
+        add (Quark(filename));
       }
       g_dir_close (dir);
    }
+   debug ("loaded " << _mid_to_info.size() << " articles into cache from " << _path);
 }
 
 EncodeCache :: ~EncodeCache ()
@@ -129,10 +130,10 @@ EncodeCache :: add (const Quark& message_id)
 {
 
   MsgInfo info;
-//  info._fp = fp;
   info._message_id = message_id;
   info._size = 0;
   info._date = time(0);
+//  info._fp = get_fp_from_mid(message_id);
   _mid_to_info.insert (mid_to_info_t::value_type (info._message_id, info));
 }
 
@@ -198,6 +199,16 @@ EncodeCache :: get_data(std::string& data, const Quark& where)
   data = out.str();
 }
 
+bool
+EncodeCache :: update_file (std::string& data, const Quark& where)
+{
+  FILE * fp = get_fp_from_mid(where);
+  if (!fp) return false;
+  fwrite(data.c_str(), strlen(data.c_str()), sizeof(char), fp);
+  fclose(fp);
+  return true;
+}
+
 void
 EncodeCache :: resize (guint64 max_bytes)
 {
@@ -221,6 +232,7 @@ EncodeCache :: resize (guint64 max_bytes)
         unlink (buf);
         _current_bytes -= it->_size;
         removed.insert (mid);
+//        if (it->_fp) fclose(it->_fp);
         _mid_to_info.erase (mid);
       }
     }
