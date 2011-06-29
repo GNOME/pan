@@ -56,6 +56,10 @@ const char * fallback_post_ui =
 "    <separator />\n"
 "    <menuitem action='move-top' />\n"
 "    <menuitem action='move-bottom' />\n"
+"    <separator />\n"
+"    <menuitem action='yenc' />\n"
+"    <menuitem action='plain' />\n"
+"    <menuitem action='base64' />\n"
 "  </popup>\n"
 "\n"
 "</ui>\n";

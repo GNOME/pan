@@ -805,8 +805,8 @@ UUEncodePartial (FILE *outfile, FILE *infile,
       (infile == NULL&&infname==NULL) || outfile==NULL ||
       (encoding!=UU_ENCODED&&encoding!=XX_ENCODED&&encoding!=B64ENCODED&&
        encoding!=PT_ENCODED&&encoding!=QP_ENCODED&&encoding!=YENC_ENCODED)) {
-    UUMessage (uuencode_id, __LINE__, UUMSG_ERROR,
-	       uustring (S_PARM_CHECK), "UUEncodePartial()");
+//    UUMessage (uuencode_id, __LINE__, UUMSG_ERROR,
+//	       uustring (S_PARM_CHECK), "UUEncodePartial()");
     return UURET_ILLVAL;
   }
 
@@ -1491,13 +1491,13 @@ UUE_PrepSingle (FILE *outfile, FILE *infile,
 		char *infname, int encoding,
 		char *outfname, int filemode,
 		char *destination, char *from,
-		char *subject, char* mid, char* format, char* agent, char* buffer, int isemail)
+		char *subject, int isemail)
 {
   return UUE_PrepSingleExt (outfile, infile,
 			    infname, encoding,
 			    outfname, filemode,
 			    destination, from,
-			    subject, mid, NULL, format, agent, buffer,
+			    subject, NULL,
 			    isemail);
 }
 
@@ -1506,7 +1506,7 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 		   char *infname, int encoding,
 		   char *outfname, int filemode,
 		   char *destination, char *from,
-		   char *subject, char* mid, char *replyto, char* format, char* agent, char* buffer,
+		   char *subject, char *replyto,
 		   int isemail)
 {
   mimemap *miter=mimetable;
@@ -1569,18 +1569,6 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 
   fprintf (outfile, "Subject: %s%s", subline, eolstring);
 
-  // pan change (imhotep) : add unique mid for saving the upload queue to hdd, add user agent
-  if (mid)
-  {
-    fprintf(outfile, "Message-ID: <%s>%s", mid, eolstring);
-  }
-
-  if (agent)
-  {
-    fprintf(outfile, "User-Agent: %s%s", agent, eolstring);
-  }
-
-
   if (replyto) {
     fprintf (outfile, "Reply-To: %s%s", replyto, eolstring);
   }
@@ -1597,10 +1585,6 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 
   fprintf (outfile, "%s", eolstring);
 
-  // pan change (imhotep) : add preamble text
-  if (buffer)
-    fprintf (outfile, "%s%s%s%s", eolstring, buffer, eolstring, eolstring);
-
   res = UUEncodeToStream (outfile, infile, infname, encoding,
 			  outfname, filemode);
 
@@ -1613,16 +1597,14 @@ UUE_PrepPartial (FILE *outfile, FILE *infile,
 		 char *infname, int encoding,
 		 char *outfname, int filemode,
 		 int partno, long linperfile, long filesize,
-		 char *destination, char *from, char *subject, char* mid, char* format, char* agent, char* buffer,
-		 int isemail)
+		 char *destination, char *from, char *subject, int isemail)
 {
   return UUE_PrepPartialExt (outfile, infile,
 			     infname, encoding,
 			     outfname, filemode,
 			     partno, linperfile, filesize,
 			     destination,
-			     from, subject, mid, NULL, format, agent, buffer,
-			     isemail);
+			     from, subject, NULL, isemail);
 }
 
 int UUEXPORT
@@ -1631,7 +1613,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
 		    char *outfname, int filemode,
 		    int partno, long linperfile, long filesize,
 		    char *destination,
-		    char *from, char *subject, char* mid, char *replyto, char* format, char* agent, char* buffer,
+		    char *from, char *subject, char *replyto,
 		    int isemail)
 {
   static int numparts, themode;
@@ -1728,7 +1710,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
       if (infile==NULL) fclose (theifile);
       return UUE_PrepSingleExt (outfile, infile, infname, encoding,
 				outfname, filemode, destination,
-				from, subject, mid, replyto, format, agent, buffer, isemail);
+				from, subject, replyto, isemail);
     }
 
     /*
@@ -1753,10 +1735,8 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
     if (partno == 1)
       crc = crc32(0L, Z_NULL, 0);
       crcptr = &crc;
-      sprintf (subline, format, oname, partno, numparts);
-//    else
-//      sprintf (subline, "\"%s\" - (%03d/%03d)", oname,
-//	       partno, numparts);
+      sprintf (subline, "\"%s\" - (%03d/%03d)", oname,
+	       partno, numparts);
   }
   else {
     if (subject)
@@ -1779,17 +1759,6 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
 
   fprintf (outfile, "Subject: %s%s", subline, eolstring);
 
-  // pan change (imhotep) : add unique mid for saving the upload queue to hdd, add user agent
-  if (mid)
-  {
-    fprintf(outfile, "Message-ID: <%s>%s", mid, eolstring);
-  }
-
-  if (agent)
-  {
-    fprintf(outfile, "User-Agent: %s%s", agent, eolstring);
-  }
-
   if (replyto) {
     fprintf (outfile, "Reply-To: %s%s", replyto, eolstring);
   }
@@ -1803,10 +1772,6 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
   }
 
   fprintf (outfile, "%s", eolstring);
-
-  // pan change (imhotep) : add preamble text
-  if (buffer)
-    fprintf (outfile, "%s%s%s%s", eolstring, buffer, eolstring, eolstring);
 
   res = UUEncodePartial (outfile, theifile,
 			 infname, encoding,

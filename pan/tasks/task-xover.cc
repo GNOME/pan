@@ -84,14 +84,6 @@ namespace
   }
 }
 
-//namespace
-//{
-//    void create_cachename(char* in, size_t len, const char* add)
-//    {
-//        g_snprintf(in, len, "%s%c%s",file::get_pan_home().c_str(), G_DIR_SEPARATOR , add);
-//    }
-//}
-
 TaskXOver :: TaskXOver (Data         & data,
                         const Quark  & group,
                         Mode           mode,
@@ -108,15 +100,10 @@ TaskXOver :: TaskXOver (Data         & data,
   _parts_so_far (0ul),
   _articles_so_far (0ul),
   _lines_so_far (0ul),
-  _total_minitasks (0),
-  _working(0)
+  _total_minitasks (0)
 {
 
   debug ("ctor for " << group);
-
-//  char buf[2048];
-//  create_cachename (buf,sizeof(buf), "headers");
-//  _headers.open(buf, std::ios::out | std::ios::trunc);
 
   // add a ``GROUP'' MiniTask for each server that has this group
   // initialize the _high lookup table to boundaries
@@ -390,18 +377,6 @@ TaskXOver :: on_nntp_done (NNTP              * nntp,
 {
   update_work (true);
   check_in (nntp, health);
-
-//  --_working;
-//
-//  if (_working == 0)
-//  {
-//      char buf[2048];
-//      create_cachename(buf,2048,"headers");
-//      _headers.close();
-//      _headers.open(buf, std::ifstream::in);
-//      while (_headers.getline(buf,2048))
-//        on_nntp_line_process(nntp,StringView(buf));
-//  }
 }
 
 void

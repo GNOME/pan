@@ -65,8 +65,9 @@ Encoder :: enqueue (TaskUpload                      * task,
                     Article                         * article,
                     std::string                     & filename,
                     std::string                     & basename,
+                    std::string                     & subject,
                     int                               lpf,
-                    const TaskUpload::EncodeMode    & enc)
+                    const TaskUpload::EncodeMode      enc)
 
 {
   disable_progress_update ();
@@ -74,11 +75,12 @@ Encoder :: enqueue (TaskUpload                      * task,
   this->task = task;
   this->basename = basename;
   this->filename = filename;
-  this->encode_mode = encode_mode;
+  this->encode_mode = enc;
   this->needed = &task->_needed;
   this->cache = cache;
   this->article = article;
   this->lpf = lpf;
+  this->subject = subject;
 
   percent = 0;
   current_file.clear ();
@@ -119,10 +121,7 @@ Encoder :: do_work()
       batch.init(StringView(basename), needed->size(), 0);
 
       /* build real subject line for article*/
-      ///TODO should this be here??
-      g_snprintf(buf, sizeof(buf), "\"%s\" - %s (/%03d)", basename.c_str(), article->subject.to_string().c_str(), (int)needed->size());
-      tmp->subject = buf;
-
+      tmp->subject = subject;
 
       for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
       {
@@ -135,8 +134,36 @@ Encoder :: do_work()
         }
 
         crc32_t crc;
-        res = UUEncodePartial (fp, NULL, (char*)filename.c_str(),YENC_ENCODED, (char*)basename.c_str(), NULL, 0644, cnt, lpf,&crc);
+        int enc(YENC_ENCODED);
+        std::ofstream out;
+        std::string txt;
+        /* (encoding!=UU_ENCODED&&encoding!=XX_ENCODED&&encoding!=B64ENCODED&&
+       encoding!=PT_ENCODED&&encoding!=QP_ENCODED&&encoding!=YENC_ENCODED)) { */
+        switch (encode_mode)
+        {
+            case TaskUpload::YENC:
+                enc = YENC_ENCODED;
+                break;
+            case TaskUpload::PLAIN:
+                file :: get_text_file_contents (filename, txt);
+                cache->get_filename(cachename, Quark(it->second.message_id));
+                out.open(cachename, std::ios::out);
+                out << txt;
+                out.close();
+                res = UURET_OK;
+                goto _no_encode;
+                break;
+            case TaskUpload::BASE64:
+                enc = B64ENCODED;
+                break;
+            default:
+                enc = YENC_ENCODED;
+                break;
+        }
 
+        res = UUEncodePartial (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, lpf,&crc);
+
+_no_encode:
         if (fp) fclose(fp);
         if (res != UURET_CONT && res != UURET_OK) break;
         cache->finalize(it->second.message_id);

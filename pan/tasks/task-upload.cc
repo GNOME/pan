@@ -73,7 +73,6 @@ TaskUpload :: TaskUpload (const std::string         & filename,
                           EncodeCache               & cache,
                           Article                     article,
                           UploadInfo                  format,
-                          needed_t                  & imported,
                           GMimeMessage *              msg,
                           Progress::Listener        * listener,
                           const TaskUpload::EncodeMode  enc):
@@ -90,35 +89,20 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _encode_mode(enc),
   _all_bytes(0),
   _format(format),
-  _save_file(format.save_file),
   _lpf(format.lpf),
   _queue_pos(0),
   _msg (msg)
 {
 
-//    char * pch = g_mime_object_to_string ((GMimeObject *) _msg);
-//    std::cerr<<"gmimemessage:\n"<<pch<<std::endl;
-//    g_free(pch);
-
-  if (!imported.empty())
-    foreach (needed_t, imported, nit)
-      _needed.insert(*nit);
-
   struct stat sb;
   stat(filename.c_str(),&sb);
   _bytes = sb.st_size;
-  build_needed_tasks(!imported.empty());
-
   update_work ();
 }
 
 void
-TaskUpload :: build_needed_tasks(bool imported)
+TaskUpload :: build_needed_tasks()
 {
-
-  quarks_t groups;
-  foreach_const (Xref, _article.xref, it)
-    _groups.insert (it->group);
 
   foreach (needed_t, _needed, it)
   {
@@ -126,9 +110,15 @@ TaskUpload :: build_needed_tasks(bool imported)
     _cache.add(Quark(it->second.message_id));
   }
   _cache.reserve(_mids);
+
   _needed_parts = _needed.size();
-  //dbg
   _total_parts = _needed_parts;
+
+   /* build new master subject */
+  char sub[2048];
+  g_snprintf(sub,2048,"%s - \"%s\" - (%03d/%03d)", _subject.c_str(), _basename.c_str(), 1, _total_parts);
+  _master_subject = sub;
+
 }
 
 void
@@ -146,23 +136,18 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   /* only need encode if mode is NOT plain */
   if (!_encoder && !_encoder_has_run)
   {
-    std::cerr<<"need encoder\n";
     _state.set_need_encoder();
   }
   else if(working)
   {
-      std::cerr<<"working\n";
     _state.set_working();
   }
   else if (_encoder_has_run && !_needed.empty())
   {
-      std::cerr<<"need nntp\n";
     _state.set_need_nntp(_server);
   }
   else if (_needed.empty())
   {
-
-      std::cerr<<"completed\n";
     _state.set_completed();
     set_finished(_queue_pos);
   }
@@ -172,32 +157,25 @@ TaskUpload :: update_work (NNTP* checkin_pending)
 ****
 ***/
 
-namespace
+void
+TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d)
 {
-    void pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
-    {
-        g_mime_object_append_header ((GMimeObject *) msg, "Message-ID", mid);
-        char * bracketed = g_strdup_printf ("<%s>", mid);
-        g_mime_header_list_set (GMIME_OBJECT(msg)->headers, "Message-ID", bracketed);
-        g_free (bracketed);
-    }
+    std::stringstream out;
 
-    void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d)
-    {
-        std::stringstream out;
+    //add headers
+    if (!n->mid.empty()) pan_g_mime_message_set_message_id (msg, n->mid.c_str());
 
-        //add headers to gmimemessage
-        if (!n->mid.empty()) pan_g_mime_message_set_message_id (msg, n->mid.c_str());
+    //modify subject
+    char buf[2048];
+    g_snprintf(buf, sizeof(buf), "%s - \"%s\" - (%03d/%03d)", _subject.c_str(), _basename.c_str(), n->partno, _total_parts);
+    g_mime_message_set_subject (msg, buf);
 
-        //extract body from gmimemessage
-        gboolean unused;
-        char * body (g_mime_object_to_string ((GMimeObject *) msg));
-        out<< body<<"\r\n";
-        std::cerr<<"message:\n"<<out.str()<<std::endl;
-        out<<d;
-        d = out.str();
-        std::cerr<<"message:\n"<<out.str()<<std::endl;
-    }
+    //extract body
+    gboolean unused;
+    char * body (g_mime_object_to_string ((GMimeObject *) msg));
+    out<< body<<"\r\n";
+    out<<d;
+    d = out.str();
 }
 
 void
@@ -239,9 +217,7 @@ TaskUpload :: use_nntp (NNTP * nntp)
 
 void
 TaskUpload :: on_nntp_line (NNTP * nntp,
-                              const StringView & line_in)
-{
-}
+                              const StringView & line_in) {}
 
 void
 TaskUpload :: on_nntp_done (NNTP * nntp,
@@ -252,8 +228,6 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   Log::Entry tmp;
   tmp.date = time(NULL);
   tmp.is_child = true;
-
-  std::cerr<<"nntp done : "<<response<<std::endl;
 
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
@@ -301,7 +275,8 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
         tmp.message = buf;
         _logfile.push_front(tmp);
-      } else if (post_ok && _needed.empty())
+      }
+      else if (post_ok && _needed.empty())
       {
         g_snprintf(buf,sizeof(buf), _("Posting of file %s (Part %d of %d) succesful: %s"),
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
@@ -368,24 +343,9 @@ TaskUpload :: use_encoder (Encoder* encoder)
   _encoder = encoder;
   init_steps(100);
   _state.set_working();
-  // build group name
-  std::string groups;
-  quarks_t::iterator it = _groups.begin();
-  int i(0);
-  for (; it != _groups.end(); it, ++it, ++i)
-  {
-    if (i<_groups.size()&& i>0 && _groups.size()>1) groups += ",";
-    groups += (*it).to_string();
-  }
 
-  /* build format string for yEnc */
-  std::stringstream format_s;
-  format_s << (_format.comment1 ? _subject : "");
-  format_s << (_format.comment1 ? " - " : "");
-  format_s << "\"%s\""; // will be filled in by uuencode
-  format_s << " (%d/%d) yEnc";     // will be filled in by uuencode
-  std::string format(format_s.str());
-  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _lpf, YENC);//_encode_mode);
+    ///TODO support other encode modes by choice of user
+  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _lpf, _encode_mode);
   debug ("encoder thread was free, enqueued work");
 }
 
@@ -415,8 +375,9 @@ TaskUpload :: on_worker_done (bool cancelled)
     foreach_const(Encoder::log_t, _encoder->log_infos, it)
       Log :: add_info(it->c_str());
 
-    if (!_encoder->log_errors.empty())
-      set_error (_encoder->log_errors.front());
+    if (!_encoder->log_errors.empty()) {
+        _needed.clear(); //update_work will then set the status to complete
+    }
 
     if (!_encoder->log_severe.empty())
       _state.set_health (ERR_LOCAL);
@@ -442,7 +403,6 @@ TaskUpload :: ~TaskUpload ()
       _encoder->cancel_silently();
 
   g_object_unref (G_OBJECT(_msg));
-
-  _cache.release(_mids);
-  _cache.resize();
+//  _cache.release(_mids);
+//  _cache.resize();
 }

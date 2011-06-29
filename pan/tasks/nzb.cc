@@ -366,24 +366,24 @@ NZB :: nzb_to_xml (std::ostream             & out,
       escaped (out, task->_subject);
       out  << "\" server=\"";
       escaped (out, task->_server.to_string());
-      out  << "\" queue=\"";
-      escaped (out, task->_save_file);
+
+      ///TODO
+//      out  << "\" queue=\"";
+//      escaped (out, task->_save_file);
       out  << "\" lpf=\"";
       char buf[256];
       g_snprintf(buf,sizeof(buf),"%d",task->_lpf);
       escaped (out, buf);
-      out  << "\" domain=\"nospam@";
-      escaped (out, task->_domain) << "\">\n";
       ++depth;
       out << indent(depth)
           << "<path>" << task->_filename << "</path>\n";
       out  << indent(depth) << "<groups>\n";
 
-
-      ++depth;
-      foreach_const (quarks_t, task->_groups, git)
-        out << indent(depth) << "<group>" << *git << "</group>\n";
-      --depth;
+        ///TODO
+//      ++depth;
+//      foreach_const (quarks_t, task->_groups, git)
+//        out << indent(depth) << "<group>" << *git << "</group>\n";
+//      --depth;
 
       out << indent(--depth) << "</groups>\n";
       out  << indent(depth) << "<parts>\n";

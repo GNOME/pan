@@ -59,6 +59,8 @@ namespace pan
       void move_top      (const tasks_t&);
       void move_bottom   (const tasks_t&);
 
+      void select_encode (const tasks_t&);
+
       enum AddMode { TOP, BOTTOM };
       void add_tasks     (const tasks_t&, AddMode=BOTTOM);
 
@@ -97,8 +99,8 @@ namespace pan
       listeners_t _listeners;
 
     public:
-      TaskUpload* operator[](size_t i) { return _tasks[i]; }
-      const TaskUpload* operator[](size_t i) const { return _tasks[i]; }
+      TaskUpload* operator[](size_t i) { if (i>=_tasks.size() || i<0) return NULL; return _tasks[i]; }
+      const TaskUpload* operator[](size_t i) const { if (i>=_tasks.size() || i<0) return NULL; return _tasks[i]; }
 
     private:
       TaskSet _tasks;

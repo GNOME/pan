@@ -152,6 +152,15 @@ UploadQueue :: move_bottom (const tasks_t& tasks)
 }
 
 void
+UploadQueue :: select_encode (const tasks_t& tasks)
+{
+//  foreach_const (tasks_t, tasks, it) {
+//    TaskUpload * task (*it);
+//
+//  }
+}
+
+void
 UploadQueue :: fire_tasks_added (int pos, int count)
 {
   for (lit it(_listeners.begin()), end(_listeners.end()); it!=end; )

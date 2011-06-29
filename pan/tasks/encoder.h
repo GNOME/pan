@@ -65,8 +65,9 @@ namespace pan
                     Article                         * article,
                     std::string                     & filename,
                     std::string                     & basename,
+                    std::string                     & subject,
                     int                               lpf,
-                    const TaskUpload::EncodeMode    & enc = TaskUpload::YENC);
+                    const TaskUpload::EncodeMode      enc = TaskUpload::YENC);
 
     public:
 
@@ -83,7 +84,7 @@ namespace pan
       int parts;
       TaskUpload * task;
       TaskUpload::EncodeMode encode_mode;
-      std::string   basename, filename;
+      std::string   basename, filename, subject;
       int lpf;
       EncodeCache * cache;
       TaskUpload::needed_t * needed;

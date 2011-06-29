@@ -47,7 +47,6 @@
 #define YENC_TAG_CRC32         " crc32="
 #define YENC_FULL_LINE_LEN     256
 #define YENC_HALF_LINE_LEN     128
-//#define YENC_LINES_PER_FILE    4000
 #define YENC_ESC_NULL          "=@"
 #define YENC_ESC_TAB           "=I"
 #define YENC_ESC_LF            "=J"
@@ -59,7 +58,7 @@
 namespace pan
 {
   /**
-   * Utilities to build and parse GMimeMesasges.
+   * Utilities to build and parse GMimeMessages.
    *
    * Most of nastiness this is to handle Usenet's use of chainging together
    * multiple articles as parts of a whole.  This code tries to build
@@ -94,6 +93,7 @@ namespace pan
 
   char *pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html);
   void pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, GMimeRecipientType type, const char *string);
+  void pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid);
 
 }
 

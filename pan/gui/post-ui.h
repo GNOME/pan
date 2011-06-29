@@ -33,6 +33,13 @@
 
 namespace pan
 {
+   /*
+    #define B64ENCODED	(2)
+    #define PT_ENCODED	(5)
+    #define YENC_ENCODED 7)	*/
+
+  static int bpl[3] = { 45, 45, 128 };
+
   class Profiles;
   class TaskPost;
   class UploadQueue;
@@ -87,13 +94,14 @@ namespace pan
       void update_parts_tab();
 
       //popup action entries
-      void remove_files ();
-      void clear_list   ();
-      void select_parts ();
-      void move_up      ();
-      void move_down    ();
-      void move_top     ();
-      void move_bottom  ();
+      void remove_files  ();
+      void clear_list    ();
+      void select_parts  ();
+      void move_up       ();
+      void move_down     ();
+      void move_top      ();
+      void move_bottom   ();
+      void select_encode (GtkAction*);
 
       static void do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g);
       static gboolean on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gpointer userdata);
@@ -144,7 +152,7 @@ namespace pan
       std::string _charset;
       TextMassager _tm;
       GtkUIManager * _uim;
-      GtkActionGroup * _agroup, * _pgroup;
+      GtkActionGroup * _agroup, * _pgroup, * _epgroup;
       std::string _current_signature;
       GtkWidget * _post_dialog;
       TaskPost * _post_task;
@@ -181,6 +189,7 @@ namespace pan
       GtkWidget* create_main_tab ();
       GtkWidget* create_extras_tab ();
       GtkWidget* create_filequeue_tab ();
+      void update_filequeue_tab();
       GtkWidget* create_parts_tab ();
       GtkWidget* create_log_tab ();
 
@@ -232,9 +241,6 @@ namespace pan
       int _running_uploads;
       std::ofstream _out;
       static void message_id_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer);
-      std::string get_domain(const StringView& mid);
-      bool update_queue_mids (bool enable=true);
-      bool update_queue_save_file ();
 
       void generate_unique_id (StringView& mid, int cnt, std::string& s);
       MTRand mtrand;

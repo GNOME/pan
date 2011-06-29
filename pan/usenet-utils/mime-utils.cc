@@ -1237,7 +1237,6 @@ char *pan::pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html
   if (mime_part != NULL) {
     body = pan_g_mime_part_get_content (GMIME_PART (mime_part), &len);
   }
-
   return body;
 }
 
@@ -1251,4 +1250,15 @@ void pan::pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, 
         g_mime_message_add_recipient (message, type, internet_address_get_name(ia), internet_address_mailbox_get_addr(INTERNET_ADDRESS_MAILBOX(ia)));
     }
   }
+}
+
+/**
+* Works around a GMime bug that uses `Message-Id' rather than `Message-ID'
+*/
+void pan::pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
+{
+    g_mime_object_append_header ((GMimeObject *) msg, "Message-ID", mid);
+    char * bracketed = g_strdup_printf ("<%s>", mid);
+    g_mime_header_list_set (GMIME_OBJECT(msg)->headers, "Message-ID", bracketed);
+    g_free (bracketed);
 }

@@ -83,13 +83,9 @@ namespace pan
 
       enum EncodeMode
       {
-        UUENC = UU_ENCODED,
-        YENC = YENC_ENCODED,
-        BASE64 = B64ENCODED,
-        PLAIN = PT_ENCODED,
-        XXENC = XX_ENCODED,
-        QPENC = QP_ENCODED,
-        BHENC = BH_ENCODED
+        BASE64,
+        PLAIN,
+        YENC,
       };
 
       // life cycle
@@ -98,10 +94,9 @@ namespace pan
                    EncodeCache               & cache,
                    Article                     article,
                    UploadInfo                  format,
-                   needed_t                  & imported,
                    GMimeMessage *              msg,
                    Progress::Listener        * listener= 0,
-                   TaskUpload::EncodeMode enc= YENC);
+                   EncodeMode enc= YENC);
 
       virtual ~TaskUpload ();
 
@@ -113,6 +108,27 @@ namespace pan
       const std::string& subject ()  { return  _subject;  }
       unsigned long get_byte_count() { return _bytes;     }
       needed_t& needed()             { return _needed;    }
+      std::string enc_mode_to_str(EncodeMode& e)
+      {
+        std::string res;
+        switch (e)
+        {
+            case YENC:
+              res += "yEnc";
+              break;
+            case BASE64:
+              res += "BASE64";
+              break;
+            case PLAIN:
+              break;
+            default:
+              res += "yEnc";
+              break;
+        }
+        return res;
+      }
+
+      std::string encode_mode()  { return enc_mode_to_str(_encode_mode); }
 
       /** only call this for tasks in the NEED_ENCODE state
        * attempts to acquire the encoder thread and start encoding
@@ -144,29 +160,26 @@ namespace pan
       std::string _filename;
       std::string _basename;
       TaskUpload::EncodeMode _encode_mode;
-      quarks_t _groups;
-      std::string _subject, _author;
+      std::string _subject, _master_subject, _author;
       UploadInfo _format;
       int _total_parts, _needed_parts;
       unsigned long _bytes;
       EncodeCache& _cache;
       std::deque<Log::Entry> _logfile;   // for intermediate updates
       Article _article;
-      std::string _domain;
       unsigned long _all_bytes;
       std::vector<Article*> _upload_list;
-      std::string _save_file;
       Article::mid_sequence_t _mids;
       int _queue_pos;
-      std::string _agent;
       int _lpf;
 
     private:
       needed_t       _needed;
       void update_work (NNTP * checkin_pending = 0);
-      void build_needed_tasks(bool);
+      void build_needed_tasks();
 
       GMimeMessage * _msg;
+      void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d);
 
   };
 }
