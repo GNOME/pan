@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset:
 2 -*- */
 /*
  * Pan - A Newsreader for Gtk+
@@ -351,58 +351,59 @@ NZB :: nzb_to_xml (std::ostream             & out,
       out << indent(--depth) << "</segments>\n";
       out << indent(--depth) << "</file>\n";
     }
-    else
-    { // handle upload tasks
-      TaskUpload * task (dynamic_cast<TaskUpload*>(*it));
-      // not an upload task, move on
-      if (!task) continue;
-
-      const Article& a (task->get_article());
-
-      //info: author, subject, load path, parts to encode / post
-      out << indent(depth)
-          << "<upload" << " author=\"";
-      escaped (out, task->_author);
-      out  << "\" subject=\"";
-      escaped (out, task->_subject);
-      out  << "\" server=\"";
-      escaped (out, task->_server.to_string());
-
-      ///TODO
-//      out  << "\" queue=\"";
-//      escaped (out, task->_save_file);
-      out  << "\" lpf=\"";
-      char buf[256];
-      g_snprintf(buf,sizeof(buf),"%d",task->_lpf);
-      escaped (out, buf);
-      ++depth;
-      out << indent(depth)
-          << "<path>" << task->_filename << "</path>\n";
-      out  << indent(depth) << "<groups>\n";
-
-        ///TODO
+//    else
+//    { // handle upload tasks
+//      TaskUpload * task (dynamic_cast<TaskUpload*>(*it));
+//      // not an upload task, move on
+//      if (!task) continue;
+//
+//      const Article& a (task->get_article());
+//
+//      //info: author, subject, load path, parts to encode / post
+//      out << indent(depth)
+//          << "<upload" << " author=\"";
+//      escaped (out, task->_author);
+//      out  << "\" subject=\"";
+//      escaped (out, task->_subject);
+//      out  << "\" server=\"";
+//      escaped (out, task->_server.to_string());
+//
+//      ///TODO
+////      out  << "\" queue=\"";
+////      escaped (out, task->_save_file);
+//      out  << "\" lpf=\"";
+//      char buf[256];
+//      g_snprintf(buf,sizeof(buf),"%d",task->_lpf);
+//      escaped (out, buf);
 //      ++depth;
-//      foreach_const (quarks_t, task->_groups, git)
-//        out << indent(depth) << "<group>" << *git << "</group>\n";
+//      out << indent(depth)
+//          << "<path>" << task->_filename << "</path>\n";
+//      out  << indent(depth) << "<groups>\n";
+//
+//        ///TODO
+////      ++depth;
+////      foreach_const (quarks_t, task->_groups, git)
+////        out << indent(depth) << "<group>" << *git << "</group>\n";
+////      --depth;
+//
+//      out << indent(--depth) << "</groups>\n";
+//      out  << indent(depth) << "<parts>\n";
+//      ++depth;
+//
+//      foreach (TaskUpload::needed_t, task->_needed, it)
+//      {
+//        out << indent(depth)
+//            << "<part" << " bytes=\"" << it->second.bytes << '"'
+//            << " number=\"" << it->second.partno << '"'
+//            << ">";
+//        escaped(out, it->second.message_id);
+//        out  << "</part>\n";
+//      }
 //      --depth;
-
-      out << indent(--depth) << "</groups>\n";
-      out  << indent(depth) << "<parts>\n";
-      ++depth;
-
-      foreach (TaskUpload::needed_t, task->_needed, it)
-      {
-        out << indent(depth)
-            << "<part" << " bytes=\"" << it->second.bytes << '"'
-            << " number=\"" << it->second.partno << '"'
-            << ">";
-        escaped(out, it->second.message_id);
-        out  << "</part>\n";
-      }
-      --depth;
-      out  << indent(depth) << "</parts>\n";
-      out << indent(depth) << "</upload>\n";
-    }
+//      out  << indent(depth) << "</parts>\n";
+//      out << indent(depth) << "</upload>\n";
+//    }
+//  }
   }
   out << indent(--depth) << "</nzb>\n";
   return out;

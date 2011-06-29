@@ -98,10 +98,14 @@ Encoder :: do_work()
   const int bufsz = 4096;
   char buf[bufsz], buf2[bufsz];
   int cnt(1);
-  crc32_t crcptr;
+  crc32_t crc;
   struct stat sb;
   std::string s;
   FILE* outfile, * infile ;
+  PartBatch batch;
+  char cachename[4096];
+  FILE * fp ;
+  Article* tmp = article;
 
     enable_progress_update();
 
@@ -113,11 +117,7 @@ Encoder :: do_work()
       UUSetMsgCallback (this, uu_log);
       UUSetBusyCallback (this, uu_busy_poll, 200);
 
-      PartBatch batch;
-      char cachename[4096];
-      int cnt(1);
-      FILE * fp ;
-      Article* tmp = article;
+
 
       batch.init(StringView(basename), needed->size(), 0);
 
@@ -126,8 +126,6 @@ Encoder :: do_work()
 
       for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
       {
-
-        crc32_t crc;
         int enc(YENC_ENCODED);
         std::ofstream out;
         std::string txt;
@@ -173,8 +171,7 @@ _no_encode:
         stat (cachename, &sb);
         it->second.bytes  = sb.st_size;
         task->_all_bytes += sb.st_size;
-        //dbg
-        batch.add_part(cnt, StringView(s), 0);//sb.st_size);
+        batch.add_part(cnt, StringView(it->second.mid), sb.st_size);
         if (res != UURET_CONT) break;
       }
 

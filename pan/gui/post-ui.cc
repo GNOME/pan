@@ -781,7 +781,8 @@ PostUI :: send_and_save_now ()
       HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
       _("The file queue is empty, so no files can be saved."),"");
       gtk_dialog_add_button (GTK_DIALOG(d), _("Go Back"), GTK_RESPONSE_CANCEL);
-  }
+  } else
+    _save_file = prompt_user_for_upload_nzb_dir (GTK_WINDOW(_root), _prefs);
 
   GMimeMessage * message (new_message_from_ui (POSTING));
   if (!maybe_post_message (message))
@@ -905,9 +906,7 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
       mut.unlock();
       if (close) close_window(true);
     }
-
   }
-
 }
 
 void
