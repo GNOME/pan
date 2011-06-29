@@ -116,6 +116,7 @@ Encoder :: do_work()
       PartBatch batch;
       char cachename[4096];
       int cnt(1);
+      FILE * fp ;
       Article* tmp = article;
 
       batch.init(StringView(basename), needed->size(), 0);
@@ -125,13 +126,6 @@ Encoder :: do_work()
 
       for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
       {
-        FILE * fp = cache->get_fp_from_mid(it->second.message_id);
-        if (!fp)
-        {
-          g_snprintf(buf, bufsz, _("Error loading %s from cache."), it->second.message_id.c_str());
-          log_errors.push_back(buf); // log error
-          continue;
-        }
 
         crc32_t crc;
         int enc(YENC_ENCODED);
@@ -161,10 +155,18 @@ Encoder :: do_work()
                 break;
         }
 
+        fp = cache->get_fp_from_mid(it->second.message_id);
+        if (!fp)
+        {
+          g_snprintf(buf, bufsz, _("Error loading %s from cache."), it->second.message_id.c_str());
+          log_errors.push_back(buf); // log error
+          continue;
+        }
+
         res = UUEncodePartial (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, lpf,&crc);
 
-_no_encode:
         if (fp) fclose(fp);
+_no_encode:
         if (res != UURET_CONT && res != UURET_OK) break;
         cache->finalize(it->second.message_id);
         cache->get_filename(cachename, Quark(it->second.message_id));
