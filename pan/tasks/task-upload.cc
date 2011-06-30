@@ -124,10 +124,9 @@ TaskUpload :: update_work (NNTP* checkin_pending)
 {
 
   int working(0);
-  Needed n;
   foreach (needed_t, _needed, nit)
   {
-    n = nit->second;
+    Needed& n (nit->second);
     if (n.nntp && n.nntp!=checkin_pending)
       ++working;
   }
@@ -144,12 +143,6 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   else if ((_encoder_has_run && !_needed.empty()))
   {
     _state.set_need_nntp(_server);
-    std::string data;
-    _cache.get_data(data,n.message_id.c_str());
-//    prepend_headers(_msg,&n, data);
-    std::ofstream dbg("/home/imhotep/dbg",std::ios::out);
-    dbg<<StringView(data);
-
   }
   else if (_needed.empty())
   {
@@ -211,9 +204,6 @@ TaskUpload :: use_nntp (NNTP * nntp)
     std::string data;
     _cache.get_data(data,needed->message_id.c_str());
     prepend_headers(_msg,needed, data);
-    std::ofstream dbg("/home/imhotep/dbg",std::ios::out);
-    dbg<<StringView(data);
-    dbg.close();
     nntp->post(StringView(data), this);
     update_work ();
   }
@@ -412,6 +402,6 @@ TaskUpload :: ~TaskUpload ()
       _encoder->cancel_silently();
 
   g_object_unref (G_OBJECT(_msg));
-//  _cache.release(_mids);
-//  _cache.resize();
+  _cache.release(_mids);
+  _cache.resize();
 }
