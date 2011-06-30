@@ -124,9 +124,10 @@ TaskUpload :: update_work (NNTP* checkin_pending)
 {
 
   int working(0);
+  Needed n;
   foreach (needed_t, _needed, nit)
   {
-    Needed& n (nit->second);
+    n = nit->second;
     if (n.nntp && n.nntp!=checkin_pending)
       ++working;
   }
@@ -143,6 +144,12 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   else if ((_encoder_has_run && !_needed.empty()))
   {
     _state.set_need_nntp(_server);
+    std::string data;
+    _cache.get_data(data,n.message_id.c_str());
+//    prepend_headers(_msg,&n, data);
+    std::ofstream dbg("/home/imhotep/dbg",std::ios::out);
+    dbg<<StringView(data);
+
   }
   else if (_needed.empty())
   {
@@ -171,8 +178,8 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
     //extract body
     gboolean unused;
     char * body (g_mime_object_to_string ((GMimeObject *) msg));
-    out<< body<<"\r\n";
-    out<<d;
+    out << body << "\n";
+    out << d;
     d = out.str();
 }
 
@@ -204,8 +211,9 @@ TaskUpload :: use_nntp (NNTP * nntp)
     std::string data;
     _cache.get_data(data,needed->message_id.c_str());
     prepend_headers(_msg,needed, data);
-    /* update cache file */
-//    _cache.update_file (data,needed->message_id.c_str());
+    std::ofstream dbg("/home/imhotep/dbg",std::ios::out);
+    dbg<<StringView(data);
+    dbg.close();
     nntp->post(StringView(data), this);
     update_work ();
   }
@@ -304,6 +312,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
     case TOO_MANY_CONNECTIONS:
       // lockout for 120 secs, but try
       _state.set_need_nntp(nntp->_server);
+
       break;
     default:
       this->stop();
@@ -403,6 +412,6 @@ TaskUpload :: ~TaskUpload ()
       _encoder->cancel_silently();
 
   g_object_unref (G_OBJECT(_msg));
-  _cache.release(_mids);
-  _cache.resize();
+//  _cache.release(_mids);
+//  _cache.resize();
 }

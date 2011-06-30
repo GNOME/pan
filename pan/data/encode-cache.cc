@@ -191,11 +191,13 @@ EncodeCache :: get_data(std::string& data, const Quark& where)
 {
   char buf[4096];
   get_filename(buf, where);
-  std::ifstream in(buf, std::ifstream::in);
+  std::ifstream in(buf, std::ios::in);
   std::stringstream out;
-  while (in.good())
-    out << (char) in.get();
 
+  while (in.getline(buf,sizeof(buf)))
+    out << buf << "\n";
+
+  in.close();
   data = out.str();
 }
 

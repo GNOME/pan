@@ -70,6 +70,7 @@ namespace pan
       if (a_rank != b_rank)
         return a_rank < b_rank;
 
+      ///DBG segfault (??)
       if (a_type == SAVE) { // order 'save' by oldest
         const time_t a_time (dynamic_cast<const TaskArticle*>(a)->get_time_posted ());
         const time_t b_time (dynamic_cast<const TaskArticle*>(b)->get_time_posted ());
