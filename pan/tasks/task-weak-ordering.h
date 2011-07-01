@@ -34,14 +34,15 @@ namespace pan
    */
   struct TaskWeakOrdering
   {
-    const Quark BODIES, CANCEL, GROUPS, POST, SAVE, XOVER;
+    const Quark BODIES, CANCEL, GROUPS, POST, SAVE, XOVER, UPLOAD;
     TaskWeakOrdering ():
       BODIES ("BODIES"),
       CANCEL ("CANCEL"),
       GROUPS ("GROUPS"),
       POST ("POST"),
       SAVE ("SAVE"),
-      XOVER ("XOVER")
+      XOVER ("XOVER"),
+      UPLOAD ("UPLOAD")
       {}
 
     int get_rank_for_type (const Quark& type) const
@@ -54,8 +55,8 @@ namespace pan
         rank = 1;
       else if (type==SAVE)
         rank = 2;
-      else
-        rank = 2;
+      else if (type==UPLOAD)
+        rank = 3;
 
       return rank;
     }
@@ -70,10 +71,14 @@ namespace pan
       if (a_rank != b_rank)
         return a_rank < b_rank;
 
-      ///DBG segfault (??)
       if (a_type == SAVE) { // order 'save' by oldest
-        const time_t a_time (dynamic_cast<const TaskArticle*>(a)->get_time_posted ());
-        const time_t b_time (dynamic_cast<const TaskArticle*>(b)->get_time_posted ());
+        const TaskArticle* _a = dynamic_cast<const TaskArticle*>(a);
+        const TaskArticle* _b = dynamic_cast<const TaskArticle*>(b);
+
+        if (!_a || !_b) return false;
+
+        const time_t a_time (_a->get_time_posted ());
+        const time_t b_time (_b->get_time_posted ());
         if (a_time != b_time)
           return a_time < b_time;
       }
