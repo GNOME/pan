@@ -128,7 +128,7 @@ namespace pan
           tasks_t tasks;
           TaskState get_state (Task* task) const {
             if (_decoding && (task==_decoding)) return DECODING;
-            if (_decoding && (task==_encoding)) return ENCODING;
+            if (_encoding && (task==_encoding)) return ENCODING;
             if (_removing.count(task)) return REMOVING;
             if (_stopped.count(task)) return STOPPED;
             if (_running.count(task)) return RUNNING;
