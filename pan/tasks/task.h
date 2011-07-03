@@ -57,7 +57,9 @@ namespace pan
             NEED_DECODER,
             NEED_ENCODER,
             /** Task is running */
-            WORKING
+            WORKING,
+
+            PAUSED
          };
 
          /**
@@ -81,6 +83,9 @@ namespace pan
 
                void set_completed () {
                    _work = COMPLETED; _servers.clear(); }
+
+               void set_paused () {
+                   _work = PAUSED; _servers.clear(); }
 
                void set_working () {
                   _work = WORKING; _servers.clear(); }

@@ -98,7 +98,8 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   struct stat sb;
   stat(filename.c_str(),&sb);
   _bytes = sb.st_size;
-  update_work ();
+//  update_work ();
+  _state.set_paused();
 }
 
 void

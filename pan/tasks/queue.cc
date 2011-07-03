@@ -48,7 +48,8 @@ Queue :: Queue (ServerInfo         & server_info,
   _save_delay_secs (save_delay_secs),
   _needs_saving (false),
   _last_time_saved (0),
-  _archive (archive)
+  _archive (archive),
+  _current_uploads(0)
 {
   tasks_t tasks;
   _archive.load_tasks (tasks);
@@ -117,7 +118,12 @@ Queue :: clean_n_save ()
     Task * task  (*it);
     const Task::State& state (task->get_state());
     if (state._work==Task::COMPLETED || _removing.count(task))
+    {
+      TaskUpload* t = dynamic_cast<TaskUpload*>(task);
+      if (task)
+        --_current_uploads;
       remove_task (task);
+    }
   }
 
   // maybe save the task list.
@@ -251,6 +257,9 @@ Queue :: process_task (Task * task)
   if (state._work == Task::COMPLETED)
   {
     debug ("completed");
+    TaskUpload* t = dynamic_cast<TaskUpload*>(task);
+    if (task)
+      --_current_uploads;
     remove_task (task);
   }
   else if (_removing.count(task))
@@ -272,6 +281,14 @@ Queue :: process_task (Task * task)
   {
     debug ("working");
     // do nothing
+  }
+  else if (state._work == Task::PAUSED)
+  {
+    std::cerr<<"paused task\n";
+    debug ("paused");
+    const Task::State::unique_servers_t& servers (state._servers);
+    foreach_const (Task::State::unique_servers_t, servers, it)
+      request_wakeup ((TaskUpload*)task,*it);
   }
   else if (state._work == Task::NEED_DECODER)
   {
@@ -349,6 +366,19 @@ Queue :: find_first_task_needing_server (const Quark& server)
   }
 
   return 0;
+}
+
+void
+Queue :: request_wakeup (TaskUpload* task, const Quark& server)
+{
+  int max (_server_info.get_server_limits(server));
+  std::cerr<<"request wakeup "<<_current_uploads<<" "<<max<<std::endl;
+  if (_current_uploads < max)
+  {
+    std::cerr<<"task wakeup ("<<max<<"(!\n";
+    ++_current_uploads;
+    task->wakeup();
+  }
 }
 
 bool

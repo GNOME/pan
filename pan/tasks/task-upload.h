@@ -178,6 +178,7 @@ namespace pan
     public:
       void build_needed_tasks();
       std::set<int> _wanted;
+      void wakeup() { update_work(); }
 
     private:
       GMimeMessage * _msg;

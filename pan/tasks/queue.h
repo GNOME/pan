@@ -189,6 +189,9 @@ namespace pan
       Task* find_first_task_needing_server (const Quark& server);
       Task* find_first_task_needing_decoder ();
       Task* find_first_task_needing_encoder ();
+
+      void request_wakeup (TaskUpload* task, const Quark& server);
+
       bool find_best_server (const Task::State::unique_servers_t& servers, Quark& setme);
       bool task_is_active (const Task*) const;
 
@@ -232,6 +235,7 @@ namespace pan
       bool _needs_saving;
       time_t _last_time_saved;
       quarks_t _mids;
+      int _current_uploads;
 
     private:
       TaskArchive& _archive;
