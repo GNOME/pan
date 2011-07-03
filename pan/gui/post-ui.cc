@@ -509,6 +509,7 @@ gboolean
 PostUI :: on_selection_changed  (GtkTreeSelection *s,gpointer p)
 {
   static_cast<PostUI*>(p)->update_filequeue_label();
+  return false;
 }
 
 gboolean
@@ -538,11 +539,11 @@ PostUI :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointe
          }
       }
       do_popup_menu(treeview, event, userdata);
-      return TRUE;
+      return true;
     }
 
   }
-  return FALSE;
+  return false;
 }
 
 void
