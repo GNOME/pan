@@ -105,6 +105,7 @@ namespace pan
 
       static void do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g);
       static gboolean on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gpointer userdata);
+      static gboolean on_selection_changed  (GtkTreeSelection *s,gpointer p);
 
     private:
       void done_sending_message (GMimeMessage*, bool);
@@ -189,9 +190,16 @@ namespace pan
       GtkWidget* create_main_tab ();
       GtkWidget* create_extras_tab ();
       GtkWidget* create_filequeue_tab ();
-      void update_filequeue_tab();
+
+      GtkWidget* create_filequeue_status_bar ();
+      GtkWidget * _filequeue_eventbox;
+      GtkWidget * _filequeue_label;
+      void update_filequeue_label (GtkTreeSelection *selection=NULL);
+
       GtkWidget* create_parts_tab ();
       GtkWidget* create_log_tab ();
+
+      void update_filequeue_tab();
 
     private:
       std::string utf8ize (const StringView&) const;

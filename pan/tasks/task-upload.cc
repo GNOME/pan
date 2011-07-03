@@ -133,7 +133,7 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   }
 
   /* only need encode if mode is NOT plain */
-  if (!_encoder && !_encoder_has_run && _msg)
+  if (!_encoder && !_encoder_has_run)
   {
     _state.set_need_encoder();
   }

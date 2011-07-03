@@ -40,7 +40,7 @@ UploadQueue :: UploadQueue ()
 UploadQueue :: ~UploadQueue ()
 {
 
-  //deletion is done by main queue.
+  //deletion is done by main queue in PostUI.
 
 //  const tasks_t tmp (_tasks.begin(), _tasks.end());
 //  foreach_const (tasks_t, tmp, it) {

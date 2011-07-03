@@ -134,6 +134,34 @@ namespace
   }
 }
 
+/***
+****
+***/
+
+void
+PostUI:: update_filequeue_label (GtkTreeSelection *selection)
+{
+    PostUI::tasks_t tasks(get_selected_files());
+
+    if (tasks.empty())
+      _upload_queue.get_all_tasks(tasks);
+
+    char str[512];
+    long kb(0);
+    foreach (PostUI::tasks_t, tasks, it)
+    {
+      TaskUpload * task (*it);
+      kb += task->_bytes/1024;
+    }
+    g_snprintf(str,sizeof(str), _("Upload Queue : %d Tasks, %ld KB (~ %.2f MB) total ."), tasks.size(), kb, kb/1024.0f);
+    gtk_label_set_text (GTK_LABEL(_filequeue_label), str);
+}
+
+/***
+****
+***/
+
+/* only used if the encode mode has changed, would be too expensive for repetitive calls */
 void
 PostUI :: update_filequeue_tab()
 {
@@ -178,6 +206,8 @@ PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
                       4, task->encode_mode().c_str(),
                       -1);
   }
+
+  update_filequeue_label();
 }
 
 void
@@ -190,6 +220,8 @@ PostUI :: on_queue_task_removed (UploadQueue&, TaskUpload& task, int index)
   GtkTreeIter iter;
   gtk_tree_model_iter_nth_child (GTK_TREE_MODEL(store), &iter, NULL, index);
   gtk_list_store_remove (store, &iter);
+
+  update_filequeue_label();
 }
 
 void
@@ -474,28 +506,41 @@ namespace
 }
 
 gboolean
+PostUI :: on_selection_changed  (GtkTreeSelection *s,gpointer p)
+{
+  static_cast<PostUI*>(p)->update_filequeue_label();
+}
+
+gboolean
 PostUI :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
-  {
-  if (event->type == GDK_BUTTON_PRESS  &&  event->button == 3)
+{
+
+  if (event->type == GDK_BUTTON_PRESS )
   {
     GtkTreeSelection *selection;
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
-    if (gtk_tree_selection_count_selected_rows(selection)  <= 1)
+
+    if ( event->button == 3)
     {
-       GtkTreePath *path;
-       /* Get tree path for row that was clicked */
-       if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
-                                         (gint) event->x,
-                                         (gint) event->y,
-                                         &path, NULL, NULL, NULL))
-       {
-         gtk_tree_selection_unselect_all(selection);
-         gtk_tree_selection_select_path(selection, path);
-         gtk_tree_path_free(path);
-       }
+
+      if (gtk_tree_selection_count_selected_rows(selection)  <= 1)
+      {
+         GtkTreePath *path;
+         /* Get tree path for row that was clicked */
+         if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
+                                           (gint) event->x,
+                                           (gint) event->y,
+                                           &path, NULL, NULL, NULL))
+         {
+           gtk_tree_selection_unselect_all(selection);
+           gtk_tree_selection_select_path(selection, path);
+           gtk_tree_path_free(path);
+         }
+      }
+      do_popup_menu(treeview, event, userdata);
+      return TRUE;
     }
-    do_popup_menu(treeview, event, userdata);
-    return TRUE;
+
   }
   return FALSE;
 }
@@ -2345,6 +2390,7 @@ PostUI :: create_filequeue_tab ()
   //set hint and selection
   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(w),TRUE);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (w));
+  g_signal_connect (selection, "changed", G_CALLBACK(on_selection_changed), this);
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
   gtk_tree_view_columns_autosize(GTK_TREE_VIEW(w));
 
@@ -2355,7 +2401,29 @@ PostUI :: create_filequeue_tab ()
   gtk_container_add (GTK_CONTAINER(w), _filequeue_store);
   gtk_box_pack_start (GTK_BOX(vbox), w, true, true, 0);
 
+  // add status bar
+  gtk_box_pack_start (GTK_BOX(vbox), create_filequeue_status_bar(), false, false, 0);
+  update_filequeue_label ();
+
   return vbox;
+}
+
+GtkWidget*
+PostUI:: create_filequeue_status_bar ()
+{
+  GtkWidget * w;
+  GtkWidget * status_bar (gtk_hbox_new (FALSE, 0));
+
+  // connection status
+  w = _filequeue_label = gtk_label_new (NULL);
+  gtk_misc_set_padding (GTK_MISC(w), PAD, 0);
+  GtkWidget * frame = gtk_frame_new (NULL);
+  gtk_container_set_border_width (GTK_CONTAINER(frame), 0);
+  gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER(frame), w);
+  gtk_box_pack_start (GTK_BOX(status_bar), frame, FALSE, FALSE, 0);
+
+  return status_bar;
 }
 
 void
@@ -2645,6 +2713,7 @@ void
 PostUI :: clear_list (void)
 {
   _upload_queue.clear();
+  update_filequeue_label();
 }
 
 void PostUI :: up_clicked_cb (GtkButton*, PostUI* pane)
@@ -2811,7 +2880,9 @@ PostUI :: PostUI (GtkWindow    * parent,
   _draft_autosave_timeout(0),
   _draft_autosave_idle_tag(0),
   _body_changed_id(0),
-  _body_changed_idle_tag(0)
+  _body_changed_idle_tag(0),
+  _filequeue_eventbox (0),
+  _filequeue_label (0)
 {
 
   mtrand.seed();

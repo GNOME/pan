@@ -152,8 +152,7 @@ namespace pan
     private: // implementation
       friend class Encoder;
       friend class PostUI;
-      friend class NZB;
-      friend class MyContext;
+      friend class Queue;
       Encoder * _encoder;
       bool _encoder_has_run;
       std::string _filename;
@@ -171,16 +170,16 @@ namespace pan
       Article::mid_sequence_t _mids;
       int _queue_pos;
       int _lpf;
-      needed_t       _needed;
+      needed_t _needed;
 
       void update_work (NNTP * checkin_pending = 0);
 
     public:
       void build_needed_tasks();
-      std::set<int> _wanted;
-      void wakeup() { update_work(); }
+      void wakeup() { _state.set_working(); update_work(); }
 
     private:
+      std::set<int> _wanted;
       GMimeMessage * _msg;
       void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d);
 
