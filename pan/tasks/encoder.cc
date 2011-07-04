@@ -98,10 +98,10 @@ Encoder :: do_work()
   const int bufsz = 4096;
   char buf[bufsz], buf2[bufsz];
   int cnt(1);
+  crc32_t crc(0);
   struct stat sb;
   std::string s;
   FILE* outfile, * infile ;
-//  PartBatch batch;
   char cachename[4096];
   FILE * fp ;
   Article* tmp = article;
@@ -115,8 +115,6 @@ Encoder :: do_work()
   } else {
     UUSetMsgCallback (this, uu_log);
     UUSetBusyCallback (this, uu_busy_poll, 200);
-
-//    batch.init(StringView(basename), needed->size(), 0);
 
     /* build real subject line for article*/
     tmp->subject = subject;
@@ -156,8 +154,7 @@ Encoder :: do_work()
         continue;
       }
 
-      crc32_t unused;
-      res = UUEncodePartial (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, lpf, &unused);
+      res = UUEncodePartial (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, lpf,&crc);
 
       if (fp) fclose(fp);
 _no_encode:
@@ -183,12 +180,12 @@ _no_encode:
                  : UUstrerror(res));
       log_errors.push_back(buf); // log error
     } else
-    { // prepare article for upload list
-//      tmp->set_parts(batch);
       task->_upload_list.push_back(tmp);
-    }
+
   UUCleanUp ();
+
   }
+
   disable_progress_update();
 
 }

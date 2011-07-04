@@ -50,7 +50,6 @@ using namespace pan;
 ******
 *****/
 
-// empty cache at construction, we don't need the old files...
 EncodeCache :: EncodeCache (const StringView& path, size_t max_megs):
    _path (path.str, path.len),
    _max_megs (max_megs),
@@ -70,16 +69,15 @@ EncodeCache :: EncodeCache (const StringView& path, size_t max_megs):
       while ((fname = g_dir_read_name (dir)))
       {
         g_snprintf (filename, sizeof(filename), "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, fname);
-        add (Quark(filename));
+        // delete ALL but the gmime_messages
+        if (!strstr(filename, "_msg_")) unlink(filename);
       }
       g_dir_close (dir);
    }
-   debug ("loaded " << _mid_to_info.size() << " articles into cache from " << _path);
 }
 
 EncodeCache :: ~EncodeCache ()
-{
-}
+{}
 
 /*****
 ******
@@ -112,9 +110,9 @@ EncodeCache :: contains (const Quark& mid) const
 void
 EncodeCache :: get_filename (char* buf, const Quark& mid) const
 {
-   const char* base = g_path_get_basename(mid.c_str());
+   char* base = g_path_get_basename(mid.c_str());
    g_snprintf (buf, PATH_MAX, "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, base);
-   g_free((gpointer)base);
+   g_free(base);
 }
 
 FILE*

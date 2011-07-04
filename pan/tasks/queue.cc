@@ -48,7 +48,8 @@ Queue :: Queue (ServerInfo         & server_info,
   _save_delay_secs (save_delay_secs),
   _needs_saving (false),
   _last_time_saved (0),
-  _archive (archive)
+  _archive (archive),
+  _uploads_total(0)
 {
   tasks_t tasks;
   _archive.load_tasks (tasks);
@@ -111,6 +112,7 @@ Queue :: get_pool (const Quark& servername)
 void
 Queue :: clean_n_save ()
 {
+
   const tasks_t tmp (_tasks.begin(), _tasks.end());
   // remove completed tasks.
   foreach_const (tasks_t, tmp, it) {
@@ -144,7 +146,7 @@ Queue :: upkeep ()
   // ref #352170, #354779
   foreach_const (tasks_t, tmp, it) {
     Task * task (*it);
-    if (task->get_state()._work == Task::NEED_NNTP) {
+    if (task->get_state()._work == Task::NEED_NNTP ) {
       process_task (task);
       break;
     }
@@ -157,6 +159,10 @@ Queue :: upkeep ()
     active.insert (it->second);
   foreach (std::set<Task*>, active, it)
     process_task (*it);
+
+  //upkeep on paused upload slots
+//  foreach (std::set<TaskUpload*>, _uploads, it)
+//    process_task (*it);
 
   // idle socket upkeep
   foreach (pools_t, _pools, it)
@@ -240,9 +246,22 @@ Queue :: give_task_a_connection (Task * task, NNTP * nntp)
 }
 
 void
+Queue :: give_task_an_upload_slot (TaskUpload* task)
+{
+  int max (_server_info.get_server_limits(task->_server));
+  if (_uploads.size() < max)
+  {
+    _uploads.insert(task);
+    task->wakeup();
+    fire_task_active_changed (task, true);
+    process_task(task);
+  }
+}
+
+void
 Queue :: process_task (Task * task)
 {
-  pan_return_if_fail (task!=0);
+  pan_return_if_fail (task != 0);
 
   debug ("in process_task with a task of type " << task->get_type());
 
@@ -271,7 +290,12 @@ Queue :: process_task (Task * task)
   else if (state._work == Task::WORKING)
   {
     debug ("working");
-    // do nothing
+  }
+  else if (state._work == Task::PAUSED)
+  {
+    TaskUpload* t = dynamic_cast<TaskUpload*>(task);
+    if (t)
+      give_task_an_upload_slot(t);
   }
   else if (state._work == Task::NEED_DECODER)
   {
@@ -584,10 +608,27 @@ Queue :: remove_task (Task * task)
     TaskArticle * ta (dynamic_cast<TaskArticle*>(task));
     if (ta)
       _mids.erase (ta->get_article().message_id);
-
     _stopped.erase (task);
     _removing.erase (task);
     _tasks.remove (index);
+
+    // manually upkeep on ONE new taskupload to keep the queue going
+    TaskUpload * t  (dynamic_cast<TaskUpload*>(task));
+    if (t)
+    {
+      int max (_server_info.get_server_limits(t->_server));
+      _uploads.erase(t);
+      const tasks_t tmp (_tasks.begin(), _tasks.end());
+      foreach_const (tasks_t, tmp, it) {
+        Task * task (*it);
+        if (task->get_state()._work == Task::PAUSED)
+        {
+          give_task_an_upload_slot(dynamic_cast<TaskUpload*>(*it));
+          break;
+        }
+      }
+    }
+
     delete task;
   }
 
@@ -701,7 +742,7 @@ Queue :: check_in (Decoder* decoder UNUSED, Task* task)
 }
 
 void
-Queue :: check_in (Encoder* decoder UNUSED, Task* task)
+Queue :: check_in (Encoder* encoder UNUSED, Task* task)
 {
   // take care of our decoder counting...
   _encoder_task = 0;

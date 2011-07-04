@@ -53,6 +53,7 @@ namespace pan
     private Queue::Listener,
     private Prefs::Listener
   {
+
     public:
       GUI (Data& data, Queue&, ArticleCache&, EncodeCache&, Prefs&, GroupPrefs&);
       virtual ~GUI ();
@@ -235,6 +236,7 @@ namespace pan
       static void add_widget (GtkUIManager*, GtkWidget*, gpointer);
       static void server_list_dialog_destroyed_cb (GtkWidget*, gpointer);
       void server_list_dialog_destroyed (GtkWidget*);
+
   };
 }
 

@@ -33,13 +33,6 @@
 
 namespace pan
 {
-   /*
-    #define B64ENCODED	(2)
-    #define PT_ENCODED	(5)
-    #define YENC_ENCODED 7)	*/
-
-  static int bpl[3] = { 45, 45, 128 };
-
   class Profiles;
   class TaskPost;
   class UploadQueue;
@@ -105,6 +98,7 @@ namespace pan
 
       static void do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g);
       static gboolean on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gpointer userdata);
+      static gboolean on_selection_changed  (GtkTreeSelection *s,gpointer p);
 
     private:
       void done_sending_message (GMimeMessage*, bool);
@@ -168,6 +162,7 @@ namespace pan
       TaskUpload* _upload_ptr;
       int _total_parts;
       std::string _save_file;
+      MTRand rng;
 
     private:
       friend class UploadQueue;
@@ -189,9 +184,16 @@ namespace pan
       GtkWidget* create_main_tab ();
       GtkWidget* create_extras_tab ();
       GtkWidget* create_filequeue_tab ();
-      void update_filequeue_tab();
+
+      GtkWidget* create_filequeue_status_bar ();
+      GtkWidget * _filequeue_eventbox;
+      GtkWidget * _filequeue_label;
+      void update_filequeue_label (GtkTreeSelection *selection=NULL);
+
       GtkWidget* create_parts_tab ();
       GtkWidget* create_log_tab ();
+
+      void update_filequeue_tab();
 
     private:
       std::string utf8ize (const StringView&) const;
@@ -243,7 +245,6 @@ namespace pan
       static void message_id_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer);
 
       void generate_unique_id (StringView& mid, int cnt, std::string& s);
-      MTRand mtrand;
 
       int get_total_parts(const char* file, TaskUpload* it);
 
