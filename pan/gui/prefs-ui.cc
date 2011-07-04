@@ -628,7 +628,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_add_wide_control (t, &row, w);
   HIG :: workarea_add_section_title (t, &row, _("Upload Subject Line Appearance"));
   HIG :: workarea_add_section_spacer (t, row, 4);
-  w = new_spin_button ("upload-option-lpf", 5000, 50000, prefs);
+  w = new_spin_button ("upload-option-lpf", 4000, 50000, prefs);
   l = gtk_label_new(_("Default Lines per File (for yEnc Encoder)"));
   gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
   gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);

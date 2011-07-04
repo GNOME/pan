@@ -343,8 +343,7 @@ TaskUpload :: use_encoder (Encoder* encoder)
   init_steps(100);
   _state.set_working();
 
-    ///TODO support other encode modes by choice of user
-  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _lpf, _encode_mode);
+  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, 5000, YENC);
   debug ("encoder thread was free, enqueued work");
 }
 
@@ -402,6 +401,6 @@ TaskUpload :: ~TaskUpload ()
       _encoder->cancel_silently();
 
   g_object_unref (G_OBJECT(_msg));
-  _cache.release(_mids);
-  _cache.resize();
+//  _cache.release(_mids);
+//  _cache.resize();
 }

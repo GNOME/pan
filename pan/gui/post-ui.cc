@@ -783,6 +783,8 @@ PostUI :: send_and_save_now ()
   } else
     _save_file = prompt_user_for_upload_nzb_dir (GTK_WINDOW(_root), _prefs);
 
+  if (_save_file.empty()) return;
+
   GMimeMessage * message (new_message_from_ui (POSTING));
   if (!maybe_post_message (message))
     g_object_unref (G_OBJECT(message));

@@ -189,13 +189,22 @@ EncodeCache :: clear ()
 void
 EncodeCache :: get_data(std::string& data, const Quark& where)
 {
-  char buf[4096];
+  char buf[4096], buf2[4096];
   get_filename(buf, where);
   std::ifstream in(buf, std::ios::in);
   std::stringstream out;
 
-  while (in.getline(buf,sizeof(buf)))
+  char * path = g_path_get_basename (buf);
+  g_snprintf(buf2,sizeof(buf2), "/home/imhotep/%s",path);
+
+  std::ofstream dbg(buf2, std::ios::out);
+
+  while (in.getline(buf,sizeof(buf))) {
+    dbg << buf <<"\n";
     out << buf << "\n";
+  }
+
+  dbg.close();
 
   in.close();
   data = out.str();

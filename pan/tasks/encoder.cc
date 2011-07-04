@@ -98,7 +98,6 @@ Encoder :: do_work()
   const int bufsz = 4096;
   char buf[bufsz], buf2[bufsz];
   int cnt(1);
-  crc32_t crc;
   struct stat sb;
   std::string s;
   FILE* outfile, * infile ;
@@ -127,8 +126,6 @@ Encoder :: do_work()
       int enc(YENC_ENCODED);
       std::ofstream out;
       std::string txt;
-      /* (encoding!=UU_ENCODED&&encoding!=XX_ENCODED&&encoding!=B64ENCODED&&
-     encoding!=PT_ENCODED&&encoding!=QP_ENCODED&&encoding!=YENC_ENCODED)) { */
       switch (encode_mode)
       {
           case TaskUpload::YENC:
@@ -159,7 +156,8 @@ Encoder :: do_work()
         continue;
       }
 
-      res = UUEncodePartial (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, lpf,&crc);
+      crc32_t unused;
+      res = UUEncodePartial (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, lpf, &unused);
 
       if (fp) fclose(fp);
 _no_encode:
