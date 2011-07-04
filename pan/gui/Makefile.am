@@ -91,7 +91,7 @@ else
 WINRC =
 WINRCOBJ =
 endif
-  
+
 pan_SOURCES = gui.cc pan.cc $(WINRC)
 pan_LDADD = ./libpangui.a $(WINRCOBJ) ../data-impl/libpandata.a ../tasks/libtasks.a ../data/libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a ../../uulib/libuu.a @GTKSPELL_LIBS@ @GTK_LIBS@ @GMIME_LIBS@ @GLIB_LIBS@
 

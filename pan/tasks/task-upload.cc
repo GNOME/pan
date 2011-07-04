@@ -88,17 +88,16 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _encoder_has_run (false),
   _encode_mode(enc),
   _all_bytes(0),
-  _format(format),
   _lpf(format.lpf),
   _queue_pos(0),
   _msg (msg),
-  _total_parts(format.total)
+  _total_parts(format.total),
+  _save_file(format.save_file)
 {
 
   struct stat sb;
   stat(filename.c_str(),&sb);
   _bytes = sb.st_size;
-//  update_work ();
   _state.set_paused();
 }
 
@@ -113,10 +112,7 @@ TaskUpload :: build_needed_tasks()
   }
   _cache.reserve(_mids);
 
-   /* build new master subject */
-  char sub[2048];
-  g_snprintf(sub,2048,"%s - \"%s\" - (%03d/%03d)", _subject.c_str(), _basename.c_str(), 1, _total_parts);
-  _master_subject = sub;
+  update_master_subject ();
 
 }
 
@@ -133,7 +129,7 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   }
 
   /* only need encode if mode is NOT plain */
-  if (!_encoder && !_encoder_has_run)
+  if (!_encoder_has_run)
   {
     _state.set_need_encoder();
   }
@@ -157,6 +153,21 @@ TaskUpload :: update_work (NNTP* checkin_pending)
 ***/
 
 void
+TaskUpload :: update_subjects()
+{
+  _total_parts = std::max(1, (int) (((long)_bytes + (_lpf*bpl[_encode_mode]-1)) / (_lpf*bpl[_encode_mode])));
+  update_master_subject ();
+}
+
+void TaskUpload :: update_master_subject()
+{
+  /* build new master subject */
+  char sub[2048];
+  g_snprintf(sub,2048,"%s - \"%s\" - (%03d/%03d)", _subject.c_str(), _basename.c_str(), 1, _total_parts);
+  _master_subject = sub;
+}
+
+void
 TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d)
 {
     std::stringstream out;
@@ -175,6 +186,8 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
     out << body << "\n";
     out << d;
     d = out.str();
+
+    g_free(body);
 }
 
 void
@@ -206,6 +219,7 @@ TaskUpload :: use_nntp (NNTP * nntp)
     _cache.get_data(data,needed->message_id.c_str());
     prepend_headers(_msg,needed, data);
     nntp->post(StringView(data), this);
+
     update_work ();
   }
 }
@@ -344,7 +358,6 @@ TaskUpload :: use_encoder (Encoder* encoder)
   init_steps(100);
   _state.set_working();
 
-    ///TODO support other encode modes by choice of user
   _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _lpf, _encode_mode);
   debug ("encoder thread was free, enqueued work");
 }
@@ -393,6 +406,9 @@ TaskUpload :: on_worker_done (bool cancelled)
   _encoder = 0;
   update_work ();
   check_in (d);
+
+  /* update stats */
+  update_subjects();
 }
 
 TaskUpload :: ~TaskUpload ()

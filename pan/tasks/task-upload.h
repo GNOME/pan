@@ -153,13 +153,15 @@ namespace pan
       friend class Encoder;
       friend class PostUI;
       friend class Queue;
+      friend class NZB;
+
       Encoder * _encoder;
       bool _encoder_has_run;
       std::string _filename;
       std::string _basename;
       TaskUpload::EncodeMode _encode_mode;
       std::string _subject, _master_subject, _author;
-      UploadInfo _format;
+      std::string _save_file;
       int _total_parts, _needed_parts;
       unsigned long _bytes;
       EncodeCache& _cache;
@@ -175,6 +177,8 @@ namespace pan
       void update_work (NNTP * checkin_pending = 0);
 
     public:
+      void set_encoder_done (bool setme) { _encoder_has_run = setme; }
+      needed_t& needed() { return _needed; }
       void build_needed_tasks();
       void wakeup() { _state.set_working(); update_work(); }
 
@@ -182,6 +186,8 @@ namespace pan
       std::set<int> _wanted;
       GMimeMessage * _msg;
       void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d);
+      void update_subjects();
+      void update_master_subject();
 
   };
 }

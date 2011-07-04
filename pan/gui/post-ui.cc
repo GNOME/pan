@@ -80,9 +80,9 @@ PostUI :: generate_unique_id (StringView& mid, int cnt, std::string& s)
   std::strftime (buf, sizeof(buf), "%Y%m%d%H%M%S", &local_now);
   out << "pan$";
   gettimeofday (&tv, NULL);
-  out << buf << "$" << std::hex << tv.tv_usec << "$" << std::hex
-      << mtrand.randInt() << "$" << std::hex << mtrand.randInt() << "$"
-      << std::hex << mtrand.randInt() << "$" << std::hex << cnt;
+  out << std::hex << tv.tv_usec << "$" << std::hex
+      << rng.randInt() << "$" << std::hex << rng.randInt() << "$"
+      << std::hex << rng.randInt() << "$" << std::hex << cnt;
   // delimit
   out<< '@';
   // add domain
@@ -1083,17 +1083,21 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       : GNKSA::generate_message_id_from_email_address (profile.address);
     StringView domain(d);
 
+    /* init taskupload variables before adding the tasks to the queue for processing */
     foreach (PostUI::tasks_t, tasks, it)
     {
-      const char* basename = (*it)->_filename.c_str();
+
+      TaskUpload * t (*it);
+
+      const char* basename = t->_basename.c_str();
       TaskUpload::Needed n;
 
       stat (basename,&sb);
 
-      int total = std::max(1, (int) (((long)sb.st_size + (lpf*bpl[(*it)->_encode_mode]-1)) /
-        (lpf*bpl[(*it)->_encode_mode])));
+      int total = std::max(1, (int) (((long)sb.st_size + (lpf*bpl[t->_encode_mode]-1)) /
+        (lpf*bpl[t->_encode_mode])));
 
-      foreach (std::set<int>, (*it)->_wanted, pit)
+      foreach (std::set<int>, t->_wanted, pit)
       {
         if (custom_mid)
         {
@@ -1105,14 +1109,16 @@ PostUI :: maybe_post_message (GMimeMessage * message)
         g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);
         n.message_id = buf;
         n.partno = *pit;
-        (*it)->_needed.insert(std::pair<int,TaskUpload::Needed>(*pit,n));
+        t->_needed.insert(std::pair<int,TaskUpload::Needed>(*pit,n));
       }
-      (*it)->build_needed_tasks();
+      t->build_needed_tasks();
 
-      (*it)->_queue_pos = cnt++;
+      t->_save_file = _save_file;
+
+      t->_queue_pos = cnt++;
       _queue.add_task (*it, Queue::BOTTOM);
-      (*it)->add_listener(this);
-      _upload_listeners.push_back(*it);
+      t->add_listener(this);
+      _upload_listeners.push_back(t);
     }
     gtk_widget_hide (_root); // hide the main window, we still need the class' data
   }
@@ -1338,20 +1344,20 @@ PostUI :: open_draft ()
 void
 PostUI :: import_draft (const char* fn)
 {
-    const char * draft = fn;
-    std::string txt;
-    if (file :: get_text_file_contents (draft, txt))
-    {
-      GMimeStream * stream = g_mime_stream_mem_new_with_buffer (txt.c_str(), txt.size());
-      GMimeParser * parser = g_mime_parser_new_with_stream (stream);
-      GMimeMessage * message = g_mime_parser_construct_message (parser);
-      if (message) {
-        set_message (message);
-        g_object_unref (G_OBJECT(message));
-      }
-      g_object_unref (G_OBJECT(parser));
-      g_object_unref (G_OBJECT(stream));
-    }
+//    const char * draft = fn;
+//    std::string txt;
+//    if (file :: get_text_file_contents (draft, txt))
+//    {
+//      GMimeStream * stream = g_mime_stream_mem_new_with_buffer (txt.c_str(), txt.size());
+//      GMimeParser * parser = g_mime_parser_new_with_stream (stream);
+//      GMimeMessage * message = g_mime_parser_construct_message (parser);
+//      if (message) {
+//        set_message (message);
+//        g_object_unref (G_OBJECT(message));
+//      }
+//      g_object_unref (G_OBJECT(parser));
+//      g_object_unref (G_OBJECT(stream));
+//    }
 }
 
 namespace
@@ -2886,7 +2892,7 @@ PostUI :: PostUI (GtkWindow    * parent,
   _filequeue_label (0)
 {
 
-  mtrand.seed();
+  rng.seed();
 
   _upload_queue.add_listener (this);
 
@@ -3003,6 +3009,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
         gtk_widget_destroy (w);
 
         TaskUpload::UploadInfo ui;
+        // not used for now...
         ui.comment1 = _prefs.get_flag("upload-queue-append-subject-enabled",false);
         // query lines per file value
         ui.lpf = _prefs.get_int("upload-option-lpf",4000);
@@ -3033,8 +3040,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 
           struct stat sb;
           stat ((const char*)cur->data,&sb);
-          int lpf = _prefs.get_int("upload-option-lpf",4000);
-          int total = std::max(1, (int) (((long)sb.st_size + (lpf*bpl[TaskUpload::YENC]-1)) / (lpf*bpl[TaskUpload::YENC])));
+          int total = std::max(1, (int) (((long)sb.st_size + (ui.lpf*bpl[TaskUpload::YENC]-1)) / (ui.lpf*bpl[TaskUpload::YENC])));
           ui.total = total;
 
           TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),

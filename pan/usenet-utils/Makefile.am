@@ -11,7 +11,7 @@ libusenetutils_a_SOURCES = \
  scorefile.cc \
  text-massager.cc \
  url-find.cc \
- MersenneTwister.h 
+ rng.cc
 
 noinst_HEADERS = \
  defgroup.h \
@@ -22,7 +22,8 @@ noinst_HEADERS = \
  numbers.h \
  scorefile.h \
  text-massager.h \
- url-find.h 
+ url-find.h \
+ rng.h
 
 #noinst_PROGRAMS = \
 # gnksa-test \
@@ -33,7 +34,7 @@ noinst_HEADERS = \
 # url-find-test
 
 #TESTS = $(noinst_PROGRAMS)
-#TEST_LDADD = ./libusenetutils.a ../general/libgeneralutils.a @GMIME_LIBS@ 
+#TEST_LDADD = ./libusenetutils.a ../general/libgeneralutils.a @GMIME_LIBS@
 #@GLIB_LIBS@
 #gnksa_test_SOURCES = gnksa-test.cc
 #gnksa_test_LDADD = $(TEST_LDADD)
