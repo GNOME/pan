@@ -788,8 +788,7 @@ int UUEXPORT
 UUEncodePartial (FILE *outfile, FILE *infile,
 		 char *infname, int encoding,
 		 char *outfname, char *mimetype,
-		 int filemode, int partno, long linperfile,
-		 crc32_t *crcptr)
+		 int filemode, int partno, long linperfile, unsigned long* crcptr)
 {
   mimemap *miter=mimetable;
   static FILE *theifile;
@@ -817,6 +816,8 @@ UUEncodePartial (FILE *outfile, FILE *infile,
   progress.action = 0;
 
   if (partno == 1) {
+    *crcptr = crc32(0L, Z_NULL, 0);
+
     if (infile==NULL) {
       if (stat (infname, &finfo) == -1) {
 	UUMessage (uuencode_id, __LINE__, UUMSG_ERROR,
@@ -971,6 +972,7 @@ UUEncodePartial (FILE *outfile, FILE *infile,
 
   progress.action  = UUACT_ENCODING;
 
+  /// DBG
   if ((res = UUEncodeStream (outfile, theifile, encoding, linperfile,
 			     crcptr, pcrcptr)) != UURET_OK) {
     if (infile==NULL) fclose (theifile);

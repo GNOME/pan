@@ -98,11 +98,10 @@ Encoder :: do_work()
   const int bufsz = 4096;
   char buf[bufsz], buf2[bufsz];
   int cnt(1);
-  crc32_t crc;
+  crc32_t crc(0);
   struct stat sb;
   std::string s;
   FILE* outfile, * infile ;
-//  PartBatch batch;
   char cachename[4096];
   FILE * fp ;
   Article* tmp = article;
@@ -117,8 +116,6 @@ Encoder :: do_work()
     UUSetMsgCallback (this, uu_log);
     UUSetBusyCallback (this, uu_busy_poll, 200);
 
-//    batch.init(StringView(basename), needed->size(), 0);
-
     /* build real subject line for article*/
     tmp->subject = subject;
 
@@ -127,8 +124,6 @@ Encoder :: do_work()
       int enc(YENC_ENCODED);
       std::ofstream out;
       std::string txt;
-      /* (encoding!=UU_ENCODED&&encoding!=XX_ENCODED&&encoding!=B64ENCODED&&
-     encoding!=PT_ENCODED&&encoding!=QP_ENCODED&&encoding!=YENC_ENCODED)) { */
       switch (encode_mode)
       {
           case TaskUpload::YENC:
@@ -159,7 +154,7 @@ Encoder :: do_work()
         continue;
       }
 
-      res = UUEncodePartial (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, lpf,&crc);
+      res = UUEncodePartial (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), 0, 0, cnt, lpf, &crc);
 
       if (fp) fclose(fp);
 _no_encode:
@@ -185,12 +180,12 @@ _no_encode:
                  : UUstrerror(res));
       log_errors.push_back(buf); // log error
     } else
-    { // prepare article for upload list
-//      tmp->set_parts(batch);
       task->_upload_list.push_back(tmp);
-    }
+
   UUCleanUp ();
+
   }
+
   disable_progress_update();
 
 }

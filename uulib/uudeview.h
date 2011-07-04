@@ -227,8 +227,7 @@ int	UUEXPORT UUEncodeMulti		_ANSI_ARGS_((FILE *, FILE *,
 int	UUEXPORT UUEncodePartial	_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, char *,
-						     int, int, long,
-						     unsigned long*));
+						     int, int, long, unsigned long*));
 int	UUEXPORT UUEncodeToStream	_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, int));
