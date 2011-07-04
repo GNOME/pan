@@ -112,7 +112,10 @@ TaskUpload :: build_needed_tasks()
   }
   _cache.reserve(_mids);
 
-  update_master_subject ();
+  /* build new master subject */
+  char sub[2048];
+  g_snprintf(sub,2048,"%s - \"%s\" - (%03d/%03d)", _subject.c_str(), _basename.c_str(), 1, _total_parts);
+  _master_subject = sub;
 
 }
 
@@ -146,25 +149,6 @@ TaskUpload :: update_work (NNTP* checkin_pending)
     _state.set_completed();
     set_finished(_queue_pos);
   }
-}
-
-/***
-****
-***/
-
-void
-TaskUpload :: update_subjects()
-{
-  _total_parts = std::max(1, (int) (((long)_bytes + (_lpf*bpl[_encode_mode]-1)) / (_lpf*bpl[_encode_mode])));
-  update_master_subject ();
-}
-
-void TaskUpload :: update_master_subject()
-{
-  /* build new master subject */
-  char sub[2048];
-  g_snprintf(sub,2048,"%s - \"%s\" - (%03d/%03d)", _subject.c_str(), _basename.c_str(), 1, _total_parts);
-  _master_subject = sub;
 }
 
 void
@@ -408,8 +392,6 @@ TaskUpload :: on_worker_done (bool cancelled)
   update_work ();
   check_in (d);
 
-  /* update stats */
-  update_subjects();
 }
 
 TaskUpload :: ~TaskUpload ()
@@ -420,6 +402,6 @@ TaskUpload :: ~TaskUpload ()
       _encoder->cancel_silently();
 
   g_object_unref (G_OBJECT(_msg));
-//  _cache.release(_mids);
-//  _cache.resize();
+  _cache.release(_mids);
+  _cache.resize();
 }

@@ -85,9 +85,9 @@ namespace pan
 
       enum EncodeMode
       {
-        BASE64,
-        PLAIN,
-        YENC,
+        BASE64=0,
+        PLAIN=1,
+        YENC=2,
       };
 
       // life cycle
@@ -186,8 +186,6 @@ namespace pan
       std::set<int> _wanted;
       GMimeMessage * _msg;
       void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d);
-      void update_subjects();
-      void update_master_subject();
 
   };
 }

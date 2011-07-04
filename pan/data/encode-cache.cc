@@ -69,8 +69,7 @@ EncodeCache :: EncodeCache (const StringView& path, size_t max_megs):
       while ((fname = g_dir_read_name (dir)))
       {
         g_snprintf (filename, sizeof(filename), "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, fname);
-        // delete ALL but the gmime_messages
-        if (!strstr(filename, "_msg_")) unlink(filename);
+        unlink(filename);
       }
       g_dir_close (dir);
    }

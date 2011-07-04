@@ -56,9 +56,8 @@ namespace
       g_object_unref (G_OBJECT(stream));
     }
 
-    //delete msg
+    //delete msg on disk
     unlink(filename.str);
-    g_object_ref(msg);
     return msg;
   }
 }
@@ -72,10 +71,6 @@ namespace
     quarks_t groups;
     std::string text;
     std::string path;
-    std::string rng;
-    std::string save_file;
-    TaskUpload::EncodeMode enc_mode;
-    TaskUpload::needed_t needed_parts;
     PartBatch parts;
     tasks_t tasks;
     Article a;
@@ -88,12 +83,10 @@ namespace
     const StringView fallback_path;
     size_t bytes;
     size_t number;
-    std::string msg_name;
-    int lpf;
 
     MyContext (ArticleCache& ac, EncodeCache& ec, ArticleRead& r,
                const ServerRank& rank, const GroupServer& g, const StringView& p):
-      cache(ac), encode_cache(ec), read(r), ranks(rank), gs(g), fallback_path(p) {}
+      cache(ac), encode_cache(ec), read(r), ranks(rank), gs(g), fallback_path(p) { }
 
     void file_clear () {
       groups.clear ();
@@ -102,12 +95,6 @@ namespace
       a.clear ();
       bytes = 0;
       number = 0;
-      needed_parts.clear();
-      save_file.clear();
-      rng.clear();
-      msg_name.clear();
-      enc_mode = TaskUpload::YENC;
-      lpf = 5000;
     }
   };
 
@@ -130,27 +117,12 @@ namespace
       }
     }
 
-    else if (!strcmp (element_name, "upload")) {
-      mc.file_clear ();
-      for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
-             if (!strcmp (*k,"server"))     mc.server    = *v;
-        else if (!strcmp (*k,"poster"))     mc.a.author = *v;
-        else if (!strcmp (*k,"subject"))    mc.a.subject = *v;
-        else if (!strcmp (*k,"msg"))        mc.msg_name  = *v;
-        else if (!strcmp (*k,"save-file"))  mc.save_file = *v;
-        else if (!strcmp (*k,"lpf"))        mc.lpf       = atoi(*v);
-        else if (!strcmp (*k,"enc-mode"))   mc.enc_mode  = (TaskUpload::EncodeMode) atoi (*v);
-
-      }
-    }
-
-    else if (!strcmp (element_name, "segment") || !strcmp (element_name, "part")) {
+    else if (!strcmp (element_name, "segment")) {
       mc.bytes = 0;
       mc.number = 0;
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
              if (!strcmp (*k,"bytes"))  mc.bytes  = strtoul (*v,0,10);
         else if (!strcmp (*k,"number")) mc.number = atoi (*v);
-        else if (!strcmp (*k,"rng"))    mc.rng    = *v;
       }
     }
   }
@@ -177,16 +149,6 @@ namespace
       mc.parts.add_part (mc.number, mid, mc.bytes);
     }
 
-    else if (!strcmp(element_name, "part") && !mc.rng.empty() && mc.number && !mc.text.empty()) {
-      mc.a.message_id = mc.text;
-      TaskUpload::Needed n;
-      n.partno = mc.number;
-      n.message_id = mc.text;
-      n.mid = mc.rng;
-      n.bytes = mc.bytes;
-      mc.needed_parts.insert(std::pair<int, TaskUpload::Needed>(mc.number,n));
-    }
-
     else if (!strcmp(element_name,"path"))
       mc.path = mc.text;
 
@@ -202,33 +164,9 @@ namespace
           mc.a.xref.insert (*sit, *git, 0);
       }
       const StringView p (mc.path.empty() ? mc.fallback_path : StringView(mc.path));
-      debug("adding taskarticle from nzb.\n");
       mc.tasks.push_back (new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, 0, TaskArticle::DECODE, p));
-
     }
-    else if (!strcmp (element_name, "upload"))
-    {
-      debug("adding taskupload from nzb.\n");
-      foreach_const (quarks_t, mc.groups, git)
-        mc.a.xref.insert (mc.server, *git, 0);
-      TaskUpload::UploadInfo format;
-      format.lpf = mc.lpf;
-      format.total = std::max(1, (int) (((long)mc.bytes + (mc.lpf*bpl[TaskUpload::YENC]-1)) / (mc.lpf*bpl[TaskUpload::YENC])));
 
-      char buf[2048];
-      mc.encode_cache.get_filename (buf, Quark(mc.msg_name));
-      GMimeMessage * msg = import_msg(StringView(buf));
-
-      TaskUpload* tmp = new TaskUpload (mc.path, mc.server, mc.encode_cache, mc.a, // subject and author
-                                        format, msg, 0, mc.enc_mode);
-
-      /* build needed parts */
-      foreach (TaskUpload::needed_t, mc.needed_parts, it)
-        tmp->needed().insert(*it);
-      tmp->build_needed_tasks();
-
-      mc.tasks.push_back (tmp);
-    }
   }
 
   void text (GMarkupParseContext *context    UNUSED,
@@ -384,71 +322,6 @@ NZB :: nzb_to_xml (std::ostream             & out,
       }
       out << indent(--depth) << "</segments>\n";
       out << indent(--depth) << "</file>\n";
-    }
-    else
-    { // handle upload tasks
-      TaskUpload * task (dynamic_cast<TaskUpload*>(*it));
-      // not an upload task, move on
-      if (!task) continue;
-
-      const Article& a (task->get_article());
-
-      out << indent(depth)
-          << "<upload" << " poster=\"";
-      escaped (out, task->_author);
-      out << "\" subject=\"";
-      escaped (out, task->_subject);
-      out << "\" save-file=\"";
-      escaped (out, task->_save_file);
-      out  << "\" server=\"";
-      escaped (out, task->_server.to_string());
-
-      out  << "\" msg=\"";
-      /* save gmimemessage from task */
-      g_snprintf(name,sizeof(name),"%s_msg_%d.%d",task->_basename.c_str(), task->_queue_pos, task->_bytes);
-      task->_cache.get_filename (buf, name);
-      std::ofstream outfile (buf, std::ios::out | std::ios::trunc);
-      char * body (g_mime_object_to_string ((GMimeObject *) task->_msg));
-      outfile << body;
-      outfile.close();
-      g_free(body);
-      escaped (out, name);
-
-      out  << "\" enc-mode=\"";
-      g_snprintf(buf,sizeof(buf),"%d",task->_encode_mode);
-      escaped (out, buf);
-      out  << "\" lpf=\"";
-      g_snprintf(buf,sizeof(buf),"%d",task->_lpf);
-      escaped (out, buf);
-      out <<"\">\n";
-
-      ++depth;
-      out << indent(depth)
-          << "<path>" << task->_filename << "</path>\n";
-      out  << indent(depth) << "<groups>\n";
-
-      ++depth;
-      foreach_const (Xref, task->_article.xref,  xit)
-        out << indent(depth) << "<group>" << xit->group << "</group>\n";
-      --depth;
-
-      out << indent(--depth) << "</groups>\n";
-      out  << indent(depth) << "<parts>\n";
-      ++depth;
-
-      foreach (TaskUpload::needed_t, task->_needed, it)
-      {
-        out << indent(depth)
-            << "<part" << " bytes=\""<< it->second.bytes << '"'
-            << " number=\""          << it->second.partno << '"'
-            << " rng=\""             << it->second.mid << '"'
-            << ">";
-        escaped(out, it->second.message_id);
-        out  << "</part>\n";
-      }
-      --depth;
-      out  << indent(depth) << "</parts>\n";
-      out << indent(depth) << "</upload>\n";
     }
   }
   out << indent(--depth) << "</nzb>\n";
