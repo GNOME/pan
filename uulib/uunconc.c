@@ -1157,7 +1157,6 @@ UUDecodePart (FILE *datain, FILE *dataout, int *state,
       if ((ptr = _FP_strstr (line, " crc32=")) != NULL)
       {
 	crc32_t fcrc32 = strtoul (ptr + 7, NULL, 16);
-	printf("%lu %lu\n",fcrc32, yefilecrc);
 	if (fcrc32 != yefilecrc) {
 	  UUMessage (uunconc_id, __LINE__, UUMSG_WARNING,
 		     uustring (S_CRC_MISMATCH), progress.curfile);

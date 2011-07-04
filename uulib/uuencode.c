@@ -135,7 +135,7 @@ unsigned char UUEncodeTable[64] = {
   'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
   'X', 'Y', 'Z', '[', '\\',']', '^', '_'
 };
-  
+
 
 unsigned char B64EncodeTable[64] = {
   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
@@ -162,11 +162,11 @@ unsigned char XXEncodeTable[64] = {
 unsigned char BHEncodeTable[64] = {
   '!', '"', '#', '$', '%', '&', '\'', '(',
   ')', '*', '+', ',', '-', '0', '1', '2',
-  '3', '4', '5', '6', '8', '9', '@', 'A', 
-  'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 
-  'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 
-  'S', 'T', 'U', 'V', 'X', 'Y', 'Z', '[', 
-  '`', 'a', 'b', 'c', 'd', 'e', 'f', 'h', 
+  '3', '4', '5', '6', '8', '9', '@', 'A',
+  'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+  'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R',
+  'S', 'T', 'U', 'V', 'X', 'Y', 'Z', '[',
+  '`', 'a', 'b', 'c', 'd', 'e', 'f', 'h',
   'i', 'j', 'k', 'l', 'm', 'p', 'q', 'r'
 };
 
@@ -242,7 +242,7 @@ char *uuestr_otemp;
  * Encode one part of the data stream
  */
 
-static int 
+static int
 UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc32_t *crc, crc32_t *pcrc)
 {
   unsigned char *itemp = (char *) uuestr_itemp;
@@ -280,7 +280,7 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
       /*
        * Busy Callback
        */
-      
+
       if (UUBUSYPOLL(ftell(infile)-progress.foffset,progress.fsize)) {
 	UUMessage (uuencode_id, __LINE__, UUMSG_NOTE,
 		   uustring (S_ENCODE_CANCEL));
@@ -386,13 +386,13 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
 
 	    *optr++ = '=';
 	    llen++;
-	    
+
 	    if (fwrite (otemp, 1, llen, outfile) != llen ||
 		fwrite ((char *) eolstring, 1,
 			strlen(eolstring), outfile) != strlen (eolstring)) {
 	      return UURET_IOERR;
 	    }
-	    
+
 	    optr = otemp;
 	    llen = 0;
 	  }
@@ -433,7 +433,7 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
       /*
        * Busy Callback
        */
-      
+
       if (UUBUSYPOLL(ftell(infile)-progress.foffset,progress.fsize)) {
 	UUMessage (uuencode_id, __LINE__, UUMSG_NOTE,
 		   uustring (S_ENCODE_CANCEL));
@@ -563,7 +563,7 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
       if (encoding == B64ENCODED) {
 	if (count - index == 2) {
 	  *optr++ = table[itemp[index] >> 2];
-	  *optr++ = table[((itemp[index  ] & 0x03) << 4) | 
+	  *optr++ = table[((itemp[index  ] & 0x03) << 4) |
 			  ((itemp[index+1] & 0xf0) >> 4)];
 	  *optr++ = table[((itemp[index+1] & 0x0f) << 2)];
 	  *optr++ = '=';
@@ -579,7 +579,7 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
       else if (encoding == UU_ENCODED || encoding == XX_ENCODED) {
 	if (count - index == 2) {
 	  *optr++ = table[itemp[index] >> 2];
-	  *optr++ = table[((itemp[index  ] & 0x03) << 4) | 
+	  *optr++ = table[((itemp[index  ] & 0x03) << 4) |
 			  ( itemp[index+1] >> 4)];
 	  *optr++ = table[((itemp[index+1] & 0x0f) << 2)];
 	  *optr++ = table[0];
@@ -630,7 +630,7 @@ UUEncodeMulti (FILE *outfile, FILE *infile, char *infname, int encoding,
   crc32_t crc;
   crc32_t *crcptr=NULL;
 
-  if (outfile==NULL || 
+  if (outfile==NULL ||
       (infile == NULL && infname==NULL) ||
       (outfname==NULL && infname==NULL) ||
       (encoding!=UU_ENCODED&&encoding!=XX_ENCODED&&encoding!=B64ENCODED&&
@@ -717,7 +717,7 @@ UUEncodeMulti (FILE *outfile, FILE *infile, char *infname, int encoding,
   if (encoding == UU_ENCODED || encoding == XX_ENCODED) {
     fprintf (outfile, "begin %o %s%s",
 	     (themode) ? themode : 0644,
-	     UUFNameFilter ((outfname)?outfname:infname), 
+	     UUFNameFilter ((outfname)?outfname:infname),
 	     eolstring);
   }
   else if (encoding == YENC_ENCODED) {
@@ -725,13 +725,13 @@ UUEncodeMulti (FILE *outfile, FILE *infile, char *infname, int encoding,
     crcptr = &crc;
     if (progress.fsize == -1) {
       fprintf (outfile, "=ybegin line=128 name=%s%s",
-	       UUFNameFilter ((outfname)?outfname:infname), 
+	       UUFNameFilter ((outfname)?outfname:infname),
 	       eolstring);
     }
     else {
       fprintf (outfile, "=ybegin line=128 size=%ld name=%s%s",
 	       progress.fsize,
-	       UUFNameFilter ((outfname)?outfname:infname), 
+	       UUFNameFilter ((outfname)?outfname:infname),
 	       eolstring);
     }
   }
@@ -748,8 +748,8 @@ UUEncodeMulti (FILE *outfile, FILE *infile, char *infname, int encoding,
   }
 
   if (encoding == UU_ENCODED || encoding == XX_ENCODED) {
-    fprintf (outfile, "%c%s",    
-	     (encoding==UU_ENCODED) ? UUEncodeTable[0] : XXEncodeTable[0], 
+    fprintf (outfile, "%c%s",
+	     (encoding==UU_ENCODED) ? UUEncodeTable[0] : XXEncodeTable[0],
 	     eolstring);
     fprintf (outfile, "end%s", eolstring);
   }
@@ -833,7 +833,7 @@ UUEncodePartial (FILE *outfile, FILE *infile,
       }
       if (linperfile <= 0)
 	numparts = 1;
-      else 
+      else
 	numparts = (int) (((long)finfo.st_size+(linperfile*bpl[encoding]-1))/
 			  (linperfile*bpl[encoding]));
 
@@ -903,7 +903,7 @@ UUEncodePartial (FILE *outfile, FILE *infile,
     }
 
     fprintf (outfile, "%s", eolstring);
-    
+
     /*
      * for the first part of UU or XX messages, print a begin line
      */
@@ -921,33 +921,33 @@ UUEncodePartial (FILE *outfile, FILE *infile,
       if (progress.totsize == -1) {
 	fprintf (outfile, "=ybegin part=%d line=128 name=%s%s",
 		 partno,
-		 UUFNameFilter ((outfname)?outfname:infname), 
+		 UUFNameFilter ((outfname)?outfname:infname),
 		 eolstring);
       }
       else {
 	fprintf (outfile, "=ybegin part=%d line=128 size=%ld name=%s%s",
 		 partno,
 		 progress.totsize,
-		 UUFNameFilter ((outfname)?outfname:infname), 
+		 UUFNameFilter ((outfname)?outfname:infname),
 		 eolstring);
       }
 
       fprintf (outfile, "=ypart begin=%d end=%d%s",
 	       (partno-1)*linperfile*128+1,
-	       (partno*linperfile*128) < progress.totsize ? 
+	       (partno*linperfile*128) < progress.totsize ?
 	       (partno*linperfile*128) : progress.totsize,
 	       eolstring);
     }
     else {
       if (progress.totsize == -1) {
 	fprintf (outfile, "=ybegin line=128 name=%s%s",
-		 UUFNameFilter ((outfname)?outfname:infname), 
+		 UUFNameFilter ((outfname)?outfname:infname),
 		 eolstring);
       }
       else {
 	fprintf (outfile, "=ybegin line=128 size=%ld name=%s%s",
 		 progress.totsize,
-		 UUFNameFilter ((outfname)?outfname:infname), 
+		 UUFNameFilter ((outfname)?outfname:infname),
 		 eolstring);
       }
     }
@@ -972,7 +972,6 @@ UUEncodePartial (FILE *outfile, FILE *infile,
 
   progress.action  = UUACT_ENCODING;
 
-  /// DBG
   if ((res = UUEncodeStream (outfile, theifile, encoding, linperfile,
 			     crcptr, pcrcptr)) != UURET_OK) {
     if (infile==NULL) fclose (theifile);
@@ -992,15 +991,15 @@ UUEncodePartial (FILE *outfile, FILE *infile,
 
   if (feof (theifile) &&
       (encoding == UU_ENCODED || encoding == XX_ENCODED)) {
-    fprintf (outfile, "%c%s",    
-	     (encoding==UU_ENCODED) ? UUEncodeTable[0] : XXEncodeTable[0], 
+    fprintf (outfile, "%c%s",
+	     (encoding==UU_ENCODED) ? UUEncodeTable[0] : XXEncodeTable[0],
 	     eolstring);
     fprintf (outfile, "end%s", eolstring);
   }
   else if (encoding == YENC_ENCODED) {
     if (numparts != 1) {
       fprintf (outfile, "=yend size=%d part=%d pcrc32=%08lx",
-	       (partno*linperfile*128) < progress.totsize ? 
+	       (partno*linperfile*128) < progress.totsize ?
 	       linperfile*128 : (progress.totsize-(partno-1)*linperfile*128),
 	       partno,
 	       pcrc);
@@ -1114,7 +1113,7 @@ UUEncodeToStream (FILE *outfile, FILE *infile,
   if (encoding == UU_ENCODED || encoding == XX_ENCODED) {
     fprintf (outfile, "begin %o %s%s",
 	     (themode) ? themode : 0644,
-	     UUFNameFilter ((outfname)?outfname:infname), 
+	     UUFNameFilter ((outfname)?outfname:infname),
 	     eolstring);
   }
   else if (encoding == YENC_ENCODED) {
@@ -1122,13 +1121,13 @@ UUEncodeToStream (FILE *outfile, FILE *infile,
     crcptr = &crc;
     if (progress.fsize == -1) {
       fprintf (outfile, "=ybegin line=128 name=%s%s",
-	       UUFNameFilter ((outfname)?outfname:infname), 
+	       UUFNameFilter ((outfname)?outfname:infname),
 	       eolstring);
     }
     else {
       fprintf (outfile, "=ybegin line=128 size=%ld name=%s%s",
 	       progress.fsize,
-	       UUFNameFilter ((outfname)?outfname:infname), 
+	       UUFNameFilter ((outfname)?outfname:infname),
 	       eolstring);
     }
   }
@@ -1137,7 +1136,7 @@ UUEncodeToStream (FILE *outfile, FILE *infile,
     if (res != UURET_CANCEL) {
       UUMessage (uuencode_id, __LINE__, UUMSG_ERROR,
 		 uustring (S_ERR_ENCODING),
-		 UUFNameFilter ((infname)?infname:outfname), 
+		 UUFNameFilter ((infname)?infname:outfname),
 		 (res==UURET_IOERR)?strerror(uu_errno):UUstrerror (res));
     }
     progress.action = 0;
@@ -1145,8 +1144,8 @@ UUEncodeToStream (FILE *outfile, FILE *infile,
   }
 
   if (encoding == UU_ENCODED || encoding == XX_ENCODED) {
-    fprintf (outfile, "%c%s",    
-	     (encoding==UU_ENCODED) ? UUEncodeTable[0] : XXEncodeTable[0], 
+    fprintf (outfile, "%c%s",
+	     (encoding==UU_ENCODED) ? UUEncodeTable[0] : XXEncodeTable[0],
 	     eolstring);
     fprintf (outfile, "end%s", eolstring);
   }
@@ -1214,7 +1213,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
       sprintf (oname, "%s", diskname);
     }
     else {
-      len = ((uusavepath)?strlen(uusavepath):0) + strlen (diskname) 
+      len = ((uusavepath)?strlen(uusavepath):0) + strlen (diskname)
 	+ ((uuencodeext)?strlen(uuencodeext):0) + 5;
 
       if ((oname = malloc (len)) == NULL) {
@@ -1226,7 +1225,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
     }
   }
   else {
-    len = ((uusavepath) ? strlen (uusavepath) : 0) + 
+    len = ((uusavepath) ? strlen (uusavepath) : 0) +
       strlen(UUFNameFilter(infname)) +
 	((uuencodeext)?strlen(uuencodeext):0) + 5;
 
@@ -1236,7 +1235,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
       return UURET_NOMEM;
     }
     optr = UUFNameFilter (infname);
-    sprintf (oname, "%s%s", 
+    sprintf (oname, "%s%s",
 	     (uusavepath)?uusavepath:"",
 	     (*optr=='.')?optr+1:optr);
   }
@@ -1277,7 +1276,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
     }
     if (linperfile <= 0)
       numparts = 1;
-    else 
+    else
       numparts = (int) (((long)finfo.st_size + (linperfile*bpl[encoding]-1)) /
 			(linperfile*bpl[encoding]));
 
@@ -1315,7 +1314,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
      */
     if (progress.numparts==1 && progress.totsize!=-1 && uuencodeext!=NULL)
       strcpy  (optr, uuencodeext);
-    else 
+    else
       sprintf (optr, "%03d", part);
 
     /*
@@ -1382,7 +1381,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
     if (part==1 && (encoding == UU_ENCODED || encoding == XX_ENCODED)) {
       fprintf (outfile, "begin %o %s%s",
 	       (filemode)?filemode : 0644,
-	       UUFNameFilter ((outfname)?outfname:infname), 
+	       UUFNameFilter ((outfname)?outfname:infname),
 	       eolstring);
     }
     else if (encoding == YENC_ENCODED) {
@@ -1396,33 +1395,33 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
 	if (progress.totsize == -1) {
 	  fprintf (outfile, "=ybegin part=%d line=128 name=%s%s",
 		   part,
-		   UUFNameFilter ((outfname)?outfname:infname), 
+		   UUFNameFilter ((outfname)?outfname:infname),
 		   eolstring);
 	}
 	else {
 	  fprintf (outfile, "=ybegin part=%d line=128 size=%ld name=%s%s",
 		   part,
 		   progress.totsize,
-		   UUFNameFilter ((outfname)?outfname:infname), 
+		   UUFNameFilter ((outfname)?outfname:infname),
 		   eolstring);
 	}
 
 	fprintf (outfile, "=ypart begin=%d end=%d%s",
 		 (part-1)*linperfile*128+1,
-		 (part*linperfile*128) < progress.totsize ? 
+		 (part*linperfile*128) < progress.totsize ?
 		 (part*linperfile*128) : progress.totsize,
 		 eolstring);
       }
       else {
 	if (progress.totsize == -1) {
 	  fprintf (outfile, "=ybegin line=128 name=%s%s",
-		   UUFNameFilter ((outfname)?outfname:infname), 
+		   UUFNameFilter ((outfname)?outfname:infname),
 		   eolstring);
 	}
 	else {
 	  fprintf (outfile, "=ybegin line=128 size=%ld name=%s%s",
 		   progress.totsize,
-		   UUFNameFilter ((outfname)?outfname:infname), 
+		   UUFNameFilter ((outfname)?outfname:infname),
 		   eolstring);
 	}
       }
@@ -1433,7 +1432,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
       if (res != UURET_CANCEL) {
 	UUMessage (uuencode_id, __LINE__, UUMSG_ERROR,
 		   uustring (S_ERR_ENCODING),
-		   UUFNameFilter ((infname)?infname:outfname),	 
+		   UUFNameFilter ((infname)?infname:outfname),
 		   (res==UURET_IOERR)?strerror(uu_errno):UUstrerror (res));
       }
       if (infile==NULL) fclose (theifile);
@@ -1446,15 +1445,15 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
 
     if (feof (theifile) &&
 	(encoding == UU_ENCODED || encoding == XX_ENCODED)) {
-      fprintf (outfile, "%c%s",    
-	       (encoding==UU_ENCODED) ? UUEncodeTable[0] : XXEncodeTable[0], 
+      fprintf (outfile, "%c%s",
+	       (encoding==UU_ENCODED) ? UUEncodeTable[0] : XXEncodeTable[0],
 	       eolstring);
       fprintf (outfile, "end%s", eolstring);
     }
     else if (encoding == YENC_ENCODED) {
       if (numparts != 1) {
 	fprintf (outfile, "=yend size=%d part=%d pcrc32=%08lx",
-		 (part*linperfile*128) < progress.totsize ? 
+		 (part*linperfile*128) < progress.totsize ?
 		 linperfile*128 : (progress.totsize-(part-1)*linperfile*128),
 		 part,
 		 pcrc);
@@ -1464,7 +1463,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
 		 progress.totsize);
       }
       if (feof (theifile))
-	fprintf (outfile, " crc32=%08lx", crc); 
+	fprintf (outfile, " crc32=%08lx", crc);
       fprintf (outfile, "%s", eolstring);
     }
 
@@ -1587,7 +1586,7 @@ UUE_PrepSingleExt (FILE *outfile, FILE *infile,
 
   res = UUEncodeToStream (outfile, infile, infname, encoding,
 			  outfname, filemode);
-  
+
   _FP_free (subline);
   return res;
 }
@@ -1659,7 +1658,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
       }
       if (linperfile <= 0)
 	numparts = 1;
-      else 
+      else
 	numparts = (int) (((long)finfo.st_size+(linperfile*bpl[encoding]-1))/
 			  (linperfile*bpl[encoding]));
 
@@ -1740,7 +1739,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
   }
   else {
     if (subject)
-      sprintf (subline, "%s (%03d/%03d) - [ %s ]", 
+      sprintf (subline, "%s (%03d/%03d) - [ %s ]",
 	       subject, partno, numparts, oname);
     else
       sprintf (subline, "[ %s ] (%03d/%03d)",
@@ -1770,7 +1769,7 @@ UUE_PrepPartialExt (FILE *outfile, FILE *infile,
     fprintf (outfile, "\tid=\"%s\"%s",
 	     mimeid, eolstring);
   }
-    
+
   fprintf (outfile, "%s", eolstring);
 
   res = UUEncodePartial (outfile, theifile,
