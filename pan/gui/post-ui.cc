@@ -831,7 +831,7 @@ PostUI :: send_and_save_now ()
 
   if (_save_file.empty()) return;
 
-  GMimeMessage * message (new_message_from_ui (POSTING));
+  GMimeMessage * message (new_message_from_ui (UPLOADING));
   if (!maybe_post_message (message))
     g_object_unref (G_OBJECT(message));
 }
@@ -1096,12 +1096,20 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       int total = get_total_parts(t->_filename.c_str(), t);
 
       std::string last_mid;
+
+      StringView d;
+      const char * pch = domain.strchr ('@');
+      if (pch != NULL)
+         d = domain.substr (pch+1, NULL);
+      else
+        d = domain;
+
       foreach (std::set<int>, t->_wanted, pit)
       {
         if (custom_mid)
         {
             std::string out;
-            generate_unique_id(domain, *pit,out);
+            generate_unique_id(d, *pit,out);
             n.mid = out;
             n.last_mid = last_mid;
             // set father mid to first part of upload
@@ -1486,7 +1494,7 @@ PostUI :: new_message_from_ui (Mode mode)
   GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   g_object_unref (stream);
   GMimePart * part = g_mime_part_new ();
-  if (_file_queue_empty)
+  if (mode == POSTING || mode == DRAFTING)
     pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
   else
     // http://tools.ietf.org/html/rfc2046#section-5.1.3
@@ -2983,7 +2991,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 {
   const Profile profile (get_current_profile ());
   PostUI::tasks_t tasks;
-  GMimeMessage * tmp (new_message_from_ui (POSTING));
+  GMimeMessage * tmp (new_message_from_ui (UPLOADING));
 
   if (!check_message(profile.posting_server, tmp, true))
   {
@@ -3018,7 +3026,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
         GSList * cur = g_slist_nth (tmp_list,0);
         for (; cur; cur = cur->next)
         {
-          GMimeMessage * msg (new_message_from_ui (POSTING));
+          GMimeMessage * msg (new_message_from_ui (UPLOADING));
 
           //for nzb handling
           Article a;
@@ -3045,7 +3053,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 
           TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
                             profile.posting_server, _cache,
-                            a, ui, msg,0, TaskUpload::YENC);
+                            a, ui, msg ,0, TaskUpload::YENC);
 
           for (int i=1;i<=ui.total; ++i)
             tmp->_wanted.insert(i);

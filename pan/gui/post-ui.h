@@ -174,7 +174,7 @@ namespace pan
       void add_actions (GtkWidget* box);
       void apply_profile_to_body ();
       void apply_profile_to_headers ();
-      enum Mode { DRAFTING, POSTING };
+      enum Mode { DRAFTING, POSTING, UPLOADING };
       GMimeMessage * new_message_from_ui (Mode mode);
       Profile get_current_profile ();
       bool check_message (const Quark& server, GMimeMessage*, bool binpost=false);

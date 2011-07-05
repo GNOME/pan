@@ -92,9 +92,11 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _queue_pos(0),
   _msg (msg),
   _total_parts(format.total),
-  _save_file(format.save_file),
-  _references(g_mime_object_get_header ((GMimeObject *)msg, "References"))
+  _save_file(format.save_file)
 {
+
+  const char * tmp (g_mime_object_get_header ((GMimeObject *)_msg, "References"));
+  if (tmp) _references = std::string(tmp);
 
   struct stat sb;
   stat(filename.c_str(),&sb);
@@ -157,10 +159,11 @@ void
 TaskUpload :: add_reference_to_list(std::string s)
 {
   char buf[4096];
+//  std::cerr<<"references old : "<<_references<<std::endl;
   g_snprintf(buf,sizeof(buf),"%s <%s>", _references.empty()  ? "": _references.c_str() , s.c_str());
-//  mut.lock();
+//  std::cerr<<"references new : "<<buf<<std::endl;
   g_mime_object_set_header ((GMimeObject *)_msg, "References", buf);
-//  mut.unlock;
+//  std::cerr<<"references msg : "<<g_mime_object_get_header((GMimeObject*)_msg,"References")<<std::endl;
 }
 
 void
@@ -173,20 +176,19 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
 
     //modify subject
     char buf[2048];
-    g_snprintf(buf, sizeof(buf), "%s - \"%s\" - %s(%03d/%03d)",
+    g_snprintf(buf, sizeof(buf), "%s - \"%s\" - %s(%d/%d)",
                _subject.c_str(),
                _basename.c_str(),
                (_encode_mode==YENC ? " yEnc ":""),
                n->partno, _total_parts);
     g_mime_message_set_subject (msg, buf);
 
-    ///TODO debug
-//    if (!n->last_mid.empty())
-//      add_reference_to_list(n->last_mid);
+    if (!n->last_mid.empty())
+      add_reference_to_list(n->last_mid);
 
     //extract body
-    gboolean unused;
     char * body (g_mime_object_to_string ((GMimeObject *) msg));
+    std::cerr<<"\n"<<body<<"\n--------------------------\n\n";
     out << body << "\n";
     out << d;
     d = out.str();
