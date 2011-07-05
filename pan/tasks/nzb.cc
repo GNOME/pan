@@ -254,13 +254,6 @@ NZB :: nzb_to_xml (std::ostream             & out,
 {
   int depth (0);
 
-//  // init rng
-//  MTRand rng;
-//  rng.seed();
-
-  char buf[2048];
-  char name[2048];
-
   out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
       << "<!DOCTYPE nzb PUBLIC \"-//newzBin//DTD NZB 1.0//EN\" \"http://www.newzbin.com/DTD/nzb/nzb-1.0.dtd\">\n"
       << indent(depth++)

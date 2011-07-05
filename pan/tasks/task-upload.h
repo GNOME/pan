@@ -60,7 +60,7 @@ namespace pan
         bool comment1;
         std::string  save_file;
         std::string  mid;
-        int lpf;
+        int bpf;
         int total;
       };
 
@@ -73,7 +73,7 @@ namespace pan
         int partno;
         NNTP* nntp;
         std::string message_id;
-        std::string mid; // for rng
+        std::string mid, last_mid; // for rng
         std::string cachename;
         Xref xref;
         bool encoded;
@@ -171,8 +171,9 @@ namespace pan
       std::vector<Article*> _upload_list;
       Article::mid_sequence_t _mids;
       int _queue_pos;
-      int _lpf;
+      int _bpf;
       needed_t _needed;
+      std::string _references; // original references, not to be touched!
 
       void update_work (NNTP * checkin_pending = 0);
 
@@ -186,6 +187,7 @@ namespace pan
       std::set<int> _wanted;
       GMimeMessage * _msg;
       void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d);
+      void add_reference_to_list(std::string s);
 
   };
 }

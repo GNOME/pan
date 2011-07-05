@@ -66,7 +66,7 @@ Encoder :: enqueue (TaskUpload                      * task,
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & subject,
-                    int                               lpf,
+                    int                               bpf,
                     const TaskUpload::EncodeMode      enc)
 
 {
@@ -79,7 +79,7 @@ Encoder :: enqueue (TaskUpload                      * task,
   this->needed = &task->_needed;
   this->cache = cache;
   this->article = article;
-  this->lpf = lpf;
+  this->bpf = bpf;
   this->subject = subject;
 
   percent = 0;
@@ -121,6 +121,8 @@ Encoder :: do_work()
 
     for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
     {
+      g_snprintf(buf,sizeof(buf),"%s.%d",basename.c_str(), cnt);
+
       int enc(YENC_ENCODED);
       std::ofstream out;
       std::string txt;
@@ -131,7 +133,7 @@ Encoder :: do_work()
               break;
           case TaskUpload::PLAIN:
               file :: get_text_file_contents (filename, txt);
-              cache->get_filename(cachename, Quark(it->second.message_id));
+              cache->get_filename(cachename, Quark(buf));//it->second.message_id));
               out.open(cachename, std::ios::out);
               out << txt;
               out.close();
@@ -154,7 +156,7 @@ Encoder :: do_work()
         continue;
       }
 
-      res = UUEncodePartial (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, lpf,&crc);
+      res = UUEncodePartial_byFSize (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, bpf ,&crc);
 
       if (fp) fclose(fp);
 _no_encode:
@@ -167,6 +169,7 @@ _no_encode:
       task->_all_bytes += sb.st_size;
       tmp->add_part(cnt, StringView(it->second.mid), sb.st_size);
       if (res != UURET_CONT) break;
+
     }
 
     if (res != UURET_OK && res != UURET_CONT)

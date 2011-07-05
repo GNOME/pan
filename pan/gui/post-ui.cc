@@ -968,7 +968,6 @@ PostUI :: on_progress_error (Progress&, const StringView& message)
   gtk_widget_show (d);
 }
 
-
 bool
 PostUI :: maybe_post_message (GMimeMessage * message)
 {
@@ -1072,7 +1071,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _upload_queue.get_all_tasks(tasks);
     int cnt(0);
     char buf[2048];
-    int lpf = _prefs.get_int("upload-option-lpf",4000);
+    int lpf = _prefs.get_int("upload-option-bpf",1024*512);
     struct stat sb;
     _running_uploads = tasks.size();
 
@@ -1094,11 +1093,9 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       const char* basename = t->_basename.c_str();
       TaskUpload::Needed n;
 
-      stat (basename,&sb);
+      int total = get_total_parts(t->_filename.c_str(), t);
 
-      int total = std::max(1, (int) (((long)sb.st_size + (lpf*bpl[t->_encode_mode]-1)) /
-        (lpf*bpl[t->_encode_mode])));
-
+      std::string last_mid;
       foreach (std::set<int>, t->_wanted, pit)
       {
         if (custom_mid)
@@ -1106,6 +1103,9 @@ PostUI :: maybe_post_message (GMimeMessage * message)
             std::string out;
             generate_unique_id(domain, *pit,out);
             n.mid = out;
+            n.last_mid = last_mid;
+            // set father mid to first part of upload
+            if (last_mid.empty()) last_mid = out;
         }
 
         g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);
@@ -2714,8 +2714,8 @@ PostUI :: get_total_parts(const char* file, TaskUpload* it)
 {
     struct stat sb;
     stat (file,&sb);
-    int lpf = _prefs.get_int("upload-option-lpf",4000);
-    return std::max(1, (int) (((long)sb.st_size + (lpf*bpl[it->_encode_mode]-1)) / (lpf*bpl[it->_encode_mode])));
+    int bpf = _prefs.get_int("upload-option-bpf",1024*512);
+    return std::max(1,(int)std::ceil(sb.st_size / bpf));
 }
 
 void
@@ -2772,7 +2772,6 @@ PostUI :: select_parts ()
 
   if (!_upload_ptr) return;
 
-  int lpf = _prefs.get_int("upload-option-lpf",4000);
   int new_parts = get_total_parts(_upload_ptr->_filename.c_str(), _upload_ptr);
   if (_total_parts != new_parts)
   {
@@ -3014,7 +3013,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
         // not used for now...
         ui.comment1 = _prefs.get_flag("upload-queue-append-subject-enabled",false);
         // query lines per file value
-        ui.lpf = _prefs.get_int("upload-option-lpf",4000);
+        ui.bpf = _prefs.get_int("upload-option-bpf",1024*512);
 
         GSList * cur = g_slist_nth (tmp_list,0);
         for (; cur; cur = cur->next)
@@ -3042,14 +3041,13 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 
           struct stat sb;
           stat ((const char*)cur->data,&sb);
-          int total = std::max(1, (int) (((long)sb.st_size + (ui.lpf*bpl[TaskUpload::YENC]-1)) / (ui.lpf*bpl[TaskUpload::YENC])));
-          ui.total = total;
+          ui.total = std::max(1,(int)std::ceil(sb.st_size / (double)_prefs.get_int("upload-option-bpf",1024*512)));
 
           TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
                             profile.posting_server, _cache,
                             a, ui, msg,0, TaskUpload::YENC);
 
-          for (int i=1;i<=total; ++i)
+          for (int i=1;i<=ui.total; ++i)
             tmp->_wanted.insert(i);
 
           _upload_queue.add_task(tmp);

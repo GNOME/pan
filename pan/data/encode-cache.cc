@@ -138,7 +138,7 @@ EncodeCache :: add (const Quark& message_id)
 ****
 ***/
 
-void EncodeCache :: finalize (std::string& message_id)
+void EncodeCache :: finalize (std::string message_id)
 {
   struct stat sb;
   stat (message_id.c_str(), &sb);

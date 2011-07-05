@@ -58,7 +58,7 @@ namespace
   {
     char buf[4096];
     char * freeme = g_path_get_basename(f);
-    snprintf (buf, sizeof(buf), _("%s"), freeme);
+    snprintf (buf, sizeof(buf), "%s", freeme);
     g_free(freeme);
     return buf;
   }
@@ -88,17 +88,19 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _encoder_has_run (false),
   _encode_mode(enc),
   _all_bytes(0),
-  _lpf(format.lpf),
+  _bpf(format.bpf),
   _queue_pos(0),
   _msg (msg),
   _total_parts(format.total),
-  _save_file(format.save_file)
+  _save_file(format.save_file),
+  _references(g_mime_object_get_header ((GMimeObject *)msg, "References"))
 {
 
   struct stat sb;
   stat(filename.c_str(),&sb);
   _bytes = sb.st_size;
   _state.set_paused();
+
 }
 
 void
@@ -152,6 +154,16 @@ TaskUpload :: update_work (NNTP* checkin_pending)
 }
 
 void
+TaskUpload :: add_reference_to_list(std::string s)
+{
+  char buf[4096];
+  g_snprintf(buf,sizeof(buf),"%s <%s>", _references.empty()  ? "": _references.c_str() , s.c_str());
+//  mut.lock();
+  g_mime_object_set_header ((GMimeObject *)_msg, "References", buf);
+//  mut.unlock;
+}
+
+void
 TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d)
 {
     std::stringstream out;
@@ -161,8 +173,16 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
 
     //modify subject
     char buf[2048];
-    g_snprintf(buf, sizeof(buf), "%s - \"%s\" - (%03d/%03d)", _subject.c_str(), _basename.c_str(), n->partno, _total_parts);
+    g_snprintf(buf, sizeof(buf), "%s - \"%s\" - %s(%03d/%03d)",
+               _subject.c_str(),
+               _basename.c_str(),
+               (_encode_mode==YENC ? " yEnc ":""),
+               n->partno, _total_parts);
     g_mime_message_set_subject (msg, buf);
+
+    ///TODO debug
+//    if (!n->last_mid.empty())
+//      add_reference_to_list(n->last_mid);
 
     //extract body
     gboolean unused;
@@ -300,11 +320,10 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
 
     case TOO_MANY_CONNECTIONS:
       // lockout for 120 secs, but try
-      _state.set_need_nntp(nntp->_server);
-
+      it->second.reset();
       break;
     default:
-      this->stop();
+      _needed.erase (it);
       Log::add_entry_list (tmp, _logfile);
       _logfile.clear();
       Log :: add_err_va (_("Posting of file %s not successful: Check the log (right-click on list item) !"),
@@ -342,8 +361,7 @@ TaskUpload :: use_encoder (Encoder* encoder)
   init_steps(100);
   _state.set_working();
 
-//  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, 5000, YENC);
-  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _lpf, _encode_mode);
+  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _bpf, _encode_mode);
   debug ("encoder thread was free, enqueued work");
 }
 
