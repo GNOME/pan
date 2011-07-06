@@ -3,6 +3,6 @@
 
 namespace pan
 {
-  bool _debug_flag = true;
+  bool _debug_flag = false;
   bool _debug_verbose_flag = false;
 }

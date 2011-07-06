@@ -36,6 +36,7 @@ extern "C" {
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/mime-utils.h>
+#include <pan/usenet-utils/gnksa.h>
 #include <pan/data/encode-cache.h>
 #include "encoder.h"
 #include "task-upload.h"
@@ -159,11 +160,14 @@ void
 TaskUpload :: add_reference_to_list(std::string s)
 {
   char buf[4096];
-//  std::cerr<<"references old : "<<_references<<std::endl;
-  g_snprintf(buf,sizeof(buf),"%s <%s>", _references.empty()  ? "": _references.c_str() , s.c_str());
-//  std::cerr<<"references new : "<<buf<<std::endl;
-  g_mime_object_set_header ((GMimeObject *)_msg, "References", buf);
-//  std::cerr<<"references msg : "<<g_mime_object_get_header((GMimeObject*)_msg,"References")<<std::endl;
+  std::cerr<<"references old : "<<_references<<std::endl;
+
+  std::string res = GNKSA::generate_references (StringView(_references), s);
+  GNKSA::trim_references(res);
+
+  std::cerr<<"references new : "<<buf<<std::endl;
+  g_mime_object_set_header ((GMimeObject *)_msg, "References", res.c_str());
+  std::cerr<<"references msg : "<<g_mime_object_get_header((GMimeObject*)_msg,"References")<<std::endl;
 }
 
 void
@@ -183,8 +187,8 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
                n->partno, _total_parts);
     g_mime_message_set_subject (msg, buf);
 
-    if (!n->last_mid.empty())
-      add_reference_to_list(n->last_mid);
+//    if (!n->last_mid.empty())
+//      add_reference_to_list(n->last_mid);
 
     //extract body
     char * body (g_mime_object_to_string ((GMimeObject *) msg));

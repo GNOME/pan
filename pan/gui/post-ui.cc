@@ -1494,11 +1494,11 @@ PostUI :: new_message_from_ui (Mode mode)
   GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   g_object_unref (stream);
   GMimePart * part = g_mime_part_new ();
-  if (mode == POSTING || mode == DRAFTING)
+//  if (mode == POSTING || mode == DRAFTING)
     pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
-  else
-    // http://tools.ietf.org/html/rfc2046#section-5.1.3
-    pch = g_strdup_printf ("multipart/mixed; charset=%s", charset.c_str());
+//  else
+//    // http://tools.ietf.org/html/rfc2046#section-5.1.3
+//    pch = g_strdup_printf ("multipart/mixed; charset=%s", charset.c_str());
 
   GMimeContentType * type = g_mime_content_type_new_from_string (pch);
   g_free (pch);
