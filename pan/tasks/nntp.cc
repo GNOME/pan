@@ -449,7 +449,6 @@ NNTP :: post (const StringView  & msg,
   }
   else
   {
-    std::cerr<<s<<std::endl;
     _post = s;
     _commands.push_back ("POST\r\n");
     write_next_command ();

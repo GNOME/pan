@@ -536,7 +536,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
 
         // found parts...
         part_batch.init (a.message_id, total_part_count, found_part_count);
-        std::cerr<<"article "<<a.message_id<<" "<<total_part_count<<" "<<found_part_count<<std::endl;
+//        std::cerr<<"article "<<a.message_id<<" "<<total_part_count<<" "<<found_part_count<<std::endl;
         for (int i(0), count(found_part_count); i<count; ++i)
         {
           const bool gotline (in->getline (s));

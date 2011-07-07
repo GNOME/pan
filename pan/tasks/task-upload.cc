@@ -175,7 +175,6 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
 
     //extract body
     char * body (g_mime_object_to_string ((GMimeObject *) msg));
-    std::cerr<<"\n"<<body<<"\n--------------------------\n\n";
     out << body << "\n";
     out << d;
     d = out.str();
@@ -234,8 +233,6 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   Log::Entry tmp;
   tmp.date = time(NULL);
   tmp.is_child = true;
-
-  std::cerr<<response<<std::endl;
 
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)

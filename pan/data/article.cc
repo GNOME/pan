@@ -38,8 +38,7 @@ Article :: get_part_state () const
     part_state = SINGLE;
 
   // someone's posted a followup to a multipart
-  ///TODO magic number??
-  else if (!is_line_count_ge(4000) && has_reply_leader(subject.to_view()))
+  else if (!is_line_count_ge(250) && has_reply_leader(subject.to_view()))
     part_state = SINGLE;
 
   else  {
@@ -50,10 +49,6 @@ Article :: get_part_state () const
     else // a multipart..
       part_state = total==found ? COMPLETE : INCOMPLETE;
   }
-
-  std::cerr<<message_id<<" is "<<(is_binary ? "binary" : "text")<<".\n";
-
-//  if (strstr(message_id, "pan.2011")) return SINGLE;
 
   return part_state;
 }
