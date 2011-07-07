@@ -21,20 +21,13 @@
 #include <cassert>
 #include <cerrno>
 extern "C" {
-  #define PROTOTYPES
-  #include <stdio.h>
-  #include <uulib/uudeview.h>
   #include <glib/gi18n.h>
   #include <gmime/gmime-utils.h>
-
 }
-#include <fstream>
-#include <iostream>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/utf8-utils.h>
-#include <pan/general/file-util.h>
 #include <pan/data/data.h>
 #include "nntp.h"
 #include "task-xover.h"
@@ -99,10 +92,8 @@ TaskXOver :: TaskXOver (Data         & data,
   _bytes_so_far (0),
   _parts_so_far (0ul),
   _articles_so_far (0ul),
-  _lines_so_far (0ul),
   _total_minitasks (0)
 {
-
   debug ("ctor for " << group);
 
   // add a ``GROUP'' MiniTask for each server that has this group
@@ -233,7 +224,6 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
     //std::cerr << LINE_ID << " nothing new here..." << std::endl;
     _high[nntp->_server] = high;
   }
-//  _working = _total_minitasks;
 }
 
 namespace
@@ -274,24 +264,9 @@ namespace
 }
 
 void
-TaskXOver :: on_nntp_line         (NNTP               * nntp,
-                                   const StringView   & line)
-//{
-//    _headers<<line<<"\r\n";
-//    increment_step(1);
-//    ++_lines_so_far;
-//    _bytes_so_far += line.len;
-//
-//    if (!(_lines_so_far % 500))
-//     set_status_va (_("%s (%lu Header Lines)"), _short_group_name.c_str(), _lines_so_far);
-//
-//}
-//
-//void
-//TaskXOver :: on_nntp_line_process (NNTP               * nntp,
-//                                   const StringView   & line)
+TaskXOver :: on_nntp_line (NNTP               * nntp,
+                           const StringView   & line)
 {
-
   pan_return_if_fail (nntp != 0);
   pan_return_if_fail (!nntp->_server.empty());
   pan_return_if_fail (!nntp->_group.empty());
@@ -359,7 +334,7 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
   if (article)
     ++_articles_so_far;
 
-//   emit a status update
+  // emit a status update
   uint64_t& prev = _last_xover_number[nntp];
   increment_step (number - prev);
   prev = number;
@@ -375,6 +350,7 @@ TaskXOver :: on_nntp_done (NNTP              * nntp,
                            Health              health,
                            const StringView  & response UNUSED)
 {
+  //std::cerr << LINE_ID << " nntp " << nntp->_server << " (" << nntp << ") done; checking in.  health==" << health << std::endl;
   update_work (true);
   check_in (nntp, health);
 }
@@ -399,8 +375,8 @@ TaskXOver :: update_work (bool subtract_one_from_nntp_count)
   else if (nntp_count)
     _state.set_working ();
   else {
-    _state.set_completed();
-    set_finished(OK);
+    _state.set_completed ();
+    set_finished (OK);
   }
 }
 

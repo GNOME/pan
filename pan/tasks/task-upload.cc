@@ -157,25 +157,11 @@ TaskUpload :: update_work (NNTP* checkin_pending)
 }
 
 void
-TaskUpload :: add_reference_to_list(std::string s)
-{
-  char buf[4096];
-  std::cerr<<"references old : "<<_references<<std::endl;
-
-  std::string res = GNKSA::generate_references (StringView(_references), s);
-  GNKSA::trim_references(res);
-
-  std::cerr<<"references new : "<<buf<<std::endl;
-  g_mime_object_set_header ((GMimeObject *)_msg, "References", res.c_str());
-  std::cerr<<"references msg : "<<g_mime_object_get_header((GMimeObject*)_msg,"References")<<std::endl;
-}
-
-void
 TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d)
 {
     std::stringstream out;
 
-    //add headers
+    //add message-id created from mt-rng
     if (!n->mid.empty()) pan_g_mime_message_set_message_id (msg, n->mid.c_str());
 
     //modify subject
@@ -186,9 +172,6 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
                (_encode_mode==YENC ? " yEnc ":""),
                n->partno, _total_parts);
     g_mime_message_set_subject (msg, buf);
-
-//    if (!n->last_mid.empty())
-//      add_reference_to_list(n->last_mid);
 
     //extract body
     char * body (g_mime_object_to_string ((GMimeObject *) msg));
@@ -251,6 +234,8 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   Log::Entry tmp;
   tmp.date = time(NULL);
   tmp.is_child = true;
+
+  std::cerr<<response<<std::endl;
 
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
@@ -426,6 +411,6 @@ TaskUpload :: ~TaskUpload ()
       _encoder->cancel_silently();
 
   g_object_unref (G_OBJECT(_msg));
-  _cache.release(_mids);
-  _cache.resize();
+//  _cache.release(_mids);
+//  _cache.resize();
 }

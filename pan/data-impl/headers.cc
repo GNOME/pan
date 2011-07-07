@@ -536,6 +536,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
 
         // found parts...
         part_batch.init (a.message_id, total_part_count, found_part_count);
+        std::cerr<<"article "<<a.message_id<<" "<<total_part_count<<" "<<found_part_count<<std::endl;
         for (int i(0), count(found_part_count); i<count; ++i)
         {
           const bool gotline (in->getline (s));
@@ -887,7 +888,7 @@ DataImpl :: mark_read (const Article  ** articles,
     fire_group_counts (group, g._unread_count, g._article_count);
     on_articles_changed (group, it->second, false);
   }
-  
+
   if( !newsrc_autosave_id && newsrc_autosave_timeout )
     newsrc_autosave_id = g_timeout_add_seconds( newsrc_autosave_timeout * 60, nrc_as_cb, this);
 }
@@ -1108,7 +1109,7 @@ DataImpl :: delete_articles (const unique_articles_t& articles)
 
     // remove the articles from our lookup table...
     GroupHeaders * h (get_group_headers (group));
-    if (h) 
+    if (h)
       h->remove_articles (it->second.mids);
   }
 

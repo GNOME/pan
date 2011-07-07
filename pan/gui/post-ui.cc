@@ -1095,8 +1095,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
       int total = get_total_parts(t->_filename.c_str(), t);
 
-      std::string last_mid;
-
       StringView d;
       const char * pch = domain.strchr ('@');
       if (pch != NULL)
@@ -1111,9 +1109,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
             std::string out;
             generate_unique_id(d, *pit,out);
             n.mid = out;
-            n.last_mid = last_mid;
-            // set father mid to first part of upload
-            if (last_mid.empty()) last_mid = out;
         }
 
         g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);
@@ -1494,11 +1489,7 @@ PostUI :: new_message_from_ui (Mode mode)
   GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   g_object_unref (stream);
   GMimePart * part = g_mime_part_new ();
-//  if (mode == POSTING || mode == DRAFTING)
-    pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
-//  else
-//    // http://tools.ietf.org/html/rfc2046#section-5.1.3
-//    pch = g_strdup_printf ("multipart/mixed; charset=%s", charset.c_str());
+  pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
 
   GMimeContentType * type = g_mime_content_type_new_from_string (pch);
   g_free (pch);
@@ -1508,6 +1499,9 @@ PostUI :: new_message_from_ui (Mode mode)
   g_object_unref (content_object);
   g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
   g_object_unref (part);
+
+  //dbg
+//  set_message(msg);
 
   return msg;
 }
@@ -1532,7 +1526,8 @@ PostUI :: save_draft ()
 
   if (gtk_dialog_run(GTK_DIALOG(d)) == GTK_RESPONSE_ACCEPT)
   {
-    GMimeMessage * msg = new_message_from_ui (DRAFTING);
+    //dbg DRAFTING
+    GMimeMessage * msg = new_message_from_ui (UPLOADING);
     char * filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER(d));
     draft_filename = filename;
 
@@ -2991,7 +2986,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 {
   const Profile profile (get_current_profile ());
   PostUI::tasks_t tasks;
-  GMimeMessage * tmp (new_message_from_ui (UPLOADING));
+  GMimeMessage * tmp (new_message_from_ui (POSTING));
 
   if (!check_message(profile.posting_server, tmp, true))
   {
