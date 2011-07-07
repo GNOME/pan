@@ -293,9 +293,8 @@ DataImpl :: xover_add (const Quark         & server,
       a.author = author;
       a.subject = multipart_subject_quark;
       a.message_id = art_mid;
-      // dbg
-      a.set_part_count (a.is_binary ? part_count : 1);
       a.is_binary = part_count >= 1;
+      a.set_part_count (a.is_binary ? part_count : 1);
       a.time_posted = time_posted;
       a.xref.insert (server, xref);
       load_article (group, &a, references);
