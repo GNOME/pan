@@ -293,7 +293,7 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
   ok = ok && l.pop_token (date, '\t');   if (ok) date.trim ();
   ok = ok && l.pop_token (mid, '\t');    if (ok) mid.trim ();
 
-  // bugfix: handle multiple References correctly.
+  //handle multiple "References:"-message-ids correctly.
   ok = ok && l.pop_token (tmp, '\t');
   do
   {
@@ -304,7 +304,7 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
       ref += tmp;
       tmp.clear();
     } else break;
-  } while (ok && l.pop_token (tmp, '\t')) ;
+  } while ((ok = ok && l.pop_token (tmp, '\t'))) ;
 
                                          if (ok) bytes = view_to_ul (tmp); tmp.clear();
   ok = ok && l.pop_token (tmp, '\t');    if (ok) lines = view_to_ul (tmp);
