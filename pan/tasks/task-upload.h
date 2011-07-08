@@ -73,7 +73,7 @@ namespace pan
         int partno;
         NNTP* nntp;
         std::string message_id;
-        std::string mid, last_mid; // for rng
+        std::string mid; // for rng
         std::string cachename;
         Xref xref;
         bool encoded;

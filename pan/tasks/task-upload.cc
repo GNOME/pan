@@ -338,6 +338,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
 unsigned long
 TaskUpload :: get_bytes_remaining () const
 {
+  if (_needed.empty()) return _bytes*1.15;
   unsigned long bytes (0);
   foreach_const (needed_t, _needed, it)
     bytes += (unsigned long)it->second.bytes;
@@ -414,6 +415,6 @@ TaskUpload :: ~TaskUpload ()
       _encoder->cancel_silently();
 
   g_object_unref (G_OBJECT(_msg));
-//  _cache.release(_mids);
-//  _cache.resize();
+  _cache.release(_mids);
+  _cache.resize();
 }
