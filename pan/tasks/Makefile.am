@@ -19,6 +19,7 @@ libtasks_a_SOURCES = \
   socket.cc \
   socket-impl-gio.cc \
   socket-impl-scripted.cc \
+  socket-impl-openssl.cc \
   nntp-pool.cc
 
 noinst_HEADERS = \
@@ -42,6 +43,7 @@ noinst_HEADERS = \
   socket.h \
   socket-impl-gio.h \
   socket-impl-scripted.h \
+  socket-impl-openssl.h \
   nntp-pool.h
 
 #noinst_PROGRAMS = \

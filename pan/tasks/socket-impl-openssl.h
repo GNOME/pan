@@ -1,0 +1,91 @@
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/*
+ * Pan - A Newsreader for Gtk+
+ * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; version 2 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+
+#ifndef __SocketSSL_h__
+#define __SocketSSL_h__
+
+#include <string>
+#include <glib/giochannel.h>
+#include <glib/gstring.h>
+#include <pan/tasks/socket.h>
+
+#include <openssl/crypto.h>
+#include <openssl/x509.h>
+#include <openssl/pem.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+
+namespace pan
+{
+  /**
+   * glib implementation of Socket
+   *
+   * @ingroup tasks
+   */
+  class GIOChannelSocketSSL: public Socket
+  {
+    public:
+      GIOChannelSocketSSL ();
+      virtual ~GIOChannelSocketSSL ();
+      virtual bool open (const StringView& address, int port, std::string& setme_err);
+      virtual void write_command (const StringView& chars, Listener *);
+      virtual void get_host (std::string& setme) const;
+
+    private:
+      GIOChannel * _channel;
+      unsigned int _tag_watch;
+      unsigned int _tag_timeout;
+      Listener * _listener;
+      GString * _out_buf;
+      GString * _in_buf;
+      std::string _partial_read;
+      std::string _host;
+      bool _io_performed;
+
+    private:
+      enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };
+      void set_watch_mode (WatchMode mode);
+      static gboolean gio_func (GIOChannel*, GIOCondition, gpointer);
+      gboolean gio_func (GIOChannel*, GIOCondition);
+      static gboolean timeout_func (gpointer);
+      enum DoResult { IO_ERR, IO_READ, IO_WRITE, IO_DONE };
+      DoResult do_read ();
+      DoResult do_write ();
+
+      GIOChannel * create_channel (const StringView& host_in, int port, std::string& setme_err);
+
+    //SSL functions
+    private:
+      GIOChannel* ssl_get_iochannel(GIOChannel *handle, const char *mycert=NULL, const char *mypkey=NULL,
+                                    const char *cafile=NULL, const char *capath=NULL, gboolean verify=false);
+
+    public:
+
+      /**
+       * Socket::Creator that instantiates GIOSocket objects.
+       */
+      class Creator: public Socket::Creator {
+        public:
+          virtual ~Creator () { }
+          virtual void create_socket (const StringView& host, int port, WorkerPool&, Listener *l);
+      };
+  };
+}
+
+#endif

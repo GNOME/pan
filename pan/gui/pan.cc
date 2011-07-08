@@ -34,6 +34,7 @@ extern "C" {
 #include <pan/general/file-util.h>
 #include <pan/general/worker-pool.h>
 #include <pan/tasks/socket-impl-gio.h>
+#include <pan/tasks/socket-impl-openssl.h>
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>
 #include <pan/tasks/nzb.h>
@@ -324,7 +325,12 @@ main (int argc, char *argv[])
 
     // instantiate the queue...
     WorkerPool worker_pool (4, true);
-    GIOChannelSocket::Creator socket_creator;
+
+    //////////////////////////
+    /// DBG!!!!
+    GIOChannelSocketSSL::Creator socket_creator;
+    //////////////////////////
+
     Queue queue (data, data, &socket_creator, worker_pool,
                  prefs.get_flag ("work-online", true),
                  prefs.get_int ("task-save-delay-secs", 10));
