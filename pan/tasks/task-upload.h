@@ -188,6 +188,7 @@ namespace pan
       GMimeMessage * _msg;
       void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d);
       void add_reference_to_list(std::string s);
+      bool _first;
 
   };
 }

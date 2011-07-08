@@ -829,8 +829,10 @@ PostUI :: send_and_save_now ()
   } else
     _save_file = prompt_user_for_upload_nzb_dir (GTK_WINDOW(_root), _prefs);
 
+  // no file chosen, abort
   if (_save_file.empty()) return;
 
+  // else, start upload (and update tasks' data)
   GMimeMessage * message (new_message_from_ui (UPLOADING));
   if (!maybe_post_message (message))
     g_object_unref (G_OBJECT(message));
@@ -1059,6 +1061,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _queue.add_task (_post_task, Queue::TOP);
   } else {
 
+    // prepend header for xml file (if one was chosen)
     if (!_save_file.empty())
     {
       _out.open(_save_file.c_str(), std::fstream::out | std::fstream::app);
@@ -1084,6 +1087,8 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       : GNKSA::generate_message_id_from_email_address (profile.address);
     StringView domain(d);
 
+    /// TODO maybe update tasks' msgs here ???
+
     /* init taskupload variables before adding the tasks to the queue for processing */
     foreach (PostUI::tasks_t, tasks, it)
     {
@@ -1093,8 +1098,8 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       const char* basename = t->_basename.c_str();
       TaskUpload::Needed n;
 
+      // generate domain for rng numbers
       int total = get_total_parts(t->_filename.c_str(), t);
-
       StringView d;
       const char * pch = domain.strchr ('@');
       if (pch != NULL)
@@ -1102,6 +1107,15 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       else
         d = domain;
 
+      // generate rng number for message-ids
+      // compose subject lines
+      // build needed struct for upload
+      // set queue position for listeners
+      // start queue and initialize listeners
+      // NOTE: the postui class won't be destroyed after that, because we need some data from it
+      // (for example for saving the nzb file). it will be hidden and destroyed on destruction of
+      // the last Taskupload task.
+      // (perhaps this could be changed if we added a listener for this in gui.cc and let post-ui.cc die) (??)
       foreach (std::set<int>, t->_wanted, pit)
       {
         if (custom_mid)
@@ -1117,12 +1131,12 @@ PostUI :: maybe_post_message (GMimeMessage * message)
         t->_needed.insert(std::pair<int,TaskUpload::Needed>(*pit,n));
       }
       t->build_needed_tasks();
-
       t->_save_file = _save_file;
-
       t->_queue_pos = cnt++;
+
       _queue.add_task (*it, Queue::BOTTOM);
       t->add_listener(this);
+
       _upload_listeners.push_back(t);
     }
     gtk_widget_hide (_root); // hide the main window, we still need the class' data
@@ -1403,7 +1417,7 @@ namespace
 }
 
 GMimeMessage*
-PostUI :: new_message_from_ui (Mode mode)
+PostUI :: new_message_from_ui (Mode mode, bool copy_body)
 {
   GMimeMessage * msg (g_mime_message_new (false));
 
@@ -1473,35 +1487,33 @@ PostUI :: new_message_from_ui (Mode mode)
     pan_g_mime_message_set_message_id (msg, message_id.c_str());
   }
 
-  // body & charset
-  std::string body (get_body());
-  GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
-  const std::string charset ((mode==POSTING && !_charset.empty()) ? _charset : "UTF-8");
-  if (charset != "UTF-8") {
-    // add a wrapper to convert from UTF-8 to $charset
-    GMimeStream * tmp = g_mime_stream_filter_new (stream);
+    // body & charset
+    std::string body;
+    if (copy_body) body = get_body();
+    GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
+    const std::string charset ((mode==POSTING && !_charset.empty()) ? _charset : "UTF-8");
+    if (charset != "UTF-8") {
+      // add a wrapper to convert from UTF-8 to $charset
+      GMimeStream * tmp = g_mime_stream_filter_new (stream);
+      g_object_unref (stream);
+      GMimeFilter * filter = g_mime_filter_charset_new ("UTF-8", charset.c_str());
+      g_mime_stream_filter_add (GMIME_STREAM_FILTER(tmp), filter);
+      g_object_unref (filter);
+      stream = tmp;
+    }
+    GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
     g_object_unref (stream);
-    GMimeFilter * filter = g_mime_filter_charset_new ("UTF-8", charset.c_str());
-    g_mime_stream_filter_add (GMIME_STREAM_FILTER(tmp), filter);
-    g_object_unref (filter);
-    stream = tmp;
-  }
-  GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
-  g_object_unref (stream);
-  GMimePart * part = g_mime_part_new ();
-  pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+    GMimePart * part = g_mime_part_new ();
+    pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
 
-  GMimeContentType * type = g_mime_content_type_new_from_string (pch);
-  g_free (pch);
-  g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
-  g_mime_part_set_content_object (part, content_object);
-  g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
-  g_object_unref (content_object);
-  g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
-  g_object_unref (part);
-
-  //dbg
-//  set_message(msg);
+    GMimeContentType * type = g_mime_content_type_new_from_string (pch);
+    g_free (pch);
+    g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
+    g_mime_part_set_content_object (part, content_object);
+    g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
+    g_object_unref (content_object);
+    g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
+    g_object_unref (part);
 
   return msg;
 }
@@ -2986,7 +2998,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 {
   const Profile profile (get_current_profile ());
   PostUI::tasks_t tasks;
-  GMimeMessage * tmp (new_message_from_ui (POSTING));
+  GMimeMessage * tmp (new_message_from_ui (UPLOADING));
 
   if (!check_message(profile.posting_server, tmp, true))
   {
@@ -3019,30 +3031,33 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
         ui.bpf = _prefs.get_int("upload-option-bpf",1024*512);
 
         GSList * cur = g_slist_nth (tmp_list,0);
+        std::string author;
+        profile.get_from_header(author);
+        std::string subject(utf8ize (g_mime_message_get_subject (tmp)));
+
+        // insert groups info from msg
+        quarks_t groups;
+        StringView line (g_mime_object_get_header ((GMimeObject *) tmp, "Newsgroups"));
+        StringView groupname;
+        while (line.pop_token (groupname, ',')) {
+          groupname.trim ();
+          if (!groupname.empty())
+              groups.insert(Quark(groupname));
+        }
+
         for (; cur; cur = cur->next)
         {
           GMimeMessage * msg (new_message_from_ui (UPLOADING));
 
           //for nzb handling
           Article a;
-          a.subject = utf8ize (g_mime_message_get_subject (msg));
-          std::string s;
-          profile.get_from_header(s);
-          a.author = s;
-
-          // insert groups info into article struct
-          quarks_t groups;
-          StringView line (g_mime_object_get_header ((GMimeObject *) msg, "Newsgroups"));
-          StringView groupname;
-          while (line.pop_token (groupname, ',')) {
-            groupname.trim ();
-            if (!groupname.empty())
-                groups.insert(Quark(groupname));
-          }
+          a.subject = subject;
+          a.author = author;
           foreach_const (quarks_t, groups, git)
              a.xref.insert (profile.posting_server, *git,0);
 
           struct stat sb;
+          // yEnc encoding is the default, user can change that with popup-menu
           stat ((const char*)cur->data,&sb);
           ui.total = std::max(1,(int)std::ceil(sb.st_size / (double)_prefs.get_int("upload-option-bpf",1024*512)));
 
@@ -3050,6 +3065,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
                             profile.posting_server, _cache,
                             a, ui, msg ,0, TaskUpload::YENC);
 
+          // insert wanted parts to upload
           for (int i=1;i<=ui.total; ++i)
             tmp->_wanted.insert(i);
 

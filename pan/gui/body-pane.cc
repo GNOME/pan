@@ -1652,13 +1652,12 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     const char * header = "References";
     v = g_mime_object_get_header (_message_obj, header);
     val.assign (v.str, v.len);
-//    if (!val.empty())
-//      val += ' ';
+    if (!val.empty())
+      val += ' ';
     val += "<";
     val += g_mime_message_get_message_id (_message);
     val += ">";
-    /// DBG, removeme!!
-//    val = GNKSA :: trim_references (val);
+    val = GNKSA :: trim_references (val);
     g_mime_object_append_header (msg_obj, header, val.c_str());
 
     ///

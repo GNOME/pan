@@ -93,8 +93,10 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _queue_pos(0),
   _msg (msg),
   _total_parts(format.total),
-  _save_file(format.save_file)
+  _save_file(format.save_file),
+  _first(true)
 {
+
 
   const char * tmp (g_mime_object_get_header ((GMimeObject *)_msg, "References"));
   if (tmp) _references = std::string(tmp);
@@ -173,13 +175,17 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
                n->partno, _total_parts);
     g_mime_message_set_subject (msg, buf);
 
-    //extract body
-    char * body (g_mime_object_to_string ((GMimeObject *) msg));
-    out << body << "\n";
+    //extract whole message with headers (for first message, others only post headers + encoded data)
+    char * all;
+    if (_first) all = g_mime_object_to_string ((GMimeObject *) msg);
+    else
+      all = g_mime_object_get_headers ((GMimeObject *) msg);
+    out << all << "\n";
     out << d;
     d = out.str();
 
-    g_free(body);
+    if (_first) g_free(all);
+    if (_first) _first = !_first;
 }
 
 void

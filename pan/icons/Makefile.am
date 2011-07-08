@@ -45,7 +45,7 @@ stock_images = \
 	icon_mozilla_surprised.png \
 	icon_mozilla_tongueout.png \
 	icon_mozilla_wink.png
-
+    
 
 EXTRA_DIST = \
 	pan-template.xcf \
