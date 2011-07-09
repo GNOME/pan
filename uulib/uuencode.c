@@ -683,8 +683,6 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
   long offset=0;
   long line = 0;
   size_t llen;
-  ///TODO
-  int linperfile = 0;
 
   if (outfile==NULL || infile==NULL ||
       (encoding!=UU_ENCODED&&encoding!=XX_ENCODED&&encoding!=B64ENCODED&&
@@ -698,164 +696,182 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
    * read line oriented.
    */
 
+  long rest = bpf;
+  long current = 0;
+
   if (encoding == PT_ENCODED || encoding == QP_ENCODED)
     {
-      while (!feof (infile) && (linperfile <= 0 || line < linperfile))
-        {
-          if (_FP_fgets (itemp, 255, infile) == NULL)
-            {
-              break;
-            }
+      while (rest > 0 )
+      {
+        current = rest > 255 ? 255 : rest;
 
-          itemp[255] = '\0';
-          count = strlen (itemp);
+//        if (_FP_fgets (itemp, 255, infile) == NULL)
+//          break;
 
-          llen = 0;
-          optr = otemp;
+      if ((count = fread (itemp, sizeof(unsigned char), current, infile)) != 255)
+      {
+        if (count == 0)
+          break;
+        else if (ferror (infile))
+          return UURET_IOERR;
+      }
 
-          /*
-           * Busy Callback
-           */
+      rest -= count;
 
-          if (UUBUSYPOLL(ftell(infile)-progress.foffset,progress.fsize))
-            {
-              UUMessage (uuencode_id, __LINE__, UUMSG_NOTE,
-                         uustring (S_ENCODE_CANCEL));
-              return UURET_CANCEL;
-            }
 
-          if (encoding == PT_ENCODED)
-            {
-              /*
-               * If there is a line feed, replace by eolstring
-               */
-              if (count > 0 && itemp[count-1] == '\n')
-                {
-                  itemp[--count] = '\0';
-                  if (fwrite (itemp, 1, count, outfile) != count ||
-                      fwrite ((char *) eolstring, 1,
-                              strlen(eolstring), outfile) != strlen (eolstring))
-                    {
-                      return UURET_IOERR;
-                    }
-                }
+        itemp[count] = '\0';
+//        count = strlen (itemp);
+
+        llen = 0;
+        optr = otemp;
+
+        /*
+         * Busy Callback
+         */
+
+        if (UUBUSYPOLL(ftell(infile)-progress.foffset,progress.fsize))
+          {
+//            UUMessage (uuencode_id, __LINE__, UUMSG_NOTE,
+//                       uustring (S_ENCODE_CANCEL));
+            printf("cancel\n");
+            return UURET_CANCEL;
+          }
+
+        if (encoding == PT_ENCODED)
+          {
+
+            /*
+             * If there is a line feed, replace by eolstring
+             */
+            if (count > 0 && itemp[count-1] == '\n')
+              {
+                itemp[--count] = '\0';
+                if (fwrite (itemp, sizeof(unsigned char), count, outfile) != count ||
+                    fwrite ((char *) eolstring, sizeof(unsigned char),
+                            strlen(eolstring), outfile) != strlen (eolstring))
+                  {
+                    printf("error count>0 \n");
+                    return UURET_IOERR;
+                  }
+              }
               else
-                {
-                  if (fwrite (itemp, 1, count, outfile) != llen)
-                    {
-                      return UURET_IOERR;
-                    }
-                }
-            }
+              {
+                size_t res;
+                if ((res=fwrite (itemp, sizeof(unsigned char), count, outfile)) != count)
+                  {
+                    printf("error count %d %u %lu\n",count, res,llen);
+                    return UURET_IOERR;
+                  }
+              }
+          }
           else if (encoding == QP_ENCODED)
-            {
-              for (index=0; index<count; index++)
-                {
-                  if (llen == 0 && itemp[index] == '.')
-                    {
-                      /*
-                       * Special rule: encode '.' at the beginning of a line, so
-                       * that some mailers aren't confused.
-                       */
-                      *optr++ = '=';
-                      *optr++ = HexEncodeTable[itemp[index] >> 4];
-                      *optr++ = HexEncodeTable[itemp[index] & 0x0f];
-                      llen += 3;
-                    }
-                  else if ((itemp[index] >= 33 && itemp[index] <= 60) ||
-                           (itemp[index] >= 62 && itemp[index] <= 126) ||
-                           itemp[index] == 9 || itemp[index] == 32)
-                    {
-                      *optr++ = itemp[index];
-                      llen++;
-                    }
-                  else if (itemp[index] == '\n')
-                    {
-                      /*
-                       * If the last character before EOL was a space or tab,
-                       * we must encode it. If llen > 74, there's no space to do
-                       * that, so generate a soft line break instead.
-                       */
+          {
+            for (index=0; index<count; index++)
+              {
+                if (llen == 0 && itemp[index] == '.')
+                  {
+                    /*
+                     * Special rule: encode '.' at the beginning of a line, so
+                     * that some mailers aren't confused.
+                     */
+                    *optr++ = '=';
+                    *optr++ = HexEncodeTable[itemp[index] >> 4];
+                    *optr++ = HexEncodeTable[itemp[index] & 0x0f];
+                    llen += 3;
+                  }
+                else if ((itemp[index] >= 33 && itemp[index] <= 60) ||
+                         (itemp[index] >= 62 && itemp[index] <= 126) ||
+                         itemp[index] == 9 || itemp[index] == 32)
+                  {
+                    *optr++ = itemp[index];
+                    llen++;
+                  }
+                else if (itemp[index] == '\n')
+                  {
+                    /*
+                     * If the last character before EOL was a space or tab,
+                     * we must encode it. If llen > 74, there's no space to do
+                     * that, so generate a soft line break instead.
+                     */
 
-                      if (index>0 && (itemp[index-1] == 9 || itemp[index-1] == 32))
-                        {
-                          *(optr-1) = '=';
-                          if (llen <= 74)
-                            {
-                              *optr++ = HexEncodeTable[itemp[index-1] >> 4];
-                              *optr++ = HexEncodeTable[itemp[index-1] & 0x0f];
-                              llen += 2;
-                            }
-                        }
+                    if (index>0 && (itemp[index-1] == 9 || itemp[index-1] == 32))
+                      {
+                        *(optr-1) = '=';
+                        if (llen <= 74)
+                          {
+                            *optr++ = HexEncodeTable[itemp[index-1] >> 4];
+                            *optr++ = HexEncodeTable[itemp[index-1] & 0x0f];
+                            llen += 2;
+                          }
+                      }
 
-                      if (fwrite (otemp, 1, llen, outfile) != llen ||
-                          fwrite ((char *) eolstring, 1,
-                                  strlen(eolstring), outfile) != strlen (eolstring))
-                        {
-                          return UURET_IOERR;
-                        }
+                    if (fwrite (otemp, 1, llen, outfile) != llen ||
+                        fwrite ((char *) eolstring, 1,
+                                strlen(eolstring), outfile) != strlen (eolstring))
+                      {
+                        return UURET_IOERR;
+                      }
 
-                      /*
-                       * Fix the soft line break condition from above
-                       */
+                    /*
+                     * Fix the soft line break condition from above
+                     */
 
-                      if (index>0 && (itemp[index-1] == 9 || itemp[index-1] == 32) &&
-                          *(optr-1) == '=')
-                        {
-                          otemp[0] = '=';
-                          otemp[1] = HexEncodeTable[itemp[index-1] >> 4];
-                          otemp[2] = HexEncodeTable[itemp[index-1] & 0x0f];
+                    if (index>0 && (itemp[index-1] == 9 || itemp[index-1] == 32) &&
+                        *(optr-1) == '=')
+                      {
+                        otemp[0] = '=';
+                        otemp[1] = HexEncodeTable[itemp[index-1] >> 4];
+                        otemp[2] = HexEncodeTable[itemp[index-1] & 0x0f];
 
-                          if (fwrite (otemp, 1, 3, outfile) != 3 ||
-                              fwrite ((char *) eolstring, 1,
-                                      strlen(eolstring), outfile) != strlen (eolstring))
-                            {
-                              return UURET_IOERR;
-                            }
-                        }
+                        if (fwrite (otemp, 1, 3, outfile) != 3 ||
+                            fwrite ((char *) eolstring, 1,
+                                    strlen(eolstring), outfile) != strlen (eolstring))
+                          {
+                            return UURET_IOERR;
+                          }
+                      }
 
-                      optr = otemp;
-                      llen = 0;
-                    }
-                  else
-                    {
-                      *optr++ = '=';
-                      *optr++ = HexEncodeTable[itemp[index] >> 4];
-                      *optr++ = HexEncodeTable[itemp[index] & 0x0f];
-                      llen += 3;
-                    }
+                    optr = otemp;
+                    llen = 0;
+                  }
+                else
+                  {
+                    *optr++ = '=';
+                    *optr++ = HexEncodeTable[itemp[index] >> 4];
+                    *optr++ = HexEncodeTable[itemp[index] & 0x0f];
+                    llen += 3;
+                  }
 
-                  /*
-                   * Lines must be shorter than 76 characters (not counting CRLF).
-                   * If the line grows longer than that, we must include a soft
-                   * line break.
-                   */
+                /*
+                 * Lines must be shorter than 76 characters (not counting CRLF).
+                 * If the line grows longer than that, we must include a soft
+                 * line break.
+                 */
 
-                  if (itemp[index+1] != 0 && itemp[index+1] != '\n' &&
-                      (llen >= 75 ||
-                       (!((itemp[index+1] >= 33 && itemp[index+1] <= 60) ||
-                          (itemp[index+1] >= 62 && itemp[index+1] <= 126)) &&
-                        llen >= 73)))
-                    {
+                if (itemp[index+1] != 0 && itemp[index+1] != '\n' &&
+                    (llen >= 75 ||
+                     (!((itemp[index+1] >= 33 && itemp[index+1] <= 60) ||
+                        (itemp[index+1] >= 62 && itemp[index+1] <= 126)) &&
+                      llen >= 73)))
+                  {
 
-                      *optr++ = '=';
-                      llen++;
+                    *optr++ = '=';
+                    llen++;
 
-                      if (fwrite (otemp, 1, llen, outfile) != llen ||
-                          fwrite ((char *) eolstring, 1,
-                                  strlen(eolstring), outfile) != strlen (eolstring))
-                        {
-                          return UURET_IOERR;
-                        }
+                    if (fwrite (otemp, 1, llen, outfile) != llen ||
+                        fwrite ((char *) eolstring, 1,
+                                strlen(eolstring), outfile) != strlen (eolstring))
+                      {
+                        return UURET_IOERR;
+                      }
 
-                      optr = otemp;
-                      llen = 0;
-                    }
-                }
-            }
-
-          line++;
-        }
+                    optr = otemp;
+                    llen = 0;
+                  }
+              }
+          }
+        line++;
+      }
 
       return UURET_OK;
     }
@@ -987,9 +1003,6 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
   {
     return UURET_ILLVAL;
   }
-
-  long rest = bpf;
-  long current = 0;
 
   while (!feof (infile) && rest > 0)
   {

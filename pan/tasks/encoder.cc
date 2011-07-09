@@ -125,22 +125,29 @@ Encoder :: do_work()
 
       int enc(YENC_ENCODED);
       std::ofstream out;
-      std::stringstream txt;
+      std::ifstream in;
       switch (encode_mode)
       {
           case TaskUpload::YENC:
               enc = YENC_ENCODED;
               break;
           case TaskUpload::PLAIN:
-              std::ifstream in(filename.c_str(), std::ios::in);
-              char buf[4096];
-              cache->get_filename(cachename, it->second.message_id);
-              out.open(cachename, std::ios::out);
-              while (in.getline(buf,sizeof(buf))) out << buf;
-              out.close();
-              in.close();
-              res = UURET_OK;
-              goto _no_encode;
+//              in.open(filename.c_str(), std::ios::in);
+//              char buf[4096];
+//              cache->get_filename(cachename, it->second.message_id);
+//              out.open(cachename, std::ios::out);
+//
+//              out<<"MIME-Version: 1.0\n";
+////              out << "Content-Type: text/plain\n";
+//              out << "Content-Transfer-Encoding: 8bit\n";
+//              out << "Content-Disposition: attachment; filename=\""<<basename<<"\"\n";
+//
+//              while (in.good()) out << (char)in.get();
+//              out.close();
+//              in.close();
+//              res = UURET_OK;
+//              goto _no_encode;
+              enc = PT_ENCODED;
               break;
           case TaskUpload::BASE64:
               enc = B64ENCODED;
@@ -171,7 +178,6 @@ _no_encode:
       task->_all_bytes += sb.st_size;
       tmp->add_part(cnt, StringView(it->second.mid), sb.st_size);
       if (res != UURET_CONT) break;
-
     }
 
     if (res != UURET_OK && res != UURET_CONT)

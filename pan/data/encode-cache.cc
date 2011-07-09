@@ -130,7 +130,6 @@ EncodeCache :: add (const Quark& message_id)
   info._message_id = message_id;
   info._size = 0;
   info._date = time(0);
-//  info._fp = get_fp_from_mid(message_id);
   _mid_to_info.insert (mid_to_info_t::value_type (info._message_id, info));
 }
 
@@ -231,7 +230,6 @@ EncodeCache :: resize (guint64 max_bytes)
         unlink (buf);
         _current_bytes -= it->_size;
         removed.insert (mid);
-//        if (it->_fp) fclose(it->_fp);
         _mid_to_info.erase (mid);
       }
     }

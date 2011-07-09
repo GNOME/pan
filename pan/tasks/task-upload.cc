@@ -149,6 +149,8 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   }
   else if ((_encoder_has_run && !_needed.empty()))
   {
+//    _state.set_completed();
+//    set_finished(_queue_pos);
     _state.set_need_nntp(_server);
   }
   else if (_needed.empty())
@@ -378,7 +380,6 @@ TaskUpload :: on_worker_done (bool cancelled)
   {
     // the encoder is done... catch up on all housekeeping
     // now that we're back in the main thread.
-
     foreach_const(Encoder::log_t, _encoder->log_severe, it)
       Log :: add_err(it->c_str());
     foreach_const(Encoder::log_t, _encoder->log_errors, it)
@@ -415,6 +416,6 @@ TaskUpload :: ~TaskUpload ()
       _encoder->cancel_silently();
 
   g_object_unref (G_OBJECT(_msg));
-  _cache.release(_mids);
-  _cache.resize();
+//  _cache.release(_mids);
+//  _cache.resize();
 }
