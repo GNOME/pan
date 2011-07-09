@@ -464,7 +464,6 @@ namespace
       {
         if (ret) *ret = 0;
         if(SSL_get_error(chan->ssl, err) == SSL_ERROR_WANT_READ) {
-          std::cerr<<"again\n";
           return G_IO_STATUS_AGAIN;
         }
         return ssl_errno(errno);

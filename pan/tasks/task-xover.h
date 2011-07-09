@@ -68,6 +68,7 @@ namespace pan
       server_to_minitasks_t _server_to_minitasks;
 
     private: // implementation
+      void process_headers (NNTP*);
       Data& _data;
       const Quark _group;
       std::string _short_group_name;
@@ -85,6 +86,10 @@ namespace pan
       unsigned long _articles_so_far;
       unsigned long _lines_so_far;
       unsigned long _total_minitasks;
+      int           _running_minitasks;
+      bool _xzver;
+//      FILE * _headers;
+      std::ofstream _headers;
   };
 }
 

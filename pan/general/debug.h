@@ -26,6 +26,9 @@ namespace pan
 {
   extern bool _debug_flag;
   extern bool _debug_verbose_flag;
+
+  // imhotep
+  extern bool _xzver_support;
 }
 
 #define LINE_ID '(' << __FILE__ << ':' << __LINE__ << ':' << __func__ << ')'

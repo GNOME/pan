@@ -286,6 +286,8 @@ main (int argc, char *argv[])
       nzb_output_path = tok+9;
     else if (!strcmp(tok,"-h") || !strcmp(tok,"--help"))
       { usage (); return 0; }
+    else if (!strcmp(tok,"--xzver"))
+      _xzver_support = true;
     else {
       nzb = true;
       nzb_files.push_back (tok);

@@ -26,17 +26,19 @@ extern "C" {
   #include <uulib/uudeview.h>
   #include <glib/gi18n.h>
   #include <gmime/gmime-utils.h>
-
+  #include <zlib.h>
 }
 #include <fstream>
 #include <iostream>
 #include <pan/general/debug.h>
+#include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/data/data.h>
 #include "nntp.h"
 #include "task-xover.h"
+
 
 using namespace pan;
 
@@ -83,6 +85,16 @@ namespace
   }
 }
 
+namespace
+{
+  char* build_cachename (char* buf, size_t len, const char* name)
+  {
+    const char * home(file::get_pan_home().c_str());
+    g_snprintf(buf,len,"%s%c%s%c%s",home, G_DIR_SEPARATOR, "encode-cache", G_DIR_SEPARATOR, name);
+    return buf;
+  }
+}
+
 TaskXOver :: TaskXOver (Data         & data,
                         const Quark  & group,
                         Mode           mode,
@@ -98,8 +110,18 @@ TaskXOver :: TaskXOver (Data         & data,
   _bytes_so_far (0),
   _parts_so_far (0ul),
   _articles_so_far (0ul),
-  _total_minitasks (0)
+  _total_minitasks (0),
+  _running_minitasks (0),
+  _xzver (_xzver_support)
 {
+
+
+
+  if (_xzver)
+  {
+    char buf[4096];
+    _headers.open(build_cachename(buf,sizeof(buf), "xzver_test"), std::ios::out | std::ios::binary);
+  }
 
   debug ("ctor for " << group);
 
@@ -163,7 +185,11 @@ TaskXOver :: use_nntp (NNTP* nntp)
       case MiniTask::XOVER:
         debug ("XOVER " << mt._low << '-' << mt._high << " to " << server);
         _last_xover_number[nntp] = mt._low;
-        nntp->xover (_group, mt._low, mt._high, this);
+        if (_xzver)
+          nntp->xzver (_group, mt._low, mt._high, this);
+        else
+          nntp->xover (_group, mt._low, mt._high, this);
+        --_running_minitasks;
         break;
       default:
         assert (0);
@@ -217,14 +243,15 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
   {
     //std::cerr << LINE_ID << " okay, I'll try to get articles in [" << l << "..." << h << ']' << std::endl;
     add_steps (h-l);
-    const int INCREMENT (1000);
+    int INCREMENT = _xzver ? 100000 : 1000;
     MiniTasks_t& minitasks (_server_to_minitasks[servername]);
     for (uint64_t m=l; m<=h; m+=INCREMENT) {
       MiniTask mt (MiniTask::XOVER, m, m+INCREMENT);
-      debug ("adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << ']');
+      debug ("adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << "]");
       minitasks.push_front (mt);
       ++_total_minitasks;
     }
+    _running_minitasks = _total_minitasks;
   }
   else
   {
@@ -272,6 +299,21 @@ namespace
 
 void
 TaskXOver :: on_nntp_line         (NNTP               * nntp,
+                                   const StringView   & line)
+{
+
+    if (_xzver ) {
+        if (line.strstr("=ybegin line=128"))
+          _headers << line.str << " name=xzver_decoded\n";
+        else
+          _headers << line.str <<"\n";
+    }
+    else
+      on_nntp_line_process (nntp, line);
+}
+
+void
+TaskXOver :: on_nntp_line_process (NNTP               * nntp,
                                    const StringView   & line)
 {
 
@@ -372,6 +414,8 @@ TaskXOver :: on_nntp_done (NNTP              * nntp,
                            Health              health,
                            const StringView  & response UNUSED)
 {
+  if (_running_minitasks == 0) process_headers(nntp);
+
   update_work (true);
   check_in (nntp, health);
 }
@@ -399,6 +443,100 @@ TaskXOver :: update_work (bool subtract_one_from_nntp_count)
     _state.set_completed();
     set_finished(OK);
   }
+}
+
+namespace
+{
+
+  #define CHUNK 16384
+
+  int inf(FILE *source, FILE *dest)
+  {
+    int ret;
+    unsigned have;
+    z_stream strm;
+    unsigned char in[CHUNK];
+    unsigned char out[CHUNK];
+
+    /* allocate inflate state */
+    strm.zalloc = Z_NULL;
+    strm.zfree = Z_NULL;
+    strm.opaque = Z_NULL;
+    strm.avail_in = 0;
+    strm.next_in = Z_NULL;
+    ret = inflateInit2(&strm,-15); //raw inflate
+    if (ret != Z_OK)
+        return ret;
+
+    /* decompress until deflate stream ends or end of file */
+    do {
+        strm.avail_in = fread(in, 1, CHUNK, source);
+        if (ferror(source)) {
+            (void)inflateEnd(&strm);
+            return Z_ERRNO;
+        }
+        if (strm.avail_in == 0)
+            break;
+        strm.next_in = in;
+
+        /* run inflate() on input until output buffer not full */
+        do {
+            strm.avail_out = CHUNK;
+            strm.next_out = out;
+            ret = inflate(&strm, Z_NO_FLUSH);
+            assert(ret != Z_STREAM_ERROR);  /* state not clobbered */
+            switch (ret) {
+            case Z_NEED_DICT:
+                ret = Z_DATA_ERROR;     /* and fall through */
+            case Z_DATA_ERROR:
+            case Z_MEM_ERROR:
+                (void)inflateEnd(&strm);
+                return ret;
+            }
+            have = CHUNK - strm.avail_out;
+            if (fwrite(out, 1, have, dest) != have || ferror(dest)) {
+                (void)inflateEnd(&strm);
+                return Z_ERRNO;
+            }
+        } while (strm.avail_out == 0);
+
+        /* done when inflate() says it's done */
+    } while (ret != Z_STREAM_END);
+
+    /* clean up and return */
+    (void)inflateEnd(&strm);
+    return ret == Z_STREAM_END ? Z_OK : Z_DATA_ERROR;
+  }
+}
+
+void
+ TaskXOver :: process_headers (NNTP* nntp)
+{
+  char buf[4096];
+
+  _headers.close();
+  /* yenc-decode */
+  UUInitialize ();
+  UULoadFile (build_cachename(buf,sizeof(buf), "xzver_test"), 0, 1);
+  UUDecodeFile (UUGetFileListItem (0), build_cachename(buf,sizeof(buf), "xzver_decoded"));
+  UUCleanUp ();
+
+  /* raw zlib inflate */
+  FILE * in = fopen (buf, "rb");
+  FILE * out = fopen (build_cachename(buf,sizeof(buf), "xzver_out"), "wb");
+  int res(Z_OK);
+  if (in && out) res = inf (in,out);
+
+  /* feed to on_nntp_line */
+  if (in) fclose(in);
+  if (out) fclose(out);
+  if (res==Z_OK)
+  {
+    std::ifstream f(buf, std::ios::in);
+    char buf[4096];
+    while (f.getline(buf,sizeof(buf))) on_nntp_line_process(nntp,StringView(buf));
+  }
+
 }
 
 unsigned long
