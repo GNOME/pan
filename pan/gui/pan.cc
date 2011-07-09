@@ -328,7 +328,7 @@ main (int argc, char *argv[])
 
     //////////////////////////
     /// DBG!!!!
-    GIOChannelSocketSSL::Creator socket_creator;
+    GIOChannelSocket::Creator socket_creator;
     //////////////////////////
 
     Queue queue (data, data, &socket_creator, worker_pool,

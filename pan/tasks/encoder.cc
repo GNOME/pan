@@ -125,18 +125,20 @@ Encoder :: do_work()
 
       int enc(YENC_ENCODED);
       std::ofstream out;
-      std::string txt;
+      std::stringstream txt;
       switch (encode_mode)
       {
           case TaskUpload::YENC:
               enc = YENC_ENCODED;
               break;
           case TaskUpload::PLAIN:
-              file :: get_text_file_contents (filename, txt);
-              cache->get_filename(cachename, Quark(buf));//it->second.message_id));
+              std::ifstream in(filename.c_str(), std::ios::in);
+              char buf[4096];
+              cache->get_filename(cachename, it->second.message_id);
               out.open(cachename, std::ios::out);
-              out << txt;
+              while (in.getline(buf,sizeof(buf))) out << buf;
               out.close();
+              in.close();
               res = UURET_OK;
               goto _no_encode;
               break;
