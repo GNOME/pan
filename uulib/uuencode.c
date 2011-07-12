@@ -701,7 +701,7 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
 
   if (encoding == PT_ENCODED || encoding == QP_ENCODED)
     {
-      while (rest > 0 )
+      while (!feof (infile) && rest > 0 )
       {
         current = rest > 255 ? 255 : rest;
 
@@ -733,7 +733,6 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
           {
 //            UUMessage (uuencode_id, __LINE__, UUMSG_NOTE,
 //                       uustring (S_ENCODE_CANCEL));
-            printf("cancel\n");
             return UURET_CANCEL;
           }
 
@@ -750,7 +749,6 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
                     fwrite ((char *) eolstring, sizeof(unsigned char),
                             strlen(eolstring), outfile) != strlen (eolstring))
                   {
-                    printf("error count>0 \n");
                     return UURET_IOERR;
                   }
               }
@@ -759,7 +757,6 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
                 size_t res;
                 if ((res=fwrite (itemp, sizeof(unsigned char), count, outfile)) != count)
                   {
-                    printf("error count %d %u %lu\n",count, res,llen);
                     return UURET_IOERR;
                   }
               }
@@ -887,7 +884,7 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
     long rest = bpf;
     long current = 0;
 
-    while (rest > 0)
+    while (!feof (infile) && rest > 0)
     {
       current = rest > 128 ? 128 : rest;
 
@@ -1710,6 +1707,7 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
           mimetype = "text/plain";
         }
 
+
       /*
        * print sub-header
        */
@@ -1739,6 +1737,9 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
                    UUFNameFilter ((outfname)?outfname:infname), eolstring);
         }
     }
+
+
+
   if (encoding == YENC_ENCODED)
     {
       pcrc = crc32(0L, Z_NULL, 0);

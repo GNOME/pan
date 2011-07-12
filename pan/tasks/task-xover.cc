@@ -414,7 +414,7 @@ TaskXOver :: on_nntp_done (NNTP              * nntp,
                            Health              health,
                            const StringView  & response UNUSED)
 {
-  if (_running_minitasks == 0) process_headers(nntp);
+  if (_running_minitasks == 0 && _xzver) process_headers(nntp);
 
   update_work (true);
   check_in (nntp, health);

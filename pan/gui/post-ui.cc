@@ -2729,8 +2729,7 @@ PostUI :: get_total_parts(const char* file, TaskUpload* it)
 {
     struct stat sb;
     stat (file,&sb);
-    int bpf = _prefs.get_int("upload-option-bpf",1024*512);
-    return std::max(1,(int)std::ceil(sb.st_size / bpf));
+    return std::max(1,(int)std::ceil((double)sb.st_size / (double)_prefs.get_int("upload-option-bpf",1024*512)));
 }
 
 void
@@ -3059,8 +3058,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
           struct stat sb;
           // yEnc encoding is the default, user can change that with popup-menu
           stat ((const char*)cur->data,&sb);
-          ui.total = std::max(1,(int)std::ceil(sb.st_size / (double)_prefs.get_int("upload-option-bpf",1024*512)));
-
+          ui.total = std::max(1,(int)std::ceil((double)sb.st_size / (double)_prefs.get_int("upload-option-bpf",1024*512)));
           TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
                             profile.posting_server, _cache,
                             a, ui, msg ,0, TaskUpload::YENC);

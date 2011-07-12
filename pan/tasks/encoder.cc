@@ -132,21 +132,6 @@ Encoder :: do_work()
               enc = YENC_ENCODED;
               break;
           case TaskUpload::PLAIN:
-//              in.open(filename.c_str(), std::ios::in);
-//              char buf[4096];
-//              cache->get_filename(cachename, it->second.message_id);
-//              out.open(cachename, std::ios::out);
-//
-//              out<<"MIME-Version: 1.0\n";
-////              out << "Content-Type: text/plain\n";
-//              out << "Content-Transfer-Encoding: 8bit\n";
-//              out << "Content-Disposition: attachment; filename=\""<<basename<<"\"\n";
-//
-//              while (in.good()) out << (char)in.get();
-//              out.close();
-//              in.close();
-//              res = UURET_OK;
-//              goto _no_encode;
               enc = PT_ENCODED;
               break;
           case TaskUpload::BASE64:

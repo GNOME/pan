@@ -10,8 +10,7 @@ libusenetutils_a_SOURCES = \
  numbers.cc \
  scorefile.cc \
  text-massager.cc \
- url-find.cc \
- rng.cc
+ url-find.cc 
 
 noinst_HEADERS = \
  defgroup.h \
@@ -22,8 +21,7 @@ noinst_HEADERS = \
  numbers.h \
  scorefile.h \
  text-massager.h \
- url-find.h \
- rng.h
+ url-find.h 
 
 noinst_PROGRAMS = \
  gnksa-test \
