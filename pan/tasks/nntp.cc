@@ -63,7 +63,6 @@ NNTP :: fire_done_func (Health health, const StringView& response)
       debug ("I (" << (void*)this << ") am setting my _listener to 0");
       _listener = 0;
       l->on_nntp_done (this, health, response);
-      _xzver = false;
    }
 }
 
@@ -79,7 +78,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    StringView line (line_in);
 
    // strip off trailing \r\n
-   if (line.len>=2 && line.str[line.len-2]=='\r' && line.str[line.len-1]=='\n' && !_xzver)
+   if (line.len>=2 && line.str[line.len-2]=='\r' && line.str[line.len-1]=='\n')
      line.truncate (line.len-2);
 
 //    std::cerr <<"_nntp_response_text: " << _nntp_response_text<<std::endl;
@@ -94,7 +93,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
       {
          state = CMD_MORE;
 
-         if (line.len>=2 && line.str[0]=='.' && line.str[1]=='.' && !_xzver) // rfc 977: 2.4.1
+         if (line.len>=2 && line.str[0]=='.' && line.str[1]=='.') // rfc 977: 2.4.1
             line.rtruncate (line.len-1);
 
          assert (_listener != 0);
@@ -317,24 +316,6 @@ NNTP :: xover (const Quark   & group,
 
    write_next_command ();
 }
-
-void
-NNTP :: xzver (const Quark   & group,
-               uint64_t        low,
-               uint64_t        high,
-               Listener      * l)
-{
-   _listener = l;
-   _xzver = true;
-
-   if (group != _group)
-      _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
-
-   _commands.push_back (build_command ("XZVER %"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT"\r\n", low, high));
-
-   write_next_command ();
-}
-
 
 void
 NNTP :: list_newsgroups (Listener * l)

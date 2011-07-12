@@ -50,7 +50,6 @@ namespace pan
       virtual void use_nntp (NNTP * nntp);
 
     private: // NNTP::Listener
-      void on_nntp_line_process (NNTP*, const StringView&);
       virtual void on_nntp_line (NNTP*, const StringView&);
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
       virtual void on_nntp_group (NNTP*, const Quark&, unsigned long, uint64_t, uint64_t);
@@ -68,7 +67,6 @@ namespace pan
       server_to_minitasks_t _server_to_minitasks;
 
     private: // implementation
-      void process_headers (NNTP*);
       Data& _data;
       const Quark _group;
       std::string _short_group_name;
@@ -84,12 +82,8 @@ namespace pan
       unsigned long _bytes_so_far;
       unsigned long _parts_so_far;
       unsigned long _articles_so_far;
-      unsigned long _lines_so_far;
       unsigned long _total_minitasks;
-      int           _running_minitasks;
-      bool _xzver;
-//      FILE * _headers;
-      std::ofstream _headers;
+
   };
 }
 

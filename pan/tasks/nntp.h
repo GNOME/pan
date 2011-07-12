@@ -153,8 +153,7 @@ namespace pan
           _listener(0),
           _username(username),
           _password(password),
-          _nntp_response_text(false),
-          _xzver(false)
+          _nntp_response_text(false)
        {}
 
        virtual ~NNTP ()
@@ -190,12 +189,6 @@ namespace pan
                              uint64_t             high,
                              Listener           * l);
 
-
-      /** Experimental XZVER header compression support */
-      void  xzver           (const Quark   & group,
-                             uint64_t        low,
-                             uint64_t        high,
-                             Listener      * l) ;
 
       /**
        * Executes a LIST command: "LIST"
@@ -309,8 +302,6 @@ namespace pan
       std::string _post;
       /** True if the server told us that we're getting a list back. */
       bool _nntp_response_text;
-
-      bool _xzver;
 
       typedef std::deque<std::string> strings_t;
       strings_t _commands;
