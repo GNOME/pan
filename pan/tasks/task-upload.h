@@ -72,12 +72,11 @@ namespace pan
         unsigned long bytes;
         int partno;
         NNTP* nntp;
-        std::string message_id;
+        std::string message_id, last_mid;
         std::string mid; // for rng
         std::string cachename;
         Xref xref;
-        bool encoded;
-        Needed (): nntp(0), bytes(0) , partno(1), encoded(false) {}
+        Needed (): nntp(0), bytes(0) , partno(1) {}
         void reset() { nntp = 0; }
       };
 

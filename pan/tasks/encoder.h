@@ -41,7 +41,7 @@ extern "C" {
 namespace pan
 {
   /**
-   * Encodes attachments (yEnc) for posting to usenet groups.
+   * Encodes attachments (yEnc, BASE64,MIME PT) for posting to usenet groups.
    *
    * @author Heinrich Mueller <eddie_v@gmx.de>
    * @author Calin Culianu <calin@ajvar.org>

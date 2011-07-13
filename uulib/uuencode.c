@@ -699,14 +699,13 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
   long rest = bpf;
   long current = 0;
 
+  ///TODO fixme!!
+
   if (encoding == PT_ENCODED || encoding == QP_ENCODED)
     {
       while (!feof (infile) && rest > 0 )
       {
         current = rest > 255 ? 255 : rest;
-
-//        if (_FP_fgets (itemp, 255, infile) == NULL)
-//          break;
 
       if ((count = fread (itemp, sizeof(unsigned char), current, infile)) != 255)
       {
@@ -1472,7 +1471,7 @@ UUEncodePartial (FILE *outfile, FILE *infile,
                        eolstring);
             }
 
-          fprintf (outfile, "=ypart begin=%d end=%d%s",
+          fprintf (outfile, "=ypart begin=%ld end=%ld%s",
                    (partno-1)*linperfile*128+1,
                    (partno*linperfile*128) < progress.totsize ?
                    (partno*linperfile*128) : progress.totsize,
@@ -1546,7 +1545,7 @@ UUEncodePartial (FILE *outfile, FILE *infile,
     {
       if (numparts != 1)
         {
-          fprintf (outfile, "=yend size=%d part=%d pcrc32=%08lx",
+          fprintf (outfile, "=yend size=%ld part=%d pcrc32=%08lx",
                    (partno*linperfile*128) < progress.totsize ?
                    linperfile*128 : (progress.totsize-(partno-1)*linperfile*128),
                    partno,
@@ -1554,7 +1553,7 @@ UUEncodePartial (FILE *outfile, FILE *infile,
         }
       else
         {
-          fprintf (outfile, "=yend size=%d",
+          fprintf (outfile, "=yend size=%ld",
                    progress.totsize);
         }
       if (feof (theifile))
@@ -1645,10 +1644,10 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
                          infname, strerror (uu_errno=errno));
               return UURET_IOERR;
             }
-          if (bpf <= 0)
+          if (finfo.st_size <= bpf)
             numparts = 1;
           else
-            numparts = (int) ((long)ceill(finfo.st_size / bpf));
+            numparts = (int) (ceill(finfo.st_size / bpf));
 
           themode  = (filemode) ? filemode : ((int) finfo.st_mode & 0777);
           thesize  = (long) finfo.st_size;
@@ -1668,10 +1667,10 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
               themode =  (int) finfo.st_mode & 0777;
               thesize = (long) finfo.st_size;
 
-              if (bpf <= 0)
+              if (finfo.st_size <= bpf)
                 numparts = 1;
               else
-                numparts = (int) ((long)ceill(thesize / bpf));
+                numparts = (int) (ceill(thesize / bpf));
 
 
             }
@@ -1738,7 +1737,7 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
         }
     }
 
-
+  printf("numparts %d\n", numparts);
 
   if (encoding == YENC_ENCODED)
     {
@@ -1762,7 +1761,7 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
                        eolstring);
             }
 
-          fprintf (outfile, "=ypart begin=%d end=%d%s",
+          fprintf (outfile, "=ypart begin=%ld end=%ld%s",
                    (partno-1)*bpf,
                    (partno*bpf) < progress.totsize ?
                    (partno*bpf) : progress.totsize,
@@ -1836,7 +1835,7 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
   {
     if (numparts != 1)
       {
-        fprintf (outfile, "=yend size=%d part=%d pcrc32=%08lx",
+        fprintf (outfile, "=yend size=%ld part=%d pcrc32=%08lx",
                  (partno*bpf) < progress.totsize ?
                  bpf : (progress.totsize-(partno-1)*bpf),
                  partno,
@@ -1844,7 +1843,7 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
       }
     else
       {
-        fprintf (outfile, "=yend size=%d",
+        fprintf (outfile, "=yend size=%ld",
                  progress.totsize);
       }
     if (feof (theifile))
@@ -2293,7 +2292,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
                            eolstring);
                 }
 
-              fprintf (outfile, "=ypart begin=%d end=%d%s",
+              fprintf (outfile, "=ypart begin=%ld end=%ld%s",
                        (part-1)*linperfile*128+1,
                        (part*linperfile*128) < progress.totsize ?
                        (part*linperfile*128) : progress.totsize,
@@ -2347,7 +2346,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
         {
           if (numparts != 1)
             {
-              fprintf (outfile, "=yend size=%d part=%d pcrc32=%08lx",
+              fprintf (outfile, "=yend size=%ld part=%d pcrc32=%08lx",
                        (part*linperfile*128) < progress.totsize ?
                        linperfile*128 : (progress.totsize-(part-1)*linperfile*128),
                        part,
@@ -2355,7 +2354,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
             }
           else
             {
-              fprintf (outfile, "=yend size=%d",
+              fprintf (outfile, "=yend size=%ld",
                        progress.totsize);
             }
           if (feof (theifile))

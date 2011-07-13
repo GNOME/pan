@@ -217,6 +217,14 @@ namespace pan
       std::list<Task*> _active_tasks;
       std::string _charset;
 
+      static gboolean dragged(GtkWidget *wgt, GdkDragContext *context, int x, int y,
+              GtkSelectionData *seldata, guint info, guint time,
+              gpointer userdata);
+
+      static void dragged_rcvd(GtkWidget *wgt, GdkDragContext *context, int x, int y,
+              GtkSelectionData *seldata, guint info, guint time,
+              gpointer userdata);
+
       void set_charset (const StringView& v);
 
       void upkeep ();

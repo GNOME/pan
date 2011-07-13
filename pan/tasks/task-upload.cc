@@ -108,6 +108,20 @@ TaskUpload :: TaskUpload (const std::string         & filename,
 
 }
 
+namespace
+{
+  const char * build_subject_line (char* buf, int size, std::string& s, std::string& n, int p, int tp, TaskUpload::EncodeMode em)
+  {
+
+      if (tp != 1)
+        g_snprintf(buf, size,"%s - \"%s\" %s (%03d/%03d)", s.c_str(), n.c_str(), em == TaskUpload::YENC ? "yEnc" : "", p, tp );
+      else
+        g_snprintf(buf, size,"%s - \"%s\"  %s", s.c_str(), n.c_str(), em == TaskUpload::YENC ? "yEnc" : "");
+
+    return buf;
+  }
+}
+
 void
 TaskUpload :: build_needed_tasks()
 {
@@ -120,10 +134,8 @@ TaskUpload :: build_needed_tasks()
   _cache.reserve(_mids);
 
   /* build new master subject */
-  char sub[2048];
-  g_snprintf(sub,2048,"%s - \"%s\" - (%03d/%03d)", _subject.c_str(), _basename.c_str(), 1, _total_parts);
-  _master_subject = sub;
-
+  char buf[4096];
+  _master_subject = build_subject_line (buf, 4096, _subject, _basename, 1, _total_parts, _encode_mode);
 }
 
 void
@@ -149,14 +161,25 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   }
   else if ((_encoder_has_run && !_needed.empty()))
   {
-    _state.set_completed();
-    set_finished(_queue_pos);
-//    _state.set_need_nntp(_server);
+//    _state.set_completed();
+//    set_finished(_queue_pos);
+    _state.set_need_nntp(_server);
   }
   else if (_needed.empty())
   {
     _state.set_completed();
     set_finished(_queue_pos);
+  }
+}
+
+namespace
+{
+  void mod_refs (GMimeMessage* msg, std::string& refs, std::string& mid)
+  {
+    if (mid.empty()) return ; // do nothing if no new mids are added
+    char buf[4096];
+    g_snprintf(buf,sizeof(buf), "%s <%s>", refs.c_str(), mid.c_str());
+    g_mime_object_set_header ((GMimeObject *) msg, "References", buf);
   }
 }
 
@@ -169,13 +192,11 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
     if (!n->mid.empty()) pan_g_mime_message_set_message_id (msg, n->mid.c_str());
 
     //modify subject
-    char buf[2048];
-    g_snprintf(buf, sizeof(buf), "%s - \"%s\" - %s(%d/%d)",
-               _subject.c_str(),
-               _basename.c_str(),
-               (_encode_mode==YENC ? " yEnc ":""),
-               n->partno, _total_parts);
-    g_mime_message_set_subject (msg, buf);
+    char buf[4096];
+    g_mime_message_set_subject (msg, build_subject_line (buf, 4096, _subject, _basename, n->partno, _total_parts, _encode_mode));
+
+    //modify references header
+    mod_refs (msg, _references,  n->last_mid);
 
     //extract whole message with headers (for first message, others only post headers + encoded data)
     char * all;

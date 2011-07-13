@@ -153,7 +153,7 @@ PostUI:: update_filequeue_label (GtkTreeSelection *selection)
       TaskUpload * task (*it);
       kb += task->_bytes/1024;
     }
-    g_snprintf(str,sizeof(str), _("Upload Queue : %d Tasks, %ld KB (~ %.2f MB) total ."), tasks.size(), kb, kb/1024.0f);
+    g_snprintf(str,sizeof(str), _("Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."), tasks.size(), kb, kb/1024.0f);
     gtk_label_set_text (GTK_LABEL(_filequeue_label), str);
 }
 
@@ -1087,7 +1087,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       : GNKSA::generate_message_id_from_email_address (profile.address);
     StringView domain(d);
 
-    /// TODO maybe update tasks' msgs here ???
+    /// TODO maybe update tasks' msg headers here ???
 
     /* init taskupload variables before adding the tasks to the queue for processing */
     foreach (PostUI::tasks_t, tasks, it)
@@ -1116,6 +1116,9 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       // (for example for saving the nzb file). it will be hidden and destroyed on destruction of
       // the last Taskupload task.
       // (perhaps this could be changed if we added a listener for this in gui.cc and let post-ui.cc die) (??)
+
+      std::string last_mid;
+
       foreach (std::set<int>, t->_wanted, pit)
       {
         if (custom_mid)
@@ -1128,6 +1131,8 @@ PostUI :: maybe_post_message (GMimeMessage * message)
         g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);
         n.message_id = buf;
         n.partno = *pit;
+        n.last_mid = last_mid;
+        last_mid = n.mid;
         t->_needed.insert(std::pair<int,TaskUpload::Needed>(*pit,n));
       }
       t->build_needed_tasks();
@@ -1476,11 +1481,11 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   g_free (pch);
 
   // User-Agent
-  if (mode==POSTING && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
+  if ((mode==POSTING || mode == UPLOADING) && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
     g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent());
 
   // Message-ID for single text-only posts
-  if (mode==POSTING && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
+  if ((mode==POSTING || mode==UPLOADING) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
     const std::string message_id = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);

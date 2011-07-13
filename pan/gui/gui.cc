@@ -162,6 +162,21 @@ namespace
   }
 }
 
+namespace
+{
+  enum {
+        TARGET_STRING,
+        TARGET_ROOTWIN
+  };
+
+  static GtkTargetEntry target_list[] = {
+          { "STRING",     0, TARGET_STRING },
+          { "text/plain", 0, TARGET_STRING },
+          { "application/x-rootwindow-drop", 0, TARGET_ROOTWIN }
+  };
+}
+
+
 
 GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_cache, Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),
@@ -259,6 +274,14 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
   gtk_widget_set_tooltip_text (w, _("Open the Task Manager"));
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
   g_signal_connect (w, "clicked", G_CALLBACK(show_task_window_cb), this);
+
+  // drag and drop for message-ids
+//  gtk_drag_dest_set(w,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
+//  gtk_drag_dest_add_text_targets(w);
+//  gtk_drag_dest_add_uri_targets(w);
+//  g_signal_connect (w, "drag-data-received", G_CALLBACK(dragged_rcvd), this);
+//  g_signal_connect (w, "drag-drop", G_CALLBACK (dragged), this);
+
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
   frame = gtk_frame_new (NULL);
   gtk_container_set_border_width (GTK_CONTAINER(frame), 0);
@@ -563,6 +586,63 @@ GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
 	gtk_widget_destroy (w);
 
   return file;
+}
+
+gboolean GUI ::dragged(GtkWidget *wgt, GdkDragContext *context, int x, int y,
+              GtkSelectionData *seldata, guint info, guint time,
+              gpointer userdata)
+{
+
+  gtk_drag_finish (context, true, true, time);
+
+  GUI * p(static_cast<GUI*>(userdata));
+
+  std::cerr<<"dragged\n";
+
+  GdkAtom target_type;
+
+  /* If the source offers a target */
+  if (context-> targets)
+  {
+    target_type = GDK_POINTER_TO_ATOM
+            (g_list_nth_data (context-> targets, TARGET_STRING));
+
+    gtk_drag_get_data(wgt,context,target_type,time);
+  }
+
+  return true;
+
+}
+
+void GUI ::dragged_rcvd(GtkWidget *wgt, GdkDragContext *context, int x, int y,
+              GtkSelectionData *seldata, guint info, guint time,
+              gpointer userdata)
+{
+
+  gtk_drag_finish (context, true, true, time);
+
+  std::cerr<<"dragged rcvd\n";
+
+  GUI * p(static_cast<GUI*>(userdata));
+
+  GtkWidget * header_pane;
+  GtkTreeIter   iter;
+
+  header_pane = GTK_WIDGET(userdata);
+  std::cerr<<"data : "<<(gchar*)seldata->data<<std::endl;
+  Article a;
+  a.message_id = Quark((gchar*)seldata->data);
+  a.xref.insert ("2", "alt.binaries.test", 0);
+  a.set_part_count (1);
+  a.is_binary = true;
+  std::vector<Article> v;
+  v.push_back(a);
+  SaveDialog * dialog = new SaveDialog (p->_prefs, p->_group_prefs, p->_data, p->_data,
+                                        p->_cache, p->_data, p->_queue, get_window(p->_root), p->_header_pane->get_group(), v);
+  gtk_widget_show (dialog->root());
+
+  gtk_drag_finish (context, true, false, time);
+
 }
 
 void GUI :: do_save_articles ()
