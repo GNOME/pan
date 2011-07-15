@@ -450,7 +450,7 @@ DataImpl :: MyTree :: accumulate_descendants (unique_nodes_t& descendants,
   // if this node has an article and wasn't already in `descendants',
   // then add it and its children.
 
-  if (node->_article && descendants.insert(node).second)
+  if (node->_article && descendants.insert(node).second || !node->_article)
     foreach_const (ArticleNode::children_t, node->_children, it)
       accumulate_descendants (descendants, *it);
 }
