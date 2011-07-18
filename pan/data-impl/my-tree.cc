@@ -78,9 +78,18 @@ DataImpl :: MyTree :: get_article (const Quark& mid) const
 }
 
 size_t
-DataImpl :: MyTree :: size () const 
+DataImpl :: MyTree :: size () const
 {
   return _nodes.size();
+}
+
+void
+DataImpl :: MyTree :: set_rules (const RulesInfo * criteria )
+{
+  if (criteria)
+    _rules = *criteria;
+  else
+    _rules.clear ();
 }
 
 void
@@ -90,7 +99,7 @@ DataImpl :: MyTree :: set_filter (const Data::ShowType    show_type,
   // set the filter...
   if (criteria)
     _filter = *criteria;
-  else 
+  else
     _filter.clear ();
   _show_type = show_type;
 
@@ -122,6 +131,7 @@ DataImpl :: MyTree :: MyTree (DataImpl              & data_impl,
   _data.ref_group (_group);
   _data._trees.insert (this);
   set_filter (show_type, filter);
+  // set_rules (rules)
 }
 
 DataImpl :: MyTree :: ~MyTree ()
@@ -132,7 +142,7 @@ DataImpl :: MyTree :: ~MyTree ()
 }
 
 /****
-*****  
+*****
 ****/
 
 struct
@@ -153,6 +163,89 @@ DataImpl :: MyTree :: NodeMidCompare
   bool operator () (const ArticleNode* a, const Quark& b) const
     { return a->_mid < b; }
 };
+
+void
+DataImpl :: MyTree :: apply_rules (const const_nodes_v& candidates)
+{
+  NodeMidCompare compare;
+  const_nodes_v pass;
+  const_nodes_v fail;
+  pass.reserve (candidates.size());
+  fail.reserve (candidates.size());
+
+  // apply the rules to the whole tree
+  foreach_const (const_nodes_v, candidates, it) {
+    if (!(*it)->_article)
+      continue;
+    else if (_data._rules_filter.test_article (_data, _rules, _group, *(*it)->_article))
+      pass.push_back (*it);
+    else
+      fail.push_back (*it);
+  }
+  //std::cerr << LINE_ID << " " << pass.size() << " of "
+  //          << (pass.size() + fail.size()) << " articles pass\n";
+
+  //  maybe include threads or subthreads...
+  if (_show_type == Data::SHOW_THREADS)
+  {
+    foreach (const_nodes_v, pass, it) {
+      const ArticleNode *& n (*it);
+      while (n->_parent)
+        n = n->_parent;
+    }
+    std::sort (pass.begin(), pass.end(), compare);
+    pass.erase (std::unique (pass.begin(), pass.end()), pass.end());
+    //std::cerr << LINE_ID << " reduces to " << pass.size() << " threads\n";
+  }
+
+  if (_show_type == Data::SHOW_THREADS || _show_type == Data::SHOW_SUBTHREADS)
+  {
+    unique_nodes_t d;
+    foreach_const (const_nodes_v, pass, it)
+      accumulate_descendants (d, *it);
+    //std::cerr << LINE_ID << " expands into " << d.size() << " articles\n";
+
+    const_nodes_v fail2;
+    pass.clear ();
+    foreach_const (unique_nodes_t, d, it) {
+      const Article * a ((*it)->_article);
+      if (a->score > -9999 || _data._rules_filter.test_article (_data, _rules, _group, *a))
+        pass.push_back (*it); // pass is now sorted by mid because d was too
+      else
+        fail2.push_back (*it); // fail2 is sorted by mid because d was too
+    }
+
+    // fail cleanup: add fail2 and remove duplicates.
+    // both are sorted by mid, so set_union will do the job
+    const_nodes_v tmp;
+    tmp.reserve (fail.size() + fail2.size());
+    std::set_union (fail.begin(), fail.end(),
+                    fail2.begin(), fail2.end(),
+                    inserter (tmp, tmp.begin()), compare);
+    fail.swap (tmp);
+
+    // fail cleanup: remove newly-passing articles
+    tmp.clear ();
+    std::set_difference (fail.begin(), fail.end(),
+                         pass.begin(), pass.end(),
+                         inserter (tmp, tmp.begin()), compare);
+    fail.swap (tmp);
+    //std::cerr << LINE_ID << ' ' << pass.size() << " of "
+    //          << (pass.size() + fail.size())
+    //          << " make it past the show-thread block\n";
+  }
+
+
+  // passing articles not in the tree should be added...
+  add_articles (pass);
+
+  // failing articles in the tree should be removed...
+  quarks_t mids;
+  foreach_const (const_nodes_v, fail, it)
+    mids.insert (mids.end(), (*it)->_mid);
+  remove_articles (mids);
+
+}
 
 
 // candidates holds GroupHeader's ArticleNodes pointers
@@ -219,7 +312,7 @@ DataImpl :: MyTree :: apply_filter (const const_nodes_v& candidates)
                     fail2.begin(), fail2.end(),
                     inserter (tmp, tmp.begin()), compare);
     fail.swap (tmp);
-	 
+
     // fail cleanup: remove newly-passing articles
     tmp.clear ();
     std::set_difference (fail.begin(), fail.end(),
@@ -227,7 +320,7 @@ DataImpl :: MyTree :: apply_filter (const const_nodes_v& candidates)
                          inserter (tmp, tmp.begin()), compare);
     fail.swap (tmp);
     //std::cerr << LINE_ID << ' ' << pass.size() << " of "
-    //          << (pass.size() + fail.size()) 
+    //          << (pass.size() + fail.size())
     //          << " make it past the show-thread block\n";
   }
 
@@ -331,6 +424,7 @@ DataImpl :: MyTree :: articles_changed (const quarks_t& mids, bool do_refilter)
     const_nodes_v nodes;
     _data.find_nodes (mids, _data.get_group_headers(_group)->_nodes, nodes);
     apply_filter (nodes);
+    apply_rules (nodes);
   }
 
   // fire an update event for any of those mids in our tree...
@@ -350,6 +444,7 @@ DataImpl :: MyTree :: add_articles (const quarks_t& mids)
   const_nodes_v nodes;
   _data.find_nodes (mids, _data.get_group_headers(_group)->_nodes, nodes);
   apply_filter (nodes);
+  apply_rules (nodes);
 }
 
 

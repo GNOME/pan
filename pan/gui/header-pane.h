@@ -26,6 +26,7 @@
 #include <pan/data/article-cache.h>
 #include <pan/data/data.h>
 #include <pan/usenet-utils/filter-info.h>
+#include <pan/usenet-utils/rules-info.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/tasks/queue.h>
 #include <pan/gui/action-manager.h>
@@ -297,15 +298,18 @@ namespace pan
       GtkWidget * _tree_view;
       PanTreeStore * _tree_store;
       FilterInfo _filter;
+      RulesInfo _rules;
       Data::ShowType _show_type;
       guint _selection_changed_idle_tag;
 
     private:
       void rebuild_filter (const std::string&, int);
+      void rebuild_rules (int mode);
       void refresh_font ();
 
     public: // public so that anonymous namespace can reach -- don't call
       void filter (const std::string& text, int mode);
+      void rules (int mode);
       static void do_popup_menu (GtkWidget*, GdkEventButton*, gpointer);
       static void on_row_activated (GtkTreeView*, GtkTreePath*, GtkTreeViewColumn*, gpointer);
       static gboolean on_button_pressed (GtkWidget*, GdkEventButton*, gpointer);

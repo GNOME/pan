@@ -101,7 +101,7 @@ namespace pan
       bool get_geometry (const StringView&, int&, int&, int&, int&) const;
 
     public:
-      Prefs () {}
+      Prefs () { _rules_changed = false; }
       virtual void save () const {}
       virtual ~Prefs () {}
 
@@ -128,6 +128,9 @@ namespace pan
       mutable colors_t _colors;
       typedef std::map<std::string,int> ints_t;
       mutable ints_t _ints;
+
+    public:
+      bool _rules_changed;
   };
 }
 

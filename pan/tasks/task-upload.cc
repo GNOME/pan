@@ -162,7 +162,7 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   {
     _state.set_working();
   }
-  else if ((_encoder_has_run && !_needed.empty()))
+  else if (_encoder_has_run && !_needed.empty())
   {
       _state.set_need_nntp(_server);
   }
@@ -264,6 +264,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   tmp.date = time(NULL);
   tmp.is_child = true;
   bool found(false);
+  bool post_ok(false);
 
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
@@ -274,13 +275,14 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
 
   if (!found) return;
 
-  bool post_ok(false);
+  if (_queue_pos == -1) { _needed.erase(it); goto _end; }
+
   switch (health)
   {
     case OK:
       std::cerr<<"OK "<<_queue_pos<<std::endl;
-//      increment_step(it->second.bytes);
-//      _needed.erase (it);
+      increment_step(it->second.bytes);
+      _needed.erase (it);
       post_ok = true;
       break;
     case ERR_NETWORK:

@@ -244,7 +244,9 @@ namespace pan
       static void add_widget (GtkUIManager*, GtkWidget*, gpointer);
       static void server_list_dialog_destroyed_cb (GtkWidget*, gpointer);
       void server_list_dialog_destroyed (GtkWidget*);
-
+      static void prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self);
+      void prefs_dialog_destroyed (GtkWidget* w);
+      int score_int_from_string(std::string val, const char* rules[]);
   };
 }
 

@@ -4,6 +4,7 @@ noinst_LIBRARIES = libusenetutils.a
 
 libusenetutils_a_SOURCES = \
  filter-info.cc \
+ rules-info.cc \
  gnksa.cc \
  message-check.cc \
  mime-utils.cc \
@@ -15,6 +16,7 @@ libusenetutils_a_SOURCES = \
 noinst_HEADERS = \
  defgroup.h \
  filter-info.h \
+ rules-info.h \
  gnksa.h \
  message-check.h \
  mime-utils.h \

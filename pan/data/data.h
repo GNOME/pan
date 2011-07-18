@@ -37,6 +37,7 @@
 namespace pan
 {
   class FilterInfo;
+  class RulesInfo;
 
   /**
    * Data Interface class for seeing the mapping between groups and servers.
@@ -468,6 +469,8 @@ namespace pan
 
           virtual void set_filter (const ShowType     show_type = SHOW_ARTICLES,
                                    const FilterInfo * filter_or_null_to_reset = 0) = 0;
+
+          virtual void set_rules (const RulesInfo * filterme = 0) = 0;
       };
 
        /**

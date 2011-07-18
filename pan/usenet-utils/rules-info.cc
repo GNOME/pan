@@ -17,25 +17,61 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef PREFS_UI_H
-#define PREFS_UI_H
+#include <config.h>
+extern "C" {
+  #include <glib.h>
+  #include <glib/gi18n.h>
+}
+#include <pan/general/macros.h>
+#include "rules-info.h"
 
-#include <gtk/gtk.h>
-#include <pan/gui/prefs.h>
+using namespace pan;
 
-namespace pan
+/***
+****
+***/
+
+void
+RulesInfo :: clear ()
 {
-  class PrefsDialog
-  {
-    public:
-      PrefsDialog (Prefs&, GtkWindow*) ;
-      ~PrefsDialog () { }
-      GtkWidget* root() { return _root; }
-
-    private:
-      Prefs& _prefs;
-      GtkWidget* _root;
-  };
+  _type = RulesInfo::TYPE_ERR;
+  _aggregates.clear ();
+  _negate = false;
+  _needs_body = false;
 }
 
-#endif
+void
+RulesInfo :: set_type_is (Type type) {
+   clear ();
+   _type = type;
+}
+
+void
+RulesInfo :: set_type_le (Type type, unsigned long le) {
+  clear ();
+  _type = type;
+  _negate = true;
+}
+
+void
+RulesInfo :: set_type_aggregate_and () {
+   clear ();
+   _type = AGGREGATE_AND;
+}
+void
+RulesInfo :: set_type_aggregate_or () {
+   clear ();
+   _type = AGGREGATE_OR;
+}
+
+/****
+*****
+****/
+
+
+void
+RulesInfo :: set_type_mark_read ()
+{
+   set_type_is (MARK_READ);
+}
+

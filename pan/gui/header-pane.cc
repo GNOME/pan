@@ -131,7 +131,7 @@ namespace
                       const Quark         & message_id)
   {
     int offset (ICON_EMPTY);
-      
+
     if (queue.contains (message_id))
       offset = ICON_QUEUED;
     else if (cache.contains (message_id))
@@ -319,7 +319,7 @@ HeaderPane :: create_row (const EvolutionDateMaker & e,
 
   std::pair<mid_to_row_t::iterator,bool> result (_mid_to_row.insert (row));
   g_assert (result.second);
-  
+
   return row;
 }
 
@@ -684,7 +684,7 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
     }
     _tree_store->insert_sorted (tmp);
   }
-     
+
   // reparent...
   if (do_thread && !diffs.reparented.empty()) {
     PanTreeStore::parent_to_children_t tmp;
@@ -916,7 +916,7 @@ HeaderPane :: on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gp
     GtkTreeSelection * selection = gtk_tree_view_get_selection(tv);
     GtkTreePath *path;
     if (gtk_tree_view_get_path_at_pos (tv,
-                                       (gint) event->x, 
+                                       (gint) event->x,
                                        (gint) event->y,
                                        &path, NULL, NULL, NULL))
     {
@@ -1024,6 +1024,34 @@ namespace
     AUTHOR,
     MESSAGE_ID
   };
+
+  enum
+  {
+    RULES_MARK_READ,
+    RULES_MARK_UNREAD,
+    RULES_AUTOCACHE,
+    RULES_AUTODL,
+    RULES_DELETE
+  };
+}
+
+void
+HeaderPane :: rebuild_rules (int mode)
+{
+
+  RulesInfo &f (_rules);
+  f.set_type_aggregate_and ();
+  RulesInfo tmp;
+
+  if (mode == RULES_MARK_READ) {
+    tmp.set_type_mark_read ();
+    f._aggregates.push_back (tmp);
+  }
+//   if (mode == RULES_MARK_UNREAD) {
+//    tmp.set_type_mark_unread ();
+//    f._aggregates.push_back (tmp);
+//  }
+
 }
 
 void
@@ -1036,6 +1064,7 @@ HeaderPane :: rebuild_filter (const std::string& text, int mode)
   d.text = text;
 
   FilterInfo &f (_filter);
+
   f.set_type_aggregate_and ();
 
   // entry field filter...
@@ -1172,6 +1201,19 @@ HeaderPane :: filter (const std::string& text, int mode)
 
     _wait.watch_cursor_off ();
   }
+}
+
+void
+HeaderPane :: rules(int mode)
+{
+  if (_prefs.get_string("rules-mark-read-value","never") != "never")
+    rebuild_rules(RULES_MARK_READ);
+
+  if (_rules._aggregates.empty())
+    _atree->set_rules();
+  else
+    _atree->set_rules(&_rules);
+
 }
 
 namespace
@@ -1869,7 +1911,7 @@ namespace
 }
 
 /**
-*** 
+***
 **/
 
 void

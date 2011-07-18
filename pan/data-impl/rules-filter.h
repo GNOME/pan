@@ -17,24 +17,33 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef PREFS_UI_H
-#define PREFS_UI_H
+#ifndef __RulesFilter_h__
+#define __RulesFilter_h__
 
-#include <gtk/gtk.h>
-#include <pan/gui/prefs.h>
+#include <pan/general/quark.h>
+#include <pan/usenet-utils/filter-info.h>
+#include <pan/usenet-utils/rules-info.h>
+#include <pan/usenet-utils/scorefile.h>
+#include <pan/data/article.h>
+#include <pan/data/data.h>
 
 namespace pan
 {
-  class PrefsDialog
+  /**
+   * @ingroup data_impl
+   */
+  class RulesFilter
   {
-    public:
-      PrefsDialog (Prefs&, GtkWindow*) ;
-      ~PrefsDialog () { }
-      GtkWidget* root() { return _root; }
 
-    private:
-      Prefs& _prefs;
-      GtkWidget* _root;
+    public:
+
+      RulesFilter() {  }
+
+      bool test_article (const Data& data,
+                         const RulesInfo   & rules,
+                         const Quark& group,
+                         const Article& article) const;
+
   };
 }
 

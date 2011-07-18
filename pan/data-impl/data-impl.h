@@ -40,6 +40,7 @@
 #include <pan/tasks/queue.h>
 #include <pan/data-impl/data-io.h>
 #include <pan/data-impl/article-filter.h>
+#include <pan/data-impl/rules-filter.h>
 #include <pan/data-impl/profiles.h>
 #include <pan/data-impl/memchunk.h>
 
@@ -440,6 +441,7 @@ namespace pan
           virtual size_t size () const;
           virtual void set_filter (const ShowType      show_type = SHOW_ARTICLES,
                                    const FilterInfo  * criteria  = 0);
+          virtual void set_rules (const RulesInfo * criteria = 0);
 
         public:
           void articles_changed (const quarks_t& mids, bool do_refilter);
@@ -452,6 +454,7 @@ namespace pan
           nodes_t _nodes;
           MemChunk<ArticleNode> _node_chunk;
           FilterInfo _filter;
+          RulesInfo _rules;
           Data::ShowType _show_type;
           struct NodeMidCompare;
           struct TwoNodes;
@@ -461,6 +464,7 @@ namespace pan
           void accumulate_descendants (unique_nodes_t&, const ArticleNode*) const;
           void add_articles (const const_nodes_v&);
           void apply_filter (const const_nodes_v&);
+          void apply_rules (const const_nodes_v& candidates);
       };
 
       std::set<MyTree*> _trees;
@@ -621,6 +625,7 @@ namespace pan
     public:
 
       const ArticleFilter _article_filter;
+      const RulesFilter   _rules_filter;
 
     private:
       guint newsrc_autosave_id;

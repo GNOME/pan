@@ -904,6 +904,7 @@ void GUI :: do_select_article_body ()
 void GUI :: do_show_preferences_dialog ()
 {
   PrefsDialog * dialog = new PrefsDialog (_prefs, get_window(_root));
+  g_signal_connect (dialog->root(), "destroy", G_CALLBACK(prefs_dialog_destroyed_cb), this);
   gtk_widget_show (dialog->root());
 }
 void GUI :: do_show_group_preferences_dialog ()
@@ -1065,6 +1066,74 @@ void GUI :: server_list_dialog_destroyed (GtkWidget *)
       _queue.add_task (new TaskGroups (_data, *it));
   }
 }
+
+void GUI ::  prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self)
+{
+  static_cast<GUI*>(self)->prefs_dialog_destroyed (w);
+}
+
+/*
+    w = score_handler_new (prefs, "rules-delete-score-value", "never", b);
+    w = score_handler_new (prefs, "rules-mark-read-value", "never", b);
+    w = score_handler_new (prefs, "rules-mark-unread-value", "never", b);
+    w = score_handler_new (prefs, "rules-autocache-value", "never", b);
+    w = score_handler_new (prefs, "rules-auto-dl-value", "never", b);
+*/
+
+#define NUM_RULES 6
+
+//int GUI :: score_int_from_string(std::string val, const char* rules[])
+//{
+//  const char* tmp (val.c_str());
+//  int res(-1);
+//  for (int i=0;i<NUM_RULES;++i) {
+//    if (!strcmp(rules[i],tmp)) { res = i; break; }
+//  }
+//  return res;
+//}
+
+void GUI :: prefs_dialog_destroyed (GtkWidget *)
+{
+
+  const Quark& group (_header_pane->get_group());
+  if (!group.empty() && _prefs._rules_changed)
+  {
+    _prefs._rules_changed = !_prefs._rules_changed;
+    std::string text;
+    int no(0);
+    _header_pane->rules(no);
+  }
+//  // apply filters
+//  if (_prefs._rules_changed && !group.empty())
+//  {
+//    _prefs._rules_changed = !_prefs._rules_changed;
+//    std::map<int, const char*> rules_map;
+//
+//    const char* rules [NUM_RULES] = { "never",
+//                              "watched",
+//                              "high" ,
+//                              "medium",
+//                              "low" ,
+//                              "ignored" };
+//    for (int i=0;i<NUM_RULES;++i)
+//      rules_map.insert(std::pair<int,const char*>(i,rules[i]));
+//    int val_delete(score_int_from_string(_prefs.get_string("rules-delete-score-value", "never"),rules));
+//    int val_read(score_int_from_string(_prefs.get_string("rules-mark-read-value", "never"),rules));
+//    int val_unread(score_int_from_string(_prefs.get_string("rules-mark-unread-value", "never"),rules));
+//    int val_cache(score_int_from_string(_prefs.get_string("rules-autocache-value", "never"),rules));
+//    int val_dl(score_int_from_string(_prefs.get_string("rules-auto-dl-value", "never"),rules));
+//
+//    std::cerr<<val_delete<<" "<<val_read<<std::endl;
+//
+//    std::vector<const Article*> articles_v (_header_pane->get_full_selection_v());
+//
+//    foreach (std::vector<const Article*>, articles_v, vit)
+//    {
+////      foreach
+//    }
+//  }
+}
+
 
 void GUI :: do_show_servers_dialog ()
 {
