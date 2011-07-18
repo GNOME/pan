@@ -28,9 +28,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdio>
-extern "C" {
-#include <glib/gi18n.h>
-}
+
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
@@ -76,7 +74,8 @@ TaskUpload :: TaskUpload (const std::string         & filename,
                           UploadInfo                  format,
                           GMimeMessage *              msg,
                           Progress::Listener        * listener,
-                          const TaskUpload::EncodeMode  enc):
+                          const TaskUpload::EncodeMode  enc,
+                          const TaskUpload::AttachMode  att):
   Task ("UPLOAD", get_description(filename.c_str())),
   _filename(filename),
   _basename (g_get_basename(filename.c_str())),
@@ -89,14 +88,14 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _encoder_has_run (false),
   _encode_mode(enc),
   _all_bytes(0),
-  _bpf(format.bpf),
+  _kbpf(format.kbpf),
   _queue_pos(0),
   _msg (msg),
   _total_parts(format.total),
   _save_file(format.save_file),
-  _first(true)
+  _first(true),
+  _att_mode(att)
 {
-
 
   const char * tmp (g_mime_object_get_header ((GMimeObject *)_msg, "References"));
   if (tmp) _references = std::string(tmp);
@@ -104,8 +103,8 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   struct stat sb;
   stat(filename.c_str(),&sb);
   _bytes = sb.st_size;
-  _state.set_paused();
 
+  _state.set_paused();
 }
 
 namespace
@@ -125,7 +124,6 @@ namespace
 void
 TaskUpload :: build_needed_tasks()
 {
-
   foreach (needed_t, _needed, it)
   {
     _mids.push_back(Quark(it->second.message_id));
@@ -150,8 +148,13 @@ TaskUpload :: update_work (NNTP* checkin_pending)
       ++working;
   }
 
+  if (_queue_pos == -1)
+  {
+    _state.set_need_nntp(_server);
+  }
+
   /* only need encode if mode is NOT plain */
-  if (!_encoder_has_run)
+  if (!_encoder_has_run && !_encoder && _queue_pos != -1)
   {
     _state.set_need_encoder();
   }
@@ -161,25 +164,12 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   }
   else if ((_encoder_has_run && !_needed.empty()))
   {
-//    _state.set_completed();
-//    set_finished(_queue_pos);
-    _state.set_need_nntp(_server);
+      _state.set_need_nntp(_server);
   }
   else if (_needed.empty())
   {
     _state.set_completed();
     set_finished(_queue_pos);
-  }
-}
-
-namespace
-{
-  void mod_refs (GMimeMessage* msg, std::string& refs, std::string& mid)
-  {
-    if (mid.empty()) return ; // do nothing if no new mids are added
-    char buf[4096];
-    g_snprintf(buf,sizeof(buf), "%s <%s>", refs.c_str(), mid.c_str());
-    g_mime_object_set_header ((GMimeObject *) msg, "References", buf);
   }
 }
 
@@ -193,22 +183,32 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
 
     //modify subject
     char buf[4096];
-    g_mime_message_set_subject (msg, build_subject_line (buf, 4096, _subject, _basename, n->partno, _total_parts, _encode_mode));
+    if (_queue_pos != -1)
+      g_mime_message_set_subject (msg, build_subject_line (buf, 4096, _subject, _basename, n->partno, _total_parts, _encode_mode));
 
     //modify references header
-    mod_refs (msg, _references,  n->last_mid);
+    std::string mids(_references);
+    mids += " <" + _first_mid + "> ";
+    if (_first_mid != n->last_mid && !_first)  mids += "<" + n->last_mid + ">";
+    g_mime_object_set_header ((GMimeObject *) msg, "References", mids.c_str());
 
-    //extract whole message with headers (for first message, others only post headers + encoded data)
     char * all;
-    if (_first) all = g_mime_object_to_string ((GMimeObject *) msg);
+    if (_first && _queue_pos==-1)
+      all = g_mime_object_to_string ((GMimeObject *) msg);
     else
       all = g_mime_object_get_headers ((GMimeObject *) msg);
     out << all << "\n";
     out << d;
     d = out.str();
 
-    if (_first) g_free(all);
+    if (_first && _queue_pos==0) g_free(all);
     if (_first) _first = !_first;
+}
+
+GMimeObject *
+TaskUpload :: get_body(Needed* n)
+{
+  return 0;
 }
 
 void
@@ -258,22 +258,29 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
                              Health health,
                              const StringView & response)
 {
+
   char buf[4096];
   Log::Entry tmp;
   tmp.date = time(NULL);
   tmp.is_child = true;
+  bool found(false);
 
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
-    if (it->second.nntp == nntp)
+    if (it->second.nntp == nntp) {
+      found=true;
       break;
+    }
+
+  if (!found) return;
 
   bool post_ok(false);
   switch (health)
   {
     case OK:
-      increment_step(it->second.bytes);
-      _needed.erase (it);
+      std::cerr<<"OK "<<_queue_pos<<std::endl;
+//      increment_step(it->second.bytes);
+//      _needed.erase (it);
       post_ok = true;
       break;
     case ERR_NETWORK:
@@ -372,6 +379,9 @@ TaskUpload :: get_bytes_remaining () const
 void
 TaskUpload :: use_encoder (Encoder* encoder)
 {
+
+  if (!encoder) return;
+
   if (_state._work != NEED_ENCODER)
     check_in (encoder);
 
@@ -379,7 +389,7 @@ TaskUpload :: use_encoder (Encoder* encoder)
   init_steps(100);
   _state.set_working();
 
-  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _bpf, _encode_mode);
+  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _kbpf, _encode_mode);
   debug ("encoder thread was free, enqueued work");
 }
 
@@ -437,6 +447,9 @@ TaskUpload :: ~TaskUpload ()
       _encoder->cancel_silently();
 
   g_object_unref (G_OBJECT(_msg));
-//  _cache.release(_mids);
-//  _cache.resize();
+  if (_att_mode==BULK && _queue_pos != -1)
+  {
+    _cache.release(_mids);
+    _cache.resize();
+  }
 }

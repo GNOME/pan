@@ -170,9 +170,9 @@ namespace
   };
 
   static GtkTargetEntry target_list[] = {
-          { "STRING",     0, TARGET_STRING },
-          { "text/plain", 0, TARGET_STRING },
-          { "application/x-rootwindow-drop", 0, TARGET_ROOTWIN }
+          { const_cast<char*>("STRING"),     0, TARGET_STRING },
+          { const_cast<char*>("text/plain"), 0, TARGET_STRING },
+          { const_cast<char*>("application/x-rootwindow-drop"), 0, TARGET_ROOTWIN }
   };
 }
 
@@ -276,11 +276,11 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
   g_signal_connect (w, "clicked", G_CALLBACK(show_task_window_cb), this);
 
   // drag and drop for message-ids
-//  gtk_drag_dest_set(w,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
-//  gtk_drag_dest_add_text_targets(w);
-//  gtk_drag_dest_add_uri_targets(w);
-//  g_signal_connect (w, "drag-data-received", G_CALLBACK(dragged_rcvd), this);
-//  g_signal_connect (w, "drag-drop", G_CALLBACK (dragged), this);
+//  gtk_drag_dest_set(_workarea_bin,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
+//  gtk_drag_dest_add_text_targets(_workarea_bin);
+//  gtk_drag_dest_add_uri_targets(_workarea_bin);
+//  g_signal_connect (_workarea_bin, "drag-data-received", G_CALLBACK(dragged_rcvd), this);
+//  g_signal_connect (_workarea_bin, "drag-drop", G_CALLBACK (dragged), this);
 
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
   frame = gtk_frame_new (NULL);

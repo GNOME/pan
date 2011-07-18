@@ -66,7 +66,7 @@ Encoder :: enqueue (TaskUpload                      * task,
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & subject,
-                    int                               bpf,
+                    int                               kbpf,
                     const TaskUpload::EncodeMode      enc)
 
 {
@@ -79,7 +79,7 @@ Encoder :: enqueue (TaskUpload                      * task,
   this->needed = &task->_needed;
   this->cache = cache;
   this->article = article;
-  this->bpf = bpf;
+  this->kbpf = kbpf;
   this->subject = subject;
 
   percent = 0;
@@ -150,7 +150,7 @@ Encoder :: do_work()
         continue;
       }
 
-      res = UUEncodePartial_byFSize (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), NULL, 0644, cnt, bpf ,&crc);
+      res = UUEncodePartial_byFSize (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), 0, 0, cnt, kbpf*1024 ,&crc);
 
       if (fp) fclose(fp);
 _no_encode:
@@ -177,13 +177,9 @@ _no_encode:
       log_errors.push_back(buf); // log error
     } else
       task->_upload_list.push_back(tmp);
-
   UUCleanUp ();
-
   }
-
   disable_progress_update();
-
 }
 
 /***

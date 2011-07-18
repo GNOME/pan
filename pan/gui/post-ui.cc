@@ -927,7 +927,10 @@ PostUI :: maybe_mail_message (GMimeMessage * message)
 void
 PostUI :: on_progress_finished (Progress&, int status) // posting finished
 {
-  bool close(false);
+
+  std::cerr<<"status "<<status<<std::endl;
+  if (status==-1) { --_running_uploads; return; }
+
   if (_file_queue_empty)
   {
     _post_task->remove_listener (this);
@@ -939,23 +942,24 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
     gtk_widget_destroy (_post_dialog);
   } else
   {
+    --_running_uploads;
+    int no = status;
+    TaskUpload * ptr = _upload_queue[no];
+
     if (!_save_file.empty())
     {
       mut.lock();
-        int no = status;
-        TaskUpload * ptr = _upload_queue[no];
         if (ptr) NZB :: upload_list_to_xml_file (_out, ptr->_upload_list);
-        --_running_uploads;
         if (_running_uploads==0 )
         {
           _out << "</nzb>\n";
           _out.close();
-          close = true;
         }
       mut.unlock();
-      if (close) close_window(true);
     }
+
   }
+  if (_running_uploads==0) close_window(true);
 }
 
 void
@@ -1074,7 +1078,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _upload_queue.get_all_tasks(tasks);
     int cnt(0);
     char buf[2048];
-    int lpf = _prefs.get_int("upload-option-bpf",1024*512);
     struct stat sb;
     _running_uploads = tasks.size();
 
@@ -1085,9 +1088,33 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       d = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
-    StringView domain(d);
+    StringView d2(d);
+    StringView domain;
+      const char * pch = d2.strchr ('@');
+      if (pch != NULL)
+         domain = d2.substr (pch+1, NULL);
+      else
+        domain = d2;
 
-    /// TODO maybe update tasks' msg headers here ???
+    std::string last_mid;
+    std::string first_mid;
+
+    // dummy taskupload for master article without attachment, dbg!!
+    const Profile profile (get_current_profile ());
+    std::string out;
+    generate_unique_id(domain, 1,out);
+    first_mid = out;
+    Article a(tasks[0]->_article);
+
+    TaskUpload::UploadInfo f;
+    f.total=1;
+    TaskUpload::Needed n;
+    n.mid = out;
+    TaskUpload * tmp = new TaskUpload("",profile.posting_server,_cache,a,f,new_message_from_ui(UPLOADING));
+    tmp->_needed.insert(std::pair<int, TaskUpload::Needed>(1,n));
+    tmp->_queue_pos = -1;
+    _queue.add_task (tmp, Queue::BOTTOM);
+    tmp->add_listener(this);
 
     /* init taskupload variables before adding the tasks to the queue for processing */
     foreach (PostUI::tasks_t, tasks, it)
@@ -1099,39 +1126,24 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       TaskUpload::Needed n;
 
       // generate domain for rng numbers
-      int total = get_total_parts(t->_filename.c_str(), t);
-      StringView d;
-      const char * pch = domain.strchr ('@');
-      if (pch != NULL)
-         d = domain.substr (pch+1, NULL);
-      else
-        d = domain;
-
-      // generate rng number for message-ids
-      // compose subject lines
-      // build needed struct for upload
-      // set queue position for listeners
-      // start queue and initialize listeners
-      // NOTE: the postui class won't be destroyed after that, because we need some data from it
-      // (for example for saving the nzb file). it will be hidden and destroyed on destruction of
-      // the last Taskupload task.
-      // (perhaps this could be changed if we added a listener for this in gui.cc and let post-ui.cc die) (??)
-
-      std::string last_mid;
+      int total = get_total_parts(t->_filename.c_str());
+      std::cerr<<"total of "<<t->_filename<<" : "<<total<<std::endl;
 
       foreach (std::set<int>, t->_wanted, pit)
       {
         if (custom_mid)
         {
             std::string out;
-            generate_unique_id(d, *pit,out);
+            generate_unique_id(domain, *pit,out);
             n.mid = out;
+            if (first_mid.empty()) first_mid = out;
         }
 
         g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);
         n.message_id = buf;
         n.partno = *pit;
         n.last_mid = last_mid;
+        t->_first_mid = first_mid;
         last_mid = n.mid;
         t->_needed.insert(std::pair<int,TaskUpload::Needed>(*pit,n));
       }
@@ -1141,8 +1153,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
       _queue.add_task (*it, Queue::BOTTOM);
       t->add_listener(this);
-
-      _upload_listeners.push_back(t);
     }
     gtk_widget_hide (_root); // hide the main window, we still need the class' data
   }
@@ -2717,7 +2727,7 @@ PostUI :: select_encode (GtkAction* a)
     foreach(tasks_t, tasks, it)
     {
       const char* f = (*it)->_filename.c_str();
-      int total(get_total_parts (f,*it));
+      int total(get_total_parts (f));
 
       (*it)->_encode_mode = tmp;
       (*it)->_total_parts = total;
@@ -2730,11 +2740,12 @@ PostUI :: select_encode (GtkAction* a)
 }
 
 int
-PostUI :: get_total_parts(const char* file, TaskUpload* it)
+PostUI :: get_total_parts(const char* file)
 {
     struct stat sb;
     stat (file,&sb);
-    return std::max(1,(int)std::ceil((double)sb.st_size / (double)_prefs.get_int("upload-option-bpf",1024*512)));
+    int max (std::max(1,(int)std::ceil((double)sb.st_size / (1024*_prefs.get_int("upload-option-kbpf",512)))));
+    return max;
 }
 
 void
@@ -2791,7 +2802,7 @@ PostUI :: select_parts ()
 
   if (!_upload_ptr) return;
 
-  int new_parts = get_total_parts(_upload_ptr->_filename.c_str(), _upload_ptr);
+  int new_parts = get_total_parts(_upload_ptr->_filename.c_str());
   if (_total_parts != new_parts)
   {
     _upload_ptr->_wanted.clear();
@@ -2909,8 +2920,11 @@ PostUI :: PostUI (GtkWindow    * parent,
   _body_changed_id(0),
   _body_changed_idle_tag(0),
   _filequeue_eventbox (0),
-  _filequeue_label (0)
+  _filequeue_label (0),
+  _multipart(g_mime_multipart_new_with_subtype("mixed"))
 {
+
+  g_mime_multipart_set_boundary(_multipart,"$pan_multipart_gmime_message$");
 
   rng.seed();
 
@@ -3029,12 +3043,9 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
         gtk_widget_destroy (w);
 
         TaskUpload::UploadInfo ui;
-        // not used for now...
-        ui.comment1 = _prefs.get_flag("upload-queue-append-subject-enabled",false);
         // query lines per file value
-        ui.bpf = _prefs.get_int("upload-option-bpf",1024*512);
+        ui.kbpf = _prefs.get_int("upload-option-kbpf",512);
 
-        GSList * cur = g_slist_nth (tmp_list,0);
         std::string author;
         profile.get_from_header(author);
         std::string subject(utf8ize (g_mime_message_get_subject (tmp)));
@@ -3049,6 +3060,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
               groups.insert(Quark(groupname));
         }
 
+        GSList * cur = g_slist_nth (tmp_list,0);
         for (; cur; cur = cur->next)
         {
           GMimeMessage * msg (new_message_from_ui (UPLOADING));
@@ -3062,11 +3074,11 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 
           struct stat sb;
           // yEnc encoding is the default, user can change that with popup-menu
-          stat ((const char*)cur->data,&sb);
-          ui.total = std::max(1,(int)std::ceil((double)sb.st_size / (double)_prefs.get_int("upload-option-bpf",1024*512)));
+          ui.total = get_total_parts((const char*)cur->data);
+          std::cerr<<"ui total "<<ui.total<<" "<<(const char*)cur->data<<" "<<get_total_parts((const char*)cur->data)<<std::endl;
           TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
                             profile.posting_server, _cache,
-                            a, ui, msg ,0, TaskUpload::YENC);
+                            a, ui, msg ,0, TaskUpload::YENC, TaskUpload::BULK );
 
           // insert wanted parts to upload
           for (int i=1;i<=ui.total; ++i)

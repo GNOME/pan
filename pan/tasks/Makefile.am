@@ -12,6 +12,7 @@ libtasks_a_SOURCES = \
   task-post.cc \
   task-xover.cc \
   task-upload.cc \
+  task-multipost.cc \
   nntp.cc \
   nzb.cc \
   queue.cc \
@@ -34,6 +35,7 @@ noinst_HEADERS = \
   task-groups.h \
   task-post.h \
   task-upload.h \
+  task-multipost.h \
   task-weak-ordering.h \
   task-xover.h \
   nntp.h  \

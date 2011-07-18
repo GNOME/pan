@@ -112,7 +112,7 @@ namespace pan
       void set_message (GMimeMessage*);
 
     private:
-      virtual void on_progress_finished (Progress&, int status);
+      virtual void on_progress_finished (Progress&, int status=OK);
       virtual void on_progress_error (Progress&, const StringView&);
 
       virtual void on_progress_step (Progress&, int p) {}
@@ -150,7 +150,6 @@ namespace pan
       std::string _current_signature;
       GtkWidget * _post_dialog;
       TaskPost * _post_task;
-      std::vector<TaskUpload*> _upload_listeners;
       typedef std::map<std::string, std::string> str2str_t;
       str2str_t _hidden_headers;
       str2str_t _profile_headers;
@@ -163,6 +162,7 @@ namespace pan
       int _total_parts;
       std::string _save_file;
       MTRand rng;
+      GMimeMultipart * _multipart;
 
     private:
       friend class UploadQueue;
@@ -246,7 +246,7 @@ namespace pan
 
       void generate_unique_id (StringView& mid, int cnt, std::string& s);
 
-      int get_total_parts(const char* file, TaskUpload* it);
+      int get_total_parts(const char* file);
 
     private:
       guint _draft_autosave_id;

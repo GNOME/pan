@@ -622,18 +622,19 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
   row = 0;
   t = HIG :: workarea_create ();
-  HIG :: workarea_add_section_title (t, &row, _("Upload Subject Line Appearance"));
+  HIG :: workarea_add_section_title (t, &row, _("Encoding Options"));
   HIG :: workarea_add_section_spacer (t, row, 4);
-  w = new_check_button (_("Append Subject to all Posts"), "upload-queue-append-subject-enabled", false, prefs);
-  HIG :: workarea_add_wide_control (t, &row, w);
-  HIG :: workarea_add_section_title (t, &row, _("Upload Subject Line Appearance"));
-  HIG :: workarea_add_section_spacer (t, row, 4);
-  // 256 mb blocks max, 512 kb min
-  w = new_spin_button ("upload-option-bpf", 5000, 1024*1024*256, prefs);
-  l = gtk_label_new(_("Default Bytes per File (for yEnc Encoder)"));
+  // 16 MiB blocks max, 512 kb min
+  w = new_spin_button ("upload-option-kbpf", 512, 1024*16, prefs);
+  l = gtk_label_new(_("Default KB per File (for Encoder)"));
   gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
-  gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
   HIG::workarea_add_row (t, &row, w, l);
+
+//  HIG::workarea_add_section_divider (t, &row);
+//  HIG :: workarea_add_section_title (t, &row, _("Attachment Options (Bulk Uploads)"));
+//  w = new_check_button (_("Single master reply/followup with body, attachments are replies"), "upload-option-reply-multi", false, prefs);
+//  HIG :: workarea_add_wide_control (t, &row, w);
+
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Upload options")));
 

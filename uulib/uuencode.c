@@ -1737,8 +1737,6 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
         }
     }
 
-  printf("numparts %d\n", numparts);
-
   if (encoding == YENC_ENCODED)
     {
       pcrc = crc32(0L, Z_NULL, 0);
