@@ -61,6 +61,7 @@ namespace pan
     public TaskArchive,
     public ProfilesImpl
   {
+
     /**
     *** SERVERS
     **/
@@ -635,7 +636,7 @@ namespace pan
     public:
 
       const ArticleFilter _article_filter;
-      RulesFilter   _rules_filter;
+            RulesFilter   _rules_filter;
 
     private:
       guint newsrc_autosave_id;

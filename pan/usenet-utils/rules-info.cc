@@ -19,7 +19,7 @@
 
 #include <iostream>
 #include <pan/general/debug.h>
-#include <pan/tasks/queue.h>
+
 
 #include <config.h>
 extern "C" {

@@ -506,15 +506,17 @@ namespace pan
                                                 size_t                end_line,
                                                 bool                  do_rescore) = 0;
 
-        virtual void rescore_articles (const Quark& group, const quarks_t mids) = 0;
+       virtual void rescore_articles (const Quark& group, const quarks_t mids) = 0;
 
-        virtual void rescore () = 0;
+       virtual void rescore () = 0;
 
-    ///TODO private!
     public:
-      Queue * _queue;
-      void set_queue (Queue* q) { _queue = q; }
 
+      void set_queue (Queue* q) { _queue = q; }
+      Queue* get_queue () { return _queue; }
+
+    private:
+      Queue * _queue;
 
 
     /*****************************************************************

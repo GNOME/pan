@@ -20,6 +20,7 @@
 #include <config.h>
 #include <cassert>
 #include <pan/general/debug.h>
+#include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/filter-info.h>
@@ -238,27 +239,34 @@ DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
 void
 DataImpl :: MyTree :: cache_articles (std::set<const Article*> s)
 {
-  if (!_data._queue) return;
+  Queue * q (_data.get_queue());
+  if (!q) return;
 
   Queue::tasks_t tasks;
   ArticleCache& cache(_data.get_cache());
   foreach_const (std::set<const Article*>, s, it)
     tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data));
   if (!tasks.empty())
-    _data._queue->add_tasks (tasks, Queue::TOP);
+    q->add_tasks (tasks, Queue::BOTTOM);
 }
 
 void
 DataImpl :: MyTree :: download_articles (std::set<const Article*> s)
 {
-  if (!_data._queue) return;
+  Queue * q (_data.get_queue());
+  if (!q) return;
 
+  std::string path; /// TODO default path from prefs !!
   Queue::tasks_t tasks;
   ArticleCache& cache(_data.get_cache());
+
+  if (path.empty())
+    path = file :: get_temp_attach_path();
+
   foreach_const (std::set<const Article*>, s, it)
-    tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data));
+    tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data, 0, TaskArticle::DECODE, path));
   if (!tasks.empty())
-    _data._queue->add_tasks (tasks, Queue::TOP);
+    q->add_tasks (tasks, Queue::BOTTOM);
 }
 
 
