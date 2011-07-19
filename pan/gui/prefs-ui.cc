@@ -521,7 +521,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     w = new_check_button (_("Clear article cache on shutdown"), "clear-article-cache-on-shutdown", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_spin_button ("cache-size-megs", 10, 1024*16, prefs);
-    l = gtk_label_new(_("Size of Article Cache (in MiB): "));
+    l = gtk_label_new(_("Size of Article Cache (in MiB). "));
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
     HIG::workarea_add_row (t, &row, w, l);
