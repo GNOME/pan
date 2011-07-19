@@ -42,6 +42,8 @@ const char * fallback_ui_file =
 "      <menu action='view-header-pane-menu'>\n"
 "        <menuitem action='thread-headers' />\n"
 "        <separator />\n"
+"        <menuitem action='enable-rules' />\n"
+"        <separator />\n"
 "        <menuitem action='show-matching-articles' />\n"
 "        <menuitem action='show-matching-threads' />\n"
 "        <menuitem action='show-matching-subthreads' />\n"

@@ -17,6 +17,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <iostream>
+#include <pan/general/debug.h>
+#include <pan/tasks/queue.h>
+
 #include <config.h>
 extern "C" {
   #include <glib.h>
@@ -36,8 +40,9 @@ RulesInfo :: clear ()
 {
   _type = RulesInfo::TYPE_ERR;
   _aggregates.clear ();
+  _lb = _hb = 0;
+  _ge = 0;
   _negate = false;
-  _needs_body = false;
 }
 
 void
@@ -47,10 +52,26 @@ RulesInfo :: set_type_is (Type type) {
 }
 
 void
+RulesInfo :: set_type_ge (Type type, unsigned long ge) {
+  clear ();
+  _type = type;
+  _ge = ge;
+}
+
+void
 RulesInfo :: set_type_le (Type type, unsigned long le) {
   clear ();
   _type = type;
   _negate = true;
+  _ge = le+1;  // le N == !ge N+1
+}
+
+void
+RulesInfo :: set_type_bounds (Type type, int low, int high)
+{
+  clear ();
+  _type = type;
+  _lb = low; _hb = high;
 }
 
 void
@@ -70,8 +91,25 @@ RulesInfo :: set_type_aggregate_or () {
 
 
 void
-RulesInfo :: set_type_mark_read ()
+RulesInfo :: set_type_mark_read_b (int lb, int hb)
 {
-   set_type_is (MARK_READ);
+   set_type_bounds (MARK_READ, lb, hb);
 }
 
+void
+RulesInfo :: set_type_autocache_b (int lb, int hb)
+{
+   set_type_bounds (AUTOCACHE, lb, hb);
+}
+
+void
+RulesInfo :: set_type_dl_b  (int lb, int hb)
+{
+   set_type_bounds (AUTODOWNLOAD, lb, hb);
+}
+
+void
+RulesInfo :: set_type_delete_b  (int lb, int hb)
+{
+   set_type_bounds (DELETE, lb, hb);
+}

@@ -256,7 +256,8 @@ namespace
     // build the combo box...
     const std::string mode (prefs.get_string (mode_key, mode_fallback));
     GtkListStore * store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-    const char* strings[6][2] = { { N_("Disabled"),"never" },
+    const char* strings[7][2] = { { N_("Disabled"),"never" },
+                                  { N_("Only new (Score == 0)"),"new" },
                                   { N_("9999 or more"), "watched" },
                                   { N_("5000 to 9998"), "high" },
                                   { N_("1 to 4999"),    "medium" },
@@ -586,12 +587,10 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
     gtk_widget_set_tooltip_text (t, _("This menu lets you configure Pan to take certain actions on your behalf automatically, based on a post's score."));
 
-    w = score_handler_new (prefs, "rules-delete-score-value", "never", b);
+    w = score_handler_new (prefs, "rules-delete-value", "never", b);
     HIG :: workarea_add_row (t, &row, _("_Delete Posts scoring at: "), w);
     w = score_handler_new (prefs, "rules-mark-read-value", "never", b);
     HIG :: workarea_add_row (t, &row, _("Mark Posts _read scoring at: "), w);
-    w = score_handler_new (prefs, "rules-mark-unread-value", "never", b);
-    HIG :: workarea_add_row (t, &row, _("Mark Posts _unread scoring at: "), w);
     w = score_handler_new (prefs, "rules-autocache-value", "never", b);
     HIG :: workarea_add_row (t, &row, _("_Cache Posts scoring at: "), w);
     w = score_handler_new (prefs, "rules-auto-dl-value", "never", b);

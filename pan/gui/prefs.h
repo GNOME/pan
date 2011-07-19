@@ -131,6 +131,7 @@ namespace pan
 
     public:
       bool _rules_changed;
+      bool _rules_enabled;
   };
 }
 

@@ -141,7 +141,7 @@ SaveDialog :: response_cb (GtkDialog * dialog,
 
     std::string sep( self->_prefs.get_string("save-subj-seperator", "-") );
 
-    // make the tasks... 
+    // make the tasks...
     Queue::tasks_t tasks;
     foreach_const (std::vector<Article>, self->_articles, it)
     {

@@ -588,6 +588,7 @@ GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
   return file;
 }
 
+/// TODO drag-n-drop of nzb files
 gboolean GUI ::dragged(GtkWidget *wgt, GdkDragContext *context, int x, int y,
               GtkSelectionData *seldata, guint info, guint time,
               gpointer userdata)
@@ -596,8 +597,6 @@ gboolean GUI ::dragged(GtkWidget *wgt, GdkDragContext *context, int x, int y,
   gtk_drag_finish (context, true, true, time);
 
   GUI * p(static_cast<GUI*>(userdata));
-
-  std::cerr<<"dragged\n";
 
   GdkAtom target_type;
 
@@ -621,25 +620,23 @@ void GUI ::dragged_rcvd(GtkWidget *wgt, GdkDragContext *context, int x, int y,
 
   gtk_drag_finish (context, true, true, time);
 
-  std::cerr<<"dragged rcvd\n";
-
-  GUI * p(static_cast<GUI*>(userdata));
-
-  GtkWidget * header_pane;
-  GtkTreeIter   iter;
-
-  header_pane = GTK_WIDGET(userdata);
-  std::cerr<<"data : "<<(gchar*)seldata->data<<std::endl;
-  Article a;
-  a.message_id = Quark((gchar*)seldata->data);
-  a.xref.insert ("2", "alt.binaries.test", 0);
-  a.set_part_count (1);
-  a.is_binary = true;
-  std::vector<Article> v;
-  v.push_back(a);
-  SaveDialog * dialog = new SaveDialog (p->_prefs, p->_group_prefs, p->_data, p->_data,
-                                        p->_cache, p->_data, p->_queue, get_window(p->_root), p->_header_pane->get_group(), v);
-  gtk_widget_show (dialog->root());
+//  GUI * p(static_cast<GUI*>(userdata));
+//
+//  GtkWidget * header_pane;
+//  GtkTreeIter   iter;
+//
+//  header_pane = GTK_WIDGET(userdata);
+////  std::cerr<<"data : "<<(gchar*)seldata->data<<std::endl;
+//  Article a;
+//  a.message_id = Quark((gchar*)seldata->data);
+//  a.xref.insert ("2", "alt.binaries.test", 0);
+//  a.set_part_count (1);
+//  a.is_binary = true;
+//  std::vector<Article> v;
+//  v.push_back(a);
+//  SaveDialog * dialog = new SaveDialog (p->_prefs, p->_group_prefs, p->_data, p->_data,
+//                                        p->_cache, p->_data, p->_queue, get_window(p->_root), p->_header_pane->get_group(), v);
+//  gtk_widget_show (dialog->root());
 
   gtk_drag_finish (context, true, false, time);
 
@@ -1072,26 +1069,6 @@ void GUI ::  prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self)
   static_cast<GUI*>(self)->prefs_dialog_destroyed (w);
 }
 
-/*
-    w = score_handler_new (prefs, "rules-delete-score-value", "never", b);
-    w = score_handler_new (prefs, "rules-mark-read-value", "never", b);
-    w = score_handler_new (prefs, "rules-mark-unread-value", "never", b);
-    w = score_handler_new (prefs, "rules-autocache-value", "never", b);
-    w = score_handler_new (prefs, "rules-auto-dl-value", "never", b);
-*/
-
-#define NUM_RULES 6
-
-//int GUI :: score_int_from_string(std::string val, const char* rules[])
-//{
-//  const char* tmp (val.c_str());
-//  int res(-1);
-//  for (int i=0;i<NUM_RULES;++i) {
-//    if (!strcmp(rules[i],tmp)) { res = i; break; }
-//  }
-//  return res;
-//}
-
 void GUI :: prefs_dialog_destroyed (GtkWidget *)
 {
 
@@ -1099,39 +1076,9 @@ void GUI :: prefs_dialog_destroyed (GtkWidget *)
   if (!group.empty() && _prefs._rules_changed)
   {
     _prefs._rules_changed = !_prefs._rules_changed;
-    std::string text;
-    int no(0);
-    _header_pane->rules(no);
+    _header_pane->rules(_prefs._rules_enabled);
   }
-//  // apply filters
-//  if (_prefs._rules_changed && !group.empty())
-//  {
-//    _prefs._rules_changed = !_prefs._rules_changed;
-//    std::map<int, const char*> rules_map;
-//
-//    const char* rules [NUM_RULES] = { "never",
-//                              "watched",
-//                              "high" ,
-//                              "medium",
-//                              "low" ,
-//                              "ignored" };
-//    for (int i=0;i<NUM_RULES;++i)
-//      rules_map.insert(std::pair<int,const char*>(i,rules[i]));
-//    int val_delete(score_int_from_string(_prefs.get_string("rules-delete-score-value", "never"),rules));
-//    int val_read(score_int_from_string(_prefs.get_string("rules-mark-read-value", "never"),rules));
-//    int val_unread(score_int_from_string(_prefs.get_string("rules-mark-unread-value", "never"),rules));
-//    int val_cache(score_int_from_string(_prefs.get_string("rules-autocache-value", "never"),rules));
-//    int val_dl(score_int_from_string(_prefs.get_string("rules-auto-dl-value", "never"),rules));
-//
-//    std::cerr<<val_delete<<" "<<val_read<<std::endl;
-//
-//    std::vector<const Article*> articles_v (_header_pane->get_full_selection_v());
-//
-//    foreach (std::vector<const Article*>, articles_v, vit)
-//    {
-////      foreach
-//    }
-//  }
+
 }
 
 
@@ -1654,6 +1601,7 @@ void GUI :: do_match_only_cached_articles (bool) { _header_pane->refilter (); }
 void GUI :: do_match_only_binary_articles (bool) { _header_pane->refilter (); }
 void GUI :: do_match_only_my_articles     (bool) { _header_pane->refilter (); }
 void GUI :: do_match_on_score_state       (int)  { _header_pane->refilter (); }
+void GUI :: do_enable_toggle_rules        (bool enable) { _header_pane -> rules (enable); }
 
 void GUI :: do_show_matches (const Data::ShowType show_type)
 {

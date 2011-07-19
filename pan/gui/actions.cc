@@ -82,9 +82,6 @@ namespace
       GtkIconSet * icon_set = gtk_icon_set_new_from_pixbuf (pixbuf);
       gtk_icon_factory_add (factory, my_builtin_icons[i].name, icon_set);
       g_object_unref (pixbuf);
-
-      //std::cerr << "registered icon " << my_builtin_icons[i].name << std::endl;
-
       g_object_unref (pixbuf);
       gtk_icon_set_unref (icon_set);
     }
@@ -228,6 +225,12 @@ namespace
     if (!new_state)
       new_state = SCORE_STATE_MASK;
     set_new_match_on_score_state (new_state);
+  }
+
+  void do_toggle_rules  (GtkToggleAction * a)
+  {
+    prefs->_rules_enabled = gtk_toggle_action_get_active (a);
+    pan_ui->do_enable_toggle_rules(prefs->_rules_enabled);
   }
 
   void do_match_only_watched_articles (GtkToggleAction * a)   { set_new_match_on_score_state (gtk_toggle_action_get_active(a) ? MATCH_WATCHED : prev_score_state); }
@@ -645,7 +648,9 @@ namespace
     { "match-medium-scoring-articles", NULL, N_("Match Scores of 1...4999 (Me_dium)"), NULL, NULL, G_CALLBACK(do_match_medium_scoring_articles), true },
     { "match-normal-scoring-articles", NULL, N_("Match Scores of 0 (_Normal)"), NULL, NULL, G_CALLBACK(do_match_normal_scoring_articles), true },
     { "match-low-scoring-articles", NULL, N_("Match Scores of -9998...-1 (_Low)"), NULL, NULL, G_CALLBACK(do_match_low_scoring_articles), true },
-    { "match-ignored-articles", NULL, N_("Match Scores of -9999 (_Ignored)"), NULL, NULL, G_CALLBACK(do_match_ignored_articles), false }
+    { "match-ignored-articles", NULL, N_("Match Scores of -9999 (_Ignored)"), NULL, NULL, G_CALLBACK(do_match_ignored_articles), false },
+
+    { "enable-rules", NULL, N_("Enable/Disable all _Rules"), "R", NULL, G_CALLBACK(do_toggle_rules), true    }
   };
 
   const guint n_toggle_entries (G_N_ELEMENTS(toggle_entries));

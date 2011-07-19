@@ -29,7 +29,7 @@ namespace pan
 {
   /**
    * Interface class describing a filter that can be applied to a set of articles.
-   * @ingroup usenet_utils 
+   * @ingroup usenet_utils
    */
   class FilterInfo
   {

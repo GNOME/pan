@@ -116,6 +116,8 @@ namespace pan
     virtual void do_match_only_my_articles (bool) = 0;
     virtual void do_show_matches (const Data::ShowType) = 0;
 
+    virtual void do_enable_toggle_rules (bool enable) = 0;
+
 #define MATCH_IGNORED         (1<<0)
 #define MATCH_LOW_SCORING     (1<<1)
 #define MATCH_NORMAL_SCORING  (1<<2)

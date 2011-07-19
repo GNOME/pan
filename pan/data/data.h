@@ -38,6 +38,7 @@ namespace pan
 {
   class FilterInfo;
   class RulesInfo;
+  class Queue;
 
   /**
    * Data Interface class for seeing the mapping between groups and servers.
@@ -470,7 +471,8 @@ namespace pan
           virtual void set_filter (const ShowType     show_type = SHOW_ARTICLES,
                                    const FilterInfo * filter_or_null_to_reset = 0) = 0;
 
-          virtual void set_rules (const RulesInfo * filterme = 0) = 0;
+          virtual void set_rules (const ShowType     show_type = SHOW_ARTICLES,
+                                   const RulesInfo * filter_or_null_to_reset = 0) = 0;
       };
 
        /**
@@ -478,7 +480,9 @@ namespace pan
         */
        virtual ArticleTree* group_get_articles (const Quark       & group,
                                                 const ShowType      show_type = SHOW_ARTICLES,
-                                                const FilterInfo  * criteria = 0) const=0;
+                                                const FilterInfo  * criteria = 0,
+                                                const RulesInfo   * rules    = 0,
+                                                      Queue       * queue = 0) const=0;
 
        virtual void group_clear_articles (const Quark& group) = 0;
 
@@ -505,6 +509,11 @@ namespace pan
         virtual void rescore_articles (const Quark& group, const quarks_t mids) = 0;
 
         virtual void rescore () = 0;
+
+    ///TODO private!
+    public:
+      Queue * _queue;
+      void set_queue (Queue* q) { _queue = q; }
 
 
 

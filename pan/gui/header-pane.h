@@ -304,12 +304,13 @@ namespace pan
 
     private:
       void rebuild_filter (const std::string&, int);
-      void rebuild_rules (int mode);
+      void rebuild_rules (bool enable=false);
+      int get_int_from_rules_str(std::string val);
       void refresh_font ();
 
     public: // public so that anonymous namespace can reach -- don't call
       void filter (const std::string& text, int mode);
-      void rules (int mode);
+      void rules (bool enable=false);
       static void do_popup_menu (GtkWidget*, GdkEventButton*, gpointer);
       static void on_row_activated (GtkTreeView*, GtkTreePath*, GtkTreeViewColumn*, gpointer);
       static gboolean on_button_pressed (GtkWidget*, GdkEventButton*, gpointer);

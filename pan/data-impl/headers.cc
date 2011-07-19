@@ -922,6 +922,7 @@ DataImpl :: get_article_scores (const Quark         & group,
 void
 DataImpl :: rescore_articles (const Quark& group, const quarks_t mids)
 {
+
   GroupHeaders * gh (get_group_headers (group));
   if (!gh) // group isn't loaded
     return;
@@ -1075,6 +1076,7 @@ DataImpl :: group_clear_articles (const Quark& group)
 void
 DataImpl :: delete_articles (const unique_articles_t& articles)
 {
+
   quarks_t all_mids;
 
   // info we need to batch these deletions per group...
@@ -1136,6 +1138,7 @@ DataImpl :: on_articles_changed (const Quark& group, const quarks_t& mids, bool 
 void
 DataImpl :: on_articles_added (const Quark& group, const quarks_t& mids)
 {
+
   if (!mids.empty())
   {
     Log::add_info_va (_("Added %lu articles to %s."),
@@ -1192,8 +1195,10 @@ DataImpl :: find_closest_ancestor (const ArticleNode             * node,
 Data::ArticleTree*
 DataImpl :: group_get_articles (const Quark       & group,
                                 const ShowType      show_type,
-                                const FilterInfo  * filter) const
+                                const FilterInfo  * filter,
+                                const RulesInfo   * rules,
+                                      Queue       * queue) const
 {
   // cast const away for group_ref()... consider _groups mutable
-  return new MyTree (*const_cast<DataImpl*>(this), group, show_type, filter);
+  return new MyTree (*const_cast<DataImpl*>(this), group, show_type, filter, rules,queue);
 }

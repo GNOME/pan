@@ -431,7 +431,9 @@ namespace pan
           MyTree (DataImpl              & data_impl,
                   const Quark           & group,
                   const Data::ShowType    show_type,
-                  const FilterInfo      * filter_info);
+                  const FilterInfo      * filter_info=0,
+                  const RulesInfo       * rules=0,
+                        Queue           * queue=0);
           virtual ~MyTree ();
 
         public: // from ArticleTree
@@ -441,7 +443,8 @@ namespace pan
           virtual size_t size () const;
           virtual void set_filter (const ShowType      show_type = SHOW_ARTICLES,
                                    const FilterInfo  * criteria  = 0);
-          virtual void set_rules (const RulesInfo * criteria = 0);
+          virtual void set_rules  (const ShowType      show_type = SHOW_ARTICLES,
+                                   const RulesInfo   * rules  = 0);
 
         public:
           void articles_changed (const quarks_t& mids, bool do_refilter);
@@ -464,8 +467,14 @@ namespace pan
           void accumulate_descendants (unique_nodes_t&, const ArticleNode*) const;
           void add_articles (const const_nodes_v&);
           void apply_filter (const const_nodes_v&);
-          void apply_rules (const const_nodes_v& candidates);
+          void apply_rules  (const_nodes_v& candidates);
+
+        private:
+          void cache_articles (std::set<const Article*> s);
+          void download_articles (std::set<const Article*> s);
       };
+
+
 
       std::set<MyTree*> _trees;
       void on_articles_removed (const quarks_t& mids) const;
@@ -474,14 +483,15 @@ namespace pan
       void remove_articles_from_tree (MyTree*, const quarks_t& mids) const;
       void add_articles_to_tree (MyTree*, const quarks_t& mids);
 
-
     public:  // Data interface
 
       virtual void delete_articles             (const unique_articles_t&);
 
       virtual ArticleTree* group_get_articles  (const Quark        & group,
                                                 const ShowType      show_type = SHOW_ARTICLES,
-                                                const FilterInfo   * criteria=0) const;
+                                                const FilterInfo   * criteria=0,
+                                                const RulesInfo    * rules=0,
+                                                      Queue        * queue=0) const;
 
       virtual void group_clear_articles        (const Quark        & group);
 
@@ -625,7 +635,7 @@ namespace pan
     public:
 
       const ArticleFilter _article_filter;
-      const RulesFilter   _rules_filter;
+      RulesFilter   _rules_filter;
 
     private:
       guint newsrc_autosave_id;

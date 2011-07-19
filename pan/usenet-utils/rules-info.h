@@ -41,7 +41,6 @@ namespace pan
         AGGREGATE_AND,
         AGGREGATE_OR,
         MARK_READ,
-        MARK_UNREAD,
         AUTOCACHE,
         AUTODOWNLOAD,
         DELETE
@@ -67,18 +66,25 @@ namespace pan
       /** When this is true, the results of the test should be negated. */
       bool _negate;
 
-      /** When this is true the test needs the article body. */
-      bool _needs_body;
-
     private:
       void set_type_is (Type type);
       void set_type_le (Type type, unsigned long le);
+      void set_type_ge (Type type, unsigned long ge);
+      void set_type_bounds (Type type, int low, int high);
+
 
     public:
+
+      unsigned long _ge;
+      int _lb, _hb;
+
       void clear ();
       void set_type_aggregate_and ();
       void set_type_aggregate_or ();
-      void set_type_mark_read ();
+      void set_type_mark_read_b (int lb, int hb);
+      void set_type_autocache_b (int lb, int hb);
+      void set_type_dl_b (int lb, int hb);
+      void set_type_delete_b (int lb, int hb);
   };
 }
 

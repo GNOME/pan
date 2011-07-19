@@ -28,27 +28,36 @@
 
 using namespace pan;
 
-bool
-RulesFilter :: test_article (const Data        & data,
-                             const RulesInfo   & rules,
-                             const Quark       & group,
-                             const Article     & article) const
+void
+RulesFilter :: finalize (Data& data)
 {
-  bool pass (false);
-  const ArticleCache& cache(data.get_cache());
+
+  data.delete_articles (_delete);
+  _delete.clear();
+
+  const std::vector<const Article*> tmp (_mark_read.begin(), _mark_read.end());
+  data.mark_read ((const Article**)&tmp.front(), tmp.size());
+  _mark_read.clear();
+
+  _cached.clear();
+  _downloaded.clear();
+}
+
+bool
+RulesFilter :: test_article ( Data        & data,
+                              RulesInfo   & rules,
+                              const Quark & group,
+                              Article     & article)
+{
+
+  bool pass (article.score >= rules._lb && article.score <= rules._hb);
 
   switch (rules._type)
   {
     case RulesInfo::AGGREGATE_AND:
       pass = true;
-      foreach_const (RulesInfo::aggregates_t, rules._aggregates, it) {
-        // assume test passes if test needs body but article not cached
-        if (!it->_needs_body || cache.contains(article.message_id) )
-          if (!test_article (data, *it, group, article)) {
-            pass = false;
-            break;
-          }
-      }
+      foreach (RulesInfo::aggregates_t, rules._aggregates, it)
+        test_article (data, *it, group, article);
       break;
 
     case RulesInfo::AGGREGATE_OR:
@@ -56,20 +65,40 @@ RulesFilter :: test_article (const Data        & data,
         pass = true;
       else {
         pass = false;
-        foreach_const (RulesInfo::aggregates_t, rules._aggregates, it) {
-          // assume test fails if test needs body but article not cached
-          if (!it->_needs_body || cache.contains(article.message_id) )
-            if (test_article (data, *it, group, article)) {
-              pass = true;
-              break;
-            }
+        foreach (RulesInfo::aggregates_t, rules._aggregates, it) {
+          if (test_article (data, *it, group, article)) {
+            pass = true;
+            break;
+          }
         }
       }
       break;
 
     case RulesInfo::MARK_READ:
-      pass = article.score == Article::COMPLETE;
-    break;
+
+      if (pass)
+        _mark_read.insert(&article);
+      break;
+
+    case RulesInfo::AUTOCACHE:
+      if (pass)
+        _cached.insert (&article);
+      break;
+
+    case RulesInfo::AUTODOWNLOAD:
+      if (pass)
+        _downloaded.insert (&article);
+      break;
+
+    case RulesInfo::DELETE:
+      if (pass)
+         _delete.insert (&article);
+      break;
+
+    default:
+     debug("error : unknown rules type "<<rules._type);
+     return true;
+     break;
   }
 
   return pass;

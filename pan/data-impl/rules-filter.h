@@ -21,6 +21,7 @@
 #define __RulesFilter_h__
 
 #include <pan/general/quark.h>
+#include <pan/tasks/queue.h>
 #include <pan/usenet-utils/filter-info.h>
 #include <pan/usenet-utils/rules-info.h>
 #include <pan/usenet-utils/scorefile.h>
@@ -39,11 +40,20 @@ namespace pan
 
       RulesFilter() {  }
 
-      bool test_article (const Data& data,
-                         const RulesInfo   & rules,
+      bool test_article (Data        & data,
+                         RulesInfo   & rules,
                          const Quark& group,
-                         const Article& article) const;
+                         Article& article);
 
+      private:
+        std::set<const Article*> _mark_read;
+        std::set<const Article*> _delete;
+
+      public:
+
+        std::set<const Article*> _cached;
+        std::set<const Article*> _downloaded;
+        void finalize (Data& data) ;
   };
 }
 

@@ -27,6 +27,7 @@
 #include <pan/general/worker-pool.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
+#include <pan/data/server-info.h>
 #include <pan/data/data.h>
 #include <pan/data/xref.h>
 #include <pan/tasks/nntp.h>
@@ -35,6 +36,7 @@
 namespace pan
 {
   struct Decoder;
+  class Data;
 
   /**
    * Task for downloading, and optionally decoding, articles

@@ -85,16 +85,6 @@ namespace
   }
 }
 
-namespace
-{
-  char* build_cachename (char* buf, size_t len, const char* name)
-  {
-    const char * home(file::get_pan_home().c_str());
-    g_snprintf(buf,len,"%s%c%s%c%s",home, G_DIR_SEPARATOR, "encode-cache", G_DIR_SEPARATOR, name);
-    return buf;
-  }
-}
-
 TaskXOver :: TaskXOver (Data         & data,
                         const Quark  & group,
                         Mode           mode,

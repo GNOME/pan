@@ -362,8 +362,6 @@ HeaderPane :: column_compare_func (GtkTreeModel  * model,
 {
   int ret (0);
   const PanTreeStore * store (reinterpret_cast<PanTreeStore*>(model));
-  //const Row& row_a (*dynamic_cast<const Row*>(store->get_row (iter_a)));
-  //const Row& row_b (*dynamic_cast<const Row*>(store->get_row (iter_b)));
   const Row& row_a (*static_cast<const Row*>(store->get_row (iter_a)));
   const Row& row_b (*static_cast<const Row*>(store->get_row (iter_b)));
 
@@ -542,7 +540,7 @@ HeaderPane :: set_group (const Quark& new_group)
 
     if (!_group.empty())
     {
-      _atree = _data.group_get_articles (new_group, _show_type, &_filter);
+      _atree = _data.group_get_articles (new_group, _show_type, &_filter,&_rules,&_queue);
       _atree->add_listener (this);
 
       rebuild ();
@@ -1025,38 +1023,63 @@ namespace
     MESSAGE_ID
   };
 
-  enum
-  {
-    RULES_MARK_READ,
-    RULES_MARK_UNREAD,
-    RULES_AUTOCACHE,
-    RULES_AUTODL,
-    RULES_DELETE
-  };
+}
+
+#define RANGE 4998
+int
+HeaderPane :: get_int_from_rules_str(std::string val)
+{
+  if (val == "new") return 0;
+  if (val == "never") return 9999+RANGE+1;
+  if (val == "watched") return 9999;
+  if (val == "high") return 5000;
+  if (val == "medium") return 1;
+  if (val == "low") return -4999;
+  if (val == "ignored") return -9999;
 }
 
 void
-HeaderPane :: rebuild_rules (int mode)
+HeaderPane :: rebuild_rules (bool enable)
 {
 
-  RulesInfo &f (_rules);
-  f.set_type_aggregate_and ();
+  if (!enable)
+  {
+    _rules.clear();
+    return;
+  }
+
+  RulesInfo &r (_rules);
+  r.set_type_aggregate_and ();
   RulesInfo tmp;
 
-  if (mode == RULES_MARK_READ) {
-    tmp.set_type_mark_read ();
-    f._aggregates.push_back (tmp);
-  }
-//   if (mode == RULES_MARK_UNREAD) {
-//    tmp.set_type_mark_unread ();
-//    f._aggregates.push_back (tmp);
-//  }
+  int backup (get_int_from_rules_str("never"));
+  int val_mark_read(get_int_from_rules_str(_prefs.get_string("rules-mark-read-value", "never")));
+  if (!enable) val_mark_read = backup;
+  int val_delete(get_int_from_rules_str(_prefs.get_string("rules-delete-value", "never")));
+  if (!enable) val_delete = backup;
+  int val_cache(get_int_from_rules_str(_prefs.get_string("rules-autocache-value", "never")));
+  if (!enable) val_cache = backup;
+  int val_dl(get_int_from_rules_str(_prefs.get_string("rules-auto-dl-value", "never")));
+  if (!enable) val_dl = backup;
+
+  tmp.set_type_mark_read_b (val_mark_read, val_mark_read == 0 ? 0 : val_mark_read+RANGE);
+  r._aggregates.push_back (tmp);
+
+  tmp.set_type_delete_b (val_delete, val_delete == 0 ? 0 : val_delete+RANGE);
+  r._aggregates.push_back (tmp);
+
+  tmp.set_type_autocache_b (val_cache, val_cache == 0 ? 0 : val_cache+RANGE);
+  r._aggregates.push_back (tmp);
+
+  tmp.set_type_dl_b (val_dl, val_dl == 0 ? 0 : val_dl+RANGE);
+  r._aggregates.push_back (tmp);
 
 }
 
 void
 HeaderPane :: rebuild_filter (const std::string& text, int mode)
 {
+
   TextMatch::Description d;
   d.negate = false;
   d.case_sensitive = false;
@@ -1204,16 +1227,22 @@ HeaderPane :: filter (const std::string& text, int mode)
 }
 
 void
-HeaderPane :: rules(int mode)
+HeaderPane :: rules(bool enable)
 {
-  if (_prefs.get_string("rules-mark-read-value","never") != "never")
-    rebuild_rules(RULES_MARK_READ);
+  rebuild_rules(enable);
 
-  if (_rules._aggregates.empty())
-    _atree->set_rules();
-  else
-    _atree->set_rules(&_rules);
+  if (_atree)
+  {
+    _wait.watch_cursor_on ();
 
+    if (_rules._aggregates.empty()) {
+      _atree->set_rules();
+    }
+    else
+      _atree->set_rules(_show_type, &_rules);
+
+    _wait.watch_cursor_off ();
+  }
 }
 
 namespace
@@ -1691,6 +1720,7 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _root = scroll;
 
   search_activate (this); // calls rebuild_filter
+  rules();
 
   _data.add_listener (this);
   _prefs.add_listener (this);
@@ -2113,10 +2143,11 @@ HeaderPane :: on_queue_task_removed (Queue&, Task& task, int)
 void
 HeaderPane :: on_cache_added (const Quark& message_id)
 {
-  quarks_t q;
-  q.insert(message_id);
-  _data.rescore_articles ( _group, q );
-  rebuild_article_action (message_id);
+    /// SLOOOOW!
+//  quarks_t q;
+//  q.insert(message_id);
+//  _data.rescore_articles ( _group, q );
+//  rebuild_article_action (message_id);
 }
 void
 HeaderPane :: on_cache_removed (const quarks_t& message_ids)
