@@ -1025,17 +1025,27 @@ namespace
 
 }
 
+//{ N_("Disabled"),"never" },
+//{ N_("Only new (Score == 0)"),"new" },
+//{ N_("9999 or more"), "watched" },
+//{ N_("5000 to 9998"), "high" },
+//{ N_("1 to 4999"),    "medium" },
+//{ N_("-9998 to -1"),  "low" },
+//{ N_("-9999 or less"),"ignored" }};
+
 #define RANGE 4998
-int
+std::pair<int,int>
 HeaderPane :: get_int_from_rules_str(std::string val)
 {
-  if (val == "new") return 0;
-  if (val == "never") return 9999+RANGE+1;
-  if (val == "watched") return 9999;
-  if (val == "high") return 5000;
-  if (val == "medium") return 1;
-  if (val == "low") return -4999;
-  if (val == "ignored") return -9999;
+  std::pair<int,int> res;
+  if (val == "new")     { res.first = 0;      res.second = 0; }
+  if (val == "never")   { res.first = 10;     res.second = 5; } // inversed, so never true
+  if (val == "watched") { res.first = 9999;   res.second = 99999; }
+  if (val == "high")    { res.first = 5000;   res.second = 5000+RANGE; }
+  if (val == "medium")  { res.first = 1;      res.second = 1+RANGE; }
+  if (val == "low")     { res.first = -9998;  res.second = -1; }
+  if (val == "ignored") { res.first = -9999;  res.second = -99999; }
+  return res;
 }
 
 void
@@ -1052,27 +1062,23 @@ HeaderPane :: rebuild_rules (bool enable)
   r.set_type_aggregate_and ();
   RulesInfo tmp;
 
-  int backup (get_int_from_rules_str("never"));
-  int val_mark_read(get_int_from_rules_str(_prefs.get_string("rules-mark-read-value", "never")));
-  if (!enable) val_mark_read = backup;
-  int val_delete(get_int_from_rules_str(_prefs.get_string("rules-delete-value", "never")));
-  if (!enable) val_delete = backup;
-  int val_cache(get_int_from_rules_str(_prefs.get_string("rules-autocache-value", "never")));
-  if (!enable) val_cache = backup;
-  int val_dl(get_int_from_rules_str(_prefs.get_string("rules-auto-dl-value", "never")));
-  if (!enable) val_dl = backup;
+  std::pair<int,int> res;
 
-  tmp.set_type_mark_read_b (val_mark_read, val_mark_read == 0 ? 0 : val_mark_read+RANGE);
+  res = get_int_from_rules_str(_prefs.get_string("rules-delete-value", "never"));
+  tmp.set_type_delete_b (res.first, res.second);
   r._aggregates.push_back (tmp);
 
-  tmp.set_type_delete_b (val_delete, val_delete == 0 ? 0 : val_delete+RANGE);
+  res = get_int_from_rules_str(_prefs.get_string("rules-mark-read-value", "never"));
+  tmp.set_type_mark_read_b (res.first, res.second);
   r._aggregates.push_back (tmp);
 
-  tmp.set_type_autocache_b (val_cache, val_cache == 0 ? 0 : val_cache+RANGE);
+  res = get_int_from_rules_str(_prefs.get_string("rules-autocache-value", "never"));
+  tmp.set_type_autocache_b (res.first, res.second);
   r._aggregates.push_back (tmp);
 
-  tmp.set_type_dl_b (val_dl, val_dl == 0 ? 0 : val_dl+RANGE);
-  r._aggregates.push_back (tmp);
+  res = get_int_from_rules_str(_prefs.get_string("rules-auto-dl-value", "never"));
+  tmp.set_type_dl_b (res.first, res.second);
+   r._aggregates.push_back (tmp);
 
 }
 

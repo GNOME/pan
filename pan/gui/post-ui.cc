@@ -1064,6 +1064,8 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _queue.add_task (_post_task, Queue::TOP);
   } else {
 
+    gtk_widget_hide (_root); // hide the main window, we still need the class' data
+
     // prepend header for xml file (if one was chosen)
     if (!_save_file.empty())
     {
@@ -1108,7 +1110,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     f.total=1;
     TaskUpload::Needed n;
     n.mid = out;
-    TaskUpload * tmp = new TaskUpload("",profile.posting_server,_cache,a,f,new_message_from_ui(UPLOADING));
+    TaskUpload * tmp = new TaskUpload(a.subject.to_string(),profile.posting_server,_cache,a,f,new_message_from_ui(UPLOADING));
     tmp->_needed.insert(std::pair<int, TaskUpload::Needed>(1,n));
     tmp->_queue_pos = -1;
     _queue.add_task (tmp, Queue::BOTTOM);
@@ -1133,7 +1135,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
             std::string out;
             generate_unique_id(domain, *pit,out);
             n.mid = out;
-            std::cerr<<"rng "<<out<<std::endl;
             if (first_mid.empty()) first_mid = out;
         }
 
@@ -1152,7 +1153,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       _queue.add_task (*it, Queue::BOTTOM);
       t->add_listener(this);
     }
-    gtk_widget_hide (_root); // hide the main window, we still need the class' data
+
   }
 
   /**

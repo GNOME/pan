@@ -32,6 +32,8 @@ void
 RulesFilter :: finalize (Data& data)
 {
 
+  std::cerr<<"finalize "<<_delete.size()<<std::endl;
+
   data.delete_articles (_delete);
   _delete.clear();
 
@@ -51,6 +53,8 @@ RulesFilter :: test_article ( Data        & data,
 {
 
   bool pass (article.score >= rules._lb && article.score <= rules._hb);
+  if (rules._hb >= 9999 && article.score >= rules._hb) pass = true;
+  if (rules._lb <= -9999 && article.score <= rules._lb) pass = true;
 
   switch (rules._type)
   {

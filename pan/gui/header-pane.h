@@ -305,7 +305,7 @@ namespace pan
     private:
       void rebuild_filter (const std::string&, int);
       void rebuild_rules (bool enable=false);
-      int get_int_from_rules_str(std::string val);
+      std::pair <int,int> get_int_from_rules_str(std::string val);
       void refresh_font ();
 
     public: // public so that anonymous namespace can reach -- don't call
