@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-20 23:58+0100\n"
+"POT-Creation-Date: 2011-07-19 20:51+0200\n"
 "PO-Revision-Date: 2008-09-21 00:30+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,29 +26,29 @@ msgid "Read News from Usenet"
 msgstr "Leia Notícias da Usenet"
 
 #. load_group_descriptions (*_data_io);
-#: ../pan/data-impl/data-impl.cc:88
+#: ../pan/data-impl/data-impl.cc:101
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "Motor de dados lido em %.1f segundos"
 
 #: ../pan/data-impl/data-io.cc:187 ../pan/data-impl/data-io.cc:211
 #: ../pan/data/article-cache.cc:236 ../pan/data/article-cache.cc:247
-#: ../pan/gui/post-ui.cc:1049
+#: ../pan/gui/post-ui.cc:1572
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Incapaz de gravar \"%s\" %s"
 
-#: ../pan/data-impl/groups.cc:93
+#: ../pan/data-impl/groups.cc:94
 #, c-format
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "A ignorar ficheiro newsrc para o servidor \"%s\""
 
-#: ../pan/data-impl/headers.cc:580
+#: ../pan/data-impl/headers.cc:582
 #, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr "Expirados %lu artigos de \"%s\""
 
-#: ../pan/data-impl/headers.cc:587
+#: ../pan/data-impl/headers.cc:589
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
@@ -56,25 +57,26 @@ msgstr ""
 "Versão de dados não suportada para cabeçalhos %s: %d.\n"
 "Poderá estar, por acidente, a utilizar uma versão antiga do Pan?"
 
-#: ../pan/data-impl/headers.cc:602
+#: ../pan/data-impl/headers.cc:604
 #, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
-msgstr "Lidos %lu artigos para o grupo \"%s\" em %.1f segundos (%.0f por segundo)"
+msgstr ""
+"Lidos %lu artigos para o grupo \"%s\" em %.1f segundos (%.0f por segundo)"
 
-#: ../pan/data-impl/headers.cc:827
+#: ../pan/data-impl/headers.cc:829
 #, c-format
 msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
 msgstr ""
 "Gravados %lu partes, %lu artigos em \"%s\" em %.1f segundos (%.0f art/seg)"
 
-#: ../pan/data-impl/headers.cc:1123
+#: ../pan/data-impl/headers.cc:1144
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "Adicionados %lu artigos em %s."
 
-#: ../pan/data-impl/profiles.cc:163 ../pan/data-impl/server.cc:302
-#: ../pan/data/article-cache.cc:391 ../pan/general/file-util.cc:296
-#: ../pan/gui/post-ui.cc:268
+#: ../pan/data-impl/profiles.cc:163 ../pan/data-impl/server.cc:316
+#: ../pan/data/article-cache.cc:391 ../pan/general/file-util.cc:240
+#: ../pan/gui/post-ui.cc:562
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Erro ao ler o ficheiro \"%s\": %s"
@@ -119,47 +121,26 @@ msgstr "%b %d %Y"
 msgid "?"
 msgstr "?"
 
-#: ../pan/general/file-util.cc:136
-#, c-format
-msgid "Creating directory \"%s\""
-msgstr "A criar o directório \"%s\""
-
-#: ../pan/general/file-util.cc:139
-#, c-format
-msgid "Couldn't create directory \"%s\": %s"
-msgstr "Incapaz de criar o directório \"%s\": %s"
-
-#: ../pan/general/text-match.cc:210
-msgid ""
-"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
-"fail."
-msgstr ""
-"A sua cópia da libpcre não suporta UTF-8. Expressões regulares UTF-8 poderão "
-"falhar."
-
-#: ../pan/general/text-match.cc:221
-#, c-format
-msgid "Can't use regular expression \"%s\": %s at position %d"
-msgstr "Incapaz de utilizar a expressão regular \"%s\": %s na posição %d"
-
-#: ../pan/general/text-match.cc:229
+#: ../pan/general/text-match.cc:193
 #, c-format
 msgid "Can't use regular expression \"%s\": %s"
 msgstr "Incapaz de utilizar a expressão regular \"%s\": %s"
 
-#: ../pan/general/utf8-utils.cc:208
+#: ../pan/general/utf8-utils.cc:213
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
-msgstr "Incapaz de determinar a codificação do artigo. Caracteres não-UTF8 foram removidos."
+msgstr ""
+"Incapaz de determinar a codificação do artigo. Caracteres não-UTF8 foram "
+"removidos."
 
-#: ../pan/gui/actions.cc:255 ../pan/gui/post-ui.cc:200
+#: ../pan/gui/actions.cc:255 ../pan/gui/post-ui.cc:369
 msgid "_File"
 msgstr "_Ficheiro"
 
-#: ../pan/gui/actions.cc:256 ../pan/gui/post-ui.cc:201
+#: ../pan/gui/actions.cc:256 ../pan/gui/post-ui.cc:370
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../pan/gui/actions.cc:257 ../pan/gui/prefs-ui.cc:509
+#: ../pan/gui/actions.cc:257 ../pan/gui/prefs-ui.cc:580
 msgid "_Layout"
 msgstr "_Disposição"
 
@@ -187,7 +168,7 @@ msgstr "Filt_ro"
 msgid "_Go"
 msgstr "_Ir"
 
-#: ../pan/gui/actions.cc:264
+#: ../pan/gui/actions.cc:264 ../pan/gui/prefs-ui.cc:606
 msgid "_Actions"
 msgstr "_Acções"
 
@@ -207,7 +188,7 @@ msgstr "Afi_xar"
 msgid "_Help"
 msgstr "_Ajuda"
 
-#: ../pan/gui/actions.cc:272 ../pan/gui/post-ui.cc:206
+#: ../pan/gui/actions.cc:272 ../pan/gui/post-ui.cc:376
 msgid "Set Character _Encoding..."
 msgstr "Definir Codificação de _Caracteres..."
 
@@ -292,453 +273,473 @@ msgid "Save Articles..."
 msgstr "Gravar os Artigos..."
 
 #: ../pan/gui/actions.cc:327
-msgid "_Save Articles from this NZB..."
+#, fuzzy
+msgid "Save Articles from this _NZB..."
 msgstr "_Gravar os Artigos deste NZB..."
 
 #: ../pan/gui/actions.cc:328
 msgid "Save Articles from this NZB"
 msgstr "Gravar os Artigos deste NZB"
 
-#: ../pan/gui/actions.cc:337
+#: ../pan/gui/actions.cc:332
+#, fuzzy
+msgid "Save Articles to an NZB _File..."
+msgstr "_Gravar os Artigos deste NZB..."
+
+#: ../pan/gui/actions.cc:333
+#, fuzzy
+msgid "Save Articles to an NZB File"
+msgstr "Gravar os Artigos deste NZB"
+
+#: ../pan/gui/actions.cc:342
 msgid "_Import NZB Files..."
 msgstr "_Importar Ficheiros NZB..."
 
-#: ../pan/gui/actions.cc:342
+#: ../pan/gui/actions.cc:347
 msgid "_Cancel Last Task"
 msgstr "_Cancelar a Última Tarefa"
 
-#: ../pan/gui/actions.cc:347
+#: ../pan/gui/actions.cc:352
 msgid "_Task Manager"
 msgstr "Gestor de _Tarefas"
 
-#: ../pan/gui/actions.cc:352
+#: ../pan/gui/actions.cc:357
 msgid "_Event Log"
 msgstr "Registo de _Eventos"
 
-#: ../pan/gui/actions.cc:357
+#: ../pan/gui/actions.cc:362
 msgid "_Quit"
 msgstr "_Sair"
 
-#: ../pan/gui/actions.cc:362
+#: ../pan/gui/actions.cc:367
 msgid "Select _All Articles"
 msgstr "Seleccionar _Todos os Artigos"
 
-#: ../pan/gui/actions.cc:367
+#: ../pan/gui/actions.cc:372
 msgid "_Deselect All Articles"
 msgstr "_Retirar a Selecção de Todos os Artigos"
 
-#: ../pan/gui/actions.cc:372
+#: ../pan/gui/actions.cc:377
 msgid "Add Su_bthreads to Selection"
 msgstr "Adicionar as _SubÁrvores à Selecção"
 
-#: ../pan/gui/actions.cc:377
+#: ../pan/gui/actions.cc:382
 msgid "Add _Threads to Selection"
 msgstr "Adicionar Ár_vores à Selecção"
 
-#: ../pan/gui/actions.cc:382
+#: ../pan/gui/actions.cc:387
 msgid "Add _Similar Articles to Selection"
 msgstr "Adicionar Artigos _Semelhantes à Selecção"
 
-#: ../pan/gui/actions.cc:387
+#: ../pan/gui/actions.cc:392
 msgid "Select Article _Body"
 msgstr "Seleccionar o Cor_po do Artigo"
 
-#: ../pan/gui/actions.cc:392
+#: ../pan/gui/actions.cc:397
 msgid "Edit _Preferences"
 msgstr "Editar as _Preferências"
 
-#: ../pan/gui/actions.cc:397
+#: ../pan/gui/actions.cc:402
 msgid "Edit Selected _Group's Preferences"
 msgstr "Editar as Preferências dos _Grupos Seleccionados"
 
-#: ../pan/gui/actions.cc:402 ../pan/gui/post-ui.cc:215
+#: ../pan/gui/actions.cc:407 ../pan/gui/post-ui.cc:385
 msgid "Edit P_osting Profiles"
 msgstr "Editar os Perfis de Afi_xação"
 
-#: ../pan/gui/actions.cc:407
+#: ../pan/gui/actions.cc:412
 msgid "Edit _News Servers"
 msgstr "Editar os Servidores de _Notícias"
 
-#: ../pan/gui/actions.cc:412
+#: ../pan/gui/actions.cc:417
 msgid "Jump to _Group Tab"
 msgstr "Ir para o Separador de _Grupo"
 
-#: ../pan/gui/actions.cc:417
+#: ../pan/gui/actions.cc:422
 msgid "Jump to _Header Tab"
 msgstr "Ir para o Separador de Ca_beçalho"
 
-#: ../pan/gui/actions.cc:422
+#: ../pan/gui/actions.cc:427
 msgid "Jump to _Body Tab"
 msgstr "Ir para o Separador de _Artigo"
 
-#: ../pan/gui/actions.cc:427
+#: ../pan/gui/actions.cc:432
 msgid "_Rot13 Selected Text"
 msgstr "_Rot13 do Texto Seleccionado"
 
-#: ../pan/gui/actions.cc:432
+#: ../pan/gui/actions.cc:437
 msgid "Clear _Header Pane"
 msgstr "Limpar o Painel de Ca_beçalhos"
 
-#: ../pan/gui/actions.cc:436
+#: ../pan/gui/actions.cc:441
 msgid "Clear _Body Pane"
 msgstr "Limpar o Painel de _Artigos"
 
-#: ../pan/gui/actions.cc:441
+#: ../pan/gui/actions.cc:446
 msgid "Cache Article"
 msgstr "Colocar o Artigo em Cache"
 
-#: ../pan/gui/actions.cc:446
+#: ../pan/gui/actions.cc:451
 msgid "Read Article"
 msgstr "Ler o Artigo"
 
-#: ../pan/gui/actions.cc:451
+#: ../pan/gui/actions.cc:456
 msgid "Show Article Information"
 msgstr "Apresentar a Informação do Artigo"
 
-#: ../pan/gui/actions.cc:456
+#: ../pan/gui/actions.cc:461
 msgid "Read _More"
 msgstr "Ler _Mais"
 
-#: ../pan/gui/actions.cc:457
+#: ../pan/gui/actions.cc:462
 msgid "Read More"
 msgstr "Ler Mais"
 
-#: ../pan/gui/actions.cc:461
+#: ../pan/gui/actions.cc:466
 msgid "Read _Back"
 msgstr "Ler _Anterior"
 
-#: ../pan/gui/actions.cc:462
+#: ../pan/gui/actions.cc:467
 msgid "Read Back"
 msgstr "Ler Anterior"
 
-#: ../pan/gui/actions.cc:466
+#: ../pan/gui/actions.cc:471
 msgid "Next _Unread Group"
 msgstr "Grupo por Ler Seg_uinte"
 
-#: ../pan/gui/actions.cc:471
+#: ../pan/gui/actions.cc:476
 msgid "Next _Group"
 msgstr "_Grupo Seguinte"
 
-#: ../pan/gui/actions.cc:476
+#: ../pan/gui/actions.cc:481
 msgid "Next _Unread Article"
 msgstr "Artigo por Ler Seg_uinte"
 
-#: ../pan/gui/actions.cc:477
+#: ../pan/gui/actions.cc:482
 msgid "Next Unread Article"
 msgstr "Artigo por Ler Seguinte"
 
-#: ../pan/gui/actions.cc:481
+#: ../pan/gui/actions.cc:486
 msgid "Next _Article"
 msgstr "_Artigo Seguinte"
 
-#: ../pan/gui/actions.cc:482
+#: ../pan/gui/actions.cc:487
 msgid "Next Article"
 msgstr "Artigo Seguinte"
 
-#: ../pan/gui/actions.cc:486
+#: ../pan/gui/actions.cc:491
 msgid "Next _Watched Article"
 msgstr "Artigo Acompan_hado Seguinte"
 
-#: ../pan/gui/actions.cc:491
+#: ../pan/gui/actions.cc:496
 msgid "Next Unread _Thread"
 msgstr "Á_rvore por Ler Seguinte"
 
-#: ../pan/gui/actions.cc:492
+#: ../pan/gui/actions.cc:497
 msgid "Next Unread Thread"
 msgstr "Árvore por Ler Seguinte"
 
-#: ../pan/gui/actions.cc:496
+#: ../pan/gui/actions.cc:501
 msgid "Next Threa_d"
 msgstr "Árvore Seguin_te"
 
-#: ../pan/gui/actions.cc:501
+#: ../pan/gui/actions.cc:506
 msgid "Pre_vious Article"
 msgstr "Artigo An_terior"
 
-#: ../pan/gui/actions.cc:506
+#: ../pan/gui/actions.cc:511
 msgid "Previous _Thread"
 msgstr "Árvore An_terior"
 
-#: ../pan/gui/actions.cc:511
+#: ../pan/gui/actions.cc:516
 msgid "_Parent Article"
 msgstr "Artigo _Pai"
 
-#: ../pan/gui/actions.cc:516
+#: ../pan/gui/actions.cc:521
 msgid "Ignore _Author"
 msgstr "Ignorar o _Autor"
 
-#: ../pan/gui/actions.cc:520
+#: ../pan/gui/actions.cc:525
 msgid "_Watch Thread"
 msgstr "_Acompanhar a Árvore"
 
-#: ../pan/gui/actions.cc:525
+#: ../pan/gui/actions.cc:530
 msgid "_Ignore Thread"
 msgstr "_Ignorar a Árvore"
 
-#: ../pan/gui/actions.cc:530
+#: ../pan/gui/actions.cc:535
 msgid "Edit Article's Watch/Ignore/Score..."
 msgstr "Editar o Acompanhar/Ignorar/Pontuação dos Artigos..."
 
-#: ../pan/gui/actions.cc:535
+#: ../pan/gui/actions.cc:540
 msgid "Add a _Scoring Rule..."
 msgstr "Adicionar uma Regra de _Pontuação..."
 
-#: ../pan/gui/actions.cc:540
+#: ../pan/gui/actions.cc:545
 msgid "Cance_l Article..."
 msgstr "Cance_lar o Artigo..."
 
-#: ../pan/gui/actions.cc:545
+#: ../pan/gui/actions.cc:550
 msgid "_Supersede Article..."
 msgstr "_Substituir o Artigo..."
 
-#: ../pan/gui/actions.cc:550
+#: ../pan/gui/actions.cc:555
 msgid "_Delete Article"
 msgstr "_Apagar o Artigo"
 
-#: ../pan/gui/actions.cc:555
+#: ../pan/gui/actions.cc:560
 msgid "Clear Article Cache"
 msgstr "Limpar a Cache de Artigos"
 
-#: ../pan/gui/actions.cc:560
+#: ../pan/gui/actions.cc:565
 msgid "_Mark Article as Read"
 msgstr "_Marcar o Artigo como Lido"
 
-#: ../pan/gui/actions.cc:565
+#: ../pan/gui/actions.cc:570
 msgid "Mark Article as _Unread"
 msgstr "Marcar o Artigo por _Ler"
 
-#: ../pan/gui/actions.cc:570
+#: ../pan/gui/actions.cc:575
 msgid "_Post to Newsgroup"
 msgstr "_Afixar para o Grupo"
 
-#: ../pan/gui/actions.cc:571
+#: ../pan/gui/actions.cc:576
 msgid "Post to Newsgroup"
 msgstr "Afixar para o Grupo"
 
-#: ../pan/gui/actions.cc:575
+#: ../pan/gui/actions.cc:580
 msgid "_Followup to Newsgroup"
 msgstr "_DarSeguimento-Para o Grupo"
 
-#: ../pan/gui/actions.cc:576
+#: ../pan/gui/actions.cc:581
 msgid "Followup to Newsgroup"
 msgstr "DarSeguimento-Para o Grupo"
 
-#: ../pan/gui/actions.cc:580
+#: ../pan/gui/actions.cc:585
 msgid "_Reply to Author in Mail"
 msgstr "_Responder ao Autor no Mail"
 
-#: ../pan/gui/actions.cc:585
+#: ../pan/gui/actions.cc:590
 msgid "_Pan Home Page"
 msgstr "_Página do Pan"
 
-#: ../pan/gui/actions.cc:590
+#: ../pan/gui/actions.cc:595
 msgid "Give _Feedback or Report a Bug..."
 msgstr "Comentar ou Reportar um _Erro..."
 
-#: ../pan/gui/actions.cc:595
+#: ../pan/gui/actions.cc:600
 msgid "_Tip Jar..."
 msgstr "Jarro das _Gorjetas..."
 
-#: ../pan/gui/actions.cc:601 ../pan/gui/actions.cc:606
+#: ../pan/gui/actions.cc:605
 msgid "_About"
 msgstr "_Sobre"
 
-#: ../pan/gui/actions.cc:622
+#: ../pan/gui/actions.cc:620
 msgid "_Thread Headers"
 msgstr "Ca_beçalhos da Árvore"
 
-#: ../pan/gui/actions.cc:623
+#: ../pan/gui/actions.cc:621
 msgid "_Wrap Article Body"
 msgstr "_Quebrar as Linhas do Corpo do Artigo"
 
-#: ../pan/gui/actions.cc:624
+#: ../pan/gui/actions.cc:622
 msgid "Mute _Quoted Text"
 msgstr "Esconder o Te_xto Citado"
 
-#: ../pan/gui/actions.cc:625
+#: ../pan/gui/actions.cc:623
 msgid "Show All _Headers in Body Pane"
 msgstr "Apresentar Todos os Cabeçal_hos no Painel de Artigo"
 
-#: ../pan/gui/actions.cc:626
+#: ../pan/gui/actions.cc:624
 msgid "Show _Smilies as Graphics"
 msgstr "Apresentar _Risonhos como Imagens"
 
-#: ../pan/gui/actions.cc:627
+#: ../pan/gui/actions.cc:625
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr "Apresentar *Negrito*, __Sublinhado__ e /Itálico/"
 
-#: ../pan/gui/actions.cc:628
+#: ../pan/gui/actions.cc:626
 msgid "Size Pictures to _Fit"
 msgstr "Dimensionar as Imagens para _Caber"
 
-#: ../pan/gui/actions.cc:629
+#: ../pan/gui/actions.cc:627
 msgid "Use _Monospace Font"
 msgstr "Utilizar Fonte _Mono-Espaçada"
 
-#: ../pan/gui/actions.cc:630
+#: ../pan/gui/actions.cc:628
 msgid "Set Focus to Images"
 msgstr "Atribuir o Foco a Imagens"
 
-#: ../pan/gui/actions.cc:633
+#: ../pan/gui/actions.cc:629
+msgid "Highlight _URLs"
+msgstr ""
+
+#: ../pan/gui/actions.cc:632
 msgid "_Work Online"
 msgstr "Trabalhar _Ligado"
 
-#: ../pan/gui/actions.cc:634
+#: ../pan/gui/actions.cc:633
 msgid "_Tabbed Layout"
 msgstr "Disposição em Separa_dores"
 
-#: ../pan/gui/actions.cc:635
+#: ../pan/gui/actions.cc:634
 msgid "Show Group _Pane"
 msgstr "Apresentar o _Painel de Grupo"
 
-#: ../pan/gui/actions.cc:636
+#: ../pan/gui/actions.cc:635
 msgid "Show Hea_der Pane"
 msgstr "Apresentar o Painel de Cabeçal_ho"
 
-#: ../pan/gui/actions.cc:637
+#: ../pan/gui/actions.cc:636
 msgid "Show Bod_y Pane"
 msgstr "Apresentar o Painel de Arti_go"
 
-#: ../pan/gui/actions.cc:638
+#: ../pan/gui/actions.cc:637
 msgid "Show _Toolbar"
 msgstr "Apresentar a Barra de Ferramen_tas"
 
-#: ../pan/gui/actions.cc:639
+#: ../pan/gui/actions.cc:638
 msgid "Abbreviate Group Names"
 msgstr "Abreviar os Nomes dos Grupos"
 
-#: ../pan/gui/actions.cc:641
+#: ../pan/gui/actions.cc:640
 msgid "Match Only _Unread Articles"
 msgstr "Coincidir Apenas os Artigos por _Ler"
 
-#: ../pan/gui/actions.cc:641
+#: ../pan/gui/actions.cc:640
 msgid "Match Only Unread Articles"
 msgstr "Coincidir Apenas os Artigos por Ler"
 
-#: ../pan/gui/actions.cc:642
+#: ../pan/gui/actions.cc:641
 msgid "Match Only _Cached Articles"
 msgstr "Coincidir Apenas os Artigos em _Cache"
 
-#: ../pan/gui/actions.cc:642
+#: ../pan/gui/actions.cc:641
 msgid "Match Only Cached Articles"
 msgstr "Coincidir Apenas os Artigos em Cache"
 
-#: ../pan/gui/actions.cc:643
+#: ../pan/gui/actions.cc:642
 msgid "Match Only _Complete Articles"
 msgstr "Coincidir Apenas os Artigos _Completos"
 
-#: ../pan/gui/actions.cc:643
+#: ../pan/gui/actions.cc:642
 msgid "Match Only Complete Articles"
 msgstr "Coincidir Apenas os Artigos Completos"
 
-#: ../pan/gui/actions.cc:644
+#: ../pan/gui/actions.cc:643
 msgid "Match Only _My Articles"
 msgstr "Coincidir Apenas os _Meus Artigos"
 
-#: ../pan/gui/actions.cc:644
+#: ../pan/gui/actions.cc:643
 msgid "Match Only My Articles"
 msgstr "Coincidir Apenas os Meus Artigos"
 
-#: ../pan/gui/actions.cc:645
+#: ../pan/gui/actions.cc:644
 msgid "Match Only _Watched Articles"
 msgstr "Coincidir Apenas os Artigos _Acompanhados"
 
-#: ../pan/gui/actions.cc:645
+#: ../pan/gui/actions.cc:644
 msgid "Match Only Watched Articles"
 msgstr "Coincidir Apenas os Artigos Acompanhados"
 
-#: ../pan/gui/actions.cc:647
+#: ../pan/gui/actions.cc:646
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "Coincidir as Pontuações de 9999 (_Acompanhados)"
 
-#: ../pan/gui/actions.cc:648
+#: ../pan/gui/actions.cc:647
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr "Coincidir as Pontuações entre 5000...9998 (A_lta)"
 
-#: ../pan/gui/actions.cc:649
+#: ../pan/gui/actions.cc:648
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "Coincidir as Pontuações entre 1 e 4999 (Mé_dia)"
 
-#: ../pan/gui/actions.cc:650
+#: ../pan/gui/actions.cc:649
 msgid "Match Scores of 0 (_Normal)"
 msgstr "Coincidir as Pontuações de 0 (_Normal)"
 
-#: ../pan/gui/actions.cc:651
+#: ../pan/gui/actions.cc:650
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "Coincidir as Pontuações entre -9998...-1 (_Baixa)"
 
-#: ../pan/gui/actions.cc:652
+#: ../pan/gui/actions.cc:651
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "Coincidir as Pontuações de -9999 (_Ignorados)"
 
-#: ../pan/gui/actions.cc:678
+#: ../pan/gui/actions.cc:653
+msgid "Enable/Disable all _Rules"
+msgstr ""
+
+#: ../pan/gui/actions.cc:679
 msgid "Show Matching _Articles"
 msgstr "Apresentar os _Artigos Coincidentes"
 
-#: ../pan/gui/actions.cc:679
+#: ../pan/gui/actions.cc:680
 msgid "Show Matching Articles' _Threads"
 msgstr "Apresentar as Árvores dos Ar_tigos Coincidentes"
 
-#: ../pan/gui/actions.cc:680
+#: ../pan/gui/actions.cc:681
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Apresentar as _SubÁrvores dos Artigos Coincidentes"
 
-#: ../pan/gui/body-pane.cc:950
+#: ../pan/gui/body-pane.cc:972
 #, c-format
 msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
 msgstr "Anexo não apresentado: Tipo MIME %s/%s; nome do ficheiro %s\n"
 
-#: ../pan/gui/body-pane.cc:951
+#: ../pan/gui/body-pane.cc:973
 #, c-format
 msgid "Attachment not shown: MIME type %s/%s\n"
 msgstr "Anexo não apresentado: Tipo MIME %s/%s\n"
 
-#: ../pan/gui/body-pane.cc:1031 ../pan/gui/gui.cc:1507
-#: ../pan/gui/header-pane.cc:1014 ../pan/gui/header-pane.cc:1356
-#: ../pan/gui/prefs-ui.cc:361 ../pan/gui/score-add-ui.cc:142
+#: ../pan/gui/body-pane.cc:1051 ../pan/gui/gui.cc:1652
+#: ../pan/gui/header-pane.cc:1012 ../pan/gui/header-pane.cc:1450
+#: ../pan/gui/post-ui.cc:2416 ../pan/gui/prefs-ui.cc:411
+#: ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
 msgstr "Assunto"
 
-#: ../pan/gui/body-pane.cc:1033 ../pan/gui/gui.cc:1507
+#: ../pan/gui/body-pane.cc:1053 ../pan/gui/gui.cc:1652
 msgid "From"
 msgstr "De"
 
-#: ../pan/gui/body-pane.cc:1035 ../pan/gui/gui.cc:1508
-#: ../pan/gui/header-pane.cc:1433 ../pan/gui/log-ui.cc:208
-#: ../pan/gui/prefs-ui.cc:357
+#: ../pan/gui/body-pane.cc:1055 ../pan/gui/gui.cc:1653
+#: ../pan/gui/header-pane.cc:1527 ../pan/gui/log-ui.cc:307
+#: ../pan/gui/prefs-ui.cc:407
 msgid "Date"
 msgstr "Data"
 
-#: ../pan/gui/body-pane.cc:1042
+#: ../pan/gui/body-pane.cc:1062
 msgid "Newsgroups"
 msgstr "Grupo de Notícias"
 
-#: ../pan/gui/body-pane.cc:1047
+#: ../pan/gui/body-pane.cc:1067
 msgid "Followup-To"
 msgstr "DarSeguimento-Para"
 
-#: ../pan/gui/body-pane.cc:1057
+#: ../pan/gui/body-pane.cc:1077
 msgid "Reply-To"
 msgstr "Responder-A"
 
-#: ../pan/gui/body-pane.cc:1083
+#: ../pan/gui/body-pane.cc:1119
 msgid " from "
 msgstr " de "
 
-#: ../pan/gui/body-pane.cc:1085
+#: ../pan/gui/body-pane.cc:1121
 msgid " at "
 msgstr " em "
 
-#: ../pan/gui/body-pane.cc:1324
+#: ../pan/gui/body-pane.cc:1362
 msgid "Copy _URL"
 msgstr "Copiar o _URL"
 
 # 48x48/emblems/emblem-plan.icon.in.h:1
 # 48x48/emblems/emblem-plan.icon.in.h:1
 #. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:853
-#: ../pan/gui/gui.cc:1251 ../pan/gui/gui.cc:1528
-#: ../pan/gui/score-add-ui.cc:605
+#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:986
+#: ../pan/gui/gui.cc:1411 ../pan/gui/gui.cc:1673
+#: ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
 
@@ -763,275 +764,306 @@ msgstr "Obter _todos os cabeçalhos"
 msgid "Get the _latest N headers: "
 msgstr "Obter os últim_os N cabeçalhos: "
 
-#: ../pan/gui/e-charset-picker.c:62 ../pan/gui/task-pane.cc:323
+#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:404
+msgid "Action"
+msgstr "Acção"
+
+#: ../pan/gui/e-action-combo-box.c:389
+msgid "A GtkRadioAction"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:52 ../pan/gui/task-pane.cc:325
 msgid "Unknown"
 msgstr "Desconhecido"
 
-#: ../pan/gui/e-charset-picker.c:63
+#: ../pan/gui/e-charset.c:53
+msgid "Arabic"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:54
 msgid "Baltic"
 msgstr "Báltico"
 
-#: ../pan/gui/e-charset-picker.c:64
+#: ../pan/gui/e-charset.c:55
 msgid "Central European"
 msgstr "Europeu Central"
 
-#: ../pan/gui/e-charset-picker.c:65
+#: ../pan/gui/e-charset.c:56
 msgid "Chinese"
 msgstr "Chinês"
 
-#: ../pan/gui/e-charset-picker.c:66
+#: ../pan/gui/e-charset.c:57
 msgid "Cyrillic"
 msgstr "Cirílico"
 
-#: ../pan/gui/e-charset-picker.c:67
+#: ../pan/gui/e-charset.c:58
 msgid "Greek"
 msgstr "Grego"
 
-#: ../pan/gui/e-charset-picker.c:68
+#: ../pan/gui/e-charset.c:59
 msgid "Hebrew"
 msgstr "Hebreu"
 
-#: ../pan/gui/e-charset-picker.c:69
+#: ../pan/gui/e-charset.c:60
 msgid "Japanese"
 msgstr "Japonês"
 
-#: ../pan/gui/e-charset-picker.c:70
+#: ../pan/gui/e-charset.c:61
 msgid "Korean"
 msgstr "Coreano"
 
-#: ../pan/gui/e-charset-picker.c:71
+#: ../pan/gui/e-charset.c:62
 msgid "Thai"
 msgstr "Tailandês"
 
-#: ../pan/gui/e-charset-picker.c:72
+#: ../pan/gui/e-charset.c:63
 msgid "Turkish"
 msgstr "Turco"
 
-#: ../pan/gui/e-charset-picker.c:73
+#: ../pan/gui/e-charset.c:64
 msgid "Unicode"
 msgstr "Unicode"
 
-#: ../pan/gui/e-charset-picker.c:74
+#: ../pan/gui/e-charset.c:65
 msgid "Western European"
 msgstr "Europeu Ocidental"
 
-#: ../pan/gui/e-charset-picker.c:75
+#: ../pan/gui/e-charset.c:66
 msgid "Western European, New"
 msgstr "Europeu Ocidental, Novo"
 
-#: ../pan/gui/e-charset-picker.c:93 ../pan/gui/e-charset-picker.c:94
-#: ../pan/gui/e-charset-picker.c:95
+#: ../pan/gui/e-charset.c:85 ../pan/gui/e-charset.c:86
+#: ../pan/gui/e-charset.c:87
 msgid "Traditional"
 msgstr "Tradicional"
 
-#: ../pan/gui/e-charset-picker.c:96 ../pan/gui/e-charset-picker.c:97
-#: ../pan/gui/e-charset-picker.c:98 ../pan/gui/e-charset-picker.c:99
+#: ../pan/gui/e-charset.c:88 ../pan/gui/e-charset.c:89
+#: ../pan/gui/e-charset.c:90 ../pan/gui/e-charset.c:91
 msgid "Simplified"
 msgstr "Simplificado"
 
-#: ../pan/gui/e-charset-picker.c:102
+#: ../pan/gui/e-charset.c:94
 msgid "Ukrainian"
 msgstr "Ucraniano"
 
-#: ../pan/gui/e-charset-picker.c:105
+#: ../pan/gui/e-charset.c:97
 msgid "Visual"
 msgstr "Visual"
 
-#: ../pan/gui/e-charset-picker.c:216 ../pan/gui/gui.cc:1644
-#: ../pan/gui/post-ui.cc:247
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:1790
+#: ../pan/gui/post-ui.cc:481
 msgid "Character Encoding"
 msgstr "Codificação de Caracteres"
 
-#: ../pan/gui/e-charset-picker.c:231
+#: ../pan/gui/e-charset-combo-box.c:117
 msgid "Enter the character set to use"
 msgstr "Introduza o conjunto de caracteres a utilizar"
 
-#: ../pan/gui/e-charset-picker.c:338
+#: ../pan/gui/e-charset-combo-box.c:336
 msgid "Other..."
 msgstr "Outro..."
 
-#: ../pan/gui/group-pane.cc:568
-msgid "Group Name"
+#: ../pan/gui/group-pane.cc:499
+#, fuzzy
+msgid "Group"
+msgstr "Grupos"
+
+#: ../pan/gui/group-pane.cc:500
+#, fuzzy
+msgid "Group (regex)"
 msgstr "Nome do Grupo"
 
-#: ../pan/gui/group-pane.cc:840
+#: ../pan/gui/group-pane.cc:912
 msgid "Subscribed Groups"
 msgstr "Grupos Subscritos"
 
-#: ../pan/gui/group-pane.cc:841
+#: ../pan/gui/group-pane.cc:913
 msgid "Other Groups"
 msgstr "Outros Grupos"
 
-#: ../pan/gui/group-pane.cc:885 ../pan/gui/score-view-ui.cc:160
+#: ../pan/gui/group-pane.cc:953 ../pan/gui/score-view-ui.cc:157
 msgid "Name"
 msgstr "Nome"
 
-#: ../pan/gui/group-prefs-dialog.cc:102
+#: ../pan/gui/group-prefs-dialog.cc:89
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "Nenhum Perfil definido em \"Editar|Perfis de Afixação\"."
 
-#: ../pan/gui/group-prefs-dialog.cc:130
+#: ../pan/gui/group-prefs-dialog.cc:117
 msgid "Pan: Group Preferences"
 msgstr "Pan: Preferências de Grupo"
 
-#: ../pan/gui/group-prefs-dialog.cc:144
+#: ../pan/gui/group-prefs-dialog.cc:131
 #, c-format
 msgid "Properties for %s"
 msgstr "Propriedades de %s"
 
-#: ../pan/gui/group-prefs-dialog.cc:150
+#: ../pan/gui/group-prefs-dialog.cc:136
 msgid "Character _encoding:"
 msgstr "Codificação de caract_eres:"
 
-#: ../pan/gui/group-prefs-dialog.cc:151
+#: ../pan/gui/group-prefs-dialog.cc:137
 msgid "Directory for Saving Attachments"
 msgstr "Directório onde Gravar os Anexos"
 
-#: ../pan/gui/group-prefs-dialog.cc:156
+#: ../pan/gui/group-prefs-dialog.cc:142
 msgid "Directory for _saving attachments:"
 msgstr "Directório onde _gravar os anexos:"
 
-#: ../pan/gui/group-prefs-dialog.cc:158
+#: ../pan/gui/group-prefs-dialog.cc:144
 msgid "Posting _profile:"
 msgstr "_Perfis de afixação:"
 
-#: ../pan/gui/gui.cc:259
+#: ../pan/gui/gui.cc:274
 msgid "Open the Task Manager"
 msgstr "Abrir o Gestor de Tarefas"
 
-#: ../pan/gui/gui.cc:281
+#: ../pan/gui/gui.cc:304
 msgid "Open the Event Log"
 msgstr "Abrir o Registo de Eventos"
 
-#: ../pan/gui/gui.cc:519
+#: ../pan/gui/gui.cc:539
 msgid "Save NZB's Files"
 msgstr "Gravar os Ficheiros NZB"
 
-#: ../pan/gui/gui.cc:639
+#: ../pan/gui/gui.cc:566
+msgid "Untitled.nzb"
+msgstr ""
+
+#: ../pan/gui/gui.cc:568
+#, fuzzy
+msgid "Save NZB File as..."
+msgstr "Gravar os Ficheiros NZB"
+
+#: ../pan/gui/gui.cc:771
 msgid "Import NZB Files"
 msgstr "Importar Ficheiros NZB"
 
-#: ../pan/gui/gui.cc:647
+#: ../pan/gui/gui.cc:779 ../pan/gui/post-ui.cc:3126
 msgid "NZB Files"
 msgstr "Ficheiros NZB"
 
-#: ../pan/gui/gui.cc:652
+#: ../pan/gui/gui.cc:784
 msgid "All Files"
 msgstr "Todos os Ficheiros"
 
-#: ../pan/gui/gui.cc:1030
+#: ../pan/gui/gui.cc:1183
 msgid "Unable to supersede article."
 msgstr "Incapaz de substituir o artigo."
 
-#: ../pan/gui/gui.cc:1031 ../pan/gui/gui.cc:1102
+#: ../pan/gui/gui.cc:1184 ../pan/gui/gui.cc:1258
 msgid "The article doesn't match any of your posting profiles."
 msgstr "O artigo não equivale a nenhum dos seus perfis de afixação."
 
-#: ../pan/gui/gui.cc:1075
+#: ../pan/gui/gui.cc:1231
 msgid "Revise and send this article to replace the old one."
 msgstr "Rever e enviar este artigo para substituir o antigo."
 
-#: ../pan/gui/gui.cc:1076 ../pan/gui/gui.cc:1139
+#: ../pan/gui/gui.cc:1232 ../pan/gui/gui.cc:1295
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
-"Seja paciente! Demorará algum tempo para que as suas alterações tenham efeito."
+"Seja paciente! Demorará algum tempo para que as suas alterações tenham "
+"efeito."
 
-#: ../pan/gui/gui.cc:1101
+#: ../pan/gui/gui.cc:1257
 msgid "Unable to cancel article."
 msgstr "Incapaz de cancelar o artigo."
 
-#: ../pan/gui/gui.cc:1138
+#: ../pan/gui/gui.cc:1294
 msgid "Send this article to ask your server to cancel your other one."
 msgstr "Enviar este artigo para pedir ao servidor que cancele o seu outro."
 
-#: ../pan/gui/gui.cc:1254 ../pan/gui/gui.cc:1274
-msgid "Copyright © 2002-2007 Charles Kerr"
+#: ../pan/gui/gui.cc:1414
+#, fuzzy
+msgid "Copyright © 2002-2011 Charles Kerr and others"
 msgstr "Copyright © 2003-2007 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1259
+#: ../pan/gui/gui.cc:1419
 msgid "translator-credits"
-msgstr "Duarte Loreto <happyguy_pt@hotmail.com>, Filipe Gomes <filipefgomes@gmail.com>"
+msgstr ""
+"Duarte Loreto <happyguy_pt@hotmail.com>, Filipe Gomes <filipefgomes@gmail."
+"com>"
 
-#: ../pan/gui/gui.cc:1390
+#: ../pan/gui/gui.cc:1535
 msgid "_1. Group Pane"
 msgstr "_1. Painel de Grupo"
 
-#: ../pan/gui/gui.cc:1391
+#: ../pan/gui/gui.cc:1536
 msgid "_2. Header Pane"
 msgstr "_2. Painel de Cabeçalhos"
 
-#: ../pan/gui/gui.cc:1392
+#: ../pan/gui/gui.cc:1537
 msgid "_3. Body Pane"
 msgstr "_3. Painel de Artigos"
 
-#: ../pan/gui/gui.cc:1490
+#: ../pan/gui/gui.cc:1635
 #, c-format
 msgid "This article has all %d parts."
 msgstr "Este artigo possui todas as %d partes."
 
-#: ../pan/gui/gui.cc:1492
+#: ../pan/gui/gui.cc:1637
 #, c-format
 msgid "This article is missing %d of its %d parts:"
 msgstr "Faltam a este artigo %d das suas %d partes:"
 
-#: ../pan/gui/gui.cc:1508 ../pan/gui/header-pane.cc:1016
+#: ../pan/gui/gui.cc:1653 ../pan/gui/header-pane.cc:1014
 msgid "Message-ID"
 msgstr "ID-Mensagem"
 
-#: ../pan/gui/gui.cc:1509 ../pan/gui/header-pane.cc:1403
-#: ../pan/gui/prefs-ui.cc:358
+#: ../pan/gui/gui.cc:1654 ../pan/gui/header-pane.cc:1497
+#: ../pan/gui/prefs-ui.cc:408
 msgid "Lines"
 msgstr "Linhas"
 
-#: ../pan/gui/gui.cc:1509 ../pan/gui/header-pane.cc:1418
-#: ../pan/gui/prefs-ui.cc:356
+#: ../pan/gui/gui.cc:1654 ../pan/gui/header-pane.cc:1512
+#: ../pan/gui/prefs-ui.cc:406
 msgid "Bytes"
 msgstr "Bytes"
 
-#: ../pan/gui/gui.cc:1645
+#: ../pan/gui/gui.cc:1791
 msgid "Body Pane Encoding"
 msgstr "Codificação do Painel de Artigos"
 
-#: ../pan/gui/gui.cc:1674 ../pan/gui/task-pane.cc:372
+#: ../pan/gui/gui.cc:1820 ../pan/gui/task-pane.cc:374
 #, c-format
 msgid "Offline"
 msgstr "Desligado"
 
-#: ../pan/gui/gui.cc:1677
+#: ../pan/gui/gui.cc:1823
 #, c-format
 msgid "Closing %d connections"
 msgstr "A fechar %d ligações"
 
-#: ../pan/gui/gui.cc:1679 ../pan/gui/gui.cc:1709
+#: ../pan/gui/gui.cc:1825 ../pan/gui/gui.cc:1855
 #, c-format
 msgid "No Connections"
 msgstr "Sem Ligações"
 
-#: ../pan/gui/gui.cc:1683
+#: ../pan/gui/gui.cc:1829
 #, c-format
 msgid "Connecting"
 msgstr "A estabelecer ligação"
 
-#: ../pan/gui/gui.cc:1696
+#: ../pan/gui/gui.cc:1842
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d inactivo, %d activo @ %.1f KiBps"
 
-#: ../pan/gui/gui.cc:1752
+#: ../pan/gui/gui.cc:1898
 #, c-format
 msgid "No Tasks"
 msgstr "Nenhuma Tarefa"
 
-#: ../pan/gui/gui.cc:1754 ../pan/gui/prefs-ui.cc:493
+#: ../pan/gui/gui.cc:1900 ../pan/gui/prefs-ui.cc:564
 msgid "Tasks"
 msgstr "Tarefas"
 
-#: ../pan/gui/gui.cc:1764 ../pan/gui/task-pane.cc:245
+#: ../pan/gui/gui.cc:1911 ../pan/gui/task-pane.cc:245
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu tarefas, %s, %.1f KiBps, TEC %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:1816
+#: ../pan/gui/gui.cc:1963
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1039,32 +1071,37 @@ msgstr ""
 "Pan está desligado. Consulte \"Ficheiro|Registo de Eventos\" e corrija o "
 "problema, depois utilize \"Ficheiro|Trabalhar Ligado\" para continuar."
 
-#: ../pan/gui/header-pane.cc:1013
+#: ../pan/gui/header-pane.cc:1010
 msgid "Subject or Author"
 msgstr "Assunto ou Autor"
 
-#: ../pan/gui/header-pane.cc:1015 ../pan/gui/header-pane.cc:1388
-#: ../pan/gui/prefs-ui.cc:355 ../pan/gui/score-add-ui.cc:143
+#: ../pan/gui/header-pane.cc:1011
+#, fuzzy
+msgid "Sub or Auth (regex)"
+msgstr "Assunto ou Autor"
+
+#: ../pan/gui/header-pane.cc:1013 ../pan/gui/header-pane.cc:1482
+#: ../pan/gui/prefs-ui.cc:405 ../pan/gui/score-add-ui.cc:140
 msgid "Author"
 msgstr "Autor"
 
-#: ../pan/gui/header-pane.cc:1373 ../pan/gui/prefs-ui.cc:359
+#: ../pan/gui/header-pane.cc:1467 ../pan/gui/prefs-ui.cc:409
 msgid "Score"
 msgstr "Pontuação"
 
-#: ../pan/gui/log-ui.cc:87
+#: ../pan/gui/log-ui.cc:105
 msgid "Save Event List"
 msgstr "Gravar a Lista de Eventos"
 
-#: ../pan/gui/log-ui.cc:169
+#: ../pan/gui/log-ui.cc:258
 msgid "Pan: Events"
 msgstr "Pan: Eventos"
 
-#: ../pan/gui/log-ui.cc:218
+#: ../pan/gui/log-ui.cc:317
 msgid "Message"
 msgstr "Mensagem"
 
-#: ../pan/gui/pan.cc:145
+#: ../pan/gui/pan.cc:153
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1074,7 +1111,7 @@ msgstr ""
 " \n"
 "Para começar a ler notícias, Adicione um Servidor."
 
-#: ../pan/gui/pan.cc:190
+#: ../pan/gui/pan.cc:233
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -1109,25 +1146,32 @@ msgstr ""
 "  --no-gui                 Apenas apresentar resultado na consola, não a "
 "pilha de obtenção.\n"
 
-#: ../pan/gui/pan.cc:255
+#: ../pan/gui/pan.cc:299
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Erro: --no-gui utilizado sem ficheiros nzb nem news:message-id."
 
-#: ../pan/gui/pan.cc:259
+#: ../pan/gui/pan.cc:303
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s iniciado"
 
-#: ../pan/gui/pan.cc:275
+#: ../pan/gui/pan.cc:321
 msgid "Please configure Pan's news servers before using it as an nzb client."
-msgstr "Configure os servidores de notícias do Pan antes de o utilizar como cliente nzb."
+msgstr ""
+"Configure os servidores de notícias do Pan antes de o utilizar como cliente "
+"nzb."
 
-#: ../pan/gui/post-ui.cc:94
+#: ../pan/gui/post-ui.cc:156
+#, c-format
+msgid "Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:258
 #, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "Erro ao definir o corrector ortográfico: %s"
 
-#: ../pan/gui/post-ui.cc:103
+#: ../pan/gui/post-ui.cc:267
 msgid ""
 "<b>Spellchecker not found!</b>\n"
 " \n"
@@ -1137,104 +1181,178 @@ msgstr ""
 " \n"
 "Esta cópia do Pan foi compilada com o GtkSpell activo?"
 
-#: ../pan/gui/post-ui.cc:202
+#: ../pan/gui/post-ui.cc:371
 msgid "_Profile"
 msgstr "_Perfil"
 
-#: ../pan/gui/post-ui.cc:203
+#: ../pan/gui/post-ui.cc:372
 msgid "Set Editor"
 msgstr "Definir o Editor"
 
-#: ../pan/gui/post-ui.cc:205
+#: ../pan/gui/post-ui.cc:374
 msgid "_Send Article"
 msgstr "_Enviar Artigo"
 
-#: ../pan/gui/post-ui.cc:205
+#: ../pan/gui/post-ui.cc:374
 msgid "Send Article Now"
 msgstr "Enviar o Artigo Agora"
 
-#: ../pan/gui/post-ui.cc:207
+#: ../pan/gui/post-ui.cc:375
+#, fuzzy
+msgid "_Send and Save Articles to NZB"
+msgstr "Gravar os Artigos deste NZB"
+
+#: ../pan/gui/post-ui.cc:375
+#, fuzzy
+msgid "Send and Save Articles to NZB"
+msgstr "Pan: Gravar Artigos"
+
+#: ../pan/gui/post-ui.cc:377
 msgid "Sa_ve Draft"
 msgstr "Gravar _Rascunho"
 
-#: ../pan/gui/post-ui.cc:207
+#: ../pan/gui/post-ui.cc:377
 msgid "Save as a Draft for Future Posting"
 msgstr "Gravar como Rascunho para Afixar Mais Tarde"
 
-#: ../pan/gui/post-ui.cc:208
+#: ../pan/gui/post-ui.cc:378
 msgid "_Open Draft..."
 msgstr "_Abrir Rascunho..."
 
-#: ../pan/gui/post-ui.cc:208
+#: ../pan/gui/post-ui.cc:378
 msgid "Open an Article Draft"
 msgstr "Abrir o Rascunho de um Artigo"
 
-#: ../pan/gui/post-ui.cc:213
+#: ../pan/gui/post-ui.cc:383
 msgid "_Rot13"
 msgstr "_Rot13"
 
-#: ../pan/gui/post-ui.cc:213
+#: ../pan/gui/post-ui.cc:383
 msgid "Rot13 Selected Text"
 msgstr "Rot13 do Texto Seleccionado"
 
-#: ../pan/gui/post-ui.cc:214
+#: ../pan/gui/post-ui.cc:384
 msgid "Run _Editor"
 msgstr "Executar o _Editor"
 
-#: ../pan/gui/post-ui.cc:220
+#: ../pan/gui/post-ui.cc:384
+#, fuzzy
+msgid "Run Editor"
+msgstr "Executar o _Editor"
+
+#: ../pan/gui/post-ui.cc:386
+msgid "Add _Files to Queue"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:386
+msgid "Add Files to Queue"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:402 ../pan/gui/post-ui.cc:403
+#, fuzzy
+msgid "Remove from Queue"
+msgstr "Remover um Servidor"
+
+#: ../pan/gui/post-ui.cc:407 ../pan/gui/post-ui.cc:408
+msgid "Clear List"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:412 ../pan/gui/post-ui.cc:413
+msgid "Select needed Parts"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:417 ../pan/gui/post-ui.cc:418
+msgid "Move Up"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:422 ../pan/gui/post-ui.cc:423
+msgid "Move Down"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:427 ../pan/gui/post-ui.cc:428
+msgid "Move to Top"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:432 ../pan/gui/post-ui.cc:433
+msgid "Move to Bottom"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:437 ../pan/gui/post-ui.cc:438
+msgid "yEnc-Encode"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:442 ../pan/gui/post-ui.cc:443
+msgid "No encoding (plain)"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:447 ../pan/gui/post-ui.cc:448
+msgid "BASE64-Encode"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:454
 msgid "_Wrap Text"
 msgstr "_Quebrar as Linhas"
 
-#: ../pan/gui/post-ui.cc:221
+#: ../pan/gui/post-ui.cc:454
+#, fuzzy
+msgid "Wrap Text"
+msgstr "_Quebrar as Linhas"
+
+#: ../pan/gui/post-ui.cc:455
 msgid "Always Run Editor"
 msgstr "Executar Sempre o Editor"
 
-#: ../pan/gui/post-ui.cc:222
+#: ../pan/gui/post-ui.cc:456
 msgid "Remember Character Encoding for this Group"
 msgstr "Recordar a Codificação de Caracteres deste Grupo"
 
-#: ../pan/gui/post-ui.cc:223
+#: ../pan/gui/post-ui.cc:457
 msgid "Check _Spelling"
 msgstr "Verificar a _Ortografia"
 
-#: ../pan/gui/post-ui.cc:248
+#: ../pan/gui/post-ui.cc:482
 msgid "New Article's Encoding:"
 msgstr "Codificação do Novo Artigo:"
 
-#: ../pan/gui/post-ui.cc:342
+#: ../pan/gui/post-ui.cc:665
 msgid "Your changes will be lost!"
 msgstr "As suas alterações serão perdidas!"
 
-#: ../pan/gui/post-ui.cc:343
+#: ../pan/gui/post-ui.cc:666
 msgid "Close this window and lose your changes?"
 msgstr "Fechar esta janela e perder as suas alterações?"
 
-#: ../pan/gui/post-ui.cc:380 ../pan/gui/post-ui.cc:419
+#: ../pan/gui/post-ui.cc:711 ../pan/gui/post-ui.cc:750
 msgid "There were problems with this post."
 msgstr "Ocorreram problemas com esta mensagem."
 
-#: ../pan/gui/post-ui.cc:382 ../pan/gui/post-ui.cc:421
+#: ../pan/gui/post-ui.cc:713 ../pan/gui/post-ui.cc:752
+#: ../pan/gui/post-ui.cc:828
 msgid "Go Back"
 msgstr "Retroceder"
 
-#: ../pan/gui/post-ui.cc:384
+#: ../pan/gui/post-ui.cc:715
 msgid "Post Anyway"
 msgstr "Ainda Assim Afixar"
 
 #. Prompt the user
-#: ../pan/gui/post-ui.cc:413
+#: ../pan/gui/post-ui.cc:744
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr ""
-"A mensagem utiliza caracteres não especificados no conjunto de caracteres '%"
-"s' - possivelmente utiliza '%s' "
+"A mensagem utiliza caracteres não especificados no conjunto de caracteres "
+"'%s' - possivelmente utiliza '%s' "
 
-#: ../pan/gui/post-ui.cc:436
+#: ../pan/gui/post-ui.cc:767
 msgid "Go _Online"
 msgstr "_Ligar-se"
 
-#: ../pan/gui/post-ui.cc:615
+#: ../pan/gui/post-ui.cc:827
+msgid "The file queue is empty, so no files can be saved."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:994
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1242,83 +1360,125 @@ msgstr ""
 "Não está definido nenhum servidor de afixação para este perfil.\n"
 "Edite o perfil em \"Editar|Gerir Perfis de Afixação\"."
 
-#: ../pan/gui/post-ui.cc:648
+#: ../pan/gui/post-ui.cc:1027
 msgid "Pan is Offline."
 msgstr "Pan está Desligado."
 
-#: ../pan/gui/post-ui.cc:649
+#: ../pan/gui/post-ui.cc:1028
 msgid "Go online to post the article?"
 msgstr "Ligar-se para afixar o artigo?"
 
-#. *
-#. ***  Pop up a ``Posting'' Dialog...
-#. *
-#: ../pan/gui/post-ui.cc:662
+#: ../pan/gui/post-ui.cc:1043
 msgid "Posting Article"
 msgstr "A Afixar o Artigo"
 
-#: ../pan/gui/post-ui.cc:668
+#: ../pan/gui/post-ui.cc:1049
 msgid "Posting..."
 msgstr "A Afixar..."
 
-#: ../pan/gui/post-ui.cc:719
+#: ../pan/gui/post-ui.cc:1213
 msgid "Error opening temporary file"
 msgstr "Erro ao abrir o ficheiro temporário"
 
-#: ../pan/gui/post-ui.cc:731
+#: ../pan/gui/post-ui.cc:1225
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Erro ao escrever o artigo no ficheiro temporário: %s"
 
-#: ../pan/gui/post-ui.cc:750
+#: ../pan/gui/post-ui.cc:1244
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
-msgstr "Erro ao processar a linha de comando de \"editor externo\": %s (Comando era: %s)"
+msgstr ""
+"Erro ao processar a linha de comando de \"editor externo\": %s (Comando era: "
+"%s)"
 
-#: ../pan/gui/post-ui.cc:788
+#: ../pan/gui/post-ui.cc:1285
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Erro ao iniciar o editor externo: %s"
 
-#: ../pan/gui/post-ui.cc:833
+#: ../pan/gui/post-ui.cc:1341
 msgid "Open Draft Article"
 msgstr "Abrir o Rascunho de Artigo"
 
-#: ../pan/gui/post-ui.cc:1017
+#: ../pan/gui/post-ui.cc:1539
 msgid "Save Draft Article"
 msgstr "Gravar o Rascunho de Artigo"
 
-#: ../pan/gui/post-ui.cc:1213
+#: ../pan/gui/post-ui.cc:1736
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Incapaz de processar o comando de assinatura \"%s\": %s"
 
-#: ../pan/gui/post-ui.cc:1245
+#: ../pan/gui/post-ui.cc:1768
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Incapaz de converter a assinatura em UTF-8."
 
-#: ../pan/gui/post-ui.cc:1670
+#: ../pan/gui/post-ui.cc:2253
 msgid "F_rom"
 msgstr "_De"
 
-#: ../pan/gui/post-ui.cc:1688
+#: ../pan/gui/post-ui.cc:2271
 msgid "_Subject"
 msgstr "A_ssunto"
 
-#: ../pan/gui/post-ui.cc:1701
+#: ../pan/gui/post-ui.cc:2284
 msgid "_Newsgroups"
 msgstr "_Grupos"
 
-#: ../pan/gui/post-ui.cc:1715
+#: ../pan/gui/post-ui.cc:2298
 msgid "Mail _To"
 msgstr "EMail _Para"
 
-#: ../pan/gui/post-ui.cc:1764
+#: ../pan/gui/post-ui.cc:2401
+msgid "Delete from Queue"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2414
+msgid "No."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2418 ../pan/gui/post-ui.cc:2517
+#: ../pan/gui/post-ui.cc:2558
+#, fuzzy
+msgid "Filename"
+msgstr "_Ficheiro"
+
+#: ../pan/gui/post-ui.cc:2420
+msgid "Size (kB)"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2422
+msgid "Encode Mode"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2525
+msgid "The current filename"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2529
+#, fuzzy
+msgid "Subject Line"
+msgstr "Assunto"
+
+#: ../pan/gui/post-ui.cc:2537
+msgid "The current Subject Line"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2551
+msgid "No. "
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2555
+msgid "Enable/Disable"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2590
 msgid "Follo_wup-To"
 msgstr "_DarSeguimento-Para"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: ../pan/gui/post-ui.cc:1773
+#: ../pan/gui/post-ui.cc:2599
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1331,11 +1491,11 @@ msgstr ""
 "Para redireccionar todas as respostas para o seu endereço de email, utilize "
 "\"Followup-To: poster\" (\"DarSeguimento-Para: autor\")"
 
-#: ../pan/gui/post-ui.cc:1779
+#: ../pan/gui/post-ui.cc:2605
 msgid "_Reply-To"
 msgstr "_Responder-A:"
 
-#: ../pan/gui/post-ui.cc:1787
+#: ../pan/gui/post-ui.cc:2613
 msgid ""
 "The email account where mail replies to your posted message should go.  This "
 "is only needed if it differs from the \"From\" header."
@@ -1343,100 +1503,121 @@ msgstr ""
 "A conta de email para onde deverão ir as respostas por email às suas "
 "mensagens.  Apenas é necessário se for diferente do cabeçalho \"De\"."
 
-#: ../pan/gui/post-ui.cc:1793
+#: ../pan/gui/post-ui.cc:2619
 msgid "_Custom Headers"
 msgstr "_Cabeçalhos Personalizados"
 
-#: ../pan/gui/post-ui.cc:1817
+#: ../pan/gui/post-ui.cc:2643
 msgid "Add \"_User-Agent\" header"
 msgstr "Adicionar cabeçalho de \"Agente-_Utilizado\""
 
-#: ../pan/gui/post-ui.cc:1824
+#: ../pan/gui/post-ui.cc:2650
 msgid "Add \"Message-_Id header"
 msgstr "Adicionar cabeçalho de \"_ID-Mensagem\""
 
-#: ../pan/gui/post-ui.cc:1881
+#: ../pan/gui/post-ui.cc:2819
+#, fuzzy
+msgid "Select Parts"
+msgstr "Seleccionar _Todos os Artigos"
+
+#: ../pan/gui/post-ui.cc:2829
+msgid "_Parts"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2945
 msgid "Post Article"
 msgstr "Afixar Artigo"
 
-#: ../pan/gui/post-ui.cc:1903
+#: ../pan/gui/post-ui.cc:2966
 msgid "_Message"
 msgstr "_Mensagem"
 
-#: ../pan/gui/post-ui.cc:1904
+#: ../pan/gui/post-ui.cc:2967
 msgid "More _Headers"
 msgstr "Mais Ca_beçalhos"
 
-#: ../pan/gui/post-ui.cc:1931 ../pan/gui/profiles-dialog.cc:397
+#: ../pan/gui/post-ui.cc:2968
+msgid "File _Queue"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2997 ../pan/gui/profiles-dialog.cc:393
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "Em %d, %n escreveu:"
+
+#: ../pan/gui/post-ui.cc:3028
+msgid "Add files to queue"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:3113
+msgid "Save Upload Queue as NZB File"
+msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:100
 msgid "Posting Profile"
 msgstr "Perfil de Afixação"
 
-#: ../pan/gui/profiles-dialog.cc:114
+#: ../pan/gui/profiles-dialog.cc:110
 msgid "Profile Information"
 msgstr "Informação de Perfil"
 
-#: ../pan/gui/profiles-dialog.cc:118
+#: ../pan/gui/profiles-dialog.cc:114
 msgid "_Profile Name:"
 msgstr "Nome de _Perfil:"
 
-#: ../pan/gui/profiles-dialog.cc:121
+#: ../pan/gui/profiles-dialog.cc:117
 msgid "Required Information"
 msgstr "Informação Necessária"
 
-#: ../pan/gui/profiles-dialog.cc:125
+#: ../pan/gui/profiles-dialog.cc:121
 msgid "_Full Name:"
 msgstr "Nome _Completo:"
 
-#: ../pan/gui/profiles-dialog.cc:128
+#: ../pan/gui/profiles-dialog.cc:124
 msgid "_Email Address:"
 msgstr "_Endereço de EMail:"
 
-#: ../pan/gui/profiles-dialog.cc:130
+#: ../pan/gui/profiles-dialog.cc:126
 msgid "_Post Articles via:"
 msgstr "_Afixar Artigos Através de:"
 
-#: ../pan/gui/profiles-dialog.cc:133
+#: ../pan/gui/profiles-dialog.cc:129
 msgid "Signature"
 msgstr "Assinatura"
 
-#: ../pan/gui/profiles-dialog.cc:136
+#: ../pan/gui/profiles-dialog.cc:132
 msgid "_Use a Signature"
 msgstr "_Utilizar uma Assinatura"
 
-#: ../pan/gui/profiles-dialog.cc:140
+#: ../pan/gui/profiles-dialog.cc:136
 msgid "Signature File"
 msgstr "Ficheiro de Assinatura"
 
-#: ../pan/gui/profiles-dialog.cc:143
+#: ../pan/gui/profiles-dialog.cc:139
 msgid "_Signature:"
 msgstr "A_ssinatura:"
 
-#: ../pan/gui/profiles-dialog.cc:148
+#: ../pan/gui/profiles-dialog.cc:144
 msgid "Text File"
 msgstr "Ficheiro de Texto"
 
-#: ../pan/gui/profiles-dialog.cc:150
+#: ../pan/gui/profiles-dialog.cc:146
 msgid "Text"
 msgstr "Texto"
 
-#: ../pan/gui/profiles-dialog.cc:152
+#: ../pan/gui/profiles-dialog.cc:148
 msgid "Command"
 msgstr "Comando"
 
-#: ../pan/gui/profiles-dialog.cc:162
+#: ../pan/gui/profiles-dialog.cc:158
 msgid "Signature _Type:"
 msgstr "_Tipo de Assinatura:"
 
-#: ../pan/gui/profiles-dialog.cc:165
+#: ../pan/gui/profiles-dialog.cc:161
 msgid "Optional Information"
 msgstr "Informação Opcional"
 
-#: ../pan/gui/profiles-dialog.cc:170
+#: ../pan/gui/profiles-dialog.cc:166
 msgid ""
 "When posting to Usenet, your article's Message-ID contains a domain name.  "
 "You can set a custom domain name here, or leave it blank to let Pan use the "
@@ -1446,11 +1627,11 @@ msgstr ""
 "domínio. Pode definir aqui um nome de domínio personalizado, ou deixá-lo em "
 "branco para que o Pan utilize o nome de domínio do seu endereço de email."
 
-#: ../pan/gui/profiles-dialog.cc:171
+#: ../pan/gui/profiles-dialog.cc:167
 msgid "Message-ID _Domain Name:"
 msgstr "Nome de _Domínio do ID-Mensagem:"
 
-#: ../pan/gui/profiles-dialog.cc:175
+#: ../pan/gui/profiles-dialog.cc:171
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -1463,11 +1644,11 @@ msgstr ""
 "%n para o nome do Autor\n"
 "%d para a Data"
 
-#: ../pan/gui/profiles-dialog.cc:176
+#: ../pan/gui/profiles-dialog.cc:172
 msgid "_Attribution:"
 msgstr "_Atribuição:"
 
-#: ../pan/gui/profiles-dialog.cc:199
+#: ../pan/gui/profiles-dialog.cc:195
 msgid ""
 "Extra headers to be included in your posts, such as\n"
 "Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
@@ -1477,27 +1658,27 @@ msgstr ""
 "Responder-A: \"O Seu Nome\" <seunome@algures.pt>\n"
 "Organização: A Sua Organização"
 
-#: ../pan/gui/profiles-dialog.cc:208
+#: ../pan/gui/profiles-dialog.cc:204
 msgid "E_xtra Headers:"
 msgstr "Cabeçalhos A_dicionais:"
 
-#: ../pan/gui/profiles-dialog.cc:248
+#: ../pan/gui/profiles-dialog.cc:244
 msgid "Invalid email address."
 msgstr "Endereço de email inválido."
 
-#: ../pan/gui/profiles-dialog.cc:249
+#: ../pan/gui/profiles-dialog.cc:245
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Utilize um endereço no formato jose@algures.pt"
 
-#: ../pan/gui/profiles-dialog.cc:398
+#: ../pan/gui/profiles-dialog.cc:394
 msgid "New Profile"
 msgstr "Novo Perfil"
 
-#: ../pan/gui/profiles-dialog.cc:444
+#: ../pan/gui/profiles-dialog.cc:440
 msgid "Posting Profiles"
 msgstr "Perfis de Afixação"
 
-#: ../pan/gui/profiles-dialog.cc:460
+#: ../pan/gui/profiles-dialog.cc:456
 msgid "Profiles"
 msgstr "Perfis"
 
@@ -1506,243 +1687,331 @@ msgstr "Perfis"
 msgid "Couldn't parse %s color \"%s\""
 msgstr "Incapaz de processar a cor %s \"%s\""
 
-#: ../pan/gui/prefs-ui.cc:198
+#: ../pan/gui/prefs-ui.cc:204
 msgid "Use GNOME Preferences"
 msgstr "Utilizar as Preferências do GNOME"
 
-#: ../pan/gui/prefs-ui.cc:199
+#: ../pan/gui/prefs-ui.cc:205
 msgid "Use KDE Preferences"
 msgstr "Utilizar as Preferências do KDE"
 
-#: ../pan/gui/prefs-ui.cc:200
+#: ../pan/gui/prefs-ui.cc:206
 msgid "Use OS X Preferences"
 msgstr "Utilizar as Preferências do OS X"
 
-#: ../pan/gui/prefs-ui.cc:201
+#: ../pan/gui/prefs-ui.cc:207
 msgid "Use Windows Preferences"
 msgstr "Utilizar as Preferências do Windows"
 
-#: ../pan/gui/prefs-ui.cc:202
+#: ../pan/gui/prefs-ui.cc:208
 msgid "Custom Command:"
 msgstr "Comando Personalizado:"
 
-#: ../pan/gui/prefs-ui.cc:354
-msgid "Action"
-msgstr "Acção"
+#: ../pan/gui/prefs-ui.cc:259
+#, fuzzy
+msgid "Disabled"
+msgstr "Activo"
 
-#: ../pan/gui/prefs-ui.cc:360 ../pan/gui/task-pane.cc:478
+#: ../pan/gui/prefs-ui.cc:260
+msgid "Only new (Score == 0)"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:261
+#, fuzzy
+msgid "9999 or more"
+msgstr "Pontuação de 9999 ou superior:"
+
+#: ../pan/gui/prefs-ui.cc:262
+#, fuzzy
+msgid "5000 to 9998"
+msgstr "Pontuação entre 5000 e 9998:"
+
+#: ../pan/gui/prefs-ui.cc:263
+msgid "1 to 4999"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:264
+#, fuzzy
+msgid "-9998 to -1"
+msgstr "Pontuação entre -9998 e -1:"
+
+#: ../pan/gui/prefs-ui.cc:265
+#, fuzzy
+msgid "-9999 or less"
+msgstr "Pontuação de -9999 ou inferior:"
+
+#: ../pan/gui/prefs-ui.cc:410 ../pan/gui/task-pane.cc:478
 msgid "State"
 msgstr "Estado"
 
-#: ../pan/gui/prefs-ui.cc:394
+#: ../pan/gui/prefs-ui.cc:444
 msgid "Enabled"
 msgstr "Activo"
 
-#: ../pan/gui/prefs-ui.cc:398
+#: ../pan/gui/prefs-ui.cc:448
 msgid "Column Name"
 msgstr "Nome da Coluna"
 
-#: ../pan/gui/prefs-ui.cc:432
+#: ../pan/gui/prefs-ui.cc:482
 msgid "Pan: Preferences"
 msgstr "Pan: Preferências"
 
-#: ../pan/gui/prefs-ui.cc:444
+#: ../pan/gui/prefs-ui.cc:495
 msgid "Mouse"
 msgstr "Rato"
 
-#: ../pan/gui/prefs-ui.cc:446
+#: ../pan/gui/prefs-ui.cc:497
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Clique único activa, em vez de seleccionar, os _grupos"
 
-#: ../pan/gui/prefs-ui.cc:448
+#: ../pan/gui/prefs-ui.cc:499
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Clique único activa, em vez de seleccionar, os _artigos"
 
-#: ../pan/gui/prefs-ui.cc:451
+#: ../pan/gui/prefs-ui.cc:502
 msgid "Groups"
 msgstr "Grupos"
 
-#: ../pan/gui/prefs-ui.cc:453
+#: ../pan/gui/prefs-ui.cc:504
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Obter novos cabeçalhos nos grupos subscritos ao _iniciar"
 
-#: ../pan/gui/prefs-ui.cc:455
+#: ../pan/gui/prefs-ui.cc:506
 msgid "Get new headers when _entering group"
 msgstr "Obter os novos cabeçalhos ao _entrar num grupo"
 
-#: ../pan/gui/prefs-ui.cc:457
+#: ../pan/gui/prefs-ui.cc:508
 msgid "Mark entire group _read when leaving group"
 msgstr "Marcar todo o grupo como _lido ao sair de um grupo"
 
-#: ../pan/gui/prefs-ui.cc:459
+#: ../pan/gui/prefs-ui.cc:510
 msgid "Mark entire group read before getting _new headers"
 msgstr "Marcar todo o grupo como lido antes de obter _novos cabeçalhos"
 
-#: ../pan/gui/prefs-ui.cc:461
+#: ../pan/gui/prefs-ui.cc:512
 msgid "E_xpand all threads when entering group"
 msgstr "E_xpandir todas as árvores ao entrar num grupo"
 
-#: ../pan/gui/prefs-ui.cc:464
+#: ../pan/gui/prefs-ui.cc:515
 msgid "Articles"
 msgstr "Artigos"
 
-#: ../pan/gui/prefs-ui.cc:466
+#: ../pan/gui/prefs-ui.cc:517
 msgid "Space selects next article rather than next unread"
 msgstr "Espaço selecciona o artigo seguinte em vez do seguinte por ler"
 
-#: ../pan/gui/prefs-ui.cc:468
+#: ../pan/gui/prefs-ui.cc:519
 msgid "Smooth scrolling"
 msgstr "Rolamento suave"
 
-#: ../pan/gui/prefs-ui.cc:470
+#: ../pan/gui/prefs-ui.cc:521
 msgid "Clear article cache on shutdown"
 msgstr "Limpar a cache de artigos ao desligar"
 
-#: ../pan/gui/prefs-ui.cc:473
+#: ../pan/gui/prefs-ui.cc:524
+msgid "Size of Article Cache (in MiB). "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:529
+#, fuzzy
+msgid "Autosave Articles"
+msgstr "Gravar Artigos"
+
+#: ../pan/gui/prefs-ui.cc:531
+msgid "Minutes to autosave newsrc files."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:536
+#, fuzzy
+msgid "Autosave Article Draft"
+msgstr "Abrir o Rascunho de um Artigo"
+
+#: ../pan/gui/prefs-ui.cc:538
+msgid "Minutes to autosave the current Article Draft."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:543
 msgid "_Behavior"
 msgstr "_Comportamento"
 
-#: ../pan/gui/prefs-ui.cc:477
+#: ../pan/gui/prefs-ui.cc:548
 msgid "Pane Layout"
 msgstr "Disposição do Painel"
 
-#: ../pan/gui/prefs-ui.cc:496
+#: ../pan/gui/prefs-ui.cc:567
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=Grupos, 2=Cabeçalhos, 3=Artigo"
 
-#: ../pan/gui/prefs-ui.cc:498
+#: ../pan/gui/prefs-ui.cc:569
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=Grupos, 2=Artigo, 3=Cabeçalhos"
 
-#: ../pan/gui/prefs-ui.cc:500
+#: ../pan/gui/prefs-ui.cc:571
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=Cabeçalhos, 2=Grupos, 3=Artigo"
 
-#: ../pan/gui/prefs-ui.cc:502
+#: ../pan/gui/prefs-ui.cc:573
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=Cabeçalhos, 2=Artigo, 3=Grupos"
 
-#: ../pan/gui/prefs-ui.cc:504
+#: ../pan/gui/prefs-ui.cc:575
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=Artigo, 2=Grupos, 3=Cabeçalhos"
 
-#: ../pan/gui/prefs-ui.cc:506
+#: ../pan/gui/prefs-ui.cc:577
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=Artigo, 2=Cabeçalhos, 3=Grupos"
 
-#: ../pan/gui/prefs-ui.cc:513
+#: ../pan/gui/prefs-ui.cc:585
 msgid "Header Pane Columns"
 msgstr "Colunas do Painel de Cabeçalhos"
 
-#: ../pan/gui/prefs-ui.cc:517
+#: ../pan/gui/prefs-ui.cc:589
 msgid "_Headers"
 msgstr "Ca_beçalhos"
 
-#: ../pan/gui/prefs-ui.cc:521
+#: ../pan/gui/prefs-ui.cc:594
+msgid ""
+"This menu lets you configure Pan to take certain actions on your behalf "
+"automatically, based on a post's score."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:597
+msgid "_Delete Posts scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:599
+msgid "Mark Posts _read scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:601
+msgid "_Cache Posts scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:603
+msgid "Download _attachments of Posts scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:611
 msgid "Fonts"
 msgstr "Fontes"
 
-#: ../pan/gui/prefs-ui.cc:523
+#: ../pan/gui/prefs-ui.cc:613
 msgid "Use custom font in Group Pane:"
 msgstr "Utilizar fonte personalizada no Painel de Grupo:"
 
-#: ../pan/gui/prefs-ui.cc:528
+#: ../pan/gui/prefs-ui.cc:618
 msgid "Use custom font in Header Pane:"
 msgstr "Utilizar fonte personalizada no Painel de Cabeçalhos:"
 
-#: ../pan/gui/prefs-ui.cc:533
+#: ../pan/gui/prefs-ui.cc:623
 msgid "Use custom font in Body Pane:"
 msgstr "Utilizar fonte personalizada no Painel de Artigos:"
 
-#: ../pan/gui/prefs-ui.cc:538
+#: ../pan/gui/prefs-ui.cc:628
 msgid "Monospace font:"
 msgstr "Fonte monoespaçada:"
 
-#: ../pan/gui/prefs-ui.cc:542
+#: ../pan/gui/prefs-ui.cc:632
 msgid "_Fonts"
 msgstr "_Fontes"
 
-#: ../pan/gui/prefs-ui.cc:546
+#: ../pan/gui/prefs-ui.cc:637
 msgid "Header Pane"
 msgstr "Painel de Cabeçalhos"
 
-#: ../pan/gui/prefs-ui.cc:549 ../pan/gui/prefs-ui.cc:555
-#: ../pan/gui/prefs-ui.cc:561 ../pan/gui/prefs-ui.cc:567
-#: ../pan/gui/prefs-ui.cc:573
+#: ../pan/gui/prefs-ui.cc:640 ../pan/gui/prefs-ui.cc:646
+#: ../pan/gui/prefs-ui.cc:652 ../pan/gui/prefs-ui.cc:658
+#: ../pan/gui/prefs-ui.cc:664
 msgid "Text:"
 msgstr "Texto:"
 
-#: ../pan/gui/prefs-ui.cc:551 ../pan/gui/prefs-ui.cc:557
-#: ../pan/gui/prefs-ui.cc:563 ../pan/gui/prefs-ui.cc:569
-#: ../pan/gui/prefs-ui.cc:575
+#: ../pan/gui/prefs-ui.cc:642 ../pan/gui/prefs-ui.cc:648
+#: ../pan/gui/prefs-ui.cc:654 ../pan/gui/prefs-ui.cc:660
+#: ../pan/gui/prefs-ui.cc:666
 msgid "Background:"
 msgstr "Fundo:"
 
-#: ../pan/gui/prefs-ui.cc:553
+#: ../pan/gui/prefs-ui.cc:644
 msgid "Scores of 9999 or more:"
 msgstr "Pontuação de 9999 ou superior:"
 
-#: ../pan/gui/prefs-ui.cc:559
+#: ../pan/gui/prefs-ui.cc:650
 msgid "Scores from 5000 to 9998:"
 msgstr "Pontuação entre 5000 e 9998:"
 
-#: ../pan/gui/prefs-ui.cc:565
+#: ../pan/gui/prefs-ui.cc:656
 msgid "Scores from 1 to 4999:"
 msgstr "Pontuação entre 1 e 4999:"
 
-#: ../pan/gui/prefs-ui.cc:571
+#: ../pan/gui/prefs-ui.cc:662
 msgid "Scores from -9998 to -1:"
 msgstr "Pontuação entre -9998 e -1:"
 
-#: ../pan/gui/prefs-ui.cc:577
+#: ../pan/gui/prefs-ui.cc:668
 msgid "Scores of -9999 or less:"
 msgstr "Pontuação de -9999 ou inferior:"
 
-#: ../pan/gui/prefs-ui.cc:579
+#: ../pan/gui/prefs-ui.cc:670
 msgid "Body Pane"
 msgstr "Painel de Artigos"
 
-#: ../pan/gui/prefs-ui.cc:585
+#: ../pan/gui/prefs-ui.cc:676
 msgid "Quoted Text:"
 msgstr "Texto Citado:"
 
-#: ../pan/gui/prefs-ui.cc:586
+#: ../pan/gui/prefs-ui.cc:677
 msgid "URL:"
 msgstr "URL:"
 
-#: ../pan/gui/prefs-ui.cc:587
+#: ../pan/gui/prefs-ui.cc:678
 msgid "Signature:"
 msgstr "Assinatura:"
 
-#: ../pan/gui/prefs-ui.cc:589
+#: ../pan/gui/prefs-ui.cc:680
 msgid "_Colors"
 msgstr "_Cores"
 
-#: ../pan/gui/prefs-ui.cc:593
+#: ../pan/gui/prefs-ui.cc:685
 msgid "Preferred Applications"
 msgstr "Aplicações Preferidas"
 
-#: ../pan/gui/prefs-ui.cc:597
+#: ../pan/gui/prefs-ui.cc:689
 msgid "_Web Browser:"
 msgstr "Navegador _Web:"
 
-#: ../pan/gui/prefs-ui.cc:600
+#: ../pan/gui/prefs-ui.cc:692
 msgid "_Mail Reader:"
 msgstr "Leitor de _Correio:"
 
-#: ../pan/gui/prefs-ui.cc:602
+#: ../pan/gui/prefs-ui.cc:694
 msgid "_Text Editor:"
 msgstr "Editor de _Texto:"
 
-#: ../pan/gui/prefs-ui.cc:604
+#: ../pan/gui/prefs-ui.cc:696
 msgid "A_pplications"
 msgstr "A_plicações"
 
-#: ../pan/gui/save-ui.cc:58
-#, c-format
+#: ../pan/gui/prefs-ui.cc:701
+msgid "Encoding Options"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:705
+msgid "Default KB per File (for Encoder). "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:715
+#, fuzzy
+msgid "_Upload options"
+msgstr "A_plicações"
+
+#: ../pan/gui/save-ui.cc:77
+#, fuzzy, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - subject line excerpt\n"
+"%S - subject line\n"
 " \n"
 "\"/home/user/News/Pan/%g\" becomes\n"
 "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
@@ -1757,242 +2026,242 @@ msgstr ""
 "\"/home/user/News/Pan/%G\" torna-se em\n"
 "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 
-#: ../pan/gui/save-ui.cc:201
+#: ../pan/gui/save-ui.cc:231
 msgid "Save attachments"
 msgstr "Gravar anexos"
 
-#: ../pan/gui/save-ui.cc:202
+#: ../pan/gui/save-ui.cc:232
 msgid "Save text"
 msgstr "Gravar o texto"
 
-#: ../pan/gui/save-ui.cc:203
+#: ../pan/gui/save-ui.cc:233
 msgid "Save attachments and text"
 msgstr "Gravar os anexos e texto"
 
-#: ../pan/gui/save-ui.cc:210
+#: ../pan/gui/save-ui.cc:240
 msgid "Add to the queue sorted by date posted"
 msgstr "Adicionar à pilha ordenado por data de afixação"
 
-#: ../pan/gui/save-ui.cc:211
+#: ../pan/gui/save-ui.cc:241
 msgid "Add to the front of the queue"
 msgstr "Adicionar ao início da pilha"
 
-#: ../pan/gui/save-ui.cc:212
+#: ../pan/gui/save-ui.cc:242
 msgid "Add to the back of the queue"
 msgstr "Adicionar ao final da pilha"
 
-#: ../pan/gui/save-ui.cc:239
+#: ../pan/gui/save-ui.cc:269
 msgid "Pan: Save Articles"
 msgstr "Pan: Gravar Artigos"
 
-#: ../pan/gui/save-ui.cc:264 ../pan/gui/save-ui.cc:282
+#: ../pan/gui/save-ui.cc:294 ../pan/gui/save-ui.cc:312
 msgid "_Location:"
 msgstr "_Localização:"
 
-#: ../pan/gui/save-ui.cc:268
+#: ../pan/gui/save-ui.cc:298
 msgid "Save Articles"
 msgstr "Gravar Artigos"
 
-#: ../pan/gui/save-ui.cc:285
+#: ../pan/gui/save-ui.cc:315
 #, c-format
 msgid "_Group's path: %s"
 msgstr "Caminho do _grupo: %s"
 
-#: ../pan/gui/save-ui.cc:296
+#: ../pan/gui/save-ui.cc:326
 msgid "_Action:"
 msgstr "_Acção:"
 
-#: ../pan/gui/save-ui.cc:300
+#: ../pan/gui/save-ui.cc:330
 msgid "_Priority:"
 msgstr "_Prioridade:"
 
-#: ../pan/gui/score-add-ui.cc:92
+#: ../pan/gui/score-add-ui.cc:89
 msgid "is more than"
 msgstr "é maior do que"
 
-#: ../pan/gui/score-add-ui.cc:93
+#: ../pan/gui/score-add-ui.cc:90
 msgid "is at most"
 msgstr "é no máximo"
 
-#: ../pan/gui/score-add-ui.cc:115
+#: ../pan/gui/score-add-ui.cc:112
 msgid "increase the article's score by"
 msgstr "aumentar a pontuação do artigo por"
 
-#: ../pan/gui/score-add-ui.cc:116
+#: ../pan/gui/score-add-ui.cc:113
 msgid "decrease the article's score by"
 msgstr "reduzir a pontuação do artigo por"
 
-#: ../pan/gui/score-add-ui.cc:117
+#: ../pan/gui/score-add-ui.cc:114
 msgid "set the article's score to"
 msgstr "definir a pontuação do artigo em"
 
-#: ../pan/gui/score-add-ui.cc:118
+#: ../pan/gui/score-add-ui.cc:115
 msgid "watch the article (set its score to 9999)"
 msgstr "acompanhar o artigo (define a pontuação como 9999)"
 
-#: ../pan/gui/score-add-ui.cc:119
+#: ../pan/gui/score-add-ui.cc:116
 msgid "ignore the article (set its score to -9999)"
 msgstr "ignorar o artigo (define a pontuação como -9999)"
 
-#: ../pan/gui/score-add-ui.cc:144
+#: ../pan/gui/score-add-ui.cc:141
 msgid "References"
 msgstr "Referências"
 
-#: ../pan/gui/score-add-ui.cc:145
+#: ../pan/gui/score-add-ui.cc:142
 msgid "Line Count"
 msgstr "Número de Linhas"
 
-#: ../pan/gui/score-add-ui.cc:146
+#: ../pan/gui/score-add-ui.cc:143
 msgid "Byte Count"
 msgstr "Quantidade de Bytes"
 
-#: ../pan/gui/score-add-ui.cc:147
+#: ../pan/gui/score-add-ui.cc:144
 msgid "Crosspost Group Count"
 msgstr "Número de Afixagens Cruzadas"
 
-#: ../pan/gui/score-add-ui.cc:148
+#: ../pan/gui/score-add-ui.cc:145
 msgid "Age (in days)"
 msgstr "Idade (em dias)"
 
-#: ../pan/gui/score-add-ui.cc:170
+#: ../pan/gui/score-add-ui.cc:167
 msgid "for the next month"
 msgstr "para o próximo mês"
 
-#: ../pan/gui/score-add-ui.cc:171
+#: ../pan/gui/score-add-ui.cc:168
 msgid "for the next six months"
 msgstr "para os próximos seis meses"
 
-#: ../pan/gui/score-add-ui.cc:172
+#: ../pan/gui/score-add-ui.cc:169
 msgid "forever"
 msgstr "para sempre"
 
-#: ../pan/gui/score-add-ui.cc:197
+#: ../pan/gui/score-add-ui.cc:194
 msgid "contains"
 msgstr "contém"
 
-#: ../pan/gui/score-add-ui.cc:198
+#: ../pan/gui/score-add-ui.cc:195
 msgid "doesn't contain"
 msgstr "não contém"
 
-#: ../pan/gui/score-add-ui.cc:199
+#: ../pan/gui/score-add-ui.cc:196
 msgid "is"
 msgstr "é"
 
-#: ../pan/gui/score-add-ui.cc:200
+#: ../pan/gui/score-add-ui.cc:197
 msgid "isn't"
 msgstr "não é"
 
-#: ../pan/gui/score-add-ui.cc:201
+#: ../pan/gui/score-add-ui.cc:198
 msgid "starts with"
 msgstr "começa por"
 
-#: ../pan/gui/score-add-ui.cc:202
+#: ../pan/gui/score-add-ui.cc:199
 msgid "ends with"
 msgstr "termina em"
 
-#: ../pan/gui/score-add-ui.cc:203
+#: ../pan/gui/score-add-ui.cc:200
 msgid "matches regex"
 msgstr "respeita a expresão regular"
 
-#: ../pan/gui/score-add-ui.cc:484
+#: ../pan/gui/score-add-ui.cc:481
 msgid "Another rule already sets this article's score."
 msgstr "Outra regra já define a pontuação deste artigo."
 
-#: ../pan/gui/score-add-ui.cc:485
+#: ../pan/gui/score-add-ui.cc:482
 msgid "You may want to go back or delete the old rule."
 msgstr "Poderá desejar retroceder ou apagar a regra antiga."
 
-#: ../pan/gui/score-add-ui.cc:556
+#: ../pan/gui/score-add-ui.cc:553
 msgid "Add and Re_score"
 msgstr "Adicionar e _Repontuar"
 
-#: ../pan/gui/score-add-ui.cc:607 ../pan/gui/score-add-ui.cc:627
+#: ../pan/gui/score-add-ui.cc:604 ../pan/gui/score-add-ui.cc:624
 msgid "New Scoring Rule"
 msgstr "Nova Regra de Pontuação"
 
-#: ../pan/gui/score-add-ui.cc:638
+#: ../pan/gui/score-add-ui.cc:635
 msgid "If the group name"
 msgstr "Se o nome do grupo"
 
-#: ../pan/gui/score-add-ui.cc:645
+#: ../pan/gui/score-add-ui.cc:642
 msgid "And the article's"
 msgstr "E o ... do artigo"
 
-#: ../pan/gui/score-view-ui.cc:59
+#: ../pan/gui/score-view-ui.cc:56
 msgid "Close and Re_score"
 msgstr "Fechar e _Repontuar"
 
-#: ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/score-view-ui.cc:154
 #, c-format
 msgid "File %s, Lines %d - %d"
 msgstr "Ficheiro %s, Linha %d - %d"
 
-#: ../pan/gui/score-view-ui.cc:185
+#: ../pan/gui/score-view-ui.cc:182
 msgid "Pan: Article's Scores"
 msgstr "Pan: Pontuações dos Artigos"
 
-#: ../pan/gui/score-view-ui.cc:215
+#: ../pan/gui/score-view-ui.cc:208
 msgid "Add"
 msgstr "Adicionar"
 
-#: ../pan/gui/score-view-ui.cc:220
+#: ../pan/gui/score-view-ui.cc:213
 msgid "New Score"
 msgstr "Nova Pontuação"
 
-#: ../pan/gui/score-view-ui.cc:225
+#: ../pan/gui/score-view-ui.cc:218
 msgid "Criteria"
 msgstr "Critério"
 
-#: ../pan/gui/score-view-ui.cc:248
+#: ../pan/gui/score-view-ui.cc:241
 msgid "Add a New Scoring Rule"
 msgstr "Adicionar uma Nova Regra de Pontuação"
 
-#: ../pan/gui/score-view-ui.cc:255
+#: ../pan/gui/score-view-ui.cc:248
 msgid "Remove the Selected Scoring Rule"
 msgstr "Remover a Regra de Pontuação Seleccionada"
 
-#: ../pan/gui/server-ui.cc:163
+#: ../pan/gui/server-ui.cc:165
 msgid "Please specify the server's address."
 msgstr "Especifique o endereço do servidor."
 
 #. create the dialog
-#: ../pan/gui/server-ui.cc:202 ../pan/gui/server-ui.cc:548
+#: ../pan/gui/server-ui.cc:205 ../pan/gui/server-ui.cc:543
 msgid "Add a Server"
 msgstr "Adicionar um Servidor"
 
-#: ../pan/gui/server-ui.cc:202 ../pan/gui/server-ui.cc:558
+#: ../pan/gui/server-ui.cc:205 ../pan/gui/server-ui.cc:549
 msgid "Edit a Server's Settings"
 msgstr "Editar as Definições de um Servidor"
 
-#: ../pan/gui/server-ui.cc:227
+#: ../pan/gui/server-ui.cc:225
 msgid "Location"
 msgstr "Localização"
 
-#: ../pan/gui/server-ui.cc:231
+#: ../pan/gui/server-ui.cc:229
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr "O endereço real do servidor de notícias, por ex. \"news.servidor.pt\""
 
-#: ../pan/gui/server-ui.cc:232
+#: ../pan/gui/server-ui.cc:230
 msgid "_Address:"
 msgstr "_Endereço:"
 
-#: ../pan/gui/server-ui.cc:236
+#: ../pan/gui/server-ui.cc:234
 msgid "The news server's port number.  Typically 119."
 msgstr "O porto do servidor de notícias.  Normalmente é o 119."
 
-#: ../pan/gui/server-ui.cc:237
+#: ../pan/gui/server-ui.cc:235
 msgid "Por_t:"
 msgstr "Por_to:"
 
-#: ../pan/gui/server-ui.cc:240
+#: ../pan/gui/server-ui.cc:238
 msgid "Login (if Required)"
 msgstr "Iniciar Sessão (se Necessário)"
 
-#: ../pan/gui/server-ui.cc:244
+#: ../pan/gui/server-ui.cc:242
 msgid "_Username:"
 msgstr "_Utilizador:"
 
-#: ../pan/gui/server-ui.cc:245
+#: ../pan/gui/server-ui.cc:243
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2000,11 +2269,11 @@ msgstr ""
 "O utilizador a indicar ao servidor quando pedido. Se o seu servidor não "
 "requerer autenticação, pode deixar em branco."
 
-#: ../pan/gui/server-ui.cc:249
+#: ../pan/gui/server-ui.cc:247
 msgid "_Password:"
 msgstr "_Senha:"
 
-#: ../pan/gui/server-ui.cc:250
+#: ../pan/gui/server-ui.cc:248
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2012,11 +2281,11 @@ msgstr ""
 "A senha a indicar ao servidor quando pedido. Se o seu servidor não requerer "
 "autenticação, pode deixar em branco."
 
-#: ../pan/gui/server-ui.cc:253
+#: ../pan/gui/server-ui.cc:251
 msgid "Settings"
 msgstr "Definições"
 
-#: ../pan/gui/server-ui.cc:259
+#: ../pan/gui/server-ui.cc:258
 msgid "Connection _Limit:"
 msgstr "_Limite de Ligação:"
 
@@ -2048,19 +2317,19 @@ msgstr "Nunca Expirar Artigos Antigos"
 msgid "E_xpire Old Articles:"
 msgstr "E_xpirar Artigos Antigos:"
 
-#: ../pan/gui/server-ui.cc:284
+#: ../pan/gui/server-ui.cc:285
 msgid "Primary"
 msgstr "Primário"
 
-#: ../pan/gui/server-ui.cc:285
+#: ../pan/gui/server-ui.cc:286
 msgid "Fallback"
 msgstr "De Recurso"
 
-#: ../pan/gui/server-ui.cc:299
+#: ../pan/gui/server-ui.cc:300
 msgid "Server Rank:"
 msgstr "Nível do Servidor:"
 
-#: ../pan/gui/server-ui.cc:303
+#: ../pan/gui/server-ui.cc:304
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -2070,17 +2339,17 @@ msgstr ""
 "nos primários.  Uma metodologia comum é utilizar servidores gratuitos como "
 "primários e servidores por subscrição como de recurso."
 
-#: ../pan/gui/server-ui.cc:426
+#: ../pan/gui/server-ui.cc:425
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "Realmente apagar \"%s\"?"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:497 ../pan/gui/server-ui.cc:522
+#: ../pan/gui/server-ui.cc:496 ../pan/gui/server-ui.cc:517
 msgid "Servers"
 msgstr "Servidores"
 
-#: ../pan/gui/server-ui.cc:565
+#: ../pan/gui/server-ui.cc:556
 msgid "Remove a Server"
 msgstr "Remover um Servidor"
 
@@ -2113,27 +2382,37 @@ msgid "Decoding"
 msgstr "A Descodificar"
 
 #: ../pan/gui/task-pane.cc:319
+#, fuzzy
+msgid "Encoding"
+msgstr "A Descodificar"
+
+#: ../pan/gui/task-pane.cc:320
 msgid "Queued for Decode"
 msgstr "Em Fila na Descodificação"
 
-#: ../pan/gui/task-pane.cc:320
+#: ../pan/gui/task-pane.cc:321
+#, fuzzy
+msgid "Queued for Encode"
+msgstr "Em Fila na Descodificação"
+
+#: ../pan/gui/task-pane.cc:322
 msgid "Queued"
 msgstr "Em Fila"
 
-#: ../pan/gui/task-pane.cc:321
+#: ../pan/gui/task-pane.cc:323
 msgid "Stopped"
 msgstr "Parada"
 
-#: ../pan/gui/task-pane.cc:322
+#: ../pan/gui/task-pane.cc:324
 msgid "Removing"
 msgstr "A Remover"
 
-#: ../pan/gui/task-pane.cc:349
+#: ../pan/gui/task-pane.cc:351
 #, c-format
 msgid "%d%% Done"
 msgstr "%d%% Realizado"
 
-#: ../pan/gui/task-pane.cc:355
+#: ../pan/gui/task-pane.cc:357
 #, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%d:%02d:%02d Remanescente (%d @ %lu KiB/s)"
@@ -2168,17 +2447,17 @@ msgstr "Incapaz de gravar o ficheiro \"%s\": %s"
 msgid "Error initializing uulib"
 msgstr "Erro ao inicializar a uulib"
 
-#: ../pan/tasks/decoder.cc:146 ../pan/tasks/socket-impl-gio.cc:404
+#: ../pan/tasks/decoder.cc:147 ../pan/tasks/socket-impl-gio.cc:406
 #, c-format
 msgid "Error reading from %s: %s"
 msgstr "Erro ao ler de %s: %s"
 
-#: ../pan/tasks/decoder.cc:181
+#: ../pan/tasks/decoder.cc:182
 #, c-format
 msgid "Saved \"%s\""
 msgstr "\"%s\" Gravada"
 
-#: ../pan/tasks/decoder.cc:188
+#: ../pan/tasks/decoder.cc:189
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -2187,43 +2466,43 @@ msgstr ""
 "Erro ao gravar \"%s\":\n"
 "%s."
 
-#: ../pan/tasks/decoder.cc:303 ../pan/tasks/task-article.cc:315
+#: ../pan/tasks/decoder.cc:304 ../pan/tasks/task-article.cc:315
 #, c-format
 msgid "Decoding %s"
 msgstr "A Descodificar %s"
 
-#: ../pan/tasks/nntp.cc:170
+#: ../pan/tasks/nntp.cc:126
 #, c-format
 msgid "%s requires a username, but none is set."
 msgstr "%s requer um utilizador, mas nenhum está definido."
 
-#: ../pan/tasks/nntp.cc:183
+#: ../pan/tasks/nntp.cc:139
 #, c-format
 msgid "%s requires a password, but none is set."
 msgstr "%s requer uma senha, mas nenhuma está definida."
 
-#: ../pan/tasks/nntp.cc:242
+#: ../pan/tasks/nntp.cc:205
 #, c-format
 msgid "Sending \"%s\" to %s returned an error: %s"
 msgstr "Ao enviar \"%s\" para %s foi devolvido um erro: %s"
 
-#: ../pan/tasks/nntp.cc:266
+#: ../pan/tasks/nntp.cc:228
 #, c-format
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr ""
 "Ao enviar \"%s\" para %s foi devolvida uma resposta desconhecida: \"%s\""
 
-#: ../pan/tasks/nntp-pool.cc:205
+#: ../pan/tasks/nntp-pool.cc:206
 #, c-format
 msgid "Unable to connect to \"%s\""
 msgstr "Incapaz de se ligar a \"%s\""
 
-#: ../pan/tasks/socket-impl-gio.cc:224 ../pan/tasks/socket-impl-gio.cc:262
+#: ../pan/tasks/socket-impl-gio.cc:226 ../pan/tasks/socket-impl-gio.cc:264
 #, c-format
 msgid "Error connecting to \"%s\""
 msgstr "Erro ao se ligar a \"%s\""
 
-#: ../pan/tasks/socket-impl-gio.cc:403
+#: ../pan/tasks/socket-impl-gio.cc:405
 msgid "Unknown Error"
 msgstr "Erro Desconhecido"
 
@@ -2240,7 +2519,9 @@ msgstr "A Ler %s"
 #: ../pan/tasks/task-article.cc:287
 #, c-format
 msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
-msgstr "O artigo \"%s\" está incompleto -- o(s) servidor(es) de notícias não têm a parte %s"
+msgstr ""
+"O artigo \"%s\" está incompleto -- o(s) servidor(es) de notícias não têm a "
+"parte %s"
 
 #: ../pan/tasks/task-groups.cc:40
 #, c-format
@@ -2257,177 +2538,177 @@ msgstr "Obtidos %lu Grupos"
 msgid "Posting \"%s\""
 msgstr "A Afixar \"%s\""
 
-#: ../pan/tasks/task-xover.cc:71
+#: ../pan/tasks/task-xover.cc:79
 #, c-format
 msgid "Getting all headers for \"%s\""
 msgstr "A obter todos os cabeçalhos de \"%s\""
 
-#: ../pan/tasks/task-xover.cc:73
+#: ../pan/tasks/task-xover.cc:81
 #, c-format
 msgid "Getting new headers for \"%s\""
 msgstr "A obter os novos cabeçalhos de \"%s\""
 
 #. SAMPLE
-#: ../pan/tasks/task-xover.cc:75
+#: ../pan/tasks/task-xover.cc:83
 #, c-format
 msgid "Sampling headers for \"%s\""
 msgstr "A preparar as amostras de cabeçalhos de \"%s\""
 
-#: ../pan/tasks/task-xover.cc:325
+#: ../pan/tasks/task-xover.cc:366
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu partes, %lu artigos)"
 
-#: ../pan/usenet-utils/filter-info.cc:152
+#: ../pan/usenet-utils/filter-info.cc:163
 msgid "article doesn't have attachments"
 msgstr "artigo não possui anexos"
 
-#: ../pan/usenet-utils/filter-info.cc:156
+#: ../pan/usenet-utils/filter-info.cc:167
 msgid "the article has attachments"
 msgstr "o artigo possui anexos"
 
-#: ../pan/usenet-utils/filter-info.cc:160
+#: ../pan/usenet-utils/filter-info.cc:171
 msgid "the article isn't cached locally"
 msgstr "o artigo não está em cache local"
 
-#: ../pan/usenet-utils/filter-info.cc:164
+#: ../pan/usenet-utils/filter-info.cc:175
 msgid "the article is cached locally"
 msgstr "o artigo está em cache local"
 
-#: ../pan/usenet-utils/filter-info.cc:168
+#: ../pan/usenet-utils/filter-info.cc:179
 msgid "the article wasn't posted by you"
 msgstr "o artigo não foi afixado por si"
 
-#: ../pan/usenet-utils/filter-info.cc:172
+#: ../pan/usenet-utils/filter-info.cc:183
 msgid "the article was posted by you"
 msgstr "o artigo foi afixado por si"
 
-#: ../pan/usenet-utils/filter-info.cc:176
+#: ../pan/usenet-utils/filter-info.cc:187
 msgid "the article has been read"
 msgstr "o artigo foi lido"
 
-#: ../pan/usenet-utils/filter-info.cc:180
+#: ../pan/usenet-utils/filter-info.cc:191
 msgid "the article hasn't been read"
 msgstr "o artigo não foi lido"
 
-#: ../pan/usenet-utils/filter-info.cc:184
+#: ../pan/usenet-utils/filter-info.cc:195
 #, c-format
 msgid "the article is less than %ld bytes long"
 msgstr "o artigo tem menos de %ld bytes de tamanho"
 
-#: ../pan/usenet-utils/filter-info.cc:189
+#: ../pan/usenet-utils/filter-info.cc:200
 #, c-format
 msgid "the article is at least %ld bytes long"
 msgstr "o artigo tem pelo menos %ld bytes de tamanho"
 
-#: ../pan/usenet-utils/filter-info.cc:194
+#: ../pan/usenet-utils/filter-info.cc:205
 #, c-format
 msgid "the article is less than %ld lines long"
 msgstr "o artigo tem menos de %ld linhas de tamanho"
 
-#: ../pan/usenet-utils/filter-info.cc:199
+#: ../pan/usenet-utils/filter-info.cc:210
 #, c-format
 msgid "the article is at least %ld lines long"
 msgstr "o artigo tem pelo menos %ld linhas de tamanho"
 
-#: ../pan/usenet-utils/filter-info.cc:204
+#: ../pan/usenet-utils/filter-info.cc:215
 #, c-format
 msgid "the article is less than %ld days old"
 msgstr "o artigo tem menos de %ld dias de antiguidade"
 
-#: ../pan/usenet-utils/filter-info.cc:209
+#: ../pan/usenet-utils/filter-info.cc:220
 #, c-format
 msgid "the article is at least %ld days old"
 msgstr "o artigo tem pelo menos %ld dias de antiguidade"
 
-#: ../pan/usenet-utils/filter-info.cc:214
+#: ../pan/usenet-utils/filter-info.cc:225
 #, c-format
 msgid "the article was posted to less than %ld groups"
 msgstr "o artigo foi afixado em menos de %ld grupos"
 
-#: ../pan/usenet-utils/filter-info.cc:219
+#: ../pan/usenet-utils/filter-info.cc:230
 #, c-format
 msgid "the article was posted to at least %ld groups"
 msgstr "o artigo foi afixado em pelo menos %ld grupos"
 
-#: ../pan/usenet-utils/filter-info.cc:224
+#: ../pan/usenet-utils/filter-info.cc:235
 #, c-format
 msgid "the article's score is less than %ld"
 msgstr "a pontuação do artigo é de pelo menos %ld"
 
-#: ../pan/usenet-utils/filter-info.cc:229
+#: ../pan/usenet-utils/filter-info.cc:240
 #, c-format
 msgid "the article's score is %ld or higher"
 msgstr "a pontuação do artigo é %ld ou superior"
 
-#: ../pan/usenet-utils/filter-info.cc:238
-#: ../pan/usenet-utils/filter-info.cc:248
+#: ../pan/usenet-utils/filter-info.cc:249
+#: ../pan/usenet-utils/filter-info.cc:259
 #, c-format
 msgid "%s doesn't contain \"%s\""
 msgstr "%s não contém \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:239
-#: ../pan/usenet-utils/filter-info.cc:249
+#: ../pan/usenet-utils/filter-info.cc:250
+#: ../pan/usenet-utils/filter-info.cc:260
 #, c-format
 msgid "%s isn't \"%s\""
 msgstr "%s não é \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:240
-#: ../pan/usenet-utils/filter-info.cc:250
+#: ../pan/usenet-utils/filter-info.cc:251
+#: ../pan/usenet-utils/filter-info.cc:261
 #, c-format
 msgid "%s doesn't begin with \"%s\""
 msgstr "%s não começa por \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:241
-#: ../pan/usenet-utils/filter-info.cc:251
+#: ../pan/usenet-utils/filter-info.cc:252
+#: ../pan/usenet-utils/filter-info.cc:262
 #, c-format
 msgid "%s doesn't end with \"%s\""
 msgstr "%s não termina em \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:242
-#: ../pan/usenet-utils/filter-info.cc:252
+#: ../pan/usenet-utils/filter-info.cc:253
+#: ../pan/usenet-utils/filter-info.cc:263
 #, c-format
 msgid "%s doesn't match the regex \"%s\""
 msgstr "%s não respeita a expressão regular \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:264
+#: ../pan/usenet-utils/filter-info.cc:275
 #, c-format
 msgid "%s contains \"%s\""
 msgstr "%s contém \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:265
+#: ../pan/usenet-utils/filter-info.cc:276
 #, c-format
 msgid "%s is \"%s\""
 msgstr "%s é \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:266
+#: ../pan/usenet-utils/filter-info.cc:277
 #, c-format
 msgid "%s begins with \"%s\""
 msgstr "%s começa por \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:267
+#: ../pan/usenet-utils/filter-info.cc:278
 #, c-format
 msgid "%s ends with \"%s\""
 msgstr "%s termina em \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:268
+#: ../pan/usenet-utils/filter-info.cc:279
 #, c-format
 msgid "%s matches the regex \"%s\""
 msgstr "%s respeita a expressão regular \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:274
+#: ../pan/usenet-utils/filter-info.cc:285
 msgid "Any of these tests fail:"
 msgstr "Qualquer um destes testes falha:"
 
-#: ../pan/usenet-utils/filter-info.cc:281
+#: ../pan/usenet-utils/filter-info.cc:292
 msgid "All of these tests pass:"
 msgstr "Todos estes testes passam:"
 
-#: ../pan/usenet-utils/filter-info.cc:288
+#: ../pan/usenet-utils/filter-info.cc:299
 msgid "None of these tests pass:"
 msgstr "Nenhum destes testes passa:"
 
-#: ../pan/usenet-utils/filter-info.cc:295
+#: ../pan/usenet-utils/filter-info.cc:306
 msgid "Any of these tests pass:"
 msgstr "Qualquer um destes testes passa:"
 
@@ -2437,49 +2718,49 @@ msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr ""
 "Nenhum endereço de email indicado; a gerar id-mensagem com o domínio \"%s\""
 
-#: ../pan/usenet-utils/message-check.cc:123
+#: ../pan/usenet-utils/message-check.cc:124
 msgid "Warning: Reply seems to be top-posted."
 msgstr "Aviso: Resposta parece estar no início da mensagem."
 
-#: ../pan/usenet-utils/message-check.cc:144
+#: ../pan/usenet-utils/message-check.cc:145
 msgid "Warning: The signature marker should be \"-- \", not \"--\"."
 msgstr "Aviso: A marca de assinatura deveria ser \"-- \", não \"--\"."
 
-#: ../pan/usenet-utils/message-check.cc:161
+#: ../pan/usenet-utils/message-check.cc:162
 msgid "Warning: Signature prefix with no signature."
 msgstr "Aviso: Prefixo de assinatura sem assinatura."
 
-#: ../pan/usenet-utils/message-check.cc:166
+#: ../pan/usenet-utils/message-check.cc:167
 msgid "Warning: Signature is more than 4 lines long."
 msgstr "Aviso: Assinatura tem mais de 4 linhas de comprimento."
 
-#: ../pan/usenet-utils/message-check.cc:171
+#: ../pan/usenet-utils/message-check.cc:172
 msgid "Warning: Signature is more than 80 characters wide."
 msgstr "Aviso: Assinatura tem mais de 80 caracteres de largura."
 
-#: ../pan/usenet-utils/message-check.cc:196
+#: ../pan/usenet-utils/message-check.cc:197
 #, c-format
 msgid "Warning: %d lines are more than 80 characters wide."
 msgstr "Aviso: %d linhas têm mais do que 80 caracteres de largura."
 
-#: ../pan/usenet-utils/message-check.cc:219
+#: ../pan/usenet-utils/message-check.cc:220
 msgid "Error: Message is empty."
 msgstr "Erro: Mensagem está vazia."
 
-#: ../pan/usenet-utils/message-check.cc:254
+#: ../pan/usenet-utils/message-check.cc:255
 msgid "Warning: The message is entirely quoted text!"
 msgstr "Aviso: A mensagem é, na sua totalidade, texto citado!"
 
-#: ../pan/usenet-utils/message-check.cc:255
+#: ../pan/usenet-utils/message-check.cc:256
 msgid "Warning: The message is mostly quoted text."
 msgstr "Aviso: A mensagem é, na sua maioria, texto citado."
 
-#: ../pan/usenet-utils/message-check.cc:305
+#: ../pan/usenet-utils/message-check.cc:306
 msgid "Error: Message appears to have no new content."
 msgstr "Erro: Mensagem aparenta não ter conteúdo novo."
 
-#: ../pan/usenet-utils/message-check.cc:340
-#: ../pan/usenet-utils/message-check.cc:379
+#: ../pan/usenet-utils/message-check.cc:341
+#: ../pan/usenet-utils/message-check.cc:380
 #, c-format
 msgid ""
 "Warning: The posting profile's server doesn't carry newsgroup\n"
@@ -2492,40 +2773,40 @@ msgstr ""
 "\tSe o nome do grupo estiver correcto, altere o perfil na linha\n"
 "\"De:\" ou edite o perfil em \"Editar|Gerir Perfis de Afixação\"."
 
-#: ../pan/usenet-utils/message-check.cc:351
+#: ../pan/usenet-utils/message-check.cc:352
 msgid "Warning: Following-Up to too many groups."
 msgstr "Aviso: A DarSeguimento-Para demasiados grupos."
 
-#: ../pan/usenet-utils/message-check.cc:362
+#: ../pan/usenet-utils/message-check.cc:363
 msgid "Error: No Subject specified."
 msgstr "Erro: Nenhum Assunto especificado."
 
-#: ../pan/usenet-utils/message-check.cc:391
+#: ../pan/usenet-utils/message-check.cc:392
 #, c-format
 msgid "Warning: Group \"%s\" is read-only."
 msgstr "Aviso: Grupo \"%s\" é apenas de leitura."
 
-#: ../pan/usenet-utils/message-check.cc:400
+#: ../pan/usenet-utils/message-check.cc:401
 msgid "Error: Posting to a very large number of groups."
 msgstr "Erro: A afixar num número muito grande de grupos."
 
-#: ../pan/usenet-utils/message-check.cc:405
+#: ../pan/usenet-utils/message-check.cc:406
 msgid "Warning: Posting to a large number of groups."
 msgstr "Aviso: A afixar num número grande de grupos."
 
-#: ../pan/usenet-utils/message-check.cc:412
+#: ../pan/usenet-utils/message-check.cc:413
 msgid "Warning: Crossposting without setting Followup-To header."
 msgstr "Aviso: Mensagens cruzadas sem definir cabeçalho DarSeguimento-Para."
 
-#: ../pan/usenet-utils/message-check.cc:436
+#: ../pan/usenet-utils/message-check.cc:437
 msgid "Error: Bad email address."
 msgstr "Erro: endereço de email inválido."
 
-#: ../pan/usenet-utils/message-check.cc:445
+#: ../pan/usenet-utils/message-check.cc:446
 msgid "Warning: Most newsgroups frown upon HTML posts."
 msgstr "Aviso: Mensagens em HTML desagradam à maioria dos grupos de notícias."
 
-#: ../pan/usenet-utils/message-check.cc:475
+#: ../pan/usenet-utils/message-check.cc:482
 msgid "Error: No Recipients."
 msgstr "Erro: Nenhum Destinatário."
 
@@ -2553,7 +2834,22 @@ msgstr "Erro ao ler a pontuação em %*.*s, linha %d: linha inesperada."
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr "Ler %lu regras de pontuação em %lu secções de \"%s\""
 
-#: ../pan/usenet-utils/text-massager.cc:309
+#: ../pan/usenet-utils/text-massager.cc:398
 msgid "> [quoted text muted]"
 msgstr "> [texto citado alterado]"
 
+#~ msgid "Creating directory \"%s\""
+#~ msgstr "A criar o directório \"%s\""
+
+#~ msgid "Couldn't create directory \"%s\": %s"
+#~ msgstr "Incapaz de criar o directório \"%s\": %s"
+
+#~ msgid ""
+#~ "Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions "
+#~ "may fail."
+#~ msgstr ""
+#~ "A sua cópia da libpcre não suporta UTF-8. Expressões regulares UTF-8 "
+#~ "poderão falhar."
+
+#~ msgid "Can't use regular expression \"%s\": %s at position %d"
+#~ msgstr "Incapaz de utilizar a expressão regular \"%s\": %s na posição %d"

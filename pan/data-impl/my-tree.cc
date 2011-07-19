@@ -441,14 +441,16 @@ DataImpl :: MyTree :: accumulate_descendants (unique_nodes_t& descendants,
 void
 DataImpl :: MyTree :: articles_changed (const quarks_t& mids, bool do_refilter)
 {
+  const_nodes_v nodes;
+  _data.find_nodes (mids, _data.get_group_headers(_group)->_nodes, nodes);
+  apply_rules (nodes);
 
   if (do_refilter)
   {
-    const_nodes_v nodes;
-    _data.find_nodes (mids, _data.get_group_headers(_group)->_nodes, nodes);
-    apply_rules (nodes);
+
      // refilter... this may cause articles to be shown or hidden
     apply_filter (nodes);
+
   }
 
 
@@ -469,8 +471,9 @@ DataImpl :: MyTree :: add_articles (const quarks_t& mids)
 {
   const_nodes_v nodes;
   _data.find_nodes (mids, _data.get_group_headers(_group)->_nodes, nodes);
-  apply_rules (nodes);
   apply_filter (nodes);
+  apply_rules (nodes);
+
 
 }
 
