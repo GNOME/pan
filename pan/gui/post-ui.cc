@@ -86,8 +86,8 @@ PostUI :: generate_unique_id (StringView& mid, int cnt, std::string& s)
   // delimit
   out<< '@';
   // add domain
-  out << mid;
-  //std::cerr << "rng : "<<out.str()<<std::endl;
+  out << (mid.empty() ? "nospam.com" : mid);
+//  std::cerr << "rng : "<<out.str()<<std::endl;
   s = out.str();
 }
 
@@ -928,7 +928,6 @@ void
 PostUI :: on_progress_finished (Progress&, int status) // posting finished
 {
 
-  std::cerr<<"status "<<status<<std::endl;
   if (status==-1) { --_running_uploads; return; }
 
   if (_file_queue_empty)
@@ -1079,13 +1078,12 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     int cnt(0);
     char buf[2048];
     struct stat sb;
-    _running_uploads = tasks.size();
+    _running_uploads = tasks.size()+1;
 
-    // generate domain name for upload if the flag is set
-    bool custom_mid(_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false));
+    // generate domain name for upload if the flag is set / a save-file is set
+    bool custom_mid(_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false) || !_save_file.empty());
     std::string d;
-    if (custom_mid)
-      d = !profile.fqdn.empty()
+    d = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
     StringView d2(d);
@@ -1099,7 +1097,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     std::string last_mid;
     std::string first_mid;
 
-    // dummy taskupload for master article without attachment, dbg!!
+    // master article, other attach
     const Profile profile (get_current_profile ());
     std::string out;
     generate_unique_id(domain, 1,out);
@@ -1127,7 +1125,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
       // generate domain for rng numbers
       int total = get_total_parts(t->_filename.c_str());
-      std::cerr<<"total of "<<t->_filename<<" : "<<total<<std::endl;
 
       foreach (std::set<int>, t->_wanted, pit)
       {
@@ -1136,6 +1133,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
             std::string out;
             generate_unique_id(domain, *pit,out);
             n.mid = out;
+            std::cerr<<"rng "<<out<<std::endl;
             if (first_mid.empty()) first_mid = out;
         }
 
@@ -3075,7 +3073,6 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
           struct stat sb;
           // yEnc encoding is the default, user can change that with popup-menu
           ui.total = get_total_parts((const char*)cur->data);
-          std::cerr<<"ui total "<<ui.total<<" "<<(const char*)cur->data<<" "<<get_total_parts((const char*)cur->data)<<std::endl;
           TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
                             profile.posting_server, _cache,
                             a, ui, msg ,0, TaskUpload::YENC, TaskUpload::BULK );
