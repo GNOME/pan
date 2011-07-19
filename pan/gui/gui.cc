@@ -1078,6 +1078,7 @@ void GUI :: prefs_dialog_destroyed (GtkWidget *)
     _prefs._rules_changed = !_prefs._rules_changed;
     _header_pane->rules(_prefs._rules_enabled);
   }
+  _cache.set_max_megs(_prefs.get_int("cache-size-megs",10));
 
 }
 

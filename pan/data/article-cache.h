@@ -86,6 +86,9 @@ namespace pan
       void add_listener (Listener * l) { _listeners.insert(l); }
       void remove_listener (Listener * l) { _listeners.erase(l); }
 
+    public:
+      void set_max_megs (size_t value) { _max_megs = value; }
+
     private:
 
       std::map<Quark,int> _locks;
@@ -109,7 +112,7 @@ namespace pan
       };
 
       std::string _path;
-      const size_t _max_megs;
+      size_t _max_megs; // changeable via prefs
       guint64 _current_bytes;
 
       typedef std::set<Listener*> listeners_t;
