@@ -150,6 +150,7 @@ Encoder :: do_work()
         continue;
       }
 
+//      std::cerr<<"encode "<<kbpf*1024<<" bytes, "<<kbpf<<" kb \n";
       res = UUEncodePartial_byFSize (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), 0, 0, cnt, kbpf*1024 ,&crc);
 
       if (fp) fclose(fp);

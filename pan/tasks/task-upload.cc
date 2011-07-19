@@ -188,9 +188,9 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
 
     //modify references header
     std::string mids(_references);
-    mids += " <" + _first_mid + "> ";
-    if (_first_mid != n->last_mid && !_first)  mids += "<" + n->last_mid + ">";
-    g_mime_object_set_header ((GMimeObject *) msg, "References", mids.c_str());
+    if (!_first_mid.empty()) mids += " <" + _first_mid + "> ";
+    if (_first_mid != n->last_mid && !_first && !n->last_mid.empty())  mids += "<" + n->last_mid + ">";
+    if (!mids.empty()) g_mime_object_set_header ((GMimeObject *) msg, "References", mids.c_str());
 
     char * all;
     if (_first && _queue_pos==-1)
@@ -201,15 +201,10 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
     out << d;
     d = out.str();
 
-    if (_first && _queue_pos==0) g_free(all);
+    if (_first && _queue_pos==-1) g_free(all);
     if (_first) _first = !_first;
 }
 
-GMimeObject *
-TaskUpload :: get_body(Needed* n)
-{
-  return 0;
-}
 
 void
 TaskUpload :: use_nntp (NNTP * nntp)
@@ -234,10 +229,13 @@ TaskUpload :: use_nntp (NNTP * nntp)
   {
     needed->nntp = nntp;
 
-    set_status_va (_("Uploading %s - Part %d of %d"), _basename.c_str(), needed->partno, _total_parts);
+    if (_queue_pos != -1)
+      set_status_va (_("Uploading %s - Part %d of %d"), _basename.c_str(), needed->partno, _total_parts);
+    else
+      set_status_va (_("Uploading %s - Part %d of %d"), _basename.c_str(), 1, _total_parts);
 
     std::string data;
-    _cache.get_data(data,needed->message_id.c_str());
+    if (_queue_pos != -1) _cache.get_data(data,needed->message_id.c_str());
     prepend_headers(_msg,needed, data);
     nntp->post(StringView(data), this);
 
@@ -266,22 +264,23 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   bool found(false);
   bool post_ok(false);
 
+  if (!nntp ) std::cerr<<"nntp error!\n";
+
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
     if (it->second.nntp == nntp) {
-      found=true;
+      found = true;
       break;
     }
 
-  if (!found) return;
+  if (!found) goto _end;
 
   if (_queue_pos == -1) { _needed.erase(it); goto _end; }
 
   switch (health)
   {
     case OK:
-      std::cerr<<"OK "<<_queue_pos<<std::endl;
-      increment_step(it->second.bytes);
+      increment_step(it->second.bytes); /// DBG
       _needed.erase (it);
       post_ok = true;
       break;

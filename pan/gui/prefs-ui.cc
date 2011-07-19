@@ -696,7 +696,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_add_section_spacer (t, row, 4);
   // 16 MiB blocks max, 512 kb min
   w = new_spin_button ("upload-option-kbpf", 512, 1024*16, prefs);
-  l = gtk_label_new(_("Default KB per File (for Encoder)"));
+  l = gtk_label_new(_("Default KB per File (for Encoder). "));
   gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
   HIG::workarea_add_row (t, &row, w, l);
 

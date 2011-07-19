@@ -196,7 +196,6 @@ namespace pan
       std::set<int> _wanted;
       GMimeMessage * _msg;
       void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d);
-      GMimeObject * get_body(Needed* n);
       void add_reference_to_list(std::string s);
       bool _first;
   };

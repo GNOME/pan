@@ -56,10 +56,12 @@ Progress :: fire_status (const StringView& msg) {
 }
 void
 Progress :: add_listener (Listener * l) {
+   if (!l) return;
    _listeners.insert (l);
 }
 void
 Progress :: remove_listener (Listener * l) {
+   if (!l) return;
    _listeners.erase (l);
 }
 
