@@ -58,7 +58,7 @@ namespace pan
             NEED_ENCODER,
             /** Task is running */
             WORKING,
-
+            /** Task is paused, woken up if 'current_connections < max_connections' */
             PAUSED
          };
 

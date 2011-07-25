@@ -495,7 +495,7 @@ UUEncodeStream (FILE *outfile, FILE *infile, int encoding, long linperfile, crc3
               switch ((char) ((int) itemp[index] + 42))
                 {
                 case '\0':
-                case '\t':
+//                case '\t':  yEnc 1.3 draft
                 case '\n':
                 case '\r':
                 case '=':
@@ -883,7 +883,7 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
     long rest = bpf;
     long current = 0;
 
-    while (!feof (infile) && rest > 0)
+    while (rest > 0)
     {
       current = rest > 128 ? 128 : rest;
 
@@ -897,9 +897,8 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
         {
           return UURET_IOERR;
         }
-      }
 
-      rest -= count;
+      }
 
       if (pcrc)
         *pcrc = crc32(*pcrc, itemp, count);
@@ -933,16 +932,18 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
               optr = otemp;
             }
 
-          switch ((char) ((int) itemp[index] + 42))
+          char tmp = (char) ((int) itemp[index] + 42);
+
+          switch (tmp)
             {
             case '\0':
-            case '\t':
+//          case '\t':  yEnc 1.3 draft
             case '\n':
             case '\r':
             case '=':
             case '\033':
               *optr++ = '=';
-              *optr++ = (char) ((int) itemp[index] + 42 + 64);
+              *optr++ = tmp + 64;
               llen += 2;
               break;
 
@@ -950,23 +951,21 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
               if (llen == 0)
                 {
                   *optr++ = '=';
-                  *optr++ = (char) ((int) itemp[index] + 42 + 64);
+                  *optr++ =  tmp + 64;
                   llen += 2;
-                }
-              else
-                {
-                  *optr++ = (char) ((int) itemp[index] + 42);
-                  llen++;
-                }
-              break;
+                  break;
+              }
 
             default:
-              *optr++ = (char) ((int) itemp[index] + 42);
+              *optr++ = tmp;
               llen++;
               break;
             }
         }
+
+        rest -= count;
     }
+
 
     /*
      * write last line

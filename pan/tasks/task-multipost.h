@@ -57,13 +57,24 @@ namespace pan
 
       typedef std::vector<Quark> mid_sequence_t;
 
-      typedef std::map<int, TaskUpload::Needed> needed_t;
+      struct Needed {
+        unsigned long bytes;
+        int partno;
+        NNTP* nntp;
+        std::string message_id;
+        std::string cachename;
+        Xref xref;
+        Needed (): nntp(0), bytes(0) , partno(1) {}
+        void reset() { nntp = 0; }
+      };
+
+      typedef std::map<int, TaskMultiPost::Needed> needed_t;
 
       // life cycle
-      TaskMultiPost ( const std::string         & filename,
+      TaskMultiPost ( quarks_t                  & filenames,
                       const Quark               & server,
                       Article                     article,
-                      GMimeMessage *              msg,
+                      GMimeMultipart *              msg,
                       Progress::Listener        * listener= 0);
 
       virtual ~TaskMultiPost ();
@@ -71,7 +82,6 @@ namespace pan
     public: // Task subclass
       unsigned long get_bytes_remaining () const;
       void stop ();
-      const std::string& get_basename()  { return  _basename; }
 
       /** only call this for tasks in the NEED_ENCODE state
        * attempts to acquire the encoder thread and start encoding
@@ -92,19 +102,22 @@ namespace pan
 
     private: // implementation
       friend class PostUI;
-      friend class Queue;
+      friend class UploadQueue;
 
-      std::string _filename;
+      quarks_t _filenames;
       std::string _basename;
       std::string _subject, _master_subject, _author;
       std::string _save_file;
-      int _total_parts, _needed_parts;
       unsigned long _bytes;
       Article _article;
       unsigned long _all_bytes;
+      std::string mid;
+
+
+      void dbg() ;
 
       Article::mid_sequence_t _mids;
-      TaskUpload::needed_t _needed;
+      TaskMultiPost::needed_t _needed;
 
       void update_work (NNTP * checkin_pending = 0);
 
@@ -114,7 +127,8 @@ namespace pan
 
     private:
       std::set<int> _wanted;
-      GMimeMessage * _msg;
+      GMimeMultipart * _msg;
+      long _files_left;
 
   };
 }

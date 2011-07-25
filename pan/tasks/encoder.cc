@@ -66,7 +66,7 @@ Encoder :: enqueue (TaskUpload                      * task,
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & subject,
-                    int                               kbpf,
+                    int                               bpf,
                     const TaskUpload::EncodeMode      enc)
 
 {
@@ -79,7 +79,7 @@ Encoder :: enqueue (TaskUpload                      * task,
   this->needed = &task->_needed;
   this->cache = cache;
   this->article = article;
-  this->kbpf = kbpf;
+  this->bpf = bpf;
   this->subject = subject;
 
   percent = 0;
@@ -89,6 +89,29 @@ Encoder :: enqueue (TaskUpload                      * task,
 
   // gentlemen, start your encod'n...
   _worker_pool.push_work (this, task, false);
+}
+
+bool
+Encoder :: write_file (const char *fn)
+{
+
+  char buf[2048];
+
+  FILE * fp = cache->get_fp_from_mid(fn);
+  if (!fp)
+  {
+    g_snprintf(buf, sizeof(buf), _("Error loading %s from cache."), fn);
+    log_errors.push_back(buf); // log error
+    return false;
+  }
+
+  // write data from file on hdd to cache directory (plain copy)
+  char c[2048];
+  std::ifstream in(filename.c_str(), std::ios::in);
+  while (in.getline(c,2048))
+    fwrite (c, strlen(c), sizeof (char), fp);
+
+  return true;
 }
 
 void
@@ -114,7 +137,7 @@ Encoder :: do_work()
     log_errors.push_back(_("Error initializing uulib")); // log error
   } else {
     UUSetMsgCallback (this, uu_log);
-    UUSetBusyCallback (this, uu_busy_poll, 200);
+    UUSetBusyCallback (this, uu_busy_poll, 90);
 
     /* build real subject line for article*/
     tmp->subject = subject;
@@ -134,9 +157,6 @@ Encoder :: do_work()
           case TaskUpload::PLAIN:
               enc = PT_ENCODED;
               break;
-          case TaskUpload::BASE64:
-              enc = B64ENCODED;
-              break;
           default:
               enc = YENC_ENCODED;
               break;
@@ -150,8 +170,7 @@ Encoder :: do_work()
         continue;
       }
 
-//      std::cerr<<"encode "<<kbpf*1024<<" bytes, "<<kbpf<<" kb \n";
-      res = UUEncodePartial_byFSize (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), 0, 0, cnt, kbpf*1024 ,&crc);
+      res = UUEncodePartial_byFSize (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), 0, 0, cnt, bpf ,&crc);
 
       if (fp) fclose(fp);
 _no_encode:

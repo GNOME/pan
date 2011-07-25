@@ -38,23 +38,10 @@ UploadQueue :: UploadQueue ()
 }
 
 UploadQueue :: ~UploadQueue ()
-{
-
-  //deletion is done by main queue in PostUI.
-
-//  const tasks_t tmp (_tasks.begin(), _tasks.end());
-//  foreach_const (tasks_t, tmp, it) {
-//    TaskUpload * task  (*it);
-//    remove_task (task);
-//  }
-//
-//  foreach (TaskSet, _tasks, it)
-//    delete *it;
-//
-}
+{}
 
 void
-UploadQueue :: get_all_tasks (tasks_t& setme)
+UploadQueue :: get_all_tasks (std::vector<Task*>& setme)
 {
   setme.clear();
   setme.reserve(_tasks.size());
@@ -68,7 +55,7 @@ UploadQueue :: clear()
 {
   const tasks_t tmp (_tasks.begin(), _tasks.end());
   foreach_const (tasks_t, tmp, it) {
-    TaskUpload * task  (*it);
+    Task * task  (*it);
     remove_task (task);
   }
 
@@ -77,7 +64,7 @@ UploadQueue :: clear()
 }
 
 void
-UploadQueue :: add_task (TaskUpload * task, AddMode mode)
+UploadQueue :: add_task (Task * task, AddMode mode)
 {
   tasks_t tasks;
   tasks.push_back (task);
@@ -103,7 +90,7 @@ UploadQueue :: remove_tasks (const tasks_t& tasks)
 }
 
 void
-UploadQueue :: remove_task (TaskUpload * task)
+UploadQueue :: remove_task (Task * task)
 {
   const int index (_tasks.index_of (task));
   pan_return_if_fail (index != -1);
@@ -115,7 +102,7 @@ void
 UploadQueue :: move_up (const tasks_t& tasks)
 {
   foreach_const (tasks_t, tasks, it) {
-    TaskUpload * task (*it);
+    Task * task (*it);
     const int old_pos (_tasks.index_of (task));
     _tasks.move_up (old_pos);
   }
@@ -125,7 +112,7 @@ void
 UploadQueue :: move_down (const tasks_t& tasks)
 {
   foreach_const_r (tasks_t, tasks, it) {
-    TaskUpload * task (*it);
+    Task * task (*it);
     const int old_pos (_tasks.index_of (task));
     _tasks.move_down (old_pos);
   }
@@ -135,7 +122,7 @@ void
 UploadQueue :: move_top (const tasks_t& tasks)
 {
   foreach_const_r (tasks_t, tasks, it) {
-    TaskUpload * task (*it);
+    Task * task (*it);
     const int old_pos (_tasks.index_of (task));
     _tasks.move_top (old_pos);
   }
@@ -145,7 +132,7 @@ void
 UploadQueue :: move_bottom (const tasks_t& tasks)
 {
   foreach_const (tasks_t, tasks, it) {
-    TaskUpload * task (*it);
+    Task * task (*it);
     const int old_pos (_tasks.index_of (task));
     _tasks.move_bottom (old_pos);
   }
@@ -153,12 +140,7 @@ UploadQueue :: move_bottom (const tasks_t& tasks)
 
 void
 UploadQueue :: select_encode (const tasks_t& tasks)
-{
-//  foreach_const (tasks_t, tasks, it) {
-//    TaskUpload * task (*it);
-//
-//  }
-}
+{}
 
 void
 UploadQueue :: fire_tasks_added (int pos, int count)
@@ -167,13 +149,13 @@ UploadQueue :: fire_tasks_added (int pos, int count)
     (*it++)->on_queue_tasks_added (*this, pos, count);
 }
 void
-UploadQueue :: fire_task_removed (TaskUpload*& task, int pos)
+UploadQueue :: fire_task_removed (Task*& task, int pos)
 {
   for (lit it(_listeners.begin()), end(_listeners.end()); it!=end; )
     (*it++)->on_queue_task_removed (*this, *task, pos);
 }
 void
-UploadQueue :: fire_task_moved (TaskUpload*& task, int new_pos, int old_pos)
+UploadQueue :: fire_task_moved (Task*& task, int new_pos, int old_pos)
 {
   for (lit it(_listeners.begin()), end(_listeners.end()); it!=end; )
     (*it++)->on_queue_task_moved (*this, *task, new_pos, old_pos);
@@ -186,13 +168,13 @@ UploadQueue :: on_set_items_added (TaskSet& container UNUSED, TaskSet::items_t& 
 }
 
 void
-UploadQueue :: on_set_item_removed (TaskSet& container UNUSED, TaskUpload*& task, int pos)
+UploadQueue :: on_set_item_removed (TaskSet& container UNUSED, Task*& task, int pos)
 {
   fire_task_removed (task, pos);
 }
 
 void
-UploadQueue :: on_set_item_moved (TaskSet& container UNUSED, TaskUpload*& task, int new_pos, int old_pos)
+UploadQueue :: on_set_item_moved (TaskSet& container UNUSED, Task*& task, int new_pos, int old_pos)
 {
   fire_task_moved (task, new_pos, old_pos);
 }

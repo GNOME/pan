@@ -32,7 +32,7 @@ void
 RulesFilter :: finalize (Data& data)
 {
 
-  std::cerr<<"finalize "<<_delete.size()<<std::endl;
+//  std::cerr<<"finalize "<<_delete.size()<<std::endl;
 
   data.delete_articles (_delete);
   _delete.clear();

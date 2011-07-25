@@ -19,6 +19,9 @@ const char * fallback_post_ui =
 "      <menuitem action='set-charset' />\n"
 "      <menuitem action='remember-charset' />\n"
 "      <separator />\n"
+"      <menuitem action='inline-or-bulk' />\n"
+"      <menuitem action='master-reply' />\n"
+"      <separator />\n"
 "      <menuitem action='run-editor' />\n"
 "      <menuitem action='always-run-editor' />\n"
 "      <separator />\n"
@@ -59,7 +62,7 @@ const char * fallback_post_ui =
 "    <separator />\n"
 "    <menuitem action='yenc' />\n"
 "    <menuitem action='plain' />\n"
-"    <menuitem action='base64' />\n"
+"    <separator />\n"
 "  </popup>\n"
 "\n"
 "</ui>\n";

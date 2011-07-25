@@ -61,7 +61,7 @@ namespace pan
       {
         std::string  save_file;
         std::string  mid;
-        int kbpf;
+        int bpf;
         int total;
       };
 
@@ -85,15 +85,8 @@ namespace pan
 
       enum EncodeMode
       {
-        BASE64=0,
-        PLAIN=1,
-        YENC=2,
-      };
-
-      enum AttachMode
-      {
-        BULK,
-        INLINE
+        PLAIN,
+        YENC
       };
 
       // life cycle
@@ -104,8 +97,7 @@ namespace pan
                    UploadInfo                  format,
                    GMimeMessage *              msg=0,
                    Progress::Listener        * listener= 0,
-                   const EncodeMode enc= YENC,
-                   const AttachMode att= BULK);
+                   const EncodeMode enc= YENC);
 
       virtual ~TaskUpload ();
 
@@ -120,9 +112,6 @@ namespace pan
         {
             case YENC:
               res += "yEnc";
-              break;
-            case BASE64:
-              res += "BASE64";
               break;
             case PLAIN:
               break;
@@ -167,7 +156,6 @@ namespace pan
       std::string _filename;
       std::string _basename;
       EncodeMode _encode_mode;
-      AttachMode _att_mode;
       std::string _subject, _master_subject, _author;
       std::string _save_file;
       int _total_parts, _needed_parts;
@@ -179,7 +167,7 @@ namespace pan
       std::vector<Article*> _upload_list;
       Article::mid_sequence_t _mids;
       int _queue_pos;
-      int _kbpf;
+      int _bpf;
       needed_t _needed;
       std::string _references; // original references, not to be touched!
       std::string _first_mid;

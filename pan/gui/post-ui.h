@@ -25,6 +25,7 @@
 #include <pan/general/progress.h>
 #include <pan/tasks/queue.h>
 #include <pan/tasks/upload-queue.h>
+#include <pan/tasks/task-multipost.h>
 #include <pan/usenet-utils/text-massager.h>
 #include <pan/data/encode-cache.h>
 #include "group-prefs.h"
@@ -47,7 +48,9 @@ namespace pan
   {
     public:
 
-      typedef std::vector<TaskUpload*> tasks_t;
+      typedef std::vector<Task*> tasks_t;
+      typedef std::vector<TaskUpload*> bulk_tasks_t;
+      typedef std::vector<TaskMultiPost*> inline_tasks_t;
 
       static PostUI* create_window (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
                                     GMimeMessage*, Prefs&, GroupPrefs&, EncodeCache&);
@@ -167,15 +170,16 @@ namespace pan
     private:
       friend class UploadQueue;
       virtual void on_queue_tasks_added (UploadQueue&, int index, int count);
-      virtual void on_queue_task_removed (UploadQueue&, TaskUpload&, int index);
-      virtual void on_queue_task_moved (UploadQueue&, TaskUpload&, int new_index, int old_index);
+      virtual void on_queue_task_removed (UploadQueue&, Task&, int index);
+      virtual void on_queue_task_moved (UploadQueue&, Task&, int new_index, int old_index);
 
     private:
       void add_actions (GtkWidget* box);
       void apply_profile_to_body ();
       void apply_profile_to_headers ();
-      enum Mode { DRAFTING, POSTING, UPLOADING };
+      enum Mode { DRAFTING, POSTING, UPLOADING, MULTI };
       GMimeMessage * new_message_from_ui (Mode mode, bool copy_body=true);
+      GMimeMultipart* new_multipart_from_ui (bool copy_body=true);
       Profile get_current_profile ();
       bool check_message (const Quark& server, GMimeMessage*, bool binpost=false);
       bool check_charset ();

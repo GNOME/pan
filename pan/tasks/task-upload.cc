@@ -74,8 +74,7 @@ TaskUpload :: TaskUpload (const std::string         & filename,
                           UploadInfo                  format,
                           GMimeMessage *              msg,
                           Progress::Listener        * listener,
-                          const TaskUpload::EncodeMode  enc,
-                          const TaskUpload::AttachMode  att):
+                          const TaskUpload::EncodeMode  enc):
   Task ("UPLOAD", get_description(filename.c_str())),
   _filename(filename),
   _basename (g_get_basename(filename.c_str())),
@@ -88,13 +87,12 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _encoder_has_run (false),
   _encode_mode(enc),
   _all_bytes(0),
-  _kbpf(format.kbpf),
+  _bpf(format.bpf),
   _queue_pos(0),
   _msg (msg),
   _total_parts(format.total),
   _save_file(format.save_file),
-  _first(true),
-  _att_mode(att)
+  _first(true)
 {
 
   const char * tmp (g_mime_object_get_header ((GMimeObject *)_msg, "References"));
@@ -164,7 +162,7 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   }
   else if (_encoder_has_run && !_needed.empty())
   {
-      _state.set_need_nntp(_server);
+    _state.set_need_nntp(_server);
   }
   else if (_needed.empty())
   {
@@ -390,7 +388,7 @@ TaskUpload :: use_encoder (Encoder* encoder)
   init_steps(100);
   _state.set_working();
 
-  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _kbpf, _encode_mode);
+  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _bpf, _encode_mode);
   debug ("encoder thread was free, enqueued work");
 }
 
@@ -448,7 +446,7 @@ TaskUpload :: ~TaskUpload ()
       _encoder->cancel_silently();
 
   g_object_unref (G_OBJECT(_msg));
-  if (_att_mode==BULK && _queue_pos != -1)
+  if ( _queue_pos != -1)
   {
     _cache.release(_mids);
     _cache.resize();

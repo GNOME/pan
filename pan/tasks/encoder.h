@@ -66,7 +66,7 @@ namespace pan
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & subject,
-                    int                               kbpf,
+                    int                               bpf,
                     const TaskUpload::EncodeMode      enc = TaskUpload::YENC);
 
     public:
@@ -85,7 +85,7 @@ namespace pan
       TaskUpload * task;
       TaskUpload::EncodeMode encode_mode;
       std::string   basename, filename, subject;
-      int kbpf;
+      int bpf;
       EncodeCache * cache;
       TaskUpload::needed_t * needed;
       Article * article;
@@ -105,6 +105,8 @@ namespace pan
       int _gsourceid;
       void disable_progress_update();
       void enable_progress_update();
+
+      bool write_file (const char *fn);
   };
 }
 

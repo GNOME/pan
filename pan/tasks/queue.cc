@@ -646,12 +646,23 @@ Queue :: get_all_task_states (task_states_t& setme)
   need_decode.clear();
   need_decode.reserve(setme.tasks.capacity());
 
+  std::vector<Task *> & need_encode = setme._need_encode.get_container();
+  need_encode.clear();
+  need_encode.reserve(setme.tasks.capacity());
+
   foreach(TaskSet, _tasks, it) {
     setme.tasks.push_back(*it);
     if ((*it)->get_state()._work == Task::NEED_DECODER)
       need_decode.push_back(*it);
   }
   setme._need_decode.sort();
+
+  foreach(TaskSet, _tasks, it) {
+    setme.tasks.push_back(*it);
+    if ((*it)->get_state()._work == Task::NEED_ENCODER)
+      need_encode.push_back(*it);
+  }
+  setme._need_encode.sort();
 
   setme._queued.get_container() = setme.tasks;
   setme._queued.sort ();
@@ -671,6 +682,7 @@ Queue :: get_all_task_states (task_states_t& setme)
   running.insert (running.end(), tmp.begin(), tmp.end());
 
   setme._decoding = _decoder_task;
+  setme._encoding = _encoder_task;
 }
 
 void

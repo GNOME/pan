@@ -98,10 +98,22 @@ inline int close(int fd) {return _close(fd);}
 #endif
 
   bool remember_charsets (true);
+  bool inline_or_bulk (false); // false == bulk
+  bool master_reply (true);
 
   void on_remember_charset_toggled (GtkToggleAction * toggle, gpointer)
   {
     remember_charsets = gtk_toggle_action_get_active (toggle);
+  }
+
+  void on_inline_toggled (GtkToggleAction * toggle, gpointer)
+  {
+    inline_or_bulk = gtk_toggle_action_get_active (toggle);
+  }
+
+  void on_mr_toggled (GtkToggleAction * toggle, gpointer)
+  {
+    master_reply = gtk_toggle_action_get_active (toggle);
   }
 
   void on_spellcheck_toggled (GtkToggleAction * toggle, gpointer post_g)
@@ -114,7 +126,7 @@ inline int close(int fd) {return _close(fd);}
 namespace
 {
   int
-  find_task_index (GtkListStore * list, TaskUpload * task)
+  find_task_index (GtkListStore * list, Task * task)
   {
     GtkTreeIter iter;
     int index (0);
@@ -141,17 +153,25 @@ namespace
 void
 PostUI:: update_filequeue_label (GtkTreeSelection *selection)
 {
-    PostUI::tasks_t tasks(get_selected_files());
+    tasks_t tasks(get_selected_files());
 
     if (tasks.empty())
+    {
       _upload_queue.get_all_tasks(tasks);
+    }
+
 
     char str[512];
     long kb(0);
     foreach (PostUI::tasks_t, tasks, it)
     {
-      TaskUpload * task (*it);
-      kb += task->_bytes/1024;
+      TaskUpload * task (dynamic_cast<TaskUpload*>(*it));
+      if (task) kb += task->_bytes/1024;
+      else
+      {
+        TaskMultiPost * task (dynamic_cast<TaskMultiPost*>(*it));
+        if (task) kb += task->_bytes/1024;
+      }
     }
     g_snprintf(str,sizeof(str), _("Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."), tasks.size(), kb, kb/1024.0f);
     gtk_label_set_text (GTK_LABEL(_filequeue_label), str);
@@ -171,7 +191,7 @@ PostUI :: update_filequeue_tab()
    GtkTreeIter iter;
    int i(0);
    TaskUpload * task;
-   while (task = _upload_queue[i++])
+   while (task = dynamic_cast<TaskUpload*>(_upload_queue[i++]))
    {
        gtk_list_store_insert (store, &iter, i);
        gtk_list_store_set (store, &iter,
@@ -194,7 +214,7 @@ PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
   for (int i=0; i<count; ++i)
   {
     const int pos (index + i);
-    TaskUpload * task (_upload_queue[pos]);
+    TaskUpload * task (dynamic_cast<TaskUpload*>(_upload_queue[pos]));
     if (!task) continue;
     GtkTreeIter iter;
     gtk_list_store_insert (store, &iter, pos);
@@ -211,7 +231,7 @@ PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
 }
 
 void
-PostUI :: on_queue_task_removed (UploadQueue&, TaskUpload& task, int index)
+PostUI :: on_queue_task_removed (UploadQueue&, Task& task, int index)
 {
   GtkListStore *store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store)));
 
@@ -225,7 +245,7 @@ PostUI :: on_queue_task_removed (UploadQueue&, TaskUpload& task, int index)
 }
 
 void
-PostUI :: on_queue_task_moved (UploadQueue&, TaskUpload&, int new_index, int old_index)
+PostUI :: on_queue_task_moved (UploadQueue&, Task&, int new_index, int old_index)
 {
   GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store));
   GtkListStore* store = GTK_LIST_STORE(model);
@@ -383,7 +403,7 @@ namespace
     { "rot13", GTK_STOCK_REFRESH, N_("_Rot13"), 0, N_("Rot13 Selected Text"), G_CALLBACK(do_rot13) },
     { "run-editor", GTK_STOCK_JUMP_TO, N_("Run _Editor"), "<control>e", N_("Run Editor"), G_CALLBACK(do_edit) },
     { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), 0, 0, G_CALLBACK(do_profiles) },
-    { "add-files", GTK_STOCK_OPEN, N_("Add _Files to Queue"), "<control>O", N_("Add Files to Queue"), G_CALLBACK(do_add_files) },
+    { "add-files", GTK_STOCK_ADD, N_("Add _Files to Queue"), "<control>O", N_("Add Files to Queue"), G_CALLBACK(do_add_files) },
   };
 
   void do_remove_files       (GtkAction*, gpointer p) {static_cast<PostUI*>(p)->remove_files(); }
@@ -441,19 +461,17 @@ namespace
     { "plain", NULL,
       N_("No encoding (plain)"), "",
       N_("No encoding (plain)"),
-      G_CALLBACK(do_select_encode) },
-
-    { "base64", NULL,
-      N_("BASE64-Encode"), "",
-      N_("BASE64-Encode"),
       G_CALLBACK(do_select_encode) }
+
   };
 
-  GtkToggleActionEntry toggle_entries[] =
+  const GtkToggleActionEntry toggle_entries[] =
   {
     { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), 0, N_("Wrap Text"), G_CALLBACK(do_wrap), true },
     { "always-run-editor", 0, N_("Always Run Editor"), 0, 0, G_CALLBACK(do_edit2), false },
     { "remember-charset", 0, N_("Remember Character Encoding for this Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
+    { "inline-or-bulk", 0, N_("Attachments are inlined with Message"), 0, 0, G_CALLBACK(on_inline_toggled), false },
+    { "master-reply", 0, N_("All Attachments are threaded replies to message"), 0, 0, G_CALLBACK(on_mr_toggled), true },
     { "spellcheck", 0, N_("Check _Spelling"), 0, 0, G_CALLBACK(on_spellcheck_toggled), true }
   };
 
@@ -578,6 +596,7 @@ PostUI :: add_actions (GtkWidget * box)
                                 _prefs.get_flag ("spellcheck-enabled", DEFAULT_SPELLCHECK_FLAG));
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "wrap")),
                                 _prefs.get_flag ("compose-wrap-enabled", true));
+  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "inline-or-bulk")), false);
   gtk_ui_manager_insert_action_group (_uim, _agroup, 0);
 
    //add popup actions
@@ -812,7 +831,7 @@ void
 PostUI :: send_and_save_now ()
 {
 
-  PostUI::tasks_t tasks;
+  tasks_t tasks;
   _upload_queue.get_all_tasks(tasks);
 
   if (!check_charset())
@@ -943,7 +962,7 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
   {
     --_running_uploads;
     int no = status;
-    TaskUpload * ptr = _upload_queue[no];
+    TaskUpload * ptr = dynamic_cast<TaskUpload*>(_upload_queue[no]);
 
     if (!_save_file.empty())
     {
@@ -1075,12 +1094,13 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       << "<nzb xmlns=\"http://www.newzbin.com/DTD/2003/nzb\">\n";
     }
 
-    PostUI::tasks_t tasks;
+    std::vector<Task*> tasks;
     _upload_queue.get_all_tasks(tasks);
     int cnt(0);
     char buf[2048];
     struct stat sb;
-    _running_uploads = tasks.size()+1;
+    _running_uploads = tasks.size();
+    if (master_reply) ++_running_uploads;
 
     // generate domain name for upload if the flag is set / a save-file is set
     bool custom_mid(_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false) || !_save_file.empty());
@@ -1099,59 +1119,95 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     std::string last_mid;
     std::string first_mid;
 
-    // master article, other attach
-    const Profile profile (get_current_profile ());
-    std::string out;
-    generate_unique_id(domain, 1,out);
-    first_mid = out;
-    Article a(tasks[0]->_article);
+    Article a;
+    TaskUpload * tmp (dynamic_cast<TaskUpload*>(tasks[0]));
+    if (tmp) a = tmp->_article;
 
-    TaskUpload::UploadInfo f;
-    f.total=1;
-    TaskUpload::Needed n;
-    n.mid = out;
-    TaskUpload * tmp = new TaskUpload(a.subject.to_string(),profile.posting_server,_cache,a,f,new_message_from_ui(UPLOADING));
-    tmp->_needed.insert(std::pair<int, TaskUpload::Needed>(1,n));
-    tmp->_queue_pos = -1;
-    _queue.add_task (tmp, Queue::BOTTOM);
-    tmp->add_listener(this);
+    if (master_reply)
+    {
+      std::cerr<<"adding master reply to queue\n";
+
+      // master article, other attachments are threaded as replies to this
+      const Profile profile (get_current_profile ());
+      std::string out;
+      generate_unique_id(domain, 1,out);
+      first_mid = out;
+
+
+      TaskUpload::UploadInfo f;
+      f.total=1;
+      TaskUpload::Needed n;
+      n.mid = out;
+
+      if (!inline_or_bulk)
+      {
+        TaskUpload * tmp = new TaskUpload(a.subject.to_string(),profile.posting_server,_cache,a,f,new_message_from_ui(UPLOADING));
+        tmp->_needed.insert(std::pair<int, TaskUpload::Needed>(1,n));
+        tmp->_queue_pos = -1;
+        _queue.add_task (tmp, Queue::BOTTOM);
+        tmp->add_listener(this);
+      }
+    }
 
     /* init taskupload variables before adding the tasks to the queue for processing */
-    foreach (PostUI::tasks_t, tasks, it)
+
+    if (!inline_or_bulk) // bulk upload
     {
+      std::cerr<<"adding "<<tasks.size()<<" tasks."<<std::endl;
 
-      TaskUpload * t (*it);
-
-      const char* basename = t->_basename.c_str();
-      TaskUpload::Needed n;
-
-      // generate domain for rng numbers
-      int total = get_total_parts(t->_filename.c_str());
-
-      foreach (std::set<int>, t->_wanted, pit)
+      foreach (PostUI::tasks_t, tasks, it)
       {
-        if (custom_mid)
+
+        TaskUpload * t (dynamic_cast<TaskUpload*>(*it));
+
+        const char* basename = t->_basename.c_str();
+        TaskUpload::Needed n;
+
+        // generate domain for rng numbers
+        int total = get_total_parts(t->_filename.c_str());
+
+        foreach (std::set<int>, t->_wanted, pit)
         {
-            std::string out;
-            generate_unique_id(domain, *pit,out);
-            n.mid = out;
-            if (first_mid.empty()) first_mid = out;
+          if (custom_mid)
+          {
+              std::string out;
+              generate_unique_id(domain, *pit,out);
+              n.mid = out;
+              if (first_mid.empty()) first_mid = out;
+          }
+
+          g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);
+          n.message_id = buf;
+          n.partno = *pit;
+          n.last_mid = last_mid;
+          t->_first_mid = first_mid;
+          last_mid = n.mid;
+          t->_needed.insert(std::pair<int,TaskUpload::Needed>(*pit,n));
         }
+        t->build_needed_tasks();
+        t->_save_file = _save_file;
+        t->_queue_pos = cnt++;
 
-        g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);
-        n.message_id = buf;
-        n.partno = *pit;
-        n.last_mid = last_mid;
-        t->_first_mid = first_mid;
-        last_mid = n.mid;
-        t->_needed.insert(std::pair<int,TaskUpload::Needed>(*pit,n));
+        _queue.add_task (*it, Queue::BOTTOM);
+        t->add_listener(this);
       }
-      t->build_needed_tasks();
-      t->_save_file = _save_file;
-      t->_queue_pos = cnt++;
+    }
+    else    // attachments are all inlined in ONE big gmimemultipart
+    {
+      _running_uploads = 1;
+      quarks_t filenames;
+      GMimeMessage* msg(new_message_from_ui(UPLOADING));
+      GMimeMultipart * multi (g_mime_multipart_new_with_subtype("mixed"));
+      g_mime_multipart_insert(multi,0,GMIME_OBJECT(msg));
 
-      _queue.add_task (*it, Queue::BOTTOM);
-      t->add_listener(this);
+      TaskMultiPost * mp = new TaskMultiPost(filenames, profile.posting_server, a, multi, this);
+      foreach (PostUI::tasks_t, tasks, it)
+      {
+        TaskUpload * t (dynamic_cast<TaskUpload*>(*it));
+        mp->_filenames.insert(Quark(t->_filename.c_str()));
+      }
+      mp->dbg();
+      _upload_queue.clear();
     }
 
   }
@@ -1433,17 +1489,29 @@ namespace
 GMimeMessage*
 PostUI :: new_message_from_ui (Mode mode, bool copy_body)
 {
-  GMimeMessage * msg (g_mime_message_new (false));
+  GMimeMessage * msg(0);
+  if (mode!=MULTI)
+    msg = g_mime_message_new (false);
+  else
+    msg = (GMimeMessage*)g_mime_multipart_new_with_subtype("mixed");
 
   // headers from the ui: From
   const Profile profile (get_current_profile ());
   std::string s;
   profile.get_from_header (s);
-  g_mime_message_set_sender (msg, s.c_str());
+  if (mode!=MULTI)
+    g_mime_message_set_sender (msg, s.c_str());
+  else
+    g_mime_object_set_header ((GMimeObject *) msg, "From", s.c_str());
 
   // headers from the ui: Subject
   const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
-  if (cpch) g_mime_message_set_subject (msg, cpch);
+  if (cpch) {
+    if (mode!=MULTI)
+      g_mime_message_set_subject (msg, cpch);
+    else
+      g_mime_object_set_header ((GMimeObject *) msg, "Subject", cpch);
+  }
 
   // headers from the ui: To
   const StringView to (gtk_entry_get_text (GTK_ENTRY(_to_entry)));
@@ -1490,11 +1558,11 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   g_free (pch);
 
   // User-Agent
-  if ((mode==POSTING || mode == UPLOADING) && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
+  if ((mode==POSTING || mode == UPLOADING || mode == MULTI) && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
     g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent());
 
   // Message-ID for single text-only posts
-  if ((mode==POSTING || mode==UPLOADING) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
+  if ((mode==POSTING || mode==UPLOADING || mode == MULTI) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
     const std::string message_id = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
@@ -1502,35 +1570,137 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   }
 
     // body & charset
-    std::string body;
-    if (copy_body) body = get_body();
-    GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
-    const std::string charset ((mode==POSTING && !_charset.empty()) ? _charset : "UTF-8");
-    if (charset != "UTF-8") {
-      // add a wrapper to convert from UTF-8 to $charset
-      GMimeStream * tmp = g_mime_stream_filter_new (stream);
+    if (mode != MULTI)
+    {
+      std::string body;
+      if (copy_body) body = get_body();
+      GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
+      const std::string charset ((mode==POSTING && !_charset.empty()) ? _charset : "UTF-8");
+      if (charset != "UTF-8") {
+        // add a wrapper to convert from UTF-8 to $charset
+        GMimeStream * tmp = g_mime_stream_filter_new (stream);
+        g_object_unref (stream);
+        GMimeFilter * filter = g_mime_filter_charset_new ("UTF-8", charset.c_str());
+        g_mime_stream_filter_add (GMIME_STREAM_FILTER(tmp), filter);
+        g_object_unref (filter);
+        stream = tmp;
+      }
+      GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
       g_object_unref (stream);
-      GMimeFilter * filter = g_mime_filter_charset_new ("UTF-8", charset.c_str());
-      g_mime_stream_filter_add (GMIME_STREAM_FILTER(tmp), filter);
-      g_object_unref (filter);
-      stream = tmp;
-    }
-    GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
-    g_object_unref (stream);
-    GMimePart * part = g_mime_part_new ();
-    pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+      GMimePart * part = g_mime_part_new ();
+      pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
 
-    GMimeContentType * type = g_mime_content_type_new_from_string (pch);
-    g_free (pch);
-    g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
-    g_mime_part_set_content_object (part, content_object);
-    g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
-    g_object_unref (content_object);
-    g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
-    g_object_unref (part);
+      GMimeContentType * type = g_mime_content_type_new_from_string (pch);
+      g_free (pch);
+      g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
+      g_mime_part_set_content_object (part, content_object);
+      g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
+      g_object_unref (content_object);
+      g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
+      g_object_unref (part);
+    }
 
   return msg;
 }
+
+GMimeMultipart*
+PostUI :: new_multipart_from_ui (bool copy_body)
+{
+  GMimeMultipart * msg(g_mime_multipart_new_with_subtype("mixed"));
+
+  // headers from the ui: From
+  const Profile profile (get_current_profile ());
+  std::string s;
+  profile.get_from_header (s);
+  g_mime_object_set_header ((GMimeObject *) msg, "From", s.c_str());
+
+  // headers from the ui: Subject
+  const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
+  if (cpch)
+    g_mime_object_set_header ((GMimeObject *) msg, "Subject", cpch);
+
+  // headers from the ui: To
+  const StringView to (gtk_entry_get_text (GTK_ENTRY(_to_entry)));
+  if (!to.empty())
+    pan_g_mime_message_add_recipients_from_string ((GMimeMessage*)msg, GMIME_RECIPIENT_TYPE_TO, to.str);
+
+  // headers from the ui: Newsgroups
+  const StringView groups (gtk_entry_get_text (GTK_ENTRY(_groups_entry)));
+  if (!groups.empty())
+    g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", groups.str);
+
+  // headers from the ui: Followup-To
+  const StringView followupto (gtk_entry_get_text (GTK_ENTRY(_followupto_entry)));
+  if (!followupto.empty())
+    g_mime_object_set_header ((GMimeObject *) msg, "Followup-To", followupto.str);
+
+  // headers from the ui: Reply-To
+  const StringView replyto (gtk_entry_get_text (GTK_ENTRY(_replyto_entry)));
+  if (!replyto.empty())
+    g_mime_object_set_header ((GMimeObject *) msg, "Reply-To", replyto.str);
+
+  // build headers from the 'more headers' entry field
+  std::map<std::string,std::string> headers;
+  GtkTextBuffer * buf (_headers_buf);
+  GtkTextIter start, end;
+  gtk_text_buffer_get_bounds (buf, &start, &end);
+  char * pch = gtk_text_buffer_get_text (buf, &start, &end, false);
+  StringView key, val, v(pch);
+  v.trim ();
+  while (v.pop_token (val, '\n') && val.pop_token(key,':')) {
+    key.trim ();
+    val.eat_chars (1);
+    val.trim ();
+    std::string key_str (key.to_string());
+    if (extra_header_is_editable (key, val))
+      g_mime_object_set_header ((GMimeObject *) msg, key.to_string().c_str(),
+                                val.to_string().c_str());
+  }
+  g_free (pch);
+
+  // User-Agent
+  if (_prefs.get_flag (USER_AGENT_PREFS_KEY, true))
+    g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent());
+
+  // Message-ID for single text-only posts
+  if (_prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
+    const std::string message_id = !profile.fqdn.empty()
+      ? GNKSA::generate_message_id (profile.fqdn)
+      : GNKSA::generate_message_id_from_email_address (profile.address);
+    pan_g_mime_message_set_message_id ((GMimeMessage*)msg, message_id.c_str());
+  }
+
+    // body & charset
+      std::string body;
+      if (copy_body) body = get_body();
+      GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
+      const std::string charset (_charset.empty() ? _charset : "UTF-8");
+      if (charset != "UTF-8") {
+        // add a wrapper to convert from UTF-8 to $charset
+        GMimeStream * tmp = g_mime_stream_filter_new (stream);
+        g_object_unref (stream);
+        GMimeFilter * filter = g_mime_filter_charset_new ("UTF-8", charset.c_str());
+        g_mime_stream_filter_add (GMIME_STREAM_FILTER(tmp), filter);
+        g_object_unref (filter);
+        stream = tmp;
+      }
+      GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
+      g_object_unref (stream);
+      GMimePart * part = g_mime_part_new ();
+      pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+
+      GMimeContentType * type = g_mime_content_type_new_from_string (pch);
+      g_free (pch);
+      g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
+      g_mime_part_set_content_object (part, content_object);
+      g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
+      g_object_unref (content_object);
+      g_mime_message_set_mime_part ((GMimeMessage*)msg, GMIME_OBJECT(part));
+      g_object_unref (part);
+
+  return msg;
+}
+
 
 void
 PostUI :: save_draft ()
@@ -2719,21 +2889,12 @@ PostUI :: select_encode (GtkAction* a)
         tmp = TaskUpload::YENC;
     if (!strcmp(name, "plain"))
         tmp = TaskUpload::PLAIN;
-    if (!strcmp(name, "base64"))
-        tmp = TaskUpload::BASE64;
 
     struct stat sb;
     foreach(tasks_t, tasks, it)
     {
-      const char* f = (*it)->_filename.c_str();
-      int total(get_total_parts (f));
-
-      (*it)->_encode_mode = tmp;
-      (*it)->_total_parts = total;
-      (*it)->_wanted.clear();
-      for (int i=1;i<=total;++i)
-        (*it)->_wanted.insert(i);
-
+      TaskUpload * tmp2 (dynamic_cast<TaskUpload*>(*it));
+      if (tmp2) tmp2->_encode_mode = tmp;
     }
     update_filequeue_tab();
 }
@@ -2743,7 +2904,8 @@ PostUI :: get_total_parts(const char* file)
 {
     struct stat sb;
     stat (file,&sb);
-    int max (std::max(1,(int)std::ceil((double)sb.st_size / (1024*_prefs.get_int("upload-option-kbpf",512)))));
+    int max (std::max(1,(int)std::ceil((double)sb.st_size /
+                                       _prefs.get_int("upload-option-bpf",512*1024))));
     return max;
 }
 
@@ -2797,7 +2959,7 @@ PostUI :: select_parts ()
 {
 
   PostUI::tasks_t set(get_selected_files());
-  _upload_ptr = set[0];
+  _upload_ptr = dynamic_cast<TaskUpload*>(set[0]);
 
   if (!_upload_ptr) return;
 
@@ -2818,7 +2980,7 @@ PostUI :: select_parts ()
   gtk_window_set_role (GTK_WINDOW(w), "pan-parts-window");
   gtk_window_set_title (GTK_WINDOW(w), _("Select Parts"));
   int x,y;
-  x = _prefs.get_int("post-ui-width", -1);
+  x = _prefs.get_int("post-ui-width", 450); // FIXME BUG: Native Windows wider or taller than 65535 pixels are not supported
   y = _prefs.get_int("post-ui-height", 450);
   gtk_window_set_default_size (GTK_WINDOW(w), x, y);
   // populate the window
@@ -3043,7 +3205,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 
         TaskUpload::UploadInfo ui;
         // query lines per file value
-        ui.kbpf = _prefs.get_int("upload-option-kbpf",512);
+        ui.bpf = _prefs.get_int("upload-option-bpf",512*1024);
 
         std::string author;
         profile.get_from_header(author);
@@ -3075,8 +3237,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
           // yEnc encoding is the default, user can change that with popup-menu
           ui.total = get_total_parts((const char*)cur->data);
           TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
-                            profile.posting_server, _cache,
-                            a, ui, msg ,0, TaskUpload::YENC, TaskUpload::BULK );
+                            profile.posting_server, _cache, a, ui, msg);
 
           // insert wanted parts to upload
           for (int i=1;i<=ui.total; ++i)

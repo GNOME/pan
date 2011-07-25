@@ -144,7 +144,7 @@ void EncodeCache :: finalize (std::string message_id)
   _mid_to_info[message_id]._size = sb.st_size;
   fire_added (message_id);
   _current_bytes += sb.st_size;
-  resize();
+  //resize(); ///TODO mt debug!
 }
 
 void

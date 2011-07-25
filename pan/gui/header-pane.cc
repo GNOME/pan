@@ -31,6 +31,7 @@ extern "C" {
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/filter-info.h>
+#include <pan/usenet-utils/rules-info.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
 #include <pan/icons/pan-pixbufs.h>
@@ -1025,14 +1026,6 @@ namespace
 
 }
 
-//{ N_("Disabled"),"never" },
-//{ N_("Only new (Score == 0)"),"new" },
-//{ N_("9999 or more"), "watched" },
-//{ N_("5000 to 9998"), "high" },
-//{ N_("1 to 4999"),    "medium" },
-//{ N_("-9998 to -1"),  "low" },
-//{ N_("-9999 or less"),"ignored" }};
-
 #define RANGE 4998
 std::pair<int,int>
 HeaderPane :: get_int_from_rules_str(std::string val)
@@ -1054,6 +1047,7 @@ HeaderPane :: rebuild_rules (bool enable)
 
   if (!enable)
   {
+    std::cerr<<"clear rules\n";
     _rules.clear();
     return;
   }
@@ -1243,9 +1237,13 @@ HeaderPane :: rules(bool enable)
 
     if (_rules._aggregates.empty()) {
       _atree->set_rules();
+      std::cerr<<"rules, aggr empty\n";
     }
     else
+    {
+      std::cerr<<"rules, aggr NOT empty, size "<<_rules._aggregates.size()<< "\n";
       _atree->set_rules(_show_type, &_rules);
+    }
 
     _wait.watch_cursor_off ();
   }
@@ -1726,7 +1724,7 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _root = scroll;
 
   search_activate (this); // calls rebuild_filter
-  rules();
+  rules(_prefs._rules_enabled);
 
   _data.add_listener (this);
   _prefs.add_listener (this);
@@ -2146,14 +2144,16 @@ HeaderPane :: on_queue_task_removed (Queue&, Task& task, int)
   if (ta)
     rebuild_article_action (ta->get_article().message_id);
 }
+
 void
 HeaderPane :: on_cache_added (const Quark& message_id)
 {
-    /// SLOOOOW!
-//  quarks_t q;
-//  q.insert(message_id);
-//  _data.rescore_articles ( _group, q );
-//  rebuild_article_action (message_id);
+  /// SLOOOOW!
+  quarks_t q;
+  q.insert(message_id);
+  _data.rescore_articles ( _group, q );
+  rebuild_article_action (message_id);
+
 }
 void
 HeaderPane :: on_cache_removed (const quarks_t& message_ids)

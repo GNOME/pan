@@ -844,12 +844,12 @@ namespace
           g_mime_multipart_remove_at (mp, index);
           g_object_unref (part);
 
-          //workaround gmime insert bug
-          //g_mime_multipart_insert (mp,index,newpart);
-          {
-            ptr_array_insert(mp->children, index, newpart);
+          //should be fixed meanwhile (!) workaround gmime insert bug
+          g_mime_multipart_insert (mp,index,newpart);
+//          {
+//            ptr_array_insert(mp->children, index, newpart);
             g_object_ref(newpart);
-          }
+//          }
         }
         else if(GMIME_IS_MESSAGE(parent))
         {

@@ -45,9 +45,7 @@ namespace
   std::string get_description (const char* name)
   {
     char buf[4096];
-    char * freeme = g_path_get_basename(name);
-    snprintf (buf, sizeof(buf), _("Uploading %s"), freeme);
-    g_free(freeme);
+    snprintf (buf, sizeof(buf), _("Uploading \"%s\""), name);
     return buf;
   }
 
@@ -65,32 +63,31 @@ namespace
 ****
 ***/
 
-TaskMultiPost :: TaskMultiPost (const std::string   & filename,
-                          const Quark               & server,
-                          Article                     article,
-                          GMimeMessage *              msg,
-                          Progress::Listener        * listener):
-  Task ("UPLOAD", get_description(filename.c_str())),
-  _filename(filename),
-  _basename (g_get_basename(filename.c_str())),
+TaskMultiPost :: TaskMultiPost (quarks_t            & filenames,
+                                const Quark         & server,
+                                Article               article,
+                                GMimeMultipart      * msg,
+                                Progress::Listener  * listener):
+   Task ("UPLOAD", get_description(article.subject.to_string().c_str())),
+  _filenames(filenames),
   _server(server),
   _article(article),
   _subject (article.subject.to_string()),
   _author(article.author.to_string()),
-  _msg (msg)
+  _files_left(1),
+  _msg(msg)
+
 {
-
-
-//  struct stat sb;
-//  stat(filename.c_str(),&sb);
-//  _bytes = sb.st_size;
-
+  g_mime_multipart_set_boundary(_msg, "$pan_multipart_msg$");
+  build_needed_tasks();
+  //  _state.set_paused();
+  update_work();
 }
 
 void
 TaskMultiPost :: build_needed_tasks()
 {
-
+  _files_left = _needed.size();
   foreach (needed_t, _needed, it)
   {
     _mids.push_back(Quark(it->second.message_id));
@@ -105,21 +102,21 @@ TaskMultiPost :: update_work (NNTP* checkin_pending)
   int working(0);
   foreach (needed_t, _needed, nit)
   {
-    TaskUpload::Needed& n (nit->second);
+    TaskMultiPost::Needed& n (nit->second);
     if (n.nntp && n.nntp!=checkin_pending)
       ++working;
   }
 
-  /* only need encode if mode is NOT plain */
   if (working)
   {
     _state.set_working();
   }
-  else if (!working)
+  else if (_files_left==0)
   {
+//    prepare_msg();
     _state.set_need_nntp(_server);
   }
-  else if (_needed.empty())
+  else if (!working && _files_left == 0)
   {
     _state.set_completed();
     set_finished(OK);
@@ -130,7 +127,9 @@ TaskMultiPost :: update_work (NNTP* checkin_pending)
 void
 TaskMultiPost :: use_nntp (NNTP * nntp)
 {
-  nntp->post(StringView(""), this);
+  char * pch = g_mime_object_to_string ((GMimeObject *) _msg);
+  nntp->post(pch, this);
+  g_free(pch);
 
   update_work ();
 }
@@ -161,10 +160,7 @@ TaskMultiPost :: on_nntp_done (NNTP * nntp,
 unsigned long
 TaskMultiPost :: get_bytes_remaining () const
 {
-  unsigned long bytes (0);
-  foreach_const (needed_t, _needed, it)
-    bytes += (unsigned long)it->second.bytes;
-  return bytes;
+  return 0;
 }
 
 
@@ -176,6 +172,19 @@ TaskMultiPost :: stop ()
 
 TaskMultiPost :: ~TaskMultiPost ()
 {
+  g_object_unref(_msg);
+
+}
 
 
+
+
+
+void
+TaskMultiPost :: dbg()
+{
+  std::cerr<<g_mime_object_to_string((GMimeObject*)_msg)<<std::endl;
+  std::cerr<<"\n////////////////////////////////////\n";
+  foreach_const (quarks_t, _filenames, it)
+    std::cerr<<*it<<std::endl;
 }

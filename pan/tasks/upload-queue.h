@@ -32,6 +32,7 @@
 #include <pan/tasks/socket.h>
 #include <pan/tasks/adaptable-set.h>
 #include <pan/tasks/task-upload.h>
+#include <pan/tasks/task-multipost.h>
 #include <pan/tasks/encoder.h>
 #include <pan/tasks/task-weak-ordering.h>
 
@@ -43,16 +44,16 @@ namespace pan
   struct Encoder;
 
   class UploadQueue:
-        private AdaptableSet<TaskUpload*, TaskWeakOrdering>::Listener
+        private AdaptableSet<Task*, TaskWeakOrdering>::Listener
   {
     public:
 
-      typedef AdaptableSet<TaskUpload*, TaskWeakOrdering> TaskSet;
+      typedef AdaptableSet<Task*, TaskWeakOrdering> TaskSet;
 
       UploadQueue ();
       virtual ~UploadQueue ();
 
-      typedef std::vector<TaskUpload*> tasks_t;
+      typedef std::vector<Task*> tasks_t;
       void remove_tasks  (const tasks_t&);
       void move_up       (const tasks_t&);
       void move_down     (const tasks_t&);
@@ -64,26 +65,26 @@ namespace pan
       enum AddMode { TOP, BOTTOM };
       void add_tasks     (const tasks_t&, AddMode=BOTTOM);
 
-      void add_task (TaskUpload*, AddMode=BOTTOM);
-      void remove_task (TaskUpload*);
+      void add_task (Task*, AddMode=BOTTOM);
+      void remove_task (Task*);
 
       void clear();
 
-      void get_all_tasks (tasks_t& setme);
+      void get_all_tasks  (std::vector<Task*>& setme);
 
     protected:
       virtual void fire_tasks_added  (int index, int count);
-      virtual void fire_task_removed (TaskUpload*&, int index);
-      virtual void fire_task_moved   (TaskUpload*&, int index, int old_index);
+      virtual void fire_task_removed (Task*&, int index);
+      virtual void fire_task_moved   (Task*&, int index, int old_index);
 
     public:
 
       struct Listener {
         virtual ~Listener () {}
-        virtual void on_queue_task_active_changed (UploadQueue&, TaskUpload&, bool active) {}
+        virtual void on_queue_task_active_changed (UploadQueue&, Task&, bool active) {}
         virtual void on_queue_tasks_added (UploadQueue&, int index, int count) = 0;
-        virtual void on_queue_task_removed (UploadQueue&, TaskUpload&, int index) = 0;
-        virtual void on_queue_task_moved (UploadQueue&, TaskUpload&, int new_index, int old_index) = 0;
+        virtual void on_queue_task_removed (UploadQueue&, Task&, int index) = 0;
+        virtual void on_queue_task_moved (UploadQueue&, Task&, int new_index, int old_index) = 0;
         virtual void on_queue_connection_count_changed (UploadQueue&, int count) {}
         virtual void on_queue_size_changed (UploadQueue&, int active, int total) {}
         virtual void on_queue_online_changed (UploadQueue&, bool online) {}
@@ -99,14 +100,14 @@ namespace pan
       listeners_t _listeners;
 
     public:
-      TaskUpload* operator[](size_t i) { if (i>=_tasks.size() || i<0) return NULL; return _tasks[i]; }
-      const TaskUpload* operator[](size_t i) const { if (i>=_tasks.size() || i<0) return NULL; return _tasks[i]; }
+      Task* operator[](size_t i) { if (i>=_tasks.size() || i<0) return NULL; return _tasks[i]; }
+      const Task* operator[](size_t i) const { if (i>=_tasks.size() || i<0) return NULL; return _tasks[i]; }
 
     private:
       TaskSet _tasks;
       virtual void on_set_items_added  (TaskSet&, TaskSet::items_t&, int index);
-      virtual void on_set_item_removed (TaskSet&, TaskUpload*&, int index);
-      virtual void on_set_item_moved   (TaskSet&, TaskUpload*&, int index, int old_index);
+      virtual void on_set_item_removed (TaskSet&, Task*&, int index);
+      virtual void on_set_item_moved   (TaskSet&, Task*&, int index, int old_index);
   };
 }
 
