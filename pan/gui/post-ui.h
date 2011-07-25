@@ -116,7 +116,7 @@ namespace pan
 
     private:
       virtual void on_progress_finished (Progress&, int status=OK);
-      virtual void on_progress_error (Progress&, const StringView&);
+      virtual void on_progress_error (Progress&, const StringView&) {}
 
       virtual void on_progress_step (Progress&, int p) {}
       virtual void on_progress_status (Progress&, const StringView& s) {}
@@ -151,7 +151,6 @@ namespace pan
       GtkUIManager * _uim;
       GtkActionGroup * _agroup, * _pgroup, * _epgroup;
       std::string _current_signature;
-      GtkWidget * _post_dialog;
       TaskPost * _post_task;
       typedef std::map<std::string, std::string> str2str_t;
       str2str_t _hidden_headers;

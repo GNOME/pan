@@ -278,8 +278,6 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   bool found(false);
   bool post_ok(false);
 
-  if (!nntp ) std::cerr<<"nntp error!\n";
-
   needed_t::iterator it;
   for (it=_needed.begin(); it!=_needed.end(); ++it)
     if (it->second.nntp == nntp) {

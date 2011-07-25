@@ -675,7 +675,7 @@ PostUI :: close_window (bool flag)
   if (get_body() == _unchanged_body)
     destroy_flag = true;
 
-  else if (!flag) {
+  if (!destroy_flag) {
     GtkWidget * d = gtk_message_dialog_new (
       GTK_WINDOW(_root),
       GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -694,6 +694,7 @@ PostUI :: close_window (bool flag)
 
   int w,h;
   gtk_window_get_size( GTK_WINDOW(_root), &w, &h);
+  std::cerr<<"post ui sizes: "<<w<<" "<<h<<std::endl;
   _prefs.set_int("post-ui-width", w);
   _prefs.set_int("post-ui-height", h);
 
@@ -793,19 +794,6 @@ namespace
     gtk_container_add (GTK_CONTAINER (button), align);
     gtk_widget_show_all (button);
     return button;
-  }
-}
-
-namespace
-{
-  gboolean pulse_me (gpointer progressbar)
-  {
-    gtk_progress_bar_pulse (GTK_PROGRESS_BAR (progressbar));
-    return true;
-  }
-  void remove_progress_tag (gpointer tag)
-  {
-    g_source_remove (GPOINTER_TO_UINT(tag));
   }
 }
 
@@ -957,7 +945,7 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
       done_sending_message (message, false);
     else
       maybe_mail_message (message);
-    gtk_widget_destroy (_post_dialog);
+    close_window(true);
   } else
   {
     --_running_uploads;
@@ -975,21 +963,9 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
         }
       mut.unlock();
     }
-
+    if (_running_uploads==0) close_window(true);
   }
-  if (_running_uploads==0) close_window(true);
-}
 
-void
-PostUI :: on_progress_error (Progress&, const StringView& message)
-{
-  GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
-                                          GTK_DIALOG_DESTROY_WITH_PARENT,
-                                          GTK_MESSAGE_ERROR,
-                                          GTK_BUTTONS_CLOSE, "%s", message.to_string().c_str());
-  g_signal_connect_swapped (d, "response",
-                            G_CALLBACK(gtk_widget_destroy), d);
-  gtk_widget_show (d);
 }
 
 bool
@@ -1054,36 +1030,14 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _queue.set_online (true);
   }
 
-  /**
-  ***  Pop up a ``Posting'' Dialog...
-  **/
+  gtk_widget_hide (_root);
+
   if(_file_queue_empty)
   {
-    GtkWidget * d = gtk_dialog_new_with_buttons (_("Posting Article"),
-                                                 GTK_WINDOW(_root),
-                                                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                 //GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                                 NULL);
-    char buf[512];
-    g_snprintf (buf, sizeof(buf), "<b>%s</b>", _("Posting..."));
-    GtkWidget * w = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL, "use-markup", TRUE, "label", buf, NULL));
-    GtkWidget *content = gtk_dialog_get_content_area(GTK_DIALOG(d));
-    gtk_box_pack_start (GTK_BOX(content), w, false, false, PAD_SMALL);
-    w = gtk_progress_bar_new ();
-    gtk_progress_bar_set_pulse_step (GTK_PROGRESS_BAR(w), 0.05);
-    const guint tag = g_timeout_add (100, pulse_me, w);
-    gtk_box_pack_start (GTK_BOX(content), w, false, false, PAD_SMALL);
-    g_object_set_data_full (G_OBJECT(d), "progressbar-timeout-tag", GUINT_TO_POINTER(tag), remove_progress_tag);
-    _post_dialog = d;
-    g_signal_connect (_post_dialog, "destroy", G_CALLBACK(gtk_widget_destroyed), &_post_dialog);
-    gtk_widget_show_all (d);
-
     _post_task = new TaskPost (server, message);
     _post_task->add_listener (this);
     _queue.add_task (_post_task, Queue::TOP);
   } else {
-
-    gtk_widget_hide (_root); // hide the main window, we still need the class' data
 
     // prepend header for xml file (if one was chosen)
     if (!_save_file.empty())

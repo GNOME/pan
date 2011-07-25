@@ -23,6 +23,7 @@ extern "C" {
 }
 #include "task-post.h"
 #include <pan/general/debug.h>
+#include <pan/general/log.h>
 
 using namespace pan;
 
@@ -69,8 +70,14 @@ TaskPost :: on_nntp_done (NNTP              * nntp,
   _state.set_health (health);
 
   if (health == ERR_NETWORK)
+  {
+    Log :: add_err_va (_("Posting of \"%s\" failed: %s"),
+                          g_mime_message_get_subject(_message), response.str);
     _state.set_need_nntp (_server);
+  }
   else {
+    Log :: add_info_va (_("Posting of \"%s\" succesful: %s"),
+                          g_mime_message_get_subject(_message), response.str);
     _state.set_completed ();
     set_error (response);
     set_finished (health);
