@@ -1,0 +1,6598 @@
+# PAN Newsreader Hungarian po file
+# Copyright (C) 2001 Free Software Foundation, Inc.
+# András Tímár <timar@gnome.hu>, 2001.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: pan 0.11.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-18 10:27-0500\n"
+"PO-Revision-Date: 2003-07-14 00:53+0200\n"
+"Last-Translator: Andras Timar <timar@gnome.hu>\n"
+"Language-Team: Hungarian <hu@gnome.hu>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: pan.desktop.in.h:1
+#, fuzzy
+msgid "Pan Newsreader"
+msgstr "Pan, a hírolvasó"
+
+#: pan.desktop.in.h:2
+msgid "Read News from Usenet"
+msgstr ""
+
+#: pan/data-impl/data-impl.cc:82
+#, c-format
+msgid "Loaded data backend in %.1f seconds"
+msgstr ""
+
+#: pan/data-impl/data-io.cc:220 pan/data-impl/data-io.cc:241
+#: pan/data/article-cache.cc:236 pan/data/article-cache.cc:246
+#: pan/gui/post-ui.cc:1261
+#, fuzzy, c-format
+msgid "Unable to save \"%s\" %s"
+msgstr "Nem sikerült létrehozni a fájlt: \"%s\""
+
+#: pan/data-impl/groups.cc:92
+#, fuzzy, c-format
+msgid "Skipping newsrc file for server \"%s\""
+msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+
+#: pan/data-impl/headers.cc:551
+#, fuzzy, c-format
+msgid "Expired %lu old articles from \"%s\""
+msgstr "%u cikk törölve \"%s\" hírcsoportból"
+
+#: pan/data-impl/headers.cc:558
+#, c-format
+msgid ""
+"Unsupported data version for %s headers: %d.\n"
+"Are you running an old version of Pan by accident?"
+msgstr ""
+
+#: pan/data-impl/headers.cc:573
+#, fuzzy, c-format
+msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
+msgstr ""
+"%d cikk betöltése `%s' hírcsoportba %.1f másodperc alatt (%.0f cikk/"
+"másodperc)"
+
+#: pan/data-impl/headers.cc:797
+#, fuzzy, c-format
+msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgstr ""
+"%d cikk mentése \"%s\" hírcsoportból %.1f másodperc alatt (%.0f cikk/"
+"másodperc)"
+
+#: pan/data-impl/headers.cc:1089
+#, fuzzy, c-format
+msgid "Added %lu articles to %s."
+msgstr "%u cikk törölve \"%s\" hírcsoportból"
+
+#: pan/data-impl/profiles.cc:173
+#, fuzzy, c-format
+msgid "Error reading \"%s\": %s"
+msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+
+#: pan/data-impl/server.cc:296
+#, fuzzy, c-format
+msgid "Error loading newsserver information: %s"
+msgstr "\"%s\" feldolgozása"
+
+#: pan/data/article-cache.cc:148
+#, fuzzy, c-format
+msgid "Error opening directory: \"%s\": %s"
+msgstr "Hiba a könyvtár megnyitása közben: \"%s\": %s)"
+
+#: pan/data/article-cache.cc:364 pan/general/line-reader.cc:24
+#, fuzzy, c-format
+msgid "Error opening file \"%s\" %s"
+msgstr "Hiba a fájl megnyitása közben: \"%s\": %s"
+
+#: pan/data/article-cache.cc:395 pan/gui/post-ui.cc:1028
+#, c-format
+msgid "Error reading file \"%s\": %s"
+msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+
+#: pan/data/filter-info.cc:152
+#, fuzzy
+msgid "article doesn't have attachments"
+msgstr "A cikkben nincsenek teljes mellékletek"
+
+#: pan/data/filter-info.cc:156
+#, fuzzy
+msgid "the article has attachments"
+msgstr "A cikknek nincs melléklete"
+
+#: pan/data/filter-info.cc:160
+#, fuzzy
+msgid "the article isn't cached locally"
+msgstr "Helyben nem gyorstárazott cikkek mutatása"
+
+#: pan/data/filter-info.cc:164
+#, fuzzy
+msgid "the article is cached locally"
+msgstr "Helyben gyorstárazott cikkek mutatása"
+
+#: pan/data/filter-info.cc:168
+#, fuzzy
+msgid "the article wasn't posted by you"
+msgstr "A cikket nem én adtam fel"
+
+#: pan/data/filter-info.cc:172
+#, fuzzy
+msgid "the article was posted by you"
+msgstr "A cikket én adtam fel"
+
+#: pan/data/filter-info.cc:176
+#, fuzzy
+msgid "the article has been read"
+msgstr "A cikkben van egy"
+
+#: pan/data/filter-info.cc:180
+#, fuzzy
+msgid "the article hasn't been read"
+msgstr "A cikkben van egy"
+
+#: pan/data/filter-info.cc:184
+#, fuzzy, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "a cikk több, mint %d nap régi"
+
+#: pan/data/filter-info.cc:189
+#, fuzzy, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "A cikk legalább N _napos"
+
+#: pan/data/filter-info.cc:194
+#, fuzzy, c-format
+msgid "the article is less than %ld lines long"
+msgstr "a cikk több, mint %d nap régi"
+
+#: pan/data/filter-info.cc:199
+#, fuzzy, c-format
+msgid "the article is at least %ld lines long"
+msgstr "a cikk több, mint %d nap régi"
+
+#: pan/data/filter-info.cc:204
+#, fuzzy, c-format
+msgid "the article is less than %ld days old"
+msgstr "A cikk több, mint %d nap régi"
+
+#: pan/data/filter-info.cc:209
+#, fuzzy, c-format
+msgid "the article is at least %ld days old"
+msgstr "A cikk legalább N _napos"
+
+#: pan/data/filter-info.cc:214
+#, fuzzy, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "A cikket kevesebb, mint %d hírcsoportba küldték el"
+
+#: pan/data/filter-info.cc:219
+#, fuzzy, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "A ci_kket legalább N _csoportba elküldték:"
+
+#: pan/data/filter-info.cc:224
+#, fuzzy, c-format
+msgid "the article's score is less than %ld"
+msgstr "A cikk _több, mint"
+
+#: pan/data/filter-info.cc:229
+#, fuzzy, c-format
+msgid "the article's score is %ld or higher"
+msgstr "A cikk tárgyának használata"
+
+#: pan/data/filter-info.cc:238 pan/data/filter-info.cc:248
+#, fuzzy, c-format
+msgid "%s doesn't contain \"%s\""
+msgstr "%s nem tartalmazza %s \"%s\""
+
+#: pan/data/filter-info.cc:239 pan/data/filter-info.cc:249
+#, fuzzy, c-format
+msgid "%s isn't \"%s\""
+msgstr "%s tartalmazza %s \"%s\""
+
+#: pan/data/filter-info.cc:240 pan/data/filter-info.cc:250
+#, fuzzy, c-format
+msgid "%s doesn't begin with \"%s\""
+msgstr "%s nem tartalmazza %s \"%s\""
+
+#: pan/data/filter-info.cc:241 pan/data/filter-info.cc:251
+#, fuzzy, c-format
+msgid "%s doesn't end with \"%s\""
+msgstr "%s nem tartalmazza %s \"%s\""
+
+#: pan/data/filter-info.cc:242 pan/data/filter-info.cc:252
+#, fuzzy, c-format
+msgid "%s doesn't match the regex \"%s\""
+msgstr "%s nem tartalmazza %s \"%s\""
+
+#: pan/data/filter-info.cc:264
+#, fuzzy, c-format
+msgid "%s contains \"%s\""
+msgstr "%s tartalmazza %s \"%s\""
+
+#: pan/data/filter-info.cc:265
+#, fuzzy, c-format
+msgid "%s is \"%s\""
+msgstr "%s tartalmazza %s \"%s\""
+
+#: pan/data/filter-info.cc:266
+#, fuzzy, c-format
+msgid "%s begins with \"%s\""
+msgstr "%s tartalmazza %s \"%s\""
+
+#: pan/data/filter-info.cc:267
+#, fuzzy, c-format
+msgid "%s ends with \"%s\""
+msgstr "%s tartalmazza %s \"%s\""
+
+#: pan/data/filter-info.cc:268
+#, fuzzy, c-format
+msgid "%s matches the regex \"%s\""
+msgstr "%u cikk tesz eleget a %s szabálynak"
+
+#: pan/data/filter-info.cc:274
+msgid "Any of these tests fail:"
+msgstr ""
+
+#: pan/data/filter-info.cc:281
+msgid "All of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:288
+msgid "None of these tests pass:"
+msgstr ""
+
+#: pan/data/filter-info.cc:295
+msgid "Any of these tests pass:"
+msgstr ""
+
+#: pan/data/scorefile.cc:299
+#, c-format
+msgid ""
+"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
+"'Expires: DD-MM-YYYY'."
+msgstr ""
+
+#: pan/data/scorefile.cc:302
+#, c-format
+msgid "Expired old score from %*.*s, line %d"
+msgstr ""
+
+#: pan/data/scorefile.cc:373
+#, c-format
+msgid "Error reading score in %*.*s, line %d: unexpected line."
+msgstr ""
+
+#: pan/data/scorefile.cc:421
+#, c-format
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
+msgstr ""
+
+#. build the locale strings
+#: pan/general/e-util.cc:213
+msgid "%l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:214
+msgid "Today %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:215
+msgid "%a %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:216
+msgid "%b %d %l:%M %p"
+msgstr ""
+
+#: pan/general/e-util.cc:217
+msgid "%b %d %Y"
+msgstr ""
+
+#: pan/general/e-util.cc:242
+msgid "?"
+msgstr ""
+
+#: pan/general/file-util.cc:139
+#, fuzzy, c-format
+msgid "Creating directory \"%s\""
+msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#: pan/general/file-util.cc:142
+#, fuzzy, c-format
+msgid "Couldn't create directory \"%s\": %s"
+msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#: pan/general/text-match.cc:210
+msgid ""
+"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
+"fail."
+msgstr ""
+
+#: pan/general/text-match.cc:221
+#, c-format
+msgid "Can't use regular expression \"%s\": %s at position %d"
+msgstr ""
+
+#: pan/general/text-match.cc:229
+#, fuzzy, c-format
+msgid "Can't use regular expression \"%s\": %s"
+msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#: pan/gui/actions.cc:258 pan/gui/post-ui.cc:238
+#, fuzzy
+msgid "_File"
+msgstr "/_Fájl"
+
+#: pan/gui/actions.cc:259 pan/gui/post-ui.cc:239
+#, fuzzy
+msgid "_Edit"
+msgstr "/S_zerkesztés"
+
+#: pan/gui/actions.cc:260 pan/gui/prefs-ui.cc:460
+#, fuzzy
+msgid "_Layout"
+msgstr "Elrendezés"
+
+#: pan/gui/actions.cc:261
+#, fuzzy
+msgid "_Group Pane"
+msgstr "A _hírcsoport mező nagyítása"
+
+#: pan/gui/actions.cc:262
+#, fuzzy
+msgid "_Header Pane"
+msgstr "Fejlécmező mutatása"
+
+#: pan/gui/actions.cc:263
+#, fuzzy
+msgid "_Body Pane"
+msgstr "Hírcsoportlista mező"
+
+#: pan/gui/actions.cc:264
+#, fuzzy
+msgid "_View"
+msgstr "/_Nézet"
+
+#: pan/gui/actions.cc:265
+msgid "Character _Encoding"
+msgstr ""
+
+#: pan/gui/actions.cc:266
+#, fuzzy
+msgid "Filte_r"
+msgstr "Szűrők"
+
+#: pan/gui/actions.cc:267
+#, fuzzy
+msgid "_Go"
+msgstr "/_Hírcsoportok"
+
+#: pan/gui/actions.cc:268
+#, fuzzy
+msgid "_Actions"
+msgstr "Műveletek"
+
+#: pan/gui/actions.cc:269
+#, fuzzy
+msgid "_Articles"
+msgstr "/_Cikkek"
+
+#: pan/gui/actions.cc:270
+#, fuzzy
+msgid "_Groups"
+msgstr "Hírcsoportok"
+
+#: pan/gui/actions.cc:271 pan/gui/actions.cc:272
+#, fuzzy
+msgid "_Post"
+msgstr "/_Küldés"
+
+#: pan/gui/actions.cc:273 pan/gui/save-ui.cc:202
+#, fuzzy
+msgid "_Help"
+msgstr "/_Súgó"
+
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "_Read Group"
+msgstr "Hírcsoport újrabetöltése"
+
+#: pan/gui/actions.cc:274
+#, fuzzy
+msgid "Read Selected Group"
+msgstr "Következő olvasatlan hírcsoport olvasása"
+
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "_Mark Group _Read"
+msgstr "/_Hírcsoport megjelölése olvasottként"
+
+#: pan/gui/actions.cc:275
+#, fuzzy
+msgid "Mark Selected Groups Read"
+msgstr "A kijelölt cikkek megjelölése elolvasottként"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "_Delete Group's Articles"
+msgstr "/_Minden cikk törlése"
+
+#: pan/gui/actions.cc:276
+#, fuzzy
+msgid "Delete Selected Groups' Articles"
+msgstr "/_Minden cikk törlése"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New _Headers in Selected Groups"
+msgstr "Új fejlécek letöltése a kijelölt hírcsoportokhoz"
+
+#: pan/gui/actions.cc:277
+#, fuzzy
+msgid "Get New Headers for Selected Groups"
+msgstr "Új fejlécek letöltése a kijelölt hírcsoportokhoz"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New _Headers in Subscribed Groups"
+msgstr "Új fejlécek letöltése az előfizetett hírcsoportokhoz"
+
+#: pan/gui/actions.cc:278
+#, fuzzy
+msgid "Get New Headers for Subscribed Groups"
+msgstr "Új fejlécek letöltése az előfizetett hírcsoportokhoz"
+
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get _Headers..."
+msgstr "/Új fejlécek letöltése"
+
+#: pan/gui/actions.cc:279
+#, fuzzy
+msgid "Get Headers from Server"
+msgstr "Mintavétel a kijelölt hírcsoportok fejléceiből"
+
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Refresh Group List"
+msgstr "\"%s\" hírcsoport frissítése"
+
+#: pan/gui/actions.cc:280
+#, fuzzy
+msgid "Get a new Group list from the Server"
+msgstr "Akarsz kapcsolatot létesíteni \"%s\" kiszolgálóval?"
+
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "_Subscribe"
+msgstr "/_Előfizetés"
+
+#: pan/gui/actions.cc:281
+#, fuzzy
+msgid "Subscribe to Selected Groups"
+msgstr "Előfizetés a kijelölt hírcsoportokra"
+
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "_Unsubscribe"
+msgstr "/_Lemondás"
+
+#: pan/gui/actions.cc:282
+#, fuzzy
+msgid "Unsubscribe from Selected Groups"
+msgstr "A kijelölt hírcsoportok lemondása"
+
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "_Save Articles..."
+msgstr "Cikk mentése másként..."
+
+#: pan/gui/actions.cc:284
+#, fuzzy
+msgid "Save Selected Articles..."
+msgstr "Kijelölt cikkek á_thelyezése"
+
+#: pan/gui/actions.cc:286
+#, fuzzy
+msgid "_Import NZB Files..."
+msgstr ".newsrc importálása..."
+
+#: pan/gui/actions.cc:287
+#, fuzzy
+msgid "_Cancel Last Task"
+msgstr "Az utolsó feladat visszavonása"
+
+#: pan/gui/actions.cc:287
+msgid "Cancel Last Task"
+msgstr "Az utolsó feladat visszavonása"
+
+#: pan/gui/actions.cc:288
+#, fuzzy
+msgid "_Task Manager..."
+msgstr "_Feladatkezelő..."
+
+#: pan/gui/actions.cc:289
+msgid "_Event Log..."
+msgstr ""
+
+#: pan/gui/actions.cc:290
+#, fuzzy
+msgid "_Quit"
+msgstr "/S_zerkesztés"
+
+#: pan/gui/actions.cc:292
+#, fuzzy
+msgid "Select _All Articles"
+msgstr "Kijelölt _cikkek"
+
+#: pan/gui/actions.cc:293
+#, fuzzy
+msgid "_Deselect All Articles"
+msgstr "M_inden cikk kijelölése"
+
+#: pan/gui/actions.cc:294
+msgid "Add Su_bthreads to Selection"
+msgstr ""
+
+#: pan/gui/actions.cc:295
+msgid "Add _Threads to Selection"
+msgstr ""
+
+#: pan/gui/actions.cc:296
+msgid "Add _Similar Artilces to Selection"
+msgstr ""
+
+#: pan/gui/actions.cc:297
+#, fuzzy
+msgid "Select Article _Body"
+msgstr "/S_zerkesztés/Cikk _törzsének kijelölése"
+
+#: pan/gui/actions.cc:298
+#, fuzzy
+msgid "Edit _Preferences..."
+msgstr "/S_zerkesztés/_Beállítások..."
+
+#: pan/gui/actions.cc:299
+#, fuzzy
+msgid "Edit _Group Preferences..."
+msgstr "/S_zerkesztés/_Beállítások..."
+
+#: pan/gui/actions.cc:300
+#, fuzzy
+msgid "Edit P_osting Profiles..."
+msgstr "/_Fájl/Cikk _nyomtatása..."
+
+#: pan/gui/actions.cc:301
+#, fuzzy
+msgid "Edit _News Servers..."
+msgstr "Egyéb szűrők szerkesztése..."
+
+#: pan/gui/actions.cc:303
+#, fuzzy
+msgid "Jump to _Group Tab"
+msgstr "Hírcsoportlista mező"
+
+#: pan/gui/actions.cc:304
+#, fuzzy
+msgid "Jump to _Header Tab"
+msgstr "Szálmező"
+
+#: pan/gui/actions.cc:305
+#, fuzzy
+msgid "Jump to _Body Tab"
+msgstr "/_Nézet/_Idézett szöveg elrejtése"
+
+#: pan/gui/actions.cc:306
+#, fuzzy
+msgid "_Rot13 Selected Text"
+msgstr "A kijelölt szöveg rot13 kódolása"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear _Header Pane"
+msgstr "Fejlécmező mutatása"
+
+#: pan/gui/actions.cc:308
+#, fuzzy
+msgid "Clear Header Pane"
+msgstr "Fejlécmező mutatása"
+
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear _Body Pane"
+msgstr "Hírcsoportlista mező"
+
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "Clear Body Pane"
+msgstr "Hírcsoportlista mező"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download _Selected Article"
+msgstr "Kijelölt cikkek letöltése"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "Download Selected Article"
+msgstr "Kijelölt cikkek letöltése"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read _Selected Article"
+msgstr "Kijelölt cikkek letöltése"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "Read Selected Article"
+msgstr "Kijelölt cikkek letöltése"
+
+#: pan/gui/actions.cc:313
+#, fuzzy
+msgid "Read _More"
+msgstr "Olvasás tovább"
+
+#: pan/gui/actions.cc:313
+msgid "Read More"
+msgstr "Olvasás tovább"
+
+#: pan/gui/actions.cc:314
+msgid "Read _Back"
+msgstr ""
+
+#: pan/gui/actions.cc:314
+#, fuzzy
+msgid "Read Back"
+msgstr "elolvasott"
+
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next _Unread Group"
+msgstr "/N_avigálás/Következő olvasatlan _hírcsoport"
+
+#: pan/gui/actions.cc:315
+#, fuzzy
+msgid "Next Unread Group"
+msgstr "/N_avigálás/Következő olvasatlan _hírcsoport"
+
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next _Group"
+msgstr "/N_avigálás/Kö_vetkező hírcsoport"
+
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "Next Group"
+msgstr "/N_avigálás/Kö_vetkező hírcsoport"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next _Unread Article"
+msgstr "Következő olvasatlan cikk olvasása"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "Next Unread Article"
+msgstr "Következő olvasatlan cikk olvasása"
+
+#: pan/gui/actions.cc:318
+#, fuzzy
+msgid "Next _Article"
+msgstr "Következő cikk"
+
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next _Watched Article"
+msgstr "Minden cikk kijelölése"
+
+#: pan/gui/actions.cc:319
+#, fuzzy
+msgid "Next Watched Article"
+msgstr "Minden cikk kijelölése"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread _Thread"
+msgstr "Következő olvasatlan szál"
+
+#: pan/gui/actions.cc:320
+#, fuzzy
+msgid "Next Unread Thread"
+msgstr "Következő olvasatlan szál olvasása"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Threa_d"
+msgstr "Következő szál"
+
+#: pan/gui/actions.cc:321
+#, fuzzy
+msgid "Next Thread"
+msgstr "Következő szál"
+
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Pre_vious Article"
+msgstr "Előző cikk"
+
+#: pan/gui/actions.cc:322
+#, fuzzy
+msgid "Previous Article"
+msgstr "Előző cikk"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous _Thread"
+msgstr "Előző szál"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "Previous Thread"
+msgstr "Előző szál"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "_Parent Article"
+msgstr "Szülő cikk"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "Parent Article"
+msgstr "Szülő cikk"
+
+#: pan/gui/actions.cc:326
+#, fuzzy
+msgid "_Plonk Author"
+msgstr "- Szerző"
+
+#: pan/gui/actions.cc:327
+#, fuzzy
+msgid "_Watch Thread"
+msgstr "Figyelt szálak"
+
+#: pan/gui/actions.cc:328
+#, fuzzy
+msgid "_Ignore Thread"
+msgstr "Figyelmen kívül hagyott szálak"
+
+#: pan/gui/actions.cc:329
+#, fuzzy
+msgid "View Article's S_core"
+msgstr "Pan: Melléklet mentése másként"
+
+#: pan/gui/actions.cc:330
+#, fuzzy
+msgid "_Add a _Scoring Rule"
+msgstr "Új szabály hozzáadása."
+
+#: pan/gui/actions.cc:331
+#, fuzzy
+msgid "Cance_l Article..."
+msgstr "Cikk visszavonása"
+
+#: pan/gui/actions.cc:332
+#, fuzzy
+msgid "_Supersede Article..."
+msgstr "/Cikk _mentése másként..."
+
+#: pan/gui/actions.cc:333
+#, fuzzy
+msgid "_Delete Article"
+msgstr "_Cikk törlése"
+
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "_Mark Article as Read"
+msgstr "A kijelölt cikkek megjelölése elolvasottként"
+
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "Mark Article as Read"
+msgstr "A kijelölt cikkek megjelölése elolvasottként"
+
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as _Unread"
+msgstr "Megjelölés olvasatlanként"
+
+#: pan/gui/actions.cc:335
+#, fuzzy
+msgid "Mark Article as Unread"
+msgstr "Megjelölés olvasatlanként"
+
+#: pan/gui/actions.cc:337
+#, fuzzy
+msgid "_Post to Newsgroup"
+msgstr "Küldés a hírcsoportba"
+
+#: pan/gui/actions.cc:337
+msgid "Post to Newsgroup"
+msgstr "Küldés a hírcsoportba"
+
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "_Followup to  Newsgroup"
+msgstr "_Válasz írása a hírcsoportba"
+
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "Followup to Newsgroup"
+msgstr "_Válasz írása a hírcsoportba"
+
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "_Reply to Author"
+msgstr "- Szerző"
+
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "Reply to Author"
+msgstr "- Szerző"
+
+#: pan/gui/actions.cc:341
+#, fuzzy
+msgid "_Pan Home Page..."
+msgstr "/_Súgó/Pan _honlap..."
+
+#: pan/gui/actions.cc:342
+#, fuzzy
+msgid "Give _Feedback or Report a Bug..."
+msgstr "/_Súgó/_Hibajelentés..."
+
+#: pan/gui/actions.cc:343
+msgid "_Tip Jar..."
+msgstr ""
+
+#: pan/gui/actions.cc:345 pan/gui/actions.cc:347
+#, fuzzy
+msgid "_About..."
+msgstr "/_Súgó/_Névjegy..."
+
+#: pan/gui/actions.cc:361
+#, fuzzy
+msgid "_Thread Headers"
+msgstr "Fejlécek"
+
+#: pan/gui/actions.cc:362
+#, fuzzy
+msgid "_Wrap Article Body"
+msgstr "Az üzenet törzsének betördelése"
+
+#: pan/gui/actions.cc:363
+#, fuzzy
+msgid "Mute _Quoted Text"
+msgstr "Idézett szöveg elrejtése"
+
+#: pan/gui/actions.cc:364
+#, fuzzy
+msgid "Show All _Headers in Body Pane"
+msgstr "A teljes _fejléc mutatása az üzenettörzsben"
+
+#: pan/gui/actions.cc:365
+#, fuzzy
+msgid "Show _Smilies as Graphics"
+msgstr "_Figyelmeztés:"
+
+#: pan/gui/actions.cc:366
+msgid "Show *Bold*, __Underlined__, and /Italic/"
+msgstr ""
+
+#: pan/gui/actions.cc:367
+msgid "Size Pictures to _Fit"
+msgstr ""
+
+#: pan/gui/actions.cc:368
+#, fuzzy
+msgid "Smooth Scrolling"
+msgstr "Finom görgetés sebessége:"
+
+#: pan/gui/actions.cc:369
+msgid "Use _Monospace Font"
+msgstr ""
+
+#: pan/gui/actions.cc:371
+#, fuzzy
+msgid "_Work Online"
+msgstr "/_Fájl/On_line munka"
+
+#: pan/gui/actions.cc:372
+#, fuzzy
+msgid "_Tabbed Layout"
+msgstr "Elrendezés"
+
+#: pan/gui/actions.cc:373
+#, fuzzy
+msgid "Show Group _Pane"
+msgstr "Hírcsoportlista mező"
+
+#: pan/gui/actions.cc:374
+#, fuzzy
+msgid "Show Hea_der Pane"
+msgstr "Szálmező"
+
+#: pan/gui/actions.cc:375
+#, fuzzy
+msgid "Show Bod_y Pane"
+msgstr "Hírcsoportlista mező"
+
+#: pan/gui/actions.cc:376
+msgid "Show _Toolbar"
+msgstr ""
+
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate _Names in Group Pane"
+msgstr "A hírcsoport mező nagyítása"
+
+#: pan/gui/actions.cc:377
+#, fuzzy
+msgid "Abbreviate Newsgroup Names"
+msgstr "A hírcsoport mező nagyítása"
+
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only _Unread Articles"
+msgstr "Olvasatlan cikkek mutatása"
+
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Match Only Unread Articles"
+msgstr "Olvasatlan cikkek mutatása"
+
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only _Cached Articles"
+msgstr "Csak a gyorstárban lévő cikkek mutatása"
+
+#: pan/gui/actions.cc:380
+#, fuzzy
+msgid "Match Only Cached Articles"
+msgstr "Csak a gyorstárban lévő cikkek mutatása"
+
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only _Complete Articles"
+msgstr "Csak a teljes mellékletek megjelenítése"
+
+#: pan/gui/actions.cc:381
+#, fuzzy
+msgid "Match Only Complete Articles"
+msgstr "Csak a teljes mellékletek megjelenítése"
+
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only _My Articles"
+msgstr "Csak az új cikkek megjelenítése"
+
+#: pan/gui/actions.cc:382
+#, fuzzy
+msgid "Match Only Articles Posted by Me"
+msgstr "Az általam írott cikkek mutatása"
+
+#: pan/gui/actions.cc:383
+#, fuzzy
+msgid "Match Only _Watched Articles"
+msgstr "Csak a figyelt cikkek megjelenítése"
+
+#: pan/gui/actions.cc:383
+#, fuzzy
+msgid "Match Only Watched Articles"
+msgstr "Csak a figyelt cikkek megjelenítése"
+
+#: pan/gui/actions.cc:385
+msgid "Match Scores of 9999 (_Watched)"
+msgstr ""
+
+#: pan/gui/actions.cc:386
+msgid "Match Scores of 5000...9998 (_High)"
+msgstr ""
+
+#: pan/gui/actions.cc:387
+msgid "Match Scores of 1...4999 (Me_dium)"
+msgstr ""
+
+#: pan/gui/actions.cc:388
+msgid "Match Scores of 0 (_Normal)"
+msgstr ""
+
+#: pan/gui/actions.cc:389
+msgid "Match Scores of -9998...-1 (_Low)"
+msgstr ""
+
+#: pan/gui/actions.cc:390
+msgid "Match Scores of -9999 (_Ignored)"
+msgstr ""
+
+#: pan/gui/actions.cc:416
+#, fuzzy
+msgid "Show Matching _Articles"
+msgstr "Elolvasott cikkek mutatása"
+
+#: pan/gui/actions.cc:417
+#, fuzzy
+msgid "Show Matching Articles' _Threads"
+msgstr "Elolvasott cikkek mutatása"
+
+#: pan/gui/actions.cc:418
+#, fuzzy
+msgid "Show Matching Articles' _Subthreads"
+msgstr "Egyező cikkek és válaszok mutatása"
+
+#: pan/gui/actions.cc:435
+msgid "Baltic (ISO-8859-4)"
+msgstr ""
+
+#: pan/gui/actions.cc:436
+msgid "Baltic (ISO-8859-13)"
+msgstr ""
+
+#: pan/gui/actions.cc:437
+msgid "Baltic (Windows-1257)"
+msgstr ""
+
+#: pan/gui/actions.cc:438
+msgid "Central European (ISO-8859-2)"
+msgstr ""
+
+#: pan/gui/actions.cc:439
+msgid "Central European (Windows-1250)"
+msgstr ""
+
+#: pan/gui/actions.cc:440
+msgid "Chinese Simplified (gb2312)"
+msgstr ""
+
+#: pan/gui/actions.cc:441
+msgid "Chinese Traditional (big5)"
+msgstr ""
+
+#: pan/gui/actions.cc:442
+msgid "Cyrillic (ISO-8859-5)"
+msgstr ""
+
+#: pan/gui/actions.cc:443
+msgid "Cyrillic (Windows-1251)"
+msgstr ""
+
+#: pan/gui/actions.cc:444
+msgid "Cyrillic (KOI8-R)"
+msgstr ""
+
+#: pan/gui/actions.cc:445
+msgid "Cyrillic, Ukrainian (KOI8-U)"
+msgstr ""
+
+#: pan/gui/actions.cc:446
+msgid "Greek (ISO-8859-7)"
+msgstr ""
+
+#: pan/gui/actions.cc:447
+msgid "Japanese (ISO-2022-jp)"
+msgstr ""
+
+#: pan/gui/actions.cc:448
+msgid "Korean (euc-kr)"
+msgstr ""
+
+#: pan/gui/actions.cc:449
+msgid "Turkish (ISO-8859-9)"
+msgstr ""
+
+#: pan/gui/actions.cc:450
+msgid "Western (ISO-8859-1)"
+msgstr ""
+
+#: pan/gui/actions.cc:451
+msgid "Western, New (ISO-8859-15)"
+msgstr ""
+
+#: pan/gui/actions.cc:452
+msgid "Western (Windows-1252)"
+msgstr ""
+
+#: pan/gui/actions.cc:453
+msgid "Unicode (UTF-8)"
+msgstr ""
+
+#: pan/gui/body-pane.cc:855
+#, c-format
+msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
+msgstr ""
+
+#: pan/gui/body-pane.cc:856
+#, fuzzy, c-format
+msgid "Attachment not shown: MIME type %s/%s\n"
+msgstr "Melléklet: %s - %s - %s\n"
+
+#: pan/gui/body-pane.cc:936 pan/gui/header-pane.cc:1167
+#: pan/gui/header-pane.cc:1502 pan/gui/prefs-ui.cc:322
+#: pan/gui/score-add-ui.cc:136
+msgid "Subject"
+msgstr "Tárgy"
+
+#: pan/gui/body-pane.cc:938
+#, fuzzy
+msgid "From"
+msgstr "Feladó"
+
+#: pan/gui/body-pane.cc:940 pan/gui/header-pane.cc:1579 pan/gui/log-ui.cc:206
+#: pan/gui/prefs-ui.cc:318
+msgid "Date"
+msgstr "Dátum"
+
+#: pan/gui/body-pane.cc:947
+msgid "Newsgroups"
+msgstr "Hírcsoportok"
+
+#: pan/gui/body-pane.cc:952
+#, fuzzy
+msgid "Followup-To"
+msgstr "Followup-To:"
+
+#: pan/gui/body-pane.cc:962
+msgid "Reply-To"
+msgstr "Válaszcím"
+
+#: pan/gui/body-pane.cc:988
+#, fuzzy
+msgid " from "
+msgstr "Feladó: "
+
+#: pan/gui/body-pane.cc:990
+#, fuzzy
+msgid " at "
+msgstr "- Dátum"
+
+#: pan/gui/dl-headers-ui.cc:102
+#, fuzzy
+msgid "Pan: "
+msgstr "Pan %s "
+
+#: pan/gui/dl-headers-ui.cc:128
+#, fuzzy
+msgid "Get the last N _days' headers: "
+msgstr "A legújabb fejlécek letöltése:"
+
+#: pan/gui/dl-headers-ui.cc:136
+#, fuzzy
+msgid "Get _new headers"
+msgstr "Az új fejlécek"
+
+#: pan/gui/dl-headers-ui.cc:140
+#, fuzzy
+msgid "Get _all headers"
+msgstr "Az összes fejléc"
+
+#: pan/gui/dl-headers-ui.cc:144
+#, fuzzy
+msgid "Get the _latest N headers: "
+msgstr "A legújabb fejlécek letöltése:"
+
+#: pan/gui/group-pane.cc:608
+msgid "Group Name"
+msgstr "Csoportnév"
+
+#: pan/gui/group-pane.cc:700
+#, c-format
+msgid " (%lu)"
+msgstr ""
+
+#: pan/gui/group-pane.cc:829 pan/gui/header-pane.cc:1668
+#, fuzzy
+msgid "Clear the Filter"
+msgstr "Cikkszűrő"
+
+#: pan/gui/group-pane.cc:857
+msgid "Subscribed Groups"
+msgstr "Előfizetett hírcsoportok"
+
+#: pan/gui/group-pane.cc:858
+#, fuzzy
+msgid "Other Groups"
+msgstr "Új hírcsoportok"
+
+#: pan/gui/group-pane.cc:900
+msgid "Name"
+msgstr "Név"
+
+#: pan/gui/group-prefs-dialog.cc:101
+#, fuzzy
+msgid "No Profiles defined in Edit|Posting Profiles."
+msgstr "/_Fájl/Cikk _nyomtatása..."
+
+#: pan/gui/group-prefs-dialog.cc:129
+#, fuzzy
+msgid "Pan: Group Preferences"
+msgstr "Pan: Beállítások"
+
+#: pan/gui/group-prefs-dialog.cc:143
+#, fuzzy, c-format
+msgid "Properties for %s"
+msgstr "``%s'' tulajdonságai"
+
+#: pan/gui/group-prefs-dialog.cc:147
+msgid "Character _encoding:"
+msgstr ""
+
+#: pan/gui/group-prefs-dialog.cc:148
+#, fuzzy
+msgid "Directory for Saving Attachments"
+msgstr "Könyvtár a mentett mellékletfájlok számára"
+
+#: pan/gui/group-prefs-dialog.cc:153
+#, fuzzy
+msgid "Directory for _saving attachments:"
+msgstr "Könyvtár a mentett mellékletfájlok számára"
+
+#: pan/gui/group-prefs-dialog.cc:155
+#, fuzzy
+msgid "Posting _profile:"
+msgstr "Pan: Profil"
+
+#: pan/gui/gui.cc:236
+msgid "Open the Task Manager"
+msgstr "A feladatkezelő megnyitása"
+
+#: pan/gui/gui.cc:257
+#, fuzzy
+msgid "Open the Event Log"
+msgstr "Az állapotnapló megnyitása"
+
+#: pan/gui/gui.cc:481
+#, fuzzy
+msgid "Save Attachments"
+msgstr "Melléklet mentése ide:"
+
+#: pan/gui/gui.cc:529
+msgid "Import NZB File(s)"
+msgstr ""
+
+#: pan/gui/gui.cc:605
+msgid ""
+"Pan is now offline. Please ensure that space is available, then use File|"
+"Work Online to continue."
+msgstr ""
+
+#: pan/gui/gui.cc:730 pan/gui/gui.cc:1092 pan/gui/gui.cc:1296
+msgid "Pan"
+msgstr "Pan"
+
+#: pan/gui/gui.cc:902
+#, fuzzy
+msgid "Unable to supersede article."
+msgstr "/Cikk _mentése másként..."
+
+#: pan/gui/gui.cc:903 pan/gui/gui.cc:970
+msgid "The article doesn't match any of your posting profiles."
+msgstr ""
+
+#: pan/gui/gui.cc:944
+msgid "Revise and send this article to replace the old one."
+msgstr ""
+
+#: pan/gui/gui.cc:945 pan/gui/gui.cc:1005
+msgid "Be patient!  It will take time for your changes to take effect."
+msgstr ""
+
+#: pan/gui/gui.cc:969
+#, fuzzy
+msgid "Unable to cancel article."
+msgstr "Nem sikerült megváltoztatni a fájl jogosultságait"
+
+#: pan/gui/gui.cc:1004
+msgid "Send this article to ask your server to cancel your other one."
+msgstr ""
+
+#: pan/gui/gui.cc:1095 pan/gui/gui.cc:1115
+#, fuzzy
+msgid "Copyright © 2002-2006 Charles Kerr"
+msgstr "Copyright (C) 1999-2001, Pan Development Team"
+
+#: pan/gui/gui.cc:1100
+msgid "translator-credits"
+msgstr ""
+
+#: pan/gui/gui.cc:1211
+#, fuzzy
+msgid "_1. Group Pane"
+msgstr "A _hírcsoport mező nagyítása"
+
+#: pan/gui/gui.cc:1212
+#, fuzzy
+msgid "_2. Header Pane"
+msgstr "Fejlécmező mutatása"
+
+#: pan/gui/gui.cc:1213
+#, fuzzy
+msgid "_3. Body Pane"
+msgstr "Hírcsoportlista mező"
+
+#: pan/gui/gui.cc:1298
+#, fuzzy, c-format
+msgid "Pan: %s"
+msgstr "Pan %s "
+
+#: pan/gui/gui.cc:1415
+msgid "Offline"
+msgstr "Offline"
+
+#: pan/gui/gui.cc:1418
+#, c-format
+msgid "Closing %d connections"
+msgstr "%d kapcsolat lezárása"
+
+#: pan/gui/gui.cc:1420 pan/gui/gui.cc:1450
+msgid "No Connections"
+msgstr "Nincs kapcsolat"
+
+#: pan/gui/gui.cc:1424
+msgid "Connecting"
+msgstr "Kapcsolódás"
+
+#: pan/gui/gui.cc:1437
+#, c-format
+msgid "%s: %d idle, %d active @ %.1f KiBps"
+msgstr ""
+
+#: pan/gui/gui.cc:1493
+msgid "No Tasks"
+msgstr "Nincs feladat"
+
+#: pan/gui/gui.cc:1496
+#, c-format
+msgid "Tasks: %u/%u"
+msgstr "Feladat: %u/%u"
+
+#: pan/gui/gui.cc:1497
+#, c-format
+msgid "%u Tasks Running, %u Tasks Total"
+msgstr "%u feladat fut, összesen %u feladat van"
+
+#: pan/gui/gui.cc:1546
+msgid ""
+"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
+"then use \"File|Work Online\" to continue."
+msgstr ""
+
+#. less than a kibi...
+#: pan/gui/header-pane.cc:363 pan/gui/task-pane.cc:208
+#, c-format
+msgid "%lu B"
+msgstr ""
+
+#: pan/gui/header-pane.cc:365
+#, fuzzy, c-format
+msgid "%.1f KiB"
+msgstr "%d @ %.1f KB/s"
+
+#: pan/gui/header-pane.cc:367
+#, c-format
+msgid "%.1f MiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:369
+#, c-format
+msgid "%.1f GiB"
+msgstr ""
+
+#: pan/gui/header-pane.cc:1166
+#, fuzzy
+msgid "Subject or Author"
+msgstr "Tárgy: "
+
+#: pan/gui/header-pane.cc:1168 pan/gui/header-pane.cc:1534
+#: pan/gui/prefs-ui.cc:316 pan/gui/score-add-ui.cc:137
+msgid "Author"
+msgstr "Szerző"
+
+#: pan/gui/header-pane.cc:1169
+msgid "Message-ID"
+msgstr "Üzenetazonosító"
+
+#: pan/gui/header-pane.cc:1519 pan/gui/prefs-ui.cc:320
+msgid "Score"
+msgstr ""
+
+#: pan/gui/header-pane.cc:1549 pan/gui/prefs-ui.cc:319
+msgid "Lines"
+msgstr "Sor"
+
+#: pan/gui/header-pane.cc:1564 pan/gui/prefs-ui.cc:317
+msgid "Bytes"
+msgstr ""
+
+#: pan/gui/log-ui.cc:85
+msgid "Save Event List"
+msgstr ""
+
+#: pan/gui/log-ui.cc:167
+#, fuzzy
+msgid "Pan: Events"
+msgstr "Pan: Szabályok"
+
+#: pan/gui/log-ui.cc:216
+msgid "Message"
+msgstr "Üzenet"
+
+#: pan/gui/pan.cc:120
+msgid ""
+"Thank you for trying Pan!\n"
+" \n"
+"To start newsreading, first Add a Server."
+msgstr ""
+
+#: pan/gui/pan.cc:141
+msgid ""
+"General Options\n"
+"  -h, --help               Show this usage page.\n"
+"\n"
+"URL Options\n"
+"  news:message-id          Show the specified article.\n"
+"  news:group.name          Show the specified newsgroup.\n"
+"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"\n"
+"NZB Batch Options\n"
+"  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
+"  -o path, --output=path   Path to save attachments listed in the nzb "
+"files.\n"
+"  --nogui                  Only show console output, not the download "
+"queue.\n"
+msgstr ""
+
+#: pan/gui/pan.cc:198
+msgid "Error: nzb arguments used without nzb files."
+msgstr ""
+
+#: pan/gui/pan.cc:203
+msgid "Error: --nogui used without nzb files or news:message-id."
+msgstr ""
+
+#: pan/gui/pan.cc:207
+#, fuzzy, c-format
+msgid "Pan %s started"
+msgstr "A Pan %s elindult"
+
+#: pan/gui/pan.cc:223
+msgid "Please configure Pan's news servers before using it as an nzb client."
+msgstr ""
+
+#: pan/gui/post-ui.cc:86
+#, fuzzy, c-format
+msgid "Error setting spellchecker: %s"
+msgstr "Szerkesztés külső szüvegszerkesztővel"
+
+#: pan/gui/post-ui.cc:95
+msgid ""
+"<b>Spellchecker not found!</b>\n"
+" \n"
+"Was this copy of Pan compiled with GtkSpell enabled?"
+msgstr ""
+
+#: pan/gui/post-ui.cc:240
+#, fuzzy
+msgid "_Profile"
+msgstr "Profil"
+
+#: pan/gui/post-ui.cc:241
+msgid "Character Encoding"
+msgstr ""
+
+#: pan/gui/post-ui.cc:242
+#, fuzzy
+msgid "Set Editor"
+msgstr "Szerkesztés"
+
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "_Send Article"
+msgstr "Szülő cikk"
+
+#: pan/gui/post-ui.cc:244
+#, fuzzy
+msgid "Send Article Now"
+msgstr "Küldés most"
+
+#: pan/gui/post-ui.cc:245
+#, fuzzy
+msgid "Sa_ve Draft"
+msgstr "M_entés"
+
+#: pan/gui/post-ui.cc:245
+msgid "Save as a Draft for Future Posting"
+msgstr ""
+
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "_Open Draft..."
+msgstr "M_entés"
+
+#: pan/gui/post-ui.cc:246
+#, fuzzy
+msgid "Open an Article Draft"
+msgstr "/Cikk _olvasása"
+
+#: pan/gui/post-ui.cc:247
+msgid "Wrap _Now"
+msgstr ""
+
+#: pan/gui/post-ui.cc:247
+#, fuzzy
+msgid "Wrap the Article Body to 80 Columns"
+msgstr "Az üzenet törzsének betördelése"
+
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "_Close"
+msgstr "Bezárás"
+
+#: pan/gui/post-ui.cc:248
+#, fuzzy
+msgid "Close Window"
+msgstr "Naplóablak bezárása"
+
+#: pan/gui/post-ui.cc:249
+msgid "Cu_t"
+msgstr ""
+
+#: pan/gui/post-ui.cc:249
+#, fuzzy
+msgid "Cut Text"
+msgstr "Idézett szöveg"
+
+#: pan/gui/post-ui.cc:250
+msgid "_Copy"
+msgstr "_Másolás"
+
+#: pan/gui/post-ui.cc:250
+#, fuzzy
+msgid "Copy Text"
+msgstr "Tördelés"
+
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "_Paste"
+msgstr "Nyomtatás"
+
+#: pan/gui/post-ui.cc:251
+#, fuzzy
+msgid "Paste Text"
+msgstr "Idézett szöveg"
+
+#: pan/gui/post-ui.cc:252
+msgid "_Rot13"
+msgstr ""
+
+#: pan/gui/post-ui.cc:252
+msgid "Rot13 Selected Text"
+msgstr "A kijelölt szöveg rot13 kódolása"
+
+#: pan/gui/post-ui.cc:253
+#, fuzzy
+msgid "Run _Editor"
+msgstr "Szerkesztés"
+
+#: pan/gui/post-ui.cc:254
+msgid "_Manage Editor List..."
+msgstr ""
+
+#: pan/gui/post-ui.cc:255
+#, fuzzy
+msgid "Manage Posting Pr_ofiles..."
+msgstr "/_Fájl/Cikk _nyomtatása..."
+
+#: pan/gui/post-ui.cc:260
+#, fuzzy
+msgid "_Wrap Text"
+msgstr "Tördelés"
+
+#: pan/gui/post-ui.cc:261
+msgid "Remember _Charset for This Group"
+msgstr ""
+
+#: pan/gui/post-ui.cc:262
+msgid "Check _Spelling"
+msgstr ""
+
+#: pan/gui/post-ui.cc:317 pan/gui/post-ui.cc:318 pan/gui/post-ui.cc:319
+msgid "Baltic"
+msgstr ""
+
+#: pan/gui/post-ui.cc:320 pan/gui/post-ui.cc:321
+msgid "Central European"
+msgstr ""
+
+#: pan/gui/post-ui.cc:322
+msgid "Chinese Simplified"
+msgstr ""
+
+#: pan/gui/post-ui.cc:323
+msgid "Chinese Traditional"
+msgstr ""
+
+#: pan/gui/post-ui.cc:324 pan/gui/post-ui.cc:325 pan/gui/post-ui.cc:326
+msgid "Cyrillic"
+msgstr ""
+
+#: pan/gui/post-ui.cc:327
+msgid "Cyrillic, Ukrainian"
+msgstr ""
+
+#: pan/gui/post-ui.cc:328
+msgid "Greek"
+msgstr ""
+
+#: pan/gui/post-ui.cc:329
+#, fuzzy
+msgid "Japanese"
+msgstr "pan.sent"
+
+#: pan/gui/post-ui.cc:330
+#, fuzzy
+msgid "Korean"
+msgstr "olvasottként"
+
+#: pan/gui/post-ui.cc:331
+msgid "Turkish"
+msgstr ""
+
+#: pan/gui/post-ui.cc:332 pan/gui/post-ui.cc:334
+msgid "Western"
+msgstr ""
+
+#: pan/gui/post-ui.cc:333
+msgid "Western, New"
+msgstr ""
+
+#: pan/gui/post-ui.cc:335
+msgid "Unicode, UTF-8"
+msgstr ""
+
+#: pan/gui/post-ui.cc:431
+#, fuzzy, c-format
+msgid "Error loading post.ui: \"%s\""
+msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+
+#: pan/gui/post-ui.cc:502
+msgid "Manage Editor List"
+msgstr ""
+
+#: pan/gui/post-ui.cc:509
+#, fuzzy
+msgid "Editors"
+msgstr "Szerkesztés"
+
+#: pan/gui/post-ui.cc:609
+msgid "Your changes will be lost!"
+msgstr ""
+
+#: pan/gui/post-ui.cc:610
+msgid "Close this window and lose your changes?"
+msgstr ""
+
+#: pan/gui/post-ui.cc:647
+msgid "There were problems with this post."
+msgstr ""
+
+#: pan/gui/post-ui.cc:649
+msgid "Go Back"
+msgstr ""
+
+#: pan/gui/post-ui.cc:651
+msgid "Post Anyway"
+msgstr ""
+
+#: pan/gui/post-ui.cc:662
+#, fuzzy
+msgid "Go _Online"
+msgstr "_Online"
+
+#: pan/gui/post-ui.cc:834
+msgid ""
+"No posting server is set for this posting profile.\n"
+"Please edit the profile via Edit|Manage Posting Profiles."
+msgstr ""
+
+#: pan/gui/post-ui.cc:867
+#, fuzzy
+msgid "Pan is Offline."
+msgstr "Offline"
+
+#: pan/gui/post-ui.cc:868
+msgid "Go online to post the article?"
+msgstr ""
+
+#. *
+#. ***  Pop up a ``Posting'' Dialog...
+#. *
+#: pan/gui/post-ui.cc:881
+#, fuzzy
+msgid "Posting Article"
+msgstr "Cikkek rendezése"
+
+#: pan/gui/post-ui.cc:887
+msgid "Posting..."
+msgstr ""
+
+#: pan/gui/post-ui.cc:938
+#, fuzzy
+msgid "Error opening temporary file"
+msgstr "Hiba a fájl megnyitása közben: \"%s\": %s"
+
+#: pan/gui/post-ui.cc:958
+#, c-format
+msgid "Error writing article to temporary file: %s"
+msgstr ""
+
+#: pan/gui/post-ui.cc:977
+#, fuzzy, c-format
+msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
+msgstr "Szerkesztés külső szüvegszerkesztővel"
+
+#: pan/gui/post-ui.cc:1015
+#, fuzzy, c-format
+msgid "Error starting external editor: %s"
+msgstr "Szerkesztés külső szüvegszerkesztővel"
+
+#: pan/gui/post-ui.cc:1070
+#, fuzzy
+msgid "Open Draft Article"
+msgstr "/Cikk _olvasása"
+
+#: pan/gui/post-ui.cc:1233
+#, fuzzy
+msgid "Save Draft Article"
+msgstr "/_Cikkek mentése"
+
+#: pan/gui/post-ui.cc:1390
+#, fuzzy, c-format
+msgid "Couldn't read signature file \"%s\": %s"
+msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#: pan/gui/post-ui.cc:1411
+#, fuzzy, c-format
+msgid "Couldn't parse signature command \"%s\": %s"
+msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#: pan/gui/post-ui.cc:1448
+#, fuzzy
+msgid "Couldn't convert signature to UTF-8."
+msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#: pan/gui/post-ui.cc:1790
+#, fuzzy
+msgid "Post Article"
+msgstr "Betölti a cikket"
+
+#: pan/gui/post-ui.cc:1812
+#, fuzzy
+msgid "F_rom"
+msgstr "Feladó"
+
+#: pan/gui/post-ui.cc:1819
+#, fuzzy
+msgid "_Subject"
+msgstr "Tárgy"
+
+#: pan/gui/post-ui.cc:1825
+#, fuzzy
+msgid "_Newsgroups"
+msgstr "Hírcsoportok"
+
+#: pan/gui/post-ui.cc:1832
+#, fuzzy
+msgid "_Mail To"
+msgstr "Email"
+
+#: pan/gui/post-ui.cc:1842
+msgid "One header per line, in the form HeaderName: Value"
+msgstr ""
+
+#: pan/gui/post-ui.cc:1845
+#, fuzzy
+msgid "_More Headers"
+msgstr "Fejlécek"
+
+#: pan/gui/post-ui.cc:1867 pan/gui/profiles-dialog.cc:398
+#, c-format
+msgid "On %d, %n wrote:"
+msgstr "%d keltezéssel %n azt írta:"
+
+#: pan/gui/profiles-dialog.cc:102
+#, fuzzy
+msgid "Posting Profile"
+msgstr "Pan: Profil"
+
+#: pan/gui/profiles-dialog.cc:110
+#, fuzzy
+msgid "Profile Information"
+msgstr "Információk a kiszolgálóról"
+
+#: pan/gui/profiles-dialog.cc:114
+#, fuzzy
+msgid "_Profile Name:"
+msgstr "Profilnév"
+
+#: pan/gui/profiles-dialog.cc:117
+msgid "Required Information"
+msgstr "Kötelező adatok"
+
+#: pan/gui/profiles-dialog.cc:121
+#, fuzzy
+msgid "_Full Name:"
+msgstr "Szabály neve:"
+
+#: pan/gui/profiles-dialog.cc:124
+#, fuzzy
+msgid "_Email Address:"
+msgstr "Emailcím:"
+
+#: pan/gui/profiles-dialog.cc:126
+#, fuzzy
+msgid "_Post Articles via:"
+msgstr "Betölti a cikket"
+
+#: pan/gui/profiles-dialog.cc:129
+#, fuzzy
+msgid "Signature"
+msgstr "figyelmen kívül hagyott"
+
+#: pan/gui/profiles-dialog.cc:132
+msgid "_Use a Signature"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:136
+#, fuzzy
+msgid "Signature File"
+msgstr "Aláírásfájl:"
+
+#: pan/gui/profiles-dialog.cc:139
+msgid "_Signature:"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:144
+#, fuzzy
+msgid "Text File"
+msgstr "Következő cikk"
+
+#: pan/gui/profiles-dialog.cc:146
+#, fuzzy
+msgid "Text"
+msgstr "Idézett szöveg"
+
+#: pan/gui/profiles-dialog.cc:148
+#, fuzzy
+msgid "Command"
+msgstr "Nyomtatási parancs"
+
+#: pan/gui/profiles-dialog.cc:158
+msgid "Signature _Type:"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:161
+#, fuzzy
+msgid "Optional Information"
+msgstr "Információk a kiszolgálóról"
+
+#: pan/gui/profiles-dialog.cc:169
+#, c-format
+msgid ""
+"%i for Message-ID\n"
+"%a for Author and Address\n"
+"%n for Author name\n"
+"%d for Date"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:170
+#, fuzzy
+msgid "_Attribution:"
+msgstr "Engedélyezés"
+
+#: pan/gui/profiles-dialog.cc:190
+msgid ""
+"Extra headers to be included in your posts, such as\n"
+"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
+"Organization: Your Organization"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:199
+#, fuzzy
+msgid "E_xtra Headers:"
+msgstr "Fejlécek"
+
+#: pan/gui/profiles-dialog.cc:253
+#, fuzzy
+msgid "Invalid email address."
+msgstr "E-mail cím:"
+
+#: pan/gui/profiles-dialog.cc:254
+msgid "Please use an address of the form joe@somewhere.org"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:399
+msgid "New Profile"
+msgstr "Új profil"
+
+#: pan/gui/profiles-dialog.cc:442
+#, fuzzy
+msgid "Posting Profiles"
+msgstr "/_Fájl/Cikk _nyomtatása..."
+
+#: pan/gui/profiles-dialog.cc:458
+#, fuzzy
+msgid "Profiles"
+msgstr "Profil"
+
+#: pan/gui/profiles-dialog.cc:482
+#, fuzzy
+msgid "Add a New Profile"
+msgstr "Új profil hozzáadása"
+
+#: pan/gui/profiles-dialog.cc:493
+msgid "Edit the selected profile"
+msgstr "A kijelölt profil szerkesztése"
+
+#: pan/gui/profiles-dialog.cc:499
+msgid "Remove the selected profile"
+msgstr "A kijelölt profil törlése"
+
+#: pan/gui/prefs.cc:320
+#, fuzzy, c-format
+msgid "Couldn't parse %s color \"%s\""
+msgstr "Nem sikerült betölteni ezt a betűkészletet: %s"
+
+#: pan/gui/prefs-ui.cc:159
+#, fuzzy
+msgid "Use GNOME Preferences"
+msgstr "Pan: Beállítások"
+
+#: pan/gui/prefs-ui.cc:160
+#, fuzzy
+msgid "Use KDE Preferences"
+msgstr "Pan: Beállítások"
+
+#: pan/gui/prefs-ui.cc:161
+#, fuzzy
+msgid "Use OS/X Preferences"
+msgstr "Pan: Beállítások"
+
+#: pan/gui/prefs-ui.cc:162
+#, fuzzy
+msgid "Use Windows Preferences"
+msgstr "Pan: Beállítások"
+
+#: pan/gui/prefs-ui.cc:163
+#, fuzzy
+msgid "Custom Command:"
+msgstr "Nyomtatási parancs"
+
+#: pan/gui/prefs-ui.cc:315
+#, fuzzy
+msgid "Action"
+msgstr "Műveletek"
+
+#: pan/gui/prefs-ui.cc:321
+#, fuzzy
+msgid "State"
+msgstr "Állapot"
+
+#: pan/gui/prefs-ui.cc:354
+#, fuzzy
+msgid "Enabled"
+msgstr "Sikertelen"
+
+#: pan/gui/prefs-ui.cc:358
+#, fuzzy
+msgid "Column Name"
+msgstr "A neved:"
+
+#: pan/gui/prefs-ui.cc:392
+msgid "Pan: Preferences"
+msgstr "Pan: Beállítások"
+
+#: pan/gui/prefs-ui.cc:404
+msgid "Mouse"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:406
+msgid "Single-click activates, rather than selects, _groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:408
+msgid "Single-click activates, rather than selects, _articles"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:411
+#, fuzzy
+msgid "Groups"
+msgstr "Hírcsoportok"
+
+#: pan/gui/prefs-ui.cc:413
+#, fuzzy
+msgid "Get new headers in subscribed groups on _startup"
+msgstr "Új fejlécek letöltése az előfizetett hírcsoportokhoz"
+
+#: pan/gui/prefs-ui.cc:415
+#, fuzzy
+msgid "Get new headers when _entering group"
+msgstr "Új fejlécek letöltése a kijelölt hírcsoportokhoz"
+
+#: pan/gui/prefs-ui.cc:417
+msgid "Mark entire group _read when leaving group"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:420
+msgid "Articles"
+msgstr "Cikkek"
+
+#: pan/gui/prefs-ui.cc:421
+msgid "Space selects next article, not next unread"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:424
+msgid "_Behavior"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:428
+#, fuzzy
+msgid "Pane Layout"
+msgstr "Megjelenítés - Hírcsoportok"
+
+#: pan/gui/prefs-ui.cc:444
+#, fuzzy
+msgid "Tasks"
+msgstr "Nincs feladat"
+
+#: pan/gui/prefs-ui.cc:447
+msgid "1=Groups, 2=Headers, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:449
+msgid "1=Groups, 2=Body, 3=Headers"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:451
+msgid "1=Headers, 2=Groups, 3=Body"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:453
+msgid "1=Headers, 2=Body, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:455
+#, fuzzy
+msgid "1=Body, 2=Groups, 3=Headers"
+msgstr "Hírcsoport-fejlécek betöltése"
+
+#: pan/gui/prefs-ui.cc:457
+msgid "1=Body, 2=Headers, 3=Groups"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:464
+#, fuzzy
+msgid "Header Pane Columns"
+msgstr "Fejlécmező mutatása"
+
+#: pan/gui/prefs-ui.cc:468
+#, fuzzy
+msgid "Threads"
+msgstr "szálban van"
+
+#: pan/gui/prefs-ui.cc:470
+#, fuzzy
+msgid "E_xpand all threads when entering group"
+msgstr "Új fejlécek letöltése a kijelölt hírcsoportokhoz"
+
+#: pan/gui/prefs-ui.cc:473
+#, fuzzy
+msgid "_Headers"
+msgstr "Fejlécek"
+
+#: pan/gui/prefs-ui.cc:477
+msgid "Fonts"
+msgstr "Betűkészletek"
+
+#: pan/gui/prefs-ui.cc:479
+#, fuzzy
+msgid "Use custom font in Group Pane:"
+msgstr "Egyéni fájlnév használata"
+
+#: pan/gui/prefs-ui.cc:484
+#, fuzzy
+msgid "Use custom font in Header Pane:"
+msgstr "Egyéni fájlnév használata"
+
+#: pan/gui/prefs-ui.cc:489
+#, fuzzy
+msgid "Use custom font in Body Pane:"
+msgstr "Egyéni fájlnév használata"
+
+#: pan/gui/prefs-ui.cc:494
+msgid "Monospace font:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:498
+#, fuzzy
+msgid "_Fonts"
+msgstr "Betűkészletek"
+
+#: pan/gui/prefs-ui.cc:502
+#, fuzzy
+msgid "Header Pane"
+msgstr "Fejlécmező mutatása"
+
+#: pan/gui/prefs-ui.cc:505 pan/gui/prefs-ui.cc:511 pan/gui/prefs-ui.cc:517
+#: pan/gui/prefs-ui.cc:523 pan/gui/prefs-ui.cc:529
+#, fuzzy
+msgid "Text:"
+msgstr "Idézett szöveg"
+
+#: pan/gui/prefs-ui.cc:507 pan/gui/prefs-ui.cc:513 pan/gui/prefs-ui.cc:519
+#: pan/gui/prefs-ui.cc:525 pan/gui/prefs-ui.cc:531
+#, fuzzy
+msgid "Background:"
+msgstr "Törzs háttere"
+
+#: pan/gui/prefs-ui.cc:509
+msgid "Scores of 9999 or more:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:515
+msgid "Scores from 5000 to 9998:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:521
+msgid "Scores from 1 to 4999:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:527
+msgid "Scores from -9998 to -1:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:533
+msgid "Scores of -9999 or less:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:535
+#, fuzzy
+msgid "Body Pane"
+msgstr "Hírcsoportlista mező"
+
+#: pan/gui/prefs-ui.cc:541
+#, fuzzy
+msgid "Quoted Text:"
+msgstr "Idézett szöveg"
+
+#: pan/gui/prefs-ui.cc:542
+#, fuzzy
+msgid "URL:"
+msgstr "URL-ek"
+
+#: pan/gui/prefs-ui.cc:543
+msgid "Signature:"
+msgstr ""
+
+#: pan/gui/prefs-ui.cc:545
+#, fuzzy
+msgid "_Colors"
+msgstr "Színek"
+
+#: pan/gui/prefs-ui.cc:549
+#, fuzzy
+msgid "Preferred Applications"
+msgstr "Külső szövegszerkesztő"
+
+#: pan/gui/prefs-ui.cc:553
+#, fuzzy
+msgid "_Web Browser:"
+msgstr "Új hírcsoportok"
+
+#: pan/gui/prefs-ui.cc:556
+#, fuzzy
+msgid "_Mail Reader:"
+msgstr "Levélcím:"
+
+#: pan/gui/prefs-ui.cc:558
+#, fuzzy
+msgid "A_pplications"
+msgstr "Külső szövegszerkesztő"
+
+#: pan/gui/save-ui.cc:61
+#, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+" \n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+
+#: pan/gui/save-ui.cc:156
+#, fuzzy
+msgid "Pan: Save Articles"
+msgstr "Mentett cikkek mutatása"
+
+#: pan/gui/save-ui.cc:173
+msgid "Files"
+msgstr "Fájlok"
+
+#: pan/gui/save-ui.cc:176
+#, fuzzy
+msgid "Save _Text"
+msgstr "Beállítások mentése"
+
+#: pan/gui/save-ui.cc:179
+#, fuzzy
+msgid "Save _Attachments"
+msgstr "Melléklet mentése ide:"
+
+#: pan/gui/save-ui.cc:185
+#, fuzzy
+msgid "Path"
+msgstr "Nyomtatás"
+
+#: pan/gui/save-ui.cc:191
+msgid "C_ustom path:"
+msgstr ""
+
+#: pan/gui/save-ui.cc:195
+#, fuzzy
+msgid "Save Files to Path"
+msgstr "Melléklet mentése ide:"
+
+#: pan/gui/save-ui.cc:208
+#, fuzzy
+msgid "_Path:"
+msgstr "Nyomtatás"
+
+#: pan/gui/save-ui.cc:211
+#, c-format
+msgid "Group's _default path: %s"
+msgstr ""
+
+#: pan/gui/save-ui.cc:220
+#, fuzzy
+msgid "Group Management"
+msgstr "Bunkók kezelése."
+
+#. sort by age
+#: pan/gui/save-ui.cc:224
+msgid "Add to the queue sorted by a_ge"
+msgstr ""
+
+#. top of queue
+#: pan/gui/save-ui.cc:229
+#, fuzzy
+msgid "Add to the _front of the queue"
+msgstr "Feladat hozzáadása a sor elejére"
+
+#. bottom of queue
+#: pan/gui/save-ui.cc:234
+#, fuzzy
+msgid "Add to the _back of the queue"
+msgstr "Feladat hozzáadása a sor végére"
+
+#: pan/gui/score-add-ui.cc:86
+msgid "is more than"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:87
+#, fuzzy
+msgid "is at most"
+msgstr "A cikkben _van egy"
+
+#: pan/gui/score-add-ui.cc:109
+#, fuzzy
+msgid "increase the article's score by"
+msgstr "Az üzenet törzsének betördelése"
+
+#: pan/gui/score-add-ui.cc:110
+#, fuzzy
+msgid "decrease the article's score by"
+msgstr "Az üzenet törzsének betördelése"
+
+#: pan/gui/score-add-ui.cc:111
+#, fuzzy
+msgid "set the article's score to"
+msgstr "A cikk tárgyának használata"
+
+#: pan/gui/score-add-ui.cc:112
+#, fuzzy
+msgid "watch the article (set its score to 9999)"
+msgstr "A cikk tárgyának használata"
+
+#: pan/gui/score-add-ui.cc:113
+msgid "ignore the article (set its score to -9999)"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:138
+#, fuzzy
+msgid "References"
+msgstr "Hivatkozások: "
+
+#: pan/gui/score-add-ui.cc:139
+#, fuzzy
+msgid "Line Count"
+msgstr "- Sorok száma"
+
+#: pan/gui/score-add-ui.cc:140
+#, fuzzy
+msgid "Byte Count"
+msgstr "- Sorok száma"
+
+#: pan/gui/score-add-ui.cc:141
+msgid "Crosspost Group Count"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:142
+msgid "Age (in days)"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:164
+msgid "the next week"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:165
+msgid "the next month"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:166
+msgid "forever"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:191
+msgid "contains"
+msgstr "tartalmazza"
+
+#: pan/gui/score-add-ui.cc:192
+#, fuzzy
+msgid "doesn't contain"
+msgstr "nem tartalmazza"
+
+#: pan/gui/score-add-ui.cc:193
+#, fuzzy
+msgid "is"
+msgstr "Találat"
+
+#: pan/gui/score-add-ui.cc:194
+msgid "isn't"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:195
+msgid "starts with"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:196
+msgid "ends with"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:197
+msgid "matches regex"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:525
+#, fuzzy
+msgid "Add and Re_score"
+msgstr "Levelezőkiszolgáló"
+
+#: pan/gui/score-add-ui.cc:573
+#, fuzzy
+msgid "Pan: New Scoring Rule"
+msgstr "Pan: Szabály szerkesztése"
+
+#: pan/gui/score-add-ui.cc:592
+#, fuzzy
+msgid "New Scoring Rule"
+msgstr "Új szabály"
+
+#: pan/gui/score-add-ui.cc:603
+msgid "If the group name"
+msgstr ""
+
+#: pan/gui/score-add-ui.cc:610
+#, fuzzy
+msgid "And the article's"
+msgstr "Egyező cikkek mutatása"
+
+#: pan/gui/score-add-ui.cc:622
+#, fuzzy
+msgid "Then"
+msgstr "Köszönet"
+
+#: pan/gui/score-add-ui.cc:630
+#, fuzzy
+msgid "For"
+msgstr "_Mappa"
+
+#: pan/gui/score-view-ui.cc:64
+#, fuzzy
+msgid "Close and Re_score"
+msgstr "Naplóablak bezárása"
+
+#: pan/gui/score-view-ui.cc:167
+#, c-format
+msgid "File %s, Lines %d - %d"
+msgstr ""
+
+#: pan/gui/score-view-ui.cc:170
+#, fuzzy, c-format
+msgid "Name: \"%s\""
+msgstr "\"%s\" mentve"
+
+#: pan/gui/score-view-ui.cc:199
+#, fuzzy
+msgid "Pan: Article's Scores"
+msgstr "Pan: Melléklet mentése másként"
+
+#: pan/gui/score-view-ui.cc:225
+#, fuzzy
+msgid "Add"
+msgstr "_Hozzáadás"
+
+#: pan/gui/score-view-ui.cc:230
+#, fuzzy
+msgid "New Score"
+msgstr "News kiszolgálók"
+
+#: pan/gui/score-view-ui.cc:235
+msgid "Criteria"
+msgstr ""
+
+#: pan/gui/score-view-ui.cc:258
+#, fuzzy
+msgid "Add a New Scoring Rule"
+msgstr "Új szabály hozzáadása."
+
+#: pan/gui/score-view-ui.cc:265
+#, fuzzy
+msgid "Remove the Selected Scoring Rule"
+msgstr "A kijelölt szabály törlése."
+
+#: pan/gui/server-ui.cc:162
+msgid "Please specify the server's address."
+msgstr ""
+
+#. create the dialog
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Add a Server"
+msgstr "Pan: Kiszolgáló szerkesztése"
+
+#: pan/gui/server-ui.cc:201
+#, fuzzy
+msgid "Pan: Edit a Server's Settings"
+msgstr "Beállítások kiszolgálónként"
+
+#: pan/gui/server-ui.cc:222
+msgid "Location"
+msgstr "Hely"
+
+#: pan/gui/server-ui.cc:226
+msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
+msgstr ""
+
+#: pan/gui/server-ui.cc:227
+#, fuzzy
+msgid "_Address:"
+msgstr "Cím:"
+
+#: pan/gui/server-ui.cc:231
+msgid "The news server's port number.  Typically 119."
+msgstr ""
+
+#: pan/gui/server-ui.cc:232
+#, fuzzy
+msgid "Por_t:"
+msgstr "Port:"
+
+#: pan/gui/server-ui.cc:235
+msgid "Login (if Required)"
+msgstr ""
+
+#: pan/gui/server-ui.cc:239
+#, fuzzy
+msgid "_Username:"
+msgstr "Felhasználónév"
+
+#: pan/gui/server-ui.cc:240
+msgid ""
+"The username to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+#: pan/gui/server-ui.cc:244
+#, fuzzy
+msgid "_Password:"
+msgstr "Jelszó"
+
+#: pan/gui/server-ui.cc:245
+msgid ""
+"The password to give the server when asked.  If your server doesn't require "
+"authentication, you can leave this blank."
+msgstr ""
+
+#: pan/gui/server-ui.cc:248
+#, fuzzy
+msgid "Settings"
+msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+
+#: pan/gui/server-ui.cc:254
+#, fuzzy
+msgid "Connection _Limit:"
+msgstr "Kapcsolat"
+
+#: pan/gui/server-ui.cc:257
+msgid "After Two Weeks"
+msgstr ""
+
+#: pan/gui/server-ui.cc:258
+msgid "After One Month"
+msgstr ""
+
+#: pan/gui/server-ui.cc:259
+msgid "After Two Months"
+msgstr ""
+
+#: pan/gui/server-ui.cc:260
+#, fuzzy
+msgid "Never Expire Old Articles"
+msgstr "Kijelölt cikkek áthelyezése"
+
+#: pan/gui/server-ui.cc:274
+#, fuzzy
+msgid "E_xpire Old Articles:"
+msgstr "Cikkek szálakba rendezése"
+
+#: pan/gui/server-ui.cc:277
+#, fuzzy
+msgid "Primary"
+msgstr "Prioritás"
+
+#: pan/gui/server-ui.cc:278
+msgid "Fallback"
+msgstr ""
+
+#: pan/gui/server-ui.cc:292
+#, fuzzy
+msgid "Server Rank:"
+msgstr "Kiszolgáló port"
+
+#: pan/gui/server-ui.cc:296
+msgid ""
+"Fallback servers are used for articles that can't be found on the "
+"primaries.  One common approach is to use free servers as primaries and "
+"subscription servers as fallbacks."
+msgstr ""
+
+#: pan/gui/server-ui.cc:420
+#, c-format
+msgid "Really delete \"%s\"?"
+msgstr ""
+
+#. dialog
+#: pan/gui/server-ui.cc:492
+#, fuzzy
+msgid "Pan: Servers"
+msgstr "Levelezőkiszolgáló"
+
+#: pan/gui/server-ui.cc:512
+#, fuzzy
+msgid "Servers"
+msgstr "Kiszolgáló"
+
+#: pan/gui/server-ui.cc:538
+#, fuzzy
+msgid "Add a Server"
+msgstr "Levelezőkiszolgáló"
+
+#: pan/gui/server-ui.cc:548
+#, fuzzy
+msgid "Edit a Server's Settings"
+msgstr "Beállítások kiszolgálónként"
+
+#: pan/gui/server-ui.cc:555
+#, fuzzy
+msgid "Remove a Server"
+msgstr "Hírkiszolgáló"
+
+#. less than a mebi...
+#: pan/gui/task-pane.cc:210
+#, c-format
+msgid "%.2f KiB"
+msgstr ""
+
+#. less than a gibi...
+#: pan/gui/task-pane.cc:212
+#, c-format
+msgid "%.2f MiB"
+msgstr ""
+
+#: pan/gui/task-pane.cc:214
+#, c-format
+msgid "%.2f GiB"
+msgstr ""
+
+#: pan/gui/task-pane.cc:250
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
+msgstr "Pan %s Feladatkezelő (%d sorban áll, %d fut, %d sikertelen)"
+
+#: pan/gui/task-pane.cc:252
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running)"
+msgstr "Pan %s Feladatkezelő (%d sorban áll, %d fut)"
+
+#: pan/gui/task-pane.cc:254
+#, fuzzy
+msgid "Pan: Tasks"
+msgstr "Pan: Feladatkezelő"
+
+#: pan/gui/task-pane.cc:268
+#, c-format
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
+msgstr ""
+
+#: pan/gui/task-pane.cc:326
+msgid "Running"
+msgstr "Fut"
+
+#: pan/gui/task-pane.cc:327
+msgid "Queued"
+msgstr "Sorban áll"
+
+#: pan/gui/task-pane.cc:328
+msgid "Stopped"
+msgstr ""
+
+#: pan/gui/task-pane.cc:329
+#, fuzzy
+msgid "Removing"
+msgstr "Törlés"
+
+#: pan/gui/task-pane.cc:330
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#: pan/gui/task-pane.cc:354
+#, fuzzy, c-format
+msgid "%d%% Done; %d:%02d:%02d Remaining (%d @ %lu KiB/s)"
+msgstr "%.2f KB/s, %d:%02d:%02d maradt"
+
+#: pan/gui/task-pane.cc:358
+#, fuzzy, c-format
+msgid "%d%% Done; %s"
+msgstr "% kész"
+
+#: pan/gui/task-pane.cc:366
+#, fuzzy, c-format
+msgid "to %s"
+msgstr "%s névjegye"
+
+#: pan/gui/task-pane.cc:433
+msgid "Restart Tasks"
+msgstr ""
+
+#: pan/gui/task-pane.cc:438
+#, fuzzy
+msgid "Stop Tasks"
+msgstr "Nincs feladat"
+
+#: pan/gui/task-pane.cc:443
+#, fuzzy
+msgid "Delete Tasks"
+msgstr "Szálak törlése"
+
+#: pan/gui/task-pane.cc:467
+msgid "Status"
+msgstr "Állapot"
+
+#: pan/gui/url.cc:92
+#, fuzzy, c-format
+msgid "Error starting URL: %s (Command was: %s)"
+msgstr "Szerkesztés külső szüvegszerkesztővel"
+
+#: pan/tasks/nntp.cc:214
+#, fuzzy, c-format
+msgid "Unable to set group: %s"
+msgstr "Nem sikerült létrehozni a fájlt: \"%s\""
+
+#: pan/tasks/nntp.cc:231
+#, fuzzy, c-format
+msgid "Error: %s"
+msgstr "Hiba"
+
+#: pan/tasks/socket-impl-gio.cc:112
+#, c-format
+msgid "Making a new connection to %*.*s"
+msgstr ""
+
+#: pan/tasks/socket-impl-gio.cc:347
+#, fuzzy
+msgid "Unknown Error"
+msgstr "Ismeretlen"
+
+#: pan/tasks/socket-impl-gio.cc:348
+#, fuzzy, c-format
+msgid "Error reading from socket: %s"
+msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+
+#: pan/tasks/task-article.cc:54 pan/tasks/task-article.cc:124
+#, fuzzy, c-format
+msgid "Saving %s"
+msgstr "\"%s\" mentése"
+
+#: pan/tasks/task-article.cc:56
+#, fuzzy, c-format
+msgid "Reading %s"
+msgstr "Olvasás"
+
+#: pan/tasks/task-article.cc:291
+msgid "Error initializing uulib"
+msgstr ""
+
+#: pan/tasks/task-article.cc:302
+#, fuzzy, c-format
+msgid "Couldn't load \"%s\": %s"
+msgstr "Nem sikerült betölteni ezt a betűkészletet: %s"
+
+#: pan/tasks/task-article.cc:335
+#, c-format
+msgid "Saved \"%s\""
+msgstr "\"%s\" mentve"
+
+#: pan/tasks/task-article.cc:339
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s. %s"
+msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+
+#: pan/tasks/task-article.cc:341
+#, fuzzy, c-format
+msgid ""
+"Error saving \"%s\":\n"
+"%s."
+msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+
+#: pan/tasks/task-groups.cc:40
+#, fuzzy, c-format
+msgid "Getting group list from \"%s\""
+msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+
+#: pan/tasks/task-groups.cc:121
+#, fuzzy, c-format
+msgid "Fetched %lu Groups"
+msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+
+#: pan/tasks/task-post.cc:34
+#, fuzzy, c-format
+msgid "Posting \"%s\""
+msgstr "\"%s\" feldolgozása"
+
+#: pan/tasks/task-xover.cc:71
+#, fuzzy, c-format
+msgid "Getting all headers for \"%s\""
+msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+
+#: pan/tasks/task-xover.cc:73
+#, fuzzy, c-format
+msgid "Getting new headers for \"%s\""
+msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+
+#. SAMPLE
+#: pan/tasks/task-xover.cc:75
+#, fuzzy, c-format
+msgid "Sampling headers for \"%s\""
+msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+
+#: pan/tasks/task-xover.cc:321
+#, fuzzy, c-format
+msgid "%s (%lu parts, %lu articles)"
+msgstr "%u cikk szűrése"
+
+#: pan/usenet-utils/gnksa.cc:879
+#, c-format
+msgid "No email address provided; generating message-id with domain \"%s\""
+msgstr ""
+
+#: pan/usenet-utils/message-check.cc:123
+msgid "Warning: Reply seems to be top-posted."
+msgstr ""
+
+#: pan/usenet-utils/message-check.cc:144
+msgid "Warning: The signature marker should be \"-- \", not \"--\"."
+msgstr ""
+
+#: pan/usenet-utils/message-check.cc:161
+#, fuzzy
+msgid "Warning: Signature prefix with no signature."
+msgstr "FIGYELEM: Aláírás előtag aláírás nélkül."
+
+#: pan/usenet-utils/message-check.cc:166
+#, fuzzy
+msgid "Warning: Signature is more than 4 lines long."
+msgstr "FIGYELEM: Az aláírás több, mint négy sor."
+
+#: pan/usenet-utils/message-check.cc:171
+#, fuzzy
+msgid "Warning: Signature is more than 80 characters wide."
+msgstr "FIGYELEM: Az aláírás több, mint négy sor."
+
+#: pan/usenet-utils/message-check.cc:196
+#, fuzzy, c-format
+msgid "Warning: %d lines are more than 80 characters wide."
+msgstr "FIGYELEM: Az üzenetben %d sor hosszabb, mint 80 karakter."
+
+#: pan/usenet-utils/message-check.cc:219
+#, fuzzy
+msgid "Error: Message is empty."
+msgstr "HIBA: Az üzenet üres."
+
+#: pan/usenet-utils/message-check.cc:254
+#, fuzzy
+msgid "Warning: The message is entirely quoted text!"
+msgstr "FIGYELEM: Az üzenet csak idézetből áll!"
+
+#: pan/usenet-utils/message-check.cc:255
+#, fuzzy
+msgid "Warning: The message is mostly quoted text."
+msgstr "FIGYELEM: Az üzenet nagyrészt idézetet tartalmaz."
+
+#: pan/usenet-utils/message-check.cc:305
+#, fuzzy
+msgid "Error: Message appears to have no new content."
+msgstr "HIBA: Az üzenetben nincs új tartalom."
+
+#: pan/usenet-utils/message-check.cc:340 pan/usenet-utils/message-check.cc:375
+#, fuzzy, c-format
+msgid "Warning: Unknown group \"%s\"."
+msgstr "FIGYELEM: Ismeretlen hírcsoport: \"%s\""
+
+#: pan/usenet-utils/message-check.cc:347
+#, fuzzy
+msgid "Warning: Following-Up to too many groups."
+msgstr "FIGYELEM: Sok hírcsoportba küldted el ezt az üzenetet."
+
+#: pan/usenet-utils/message-check.cc:358
+#, fuzzy
+msgid "Error: No Subject specified."
+msgstr "HIBA: Nincs tárgy megadva."
+
+#: pan/usenet-utils/message-check.cc:383
+#, fuzzy, c-format
+msgid "Warning: Group \"%s\" is read-only."
+msgstr "FIGYELEM: \"%s\" csoport csak olvasható."
+
+#: pan/usenet-utils/message-check.cc:392
+#, fuzzy
+msgid "Error: Posting to a very large number of groups."
+msgstr "HIBA: Nagyon sok hírcsoportba küldted el ezt az üzenetet."
+
+#: pan/usenet-utils/message-check.cc:397
+#, fuzzy
+msgid "Warning: Posting to a large number of groups."
+msgstr "FIGYELEM: Sok hírcsoportba küldted el ezt az üzenetet."
+
+#: pan/usenet-utils/message-check.cc:404
+#, fuzzy
+msgid "Warning: Crossposting without setting Followup-To header."
+msgstr "FIGYELEM: Keresztpostázás Followup-To beállítása nélkül."
+
+#: pan/usenet-utils/message-check.cc:428
+#, fuzzy
+msgid "Error: Bad email address."
+msgstr "E-mail cím:"
+
+#: pan/usenet-utils/message-check.cc:437
+msgid "Warning: Most newsgroups frown upon HTML posts."
+msgstr ""
+
+#: pan/usenet-utils/message-check.cc:467
+#, fuzzy
+msgid "Error: No Recipients."
+msgstr "Nincs címzett!"
+
+#: pan/usenet-utils/text-massager.cc:309
+msgid "> [quoted text muted]"
+msgstr "> [idézet elrejtve]"
+
+#: pan/usenet-utils/utf8-utils.cc:252
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Post New Article"
+#~ msgstr "Betölti a cikket"
+
+#, fuzzy
+#~ msgid "_Follow-up"
+#~ msgstr "Followup-To"
+
+#, fuzzy
+#~ msgid "Follow-up to Article"
+#~ msgstr "Válasz a hírcsoportban"
+
+#, fuzzy
+#~ msgid "_Post Article"
+#~ msgstr "Betölti a cikket"
+
+#, fuzzy
+#~ msgid "Post this Article Now"
+#~ msgstr "QUIT sikertelen: %s"
+
+#, fuzzy
+#~ msgid "Are you sure you want to close this window?"
+#~ msgstr ""
+#~ "Biztos, hogy törölni akarod ezt a %d hírcsoportot/mappát és az összes "
+#~ "benne lévő cikket?"
+
+#, fuzzy
+#~ msgid "Error: No Newsgroups specified."
+#~ msgstr "HIBA: Nincs címzett megadva."
+
+#, fuzzy
+#~ msgid "_Posting"
+#~ msgstr "/_Küldés"
+
+#, fuzzy
+#~ msgid "_Save Attachments..."
+#~ msgstr "Bináris melléklet mentése másként..."
+
+#, fuzzy
+#~ msgid "Save Selected Articles' Attachments..."
+#~ msgstr "A kijelölt cikkek mellékleteinek mentése."
+
+#~ msgid "Message-Id"
+#~ msgstr "Üzenetazonosító"
+
+#, fuzzy
+#~ msgid "Saved newsrc files in %.1f seconds"
+#~ msgstr "%d szabály mentése %.1f másodperc alatt (%.0f szabály/másodperc)"
+
+#, fuzzy
+#~ msgid "Pan: Get Headers from Server"
+#~ msgstr "Mintavétel a kijelölt hírcsoportok fejléceiből"
+
+#, fuzzy
+#~ msgid "%d connections totaling %.1f KiB per second"
+#~ msgstr "%d kapcsolat, összesen %.1f KB másodpercenként"
+
+#, fuzzy
+#~ msgid "_Reply-To Header:"
+#~ msgstr "Reply-To:"
+
+#, fuzzy
+#~ msgid "Or_ganization Header:"
+#~ msgstr "Szervezet:"
+
+#, fuzzy
+#~ msgid "Automatic Downloads"
+#~ msgstr "A cikk régi"
+
+#, fuzzy
+#~ msgid "Save a_ttachments to path:"
+#~ msgstr "Melléklet mentése ide:"
+
+#, fuzzy
+#~ msgid "Error decoding \"%s\": %s"
+#~ msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+
+#~ msgid "UNKNOWN"
+#~ msgstr "ISMERETLEN"
+
+#, fuzzy
+#~ msgid "Decode can't access directory \"%s\""
+#~ msgstr "A dekódoló nem éri el a \"%s\" útvonalat."
+
+#, fuzzy
+#~ msgid "_Watch Subthread"
+#~ msgstr "/_Szál figyelése"
+
+#, fuzzy
+#~ msgid "_Ignore Subthread"
+#~ msgstr "/S_zál kihagyása"
+
+#~ msgid "Colors"
+#~ msgstr "Színek"
+
+#, fuzzy
+#~ msgid "Header Pane background:"
+#~ msgstr "Törzs háttere"
+
+#, fuzzy
+#~ msgid "Read articles:"
+#~ msgstr "Elolvasott cikkek mutatása"
+
+#, fuzzy
+#~ msgid "Unread articles:"
+#~ msgstr "Olvasatlan cikkek mutatása"
+
+#, fuzzy
+#~ msgid "Couldn't create temporary file: %s"
+#~ msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#, fuzzy
+#~ msgid "Error renaming \"%s\" as \"%s\": %s."
+#~ msgstr "\"%s\" feldolgozása"
+
+#, fuzzy
+#~ msgid "Can't backup \"%s\" as \"%s\": %s"
+#~ msgstr "\"%s\" feldolgozása"
+
+#, fuzzy
+#~ msgid "Can't write to \"%s\": %s"
+#~ msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#~ msgid "Body"
+#~ msgstr "Törzs"
+
+#~ msgid "subject"
+#~ msgstr "tárgy"
+
+#~ msgid "author"
+#~ msgstr "szerző"
+
+#, fuzzy
+#~ msgid "references"
+#~ msgstr "Hivatkozások"
+
+#, fuzzy
+#~ msgid "line count"
+#~ msgstr "+ Sorok száma"
+
+#, fuzzy
+#~ msgid "Change"
+#~ msgstr "kifejezés"
+
+#, fuzzy
+#~ msgid "Connections"
+#~ msgstr "Kapcsolat"
+
+#, fuzzy
+#~ msgid "Active"
+#~ msgstr "Műveletek"
+
+#~ msgid "Article %s (%s) canceled"
+#~ msgstr "A cikket visszavonták: %s (%s)"
+
+#~ msgid ""
+#~ "Unable to cancel article: Couldn't find matching article in folder `pan."
+#~ "sent'!"
+#~ msgstr ""
+#~ "Nem sikerült visszavonni a cikket: nem található a `pan.sent' mappában "
+#~ "ezzel megegyező cikk"
+
+#~ msgid ""
+#~ "Unable to supersede article: Couldn't find matching article in folder "
+#~ "`pan.sent'!"
+#~ msgstr ""
+#~ "Nem sikerült felülírni a cikket: nem található a `pan.sent' mappában "
+#~ "ezzel megegyező cikk"
+
+#~ msgid "Pan: Filter Out Articles"
+#~ msgstr "Pan: Cikkek szűrése"
+
+#~ msgid "Add Author to Bozo Filter"
+#~ msgstr "A szerző hozzáadása a bunkókhoz"
+
+#~ msgid "Regular Expression"
+#~ msgstr "Reguláris kifejezés"
+
+#~ msgid "Add Author to Spam Filter"
+#~ msgstr "A szerző hozzáadása a levélszemetelőkhöz"
+
+#~ msgid "Add Subject to Spam Filter"
+#~ msgstr "A tárgy hozzáadása a levélszemetelőkhöz"
+
+#~ msgid "Pan: Find Message"
+#~ msgstr "Pan: Üzenet keresése"
+
+#~ msgid "Unread Only"
+#~ msgstr "Csak olvasatlan"
+
+#~ msgid "Case Sensitive"
+#~ msgstr "Kis- és nagybetű megkülönböztetése"
+
+#~ msgid "Find:"
+#~ msgstr "Keresés:"
+
+#~ msgid ""
+#~ "Type in a search string and press ENTER.\n"
+#~ "Wildcards are allowed."
+#~ msgstr ""
+#~ "Írd be a keresendő karakterláncot, és nyomj ENTER-t. \n"
+#~ "Szabad helyettesítő karaktereket használni."
+
+#~ msgid "You must download the article before you can cancel it."
+#~ msgstr "Visszavonás előtt le kell tölteni a cikket."
+
+#~ msgid "You must download the article before you can supersede it."
+#~ msgstr "Felülírás előtt le kell tölteni a cikket."
+
+#~ msgid "/---"
+#~ msgstr "/---"
+
+#~ msgid "/Save Article A_ttachments"
+#~ msgstr "/Cik_k mellékleteinek mentése"
+
+#~ msgid "/D_ownload Flagged"
+#~ msgstr "/Megjelöltek _letöltése"
+
+#~ msgid "/_Flag"
+#~ msgstr "/_Megjelölés"
+
+#~ msgid "/_Unflag"
+#~ msgstr "/_Megjelölés törlése"
+
+#~ msgid "/Add to Bo_zo or Spam Filter..."
+#~ msgstr "/Hozzáadás a _bunkókhoz vagy a levélszemetelőkhöz..."
+
+#~ msgid "/_Copy to Folder"
+#~ msgstr "/_Másolás mappába"
+
+#~ msgid "/_Delete"
+#~ msgstr "/_Törlés"
+
+#~ msgid "Loading group \"%s\""
+#~ msgstr "\"%s\" hírcsoport betöltése"
+
+#~ msgid "Filtering Articles"
+#~ msgstr "Cikkek szűrése"
+
+#~ msgid "Updating Header Pane..."
+#~ msgstr "A fejléc mező frissítése..."
+
+#~ msgid "Error saving article \"%s\" (is %s full?)"
+#~ msgstr "Hiba a cikk mentése közben: \"%s\" (%s tele van?)"
+
+#~ msgid "Directory \"%s\" contains %.1f MB in %d files"
+#~ msgstr "A \"%s\" könyvtár %.1f MB-ot tartalmaz %d fájlban"
+
+#~ msgid "Don't know what to do with header \"%s\""
+#~ msgstr "A Pan nem tud mit kezdeni a következő fejléccel: \"%s\""
+
+#~ msgid "Couldn't parse a Message-ID from the raw message!"
+#~ msgstr "Nem olvasható ki az üzenetazonosító a nyers üzenetből!"
+
+#~ msgid "Unparseable Subject"
+#~ msgstr "Értelmezhetetlen tárgy"
+
+#~ msgid "unknown@spammesenseless.com"
+#~ msgstr "ismeretlen@aspamertelmetlen.hu"
+
+#~ msgid "Decoding \"%s\""
+#~ msgstr "\"%s\" dekódolása"
+
+#~ msgid "Decode unable to create file \"%s\" %s"
+#~ msgstr "Nem sikerült létrehozni a fájlt: \"%s\" %s"
+
+#, fuzzy
+#~ msgid "Decoded \"%s\" from group \"%s\", \"%s\""
+#~ msgstr "\"%s\" \"%s\" csoportból dekódolva, \"%s\" %d rész"
+
+#~ msgid "Loading %u of %d groups"
+#~ msgstr "%u / %d hírcsoport betöltve"
+
+#, fuzzy
+#~ msgid "Loaded %d groups for server \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr ""
+#~ "%d csoport letöltve `%s' kiszolgálóról %.1f másodperc alatt (%.0f csoport/"
+#~ "másodperc)"
+
+#~ msgid "Saved %d of %u groups"
+#~ msgstr "%d / %u hírcsoport mentve"
+
+#~ msgid "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr ""
+#~ "%d csoport elmentve \"%s\"-be %.1f másodperc alatt (%.0f csoport/"
+#~ "másodperc)"
+
+#~ msgid "Loaded %d of %d articles"
+#~ msgstr "%d / %d cikk betöltve"
+
+#~ msgid "(No Group)"
+#~ msgstr "(Nincs hírcsoport)"
+
+#~ msgid ""
+#~ "INFORMATION: Please be aware that posts to \"%s\" will not appear until "
+#~ "approved by the group's moderator."
+#~ msgstr ""
+#~ "INFORMÁCIÓ: Vedd figyelembe, hogy \"%s\" hírcsoportban csak akkor jelenik "
+#~ "meg az üzeneted, ha a moderátor jóváhagyja."
+
+#, fuzzy
+#~ msgid "ERROR: invalid address \"%s\""
+#~ msgstr "HIBA: Érvénytelen cím ``%s''"
+
+#, fuzzy
+#~ msgid "Couldn't create file \"%s\" to export newsrc file %s"
+#~ msgstr "Nem sikerült pixmapot létrehozni a fájlból: %s"
+
+#, fuzzy
+#~ msgid "Unable to access or create directory \"%s\""
+#~ msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#, fuzzy
+#~ msgid "Can't open file \"%s\""
+#~ msgstr "Nem sikerült megnyitni ezt a fájlt: `%s'"
+
+#~ msgid "A newsreader for GNOME"
+#~ msgstr "News-olvasó a GNOME-hoz"
+
+#~ msgid "Programmer"
+#~ msgstr "Programozó"
+
+#~ msgid "Programmer & Documentation"
+#~ msgstr "Programozó és dokumentációíró"
+
+#~ msgid "Project Originator, Programmer"
+#~ msgstr "A projekt elindítója, programozó"
+
+#~ msgid "Programmer, 0.6 - 0.7"
+#~ msgstr "Programozó, 0.6 - 0.7"
+
+#~ msgid "Pan: Download Headers for group `%s'"
+#~ msgstr "Pan: Fejlécek letöltése `%s' hírcsoporthoz"
+
+#~ msgid "Pan: Download Headers"
+#~ msgstr "Pan: Fejlécek letöltése"
+
+#~ msgid "Download new headers"
+#~ msgstr "Új fejlécek letöltése"
+
+#~ msgid "Download all Headers"
+#~ msgstr "Az összes fejléc letöltése"
+
+#~ msgid "Download Article Bodies too"
+#~ msgstr "Töltse le a cikkek törzsét is"
+
+#~ msgid "Save the log to a file"
+#~ msgstr "Napló mentése fájlba"
+
+#~ msgid "/_File/_Save..."
+#~ msgstr "/_Fájl/_Mentés..."
+
+#~ msgid "/_File/Clea_r"
+#~ msgstr "/_Fájl/_Törlés"
+
+#~ msgid "/_File/---"
+#~ msgstr "/_Fájl/---"
+
+#~ msgid "/_File/_Close"
+#~ msgstr "/_Fájl/_Bezárás"
+
+#~ msgid "Pan: Status Log"
+#~ msgstr "Pan: Állapotnapló"
+
+#~ msgid "Clear the log window"
+#~ msgstr "Naplóablak törlése"
+
+#~ msgid "Time"
+#~ msgstr "Idő"
+
+#~ msgid "Log Entry"
+#~ msgstr "Naplóbejegyzés"
+
+#~ msgid "Display Name:"
+#~ msgstr "Megjelenítendő név:"
+
+#~ msgid "For example: John Doe"
+#~ msgstr "Például: Kovács Béla"
+
+#~ msgid "Organization:"
+#~ msgstr "Szervezet:"
+
+#~ msgid "For example: user@host.com"
+#~ msgstr "Például: kbela@valahol.hu"
+
+#~ msgid "SMTP Server:"
+#~ msgstr "SMTP-kiszolgáló:"
+
+#~ msgid "SMTP Port:"
+#~ msgstr "SMTP-port:"
+
+#~ msgid "default"
+#~ msgstr "alapértelmezett"
+
+#~ msgid "Type the name of your Internet news server."
+#~ msgstr "Add meg az internetes news kiszolgálód nevét."
+
+#~ msgid "News (NNTP) server:"
+#~ msgstr "News (NNTP) kiszolgáló:"
+
+#~ msgid ""
+#~ "If you must log on to your news (NNTP) server, then select the check box "
+#~ "below."
+#~ msgstr ""
+#~ "Ha muszáj bejelentkezned a news (NNTP) kiszolgálóra, válaszd ki az alábbi "
+#~ "jelölőnégyzetet."
+
+#~ msgid "My server requires a password."
+#~ msgstr "A kiszolgálóm jelszót kér."
+
+#~ msgid "Account name:"
+#~ msgstr "Felhasználónév:"
+
+#~ msgid ""
+#~ "Type in the name you would like Pan to show when referring to this "
+#~ "profile you have just setup.  You can name the profile anything you want "
+#~ "to."
+#~ msgstr ""
+#~ "Add meg a nevet, amit az imént beállított profil megjelölésére fogsz "
+#~ "használni. A név bármi lehet."
+
+#~ msgid "Profile name:"
+#~ msgstr "Profilnév:"
+
+#~ msgid "For example: UUNET Server"
+#~ msgstr "Például: Elender kiszolgáló"
+
+#~ msgid "Pan Setup Wizard"
+#~ msgstr "Pan beállító varázsló"
+
+#~ msgid "Thank you for trying Pan!"
+#~ msgstr "Köszönjük, hogy használod a Pan-t!"
+
+#~ msgid "Email"
+#~ msgstr "E-mail"
+
+#~ msgid "Ready!"
+#~ msgstr "Kész!"
+
+#~ msgid ""
+#~ "You have successfully entered all of\n"
+#~ "the information required to set up Pan.\n"
+#~ "\n"
+#~ "To save these settings, click Save."
+#~ msgstr ""
+#~ "Sikeresen megadtál minden szükséges\n"
+#~ "információt a Pan beállításához.\n"
+#~ "\n"
+#~ "A beállítások mentéséhez kattints \n"
+#~ "a Mentés gombra."
+
+#~ msgid "About"
+#~ msgstr "Névjegy"
+
+#~ msgid "License"
+#~ msgstr "Licenc"
+
+#~ msgid "Authors"
+#~ msgstr "Szerzők"
+
+#~ msgid "Thanks to"
+#~ msgstr "Köszönet"
+
+#~ msgid "  (No conditions -- no articles will match)"
+#~ msgstr "(Nincs feltétel --  egy cikkre sem illik rá)"
+
+#~ msgid "  (No conditions -- all articles will match)"
+#~ msgstr "(Nincs feltétel -- minden cikkre ráillik)"
+
+#~ msgid "Pan: Edit Filter"
+#~ msgstr "Pan: Szűrőszerkesztő"
+
+#~ msgid "Filter name: "
+#~ msgstr "Szűrő neve:"
+
+#~ msgid "Show in Filter Menu"
+#~ msgstr "Megjelenítés a Szűrő menüben"
+
+#~ msgid "Move the selected line up one line"
+#~ msgstr "Kijelölt sor mozgatása eggyel feljebb"
+
+#~ msgid "Move the selected line down one line"
+#~ msgstr "Kijelölt sor mozgatása eggyel lejjebb"
+
+#~ msgid "Negate"
+#~ msgstr "Negálás"
+
+#~ msgid "Negate the selected line"
+#~ msgstr "Kijelölt sor negálása"
+
+#~ msgid "AND"
+#~ msgstr "ÉS"
+
+#~ msgid "OR"
+#~ msgstr "VAGY"
+
+#~ msgid "Delete the selected line"
+#~ msgstr "A kijelölt sor törlése."
+
+#~ msgid "Add New Line to the Filter"
+#~ msgstr "Új összetevő hozzáadása a szűrőhöz."
+
+#~ msgid "New Filter Line"
+#~ msgstr "Új szűrőösszetevő"
+
+#~ msgid "_Article"
+#~ msgstr "_Cikk"
+
+#~ msgid "contains the phrase"
+#~ msgstr "tartalmazza a kifejezést"
+
+#~ msgid ""
+#~ "See http://pan.rebelbase.com/regexp.txt for a tutorial on how to use "
+#~ "regular expressions.  If regular expressions are turned off, a simple "
+#~ "case-insensitive wildcard match is used."
+#~ msgstr ""
+#~ "A http://pan.rebelbase.com/regexp.txt weboldalon van egy útmutató a "
+#~ "reguláris kifejezések használatához. Ha nincs bekapcsolva ez a "
+#~ "jelölőnégyzet, akkor egyszerű, helyettesítő karaktereket figyelembe vevő, "
+#~ "de a kis- és nagybetűket nem megkülönböztető illeszkedésvizsgálatot végez "
+#~ "a program."
+
+#~ msgid "(%s for user-specified text)"
+#~ msgstr "(%s a felhasználó által megadott szöveg)"
+
+#~ msgid "Saved"
+#~ msgstr "Mentett"
+
+#~ msgid "Queued for Saving"
+#~ msgstr "Sorban áll a mentéshez"
+
+#~ msgid "Neither Saved nor Queued"
+#~ msgstr "Se nem mentett, se nem sorban álló"
+
+#~ msgid "Article _thread is"
+#~ msgstr "A cikkben _szála egy"
+
+#~ msgid "Watched"
+#~ msgstr "figyelt"
+
+#~ msgid "Ignored"
+#~ msgstr "figyelmen kívül hagyott"
+
+#~ msgid "Neither Watched nor Ignored"
+#~ msgstr "Se nem megfigyelt, se nem figyelmen kívül hagyott"
+
+#~ msgid "Article h_as"
+#~ msgstr "A cikkben _van egy"
+
+#~ msgid "Attachments"
+#~ msgstr "Mellékletek"
+
+#~ msgid "Incomplete Attachments"
+#~ msgstr "Nem teljes mellékletek"
+
+#~ msgid "No Attachments"
+#~ msgstr "Nincs melléklet"
+
+#~ msgid "Article _is"
+#~ msgstr "A cikkben _egy"
+
+#~ msgid "New"
+#~ msgstr "Új"
+
+#~ msgid "Unread"
+#~ msgstr "olvasatlan"
+
+#~ msgid "Cached"
+#~ msgstr "Gyorsítótárban"
+
+#~ msgid "Posted by Me"
+#~ msgstr "Én adtam fel"
+
+#~ msgid "Article has at _least N lines:"
+#~ msgstr "A cikk legalább N _sorból áll:"
+
+#~ msgid "Article _score is at least"
+#~ msgstr "A cikk _megjelölése legalább"
+
+#~ msgid "Pan: Filters"
+#~ msgstr "Pan: Szűrők"
+
+#~ msgid "Filters"
+#~ msgstr "Szűrők"
+
+#~ msgid "Add New"
+#~ msgstr "Új"
+
+#~ msgid "Add a new filter"
+#~ msgstr "Új szűrő létrehozása."
+
+#~ msgid "Edit the selected filter"
+#~ msgstr "A kijelölt szűrő szerkesztése"
+
+#~ msgid "Remove the selected filter"
+#~ msgstr "A kijelölt szűrő törlése"
+
+#~ msgid "NONE OF:"
+#~ msgstr "EGYIK SEM:"
+
+#~ msgid "ALL OF:"
+#~ msgstr "MINDEN:"
+
+#~ msgid "ANY OF:"
+#~ msgstr "BÁRMELY:"
+
+#~ msgid "Article has complete attachments"
+#~ msgstr "A cikkben teljes mellékletek vannak"
+
+#~ msgid "Article does not have incomplete attachments"
+#~ msgstr "A cikknek nincs teljes melléklete"
+
+#~ msgid "Article has incomplete attachments"
+#~ msgstr "A cikkben van nem teljes melléklet"
+
+#~ msgid "Article has complete or incomplete attachments"
+#~ msgstr "A cikknek van teljes vagy nem teljes melléklete"
+
+#~ msgid "Article is crossposted to at least %d groups"
+#~ msgstr "A cikket legalább %d hírcsoportba küldték el"
+
+#, fuzzy
+#~ msgid "Article was posted in the last %d days"
+#~ msgstr "A ci_kk több, mint"
+
+#, fuzzy
+#~ msgid "Article is %d or more lines long"
+#~ msgstr "a cikk több, mint"
+
+#~ msgid "Bozos"
+#~ msgstr "Bunkók"
+
+#~ msgid "Spam"
+#~ msgstr "Levélszemét"
+
+#~ msgid "Article is unread or old"
+#~ msgstr "A cikk olvasatlan vagy régi"
+
+#~ msgid "Article is new"
+#~ msgstr "A cikk új"
+
+#~ msgid "Article is new or read"
+#~ msgstr "A cikk új vagy olvasott"
+
+#~ msgid "Article is unread"
+#~ msgstr "A cikk olvasatlan"
+
+#~ msgid "Article is new or unread"
+#~ msgstr "A cikk új vagy olvasatlan"
+
+#~ msgid "Article is read"
+#~ msgstr "A cikk olvasott"
+
+#, fuzzy
+#~ msgid "Article is either saved or queued for saving"
+#~ msgstr "Se nem mentett, se nem sorban álló cikkek mutatása"
+
+#, fuzzy
+#~ msgid "Article is neither saved nor queued for saving"
+#~ msgstr "Se nem mentett, se nem sorban álló cikkek mutatása"
+
+#, fuzzy
+#~ msgid "Thread isn't watched"
+#~ msgstr "%u cikk szálakba rendezése"
+
+#~ msgid "Thread is watched"
+#~ msgstr "A szál figyelve van"
+
+#~ msgid "Thread isn't ignored"
+#~ msgstr "A szál nincs figyelmen kívül hagyva"
+
+#~ msgid "Thread is ignored"
+#~ msgstr "A szál figyelmen kívül van hagyva"
+
+#, fuzzy
+#~ msgid "Thread is watched or ignored"
+#~ msgstr "Se nem megfigyelt, se nem figyelmen kívül hagyott szálak mutatása"
+
+#, fuzzy
+#~ msgid "Thread is neither watched nor ignored"
+#~ msgstr "Se nem megfigyelt, se nem figyelmen kívül hagyott szálak mutatása"
+
+#, fuzzy
+#~ msgid "Wrote filters to \"%s\""
+#~ msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#~ msgid "Invalid folder name: \"%s\""
+#~ msgstr "Érvénytelen mappanév: \"%s\""
+
+#~ msgid "Folder \"%s\" already exists."
+#~ msgstr "\"%s\" mappa már létezik."
+
+#, fuzzy
+#~ msgid "Please don't begin folders with \"pan.\"; it confuses me."
+#~ msgstr ""
+#~ "Kérlek, ne kezdd a mappaneveket \"pan.\"-nal, mert összezavarhatja a "
+#~ "programot."
+
+#~ msgid "Create New Folder"
+#~ msgstr "Új mappa létrehozása"
+
+#~ msgid "New Folder Name:"
+#~ msgstr "Az új mappa neve:"
+
+#, fuzzy
+#~ msgid "/Get New Headers and _Bodies"
+#~ msgstr "Új fejlécek letöltése a kijelölt hírcsoportokhoz"
+
+#, fuzzy
+#~ msgid "/More Download _Options..."
+#~ msgstr "/_Cikkek letöltése"
+
+#~ msgid "/Refresh Article _Counts"
+#~ msgstr "/_Cikkek számának frissítése"
+
+#, fuzzy
+#~ msgid "/Group _Properties..."
+#~ msgstr "/_Hírcsoportok/T_ulajdonságok..."
+
+#, fuzzy
+#~ msgid "/Dele_te Group"
+#~ msgstr "Kijelöli a hírcsoportot"
+
+#~ msgid " (Moderated)"
+#~ msgstr " (moderált)"
+
+#~ msgid " (Read-Only)"
+#~ msgstr " (csak olvasható)"
+
+#~ msgid "All Groups"
+#~ msgstr "Minden hírcsoport"
+
+#~ msgid "Subscribed"
+#~ msgstr "Előfizetett"
+
+#~ msgid "Folders"
+#~ msgstr "Mappák"
+
+#~ msgid "Total"
+#~ msgstr "Összesen"
+
+#~ msgid "Description"
+#~ msgstr "Leírás"
+
+#~ msgid ""
+#~ "Type in a group search string and press ENTER.  Wildcards are allowed."
+#~ msgstr ""
+#~ "Írd be a keresendő hírcsoportnév-karakterláncot, és nyomj Entert. Szabad "
+#~ "helyettesítő karaktereket használni."
+
+#~ msgid ""
+#~ "We don't have a list of groups for \"%s\".\n"
+#~ "Shall we get download it?"
+#~ msgstr ""
+#~ "Nincs hírcsoportlistánk \"%s\" kiszolgálótól.\n"
+#~ "Szerezzünk egyet?"
+
+#~ msgid "<More>"
+#~ msgstr "<Tovább>"
+
+#~ msgid "X-Newsreader"
+#~ msgstr "X-Newsreader"
+
+#~ msgid "X-Mailer"
+#~ msgstr "X-Mailer"
+
+#~ msgid "User-Agent"
+#~ msgstr "User-Agent"
+
+#~ msgid " (%u selected)"
+#~ msgstr "(%u kiválasztva)"
+
+#~ msgid "Connecting to news server"
+#~ msgstr "Kapcsolódás a hírkiszolgálóhoz"
+
+#~ msgid "News server connection count: %d"
+#~ msgstr "Kapcsolatok száma a hírkiszolgálóhoz: %d"
+
+#~ msgid "The Task Manager is Empty"
+#~ msgstr "A feladatkezelő üres"
+
+#~ msgid "Open the Connection Manager"
+#~ msgstr "A kapcsolatkezelő megnyitása"
+
+#~ msgid "Pan is Online"
+#~ msgstr "Online"
+
+#~ msgid "Post"
+#~ msgstr "Küldés"
+
+#~ msgid "Get"
+#~ msgstr "Letöltés"
+
+#~ msgid "Save Article Attachments"
+#~ msgstr "Cikk mellékleteinek mentése"
+
+#~ msgid "Mine"
+#~ msgstr "Saját"
+
+#~ msgid "Show Only My Posts"
+#~ msgstr "Csak a saját küldemények megjelenítése"
+
+#~ msgid "Net"
+#~ msgstr "Hálózat"
+
+#~ msgid "/_File/_Save Article As..."
+#~ msgstr "/_Fájl/Cikk _mentése másként..."
+
+#~ msgid "/_File/Save Article A_ttachments"
+#~ msgstr "/_Fájl/Cikk mellékleteinek men_tése"
+
+#~ msgid "/_File/_Delete Last Task"
+#~ msgstr "/_Fájl/Utolsó fela_dat törlése"
+
+#~ msgid "/_File/_Print Article..."
+#~ msgstr "/_Fájl/Cikk _nyomtatása..."
+
+#~ msgid "/_File/_New Folder..."
+#~ msgstr "/_Fájl/Ú_j mappa..."
+
+#~ msgid "/_File/Delete _Folder..."
+#~ msgstr "/_Fájl/Mappa _törlése..."
+
+#~ msgid "/_File/_Edit Article in Folder"
+#~ msgstr "/_Fájl/_Cikk szerkesztése a mappában"
+
+#~ msgid "/_File/E_xit"
+#~ msgstr "/_Fájl/_Kilépés"
+
+#~ msgid "/_Edit"
+#~ msgstr "/S_zerkesztés"
+
+#, fuzzy
+#~ msgid "/_Edit/Select all"
+#~ msgstr "Az összes _hírcsoport kijelölése"
+
+#, fuzzy
+#~ msgid "/_Edit/Deselect all"
+#~ msgstr "Kijelöli a hírcsoportot"
+
+#~ msgid "/_Edit/---"
+#~ msgstr "/S_zerkesztés/---"
+
+#, fuzzy
+#~ msgid "/_Edit/Select all _Groups"
+#~ msgstr "Az összes _hírcsoport kijelölése"
+
+#, fuzzy
+#~ msgid "/_Edit/Deselect all G_roups"
+#~ msgstr "Kijelöli a hírcsoportot"
+
+#, fuzzy
+#~ msgid "/_Edit/Select all _Articles"
+#~ msgstr "/S_zerkesztés/_Minden cikk kijelölése"
+
+#, fuzzy
+#~ msgid "/_Edit/_Find..."
+#~ msgstr "/S_zerkesztés/_Keresés..."
+
+#, fuzzy
+#~ msgid "/_Edit/Find _Next"
+#~ msgstr "/S_zerkesztés/_Keresés..."
+
+#~ msgid "/_View/---"
+#~ msgstr "/_Nézet/---"
+
+#, fuzzy
+#~ msgid "/_View/Show Group _Pane"
+#~ msgstr "Hírcsoportlista mező"
+
+#, fuzzy
+#~ msgid "/_View/Show Hea_der Pane"
+#~ msgstr "_Fejlécmező mutatása"
+
+#, fuzzy
+#~ msgid "/_View/Thr_ead Header Pane"
+#~ msgstr "Szálmező"
+
+#, fuzzy
+#~ msgid "/_View/_Rot13 Selected Text"
+#~ msgstr "A kijelölt szöveg _rot13 kódolása"
+
+#, fuzzy
+#~ msgid "/_View/_Wrap Article Body"
+#~ msgstr "/_Nézet/Az ü_zenet törzsének betördelése"
+
+#~ msgid "/_View/Mute _Quoted Text"
+#~ msgstr "/_Nézet/_Idézett szöveg elrejtése"
+
+#~ msgid "/_View/E_xpand Selected Threads"
+#~ msgstr "/_Nézet/_Kijelölt szálak kibontása"
+
+#~ msgid "/_View/C_ollapse Selected Threads"
+#~ msgstr "/_Nézet/A ki_jelölt szálak becsukása"
+
+#, fuzzy
+#~ msgid "/Filte_r/---"
+#~ msgstr "/_Fájl/---"
+
+#, fuzzy
+#~ msgid "/Filte_r/Show Matching Articles and References"
+#~ msgstr "Egyező cikkek és hivatkozások mutatása"
+
+#, fuzzy
+#~ msgid "/Filte_r/Show Threads with Matching Articles"
+#~ msgstr "Egyező cikkeket tartalmazó szálak mutatása"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match _New Articles"
+#~ msgstr "Új cikkek mutatása"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match _Read Articles"
+#~ msgstr "Elolvasott cikkek mutatása"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match Articles which are _Cached"
+#~ msgstr "Helyben gyorstárazott cikkek mutatása"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match Articles which are not Cache_d"
+#~ msgstr "Helyben nem gyorstárazott cikkek mutatása"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match Articles with Complete _Attachments"
+#~ msgstr "A cikkben teljes mellékletek vannak"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match Articles with I_ncomplete Attachments"
+#~ msgstr "A cikkben van nem teljes melléklet"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match Articles with No A_ttachments"
+#~ msgstr "/_Fájl/Cikkek mentése (Csa_k a mellékletek)"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match Articles Written by _Me"
+#~ msgstr "Az általam írott cikkek mutatása"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match Articles Written by _Other People"
+#~ msgstr "Mások által írott cikkek mutatása"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match _Watched Threads"
+#~ msgstr "Figyelt szálak mutatása"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match _Ignored Threads"
+#~ msgstr "Figyelmen kívül hagyott szálak mutatása"
+
+#, fuzzy
+#~ msgid "/Filte_r/Match Threads N_either Watched nor Ignored"
+#~ msgstr "Se nem megfigyelt, se nem figyelmen kívül hagyott szálak mutatása"
+
+#, fuzzy
+#~ msgid "/_Go/Read More"
+#~ msgstr "/Cikk _olvasása"
+
+#, fuzzy
+#~ msgid "/_Go/---"
+#~ msgstr "/_Hírcsoportok/---"
+
+#, fuzzy
+#~ msgid "/_Go/_Next Unread Article"
+#~ msgstr "Következő olvasatlan cikk"
+
+#, fuzzy
+#~ msgid "/_Go/Previous Article _Read"
+#~ msgstr "/N_avigálás/_Előző cikk"
+
+#, fuzzy
+#~ msgid "/_Go/T_op of Thread"
+#~ msgstr "Szál teteje"
+
+#~ msgid "/_Servers"
+#~ msgstr "/K_iszolgálók"
+
+#, fuzzy
+#~ msgid "/_Servers/Select _Server"
+#~ msgstr "/K_iszolgálók/_Kiszolgáló választása"
+
+#~ msgid "/_Servers/---"
+#~ msgstr "/K_iszolgálók/---"
+
+#~ msgid "/_Servers/Get List of _All Groups..."
+#~ msgstr "/K_iszolgálók/Az ö_sszes hírcsoport listájának letöltése..."
+
+#~ msgid "/_Servers/Get List of _New Groups..."
+#~ msgstr "/K_iszolgálók/Az ú_j hírcsoportok listájának letöltése..."
+
+#~ msgid "/_Servers/_Import .newsrc..."
+#~ msgstr "/K_iszolgálók/.newsrc _importálása..."
+
+#~ msgid "/_Servers/_Export .newsrc..."
+#~ msgstr "/K_iszolgálók/.newsrc _exportálása..."
+
+#, fuzzy
+#~ msgid "/_Newsgroups/Mark Group _Read"
+#~ msgstr "/_Hírcsoportok/_Hírcsoport megjelölése olvasottként"
+
+#, fuzzy
+#~ msgid "/_Newsgroups/_Delete Group's Articles"
+#~ msgstr "/_Hírcsoportok/Ú_j cikkek letöltése"
+
+#, fuzzy
+#~ msgid "/_Newsgroups/---"
+#~ msgstr "/_Hírcsoportok/---"
+
+#, fuzzy
+#~ msgid "/_Newsgroups/Get New _Headers"
+#~ msgstr "/_Hírcsoportok/Ú_j cikkek letöltése"
+
+#, fuzzy
+#~ msgid "/_Newsgroups/Get New Headers and _Bodies"
+#~ msgstr "/_Hírcsoportok/Ú_j cikkek letöltése"
+
+#, fuzzy
+#~ msgid "/_Newsgroups/More Download _Options..."
+#~ msgstr "/_Hírcsoportok/_Cikkek letöltése..."
+
+#, fuzzy
+#~ msgid "/_Newsgroups/Refresh Article _Counts"
+#~ msgstr "/_Hírcsoportok/Ci_kkek számának frissítése"
+
+#, fuzzy
+#~ msgid "/_Newsgroups/_Subscribe"
+#~ msgstr "/Hírcsoportok/_Előfizetés"
+
+#, fuzzy
+#~ msgid "/_Newsgroups/_Unsubscribe"
+#~ msgstr "/_Hírcsoportok/_Lemondás"
+
+#, fuzzy
+#~ msgid "/_Newsgroups/Group _Properties..."
+#~ msgstr "/_Hírcsoportok/T_ulajdonságok..."
+
+#, fuzzy
+#~ msgid "/_Newsgroups/Dele_te Group"
+#~ msgstr "/_Hírcsoportok/_Törlés"
+
+#, fuzzy
+#~ msgid "/_Articles/Mark _Read"
+#~ msgstr "_Megjelölés olvasottként"
+
+#, fuzzy
+#~ msgid "/_Articles/Mark _Unread"
+#~ msgstr "Megjelölés _olvasatlanként"
+
+#, fuzzy
+#~ msgid "/_Articles/---"
+#~ msgstr "_Cikkek"
+
+#, fuzzy
+#~ msgid "/_Articles/D_ownload Flagged"
+#~ msgstr "Megjelöltek _letöltése"
+
+#, fuzzy
+#~ msgid "/_Articles/_Flag"
+#~ msgstr "_Cikkek"
+
+#, fuzzy
+#~ msgid "/_Articles/U_nflag"
+#~ msgstr "_Cikkek"
+
+#, fuzzy
+#~ msgid "/_Articles/_Watch Thread"
+#~ msgstr "S_zálak figyelése"
+
+#, fuzzy
+#~ msgid "/_Articles/_Ignore Thread"
+#~ msgstr "Szálak _figyelmen kívül hagyása"
+
+#, fuzzy
+#~ msgid "/_Articles/Add to Bo_zo or Spam Filter..."
+#~ msgstr "Hozzáadás a _bunkókhoz vagy a levélszemetelőkhöz"
+
+#, fuzzy
+#~ msgid "/_Articles/_Cancel..."
+#~ msgstr "Cikkgyorstár"
+
+#, fuzzy
+#~ msgid "/_Articles/_Supersede..."
+#~ msgstr "_Felülírás..."
+
+#, fuzzy
+#~ msgid "/_Articles/_Delete"
+#~ msgstr "_Cikkek"
+
+#~ msgid "/_Post/_Post to Newsgroup"
+#~ msgstr "/_Küldés/Ú_j cikk írása a hírcsoportba"
+
+#, fuzzy
+#~ msgid "/_Post/_Followup to Newsgroup"
+#~ msgstr "/_Küldés/_Válasz írása a hírcsoportba"
+
+#, fuzzy
+#~ msgid "/_Post/_Reply by Email"
+#~ msgstr "/_Küldés/Válasz _emailben"
+
+#, fuzzy
+#~ msgid "/_Post/Followup _and Reply"
+#~ msgstr "/_Küldés/Válasz a _hírcsoportba és emailben"
+
+#, fuzzy
+#~ msgid "/_Post/For_ward Article by Email"
+#~ msgstr "/_Küldés/_Cikk továbbítása emailben"
+
+#, fuzzy
+#~ msgid "/_Post/---"
+#~ msgstr "/_Küldés"
+
+#~ msgid "/_Post/Send Pending _Messages"
+#~ msgstr "/_Küldés/_Függőben levő üzenetek elküldése"
+
+#, fuzzy
+#~ msgid "/_Tools"
+#~ msgstr "/_Küldés"
+
+#, fuzzy
+#~ msgid "/_Tools/---"
+#~ msgstr "/_Küldés"
+
+#, fuzzy
+#~ msgid "/_Tools/Custom _Filters..."
+#~ msgstr "/S_zerkesztés/_Szűrők..."
+
+#, fuzzy
+#~ msgid "/_Tools/_Rules..."
+#~ msgstr "/S_zerkesztés/S_zabályok..."
+
+#, fuzzy
+#~ msgid "/_Tools/_Online Settings..."
+#~ msgstr "/S_zerkesztés/_Online beállítások..."
+
+#, fuzzy
+#~ msgid "/_Tools/_Log Viewer..."
+#~ msgstr "_Naplónéző..."
+
+#, fuzzy
+#~ msgid "/_Help/Online Users` _Manual..."
+#~ msgstr "/_Súgó/Online _felhasználói kézikönyv..."
+
+#~ msgid "/_Help/---"
+#~ msgstr "/_Súgó/---"
+
+#~ msgid "/_Help/_Feedback..."
+#~ msgstr "/Súgó/_Visszajelzés..."
+
+#, fuzzy
+#~ msgid "Full user name:"
+#~ msgstr "Teljes név:"
+
+#, fuzzy
+#~ msgid "Message-ID domain name:"
+#~ msgstr "Üzenetazonosító:"
+
+#~ msgid "Custom Headers"
+#~ msgstr "Egyéni fejléc"
+
+#~ msgid "Pan: Edit Profile"
+#~ msgstr "Pan: Profilszerkesztő"
+
+#~ msgid "User Profile"
+#~ msgstr "Felhasználói profil"
+
+#~ msgid "Incomplete Profile."
+#~ msgstr "Nem teljes profil."
+
+#, fuzzy
+#~ msgid "Add _New"
+#~ msgstr "Új"
+
+#, fuzzy
+#~ msgid "_Copy From"
+#~ msgstr "Másolás innen"
+
+#, fuzzy
+#~ msgid "_Remove"
+#~ msgstr "Törlés"
+
+#, fuzzy
+#~ msgid "Wrote profiles to \"%s\""
+#~ msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#~ msgid "Post anyway, despite these problems?"
+#~ msgstr "Elküldöd a problémák ellenére?"
+
+#~ msgid "Post anyway, despite this problem?"
+#~ msgstr "Elküldöd a probléma ellenére?"
+
+#, fuzzy
+#~ msgid "/_File/_Save Changes"
+#~ msgstr "Változások mentése"
+
+#, fuzzy
+#~ msgid "/_File/Save _As..."
+#~ msgstr "_Cikkek mentése másként..."
+
+#, fuzzy
+#~ msgid "/_Edit/Cu_t"
+#~ msgstr "Szerkesztés"
+
+#, fuzzy
+#~ msgid "/_Edit/_Copy"
+#~ msgstr "Szerkesztés"
+
+#, fuzzy
+#~ msgid "/_Edit/_Paste"
+#~ msgstr "Szerkesztés"
+
+#, fuzzy
+#~ msgid "/_Edit/_Rot13 Selected Text"
+#~ msgstr "A kijelölt szöveg _rot13 kódolása"
+
+#, fuzzy
+#~ msgid "/_Edit/Edit with E_xternal Editor"
+#~ msgstr "Szer_kesztés külső szövegszerkesztővel"
+
+#, fuzzy
+#~ msgid "/_File/Send Now"
+#~ msgstr "Küldés most"
+
+#, fuzzy
+#~ msgid "/_File/Send Later"
+#~ msgstr "Küldés később"
+
+#, fuzzy
+#~ msgid "/_File/Save As..."
+#~ msgstr "_Cikkek mentése másként..."
+
+#~ msgid "Send Later"
+#~ msgstr "Küldés később"
+
+#~ msgid "Rewrap"
+#~ msgstr "Újratördelés"
+
+#, fuzzy
+#~ msgid "Turn line wrap on/off"
+#~ msgstr "Sortörés ki/be kapcsolása az üzenet törzsében"
+
+#, fuzzy
+#~ msgid "Edit with an External Editor"
+#~ msgstr "Szerkesztés külső szüvegszerkesztővel"
+
+#, fuzzy
+#~ msgid " (%lu lines in 1 article)"
+#~ msgstr "%u cikk szűrése"
+
+#, fuzzy
+#~ msgid "Select the file to attach."
+#~ msgstr "Válaszd ki a beolvasandó .newsrc fájlt:"
+
+#~ msgid "Filename"
+#~ msgstr "Fájlnév"
+
+#, fuzzy
+#~ msgid "Kilobytes"
+#~ msgstr "Szűrők"
+
+#, fuzzy
+#~ msgid "Lines per article:"
+#~ msgstr "Új cikkek mutatása"
+
+#, fuzzy
+#~ msgid "Estimated Article Size"
+#~ msgstr "A cikk tárgyának használata"
+
+#, fuzzy
+#~ msgid "Organization"
+#~ msgstr "Szervezet:"
+
+#~ msgid "The organization you're associated with."
+#~ msgstr "A szervezet, amelyhez tartozol."
+
+#, fuzzy
+#~ msgid "New Message"
+#~ msgstr "Új üzenetek"
+
+#~ msgid "Save message to file"
+#~ msgstr "Üzenet mentése fájlba"
+
+#~ msgid "Pan: Import .newsrc File"
+#~ msgstr "Pan: .newsrc fájl importálása"
+
+#, fuzzy
+#~ msgid "Select .newsrc file to read:"
+#~ msgstr "Válaszd ki a beolvasandó .newsrc fájlt:"
+
+#~ msgid "Pan: Export .newsrc File"
+#~ msgstr "Pan: .newsrc exportálása"
+
+#, fuzzy
+#~ msgid "Select .newsrc file to write:"
+#~ msgstr "Válaszd ki a kiírandó .newsrc fájlt:"
+
+#~ msgid "QUIT failed: %s"
+#~ msgstr "QUIT sikertelen: %s"
+
+#~ msgid "Handshake: %s"
+#~ msgstr "Kézfogás: %s"
+
+#~ msgid "NNTP handshake failed: %s"
+#~ msgstr "NNTP kézfogás sikertelen: %s"
+
+#~ msgid "Handshake failed: %s"
+#~ msgstr "Kézfogás sikertelen: %s"
+
+#, fuzzy
+#~ msgid "Authentication failed: bad handshake for SPA password"
+#~ msgstr "Hitelesítés sikertelen: jelszó szükséges"
+
+#, fuzzy
+#~ msgid "Bad SPA handshake: %s"
+#~ msgstr "Kézfogás: %s"
+
+#~ msgid "Authentication failed: need a password"
+#~ msgstr "Hitelesítés sikertelen: jelszó szükséges"
+
+#~ msgid "Authentication failed: %s"
+#~ msgstr "Hitelesítés sikertelen: %s"
+
+#, fuzzy
+#~ msgid "Unsupported authentication mechanism: %s"
+#~ msgstr "Nem támogatott adatváltozat: %d"
+
+#~ msgid "MODE READER check failed: %s"
+#~ msgstr "MODE READER ellenőrzés sikertelen: %s"
+
+#, fuzzy
+#~ msgid "Posting failed.  Server said: %s"
+#~ msgstr "QUIT sikertelen: %s"
+
+#, fuzzy
+#~ msgid "Getting %d of %d"
+#~ msgstr "%s letöltése innen: %s"
+
+#, fuzzy
+#~ msgid "Select Color"
+#~ msgstr "Szűrő kijelölése"
+
+#, fuzzy
+#~ msgid "Browse..."
+#~ msgstr "_Bunkók..."
+
+#, fuzzy
+#~ msgid "Select Font"
+#~ msgstr "Kijelölés"
+
+#, fuzzy
+#~ msgid "Font Family"
+#~ msgstr "Sikertelen"
+
+#~ msgid "pan.sent"
+#~ msgstr "pan.sent"
+
+#~ msgid "pan.sendlater"
+#~ msgstr "pan.sendlater"
+
+#, fuzzy
+#~ msgid "Restored %d tasks from \"%s\""
+#~ msgstr "Eltávolítod az összes cikket ebből a hírcsoportból: \"%s\"?"
+
+#~ msgid ""
+#~ "%a - abbreviated weekday name\n"
+#~ "%A - full weekday name\n"
+#~ "%b - abbreviated month name\n"
+#~ "%B - full month name\n"
+#~ "%c - local date & time\n"
+#~ "%d - day of the month\n"
+#~ "%H - hour (24-hour clock)\n"
+#~ "%I - hour (12-hour clock)\n"
+#~ "%j - day of the year (001-366)\n"
+#~ "%m - month (01-12)\n"
+#~ "%M - minute (00-59)\n"
+#~ "%p - local equivalent of AM/PM\n"
+#~ "%S - second (00-61)\n"
+#~ "%x - local date\n"
+#~ "%X - local time\n"
+#~ "%y - two-digit year\n"
+#~ "%Y - four-digit year\n"
+#~ "%% - %"
+#~ msgstr ""
+#~ "%a - a hét napja rövidítve\n"
+#~ "%A - a hét napjának teljes neve\n"
+#~ "%b - a hónap neve rövidítve\n"
+#~ "%B - a hónap teljes neve\n"
+#~ "%c - helyi dátum és idő\n"
+#~ "%d - a hónap napja\n"
+#~ "%H - óra (24 órás)\n"
+#~ "%I - óra (12 órás)\n"
+#~ "%j - az év napja (001-366)\n"
+#~ "%m - hónap (01-12)\n"
+#~ "%M - perc (00-59)\n"
+#~ "%p - az AM/PM helyi megfelelője\n"
+#~ "%S - másodperc (00-61)\n"
+#~ "%x - helyi dátum\n"
+#~ "%X - helyi idő\n"
+#~ "%y - kétszámjegyű év\n"
+#~ "%Y - négyszámjegyű év\n"
+#~ "%% - %"
+
+#~ msgid "Not Named"
+#~ msgstr "Nem megnevezett"
+
+#~ msgid "No Address"
+#~ msgstr "Nincs cím"
+
+#~ msgid "Server Information"
+#~ msgstr "Információk a kiszolgálóról"
+
+#, fuzzy
+#~ msgid "Server address:"
+#~ msgstr "Kiszolgáló címe"
+
+#~ msgid "Authorization"
+#~ msgstr "Engedélyezés"
+
+#, fuzzy
+#~ msgid "My server requires my user name and password"
+#~ msgstr "A kiszolgálóm kéri a felhasználónevem és a jelszót"
+
+#~ msgid "Misc"
+#~ msgstr "Egyéb"
+
+#~ msgid "Idle Seconds Before Timeout:"
+#~ msgstr "Tétlen másodpercek időtúllépés előtt:"
+
+#~ msgid "Generate Message-ID"
+#~ msgstr "Üzenetazonosító generálása"
+
+#~ msgid "Directories"
+#~ msgstr "Könyvtárak"
+
+#~ msgid "Download Directory:"
+#~ msgstr "Letöltések könyvtára:"
+
+#~ msgid "Download Directory"
+#~ msgstr "Letöltések könyvtára"
+
+#, fuzzy
+#~ msgid "Other Options"
+#~ msgstr "Beállítások"
+
+#, fuzzy
+#~ msgid "Automatically remove failed tasks from the task manager"
+#~ msgstr "Eltávolítod az összes cikket ebből a %u hírcsoportból?"
+
+#~ msgid "Newsreader"
+#~ msgstr "Hírolvasó"
+
+#~ msgid "Headers to Show"
+#~ msgstr "Megjelenítendő fejlécek"
+
+#~ msgid "Message Body"
+#~ msgstr "Üzenet törzse"
+
+#~ msgid "Message Body (Monospace)"
+#~ msgstr "Üzenet törzse (Monospace)"
+
+#~ msgid "Body Foreground"
+#~ msgstr "Törzs előtere"
+
+#, fuzzy
+#~ msgid "Use default foreground"
+#~ msgstr "Törzs előtere"
+
+#, fuzzy
+#~ msgid "Quoted Text 2"
+#~ msgstr "Idézett szöveg"
+
+#, fuzzy
+#~ msgid "Quoted Text 3"
+#~ msgstr "Idézett szöveg"
+
+#, fuzzy
+#~ msgid "Date format:"
+#~ msgstr "Cikk dátumformátuma:"
+
+#~ msgid "Options"
+#~ msgstr "Beállítások"
+
+#, fuzzy
+#~ msgid "Old Articles with no New Replies"
+#~ msgstr "Új válasz nélküli cikkek"
+
+#, fuzzy
+#~ msgid "New Articles / Articles with New Replies"
+#~ msgstr "Megjelölés törlése a kijelölt cikkekről és válaszokról"
+
+#, fuzzy
+#~ msgid "Unread Articles / Articles with Unread Replies"
+#~ msgstr "Megjelölés törlése a kijelölt cikkekről és válaszokról"
+
+#, fuzzy
+#~ msgid "Read Articles with no Unread Replies"
+#~ msgstr "Kijelölt cikkek és válaszok"
+
+#, fuzzy
+#~ msgid "When a Followup subject header changes, show as new thread"
+#~ msgstr "Amikor egy válaszban változik tárgy, kezdjen új szálat"
+
+#, fuzzy
+#~ msgid "Expand all threads by default"
+#~ msgstr "Minden szál kibontása"
+
+#~ msgid "Grouplist Pane"
+#~ msgstr "Hírcsoportlista mező"
+
+#, fuzzy
+#~ msgid "Selected layout: "
+#~ msgstr "Szűrő kijelölése"
+
+#, fuzzy
+#~ msgid "Group Pane Font"
+#~ msgstr "Hírcsoportlista mező"
+
+#, fuzzy
+#~ msgid "Download New Headers when Loading a Group"
+#~ msgstr "Új fejlécek letöltése a hírcsoport betöltésekor"
+
+#, fuzzy
+#~ msgid "Maximum total number of connections:"
+#~ msgstr "Az összes kapcsolat maximális száma"
+
+#, fuzzy
+#~ msgid "Maximum number of task retries before giving up:"
+#~ msgstr "Az újrapróbálkozások maximális száma, mielőtt feladja"
+
+#~ msgid ""
+#~ "Maximum\n"
+#~ "Connections"
+#~ msgstr ""
+#~ "Maximális\n"
+#~ "kapcsolatszám"
+
+#~ msgid ""
+#~ "Reserve a connection\n"
+#~ "for reading articles"
+#~ msgstr ""
+#~ "Egy kapcsolat fenntartása\n"
+#~ "cikkolvasáshoz"
+
+#~ msgid "Reserve"
+#~ msgstr "Fenntartás"
+
+#, fuzzy
+#~ msgid "Per-Server Preferences"
+#~ msgstr "Pan: Beállítások"
+
+#, fuzzy
+#~ msgid "Clear Cache Now"
+#~ msgstr "Lemezes gyorstár törlése"
+
+#, fuzzy
+#~ msgid "Clear Cache when exiting Pan"
+#~ msgstr "Gyorstár törlése kilépéskor"
+
+#~ msgid "Article Cache"
+#~ msgstr "Cikkgyorstár"
+
+#~ msgid "Address"
+#~ msgstr "Cím"
+
+#, fuzzy
+#~ msgid "Port"
+#~ msgstr "Port:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Newsreaders use .newsrc files to remember which articles\n"
+#~ "you've read and which groups you're subscribed to.  Automatically\n"
+#~ "importing/exporting .newsrc files lets you share them between Pan and "
+#~ "other newsreaders."
+#~ msgstr ""
+#~ "Sok news-olvasó program használja a newsrc fájlokat. Ezekben \n"
+#~ "kerül rögzítésre, hogy mely cikkeket olvastad és mely \n"
+#~ "hírcsoportokra fizettél elő. A Pan-on kívül más news-olvasó \n"
+#~ "programot is használsz, beállíthatod, hogy a Pan automatikusan \n"
+#~ "importálja indításkor és exportálja kilépéskor."
+
+#~ msgid "Import/Export .newsrc files automatically"
+#~ msgstr "A .newsrc fájlok automatikus importálása/exportálása"
+
+#~ msgid ".newsrc filename:"
+#~ msgstr ".newsrc fájlnév:"
+
+#~ msgid "read/write subscribed groups only"
+#~ msgstr "Csak az előfizetett hírcsoportok nyilvántartása"
+
+#~ msgid ""
+#~ "Many users prefer to save memory and disk space by only keeping "
+#~ "subscribed groups in their .newsrc file."
+#~ msgstr ""
+#~ "Sok felhasználó csak az előfizetett hírcsoportokat tartja nyilván a ."
+#~ "newsrc fájlban, így memóriát és lemezhelyet takarítanak meg."
+
+#~ msgid ".Newsrc Files"
+#~ msgstr ".Newsrc fájlok"
+
+#~ msgid "New..."
+#~ msgstr "Új..."
+
+#~ msgid "Edit..."
+#~ msgstr "Szerkesztés..."
+
+#~ msgid "Delete"
+#~ msgstr "Törlés"
+
+#~ msgid "Cache"
+#~ msgstr "Gyorstár"
+
+#, fuzzy
+#~ msgid "Display - Group Pane"
+#~ msgstr "Megjelenítés - Hírcsoportok"
+
+#, fuzzy
+#~ msgid "Display - Header Pane"
+#~ msgstr "Megjelenítés - Szálak"
+
+#, fuzzy
+#~ msgid "Display - Body Pane"
+#~ msgstr "Megjelenítés - Szálak"
+
+#, fuzzy
+#~ msgid "Display - Headers"
+#~ msgstr "Megjelenítés - Szálak"
+
+#~ msgid "General"
+#~ msgstr "Általános"
+
+#, fuzzy
+#~ msgid "Servers - News"
+#~ msgstr "Kiszolgálók"
+
+#, fuzzy
+#~ msgid "Servers - Mail"
+#~ msgstr "Kiszolgálók"
+
+#~ msgid "Pan: Print"
+#~ msgstr "Pan: Nyomtatás"
+
+#~ msgid "You haven't loaded an article to print."
+#~ msgstr "Nem töltöttél be cikket, nincs mit kinyomtatni."
+
+#~ msgid "Connect Failure"
+#~ msgstr "Sikertelen kapcsolat"
+
+#~ msgid "Sending 'stay connected' request"
+#~ msgstr "'Stay connected' kérés küldése"
+
+#~ msgid "Disconnecting"
+#~ msgstr "Szétkapcsolás"
+
+#~ msgid "Closing connection %p after %d seconds idle"
+#~ msgstr "%p kapcsolat lezárása %d másodperc tétlenség után"
+
+#~ msgid ""
+#~ "%s\n"
+#~ "\n"
+#~ "Matches: %u\n"
+#~ "Group: %s\n"
+#~ "Rule: %s"
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Találatok: %u\n"
+#~ "Hírcsoport: %s\n"
+#~ "Szabály: %s"
+
+#~ msgid "Mark as"
+#~ msgstr "Megjelölés"
+
+#~ msgid "_Flag body for download"
+#~ msgstr "C_ikktörzs megjelölése letöltésre"
+
+#, fuzzy
+#~ msgid "_Retrieve Body"
+#~ msgstr "Törzs _letöltése"
+
+#~ msgid "_Watch thread (highlights the thread)"
+#~ msgstr "Szál _figyelése (kiemeli a szálat)"
+
+#~ msgid "_Ignore thread (hides the thread by default)"
+#~ msgstr "_Szál figyelmen kívül hagyása (elrejti a szálat)"
+
+#~ msgid "Edit Filters"
+#~ msgstr "Szűrők szerkesztése"
+
+#~ msgid "Select Filter:"
+#~ msgstr "Szűrő kijelölése"
+
+#~ msgid "Rule applies to all newsgroups"
+#~ msgstr "A szabály minden hírcsoportra érvényes"
+
+#~ msgid "Wildcard group specification:"
+#~ msgstr "Helyettesítő karakterrel megadott hírcsoport:"
+
+#~ msgid "(e.g., *anime*)"
+#~ msgstr "(pl: *anime*)"
+
+#~ msgid "Rule applies to specific newsgroups:"
+#~ msgstr "A szabály csak bizonyos hírcsoportokra érvényes:"
+
+#~ msgid "Subscribed Newsgroups"
+#~ msgstr "Előfizetett hírcsoportok"
+
+#~ msgid "Rule applies to:"
+#~ msgstr "A szabály érvényes ezekre:"
+
+#, fuzzy
+#~ msgid "Apply to Incoming"
+#~ msgstr "Alkalmazod a bejövőkre?"
+
+#~ msgid "Delete Articles by Bozos"
+#~ msgstr "Bunkók által írott cikkek törlése"
+
+#~ msgid "Delete Spam"
+#~ msgstr "Levélszemét törlése"
+
+#, fuzzy
+#~ msgid "Applying rule to selected groups"
+#~ msgstr "Szabály alkalmazása a kijelölt hírcsoportokra"
+
+#, fuzzy
+#~ msgid "Applying rule \"%s\" to group \"%s\""
+#~ msgstr "`%s' szabály alkalmazása `%s' hírcsoportra"
+
+#~ msgid "Rules"
+#~ msgstr "Szabályok"
+
+#~ msgid "Hit Ratio"
+#~ msgstr "Találati arány"
+
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Selected\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "Alkalmazás \n"
+#~ "a kijelölt \n"
+#~ "hírcsoportokra"
+
+#~ msgid ""
+#~ "Apply to\n"
+#~ "Subscribed\n"
+#~ "Groups"
+#~ msgstr ""
+#~ "Alkalmazás az \n"
+#~ "előfizetett \n"
+#~ "hírcsoportokra"
+
+#, fuzzy
+#~ msgid "Wrote rules to \"%s\""
+#~ msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#, fuzzy
+#~ msgid "Save in Directory"
+#~ msgstr "Adatok könyvtára"
+
+#, fuzzy
+#~ msgid "Add \"/%s\" to path"
+#~ msgstr "``%s'' hozzáadása az elérési úthoz"
+
+#~ msgid "Article Text"
+#~ msgstr "Cikk szövege"
+
+#, fuzzy
+#~ msgid "Don't save article text"
+#~ msgstr "_Cikk szövegének mentése..."
+
+#, fuzzy
+#~ msgid "Use Message-ID header"
+#~ msgstr "Üzenetazonosító"
+
+#, fuzzy
+#~ msgid "Use subject header"
+#~ msgstr "+ Tárgy"
+
+#, fuzzy
+#~ msgid "Specify filename"
+#~ msgstr "Fájlnév"
+
+#, fuzzy
+#~ msgid "Don't save attachments"
+#~ msgstr "Pan: Melléklet mentése másként"
+
+#, fuzzy
+#~ msgid "Use encoded filename"
+#~ msgstr "Kódolt fájlnév használata"
+
+#, fuzzy
+#~ msgid "Sending mail"
+#~ msgstr "Levélküldés"
+
+#, fuzzy
+#~ msgid "No known recipients"
+#~ msgstr "Címzett ismeretlen"
+
+#, fuzzy
+#~ msgid "Mail sent!"
+#~ msgstr "A levél elküldve!"
+
+#~ msgid "Handshaking with mail server"
+#~ msgstr "Kézfogás a levélkiszolgálóval"
+
+#~ msgid "Connecting to mail server"
+#~ msgstr "Kapcsolódás a levélkiszolgálóhoz"
+
+#, fuzzy
+#~ msgid "Unable to connect to mail server \"%s\""
+#~ msgstr "Kapcsolódás a levélkiszolgálóhoz"
+
+#, fuzzy
+#~ msgid "Mail server not ready"
+#~ msgstr "Levelezőkiszolgáló"
+
+#, fuzzy
+#~ msgid "Downloading %d articles"
+#~ msgstr "Megjelölt cikkek letöltése"
+
+#, fuzzy
+#~ msgid "Unable to update counts for group \"%s\""
+#~ msgstr "Nem sikerült értelmezni \"%s\" geometria-karakterláncot"
+
+#, fuzzy
+#~ msgid "Getting all groups from server \"%s\""
+#~ msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+
+#, fuzzy
+#~ msgid "Got %s groups from server \"%s\""
+#~ msgstr "Akarsz kapcsolatot létesíteni \"%s\" kiszolgálóval?"
+
+#, fuzzy
+#~ msgid "Adding groups to server \"%s\""
+#~ msgstr "`%s' hírcsoport betöltése"
+
+#, fuzzy
+#~ msgid "Got %d groups from server \"%s\""
+#~ msgstr "Akarsz kapcsolatot létesíteni \"%s\" kiszolgálóval?"
+
+#, fuzzy
+#~ msgid "Got %s descriptions from server \"%s\""
+#~ msgstr "Akarsz kapcsolatot létesíteni \"%s\" kiszolgálóval?"
+
+#, fuzzy
+#~ msgid "Sampling %lu of %lu"
+#~ msgstr "%u / %d hírcsoport betöltve"
+
+#~ msgid "Not Queued"
+#~ msgstr "Nem áll sorban"
+
+#~ msgid "Aborting"
+#~ msgstr "Megszakítás"
+
+#~ msgid "???"
+#~ msgstr "???"
+
+#~ msgid "%s (%d tries)"
+#~ msgstr "%s (%d próbálkozás)"
+
+#~ msgid "Pan %s Task Manager"
+#~ msgstr "Pan %s Feladatkezelő"
+
+#~ msgid "Set Per-Server Connection Limits"
+#~ msgstr "Kiszolgálónkénti kapcsolatok számának beállítása"
+
+#~ msgid "Move Selected Task(s) Up"
+#~ msgstr "A kijelölt feladatok mozgatása felfelé"
+
+#, fuzzy
+#~ msgid "Move Selected Task(s) to Top"
+#~ msgstr "A kijelölt feladatok mozgatása a tetejére"
+
+#~ msgid "Move Selected Task(s) Down"
+#~ msgstr "A kijelölt feladatok mozgatása lefelé"
+
+#, fuzzy
+#~ msgid "Move Selected Task(s) to Bottom"
+#~ msgstr "A kijelölt feladatok mozgatása az aljára"
+
+#, fuzzy
+#~ msgid "Restart selected stopped/failed Task(s)"
+#~ msgstr "A sikertelen feladatok újra sorbaállítása"
+
+#, fuzzy
+#~ msgid "Stop Selected Task(s)"
+#~ msgstr "A kijelölt feladatok mozgatása felfelé"
+
+#, fuzzy
+#~ msgid "Delete Selected Task(s)"
+#~ msgstr "A kijelölt feladatok visszavonása"
+
+#~ msgid "Email \"%s\" sent."
+#~ msgstr "\"%s\" levél elment."
+
+#~ msgid "Email \"%s\" not sent."
+#~ msgstr "\"%s\" levél nem ment el."
+
+#, fuzzy
+#~ msgid "Article \"%s\" posted."
+#~ msgstr "A ci_kk több, mint"
+
+#, fuzzy
+#~ msgid "Article \"%s\" not posted."
+#~ msgstr "A ci_kk több, mint"
+
+#, fuzzy
+#~ msgid "Mailing article \"%s\""
+#~ msgstr "Egyező cikkek mutatása"
+
+#~ msgid "Email send failed.\n"
+#~ msgstr "A levélküldés sikertelen.\n"
+
+#~ msgid "Usenet posting failed.\n"
+#~ msgstr "A Usenet küldés sikertelen.\n"
+
+#, fuzzy
+#~ msgid "Your message was saved in the folder \"pan.sendlater\""
+#~ msgstr "Sorban álló üzenetek elküldése a \"pan.sendlater\" mappából"
+
+#, fuzzy
+#~ msgid "Can't create file \"%s\" %s"
+#~ msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#, fuzzy
+#~ msgid "Saved article body to \"%s\""
+#~ msgstr "%u cikk törölve `%s' hírcsoportból"
+
+#, fuzzy
+#~ msgid "Could not open \"%s\" for writing: %s\n"
+#~ msgstr "Nem sikerült megnyitni ezt a fájlt: `%s'"
+
+#, fuzzy
+#~ msgid "German"
+#~ msgstr "Általános"
+
+#, fuzzy
+#~ msgid "Finnish"
+#~ msgstr "Kész!"
+
+#, fuzzy
+#~ msgid "Latvian"
+#~ msgstr "Hely"
+
+#, fuzzy
+#~ msgid "/Get Bodies along _with Articles:"
+#~ msgstr "Új fejlécek letöltése"
+
+#, fuzzy
+#~ msgid "/Get _New Articles"
+#~ msgstr "Új cikkek mutatása"
+
+#, fuzzy
+#~ msgid "/Get A_ll Articles"
+#~ msgstr "M_inden cikk kijelölése"
+
+#, fuzzy
+#~ msgid "/Get New Articles in all Su_bscribed Groups"
+#~ msgstr "Új fejlécek letöltése az előfizetett hírcsoportokhoz"
+
+#~ msgid "/_Properties..."
+#~ msgstr "/_Tulajdonságok..."
+
+#~ msgid "/_Empty"
+#~ msgstr "/_Kiürítés..."
+
+#~ msgid "/_Dele_te"
+#~ msgstr "/_Törlés"
+
+#~ msgid "Bug in Code"
+#~ msgstr "Hiba a kódban"
+
+#~ msgid "Subject:"
+#~ msgstr "Tárgy:"
+
+#~ msgid "Author:"
+#~ msgstr "Szerző:"
+
+#~ msgid "regexp"
+#~ msgstr "reg. kif."
+
+#, fuzzy
+#~ msgid "Edit Current Filter"
+#~ msgstr "Szűrők szerkesztése"
+
+#~ msgid ""
+#~ "Type in a search string and press ENTER. Wildcards are allowed; see "
+#~ "http://pan.rebelbase.com/wildmat.html for more information."
+#~ msgstr ""
+#~ "Írd be a keresendő karakterláncot, és nyomd le az ENTER-t. Helyettesítő "
+#~ "karaktereket használhatsz; további információkért nézd meg a http://pan."
+#~ "rebelbase.com/wildmat.html weboldalt."
+
+#~ msgid "BUG!!"
+#~ msgstr "HIBA!!"
+
+#~ msgid "Please Select a Folder from the Group list."
+#~ msgstr "Válassz egy mappát a csoportlistából."
+
+#~ msgid "/Flag T_hreads"
+#~ msgstr "/S_zálak megjelölése"
+
+#~ msgid "/Unflag Thr_eads"
+#~ msgstr "/Szá_lak megjelölésének törlése"
+
+#~ msgid "/Delete Th_reads"
+#~ msgstr "/Szá_lak törlése"
+
+#~ msgid "/Delete All"
+#~ msgstr "/Mindet törli"
+
+#~ msgid "Resorting Articles"
+#~ msgstr "Cikkek újrarendezése"
+
+#~ msgid "Refiltering Articles"
+#~ msgstr "Cikkek újraszűrése"
+
+#~ msgid "Rebuilding Header Pane..."
+#~ msgstr "A fejléc mező újraépítése..."
+
+#~ msgid "Empty %u groups"
+#~ msgstr "%u hírcsoport kiürítése"
+
+#~ msgid "Empty group \"%s\""
+#~ msgstr "\"%s\" hírcsoport kiürítése"
+
+#~ msgid "Remove all messages from these %u groups?"
+#~ msgstr "Eltávolítod az összes cikket ebből a %u hírcsoportból?"
+
+#~ msgid "Reset \"new message\" counters"
+#~ msgstr "Új üzenetek számlálóinak alaphelyzetbe állítása"
+
+#~ msgid "Reset \"new message\" counter"
+#~ msgstr "Új üzenetek számlálójának alaphelyzetbe állítása"
+
+#~ msgid "Newsgroups: "
+#~ msgstr "Hírcsoportok: "
+
+#~ msgid "Message-Id: "
+#~ msgstr "Üzenetazonosító: "
+
+#~ msgid "Date: "
+#~ msgstr "Dátum: "
+
+#~ msgid "Reply-To: "
+#~ msgstr "Reply-To: "
+
+#~ msgid "Followup-To: "
+#~ msgstr "Followup-To: "
+
+#~ msgid "Newsreader:"
+#~ msgstr "Hírolvasó:"
+
+#~ msgid ""
+#~ "1 task still active or queued.\n"
+#~ "Are you sure you want to exit Pan?"
+#~ msgstr ""
+#~ "1 feladat még aktív vagy sorban áll.\n"
+#~ "Biztos ki akarsz lépni a Panból?"
+
+#~ msgid ""
+#~ "%d tasks still active or queued.\n"
+#~ "Are you sure you want to exit Pan?"
+#~ msgstr ""
+#~ "%d feladat még aktív vagy sorban áll.\n"
+#~ "Biztos ki akarsz lépni a Panból?"
+
+#~ msgid "/_File/Save _Articles"
+#~ msgstr "/_Fájl/_Cikkek mentése"
+
+#~ msgid "/_Edit/Find Again..."
+#~ msgstr "/S_zerkesztés/T_ovább keres..."
+
+#~ msgid "/_Edit/Pr_ofiles..."
+#~ msgstr "/S_zerkesztés/_Profilok..."
+
+#, fuzzy
+#~ msgid "/_Edit/_Current Filter..."
+#~ msgstr "/S_zerkesztés/_Szűrők..."
+
+#, fuzzy
+#~ msgid "/_View/View _Article Tab"
+#~ msgstr "Következő _cikk"
+
+#, fuzzy
+#~ msgid "/_View/Show Art_icle Pane"
+#~ msgstr "_Cikkmező mutatása"
+
+#~ msgid "/_View/_Rot13 Article Body"
+#~ msgstr "/_Nézet/Cikk törzsének _rot13 kódolása"
+
+#~ msgid "/_View/Expand all Thread_s"
+#~ msgstr "/_Nézet/_Minden szál kibontása"
+
+#~ msgid "/_View/Colla_pse all Thread_s"
+#~ msgstr "/_Nézet/Min_den szál becsukása"
+
+#~ msgid "/_Groups/Get Bodies along _with Articles:"
+#~ msgstr "/_Hírcsoportok/Cikkek _törzsének letöltése:"
+
+#~ msgid "/_Groups/Get A_ll Articles"
+#~ msgstr "/_Hírcsoportok/M_inden cikk letöltése"
+
+#~ msgid "/_Groups/Get New Articles in all Su_bscribed Groups"
+#~ msgstr ""
+#~ "/_Hírcsoportok/Új fejlécek _letöltése az előfizetett hírcsoportokhoz"
+
+#~ msgid "/_Groups/_Empty..."
+#~ msgstr "/_Hírcsoportok/_Kiürítés..."
+
+#, fuzzy
+#~ msgid "/_Articles/Mark _Threads as Read"
+#~ msgstr "S_zálak megjelölése olvasottként"
+
+#, fuzzy
+#~ msgid "/_Articles/Mark Threads as U_nread"
+#~ msgstr "Szálak megjelölése _olvasatlanként"
+
+#, fuzzy
+#~ msgid "/_Articles/Flag T_hreads"
+#~ msgstr "A cikkben _van egy"
+
+#, fuzzy
+#~ msgid "/_Articles/Unflag Thr_eads"
+#~ msgstr "Szá_lak megjelölésének törlése"
+
+#, fuzzy
+#~ msgid "/_Articles/Download Threads"
+#~ msgstr "Szálak letöltése"
+
+#, fuzzy
+#~ msgid "/_Articles/Cop_y to Folder"
+#~ msgstr "_Másolás mappába"
+
+#, fuzzy
+#~ msgid "/_Articles/Co_py Threads to Folder"
+#~ msgstr "_Szálak másolása mappába"
+
+#, fuzzy
+#~ msgid "/_Articles/Mo_ve to Folder"
+#~ msgstr "Á_thelyezés mappába"
+
+#, fuzzy
+#~ msgid "/_Articles/Move Threads to Folder"
+#~ msgstr "Szál áthelyezése mappába"
+
+#, fuzzy
+#~ msgid "/_Articles/Delete All"
+#~ msgstr "Mindet törli"
+
+#~ msgid "/_Navigate"
+#~ msgstr "/N_avigálás"
+
+#~ msgid "/_Navigate/---"
+#~ msgstr "/N_avigálás/---"
+
+#~ msgid "/_Navigate/S_kip Uncached Articles:"
+#~ msgstr "/N_avigálás/Nem _gyorstárazott cikkek kihagyása:"
+
+#~ msgid "/_Navigate/_Load Articles When Selected:"
+#~ msgstr "/N_avigálás/_Cikkek betöltése kijelöléskor:"
+
+#~ msgid "/_Navigate/_Next Unread Article"
+#~ msgstr "/N_avigálás/_Következő olvasatlan cikk"
+
+#~ msgid "/_Navigate/Next _Article"
+#~ msgstr "/N_avigálás/Követke_ző cikk"
+
+#~ msgid "/_Navigate/Next Unread _Thread"
+#~ msgstr "/N_avigálás/Következő olvasatlan _szál"
+
+#~ msgid "/_Navigate/Next Threa_d"
+#~ msgstr "/N_avigálás/Következő s_zál"
+
+#~ msgid "/_Navigate/Pre_vious Article"
+#~ msgstr "/N_avigálás/_Előző cikk"
+
+#~ msgid "/_Navigate/Previo_us Thread"
+#~ msgstr "/N_avigálás/E_lőző szál"
+
+#~ msgid "/_Navigate/_Parent Article"
+#~ msgstr "/N_avigálás/Szülő c_ikk"
+
+#~ msgid "/_Navigate/T_op of Thread"
+#~ msgstr "/N_avigálás/Szál _teteje"
+
+#~ msgid "Move Up"
+#~ msgstr "Fel"
+
+#~ msgid "Move Down"
+#~ msgstr "Le"
+
+#~ msgid "Delete Line"
+#~ msgstr "Sor törlése"
+
+#, fuzzy
+#~ msgid "Pan: Current Filter"
+#~ msgstr "Pan: Szűrőszerkesztő"
+
+#, fuzzy
+#~ msgid "Match Author:"
+#~ msgstr "Szerző:"
+
+#, fuzzy
+#~ msgid "_New"
+#~ msgstr "Új..."
+
+#, fuzzy
+#~ msgid "_Unread"
+#~ msgstr "olvasatlan"
+
+#, fuzzy
+#~ msgid "Match Attachments:"
+#~ msgstr "Mellékletek"
+
+#, fuzzy
+#~ msgid "Complete _Binary"
+#~ msgstr "teljes bináris csatolás"
+
+#, fuzzy
+#~ msgid "Incomple_te Binary"
+#~ msgstr "Nem teljes bináris cikkek mutatása"
+
+#, fuzzy
+#~ msgid "_Saved"
+#~ msgstr "Mentés"
+
+#, fuzzy
+#~ msgid "_Watched"
+#~ msgstr "figyelt"
+
+#, fuzzy
+#~ msgid "Igno_red"
+#~ msgstr "figyelmen kívül hagyott"
+
+#, fuzzy
+#~ msgid "Negate Current _Filter"
+#~ msgstr "Nincs egyéni szűrő"
+
+#, fuzzy
+#~ msgid "/_File/Close"
+#~ msgstr "Szűrés"
+
+#, fuzzy
+#~ msgid "/Encoding"
+#~ msgstr "Ismeretlen kódolás"
+
+#~ msgid "Send this Message Now"
+#~ msgstr "A levél elküldése azonnal"
+
+#~ msgid "Send this Message Later"
+#~ msgstr "A levél elküldése később"
+
+#, fuzzy
+#~ msgid "Rewrap all the text in the Message Body"
+#~ msgstr "Újratördeli a szöveget az üzenet törzsében."
+
+#~ msgid "Couldn't exec external editor"
+#~ msgstr "Nem sikerült futtatni a külső szövegszerkesztőt"
+
+#~ msgid "Couldn't write to file"
+#~ msgstr "Nem sikerült írni a fájlba"
+
+#~ msgid "Pipe read failed"
+#~ msgstr "Nem sikerült olvasni a csővezetékből"
+
+#~ msgid "Unable to open file `%s'"
+#~ msgstr "Nem sikerült megnyitni ezt a fájlt: `%s'"
+
+#~ msgid "Unable to write to temp file"
+#~ msgstr "Nem sikerült írni az ideiglenes fájlba"
+
+#~ msgid "Password"
+#~ msgstr "Jelszó"
+
+#, fuzzy
+#~ msgid ""
+#~ "Automatically guess which articles to decode \n"
+#~ "when duplicate parts appear in a multipart post"
+#~ msgstr ""
+#~ "Rész automatikus kiválasztása, amikor több azonos rész szerepel egy "
+#~ "többrészes küldeményben"
+
+#~ msgid "Newsgroups (if more than one group)"
+#~ msgstr "Hírcsoportok (ha több, mint egy csoport)"
+
+#~ msgid "References (if article is a reply)"
+#~ msgstr "Hivatkozások (ha a cikk egy válasz)"
+
+#, fuzzy
+#~ msgid "Left Mouse Button:"
+#~ msgstr "2. egérgomb"
+
+#~ msgid "Selects Article"
+#~ msgstr "Kijelöli a cikket"
+
+#, fuzzy
+#~ msgid "Middle Mouse Button:"
+#~ msgstr "1. egérgomb"
+
+#~ msgid "Selection"
+#~ msgstr "Kijelölés"
+
+#~ msgid "Show only the first part of complete multipart binary posts"
+#~ msgstr ""
+#~ "A teljes többrészes bináris küldeményeknek csak az első részét mutassa"
+
+#~ msgid "Display article dates in local time instead of UTC"
+#~ msgstr "A cikk dátumát helyi időben mutassa UTC helyett"
+
+#~ msgid "Article Pane"
+#~ msgstr "Cikkmező"
+
+#~ msgid "Thread Pane"
+#~ msgstr "Szálmező"
+
+#~ msgid "Loads Group"
+#~ msgstr "Betölti a hírcsoportot"
+
+#~ msgid "Group list font"
+#~ msgstr "Hírcsoportlista betűje"
+
+#~ msgid "Server \"%s\" is Online"
+#~ msgstr "\"%s\" kiszolgáló elérhető"
+
+#~ msgid "Server \"%s\" is Offline; no new tasks will be processed"
+#~ msgstr "\"%s\" kiszolgáló nem elérhető; a Pan nem dolgoz fel új feladatokat"
+
+#~ msgid "Pan should ask before going online"
+#~ msgstr "A Pan kérdezze meg, hogy kapcsolódhat-e"
+
+#~ msgid "Pan should go online as needed without asking"
+#~ msgstr "A Pan szükség esetén kérdés nélkül kapcsolódjon"
+
+#~ msgid "Pan should quietly stay offline until told otherwise"
+#~ msgstr "A Pan ne kapcsolódjon, amíg nem utasítják rá"
+
+#~ msgid "Global Settings"
+#~ msgstr "Globális beállítások"
+
+#~ msgid "Online Status"
+#~ msgstr "Online állapot"
+
+#~ msgid ""
+#~ "The cache is used to keep local copies of articles\n"
+#~ "to reduce the time connected to the network."
+#~ msgstr ""
+#~ "A gyorstár a cikkek helyi másolatait tartalmazza,\n"
+#~ "ezáltal csökken a hálózaton töltött idő."
+
+#~ msgid "Disk Cache:"
+#~ msgstr "Lemezes gyorstár:"
+
+#~ msgid "Megs"
+#~ msgstr "MB"
+
+#~ msgid "backup previous .newsrc file before exporting"
+#~ msgstr "Az előző .newsrc fájl biztonsági mentése expotálás előtt"
+
+#~ msgid "Display - Threads"
+#~ msgstr "Megjelenítés - Szálak"
+
+#, fuzzy
+#~ msgid "Display - Articles"
+#~ msgstr "Megjelenítés - Cikk"
+
+#~ msgid "Online Settings"
+#~ msgstr "Online beállítások"
+
+#~ msgid "Preparing to Send Mail"
+#~ msgstr "Előkészület levél küldéséhez"
+
+#~ msgid "Can't parse the From: line; hope for the best."
+#~ msgstr "Nem sikerült értelmezni a From: sort; reméljük a legjobbakat"
+
+#~ msgid "No Sender Specified!"
+#~ msgstr "Nincs feladó megadva!"
+
+#~ msgid "Removed %d articles from local cache"
+#~ msgstr "%d cikk törlésre került a helyi gyorstárból"
+
+#~ msgid "Article cache now has %.1f MB in %d articles"
+#~ msgstr "A cikkgyorstár most %.1f MB-ot tartalmaz %d cikkben"
+
+#~ msgid "WARNING: %d lines too wide in signature"
+#~ msgstr "FIGYELEM: %d sor túl széles az aláírásban"
+
+#~ msgid "unknown@spammesenseless.net"
+#~ msgstr "ismeretlen@aspamertelmetlen.hu"
+
+#~ msgid ""
+#~ "Couldn't find body for message `%s' - decoding may be incomplete or "
+#~ "incorrect"
+#~ msgstr ""
+#~ "`%s' üzenet törzse nem található meg - a dekódolás tökéletlen vagy "
+#~ "helytelen lehet"
+
+#~ msgid "Waiting to decode \"%s\""
+#~ msgstr "Várakozás \"%s\" dekódolására"
+
+#~ msgid "Loading %s"
+#~ msgstr "%s betöltése"
+
+#, fuzzy
+#~ msgid "Can't write config to '%s': %s"
+#~ msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+
+#~ msgid "Created folder pan.sendlater"
+#~ msgstr "A pan.sendlater mappa létrehozva"
+
+#~ msgid "Created folder pan.sent"
+#~ msgstr "A pan.sent mappa létrehozva"
+
+#~ msgid "Lead Programmer"
+#~ msgstr "Vezető programozó"
+
+#~ msgid ""
+#~ "Many thanks to the following people, whose contributions\n"
+#~ "are a large part of why Open Source software development\n"
+#~ "is so fun.\n"
+#~ "\n"
+#~ "Pan %s Translations\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Code or Patches\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Suggestions and Testing\n"
+#~ "%s\n"
+#~ "\n"
+#~ "If you should have been in this list but you're not,\n"
+#~ "send us mail and we'll add you next time.\n"
+#~ "\n"
+#~ "Contributors to previous versions are listed at\n"
+#~ "http://pan.rebelbase.com/CREDITS"
+#~ msgstr ""
+#~ "Az itt felsorolt emberek nagyban hozzájárultak ahhoz,\n"
+#~ "hogy a nyílt forráskódú fejlesztés jó móka legyen. \n"
+#~ "Köszönet érte!\n"
+#~ "\n"
+#~ "Pan %s fordítások\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s kód vagy javítások\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s javaslatok és tesztelés\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Ha rajta kellene lenned a listán, de nem találod magad,\n"
+#~ "írj egy levelet, és legközelebb hozzáadunk téged is.\n"
+#~ "\n"
+#~ "A korábbi változatok közreműködői itt vannak felsorolva:\n"
+#~ "http://pan.rebelbase.com/CREDITS"
+
+#~ msgid "Pan - Log Viewer"
+#~ msgstr "Pan - Naplónéző"
+
+#~ msgid "Save this log to a file."
+#~ msgstr "Napló mentése fájlba"
+
+#~ msgid "Download"
+#~ msgstr "Az utolsó"
+
+#~ msgid "Most Recent Headers"
+#~ msgstr "fejléc letöltése"
+
+#~ msgid "Finished!"
+#~ msgstr "Kész!"
+
+#~ msgid "Pan: Save Multipart Message"
+#~ msgstr "Pan: Többrészes üzenet mentése"
+
+#~ msgid "all groups"
+#~ msgstr "Az összes csoport"
+
+#~ msgid "new groups"
+#~ msgstr "Az új csoportok"
+
+#~ msgid "BUG IN CODE"
+#~ msgstr "HIBA A KÓDBAN"
+
+#~ msgid "sample"
+#~ msgstr "Minta"
+
+#, fuzzy
+#~ msgid "The Task Manager is Paused"
+#~ msgstr "A feladatkezelő üres"
+
+#, fuzzy
+#~ msgid "The Task Manager is not Paused"
+#~ msgstr "A feladatkezelő üres"
+
+#, fuzzy
+#~ msgid "Pause the Task Manager"
+#~ msgstr "A feladatkezelő megnyitása"
+
+#~ msgid "Transfer Rate"
+#~ msgstr "Átviteli sebesség"
+
+#, fuzzy
+#~ msgid ""
+#~ "thread %p attempted double lock!\n"
+#~ "first lock was in %s:%d (%s),\n"
+#~ "now trying for another one from %s:%d (%s)"
+#~ msgstr "HIBA %lu szál kétszeres zárolást kísérelt meg! %s:%d"
+
+#, fuzzy
+#~ msgid "thread %p attempted to remove a lock it didn't have from %s:%d (%s)"
+#~ msgstr "HIBA %lu szál kétszeres zárolást kísérelt meg! %s:%d"
+
+#, fuzzy
+#~ msgid "Aricle is New"
+#~ msgstr "A cikk új"
+
+#, fuzzy
+#~ msgid "Article is New or Read"
+#~ msgstr "A cikk olvasott"
+
+#, fuzzy
+#~ msgid "Article is Old"
+#~ msgstr "A cikk régi"
+
+#~ msgid "HEY you forgot to put a message here! :)"
+#~ msgstr "Hé, elfelejtettél ide egy üzenetet tenni! :)"
+
+#~ msgid "Loading group `%s'"
+#~ msgstr "`%s' hírcsoport betöltése"
+
+#~ msgid "Saving group `%s'"
+#~ msgstr "`%s' hírcsoport mentése"
+
+#~ msgid "Refreshing group `%s'"
+#~ msgstr "`%s' hírcsoport frissítése"
+
+#~ msgid "Edit the selected rule."
+#~ msgstr "Kijelölt szabály szerkesztése."
+
+#~ msgid "Apply the Selected Rule to the Selected Groups."
+#~ msgstr "A kijelölt szabály alkalmazása a kijelölt hírcsoportokra."
+
+#~ msgid "Apply the Selected Rule to all Subscribed Groups."
+#~ msgstr "A kijelölt szabály alkalmazása az összes előfizetett hírcsoportra."
+
+#~ msgid "Reply To:"
+#~ msgstr "Válaszcím:"
+
+#~ msgid "Message ID FQDN:"
+#~ msgstr "Üzenetazonosító FQDN:"
+
+#~ msgid "On the Fly"
+#~ msgstr "Röptében"
+
+#~ msgid "Edit \"%s\" Filter"
+#~ msgstr "%s szűrő szerkesztése"
+
+#~ msgid "Which Articles to Show"
+#~ msgstr "Mutatandó cikkek"
+
+#~ msgid "Custom Filters"
+#~ msgstr "Egyéni szűrők"
+
+#~ msgid "Show Complete Binary Articles"
+#~ msgstr "Teljes bináris cikkek mutatása"
+
+#~ msgid "Show Text Articles"
+#~ msgstr "Szöveges cikkek mutatása"
+
+#~ msgid "Show Queued Articles"
+#~ msgstr "Sorba álló cikkek mutatása"
+
+#~ msgid "Show Articles Neither Queued nor Saved"
+#~ msgstr "Se nem mentett, se nem sorban álló cikkek mutatása"
+
+#~ msgid "Show Articles which are Cached Locally"
+#~ msgstr "Helyben gyorstárazott cikkek mutatása"
+
+#~ msgid "Show Articles which are not Cached Locally"
+#~ msgstr "Helyben nem gyorstárazott cikkek mutatása"
+
+#~ msgid "Show Articles posted by Others"
+#~ msgstr "Mások által írott cikkek mutatása"
+
+#~ msgid "Show Watched Threads"
+#~ msgstr "Figyelt szálak mutatása"
+
+#~ msgid "Show Ignored Threads"
+#~ msgstr "Figyelmen kívül hagyott szálak mutatása"
+
+#~ msgid "Show Threads Neither Watched nor Ignored"
+#~ msgstr "Se nem megfigyelt, se nem figyelmen kívül hagyott szálak mutatása"
+
+#~ msgid "/_Navigate/Space Reading"
+#~ msgstr "/N_avigálás/Olvasás sorban"
+
+#, fuzzy
+#~ msgid "/_Filters/_Which articles to Show/"
+#~ msgstr "Mutatandó cikkek"
+
+#, fuzzy
+#~ msgid ""
+#~ "/_Filters/_Which articles to Show/_Show Matching Articles and Replies"
+#~ msgstr "Egyező cikkek és válaszok mutatása"
+
+#, fuzzy
+#~ msgid ""
+#~ "/_Filters/_Which articles to Show/_Show Matching Articles and References"
+#~ msgstr "Egyező cikkek és hivatkozások mutatása"
+
+#, fuzzy
+#~ msgid ""
+#~ "/_Filters/_Which articles to Show/_Show Threads with Matching Articles"
+#~ msgstr "Egyező cikkeket tartalmazó szálak mutatása"
+
+#, fuzzy
+#~ msgid "/_Filters/_Custom Filters/"
+#~ msgstr "Egyéni szűrők"
+
+#, fuzzy
+#~ msgid "/_Filters/_Custom Filters/---"
+#~ msgstr "Egyéni szűrők"
+
+#, fuzzy
+#~ msgid "/_Filters/Show Saved Articles"
+#~ msgstr "/_Fájl/_Cikkek mentése"
+
+#, fuzzy
+#~ msgid "/_Filters/Show Queued Articles"
+#~ msgstr "Sorba álló cikkek mutatása"
+
+#, fuzzy
+#~ msgid "/_Filters/Show Articles neither Saved nor Queued"
+#~ msgstr "Se nem mentett, se nem sorban álló cikkek mutatása"
+
+#, fuzzy
+#~ msgid "/_Reply by E-mail"
+#~ msgstr "Válasz _emailben"
+
+#, fuzzy
+#~ msgid "/For_ward article by E-mail"
+#~ msgstr "_Cikk továbbítása emailben"
+
+#~ msgid "Unknown Content Type"
+#~ msgstr "Ismeretlen tartalomtípus"
+
+#~ msgid "Unknown Encoding"
+#~ msgstr "Ismeretlen kódolás"
+
+#~ msgid "No Filename"
+#~ msgstr "Nincs fájlnév"
+
+#, fuzzy
+#~ msgid "_Filter"
+#~ msgstr "Szűrés"
+
+#, fuzzy
+#~ msgid "/_File/_Open Attachments..."
+#~ msgstr "Mellékletek m_egnyitása..."
+
+#~ msgid "Use gdk_fontset_load instead of gdk_font_load"
+#~ msgstr "A gdk_fontset_load használata a gdk_font_load helyett"
+
+#~ msgid ""
+#~ "Toggling this and restarting Pan is a good idea if your fonts aren't "
+#~ "being displayed properly."
+#~ msgstr ""
+#~ "Jó ötlet ezt beállítani és újraindítani a Pant, ha a betűk nem jelennek "
+#~ "meg helyesen."
+
+#~ msgid "Data Directory:"
+#~ msgstr "Adatok könyvtára:"
+
+#~ msgid "Save"
+#~ msgstr "Mentés"
+
+#~ msgid "Clear"
+#~ msgstr "Törlés"
+
+#~ msgid "Close the Log Viewer."
+#~ msgstr "A naplónéző bezárása."
+
+#~ msgid "Welcome to Pan"
+#~ msgstr "Üdvözöl a Pan"
+
+#~ msgid "Save Profile"
+#~ msgstr "Profil mentése"
+
+#~ msgid "Congratulations"
+#~ msgstr "Gratulálok"
+
+#~ msgid "The Queue is Paused"
+#~ msgstr "A sor áll"
+
+#~ msgid "The Queue is not Paused"
+#~ msgstr "A sor nem áll"
+
+#~ msgid "Clear Queue"
+#~ msgstr "Várakozási sor törlése"
+
+#~ msgid "Test Sound"
+#~ msgstr "Hangpróba"
+
+#~ msgid "Mark Threads as Read"
+#~ msgstr "A szálak megjelölése olvasottként"
+
+#~ msgid "Mark Threads as Unread"
+#~ msgstr "A szálak megjelölése olvasatlanként"
+
+#~ msgid "Flag Selected Articles"
+#~ msgstr "Kijelölt cikkek megjelölése"
+
+#~ msgid "Flag Selected Threads"
+#~ msgstr "Kijelölt szálak megjelölése"
+
+#~ msgid "Unf_lag Selected Articles"
+#~ msgstr "Megjelölés _törlése a kijelölt cikkekről"
+
+#~ msgid "Unflag Selected Threads"
+#~ msgstr "Kijelölt szálak megjelölésének törlése"
+
+#~ msgid "Download Selected Threads"
+#~ msgstr "A kijelölt szálak letöltése"
+
+#~ msgid "Watch Selected Threads"
+#~ msgstr "A kijelölt szálak figyelése"
+
+#~ msgid "Ignore Selected Threads"
+#~ msgstr "A kijelölt szálak figyelmen kívül hagyása"
+
+#~ msgid "Cop_y to Folder"
+#~ msgstr "Máso_lás mappába"
+
+#~ msgid "Co_py Threads to Folder"
+#~ msgstr "Szála_k másolása mappába"
+
+#~ msgid "Copy Threads to Folder"
+#~ msgstr "Szálak másolása mappába"
+
+#~ msgid "Mo_ve to Folder"
+#~ msgstr "Á_thelyezés mappába"
+
+#~ msgid "Move to Folder"
+#~ msgstr "Áthelyezés mappába"
+
+#~ msgid "_Cancel..."
+#~ msgstr "_Visszavonás..."
+
+#~ msgid "Cancel Selected Article which you Posted"
+#~ msgstr "A kijelölés alatt álló elküldött cikk visszavonása"
+
+#~ msgid "Supersede Selected Article which you Posted"
+#~ msgstr "A kijelölés alatt álló elküldött cikk felülírása"
+
+#~ msgid "Save the selected articles and their attachments."
+#~ msgstr "A kijelölt cikkek és mellékleteik mentése."
+
+#~ msgid "Dialog to set how you want to save the selected articles"
+#~ msgstr ""
+#~ "Párbeszédablak, amelyben beállítható a kijelölt cikkek mentésének módja"
+
+#~ msgid "Rethreading Articles"
+#~ msgstr "Cikkek újraszálazása"
+
+#~ msgid "Threading Articles"
+#~ msgstr "Cikkek megjelenítése szálanként"
+
+#~ msgid "Open Attachment..."
+#~ msgstr "Melléklet megnyitása..."
+
+#~ msgid "Delete the selected folder."
+#~ msgstr "A kijelölt mappa törlése."
+
+#~ msgid "Edit Selected Article in Folder"
+#~ msgstr "A kijelölt cikk szerkesztése a mappában"
+
+#, fuzzy
+#~ msgid "Select all Groups in the Group List"
+#~ msgstr "Válassz egy mappát a csoportlistából."
+
+#, fuzzy
+#~ msgid "Deselect all Groups in the Group List"
+#~ msgstr "Válassz egy mappát a csoportlistából."
+
+#, fuzzy
+#~ msgid "Select all Articles in the Article List"
+#~ msgstr "Kijelölt cikkek és válaszok"
+
+#, fuzzy
+#~ msgid "Deselect all Articles in the Article List"
+#~ msgstr "Kijelölt cikkek és válaszok"
+
+#~ msgid "Filter Tool."
+#~ msgstr "Szűrőeszköz"
+
+#~ msgid "Rules Tool."
+#~ msgstr "Szabályok eszköz"
+
+#, fuzzy
+#~ msgid "Profiles Tool."
+#~ msgstr "Szabályok eszköz"
+
+#~ msgid "Online/Offline Settings..."
+#~ msgstr "Online/Offline beállítások..."
+
+#~ msgid "Post a new message to the current group."
+#~ msgstr "Új cikk írása az aktuális hírcsoportba."
+
+#~ msgid "Post a reply to the message on the news server."
+#~ msgstr "Válasz írása az üzenetre a news kiszolgálón keresztül."
+
+#~ msgid "Create a mail reply to the sender."
+#~ msgstr "Válaszlevél írása a feladónak."
+
+#~ msgid "Send a reply both to the author in mail, and to the news server."
+#~ msgstr ""
+#~ "A választ a szerző megkapja emailben, és megjelenik a news kiszolgálón is."
+
+#~ msgid "Forward article by E-mail"
+#~ msgstr "Cikk továbbítása emailben"
+
+#, fuzzy
+#~ msgid "Skip Uncached Articles:"
+#~ msgstr "Olvasatlan cikkek mutatása"
+
+#~ msgid "Move to the Next Group with Unread Messages."
+#~ msgstr ""
+#~ "Ugrás a következő hírcsoportra, amely olvasatlan cikkeket tartalmaz."
+
+#~ msgid "Move to the Next Group."
+#~ msgstr "Ugrás a következő hírcsoportra."
+
+#~ msgid "Refresh a list of groups from the selected servers."
+#~ msgstr "A hírcsoportok listájának frissítése a kijelölt kiszolgálóról."
+
+#~ msgid "Download a list of new groups from the selected servers."
+#~ msgstr "Az új hírcsoportok listájának letöltése a kijelölt kiszolgálóról."
+
+#~ msgid "Export .newsrc..."
+#~ msgstr ".newsrc exportálása..."
+
+#~ msgid "Pan _Homepage"
+#~ msgstr "Pan _honlap"
+
+#~ msgid "Online Users _Manual"
+#~ msgstr "Online _felhasználói kézikönyv"
+
+#~ msgid "Mail Feedback to the Pan Authors"
+#~ msgstr "Visszajelzés küldése a Pan szerzőinek"
+
+#~ msgid "Submit a Pan Bug Report to the GNOME Bug Tracker"
+#~ msgstr "Pan hiba bejelentése a GNOME hibaadatbázisba"
+
+#~ msgid "Open the Log Viewer"
+#~ msgstr "A naplónéző megnyitása"
+
+#~ msgid "Zoom/Unzoom"
+#~ msgstr "Nagyítás/kicsinyítés"
+
+#, fuzzy
+#~ msgid "View Group Tab"
+#~ msgstr "Új hírcsoportok"
+
+#, fuzzy
+#~ msgid "View Header Tab"
+#~ msgstr "Szálmező"
+
+#, fuzzy
+#~ msgid "View Article Tab"
+#~ msgstr "Cikkmező"
+
+#~ msgid "Show Article Pane"
+#~ msgstr "Cikkmező mutatása"
+
+#~ msgid "Rot13 Article Body"
+#~ msgstr "A törzs rot13 kódolása"
+
+#, fuzzy
+#~ msgid "Show All Headers in Article Pane"
+#~ msgstr "A teljes fejléc mutatása az üzenetörzsben"
+
+#~ msgid "Expand Selected Threads"
+#~ msgstr "A kijelölt szálak kibontása"
+
+#~ msgid "C_ollapse Selected Threads"
+#~ msgstr "K_ijelölt szálak becsukása"
+
+#~ msgid "Collapse Selected Threads"
+#~ msgstr "A kijelölt szálak becsukása"
+
+#~ msgid "Collapse all Threads"
+#~ msgstr "Minden szál becsukása"
+
+#, fuzzy
+#~ msgid "Mark All Articles in Selected Groups as Read"
+#~ msgstr "A kijelölt hírcsoport megjelölése elolvasottként"
+
+#, fuzzy
+#~ msgid "Get Bodies along with Articles"
+#~ msgstr "Új fejlécek letöltése"
+
+#, fuzzy
+#~ msgid "Get New Articles in all Subscribed Groups"
+#~ msgstr "Új fejlécek letöltése az előfizetett hírcsoportokhoz"
+
+#, fuzzy
+#~ msgid "Specify and Download Articles"
+#~ msgstr "Töltse le a cikkek törzsét is"
+
+#~ msgid "Refresh Article Counts"
+#~ msgstr "Cikkek számának frissítése"
+
+#~ msgid "Subscribe"
+#~ msgstr "Előfizetés"
+
+#~ msgid "Unsubscribe"
+#~ msgstr "Lemondás"
+
+#~ msgid "Set the properties for the selected group."
+#~ msgstr "A kijelölt hírcsoport tulajdonságainak beállítása."
+
+#, fuzzy
+#~ msgid "Remove all Articles from Selected Groups"
+#~ msgstr "Az összes cikk eltávolítása a kijelölt hírcsoportokból."
+
+#~ msgid "Dele_te"
+#~ msgstr "_Törlés"
+
+#~ msgid "Delete the selected group(s) from Pan."
+#~ msgstr "A kijelölt hírcsoportok törlése a Panból."
+
+#~ msgid "No Servers Defined"
+#~ msgstr "Nincs megadva kiszolgáló"
+
+#~ msgid "GEOMETRY"
+#~ msgstr "GEOMETRY"
+
+#~ msgid "Maximum Connections:"
+#~ msgstr "Maximális kapcsolatszám:"
+
+#~ msgid "Newsrc Files"
+#~ msgstr "Newsrc fájlok"
+
+#~ msgid "Loading Groups"
+#~ msgstr "Hírcsoportok betöltése"
+
+#~ msgid "Group Properties"
+#~ msgstr "Csoport tulajdonságai"
+
+#~ msgid "lines"
+#~ msgstr "sorból áll"
+
+#~ msgid "newsgroups"
+#~ msgstr "hírcsoport"
+
+#~ msgid "days old"
+#~ msgstr "napja lett feladva"
+
+#, fuzzy
+#~ msgid "Article body is _cached locally"
+#~ msgstr "Helyben gyorstárazott cikkek mutatása"
+
+#~ msgid "Saved or Decoded"
+#~ msgstr "Mentve vagy dekódolva"
+
+#~ msgid "_Play a Sound:"
+#~ msgstr "_Hangjelzés:"
+
+#~ msgid "Updating Group List"
+#~ msgstr "Hírcsoportlista frissítése"
+
+#~ msgid "Mark as Read"
+#~ msgstr "Megjelölés olvasottként"
+
+#~ msgid "Add to Bozo or Spam _Filter"
+#~ msgstr "_Hozzáadás a bunkókhoz vagy a levélszemetelőkhöz"
+
+#~ msgid "Move Selected Articles and Re_plies"
+#~ msgstr "Kijelölt c_ikkek és válaszok áthelyezése"
+
+#~ msgid "Updating article display"
+#~ msgstr "Cikkmegjelenítő frissítése"
+
+#~ msgid "Displaying article list"
+#~ msgstr "Cikklista megjelenítése"
+
+#~ msgid "Applying Filter `%s' to Group"
+#~ msgstr "Szűrő alkalmazása `%s' hírcsoportra"
+
+#~ msgid "Saving Pan's current state"
+#~ msgstr "A Pan aktuális állapotának mentése"
+
+#~ msgid "Saved settings to disk."
+#~ msgstr "A beállítások ki lettek mentve a lemezre."
+
+#~ msgid "Save the article headers and body to a text file."
+#~ msgstr "A cikk fejlécének és törzsének mentése egy szövegfájlba."
+
+#~ msgid "Save _Binary Attachments"
+#~ msgstr "_Bináris melléklet mentése"
+
+#~ msgid "Download and decode attachments in the selected messages."
+#~ msgstr "A kijelölt üzenetek mellékleteinek letöltése és dekódolása."
+
+#~ msgid "Save Binary Attachments _As..."
+#~ msgstr "B_ináris melléklet mentése másként..."
+
+#~ msgid ""
+#~ "Download and decode attachments in the selected messages, and save as..."
+#~ msgstr ""
+#~ "A kijelölt üzenetek mellékleteinek letöltése és dekódolása, utána mentése "
+#~ "másként..."
+
+#~ msgid "Print Selected Article"
+#~ msgstr "Kijelölt cikk nyomtatása"
+
+#, fuzzy
+#~ msgid "Select _Replies"
+#~ msgstr "M_inden cikk kijelölése"
+
+#~ msgid "Select _Threads"
+#~ msgstr "_Szálak kijelölése"
+
+#, fuzzy
+#~ msgid "Skip Un_cached Articles:"
+#~ msgstr "Olvasatlan cikkek mutatása"
+
+#~ msgid "_Zoom/Unzoom Window"
+#~ msgstr "Ablak _nagyítása/kicsinyítése"
+
+#~ msgid "Zoom Header Pa_ne"
+#~ msgstr "A _fejléc mező nagyítása"
+
+#~ msgid "Zoom Art_icle Pane"
+#~ msgstr "A _cikkmező nagyítása"
+
+#~ msgid "Zoom Article Pane"
+#~ msgstr "A cikkmező nagyítása"
+
+#, fuzzy
+#~ msgid "Delete all Articles in Group"
+#~ msgstr "Minden cikk a hírcsoportban"
+
+#, fuzzy
+#~ msgid "Mark as Read all Articles in Group"
+#~ msgstr "Minden cikk a hírcsoportban"
+
+#, fuzzy
+#~ msgid "Mark as Read all articles from the selected group(s)."
+#~ msgstr "Az összes cikk eltávolítása a kijelölt hírcsoportokból."
+
+#~ msgid "_Download Headers/Bodies..."
+#~ msgstr "_Fejlécek/törzsek letöltése..."
+
+#~ msgid "Download..."
+#~ msgstr "Letöltés..."
+
+#~ msgid "_Get New Headers in Selected Groups"
+#~ msgstr "Új fejlécek _letöltése a kijelölt hírcsoportokhoz"
+
+#, fuzzy
+#~ msgid "Get _All Headers in Selected Groups"
+#~ msgstr "Az összes fejléc letöltése a kijelölt hírcsoportokhoz"
+
+#~ msgid "Get All Headers in Selected Groups"
+#~ msgstr "Az összes fejléc letöltése a kijelölt hírcsoportokhoz"
+
+#, fuzzy
+#~ msgid "Sample _Headers from Selected Groups"
+#~ msgstr "Mintavétel a kijelölt hírcsoportok fejléceiből"
+
+#~ msgid "Dele_te..."
+#~ msgstr "_Törlés..."
+
+#~ msgid "_Copy Selected Articles"
+#~ msgstr "Kijelölt cikkek _másolása"
+
+#~ msgid "Copy Selected Articles"
+#~ msgstr "Kijelölt cikkek másolása"
+
+#~ msgid "Copy Selected Articles and _Replies"
+#~ msgstr "Kijelölt cikkek és _válaszok másolása"
+
+#~ msgid "Copy Selected Articles and Replies"
+#~ msgstr "Kijelölt cikkek és válaszok másolása"
+
+#~ msgid "Show Status Bar"
+#~ msgstr "Állapotsor mutatása"
+
+#~ msgid "No Subject"
+#~ msgstr "Nincs tárgy"
+
+#, fuzzy
+#~ msgid "External Editor, for composing messages:"
+#~ msgstr "Külső szövegszerkesztő (%t az ideiglenes fájl neve)"
+
+#~ msgid "Temporary Directory:"
+#~ msgstr "Ideiglenes fájlok könyvtára:"
+
+#~ msgid "Temporary Directory"
+#~ msgstr "Ideiglenes fájlok könyvtára"
+
+#~ msgid "Placeholder"
+#~ msgstr "Helykitöltő"
+
+#~ msgid "Posting - Headers"
+#~ msgstr "Küldés - Fejlécek"
+
+#~ msgid "Posting - Identity"
+#~ msgstr "Küldés - Személyes adatok"
+
+#~ msgid "Save As..."
+#~ msgstr "Mentés másként..."
+
+#~ msgid "File Exists.  Overwrite this file?"
+#~ msgstr "A fájl létezik. Felülírod?"
+
+#~ msgid "Threading %u articles"
+#~ msgstr "%u cikk szálakba rendezése"
+
+#~ msgid "Threaded %u of %u articles"
+#~ msgstr "%u / %u cikk szálakba rendezése"
+
+#~ msgid "Couldn't parse header info mbox message; trying harder."
+#~ msgstr "Nem sikerült értelmezni az mbox üzenet fejlécét. "
+
+#~ msgid "Using filename [%s]"
+#~ msgstr "[%s] fájlnév használata"
+
+#~ msgid "Translation Coordinator"
+#~ msgstr "Fordítások koordinálása"
+
+#~ msgid ""
+#~ "Welcome to Pan!\n"
+#~ "Since this is your first time running Pan,\n"
+#~ "we'll need to gather some information.\n"
+#~ msgstr ""
+#~ "Üdvözöl a Pan!\n"
+#~ "Mivel most futtatod először a Pant,\n"
+#~ "meg kell adnod egy pár dolgot.\n"
+
+#~ msgid "No Body Found"
+#~ msgstr "Nincs törzs"
+
+#~ msgid "FollowUp-To:"
+#~ msgstr "Válasz erre:"
+
+#~ msgid "Newsgroups:"
+#~ msgstr "Hírcsoportok:"
+
+#~ msgid "Date:"
+#~ msgstr "Dátum:"
+
+#~ msgid "Save _Binary Attachment"
+#~ msgstr "_Bináris melléklet mentése"
+
+#~ msgid "Save Binary Attachment"
+#~ msgstr "Bináris melléklet mentése"
+
+#~ msgid "Save Binary Attachment _As..."
+#~ msgstr "B_ináris melléklet mentése másként..."
+
+#~ msgid "_Open Binary Attachment"
+#~ msgstr "Bináris melléklet _megnyitása"
+
+#~ msgid "Open Binary Attachment"
+#~ msgstr "Bináris melléklet megnyitása"
+
+#~ msgid "_Delete Decoded Binary Attachment"
+#~ msgstr "A dekódolt bináris melléklet _törlése"
+
+#~ msgid "Delete Decoded Binary Attachment"
+#~ msgstr "A dekódolt bináris melléklet törlése"
+
+#~ msgid "Selected Articles and _Replies"
+#~ msgstr "Kijelölt cikkek és _válaszok"
+
+#~ msgid "All Articles in _Group"
+#~ msgstr "Minden cikk a _hírcsoportban"
+
+#~ msgid "_Edit Selected Article"
+#~ msgstr "Kijelölt cikk s_zerkesztése"
+
+#~ msgid "Entire _Group"
+#~ msgstr "Egész _hírcsoport"
+
+#~ msgid "Entire Group"
+#~ msgstr "Egész hírcsoport"
+
+#~ msgid "_Flag Selected Articles"
+#~ msgstr "Kijelölt cikkek _megjelölése"
+
+#~ msgid "Fla_g Selected Articles and Replies"
+#~ msgstr "Kijelölt cikkek és válaszok m_egjelölése"
+
+#~ msgid "Flag Selected Articles and Replies"
+#~ msgstr "Kijelölt cikkek és válaszok megjelölése"
+
+#~ msgid "_Unflag Selected Articles"
+#~ msgstr "Megjelölés tö_rlése a kijelölt cikkekről"
+
+#~ msgid "U_nflag Selected Articles and Replies"
+#~ msgstr "Megjelölés tör_lése a kijelölt cikkekről és válaszokról"
+
+#~ msgid "Unflag Selected Articles and Replies"
+#~ msgstr "Megjelölés törlése a kijelölt cikkekről és válaszokról"
+
+#~ msgid "_Read Selected Message"
+#~ msgstr "Kijelölt cikk _olvasása"
+
+#~ msgid "Read Selected Message"
+#~ msgstr "Kijelölt cikk olvasása"
+
+#~ msgid "Read Selected Message in New _Window"
+#~ msgstr "Kijelölt cikk olvasása új _ablakban"
+
+#~ msgid "Read Selected Message in New Window"
+#~ msgstr "Kijelölt cikk olvasása új ablakban"
+
+#~ msgid "Download _Bodies"
+#~ msgstr "_Cikktörzsek letöltése"
+
+#~ msgid "Download Bodies"
+#~ msgstr "Cikktörzsek letöltése"
+
+#~ msgid "_Purge Downloaded Bodies"
+#~ msgstr "_Letöltött cikktörzsek törlése"
+
+#~ msgid "Purge Downloaded Bodies"
+#~ msgstr "Letöltött cikktörzsek törlése"
+
+#~ msgid "Fol_der Tools"
+#~ msgstr "M_appaeszközök"
+
+#~ msgid "Folder Tools"
+#~ msgstr "Mappaeszközök"
+
+#~ msgid "Save Se_tup"
+#~ msgstr "_Beállítások mentése"
+
+#~ msgid "Followup to newsgroup _and Reply by E-mail"
+#~ msgstr "Vá_lasz a hírcsoportban és emailben is"
+
+#~ msgid "_Cancel Selected Article you Posted"
+#~ msgstr "Elküldött cikk _visszavonása"
+
+#~ msgid "_Supersede Selected Article you Posted"
+#~ msgstr "Elküldött cikk _felülírása"
+
+#~ msgid "Read the _Next Unread Message"
+#~ msgstr "A _következő olvasatlan üzenet olvasása"
+
+#~ msgid "Read the Next Unread Message"
+#~ msgstr "A következő olvasatlan üzenet olvasása"
+
+#, fuzzy
+#~ msgid "Read the Next Unread _Cached Message"
+#~ msgstr "A következő olvasatlan üzenet olvasása"
+
+#, fuzzy
+#~ msgid "Read the Next Unread Cached Message"
+#~ msgstr "A következő olvasatlan üzenet olvasása"
+
+#~ msgid "Select the _Next Unread Message"
+#~ msgstr "A következő _olvasatlan üzenet kijelölése"
+
+#~ msgid "Select the Next Unread Message"
+#~ msgstr "A következő olvasatlan üzenet kijelölése"
+
+#, fuzzy
+#~ msgid "Select the Next Unread C_ached Message"
+#~ msgstr "A következő olvasatlan üzenet kijelölése"
+
+#, fuzzy
+#~ msgid "Select the Next Unread Cached Message"
+#~ msgstr "A következő olvasatlan üzenet kijelölése"
+
+#, fuzzy
+#~ msgid "Read the Next _Message"
+#~ msgstr "A következő olvasatlan üzenet olvasása"
+
+#, fuzzy
+#~ msgid "Read the Next Message"
+#~ msgstr "A következő olvasatlan üzenet olvasása"
+
+#, fuzzy
+#~ msgid "Read the Next _Thread"
+#~ msgstr "A következő olvasatlan üzenet olvasása"
+
+#~ msgid "_Select the Next Message"
+#~ msgstr "_Következő üzenet kijelölése"
+
+#, fuzzy
+#~ msgid "Select the Next Message"
+#~ msgstr "A következő olvasatlan üzenet kijelölése"
+
+#, fuzzy
+#~ msgid "S_elect the Next Thread"
+#~ msgstr "Le és a következő szál kijelölése"
+
+#, fuzzy
+#~ msgid "Select the Next Thread"
+#~ msgstr "Le és a következő szál kijelölése"
+
+#, fuzzy
+#~ msgid "Read the Previo_us Message"
+#~ msgstr "A következő olvasatlan üzenet olvasása"
+
+#, fuzzy
+#~ msgid "Read the Previous Message"
+#~ msgstr "A következő olvasatlan üzenet olvasása"
+
+#, fuzzy
+#~ msgid "Read the Pre_vious Thread"
+#~ msgstr "Fel és az előző szál kijelölése"
+
+#, fuzzy
+#~ msgid "Se_lect the Previous Message"
+#~ msgstr "Fel és az előző szál kijelölése"
+
+#, fuzzy
+#~ msgid "Select the Previous Message"
+#~ msgstr "Fel és az előző szál kijelölése"
+
+#, fuzzy
+#~ msgid "Select the Previous Threa_d"
+#~ msgstr "Fel és az előző szál kijelölése"
+
+#, fuzzy
+#~ msgid "Select the Previous Thread"
+#~ msgstr "Fel és az előző szál kijelölése"
+
+#~ msgid "Send Feedback"
+#~ msgstr "Visszajelzés küldése"
+
+#~ msgid "+ Author"
+#~ msgstr "+ Szerző"
+
+#~ msgid "+ Date"
+#~ msgstr "+ Dátum"
+
+#~ msgid "- Subject"
+#~ msgstr "- Tárgy"
+
+#, fuzzy
+#~ msgid "Zoom the _Thread Pane"
+#~ msgstr "Az üzenet mező nagyítása"
+
+#, fuzzy
+#~ msgid "Zoom the Message _Body Pane"
+#~ msgstr "Az üzenettörzs mező nagyítása"
+
+#~ msgid "Zoom the Message Body Pane"
+#~ msgstr "Az üzenettörzs mező nagyítása"
+
+#, fuzzy
+#~ msgid "Expand _all Threads"
+#~ msgstr "Minden szál kibontása"
+
+#, fuzzy
+#~ msgid "C_ollapse all Threads"
+#~ msgstr "Minden szál becsukása"
+
+#~ msgid "_Rot13 the Message Body"
+#~ msgstr "Az üzenet törzsének _rot13 kódolása"
+
+#~ msgid "Rot13 the Message Body"
+#~ msgstr "Az üzenet törzsének rot13 kódolása"
+
+#~ msgid "Fill/_Wrap the Message Body"
+#~ msgstr "Az üzenet törzsének be_tördelése"
+
+#, fuzzy
+#~ msgid "Get New Headers & _Bodies in Subscribed Groups"
+#~ msgstr "Új fejlécek és törzsek letöltése az előfizetett hírcsoportokhoz"
+
+#~ msgid "Get New Headers & Bodies in Subscribed Groups"
+#~ msgstr "Új fejlécek és törzsek letöltése az előfizetett hírcsoportokhoz"
+
+#, fuzzy
+#~ msgid "Get New Headers & B_odies in Selected Groups"
+#~ msgstr "Új fejlécek és törzsek letöltése a kijelölt hírcsoportokhoz"
+
+#~ msgid "Get New Headers & Bodies in Selected Groups"
+#~ msgstr "Új fejlécek és törzsek letöltése a kijelölt hírcsoportokhoz"
+
+#, fuzzy
+#~ msgid "Get A_ll Headers & Bodies in Selected Groups"
+#~ msgstr "Az összes fejléc és törzs letöltése a kijelölt hírcsoportokhoz"
+
+#~ msgid "Get All Headers & Bodies in Selected Groups"
+#~ msgstr "Az összes fejléc és törzs letöltése a kijelölt hírcsoportokhoz"
+
+#, fuzzy
+#~ msgid "Sa_mple Headers & Bodies in Selected Groups"
+#~ msgstr "Mintavétel a kijelölt hírcsoportok fejléceiből és törzseiből"
+
+#~ msgid "Sample Headers & Bodies in Selected Groups"
+#~ msgstr "Mintavétel a kijelölt hírcsoportok fejléceiből és törzseiből"
+
+#~ msgid "Edit Group _Properties..."
+#~ msgstr "Csoport tulajdonságainak szerkesztése..."
+
+#~ msgid "_Group"
+#~ msgstr "_Hírcsoport"
+
+#~ msgid "Me_ssages"
+#~ msgstr "Üz_enetek"
+
+#~ msgid "Reply by _E-mail"
+#~ msgstr "Válasz _emailben"
+
+#~ msgid "Create a mail reply to the sender with your favorite MUA."
+#~ msgstr "Válasz írása a feladónak a kedvenc levelezőprogramoddal."
+
+#~ msgid "_Message"
+#~ msgstr "Üz_enet"
+
+#~ msgid "Post Followup"
+#~ msgstr "Válasz a hírcsoportba"
+
+#~ msgid "E-mail Reply"
+#~ msgstr "Válasz emailben"
+
+#~ msgid "Print this message"
+#~ msgstr "Az üzenet nyomtatása"
+
+#~ msgid "Type your user name and password for your news server."
+#~ msgstr "Add meg a felhasználóneved és a jelszavad a news kiszolgálóhoz."
+
+#~ msgid "News Server Name"
+#~ msgstr "News kiszolgáló neve:"
+
+#~ msgid "News Server Logon"
+#~ msgstr "News kiszolgáló bejelentkezés"
+
+#~ msgid "My server requires me to log on."
+#~ msgstr "Be kell jelentkeznem a kiszolgálómra."
+
+#~ msgid "Reply by E-mail"
+#~ msgstr "Válasz levélben"
+
+#~ msgid "Followup to newsgroup and Reply by E-mail"
+#~ msgstr "Válasz a hírcsoportban és levélben is"
+
+#~ msgid "Open in New Window"
+#~ msgstr "Megnyitás új ablakban"
+
+#~ msgid "Open this message for reading."
+#~ msgstr "Üzenet megnyitása olvasásra"
+
+#~ msgid "Respond"
+#~ msgstr "Válasz"
+
+#~ msgid "Show All Headers in Body"
+#~ msgstr "Az összes fejléc megjelenítése a törzsben"
+
+#~ msgid "Bozoize Author"
+#~ msgstr "A szerző bunkóvá nyilvánítása"
+
+#~ msgid "Loaded %d bozos from `%s'"
+#~ msgstr "%d bunkó betöltve `%s' fájlból"
+
+#~ msgid "Status: %s\n"
+#~ msgstr "Állapot: %s\n"
+
+#~ msgid "Loaded %u of %d rules"
+#~ msgstr "%u / %d szabály betöltve"
+
+#~ msgid "Got %d rules in %.1f seconds (%.0f rules/sec)"
+#~ msgstr "%d szabály betöltése %.1f másodperc alatt (%.0f szabály/másodperc)"
+
+#~ msgid "_Up to Select the Previous Article"
+#~ msgstr "_Fel és az előző cikk kijelölése"
+
+#~ msgid "Up to Select the Previous Article"
+#~ msgstr "Fel és az előző cikk kijelölése"
+
+#~ msgid "_Down to Select the Next Article"
+#~ msgstr "_Le és a következő cikk kijelölése"
+
+#~ msgid "Down to Select the Next Article"
+#~ msgstr "Le és a következő cikk kijelölése"
+
+#~ msgid "Select the Next Unread Message _Body"
+#~ msgstr "A következő olvasatlan üzenet _törzsének kijelölése"
+
+#~ msgid "Select the Next Unread Message Body"
+#~ msgstr "A következő olvasatlan üzenet törzsének kijelölése"
+
+#~ msgid "Down to Read the Next Article"
+#~ msgstr "Le és a következő cikk olvasása"
+
+#~ msgid "Read the Next Unread Message Body"
+#~ msgstr "A következő olvasatlan üzenet törzsének olvasása"
+
+#~ msgid "+ Unread Count"
+#~ msgstr "+ Olvasatlanok száma"
+
+#~ msgid "- Unread Count"
+#~ msgstr "- Olvasatlanok száma"
+
+#~ msgid "Open up the Task Manager."
+#~ msgstr "A feladatkezelő megnyitása."
+
+#~ msgid " - %s"
+#~ msgstr " - %s"
+
+#~ msgid "Attribution Line (%i for message-id, %a for author, %d for date)"
+#~ msgstr ""
+#~ "Hivatkozás a szerzőre (%i az üzenetazonosító, %a a szerző, %d a dátum)"
+
+#~ msgid ""
+#~ "External Mail Program (%r for recipient, %s for subject, %t for body "
+#~ "filename)"
+#~ msgstr ""
+#~ "Külső levelezőprogram (%r a címzett, %s a tárgy, %t a levél törzsét "
+#~ "tartalmazó fájl)"
+
+#~ msgid "Unread Messages"
+#~ msgstr "Olvasatlan cikkek"
+
+#~ msgid "NOT "
+#~ msgstr "NEM "
+
+#~ msgid "binary attachments"
+#~ msgstr "bináris csatolás"
+
+#~ msgid " complete "
+#~ msgstr " teljes "
+
+#~ msgid " no "
+#~ msgstr " nem "
+
+#~ msgid "is a reply to an article I posted"
+#~ msgstr "válasz egy általam küldött cikkre"
+
+#~ msgid "incomplete"
+#~ msgstr "nem teljes"
+
+#~ msgid "complete"
+#~ msgstr "teljes"
+
+#~ msgid "no"
+#~ msgstr "nem"
+
+#~ msgid "article exceeds"
+#~ msgstr "a cikk meghaladja"
+
+#~ msgid "article was posted to more than"
+#~ msgstr "a cikk el lett küldve több, mint"
+
+#~ msgid "article is in a"
+#~ msgstr "a cikk benne van"
+
+#~ msgid "watched"
+#~ msgstr "figyelt"
+
+#~ msgid "author is a bozo"
+#~ msgstr "a szerző egy bunkó"
+
+#~ msgid "article is marked as"
+#~ msgstr "a cikk meg van jelölve"
+
+#~ msgid "unread"
+#~ msgstr "olvasatlanként"
+
+#~ msgid "Hello frob!"
+#~ msgstr "Szia frob!"
+
+#~ msgid "article exceeds %d lines"
+#~ msgstr "a cikk több, mint %d sorból áll"
+
+#~ msgid "Hello kail!"
+#~ msgstr "Szia kail!"
+
+#~ msgid "article is in a %s thread"
+#~ msgstr "a cikk %s szálban van"
+
+#~ msgid "hello tov!"
+#~ msgstr "szia tov!"
+
+#~ msgid "Hello minmax!"
+#~ msgstr "Hello minmax!"
+
+#~ msgid "article is marked as %s"
+#~ msgstr "a cikk megjelölése: %s"
+
+#~ msgid "NOT %s"
+#~ msgstr "NEM %s"
+
+#~ msgid "Delete Bozos"
+#~ msgstr "Bunkók törlése"
+
+#~ msgid ""
+#~ "Add Bozo in the form\n"
+#~ "\"J. Random Bozo\" <bozo@spammesensless.net>"
+#~ msgstr ""
+#~ "Add meg a bunkót ebben a formában\n"
+#~ "\"Bunkó Pista\" <bunko_p@aspamertelmetlen.hu>"
+
+#~ msgid "Yes"
+#~ msgstr "Igen"
+
+#~ msgid "Does Not"
+#~ msgstr "nem"
+
+#~ msgid "Does"
+#~ msgstr " "
+
+#~ msgid "ERROR: No conditions specified!"
+#~ msgstr "HIBA: Nincs feltétel megadva!"
+
+#~ msgid "Cross-_Posted to more than"
+#~ msgstr "K_eresztpostázva van több, mint"
+
+#~ msgid "groups"
+#~ msgstr "hírcsoportba"
+
+#~ msgid "Author is a _Bozo"
+#~ msgstr "A szerző egy _bunkó"
+
+#~ msgid "Add _Condition"
+#~ msgstr "_Feltétel hozzáadása"
+
+#~ msgid "NOT"
+#~ msgstr "NEM"
+
+#~ msgid "Line_Up"
+#~ msgstr "_Fel"
+
+#~ msgid "Conditions"
+#~ msgstr "Feltételek"
+
+#~ msgid "Dec_ode article(s) in"
+#~ msgstr "Cikkek dekódolása ide"
+
+#~ msgid "_Retrieve body (tag for retrieval if offline)"
+#~ msgstr "_Cikktörzs letöltése (megjelölés letöltésre offline módban)"
+
+#~ msgid "Rena_me"
+#~ msgstr "Á_tnevezés"
+
+#~ msgid "A_pply to Incoming?"
+#~ msgstr "A_lkalmazod a bejövőkre?"
+
+#~ msgid "Real Name"
+#~ msgstr "Valódi név"
+
+#~ msgid "Mail Address"
+#~ msgstr "Levélcím"
+
+#~ msgid "_Add Bozo"
+#~ msgstr "Bunkó _hozzáadása"
+
+#~ msgid "_Edit Bozo"
+#~ msgstr "Bunkó _szerkesztése"
+
+#~ msgid "_Delete Bozo"
+#~ msgstr "Bunkó _törlése"
+
+#~ msgid "Edit Bozo"
+#~ msgstr "Bunkó szerkesztése"
+
+#~ msgid ""
+#~ "Enter the Bozo's Real Name,\n"
+#~ "or mail address, or both."
+#~ msgstr ""
+#~ "Add meg a bunkó valódi nevét,\n"
+#~ "vagy emailcímét, vagy mindkettőt."
+
+#~ msgid "Real Name:"
+#~ msgstr "Valódi név:"
+
+#~ msgid "Download _New Headers"
+#~ msgstr "Ú_j fejlécek letöltése"
+
+#~ msgid "Download _All Headers"
+#~ msgstr "_Minden fejléc letöltése"
+
+#~ msgid "_Download"
+#~ msgstr "A legújabb"
+
+#~ msgid "most Recent Headers"
+#~ msgstr "fejléc letöltése"
+
+#~ msgid "Also Download Article _Bodies"
+#~ msgstr "A cikkek _törzsét is töltse le"

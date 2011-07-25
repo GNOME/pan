@@ -1163,9 +1163,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
         const char* basename = t->_basename.c_str();
         TaskUpload::Needed n;
 
-        // generate domain for rng numbers
-        int total = get_total_parts(t->_filename.c_str());
-
         foreach (std::set<int>, t->_wanted, pit)
         {
           if (custom_mid)
