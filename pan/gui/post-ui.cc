@@ -1125,7 +1125,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
     if (master_reply)
     {
-      std::cerr<<"adding master reply to queue\n";
+//      std::cerr<<"adding master reply to queue\n";
 
       // master article, other attachments are threaded as replies to this
       const Profile profile (get_current_profile ());
@@ -1153,7 +1153,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
     if (!inline_or_bulk) // bulk upload
     {
-      std::cerr<<"adding "<<tasks.size()<<" tasks."<<std::endl;
+//      std::cerr<<"adding "<<tasks.size()<<" tasks."<<std::endl;
 
       foreach (PostUI::tasks_t, tasks, it)
       {

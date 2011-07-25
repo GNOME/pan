@@ -51,6 +51,14 @@ namespace pan
       virtual void on_queue_error (Queue&, const StringView&) { }
 
     private:
+      static gboolean on_tooltip_query(GtkWidget  *widget,
+                                       gint        x,
+                                       gint        y,
+                                       gboolean    keyboard_tip,
+                                       GtkTooltip *tooltip,
+                                       gpointer    data);
+
+    private:
       Queue& _queue;
       GtkWidget * _root;
       GtkWidget * _view;

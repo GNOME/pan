@@ -66,6 +66,8 @@ namespace pan
       };
 
       const Article& get_article ()  { return _article; }
+      const std::string& get_groups () const { return _groups; }
+      const std::string& get_filename () const { return _filename; }
 
       typedef std::vector<Quark> mid_sequence_t;
 
@@ -150,6 +152,7 @@ namespace pan
       friend class PostUI;
       friend class Queue;
       friend class NZB;
+      friend class TaskPane;
 
       Encoder * _encoder;
       bool _encoder_has_run;
@@ -171,6 +174,13 @@ namespace pan
       needed_t _needed;
       std::string _references; // original references, not to be touched!
       std::string _first_mid;
+      bool _paused;
+      std::set<int> _wanted;
+      GMimeMessage * _msg;
+      void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d);
+      void add_reference_to_list(std::string s);
+      bool _first;
+      std::string _groups;
 
       void update_work (NNTP * checkin_pending = 0);
 
@@ -178,14 +188,8 @@ namespace pan
       void set_encoder_done (bool setme) { _encoder_has_run = setme; }
       needed_t& needed() { return _needed; }
       void build_needed_tasks();
-      void wakeup() { _state.set_working(); update_work(); }
+      void wakeup() { _state.set_working(); _paused=false; update_work(); }
 
-    private:
-      std::set<int> _wanted;
-      GMimeMessage * _msg;
-      void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d);
-      void add_reference_to_list(std::string s);
-      bool _first;
   };
 }
 

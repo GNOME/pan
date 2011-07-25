@@ -56,6 +56,20 @@ namespace
       snprintf (buf, sizeof(buf), _("Reading %s"), stripped.c_str());
     return std::string (buf);
   }
+
+  std::string get_groups_str(const Article& a)
+  {
+    std::string r;
+    quarks_t groups;
+    int cnt(1);
+    foreach_const (Xref, a.xref, xit)
+    {
+      r += xit->group.to_string();
+      if (cnt != a.xref.size() && a.xref.size() != 1) r+=", ";
+      ++cnt;
+    }
+    return r;
+  }
 }
 
 TaskArticle :: TaskArticle (const ServerRank          & server_rank,
@@ -75,7 +89,8 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   _time_posted (article.time_posted),
   _save_mode (save_mode),
   _decoder(0),
-  _decoder_has_run (false)
+  _decoder_has_run (false),
+  _groups(get_groups_str(article))
 {
   cache.reserve (article.get_part_mids());
 

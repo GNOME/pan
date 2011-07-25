@@ -61,6 +61,20 @@ namespace
     g_free(freeme);
     return buf;
   }
+
+  std::string get_groups_str(const Article& a)
+  {
+    std::string r;
+    quarks_t groups;
+    int cnt(1);
+    foreach_const (Xref, a.xref, xit)
+    {
+      r += xit->group.to_string();
+      if (cnt != a.xref.size() && a.xref.size() != 1) r+=", ";
+      ++cnt;
+    }
+    return r;
+  }
 }
 
 /***
@@ -92,7 +106,9 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _msg (msg),
   _total_parts(format.total),
   _save_file(format.save_file),
-  _first(true)
+  _first(true),
+  _paused(true),
+  _groups(get_groups_str(article))
 {
 
   const char * tmp (g_mime_object_get_header ((GMimeObject *)_msg, "References"));
@@ -367,7 +383,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
 unsigned long
 TaskUpload :: get_bytes_remaining () const
 {
-  if (_needed.empty()) return _bytes*1.15;
+  if (_paused) return _bytes*1.15;
   unsigned long bytes (0);
   foreach_const (needed_t, _needed, it)
     bytes += (unsigned long)it->second.bytes;

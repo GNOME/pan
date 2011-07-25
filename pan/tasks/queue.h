@@ -107,7 +107,7 @@ namespace pan
 
     public:
       enum TaskState { QUEUED, RUNNING, DECODING, ENCODING, STOPPED, REMOVING,
-                       QUEUED_FOR_DECODE, QUEUED_FOR_ENCODE, PAUSED};
+                       QUEUED_FOR_DECODE, QUEUED_FOR_ENCODE};
 
       /**
        * An ordered collection of tasks and their corresponding TaskState s.

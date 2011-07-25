@@ -62,6 +62,7 @@ namespace pan
       time_t get_time_posted () const { return _time_posted; }
       const Quark& get_save_path () const { return _save_path; }
       const Article& get_article () const { return _article; }
+      const std::string& get_groups () const { return _groups; }
 
     public: // Task subclass
       unsigned long get_bytes_remaining () const;
@@ -99,6 +100,7 @@ namespace pan
       friend class Decoder;
       Decoder * _decoder;
       bool _decoder_has_run;
+      std::string _groups;
 
     private:
       struct Needed {

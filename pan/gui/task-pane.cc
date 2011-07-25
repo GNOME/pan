@@ -23,6 +23,7 @@ extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
 }
+#include <pan/general/e-util.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
@@ -89,6 +90,87 @@ namespace
     // not found
     return -1;
   }
+}
+
+namespace
+{
+  std::string escaped (const std::string& s)
+  {
+    char * pch = g_markup_escape_text (s.c_str(), s.size());
+    const std::string ret (pch);
+    g_free (pch);
+    return ret;
+  }
+}
+
+gboolean
+TaskPane:: on_tooltip_query(GtkWidget  *widget,
+                            gint        x,
+                            gint        y,
+                            gboolean    keyboard_tip,
+                            GtkTooltip *tooltip,
+                            gpointer    data)
+{
+  TaskPane* tp(static_cast<TaskPane*>(data));
+
+  gtk_tooltip_set_icon_from_stock (tooltip, GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
+
+  GtkTreeIter iter;
+  GtkTreeView *tree_view = GTK_TREE_VIEW (widget);
+  GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
+  GtkTreePath *path(0);
+
+  char buffer[4096];
+  Task * task(0);
+  bool task_found(false);
+
+  if (!gtk_tree_view_get_tooltip_context (tree_view, &x, &y, keyboard_tip, &model, &path, &iter))
+    return false;
+
+  gtk_tree_model_get (model, &iter, COL_TASK_POINTER, &task, -1);
+//  if (!task) return false;
+
+  g_snprintf(buffer,sizeof(buffer),"...");
+
+  EvolutionDateMaker date_maker;
+  char * date(0);
+
+  TaskUpload * tu (dynamic_cast<TaskUpload*>(task));
+  if (tu)
+  {
+    const Article& a(tu->get_article());
+    date = date_maker.get_date_string (tu->get_article().time_posted);
+    g_snprintf(buffer,sizeof(buffer),
+               _("\
+\n<u>Upload</u>\n\n<i>Subject:</i> <b>\"%s\"</b>,\n<i>From:</i> <b>%s</b>,\n\
+<i>Groups:</i> <b>%s</b>,\n<i>Sourcefile:</i> <b>%s</b>\n"),
+               a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(),
+               tu->get_groups().c_str(), tu->get_filename().c_str());
+  }
+
+  TaskArticle * ta (dynamic_cast<TaskArticle*>(task));
+  if (ta)
+  {
+    const Article& a(ta->get_article());
+    date = date_maker.get_date_string (ta->get_article().time_posted);
+    g_snprintf(buffer,sizeof(buffer),
+               _("\
+\n<u>Download</u>\n\n<i>Subject:</i> <b>\"%s\"</b>, \n<i>From:</i> <b>%s</b>,\n<i>Date:</i> <b>%s</b>,\n\
+<i>Groups:</i> <b>%s</b>, \n<i>Save Path:</i> <b>%s</b>\n"),
+               a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(), date ? date : _("unknown"),
+               ta->get_groups().c_str(), ta->get_save_path().to_string().c_str());
+  }
+
+  task_found = tu || ta;
+
+  if (task_found)
+  {
+    gtk_tooltip_set_markup (tooltip, buffer);
+    gtk_tree_view_set_tooltip_row (tree_view, tooltip, path);
+  }
+  gtk_tree_path_free (path);
+
+  return true;
 }
 
 void TaskPane :: online_toggled_cb (GtkToggleButton* b, Queue *queue)
@@ -227,7 +309,7 @@ TaskPane :: update_status (const task_states_t& tasks)
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks (%d Queued, %d Running, %d Stopped)"), queued_count, running_count, stopped_count);
   else if (running_count || queued_count)
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks (%d Queued, %d Running)"), queued_count, running_count);
-  else 
+  else
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks"));
   gtk_window_set_title (GTK_WINDOW(_root), buf);
 
@@ -251,7 +333,8 @@ TaskPane :: update_status (const task_states_t& tasks)
   if (selected_count) {
     guint64 selected_bytes (0ul);
     foreach_const (tasks_t, tasks_selected, it)
-      selected_bytes += (*it)->get_bytes_remaining ();
+      if (*it)
+        selected_bytes += (*it)->get_bytes_remaining ();
     g_snprintf (buf, sizeof(buf), _("%lu selected, %s"), selected_count, render_bytes(selected_bytes));
     line += '\n';
     line += buf;
@@ -310,6 +393,8 @@ namespace
     gtk_tree_model_get (model, iter, COL_TASK_POINTER, &task,
                                      COL_TASK_STATE,  &state,
                                      -1);
+
+    if (!task) return;
 
     // build the state string
     const char * state_str (0);
@@ -480,6 +565,10 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
   gtk_tree_view_append_column (GTK_TREE_VIEW(_view), col);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
+
+  gtk_widget_set_has_tooltip (_view, true);
+  g_signal_connect(_view,"query-tooltip",G_CALLBACK(on_tooltip_query), this);
+//  gtk_widget_set_tooltip_window (_view, _tooltip_window);
 
   w = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
