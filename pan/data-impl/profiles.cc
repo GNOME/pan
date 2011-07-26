@@ -84,7 +84,7 @@ namespace
           mc.profile_name = *v;
       if (!mc.profile_name.empty())
         mc.profiles[mc.profile_name].clear ();
-    } 
+    }
 
     if ((element_name == "signature_file") && !mc.profile_name.empty()) {
       Profile& p (mc.profiles[mc.profile_name]);
@@ -116,6 +116,7 @@ namespace
       if (element_name == "signature_file") p.signature_file.assign (t.str, t.len);
       else if (element_name == "attribution") p.attribution.assign (t.str, t.len);
       else if (element_name == "fqdn") p.fqdn.assign (t.str, t.len);
+      else if (element_name == "xface") p.xface.assign (t.str, t.len);
       else if (element_name == "username") p.username.assign (t.str, t.len);
       else if (element_name == "address") p.address.assign (t.str, t.len);
       else if (element_name == "server") p.posting_server = t;
@@ -127,7 +128,7 @@ namespace
 
   void text (GMarkupParseContext *context    UNUSED,
              const gchar         *text,
-             gsize                text_len,  
+             gsize                text_len,
              gpointer             user_data,
              GError             **error      UNUSED)
   {
@@ -186,8 +187,8 @@ void
 ProfilesImpl :: serialize (std::ostream& out) const
 {
   int depth (0);
- 
-  // xml header... 
+
+  // xml header...
   out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
   out << indent(depth++) << "<posting>\n";
 
@@ -198,6 +199,7 @@ ProfilesImpl :: serialize (std::ostream& out) const
     out << indent(depth) << "<username>" << escaped(it->second.username) << "</username>\n";
     out << indent(depth) << "<address>" << escaped(it->second.address) << "</address>\n";
     out << indent(depth) << "<server>" << escaped(it->second.posting_server.to_view()) << "</server>\n";
+    out << indent(depth) << "<xface>" << escaped(it->second.xface) << "</xface>\n";
     if (!it->second.signature_file.empty()) {
       const char * type;
       switch (it->second.sig_type) {

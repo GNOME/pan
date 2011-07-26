@@ -312,6 +312,7 @@ PostUI :: set_spellcheck_enabled (bool enabled)
 std::string
 PostUI :: get_body () const
 {
+  std::cerr<<"get body\n";
   std::string body;
   GtkTextBuffer * buf (_body_buf);
   GtkTextView * view (GTK_TEXT_VIEW(_body_view));
@@ -656,7 +657,7 @@ namespace
 {
   gboolean delete_event_cb (GtkWidget*, GdkEvent*, gpointer user_data)
   {
-    static_cast<PostUI*>(user_data)->close_window ();
+    static_cast<PostUI*>(user_data)->close_window (true);
     return true; // don't invoke the default handler that destroys the widget
   }
 
@@ -692,7 +693,7 @@ PostUI :: close_window (bool flag)
     gtk_widget_destroy (d);
   }
 
-  int w,h;
+  int w(450),h(450);
   gtk_window_get_size( GTK_WINDOW(_root), &w, &h);
   std::cerr<<"post ui sizes: "<<w<<" "<<h<<std::endl;
   _prefs.set_int("post-ui-width", w);
@@ -850,7 +851,7 @@ PostUI :: done_sending_message (GMimeMessage * message, bool ok)
 {
   if (ok) {
     _unchanged_body = get_body ();
-    close_window ();
+    close_window (true);
   }
 
   g_object_unref (G_OBJECT(message));
@@ -945,7 +946,6 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
       done_sending_message (message, false);
     else
       maybe_mail_message (message);
-    close_window(true);
   } else
   {
     --_running_uploads;
@@ -1079,8 +1079,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
     if (master_reply)
     {
-//      std::cerr<<"adding master reply to queue\n";
-
       // master article, other attachments are threaded as replies to this
       const Profile profile (get_current_profile ());
       std::string out;
@@ -1107,8 +1105,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
     if (!inline_or_bulk) // bulk upload
     {
-//      std::cerr<<"adding "<<tasks.size()<<" tasks."<<std::endl;
-
       foreach (PostUI::tasks_t, tasks, it)
       {
 
@@ -1483,6 +1479,10 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   const StringView replyto (gtk_entry_get_text (GTK_ENTRY(_replyto_entry)));
   if (!replyto.empty())
     g_mime_object_set_header ((GMimeObject *) msg, "Reply-To", replyto.str);
+
+  // headers from posting profile(via prefs): X-Face
+  if (!profile.xface.empty())
+    g_mime_object_set_header ((GMimeObject *) msg, "X-Face", profile.xface.c_str());
 
   // add the 'hidden headers'
   foreach_const (str2str_t, _hidden_headers, it)
@@ -2320,7 +2320,7 @@ PostUI :: body_changed_cb (GtkEditable*, gpointer ui_gpointer)
   PostUI * ui (static_cast<PostUI*>(ui_gpointer));
   unsigned int& tag (ui->_body_changed_idle_tag);
   if (!tag)
-    tag = g_timeout_add (2000, body_changed_idle, ui);
+    tag = g_timeout_add (5000, body_changed_idle, ui);
 }
 
 /***
@@ -2492,7 +2492,7 @@ namespace
   {
 
     GtkTreePath * path = gtk_tree_model_get_path ( model , iter ) ;
-    int cnt = gtk_tree_path_get_indices ( path )[0]+1 ;
+    int cnt (gtk_tree_path_get_indices ( path )[0]+1) ;
     std::string tmp;
     char buf[256];
     g_snprintf(buf,sizeof(buf),"%d",cnt);
@@ -3057,7 +3057,7 @@ PostUI :: PostUI (GtkWindow    * parent,
   gtk_window_set_role (GTK_WINDOW(_root), "pan-post-window");
   gtk_window_set_title (GTK_WINDOW(_root), _("Post Article"));
   int w,h;
-  w = _prefs.get_int("post-ui-width", -1);
+  w = _prefs.get_int("post-ui-width", 450);
   h = _prefs.get_int("post-ui-height", 450);
   gtk_window_set_default_size (GTK_WINDOW(_root), w, h);
   g_object_set_data_full (G_OBJECT(_root), "post-ui", this, delete_post_ui);

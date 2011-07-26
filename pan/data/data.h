@@ -94,6 +94,7 @@ namespace pan
     std::string signature_file;
     std::string attribution;
     std::string fqdn;
+    std::string xface;
     Quark posting_server;
 
     void get_from_header (std::string& s) const {
