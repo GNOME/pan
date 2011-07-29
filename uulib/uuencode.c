@@ -1630,23 +1630,24 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
       if (infile==NULL)
         {
           if (stat (infname, &finfo) == -1)
-            {
-              UUMessage (uuencode_id, __LINE__, UUMSG_ERROR,
-                         uustring (S_NOT_STAT_FILE),
-                         infname, strerror (uu_errno=errno));
-              return UURET_IOERR;
-            }
+          {
+            UUMessage (uuencode_id, __LINE__, UUMSG_ERROR,
+                       uustring (S_NOT_STAT_FILE),
+                       infname, strerror (uu_errno=errno));
+            return UURET_IOERR;
+          }
           if ((theifile = fopen (infname, "rb")) == NULL)
-            {
-              UUMessage (uuencode_id, __LINE__, UUMSG_ERROR,
-                         uustring (S_NOT_OPEN_FILE),
-                         infname, strerror (uu_errno=errno));
-              return UURET_IOERR;
-            }
+          {
+            UUMessage (uuencode_id, __LINE__, UUMSG_ERROR,
+                       uustring (S_NOT_OPEN_FILE),
+                       infname, strerror (uu_errno=errno));
+            return UURET_IOERR;
+          }
+
           if (finfo.st_size <= bpf)
             numparts = 1;
           else
-            numparts = (int) (ceill(finfo.st_size / bpf));
+            numparts = (int) (ceil((double)finfo.st_size / (double)bpf));
 
           themode  = (filemode) ? filemode : ((int) finfo.st_mode & 0777);
           thesize  = (long) finfo.st_size;
@@ -1766,6 +1767,9 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
         }
       else
         {
+
+          printf("parts of %s %ld\n",progress.curfile, progress.numparts);
+
           if (progress.totsize == -1)
             {
               fprintf (outfile, "=ybegin line=128 name=%s%s",
