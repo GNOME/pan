@@ -19,7 +19,6 @@ const char * fallback_post_ui =
 "      <menuitem action='set-charset' />\n"
 "      <menuitem action='remember-charset' />\n"
 "      <separator />\n"
-"      <menuitem action='inline-or-bulk' />\n"
 "      <menuitem action='master-reply' />\n"
 "      <separator />\n"
 "      <menuitem action='run-editor' />\n"
