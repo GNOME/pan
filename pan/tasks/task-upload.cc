@@ -210,14 +210,16 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
 
     char * all;
     if (_first && _queue_pos==-1)
+    {
       all = g_mime_object_to_string ((GMimeObject *) msg);
+      g_free(all);
+    }
     else
       all = g_mime_object_get_headers ((GMimeObject *) msg);
     out << all << "\n";
     out << d;
     d = out.str();
 
-    if (_first && _queue_pos==-1) g_free(all);
     if (_first) _first = !_first;
 }
 
@@ -248,7 +250,7 @@ TaskUpload :: use_nntp (NNTP * nntp)
     if (_queue_pos != -1)
       set_status_va (_("Uploading %s - Part %d of %d"), _basename.c_str(), needed->partno, _total_parts);
     else
-      set_status_va (_("Uploading %s - Part %d of %d"), _basename.c_str(), 1, _total_parts);
+      set_status_va (_("Uploading Message body with Subject \"%s\""), _subject.c_str());
 
     std::string data;
     if (_queue_pos != -1) _cache.get_data(data,needed->message_id.c_str());
@@ -288,7 +290,6 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
     }
 
   if (!found) goto _end;
-
   if (_queue_pos == -1) { _needed.erase(it); goto _end; }
 
   switch (health)

@@ -108,7 +108,7 @@ inline int close(int fd) {return _close(fd);}
 
   void on_inline_toggled (GtkToggleAction * toggle, gpointer)
   {
-    inline_or_bulk = gtk_toggle_action_get_active (toggle);
+//    inline_or_bulk = gtk_toggle_action_get_active (toggle);
   }
 
   void on_mr_toggled (GtkToggleAction * toggle, gpointer)
@@ -312,7 +312,6 @@ PostUI :: set_spellcheck_enabled (bool enabled)
 std::string
 PostUI :: get_body () const
 {
-  std::cerr<<"get body\n";
   std::string body;
   GtkTextBuffer * buf (_body_buf);
   GtkTextView * view (GTK_TEXT_VIEW(_body_view));
@@ -471,7 +470,7 @@ namespace
     { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), 0, N_("Wrap Text"), G_CALLBACK(do_wrap), true },
     { "always-run-editor", 0, N_("Always Run Editor"), 0, 0, G_CALLBACK(do_edit2), false },
     { "remember-charset", 0, N_("Remember Character Encoding for this Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
-    { "inline-or-bulk", 0, N_("Attachments are inlined with Message"), 0, 0, G_CALLBACK(on_inline_toggled), false },
+//    { "inline-or-bulk", 0, N_("Attachments are inlined with Message"), 0, 0, G_CALLBACK(on_inline_toggled), false },
     { "master-reply", 0, N_("All Attachments are threaded replies to message"), 0, 0, G_CALLBACK(on_mr_toggled), true },
     { "spellcheck", 0, N_("Check _Spelling"), 0, 0, G_CALLBACK(on_spellcheck_toggled), true }
   };
@@ -1038,6 +1037,9 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _post_task->add_listener (this);
     _queue.add_task (_post_task, Queue::TOP);
   } else {
+
+    //dbg
+    inline_or_bulk = false;
 
     // prepend header for xml file (if one was chosen)
     if (!_save_file.empty())

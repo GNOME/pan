@@ -1047,7 +1047,6 @@ HeaderPane :: rebuild_rules (bool enable)
 
   if (!enable)
   {
-    std::cerr<<"clear rules\n";
     _rules.clear();
     return;
   }
@@ -1235,15 +1234,10 @@ HeaderPane :: rules(bool enable)
   {
     _wait.watch_cursor_on ();
 
-    if (_rules._aggregates.empty()) {
+    if (_rules._aggregates.empty())
       _atree->set_rules();
-      std::cerr<<"rules, aggr empty\n";
-    }
     else
-    {
-      std::cerr<<"rules, aggr NOT empty, size "<<_rules._aggregates.size()<< "\n";
       _atree->set_rules(_show_type, &_rules);
-    }
 
     _wait.watch_cursor_off ();
   }

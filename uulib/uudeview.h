@@ -163,14 +163,14 @@ typedef struct _uulist {
  */
 
 typedef struct {
-  int  action;			/* see UUACT_* definitions above           */
-  char curfile[256];		/* the file we are working on, incl. path  */
-  int  partno;			/* part we're currently decoding           */
-  int  numparts;		/* total number of parts of this file      */
-  long fsize;			/* size of the current file                */
-  int  percent;			/* % of _current part_                     */
-  long foffset;			/* file offset -- internal use only        */
-  long totsize;			/* file total size -- internal use only    */
+  int  action;			 /* see UUACT_* definitions above           */
+  char curfile[2048];/* the file we are working on, incl. path  */
+  int  partno;		 	 /* part we're currently decoding           */
+  int  numparts;		 /* total number of parts of this file      */
+  long fsize;			   /* size of the current file                */
+  int  percent;			 /* % of _current part_                     */
+  long foffset;			 /* file offset -- internal use only        */
+  long totsize;			 /* file total size -- internal use only    */
 } uuprogress;
 
 

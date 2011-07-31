@@ -1180,7 +1180,7 @@ UUEncodeMulti (FILE *outfile, FILE *infile, char *infname, int encoding,
   if (progress.fsize < 0)
     progress.fsize = -1;
 
-  _FP_strncpy (progress.curfile, (outfname)?outfname:infname, 256);
+  _FP_strncpy (progress.curfile, (outfname)?outfname:infname, 2048);
 
   progress.partno   = 1;
   progress.numparts = 1;
@@ -1390,7 +1390,7 @@ UUEncodePartial (FILE *outfile, FILE *infile,
           theifile = infile;
         }
 
-      _FP_strncpy (progress.curfile, (outfname)?outfname:infname, 256);
+      _FP_strncpy (progress.curfile, (outfname)?outfname:infname, 2048);
 
       progress.totsize  = (thesize>=0) ? thesize : -1;
       progress.partno   = 1;
@@ -1677,7 +1677,7 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
           theifile = infile;
         }
 
-      _FP_strncpy (progress.curfile, (outfname)?outfname:infname, 256);
+      _FP_strncpy (progress.curfile, (outfname)?outfname:infname, 2048);
 
       progress.totsize  = (thesize>=0) ? thesize : -1;
       progress.partno   = 1;
@@ -1767,8 +1767,6 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
         }
       else
         {
-
-          printf("parts of %s %ld\n",progress.curfile, progress.numparts);
 
           if (progress.totsize == -1)
             {
@@ -1952,7 +1950,7 @@ UUEncodeToStream (FILE *outfile, FILE *infile,
   if (progress.fsize < 0)
     progress.fsize = -1;
 
-  _FP_strncpy (progress.curfile, (outfname)?outfname:infname, 256);
+  _FP_strncpy (progress.curfile, (outfname)?outfname:infname, 2048);
 
   progress.partno   = 1;
   progress.numparts = 1;
@@ -2179,7 +2177,7 @@ UUEncodeToFile (FILE *infile, char *infname, int encoding,
       theifile = infile;
     }
 
-  _FP_strncpy (progress.curfile, (outfname)?outfname:infname, 256);
+  _FP_strncpy (progress.curfile, (outfname)?outfname:infname, 2048);
 
   progress.totsize  = (progress.totsize<0) ? -1 : progress.totsize;
   progress.numparts = numparts;

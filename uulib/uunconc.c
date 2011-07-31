@@ -1393,15 +1393,15 @@ UUDecode (uulist *data)
   progress.action = 0;
   if (data->filename != NULL) {
     _FP_strncpy (progress.curfile,
-		 (strlen(data->filename)>255)?
-		 (data->filename+strlen(data->filename)-255):data->filename,
-		 256);
+		 (strlen(data->filename)>2047)?
+		 (data->filename+strlen(data->filename)-2047):data->filename,
+		 2048);
   }
   else {
     _FP_strncpy (progress.curfile,
-		 (strlen(data->binfile)>255)?
-		 (data->binfile+strlen(data->binfile)-255):data->binfile,
-		 256);
+		 (strlen(data->binfile)>2047)?
+		 (data->binfile+strlen(data->binfile)-2047):data->binfile,
+		 2048);
   }
   progress.partno   =  0;
   progress.numparts =  0;
