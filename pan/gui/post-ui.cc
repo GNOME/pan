@@ -596,7 +596,7 @@ PostUI :: add_actions (GtkWidget * box)
                                 _prefs.get_flag ("spellcheck-enabled", DEFAULT_SPELLCHECK_FLAG));
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "wrap")),
                                 _prefs.get_flag ("compose-wrap-enabled", true));
-  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "inline-or-bulk")), false);
+//  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "inline-or-bulk")), false);
   gtk_ui_manager_insert_action_group (_uim, _agroup, 0);
 
    //add popup actions
