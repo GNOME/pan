@@ -1,1406 +1,1135 @@
 # Copyright (C) 1999-2001 Free Software Foundation, Inc.
-# Valek Filippov <EMAIL@df.ru>, 2001.
+# Valek Filippov <EMAIL@df.ru>, 2001, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: PAN\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-18 10:27-0500\n"
-"PO-Revision-Date: 2001-10-28 18:01+0300\n"
-"Last-Translator: Valek Filippov <frob@df.ru>\n"
-"Language-Team: Russian <ru@li.org>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=pan2&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2011-06-05 00:58+0000\n"
+"PO-Revision-Date: 2011-08-22 19:54+0300\n"
+"Last-Translator: Yuri Myasoedov <omerta13@yandex.ru>\n"
+"Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: pan.desktop.in.h:1
-#, fuzzy
+#: ../pan.desktop.in.h:1
 msgid "Pan Newsreader"
-msgstr "новые заголовки"
+msgstr "Программа чтения новостей"
 
-#: pan.desktop.in.h:2
+#: ../pan.desktop.in.h:2
 msgid "Read News from Usenet"
-msgstr ""
+msgstr "Чтение новостей из Usenet"
 
-#: pan/data-impl/data-impl.cc:82
+#. load_group_descriptions (*_data_io);
+#: ../pan/data-impl/data-impl.cc:90
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
-msgstr ""
+msgstr "Данные движка загружены за %.1f сек"
 
-#: pan/data-impl/data-io.cc:220 pan/data-impl/data-io.cc:241
-#: pan/data/article-cache.cc:236 pan/data/article-cache.cc:246
-#: pan/gui/post-ui.cc:1261
-#, fuzzy, c-format
+#: ../pan/data-impl/data-io.cc:187
+#: ../pan/data-impl/data-io.cc:211
+#: ../pan/data/article-cache.cc:236
+#: ../pan/data/article-cache.cc:247
+#: ../pan/gui/post-ui.cc:1100
+#, c-format
 msgid "Unable to save \"%s\" %s"
-msgstr "Не удалось установить группу \"%s\": %s"
+msgstr "Не удалось сохранить «%s» %s"
 
-#: pan/data-impl/groups.cc:92
-#, fuzzy, c-format
+#: ../pan/data-impl/groups.cc:94
+#, c-format
 msgid "Skipping newsrc file for server \"%s\""
-msgstr "Подключиться к серверу \"%s\"?"
+msgstr "Пропускаем файл newsrc для сервера «%s»"
 
-#: pan/data-impl/headers.cc:551
-#, fuzzy, c-format
+#: ../pan/data-impl/headers.cc:581
+#, c-format
 msgid "Expired %lu old articles from \"%s\""
-msgstr "Удалено %u статей из %s"
+msgstr "Истёкшие %lu старых статей из «%s»"
 
-#: pan/data-impl/headers.cc:558
-#, fuzzy, c-format
+#: ../pan/data-impl/headers.cc:588
+#, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
 "Are you running an old version of Pan by accident?"
-msgstr "Неподдерживаемая версия данных для заголовков %s: %d"
-
-#: pan/data-impl/headers.cc:573
-#, fuzzy, c-format
-msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
-msgstr "Сохранено %d статей за %.1f секунд (%.0f статей/сек)"
-
-#: pan/data-impl/headers.cc:797
-#, fuzzy, c-format
-msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
-msgstr "Сохранено %d статей за %.1f секунд (%.0f статей/сек)"
-
-#: pan/data-impl/headers.cc:1089
-#, fuzzy, c-format
-msgid "Added %lu articles to %s."
-msgstr "Удалено %u статей из %s"
-
-#: pan/data-impl/profiles.cc:173
-#, fuzzy, c-format
-msgid "Error reading \"%s\": %s"
-msgstr "Ошибка чтения файла \"%s\""
-
-#: pan/data-impl/server.cc:296
-#, c-format
-msgid "Error loading newsserver information: %s"
 msgstr ""
+"Неподдерживаемая версия данных для заголовков %s: %d.\n"
+"Проверьте, не используете ли вы старую версию Pan."
 
-#: pan/data/article-cache.cc:148
+#: ../pan/data-impl/headers.cc:603
+#, c-format
+msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
+msgstr "Загружено %lu статей для «%s» за %.1f секунд (%.0f статей в секунду)"
+
+#: ../pan/data-impl/headers.cc:828
+#, c-format
+msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgstr "Сохранено %lu частей, %lu статей в «%s» за %.1f секунд (%.0f частей в секунду)"
+
+#: ../pan/data-impl/headers.cc:1140
+#, c-format
+msgid "Added %lu articles to %s."
+msgstr "Добавлено %lu статей в %s."
+
+#: ../pan/data-impl/profiles.cc:163
+#: ../pan/data-impl/server.cc:309
+#: ../pan/data/article-cache.cc:391
+#: ../pan/general/file-util.cc:228
+#: ../pan/gui/post-ui.cc:274
+#, c-format
+msgid "Error reading file \"%s\": %s"
+msgstr "Ошибка чтения файла «%s»: %s"
+
+#: ../pan/data-impl/xover.cc:239
+#, c-format
+msgid "Error reading from %s: unknown group \"%s\""
+msgstr "Ошибка чтения из %s: неизвестная группа «%s»"
+
+#: ../pan/data/article-cache.cc:148
 #, c-format
 msgid "Error opening directory: \"%s\": %s"
-msgstr ""
+msgstr "Ошибка открытия каталога «%s»: %s"
 
-#: pan/data/article-cache.cc:364 pan/general/line-reader.cc:24
-#, fuzzy, c-format
+#: ../pan/data/article-cache.cc:360
+#, c-format
 msgid "Error opening file \"%s\" %s"
-msgstr "Ошибка чтения файла \"%s\""
-
-#: pan/data/article-cache.cc:395 pan/gui/post-ui.cc:1028
-#, fuzzy, c-format
-msgid "Error reading file \"%s\": %s"
-msgstr "Ошибка чтения файла \"%s\""
-
-#: pan/data/filter-info.cc:152
-#, fuzzy
-msgid "article doesn't have attachments"
-msgstr "статья содержит %s двоичных вложений"
-
-#: pan/data/filter-info.cc:156
-#, fuzzy
-msgid "the article has attachments"
-msgstr "статья содержит %s двоичных вложений"
-
-#: pan/data/filter-info.cc:160
-#, fuzzy
-msgid "the article isn't cached locally"
-msgstr "Статья помечена как"
-
-#: pan/data/filter-info.cc:164
-#, fuzzy
-msgid "the article is cached locally"
-msgstr "Статья помечена как"
-
-#: pan/data/filter-info.cc:168
-#, fuzzy
-msgid "the article wasn't posted by you"
-msgstr "Статья была послана по крайней мере в"
-
-#: pan/data/filter-info.cc:172
-#, fuzzy
-msgid "the article was posted by you"
-msgstr "Статья была послана по крайней мере в"
-
-#: pan/data/filter-info.cc:176
-#, fuzzy
-msgid "the article has been read"
-msgstr "Статья содержит"
-
-#: pan/data/filter-info.cc:180
-#, fuzzy
-msgid "the article hasn't been read"
-msgstr "Статья содержит"
-
-#: pan/data/filter-info.cc:184
-#, fuzzy, c-format
-msgid "the article is less than %ld bytes long"
-msgstr "Статья не меньше чем %d строк"
-
-#: pan/data/filter-info.cc:189
-#, fuzzy, c-format
-msgid "the article is at least %ld bytes long"
-msgstr "Статья не меньше чем %d строк"
-
-#: pan/data/filter-info.cc:194
-#, fuzzy, c-format
-msgid "the article is less than %ld lines long"
-msgstr "Статья не меньше чем %d строк"
-
-#: pan/data/filter-info.cc:199
-#, fuzzy, c-format
-msgid "the article is at least %ld lines long"
-msgstr "Статья не меньше чем %d строк"
-
-#: pan/data/filter-info.cc:204
-#, fuzzy, c-format
-msgid "the article is less than %ld days old"
-msgstr "статья старее %d дней"
-
-#: pan/data/filter-info.cc:209
-#, fuzzy, c-format
-msgid "the article is at least %ld days old"
-msgstr "статья старее %d дней"
-
-#: pan/data/filter-info.cc:214
-#, fuzzy, c-format
-msgid "the article was posted to less than %ld groups"
-msgstr "статья была послана более чем в %d групп"
-
-#: pan/data/filter-info.cc:219
-#, fuzzy, c-format
-msgid "the article was posted to at least %ld groups"
-msgstr "статья была послана более чем в %d групп"
-
-#: pan/data/filter-info.cc:224
-#, fuzzy, c-format
-msgid "the article's score is less than %ld"
-msgstr "Статья имеет больше чем"
-
-#: pan/data/filter-info.cc:229
-#, fuzzy, c-format
-msgid "the article's score is %ld or higher"
-msgstr "Статья имеет больше чем"
-
-#: pan/data/filter-info.cc:238 pan/data/filter-info.cc:248
-#, c-format
-msgid "%s doesn't contain \"%s\""
-msgstr ""
-
-#: pan/data/filter-info.cc:239 pan/data/filter-info.cc:249
-#, c-format
-msgid "%s isn't \"%s\""
-msgstr ""
-
-#: pan/data/filter-info.cc:240 pan/data/filter-info.cc:250
-#, c-format
-msgid "%s doesn't begin with \"%s\""
-msgstr ""
-
-#: pan/data/filter-info.cc:241 pan/data/filter-info.cc:251
-#, c-format
-msgid "%s doesn't end with \"%s\""
-msgstr ""
-
-#: pan/data/filter-info.cc:242 pan/data/filter-info.cc:252
-#, fuzzy, c-format
-msgid "%s doesn't match the regex \"%s\""
-msgstr "Тема не совпадает с рег.выражением \"%s\""
-
-#: pan/data/filter-info.cc:264
-#, fuzzy, c-format
-msgid "%s contains \"%s\""
-msgstr "Нет подключений"
-
-#: pan/data/filter-info.cc:265
-#, c-format
-msgid "%s is \"%s\""
-msgstr ""
-
-#: pan/data/filter-info.cc:266
-#, c-format
-msgid "%s begins with \"%s\""
-msgstr ""
-
-#: pan/data/filter-info.cc:267
-#, c-format
-msgid "%s ends with \"%s\""
-msgstr ""
-
-#: pan/data/filter-info.cc:268
-#, fuzzy, c-format
-msgid "%s matches the regex \"%s\""
-msgstr "Тема совпадает с рег.выражением \"%s\""
-
-#: pan/data/filter-info.cc:274
-msgid "Any of these tests fail:"
-msgstr ""
-
-#: pan/data/filter-info.cc:281
-msgid "All of these tests pass:"
-msgstr ""
-
-#: pan/data/filter-info.cc:288
-msgid "None of these tests pass:"
-msgstr ""
-
-#: pan/data/filter-info.cc:295
-msgid "Any of these tests pass:"
-msgstr ""
-
-#: pan/data/scorefile.cc:299
-#, c-format
-msgid ""
-"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
-"'Expires: DD-MM-YYYY'."
-msgstr ""
-
-#: pan/data/scorefile.cc:302
-#, c-format
-msgid "Expired old score from %*.*s, line %d"
-msgstr ""
-
-#: pan/data/scorefile.cc:373
-#, c-format
-msgid "Error reading score in %*.*s, line %d: unexpected line."
-msgstr ""
-
-#: pan/data/scorefile.cc:421
-#, c-format
-msgid "Read %lu scoring rules in %lu sections from \"%s\""
-msgstr ""
+msgstr "Ошибка открытия файла «%s»: %s"
 
 #. build the locale strings
-#: pan/general/e-util.cc:213
+#: ../pan/general/e-util.cc:213
 msgid "%l:%M %p"
-msgstr ""
+msgstr "%H:%M"
 
-#: pan/general/e-util.cc:214
+#: ../pan/general/e-util.cc:214
 msgid "Today %l:%M %p"
-msgstr ""
+msgstr "Сегодня %H:%M"
 
-#: pan/general/e-util.cc:215
+#: ../pan/general/e-util.cc:215
 msgid "%a %l:%M %p"
-msgstr ""
+msgstr "%a %H:%M"
 
-#: pan/general/e-util.cc:216
+#: ../pan/general/e-util.cc:216
 msgid "%b %d %l:%M %p"
-msgstr ""
+msgstr "%b %d %H:%M"
 
-#: pan/general/e-util.cc:217
+#: ../pan/general/e-util.cc:217
 msgid "%b %d %Y"
-msgstr ""
+msgstr "%d %b %Y"
 
-#: pan/general/e-util.cc:242
+#: ../pan/general/e-util.cc:242
 msgid "?"
-msgstr ""
+msgstr "?"
 
-#: pan/general/file-util.cc:139
-#, fuzzy, c-format
-msgid "Creating directory \"%s\""
-msgstr "Ожидание декодирования \"%s\""
-
-#: pan/general/file-util.cc:142
-#, fuzzy, c-format
-msgid "Couldn't create directory \"%s\": %s"
-msgstr "Не удалось создать каталог \"%s\": %s"
-
-#: pan/general/text-match.cc:210
-msgid ""
-"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
-"fail."
-msgstr ""
-
-#: pan/general/text-match.cc:221
+#: ../pan/general/text-match.cc:193
 #, c-format
-msgid "Can't use regular expression \"%s\": %s at position %d"
-msgstr ""
-
-#: pan/general/text-match.cc:229
-#, fuzzy, c-format
 msgid "Can't use regular expression \"%s\": %s"
-msgstr "Автор совпадает с рег.выражением \"%s\""
+msgstr "Невозможно использовать регулярное выражение «%s»: %s"
 
-#: pan/gui/actions.cc:258 pan/gui/post-ui.cc:238
-#, fuzzy
+#: ../pan/general/utf8-utils.cc:213
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgstr "Не удалось определить кодировку статьи. Символы, отличные от UTF-8, были удалены."
+
+#: ../pan/gui/actions.cc:252
+#: ../pan/gui/post-ui.cc:205
 msgid "_File"
-msgstr "Не удалось"
+msgstr "_Файл"
 
-#: pan/gui/actions.cc:259 pan/gui/post-ui.cc:239
-#, fuzzy
+#: ../pan/gui/actions.cc:253
+#: ../pan/gui/post-ui.cc:206
 msgid "_Edit"
-msgstr "Правка"
+msgstr "_Правка"
 
-#: pan/gui/actions.cc:260 pan/gui/prefs-ui.cc:460
-#, fuzzy
+#: ../pan/gui/actions.cc:254
+#: ../pan/gui/prefs-ui.cc:518
 msgid "_Layout"
-msgstr "Выравнивание"
+msgstr "_Расположение"
 
-#: pan/gui/actions.cc:261
-#, fuzzy
+#: ../pan/gui/actions.cc:255
 msgid "_Group Pane"
-msgstr "Показать панель группы"
+msgstr "Панель _группы"
 
-#: pan/gui/actions.cc:262
-#, fuzzy
+#: ../pan/gui/actions.cc:256
 msgid "_Header Pane"
-msgstr "Показать панель заголовка"
+msgstr "Панель _заголовка"
 
-#: pan/gui/actions.cc:263
+#: ../pan/gui/actions.cc:257
 msgid "_Body Pane"
-msgstr ""
+msgstr "Панель _тела сообщения"
 
-#: pan/gui/actions.cc:264
+#: ../pan/gui/actions.cc:258
 msgid "_View"
-msgstr "Просмотр"
+msgstr "_Вид"
 
-#: pan/gui/actions.cc:265
-msgid "Character _Encoding"
-msgstr ""
-
-#: pan/gui/actions.cc:266
-#, fuzzy
+#: ../pan/gui/actions.cc:259
 msgid "Filte_r"
-msgstr "Фильтры"
+msgstr "Ф_ильтр"
 
-#: pan/gui/actions.cc:267
-#, fuzzy
+#: ../pan/gui/actions.cc:260
 msgid "_Go"
-msgstr "Группы"
+msgstr "П_ереход"
 
-#: pan/gui/actions.cc:268
-#, fuzzy
+#: ../pan/gui/actions.cc:261
 msgid "_Actions"
-msgstr "Действия"
+msgstr "_Действия"
 
-#: pan/gui/actions.cc:269
+#: ../pan/gui/actions.cc:262
 msgid "_Articles"
-msgstr "Статьи"
+msgstr "_Статьи"
 
-#: pan/gui/actions.cc:270
-#, fuzzy
-msgid "_Groups"
-msgstr "Группы"
+#: ../pan/gui/actions.cc:263
+msgid "G_roups"
+msgstr "_Группы"
 
-#: pan/gui/actions.cc:271 pan/gui/actions.cc:272
+#: ../pan/gui/actions.cc:264
+#: ../pan/gui/actions.cc:265
 msgid "_Post"
-msgstr "Послать"
+msgstr "_Отправка"
 
-#: pan/gui/actions.cc:273 pan/gui/save-ui.cc:202
+#: ../pan/gui/actions.cc:266
 msgid "_Help"
-msgstr ""
+msgstr "_Справка"
 
-#: pan/gui/actions.cc:274
-#, fuzzy
+#: ../pan/gui/actions.cc:269
+#: ../pan/gui/post-ui.cc:211
+msgid "Set Character _Encoding..."
+msgstr "Установить _кодировку символов…"
+
+#: ../pan/gui/actions.cc:270
+msgid "Set Character Encoding..."
+msgstr "Установить кодировку символов…"
+
+#: ../pan/gui/actions.cc:274
 msgid "_Read Group"
-msgstr "Перезагрузка групп"
+msgstr "_Прочитать группу"
 
-#: pan/gui/actions.cc:274
-#, fuzzy
-msgid "Read Selected Group"
-msgstr "Выбирает группу"
+#: ../pan/gui/actions.cc:275
+msgid "Read Group"
+msgstr "Прочитать группу"
 
-#: pan/gui/actions.cc:275
-#, fuzzy
-msgid "_Mark Group _Read"
-msgstr "Пометить группу как прочитанную"
+#: ../pan/gui/actions.cc:279
+msgid "_Mark Selected Groups Read"
+msgstr "От_метить выделенные группы прочитанными"
 
-#: pan/gui/actions.cc:275
-#, fuzzy
+#: ../pan/gui/actions.cc:280
 msgid "Mark Selected Groups Read"
-msgstr "Пометить выбранные статьи как прочитанные"
+msgstr "Отметить выделенные группы прочитанными"
 
-#: pan/gui/actions.cc:276
-#, fuzzy
-msgid "_Delete Group's Articles"
-msgstr "Удалить все статьи"
+#: ../pan/gui/actions.cc:284
+msgid "_Delete Selected Groups' Articles"
+msgstr "_Удалить выделенные статьи группы"
 
-#: pan/gui/actions.cc:276
-#, fuzzy
+#: ../pan/gui/actions.cc:285
 msgid "Delete Selected Groups' Articles"
-msgstr "Отметить выбранные статьи"
+msgstr "Удалить выделенные статьи группы"
 
-#: pan/gui/actions.cc:277
-#, fuzzy
+#: ../pan/gui/actions.cc:289
 msgid "Get New _Headers in Selected Groups"
-msgstr "Получить новые статьи в выбранных группах"
+msgstr "Получить новые заголовки в _выделенных группах"
 
-#: pan/gui/actions.cc:277
-#, fuzzy
-msgid "Get New Headers for Selected Groups"
-msgstr "Получить новые статьи в выбранных группах"
+#: ../pan/gui/actions.cc:290
+msgid "Get New Headers in Selected Groups"
+msgstr "Получить новые заголовки в выделенных группах"
 
-#: pan/gui/actions.cc:278
-#, fuzzy
+#: ../pan/gui/actions.cc:294
 msgid "Get New _Headers in Subscribed Groups"
-msgstr "Получить новые статьи во всех группах подписки"
+msgstr "Получить новые заголовки в _группах подписки"
 
-#: pan/gui/actions.cc:278
-#, fuzzy
-msgid "Get New Headers for Subscribed Groups"
-msgstr "Получить новые статьи во всех группах подписки"
+#: ../pan/gui/actions.cc:295
+msgid "Get New Headers in Subscribed Groups"
+msgstr "Получить новые заголовки в группах подписки"
 
-#: pan/gui/actions.cc:279
-#, fuzzy
+#: ../pan/gui/actions.cc:299
 msgid "Get _Headers..."
-msgstr "Еще заголовки"
+msgstr "Получить _заголовки…"
 
-#: pan/gui/actions.cc:279
-msgid "Get Headers from Server"
-msgstr ""
+#: ../pan/gui/actions.cc:300
+msgid "Get Headers..."
+msgstr "Получить заголовки…"
 
-#: pan/gui/actions.cc:280
-#, fuzzy
+#: ../pan/gui/actions.cc:304
+#: ../pan/gui/actions.cc:305
 msgid "Refresh Group List"
-msgstr "Обновление группы \"%s\""
+msgstr "Обновить список групп"
 
-#: pan/gui/actions.cc:280
-#, fuzzy
-msgid "Get a new Group list from the Server"
-msgstr "Объединение групп для \"%s\""
-
-#: pan/gui/actions.cc:281
+#: ../pan/gui/actions.cc:309
 msgid "_Subscribe"
+msgstr "_Подписаться"
+
+#: ../pan/gui/actions.cc:310
+msgid "Subscribe"
 msgstr "Подписаться"
 
-#: pan/gui/actions.cc:281
-#, fuzzy
-msgid "Subscribe to Selected Groups"
-msgstr "Подписанные группы"
-
-#: pan/gui/actions.cc:282
+#: ../pan/gui/actions.cc:314
 msgid "_Unsubscribe"
+msgstr "_Отписаться"
+
+#: ../pan/gui/actions.cc:315
+msgid "Unsubscribe"
 msgstr "Отписаться"
 
-#: pan/gui/actions.cc:282
-#, fuzzy
-msgid "Unsubscribe from Selected Groups"
-msgstr "Применение правила к выбранным группам"
-
-#: pan/gui/actions.cc:284
-#, fuzzy
+#: ../pan/gui/actions.cc:319
 msgid "_Save Articles..."
-msgstr "Сохранить статьи как..."
+msgstr "_Сохранить статьи…"
 
-#: pan/gui/actions.cc:284
-#, fuzzy
-msgid "Save Selected Articles..."
-msgstr "Сохранить вложения к выделенным статьям"
+#: ../pan/gui/actions.cc:320
+msgid "Save Articles..."
+msgstr "Сохранить статьи…"
 
-#: pan/gui/actions.cc:286
-#, fuzzy
+#: ../pan/gui/actions.cc:324
+msgid "Save Articles from this _NZB..."
+msgstr "Сохранить статьи из этого _NZB…"
+
+#: ../pan/gui/actions.cc:325
+msgid "Save Articles from this NZB"
+msgstr "Сохранить статьи из этого NZB"
+
+#: ../pan/gui/actions.cc:329
+msgid "Save Articles to an NZB _File..."
+msgstr "Сохранить статьи в _файл NZB…"
+
+#: ../pan/gui/actions.cc:330
+#| msgid "Save this log to a file."
+msgid "Save Articles to an NZB File"
+msgstr "Сохранить статьи в файл NZB"
+
+#: ../pan/gui/actions.cc:339
 msgid "_Import NZB Files..."
-msgstr "Импортирование .newsrc..."
+msgstr "_Импортировать файлы NZB…"
 
-#: pan/gui/actions.cc:287
-#, fuzzy
+#: ../pan/gui/actions.cc:344
 msgid "_Cancel Last Task"
-msgstr "Отменить выбранные задачи"
+msgstr "_Отменить последнюю задачу"
 
-#: pan/gui/actions.cc:287
-#, fuzzy
-msgid "Cancel Last Task"
-msgstr "Отменить выбранные задачи"
+#: ../pan/gui/actions.cc:349
+#| msgid "_Task Manager..."
+msgid "_Task Manager"
+msgstr "_Диспетчер задач"
 
-#: pan/gui/actions.cc:288
-msgid "_Task Manager..."
-msgstr "Диспетчер задач..."
+#: ../pan/gui/actions.cc:354
+msgid "_Event Log"
+msgstr "_Журнал событий"
 
-#: pan/gui/actions.cc:289
-msgid "_Event Log..."
-msgstr ""
-
-#: pan/gui/actions.cc:290
-#, fuzzy
+#: ../pan/gui/actions.cc:359
 msgid "_Quit"
-msgstr "Правка"
+msgstr "_Закончить"
 
-#: pan/gui/actions.cc:292
-#, fuzzy
+#: ../pan/gui/actions.cc:364
 msgid "Select _All Articles"
-msgstr "Выделить все статьи"
+msgstr "_Выделить все статьи"
 
-#: pan/gui/actions.cc:293
-#, fuzzy
+#: ../pan/gui/actions.cc:369
 msgid "_Deselect All Articles"
-msgstr "Снять выделение со всех статей"
+msgstr "_Снять выделение со всех статей"
 
-#: pan/gui/actions.cc:294
-#, fuzzy
+#: ../pan/gui/actions.cc:374
 msgid "Add Su_bthreads to Selection"
-msgstr "Добавить подшивки к выделению"
+msgstr "Добавить _вложенные подшивки к выделению"
 
-#: pan/gui/actions.cc:295
+#: ../pan/gui/actions.cc:379
 msgid "Add _Threads to Selection"
-msgstr "Добавить подшивки к выделению"
+msgstr "Добавить _подшивки к выделению"
 
-#: pan/gui/actions.cc:296
-#, fuzzy
-msgid "Add _Similar Artilces to Selection"
-msgstr "Добавить ответы к выделению"
+#: ../pan/gui/actions.cc:384
+msgid "Add _Similar Articles to Selection"
+msgstr "Добавить _схожие статьи к выделению"
 
-#: pan/gui/actions.cc:297
+#: ../pan/gui/actions.cc:389
 msgid "Select Article _Body"
-msgstr "Выделить содержимое статьи"
+msgstr "Выделить со_держимое статьи"
 
-#: pan/gui/actions.cc:298
-#, fuzzy
-msgid "Edit _Preferences..."
-msgstr "Pan: Настройки"
+#: ../pan/gui/actions.cc:394
+msgid "Edit _Preferences"
+msgstr "_Изменить настройки"
 
-#: pan/gui/actions.cc:299
-#, fuzzy
-msgid "Edit _Group Preferences..."
-msgstr "Pan: Настройки"
+#: ../pan/gui/actions.cc:399
+msgid "Edit Selected _Group's Preferences"
+msgstr "Изменить _настройки выделенных групп"
 
-#: pan/gui/actions.cc:300
-#, fuzzy
-msgid "Edit P_osting Profiles..."
-msgstr "Сбой отправки статьи: %s"
+#: ../pan/gui/actions.cc:404
+#: ../pan/gui/post-ui.cc:220
+msgid "Edit P_osting Profiles"
+msgstr "Изменить _профили публикации"
 
-#: pan/gui/actions.cc:301
-#, fuzzy
-msgid "Edit _News Servers..."
-msgstr "Правка других фильтров..."
+#: ../pan/gui/actions.cc:409
+msgid "Edit _News Servers"
+msgstr "Изменить _серверы новостей"
 
-#: pan/gui/actions.cc:303
+#: ../pan/gui/actions.cc:414
 msgid "Jump to _Group Tab"
-msgstr ""
+msgstr "Перейти к вкладке _групп"
 
-#: pan/gui/actions.cc:304
-#, fuzzy
+#: ../pan/gui/actions.cc:419
 msgid "Jump to _Header Tab"
-msgstr "Другие заголовки"
+msgstr "Перейти к вкладке _заголовков"
 
-#: pan/gui/actions.cc:305
-#, fuzzy
+#: ../pan/gui/actions.cc:424
 msgid "Jump to _Body Tab"
-msgstr "Другие заголовки"
+msgstr "Перейти к вкладке _тела сообщения"
 
-#: pan/gui/actions.cc:306
+#: ../pan/gui/actions.cc:429
 msgid "_Rot13 Selected Text"
-msgstr "\"Закодировать\" выбранный текст с помощью Rot13"
+msgstr "Кодировать выбранный текст с помощью _Rot13"
 
-#: pan/gui/actions.cc:308
-#, fuzzy
+#: ../pan/gui/actions.cc:434
 msgid "Clear _Header Pane"
-msgstr "Показать панель заголовка"
+msgstr "Очистить панель _заголовков"
 
-#: pan/gui/actions.cc:308
-#, fuzzy
-msgid "Clear Header Pane"
-msgstr "Показать панель заголовка"
-
-#: pan/gui/actions.cc:309
-#, fuzzy
+#: ../pan/gui/actions.cc:438
 msgid "Clear _Body Pane"
-msgstr "Показать панель группы"
+msgstr "Очистить панель _тела сообщения"
 
-#: pan/gui/actions.cc:309
-#, fuzzy
-msgid "Clear Body Pane"
-msgstr "Показать панель группы"
+#: ../pan/gui/actions.cc:443
+#| msgid "Cached Article \"%s\""
+msgid "Cache Article"
+msgstr "Кэшировать статью"
 
-#: pan/gui/actions.cc:311
-#, fuzzy
-msgid "Download _Selected Article"
-msgstr "Скачать выбранные статьи"
+#: ../pan/gui/actions.cc:448
+msgid "Read Article"
+msgstr "Прочитать статью"
 
-#: pan/gui/actions.cc:311
-#, fuzzy
-msgid "Download Selected Article"
-msgstr "Скачать выбранные статьи"
+#: ../pan/gui/actions.cc:453
+#| msgid "Profile Information"
+msgid "Show Article Information"
+msgstr "Показать информацию о статье"
 
-#: pan/gui/actions.cc:312
-#, fuzzy
-msgid "Read _Selected Article"
-msgstr "Отметить выбранные статьи"
-
-#: pan/gui/actions.cc:312
-#, fuzzy
-msgid "Read Selected Article"
-msgstr "Отметить выбранные статьи"
-
-#: pan/gui/actions.cc:313
+#: ../pan/gui/actions.cc:458
 msgid "Read _More"
-msgstr ""
+msgstr "Читать _далее"
 
-#: pan/gui/actions.cc:313
-#, fuzzy
+#: ../pan/gui/actions.cc:459
 msgid "Read More"
-msgstr "Читать"
+msgstr "Читать далее"
 
-#: pan/gui/actions.cc:314
+#: ../pan/gui/actions.cc:463
 msgid "Read _Back"
-msgstr ""
+msgstr "_Назад"
 
-#: pan/gui/actions.cc:314
-#, fuzzy
+#: ../pan/gui/actions.cc:464
 msgid "Read Back"
-msgstr "Читать"
+msgstr "Назад"
 
-#: pan/gui/actions.cc:315
-#, fuzzy
+#: ../pan/gui/actions.cc:468
 msgid "Next _Unread Group"
-msgstr "След. непрочитанная группа"
+msgstr "Следующая _непрочитанная группа"
 
-#: pan/gui/actions.cc:315
-#, fuzzy
-msgid "Next Unread Group"
-msgstr "След. непрочитанная группа"
-
-#: pan/gui/actions.cc:316
-#, fuzzy
+#: ../pan/gui/actions.cc:473
 msgid "Next _Group"
-msgstr "След. группа"
+msgstr "Следующая _группа"
 
-#: pan/gui/actions.cc:316
-#, fuzzy
-msgid "Next Group"
-msgstr "След. группа"
-
-#: pan/gui/actions.cc:317
-#, fuzzy
+#: ../pan/gui/actions.cc:478
 msgid "Next _Unread Article"
-msgstr "След. непрочитанная статья"
+msgstr "Следующая _непрочитанная статья"
 
-#: pan/gui/actions.cc:317
+#: ../pan/gui/actions.cc:479
 msgid "Next Unread Article"
-msgstr "След. непрочитанная статья"
+msgstr "Следующая непрочитанная статья"
 
-#: pan/gui/actions.cc:318
+#: ../pan/gui/actions.cc:483
 msgid "Next _Article"
-msgstr "След. статья"
+msgstr "Следующая _статья"
 
-#: pan/gui/actions.cc:319
-#, fuzzy
+#: ../pan/gui/actions.cc:484
+#| msgid "Next _Article"
+msgid "Next Article"
+msgstr "Следующая статья"
+
+#: ../pan/gui/actions.cc:488
 msgid "Next _Watched Article"
-msgstr "След. статья"
+msgstr "Следующая _ожидаемая статья"
 
-#: pan/gui/actions.cc:319
-#, fuzzy
-msgid "Next Watched Article"
-msgstr "След. непрочитанная статья"
-
-#: pan/gui/actions.cc:320
+#: ../pan/gui/actions.cc:493
 msgid "Next Unread _Thread"
-msgstr "След. непрочитанная подшивка"
+msgstr "Следующая непрочитанная _подшивка"
 
-#: pan/gui/actions.cc:320
+#: ../pan/gui/actions.cc:494
 msgid "Next Unread Thread"
-msgstr "След. непрочитанная подшивка"
+msgstr "Следующая непрочитанная подшивка"
 
-#: pan/gui/actions.cc:321
+#: ../pan/gui/actions.cc:498
 msgid "Next Threa_d"
-msgstr "След. подшивка"
+msgstr "Следующая по_дшивка"
 
-#: pan/gui/actions.cc:321
-msgid "Next Thread"
-msgstr "След. подшивка"
-
-#: pan/gui/actions.cc:322
+#: ../pan/gui/actions.cc:503
 msgid "Pre_vious Article"
-msgstr "Пред. статья"
+msgstr "Пр_едыдущая статья"
 
-#: pan/gui/actions.cc:322
-msgid "Previous Article"
-msgstr "Пред. статья"
-
-#: pan/gui/actions.cc:323
-#, fuzzy
+#: ../pan/gui/actions.cc:508
 msgid "Previous _Thread"
-msgstr "Пред. подшивка"
+msgstr "Пред_ыдущая подшивка"
 
-#: pan/gui/actions.cc:323
-msgid "Previous Thread"
-msgstr "Пред. подшивка"
-
-#: pan/gui/actions.cc:324
-#, fuzzy
+#: ../pan/gui/actions.cc:513
 msgid "_Parent Article"
-msgstr "Печать статьи..."
+msgstr "_Родительская статья"
 
-#: pan/gui/actions.cc:324
-#, fuzzy
-msgid "Parent Article"
-msgstr "Печать статьи..."
+#: ../pan/gui/actions.cc:518
+msgid "Ignore _Author"
+msgstr "Игнорировать _автора"
 
-#: pan/gui/actions.cc:326
-#, fuzzy
-msgid "_Plonk Author"
-msgstr "Автор"
-
-#: pan/gui/actions.cc:327
-#, fuzzy
+#: ../pan/gui/actions.cc:522
 msgid "_Watch Thread"
-msgstr "Ожидаемые подшивки"
+msgstr "_Следить за подшивкой"
 
-#: pan/gui/actions.cc:328
-#, fuzzy
+#: ../pan/gui/actions.cc:527
 msgid "_Ignore Thread"
-msgstr "Игнорируемые подшивки"
+msgstr "_Игнорировать подшивку"
 
-#: pan/gui/actions.cc:329
-#, fuzzy
-msgid "View Article's S_core"
-msgstr "Статья прочитана"
+#: ../pan/gui/actions.cc:532
+msgid "Edit Article's Watch/Ignore/Score..."
+msgstr "Изменить атрибуты статьи…"
 
-#: pan/gui/actions.cc:330
-#, fuzzy
-msgid "_Add a _Scoring Rule"
-msgstr "Добавить новое правило."
+#: ../pan/gui/actions.cc:537
+msgid "Add a _Scoring Rule..."
+msgstr "Добавить _правило оценивания…"
 
-#: pan/gui/actions.cc:331
-#, fuzzy
+#: ../pan/gui/actions.cc:542
 msgid "Cance_l Article..."
-msgstr "Отмена статьи"
+msgstr "От_менить статью…"
 
-#: pan/gui/actions.cc:332
-#, fuzzy
+#: ../pan/gui/actions.cc:547
 msgid "_Supersede Article..."
-msgstr "Правила..."
+msgstr "_Заменить статью…"
 
-#: pan/gui/actions.cc:333
-#, fuzzy
+#: ../pan/gui/actions.cc:552
 msgid "_Delete Article"
-msgstr "Удалить статью"
+msgstr "_Удалить статью"
 
-#: pan/gui/actions.cc:334
-#, fuzzy
+#: ../pan/gui/actions.cc:557
+#| msgid "Article Cache"
+msgid "Clear Article Cache"
+msgstr "Очистить кэш статьи"
+
+#: ../pan/gui/actions.cc:562
 msgid "_Mark Article as Read"
-msgstr "Пометить выбранные статьи как прочитанные"
+msgstr "Отметить как _прочитанную"
 
-#: pan/gui/actions.cc:334
-#, fuzzy
-msgid "Mark Article as Read"
-msgstr "Пометить выбранные статьи как прочитанные"
-
-#: pan/gui/actions.cc:335
-#, fuzzy
+#: ../pan/gui/actions.cc:567
 msgid "Mark Article as _Unread"
-msgstr "Пометить как непрочитанное"
+msgstr "Отметить как _непрочитанную"
 
-#: pan/gui/actions.cc:335
-#, fuzzy
-msgid "Mark Article as Unread"
-msgstr "Пометить как непрочитанное"
-
-#: pan/gui/actions.cc:337
-#, fuzzy
+#: ../pan/gui/actions.cc:572
 msgid "_Post to Newsgroup"
-msgstr "Послать в группу новостей"
+msgstr "_Опубликовать в группе новостей"
 
-#: pan/gui/actions.cc:337
-#, fuzzy
+#: ../pan/gui/actions.cc:573
 msgid "Post to Newsgroup"
-msgstr "Послать в группу новостей"
+msgstr "Опубликовать в группе новостей"
 
-#: pan/gui/actions.cc:338
-#, fuzzy
-msgid "_Followup to  Newsgroup"
-msgstr "Ответить в группу новостей"
+#: ../pan/gui/actions.cc:577
+msgid "_Followup to Newsgroup"
+msgstr "_Ответить в группу новостей"
 
-#: pan/gui/actions.cc:338
-#, fuzzy
+#: ../pan/gui/actions.cc:578
 msgid "Followup to Newsgroup"
 msgstr "Ответить в группу новостей"
 
-#: pan/gui/actions.cc:339
-#, fuzzy
-msgid "_Reply to Author"
-msgstr "Автор"
+#: ../pan/gui/actions.cc:582
+msgid "_Reply to Author in Mail"
+msgstr "_Ответить автору по почте"
 
-#: pan/gui/actions.cc:339
-#, fuzzy
-msgid "Reply to Author"
-msgstr "Автор"
+#: ../pan/gui/actions.cc:587
+msgid "_Pan Home Page"
+msgstr "_Домашняя страница Pan"
 
-#: pan/gui/actions.cc:341
-#, fuzzy
-msgid "_Pan Home Page..."
-msgstr "Домашняя страница Pan..."
-
-#: pan/gui/actions.cc:342
-#, fuzzy
+#: ../pan/gui/actions.cc:592
 msgid "Give _Feedback or Report a Bug..."
-msgstr "Сообщить об ошибке..."
+msgstr "Обратная _связь или сообщение об ошибке…"
 
-#: pan/gui/actions.cc:343
+#: ../pan/gui/actions.cc:597
 msgid "_Tip Jar..."
-msgstr ""
+msgstr "_Пожертвовать…"
 
-#: pan/gui/actions.cc:345 pan/gui/actions.cc:347
-#, fuzzy
-msgid "_About..."
-msgstr "О программе"
+#: ../pan/gui/actions.cc:602
+msgid "_About"
+msgstr "_О программе"
 
-#: pan/gui/actions.cc:361
-#, fuzzy
+#: ../pan/gui/actions.cc:617
 msgid "_Thread Headers"
-msgstr "Еще заголовки"
+msgstr "_Заголовки подшивок"
 
-#: pan/gui/actions.cc:362
-#, fuzzy
+#: ../pan/gui/actions.cc:618
 msgid "_Wrap Article Body"
-msgstr "Заполнение/Перенос строк в теле сообщения"
+msgstr "_Переносить тело статьи"
 
-#: pan/gui/actions.cc:363
+#: ../pan/gui/actions.cc:619
 msgid "Mute _Quoted Text"
-msgstr "Подавить цитируемый текст"
+msgstr "Подавить _цитируемый текст"
 
-#: pan/gui/actions.cc:364
-#, fuzzy
+#: ../pan/gui/actions.cc:620
 msgid "Show All _Headers in Body Pane"
-msgstr "Показывать все заголовки в панели статьи"
+msgstr "Показывать все _заголовки в панели тела сообщения"
 
-#: pan/gui/actions.cc:365
-#, fuzzy
+#: ../pan/gui/actions.cc:621
 msgid "Show _Smilies as Graphics"
-msgstr "Показать предупреждение:"
+msgstr "Показывать _смайлы как графику"
 
-#: pan/gui/actions.cc:366
+#: ../pan/gui/actions.cc:622
 msgid "Show *Bold*, __Underlined__, and /Italic/"
-msgstr ""
+msgstr "Показывать *Жирный*, __Почёркнутый__, and /Наклонный/"
 
-#: pan/gui/actions.cc:367
+#: ../pan/gui/actions.cc:623
 msgid "Size Pictures to _Fit"
-msgstr ""
+msgstr "Изменять _размер изображений при необходимости"
 
-#: pan/gui/actions.cc:368
-msgid "Smooth Scrolling"
-msgstr ""
-
-#: pan/gui/actions.cc:369
+#: ../pan/gui/actions.cc:624
 msgid "Use _Monospace Font"
-msgstr ""
+msgstr "Использовать _моноширный шрифт"
 
-#: pan/gui/actions.cc:371
+#: ../pan/gui/actions.cc:625
+msgid "Set Focus to Images"
+msgstr "Передавать фокус изображениям"
+
+#: ../pan/gui/actions.cc:626
+msgid "Highlight _URLs"
+msgstr "Подсвечивать _URL"
+
+#: ../pan/gui/actions.cc:629
 msgid "_Work Online"
-msgstr ""
+msgstr "_Работать в сети"
 
-#: pan/gui/actions.cc:372
-#, fuzzy
+#: ../pan/gui/actions.cc:630
 msgid "_Tabbed Layout"
-msgstr "Выравнивание"
+msgstr "Расположение с _вкладками"
 
-#: pan/gui/actions.cc:373
-#, fuzzy
+#: ../pan/gui/actions.cc:631
 msgid "Show Group _Pane"
-msgstr "Показать панель группы"
+msgstr "Показывать панель _групп"
 
-#: pan/gui/actions.cc:374
+#: ../pan/gui/actions.cc:632
 msgid "Show Hea_der Pane"
-msgstr "Показать панель заголовка"
+msgstr "Показывать панель _заголовков"
 
-#: pan/gui/actions.cc:375
-#, fuzzy
+#: ../pan/gui/actions.cc:633
 msgid "Show Bod_y Pane"
-msgstr "Показать панель группы"
+msgstr "Показывать панель _тела сообщения"
 
-#: pan/gui/actions.cc:376
+#: ../pan/gui/actions.cc:634
 msgid "Show _Toolbar"
-msgstr ""
+msgstr "Показывать панель _инструментов"
 
-#: pan/gui/actions.cc:377
-msgid "Abbreviate _Names in Group Pane"
-msgstr ""
+#: ../pan/gui/actions.cc:635
+msgid "Abbreviate Group Names"
+msgstr "Сокращать названия групп"
 
-#: pan/gui/actions.cc:377
-#, fuzzy
-msgid "Abbreviate Newsgroup Names"
-msgstr "Подписанные группы новостей"
-
-#: pan/gui/actions.cc:379
-#, fuzzy
+#: ../pan/gui/actions.cc:637
 msgid "Match Only _Unread Articles"
-msgstr "Показать непрочитанные статьи"
+msgstr "Только _непрочитанные статьи"
 
-#: pan/gui/actions.cc:379
-#, fuzzy
+#: ../pan/gui/actions.cc:637
 msgid "Match Only Unread Articles"
-msgstr "Показать непрочитанные статьи"
+msgstr "Только непрочитанные статьи"
 
-#: pan/gui/actions.cc:380
-#, fuzzy
+#: ../pan/gui/actions.cc:638
 msgid "Match Only _Cached Articles"
-msgstr "Показать ожидаемые статьи"
+msgstr "Только _кэшированные статьи"
 
-#: pan/gui/actions.cc:380
-#, fuzzy
+#: ../pan/gui/actions.cc:638
 msgid "Match Only Cached Articles"
-msgstr "Показать ожидаемые статьи"
+msgstr "Только кэшированные статьи"
 
-#: pan/gui/actions.cc:381
-#, fuzzy
+#: ../pan/gui/actions.cc:639
 msgid "Match Only _Complete Articles"
-msgstr "Показать полные двоичные статьи"
+msgstr "Только _полные статьи"
 
-#: pan/gui/actions.cc:381
-#, fuzzy
+#: ../pan/gui/actions.cc:639
 msgid "Match Only Complete Articles"
-msgstr "Показать полные двоичные статьи"
+msgstr "Только полные статьи"
 
-#: pan/gui/actions.cc:382
-#, fuzzy
+#: ../pan/gui/actions.cc:640
 msgid "Match Only _My Articles"
-msgstr "Показать совпадающие статьи"
+msgstr "Только _мои статьи"
 
-#: pan/gui/actions.cc:382
-msgid "Match Only Articles Posted by Me"
-msgstr ""
+#: ../pan/gui/actions.cc:640
+msgid "Match Only My Articles"
+msgstr "Только мои статьи"
 
-#: pan/gui/actions.cc:383
-#, fuzzy
+#: ../pan/gui/actions.cc:641
 msgid "Match Only _Watched Articles"
-msgstr "Показать ожидаемые статьи"
+msgstr "Только _ожидаемые статьи"
 
-#: pan/gui/actions.cc:383
-#, fuzzy
+#: ../pan/gui/actions.cc:641
 msgid "Match Only Watched Articles"
-msgstr "Показать ожидаемые статьи"
+msgstr "Только ожидаемые статьи"
 
-#: pan/gui/actions.cc:385
+#: ../pan/gui/actions.cc:643
 msgid "Match Scores of 9999 (_Watched)"
-msgstr ""
+msgstr "Оценки от 9999 (_ожидаемые)"
 
-#: pan/gui/actions.cc:386
+#: ../pan/gui/actions.cc:644
 msgid "Match Scores of 5000...9998 (_High)"
-msgstr ""
+msgstr "Оценки от 5000 до 9998 (_высокие)"
 
-#: pan/gui/actions.cc:387
+#: ../pan/gui/actions.cc:645
 msgid "Match Scores of 1...4999 (Me_dium)"
-msgstr ""
+msgstr "Оценки от 1 до 4999 (_средние)"
 
-#: pan/gui/actions.cc:388
+#: ../pan/gui/actions.cc:646
 msgid "Match Scores of 0 (_Normal)"
-msgstr ""
+msgstr "Оценки от 0 (_обычные)"
 
-#: pan/gui/actions.cc:389
+#: ../pan/gui/actions.cc:647
 msgid "Match Scores of -9998...-1 (_Low)"
-msgstr ""
+msgstr "Оценки от -9998 до -1 (_низкие)"
 
-#: pan/gui/actions.cc:390
+#: ../pan/gui/actions.cc:648
 msgid "Match Scores of -9999 (_Ignored)"
-msgstr ""
+msgstr "Оценки ниже -9999 (_игнорируемые)"
 
-#: pan/gui/actions.cc:416
-#, fuzzy
+#: ../pan/gui/actions.cc:674
 msgid "Show Matching _Articles"
-msgstr "Показать совпадающие статьи"
+msgstr "Показывать совпадающие _статьи"
 
-#: pan/gui/actions.cc:417
-#, fuzzy
+#: ../pan/gui/actions.cc:675
 msgid "Show Matching Articles' _Threads"
-msgstr "Показать совпадающие статьи"
+msgstr "Показывать совпадающие _подшивки статей"
 
-#: pan/gui/actions.cc:418
-#, fuzzy
+#: ../pan/gui/actions.cc:676
 msgid "Show Matching Articles' _Subthreads"
-msgstr "Показать совпадающие статьи"
+msgstr "Показывать совпадающие _вложенные подшивки статей"
 
-#: pan/gui/actions.cc:435
-msgid "Baltic (ISO-8859-4)"
-msgstr ""
-
-#: pan/gui/actions.cc:436
-msgid "Baltic (ISO-8859-13)"
-msgstr ""
-
-#: pan/gui/actions.cc:437
-msgid "Baltic (Windows-1257)"
-msgstr ""
-
-#: pan/gui/actions.cc:438
-msgid "Central European (ISO-8859-2)"
-msgstr ""
-
-#: pan/gui/actions.cc:439
-msgid "Central European (Windows-1250)"
-msgstr ""
-
-#: pan/gui/actions.cc:440
-msgid "Chinese Simplified (gb2312)"
-msgstr ""
-
-#: pan/gui/actions.cc:441
-msgid "Chinese Traditional (big5)"
-msgstr ""
-
-#: pan/gui/actions.cc:442
-msgid "Cyrillic (ISO-8859-5)"
-msgstr ""
-
-#: pan/gui/actions.cc:443
-msgid "Cyrillic (Windows-1251)"
-msgstr ""
-
-#: pan/gui/actions.cc:444
-msgid "Cyrillic (KOI8-R)"
-msgstr ""
-
-#: pan/gui/actions.cc:445
-msgid "Cyrillic, Ukrainian (KOI8-U)"
-msgstr ""
-
-#: pan/gui/actions.cc:446
-msgid "Greek (ISO-8859-7)"
-msgstr ""
-
-#: pan/gui/actions.cc:447
-msgid "Japanese (ISO-2022-jp)"
-msgstr ""
-
-#: pan/gui/actions.cc:448
-msgid "Korean (euc-kr)"
-msgstr ""
-
-#: pan/gui/actions.cc:449
-msgid "Turkish (ISO-8859-9)"
-msgstr ""
-
-#: pan/gui/actions.cc:450
-msgid "Western (ISO-8859-1)"
-msgstr ""
-
-#: pan/gui/actions.cc:451
-msgid "Western, New (ISO-8859-15)"
-msgstr ""
-
-#: pan/gui/actions.cc:452
-msgid "Western (Windows-1252)"
-msgstr ""
-
-#: pan/gui/actions.cc:453
-msgid "Unicode (UTF-8)"
-msgstr ""
-
-#: pan/gui/body-pane.cc:855
+#: ../pan/gui/body-pane.cc:972
 #, c-format
 msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
-msgstr ""
+msgstr "Непоказанное вложение: тип MIME — %s/%s; имя файла — %s\n"
 
-#: pan/gui/body-pane.cc:856
-#, fuzzy, c-format
+#: ../pan/gui/body-pane.cc:973
+#, c-format
 msgid "Attachment not shown: MIME type %s/%s\n"
-msgstr "Вложение: %s - %s - %s\n"
+msgstr "Непоказанное вложение: тип MIME %s/%s\n"
 
-#: pan/gui/body-pane.cc:936 pan/gui/header-pane.cc:1167
-#: pan/gui/header-pane.cc:1502 pan/gui/prefs-ui.cc:322
-#: pan/gui/score-add-ui.cc:136
+#: ../pan/gui/body-pane.cc:1051
+#: ../pan/gui/gui.cc:1542
+#: ../pan/gui/header-pane.cc:1014
+#: ../pan/gui/header-pane.cc:1373
+#: ../pan/gui/prefs-ui.cc:365
+#: ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
 msgstr "Тема"
 
-#: pan/gui/body-pane.cc:938
-#, fuzzy
+#: ../pan/gui/body-pane.cc:1053
+#: ../pan/gui/gui.cc:1542
 msgid "From"
-msgstr "От:"
+msgstr "От"
 
-#: pan/gui/body-pane.cc:940 pan/gui/header-pane.cc:1579 pan/gui/log-ui.cc:206
-#: pan/gui/prefs-ui.cc:318
+#: ../pan/gui/body-pane.cc:1055
+#: ../pan/gui/gui.cc:1543
+#: ../pan/gui/header-pane.cc:1450
+#: ../pan/gui/log-ui.cc:208
+#: ../pan/gui/prefs-ui.cc:361
 msgid "Date"
 msgstr "Дата"
 
-#: pan/gui/body-pane.cc:947
-#, fuzzy
+#: ../pan/gui/body-pane.cc:1062
 msgid "Newsgroups"
-msgstr "Группа новостей"
+msgstr "Новостные группы"
 
-#: pan/gui/body-pane.cc:952
-#, fuzzy
+#: ../pan/gui/body-pane.cc:1067
 msgid "Followup-To"
-msgstr "Ответить в группу:"
+msgstr "Адрес для ответа"
 
-#: pan/gui/body-pane.cc:962
-#, fuzzy
+#: ../pan/gui/body-pane.cc:1077
 msgid "Reply-To"
-msgstr "Обратный адрес:"
+msgstr "Адрес для ответа"
 
-#: pan/gui/body-pane.cc:988
-#, fuzzy
+#: ../pan/gui/body-pane.cc:1119
 msgid " from "
-msgstr "От:"
+msgstr " от"
 
-#: pan/gui/body-pane.cc:990
-#, fuzzy
+#: ../pan/gui/body-pane.cc:1121
 msgid " at "
-msgstr "Дата: "
+msgstr " "
 
-#: pan/gui/dl-headers-ui.cc:102
-#, fuzzy
-msgid "Pan: "
-msgstr "Pan: Правила"
+#: ../pan/gui/body-pane.cc:1362
+msgid "Copy _URL"
+msgstr "Копировать _URL"
 
-#: pan/gui/dl-headers-ui.cc:128
-#, fuzzy
-msgid "Get the last N _days' headers: "
-msgstr "Наиболее свежие заголовки"
+#. update the titlebar
+#: ../pan/gui/dl-headers-ui.cc:106
+#: ../pan/gui/gui.cc:900
+#: ../pan/gui/gui.cc:1302
+#: ../pan/gui/gui.cc:1563
+#: ../pan/gui/score-add-ui.cc:602
+msgid "Pan"
+msgstr "Pan"
 
-#: pan/gui/dl-headers-ui.cc:136
-#, fuzzy
-msgid "Get _new headers"
-msgstr "новые заголовки"
-
-#: pan/gui/dl-headers-ui.cc:140
-#, fuzzy
-msgid "Get _all headers"
-msgstr "все заголовки"
-
-#: pan/gui/dl-headers-ui.cc:144
-#, fuzzy
-msgid "Get the _latest N headers: "
-msgstr "Наиболее свежие заголовки"
-
-#: pan/gui/group-pane.cc:608
-msgid "Group Name"
-msgstr "Название группы"
-
-#: pan/gui/group-pane.cc:700
+#: ../pan/gui/dl-headers-ui.cc:112
 #, c-format
-msgid " (%lu)"
-msgstr ""
+msgid "%d Groups"
+msgstr "%d групп"
 
-#: pan/gui/group-pane.cc:829 pan/gui/header-pane.cc:1668
-#, fuzzy
-msgid "Clear the Filter"
-msgstr "Выбрать фильтр:"
+#: ../pan/gui/dl-headers-ui.cc:135
+msgid "Get the last N _days' headers: "
+msgstr "Получить заголовки за последние № _дней:"
 
-#: pan/gui/group-pane.cc:857
+#: ../pan/gui/dl-headers-ui.cc:143
+msgid "Get _new headers"
+msgstr "Получить _новые заголовки"
+
+#: ../pan/gui/dl-headers-ui.cc:147
+msgid "Get _all headers"
+msgstr "Получить _все заголовки"
+
+#: ../pan/gui/dl-headers-ui.cc:151
+msgid "Get the _latest N headers: "
+msgstr "Получить _последние № заголовков:"
+
+#: ../pan/gui/e-action-combo-box.c:388
+#: ../pan/gui/prefs-ui.cc:358
+msgid "Action"
+msgstr "Действие"
+
+#: ../pan/gui/e-action-combo-box.c:389
+msgid "A GtkRadioAction"
+msgstr "GtkRadioAction"
+
+#: ../pan/gui/e-charset.c:52
+#: ../pan/gui/task-pane.cc:321
+msgid "Unknown"
+msgstr "Неизвестная"
+
+#: ../pan/gui/e-charset.c:53
+msgid "Arabic"
+msgstr "Арабская"
+
+#: ../pan/gui/e-charset.c:54
+msgid "Baltic"
+msgstr "Балтийская"
+
+#: ../pan/gui/e-charset.c:55
+msgid "Central European"
+msgstr "Центральноевропейская"
+
+#: ../pan/gui/e-charset.c:56
+#| msgid "Lines"
+msgid "Chinese"
+msgstr "Китайская"
+
+#: ../pan/gui/e-charset.c:57
+msgid "Cyrillic"
+msgstr "Кириллица"
+
+#: ../pan/gui/e-charset.c:58
+msgid "Greek"
+msgstr "Греческая"
+
+#: ../pan/gui/e-charset.c:59
+msgid "Hebrew"
+msgstr "Иврит"
+
+#: ../pan/gui/e-charset.c:60
+msgid "Japanese"
+msgstr "Японская"
+
+#: ../pan/gui/e-charset.c:61
+msgid "Korean"
+msgstr "Корейская"
+
+#: ../pan/gui/e-charset.c:62
+msgid "Thai"
+msgstr "Тайская"
+
+#: ../pan/gui/e-charset.c:63
+msgid "Turkish"
+msgstr "Турецкая"
+
+#: ../pan/gui/e-charset.c:64
+msgid "Unicode"
+msgstr "Юникод"
+
+#: ../pan/gui/e-charset.c:65
+msgid "Western European"
+msgstr "Западноевропейская"
+
+#: ../pan/gui/e-charset.c:66
+msgid "Western European, New"
+msgstr "Западноевропейская, новая"
+
+#: ../pan/gui/e-charset.c:85
+#: ../pan/gui/e-charset.c:86
+#: ../pan/gui/e-charset.c:87
+msgid "Traditional"
+msgstr "Традиционная"
+
+#: ../pan/gui/e-charset.c:88
+#: ../pan/gui/e-charset.c:89
+#: ../pan/gui/e-charset.c:90
+#: ../pan/gui/e-charset.c:91
+msgid "Simplified"
+msgstr "Упрощённая"
+
+#: ../pan/gui/e-charset.c:94
+msgid "Ukrainian"
+msgstr "Украинская"
+
+#: ../pan/gui/e-charset.c:97
+msgid "Visual"
+msgstr "Иврит"
+
+#: ../pan/gui/e-charset-combo-box.c:93
+#: ../pan/gui/gui.cc:1680
+#: ../pan/gui/post-ui.cc:253
+msgid "Character Encoding"
+msgstr "Кодировка символов"
+
+#: ../pan/gui/e-charset-combo-box.c:117
+msgid "Enter the character set to use"
+msgstr "Введите используемую кодировку"
+
+#: ../pan/gui/e-charset-combo-box.c:336
+#| msgid "Filter_s..."
+msgid "Other..."
+msgstr "Другая…"
+
+#: ../pan/gui/group-pane.cc:499
+msgid "Group"
+msgstr "Группа"
+
+#: ../pan/gui/group-pane.cc:500
+#| msgid "Group Properties"
+msgid "Group (regex)"
+msgstr "Группа (рег. выражение)"
+
+#: ../pan/gui/group-pane.cc:912
 msgid "Subscribed Groups"
 msgstr "Подписанные группы"
 
-#: pan/gui/group-pane.cc:858
-#, fuzzy
+#: ../pan/gui/group-pane.cc:913
 msgid "Other Groups"
-msgstr "Новые группы"
+msgstr "Другие группы"
 
-#: pan/gui/group-pane.cc:900
+#: ../pan/gui/group-pane.cc:953
+#: ../pan/gui/score-view-ui.cc:157
 msgid "Name"
 msgstr "Имя"
 
-#: pan/gui/group-prefs-dialog.cc:101
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:89
 msgid "No Profiles defined in Edit|Posting Profiles."
-msgstr "Сбой отправки статьи: %s"
+msgstr "Нет настроенных профилей («Правка» > «Профили публикации»)."
 
-#: pan/gui/group-prefs-dialog.cc:129
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:117
 msgid "Pan: Group Preferences"
-msgstr "Pan: Настройки"
+msgstr "Pan: настройки групп"
 
-#: pan/gui/group-prefs-dialog.cc:143
-#, fuzzy, c-format
+#: ../pan/gui/group-prefs-dialog.cc:131
+#, c-format
 msgid "Properties for %s"
-msgstr "Свойства..."
+msgstr "Свойства для %s"
 
-#: pan/gui/group-prefs-dialog.cc:147
+#: ../pan/gui/group-prefs-dialog.cc:136
 msgid "Character _encoding:"
-msgstr ""
+msgstr "_Кодировка символов:"
 
-#: pan/gui/group-prefs-dialog.cc:148
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:137
 msgid "Directory for Saving Attachments"
-msgstr "Каталог для сохранения вложенных файлов"
+msgstr "Каталог для сохранения вложений"
 
-#: pan/gui/group-prefs-dialog.cc:153
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:142
 msgid "Directory for _saving attachments:"
-msgstr "Каталог для сохранения вложенных файлов"
+msgstr "Каталог для сохранения _вложений:"
 
-#: pan/gui/group-prefs-dialog.cc:155
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:144
 msgid "Posting _profile:"
-msgstr "Pan: Профиль"
+msgstr "_Профиль публикации:"
 
-#: pan/gui/gui.cc:236
+#: ../pan/gui/gui.cc:253
 msgid "Open the Task Manager"
 msgstr "Открыть окно диспетчера задач."
 
-#: pan/gui/gui.cc:257
-#, fuzzy
+#: ../pan/gui/gui.cc:275
 msgid "Open the Event Log"
-msgstr "Открыть журнал состояния"
+msgstr "Открыть журнал событий"
 
-#: pan/gui/gui.cc:481
-#, fuzzy
-msgid "Save Attachments"
-msgstr "Не сохранять вложения"
+#: ../pan/gui/gui.cc:510
+msgid "Save NZB's Files"
+msgstr "Сохранить файлы NZB"
 
-#: pan/gui/gui.cc:529
-msgid "Import NZB File(s)"
-msgstr ""
+#: ../pan/gui/gui.cc:537
+msgid "Untitled.nzb"
+msgstr "Безымянный.nzb"
 
-#: pan/gui/gui.cc:605
-msgid ""
-"Pan is now offline. Please ensure that space is available, then use File|"
-"Work Online to continue."
-msgstr ""
+#: ../pan/gui/gui.cc:539
+msgid "Save NZB File as..."
+msgstr "Сохранить файл NZB как…"
 
-#: pan/gui/gui.cc:730 pan/gui/gui.cc:1092 pan/gui/gui.cc:1296
-msgid "Pan"
-msgstr ""
+#: ../pan/gui/gui.cc:686
+msgid "Import NZB Files"
+msgstr "Импортировать файлы NZB"
 
-#: pan/gui/gui.cc:902
-#, fuzzy
+#: ../pan/gui/gui.cc:694
+msgid "NZB Files"
+msgstr "Файлы в формате NZB"
+
+#: ../pan/gui/gui.cc:699
+msgid "All Files"
+msgstr "Все файлы"
+
+#: ../pan/gui/gui.cc:1077
 msgid "Unable to supersede article."
-msgstr "Правила..."
+msgstr "Не удалось заменить статью."
 
-#: pan/gui/gui.cc:903 pan/gui/gui.cc:970
+#: ../pan/gui/gui.cc:1078
+#: ../pan/gui/gui.cc:1152
 msgid "The article doesn't match any of your posting profiles."
-msgstr ""
+msgstr "Статья не соответствует ни одному из профилей публикации."
 
-#: pan/gui/gui.cc:944
+#: ../pan/gui/gui.cc:1125
 msgid "Revise and send this article to replace the old one."
-msgstr ""
+msgstr "Пересмотрите и отправьте эту статью, чтобы заменить старую."
 
-#: pan/gui/gui.cc:945 pan/gui/gui.cc:1005
+#: ../pan/gui/gui.cc:1126
+#: ../pan/gui/gui.cc:1189
 msgid "Be patient!  It will take time for your changes to take effect."
-msgstr ""
+msgstr "Будьте осторожны! Применение изменений займёт некоторое количество времени."
 
-#: pan/gui/gui.cc:969
-#, fuzzy
+#: ../pan/gui/gui.cc:1151
 msgid "Unable to cancel article."
-msgstr "Не удалось изменить режим файла"
+msgstr "Не удалось отменить статью."
 
-#: pan/gui/gui.cc:1004
+#: ../pan/gui/gui.cc:1188
 msgid "Send this article to ask your server to cancel your other one."
-msgstr ""
+msgstr "Отправить статью, чтобы сервер отменил вашу другую статью."
 
-#: pan/gui/gui.cc:1095 pan/gui/gui.cc:1115
-msgid "Copyright © 2002-2006 Charles Kerr"
-msgstr ""
+#: ../pan/gui/gui.cc:1305
+msgid "Copyright © 2002-2011 Charles Kerr and others"
+msgstr "Авторское право © 2002-2011 Charles Kerr и другие"
 
-#: pan/gui/gui.cc:1100
+#: ../pan/gui/gui.cc:1310
 msgid "translator-credits"
-msgstr ""
+msgstr "Юрий Мясоедов <omerta13@yandex.ru>, 2011."
 
-#: pan/gui/gui.cc:1211
-#, fuzzy
+#: ../pan/gui/gui.cc:1426
 msgid "_1. Group Pane"
-msgstr "Показать панель группы"
+msgstr "_1. Панель группы"
 
-#: pan/gui/gui.cc:1212
-#, fuzzy
+#: ../pan/gui/gui.cc:1427
 msgid "_2. Header Pane"
-msgstr "Показать панель заголовка"
+msgstr "_2. Панель заголовков"
 
-#: pan/gui/gui.cc:1213
+#: ../pan/gui/gui.cc:1428
 msgid "_3. Body Pane"
-msgstr ""
+msgstr "_3. Панель тела сообщения"
 
-#: pan/gui/gui.cc:1298
-#, fuzzy, c-format
-msgid "Pan: %s"
-msgstr "Pan: Правила"
-
-#: pan/gui/gui.cc:1415
-msgid "Offline"
-msgstr "Отключиться"
-
-#: pan/gui/gui.cc:1418
-#, fuzzy, c-format
-msgid "Closing %d connections"
-msgstr "Нет подключений"
-
-#: pan/gui/gui.cc:1420 pan/gui/gui.cc:1450
-msgid "No Connections"
-msgstr "Нет подключений"
-
-#: pan/gui/gui.cc:1424
-#, fuzzy
-msgid "Connecting"
-msgstr "Нет подключений"
-
-#: pan/gui/gui.cc:1437
+#: ../pan/gui/gui.cc:1525
 #, c-format
-msgid "%s: %d idle, %d active @ %.1f KiBps"
-msgstr ""
+msgid "This article has all %d parts."
+msgstr "У этой статьи все %d частей."
 
-#: pan/gui/gui.cc:1493
-msgid "No Tasks"
-msgstr "Нет задач"
-
-#: pan/gui/gui.cc:1496
-#, fuzzy, c-format
-msgid "Tasks: %u/%u"
-msgstr "Задачи: %d/%d"
-
-#: pan/gui/gui.cc:1497
+#: ../pan/gui/gui.cc:1527
 #, c-format
-msgid "%u Tasks Running, %u Tasks Total"
-msgstr ""
+msgid "This article is missing %d of its %d parts:"
+msgstr "В этой статье нет некоторых частей (отсутствуют: %d из %d):"
 
-#: pan/gui/gui.cc:1546
-msgid ""
-"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
-"then use \"File|Work Online\" to continue."
-msgstr ""
-
-#. less than a kibi...
-#: pan/gui/header-pane.cc:363 pan/gui/task-pane.cc:208
-#, c-format
-msgid "%lu B"
-msgstr ""
-
-#: pan/gui/header-pane.cc:365
-#, fuzzy, c-format
-msgid "%.1f KiB"
-msgstr "%d @ %.1f Кб/с"
-
-#: pan/gui/header-pane.cc:367
-#, c-format
-msgid "%.1f MiB"
-msgstr ""
-
-#: pan/gui/header-pane.cc:369
-#, c-format
-msgid "%.1f GiB"
-msgstr ""
-
-#: pan/gui/header-pane.cc:1166
-#, fuzzy
-msgid "Subject or Author"
-msgstr "Тема: "
-
-#: pan/gui/header-pane.cc:1168 pan/gui/header-pane.cc:1534
-#: pan/gui/prefs-ui.cc:316 pan/gui/score-add-ui.cc:137
-msgid "Author"
-msgstr "Автор"
-
-#: pan/gui/header-pane.cc:1169
+#: ../pan/gui/gui.cc:1543
+#: ../pan/gui/header-pane.cc:1016
 msgid "Message-ID"
 msgstr "ID cообщения"
 
-#: pan/gui/header-pane.cc:1519 pan/gui/prefs-ui.cc:320
-msgid "Score"
-msgstr ""
-
-#: pan/gui/header-pane.cc:1549 pan/gui/prefs-ui.cc:319
+#: ../pan/gui/gui.cc:1544
+#: ../pan/gui/header-pane.cc:1420
+#: ../pan/gui/prefs-ui.cc:362
 msgid "Lines"
 msgstr "Строки"
 
-#: pan/gui/header-pane.cc:1564 pan/gui/prefs-ui.cc:317
+#: ../pan/gui/gui.cc:1544
+#: ../pan/gui/header-pane.cc:1435
+#: ../pan/gui/prefs-ui.cc:360
 msgid "Bytes"
-msgstr ""
+msgstr "Байты"
 
-#: pan/gui/log-ui.cc:85
+#: ../pan/gui/gui.cc:1681
+msgid "Body Pane Encoding"
+msgstr "Кодировка в панели тела сообщения"
+
+#: ../pan/gui/gui.cc:1710
+#: ../pan/gui/task-pane.cc:370
+#, c-format
+msgid "Offline"
+msgstr "Отключиться"
+
+#: ../pan/gui/gui.cc:1713
+#, c-format
+msgid "Closing %d connections"
+msgstr "Закрытие соединений: %d"
+
+#: ../pan/gui/gui.cc:1715
+#: ../pan/gui/gui.cc:1745
+#, c-format
+msgid "No Connections"
+msgstr "Нет подключений"
+
+#: ../pan/gui/gui.cc:1719
+#, c-format
+msgid "Connecting"
+msgstr "Подключение"
+
+#: ../pan/gui/gui.cc:1732
+#, c-format
+msgid "%s: %d idle, %d active @ %.1f KiBps"
+msgstr "%s: в простое — %d; активных — %d @ %.1f КиБ/с"
+
+#: ../pan/gui/gui.cc:1788
+#, c-format
+msgid "No Tasks"
+msgstr "Нет задач"
+
+#: ../pan/gui/gui.cc:1790
+#: ../pan/gui/prefs-ui.cc:502
+msgid "Tasks"
+msgstr "Задачи"
+
+#: ../pan/gui/gui.cc:1800
+#: ../pan/gui/task-pane.cc:243
+#, c-format
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
+msgstr "Задачи: %lu, %s, %.1f КиБ/с; осталось: %d:%02d:%02d"
+
+#: ../pan/gui/gui.cc:1852
+msgid "Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue."
+msgstr "Pan находится в автономном режиме. См. «Файл» > «Журнал событий» и исправьте проблему, затем используйте для продолжения работы меню «Файл» > «Работать в сети»."
+
+#: ../pan/gui/header-pane.cc:1012
+msgid "Subject or Author"
+msgstr "Тема или автор"
+
+#: ../pan/gui/header-pane.cc:1013
+msgid "Sub or Auth (regex)"
+msgstr "Тема или автор (рег. выражение)"
+
+#: ../pan/gui/header-pane.cc:1015
+#: ../pan/gui/header-pane.cc:1405
+#: ../pan/gui/prefs-ui.cc:359
+#: ../pan/gui/score-add-ui.cc:140
+msgid "Author"
+msgstr "Автор"
+
+#: ../pan/gui/header-pane.cc:1390
+#: ../pan/gui/prefs-ui.cc:363
+msgid "Score"
+msgstr "Оценка"
+
+#: ../pan/gui/log-ui.cc:87
 msgid "Save Event List"
-msgstr ""
+msgstr "Сохранить список событий"
 
-#: pan/gui/log-ui.cc:167
-#, fuzzy
+#: ../pan/gui/log-ui.cc:169
 msgid "Pan: Events"
-msgstr "Pan: Правила"
+msgstr "Pan: события"
 
-#: pan/gui/log-ui.cc:216
+#: ../pan/gui/log-ui.cc:218
 msgid "Message"
 msgstr "Сообщение"
 
-#: pan/gui/pan.cc:120
+#: ../pan/gui/pan.cc:151
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
 "To start newsreading, first Add a Server."
 msgstr ""
+"Спасибо, что решили попробовать Pan!\n"
+" \n"
+"Чтобы начать чтение новостей, добавьте сервер."
 
-#: pan/gui/pan.cc:141
+#: ../pan/gui/pan.cc:231
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -1408,446 +1137,378 @@ msgid ""
 "URL Options\n"
 "  news:message-id          Show the specified article.\n"
 "  news:group.name          Show the specified newsgroup.\n"
-"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"  headers:group.name       Download new headers for the specified newsgroup.\n"
+"  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
 "  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
-"  -o path, --output=path   Path to save attachments listed in the nzb "
-"files.\n"
-"  --nogui                  Only show console output, not the download "
-"queue.\n"
+"  -o path, --output=path   Path to save attachments listed in the nzb files.\n"
+"  --no-gui                 Only show console output, not the download queue.\n"
 msgstr ""
+"Основные параметры\n"
+"  -h, --help               Показать эту страницу.\n"
+"\n"
+"Параметры URL\n"
+"  news:message-id          Показать указанную статью.\n"
+"  news:group.name          Показать указанную группу новостей.\n"
+"  headers:group.name       Загрузить новые заголовки для указанной группы новостей.\n"
+"  --no-gui                 Для параметра news:message-id, вывести статью в стандартный поток вывода.\n"
+"\n"
+"Параметры пакетной обработки NZB\n"
+"  --nzb файл1 файл2 ...    Обработать файлы nzb без полного запуска Pan.\n"
+"  -o путь, --output=путь   Путь для сохранения вложений, перечисленных в файлах nzb.\n"
+"  --no-gui                 Показать только консольный вывод без очереди загруки.\n"
 
-#: pan/gui/pan.cc:198
-msgid "Error: nzb arguments used without nzb files."
-msgstr ""
+#: ../pan/gui/pan.cc:297
+msgid "Error: --no-gui used without nzb files or news:message-id."
+msgstr "Ошибка: --no-gui используется без файлов nzb или news:message-id."
 
-#: pan/gui/pan.cc:203
-msgid "Error: --nogui used without nzb files or news:message-id."
-msgstr ""
-
-#: pan/gui/pan.cc:207
-#, fuzzy, c-format
+#: ../pan/gui/pan.cc:301
+#, c-format
 msgid "Pan %s started"
 msgstr "Pan %s запущен"
 
-#: pan/gui/pan.cc:223
+#: ../pan/gui/pan.cc:317
 msgid "Please configure Pan's news servers before using it as an nzb client."
-msgstr ""
+msgstr "Перед использование Pan как клиента nzb, необходимо настроить новостные серверы."
 
-#: pan/gui/post-ui.cc:86
-#, fuzzy, c-format
+#: ../pan/gui/post-ui.cc:97
+#, c-format
 msgid "Error setting spellchecker: %s"
-msgstr "Ошибка чтения файла \"%s\""
+msgstr "Ошибка установки модуля проверки правописания: %s"
 
-#: pan/gui/post-ui.cc:95
+#: ../pan/gui/post-ui.cc:106
 msgid ""
 "<b>Spellchecker not found!</b>\n"
 " \n"
 "Was this copy of Pan compiled with GtkSpell enabled?"
 msgstr ""
+"<b>Компонент проверки орфографии не найден!</b>\n"
+" \n"
+"Эта копия Pan скомпилирована с поддержкой GtkSpell?"
 
-#: pan/gui/post-ui.cc:240
-#, fuzzy
+#: ../pan/gui/post-ui.cc:207
 msgid "_Profile"
-msgstr "Профиль"
+msgstr "_Профиль"
 
-#: pan/gui/post-ui.cc:241
-msgid "Character Encoding"
-msgstr ""
-
-#: pan/gui/post-ui.cc:242
-#, fuzzy
+#: ../pan/gui/post-ui.cc:208
 msgid "Set Editor"
-msgstr "Внутренняя ошибка"
+msgstr "Установить редактор"
 
-#: pan/gui/post-ui.cc:244
-#, fuzzy
+#: ../pan/gui/post-ui.cc:210
 msgid "_Send Article"
-msgstr "Печать статьи..."
+msgstr "_Отправить статью"
 
-#: pan/gui/post-ui.cc:244
-#, fuzzy
+#: ../pan/gui/post-ui.cc:210
 msgid "Send Article Now"
-msgstr "Отправить сейчас"
+msgstr "Отправить статью сейчас"
 
-#: pan/gui/post-ui.cc:245
-#, fuzzy
+#: ../pan/gui/post-ui.cc:212
 msgid "Sa_ve Draft"
-msgstr "Сохранить профиль"
+msgstr "Со_хранить черновик"
 
-#: pan/gui/post-ui.cc:245
+#: ../pan/gui/post-ui.cc:212
 msgid "Save as a Draft for Future Posting"
-msgstr ""
+msgstr "Сохранить как черновик, чтобы опубликовать потом"
 
-#: pan/gui/post-ui.cc:246
-#, fuzzy
+#: ../pan/gui/post-ui.cc:213
 msgid "_Open Draft..."
-msgstr "Сохранить профиль"
+msgstr "_Открыть черновик…"
 
-#: pan/gui/post-ui.cc:246
-#, fuzzy
+#: ../pan/gui/post-ui.cc:213
 msgid "Open an Article Draft"
-msgstr "Сортировать статьи"
+msgstr "Открыть черновик статьи"
 
-#: pan/gui/post-ui.cc:247
-msgid "Wrap _Now"
-msgstr ""
-
-#: pan/gui/post-ui.cc:247
-#, fuzzy
-msgid "Wrap the Article Body to 80 Columns"
-msgstr "Заполнение/Перенос строк в теле сообщения"
-
-#: pan/gui/post-ui.cc:248
-#, fuzzy
-msgid "_Close"
-msgstr "Закрыть"
-
-#: pan/gui/post-ui.cc:248
-msgid "Close Window"
-msgstr ""
-
-#: pan/gui/post-ui.cc:249
-msgid "Cu_t"
-msgstr ""
-
-#: pan/gui/post-ui.cc:249
-#, fuzzy
-msgid "Cut Text"
-msgstr "Цитируемый текст 3"
-
-#: pan/gui/post-ui.cc:250
-msgid "_Copy"
-msgstr ""
-
-#: pan/gui/post-ui.cc:250
-#, fuzzy
-msgid "Copy Text"
-msgstr "Перенос строк"
-
-#: pan/gui/post-ui.cc:251
-#, fuzzy
-msgid "_Paste"
-msgstr "Послать"
-
-#: pan/gui/post-ui.cc:251
-#, fuzzy
-msgid "Paste Text"
-msgstr "Текст статьи"
-
-#: pan/gui/post-ui.cc:252
+#: ../pan/gui/post-ui.cc:218
 msgid "_Rot13"
-msgstr ""
+msgstr "_Rot13"
 
-#: pan/gui/post-ui.cc:252
+#: ../pan/gui/post-ui.cc:218
 msgid "Rot13 Selected Text"
-msgstr "\"Закодировать\" выбранный текст с помощью Rot13"
+msgstr "Закодировать выбранный текст с помощью Rot13"
 
-#: pan/gui/post-ui.cc:253
-#, fuzzy
+#: ../pan/gui/post-ui.cc:219
 msgid "Run _Editor"
-msgstr "Внутренняя ошибка"
+msgstr "Запустить _редактор"
 
-#: pan/gui/post-ui.cc:254
-msgid "_Manage Editor List..."
-msgstr ""
+#: ../pan/gui/post-ui.cc:219
+msgid "Run Editor"
+msgstr "Запустить редактор"
 
-#: pan/gui/post-ui.cc:255
-#, fuzzy
-msgid "Manage Posting Pr_ofiles..."
-msgstr "Профили..."
+#: ../pan/gui/post-ui.cc:221
+msgid "Wrap Selected"
+msgstr "Перенести выделенное"
 
-#: pan/gui/post-ui.cc:260
-#, fuzzy
+#: ../pan/gui/post-ui.cc:226
 msgid "_Wrap Text"
-msgstr "Перенос строк"
+msgstr "_Переносить текст"
 
-#: pan/gui/post-ui.cc:261
-msgid "Remember _Charset for This Group"
-msgstr ""
+#: ../pan/gui/post-ui.cc:226
+msgid "Wrap Text"
+msgstr "Переносить текст"
 
-#: pan/gui/post-ui.cc:262
+#: ../pan/gui/post-ui.cc:227
+msgid "Always Run Editor"
+msgstr "Всегда запускать редактор"
+
+#: ../pan/gui/post-ui.cc:228
+msgid "Remember Character Encoding for this Group"
+msgstr "Запомнить кодировку для этой группы"
+
+#: ../pan/gui/post-ui.cc:229
 msgid "Check _Spelling"
-msgstr ""
+msgstr "_Проверить орфографию"
 
-#: pan/gui/post-ui.cc:317 pan/gui/post-ui.cc:318 pan/gui/post-ui.cc:319
-msgid "Baltic"
-msgstr ""
+#: ../pan/gui/post-ui.cc:254
+msgid "New Article's Encoding:"
+msgstr "Кодировка статьи:"
 
-#: pan/gui/post-ui.cc:320 pan/gui/post-ui.cc:321
-msgid "Central European"
-msgstr ""
-
-#: pan/gui/post-ui.cc:322
-msgid "Chinese Simplified"
-msgstr ""
-
-#: pan/gui/post-ui.cc:323
-msgid "Chinese Traditional"
-msgstr ""
-
-#: pan/gui/post-ui.cc:324 pan/gui/post-ui.cc:325 pan/gui/post-ui.cc:326
-msgid "Cyrillic"
-msgstr ""
-
-#: pan/gui/post-ui.cc:327
-msgid "Cyrillic, Ukrainian"
-msgstr ""
-
-#: pan/gui/post-ui.cc:328
-msgid "Greek"
-msgstr ""
-
-#: pan/gui/post-ui.cc:329
-#, fuzzy
-msgid "Japanese"
-msgstr "pan.sent"
-
-#: pan/gui/post-ui.cc:330
-msgid "Korean"
-msgstr ""
-
-#: pan/gui/post-ui.cc:331
-msgid "Turkish"
-msgstr ""
-
-#: pan/gui/post-ui.cc:332 pan/gui/post-ui.cc:334
-msgid "Western"
-msgstr ""
-
-#: pan/gui/post-ui.cc:333
-msgid "Western, New"
-msgstr ""
-
-#: pan/gui/post-ui.cc:335
-msgid "Unicode, UTF-8"
-msgstr ""
-
-#: pan/gui/post-ui.cc:431
-#, fuzzy, c-format
-msgid "Error loading post.ui: \"%s\""
-msgstr "Ошибка чтения из сокета."
-
-#: pan/gui/post-ui.cc:502
-msgid "Manage Editor List"
-msgstr ""
-
-#: pan/gui/post-ui.cc:509
-#, fuzzy
-msgid "Editors"
-msgstr "Внутренняя ошибка"
-
-#: pan/gui/post-ui.cc:609
+#: ../pan/gui/post-ui.cc:363
 msgid "Your changes will be lost!"
-msgstr ""
+msgstr "Все сделанные изменения будут потеряны!"
 
-#: pan/gui/post-ui.cc:610
+#: ../pan/gui/post-ui.cc:364
 msgid "Close this window and lose your changes?"
-msgstr ""
+msgstr "Закрыть это окно, несмотря на потерю сделанных изменений?"
 
-#: pan/gui/post-ui.cc:647
+#: ../pan/gui/post-ui.cc:406
+#: ../pan/gui/post-ui.cc:445
 msgid "There were problems with this post."
-msgstr ""
+msgstr "С этой публикацией возникли проблемы."
 
-#: pan/gui/post-ui.cc:649
+#: ../pan/gui/post-ui.cc:408
+#: ../pan/gui/post-ui.cc:447
 msgid "Go Back"
-msgstr ""
+msgstr "Вернуться назад"
 
-#: pan/gui/post-ui.cc:651
+#: ../pan/gui/post-ui.cc:410
 msgid "Post Anyway"
-msgstr ""
+msgstr "Всё равно опубликовать"
 
-#: pan/gui/post-ui.cc:662
+#. Prompt the user
+#: ../pan/gui/post-ui.cc:439
+#, c-format
+msgid "Message uses characters not specified in charset '%s' - possibly use '%s' "
+msgstr "В сообщении есть символы, не определённые в кодировке «%s», возможно надо использовать «%s»"
+
+#: ../pan/gui/post-ui.cc:462
 msgid "Go _Online"
-msgstr ""
+msgstr "_Выйти в онлайн"
 
-#: pan/gui/post-ui.cc:834
+#: ../pan/gui/post-ui.cc:627
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
 msgstr ""
+"Для этого профиля не указан сервер публикации.\n"
+"Измените профиль с помощью меню «Правка» > «Управление профилями публикации»."
 
-#: pan/gui/post-ui.cc:867
-#, fuzzy
+#: ../pan/gui/post-ui.cc:660
 msgid "Pan is Offline."
-msgstr "Отключиться"
+msgstr "Pan находится в автономном режиме."
 
-#: pan/gui/post-ui.cc:868
+#: ../pan/gui/post-ui.cc:661
 msgid "Go online to post the article?"
-msgstr ""
+msgstr "Выйти в онлайн, чтобы опубликовать статью?"
 
 #. *
 #. ***  Pop up a ``Posting'' Dialog...
 #. *
-#: pan/gui/post-ui.cc:881
-#, fuzzy
+#: ../pan/gui/post-ui.cc:674
 msgid "Posting Article"
-msgstr "Сортировка статей"
+msgstr "Публикация статьи"
 
-#: pan/gui/post-ui.cc:887
+#: ../pan/gui/post-ui.cc:680
 msgid "Posting..."
-msgstr ""
+msgstr "Публикация…"
 
-#: pan/gui/post-ui.cc:938
+#: ../pan/gui/post-ui.cc:751
 msgid "Error opening temporary file"
-msgstr ""
+msgstr "Ошибка открытия временного файла"
 
-#: pan/gui/post-ui.cc:958
+#: ../pan/gui/post-ui.cc:763
 #, c-format
 msgid "Error writing article to temporary file: %s"
-msgstr ""
+msgstr "Ошибка записи статьи во временный файл: %s"
 
-#: pan/gui/post-ui.cc:977
+#: ../pan/gui/post-ui.cc:782
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
-msgstr ""
+msgstr "Ошибка разбора команды вызова внешнего редактора: %s (команда: %s)"
 
-#: pan/gui/post-ui.cc:1015
+#: ../pan/gui/post-ui.cc:823
 #, c-format
 msgid "Error starting external editor: %s"
-msgstr ""
+msgstr "Ошибка запуска внешнего редактора: %s"
 
-#: pan/gui/post-ui.cc:1070
-#, fuzzy
+#: ../pan/gui/post-ui.cc:879
 msgid "Open Draft Article"
-msgstr "Сортировать статьи"
+msgstr "Открыть черновик статьи"
 
-#: pan/gui/post-ui.cc:1233
-#, fuzzy
+#: ../pan/gui/post-ui.cc:1068
 msgid "Save Draft Article"
-msgstr "Сохранить статьи"
+msgstr "Сохранить черновик статьи"
 
-#: pan/gui/post-ui.cc:1390
-#, fuzzy, c-format
-msgid "Couldn't read signature file \"%s\": %s"
-msgstr "Не удалось создать каталог \"%s\": %s"
-
-#: pan/gui/post-ui.cc:1411
-#, fuzzy, c-format
-msgid "Couldn't parse signature command \"%s\": %s"
-msgstr "Не удалось создать каталог \"%s\": %s"
-
-#: pan/gui/post-ui.cc:1448
-#, fuzzy
-msgid "Couldn't convert signature to UTF-8."
-msgstr "Не удалось создать каталог \"%s\": %s"
-
-#: pan/gui/post-ui.cc:1790
-#, fuzzy
-msgid "Post Article"
-msgstr "Загружает статью"
-
-#: pan/gui/post-ui.cc:1812
-#, fuzzy
-msgid "F_rom"
-msgstr "От:"
-
-#: pan/gui/post-ui.cc:1819
-#, fuzzy
-msgid "_Subject"
-msgstr "Тема"
-
-#: pan/gui/post-ui.cc:1825
-#, fuzzy
-msgid "_Newsgroups"
-msgstr "Группа новостей"
-
-#: pan/gui/post-ui.cc:1832
-#, fuzzy
-msgid "_Mail To"
-msgstr "Отправить:"
-
-#: pan/gui/post-ui.cc:1842
-msgid "One header per line, in the form HeaderName: Value"
-msgstr ""
-
-#: pan/gui/post-ui.cc:1845
-#, fuzzy
-msgid "_More Headers"
-msgstr "Еще заголовки"
-
-#: pan/gui/post-ui.cc:1867 pan/gui/profiles-dialog.cc:398
+#: ../pan/gui/post-ui.cc:1264
 #, c-format
+msgid "Couldn't parse signature command \"%s\": %s"
+msgstr "Не удалось разобрать команду подписи «%s»: %s"
+
+#: ../pan/gui/post-ui.cc:1296
+msgid "Couldn't convert signature to UTF-8."
+msgstr "Не удалось преобразовать подпись в UTF-8."
+
+#: ../pan/gui/post-ui.cc:1751
+msgid "F_rom"
+msgstr "_От"
+
+#: ../pan/gui/post-ui.cc:1769
+msgid "_Subject"
+msgstr "_Тема"
+
+#: ../pan/gui/post-ui.cc:1782
+msgid "_Newsgroups"
+msgstr "_Группы новостей"
+
+#: ../pan/gui/post-ui.cc:1796
+msgid "Mail _To"
+msgstr "_Обратный адрес"
+
+#: ../pan/gui/post-ui.cc:1845
+msgid "Follo_wup-To"
+msgstr "Ответить в _группу"
+
+#. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
+#: ../pan/gui/post-ui.cc:1854
+#| msgid ""
+#| "The e-mail account where mail replies to your posted message should go.  "
+#| "This is only needed if it differs from the \"From\" header."
+msgid ""
+"The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n"
+"\n"
+"To direct all replies to your email address, use \"Followup-To: poster\""
+msgstr ""
+"Новостные группы, куда должны отправляться ответы на ваши сообщения. Используется только тогда, когда группы отличаются от заголовка «Newsgroups».\n"
+"\n"
+"Чтобы направить все ответы на ваш адрес эл. почты, используйте «Followup-To: poster»"
+
+#: ../pan/gui/post-ui.cc:1860
+msgid "_Reply-To"
+msgstr "О_братный адрес"
+
+#: ../pan/gui/post-ui.cc:1868
+#| msgid ""
+#| "The e-mail account where mail replies to your posted message should go.  "
+#| "This is only needed if it differs from the \"From\" header."
+msgid "The email account where mail replies to your posted message should go.  This is only needed if it differs from the \"From\" header."
+msgstr "Почтовый адрес, куда должны приходить ответы на ваше сообщение. Нужно, только если отличается от заголовка «От»."
+
+#: ../pan/gui/post-ui.cc:1874
+msgid "_Custom Headers"
+msgstr "_Доп. заголовки"
+
+#: ../pan/gui/post-ui.cc:1898
+#| msgid "Don't add the \"User-Agent\" identification header"
+msgid "Add \"_User-Agent\" header"
+msgstr "Добавить заголовок «_User-Agent»"
+
+#: ../pan/gui/post-ui.cc:1905
+#| msgid "Message-Id: "
+msgid "Add \"Message-_Id header"
+msgstr "Добавить заголовок «_Message-Id»"
+
+#: ../pan/gui/post-ui.cc:1964
+msgid "Post Article"
+msgstr "Опубликовать статью"
+
+#: ../pan/gui/post-ui.cc:1985
+#| msgid "Message"
+msgid "_Message"
+msgstr "_Сообщение"
+
+#: ../pan/gui/post-ui.cc:1986
+msgid "More _Headers"
+msgstr "_Дополнительные заголовки"
+
+#: ../pan/gui/post-ui.cc:2013
+#: ../pan/gui/profiles-dialog.cc:393
+#, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "В письме %d, %n написал:"
 
-#: pan/gui/profiles-dialog.cc:102
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:100
 msgid "Posting Profile"
-msgstr "Pan: Профиль"
+msgstr "Профили публикации"
 
-#: pan/gui/profiles-dialog.cc:110
+#: ../pan/gui/profiles-dialog.cc:110
 msgid "Profile Information"
 msgstr "Информация о профиле"
 
-#: pan/gui/profiles-dialog.cc:114
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:114
 msgid "_Profile Name:"
-msgstr "Имя профиля:"
+msgstr "_Название профиля:"
 
-#: pan/gui/profiles-dialog.cc:117
+#: ../pan/gui/profiles-dialog.cc:117
 msgid "Required Information"
 msgstr "Требуемая информация"
 
-#: pan/gui/profiles-dialog.cc:121
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:121
 msgid "_Full Name:"
-msgstr "Полное имя пользователя:"
+msgstr "По_лное имя:"
 
-#: pan/gui/profiles-dialog.cc:124
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:124
 msgid "_Email Address:"
-msgstr "Электронный адрес:"
+msgstr "_Адрес эл. почты:"
 
-#: pan/gui/profiles-dialog.cc:126
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:126
 msgid "_Post Articles via:"
-msgstr "Сортировать статьи"
+msgstr "_Публиковать статьи через:"
 
-#: pan/gui/profiles-dialog.cc:129
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:129
 msgid "Signature"
-msgstr "Файл подписи:"
+msgstr "Подпись"
 
-#: pan/gui/profiles-dialog.cc:132
+#: ../pan/gui/profiles-dialog.cc:132
 msgid "_Use a Signature"
-msgstr ""
+msgstr "_Использовать подпись"
 
-#: pan/gui/profiles-dialog.cc:136
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:136
 msgid "Signature File"
-msgstr "Файл подписи:"
+msgstr "Файл подписи"
 
-#: pan/gui/profiles-dialog.cc:139
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:139
 msgid "_Signature:"
-msgstr "Навигация"
+msgstr "_Подпись:"
 
-#: pan/gui/profiles-dialog.cc:144
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:144
 msgid "Text File"
-msgstr "След. статья"
+msgstr "Текстовый файл"
 
-#: pan/gui/profiles-dialog.cc:146
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:146
 msgid "Text"
-msgstr "Цитируемый текст 3"
+msgstr "Текст"
 
-#: pan/gui/profiles-dialog.cc:148
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:148
 msgid "Command"
-msgstr "Команда печати:"
+msgstr "Команда"
 
-#: pan/gui/profiles-dialog.cc:158
+#: ../pan/gui/profiles-dialog.cc:158
 msgid "Signature _Type:"
-msgstr ""
+msgstr "_Тип подписи:"
 
-#: pan/gui/profiles-dialog.cc:161
+#: ../pan/gui/profiles-dialog.cc:161
 msgid "Optional Information"
 msgstr "Дополнительная информация"
 
-#: pan/gui/profiles-dialog.cc:169
+#: ../pan/gui/profiles-dialog.cc:166
+msgid "When posting to Usenet, your article's Message-ID contains a domain name.  You can set a custom domain name here, or leave it blank to let Pan use the domain name from your email address."
+msgstr "При публикации в Usenet идентификатор сообщения статьи содержит имя домена. Вы можете установить другое имя домена или оставить его пустым, чтобы Pan использовал имя домена адреса эл. почты."
+
+#: ../pan/gui/profiles-dialog.cc:167
+msgid "Message-ID _Domain Name:"
+msgstr "_Домен идентификатора сообщения:"
+
+#: ../pan/gui/profiles-dialog.cc:171
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -1855,3101 +1516,1107 @@ msgid ""
 "%n for Author name\n"
 "%d for Date"
 msgstr ""
+"%i для идентификатора сообщения\n"
+"%a для автора и адреса\n"
+"%n для имени автора\n"
+"%d для даты"
 
-#: pan/gui/profiles-dialog.cc:170
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:172
 msgid "_Attribution:"
-msgstr "Авторизация"
+msgstr "_Приписка:"
 
-#: pan/gui/profiles-dialog.cc:190
+#: ../pan/gui/profiles-dialog.cc:195
 msgid ""
 "Extra headers to be included in your posts, such as\n"
 "Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
 "Organization: Your Organization"
 msgstr ""
+"Дополнительные заголовки, которые будут включены в публикацию, например:\n"
+"Обратный адрес: «Вася Пупкин» <вася@пупкин.ru>\n"
+"Организация: ИП Пупкин"
 
-#: pan/gui/profiles-dialog.cc:199
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:204
 msgid "E_xtra Headers:"
-msgstr "Еще заголовки"
+msgstr "_Дополнительные заголовки:"
 
-#: pan/gui/profiles-dialog.cc:253
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:244
 msgid "Invalid email address."
-msgstr "Электронный адрес:"
+msgstr "Недопустимый адрес эл. почты."
 
-#: pan/gui/profiles-dialog.cc:254
+#: ../pan/gui/profiles-dialog.cc:245
 msgid "Please use an address of the form joe@somewhere.org"
-msgstr ""
+msgstr "Используйте адрес в следующей форме: joe@somewhere.org"
 
-#: pan/gui/profiles-dialog.cc:399
+#: ../pan/gui/profiles-dialog.cc:394
 msgid "New Profile"
 msgstr "Новый профиль"
 
-#: pan/gui/profiles-dialog.cc:442
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:440
 msgid "Posting Profiles"
-msgstr "Сбой отправки статьи: %s"
+msgstr "Профили публикаций"
 
-#: pan/gui/profiles-dialog.cc:458
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:456
 msgid "Profiles"
-msgstr "Профиль"
+msgstr "Профили"
 
-#: pan/gui/profiles-dialog.cc:482
-#, fuzzy
-msgid "Add a New Profile"
-msgstr "Добавить новый профиль"
-
-#: pan/gui/profiles-dialog.cc:493
-msgid "Edit the selected profile"
-msgstr "Правка выбранного профиля"
-
-#: pan/gui/profiles-dialog.cc:499
-msgid "Remove the selected profile"
-msgstr "Удалить выбранный профиль"
-
-#: pan/gui/prefs.cc:320
-#, fuzzy, c-format
+#: ../pan/gui/prefs.cc:323
+#, c-format
 msgid "Couldn't parse %s color \"%s\""
-msgstr "Невозможно выбрать группу \"%s\""
+msgstr "Не удалось разобрать %s цвет «%s»"
 
-#: pan/gui/prefs-ui.cc:159
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:202
 msgid "Use GNOME Preferences"
-msgstr "Pan: Настройки"
+msgstr "Использовать настройки GNOME"
 
-#: pan/gui/prefs-ui.cc:160
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:203
 msgid "Use KDE Preferences"
-msgstr "Pan: Настройки"
+msgstr "Использовать настройки KDE"
 
-#: pan/gui/prefs-ui.cc:161
-#, fuzzy
-msgid "Use OS/X Preferences"
-msgstr "Pan: Настройки"
+#: ../pan/gui/prefs-ui.cc:204
+msgid "Use OS X Preferences"
+msgstr "Использовать настройки OS X"
 
-#: pan/gui/prefs-ui.cc:162
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:205
 msgid "Use Windows Preferences"
-msgstr "Pan: Настройки"
+msgstr "Использовать настройки Windows"
 
-#: pan/gui/prefs-ui.cc:163
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:206
 msgid "Custom Command:"
-msgstr "Команда печати:"
+msgstr "Другая команда:"
 
-#: pan/gui/prefs-ui.cc:315
-#, fuzzy
-msgid "Action"
-msgstr "Действия"
-
-#: pan/gui/prefs-ui.cc:321
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:364
+#: ../pan/gui/task-pane.cc:473
 msgid "State"
 msgstr "Состояние"
 
-#: pan/gui/prefs-ui.cc:354
+#: ../pan/gui/prefs-ui.cc:398
 msgid "Enabled"
-msgstr ""
+msgstr "Включено"
 
-#: pan/gui/prefs-ui.cc:358
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:402
 msgid "Column Name"
-msgstr "Ваше имя"
+msgstr "Название столбца"
 
-#: pan/gui/prefs-ui.cc:392
+#: ../pan/gui/prefs-ui.cc:436
 msgid "Pan: Preferences"
-msgstr "Pan: Настройки"
+msgstr "Pan: настройки"
 
-#: pan/gui/prefs-ui.cc:404
+#: ../pan/gui/prefs-ui.cc:448
 msgid "Mouse"
-msgstr ""
+msgstr "Мышь"
 
-#: pan/gui/prefs-ui.cc:406
+#: ../pan/gui/prefs-ui.cc:450
 msgid "Single-click activates, rather than selects, _groups"
-msgstr ""
+msgstr "Простой щелчок делает _группы активными, но не выделяет их"
 
-#: pan/gui/prefs-ui.cc:408
+#: ../pan/gui/prefs-ui.cc:452
 msgid "Single-click activates, rather than selects, _articles"
-msgstr ""
+msgstr "Простой щелчок делает _статьи активными, но не выделяет их"
 
-#: pan/gui/prefs-ui.cc:411
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:455
 msgid "Groups"
 msgstr "Группы"
 
-#: pan/gui/prefs-ui.cc:413
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:457
 msgid "Get new headers in subscribed groups on _startup"
-msgstr "Получить новые заголовки в группах подписки"
+msgstr "Получать новые заголовки в подписанных группах при _запуске"
 
-#: pan/gui/prefs-ui.cc:415
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:459
 msgid "Get new headers when _entering group"
-msgstr "Получить новые статьи в выбранных группах"
+msgstr "Получать новые заголовки при _входе в группу"
 
-#: pan/gui/prefs-ui.cc:417
+#: ../pan/gui/prefs-ui.cc:461
 msgid "Mark entire group _read when leaving group"
-msgstr ""
+msgstr "При _выходе из группы отмечать всю группу как прочитанную"
 
-#: pan/gui/prefs-ui.cc:420
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:463
+msgid "Mark entire group read before getting _new headers"
+msgstr "Перед получением _новых заголовков отмечать всю группу как прочитанную"
+
+#: ../pan/gui/prefs-ui.cc:465
+msgid "E_xpand all threads when entering group"
+msgstr "_Разворачивать все подшивки при входе в группу"
+
+#: ../pan/gui/prefs-ui.cc:468
 msgid "Articles"
 msgstr "Статьи"
 
-#: pan/gui/prefs-ui.cc:421
-msgid "Space selects next article, not next unread"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:470
+#| msgid "Save the selected articles and their attachments."
+msgid "Space selects next article rather than next unread"
+msgstr "Пробел выбирает следующую статью, но не следующую непрочитанную"
 
-#: pan/gui/prefs-ui.cc:424
+#: ../pan/gui/prefs-ui.cc:472
+msgid "Smooth scrolling"
+msgstr "Плавная прокрутка"
+
+#: ../pan/gui/prefs-ui.cc:474
+msgid "Clear article cache on shutdown"
+msgstr "Очищать кэш статьи при завершении работы"
+
+#: ../pan/gui/prefs-ui.cc:477
+msgid "Minutes to autosave newsrc files."
+msgstr "минут для автосохранения файлов newsrc."
+
+#: ../pan/gui/prefs-ui.cc:482
 msgid "_Behavior"
-msgstr ""
+msgstr "_Поведение"
 
-#: pan/gui/prefs-ui.cc:428
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:486
 msgid "Pane Layout"
-msgstr "Выравнивание"
+msgstr "Расположение панелей"
 
-#: pan/gui/prefs-ui.cc:444
-#, fuzzy
-msgid "Tasks"
-msgstr "Нет задач"
-
-#: pan/gui/prefs-ui.cc:447
+#: ../pan/gui/prefs-ui.cc:505
 msgid "1=Groups, 2=Headers, 3=Body"
-msgstr ""
+msgstr "1=Группы, 2=Заголовки, 3=Тело"
 
-#: pan/gui/prefs-ui.cc:449
+#: ../pan/gui/prefs-ui.cc:507
 msgid "1=Groups, 2=Body, 3=Headers"
-msgstr ""
+msgstr "1=Группы, 2=Тело, 3=Заголовки"
 
-#: pan/gui/prefs-ui.cc:451
+#: ../pan/gui/prefs-ui.cc:509
 msgid "1=Headers, 2=Groups, 3=Body"
-msgstr ""
+msgstr "1=Заголовки, 2=Группы, 3=Тело"
 
-#: pan/gui/prefs-ui.cc:453
+#: ../pan/gui/prefs-ui.cc:511
 msgid "1=Headers, 2=Body, 3=Groups"
-msgstr ""
+msgstr "1=Заголовки, 2=Тело, 3=Группы"
 
-#: pan/gui/prefs-ui.cc:455
+#: ../pan/gui/prefs-ui.cc:513
 msgid "1=Body, 2=Groups, 3=Headers"
-msgstr ""
+msgstr "1=Тело, 2=Группы, 3=Заголовки"
 
-#: pan/gui/prefs-ui.cc:457
+#: ../pan/gui/prefs-ui.cc:515
 msgid "1=Body, 2=Headers, 3=Groups"
-msgstr ""
+msgstr "1=Тело, 2=Заголовки, 3=Группы"
 
-#: pan/gui/prefs-ui.cc:464
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:522
 msgid "Header Pane Columns"
-msgstr "Показать панель заголовка"
+msgstr "Столбцы в панели заголовков"
 
-#: pan/gui/prefs-ui.cc:468
-#, fuzzy
-msgid "Threads"
-msgstr "Отметить подшивки"
-
-#: pan/gui/prefs-ui.cc:470
-#, fuzzy
-msgid "E_xpand all threads when entering group"
-msgstr "Получить новые статьи в выбранных группах"
-
-#: pan/gui/prefs-ui.cc:473
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:526
 msgid "_Headers"
-msgstr "Еще заголовки"
+msgstr "_Заголовки"
 
-#: pan/gui/prefs-ui.cc:477
+#: ../pan/gui/prefs-ui.cc:530
 msgid "Fonts"
 msgstr "Шрифты"
 
-#: pan/gui/prefs-ui.cc:479
+#: ../pan/gui/prefs-ui.cc:532
 msgid "Use custom font in Group Pane:"
-msgstr ""
+msgstr "Использовать другой шрифт в панели групп:"
 
-#: pan/gui/prefs-ui.cc:484
+#: ../pan/gui/prefs-ui.cc:537
 msgid "Use custom font in Header Pane:"
-msgstr ""
+msgstr "Использовать другой шрифт в панели заголовков:"
 
-#: pan/gui/prefs-ui.cc:489
+#: ../pan/gui/prefs-ui.cc:542
 msgid "Use custom font in Body Pane:"
-msgstr ""
+msgstr "Использовать другой шрифт в панели тела сообщения:"
 
-#: pan/gui/prefs-ui.cc:494
+#: ../pan/gui/prefs-ui.cc:547
 msgid "Monospace font:"
-msgstr ""
+msgstr "Моноширный шрифт:"
 
-#: pan/gui/prefs-ui.cc:498
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:551
 msgid "_Fonts"
-msgstr "Шрифты"
+msgstr "_Шрифты"
 
-#: pan/gui/prefs-ui.cc:502
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:555
 msgid "Header Pane"
-msgstr "Показать панель заголовка"
+msgstr "Панель заголовков"
 
-#: pan/gui/prefs-ui.cc:505 pan/gui/prefs-ui.cc:511 pan/gui/prefs-ui.cc:517
-#: pan/gui/prefs-ui.cc:523 pan/gui/prefs-ui.cc:529
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:558
+#: ../pan/gui/prefs-ui.cc:564
+#: ../pan/gui/prefs-ui.cc:570
+#: ../pan/gui/prefs-ui.cc:576
+#: ../pan/gui/prefs-ui.cc:582
 msgid "Text:"
-msgstr "Цитируемый текст 3"
+msgstr "Текст:"
 
-#: pan/gui/prefs-ui.cc:507 pan/gui/prefs-ui.cc:513 pan/gui/prefs-ui.cc:519
-#: pan/gui/prefs-ui.cc:525 pan/gui/prefs-ui.cc:531
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:560
+#: ../pan/gui/prefs-ui.cc:566
+#: ../pan/gui/prefs-ui.cc:572
+#: ../pan/gui/prefs-ui.cc:578
+#: ../pan/gui/prefs-ui.cc:584
 msgid "Background:"
-msgstr "Фон статьи"
+msgstr "Фон:"
 
-#: pan/gui/prefs-ui.cc:509
+#: ../pan/gui/prefs-ui.cc:562
 msgid "Scores of 9999 or more:"
-msgstr ""
+msgstr "Оценки от 9999 и выше:"
 
-#: pan/gui/prefs-ui.cc:515
+#: ../pan/gui/prefs-ui.cc:568
 msgid "Scores from 5000 to 9998:"
-msgstr ""
+msgstr "Оценки от 5000 до 9998:"
 
-#: pan/gui/prefs-ui.cc:521
+#: ../pan/gui/prefs-ui.cc:574
 msgid "Scores from 1 to 4999:"
-msgstr ""
+msgstr "Оценки от 1 до 4999:"
 
-#: pan/gui/prefs-ui.cc:527
+#: ../pan/gui/prefs-ui.cc:580
 msgid "Scores from -9998 to -1:"
-msgstr ""
+msgstr "Оценки от -9998 до -1:"
 
-#: pan/gui/prefs-ui.cc:533
+#: ../pan/gui/prefs-ui.cc:586
 msgid "Scores of -9999 or less:"
-msgstr ""
+msgstr "Оценки от -9999 и ниже:"
 
-#: pan/gui/prefs-ui.cc:535
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:588
 msgid "Body Pane"
-msgstr "Показать панель группы"
+msgstr "Панель тела сообщения"
 
-#: pan/gui/prefs-ui.cc:541
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:594
 msgid "Quoted Text:"
-msgstr "Цитируемый текст 1"
+msgstr "Цитируемый текст:"
 
-#: pan/gui/prefs-ui.cc:542
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:595
 msgid "URL:"
-msgstr "URL"
+msgstr "URL:"
 
-#: pan/gui/prefs-ui.cc:543
+#: ../pan/gui/prefs-ui.cc:596
 msgid "Signature:"
-msgstr ""
+msgstr "Подпись:"
 
-#: pan/gui/prefs-ui.cc:545
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:598
 msgid "_Colors"
-msgstr "Цвета"
+msgstr "_Цвета"
 
-#: pan/gui/prefs-ui.cc:549
+#: ../pan/gui/prefs-ui.cc:602
 msgid "Preferred Applications"
-msgstr ""
+msgstr "Предпочитаемые приложения"
 
-#: pan/gui/prefs-ui.cc:553
+#: ../pan/gui/prefs-ui.cc:606
 msgid "_Web Browser:"
-msgstr ""
+msgstr "_Веб-браузер:"
 
-#: pan/gui/prefs-ui.cc:556
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:609
 msgid "_Mail Reader:"
-msgstr "Еще заголовки"
+msgstr "_Чтение эл. почты:"
 
-#: pan/gui/prefs-ui.cc:558
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:611
+msgid "_Text Editor:"
+msgstr "_Текстовый редактор:"
+
+#: ../pan/gui/prefs-ui.cc:613
 msgid "A_pplications"
-msgstr "Действия"
+msgstr "_Приложения"
 
-#: pan/gui/save-ui.cc:61
+#: ../pan/gui/save-ui.cc:73
 #, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - subject line excerpt\n"
 " \n"
 "\"/home/user/News/Pan/%g\" becomes\n"
 "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
 "\"/home/user/News/Pan/%G\" becomes\n"
 "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgstr ""
+"%g — группа как один каталог (alt.binaries.pictures.trains)\n"
+"%G — группа как вложенный каталог (/alt/binaries/pictures/trains)\n"
+"%s — извлечение строки темы\n"
+" \n"
+"«/home/user/News/Pan/%g» станет\n"
+"«/home/user/News/Pan/alt.binaries.pictures.trains», и\n"
+"«/home/user/News/Pan/%G» станет\n"
+"«/home/user/News/Pan/alt/binaries/pictures/trains»,"
 
-#: pan/gui/save-ui.cc:156
-#, fuzzy
+#: ../pan/gui/save-ui.cc:226
+msgid "Save attachments"
+msgstr "Сохранять вложения"
+
+#: ../pan/gui/save-ui.cc:227
+msgid "Save text"
+msgstr "Сохранять текст"
+
+#: ../pan/gui/save-ui.cc:228
+msgid "Save attachments and text"
+msgstr "Сохранять вложения и текст"
+
+#: ../pan/gui/save-ui.cc:235
+msgid "Add to the queue sorted by date posted"
+msgstr "Добавить в очередь, упорядоченную по дате публикации"
+
+#: ../pan/gui/save-ui.cc:236
+msgid "Add to the front of the queue"
+msgstr "Добавить в начало очереди"
+
+#: ../pan/gui/save-ui.cc:237
+msgid "Add to the back of the queue"
+msgstr "Добавить в конец очереди"
+
+#: ../pan/gui/save-ui.cc:264
 msgid "Pan: Save Articles"
-msgstr "Показать сохраненные статьи"
+msgstr "Pan: сохранить статьи"
 
-#: pan/gui/save-ui.cc:173
-#, fuzzy
-msgid "Files"
-msgstr "Не удалось"
+#: ../pan/gui/save-ui.cc:289
+#: ../pan/gui/save-ui.cc:307
+#| msgid "Location"
+msgid "_Location:"
+msgstr "_Расположение:"
 
-#: pan/gui/save-ui.cc:176
-#, fuzzy
-msgid "Save _Text"
-msgstr "Текст статьи"
+#: ../pan/gui/save-ui.cc:293
+msgid "Save Articles"
+msgstr "Сохранить статьи"
 
-#: pan/gui/save-ui.cc:179
-#, fuzzy
-msgid "Save _Attachments"
-msgstr "Не сохранять вложения"
-
-#: pan/gui/save-ui.cc:185
-#, fuzzy
-msgid "Path"
-msgstr "Автор"
-
-#: pan/gui/save-ui.cc:191
-msgid "C_ustom path:"
-msgstr ""
-
-#: pan/gui/save-ui.cc:195
-#, fuzzy
-msgid "Save Files to Path"
-msgstr "Не сохранять вложения"
-
-#: pan/gui/save-ui.cc:208
-#, fuzzy
-msgid "_Path:"
-msgstr "Послать"
-
-#: pan/gui/save-ui.cc:211
+#: ../pan/gui/save-ui.cc:310
 #, c-format
-msgid "Group's _default path: %s"
-msgstr ""
+msgid "_Group's path: %s"
+msgstr "_Путь к группе: %s"
 
-#: pan/gui/save-ui.cc:220
-#, fuzzy
-msgid "Group Management"
-msgstr "Название группы"
+#: ../pan/gui/save-ui.cc:321
+msgid "_Action:"
+msgstr "_Действие:"
 
-#. sort by age
-#: pan/gui/save-ui.cc:224
-msgid "Add to the queue sorted by a_ge"
-msgstr ""
+#: ../pan/gui/save-ui.cc:325
+msgid "_Priority:"
+msgstr "_Приоритет:"
 
-#. top of queue
-#: pan/gui/save-ui.cc:229
-#, fuzzy
-msgid "Add to the _front of the queue"
-msgstr "Добавить задачу в начало очереди"
-
-#. bottom of queue
-#: pan/gui/save-ui.cc:234
-#, fuzzy
-msgid "Add to the _back of the queue"
-msgstr "Добавить задачу в конец очереди"
-
-#: pan/gui/score-add-ui.cc:86
+#: ../pan/gui/score-add-ui.cc:89
 msgid "is more than"
-msgstr ""
+msgstr "больше, чем"
 
-#: pan/gui/score-add-ui.cc:87
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:90
 msgid "is at most"
-msgstr "Статья содержит по крайней мере"
+msgstr "не более"
 
-#: pan/gui/score-add-ui.cc:109
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:112
 msgid "increase the article's score by"
-msgstr "Заполнение/Перенос строк в теле сообщения"
+msgstr "увеличить оценку статьи на"
 
-#: pan/gui/score-add-ui.cc:110
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:113
 msgid "decrease the article's score by"
-msgstr "Заполнение/Перенос строк в теле сообщения"
+msgstr "уменьшить оценку статьи на"
 
-#: pan/gui/score-add-ui.cc:111
+#: ../pan/gui/score-add-ui.cc:114
 msgid "set the article's score to"
-msgstr ""
+msgstr "поставить оценку статье"
 
-#: pan/gui/score-add-ui.cc:112
+#: ../pan/gui/score-add-ui.cc:115
 msgid "watch the article (set its score to 9999)"
-msgstr ""
+msgstr "посмотреть статью (поставить оценку 9999)"
 
-#: pan/gui/score-add-ui.cc:113
+#: ../pan/gui/score-add-ui.cc:116
 msgid "ignore the article (set its score to -9999)"
-msgstr ""
+msgstr "игнорировать статью (поставить оценку -9999)"
 
-#: pan/gui/score-add-ui.cc:138
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:141
 msgid "References"
-msgstr "Ссылки:"
+msgstr "Ссылки"
 
-#: pan/gui/score-add-ui.cc:139
+#: ../pan/gui/score-add-ui.cc:142
 msgid "Line Count"
-msgstr ""
+msgstr "Количество строк"
 
-#: pan/gui/score-add-ui.cc:140
+#: ../pan/gui/score-add-ui.cc:143
 msgid "Byte Count"
-msgstr ""
+msgstr "Количество байт"
 
-#: pan/gui/score-add-ui.cc:141
+#: ../pan/gui/score-add-ui.cc:144
 msgid "Crosspost Group Count"
-msgstr ""
+msgstr "Кол-во кросспостов группы"
 
-#: pan/gui/score-add-ui.cc:142
+#: ../pan/gui/score-add-ui.cc:145
 msgid "Age (in days)"
-msgstr ""
+msgstr "Возраст (в днях)"
 
-#: pan/gui/score-add-ui.cc:164
-msgid "the next week"
-msgstr ""
+#: ../pan/gui/score-add-ui.cc:167
+msgid "for the next month"
+msgstr "для следующего месяца"
 
-#: pan/gui/score-add-ui.cc:165
-msgid "the next month"
-msgstr ""
+#: ../pan/gui/score-add-ui.cc:168
+msgid "for the next six months"
+msgstr "для следующих шести месяцев"
 
-#: pan/gui/score-add-ui.cc:166
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:169
 msgid "forever"
-msgstr "Сервер"
+msgstr "всегда"
 
-#: pan/gui/score-add-ui.cc:191
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:194
 msgid "contains"
-msgstr "Нет подключений"
+msgstr "содержит"
 
-#: pan/gui/score-add-ui.cc:192
+#: ../pan/gui/score-add-ui.cc:195
 msgid "doesn't contain"
-msgstr ""
+msgstr "не содержит"
 
-#: pan/gui/score-add-ui.cc:193
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:196
 msgid "is"
-msgstr "Разное"
+msgstr "является"
 
-#: pan/gui/score-add-ui.cc:194
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:197
 msgid "isn't"
-msgstr "Печать"
+msgstr "не является"
 
-#: pan/gui/score-add-ui.cc:195
+#: ../pan/gui/score-add-ui.cc:198
 msgid "starts with"
-msgstr ""
+msgstr "начинается с"
 
-#: pan/gui/score-add-ui.cc:196
+#: ../pan/gui/score-add-ui.cc:199
 msgid "ends with"
-msgstr ""
+msgstr "заканчивается на"
 
-#: pan/gui/score-add-ui.cc:197
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:200
 msgid "matches regex"
-msgstr "Тема совпадает с рег.выражением \"%s\""
+msgstr "соответствует регулярному выражению"
 
-#: pan/gui/score-add-ui.cc:525
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:481
+msgid "Another rule already sets this article's score."
+msgstr "Другое правило уже устанавливает оценку для статьи."
+
+#: ../pan/gui/score-add-ui.cc:482
+msgid "You may want to go back or delete the old rule."
+msgstr "Возможно, вы захотите вернуться или удалить предыдущее правило."
+
+#: ../pan/gui/score-add-ui.cc:553
 msgid "Add and Re_score"
-msgstr "Почтовый сервер"
+msgstr "Добавить и _пересчитать"
 
-#: pan/gui/score-add-ui.cc:573
-#, fuzzy
-msgid "Pan: New Scoring Rule"
-msgstr "Pan: Правка правила"
-
-#: pan/gui/score-add-ui.cc:592
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:604
+#: ../pan/gui/score-add-ui.cc:624
 msgid "New Scoring Rule"
-msgstr "Новое правило"
+msgstr "Создать правило оценки"
 
-#: pan/gui/score-add-ui.cc:603
+#: ../pan/gui/score-add-ui.cc:635
 msgid "If the group name"
-msgstr ""
+msgstr "Если название группы"
 
-#: pan/gui/score-add-ui.cc:610
-#, fuzzy
+#: ../pan/gui/score-add-ui.cc:642
 msgid "And the article's"
-msgstr "Статьи"
+msgstr "У статьи"
 
-#: pan/gui/score-add-ui.cc:622
-#, fuzzy
-msgid "Then"
-msgstr "Благодарности"
-
-#: pan/gui/score-add-ui.cc:630
-#, fuzzy
-msgid "For"
-msgstr "Папки"
-
-#: pan/gui/score-view-ui.cc:64
+#: ../pan/gui/score-view-ui.cc:56
 msgid "Close and Re_score"
-msgstr ""
+msgstr "Закрыть и _пересчитать"
 
-#: pan/gui/score-view-ui.cc:167
+#: ../pan/gui/score-view-ui.cc:154
 #, c-format
 msgid "File %s, Lines %d - %d"
-msgstr ""
+msgstr "Файл: %s; строки: %d-%d"
 
-#: pan/gui/score-view-ui.cc:170
-#, fuzzy, c-format
-msgid "Name: \"%s\""
-msgstr "Сохранение \"%s\""
-
-#: pan/gui/score-view-ui.cc:199
-#, fuzzy
+#: ../pan/gui/score-view-ui.cc:182
 msgid "Pan: Article's Scores"
-msgstr "Статья прочитана"
+msgstr "Pan: оценки статей"
 
-#: pan/gui/score-view-ui.cc:225
-#, fuzzy
+#: ../pan/gui/score-view-ui.cc:208
 msgid "Add"
-msgstr "Добавить новый"
+msgstr "Добавить"
 
-#: pan/gui/score-view-ui.cc:230
-#, fuzzy
+#: ../pan/gui/score-view-ui.cc:213
 msgid "New Score"
-msgstr "Сервера новостей"
+msgstr "Новая оценка"
 
-#: pan/gui/score-view-ui.cc:235
+#: ../pan/gui/score-view-ui.cc:218
 msgid "Criteria"
-msgstr ""
+msgstr "Критерий"
 
-#: pan/gui/score-view-ui.cc:258
-#, fuzzy
+#: ../pan/gui/score-view-ui.cc:241
 msgid "Add a New Scoring Rule"
-msgstr "Добавить новое правило."
+msgstr "Добавить новое правило оценки"
 
-#: pan/gui/score-view-ui.cc:265
-#, fuzzy
+#: ../pan/gui/score-view-ui.cc:248
 msgid "Remove the Selected Scoring Rule"
-msgstr "Удалить выбранное правило."
+msgstr "Удалить выбранное правило оценки"
 
-#: pan/gui/server-ui.cc:162
+#: ../pan/gui/server-ui.cc:164
 msgid "Please specify the server's address."
-msgstr ""
+msgstr "Укажите адрес сервера."
 
 #. create the dialog
-#: pan/gui/server-ui.cc:201
-#, fuzzy
-msgid "Pan: Add a Server"
-msgstr "Pan: Новый/Правка сервера"
+#: ../pan/gui/server-ui.cc:203
+#: ../pan/gui/server-ui.cc:538
+msgid "Add a Server"
+msgstr "Добавление сервера"
 
-#: pan/gui/server-ui.cc:201
-#, fuzzy
-msgid "Pan: Edit a Server's Settings"
-msgstr "Настройки по-серверно"
+#: ../pan/gui/server-ui.cc:203
+#: ../pan/gui/server-ui.cc:544
+msgid "Edit a Server's Settings"
+msgstr "Изменить параметры сервера"
 
-#: pan/gui/server-ui.cc:222
+#: ../pan/gui/server-ui.cc:223
 msgid "Location"
 msgstr "Расположение"
 
-#: pan/gui/server-ui.cc:226
+#: ../pan/gui/server-ui.cc:227
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
-msgstr ""
+msgstr "Адрес сервера новостей, например «news.mynewsserver.com»"
 
-#: pan/gui/server-ui.cc:227
-#, fuzzy
+#: ../pan/gui/server-ui.cc:228
 msgid "_Address:"
-msgstr "Адрес:"
+msgstr "_Адрес:"
 
-#: pan/gui/server-ui.cc:231
+#: ../pan/gui/server-ui.cc:232
 msgid "The news server's port number.  Typically 119."
-msgstr ""
+msgstr "Номер порта сервера новостей. Обычно, 119."
 
-#: pan/gui/server-ui.cc:232
-#, fuzzy
+#: ../pan/gui/server-ui.cc:233
 msgid "Por_t:"
-msgstr "Порт:"
+msgstr "_Порт:"
 
-#: pan/gui/server-ui.cc:235
+#: ../pan/gui/server-ui.cc:236
 msgid "Login (if Required)"
-msgstr ""
+msgstr "Логин (если требуется)"
 
-#: pan/gui/server-ui.cc:239
-#, fuzzy
+#: ../pan/gui/server-ui.cc:240
 msgid "_Username:"
-msgstr "Имя пользователя"
+msgstr "_Имя пользователя:"
 
-#: pan/gui/server-ui.cc:240
-msgid ""
-"The username to give the server when asked.  If your server doesn't require "
-"authentication, you can leave this blank."
-msgstr ""
+#: ../pan/gui/server-ui.cc:241
+msgid "The username to give the server when asked.  If your server doesn't require authentication, you can leave this blank."
+msgstr "Имя пользователя, передаваемое серверу при запросе. Если сервер не требует аутентификации, это поле можно оставить пустым."
 
-#: pan/gui/server-ui.cc:244
-#, fuzzy
+#: ../pan/gui/server-ui.cc:245
 msgid "_Password:"
-msgstr "Пароль:"
+msgstr "_Пароль:"
 
-#: pan/gui/server-ui.cc:245
-msgid ""
-"The password to give the server when asked.  If your server doesn't require "
-"authentication, you can leave this blank."
-msgstr ""
+#: ../pan/gui/server-ui.cc:246
+msgid "The password to give the server when asked.  If your server doesn't require authentication, you can leave this blank."
+msgstr "Пароль, передаваемый серверу при запросе. Если сервер не требует аутентификации, это поле можно оставить пустым."
 
-#: pan/gui/server-ui.cc:248
-#, fuzzy
+#: ../pan/gui/server-ui.cc:249
 msgid "Settings"
-msgstr "Настройки \"в сети\""
+msgstr "Параметры"
 
-#: pan/gui/server-ui.cc:254
-#, fuzzy
+#: ../pan/gui/server-ui.cc:255
 msgid "Connection _Limit:"
-msgstr "Подключение"
+msgstr "_Макс. кол-во подключений:"
 
-#: pan/gui/server-ui.cc:257
+#: ../pan/gui/server-ui.cc:258
 msgid "After Two Weeks"
-msgstr ""
+msgstr "После двух недель"
 
-#: pan/gui/server-ui.cc:258
+#: ../pan/gui/server-ui.cc:259
 msgid "After One Month"
-msgstr ""
+msgstr "После одного месяца"
 
-#: pan/gui/server-ui.cc:259
+#: ../pan/gui/server-ui.cc:260
 msgid "After Two Months"
-msgstr ""
+msgstr "После двух месяцев"
 
-#: pan/gui/server-ui.cc:260
-#, fuzzy
+#: ../pan/gui/server-ui.cc:261
+msgid "After Three Months"
+msgstr "После трёх месяцев"
+
+#: ../pan/gui/server-ui.cc:262
+msgid "After Six Months"
+msgstr "После шести месяцев"
+
+#: ../pan/gui/server-ui.cc:263
 msgid "Never Expire Old Articles"
-msgstr "След. непрочитанная статья"
+msgstr "Статьи никогда не устаревают"
 
-#: pan/gui/server-ui.cc:274
-#, fuzzy
+#: ../pan/gui/server-ui.cc:277
 msgid "E_xpire Old Articles:"
-msgstr "Показать старые статьи"
+msgstr "Статьи _устаревают:"
 
-#: pan/gui/server-ui.cc:277
-#, fuzzy
+#: ../pan/gui/server-ui.cc:280
 msgid "Primary"
-msgstr "Приоритет"
+msgstr "Главный"
 
-#: pan/gui/server-ui.cc:278
+#: ../pan/gui/server-ui.cc:281
 msgid "Fallback"
-msgstr ""
+msgstr "Запасной"
 
-#: pan/gui/server-ui.cc:292
-#, fuzzy
+#: ../pan/gui/server-ui.cc:295
 msgid "Server Rank:"
-msgstr "Серверы"
+msgstr "Ранг сервера:"
 
-#: pan/gui/server-ui.cc:296
-msgid ""
-"Fallback servers are used for articles that can't be found on the "
-"primaries.  One common approach is to use free servers as primaries and "
-"subscription servers as fallbacks."
-msgstr ""
+#: ../pan/gui/server-ui.cc:299
+msgid "Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."
+msgstr "Запасные серверы используются для статей, которые не удалось найти на основных. Типичное использование — свободные серверы используются в качестве главных, серверы с подписками в качестве запасных."
 
-#: pan/gui/server-ui.cc:420
+#: ../pan/gui/server-ui.cc:420
 #, c-format
 msgid "Really delete \"%s\"?"
-msgstr ""
+msgstr "Действительно удалить «%s»?"
 
 #. dialog
-#: pan/gui/server-ui.cc:492
-#, fuzzy
-msgid "Pan: Servers"
-msgstr "Серверы"
-
-#: pan/gui/server-ui.cc:512
+#: ../pan/gui/server-ui.cc:491
+#: ../pan/gui/server-ui.cc:512
 msgid "Servers"
 msgstr "Серверы"
 
-#: pan/gui/server-ui.cc:538
-#, fuzzy
-msgid "Add a Server"
-msgstr "Почтовый сервер"
-
-#: pan/gui/server-ui.cc:548
-#, fuzzy
-msgid "Edit a Server's Settings"
-msgstr "Настройки по-серверно"
-
-#: pan/gui/server-ui.cc:555
-#, fuzzy
+#: ../pan/gui/server-ui.cc:551
 msgid "Remove a Server"
-msgstr "Сервер новостей"
+msgstr "Удалить сервер"
 
-#. less than a mebi...
-#: pan/gui/task-pane.cc:210
+#: ../pan/gui/task-pane.cc:225
 #, c-format
-msgid "%.2f KiB"
-msgstr ""
-
-#. less than a gibi...
-#: pan/gui/task-pane.cc:212
-#, c-format
-msgid "%.2f MiB"
-msgstr ""
-
-#: pan/gui/task-pane.cc:214
-#, c-format
-msgid "%.2f GiB"
-msgstr ""
-
-#: pan/gui/task-pane.cc:250
-#, fuzzy, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
-msgstr "Диспетчер задач Pan %s (%d в очереди, %d запущено, %d сбоев)"
+msgstr "Pan: задачи (в очереди: %d; запущено: %d; остановлено: %d)"
 
-#: pan/gui/task-pane.cc:252
-#, fuzzy, c-format
-msgid "Pan: Tasks (%d Queued, %d Running)"
-msgstr "Диспетчер задач Pan %s (%d в очереди, %d запущено)"
-
-#: pan/gui/task-pane.cc:254
-#, fuzzy
-msgid "Pan: Tasks"
-msgstr "Нет задач"
-
-#: pan/gui/task-pane.cc:268
+#: ../pan/gui/task-pane.cc:227
 #, c-format
-msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
-msgstr ""
+msgid "Pan: Tasks (%d Queued, %d Running)"
+msgstr "Pan: задачи (в очереди: %d; запущено: %d)"
 
-#: pan/gui/task-pane.cc:326
+#: ../pan/gui/task-pane.cc:229
+#, c-format
+msgid "Pan: Tasks"
+msgstr "Pan: задачи"
+
+#: ../pan/gui/task-pane.cc:253
+#, c-format
+msgid "%lu selected, %s"
+msgstr "Выбрано %lu, %s"
+
+#: ../pan/gui/task-pane.cc:315
 msgid "Running"
 msgstr "Запущено"
 
-#: pan/gui/task-pane.cc:327
+#: ../pan/gui/task-pane.cc:316
+#| msgid "Decoding \"%s\""
+msgid "Decoding"
+msgstr "Декодирование"
+
+#: ../pan/gui/task-pane.cc:317
+#| msgid "Saved or Decoded"
+msgid "Queued for Decode"
+msgstr "Поставлено в очередь для декодирования"
+
+#: ../pan/gui/task-pane.cc:318
 msgid "Queued"
 msgstr "Поставлено в очередь"
 
-#: pan/gui/task-pane.cc:328
+#: ../pan/gui/task-pane.cc:319
 msgid "Stopped"
-msgstr ""
+msgstr "Остановлено"
 
-#: pan/gui/task-pane.cc:329
-#, fuzzy
+#: ../pan/gui/task-pane.cc:320
 msgid "Removing"
-msgstr "Удалить"
+msgstr "Удаление"
 
-#: pan/gui/task-pane.cc:330
-msgid "Unknown"
-msgstr "Неизвестно"
+#: ../pan/gui/task-pane.cc:347
+#, c-format
+msgid "%d%% Done"
+msgstr "Выполнено %d%%"
 
-#: pan/gui/task-pane.cc:354
-#, fuzzy, c-format
-msgid "%d%% Done; %d:%02d:%02d Remaining (%d @ %lu KiB/s)"
-msgstr "%.2f Кб/с, %d:%02d:%02d осталось"
+#: ../pan/gui/task-pane.cc:353
+#, c-format
+msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
+msgstr "%d:%02d:%02d осталось (%d @ %lu КиБ/с)"
 
-#: pan/gui/task-pane.cc:358
-#, fuzzy, c-format
-msgid "%d%% Done; %s"
-msgstr "% Выполнено"
+#: ../pan/gui/task-pane.cc:432
+#| msgid "Offline"
+msgid "_Online"
+msgstr "_В сети"
 
-#: pan/gui/task-pane.cc:366
-#, fuzzy, c-format
-msgid "to %s"
-msgstr "О программе \"%s\""
-
-#: pan/gui/task-pane.cc:433
+#: ../pan/gui/task-pane.cc:449
 msgid "Restart Tasks"
-msgstr ""
+msgstr "Перезапустить задачи"
 
-#: pan/gui/task-pane.cc:438
-#, fuzzy
+#: ../pan/gui/task-pane.cc:451
 msgid "Stop Tasks"
-msgstr "Нет задач"
+msgstr "Остановить задачи"
 
-#: pan/gui/task-pane.cc:443
-#, fuzzy
+#: ../pan/gui/task-pane.cc:453
 msgid "Delete Tasks"
-msgstr "Удалить выбранные подшивки"
+msgstr "Удалить задачи"
 
-#: pan/gui/task-pane.cc:467
-msgid "Status"
-msgstr "Состояние"
-
-#: pan/gui/url.cc:92
+#: ../pan/gui/url.cc:123
 #, c-format
 msgid "Error starting URL: %s (Command was: %s)"
-msgstr ""
+msgstr "Ошибка запуска URL: %s (команда: %s)"
 
-#: pan/tasks/nntp.cc:214
-#, fuzzy, c-format
-msgid "Unable to set group: %s"
-msgstr "Не удалось установить группу \"%s\": %s"
-
-#: pan/tasks/nntp.cc:231
-#, fuzzy, c-format
-msgid "Error: %s"
-msgstr "Ошибка"
-
-#: pan/tasks/socket-impl-gio.cc:112
+#: ../pan/tasks/decoder.cc:111
 #, c-format
-msgid "Making a new connection to %*.*s"
-msgstr ""
+msgid "Couldn't save file \"%s\": %s"
+msgstr "Не удалось сохранить файл «%s»: %s"
 
-#: pan/tasks/socket-impl-gio.cc:347
-#, fuzzy
-msgid "Unknown Error"
-msgstr "Неизвестно"
-
-#: pan/tasks/socket-impl-gio.cc:348
-#, fuzzy, c-format
-msgid "Error reading from socket: %s"
-msgstr "Ошибка чтения из сокета."
-
-#: pan/tasks/task-article.cc:54 pan/tasks/task-article.cc:124
-#, fuzzy, c-format
-msgid "Saving %s"
-msgstr "Сохранение \"%s\""
-
-#: pan/tasks/task-article.cc:56
-#, fuzzy, c-format
-msgid "Reading %s"
-msgstr "Загрузка %s"
-
-#: pan/tasks/task-article.cc:291
+#: ../pan/tasks/decoder.cc:133
 msgid "Error initializing uulib"
-msgstr ""
+msgstr "Ошибка инициализации uulib"
 
-#: pan/tasks/task-article.cc:302
-#, fuzzy, c-format
-msgid "Couldn't load \"%s\": %s"
-msgstr "Невозможно загрузить шрифт \"%s\""
+#: ../pan/tasks/decoder.cc:147
+#: ../pan/tasks/socket-impl-gio.cc:406
+#, c-format
+msgid "Error reading from %s: %s"
+msgstr "Ошибка чтения из %s: %s"
 
-#: pan/tasks/task-article.cc:335
+#: ../pan/tasks/decoder.cc:182
 #, c-format
 msgid "Saved \"%s\""
-msgstr "Сохранение \"%s\""
+msgstr "Сохранено «%s»"
 
-#: pan/tasks/task-article.cc:339
-#, fuzzy, c-format
-msgid ""
-"Error saving \"%s\":\n"
-"%s. %s"
-msgstr "Ошибка чтения файла \"%s\""
-
-#: pan/tasks/task-article.cc:341
-#, fuzzy, c-format
+#: ../pan/tasks/decoder.cc:189
+#, c-format
 msgid ""
 "Error saving \"%s\":\n"
 "%s."
-msgstr "Ошибка чтения файла \"%s\""
+msgstr ""
+"Ошибка сохранения «%s»:\n"
+"%s."
 
-#: pan/tasks/task-groups.cc:40
-#, fuzzy, c-format
+#: ../pan/tasks/decoder.cc:304
+#: ../pan/tasks/task-article.cc:315
+#, c-format
+#| msgid "Decoding \"%s\""
+msgid "Decoding %s"
+msgstr "Декодирование %s"
+
+#: ../pan/tasks/nntp.cc:171
+#, c-format
+#| msgid "My server requires my username and password"
+msgid "%s requires a username, but none is set."
+msgstr "%s требует имя пользователя, но оно не было установлено."
+
+#: ../pan/tasks/nntp.cc:184
+#, c-format
+#| msgid "My server requires a password."
+msgid "%s requires a password, but none is set."
+msgstr "%s требует пароль, но оно не было установлено."
+
+#: ../pan/tasks/nntp.cc:244
+#, c-format
+msgid "Sending \"%s\" to %s returned an error: %s"
+msgstr "Отправка «%s» %s завершилась с ошибкой: %s"
+
+#: ../pan/tasks/nntp.cc:267
+#, c-format
+msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
+msgstr "Отправка «%s» %s завершилась с непонятным ответом: «%s»"
+
+#: ../pan/tasks/nntp-pool.cc:206
+#, c-format
+#| msgid "Unable to open connection to mail server \"%s\""
+msgid "Unable to connect to \"%s\""
+msgstr "Не удалось подключиться к «%s»"
+
+#: ../pan/tasks/socket-impl-gio.cc:226
+#: ../pan/tasks/socket-impl-gio.cc:264
+#, c-format
+msgid "Error connecting to \"%s\""
+msgstr "Ошибка подключения к «%s»"
+
+#: ../pan/tasks/socket-impl-gio.cc:405
+msgid "Unknown Error"
+msgstr "Неизвестная ошибка"
+
+#: ../pan/tasks/task-article.cc:54
+#: ../pan/tasks/task-article.cc:125
+#, c-format
+msgid "Saving %s"
+msgstr "Сохранение %s"
+
+#: ../pan/tasks/task-article.cc:56
+#, c-format
+msgid "Reading %s"
+msgstr "Чтение %s"
+
+#: ../pan/tasks/task-article.cc:287
+#, c-format
+msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
+msgstr "Статья «%s» неполна — на сервере отсутствует часть %s"
+
+#: ../pan/tasks/task-groups.cc:40
+#, c-format
 msgid "Getting group list from \"%s\""
-msgstr "Объединение групп для \"%s\""
+msgstr "Получение списка групп из «%s»"
 
-#: pan/tasks/task-groups.cc:121
-#, fuzzy, c-format
+#: ../pan/tasks/task-groups.cc:123
+#, c-format
 msgid "Fetched %lu Groups"
-msgstr "Получено %u заголовков для \"%s\""
+msgstr "Получено групп: %lu"
 
-#: pan/tasks/task-post.cc:34
-#, fuzzy, c-format
+#: ../pan/tasks/task-post.cc:34
+#, c-format
 msgid "Posting \"%s\""
-msgstr "Обработка \"%s\""
+msgstr "Опубликование «%s»"
 
-#: pan/tasks/task-xover.cc:71
-#, fuzzy, c-format
+#: ../pan/tasks/task-xover.cc:71
+#, c-format
 msgid "Getting all headers for \"%s\""
-msgstr "Получение %s для \"%s\""
+msgstr "Получение всех заголовков «%s»"
 
-#: pan/tasks/task-xover.cc:73
-#, fuzzy, c-format
+#: ../pan/tasks/task-xover.cc:73
+#, c-format
 msgid "Getting new headers for \"%s\""
-msgstr "Получение %s для \"%s\""
+msgstr "Получение новых заголовков «%s»"
 
 #. SAMPLE
-#: pan/tasks/task-xover.cc:75
-#, fuzzy, c-format
+#: ../pan/tasks/task-xover.cc:75
+#, c-format
 msgid "Sampling headers for \"%s\""
-msgstr "Получение образцов заголовков статей %lu из %lu"
+msgstr "Получение образцов заголовков для «%s»"
 
-#: pan/tasks/task-xover.cc:321
+#: ../pan/tasks/task-xover.cc:342
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
-msgstr ""
+msgstr "%s (частей: %lu; статей: %lu)"
 
-#: pan/usenet-utils/gnksa.cc:879
+#: ../pan/usenet-utils/filter-info.cc:162
+msgid "article doesn't have attachments"
+msgstr "статья не содержит вложений"
+
+#: ../pan/usenet-utils/filter-info.cc:166
+msgid "the article has attachments"
+msgstr "статья содержит вложения"
+
+#: ../pan/usenet-utils/filter-info.cc:170
+msgid "the article isn't cached locally"
+msgstr "статья не помещена в локальный кэш"
+
+#: ../pan/usenet-utils/filter-info.cc:174
+msgid "the article is cached locally"
+msgstr "статья помещена в локальный кэш"
+
+#: ../pan/usenet-utils/filter-info.cc:178
+msgid "the article wasn't posted by you"
+msgstr "статья была опубликована не вами"
+
+#: ../pan/usenet-utils/filter-info.cc:182
+msgid "the article was posted by you"
+msgstr "статья была опубликована вами"
+
+#: ../pan/usenet-utils/filter-info.cc:186
+msgid "the article has been read"
+msgstr "статья была прочитана"
+
+#: ../pan/usenet-utils/filter-info.cc:190
+msgid "the article hasn't been read"
+msgstr "статья не была прочитана"
+
+#: ../pan/usenet-utils/filter-info.cc:194
+#, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "длина статьи меньше, чем %ld байт"
+
+#: ../pan/usenet-utils/filter-info.cc:199
+#, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "длина статьи не менее %ld байт"
+
+#: ../pan/usenet-utils/filter-info.cc:204
+#, c-format
+msgid "the article is less than %ld lines long"
+msgstr "в статье не более %ld строк"
+
+#: ../pan/usenet-utils/filter-info.cc:209
+#, c-format
+msgid "the article is at least %ld lines long"
+msgstr "в статье не менее %ld строк"
+
+#: ../pan/usenet-utils/filter-info.cc:214
+#, c-format
+msgid "the article is less than %ld days old"
+msgstr "статье не более чем %ld дней"
+
+#: ../pan/usenet-utils/filter-info.cc:219
+#, c-format
+msgid "the article is at least %ld days old"
+msgstr "статье не менее чем %ld дней"
+
+#: ../pan/usenet-utils/filter-info.cc:224
+#, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "статья опубликована не более чем в %ld группах"
+
+#: ../pan/usenet-utils/filter-info.cc:229
+#, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "статья опубликована по крайней мере в %ld группах"
+
+#: ../pan/usenet-utils/filter-info.cc:234
+#, c-format
+msgid "the article's score is less than %ld"
+msgstr "оценка статьи не более чем %ld"
+
+#: ../pan/usenet-utils/filter-info.cc:239
+#, c-format
+msgid "the article's score is %ld or higher"
+msgstr "оценка статьи %ld и выше"
+
+#: ../pan/usenet-utils/filter-info.cc:248
+#: ../pan/usenet-utils/filter-info.cc:258
+#, c-format
+msgid "%s doesn't contain \"%s\""
+msgstr "%s не содержит «%s»"
+
+#: ../pan/usenet-utils/filter-info.cc:249
+#: ../pan/usenet-utils/filter-info.cc:259
+#, c-format
+msgid "%s isn't \"%s\""
+msgstr "%s не является «%s»"
+
+#: ../pan/usenet-utils/filter-info.cc:250
+#: ../pan/usenet-utils/filter-info.cc:260
+#, c-format
+msgid "%s doesn't begin with \"%s\""
+msgstr "%s не начинается с «%s»"
+
+#: ../pan/usenet-utils/filter-info.cc:251
+#: ../pan/usenet-utils/filter-info.cc:261
+#, c-format
+msgid "%s doesn't end with \"%s\""
+msgstr "%s не заканчивается на «%s»"
+
+#: ../pan/usenet-utils/filter-info.cc:252
+#: ../pan/usenet-utils/filter-info.cc:262
+#, c-format
+msgid "%s doesn't match the regex \"%s\""
+msgstr "%s не соответствует регулярному выражению «%s»"
+
+#: ../pan/usenet-utils/filter-info.cc:274
+#, c-format
+msgid "%s contains \"%s\""
+msgstr "%s содержит «%s»"
+
+#: ../pan/usenet-utils/filter-info.cc:275
+#, c-format
+msgid "%s is \"%s\""
+msgstr "%s является «%s»"
+
+#: ../pan/usenet-utils/filter-info.cc:276
+#, c-format
+msgid "%s begins with \"%s\""
+msgstr "%s начинается с «%s»"
+
+#: ../pan/usenet-utils/filter-info.cc:277
+#, c-format
+msgid "%s ends with \"%s\""
+msgstr "%s заканчивается на «%s»"
+
+#: ../pan/usenet-utils/filter-info.cc:278
+#, c-format
+msgid "%s matches the regex \"%s\""
+msgstr "%s соответствует регулярному выражению «%s»"
+
+#: ../pan/usenet-utils/filter-info.cc:284
+msgid "Any of these tests fail:"
+msgstr "Один из этих тестов не выполнен:"
+
+#: ../pan/usenet-utils/filter-info.cc:291
+msgid "All of these tests pass:"
+msgstr "Все эти тесты пройдены:"
+
+#: ../pan/usenet-utils/filter-info.cc:298
+msgid "None of these tests pass:"
+msgstr "Ни один из этих тестов не пройден:"
+
+#: ../pan/usenet-utils/filter-info.cc:305
+msgid "Any of these tests pass:"
+msgstr "Любой из этих тестов проходит:"
+
+#: ../pan/usenet-utils/gnksa.cc:846
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
-msgstr ""
+msgstr "Не указан адрес эл. почты; создание идентификатора сообщения с доменом «%s»"
 
-#: pan/usenet-utils/message-check.cc:123
+#: ../pan/usenet-utils/message-check.cc:124
 msgid "Warning: Reply seems to be top-posted."
-msgstr ""
+msgstr "Предупреждение: кажется, ответ помещён над оригиналом."
 
-#: pan/usenet-utils/message-check.cc:144
+#: ../pan/usenet-utils/message-check.cc:145
 msgid "Warning: The signature marker should be \"-- \", not \"--\"."
-msgstr ""
+msgstr "Предупреждение: маркер подписи должен иметь вид «-- », а не «--»."
 
-#: pan/usenet-utils/message-check.cc:161
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:162
 msgid "Warning: Signature prefix with no signature."
-msgstr "ВНИМАНИЕ: Префикс подписи без подписи."
+msgstr "Предупреждение: префикс подписи без подписи."
 
-#: pan/usenet-utils/message-check.cc:166
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:167
 msgid "Warning: Signature is more than 4 lines long."
-msgstr "Внимание: подпись длиннее 4 строк"
+msgstr "Предупреждение: подпись занимает больше 4 строк."
 
-#: pan/usenet-utils/message-check.cc:171
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:172
 msgid "Warning: Signature is more than 80 characters wide."
-msgstr "Внимание: подпись длиннее 4 строк"
+msgstr "Предупреждение: ширина подписи больше 80 символов."
 
-#: pan/usenet-utils/message-check.cc:196
+#: ../pan/usenet-utils/message-check.cc:197
 #, c-format
 msgid "Warning: %d lines are more than 80 characters wide."
-msgstr ""
+msgstr "Предупреждение: %d строк имеют ширину более 80 символов."
 
-#: pan/usenet-utils/message-check.cc:219
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:220
 msgid "Error: Message is empty."
-msgstr "ОШИБКА: Это пустое сообщение."
+msgstr "Ошибка: пустое сообщение."
 
-#: pan/usenet-utils/message-check.cc:254
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:255
 msgid "Warning: The message is entirely quoted text!"
-msgstr "Внимание: это сообщение состоит только из процитированного текста!"
+msgstr "Предупреждение: сообщение полностью состоит из цитируемого текста!"
 
-#: pan/usenet-utils/message-check.cc:255
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:256
 msgid "Warning: The message is mostly quoted text."
-msgstr "Внимание: это сообщение в основном процитированный текст."
+msgstr "Предупреждение: большая часть сообщения состоит из цитируемого текста."
 
-#: pan/usenet-utils/message-check.cc:305
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:306
 msgid "Error: Message appears to have no new content."
-msgstr "ОШИБКА: Похоже в сообщении нет нового содержимого."
+msgstr "Ошибка: похоже, что в сообщении нет нового содержимого."
 
-#: pan/usenet-utils/message-check.cc:340 pan/usenet-utils/message-check.cc:375
-#, fuzzy, c-format
-msgid "Warning: Unknown group \"%s\"."
-msgstr "ВНИМАНИЕ: неизвестная группа: \"%s\"."
+#: ../pan/usenet-utils/message-check.cc:341
+#: ../pan/usenet-utils/message-check.cc:380
+#, c-format
+msgid ""
+"Warning: The posting profile's server doesn't carry newsgroup\n"
+"\t\"%s\".\n"
+"\tIf the group name is correct, switch profiles in the \"From:\"\n"
+"\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
+msgstr ""
+"Предупреждение: сервер профилей публикации не несёт новостной группы\n"
+"\t«%s».\n"
+"\tЕсли название группы правильное, замените профили в строке «От:»\n"
+"\tили измените профиль в меню «Правка» > «Управление профилями публикации»."
 
-#: pan/usenet-utils/message-check.cc:347
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:352
 msgid "Warning: Following-Up to too many groups."
-msgstr "Внимание: отправка в большое число групп."
+msgstr "Предупреждение: отправка ответа в слишком больше число групп."
 
-#: pan/usenet-utils/message-check.cc:358
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:363
 msgid "Error: No Subject specified."
-msgstr "ОШИБКА: не указана тема."
+msgstr "Ошибка: не указана тема."
 
-#: pan/usenet-utils/message-check.cc:383
-#, fuzzy, c-format
+#: ../pan/usenet-utils/message-check.cc:392
+#, c-format
 msgid "Warning: Group \"%s\" is read-only."
-msgstr "ВНИМАНИЕ: группа \"%s\" только для чтения."
+msgstr "Предупреждение: группа «%s» доступна только для чтения."
 
-#: pan/usenet-utils/message-check.cc:392
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:401
 msgid "Error: Posting to a very large number of groups."
-msgstr "Ошибка: Отправка в слишком большое число групп."
+msgstr "Ошибка: опубликование в слишком большое количество групп."
 
-#: pan/usenet-utils/message-check.cc:397
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:406
 msgid "Warning: Posting to a large number of groups."
-msgstr "Внимание: отправка в большое число групп."
+msgstr "Предупреждение: опубликование в большом количестве групп."
 
-#: pan/usenet-utils/message-check.cc:404
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:413
 msgid "Warning: Crossposting without setting Followup-To header."
-msgstr ""
-"Внимание: Перекрестная отправка в несколько групп без установки Followup-To."
+msgstr "Предупреждение: кросспостинг без установки заголовка обратного адреса для ответа в группу."
 
-#: pan/usenet-utils/message-check.cc:428
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:436
 msgid "Error: Bad email address."
-msgstr "Электронный адрес:"
+msgstr "Ошибка: неверный адрес эл. почты."
 
-#: pan/usenet-utils/message-check.cc:437
+#: ../pan/usenet-utils/message-check.cc:445
 msgid "Warning: Most newsgroups frown upon HTML posts."
-msgstr ""
+msgstr "Предупреждение: большинство новостных групп против публикаций в формате HTML."
 
-#: pan/usenet-utils/message-check.cc:467
-#, fuzzy
+#: ../pan/usenet-utils/message-check.cc:475
 msgid "Error: No Recipients."
-msgstr "Нет получателей!"
+msgstr "Ошибка: нет получателей."
 
-#: pan/usenet-utils/text-massager.cc:309
+#: ../pan/usenet-utils/scorefile.cc:304
+#, c-format
+msgid "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or 'Expires: DD-MM-YYYY'."
+msgstr "Ошибка при чтении оценки в %*.*s, строка %d: ожидалась строка вида «Expires: MM/DD/YYYY» или «Expires: DD-MM-YYYY»."
+
+#: ../pan/usenet-utils/scorefile.cc:307
+#, c-format
+msgid "Expired old score from %*.*s, line %d"
+msgstr "Истёкшая старая оценка в %*.*s, в строке %d"
+
+#: ../pan/usenet-utils/scorefile.cc:380
+#, c-format
+msgid "Error reading score in %*.*s, line %d: unexpected line."
+msgstr "Ошибка при чтении оценки в %*.*s, строка %d: неожиданная строка."
+
+#: ../pan/usenet-utils/scorefile.cc:428
+#, c-format
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
+msgstr "Прочитать %lu правил оценки в %lu разделах из «%s»"
+
+#: ../pan/usenet-utils/text-massager.cc:398
 msgid "> [quoted text muted]"
-msgstr ""
+msgstr "> [цитируемый текст скрыт]"
 
-#: pan/usenet-utils/utf8-utils.cc:252
-msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
-msgstr ""
-
-#, fuzzy
-#~ msgid "_Posting"
-#~ msgstr "Послать"
-
-#, fuzzy
-#~ msgid "_Save Attachments..."
-#~ msgstr "Открыть вложения..."
-
-#, fuzzy
-#~ msgid "Post New Article"
-#~ msgstr "Загружает статью"
-
-#, fuzzy
-#~ msgid "_Follow-up"
-#~ msgstr "Ответить в группу:"
-
-#, fuzzy
-#~ msgid "Follow-up to Article"
-#~ msgstr "Показать текстовые статьи"
-
-#, fuzzy
-#~ msgid "_Post Article"
-#~ msgstr "Сортировать статьи"
-
-#, fuzzy
-#~ msgid "Post this Article Now"
-#~ msgstr "Отправка статьи в конференцию \"%s\""
-
-#, fuzzy
-#~ msgid "Error: No Newsgroups specified."
-#~ msgstr "ОШИБКА: не указаны получатели."
-
-#~ msgid "Message-Id"
-#~ msgstr "Message-Id"
-
-#, fuzzy
-#~ msgid "Saved newsrc files in %.1f seconds"
-#~ msgstr "Сохранено %d статей за %.1f секунд (%.0f статей/сек)"
-
-#, fuzzy
-#~ msgid "_Reply-To Header:"
-#~ msgstr "Обратный адрес:"
-
-#, fuzzy
-#~ msgid "Or_ganization Header:"
-#~ msgstr "Организация:"
-
-#, fuzzy
-#~ msgid "Save a_ttachments to path:"
-#~ msgstr "Сохранить вложение в:"
-
-#, fuzzy
-#~ msgid "Error decoding \"%s\": %s"
-#~ msgstr "Ошибка чтения файла \"%s\""
-
-#~ msgid "UNKNOWN"
-#~ msgstr "НЕИЗВЕСТНО"
-
-#, fuzzy
-#~ msgid "Decode can't access directory \"%s\""
-#~ msgstr "Не удалось создать каталог \"%s\": %s"
-
-#, fuzzy
-#~ msgid "_Watch Subthread"
-#~ msgstr "Просмотреть подшивку"
-
-#, fuzzy
-#~ msgid "_Ignore Subthread"
-#~ msgstr "Игнорировать подшивки"
-
-#~ msgid "Colors"
-#~ msgstr "Цвета"
-
-#, fuzzy
-#~ msgid "Header Pane background:"
-#~ msgstr "Показать панель заголовка"
-
-#, fuzzy
-#~ msgid "Read articles:"
-#~ msgstr "Показать прочитанные статьи"
-
-#, fuzzy
-#~ msgid "Unread articles:"
-#~ msgstr "Показать непрочитанные статьи"
-
-#, fuzzy
-#~ msgid ""
-#~ "Unsupported data version (%d) for server properties.  Are you running an "
-#~ "old version of Pan by accident?"
-#~ msgstr "Неподдерживаемая версия данных %d для файла данных %s"
-
-#, fuzzy
-#~ msgid "Couldn't create temporary file: %s"
-#~ msgstr "Не удалось создать каталог \"%s\": %s"
-
-#, fuzzy
-#~ msgid "Can't write to \"%s\": %s"
-#~ msgstr "Не удалось записать правило в \"%s\": %s"
-
-#, fuzzy
-#~ msgid "Open a Draft Article from Disk"
-#~ msgstr "Устарело %u статей из %s"
-
-#, fuzzy
-#~ msgid "subject"
-#~ msgstr "Тема"
-
-#, fuzzy
-#~ msgid "Change"
-#~ msgstr "Сохранить изменения"
-
-#, fuzzy
-#~ msgid "Active"
-#~ msgstr "Действия"
-
-#~ msgid " (Moderated)"
-#~ msgstr " (Модерируемое)"
-
-#~ msgid " (Read-Only)"
-#~ msgstr " (Только чтение)"
-
-#~ msgid ""
-#~ "We don't have a group list for server \"%s\".\n"
-#~ "Shall we get one?"
-#~ msgstr ""
-#~ "У нас нет списка групп для сервера \"%s\".\n"
-#~ "Надо ли его получать?"
-
-#~ msgid "All Groups"
-#~ msgstr "Все группы"
-
-#~ msgid "Subscribed"
-#~ msgstr "Подписанные"
-
-#~ msgid "Unread"
-#~ msgstr "Непрочтенные"
-
-#~ msgid "Total"
-#~ msgstr "Всего"
-
-#~ msgid "Description"
-#~ msgstr "Описание"
-
-#~ msgid "Find:"
-#~ msgstr "Искать:"
-
-#~ msgid ""
-#~ "Type in a group search string and press ENTER.  Wildcards are allowed."
-#~ msgstr ""
-#~ "Наберите строку для поиска группы и нажмите \"Enter\". Допустимы символы "
-#~ "шаблонов."
-
-#~ msgid "Bug in Code"
-#~ msgstr "Ошибка в коде"
-
-#~ msgid "Pan: Find Message"
-#~ msgstr "Pan: Поиск сообщения"
-
-#~ msgid "Subject:"
-#~ msgstr "Тема:"
-
-#~ msgid "Author:"
-#~ msgstr "Автор:"
-
-#~ msgid "Unread Only"
-#~ msgstr "Только непрочтенные"
-
-#~ msgid "Case Sensitive"
-#~ msgstr "Чувствительное к регистру"
-
-#~ msgid "Pan: Filter Out Articles"
-#~ msgstr "Pan: Фильтрация статей"
-
-#~ msgid "Add Author to Bozo Filter"
-#~ msgstr "Добавить автора в Bozo фильтр"
-
-#~ msgid "regexp"
-#~ msgstr "рег. выражение"
-
-#~ msgid "Add Author to Spam Filter"
-#~ msgstr "Добавить автора в фильтр спама"
-
-#~ msgid "Add Subject to Spam Filter"
-#~ msgstr "Добавить тему в фильтр спама"
-
-#~ msgid "No Custom Filter"
-#~ msgstr "Нет другого фильтра"
-
-#~ msgid "Edit \"%s\" Filter"
-#~ msgstr "Правка фильтра \"%s\""
-
-#~ msgid "Which Articles to Show"
-#~ msgstr "Какие статьи показывать"
-
-#~ msgid "Show Matching Articles and Replies"
-#~ msgstr "Показать совпадающие статьи и ответы"
-
-#~ msgid "Show Matching Articles and References"
-#~ msgstr "Показать совпадающие статьи и ссылки"
-
-#~ msgid "Show Threads with Matching Articles"
-#~ msgstr "Показать подшивки с совпадающими статьями"
-
-#~ msgid "Custom Filters"
-#~ msgstr "Другие фильтры"
-
-#~ msgid "Show New Articles"
-#~ msgstr "Показать новые статьи"
-
-#~ msgid "Show Watched Threads"
-#~ msgstr "Показать ожидаемые подшивки"
-
-#~ msgid "Show Ignored Threads"
-#~ msgstr "Показать игнорируемые подшивки"
-
-#~ msgid "Show Threads Neither Watched nor Ignored"
-#~ msgstr "Показать подшивки не являющиеся ни ожидаемыми ни игнорируемыми"
-
-#~ msgid "Show Incomplete Binary Articles"
-#~ msgstr "Показать неполные двоичные статьи"
-
-#~ msgid "Show Queued Articles"
-#~ msgstr "Показать очередные статьи"
-
-#~ msgid "Show Articles Neither Queued nor Saved"
-#~ msgstr "Показать статьи не являющиеся ни очередными ни сохранёными"
-
-#~ msgid "Show Articles which are Cached Locally"
-#~ msgstr "Показать локально кэшированные статьи"
-
-#~ msgid "Show Articles which are not Cached Locally"
-#~ msgstr "Показать статьи не кэшированные локально"
-
-#~ msgid ""
-#~ "Type in a search string and press ENTER. Wildcards are allowed; see "
-#~ "http://pan.rebelbase.com/wildmat.html for more information."
-#~ msgstr ""
-#~ "Наберите строку для поиска и нажмите \"Enter\". Допустимы символы "
-#~ "шаблонов; см. http://pan.rebelbase.com/wildmat.html для справки."
-
-#~ msgid "BUG!!"
-#~ msgstr "ОШИБКА!!"
-
-#~ msgid "Please Select a Folder from the Group list."
-#~ msgstr "Пожалуйста выберите папку из списка групп."
-
-#~ msgid "_Mark as Read"
-#~ msgstr "Пометить как прочитанное"
-
-#~ msgid "Mark _Threads as Read"
-#~ msgstr "Пометить подшивки как прочитанные"
-
-#~ msgid "Mark Threads as Read"
-#~ msgstr "Пометить подшивки как прочитанные"
-
-#~ msgid "Mark Threads as U_nread"
-#~ msgstr "Пометить подшивки как непрочитанные"
-
-#~ msgid "Mark Threads as Unread"
-#~ msgstr "Пометить подшивки как непрочитанные"
-
-#~ msgid "D_ownload Flagged"
-#~ msgstr "Загрузить отмеченные"
-
-#~ msgid "Download Flagged Articles"
-#~ msgstr "Загрузить отмеченные статьи"
-
-#~ msgid "_Flag"
-#~ msgstr "Отметка"
-
-#~ msgid "Flag Selected Threads"
-#~ msgstr "Отметить выбранные подшивки"
-
-#~ msgid "Unflag"
-#~ msgstr "Снять отметку"
-
-#~ msgid "Unf_lag Selected Articles"
-#~ msgstr "Снять отметку с выбранных статей"
-
-#~ msgid "Unflag Thr_eads"
-#~ msgstr "Снять отметку с подшивок"
-
-#~ msgid "Unflag Selected Threads"
-#~ msgstr "Снять отметку с выбранных подшивок"
-
-#~ msgid "Download"
-#~ msgstr "Скачать"
-
-#~ msgid "Download Threads"
-#~ msgstr "Скачать подшивки"
-
-#~ msgid "Download Selected Threads"
-#~ msgstr "Скачать выбранные подшивки"
-
-#, fuzzy
-#~ msgid "Watch Selected Threads"
-#~ msgstr "Выбранные подшивки"
-
-#~ msgid "Ignore Selected Threads"
-#~ msgstr "Игнорировать выбранные подшивки"
-
-#~ msgid "Add to Bo_zo or Spam Filter"
-#~ msgstr "Добавить в фильтр спама или Bozo"
-
-#~ msgid "Add to Bozo or Spam Filter"
-#~ msgstr "Добавить в фильтр спама или Bozo"
-
-#~ msgid "Cop_y to Folder"
-#~ msgstr "Скопировать в папку"
-
-#~ msgid "Copy to Folder"
-#~ msgstr "Скопировать в папку"
-
-#~ msgid "Co_py Threads to Folder"
-#~ msgstr "Скопировать подшивку в папку"
-
-#~ msgid "Copy Threads to Folder"
-#~ msgstr "Скопировать подшивку в папку"
-
-#~ msgid "Mo_ve to Folder"
-#~ msgstr "Переместить в папку"
-
-#~ msgid "Move to Folder"
-#~ msgstr "Переместить в папку"
-
-#~ msgid "Move Thread to Folder"
-#~ msgstr "Переместить подшивку в папку"
-
-#~ msgid "_Cancel..."
-#~ msgstr "Отмена..."
-
-#, fuzzy
-#~ msgid "Cancel Selected Article which you Posted"
-#~ msgstr "Снять отметку с выбранных статей, которые послали вы"
-
-#, fuzzy
-#~ msgid "Supersede Selected Article which you Posted"
-#~ msgstr "Снять отметку с выбранных статей, которые послали вы"
-
-#~ msgid "_Delete"
-#~ msgstr "Удалить"
-
-#~ msgid "Delete"
-#~ msgstr "Удалить"
-
-#~ msgid "Delete Th_reads"
-#~ msgstr "Удалить подшивки"
-
-#~ msgid "Save the selected articles and their attachments."
-#~ msgstr "Сохранить выбранные статьи и их вложения"
-
-#~ msgid "Save Articles (A_ttachments only)"
-#~ msgstr "Сохранить статьи (только вложения)"
-
-#~ msgid "Resorting Articles"
-#~ msgstr "Восстановление статей"
-
-#~ msgid "Rethreading Articles"
-#~ msgstr "Перераскладка статей"
-
-#~ msgid "Refiltering Articles"
-#~ msgstr "Перефильтрация статей"
-
-#~ msgid "Rebuilding Header Pane..."
-#~ msgstr "Перестроение панели заголовка..."
-
-#~ msgid "Threading Articles"
-#~ msgstr "Раскладка статей"
-
-#~ msgid "Filtering Articles"
-#~ msgstr "Фильтрация статей"
-
-#~ msgid "Updating Header Pane..."
-#~ msgstr "Обновление панели заголовка..."
-
-#~ msgid "Loading Group \"%s\""
-#~ msgstr "Загрузка группы \"%s\""
-
-#~ msgid "Clean group \"%s\""
-#~ msgstr "Очистить группу \"%s\""
-
-#~ msgid ""
-#~ "Remove all messages from group: \n"
-#~ "%s ?"
-#~ msgstr ""
-#~ "Удалить все статьи из группы:\n"
-#~ "%s ?"
-
-#~ msgid "Reset new message counter"
-#~ msgstr "Сбросить счетчик новых сообщений"
-
-#~ msgid "Invalid folder name: \"%s\""
-#~ msgstr "Неправильное название папки: \"%s\""
-
-#~ msgid "Folder \"%s\" already exists."
-#~ msgstr "Папка \"%s\" уже существует."
-
-#~ msgid "Please don't begin folders with \"pan.\"; it confuses me terribly."
-#~ msgstr ""
-#~ "Пожалуйста, не начинайте названия папок с \"pan.\"; это смущает меня."
-
-#~ msgid "New Folder Name:"
-#~ msgstr "Название новой папки:"
-
-#~ msgid "Post anyway, despite these problems?"
-#~ msgstr "Отправить в любом случае, игнорируя эти проблемы?"
-
-#~ msgid "Post anyway, despite this problem?"
-#~ msgstr "Отправить в любом случае, игнорируя эту проблему?"
-
-#~ msgid "<More>"
-#~ msgstr "<Далее>"
-
-#~ msgid "Newsgroups: "
-#~ msgstr "Группа новостей: "
-
-#~ msgid "Message-Id: "
-#~ msgstr "Сообщение: "
-
-#~ msgid "Open Attachment..."
-#~ msgstr "Открыть вложение..."
-
-#~ msgid "_New Folder..."
-#~ msgstr "Новая папка..."
-
-#~ msgid "Create a new folder."
-#~ msgstr "Создать новую папку."
-
-#~ msgid "_Delete Folder..."
-#~ msgstr "Удалить папку..."
-
-#~ msgid "Delete the selected folder."
-#~ msgstr "Удалить выбранную папку."
-
-#~ msgid "_Edit Article in Folder"
-#~ msgstr "Правка статьи в папке"
-
-#~ msgid "Edit Selected Article in Folder"
-#~ msgstr "Правка выбранной статьи в папке"
-
-#~ msgid "Select all _Groups"
-#~ msgstr "Выбрать все группы"
-
-#~ msgid "Select all Groups in the Group List"
-#~ msgstr "Выбрать все группы из списка групп"
-
-#~ msgid "_Deselect all Groups"
-#~ msgstr "Снять выделение со всех групп"
-
-#~ msgid "Deselect all Groups in the Group List"
-#~ msgstr "Снять выделение со всех групп из списка"
-
-#~ msgid "Select all Articles in the Article List"
-#~ msgstr "Выделить все статьи в списке статей"
-
-#~ msgid "Add replies to the Article List selection"
-#~ msgstr "Добавить ответы к выделению списка статей"
-
-#~ msgid "Add Thread to the Article List selection"
-#~ msgstr "Добавить подшивки к выделению списка статей"
-
-#~ msgid "Deselect all Articles in the Article List"
-#~ msgstr "Снять выделение со всех статей в списке"
-
-#~ msgid "Filter_s..."
-#~ msgstr "Фильтры..."
-
-#~ msgid "Filter Tool."
-#~ msgstr "Инструмент \"Фильтр\"."
-
-#~ msgid "_Rules..."
-#~ msgstr "Правила..."
-
-#~ msgid "Rules Tool."
-#~ msgstr "Инструменты правил"
-
-#~ msgid "Profiles Tool."
-#~ msgstr "Инструменты \"Профиль\"."
-
-#~ msgid "_Online/Offline Settings..."
-#~ msgstr "Установки \"в сети\"/\"вне сети\"..."
-
-#~ msgid "Online/Offline Settings..."
-#~ msgstr "Установки \"в сети\"/\"вне сети\"..."
-
-#~ msgid "Post a new message to the current group."
-#~ msgstr "Послать новое сообщение в текущую группу."
-
-#~ msgid "Post a reply to the message on the news server."
-#~ msgstr "Послать ответное сообщение на сервер новостей."
-
-#~ msgid "_Reply by E-mail"
-#~ msgstr "Ответить по почте"
-
-#~ msgid "Create a mail reply to the sender."
-#~ msgstr "Создать почтовый ответ отправителю."
-
-#~ msgid "Send a reply both to the author in mail, and to the news server."
-#~ msgstr "Послать ответное сообщение автору и на сервер новостей."
-
-#~ msgid "For_ward article by E-mail"
-#~ msgstr "Переслать статью по эл.почте"
-
-#~ msgid "Forward article by E-mail"
-#~ msgstr "Переслать статью по эл.почте"
-
-#, fuzzy
-#~ msgid "Send Pending _Messages"
-#~ msgstr "Отправить это сообщение сейчас"
-
-#~ msgid "Send Messages Queued in \"pan.sendlater\""
-#~ msgstr "Послать сообщения из папки \"pan.sendlater\""
-
-#~ msgid "_Next Unread Article"
-#~ msgstr "След. непрочитанная статья"
-
-#~ msgid "Previo_us Thread"
-#~ msgstr "Пред. подшивка"
-
-#~ msgid "T_op of Thread"
-#~ msgstr "Начало подшивки"
-
-#~ msgid "Top of Thread"
-#~ msgstr "Начало подшивки"
-
-#~ msgid "Move to the Next Group with Unread Messages."
-#~ msgstr "Перейти к след. группе с непрочитанными сообщениями."
-
-#~ msgid "Move to the Next Group."
-#~ msgstr "Перейти к след. группе."
-
-#~ msgid "Get List of _All Groups"
-#~ msgstr "Получить список всех групп"
-
-#~ msgid "Refresh a list of groups from the selected servers."
-#~ msgstr "Обновить список групп c выбранных серверов."
-
-#~ msgid "Get List of _New Groups"
-#~ msgstr "Получить список новых групп"
-
-#~ msgid "Download a list of new groups from the selected servers."
-#~ msgstr "Загрузить список новых групп c выбранных серверов."
-
-#~ msgid "Import .newsrc..."
-#~ msgstr "Импортирование .newsrc..."
-
-#~ msgid "_Export .newsrc..."
-#~ msgstr "Экспортирование .newsrc..."
-
-#~ msgid "Export .newsrc..."
-#~ msgstr "Экспортирование .newsrc..."
-
-#~ msgid "Pan _Homepage"
-#~ msgstr "Домашняя страница Pan"
-
-#~ msgid "Online Users _Manual..."
-#~ msgstr "Он-лайн руководство пользователя..."
-
-#~ msgid "Online Users _Manual"
-#~ msgstr "Он-лайн руководство пользователя"
-
-#~ msgid "_Feedback..."
-#~ msgstr "Отзыв..."
-
-#~ msgid "Mail Feedback to the Pan Authors"
-#~ msgstr "Отправить отзыв авторам Pan"
-
-#~ msgid "Submit a Pan Bug Report to the GNOME Bug Tracker"
-#~ msgstr ""
-#~ "Отправить сообщение об ошибке в Pan в систему отслеживания ошибок GNOME"
-
-#~ msgid "_Log Viewer..."
-#~ msgstr "Просмотр журнала..."
-
-#~ msgid "Open the Log Viewer"
-#~ msgstr "Открыть программу просмотра журнала"
-
-#~ msgid "_Zoom/Unzoom Window"
-#~ msgstr "Масштабировать окно"
-
-#~ msgid "Zoom/Unzoom"
-#~ msgstr "Масштабировать"
-
-#~ msgid "Zoom _Group Pane"
-#~ msgstr "Масштабировать панель групп новостей"
-
-#~ msgid "Zoom Group Pane"
-#~ msgstr "Масштабировать панель групп новостей"
-
-#~ msgid "Zoom Header Pa_ne"
-#~ msgstr "Масштабировать панель заголовка"
-
-#~ msgid "Zoom Header Pane"
-#~ msgstr "Масштабировать панель заголовка"
-
-#~ msgid "Zoo_m Article Pane"
-#~ msgstr "Масштабировать панель статьи"
-
-#~ msgid "Zoom Article Pane"
-#~ msgstr "Масштабировать панель статьи"
-
-#~ msgid "Show Art_icle Pane"
-#~ msgstr "Показать панель статьи"
-
-#~ msgid "Show Article Pane"
-#~ msgstr "Показать панель статьи"
-
-#~ msgid "_Rot13 Article Body"
-#~ msgstr "Закодировать сообщение с помощью Rot13"
-
-#~ msgid "Rot13 Article Body"
-#~ msgstr "Закодировать сообщение с помощью Rot13"
-
-#~ msgid "Fill/Wr_ap Article Body"
-#~ msgstr "Заполнение/Перенос строк в теле сообщения"
-
-#~ msgid "Mute Quoted Text"
-#~ msgstr "Подавить цитируемый текст"
-
-#~ msgid "Show All Headers in Article Pane"
-#~ msgstr "Показывать все заголовки в панели статьи"
-
-#~ msgid "E_xpand Selected Threads"
-#~ msgstr "Развернуть выбранные подшивки"
-
-#~ msgid "Expand Selected Threads"
-#~ msgstr "Развернуть выбранные подшивки"
-
-#~ msgid "Expand all Thread_s"
-#~ msgstr "Развернуть все подшивки"
-
-#~ msgid "Expand all Threads"
-#~ msgstr "Развернуть все подшивки"
-
-#~ msgid "C_ollapse Selected Threads"
-#~ msgstr "Свернуть выбранные подшивки"
-
-#~ msgid "Collapse Selected Threads"
-#~ msgstr "Свернуть выбранные подшивки"
-
-#~ msgid "Colla_pse all Threads"
-#~ msgstr "Свернуть все подшивки"
-
-#~ msgid "Collapse all Threads"
-#~ msgstr "Свернуть все подшивки"
-
-#~ msgid "Mark All Articles in Selected Groups as Read"
-#~ msgstr "Пометить все статьи в выбранных группах как прочитанные"
-
-#~ msgid "Delete all Articles in Selected Groups"
-#~ msgstr "Удалить все статьи в выбранных группах"
-
-#, fuzzy
-#~ msgid "Get Bodies along with Articles"
-#~ msgstr "Нет идей, что надо сделать со статьей \"%s\""
-
-#~ msgid "Get _New Articles in Selected Groups"
-#~ msgstr "Получить новые статьи в выбранных группах"
-
-#~ msgid "Get A_ll Articles in Selected Groups"
-#~ msgstr "Получить все статьи в выбранных группах"
-
-#~ msgid "Get All Articles in Selected Groups"
-#~ msgstr "Получить все статьи в выбранных группах"
-
-#~ msgid "Get New Articles in all Su_bscribed Groups"
-#~ msgstr "Получить новые статьи в группах подписки"
-
-#, fuzzy
-#~ msgid "Get Speci_fic Articles in Selected Groups..."
-#~ msgstr "Получить все заголовки в выбранных группах"
-
-#, fuzzy
-#~ msgid "Get Specific Articles in Selected Groups"
-#~ msgstr "Получить все заголовки в выбранных группах"
-
-#~ msgid "Refresh Article _Counts"
-#~ msgstr "Обновить счетчик статей"
-
-#~ msgid "Refresh Article Counts"
-#~ msgstr "Обновить счетчик статей"
-
-#~ msgid "Subscribe"
-#~ msgstr "Подписаться"
-
-#~ msgid "Unsubscribe"
-#~ msgstr "Отписаться"
-
-#~ msgid "Set the properties for the selected group."
-#~ msgstr "Установить свойства для выбранной группы."
-
-#~ msgid "Dele_te..."
-#~ msgstr "Удалить..."
-
-#~ msgid "Delete the selected group(s) from Pan."
-#~ msgstr "Удалить выбранные группы из Pan."
-
-#~ msgid "_Servers"
-#~ msgstr "Серверы"
-
-#~ msgid "Open the Connection Manager"
-#~ msgstr "Открыть окно диспетчера соединений."
-
-#~ msgid ""
-#~ "1 task still active or queued.\n"
-#~ "Are you sure you want to exit Pan?"
-#~ msgstr ""
-#~ "1 задача еще активна или в очереди.\n"
-#~ "Вы уверены, что хотите выйти из Pan?"
-
-#~ msgid ""
-#~ "%d tasks still active or queued.\n"
-#~ "Are you sure you want to exit Pan?"
-#~ msgstr ""
-#~ "%d задач еще активны или в очереди.\n"
-#~ "Вы уверены, что хотите выйти из Pan?"
-
-#~ msgid "Unable to parse the geometry string \"%s\""
-#~ msgstr "Не удалось разобрать строку геометрии \"%s\""
-
-#, fuzzy
-#~ msgid "The Task Manager is Empty"
-#~ msgstr "Открыть окно диспетчера задач."
-
-#~ msgid "No Servers Defined"
-#~ msgstr "Серверы не определены"
-
-#~ msgid "Posting and Mailing Article ``%s''"
-#~ msgstr "Отправка статьи \"%s\" почтой и в группу"
-
-#~ msgid "Mailing Article ``%s''"
-#~ msgstr "Отправка статьи почтой \"%s\""
-
-#~ msgid "I have no idea what I'm doing with Article ``%s''"
-#~ msgstr "Нет идей, что надо сделать со статьей \"%s\""
-
-#~ msgid "E-Mail send failed.\n"
-#~ msgstr "Не удалось отправить письмо.\n"
-
-#~ msgid "Usenet posting failed.\n"
-#~ msgstr "Не удалось отправить статью.\n"
-
-#~ msgid "Your message was saved in the folder ``pan.sendlater''"
-#~ msgstr "Ваше сообщение сохранено в папке pan.sendlater"
-
-#~ msgid "E-mail Message \"%s\" sent."
-#~ msgstr "Почтовое сообщение \"%s\" отправлено."
-
-#~ msgid "E-mail Message \"%s\" not sent."
-#~ msgstr "Почтовое сообщение \"%s\" не отправлено."
-
-#~ msgid "Posting article \"%s\" part %d of %d."
-#~ msgstr "Отправка статьи %s часть %d из %d."
-
-#~ msgid "NNTP Article \"%s\" (%d of %d) posted."
-#~ msgstr "NNTP статья \"%s\" (часть %d из %d) отправлена."
-
-#~ msgid "NNTP Article \"%s\" (%d of %d) not posted."
-#~ msgstr "NNTP статья \"%s\" (часть %d из %d) не отправлена."
-
-#~ msgid "Send Later"
-#~ msgstr "Отправить позже"
-
-#, fuzzy
-#~ msgid "Edit with E_xternal Editor"
-#~ msgstr "Ответить с помощью внешнего почтового клиента"
-
-#, fuzzy
-#~ msgid "Edit with External Editor"
-#~ msgstr "Ответить с помощью внешнего почтового клиента"
-
-#~ msgid "Send this Message Now"
-#~ msgstr "Отправить это сообщение сейчас"
-
-#~ msgid "Send this Message Later"
-#~ msgstr "Отправить это сообщение позже"
-
-#~ msgid "Rewrap"
-#~ msgstr "Переразметить"
-
-#~ msgid "Rewrap all the text in the Message Body."
-#~ msgstr "Переразметить весь текст в теле сообщения."
-
-#~ msgid "Turn line wrap on/off in the Message Body"
-#~ msgstr "Включить/Выключить перенос строк в теле сообщения"
-
-#~ msgid ""
-#~ "The e-mail account where mail replies to your posted message should go.  "
-#~ "This is only needed if it differs from the \"From\" header."
-#~ msgstr ""
-#~ "Почтовый адрес куда должны приходить ответы на ваше сообщение.  Нужен "
-#~ "только если отличается от поля \"От:\" заголовка."
-
-#~ msgid "The organization you're associated with."
-#~ msgstr "Организация, с которой вы связаны."
-
-#~ msgid "Don't add the \"User-Agent\" identification header"
-#~ msgstr "Не добавлять заголовок идентификации \"User-Agent\""
-
-#~ msgid "Post To Groups:"
-#~ msgstr "Отправить в группу:"
-
-#~ msgid "Save message to file"
-#~ msgstr "Сохранить сообщение в файле"
-
-#, fuzzy
-#~ msgid "Couldn't open file `%s'"
-#~ msgstr "Не удалось найти файл картинки: %s"
-
-#, fuzzy
-#~ msgid "Couldn't exec external editor"
-#~ msgstr "Не удалось создать каталог \"%s\": %s"
-
-#, fuzzy
-#~ msgid "Couldn't write to file"
-#~ msgstr "Не удалось создать картинку из файла: %s "
-
-#, fuzzy
-#~ msgid "Pipe read failed"
-#~ msgstr "Не удалось отправить письмо.\n"
-
-#, fuzzy
-#~ msgid "Unable to open file `%s'"
-#~ msgstr "Не удалось создать файл \"%s\""
-
-#~ msgid "Unable to write to temp file"
-#~ msgstr "Не удалось записать во временный файл"
-
-#~ msgid "Pan: Import .newsrc File"
-#~ msgstr "Pan: Импорт файла .newsrc"
-
-#~ msgid "Select .newsrc File to Read:"
-#~ msgstr "Выберите файл .newsrc для чтения:"
-
-#~ msgid "Pan: Export .newsrc File"
-#~ msgstr "Pan: Экспорт файла .newsrc"
-
-#~ msgid "Select .newsrc File to Write:"
-#~ msgstr "Выберите файл .newsrc для записи:"
-
-#~ msgid "QUIT failed: %s"
-#~ msgstr "Сбой команды QUIT: %s"
-
-#, fuzzy
-#~ msgid "Handshake: %s"
-#~ msgstr "Сбой обмена приветствиями: %s"
-
-#~ msgid "NNTP handshake failed: %s"
-#~ msgstr "Сбой обмена по NNTP: %s"
-
-#~ msgid "Handshake failed: %s"
-#~ msgstr "Сбой обмена приветствиями: %s"
-
-#~ msgid "Authentication failed: %s"
-#~ msgstr "Сбой идентификации: %s"
-
-#~ msgid "Authentication failed: need a password"
-#~ msgstr "Сбой идентификации: необходим пароль"
-
-#~ msgid "MODE READER check failed: %s"
-#~ msgstr "Сбой проверки MODE READE: %s"
-
-#, fuzzy
-#~ msgid "Posting complete: %s"
-#~ msgstr " неполное "
-
-#, fuzzy
-#~ msgid "Getting article `%s' (Message-ID: %s) body failed: %s"
-#~ msgstr "Сбой получения статьи с сервера: %s"
-
-#~ msgid "No articles found for group \"%s\""
-#~ msgstr "В группе \"%s\" статьи не найдены"
-
-#~ msgid "Getting header list failed: %s"
-#~ msgstr "Сбой получения списка заголовков: %s"
-
-#, fuzzy
-#~ msgid "Corrupt header skipped: %s"
-#~ msgstr "Поврежденный заголовок пропущен - нет даты: %s"
-
-#, fuzzy
-#~ msgid "Getting %d of %d: \"%s\""
-#~ msgstr "Получение %s для \"%s\""
-
-#~ msgid "Cancelling message \"%s\""
-#~ msgstr "Отмена сообщения \"%s\""
-
-#~ msgid "Specify the geometry of the window."
-#~ msgstr "Указать геометрию окна."
-
-#~ msgid "GEOMETRY"
-#~ msgstr "Геометрия"
-
-#~ msgid ""
-#~ "Send outgoing messages to stdout instead of smtp/nntp servers for "
-#~ "debugging purposes."
-#~ msgstr ""
-#~ "Отправить исходящие сообщения в stdout вместо smtp/nntp для отладки."
-
-#~ msgid "Turn on article cache debugging messages."
-#~ msgstr "Включить отладочные сообщения кэша статей."
-
-#~ msgid "Turn on socket input debugging messages."
-#~ msgstr "Включить отладочные сообщения ввода сокета"
-
-#~ msgid "Turn on socket output debugging messages."
-#~ msgstr "Включить отладочные сообщения вывода сокета."
-
-#~ msgid "Turn on socket input/output debugging messages."
-#~ msgstr "Включить отладочные сообщения ввода/вывода сокетов."
-
-#~ msgid "Same as --debug-socket"
-#~ msgstr "Тоже что и --debug-socket"
-
-#~ msgid "Trace function calls"
-#~ msgstr "Отследить вызовы функций"
-
-#~ msgid "Turn on task scheduler debugging messages."
-#~ msgstr "Включить отладочные сообщения планировщика заданий."
-
-#~ msgid "Turn on attachment decoding debugging messages."
-#~ msgstr "Включить отладочные сообщения декодирования вложений."
-
-#~ msgid "Turn on newsrc decoding debugging messages."
-#~ msgstr "Включить отладочные сообщения декодирования newsrc."
-
-#~ msgid "Turn on gui thread lock debugging messages."
-#~ msgstr "Включить отладочные сообщения gui thread lock."
-
-#~ msgid "Turn on pan object system debugging messages."
-#~ msgstr "Включить отладочные сообщения системы объектов pan"
-
-#~ msgid ""
-#~ "Turn on most of the generally-useful debug flags.  A good first choice "
-#~ "when preparing a bug report."
-#~ msgstr ""
-#~ "Включить большинство обычно полезных флагов отладки. Хороший "
-#~ "первоначальный выбор при подготовке сообщения об ошибке."
-
-#~ msgid "Error writing to socket."
-#~ msgstr "Ошибка записи в сокет."
-
-#~ msgid "pan.sendlater"
-#~ msgstr "pan.sendlater"
-
-#~ msgid ""
-#~ "%a - abbreviated weekday name\n"
-#~ "%A - full weekday name\n"
-#~ "%b - abbreviated month name\n"
-#~ "%B - full month name\n"
-#~ "%c - local date & time\n"
-#~ "%d - day of the month\n"
-#~ "%H - hour (24-hour clock)\n"
-#~ "%I - hour (12-hour clock)\n"
-#~ "%j - day of the year (001-366)\n"
-#~ "%m - month (01-12)\n"
-#~ "%M - minute (00-59)\n"
-#~ "%p - local equivalent of AM/PM\n"
-#~ "%S - second (00-61)\n"
-#~ "%x - local date\n"
-#~ "%X - local time\n"
-#~ "%y - two-digit year\n"
-#~ "%Y - four-digit year\n"
-#~ "%% - %"
-#~ msgstr ""
-#~ "%a - сокращенный день недели\n"
-#~ "%A - полное название дня недели\n"
-#~ "%b - сокращенное название месяца\n"
-#~ "%B - полное название месяца\n"
-#~ "%c - местные дата и время\n"
-#~ "%d - день месяца\n"
-#~ "%H - час (24-часовой)\n"
-#~ "%I - час (12-часовой)\n"
-#~ "%j - день года (001-366)\n"
-#~ "%m - месяц (01-12)\n"
-#~ "%M - минута (00-59)\n"
-#~ "%p - местный эквивалент для ДП/ПП\n"
-#~ "%S - секунда (00-61)\n"
-#~ "%x - местная дата\n"
-#~ "%X - местное время\n"
-#~ "%y - две цифры года\n"
-#~ "%Y - четыре цифры года\n"
-#~ "%% - %"
-
-#~ msgid "Not Named"
-#~ msgstr "Безымянное"
-
-#~ msgid "No Address"
-#~ msgstr "Нет адреса"
-
-#~ msgid "Server Information"
-#~ msgstr "Информация о сервере"
-
-#~ msgid "Profile Name"
-#~ msgstr "Название профиля"
-
-#~ msgid "Server Address"
-#~ msgstr "Адрес сервера"
-
-#~ msgid "Server Port"
-#~ msgstr "Порт сервера"
-
-#~ msgid "My server requires my username and password"
-#~ msgstr "Мой сервер требует имя пользователя и пароль"
-
-#~ msgid "Password"
-#~ msgstr "Пароль"
-
-#~ msgid "Maximum Connections:"
-#~ msgstr "Максимум соединений:"
-
-#~ msgid "Idle Seconds Before Timeout:"
-#~ msgstr "Секунд бездействия до таймаута:"
-
-#~ msgid "Generate Message-ID"
-#~ msgstr "Создать Message-ID"
-
-#~ msgid "Use gdk_fontset_load instead of gdk_font_load"
-#~ msgstr "Использовать gdk_fontset_load вместо gdk_font_load"
-
-#~ msgid ""
-#~ "Toggling this and restarting Pan is a good idea if your fonts aren't "
-#~ "being displayed properly."
-#~ msgstr ""
-#~ "Переключить это и перезапустить Pan -- хорошая идея если ваши шрифты не "
-#~ "отображаются правильно."
-
-#~ msgid "External Editor (%t will be replaced with filename)"
-#~ msgstr "Внешний редактор (%t будет заменено на имя файла)"
-
-#~ msgid "Fill articles for reading at column"
-#~ msgstr "Заполнить статьи для чтения по столбцу"
-
-#~ msgid "Article date format:"
-#~ msgstr "Формат даты статьи:"
-
-#~ msgid "Message Body"
-#~ msgstr "Тело сообщения"
-
-#, fuzzy
-#~ msgid "Message Body (Monospace)"
-#~ msgstr "Тело сообщения"
-
-#~ msgid "Use System Background"
-#~ msgstr "Использовать системный фон"
-
-#~ msgid "Body Foreground"
-#~ msgstr "Цвет текста статьи"
-
-#~ msgid "Use System Foreground"
-#~ msgstr "Использовать системный цвет текста"
-
-#~ msgid "Quoted Text 2"
-#~ msgstr "Цитируемый текст 2"
-
-#~ msgid "Newsgroups (if more than one group)"
-#~ msgstr "Группа новостей (если больше одной группы)"
-
-#~ msgid "References (if article is a reply)"
-#~ msgstr "Ссылки (если статья является ответом)"
-
-#~ msgid "Reply-To (if different from Author)"
-#~ msgstr "Обратный адрес (если отличается от автора)"
-
-#~ msgid "Headers to Show"
-#~ msgstr "Показываемые заголовки"
-
-#~ msgid "Mouse Button 1:"
-#~ msgstr "Первая кнопка мыши:"
-
-#~ msgid "Selects Article"
-#~ msgstr "Выбирает статью"
-
-#~ msgid "Mouse Button 2:"
-#~ msgstr "Вторая кнопка мыши:"
-
-#~ msgid "Selection"
-#~ msgstr "Выделение"
-
-#~ msgid "Old Articles with no New Replies"
-#~ msgstr "Старые статьи без новых ответов"
-
-#~ msgid "New Articles / Articles with New Replies"
-#~ msgstr "Новые статьи / статьи с новыми ответами"
-
-#~ msgid "Unread Articles / Articles with Unread Replies"
-#~ msgstr "Непрочитанные статьи / статьи с непрочитанными ответами"
-
-#~ msgid "Display article dates in local time instead of UTC"
-#~ msgstr "Показывать дату статьи в локальном времени вместо UTC"
-
-#~ msgid "Grouplist Pane"
-#~ msgstr "Панель списка групп"
-
-#~ msgid "Article Pane"
-#~ msgstr "Панель статьи"
-
-#~ msgid "Thread Pane"
-#~ msgstr "Панель подшивок"
-
-#~ msgid "Loads Group"
-#~ msgstr "Загружает группу"
-
-#~ msgid "Group list font"
-#~ msgstr "Шрифт списка групп"
-
-#~ msgid "Download New Headers when the Group is Loaded"
-#~ msgstr "Скачать заголовки статей когда группа загружена"
-
-#~ msgid "Options"
-#~ msgstr "Параметры"
-
-#~ msgid "Server \"%s\" is Online"
-#~ msgstr "Сервер \"%s\" в сети"
-
-#~ msgid "Server \"%s\" is Offline; no new tasks will be processed"
-#~ msgstr "Сервер \"%s\" вне сети; новые задания не будут обработаны"
-
-#~ msgid "Maximum Total Number of Connections"
-#~ msgstr "Максимальное общее число соединений"
-
-#~ msgid "Pan should ask before going online"
-#~ msgstr "Pan должен спрашивать, прежде чем подключиться"
-
-#~ msgid "Pan should go online as needed without asking"
-#~ msgstr "Pan должен при необходимости подключаться к сети не спрашивая"
-
-#~ msgid "Pan should quietly stay offline until told otherwise"
-#~ msgstr "Pan должен оставаться вне сети пока ему не скажут иное"
-
-#~ msgid "Global Settings"
-#~ msgstr "Глобальные настройки"
-
-#~ msgid ""
-#~ "Maximum\n"
-#~ "Connections"
-#~ msgstr ""
-#~ "Максимум\n"
-#~ "соединений"
-
-#~ msgid "Online Status"
-#~ msgstr "Состояние \"в сети\""
-
-#~ msgid "Reserve"
-#~ msgstr "Резервировать"
-
-#~ msgid "Download Directory:"
-#~ msgstr "Каталог для скачивания:"
-
-#~ msgid "Download Directory"
-#~ msgstr "Каталог для скачивания"
-
-#~ msgid "Data Directory:"
-#~ msgstr "Каталог данных:"
-
-#~ msgid "Data Directory"
-#~ msgstr "Каталог данных"
-
-#~ msgid ""
-#~ "The cache is used to keep local copies of articles\n"
-#~ "to reduce the time connected to the network."
-#~ msgstr ""
-#~ "Кэш используется для хранения локальной копии статей\n"
-#~ "и таким образом уменьшает время соединения с сетью."
-
-#~ msgid "Disk Cache:"
-#~ msgstr "Дисковый кэш:"
-
-#~ msgid "Megs"
-#~ msgstr "Мегабайт"
-
-#~ msgid "Clear Disk Cache"
-#~ msgstr "Очистить дисковый кэш"
-
-#~ msgid "Delete Cache when exiting Pan"
-#~ msgstr "Очищать кэш при выходе из Pan"
-
-#~ msgid "Article Cache"
-#~ msgstr "Кэш статей"
-
-#~ msgid "Import/Export .newsrc files automatically"
-#~ msgstr "Автоматически импортировать/экспортировать файл .newsrc"
-
-#~ msgid "Newsrc Files"
-#~ msgstr "Файлы .newsrc"
-
-#~ msgid "Address"
-#~ msgstr "Адрес"
-
-#~ msgid "New..."
-#~ msgstr "Новый..."
-
-#~ msgid "Edit..."
-#~ msgstr "Правка..."
-
-#~ msgid "Cache"
-#~ msgstr "Кэш"
-
-#~ msgid "Directories"
-#~ msgstr "Каталоги"
-
-#~ msgid "Display - Groups"
-#~ msgstr "Отобразить - группы"
-
-#~ msgid "Display - Threads"
-#~ msgstr "Отобразить - подшивки"
-
-#~ msgid "Display - Article"
-#~ msgstr "Отобразить - Статью"
-
-#~ msgid "General"
-#~ msgstr "Общие"
-
-#~ msgid ".Newsrc Files"
-#~ msgstr "Файлы .newsrc"
-
-#~ msgid "Pan: Print"
-#~ msgstr "Pan: Печать"
-
-#~ msgid "You haven't loaded an article to print."
-#~ msgstr "Вы не загрузили статью для печати."
-
-#~ msgid "Connect Failure"
-#~ msgstr "Сбой соединения"
-
-#~ msgid "Disconnecting"
-#~ msgstr "Отключение"
-
-#~ msgid "Pan: Save Attachments As"
-#~ msgstr "Pan: Сохранить вложение как"
-
-#~ msgid "Add ``/%s'' to path"
-#~ msgstr "Добавить `/%s' к пути"
-
-#~ msgid "Don't Save Article Text"
-#~ msgstr "Не сохранять текст статьи"
-
-#~ msgid "Use Message-ID"
-#~ msgstr "Использовать ID cообщения"
-
-#~ msgid "Use Subject"
-#~ msgstr "Использовать тему"
-
-#~ msgid "Use Custom Filename"
-#~ msgstr "Использовать другое имя файла"
-
-#~ msgid "Attachments"
-#~ msgstr "Вложения"
-
-#~ msgid "Use Encoded Filename"
-#~ msgstr "Использовать кодированное имя файла"
-
-#~ msgid "Use Article Subject"
-#~ msgstr "Использовать тему статьи"
-
-#~ msgid "Got unexpected response from mail server: expected %d; got %s"
-#~ msgstr ""
-#~ "Получен неожиданный ответ от почтового сервера: ожидалось %d; получено %s"
-
-#~ msgid "Preparing to Send Mail"
-#~ msgstr "Подготовка к отправке почты"
-
-#~ msgid "Can't parse the From: line; hope for the best."
-#~ msgstr "Невозможно проанализировать строку \"От:\"; надеюсь на лучшее."
-
-#~ msgid "No Sender Specified!"
-#~ msgstr "Не указан отправитель!"
-
-#~ msgid "Sending Mail"
-#~ msgstr "Отправка почты"
-
-#~ msgid "No Known Recipients"
-#~ msgstr "Неизвестные получатели"
-
-#~ msgid "Mail Sent!"
-#~ msgstr "Почта отправлена!"
-
-#~ msgid "Handshaking with mail server"
-#~ msgstr "Рукопожатие с почтовым сервером"
-
-#~ msgid "Connecting to mail server"
-#~ msgstr "Подключение к почтовому серверу"
-
-#~ msgid "Unable to open connection to mail server \"%s\""
-#~ msgstr "Не удалось открыть соединение с почтовым сервером \"%s\""
-
-#~ msgid "Mail Server Not Ready"
-#~ msgstr "Почтовый сервер не готов"
-
-#, fuzzy
-#~ msgid "Can't connect to %s: %s"
-#~ msgstr "Не удалось создать каталог \"%s\": %s"
-
-#, fuzzy
-#~ msgid "Socket keepalive option failed: %s"
-#~ msgstr "Сбой идентификации: %s"
-
-#~ msgid "Timed out waiting to read from the server."
-#~ msgstr "Превышено время ожидания для чтения с сервера."
-
-#~ msgid "Lost connection to server"
-#~ msgstr "Утрачено подключение к серверу"
-
-#~ msgid "Error: reading from socket returned %d."
-#~ msgstr "Ошибка: при чтении из сокета получено %d."
-
-#~ msgid "An error occurred writing to the server."
-#~ msgstr "При записи на сервер возникла ошибка."
-
-#~ msgid "Threading %u articles"
-#~ msgstr "Раскладка %u статей"
-
-#~ msgid "Threaded %u of %u articles"
-#~ msgstr "Разложено %u статей из %u"
-
-#~ msgid "Removed %d articles from local cache"
-#~ msgstr "Удалено %d статей из локального кэша"
-
-#~ msgid "WARNING: %d lines too wide in signature"
-#~ msgstr "ВНИМАНИЕ: %d слишком широких строк в подписи"
-
-#~ msgid "WARNING: %d lines >80 characters in the message."
-#~ msgstr "Внимание: %d строк содержат больше чем 80 символов."
-
-#, fuzzy
-#~ msgid "ERROR: invalid address ``%s''"
-#~ msgstr "ОШИБКА: %s \"%s\""
-
-#~ msgid "ERROR: Must have one author in From: line"
-#~ msgstr "ОШИБКА: в поле \"От:\" должен быть только один автор"
-
-#, fuzzy
-#~ msgid "Unparseable Subject"
-#~ msgstr "Использовать тему статьи"
-
-#~ msgid "unknown@spammesenseless.net"
-#~ msgstr "unknown@spammesenseless.net"
-
-#~ msgid "Decoding \"%s\""
-#~ msgstr "Декодирование \"%s\""
-
-#~ msgid "Decoded \"%s\" from group \"%s\", \"%s\" part #%d"
-#~ msgstr "Декодировано \"%s\" из группы \"%s\", \"%s\" часть #%d"
-
-#~ msgid "Loading %u of %d groups"
-#~ msgstr "Загрузка %u групп из %d"
-
-#, fuzzy
-#~ msgid "Loaded %d groups for server `%s' in %.1f seconds (%.0f groups/sec)"
-#~ msgstr "Сохранено %d групп в \"%s\" за %.1f секунд (%.0f групп/сек)"
-
-#, fuzzy
-#~ msgid "Saved %d of %u groups"
-#~ msgstr "Сохранено %d статей из %u"
-
-#~ msgid "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
-#~ msgstr "Сохранено %d групп в \"%s\" за %.1f секунд (%.0f групп/сек)"
-
-#~ msgid "Loaded %d of %d articles"
-#~ msgstr "Загружено %d статей из %d"
-
-#~ msgid "(No Group)"
-#~ msgstr "(Нет группы)"
-
-#, fuzzy
-#~ msgid "Imported %d groups (%d new) from `%s'"
-#~ msgstr "Получено %d групп с сервера \"%s\""
-
-#, fuzzy
-#~ msgid "Couldn't create file `%s' to export newsrc file %s"
-#~ msgstr "Не удалось создать картинку из файла: %s "
-
-#, fuzzy
-#~ msgid "Exported %d groups (%d subscribed) to `%s'"
-#~ msgstr "%d групп записано в \"%s\""
-
-#~ msgid "Loading Groups"
-#~ msgstr "Загрузка групп"
-
-#~ msgid "Articles/Mail queued for posting via the \"Send Later\" button"
-#~ msgstr ""
-#~ "Статьи/почта поставленные в очередь для отправки с помощью кнопки "
-#~ "\"Послать позже\""
-
-#~ msgid "Created folder pan.sendlater"
-#~ msgstr "Создана папка pan.sendlater"
-
-#~ msgid "Articles/Mail posted before"
-#~ msgstr "Статьи/почта посланные раньше"
-
-#~ msgid "Created folder pan.sent"
-#~ msgstr "Создана папка pan.sent"
-
-#~ msgid "Group Properties"
-#~ msgstr "Свойства группы"
-
-#~ msgid "A newsreader for GNOME"
-#~ msgstr "Программа чтения новостей для Gnome."
-
-#~ msgid "Copyright (C) 1999-2001, Pan Development Team"
-#~ msgstr "Авторское право (С) 1999-2001, команда разработки Pan"
-
-#~ msgid "Lead Programmer"
-#~ msgstr "Ведущий программист"
-
-#~ msgid "Programmer"
-#~ msgstr "Программист"
-
-#~ msgid "Programmer & Documentation"
-#~ msgstr "Программист и автор документации"
-
-#~ msgid "Translation Coordinator"
-#~ msgstr "Координатор перевода"
-
-#~ msgid "Programmer, 0.6 - 0.7"
-#~ msgstr "Программист, 0.6 - 0.7"
-
-#~ msgid "Save"
-#~ msgstr "Сохранить"
-
-#~ msgid "Save this log to a file."
-#~ msgstr "Сохранить этот журнал в файле."
-
-#~ msgid "Clear"
-#~ msgstr "Очистить"
-
-#~ msgid "Clear this log."
-#~ msgstr "Очистить этот журнал."
-
-#~ msgid "Close the Log Viewer."
-#~ msgstr "Закрыть программу просмотра журнала."
-
-#~ msgid "Save the log to file"
-#~ msgstr "Сохранить журнал в файле"
-
-#~ msgid "Pan - Log Viewer"
-#~ msgstr "Pan - Просмотр журнала"
-
-#~ msgid "Time"
-#~ msgstr "Время"
-
-#~ msgid "Log Entry"
-#~ msgstr "Журнальная запись"
-
-#~ msgid "Pan: Download Headers for group `%s'"
-#~ msgstr "Pan: Скачивание заголовков статей группы \"%s\""
-
-#~ msgid "Download New Headers"
-#~ msgstr "Скачать новые заголовки"
-
-#~ msgid "Download All Headers"
-#~ msgstr "Скачать все заголовки"
-
-#~ msgid "Also Download Article Bodies"
-#~ msgstr "Скачивать также содержимое статьи"
-
-#~ msgid ""
-#~ "When you post a message to a newsgroup, your display name will appear in "
-#~ "the From field.  Type your name in as you would like it to appear."
-#~ msgstr ""
-#~ "Когда вы отправляете сообщение в группу новостей, ваше отображаемое имя "
-#~ "будет появляться в поле \"От:\". Введите ваше имя если вы хотите, чтобы "
-#~ "оно появлялось."
-
-#~ msgid "Display Name:"
-#~ msgstr "Отображаемое имя:"
-
-#~ msgid "For example: John Doe"
-#~ msgstr "Например: Вася Пупкин"
-
-#~ msgid ""
-#~ "If you belong to an organization and would like for your organization's "
-#~ "name to appear with your posts, type in your organization name below.  "
-#~ "This information is optional, you may leave it blank."
-#~ msgstr ""
-#~ "Если вы член какой-либо организации и хотите чтобы название вашей "
-#~ "организации появлялось в ваших сообщениях, введите ниже название вашей "
-#~ "организации. Эта информация не обязательная, вы можете оставить это поле "
-#~ "пустым."
-
-#~ msgid ""
-#~ "People can reply to your posts by sending you an e-mail message at the "
-#~ "following address."
-#~ msgstr ""
-#~ "Люди смогут отвечать на ваше сообщение посылая вам почту по адресу "
-#~ "указанному ниже."
-
-#~ msgid "For example: user@host.com"
-#~ msgstr "Например: user@df.ru"
-
-#~ msgid ""
-#~ "Please enter the name of the mail server to use when sending e-mail "
-#~ "messages."
-#~ msgstr ""
-#~ "Пожалуйста введите название почтового сервера для исходящих сообщений"
-
-#~ msgid "SMTP Server:"
-#~ msgstr "SMTP сервер:"
-
-#~ msgid "SMTP Port:"
-#~ msgstr "Порт:"
-
-#~ msgid "Type the name of your Internet news server."
-#~ msgstr "Введите название вашего сервера новостей Интернет."
-
-#~ msgid "News (NNTP) server:"
-#~ msgstr "Сервер новостей (NNTP):"
-
-#~ msgid ""
-#~ "If you must log on to your news (NNTP) server, then select the check box "
-#~ "below."
-#~ msgstr ""
-#~ "Если вы должны регистрироваться на вашем сервере новостей (NNTP), то "
-#~ "поставьте отметку в поле ниже."
-
-#~ msgid "My server requires a password."
-#~ msgstr "Мой сервер требует пароль"
-
-#~ msgid "Account name:"
-#~ msgstr "Учетное имя:"
-
-#~ msgid ""
-#~ "Type in the name you would like Pan to show when referring to this "
-#~ "profile you have just setup.  You can name the profile anything you want "
-#~ "to."
-#~ msgstr ""
-#~ "Введите имя, на которое вы хотелось бы, чтобы ссылался Pan относительно "
-#~ "этого профиля. Вы можете назвать профиль как угодно. "
-
-#~ msgid "For example: UUNET Server"
-#~ msgstr "Например: UUNET сервер"
-
-#~ msgid "Pan Setup Wizard"
-#~ msgstr "Помощник установки PAN"
-
-#~ msgid "Welcome to Pan"
-#~ msgstr "Добро пожаловать в Pan"
-
-#~ msgid "E-mail"
-#~ msgstr "Эл.почта"
-
-#~ msgid "Congratulations"
-#~ msgstr "Поздравляем"
-
-#~ msgid ""
-#~ "You have successfully entered all of\n"
-#~ "the information required to set up Pan.\n"
-#~ "\n"
-#~ "To save these settings, click Finish."
-#~ msgstr ""
-#~ "Вы успешно ввели всю информацию\n"
-#~ "необходимую для установки Пана.\n"
-#~ "\n"
-#~ "Чтобы сохранить эти настройки нажмите \"Финиш!\"."
-
-#~ msgid "License"
-#~ msgstr "Лицензия"
-
-#~ msgid "Authors"
-#~ msgstr "Авторы"
-
-#~ msgid "Thanks to"
-#~ msgstr "Благодарности"
-
-#~ msgid "Downloading %d articles from group %s"
-#~ msgstr "Скачивание %d статей из группы %s"
-
-#, fuzzy
-#~ msgid "Downloading body of \"%s\" (%s) from group %s"
-#~ msgstr "Загрузка содержимого \"%s\" из группы %s"
-
-#, fuzzy
-#~ msgid "Cached article \"%s\" (%s) from group %s"
-#~ msgstr "Кэшированная статья \"%s\" из группы %s"
-
-#~ msgid "Cached Article \"%s\""
-#~ msgstr "Кэшированная статья \"%s\""
-
-#~ msgid "Downloading article \"%s\" failed."
-#~ msgstr "Загрузка статьи \"%s\" не удалась."
-
-#, fuzzy
-#~ msgid "Saved article body to `%s'"
-#~ msgstr "Устарело %u статей из %s"
-
-#, fuzzy
-#~ msgid "Pan: Save Multipart Message"
-#~ msgstr "Декодировать сообщение"
-
-#, fuzzy
-#~ msgid "Updating article counts for %u groups from server `%s'"
-#~ msgstr "Получено %d групп с сервера \"%s\""
-
-#, fuzzy
-#~ msgid "Unable to update counts for group `%s'"
-#~ msgstr "Не удалось установить группу: %s"
-
-#~ msgid "all groups"
-#~ msgstr "все группы"
-
-#~ msgid "new groups"
-#~ msgstr "новые группы"
-
-#~ msgid "BUG IN CODE"
-#~ msgstr "ОШИБКА В КОДЕ"
-
-#~ msgid "Getting %s from %s"
-#~ msgstr "Получение %s из %s"
-
-#~ msgid "Got %u groups for \"%s\""
-#~ msgstr "Получено %u групп для \"%s\""
-
-#~ msgid "Got %s groups for \"%s\""
-#~ msgstr "Получено %s групп для \"%s\""
-
-#~ msgid "List Newsgroups failed: %s"
-#~ msgstr "Сбой списка группы новостей: %s"
-
-#~ msgid "Got %s descriptions for \"%s\""
-#~ msgstr "Получено %s описаний групп для \"%s\""
-
-#~ msgid "Got %d groups for server `%s'"
-#~ msgstr "Получено %d групп с сервера \"%s\""
-
-#~ msgid "Retrieving 0 new groups for \"%s\""
-#~ msgstr "Получено 0 новых групп от \"%s\""
-
-#~ msgid "New groups retrieval failed: %s"
-#~ msgstr "Сбой запроса новых групп: %s"
-
-#~ msgid "Retrieving %d new groups for \"%s\""
-#~ msgstr "Получено %d новых групп от \"%s\""
-
-#~ msgid "Got %d new groups"
-#~ msgstr "Получено %d новых групп"
-
-#~ msgid "Got %d news groups for \"%s\""
-#~ msgstr "Получено %d групп для \"%s\""
-
-#~ msgid "No new articles in group \"%s\""
-#~ msgstr "Нет новых статей в группе \"%s\""
-
-#, fuzzy
-#~ msgid "Getting new Headers %lu of %lu"
-#~ msgstr "Получение заголовки новых статей %lu из %lu"
-
-#~ msgid "Sampling %d articles"
-#~ msgstr "Выборка %d статей"
-
-#, fuzzy
-#~ msgid "Getting Headers %lu of %lu"
-#~ msgstr "Получение заголовков статей %lu из %lu"
-
-#~ msgid "sample"
-#~ msgstr "образец"
-
-#~ msgid "Not Queued"
-#~ msgstr "Не поставлено в очередь"
-
-#~ msgid "Aborting"
-#~ msgstr "Прервано"
-
-#~ msgid "???"
-#~ msgstr "???"
-
-#~ msgid "%s (%d tries)"
-#~ msgstr "%s (%d попыток)"
-
-#~ msgid "Pan %s Task Manager"
-#~ msgstr "Pan %s - диспетчер задач"
-
-#~ msgid "Move Selected Task(s) Up"
-#~ msgstr "Переместить выбранные задачи вверх"
-
-#~ msgid "Move Selected Task(s) To Top"
-#~ msgstr "Переместить выбранные задачи доверху"
-
-#~ msgid "Move Selected Task(s) Down"
-#~ msgstr "Переместить выбранные задачи вниз"
-
-#~ msgid "Move Selected Task(s) To Bottom"
-#~ msgstr "Переместить выбранные задачи донизу"
-
-#~ msgid "Set Per-Server Connection Limits"
-#~ msgstr "Установить ограничения соединений по серверам"
-
-#~ msgid "Clear Queue"
-#~ msgstr "Очистить очередь"
-
-#~ msgid "Transfer Rate"
-#~ msgstr "Скорость передачи"
-
-#~ msgid "Pan - Task Manager"
-#~ msgstr "Pan - диспетчер задач"
-
-#~ msgid "Unknown Content Type"
-#~ msgstr "Неизвестный тип контента"
-
-#~ msgid "Unknown Encoding"
-#~ msgstr "Неизвестное кодирование"
-
-#~ msgid "No Filename"
-#~ msgstr "Нет имени файла"
-
-#~ msgid "NONE OF:"
-#~ msgstr "НИЧЕГО ИЗ:"
-
-#~ msgid "ALL OF:"
-#~ msgstr "ВСЕ ИЗ:"
-
-#~ msgid "ANY OF:"
-#~ msgstr "ЛЮБОЙ ИЗ:"
-
-#, fuzzy
-#~ msgid "Article has complete attachments"
-#~ msgstr "статья содержит %s двоичных вложений"
-
-#, fuzzy
-#~ msgid "Article does not have incomplete attachments"
-#~ msgstr "статья содержит %s двоичных вложений"
-
-#, fuzzy
-#~ msgid "Article has incomplete attachments"
-#~ msgstr "статья содержит %s двоичных вложений"
-
-#, fuzzy
-#~ msgid "Article has complete or incomplete attachments"
-#~ msgstr "статья содержит %s двоичных вложений"
-
-#, fuzzy
-#~ msgid "Article was posted in the last %d days"
-#~ msgstr "Статья была послана более чем"
-
-#~ msgid "Pan: Edit Filter"
-#~ msgstr "Pan: Правка фильтра"
-
-#~ msgid "Filter Name: "
-#~ msgstr "Название фильтра: "
-
-#~ msgid "Show in Filter Menu"
-#~ msgstr "Показать в меню фильтров"
-
-#~ msgid "Move Up"
-#~ msgstr "Поднять"
-
-#~ msgid "Move the selected line up one line"
-#~ msgstr "Переместить выбранную строку на одну вверх"
-
-#~ msgid "Move Down"
-#~ msgstr "Опустить"
-
-#~ msgid "Move the selected line down one line"
-#~ msgstr "Переместить выбранную строку на одну вниз"
-
-#~ msgid "Negate"
-#~ msgstr "Исключить"
-
-#~ msgid "Negate the selected line"
-#~ msgstr "Исключить выбранную строку"
-
-#~ msgid "AND"
-#~ msgstr "И"
-
-#~ msgid "OR"
-#~ msgstr "ИЛИ"
-
-#~ msgid "Delete Line"
-#~ msgstr "Удалить строку"
-
-#~ msgid "Delete the selected line"
-#~ msgstr "Удалить выбранную строку"
-
-#~ msgid "Add new Component to Filter."
-#~ msgstr "Добавить новый компонент к фильтру."
-
-#~ msgid "New Filter Component"
-#~ msgstr "Новый компонент фильтр"
-
-#~ msgid "_Article"
-#~ msgstr "Статья"
-
-#~ msgid "contains the phrase"
-#~ msgstr "содержит фразу"
-
-#~ msgid "(%s for user-specified text)"
-#~ msgstr "(%s для указанного пользователем текста)"
-
-#~ msgid ""
-#~ "See http://pan.rebelbase.com/regexp.txt for a tutorial on how to use "
-#~ "regular expressions.  If regular expressions are turned off, a simple "
-#~ "case-insensitive wildcard match is used."
-#~ msgstr ""
-#~ "См. справочник по использованию регулярных выражений на http://www.linux-"
-#~ "learn.org/regexp.tut. Если регулярные выражения отключены, используется "
-#~ "простое не чувствительное к регистру совпадение шаблона."
-
-#~ msgid "Regular Expression"
-#~ msgstr "Регулярное выражение"
-
-#~ msgid "lines"
-#~ msgstr "cтроки"
-
-#~ msgid "newsgroups"
-#~ msgstr "групп новостей"
-
-#~ msgid "Article _was at least"
-#~ msgstr "Статья была по крайней мере"
-
-#~ msgid "days old"
-#~ msgstr "дней назад"
-
-#, fuzzy
-#~ msgid "Article _thread is"
-#~ msgstr "Статья содержит"
-
-#~ msgid "Watched"
-#~ msgstr "Ожидалась"
-
-#~ msgid "Ignored"
-#~ msgstr "Проигнорирована"
-
-#, fuzzy
-#~ msgid "Neither Watched nor Ignored"
-#~ msgstr "Показать статьи, не являющиеся ни ожидаемыми ни игнорируемыми"
-
-#, fuzzy
-#~ msgid "Article is _read"
-#~ msgstr "Статья в"
-
-#~ msgid "Article h_as"
-#~ msgstr "Статья содержит"
-
-#~ msgid "Incomplete Attachments"
-#~ msgstr "Неполное вложение"
-
-#~ msgid "No Attachments"
-#~ msgstr "Нет вложений"
-
-#, fuzzy
-#~ msgid "Article body is _cached locally"
-#~ msgstr "Статья помечена как"
-
-#~ msgid "Article is _new"
-#~ msgstr "Статья новая"
-
-#, fuzzy
-#~ msgid "Article _score is at least"
-#~ msgstr "Статья помечена как"
-
-#~ msgid "Saved or Decoded"
-#~ msgstr "Сохранено и декодировано"
-
-#~ msgid "Queued for Saving or Decoding"
-#~ msgstr "Поставлено в очередь для сохранения и декодирования"
-
-#~ msgid "Article is %d or more lines long"
-#~ msgstr "Cтатья имеет %d или больше строк"
-
-#~ msgid "Bozos"
-#~ msgstr "Bozos"
-
-#~ msgid "Spam"
-#~ msgstr "Спам"
-
-#~ msgid "Article is old"
-#~ msgstr "Статья старая"
-
-#~ msgid "Article is new"
-#~ msgstr "Статья новая"
-
-#~ msgid "Subject doesn't match the phrase `%s'"
-#~ msgstr "Тема не совпадает с фразой \"%s\""
-
-#~ msgid "Subject matches the phrase `%s'"
-#~ msgstr "Тема совпадает с фразой \"%s\""
-
-#~ msgid "Author doesn't match regular expression `%s'"
-#~ msgstr "Автор не совпадает с рег.выражением \"%s\""
-
-#~ msgid "Author doesn't match phrase `%s'"
-#~ msgstr "Автор не совпадает со строкой \"%s\""
-
-#~ msgid "Author matches phrase `%s'"
-#~ msgstr "Автор совпадает со строкой \"%s\""
-
-#~ msgid "Message-ID doesn't match regular expression `%s'"
-#~ msgstr "ID сообщения не совпадает с рег.выражением \"%s\""
-
-#~ msgid "Message-ID matches regular expression `%s'"
-#~ msgstr "ID сообщения совпадает с рег.выражением \"%s\""
-
-#~ msgid "Message-ID doesn't match phrase `%s'"
-#~ msgstr "ID сообщения не совпадает со строкой \"%s\""
-
-#~ msgid "Message-ID matches phrase `%s'"
-#~ msgstr "ID сообщения совпадает со строкой \"%s\""
-
-#~ msgid "Article is unread"
-#~ msgstr "Статья непрочитана"
-
-#~ msgid "Article has not been saved or decoded"
-#~ msgstr "Статья не была сохранена или декодирована"
-
-#~ msgid "Article has been saved or decoded"
-#~ msgstr "Статья была сохранена или декодирована"
-
-#, fuzzy
-#~ msgid "Article is queued for saving or decoding"
-#~ msgstr ""
-#~ "Статьи/почта поставленные в очередь для отправки с помощью кнопки "
-#~ "\"Послать позже\""
-
-#, fuzzy
-#~ msgid "Article is neither saved nor queued for saving"
-#~ msgstr "Показать статьи, не являющиеся ни ожидаемыми ни игнорируемыми"
-
-#, fuzzy
-#~ msgid "Thread isn't watched"
-#~ msgstr "Раскладка %u статей"
-
-#, fuzzy
-#~ msgid "Thread is watched"
-#~ msgstr "Панель подшивок"
-
-#, fuzzy
-#~ msgid "Thread is ignored"
-#~ msgstr "Панель подшивок"
-
-#, fuzzy
-#~ msgid "Thread is watched or ignored"
-#~ msgstr "Показать статьи, не являющиеся ни ожидаемыми ни игнорируемыми"
-
-#, fuzzy
-#~ msgid "Thread is neither watched nor ignored"
-#~ msgstr "Показать статьи, не являющиеся ни ожидаемыми ни игнорируемыми"
-
-#~ msgid "Pan: Filters"
-#~ msgstr "Pan: Фильтры"
-
-#~ msgid "Add a new filter"
-#~ msgstr "Добавить новый фильтр"
-
-#~ msgid "Edit the selected filter"
-#~ msgstr "Правка выбранного фильтра"
-
-#~ msgid "Remove the selected filter"
-#~ msgstr "Удалить выбранный фильтр"
-
-#~ msgid "Can't write filters to `%s': %s"
-#~ msgstr "Не удалось записать фильтры в \"%s\": %s"
-
-#, fuzzy
-#~ msgid "Wrote filters to `%s'"
-#~ msgstr "%d групп записано в \"%s\""
-
-#~ msgid "HEY you forgot to put a message here! :)"
-#~ msgstr "ЭЙ! Вы забыли вставить сюда сообщение! :)"
-
-#~ msgid ""
-#~ "%s\n"
-#~ "\n"
-#~ "Matches: %u\n"
-#~ "Group: %s\n"
-#~ "Rule: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "\n"
-#~ "Совпадения: %u\n"
-#~ "Группа: %s\n"
-#~ "Правило: %s"
-
-#~ msgid "_Play a Sound:"
-#~ msgstr "Воспроизвести звук:"
-
-#~ msgid "Test Sound"
-#~ msgstr "Проверить звук"
-
-#~ msgid "Mark as"
-#~ msgstr "Пометить как"
-
-#~ msgid "_Flag body for download"
-#~ msgstr "Пометить содержимое для получения"
-
-#~ msgid "_Watch thread (highlights the thread)"
-#~ msgstr "Ожидаемая подшивка (подсвечивает подшивку)"
-
-#~ msgid "_Ignore thread (hides the thread by default)"
-#~ msgstr "Игнорировать подшивку (по умолчанию скрывает подшивку)"
-
-#~ msgid "Edit Filters"
-#~ msgstr "Правка фильтров"
-
-#~ msgid "Rule applies to all newsgroups"
-#~ msgstr "Правило применяется ко всем группам новостей"
-
-#~ msgid "Wildcard group specification:"
-#~ msgstr "Шаблон спецификации группы:"
-
-#~ msgid "(e.g., *anime*)"
-#~ msgstr "(например *anime*)"
-
-#~ msgid "Rule applies to specific newsgroups:"
-#~ msgstr "Правило применяется к указанной группе новостей:"
-
-#~ msgid "Rule applies to:"
-#~ msgstr "Правило применяется к:"
-
-#~ msgid "Rule Name:"
-#~ msgstr "Название правила:"
-
-#, fuzzy
-#~ msgid "Delete Articles by Bozos"
-#~ msgstr "Выбранные статьи"
-
-#~ msgid "Delete Spam"
-#~ msgstr "Удалить спам"
-
-#~ msgid "Loading group `%s'"
-#~ msgstr "Загрузка группы \"%s\""
-
-#~ msgid "Applying rule `%s' to Group `%s'"
-#~ msgstr "Применение правила \"%s\" к группе \"%s\""
-
-#~ msgid "Saving group `%s'"
-#~ msgstr "Сохранение группы \"%s\""
-
-#~ msgid "Refreshing group `%s'"
-#~ msgstr "Обновление группы \"%s\""
-
-#~ msgid "Rules"
-#~ msgstr "Правила"
-
-#~ msgid "Edit the selected rule."
-#~ msgstr "Правка выбранного правила."
-
-#~ msgid ""
-#~ "Apply to\n"
-#~ "Selected\n"
-#~ "Groups"
-#~ msgstr ""
-#~ "Применить\n"
-#~ "к выбранным\n"
-#~ "группам"
-
-#~ msgid "Apply the Selected Rule to the Selected Groups."
-#~ msgstr "Применить выбранное правило к выбранным группам"
-
-#~ msgid ""
-#~ "Apply to\n"
-#~ "Subscribed\n"
-#~ "Groups"
-#~ msgstr ""
-#~ "Применить\n"
-#~ "к подписанным\n"
-#~ "группам"
-
-#~ msgid "Apply the Selected Rule to all Subscribed Groups."
-#~ msgstr "Применить выбранное правило к подписанным группам"
-
-#~ msgid "%u articles match rule %s"
-#~ msgstr "%u статей удовлетворяют правилу %s"
-
-#~ msgid "Reply To:"
-#~ msgstr "Обратный адрес:"
-
-#~ msgid "Pan: Edit Profile"
-#~ msgstr "Pan: Правка профиля"
-
-#~ msgid "User Profile"
-#~ msgstr "Профиль пользователя"
-
-#~ msgid "You need at least one profile"
-#~ msgstr "Вам необходим хотя бы один профиль"
-
-#~ msgid "Incomplete Profile."
-#~ msgstr "Неполный профиль."
-
-#~ msgid "Copy From"
-#~ msgstr "Скопировать из"
-
-#~ msgid "Use the selected profile to create a new profile"
-#~ msgstr "Использовать выбранный профиль для создания нового профиля"
-
-#~ msgid "Can't write profiles to `%s': %s"
-#~ msgstr "Не удалось записать профиль в \"%s\": %s"
