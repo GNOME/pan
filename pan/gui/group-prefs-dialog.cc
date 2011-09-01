@@ -63,6 +63,8 @@ GroupPrefsDialog :: save_from_gui ()
   const char * pch (file_entry_get (_save_path));
   foreach_const (quarks_v, _groups, it)
     _group_prefs.set_string (*it, "default-group-save-path", pch);
+
+  _group_prefs.save () ;
 }
 
 void

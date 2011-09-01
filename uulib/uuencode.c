@@ -1711,19 +1711,22 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
        * print sub-header
        */
 
-      if (encoding != YENC_ENCODED)
-      {
-        fprintf (outfile, "MIME-Version: 1.0%s", eolstring);
-        fprintf (outfile, "Content-Type: %s%s",
-                 (mimetype)?mimetype:"Application/Octet-Stream",
-                 eolstring);
-        fprintf (outfile, "Content-Transfer-Encoding: %s%s",
-                 CTE_TYPE(encoding), eolstring);
-        fprintf (outfile, "Content-Disposition: attachment; filename=\"%s\"%s",
-                 UUFNameFilter ((outfname)?outfname:infname), eolstring);
-      }
+      // pan change (imhotep) : headers are already in the gmimemessage, so there's no need to add them
+      // to the body.
 
-      fprintf (outfile, "%s", eolstring);
+//      if (encoding != YENC_ENCODED)
+//      {
+//        fprintf (outfile, "MIME-Version: 1.0%s", eolstring);
+//        fprintf (outfile, "Content-Type: %s%s",
+//                 (mimetype)?mimetype:"Application/Octet-Stream",
+//                 eolstring);
+//        fprintf (outfile, "Content-Transfer-Encoding: %s%s",
+//                 CTE_TYPE(encoding), eolstring);
+//        fprintf (outfile, "Content-Disposition: attachment; filename=\"%s\"%s",
+//                 UUFNameFilter ((outfname)?outfname:infname), eolstring);
+//      }
+//
+//      fprintf (outfile, "%s", eolstring);
 
       /*
        * for the first part of UU or XX messages, print a begin line

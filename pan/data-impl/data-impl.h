@@ -431,7 +431,7 @@ namespace pan
         public: // life cycle
           MyTree (DataImpl              & data_impl,
                   const Quark           & group,
-                  const Quark           & save_path,
+                  const Quark           & save_path,  // for auto-download
                   const Data::ShowType    show_type,
                   const FilterInfo      * filter_info=0,
                   const RulesInfo       * rules=0,
@@ -455,7 +455,7 @@ namespace pan
 
         private: // implementation fields
           const Quark _group;
-          const Quark _save_path;
+          const Quark _save_path;  // for auto-download
           DataImpl & _data;
           nodes_t _nodes;
           MemChunk<ArticleNode> _node_chunk;

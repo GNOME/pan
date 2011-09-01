@@ -694,7 +694,6 @@ PostUI :: close_window (bool flag)
 
   int w(450),h(450);
   gtk_window_get_size( GTK_WINDOW(_root), &w, &h);
-  std::cerr<<"post ui sizes: "<<w<<" "<<h<<std::endl;
   _prefs.set_int("post-ui-width", w);
   _prefs.set_int("post-ui-height", h);
 

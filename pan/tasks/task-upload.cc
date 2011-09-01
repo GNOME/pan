@@ -211,12 +211,17 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
     char * all;
     if (_first && _queue_pos==-1)
       all = g_mime_object_to_string ((GMimeObject *) msg);
+    else  if (_first && _queue_pos==0)
+      all = g_mime_object_to_string ((GMimeObject *) msg);
     else
       all = g_mime_object_get_headers ((GMimeObject *) msg);
+
     out << all << "\n";
     if (_first && _queue_pos == -1) g_free(all);
     out << d;
     d = out.str();
+
+//    std::cerr<<d<<std::endl<<std::endl;
 
     if (_first) _first = !_first;
 }

@@ -542,7 +542,6 @@ HeaderPane :: set_group (const Quark& new_group)
     char * pch = g_build_filename (g_get_home_dir(), "News", NULL);
     Quark path(_group_prefs.get_string (_group, "default-group-save-path", pch));
     g_free(pch);
-    std::cerr<<path<<std::endl;
 
     if (!_group.empty())
     {

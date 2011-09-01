@@ -480,7 +480,7 @@ namespace pan
         * Get a collection of headers that match the specified filter.
         */
        virtual ArticleTree* group_get_articles (const Quark       & group,
-                                                const Quark       & save_path,
+                                                const Quark       & save_path,  // for auto-download
                                                 const ShowType      show_type = SHOW_ARTICLES,
                                                 const FilterInfo  * criteria = 0,
                                                 const RulesInfo   * rules    = 0,
