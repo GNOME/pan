@@ -26,7 +26,7 @@ int main ()
 
   // TEST: can we add an article?
   data.xover_add (server, group, "Subject", "Author", 0, "<article1@foo.com>", "", 40, 100, "");
-  tree = data.group_get_articles (group);
+  tree = data.group_get_articles (group,Quark(""));
   check (tree->size() == 1ul)
   a = tree->get_article ("<article1@foo.com>");
   check (a != 0);
@@ -37,7 +37,7 @@ int main ()
 
   // TEST: can we add a child?
   data.xover_add (server, group, "Re: Subject", "Author", 0, "<article2@blah.com>", "<article1@foo.com>", 40, 100, "");
-  tree = data.group_get_articles (group);
+  tree = data.group_get_articles (group,Quark(""));
   check (tree->size() == 2ul)
   a = tree->get_article ("<article2@blah.com>");
   check (a != 0)
@@ -76,7 +76,7 @@ int main ()
   filter_info.set_type_text ("Subject", description);
 
   // show articles whose subject has the letter 'a'
-  tree = data.group_get_articles (group);
+  tree = data.group_get_articles (group,Quark(""));
   tree->set_filter (Data::SHOW_ARTICLES, &filter_info);
   check (tree->size() == 0ul);
 

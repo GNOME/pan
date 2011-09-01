@@ -1194,11 +1194,12 @@ DataImpl :: find_closest_ancestor (const ArticleNode             * node,
 
 Data::ArticleTree*
 DataImpl :: group_get_articles (const Quark       & group,
+                                const Quark       & save_path,
                                 const ShowType      show_type,
                                 const FilterInfo  * filter,
                                 const RulesInfo   * rules,
                                       Queue       * queue) const
 {
   // cast const away for group_ref()... consider _groups mutable
-  return new MyTree (*const_cast<DataImpl*>(this), group, show_type, filter, rules,queue);
+  return new MyTree (*const_cast<DataImpl*>(this), group, save_path, show_type, filter, rules,queue);
 }

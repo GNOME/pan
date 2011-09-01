@@ -31,9 +31,6 @@ using namespace pan;
 void
 RulesFilter :: finalize (Data& data)
 {
-
-//  std::cerr<<"finalize "<<_delete.size()<<std::endl;
-
   data.delete_articles (_delete);
   _delete.clear();
 
@@ -41,7 +38,12 @@ RulesFilter :: finalize (Data& data)
   data.mark_read ((const Article**)&tmp.front(), tmp.size());
   _mark_read.clear();
 
+  const std::vector<const Article*> tmp2 ( _cached.begin(),  _cached.end());
+  data.mark_read ((const Article**)&tmp2.front(), tmp2.size());
   _cached.clear();
+
+  const std::vector<const Article*> tmp3 (_downloaded.begin(), _downloaded.end());
+  data.mark_read ((const Article**)&tmp3.front(), tmp3.size());
   _downloaded.clear();
 }
 

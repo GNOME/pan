@@ -145,12 +145,14 @@ DataImpl :: MyTree :: set_filter (const Data::ShowType    show_type,
 
 DataImpl :: MyTree :: MyTree (DataImpl              & data_impl,
                               const Quark           & group,
+                              const Quark           & save_path,
                               const Data::ShowType    show_type,
                               const FilterInfo      * filter,
                               const RulesInfo       * rules,
                                     Queue           * queue):
   _group (group),
-  _data (data_impl)
+  _data (data_impl),
+  _save_path(save_path)
 {
 
   _data.set_queue(queue);
@@ -257,7 +259,8 @@ DataImpl :: MyTree :: cache_articles (std::set<const Article*> s)
   Queue::tasks_t tasks;
   ArticleCache& cache(_data.get_cache());
   foreach_const (std::set<const Article*>, s, it)
-    tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data));
+    if (!_data.is_read(*it))
+      tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data));
   if (!tasks.empty())
     q->add_tasks (tasks, Queue::BOTTOM);
 }
@@ -268,15 +271,12 @@ DataImpl :: MyTree :: download_articles (std::set<const Article*> s)
   Queue * q (_data.get_queue());
   if (!q) return;
 
-  std::string path; /// TODO default path from prefs !!
   Queue::tasks_t tasks;
   ArticleCache& cache(_data.get_cache());
 
-  if (path.empty())
-    path = file :: get_temp_attach_path();
-
   foreach_const (std::set<const Article*>, s, it)
-    tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data, 0, TaskArticle::DECODE, path));
+    if (!_data.is_read(*it))
+      tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data, 0, TaskArticle::DECODE, _save_path));
   if (!tasks.empty())
     q->add_tasks (tasks, Queue::BOTTOM);
 }

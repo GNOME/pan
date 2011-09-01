@@ -32,6 +32,7 @@
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-tree.h>
 #include <pan/gui/prefs.h>
+#include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
 
 namespace pan
@@ -75,7 +76,7 @@ namespace pan
     private ArticleCache::Listener
   {
     public:
-      HeaderPane (ActionManager&, Data& data, Queue&, ArticleCache&, Prefs&, WaitUI&);
+      HeaderPane (ActionManager&, Data& data, Queue&, ArticleCache&, Prefs&, GroupPrefs&, WaitUI&);
       ~HeaderPane ();
 
     public:
@@ -291,6 +292,7 @@ namespace pan
       Data& _data;
       Queue& _queue;
       Prefs& _prefs;
+      GroupPrefs& _group_prefs;
       WaitUI& _wait;
       Quark _group;
       Data::ArticleTree * _atree;

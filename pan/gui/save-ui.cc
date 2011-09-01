@@ -284,7 +284,7 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
   GtkWidget *t, *w, *h;
   t = HIG :: workarea_create ();
 
-  HIG :: workarea_add_section_spacer (t, row, have_group_default?4:3);
+  HIG :: workarea_add_section_spacer (t, row, have_group_default ? 4 : 3);
 
   if (path_mode==PATH_GROUP && !have_group_default)
       path_mode = PATH_ENTRY;

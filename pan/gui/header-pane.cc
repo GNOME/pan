@@ -539,9 +539,14 @@ HeaderPane :: set_group (const Quark& new_group)
     delete _atree;
     _atree = 0;
 
+    char * pch = g_build_filename (g_get_home_dir(), "News", NULL);
+    Quark path(_group_prefs.get_string (_group, "default-group-save-path", pch));
+    g_free(pch);
+    std::cerr<<path<<std::endl;
+
     if (!_group.empty())
     {
-      _atree = _data.group_get_articles (new_group, _show_type, &_filter,&_rules,&_queue);
+      _atree = _data.group_get_articles (new_group, path, _show_type, &_filter,&_rules,&_queue);
       _atree->add_listener (this);
 
       rebuild ();
@@ -1663,11 +1668,13 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
                           Queue               & queue,
                           ArticleCache        & cache,
                           Prefs               & prefs,
+                          GroupPrefs          & group_prefs,
                           WaitUI              & wait):
   _action_manager (action_manager),
   _data (data),
   _queue (queue),
   _prefs (prefs),
+  _group_prefs (group_prefs),
   _wait (wait),
   _atree (0),
   _root (0),
