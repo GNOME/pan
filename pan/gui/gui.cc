@@ -906,9 +906,10 @@ void GUI :: do_show_preferences_dialog ()
 }
 void GUI :: do_show_group_preferences_dialog ()
 {
-  const Quark group (_group_pane->get_first_selection ());
-  if (!group.empty()) {
-    GroupPrefsDialog * dialog = new GroupPrefsDialog (_data, group, _group_prefs, get_window(_root));
+//  const Quark group (_group_pane->get_first_selection ());
+  quarks_v groups(_group_pane->get_full_selection());
+  if (!groups.empty()) {
+    GroupPrefsDialog * dialog = new GroupPrefsDialog (_data, groups, _group_prefs, get_window(_root));
     gtk_widget_show (dialog->root());
   }
 }

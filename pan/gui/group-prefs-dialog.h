@@ -30,16 +30,16 @@ namespace pan
   class GroupPrefsDialog
   {
     public:
-      GroupPrefsDialog (Data         & data,
-                        const Quark  & group,
-                        GroupPrefs   & group_prefs,
-                        GtkWindow    * parent_window);
+      GroupPrefsDialog (Data            & data,
+                        const quarks_v  & groups,
+                        GroupPrefs      & group_prefs,
+                        GtkWindow       * parent_window);
 
       ~GroupPrefsDialog () {}
       GtkWidget * root() { return _root; }
 
     private:
-      const Quark    _group;
+      const quarks_v   _groups;
       GroupPrefs   & _group_prefs;
       GtkWidget    * _root;
       GtkWidget    * _charset;
@@ -50,5 +50,5 @@ namespace pan
       static void response_cb (GtkDialog*, int, gpointer);
       void save_from_gui ();
   };
-} 
+}
 #endif
