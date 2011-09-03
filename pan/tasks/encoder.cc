@@ -142,6 +142,9 @@ Encoder :: do_work()
     /* build real subject line for article*/
     tmp->subject = subject;
 
+    // DBG
+    // fp = fopen("/home/imhotep/test.pdf", "wb+");
+
     for (TaskUpload::needed_t::iterator it = needed->begin(); it != needed->end(); ++it, ++cnt)
     {
       g_snprintf(buf,sizeof(buf),"%s.%d",basename.c_str(), cnt);

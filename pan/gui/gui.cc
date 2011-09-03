@@ -1301,15 +1301,48 @@ void GUI :: do_cancel_article ()
   g_object_unref (message);
 }
 
+bool GUI::deletion_confirmation_dialog()
+  {
+    bool ret(false);
+    GtkWidget * d = gtk_message_dialog_new (
+      get_window(_root),
+      GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+      GTK_MESSAGE_WARNING,
+      GTK_BUTTONS_NONE, NULL);
+    HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
+      _("You marked some articles for deletion"),
+      _("Are you sure you want to delete them?"));
+    gtk_dialog_add_buttons (GTK_DIALOG(d),
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
+                            GTK_STOCK_APPLY, GTK_RESPONSE_YES,
+                            NULL);
+    gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
+    ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
+    gtk_widget_destroy(d);
+    return ret;
+  }
+
 void GUI :: do_delete_article ()
 {
-  const std::set<const Article*> articles (_header_pane->get_nested_selection());
-  _data.delete_articles (articles);
+  bool confirm (_prefs.get_flag("show-deletion-confirm-dialog", true));
+  bool do_delete(false);
+  if (confirm)
+  {
+    if (deletion_confirmation_dialog())
+      do_delete = true;
+  } else
+    do_delete = true;
 
-  const Quark mid (_body_pane->get_message_id());
-  foreach_const (std::set<const Article*>, articles, it)
-    if ((*it)->message_id == mid)
-      _body_pane->clear ();
+  if (do_delete)
+  {
+    const std::set<const Article*> articles (_header_pane->get_nested_selection());
+    _data.delete_articles (articles);
+
+    const Quark mid (_body_pane->get_message_id());
+    foreach_const (std::set<const Article*>, articles, it)
+      if ((*it)->message_id == mid)
+        _body_pane->clear ();
+  }
 }
 
 void GUI :: do_clear_article_cache ()
@@ -1666,6 +1699,7 @@ void GUI :: do_quit ()
 {
   gtk_main_quit ();
 }
+
 void GUI :: do_read_selected_group ()
 {
   const Quark group (_group_pane->get_first_selection ());
@@ -1714,17 +1748,31 @@ void GUI :: do_read_selected_group ()
     }
   }
 }
+
 void GUI :: do_mark_selected_groups_read ()
 {
   const quarks_v group_names (_group_pane->get_full_selection ());
   foreach_const (quarks_v, group_names, it)
     _data.mark_group_read (*it);
 }
+
 void GUI :: do_clear_selected_groups ()
 {
-  const quarks_v groups (_group_pane->get_full_selection ());
-  foreach_const (quarks_v, groups, it)
-    _data.group_clear_articles (*it);
+  bool confirm (_prefs.get_flag("show-deletion-confirm-dialog", true));
+  bool do_delete(false);
+  if (confirm)
+  {
+    if (deletion_confirmation_dialog())
+      do_delete = true;
+  } else
+    do_delete = true;
+
+  if (do_delete)
+  {
+      const quarks_v groups (_group_pane->get_full_selection ());
+      foreach_const (quarks_v, groups, it)
+      _data.group_clear_articles (*it);
+  }
 }
 
 void GUI :: do_xover_selected_groups ()

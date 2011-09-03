@@ -516,6 +516,8 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_section_spacer (t, row, 4);
     w = new_check_button (_("Space selects next article rather than next unread"), "space-selects-next-article", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
+    w = new_check_button (_("Always show article deletion confirmation dialog"), "show-deletion-confirm-dialog", true, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Smooth scrolling"), "smooth-scrolling", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Clear article cache on shutdown"), "clear-article-cache-on-shutdown", false, prefs);

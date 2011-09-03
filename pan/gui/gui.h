@@ -123,6 +123,7 @@ namespace pan
       virtual void do_cancel_article ();
       virtual void do_supersede_article ();
       virtual void do_delete_article ();
+      virtual bool deletion_confirmation_dialog();
       virtual void do_clear_article_cache ();
       virtual void do_mark_article_read ();
       virtual void do_mark_article_unread ();

@@ -178,8 +178,9 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   }
   else if (_encoder_has_run && !_needed.empty())
   {
-//    _state.set_completed();
-//    set_finished(_queue_pos);
+    // DBG
+//     _state.set_completed();
+//     set_finished(_queue_pos);
     _state.set_need_nntp(_server);
   }
   else if (_needed.empty())
@@ -204,24 +205,29 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
 
     //modify references header
     std::string mids(_references);
-    if (!_first_mid.empty()) mids += " <" + _first_mid + "> ";
-    if (_first_mid != n->last_mid && !_first && !n->last_mid.empty())  mids += "<" + n->last_mid + ">";
+    if (!_first_mid.empty()) mids += " <" + _first_mid + ">";
+    if (_first_mid != n->last_mid && !_first && !n->last_mid.empty())  mids += " <" + n->last_mid + ">";
     if (!mids.empty()) g_mime_object_set_header ((GMimeObject *) msg, "References", mids.c_str());
 
-    char * all;
+    // modify content type
+    g_snprintf(buf,sizeof(buf), "Message/Partial; number=%d; total=%d", n->partno, _total_parts);
+//    GMimeContentType * new_type = g_mime_content_type_new_from_string (buf);
+//    g_mime_object_set_content_type ((GMimeObject *) msg, new_type);
+//    g_object_unref (new_type);
+    g_mime_object_set_header ((GMimeObject *) msg, "Content-Type",buf);
+
+    char * all(g_mime_object_get_headers ((GMimeObject *) msg));
     if (_first && _queue_pos==-1)
       all = g_mime_object_to_string ((GMimeObject *) msg);
     else  if (_first && _queue_pos==0)
       all = g_mime_object_to_string ((GMimeObject *) msg);
-    else
-      all = g_mime_object_get_headers ((GMimeObject *) msg);
 
     out << all << "\n";
     if (_first && _queue_pos == -1) g_free(all);
     out << d;
     d = out.str();
 
-//    std::cerr<<d<<std::endl<<std::endl;
+    std::cerr<<d<<std::endl;
 
     if (_first) _first = !_first;
 }
@@ -298,7 +304,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   switch (health)
   {
     case OK:
-      increment_step(it->second.bytes); /// DBG
+      increment_step(it->second.bytes);
       _needed.erase (it);
       post_ok = true;
       break;

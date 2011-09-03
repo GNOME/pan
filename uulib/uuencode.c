@@ -716,50 +716,24 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
       }
 
       rest -= count;
+      itemp[count] = '\0';
 
-
-        itemp[count] = '\0';
-//        count = strlen (itemp);
-
-        llen = 0;
-        optr = otemp;
+      llen = 0;
+      optr = otemp;
 
         /*
          * Busy Callback
          */
 
-        if (UUBUSYPOLL(ftell(infile)-progress.foffset,progress.fsize))
-          {
-//            UUMessage (uuencode_id, __LINE__, UUMSG_NOTE,
-//                       uustring (S_ENCODE_CANCEL));
-            return UURET_CANCEL;
-          }
+      if (UUBUSYPOLL(ftell(infile)-progress.foffset,progress.fsize))
+          return UURET_CANCEL;
 
-        if (encoding == PT_ENCODED)
-          {
-
-            /*
-             * If there is a line feed, replace by eolstring
-             */
-            if (count > 0 && itemp[count-1] == '\n')
-              {
-                itemp[--count] = '\0';
-                if (fwrite (itemp, sizeof(unsigned char), count, outfile) != count ||
-                    fwrite ((char *) eolstring, sizeof(unsigned char),
-                            strlen(eolstring), outfile) != strlen (eolstring))
-                  {
-                    return UURET_IOERR;
-                  }
-              }
-              else
-              {
-                size_t res;
-                if ((res=fwrite (itemp, sizeof(unsigned char), count, outfile)) != count)
-                  {
-                    return UURET_IOERR;
-                  }
-              }
-          }
+      if (encoding == PT_ENCODED)
+      {
+        size_t res;
+        if ((res=fwrite (itemp, sizeof(unsigned char), count, outfile)) != count)
+            return UURET_IOERR;
+      }
           else if (encoding == QP_ENCODED)
           {
             for (index=0; index<count; index++)
@@ -1711,21 +1685,16 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
        * print sub-header
        */
 
-      // pan change (imhotep) : headers are already in the gmimemessage, so there's no need to add them
-      // to the body.
-
 //      if (encoding != YENC_ENCODED)
 //      {
 //        fprintf (outfile, "MIME-Version: 1.0%s", eolstring);
-//        fprintf (outfile, "Content-Type: %s%s",
-//                 (mimetype)?mimetype:"Application/Octet-Stream",
-//                 eolstring);
+//        fprintf (outfile, "Content-Type: Message/Partial; number=%d; total=%d;%s",
+//               partno, numparts, eolstring);
 //        fprintf (outfile, "Content-Transfer-Encoding: %s%s",
 //                 CTE_TYPE(encoding), eolstring);
 //        fprintf (outfile, "Content-Disposition: attachment; filename=\"%s\"%s",
 //                 UUFNameFilter ((outfname)?outfname:infname), eolstring);
 //      }
-//
 //      fprintf (outfile, "%s", eolstring);
 
       /*

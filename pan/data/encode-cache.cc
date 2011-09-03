@@ -202,7 +202,8 @@ EncodeCache :: update_file (std::string& data, const Quark& where)
 {
   FILE * fp = get_fp_from_mid(where);
   if (!fp) return false;
-  fwrite(data.c_str(), strlen(data.c_str()), sizeof(char), fp);
+  const char * out (data.c_str());
+  fwrite(out, strlen(out), sizeof(char), fp);
   fclose(fp);
   return true;
 }
