@@ -210,7 +210,6 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
   gtk_box_pack_start (GTK_BOX(_root), _menu_vbox, FALSE, FALSE, 0);
   gtk_widget_show (_menu_vbox);
 
-  //_group_pane = new GroupPane (*this, data, _prefs);
   _group_pane = new GroupPane (*this, data, _prefs);
   _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, _group_prefs, *this);
   _body_pane = new BodyPane (data, _cache, _prefs);
@@ -1643,6 +1642,42 @@ void GUI :: do_show_matches (const Data::ShowType show_type)
   _header_pane->set_show_type (show_type);
 }
 
+namespace
+{
+  std::string bytes_to_size(unsigned long val)
+  {
+    int i(0);
+    double d(val);
+    while (d >= 1024.0) { d /= 1024.0; ++i; }
+    std::stringstream out;
+    out << d;
+    std::string ret(out.str());
+
+    switch (i)
+    {
+      case 0:
+        ret += _(" Bytes");
+        break;
+      case 1:
+        ret += _(" KB");
+        break;
+      case 2:
+        ret += _(" MB");
+        break;
+      case 3:
+        ret += _(" GB");
+        break;
+      case 4:
+        ret += _(" TB");
+        break;
+      default:
+        ret += _(" Bytes");
+        break;
+    }
+    return ret;
+  }
+}
+
 void GUI :: do_show_selected_article_info ()
 {
   const Article* a = _header_pane->get_first_selected_article ();
@@ -1680,12 +1715,13 @@ void GUI :: do_show_selected_article_info ()
       GTK_BUTTONS_CLOSE,
         "<b>%s</b>: %s\n" "<b>%s</b>: %s\n"
         "<b>%s</b>: %s\n" "<b>%s</b>: %s\n"
-        "<b>%s</b>: %lu\n" "<b>%s</b>: %lu\n"
+        "<b>%s</b>: %lu\n" "<b>%s</b>: %s (%lu %s)\n"
         "\n"
         "%s" "%s",
         _("Subject"), a->subject.c_str(), _("From"), a->author.c_str(),
         _("Date"), date, _("Message-ID"), a->message_id.c_str(),
-        _("Lines"), a->get_line_count(), _("Bytes"), a->get_byte_count(),
+        _("Lines"), a->get_line_count(), _("Size"), bytes_to_size(a->get_byte_count()).c_str(),
+        a->get_byte_count(),_("Bytes"),
         msg, s.str().c_str());
     g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
     gtk_widget_show_all (w);
