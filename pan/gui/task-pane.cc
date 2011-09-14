@@ -25,6 +25,7 @@ extern "C" {
 }
 #include <pan/general/e-util.h>
 #include <pan/general/debug.h>
+#include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/tasks/queue.h>
@@ -32,6 +33,7 @@ extern "C" {
 #include "pad.h"
 #include "render-bytes.h"
 #include "task-pane.h"
+#include "taskpane.ui.h"
 
 enum
 {
@@ -40,12 +42,9 @@ enum
   NUM_COLS
 };
 
-
 /**
 ***  Internal Utility
 **/
-
-typedef Queue::tasks_t tasks_t;
 
 void
 TaskPane :: get_selected_tasks_foreach (GtkTreeModel *model, GtkTreePath *, GtkTreeIter *iter, gpointer list_g)
@@ -141,9 +140,8 @@ TaskPane:: on_tooltip_query(GtkWidget  *widget,
     const Article& a(tu->get_article());
     date = date_maker.get_date_string (tu->get_article().time_posted);
     g_snprintf(buffer,sizeof(buffer),
-               _("\
-\n<u>Upload</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n\
-<i>Groups:</i> <b>%s</b>\n<i>Sourcefile:</i> <b>%s</b>\n"),
+               _("\n<u>Upload</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n"
+                 "<i>Groups:</i> <b>%s</b>\n<i>Sourcefile:</i> <b>%s</b>\n"),
                a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(),
                tu->get_groups().c_str(), tu->get_filename().c_str());
   }
@@ -154,9 +152,8 @@ TaskPane:: on_tooltip_query(GtkWidget  *widget,
     const Article& a(ta->get_article());
     date = date_maker.get_date_string (ta->get_article().time_posted);
     g_snprintf(buffer,sizeof(buffer),
-               _("\
-\n<u>Download</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n<i>Date:</i> <b>%s</b>\n\
-<i>Groups:</i> <b>%s</b>\n<i>Save Path:</i> <b>%s</b>\n"),
+               _("\n<u>Download</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n<i>Date:</i> <b>%s</b>\n"
+                 "<i>Groups:</i> <b>%s</b>\n<i>Save Path:</i> <b>%s</b>\n"),
                a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(), date ? date : _("unknown"),
                ta->get_groups().c_str(), ta->get_save_path().to_string().c_str());
   }
@@ -171,6 +168,50 @@ TaskPane:: on_tooltip_query(GtkWidget  *widget,
   gtk_tree_path_free (path);
 
   return true;
+}
+
+void
+TaskPane::  do_popup_menu (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
+{
+  TaskPane * self (static_cast<TaskPane*>(userdata));
+  GtkWidget * menu (gtk_ui_manager_get_widget (self->_uim, "/taskpane-popup"));
+  gtk_menu_popup (GTK_MENU(menu), NULL, NULL, NULL, NULL,
+                  (event ? event->button : 0),
+                  (event ? event->time : 0));
+}
+
+gboolean
+TaskPane :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
+{
+
+  if (event->type == GDK_BUTTON_PRESS )
+  {
+    GtkTreeSelection *selection;
+    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+
+    if ( event->button == 3)
+    {
+
+      if (gtk_tree_selection_count_selected_rows(selection)  <= 1)
+      {
+         GtkTreePath *path;
+         /* Get tree path for row that was clicked */
+         if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
+                                           (gint) event->x,
+                                           (gint) event->y,
+                                           &path, NULL, NULL, NULL))
+         {
+           gtk_tree_selection_unselect_all(selection);
+           gtk_tree_selection_select_path(selection, path);
+           gtk_tree_path_free(path);
+         }
+      }
+      do_popup_menu(treeview, event, userdata);
+      return true;
+    }
+
+  }
+  return false;
 }
 
 void TaskPane :: online_toggled_cb (GtkToggleButton* b, Queue *queue)
@@ -204,6 +245,60 @@ void TaskPane :: delete_clicked_cb (GtkButton*, TaskPane* pane)
 void TaskPane :: restart_clicked_cb (GtkButton*, TaskPane* pane)
 {
   pane->_queue.restart_tasks (pane->get_selected_tasks());
+}
+
+std::string
+TaskPane :: prompt_user_for_new_dest (GtkWindow * parent, const Quark& current_path)
+{
+  char buf[4096];
+  struct stat sb;
+  std::string path;
+
+  std::string prev_path(current_path.c_str());
+  if (!file :: file_exists (prev_path.c_str()))
+    prev_path = g_get_home_dir ();
+
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Choose new destination for selected Tasks"),
+                                                GTK_WINDOW(parent),
+                                                GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                                                GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                                GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+                                                NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_ACCEPT);
+  gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (w), TRUE);
+  gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
+
+  if (GTK_RESPONSE_ACCEPT == gtk_dialog_run(GTK_DIALOG(w)))
+  {
+    char * tmp = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w));
+    path = tmp;
+    g_free (tmp);
+  } else
+    path.clear();
+
+  gtk_widget_destroy (w);
+  return path;
+}
+
+void
+TaskPane :: change_destination (const tasks_t& tasks)
+{
+
+  if (tasks.empty()) return;
+  TaskArticle * t (dynamic_cast<TaskArticle*>(tasks[0]));
+  std::string new_path(prompt_user_for_new_dest(GTK_WINDOW(_root),t->get_save_path()));
+  if (new_path.empty()) return; // user cancelled/aborted
+  foreach_const (tasks_t, tasks, it) {
+    TaskArticle * task (dynamic_cast<TaskArticle*>(*it));
+    if (task)
+      task->set_save_path(Quark(new_path));
+  }
+
+}
+
+void TaskPane :: change_dest_clicked_cb (GtkButton*, TaskPane* pane)
+{
+  pane->change_destination (pane->get_selected_tasks());
 }
 
 /**
@@ -506,6 +601,102 @@ namespace
   }
 }
 
+namespace
+{
+
+  void do_move_up        (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->up_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_move_down      (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->down_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_move_top       (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->top_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_move_bottom    (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->bottom_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_stop           (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->stop_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_delete         (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->delete_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_restart        (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->restart_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_change_dest    (GtkAction* a, gpointer p){ static_cast<TaskPane*>(p)->change_dest_clicked_cb(0, static_cast<TaskPane*>(p)); }
+
+  GtkActionEntry taskpane_popup_entries[] =
+  {
+
+    { "move-up", NULL,
+      N_("Move Up"), "",
+      N_("Move Up"),
+      G_CALLBACK(do_move_up) },
+
+    { "move-down", NULL,
+      N_("Move Down"), "",
+      N_("Move Down"),
+      G_CALLBACK(do_move_down) },
+
+    { "move-top", NULL,
+      N_("Move To Top"), "",
+      N_("Move To Top"),
+      G_CALLBACK(do_move_top) },
+
+    { "move-bottom", NULL,
+      N_("Move To Bottom"), "",
+      N_("Move To Bottom"),
+      G_CALLBACK(do_move_bottom) },
+
+    { "stop", NULL,
+      N_("Stop Task"), "",
+      N_("Stop Task"),
+      G_CALLBACK(do_stop) },
+
+    { "delete", NULL,
+      N_("Delete Task"), "",
+      N_("Delete Task"),
+      G_CALLBACK(do_delete) },
+
+    { "restart", NULL,
+      N_("Restart Task"), "",
+      N_("Restart Task"),
+      G_CALLBACK(do_restart) },
+
+    { "change-dest", NULL,
+      N_("Change Download Destination"), "",
+      N_("Change Download Destination"),
+      G_CALLBACK(do_change_dest) }
+  };
+
+}
+
+void
+TaskPane :: add_actions (GtkWidget * box)
+{
+  // action manager for popup
+  _uim = gtk_ui_manager_new ();
+  // read the file...
+  char * filename = g_build_filename (file::get_pan_home().c_str(), "taskpane.ui", NULL);
+  GError * err (0);
+  if (!gtk_ui_manager_add_ui_from_file (_uim, filename, &err)) {
+    g_clear_error (&err);
+    gtk_ui_manager_add_ui_from_string (_uim, fallback_taskpane_ui, -1, &err);
+  }
+  if (err) {
+    Log::add_err_va (_("Error reading file \"%s\": %s"), filename, err->message);
+    g_clear_error (&err);
+
+  }
+  g_free (filename);
+
+//  g_signal_connect (_uim, "add_widget", G_CALLBACK(add_widget), box);
+
+   //add popup actions
+  _pgroup = gtk_action_group_new ("taskpane");
+  gtk_action_group_set_translation_domain (_pgroup, NULL);
+  gtk_action_group_add_actions (_pgroup, taskpane_popup_entries, G_N_ELEMENTS(taskpane_popup_entries), this);
+  gtk_ui_manager_insert_action_group (_uim, _pgroup, 0);
+
+}
+
+namespace
+{
+  gboolean on_popup_menu (GtkWidget * treeview, gpointer userdata)
+  {
+    TaskPane::do_popup_menu (treeview, NULL, userdata);
+    return true;
+  }
+}
+
 TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
 {
   _root = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -544,7 +735,7 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
     gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
     w = add_button (buttons, GTK_STOCK_CLOSE, 0, 0);
     g_signal_connect_swapped (w, "clicked", G_CALLBACK(gtk_widget_destroy), _root);
-    pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new()); // eat h space
+    pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new()); // eat horizontal space
 
   gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
   gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
@@ -566,9 +757,17 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
 
+  // tooltips for articles
   gtk_widget_set_has_tooltip (_view, true);
   g_signal_connect(_view,"query-tooltip",G_CALLBACK(on_tooltip_query), this);
-//  gtk_widget_set_tooltip_window (_view, _tooltip_window);
+
+  // connect signals for popup menu
+  g_signal_connect (_view, "popup-menu", G_CALLBACK(on_popup_menu), this);
+  g_signal_connect (_view, "button-press-event", G_CALLBACK(on_button_pressed), this);
+
+  // actions
+  add_actions(_view);
+  gtk_window_add_accel_group (GTK_WINDOW(_root), gtk_ui_manager_get_accel_group (_uim));
 
   w = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);

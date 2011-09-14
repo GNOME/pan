@@ -149,7 +149,7 @@ namespace pan
       std::string _charset;
       TextMassager _tm;
       GtkUIManager * _uim;
-      GtkActionGroup * _agroup, * _pgroup, * _epgroup;
+      GtkActionGroup * _agroup;
       std::string _current_signature;
       TaskPost * _post_task;
       typedef std::map<std::string, std::string> str2str_t;

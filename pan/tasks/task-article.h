@@ -61,6 +61,7 @@ namespace pan
       virtual ~TaskArticle ();
       time_t get_time_posted () const { return _time_posted; }
       const Quark& get_save_path () const { return _save_path; }
+      void  set_save_path (const Quark& q) { _save_path = q;}
       const Article& get_article () const { return _article; }
       const std::string& get_groups () const { return _groups; }
 
@@ -87,7 +88,7 @@ namespace pan
       void on_worker_done (bool cancelled);
 
     protected:
-      const Quark _save_path;
+      Quark _save_path;
       const ServerRank& _server_rank;
       ArticleCache& _cache;
       ArticleRead& _read;

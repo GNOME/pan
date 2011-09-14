@@ -212,7 +212,6 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
 
   _group_pane = new GroupPane (*this, data, _prefs);
   _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, _group_prefs, *this);
-  _header_panes.push_back(_header_pane);
   _body_pane = new BodyPane (data, _cache, _prefs);
 
   std::string path = "/ui/main-window-toolbar";
@@ -1759,13 +1758,8 @@ void GUI :: do_read_selected_group ()
   const bool changed  (old_group != group);
   if (changed)
   {
-    HeaderPane * tmp = new HeaderPane (*this, _data, _queue, _cache, _prefs, _group_prefs, *this);
-
-//    g_object_ref (tmp->root());
-    _header_pane = tmp;
     _header_pane->set_group (group);
     _header_pane->set_focus ();
-    _header_panes.push_back(tmp);
   }
   watch_cursor_off ();
 

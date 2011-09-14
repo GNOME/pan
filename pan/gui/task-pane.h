@@ -26,6 +26,8 @@
 #include <pan/tasks/queue.h>
 #include "prefs.h"
 
+typedef Queue::tasks_t tasks_t;
+
 namespace pan
 {
   /**
@@ -69,6 +71,10 @@ namespace pan
       gulong _online_toggle_handler;
       guint _update_timeout_tag;
       bool _dampen_move_feedback_loop;
+      GtkUIManager * _uim;
+      GtkActionGroup * _pgroup;
+    private:
+      std::string prompt_user_for_new_dest (GtkWindow * parent, const Quark& current_path);
 
     private:
       void update_status (const Queue::task_states_t&);
@@ -76,12 +82,18 @@ namespace pan
       static gboolean periodic_refresh (gpointer);
       static void root_destroyed_cb (GtkWidget, gpointer);
 
+    public:
+      static void do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g);
+      static gboolean on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gpointer userdata);
+      void add_actions (GtkWidget * box);
+      void change_destination (const tasks_t& tasks);
 
     private:
       typedef std::vector<Task*> task_list;
       task_list get_selected_tasks () const;
       static void get_selected_tasks_foreach (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer);
       static void online_toggled_cb  (GtkToggleButton*, Queue*);
+    public:   /// FIXME, privatize this again...
       static void up_clicked_cb      (GtkButton*, TaskPane*);
       static void down_clicked_cb    (GtkButton*, TaskPane*);
       static void top_clicked_cb     (GtkButton*, TaskPane*);
@@ -89,6 +101,17 @@ namespace pan
       static void stop_clicked_cb    (GtkButton*, TaskPane*);
       static void delete_clicked_cb  (GtkButton*, TaskPane*);
       static void restart_clicked_cb (GtkButton*, TaskPane*);
+      static void change_dest_clicked_cb (GtkButton*, TaskPane*);
+
+    private:
+//      static void do_move_up     (GtkAction*, gpointer p);
+//      static void do_move_down   (GtkAction*, gpointer p);
+//      static void do_move_top    (GtkAction*, gpointer p);
+//      static void do_move_bottom (GtkAction*, gpointer p);
+//      static void do_stop        (GtkAction*, gpointer p);
+//      static void do_delete      (GtkAction*, gpointer p);
+//      static void do_restart     (GtkAction*, gpointer p);
+//      static void do_change_dest (GtkAction*, gpointer p);
   };
 }
 

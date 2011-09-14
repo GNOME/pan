@@ -597,13 +597,10 @@ PostUI :: add_actions (GtkWidget * box)
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "wrap")),
                                 _prefs.get_flag ("compose-wrap-enabled", true));
 //  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "inline-or-bulk")), false);
-  gtk_ui_manager_insert_action_group (_uim, _agroup, 0);
 
    //add popup actions
-  _pgroup = gtk_action_group_new ("fq");
-  gtk_action_group_set_translation_domain (_pgroup, NULL);
   gtk_action_group_add_actions (_agroup, filequeue_popup_entries, G_N_ELEMENTS(filequeue_popup_entries), this);
-  gtk_ui_manager_insert_action_group (_uim, _pgroup, 0);
+  gtk_ui_manager_insert_action_group (_uim, _agroup, 0);
 
 }
 
