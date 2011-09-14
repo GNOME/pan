@@ -203,6 +203,7 @@ namespace pan
       GtkWidget * _toolbar;
       GroupPane * _group_pane;
       HeaderPane * _header_pane;
+      std::vector<HeaderPane*> _header_panes;
       BodyPane * _body_pane;
       GtkUIManager * _ui_manager;
 

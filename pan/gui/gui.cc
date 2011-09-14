@@ -212,6 +212,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
 
   _group_pane = new GroupPane (*this, data, _prefs);
   _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, _group_prefs, *this);
+  _header_panes.push_back(_header_pane);
   _body_pane = new BodyPane (data, _cache, _prefs);
 
   std::string path = "/ui/main-window-toolbar";
@@ -235,7 +236,6 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
   //gtk_ui_manager_add_ui (_ui_manager, merge_id, path, "group-pane-filter", NULL, GTK_UI_MANAGER_TOOLITEM, true);
   //GtkWidget * item = gtk_ui_manager_get_widget (_ui_manager, path);
   //gtk_container_add (GTK_CONTAINER(item), _group_pane->create_filter_entry());
-
 
   // workarea
   _workarea_bin = gtk_event_box_new ();
@@ -652,7 +652,8 @@ void GUI :: do_save_articles ()
     copies.push_back (**it);
 
   if (!copies.empty()) {
-    SaveDialog * dialog = new SaveDialog (_prefs, _group_prefs, _data, _data, _cache, _data, _queue, get_window(_root), _header_pane->get_group(), copies);
+    SaveDialog * dialog = new SaveDialog (_prefs, _group_prefs, _data, _data, _cache,
+                                          _data, _queue, get_window(_root), _header_pane->get_group(), copies);
     gtk_widget_show (dialog->root());
   }
 }
@@ -1754,8 +1755,18 @@ void GUI :: do_read_selected_group ()
 
   // update the header pane
   watch_cursor_on ();
-  const bool changed (_header_pane->set_group (group));
-  _header_pane->set_focus ();
+  const Quark old_group(_header_pane->get_group());
+  const bool changed  (old_group != group);
+  if (changed)
+  {
+    HeaderPane * tmp = new HeaderPane (*this, _data, _queue, _cache, _prefs, _group_prefs, *this);
+
+//    g_object_ref (tmp->root());
+    _header_pane = tmp;
+    _header_pane->set_group (group);
+    _header_pane->set_focus ();
+    _header_panes.push_back(tmp);
+  }
   watch_cursor_off ();
 
   // periodically save our state
