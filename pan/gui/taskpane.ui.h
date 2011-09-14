@@ -1,0 +1,18 @@
+const char * fallback_taskpane_ui =
+"<ui>\n"
+"\n"
+"  <popup name='taskpane-popup'>\n"
+"    <menuitem action='move-up' />\n"
+"    <menuitem action='move-down' />\n"
+"    <separator />\n"
+"    <menuitem action='move-top' />\n"
+"    <menuitem action='move-bottom' />\n"
+"    <separator />\n"
+"    <menuitem action='stop' />\n"
+"    <menuitem action='delete' />\n"
+"    <menuitem action='restart' />\n"
+"    <separator />\n"
+"    <menuitem action='change-dest' />\n"
+"  </popup>\n"
+"\n"
+"</ui>\n";
