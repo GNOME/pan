@@ -65,7 +65,7 @@ using namespace pan;
 #define USER_AGENT_EXTRA_PREFS_KEY "user-agent-extra-info"
 
 /** generates a unique message-id for a usenet post, consisting of
- *  the current date and time (in seconds resolution) and three random numbers + part count
+ *  the current time (in usec resolution) and three random numbers + part count
  */
 void
 PostUI :: generate_unique_id (StringView& mid, int cnt, std::string& s)
@@ -76,8 +76,6 @@ PostUI :: generate_unique_id (StringView& mid, int cnt, std::string& s)
   struct timeval tv;
   const time_t now (time(NULL));
   struct tm local_now = *gmtime (&now);
-  char buf[64];
-  std::strftime (buf, sizeof(buf), "%Y%m%d%H%M%S", &local_now);
   out << "pan$";
   gettimeofday (&tv, NULL);
   out << std::hex << tv.tv_usec << "$" << std::hex
@@ -87,14 +85,13 @@ PostUI :: generate_unique_id (StringView& mid, int cnt, std::string& s)
   out<< '@';
   // add domain
   out << (mid.empty() ? "nospam.com" : mid);
-//  std::cerr << "rng : "<<out.str()<<std::endl;
   s = out.str();
 }
 
 namespace
 {
 #ifndef HAVE_CLOSE
-inline int close(int fd) {return _close(fd);}
+  inline int close(int fd) {return _close(fd);}
 #endif
 
   bool remember_charsets (true);

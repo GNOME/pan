@@ -33,7 +33,7 @@ namespace
   {
     char buf[1024];
     snprintf (buf, sizeof(buf), _("Posting \"%s\""), g_mime_message_get_subject(message));
-    return std::string (buf);
+    return buf;
   }
 }
 
@@ -69,15 +69,17 @@ TaskPost :: on_nntp_done (NNTP              * nntp,
 {
   _state.set_health (health);
 
+  const char* res(g_mime_message_get_subject(_message));
+
   if (health == ERR_NETWORK)
   {
     Log :: add_err_va (_("Posting of \"%s\" failed: %s"),
-                          g_mime_message_get_subject(_message), response.str);
+                          res, response.str);
     _state.set_need_nntp (_server);
   }
   else {
     Log :: add_info_va (_("Posting of \"%s\" succesful: %s"),
-                          g_mime_message_get_subject(_message), response.str);
+                          res, response.str);
     _state.set_completed ();
     set_error (response);
     set_finished (health);

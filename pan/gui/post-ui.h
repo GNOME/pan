@@ -49,8 +49,6 @@ namespace pan
     public:
 
       typedef std::vector<Task*> tasks_t;
-      typedef std::vector<TaskUpload*> bulk_tasks_t;
-      typedef std::vector<TaskMultiPost*> inline_tasks_t;
 
       static PostUI* create_window (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
                                     GMimeMessage*, Prefs&, GroupPrefs&, EncodeCache&);

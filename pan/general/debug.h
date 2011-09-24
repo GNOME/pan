@@ -26,6 +26,7 @@ namespace pan
 {
   extern bool _debug_flag;
   extern bool _debug_verbose_flag;
+  extern bool _verbose_flag;
 
 }
 
@@ -41,6 +42,12 @@ namespace pan
   do { \
     if (_debug_verbose_flag) \
       std::cerr << LINE_ID << ' ' << A << '\n'; \
+  } while (0)
+
+#define verbose(A) \
+  do { \
+    if (_verbose_flag) \
+      std::cout << A << '\n'; \
   } while (0)
 
 #ifndef UNUSED
