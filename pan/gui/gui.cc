@@ -276,11 +276,9 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
   g_signal_connect (w, "clicked", G_CALLBACK(show_task_window_cb), this);
 
   // drag and drop for message-ids
-//  gtk_drag_dest_set(_workarea_bin,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
-//  gtk_drag_dest_add_text_targets(_workarea_bin);
-//  gtk_drag_dest_add_uri_targets(_workarea_bin);
-//  g_signal_connect (_workarea_bin, "drag-data-received", G_CALLBACK(dragged_rcvd), this);
-//  g_signal_connect (_workarea_bin, "drag-drop", G_CALLBACK (dragged), this);
+  gtk_drag_dest_set(_workarea_bin,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
+  gtk_drag_dest_add_text_targets(_workarea_bin);
+  gtk_drag_dest_add_uri_targets(_workarea_bin);
 
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
   frame = gtk_frame_new (NULL);
@@ -586,60 +584,6 @@ GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
 	gtk_widget_destroy (w);
 
   return file;
-}
-
-/// TODO drag-n-drop of nzb files
-gboolean GUI ::dragged(GtkWidget *wgt, GdkDragContext *context, int x, int y,
-              GtkSelectionData *seldata, guint info, guint time,
-              gpointer userdata)
-{
-
-  gtk_drag_finish (context, true, true, time);
-
-  GUI * p(static_cast<GUI*>(userdata));
-
-  GdkAtom target_type;
-
-  /* If the source offers a target */
-  if (context-> targets)
-  {
-    target_type = GDK_POINTER_TO_ATOM
-            (g_list_nth_data (context-> targets, TARGET_STRING));
-
-    gtk_drag_get_data(wgt,context,target_type,time);
-  }
-
-  return true;
-
-}
-
-void GUI ::dragged_rcvd(GtkWidget *wgt, GdkDragContext *context, int x, int y,
-              GtkSelectionData *seldata, guint info, guint time,
-              gpointer userdata)
-{
-
-  gtk_drag_finish (context, true, true, time);
-
-//  GUI * p(static_cast<GUI*>(userdata));
-//
-//  GtkWidget * header_pane;
-//  GtkTreeIter   iter;
-//
-//  header_pane = GTK_WIDGET(userdata);
-////  std::cerr<<"data : "<<(gchar*)seldata->data<<std::endl;
-//  Article a;
-//  a.message_id = Quark((gchar*)seldata->data);
-//  a.xref.insert ("2", "alt.binaries.test", 0);
-//  a.set_part_count (1);
-//  a.is_binary = true;
-//  std::vector<Article> v;
-//  v.push_back(a);
-//  SaveDialog * dialog = new SaveDialog (p->_prefs, p->_group_prefs, p->_data, p->_data,
-//                                        p->_cache, p->_data, p->_queue, get_window(p->_root), p->_header_pane->get_group(), v);
-//  gtk_widget_show (dialog->root());
-
-  gtk_drag_finish (context, true, false, time);
-
 }
 
 void GUI :: do_save_articles ()

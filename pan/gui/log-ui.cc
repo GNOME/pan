@@ -33,8 +33,6 @@ extern "C" {
 
 using namespace pan;
 
-///TODO : perhaps implement a tooltip for right-click?
-
 namespace
 {
   enum { COL_HIDDEN, COL_SEVERITY, COL_DATE, COL_MESSAGE, N_COLS };

@@ -58,6 +58,7 @@ namespace pan
       GUI (Data& data, Queue&, ArticleCache&, EncodeCache&, Prefs&, GroupPrefs&);
       virtual ~GUI ();
       GtkWidget* root () { return _root; }
+      typedef std::vector<std::string> strings_t;
 
     public: // ActionManager
       virtual bool is_action_active (const char * action_name) const;
@@ -218,14 +219,6 @@ namespace pan
       std::vector<ProgressView*> _views;
       std::list<Task*> _active_tasks;
       std::string _charset;
-
-      static gboolean dragged(GtkWidget *wgt, GdkDragContext *context, int x, int y,
-              GtkSelectionData *seldata, guint info, guint time,
-              gpointer userdata);
-
-      static void dragged_rcvd(GtkWidget *wgt, GdkDragContext *context, int x, int y,
-              GtkSelectionData *seldata, guint info, guint time,
-              gpointer userdata);
 
       void set_charset (const StringView& v);
 

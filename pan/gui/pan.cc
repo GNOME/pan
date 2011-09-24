@@ -360,7 +360,7 @@ main (int argc, char *argv[])
         queue.add_tasks (tasks, Queue::BOTTOM);
       }
 
-      // iff non-gui mode, contains a PanKiller ptr to quit pan on queue empty
+      // if non-gui mode, contains a PanKiller ptr to quit pan on queue empty
       std::auto_ptr<PanKiller> killer;
 
       // don't open the full-blown Pan, just act as a nzb client,
