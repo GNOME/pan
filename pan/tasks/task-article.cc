@@ -134,10 +134,15 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   // initialize our progress status...
   init_steps (all_bytes);
   set_step (all_bytes - need_bytes);
+  const char *artsub(article.subject.c_str());
   if (save_path.empty())
-    set_status (article.subject.c_str());
+    set_status (artsub);
   else
-    set_status_va (_("Saving %s"), article.subject.c_str());
+    set_status_va (_("Saving %s"), artsub);
+
+  char buf[2048];
+  g_snprintf(buf,sizeof(buf), _("Saving %s"), artsub);
+  verbose (buf);
 
   update_work ();
 }
@@ -351,11 +356,20 @@ TaskArticle :: on_worker_done (bool cancelled)
     // now that we're back in the main thread.
 
     foreach_const(Decoder::log_t, _decoder->log_severe, it)
+    {
       Log :: add_err(it->c_str());
+      verbose (it->c_str());
+    }
     foreach_const(Decoder::log_t, _decoder->log_errors, it)
+    {
       Log :: add_err(it->c_str());
+      verbose (it->c_str());
+    }
     foreach_const(Decoder::log_t, _decoder->log_infos, it)
+    {
       Log :: add_info(it->c_str());
+      verbose (it->c_str());
+    }
 
     if (_decoder->mark_read)
       _read.mark_read(_article);

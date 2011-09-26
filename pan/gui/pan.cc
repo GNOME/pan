@@ -34,7 +34,6 @@ extern "C" {
 #include <pan/general/file-util.h>
 #include <pan/general/worker-pool.h>
 #include <pan/tasks/socket-impl-gio.h>
-//#include <pan/tasks/socket-impl-openssl.h>
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>
 #include <pan/tasks/nzb.h>
@@ -232,6 +231,7 @@ namespace
     std::cerr << "Pan " << VERSION << "\n\n" <<
 _("General Options\n"
 "  -h, --help               Show this usage page.\n"
+"  --verbose                Be verbose (in non-GUI mode).\n"
 "\n"
 "URL Options\n"
 "  news:message-id          Show the specified article.\n"
@@ -256,7 +256,7 @@ main (int argc, char *argv[])
   g_thread_init (0);
   g_mime_init (GMIME_ENABLE_RFC2047_WORKAROUNDS);
 
-  bool gui(true), nzb(false);
+  bool gui(true), nzb(false), verbosed(false);
   std::string url;
   std::string groups;
   std::string nzb_output_path;
@@ -278,26 +278,31 @@ main (int argc, char *argv[])
       else _debug_flag = true;
     } else if (!strcmp (tok, "--nzb"))
       nzb = true;
-    else if (!strcmp (tok, "--version"))
-      { std::cerr << "Pan " << VERSION << '\n'; return 0; }
+    else if (!strcmp (tok, "--version") || !strcmp (tok, "-v"))
+      { std::cerr << "Pan " << VERSION << '\n'; return EXIT_SUCCESS; }
     else if (!strcmp (tok, "-o") && i<argc-1)
       nzb_output_path = argv[++i];
     else if (!memcmp (tok, "--output=", 9))
       nzb_output_path = tok+9;
     else if (!strcmp(tok,"-h") || !strcmp(tok,"--help"))
-      { usage (); return 0; }
+      { usage (); return EXIT_SUCCESS; }
+    else if (!strcmp(tok, "--verbose") )
+      verbosed = true;
     else {
       nzb = true;
       nzb_files.push_back (tok);
     }
   }
 
+  if (verbosed && !gui && nzb)
+    _verbose_flag = true;
+
   if (gui)
     gtk_init (&argc, &argv);
 
   if (!gui && nzb_files.empty() && url.empty() && groups.empty()) {
     std::cerr << _("Error: --no-gui used without nzb files or news:message-id.") << std::endl;
-    return 0;
+    return EXIT_FAILURE;
   }
 
   Log::add_info_va (_("Pan %s started"), VERSION);
@@ -319,17 +324,14 @@ main (int argc, char *argv[])
 
     if (nzb && data.get_servers().empty()) {
       std::cerr << _("Please configure Pan's news servers before using it as an nzb client.") << std::endl;
-       return 0;
+       return EXIT_FAILURE;
     }
     data.set_newsrc_autosave_timeout( prefs.get_int("newsrc-autosave-timeout-min", 10 ));
 
     // instantiate the queue...
     WorkerPool worker_pool (4, true);
 
-    //////////////////////////
-    /// DBG!!!!
     GIOChannelSocket::Creator socket_creator;
-    //////////////////////////
 
     Queue queue (data, data, &socket_creator, worker_pool,
                  prefs.get_flag ("work-online", true),
@@ -349,7 +351,7 @@ main (int argc, char *argv[])
         if (nzb_output_path.empty() && gui)
           nzb_output_path = GUI::prompt_user_for_save_path (NULL, prefs);
         if (nzb_output_path.empty()) // user pressed `cancel' when prompted
-          return 0;
+          return EXIT_FAILURE;
 
         // load the nzb files...
         std::vector<Task*> tasks;
@@ -358,7 +360,7 @@ main (int argc, char *argv[])
         queue.add_tasks (tasks, Queue::BOTTOM);
       }
 
-      // iff non-gui mode, contains a PanKiller ptr to quit pan on queue empty
+      // if non-gui mode, contains a PanKiller ptr to quit pan on queue empty
       std::auto_ptr<PanKiller> killer;
 
       // don't open the full-blown Pan, just act as a nzb client,
@@ -406,5 +408,5 @@ main (int argc, char *argv[])
 
   g_mime_shutdown ();
   Quark::dump (std::cerr);
-  return 0;
+  return EXIT_SUCCESS;
 }

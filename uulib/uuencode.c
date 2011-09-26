@@ -699,7 +699,7 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
   long rest = bpf;
   long current = 0;
 
-  ///TODO fixme!!
+  ///FIXME
 
   if (encoding == PT_ENCODED || encoding == QP_ENCODED)
     {
