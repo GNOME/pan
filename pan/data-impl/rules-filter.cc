@@ -60,13 +60,13 @@ RulesFilter :: test_article ( Data        & data,
 
   switch (rules._type)
   {
-    case RulesInfo::AGGREGATE_AND:
+    case RulesInfo::AGGREGATE__AND:
       pass = true;
       foreach (RulesInfo::aggregates_t, rules._aggregates, it)
         test_article (data, *it, group, article);
       break;
 
-    case RulesInfo::AGGREGATE_OR:
+    case RulesInfo::AGGREGATE__OR:
       if (rules._aggregates.empty())
         pass = true;
       else {
@@ -96,7 +96,7 @@ RulesFilter :: test_article ( Data        & data,
         _downloaded.insert (&article);
       break;
 
-    case RulesInfo::DELETE:
+    case RulesInfo::DELETE_ARTICLE:
       if (pass)
          _delete.insert (&article);
       break;

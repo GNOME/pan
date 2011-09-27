@@ -36,25 +36,22 @@ namespace pan
     public:
 
       /** The different type of filters we support. */
-      enum Type {
-        TYPE_ERR,
-        AGGREGATE_AND,
-        AGGREGATE_OR,
+      enum RulesType {
+        TYPE__ERR,
+        AGGREGATE__AND,
+        AGGREGATE__OR,
         MARK_READ,
         AUTOCACHE,
         AUTODOWNLOAD,
-        DELETE
+        DELETE_ARTICLE
       };
 
-    public:
-      bool empty() const { return _type == TYPE_ERR; }
+      /** Defines what type of filter this is. */
+      RulesType _type;
+
+      bool empty() const { return _type == TYPE__ERR; }
       RulesInfo () { clear(); }
       virtual ~RulesInfo () { }
-
-    public:
-
-      /** Defines what type of filter this is. */
-      Type _type;
 
       /** Convenience typedef. */
       typedef std::deque<RulesInfo> aggregates_t;
@@ -67,10 +64,10 @@ namespace pan
       bool _negate;
 
     private:
-      void set_type_is (Type type);
-      void set_type_le (Type type, unsigned long le);
-      void set_type_ge (Type type, unsigned long ge);
-      void set_type_bounds (Type type, int low, int high);
+      void set_type_is (RulesType type);
+      void set_type_le (RulesType type, unsigned long le);
+      void set_type_ge (RulesType type, unsigned long ge);
+      void set_type_bounds (RulesType type, int low, int high);
 
 
     public:

@@ -38,7 +38,7 @@ using namespace pan;
 void
 RulesInfo :: clear ()
 {
-  _type = RulesInfo::TYPE_ERR;
+  _type = RulesInfo::TYPE__ERR;
   _aggregates.clear ();
   _lb = _hb = 0;
   _ge = 0;
@@ -46,20 +46,20 @@ RulesInfo :: clear ()
 }
 
 void
-RulesInfo :: set_type_is (Type type) {
+RulesInfo :: set_type_is (RulesType type) {
    clear ();
    _type = type;
 }
 
 void
-RulesInfo :: set_type_ge (Type type, unsigned long ge) {
+RulesInfo :: set_type_ge (RulesType type, unsigned long ge) {
   clear ();
   _type = type;
   _ge = ge;
 }
 
 void
-RulesInfo :: set_type_le (Type type, unsigned long le) {
+RulesInfo :: set_type_le (RulesType type, unsigned long le) {
   clear ();
   _type = type;
   _negate = true;
@@ -67,7 +67,7 @@ RulesInfo :: set_type_le (Type type, unsigned long le) {
 }
 
 void
-RulesInfo :: set_type_bounds (Type type, int low, int high)
+RulesInfo :: set_type_bounds (RulesType type, int low, int high)
 {
   clear ();
   _type = type;
@@ -77,12 +77,12 @@ RulesInfo :: set_type_bounds (Type type, int low, int high)
 void
 RulesInfo :: set_type_aggregate_and () {
    clear ();
-   _type = AGGREGATE_AND;
+   _type = AGGREGATE__AND;
 }
 void
 RulesInfo :: set_type_aggregate_or () {
    clear ();
-   _type = AGGREGATE_OR;
+   _type = AGGREGATE__OR;
 }
 
 /****
@@ -111,5 +111,5 @@ RulesInfo :: set_type_dl_b  (int lb, int hb)
 void
 RulesInfo :: set_type_delete_b  (int lb, int hb)
 {
-   set_type_bounds (DELETE, lb, hb);
+   set_type_bounds (DELETE_ARTICLE, lb, hb);
 }
