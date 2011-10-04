@@ -128,6 +128,8 @@ namespace pan
       virtual void do_clear_article_cache ();
       virtual void do_mark_article_read ();
       virtual void do_mark_article_unread ();
+      virtual void do_mark_thread_read ();
+      virtual void do_mark_thread_unread ();
       virtual void do_post ();
       virtual void do_followup_to ();
       virtual void do_reply_to ();

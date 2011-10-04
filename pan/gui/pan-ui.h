@@ -72,6 +72,8 @@ namespace pan
     virtual void do_clear_article_cache () = 0;
     virtual void do_mark_article_read () = 0;
     virtual void do_mark_article_unread () = 0;
+    virtual void do_mark_thread_read () = 0;
+    virtual void do_mark_thread_unread () = 0;
     virtual void do_post () = 0;
     virtual void do_followup_to () = 0;
     virtual void do_reply_to () = 0;

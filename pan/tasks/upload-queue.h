@@ -32,7 +32,6 @@
 #include <pan/tasks/socket.h>
 #include <pan/tasks/adaptable-set.h>
 #include <pan/tasks/task-upload.h>
-#include <pan/tasks/task-multipost.h>
 #include <pan/tasks/encoder.h>
 #include <pan/tasks/task-weak-ordering.h>
 

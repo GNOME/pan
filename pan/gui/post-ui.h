@@ -25,7 +25,6 @@
 #include <pan/general/progress.h>
 #include <pan/tasks/queue.h>
 #include <pan/tasks/upload-queue.h>
-#include <pan/tasks/task-multipost.h>
 #include <pan/usenet-utils/text-massager.h>
 #include <pan/data/encode-cache.h>
 #include "group-prefs.h"

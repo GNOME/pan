@@ -798,6 +798,7 @@ namespace {
   struct NestedData {
     const HeaderPane * pane;
     articles_t articles;
+    bool mark_all; /* for mark_article_(un)read and mark_thread_(un)read */
   };
 }
 
@@ -807,13 +808,15 @@ HeaderPane :: get_nested_foreach (GtkTreeModel  * model,
                                   GtkTreeIter   * iter,
                                   gpointer        data) const
 {
-  articles_t& articles (*static_cast<articles_t*>(data));
+  NestedData& ndata (*static_cast<NestedData*>(data));
+  articles_t& articles (ndata.articles);
   articles.insert (get_article (model, iter));
   const bool expanded (gtk_tree_view_row_expanded (GTK_TREE_VIEW(_tree_view), path));
   GtkTreeIter child;
-  if (!expanded && gtk_tree_model_iter_children(model,&child,iter))
+  if ((!expanded || ndata.mark_all) && gtk_tree_model_iter_children(model,&child,iter))
     walk_and_collect (model, &child, articles);
 }
+
 void
 HeaderPane :: get_nested_foreach_static (GtkTreeModel* model,
                                          GtkTreePath* path,
@@ -821,14 +824,15 @@ HeaderPane :: get_nested_foreach_static (GtkTreeModel* model,
                                          gpointer data)
 {
   NestedData& ndata (*static_cast<NestedData*>(data));
-  ndata.pane->get_nested_foreach (model, path, iter, &ndata.articles);
+  ndata.pane->get_nested_foreach (model, path, iter, &ndata);
 }
 
 articles_t
-HeaderPane :: get_nested_selection () const
+HeaderPane :: get_nested_selection (bool do_mark_all) const
 {
   NestedData data;
   data.pane = this;
+  data.mark_all = do_mark_all;
   GtkTreeSelection * selection (gtk_tree_view_get_selection (GTK_TREE_VIEW(_tree_view)));
   gtk_tree_selection_selected_foreach (selection, get_nested_foreach_static, &data);
   return data.articles;
@@ -1642,6 +1646,8 @@ HeaderPane :: on_selection_changed_idle (gpointer self_gpointer)
     "show-selected-article-info",
     "mark-article-read",
     "mark-article-unread",
+    "mark-thread-read",
+    "mark-thread-unread",
     "watch-thread",
     "ignore-thread",
     "plonk",

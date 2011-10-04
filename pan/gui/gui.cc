@@ -1278,7 +1278,7 @@ void GUI :: do_delete_article ()
 
   if (do_delete)
   {
-    const std::set<const Article*> articles (_header_pane->get_nested_selection());
+    const std::set<const Article*> articles (_header_pane->get_nested_selection(false));
     _data.delete_articles (articles);
 
     const Quark mid (_body_pane->get_message_id());
@@ -1296,14 +1296,28 @@ void GUI :: do_clear_article_cache ()
 
 void GUI :: do_mark_article_read ()
 {
-  const std::set<const Article*> article_set (_header_pane->get_nested_selection ());
+  const std::set<const Article*> article_set (_header_pane->get_nested_selection (false));
   const std::vector<const Article*> tmp (article_set.begin(), article_set.end());
   _data.mark_read ((const Article**)&tmp.front(), tmp.size());
 }
 
 void GUI :: do_mark_article_unread ()
 {
-  const std::set<const Article*> article_set (_header_pane->get_nested_selection ());
+  const std::set<const Article*> article_set (_header_pane->get_nested_selection (false));
+  const std::vector<const Article*> tmp (article_set.begin(), article_set.end());
+  _data.mark_read ((const Article**)&tmp.front(), tmp.size(), false);
+}
+
+void GUI :: do_mark_thread_read ()
+{
+  const std::set<const Article*> article_set (_header_pane->get_nested_selection (true));
+  const std::vector<const Article*> tmp (article_set.begin(), article_set.end());
+  _data.mark_read ((const Article**)&tmp.front(), tmp.size());
+}
+
+void GUI :: do_mark_thread_unread ()
+{
+  const std::set<const Article*> article_set (_header_pane->get_nested_selection (true));
   const std::vector<const Article*> tmp (article_set.begin(), article_set.end());
   _data.mark_read ((const Article**)&tmp.front(), tmp.size(), false);
 }

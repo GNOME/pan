@@ -164,11 +164,6 @@ PostUI:: update_filequeue_label (GtkTreeSelection *selection)
     {
       TaskUpload * task (dynamic_cast<TaskUpload*>(*it));
       if (task) kb += task->_bytes/1024;
-      else
-      {
-        TaskMultiPost * task (dynamic_cast<TaskMultiPost*>(*it));
-        if (task) kb += task->_bytes/1024;
-      }
     }
     g_snprintf(str,sizeof(str), _("Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."), tasks.size(), kb, kb/1024.0f);
     gtk_label_set_text (GTK_LABEL(_filequeue_label), str);
@@ -468,7 +463,7 @@ namespace
     { "always-run-editor", 0, N_("Always Run Editor"), 0, 0, G_CALLBACK(do_edit2), false },
     { "remember-charset", 0, N_("Remember Character Encoding for this Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
 //    { "inline-or-bulk", 0, N_("Attachments are inlined with Message"), 0, 0, G_CALLBACK(on_inline_toggled), false },
-    { "master-reply", 0, N_("All Attachments are threaded replies to message"), 0, 0, G_CALLBACK(on_mr_toggled), true },
+    { "master-reply", 0, N_("Thread attached replies"), 0, 0, G_CALLBACK(on_mr_toggled), true },
     { "spellcheck", 0, N_("Check _Spelling"), 0, 0, G_CALLBACK(on_spellcheck_toggled), true }
   };
 
@@ -1134,24 +1129,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
         t->add_listener(this);
       }
     }
-    else    // attachments are all inlined in ONE big gmimemultipart
-    {
-      _running_uploads = 1;
-      quarks_t filenames;
-      GMimeMessage* msg(new_message_from_ui(UPLOADING));
-      GMimeMultipart * multi (g_mime_multipart_new_with_subtype("mixed"));
-      g_mime_multipart_insert(multi,0,GMIME_OBJECT(msg));
-
-      TaskMultiPost * mp = new TaskMultiPost(filenames, profile.posting_server, a, multi, this);
-      foreach (PostUI::tasks_t, tasks, it)
-      {
-        TaskUpload * t (dynamic_cast<TaskUpload*>(*it));
-        mp->_filenames.insert(Quark(t->_filename.c_str()));
-      }
-      mp->dbg();
-      _upload_queue.clear();
-    }
-
   }
 
   /**

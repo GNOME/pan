@@ -113,7 +113,8 @@ namespace pan
       const Article* get_first_selected_article () const;
       std::set<const Article*> get_full_selection () const;
       std::vector<const Article*> get_full_selection_v () const;
-      std::set<const Article*> get_nested_selection () const;
+      /** Selects nested articles for marking/deletion. 'do_mark_all' specifies whether or not to mark all articles in the thread */
+      std::set<const Article*> get_nested_selection (bool do_mark_all) const;
       bool set_group (const Quark& group);
       const Quark& get_group () { return _group; }
 

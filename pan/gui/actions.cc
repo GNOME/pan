@@ -152,6 +152,8 @@ namespace
   void do_clear_article_cache          (GtkAction*) { pan_ui->do_clear_article_cache(); }
   void do_mark_article_read            (GtkAction*) { pan_ui->do_mark_article_read(); }
   void do_mark_article_unread          (GtkAction*) { pan_ui->do_mark_article_unread(); }
+  void do_mark_thread_read             (GtkAction*) { pan_ui->do_mark_thread_read(); }
+  void do_mark_thread_unread           (GtkAction*) { pan_ui->do_mark_thread_unread(); }
   void do_post                         (GtkAction*) { pan_ui->do_post(); }
   void do_followup_to                  (GtkAction*) { pan_ui->do_followup_to(); }
   void do_reply_to                     (GtkAction*) { pan_ui->do_reply_to(); }
@@ -570,6 +572,17 @@ namespace
       N_("Mark Article as _Unread"), "<control>M",
       NULL,
       G_CALLBACK(do_mark_article_unread) },
+
+    ///TODO create icons for the next two actions
+    { "mark-thread-read", "ICON_ARTICLE_READ",
+      N_("_Mark Thread as Read"), "<Shift>T",
+      NULL,
+      G_CALLBACK(do_mark_thread_read) },
+
+    { "mark-thread-unread", "ICON_ARTICLE_UNREAD",
+      N_("Mark Thread as _Unread"), "<control><Shift>T",
+      NULL,
+      G_CALLBACK(do_mark_thread_unread) },
 
     { "post", "ICON_COMPOSE_POST",
       N_("_Post to Newsgroup"), "P",

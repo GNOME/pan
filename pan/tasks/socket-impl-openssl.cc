@@ -421,6 +421,8 @@ namespace
     X509 *cert;
     const char *errstr;
 
+    if (!handle || !chan->ssl) return -1;
+
     ret = SSL_connect(chan->ssl);
     if (ret <= 0) {
       err = SSL_get_error(chan->ssl, ret);
