@@ -34,7 +34,6 @@ extern "C" {
 #include <pan/general/file-util.h>
 #include <pan/general/worker-pool.h>
 #include <pan/tasks/socket-impl-gio.h>
-#include <pan/tasks/socket-impl-openssl.h>
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>
 #include <pan/tasks/nzb.h>
