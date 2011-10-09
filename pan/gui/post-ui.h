@@ -94,7 +94,7 @@ namespace pan
       void move_down     ();
       void move_top      ();
       void move_bottom   ();
-      void select_encode (GtkAction*);
+//      void select_encode (GtkAction*);  deactivated for now
 
       static void do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g);
       static gboolean on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gpointer userdata);
@@ -188,12 +188,11 @@ namespace pan
       GtkWidget* create_filequeue_status_bar ();
       GtkWidget * _filequeue_eventbox;
       GtkWidget * _filequeue_label;
-      void update_filequeue_label (GtkTreeSelection *selection=NULL);
+      void update_filequeue_label (GtkTreeSelection *selection=0);
 
       GtkWidget* create_parts_tab ();
-      GtkWidget* create_log_tab ();
-
-      void update_filequeue_tab();
+//      GtkWidget* create_log_tab ();
+//      void update_filequeue_tab();
 
     private:
       std::string utf8ize (const StringView&) const;

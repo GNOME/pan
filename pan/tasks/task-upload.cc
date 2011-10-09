@@ -87,8 +87,7 @@ TaskUpload :: TaskUpload (const std::string         & filename,
                           Article                     article,
                           UploadInfo                  format,
                           GMimeMessage *              msg,
-                          Progress::Listener        * listener,
-                          const TaskUpload::EncodeMode  enc):
+                          Progress::Listener        * listener):
   Task ("UPLOAD", get_description(filename.c_str())),
   _filename(filename),
   _basename (g_get_basename(filename.c_str())),
@@ -99,7 +98,6 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _author(article.author.to_string()),
   _encoder(0),
   _encoder_has_run (false),
-  _encode_mode(enc),
   _all_bytes(0),
   _bpf(format.bpf),
   _queue_pos(0),
@@ -123,13 +121,13 @@ TaskUpload :: TaskUpload (const std::string         & filename,
 
 namespace
 {
-  const char * build_subject_line (char* buf, int size, std::string& s, std::string& n, int p, int tp, TaskUpload::EncodeMode em)
+  const char * build_subject_line (char* buf, int size, std::string& s, std::string& n, int p, int tp)
   {
 
       if (tp != 1)
-        g_snprintf(buf, size,"%s - \"%s\" %s (%03d/%03d)", s.c_str(), n.c_str(), em == TaskUpload::YENC ? "yEnc" : "", p, tp );
+        g_snprintf(buf, size,"%s - \"%s\" yEnc (%03d/%03d)", s.c_str(), n.c_str(), p, tp );
       else
-        g_snprintf(buf, size,"%s - \"%s\"  %s", s.c_str(), n.c_str(), em == TaskUpload::YENC ? "yEnc" : "");
+        g_snprintf(buf, size,"%s - \"%s\"  yEnc", s.c_str(), n.c_str());
 
     return buf;
   }
@@ -147,7 +145,7 @@ TaskUpload :: build_needed_tasks()
 
   /* build new master subject */
   char buf[4096];
-  _master_subject = build_subject_line (buf, 4096, _subject, _basename, 1, _total_parts, _encode_mode);
+  _master_subject = build_subject_line (buf, 4096, _subject, _basename, 1, _total_parts);
 }
 
 void
@@ -201,7 +199,7 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
     //modify subject
     char buf[4096];
     if (_queue_pos != -1)
-      g_mime_message_set_subject (msg, build_subject_line (buf, 4096, _subject, _basename, n->partno, _total_parts, _encode_mode));
+      g_mime_message_set_subject (msg, build_subject_line (buf, 4096, _subject, _basename, n->partno, _total_parts));
 
     //modify references header
     std::string mids(_references);
@@ -411,7 +409,7 @@ TaskUpload :: use_encoder (Encoder* encoder)
   init_steps(100);
   _state.set_working();
 
-  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _bpf, _encode_mode);
+  _encoder->enqueue (this, &_cache, &_article, _filename, _basename, _master_subject, _bpf);
   debug ("encoder thread was free, enqueued work");
 }
 

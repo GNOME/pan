@@ -85,12 +85,6 @@ namespace pan
 
       typedef std::map<int, Needed> needed_t;
 
-      enum EncodeMode
-      {
-        PLAIN,
-        YENC
-      };
-
       // life cycle
       TaskUpload ( const std::string         & filename,
                    const Quark               & server,
@@ -98,8 +92,7 @@ namespace pan
                    Article                     article,
                    UploadInfo                  format,
                    GMimeMessage *              msg=0,
-                   Progress::Listener        * listener= 0,
-                   const EncodeMode enc= YENC);
+                   Progress::Listener        * listener= 0);
 
       virtual ~TaskUpload ();
 
@@ -107,24 +100,22 @@ namespace pan
       unsigned long get_bytes_remaining () const;
       void stop ();
       const std::string& get_basename()  { return  _basename; }
-      std::string enc_mode_to_str(EncodeMode& e)
-      {
-        std::string res;
-        switch (e)
-        {
-            case YENC:
-              res += "yEnc";
-              break;
-            case PLAIN:
-              break;
-            default:
-              res += "yEnc";
-              break;
-        }
-        return res;
-      }
-
-      std::string encode_mode()  { return enc_mode_to_str(_encode_mode); }
+//      std::string enc_mode_to_str(EncodeMode& e)
+//      {
+//        std::string res;
+//        switch (e)
+//        {
+//            case YENC:
+//              res += "yEnc";
+//              break;
+//            case PLAIN:
+//              break;
+//            default:
+//              res += "yEnc";
+//              break;
+//        }
+//        return res;
+//      }
 
       /** only call this for tasks in the NEED_ENCODE state
        * attempts to acquire the encoder thread and start encoding
@@ -158,7 +149,6 @@ namespace pan
       bool _encoder_has_run;
       std::string _filename;
       std::string _basename;
-      EncodeMode _encode_mode;
       std::string _subject, _master_subject, _author;
       std::string _save_file;
       int _total_parts, _needed_parts;

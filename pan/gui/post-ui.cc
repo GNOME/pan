@@ -173,28 +173,27 @@ PostUI:: update_filequeue_label (GtkTreeSelection *selection)
 ****
 ***/
 
-/* only used if the encode mode has changed, would be too expensive for repetitive calls */
-void
-PostUI :: update_filequeue_tab()
-{
-   GtkListStore *store = GTK_LIST_STORE(
-                      gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store)));
-   gtk_list_store_clear(store);
-   GtkTreeIter iter;
-   int i(0);
-   TaskUpload * task;
-   while (task = dynamic_cast<TaskUpload*>(_upload_queue[i++]))
-   {
-       gtk_list_store_insert (store, &iter, i);
-       gtk_list_store_set (store, &iter,
-                          0, i+1,
-                          1, task->_subject.c_str(),
-                          2, task,
-                          3, task->_bytes/1024,
-                          4, task->encode_mode().c_str(),
-                          -1);
-   }
-}
+//* only used if the encode mode has changed, would be too expensive for repetitive calls */
+//void
+//PostUI :: update_filequeue_tab()
+//{
+//   GtkListStore *store = GTK_LIST_STORE(
+//                      gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store)));
+//   gtk_list_store_clear(store);
+//   GtkTreeIter iter;
+//   int i(0);
+//   TaskUpload * task;
+//   while (task = dynamic_cast<TaskUpload*>(_upload_queue[i++]))
+//   {
+//       gtk_list_store_insert (store, &iter, i);
+//       gtk_list_store_set (store, &iter,
+//                          0, i+1,
+//                          1, task->_subject.c_str(),
+//                          2, task,
+//                          3, task->_bytes/1024
+//                          -1);
+//   }
+//}
 
 void
 PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
@@ -214,8 +213,7 @@ PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
                       0, pos+1,
                       1, task->_subject.c_str(),
                       2, task,
-                      3, task->_bytes/1024,
-                      4, task->encode_mode().c_str(),
+                      3, task->_bytes/1024.0f,
                       -1);
   }
 
@@ -405,7 +403,7 @@ namespace
   void do_move_down          (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->move_down(); }
   void do_move_top           (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->move_top(); }
   void do_move_bottom        (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->move_bottom(); }
-  void do_select_encode      (GtkAction* a, gpointer p) { static_cast<PostUI*>(p)->select_encode(a); }
+//  void do_select_encode      (GtkAction* a, gpointer p) { static_cast<PostUI*>(p)->select_encode(a); }
 
   GtkActionEntry filequeue_popup_entries[] =
   {
@@ -443,17 +441,17 @@ namespace
     { "move-bottom", NULL,
       N_("Move to Bottom"), "",
       N_("Move to Bottom"),
-      G_CALLBACK(do_move_bottom) },
+      G_CALLBACK(do_move_bottom) }
 
-    { "yenc", NULL,
-      N_("yEnc-Encode"), "",
-      N_("yEnc-Encode"),
-      G_CALLBACK(do_select_encode) },
-
-    { "plain", NULL,
-      N_("No encoding (plain)"), "",
-      N_("No encoding (plain)"),
-      G_CALLBACK(do_select_encode) }
+//    { "yenc", NULL,
+//      N_("yEnc-Encode"), "",
+//      N_("yEnc-Encode"),
+//      G_CALLBACK(do_select_encode) },
+//
+//    { "plain", NULL,
+//      N_("No encoding (plain)"), "",
+//      N_("No encoding (plain)"),
+//      G_CALLBACK(do_select_encode) }
 
   };
 
@@ -2498,7 +2496,7 @@ PostUI :: create_filequeue_tab ()
   gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
 
   //add filestore
-  list_store = gtk_list_store_new (5, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_UINT, G_TYPE_STRING);
+  list_store = gtk_list_store_new (4, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_FLOAT);
   w = _filequeue_store = gtk_tree_view_new_with_model (GTK_TREE_MODEL(list_store));
 
   // add columns
@@ -2511,8 +2509,8 @@ PostUI :: create_filequeue_tab ()
   gtk_tree_view_insert_column_with_data_func(t, 2, (_("Filename")), renderer, render_filename, 0, 0);
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_insert_column_with_attributes (t, 3, (_("Size (kB)")),renderer,"text", 3,NULL);
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_insert_column_with_attributes (t, 4, (_("Encode Mode")),renderer,"text", 4,NULL);
+//  renderer = gtk_cell_renderer_text_new ();
+//  gtk_tree_view_insert_column_with_attributes (t, 4, (_("Encode Mode")),renderer,"text", 4,NULL);
 
   // connect signals for popup menu
   g_signal_connect (w, "popup-menu", G_CALLBACK(on_popup_menu), this);
@@ -2801,26 +2799,26 @@ PostUI :: move_bottom (void)
   _upload_queue.move_bottom (get_selected_files());
 }
 
-void
-PostUI :: select_encode (GtkAction* a)
-{
-    tasks_t tasks = get_selected_files();
-    const gchar* name = gtk_action_get_name(a);
-
-    TaskUpload::EncodeMode tmp;
-    if (!strcmp(name, "yenc"))
-        tmp = TaskUpload::YENC;
-    if (!strcmp(name, "plain"))
-        tmp = TaskUpload::PLAIN;
-
-    struct stat sb;
-    foreach(tasks_t, tasks, it)
-    {
-      TaskUpload * tmp2 (dynamic_cast<TaskUpload*>(*it));
-      if (tmp2) tmp2->_encode_mode = tmp;
-    }
-    update_filequeue_tab();
-}
+//void
+//PostUI :: select_encode (GtkAction* a)
+//{
+//    tasks_t tasks = get_selected_files();
+//    const gchar* name = gtk_action_get_name(a);
+//
+//    TaskUpload::EncodeMode tmp;
+//    if (!strcmp(name, "yenc"))
+//        tmp = TaskUpload::YENC;
+//    if (!strcmp(name, "plain"))
+//        tmp = TaskUpload::PLAIN;
+//
+//    struct stat sb;
+//    foreach(tasks_t, tasks, it)
+//    {
+//      TaskUpload * tmp2 (dynamic_cast<TaskUpload*>(*it));
+//      if (tmp2) tmp2->_encode_mode = tmp;
+//    }
+//    update_filequeue_tab();
+//}
 
 int
 PostUI :: get_total_parts(const char* file)

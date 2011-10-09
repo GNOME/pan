@@ -233,7 +233,8 @@ ProfileDialog :: run_until_valid_or_cancel (ProfileDialog& pd)
   {
     const int response (gtk_dialog_run (GTK_DIALOG(pd.root())));
 
-    if (response == GTK_RESPONSE_CANCEL)
+    /* abort profile creation on cancel and closing of the window */
+    if (response == GTK_RESPONSE_CANCEL || response == GTK_RESPONSE_DELETE_EVENT)
       return false;
 
     std::string name;

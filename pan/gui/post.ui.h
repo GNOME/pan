@@ -1,3 +1,4 @@
+// "      <menuitem action='wrapselected' />\n"  doesnt exist yet, so deactivated for now....
 const char * fallback_post_ui =
 "<ui>\n"
 "  <menubar name='post'>\n"
@@ -25,7 +26,6 @@ const char * fallback_post_ui =
 "      <menuitem action='always-run-editor' />\n"
 "      <separator />\n"
 "      <menuitem action='wrap' />\n"
-"      <menuitem action='wrapselected' />\n"
 "      <menuitem action='spellcheck' />\n"
 "      <separator />\n"
 "      <menuitem action='manage-profiles' />\n"
@@ -58,10 +58,6 @@ const char * fallback_post_ui =
 "    <separator />\n"
 "    <menuitem action='move-top' />\n"
 "    <menuitem action='move-bottom' />\n"
-"    <separator />\n"
-"    <menuitem action='yenc' />\n"
-"    <menuitem action='plain' />\n"
-"    <separator />\n"
 "  </popup>\n"
 "\n"
 "</ui>\n";

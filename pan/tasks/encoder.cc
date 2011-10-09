@@ -66,8 +66,7 @@ Encoder :: enqueue (TaskUpload                      * task,
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & subject,
-                    int                               bpf,
-                    const TaskUpload::EncodeMode      enc)
+                    int                               bpf)
 
 {
   disable_progress_update ();
@@ -75,7 +74,6 @@ Encoder :: enqueue (TaskUpload                      * task,
   this->task = task;
   this->basename = basename;
   this->filename = filename;
-  this->encode_mode = enc;
   this->needed = &task->_needed;
   this->cache = cache;
   this->article = article;
@@ -152,18 +150,6 @@ Encoder :: do_work()
       int enc(YENC_ENCODED);
       std::ofstream out;
       std::ifstream in;
-      switch (encode_mode)
-      {
-          case TaskUpload::YENC:
-              enc = YENC_ENCODED;
-              break;
-          case TaskUpload::PLAIN:
-              enc = PT_ENCODED;
-              break;
-          default:
-              enc = YENC_ENCODED;
-              break;
-      }
 
       fp = cache->get_fp_from_mid(it->second.message_id);
       if (!fp)
@@ -173,10 +159,9 @@ Encoder :: do_work()
         continue;
       }
 
-      res = UUEncodePartial_byFSize (fp, NULL, (char*)filename.c_str(), enc , (char*)basename.c_str(), 0, 0, cnt, bpf ,&crc);
+      res = UUEncodePartial_byFSize (fp, NULL, (char*)filename.c_str(), YENC_ENCODED , (char*)basename.c_str(), 0, 0, cnt, bpf ,&crc);
 
       if (fp) fclose(fp);
-_no_encode:
       if (res != UURET_CONT && res != UURET_OK) break;
       cache->finalize(it->second.message_id);
       cache->get_filename(cachename, Quark(it->second.message_id));

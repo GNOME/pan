@@ -41,7 +41,7 @@ extern "C" {
 namespace pan
 {
   /**
-   * Encodes attachments (yEnc, MIME PT) for posting to usenet groups.
+   * Encodes attachments (yEnc) for posting to usenet groups.
    *
    * @author Heinrich Mueller <eddie_v@gmx.de>
    * @author Calin Culianu <calin@ajvar.org>
@@ -66,8 +66,7 @@ namespace pan
                     std::string                     & filename,
                     std::string                     & basename,
                     std::string                     & subject,
-                    int                               bpf,
-                    const TaskUpload::EncodeMode      enc = TaskUpload::YENC);
+                    int                               bpf);
 
     public:
 
@@ -83,7 +82,6 @@ namespace pan
       friend class TaskUpload;
       int parts;
       TaskUpload * task;
-      TaskUpload::EncodeMode encode_mode;
       std::string   basename, filename, subject;
       int bpf;
       EncodeCache * cache;
