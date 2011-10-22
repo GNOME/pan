@@ -328,10 +328,17 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     HIG::workarea_add_section_divider (t, &row);
     HIG::workarea_add_section_title (t, &row, _("Security"));
     HIG::workarea_add_section_spacer (t, row, 2);
+
     struct { int o; const char * str; } ssl_items[] = {
+#ifdef HAVE_OPENSSL
       { 0, N_("Use Plaintext (Unsecured) Connections") },
       { 1, N_("Use Secure TLS (SSL) Connections") }
+
+#else
+      { 0, N_("Use Plaintext (Unsecured) Connections") }
+#endif
     };
+
     store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     for (unsigned int i(0); i<G_N_ELEMENTS(ssl_items); ++i) {
       GtkTreeIter iter;

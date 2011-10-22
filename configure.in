@@ -13,7 +13,8 @@ else
 dnl git-dir is used for building outside the src tree
 	GIT_HASH=`git --git-dir=$srcdir/.git log -1 --pretty=format:%h 2> /dev/null`
 	if test ! -z $GIT_HASH; then
-		GIT_BRANCH=`git --git-dir=$srcdir/.git symbolic-ref HEAD 2> /dev/null | awk -F/ '{print $NF}'`
+dnl		GIT_BRANCH=`git --git-dir=$srcdir/.git symbolic-ref HEAD 2> /dev/null | awk -F/ '{print $NF}'`
+      GIT_BRANCH=`git config --get remote.origin.url 2> /dev/null `
 	fi
 fi
 if test ! -z $GIT_HASH; then
@@ -49,10 +50,12 @@ GMIME_REQUIRED=2.4.0
 GTK_REQUIRED=2.16.0
 GTK3_REQUIRED=3.0.0
 GTKSPELL_REQUIRED=2.0.7
+OPENSSL_REQUIRED=1.0.0
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GMIME_REQUIRED)
 AC_SUBST(GTK_REQUIRED)
 AC_SUBST(GTKSPELL_REQUIRED)
+AC_SUBST(OPENSSL_REQUIRED)
 
 AC_PROG_CXX
 AC_HEADER_STDC
@@ -97,6 +100,16 @@ if test "x$want_gtkspell" = "xyes" ; then
 	                  [gtkspell_msg=yes
 	                  AC_DEFINE(HAVE_GTKSPELL,[1],[Spellcheck Library])],
 	                  [gtkspell_msg=no
+	                  AC_MSG_RESULT(no)])
+fi
+
+openssl_msg=no
+AC_ARG_WITH(openssl, AC_HELP_STRING([--with-openssl], [Enable OpenSSL support]), [want_openssl=$withval], [want_openssl=no])
+if test "x$want_openssl" = "xyes" ; then
+	PKG_CHECK_MODULES([OPENSSL], [openssl >= $OPENSSL_REQUIRED],
+	                  [openssl_msg=yes
+	                  AC_DEFINE(HAVE_OPENSSL,[1],[OpenSSL 3.0])],
+	                  [openssl_msg=no
 	                  AC_MSG_RESULT(no)])
 fi
 
@@ -181,5 +194,7 @@ Configuration:
         Source code location:	${srcdir}
         Compiler:		${CXX}
         With GtkSpell:          ${gtkspell_msg}
+        With GTK3:              ${gtk_msg}
+        With OpenSSL 3.0:       ${openssl_msg}
 
 "
