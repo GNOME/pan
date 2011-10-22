@@ -26,6 +26,7 @@
 #include <pan/data/server-info.h>
 #include <pan/tasks/socket.h>
 #include <pan/tasks/nntp.h>
+#include <pan/tasks/socket-impl-main.h>
 
 namespace pan
 {
@@ -45,7 +46,7 @@ namespace pan
 
       NNTP_Pool (const Quark       & server,
                  ServerInfo        & server_info,
-                 Socket::Creator   *);
+                 SocketCreator     *);
 
       virtual ~NNTP_Pool ();
 
@@ -92,7 +93,7 @@ namespace pan
 
       ServerInfo& _server_info;
       const Quark _server;
-      Socket::Creator * _socket_creator;
+      SocketCreator * _socket_creator;
       int _pending_connections;
 
       struct PoolItem {

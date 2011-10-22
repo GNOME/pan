@@ -33,7 +33,7 @@ using namespace pan;
 
 Queue :: Queue (ServerInfo         & server_info,
                 TaskArchive        & archive,
-                Socket::Creator    * socket_creator,
+                SocketCreator      * socket_creator,
                 WorkerPool         & pool,
                 bool                 online,
                 int                  save_delay_secs):

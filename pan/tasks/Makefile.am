@@ -1,5 +1,5 @@
 AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@
-AM_LDFLAGS = ../../uulib/libuu.a -lz 
+AM_LDFLAGS = ../../uulib/libuu.a -lz -lssl -lcrypto
 
 noinst_LIBRARIES = libtasks.a
 
@@ -17,6 +17,8 @@ libtasks_a_SOURCES = \
   queue.cc \
   upload-queue.cc \
   socket.cc \
+  socket-impl-openssl.cc \
+  socket-impl-main.cc \
   socket-impl-gio.cc \
   socket-impl-scripted.cc \
   nntp-pool.cc
@@ -40,6 +42,8 @@ noinst_HEADERS = \
   queue.h  \
   upload-queue.h \
   socket.h \
+  socket-impl-main.h \
+  socket-impl-openssl.cc \
   socket-impl-gio.h \
   socket-impl-scripted.h \
   nntp-pool.h

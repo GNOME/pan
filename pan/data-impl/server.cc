@@ -158,6 +158,16 @@ DataImpl :: set_server_rank (const Quark   & server,
 }
 
 void
+DataImpl :: set_server_ssl_support (const Quark   & server,
+                                    int             ssl)
+{
+  Server * s (find_server (server));
+  assert (s != 0);
+  s->ssl_support = ssl;
+
+}
+
+void
 DataImpl :: save_server_info (const Quark& server)
 {
   Server * s (find_server (server));
@@ -204,6 +214,16 @@ DataImpl :: get_server_address (const Quark& server) const
     str = x.str();
   }
   return str;
+}
+
+bool
+DataImpl :: get_server_ssl_support (const Quark & server) const
+{
+  bool retval (false);
+  const Server * s (find_server (server));
+  if (s != 0)
+    retval = (s->ssl_support != 0);
+  return retval;
 }
 
 int
@@ -330,6 +350,7 @@ DataImpl :: load_server_properties (const DataIO& source)
     s.max_connections = to_int (kv["connection-limit"], 2);
     s.article_expiration_age = to_int(kv["expire-articles-n-days-old"], 31);
     s.rank = to_int(kv["rank"], 1);
+    s.ssl_support = to_int(kv["use-ssl"], 0);
     s.newsrc_filename = kv["newsrc"];
     if (s.newsrc_filename.empty()) { // set a default filename
       std::ostringstream o;
@@ -382,7 +403,8 @@ DataImpl :: save_server_properties (DataIO& data_io) const
          << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
          << indent(depth) << "<connection-limit>" << s->max_connections << "</connection-limit>\n"
          << indent(depth) << "<newsrc>" << s->newsrc_filename << "</newsrc>\n"
-         << indent(depth) << "<rank>" << s->rank << "</rank>\n";
+         << indent(depth) << "<rank>" << s->rank << "</rank>\n"
+         << indent(depth) << "<use-ssl>" << s->ssl_support << "</use-ssl>\n";
 
     *out << indent(--depth) << "</server>\n";
   }

@@ -44,16 +44,16 @@ extern "C" {
   #define _WIN32_WINNT 0x0501
   #include <ws2tcpip.h>
   #undef gai_strerror
-  /*
+
   #define gai_strerror(i) gai_strerror_does_not_link (i)
-  const char*
-  gai_strerror_does_not_link (int errval)
-  {
-    char buf[32];
-    g_snprintf (buf, sizeof(buf), "Winsock error %d", errval);
-    return buf;
-  }
-  */
+//  const char*
+//  gai_strerror_does_not_link (int errval)
+//  {
+//    char buf[32];
+//    g_snprintf (buf, sizeof(buf), "Winsock error %d", errval);
+//    return buf;
+//  }
+
   const char*
   get_last_error (int err)
   {
@@ -88,75 +88,10 @@ extern "C" {
 #include <pan/general/log.h>
 #include <pan/general/string-view.h>
 #include <pan/usenet-utils/gnksa.h>
-#include "socket-impl-gio.h"
 #include "socket-impl-openssl.h"
+#include "socket-impl-main.h"
 
 using namespace pan;
-
-namespace
-{
-  typedef int (*t_getaddrinfo)(const char *,const char *, const struct addrinfo*, struct addrinfo **);
-  t_getaddrinfo p_getaddrinfo (0);
-
-  typedef void (*t_freeaddrinfo)(struct addrinfo*);
-  t_freeaddrinfo p_freeaddrinfo (0);
-
-  void ensure_module_inited (void)
-  {
-    bool inited (false);
-
-    if (!inited)
-    {
-      p_freeaddrinfo=NULL;
-      p_getaddrinfo=NULL;
-
-#ifdef G_OS_WIN32
-      WSADATA wsaData;
-      WSAStartup(MAKEWORD(2,2), &wsaData);
-
-      char sysdir[MAX_PATH], path[MAX_PATH+8];
-
-      if(GetSystemDirectory(sysdir,MAX_PATH)!=0)
-      {
-        HMODULE lib=NULL;
-        FARPROC pfunc=NULL;
-        const char *libs[]={"ws2_32","wship6",NULL};
-
-        for(const char **p=libs;*p!=NULL;++p)
-        {
-          g_snprintf(path,MAX_PATH+8,"%s\\%s",sysdir,*p);
-          lib=LoadLibrary(path);
-          if(!lib)
-            continue;
-          pfunc=GetProcAddress(lib,"getaddrinfo");
-          if(!pfunc)
-          {
-            FreeLibrary(lib);
-            lib=NULL;
-            continue;
-          }
-          p_getaddrinfo=reinterpret_cast<t_getaddrinfo>(pfunc);
-          pfunc=GetProcAddress(lib,"freeaddrinfo");
-          if(!pfunc)
-          {
-            FreeLibrary(lib);
-            lib=NULL;
-            p_getaddrinfo=NULL;
-            continue;
-          }
-          p_freeaddrinfo=reinterpret_cast<t_freeaddrinfo>(pfunc);
-          break;
-        }
-      }
-#else
-      p_freeaddrinfo=::freeaddrinfo;
-      p_getaddrinfo=::getaddrinfo;
-#endif
-      inited = true;
-    }
-  }
-
-}
 
 /****
 *****
@@ -169,12 +104,13 @@ GIOChannelSocketSSL :: GIOChannelSocketSSL ():
    _tag_watch (0),
    _tag_timeout (0),
    _listener (0),
-   _out_buf (g_string_new (NULL)),
-   _in_buf (g_string_new (NULL)),
+   _out_buf (g_string_new (0)),
+   _in_buf (g_string_new (0)),
    _io_performed (false)
 {
    debug ("GIOChannelSocketSSL ctor " << (void*)this);
 }
+
 
 GIOChannel *
 GIOChannelSocketSSL :: create_channel (const StringView& host_in, int port, std::string& setme_err)
@@ -241,7 +177,7 @@ GIOChannelSocketSSL :: create_channel (const StringView& host_in, int port, std:
     hints.ai_family = 0;
     hints.ai_socktype = SOCK_STREAM;
     struct addrinfo * ans;
-    err = p_getaddrinfo (host.c_str(), portbuf, &hints, &ans);
+    err = ::getaddrinfo (host.c_str(), portbuf, &hints, &ans);
     if (err != 0) {
       char buf[512];
       snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
@@ -276,7 +212,7 @@ GIOChannelSocketSSL :: create_channel (const StringView& host_in, int port, std:
     }
 
     // cleanup
-    p_freeaddrinfo (ans);
+    ::freeaddrinfo (ans);
   }
 
   // create the giochannel...
@@ -295,12 +231,12 @@ GIOChannelSocketSSL :: create_channel (const StringView& host_in, int port, std:
   GIOChannel * channel (0);
 #ifndef G_OS_WIN32
   channel = g_io_channel_unix_new (sockfd);
-  g_io_channel_set_flags (channel, G_IO_FLAG_NONBLOCK, NULL);
+  g_io_channel_set_flags (channel, G_IO_FLAG_NONBLOCK, 0);
 #else
   channel = g_io_channel_win32_new_socket (sockfd);
 #endif
-  if (g_io_channel_get_encoding (channel) != NULL)
-    g_io_channel_set_encoding (channel, NULL, NULL);
+  if (g_io_channel_get_encoding (channel) != 0)
+    g_io_channel_set_encoding (channel, 0, 0);
   g_io_channel_set_buffered (channel, true);
   g_io_channel_set_line_term (channel, "\n", 1);
   return ssl_get_iochannel(channel);
@@ -316,6 +252,103 @@ namespace
   }
 }
 
+namespace
+{
+
+  typedef struct
+  {
+    GIOChannel pad;
+    gint fd;
+    GIOChannel *giochan;
+    SSL *ssl;
+    SSL_CTX *ctx;
+    unsigned int verify:1;
+  } GIOSSLChannel;
+
+  static pthread_mutex_t *lock_cs;
+
+  void gio_lock(int mode, int type, const char *file, int line)
+  {
+    if (mode & CRYPTO_LOCK)
+      pthread_mutex_lock(&(lock_cs[type]));
+    else
+      pthread_mutex_unlock(&(lock_cs[type]));
+  }
+
+  void thread_setup(void) {
+
+    lock_cs = (pthread_mutex_t*)malloc(CRYPTO_num_locks() * sizeof(pthread_mutex_t));
+    for (int i=0; i<CRYPTO_num_locks(); i++)
+      if (pthread_mutex_init(&(lock_cs[i]),0) != 0)
+        g_warning("error initialing mutex!");
+
+    // CRYPTO_set_id_callback((unsigned long (*)())pthreads_thread_id);
+    CRYPTO_set_locking_callback(gio_lock);
+  }
+
+  void thread_cleanup(void) {
+
+    CRYPTO_set_locking_callback(0);
+    if (lock_cs)
+    {
+      for (int i=0; i<CRYPTO_num_locks(); i++)
+        if (&lock_cs[i]) pthread_mutex_destroy(&lock_cs[i]);
+      free(lock_cs);
+    }
+  }
+
+  /* FIXME todo: real verify + UI ! */
+  gboolean ssl_verify(SSL *ssl, SSL_CTX *ctx, X509 *cert)
+  {
+//    if (SSL_get_verify_result(ssl) != X509_V_OK) {
+      unsigned char md[EVP_MAX_MD_SIZE];
+      unsigned int n;
+      char *str;
+
+      if ((str = X509_NAME_oneline(X509_get_subject_name(cert), 0, 0)) == NULL)
+        g_warning("  Could not get subject-name from peer certificate");
+      else {
+        g_warning("  Subject : %s", str);
+        free(str);
+      }
+      if ((str = X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0)) == NULL)
+        g_warning("  Could not get issuer-name from peer certificate");
+      else {
+        g_warning("  Issuer  : %s", str);
+        free(str);
+      }
+      if (! X509_digest(cert, EVP_md5(), md, &n))
+        g_warning("  Could not get fingerprint from peer certificate");
+      else {
+        char hex[] = "0123456789ABCDEF";
+        char fp[EVP_MAX_MD_SIZE*3];
+        if (n < sizeof(fp)) {
+          unsigned int i;
+          for (i = 0; i < n; i++) {
+            fp[i*3+0] = hex[(md[i] >> 4) & 0xF];
+            fp[i*3+1] = hex[(md[i] >> 0) & 0xF];
+            fp[i*3+2] = i == n - 1 ? '\0' : ':';
+          }
+          g_warning("  MD5 Fingerprint : %s", fp);
+        }
+      }
+//      return FALSE;
+//    }
+    return TRUE;
+  }
+
+
+  void ssl_free(GIOChannel *handle)
+  {
+    GIOSSLChannel *chan = (GIOSSLChannel *)handle;
+    g_io_channel_unref(chan->giochan);
+    SSL_free(chan->ssl);
+    SSL_CTX_free(chan->ctx);
+    thread_cleanup();
+    g_free(chan);
+  }
+}
+
 GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
 {
 //std::cerr << LINE_ID << " destroying socket " << this << std::endl;
@@ -323,11 +356,10 @@ GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
 
-
   if (_channel)
   {
-    g_io_channel_shutdown (_channel, true, NULL);
-    g_io_channel_unref (_channel);
+    g_io_channel_shutdown (_channel, true, 0);
+    ssl_free(_channel);
     _channel = 0;
   }
 
@@ -371,15 +403,6 @@ GIOChannelSocketSSL :: write_command (const StringView& command, Listener * l)
 
 namespace
 {
-  typedef struct
-  {
-    GIOChannel pad;
-    gint fd;
-    GIOChannel *giochan;
-    SSL *ssl;
-    SSL_CTX *ctx;
-    unsigned int verify:1;
-  } GIOSSLChannel;
 
   SSL_CTX* ssl_init(void)
   {
@@ -405,48 +428,36 @@ namespace
     return G_IO_STATUS_ERROR;
   }
 
-  void ssl_free(GIOChannel *handle)
+  bool ssl_handshake(GIOChannel *handle)
   {
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
-    g_io_channel_unref(chan->giochan);
-    SSL_free(chan->ssl);
-    SSL_CTX_free(chan->ctx);
-    g_free(chan);
-  }
-
-  int ssl_handshake(GIOChannel *handle)
-  {
-    GIOSSLChannel *chan = (GIOSSLChannel *)handle;
-    int ret, err;
+    bool ret;
+    int err;
     X509 *cert;
     const char *errstr;
 
-    if (!handle || !chan->ssl) return -1;
+    if (!handle || !chan->ssl || !chan->ctx) return -1;
 
     ret = SSL_connect(chan->ssl);
     if (ret <= 0) {
       err = SSL_get_error(chan->ssl, ret);
-      if (err != SSL_ERROR_WANT_READ && err != SSL_ERROR_WANT_WRITE) {
-        errstr = ERR_reason_error_string(ERR_get_error());
-        g_warning("SSL handshake failed: %s", errstr != NULL ? errstr : "server closed connection");
+      if (err != SSL_ERROR_WANT_READ && err != SSL_ERROR_WANT_WRITE)
         return -1;
-      }
       return err == SSL_ERROR_WANT_READ ? 1 : 3;
     }
 
     cert = SSL_get_peer_certificate(chan->ssl);
-    if (cert == NULL) {
-      g_warning("SSL server supplied no certificate");
+    if (!cert && chan->ssl)
       return -1;
-    }
-//    ret = !chan->verify || ssl_verify(chan->ssl, chan->ctx, cert);
+
+    ret = chan->verify ? ssl_verify(chan->ssl, chan->ctx, cert) : true;
     X509_free(cert);
     return ret ? 0 : -1;
   }
 
   GIOStatus ssl_read(GIOChannel *handle, gchar *buf, gsize len, gsize *ret, GError **gerr)
   {
-    return G_IO_STATUS_AGAIN;
+    return G_IO_STATUS_NORMAL;
   }
 
   GIOStatus ssl_read_line_string(GIOChannel *handle, GString* g, gsize *ret, GError **gerr)
@@ -455,27 +466,22 @@ namespace
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
 
     gint err;
-    char tmp[4096];
+    size_t tmp_size(4096*128);
+    char tmp[tmp_size];
     g_string_set_size(g,0);
 
-    /// TODO perhaps own thread for this??
     if (handle->read_buf->len == 0)
     {
-      err = SSL_read(chan->ssl, tmp, sizeof(tmp));
-      if(err < 0)
+      err = SSL_read(chan->ssl, tmp, tmp_size*sizeof(char));
+      if (ret) *ret = err < 0 ? 0 : err;
+      if(err <= 0)
       {
-        if (ret) *ret = 0;
-        if(SSL_get_error(chan->ssl, err) == SSL_ERROR_WANT_READ) {
+        if(SSL_get_error(chan->ssl, err) == SSL_ERROR_WANT_READ)
           return G_IO_STATUS_AGAIN;
-        }
         return ssl_errno(errno);
       }
       else
-      {
-        std::cerr<<"append len "<<err<<std::endl;
         g_string_append_len (handle->read_buf,tmp,err);
-        if (ret) *ret = err;
-      }
     }
 
     //fill in from read_buf
@@ -582,15 +588,15 @@ GIOChannelSocketSSL :: do_read ()
   while (more && !_abort_flag)
   {
     _io_performed = true;
-    const GIOStatus status (ssl_read_line_string(_channel, g, NULL, &err));
-                                     //g_io_channel_read_line_string (_channel, g, NULL, &err));
+    gsize ret;
+    const GIOStatus status (ssl_read_line_string(_channel, g, &ret, &err));
 
     if (status == G_IO_STATUS_NORMAL)
     {
       g_string_prepend_len (g, _partial_read.c_str(), _partial_read.size());
       _partial_read.clear ();
 
-      debug_v ("read [" << g->str << "]"); // verbose debug, if --debug --debug was on the command-line
+      debug_v ("read [" << g->str << "]");
       increment_xfer_byte_count (g->len);
       if (g_str_has_suffix (g->str, "\r\n"))
         g_string_truncate (g, g->len-2);
@@ -599,10 +605,11 @@ GIOChannelSocketSSL :: do_read ()
     else if (status == G_IO_STATUS_AGAIN)
     {
       // see if we've got a partial line buffered up
-      if (_channel->read_buf) {
+      if (_channel->read_buf->len != 0)  {
+        increment_xfer_byte_count ((int)ret);
         _partial_read.append (_channel->read_buf->str, _channel->read_buf->len);
-        std::cerr<<"partial read : "<<_partial_read<<std::endl;
         g_string_set_size (_channel->read_buf, 0);
+//        std::cerr<<"partial read : "<<_partial_read<<"("<<_channel->read_buf->len<<"/"<<_partial_read.size()<<")\n";
       }
       return IO_READ;
     }
@@ -610,7 +617,7 @@ GIOChannelSocketSSL :: do_read ()
     {
       const char * msg (err ? err->message : _("Unknown Error"));
       Log::add_err_va (_("Error reading from %s: %s"), _host.c_str(), msg);
-      if (err != NULL)
+      if (err != 0)
         g_clear_error (&err);
       return IO_ERR;
     }
@@ -762,73 +769,30 @@ GIOChannelSocketSSL :: set_watch_mode (WatchMode mode)
 
 
 GIOChannel *
-GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, const char *mycert, const char *mypkey, const char *cafile, const char *capath, gboolean verify)
+GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 {
-	GIOSSLChannel *chan;
-	GIOChannel *gchan;
-	int err, fd;
-	SSL *ssl;
-	SSL_CTX *ctx;
+	GIOSSLChannel *chan(0);
+	GIOChannel *gchan(0);
+	int err(0), fd(0);
+	SSL *ssl(0);
+	SSL_CTX *ctx(0);
 
-	g_return_val_if_fail(handle != NULL, NULL);
+	g_return_val_if_fail(handle != 0, 0);
 
 	if(!(ctx = ssl_init()))
-		return NULL;
+		return 0;
 
 	if(!(fd = g_io_channel_unix_get_fd(handle)))
-		return NULL;
-
-    ///TODO cert validation !
-//	if (mycert && *mycert) {
-//		char *scert = NULL, *spkey = NULL;
-//		if ((ctx = SSL_CTX_new(SSLv23_client_method())) == NULL) {
-//			g_error("Could not allocate memory for SSL context");
-//			return NULL;
-//		}
-//		scert = convert_home(mycert);
-//		if (mypkey && *mypkey)
-//			spkey = convert_home(mypkey);
-//		if (! SSL_CTX_use_certificate_file(ctx, scert, SSL_FILETYPE_PEM))
-//			g_warning("Loading of client certificate '%s' failed", mycert);
-//		else if (! SSL_CTX_use_PrivateKey_file(ctx, spkey ? spkey : scert, SSL_FILETYPE_PEM))
-//			g_warning("Loading of private key '%s' failed", mypkey ? mypkey : mycert);
-//		else if (! SSL_CTX_check_private_key(ctx))
-//			g_warning("Private key does not match the certificate");
-//		g_free(scert);
-//		g_free(spkey);
-//	}
-
-//	if ((cafile && *cafile) || (capath && *capath)) {
-//		char *scafile = NULL;
-//		char *scapath = NULL;
-//		if (! ctx && (ctx = SSL_CTX_new(SSLv23_client_method())) == NULL) {
-//			g_error("Could not allocate memory for SSL context");
-//			return NULL;
-//		}
-//		if (cafile && *cafile)
-//			scafile = convert_home(cafile);
-//		if (capath && *capath)
-//			scapath = convert_home(capath);
-//		if (! SSL_CTX_load_verify_locations(ctx, scafile, scapath)) {
-//			g_warning("Could not load CA list for verifying SSL server certificate");
-//			g_free(scafile);
-//			g_free(scapath);
-//			SSL_CTX_free(ctx);
-//			return NULL;
-//		}
-//		g_free(scafile);
-//		g_free(scapath);
-//		verify = TRUE;
-//	}
-
-//	if (ctx == NULL)
-//		ctx = ssl_ctx;
+	{
+	  if (ctx) SSL_CTX_free(ctx);
+    return 0;
+	}
 
 	if(!(ssl = SSL_new(ctx)))
 	{
 	  SSL_CTX_free(ctx);
 		g_warning("Failed to allocate SSL structure");
-		return NULL;
+		return 0;
 	}
 
 	if(!(err = SSL_set_fd(ssl, fd)))
@@ -836,8 +800,10 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, const char *mycert,
 		g_warning("Failed to associate socket to SSL stream");
 		SSL_free(ssl);
   	SSL_CTX_free(ctx);
-		return NULL;
+		return 0;
 	}
+
+	thread_setup();
 
 	chan = g_new0(GIOSSLChannel, 1);
 	chan->fd = fd;
@@ -851,57 +817,10 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, const char *mycert,
 	g_io_channel_init(gchan);
   gchan->read_buf = g_string_sized_new(4096*128);
 
-  while (ssl_handshake(gchan) != 0) ;
+  /// FIXME : callback
+  if (ssl_handshake(gchan))
 
-  std::cerr<<"handshake success!\n";
+//  std::cerr<<"handshake success!\n";
 
 	return gchan;
-}
-
-/***
-****  GIOChannel::SocketCreator -- create a socket in a worker thread
-***/
-
-namespace
-{
-  struct ThreadWorker : public WorkerPool::Worker,
-                        public WorkerPool::Worker::Listener
-  {
-    std::string host;
-    int port;
-    Socket::Creator::Listener * listener;
-
-    bool ok;
-    Socket * socket;
-    std::string err;
-
-    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l):
-      host(h), port(p), listener(l), ok(false), socket(0) {}
-
-    void do_work ()
-    {
-      socket = new GIOChannelSocketSSL ();
-      ok = socket->open (host, port, err);
-    }
-
-    /** called in main thread after do_work() is done */
-    void on_worker_done (bool cancelled UNUSED)
-    {
-      // pass results to main thread...
-      if (!err.empty())   Log :: add_err (err.c_str());
-      listener->on_socket_created (host, port, ok, socket);
-    }
-  };
-}
-
-void
-GIOChannelSocketSSL :: Creator :: create_socket (const StringView & host,
-                                              int                port,
-                                              WorkerPool       & threadpool,
-                                              Listener         * listener)
-{
-  ensure_module_inited ();
-
-  ThreadWorker * w = new ThreadWorker (host, port, listener);
-  threadpool.push_work (w, w, true);
 }
