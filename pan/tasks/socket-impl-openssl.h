@@ -27,6 +27,7 @@
 
 #include <openssl/crypto.h>
 #include <openssl/x509.h>
+#include <openssl/x509v3.h>
 #include <openssl/pem.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
@@ -72,8 +73,7 @@ namespace pan
 
     //SSL functions
     private:
-      GIOChannel* ssl_get_iochannel(GIOChannel *handle, const char *mycert=NULL, const char *mypkey=NULL,
-                                    const char *cafile=NULL, const char *capath=NULL, gboolean verify=false);
+      GIOChannel* ssl_get_iochannel(GIOChannel *handle, gboolean verify=true);
 
     public:
 

@@ -332,8 +332,8 @@ main (int argc, char *argv[])
     // instantiate the queue...
     WorkerPool worker_pool (4, true);
 
-    GIOChannelSocket::Creator socket_creator;
-//    GIOChannelSocketSSL::Creator socket_creator;
+//    GIOChannelSocket::Creator socket_creator;
+    GIOChannelSocketSSL::Creator socket_creator;
 
     Queue queue (data, data, &socket_creator, worker_pool,
                  prefs.get_flag ("work-online", true),
