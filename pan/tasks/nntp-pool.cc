@@ -39,7 +39,7 @@ namespace
 
 NNTP_Pool :: NNTP_Pool (const Quark        & server,
                         ServerInfo         & server_info,
-                        Socket::Creator    * creator):
+                        SocketCreator      * creator):
   _server_info (server_info),
   _server (server),
   _socket_creator (creator),
@@ -266,14 +266,13 @@ NNTP_Pool :: request_nntp (WorkerPool& threadpool)
 
   if (!idle && ((pending+active)<max) && new_connections_are_allowed())
   {
-    debug ("trying to create a socket");
-
     std::string address;
     int port;
     if (_server_info.get_server_addr (_server, address, port))
     {
       ++_pending_connections;
-      _socket_creator->create_socket (address, port, threadpool, this);
+      const bool ssl(_server_info.get_server_ssl_support(_server));
+      _socket_creator->create_socket (address, port, threadpool, this, ssl);
     }
   }
 }

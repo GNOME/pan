@@ -58,8 +58,6 @@ namespace pan
      */
     std::string get_pan_home ();
 
-    std::string get_temp_attach_path ();
-
     /**
      * If the specified directory doesn't exist, Pan tries to create it.
      * @param path

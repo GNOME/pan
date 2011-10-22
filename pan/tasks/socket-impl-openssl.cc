@@ -44,16 +44,16 @@ extern "C" {
   #define _WIN32_WINNT 0x0501
   #include <ws2tcpip.h>
   #undef gai_strerror
-  /*
+
   #define gai_strerror(i) gai_strerror_does_not_link (i)
-  const char*
-  gai_strerror_does_not_link (int errval)
-  {
-    char buf[32];
-    g_snprintf (buf, sizeof(buf), "Winsock error %d", errval);
-    return buf;
-  }
-  */
+//  const char*
+//  gai_strerror_does_not_link (int errval)
+//  {
+//    char buf[32];
+//    g_snprintf (buf, sizeof(buf), "Winsock error %d", errval);
+//    return buf;
+//  }
+
   const char*
   get_last_error (int err)
   {
@@ -88,75 +88,10 @@ extern "C" {
 #include <pan/general/log.h>
 #include <pan/general/string-view.h>
 #include <pan/usenet-utils/gnksa.h>
-#include "socket-impl-gio.h"
 #include "socket-impl-openssl.h"
+#include "socket-impl-main.h"
 
 using namespace pan;
-
-namespace
-{
-  typedef int (*t_getaddrinfo)(const char *,const char *, const struct addrinfo*, struct addrinfo **);
-  t_getaddrinfo p_getaddrinfo (0);
-
-  typedef void (*t_freeaddrinfo)(struct addrinfo*);
-  t_freeaddrinfo p_freeaddrinfo (0);
-
-  void ensure_module_inited (void)
-  {
-    bool inited (false);
-
-    if (!inited)
-    {
-      p_freeaddrinfo=0;
-      p_getaddrinfo=0;
-
-#ifdef G_OS_WIN32
-      WSADATA wsaData;
-      WSAStartup(MAKEWORD(2,2), &wsaData);
-
-      char sysdir[MAX_PATH], path[MAX_PATH+8];
-
-      if(GetSystemDirectory(sysdir,MAX_PATH)!=0)
-      {
-        HMODULE lib=0;
-        FARPROC pfunc=0;
-        const char *libs[]={"ws2_32","wship6",0};
-
-        for(const char **p=libs;*p!=0;++p)
-        {
-          g_snprintf(path,MAX_PATH+8,"%s\\%s",sysdir,*p);
-          lib=LoadLibrary(path);
-          if(!lib)
-            continue;
-          pfunc=GetProcAddress(lib,"getaddrinfo");
-          if(!pfunc)
-          {
-            FreeLibrary(lib);
-            lib=0;
-            continue;
-          }
-          p_getaddrinfo=reinterpret_cast<t_getaddrinfo>(pfunc);
-          pfunc=GetProcAddress(lib,"freeaddrinfo");
-          if(!pfunc)
-          {
-            FreeLibrary(lib);
-            lib=0;
-            p_getaddrinfo=0;
-            continue;
-          }
-          p_freeaddrinfo=reinterpret_cast<t_freeaddrinfo>(pfunc);
-          break;
-        }
-      }
-#else
-      p_freeaddrinfo=::freeaddrinfo;
-      p_getaddrinfo=::getaddrinfo;
-#endif
-      inited = true;
-    }
-  }
-
-}
 
 /****
 *****
@@ -176,6 +111,7 @@ GIOChannelSocketSSL :: GIOChannelSocketSSL ():
    debug ("GIOChannelSocketSSL ctor " << (void*)this);
 }
 
+
 GIOChannel *
 GIOChannelSocketSSL :: create_channel (const StringView& host_in, int port, std::string& setme_err)
 {
@@ -185,6 +121,8 @@ GIOChannelSocketSSL :: create_channel (const StringView& host_in, int port, std:
 #ifndef G_OS_WIN32
   signal (SIGPIPE, SIG_IGN);
 #endif
+
+  std::cerr<<"cc "<<host_in<<":"<<port<<"\n";
 
   // get an addrinfo for the host
   const std::string host (host_in.str, host_in.len);
@@ -241,7 +179,7 @@ GIOChannelSocketSSL :: create_channel (const StringView& host_in, int port, std:
     hints.ai_family = 0;
     hints.ai_socktype = SOCK_STREAM;
     struct addrinfo * ans;
-    err = p_getaddrinfo (host.c_str(), portbuf, &hints, &ans);
+    err = ::getaddrinfo (host.c_str(), portbuf, &hints, &ans);
     if (err != 0) {
       char buf[512];
       snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
@@ -276,7 +214,7 @@ GIOChannelSocketSSL :: create_channel (const StringView& host_in, int port, std:
     }
 
     // cleanup
-    p_freeaddrinfo (ans);
+    ::freeaddrinfo (ans);
   }
 
   // create the giochannel...
@@ -361,6 +299,46 @@ namespace
     }
   }
 
+  /* todo: real verify + UI ! */
+  gboolean ssl_verify(SSL *ssl, SSL_CTX *ctx, X509 *cert)
+  {
+//    if (SSL_get_verify_result(ssl) != X509_V_OK) {
+      unsigned char md[EVP_MAX_MD_SIZE];
+      unsigned int n;
+      char *str;
+
+      if ((str = X509_NAME_oneline(X509_get_subject_name(cert), 0, 0)) == NULL)
+        g_warning("  Could not get subject-name from peer certificate");
+      else {
+        g_warning("  Subject : %s", str);
+        free(str);
+      }
+      if ((str = X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0)) == NULL)
+        g_warning("  Could not get issuer-name from peer certificate");
+      else {
+        g_warning("  Issuer  : %s", str);
+        free(str);
+      }
+      if (! X509_digest(cert, EVP_md5(), md, &n))
+        g_warning("  Could not get fingerprint from peer certificate");
+      else {
+        char hex[] = "0123456789ABCDEF";
+        char fp[EVP_MAX_MD_SIZE*3];
+        if (n < sizeof(fp)) {
+          unsigned int i;
+          for (i = 0; i < n; i++) {
+            fp[i*3+0] = hex[(md[i] >> 4) & 0xF];
+            fp[i*3+1] = hex[(md[i] >> 0) & 0xF];
+            fp[i*3+2] = i == n - 1 ? '\0' : ':';
+          }
+          g_warning("  MD5 Fingerprint : %s", fp);
+        }
+      }
+//      return FALSE;
+//    }
+    return TRUE;
+  }
+
 
   void ssl_free(GIOChannel *handle)
   {
@@ -398,6 +376,7 @@ bool
 GIOChannelSocketSSL :: open (const StringView& address, int port, std::string& setme_err)
 {
   _host.assign (address.str, address.len);
+  std::cerr<<"open ssl "<<address<<":"<<port<<std::endl;
   _channel = create_channel (address, port, setme_err);
   return _channel != 0;
 }
@@ -452,34 +431,29 @@ namespace
     return G_IO_STATUS_ERROR;
   }
 
-  int ssl_handshake(GIOChannel *handle)
+  bool ssl_handshake(GIOChannel *handle)
   {
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
-    int ret, err;
+    bool ret;
+    int err;
     X509 *cert;
     const char *errstr;
 
-    if (!handle || !chan->ssl) return -1;
+    if (!handle || !chan->ssl || !chan->ctx) return -1;
 
     ret = SSL_connect(chan->ssl);
     if (ret <= 0) {
       err = SSL_get_error(chan->ssl, ret);
-      if (err != SSL_ERROR_WANT_READ && err != SSL_ERROR_WANT_WRITE) {
-        errstr = ERR_reason_error_string(ERR_get_error());
-        g_warning("SSL handshake failed: %s", errstr != 0 ? errstr : "server closed connection");
+      if (err != SSL_ERROR_WANT_READ && err != SSL_ERROR_WANT_WRITE)
         return -1;
-      }
       return err == SSL_ERROR_WANT_READ ? 1 : 3;
     }
 
-
     cert = SSL_get_peer_certificate(chan->ssl);
-    if (cert == 0) {
-      g_warning("SSL server supplied no certificate");
+    if (!cert && chan->ssl)
       return -1;
-    }
 
-//    ret = chan->verify ? ssl_verify(chan->ssl, chan->ctx, handle->hostname.c_str(), cert) : true;
+    ret = chan->verify ? ssl_verify(chan->ssl, chan->ctx, cert) : true;
     X509_free(cert);
     return ret ? 0 : -1;
   }
@@ -847,59 +821,9 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
   gchan->read_buf = g_string_sized_new(4096*128);
 
   /// FIXME : callback
-  debug("before handshake");
-  while (ssl_handshake(gchan) != 0) ;
-  debug("after handshake");
+  if (ssl_handshake(gchan))
 
 //  std::cerr<<"handshake success!\n";
 
 	return gchan;
-}
-
-/***
-****  GIOChannel::SocketCreator -- create a socket in a worker thread
-***/
-
-namespace
-{
-  struct ThreadWorker : public WorkerPool::Worker,
-                        public WorkerPool::Worker::Listener
-  {
-    std::string host;
-    int port;
-    Socket::Creator::Listener * listener;
-
-    bool ok;
-    Socket * socket;
-    std::string err;
-
-    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l):
-      host(h), port(p), listener(l), ok(false), socket(0) {}
-
-    void do_work ()
-    {
-      socket = new GIOChannelSocketSSL ();
-      ok = socket->open (host, port, err);
-    }
-
-    /** called in main thread after do_work() is done */
-    void on_worker_done (bool cancelled UNUSED)
-    {
-      // pass results to main thread...
-      if (!err.empty())   Log :: add_err (err.c_str());
-      listener->on_socket_created (host, port, ok, socket);
-    }
-  };
-}
-
-void
-GIOChannelSocketSSL :: Creator :: create_socket (const StringView & host,
-                                              int                port,
-                                              WorkerPool       & threadpool,
-                                              Listener         * listener)
-{
-  ensure_module_inited ();
-
-  ThreadWorker * w = new ThreadWorker (host, port, listener);
-  threadpool.push_work (w, w, true);
 }

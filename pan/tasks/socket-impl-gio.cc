@@ -89,71 +89,12 @@ extern "C" {
 #include <pan/general/string-view.h>
 #include <pan/usenet-utils/gnksa.h>
 #include "socket-impl-gio.h"
+#include "socket-impl-main.h"
 
 using namespace pan;
 
 namespace
 {
-  typedef int (*t_getaddrinfo)(const char *,const char *, const struct addrinfo*, struct addrinfo **);
-  t_getaddrinfo p_getaddrinfo (0);
-
-  typedef void (*t_freeaddrinfo)(struct addrinfo*);
-  t_freeaddrinfo p_freeaddrinfo (0);
-
-  void ensure_module_inited (void)
-  {
-    static bool inited (false);
-
-    if (!inited)
-    {
-      p_freeaddrinfo=NULL;
-      p_getaddrinfo=NULL;
-
-#ifdef G_OS_WIN32
-      WSADATA wsaData;
-      WSAStartup(MAKEWORD(2,2), &wsaData);
-
-      char sysdir[MAX_PATH], path[MAX_PATH+8];
-
-      if(GetSystemDirectory(sysdir,MAX_PATH)!=0)
-      {
-        HMODULE lib=NULL;
-        FARPROC pfunc=NULL;
-        const char *libs[]={"ws2_32","wship6",NULL};
-
-        for(const char **p=libs;*p!=NULL;++p)
-        {
-          g_snprintf(path,MAX_PATH+8,"%s\\%s",sysdir,*p);
-          lib=LoadLibrary(path);
-          if(!lib)
-            continue;
-          pfunc=GetProcAddress(lib,"getaddrinfo");
-          if(!pfunc)
-          {
-            FreeLibrary(lib);
-            lib=NULL;
-            continue;
-          }
-          p_getaddrinfo=reinterpret_cast<t_getaddrinfo>(pfunc);
-          pfunc=GetProcAddress(lib,"freeaddrinfo");
-          if(!pfunc)
-          {
-            FreeLibrary(lib);
-            lib=NULL;
-            p_getaddrinfo=NULL;
-            continue;
-          }
-          p_freeaddrinfo=reinterpret_cast<t_freeaddrinfo>(pfunc);
-          break;
-        }
-      }
-#else
-      p_freeaddrinfo=::freeaddrinfo;
-      p_getaddrinfo=::getaddrinfo;
-#endif
-      inited = true;
-    }
-  }
 
   GIOChannel *
   create_channel (const StringView& host_in, int port, std::string& setme_err)
@@ -170,7 +111,7 @@ namespace
     char portbuf[32], hpbuf[255];
     g_snprintf (portbuf, sizeof(portbuf), "%d", port);
     g_snprintf (hpbuf,sizeof(hpbuf),"%s:%s",host_in.str,portbuf);
-    
+
 #ifdef G_OS_WIN32 // windows might not have getaddrinfo...
     if (!p_getaddrinfo)
     {
@@ -220,7 +161,7 @@ namespace
       hints.ai_family = 0;
       hints.ai_socktype = SOCK_STREAM;
       struct addrinfo * ans;
-      err = p_getaddrinfo (host.c_str(), portbuf, &hints, &ans);
+      err = ::getaddrinfo (host.c_str(), portbuf, &hints, &ans);
       if (err != 0) {
         char buf[512];
         snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
@@ -255,7 +196,7 @@ namespace
       }
 
       // cleanup
-      p_freeaddrinfo (ans);
+      ::freeaddrinfo (ans);
     }
 
     // create the giochannel...
@@ -339,6 +280,7 @@ bool
 GIOChannelSocket :: open (const StringView& address, int port, std::string& setme_err)
 {
   _host.assign (address.str, address.len);
+  std::cerr<<"open normal "<<address<<":"<<port<<std::endl;
   _channel = create_channel (address, port, setme_err);
   return _channel != 0;
 }
@@ -552,52 +494,4 @@ GIOChannelSocket :: set_watch_mode (WatchMode mode)
   }
 
   debug ("set_watch_mode " << mode << ": _tag_watch is now " << _tag_watch);
-}
-
-/***
-****  GIOChannel::SocketCreator -- create a socket in a worker thread
-***/
-
-namespace
-{
-  struct ThreadWorker : public WorkerPool::Worker,
-                        public WorkerPool::Worker::Listener
-  {
-    std::string host;
-    int port;
-    Socket::Creator::Listener * listener;
-
-    bool ok;
-    Socket * socket;
-    std::string err;
-
-    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l):
-      host(h), port(p), listener(l), ok(false), socket(0) {}
-
-    void do_work ()
-    {
-      socket = new GIOChannelSocket ();
-      ok = socket->open (host, port, err);
-    }
-
-    /** called in main thread after do_work() is done */
-    void on_worker_done (bool cancelled UNUSED)
-    {
-      // pass results to main thread...
-      if (!err.empty())   Log :: add_err (err.c_str());
-      listener->on_socket_created (host, port, ok, socket);
-    }
-  };
-}
-
-void
-GIOChannelSocket :: Creator :: create_socket (const StringView & host,
-                                              int                port,
-                                              WorkerPool       & threadpool,
-                                              Listener         * listener)
-{
-  ensure_module_inited ();
-
-  ThreadWorker * w = new ThreadWorker (host, port, listener);
-  threadpool.push_work (w, w, true);
 }

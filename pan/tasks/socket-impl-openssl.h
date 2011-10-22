@@ -32,6 +32,8 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 
+#include "socket-impl-gio.h"
+
 namespace pan
 {
   /**
@@ -39,7 +41,7 @@ namespace pan
    *
    * @ingroup tasks
    */
-  class GIOChannelSocketSSL: public Socket
+  class GIOChannelSocketSSL: public GIOChannelSocket
   {
     public:
       GIOChannelSocketSSL ();
@@ -71,20 +73,8 @@ namespace pan
 
       GIOChannel * create_channel (const StringView& host_in, int port, std::string& setme_err);
 
-    //SSL functions
     private:
       GIOChannel* ssl_get_iochannel(GIOChannel *handle, gboolean verify=true);
-
-    public:
-
-      /**
-       * Socket::Creator that instantiates GIOSocket objects.
-       */
-      class Creator: public Socket::Creator {
-        public:
-          virtual ~Creator () { }
-          virtual void create_socket (const StringView& host, int port, WorkerPool&, Listener *l);
-      };
   };
 }
 

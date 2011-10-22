@@ -34,6 +34,7 @@
 #include <pan/tasks/task.h>
 #include <pan/tasks/encoder.h>
 #include <pan/tasks/task-weak-ordering.h>
+#include <pan/tasks/socket-impl-main.h>
 
 namespace pan
 {
@@ -69,7 +70,7 @@ namespace pan
     private AdaptableSet<Task*, TaskWeakOrdering>::Listener
   {
     public:
-      Queue (ServerInfo&, TaskArchive&, Socket::Creator*, WorkerPool&,
+      Queue (ServerInfo&, TaskArchive&, SocketCreator*, WorkerPool&,
              bool online, int save_delay_secs);
       virtual ~Queue ();
 
@@ -201,7 +202,7 @@ namespace pan
       std::set<TaskUpload*> _uploads;
       std::set<Task*> _removing;
       std::set<Task*> _stopped;
-      Socket::Creator * _socket_creator;
+      SocketCreator * _socket_creator;
       WorkerPool & _worker_pool;
       Decoder _decoder;
       Encoder _encoder;

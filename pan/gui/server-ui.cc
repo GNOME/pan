@@ -55,6 +55,7 @@ namespace
     GtkWidget * connection_limit_spin;
     GtkWidget * expiration_age_combo;
     GtkWidget * rank_combo;
+    GtkWidget * ssl_combo;
     ServerEditDialog (Data& d, Queue& q): data(d), queue(q) {}
   };
 
@@ -91,7 +92,7 @@ namespace
 
     d->server = server;
 
-    int port(119), max_conn(4), age(31*3), rank(1);
+    int port(119), max_conn(4), age(31*3), rank(1), ssl(0);
     std::string addr, user, pass;
     if (!server.empty()) {
       d->data.get_server_addr (server, addr, port);
@@ -99,6 +100,7 @@ namespace
       age = d->data.get_server_article_expiration_age (server);
       rank = d->data.get_server_rank (server);
       max_conn = d->data.get_server_limits (server);
+      ssl = d->data.get_server_ssl_support(server);
     }
 
     pan_entry_set_text (d->address_entry, addr);
@@ -131,6 +133,19 @@ namespace
         break;
       }
     } while (gtk_tree_model_iter_next(model, &iter));
+
+    // set ssl combo
+    combo = GTK_COMBO_BOX (d->ssl_combo);
+    model = gtk_combo_box_get_model (combo);
+    if (gtk_tree_model_get_iter_first(model, &iter)) do {
+      int that;
+      gtk_tree_model_get (model, &iter, 1, &that, -1);
+      if (that == ssl) {
+        gtk_combo_box_set_active_iter (combo, &iter);
+        break;
+      }
+    } while (gtk_tree_model_iter_next(model, &iter));
+
   }
 
   void
@@ -159,6 +174,10 @@ namespace
       combo = GTK_COMBO_BOX (d->rank_combo);
       if (gtk_combo_box_get_active_iter (combo, &iter))
         gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &rank, -1);
+      int ssl(0);
+      combo = GTK_COMBO_BOX (d->ssl_combo);
+      if (gtk_combo_box_get_active_iter (combo, &iter))
+        gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &ssl, -1);
 
       const char * err_msg (0);
       if (addr.empty())
@@ -181,6 +200,7 @@ namespace
         d->data.set_server_limits (d->server, max_conn);
         d->data.set_server_article_expiration_age (d->server, age);
         d->data.set_server_rank (d->server, rank);
+        d->data.set_server_ssl_support(d->server, ssl);
         d->data.save_server_info(d->server);
         d->queue.upkeep ();
       }
@@ -303,6 +323,36 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
     gtk_widget_set_tooltip_text( e, _("Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."));
     HIG::workarea_add_row (t, &row, e, w);
+
+    // ssl 3.0 option
+    HIG::workarea_add_section_divider (t, &row);
+    HIG::workarea_add_section_title (t, &row, _("Security"));
+    HIG::workarea_add_section_spacer (t, row, 2);
+    struct { int o; const char * str; } ssl_items[] = {
+      { 0, N_("Use Plaintext (Unsecured) Connections") },
+      { 1, N_("Use Secure TLS (SSL) Connections") }
+    };
+    store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+    for (unsigned int i(0); i<G_N_ELEMENTS(ssl_items); ++i) {
+      GtkTreeIter iter;
+      gtk_list_store_append (store,  &iter);
+      gtk_list_store_set (store, &iter, 0, _(ssl_items[i].str), 1, ssl_items[i].o, -1);
+    }
+
+    d->ssl_combo = w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
+    g_object_unref (G_OBJECT(store));
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
+    gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
+    l = gtk_label_new (_("TLS (SSL) Options:"));
+    e = gtk_event_box_new ();
+    gtk_container_add (GTK_CONTAINER(e), l);
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+    gtk_widget_set_tooltip_text( e, _("You can set the option for using/disabling secure SSL/TLS connections here. If you enable SSL/TLS, your data is encrypted and secure. "
+                                      "It is encouraged to use this option for privacy reasons."));
+    HIG::workarea_add_row (t, &row, e, w);
+
+
 
   d->server = server;
   edit_dialog_populate (data, server, d);

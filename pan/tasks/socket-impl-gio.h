@@ -61,17 +61,6 @@ namespace pan
       enum DoResult { IO_ERR, IO_READ, IO_WRITE, IO_DONE };
       DoResult do_read ();
       DoResult do_write ();
-
-    public:
-
-      /**
-       * Socket::Creator that instantiates GIOSocket objects.
-       */
-      class Creator: public Socket::Creator {
-        public:
-          virtual ~Creator () { }
-          virtual void create_socket (const StringView& host, int port, WorkerPool&, Listener *l);
-      };
   };
 }
 

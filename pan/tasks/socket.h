@@ -86,7 +86,7 @@ namespace pan
         };
 
         virtual ~Creator () { }
-        virtual void create_socket (const StringView& host, int port, WorkerPool&, Listener*) = 0;
+        virtual void create_socket (const StringView& host, int port, WorkerPool&, Listener*, bool) = 0;
       };
   };
 }

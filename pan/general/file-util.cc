@@ -70,16 +70,6 @@ file :: get_pan_home ()
   return pan_home;
 }
 
-std::string
-file :: get_temp_attach_path()
-{
-  char * pch (g_build_filename (file::get_pan_home().c_str(), "downloaded-attachments", NULL));
-  file :: ensure_dir_exists (pch);
-  std::string path (pch);
-  g_free (pch);
-  return path;
-}
-
 const char*
 file :: pan_strerror (int error_number)
 {
