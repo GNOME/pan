@@ -2884,14 +2884,10 @@ PostUI :: select_parts ()
 
   if (!_upload_ptr) return;
 
-  int new_parts = get_total_parts(_upload_ptr->_filename.c_str());
-  if (_total_parts != new_parts)
-  {
-    _upload_ptr->_wanted.clear();
-    for (int i=1;i<=new_parts;++i)
-      _upload_ptr->_wanted.insert(i);
-  }
-  _total_parts = new_parts;
+  _total_parts = get_total_parts(_upload_ptr->_filename.c_str());
+//  _upload_ptr->_wanted.clear();
+//  for (int i=1;i<=_total_parts;++i)
+//    _upload_ptr->_wanted.insert(i);
 
   GtkWidget * w;
   GtkTreeIter iter;
@@ -3155,7 +3151,6 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
              a.xref.insert (profile.posting_server, *git,0);
 
           struct stat sb;
-          // yEnc encoding is the default, user can change that with popup-menu
           ui.total = get_total_parts((const char*)cur->data);
           TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
                             profile.posting_server, _cache, a, ui, msg);

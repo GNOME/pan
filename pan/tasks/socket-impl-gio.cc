@@ -280,7 +280,6 @@ bool
 GIOChannelSocket :: open (const StringView& address, int port, std::string& setme_err)
 {
   _host.assign (address.str, address.len);
-  std::cerr<<"open normal "<<address<<":"<<port<<std::endl;
   _channel = create_channel (address, port, setme_err);
   return _channel != 0;
 }

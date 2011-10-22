@@ -265,7 +265,7 @@ namespace
     unsigned int verify:1;
   } GIOSSLChannel;
 
-  static pthread_mutex_t *lock_cs;
+  pthread_mutex_t *lock_cs;
 
   void gio_lock(int mode, int type, const char *file, int line)
   {
@@ -293,7 +293,7 @@ namespace
     {
       for (int i=0; i<CRYPTO_num_locks(); i++)
         if (&lock_cs[i]) pthread_mutex_destroy(&lock_cs[i]);
-      free(lock_cs);
+      if (lock_cs) free(lock_cs);
     }
   }
 
@@ -360,6 +360,7 @@ GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
   {
     g_io_channel_shutdown (_channel, true, 0);
     ssl_free(_channel);
+    g_string_free(_channel->read_buf,true);
     _channel = 0;
   }
 
@@ -452,7 +453,7 @@ namespace
 
     ret = chan->verify ? ssl_verify(chan->ssl, chan->ctx, cert) : true;
     X509_free(cert);
-    return ret ? 0 : -1;
+    return ret ? true : false;
   }
 
   GIOStatus ssl_read(GIOChannel *handle, gchar *buf, gsize len, gsize *ret, GError **gerr)
@@ -609,7 +610,6 @@ GIOChannelSocketSSL :: do_read ()
         increment_xfer_byte_count ((int)ret);
         _partial_read.append (_channel->read_buf->str, _channel->read_buf->len);
         g_string_set_size (_channel->read_buf, 0);
-//        std::cerr<<"partial read : "<<_partial_read<<"("<<_channel->read_buf->len<<"/"<<_partial_read.size()<<")\n";
       }
       return IO_READ;
     }
@@ -803,8 +803,6 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 		return 0;
 	}
 
-	thread_setup();
-
 	chan = g_new0(GIOSSLChannel, 1);
 	chan->fd = fd;
 	chan->giochan = handle;
@@ -817,10 +815,11 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 	g_io_channel_init(gchan);
   gchan->read_buf = g_string_sized_new(4096*128);
 
-  /// FIXME : callback
   if (ssl_handshake(gchan))
+  {
+    thread_setup();
+    return gchan;
+  }
+  return 0;
 
-//  std::cerr<<"handshake success!\n";
-
-	return gchan;
 }
