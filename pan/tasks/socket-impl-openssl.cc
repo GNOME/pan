@@ -264,14 +264,14 @@ namespace
     GIOChannel *giochan;
     SSL *ssl;
     SSL_CTX *ctx;
-    unsigned int verify:1;
+    unsigned int verify;
   } GIOSSLChannel;
 
 
   /* FIXME todo: real verify ! */
   gboolean ssl_verify(SSL *ssl, SSL_CTX *ctx, X509 *cert)
   {
-//    if (SSL_get_verify_result(ssl) != X509_V_OK) {
+    if (SSL_get_verify_result(ssl) != X509_V_OK) {
       unsigned char md[EVP_MAX_MD_SIZE];
       unsigned int n;
       char *str;
@@ -303,8 +303,8 @@ namespace
           g_warning("  MD5 Fingerprint : %s", fp);
         }
       }
-//      return FALSE;
-//    }
+      return FALSE;
+    }
     return TRUE;
   }
 
@@ -315,7 +315,6 @@ namespace
     g_io_channel_unref(chan->giochan);
     SSL_free(chan->ssl);
     SSL_CTX_free(chan->ctx);
-//    thread_cleanup();
     g_free(chan);
   }
 }
@@ -397,10 +396,10 @@ namespace
     return G_IO_STATUS_ERROR;
   }
 
-  bool ssl_handshake(GIOChannel *handle)
+  int ssl_handshake(GIOChannel *handle)
   {
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
-    bool ret;
+    int ret;
     int err;
     X509 *cert;
     const char *errstr;
@@ -419,9 +418,9 @@ namespace
     if (!cert && chan->ssl)
       return -1;
 
-    ret = chan->verify ? ssl_verify(chan->ssl, chan->ctx, cert) : true;
+    ret = chan->verify ?  ssl_verify(chan->ssl, chan->ctx, cert) : 0;
     X509_free(cert);
-    return ret ? true : false;
+    return ret;
   }
 
   GIOStatus ssl_read(GIOChannel *handle, gchar *buf, gsize len, gsize *ret, GError **gerr)
@@ -778,7 +777,7 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 	chan->giochan = handle;
 	chan->ssl = ssl;
 	chan->ctx = ctx;
-	chan->verify = verify;
+	chan->verify = verify ? 0 : -1;
 
 	gchan = (GIOChannel *)chan;
 	gchan->funcs = &ssl_channel_funcs;
@@ -787,7 +786,6 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 
   if (ssl_handshake(gchan))
   {
-//    thread_setup();
     return gchan;
   }
   return 0;
