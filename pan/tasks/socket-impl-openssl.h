@@ -25,12 +25,14 @@
 #include <glib/gstring.h>
 #include <pan/tasks/socket.h>
 
-#include <openssl/crypto.h>
-#include <openssl/x509.h>
-#include <openssl/x509v3.h>
-#include <openssl/pem.h>
-#include <openssl/ssl.h>
-#include <openssl/err.h>
+#ifdef HAVE_OPENSSL
+  #include <openssl/crypto.h>
+  #include <openssl/x509.h>
+  #include <openssl/x509v3.h>
+  #include <openssl/pem.h>
+  #include <openssl/ssl.h>
+  #include <openssl/err.h>
+#endif
 
 #include "socket-impl-gio.h"
 
@@ -46,6 +48,7 @@ namespace pan
     public:
       GIOChannelSocketSSL ();
       virtual ~GIOChannelSocketSSL ();
+#ifdef HAVE_OPENSSL
       virtual bool open (const StringView& address, int port, std::string& setme_err);
       virtual void write_command (const StringView& chars, Listener *);
       virtual void get_host (std::string& setme) const;
@@ -76,6 +79,7 @@ namespace pan
 
     private:
       GIOChannel* ssl_get_iochannel(GIOChannel *handle, gboolean verify=true);
+#endif
   };
 }
 

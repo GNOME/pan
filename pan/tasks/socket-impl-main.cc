@@ -34,9 +34,6 @@
 #include <cerrno>
 #include <cstring>
 
-#include <openssl/crypto.h>
-#include <openssl/ssl.h>
-
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/worker-pool.h>
@@ -125,10 +122,12 @@ namespace pan
 
     void do_work ()
     {
-      if (use_ssl)
-        socket = new GIOChannelSocketSSL ();
-      else
-        socket = new GIOChannelSocket ();
+      #ifdef HAVE_OPENSSL
+        if (use_ssl)
+          socket = new GIOChannelSocketSSL ();
+        else
+      #endif
+          socket = new GIOChannelSocket ();
       ok = socket->open (host, port, err);
     }
 
@@ -143,6 +142,7 @@ namespace pan
 }
 
 
+#ifdef HAVE_OPENSSL
 namespace
 {
   static pthread_mutex_t *lock_cs=0;
@@ -172,6 +172,7 @@ namespace
     OPENSSL_free(lock_cs);
   }
 }
+#endif
 
 SocketCreator :: SocketCreator()
 {

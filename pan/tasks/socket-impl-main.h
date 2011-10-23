@@ -35,7 +35,11 @@
 #include <pan/general/string-view.h>
 #include <pan/general/worker-pool.h>
 #include "socket.h"
-#include "socket-impl-openssl.h"
+#ifdef HAVE_OPENSSL
+  #include <openssl/crypto.h>
+  #include <openssl/ssl.h>
+  #include "socket-impl-openssl.h"
+#endif
 #include "socket-impl-gio.h"
 
 namespace pan

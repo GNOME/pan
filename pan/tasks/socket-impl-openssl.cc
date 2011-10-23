@@ -99,6 +99,8 @@ using namespace pan;
 *****
 ****/
 
+#ifdef HAVE_OPENSSL // without libssl this class is just a stub....
+
 GIOChannelSocketSSL :: GIOChannelSocketSSL ():
    _channel (0),
    _tag_watch (0),
@@ -791,3 +793,5 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
   return 0;
 
 }
+#endif  //HAVE_OPENSSL
+
