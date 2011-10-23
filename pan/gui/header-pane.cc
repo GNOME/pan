@@ -267,6 +267,7 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
                               gpointer            user_data)
 {
   const HeaderPane * self (static_cast<HeaderPane*>(user_data));
+  const Prefs & p(self->_prefs);
   const Row * row (dynamic_cast<Row*>(self->_tree_store->get_row (iter)));
 
   CountUnread counter (row);
@@ -278,7 +279,7 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
   const char * text (a->subject.c_str());
   char buf[512];
 
-  bool underlined (false);
+  bool unread (false);
 
   if (counter.unread_children)
   {
@@ -289,7 +290,7 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
     gtk_tree_path_free (path);
 
     if (!expanded) {
-      underlined = row->is_read;
+      unread = row->is_read;
       snprintf (buf, sizeof(buf), "%s (%lu)", text, counter.unread_children);
       text = buf;
     }
@@ -298,7 +299,9 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
   g_object_set (renderer,
     "text", text,
     "weight", (bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
-    "underline", (underlined ? PANGO_UNDERLINE_SINGLE : PANGO_UNDERLINE_NONE),
+    "foreground",  unread ? p.get_color_str ("score-color-read-fg",TANGO_ORANGE).c_str() :
+                   "black",
+    "background", unread ? p.get_color_str ("score-color-read-bg","white").c_str() : "white",
     NULL);
 }
 

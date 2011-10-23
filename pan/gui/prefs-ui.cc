@@ -637,7 +637,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Header Pane"));
-    HIG :: workarea_add_section_spacer(t, row, 5);
+    HIG :: workarea_add_section_spacer(t, row, 6);
     h = gtk_hbox_new (false, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-watched-fg", "black", prefs));
@@ -668,6 +668,12 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-ignored-bg", "black", prefs));
     HIG :: workarea_add_row (t, &row, _("Scores of -9999 or less:"), h);
+    h = gtk_hbox_new (false, PAD);
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-read-fg", TANGO_ORANGE, prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-read-bg", "white", prefs));
+    HIG :: workarea_add_row (t, &row, _("Read collapsed Thread:"), h);
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Body Pane"));
     HIG :: workarea_add_section_spacer (t, row, 3);
@@ -707,11 +713,6 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   l = gtk_label_new(_("Default Bytes per File (for Encoder). "));
   gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
   HIG::workarea_add_row (t, &row, w, l);
-
-//  HIG::workarea_add_section_divider (t, &row);
-//  HIG :: workarea_add_section_title (t, &row, _("Attachment Options (Bulk Uploads)"));
-//  w = new_check_button (_("Single master reply/followup with body, attachments are replies"), "upload-option-reply-multi", false, prefs);
-//  HIG :: workarea_add_wide_control (t, &row, w);
 
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Upload options")));

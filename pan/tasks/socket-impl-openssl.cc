@@ -265,39 +265,8 @@ namespace
     unsigned int verify:1;
   } GIOSSLChannel;
 
-  pthread_mutex_t *lock_cs;
 
-  void gio_lock(int mode, int type, const char *file, int line)
-  {
-    if (mode & CRYPTO_LOCK)
-      pthread_mutex_lock(&(lock_cs[type]));
-    else
-      pthread_mutex_unlock(&(lock_cs[type]));
-  }
-
-  void thread_setup(void) {
-
-    lock_cs = (pthread_mutex_t*)malloc(CRYPTO_num_locks() * sizeof(pthread_mutex_t));
-    for (int i=0; i<CRYPTO_num_locks(); i++)
-      if (pthread_mutex_init(&(lock_cs[i]),0) != 0)
-        g_warning("error initialing mutex!");
-
-    // CRYPTO_set_id_callback((unsigned long (*)())pthreads_thread_id);
-    CRYPTO_set_locking_callback(gio_lock);
-  }
-
-  void thread_cleanup(void) {
-
-    CRYPTO_set_locking_callback(0);
-    if (lock_cs)
-    {
-      for (int i=0; i<CRYPTO_num_locks(); i++)
-        if (&lock_cs[i]) pthread_mutex_destroy(&lock_cs[i]);
-      if (lock_cs) free(lock_cs);
-    }
-  }
-
-  /* FIXME todo: real verify + UI ! */
+  /* FIXME todo: real verify ! */
   gboolean ssl_verify(SSL *ssl, SSL_CTX *ctx, X509 *cert)
   {
 //    if (SSL_get_verify_result(ssl) != X509_V_OK) {
@@ -344,7 +313,7 @@ namespace
     g_io_channel_unref(chan->giochan);
     SSL_free(chan->ssl);
     SSL_CTX_free(chan->ctx);
-    thread_cleanup();
+//    thread_cleanup();
     g_free(chan);
   }
 }
@@ -407,9 +376,6 @@ namespace
 
   SSL_CTX* ssl_init(void)
   {
-    SSL_library_init();
-    SSL_load_error_strings();
-
     SSL_CTX* ctx (SSL_CTX_new(SSLv3_client_method()));
     return ctx;
   }
@@ -804,6 +770,8 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 	}
 
 	chan = g_new0(GIOSSLChannel, 1);
+	if (!chan) return 0;
+
 	chan->fd = fd;
 	chan->giochan = handle;
 	chan->ssl = ssl;
@@ -817,7 +785,7 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 
   if (ssl_handshake(gchan))
   {
-    thread_setup();
+//    thread_setup();
     return gchan;
   }
   return 0;

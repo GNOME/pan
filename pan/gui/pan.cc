@@ -332,7 +332,6 @@ main (int argc, char *argv[])
     // instantiate the queue...
     WorkerPool worker_pool (4, true);
 
-//    GIOChannelSocket::Creator socket_creator;
     SocketCreator socket_creator;
 
     Queue queue (data, data, &socket_creator, worker_pool,

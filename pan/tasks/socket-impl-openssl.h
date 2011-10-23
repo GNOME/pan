@@ -72,6 +72,7 @@ namespace pan
       DoResult do_write ();
 
       GIOChannel * create_channel (const StringView& host_in, int port, std::string& setme_err);
+      void gio_lock(int mode, int type, const char *file, int line);
 
     private:
       GIOChannel* ssl_get_iochannel(GIOChannel *handle, gboolean verify=true);
