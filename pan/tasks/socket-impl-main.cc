@@ -43,66 +43,6 @@
 
 using namespace pan;
 
-/*  FIXME for win32!!!!!!!
-namespace
-{
-  void ensure_module_inited (void)
-  {
-    static bool inited (false);
-
-    if (!inited)
-    {
-      p_freeaddrinfo=NULL;
-      p_getaddrinfo=NULL;
-
-#ifdef G_OS_WIN32
-      WSADATA wsaData;
-      WSAStartup(MAKEWORD(2,2), &wsaData);
-
-      char sysdir[MAX_PATH], path[MAX_PATH+8];
-
-      if(GetSystemDirectory(sysdir,MAX_PATH)!=0)
-      {
-        HMODULE lib=NULL;
-        FARPROC pfunc=NULL;
-        const char *libs[]={"ws2_32","wship6",NULL};
-
-        for(const char **p=libs;*p!=NULL;++p)
-        {
-          g_snprintf(path,MAX_PATH+8,"%s\\%s",sysdir,*p);
-          lib=LoadLibrary(path);
-          if(!lib)
-            continue;
-          pfunc=GetProcAddress(lib,"getaddrinfo");
-          if(!pfunc)
-          {
-            FreeLibrary(lib);
-            lib=NULL;
-            continue;
-          }
-          p_getaddrinfo=reinterpret_cast<t_getaddrinfo>(pfunc);
-          pfunc=GetProcAddress(lib,"freeaddrinfo");
-          if(!pfunc)
-          {
-            FreeLibrary(lib);
-            lib=NULL;
-            p_getaddrinfo=NULL;
-            continue;
-          }
-          p_freeaddrinfo=reinterpret_cast<t_freeaddrinfo>(pfunc);
-          break;
-        }
-      }
-#else
-      p_freeaddrinfo=::freeaddrinfo;
-      p_getaddrinfo=::getaddrinfo;
-#endif
-      inited = true;
-    }
-  }
-}
-*/
-
 namespace pan
 {
   struct ThreadWorker : public WorkerPool::Worker,
@@ -168,7 +108,7 @@ namespace
     for (int i=0; i<CRYPTO_num_locks(); i++)
       pthread_mutex_destroy(&lock_cs[i]);
     CRYPTO_set_locking_callback(0);
-    CRYPTO_set_id_callback(0);
+//    CRYPTO_set_id_callback(0);
     OPENSSL_free(lock_cs);
   }
 }
@@ -198,7 +138,7 @@ SocketCreator :: create_socket (const StringView & host,
                                 Socket::Creator::Listener * listener,
                                 bool               use_ssl)
 {
-//  ensure_module_inited ();
+  ensure_module_init ();
 
   ThreadWorker * w = new ThreadWorker (host, port, listener, use_ssl);
   threadpool.push_work (w, w, true);

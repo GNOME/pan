@@ -134,6 +134,7 @@ namespace
       }
     } while (gtk_tree_model_iter_next(model, &iter));
 
+#ifdef HAVE_OPENSSL
     // set ssl combo
     combo = GTK_COMBO_BOX (d->ssl_combo);
     model = gtk_combo_box_get_model (combo);
@@ -145,6 +146,7 @@ namespace
         break;
       }
     } while (gtk_tree_model_iter_next(model, &iter));
+#endif
 
   }
 
@@ -175,9 +177,11 @@ namespace
       if (gtk_combo_box_get_active_iter (combo, &iter))
         gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &rank, -1);
       int ssl(0);
+#ifdef HAVE_OPENSSL
       combo = GTK_COMBO_BOX (d->ssl_combo);
       if (gtk_combo_box_get_active_iter (combo, &iter))
         gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &ssl, -1);
+#endif
 
       const char * err_msg (0);
       if (addr.empty())
@@ -325,18 +329,15 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     HIG::workarea_add_row (t, &row, e, w);
 
     // ssl 3.0 option
+#ifdef HAVE_OPENSSL
     HIG::workarea_add_section_divider (t, &row);
     HIG::workarea_add_section_title (t, &row, _("Security"));
     HIG::workarea_add_section_spacer (t, row, 2);
 
     struct { int o; const char * str; } ssl_items[] = {
-#ifdef HAVE_OPENSSL
+
       { 0, N_("Use Plaintext (Unsecured) Connections") },
       { 1, N_("Use Secure TLS (SSL) Connections") }
-
-#else
-      { 0, N_("Use Plaintext (Unsecured) Connections") }
-#endif
     };
 
     store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
@@ -358,8 +359,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     gtk_widget_set_tooltip_text( e, _("You can set the option for using/disabling secure SSL/TLS connections here. If you enable SSL/TLS, your data is encrypted and secure. "
                                       "It is encouraged to use this option for privacy reasons."));
     HIG::workarea_add_row (t, &row, e, w);
-
-
+#endif
 
   d->server = server;
   edit_dialog_populate (data, server, d);

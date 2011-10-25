@@ -17,8 +17,8 @@ libtasks_a_SOURCES = \
   queue.cc \
   upload-queue.cc \
   socket.cc \
-  socket-impl-openssl.cc \
   socket-impl-main.cc \
+  socket-impl-openssl.cc \
   socket-impl-gio.cc \
   socket-impl-scripted.cc \
   nntp-pool.cc

@@ -35,6 +35,8 @@
 #endif
 
 #include "socket-impl-gio.h"
+#include "socket-impl-main.h"
+
 
 namespace pan
 {

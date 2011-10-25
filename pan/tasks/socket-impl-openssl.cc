@@ -93,6 +93,9 @@ extern "C" {
 
 using namespace pan;
 
+extern t_getaddrinfo p_getaddrinfo;
+extern t_freeaddrinfo p_freeaddrinfo;
+
 /****
 *****
 *****

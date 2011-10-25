@@ -93,6 +93,7 @@ extern "C" {
 
 using namespace pan;
 
+
 namespace
 {
 
@@ -161,7 +162,7 @@ namespace
       hints.ai_family = 0;
       hints.ai_socktype = SOCK_STREAM;
       struct addrinfo * ans;
-      err = ::getaddrinfo (host.c_str(), portbuf, &hints, &ans);
+      err = p_getaddrinfo (host.c_str(), portbuf, &hints, &ans);
       if (err != 0) {
         char buf[512];
         snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
@@ -196,7 +197,7 @@ namespace
       }
 
       // cleanup
-      ::freeaddrinfo (ans);
+      p_freeaddrinfo (ans);
     }
 
     // create the giochannel...

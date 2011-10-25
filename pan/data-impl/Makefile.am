@@ -24,26 +24,26 @@ noinst_HEADERS = \
  profiles.h \
  memchunk.h
 
-noinst_PROGRAMS = \
- add-server \
- headers-test \
- speed-test-load-group
+#noinst_PROGRAMS = \
+# add-server \
+# headers-test \
+# speed-test-load-group
 
-TESTS = \
- add-server \
- headers-test 
+#TESTS = \
+# add-server \
+# headers-test
 
-TEST_LDADD = \
- ./libpandata.a \
- ../tasks/libtasks.a \
- ../data/libdata.a \
- ../usenet-utils/libusenetutils.a \
- ../general/libgeneralutils.a \
- ../../uulib/libuu.a \
- @GMIME_LIBS@ @GLIB_LIBS@
-add_server_SOURCES = add-server.cc
-add_server_LDADD = $(TEST_LDADD)
-headers_test_SOURCES = headers-test.cc
-headers_test_LDADD = $(TEST_LDADD)
-speed_test_load_group_SOURCES = speed-test-load-group.cc
-speed_test_load_group_LDADD = $(TEST_LDADD)
+#TEST_LDADD = \
+# ./libpandata.a \
+# ../tasks/libtasks.a \
+# ../data/libdata.a \
+# ../usenet-utils/libusenetutils.a \
+# ../general/libgeneralutils.a \
+# ../../uulib/libuu.a \
+# @GMIME_LIBS@ @GLIB_LIBS@
+#add_server_SOURCES = add-server.cc
+#add_server_LDADD = $(TEST_LDADD)
+#headers_test_SOURCES = headers-test.cc
+#headers_test_LDADD = $(TEST_LDADD)
+#speed_test_load_group_SOURCES = speed-test-load-group.cc
+#speed_test_load_group_LDADD = $(TEST_LDADD)
