@@ -92,6 +92,7 @@ namespace pan
       void set_color (const StringView& key, const StringView& color_str);
       std::string get_color_str (const StringView& key, const GdkColor& fallback) const;
       std::string get_color_str (const StringView& key, const StringView& fallback_str) const;
+      std::string get_color_str_wo_fallback (const StringView& key) const;
       GdkColor get_color (const StringView& key, const GdkColor& fallback) const;
       GdkColor get_color (const StringView& key, const StringView& fallback_str) const;
 

@@ -350,3 +350,13 @@ Prefs :: get_color_str (const StringView& key, const StringView& fallback) const
 {
   return color_to_string (get_color (key, fallback));
 }
+
+/* get string without fallback option */
+std::string
+Prefs :: get_color_str_wo_fallback (const StringView& key) const
+{
+  std::string res;
+  if (!_colors.count(key)) return res;
+  const GdkColor& col(_colors[key]);
+  return color_to_string (col);
+}

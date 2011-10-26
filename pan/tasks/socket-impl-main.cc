@@ -39,7 +39,10 @@
 #include <pan/general/worker-pool.h>
 #include <pan/general/string-view.h>
 
+#include <pthread.h>
+
 #include "socket-impl-main.h"
+
 
 using namespace pan;
 

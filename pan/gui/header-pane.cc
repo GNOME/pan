@@ -296,13 +296,16 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
     }
   }
 
+  std::string def_bg, def_fg;
+  def_fg = p.get_color_str_wo_fallback("color-read-fg");
+  def_bg = p.get_color_str_wo_fallback("color-read-bg");
+
   g_object_set (renderer,
     "text", text,
     "weight", (bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
-    "foreground",  unread ? p.get_color_str ("score-color-read-fg",TANGO_ORANGE).c_str() :
-                   "black",
-    "background", unread ? p.get_color_str ("score-color-read-bg","white").c_str() : "white",
-    NULL);
+    "foreground", unread ? (def_fg.empty() ? NULL : def_fg.c_str()) : NULL,
+    "background", unread ? (def_bg.empty() ? NULL : def_bg.c_str()) : NULL, NULL);
+
 }
 
 HeaderPane::Row*

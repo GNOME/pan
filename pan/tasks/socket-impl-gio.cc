@@ -93,6 +93,10 @@ extern "C" {
 
 using namespace pan;
 
+#ifndef G_OS_WIN32
+extern t_getaddrinfo p_getaddrinfo;
+extern t_freeaddrinfo p_freeaddrinfo;
+#endif
 
 namespace
 {
@@ -162,7 +166,7 @@ namespace
       hints.ai_family = 0;
       hints.ai_socktype = SOCK_STREAM;
       struct addrinfo * ans;
-      err = p_getaddrinfo (host.c_str(), portbuf, &hints, &ans);
+      err = ::getaddrinfo (host.c_str(), portbuf, &hints, &ans);
       if (err != 0) {
         char buf[512];
         snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
@@ -197,7 +201,7 @@ namespace
       }
 
       // cleanup
-      p_freeaddrinfo (ans);
+      ::freeaddrinfo (ans);
     }
 
     // create the giochannel...
