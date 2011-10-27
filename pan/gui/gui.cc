@@ -124,6 +124,8 @@ GUI :: add_widget (GtkUIManager *,
   const char * name (gtk_widget_get_name (widget));
   GUI * self (static_cast<GUI*>(gui_g));
 
+  std::cerr<<"add widget "<<name<<std::endl;
+
   if (name && strstr(name,"main-window-")==name)
   {
     if (!GTK_IS_TOOLBAR (widget))
@@ -162,19 +164,19 @@ namespace
   }
 }
 
-namespace
-{
-  enum {
-        TARGET_STRING,
-        TARGET_ROOTWIN
-  };
-
-  static GtkTargetEntry target_list[] = {
-          { const_cast<char*>("STRING"),     0, TARGET_STRING },
-          { const_cast<char*>("text/plain"), 0, TARGET_STRING },
-          { const_cast<char*>("application/x-rootwindow-drop"), 0, TARGET_ROOTWIN }
-  };
-}
+//namespace
+//{
+//  enum {
+//        TARGET_STRING,
+//        TARGET_ROOTWIN
+//  };
+//
+//  static GtkTargetEntry target_list[] = {
+//          { const_cast<char*>("STRING"),     0, TARGET_STRING },
+//          { const_cast<char*>("text/plain"), 0, TARGET_STRING },
+//          { const_cast<char*>("application/x-rootwindow-drop"), 0, TARGET_ROOTWIN }
+//  };
+//}
 
 
 
@@ -231,10 +233,10 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
   gtk_widget_show_all (GTK_WIDGET(item));
   gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, index+1);
 
-  //guint merge_id = gtk_ui_manager_new_merge_id (_ui_manager);
-  //gtk_ui_manager_add_ui (_ui_manager, merge_id, path, "group-pane-filter", NULL, GTK_UI_MANAGER_TOOLITEM, true);
-  //GtkWidget * item = gtk_ui_manager_get_widget (_ui_manager, path);
-  //gtk_container_add (GTK_CONTAINER(item), _group_pane->create_filter_entry());
+//  guint merge_id = gtk_ui_manager_new_merge_id (_ui_manager);
+//  gtk_ui_manager_add_ui (_ui_manager, merge_id, path, "group-pane-filter", NULL, GTK_UI_MANAGER_TOOLITEM, true);
+//  GtkWidget * item = gtk_ui_manager_get_widget (_ui_manager, path);
+//  gtk_container_add (GTK_CONTAINER(item), _group_pane->create_filter_entry());
 
   // workarea
   _workarea_bin = gtk_event_box_new ();
@@ -274,9 +276,9 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
   g_signal_connect (w, "clicked", G_CALLBACK(show_task_window_cb), this);
 
   // drag and drop for message-ids
-  gtk_drag_dest_set(_workarea_bin,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
-  gtk_drag_dest_add_text_targets(_workarea_bin);
-  gtk_drag_dest_add_uri_targets(_workarea_bin);
+//  gtk_drag_dest_set(_workarea_bin,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
+//  gtk_drag_dest_add_text_targets(_workarea_bin);
+//  gtk_drag_dest_add_uri_targets(_workarea_bin);
 
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
   frame = gtk_frame_new (NULL);

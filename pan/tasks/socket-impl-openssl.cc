@@ -579,7 +579,6 @@ GIOChannelSocketSSL :: do_read ()
     {
       // see if we've got a partial line buffered up
       if (_channel->read_buf->len != 0)  {
-        increment_xfer_byte_count ((int)ret);
         _partial_read.append (_channel->read_buf->str, _channel->read_buf->len);
         g_string_set_size (_channel->read_buf, 0);
       }
