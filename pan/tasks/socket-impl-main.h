@@ -112,7 +112,9 @@ namespace
 
 namespace pan
 {
-
+#ifdef HAVE_OPENSSL
+  static SSL_CTX* ssl_ctx;
+#endif
   class SocketCreator
   {
     public:

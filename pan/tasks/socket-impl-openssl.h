@@ -48,9 +48,12 @@ namespace pan
   class GIOChannelSocketSSL: public GIOChannelSocket
   {
     public:
-      GIOChannelSocketSSL ();
       virtual ~GIOChannelSocketSSL ();
-#ifdef HAVE_OPENSSL
+#ifndef HAVE_OPENSSL
+      GIOChannelSocketSSL ();
+#else
+      GIOChannelSocketSSL (SSL_CTX* ctx=0);
+#endif
       virtual bool open (const StringView& address, int port, std::string& setme_err);
       virtual void write_command (const StringView& chars, Listener *);
       virtual void get_host (std::string& setme) const;
@@ -65,6 +68,9 @@ namespace pan
       std::string _partial_read;
       std::string _host;
       bool _io_performed;
+#ifdef HAVE_OPENSSL
+      SSL_CTX * _ctx;
+#endif
 
     private:
       enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };
@@ -81,7 +87,6 @@ namespace pan
 
     private:
       GIOChannel* ssl_get_iochannel(GIOChannel *handle, gboolean verify=true);
-#endif
   };
 }
 

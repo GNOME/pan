@@ -106,14 +106,15 @@ extern t_freeaddrinfo p_freeaddrinfo;
 
 #ifdef HAVE_OPENSSL // without libssl this class is just a stub....
 
-GIOChannelSocketSSL :: GIOChannelSocketSSL ():
+GIOChannelSocketSSL :: GIOChannelSocketSSL (SSL_CTX* ctx):
    _channel (0),
    _tag_watch (0),
    _tag_timeout (0),
    _listener (0),
    _out_buf (g_string_new (0)),
    _in_buf (g_string_new (0)),
-   _io_performed (false)
+   _io_performed (false),
+   _ctx(ctx)
 {
    debug ("GIOChannelSocketSSL ctor " << (void*)this);
 }
@@ -319,7 +320,7 @@ namespace
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
     g_io_channel_unref(chan->giochan);
     SSL_free(chan->ssl);
-    SSL_CTX_free(chan->ctx);
+
     g_free(chan);
   }
 }
@@ -382,8 +383,7 @@ namespace
 
   SSL_CTX* ssl_init(void)
   {
-    SSL_CTX* ctx (SSL_CTX_new(SSLv3_client_method()));
-    return ctx;
+    return 0;
   }
 
   static GIOStatus ssl_errno(gint e)
@@ -750,8 +750,8 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 
 	g_return_val_if_fail(handle != 0, 0);
 
-	if(!(ctx = ssl_init()))
-		return 0;
+	ctx = _ctx;
+	if (!ctx) return 0;
 
 	if(!(fd = g_io_channel_unix_get_fd(handle)))
 	{

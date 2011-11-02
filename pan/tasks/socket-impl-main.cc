@@ -59,15 +59,16 @@ namespace pan
     Socket * socket;
     std::string err;
     bool use_ssl;
+    SSL_CTX * context;
 
-    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l, bool ssl):
-      host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl) {}
+    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l, bool ssl, SSL_CTX* ctx):
+      host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), context(ctx) {}
 
     void do_work ()
     {
       #ifdef HAVE_OPENSSL
         if (use_ssl)
-          socket = new GIOChannelSocketSSL ();
+          socket = new GIOChannelSocketSSL (context);
         else
       #endif
           socket = new GIOChannelSocket ();
@@ -124,6 +125,7 @@ SocketCreator :: SocketCreator()
   SSL_load_error_strings();
   /* init static locks for threads */
   ssl_thread_setup();
+  ssl_ctx = SSL_CTX_new(SSLv3_client_method());
 #endif
 
 }
@@ -131,6 +133,7 @@ SocketCreator :: ~SocketCreator()
 {
 #ifdef HAVE_OPENSSL
   ssl_thread_cleanup();
+  SSL_CTX_free(ssl_ctx);
 #endif
 }
 
@@ -143,6 +146,6 @@ SocketCreator :: create_socket (const StringView & host,
 {
   ensure_module_init ();
 
-  ThreadWorker * w = new ThreadWorker (host, port, listener, use_ssl);
+  ThreadWorker * w = new ThreadWorker (host, port, listener, use_ssl, ssl_ctx);
   threadpool.push_work (w, w, true);
 }
