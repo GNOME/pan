@@ -36,8 +36,11 @@
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 
+namespace pan
+{
+
 /* Checks if the given string has internal NUL characters. */
-static gboolean has_internal_nul(const char* str, int len) {
+gboolean has_internal_nul(const char* str, int len) {
 	/* Remove trailing nul characters. They would give false alarms */
 	while (len > 0 && str[len-1] == 0)
 		len--;
@@ -45,7 +48,7 @@ static gboolean has_internal_nul(const char* str, int len) {
 }
 
 /* tls_dns_name - Extract valid DNS name from subjectAltName value */
-static const char *tls_dns_name(const GENERAL_NAME * gn)
+const char *tls_dns_name(const GENERAL_NAME * gn)
 {
 	const char *dnsname;
 
@@ -68,7 +71,7 @@ static const char *tls_dns_name(const GENERAL_NAME * gn)
 }
 
 /* tls_text_name - extract certificate property value by name */
-static char *tls_text_name(X509_NAME *name, int nid)
+char *tls_text_name(X509_NAME *name, int nid)
 {
 	int     pos;
 	X509_NAME_ENTRY *entry;
@@ -107,7 +110,7 @@ static char *tls_text_name(X509_NAME *name, int nid)
 
 
 /** check if a hostname in the certificate matches the hostname we used for the connection */
-static gboolean match_hostname(const char *cert_hostname, const char *hostname)
+gboolean match_hostname(const char *cert_hostname, const char *hostname)
 {
 	const char *hostname_left;
 
@@ -123,7 +126,7 @@ static gboolean match_hostname(const char *cert_hostname, const char *hostname)
 	return FALSE;
 }
 
-static gboolean ssl_verify_hostname(X509 *cert, const char *hostname)
+gboolean ssl_verify_hostname(X509 *cert, const char *hostname)
 {
 	int gen_index, gen_count;
 	gboolean matched = FALSE, has_dns_name = FALSE;
@@ -177,7 +180,7 @@ static gboolean ssl_verify_hostname(X509 *cert, const char *hostname)
 	return matched;
 }
 
-static gboolean ssl_verify(SSL *ssl, SSL_CTX *ctx, const char* hostname, X509 *cert)
+gboolean ssl_verify(SSL *ssl, SSL_CTX *ctx, const char* hostname, X509 *cert)
 {
 	long result;
 
@@ -221,6 +224,8 @@ static gboolean ssl_verify(SSL *ssl, SSL_CTX *ctx, const char* hostname, X509 *c
 		return FALSE;
 	}
 	return TRUE;
+}
+
 }
 
 #endif

@@ -27,7 +27,7 @@ extern "C" {
   #include <gtk/gtk.h>
 }
 
-#include <pan/usenet-utils/ssl-utils.h>
+//#include <pan/usenet-utils/ssl-utils.h>
 #include <pan/icons/pan-pixbufs.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
