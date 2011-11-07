@@ -57,6 +57,7 @@ namespace pan
       certs_m _cert_to_server;
       X509_STORE* _store;
       std::string _path;
+      std::vector<SSL_SESSION*> _sessions;
 
     public:
       SSL_CTX* get_ctx() { return _ctx; }
@@ -64,6 +65,21 @@ namespace pan
       void get_all_certs_from_disk(std::set<X509*>& setme);
       const X509* get_cert_to_server(const Quark& server) const;
       static void pretty_print_x509 (char* buf, size_t size, const Quark& server, X509* cert);
+      SSL_SESSION* get_session()
+      {
+        SSL_SESSION* ret(0);
+        if (!_sessions.empty())
+        {
+          ret = _sessions.back();
+          _sessions.pop_back();
+        }
+        return ret;
+      }
+      void add_session (SSL_SESSION* s)
+      {
+        if (!s) return;
+        _sessions.push_back(s);
+      }
 
     private:
       void remove_hard(const Quark&);

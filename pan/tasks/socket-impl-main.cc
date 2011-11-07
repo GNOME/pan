@@ -136,6 +136,7 @@ SocketCreator :: SocketCreator(CertStore& cs) : store(cs)
   ssl_ctx = SSL_CTX_new(SSLv3_client_method());
   cs.set_ctx(ssl_ctx);
   SSL_CTX_set_mode(ssl_ctx, SSL_MODE_ENABLE_PARTIAL_WRITE | SSL_MODE_AUTO_RETRY);
+  SSL_CTX_set_session_cache_mode(ssl_ctx, SSL_SESS_CACHE_CLIENT);
 #endif
 }
 

@@ -125,6 +125,7 @@ GIOChannelSocketSSL :: GIOChannelSocketSSL (SSL_CTX* ctx, CertStore& cs):
 {
 //   std::cerr<<"GIOChannelSocketSSL ctor " << (void*)this<<std::endl;
    cs.add_listener(this);
+   _session = cs.get_session();
 }
 
 
@@ -295,9 +296,16 @@ namespace
 GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
 {
 
-//  std::cerr << LINE_ID << " destroying socket " << this << std::endl;
-
   _certstore.remove_listener(this);
+
+  GIOSSLChannel *chan = (GIOSSLChannel *)_channel;
+
+  std::cerr << LINE_ID << " destroying socket " << this << ", "<<chan->ssl<<", "<<_session<<", ";
+
+  _session = SSL_get1_session(chan->ssl);
+  _certstore.add_session(_session);
+
+  std::cerr<<_session<<std::endl;
 
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
@@ -367,7 +375,7 @@ namespace
   }
 
 
-  int ssl_handshake(GIOChannel *handle, CertStore::Listener* listener, CertStore* cs, std::string host)
+  int ssl_handshake(GIOChannel *handle, CertStore::Listener* listener, CertStore* cs, std::string host, SSL_SESSION* session)
   {
 
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
@@ -384,6 +392,10 @@ namespace
     mydata.l = listener;
     mydata.server = host;
     SSL_set_ex_data(chan->ssl, SSL_get_fd(chan->ssl), &mydata);
+
+
+    std::cerr<<"resuming session "<<session<<" for "<<chan->ssl<<std::endl;
+    if (session) SSL_set_session(chan->ssl, session);
 
     ret = SSL_connect(chan->ssl);
     if (ret <= 0) {
@@ -499,6 +511,8 @@ namespace
   {
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
     g_io_channel_close(chan->giochan);
+
+    std::cerr<<"ssl close\n";
 
     return G_IO_STATUS_NORMAL;
   }
@@ -778,10 +792,14 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 	g_io_channel_init(gchan);
   gchan->read_buf = g_string_sized_new(4096*128);
 
-  if (ssl_handshake(gchan, this, &_certstore, _host) == 0)
+  int ret;
+  if ((ret = ssl_handshake(gchan, this, &_certstore, _host, _session)) == 0)
   {
     g_io_channel_set_flags (handle, G_IO_FLAG_NONBLOCK, 0);
     return gchan;
+  } else
+  {
+    std::cerr<<"handshake ret "<<ret<<std::endl;
   }
   return 0;
 }

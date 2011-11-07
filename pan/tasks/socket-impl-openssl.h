@@ -70,6 +70,7 @@ namespace pan
       bool _io_performed;
       SSL_CTX * _ctx;
       CertStore& _certstore;
+      SSL_SESSION* _session;
 
     private:
       enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };
