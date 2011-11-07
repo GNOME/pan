@@ -408,7 +408,7 @@ namespace
   GtkActionEntry filequeue_popup_entries[] =
   {
 
-    { "remove-files", NULL,
+    { "remove-files", "Delete",
       N_("Remove from Queue"), "",
       N_("Remove from Queue"),
       G_CALLBACK(do_remove_files) },

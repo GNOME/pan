@@ -352,9 +352,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
         on_queue_task_active_changed (queue, *(*it), true);
     }
   }
-#ifdef HAVE_OPENSSL
   _certstore.add_listener(this);
-#endif
 }
 
 namespace
@@ -365,9 +363,8 @@ namespace
 
 GUI :: ~GUI ()
 {
-#ifdef HAVE_OPENSSL
   _certstore.remove_listener(this);
-#endif
+
   const std::string accel_filename (get_accel_filename());
   gtk_accel_map_save (accel_filename.c_str());
   chmod (accel_filename.c_str(), 0600);

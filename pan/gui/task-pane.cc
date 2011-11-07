@@ -640,7 +640,7 @@ namespace
       N_("Stop Task"),
       G_CALLBACK(do_stop) },
 
-    { "delete", NULL,
+    { "delete", "Delete",
       N_("Delete Task"), "",
       N_("Delete Task"),
       G_CALLBACK(do_delete) },

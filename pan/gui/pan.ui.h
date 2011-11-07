@@ -177,6 +177,8 @@ const char * fallback_ui_file =
 "    <toolitem action='match-only-binary-articles' />\n"
 "    <toolitem action='match-only-my-articles' />\n"
 "    <toolitem action='match-only-watched-articles' />\n"
+"    <separator />\n"
+"    <toolitem action='wrap-article-body' />\n"
 "  </toolbar>\n"
 "\n"
 "  <popup name='header-pane-popup'>\n"
