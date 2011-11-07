@@ -59,11 +59,15 @@ namespace pan
     Socket * socket;
     std::string err;
     bool use_ssl;
+#ifdef HAVE_OPENSSL
     SSL_CTX * context;
     CertStore& store;
-
     ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l, bool ssl, SSL_CTX* ctx, CertStore& cs):
       host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), context(ctx), store(cs) {}
+#else
+    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l):
+      host(h), port(p), listener(l), ok(false), socket(0), use_ssl(false) {}
+#endif
 
     void do_work ()
     {
@@ -135,6 +139,7 @@ SocketCreator :: SocketCreator(CertStore& cs) : store(cs)
 #endif
 }
 
+
 SocketCreator :: ~SocketCreator()
 {
 #ifdef HAVE_OPENSSL
@@ -151,11 +156,15 @@ SocketCreator :: create_socket (const StringView & host,
                                 bool               use_ssl)
 {
     ensure_module_init ();
-
+#ifdef HAVE_OPENSSL
     ThreadWorker * w = new ThreadWorker (host, port, listener, use_ssl, ssl_ctx, store);
+#else
+    ThreadWorker * w = new ThreadWorker (host, port, listener);
+#endif
     threadpool.push_work (w, w, true);
 }
 
+#ifdef HAVE_OPENSSL
 void
 SocketCreator :: on_verify_cert_failed(X509* cert, std::string server, int nr)
 {
@@ -164,3 +173,4 @@ SocketCreator :: on_verify_cert_failed(X509* cert, std::string server, int nr)
 void
 SocketCreator :: on_valid_cert_added (X509* cert, std::string server)
 {}
+#endif

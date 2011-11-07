@@ -53,6 +53,7 @@ Queue :: Queue (ServerInfo         & server_info,
   _uploads_total(0),
   _certstore (store)
 {
+
   tasks_t tasks;
   _archive.load_tasks (tasks);
   add_tasks (tasks, BOTTOM);

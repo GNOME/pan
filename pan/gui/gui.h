@@ -24,7 +24,7 @@
 #include <pan/data/article-cache.h>
 #include <pan/data/encode-cache.h>
 #include <pan/tasks/queue.h>
-
+#include <pan/tasks/cert-store.h>
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-ui.h>
 #include <pan/gui/prefs.h>
@@ -127,7 +127,9 @@ namespace pan
       virtual void do_supersede_article ();
       virtual void do_delete_article ();
       virtual bool deletion_confirmation_dialog();
+#ifdef HAVE_OPENSSL
       virtual bool confirm_accept_new_cert_dialog(X509*, const Quark&);
+#endif
       virtual void do_clear_article_cache ();
       virtual void do_mark_article_read ();
       virtual void do_mark_article_unread ();
@@ -178,11 +180,11 @@ namespace pan
       virtual void on_queue_size_changed (Queue&, int active, int total);
       virtual void on_queue_online_changed (Queue&, bool online);
       virtual void on_queue_error (Queue&, const StringView& message);
-
+#ifdef HAVE_OPENSSL
     private:  // CertStore::Listener
       virtual void on_verify_cert_failed(X509*, std::string, int);
       virtual void on_valid_cert_added (X509*, std::string);
-
+#endif
     private: // Log::Listener
       virtual void on_log_entry_added (const Log::Entry& e);
       virtual void on_log_cleared () {}

@@ -37,6 +37,7 @@
   #include <openssl/err.h>
 #endif
 
+
 namespace pan
 {
   /**
@@ -44,6 +45,7 @@ namespace pan
    *
    * @ingroup tasks
    */
+#ifdef HAVE_OPENSSL
   class GIOChannelSocketSSL:
     public GIOChannelSocket,
     private CertStore::Listener
@@ -88,6 +90,14 @@ namespace pan
 
     private:
       GIOChannel* ssl_get_iochannel(GIOChannel *handle, gboolean verify=true);
+
+#else
+  class GIOChannelSocketSSL
+  {
+    public:
+      virtual ~GIOChannelSocketSSL ();
+      GIOChannelSocketSSL ();
+#endif  // HAVE_OPENSSL
   };
 }
 

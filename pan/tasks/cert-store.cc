@@ -53,6 +53,8 @@ extern "C" {
 
 using namespace pan;
 
+#ifdef HAVE_OPENSSL
+
 namespace pan
 {
 
@@ -158,9 +160,8 @@ CertStore :: remove (const Quark& server)
   }
 }
 
-CertStore :: CertStore (SSL_CTX * ctx) : _ctx(ctx)
+CertStore :: CertStore ()
 {
-  if (ctx) init_me();
   char buf[2048];
   g_snprintf(buf,sizeof(buf),"%s%cssl_certs",file::get_pan_home().c_str(), G_DIR_SEPARATOR);
   file::ensure_dir_exists (buf);
@@ -264,3 +265,6 @@ CertStore :: pretty_print_x509 (char* buf, size_t size, const Quark& server, X50
 
 
 }  // namespace pan
+
+
+#endif

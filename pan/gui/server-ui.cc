@@ -28,7 +28,7 @@ extern "C" {
 }
 
 #include <pan/usenet-utils/ssl-utils.h>
-#include <pan/icons/pan-pixbufs-internal.h>
+#include <pan/icons/pan-pixbufs.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
@@ -633,6 +633,7 @@ namespace
   }
 }
 
+#ifdef HAVE_OPENSSL
 /* security dialog */
 namespace
 {
@@ -774,6 +775,7 @@ namespace
   }
 
 }
+#endif
 
 GtkWidget*
 pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
@@ -867,6 +869,7 @@ pan :: render_cert_flag (GtkTreeViewColumn * ,
 GtkWidget*
 pan :: sec_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
 {
+#ifdef HAVE_OPENSSL
   ServerListDialog * d = new ServerListDialog (data, queue);
 
   for (guint i=0; i<ICON_QTY; ++i)
@@ -894,12 +897,6 @@ pan :: sec_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   w = d->server_tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (d->servers_store));
 
   GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF, "xpad", 2,"ypad", 0,NULL));
-//  GtkTreeViewColumn * col = gtk_tree_view_column_new ();
-//  gtk_tree_view_column_set_resizable (col, false);
-//  gtk_tree_view_column_set_title (col, _("Certificate"));
-//  gtk_tree_view_column_pack_start (col, r, false);
-//  gtk_tree_view_column_set_cell_data_func (col, r, render_cert_flag, 0, 0);
-//  gtk_tree_view_append_column (GTK_TREE_VIEW(w), col);
   GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Certificates"), r, NULL);
   gtk_tree_view_column_set_cell_data_func (column, r, render_cert_flag, 0, 0);
   gtk_tree_view_append_column (GTK_TREE_VIEW(w), column);
@@ -951,4 +948,7 @@ pan :: sec_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   sec_tree_view_refresh (d);
   button_refresh (d);
   return d->dialog;
+#else
+  return 0;
+#endif
 }

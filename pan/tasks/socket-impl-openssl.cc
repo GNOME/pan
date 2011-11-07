@@ -100,8 +100,8 @@ extern "C" {
 using namespace pan;
 
 #ifndef G_OS_WIN32
-extern t_getaddrinfo p_getaddrinfo;
-extern t_freeaddrinfo p_freeaddrinfo;
+extern void* p_getaddrinfo;
+extern void* p_freeaddrinfo;
 #endif
 
 /****

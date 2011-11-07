@@ -39,9 +39,9 @@ extern "C" {
 
 #ifdef HAVE_OPENSSL
   #include <pan/tasks/socket-impl-openssl.h>
-  #include <pan/tasks/cert-store.h>
 #endif
 
+#include <pan/tasks/cert-store.h>
 #include <pan/tasks/socket-impl-gio.h>
 #include <pan/tasks/socket-impl-main.h>
 #include <pan/tasks/task-groups.h>
@@ -334,7 +334,7 @@ main (int argc, char *argv[])
     EncodeCache& encode_cache (data.get_encode_cache());
 
     /* init certificate store for SSL */
-    CertStore certstore(0);
+    CertStore certstore;
 
     if (nzb && data.get_servers().empty()) {
       std::cerr << _("Please configure Pan's news servers before using it as an nzb client.") << std::endl;

@@ -40,9 +40,9 @@
   #include <openssl/crypto.h>
   #include <openssl/ssl.h>
   #include "socket-impl-openssl.h"
-  #include "cert-store.h"
 #endif
 
+#include "cert-store.h"
 #include "socket-impl-gio.h"
 
 namespace
@@ -123,11 +123,15 @@ namespace pan
       SocketCreator (CertStore&);
       virtual ~SocketCreator ();
 
-#ifdef HAVE_OPENSSL
+
     private:
+#ifdef HAVE_OPENSSL
       SSL_CTX* ssl_ctx;
-      CertStore & store;
+      // CertStore::Listener
+      virtual void on_verify_cert_failed(X509*, std::string, int);
+      virtual void on_valid_cert_added (X509*, std::string );
 #endif
+      CertStore & store;
 
     public:
       virtual void create_socket (const StringView & host,
@@ -136,9 +140,6 @@ namespace pan
                                   Socket::Creator::Listener * listener,
                                   bool               use_ssl);
 
-      // CertStore::Listener
-      virtual void on_verify_cert_failed(X509*, std::string, int);
-      virtual void on_valid_cert_added (X509*, std::string );
   };
 
 }

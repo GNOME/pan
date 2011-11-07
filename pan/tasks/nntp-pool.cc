@@ -41,6 +41,7 @@ NNTP_Pool :: NNTP_Pool (const Quark        & server,
                         ServerInfo         & server_info,
                         SocketCreator      * creator,
                         CertStore          & certstore):
+
   _server_info (server_info),
   _server (server),
   _socket_creator (creator),
@@ -343,6 +344,7 @@ NNTP_Pool :: idle_upkeep ()
 }
 
 
+#ifdef HAVE_OPENSSL
 void
 NNTP_Pool :: on_verify_cert_failed (X509* cert, std::string server, int nr)
 {
@@ -355,3 +357,4 @@ NNTP_Pool :: on_valid_cert_added (X509* cert, std::string server)
 {
   _blacklist.erase(server);
 }
+#endif

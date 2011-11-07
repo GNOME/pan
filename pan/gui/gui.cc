@@ -352,8 +352,9 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
         on_queue_task_active_changed (queue, *(*it), true);
     }
   }
-
+#ifdef HAVE_OPENSSL
   _certstore.add_listener(this);
+#endif
 }
 
 namespace
@@ -364,9 +365,9 @@ namespace
 
 GUI :: ~GUI ()
 {
-
+#ifdef HAVE_OPENSSL
   _certstore.remove_listener(this);
-
+#endif
   const std::string accel_filename (get_accel_filename());
   gtk_accel_map_save (accel_filename.c_str());
   chmod (accel_filename.c_str(), 0600);
@@ -1066,9 +1067,11 @@ void GUI :: do_show_servers_dialog ()
 
 void GUI :: do_show_sec_dialog ()
 {
+#ifdef HAVE_OPENSSL
   GtkWidget * w = sec_dialog_new (_data, _queue, get_window(_root));
   g_signal_connect (w, "destroy", G_CALLBACK(sec_dialog_destroyed_cb), this);
   gtk_widget_show_all (w);
+#endif
 }
 
 
@@ -1303,7 +1306,7 @@ bool GUI::deletion_confirmation_dialog()
   return ret;
 }
 
-
+#ifdef HAVE_OPENSSL
 bool GUI::confirm_accept_new_cert_dialog(X509* cert, const Quark& server)
 {
   bool ret(false);
@@ -1325,6 +1328,7 @@ bool GUI::confirm_accept_new_cert_dialog(X509* cert, const Quark& server)
   gtk_widget_destroy(d);
   return ret;
 }
+#endif
 
 void GUI :: do_delete_article ()
 {
@@ -2085,7 +2089,7 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
     prev_path.assign (value.str, value.len);
 }
 
-
+#ifdef HAVE_OPENSSL
 void
 GUI :: on_verify_cert_failed(X509* cert, std::string server, int nr)
 {
@@ -2102,3 +2106,4 @@ GUI :: on_valid_cert_added (X509* cert, std::string server)
 {
 
 }
+#endif

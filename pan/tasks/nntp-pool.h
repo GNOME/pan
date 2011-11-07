@@ -27,7 +27,10 @@
 #include <pan/tasks/socket.h>
 #include <pan/tasks/nntp.h>
 #include <pan/tasks/socket-impl-main.h>
-#include <pan/tasks/cert-store.h>
+
+#ifdef HAVE_OPENSSL
+  #include <pan/tasks/cert-store.h>
+#endif
 
 namespace pan
 {
@@ -50,7 +53,6 @@ namespace pan
                  ServerInfo        & server_info,
                  SocketCreator     *,
                  CertStore         & certstore);
-
       virtual ~NNTP_Pool ();
 
       virtual void check_in (NNTP*, Health);
@@ -79,7 +81,7 @@ namespace pan
 
     private: //  NNTP::Listener
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
- #ifdef HAVE_OPENSSL
+#ifdef HAVE_OPENSSL
     private: //  CertStore::Listener
       virtual void on_verify_cert_failed (X509*, std::string, int);
       virtual void on_valid_cert_added (X509* cert, std::string server);
@@ -112,7 +114,6 @@ namespace pan
       typedef std::vector<PoolItem> pool_items_t;
       pool_items_t _pool_items;
       int _active_count;
-
       CertStore& _certstore;
 
     private:

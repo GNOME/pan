@@ -35,7 +35,10 @@
 #include <pan/tasks/encoder.h>
 #include <pan/tasks/task-weak-ordering.h>
 #include <pan/tasks/socket-impl-main.h>
-#include <pan/tasks/cert-store.h>
+
+#ifdef HAVE_OPENSSL
+  #include <pan/tasks/cert-store.h>
+#endif
 
 namespace pan
 {

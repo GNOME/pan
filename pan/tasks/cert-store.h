@@ -37,13 +37,15 @@
 
 #include <map>
 
+
+
 namespace pan
 {
-#ifdef HAVE_OPENSSL
   class CertStore
   {
+#ifdef HAVE_OPENSSL
     public:
-      CertStore (SSL_CTX*) ;
+      CertStore () ;
       virtual ~CertStore () ;
 
     private:
@@ -104,7 +106,6 @@ namespace pan
     protected:
       friend class SocketCreator;
       void set_ctx(SSL_CTX* c) { _ctx = c; init_me(); }
-
   };
 
   struct mydata_t {
@@ -114,8 +115,23 @@ namespace pan
    CertStore* cs;
    std::string server;
    CertStore::Listener* l;
+#else
+  public:
+    CertStore () {};
+    virtual ~CertStore () {};
+
+    void add_listener (void * l) {}
+    void remove_listener (void * l) {}
+
+    struct Listener
+    {
+      virtual ~Listener() {}
+    };
+#endif   // HAVE_OPENSSL
   };
-#endif
+
 }
 
- #endif
+
+#endif
+
