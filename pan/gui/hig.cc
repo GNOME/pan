@@ -129,7 +129,7 @@ HIG :: workarea_add_label   (GtkWidget   * table,
   return l;
 }
 
-                                                                                                                                                             
+
 void
 HIG :: workarea_add_control (GtkWidget   * table,
                               int           row,
@@ -190,6 +190,7 @@ HIG :: message_dialog_set_text (GtkMessageDialog * dialog,
                                 const char * primary,
                                 const char * secondary)
 {
+  gtk_widget_show_all(GTK_WIDGET(dialog));
   gtk_message_dialog_set_markup (dialog, primary);
   gtk_message_dialog_format_secondary_text (dialog, "%s", secondary);
 }

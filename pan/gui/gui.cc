@@ -1307,11 +1307,11 @@ bool GUI::deletion_confirmation_dialog()
 }
 
 #ifdef HAVE_OPENSSL
-bool GUI::confirm_accept_new_cert_dialog(X509* cert, const Quark& server)
+bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, X509* cert, const Quark& server)
 {
   bool ret(false);
   GtkWidget * d = gtk_message_dialog_new (
-    get_window(_root),
+    parent,
     GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
     GTK_MESSAGE_WARNING,
     GTK_BUTTONS_NONE, NULL);
@@ -1467,7 +1467,7 @@ void GUI :: do_about_pan ()
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
-  gtk_about_dialog_set_copyright (w, _("Copyright Â© 2002-2011 Charles Kerr and others"));
+  gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2011 Charles Kerr and others"));
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
   gtk_about_dialog_set_license (w, LICENSE);
@@ -2095,7 +2095,7 @@ GUI :: on_verify_cert_failed(X509* cert, std::string server, int nr)
 {
   std::cerr<<"gui cert failed : "<<cert<<"\n";
 
-  if (confirm_accept_new_cert_dialog(cert,server))
+  if (GUI::confirm_accept_new_cert_dialog(get_window(_root),cert,server))
     if (!_certstore.add(cert, server))
       std::cerr<<"error adding cert to "<<server<<std::endl;
 

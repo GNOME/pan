@@ -128,7 +128,7 @@ namespace pan
       virtual void do_delete_article ();
       virtual bool deletion_confirmation_dialog();
 #ifdef HAVE_OPENSSL
-      virtual bool confirm_accept_new_cert_dialog(X509*, const Quark&);
+      static bool confirm_accept_new_cert_dialog(GtkWindow*, X509*, const Quark&);
 #endif
       virtual void do_clear_article_cache ();
       virtual void do_mark_article_read ();
