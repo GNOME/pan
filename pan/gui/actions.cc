@@ -141,6 +141,7 @@ namespace
   void do_read_previous_thread         (GtkAction*) { pan_ui->do_read_previous_thread(); }
   void do_read_parent_article          (GtkAction*) { pan_ui->do_read_parent_article(); }
   void do_show_servers_dialog          (GtkAction*) { pan_ui->do_show_servers_dialog(); }
+  void do_show_sec_dialog              (GtkAction*) { pan_ui->do_show_sec_dialog(); }
   void do_plonk                        (GtkAction*) { pan_ui->do_plonk(); }
   void do_ignore                       (GtkAction*) { pan_ui->do_ignore(); }
   void do_watch                        (GtkAction*) { pan_ui->do_watch(); }
@@ -414,6 +415,11 @@ namespace
       N_("Edit _News Servers"), NULL,
       NULL,
       G_CALLBACK(do_show_servers_dialog) },
+
+    { "show-sec-dialog", GTK_STOCK_DIALOG_AUTHENTICATION,
+      N_("Edit _SSL Certificates"), NULL,
+      NULL,
+      G_CALLBACK(do_show_sec_dialog) },
 
     { "jump-to-group-tab", GTK_STOCK_JUMP_TO,
       N_("Jump to _Group Tab"), "1",

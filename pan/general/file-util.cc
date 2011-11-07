@@ -66,7 +66,7 @@ file :: get_pan_home ()
     }
   }
 
-  file :: ensure_dir_exists (pan_home);
+  ensure_dir_exists (pan_home);
   return pan_home;
 }
 

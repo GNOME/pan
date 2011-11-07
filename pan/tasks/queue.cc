@@ -34,6 +34,7 @@ using namespace pan;
 Queue :: Queue (ServerInfo         & server_info,
                 TaskArchive        & archive,
                 SocketCreator      * socket_creator,
+                CertStore          & store,
                 WorkerPool         & pool,
                 bool                 online,
                 int                  save_delay_secs):
@@ -49,7 +50,8 @@ Queue :: Queue (ServerInfo         & server_info,
   _needs_saving (false),
   _last_time_saved (0),
   _archive (archive),
-  _uploads_total(0)
+  _uploads_total(0),
+  _certstore (store)
 {
   tasks_t tasks;
   _archive.load_tasks (tasks);
@@ -98,7 +100,7 @@ Queue :: get_pool (const Quark& servername)
   }
   else // have to build one
   {
-    pool = new NNTP_Pool (servername, _server_info, _socket_creator);
+    pool = new NNTP_Pool (servername, _server_info, _socket_creator, _certstore);
     pool->add_listener (this);
     _pools[servername] = pool;
   }

@@ -20,6 +20,7 @@ const char * fallback_ui_file =
 "      <menuitem action='select-article-body' />\n"
 "      <separator />\n"
 "      <menuitem action='show-servers-dialog' />\n"
+"      <menuitem action='show-sec-dialog' />\n"
 "      <menuitem action='show-profiles-dialog' />\n"
 "      <menuitem action='show-preferences-dialog' />\n"
 "      <menuitem action='show-group-preferences-dialog' />\n"

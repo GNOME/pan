@@ -39,14 +39,17 @@ namespace
 
 NNTP_Pool :: NNTP_Pool (const Quark        & server,
                         ServerInfo         & server_info,
-                        SocketCreator      * creator):
+                        SocketCreator      * creator,
+                        CertStore          & certstore):
   _server_info (server_info),
   _server (server),
   _socket_creator (creator),
+  _certstore(certstore),
   _pending_connections (0),
   _active_count (0),
   _time_to_allow_new_connections (0)
 {
+  certstore.add_listener(this);
 }
 
 NNTP_Pool :: ~NNTP_Pool ()
@@ -55,6 +58,7 @@ NNTP_Pool :: ~NNTP_Pool ()
     delete it->nntp->_socket;
     delete it->nntp;
   }
+  _certstore.remove_listener(this);
 }
 
 /***
@@ -174,6 +178,7 @@ NNTP_Pool :: on_socket_created (const StringView  & host UNUSED,
   }
 }
 
+
 void
 NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response)
 {
@@ -270,9 +275,12 @@ NNTP_Pool :: request_nntp (WorkerPool& threadpool)
     int port;
     if (_server_info.get_server_addr (_server, address, port))
     {
-      ++_pending_connections;
-      const bool ssl(_server_info.get_server_ssl_support(_server));
-      _socket_creator->create_socket (address, port, threadpool, this, ssl);
+      if (_blacklist.count(address) == 0)
+      {
+        ++_pending_connections;
+        const bool ssl(_server_info.get_server_ssl_support(_server));
+        _socket_creator->create_socket (address, port, threadpool, this, ssl);
+      }
     }
   }
 }
@@ -332,4 +340,18 @@ NNTP_Pool :: idle_upkeep ()
       item->nntp->noop (new NoopListener (this, false));
     item = 0;
   }
+}
+
+
+void
+NNTP_Pool :: on_verify_cert_failed (X509* cert, std::string server, int nr)
+{
+  _blacklist.insert(server);
+  abort_tasks();
+}
+
+void
+NNTP_Pool :: on_valid_cert_added (X509* cert, std::string server)
+{
+  _blacklist.erase(server);
 }

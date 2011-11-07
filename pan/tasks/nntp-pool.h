@@ -27,6 +27,7 @@
 #include <pan/tasks/socket.h>
 #include <pan/tasks/nntp.h>
 #include <pan/tasks/socket-impl-main.h>
+#include <pan/tasks/cert-store.h>
 
 namespace pan
 {
@@ -40,13 +41,15 @@ namespace pan
   class NNTP_Pool:
     public NNTP::Source,
     private NNTP::Listener,
-    private Socket::Creator::Listener
+    private Socket::Creator::Listener,
+    private CertStore::Listener
   {
     public:
 
       NNTP_Pool (const Quark       & server,
                  ServerInfo        & server_info,
-                 SocketCreator     *);
+                 SocketCreator     *,
+                 CertStore         & certstore);
 
       virtual ~NNTP_Pool ();
 
@@ -58,7 +61,7 @@ namespace pan
       void get_counts (int& setme_active,
                        int& setme_idle,
                        int& setme_connecting,
-                          int& setme_max) const;
+                       int& setme_max) const;
 
     public:
 
@@ -76,7 +79,11 @@ namespace pan
 
     private: //  NNTP::Listener
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
-
+ #ifdef HAVE_OPENSSL
+    private: //  CertStore::Listener
+      virtual void on_verify_cert_failed (X509*, std::string, int);
+      virtual void on_valid_cert_added (X509* cert, std::string server);
+#endif
     private: // Socket::Creator::Listener
       virtual void on_socket_created (const StringView& host, int port, bool ok, Socket*);
 
@@ -95,6 +102,7 @@ namespace pan
       const Quark _server;
       SocketCreator * _socket_creator;
       int _pending_connections;
+      std::set<std::string> _blacklist;
 
       struct PoolItem {
         NNTP * nntp;
@@ -104,6 +112,8 @@ namespace pan
       typedef std::vector<PoolItem> pool_items_t;
       pool_items_t _pool_items;
       int _active_count;
+
+      CertStore& _certstore;
 
     private:
 

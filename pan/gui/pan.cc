@@ -36,6 +36,12 @@ extern "C" {
 #include <pan/general/log.h>
 #include <pan/general/file-util.h>
 #include <pan/general/worker-pool.h>
+
+#ifdef HAVE_OPENSSL
+  #include <pan/tasks/socket-impl-openssl.h>
+  #include <pan/tasks/cert-store.h>
+#endif
+
 #include <pan/tasks/socket-impl-gio.h>
 #include <pan/tasks/socket-impl-main.h>
 #include <pan/tasks/task-groups.h>
@@ -130,6 +136,7 @@ namespace
 
   void run_pan_in_window (ArticleCache  & cache,
                           EncodeCache   & encode_cache,
+                          CertStore     & certstore,
                           Data          & data,
                           Queue         & queue,
                           Prefs         & prefs,
@@ -139,7 +146,7 @@ namespace
     {
       const gulong delete_cb_id =  g_signal_connect (window, "delete-event", G_CALLBACK(delete_event_cb), 0);
 
-      GUI gui (data, queue, cache, encode_cache, prefs, group_prefs);
+      GUI gui (data, queue, cache, encode_cache, certstore, prefs, group_prefs);
       gtk_container_add (GTK_CONTAINER(window), gui.root());
       gtk_widget_show (GTK_WIDGET(window));
 
@@ -326,6 +333,9 @@ main (int argc, char *argv[])
     ArticleCache& cache (data.get_cache ());
     EncodeCache& encode_cache (data.get_encode_cache());
 
+    /* init certificate store for SSL */
+    CertStore certstore(0);
+
     if (nzb && data.get_servers().empty()) {
       std::cerr << _("Please configure Pan's news servers before using it as an nzb client.") << std::endl;
        return EXIT_FAILURE;
@@ -335,9 +345,9 @@ main (int argc, char *argv[])
     // instantiate the queue...
     WorkerPool worker_pool (4, true);
 
-    SocketCreator socket_creator;
+    SocketCreator socket_creator(certstore);
 
-    Queue queue (data, data, &socket_creator, worker_pool,
+    Queue queue (data, data, &socket_creator, certstore, worker_pool,
                  prefs.get_flag ("work-online", true),
                  prefs.get_int ("task-save-delay-secs", 10));
     g_timeout_add (5000, queue_upkeep_timer_cb, &queue);
@@ -399,7 +409,7 @@ main (int argc, char *argv[])
       gtk_window_set_resizable (GTK_WINDOW(window), true);
       gtk_window_set_default_icon (pixbuf);
       g_object_unref (pixbuf);
-      run_pan_in_window (cache, encode_cache, data, queue, prefs, group_prefs, GTK_WINDOW(window));
+      run_pan_in_window (cache, encode_cache, certstore, data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
 
     worker_pool.cancel_all_silently ();

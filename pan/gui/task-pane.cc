@@ -127,7 +127,6 @@ TaskPane:: on_tooltip_query(GtkWidget  *widget,
     return false;
 
   gtk_tree_model_get (model, &iter, COL_TASK_POINTER, &task, -1);
-//  if (!task) return false;
 
   g_snprintf(buffer,sizeof(buffer),"...");
 
@@ -611,7 +610,7 @@ namespace
   void do_stop           (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->stop_clicked_cb(0, static_cast<TaskPane*>(p)); }
   void do_delete         (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->delete_clicked_cb(0, static_cast<TaskPane*>(p)); }
   void do_restart        (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->restart_clicked_cb(0, static_cast<TaskPane*>(p)); }
-  void do_change_dest    (GtkAction* a, gpointer p){ static_cast<TaskPane*>(p)->change_dest_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_change_dest    (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->change_dest_clicked_cb(0, static_cast<TaskPane*>(p)); }
 
   GtkActionEntry taskpane_popup_entries[] =
   {

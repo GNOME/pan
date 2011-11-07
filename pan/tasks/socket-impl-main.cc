@@ -60,15 +60,16 @@ namespace pan
     std::string err;
     bool use_ssl;
     SSL_CTX * context;
+    CertStore& store;
 
-    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l, bool ssl, SSL_CTX* ctx):
-      host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), context(ctx) {}
+    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l, bool ssl, SSL_CTX* ctx, CertStore& cs):
+      host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), context(ctx), store(cs) {}
 
     void do_work ()
     {
       #ifdef HAVE_OPENSSL
         if (use_ssl)
-          socket = new GIOChannelSocketSSL (context);
+          socket = new GIOChannelSocketSSL (context, store);
         else
       #endif
           socket = new GIOChannelSocket ();
@@ -112,28 +113,33 @@ namespace
     for (int i=0; i<CRYPTO_num_locks(); i++)
       pthread_mutex_destroy(&lock_cs[i]);
     CRYPTO_set_locking_callback(0);
-//    CRYPTO_set_id_callback(0);
     OPENSSL_free(lock_cs);
   }
+
 }
 #endif
 
-SocketCreator :: SocketCreator()
+SocketCreator :: SocketCreator(CertStore& cs) : store(cs)
 {
 #ifdef HAVE_OPENSSL
   SSL_library_init();
   SSL_load_error_strings();
+  OpenSSL_add_all_algorithms();
+  ERR_load_crypto_strings();
+
   /* init static locks for threads */
   ssl_thread_setup();
   ssl_ctx = SSL_CTX_new(SSLv3_client_method());
+  cs.set_ctx(ssl_ctx);
+  SSL_CTX_set_mode(ssl_ctx, SSL_MODE_ENABLE_PARTIAL_WRITE | SSL_MODE_AUTO_RETRY);
 #endif
-
 }
+
 SocketCreator :: ~SocketCreator()
 {
 #ifdef HAVE_OPENSSL
   ssl_thread_cleanup();
-  SSL_CTX_free(ssl_ctx);
+  if (ssl_ctx) SSL_CTX_free(ssl_ctx);
 #endif
 }
 
@@ -144,8 +150,17 @@ SocketCreator :: create_socket (const StringView & host,
                                 Socket::Creator::Listener * listener,
                                 bool               use_ssl)
 {
-  ensure_module_init ();
+    ensure_module_init ();
 
-  ThreadWorker * w = new ThreadWorker (host, port, listener, use_ssl, ssl_ctx);
-  threadpool.push_work (w, w, true);
+    ThreadWorker * w = new ThreadWorker (host, port, listener, use_ssl, ssl_ctx, store);
+    threadpool.push_work (w, w, true);
 }
+
+void
+SocketCreator :: on_verify_cert_failed(X509* cert, std::string server, int nr)
+{
+}
+
+void
+SocketCreator :: on_valid_cert_added (X509* cert, std::string server)
+{}

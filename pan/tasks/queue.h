@@ -35,6 +35,7 @@
 #include <pan/tasks/encoder.h>
 #include <pan/tasks/task-weak-ordering.h>
 #include <pan/tasks/socket-impl-main.h>
+#include <pan/tasks/cert-store.h>
 
 namespace pan
 {
@@ -70,7 +71,7 @@ namespace pan
     private AdaptableSet<Task*, TaskWeakOrdering>::Listener
   {
     public:
-      Queue (ServerInfo&, TaskArchive&, SocketCreator*, WorkerPool&,
+      Queue (ServerInfo&, TaskArchive&, SocketCreator*, CertStore&, WorkerPool&,
              bool online, int save_delay_secs);
       virtual ~Queue ();
 
@@ -241,8 +242,13 @@ namespace pan
     private:
       TaskArchive& _archive;
       void clean_n_save ();
-
       int _uploads_total;
+      CertStore& _certstore;
+
+    /* FIXME: move all this certstore crap to data */
+    public:
+      const CertStore& store() const { return _certstore; }
+      CertStore& store()  { return _certstore; }
 
     private:
       typedef AdaptableSet<Task*, TaskWeakOrdering> TaskSet;

@@ -44,7 +44,9 @@ stock_images = \
 	icon_mozilla_smile.png \
 	icon_mozilla_surprised.png \
 	icon_mozilla_tongueout.png \
-	icon_mozilla_wink.png
+	icon_mozilla_wink.png \
+	icon_plain.png \
+	icon_cert.png
     
 
 EXTRA_DIST = \

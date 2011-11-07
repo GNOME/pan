@@ -26,6 +26,9 @@ extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
 }
+
+#include <pan/usenet-utils/ssl-utils.h>
+#include <pan/icons/pan-pixbufs-internal.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
@@ -33,6 +36,16 @@ extern "C" {
 #include "pad.h"
 #include "hig.h"
 #include "gtk_compat.h"
+
+#ifdef HAVE_OPENSSL
+  #include <pan/tasks/cert-store.h>
+  #include <openssl/crypto.h>
+  #include <openssl/x509.h>
+  #include <openssl/x509v3.h>
+  #include <openssl/pem.h>
+  #include <openssl/ssl.h>
+  #include <openssl/err.h>
+#endif
 
 using namespace pan;
 
@@ -220,6 +233,32 @@ namespace
   }
 }
 
+std::string
+pan :: import_sec_from_disk_dialog_new (Data& data, Queue& queue, GtkWindow * window)
+{
+  std::string prev_path = g_get_home_dir ();
+  std::string res;
+
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Import SSL certificate (PEM format) from File"),
+				      window,
+				      GTK_FILE_CHOOSER_ACTION_OPEN,
+				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+				      NULL);
+	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
+	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (w), false);
+	gtk_file_chooser_set_show_hidden (GTK_FILE_CHOOSER (w), false);
+
+	const int response (gtk_dialog_run (GTK_DIALOG(w)));
+	if (response == GTK_RESPONSE_ACCEPT) {
+    res = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w));
+    gtk_widget_destroy (w);
+  } else
+    gtk_widget_destroy (w);
+
+  return res;
+}
+
 GtkWidget*
 pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, const Quark& server)
 {
@@ -367,6 +406,24 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
   return d->dialog;
 }
 
+namespace
+{
+  enum
+  {
+    ICON_PLAIN,
+    ICON_CERT,
+    ICON_QTY
+   };
+
+  struct Icon {
+    const guint8 * pixbuf_txt;
+    GdkPixbuf * pixbuf;
+  } _icons[ICON_QTY] = {
+    { icon_plain,  0 },
+    { icon_cert,   0 }
+  };
+}
+
 
 /************
 *************  LIST DIALOG
@@ -376,6 +433,7 @@ namespace
 {
   enum
   {
+    COL_FLAG,
     COL_HOST,
     COL_DATA,
     N_COLUMNS
@@ -393,6 +451,7 @@ namespace
     ServerListDialog (Data& d, Queue& q): data(d), queue(q) {}
   };
 
+
   Quark
   get_selected_server (ServerListDialog * d)
   {
@@ -406,6 +465,29 @@ namespace
     if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
       char * host (0);
       gtk_tree_model_get (model, &iter, COL_DATA, &host, -1);
+      if (host) {
+        server = host;
+        g_free (host);
+      }
+    }
+
+    //std::cerr << LINE_ID << " selected server is " << server << std::endl;
+    return server;
+  }
+
+  Quark
+  get_selected_server_name (ServerListDialog * d)
+  {
+    g_assert (d != 0);
+
+    Quark server;
+
+    GtkTreeSelection * selection (gtk_tree_view_get_selection(GTK_TREE_VIEW (d->server_tree_view)));
+    GtkTreeModel * model;
+    GtkTreeIter iter;
+    if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+      char * host (0);
+      gtk_tree_model_get (model, &iter, COL_HOST, &host, -1);
       if (host) {
         server = host;
         g_free (host);
@@ -458,11 +540,19 @@ namespace
     delete (ServerListDialog*)p;
   }
 
+  void delete_sec_dialog (gpointer p)
+  {
+   for (guint i=0; i<ICON_QTY; ++i)
+      g_object_unref (_icons[i].pixbuf);
+   delete (ServerListDialog*)p;
+  }
+
   void
   server_list_dialog_response_cb (GtkDialog * dialog, int, gpointer)
   {
     gtk_widget_destroy (GTK_WIDGET(dialog));
   }
+
 
   void
   remove_button_clicked_cb (GtkButton * button, gpointer data)
@@ -543,6 +633,147 @@ namespace
   }
 }
 
+/* security dialog */
+namespace
+{
+
+  /* Show the current certificate of the selected server, if any */
+  void
+  cert_edit_button_clicked_cb (GtkButton *, gpointer user_data)
+  {
+    GtkWidget * list_dialog = GTK_WIDGET (user_data);
+    ServerListDialog * d = (ServerListDialog*) g_object_get_data (G_OBJECT(list_dialog), "dialog");
+    Quark selected_server (get_selected_server (d));
+
+    int port;
+    std::string addr;
+    d->data.get_server_addr (selected_server, addr, port);
+
+    char buf[4096] ;
+
+    if (!selected_server.empty()) {
+      X509* cert = (X509*)d->queue.store().get_cert_to_server(addr);
+      if (cert)
+      {
+        CertStore::pretty_print_x509(buf,sizeof(buf),addr, cert);
+        if (!buf) g_snprintf(buf,sizeof(buf), "%s", _("No information available.")) ;
+        GtkWidget * w = gtk_message_dialog_new_with_markup (
+        0,
+        GTK_DIALOG_MODAL,
+        GTK_MESSAGE_INFO,
+        GTK_BUTTONS_CLOSE, buf);
+        gtk_widget_show_all (w);
+        g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
+      }
+    }
+  }
+
+  void
+  sec_tree_view_refresh (ServerListDialog * d)
+  {
+    GtkTreeSelection * selection (gtk_tree_view_get_selection(GTK_TREE_VIEW (d->server_tree_view)));
+    const quarks_t servers (d->data.get_servers ());
+    const Quark selected_server (get_selected_server (d));
+
+    bool found_selected (false);
+    GtkTreeIter selected_iter;
+    gtk_list_store_clear (d->servers_store);
+    foreach_const (quarks_t, servers, it)
+    {
+      const Quark& server (*it);
+      std::string addr; int port;
+      d->data.get_server_addr (server, addr, port);
+
+      if(d->data.get_server_ssl_support(server))
+      {
+        GtkTreeIter iter;
+        gtk_list_store_append (d->servers_store, &iter);
+        gtk_list_store_set (d->servers_store, &iter,
+                            COL_FLAG, d->queue.store().exist(addr),
+                            COL_HOST, addr.c_str(),
+                            COL_DATA, server.c_str(),
+                            -1);
+        if ((found_selected = (server == selected_server)))
+          selected_iter = iter;
+      }
+    }
+
+    if (found_selected)
+      gtk_tree_selection_select_iter (selection, &selected_iter);
+  }
+
+  void
+  sec_dialog_destroy_cb (GtkWidget *, gpointer user_data)
+  {
+    if (GTK_IS_WIDGET (user_data))
+    {
+      ServerListDialog * d = (ServerListDialog*) g_object_get_data (G_OBJECT(user_data), "dialog");
+      sec_tree_view_refresh (d);
+    }
+  }
+
+
+  /* add a cert from disk, overwriting the current certificate for the selected server */
+  void
+  cert_add_button_clicked_cb (GtkButton *, gpointer user_data)
+  {
+    const Quark empty_quark;
+    GtkWidget * list_dialog = GTK_WIDGET (user_data);
+    ServerListDialog * d = (ServerListDialog*) g_object_get_data (G_OBJECT(list_dialog), "dialog");
+    std::string ret = import_sec_from_disk_dialog_new (d->data, d->queue, GTK_WINDOW(list_dialog));
+    const Quark selected_server (get_selected_server (d));
+
+    if (!ret.empty() )
+    {
+      std::string addr; int port;
+      FILE *fp = fopen(ret.c_str(),"r");
+      X509 *x = X509_new();
+      PEM_read_X509(fp,&x, 0, 0);
+      fclose(fp);
+      d->data.get_server_addr(selected_server, addr, port);
+      d->queue.store().add(x,addr);
+      sec_tree_view_refresh (d);
+    }
+  }
+
+
+  /* remove cert from certstore */
+  void
+  cert_remove_button_clicked_cb (GtkButton * button, gpointer data)
+  {
+    ServerListDialog * d (static_cast<ServerListDialog*>(data));
+    Quark selected_server (get_selected_server (d));
+    if (!selected_server.empty())
+    {
+      int port;
+      std::string addr;
+      d->data.get_server_addr (selected_server, addr, port);
+
+      GtkWidget * w = gtk_message_dialog_new (GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(button))),
+                                              GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+                                              GTK_MESSAGE_QUESTION,
+                                              GTK_BUTTONS_NONE,
+                                              _("Really delete certificate for \"%s\"?"),
+                                              addr.c_str());
+      gtk_dialog_add_buttons (GTK_DIALOG(w),
+                              GTK_STOCK_NO, GTK_RESPONSE_NO,
+                              GTK_STOCK_DELETE, GTK_RESPONSE_YES,
+                              NULL);
+      gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_NO);
+      const int response (gtk_dialog_run (GTK_DIALOG (w)));
+      gtk_widget_destroy (w);
+
+      d->data.get_server_addr (selected_server, addr, port);
+      d->queue.store().remove(addr);
+
+      if (response == GTK_RESPONSE_YES)
+        sec_tree_view_refresh (d);
+
+      button_refresh (d);
+    }
+  }
+
+}
 
 GtkWidget*
 pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
@@ -568,7 +799,7 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
 
 
   // create the list
-  d->servers_store = gtk_list_store_new (N_COLUMNS, G_TYPE_STRING, G_TYPE_STRING);
+  d->servers_store = gtk_list_store_new (N_COLUMNS, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING);
   w = d->server_tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (d->servers_store));
   GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
   GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Servers"), renderer, "text", COL_HOST, NULL);
@@ -615,6 +846,109 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   d->remove_button = w;
 
   server_tree_view_refresh (d);
+  button_refresh (d);
+  return d->dialog;
+}
+
+
+void
+pan :: render_cert_flag (GtkTreeViewColumn * ,
+                         GtkCellRenderer   * renderer,
+                         GtkTreeModel      * model,
+                         GtkTreeIter       * iter,
+                         gpointer            )
+{
+  bool index (false);
+  gtk_tree_model_get (model, iter, COL_FLAG, &index, -1);
+  g_object_set (renderer, "pixbuf", _icons[index].pixbuf, NULL);
+}
+
+
+GtkWidget*
+pan :: sec_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
+{
+  ServerListDialog * d = new ServerListDialog (data, queue);
+
+  for (guint i=0; i<ICON_QTY; ++i)
+    _icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, _icons[i].pixbuf_txt, FALSE, 0);
+
+  // dialog
+  char * title = g_strdup_printf ("Pan: %s", _("SSL Certificates"));
+  GtkWidget * w = d->dialog = gtk_dialog_new_with_buttons (title, parent,
+                                                           GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                           GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
+                                                           NULL);
+  g_free (title);
+  gtk_window_set_role (GTK_WINDOW(w), "pan-sec-dialog");
+  gtk_window_set_resizable (GTK_WINDOW(w), TRUE);
+  g_signal_connect (GTK_OBJECT(w), "response", G_CALLBACK(server_list_dialog_response_cb), d);
+  g_object_set_data_full (G_OBJECT(w), "dialog", d, delete_sec_dialog);
+
+  // workarea
+  GtkWidget * hbox = gtk_hbox_new (FALSE, PAD);
+  gtk_container_set_border_width (GTK_CONTAINER(hbox), 12);
+  gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(w))), hbox, TRUE, TRUE, 0);
+
+  // create the list
+  d->servers_store = gtk_list_store_new (N_COLUMNS, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING);
+  w = d->server_tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (d->servers_store));
+
+  GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF, "xpad", 2,"ypad", 0,NULL));
+//  GtkTreeViewColumn * col = gtk_tree_view_column_new ();
+//  gtk_tree_view_column_set_resizable (col, false);
+//  gtk_tree_view_column_set_title (col, _("Certificate"));
+//  gtk_tree_view_column_pack_start (col, r, false);
+//  gtk_tree_view_column_set_cell_data_func (col, r, render_cert_flag, 0, 0);
+//  gtk_tree_view_append_column (GTK_TREE_VIEW(w), col);
+  GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Certificates"), r, NULL);
+  gtk_tree_view_column_set_cell_data_func (column, r, render_cert_flag, 0, 0);
+  gtk_tree_view_append_column (GTK_TREE_VIEW(w), column);
+
+  r = gtk_cell_renderer_text_new ();
+  column = gtk_tree_view_column_new_with_attributes (_("Servers"), r, "text", COL_HOST, NULL);
+  gtk_tree_view_column_set_sort_column_id (column, COL_HOST);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (w), column);
+  GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (w));
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+
+  // add callbacks
+  g_signal_connect (GTK_TREE_VIEW (w), "row-activated",
+                    G_CALLBACK (server_tree_view_row_activated_cb), d->dialog);
+  g_signal_connect (G_OBJECT (selection), "changed",
+                    G_CALLBACK (server_tree_view_selection_changed_cb), d);
+
+  w = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER(w), d->server_tree_view);
+  gtk_box_pack_start (GTK_BOX (hbox), w, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (w, 300, 300);
+
+  // button box
+  GtkWidget * bbox = gtk_vbox_new (FALSE, PAD_SMALL);
+  gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
+
+  // add button
+  w = gtk_button_new_from_stock (GTK_STOCK_ADD);
+  gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
+  gtk_widget_set_tooltip_text(w, _("Import Certificate"));
+  g_signal_connect (w, "clicked", G_CALLBACK(cert_add_button_clicked_cb), d->dialog);
+
+  // inspect button
+  w = gtk_button_new_from_stock (GTK_STOCK_FIND);
+  gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
+  gtk_widget_set_tooltip_text(w, _("Inspect Certificate"));
+  g_signal_connect (w, "clicked", G_CALLBACK(cert_edit_button_clicked_cb), d->dialog);
+  d->edit_button = w;
+
+  // remove button
+  w = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
+  gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
+  gtk_widget_set_tooltip_text(w, _("Remove Certificate"));
+  g_signal_connect (w, "clicked", G_CALLBACK(cert_remove_button_clicked_cb), d);
+  d->remove_button = w;
+
+  sec_tree_view_refresh (d);
   button_refresh (d);
   return d->dialog;
 }

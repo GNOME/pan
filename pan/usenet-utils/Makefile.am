@@ -23,7 +23,8 @@ noinst_HEADERS = \
  numbers.h \
  scorefile.h \
  text-massager.h \
- url-find.h
+ url-find.h \
+ ssl-utils.h
 
 #noinst_PROGRAMS = \
 # gnksa-test \

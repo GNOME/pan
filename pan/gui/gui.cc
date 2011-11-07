@@ -75,6 +75,13 @@ namespace pan
   {
     gtk_box_pack_start( box, child, TRUE, TRUE, 0 );
   }
+
+  void remove_from_parent (GtkWidget * w)
+  {
+    GtkWidget *parent = gtk_widget_get_parent(w);
+    if (parent != 0)
+      gtk_container_remove (GTK_CONTAINER(parent), w);
+  }
 }
 
 using namespace pan;
@@ -123,8 +130,6 @@ GUI :: add_widget (GtkUIManager *,
 {
   const char * name (gtk_widget_get_name (widget));
   GUI * self (static_cast<GUI*>(gui_g));
-
-  std::cerr<<"add widget "<<name<<std::endl;
 
   if (name && strstr(name,"main-window-")==name)
   {
@@ -178,9 +183,7 @@ namespace
 //  };
 //}
 
-
-
-GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_cache, Prefs& prefs, GroupPrefs& group_prefs):
+GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_cache, CertStore& cs, Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),
   _queue (queue),
   _cache (cache),
@@ -199,7 +202,8 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
   _connection_size_label (0),
   _queue_size_label (0),
   _queue_size_button (0),
-  _taskbar (0)
+  _taskbar (0),
+  _certstore(cs)
 {
 
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
@@ -348,6 +352,8 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
         on_queue_task_active_changed (queue, *(*it), true);
     }
   }
+
+  _certstore.add_listener(this);
 }
 
 namespace
@@ -358,6 +364,9 @@ namespace
 
 GUI :: ~GUI ()
 {
+
+  _certstore.remove_listener(this);
+
   const std::string accel_filename (get_accel_filename());
   gtk_accel_map_save (accel_filename.c_str());
   chmod (accel_filename.c_str(), 0600);
@@ -997,6 +1006,12 @@ void GUI ::  server_list_dialog_destroyed_cb (GtkWidget * w, gpointer self)
   static_cast<GUI*>(self)->server_list_dialog_destroyed (w);
 }
 
+void GUI ::  sec_dialog_destroyed_cb (GtkWidget * w, gpointer self)
+{
+  static_cast<GUI*>(self)->sec_dialog_destroyed (w);
+}
+
+
 // this queues up a grouplist task for any servers that
 // were added while the server list dialog was up.
 void GUI :: server_list_dialog_destroyed (GtkWidget *)
@@ -1008,6 +1023,18 @@ void GUI :: server_list_dialog_destroyed (GtkWidget *)
     if (tmp.empty() && _data.get_server_limits(*it))
       _queue.add_task (new TaskGroups (_data, *it));
   }
+}
+
+
+void GUI :: sec_dialog_destroyed (GtkWidget * w)
+{
+//  quarks_t empty_servers, all_servers (_data.get_servers());
+//  foreach_const (quarks_t, all_servers, it) {
+//    quarks_t tmp;
+//    _data.server_get_groups (*it, tmp);
+//    if (tmp.empty() && _data.get_server_limits(*it))
+//      _queue.add_task (new TaskGroups (_data, *it));
+//  }
 }
 
 void GUI ::  prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self)
@@ -1035,6 +1062,15 @@ void GUI :: do_show_servers_dialog ()
   gtk_widget_show_all (w);
   g_signal_connect (w, "destroy", G_CALLBACK(server_list_dialog_destroyed_cb), this);
 }
+
+
+void GUI :: do_show_sec_dialog ()
+{
+  GtkWidget * w = sec_dialog_new (_data, _queue, get_window(_root));
+  g_signal_connect (w, "destroy", G_CALLBACK(sec_dialog_destroyed_cb), this);
+  gtk_widget_show_all (w);
+}
+
 
 void GUI :: do_show_score_dialog ()
 {
@@ -1247,25 +1283,48 @@ void GUI :: do_cancel_article ()
 }
 
 bool GUI::deletion_confirmation_dialog()
-  {
-    bool ret(false);
-    GtkWidget * d = gtk_message_dialog_new (
-      get_window(_root),
-      GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
-      GTK_MESSAGE_WARNING,
-      GTK_BUTTONS_NONE, NULL);
-    HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
-      _("You marked some articles for deletion"),
-      _("Are you sure you want to delete them?"));
-    gtk_dialog_add_buttons (GTK_DIALOG(d),
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
-                            GTK_STOCK_APPLY, GTK_RESPONSE_YES,
-                            NULL);
-    gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
-    ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
-    gtk_widget_destroy(d);
-    return ret;
-  }
+{
+  bool ret(false);
+  GtkWidget * d = gtk_message_dialog_new (
+    get_window(_root),
+    GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+    GTK_MESSAGE_WARNING,
+    GTK_BUTTONS_NONE, NULL);
+  HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
+    _("You marked some articles for deletion"),
+    _("Are you sure you want to delete them?"));
+  gtk_dialog_add_buttons (GTK_DIALOG(d),
+                          GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
+                          GTK_STOCK_APPLY, GTK_RESPONSE_YES,
+                          NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
+  ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
+  gtk_widget_destroy(d);
+  return ret;
+}
+
+
+bool GUI::confirm_accept_new_cert_dialog(X509* cert, const Quark& server)
+{
+  bool ret(false);
+  GtkWidget * d = gtk_message_dialog_new (
+    get_window(_root),
+    GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+    GTK_MESSAGE_WARNING,
+    GTK_BUTTONS_NONE, NULL);
+  char buf[4096];
+  CertStore::pretty_print_x509(buf,sizeof(buf), server, cert);
+  HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d), buf,
+    _("Do you want to accept it permanently (deletable afterwards) ?"));
+  gtk_dialog_add_buttons (GTK_DIALOG(d),
+                          GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
+                          GTK_STOCK_APPLY, GTK_RESPONSE_YES,
+                          NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
+  ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
+  gtk_widget_destroy(d);
+  return ret;
+}
 
 void GUI :: do_delete_article ()
 {
@@ -1423,13 +1482,6 @@ void GUI :: do_work_online (bool b)
 
 namespace
 {
-  void remove_from_parent (GtkWidget * w)
-  {
-    GtkWidget *parent = gtk_widget_get_parent(w);
-    if (parent != 0)
-      gtk_container_remove (GTK_CONTAINER(parent), w);
-  }
-
   enum { HORIZONTAL, VERTICAL };
 
   void hpane_destroy_cb (GtkWidget *, gpointer)
@@ -2031,4 +2083,22 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
 
   if (key == "default-save-attachments-path")
     prev_path.assign (value.str, value.len);
+}
+
+
+void
+GUI :: on_verify_cert_failed(X509* cert, std::string server, int nr)
+{
+  std::cerr<<"gui cert failed : "<<cert<<"\n";
+
+  if (confirm_accept_new_cert_dialog(cert,server))
+    if (!_certstore.add(cert, server))
+      std::cerr<<"error adding cert to "<<server<<std::endl;
+
+}
+
+void
+GUI :: on_valid_cert_added (X509* cert, std::string server)
+{
+
 }

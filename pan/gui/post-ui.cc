@@ -2659,7 +2659,6 @@ PostUI :: create_parts_tab ()
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(w), t);
-//  gtk_container_add (GTK_CONTAINER(w), t);
 
   return w;
 }
@@ -2897,7 +2896,8 @@ PostUI :: select_parts ()
   gtk_window_set_role (GTK_WINDOW(w), "pan-parts-window");
   gtk_window_set_title (GTK_WINDOW(w), _("Select Parts"));
   int x,y;
-  x = _prefs.get_int("post-ui-width", 450); // FIXME BUG: Native Windows wider or taller than 65535 pixels are not supported
+  // FIXME (sometimes....) BUG: Native Windows wider or taller than 65535 pixels are not supported
+  x = _prefs.get_int("post-ui-width", 450);
   y = _prefs.get_int("post-ui-height", 450);
   gtk_window_set_default_size (GTK_WINDOW(w), x, y);
   // populate the window
@@ -3116,51 +3116,50 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 
 	const int response (gtk_dialog_run (GTK_DIALOG(w)));
 	if (response == GTK_RESPONSE_ACCEPT) {
+    GSList * tmp_list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER (w));
+    gtk_widget_destroy (w);
 
-        GSList * tmp_list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER (w));
-        gtk_widget_destroy (w);
+    TaskUpload::UploadInfo ui;
+    // query lines per file value
+    ui.bpf = _prefs.get_int("upload-option-bpf",512*1024);
 
-        TaskUpload::UploadInfo ui;
-        // query lines per file value
-        ui.bpf = _prefs.get_int("upload-option-bpf",512*1024);
+    std::string author;
+    profile.get_from_header(author);
+    std::string subject(utf8ize (g_mime_message_get_subject (tmp)));
 
-        std::string author;
-        profile.get_from_header(author);
-        std::string subject(utf8ize (g_mime_message_get_subject (tmp)));
+    // insert groups info from msg
+    quarks_t groups;
+    StringView line (g_mime_object_get_header ((GMimeObject *) tmp, "Newsgroups"));
+    StringView groupname;
+    while (line.pop_token (groupname, ',')) {
+      groupname.trim ();
+      if (!groupname.empty())
+          groups.insert(Quark(groupname));
+    }
 
-        // insert groups info from msg
-        quarks_t groups;
-        StringView line (g_mime_object_get_header ((GMimeObject *) tmp, "Newsgroups"));
-        StringView groupname;
-        while (line.pop_token (groupname, ',')) {
-          groupname.trim ();
-          if (!groupname.empty())
-              groups.insert(Quark(groupname));
-        }
+    GSList * cur = g_slist_nth (tmp_list,0);
+    for (; cur; cur = cur->next)
+    {
+      GMimeMessage * msg (new_message_from_ui (UPLOADING));
 
-        GSList * cur = g_slist_nth (tmp_list,0);
-        for (; cur; cur = cur->next)
-        {
-          GMimeMessage * msg (new_message_from_ui (UPLOADING));
+      //for nzb handling
+      Article a;
+      a.subject = subject;
+      a.author = author;
+      foreach_const (quarks_t, groups, git)
+         a.xref.insert (profile.posting_server, *git,0);
 
-          //for nzb handling
-          Article a;
-          a.subject = subject;
-          a.author = author;
-          foreach_const (quarks_t, groups, git)
-             a.xref.insert (profile.posting_server, *git,0);
+      struct stat sb;
+      ui.total = get_total_parts((const char*)cur->data);
+      TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
+                        profile.posting_server, _cache, a, ui, msg);
 
-          struct stat sb;
-          ui.total = get_total_parts((const char*)cur->data);
-          TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
-                            profile.posting_server, _cache, a, ui, msg);
+      // insert wanted parts to upload
+      for (int i=1;i<=ui.total; ++i)
+        tmp->_wanted.insert(i);
 
-          // insert wanted parts to upload
-          for (int i=1;i<=ui.total; ++i)
-            tmp->_wanted.insert(i);
-
-          _upload_queue.add_task(tmp);
-        }
+      _upload_queue.add_task(tmp);
+    }
 
     if (_file_queue_empty) _file_queue_empty= false;
     g_slist_free (tmp_list);

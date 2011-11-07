@@ -89,6 +89,7 @@ namespace pan
     virtual void do_show_group_preferences_dialog () = 0;
     virtual void do_show_profiles_dialog () = 0;
     virtual void do_show_servers_dialog () = 0;
+    virtual void do_show_sec_dialog () = 0;
     virtual void do_show_score_dialog () = 0;
     virtual void do_show_new_score_dialog () = 0;
     virtual void do_show_selected_article_info () = 0;

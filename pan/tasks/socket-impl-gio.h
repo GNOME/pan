@@ -25,8 +25,6 @@
 #include <glib/gstring.h>
 #include <pan/tasks/socket.h>
 
-
-
 namespace pan
 {
   /**
@@ -55,6 +53,7 @@ namespace pan
       bool _io_performed;
 
     private:
+      friend class GIOChannelSocketSSL;
       enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };
       void set_watch_mode (WatchMode mode);
       static gboolean gio_func (GIOChannel*, GIOCondition, gpointer);

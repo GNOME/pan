@@ -51,11 +51,12 @@ namespace pan
     private Log::Listener,
     private Progress::Listener,
     private Queue::Listener,
-    private Prefs::Listener
+    private Prefs::Listener,
+    private CertStore::Listener
   {
 
     public:
-      GUI (Data& data, Queue&, ArticleCache&, EncodeCache&, Prefs&, GroupPrefs&);
+      GUI (Data& data, Queue&, ArticleCache&, EncodeCache&, CertStore&, Prefs&, GroupPrefs&);
       virtual ~GUI ();
       GtkWidget* root () { return _root; }
       typedef std::vector<std::string> strings_t;
@@ -115,6 +116,7 @@ namespace pan
       virtual void do_read_previous_thread ();
       virtual void do_read_parent_article ();
       virtual void do_show_servers_dialog ();
+      virtual void do_show_sec_dialog ();
       virtual void do_show_selected_article_info ();
       virtual void do_plonk ();
       virtual void do_watch ();
@@ -125,6 +127,7 @@ namespace pan
       virtual void do_supersede_article ();
       virtual void do_delete_article ();
       virtual bool deletion_confirmation_dialog();
+      virtual bool confirm_accept_new_cert_dialog(X509*, const Quark&);
       virtual void do_clear_article_cache ();
       virtual void do_mark_article_read ();
       virtual void do_mark_article_unread ();
@@ -176,6 +179,9 @@ namespace pan
       virtual void on_queue_online_changed (Queue&, bool online);
       virtual void on_queue_error (Queue&, const StringView& message);
 
+    private:  // CertStore::Listener
+      virtual void on_verify_cert_failed(X509*, std::string, int);
+      virtual void on_valid_cert_added (X509*, std::string);
 
     private: // Log::Listener
       virtual void on_log_entry_added (const Log::Entry& e);
@@ -198,6 +204,7 @@ namespace pan
       EncodeCache& _encode_cache;
       Prefs& _prefs;
       GroupPrefs& _group_prefs;
+      CertStore& _certstore;
 
     private:
       GtkWidget * _root;
@@ -241,6 +248,8 @@ namespace pan
       static void add_widget (GtkUIManager*, GtkWidget*, gpointer);
       static void server_list_dialog_destroyed_cb (GtkWidget*, gpointer);
       void server_list_dialog_destroyed (GtkWidget*);
+      static void sec_dialog_destroyed_cb (GtkWidget*, gpointer);
+      void sec_dialog_destroyed (GtkWidget*);
       static void prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self);
       void prefs_dialog_destroyed (GtkWidget* w);
       int score_int_from_string(std::string val, const char* rules[]);

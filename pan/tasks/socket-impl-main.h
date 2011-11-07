@@ -35,11 +35,14 @@
 #include <pan/general/string-view.h>
 #include <pan/general/worker-pool.h>
 #include "socket.h"
+
 #ifdef HAVE_OPENSSL
   #include <openssl/crypto.h>
   #include <openssl/ssl.h>
   #include "socket-impl-openssl.h"
+  #include "cert-store.h"
 #endif
+
 #include "socket-impl-gio.h"
 
 namespace
@@ -112,20 +115,30 @@ namespace
 
 namespace pan
 {
-#ifdef HAVE_OPENSSL
-  static SSL_CTX* ssl_ctx;
-#endif
-  class SocketCreator
+
+  class SocketCreator:
+    private CertStore::Listener
   {
     public:
-      SocketCreator ();
+      SocketCreator (CertStore&);
       virtual ~SocketCreator ();
 
+#ifdef HAVE_OPENSSL
+    private:
+      SSL_CTX* ssl_ctx;
+      CertStore & store;
+#endif
+
+    public:
       virtual void create_socket (const StringView & host,
                                   int                port,
                                   WorkerPool       & threadpool,
                                   Socket::Creator::Listener * listener,
                                   bool               use_ssl);
+
+      // CertStore::Listener
+      virtual void on_verify_cert_failed(X509*, std::string, int);
+      virtual void on_valid_cert_added (X509*, std::string );
   };
 
 }

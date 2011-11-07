@@ -44,6 +44,16 @@
 #include <pan/data-impl/profiles.h>
 #include <pan/data-impl/memchunk.h>
 
+#ifdef HAVE_OPENSSL
+  #include <pan/tasks/cert-store.h>
+  #include <openssl/crypto.h>
+  #include <openssl/x509.h>
+  #include <openssl/x509v3.h>
+  #include <openssl/pem.h>
+  #include <openssl/ssl.h>
+  #include <openssl/err.h>
+#endif
+
 namespace pan
 {
   typedef std::vector<const Article*> articles_t;
