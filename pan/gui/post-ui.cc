@@ -173,34 +173,16 @@ PostUI:: update_filequeue_label (GtkTreeSelection *selection)
 ****
 ***/
 
-//* only used if the encode mode has changed, would be too expensive for repetitive calls */
-//void
-//PostUI :: update_filequeue_tab()
-//{
-//   GtkListStore *store = GTK_LIST_STORE(
-//                      gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store)));
-//   gtk_list_store_clear(store);
-//   GtkTreeIter iter;
-//   int i(0);
-//   TaskUpload * task;
-//   while (task = dynamic_cast<TaskUpload*>(_upload_queue[i++]))
-//   {
-//       gtk_list_store_insert (store, &iter, i);
-//       gtk_list_store_set (store, &iter,
-//                          0, i+1,
-//                          1, task->_subject.c_str(),
-//                          2, task,
-//                          3, task->_bytes/1024
-//                          -1);
-//   }
-//}
-
 void
 PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
 {
 
   GtkListStore *store = GTK_LIST_STORE(
                       gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store)));
+
+  GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store));
+  g_object_ref(model);
+  gtk_tree_view_set_model(GTK_TREE_VIEW(_filequeue_store), NULL);
 
   for (int i=0; i<count; ++i)
   {
@@ -216,6 +198,8 @@ PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
                       3, task->_bytes/1024.0f,
                       -1);
   }
+  gtk_tree_view_set_model(GTK_TREE_VIEW(_filequeue_store), model);
+  g_object_unref(model);
 
   update_filequeue_label();
 }
@@ -586,7 +570,6 @@ PostUI :: add_actions (GtkWidget * box)
                                 _prefs.get_flag ("spellcheck-enabled", DEFAULT_SPELLCHECK_FLAG));
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "wrap")),
                                 _prefs.get_flag ("compose-wrap-enabled", true));
-//  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "inline-or-bulk")), false);
 
    //add popup actions
   gtk_action_group_add_actions (_agroup, filequeue_popup_entries, G_N_ELEMENTS(filequeue_popup_entries), this);
@@ -3095,7 +3078,6 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
   const Profile profile (get_current_profile ());
   PostUI::tasks_t tasks;
   GMimeMessage * tmp (new_message_from_ui (UPLOADING));
-
   if (!check_message(profile.posting_server, tmp, true))
   {
     g_object_unref (G_OBJECT(tmp));
@@ -3103,7 +3085,6 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
   }
 
   std::string prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
-
   GtkWidget * w = gtk_file_chooser_dialog_new (_("Add files to queue"),
 				      parent,
 				      GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -3138,36 +3119,32 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
     }
 
     GSList * cur = g_slist_nth (tmp_list,0);
+    std::vector<Task*> uploads;
     for (; cur; cur = cur->next)
     {
       GMimeMessage * msg (new_message_from_ui (UPLOADING));
-
-      //for nzb handling
+      TaskUpload* tmp;
       Article a;
+      struct stat sb;
       a.subject = subject;
       a.author = author;
       foreach_const (quarks_t, groups, git)
          a.xref.insert (profile.posting_server, *git,0);
-
-      struct stat sb;
       ui.total = get_total_parts((const char*)cur->data);
-      TaskUpload* tmp = new TaskUpload(std::string((const char*)cur->data),
+      tmp = new TaskUpload(std::string((const char*)cur->data),
                         profile.posting_server, _cache, a, ui, msg);
 
       // insert wanted parts to upload
       for (int i=1;i<=ui.total; ++i)
         tmp->_wanted.insert(i);
-
-      _upload_queue.add_task(tmp);
+      uploads.push_back(tmp);
     }
 
+     _upload_queue.add_tasks(uploads);
     if (_file_queue_empty) _file_queue_empty= false;
     g_slist_free (tmp_list);
-
   } else
-
     gtk_widget_destroy (w);
-
   g_object_unref (G_OBJECT(tmp));
 
 }

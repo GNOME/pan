@@ -319,6 +319,10 @@ TaskPane :: on_queue_tasks_added (Queue& queue, int index, int count)
   task_states_t states;
   queue.get_all_task_states (states);
 
+  GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(_store));
+  g_object_ref(model);
+  gtk_tree_view_set_model(GTK_TREE_VIEW(_store), NULL);
+
   for (int i=0; i<count; ++i)
   {
     const int pos (index + i);
@@ -330,6 +334,9 @@ TaskPane :: on_queue_tasks_added (Queue& queue, int index, int count)
                         COL_TASK_STATE, (int)states.get_state(task),
                         -1);
   }
+  gtk_tree_view_set_model(GTK_TREE_VIEW(_store), model);
+  g_object_unref(model);
+
 }
 
 void

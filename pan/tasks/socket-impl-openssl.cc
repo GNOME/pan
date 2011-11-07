@@ -379,8 +379,8 @@ namespace
   {
 
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
-    int ret;
-    int err;
+    int ret(0);
+    int err(0);
     X509 *cert;
     const char *errstr;
 
@@ -394,8 +394,9 @@ namespace
     SSL_set_ex_data(chan->ssl, SSL_get_fd(chan->ssl), &mydata);
 
 
-    std::cerr<<"resuming session "<<session<<" for "<<chan->ssl<<std::endl;
-    if (session) SSL_set_session(chan->ssl, session);
+//    std::cerr<<"resuming session "<<session<<" for "<<chan->ssl<<", result ";
+    if (session) ret = SSL_set_session(chan->ssl, session);
+    std::cerr<<ret<<std::endl;
 
     ret = SSL_connect(chan->ssl);
     if (ret <= 0) {
@@ -511,9 +512,6 @@ namespace
   {
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
     g_io_channel_close(chan->giochan);
-
-    std::cerr<<"ssl close\n";
-
     return G_IO_STATUS_NORMAL;
   }
 
