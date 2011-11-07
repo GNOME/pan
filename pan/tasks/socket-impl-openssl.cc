@@ -780,11 +780,9 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 
   if (ssl_handshake(gchan, this, &_certstore, _host) == 0)
   {
-    std::cerr<<"handshake success\n";
     g_io_channel_set_flags (handle, G_IO_FLAG_NONBLOCK, 0);
     return gchan;
   }
-  std::cerr<<"handshake fail\n";
   return 0;
 }
 
