@@ -300,12 +300,12 @@ GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
 
   GIOSSLChannel *chan = (GIOSSLChannel *)_channel;
 
-  std::cerr << LINE_ID << " destroying socket " << this << ", "<<chan->ssl<<", "<<_session<<", ";
+//  std::cerr << LINE_ID << " destroying socket " << this << ", "<<chan->ssl<<", "<<_session<<", ";
 
   _session = SSL_get1_session(chan->ssl);
   _certstore.add_session(_session);
 
-  std::cerr<<_session<<std::endl;
+//  std::cerr<<_session<<std::endl;
 
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
@@ -393,10 +393,7 @@ namespace
     mydata.server = host;
     SSL_set_ex_data(chan->ssl, SSL_get_fd(chan->ssl), &mydata);
 
-
-//    std::cerr<<"resuming session "<<session<<" for "<<chan->ssl<<", result ";
     if (session) ret = SSL_set_session(chan->ssl, session);
-    std::cerr<<ret<<std::endl;
 
     ret = SSL_connect(chan->ssl);
     if (ret <= 0) {
