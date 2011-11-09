@@ -1,4 +1,5 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@
+AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @GTK_CFLAGS@
+AM_LDFLAGS = @GTK_LIBS@
 
 noinst_LIBRARIES = libgeneralutils.a
 
@@ -34,7 +35,7 @@ noinst_HEADERS = \
  text-match.h \
  time-elapsed.h \
  utf8-utils.h \
- worker-pool.h 
+ worker-pool.h
 
 #noinst_PROGRAMS = \
 #  progress-test \

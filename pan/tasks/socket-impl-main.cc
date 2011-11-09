@@ -35,6 +35,7 @@
 #include <cstring>
 
 #include <pan/general/log.h>
+#include <pan/general/locking.h>
 #include <pan/general/macros.h>
 #include <pan/general/worker-pool.h>
 #include <pan/general/string-view.h>
@@ -94,30 +95,35 @@ namespace pan
 #ifdef HAVE_OPENSSL
 namespace
 {
-  static pthread_mutex_t *lock_cs=0;
+//  static pthread_mutex_t *lock_cs=0;
+  static Mutex* mutex;
 
   void gio_lock(int mode, int type, const char *file, int line)
   {
     if (mode & CRYPTO_LOCK)
-      pthread_mutex_lock(&(lock_cs[type]));
+      mutex[type].lock();
+//      pthread_mutex_lock(&(lock_cs[type]));
     else
-      pthread_mutex_unlock(&(lock_cs[type]));
+      mutex[type].unlock();
+//      pthread_mutex_unlock(&(lock_cs[type]));
   }
 
   void ssl_thread_setup() {
-    lock_cs = (pthread_mutex_t*)OPENSSL_malloc(CRYPTO_num_locks() * sizeof(pthread_mutex_t));
-    for (int i=0; i<CRYPTO_num_locks(); i++)
-      if (pthread_mutex_init(&lock_cs[i],0) != 0)
-        g_warning("error initialing mutex!");
+    mutex = new Mutex[CRYPTO_num_locks()];
+//    lock_cs = (pthread_mutex_t*)OPENSSL_malloc(CRYPTO_num_locks() * sizeof(pthread_mutex_t));
+//    for (int i=0; i<CRYPTO_num_locks(); i++)
+//      if (pthread_mutex_init(&lock_cs[i],0) != 0)
+//        g_warning("error initialing mutex!");
 
     CRYPTO_set_locking_callback(gio_lock);
   }
 
   void ssl_thread_cleanup() {
-    for (int i=0; i<CRYPTO_num_locks(); i++)
-      pthread_mutex_destroy(&lock_cs[i]);
+//    for (int i=0; i<CRYPTO_num_locks(); i++)
+//      pthread_mutex_destroy(&lock_cs[i]);
+    delete [] mutex;
     CRYPTO_set_locking_callback(0);
-    OPENSSL_free(lock_cs);
+//    OPENSSL_free(lock_cs);
   }
 
 }

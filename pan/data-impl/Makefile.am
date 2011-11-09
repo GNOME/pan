@@ -39,7 +39,7 @@ TEST_LDADD = \
  ../data/libdata.a \
  ../usenet-utils/libusenetutils.a \
  ../general/libgeneralutils.a \
- ../../uulib/libuu.a @GMIME_LIBS@ @GLIB_LIBS@ @OPENSSL_LIBS@
+ ../../uulib/libuu.a @GMIME_LIBS@ @GLIB_LIBS@ @OPENSSL_LIBS@ @GTK_LIBS@
 add_server_SOURCES = add-server.cc
 add_server_LDADD = $(TEST_LDADD)
 headers_test_SOURCES = headers-test.cc

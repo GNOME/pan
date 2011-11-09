@@ -25,6 +25,7 @@ extern "C" {
   #include <gtk/gtk.h>
 }
 #include <pan/general/debug.h>
+//#include <pan/general/gdk-threads.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>

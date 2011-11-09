@@ -65,15 +65,19 @@ namespace
 
   void mainloop ()
   {
-#if 1
+//#if 1
     if (nongui_gmainloop)
       g_main_loop_run (nongui_gmainloop);
     else
+    {
+      gdk_threads_enter();
       gtk_main ();
-#else
-    while (gtk_events_pending ())
-      gtk_main_iteration ();
-#endif
+      gdk_threads_leave();
+    }
+//#else
+//    while (gtk_events_pending ())
+//      gtk_main_iteration ();
+//#endif
   }
 
   void mainloop_quit ()

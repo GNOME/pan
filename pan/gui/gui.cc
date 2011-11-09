@@ -411,8 +411,8 @@ GUI :: watch_cursor_on ()
   GdkCursor * cursor = gdk_cursor_new (GDK_WATCH);
   gdk_window_set_cursor ( gtk_widget_get_window(_root), cursor);
   gdk_cursor_unref (cursor);
-  while (gtk_events_pending ())
-    gtk_main_iteration ();
+//  while (gtk_events_pending ())
+//    gtk_main_iteration ();
 }
 
 void
@@ -1307,23 +1307,24 @@ bool GUI::deletion_confirmation_dialog()
 bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, X509* cert, const Quark& server)
 {
   bool ret(false);
-  gdk_threads_enter();
-  GtkWidget * d = gtk_message_dialog_new (
-    parent,
-    GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
-    GTK_MESSAGE_WARNING,
-    GTK_BUTTONS_NONE, NULL);
   char buf[4096];
   CertStore::pretty_print_x509(buf,sizeof(buf), server, cert);
-  HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d), buf,
-    _("Do you want to accept it permanently (deletable afterwards) ?"));
-  gtk_dialog_add_buttons (GTK_DIALOG(d),
-                          GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
-                          GTK_STOCK_APPLY, GTK_RESPONSE_YES,
-                          NULL);
-  gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
-  ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
-  gtk_widget_destroy(d);
+  gdk_threads_enter();
+    GtkWidget * d = gtk_message_dialog_new (
+      parent,
+      GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+      GTK_MESSAGE_WARNING,
+      GTK_BUTTONS_NONE, NULL);
+
+    HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d), buf,
+      _("Do you want to accept it permanently (deletable afterwards) ?"));
+    gtk_dialog_add_buttons (GTK_DIALOG(d),
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
+                            GTK_STOCK_APPLY, GTK_RESPONSE_YES,
+                            NULL);
+    gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
+    ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
+    gtk_widget_destroy(d);
   gdk_threads_leave();
   return ret;
 }

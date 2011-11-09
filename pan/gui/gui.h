@@ -20,6 +20,7 @@
 #define _Pan_h_
 
 #include <pan/general/log.h>
+#include <pan/general/locking.h>
 #include <pan/general/progress.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/encode-cache.h>
