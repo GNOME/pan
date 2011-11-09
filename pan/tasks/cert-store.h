@@ -58,11 +58,12 @@ namespace pan
       X509_STORE* _store;
       std::string _path;
       std::vector<SSL_SESSION*> _sessions;
+      certs_t _blacklist;
 
     public:
       SSL_CTX* get_ctx() { return _ctx; }
       X509_STORE* get_store() const { return _store; }
-      void get_all_certs_from_disk(std::set<X509*>& setme);
+      int get_all_certs_from_disk(std::set<X509*>& setme);
       const X509* get_cert_to_server(const Quark& server) const;
       static void pretty_print_x509 (char* buf, size_t size, const Quark& server, X509* cert);
       SSL_SESSION* get_session()
@@ -79,6 +80,19 @@ namespace pan
       {
         if (!s) return;
         _sessions.push_back(s);
+      }
+
+      bool in_blacklist (const Quark& s)
+      {
+        return _blacklist.count(s) != 0;
+      }
+      void blacklist (const Quark& s)
+      {
+        _blacklist.insert(s);
+      }
+      void whitelist (const Quark& s)
+      {
+        _blacklist.erase(s);
       }
 
     private:

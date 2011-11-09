@@ -121,7 +121,8 @@ GIOChannelSocketSSL :: GIOChannelSocketSSL (SSL_CTX* ctx, CertStore& cs):
    _in_buf (g_string_new (0)),
    _io_performed (false),
    _ctx(ctx),
-   _certstore(cs)
+   _certstore(cs),
+   _rehandshake(false)
 {
 //   std::cerr<<"GIOChannelSocketSSL ctor " << (void*)this<<std::endl;
    cs.add_listener(this);
@@ -373,7 +374,7 @@ namespace
   }
 
 
-  int ssl_handshake(GIOChannel *handle, CertStore::Listener* listener, CertStore* cs, std::string host, SSL_SESSION* session)
+  int ssl_handshake(GIOChannel *handle, CertStore::Listener* listener, CertStore* cs, std::string host, SSL_SESSION* session, bool rehandshake)
   {
 
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
@@ -392,6 +393,20 @@ namespace
     SSL_set_ex_data(chan->ssl, SSL_get_fd(chan->ssl), &mydata);
 
     if (session) ret = SSL_set_session(chan->ssl, session);
+//    if (rehandshake)
+//    {
+////    SSL_set_verify(ssl,SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT,0);
+//
+//      /* Stop the client from just resuming the un-authenticated session */
+//      SSL_set_session_id_context(chan->ssl, (void *)&s_server_auth_session_id_context, sizeof(s_server_auth_session_id_context));
+//
+//      if(SSL_renegotiate(ssl)<=0)
+//        return 1;
+//      if(SSL_do_handshake(ssl)<=0)
+//        ssl->state=SSL_ST_ACCEPT;
+//      if(SSL_do_handshake(ssl)<=0)
+//        return 1;
+//    }
 
     ret = SSL_connect(chan->ssl);
     if (ret <= 0) {
@@ -786,7 +801,7 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
   gchan->read_buf = g_string_sized_new(4096*128);
 
   int ret;
-  if ((ret = ssl_handshake(gchan, this, &_certstore, _host, _session)) == 0)
+  if ((ret = ssl_handshake(gchan, this, &_certstore, _host, _session, _rehandshake)) == 0)
   {
     g_io_channel_set_flags (handle, G_IO_FLAG_NONBLOCK, 0);
     return gchan;

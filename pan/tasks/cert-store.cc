@@ -60,13 +60,10 @@ namespace pan
 
   int
   verify_callback(int ok, X509_STORE_CTX *store)
-//  verify_callback(X509_STORE_CTX *store, void* args)
   {
 
     SSL * ssl = (SSL*)X509_STORE_CTX_get_ex_data(store, SSL_get_ex_data_X509_STORE_CTX_idx());
     mydata_t* mydata = (mydata_t*)SSL_get_ex_data(ssl, SSL_get_fd(ssl));
-
-//    CertStore * me = (CertStore*)args;
 
     if (!ok)
     {
@@ -76,20 +73,16 @@ namespace pan
       int depth = X509_STORE_CTX_get_error_depth(store);
       int err = X509_STORE_CTX_get_error(store);
 
-      if (err == X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN)
+      /* accept user-override on self-signed certificates */
+      if (err == X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN ||
+          err == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT)
         mydata->cs->verify_failed(cert, mydata->server, err);
     }
     return ok;
 
-//      SSL_CTX_set_verify(me->get_ctx(), SSL_VERIFY_PEER, store->verify_cb);
-//
-//      int ok =
-//
-//  }
-
 }
 
-void
+int
 CertStore :: get_all_certs_from_disk(std::set<X509*>& setme)
 {
   char filename[PATH_MAX];
@@ -122,7 +115,7 @@ CertStore :: get_all_certs_from_disk(std::set<X509*>& setme)
   }
   g_dir_close (dir);
 
-  if (cnt != 0) Log::add_info_va(_("Succesfully added %d SSL PEM certificate(s) to Certificate Store."), cnt);
+  return cnt;
 }
 
 void
@@ -133,11 +126,12 @@ CertStore :: init_me()
   _store = SSL_CTX_get_cert_store(_ctx);
 
   std::set<X509*> certs;
+  int r(0);
   get_all_certs_from_disk (certs);
   foreach_const (std::set<X509*>, certs, it)
-    X509_STORE_add_cert(_store, *it);
-//  SSL_CTX_set_cert_verify_callback(_ctx, verify_callback, (void*)this);
-  SSL_CTX_set_verify(_ctx, SSL_VERIFY_PEER, verify_callback);
+    if (X509_STORE_add_cert(_store, *it) != 0) ++r;
+  if (r != 0) Log::add_info_va(_("Succesfully added %d SSL PEM certificate(s) to Certificate Store."), r);
+  SSL_CTX_set_verify(_ctx, SSL_VERIFY_PEER|SSL_VERIFY_FAIL_IF_NO_PEER_CERT, verify_callback);
 
 }
 
@@ -229,7 +223,7 @@ namespace
     unsigned int n;
 
     if (! X509_digest(cert, EVP_md5(), md, &n))
-			res += _("Not available.");
+			res = _("Not available.");
 		else {
 			char hex[] = "0123456789ABCDEF";
 			char fp[EVP_MAX_MD_SIZE*3];
@@ -240,26 +234,173 @@ namespace
 					fp[i*3+1] = hex[(md[i] >> 0) & 0xF];
 					fp[i*3+2] = i == n - 1 ? '\0' : ':';
 				}
-				res += fp;
+				res = fp;
 			}
 		}
     return res;
   }
 
+  std::string
+  get_x509_enddate(X509* cert)
+  {
+    std::string res;
+
+    return res;
+  }
+
+}
+
+time_t
+getTimeFromASN1(const ASN1_TIME * aTime)
+{
+  time_t lResult = 0;
+
+
+  char lBuffer[24];
+  char * pBuffer = lBuffer;
+
+
+  size_t lTimeLength = aTime->length;
+  char * pString = (char *)aTime->data;
+
+
+  if (aTime->type == V_ASN1_UTCTIME)
+  {
+    if ((lTimeLength < 11) || (lTimeLength > 17))
+    {
+      return 0;
+    }
+
+
+    memcpy(pBuffer, pString, 10);
+    pBuffer += 10;
+    pString += 10;
+  }
+  else
+  {
+    if (lTimeLength < 13)
+    {
+      return 0;
+    }
+
+
+    memcpy(pBuffer, pString, 12);
+    pBuffer += 12;
+    pString += 12;
+  }
+
+
+  if ((*pString == 'Z') || (*pString == '-') || (*pString == '+'))
+  {
+    *(pBuffer++) = '0';
+    *(pBuffer++) = '0';
+  }
+  else
+  {
+    *(pBuffer++) = *(pString++);
+    *(pBuffer++) = *(pString++);
+    // Skip any fractional seconds...
+    if (*pString == '.')
+    {
+      pString++;
+      while ((*pString >= '0') && (*pString <= '9'))
+      {
+        pString++;
+      }
+    }
+  }
+
+
+  *(pBuffer++) = 'Z';
+  *(pBuffer++) = '\0';
+
+
+  time_t lSecondsFromUCT;
+  if (*pString == 'Z')
+  {
+    lSecondsFromUCT = 0;
+  }
+  else
+  {
+    if ((*pString != '+') && (pString[5] != '-'))
+    {
+      return 0;
+    }
+
+
+    lSecondsFromUCT = ((pString[1]-'0') * 10 + (pString[2]-'0')) * 60;
+    lSecondsFromUCT += (pString[3]-'0') * 10 + (pString[4]-'0');
+    if (*pString == '-')
+    {
+      lSecondsFromUCT = -lSecondsFromUCT;
+    }
+  }
+
+
+  tm lTime;
+  lTime.tm_sec  = ((lBuffer[10] - '0') * 10) + (lBuffer[11] - '0');
+  lTime.tm_min  = ((lBuffer[8] - '0') * 10) + (lBuffer[9] - '0');
+  lTime.tm_hour = ((lBuffer[6] - '0') * 10) + (lBuffer[7] - '0');
+  lTime.tm_mday = ((lBuffer[4] - '0') * 10) + (lBuffer[5] - '0');
+  lTime.tm_mon  = (((lBuffer[2] - '0') * 10) + (lBuffer[3] - '0')) - 1;
+  lTime.tm_year = ((lBuffer[0] - '0') * 10) + (lBuffer[1] - '0');
+  if (lTime.tm_year < 50)
+  {
+    lTime.tm_year += 100; // RFC 2459
+  }
+  lTime.tm_wday = 0;
+  lTime.tm_yday = 0;
+  lTime.tm_isdst = 0;  // No DST adjustment requested
+
+  lResult = mktime(&lTime);
+
+  if ((time_t)-1 != lResult)
+  {
+    if (0 != lTime.tm_isdst)
+      lResult -= 3600; // mktime may adjust for DST (OS dependent)
+    lResult += lSecondsFromUCT;
+  }
+  else
+    lResult = 0;
+
+  return lResult;
 }
 
 void
 CertStore :: pretty_print_x509 (char* buf, size_t size, const Quark& server, X509* cert)
 {
   if (!cert) return;
+//  char buffer[4096];
+//  int len;
+//  int i = X509_get_ext_by_NID(cert, NID_invalidity_date, -1);
+//  BIO *bio = BIO_new(BIO_s_mem());
+//  X509_EXTENSION * ex = X509_get_ext( cert,i);
+//  std::cerr<<"pretty "<<i<<" "<<ex<<" "<<bio<<std::endl;
+//  if(!X509V3_EXT_print(bio, ex, 0, 0))
+//    M_ASN1_OCTET_STRING_print(bio,ex->value);
+//  len = BIO_read(bio, buffer, 4096);
+//  buffer[len] = '\0';
+//  BIO_free(bio);
+
+  time_t t = getTimeFromASN1(cert->cert_info->validity->notAfter);
+  time_t t2 = getTimeFromASN1(cert->cert_info->validity->notBefore);
+  EvolutionDateMaker date_maker;
+  char * until = date_maker.get_date_string (t);
+  char * before = date_maker.get_date_string (t2);
+
   g_snprintf(buf,size, _("The current server <b>'%s'</b> sent this security certificate :\n\n"
-                              "<b>Issuer :</b> \n%s\n\n"
+                              "<b>Issuer :</b>\n%s\n\n"
                               "<b>Subject : </b>\n%s\n\n"
-                              "<b>Fingerprint : </b>\n%s\n\n"),
+                              "<b>Valid until : </b>%s\n\n"
+                              "<b>Not valid before : </b>%s\n\n"
+                              "<b>Fingerprint (MD5) : </b>\n%s\n\n"),
                               server.c_str(),
-                              X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0),
-                              X509_NAME_oneline(X509_get_subject_name(cert), 0, 0),
+                              X509_NAME_oneline(cert->cert_info->issuer, 0, 0),
+                              X509_NAME_oneline(cert->cert_info->subject, 0, 0),
+                              until,
+                              before,
                               get_x509_fingerpint_md5(cert).c_str());
+
 }
 
 

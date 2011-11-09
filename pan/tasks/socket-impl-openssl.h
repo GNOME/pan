@@ -71,6 +71,10 @@ namespace pan
       SSL_CTX * _ctx;
       CertStore& _certstore;
       SSL_SESSION* _session;
+      bool _rehandshake;
+
+    public:
+      void set_rehandshake (bool setme) { _rehandshake = setme; }
 
     private:
       enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };

@@ -1307,6 +1307,7 @@ bool GUI::deletion_confirmation_dialog()
 bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, X509* cert, const Quark& server)
 {
   bool ret(false);
+
   char buf[4096];
   CertStore::pretty_print_x509(buf,sizeof(buf), server, cert);
   gdk_threads_enter();
@@ -2103,7 +2104,7 @@ GUI :: on_verify_cert_failed(X509* cert, std::string server, int nr)
 
 void
 GUI :: on_valid_cert_added (X509* cert, std::string server)
-{
+{}
 
-}
+
 #endif
