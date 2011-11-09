@@ -25,6 +25,7 @@ extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
   #include <gmime/gmime.h>
+  #include <X11/Xlib.h>
 }
 
 #ifdef G_OS_WIN32
@@ -265,6 +266,7 @@ main (int argc, char *argv[])
   textdomain (GETTEXT_PACKAGE);
 
   g_thread_init (0);
+  gdk_threads_init ();
   g_mime_init (GMIME_ENABLE_RFC2047_WORKAROUNDS);
 
   bool gui(true), nzb(false), verbosed(false);

@@ -288,7 +288,7 @@ namespace
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
     g_io_channel_unref(chan->giochan);
     SSL_free(chan->ssl);
-
+    std::cerr<<"ssl free\n";
     g_free(chan);
   }
 }
@@ -298,12 +298,7 @@ GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
 
   _certstore.remove_listener(this);
 
-  GIOSSLChannel *chan = (GIOSSLChannel *)_channel;
-
-//  std::cerr << LINE_ID << " destroying socket " << this << ", "<<chan->ssl<<", "<<_session<<", ";
-
-  _session = SSL_get1_session(chan->ssl);
-  _certstore.add_session(_session);
+  std::cerr << LINE_ID << " destroying socket " << this <<std::endl;
 
 //  std::cerr<<_session<<std::endl;
 
@@ -312,6 +307,9 @@ GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
 
   if (_channel)
   {
+    GIOSSLChannel *chan = (GIOSSLChannel *)_channel;
+    _session = SSL_get1_session(chan->ssl);
+    _certstore.add_session(_session);
     g_io_channel_shutdown (_channel, true, 0);
     ssl_free(_channel);
     g_string_free(_channel->read_buf,true);
@@ -793,8 +791,8 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
     g_io_channel_set_flags (handle, G_IO_FLAG_NONBLOCK, 0);
     return gchan;
   } else
-  {
-    std::cerr<<"handshake ret "<<ret<<std::endl;
+  { ;
+//    std::cerr<<"handshake ret "<<ret<<std::endl;
   }
   return 0;
 }

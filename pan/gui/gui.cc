@@ -1307,6 +1307,7 @@ bool GUI::deletion_confirmation_dialog()
 bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, X509* cert, const Quark& server)
 {
   bool ret(false);
+  gdk_threads_enter();
   GtkWidget * d = gtk_message_dialog_new (
     parent,
     GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
@@ -1323,6 +1324,7 @@ bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, X509* cert, const
   gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
   ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
   gtk_widget_destroy(d);
+  gdk_threads_leave();
   return ret;
 }
 #endif
