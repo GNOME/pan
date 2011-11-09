@@ -349,7 +349,7 @@ NNTP_Pool :: on_verify_cert_failed (X509* cert, std::string server, int nr)
 {
 //  _blacklist.erase(server);
   _certstore.blacklist(server);
-  std::cerr<<"adding "<<server<<" to blacklist ("<<cert<<", "<<nr<<")"<<std::endl;
+//  std::cerr<<"adding "<<server<<" to blacklist ("<<cert<<", "<<nr<<")"<<std::endl;
 }
 
 void
@@ -357,6 +357,6 @@ NNTP_Pool :: on_valid_cert_added (X509* cert, std::string server)
 {
 //  _blacklist.insert(server);
   _certstore.whitelist(server);
-  std::cerr<<"removing "<<server<<" from blacklist ("<<cert<<")"<<std::endl;
+//  std::cerr<<"removing "<<server<<" from blacklist ("<<cert<<")"<<std::endl;
 }
 #endif
