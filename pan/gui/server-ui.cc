@@ -32,12 +32,14 @@ extern "C" {
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
+#include <pan/usenet-utils/ssl-utils.h>
 #include "server-ui.h"
 #include "pad.h"
 #include "hig.h"
 #include "gtk_compat.h"
 
 #ifdef HAVE_OPENSSL
+
   #include <pan/tasks/cert-store.h>
   #include <openssl/crypto.h>
   #include <openssl/x509.h>
@@ -656,13 +658,16 @@ namespace
       X509* cert = (X509*)d->queue.store().get_cert_to_server(addr);
       if (cert)
       {
-        CertStore::pretty_print_x509(buf,sizeof(buf),addr, cert);
+        pretty_print_x509(buf,sizeof(buf),addr, cert,false);
         if (!buf) g_snprintf(buf,sizeof(buf), "%s", _("No information available.")) ;
         GtkWidget * w = gtk_message_dialog_new_with_markup (
         0,
         GTK_DIALOG_MODAL,
         GTK_MESSAGE_INFO,
         GTK_BUTTONS_CLOSE, buf);
+//        g_snprintf(buf,sizeof(buf), _("Server Certificate for <b>'%s'</b>"), addr.c_str());
+//        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG(w), "%s", buf);
+//        gtk_window_set_title(GTK_WINDOW(w), buf);
         gtk_widget_show_all (w);
         g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
       }

@@ -55,9 +55,6 @@
 #define YENC_SHIFT             42
 #define YENC_QUOTE_SHIFT       64
 
-/* uudeview encoding defines */
-static int bpl[3] = { 45, 45, 128 };
-
 namespace pan
 {
   /**

@@ -65,7 +65,6 @@ namespace pan
       X509_STORE* get_store() const { return _store; }
       int get_all_certs_from_disk(std::set<X509*>& setme);
       const X509* get_cert_to_server(const Quark& server) const;
-      static void pretty_print_x509 (char* buf, size_t size, const Quark& server, X509* cert);
       SSL_SESSION* get_session()
       {
         SSL_SESSION* ret(0);

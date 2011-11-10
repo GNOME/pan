@@ -35,6 +35,7 @@ extern "C" {
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/scorefile.h>
 #include <pan/usenet-utils/mime-utils.h>
+#include <pan/usenet-utils/ssl-utils.h>
 #include <pan/tasks/task-article.h>
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>
@@ -1309,7 +1310,7 @@ bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, X509* cert, const
   bool ret(false);
 
   char buf[4096];
-  CertStore::pretty_print_x509(buf,sizeof(buf), server, cert);
+  pretty_print_x509(buf,sizeof(buf), server, cert,true);
   gdk_threads_enter();
     GtkWidget * d = gtk_message_dialog_new (
       parent,
