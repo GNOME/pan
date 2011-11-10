@@ -28,22 +28,16 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <cerrno>
-#include <cstring>
 
 extern "C" {
   #include <glib/gi18n.h>
-  #include <dirent.h>
 }
 
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
 #include <pan/general/macros.h>
-#include <pan/usenet-utils/mime-utils.h>
-
-#include <pan/general/debug.h>
+#include <pan/usenet-utils/ssl-utils.h>
 #include <pan/general/file-util.h>
-#include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/log.h>
 #include <pan/general/string-view.h>
@@ -73,13 +67,18 @@ namespace pan
       int depth = X509_STORE_CTX_get_error_depth(store);
       int err = X509_STORE_CTX_get_error(store);
 
+//      std::cerr<<"ssl verify err "<<err<<" "<<ok<<std::endl;
+
       /* accept user-override on self-signed certificates */
       if (err == X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN ||
-          err == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT)
+          err == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT ||
+          err == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT ||
+          err == X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY)
         mydata->cs->verify_failed(cert, mydata->server, err);
+      else
+        g_warning("[[DEBUG:]] unknown error condition, please report me: %s", ssl_err_to_string(err).c_str());
     }
     return ok;
-
 }
 
 int
@@ -181,6 +180,7 @@ CertStore :: add(X509* cert, const Quark& server)
   FILE * fp = fopen(buf, "wb");
   PEM_write_X509(fp, cert);
   fclose(fp);
+  chmod (buf, 0600);
 
   valid_cert_added(cert, server.c_str());
   return true;

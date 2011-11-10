@@ -18,8 +18,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* based on verify_extract_name from tls_client.c in postfix */
-
 /** Copyright notice: Some code taken from here :
   * http://dslinux.gits.kiev.ua/trunk/user/irssi/src/src/core/network-openssl.c
   * Copyright (C) 2002 vjt (irssi project) */
@@ -29,18 +27,21 @@
 
 #ifdef HAVE_OPENSSL
 
+#include <pan/general/quark.h>
 #include <openssl/crypto.h>
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
 #include <openssl/pem.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
+#include <map>
+
 
 namespace pan
 {
 
   /* Checks if the given string has internal NUL characters. */
-  gboolean has_internal_nul(const char* str, int len) {
+  static gboolean has_internal_nul(const char* str, int len) {
     /* Remove trailing nul characters. They would give false alarms */
     while (len > 0 && str[len-1] == 0)
       len--;
@@ -48,7 +49,7 @@ namespace pan
   }
 
   /* tls_dns_name - Extract valid DNS name from subjectAltName value */
-  const char *tls_dns_name(const GENERAL_NAME * gn)
+  static const char *tls_dns_name(const GENERAL_NAME * gn)
   {
     const char *dnsname;
 
@@ -71,7 +72,7 @@ namespace pan
   }
 
   /* tls_text_name - extract certificate property value by name */
-  char *tls_text_name(X509_NAME *name, int nid)
+  static char *tls_text_name(X509_NAME *name, int nid)
   {
     int     pos;
     X509_NAME_ENTRY *entry;
@@ -110,7 +111,7 @@ namespace pan
 
 
   /** check if a hostname in the certificate matches the hostname we used for the connection */
-  gboolean match_hostname(const char *cert_hostname, const char *hostname)
+  static gboolean match_hostname(const char *cert_hostname, const char *hostname)
   {
     const char *hostname_left;
 
@@ -126,7 +127,7 @@ namespace pan
     return FALSE;
   }
 
-  gboolean ssl_verify_hostname(X509 *cert, const char *hostname)
+  static gboolean ssl_verify_hostname(X509 *cert, const char *hostname)
   {
     int gen_index, gen_count;
     gboolean matched = FALSE, has_dns_name = FALSE;
@@ -180,7 +181,7 @@ namespace pan
     return matched;
   }
 
-  gboolean ssl_verify(SSL *ssl, SSL_CTX *ctx, const char* hostname, X509 *cert)
+  static gboolean ssl_verify(SSL *ssl, SSL_CTX *ctx, const char* hostname, X509 *cert)
   {
     long result;
 
@@ -224,6 +225,50 @@ namespace pan
       return FALSE;
     }
     return TRUE;
+  }
+
+  static std::map<int, Quark> ssl_err;
+  static int map_init(0);
+  typedef std::pair<int, Quark> err_p;
+
+  static void init_err_map()
+  {
+    ssl_err.insert(err_p(2,"X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT"));
+    ssl_err.insert(err_p(3,"X509_V_ERR_UNABLE_TO_GET_CRL"));
+    ssl_err.insert(err_p(4,"X509_V_ERR_UNABLE_TO_DECRYPT_CERT_SIGNATURE"));
+    ssl_err.insert(err_p(5,"X509_V_ERR_UNABLE_TO_DECRYPT_CRL_SIGNATURE"));
+    ssl_err.insert(err_p(6,"X509_V_ERR_UNABLE_TO_DECODE_ISSUER_PUBLIC_KEY"));
+    ssl_err.insert(err_p(7,"X509_V_ERR_CERT_SIGNATURE_FAILURE"));
+    ssl_err.insert(err_p(8,"X509_V_ERR_CRL_SIGNATURE_FAILURE"));
+    ssl_err.insert(err_p(9,"X509_V_ERR_CERT_NOT_YET_VALID"));
+    ssl_err.insert(err_p(10,"X509_V_ERR_CERT_HAS_EXPIRED"));
+    ssl_err.insert(err_p(11,"X509_V_ERR_CRL_NOT_YET_VALID"));
+    ssl_err.insert(err_p(12,"X509_V_ERR_CRL_HAS_EXPIRED"));
+    ssl_err.insert(err_p(13,"X509_V_ERR_ERROR_IN_CERT_NOT_BEFORE_FIELD"));
+    ssl_err.insert(err_p(14,"X509_V_ERR_ERROR_IN_CERT_NOT_AFTER_FIELD"));
+    ssl_err.insert(err_p(15,"X509_V_ERR_ERROR_IN_CRL_LAST_UPDATE_FIELD"));
+    ssl_err.insert(err_p(16,"X509_V_ERR_ERROR_IN_CRL_NEXT_UPDATE_FIELD"));
+    ssl_err.insert(err_p(17,"X509_V_ERR_OUT_OF_MEM"));
+    ssl_err.insert(err_p(18,"X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT"));
+    ssl_err.insert(err_p(19,"X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN"));
+    ssl_err.insert(err_p(20,"X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY "));
+    ssl_err.insert(err_p(21,"X509_V_ERR_UNABLE_TO_VERIFY_LEAF_SIGNATURE	"));
+    ssl_err.insert(err_p(22,"X509_V_ERR_CERT_CHAIN_TOO_LONG"));
+    ssl_err.insert(err_p(23,"X509_V_ERR_CERT_REVOKED"));
+    ssl_err.insert(err_p(24,"X509_V_ERR_INVALID_CA"));
+    ssl_err.insert(err_p(25,"X509_V_ERR_PATH_LENGTH_EXCEEDED"));
+    ssl_err.insert(err_p(26,"X509_V_ERR_INVALID_PURPOSE"));
+    ssl_err.insert(err_p(27,"X509_V_ERR_CERT_UNTRUSTED"));
+    ssl_err.insert(err_p(28,"X509_V_ERR_CERT_REJECTED"));
+  }
+
+  static const Quark
+  ssl_err_to_string(int i)
+  {
+    if (map_init++ == 0) init_err_map();
+    Quark ret;
+    if (ssl_err.count(i) > 0) return ssl_err[i];
+    return ret;
   }
 
 }

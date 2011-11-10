@@ -288,8 +288,9 @@ namespace
   {
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
     g_io_channel_unref(chan->giochan);
+    SSL_shutdown(chan->ssl);
     SSL_free(chan->ssl);
-    std::cerr<<"ssl free\n";
+//    std::cerr<<"ssl free\n";
     g_free(chan);
   }
 }
@@ -299,7 +300,7 @@ GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
 
   _certstore.remove_listener(this);
 
-  std::cerr << LINE_ID << " destroying socket " << this <<std::endl;
+//  std::cerr << LINE_ID << " destroying socket " << this <<std::endl;
 
 //  std::cerr<<_session<<std::endl;
 
@@ -410,6 +411,7 @@ namespace
 
     ret = SSL_connect(chan->ssl);
     if (ret <= 0) {
+//      std::cerr<<"ret handshake "<<ret<<std::endl;
       err = SSL_get_error(chan->ssl, ret);
       switch (err) {
         case SSL_ERROR_WANT_READ:
@@ -417,17 +419,17 @@ namespace
         case SSL_ERROR_WANT_WRITE:
           return 3;
         case SSL_ERROR_ZERO_RETURN:
-          g_warning("SSL handshake failed: %s", "server closed connection");
+//          g_warning("SSL handshake failed: %s", "server closed connection");
           return -1;
         case SSL_ERROR_SYSCALL:
           errstr = ERR_reason_error_string(ERR_get_error());
           if (errstr == NULL && ret == -1)
             errstr = strerror(errno);
-          g_warning("SSL handshake failed: %s", errstr != NULL ? errstr : "server closed connection unexpectedly");
+//          g_warning("SSL handshake failed: %s", errstr != NULL ? errstr : "server closed connection unexpectedly");
           return -1;
         default:
           errstr = ERR_reason_error_string(ERR_get_error());
-          g_warning("SSL handshake failed: %s", errstr != NULL ? errstr : "unknown SSL error");
+//          g_warning("SSL handshake failed: %s", errstr != NULL ? errstr : "unknown SSL error");
           return -1;
       }
     }

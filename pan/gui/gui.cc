@@ -1460,15 +1460,16 @@ void GUI :: do_tip_jar ()
 }
 void GUI :: do_about_pan ()
 {
-  const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com> - Pan Author", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", "K. Haley <haleykd@users.sf.net> - Contributor",
-  "Petr Kovar <pknbe@volny.cz> - Contributor", "Heinrich Mueller <eddie_v@gmx.de> - Contributor", "Christophe Lambin <chris@rebelbase.com> - Original Pan Development",
+  const gchar * authors [] = {
+  "Charles Kerr <charles@rebelbase.com> - Pan Author", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", "K. Haley <haleykd@users.sf.net> - Contributor",
+  "Petr Kovar <pknbe@volny.cz> - Contributor", "Heinrich Müller <eddie_v@gmx.de> - Contributor", "Christophe Lambin <chris@rebelbase.com> - Original Pan Development",
   "Matt Eagleson <matt@rebelbase.com> - Original Pan Development", 0 };
   GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
-  gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2011 Charles Kerr and others"));
+  gtk_about_dialog_set_copyright (w, _("Copyright \u00A9 2002-2011 Charles Kerr and others")); // \u00A9 is unicode for ©
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
   gtk_about_dialog_set_license (w, LICENSE);
@@ -2094,11 +2095,11 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
 void
 GUI :: on_verify_cert_failed(X509* cert, std::string server, int nr)
 {
-  std::cerr<<"gui cert failed : "<<cert<<"\n";
+//  std::cerr<<"gui cert failed : "<<cert<<"\n";
 
   if (GUI::confirm_accept_new_cert_dialog(get_window(_root),cert,server))
     if (!_certstore.add(cert, server))
-      std::cerr<<"error adding cert to "<<server<<std::endl;
+      Log::add_err_va("Error adding certificate of server '%s' to Certificate Store",server.c_str());
 
 }
 
