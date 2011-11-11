@@ -25,7 +25,7 @@
 #include <pan/data/article-cache.h>
 #include <pan/data/encode-cache.h>
 #include <pan/tasks/queue.h>
-#include <pan/tasks/cert-store.h>
+#include <pan/data-impl/cert-store.h>
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-ui.h>
 #include <pan/gui/prefs.h>
@@ -57,7 +57,7 @@ namespace pan
   {
 
     public:
-      GUI (Data& data, Queue&, ArticleCache&, EncodeCache&, CertStore&, Prefs&, GroupPrefs&);
+      GUI (Data& data, Queue&, Prefs&, GroupPrefs&);
       virtual ~GUI ();
       GtkWidget* root () { return _root; }
       typedef std::vector<std::string> strings_t;

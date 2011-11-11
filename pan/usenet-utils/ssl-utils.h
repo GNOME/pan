@@ -27,7 +27,11 @@
 
 #ifdef HAVE_OPENSSL
 
+#include <pan/tasks/socket.h>
 #include <pan/general/quark.h>
+#include <pan/general/macros.h>
+#include <pan/general/string-view.h>
+#include <pan/tasks/socket.h>
 #include <pan/general/e-util.h>
 #include <openssl/crypto.h>
 #include <openssl/x509.h>
@@ -38,6 +42,9 @@
 #include <map>
 #include <iostream>
 #include <sstream>
+extern "C" {
+  #include <glib/gi18n.h>
+}
 
 namespace pan
 {
@@ -434,9 +441,6 @@ namespace pan
 
     void parse(std::vector<quarks_p>& i, std::vector<quarks_p>& s)
     {
-
-      std::cerr<<iss<<"\n\n";
-
       while(idx<num_tags)
       {
         std::string::size_type index = iss.find(tags_idx[idx]);
@@ -460,8 +464,6 @@ namespace pan
       }
 
       idx = 0;
-      std::cerr<<sub<<"\n\n";
-
       while(idx<num_tags)
       {
         std::string::size_type index = sub.find(tags_idx[idx]);
@@ -514,9 +516,9 @@ namespace pan
       return;
     }
 
-    struct CertParser* cp = new CertParser(cert);
+    struct CertParser cp(cert);
     std::vector<quarks_p> p_issuer, p_subject;
-    cp->parse(p_issuer, p_subject);
+    cp.parse(p_issuer, p_subject);
 
 
     time_t t = getTimeFromASN1(cert->cert_info->validity->notAfter);
@@ -539,16 +541,44 @@ namespace pan
                                 "<b>Not valid before : </b>%s\n\n"
                                 "<b>Fingerprint (MD5) : </b>\n%s\n\n"),
                                 on_connect ? tmp1 : tmp2,
-                                cp->build_complete(p_issuer).c_str(),
-                                cp->build_complete(p_subject).c_str(),
+                                cp.build_complete(p_issuer).c_str(),
+                                cp.build_complete(p_subject).c_str(),
                                 until,
                                 before,
                                 get_x509_fingerpint_md5(cert).c_str());
 
-    delete cp;
-
   }
 
+
+  typedef std::multimap<std::string, Socket*> socks_m;
+  typedef std::pair<std::string, Socket*> socks_p;
+
+  static void delete_all_socks(socks_m& socket_map, std::string server)
+  {
+
+    for (socks_m::iterator it = socket_map.begin(); it != socket_map.end();)
+    {
+      std::cerr<<it->first<<" "<<it->second<<std::endl;
+      if (it->first == server)
+      {
+        it->second->set_abort_flag(true);
+        socket_map.erase(it++);
+      } else
+        ++it;
+    }
+  }
+
+  static void delete_sock(socks_m& socket_map, Socket* sock)
+  {
+    for (socks_m::iterator it = socket_map.begin(); it != socket_map.end();)
+    {
+      if (it->second == sock)
+      {
+        delete it->second;
+        socket_map.erase(it);
+      }
+    }
+  }
 
 }
 

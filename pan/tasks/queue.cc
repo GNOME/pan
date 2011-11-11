@@ -29,12 +29,14 @@
 ****
 ***/
 
+// TODO Mulithreading downloads!
+
 using namespace pan;
 
 Queue :: Queue (ServerInfo         & server_info,
                 TaskArchive        & archive,
                 SocketCreator      * socket_creator,
-                CertStore          & store,
+                CertStore          & certstore,
                 WorkerPool         & pool,
                 bool                 online,
                 int                  save_delay_secs):
@@ -50,8 +52,9 @@ Queue :: Queue (ServerInfo         & server_info,
   _needs_saving (false),
   _last_time_saved (0),
   _archive (archive),
+  _certstore(certstore),
   _uploads_total(0),
-  _certstore (store)
+  _downloads_total(0)
 {
 
   tasks_t tasks;
@@ -262,6 +265,19 @@ Queue :: give_task_an_upload_slot (TaskUpload* task)
 }
 
 void
+Queue :: give_task_a_download_slot (TaskArticle* task)
+{
+  int max (8);//DBG!!(_server_info.get_server_limits(task->_server));
+  if (_downloads.size() < max)
+  {
+    _downloads.insert(task);
+    task->wakeup();
+    fire_task_active_changed (task, true);
+    process_task(task);
+  }
+}
+
+void
 Queue :: process_task (Task * task)
 {
   pan_return_if_fail (task != 0);
@@ -299,6 +315,11 @@ Queue :: process_task (Task * task)
     TaskUpload* t = dynamic_cast<TaskUpload*>(task);
     if (t)
       give_task_an_upload_slot(t);
+
+    TaskArticle* t2 = dynamic_cast<TaskArticle*>(task);
+    if (t2)
+      give_task_a_download_slot(t2);
+
   }
   else if (state._work == Task::NEED_DECODER)
   {
@@ -316,7 +337,12 @@ Queue :: process_task (Task * task)
     // make the requests...
     const Task::State::unique_servers_t& servers (state._servers);
     foreach_const (Task::State::unique_servers_t, servers, it)
+    {
+      std::string addr; int port;
+      _server_info.get_server_addr(*it, addr, port);
+      if (_certstore.in_blacklist(addr)) continue;
       get_pool(*it).request_nntp (_worker_pool);
+    }
 
     Quark server;
     if (!find_best_server (servers, server))

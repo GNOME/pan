@@ -40,17 +40,16 @@ namespace
 NNTP_Pool :: NNTP_Pool (const Quark        & server,
                         ServerInfo         & server_info,
                         SocketCreator      * creator,
-                        CertStore          & certstore):
+                        CertStore          & store):
 
   _server_info (server_info),
   _server (server),
   _socket_creator (creator),
-  _certstore(certstore),
   _pending_connections (0),
   _active_count (0),
-  _time_to_allow_new_connections (0)
+  _time_to_allow_new_connections (0),
+  _certstore(store)
 {
-  certstore.add_listener(this);
 }
 
 NNTP_Pool :: ~NNTP_Pool ()
@@ -59,7 +58,6 @@ NNTP_Pool :: ~NNTP_Pool ()
     delete it->nntp->_socket;
     delete it->nntp;
   }
-  _certstore.remove_listener(this);
 }
 
 /***
@@ -95,6 +93,14 @@ NNTP_Pool :: abort_tasks ()
     if (!it->is_checked_in)
       it->nntp->_socket->set_abort_flag (true);
 }
+
+void
+NNTP_Pool :: kill_tasks ()
+{
+  foreach (pool_items_t, _pool_items, it)
+    it->nntp->_socket->set_abort_flag (true);
+}
+
 
 NNTP*
 NNTP_Pool :: check_out ()
@@ -274,9 +280,9 @@ NNTP_Pool :: request_nntp (WorkerPool& threadpool)
   {
     std::string address;
     int port;
+
     if (_server_info.get_server_addr (_server, address, port))
       if (!_certstore.in_blacklist(address))
-//      if (_blacklist.count(address)  == 0)
       {
         ++_pending_connections;
         const bool ssl(_server_info.get_server_ssl_support(_server));
@@ -342,21 +348,17 @@ NNTP_Pool :: idle_upkeep ()
   }
 }
 
-
 #ifdef HAVE_OPENSSL
 void
-NNTP_Pool :: on_verify_cert_failed (X509* cert, std::string server, int nr)
+NNTP_Pool:: on_verify_cert_failed(X509* cert, std::string server, int nr)
 {
-//  _blacklist.erase(server);
-  _certstore.blacklist(server);
-//  std::cerr<<"adding "<<server<<" to blacklist ("<<cert<<", "<<nr<<")"<<std::endl;
+//  abort_tasks();
 }
 
 void
 NNTP_Pool :: on_valid_cert_added (X509* cert, std::string server)
 {
-//  _blacklist.insert(server);
-  _certstore.whitelist(server);
-//  std::cerr<<"removing "<<server<<" from blacklist ("<<cert<<")"<<std::endl;
+
 }
 #endif
+

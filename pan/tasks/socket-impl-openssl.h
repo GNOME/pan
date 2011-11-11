@@ -28,7 +28,7 @@
 #include <pan/tasks/socket-impl-gio.h>
 
 #ifdef HAVE_OPENSSL
-  #include <pan/tasks/cert-store.h>
+  #include <pan/data-impl/cert-store.h>
   #include <openssl/crypto.h>
   #include <openssl/x509.h>
   #include <openssl/x509v3.h>

@@ -53,8 +53,7 @@ TaskGroups :: TaskGroups (Data& data, const Quark& servername):
 }
 
 TaskGroups :: ~TaskGroups ()
-{
-}
+{}
 
 /***
 ****

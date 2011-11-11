@@ -93,6 +93,7 @@ namespace pan
         struct Listener {
           virtual ~Listener () {}
           virtual void on_socket_created (const StringView& host, int port, bool ok, Socket*) = 0;
+          virtual void on_socket_shutdown (const StringView& host, int port, Socket*) = 0;
         };
 
         virtual ~Creator () { }

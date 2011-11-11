@@ -28,15 +28,13 @@
   #include <openssl/rand.h>
   #include <openssl/x509.h>
 #endif
-
 #include <pan/tasks/socket.h>
 #include <pan/general/quark.h>
 #include <pan/general/macros.h>
 #include <pan/general/worker-pool.h>
 #include <pan/general/string-view.h>
-
 #include <map>
-
+#include <iostream>
 
 
 namespace pan
@@ -94,6 +92,13 @@ namespace pan
         _blacklist.erase(s);
       }
 
+      void dump_blacklist()
+      {
+        std::cerr<<"#################\n";
+        std::cerr<<_blacklist.size()<<std::endl;
+        std::cerr<<"#################\n\n";
+      }
+
     private:
       void remove_hard(const Quark&);
 
@@ -113,8 +118,8 @@ namespace pan
       typedef std::set<Listener*> listeners_t;
       listeners_t _listeners;
 
-      void add_listener (Listener * l) { _listeners.insert(l); }
-      void remove_listener (Listener * l) { _listeners.erase(l); }
+      void add_listener (Listener * l)    { _listeners.insert(l); }
+      void remove_listener (Listener * l) { _listeners.erase(l);  }
 
       /* notify functions for listener list */
       void verify_failed (X509* c, std::string server, int nr)
@@ -144,7 +149,9 @@ namespace pan
    CertStore* cs;
    std::string server;
    CertStore::Listener* l;
+
 #else
+
   public:
     CertStore () {};
     virtual ~CertStore () {};
@@ -156,6 +163,7 @@ namespace pan
     {
       virtual ~Listener() {}
     };
+
 #endif   // HAVE_OPENSSL
   };
 

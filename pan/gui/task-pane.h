@@ -93,6 +93,7 @@ namespace pan
       task_list get_selected_tasks () const;
       static void get_selected_tasks_foreach (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer);
       static void online_toggled_cb  (GtkToggleButton*, Queue*);
+
     public:   /// FIXME, privatize this again...
       static void up_clicked_cb      (GtkButton*, TaskPane*);
       static void down_clicked_cb    (GtkButton*, TaskPane*);
@@ -102,16 +103,6 @@ namespace pan
       static void delete_clicked_cb  (GtkButton*, TaskPane*);
       static void restart_clicked_cb (GtkButton*, TaskPane*);
       static void change_dest_clicked_cb (GtkButton*, TaskPane*);
-
-    private:
-//      static void do_move_up     (GtkAction*, gpointer p);
-//      static void do_move_down   (GtkAction*, gpointer p);
-//      static void do_move_top    (GtkAction*, gpointer p);
-//      static void do_move_bottom (GtkAction*, gpointer p);
-//      static void do_stop        (GtkAction*, gpointer p);
-//      static void do_delete      (GtkAction*, gpointer p);
-//      static void do_restart     (GtkAction*, gpointer p);
-//      static void do_change_dest (GtkAction*, gpointer p);
   };
 }
 

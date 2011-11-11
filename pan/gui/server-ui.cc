@@ -40,7 +40,7 @@ extern "C" {
 
 #ifdef HAVE_OPENSSL
 
-  #include <pan/tasks/cert-store.h>
+  #include <pan/data-impl/cert-store.h>
   #include <openssl/crypto.h>
   #include <openssl/x509.h>
   #include <openssl/x509v3.h>
@@ -378,7 +378,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     struct { int o; const char * str; } ssl_items[] = {
 
       { 0, N_("Use Plaintext (Unsecured) Connections") },
-      { 1, N_("Use Secure TLS (SSL) Connections") }
+      { 1, N_("Use Secure SSL Connections") }
     };
 
     store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
@@ -647,6 +647,7 @@ namespace
     GtkWidget * list_dialog = GTK_WIDGET (user_data);
     ServerListDialog * d = (ServerListDialog*) g_object_get_data (G_OBJECT(list_dialog), "dialog");
     Quark selected_server (get_selected_server (d));
+    CertStore& store (d->data.get_certstore());
 
     int port;
     std::string addr;
@@ -655,7 +656,7 @@ namespace
     char buf[4096] ;
 
     if (!selected_server.empty()) {
-      X509* cert = (X509*)d->queue.store().get_cert_to_server(addr);
+      X509* cert = (X509*)store.get_cert_to_server(addr);
       if (cert)
       {
         pretty_print_x509(buf,sizeof(buf),addr, cert,false);
@@ -680,6 +681,7 @@ namespace
     GtkTreeSelection * selection (gtk_tree_view_get_selection(GTK_TREE_VIEW (d->server_tree_view)));
     const quarks_t servers (d->data.get_servers ());
     const Quark selected_server (get_selected_server (d));
+    CertStore& store (d->data.get_certstore());
 
     bool found_selected (false);
     GtkTreeIter selected_iter;
@@ -695,7 +697,7 @@ namespace
         GtkTreeIter iter;
         gtk_list_store_append (d->servers_store, &iter);
         gtk_list_store_set (d->servers_store, &iter,
-                            COL_FLAG, d->queue.store().exist(addr),
+                            COL_FLAG, store.exist(addr),
                             COL_HOST, addr.c_str(),
                             COL_DATA, server.c_str(),
                             -1);
@@ -728,6 +730,7 @@ namespace
     ServerListDialog * d = (ServerListDialog*) g_object_get_data (G_OBJECT(list_dialog), "dialog");
     std::string ret = import_sec_from_disk_dialog_new (d->data, d->queue, GTK_WINDOW(list_dialog));
     const Quark selected_server (get_selected_server (d));
+    CertStore& store (d->data.get_certstore());
 
     if (!ret.empty() )
     {
@@ -737,7 +740,7 @@ namespace
       PEM_read_X509(fp,&x, 0, 0);
       fclose(fp);
       d->data.get_server_addr(selected_server, addr, port);
-      d->queue.store().add(x,addr);
+      store.add(x,addr);
       sec_tree_view_refresh (d);
     }
   }
@@ -749,6 +752,8 @@ namespace
   {
     ServerListDialog * d (static_cast<ServerListDialog*>(data));
     Quark selected_server (get_selected_server (d));
+    CertStore& store (d->data.get_certstore());
+
     if (!selected_server.empty())
     {
       int port;
@@ -770,7 +775,7 @@ namespace
       gtk_widget_destroy (w);
 
       d->data.get_server_addr (selected_server, addr, port);
-      d->queue.store().remove(addr);
+      store.remove(addr);
 
       if (response == GTK_RESPONSE_YES)
         sec_tree_view_refresh (d);

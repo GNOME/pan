@@ -95,7 +95,7 @@ extern "C" {
 #include <pan/usenet-utils/gnksa.h>
 #include "socket-impl-openssl.h"
 #include "socket-impl-main.h"
-#include "cert-store.h"
+#include <pan/data-impl/cert-store.h>
 
 using namespace pan;
 
@@ -124,7 +124,6 @@ GIOChannelSocketSSL :: GIOChannelSocketSSL (SSL_CTX* ctx, CertStore& cs):
    _certstore(cs),
    _rehandshake(false)
 {
-//   std::cerr<<"GIOChannelSocketSSL ctor " << (void*)this<<std::endl;
    cs.add_listener(this);
    _session = cs.get_session();
 }
@@ -300,9 +299,7 @@ GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
 
   _certstore.remove_listener(this);
 
-//  std::cerr << LINE_ID << " destroying socket " << this <<std::endl;
-
-//  std::cerr<<_session<<std::endl;
+  std::cerr << LINE_ID << " destroying socket " << this <<std::endl;
 
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
@@ -411,7 +408,6 @@ namespace
 
     ret = SSL_connect(chan->ssl);
     if (ret <= 0) {
-//      std::cerr<<"ret handshake "<<ret<<std::endl;
       err = SSL_get_error(chan->ssl, ret);
       switch (err) {
         case SSL_ERROR_WANT_READ:
@@ -807,9 +803,6 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
   {
     g_io_channel_set_flags (handle, G_IO_FLAG_NONBLOCK, 0);
     return gchan;
-  } else
-  { ;
-//    std::cerr<<"handshake ret "<<ret<<std::endl;
   }
   return 0;
 }
@@ -817,7 +810,7 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 void
 GIOChannelSocketSSL :: on_verify_cert_failed (X509* cert, std::string server, int nr)
 {
-
+  if (!_certstore.in_blacklist(server)) _certstore.blacklist(server);
 }
 
 void

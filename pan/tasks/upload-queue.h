@@ -84,10 +84,6 @@ namespace pan
         virtual void on_queue_tasks_added (UploadQueue&, int index, int count) = 0;
         virtual void on_queue_task_removed (UploadQueue&, Task&, int index) = 0;
         virtual void on_queue_task_moved (UploadQueue&, Task&, int new_index, int old_index) = 0;
-        virtual void on_queue_connection_count_changed (UploadQueue&, int count) {}
-        virtual void on_queue_size_changed (UploadQueue&, int active, int total) {}
-        virtual void on_queue_online_changed (UploadQueue&, bool online) {}
-        virtual void on_queue_error (UploadQueue&, const StringView& message) {}
       };
 
       void add_listener (Listener *l) { _listeners.insert(l); }

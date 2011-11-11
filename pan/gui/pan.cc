@@ -42,7 +42,7 @@ extern "C" {
   #include <pan/tasks/socket-impl-openssl.h>
 #endif
 
-#include <pan/tasks/cert-store.h>
+#include <pan/data-impl/cert-store.h>
 #include <pan/tasks/socket-impl-gio.h>
 #include <pan/tasks/socket-impl-main.h>
 #include <pan/tasks/task-groups.h>
@@ -139,10 +139,7 @@ namespace
     return true;
   }
 
-  void run_pan_in_window (ArticleCache  & cache,
-                          EncodeCache   & encode_cache,
-                          CertStore     & certstore,
-                          Data          & data,
+  void run_pan_in_window (Data          & data,
                           Queue         & queue,
                           Prefs         & prefs,
                           GroupPrefs    & group_prefs,
@@ -151,7 +148,7 @@ namespace
     {
       const gulong delete_cb_id =  g_signal_connect (window, "delete-event", G_CALLBACK(delete_event_cb), 0);
 
-      GUI gui (data, queue, cache, encode_cache, certstore, prefs, group_prefs);
+      GUI gui (data, queue, prefs, group_prefs);
       gtk_container_add (GTK_CONTAINER(window), gui.root());
       gtk_widget_show (GTK_WIDGET(window));
 
@@ -338,9 +335,7 @@ main (int argc, char *argv[])
     DataImpl data (false, cache_megs);
     ArticleCache& cache (data.get_cache ());
     EncodeCache& encode_cache (data.get_encode_cache());
-
-    /* init certificate store for SSL */
-    CertStore certstore;
+    CertStore& certstore (data.get_certstore());
 
     if (nzb && data.get_servers().empty()) {
       std::cerr << _("Please configure Pan's news servers before using it as an nzb client.") << std::endl;
@@ -351,6 +346,7 @@ main (int argc, char *argv[])
     // instantiate the queue...
     WorkerPool worker_pool (4, true);
 
+    // init the socket creator
     SocketCreator socket_creator(certstore);
 
     Queue queue (data, data, &socket_creator, certstore, worker_pool,
@@ -415,7 +411,7 @@ main (int argc, char *argv[])
       gtk_window_set_resizable (GTK_WINDOW(window), true);
       gtk_window_set_default_icon (pixbuf);
       g_object_unref (pixbuf);
-      run_pan_in_window (cache, encode_cache, certstore, data, queue, prefs, group_prefs, GTK_WINDOW(window));
+      run_pan_in_window (data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
 
     worker_pool.cancel_all_silently ();

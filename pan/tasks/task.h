@@ -143,6 +143,9 @@ namespace pan
          /// stop a running task
          virtual void stop () { }
 
+         /// wakeup a sleeping task
+         virtual void wakeup() {}
+
       protected:
 
          State _state;

@@ -45,7 +45,7 @@
 #include <pan/data-impl/memchunk.h>
 
 #ifdef HAVE_OPENSSL
-  #include <pan/tasks/cert-store.h>
+  #include <pan/data-impl/cert-store.h>
   #include <openssl/crypto.h>
   #include <openssl/x509.h>
   #include <openssl/x509v3.h>
@@ -87,9 +87,13 @@ namespace pan
 
       virtual EncodeCache& get_encode_cache () { return _encode_cache; }
       virtual const EncodeCache& get_encode_cache () const { return _encode_cache; }
+
+      virtual CertStore& get_certstore () { return _certstore; }
+      virtual const CertStore& get_certstore () const { return _certstore; }
     private:
       EncodeCache _encode_cache;
       ArticleCache _cache;
+      CertStore _certstore;
 
     private:
 

@@ -59,17 +59,17 @@ int main (int argc, char *argv[])
   }
 
   // initialize the queue
-  TaskArchive null_task_archive;
-  WorkerPool pool;
-  CertStore cs;
-  // FIXME : adapt!
-  SocketCreator _socket_creator(cs);
-  Queue queue (data, null_task_archive, &_socket_creator, cs, pool, true, 10);
-  queue.add_task (new TaskGroups (data, servername));
-
-  // start the event loop...
-  main_loop = g_main_loop_new (NULL, false);
-  g_timeout_add (2*1000, check_for_tasks_done, &queue);
-  g_main_loop_run (main_loop);
+//  TaskArchive null_task_archive;
+//  WorkerPool pool;
+//  CertStore cs;
+//  // FIXME : adapt!
+//  SocketCreator _socket_creator(cs);
+//  Queue queue (data, null_task_archive, &_socket_creator, cs, pool, true, 10);
+//  queue.add_task (new TaskGroups (data, servername));
+//
+//  // start the event loop...
+//  main_loop = g_main_loop_new (NULL, false);
+//  g_timeout_add (2*1000, check_for_tasks_done, &queue);
+//  g_main_loop_run (main_loop);
   return 0;
 }

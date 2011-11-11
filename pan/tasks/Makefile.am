@@ -18,7 +18,6 @@ libtasks_a_SOURCES = \
   queue.cc \
   upload-queue.cc \
   socket.cc \
-  cert-store.cc \
   socket-impl-main.cc \
   socket-impl-openssl.cc \
   socket-impl-gio.cc \
@@ -44,7 +43,6 @@ noinst_HEADERS = \
   queue.h  \
   upload-queue.h \
   socket.h \
-  cert-store.h \
   socket-impl-main.h \
   socket-impl-openssl.cc \
   socket-impl-gio.h \

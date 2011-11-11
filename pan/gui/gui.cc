@@ -184,11 +184,11 @@ namespace
 //  };
 //}
 
-GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_cache, CertStore& cs, Prefs& prefs, GroupPrefs& group_prefs):
+GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),
   _queue (queue),
-  _cache (cache),
-  _encode_cache (encode_cache),
+  _cache (data.get_cache()),
+  _encode_cache (data.get_encode_cache()),
   _prefs (prefs),
   _group_prefs (group_prefs),
   _root (gtk_vbox_new (FALSE, 0)),
@@ -204,7 +204,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, EncodeCache& encode_c
   _queue_size_label (0),
   _queue_size_button (0),
   _taskbar (0),
-  _certstore(cs)
+  _certstore(data.get_certstore())
 {
 
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
@@ -2096,8 +2096,7 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
 void
 GUI :: on_verify_cert_failed(X509* cert, std::string server, int nr)
 {
-//  std::cerr<<"gui cert failed : "<<cert<<"\n";
-
+  if (!cert) return;
   if (GUI::confirm_accept_new_cert_dialog(get_window(_root),cert,server))
     if (!_certstore.add(cert, server))
       Log::add_err_va("Error adding certificate of server '%s' to Certificate Store",server.c_str());
@@ -2106,7 +2105,13 @@ GUI :: on_verify_cert_failed(X509* cert, std::string server, int nr)
 
 void
 GUI :: on_valid_cert_added (X509* cert, std::string server)
-{}
+{
+  std::cerr<<"whitelist "<<server<<std::endl;
+
+  /* whitelist to make avaible for nntp-pool */
+  _certstore.whitelist(server);
+
+}
 
 
 #endif

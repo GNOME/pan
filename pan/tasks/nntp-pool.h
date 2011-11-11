@@ -29,7 +29,7 @@
 #include <pan/tasks/socket-impl-main.h>
 
 #ifdef HAVE_OPENSSL
-  #include <pan/tasks/cert-store.h>
+  #include <pan/data-impl/cert-store.h>
 #endif
 
 namespace pan
@@ -52,12 +52,13 @@ namespace pan
       NNTP_Pool (const Quark       & server,
                  ServerInfo        & server_info,
                  SocketCreator     *,
-                 CertStore         & certstore);
+                 CertStore         &);
       virtual ~NNTP_Pool ();
 
       virtual void check_in (NNTP*, Health);
       NNTP* check_out ();
       void abort_tasks ();
+      void kill_tasks ();
       void idle_upkeep ();
 
       void get_counts (int& setme_active,
@@ -81,14 +82,16 @@ namespace pan
 
     private: //  NNTP::Listener
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
-#ifdef HAVE_OPENSSL
-    private: //  CertStore::Listener
-      virtual void on_verify_cert_failed (X509*, std::string, int);
-      virtual void on_valid_cert_added (X509* cert, std::string server);
-#endif
+
     private: // Socket::Creator::Listener
       virtual void on_socket_created (const StringView& host, int port, bool ok, Socket*);
-
+      virtual void on_socket_shutdown (const StringView& host, int port, Socket*) {}
+#ifdef HAVE_OPENSSL
+    private:
+      // CertStore::Listener
+      virtual void on_verify_cert_failed (X509*, std::string, int) ;
+      virtual void on_valid_cert_added (X509*, std::string );
+#endif
     private:
 
       void fire_pool_has_nntp_available () {
@@ -104,7 +107,7 @@ namespace pan
       const Quark _server;
       SocketCreator * _socket_creator;
       int _pending_connections;
-      std::set<std::string> _blacklist;
+      CertStore& _certstore;
 
       struct PoolItem {
         NNTP * nntp;
@@ -114,7 +117,6 @@ namespace pan
       typedef std::vector<PoolItem> pool_items_t;
       pool_items_t _pool_items;
       int _active_count;
-      CertStore& _certstore;
 
     private:
 

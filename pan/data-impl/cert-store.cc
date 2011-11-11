@@ -150,7 +150,10 @@ CertStore :: remove (const Quark& server)
     _cert_to_server.erase(server);
     _certs.erase(server);
     remove_hard(server);
+    SSL_CTX_set_cert_store(_ctx, X509_STORE_new());
+    init_me();
   }
+  verify_failed(0,server.c_str(),0);
 }
 
 CertStore :: CertStore ()
@@ -171,19 +174,22 @@ CertStore :: add(X509* cert, const Quark& server)
 {
   if (_certs.count(server) > 0 || !cert || server.empty()) return false;
 
-  X509_STORE_add_cert(get_store(),cert);
-  _certs.insert(server);
-  _cert_to_server[server] = cert;
+  if (X509_STORE_add_cert(get_store(),cert) != 0)
+  {
+    _certs.insert(server);
+    _cert_to_server[server] = cert;
 
-  char buf[2048];
-  g_snprintf(buf,sizeof(buf),"%s%c%s.pem",_path.c_str(),G_DIR_SEPARATOR,server.c_str());
-  FILE * fp = fopen(buf, "wb");
-  PEM_write_X509(fp, cert);
-  fclose(fp);
-  chmod (buf, 0600);
+    char buf[2048];
+    g_snprintf(buf,sizeof(buf),"%s%c%s.pem",_path.c_str(),G_DIR_SEPARATOR,server.c_str());
+    FILE * fp = fopen(buf, "wb");
+    PEM_write_X509(fp, cert);
+    fclose(fp);
+    chmod (buf, 0600);
 
-  valid_cert_added(cert, server.c_str());
-  return true;
+    valid_cert_added(cert, server.c_str());
+    return true;
+  }
+  return false;
 }
 
 const X509*

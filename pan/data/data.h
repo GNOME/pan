@@ -33,6 +33,7 @@
 #include <pan/data/article-cache.h>
 #include <pan/data/encode-cache.h>
 #include <pan/data/server-info.h>
+#include <pan/data-impl/cert-store.h>
 
 namespace pan
 {
@@ -173,8 +174,13 @@ namespace pan
     public:
 
       virtual ArticleCache& get_cache () = 0;
-
       virtual const ArticleCache& get_cache () const = 0;
+
+      virtual EncodeCache& get_encode_cache () = 0;
+      virtual const EncodeCache& get_encode_cache () const = 0;
+
+      virtual CertStore& get_certstore () = 0;
+      virtual const CertStore& get_certstore () const = 0;
 
     public:
 

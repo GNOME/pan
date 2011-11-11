@@ -37,7 +37,7 @@
 #include <pan/tasks/socket-impl-main.h>
 
 #ifdef HAVE_OPENSSL
-  #include <pan/tasks/cert-store.h>
+  #include <pan/data-impl/cert-store.h>
 #endif
 
 namespace pan
@@ -196,6 +196,7 @@ namespace pan
       Task* find_first_task_needing_encoder ();
 
       void give_task_an_upload_slot (TaskUpload* task);
+      void give_task_a_download_slot (TaskArticle* task);
 
       bool find_best_server (const Task::State::unique_servers_t& servers, Quark& setme);
       bool task_is_active (const Task*) const;
@@ -204,6 +205,7 @@ namespace pan
       nntp_to_task_t _nntp_to_task;
 
       std::set<TaskUpload*> _uploads;
+      std::set<TaskArticle*> _downloads;
       std::set<Task*> _removing;
       std::set<Task*> _stopped;
       SocketCreator * _socket_creator;
@@ -245,13 +247,8 @@ namespace pan
     private:
       TaskArchive& _archive;
       void clean_n_save ();
-      int _uploads_total;
+      int _uploads_total, _downloads_total;
       CertStore& _certstore;
-
-    /* FIXME: move all this certstore crap to data */
-    public:
-      const CertStore& store() const { return _certstore; }
-      CertStore& store()  { return _certstore; }
 
     private:
       typedef AdaptableSet<Task*, TaskWeakOrdering> TaskSet;
