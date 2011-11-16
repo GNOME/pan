@@ -28,23 +28,47 @@ extern "C"
   #include <unistd.h>
   #include <sys/stat.h>
   #include <sys/types.h>
-
   #include <glib.h>
   #include <glib/gi18n.h>
-
-  #include <dirent.h>
+  #include <pwd.h>
 }
 
 #include "debug.h"
 #include "log.h"
 #include "messages.h"
 #include "file-util.h"
+#include "e-util.h"
 #include "utf8-utils.h"
 #include <algorithm>
 
 using namespace pan;
 
 #define is_nonempty_string(a) ((a) && (*a))
+#define NL std::endl
+
+std::ostream&
+file :: print_file_info (std::ostream& os, const char* file)
+{
+  EvolutionDateMaker dm;
+  struct stat sb;
+  int ret = stat(file,&sb);
+
+  os << "File information for file "<<file<<NL;
+  if (ret)
+  {
+    os << "File not found / accessible!"<<NL;
+    return os;
+  }
+  os << "Umask : "<<sb.st_mode<<NL;
+  os << "User ID : "<< sb.st_uid<<NL;
+  os << "Group ID : "<< sb.st_gid<<NL;
+  os << "Size (Bytes) : "<<sb.st_size<<NL;
+  os << "Last accessed : "<<dm.get_date_string(sb.st_atime)<<NL;
+  os << "Last modified : "<<dm.get_date_string(sb.st_mtime)<<NL;
+  os << "Last status change : "<<dm.get_date_string(sb.st_ctime)<<NL;
+
+  return os;
+}
 
 /***
 ****
@@ -77,6 +101,26 @@ file :: pan_strerror (int error_number)
   return pch && *pch ? pch : "";
 }
 
+namespace
+{
+
+  enum EX_ERRORS
+  {
+    EX_NOFILE, EX_BIT, EX_SUCCESS
+  };
+
+  EX_ERRORS check_executable_bit(const char* d)
+  {
+    struct stat sb;
+    if (stat (d, &sb) == -1) return EX_NOFILE;
+    const char* user(g_get_user_name());
+    struct passwd* pw(getpwnam(user));
+    if (sb.st_mode & S_IXUSR || ((sb.st_mode & S_IXGRP ) && pw->pw_gid == sb.st_gid))
+      return EX_SUCCESS;
+    return EX_BIT;
+  }
+}
+
 bool
 file :: ensure_dir_exists (const StringView& dirname_sv)
 {
@@ -84,11 +128,27 @@ file :: ensure_dir_exists (const StringView& dirname_sv)
 
   pan_return_val_if_fail (!dirname_sv.empty(), true);
   bool retval (true);
-
   const std::string dirname (dirname_sv.to_string());
-  if (!g_file_test (dirname.c_str(), G_FILE_TEST_IS_DIR))
-    retval = !g_mkdir_with_parents (dirname.c_str(), 0755);
+  EX_ERRORS cmd (check_executable_bit(dirname.c_str()));
+  if (cmd == EX_BIT) goto _set_bit;
 
+  if (!g_file_test (dirname.c_str(), G_FILE_TEST_IS_DIR))
+    retval = !g_mkdir_with_parents (dirname.c_str(), 0740); // changed from 755
+
+  if (!retval)
+  {
+    // check for executable bit
+    Log::add_err_va("Error creating directory '%s' : %s", dirname.c_str(),
+                    cmd == EX_NOFILE ? "error accessing file." : "executable bit not set.");
+    // set it manually
+    _set_bit:
+    if (cmd == EX_BIT)
+      if (chmod(dirname.c_str(), 0740))
+      {
+        Log::add_urgent_va("Error setting executable bit for directory '%s' : Please check your permissions.", dirname.c_str());
+        print_file_info(std::cerr,dirname.c_str());
+      }
+  }
   return retval;
 }
 

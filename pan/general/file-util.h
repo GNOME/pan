@@ -49,6 +49,9 @@ namespace pan
    */
   namespace file
   {
+    /** Stats a file and prints out some useful info. Umask etc.... */
+    std::ostream& print_file_info (std::ostream&, const char*);
+
     /** just like strerror but never returns NULL */
     const char * pan_strerror (int error_number);
 

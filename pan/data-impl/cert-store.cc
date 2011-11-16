@@ -96,7 +96,9 @@ CertStore :: get_all_certs_from_disk(std::set<X509*>& setme)
 
     g_snprintf (filename, sizeof(filename), "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, fname);
     FILE *fp = fopen(filename,"r");
+    if (!fp) continue;
     X509 *x = X509_new();
+    if (!x) { fclose(fp); continue; }
     PEM_read_X509(fp,&x, 0, 0);
     fclose(fp);
     setme.insert(x);
@@ -160,8 +162,13 @@ CertStore :: CertStore ()
 {
   char buf[2048];
   g_snprintf(buf,sizeof(buf),"%s%cssl_certs",file::get_pan_home().c_str(), G_DIR_SEPARATOR);
-  file::ensure_dir_exists (buf);
   _path = buf;
+  if (!file::ensure_dir_exists (buf))
+  {
+    std::cerr<<"Error initializing certstore. Check your permissions for the directory \"ssl-certs\" and main subfolder in your home directory! Fatal, exiting.";
+    file::print_file_info(std::cerr, buf);
+    exit(EXIT_FAILURE);
+  }
 }
 
 CertStore :: ~CertStore ()
@@ -182,6 +189,7 @@ CertStore :: add(X509* cert, const Quark& server)
     char buf[2048];
     g_snprintf(buf,sizeof(buf),"%s%c%s.pem",_path.c_str(),G_DIR_SEPARATOR,server.c_str());
     FILE * fp = fopen(buf, "wb");
+    if (!fp) return false;
     PEM_write_X509(fp, cert);
     fclose(fp);
     chmod (buf, 0600);

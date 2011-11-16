@@ -27,8 +27,8 @@ extern "C" {
   #include <gtk/gtk.h>
 }
 
-//#include <pan/usenet-utils/ssl-utils.h>
 #include <pan/icons/pan-pixbufs.h>
+#include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
@@ -735,12 +735,20 @@ namespace
     if (!ret.empty() )
     {
       std::string addr; int port;
-      FILE *fp = fopen(ret.c_str(),"r");
-      X509 *x = X509_new();
+      FILE *fp = fopen(ret.c_str(),"rb");
+      X509 *x;
+      if (!fp) goto _err;
+      x = X509_new();
+      if (!x) { fclose(fp); goto _err; }
       PEM_read_X509(fp,&x, 0, 0);
       fclose(fp);
       d->data.get_server_addr(selected_server, addr, port);
-      store.add(x,addr);
+      if (!store.add(x,addr))
+      {
+      _err:
+        Log::add_err_va("Error adding certificate of server '%s' to CertStore. Check the console output!", addr.c_str());
+        file::print_file_info(std::cerr,ret.c_str());
+      }
       sec_tree_view_refresh (d);
     }
   }

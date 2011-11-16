@@ -805,6 +805,7 @@ void GUI :: on_log_entry_added (const Log::Entry& e)
     set_bin_child (_event_log_button, _error_image);
 
   if (_queue.is_online() && (e.severity & Log::PAN_SEVERITY_URGENT)) {
+    gdk_threads_enter();
     GtkWidget * w = gtk_message_dialog_new (get_window(_root),
                                             GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
                                             GTK_MESSAGE_ERROR,
@@ -812,6 +813,7 @@ void GUI :: on_log_entry_added (const Log::Entry& e)
                                             "%s", e.message.c_str());
     g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
     gtk_widget_show_all (w);
+    gdk_threads_leave();
   }
 }
 
@@ -2099,7 +2101,7 @@ GUI :: on_verify_cert_failed(X509* cert, std::string server, int nr)
   if (!cert) return;
   if (GUI::confirm_accept_new_cert_dialog(get_window(_root),cert,server))
     if (!_certstore.add(cert, server))
-      Log::add_err_va("Error adding certificate of server '%s' to Certificate Store",server.c_str());
+      Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",server.c_str());
 
 }
 
