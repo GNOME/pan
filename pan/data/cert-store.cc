@@ -144,7 +144,7 @@ namespace pan
       _data.find_server_by_hn(server, setme);
       _data.set_server_cert(setme, "");
       _data.save_server_info(setme);
-      init_me();
+//      init_me();
     }
 
   }
