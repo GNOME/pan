@@ -13,8 +13,7 @@ libpandata_a_SOURCES = \
  server.cc \
  my-tree.cc \
  task-archive.cc \
- xover.cc \
- cert-store.cc
+ xover.cc 
 
 noinst_HEADERS = \
  article-filter.h \
@@ -23,8 +22,7 @@ noinst_HEADERS = \
  data-io.h \
  defgroup.h \
  profiles.h \
- memchunk.h \
- cert-store.h
+ memchunk.h 
 
 noinst_PROGRAMS = \
  add-server \

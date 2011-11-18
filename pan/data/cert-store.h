@@ -28,6 +28,9 @@
   #include <openssl/rand.h>
   #include <openssl/x509.h>
 #endif
+
+#include <pan/data/data.h>
+
 #include <pan/tasks/socket.h>
 #include <pan/general/quark.h>
 #include <pan/general/macros.h>
@@ -39,11 +42,13 @@
 
 namespace pan
 {
+  class Data;
+
   class CertStore
   {
 #ifdef HAVE_OPENSSL
     public:
-      CertStore () ;
+      CertStore (Data& data) ;
       virtual ~CertStore () ;
 
     private:
@@ -57,12 +62,13 @@ namespace pan
       std::string _path;
       std::vector<SSL_SESSION*> _sessions;
       certs_t _blacklist;
+      Data& _data;
 
     public:
       SSL_CTX* get_ctx() { return _ctx; }
       X509_STORE* get_store() const { return _store; }
       int get_all_certs_from_disk(std::set<X509*>& setme);
-      const X509* get_cert_to_server(const Quark& server) const;
+      X509* get_cert_to_server(const Quark& server) const;
       SSL_SESSION* get_session()
       {
         SSL_SESSION* ret(0);
@@ -103,15 +109,18 @@ namespace pan
       void remove_hard(const Quark&);
 
     public:
+
       bool add(X509*, const Quark&) ;
       void remove (const Quark&);
       bool exist (const Quark& q) { return (_certs.count(q) > 0); }
+
+      static std::string build_cert_name(std::string host);
 
       struct Listener
       {
         virtual ~Listener() {}
         /* functions that other listeners listen on */
-        virtual void on_verify_cert_failed (X509* cert UNUSED, std::string server UNUSED, int nr UNUSED) = 0;
+        virtual void on_verify_cert_failed (X509* cert UNUSED, std::string server UNUSED, std::string cert_name UNUSED, int nr UNUSED) = 0;
         virtual void on_valid_cert_added (X509* cert UNUSED, std::string server UNUSED) = 0;
       };
 
@@ -122,10 +131,11 @@ namespace pan
       void remove_listener (Listener * l) { _listeners.erase(l);  }
 
       /* notify functions for listener list */
-      void verify_failed (X509* c, std::string server, int nr)
+      void verify_failed (X509* c, std::string server, std::string cn, int nr)
       {
+        std::cerr<<"verify failed "<<server<<" "<<cn<<"\n";
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; ++it)
-          (*it)->on_verify_cert_failed (c, server, nr);
+          (*it)->on_verify_cert_failed (c, server, cn, nr);
       }
 
       void valid_cert_added (X509* c, std::string server)
@@ -148,12 +158,13 @@ namespace pan
    int ignore_all;
    CertStore* cs;
    std::string server;
+   std::string cert_name;
    CertStore::Listener* l;
 
 #else
 
   public:
-    CertStore () {};
+    CertStore (Data&) {};
     virtual ~CertStore () {};
 
     void add_listener (void * l) {}

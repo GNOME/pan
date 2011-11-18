@@ -23,7 +23,7 @@
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
 #include <pan/tasks/task.h>
-#include <pan/data-impl/cert-store.h>
+#include <pan/data/cert-store.h>
 #include <pan/tasks/nntp.h>
 
 namespace pan

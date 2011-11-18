@@ -175,7 +175,7 @@ SocketCreator :: create_socket (const StringView & host,
 
 #ifdef HAVE_OPENSSL
 void
-SocketCreator :: on_verify_cert_failed(X509* cert, std::string server, int nr)
+SocketCreator :: on_verify_cert_failed(X509* cert, std::string server, std::string cert_name, int nr)
 {
 //    delete_all_socks(socket_map, server);
 }

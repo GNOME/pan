@@ -46,6 +46,7 @@ extern "C" {
 namespace pan
 {
   struct Encoder;
+  class Data;
 
   /**
    * Task for uploading binary data to usenet

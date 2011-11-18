@@ -32,14 +32,15 @@
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/encode-cache.h>
+#include <pan/data/cert-store.h>
 #include <pan/data/server-info.h>
-#include <pan/data-impl/cert-store.h>
 
 namespace pan
 {
   class FilterInfo;
   class RulesInfo;
   class Queue;
+  class CertStore;
 
   /**
    * Data Interface class for seeing the mapping between groups and servers.
@@ -162,6 +163,26 @@ namespace pan
     public virtual Profiles,
     public virtual ArticleReferences
   {
+
+    public:
+      struct Server
+      {
+         std::string username;
+         std::string password;
+         std::string host;
+         std::string newsrc_filename;
+         std::string cert;
+         int port;
+         int article_expiration_age;
+         int max_connections;
+         int rank;
+         int ssl_support;
+         typedef sorted_vector<Quark,true,AlphabeticalQuarkOrdering> groups_t;
+         groups_t groups;
+
+         Server(): port(119), article_expiration_age(31), max_connections(2), rank(1), ssl_support(0) {}
+      };
+
     protected:
 
       Data () {}
@@ -183,6 +204,11 @@ namespace pan
       virtual const CertStore& get_certstore () const = 0;
 
     public:
+
+      /** Gets a quark to the provided hostname */
+      virtual bool find_server_by_hn (const Quark& server, Quark& setme) const = 0;
+
+      virtual const Server* find_server (const Quark& server) const = 0;
 
       virtual quarks_t get_servers () const = 0;
 

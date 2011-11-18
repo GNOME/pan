@@ -37,7 +37,7 @@
 #include <pan/tasks/socket-impl-main.h>
 
 #ifdef HAVE_OPENSSL
-  #include <pan/data-impl/cert-store.h>
+  #include <pan/data/cert-store.h>
 #endif
 
 namespace pan

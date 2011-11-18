@@ -28,7 +28,7 @@
 #include <pan/tasks/socket-impl-gio.h>
 
 #ifdef HAVE_OPENSSL
-  #include <pan/data-impl/cert-store.h>
+  #include <pan/data/cert-store.h>
   #include <openssl/crypto.h>
   #include <openssl/x509.h>
   #include <openssl/x509v3.h>
@@ -87,7 +87,7 @@ namespace pan
       DoResult do_write ();
 
       // CertStore::Listener
-      virtual void on_verify_cert_failed (X509*, std::string, int) ;
+      virtual void on_verify_cert_failed (X509*, std::string, std::string, int) ;
       virtual void on_valid_cert_added (X509*, std::string );
 
       GIOChannel * create_channel (const StringView& host_in, int port, std::string& setme_err);

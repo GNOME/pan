@@ -25,7 +25,7 @@
 #include <pan/data/article-cache.h>
 #include <pan/data/encode-cache.h>
 #include <pan/tasks/queue.h>
-#include <pan/data-impl/cert-store.h>
+#include <pan/data/cert-store.h>
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-ui.h>
 #include <pan/gui/prefs.h>
@@ -183,7 +183,7 @@ namespace pan
       virtual void on_queue_error (Queue&, const StringView& message);
 #ifdef HAVE_OPENSSL
     private:  // CertStore::Listener
-      virtual void on_verify_cert_failed(X509*, std::string, int);
+      virtual void on_verify_cert_failed(X509*, std::string, std::string, int);
       virtual void on_valid_cert_added (X509*, std::string);
 #endif
     private: // Log::Listener

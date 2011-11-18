@@ -145,7 +145,8 @@ file :: ensure_dir_exists (const StringView& dirname_sv)
     if (cmd == EX_BIT)
       if (chmod(dirname.c_str(), 0740))
       {
-        Log::add_urgent_va("Error setting executable bit for directory '%s' : Please check your permissions.", dirname.c_str());
+        Log::add_urgent_va("Error setting executable bit for directory '%s' : "
+                           "Please check your permissions.", dirname.c_str());
         print_file_info(std::cerr,dirname.c_str());
       }
   }
@@ -158,12 +159,7 @@ file :: file_exists (const char * filename)
    return filename && *filename && g_file_test (filename, G_FILE_TEST_EXISTS);
 }
 
-/**
-*** Attempt to make a filename safe for use.
-*** This is done by replacing illegal characters with '_'.
-*** This function assumes the input is UTF8 since gmime uses UTF8 interface.
-*** return value must be g_free'd.
-**/
+
 std::string
 file :: sanitize (const StringView& fname)
 {

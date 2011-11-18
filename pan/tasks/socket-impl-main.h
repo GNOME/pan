@@ -42,7 +42,7 @@
   #include "socket-impl-openssl.h"
 #endif
 
-#include <pan/data-impl/cert-store.h>
+#include <pan/data/cert-store.h>
 #include "socket-impl-gio.h"
 
 namespace
@@ -140,7 +140,7 @@ namespace pan
       std::multimap<std::string, Socket*> socket_map;
 
       // CertStore::Listener
-      virtual void on_verify_cert_failed(X509*, std::string, int);
+      virtual void on_verify_cert_failed(X509*, std::string, std::string, int);
       virtual void on_valid_cert_added (X509*, std::string );
 #endif
       CertStore & store;

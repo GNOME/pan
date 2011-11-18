@@ -40,7 +40,7 @@ extern "C" {
 
 #ifdef HAVE_OPENSSL
 
-  #include <pan/data-impl/cert-store.h>
+  #include <pan/data/cert-store.h>
   #include <openssl/crypto.h>
   #include <openssl/x509.h>
   #include <openssl/x509v3.h>
@@ -62,6 +62,7 @@ namespace
     Data& data;
     Queue& queue;
     Quark server;
+    StringView cert;
     GtkWidget * dialog;
     GtkWidget * address_entry;
     GtkWidget * port_spin;
@@ -108,7 +109,7 @@ namespace
     d->server = server;
 
     int port(119), max_conn(4), age(31*3), rank(1), ssl(0);
-    std::string addr, user, pass;
+    std::string addr, user, pass, cert;
     if (!server.empty()) {
       d->data.get_server_addr (server, addr, port);
       d->data.get_server_auth (server, user, pass);
@@ -116,6 +117,7 @@ namespace
       rank = d->data.get_server_rank (server);
       max_conn = d->data.get_server_limits (server);
       ssl = d->data.get_server_ssl_support(server);
+      cert = d->data.get_server_cert(server);
     }
 
     pan_entry_set_text (d->address_entry, addr);
@@ -192,6 +194,7 @@ namespace
       if (gtk_combo_box_get_active_iter (combo, &iter))
         gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &rank, -1);
       int ssl(0);
+      StringView cert(d->cert);
 #ifdef HAVE_OPENSSL
       combo = GTK_COMBO_BOX (d->ssl_combo);
       if (gtk_combo_box_get_active_iter (combo, &iter))
@@ -220,6 +223,7 @@ namespace
         d->data.set_server_article_expiration_age (d->server, age);
         d->data.set_server_rank (d->server, rank);
         d->data.set_server_ssl_support(d->server, ssl);
+        d->data.set_server_cert(d->server,cert);
         d->data.save_server_info(d->server);
         d->queue.upkeep ();
       }
@@ -371,6 +375,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
 
     // ssl 3.0 option
 #ifdef HAVE_OPENSSL
+    // select ssl/plaintext
     HIG::workarea_add_section_divider (t, &row);
     HIG::workarea_add_section_title (t, &row, _("Security"));
     HIG::workarea_add_section_spacer (t, row, 2);
@@ -656,7 +661,7 @@ namespace
     char buf[4096] ;
 
     if (!selected_server.empty()) {
-      X509* cert = (X509*)store.get_cert_to_server(addr);
+      X509* cert (store.get_cert_to_server(addr));
       if (cert)
       {
         pretty_print_x509(buf,sizeof(buf),addr, cert,false);
@@ -666,9 +671,8 @@ namespace
         GTK_DIALOG_MODAL,
         GTK_MESSAGE_INFO,
         GTK_BUTTONS_CLOSE, buf);
-//        g_snprintf(buf,sizeof(buf), _("Server Certificate for <b>'%s'</b>"), addr.c_str());
-//        gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG(w), "%s", buf);
-//        gtk_window_set_title(GTK_WINDOW(w), buf);
+        g_snprintf(buf,sizeof(buf), _("Server Certificate for <b>'%s'</b>"), addr.c_str());
+        gtk_window_set_title(GTK_WINDOW(w), buf);
         gtk_widget_show_all (w);
         g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
       }
@@ -721,7 +725,7 @@ namespace
   }
 
 
-  /* add a cert from disk, overwriting the current certificate for the selected server */
+  /* add a cert from disk, overwriting the current setting for the selected server */
   void
   cert_add_button_clicked_cb (GtkButton *, gpointer user_data)
   {
@@ -743,7 +747,7 @@ namespace
       PEM_read_X509(fp,&x, 0, 0);
       fclose(fp);
       d->data.get_server_addr(selected_server, addr, port);
-      if (!store.add(x,addr))
+      if (!store.add(x,selected_server))
       {
       _err:
         Log::add_err_va("Error adding certificate of server '%s' to CertStore. Check the console output!", addr.c_str());

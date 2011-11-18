@@ -2096,20 +2096,33 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
 
 #ifdef HAVE_OPENSSL
 void
-GUI :: on_verify_cert_failed(X509* cert, std::string server, int nr)
+GUI :: on_verify_cert_failed(X509* cert, std::string server, std::string cert_name, int nr)
 {
-  if (!cert) return;
-  if (GUI::confirm_accept_new_cert_dialog(get_window(_root),cert,server))
-    if (!_certstore.add(cert, server))
-      Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",server.c_str());
+  std::cerr<<"on verify failed gui ("<<server<<") ("<<cert_name<<")\n";
+  if (!cert || cert_name.empty() || server.empty()) return;
 
+  Quark setme;
+  bool found(_data.find_server_by_hn(server, setme));
+
+  if (GUI::confirm_accept_new_cert_dialog(get_window(_root),cert,server))
+    if (!_certstore.add(cert, setme))
+      Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",server.c_str());
+    else
+    {
+      std::cerr<<"added cert "<<cert<<" to server "<<server<<std::endl;
+
+      if (found)
+      {
+        std::cerr<<"on verify failed gui ("<<server<<") ("<<cert_name<<")\n";
+        _data.set_server_cert(setme, cert_name);
+        _data.save_server_info(setme);
+      }
+    }
 }
 
 void
 GUI :: on_valid_cert_added (X509* cert, std::string server)
 {
-  std::cerr<<"whitelist "<<server<<std::endl;
-
   /* whitelist to make avaible for nntp-pool */
   _certstore.whitelist(server);
 

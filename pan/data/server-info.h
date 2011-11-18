@@ -64,6 +64,8 @@ namespace pan
       virtual void set_server_ssl_support (const Quark& server,
                                     int          ssl) = 0;
 
+      virtual void set_server_cert (const Quark & server, const StringView & cert) = 0;
+
       virtual void save_server_info (const Quark& server) = 0;
 
     public: // accessors
@@ -80,6 +82,8 @@ namespace pan
       virtual std::string get_server_address (const Quark& servername) const = 0;
 
       virtual bool get_server_ssl_support (const Quark & server) const = 0;
+
+      virtual std::string get_server_cert (const Quark & server) const = 0;
 
       /** If set_server_limits() has never been called, 2 is returned. */
       virtual int get_server_limits (const Quark & server) const = 0;

@@ -45,7 +45,7 @@
 #include <pan/data-impl/memchunk.h>
 
 #ifdef HAVE_OPENSSL
-  #include <pan/data-impl/cert-store.h>
+  #include <pan/data/cert-store.h>
   #include <openssl/crypto.h>
   #include <openssl/x509.h>
   #include <openssl/x509v3.h>
@@ -111,29 +111,15 @@ namespace pan
 
       void save_server_properties (DataIO&) const;
 
-      struct Server
-      {
-         std::string username;
-         std::string password;
-         std::string host;
-         std::string newsrc_filename;
-         int port;
-         int article_expiration_age;
-         int max_connections;
-         int rank;
-         int ssl_support;
-         typedef sorted_vector<Quark,true,AlphabeticalQuarkOrdering> groups_t;
-         groups_t groups;
-
-         Server(): port(119), article_expiration_age(31), max_connections(2), rank(1), ssl_support(0) {}
-      };
-
       typedef Loki::AssocVector<Quark,Server> servers_t;
 
       servers_t _servers;
 
       Server* find_server (const Quark& server);
-      const Server* find_server (const Quark& server) const;
+
+    public:
+      virtual const Server* find_server (const Quark& server) const;
+      virtual bool find_server_by_hn (const Quark& server, Quark& setme) const;
 
     public: // mutators
 
@@ -156,6 +142,8 @@ namespace pan
       virtual void set_server_rank (const Quark& server, int rank);
 
       virtual void set_server_ssl_support (const Quark& server, int ssl);
+
+      virtual void set_server_cert (const Quark & server, const StringView & cert);
 
       virtual void set_server_article_expiration_age  (const Quark  & server,
                                                        int            days);
@@ -182,6 +170,8 @@ namespace pan
       virtual std::string get_server_address (const Quark& servername) const;
 
       virtual bool get_server_ssl_support (const Quark & server) const;
+
+      virtual std::string get_server_cert (const Quark & server) const;
 
       virtual int get_server_rank (const Quark& server) const;
 

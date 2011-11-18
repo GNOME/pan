@@ -350,7 +350,7 @@ NNTP_Pool :: idle_upkeep ()
 
 #ifdef HAVE_OPENSSL
 void
-NNTP_Pool:: on_verify_cert_failed(X509* cert, std::string server, int nr)
+NNTP_Pool:: on_verify_cert_failed(X509* cert, std::string server, std::string cert_name, int nr)
 {
 //  abort_tasks();
 }

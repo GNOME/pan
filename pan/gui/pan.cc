@@ -42,7 +42,7 @@ extern "C" {
   #include <pan/tasks/socket-impl-openssl.h>
 #endif
 
-#include <pan/data-impl/cert-store.h>
+#include <pan/data/cert-store.h>
 #include <pan/tasks/socket-impl-gio.h>
 #include <pan/tasks/socket-impl-main.h>
 #include <pan/tasks/task-groups.h>

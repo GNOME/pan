@@ -29,7 +29,7 @@
 #include <pan/tasks/socket-impl-main.h>
 
 #ifdef HAVE_OPENSSL
-  #include <pan/data-impl/cert-store.h>
+  #include <pan/data/cert-store.h>
 #endif
 
 namespace pan
@@ -89,7 +89,7 @@ namespace pan
 #ifdef HAVE_OPENSSL
     private:
       // CertStore::Listener
-      virtual void on_verify_cert_failed (X509*, std::string, int) ;
+      virtual void on_verify_cert_failed (X509*, std::string, std::string, int) ;
       virtual void on_valid_cert_added (X509*, std::string );
 #endif
     private:

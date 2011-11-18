@@ -95,7 +95,7 @@ extern "C" {
 #include <pan/usenet-utils/gnksa.h>
 #include "socket-impl-openssl.h"
 #include "socket-impl-main.h"
-#include <pan/data-impl/cert-store.h>
+#include <pan/data/cert-store.h>
 
 using namespace pan;
 
@@ -372,7 +372,8 @@ namespace
   }
 
 
-  int ssl_handshake(GIOChannel *handle, CertStore::Listener* listener, CertStore* cs, std::string host, SSL_SESSION* session, bool rehandshake)
+  int ssl_handshake(GIOChannel *handle, CertStore::Listener* listener,
+                    CertStore* cs, std::string host, SSL_SESSION* session, bool rehandshake)
   {
 
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
@@ -382,11 +383,13 @@ namespace
     const char *errstr;
 
     /* init custom data for callback */
-    mydata_t mydata;// = new mydata_t();
+    mydata_t mydata;
     mydata.ctx = chan->ctx;
     mydata.cs = cs;
     mydata.ignore_all = 0;
     mydata.l = listener;
+    /* build cert name from scratch or from Server* */
+    mydata.cert_name = CertStore::build_cert_name(host);
     mydata.server = host;
     SSL_set_ex_data(chan->ssl, SSL_get_fd(chan->ssl), &mydata);
 
@@ -808,7 +811,7 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 }
 
 void
-GIOChannelSocketSSL :: on_verify_cert_failed (X509* cert, std::string server, int nr)
+GIOChannelSocketSSL :: on_verify_cert_failed (X509* cert, std::string server, std::string cert_name, int nr)
 {
   if (!_certstore.in_blacklist(server)) _certstore.blacklist(server);
 }

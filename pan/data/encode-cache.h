@@ -34,14 +34,11 @@ namespace pan
   class StringView;
 
   /**
-   * A disk cache for binary attachments.
+   * A disk cache for binary attachments to be yenc-encoded
    *
-   * This allows a cache to be set to a certain maximum size, where
-   * the oldest articles will be aged out when the cache is full.
-   *
-   * It also has a lock/unlock mechanism to allow the cache to grow
+   * It has a lock/unlock mechanism to allow the cache to grow
    * past its limit briefly to allow large multipart articles' pieces
-   * to all be held at once (for decoding).
+   * to all be held at once (for encoding).
    *
    * FIXME: This should probably be an interface class implemented in
    * data-impl in the same way profiles was.

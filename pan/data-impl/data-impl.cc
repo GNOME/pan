@@ -65,6 +65,7 @@ DataImpl :: DataImpl (bool unit_test, int cache_megs, DataIO * io):
   ProfilesImpl (*io),
   _cache (get_cache_path(), cache_megs),
   _encode_cache (get_encode_cache_path(), cache_megs),
+  _certstore(*this),
   _unit_test (unit_test),
   _data_io (io),
   _descriptions_loaded (false),
