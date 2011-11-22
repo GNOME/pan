@@ -347,7 +347,7 @@ main (int argc, char *argv[])
     WorkerPool worker_pool (4, true);
 
     // init the socket creator
-    SocketCreator socket_creator(certstore);
+    SocketCreator socket_creator(data, certstore);
 
     Queue queue (data, data, &socket_creator, certstore, worker_pool,
                  prefs.get_flag ("work-online", true),

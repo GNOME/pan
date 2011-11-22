@@ -121,7 +121,7 @@ namespace pan
     private Socket::Creator::Listener
   {
     public:
-      SocketCreator (CertStore&);
+      SocketCreator (Data&, CertStore&);
       virtual ~SocketCreator ();
 
 
@@ -144,6 +144,7 @@ namespace pan
       virtual void on_valid_cert_added (X509*, std::string );
 #endif
       CertStore & store;
+      Data& data;
 
     public:
       virtual void create_socket (const StringView & host,

@@ -280,14 +280,13 @@ NNTP_Pool :: request_nntp (WorkerPool& threadpool)
   {
     std::string address;
     int port;
-
-    if (_server_info.get_server_addr (_server, address, port))
-      if (!_certstore.in_blacklist(address))
-      {
-        ++_pending_connections;
-        const bool ssl(_server_info.get_server_ssl_support(_server));
-        _socket_creator->create_socket (address, port, threadpool, this, ssl);
-      }
+    _server_info.get_server_addr (_server, address, port);
+    if (!_certstore.in_blacklist(_server))
+    {
+      ++_pending_connections;
+      const bool ssl(_server_info.get_server_ssl_support(_server));
+      _socket_creator->create_socket (address, port, threadpool, this, ssl);
+    }
   }
 }
 
@@ -352,13 +351,11 @@ NNTP_Pool :: idle_upkeep ()
 void
 NNTP_Pool:: on_verify_cert_failed(X509* cert, std::string server, std::string cert_name, int nr)
 {
-//  abort_tasks();
 }
 
 void
 NNTP_Pool :: on_valid_cert_added (X509* cert, std::string server)
 {
-
 }
 #endif
 

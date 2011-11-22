@@ -20,6 +20,9 @@
 #ifndef __Pan_Macros_h__
 #define __Pan_Macros_h__
 
+#define STD_SSL_PORT 563
+#define STD_NNTP_PORT 119
+
 /**
 ***  foreach
 **/

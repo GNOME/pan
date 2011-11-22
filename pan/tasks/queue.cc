@@ -338,9 +338,7 @@ Queue :: process_task (Task * task)
     const Task::State::unique_servers_t& servers (state._servers);
     foreach_const (Task::State::unique_servers_t, servers, it)
     {
-      std::string addr; int port;
-      _server_info.get_server_addr(*it, addr, port);
-      if (_certstore.in_blacklist(addr)) continue;
+      if (_certstore.in_blacklist(*it)) continue;
       get_pool(*it).request_nntp (_worker_pool);
     }
 

@@ -55,6 +55,7 @@ using namespace pan;
 *************  EDIT DIALOG
 ************/
 
+
 namespace
 {
   struct ServerEditDialog
@@ -99,6 +100,17 @@ namespace
     gtk_adjustment_set_value (a, i);
   }
 
+  void ssl_changed_cb(GtkComboBox* w, ServerEditDialog* d)
+  {
+    int ssl(0);
+#ifdef HAVE_OPENSSL
+    GtkTreeIter iter;
+    if (gtk_combo_box_get_active_iter (w, &iter))
+      gtk_tree_model_get (gtk_combo_box_get_model(w), &iter, 1, &ssl, -1);
+    pan_spin_button_set (d->port_spin, ssl==0 ? STD_NNTP_PORT : STD_SSL_PORT);
+#endif
+  }
+
   void
   edit_dialog_populate (Data&, const Quark& server, ServerEditDialog * d)
   {
@@ -108,7 +120,7 @@ namespace
 
     d->server = server;
 
-    int port(119), max_conn(4), age(31*3), rank(1), ssl(0);
+    int port(STD_NNTP_PORT), max_conn(4), age(31*3), rank(1), ssl(0);
     std::string addr, user, pass, cert;
     if (!server.empty()) {
       d->data.get_server_addr (server, addr, port);
@@ -394,6 +406,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     }
 
     d->ssl_combo = w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
+    g_signal_connect(w, "changed", G_CALLBACK(ssl_changed_cb), d);
     g_object_unref (G_OBJECT(store));
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
     gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);

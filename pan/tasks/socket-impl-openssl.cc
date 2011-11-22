@@ -112,7 +112,7 @@ extern void* p_freeaddrinfo;
 
 #ifdef HAVE_OPENSSL // without libssl this class is just a stub....
 
-GIOChannelSocketSSL :: GIOChannelSocketSSL (SSL_CTX* ctx, CertStore& cs):
+GIOChannelSocketSSL :: GIOChannelSocketSSL (const Quark& server, SSL_CTX* ctx, CertStore& cs):
    _channel (0),
    _tag_watch (0),
    _tag_timeout (0),
@@ -122,7 +122,8 @@ GIOChannelSocketSSL :: GIOChannelSocketSSL (SSL_CTX* ctx, CertStore& cs):
    _io_performed (false),
    _ctx(ctx),
    _certstore(cs),
-   _rehandshake(false)
+   _rehandshake(false),
+   _server(server)
 {
    cs.add_listener(this);
    _session = cs.get_session();
@@ -299,7 +300,7 @@ GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
 
   _certstore.remove_listener(this);
 
-  std::cerr << LINE_ID << " destroying socket " << this <<std::endl;
+//  std::cerr << LINE_ID << " destroying socket " << this <<std::endl;
 
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
@@ -372,7 +373,7 @@ namespace
   }
 
 
-  int ssl_handshake(GIOChannel *handle, CertStore::Listener* listener,
+  int ssl_handshake(const Quark& server, GIOChannel *handle, CertStore::Listener* listener,
                     CertStore* cs, std::string host, SSL_SESSION* session, bool rehandshake)
   {
 
@@ -390,7 +391,7 @@ namespace
     mydata.l = listener;
     /* build cert name from scratch or from Server* */
     mydata.cert_name = CertStore::build_cert_name(host);
-    mydata.server = host;
+    mydata.server = server;
     SSL_set_ex_data(chan->ssl, SSL_get_fd(chan->ssl), &mydata);
 
     if (session) ret = SSL_set_session(chan->ssl, session);
@@ -802,7 +803,8 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
   gchan->read_buf = g_string_sized_new(4096*128);
 
   int ret;
-  if ((ret = ssl_handshake(gchan, this, &_certstore, _host, _session, _rehandshake)) == 0)
+  if ((ret = ssl_handshake(_server, gchan, this, &_certstore,
+                           _host, _session, _rehandshake)) == 0)
   {
     g_io_channel_set_flags (handle, G_IO_FLAG_NONBLOCK, 0);
     return gchan;
@@ -811,7 +813,8 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 }
 
 void
-GIOChannelSocketSSL :: on_verify_cert_failed (X509* cert, std::string server, std::string cert_name, int nr)
+GIOChannelSocketSSL :: on_verify_cert_failed (X509* cert, std::string server,
+                                              std::string cert_name, int nr)
 {
   if (!_certstore.in_blacklist(server)) _certstore.blacklist(server);
 }

@@ -66,11 +66,13 @@ namespace pan
     std::multimap<std::string, Socket*>& socket_map;
     SSL_CTX * context;
     CertStore& store;
-    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l, bool ssl, SSL_CTX* ctx, CertStore& cs, std::multimap<std::string, Socket*>& m):
-      host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), context(ctx), store(cs), socket_map(m) {}
+    const Quark server;
+    ThreadWorker (const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l,
+                  bool ssl, SSL_CTX* ctx, CertStore& cs, std::multimap<std::string, Socket*>& m):
+      server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), context(ctx), store(cs), socket_map(m) {}
 #else
-    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l):
-      host(h), port(p), listener(l), ok(false), socket(0), use_ssl(false) {}
+    ThreadWorker (const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l):
+      server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(false) {}
 #endif
 
     void do_work ()
@@ -78,7 +80,7 @@ namespace pan
       #ifdef HAVE_OPENSSL
         if (use_ssl)
         {
-          socket = new GIOChannelSocketSSL (context, store);
+          socket = new GIOChannelSocketSSL (server, context, store);
           socket_map.insert(std::pair<std::string, Socket*>(host, socket));
         }
         else
@@ -124,8 +126,9 @@ namespace
 }
 #endif
 
-SocketCreator :: SocketCreator(CertStore& cs) : store(cs)
+SocketCreator :: SocketCreator(Data& d, CertStore& cs) : data(d), store(cs)
 {
+
 #ifdef HAVE_OPENSSL
   SSL_library_init();
   SSL_load_error_strings();
@@ -161,14 +164,14 @@ SocketCreator :: create_socket (const StringView & host,
                                 Socket::Creator::Listener * listener,
                                 bool               use_ssl)
 {
-
-    if (store.in_blacklist(host.str)) return;
-
+    Quark server;
+    data.find_server_by_hn(host, server);
+    if (store.in_blacklist(server)) return;
     ensure_module_init ();
 #ifdef HAVE_OPENSSL
-    ThreadWorker * w = new ThreadWorker (host, port, listener, use_ssl, ssl_ctx, store, socket_map);
+    ThreadWorker * w = new ThreadWorker (server, host, port, listener, use_ssl, ssl_ctx, store, socket_map);
 #else
-    ThreadWorker * w = new ThreadWorker (host, port, listener);
+    ThreadWorker * w = new ThreadWorker (server, host, port, listener);
 #endif
     threadpool.push_work (w, w, true);
 }
@@ -176,9 +179,7 @@ SocketCreator :: create_socket (const StringView & host,
 #ifdef HAVE_OPENSSL
 void
 SocketCreator :: on_verify_cert_failed(X509* cert, std::string server, std::string cert_name, int nr)
-{
-//    delete_all_socks(socket_map, server);
-}
+{}
 
 void
 SocketCreator :: on_valid_cert_added (X509* cert, std::string server)

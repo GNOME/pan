@@ -1312,7 +1312,9 @@ bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, X509* cert, const
   bool ret(false);
 
   char buf[4096];
-  pretty_print_x509(buf,sizeof(buf), server, cert,true);
+  std::string host; int port;
+  _data.get_server_addr(server,host,port);
+  pretty_print_x509(buf,sizeof(buf), host, cert,true);
   gdk_threads_enter();
     GtkWidget * d = gtk_message_dialog_new (
       parent,
@@ -2098,25 +2100,15 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
 void
 GUI :: on_verify_cert_failed(X509* cert, std::string server, std::string cert_name, int nr)
 {
-  std::cerr<<"on verify failed gui ("<<server<<") ("<<cert_name<<")\n";
   if (!cert || cert_name.empty() || server.empty()) return;
 
-  Quark setme;
-  bool found(_data.find_server_by_hn(server, setme));
-
   if (GUI::confirm_accept_new_cert_dialog(get_window(_root),cert,server))
-    if (!_certstore.add(cert, setme))
+    if (!_certstore.add(cert, server))
       Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",server.c_str());
     else
     {
-      std::cerr<<"added cert "<<cert<<" to server "<<server<<std::endl;
-
-      if (found)
-      {
-        std::cerr<<"on verify failed gui ("<<server<<") ("<<cert_name<<")\n";
-        _data.set_server_cert(setme, cert_name);
-        _data.save_server_info(setme);
-      }
+      _data.set_server_cert(server, cert_name);
+      _data.save_server_info(server);
     }
 }
 

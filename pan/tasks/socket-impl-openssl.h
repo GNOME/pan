@@ -52,7 +52,7 @@ namespace pan
   {
     public:
       virtual ~GIOChannelSocketSSL ();
-      GIOChannelSocketSSL (SSL_CTX* ctx, CertStore& cs);
+      GIOChannelSocketSSL (const Quark&, SSL_CTX* ctx, CertStore& cs);
 
       virtual bool open (const StringView& address, int port, std::string& setme_err);
       virtual void write_command (const StringView& chars, Socket::Listener *);
@@ -72,6 +72,7 @@ namespace pan
       CertStore& _certstore;
       SSL_SESSION* _session;
       bool _rehandshake;
+      Quark _server;
 
     public:
       void set_rehandshake (bool setme) { _rehandshake = setme; }

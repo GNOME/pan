@@ -69,7 +69,6 @@ namespace pan
       /* accept user-override on self-signed certificates */
       if (err == X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN ||
           err == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT ||
-          err == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT ||
           err == X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY)
         mydata->cs->verify_failed(cert, mydata->server, mydata->cert_name, err);
       else
@@ -139,12 +138,9 @@ namespace pan
       _cert_to_server.erase(server);
       _certs.erase(server);
       remove_hard(server);
-//      SSL_CTX_set_cert_store(_ctx, X509_STORE_new());
       Quark setme;
-      _data.find_server_by_hn(server, setme);
-      _data.set_server_cert(setme, "");
-      _data.save_server_info(setme);
-//      init_me();
+      _data.set_server_cert(server, "");
+      _data.save_server_info(server);
     }
 
   }
@@ -175,8 +171,8 @@ namespace pan
 
     std::string addr; int port;
     _data.get_server_addr(server, addr, port);
-    _certs.insert(addr);
-    _cert_to_server[addr] = cert;
+    _certs.insert(server);
+    _cert_to_server[server] = cert;
 
     const char* buf(build_cert_name(addr.c_str()).c_str());
 

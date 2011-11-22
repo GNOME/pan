@@ -180,7 +180,7 @@ namespace pan
          typedef sorted_vector<Quark,true,AlphabeticalQuarkOrdering> groups_t;
          groups_t groups;
 
-         Server(): port(119), article_expiration_age(31), max_connections(2), rank(1), ssl_support(0) {}
+         Server(): port(STD_NNTP_PORT), article_expiration_age(31), max_connections(2), rank(1), ssl_support(0) {}
       };
 
     protected:

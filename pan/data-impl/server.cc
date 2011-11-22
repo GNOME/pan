@@ -377,7 +377,7 @@ DataImpl :: load_server_properties (const DataIO& source)
     s.host = kv["host"];
     s.username = kv["username"];
     s.password = kv["password"];
-    s.port = to_int (kv["port"], 119);
+    s.port = to_int (kv["port"], STD_NNTP_PORT);
     s.max_connections = to_int (kv["connection-limit"], 2);
     s.article_expiration_age = to_int(kv["expire-articles-n-days-old"], 31);
     s.rank = to_int(kv["rank"], 1);
