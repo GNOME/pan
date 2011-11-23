@@ -105,6 +105,14 @@ namespace pan
         std::cerr<<"#################\n\n";
       }
 
+      void dump_certs()
+      {
+        std::cerr<<"#################\n";
+        foreach_const(certs_t, _certs, it)
+          std::cerr<<*it<<"\n";
+        std::cerr<<"#################\n\n";
+      }
+
     private:
       void remove_hard(const Quark&);
 
@@ -112,7 +120,7 @@ namespace pan
 
       bool add(X509*, const Quark&) ;
       void remove (const Quark&);
-      bool exist (const Quark& q) { return (_certs.count(q) > 0); }
+      bool exist (const Quark& q) { /*dump_certs(); std::cerr<<"q "<<q<<"\n\n"; */ return (_certs.count(q) > 0); }
 
       static std::string build_cert_name(std::string host);
 
@@ -133,7 +141,6 @@ namespace pan
       /* notify functions for listener list */
       void verify_failed (X509* c, std::string server, std::string cn, int nr)
       {
-        std::cerr<<"verify failed "<<server<<" "<<cn<<"\n";
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; ++it)
           (*it)->on_verify_cert_failed (c, server, cn, nr);
       }

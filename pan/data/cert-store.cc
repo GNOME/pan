@@ -97,8 +97,8 @@ namespace pan
       PEM_read_X509(fp,&x, 0, 0);
       fclose(fp);
       setme.insert(x);
-      _certs.insert(s->host);
-      _cert_to_server[s->host] = x;
+      _certs.insert(*it);
+      _cert_to_server[*it] = x;
       ++cnt;
     }
 

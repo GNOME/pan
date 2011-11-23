@@ -383,7 +383,7 @@ DataImpl :: load_server_properties (const DataIO& source)
     s.rank = to_int(kv["rank"], 1);
     int ssl(to_int(kv["use-ssl"], 0));
     s.ssl_support = ssl;
-    if (ssl == 1) s.cert = kv["cert"];
+    s.cert = kv["cert"];
     s.newsrc_filename = kv["newsrc"];
     if (s.newsrc_filename.empty()) { // set a default filename
       std::ostringstream o;

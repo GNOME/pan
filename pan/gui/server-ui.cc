@@ -334,7 +334,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
 
     // max connections
     const int DEFAULT_MAX_PER_SERVER (4);
-    a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 0.0, DEFAULT_MAX_PER_SERVER, 1.0, 1.0, 0.0));
+    a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 1.0, DEFAULT_MAX_PER_SERVER, 1.0, 1.0, 0.0));
     d->connection_limit_spin = w = gtk_spin_button_new (GTK_ADJUSTMENT(a), 1.0, 0u);
     HIG::workarea_add_row (t, &row, _("Connection _Limit:"), w, NULL);
 
@@ -674,7 +674,7 @@ namespace
     char buf[4096] ;
 
     if (!selected_server.empty()) {
-      X509* cert (store.get_cert_to_server(addr));
+      X509* cert (store.get_cert_to_server(selected_server));
       if (cert)
       {
         pretty_print_x509(buf,sizeof(buf),addr, cert,false);
@@ -684,7 +684,7 @@ namespace
         GTK_DIALOG_MODAL,
         GTK_MESSAGE_INFO,
         GTK_BUTTONS_CLOSE, buf);
-        g_snprintf(buf,sizeof(buf), _("Server Certificate for <b>'%s'</b>"), addr.c_str());
+        g_snprintf(buf,sizeof(buf), _("Server Certificate for '%s'"), addr.c_str());
         gtk_window_set_title(GTK_WINDOW(w), buf);
         gtk_widget_show_all (w);
         g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
@@ -714,7 +714,7 @@ namespace
         GtkTreeIter iter;
         gtk_list_store_append (d->servers_store, &iter);
         gtk_list_store_set (d->servers_store, &iter,
-                            COL_FLAG, store.exist(addr),
+                            COL_FLAG, store.exist(server),
                             COL_HOST, addr.c_str(),
                             COL_DATA, server.c_str(),
                             -1);
