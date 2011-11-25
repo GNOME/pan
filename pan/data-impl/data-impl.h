@@ -309,6 +309,19 @@ namespace pan
 
     private: // implementation
 
+//      struct Headers
+//      {
+//        struct Listener
+//        {
+//          virtual ~Listener() {}
+//          /* functions that other listeners listen on */
+//          virtual void on_articles_plus (const Quark&, const quarks_t&) = 0;
+//        };
+//      };
+
+//      typedef std::set<Listener*> listeners_t;
+//      listeners_t _header_listeners;
+
       /** 'article' MUST have been allocated by GroupHeaders::alloc_new_article()!! */
       void load_article (const Quark& g, Article * article, const StringView& references);
 

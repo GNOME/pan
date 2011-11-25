@@ -146,35 +146,37 @@ namespace
   }
 
 /* ****** Status Icon **********************************************************/
-
-namespace
-{
-  enum StatusIcons
+  namespace
   {
-    ICON_STATUS_ONLINE,
-    ICON_STATUS_OFFLINE,
-    ICON_STATUS_ACTIVE,
-    ICON_STATUS_QUEUE_EMPTY,
-    ICON_STATUS_ERROR,
-    ICON_STATUS_IDLE,
-    ICON_NUM_STATUS_ICONS
-  };
+    enum StatusIcons
+    {
+      ICON_STATUS_ONLINE,
+      ICON_STATUS_OFFLINE,
+      ICON_STATUS_ACTIVE,
+      ICON_STATUS_QUEUE_EMPTY,
+      ICON_STATUS_ERROR,
+      ICON_STATUS_IDLE,
+      ICON_STATUS_NEW_ARTICLES,
+      ICON_NUM_STATUS_ICONS
+    };
 
-  struct Icon {
-  const guint8 * pixbuf_txt;
-  GdkPixbuf * pixbuf;
-  } status_icons[ICON_NUM_STATUS_ICONS] = {
-    { icon_status_online,          0 },
-    { icon_status_offline,         0 },
-    { icon_status_active,          0 },
-    { icon_status_queue_empty,     0 },
-    { icon_status_error,           0 },
-    { icon_status_idle,            0 }
-  };
-}
+    struct Icon {
+    const guint8 * pixbuf_txt;
+    GdkPixbuf * pixbuf;
+    } status_icons[ICON_NUM_STATUS_ICONS] = {
+      { icon_status_online,          0 },
+      { icon_status_offline,         0 },
+      { icon_status_active,          0 },
+      { icon_status_queue_empty,     0 },
+      { icon_status_error,           0 },
+      { icon_status_idle,            0 },
+      { icon_status_new_articles,    0 }
+    };
+  }
 
-  struct StatusIconListener : public  Prefs::Listener,
-                              public  Queue::Listener
+  struct StatusIconListener : public Prefs::Listener,
+                              public Queue::Listener,
+                              public Data::Listener
   {
 
     static gboolean status_icon_periodic_refresh (gpointer p)
@@ -182,23 +184,26 @@ namespace
       static_cast<StatusIconListener*>(p)->update_status_tooltip();
     }
 
-    StatusIconListener(GtkStatusIcon * i, Prefs& p, Queue& q) : icon(i), prefs(p), queue(q),
-      tasks_active(0), tasks_total(0), is_online(false), blinked_cnt(0)
+    StatusIconListener(GtkStatusIcon * i, GtkWidget* r, Prefs& p, Queue& q, Data& d, bool v) : icon(i), root(r), prefs(p), queue(q), data(d),
+      tasks_active(0), tasks_total(0), is_online(false)
     {
       prefs.add_listener(this);
       queue.add_listener(this);
+      data.add_listener(this);
       update_status_tooltip();
-      status_icon_timeout_tag = g_timeout_add (250, status_icon_periodic_refresh, this);
+      status_icon_timeout_tag = g_timeout_add (500, status_icon_periodic_refresh, this);
     }
 
     ~StatusIconListener()
     {
       prefs.remove_listener(this);
       queue.remove_listener(this);
+      data.remove_listener(this);
       g_source_remove (status_icon_timeout_tag);
     }
 
-    void on_prefs_flag_changed (const StringView &key, bool value)
+    /* prefs::listener */
+    virtual void on_prefs_flag_changed (const StringView &key, bool value)
     {
        if(key == "status-icon")
          gtk_status_icon_set_visible(icon, value);
@@ -218,28 +223,32 @@ namespace
                                   tasks_active, tasks_total, queue.get_speed_KiBps());
       gtk_status_icon_set_tooltip_markup(icon, buf);
     }
-
     void update_status_icon(StatusIcons si)
     {
-      if (si == ICON_STATUS_ONLINE)
-        gtk_status_icon_set_from_stock(icon, GTK_STOCK_CONNECT);
-      else if (si == ICON_STATUS_OFFLINE)
-        gtk_status_icon_set_from_stock(icon, GTK_STOCK_DISCONNECT);
-      else
+      if (si==ICON_STATUS_IDLE)
+      {
+        if (is_online)
+          gtk_status_icon_set_from_pixbuf(icon, status_icons[ICON_STATUS_ONLINE].pixbuf);
+        else
+          gtk_status_icon_set_from_pixbuf(icon, status_icons[ICON_STATUS_OFFLINE].pixbuf);
+      } else
         gtk_status_icon_set_from_pixbuf(icon, status_icons[si].pixbuf);
     }
 
+    /* queue::listener */
     virtual void on_queue_task_active_changed (Queue&, Task&, bool active)
     {
-      if (active) ++tasks_active; else --tasks_active; update_status_tooltip();
+      update_status_tooltip();
     }
     virtual void on_queue_tasks_added (Queue&, int index UNUSED, int count)
     {
-      tasks_total += count; update_status_tooltip();
+      tasks_total += count;
+      update_status_tooltip();
+      update_status_icon(ICON_STATUS_ACTIVE);
     }
     virtual void on_queue_task_removed (Queue&, Task&, int pos UNUSED)
     {
-      --tasks_total;
+      update_status_icon(ICON_STATUS_ACTIVE);
     }
     virtual void on_queue_task_moved (Queue&, Task&, int new_pos UNUSED, int old_pos UNUSED) {}
     virtual void on_queue_connection_count_changed (Queue&, int count) {}
@@ -247,31 +256,54 @@ namespace
     {
       tasks_total = total;
       tasks_active = active;
+      if (tasks_total == 0 || tasks_active == 0)
+      {
+        update_status_icon(ICON_STATUS_IDLE);
+      }
       update_status_tooltip();
     }
+
     virtual void on_queue_online_changed (Queue&, bool online)
     {
       is_online = online;
-      update_status_icon(is_online ? ICON_STATUS_ONLINE : ICON_STATUS_OFFLINE);
+      update_status_icon(ICON_STATUS_IDLE);
       update_status_tooltip();
     }
+
     virtual void on_queue_error (Queue&, const StringView& message)
     {
       update_status_icon(ICON_STATUS_ERROR);
     }
 
+    /* data::listener */
+    virtual void on_group_counts (const Quark&, unsigned long, unsigned long)
+    {
+      update_status_icon(ICON_STATUS_NEW_ARTICLES);
+    }
+
     private:
-      GtkStatusIcon *icon;
       Queue& queue;
       Prefs& prefs;
+      Data& data;
       int tasks_active;
       int tasks_total;
-      int blinked_cnt;
       bool is_online;
       guint status_icon_timeout_tag;
+
+    public:
+      GtkStatusIcon *icon;
+      GtkWidget* root;
   };
 
-  StatusIconListener* _status_icon;
+  static StatusIconListener* _status_icon;
+/* ****** End Status Icon ******************************************************/
+
+  void status_icon_activate (GtkStatusIcon *icon, gpointer data)
+  {
+    gtk_widget_show(GTK_WIDGET(data));
+    gtk_window_deiconify(GTK_WINDOW(data));
+
+  }
 
   static gboolean window_state_event (GtkWidget *widget, GdkEventWindowState *event, gpointer trayIcon)
   {
@@ -284,18 +316,9 @@ namespace
     else if(event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED ||
                                                                   event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
     {
-        gtk_widget_show (GTK_WIDGET(widget));
         gtk_status_icon_set_visible(GTK_STATUS_ICON(trayIcon), FALSE);
     }
     return TRUE;
-  }
-
-
-  void status_icon_activate (GtkStatusIcon *icon, gpointer data)
-  {
-    GtkWindow * window = GTK_WINDOW(data);
-    gtk_widget_show(GTK_WIDGET(window));
-    gtk_window_deiconify(GTK_WINDOW(window));
   }
 
   void status_icon_popup_menu (GtkStatusIcon *icon,
@@ -307,7 +330,7 @@ namespace
     gtk_menu_popup(menu, NULL, NULL, NULL, NULL, button, activation_time);
   }
 
-  void run_pan_with_status_icon (GtkWindow * window, GdkPixbuf * pixbuf, Queue& queue, Prefs & prefs)
+  void run_pan_with_status_icon (GtkWindow * window, GdkPixbuf * pixbuf, Queue& queue, Prefs & prefs, Data& data)
   {
     for (guint i=0; i<ICON_NUM_STATUS_ICONS; ++i)
         status_icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, status_icons[i].pixbuf_txt, FALSE, 0);
@@ -316,16 +339,15 @@ namespace
     GtkWidget * menu = gtk_menu_new ();
     GtkWidget * menu_quit = gtk_image_menu_item_new_from_stock ( GTK_STOCK_QUIT, NULL);
     gtk_status_icon_set_visible(icon, prefs.get_flag("status-icon", false));
-    StatusIconListener* pl = _status_icon = new StatusIconListener(icon, prefs, queue);
+    StatusIconListener* pl = _status_icon = new StatusIconListener(icon, GTK_WIDGET(window), prefs, queue, data, prefs.get_flag("start-minimized", false));
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), menu_quit);
     gtk_widget_show_all(menu);
     g_signal_connect(icon, "activate", G_CALLBACK(status_icon_activate), window);
     g_signal_connect(icon, "popup-menu", G_CALLBACK(status_icon_popup_menu), menu);
     g_signal_connect(menu_quit, "activate", G_CALLBACK(mainloop_quit), NULL);
-//    g_signal_connect (G_OBJECT (window), "window-state-event", G_CALLBACK (window_state_event), icon);
+    g_signal_connect (G_OBJECT (window), "window-state-event", G_CALLBACK (window_state_event), icon);
   }
 
-/* ****** End Status Icon ******************************************************/
 
   void run_pan_in_window (Data          & data,
                           Queue         & queue,
@@ -598,7 +620,7 @@ main (int argc, char *argv[])
       gtk_window_set_title (GTK_WINDOW(window), "Pan");
       gtk_window_set_resizable (GTK_WINDOW(window), true);
       gtk_window_set_default_icon (pixbuf);
-      run_pan_with_status_icon(GTK_WINDOW(window), pixbuf, queue, prefs);
+      run_pan_with_status_icon(GTK_WINDOW(window), pixbuf, queue, prefs, data);
       g_object_unref (pixbuf);
       run_pan_in_window (data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }

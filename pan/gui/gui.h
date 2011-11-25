@@ -83,6 +83,7 @@ namespace pan
       virtual void do_save_articles_to_nzb ();
       virtual void do_print ();
       virtual void do_quit ();
+      virtual void do_quit_mainloop ();
       virtual void do_import_tasks ();
       virtual void do_cancel_latest_task ();
       virtual void do_show_task_window ();
@@ -256,6 +257,9 @@ namespace pan
       static void prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self);
       void prefs_dialog_destroyed (GtkWidget* w);
       int score_int_from_string(std::string val, const char* rules[]);
+
+    public:
+      GtkUIManager* get_ui_manager() { return _ui_manager; }
   };
 }
 

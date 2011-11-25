@@ -543,7 +543,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG::workarea_add_row (t, &row, w, l);
     HIG :: workarea_add_section_title (t, &row, _("Status Icon"));
     HIG :: workarea_add_section_spacer (t, row, 3);
-    w = new_check_button (_("Hide window to system tray instead of closing it"), "status-icon", true, prefs);
+    w = new_check_button (_("Hide window to system tray instead of closing it"), "status-icon", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
+    w = new_check_button (_("Start Pan minimized"),  "start-minimized", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Behavior")));

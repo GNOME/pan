@@ -30,6 +30,7 @@ extern "C" {
 
 }
 #include <pan/general/debug.h>
+#include <pan/general/non-gui.h>
 #include <pan/general/e-util.h>
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
@@ -1758,6 +1759,12 @@ void GUI :: do_quit ()
 {
   gtk_main_quit ();
 }
+
+void GUI :: do_quit_mainloop ()
+{
+  mainloop_quit();
+}
+
 
 void GUI :: do_read_selected_group ()
 {
