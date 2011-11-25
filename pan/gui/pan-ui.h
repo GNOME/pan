@@ -82,7 +82,6 @@ namespace pan
     virtual void do_tip_jar () = 0;
     virtual void do_about_pan () = 0;
     virtual void do_quit () = 0;
-    virtual void do_quit_mainloop () = 0;
 
     virtual void do_show_task_window () = 0;
     virtual void do_show_log_window () = 0;

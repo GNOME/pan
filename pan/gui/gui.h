@@ -83,7 +83,6 @@ namespace pan
       virtual void do_save_articles_to_nzb ();
       virtual void do_print ();
       virtual void do_quit ();
-      virtual void do_quit_mainloop ();
       virtual void do_import_tasks ();
       virtual void do_cancel_latest_task ();
       virtual void do_show_task_window ();

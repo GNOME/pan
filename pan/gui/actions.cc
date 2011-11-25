@@ -110,7 +110,6 @@ namespace
   void do_show_task_window             (GtkAction*) { pan_ui->do_show_task_window(); }
   void do_show_log_window              (GtkAction*) { pan_ui->do_show_log_window(); }
   void do_quit                         (GtkAction*) { pan_ui->do_quit(); }
-  void do_quit_mainloop                (GtkAction*) { pan_ui->do_quit_mainloop(); }
   void do_clear_header_pane            (GtkAction*) { pan_ui->do_clear_header_pane(); }
   void do_clear_body_pane              (GtkAction*) { pan_ui->do_clear_body_pane(); }
   void do_select_all_articles          (GtkAction*) { pan_ui->do_select_all_articles(); }
@@ -366,11 +365,6 @@ namespace
       N_("_Quit"), "<control>Q",
       NULL,
       G_CALLBACK(do_quit) },
-
-    {
-      "quit-mainloop",NULL,
-      NULL, "", NULL,
-      G_CALLBACK(do_quit_mainloop) },
 
     { "select-all-articles", NULL,
       N_("Select _All Articles"), "<control>D",
