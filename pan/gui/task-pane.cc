@@ -648,7 +648,7 @@ namespace
       G_CALLBACK(do_stop) },
 
     { "delete", "Delete",
-      N_("Delete Task"), "",
+      N_("Delete Task"), "Delete",
       N_("Delete Task"),
       G_CALLBACK(do_delete) },
 

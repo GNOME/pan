@@ -95,17 +95,11 @@ namespace
 #endif
 
   bool remember_charsets (true);
-  bool inline_or_bulk (false); // false == bulk
   bool master_reply (true);
 
   void on_remember_charset_toggled (GtkToggleAction * toggle, gpointer)
   {
     remember_charsets = gtk_toggle_action_get_active (toggle);
-  }
-
-  void on_inline_toggled (GtkToggleAction * toggle, gpointer)
-  {
-//    inline_or_bulk = gtk_toggle_action_get_active (toggle);
   }
 
   void on_mr_toggled (GtkToggleAction * toggle, gpointer)
@@ -393,7 +387,7 @@ namespace
   {
 
     { "remove-files", "Delete",
-      N_("Remove from Queue"), "",
+      N_("Remove from Queue"), "Delete",
       N_("Remove from Queue"),
       G_CALLBACK(do_remove_files) },
 
@@ -427,16 +421,6 @@ namespace
       N_("Move to Bottom"),
       G_CALLBACK(do_move_bottom) }
 
-//    { "yenc", NULL,
-//      N_("yEnc-Encode"), "",
-//      N_("yEnc-Encode"),
-//      G_CALLBACK(do_select_encode) },
-//
-//    { "plain", NULL,
-//      N_("No encoding (plain)"), "",
-//      N_("No encoding (plain)"),
-//      G_CALLBACK(do_select_encode) }
-
   };
 
   const GtkToggleActionEntry toggle_entries[] =
@@ -444,7 +428,6 @@ namespace
     { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), 0, N_("Wrap Text"), G_CALLBACK(do_wrap), true },
     { "always-run-editor", 0, N_("Always Run Editor"), 0, 0, G_CALLBACK(do_edit2), false },
     { "remember-charset", 0, N_("Remember Character Encoding for this Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
-//    { "inline-or-bulk", 0, N_("Attachments are inlined with Message"), 0, 0, G_CALLBACK(on_inline_toggled), false },
     { "master-reply", 0, N_("Thread attached replies"), 0, 0, G_CALLBACK(on_mr_toggled), true },
     { "spellcheck", 0, N_("Check _Spelling"), 0, 0, G_CALLBACK(on_spellcheck_toggled), true }
   };
@@ -1007,9 +990,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _queue.add_task (_post_task, Queue::TOP);
   } else {
 
-    //dbg
-    inline_or_bulk = false;
-
     // prepend header for xml file (if one was chosen)
     if (!_save_file.empty())
     {
@@ -1062,7 +1042,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       TaskUpload::Needed n;
       n.mid = out;
 
-      if (!inline_or_bulk)
       {
         TaskUpload * tmp = new TaskUpload(a.subject.to_string(),profile.posting_server,_cache,a,f,new_message_from_ui(UPLOADING));
         tmp->_needed.insert(std::pair<int, TaskUpload::Needed>(1,n));
@@ -1074,7 +1053,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
     /* init taskupload variables before adding the tasks to the queue for processing */
 
-    if (!inline_or_bulk) // bulk upload
     {
       foreach (PostUI::tasks_t, tasks, it)
       {
