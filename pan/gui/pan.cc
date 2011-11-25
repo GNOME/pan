@@ -300,9 +300,16 @@ namespace
 
   void status_icon_activate (GtkStatusIcon *icon, gpointer data)
   {
-    gtk_widget_show(GTK_WIDGET(data));
-    gtk_window_deiconify(GTK_WINDOW(data));
+//    gtk_widget_show(GTK_WIDGET(data));
+//    gtk_window_deiconify(GTK_WINDOW(data));
 
+    GtkWindow * window = GTK_WINDOW(data);
+    if(gtk_window_is_active (window))
+      gtk_widget_hide ((GtkWidget *) window);
+    else {
+      gtk_widget_hide ((GtkWidget *) window); // dirty hack
+      gtk_widget_show ((GtkWidget *) window);
+    }
   }
 
   static gboolean window_state_event (GtkWidget *widget, GdkEventWindowState *event, gpointer trayIcon)
