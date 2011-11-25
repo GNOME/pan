@@ -3,6 +3,9 @@
  * Pan - A Newsreader for Gtk+
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
+ * This file
+ * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the License.
@@ -176,6 +179,7 @@ namespace pan
 
     void add_listener (void * l) {}
     void remove_listener (void * l) {}
+    bool in_blacklist (const Quark& s) { return false; }
 
     struct Listener
     {

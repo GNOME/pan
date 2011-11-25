@@ -221,10 +221,5 @@ const char * fallback_ui_file =
 "    <separator />\n"
 "    <menuitem action='delete-groups-articles' />\n"
 "  </popup>\n"
-"  <popup name='tray-icon-popup'>\n"
-"    <menuitem action='quit-mainloop' />\n"
-"    <separator />\n"
-"    <menuitem action='work-online' />\n"
-"  </popup>\n"
 "\n"
 "</ui>\n";

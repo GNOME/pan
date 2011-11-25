@@ -4,6 +4,9 @@
  * Pan - A Newsreader for Gtk+
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
+ * This file
+ * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the License.
@@ -41,11 +44,7 @@
 #include <pan/general/macros.h>
 #include <pan/general/worker-pool.h>
 #include <pan/general/string-view.h>
-
-#include <pthread.h>
-
 #include "socket-impl-main.h"
-
 
 using namespace pan;
 
@@ -62,11 +61,11 @@ namespace pan
     Socket * socket;
     std::string err;
     bool use_ssl;
+    const Quark server;
 #ifdef HAVE_OPENSSL
     std::multimap<std::string, Socket*>& socket_map;
     SSL_CTX * context;
     CertStore& store;
-    const Quark server;
     ThreadWorker (const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l,
                   bool ssl, SSL_CTX* ctx, CertStore& cs, std::multimap<std::string, Socket*>& m):
       server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), context(ctx), store(cs), socket_map(m) {}
@@ -77,14 +76,14 @@ namespace pan
 
     void do_work ()
     {
-      #ifdef HAVE_OPENSSL
+#ifdef HAVE_OPENSSL
         if (use_ssl)
         {
           socket = new GIOChannelSocketSSL (server, context, store);
           socket_map.insert(std::pair<std::string, Socket*>(host, socket));
         }
         else
-      #endif
+#endif
           socket = new GIOChannelSocket ();
       ok = socket->open (host, port, err);
     }
@@ -166,8 +165,8 @@ SocketCreator :: create_socket (const StringView & host,
 {
     Quark server;
     data.find_server_by_hn(host, server);
-    if (store.in_blacklist(server)) return;
     ensure_module_init ();
+    if (store.in_blacklist(server)) return;
 #ifdef HAVE_OPENSSL
     ThreadWorker * w = new ThreadWorker (server, host, port, listener, use_ssl, ssl_ctx, store, socket_map);
 #else

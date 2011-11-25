@@ -35,6 +35,7 @@ extern "C" {
 #include <sys/time.h>
 };
 
+#include <pan/general/worker-pool.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>

@@ -1,4 +1,4 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GTKSPELL_CFLAGS@ @GTK_CFLAGS@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @OPENSSL_CFLAGS@ -DPANLOCALEDIR=\""$(panlocaledir)"\"
+AM_CPPFLAGS = -I@top_srcdir@ @GTKSPELL_CFLAGS@ @GTK_CFLAGS@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @OPENSSL_CFLAGS@ @LIBNOTIFY_CFLAGS@ -DPANLOCALEDIR=\""$(panlocaledir)"\"
 
 noinst_LIBRARIES = libpangui.a
 
@@ -94,7 +94,7 @@ endif
 
 pan_SOURCES = gui.cc pan.cc $(WINRC)
 pan_LDADD = ./libpangui.a $(WINRCOBJ) ../data-impl/libpandata.a ../tasks/libtasks.a ../data/libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a \
-            ../../uulib/libuu.a @GTKSPELL_LIBS@ @GTK_LIBS@ @GMIME_LIBS@ @GLIB_LIBS@ @OPENSSL_LIBS@
+            ../../uulib/libuu.a @GTKSPELL_LIBS@ @GTK_LIBS@ @GMIME_LIBS@ @GLIB_LIBS@ @OPENSSL_LIBS@ @LIBNOTIFY_LIBS@
 
 if HAVE_WIN32
 pan_LDFLAGS = -mwindows

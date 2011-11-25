@@ -6,5 +6,5 @@ namespace pan
   bool _debug_flag = false;
   bool _debug_verbose_flag = false;
   bool _verbose_flag = false;
-
+  std::ofstream dbg_file;
 }

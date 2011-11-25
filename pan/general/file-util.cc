@@ -30,7 +30,9 @@ extern "C"
   #include <sys/types.h>
   #include <glib.h>
   #include <glib/gi18n.h>
+# ifndef G_OS_WIN32
   #include <pwd.h>
+#endif
 }
 
 #include "debug.h"
@@ -111,6 +113,7 @@ namespace
 
   EX_ERRORS check_executable_bit(const char* d)
   {
+#ifndef G_OS_WIN32
     struct stat sb;
     if (stat (d, &sb) == -1) return EX_NOFILE;
     const char* user(g_get_user_name());
@@ -118,6 +121,9 @@ namespace
     if (sb.st_mode & S_IXUSR || ((sb.st_mode & S_IXGRP ) && pw->pw_gid == sb.st_gid))
       return EX_SUCCESS;
     return EX_BIT;
+#else
+    return EX_SUCCESS;
+#endif
   }
 }
 

@@ -4,6 +4,12 @@
  * Pan - A Newsreader for Gtk+
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
+ * This file
+ * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ * SSL functions : Copyright (C) 2002 vjt (irssi project)
+ * getTimeFromASN1 : Copyright (C) 2003 Jay Case,
+ * taken from : http://www.mail-archive.com/openssl-users@openssl.org/msg33365.html
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the License.
@@ -17,10 +23,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-/** Copyright notice: Some code taken from here :
-  * http://dslinux.gits.kiev.ua/trunk/user/irssi/src/src/core/network-openssl.c
-  * Copyright (C) 2002 vjt (irssi project) */
 
 #ifndef _SSL_UTILS_H_
 #define _SSL_UTILS_H_

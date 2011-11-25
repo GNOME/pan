@@ -3,6 +3,10 @@
  * Pan - A Newsreader for Gtk+
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
+ * This file
+ * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ * SSL functions : Copyright (C) 2002 vjt (irssi project)
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the License.
@@ -23,6 +27,7 @@
 #include <string>
 #include <glib/giochannel.h>
 #include <glib/gstring.h>
+#include <pan/general/debug.h>
 #include <pan/general/quark.h>
 #include <pan/tasks/socket.h>
 #include <pan/tasks/socket-impl-gio.h>
@@ -47,7 +52,7 @@ namespace pan
    */
 #ifdef HAVE_OPENSSL
   class GIOChannelSocketSSL:
-    public GIOChannelSocket,
+    public Socket,
     private CertStore::Listener
   {
     public:
@@ -102,7 +107,7 @@ namespace pan
   {
     public:
       virtual ~GIOChannelSocketSSL ();
-      GIOChannelSocketSSL ();
+      GIOChannelSocketSSL () { debug("SocketSSL stub ctor"); }
 #endif  // HAVE_OPENSSL
   };
 }

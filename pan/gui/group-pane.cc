@@ -503,8 +503,8 @@ namespace
 
   enum
   {
-    GROUP,
-    GROUP_REGEX
+    _GROUP,
+    _GROUP_REGEX
   };
 }
 
@@ -521,9 +521,9 @@ GroupPane :: set_filter (const std::string& search_text, int mode)
   TextMatch match;
   TextMatch * pmatch (0);
   if (!search_text.empty()) {
-    if (mode == GROUP)
+    if (mode == _GROUP)
       match.set (search_text, TextMatch::CONTAINS, false);
-    else if (mode == GROUP_REGEX)
+    else if (mode == _GROUP_REGEX)
       match.set (search_text, TextMatch::REGEX, false);
     pmatch = &match;
   }

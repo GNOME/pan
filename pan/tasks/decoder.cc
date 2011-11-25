@@ -22,7 +22,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 #include <config.h>
-//#include <algorithm>
 #include <cerrno>
 #include <ostream>
 #include <fstream>
@@ -31,6 +30,7 @@ extern "C" {
 #  include <uulib/uudeview.h>
 #  include <glib/gi18n.h>
 };
+#include <pan/general/worker-pool.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>

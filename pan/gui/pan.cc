@@ -21,11 +21,14 @@
 #include <config.h>
 #include <signal.h>
 
+#ifdef HAVE_LIBNOTIFY
+  #include <libnotify/notify.h>
+#endif
+
 extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
   #include <gmime/gmime.h>
-  #include <X11/Xlib.h>
 }
 
 #ifdef G_OS_WIN32
@@ -157,13 +160,13 @@ namespace
       ICON_STATUS_ERROR,
       ICON_STATUS_IDLE,
       ICON_STATUS_NEW_ARTICLES,
-      ICON_NUM_STATUS_ICONS
+      NUM_STATUS_ICONS
     };
 
     struct Icon {
     const guint8 * pixbuf_txt;
     GdkPixbuf * pixbuf;
-    } status_icons[ICON_NUM_STATUS_ICONS] = {
+    } status_icons[NUM_STATUS_ICONS] = {
       { icon_status_online,          0 },
       { icon_status_offline,         0 },
       { icon_status_active,          0 },
@@ -235,6 +238,39 @@ namespace
         gtk_status_icon_set_from_pixbuf(icon, status_icons[si].pixbuf);
     }
 
+    void notify_of(StatusIcons si, const char* body, const char* summary)
+    {
+      if (!prefs.get_flag("use-notify", false)) return;
+#ifdef HAVE_LIBNOTIFY
+      NotifyNotification *notif(0);
+      bool show(false);
+      GError* error(0);
+      notif = notify_notification_new (summary, body, NULL);
+
+      switch (si)
+      {
+        case ICON_STATUS_ERROR:
+
+          show = true;
+          break;
+        case ICON_STATUS_NEW_ARTICLES:
+          show = true;
+          break;
+      }
+
+      notify_notification_set_icon_from_pixbuf(notif, status_icons[si].pixbuf);
+
+      if (show)
+        notify_notification_show (notif, &error);
+
+      if (error) {
+        debug ("Error showing notification: "<<error->message);
+        g_error_free (error);
+      }
+      g_object_unref (notif);
+#endif
+    }
+
     /* queue::listener */
     virtual void on_queue_task_active_changed (Queue&, Task&, bool active)
     {
@@ -259,6 +295,9 @@ namespace
       if (tasks_total == 0 || tasks_active == 0)
       {
         update_status_icon(ICON_STATUS_IDLE);
+        const char* summary = _("Error!");
+        const char* body = _("An error has occured. Maximize Pan to investigate.");
+        notify_of(ICON_STATUS_IDLE, body, summary);
       }
       update_status_tooltip();
     }
@@ -279,6 +318,9 @@ namespace
     virtual void on_group_counts (const Quark&, unsigned long, unsigned long)
     {
       update_status_icon(ICON_STATUS_NEW_ARTICLES);
+      const char* summary = _("New Articles!");
+      const char* body = _("There are new articles available.");
+      notify_of(ICON_STATUS_NEW_ARTICLES, body, summary);
     }
 
     private:
@@ -343,7 +385,7 @@ namespace
 
   void run_pan_with_status_icon (GtkWindow * window, GdkPixbuf * pixbuf, Queue& queue, Prefs & prefs, Data& data)
   {
-    for (guint i=0; i<ICON_NUM_STATUS_ICONS; ++i)
+    for (guint i=0; i<NUM_STATUS_ICONS; ++i)
         status_icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, status_icons[i].pixbuf_txt, FALSE, 0);
 
     GtkStatusIcon * icon = gtk_status_icon_new_from_pixbuf (status_icons[ICON_STATUS_IDLE].pixbuf);
@@ -635,9 +677,15 @@ main (int argc, char *argv[])
       gtk_window_set_default_icon (pixbuf);
       run_pan_with_status_icon(GTK_WINDOW(window), pixbuf, queue, prefs, data);
       g_object_unref (pixbuf);
+#ifdef HAVE_LIBNOTIFY
+      if (!notify_is_initted ())
+        notify_init (_("Pan notification"));
+#endif
       run_pan_in_window (data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
 
+    for (guint i=0; i<NUM_STATUS_ICONS; ++i)
+      g_object_unref(status_icons[i].pixbuf);
     delete _status_icon;
 
     worker_pool.cancel_all_silently ();

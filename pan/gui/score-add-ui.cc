@@ -104,16 +104,16 @@ namespace
   ***
   **/
 
-  enum { ADD, SUBTRACT, ASSIGN, WATCH, IGNORE };
+  enum { _ADD, _SUBTRACT, _ASSIGN, _WATCH, _IGNORE };
 
   GtkTreeModel * score_tree_model_new ()
   {
     struct { int type; const char * str; } items[] = {
-      { ADD,      N_("increase the article's score by") },
-      { SUBTRACT, N_("decrease the article's score by") },
-      { ASSIGN,   N_("set the article's score to") },
-      { WATCH,    N_("watch the article (set its score to 9999)") },
-      { IGNORE,   N_("ignore the article (set its score to -9999)") }
+      { _ADD,      N_("increase the article's score by") },
+      { _SUBTRACT, N_("decrease the article's score by") },
+      { _ASSIGN,   N_("set the article's score to") },
+      { _WATCH,    N_("watch the article (set its score to 9999)") },
+      { _IGNORE,   N_("ignore the article (set its score to -9999)") }
     };
 
     GtkListStore * store = gtk_list_store_new (VALUE_COLS, G_TYPE_STRING, G_TYPE_INT);
@@ -430,11 +430,11 @@ ScoreAddDialog :: add_this_to_scorefile (bool do_rescore)
   const int spin_score (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(_score_spin)));
   value = value_combo_get (GTK_COMBO_BOX(_score_menu));
   switch (value) {
-    case ADD:       assign_flag=false; score =  spin_score; break;
-    case SUBTRACT:  assign_flag=false; score = -spin_score; break;
-    case ASSIGN:    assign_flag=true;  score =  spin_score; break;
-    case WATCH:     assign_flag=true;  score =  9999;       break;
-    case IGNORE:    assign_flag=true;  score = -9999;       break;
+    case _ADD:       assign_flag=false; score =  spin_score; break;
+    case _SUBTRACT:  assign_flag=false; score = -spin_score; break;
+    case _ASSIGN:    assign_flag=true;  score =  spin_score; break;
+    case _WATCH:     assign_flag=true;  score =  9999;       break;
+    case _IGNORE:    assign_flag=true;  score = -9999;       break;
   }
 
   // duration in days
@@ -533,10 +533,10 @@ ScoreAddDialog :: populate (const Quark& group, const Article& a, Mode mode)
   // score
   int score_mode;
   switch (mode) {
-    case WATCH_SUBTHREAD: score_mode = WATCH; break;
+    case WATCH_SUBTHREAD: score_mode = _WATCH; break;
     case PLONK:
-    case IGNORE_SUBTHREAD: score_mode = IGNORE; break;
-    default: score_mode = ADD; break;
+    case IGNORE_SUBTHREAD: score_mode = _IGNORE; break;
+    default: score_mode = _ADD; break;
   }
   gtk_spin_button_set_value (GTK_SPIN_BUTTON(_score_spin), 100);
   value_combo_set (GTK_COMBO_BOX(_score_menu), score_mode);
@@ -582,7 +582,7 @@ namespace
     const int value = value_combo_get (w);
 
     GtkWidget * spin (GTK_WIDGET (spin_gpointer));
-    if (value==WATCH || value==IGNORE)
+    if (value==_WATCH || value==_IGNORE)
       gtk_widget_hide (spin);
     else
       gtk_widget_show (spin);

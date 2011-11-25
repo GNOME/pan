@@ -3,6 +3,10 @@
  * Pan - A Newsreader for Gtk+
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
+ * This file
+ * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ * SSL functions : Copyright (C) 2002 vjt (irssi project)
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; version 2 of the License.
@@ -18,10 +22,6 @@
  */
 
 /* #define DEBUG_SOCKET_IO */
-
-/** Copyright notice: Some code taken from here :
-  * http://dslinux.gits.kiev.ua/trunk/user/irssi/src/src/core/network-openssl.c
-  * Copyright (C) 2002 vjt (irssi project) */
 
 /******
 *******
@@ -100,8 +100,8 @@ extern "C" {
 using namespace pan;
 
 #ifndef G_OS_WIN32
-extern void* p_getaddrinfo;
-extern void* p_freeaddrinfo;
+extern t_getaddrinfo p_getaddrinfo;
+extern t_freeaddrinfo p_freeaddrinfo;
 #endif
 
 /****
@@ -125,8 +125,9 @@ GIOChannelSocketSSL :: GIOChannelSocketSSL (const Quark& server, SSL_CTX* ctx, C
    _rehandshake(false),
    _server(server)
 {
-   cs.add_listener(this);
-   _session = cs.get_session();
+  debug ("GIOChannelSocketSSL ctor " << (void*)this);
+  cs.add_listener(this);
+  _session = cs.get_session();
 }
 
 
@@ -176,7 +177,7 @@ GIOChannelSocketSSL :: create_channel (const StringView& host_in, int port, std:
       server.sin_family = AF_INET;
       server.sin_port = htons(port);
       ++i;
-      err = connect (sockfd,(struct sockaddr*)&server, sizeof(server));
+      err = ::connect (sockfd,(struct sockaddr*)&server, sizeof(server));
     }
 
     if (err) {
@@ -803,12 +804,17 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
   gchan->read_buf = g_string_sized_new(4096*128);
 
   int ret;
+#ifndef G_OS_WIN32
   if ((ret = ssl_handshake(_server, gchan, this, &_certstore,
                            _host, _session, _rehandshake)) == 0)
   {
     g_io_channel_set_flags (handle, G_IO_FLAG_NONBLOCK, 0);
     return gchan;
   }
+#else
+  while (ssl_handshake(_server, gchan, this, &_certstore,_host, _session, _rehandshake)!=0) ;
+  return gchan;
+#endif
   return 0;
 }
 
