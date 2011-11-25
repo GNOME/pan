@@ -185,7 +185,7 @@ namespace
     }
 
     StatusIconListener(GtkStatusIcon * i, GtkWidget* r, Prefs& p, Queue& q, Data& d, bool v) : icon(i), root(r), prefs(p), queue(q), data(d),
-      tasks_active(0), tasks_total(0), is_online(false)
+      tasks_active(0), tasks_total(0), is_online(false), minimized(v)
     {
       prefs.add_listener(this);
       queue.add_listener(this);
@@ -288,6 +288,7 @@ namespace
       int tasks_active;
       int tasks_total;
       bool is_online;
+      bool minimized;
       guint status_icon_timeout_tag;
 
     public:
@@ -367,7 +368,8 @@ namespace
 
       GUI gui (data, queue, prefs, group_prefs);
       gtk_container_add (GTK_CONTAINER(window), gui.root());
-      gtk_widget_show (GTK_WIDGET(window));
+      const bool minimized(prefs.get_flag("start-minimized", false));
+      if (!minimized) gtk_widget_show (GTK_WIDGET(window));
 
       const quarks_t servers (data.get_servers ());
       if (servers.empty())
