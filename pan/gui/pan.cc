@@ -283,7 +283,6 @@ namespace
 
     private:
       Queue& queue;
-      Prefs& prefs;
       Data& data;
       int tasks_active;
       int tasks_total;
@@ -292,6 +291,7 @@ namespace
       guint status_icon_timeout_tag;
 
     public:
+      Prefs& prefs;
       GtkStatusIcon *icon;
       GtkWidget* root;
   };
@@ -315,16 +315,19 @@ namespace
 
   static gboolean window_state_event (GtkWidget *widget, GdkEventWindowState *event, gpointer trayIcon)
   {
+    StatusIconListener* l(static_cast<StatusIconListener*>(trayIcon));
+    if (!l->prefs.get_flag("status-icon",false)) return TRUE;
+
     if(event->changed_mask == GDK_WINDOW_STATE_ICONIFIED && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED ||
                                                              event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
     {
         gtk_widget_hide (GTK_WIDGET(widget));
-        gtk_status_icon_set_visible(GTK_STATUS_ICON(trayIcon), TRUE);
+        gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), TRUE);
     }
     else if(event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED ||
                                                                   event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
     {
-        gtk_status_icon_set_visible(GTK_STATUS_ICON(trayIcon), FALSE);
+        gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), FALSE);
     }
     return TRUE;
   }
@@ -353,7 +356,7 @@ namespace
     g_signal_connect(icon, "activate", G_CALLBACK(status_icon_activate), window);
     g_signal_connect(icon, "popup-menu", G_CALLBACK(status_icon_popup_menu), menu);
     g_signal_connect(menu_quit, "activate", G_CALLBACK(mainloop_quit), NULL);
-    g_signal_connect (G_OBJECT (window), "window-state-event", G_CALLBACK (window_state_event), icon);
+    g_signal_connect (G_OBJECT (window), "window-state-event", G_CALLBACK (window_state_event), pl);
   }
 
 
@@ -369,7 +372,8 @@ namespace
       GUI gui (data, queue, prefs, group_prefs);
       gtk_container_add (GTK_CONTAINER(window), gui.root());
       const bool minimized(prefs.get_flag("start-minimized", false));
-      if (!minimized) gtk_widget_show (GTK_WIDGET(window));
+      if (minimized) gtk_window_iconify (window);
+      gtk_widget_show (GTK_WIDGET(window));
 
       const quarks_t servers (data.get_servers ());
       if (servers.empty())
