@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* #define DEBUG_SOCKET_IO */
+ #define DEBUG_SOCKET_IO
 
 /******
 *******
@@ -41,6 +41,7 @@ extern "C" {
 
 #ifdef G_OS_WIN32
   // this #define is necessary for mingw
+  #undef _WIN32_WINNT
   #define _WIN32_WINNT 0x0501
   #include <ws2tcpip.h>
   #undef gai_strerror
@@ -224,10 +225,9 @@ namespace
 #else
     channel = g_io_channel_win32_new_socket (sockfd);
 #endif
-    if (g_io_channel_get_encoding (channel) != NULL)
-      g_io_channel_set_encoding (channel, NULL, NULL);
+    g_io_channel_set_encoding (channel, NULL, NULL);
     g_io_channel_set_buffered (channel, true);
-    g_io_channel_set_line_term (channel, "\n", 1);
+//    g_io_channel_set_line_term (channel, "\n", 1);
     return channel;
   }
 }
@@ -286,6 +286,7 @@ GIOChannelSocket :: open (const StringView& address, int port, std::string& setm
 {
   _host.assign (address.str, address.len);
   _channel = create_channel (address, port, setme_err);
+  debug("SocketSSL open "<<_channel);
   return _channel != 0;
 }
 
@@ -447,12 +448,7 @@ GIOChannelSocket :: gio_func (GIOChannel   * channel,
   else // G_IO_IN or G_IO_OUT
   {
     const DoResult result = (cond & G_IO_IN) ? do_read () : do_write ();
-    /* I keep reading about crashes due to this check on OSX.
-     * _abort_flag is never set so this won't cause a problem.
-     * could be a bug in gcc 4.2.1.
-     */
-    /*if (_abort_flag)        _listener->on_socket_abort (this);
-    else*/ if (result == IO_ERR)   _listener->on_socket_error (this);
+    if (result == IO_ERR)   _listener->on_socket_error (this);
     else if (result == IO_READ)  set_watch_mode (READ_NOW);
     else if (result == IO_WRITE) set_watch_mode (WRITE_NOW);
   }

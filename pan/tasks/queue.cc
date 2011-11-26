@@ -312,17 +312,19 @@ Queue :: process_task (Task * task)
   }
   else if (state._work == Task::PAUSED)
   {
+    debug("paused");
     TaskUpload* t = dynamic_cast<TaskUpload*>(task);
     if (t)
       give_task_an_upload_slot(t);
 
-    TaskArticle* t2 = dynamic_cast<TaskArticle*>(task);
-    if (t2)
-      give_task_a_download_slot(t2);
+//    TaskArticle* t2 = dynamic_cast<TaskArticle*>(task);
+//    if (t2)
+//      give_task_a_download_slot(t2);
 
   }
   else if (state._work == Task::NEED_DECODER)
   {
+
     if (!_decoder_task)
       give_task_a_decoder (task);
   }
@@ -334,6 +336,7 @@ Queue :: process_task (Task * task)
 
   else while (_is_online && (state._work == Task::NEED_NNTP))
   {
+    debug("online");
     // make the requests...
     const Task::State::unique_servers_t& servers (state._servers);
     foreach_const (Task::State::unique_servers_t, servers, it)
@@ -344,14 +347,21 @@ Queue :: process_task (Task * task)
 
     Quark server;
     if (!find_best_server (servers, server))
+    {
+      debug("break");
       break;
+    }
 
     NNTP * nntp (get_pool(server).check_out ());
     if (!nntp)
+    {
+      debug("break");
       break;
+    }
 
     give_task_a_connection (task, nntp);
   }
+  debug("end loop");
 }
 
 /***

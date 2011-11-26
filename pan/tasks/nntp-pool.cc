@@ -108,6 +108,7 @@ NNTP_Pool :: check_out ()
   NNTP * nntp (0);
 
   foreach (pool_items_t, _pool_items, it) {
+    debug("pool item "<<it->is_checked_in<<" "<<it->nntp);
     if (it->is_checked_in) {
       nntp = it->nntp;
       it->is_checked_in = false;
@@ -164,11 +165,13 @@ NNTP_Pool :: check_in (NNTP * nntp, Health health)
 ***/
 
 void
-NNTP_Pool :: on_socket_created (const StringView  & host UNUSED,
+NNTP_Pool :: on_socket_created (const StringView  & host,
                                 int                 port UNUSED,
                                 bool                ok,
                                 Socket            * socket)
 {
+
+  debug("on socket created "<<host<<" "<<ok<<" "<<socket);
   if (!ok)
   {
     delete socket;

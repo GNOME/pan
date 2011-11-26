@@ -67,6 +67,7 @@ namespace pan
       GIOChannel * _channel;
       unsigned int _tag_watch;
       unsigned int _tag_timeout;
+      unsigned int _handshake_timeout_tag;
       Socket::Listener * _listener;
       GString * _out_buf;
       GString * _in_buf;
@@ -78,9 +79,11 @@ namespace pan
       SSL_SESSION* _session;
       bool _rehandshake;
       Quark _server;
+      bool _done;
 
     public:
       void set_rehandshake (bool setme) { _rehandshake = setme; }
+      bool get_done() { return _done; }
 
     private:
       enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };
@@ -101,6 +104,7 @@ namespace pan
 
     private:
       GIOChannel* ssl_get_iochannel(GIOChannel *handle, gboolean verify=true);
+      static gboolean handshake_cb(gpointer ptr);
 
 #else
   class GIOChannelSocketSSL

@@ -21,7 +21,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* #define DEBUG_SOCKET_IO */
+#define DEBUG_SOCKET_IO
 
 /******
 *******
@@ -36,6 +36,10 @@
 extern "C" {
   #include <unistd.h>
   #include <glib/gi18n.h>
+  #include <errno.h>
+  #include <fcntl.h>
+  #include <sys/time.h>
+  #include <sys/types.h>
 }
 
 #include <pan/usenet-utils/ssl-utils.h>
@@ -46,8 +50,10 @@ extern "C" {
 
 #ifdef G_OS_WIN32
   // this #define is necessary for mingw
+  #undef _WIN32_WINNT
   #define _WIN32_WINNT 0x0501
   #include <ws2tcpip.h>
+  #include <winsock2.h>
   #undef gai_strerror
 
   #define gai_strerror(i) gai_strerror_does_not_link (i)
@@ -116,6 +122,7 @@ GIOChannelSocketSSL :: GIOChannelSocketSSL (const Quark& server, SSL_CTX* ctx, C
    _channel (0),
    _tag_watch (0),
    _tag_timeout (0),
+   _handshake_timeout_tag(0),
    _listener (0),
    _out_buf (g_string_new (0)),
    _in_buf (g_string_new (0)),
@@ -123,7 +130,8 @@ GIOChannelSocketSSL :: GIOChannelSocketSSL (const Quark& server, SSL_CTX* ctx, C
    _ctx(ctx),
    _certstore(cs),
    _rehandshake(false),
-   _server(server)
+   _server(server),
+   _done(false)
 {
   debug ("GIOChannelSocketSSL ctor " << (void*)this);
   cs.add_listener(this);
@@ -178,6 +186,7 @@ GIOChannelSocketSSL :: create_channel (const StringView& host_in, int port, std:
       server.sin_port = htons(port);
       ++i;
       err = ::connect (sockfd,(struct sockaddr*)&server, sizeof(server));
+      debug ("connect "<<err<<" "<<i);
     }
 
     if (err) {
@@ -250,14 +259,17 @@ GIOChannelSocketSSL :: create_channel (const StringView& host_in, int port, std:
   GIOChannel * channel (0);
 #ifndef G_OS_WIN32
   channel = g_io_channel_unix_new (sockfd);
+  g_io_channel_set_flags (channel, G_IO_FLAG_NONBLOCK, 0);
 #else
   channel = g_io_channel_win32_new_socket (sockfd);
 #endif
   if (g_io_channel_get_encoding (channel) != 0)
     g_io_channel_set_encoding (channel, 0, 0);
-  g_io_channel_set_buffered (channel, true);
+  g_io_channel_set_buffered (channel,true);
   g_io_channel_set_line_term (channel, "\n", 1);
-  return ssl_get_iochannel(channel);
+  GIOChannel* ret (ssl_get_iochannel(channel));
+  debug ("SocketSSL "<<ret);
+  return ret;
 }
 
 namespace
@@ -291,7 +303,6 @@ namespace
     g_io_channel_unref(chan->giochan);
     SSL_shutdown(chan->ssl);
     SSL_free(chan->ssl);
-//    std::cerr<<"ssl free\n";
     g_free(chan);
   }
 }
@@ -301,10 +312,11 @@ GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
 
   _certstore.remove_listener(this);
 
-//  std::cerr << LINE_ID << " destroying socket " << this <<std::endl;
+  std::cerr << LINE_ID << " destroying socket " << this <<std::endl;
 
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
+  remove_source (_handshake_timeout_tag);
 
   if (_channel)
   {
@@ -358,6 +370,29 @@ GIOChannelSocketSSL :: write_command (const StringView& command, Socket::Listene
 namespace
 {
 
+  static void set_blocking(SSL * ssl, bool val)
+  {
+    int fd, flags;
+    /* SSL_get_rfd returns -1 on error */
+    if(fd = SSL_get_fd(ssl))
+    {
+#ifndef G_OS_WIN32
+      flags = fcntl(fd, F_GETFL);
+      if (!val)
+        flags |= O_NONBLOCK;
+      else
+        flags &= ~O_NONBLOCK;
+      fcntl(fd, F_SETFL, flags);
+    }
+#else
+      u_long block(val ? 0 : 1);
+      ioctlsocket(fd, FIONBIO, &block);
+    }
+#endif
+
+  }
+
+
   static GIOStatus ssl_errno(gint e)
   {
     switch(e)
@@ -394,12 +429,11 @@ namespace
     mydata.cert_name = CertStore::build_cert_name(host);
     mydata.server = server;
     SSL_set_ex_data(chan->ssl, SSL_get_fd(chan->ssl), &mydata);
+    SSL_set_verify(chan->ssl,SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT,0);
 
     if (session) ret = SSL_set_session(chan->ssl, session);
 //    if (rehandshake)
 //    {
-////    SSL_set_verify(ssl,SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT,0);
-//
 //      /* Stop the client from just resuming the un-authenticated session */
 //      SSL_set_session_id_context(chan->ssl, (void *)&s_server_auth_session_id_context, sizeof(s_server_auth_session_id_context));
 //
@@ -414,36 +448,40 @@ namespace
     ret = SSL_connect(chan->ssl);
     if (ret <= 0) {
       err = SSL_get_error(chan->ssl, ret);
+      return ret;
       switch (err) {
         case SSL_ERROR_WANT_READ:
-          return 1;
+          debug("SSL handshake failed: wants to read");
+           if (SSL_pending (chan->ssl)) return 1;
+           return 1;
         case SSL_ERROR_WANT_WRITE:
+          debug("SSL handshake failed: wants to write");
+          if (SSL_pending (chan->ssl)) return 1;
           return 3;
         case SSL_ERROR_ZERO_RETURN:
-//          g_warning("SSL handshake failed: %s", "server closed connection");
+          debug("SSL handshake failed: server closed connection");
           return -1;
         case SSL_ERROR_SYSCALL:
           errstr = ERR_reason_error_string(ERR_get_error());
           if (errstr == NULL && ret == -1)
             errstr = strerror(errno);
-//          g_warning("SSL handshake failed: %s", errstr != NULL ? errstr : "server closed connection unexpectedly");
+          debug("SSL handshake failed: "<<(errstr != NULL ? errstr : "server closed connection unexpectedly"));
           return -1;
         default:
           errstr = ERR_reason_error_string(ERR_get_error());
-//          g_warning("SSL handshake failed: %s", errstr != NULL ? errstr : "unknown SSL error");
+          debug("SSL handshake failed: "<<(errstr != NULL ? errstr : "unknown SSL error"));
           return -1;
       }
     }
 
     cert = SSL_get_peer_certificate(chan->ssl);
     if (!cert) {
-      g_warning("SSL server supplied no certificate");
+      debug("SSL server supplied no certificate");
       return -1;
     }
 
     ret = !chan->verify || ssl_verify(chan->ssl, chan->ctx, host.c_str(), cert);
     X509_free(cert);
-
     return ret ? 0 : -1;
 
   }
@@ -457,9 +495,8 @@ namespace
   {
 
     GIOSSLChannel *chan = (GIOSSLChannel *)handle;
-
     gint err;
-    size_t tmp_size(4096*128);
+    const size_t tmp_size(4096*128);
     char tmp[tmp_size];
     g_string_set_size(g,0);
 
@@ -687,10 +724,8 @@ GIOChannelSocketSSL :: gio_func (GIOChannel   * channel,
 
 gboolean
 GIOChannelSocketSSL :: gio_func (GIOChannel   * channel,
-                              GIOCondition   cond)
+                                 GIOCondition   cond)
 {
-  debug ("gio_func: sock " << this << ", channel " << channel << ", cond " << cond);
-
   set_watch_mode (IGNORE_NOW);
 
   if (_abort_flag)
@@ -704,17 +739,14 @@ GIOChannelSocketSSL :: gio_func (GIOChannel   * channel,
   else // G_IO_IN or G_IO_OUT
   {
     const DoResult result = (cond & G_IO_IN) ? do_read () : do_write ();
-    /* I keep reading about crashes due to this check on OSX.
-     * _abort_flag is never set so this won't cause a problem.
-     * could be a bug in gcc 4.2.1.
-     */
-    /*if (_abort_flag)        _listener->on_socket_abort (this);
-    else*/ if (result == IO_ERR)   _listener->on_socket_error (this);
+    if (result == IO_ERR)   _listener->on_socket_error (this);
     else if (result == IO_READ)  set_watch_mode (READ_NOW);
     else if (result == IO_WRITE) set_watch_mode (WRITE_NOW);
   }
 
-  return false; // set_watch_now(IGNORE) cleared the tag that called this func
+  debug ("gio_func: sock " << this << ", channel " << channel << ", cond " << (cond==G_IO_IN ? "IN" : "OUT"));
+
+  return false; // set_watch_mode(IGNORE) cleared the tag that called this func
 }
 
 namespace
@@ -725,7 +757,8 @@ namespace
 void
 GIOChannelSocketSSL :: set_watch_mode (WatchMode mode)
 {
-  debug ("socket " << this << " calling set_watch_mode " << mode << "; _channel is " << _channel);
+  GIOSSLChannel *chan = (GIOSSLChannel *)_channel;
+  debug ("socket " << this << " calling set_watch_mode " << mode << "; _channel is " << chan->giochan);
   remove_source (_tag_watch);
   remove_source (_tag_timeout);
 
@@ -734,29 +767,28 @@ GIOChannelSocketSSL :: set_watch_mode (WatchMode mode)
   {
     case IGNORE_NOW:
       // don't add any watches
-      debug("channel " << _channel << " setting mode **IGNORE**");
+      debug("channel " << chan->giochan << " setting mode **IGNORE**");
       break;
 
     case READ_NOW:
-      debug("channel " << _channel << " setting mode read");
+      debug("channel " << chan->giochan << " setting mode read");
       cond = (int)G_IO_IN | (int)G_IO_ERR | (int)G_IO_HUP | (int)G_IO_NVAL;
-      _tag_watch = g_io_add_watch (_channel, (GIOCondition)cond, gio_func, this);
+      _tag_watch = g_io_add_watch (chan->giochan, (GIOCondition)cond, gio_func, this);
       _tag_timeout = g_timeout_add (TIMEOUT_SECS*1000, timeout_func, this);
       _io_performed = false;
       break;
 
     case WRITE_NOW:
-      debug("channel " << _channel << " setting mode write");
+      debug("channel " << chan->giochan << " setting mode write");
       cond = (int)G_IO_OUT | (int)G_IO_ERR | (int)G_IO_HUP | (int)G_IO_NVAL;
-      _tag_watch = g_io_add_watch (_channel, (GIOCondition)cond, gio_func, this);
+      _tag_watch = g_io_add_watch (chan->giochan, (GIOCondition)cond, gio_func, this);
       _tag_timeout = g_timeout_add (TIMEOUT_SECS*1000, timeout_func, this);
       _io_performed = false;
       break;
   }
 
-  debug ("set_watch_mode " << mode << ": _tag_watch is now " << _tag_watch);
+  debug ("set_watch_mode " << (mode==READ_NOW?"READ":mode==WRITE_NOW?"WRITE":"IGNORE") << ": _tag_watch is now " << _tag_watch);
 }
-
 
 GIOChannel *
 GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
@@ -804,17 +836,13 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
   gchan->read_buf = g_string_sized_new(4096*128);
 
   int ret;
-#ifndef G_OS_WIN32
-  if ((ret = ssl_handshake(_server, gchan, this, &_certstore,
-                           _host, _session, _rehandshake)) == 0)
+  set_blocking(ssl, true);
+  if (ssl_handshake(_server, gchan, this, &_certstore,_host, _session,_rehandshake) == 0)
   {
-    g_io_channel_set_flags (handle, G_IO_FLAG_NONBLOCK, 0);
+    set_blocking(chan->ssl, false);
     return gchan;
   }
-#else
-  while (ssl_handshake(_server, gchan, this, &_certstore,_host, _session, _rehandshake)!=0) ;
-  return gchan;
-#endif
+  set_blocking(chan->ssl, false);
   return 0;
 }
 

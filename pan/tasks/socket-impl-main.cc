@@ -46,10 +46,19 @@
 #include <pan/general/string-view.h>
 #include "socket-impl-main.h"
 
+#ifdef G_OS_WIN32
+  #undef _WIN32_WINNT
+  #define _WIN32_WINNT 0x0501
+  #include <ws2tcpip.h>
+  #undef gai_strerror
+#endif
+
 using namespace pan;
 
-namespace pan
+namespace
 {
+  const unsigned int TIMEOUT_SECS (10);
+
   struct ThreadWorker : public WorkerPool::Worker,
                         public WorkerPool::Worker::Listener
   {
@@ -73,6 +82,13 @@ namespace pan
     ThreadWorker (const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l):
       server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(false) {}
 #endif
+
+    static gboolean handshake_done_cb(gpointer g)
+    {
+      GIOChannelSocketSSL* ssl (static_cast<GIOChannelSocketSSL*>(g));
+      if (ssl->get_done()) return false;
+      return true;
+    }
 
     void do_work ()
     {
@@ -98,27 +114,47 @@ namespace pan
   };
 }
 
-
 #ifdef HAVE_OPENSSL
+
+// TODO remove this later if it works with GMutex
+#ifdef G_OS_WIN32
+  #define MUTEX_TYPE HANDLE
+  #define MUTEX_LOCK(x) WaitForSingleObject((x), INFINITE)
+  #define MUTEX_UNLOCK(x) ReleaseMutex(x)
+  #define THREAD_ID GetCurrentThreadId( )
+#else
+  #define MUTEX_TYPE Mutex
+  #define MUTEX_LOCK(x) x.lock()
+  #define MUTEX_UNLOCK(x) x.unlock()
+  #define THREAD_ID pthread_self( )
+#endif
+  #define MUTEX_SETUP(x) (x) = new MUTEX_TYPE[CRYPTO_num_locks()];
+  #define MUTEX_CLEANUP(x) delete [] x
 namespace
 {
-  static Mutex* mutex;
+  static MUTEX_TYPE* mutex;
 
   void gio_lock(int mode, int type, const char *file, int line)
   {
     if (mode & CRYPTO_LOCK)
-      mutex[type].lock();
+      MUTEX_LOCK(mutex[type]);//.lock();
     else
-      mutex[type].unlock();
+      MUTEX_UNLOCK(mutex[type]);//.unlock();
   }
 
   void ssl_thread_setup() {
-    mutex = new Mutex[CRYPTO_num_locks()];
+    MUTEX_SETUP(mutex);
+#ifdef G_OS_WIN32
+    for (int i = 0; i < CRYPTO_num_locks(); ++i) mutex[i] = CreateMutex(NULL, FALSE, NULL);
+#endif
     CRYPTO_set_locking_callback(gio_lock);
   }
 
   void ssl_thread_cleanup() {
-    delete [] mutex;
+#ifdef G_OS_WIN32
+    for (int i = 0; i < CRYPTO_num_locks(); ++i) CloseHandle(mutex[i]);
+#endif
+    MUTEX_CLEANUP(mutex);
     CRYPTO_set_locking_callback(0);
   }
 

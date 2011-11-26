@@ -445,6 +445,7 @@ namespace
   }
 }
 
+#undef DEFAULT_CHARSET
 #define DEFAULT_CHARSET  "UTF-8"
 
 void
