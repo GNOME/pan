@@ -798,9 +798,7 @@ namespace
       gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_NO);
       const int response (gtk_dialog_run (GTK_DIALOG (w)));
       gtk_widget_destroy (w);
-
-      d->data.get_server_addr (selected_server, addr, port);
-      store.remove(addr);
+      store.remove(selected_server);
 
       if (response == GTK_RESPONSE_YES)
         sec_tree_view_refresh (d);

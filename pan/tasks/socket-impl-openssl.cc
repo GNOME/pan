@@ -118,7 +118,7 @@ extern t_freeaddrinfo p_freeaddrinfo;
 
 #ifdef HAVE_OPENSSL // without libssl this class is just a stub....
 
-GIOChannelSocketSSL :: GIOChannelSocketSSL (const Quark& server, SSL_CTX* ctx, CertStore& cs):
+GIOChannelSocketSSL :: GIOChannelSocketSSL (ServerInfo& data, const Quark& server, SSL_CTX* ctx, CertStore& cs):
    _channel (0),
    _tag_watch (0),
    _tag_timeout (0),
@@ -131,7 +131,8 @@ GIOChannelSocketSSL :: GIOChannelSocketSSL (const Quark& server, SSL_CTX* ctx, C
    _certstore(cs),
    _rehandshake(false),
    _server(server),
-   _done(false)
+   _done(false),
+   _data(data)
 {
   debug ("GIOChannelSocketSSL ctor " << (void*)this);
   cs.add_listener(this);
@@ -409,7 +410,7 @@ namespace
   }
 
 
-  int ssl_handshake(const Quark& server, GIOChannel *handle, CertStore::Listener* listener,
+  int ssl_handshake(ServerInfo& data, const Quark& server, GIOChannel *handle, CertStore::Listener* listener,
                     CertStore* cs, std::string host, SSL_SESSION* session, bool rehandshake)
   {
 
@@ -426,10 +427,12 @@ namespace
     mydata.ignore_all = 0;
     mydata.l = listener;
     /* build cert name from scratch or from Server* */
-    mydata.cert_name = CertStore::build_cert_name(host);
+    Quark setme;
+    data.find_server_by_hn(host, setme);
+    mydata.cert_name = data.get_server_cert(setme);
+    std::cerr<<"ssl handshake "<<mydata.cert_name<<"\n";
     mydata.server = server;
     SSL_set_ex_data(chan->ssl, SSL_get_fd(chan->ssl), &mydata);
-    SSL_set_verify(chan->ssl,SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT,0);
 
     if (session) ret = SSL_set_session(chan->ssl, session);
 //    if (rehandshake)
@@ -813,6 +816,7 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 		g_warning("Failed to allocate SSL structure");
 		return 0;
 	}
+	SSL_set_verify(ssl,SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT,0);
 
 	if(!(err = SSL_set_fd(ssl, fd)))
 	{
@@ -837,7 +841,7 @@ GIOChannelSocketSSL :: ssl_get_iochannel(GIOChannel *handle, gboolean verify)
 
   int ret;
   set_blocking(ssl, true);
-  if (ssl_handshake(_server, gchan, this, &_certstore,_host, _session,_rehandshake) == 0)
+  if (ssl_handshake(_data, _server, gchan, this, &_certstore,_host, _session,_rehandshake) == 0)
   {
     set_blocking(chan->ssl, false);
     return gchan;

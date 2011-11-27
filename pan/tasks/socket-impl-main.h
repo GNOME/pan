@@ -150,7 +150,8 @@ namespace pan
       Data& data;
 
     public:
-      virtual void create_socket (const StringView & host,
+      virtual void create_socket (ServerInfo&,
+                                  const StringView & host,
                                   int                port,
                                   WorkerPool       & threadpool,
                                   Socket::Creator::Listener * listener,

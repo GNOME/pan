@@ -288,7 +288,7 @@ NNTP_Pool :: request_nntp (WorkerPool& threadpool)
     {
       ++_pending_connections;
       const bool ssl(_server_info.get_server_ssl_support(_server));
-      _socket_creator->create_socket (address, port, threadpool, this, ssl);
+      _socket_creator->create_socket (_server_info,address, port, threadpool, this, ssl);
     }
   }
 }

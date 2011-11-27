@@ -235,6 +235,8 @@ namespace pan
                                     std::string   & setme_username,
                                     std::string   & setme_password) const = 0;
 
+      virtual std::string get_server_cert (const Quark & server) const = 0;
+
       virtual int get_server_limits (const Quark & server) const = 0;
 
     /*****************************************************************

@@ -57,13 +57,14 @@ namespace pan
   {
     public:
       virtual ~GIOChannelSocketSSL ();
-      GIOChannelSocketSSL (const Quark&, SSL_CTX* ctx, CertStore& cs);
+      GIOChannelSocketSSL (ServerInfo&, const Quark&, SSL_CTX* ctx, CertStore& cs);
 
       virtual bool open (const StringView& address, int port, std::string& setme_err);
       virtual void write_command (const StringView& chars, Socket::Listener *);
       virtual void get_host (std::string& setme) const;
 
     private:
+      ServerInfo& _data;
       GIOChannel * _channel;
       unsigned int _tag_watch;
       unsigned int _tag_timeout;

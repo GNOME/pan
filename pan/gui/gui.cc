@@ -2104,12 +2104,12 @@ GUI :: on_verify_cert_failed(X509* cert, std::string server, std::string cert_na
 
   if (GUI::confirm_accept_new_cert_dialog(get_window(_root),cert,server))
     if (!_certstore.add(cert, server))
-//      Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",server.c_str());
-//    else
-//    {
+      Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",server.c_str());
+    else
+    {
       _data.set_server_cert(server, cert_name);
       _data.save_server_info(server);
-//    }
+    }
 }
 
 void

@@ -67,6 +67,7 @@ namespace
     Socket::Creator::Listener * listener;
 
     bool ok;
+    ServerInfo& data;
     Socket * socket;
     std::string err;
     bool use_ssl;
@@ -75,27 +76,20 @@ namespace
     std::multimap<std::string, Socket*>& socket_map;
     SSL_CTX * context;
     CertStore& store;
-    ThreadWorker (const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l,
+    ThreadWorker (ServerInfo& d, const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l,
                   bool ssl, SSL_CTX* ctx, CertStore& cs, std::multimap<std::string, Socket*>& m):
-      server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), context(ctx), store(cs), socket_map(m) {}
+      data(d), server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), context(ctx), store(cs), socket_map(m) {}
 #else
-    ThreadWorker (const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l):
-      server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(false) {}
+    ThreadWorker (ServerInfo& d, const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l):
+      data(d), server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(false) {}
 #endif
-
-    static gboolean handshake_done_cb(gpointer g)
-    {
-      GIOChannelSocketSSL* ssl (static_cast<GIOChannelSocketSSL*>(g));
-      if (ssl->get_done()) return false;
-      return true;
-    }
 
     void do_work ()
     {
 #ifdef HAVE_OPENSSL
         if (use_ssl)
         {
-          socket = new GIOChannelSocketSSL (server, context, store);
+          socket = new GIOChannelSocketSSL (data, server, context, store);
           socket_map.insert(std::pair<std::string, Socket*>(host, socket));
         }
         else
@@ -193,7 +187,8 @@ SocketCreator :: ~SocketCreator()
 }
 
 void
-SocketCreator :: create_socket (const StringView & host,
+SocketCreator :: create_socket (ServerInfo& info,
+                                const StringView & host,
                                 int                port,
                                 WorkerPool       & threadpool,
                                 Socket::Creator::Listener * listener,
@@ -204,9 +199,9 @@ SocketCreator :: create_socket (const StringView & host,
     ensure_module_init ();
     if (store.in_blacklist(server)) return;
 #ifdef HAVE_OPENSSL
-    ThreadWorker * w = new ThreadWorker (server, host, port, listener, use_ssl, ssl_ctx, store, socket_map);
+    ThreadWorker * w = new ThreadWorker (info, server, host, port, listener, use_ssl, ssl_ctx, store, socket_map);
 #else
-    ThreadWorker * w = new ThreadWorker (server, host, port, listener);
+    ThreadWorker * w = new ThreadWorker (info, server, host, port, listener);
 #endif
     threadpool.push_work (w, w, true);
 }

@@ -36,6 +36,7 @@ namespace pan
 {
   class StringView;
   class WorkerPool;
+  class Data;
 
   /**
    * Defines primitive interactions with a remote server:
@@ -97,7 +98,7 @@ namespace pan
         };
 
         virtual ~Creator () { }
-        virtual void create_socket (const StringView& host, int port, WorkerPool&, Listener*, bool) = 0;
+        virtual void create_socket (Data&, const StringView& host, int port, WorkerPool&, Listener*, bool) = 0;
       };
   };
 }
