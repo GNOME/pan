@@ -2760,26 +2760,6 @@ PostUI :: move_bottom (void)
   _upload_queue.move_bottom (get_selected_files());
 }
 
-//void
-//PostUI :: select_encode (GtkAction* a)
-//{
-//    tasks_t tasks = get_selected_files();
-//    const gchar* name = gtk_action_get_name(a);
-//
-//    TaskUpload::EncodeMode tmp;
-//    if (!strcmp(name, "yenc"))
-//        tmp = TaskUpload::YENC;
-//    if (!strcmp(name, "plain"))
-//        tmp = TaskUpload::PLAIN;
-//
-//    struct stat sb;
-//    foreach(tasks_t, tasks, it)
-//    {
-//      TaskUpload * tmp2 (dynamic_cast<TaskUpload*>(*it));
-//      if (tmp2) tmp2->_encode_mode = tmp;
-//    }
-//    update_filequeue_tab();
-//}
 
 int
 PostUI :: get_total_parts(const char* file)
@@ -2787,7 +2767,7 @@ PostUI :: get_total_parts(const char* file)
     struct stat sb;
     stat (file,&sb);
     int max (std::max(1,(int)std::ceil((double)sb.st_size /
-                                       _prefs.get_int("upload-option-bpf",512*1024))));
+                                       (double)_prefs.get_int_min("upload-option-bpf",512*1024))));
     return max;
 }
 

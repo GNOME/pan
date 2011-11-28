@@ -135,7 +135,7 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
   t = HIG :: workarea_create ();
 
   char buf[512];
-  if (groups.size() > 1)
+  if (groups.size() != 1)
     g_snprintf (buf, sizeof(buf), _("Properties for Groups"));
   else
     g_snprintf (buf, sizeof(buf), _("Properties for %s"), groups[0].c_str());
@@ -148,7 +148,7 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
     w = _save_path = file_entry_new (_("Directory for Saving Attachments"));
     char * pch = g_build_filename (g_get_home_dir(), "News", NULL);
     std::string dir;
-    if (groups.size() > 1)
+    if (groups.size() != 1)
       dir = pch;
     else
       dir = _group_prefs.get_string (groups[0], "default-group-save-path", pch);

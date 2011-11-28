@@ -200,7 +200,7 @@ namespace pan
     if (result != X509_V_OK) {
       unsigned char md[EVP_MAX_MD_SIZE];
       unsigned int n;
-      char *str;
+      char *str(0);
 
       g_warning("Could not verify SSL servers certificate: %s",
           X509_verify_cert_error_string(result));
@@ -278,7 +278,7 @@ namespace pan
   {
     if (map_init++ == 0) init_err_map();
     Quark ret;
-    if (ssl_err.count(i) > 0) return ssl_err[i];
+    if (ssl_err.count(i)) return ssl_err[i];
     return ret;
   }
 
@@ -425,10 +425,11 @@ namespace pan
 
     CertParser(X509* c) : cert(c), delim('/'), pos1(0), pos2(0), idx(0), num_tags(G_N_ELEMENTS(tags_idx))
     {
-      issuer  = X509_NAME_oneline(cert->cert_info->issuer,0,0);
-      subject = X509_NAME_oneline(cert->cert_info->subject, 0, 0);
+      issuer  = X509_NAME_oneline(X509_get_issuer_name(c),0, 0);
+      subject = X509_NAME_oneline(X509_get_subject_name(c), 0, 0);
       iss = issuer;
       sub = subject;
+
       /* init map */
       int i(0);
       tags.insert(quarks_p(cleaned_tags[i++],"Locality"));
@@ -502,8 +503,8 @@ namespace pan
 
     ~CertParser ()
     {
-      free(issuer);
-      free(subject);
+        free(issuer);
+        free(subject);
     }
   };
 
@@ -523,7 +524,7 @@ namespace pan
     cp.parse(p_issuer, p_subject);
 
 
-    time_t t = getTimeFromASN1(cert->cert_info->validity->notAfter);
+    time_t t  = getTimeFromASN1(cert->cert_info->validity->notAfter);
     time_t t2 = getTimeFromASN1(cert->cert_info->validity->notBefore);
     EvolutionDateMaker date_maker;
     char * until = date_maker.get_date_string (t);

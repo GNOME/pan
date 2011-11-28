@@ -75,9 +75,7 @@ namespace
       g_main_loop_run (nongui_gmainloop);
     else
     {
-      gdk_threads_enter();
       gtk_main ();
-      gdk_threads_leave();
     }
 #else
     while (gtk_events_pending ())
@@ -532,7 +530,6 @@ main (int argc, char *argv[])
   textdomain (GETTEXT_PACKAGE);
 
   g_thread_init (0);
-  gdk_threads_init ();
   g_mime_init (GMIME_ENABLE_RFC2047_WORKAROUNDS);
 
   bool gui(true), nzb(false), verbosed(false);

@@ -430,7 +430,6 @@ namespace
     Quark setme;
     data.find_server_by_hn(host, setme);
     mydata.cert_name = data.get_server_cert(setme);
-    std::cerr<<"ssl handshake "<<mydata.cert_name<<"\n";
     mydata.server = server;
     SSL_set_ex_data(chan->ssl, SSL_get_fd(chan->ssl), &mydata);
 
@@ -854,13 +853,11 @@ void
 GIOChannelSocketSSL :: on_verify_cert_failed (X509* cert, std::string server,
                                               std::string cert_name, int nr)
 {
-  if (!_certstore.in_blacklist(server)) _certstore.blacklist(server);
+  _certstore.blacklist(server);
 }
 
 void
 GIOChannelSocketSSL :: on_valid_cert_added (X509* cert, std::string server)
-{
-
-}
+{}
 #endif  //HAVE_OPENSSL
 

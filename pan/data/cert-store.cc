@@ -66,7 +66,7 @@ namespace pan
       if (mydata->ignore_all==1) { return 1; }
 
       X509 *cert = X509_STORE_CTX_get_current_cert(store);
-      int depth = X509_STORE_CTX_get_error_depth(store);
+      CRYPTO_add (&(cert->references), 1, CRYPTO_LOCK_X509); // refcount +1
       int err = X509_STORE_CTX_get_error(store);
 
       /* accept user-override on self-signed certificates */
@@ -136,7 +136,7 @@ namespace pan
   void
   CertStore :: remove (const Quark& server)
   {
-    if (_cert_to_server.count(server) > 0)
+    if (_cert_to_server.count(server))
     {
       _cert_to_server.erase(server);
       _certs.erase(server);
@@ -170,6 +170,8 @@ namespace pan
   CertStore :: add(X509* cert, const Quark& server)
   {
     if (!cert || server.empty()) return false;
+    debug(cert<<" "<<_data.get_server_address(server));
+    debug(X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0));
     X509_STORE_add_cert(get_store(),cert);
 
     std::string addr; int port;
@@ -184,7 +186,7 @@ namespace pan
 
     FILE * fp = fopen(buf, "wb");
     if (!fp) return false;
-    if (PEM_write_X509(fp, cert) != 1) { fclose(fp); return false; }
+    if (!PEM_write_X509(fp, cert)) { fclose(fp); return false; }
     fclose(fp);
     chmod (buf, 0600);
 
@@ -207,7 +209,7 @@ namespace pan
     else
       serv = server;
 
-    if (_cert_to_server.count(serv) > 0)
+    if (_cert_to_server.count(serv))
       ret = _cert_to_server.find(serv)->second;
     return ret;
   }

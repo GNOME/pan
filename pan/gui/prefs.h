@@ -83,6 +83,7 @@ namespace pan
       bool get_flag (const StringView& key, bool fallback) const;
       void set_flag (const StringView& key, bool);
       int get_int (const StringView& key, int fallback) const;
+      int get_int_min  (const StringView& key, int fallback) const;
       void set_int (const StringView& key, int);
 
       std::string get_string (const StringView& key, const StringView& fallback) const;

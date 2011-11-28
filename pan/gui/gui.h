@@ -62,6 +62,15 @@ namespace pan
       GtkWidget* root () { return _root; }
       typedef std::vector<std::string> strings_t;
 
+      struct VerifyData
+      {
+        X509* cert;
+        std::string server;
+        std::string cert_name;
+        int nr;
+        GUI* gui;
+      };
+
     public: // ActionManager
       virtual bool is_action_active (const char * action_name) const;
       virtual void activate_action (const char * action_name) const;
@@ -128,9 +137,6 @@ namespace pan
       virtual void do_supersede_article ();
       virtual void do_delete_article ();
       virtual bool deletion_confirmation_dialog();
-#ifdef HAVE_OPENSSL
-      bool confirm_accept_new_cert_dialog(GtkWindow*, X509*, const Quark&);
-#endif
       virtual void do_clear_article_cache ();
       virtual void do_mark_article_read ();
       virtual void do_mark_article_unread ();
@@ -166,6 +172,10 @@ namespace pan
       virtual void do_refresh_groups ();
       virtual void do_subscribe_selected_groups ();
       virtual void do_unsubscribe_selected_groups ();
+#ifdef HAVE_OPENSSL
+      void do_show_cert_failed_dialog(VerifyData* data);
+      bool confirm_accept_new_cert_dialog(GtkWindow*, X509*, const Quark&);
+#endif
 
     public:
       static std::string prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs);
@@ -256,7 +266,10 @@ namespace pan
       static void prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self);
       void prefs_dialog_destroyed (GtkWidget* w);
       int score_int_from_string(std::string val, const char* rules[]);
-
+#ifdef HAVE_OPENSSL
+      static gboolean show_cert_failed_cb(gpointer gp);
+//      static void cert_failed_dty(gpointer gp);
+#endif
     public:
       GtkUIManager* get_ui_manager() { return _ui_manager; }
   };

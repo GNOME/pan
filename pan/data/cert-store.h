@@ -33,8 +33,8 @@
 #endif
 
 #include <pan/data/data.h>
-
 #include <pan/tasks/socket.h>
+#include <pan/general/debug.h>
 #include <pan/general/quark.h>
 #include <pan/general/macros.h>
 #include <pan/general/worker-pool.h>
@@ -90,7 +90,7 @@ namespace pan
 
       bool in_blacklist (const Quark& s)
       {
-        return _blacklist.count(s) != 0;
+        return _blacklist.count(s);
       }
       void blacklist (const Quark& s)
       {
@@ -123,7 +123,7 @@ namespace pan
 
       bool add(X509*, const Quark&) ;
       void remove (const Quark&);
-      bool exist (const Quark& q) { /*dump_certs(); std::cerr<<"q "<<q<<"\n\n"; */ return (_certs.count(q) > 0); }
+      bool exist (const Quark& q) { return (_certs.count(q) > 0); }
 
       static std::string build_cert_name(std::string host);
 
@@ -144,6 +144,7 @@ namespace pan
       /* notify functions for listener list */
       void verify_failed (X509* c, std::string server, std::string cn, int nr)
       {
+        debug("verify failed listeners");
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; ++it)
           (*it)->on_verify_cert_failed (c, server, cn, nr);
       }

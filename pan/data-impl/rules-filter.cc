@@ -102,9 +102,8 @@ RulesFilter :: test_article ( Data        & data,
       break;
 
     default:
-     debug("error : unknown rules type "<<rules._type);
+//     debug("error : unknown rules type "<<rules._type);
      return true;
-     break;
   }
 
   return pass;

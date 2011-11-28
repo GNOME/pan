@@ -317,9 +317,6 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
 
   upkeep_tag = g_timeout_add (3000, upkeep_timer_cb, this);
 
-  _queue.add_listener (this);
-  Log::get().add_listener (this);
-
   g_object_ref_sink (G_OBJECT(_info_image));
   g_object_ref_sink (G_OBJECT(_error_image));
   g_object_ref (_group_pane->root());
@@ -339,7 +336,10 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   if (_prefs.get_flag ("get-new-headers-on-startup", false))
     activate_action ("get-new-headers-in-subscribed-groups");
 
+  _queue.add_listener (this);
   _prefs.add_listener (this);
+  _certstore.add_listener(this);
+  Log::get().add_listener (this);
 
   gtk_accel_map_load (get_accel_filename().c_str());
 
@@ -353,7 +353,6 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
         on_queue_task_active_changed (queue, *(*it), true);
     }
   }
-  _certstore.add_listener(this);
 }
 
 namespace
@@ -805,7 +804,6 @@ void GUI :: on_log_entry_added (const Log::Entry& e)
     set_bin_child (_event_log_button, _error_image);
 
   if (_queue.is_online() && (e.severity & Log::PAN_SEVERITY_URGENT)) {
-    gdk_threads_enter();
     GtkWidget * w = gtk_message_dialog_new (get_window(_root),
                                             GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
                                             GTK_MESSAGE_ERROR,
@@ -813,7 +811,6 @@ void GUI :: on_log_entry_added (const Log::Entry& e)
                                             "%s", e.message.c_str());
     g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
     gtk_widget_show_all (w);
-    gdk_threads_leave();
   }
 }
 
@@ -861,7 +858,6 @@ void GUI :: do_show_preferences_dialog ()
 }
 void GUI :: do_show_group_preferences_dialog ()
 {
-//  const Quark group (_group_pane->get_first_selection ());
   quarks_v groups(_group_pane->get_full_selection());
   if (!groups.empty()) {
     GroupPrefsDialog * dialog = new GroupPrefsDialog (_data, groups, _group_prefs, get_window(_root));
@@ -1315,23 +1311,23 @@ bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, X509* cert, const
   std::string host; int port;
   _data.get_server_addr(server,host,port);
   pretty_print_x509(buf,sizeof(buf), host, cert,true);
-  gdk_threads_enter();
-    GtkWidget * d = gtk_message_dialog_new (
-      parent,
-      GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
-      GTK_MESSAGE_WARNING,
-      GTK_BUTTONS_NONE, NULL);
+  GtkWidget * d = gtk_message_dialog_new (
+    parent,
+    GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+    GTK_MESSAGE_WARNING,
+    GTK_BUTTONS_NONE, NULL);
 
-    HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d), buf,
-      _("Do you want to accept it permanently (deletable afterwards) ?"));
-    gtk_dialog_add_buttons (GTK_DIALOG(d),
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
-                            GTK_STOCK_APPLY, GTK_RESPONSE_YES,
-                            NULL);
-    gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
-    ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
-    gtk_widget_destroy(d);
-  gdk_threads_leave();
+  HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d), buf,
+    _("Do you want to accept it permanently (deletable afterwards) ?"));
+  gtk_dialog_add_buttons (GTK_DIALOG(d),
+                          GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
+                          GTK_STOCK_APPLY, GTK_RESPONSE_YES,
+                          NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
+
+  debug("confirm cert gui");
+  ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
+  gtk_widget_destroy(d);
   return ret;
 }
 #endif
@@ -2097,19 +2093,48 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
 }
 
 #ifdef HAVE_OPENSSL
+
+void
+GUI :: do_show_cert_failed_dialog(VerifyData* data)
+{
+  debug("do show cert failed dialog");
+  const VerifyData& d(*data);
+  if (GUI::confirm_accept_new_cert_dialog(get_window(_root),d.cert,d.server))
+    if (!_certstore.add(d.cert, d.server))
+      Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",d.server.c_str());
+    else
+    {
+      _data.set_server_cert(d.server, d.cert_name);
+      _data.save_server_info(d.server);
+    }
+  X509_free(d.cert); // refcount -1
+  delete data;
+}
+
+gboolean
+GUI :: show_cert_failed_cb(gpointer gp)
+{
+  debug("show_cert_failed_cb");
+  VerifyData* d(static_cast<VerifyData*>(gp));
+  d->gui->do_show_cert_failed_dialog(d);
+  return false;
+}
+
 void
 GUI :: on_verify_cert_failed(X509* cert, std::string server, std::string cert_name, int nr)
 {
-  if (!cert || cert_name.empty() || server.empty()) return;
+  debug("on verify failed GUI ("<<cert<<") ("<<cert_name<<") ("<<server<<")");
+  if (!cert || server.empty()) return;
 
-  if (GUI::confirm_accept_new_cert_dialog(get_window(_root),cert,server))
-    if (!_certstore.add(cert, server))
-      Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",server.c_str());
-    else
-    {
-      _data.set_server_cert(server, cert_name);
-      _data.save_server_info(server);
-    }
+  debug(X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0));
+  VerifyData* data = new VerifyData();
+  data->cert = cert;
+  data->server = server;
+  data->cert_name = cert_name;
+  data->nr = nr;
+  data->gui = this;
+  g_idle_add(show_cert_failed_cb, data);
+
 }
 
 void
@@ -2117,7 +2142,6 @@ GUI :: on_valid_cert_added (X509* cert, std::string server)
 {
   /* whitelist to make avaible for nntp-pool */
   _certstore.whitelist(server);
-
 }
 
 

@@ -273,6 +273,15 @@ Prefs :: get_int (const StringView& key, int fallback) const
   return _ints[key];
 }
 
+int
+Prefs :: get_int_min (const StringView& key, int fallback) const
+{
+  if (!_ints.count (key))
+    _ints[key] = fallback;
+  if (_ints[key] < fallback) _ints[key] = fallback;
+  return _ints[key];
+}
+
 void
 Prefs :: set_int (const StringView& key, int value)
 {
