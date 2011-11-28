@@ -57,9 +57,9 @@ Queue :: Queue (ServerInfo         & server_info,
   _downloads_total(0)
 {
 
-//  tasks_t tasks;
-//  _archive.load_tasks (tasks);
-//  add_tasks (tasks, BOTTOM);
+  tasks_t tasks;
+  _archive.load_tasks (tasks);
+  add_tasks (tasks, BOTTOM);
 
   _tasks.add_listener (this);
 }
