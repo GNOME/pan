@@ -64,7 +64,9 @@ namespace pan
 
       struct VerifyData
       {
+#ifdef HAVE_OPENSSL
         X509* cert;
+#endif
         std::string server;
         std::string cert_name;
         int nr;

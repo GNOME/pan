@@ -157,25 +157,25 @@ namespace pan
                                   Socket::Creator::Listener * listener,
                                   bool               use_ssl);
 
-      struct Listener
-      {
-        virtual ~Listener() {}
-        /* functions that other listeners listen on */
-        virtual void on_handshake_done (X509* cert UNUSED, std::string server UNUSED, std::string cert_name UNUSED, int nr UNUSED) = 0;
-      };
-
-      typedef std::set<Listener*> listeners_t;
-      listeners_t _listeners;
-
-      void add_listener (Listener * l)    { _listeners.insert(l); }
-      void remove_listener (Listener * l) { _listeners.erase(l);  }
-
-      /* notify functions for listener list */
-      void handshake_done (X509* c, std::string server, std::string cn, int nr)
-      {
-        for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; ++it)
-          (*it)->on_handshake_done (c, server, cn, nr);
-      }
+//      struct Listener
+//      {
+//        virtual ~Listener() {}
+//        /* functions that other listeners listen on */
+//        virtual void on_handshake_done (X509* cert UNUSED, std::string server UNUSED, std::string cert_name UNUSED, int nr UNUSED) = 0;
+//      };
+//
+//      typedef std::set<Listener*> listeners_t;
+//      listeners_t _listeners;
+//
+//      void add_listener (Listener * l)    { _listeners.insert(l); }
+//      void remove_listener (Listener * l) { _listeners.erase(l);  }
+//
+//      /* notify functions for listener list */
+//      void handshake_done (X509* c, std::string server, std::string cn, int nr)
+//      {
+//        for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; ++it)
+//          (*it)->on_handshake_done (c, server, cn, nr);
+//      }
 
   };
 
