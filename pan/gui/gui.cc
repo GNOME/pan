@@ -2102,11 +2102,7 @@ GUI :: do_show_cert_failed_dialog(VerifyData* data)
   if (GUI::confirm_accept_new_cert_dialog(get_window(_root),d.cert,d.server))
     if (!_certstore.add(d.cert, d.server))
       Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",d.server.c_str());
-    else
-    {
-      _data.set_server_cert(d.server, d.cert_name);
-      _data.save_server_info(d.server);
-    }
+
   X509_free(d.cert); // refcount -1
   delete data;
 }

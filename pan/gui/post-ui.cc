@@ -2531,17 +2531,14 @@ PostUI:: on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, 
   gboolean enabled;
 
   gtk_tree_model_get_iter (model, &iter, path);
-
   gtk_tree_model_get (model, &iter, 0, &part, 1, &enabled, -1);
 
   enabled ^= 1;
   if (enabled==0)
     data->_upload_ptr->_wanted.erase(part);
   else
-  {
     data->_upload_ptr->_wanted.insert(part);
 
-  }
   gtk_list_store_set(GTK_LIST_STORE( model ), &iter, 1, enabled, -1);
   gtk_tree_path_free (path);
   data->update_parts_tab();
@@ -2824,16 +2821,8 @@ PostUI :: select_parts ()
   _upload_ptr = dynamic_cast<TaskUpload*>(set[0]);
 
   if (!_upload_ptr) return;
-
-  _total_parts = get_total_parts(_upload_ptr->_filename.c_str());
-//  _upload_ptr->_wanted.clear();
-//  for (int i=1;i<=_total_parts;++i)
-//    _upload_ptr->_wanted.insert(i);
-
-  GtkWidget * w;
   GtkTreeIter iter;
-
-  w = _part_select = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  GtkWidget * w = _part_select = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_signal_connect (_part_select, "delete-event", G_CALLBACK(delete_parts_cb), this);
   gtk_window_set_role (GTK_WINDOW(w), "pan-parts-window");
   gtk_window_set_title (GTK_WINDOW(w), _("Select Parts"));

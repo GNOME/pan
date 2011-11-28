@@ -136,6 +136,7 @@ namespace pan
   void
   CertStore :: remove (const Quark& server)
   {
+    debug("remove cert "<<server);
     if (_cert_to_server.count(server))
     {
       _cert_to_server.erase(server);
@@ -169,8 +170,8 @@ namespace pan
   bool
   CertStore :: add(X509* cert, const Quark& server)
   {
+    debug(server<<" "<<cert);
     if (!cert || server.empty()) return false;
-    debug(cert<<" "<<_data.get_server_address(server));
     debug(X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0));
     X509_STORE_add_cert(get_store(),cert);
 
@@ -179,8 +180,9 @@ namespace pan
     _certs.insert(server);
     _cert_to_server[server] = cert;
 
-    const char* buf(build_cert_name(addr.c_str()).c_str());
+    debug(server<<" "<<addr);
 
+    const char* buf(build_cert_name(addr.c_str()).c_str());
     _data.set_server_cert(server, buf);
     _data.save_server_info(server);
 
@@ -189,6 +191,8 @@ namespace pan
     if (!PEM_write_X509(fp, cert)) { fclose(fp); return false; }
     fclose(fp);
     chmod (buf, 0600);
+
+    debug(server<<" "<<buf);
 
     valid_cert_added(cert, server.c_str());
     return true;
