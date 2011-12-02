@@ -18,7 +18,6 @@
  */
 
 #include <config.h>
-
 #include <cassert>
 #include <cerrno>
 #include <cctype>
@@ -28,9 +27,11 @@ extern "C"
   #include <unistd.h>
   #include <sys/stat.h>
   #include <sys/types.h>
-
   #include <glib.h>
   #include <glib/gi18n.h>
+  #ifndef G_OS_WIN32
+    #include <pwd.h>
+  #endif
 }
 
 #include "debug.h"
@@ -39,6 +40,8 @@ extern "C"
 #include "file-util.h"
 #include "utf8-utils.h"
 #include <algorithm>
+
+
 
 using namespace pan;
 
@@ -63,7 +66,7 @@ file :: get_pan_home ()
       g_free (pch);
     }
   }
-                                                                                                                                
+
   file :: ensure_dir_exists (pan_home);
   return pan_home;
 }
@@ -75,6 +78,30 @@ file :: pan_strerror (int error_number)
   return pch && *pch ? pch : "";
 }
 
+namespace
+{
+
+  enum EX_ERRORS
+  {
+    EX_NOFILE, EX_BIT, EX_SUCCESS
+  };
+
+  EX_ERRORS check_executable_bit(const char* d)
+  {
+#ifndef G_OS_WIN32
+    struct stat sb;
+    if (stat (d, &sb) == -1) return EX_NOFILE;
+    const char* user(g_get_user_name());
+    struct passwd* pw(getpwnam(user));
+    if (sb.st_mode & S_IXUSR || ((sb.st_mode & S_IXGRP ) && pw->pw_gid == sb.st_gid))
+      return EX_SUCCESS;
+    return EX_BIT;
+#else
+    return EX_SUCCESS;
+#endif
+  }
+}
+
 bool
 file :: ensure_dir_exists (const StringView& dirname_sv)
 {
@@ -82,11 +109,27 @@ file :: ensure_dir_exists (const StringView& dirname_sv)
 
   pan_return_val_if_fail (!dirname_sv.empty(), true);
   bool retval (true);
-
   const std::string dirname (dirname_sv.to_string());
-  if (!g_file_test (dirname.c_str(), G_FILE_TEST_IS_DIR))
-    retval = !g_mkdir_with_parents (dirname.c_str(), 0755);
+  EX_ERRORS cmd (check_executable_bit(dirname.c_str()));
+  if (cmd == EX_BIT) goto _set_bit;
 
+  if (!g_file_test (dirname.c_str(), G_FILE_TEST_IS_DIR))
+    retval = !g_mkdir_with_parents (dirname.c_str(), 0740); // changed from 755
+
+  if (!retval)
+  {
+    // check for executable bit
+    Log::add_err_va("Error creating directory '%s' : %s", dirname.c_str(),
+                    cmd == EX_NOFILE ? "error accessing file." : "executable bit not set.");
+    // set it manually
+    _set_bit:
+    if (cmd == EX_BIT)
+      if (chmod(dirname.c_str(), 0740))
+      {
+        Log::add_urgent_va("Error setting executable bit for directory '%s' : "
+                           "Please check your permissions.", dirname.c_str());
+      }
+  }
   return retval;
 }
 

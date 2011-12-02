@@ -24,11 +24,18 @@ extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
   #include <gmime/gmime.h>
+  #include <gio/gio.h>
+  #include <sys/types.h>
+  #include <sys/stat.h>
+  #include <unistd.h>
 }
+
 #ifdef G_OS_WIN32
-#define _WIN32_WINNT 0x0501
-#include <windows.h>
+  #undef _WIN32_WINNT
+  #define _WIN32_WINNT 0x0501
+  #include <windows.h>
 #endif
+
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/file-util.h>
@@ -38,6 +45,7 @@ extern "C" {
 #include <pan/tasks/task-xover.h>
 #include <pan/tasks/nzb.h>
 #include <pan/data-impl/data-impl.h>
+#include <pan/data-impl/data-io.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "gui.h"
 #include "group-prefs.h"
@@ -47,6 +55,11 @@ extern "C" {
 #include "pad.h"
 
 using namespace pan;
+
+namespace
+{
+  typedef std::vector<std::string> strings_t;
+}
 
 namespace
 {
@@ -232,9 +245,13 @@ _("General Options\n"
 "  -h, --help               Show this usage page.\n"
 "\n"
 "URL Options\n"
-"  news:message-id          Show the specified article.\n"
+
+// Doesn't work yet.
+/*"  news:message-id          Show the specified article.\n"
 "  news:group.name          Show the specified newsgroup.\n"
 "  headers:group.name       Download new headers for the specified newsgroup.\n"
+*/
+
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -242,7 +259,183 @@ _("General Options\n"
 "  -o path, --output=path   Path to save attachments listed in the nzb files.\n"
 "  --no-gui                 Only show console output, not the download queue.\n") << std::endl;
   }
+
+  /***
+   ** DBUS STUFF
+   ***/
+
+  #define PAN_DBUS_SERVICE_NAME      "news.pan.NZB"
+  #define PAN_DBUS_SERVICE_PATH      "/news/pan/NZB"
+
+  /** Struct for dbus handling */
+  struct Pan
+  {
+    Data& data;
+    Queue& queue;
+    ArticleCache& cache;
+    Prefs& prefs;
+    GroupPrefs& group_prefs;
+    int dbus_id;
+    bool name_valid;
+    bool lost_name;
+
+    GDBusNodeInfo * busnodeinfo;
+    GDBusInterfaceVTable ifacetable;
+
+    Pan(Data& d, Queue& q, ArticleCache& c, Prefs& p, GroupPrefs& gp) :
+      dbus_id(-1), busnodeinfo(0),
+      data(d), queue(q), cache(c), prefs(p), group_prefs(gp),
+      lost_name(false), name_valid(false)
+      {}
+  };
+
+  static void
+  nzb_method_call  (GDBusConnection      *connection,
+                   const gchar           *sender,
+                   const gchar           *object_path,
+                   const gchar           *interface_name,
+                   const gchar           *method_name,
+                   GVariant              *parameters,
+                   GDBusMethodInvocation *invocation,
+                   gpointer               user_data)
+  {
+
+    Pan* pan(static_cast<Pan*>(user_data));
+    if (!pan) return;
+
+    gboolean gui(false), nzb(false);
+    gchar* groups;
+    gchar* nzb_output_path;
+    gchar* nzbs;
+    strings_t nzb_files;
+
+    if (g_strcmp0 (method_name, "NZBEnqueue") == 0)
+    {
+      g_variant_get (parameters, "(sssbb)", &groups, &nzb_output_path, &nzbs, &gui, &nzb);
+
+      if (groups)
+        if (strlen(groups)!=0)
+        {
+          StringView tok, v(groups);
+          while (v.pop_token(tok,','))
+            pan->queue.add_task (new TaskXOver (pan->data, tok, TaskXOver::NEW), Queue::BOTTOM);
+        }
+
+      if (nzb && nzbs)
+      {
+        //parse the files
+        StringView tok, nzb(nzbs);
+        while (nzb.pop_token(tok))
+          nzb_files.push_back(tok);
+
+        // load the nzb files...
+        std::vector<Task*> tasks;
+        foreach_const (strings_t, nzb_files, it)
+          NZB :: tasks_from_nzb_file (*it, nzb_output_path, pan->cache, pan->data, pan->data, pan->data, tasks);
+        pan->queue.add_tasks (tasks, Queue::BOTTOM);
+      }
+    }
+
+    g_dbus_method_invocation_return_value (invocation, NULL);
+  }
+
+  static GDBusConnection *dbus_connection(NULL);
+
+  static const gchar xml[]=
+  "<node>"
+  "  <interface name='news.pan.NZB'>"
+  "    <method name='NZBEnqueue'>"
+  "      <arg type='s' name='groups'    direction='in'/>"
+  "      <arg type='s' name='nzb_files' direction='in'/>"
+  "      <arg type='s' name='nzb_path'  direction='in'/>"
+  "      <arg type='b' name='gui'       direction='in'/>"
+  "      <arg type='b' name='nzb'       direction='in'/>"
+  "    </method>"
+  "  </interface>"
+  "</node>";
+
+
+  static void
+  on_bus_acquired (GDBusConnection *connection,
+                   const gchar     *name,
+                   gpointer         user_data)
+  {
+    Pan* pan (static_cast<Pan*>(user_data));
+    g_return_if_fail (pan);
+
+    pan->busnodeinfo = g_dbus_node_info_new_for_xml (xml, NULL);
+
+   /* init iface table */
+    GDBusInterfaceVTable tmp =
+    {
+      nzb_method_call ,
+      NULL, NULL
+    };
+    pan->ifacetable = tmp;
+
+    g_dbus_connection_register_object(
+      connection,
+      "/news/pan/NZB",
+      pan->busnodeinfo->interfaces[0],
+      &pan->ifacetable,
+      pan,
+      NULL,
+      NULL
+    );
+
+  }
+
+  static void
+  on_name_acquired (GDBusConnection *connection,
+                    const gchar     *name,
+                    gpointer         user_data)
+  {
+
+    Pan* pan(static_cast<Pan*>(user_data));
+    g_return_if_fail (pan);
+
+    if (connection)
+    {
+      dbus_connection = connection;
+      pan->name_valid = true;
+      pan->lost_name = false;
+    }
+  }
+
+  static void
+  on_name_lost (GDBusConnection *connection,
+                const gchar     *name,
+                gpointer         user_data)
+  {
+    Pan* pan(static_cast<Pan*>(user_data));
+    g_return_if_fail (pan);
+
+    pan->name_valid = false;
+    pan->lost_name = true;
+    pan->dbus_id= -1;
+
+  }
+
+
+  static void
+  pan_dbus_init (Pan* pan)
+  {
+    pan->dbus_id = g_bus_own_name(
+        G_BUS_TYPE_SESSION,
+        PAN_DBUS_SERVICE_NAME,
+        G_BUS_NAME_OWNER_FLAGS_NONE,
+        on_bus_acquired,
+        on_name_acquired,
+        on_name_lost,
+        pan,NULL);
+  }
+
+  /***
+   ***
+   ***/
+
 }
+
 
 int
 main (int argc, char *argv[])
@@ -251,6 +444,7 @@ main (int argc, char *argv[])
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 
+  g_type_init();
   g_thread_init (0);
   g_mime_init (GMIME_ENABLE_RFC2047_WORKAROUNDS);
 
@@ -258,8 +452,8 @@ main (int argc, char *argv[])
   std::string url;
   std::string groups;
   std::string nzb_output_path;
-  typedef std::vector<std::string> strings_t;
   strings_t nzb_files;
+  std::string nzb_str;
 
   for (int i=1; i<argc; ++i)
   {
@@ -287,6 +481,8 @@ main (int argc, char *argv[])
     else {
       nzb = true;
       nzb_files.push_back (tok);
+      if (nzb_files.size() > 1) nzb_str +=" ";
+      nzb_str += tok;
     }
   }
 
@@ -322,9 +518,38 @@ main (int argc, char *argv[])
     // instantiate the queue...
     WorkerPool worker_pool (4, true);
     GIOChannelSocket::Creator socket_creator;
-    Queue queue (data, data, &socket_creator, worker_pool,
-                 prefs.get_flag ("work-online", true),
-                 prefs.get_int ("task-save-delay-secs", 10));
+    Queue queue (data, data, &socket_creator, worker_pool, false, 32768);
+
+
+    ///////////// DBUS
+
+    Pan pan(data, queue, cache, prefs, group_prefs);
+#ifndef G_OS_WIN32
+    pan_dbus_init(&pan);
+
+    GError* error(NULL);
+    GVariant* var = g_variant_new ("(sssbb)",
+                    groups.c_str(), nzb_output_path.c_str(), nzb_str.c_str(),  gui, nzb);
+    g_dbus_connection_call_sync (g_bus_get_sync  (G_BUS_TYPE_SESSION , NULL, NULL),
+                           PAN_DBUS_SERVICE_NAME,
+                           PAN_DBUS_SERVICE_PATH,
+                           "news.pan.NZB",
+                           "NZBEnqueue",
+                           var,
+                           NULL,
+                           G_DBUS_CALL_FLAGS_NONE,
+                           -1,
+                           NULL,
+                           &error);
+    if (!error)
+    {
+      std::cerr<<"Added "<<nzb_files.size()<<" files to the queue. Exiting.\n";
+      exit(EXIT_SUCCESS);
+    }
+#endif
+    queue.set_online(true);
+    queue.set_task_save_delay(prefs.get_int ("task-save-delay-secs", 10));
+
     g_timeout_add (5000, queue_upkeep_timer_cb, &queue);
 
     if (nzb || !groups.empty())
@@ -349,7 +574,7 @@ main (int argc, char *argv[])
         queue.add_tasks (tasks, Queue::BOTTOM);
       }
 
-      // iff non-gui mode, contains a PanKiller ptr to quit pan on queue empty
+      // if in non-gui mode, contains a PanKiller ptr to quit pan on queue empty
       std::auto_ptr<PanKiller> killer;
 
       // don't open the full-blown Pan, just act as a nzb client,
@@ -384,8 +609,12 @@ main (int argc, char *argv[])
       gtk_window_set_resizable (GTK_WINDOW(window), true);
       gtk_window_set_default_icon (pixbuf);
       g_object_unref (pixbuf);
+
       run_pan_in_window (cache, data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
+
+    if (pan.dbus_id != -1 ) g_bus_unown_name(pan.dbus_id);
+    if (dbus_connection) g_dbus_connection_close(dbus_connection,NULL,0,NULL);
 
     worker_pool.cancel_all_silently ();
 

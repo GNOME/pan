@@ -594,12 +594,15 @@ void GUI :: do_save_articles_to_nzb ()
       foreach_const (std::vector<Article>, copies, it)
         tasks.push_back (new TaskArticle (_data, _data, *it, _cache, _data, 0, TaskArticle::RAW,emptystring));
 
-          // write them to a file
-          std::ofstream tmp(file.c_str());
-          if (tmp.good()) {
-            NZB :: nzb_to_xml_file (tmp, tasks);
-            tmp.close();
-          }
+      // write them to a file
+      std::ofstream tmp(file.c_str());
+      if (tmp.good()) {
+        NZB :: nzb_to_xml_file (tmp, tasks);
+        tmp.close();
+      }
+      // cleanup the virtual queue
+      foreach(Queue::tasks_t, tasks, it)
+        delete *it;
     }
 }
 

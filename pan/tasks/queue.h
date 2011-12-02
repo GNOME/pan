@@ -98,7 +98,7 @@ namespace pan
         ServerConnectionCounts(): active(0), idle(0), connecting(0), KiBps(0.0) {}
       };
       void get_full_connection_counts (std::vector<ServerConnectionCounts>& setme) const;
-                                         
+
 
     public:
       enum TaskState { QUEUED, RUNNING, DECODING, STOPPED, REMOVING,
@@ -218,6 +218,9 @@ namespace pan
       bool _needs_saving;
       time_t _last_time_saved;
       quarks_t _mids;
+
+    public:
+      void set_task_save_delay(int value) { _save_delay_secs = value; }
 
     private:
       TaskArchive& _archive;

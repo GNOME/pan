@@ -31,7 +31,7 @@ namespace pan
    * Specifies the datafiles used by DataImpl.
    * It's abstracted out so that unit tests can substitute in its own data.
    * This private class should only be used by code in the data-impl module.
-   * 
+   *
    * @ingroup data_impl
    */
   struct DataIO
@@ -42,6 +42,7 @@ namespace pan
     virtual std::string get_scorefile_name () const;
     virtual std::string get_posting_name () const;
     virtual std::string get_server_filename () const;
+    static std::string get_lock_filename () ;
 
     virtual void clear_group_headers (const Quark& group);
 

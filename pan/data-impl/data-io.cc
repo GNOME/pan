@@ -116,6 +116,12 @@ DataIO :: get_server_filename () const
   return get_pan_home_file ("servers.xml");
 }
 
+std::string
+DataIO :: get_lock_filename ()
+{
+  return get_pan_home_file ("pan.lock");
+}
+
 /****
 *****
 ****/
