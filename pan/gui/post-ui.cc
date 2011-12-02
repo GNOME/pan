@@ -135,7 +135,7 @@ PostUI :: get_body () const
   GtkTextBuffer * buf (_body_buf);
   GtkTextView * view (GTK_TEXT_VIEW(_body_view));
   const bool wrap (_prefs.get_flag ("compose-wrap-enabled", false));
-  
+
   // walk through all the complete lines...
   GtkTextIter body_start, body_end, line_start, line_end;
   gtk_text_buffer_get_bounds (buf, &body_start, &body_end);
@@ -320,7 +320,7 @@ PostUI :: rot13_selection ()
     gtk_text_buffer_insert (_body_buf, &start, str, strlen(str));
     g_free (str);
   }
-} 
+}
 
 void
 PostUI :: wrap_selection ()
@@ -421,7 +421,7 @@ PostUI :: check_charset ()
   if (charset == "UTF-8")
     return true;
 
-  // Check if body can be posted in the selected charset 
+  // Check if body can be posted in the selected charset
   const std::string body (get_body ());
   char *tmp = g_convert (body.c_str(), -1, charset.c_str(), "UTF-8", NULL, NULL, NULL);
   if (tmp) {
@@ -439,7 +439,7 @@ PostUI :: check_charset ()
   char * msg = g_strdup_printf (_("Message uses characters not specified in charset '%s' - possibly use '%s' "), charset.c_str(), tmp);
   GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
                                           GTK_DIALOG_DESTROY_WITH_PARENT,
-                                          GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE, 
+                                          GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
 										  NULL);
   HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
                            _("There were problems with this post."),
@@ -449,7 +449,7 @@ PostUI :: check_charset ()
   gtk_widget_destroy (d);
   g_free (tmp);
   g_free (msg);
-  
+
   return false;
 }
 
@@ -601,7 +601,7 @@ PostUI :: on_progress_error (Progress&, const StringView& message)
                                           GTK_DIALOG_DESTROY_WITH_PARENT,
                                           GTK_MESSAGE_ERROR,
                                           GTK_BUTTONS_CLOSE, "%s", message.to_string().c_str());
-  g_signal_connect_swapped (d, "response", 
+  g_signal_connect_swapped (d, "response",
                             G_CALLBACK(gtk_widget_destroy), d);
   gtk_widget_show (d);
 }
@@ -691,7 +691,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   gtk_widget_show_all (d);
   _post_task = new TaskPost (server, message);
   _post_task->add_listener (this);
-  
+
   _queue.add_task (_post_task, Queue::TOP);
 
   /**
@@ -722,7 +722,7 @@ namespace
 		char *fname;
 		PostUI *pui;
 	} se_data;
-	
+
 	void child_watch_cb(GPid pid, gint status, gpointer data)
 	{
 		se_data *d=static_cast<se_data*>(data);
@@ -837,7 +837,7 @@ PostUI :: spawn_editor ()
 void PostUI::spawn_editor_dead(char *fname)
 {
 	GtkTextBuffer * buf (_body_buf);
-	
+
   // read the file contents back in
   std::string txt;
   if (file :: get_text_file_contents (fname, txt)) {
@@ -1151,8 +1151,8 @@ PostUI :: create_body_widget (GtkTextBuffer*& buf, GtkWidget*& view, const Prefs
   pango_layout_set_text (layout, s.c_str(), s.size());
   pango_layout_get_extents (layout, &r, 0);
   gtk_widget_set_size_request (view, PANGO_PIXELS(r.width), -1 );
- 
-  // set the rest of the text view's policy 
+
+  // set the rest of the text view's policy
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(view), GTK_WRAP_WORD);
   gtk_text_view_set_editable (GTK_TEXT_VIEW(view), true);
   GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -1211,7 +1211,7 @@ PostUI :: update_profile_combobox ()
       sel_index = index;
     ++index;
   }
- 
+
   // ensure _something_ is selected...
   gtk_combo_box_set_active (GTK_COMBO_BOX(combo), sel_index);
 
@@ -1383,7 +1383,7 @@ PostUI :: apply_profile_to_body ()
   {
     // scrub the attribution for UTF8 cleanness
     attribution = header_to_utf8 (attribution);
- 
+
     std::string::size_type pos = body.find (old_attribution);
     if (!old_attribution.empty() && (pos != std::string::npos))
       body.replace (pos, old_attribution.size(), attribution);
@@ -1902,7 +1902,7 @@ gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your 
   gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   ++row;
-  w = _message_id_check = gtk_check_button_new_with_mnemonic (_("Add \"Message-_Id header"));
+  w = _message_id_check = gtk_check_button_new_with_mnemonic (_("Add \"Message-_Id\" header"));
   b = _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
   g_signal_connect (w, "toggled", G_CALLBACK(message_id_toggled_cb), &_prefs);

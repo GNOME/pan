@@ -100,7 +100,7 @@ namespace
 
   PixbufCache& get_pixbuf_cache (gpointer gp) {
     static const char * PIXBUF_CACHE ("pixbuf-cache");
-    GObject * o (G_OBJECT (gp)); 
+    GObject * o (G_OBJECT (gp));
     PixbufCache *pc ((PixbufCache*) g_object_get_data(o, PIXBUF_CACHE));
     if (!pc) {
       pc = new PixbufCache ();
@@ -339,8 +339,8 @@ namespace
   {
     const int begin_offset (gtk_text_iter_get_offset (iter));
 
-    GdkPixbuf * original (0);    
-    GdkPixbuf * old_scaled (0);    
+    GdkPixbuf * original (0);
+    GdkPixbuf * old_scaled (0);
     if (!get_pixbuf_at_offset (buf, begin_offset, original, old_scaled))
       return;
 
@@ -559,7 +559,7 @@ namespace
       for (;;) {
         if (str == line_end)
           break;
-        else if (text_massager->is_quote_character (g_utf8_get_char (str))) 
+        else if (text_massager->is_quote_character (g_utf8_get_char (str)))
           ++depth;
         else if (!g_unichar_isspace(g_utf8_get_char(str)))
           break;
@@ -606,7 +606,7 @@ namespace
   }
 
   enum TagMode { ADD, REPLACE };
- 
+
   void
   set_section_tag (GtkTextBuffer     * buffer,
                    GtkTextIter       * start,
@@ -707,8 +707,8 @@ namespace
     int offset (0);
     if (GNKSA::find_signature_delimiter (v, offset) != GNKSA::SIG_NONE)
       sig_point = v.str + offset;
-   
-    // colorize the quoted text 
+
+    // colorize the quoted text
     GtkTextIter mark_end;
     std::string last_quote_tag;
     bool is_sig (false);
@@ -798,7 +798,7 @@ namespace
         }
       }
     }
-    
+
     // colorize urls
     if (do_urls) {
       StringView area;
@@ -838,7 +838,7 @@ namespace
       gsize bytesLeft = buffer->len;
       guchar * data = buffer->data;
 
-      // ticket #467446 - workaround gdkpixbuf <= 2.12.x's 
+      // ticket #467446 - workaround gdkpixbuf <= 2.12.x's
       // jpg loader bug (#494667) by feeding the loader in
       // smaller chunks
       while( bytesLeft > 0 )
@@ -1079,7 +1079,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
       }
     }
   }
-  
+
   s.resize (s.size()-1); // remove trailing linefeed
   gtk_label_set_markup (GTK_LABEL(_headers), s.c_str());
 
@@ -1341,7 +1341,7 @@ BodyPane :: copy_url ()
   gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD),
                           _hover_url.c_str(), _hover_url.size());
 }
- 
+
 
 void
 BodyPane :: populate_popup_cb (GtkTextView *v, GtkMenu *m, gpointer pane)
@@ -1549,7 +1549,7 @@ namespace
   }
 
   std::string get_header (GMimeMessage * msg,
-                          const char   * key, 
+                          const char   * key,
                           const char   * fallback_charset_1,
                           const char   * fallback_charset_2)
   {
@@ -1617,6 +1617,7 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     const std::string newsgroups (get_header (_message, "Newsgroups",  message_charset, group_charset));
     const std::string fup_to     (get_header (_message, "Followup-To", message_charset, group_charset));
     const std::string reply_to   (get_header (_message, "Reply-To",    message_charset, group_charset));
+
     if (is_reply || fup_to=="poster") {
       const std::string& to (reply_to.empty() ? from : reply_to);
       pan_g_mime_message_add_recipients_from_string (msg, GMIME_RECIPIENT_TYPE_TO, to.c_str());
@@ -1634,7 +1635,6 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     g_mime_message_set_subject (msg, val.c_str());
 
     // attribution lines
-
     const char * cpch = g_mime_object_get_header (_message_obj, "From");
     h = header_to_utf8 (cpch, message_charset, group_charset);
     g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Author", h.c_str());

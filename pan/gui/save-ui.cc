@@ -102,9 +102,11 @@ SaveDialog :: response_cb (GtkDialog * dialog,
                            int response,
                            gpointer user_data)
 {
+
   if (response == GTK_RESPONSE_OK)
   {
     SaveDialog * self (static_cast<SaveDialog*>(user_data));
+
     bool subject_in_path = false;
 
     // set the path mode based on what widgets exist & are set
@@ -136,7 +138,7 @@ SaveDialog :: response_cb (GtkDialog * dialog,
 
     std::string sep( self->_prefs.get_string("save-subj-seperator", "-") );
 
-    // make the tasks... 
+    // make the tasks...
     Queue::tasks_t tasks;
     foreach_const (std::vector<Article>, self->_articles, it)
     {

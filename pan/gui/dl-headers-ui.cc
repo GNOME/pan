@@ -109,10 +109,10 @@ pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
       title += groups.begin()->c_str();
     else {
       char buf[64];
-      g_snprintf (buf, sizeof(buf), _("%d Groups"), (int)groups.size());
+      g_snprintf (buf, sizeof(buf), ngettext("%d Group","%d Groups", (int)groups.size()), (int)groups.size());
       title += buf;
     }
-    
+
     State * state = new State (data, prefs, queue);
     state->groups = groups;
     state->dialog = gtk_dialog_new_with_buttons (

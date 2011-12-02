@@ -210,7 +210,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   gtk_container_add (GTK_CONTAINER(item), _header_pane->create_filter_entry());
   gtk_widget_show_all (GTK_WIDGET(item));
   gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, index+1);
-  
+
   //guint merge_id = gtk_ui_manager_new_merge_id (_ui_manager);
   //gtk_ui_manager_add_ui (_ui_manager, merge_id, path, "group-pane-filter", NULL, GTK_UI_MANAGER_TOOLITEM, true);
   //GtkWidget * item = gtk_ui_manager_get_widget (_ui_manager, path);
@@ -270,7 +270,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   gtk_box_pack_start (GTK_BOX(status_bar), _taskbar, true, true, 0);
   gtk_widget_show_all (status_bar);
 
-  // status 
+  // status
   w = _event_log_button = gtk_button_new ();
   gtk_widget_set_tooltip_text (w, _("Open the Event Log"));
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
@@ -311,10 +311,10 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
 
   gtk_accel_map_load (get_accel_filename().c_str());
 
-  { // make sure taskbar views have the right tasks in them -- 
+  { // make sure taskbar views have the right tasks in them --
     // when Pan first starts, the active tasks are already running
     Queue::task_states_t task_states;
-    queue.get_all_task_states(task_states);    
+    queue.get_all_task_states(task_states);
     foreach(Queue::tasks_t, task_states.tasks, it) {
       Queue::TaskState s = task_states.get_state(*it);
       if (s == Queue::RUNNING || s == Queue::DECODING)
@@ -529,13 +529,13 @@ GUI :: prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs)
 std::string
 GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
 {
-	
+
   if (prev_path.empty())
     prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());
   if (!file :: file_exists (prev_path.c_str()))
   prev_path = g_get_home_dir ();
     prev_file = std::string(_("Untitled.nzb"));
-    
+
   GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB File as..."),
 				      parent,
 				      GTK_FILE_CHOOSER_ACTION_SAVE,
@@ -545,7 +545,7 @@ GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
 	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (w), TRUE);
 	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
 	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (w), prev_file.c_str());
-	
+
 	std::string file;
 	const int response (gtk_dialog_run (GTK_DIALOG(w)));
 	if (response == GTK_RESPONSE_ACCEPT) {
@@ -593,11 +593,11 @@ void GUI :: do_save_articles_to_nzb ()
       std::string emptystring;
       foreach_const (std::vector<Article>, copies, it)
         tasks.push_back (new TaskArticle (_data, _data, *it, _cache, _data, 0, TaskArticle::RAW,emptystring));
-    
+
           // write them to a file
           std::ofstream tmp(file.c_str());
           if (tmp.good()) {
-            NZB :: nzb_to_xml_file (tmp, tasks); 
+            NZB :: nzb_to_xml_file (tmp, tasks);
             tmp.close();
           }
     }
@@ -643,7 +643,7 @@ namespace
     }
 
     virtual ~SaveArticlesFromNZB() {}
-    
+
     virtual void on_progress_finished (Progress&, int status)
     {
       if (status == OK) {
@@ -758,7 +758,7 @@ namespace
       gtk_container_add (GTK_CONTAINER(w), new_child);
       gtk_widget_show (new_child);
     }
-  } 
+  }
 }
 
 void GUI :: on_log_entry_added (const Log::Entry& e)
@@ -1066,7 +1066,7 @@ void GUI :: do_supersede_article ()
   // did this user post the message?
   const char * sender (g_mime_message_get_sender (message));
   const bool user_posted_this (_data.has_from_header (sender));
-  
+
   if (!user_posted_this) {
     GtkWidget * w = gtk_message_dialog_new (
       get_window(_root),
@@ -1388,7 +1388,7 @@ GUI :: notebook_page_switched_cb (GtkNotebook *, GtkNotebookPage *, gint page_nu
   }
   g_idle_add (grab_focus_idle, w);
 }
- 
+
 void GUI :: do_tabbed_layout (bool tabbed)
 {
   if (hpane) {
@@ -1520,14 +1520,12 @@ void GUI :: do_show_selected_article_info ()
     char msg[512];
     *msg = '\0';
     std::ostringstream s;
-    if (n_parts > 1) {
-      if (missing_parts.empty())
-        g_snprintf (msg, sizeof(msg), _("This article has all %d parts."), (int)n_parts);
-      else
-        g_snprintf (msg, sizeof(msg), _("This article is missing %d of its %d parts:"), (int)missing_parts.size(), (int)n_parts);
-      foreach_const (std::set<number_t>, missing_parts, it)
-        s << ' ' << *it;
-    }
+    if (missing_parts.empty())
+      g_snprintf (msg, sizeof(msg), ngettext("This article is complete with %d part.","This article has all %d parts.",(int)n_parts), (int)n_parts);
+    else
+      g_snprintf (msg, sizeof(msg), ngettext("This article is missing %d part.","This article is missing %d of its %d parts:",(int)n_parts), (int)missing_parts.size(), (int)n_parts);
+    foreach_const (std::set<number_t>, missing_parts, it)
+      s << ' ' << *it;
 
     GtkWidget * w = gtk_message_dialog_new_with_markup (
       get_window(_root),
@@ -1709,8 +1707,9 @@ GUI :: refresh_connection_label ()
   {
     g_snprintf (str, sizeof(str), _("Offline"));
 
+    int num(active+idle);
     if (active || idle)
-      g_snprintf (tip, sizeof(tip), _("Closing %d connections"), (active+idle));
+        g_snprintf (tip, sizeof(tip), ngettext("Closing %d connection","Closing %d connections", num), num);
     else
       g_snprintf (tip, sizeof(tip), _("No Connections"));
   }
@@ -1720,7 +1719,7 @@ GUI :: refresh_connection_label ()
     g_snprintf (tip, sizeof(tip), "%s", str);
   }
   else if (active || idle)
-  { 
+  {
     typedef std::vector<Queue::ServerConnectionCounts> counts_t;
     counts_t counts;
     _queue.get_full_connection_counts (counts);

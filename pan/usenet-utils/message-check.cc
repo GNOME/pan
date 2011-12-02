@@ -194,7 +194,11 @@ namespace
 
     if (too_wide_qty) {
       char buf[1024];
-      g_snprintf (buf, sizeof(buf), _("Warning: %d lines are more than 80 characters wide."), too_wide_qty);
+      if (too_wide_qty != 1)
+        g_snprintf (buf, sizeof(buf), ngettext("Warning: %d line is more than 80 characters wide.",
+                                               "Warning: %d lines are more than 80 characters wide.", too_wide_qty), too_wide_qty);
+      else
+
       errors.insert (buf);
       goodness.raise_to_warn ();
     }
@@ -267,7 +271,7 @@ namespace
    * (2) Replace carriage returns in both the calculated attribution string
    *     and a temporary copy of the message body, so that we don't have to
    *     worry whether or not the attribution line's been wrapped.
-   * 
+   *
    * (3) Search for an occurance of the attribution string in the body.  If
    *     it's found, remove it from the temporary copy of the body so that
    *     it won't affect our line counts.
@@ -447,7 +451,7 @@ MessageCheck :: message_check (const GMimeMessage * message_const,
   }
   check_body (errors, goodness, tm, message, body, attribution);
   g_free (body);
-  
+
   // check the optional followup-to...
   bool followup_to_set (false);
   const char * cpch = g_mime_object_get_header ((GMimeObject *) message, "Followup-To");

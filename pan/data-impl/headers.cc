@@ -117,7 +117,7 @@ DataImpl :: GroupHeaders :: remove_articles (const quarks_t& mids)
     (*it)->_article = 0;
   _dirty = true;
 }
-  
+
 const DataImpl :: GroupHeaders*
 DataImpl :: get_group_headers (const Quark& group) const
 {
@@ -239,7 +239,7 @@ void
 DataImpl :: load_article (const Quark       & group,
                           Article           * article,
                           const StringView  & references)
-              
+
 {
 #if 0
   std::cerr << LINE_ID << " adding article "
@@ -261,7 +261,8 @@ DataImpl :: load_article (const Quark       & group,
     node = h->_nodes[mid] = &h->_node_chunk.back();
     node->_mid = mid;
   }
-  assert (!node->_article);
+  // !!INFO!! : this is bypassed for now, as it causes an abort on local cache corruptions
+  //assert (!node->_article);
   node->_article = article;
   ArticleNode * article_node = node;
 
@@ -463,7 +464,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
 
       Xref::targets_t targets;
       std::vector<Xref::Target>& targets_v (targets.get_container());
-        
+
       // each article in this group...
       unsigned int expire_count (0);
       in->getline (line);
@@ -614,18 +615,19 @@ namespace
 
   struct QuarkToSymbol
   {
+    char buf[2];
+    QuarkToSymbol() { buf[1] = '\0'; }
+
     typedef Loki::AssocVector < pan::Quark, char > quark_to_symbol_t;
     quark_to_symbol_t _map;
 
-    const char* operator() (const Quark& quark) const
+    const char* operator() (const Quark& quark)
     {
-      static char buf[2];
       quark_to_symbol_t::const_iterator it (_map.find (quark));
       if (it == _map.end())
         return quark.c_str();
 
       buf[0] = it->second;
-      buf[1] = '\0';
       return buf;
     }
 
@@ -825,7 +827,7 @@ DataImpl :: save_headers (DataIO& data_io, const Quark& group) const
    const double time_elapsed (timer.get_seconds_elapsed());
    if (success)
       Log::add_info_va (
-   _("Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"),
+   _("Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"),
          part_count,
          article_count,
          group.c_str(),
@@ -887,7 +889,7 @@ DataImpl :: mark_read (const Article  ** articles,
     fire_group_counts (group, g._unread_count, g._article_count);
     on_articles_changed (group, it->second, false);
   }
-  
+
   if( !newsrc_autosave_id && newsrc_autosave_timeout )
     newsrc_autosave_id = g_timeout_add_seconds( newsrc_autosave_timeout * 60, nrc_as_cb, this);
 }
@@ -1108,7 +1110,7 @@ DataImpl :: delete_articles (const unique_articles_t& articles)
 
     // remove the articles from our lookup table...
     GroupHeaders * h (get_group_headers (group));
-    if (h) 
+    if (h)
       h->remove_articles (it->second.mids);
   }
 
