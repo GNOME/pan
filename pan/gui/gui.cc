@@ -979,6 +979,7 @@ void GUI :: do_read_next_watched_article ()
 }
 void GUI :: do_read_next_unread_thread ()
 {
+  std::cerr << "FIXME " << LINE_ID << std::endl;
   _header_pane->read_next_unread_thread ();
 }
 void GUI :: do_read_next_thread ()

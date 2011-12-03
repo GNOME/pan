@@ -227,7 +227,7 @@ namespace
 #endif
     g_io_channel_set_encoding (channel, NULL, NULL);
     g_io_channel_set_buffered (channel, true);
-//    g_io_channel_set_line_term (channel, "\n", 1);
+    g_io_channel_set_line_term (channel, "\n", 1);
     return channel;
   }
 }
@@ -286,7 +286,6 @@ GIOChannelSocket :: open (const StringView& address, int port, std::string& setm
 {
   _host.assign (address.str, address.len);
   _channel = create_channel (address, port, setme_err);
-  debug("SocketSSL open "<<_channel);
   return _channel != 0;
 }
 
