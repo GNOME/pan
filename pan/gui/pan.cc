@@ -807,9 +807,8 @@ main (int argc, char *argv[])
 
     // instantiate the queue...
     WorkerPool worker_pool (4, true);
-    Queue queue (data, data, &socket_creator, certstore, worker_pool, false, 32768);
-    // init the socket creator
     SocketCreator socket_creator(data, certstore);
+    Queue queue (data, data, &socket_creator, certstore, worker_pool, false, 32768);
 
     ///////////// DBUS
     /// TODO : make it work with win32
@@ -818,6 +817,7 @@ main (int argc, char *argv[])
     pan_dbus_init(&pan);
 
     GError* error(NULL);
+
     GVariant* var = g_variant_new ("(sssbb)",
                     groups.c_str(), nzb_output_path.c_str(), nzb_str.c_str(),  gui, nzb);
     g_dbus_connection_call_sync (g_bus_get_sync  (G_BUS_TYPE_SESSION , NULL, NULL),

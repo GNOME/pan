@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-06 18:42+0200\n"
+"POT-Creation-Date: 2011-12-03 23:17+0100\n"
 "PO-Revision-Date: 2005-03-16 16:45+0000\n"
 "Last-Translator: Stylianos Papanastasiou <stelios@dcs.gla.ac.uk>\n"
 "Language-Team: Greek <gnomehellas@gmx.net>\n"
@@ -31,14 +31,14 @@ msgid "Read News from Usenet"
 msgstr "Ανάγνωση συζητήσεων από το Usenet"
 
 #. load_group_descriptions (*_data_io);
-#: ../pan/data-impl/data-impl.cc:101
+#: ../pan/data-impl/data-impl.cc:102
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr ""
 
-#: ../pan/data-impl/data-io.cc:187 ../pan/data-impl/data-io.cc:211
+#: ../pan/data-impl/data-io.cc:193 ../pan/data-impl/data-io.cc:217
 #: ../pan/data/article-cache.cc:236 ../pan/data/article-cache.cc:247
-#: ../pan/gui/post-ui.cc:1694
+#: ../pan/gui/post-ui.cc:1625
 #, fuzzy, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "ομάδα"
@@ -48,12 +48,12 @@ msgstr "ομάδα"
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "Παραλαβή μηνύματος %s"
 
-#: ../pan/data-impl/headers.cc:582
+#: ../pan/data-impl/headers.cc:596
 #, fuzzy, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr "Διαγραφή %u άρθρων από `%s'"
 
-#: ../pan/data-impl/headers.cc:589
+#: ../pan/data-impl/headers.cc:603
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
@@ -62,28 +62,29 @@ msgstr ""
 "Μη υποστηριζόμενη έκδοση δεδομένων για %s επικεφαλίδες: %d.\n"
 "Μήπως τρέχετε παλαιότερη έκδοση του Pan κατα λάθος;"
 
-#: ../pan/data-impl/headers.cc:604
+#: ../pan/data-impl/headers.cc:618
 #, fuzzy, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr ""
 "Μεταφορτώθηκαν %u άρθρα για την ομάδα \"%s\" σε %.1f δευτερόλεπτα (%.0f "
 "άρθρα/δευτ.)"
 
-#: ../pan/data-impl/headers.cc:829
+#: ../pan/data-impl/headers.cc:847
 #, fuzzy, c-format
-msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgid ""
+"Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
 msgstr ""
 "Αποθηκεύτηκαν %lu κομμάτια, %d άρθρα στο \"%s\" σε %.1f δευτερόλεπτα (%.0f "
 "άρθρα/δευτ.)"
 
-#: ../pan/data-impl/headers.cc:1144
+#: ../pan/data-impl/headers.cc:1168
 #, fuzzy, c-format
 msgid "Added %lu articles to %s."
 msgstr "Προστέθηκαν %lu κομμάτια, %lu άρθρα στο \"%s\""
 
-#: ../pan/data-impl/profiles.cc:164 ../pan/data-impl/server.cc:316
-#: ../pan/data/article-cache.cc:391 ../pan/general/file-util.cc:240
-#: ../pan/gui/post-ui.cc:580
+#: ../pan/data-impl/profiles.cc:164 ../pan/data-impl/server.cc:374
+#: ../pan/data/article-cache.cc:391 ../pan/general/file-util.cc:298
+#: ../pan/gui/post-ui.cc:538 ../pan/gui/task-pane.cc:681
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Σφάλμα ανάγνωσης αρχείου \"%s\": %s."
@@ -137,764 +138,796 @@ msgstr "Δεν μπορεί να γίνει χρήση της κανονικής
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr ""
 
-#: ../pan/gui/actions.cc:255 ../pan/gui/post-ui.cc:389
+#: ../pan/gui/actions.cc:260 ../pan/gui/post-ui.cc:357
 #, fuzzy
 msgid "_File"
 msgstr "/_Αρχείο"
 
 #
-#: ../pan/gui/actions.cc:256 ../pan/gui/post-ui.cc:390
+#: ../pan/gui/actions.cc:261 ../pan/gui/post-ui.cc:358
 #, fuzzy
 msgid "_Edit"
 msgstr "/_Επεξεργασία"
 
-#: ../pan/gui/actions.cc:257 ../pan/gui/prefs-ui.cc:582
+#: ../pan/gui/actions.cc:262 ../pan/gui/prefs-ui.cc:645
 #, fuzzy
 msgid "_Layout"
 msgstr "Διάταξη _Ταμπλώ"
 
-#: ../pan/gui/actions.cc:258
+#: ../pan/gui/actions.cc:263
 #, fuzzy
 msgid "_Group Pane"
 msgstr "Εγγράψιμο από ομάδα"
 
-#: ../pan/gui/actions.cc:259
+#: ../pan/gui/actions.cc:264
 #, fuzzy
 msgid "_Header Pane"
 msgstr "Εμφάνιση ταμπλώ κεφαλίδας"
 
-#: ../pan/gui/actions.cc:260
+#: ../pan/gui/actions.cc:265
 #, fuzzy
 msgid "_Body Pane"
 msgstr "Το Ταμπλώ"
 
 #
-#: ../pan/gui/actions.cc:261
+#: ../pan/gui/actions.cc:266
 #, fuzzy
 msgid "_View"
 msgstr "/_Προβολή"
 
-#: ../pan/gui/actions.cc:262
+#: ../pan/gui/actions.cc:267
 #, fuzzy
 msgid "Filte_r"
 msgstr "/_Φίλτρα"
 
-#: ../pan/gui/actions.cc:263
+#: ../pan/gui/actions.cc:268
 #, fuzzy
 msgid "_Go"
 msgstr "/_Μετάβαση"
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/actions.cc:264 ../pan/gui/prefs-ui.cc:608
+#: ../pan/gui/actions.cc:269 ../pan/gui/prefs-ui.cc:671
 #, fuzzy
 msgid "_Actions"
 msgstr "Ενέργειες"
 
-#: ../pan/gui/actions.cc:265
+#: ../pan/gui/actions.cc:270
 #, fuzzy
 msgid "_Articles"
 msgstr "/Ά_ρθρα"
 
-#: ../pan/gui/actions.cc:266
+#: ../pan/gui/actions.cc:271
 #, fuzzy
 msgid "G_roups"
 msgstr "Ομάδες"
 
-#: ../pan/gui/actions.cc:267 ../pan/gui/actions.cc:268
+#: ../pan/gui/actions.cc:272 ../pan/gui/actions.cc:273
 msgid "_Post"
 msgstr "_Αποστολή"
 
 #
-#: ../pan/gui/actions.cc:269
+#: ../pan/gui/actions.cc:274
 #, fuzzy
 msgid "_Help"
 msgstr "Βοήθεια"
 
-#: ../pan/gui/actions.cc:272 ../pan/gui/post-ui.cc:396
+#: ../pan/gui/actions.cc:277 ../pan/gui/post-ui.cc:364
 msgid "Set Character _Encoding..."
 msgstr ""
 
-#: ../pan/gui/actions.cc:273
+#: ../pan/gui/actions.cc:278
 msgid "Set Character Encoding..."
 msgstr ""
 
-#: ../pan/gui/actions.cc:277
+#: ../pan/gui/actions.cc:282
 #, fuzzy
 msgid "_Read Group"
 msgstr "Ανανέωση ομάδας"
 
-#: ../pan/gui/actions.cc:278
+#: ../pan/gui/actions.cc:283
 #, fuzzy
 msgid "Read Group"
 msgstr "Ανανέωση ομάδας"
 
-#: ../pan/gui/actions.cc:282
+#: ../pan/gui/actions.cc:287
 #, fuzzy
 msgid "_Mark Selected Groups Read"
 msgstr "Σήμανση επιλεγμένων άρθρων ως αναγνωσμένα"
 
-#: ../pan/gui/actions.cc:283
+#: ../pan/gui/actions.cc:288
 #, fuzzy
 msgid "Mark Selected Groups Read"
 msgstr "Σήμανση επιλεγμένων άρθρων ως αναγνωσμένα"
 
 #
-#: ../pan/gui/actions.cc:287
+#: ../pan/gui/actions.cc:292
 #, fuzzy
 msgid "_Delete Selected Groups' Articles"
 msgstr "/_Διαγραφή όλων των άρθρων της ομάδας"
 
 #
-#: ../pan/gui/actions.cc:288
+#: ../pan/gui/actions.cc:293
 #, fuzzy
 msgid "Delete Selected Groups' Articles"
 msgstr "/_Διαγραφή όλων των άρθρων της ομάδας"
 
-#: ../pan/gui/actions.cc:292
+#: ../pan/gui/actions.cc:297
 #, fuzzy
 msgid "Get New _Headers in Selected Groups"
 msgstr "Λήψη όλων των νέων κεφαλίδων στις επιλεγμένες ομάδες"
 
-#: ../pan/gui/actions.cc:293
+#: ../pan/gui/actions.cc:298
 #, fuzzy
 msgid "Get New Headers in Selected Groups"
 msgstr "Λήψη όλων των νέων κεφαλίδων στις επιλεγμένες ομάδες"
 
-#: ../pan/gui/actions.cc:297
+#: ../pan/gui/actions.cc:302
 #, fuzzy
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "Λήψη όλων των νέων κεφαλίδων στις εγεγγραμένες ομάδες"
 
-#: ../pan/gui/actions.cc:298
+#: ../pan/gui/actions.cc:303
 #, fuzzy
 msgid "Get New Headers in Subscribed Groups"
 msgstr "/Λήψη νέων κεφαλίδων στις _εγεγγραμένες ομάδες"
 
-#: ../pan/gui/actions.cc:302
+#: ../pan/gui/actions.cc:307
 #, fuzzy
 msgid "Get _Headers..."
 msgstr "/Λήψη _νέων κεφαλίδων"
 
-#: ../pan/gui/actions.cc:303
+#: ../pan/gui/actions.cc:308
 #, fuzzy
 msgid "Get Headers..."
 msgstr "/Λήψη _νέων κεφαλίδων"
 
-#: ../pan/gui/actions.cc:307 ../pan/gui/actions.cc:308
+#: ../pan/gui/actions.cc:312 ../pan/gui/actions.cc:313
 #, fuzzy
 msgid "Refresh Group List"
 msgstr "Ανανέωση ομάδας \"%s\""
 
-#: ../pan/gui/actions.cc:312
+#: ../pan/gui/actions.cc:317
 #, fuzzy
 msgid "_Subscribe"
 msgstr "/Ε_γγραφή"
 
-#: ../pan/gui/actions.cc:313
+#: ../pan/gui/actions.cc:318
 msgid "Subscribe"
 msgstr "Εγγραφή"
 
-#: ../pan/gui/actions.cc:317
+#: ../pan/gui/actions.cc:322
 #, fuzzy
 msgid "_Unsubscribe"
 msgstr "/Κατά_ργηση εγγραφής"
 
-#: ../pan/gui/actions.cc:318
+#: ../pan/gui/actions.cc:323
 msgid "Unsubscribe"
 msgstr "Κατάργηση εγγραφής"
 
-#: ../pan/gui/actions.cc:322
+#: ../pan/gui/actions.cc:327
 #, fuzzy
 msgid "_Save Articles..."
 msgstr "Απο_θήκευση άρθρων ως..."
 
-#: ../pan/gui/actions.cc:323
+#: ../pan/gui/actions.cc:328
 #, fuzzy
 msgid "Save Articles..."
 msgstr "Απο_θήκευση άρθρων ως..."
 
-#: ../pan/gui/actions.cc:327
+#: ../pan/gui/actions.cc:332
 #, fuzzy
 msgid "Save Articles from this _NZB..."
 msgstr "Απο_θήκευση άρθρων ως..."
 
-#: ../pan/gui/actions.cc:328
+#: ../pan/gui/actions.cc:333
 #, fuzzy
 msgid "Save Articles from this NZB"
 msgstr "Αποθήκευση άρθρων (μόνο συ_νημμένα)"
 
-#: ../pan/gui/actions.cc:332
+#: ../pan/gui/actions.cc:337
 #, fuzzy
 msgid "Save Articles to an NZB _File..."
 msgstr "Απο_θήκευση άρθρων ως..."
 
-#: ../pan/gui/actions.cc:333
+#: ../pan/gui/actions.cc:338
 #, fuzzy
 msgid "Save Articles to an NZB File"
 msgstr "Αποθήκευση της καταγραφής σε ένα αρχείο."
 
-#: ../pan/gui/actions.cc:342
+#: ../pan/gui/actions.cc:347
 #, fuzzy
 msgid "_Import NZB Files..."
 msgstr "Ε_ισαγωγή .newsrc..."
 
-#: ../pan/gui/actions.cc:347
+#: ../pan/gui/actions.cc:352
 #, fuzzy
 msgid "_Cancel Last Task"
 msgstr "Ακύρωση τελευταίας εργασίας"
 
-#: ../pan/gui/actions.cc:352
+#: ../pan/gui/actions.cc:357
 #, fuzzy
 msgid "_Task Manager"
 msgstr "/_Αρχείο/Διαχειριστής ερ_γασιών..."
 
-#: ../pan/gui/actions.cc:357
+#: ../pan/gui/actions.cc:362
 #, fuzzy
 msgid "_Event Log"
 msgstr "Άνοιγμα της καταγραφής κατάστασης"
 
 #
-#: ../pan/gui/actions.cc:362
+#: ../pan/gui/actions.cc:367
 #, fuzzy
 msgid "_Quit"
 msgstr "/_Επεξεργασία"
 
 #
-#: ../pan/gui/actions.cc:367
+#: ../pan/gui/actions.cc:372
 #, fuzzy
 msgid "Select _All Articles"
 msgstr "Λήψη όλων των άρθρων"
 
 #
-#: ../pan/gui/actions.cc:372
+#: ../pan/gui/actions.cc:377
 #, fuzzy
 msgid "_Deselect All Articles"
 msgstr "/_Επεξεργασία/Αποεπιλογή ό_λων των άρθρων"
 
-#: ../pan/gui/actions.cc:377
+#: ../pan/gui/actions.cc:382
 #, fuzzy
 msgid "Add Su_bthreads to Selection"
 msgstr "/_Επεξεργασία/Προσθήκη _υποαλληλουχιών στην επιλογή"
 
-#: ../pan/gui/actions.cc:382
+#: ../pan/gui/actions.cc:387
 #, fuzzy
 msgid "Add _Threads to Selection"
 msgstr "/_Επεξεργασία/Προσθήκη αλληλουχι_ών στην επιλογή"
 
-#: ../pan/gui/actions.cc:387
+#: ../pan/gui/actions.cc:392
 #, fuzzy
 msgid "Add _Similar Articles to Selection"
 msgstr "/_Επεξεργασία/Προσθήκη αλληλουχι_ών στην επιλογή"
 
-#: ../pan/gui/actions.cc:392
+#: ../pan/gui/actions.cc:397
 #, fuzzy
 msgid "Select Article _Body"
 msgstr "/_Επεξεργασία/Επιλογή _σώματος άρθρου"
 
-#: ../pan/gui/actions.cc:397
+#: ../pan/gui/actions.cc:402
 #, fuzzy
 msgid "Edit _Preferences"
 msgstr "/_Επεξεργασία/_Προτιμήσεις..."
 
-#: ../pan/gui/actions.cc:402
+#: ../pan/gui/actions.cc:407
 #, fuzzy
 msgid "Edit Selected _Group's Preferences"
 msgstr "/_Επεξεργασία/_Προτιμήσεις..."
 
-#: ../pan/gui/actions.cc:407 ../pan/gui/post-ui.cc:405
+#: ../pan/gui/actions.cc:412 ../pan/gui/post-ui.cc:373
 #, fuzzy
 msgid "Edit P_osting Profiles"
 msgstr "/_Αποστολή/_Προφίλ αποστολέα..."
 
 #
-#: ../pan/gui/actions.cc:412
+#: ../pan/gui/actions.cc:417
 #, fuzzy
 msgid "Edit _News Servers"
 msgstr "Διακομιστής νέων:"
 
-#: ../pan/gui/actions.cc:417
+#: ../pan/gui/actions.cc:422
+msgid "Edit _SSL Certificates"
+msgstr ""
+
+#: ../pan/gui/actions.cc:427
 #, fuzzy
 msgid "Jump to _Group Tab"
 msgstr "/_Προβολή/_Μετάβαση στη στήλη ομάδας"
 
 #
-#: ../pan/gui/actions.cc:422
+#: ../pan/gui/actions.cc:432
 #, fuzzy
 msgid "Jump to _Header Tab"
 msgstr "/_Προβολή/Μετάβαση στη στήλη _κεφαλίδας"
 
-#: ../pan/gui/actions.cc:427
+#: ../pan/gui/actions.cc:437
 #, fuzzy
 msgid "Jump to _Body Tab"
 msgstr "/_Προβολή/Μετάβαση στη στήλη σώματος _άρθρου"
 
 #
-#: ../pan/gui/actions.cc:432
+#: ../pan/gui/actions.cc:442
 #, fuzzy
 msgid "_Rot13 Selected Text"
 msgstr "Rot13 επιλεγμένο κειμένο"
 
-#: ../pan/gui/actions.cc:437
+#: ../pan/gui/actions.cc:447
 #, fuzzy
 msgid "Clear _Header Pane"
 msgstr "Εμφάνιση ταμπλώ κεφαλίδας"
 
-#: ../pan/gui/actions.cc:441
+#: ../pan/gui/actions.cc:451
 #, fuzzy
 msgid "Clear _Body Pane"
 msgstr "Το Ταμπλώ"
 
-#: ../pan/gui/actions.cc:446
+#: ../pan/gui/actions.cc:456
 #, fuzzy
 msgid "Cache Article"
 msgstr "Ακύρωση άρθρου"
 
-#: ../pan/gui/actions.cc:451
+#: ../pan/gui/actions.cc:461
 #, fuzzy
 msgid "Read Article"
 msgstr "_Εμφάνιση άρθρου"
 
-#: ../pan/gui/actions.cc:456
+#: ../pan/gui/actions.cc:466
 #, fuzzy
 msgid "Show Article Information"
 msgstr "Πληροφορίες για το προφίλ"
 
-#: ../pan/gui/actions.cc:461
+#: ../pan/gui/actions.cc:471
 #, fuzzy
 msgid "Read _More"
 msgstr "Ανάγνωση περισσοτέρων"
 
-#: ../pan/gui/actions.cc:462
+#: ../pan/gui/actions.cc:472
 msgid "Read More"
 msgstr "Ανάγνωση περισσοτέρων"
 
-#: ../pan/gui/actions.cc:466
+#: ../pan/gui/actions.cc:476
 msgid "Read _Back"
 msgstr ""
 
-#: ../pan/gui/actions.cc:467
+#: ../pan/gui/actions.cc:477
 #, fuzzy
 msgid "Read Back"
 msgstr "/_Μετάβαση/Ανάγνωση παραπάνω"
 
 #
-#: ../pan/gui/actions.cc:471
+#: ../pan/gui/actions.cc:481
 #, fuzzy
 msgid "Next _Unread Group"
 msgstr "/_Μετάβαση/Επόμενη μή αναγνωσμένη ο_μάδα"
 
-#: ../pan/gui/actions.cc:476
+#: ../pan/gui/actions.cc:486
 #, fuzzy
 msgid "Next _Group"
 msgstr "/_Μετάβαση/Επόμενη ο_μάδα"
 
 #
-#: ../pan/gui/actions.cc:481
+#: ../pan/gui/actions.cc:491
 #, fuzzy
 msgid "Next _Unread Article"
 msgstr "/_Μετάβαση/Επόμε_νο μή αναγνωσμένο άρθρο"
 
 #
-#: ../pan/gui/actions.cc:482
+#: ../pan/gui/actions.cc:492
 #, fuzzy
 msgid "Next Unread Article"
 msgstr "Επόμενο μή αναγνωσμένο άρθρο"
 
-#: ../pan/gui/actions.cc:486
+#: ../pan/gui/actions.cc:496
 #, fuzzy
 msgid "Next _Article"
 msgstr "/_Μετάβαση/Επόμενο ά_ρθρο"
 
-#: ../pan/gui/actions.cc:487
+#: ../pan/gui/actions.cc:497
 #, fuzzy
 msgid "Next Article"
 msgstr "/_Μετάβαση/Επόμενο ά_ρθρο"
 
 #
-#: ../pan/gui/actions.cc:491
+#: ../pan/gui/actions.cc:501
 #, fuzzy
 msgid "Next _Watched Article"
 msgstr "/_Μετάβαση/Επόμε_νο παρακολουθούμενο άρθρο"
 
 #
-#: ../pan/gui/actions.cc:496
+#: ../pan/gui/actions.cc:506
 #, fuzzy
 msgid "Next Unread _Thread"
 msgstr "/_Μετάβαση/Επόμενη μή αναγνωσμένη αλλη_λουχία"
 
-#: ../pan/gui/actions.cc:497
+#: ../pan/gui/actions.cc:507
 #, fuzzy
 msgid "Next Unread Thread"
 msgstr "Επόμενη μή αναγνωσμένη αλληλουχία"
 
-#: ../pan/gui/actions.cc:501
+#: ../pan/gui/actions.cc:511
 #, fuzzy
 msgid "Next Threa_d"
 msgstr "/_Μετάβαση/Επόμενη αλληλου_χία"
 
 #
-#: ../pan/gui/actions.cc:506
+#: ../pan/gui/actions.cc:516
 #, fuzzy
 msgid "Pre_vious Article"
 msgstr "/_Μετάβαση/Προη_γούμενο άρθρο"
 
-#: ../pan/gui/actions.cc:511
+#: ../pan/gui/actions.cc:521
 #, fuzzy
 msgid "Previous _Thread"
 msgstr "Προη_γούμενη αλληλουχία"
 
-#: ../pan/gui/actions.cc:516
+#: ../pan/gui/actions.cc:526
 #, fuzzy
 msgid "_Parent Article"
 msgstr "/_Μετάβαση/Μη_τρικό άρθρο"
 
-#: ../pan/gui/actions.cc:521
+#: ../pan/gui/actions.cc:531
 #, fuzzy
 msgid "Ignore _Author"
 msgstr "/Α_γνόηση αλληλουχιών"
 
-#: ../pan/gui/actions.cc:525
+#: ../pan/gui/actions.cc:535
 #, fuzzy
 msgid "_Watch Thread"
 msgstr "Επόμενο Θέμα"
 
-#: ../pan/gui/actions.cc:530
+#: ../pan/gui/actions.cc:540
 #, fuzzy
 msgid "_Ignore Thread"
 msgstr "/Α_γνόηση αλληλουχιών"
 
-#: ../pan/gui/actions.cc:535
+#: ../pan/gui/actions.cc:545 ../pan/gui/actions.cc:546
+#, fuzzy
+msgid "_Flag Thread"
+msgstr "Άρ_ση σημαίας σε επιλεγμένες αλληλουχίες"
+
+#: ../pan/gui/actions.cc:550 ../pan/gui/actions.cc:551
+#, fuzzy
+msgid "_Goto next flagged Thread"
+msgstr "/_Μετάβαση/Επόμενη _νέα αλληλουχία"
+
+#
+#: ../pan/gui/actions.cc:555 ../pan/gui/actions.cc:556
+#, fuzzy
+msgid "_Goto last flagged Thread"
+msgstr "Κατάρρευση επιλεγμένων αλληλουχιών"
+
+#: ../pan/gui/actions.cc:560
 #, fuzzy
 msgid "Edit Article's Watch/Ignore/Score..."
 msgstr "/Ά_ρθρα/_Δημιουργία βαθμολογίας..."
 
-#: ../pan/gui/actions.cc:540
+#: ../pan/gui/actions.cc:565
 #, fuzzy
 msgid "Add a _Scoring Rule..."
 msgstr "Προσθήκη νέας βαθμολογίας"
 
-#: ../pan/gui/actions.cc:545
+#: ../pan/gui/actions.cc:570
 #, fuzzy
 msgid "Cance_l Article..."
 msgstr "Ακύρωση άρθρου"
 
-#: ../pan/gui/actions.cc:550
+#: ../pan/gui/actions.cc:575
 #, fuzzy
 msgid "_Supersede Article..."
 msgstr "/Απο_θήκευση άρθρου ως..."
 
-#: ../pan/gui/actions.cc:555
+#: ../pan/gui/actions.cc:580
 #, fuzzy
 msgid "_Delete Article"
 msgstr "Διαγραφή"
 
-#: ../pan/gui/actions.cc:560
+#: ../pan/gui/actions.cc:585
 #, fuzzy
 msgid "Clear Article Cache"
 msgstr "Άρθρο"
 
-#: ../pan/gui/actions.cc:565
+#: ../pan/gui/actions.cc:590
 #, fuzzy
 msgid "_Mark Article as Read"
 msgstr "Σήμανση επιλεγμένων άρθρων ως αναγνωσμένα"
 
-#: ../pan/gui/actions.cc:570
+#: ../pan/gui/actions.cc:595
 #, fuzzy
 msgid "Mark Article as _Unread"
 msgstr "Σήμανση ως μή ανα_γνωσμένα"
 
-#: ../pan/gui/actions.cc:575
+#: ../pan/gui/actions.cc:601
+#, fuzzy
+msgid "_Mark Thread as Read"
+msgstr "Σήμανση  αλληλουχιών ως αναγνωσμένες"
+
+#: ../pan/gui/actions.cc:606
+#, fuzzy
+msgid "Mark Thread as _Unread"
+msgstr "Σήμανση  αλληλουχιών ως μή αναγνωσμένες"
+
+#: ../pan/gui/actions.cc:611
 #, fuzzy
 msgid "_Post to Newsgroup"
 msgstr "Α_ποστολή στην ομάδα συζήτησης"
 
-#: ../pan/gui/actions.cc:576
+#: ../pan/gui/actions.cc:612
 msgid "Post to Newsgroup"
 msgstr "Α_ποστολή στην ομάδα συζήτησης"
 
-#: ../pan/gui/actions.cc:580
+#: ../pan/gui/actions.cc:616
 #, fuzzy
 msgid "_Followup to Newsgroup"
 msgstr "/_Αποστολή/Α_πάντηση στην ομάδα συζήτησης"
 
-#: ../pan/gui/actions.cc:581
+#: ../pan/gui/actions.cc:617
 #, fuzzy
 msgid "Followup to Newsgroup"
 msgstr "/_Αποστολή/Α_πάντηση στην ομάδα συζήτησης"
 
-#: ../pan/gui/actions.cc:585
+#: ../pan/gui/actions.cc:621
 #, fuzzy
 msgid "_Reply to Author in Mail"
 msgstr "/Ά_ρθρα/_Μη εμφάνιση άρθρων αυτού του συγγραφέα"
 
-#: ../pan/gui/actions.cc:590
+#: ../pan/gui/actions.cc:626
 #, fuzzy
 msgid "_Pan Home Page"
 msgstr "/_Βοήθεια/Αρ_χική Σελίδα του Pan..."
 
-#: ../pan/gui/actions.cc:595
+#: ../pan/gui/actions.cc:631
 #, fuzzy
 msgid "Give _Feedback or Report a Bug..."
 msgstr "/_Βοήθεια/Αναφορά ενός σ_φάλματος..."
 
-#: ../pan/gui/actions.cc:600
+#: ../pan/gui/actions.cc:636
 msgid "_Tip Jar..."
 msgstr ""
 
 #
-#: ../pan/gui/actions.cc:605
+#: ../pan/gui/actions.cc:641
 #, fuzzy
 msgid "_About"
 msgstr "Περί"
 
-#: ../pan/gui/actions.cc:620
+#: ../pan/gui/actions.cc:656
 #, fuzzy
 msgid "_Thread Headers"
 msgstr "Περισσότερες κεφαλίδες"
 
-#: ../pan/gui/actions.cc:621
+#: ../pan/gui/actions.cc:657
 #, fuzzy
 msgid "_Wrap Article Body"
 msgstr "Γέμισμα/αναδίπλωση σώματος κειμένου"
 
 #
-#: ../pan/gui/actions.cc:622
+#: ../pan/gui/actions.cc:658
 #, fuzzy
 msgid "Mute _Quoted Text"
 msgstr "Σίγαση"
 
-#: ../pan/gui/actions.cc:623
+#: ../pan/gui/actions.cc:659
 #, fuzzy
 msgid "Show All _Headers in Body Pane"
 msgstr "/_Προβολή/Εμφάνιση όλων των κε_φαλίδων στο ταμπλώ άρθρου "
 
-#: ../pan/gui/actions.cc:624
+#: ../pan/gui/actions.cc:660
 #, fuzzy
 msgid "Show _Smilies as Graphics"
 msgstr "Εμφάνιση::"
 
-#: ../pan/gui/actions.cc:625
+#: ../pan/gui/actions.cc:661
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr ""
 
-#: ../pan/gui/actions.cc:626
+#: ../pan/gui/actions.cc:662
 msgid "Size Pictures to _Fit"
 msgstr ""
 
-#: ../pan/gui/actions.cc:627
+#: ../pan/gui/actions.cc:663
 #, fuzzy
 msgid "Use _Monospace Font"
 msgstr "/_Προβολή/Χρήση γραμματοσειράς Monospace στο ταμπλώ άρθρου"
 
-#: ../pan/gui/actions.cc:628
+#: ../pan/gui/actions.cc:664
 msgid "Set Focus to Images"
 msgstr ""
 
-#: ../pan/gui/actions.cc:629
+#: ../pan/gui/actions.cc:665
 msgid "Highlight _URLs"
 msgstr ""
 
-#: ../pan/gui/actions.cc:632
+#: ../pan/gui/actions.cc:668
 #, fuzzy
 msgid "_Work Online"
 msgstr "/_Αρχείο/Εργασία με _σύνδεση στο δίκτυο"
 
-#: ../pan/gui/actions.cc:633
+#: ../pan/gui/actions.cc:669
 #, fuzzy
 msgid "_Tabbed Layout"
 msgstr "/_Προβολή/_Διάταξη στηλέων"
 
-#: ../pan/gui/actions.cc:634
+#: ../pan/gui/actions.cc:670
 #, fuzzy
 msgid "Show Group _Pane"
 msgstr "Εμ_φάνιση ταμπλώ ομάδας"
 
-#: ../pan/gui/actions.cc:635
+#: ../pan/gui/actions.cc:671
 #, fuzzy
 msgid "Show Hea_der Pane"
 msgstr "/_Προβολή/Εμφάνιση ταμπλώ κε_φαλίδας"
 
-#: ../pan/gui/actions.cc:636
+#: ../pan/gui/actions.cc:672
 #, fuzzy
 msgid "Show Bod_y Pane"
 msgstr "/_Προβολή/Εμφάνιση ταμπλώ σώμα_τος άρθρου"
 
-#: ../pan/gui/actions.cc:637
+#: ../pan/gui/actions.cc:673
 msgid "Show _Toolbar"
 msgstr ""
 
-#: ../pan/gui/actions.cc:638
+#: ../pan/gui/actions.cc:674
 #, fuzzy
 msgid "Abbreviate Group Names"
 msgstr "/_Προβολή/Συντόμευση ο_νομάτων στο ταμπλώ ομάδας"
 
-#: ../pan/gui/actions.cc:640
+#: ../pan/gui/actions.cc:676
 #, fuzzy
 msgid "Match Only _Unread Articles"
 msgstr "Ταίριασμα μόνο νέων άρθρων"
 
-#: ../pan/gui/actions.cc:640
+#: ../pan/gui/actions.cc:676
 #, fuzzy
 msgid "Match Only Unread Articles"
 msgstr "Ταίριασμα μόνο νέων άρθρων"
 
-#: ../pan/gui/actions.cc:641
+#: ../pan/gui/actions.cc:677
 #, fuzzy
 msgid "Match Only _Cached Articles"
 msgstr "Ταίριασμα μόνο άρθρων στην μνήμη"
 
-#: ../pan/gui/actions.cc:641
+#: ../pan/gui/actions.cc:677
 #, fuzzy
 msgid "Match Only Cached Articles"
 msgstr "Ταίριασμα μόνο άρθρων στην μνήμη"
 
-#: ../pan/gui/actions.cc:642
+#: ../pan/gui/actions.cc:678
 #, fuzzy
 msgid "Match Only _Complete Articles"
 msgstr "Ταίριασμα μόνο ολοκληρωμένων συνημμένων"
 
-#: ../pan/gui/actions.cc:642
+#: ../pan/gui/actions.cc:678
 #, fuzzy
 msgid "Match Only Complete Articles"
 msgstr "Ταίριασμα μόνο ολοκληρωμένων συνημμένων"
 
-#: ../pan/gui/actions.cc:643
+#: ../pan/gui/actions.cc:679
 #, fuzzy
 msgid "Match Only _My Articles"
 msgstr "Ταίριασμα μόνο των άρθρων μου"
 
-#: ../pan/gui/actions.cc:643
+#: ../pan/gui/actions.cc:679
 #, fuzzy
 msgid "Match Only My Articles"
 msgstr "Ταίριασμα μόνο των άρθρων μου"
 
-#: ../pan/gui/actions.cc:644
+#: ../pan/gui/actions.cc:680
 #, fuzzy
 msgid "Match Only _Watched Articles"
 msgstr "Ταίριασμα μόνο των υπό παρακολούθηση άρθρων"
 
-#: ../pan/gui/actions.cc:644
+#: ../pan/gui/actions.cc:680
 msgid "Match Only Watched Articles"
 msgstr "Ταίριασμα μόνο των υπό παρακολούθηση άρθρων"
 
-#: ../pan/gui/actions.cc:646
+#: ../pan/gui/actions.cc:682
 #, fuzzy
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "/_Φίλτρα/Ταίριασμα βαθμολογιών 9999 (Υπό παρακολούθηση)"
 
-#: ../pan/gui/actions.cc:647
+#: ../pan/gui/actions.cc:683
 #, fuzzy
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr "/_Φίλτρα/Ταίριασμα βαθμολογιών μεταξύ 5000...9998 (Υψηλή)"
 
-#: ../pan/gui/actions.cc:648
+#: ../pan/gui/actions.cc:684
 #, fuzzy
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "/_Φίλτρα/Ταίριασμα βαθμολογιών μεταξύ 1...4999 (Μεσαία)"
 
-#: ../pan/gui/actions.cc:649
+#: ../pan/gui/actions.cc:685
 #, fuzzy
 msgid "Match Scores of 0 (_Normal)"
 msgstr "/_Φίλτρα/Ταίριασμα βαθμολογιών 0 (Κανονική)"
 
-#: ../pan/gui/actions.cc:650
+#: ../pan/gui/actions.cc:686
 #, fuzzy
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "/_Φίλτρα/Ταίριασμα βαθμολογιών μεταξύ -9998...-1 (Χαμηλή)"
 
-#: ../pan/gui/actions.cc:651
+#: ../pan/gui/actions.cc:687
 #, fuzzy
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "/_Φίλτρα/Ταίριασμα βαθμολογιών -9999 (Αγνοείται)"
 
-#: ../pan/gui/actions.cc:653
+#: ../pan/gui/actions.cc:689
 msgid "Enable/Disable all _Rules"
 msgstr ""
 
-#: ../pan/gui/actions.cc:679
+#: ../pan/gui/actions.cc:715
 #, fuzzy
 msgid "Show Matching _Articles"
 msgstr "/_Φίλτρα/Εμφάνιση άρθρων που ταιριάζουν"
 
-#: ../pan/gui/actions.cc:680
+#: ../pan/gui/actions.cc:716
 #, fuzzy
 msgid "Show Matching Articles' _Threads"
 msgstr "/_Φίλτρα/Εμφάνιση αλληλουχιών άρθρων που ταιριάζουν"
 
-#: ../pan/gui/actions.cc:681
+#: ../pan/gui/actions.cc:717
 #, fuzzy
 msgid "Show Matching Articles' _Subthreads"
 msgstr "/_Φίλτρα/Εμφάνιση υποαλληλουχιών άρθρων που ταιριάζουν"
 
-#: ../pan/gui/body-pane.cc:972
+#: ../pan/gui/body-pane.cc:973
 #, c-format
 msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:973
+#: ../pan/gui/body-pane.cc:974
 #, fuzzy, c-format
 msgid "Attachment not shown: MIME type %s/%s\n"
 msgstr "Επισυνάψεις"
 
 #
-#: ../pan/gui/body-pane.cc:1051 ../pan/gui/gui.cc:1686
-#: ../pan/gui/header-pane.cc:1017 ../pan/gui/header-pane.cc:1446
-#: ../pan/gui/post-ui.cc:2538 ../pan/gui/prefs-ui.cc:411
+#: ../pan/gui/body-pane.cc:1052 ../pan/gui/gui.cc:1779
+#: ../pan/gui/header-pane.cc:1096 ../pan/gui/header-pane.cc:1525
+#: ../pan/gui/post-ui.cc:2469 ../pan/gui/prefs-ui.cc:452
 #: ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
 msgstr "Θέμα"
 
 #
-#: ../pan/gui/body-pane.cc:1053 ../pan/gui/gui.cc:1686
+#: ../pan/gui/body-pane.cc:1054 ../pan/gui/gui.cc:1779
 #, fuzzy
 msgid "From"
 msgstr "Από"
 
 #
-#: ../pan/gui/body-pane.cc:1055 ../pan/gui/gui.cc:1687
-#: ../pan/gui/header-pane.cc:1523 ../pan/gui/log-ui.cc:307
-#: ../pan/gui/prefs-ui.cc:407
+#: ../pan/gui/body-pane.cc:1056 ../pan/gui/gui.cc:1780
+#: ../pan/gui/header-pane.cc:1602 ../pan/gui/log-ui.cc:305
+#: ../pan/gui/prefs-ui.cc:448
 msgid "Date"
 msgstr "Ημ/νία"
 
-#: ../pan/gui/body-pane.cc:1062
+#: ../pan/gui/body-pane.cc:1063
 msgid "Newsgroups"
 msgstr "Ομάδες συζήτησης"
 
-#: ../pan/gui/body-pane.cc:1067
+#: ../pan/gui/body-pane.cc:1068
 #, fuzzy
 msgid "Followup-To"
 msgstr "Προς:"
 
-#: ../pan/gui/body-pane.cc:1077
+#: ../pan/gui/body-pane.cc:1078
 msgid "Reply-To"
 msgstr "Απάντηση-Σε:"
 
-#: ../pan/gui/body-pane.cc:1119
+#: ../pan/gui/body-pane.cc:1120
 #, fuzzy
 msgid " from "
 msgstr "Από: "
 
-#: ../pan/gui/body-pane.cc:1121
+#: ../pan/gui/body-pane.cc:1122
 #, fuzzy
 msgid " at "
 msgstr "Ημερομηνία:"
 
-#: ../pan/gui/body-pane.cc:1362
+#: ../pan/gui/body-pane.cc:1363
 msgid "Copy _URL"
 msgstr ""
 
 #. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:987
-#: ../pan/gui/gui.cc:1445 ../pan/gui/gui.cc:1708
+#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:951
+#: ../pan/gui/gui.cc:1511 ../pan/gui/gui.cc:1802
 #: ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr ""
 
 #: ../pan/gui/dl-headers-ui.cc:112
 #, fuzzy, c-format
-msgid "%d Groups"
-msgstr "Ομάδες"
+msgid "%d Group"
+msgid_plural "%d Groups"
+msgstr[0] "Ομάδες"
+msgstr[1] "Ομάδες"
 
 #: ../pan/gui/dl-headers-ui.cc:135
 #, fuzzy
@@ -917,7 +950,7 @@ msgid "Get the _latest N headers: "
 msgstr "Μεταφόρτωση _προσφάτων κεφαλίδων"
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:404
+#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:445
 #, fuzzy
 msgid "Action"
 msgstr "Ενέργειες"
@@ -927,7 +960,7 @@ msgid "A GtkRadioAction"
 msgstr ""
 
 #
-#: ../pan/gui/e-charset.c:52 ../pan/gui/task-pane.cc:410
+#: ../pan/gui/e-charset.c:52 ../pan/gui/task-pane.cc:511
 msgid "Unknown"
 msgstr "Άγνωστο"
 
@@ -1012,8 +1045,8 @@ msgstr "Κυριλλική/Ουκρανική"
 msgid "Visual"
 msgstr ""
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:1839
-#: ../pan/gui/post-ui.cc:499
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:1946
+#: ../pan/gui/post-ui.cc:457 ../pan/gui/prefs-ui.cc:356
 msgid "Character Encoding"
 msgstr ""
 
@@ -1025,27 +1058,27 @@ msgstr ""
 msgid "Other..."
 msgstr ""
 
-#: ../pan/gui/group-pane.cc:499
+#: ../pan/gui/group-pane.cc:500
 #, fuzzy
 msgid "Group"
 msgstr "Ομάδες"
 
-#: ../pan/gui/group-pane.cc:500
+#: ../pan/gui/group-pane.cc:501
 #, fuzzy
 msgid "Group (regex)"
 msgstr "Ιδιότητες Ομάδας"
 
-#: ../pan/gui/group-pane.cc:912
+#: ../pan/gui/group-pane.cc:913
 msgid "Subscribed Groups"
 msgstr "Εγγεγραμένες ομάδες"
 
-#: ../pan/gui/group-pane.cc:913
+#: ../pan/gui/group-pane.cc:914
 #, fuzzy
 msgid "Other Groups"
 msgstr "Νέες ομάδες"
 
 #
-#: ../pan/gui/group-pane.cc:953 ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/group-pane.cc:954 ../pan/gui/score-view-ui.cc:157
 #, fuzzy
 msgid "Name"
 msgstr "_Όνομα"
@@ -1090,233 +1123,284 @@ msgstr "Κατάλογος για την αποθήκευση συνημμένω
 msgid "Posting _profile:"
 msgstr "Κατατομή"
 
-#: ../pan/gui/gui.cc:274
+#: ../pan/gui/gui.cc:279
 msgid "Open the Task Manager"
 msgstr "Άνοιγμα του διαχειριστή εργασιών"
 
-#: ../pan/gui/gui.cc:304
+#: ../pan/gui/gui.cc:307
 #, fuzzy
 msgid "Open the Event Log"
 msgstr "Άνοιγμα της καταγραφής κατάστασης"
 
-#: ../pan/gui/gui.cc:539
+#: ../pan/gui/gui.cc:544
 msgid "Save NZB's Files"
 msgstr ""
 
-#: ../pan/gui/gui.cc:566
+#: ../pan/gui/gui.cc:571
 msgid "Untitled.nzb"
 msgstr ""
 
-#: ../pan/gui/gui.cc:568
+#: ../pan/gui/gui.cc:573
 #, fuzzy
 msgid "Save NZB File as..."
 msgstr "Ε_ισαγωγή .newsrc..."
 
-#: ../pan/gui/gui.cc:771
+#: ../pan/gui/gui.cc:735
 #, fuzzy
 msgid "Import NZB Files"
 msgstr "Ε_ισαγωγή .newsrc..."
 
-#: ../pan/gui/gui.cc:779 ../pan/gui/post-ui.cc:3239
+#: ../pan/gui/gui.cc:743 ../pan/gui/post-ui.cc:3127
 #, fuzzy
 msgid "NZB Files"
 msgstr "Αρχεία"
 
-#: ../pan/gui/gui.cc:784
+#: ../pan/gui/gui.cc:748
 #, fuzzy
 msgid "All Files"
 msgstr "Αρχεία"
 
-#: ../pan/gui/gui.cc:1184
+#: ../pan/gui/gui.cc:1205
 #, fuzzy
 msgid "Unable to supersede article."
 msgstr "/Απο_θήκευση άρθρου ως..."
 
-#: ../pan/gui/gui.cc:1185 ../pan/gui/gui.cc:1259
+#: ../pan/gui/gui.cc:1206 ../pan/gui/gui.cc:1280
 msgid "The article doesn't match any of your posting profiles."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1232
+#: ../pan/gui/gui.cc:1253
 msgid "Revise and send this article to replace the old one."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1233 ../pan/gui/gui.cc:1296
+#: ../pan/gui/gui.cc:1254 ../pan/gui/gui.cc:1317
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1258
+#: ../pan/gui/gui.cc:1279
 #, fuzzy
 msgid "Unable to cancel article."
 msgstr "Αδύνατη η δημιουργία αρχείου: %s\n"
 
-#: ../pan/gui/gui.cc:1295
+#: ../pan/gui/gui.cc:1316
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1313
+#: ../pan/gui/gui.cc:1334
 msgid "You marked some articles for deletion"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1314
+#: ../pan/gui/gui.cc:1335
 #, fuzzy
 msgid "Are you sure you want to delete them?"
 msgstr "Είστε βέβαιοι για την διαγραφή %d ομάδων/φακέλων και των άρθρων τους?"
 
-#: ../pan/gui/gui.cc:1448
+#: ../pan/gui/gui.cc:1362
+msgid "Do you want to accept it permanently (deletable afterwards) ?"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1514
 #, fuzzy
-msgid "Copyright © 2002-2011 Charles Kerr and others"
+msgid "Copyright \\u00A9 2002-2011 Charles Kerr and others"
 msgstr "Πνευματικά δικαιώματα (C) 2003 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1453
+#: ../pan/gui/gui.cc:1519
 msgid "translator-credits"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1569
+#: ../pan/gui/gui.cc:1628
 #, fuzzy
 msgid "_1. Group Pane"
 msgstr "Εγγράψιμο από ομάδα"
 
-#: ../pan/gui/gui.cc:1570
+#: ../pan/gui/gui.cc:1629
 #, fuzzy
 msgid "_2. Header Pane"
 msgstr "Εμφάνιση ταμπλώ κεφαλίδας"
 
-#: ../pan/gui/gui.cc:1571
+#: ../pan/gui/gui.cc:1630
 #, fuzzy
 msgid "_3. Body Pane"
 msgstr "Το Ταμπλώ"
 
-#: ../pan/gui/gui.cc:1669
-#, fuzzy, c-format
-msgid "This article has all %d parts."
-msgstr "Το άρθρο δεν έχει συνημμένα"
-
-#: ../pan/gui/gui.cc:1671
-#, c-format
-msgid "This article is missing %d of its %d parts:"
+#: ../pan/gui/gui.cc:1719 ../pan/gui/gui.cc:1734
+msgid " Bytes"
 msgstr ""
 
+#: ../pan/gui/gui.cc:1722
+msgid " KB"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1725
+msgid " MB"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1728
+msgid " GB"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1731
+msgid " TB"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1763
+#, fuzzy, c-format
+msgid "This article is complete with %d part."
+msgid_plural "This article has all %d parts."
+msgstr[0] "Το άρθρο δεν έχει συνημμένα"
+msgstr[1] "Το άρθρο δεν έχει συνημμένα"
+
+#: ../pan/gui/gui.cc:1765
+#, fuzzy, c-format
+msgid "This article is missing %d part."
+msgid_plural "This article is missing %d of its %d parts:"
+msgstr[0] "Το άρθρο δεν έχει συνημμένα"
+msgstr[1] "Το άρθρο δεν έχει συνημμένα"
+
 #
-#: ../pan/gui/gui.cc:1687 ../pan/gui/header-pane.cc:1019
+#: ../pan/gui/gui.cc:1780 ../pan/gui/header-pane.cc:1098
 msgid "Message-ID"
 msgstr "ID μηνύματος"
 
-#: ../pan/gui/gui.cc:1688 ../pan/gui/header-pane.cc:1493
-#: ../pan/gui/prefs-ui.cc:408
+#: ../pan/gui/gui.cc:1781 ../pan/gui/header-pane.cc:1572
+#: ../pan/gui/prefs-ui.cc:449
 msgid "Lines"
 msgstr "Γραμμές"
 
-#: ../pan/gui/gui.cc:1688 ../pan/gui/header-pane.cc:1508
-#: ../pan/gui/prefs-ui.cc:406
+#: ../pan/gui/gui.cc:1781
+msgid "Size"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1782 ../pan/gui/header-pane.cc:1587
+#: ../pan/gui/prefs-ui.cc:447
 msgid "Bytes"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1840
+#: ../pan/gui/gui.cc:1947
 #, fuzzy
 msgid "Body Pane Encoding"
 msgstr "Το Ταμπλώ"
 
-#: ../pan/gui/gui.cc:1869 ../pan/gui/task-pane.cc:459
+#: ../pan/gui/gui.cc:1976 ../pan/gui/task-pane.cc:560
 #, c-format
 msgid "Offline"
 msgstr "Αποσυνδεδεμένος"
 
 #
-#: ../pan/gui/gui.cc:1872
-#, c-format
-msgid "Closing %d connections"
-msgstr "Κλείνουν %d συνδέσεις"
+#: ../pan/gui/gui.cc:1980
+#, fuzzy, c-format
+msgid "Closing %d connection"
+msgid_plural "Closing %d connections"
+msgstr[0] "Κλείνουν %d συνδέσεις"
+msgstr[1] "Κλείνουν %d συνδέσεις"
 
 #
-#: ../pan/gui/gui.cc:1874 ../pan/gui/gui.cc:1904
+#: ../pan/gui/gui.cc:1982 ../pan/gui/gui.cc:2012
 #, c-format
 msgid "No Connections"
 msgstr "Όχι συνδέσεις"
 
-#: ../pan/gui/gui.cc:1878
+#: ../pan/gui/gui.cc:1986
 #, c-format
 msgid "Connecting"
 msgstr "Σύνδεση"
 
-#: ../pan/gui/gui.cc:1891
+#: ../pan/gui/gui.cc:1999
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1947
+#: ../pan/gui/gui.cc:2055
 #, c-format
 msgid "No Tasks"
 msgstr "Δεν υπάρχουν εργασίες"
 
-#: ../pan/gui/gui.cc:1949 ../pan/gui/prefs-ui.cc:566
+#: ../pan/gui/gui.cc:2057 ../pan/gui/prefs-ui.cc:629
 #, fuzzy
 msgid "Tasks"
 msgstr "Δεν υπάρχουν εργασίες"
 
-#: ../pan/gui/gui.cc:1960 ../pan/gui/task-pane.cc:327
+#: ../pan/gui/gui.cc:2068 ../pan/gui/task-pane.cc:428
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr ""
 
-#: ../pan/gui/gui.cc:2012
+#: ../pan/gui/gui.cc:2120
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
 msgstr ""
 
 #
-#: ../pan/gui/header-pane.cc:1015
+#: ../pan/gui/header-pane.cc:1094
 #, fuzzy
 msgid "Subject or Author"
 msgstr "Θέμα:"
 
 #
-#: ../pan/gui/header-pane.cc:1016
+#: ../pan/gui/header-pane.cc:1095
 #, fuzzy
 msgid "Sub or Auth (regex)"
 msgstr "Θέμα:"
 
-#: ../pan/gui/header-pane.cc:1018 ../pan/gui/header-pane.cc:1478
-#: ../pan/gui/prefs-ui.cc:405 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/header-pane.cc:1097 ../pan/gui/header-pane.cc:1557
+#: ../pan/gui/prefs-ui.cc:446 ../pan/gui/score-add-ui.cc:140
 msgid "Author"
 msgstr "Συγγραφέας"
 
-#: ../pan/gui/header-pane.cc:1463 ../pan/gui/prefs-ui.cc:409
+#: ../pan/gui/header-pane.cc:1542 ../pan/gui/prefs-ui.cc:450
 msgid "Score"
 msgstr "Σκορ"
 
-#: ../pan/gui/log-ui.cc:105
+#: ../pan/gui/log-ui.cc:103
 msgid "Save Event List"
 msgstr ""
 
 #
-#: ../pan/gui/log-ui.cc:258
+#: ../pan/gui/log-ui.cc:256
 #, fuzzy
 msgid "Pan: Events"
 msgstr "Pan: Διακομιστές"
 
 #
-#: ../pan/gui/log-ui.cc:317
+#: ../pan/gui/log-ui.cc:315
 msgid "Message"
 msgstr "Μήνυμα"
 
-#: ../pan/gui/pan.cc:153
+#
+#: ../pan/gui/pan.cc:308
+#, fuzzy
+msgid "Error!"
+msgstr "Σφάλμα"
+
+#: ../pan/gui/pan.cc:309
+#, fuzzy
+msgid "An error has occured. Maximize Pan to investigate."
+msgstr "Προέκυψε σφάλμα κατά την ανάκτηση την πληροφ. χρήστη από τον πιλότο"
+
+#: ../pan/gui/pan.cc:331
+#, fuzzy
+msgid "New Articles!"
+msgstr "Εμφάνιση νέων άρθρων"
+
+#: ../pan/gui/pan.cc:332
+msgid "There are new articles available."
+msgstr ""
+
+#: ../pan/gui/pan.cc:440
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
 "To start newsreading, first Add a Server."
 msgstr ""
 
-#: ../pan/gui/pan.cc:233
+#: ../pan/gui/pan.cc:520
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
+"  --verbose                Be verbose (in non-GUI mode).\n"
 "\n"
 "URL Options\n"
-"  news:message-id          Show the specified article.\n"
-"  news:group.name          Show the specified newsgroup.\n"
-"  headers:group.name       Download new headers for the specified "
-"newsgroup.\n"
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -1327,281 +1411,279 @@ msgid ""
 "queue.\n"
 msgstr ""
 
-#: ../pan/gui/pan.cc:299
+#: ../pan/gui/pan.cc:780
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr ""
 
-#: ../pan/gui/pan.cc:303
+#: ../pan/gui/pan.cc:784
 #, fuzzy, c-format
 msgid "Pan %s started"
 msgstr "Pan %s Ξεκίνησε"
 
-#: ../pan/gui/pan.cc:321
+#: ../pan/gui/pan.cc:803
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:176
+#: ../pan/gui/pan.cc:904
+msgid "Pan notification"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:162
 #, c-format
 msgid "Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:278
+#: ../pan/gui/post-ui.cc:246
 #, fuzzy, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "Σφάλμα υποδοχή."
 
-#: ../pan/gui/post-ui.cc:287
+#: ../pan/gui/post-ui.cc:255
 msgid ""
 "<b>Spellchecker not found!</b>\n"
 " \n"
 "Was this copy of Pan compiled with GtkSpell enabled?"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:391
+#: ../pan/gui/post-ui.cc:359
 #, fuzzy
 msgid "_Profile"
 msgstr "Κατατομή"
 
 #
-#: ../pan/gui/post-ui.cc:392
+#: ../pan/gui/post-ui.cc:360
 #, fuzzy
 msgid "Set Editor"
 msgstr "Επεξεργασία"
 
-#: ../pan/gui/post-ui.cc:394
+#: ../pan/gui/post-ui.cc:362
 #, fuzzy
 msgid "_Send Article"
 msgstr "/_Μετάβαση/Μη_τρικό άρθρο"
 
-#: ../pan/gui/post-ui.cc:394
+#: ../pan/gui/post-ui.cc:362
 #, fuzzy
 msgid "Send Article Now"
 msgstr "Αποστολή τώρα"
 
-#: ../pan/gui/post-ui.cc:395
+#: ../pan/gui/post-ui.cc:363
 #, fuzzy
 msgid "_Send and Save Articles to NZB"
 msgstr "Αποθήκευση"
 
-#: ../pan/gui/post-ui.cc:395
+#: ../pan/gui/post-ui.cc:363
 #, fuzzy
 msgid "Send and Save Articles to NZB"
 msgstr "Αποθήκευση"
 
-#: ../pan/gui/post-ui.cc:397
+#: ../pan/gui/post-ui.cc:365
 #, fuzzy
 msgid "Sa_ve Draft"
 msgstr "Αποθήκευση προφιλ"
 
-#: ../pan/gui/post-ui.cc:397
+#: ../pan/gui/post-ui.cc:365
 msgid "Save as a Draft for Future Posting"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:398
+#: ../pan/gui/post-ui.cc:366
 #, fuzzy
 msgid "_Open Draft..."
 msgstr "Ά_νοιγμα συνημμένων..."
 
-#: ../pan/gui/post-ui.cc:398
+#: ../pan/gui/post-ui.cc:366
 #, fuzzy
 msgid "Open an Article Draft"
 msgstr "Επόμενο άρθρο"
 
-#: ../pan/gui/post-ui.cc:403
+#: ../pan/gui/post-ui.cc:371
 #, fuzzy
 msgid "_Rot13"
 msgstr "Rot13"
 
 #
-#: ../pan/gui/post-ui.cc:403
+#: ../pan/gui/post-ui.cc:371
 msgid "Rot13 Selected Text"
 msgstr "Rot13 επιλεγμένο κειμένο"
 
-#: ../pan/gui/post-ui.cc:404
+#: ../pan/gui/post-ui.cc:372
 #, fuzzy
 msgid "Run _Editor"
 msgstr "Εξωτερικό πρόγραμμα επεξεργασίας"
 
-#: ../pan/gui/post-ui.cc:404
+#: ../pan/gui/post-ui.cc:372
 #, fuzzy
 msgid "Run Editor"
 msgstr "Εξωτερικό πρόγραμμα επεξεργασίας"
 
-#: ../pan/gui/post-ui.cc:406
+#: ../pan/gui/post-ui.cc:374
 msgid "Add _Files to Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:406
+#: ../pan/gui/post-ui.cc:374
 msgid "Add Files to Queue"
 msgstr ""
 
 #
-#: ../pan/gui/post-ui.cc:422 ../pan/gui/post-ui.cc:423
+#: ../pan/gui/post-ui.cc:390 ../pan/gui/post-ui.cc:391
 #, fuzzy
 msgid "Remove from Queue"
 msgstr "Pan: Διακομιστές"
 
 #
-#: ../pan/gui/post-ui.cc:427 ../pan/gui/post-ui.cc:428
+#: ../pan/gui/post-ui.cc:395 ../pan/gui/post-ui.cc:396
 #, fuzzy
 msgid "Clear List"
 msgstr "Καθαρισμός"
 
-#: ../pan/gui/post-ui.cc:432 ../pan/gui/post-ui.cc:433
+#: ../pan/gui/post-ui.cc:400 ../pan/gui/post-ui.cc:401
 #, fuzzy
 msgid "Select needed Parts"
 msgstr "Επιλογή διάταξης"
 
-#: ../pan/gui/post-ui.cc:437 ../pan/gui/post-ui.cc:438
+#: ../pan/gui/post-ui.cc:405 ../pan/gui/post-ui.cc:406
+#: ../pan/gui/task-pane.cc:626 ../pan/gui/task-pane.cc:627
 msgid "Move Up"
 msgstr "Μετακίνηση Επάνω"
 
 #
-#: ../pan/gui/post-ui.cc:442 ../pan/gui/post-ui.cc:443
+#: ../pan/gui/post-ui.cc:410 ../pan/gui/post-ui.cc:411
+#: ../pan/gui/task-pane.cc:631 ../pan/gui/task-pane.cc:632
 msgid "Move Down"
 msgstr "Μετακίνηση Κάτω"
 
-#: ../pan/gui/post-ui.cc:447 ../pan/gui/post-ui.cc:448
+#: ../pan/gui/post-ui.cc:415 ../pan/gui/post-ui.cc:416
 #, fuzzy
 msgid "Move to Top"
 msgstr "Μετακίνηση σε Φάκελο"
 
-#: ../pan/gui/post-ui.cc:452 ../pan/gui/post-ui.cc:453
+#: ../pan/gui/post-ui.cc:420 ../pan/gui/post-ui.cc:421
 #, fuzzy
 msgid "Move to Bottom"
 msgstr "Μετακίνηση σε Φάκελο"
 
-#: ../pan/gui/post-ui.cc:457 ../pan/gui/post-ui.cc:458
-msgid "yEnc-Encode"
-msgstr ""
-
-#: ../pan/gui/post-ui.cc:462 ../pan/gui/post-ui.cc:463
-msgid "No encoding (plain)"
-msgstr ""
-
-#: ../pan/gui/post-ui.cc:470
+#: ../pan/gui/post-ui.cc:428
 #, fuzzy
 msgid "_Wrap Text"
 msgstr "Αναδίπλωση κειμένου"
 
-#: ../pan/gui/post-ui.cc:470
+#: ../pan/gui/post-ui.cc:428
 #, fuzzy
 msgid "Wrap Text"
 msgstr "Αναδίπλωση κειμένου"
 
-#: ../pan/gui/post-ui.cc:471
+#: ../pan/gui/post-ui.cc:429
 #, fuzzy
 msgid "Always Run Editor"
 msgstr "Εξωτερικό πρόγραμμα επεξεργασίας"
 
-#: ../pan/gui/post-ui.cc:472
+#: ../pan/gui/post-ui.cc:430
 msgid "Remember Character Encoding for this Group"
 msgstr ""
 
-#. { "inline-or-bulk", 0, N_("Attachments are inlined with Message"), 0, 0, G_CALLBACK(on_inline_toggled), false },
-#: ../pan/gui/post-ui.cc:474
-msgid "All Attachments are threaded replies to message"
-msgstr ""
+#: ../pan/gui/post-ui.cc:431
+#, fuzzy
+msgid "Thread attached replies"
+msgstr "Κακοταίριασμα ειδών"
 
-#: ../pan/gui/post-ui.cc:475
+#: ../pan/gui/post-ui.cc:432
 msgid "Check _Spelling"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:500
+#: ../pan/gui/post-ui.cc:458
 #, fuzzy
 msgid "New Article's Encoding:"
 msgstr "Pan: Εμφάνιση βαθμολογίας άρθρων"
 
-#: ../pan/gui/post-ui.cc:684
+#: ../pan/gui/post-ui.cc:638
 msgid "Your changes will be lost!"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:685
+#: ../pan/gui/post-ui.cc:639
 msgid "Close this window and lose your changes?"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:730 ../pan/gui/post-ui.cc:769
+#: ../pan/gui/post-ui.cc:684 ../pan/gui/post-ui.cc:723
 msgid "There were problems with this post."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:732 ../pan/gui/post-ui.cc:771
-#: ../pan/gui/post-ui.cc:834
+#: ../pan/gui/post-ui.cc:686 ../pan/gui/post-ui.cc:725
+#: ../pan/gui/post-ui.cc:788
 #, fuzzy
 msgid "Go Back"
 msgstr "/_Μετάβαση/Ανάγνωση παραπάνω"
 
-#: ../pan/gui/post-ui.cc:734
+#: ../pan/gui/post-ui.cc:688
 msgid "Post Anyway"
 msgstr ""
 
 #. Prompt the user
-#: ../pan/gui/post-ui.cc:763
+#: ../pan/gui/post-ui.cc:717
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:786
+#: ../pan/gui/post-ui.cc:740
 #, fuzzy
 msgid "Go _Online"
 msgstr "Το Pan είναι συνδεμένο στο δίκτυο"
 
-#: ../pan/gui/post-ui.cc:833
+#: ../pan/gui/post-ui.cc:787
 msgid "The file queue is empty, so no files can be saved."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:987
+#: ../pan/gui/post-ui.cc:941
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1020
+#: ../pan/gui/post-ui.cc:974
 #, fuzzy
 msgid "Pan is Offline."
 msgstr "Το Pan είναι αποσυνδεδεμένο από το δίκτυο"
 
-#: ../pan/gui/post-ui.cc:1021
+#: ../pan/gui/post-ui.cc:975
 msgid "Go online to post the article?"
 msgstr ""
 
 #
-#: ../pan/gui/post-ui.cc:1217
+#: ../pan/gui/post-ui.cc:1148
 msgid "Error opening temporary file"
 msgstr "Σφάλμα κατά το άνοιγμα προσωρινού αρχείου"
 
-#: ../pan/gui/post-ui.cc:1229
+#: ../pan/gui/post-ui.cc:1160
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1248
+#: ../pan/gui/post-ui.cc:1179
 #, fuzzy, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr "Σφάλμα κατά την εκκίνηση εξωτερικού προγράμματος: %s"
 
-#: ../pan/gui/post-ui.cc:1289
+#: ../pan/gui/post-ui.cc:1220
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Σφάλμα κατά την εκκίνηση εξωτερικού προγράμματος: %s"
 
-#: ../pan/gui/post-ui.cc:1345
+#: ../pan/gui/post-ui.cc:1276
 #, fuzzy
 msgid "Open Draft Article"
 msgstr "Επόμενο άρθρο"
 
-#: ../pan/gui/post-ui.cc:1661
+#: ../pan/gui/post-ui.cc:1592
 #, fuzzy
 msgid "Save Draft Article"
 msgstr "Αποθήκευση άρ_θρων"
 
 # gconf/gconf-internals.c:2333
-#: ../pan/gui/post-ui.cc:1858
+#: ../pan/gui/post-ui.cc:1789
 #, fuzzy, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Αδυναμία ανάγνωσης αρχείου υπογραφής \"%s\": %s"
 
-#: ../pan/gui/post-ui.cc:1890
+#: ../pan/gui/post-ui.cc:1821
 #, fuzzy
 msgid "Couldn't convert signature to UTF-8."
 msgstr ""
@@ -1609,50 +1691,46 @@ msgstr ""
 "να είναι σε '%s'"
 
 #
-#: ../pan/gui/post-ui.cc:2375
+#: ../pan/gui/post-ui.cc:2306
 #, fuzzy
 msgid "F_rom"
 msgstr "Από"
 
 #
-#: ../pan/gui/post-ui.cc:2393
+#: ../pan/gui/post-ui.cc:2324
 #, fuzzy
 msgid "_Subject"
 msgstr "_Θέμα:"
 
-#: ../pan/gui/post-ui.cc:2406
+#: ../pan/gui/post-ui.cc:2337
 #, fuzzy
 msgid "_Newsgroups"
 msgstr "/_Ομάδες συζητήσεων"
 
-#: ../pan/gui/post-ui.cc:2420
+#: ../pan/gui/post-ui.cc:2351
 #, fuzzy
 msgid "Mail _To"
 msgstr "Ηλεκ. Αλληλογραφία Προς"
 
-#: ../pan/gui/post-ui.cc:2523
+#: ../pan/gui/post-ui.cc:2454
 #, fuzzy
 msgid "Delete from Queue"
 msgstr "/Διαγρα_φή Ομάδας"
 
-#: ../pan/gui/post-ui.cc:2536
+#: ../pan/gui/post-ui.cc:2467
 msgid "No."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2540 ../pan/gui/post-ui.cc:2639
-#: ../pan/gui/post-ui.cc:2680
+#: ../pan/gui/post-ui.cc:2471 ../pan/gui/post-ui.cc:2567
+#: ../pan/gui/post-ui.cc:2608
 msgid "Filename"
 msgstr "Όνομα αρχείου"
 
-#: ../pan/gui/post-ui.cc:2542
+#: ../pan/gui/post-ui.cc:2473
 msgid "Size (kB)"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2544
-msgid "Encode Mode"
-msgstr ""
-
-#: ../pan/gui/post-ui.cc:2647
+#: ../pan/gui/post-ui.cc:2575
 #, fuzzy
 msgid "The current filename"
 msgstr ""
@@ -1673,30 +1751,30 @@ msgstr ""
 "Προσαρμοσμένο"
 
 #
-#: ../pan/gui/post-ui.cc:2651
+#: ../pan/gui/post-ui.cc:2579
 #, fuzzy
 msgid "Subject Line"
 msgstr "Θέμα"
 
-#: ../pan/gui/post-ui.cc:2659
+#: ../pan/gui/post-ui.cc:2587
 msgid "The current Subject Line"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2673
+#: ../pan/gui/post-ui.cc:2601
 msgid "No. "
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2677
+#: ../pan/gui/post-ui.cc:2605
 msgid "Enable/Disable"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2712
+#: ../pan/gui/post-ui.cc:2639
 #, fuzzy
 msgid "Follo_wup-To"
 msgstr "Προς:"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: ../pan/gui/post-ui.cc:2721
+#: ../pan/gui/post-ui.cc:2648
 #, fuzzy
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
@@ -1711,12 +1789,12 @@ msgstr ""
 "κατευθύνετε όλες τις απαντήσεις στην ηλεκ. διεύθυνση, χρησιμοποιείστε το\n"
 "\"Παρακολούθηση: συγγραφέας\""
 
-#: ../pan/gui/post-ui.cc:2727
+#: ../pan/gui/post-ui.cc:2654
 #, fuzzy
 msgid "_Reply-To"
 msgstr "Απάντηση-Σε:"
 
-#: ../pan/gui/post-ui.cc:2735
+#: ../pan/gui/post-ui.cc:2662
 msgid ""
 "The email account where mail replies to your posted message should go.  This "
 "is only needed if it differs from the \"From\" header."
@@ -1725,62 +1803,62 @@ msgstr ""
 "στις αποστολές σας. Είναι απαραίτητη, μόνο εαν θέλετε να διαφέρει απο το "
 "πεδίο \"Απο\"."
 
-#: ../pan/gui/post-ui.cc:2741
+#: ../pan/gui/post-ui.cc:2668
 #, fuzzy
 msgid "_Custom Headers"
 msgstr "Παραμετροποιημένες κεφαλίδες"
 
-#: ../pan/gui/post-ui.cc:2765
+#: ../pan/gui/post-ui.cc:2692
 #, fuzzy
 msgid "Add \"_User-Agent\" header"
 msgstr "Προσθήκη κεφαλίδας \"User-Agent\""
 
-#: ../pan/gui/post-ui.cc:2772
+#: ../pan/gui/post-ui.cc:2699
 #, fuzzy
-msgid "Add \"Message-_Id header"
+msgid "Add \"Message-_Id\" header"
 msgstr "Προσθήκη κεφαλίδας \"ID μηνύματος\""
 
-#: ../pan/gui/post-ui.cc:2933
+#: ../pan/gui/post-ui.cc:2828
 #, fuzzy
 msgid "Select Parts"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: ../pan/gui/post-ui.cc:2943
+#: ../pan/gui/post-ui.cc:2839
 msgid "_Parts"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3059
+#: ../pan/gui/post-ui.cc:2955
 #, fuzzy
 msgid "Post Article"
 msgstr "Ανάγνωση αρχείου"
 
 #
-#: ../pan/gui/post-ui.cc:3080
+#: ../pan/gui/post-ui.cc:2976
 #, fuzzy
 msgid "_Message"
 msgstr "Μήνυμα"
 
-#: ../pan/gui/post-ui.cc:3081
+#: ../pan/gui/post-ui.cc:2977
 #, fuzzy
 msgid "More _Headers"
 msgstr "Περισσότερες κεφαλίδες"
 
-#: ../pan/gui/post-ui.cc:3082
+#: ../pan/gui/post-ui.cc:2978
 #, fuzzy
 msgid "File _Queue"
 msgstr "Εκκαθάριση"
 
 #
-#: ../pan/gui/post-ui.cc:3111 ../pan/gui/profiles-dialog.cc:402
+#: ../pan/gui/post-ui.cc:3007 ../pan/gui/profiles-dialog.cc:403
 #, fuzzy, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "ο:"
 
-#: ../pan/gui/post-ui.cc:3142
+#: ../pan/gui/post-ui.cc:3036
 msgid "Add files to queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3226
+#: ../pan/gui/post-ui.cc:3114
 msgid "Save Upload Queue as NZB File"
 msgstr ""
 
@@ -1931,408 +2009,451 @@ msgid "E_xtra Headers:"
 msgstr "Επικεφαλίδα Μηνύματος"
 
 # gconf/gconf-backend.c:208
-#: ../pan/gui/profiles-dialog.cc:252
+#: ../pan/gui/profiles-dialog.cc:253
 #, fuzzy
 msgid "Invalid email address."
 msgstr "μη έγκυρο"
 
-#: ../pan/gui/profiles-dialog.cc:253
+#: ../pan/gui/profiles-dialog.cc:254
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:403
+#: ../pan/gui/profiles-dialog.cc:404
 #, fuzzy
 msgid "New Profile"
 msgstr "Νέο Προφίλ"
 
-#: ../pan/gui/profiles-dialog.cc:449
+#: ../pan/gui/profiles-dialog.cc:450
 #, fuzzy
 msgid "Posting Profiles"
 msgstr "/_Αποστολή/_Προφίλ αποστολέα..."
 
-#: ../pan/gui/profiles-dialog.cc:465
+#: ../pan/gui/profiles-dialog.cc:466
 #, fuzzy
 msgid "Profiles"
 msgstr "Κατατομή"
 
 #
-#: ../pan/gui/prefs.cc:323
+#: ../pan/gui/prefs.cc:332
 #, fuzzy, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "Αδυναμία ανάλυσης εντολής στην υπογραφή \"%s\""
 
 #
-#: ../pan/gui/prefs-ui.cc:204
+#: ../pan/gui/prefs-ui.cc:207
 #, fuzzy
 msgid "Use GNOME Preferences"
 msgstr "Pan Προτιμήσεις"
 
-#: ../pan/gui/prefs-ui.cc:205
+#: ../pan/gui/prefs-ui.cc:208
 #, fuzzy
 msgid "Use KDE Preferences"
 msgstr "Αναφορές"
 
-#: ../pan/gui/prefs-ui.cc:206
+#: ../pan/gui/prefs-ui.cc:209
 #, fuzzy
 msgid "Use OS X Preferences"
 msgstr "Αναφορές"
 
 #
-#: ../pan/gui/prefs-ui.cc:207
+#: ../pan/gui/prefs-ui.cc:210
 #, fuzzy
 msgid "Use Windows Preferences"
 msgstr "Pan Προτιμήσεις"
 
 #
-#: ../pan/gui/prefs-ui.cc:208
+#: ../pan/gui/prefs-ui.cc:211
 #, fuzzy
 msgid "Custom Command:"
 msgstr "Εντολή Εκτυπώσεων:"
 
-#: ../pan/gui/prefs-ui.cc:259
+#: ../pan/gui/prefs-ui.cc:262
 msgid "Disabled"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:260
+#: ../pan/gui/prefs-ui.cc:263
 msgid "Only new (Score == 0)"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:261
+#: ../pan/gui/prefs-ui.cc:264
 #, fuzzy
 msgid "9999 or more"
 msgstr "/_Φίλτρα/Ταίριασμα βαθμολογιών -9999 (Αγνοείται)"
 
-#: ../pan/gui/prefs-ui.cc:262
+#: ../pan/gui/prefs-ui.cc:265
 msgid "5000 to 9998"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:263
+#: ../pan/gui/prefs-ui.cc:266
 msgid "1 to 4999"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:264
+#: ../pan/gui/prefs-ui.cc:267
 msgid "-9998 to -1"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:265
+#: ../pan/gui/prefs-ui.cc:268
 #, fuzzy
 msgid "-9999 or less"
 msgstr "/_Φίλτρα/Ταίριασμα βαθμολογιών -9999 (Αγνοείται)"
 
+#: ../pan/gui/prefs-ui.cc:333
+#, c-format
+msgid "  Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:357
+#, fuzzy
+msgid "Global Charset Settings"
+msgstr "Επαναφόρτωση Ρυθμίσεων"
+
 #
-#: ../pan/gui/prefs-ui.cc:410 ../pan/gui/task-pane.cc:563
+#: ../pan/gui/prefs-ui.cc:451 ../pan/gui/task-pane.cc:760
 #, fuzzy
 msgid "State"
 msgstr "Κατάσταση"
 
-#: ../pan/gui/prefs-ui.cc:444
+#: ../pan/gui/prefs-ui.cc:485
 msgid "Enabled"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:448
+#: ../pan/gui/prefs-ui.cc:489
 #, fuzzy
 msgid "Column Name"
 msgstr "Διάταξη"
 
 #
-#: ../pan/gui/prefs-ui.cc:482
+#: ../pan/gui/prefs-ui.cc:525
 #, fuzzy
 msgid "Pan: Preferences"
 msgstr "Pan Προτιμήσεις"
 
 #
-#: ../pan/gui/prefs-ui.cc:495
+#: ../pan/gui/prefs-ui.cc:538
 #, fuzzy
 msgid "Mouse"
 msgstr "Κλείσιμο"
 
-#: ../pan/gui/prefs-ui.cc:497
+#: ../pan/gui/prefs-ui.cc:540
 msgid "Single-click activates, rather than selects, _groups"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:499
+#: ../pan/gui/prefs-ui.cc:542
 msgid "Single-click activates, rather than selects, _articles"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:502
+#: ../pan/gui/prefs-ui.cc:545
 msgid "Groups"
 msgstr "Ομάδες"
 
-#: ../pan/gui/prefs-ui.cc:504
+#: ../pan/gui/prefs-ui.cc:547
 #, fuzzy
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Λήψη όλων των νέων κεφαλίδων στις εγεγγραμένες ομάδες"
 
-#: ../pan/gui/prefs-ui.cc:506
+#: ../pan/gui/prefs-ui.cc:549
 #, fuzzy
 msgid "Get new headers when _entering group"
 msgstr "Νέο Ομάδα"
 
-#: ../pan/gui/prefs-ui.cc:508
+#: ../pan/gui/prefs-ui.cc:551
 msgid "Mark entire group _read when leaving group"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:510
+#: ../pan/gui/prefs-ui.cc:553
 msgid "Mark entire group read before getting _new headers"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:512
+#: ../pan/gui/prefs-ui.cc:555
 #, fuzzy
 msgid "E_xpand all threads when entering group"
 msgstr "Νέο Ομάδα"
 
-#: ../pan/gui/prefs-ui.cc:515
+#: ../pan/gui/prefs-ui.cc:558
 #, fuzzy
 msgid "Articles"
 msgstr "/Ά_ρθρα"
 
-#: ../pan/gui/prefs-ui.cc:517
+#: ../pan/gui/prefs-ui.cc:560
 #, fuzzy
 msgid "Space selects next article rather than next unread"
 msgstr "Αποθήκευση των επιλεγμένων άρθρων και των συνημμένων τους"
 
-#: ../pan/gui/prefs-ui.cc:519
+#: ../pan/gui/prefs-ui.cc:562
+#, fuzzy
+msgid "Expand threads upon selection."
+msgstr "/_Επεξεργασία/Προσθήκη αλληλουχι_ών στην επιλογή"
+
+#: ../pan/gui/prefs-ui.cc:564
 msgid "Always show article deletion confirmation dialog"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:521
+#: ../pan/gui/prefs-ui.cc:566
 #, fuzzy
 msgid "Smooth scrolling"
 msgstr "Κύλιση:"
 
-#: ../pan/gui/prefs-ui.cc:523
+#: ../pan/gui/prefs-ui.cc:568
 msgid "Clear article cache on shutdown"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:526
+#: ../pan/gui/prefs-ui.cc:571
 msgid "Size of Article Cache (in MiB). "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:531
+#: ../pan/gui/prefs-ui.cc:576
 #, fuzzy
 msgid "Autosave Articles"
 msgstr "Εμφάνιση αποθηκευμένων άρθρων"
 
-#: ../pan/gui/prefs-ui.cc:533
+#: ../pan/gui/prefs-ui.cc:578
 msgid "Minutes to autosave newsrc files."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:538
+#
+#: ../pan/gui/prefs-ui.cc:583
+#, fuzzy
+msgid "Language Settings"
+msgstr "Ρυθμίσεις Ψευδωνύμων"
+
+#: ../pan/gui/prefs-ui.cc:592
 #, fuzzy
 msgid "Autosave Article Draft"
 msgstr "Επόμενο άρθρο"
 
-#: ../pan/gui/prefs-ui.cc:540
+#: ../pan/gui/prefs-ui.cc:594
 msgid "Minutes to autosave the current Article Draft."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:545
+#: ../pan/gui/prefs-ui.cc:599
+msgid "Systray Behaviour"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:601
+msgid "Hide to system tray"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:603
+msgid "Start Pan minimized"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:605
+#, fuzzy
+msgid "Show notifications"
+msgstr "Πληροφορίες για το προφίλ"
+
+#: ../pan/gui/prefs-ui.cc:608
 msgid "_Behavior"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:550
+#: ../pan/gui/prefs-ui.cc:613
 #, fuzzy
 msgid "Pane Layout"
 msgstr "Διάταξη"
 
-#: ../pan/gui/prefs-ui.cc:569
+#: ../pan/gui/prefs-ui.cc:632
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:571
+#: ../pan/gui/prefs-ui.cc:634
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:573
+#: ../pan/gui/prefs-ui.cc:636
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:575
+#: ../pan/gui/prefs-ui.cc:638
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:577
+#: ../pan/gui/prefs-ui.cc:640
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:579
+#: ../pan/gui/prefs-ui.cc:642
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:587
+#: ../pan/gui/prefs-ui.cc:650
 #, fuzzy
 msgid "Header Pane Columns"
 msgstr "Εμφάνιση ταμπλώ κεφαλίδας"
 
-#: ../pan/gui/prefs-ui.cc:591
+#: ../pan/gui/prefs-ui.cc:654
 #, fuzzy
 msgid "_Headers"
 msgstr "Επικεφαλίδες Μηνύματος"
 
-#: ../pan/gui/prefs-ui.cc:596
+#: ../pan/gui/prefs-ui.cc:659
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
 "automatically, based on a post's score."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:599
+#: ../pan/gui/prefs-ui.cc:662
 msgid "_Delete Posts scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:601
+#: ../pan/gui/prefs-ui.cc:664
 msgid "Mark Posts _read scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:603
+#: ../pan/gui/prefs-ui.cc:666
 msgid "_Cache Posts scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:605
+#: ../pan/gui/prefs-ui.cc:668
 msgid "Download _attachments of Posts scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:613
+#: ../pan/gui/prefs-ui.cc:676
 msgid "Fonts"
 msgstr "Γραμματοσειρές"
 
-#: ../pan/gui/prefs-ui.cc:615
+#: ../pan/gui/prefs-ui.cc:678
 #, fuzzy
 msgid "Use custom font in Group Pane:"
 msgstr "Κατάρρευση ονομάτων στο ταμπλώ ομάδας"
 
-#: ../pan/gui/prefs-ui.cc:620
+#: ../pan/gui/prefs-ui.cc:683
 #, fuzzy
 msgid "Use custom font in Header Pane:"
 msgstr "Κατάρρευση ονομάτων στο ταμπλώ ομάδας"
 
-#: ../pan/gui/prefs-ui.cc:625
+#: ../pan/gui/prefs-ui.cc:688
 #, fuzzy
 msgid "Use custom font in Body Pane:"
 msgstr "Κατάρρευση ονομάτων στο ταμπλώ ομάδας"
 
-#: ../pan/gui/prefs-ui.cc:630
+#: ../pan/gui/prefs-ui.cc:693
 msgid "Monospace font:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:634
+#: ../pan/gui/prefs-ui.cc:697
 #, fuzzy
 msgid "_Fonts"
 msgstr "Γραμματοσειρές"
 
-#: ../pan/gui/prefs-ui.cc:639
+#: ../pan/gui/prefs-ui.cc:702
 #, fuzzy
 msgid "Header Pane"
 msgstr "Εμφάνιση ταμπλώ κεφαλίδας"
 
 # # NOTE: Translation of "Create" as "New" to
 # #       keep msg length relatively short...
-#: ../pan/gui/prefs-ui.cc:642 ../pan/gui/prefs-ui.cc:648
-#: ../pan/gui/prefs-ui.cc:654 ../pan/gui/prefs-ui.cc:660
-#: ../pan/gui/prefs-ui.cc:666
+#: ../pan/gui/prefs-ui.cc:705 ../pan/gui/prefs-ui.cc:711
+#: ../pan/gui/prefs-ui.cc:717 ../pan/gui/prefs-ui.cc:723
+#: ../pan/gui/prefs-ui.cc:729 ../pan/gui/prefs-ui.cc:735
 #, fuzzy
 msgid "Text:"
 msgstr "Κείμενο"
 
 #
-#: ../pan/gui/prefs-ui.cc:644 ../pan/gui/prefs-ui.cc:650
-#: ../pan/gui/prefs-ui.cc:656 ../pan/gui/prefs-ui.cc:662
-#: ../pan/gui/prefs-ui.cc:668
+#: ../pan/gui/prefs-ui.cc:707 ../pan/gui/prefs-ui.cc:713
+#: ../pan/gui/prefs-ui.cc:719 ../pan/gui/prefs-ui.cc:725
+#: ../pan/gui/prefs-ui.cc:731 ../pan/gui/prefs-ui.cc:737
 #, fuzzy
 msgid "Background:"
 msgstr "Φόντο"
 
-#: ../pan/gui/prefs-ui.cc:646
+#: ../pan/gui/prefs-ui.cc:709
 #, fuzzy
 msgid "Scores of 9999 or more:"
 msgstr "/_Φίλτρα/Ταίριασμα βαθμολογιών -9999 (Αγνοείται)"
 
-#: ../pan/gui/prefs-ui.cc:652
+#: ../pan/gui/prefs-ui.cc:715
 msgid "Scores from 5000 to 9998:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:658
+#: ../pan/gui/prefs-ui.cc:721
 msgid "Scores from 1 to 4999:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:664
+#: ../pan/gui/prefs-ui.cc:727
 msgid "Scores from -9998 to -1:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:670
+#: ../pan/gui/prefs-ui.cc:733
 #, fuzzy
 msgid "Scores of -9999 or less:"
 msgstr "/_Φίλτρα/Ταίριασμα βαθμολογιών -9999 (Αγνοείται)"
 
-#: ../pan/gui/prefs-ui.cc:672
+#: ../pan/gui/prefs-ui.cc:739
+#, fuzzy
+msgid "Read collapsed Thread:"
+msgstr "Κατάρρευση όλων των αλληλουχιών"
+
+#: ../pan/gui/prefs-ui.cc:741
 #, fuzzy
 msgid "Body Pane"
 msgstr "Το Ταμπλώ"
 
 # # NOTE: Translation of "Create" as "New" to
 # #       keep msg length relatively short...
-#: ../pan/gui/prefs-ui.cc:678
+#: ../pan/gui/prefs-ui.cc:747
 #, fuzzy
 msgid "Quoted Text:"
 msgstr "Κείμενο"
 
-#: ../pan/gui/prefs-ui.cc:679
+#: ../pan/gui/prefs-ui.cc:748
 #, fuzzy
 msgid "URL:"
 msgstr "URL"
 
 #
-#: ../pan/gui/prefs-ui.cc:680
+#: ../pan/gui/prefs-ui.cc:749
 #, fuzzy
 msgid "Signature:"
 msgstr "Α_ρχείο υπογραφής:"
 
 #
-#: ../pan/gui/prefs-ui.cc:682
+#: ../pan/gui/prefs-ui.cc:751
 #, fuzzy
 msgid "_Colors"
 msgstr "Χρώματα"
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/prefs-ui.cc:687
+#: ../pan/gui/prefs-ui.cc:756
 #, fuzzy
 msgid "Preferred Applications"
 msgstr "Ενέργειες"
 
-#: ../pan/gui/prefs-ui.cc:691
+#: ../pan/gui/prefs-ui.cc:760
 #, fuzzy
 msgid "_Web Browser:"
 msgstr "Νέες ομάδες"
 
 #
-#: ../pan/gui/prefs-ui.cc:694
+#: ../pan/gui/prefs-ui.cc:763
 #, fuzzy
 msgid "_Mail Reader:"
 msgstr "Διακομιστής Ηλεκ. Αλληλογραφίας (email)"
 
 #
-#: ../pan/gui/prefs-ui.cc:696
+#: ../pan/gui/prefs-ui.cc:765
 #, fuzzy
 msgid "_Text Editor:"
 msgstr "Επεξεργασία"
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/prefs-ui.cc:698
+#: ../pan/gui/prefs-ui.cc:767
 #, fuzzy
 msgid "A_pplications"
 msgstr "Ενέργειες"
 
 #
-#: ../pan/gui/prefs-ui.cc:703
+#: ../pan/gui/prefs-ui.cc:772
 #, fuzzy
 msgid "Encoding Options"
 msgstr "Επιλογές"
 
-#: ../pan/gui/prefs-ui.cc:707
+#: ../pan/gui/prefs-ui.cc:776
 msgid "Default Bytes per File (for Encoder). "
 msgstr ""
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/prefs-ui.cc:717
+#: ../pan/gui/prefs-ui.cc:781
 #, fuzzy
 msgid "_Upload options"
 msgstr "Ενέργειες"
@@ -2351,26 +2472,26 @@ msgid ""
 "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgstr ""
 
-#: ../pan/gui/save-ui.cc:231
+#: ../pan/gui/save-ui.cc:233
 #, fuzzy
 msgid "Save attachments"
 msgstr "Αποθήκευση συννημένων"
 
-#: ../pan/gui/save-ui.cc:232
+#: ../pan/gui/save-ui.cc:234
 #, fuzzy
 msgid "Save text"
 msgstr "Αναδίπλωση κειμένου"
 
-#: ../pan/gui/save-ui.cc:233
+#: ../pan/gui/save-ui.cc:235
 #, fuzzy
 msgid "Save attachments and text"
 msgstr "Αποθήκευση in:"
 
-#: ../pan/gui/save-ui.cc:240
+#: ../pan/gui/save-ui.cc:242
 msgid "Add to the queue sorted by date posted"
 msgstr ""
 
-#: ../pan/gui/save-ui.cc:241
+#: ../pan/gui/save-ui.cc:243
 #, fuzzy
 msgid "Add to the front of the queue"
 msgstr ""
@@ -2379,7 +2500,7 @@ msgstr ""
 "#-#-#-#-#  gnome-utils.gnome-2-2.el.po (gnome-utils 2.0.4)  #-#-#-#-#\n"
 "Πρόσθεση από"
 
-#: ../pan/gui/save-ui.cc:242
+#: ../pan/gui/save-ui.cc:244
 #, fuzzy
 msgid "Add to the back of the queue"
 msgstr ""
@@ -2388,34 +2509,34 @@ msgstr ""
 "#-#-#-#-#  gnome-utils.gnome-2-2.el.po (gnome-utils 2.0.4)  #-#-#-#-#\n"
 "Πρόσθεση Πίσω από"
 
-#: ../pan/gui/save-ui.cc:269
+#: ../pan/gui/save-ui.cc:271
 #, fuzzy
 msgid "Pan: Save Articles"
 msgstr "Αποθήκευση"
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/save-ui.cc:294 ../pan/gui/save-ui.cc:312
+#: ../pan/gui/save-ui.cc:296 ../pan/gui/save-ui.cc:314
 #, fuzzy
 msgid "_Location:"
 msgstr "Ενέργειες"
 
-#: ../pan/gui/save-ui.cc:298
+#: ../pan/gui/save-ui.cc:300
 #, fuzzy
 msgid "Save Articles"
 msgstr "Απο_θήκευση άρθρων ως..."
 
-#: ../pan/gui/save-ui.cc:315
+#: ../pan/gui/save-ui.cc:317
 #, c-format
 msgid "_Group's path: %s"
 msgstr ""
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/save-ui.cc:326
+#: ../pan/gui/save-ui.cc:328
 #, fuzzy
 msgid "_Action:"
 msgstr "Ενέργειες"
 
-#: ../pan/gui/save-ui.cc:330
+#: ../pan/gui/save-ui.cc:332
 msgid "_Priority:"
 msgstr ""
 
@@ -2586,151 +2707,217 @@ msgstr "Προσθήκη νέας βαθμολογίας"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Αφαίρεση επιλεγμένης βαθμολογίας."
 
-#: ../pan/gui/server-ui.cc:165
+#: ../pan/gui/server-ui.cc:218
 msgid "Please specify the server's address."
 msgstr ""
 
+#: ../pan/gui/server-ui.cc:260
+msgid "Import SSL certificate (PEM format) from File"
+msgstr ""
+
 #. create the dialog
-#: ../pan/gui/server-ui.cc:205 ../pan/gui/server-ui.cc:543
+#: ../pan/gui/server-ui.cc:286 ../pan/gui/server-ui.cc:866
 #, fuzzy
 msgid "Add a Server"
 msgstr "Προσθήκη νέου διακομιστή"
 
-#: ../pan/gui/server-ui.cc:205 ../pan/gui/server-ui.cc:549
+#: ../pan/gui/server-ui.cc:286 ../pan/gui/server-ui.cc:872
 #, fuzzy
 msgid "Edit a Server's Settings"
 msgstr "Εξυπηρετητής"
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/server-ui.cc:225
+#: ../pan/gui/server-ui.cc:306
 #, fuzzy
 msgid "Location"
 msgstr "Ενέργειες"
 
-#: ../pan/gui/server-ui.cc:229
+#: ../pan/gui/server-ui.cc:310
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr "Η διεύθυνση του διακομιστή νέων, π.χ. \"news.mynewsserver.com\""
 
-#: ../pan/gui/server-ui.cc:230
+#: ../pan/gui/server-ui.cc:311
 msgid "_Address:"
 msgstr "_Διεύθυνση:"
 
-#: ../pan/gui/server-ui.cc:234
+#: ../pan/gui/server-ui.cc:315
 #, fuzzy
 msgid "The news server's port number.  Typically 119."
 msgstr "Η θύρα του διακομιστή νέων. Είναι σχεδόν πάντα 119."
 
-#: ../pan/gui/server-ui.cc:235
+#: ../pan/gui/server-ui.cc:316
 msgid "Por_t:"
 msgstr "_Θύρα:"
 
-#: ../pan/gui/server-ui.cc:238
+#: ../pan/gui/server-ui.cc:319
 msgid "Login (if Required)"
 msgstr ""
 
 #
-#: ../pan/gui/server-ui.cc:242
+#: ../pan/gui/server-ui.cc:323
 msgid "_Username:"
 msgstr "Όν_ομα χρήστη"
 
-#: ../pan/gui/server-ui.cc:243
+#: ../pan/gui/server-ui.cc:324
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
 
 #
-#: ../pan/gui/server-ui.cc:247
+#: ../pan/gui/server-ui.cc:328
 msgid "_Password:"
 msgstr "_Κωδικός:"
 
-#: ../pan/gui/server-ui.cc:248
+#: ../pan/gui/server-ui.cc:329
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
 
 #
-#: ../pan/gui/server-ui.cc:251
+#: ../pan/gui/server-ui.cc:332
 #, fuzzy
 msgid "Settings"
 msgstr "Ρυθμίσεις Ψευδωνύμων"
 
-#: ../pan/gui/server-ui.cc:258
+#: ../pan/gui/server-ui.cc:339
 msgid "Connection _Limit:"
 msgstr "Όριο _συνδέσεων"
 
-#: ../pan/gui/server-ui.cc:262
+#: ../pan/gui/server-ui.cc:343
 msgid "After Two Weeks"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:263
+#: ../pan/gui/server-ui.cc:344
 msgid "After One Month"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:264
+#: ../pan/gui/server-ui.cc:345
 msgid "After Two Months"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:265
+#: ../pan/gui/server-ui.cc:346
 msgid "After Three Months"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:266
+#: ../pan/gui/server-ui.cc:347
 msgid "After Six Months"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:267
+#: ../pan/gui/server-ui.cc:348
 #, fuzzy
 msgid "Never Expire Old Articles"
 msgstr "Εμφάνιση παλαιών άρθρων"
 
-#: ../pan/gui/server-ui.cc:281
+#: ../pan/gui/server-ui.cc:362
 #, fuzzy
 msgid "E_xpire Old Articles:"
 msgstr "Εμφάνιση παλαιών άρθρων"
 
 #
-#: ../pan/gui/server-ui.cc:285
+#: ../pan/gui/server-ui.cc:366
 #, fuzzy
 msgid "Primary"
 msgstr "Προτεραιότητα"
 
-#: ../pan/gui/server-ui.cc:286
+#: ../pan/gui/server-ui.cc:367
 msgid "Fallback"
 msgstr ""
 
 #
-#: ../pan/gui/server-ui.cc:300
+#: ../pan/gui/server-ui.cc:381
 #, fuzzy
 msgid "Server Rank:"
 msgstr "Διακομιστές"
 
-#: ../pan/gui/server-ui.cc:304
+#: ../pan/gui/server-ui.cc:385
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
 "subscription servers as fallbacks."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:425
+#: ../pan/gui/server-ui.cc:392
+msgid "Security"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:397
+msgid "Use Plaintext (Unsecured) Connections"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:398
+#, fuzzy
+msgid "Use Secure SSL Connections"
+msgstr "Εξυπηρετητής"
+
+#: ../pan/gui/server-ui.cc:414
+msgid "TLS (SSL) Options:"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:418
+msgid ""
+"You can set the option for using/disabling secure SSL/TLS connections here. "
+"If you enable SSL/TLS, your data is encrypted and secure. It is encouraged "
+"to use this option for privacy reasons."
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:592
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr ""
 
+#: ../pan/gui/server-ui.cc:681
+msgid "No information available."
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:687
+#, c-format
+msgid "Server Certificate for '%s'"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:792
+#, c-format
+msgid "Really delete certificate for \"%s\"?"
+msgstr ""
+
 #
 #. dialog
-#: ../pan/gui/server-ui.cc:496 ../pan/gui/server-ui.cc:517
+#: ../pan/gui/server-ui.cc:819 ../pan/gui/server-ui.cc:840
+#: ../pan/gui/server-ui.cc:938
 msgid "Servers"
 msgstr "Διακομιστές"
 
 #
-#: ../pan/gui/server-ui.cc:556
+#: ../pan/gui/server-ui.cc:879
 #, fuzzy
 msgid "Remove a Server"
 msgstr "Pan: Διακομιστές"
 
-#: ../pan/gui/task-pane.cc:144
+#. dialog
+#: ../pan/gui/server-ui.cc:912
+msgid "SSL Certificates"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:933
+msgid "Certificates"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:964
+msgid "Import Certificate"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:970
+msgid "Inspect Certificate"
+msgstr ""
+
+#
+#: ../pan/gui/server-ui.cc:977
+#, fuzzy
+msgid "Remove Certificate"
+msgstr "Pan: Διακομιστές"
+
+#: ../pan/gui/task-pane.cc:142
 #, c-format
 msgid ""
 "\n"
@@ -2742,7 +2929,7 @@ msgid ""
 "<i>Sourcefile:</i> <b>%s</b>\n"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:157
+#: ../pan/gui/task-pane.cc:154
 #, c-format
 msgid ""
 "\n"
@@ -2756,42 +2943,46 @@ msgid ""
 msgstr ""
 
 #
-#: ../pan/gui/task-pane.cc:160
+#: ../pan/gui/task-pane.cc:156
 #, fuzzy
 msgid "unknown"
 msgstr "Άγνωστο"
 
-#: ../pan/gui/task-pane.cc:309
+#: ../pan/gui/task-pane.cc:260
+msgid "Choose new destination for selected Tasks"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:410
 #, fuzzy, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr ""
 "Pan %s Διαχειριστής Εργασιών (%d σε αναμονή, %d εκτελούνται, %d σε παύση)"
 
-#: ../pan/gui/task-pane.cc:311
+#: ../pan/gui/task-pane.cc:412
 #, fuzzy, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan %s Διαχειριστής Εργασιών (%d σε αναμονή, %d εκτελούνται)"
 
-#: ../pan/gui/task-pane.cc:313
+#: ../pan/gui/task-pane.cc:414
 #, fuzzy, c-format
 msgid "Pan: Tasks"
 msgstr " Μήνυμα Εργασίας"
 
-#: ../pan/gui/task-pane.cc:338
+#: ../pan/gui/task-pane.cc:439
 #, fuzzy, c-format
 msgid "%lu selected, %s"
 msgstr "(Επιλέχθη %u)"
 
-#: ../pan/gui/task-pane.cc:402
+#: ../pan/gui/task-pane.cc:503
 msgid "Running"
 msgstr "Εκτελείται"
 
-#: ../pan/gui/task-pane.cc:403
+#: ../pan/gui/task-pane.cc:504
 #, fuzzy
 msgid "Decoding"
 msgstr "Αποκωδικοποιείται \"%s\""
 
-#: ../pan/gui/task-pane.cc:404
+#: ../pan/gui/task-pane.cc:505
 #, fuzzy
 msgid "Encoding"
 msgstr ""
@@ -2812,45 +3003,88 @@ msgstr ""
 "#-#-#-#-#  nautilus-media.HEAD.el.po (nautilus-media VERSION)  #-#-#-#-#\n"
 "Άγνωστο"
 
-#: ../pan/gui/task-pane.cc:405
+#: ../pan/gui/task-pane.cc:506
 #, fuzzy
 msgid "Queued for Decode"
 msgstr "Αποθηκευμένο ή αποκρυπτογραφημένο"
 
-#: ../pan/gui/task-pane.cc:406
+#: ../pan/gui/task-pane.cc:507
 #, fuzzy
 msgid "Queued for Encode"
 msgstr "Στην ουρά για αποθήκευση ή αποκωδικοποίηση"
 
-#: ../pan/gui/task-pane.cc:407
+#: ../pan/gui/task-pane.cc:508
 msgid "Queued"
 msgstr "Σε αναμονή"
 
-#: ../pan/gui/task-pane.cc:408
+#: ../pan/gui/task-pane.cc:509
 msgid "Stopped"
 msgstr "Σταμάτησε"
 
 #
-#: ../pan/gui/task-pane.cc:409
+#: ../pan/gui/task-pane.cc:510
 msgid "Removing"
 msgstr "Αφαιρείται"
 
-#: ../pan/gui/task-pane.cc:436
+#: ../pan/gui/task-pane.cc:537
 #, fuzzy, c-format
 msgid "%d%% Done"
 msgstr "Τέλος"
 
-#: ../pan/gui/task-pane.cc:442
+#: ../pan/gui/task-pane.cc:543
 #, fuzzy, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%d:%02d:%02d (%lu KiB/s)"
 
-#: ../pan/gui/task-pane.cc:522
+#: ../pan/gui/task-pane.cc:636 ../pan/gui/task-pane.cc:637
+#, fuzzy
+msgid "Move To Top"
+msgstr "Μετακίνηση σε Φάκελο"
+
+#: ../pan/gui/task-pane.cc:641 ../pan/gui/task-pane.cc:642
+#, fuzzy
+msgid "Move To Bottom"
+msgstr "Μετακίνηση σε Φάκελο"
+
+#: ../pan/gui/task-pane.cc:646 ../pan/gui/task-pane.cc:647
+#, fuzzy
+msgid "Stop Task"
+msgstr "Δεν υπάρχουν εργασίες"
+
+#: ../pan/gui/task-pane.cc:651 ../pan/gui/task-pane.cc:652
+#, fuzzy
+msgid "Delete Task"
+msgstr "Διαγραφή αλληλουχιών"
+
+#: ../pan/gui/task-pane.cc:656 ../pan/gui/task-pane.cc:657
+#, fuzzy
+msgid "Restart Task"
+msgstr ""
+"#-#-#-#-#  eel.HEAD.el.po (eel 2.0.4)  #-#-#-#-#\n"
+"Ακύρωση\n"
+"#-#-#-#-#  eog.HEAD.el.po (eog 0.2)  #-#-#-#-#\n"
+"Ακύρωση\n"
+"#-#-#-#-#  ggv.HEAD.el.po (ggv 1.1.0)  #-#-#-#-#\n"
+"Ακύρωση\n"
+"#-#-#-#-#  gnome-desktop.HEAD.el.po (gnome-desktop 2.0.5)  #-#-#-#-#\n"
+"Άκυρο\n"
+"#-#-#-#-#  gnome-media.HEAD.el.po (gnome-media 2.0.2.5)  #-#-#-#-#\n"
+"Άκυρο \n"
+"#-#-#-#-#  gnome-session.HEAD.el.po (gnome-session 2.0.5)  #-#-#-#-#\n"
+"Άκυρο\n"
+"#-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#\n"
+"Ακύρωση"
+
+#: ../pan/gui/task-pane.cc:661 ../pan/gui/task-pane.cc:662
+msgid "Change Download Destination"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:719
 #, fuzzy
 msgid "_Online"
 msgstr "Το Pan είναι συνδεμένο στο δίκτυο"
 
-#: ../pan/gui/task-pane.cc:539
+#: ../pan/gui/task-pane.cc:736
 #, fuzzy
 msgid "Restart Tasks"
 msgstr ""
@@ -2869,12 +3103,12 @@ msgstr ""
 "#-#-#-#-#  nautilus.HEAD.el.po (nautilus 2.0.7)  #-#-#-#-#\n"
 "Ακύρωση"
 
-#: ../pan/gui/task-pane.cc:541
+#: ../pan/gui/task-pane.cc:738
 #, fuzzy
 msgid "Stop Tasks"
 msgstr "Δεν υπάρχουν εργασίες"
 
-#: ../pan/gui/task-pane.cc:543
+#: ../pan/gui/task-pane.cc:740
 #, fuzzy
 msgid "Delete Tasks"
 msgstr "Διαγραφή αλληλουχιών"
@@ -2894,7 +3128,7 @@ msgstr "Αδυναμία ανάγνωσης αρχείου υπογραφής \"
 msgid "Error initializing uulib"
 msgstr ""
 
-#: ../pan/tasks/decoder.cc:147 ../pan/tasks/socket-impl-gio.cc:406
+#: ../pan/tasks/decoder.cc:147 ../pan/tasks/socket-impl-gio.cc:352
 #, fuzzy, c-format
 msgid "Error reading from %s: %s"
 msgstr "Σφάλμα κατα την ανάγνωση από την υποδοχή: %s."
@@ -2911,7 +3145,7 @@ msgid ""
 "%s."
 msgstr "Σφάλμα ανάγνωσης αρχείου \"%s\": %s."
 
-#: ../pan/tasks/decoder.cc:304 ../pan/tasks/task-article.cc:330
+#: ../pan/tasks/decoder.cc:304 ../pan/tasks/task-article.cc:335
 #, fuzzy, c-format
 msgid "Decoding %s"
 msgstr "Αποκωδικοποιείται \"%s\""
@@ -2936,24 +3170,25 @@ msgstr ""
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr ""
 
-#: ../pan/tasks/nntp-pool.cc:206
+#: ../pan/tasks/nntp-pool.cc:221
 #, fuzzy, c-format
 msgid "Unable to connect to \"%s\""
 msgstr ""
 "Δεν είναι δυνατή η σύνδεση με τον διακομιστή ηλεκ. αλληλογραφίας \"%*.*s\""
 
-#: ../pan/tasks/socket-impl-gio.cc:226 ../pan/tasks/socket-impl-gio.cc:264
+#: ../pan/tasks/socket-impl-gio.cc:173 ../pan/tasks/socket-impl-gio.cc:211
 #, fuzzy, c-format
 msgid "Error connecting to \"%s\""
 msgstr "Σφάλμα ανάγνωσης αρχείου \"%s\": %s."
 
 #
-#: ../pan/tasks/socket-impl-gio.cc:405
+#: ../pan/tasks/socket-impl-gio.cc:351
 #, fuzzy
 msgid "Unknown Error"
 msgstr "Άγνωστο"
 
-#: ../pan/tasks/task-article.cc:54 ../pan/tasks/task-article.cc:140
+#: ../pan/tasks/task-article.cc:54 ../pan/tasks/task-article.cc:141
+#: ../pan/tasks/task-article.cc:144
 #, fuzzy, c-format
 msgid "Saving %s"
 msgstr "Αποθήκευση \"%s\""
@@ -2963,7 +3198,7 @@ msgstr "Αποθήκευση \"%s\""
 msgid "Reading %s"
 msgstr "Ανάγνωση"
 
-#: ../pan/tasks/task-article.cc:302
+#: ../pan/tasks/task-article.cc:307
 #, c-format
 msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
 msgstr ""
@@ -2973,7 +3208,7 @@ msgstr ""
 msgid "Getting group list from \"%s\""
 msgstr "Γίνεται λήψη ομάδων από τον διακομιστή \"%s\"."
 
-#: ../pan/tasks/task-groups.cc:123
+#: ../pan/tasks/task-groups.cc:122
 #, fuzzy, c-format
 msgid "Fetched %lu Groups"
 msgstr "Έγινε λήψη %u ομάδων"
@@ -2983,7 +3218,7 @@ msgstr "Έγινε λήψη %u ομάδων"
 msgid "Posting \"%s\""
 msgstr "Τερματισμός Επεξεργασίας"
 
-#: ../pan/tasks/task-post.cc:74
+#: ../pan/tasks/task-post.cc:76
 #, fuzzy, c-format
 msgid "Posting of \"%s\" failed: %s"
 msgstr ""
@@ -2994,7 +3229,7 @@ msgstr ""
 "#-#-#-#-#  procman.HEAD.el.po (gnome-system-monitor 2.0.2)  #-#-#-#-#\n"
 "ID"
 
-#: ../pan/tasks/task-post.cc:79
+#: ../pan/tasks/task-post.cc:81
 #, c-format
 msgid "Posting of \"%s\" succesful: %s"
 msgstr ""
@@ -3015,7 +3250,7 @@ msgstr "Καθορισμός ενεργειών για: %s"
 msgid "Sampling headers for \"%s\""
 msgstr "Καθορισμός ενεργειών για: %s"
 
-#: ../pan/tasks/task-xover.cc:366
+#: ../pan/tasks/task-xover.cc:368
 #, fuzzy, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%lu κομμάτια, %lu άρθρα"
@@ -3221,34 +3456,38 @@ msgstr "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Η υπογραφή ξεπερνά τις 4 
 msgid "Warning: Signature is more than 80 characters wide."
 msgstr "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Η υπογραφή είναι παραπάνω από 80 χαρακτήρες σε πλάτος."
 
-#: ../pan/usenet-utils/message-check.cc:197
+#: ../pan/usenet-utils/message-check.cc:198
 #, fuzzy, c-format
-msgid "Warning: %d lines are more than 80 characters wide."
-msgstr "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: %d γραμμές είναι παραπάνω από 80 χαρακτήρες σε πλάτος."
+msgid "Warning: %d line is more than 80 characters wide."
+msgid_plural "Warning: %d lines are more than 80 characters wide."
+msgstr[0] ""
+"ΠΡΟΕΙΔΟΠΟΙΗΣΗ: %d γραμμές είναι παραπάνω από 80 χαρακτήρες σε πλάτος."
+msgstr[1] ""
+"ΠΡΟΕΙΔΟΠΟΙΗΣΗ: %d γραμμές είναι παραπάνω από 80 χαρακτήρες σε πλάτος."
 
-#: ../pan/usenet-utils/message-check.cc:220
+#: ../pan/usenet-utils/message-check.cc:224
 #, fuzzy
 msgid "Error: Message is empty."
 msgstr "ΣΦΑΛΜΑ: Το μήνυμα είναι κενό."
 
-#: ../pan/usenet-utils/message-check.cc:255
+#: ../pan/usenet-utils/message-check.cc:259
 #, fuzzy
 msgid "Warning: The message is entirely quoted text!"
 msgstr "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Το μήνυμα είναι εξ' ολοκλήρου παράθεση άλλου κειμένου!"
 
-#: ../pan/usenet-utils/message-check.cc:256
+#: ../pan/usenet-utils/message-check.cc:260
 #, fuzzy
 msgid "Warning: The message is mostly quoted text."
 msgstr ""
 "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Το μήνυμα είναι σχεδόν ολόκληρο παράθεση άλλου κειμένου."
 
-#: ../pan/usenet-utils/message-check.cc:306
+#: ../pan/usenet-utils/message-check.cc:310
 #, fuzzy
 msgid "Error: Message appears to have no new content."
 msgstr "ΣΦΑΛΜΑ: Το μήνυμα φαίνεται πως δεν έχει νέο περιεχόμενο."
 
-#: ../pan/usenet-utils/message-check.cc:341
-#: ../pan/usenet-utils/message-check.cc:380
+#: ../pan/usenet-utils/message-check.cc:345
+#: ../pan/usenet-utils/message-check.cc:384
 #, c-format
 msgid ""
 "Warning: The posting profile's server doesn't carry newsgroup\n"
@@ -3257,32 +3496,32 @@ msgid ""
 "\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:352
+#: ../pan/usenet-utils/message-check.cc:356
 #, fuzzy
 msgid "Warning: Following-Up to too many groups."
 msgstr "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Ακολουθούν πολλές ομάδες."
 
-#: ../pan/usenet-utils/message-check.cc:363
+#: ../pan/usenet-utils/message-check.cc:367
 #, fuzzy
 msgid "Error: No Subject specified."
 msgstr "ΣΦΑΛΜΑ: Δεν ορίστηκε θέμα."
 
-#: ../pan/usenet-utils/message-check.cc:392
+#: ../pan/usenet-utils/message-check.cc:396
 #, fuzzy, c-format
 msgid "Warning: Group \"%s\" is read-only."
 msgstr "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Η ομάδα είναι \"%s\" προσβάσιμη μόνο για ανάγνωση."
 
-#: ../pan/usenet-utils/message-check.cc:401
+#: ../pan/usenet-utils/message-check.cc:405
 #, fuzzy
 msgid "Error: Posting to a very large number of groups."
 msgstr "ΣΦΑΛΜΑ: Δημοσίευση σε πολύ μεγάλο αριθμό ομάδων."
 
-#: ../pan/usenet-utils/message-check.cc:406
+#: ../pan/usenet-utils/message-check.cc:410
 #, fuzzy
 msgid "Warning: Posting to a large number of groups."
 msgstr "ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Δημοσίευση σε μεγάλο αριθμό ομάδων."
 
-#: ../pan/usenet-utils/message-check.cc:413
+#: ../pan/usenet-utils/message-check.cc:417
 #, fuzzy
 msgid "Warning: Crossposting without setting Followup-To header."
 msgstr ""
@@ -3290,16 +3529,16 @@ msgstr ""
 "Παρακολούθηση."
 
 #
-#: ../pan/usenet-utils/message-check.cc:437
+#: ../pan/usenet-utils/message-check.cc:441
 #, fuzzy
 msgid "Error: Bad email address."
 msgstr "Ηλεκτρονική διεύθυνση:"
 
-#: ../pan/usenet-utils/message-check.cc:446
+#: ../pan/usenet-utils/message-check.cc:450
 msgid "Warning: Most newsgroups frown upon HTML posts."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:482
+#: ../pan/usenet-utils/message-check.cc:486
 #, fuzzy
 msgid "Error: No Recipients."
 msgstr "Όχι!"
@@ -3326,7 +3565,7 @@ msgstr ""
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/text-massager.cc:398
+#: ../pan/usenet-utils/text-massager.cc:397
 msgid "> [quoted text muted]"
 msgstr "> [Το παραθέτων κείμενο παραλείπεται]"
 
@@ -4401,10 +4640,6 @@ msgstr "> [Το παραθέτων κείμενο παραλείπεται]"
 #~ msgid "ANY OF:"
 #~ msgstr "ΟΠΟΙΟΔΗΠΟΤΕ ΑΠΟ:"
 
-#
-#~ msgid "Error"
-#~ msgstr "Σφάλμα"
-
 #~ msgid "Article has complete attachments"
 #~ msgstr "Το άρθρο έχει ολοκληρωμένα συννημένα"
 
@@ -4745,9 +4980,6 @@ msgstr "> [Το παραθέτων κείμενο παραλείπεται]"
 
 #~ msgid "/_Go/Next _New Article"
 #~ msgstr "/_Μετάβαση/Επόμενο _νέο άρθρο"
-
-#~ msgid "/_Go/Next N_ew Thread"
-#~ msgstr "/_Μετάβαση/Επόμενη _νέα αλληλουχία"
 
 #~ msgid "/_Go/Previous Thread"
 #~ msgstr "/_Μετάβαση/Προηγούμενη αλληλουχία"
@@ -5767,9 +5999,6 @@ msgstr "> [Το παραθέτων κείμενο παραλείπεται]"
 #~ msgid "Show Threads with Matching Articles"
 #~ msgstr "Εμφάνιση αλληλουχιών με τα άρθρα που ταιριάζουν"
 
-#~ msgid "Show New Articles"
-#~ msgstr "Εμφάνιση νέων άρθρων"
-
 #~ msgid "Show Complete Binary Articles"
 #~ msgstr "Εμφάνιση ολοκληρωμένων  δυαδικών άρθρων"
 
@@ -5823,14 +6052,8 @@ msgstr "> [Το παραθέτων κείμενο παραλείπεται]"
 #~ msgid "Mark _Threads as Read"
 #~ msgstr "Σήμανση  αλληλου_χιών ως αναγνωσμένες"
 
-#~ msgid "Mark Threads as Read"
-#~ msgstr "Σήμανση  αλληλουχιών ως αναγνωσμένες"
-
 #~ msgid "Mark Threads as U_nread"
 #~ msgstr "Σήμανση  αλληλουχιών ως μή α_ναγνωσμένες"
-
-#~ msgid "Mark Threads as Unread"
-#~ msgstr "Σήμανση  αλληλουχιών ως μή αναγνωσμένες"
 
 #~ msgid "Download Flagged Articles"
 #~ msgstr "Μεταφόρτωση άρθρων με σημαία"
@@ -5840,9 +6063,6 @@ msgstr "> [Το παραθέτων κείμενο παραλείπεται]"
 
 #~ msgid "Unf_lag Selected Articles"
 #~ msgstr "Άρ_ση σημαίας σε επιλεγμένα μηνύματα"
-
-#~ msgid "Unflag Thr_eads"
-#~ msgstr "Άρ_ση σημαίας σε επιλεγμένες αλληλουχίες"
 
 #~ msgid "Unflag Selected Threads"
 #~ msgstr "Άρση σημαίας"
@@ -6130,15 +6350,8 @@ msgstr "> [Το παραθέτων κείμενο παραλείπεται]"
 #~ msgid "Expand all Thread_s"
 #~ msgstr "Ανάπτυξη όλων των αλλ_ηλουχιών"
 
-#
-#~ msgid "Collapse Selected Threads"
-#~ msgstr "Κατάρρευση επιλεγμένων αλληλουχιών"
-
 #~ msgid "Colla_pse all Threads"
 #~ msgstr "_Κατάρρευση όλων των αλληλουχιών"
-
-#~ msgid "Collapse all Threads"
-#~ msgstr "Κατάρρευση όλων των αλληλουχιών"
 
 #~ msgid "Mark All Articles in Selected Groups as Read"
 #~ msgstr "Σημείωση όλων των άρθρων ως αναγνωσμένα στις επιλεγμένες ομάδες"
@@ -6587,10 +6800,6 @@ msgstr "> [Το παραθέτων κείμενο παραλείπεται]"
 #~ msgid "Maximum Number of Task Retries before Giving Up"
 #~ msgstr "από"
 
-#, fuzzy
-#~ msgid "Global Settings"
-#~ msgstr "Επαναφόρτωση Ρυθμίσεων"
-
 #
 #, fuzzy
 #~ msgid ""
@@ -6757,10 +6966,6 @@ msgstr "> [Το παραθέτων κείμενο παραλείπεται]"
 #, fuzzy
 #~ msgid "socket [%p] failed its read"
 #~ msgstr "υποδοχή"
-
-#, fuzzy
-#~ msgid "An error occurred writing to the server."
-#~ msgstr "Προέκυψε σφάλμα κατά την ανάκτηση την πληροφ. χρήστη από τον πιλότο"
 
 #, fuzzy
 #~ msgid "Article cache now has %.1f MB in %d articles"
@@ -7053,10 +7258,6 @@ msgstr "> [Το παραθέτων κείμενο παραλείπεται]"
 #~ msgid "Requeue selected failed Task(s)"
 #~ msgstr "Διαγραφή επιλεγμένων εργασιών"
 
-#, fuzzy
-#~ msgid "Set Per-Server Connection Limits"
-#~ msgstr "Εξυπηρετητής"
-
 #
 #, fuzzy
 #~ msgid "Transfer Rate"
@@ -7140,10 +7341,6 @@ msgstr "> [Το παραθέτων κείμενο παραλείπεται]"
 #, fuzzy
 #~ msgid "Thread isn't watched"
 #~ msgstr "Δεν έχει ταίριασμα"
-
-#, fuzzy
-#~ msgid "Thread is watched"
-#~ msgstr "Κακοταίριασμα ειδών"
 
 # gconf/gconf-internals.c:2404
 #, fuzzy
