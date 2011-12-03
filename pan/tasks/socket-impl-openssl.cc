@@ -482,7 +482,7 @@ namespace
       return -1;
     }
 
-    ret = !chan->verify || ssl_verify(chan->ssl, chan->ctx, host.c_str(), cert);
+    ret = !chan->verify || ssl_verify(cs, chan->ssl, chan->ctx, host.c_str(), cert);
     X509_free(cert);
     return ret ? 0 : -1;
 

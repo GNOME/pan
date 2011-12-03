@@ -57,7 +57,9 @@ namespace pan
     private:
       SSL_CTX* _ctx;
       typedef std::set<Quark> certs_t;
+      typedef std::set<X509*> certs_s;
       certs_t _certs;
+      certs_s _ignores;
       typedef std::map<Quark,X509*> certs_m;
       typedef std::pair<Quark,X509*> certs_p;
       certs_m _cert_to_server;
@@ -101,19 +103,16 @@ namespace pan
         _blacklist.erase(s);
       }
 
-      void dump_blacklist()
+      void ignore (X509* cert)
       {
-        std::cerr<<"#################\n";
-        std::cerr<<_blacklist.size()<<std::endl;
-        std::cerr<<"#################\n\n";
+        _ignores.insert(cert);
       }
 
-      void dump_certs()
+      bool is_ignored(X509* c)
       {
-        std::cerr<<"#################\n";
-        foreach_const(certs_t, _certs, it)
-          std::cerr<<*it<<"\n";
-        std::cerr<<"#################\n\n";
+        foreach (certs_s, _ignores, it)
+          if (X509_cmp(c, *it)==0) return true;
+        return false;
       }
 
     private:

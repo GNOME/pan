@@ -5,7 +5,7 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ * Copyright (C) 2011 Heinrich Mï¿½ller <sphemuel@stud.informatik.uni-erlangen.de>
  * SSL functions : Copyright (C) 2002 vjt (irssi project)
  * getTimeFromASN1 : Copyright (C) 2003 Jay Case,
  * taken from : http://www.mail-archive.com/openssl-users@openssl.org/msg33365.html
@@ -29,6 +29,7 @@
 
 #ifdef HAVE_OPENSSL
 
+#include <pan/data/cert-store.h>
 #include <pan/tasks/socket.h>
 #include <pan/general/quark.h>
 #include <pan/general/macros.h>
@@ -192,11 +193,12 @@ namespace pan
     return matched;
   }
 
-  static gboolean ssl_verify(SSL *ssl, SSL_CTX *ctx, const char* hostname, X509 *cert)
+  static gboolean ssl_verify(CertStore* cs, SSL *ssl, SSL_CTX *ctx, const char* hostname, X509 *cert)
   {
     long result;
 
     result = SSL_get_verify_result(ssl);
+    if (result == X509_V_ERR_CERT_HAS_EXPIRED && cs->is_ignored(cert)) return true;
     if (result != X509_V_OK) {
       unsigned char md[EVP_MAX_MD_SIZE];
       unsigned int n;

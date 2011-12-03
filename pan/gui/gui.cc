@@ -2103,7 +2103,6 @@ GUI :: do_show_cert_failed_dialog(VerifyData* data)
     if (!_certstore.add(d.cert, d.server))
       Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",d.server.c_str());
 
-  X509_free(d.cert); // refcount -1
   delete data;
 }
 
@@ -2137,6 +2136,7 @@ void
 GUI :: on_valid_cert_added (X509* cert, std::string server)
 {
   /* whitelist to make avaible for nntp-pool */
+  X509_free(cert); // refcount -1
   _certstore.whitelist(server);
 }
 

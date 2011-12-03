@@ -4,7 +4,7 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ * Copyright (C) 2011 Heinrich Mï¿½ller <sphemuel@stud.informatik.uni-erlangen.de>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,16 +63,19 @@ namespace pan
 
     if (!ok)
     {
-      if (mydata->ignore_all==1) { return 1; }
+      int err = X509_STORE_CTX_get_error(store);
 
       X509 *cert = X509_STORE_CTX_get_current_cert(store);
       CRYPTO_add (&(cert->references), 1, CRYPTO_LOCK_X509); // refcount +1
-      int err = X509_STORE_CTX_get_error(store);
+      if (err == X509_V_ERR_CERT_HAS_EXPIRED)
+        if (!mydata->cs->is_ignored(cert))
+            mydata->cs->ignore(cert);
+        else return 1;
 
       /* accept user-override on self-signed certificates */
       if (err == X509_V_ERR_SELF_SIGNED_CERT_IN_CHAIN ||
           err == X509_V_ERR_DEPTH_ZERO_SELF_SIGNED_CERT ||
-          err == X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY)
+          err == X509_V_ERR_UNABLE_TO_GET_ISSUER_CERT_LOCALLY )
         mydata->cs->verify_failed(cert, mydata->server, mydata->cert_name, err);
       else
         g_warning("[[DEBUG:]] unknown error condition, please report me: %s", ssl_err_to_string(err).c_str());
@@ -108,6 +111,7 @@ namespace pan
     return cnt;
   }
 
+
   void
   CertStore :: init_me()
   {
@@ -120,6 +124,7 @@ namespace pan
     get_all_certs_from_disk (certs);
     foreach_const (std::set<X509*>, certs, it)
       if (X509_STORE_add_cert(_store, *it) != 0) ++r;
+
     if (r != 0) Log::add_info_va(_("Succesfully added %d SSL PEM certificate(s) to Certificate Store."), r);
     SSL_CTX_set_verify(_ctx, SSL_VERIFY_PEER|SSL_VERIFY_FAIL_IF_NO_PEER_CERT, verify_callback);
 
