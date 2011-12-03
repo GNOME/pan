@@ -1930,11 +1930,11 @@ namespace
       GtkTreeSelection * sel (gtk_tree_view_get_selection (_view));
       gtk_tree_selection_unselect_all (sel);
       GtkTreePath * path = gtk_tree_model_get_path (model, iter);
-      if (_expand)
-      {
+//      if (_expand)
+//      {
         gtk_tree_view_expand_row (_view, path, true);
         gtk_tree_view_expand_to_path (_view, path);
-      }
+//      }
       gtk_tree_view_set_cursor (_view, path, NULL, FALSE);
       gtk_tree_view_scroll_to_cell (_view, path, NULL, true, 0.5f, 0.0f);
       gtk_tree_path_free (path);

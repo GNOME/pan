@@ -54,6 +54,8 @@ extern "C" {
 #include "server-ui.h"
 #include "pad.h"
 
+//#define DEBUG_LOCALE 1
+
 using namespace pan;
 
 namespace
@@ -485,6 +487,10 @@ main (int argc, char *argv[])
       nzb_str += tok;
     }
   }
+
+#ifdef DEBUG_LOCALE
+  setlocale(LC_ALL,"C");
+#endif
 
   if (gui)
     gtk_init (&argc, &argv);
