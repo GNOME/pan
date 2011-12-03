@@ -522,7 +522,7 @@ main (int argc, char *argv[])
 
 
     ///////////// DBUS
-
+    /// TODO : make it work with win32
     Pan pan(data, queue, cache, prefs, group_prefs);
 #ifndef G_OS_WIN32
     pan_dbus_init(&pan);

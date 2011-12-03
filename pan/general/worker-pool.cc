@@ -21,7 +21,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 #include <cassert>
-#include <glib/gmain.h> // for g_idle_add
+#include <glib.h> // for g_idle_add
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include "worker-pool.h"

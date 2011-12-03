@@ -1,6 +1,6 @@
 #ifndef RENDER_BYTES_H
 #define RENDER_BYTES_H
-#include <glib/gtypes.h>
+#include <glib.h>
 namespace pan {
   extern char* render_bytes (guint64);
 }

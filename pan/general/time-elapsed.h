@@ -1,9 +1,7 @@
 #ifndef __Time_Elapsed_h__
 #define __Time_Elapsed_h__
 
-#include <glib/gtypes.h> // for GTimeVal
-#include <glib/gmain.h> // for g_get_current_time
-#include <glib/gtimer.h> // for GUSEC_PER_SEC
+#include <glib.h>
 
 namespace pan
 {

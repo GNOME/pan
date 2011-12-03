@@ -32,13 +32,57 @@
 extern "C" {
   #include <unistd.h>
   #include <glib/gi18n.h>
-  #include <gio/gio.h>
 }
 
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/worker-pool.h>
+
+#ifdef G_OS_WIN32
+  // this #define is necessary for mingw
+  #define _WIN32_WINNT 0x0501
+  #include <ws2tcpip.h>
+  #undef gai_strerror
+  /*
+  #define gai_strerror(i) gai_strerror_does_not_link (i)
+  static const char*
+  gai_strerror_does_not_link (int errval)
+  {
+    static char buf[32];
+    g_snprintf (buf, sizeof(buf), "Winsock error %d", errval);
+    return buf;
+  }
+  */
+  static const char*
+  get_last_error (int err)
+  {
+    const char * msg = 0;
+    switch(err) {
+      case WSANOTINITIALISED: msg = "No successful WSAStartup call yet."; break;
+      case WSAENETDOWN: msg = "The network subsystem has failed."; break;
+      case WSAEADDRINUSE: msg = "Fully qualified address already bound"; break;
+      case WSAEADDRNOTAVAIL: msg = "The specified address is not a valid address for this computer."; break;
+      case WSAEFAULT: msg = "Error in socket address"; break;
+      case WSAEINPROGRESS: msg = "A call is already in progress"; break;
+      case WSAEINVAL: msg = "The socket is already bound to an address."; break;
+      case WSAENOBUFS: msg = "Not enough buffers available, too many connections."; break;
+      case WSAENOTSOCK: msg = "The descriptor is not a socket."; break;
+      case 11001: msg = "Host not found"; break;
+      default: msg = "Connect failed";
+    }
+    return msg;
+  }
+
+#else
+  #include <signal.h>
+  #include <sys/types.h>
+  #include <sys/socket.h>
+  #include <netinet/in.h>
+  #include <netdb.h>
+  #include <arpa/inet.h>
+  #define closesocket(fd) close(fd)
+#endif
 
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
@@ -50,39 +94,184 @@ using namespace pan;
 
 namespace
 {
-  const unsigned int TIMEOUT_SECS (30);
-}
+  typedef int (*t_getaddrinfo)(const char *,const char *, const struct addrinfo*, struct addrinfo **);
+  t_getaddrinfo p_getaddrinfo (0);
 
-namespace
-{
+  typedef void (*t_freeaddrinfo)(struct addrinfo*);
+  t_freeaddrinfo p_freeaddrinfo (0);
+
+  void ensure_module_inited (void)
+  {
+    static bool inited (false);
+
+    if (!inited)
+    {
+      p_freeaddrinfo=NULL;
+      p_getaddrinfo=NULL;
+
+#ifdef G_OS_WIN32
+      WSADATA wsaData;
+      WSAStartup(MAKEWORD(2,2), &wsaData);
+
+      char sysdir[MAX_PATH], path[MAX_PATH+8];
+
+      if(GetSystemDirectory(sysdir,MAX_PATH)!=0)
+      {
+        HMODULE lib=NULL;
+        FARPROC pfunc=NULL;
+        const char *libs[]={"ws2_32","wship6",NULL};
+
+        for(const char **p=libs;*p!=NULL;++p)
+        {
+          g_snprintf(path,MAX_PATH+8,"%s\\%s",sysdir,*p);
+          lib=LoadLibrary(path);
+          if(!lib)
+            continue;
+          pfunc=GetProcAddress(lib,"getaddrinfo");
+          if(!pfunc)
+          {
+            FreeLibrary(lib);
+            lib=NULL;
+            continue;
+          }
+          p_getaddrinfo=reinterpret_cast<t_getaddrinfo>(pfunc);
+          pfunc=GetProcAddress(lib,"freeaddrinfo");
+          if(!pfunc)
+          {
+            FreeLibrary(lib);
+            lib=NULL;
+            p_getaddrinfo=NULL;
+            continue;
+          }
+          p_freeaddrinfo=reinterpret_cast<t_freeaddrinfo>(pfunc);
+          break;
+        }
+      }
+#else
+      p_freeaddrinfo=::freeaddrinfo;
+      p_getaddrinfo=::getaddrinfo;
+#endif
+      inited = true;
+    }
+  }
 
   GIOChannel *
   create_channel (const StringView& host_in, int port, std::string& setme_err)
   {
-
-    GIOChannel * channel (0);
+    int err;
+    int sockfd;
 
 #ifndef G_OS_WIN32
     signal (SIGPIPE, SIG_IGN);
 #endif
 
+    // get an addrinfo for the host
     const std::string host (host_in.str, host_in.len);
     char portbuf[32], hpbuf[255];
     g_snprintf (portbuf, sizeof(portbuf), "%d", port);
-    g_snprintf (hpbuf, sizeof(hpbuf), "%s:%s", host_in.str, portbuf);
+    g_snprintf (hpbuf,sizeof(hpbuf),"%s:%s",host_in.str,portbuf);
 
-    GSocketClient * client = g_socket_client_new ();
-    g_return_val_if_fail(client, 0);
+#ifdef G_OS_WIN32 // windows might not have getaddrinfo...
+    if (!p_getaddrinfo)
+    {
+      struct hostent * ans = isalpha (host[0])
+        ? gethostbyname (host.c_str())
+        : gethostbyaddr (host.c_str(), host.size(), AF_INET);
 
-    GSocketConnection * conn = g_socket_client_connect_to_host
-      (client, hpbuf, 119, 0, NULL);
-    g_return_val_if_fail(conn, 0);
+      err = WSAGetLastError();
+      if (err || !ans) {
+        setme_err = get_last_error (err);
+        return 0;
+      }
 
-    GSocket* g(g_socket_connection_get_socket(conn));
-    g_return_val_if_fail(g, 0);
+      // try opening the socket
+      sockfd = socket (AF_INET, SOCK_STREAM, 0 /*IPPROTO_TCP*/);
+      if (sockfd < 0)
+        return 0;
 
-    int sockfd = g_socket_get_fd(g);
+      // Try connecting
+      int i = 0;
+      err = -1;
+      struct sockaddr_in server;
+      memset (&server, 0, sizeof(struct sockaddr_in));
+      while (err && ans->h_addr_list[i])
+      {
+        char *addr = ans->h_addr_list[i];
+        memcpy (&server.sin_addr, addr, ans->h_length);
+        server.sin_family = AF_INET;
+        server.sin_port = htons(port);
+        ++i;
+        err = connect (sockfd,(struct sockaddr*)&server, sizeof(server));
+      }
 
+      if (err) {
+        closesocket (sockfd);
+        setme_err = get_last_error (err);
+        return 0;
+      }
+    }
+    else
+#endif // #ifdef G_OS_WIN32 ...
+    {
+      errno = 0;
+      struct addrinfo hints;
+      memset (&hints, 0, sizeof(struct addrinfo));
+      hints.ai_flags = 0;
+      hints.ai_family = 0;
+      hints.ai_socktype = SOCK_STREAM;
+      struct addrinfo * ans;
+      err = p_getaddrinfo (host.c_str(), portbuf, &hints, &ans);
+      if (err != 0) {
+        char buf[512];
+        snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
+        setme_err = buf;
+        if (errno) {
+          setme_err += " (";
+          setme_err += file :: pan_strerror (errno);
+          setme_err += ")";
+        }
+        return 0;
+      }
+
+      // try to open a socket on any ipv4 or ipv6 addresses we found
+      errno = 0;
+      sockfd = -1;
+      for (struct addrinfo * walk(ans); walk && sockfd<0; walk=walk->ai_next)
+      {
+        // only use ipv4 or ipv6 addresses
+        if ((walk->ai_family!=PF_INET) && (walk->ai_family!=PF_INET6))
+          continue;
+
+        // try to create a socket...
+        sockfd = ::socket (walk->ai_family, walk->ai_socktype, walk->ai_protocol);
+        if (sockfd < 0)
+          continue;
+
+        // and make a connection
+        if (::connect (sockfd, walk->ai_addr, walk->ai_addrlen) < 0) {
+          closesocket (sockfd);
+          sockfd = -1;
+        }
+      }
+
+      // cleanup
+      p_freeaddrinfo (ans);
+    }
+
+    // create the giochannel...
+    if (sockfd < 0) {
+      char buf[512];
+      snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
+      setme_err = buf;
+      if (errno) {
+        setme_err += " (";
+        setme_err += file :: pan_strerror (errno);
+        setme_err += ")";
+      }
+      return 0;
+    }
+
+    GIOChannel * channel (0);
 #ifndef G_OS_WIN32
     channel = g_io_channel_unix_new (sockfd);
     g_io_channel_set_flags (channel, G_IO_FLAG_NONBLOCK, NULL);
@@ -93,7 +282,6 @@ namespace
       g_io_channel_set_encoding (channel, NULL, NULL);
     g_io_channel_set_buffered (channel, true);
     g_io_channel_set_line_term (channel, "\n", 1);
-
     return channel;
   }
 }
@@ -318,7 +506,7 @@ GIOChannelSocket :: gio_func (GIOChannel   * channel,
      * could be a bug in gcc 4.2.1.
      */
     /*if (_abort_flag)        _listener->on_socket_abort (this);
-    else*/ if (result == IO_ERR) _listener->on_socket_error (this);
+    else*/ if (result == IO_ERR)   _listener->on_socket_error (this);
     else if (result == IO_READ)  set_watch_mode (READ_NOW);
     else if (result == IO_WRITE) set_watch_mode (WRITE_NOW);
   }
@@ -326,6 +514,10 @@ GIOChannelSocket :: gio_func (GIOChannel   * channel,
   return false; // set_watch_now(IGNORE) cleared the tag that called this func
 }
 
+namespace
+{
+  const unsigned int TIMEOUT_SECS (30);
+}
 
 void
 GIOChannelSocket :: set_watch_mode (WatchMode mode)
@@ -404,6 +596,8 @@ GIOChannelSocket :: Creator :: create_socket (const StringView & host,
                                               WorkerPool       & threadpool,
                                               Listener         * listener)
 {
+  ensure_module_inited ();
+
   ThreadWorker * w = new ThreadWorker (host, port, listener);
   threadpool.push_work (w, w, true);
 }

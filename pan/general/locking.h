@@ -22,7 +22,7 @@
 #ifndef _Mutex_h_
 #define _Mutex_h_
 
-#include <glib/gthread.h>
+#include <glib.h>
 
 namespace pan
 {

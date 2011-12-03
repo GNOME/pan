@@ -25,7 +25,6 @@
 extern "C" {
 #include <glib/gi18n.h>
 }
-#include <glib/gunicode.h>
 #include "text-massager.h"
 #include <pan/general/log.h>
 using namespace pan;

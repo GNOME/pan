@@ -1,4 +1,4 @@
-#include <glib/gutils.h> // g_snprintf
+#include <glib.h> // g_snprintf
 #include "render-bytes.h"
 
 namespace pan

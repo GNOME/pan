@@ -21,8 +21,7 @@
 #define __SocketGIO_h__
 
 #include <string>
-#include <glib/giochannel.h>
-#include <glib/gstring.h>
+#include <glib.h>
 #include <pan/tasks/socket.h>
 
 namespace pan

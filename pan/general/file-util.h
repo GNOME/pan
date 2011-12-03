@@ -25,7 +25,7 @@
 extern "C" {
   #include <stddef.h>
   #include <stdio.h>
-  #include <glib/gtypes.h>
+  #include <glib.h>
   #include <glib/gstdio.h>
 }
 #include <pan/general/string-view.h>

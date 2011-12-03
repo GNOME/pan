@@ -21,7 +21,7 @@
 #define _UtilMime_h_
 
 #include <vector>
-#include <glib/gtypes.h>
+#include <glib.h>
 #include <gmime/gmime-filter.h>
 #include <gmime/gmime-stream.h>
 #include <gmime/gmime-message.h>

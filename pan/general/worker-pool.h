@@ -24,8 +24,7 @@
 #define _Worker_Pool_H_
 
 #include <set>
-#include <glib/gtypes.h>
-#include <glib/gthreadpool.h>
+#include <glib.h>
 
 namespace pan
 {

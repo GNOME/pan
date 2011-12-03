@@ -62,12 +62,11 @@
 
 extern "C"
 {
-  #include <glibconfig.h> // get the version
-  #include <glib/gutils.h> // get GLIB_CHECK_VERSION
+  #include <glib.h>
 
   // pick up g_assert()
   #if GLIB_CHECK_VERSION(2,16,0)
-    #include <glib/gtestutils.h>
+    #include <glib.h>
   #else
     #include <glib/gmessages.h>
   #endif
