@@ -99,16 +99,21 @@ namespace pan
       void read_previous_thread ();
       void read_parent_article ();
 
+      void move_to_next_bookmark(int);
+
     private:
       void action_next_if (const ArticleTester& test, RowActionFunctor& action);
       void read_next_if (const ArticleTester&);
       void read_prev_if (const ArticleTester&);
+      void select_next_if (const ArticleTester& test);
+      void select_prev_if (const ArticleTester& test);
 
     public:
       GtkWidget* root () { return _root; }
       GtkWidget* get_default_focus_widget() { return _tree_view; }
       GtkWidget* create_filter_entry ();
       const Article* get_first_selected_article () const;
+      Article* get_first_selected_article ();
       std::set<const Article*> get_full_selection () const;
       std::vector<const Article*> get_full_selection_v () const;
       std::set<const Article*> get_nested_selection () const;
@@ -135,6 +140,9 @@ namespace pan
       virtual void on_prefs_int_changed    (const StringView&, int) { }
       virtual void on_prefs_string_changed (const StringView&, const StringView&);
       virtual void on_prefs_color_changed  (const StringView&, const GdkColor&) {}
+
+    public:
+      void on_article_flag_toggled(Article*) ;
 
     private:
       virtual void on_queue_task_active_changed (Queue&, Task&, bool active UNUSED) { }

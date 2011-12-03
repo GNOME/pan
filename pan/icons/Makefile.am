@@ -7,7 +7,7 @@ stock_images = \
 	icon_binary_incomplete.png \
 	icon_binary_incomplete_read.png \
 	icon_bluecheck.png \
-	icon_blue_flag.png \
+	icon_red_flag.png \
 	icon_by_me.png \
 	icon_by_others.png \
 	icon_compose_followup.png \

@@ -435,7 +435,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
     } while (!line.empty() && *line.str=='#');
 
     const int version (atoi (line.str));
-    if (version==1 || version==2)
+    if (version==1 || version==2 || version == 3)
     {
       // build the symbolic server / group lookup table
       in->getline (line);
@@ -478,13 +478,26 @@ DataImpl :: load_headers (const DataIO   & data_io,
         StringView s;
         if (!in->getline (s)) // end of file
           break;
+
+        Article& a (h->alloc_new_article());
+
+
+        // flag line
+        a.flag = false;
+        if (version == 3)
+        {
+          a.flag = atoi(s.str) == 1 ? true : false;
+          in->getline(s);
+        }
+
         if (s.empty() || *s.str!='<') // not a message-id...
           continue;
 
-        Article& a (h->alloc_new_article());
-        a.message_id = s;
+        //message id
+        s.ltrim(); a.message_id = s;
 
         // subject line
+
         in->getline (s); s.ltrim(); a.subject = s;
 
         // author line
@@ -716,10 +729,12 @@ DataImpl :: save_headers (DataIO                       & data_io,
            "#       If has-attachments isn't 't' (for true), fields 2 and 3 are omitted.\n"
            "#       If fields 2 and 3 are equal, the article is `complete'.\n"
            "#    8. One line per parts-found-count: part-index message-id byte-count\n"
+           "#\n"
            "#\n";
 
     // lines moved from line 8 to line 7 in 0.115, causing version 2
-    out << "2\t # file format version number\n";
+    // flag added, version 3 (12/2011, imhotep)
+    out << "3\t # file format version number\n";
 
     // xref lookup section
     frequency_t frequency;
@@ -749,8 +764,9 @@ DataImpl :: save_headers (DataIO                       & data_io,
       const Quark& message_id (a->message_id);
       h->build_references_header (a, references);
 
-      // message-id, subject, author
-      out << message_id << "\n\t"
+      // flag, message-id, subject, author
+      out <<a->flag<<"\n"
+          << message_id << "\n\t"
           << a->subject << "\n\t"
           << author_qts(a->author) << "\n\t";
       // references line *IF* the article has a References header

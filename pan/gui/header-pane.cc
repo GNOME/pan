@@ -75,14 +75,18 @@ namespace
   {
     ICON_READ,
     ICON_UNREAD,
+
     ICON_COMPLETE,
     ICON_COMPLETE_READ,
+
     ICON_INCOMPLETE,
     ICON_INCOMPLETE_READ,
+
     ICON_CACHED,
     ICON_QUEUED,
     ICON_ERROR,
     ICON_EMPTY,
+    ICON_FLAGGED,
     ICON_QTY
    };
 
@@ -92,14 +96,18 @@ namespace
   } _icons[ICON_QTY] = {
     { icon_article_read,           0 },
     { icon_article_unread,         0 },
+
     { icon_binary_complete,        0 },
     { icon_binary_complete_read,   0 },
+
     { icon_binary_incomplete,      0 },
     { icon_binary_incomplete_read, 0 },
+
     { icon_disk,                   0 },
     { icon_bluecheck,              0 },
     { icon_x,                      0 },
-    { icon_empty,                  0 }
+    { icon_empty,                  0 },
+    { icon_red_flag,               0 }
   };
 
   int
@@ -126,7 +134,8 @@ namespace
   }
 
   int
-  get_article_action (const ArticleCache  & cache,
+  get_article_action (const Article       * article,
+                      const ArticleCache  & cache,
                       const Queue         & queue,
                       const Quark         & message_id)
   {
@@ -136,6 +145,10 @@ namespace
       offset = ICON_QUEUED;
     else if (cache.contains (message_id))
       offset = ICON_CACHED;
+
+    if (article)
+      if (article->flag)
+        offset = ICON_FLAGGED;
 
     return offset;
   }
@@ -312,7 +325,7 @@ HeaderPane::Row*
 HeaderPane :: create_row (const EvolutionDateMaker & e,
                           const Article            * a)
 {
-  const int action (get_article_action (_cache, _queue, a->message_id));
+  const int action (get_article_action (a, _cache, _queue, a->message_id));
   const int state (get_article_state (_data, a));
   char * date_str (e.get_date_string (a->time_posted));
   Row * row = new Row (_data, a, date_str, action, state);
@@ -362,8 +375,6 @@ HeaderPane :: column_compare_func (GtkTreeModel  * model,
 {
   int ret (0);
   const PanTreeStore * store (reinterpret_cast<PanTreeStore*>(model));
-  //const Row& row_a (*dynamic_cast<const Row*>(store->get_row (iter_a)));
-  //const Row& row_b (*dynamic_cast<const Row*>(store->get_row (iter_b)));
   const Row& row_a (*static_cast<const Row*>(store->get_row (iter_a)));
   const Row& row_b (*static_cast<const Row*>(store->get_row (iter_b)));
 
@@ -751,6 +762,16 @@ HeaderPane :: get_first_selected_article () const
    const std::set<const Article*> articles (get_full_selection ());
    if (!articles.empty())
      a = *articles.begin ();
+   return a;
+}
+
+Article*
+HeaderPane :: get_first_selected_article ()
+{
+   Article * a (0);
+   std::set<const Article*> articles (get_full_selection ());
+   if (!articles.empty())
+     a = (Article*)*articles.begin ();
    return a;
 }
 
@@ -1799,6 +1820,14 @@ namespace
     virtual bool operator()(const Article&) const { return true; }
   };
 
+  struct ArticleIsFlagged: public ArticleTester {
+    virtual ~ArticleIsFlagged () {}
+    const Article* article;
+    ArticleIsFlagged (const Article* a) : article(a) {}
+    virtual bool operator()(const Article& a) const
+      { return a.get_flag() && a.message_id != article->message_id; }
+  };
+
   struct ArticleIsParentOf: public ArticleTester {
     virtual ~ArticleIsParentOf () {}
     ArticleIsParentOf (const Data::ArticleTree& tree, const Article* a) {
@@ -1967,6 +1996,22 @@ HeaderPane :: read_prev_if (const ArticleTester & test)
 }
 
 void
+HeaderPane :: select_next_if (const ArticleTester& test)
+{
+  GtkTreeView * v (GTK_TREE_VIEW(_tree_view));
+  SelectFunctor sel (v);
+  action_next_if (test, sel);
+}
+
+void
+HeaderPane :: select_prev_if (const ArticleTester& test)
+{
+  GtkTreeView * v (GTK_TREE_VIEW(_tree_view));
+  SelectFunctor sel (v);
+  action_next_if (test, sel);
+}
+
+void
 HeaderPane :: read_next_unread_article ()
 {
   read_next_if (ArticleIsUnread(_data));
@@ -2017,6 +2062,23 @@ HeaderPane :: read_parent_article ()
 ***/
 
 void
+HeaderPane :: move_to_next_bookmark(int step)
+{
+  const bool forward(step == 1);
+  Article * a (get_first_selected_article());
+  if (!a) return;
+
+  if (forward)
+    select_next_if (ArticleIsFlagged(get_first_selected_article()));
+  else
+    select_prev_if (ArticleIsFlagged(get_first_selected_article()));
+}
+
+/***
+****
+***/
+
+void
 HeaderPane :: refresh_font ()
 {
   if (!_prefs.get_flag ("header-pane-font-enabled", false))
@@ -2056,9 +2118,16 @@ HeaderPane :: rebuild_article_action (const Quark& message_id)
 {
   Row * row (get_row (message_id));
   if (row) {
-    row->action = get_article_action (_cache, _queue, message_id);
+    row->action = get_article_action (row->article, _cache, _queue, message_id);
     _tree_store->row_changed (row);
   }
+}
+
+void
+HeaderPane :: on_article_flag_toggled (Article* a)
+{
+  g_return_if_fail(a);
+  rebuild_article_action (a->message_id);
 }
 
 void

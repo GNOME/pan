@@ -46,23 +46,23 @@ namespace
   {
     { icon_article_read, "ICON_ARTICLE_READ" },
     { icon_article_unread, "ICON_ARTICLE_UNREAD" },
-    { icon_compose_followup, "ICON_COMPOSE_FOLLOWUP" }, 
-    { icon_compose_post, "ICON_COMPOSE_POST" }, 
-    { icon_disk, "ICON_DISK" }, 
-    { icon_filter_only_attachments, "ICON_ONLY_ATTACHMENTS" }, 
-    { icon_filter_only_cached, "ICON_ONLY_CACHED" }, 
-    { icon_filter_only_me, "ICON_ONLY_ME" }, 
-    { icon_filter_only_unread, "ICON_ONLY_UNREAD" }, 
-    { icon_filter_only_watched, "ICON_ONLY_WATCHED" }, 
-    { icon_get_dialog, "ICON_GET_DIALOG" }, 
-    { icon_get_selected, "ICON_GET_SELECTED" }, 
-    { icon_get_subscribed, "ICON_GET_SUBSCRIBED" }, 
-    { icon_read_group, "ICON_READ_GROUP" }, 
-    { icon_read_more, "ICON_READ_MORE" }, 
-    { icon_read_less, "ICON_READ_LESS" }, 
-    { icon_read_unread_article, "ICON_READ_UNREAD_ARTICLE" }, 
-    { icon_read_unread_thread, "ICON_READ_UNREAD_THREAD" }, 
-    { icon_score, "ICON_SCORE" }, 
+    { icon_compose_followup, "ICON_COMPOSE_FOLLOWUP" },
+    { icon_compose_post, "ICON_COMPOSE_POST" },
+    { icon_disk, "ICON_DISK" },
+    { icon_filter_only_attachments, "ICON_ONLY_ATTACHMENTS" },
+    { icon_filter_only_cached, "ICON_ONLY_CACHED" },
+    { icon_filter_only_me, "ICON_ONLY_ME" },
+    { icon_filter_only_unread, "ICON_ONLY_UNREAD" },
+    { icon_filter_only_watched, "ICON_ONLY_WATCHED" },
+    { icon_get_dialog, "ICON_GET_DIALOG" },
+    { icon_get_selected, "ICON_GET_SELECTED" },
+    { icon_get_subscribed, "ICON_GET_SUBSCRIBED" },
+    { icon_read_group, "ICON_READ_GROUP" },
+    { icon_read_more, "ICON_READ_MORE" },
+    { icon_read_less, "ICON_READ_LESS" },
+    { icon_read_unread_article, "ICON_READ_UNREAD_ARTICLE" },
+    { icon_read_unread_thread, "ICON_READ_UNREAD_THREAD" },
+    { icon_score, "ICON_SCORE" },
     { icon_search_pulldown, "ICON_SEARCH_PULLDOWN" }
   };
 
@@ -147,6 +147,9 @@ namespace
   void do_plonk                        (GtkAction*) { pan_ui->do_plonk(); }
   void do_ignore                       (GtkAction*) { pan_ui->do_ignore(); }
   void do_watch                        (GtkAction*) { pan_ui->do_watch(); }
+  void do_flag                         (GtkAction*) { pan_ui->do_flag(); }
+  void do_next_flag                    (GtkAction*) { pan_ui->do_next_flag(); }
+  void do_last_flag                    (GtkAction*) { pan_ui->do_last_flag(); }
   void do_show_score_dialog            (GtkAction*) { pan_ui->do_show_score_dialog(); }
   void do_show_new_score_dialog        (GtkAction*) { pan_ui->do_show_new_score_dialog(); }
   void do_cancel_article               (GtkAction*) { pan_ui->do_cancel_article(); }
@@ -435,22 +438,22 @@ namespace
       NULL,
       G_CALLBACK(do_clear_header_pane) },
     { "clear-body-pane", NULL,
-      N_("Clear _Body Pane"), NULL, 
+      N_("Clear _Body Pane"), NULL,
       NULL,
       G_CALLBACK(do_clear_body_pane) },
 
     { "download-selected-article", "ICON_DISK",
-      N_("Cache Article"), NULL, 
+      N_("Cache Article"), NULL,
       NULL,
       G_CALLBACK(do_download_selected_article) },
 
     { "read-selected-article", "ICON_READ_MORE",
-      N_("Read Article"), NULL, 
+      N_("Read Article"), NULL,
       NULL,
       G_CALLBACK(do_read_selected_article) },
 
     { "show-selected-article-info", NULL,
-      N_("Show Article Information"), NULL, 
+      N_("Show Article Information"), NULL,
       NULL,
       G_CALLBACK(do_show_selected_article_info) },
 
@@ -465,12 +468,12 @@ namespace
       G_CALLBACK(do_read_less) },
 
     { "read-next-unread-group", "ICON_READ_UNREAD_GROUP",
-      N_("Next _Unread Group"), "G", 
+      N_("Next _Unread Group"), "G",
       NULL,
       G_CALLBACK(do_read_next_unread_group) },
 
     { "read-next-group", "ICON_READ_GROUP",
-      N_("Next _Group"), "<shift>G", 
+      N_("Next _Group"), "<shift>G",
       NULL,
       G_CALLBACK(do_read_next_group) },
 
@@ -485,7 +488,7 @@ namespace
       G_CALLBACK(do_read_next_article) },
 
     { "read-next-watched-article", NULL,
-      N_("Next _Watched Article"), "<control><shift>N", 
+      N_("Next _Watched Article"), "<control><shift>N",
       NULL,
       G_CALLBACK(do_read_next_watched_article) },
 
@@ -495,76 +498,91 @@ namespace
       G_CALLBACK(do_read_next_unread_thread) },
 
     { "read-next-thread", NULL,
-      N_("Next Threa_d"), "<control>T", 
+      N_("Next Threa_d"), "<control>T",
       NULL,
       G_CALLBACK(do_read_next_thread) },
 
     { "read-previous-article", NULL,
-      N_("Pre_vious Article"), "V", 
+      N_("Pre_vious Article"), "V",
       NULL,
       G_CALLBACK(do_read_previous_article) },
 
     { "read-previous-thread", NULL,
-      N_("Previous _Thread"), "<control>V", 
+      N_("Previous _Thread"), "<control>V",
       NULL,
 
       G_CALLBACK(do_read_previous_thread) },
     { "read-parent-article", NULL,
-      N_("_Parent Article"), "U", 
+      N_("_Parent Article"), "U",
       NULL,
       G_CALLBACK(do_read_parent_article) },
 
     { "plonk", NULL,
-      N_("Ignore _Author"), NULL, 
+      N_("Ignore _Author"), NULL,
       NULL,
       G_CALLBACK(do_plonk) },
     { "watch-thread", NULL,
-      N_("_Watch Thread"), NULL, 
+      N_("_Watch Thread"), NULL,
       NULL,
       G_CALLBACK(do_watch) },
 
     { "ignore-thread", NULL,
-      N_("_Ignore Thread"), NULL, 
+      N_("_Ignore Thread"), NULL,
       NULL,
       G_CALLBACK(do_ignore) },
 
+    { "flag-thread", NULL,
+      N_("_Flag Thread"), "X",
+      N_("_Flag Thread"),
+      G_CALLBACK(do_flag) },
+
+    { "next-flagged", NULL,
+      N_("_Goto next flagged Thread"), "plus",
+      N_("_Goto next flagged Thread"),
+      G_CALLBACK(do_next_flag) },
+
+    { "last-flagged", NULL,
+      N_("_Goto last flagged Thread"), "minus",
+      N_("_Goto last flagged Thread"),
+      G_CALLBACK(do_last_flag) },
+
     { "view-article-score", "ICON_SCORE",
-      N_("Edit Article's Watch/Ignore/Score..."), "<control><shift>C", 
+      N_("Edit Article's Watch/Ignore/Score..."), "<control><shift>C",
       NULL,
       G_CALLBACK(do_show_score_dialog) },
 
     { "add-article-score", "ICON_SCORE",
-      N_("Add a _Scoring Rule..."), "S", 
+      N_("Add a _Scoring Rule..."), "S",
       NULL,
       G_CALLBACK(do_show_new_score_dialog) },
 
     { "cancel-article", NULL,
-      N_("Cance_l Article..."), NULL, 
+      N_("Cance_l Article..."), NULL,
       NULL,
       G_CALLBACK(do_cancel_article) },
 
     { "supersede-article", NULL,
-      N_("_Supersede Article..."), NULL, 
+      N_("_Supersede Article..."), NULL,
       NULL,
       G_CALLBACK(do_supersede_article) },
 
     { "delete-article", GTK_STOCK_DELETE,
-      N_("_Delete Article"), "Delete", 
+      N_("_Delete Article"), "Delete",
       NULL,
       G_CALLBACK(do_delete_article) },
 
     { "clear-article-cache", NULL,
-      N_("Clear Article Cache"), NULL, 
+      N_("Clear Article Cache"), NULL,
       NULL,
       G_CALLBACK(do_clear_article_cache) },
 
     { "mark-article-read", "ICON_ARTICLE_READ",
-      N_("_Mark Article as Read"), "M", 
+      N_("_Mark Article as Read"), "M",
       NULL,
       G_CALLBACK(do_mark_article_read) },
 
     { "mark-article-unread", "ICON_ARTICLE_UNREAD",
-      N_("Mark Article as _Unread"), "<control>M", 
+      N_("Mark Article as _Unread"), "<control>M",
       NULL,
       G_CALLBACK(do_mark_article_unread) },
 
@@ -579,27 +597,27 @@ namespace
       G_CALLBACK(do_followup_to) },
 
     { "reply-to", NULL,
-      N_("_Reply to Author in Mail"), "R", 
+      N_("_Reply to Author in Mail"), "R",
       NULL,
       G_CALLBACK(do_reply_to) },
 
     { "pan-web-page", NULL,
-      N_("_Pan Home Page"), NULL, 
+      N_("_Pan Home Page"), NULL,
       NULL,
       G_CALLBACK(do_pan_web) },
 
     { "bug-report", NULL,
-      N_("Give _Feedback or Report a Bug..."), NULL, 
+      N_("Give _Feedback or Report a Bug..."), NULL,
       NULL,
       G_CALLBACK(do_bug_report) },
 
     { "tip-jar", NULL,
-      N_("_Tip Jar..."), NULL, 
+      N_("_Tip Jar..."), NULL,
       NULL,
       G_CALLBACK(do_tip_jar) },
 
     { "about-pan", GTK_STOCK_ABOUT,
-      N_("_About"), NULL, 
+      N_("_About"), NULL,
       NULL,
       G_CALLBACK(do_about_pan) }
   };

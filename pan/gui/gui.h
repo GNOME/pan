@@ -116,6 +116,9 @@ namespace pan
       virtual void do_plonk ();
       virtual void do_watch ();
       virtual void do_ignore ();
+      virtual void do_flag ();
+      virtual void do_next_flag ();
+      virtual void do_last_flag ();
       virtual void do_show_score_dialog ();
       virtual void do_show_new_score_dialog ();
       virtual void do_cancel_article ();
@@ -153,6 +156,8 @@ namespace pan
       virtual void do_refresh_groups ();
       virtual void do_subscribe_selected_groups ();
       virtual void do_unsubscribe_selected_groups ();
+
+      void step_bookmarks(int step);
 
     public:
       static std::string prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs);

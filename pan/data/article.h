@@ -31,7 +31,7 @@ namespace pan
 {
   /**
    * A Usenet article, either single-part or multipart.
-   * 
+   *
    * To lessen the memory footprint of large binaries groups,
    * Pan folds multipart posts into a single Article object.
    * Only minimal information for any one part is kept
@@ -73,6 +73,7 @@ namespace pan
       unsigned int lines;
       int score;
       bool is_binary;
+      bool flag;
       static bool has_reply_leader (const StringView&);
 
     public:
@@ -85,8 +86,13 @@ namespace pan
       Xref xref;
 
     public:
-      Article (): time_posted(0), lines(0), score(0), is_binary(false)  {}
+      Article (): time_posted(0), lines(0), score(0), is_binary(false), flag(false)  {}
       void clear ();
+
+      /* Functions to bookmark an article */
+      void toggle_flag() { flag = !flag; }
+      bool get_flag() const { return flag; }
+      void set_flag(bool setme) { flag = setme; }
 
     private:
       Parts parts;

@@ -1036,6 +1036,33 @@ void GUI :: do_ignore ()
 {
   set_selected_thread_score (-9999);
 }
+
+void
+GUI :: do_flag ()
+{
+  Article* a = _header_pane->get_first_selected_article();
+  a->toggle_flag();
+  _header_pane->on_article_flag_toggled(a);
+}
+
+void
+GUI :: step_bookmarks(int step)
+{
+  _header_pane->move_to_next_bookmark(step);
+}
+
+void
+GUI :: do_next_flag ()
+{
+  step_bookmarks(1);
+}
+
+void
+GUI :: do_last_flag ()
+{
+  step_bookmarks(-1);
+}
+
 void GUI :: do_plonk ()
 {
   score_add (ScoreAddDialog::PLONK);
