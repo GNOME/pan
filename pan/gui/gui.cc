@@ -1605,9 +1605,17 @@ void GUI :: do_read_selected_group ()
   }
   gtk_window_set_title (get_window(_root), s.c_str());
 
-  // set the charset encoding based upon that group's default
+  // set the charset encoding based upon that group's / global default
   if (!group.empty())
-    set_charset (_group_prefs.get_string (group, "character-encoding", "UTF-8"));
+  {
+    std::string global_locale(_prefs.get_string("default-charset", ""));
+    if (global_locale.empty())
+      set_charset (_group_prefs.get_string (group, "character-encoding", "UTF-8"));
+    else
+      set_charset (global_locale);
+
+  }
+
 
   // update the header pane
   watch_cursor_on ();
@@ -1900,6 +1908,7 @@ void
 GUI :: on_prefs_flag_changed (const StringView&, bool)
 {
 }
+
 void
 GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
 {

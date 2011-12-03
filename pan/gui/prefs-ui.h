@@ -25,16 +25,26 @@
 
 namespace pan
 {
-  class PrefsDialog
+  class PrefsDialog :
+    public Prefs::Listener
   {
     public:
       PrefsDialog (Prefs&, GtkWindow*);
       ~PrefsDialog () {}
+      Prefs& prefs () { return _prefs; }
       GtkWidget* root() { return _root; }
 
     private:
       Prefs& _prefs;
       GtkWidget* _root;
+      GtkWidget* charset_label;
+      void update_default_charset_label(const StringView&);
+
+      void on_prefs_flag_changed (const StringView& key, bool value) {}
+      void on_prefs_int_changed (const StringView& key, int color) {}
+      void on_prefs_string_changed (const StringView& key, const StringView& value) ;
+      void on_prefs_color_changed (const StringView& key, const GdkColor& color) {}
+
   };
 }
 
