@@ -299,8 +299,10 @@ TaskXOver :: on_nntp_line (NNTP               * nntp,
       || author.empty() // missing author
       || date.empty() // missing date
       || mid.empty() // missing mid
-      || mid.front()!='<' // corrupt mid
-      || (!ref.empty() && ref.front()!='<'))
+      || mid.front()!='<') // corrupt mid
+      /// Concerning bug : https://bugzilla.gnome.org/show_bug.cgi?id=650042
+      /// Even if we didn't get a proper reference here, continue.
+      //|| (!ref.empty() && ref.front()!='<'))
     return;
 
   // if news server doesn't provide an xref, fake one
