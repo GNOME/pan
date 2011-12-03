@@ -44,8 +44,17 @@ stock_images = \
 	icon_mozilla_smile.png \
 	icon_mozilla_surprised.png \
 	icon_mozilla_tongueout.png \
-	icon_mozilla_wink.png
-    
+	icon_mozilla_wink.png \
+	icon_plain.png \
+	icon_cert.png \
+	icon_status_online.png \
+  icon_status_offline.png \
+  icon_status_active.png \
+  icon_status_queue_empty.png \
+  icon_status_error.png \
+  icon_status_idle.png \
+  icon_status_new_articles.png
+
 
 EXTRA_DIST = \
 	pan-template.xcf \

@@ -24,32 +24,48 @@
 #include <pan/gui/prefs.h>
 #include <pan/general/progress.h>
 #include <pan/tasks/queue.h>
+#include <pan/tasks/upload-queue.h>
 #include <pan/usenet-utils/text-massager.h>
+#include <pan/data/encode-cache.h>
 #include "group-prefs.h"
+
+#include <pan/usenet-utils/MersenneTwister.h>
 
 namespace pan
 {
   class Profiles;
   class TaskPost;
+  class UploadQueue;
+  class Queue;
 
   /**
    * Dialog for posting new messages Pan's GTK GUI.
    * @ingroup GUI
    */
-  class PostUI: private Progress::Listener
+  class PostUI: private Progress::Listener,
+                private UploadQueue::Listener
   {
     public:
+
+      typedef std::vector<Task*> tasks_t;
+
       static PostUI* create_window (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
-                                    GMimeMessage*, Prefs&, GroupPrefs&);
-    
+                                    GMimeMessage*, Prefs&, GroupPrefs&, EncodeCache&);
+
+      void prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& prefs);
+      std::string prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs);
+
     protected:
       PostUI (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
-              GMimeMessage*, Prefs&, GroupPrefs&);
+              GMimeMessage*, Prefs&, GroupPrefs&, EncodeCache&);
     public:
       ~PostUI ();
 
     public:
       GtkWidget * root() { return _root; }
+      GtkWidget * part_select() { return _part_select; }
+      GtkWidget * parts_store() { return _parts_store; }
+
       void rot13_selection ();
       void wrap_selection ();
       void wrap_body ();
@@ -59,11 +75,30 @@ namespace pan
       void apply_profile ();
       void save_draft ();
       void open_draft ();
+      void import_draft (const char* fn);
       void prompt_for_charset ();
       void send_now ();
-      void close_window ();
+      void send_and_save_now ();
+      void add_files ();
+      void close_window (bool flag=false);
       void set_wrap_mode (bool wrap);
       void set_always_run_editor (bool);
+
+      void update_parts_tab();
+
+      //popup action entries
+      void remove_files  ();
+      void clear_list    ();
+      void select_parts  ();
+      void move_up       ();
+      void move_down     ();
+      void move_top      ();
+      void move_bottom   ();
+//      void select_encode (GtkAction*);  deactivated for now
+
+      static void do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g);
+      static gboolean on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gpointer userdata);
+      static gboolean on_selection_changed  (GtkTreeSelection *s,gpointer p);
 
     private:
       void done_sending_message (GMimeMessage*, bool);
@@ -77,8 +112,11 @@ namespace pan
       void set_message (GMimeMessage*);
 
     private:
-      virtual void on_progress_finished (Progress&, int status);
-      virtual void on_progress_error (Progress&, const StringView&);
+      virtual void on_progress_finished (Progress&, int status=OK);
+      virtual void on_progress_error (Progress&, const StringView&) {}
+
+      virtual void on_progress_step (Progress&, int p) {}
+      virtual void on_progress_status (Progress&, const StringView& s) {}
 
     private:
       Data& _data;
@@ -88,9 +126,14 @@ namespace pan
       Prefs& _prefs;
       GroupPrefs& _group_prefs;
       GtkWidget * _root;
+      GtkWidget * _part_select;
       GtkWidget * _from_combo;
       GtkWidget * _subject_entry;
       GtkWidget * _groups_entry;
+
+      GtkWidget * _filequeue_store;
+      GtkWidget * _parts_store;
+
       GtkWidget * _to_entry;
       GtkWidget * _followupto_entry;
       GtkWidget * _replyto_entry;
@@ -105,7 +148,6 @@ namespace pan
       GtkUIManager * _uim;
       GtkActionGroup * _agroup;
       std::string _current_signature;
-      GtkWidget * _post_dialog;
       TaskPost * _post_task;
       typedef std::map<std::string, std::string> str2str_t;
       str2str_t _hidden_headers;
@@ -113,19 +155,44 @@ namespace pan
       std::string _unchanged_body;
       int _wrap_pixels;
 
+      /* binpost */
+      bool _file_queue_empty;
+      TaskUpload* _upload_ptr;
+      int _total_parts;
+      std::string _save_file;
+      MTRand rng;
+      GMimeMultipart * _multipart;
+
+    private:
+      friend class UploadQueue;
+      virtual void on_queue_tasks_added (UploadQueue&, int index, int count);
+      virtual void on_queue_task_removed (UploadQueue&, Task&, int index);
+      virtual void on_queue_task_moved (UploadQueue&, Task&, int new_index, int old_index);
+
     private:
       void add_actions (GtkWidget* box);
       void apply_profile_to_body ();
       void apply_profile_to_headers ();
-      enum Mode { DRAFTING, POSTING };
-      GMimeMessage * new_message_from_ui (Mode mode);
+      enum Mode { DRAFTING, POSTING, UPLOADING, MULTI };
+      GMimeMessage * new_message_from_ui (Mode mode, bool copy_body=true);
+      GMimeMultipart* new_multipart_from_ui (bool copy_body=true);
       Profile get_current_profile ();
-      bool check_message (const Quark& server, GMimeMessage*);
+      bool check_message (const Quark& server, GMimeMessage*, bool binpost=false);
       bool check_charset ();
 
     private:
       GtkWidget* create_main_tab ();
       GtkWidget* create_extras_tab ();
+      GtkWidget* create_filequeue_tab ();
+
+      GtkWidget* create_filequeue_status_bar ();
+      GtkWidget * _filequeue_eventbox;
+      GtkWidget * _filequeue_label;
+      void update_filequeue_label (GtkTreeSelection *selection=0);
+
+      GtkWidget* create_parts_tab ();
+//      GtkWidget* create_log_tab ();
+//      void update_filequeue_tab();
 
     private:
       std::string utf8ize (const StringView&) const;
@@ -136,15 +203,59 @@ namespace pan
       static void body_widget_resized_cb (GtkWidget*, GtkAllocation*, gpointer);
 
     private:
-      unsigned long _group_entry_changed_id;
+
+      unsigned long _body_changed_id;
+      unsigned int _body_changed_idle_tag;
+      static gboolean body_changed_idle (gpointer);
+      static void body_changed_cb (GtkEditable*, gpointer);
+
       unsigned int _group_entry_changed_idle_tag;
+      unsigned long _group_entry_changed_id;
       static gboolean group_entry_changed_idle (gpointer);
       static void group_entry_changed_cb (GtkEditable*, gpointer);
 
+    protected:
+      EncodeCache& _cache;
+
     public:
       void set_spellcheck_enabled (bool);
-	  void spawn_editor_dead(char *);
+      void spawn_editor_dead(char *);
 
+    public:
+      tasks_t  get_selected_files () const;
+
+    private:
+      static void get_selected_files_foreach (GtkTreeModel*,
+                      GtkTreePath*, GtkTreeIter*, gpointer);
+
+      static void up_clicked_cb      (GtkButton*, PostUI*);
+      static void down_clicked_cb    (GtkButton*, PostUI*);
+      static void top_clicked_cb     (GtkButton*, PostUI*);
+      static void bottom_clicked_cb  (GtkButton*, PostUI*);
+      static void delete_clicked_cb  (GtkButton*, PostUI*);
+      static void on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, gpointer user_data);
+
+    private:
+      TaskUpload* upload_ptr() { return _upload_ptr; }
+      UploadQueue _upload_queue;
+      Mutex mut;
+      int _running_uploads;
+      std::ofstream _out;
+      static void message_id_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer);
+
+      void generate_unique_id (StringView& mid, int cnt, std::string& s);
+
+      int get_total_parts(const char* file);
+
+    private:
+      guint _draft_autosave_id;
+      guint _draft_autosave_timeout;
+      guint _draft_autosave_idle_tag;
+      static gboolean draft_save_cb(gpointer ptr);
+
+    public:
+      void set_draft_autosave_timeout(guint seconds)
+        { _draft_autosave_timeout = seconds;}
   };
 }
 

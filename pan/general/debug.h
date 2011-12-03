@@ -21,11 +21,15 @@
 #define __Debug_h__
 
 #include <iostream>
+#include <fstream>
 
 namespace pan
 {
   extern bool _debug_flag;
   extern bool _debug_verbose_flag;
+  extern bool _verbose_flag;
+  extern std::ofstream dbg_file;
+
 }
 
 #define LINE_ID '(' << __FILE__ << ':' << __LINE__ << ':' << __func__ << ')'
@@ -33,13 +37,19 @@ namespace pan
 #define debug(A) \
   do { \
     if (_debug_flag) \
-      std::cerr << LINE_ID << ' ' << A << '\n'; \
+      std::cerr<< LINE_ID << ' ' << A << '\n'; \
   } while (0)
 
 #define debug_v(A) \
   do { \
     if (_debug_verbose_flag) \
       std::cerr << LINE_ID << ' ' << A << '\n'; \
+  } while (0)
+
+#define verbose(A) \
+  do { \
+    if (_verbose_flag) \
+      std::cout << A << '\n'; \
   } while (0)
 
 #ifndef UNUSED

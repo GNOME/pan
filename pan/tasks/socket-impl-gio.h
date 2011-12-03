@@ -51,6 +51,7 @@ namespace pan
       bool _io_performed;
 
     private:
+      friend class GIOChannelSocketSSL;
       enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };
       void set_watch_mode (WatchMode mode);
       virtual void write_command (const StringView& chars, Listener *);
@@ -60,17 +61,6 @@ namespace pan
       enum DoResult { IO_ERR, IO_READ, IO_WRITE, IO_DONE };
       DoResult do_read ();
       DoResult do_write ();
-
-    public:
-
-      /**
-       * Socket::Creator that instantiates GIOSocket objects.
-       */
-      class Creator: public Socket::Creator {
-        public:
-          virtual ~Creator () { }
-          virtual void create_socket (const StringView& host, int port, WorkerPool&, Listener *l);
-      };
   };
 }
 

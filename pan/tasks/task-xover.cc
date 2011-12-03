@@ -21,16 +21,24 @@
 #include <cassert>
 #include <cerrno>
 extern "C" {
+  #define PROTOTYPES
+  #include <stdio.h>
+  #include <uulib/uudeview.h>
   #include <glib/gi18n.h>
   #include <gmime/gmime-utils.h>
+  #include <zlib.h>
 }
+#include <fstream>
+#include <iostream>
 #include <pan/general/debug.h>
+#include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/data/data.h>
 #include "nntp.h"
 #include "task-xover.h"
+
 
 using namespace pan;
 
@@ -94,6 +102,7 @@ TaskXOver :: TaskXOver (Data         & data,
   _articles_so_far (0ul),
   _total_minitasks (0)
 {
+
   debug ("ctor for " << group);
 
   // add a ``GROUP'' MiniTask for each server that has this group
@@ -210,11 +219,11 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
   {
     //std::cerr << LINE_ID << " okay, I'll try to get articles in [" << l << "..." << h << ']' << std::endl;
     add_steps (h-l);
-    const int INCREMENT (1000);
+    const int INCREMENT(1000);
     MiniTasks_t& minitasks (_server_to_minitasks[servername]);
     for (uint64_t m=l; m<=h; m+=INCREMENT) {
       MiniTask mt (MiniTask::XOVER, m, m+INCREMENT);
-      debug ("adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << ']');
+      debug ("adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << "]");
       minitasks.push_front (mt);
       ++_total_minitasks;
     }
@@ -264,9 +273,10 @@ namespace
 }
 
 void
-TaskXOver :: on_nntp_line (NNTP               * nntp,
-                           const StringView   & line)
+TaskXOver :: on_nntp_line         (NNTP               * nntp,
+                                   const StringView   & line)
 {
+
   pan_return_if_fail (nntp != 0);
   pan_return_if_fail (!nntp->_server.empty());
   pan_return_if_fail (!nntp->_group.empty());
@@ -276,15 +286,29 @@ TaskXOver :: on_nntp_line (NNTP               * nntp,
   unsigned int lines=0u;
   unsigned long bytes=0ul;
   uint64_t number=0;
-  StringView subj, author, date, mid, ref, tmp, xref, l(line);
+  StringView subj, author, date, mid, tmp, xref, l(line);
+  std::string ref;
   bool ok = !l.empty();
-  ok = ok && l.pop_token (tmp, '\t');    if (ok) number = view_to_ull (tmp);
+  ok = ok && l.pop_token (tmp, '\t');    if (ok) number = view_to_ull (tmp); tmp.clear();
   ok = ok && l.pop_token (subj, '\t');   if (ok) subj.trim ();
   ok = ok && l.pop_token (author, '\t'); if (ok) author.trim ();
   ok = ok && l.pop_token (date, '\t');   if (ok) date.trim ();
   ok = ok && l.pop_token (mid, '\t');    if (ok) mid.trim ();
-  ok = ok && l.pop_token (ref, '\t');    if (ok) ref.trim ();
-  ok = ok && l.pop_token (tmp, '\t');    if (ok) bytes = view_to_ul (tmp);
+
+  //handle multiple "References:"-message-ids correctly.
+  ok = ok && l.pop_token (tmp, '\t');
+  do
+  {
+    if (tmp.empty()) continue;
+    if (tmp.front() == '<')
+    {
+      tmp.trim();
+      ref += tmp;
+      tmp.clear();
+    } else break;
+  } while ((ok = ok && l.pop_token (tmp, '\t'))) ;
+
+                                         if (ok) bytes = view_to_ul (tmp); tmp.clear();
   ok = ok && l.pop_token (tmp, '\t');    if (ok) lines = view_to_ul (tmp);
   ok = ok && l.pop_token (xref, '\t');   if (ok) xref.trim ();
 
@@ -331,7 +355,7 @@ TaskXOver :: on_nntp_line (NNTP               * nntp,
     nntp->_server, nntp->_group,
     (header_is_nonencoded_utf8(subj) ? subj : header_to_utf8(subj,fallback_charset).c_str()),
     (header_is_nonencoded_utf8(author) ? author : header_to_utf8(author,fallback_charset).c_str()),
-    time_posted, mid, ref, bytes, lines, xref);
+    time_posted, mid, StringView(ref), bytes, lines, xref);
 
   if (article)
     ++_articles_so_far;
@@ -352,7 +376,6 @@ TaskXOver :: on_nntp_done (NNTP              * nntp,
                            Health              health,
                            const StringView  & response UNUSED)
 {
-  //std::cerr << LINE_ID << " nntp " << nntp->_server << " (" << nntp << ") done; checking in.  health==" << health << std::endl;
   update_work (true);
   check_in (nntp, health);
 }
@@ -377,8 +400,8 @@ TaskXOver :: update_work (bool subtract_one_from_nntp_count)
   else if (nntp_count)
     _state.set_working ();
   else {
-    _state.set_completed ();
-    set_finished (OK);
+    _state.set_completed();
+    set_finished(OK);
   }
 }
 

@@ -72,30 +72,39 @@ DataImpl :: add_new_server ()
 
   // add it to the _servers map and give it a default filename
   std::ostringstream o;
-  //o << file::get_pan_home() << G_DIR_SEPARATOR << "newsrc-" << new_server;
   o << "newsrc-" << new_server;
   _servers[new_server].newsrc_filename = o.str ();
   return new_server;
 }
 
-DataImpl :: Server*
+Data :: Server*
 DataImpl :: find_server (const Quark& server)
 {
   Server * retval (0);
+
   servers_t::iterator it (_servers.find (server));
   if (it != _servers.end())
     retval = &it->second;
   return retval;
 }
 
-const DataImpl :: Server*
+const Data :: Server*
 DataImpl :: find_server (const Quark& server) const
 {
   const Server * retval (0);
+
   servers_t::const_iterator it (_servers.find (server));
   if (it != _servers.end())
     retval = &it->second;
   return retval;
+}
+
+bool
+DataImpl :: find_server_by_hn (const Quark& server, Quark& setme) const
+{
+  foreach_const(servers_t, _servers, it)
+    if (it->second.host == server.c_str()) { setme = it->first; return true; }
+  return false;
 }
 
 void
@@ -103,26 +112,23 @@ DataImpl :: set_server_article_expiration_age  (const Quark  & server,
                                                 int            days)
 {
   Server * s (find_server (server));
-  assert (s != 0);
+  assert (s);
 
   s->article_expiration_age = std::max (0, days);
 
-  save_server_properties (*_data_io);
 }
 
-  
 void
 DataImpl :: set_server_auth (const Quark       & server,
                              const StringView  & username,
                              const StringView  & password)
 {
   Server * s (find_server (server));
-  assert (s != 0);
+  assert (s);
 
   s->username = username;
   s->password = password;
 
-  save_server_properties (*_data_io);
 }
 
 void
@@ -131,10 +137,10 @@ DataImpl :: set_server_addr (const Quark       & server,
                              int                 port)
 {
   Server * s (find_server (server));
-  assert (s != 0);
+  assert (s);
   s->host = host;
   s->port = port;
-  save_server_properties (*_data_io);
+
 }
 
 
@@ -143,9 +149,9 @@ DataImpl :: set_server_limits (const Quark   & server,
                                int             max_connections)
 {
   Server * s (find_server (server));
-  assert (s != 0);
+  assert (s);
   s->max_connections = max_connections;
-  save_server_properties (*_data_io);
+
 }
 
 void
@@ -153,9 +159,39 @@ DataImpl :: set_server_rank (const Quark   & server,
                              int             rank)
 {
   Server * s (find_server (server));
-  assert (s != 0);
+  assert (s);
   s->rank = rank;
+
+}
+
+void
+DataImpl :: set_server_ssl_support (const Quark   & server,
+                                    int             ssl)
+{
+  Server * s (find_server (server));
+  assert (s);
+  s->ssl_support = ssl;
+
+}
+
+void
+DataImpl :: set_server_cert  (const Quark   & server,
+                              const StringView & cert)
+{
+  Server * s (find_server (server));
+  assert (s);
+  s->cert = cert;
+  debug(s->cert<<" "<<cert);
+
+}
+
+void
+DataImpl :: save_server_info (const Quark& server)
+{
+  Server * s (find_server (server));
+  assert (s);
   save_server_properties (*_data_io);
+
 }
 
 bool
@@ -164,26 +200,28 @@ DataImpl :: get_server_auth (const Quark   & server,
                              std::string   & setme_password) const
 {
   const Server * s (find_server (server));
-  const bool found (s != 0);
+  const bool found (s);
   if (found) {
     setme_username = s->username;
     setme_password = s->password;
   }
   return found;
+
 }
-                                                                                             
+
 bool
 DataImpl :: get_server_addr (const Quark   & server,
                              std::string   & setme_host,
                              int           & setme_port) const
 {
   const Server * s (find_server (server));
-  const bool found (s != 0);
+  const bool found (s);
   if (found) {
     setme_host = s->host;
     setme_port = s->port;
   }
   return found;
+
 }
 
 std::string
@@ -197,6 +235,29 @@ DataImpl :: get_server_address (const Quark& server) const
     str = x.str();
   }
   return str;
+
+}
+
+bool
+DataImpl :: get_server_ssl_support (const Quark & server) const
+{
+  bool retval (false);
+  const Server * s (find_server (server));
+  if (s)
+    retval = (s->ssl_support != 0);
+  return retval;
+
+}
+
+std::string
+DataImpl :: get_server_cert (const Quark & server) const
+{
+  std::string str;
+  const Server * s (find_server (server));
+  if (s)
+    str = s->cert;
+  return str;
+
 }
 
 int
@@ -204,9 +265,10 @@ DataImpl :: get_server_limits (const Quark & server) const
 {
   int retval (2);
   const Server * s (find_server (server));
-  if (s != 0)
+  if (s)
     retval = s->max_connections;
   return retval;
+
 }
 
 int
@@ -214,9 +276,10 @@ DataImpl :: get_server_rank (const Quark & server) const
 {
   int retval (1);
   const Server * s (find_server (server));
-  if (s != 0)
+  if (s)
     retval = s->rank;
   return retval;
+
 }
 
 int
@@ -224,10 +287,12 @@ DataImpl :: get_server_article_expiration_age  (const Quark  & server) const
 {
   int retval (31);
   const Server * s (find_server (server));
-  if (s != 0)
+  if (s)
     retval = s->article_expiration_age;
   return retval;
+
 }
+
 
 /***
 ****
@@ -272,7 +337,7 @@ namespace
 
   void text (GMarkupParseContext *context    UNUSED,
              const gchar         *text,
-             gsize                text_len,  
+             gsize                text_len,
              gpointer             user_data,
              GError             **error      UNUSED)
   {
@@ -319,10 +384,13 @@ DataImpl :: load_server_properties (const DataIO& source)
     s.host = kv["host"];
     s.username = kv["username"];
     s.password = kv["password"];
-    s.port = to_int (kv["port"], 119);
+    s.port = to_int (kv["port"], STD_NNTP_PORT);
     s.max_connections = to_int (kv["connection-limit"], 2);
     s.article_expiration_age = to_int(kv["expire-articles-n-days-old"], 31);
     s.rank = to_int(kv["rank"], 1);
+    int ssl(to_int(kv["use-ssl"], 0));
+    s.ssl_support = ssl;
+    s.cert = kv["cert"];
     s.newsrc_filename = kv["newsrc"];
     if (s.newsrc_filename.empty()) { // set a default filename
       std::ostringstream o;
@@ -331,7 +399,6 @@ DataImpl :: load_server_properties (const DataIO& source)
     }
   }
 
-  save_server_properties (*const_cast<DataIO*>(&source));
 }
 
 namespace
@@ -367,6 +434,7 @@ DataImpl :: save_server_properties (DataIO& data_io) const
   *out << indent(depth++) << "<server-properties>\n";
   foreach_const (alpha_quarks_t, servers, it) {
     const Server* s (find_server (*it));
+    debug("saving server, "<<s->cert);
     *out << indent(depth++) << "<server id=\"" << escaped(it->to_string()) << "\">\n";
     *out << indent(depth) << "<host>" << escaped(s->host) << "</host>\n"
          << indent(depth) << "<port>" << s->port << "</port>\n"
@@ -375,7 +443,10 @@ DataImpl :: save_server_properties (DataIO& data_io) const
          << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
          << indent(depth) << "<connection-limit>" << s->max_connections << "</connection-limit>\n"
          << indent(depth) << "<newsrc>" << s->newsrc_filename << "</newsrc>\n"
-         << indent(depth) << "<rank>" << s->rank << "</rank>\n";
+         << indent(depth) << "<rank>" << s->rank << "</rank>\n"
+         << indent(depth) << "<use-ssl>" << s->ssl_support << "</use-ssl>\n"
+         << indent(depth) << "<cert>"    << s->cert << "</cert>\n";
+
     *out << indent(--depth) << "</server>\n";
   }
   *out << indent(--depth) << "</server-properties>\n";

@@ -53,6 +53,6 @@ DataImpl :: load_tasks (std::vector<Task*>& setme)
     full += *it;
 
   char * dir (g_get_current_dir ()); // hmm, maybe we could add a tag to nzb for this?
-  NZB :: tasks_from_nzb_string (StringView(full), dir, get_cache(), *this, *this, *this, setme);
+  NZB :: tasks_from_nzb_string (StringView(full), dir, get_cache(), get_encode_cache(), *this, *this, *this, setme);
   g_free (dir);
 }

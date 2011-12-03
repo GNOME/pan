@@ -31,11 +31,16 @@
 #include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
+#include <pan/data/encode-cache.h>
+#include <pan/data/cert-store.h>
 #include <pan/data/server-info.h>
 
 namespace pan
 {
   class FilterInfo;
+  class RulesInfo;
+  class Queue;
+  class CertStore;
 
   /**
    * Data Interface class for seeing the mapping between groups and servers.
@@ -64,7 +69,7 @@ namespace pan
    *
    * Also, a read article should change back to unread if it changes
    * from an incomplete multipart to a complete multipart as new
-   * parts are added to it. 
+   * parts are added to it.
    *
    * @ingroup data
    */
@@ -91,6 +96,7 @@ namespace pan
     std::string signature_file;
     std::string attribution;
     std::string fqdn;
+    std::string xface;
     Quark posting_server;
 
     void get_from_header (std::string& s) const {
@@ -132,7 +138,7 @@ namespace pan
     public:
       virtual void delete_profile (const std::string& profile_name) = 0;
       virtual void add_profile (const std::string& profile_name, const Profile& profile) = 0;
-      
+
     protected:
       Profiles () {}
   };
@@ -157,6 +163,26 @@ namespace pan
     public virtual Profiles,
     public virtual ArticleReferences
   {
+
+    public:
+      struct Server
+      {
+         std::string username;
+         std::string password;
+         std::string host;
+         std::string newsrc_filename;
+         std::string cert;
+         int port;
+         int article_expiration_age;
+         int max_connections;
+         int rank;
+         int ssl_support;
+         typedef sorted_vector<Quark,true,AlphabeticalQuarkOrdering> groups_t;
+         groups_t groups;
+
+         Server(): port(STD_NNTP_PORT), article_expiration_age(31), max_connections(2), rank(1), ssl_support(0) {}
+      };
+
     protected:
 
       Data () {}
@@ -168,11 +194,21 @@ namespace pan
 
     public:
 
-      virtual ArticleCache& get_cache () = 0; 
+      virtual ArticleCache& get_cache () = 0;
+      virtual const ArticleCache& get_cache () const = 0;
 
-      virtual const ArticleCache& get_cache () const = 0; 
+      virtual EncodeCache& get_encode_cache () = 0;
+      virtual const EncodeCache& get_encode_cache () const = 0;
+
+      virtual CertStore& get_certstore () = 0;
+      virtual const CertStore& get_certstore () const = 0;
 
     public:
+
+      /** Gets a quark to the provided hostname */
+      virtual bool find_server_by_hn (const Quark& server, Quark& setme) const = 0;
+
+      virtual const Server* find_server (const Quark& server) const = 0;
 
       virtual quarks_t get_servers () const = 0;
 
@@ -198,6 +234,8 @@ namespace pan
       virtual bool get_server_auth (const Quark   & server,
                                     std::string   & setme_username,
                                     std::string   & setme_password) const = 0;
+
+      virtual std::string get_server_cert (const Quark & server) const = 0;
 
       virtual int get_server_limits (const Quark & server) const = 0;
 
@@ -354,7 +392,7 @@ namespace pan
            *
            * In the case of new articles, the Tree's existing filter
            * is applied to them and new articles that survive the filter
-           * are threaded into the tree. 
+           * are threaded into the tree.
            *
            * In the case of deleted articles, their children are
            * reparented to the youngest surviving ancestor and then the
@@ -442,7 +480,7 @@ namespace pan
                 (*it++)->on_tree_change (d);
             }
           }
-              
+
 
         /*************************************************************
         ***
@@ -467,14 +505,20 @@ namespace pan
 
           virtual void set_filter (const ShowType     show_type = SHOW_ARTICLES,
                                    const FilterInfo * filter_or_null_to_reset = 0) = 0;
+
+          virtual void set_rules (const ShowType     show_type = SHOW_ARTICLES,
+                                   const RulesInfo * filter_or_null_to_reset = 0) = 0;
       };
 
        /**
         * Get a collection of headers that match the specified filter.
         */
        virtual ArticleTree* group_get_articles (const Quark       & group,
+                                                const Quark       & save_path,  // for auto-download
                                                 const ShowType      show_type = SHOW_ARTICLES,
-                                                const FilterInfo  * criteria = 0) const=0;
+                                                const FilterInfo  * criteria = 0,
+                                                const RulesInfo   * rules    = 0,
+                                                      Queue       * queue = 0) const=0;
 
        virtual void group_clear_articles (const Quark& group) = 0;
 
@@ -498,10 +542,17 @@ namespace pan
                                                 size_t                end_line,
                                                 bool                  do_rescore) = 0;
 
-        virtual void rescore_articles (const Quark& group, const quarks_t mids) = 0;
+       virtual void rescore_articles (const Quark& group, const quarks_t mids) = 0;
 
-        virtual void rescore () = 0;
+       virtual void rescore () = 0;
 
+    public:
+
+      void set_queue (Queue* q) { _queue = q; }
+      Queue* get_queue () { return _queue; }
+
+    private:
+      Queue * _queue;
 
 
     /*****************************************************************
@@ -555,7 +606,7 @@ namespace pan
 
       /**
        * Returns the high number of the most recent XOVER command
-       * run on the specified {server,group}, or 0 if it's never 
+       * run on the specified {server,group}, or 0 if it's never
        * been run there.
        */
       virtual uint64_t get_xover_high (const Quark  & group,

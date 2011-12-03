@@ -56,6 +56,20 @@ namespace
       snprintf (buf, sizeof(buf), _("Reading %s"), stripped.c_str());
     return std::string (buf);
   }
+
+  std::string get_groups_str(const Article& a)
+  {
+    std::string r;
+    quarks_t groups;
+    int cnt(1);
+    foreach_const (Xref, a.xref, xit)
+    {
+      r += xit->group.to_string();
+      if (cnt != a.xref.size() && a.xref.size() != 1) r+=", ";
+      ++cnt;
+    }
+    return r;
+  }
 }
 
 TaskArticle :: TaskArticle (const ServerRank          & server_rank,
@@ -75,7 +89,8 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   _time_posted (article.time_posted),
   _save_mode (save_mode),
   _decoder(0),
-  _decoder_has_run (false)
+  _decoder_has_run (false),
+  _groups(get_groups_str(article))
 {
   cache.reserve (article.get_part_mids());
 
@@ -119,10 +134,15 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   // initialize our progress status...
   init_steps (all_bytes);
   set_step (all_bytes - need_bytes);
+  const char *artsub(article.subject.c_str());
   if (save_path.empty())
-    set_status (article.subject.c_str());
+    set_status (artsub);
   else
-    set_status_va (_("Saving %s"), article.subject.c_str());
+    set_status_va (_("Saving %s"), artsub);
+
+  char buf[2048];
+  g_snprintf(buf,sizeof(buf), _("Saving %s"), artsub);
+  verbose (buf);
 
   update_work ();
 }
@@ -132,7 +152,7 @@ TaskArticle :: ~TaskArticle ()
   // ensure our on_worker_done() doesn't get called after we're dead
   if (_decoder)
       _decoder->cancel_silently();
-  
+
   _cache.release (_article.get_part_mids());
 }
 
@@ -291,7 +311,7 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
       }
       break;
   }
-  
+
   update_work (nntp);
   check_in (nntp, health);
 }
@@ -336,11 +356,20 @@ TaskArticle :: on_worker_done (bool cancelled)
     // now that we're back in the main thread.
 
     foreach_const(Decoder::log_t, _decoder->log_severe, it)
+    {
       Log :: add_err(it->c_str());
+      verbose (it->c_str());
+    }
     foreach_const(Decoder::log_t, _decoder->log_errors, it)
+    {
       Log :: add_err(it->c_str());
+      verbose (it->c_str());
+    }
     foreach_const(Decoder::log_t, _decoder->log_infos, it)
+    {
       Log :: add_info(it->c_str());
+      verbose (it->c_str());
+    }
 
     if (_decoder->mark_read)
       _read.mark_read(_article);

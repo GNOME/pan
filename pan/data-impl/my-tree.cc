@@ -20,6 +20,7 @@
 #include <config.h>
 #include <cassert>
 #include <pan/general/debug.h>
+#include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/filter-info.h>
@@ -78,9 +79,39 @@ DataImpl :: MyTree :: get_article (const Quark& mid) const
 }
 
 size_t
-DataImpl :: MyTree :: size () const 
+DataImpl :: MyTree :: size () const
 {
   return _nodes.size();
+}
+
+void
+DataImpl :: MyTree :: set_rules (const Data::ShowType    show_type,
+                                 const RulesInfo * rules )
+{
+
+  if (rules) {
+//    std::cerr<<"set rules "<<rules<<std::endl;
+    _rules = *rules;
+  }
+  else
+  {
+//    std::cerr<<"rules clear my_tree\n";
+    _rules.clear ();
+  }
+
+  _show_type = show_type;
+
+  const GroupHeaders * h (_data.get_group_headers (_group));
+  g_assert (h != 0);
+  const_nodes_v candidates;
+  candidates.reserve (h->_nodes.size());
+  foreach_const (nodes_t, h->_nodes, it) {
+    const ArticleNode * node (it->second);
+    if (node->_article)
+      candidates.push_back ((ArticleNode*)node);
+  }
+
+  apply_rules(candidates);
 }
 
 void
@@ -90,7 +121,7 @@ DataImpl :: MyTree :: set_filter (const Data::ShowType    show_type,
   // set the filter...
   if (criteria)
     _filter = *criteria;
-  else 
+  else
     _filter.clear ();
   _show_type = show_type;
 
@@ -114,14 +145,23 @@ DataImpl :: MyTree :: set_filter (const Data::ShowType    show_type,
 
 DataImpl :: MyTree :: MyTree (DataImpl              & data_impl,
                               const Quark           & group,
+                              const Quark           & save_path,
                               const Data::ShowType    show_type,
-                              const FilterInfo      * filter):
+                              const FilterInfo      * filter,
+                              const RulesInfo       * rules,
+                                    Queue           * queue):
   _group (group),
-  _data (data_impl)
+  _data (data_impl),
+  _save_path(save_path)
 {
+
+  _data.set_queue(queue);
   _data.ref_group (_group);
   _data._trees.insert (this);
+
   set_filter (show_type, filter);
+  set_rules (show_type, rules);
+
 }
 
 DataImpl :: MyTree :: ~MyTree ()
@@ -132,7 +172,7 @@ DataImpl :: MyTree :: ~MyTree ()
 }
 
 /****
-*****  
+*****
 ****/
 
 struct
@@ -153,6 +193,93 @@ DataImpl :: MyTree :: NodeMidCompare
   bool operator () (const ArticleNode* a, const Quark& b) const
     { return a->_mid < b; }
 };
+
+void
+DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
+{
+
+//  std::cerr<<"apply rules mytree\n";
+
+  NodeMidCompare compare;
+  const_nodes_v pass;
+  pass.reserve (candidates.size());
+
+  // apply the rules to the whole tree
+  foreach (const_nodes_v, candidates, it) {
+    if (!(*it)->_article)
+      continue;
+    if (!_data._rules_filter.test_article (_data, _rules, _group, *(*it)->_article))
+      pass.push_back (*it);
+  }
+
+  //  maybe include threads or subthreads...
+  if (_show_type == Data::SHOW_THREADS)
+  {
+    foreach (const_nodes_v, pass, it) {
+      const ArticleNode *& n (*it);
+      while (n->_parent)
+        n = n->_parent;
+    }
+    std::sort (pass.begin(), pass.end(), compare);
+    pass.erase (std::unique (pass.begin(), pass.end()), pass.end());
+    //std::cerr << LINE_ID << " reduces to " << pass.size() << " threads\n";
+  }
+
+  if (_show_type == Data::SHOW_THREADS || _show_type == Data::SHOW_SUBTHREADS)
+  {
+    unique_nodes_t d;
+    foreach (const_nodes_v, pass, it)
+      accumulate_descendants (d, *it);
+    //std::cerr << LINE_ID << " expands into " << d.size() << " articles\n";
+
+    const_nodes_v fail2;
+    pass.clear ();
+    foreach (unique_nodes_t, d, it) {
+      Article * a ((*it)->_article);
+      if (!_data._rules_filter.test_article (_data, _rules, _group, *a))
+        pass.push_back (*it);
+    }
+  }
+  cache_articles(_data._rules_filter._cached);
+  download_articles(_data._rules_filter._downloaded);
+  _data._rules_filter.finalize(_data);
+
+  quarks_t mids;
+  foreach_const (const_nodes_v, pass, it)
+    mids.insert (mids.end(), (*it)->_mid);
+  remove_articles (mids);
+}
+
+void
+DataImpl :: MyTree :: cache_articles (std::set<const Article*> s)
+{
+  Queue * q (_data.get_queue());
+  if (!q) return;
+
+  Queue::tasks_t tasks;
+  ArticleCache& cache(_data.get_cache());
+  foreach_const (std::set<const Article*>, s, it)
+    if (!_data.is_read(*it))
+      tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data));
+  if (!tasks.empty())
+    q->add_tasks (tasks, Queue::BOTTOM);
+}
+
+void
+DataImpl :: MyTree :: download_articles (std::set<const Article*> s)
+{
+  Queue * q (_data.get_queue());
+  if (!q) return;
+
+  Queue::tasks_t tasks;
+  ArticleCache& cache(_data.get_cache());
+
+  foreach_const (std::set<const Article*>, s, it)
+    if (!_data.is_read(*it))
+      tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data, 0, TaskArticle::DECODE, _save_path));
+  if (!tasks.empty())
+    q->add_tasks (tasks, Queue::BOTTOM);
+}
 
 
 // candidates holds GroupHeader's ArticleNodes pointers
@@ -219,7 +346,7 @@ DataImpl :: MyTree :: apply_filter (const const_nodes_v& candidates)
                     fail2.begin(), fail2.end(),
                     inserter (tmp, tmp.begin()), compare);
     fail.swap (tmp);
-	 
+
     // fail cleanup: remove newly-passing articles
     tmp.clear ();
     std::set_difference (fail.begin(), fail.end(),
@@ -227,7 +354,7 @@ DataImpl :: MyTree :: apply_filter (const const_nodes_v& candidates)
                          inserter (tmp, tmp.begin()), compare);
     fail.swap (tmp);
     //std::cerr << LINE_ID << ' ' << pass.size() << " of "
-    //          << (pass.size() + fail.size()) 
+    //          << (pass.size() + fail.size())
     //          << " make it past the show-thread block\n";
   }
 
@@ -326,16 +453,19 @@ DataImpl :: MyTree :: accumulate_descendants (unique_nodes_t& descendants,
 void
 DataImpl :: MyTree :: articles_changed (const quarks_t& mids, bool do_refilter)
 {
-  if (do_refilter) {
-    // refilter... this may cause articles to be shown or hidden
-    const_nodes_v nodes;
-    _data.find_nodes (mids, _data.get_group_headers(_group)->_nodes, nodes);
+//  std::cerr<<"articles changed\n";
+
+  const_nodes_v nodes;
+  _data.find_nodes (mids, _data.get_group_headers(_group)->_nodes, nodes);
+  apply_rules (nodes);
+
+  if (do_refilter)
     apply_filter (nodes);
-  }
 
   // fire an update event for any of those mids in our tree...
   nodes_v my_nodes;
   _data.find_nodes (mids, _nodes, my_nodes);
+
   if (!my_nodes.empty()) {
     ArticleTree::Diffs diffs;
     foreach_const (nodes_v, my_nodes, it)
@@ -347,9 +477,13 @@ DataImpl :: MyTree :: articles_changed (const quarks_t& mids, bool do_refilter)
 void
 DataImpl :: MyTree :: add_articles (const quarks_t& mids)
 {
+//  std::cerr<<"add articles\n";
+
   const_nodes_v nodes;
   _data.find_nodes (mids, _data.get_group_headers(_group)->_nodes, nodes);
+  apply_rules (nodes);
   apply_filter (nodes);
+
 }
 
 
@@ -364,6 +498,8 @@ DataImpl :: MyTree :: TwoNodes
 void
 DataImpl :: MyTree :: add_articles (const const_nodes_v& nodes_in)
 {
+//  std::cerr<<"add articles nodes\n";
+
   NodeMidCompare compare;
 
   ///

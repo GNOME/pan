@@ -49,11 +49,23 @@ namespace
     g_free (pch);
     return path;
   }
+
+  std::string get_encode_cache_path ()
+  {
+    char * pch (g_build_filename (file::get_pan_home().c_str(), "encode-cache", NULL));
+    file :: ensure_dir_exists (pch);
+    std::string path (pch);
+    g_free (pch);
+    return path;
+  }
+
 }
 
 DataImpl :: DataImpl (bool unit_test, int cache_megs, DataIO * io):
   ProfilesImpl (*io),
   _cache (get_cache_path(), cache_megs),
+  _encode_cache (get_encode_cache_path(), cache_megs),
+  _certstore(*this),
   _unit_test (unit_test),
   _data_io (io),
   _descriptions_loaded (false),

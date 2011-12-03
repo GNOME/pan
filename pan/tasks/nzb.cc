@@ -1,4 +1,5 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: nil; c-basic-offset:
+2 -*- */
 /*
  * Pan - A Newsreader for Gtk+
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
@@ -19,6 +20,7 @@
 
 #include <config.h>
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <string>
 #include <map>
@@ -31,11 +33,34 @@ extern "C" {
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/general/string-view.h>
+#include <pan/usenet-utils/mime-utils.h>
 #include <pan/general/utf8-utils.h>
 #include "nzb.h"
 #include "task-article.h"
+#include "task-upload.h"
 
 using namespace pan;
+
+namespace
+{
+  GMimeMessage * import_msg(const StringView filename)
+  {
+    std::string txt;
+    GMimeMessage * msg;
+    if (file :: get_text_file_contents (filename, txt))
+    {
+      GMimeStream * stream = g_mime_stream_mem_new_with_buffer (txt.c_str(), txt.size());
+      GMimeParser * parser = g_mime_parser_new_with_stream (stream);
+      msg   = g_mime_parser_construct_message (parser);
+      g_object_unref (G_OBJECT(parser));
+      g_object_unref (G_OBJECT(stream));
+    }
+
+    //delete msg on disk
+    unlink(filename.str);
+    return msg;
+  }
+}
 
 namespace
 {
@@ -46,20 +71,22 @@ namespace
     quarks_t groups;
     std::string text;
     std::string path;
-    Article a;
     PartBatch parts;
     tasks_t tasks;
+    Article a;
     ArticleCache& cache;
     ArticleRead& read;
+    EncodeCache& encode_cache;
     const ServerRank& ranks;
     const GroupServer& gs;
+    Quark server;
     const StringView fallback_path;
     size_t bytes;
     size_t number;
 
-    MyContext (ArticleCache& ac, ArticleRead& r,
+    MyContext (ArticleCache& ac, EncodeCache& ec, ArticleRead& r,
                const ServerRank& rank, const GroupServer& g, const StringView& p):
-      cache(ac), read(r), ranks(rank), gs(g), fallback_path(p) {}
+      cache(ac), encode_cache(ec), read(r), ranks(rank), gs(g), fallback_path(p) { }
 
     void file_clear () {
       groups.clear ();
@@ -94,7 +121,7 @@ namespace
       mc.bytes = 0;
       mc.number = 0;
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
-             if (!strcmp (*k,"bytes"))  mc.bytes = strtoul (*v,0,10);
+             if (!strcmp (*k,"bytes"))  mc.bytes  = strtoul (*v,0,10);
         else if (!strcmp (*k,"number")) mc.number = atoi (*v);
       }
     }
@@ -109,7 +136,9 @@ namespace
     MyContext& mc (*static_cast<MyContext*>(user_data));
 
     if (!strcmp(element_name, "group"))
+    {
       mc.groups.insert (Quark (mc.text));
+    }
 
     else if (!strcmp(element_name, "segment") && mc.number && !mc.text.empty()) {
       const std::string mid ("<" + mc.text + ">");
@@ -137,6 +166,7 @@ namespace
       const StringView p (mc.path.empty() ? mc.fallback_path : StringView(mc.path));
       mc.tasks.push_back (new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, 0, TaskArticle::DECODE, p));
     }
+
   }
 
   void text (GMarkupParseContext *context    UNUSED,
@@ -153,13 +183,14 @@ void
 NZB :: tasks_from_nzb_string (const StringView      & nzb_in,
                               const StringView      & save_path,
                               ArticleCache          & cache,
+                              EncodeCache           & encode_cache,
                               ArticleRead           & read,
                               const ServerRank      & ranks,
                               const GroupServer     & gs,
                               std::vector<Task*>    & appendme)
 {
   const std::string nzb (clean_utf8 (nzb_in));
-  MyContext mc (cache, read, ranks, gs, save_path);
+  MyContext mc (cache, encode_cache, read, ranks, gs, save_path);
   GMarkupParser p;
   p.start_element = start_element;
   p.end_element = end_element;
@@ -182,6 +213,7 @@ void
 NZB :: tasks_from_nzb_file (const StringView      & filename,
                             const StringView      & save_path,
                             ArticleCache          & c,
+                            EncodeCache           & ec,
                             ArticleRead           & r,
                             const ServerRank      & ranks,
                             const GroupServer     & gs,
@@ -189,7 +221,7 @@ NZB :: tasks_from_nzb_file (const StringView      & filename,
 {
   std::string nzb;
   if (file :: get_text_file_contents (filename, nzb))
-    tasks_from_nzb_string (nzb, save_path, c, r, ranks, gs, appendme);
+    tasks_from_nzb_string (nzb, save_path, c, ec, r, ranks, gs, appendme);
 }
 
 namespace
@@ -215,7 +247,7 @@ namespace
   }
 }
 
-/* Saves all current tasks to tasks.nzb */
+/* Saves all current tasks to ~/.$PAN_HOME/tasks.nzb */
 std::ostream&
 NZB :: nzb_to_xml (std::ostream             & out,
                    const std::vector<Task*> & tasks)
@@ -230,26 +262,82 @@ NZB :: nzb_to_xml (std::ostream             & out,
   foreach_const (tasks_t, tasks, it)
   {
     TaskArticle * task (dynamic_cast<TaskArticle*>(*it));
-    if (!task) // not a download task...
-      continue;
-    if (task->get_save_path().empty()) // this task is for reading, not saving...
-      continue;
+    if (task)
+    {
 
-    const Article& a (task->get_article());
+      if (task->get_save_path().empty()) // this task is for reading, not saving...
+        continue;
+
+      const Article& a (task->get_article());
+      out << indent(depth++)
+          << "<file" << " poster=\"";
+      escaped (out, a.author.to_view());
+      out  << "\" date=\"" << a.time_posted << "\" subject=\"";
+      escaped (out, a.subject.to_view()) << "\">\n";
+
+      // path to save this to.
+      // This isn't part of the nzb spec.
+      const Quark& path (task->get_save_path());
+      if (!path.empty()) {
+        out << indent(depth) << "<path>";
+        escaped (out, path.to_view());
+        out << "</path>\n";
+      }
+
+      // what groups was this crossposted in?
+      quarks_t groups;
+      foreach_const (Xref, a.xref, xit)
+        groups.insert (xit->group);
+      out << indent(depth++) << "<groups>\n";
+      foreach_const (quarks_t, groups, git)
+        out << indent(depth) << "<group>" << *git << "</group>\n";
+      out << indent(--depth) << "</groups>\n";
+
+      // now for the parts...
+      out << indent(depth++) << "<segments>\n";
+      for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
+      {
+        std::string mid = it.mid ();
+
+        // remove the surrounding < > as per nzb spec
+        if (mid.size()>=2 && mid[0]=='<') {
+          mid.erase (0, 1);
+          mid.resize (mid.size()-1);
+        }
+
+        // serialize this part
+        out << indent(depth)
+            << "<segment" << " bytes=\"" << it.bytes() << '"'
+            << " number=\"" << it.number() << '"'
+            << ">";
+        escaped(out, mid);
+        out  << "</segment>\n";
+      }
+      out << indent(--depth) << "</segments>\n";
+      out << indent(--depth) << "</file>\n";
+    }
+  }
+  out << indent(--depth) << "</nzb>\n";
+  return out;
+}
+
+/* Saves upload_list to XML file for distribution */
+std::ostream&
+NZB :: upload_list_to_xml_file (std::ostream   & out,
+                   const std::vector<Article*> & tasks)
+{
+int depth (0);
+
+  foreach_const (std::vector<Article*>, tasks, it)
+  {
+    Article * task (*it);
+    const Article& a (*task);
+
     out << indent(depth++)
         << "<file" << " poster=\"";
     escaped (out, a.author.to_view());
     out  << "\" date=\"" << a.time_posted << "\" subject=\"";
     escaped (out, a.subject.to_view()) << "\">\n";
-
-    // path to save this to.
-    // This isn't part of the nzb spec.
-    const Quark& path (task->get_save_path());
-    if (!path.empty()) {
-      out << indent(depth) << "<path>";
-      escaped (out, path.to_view());
-      out << "</path>\n";
-    }
 
     // what groups was this crossposted in?
     quarks_t groups;
@@ -264,7 +352,7 @@ NZB :: nzb_to_xml (std::ostream             & out,
     out << indent(depth++) << "<segments>\n";
     for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
     {
-      std::string mid = it.mid ();
+      std::string mid  = it.mid ();
 
       // remove the surrounding < > as per nzb spec
       if (mid.size()>=2 && mid[0]=='<') {
@@ -283,14 +371,12 @@ NZB :: nzb_to_xml (std::ostream             & out,
     out << indent(--depth) << "</segments>\n";
     out << indent(--depth) << "</file>\n";
   }
-
-  out << indent(--depth) << "</nzb>\n";
   return out;
 }
 
-/* Saves selected files to a chosen XML file */
+/* Saves selected article-info to a chosen XML file */
 std::ostream&
-NZB :: nzb_to_xml_file (std::ostream             & out,
+NZB :: nzb_to_xml_file (std::ostream        & out,
                    const std::vector<Task*> & tasks)
 {
   int depth (0);
@@ -303,7 +389,7 @@ NZB :: nzb_to_xml_file (std::ostream             & out,
   foreach_const (tasks_t, tasks, it)
   {
     TaskArticle * task (dynamic_cast<TaskArticle*>(*it));
-    if (!task) // not a download task...
+    if (!task) // not a download task, for example an upload task...
       continue;
 
     const Article& a (task->get_article());
@@ -336,7 +422,7 @@ NZB :: nzb_to_xml_file (std::ostream             & out,
 
       // serialize this part
       out << indent(depth)
-          << "<segment" << " bytes=\"" << it.bytes() << '"'
+          << "<segment" << " bytes=\""  << it.bytes() << '"'
                         << " number=\"" << it.number() << '"'
                         << ">";
       escaped(out, mid);
@@ -349,3 +435,4 @@ NZB :: nzb_to_xml_file (std::ostream             & out,
   out << indent(--depth) << "</nzb>\n";
   return out;
 }
+

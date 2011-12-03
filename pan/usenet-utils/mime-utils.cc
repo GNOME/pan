@@ -38,34 +38,6 @@ extern "C"
 
 using namespace pan;
 
-/***
-**** YENC
-***/
-
-#define YENC_MARKER_BEGIN      "=ybegin"
-#define YENC_MARKER_BEGIN_LEN  7
-#define YENC_MARKER_PART       "=ypart"
-#define YENC_MARKER_PART_LEN   6
-#define YENC_MARKER_END        "=yend"
-#define YENC_MARKER_END_LEN    5
-#define YENC_TAG_PART          " part="
-#define YENC_TAG_LINE          " line="
-#define YENC_TAG_SIZE          " size="
-#define YENC_TAG_NAME          " name="
-#define YENC_TAG_BEGIN         " begin="
-#define YENC_TAG_END           " end="
-#define YENC_TAG_PCRC32                " pcrc32="
-#define YENC_TAG_CRC32         " crc32="
-#define YENC_FULL_LINE_LEN     256
-#define YENC_HALF_LINE_LEN     128
-#define YENC_ESC_NULL          "=@"
-#define YENC_ESC_TAB           "=I"
-#define YENC_ESC_LF            "=J"
-#define YENC_ESC_CR            "=M"
-#define YENC_ESC_ESC           "={"
-#define YENC_SHIFT             42
-#define YENC_QUOTE_SHIFT       64
-
 namespace
 {
    const char*
@@ -155,7 +127,7 @@ namespace
     * @param filename if parse is successful, is set with the
     *        starting character of the filename.
     * @param line_len if parse is successful, is set with the line length
-    * @param part is parse is successful & set to the cuurent attachements
+    * @param part if parse is successful this is set to the current attachement's
     *       part number
     * @return 0 on success, -1 on failure
     */
@@ -171,10 +143,10 @@ namespace
 
       // part is optional
       int part_num = __yenc_extract_tag_val_int (b, YENC_TAG_PART);
-	
+
       int a_sz = __yenc_extract_tag_val_int( b, YENC_TAG_SIZE );
       pan_return_val_if_fail( a_sz != 0, -1 );
-	
+
       const char * fname = __yenc_extract_tag_val_char (b, YENC_TAG_NAME);
       pan_return_val_if_fail( fname, -1 );
 
@@ -872,12 +844,12 @@ namespace
           g_mime_multipart_remove_at (mp, index);
           g_object_unref (part);
 
-          //workaround gmime insert bug
-          //g_mime_multipart_insert (mp,index,newpart);
-          {
-            ptr_array_insert(mp->children, index, newpart);
+          //should be fixed meanwhile (!) workaround gmime insert bug
+          g_mime_multipart_insert (mp,index,newpart);
+//          {
+//            ptr_array_insert(mp->children, index, newpart);
             g_object_ref(newpart);
-          }
+//          }
         }
         else if(GMIME_IS_MESSAGE(parent))
         {
@@ -1243,7 +1215,7 @@ char *pan::pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html
   size_t len = 0;
 
   g_return_val_if_fail (GMIME_IS_MESSAGE (message), NULL);
-  g_return_val_if_fail (is_html != NULL, NULL);
+//  g_return_val_if_fail (is_html != NULL, NULL);
 
   type = g_mime_object_get_content_type (message->mime_part);
   if (GMIME_IS_MULTIPART (message->mime_part)) {
@@ -1265,7 +1237,6 @@ char *pan::pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html
   if (mime_part != NULL) {
     body = pan_g_mime_part_get_content (GMIME_PART (mime_part), &len);
   }
-
   return body;
 }
 
@@ -1279,4 +1250,15 @@ void pan::pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, 
         g_mime_message_add_recipient (message, type, internet_address_get_name(ia), internet_address_mailbox_get_addr(INTERNET_ADDRESS_MAILBOX(ia)));
     }
   }
+}
+
+/**
+* Works around a GMime bug that uses `Message-Id' rather than `Message-ID'
+*/
+void pan::pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
+{
+    g_mime_object_append_header ((GMimeObject *) msg, "Message-ID", mid);
+    char * bracketed = g_strdup_printf ("<%s>", mid);
+    g_mime_header_list_set (GMIME_OBJECT(msg)->headers, "Message-ID", bracketed);
+    g_free (bracketed);
 }

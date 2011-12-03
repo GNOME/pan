@@ -25,6 +25,7 @@ extern "C" {
   #include <gtk/gtk.h>
 }
 #include <pan/general/debug.h>
+//#include <pan/general/gdk-threads.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
@@ -215,7 +216,7 @@ namespace
     blah->path = path;
     blah->col = col;
     g_idle_add (maybe_activate_on_idle_idle, blah);
-  } 
+  }
 }
 
 gboolean
@@ -343,8 +344,8 @@ namespace
     headers[0].groupname = *sub_title_quark;
     headers[1].groupname = *other_title_quark;
     g_object_weak_ref (G_OBJECT(store), delete_rows, headers);
- 
-    // 
+
+    //
     //  subscribed
     //
 
@@ -428,7 +429,7 @@ GroupPane :: on_group_subscribe (const Quark& groupname, bool sub)
       ++pos;
     } while (gtk_tree_model_iter_next (model, &group_iter));
   }
-  
+
   // move the row
   _tree_store->reparent (_tree_store->get_row(&section_iter), find_row(groupname), pos);
 
@@ -502,8 +503,8 @@ namespace
 
   enum
   {
-    GROUP,
-    GROUP_REGEX
+    _GROUP,
+    _GROUP_REGEX
   };
 }
 
@@ -520,9 +521,9 @@ GroupPane :: set_filter (const std::string& search_text, int mode)
   TextMatch match;
   TextMatch * pmatch (0);
   if (!search_text.empty()) {
-    if (mode == GROUP)
+    if (mode == _GROUP)
       match.set (search_text, TextMatch::CONTAINS, false);
-    else if (mode == GROUP_REGEX)
+    else if (mode == _GROUP_REGEX)
       match.set (search_text, TextMatch::REGEX, false);
     pmatch = &match;
   }

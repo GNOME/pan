@@ -28,6 +28,10 @@ namespace pan
    * @ingroup GUI
    */
   GtkWidget* log_dialog_new (Prefs& prefs, GtkWindow* parent);
+
+  gboolean on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointer userdata);
+  void do_popup_menu (GtkWidget *treeview, GdkEventButton *event, gpointer userdata);
+
 }
 
 #endif

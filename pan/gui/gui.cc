@@ -26,6 +26,8 @@ extern "C" {
   #include <sys/types.h> // for chmod
   #include <sys/stat.h> // for chmod
   #include <glib/gi18n.h>
+  #include <dirent.h>
+
 }
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
@@ -33,6 +35,7 @@ extern "C" {
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/scorefile.h>
 #include <pan/usenet-utils/mime-utils.h>
+#include <pan/usenet-utils/ssl-utils.h>
 #include <pan/tasks/task-article.h>
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>
@@ -64,12 +67,21 @@ extern "C" {
 #include "url.h"
 #include "gtk_compat.h"
 
+#include "profiles-dialog.h"
+
 namespace pan
 {
   void
   pan_box_pack_start_defaults (GtkBox * box, GtkWidget * child)
   {
     gtk_box_pack_start( box, child, TRUE, TRUE, 0 );
+  }
+
+  void remove_from_parent (GtkWidget * w)
+  {
+    GtkWidget *parent = gtk_widget_get_parent(w);
+    if (parent != 0)
+      gtk_container_remove (GTK_CONTAINER(parent), w);
   }
 }
 
@@ -158,11 +170,25 @@ namespace
   }
 }
 
+//namespace
+//{
+//  enum {
+//        TARGET_STRING,
+//        TARGET_ROOTWIN
+//  };
+//
+//  static GtkTargetEntry target_list[] = {
+//          { const_cast<char*>("STRING"),     0, TARGET_STRING },
+//          { const_cast<char*>("text/plain"), 0, TARGET_STRING },
+//          { const_cast<char*>("application/x-rootwindow-drop"), 0, TARGET_ROOTWIN }
+//  };
+//}
 
-GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPrefs& group_prefs):
+GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),
   _queue (queue),
-  _cache (cache),
+  _cache (data.get_cache()),
+  _encode_cache (data.get_encode_cache()),
   _prefs (prefs),
   _group_prefs (group_prefs),
   _root (gtk_vbox_new (FALSE, 0)),
@@ -177,8 +203,10 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   _connection_size_label (0),
   _queue_size_label (0),
   _queue_size_button (0),
-  _taskbar (0)
+  _taskbar (0),
+  _certstore(data.get_certstore())
 {
+
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
   if (!gtk_ui_manager_add_ui_from_file (_ui_manager, filename, NULL))
     gtk_ui_manager_add_ui_from_string (_ui_manager, fallback_ui_file, -1, NULL);
@@ -189,9 +217,8 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   gtk_box_pack_start (GTK_BOX(_root), _menu_vbox, FALSE, FALSE, 0);
   gtk_widget_show (_menu_vbox);
 
-  //_group_pane = new GroupPane (*this, data, _prefs);
   _group_pane = new GroupPane (*this, data, _prefs);
-  _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, *this, *this);
+  _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, _group_prefs, *this, *this);
   _body_pane = new BodyPane (data, _cache, _prefs);
 
   std::string path = "/ui/main-window-toolbar";
@@ -211,11 +238,10 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   gtk_widget_show_all (GTK_WIDGET(item));
   gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, index+1);
 
-  //guint merge_id = gtk_ui_manager_new_merge_id (_ui_manager);
-  //gtk_ui_manager_add_ui (_ui_manager, merge_id, path, "group-pane-filter", NULL, GTK_UI_MANAGER_TOOLITEM, true);
-  //GtkWidget * item = gtk_ui_manager_get_widget (_ui_manager, path);
-  //gtk_container_add (GTK_CONTAINER(item), _group_pane->create_filter_entry());
-
+//  guint merge_id = gtk_ui_manager_new_merge_id (_ui_manager);
+//  gtk_ui_manager_add_ui (_ui_manager, merge_id, path, "group-pane-filter", NULL, GTK_UI_MANAGER_TOOLITEM, true);
+//  GtkWidget * item = gtk_ui_manager_get_widget (_ui_manager, path);
+//  gtk_container_add (GTK_CONTAINER(item), _group_pane->create_filter_entry());
 
   // workarea
   _workarea_bin = gtk_event_box_new ();
@@ -253,6 +279,12 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   gtk_widget_set_tooltip_text (w, _("Open the Task Manager"));
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
   g_signal_connect (w, "clicked", G_CALLBACK(show_task_window_cb), this);
+
+  // drag and drop for message-ids
+//  gtk_drag_dest_set(_workarea_bin,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
+//  gtk_drag_dest_add_text_targets(_workarea_bin);
+//  gtk_drag_dest_add_uri_targets(_workarea_bin);
+
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
   frame = gtk_frame_new (NULL);
   gtk_container_set_border_width (GTK_CONTAINER(frame), 0);
@@ -285,9 +317,6 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
 
   upkeep_tag = g_timeout_add (3000, upkeep_timer_cb, this);
 
-  _queue.add_listener (this);
-  Log::get().add_listener (this);
-
   g_object_ref_sink (G_OBJECT(_info_image));
   g_object_ref_sink (G_OBJECT(_error_image));
   g_object_ref (_group_pane->root());
@@ -307,7 +336,10 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
   if (_prefs.get_flag ("get-new-headers-on-startup", false))
     activate_action ("get-new-headers-in-subscribed-groups");
 
+  _queue.add_listener (this);
   _prefs.add_listener (this);
+  _certstore.add_listener(this);
+  Log::get().add_listener (this);
 
   gtk_accel_map_load (get_accel_filename().c_str());
 
@@ -317,7 +349,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
     queue.get_all_task_states(task_states);
     foreach(Queue::tasks_t, task_states.tasks, it) {
       Queue::TaskState s = task_states.get_state(*it);
-      if (s == Queue::RUNNING || s == Queue::DECODING)
+      if (s == Queue::RUNNING || s == Queue::DECODING || s == Queue::ENCODING)
         on_queue_task_active_changed (queue, *(*it), true);
     }
   }
@@ -331,6 +363,8 @@ namespace
 
 GUI :: ~GUI ()
 {
+  _certstore.remove_listener(this);
+
   const std::string accel_filename (get_accel_filename());
   gtk_accel_map_save (accel_filename.c_str());
   chmod (accel_filename.c_str(), 0600);
@@ -377,8 +411,8 @@ GUI :: watch_cursor_on ()
   GdkCursor * cursor = gdk_cursor_new (GDK_WATCH);
   gdk_window_set_cursor ( gtk_widget_get_window(_root), cursor);
   gdk_cursor_unref (cursor);
-  while (gtk_events_pending ())
-    gtk_main_iteration ();
+//  while (gtk_events_pending ())
+//    gtk_main_iteration ();
 }
 
 void
@@ -570,7 +604,8 @@ void GUI :: do_save_articles ()
     copies.push_back (**it);
 
   if (!copies.empty()) {
-    SaveDialog * dialog = new SaveDialog (_prefs, _group_prefs, _data, _data, _cache, _data, _queue, get_window(_root), _header_pane->get_group(), copies);
+    SaveDialog * dialog = new SaveDialog (_prefs, _group_prefs, _data, _data, _cache,
+                                          _data, _queue, get_window(_root), _header_pane->get_group(), copies);
     gtk_widget_show (dialog->root());
   }
 }
@@ -624,12 +659,13 @@ namespace
     GtkWidget * _root;
     Prefs& _prefs;
     ArticleCache& _cache;
+    EncodeCache & _encode_cache;
     const Article _article;
     const std::string _path;
 
     SaveArticlesFromNZB (Data& d, Queue& q, GtkWidget *r, Prefs& p,
-                         ArticleCache& c, const Article& a, const std::string& path):
-      _data(d), _queue(q), _root(r), _prefs(p), _cache(c), _article(a), _path(path) {}
+                         ArticleCache& c, EncodeCache& ec, const Article& a, const std::string& path):
+      _data(d), _queue(q), _root(r), _prefs(p), _cache(c), _encode_cache(ec), _article(a), _path(path) {}
 
     static void foreach_part_cb (GMimeObject */*parent*/, GMimeObject *o, gpointer self)
     {
@@ -647,7 +683,7 @@ namespace
         const GByteArray * buffer (GMIME_STREAM_MEM(mem_stream)->buffer);
         const StringView nzb ((const char*)buffer->data, buffer->len);
         Queue::tasks_t tasks;
-        NZB :: tasks_from_nzb_string (nzb, _path, _cache, _data, _data, _data, tasks);
+        NZB :: tasks_from_nzb_string (nzb, _path, _cache, _encode_cache, _data, _data, _data, tasks);
         if (!tasks.empty())
           _queue.add_tasks (tasks, Queue::BOTTOM);
         g_object_unref (mem_stream);
@@ -676,7 +712,8 @@ void GUI :: do_save_articles_from_nzb ()
     const std::string path (GUI :: prompt_user_for_save_path (get_window(_root), _prefs));
     if (!path.empty())
     {
-      SaveArticlesFromNZB * listener = new SaveArticlesFromNZB (_data, _queue, _root, _prefs, _cache, *article, path);
+      SaveArticlesFromNZB * listener = new SaveArticlesFromNZB (_data, _queue, _root,
+                                                                _prefs, _cache, _encode_cache, *article, path);
       Task * t = new TaskArticle (_data, _data, *article, _cache, _data, listener);
       _queue.add_task (t, Queue::TOP);
     }
@@ -730,7 +767,7 @@ void GUI :: do_import_tasks ()
     const std::string path (prompt_user_for_save_path (get_window(_root), _prefs));
     if (!path.empty())
       foreach_const (strings_t, filenames, it)
-        NZB :: tasks_from_nzb_file (*it, path, _cache, _data, _data, _data, tasks);
+        NZB :: tasks_from_nzb_file (*it, path, _cache, _encode_cache, _data, _data, _data, tasks);
   }
 
   if (!tasks.empty())
@@ -828,13 +865,14 @@ void GUI :: do_select_article_body ()
 void GUI :: do_show_preferences_dialog ()
 {
   PrefsDialog * dialog = new PrefsDialog (_prefs, get_window(_root));
+  g_signal_connect (dialog->root(), "destroy", G_CALLBACK(prefs_dialog_destroyed_cb), this);
   gtk_widget_show (dialog->root());
 }
 void GUI :: do_show_group_preferences_dialog ()
 {
-  const Quark group (_group_pane->get_first_selection ());
-  if (!group.empty()) {
-    GroupPrefsDialog * dialog = new GroupPrefsDialog (_data, group, _group_prefs, get_window(_root));
+  quarks_v groups(_group_pane->get_full_selection());
+  if (!groups.empty()) {
+    GroupPrefsDialog * dialog = new GroupPrefsDialog (_data, groups, _group_prefs, get_window(_root));
     gtk_widget_show (dialog->root());
   }
 }
@@ -926,6 +964,7 @@ void GUI :: do_read_more ()
                      : "read-next-unread-article");
   }
 }
+
 void GUI :: do_read_less ()
 {
   if (!_body_pane->read_less ())
@@ -953,6 +992,7 @@ void GUI :: do_read_next_watched_article ()
 }
 void GUI :: do_read_next_unread_thread ()
 {
+  std::cerr << "FIXME " << LINE_ID << std::endl;
   _header_pane->read_next_unread_thread ();
 }
 void GUI :: do_read_next_thread ()
@@ -977,6 +1017,12 @@ void GUI ::  server_list_dialog_destroyed_cb (GtkWidget * w, gpointer self)
   static_cast<GUI*>(self)->server_list_dialog_destroyed (w);
 }
 
+void GUI ::  sec_dialog_destroyed_cb (GtkWidget * w, gpointer self)
+{
+  static_cast<GUI*>(self)->sec_dialog_destroyed (w);
+}
+
+
 // this queues up a grouplist task for any servers that
 // were added while the server list dialog was up.
 void GUI :: server_list_dialog_destroyed (GtkWidget *)
@@ -990,12 +1036,54 @@ void GUI :: server_list_dialog_destroyed (GtkWidget *)
   }
 }
 
+
+void GUI :: sec_dialog_destroyed (GtkWidget * w)
+{
+//  quarks_t empty_servers, all_servers (_data.get_servers());
+//  foreach_const (quarks_t, all_servers, it) {
+//    quarks_t tmp;
+//    _data.server_get_groups (*it, tmp);
+//    if (tmp.empty() && _data.get_server_limits(*it))
+//      _queue.add_task (new TaskGroups (_data, *it));
+//  }
+}
+
+void GUI ::  prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self)
+{
+  static_cast<GUI*>(self)->prefs_dialog_destroyed (w);
+}
+
+void GUI :: prefs_dialog_destroyed (GtkWidget *)
+{
+
+  const Quark& group (_header_pane->get_group());
+  if (!group.empty() && _prefs._rules_changed)
+  {
+    _prefs._rules_changed = !_prefs._rules_changed;
+    _header_pane->rules(_prefs._rules_enabled);
+  }
+  _cache.set_max_megs(_prefs.get_int("cache-size-megs",10));
+
+}
+
+
 void GUI :: do_show_servers_dialog ()
 {
   GtkWidget * w = server_list_dialog_new (_data, _queue, get_window(_root));
   gtk_widget_show_all (w);
   g_signal_connect (w, "destroy", G_CALLBACK(server_list_dialog_destroyed_cb), this);
 }
+
+
+void GUI :: do_show_sec_dialog ()
+{
+#ifdef HAVE_OPENSSL
+  GtkWidget * w = sec_dialog_new (_data, _queue, get_window(_root));
+  g_signal_connect (w, "destroy", G_CALLBACK(sec_dialog_destroyed_cb), this);
+  gtk_widget_show_all (w);
+#endif
+}
+
 
 void GUI :: do_show_score_dialog ()
 {
@@ -1151,7 +1239,7 @@ void GUI :: do_supersede_article ()
   g_object_unref (content_object);
   g_object_unref (stream);
 
-  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, new_message, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, new_message, _prefs, _group_prefs, _encode_cache);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -1214,7 +1302,7 @@ void GUI :: do_cancel_article ()
   g_object_unref (stream);
   g_free (cancel_message);
 
-  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, cancel, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, cancel, _prefs, _group_prefs, _encode_cache);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -1234,32 +1322,110 @@ void GUI :: do_cancel_article ()
   g_object_unref (message);
 }
 
+bool GUI::deletion_confirmation_dialog()
+{
+  bool ret(false);
+  GtkWidget * d = gtk_message_dialog_new (
+    get_window(_root),
+    GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+    GTK_MESSAGE_WARNING,
+    GTK_BUTTONS_NONE, NULL);
+  HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
+    _("You marked some articles for deletion"),
+    _("Are you sure you want to delete them?"));
+  gtk_dialog_add_buttons (GTK_DIALOG(d),
+                          GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
+                          GTK_STOCK_APPLY, GTK_RESPONSE_YES,
+                          NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
+  ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
+  gtk_widget_destroy(d);
+  return ret;
+}
+
+#ifdef HAVE_OPENSSL
+bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, X509* cert, const Quark& server)
+{
+  bool ret(false);
+
+  char buf[4096];
+  std::string host; int port;
+  _data.get_server_addr(server,host,port);
+  pretty_print_x509(buf,sizeof(buf), host, cert,true);
+  GtkWidget * d = gtk_message_dialog_new (
+    parent,
+    GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+    GTK_MESSAGE_WARNING,
+    GTK_BUTTONS_NONE, NULL);
+
+  HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d), buf,
+    _("Do you want to accept it permanently (deletable afterwards) ?"));
+  gtk_dialog_add_buttons (GTK_DIALOG(d),
+                          GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
+                          GTK_STOCK_APPLY, GTK_RESPONSE_YES,
+                          NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
+
+  debug("confirm cert gui");
+  ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
+  gtk_widget_destroy(d);
+  return ret;
+}
+#endif
+
 void GUI :: do_delete_article ()
 {
-  const std::set<const Article*> articles (_header_pane->get_nested_selection());
-  _data.delete_articles (articles);
+  bool confirm (_prefs.get_flag("show-deletion-confirm-dialog", true));
+  bool do_delete(false);
+  if (confirm)
+  {
+    if (deletion_confirmation_dialog())
+      do_delete = true;
+  } else
+    do_delete = true;
 
-  const Quark mid (_body_pane->get_message_id());
-  foreach_const (std::set<const Article*>, articles, it)
-    if ((*it)->message_id == mid)
-      _body_pane->clear ();
+  if (do_delete)
+  {
+    const std::set<const Article*> articles (_header_pane->get_nested_selection(false));
+    _data.delete_articles (articles);
+
+    const Quark mid (_body_pane->get_message_id());
+    foreach_const (std::set<const Article*>, articles, it)
+      if ((*it)->message_id == mid)
+        _body_pane->clear ();
+  }
 }
 
 void GUI :: do_clear_article_cache ()
 {
   _cache.clear ();
+  _encode_cache.clear();
 }
 
 void GUI :: do_mark_article_read ()
 {
-  const std::set<const Article*> article_set (_header_pane->get_nested_selection ());
+  const std::set<const Article*> article_set (_header_pane->get_nested_selection (false));
   const std::vector<const Article*> tmp (article_set.begin(), article_set.end());
   _data.mark_read ((const Article**)&tmp.front(), tmp.size());
 }
 
 void GUI :: do_mark_article_unread ()
 {
-  const std::set<const Article*> article_set (_header_pane->get_nested_selection ());
+  const std::set<const Article*> article_set (_header_pane->get_nested_selection (false));
+  const std::vector<const Article*> tmp (article_set.begin(), article_set.end());
+  _data.mark_read ((const Article**)&tmp.front(), tmp.size(), false);
+}
+
+void GUI :: do_mark_thread_read ()
+{
+  const std::set<const Article*> article_set (_header_pane->get_nested_selection (true));
+  const std::vector<const Article*> tmp (article_set.begin(), article_set.end());
+  _data.mark_read ((const Article**)&tmp.front(), tmp.size());
+}
+
+void GUI :: do_mark_thread_unread ()
+{
+  const std::set<const Article*> article_set (_header_pane->get_nested_selection (true));
   const std::vector<const Article*> tmp (article_set.begin(), article_set.end());
   _data.mark_read ((const Article**)&tmp.front(), tmp.size(), false);
 }
@@ -1295,7 +1461,7 @@ GUI :: do_post ()
   g_mime_message_set_mime_part (message, GMIME_OBJECT(part));
   g_object_unref (part);
 
-  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
   if (post)
     gtk_widget_show_all (post->root());
   g_object_unref (message);
@@ -1305,7 +1471,7 @@ void GUI :: do_followup_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (false);
   if (message) {
-    PostUI * post = PostUI :: create_window(0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+    PostUI * post = PostUI :: create_window(0, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);
@@ -1315,7 +1481,7 @@ void GUI :: do_reply_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (true);
   if (message) {
-    PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs);
+    PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);
@@ -1336,13 +1502,16 @@ void GUI :: do_tip_jar ()
 }
 void GUI :: do_about_pan ()
 {
-  const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com> - Pan Author", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", "K. Haley <haleykd@users.sf.net> - Contributor", "Petr Kovar <pknbe@volny.cz> - Contributor", "Heinrich Mueller <eddie_v@gmx.de> - Contributor", "Christophe Lambin <chris@rebelbase.com> - Original Pan Development", "Matt Eagleson <matt@rebelbase.com> - Original Pan Development", 0 };
+  const gchar * authors [] = {
+  "Charles Kerr <charles@rebelbase.com> - Pan Author", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", "K. Haley <haleykd@users.sf.net> - Contributor",
+  "Petr Kovar <pknbe@volny.cz> - Contributor", "Heinrich M�ller <eddie_v@gmx.de> - Contributor", "Christophe Lambin <chris@rebelbase.com> - Original Pan Development",
+  "Matt Eagleson <matt@rebelbase.com> - Original Pan Development", 0 };
   GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
-  gtk_about_dialog_set_copyright (w, _("Copyright © 2002-2011 Charles Kerr and others"));
+  gtk_about_dialog_set_copyright (w, _("Copyright \u00A9 2002-2011 Charles Kerr and others")); // \u00A9 is unicode for �
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
   gtk_about_dialog_set_license (w, LICENSE);
@@ -1361,13 +1530,6 @@ void GUI :: do_work_online (bool b)
 
 namespace
 {
-  void remove_from_parent (GtkWidget * w)
-  {
-    GtkWidget *parent = gtk_widget_get_parent(w);
-    if (parent != 0)
-      gtk_container_remove (GTK_CONTAINER(parent), w);
-  }
-
   enum { HORIZONTAL, VERTICAL };
 
   void hpane_destroy_cb (GtkWidget *, gpointer)
@@ -1533,10 +1695,47 @@ void GUI :: do_match_only_cached_articles (bool) { _header_pane->refilter (); }
 void GUI :: do_match_only_binary_articles (bool) { _header_pane->refilter (); }
 void GUI :: do_match_only_my_articles     (bool) { _header_pane->refilter (); }
 void GUI :: do_match_on_score_state       (int)  { _header_pane->refilter (); }
+void GUI :: do_enable_toggle_rules        (bool enable) { _header_pane -> rules (enable); }
 
 void GUI :: do_show_matches (const Data::ShowType show_type)
 {
   _header_pane->set_show_type (show_type);
+}
+
+namespace
+{
+  std::string bytes_to_size(unsigned long val)
+  {
+    int i(0);
+    double d(val);
+    while (d >= 1024.0) { d /= 1024.0; ++i; }
+    std::stringstream out;
+    out << d;
+    std::string ret(out.str());
+
+    switch (i)
+    {
+      case 0:
+        ret += _(" Bytes");
+        break;
+      case 1:
+        ret += _(" KB");
+        break;
+      case 2:
+        ret += _(" MB");
+        break;
+      case 3:
+        ret += _(" GB");
+        break;
+      case 4:
+        ret += _(" TB");
+        break;
+      default:
+        ret += _(" Bytes");
+        break;
+    }
+    return ret;
+  }
 }
 
 void GUI :: do_show_selected_article_info ()
@@ -1574,12 +1773,13 @@ void GUI :: do_show_selected_article_info ()
       GTK_BUTTONS_CLOSE,
         "<b>%s</b>: %s\n" "<b>%s</b>: %s\n"
         "<b>%s</b>: %s\n" "<b>%s</b>: %s\n"
-        "<b>%s</b>: %lu\n" "<b>%s</b>: %lu\n"
+        "<b>%s</b>: %lu\n" "<b>%s</b>: %s (%lu %s)\n"
         "\n"
         "%s" "%s",
         _("Subject"), a->subject.c_str(), _("From"), a->author.c_str(),
         _("Date"), date, _("Message-ID"), a->message_id.c_str(),
-        _("Lines"), a->get_line_count(), _("Bytes"), a->get_byte_count(),
+        _("Lines"), a->get_line_count(), _("Size"), bytes_to_size(a->get_byte_count()).c_str(),
+        a->get_byte_count(),_("Bytes"),
         msg, s.str().c_str());
     g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
     gtk_widget_show_all (w);
@@ -1593,6 +1793,7 @@ void GUI :: do_quit ()
 {
   gtk_main_quit ();
 }
+
 void GUI :: do_read_selected_group ()
 {
   const Quark group (_group_pane->get_first_selection ());
@@ -1619,8 +1820,13 @@ void GUI :: do_read_selected_group ()
 
   // update the header pane
   watch_cursor_on ();
-  const bool changed (_header_pane->set_group (group));
-  _header_pane->set_focus ();
+  const Quark old_group(_header_pane->get_group());
+  const bool changed  (old_group != group);
+  if (changed)
+  {
+    _header_pane->set_group (group);
+    _header_pane->set_focus ();
+  }
   watch_cursor_off ();
 
   // periodically save our state
@@ -1649,17 +1855,31 @@ void GUI :: do_read_selected_group ()
     }
   }
 }
+
 void GUI :: do_mark_selected_groups_read ()
 {
   const quarks_v group_names (_group_pane->get_full_selection ());
   foreach_const (quarks_v, group_names, it)
     _data.mark_group_read (*it);
 }
+
 void GUI :: do_clear_selected_groups ()
 {
-  const quarks_v groups (_group_pane->get_full_selection ());
-  foreach_const (quarks_v, groups, it)
-    _data.group_clear_articles (*it);
+  bool confirm (_prefs.get_flag("show-deletion-confirm-dialog", true));
+  bool do_delete(false);
+  if (confirm)
+  {
+    if (deletion_confirmation_dialog())
+      do_delete = true;
+  } else
+    do_delete = true;
+
+  if (do_delete)
+  {
+      const quarks_v groups (_group_pane->get_full_selection ());
+      foreach_const (quarks_v, groups, it)
+      _data.group_clear_articles (*it);
+  }
 }
 
 void GUI :: do_xover_selected_groups ()
@@ -1844,6 +2064,7 @@ GUI :: set_queue_size_label (unsigned int running,
   _queue.get_stats (queued, unused, stopped,
                     KiB_remain, KiBps,
                     hr, min, sec);
+
   g_snprintf (tip, sizeof(tip), _("%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"),
               (running+queued), render_bytes(KiB_remain), KiBps, hr, min, sec);
 
@@ -1906,8 +2127,8 @@ GUI :: on_queue_error (Queue&, const StringView& message)
 
 void
 GUI :: on_prefs_flag_changed (const StringView&, bool)
-{
-}
+{}
+
 
 void
 GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
@@ -1918,3 +2139,54 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
   if (key == "default-save-attachments-path")
     prev_path.assign (value.str, value.len);
 }
+
+#ifdef HAVE_OPENSSL
+
+void
+GUI :: do_show_cert_failed_dialog(VerifyData* data)
+{
+  debug("do show cert failed dialog");
+  const VerifyData& d(*data);
+  if (GUI::confirm_accept_new_cert_dialog(get_window(_root),d.cert,d.server))
+    if (!_certstore.add(d.cert, d.server))
+      Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",d.server.c_str());
+
+  delete data;
+}
+
+gboolean
+GUI :: show_cert_failed_cb(gpointer gp)
+{
+  debug("show_cert_failed_cb");
+  VerifyData* d(static_cast<VerifyData*>(gp));
+  d->gui->do_show_cert_failed_dialog(d);
+  return false;
+}
+
+void
+GUI :: on_verify_cert_failed(X509* cert, std::string server, std::string cert_name, int nr)
+{
+  debug("on verify failed GUI ("<<cert<<") ("<<cert_name<<") ("<<server<<")");
+  if (!cert || server.empty()) return;
+
+  debug(X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0));
+  VerifyData* data = new VerifyData();
+  data->cert = cert;
+  data->server = server;
+  data->cert_name = cert_name;
+  data->nr = nr;
+  data->gui = this;
+  g_idle_add(show_cert_failed_cb, data);
+
+}
+
+void
+GUI :: on_valid_cert_added (X509* cert, std::string server)
+{
+  /* whitelist to make avaible for nntp-pool */
+  X509_free(cert); // refcount -1
+  _certstore.whitelist(server);
+}
+
+
+#endif

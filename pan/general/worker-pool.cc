@@ -22,6 +22,7 @@
  */
 #include <cassert>
 #include <glib.h> // for g_idle_add
+#include <gdk/gdk.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include "worker-pool.h"

@@ -163,16 +163,16 @@ typedef struct _uulist {
  */
 
 typedef struct {
-  int  action;			/* see UUACT_* definitions above           */
-  char curfile[256];		/* the file we are working on, incl. path  */
-  int  partno;			/* part we're currently decoding           */
-  int  numparts;		/* total number of parts of this file      */
-  long fsize;			/* size of the current file                */
-  int  percent;			/* % of _current part_                     */
-  long foffset;			/* file offset -- internal use only        */
-  long totsize;			/* file total size -- internal use only    */
+  int  action;			 /* see UUACT_* definitions above           */
+  char curfile[2048];/* the file we are working on, incl. path  */
+  int  partno;		 	 /* part we're currently decoding           */
+  int  numparts;		 /* total number of parts of this file      */
+  long fsize;			   /* size of the current file                */
+  int  percent;			 /* % of _current part_                     */
+  long foffset;			 /* file offset -- internal use only        */
+  long totsize;			 /* file total size -- internal use only    */
 } uuprogress;
-  
+
 
 /*
  * Externally visible Functions
@@ -191,7 +191,7 @@ int	UUEXPORT UUGetOption		_ANSI_ARGS_((int, int *, char *, int));
 int	UUEXPORT UUSetOption		_ANSI_ARGS_((int, int, char *));
 char *	UUEXPORT UUstrerror		_ANSI_ARGS_((int));
 int	UUEXPORT UUSetMsgCallback	_ANSI_ARGS_((void *,
-						     void (*) (void *, 
+						     void (*) (void *,
 							       char *,
 							       int)));
 int	UUEXPORT UUSetBusyCallback	_ANSI_ARGS_((void *,
@@ -213,7 +213,7 @@ int	UUEXPORT UUDecodeToTemp		_ANSI_ARGS_((uulist *));
 int	UUEXPORT UURemoveTemp		_ANSI_ARGS_((uulist *));
 int	UUEXPORT UUDecodeFile		_ANSI_ARGS_((uulist *, char *));
 int	UUEXPORT UUInfoFile		_ANSI_ARGS_((uulist *, void *,
-						     int (*) (void *, 
+						     int (*) (void *,
 							      char *)));
 int	UUEXPORT UUSmerge		_ANSI_ARGS_((int));
 int	UUEXPORT UUCleanUp		_ANSI_ARGS_((void));
@@ -227,8 +227,11 @@ int	UUEXPORT UUEncodeMulti		_ANSI_ARGS_((FILE *, FILE *,
 int	UUEXPORT UUEncodePartial	_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, char *,
-						     int, int, long,
-						     unsigned long*));
+						     int, int, long, unsigned long*));
+int	UUEXPORT UUEncodePartial_byFSize	_ANSI_ARGS_((FILE *, FILE *,
+						     char *, int,
+						     char *, char *,
+						     int, int, long, unsigned long*));
 int	UUEXPORT UUEncodeToStream	_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, int));

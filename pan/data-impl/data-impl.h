@@ -35,12 +35,24 @@
 #include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
+#include <pan/data/encode-cache.h>
 #include <pan/data/data.h>
 #include <pan/tasks/queue.h>
 #include <pan/data-impl/data-io.h>
 #include <pan/data-impl/article-filter.h>
+#include <pan/data-impl/rules-filter.h>
 #include <pan/data-impl/profiles.h>
 #include <pan/data-impl/memchunk.h>
+
+#ifdef HAVE_OPENSSL
+  #include <pan/data/cert-store.h>
+  #include <openssl/crypto.h>
+  #include <openssl/x509.h>
+  #include <openssl/x509v3.h>
+  #include <openssl/pem.h>
+  #include <openssl/ssl.h>
+  #include <openssl/err.h>
+#endif
 
 namespace pan
 {
@@ -51,7 +63,7 @@ namespace pan
    *
    * Most of the files are stored in $PAN_HOME, which defaults to
    * $HOME/.pan2 if the PAN_HOME environmental variable isn't set.
-   * 
+   *
    * @ingroup data_impl
    */
   class DataImpl:
@@ -59,6 +71,7 @@ namespace pan
     public TaskArchive,
     public ProfilesImpl
   {
+
     /**
     *** SERVERS
     **/
@@ -71,8 +84,16 @@ namespace pan
     public:
       virtual ArticleCache& get_cache () { return _cache; }
       virtual const ArticleCache& get_cache () const { return _cache; }
+
+      virtual EncodeCache& get_encode_cache () { return _encode_cache; }
+      virtual const EncodeCache& get_encode_cache () const { return _encode_cache; }
+
+      virtual CertStore& get_certstore () { return _certstore; }
+      virtual const CertStore& get_certstore () const { return _certstore; }
     private:
+      EncodeCache _encode_cache;
       ArticleCache _cache;
+      CertStore _certstore;
 
     private:
 
@@ -90,28 +111,15 @@ namespace pan
 
       void save_server_properties (DataIO&) const;
 
-      struct Server
-      {
-         std::string username;
-         std::string password;
-         std::string host;
-         std::string newsrc_filename;
-         int port;
-         int article_expiration_age;
-         int max_connections;
-         int rank;
-         typedef sorted_vector<Quark,true,AlphabeticalQuarkOrdering> groups_t;
-         groups_t groups;
-
-         Server(): port(119), article_expiration_age(31), max_connections(2), rank(1) {}
-      };
-
       typedef Loki::AssocVector<Quark,Server> servers_t;
 
       servers_t _servers;
 
       Server* find_server (const Quark& server);
-      const Server* find_server (const Quark& server) const;
+
+    public:
+      virtual const Server* find_server (const Quark& server) const;
+      virtual bool find_server_by_hn (const Quark& server, Quark& setme) const;
 
     public: // mutators
 
@@ -123,18 +131,24 @@ namespace pan
       virtual void set_server_auth (const Quark       & server,
                                     const StringView  & username,
                                     const StringView  & password);
-                                                                                
+
       virtual void set_server_addr (const Quark       & server,
                                     const StringView  & host,
                                     const int           port);
-                                                                                
+
       virtual void set_server_limits (const Quark     & server,
                                       int               max_connections);
 
       virtual void set_server_rank (const Quark& server, int rank);
 
+      virtual void set_server_ssl_support (const Quark& server, int ssl);
+
+      virtual void set_server_cert (const Quark & server, const StringView & cert);
+
       virtual void set_server_article_expiration_age  (const Quark  & server,
                                                        int            days);
+
+      virtual void save_server_info (const Quark& server);
 
     public: // accessors
 
@@ -148,12 +162,16 @@ namespace pan
       virtual bool get_server_auth (const Quark   & server,
                                     std::string   & setme_username,
                                     std::string   & setme_password) const;
-                                                                                
+
       virtual bool get_server_addr (const Quark   & server,
                                     std::string   & setme_host,
                                     int           & setme_port) const;
 
       virtual std::string get_server_address (const Quark& servername) const;
+
+      virtual bool get_server_ssl_support (const Quark & server) const;
+
+      virtual std::string get_server_cert (const Quark & server) const;
 
       virtual int get_server_rank (const Quark& server) const;
 
@@ -291,6 +309,19 @@ namespace pan
 
     private: // implementation
 
+//      struct Headers
+//      {
+//        struct Listener
+//        {
+//          virtual ~Listener() {}
+//          /* functions that other listeners listen on */
+//          virtual void on_articles_plus (const Quark&, const quarks_t&) = 0;
+//        };
+//      };
+
+//      typedef std::set<Listener*> listeners_t;
+//      listeners_t _header_listeners;
+
       /** 'article' MUST have been allocated by GroupHeaders::alloc_new_article()!! */
       void load_article (const Quark& g, Article * article, const StringView& references);
 
@@ -422,8 +453,11 @@ namespace pan
         public: // life cycle
           MyTree (DataImpl              & data_impl,
                   const Quark           & group,
+                  const Quark           & save_path,  // for auto-download
                   const Data::ShowType    show_type,
-                  const FilterInfo      * filter_info);
+                  const FilterInfo      * filter_info=0,
+                  const RulesInfo       * rules=0,
+                        Queue           * queue=0);
           virtual ~MyTree ();
 
         public: // from ArticleTree
@@ -433,6 +467,8 @@ namespace pan
           virtual size_t size () const;
           virtual void set_filter (const ShowType      show_type = SHOW_ARTICLES,
                                    const FilterInfo  * criteria  = 0);
+          virtual void set_rules  (const ShowType      show_type = SHOW_ARTICLES,
+                                   const RulesInfo   * rules  = 0);
 
         public:
           void articles_changed (const quarks_t& mids, bool do_refilter);
@@ -441,10 +477,12 @@ namespace pan
 
         private: // implementation fields
           const Quark _group;
+          const Quark _save_path;  // for auto-download
           DataImpl & _data;
           nodes_t _nodes;
           MemChunk<ArticleNode> _node_chunk;
           FilterInfo _filter;
+          RulesInfo _rules;
           Data::ShowType _show_type;
           struct NodeMidCompare;
           struct TwoNodes;
@@ -454,7 +492,14 @@ namespace pan
           void accumulate_descendants (unique_nodes_t&, const ArticleNode*) const;
           void add_articles (const const_nodes_v&);
           void apply_filter (const const_nodes_v&);
+          void apply_rules  (const_nodes_v& candidates);
+
+        private:
+          void cache_articles (std::set<const Article*> s);
+          void download_articles (std::set<const Article*> s);
       };
+
+
 
       std::set<MyTree*> _trees;
       void on_articles_removed (const quarks_t& mids) const;
@@ -463,14 +508,16 @@ namespace pan
       void remove_articles_from_tree (MyTree*, const quarks_t& mids) const;
       void add_articles_to_tree (MyTree*, const quarks_t& mids);
 
-
     public:  // Data interface
 
       virtual void delete_articles             (const unique_articles_t&);
 
       virtual ArticleTree* group_get_articles  (const Quark        & group,
+                                                const Quark        & save_path,
                                                 const ShowType      show_type = SHOW_ARTICLES,
-                                                const FilterInfo   * criteria=0) const;
+                                                const FilterInfo   * criteria=0,
+                                                const RulesInfo    * rules=0,
+                                                      Queue        * queue=0) const;
 
       virtual void group_clear_articles        (const Quark        & group);
 
@@ -614,6 +661,7 @@ namespace pan
     public:
 
       const ArticleFilter _article_filter;
+            RulesFilter   _rules_filter;
 
     private:
       guint newsrc_autosave_id;

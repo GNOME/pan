@@ -22,10 +22,13 @@
 
 #include <map>
 #include <vector>
+#include <sstream>
 
 #include <pan/data/data.h>
 #include <pan/tasks/task.h>
 #include <pan/tasks/nntp.h>
+#include <fstream>
+#include <iostream>
 
 namespace pan
 {
@@ -80,6 +83,7 @@ namespace pan
       unsigned long _parts_so_far;
       unsigned long _articles_so_far;
       unsigned long _total_minitasks;
+
   };
 }
 

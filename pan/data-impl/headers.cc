@@ -372,7 +372,7 @@ DataImpl :: get_references (const Quark& group, const Article& a) const
     s.insert (0, v.str, v.len);
     node = node->parent;
   }
-std::cerr << "article " << a.message_id << " references " << s << std::endl;
+//  std::cerr << "article " << a.message_id << " references " << s << std::endl;
   return s;
 }
 #endif
@@ -550,6 +550,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
 
         // found parts...
         part_batch.init (a.message_id, total_part_count, found_part_count);
+//        std::cerr<<"article "<<a.message_id<<" "<<total_part_count<<" "<<found_part_count<<std::endl;
         for (int i(0), count(found_part_count); i<count; ++i)
         {
           const bool gotline (in->getline (s));
@@ -939,6 +940,7 @@ DataImpl :: get_article_scores (const Quark         & group,
 void
 DataImpl :: rescore_articles (const Quark& group, const quarks_t mids)
 {
+
   GroupHeaders * gh (get_group_headers (group));
   if (!gh) // group isn't loaded
     return;
@@ -1092,6 +1094,7 @@ DataImpl :: group_clear_articles (const Quark& group)
 void
 DataImpl :: delete_articles (const unique_articles_t& articles)
 {
+
   quarks_t all_mids;
 
   // info we need to batch these deletions per group...
@@ -1143,6 +1146,9 @@ DataImpl :: on_articles_removed (const quarks_t& mids) const
 void
 DataImpl :: on_articles_changed (const Quark& group, const quarks_t& mids, bool do_refilter)
 {
+//  for (listeners_t::iterator it(_header_listeners.begin()), end(_header_listeners.end()); it!=end; ++it)
+//    (*it)->on_articles_plus (group, mids);
+
   rescore_articles (group, mids);
 
   // notify the trees that the articles have changed...
@@ -1153,6 +1159,10 @@ DataImpl :: on_articles_changed (const Quark& group, const quarks_t& mids, bool 
 void
 DataImpl :: on_articles_added (const Quark& group, const quarks_t& mids)
 {
+
+//  for (listeners_t::iterator it(_header_listeners.begin()), end(_header_listeners.end()); it!=end; ++it)
+//    (*it)->on_articles_plus (group, mids);
+
   if (!mids.empty())
   {
     Log::add_info_va (_("Added %lu articles to %s."),
@@ -1208,9 +1218,12 @@ DataImpl :: find_closest_ancestor (const ArticleNode             * node,
 
 Data::ArticleTree*
 DataImpl :: group_get_articles (const Quark       & group,
+                                const Quark       & save_path,
                                 const ShowType      show_type,
-                                const FilterInfo  * filter) const
+                                const FilterInfo  * filter,
+                                const RulesInfo   * rules,
+                                      Queue       * queue) const
 {
   // cast const away for group_ref()... consider _groups mutable
-  return new MyTree (*const_cast<DataImpl*>(this), group, show_type, filter);
+  return new MyTree (*const_cast<DataImpl*>(this), group, save_path, show_type, filter, rules,queue);
 }

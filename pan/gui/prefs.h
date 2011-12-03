@@ -25,7 +25,10 @@
 #include <string>
 #include <vector>
 #include <pan/general/string-view.h>
-#include <gtk/gtk.h>
+extern "C"
+{
+  #include <gtk/gtk.h>
+}
 
 namespace pan
 {
@@ -80,6 +83,7 @@ namespace pan
       bool get_flag (const StringView& key, bool fallback) const;
       void set_flag (const StringView& key, bool);
       int get_int (const StringView& key, int fallback) const;
+      int get_int_min  (const StringView& key, int fallback) const;
       void set_int (const StringView& key, int);
 
       std::string get_string (const StringView& key, const StringView& fallback) const;
@@ -89,6 +93,7 @@ namespace pan
       void set_color (const StringView& key, const StringView& color_str);
       std::string get_color_str (const StringView& key, const GdkColor& fallback) const;
       std::string get_color_str (const StringView& key, const StringView& fallback_str) const;
+      std::string get_color_str_wo_fallback (const StringView& key) const;
       GdkColor get_color (const StringView& key, const GdkColor& fallback) const;
       GdkColor get_color (const StringView& key, const StringView& fallback_str) const;
 
@@ -101,7 +106,7 @@ namespace pan
       bool get_geometry (const StringView&, int&, int&, int&, int&) const;
 
     public:
-      Prefs () {}
+      Prefs () { _rules_changed = false; }
       virtual void save () const {}
       virtual ~Prefs () {}
 
@@ -128,6 +133,10 @@ namespace pan
       mutable colors_t _colors;
       typedef std::map<std::string,int> ints_t;
       mutable ints_t _ints;
+
+    public:
+      bool _rules_changed;
+      bool _rules_enabled;
   };
 }
 

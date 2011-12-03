@@ -26,11 +26,13 @@
 #include <pan/data/article-cache.h>
 #include <pan/data/data.h>
 #include <pan/usenet-utils/filter-info.h>
+#include <pan/usenet-utils/rules-info.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/tasks/queue.h>
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-tree.h>
 #include <pan/gui/prefs.h>
+#include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
 #include <pan/gui/gui.h>
 
@@ -75,7 +77,7 @@ namespace pan
     private ArticleCache::Listener
   {
     public:
-      HeaderPane (ActionManager&, Data& data, Queue&, ArticleCache&, Prefs&, WaitUI&, GUI&);
+      HeaderPane (ActionManager&, Data& data, Queue&, ArticleCache&, Prefs&, GroupPrefs&, WaitUI&, GUI&);
       ~HeaderPane ();
 
     public:
@@ -118,7 +120,7 @@ namespace pan
       std::set<const Article*> get_full_selection () const;
       std::vector<const Article*> get_full_selection_v () const;
       const guint get_full_selection_rows_num();
-      std::set<const Article*> get_nested_selection () const;
+      std::set<const Article*> get_nested_selection (bool do_mark_all) const;
       bool set_group (const Quark& group);
       const Quark& get_group () { return _group; }
 
@@ -300,6 +302,7 @@ namespace pan
       Data& _data;
       Queue& _queue;
       Prefs& _prefs;
+      GroupPrefs& _group_prefs;
       WaitUI& _wait;
       Quark _group;
       Data::ArticleTree * _atree;
@@ -307,15 +310,19 @@ namespace pan
       GtkWidget * _tree_view;
       PanTreeStore * _tree_store;
       FilterInfo _filter;
+      RulesInfo _rules;
       Data::ShowType _show_type;
       guint _selection_changed_idle_tag;
 
     private:
       void rebuild_filter (const std::string&, int);
+      void rebuild_rules (bool enable=false);
+      std::pair <int,int> get_int_from_rules_str(std::string val);
       void refresh_font ();
 
     public: // public so that anonymous namespace can reach -- don't call
       void filter (const std::string& text, int mode);
+      void rules (bool enable=false);
       static void do_popup_menu (GtkWidget*, GdkEventButton*, gpointer);
       static void on_row_activated (GtkTreeView*, GtkTreePath*, GtkTreeViewColumn*, gpointer);
       static gboolean on_button_pressed (GtkWidget*, GdkEventButton*, gpointer);

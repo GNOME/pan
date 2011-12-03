@@ -26,7 +26,7 @@ int main ()
 
   // TEST: can we add an article?
   data.xover_add (server, group, "Subject", "Author", 0, "<article1@foo.com>", "", 40, 100, "");
-  tree = data.group_get_articles (group);
+  tree = data.group_get_articles (group,Quark(""));
   check (tree->size() == 1ul)
   a = tree->get_article ("<article1@foo.com>");
   check (a != 0);
@@ -37,7 +37,7 @@ int main ()
 
   // TEST: can we add a child?
   data.xover_add (server, group, "Re: Subject", "Author", 0, "<article2@blah.com>", "<article1@foo.com>", 40, 100, "");
-  tree = data.group_get_articles (group);
+  tree = data.group_get_articles (group,Quark(""));
   check (tree->size() == 2ul)
   a = tree->get_article ("<article2@blah.com>");
   check (a != 0)
@@ -76,7 +76,7 @@ int main ()
   filter_info.set_type_text ("Subject", description);
 
   // show articles whose subject has the letter 'a'
-  tree = data.group_get_articles (group);
+  tree = data.group_get_articles (group,Quark(""));
   tree->set_filter (Data::SHOW_ARTICLES, &filter_info);
   check (tree->size() == 0ul);
 
@@ -127,7 +127,7 @@ int main ()
    check (part != 0)
    check (part->xref.find (server, group, ul))
    check (ul == 10033)
- 
+
    // TEST: does xover add articles and thread them right to existing grandparents when their parents can't be found?
    data.xover_add (server, group, "10034	Re: it is all a dream again.	\"Bob Barker\" <bob@wtf.com>	Wed, 27 Apr 2005 16:53:02 GMT	<wftmid2@newsread1.news.pas.earthlink.net>	<article1@foo.com> <article2b@blah.com>	999	90	Xref: news.netfront.net alt.zen:175095 alt.religion.buddhism:10034 talk.religion.buddhism:170168");
    //check (data.group_get_article_count(group) == 5ul)
@@ -138,7 +138,7 @@ int main ()
    //check (data.article_get_parent (group, tmp.message_id, q))
    //check (q == a1.message_id)
    Article floating_child (tmp);
- 
+
    // TEST: and when the parent shows up, does the child get reparented right?
    data.xover_add (server, group, "10035	Re: it is all a dream again.	\"Bob Barker\" <bob@wtf.com>	Wed, 27 Apr 2005 16:53:02 GMT	<article2b@blah.com>	<article1@foo.com>	2487	31	Xref: news.netfront.net alt.zen:175096 alt.religion.buddhism:10035 talk.religion.buddhism:170169");
    //check (data.group_get_article_count(group) == 6ul)
@@ -200,7 +200,7 @@ int main ()
    check (ul == 10035)
    check (part->xref.find (server2, group, ul))
    check (ul == 6666)
- 
+
 #if 0
    TimeElapsed xover_timer;
    std::ifstream in ("header-impl-test.dat");

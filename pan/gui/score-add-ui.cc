@@ -104,16 +104,16 @@ namespace
   ***
   **/
 
-  enum { ADD, SUBTRACT, ASSIGN, WATCH, IGNORE };
+  enum { _ADD, _SUBTRACT, _ASSIGN, _WATCH, _IGNORE };
 
   GtkTreeModel * score_tree_model_new ()
   {
     struct { int type; const char * str; } items[] = {
-      { ADD,      N_("increase the article's score by") },
-      { SUBTRACT, N_("decrease the article's score by") },
-      { ASSIGN,   N_("set the article's score to") },
-      { WATCH,    N_("watch the article (set its score to 9999)") },
-      { IGNORE,   N_("ignore the article (set its score to -9999)") }
+      { _ADD,      N_("increase the article's score by") },
+      { _SUBTRACT, N_("decrease the article's score by") },
+      { _ASSIGN,   N_("set the article's score to") },
+      { _WATCH,    N_("watch the article (set its score to 9999)") },
+      { _IGNORE,   N_("ignore the article (set its score to -9999)") }
     };
 
     GtkListStore * store = gtk_list_store_new (VALUE_COLS, G_TYPE_STRING, G_TYPE_INT);
@@ -195,9 +195,9 @@ namespace
       { TextMatch::CONTAINS,    true,  N_("doesn't contain")},
       { TextMatch::IS,          false, N_("is")},
       { TextMatch::IS,          true,  N_("isn't")},
-      { TextMatch::BEGINS_WITH, false, N_("starts with")}, 
+      { TextMatch::BEGINS_WITH, false, N_("starts with")},
       { TextMatch::ENDS_WITH,   false, N_("ends with")},
-      { TextMatch::REGEX,       false, N_("matches regex")}, 
+      { TextMatch::REGEX,       false, N_("matches regex")},
     };
 
     GtkListStore * store = gtk_list_store_new (TEXT_MATCH_COLS, G_TYPE_STRING, G_TYPE_INT, G_TYPE_BOOLEAN);
@@ -319,7 +319,7 @@ namespace
 
     GtkTreeModel * model = field_tree_model_new ();
     GtkWidget * field = setme_field = value_combo_new (model);
-    g_object_unref (G_OBJECT(model)); 
+    g_object_unref (G_OBJECT(model));
     gtk_box_pack_start (GTK_BOX(h), field, false, false, 0);
     g_signal_connect (field, "changed", G_CALLBACK(field_changed_cb), h);
     g_object_set_data (G_OBJECT(h), "field", field);
@@ -353,7 +353,7 @@ namespace
 void
 ScoreAddDialog :: add_this_to_scorefile (bool do_rescore)
 {
-  
+
   // section
   bool negate (false);
   int value (0);
@@ -430,11 +430,11 @@ ScoreAddDialog :: add_this_to_scorefile (bool do_rescore)
   const int spin_score (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(_score_spin)));
   value = value_combo_get (GTK_COMBO_BOX(_score_menu));
   switch (value) {
-    case ADD:       assign_flag=false; score =  spin_score; break;
-    case SUBTRACT:  assign_flag=false; score = -spin_score; break;
-    case ASSIGN:    assign_flag=true;  score =  spin_score; break;
-    case WATCH:     assign_flag=true;  score =  9999;       break;
-    case IGNORE:    assign_flag=true;  score = -9999;       break;
+    case _ADD:       assign_flag=false; score =  spin_score; break;
+    case _SUBTRACT:  assign_flag=false; score = -spin_score; break;
+    case _ASSIGN:    assign_flag=true;  score =  spin_score; break;
+    case _WATCH:     assign_flag=true;  score =  9999;       break;
+    case _IGNORE:    assign_flag=true;  score = -9999;       break;
   }
 
   // duration in days
@@ -533,10 +533,10 @@ ScoreAddDialog :: populate (const Quark& group, const Article& a, Mode mode)
   // score
   int score_mode;
   switch (mode) {
-    case WATCH_SUBTHREAD: score_mode = WATCH; break;
+    case WATCH_SUBTHREAD: score_mode = _WATCH; break;
     case PLONK:
-    case IGNORE_SUBTHREAD: score_mode = IGNORE; break;
-    default: score_mode = ADD; break;
+    case IGNORE_SUBTHREAD: score_mode = _IGNORE; break;
+    default: score_mode = _ADD; break;
   }
   gtk_spin_button_set_value (GTK_SPIN_BUTTON(_score_spin), 100);
   value_combo_set (GTK_COMBO_BOX(_score_menu), score_mode);
@@ -552,12 +552,12 @@ namespace
     GtkWidget * button = gtk_button_new ();
     GtkWidget * label = gtk_label_new_with_mnemonic (_("Add and Re_score"));
     gtk_label_set_mnemonic_widget (GTK_LABEL (label), GTK_WIDGET (button));
-			      
+
     GtkWidget * image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_BUTTON);
     GtkWidget * image2 = gtk_image_new_from_stock (GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
     GtkWidget * hbox = gtk_hbox_new (FALSE, 2);
     GtkWidget * align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-					        
+
     gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (hbox), image2, FALSE, FALSE, 0);
     gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -582,7 +582,7 @@ namespace
     const int value = value_combo_get (w);
 
     GtkWidget * spin (GTK_WIDGET (spin_gpointer));
-    if (value==WATCH || value==IGNORE)
+    if (value==_WATCH || value==_IGNORE)
       gtk_widget_hide (spin);
     else
       gtk_widget_show (spin);
@@ -643,7 +643,7 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
     gtk_widget_show (w);
 
     // score
-    h = gtk_hbox_new (false, PAD_SMALL); 
+    h = gtk_hbox_new (false, PAD_SMALL);
     model = score_tree_model_new ();
     w = _score_menu = value_combo_new (model);
     g_object_unref (model);

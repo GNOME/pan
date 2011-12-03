@@ -41,25 +41,30 @@ namespace
     delete static_cast<GroupPrefsDialog*>(castme);
   }
 }
-  
+
 void
 GroupPrefsDialog :: save_from_gui ()
 {
   // charset...
   const char * tmp = e_charset_combo_box_get_charset (E_CHARSET_COMBO_BOX(_charset));
-  _group_prefs.set_string (_group, "character-encoding", tmp);
+  foreach_const (quarks_v, _groups, it)
+    _group_prefs.set_string (*it, "character-encoding", tmp);
 
   // posting profile...
   std::string profile;
   if (gtk_widget_get_sensitive (_profile)) {
     char * pch (gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT(_profile)));
-    _group_prefs.set_string (_group, "posting-profile", pch);
+    foreach_const (quarks_v, _groups, it)
+      _group_prefs.set_string (*it, "posting-profile", pch);
     g_free (pch);
   }
 
   // save path...
   const char * pch (file_entry_get (_save_path));
-  _group_prefs.set_string (_group, "default-group-save-path", pch);
+  foreach_const (quarks_v, _groups, it)
+    _group_prefs.set_string (*it, "default-group-save-path", pch);
+
+  _group_prefs.save () ;
 }
 
 void
@@ -75,7 +80,7 @@ namespace
 {
   GtkWidget*
   create_profiles_combo_box (const Data       & data,
-                             const Quark      & group,
+                             const quarks_v   & groups,
                              const GroupPrefs & group_prefs)
   {
     GtkWidget * w = gtk_combo_box_text_new ();
@@ -92,7 +97,7 @@ namespace
     }
     else
     {
-      const std::string s (group_prefs.get_string (group, "posting-profile", ""));
+      const std::string s (group_prefs.get_string (groups[0], "posting-profile", ""));
       int i(0), sel_index (0);
       foreach_const (unique_strings_t, profiles, it) {
         if (*it == s)
@@ -107,13 +112,14 @@ namespace
   }
 }
 
-GroupPrefsDialog :: GroupPrefsDialog (Data         & data,
-                                      const Quark  & group,
-                                      GroupPrefs   & group_prefs,
-                                      GtkWindow    * parent_window):
-  _group (group),
+GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
+                                      const quarks_v  & groups,
+                                      GroupPrefs      & group_prefs,
+                                      GtkWindow       * parent_window):
+  _groups (groups),
   _group_prefs (group_prefs)
 {
+
   GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Pan: Group Preferences"),
                                                     parent_window,
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -127,21 +133,31 @@ GroupPrefsDialog :: GroupPrefsDialog (Data         & data,
   int row (0);
   GtkWidget *t, *w, *l;
   t = HIG :: workarea_create ();
+
   char buf[512];
-  g_snprintf (buf, sizeof(buf), _("Properties for %s"), group.c_str());
+  if (groups.size() != 1)
+    g_snprintf (buf, sizeof(buf), _("Properties for Groups"));
+  else
+    g_snprintf (buf, sizeof(buf), _("Properties for %s"), groups[0].c_str());
+
   HIG::workarea_add_section_title (t, &row, buf);
     HIG :: workarea_add_section_spacer (t, row, 3);
     _charset = w = e_charset_combo_box_new( );
-    e_charset_combo_box_set_charset( E_CHARSET_COMBO_BOX(_charset), _group_prefs.get_string (group, "character-encoding", "UTF-8").c_str());
+    e_charset_combo_box_set_charset( E_CHARSET_COMBO_BOX(_charset), _group_prefs.get_string (groups[0], "character-encoding", "UTF-8").c_str());
     HIG :: workarea_add_row (t, &row, _("Character _encoding:"), w);
     w = _save_path = file_entry_new (_("Directory for Saving Attachments"));
     char * pch = g_build_filename (g_get_home_dir(), "News", NULL);
-    const std::string dir (_group_prefs.get_string (_group, "default-group-save-path", pch));
+    std::string dir;
+    if (groups.size() != 1)
+      dir = pch;
+    else
+      dir = _group_prefs.get_string (groups[0], "default-group-save-path", pch);
     g_free (pch);
     file_entry_set (w, dir.c_str());
     HIG :: workarea_add_row (t, &row, _("Directory for _saving attachments:"), w);
-    w = _profile = create_profiles_combo_box (data, group, group_prefs);
+    w = _profile = create_profiles_combo_box (data, groups, group_prefs);
     l = HIG :: workarea_add_row (t, &row, _("Posting _profile:"), w);
+
     gtk_widget_set_sensitive (l, gtk_widget_get_sensitive(w));
 
   gtk_widget_show_all (t);
