@@ -882,7 +882,8 @@ void GUI :: do_read_selected_article ()
   const Article* article (_header_pane->get_first_selected_article ());
   if (article)
   {
-    _header_pane->expand_selected ();
+    const bool expand (_prefs.get_flag("expand-selected-articles",false));
+    if (expand) _header_pane->expand_selected ();
 
     Task * t = new TaskArticle (_data, _data, *article, _cache, _data, this);
     _queue.add_task (t, Queue::TOP);

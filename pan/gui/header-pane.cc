@@ -633,7 +633,8 @@ HeaderPane :: select_message_id (const Quark& mid, bool do_scroll)
   HeaderPane::Row * row = get_row (mid);
   GtkTreePath * path (_tree_store->get_path(row));
   GtkTreeView * view (GTK_TREE_VIEW(_tree_view));
-  gtk_tree_view_expand_to_path (view, path);
+  const bool expand (_prefs.get_flag("expand-selected-articles",false));
+  if (expand) gtk_tree_view_expand_to_path (view, path);
   GtkTreeSelection * sel (gtk_tree_view_get_selection (view));
   gtk_tree_selection_select_path (sel, path);
   if (do_scroll) {
@@ -1882,14 +1883,18 @@ namespace
 
   struct SelectFunctor: public pan::RowActionFunctor {
     virtual ~SelectFunctor () {}
-    SelectFunctor (GtkTreeView * view): _view(view) {}
+    SelectFunctor (GtkTreeView * view, bool exp): _view(view), _expand(exp) {}
     GtkTreeView * _view;
+    bool _expand;
     virtual void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article&) {
       GtkTreeSelection * sel (gtk_tree_view_get_selection (_view));
       gtk_tree_selection_unselect_all (sel);
       GtkTreePath * path = gtk_tree_model_get_path (model, iter);
-      gtk_tree_view_expand_row (_view, path, true);
-      gtk_tree_view_expand_to_path (_view, path);
+      if (_expand)
+      {
+        gtk_tree_view_expand_row (_view, path, true);
+        gtk_tree_view_expand_to_path (_view, path);
+      }
       gtk_tree_view_set_cursor (_view, path, NULL, FALSE);
       gtk_tree_view_scroll_to_cell (_view, path, NULL, true, 0.5f, 0.0f);
       gtk_tree_path_free (path);
@@ -1898,7 +1903,7 @@ namespace
 
   struct ReadFunctor: public SelectFunctor {
     virtual ~ReadFunctor() {}
-    ReadFunctor (GtkTreeView * view, ActionManager& am): SelectFunctor(view), _am(am) {}
+    ReadFunctor (GtkTreeView * view, bool exp, ActionManager& am): SelectFunctor(view,exp), _am(am) {}
     ActionManager& _am;
     virtual void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article& a) {
       SelectFunctor::operator() (model, iter, a);
@@ -1982,7 +1987,7 @@ void
 HeaderPane :: read_next_if (const ArticleTester& test)
 {
   GtkTreeView * v (GTK_TREE_VIEW(_tree_view));
-  ReadFunctor read (v, _action_manager);
+  ReadFunctor read (v, _prefs.get_flag("expand-selected-articles", false), _action_manager);
   action_next_if (test, read);
 }
 
@@ -1991,7 +1996,7 @@ HeaderPane :: read_prev_if (const ArticleTester & test)
 {
   GtkTreeView * v (GTK_TREE_VIEW(_tree_view));
   GtkTreeModel * m (GTK_TREE_MODEL(_tree_store));
-  ReadFunctor read (v, _action_manager);
+  ReadFunctor read (v, _prefs.get_flag("expand-selected-articles", false), _action_manager);
   next_iterator (v, m, TreeIteratorPrev(), test, read);
 }
 
@@ -1999,7 +2004,7 @@ void
 HeaderPane :: select_next_if (const ArticleTester& test)
 {
   GtkTreeView * v (GTK_TREE_VIEW(_tree_view));
-  SelectFunctor sel (v);
+  SelectFunctor sel (v, _prefs.get_flag("expand-selected-articles", false));
   action_next_if (test, sel);
 }
 
@@ -2007,7 +2012,7 @@ void
 HeaderPane :: select_prev_if (const ArticleTester& test)
 {
   GtkTreeView * v (GTK_TREE_VIEW(_tree_view));
-  SelectFunctor sel (v);
+  SelectFunctor sel (v, _prefs.get_flag("expand-selected-articles", false));
   action_next_if (test, sel);
 }
 
