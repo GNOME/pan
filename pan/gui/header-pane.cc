@@ -682,7 +682,12 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
       Row * child (get_row (it->first));
       tmp[parent].push_back (child);
     }
+
+    g_object_ref(G_OBJECT (_tree_store));
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), NULL);
     _tree_store->insert_sorted (tmp);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), GTK_TREE_MODEL (_tree_store));
+    g_object_unref(G_OBJECT(_tree_store));
   }
 
   // reparent...
@@ -708,7 +713,12 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
                          keep.begin(), keep.end(),
                          inserter (kill, kill.begin()), o);
     g_assert (keep.size() + kill.size() == _mid_to_row.size());
+
+    g_object_ref(G_OBJECT (_tree_store));
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), NULL);
     _tree_store->remove (kill);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), GTK_TREE_MODEL (_tree_store));
+    g_object_unref(G_OBJECT(_tree_store));
     _mid_to_row.get_container().swap (keep);
   }
 
