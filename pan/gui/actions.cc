@@ -82,10 +82,6 @@ namespace
       GtkIconSet * icon_set = gtk_icon_set_new_from_pixbuf (pixbuf);
       gtk_icon_factory_add (factory, my_builtin_icons[i].name, icon_set);
       g_object_unref (pixbuf);
-
-      //std::cerr << "registered icon " << my_builtin_icons[i].name << std::endl;
-
-      g_object_unref (pixbuf);
       gtk_icon_set_unref (icon_set);
     }
 

@@ -32,6 +32,7 @@
 #include <pan/gui/pan-tree.h>
 #include <pan/gui/prefs.h>
 #include <pan/gui/wait.h>
+#include <pan/gui/gui.h>
 
 namespace pan
 {
@@ -74,7 +75,7 @@ namespace pan
     private ArticleCache::Listener
   {
     public:
-      HeaderPane (ActionManager&, Data& data, Queue&, ArticleCache&, Prefs&, WaitUI&);
+      HeaderPane (ActionManager&, Data& data, Queue&, ArticleCache&, Prefs&, WaitUI&, GUI&);
       ~HeaderPane ();
 
     public:
@@ -116,6 +117,7 @@ namespace pan
       Article* get_first_selected_article ();
       std::set<const Article*> get_full_selection () const;
       std::vector<const Article*> get_full_selection_v () const;
+      const guint get_full_selection_rows_num();
       std::set<const Article*> get_nested_selection () const;
       bool set_group (const Quark& group);
       const Quark& get_group () { return _group; }
@@ -317,7 +319,9 @@ namespace pan
       static void do_popup_menu (GtkWidget*, GdkEventButton*, gpointer);
       static void on_row_activated (GtkTreeView*, GtkTreePath*, GtkTreeViewColumn*, gpointer);
       static gboolean on_button_pressed (GtkWidget*, GdkEventButton*, gpointer);
+      static gboolean on_keyboard_button_pressed ( GtkWidget *widget, GdkEventKey *event, gpointer data);
       ArticleCache& _cache;
+      GUI& _gui;
 
     private:
       void get_nested_foreach (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer) const;

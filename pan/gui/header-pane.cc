@@ -21,6 +21,7 @@ extern "C" {
   #include <config.h>
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
+  #include <gdk/gdkkeysyms.h>
 }
 #include <cctype>
 #include <cmath>
@@ -776,6 +777,13 @@ HeaderPane :: get_first_selected_article ()
    return a;
 }
 
+const guint
+HeaderPane :: get_full_selection_rows_num()
+{
+  return (gtk_tree_selection_count_selected_rows(gtk_tree_view_get_selection(GTK_TREE_VIEW(_tree_view))));
+}
+
+
 void
 HeaderPane :: get_full_selection_v_foreach (GtkTreeModel * model,
                                             GtkTreePath  * ,
@@ -936,6 +944,32 @@ namespace
   }
 }
 
+namespace
+{
+  static gboolean return_pressed_download_all (gpointer data)
+  {
+    HeaderPane * self (static_cast<HeaderPane*>(data));
+    self->_gui.do_read_or_save_articles();
+    return false;
+
+  }
+}
+
+gboolean
+HeaderPane :: on_keyboard_button_pressed ( GtkWidget *widget, GdkEventKey *event, gpointer data)
+{
+  if (event->type == GDK_KEY_PRESS)
+  {
+    if (event->keyval == GDK_KEY_Return)
+    {
+      g_idle_add(return_pressed_download_all, data);
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
 gboolean
 HeaderPane :: on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gpointer userdata)
 {
@@ -968,7 +1002,7 @@ HeaderPane :: on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gp
            && (event->send_event == false)
            && (event->window == gtk_tree_view_get_bin_window (tv))
            && !(event->state & (GDK_SHIFT_MASK|GDK_CONTROL_MASK|GDK_MOD1_MASK))
-           && (self->get_full_selection_v().size() == 1u))
+           && (self->get_full_selection_rows_num() == 1u))
   {
     GtkTreePath * path;
     GtkTreeViewColumn * col;
@@ -1626,7 +1660,8 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
                           Queue               & queue,
                           ArticleCache        & cache,
                           Prefs               & prefs,
-                          WaitUI              & wait):
+                          WaitUI              & wait,
+                          GUI                 & gui):
   _action_manager (action_manager),
   _data (data),
   _queue (queue),
@@ -1637,7 +1672,8 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _tree_view (0),
   _tree_store (0),
   _selection_changed_idle_tag (0),
-  _cache (cache)
+  _cache (cache),
+  _gui (gui)
 {
   // init the icons
   for (guint i=0; i<ICON_QTY; ++i)
@@ -1666,6 +1702,10 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
 
   g_signal_connect (w, "button-release-event", G_CALLBACK(on_button_pressed), this);
   g_signal_connect (w, "button-press-event", G_CALLBACK(on_button_pressed), this);
+
+  /* intercept ENTER for selection of multiple articles */
+  g_signal_connect (w, "key-press-event", G_CALLBACK(on_keyboard_button_pressed), this);
+
   g_signal_connect (w, "row-collapsed", G_CALLBACK(row_collapsed_cb), NULL);
   g_signal_connect (w, "row-expanded", G_CALLBACK(row_expanded_cb), NULL);
   g_signal_connect (w, "popup-menu", G_CALLBACK(on_popup_menu), this);

@@ -191,7 +191,7 @@ GUI :: GUI (Data& data, Queue& queue, ArticleCache& cache, Prefs& prefs, GroupPr
 
   //_group_pane = new GroupPane (*this, data, _prefs);
   _group_pane = new GroupPane (*this, data, _prefs);
-  _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, *this);
+  _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, *this, *this);
   _body_pane = new BodyPane (data, _cache, _prefs);
 
   std::string path = "/ui/main-window-toolbar";
@@ -573,6 +573,15 @@ void GUI :: do_save_articles ()
     SaveDialog * dialog = new SaveDialog (_prefs, _group_prefs, _data, _data, _cache, _data, _queue, get_window(_root), _header_pane->get_group(), copies);
     gtk_widget_show (dialog->root());
   }
+}
+
+void GUI :: do_read_or_save_articles ()
+{
+  const guint rows(_header_pane->get_full_selection_rows_num());
+  if (rows != 1)
+    do_save_articles();
+  else
+    do_read_selected_article();
 }
 
 

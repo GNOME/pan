@@ -158,6 +158,7 @@ namespace pan
       virtual void do_unsubscribe_selected_groups ();
 
       void step_bookmarks(int step);
+      void do_read_or_save_articles ();
 
     public:
       static std::string prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs);
