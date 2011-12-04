@@ -191,8 +191,6 @@ namespace pan
       void update_filequeue_label (GtkTreeSelection *selection=0);
 
       GtkWidget* create_parts_tab ();
-//      GtkWidget* create_log_tab ();
-//      void update_filequeue_tab();
 
     private:
       std::string utf8ize (const StringView&) const;
@@ -252,6 +250,17 @@ namespace pan
       guint _draft_autosave_timeout;
       guint _draft_autosave_idle_tag;
       static gboolean draft_save_cb(gpointer ptr);
+
+      /* override of "delete" */
+      enum pages
+      {
+        PAGE_MAIN = 0,
+        PAGE_EXTRAS = 1,
+        PAGE_QUEUE = 2
+      };
+      GtkWidget * _notebook;
+      int delete_override;
+      static gboolean on_keyboard_key_pressed_cb (GtkWidget *, GdkEventKey *, gpointer);
 
     public:
       void set_draft_autosave_timeout(guint seconds)

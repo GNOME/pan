@@ -499,6 +499,9 @@ namespace
     gboolean handled (false);
 
     g_return_val_if_fail (GTK_IS_TEXT_VIEW(w), false);
+
+//    if (event->keyval==GDK_KEY_Enter) return false;
+
     const bool up = event->keyval==GDK_KEY_Up || event->keyval==GDK_KEY_KP_Up;
     const bool down = event->keyval==GDK_KEY_Down || event->keyval==GDK_KEY_KP_Down;
 

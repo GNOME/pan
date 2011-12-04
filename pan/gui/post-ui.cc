@@ -26,6 +26,7 @@ extern "C" {
   #include <gmime/gmime.h>
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
+  #include <gdk/gdkkeysyms.h>
   #include <sys/time.h>
 #ifdef HAVE_GTKSPELL
   #include <gtkspell/gtkspell.h>
@@ -147,10 +148,7 @@ PostUI:: update_filequeue_label (GtkTreeSelection *selection)
     tasks_t tasks(get_selected_files());
 
     if (tasks.empty())
-    {
       _upload_queue.get_all_tasks(tasks);
-    }
-
 
     char str[512];
     long kb(0);
@@ -387,7 +385,7 @@ namespace
   {
 
     { "remove-files", "Delete",
-      N_("Remove from Queue"), "Delete",
+      N_("Remove from Queue"), NULL,
       N_("Remove from Queue"),
       G_CALLBACK(do_remove_files) },
 
@@ -2869,7 +2867,7 @@ gboolean
 PostUI::draft_save_cb(gpointer ptr)
 {
     PostUI *data = static_cast<PostUI*>(ptr);
-    if (!data) return true;
+    if (!data) return false;
     GMimeMessage * msg = data->new_message_from_ui (DRAFTING);
     std::string& draft_filename (get_draft_filename ());
     char * filename = g_build_filename (draft_filename.c_str(), "autosave", NULL);
@@ -2888,6 +2886,22 @@ PostUI::draft_save_cb(gpointer ptr)
     data->_unchanged_body = body;
     data->_draft_autosave_idle_tag = 0;
     return false;
+}
+
+gboolean
+PostUI :: on_keyboard_key_pressed_cb (GtkWidget * w, GdkEventKey * event, gpointer ptr)
+{
+  PostUI *data = static_cast<PostUI*>(ptr);
+  if (!data) return false;
+  if (event->type == GDK_KEY_PRESS)
+  {
+    if (event->keyval == GDK_KEY_Delete)
+    {
+      if (gtk_notebook_get_current_page(GTK_NOTEBOOK(data->_notebook)) == PostUI::PAGE_QUEUE)
+        data->remove_files();
+    }
+  }
+  return false;
 }
 
 PostUI :: PostUI (GtkWindow    * parent,
@@ -2972,11 +2986,14 @@ PostUI :: PostUI (GtkWindow    * parent,
   gtk_widget_show_all (vbox);
   gtk_container_add (GTK_CONTAINER(_root), vbox);
 
-  GtkWidget * notebook = gtk_notebook_new ();
+  GtkWidget * notebook = _notebook = gtk_notebook_new ();
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_main_tab(), gtk_label_new_with_mnemonic(_("_Message")));
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_extras_tab(), gtk_label_new_with_mnemonic(_("More _Headers")));
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), create_filequeue_tab(), gtk_label_new_with_mnemonic(_("File _Queue")));
   pan_box_pack_start_defaults (GTK_BOX(vbox), notebook);
+
+  /* button press handler for "delete" */
+  g_signal_connect (vbox, "key-press-event", G_CALLBACK(on_keyboard_key_pressed_cb), this);
 
   // remember this message, but don't put it in the text view yet.
   // we have to wait for it to be realized first so that wrapping
