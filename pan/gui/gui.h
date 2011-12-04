@@ -139,6 +139,7 @@ namespace pan
       virtual void do_flag_off ();
       virtual void do_next_flag ();
       virtual void do_last_flag ();
+      virtual void do_mark_all_flagged ();
       virtual void do_show_score_dialog ();
       virtual void do_show_new_score_dialog ();
       virtual void do_cancel_article ();

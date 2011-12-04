@@ -313,7 +313,7 @@ GIOChannelSocketSSL :: ~GIOChannelSocketSSL ()
 
   _certstore.remove_listener(this);
 
-  std::cerr << LINE_ID << " destroying socket " << this <<std::endl;
+  debug(" destroying SSL socket "<<this);
 
   remove_source (_tag_watch);
   remove_source (_tag_timeout);

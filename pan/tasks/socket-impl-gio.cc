@@ -262,7 +262,7 @@ namespace
 
 GIOChannelSocket :: ~GIOChannelSocket ()
 {
-//std::cerr << LINE_ID << " destroying socket " << this << std::endl;
+  debug(" destroying GIO socket "<<this);
 
   remove_source (_tag_watch);
   remove_source (_tag_timeout);

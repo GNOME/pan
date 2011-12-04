@@ -149,6 +149,7 @@ namespace
   void do_flag_off                     (GtkAction*) { pan_ui->do_flag_off(); }
   void do_next_flag                    (GtkAction*) { pan_ui->do_next_flag(); }
   void do_last_flag                    (GtkAction*) { pan_ui->do_last_flag(); }
+  void do_mark_all_flagged             (GtkAction*) { pan_ui->do_mark_all_flagged(); }
   void do_show_score_dialog            (GtkAction*) { pan_ui->do_show_score_dialog(); }
   void do_show_new_score_dialog        (GtkAction*) { pan_ui->do_show_new_score_dialog(); }
   void do_cancel_article               (GtkAction*) { pan_ui->do_cancel_article(); }
@@ -552,6 +553,11 @@ namespace
       N_("_Toggle Flag off for Thread"), "<shift>X",
       N_("_Toggle Flag off for Thread"),
       G_CALLBACK(do_flag_off) },
+
+    { "mark-all-flagged", NULL,
+      N_("_Mark all flagged Threads"), "<control>X",
+      N_("_Mark all flagged Threads"),
+      G_CALLBACK(do_mark_all_flagged) },
 
     { "next-flagged", NULL,
       N_("_Goto next flagged Thread"), "plus",

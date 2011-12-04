@@ -2436,7 +2436,6 @@ PostUI :: create_filequeue_tab ()
 {
   GtkWidget *w ;
   GtkListStore *list_store;
-  GtkTreeIter   iter;
   GtkCellRenderer *renderer;
   GtkWidget * vbox = gtk_vbox_new (false, 0);
   GtkWidget * buttons = gtk_hbox_new (false, PAD_SMALL);

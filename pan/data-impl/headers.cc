@@ -1156,9 +1156,6 @@ DataImpl :: on_articles_removed (const quarks_t& mids) const
 void
 DataImpl :: on_articles_changed (const Quark& group, const quarks_t& mids, bool do_refilter)
 {
-//  for (listeners_t::iterator it(_header_listeners.begin()), end(_header_listeners.end()); it!=end; ++it)
-//    (*it)->on_articles_plus (group, mids);
-
   rescore_articles (group, mids);
 
   // notify the trees that the articles have changed...
@@ -1169,9 +1166,6 @@ DataImpl :: on_articles_changed (const Quark& group, const quarks_t& mids, bool 
 void
 DataImpl :: on_articles_added (const Quark& group, const quarks_t& mids)
 {
-
-//  for (listeners_t::iterator it(_header_listeners.begin()), end(_header_listeners.end()); it!=end; ++it)
-//    (*it)->on_articles_plus (group, mids);
 
   if (!mids.empty())
   {
