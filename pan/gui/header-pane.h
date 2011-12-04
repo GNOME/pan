@@ -105,6 +105,7 @@ namespace pan
       void read_previous_thread ();
       void read_parent_article ();
 
+      void mark_all_flagged ();
       void move_to_next_bookmark(int);
 
     private:
