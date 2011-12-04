@@ -505,8 +505,8 @@ HeaderPane :: rebuild ()
 {
   quarks_t selectme;
   if (1) {
-    const articles_t old_selection (get_full_selection ());
-    foreach_const (articles_t, old_selection, it)
+    const articles_set old_selection (get_full_selection ());
+    foreach_const (articles_set, old_selection, it)
       selectme.insert ((*it)->message_id);
   }
 
@@ -790,7 +790,7 @@ HeaderPane :: get_first_selected_article ()
 }
 
 const guint
-HeaderPane :: get_full_selection_rows_num()
+HeaderPane :: get_full_selection_rows_num() const
 {
   return (gtk_tree_selection_count_selected_rows(gtk_tree_view_get_selection(GTK_TREE_VIEW(_tree_view))));
 }
@@ -831,7 +831,7 @@ HeaderPane :: get_full_selection () const
 void
 HeaderPane :: walk_and_collect (GtkTreeModel          * model,
                                 GtkTreeIter           * cur,
-                                articles_t            & setme) const
+                                articles_set          & setme) const
 {
   for (;;) {
     setme.insert (get_article (model, cur));
@@ -858,7 +858,7 @@ HeaderPane :: get_nested_foreach (GtkTreeModel  * model,
                                   gpointer        data) const
 {
   NestedData& ndata (*static_cast<NestedData*>(data));
-  articles_t& articles (ndata.articles);
+  articles_set& articles (ndata.articles);
   articles.insert (get_article (model, iter));
   const bool expanded (gtk_tree_view_row_expanded (GTK_TREE_VIEW(_tree_view), path));
   GtkTreeIter child;
@@ -876,7 +876,7 @@ HeaderPane :: get_nested_foreach_static (GtkTreeModel* model,
   ndata.pane->get_nested_foreach (model, path, iter, &ndata);
 }
 
-articles_t
+articles_set
 HeaderPane :: get_nested_selection (bool do_mark_all) const
 {
   NestedData data;
@@ -2265,10 +2265,11 @@ HeaderPane :: rebuild_article_action (const Quark& message_id)
 }
 
 void
-HeaderPane :: on_article_flag_changed (const Article* a, const Quark& group)
+HeaderPane :: on_article_flag_changed (articles_t& a, const Quark& group)
 {
-  g_return_if_fail(a);
-  rebuild_article_action (a->message_id);
+  g_return_if_fail(!a.empty());
+  foreach_const (articles_t, a, it)
+    rebuild_article_action ((*it)->message_id);
 }
 
 void

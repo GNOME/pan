@@ -71,7 +71,7 @@ Data :: fire_group_subscribe (const Quark& group, bool sub)
 }
 
 void
-Data :: fire_article_flag_changed (const Article* a, const Quark& group)
+Data :: fire_article_flag_changed (articles_t& a, const Quark& group)
 {
   for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
     (*it++)->on_article_flag_changed (a, group);

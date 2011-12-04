@@ -63,7 +63,8 @@ namespace
     { icon_read_unread_article, "ICON_READ_UNREAD_ARTICLE" },
     { icon_read_unread_thread, "ICON_READ_UNREAD_THREAD" },
     { icon_score, "ICON_SCORE" },
-    { icon_search_pulldown, "ICON_SEARCH_PULLDOWN" }
+    { icon_search_pulldown, "ICON_SEARCH_PULLDOWN" },
+    { icon_red_flag, "ICON_FLAGGED"}
   };
 
   void
@@ -144,7 +145,8 @@ namespace
   void do_plonk                        (GtkAction*) { pan_ui->do_plonk(); }
   void do_ignore                       (GtkAction*) { pan_ui->do_ignore(); }
   void do_watch                        (GtkAction*) { pan_ui->do_watch(); }
-  void do_flag                         (GtkAction*) { pan_ui->do_flag(); }
+  void do_flag_on                      (GtkAction*) { pan_ui->do_flag_on(); }
+  void do_flag_off                     (GtkAction*) { pan_ui->do_flag_off(); }
   void do_next_flag                    (GtkAction*) { pan_ui->do_next_flag(); }
   void do_last_flag                    (GtkAction*) { pan_ui->do_last_flag(); }
   void do_show_score_dialog            (GtkAction*) { pan_ui->do_show_score_dialog(); }
@@ -541,10 +543,15 @@ namespace
       NULL,
       G_CALLBACK(do_ignore) },
 
-    { "flag-thread", NULL,
-      N_("_Flag Thread"), "X",
-      N_("_Flag Thread"),
-      G_CALLBACK(do_flag) },
+    { "flag-thread", "ICON_FLAGGED",
+      N_("_Toggle Flag on for Thread"), "X",
+      N_("_Toggle Flag on for Thread"),
+      G_CALLBACK(do_flag_on) },
+
+    { "unflag-thread", NULL,
+      N_("_Toggle Flag off for Thread"), "<shift>X",
+      N_("_Toggle Flag off for Thread"),
+      G_CALLBACK(do_flag_off) },
 
     { "next-flagged", NULL,
       N_("_Goto next flagged Thread"), "plus",

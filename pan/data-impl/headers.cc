@@ -200,7 +200,7 @@ DataImpl :: unref_group   (const Quark& group)
 }
 
 void
-DataImpl :: fire_article_flag_changed (const Article* a, const Quark& group)
+DataImpl :: fire_article_flag_changed (articles_t& a, const Quark& group)
 {
   GroupHeaders * h (get_group_headers (group));
   h->_dirty = true;

@@ -65,6 +65,9 @@ namespace pan
     virtual void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article& a) = 0;
   };
 
+  typedef std::vector<const Article*> articles_t;
+  typedef std::set<const Article*> articles_set;
+
   /**
    * Header Pane in the main window of Pan's GUI.
    * @ingroup GUI
@@ -119,7 +122,7 @@ namespace pan
       Article* get_first_selected_article ();
       std::set<const Article*> get_full_selection () const;
       std::vector<const Article*> get_full_selection_v () const;
-      const guint get_full_selection_rows_num();
+      const guint get_full_selection_rows_num () const;
       std::set<const Article*> get_nested_selection (bool do_mark_all) const;
       bool set_group (const Quark& group);
       const Quark& get_group () { return _group; }
@@ -146,7 +149,7 @@ namespace pan
       virtual void on_prefs_color_changed  (const StringView&, const GdkColor&) {}
 
     public:
-      virtual void on_article_flag_changed (const Article* a, const Quark& group);
+      virtual void on_article_flag_changed (articles_t& a, const Quark& group);
 
     private:
       virtual void on_queue_task_active_changed (Queue&, Task&, bool active UNUSED) { }
@@ -341,7 +344,7 @@ namespace pan
       class CountUnread;
       class RowInserter;
       class SimilarWalk;
-      void walk_and_collect (GtkTreeModel*, GtkTreeIter*, std::set<const Article*>&) const;
+      void walk_and_collect (GtkTreeModel*, GtkTreeIter*, articles_set&) const;
     private:
       typedef void RenderFunc (GtkTreeViewColumn*, GtkCellRenderer*, GtkTreeModel*, GtkTreeIter*, gpointer);
       static RenderFunc render_action;

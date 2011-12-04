@@ -246,6 +246,8 @@ namespace pan
 
     public:
 
+      typedef std::vector<const Article*> articles_t;
+
       /**
        * Interface class for objects that listen to a Data's events.
        * @ingroup data
@@ -264,7 +266,7 @@ namespace pan
                                       unsigned long total  UNUSED) {}
 
         /* listener for article flag, don't call too often */
-        virtual void on_article_flag_changed (const Article* a UNUSED, const Quark& group UNUSED) {}
+        virtual void on_article_flag_changed (articles_t& a UNUSED, const Quark& group UNUSED) {}
       };
 
       void add_listener (Listener * l);
@@ -290,7 +292,7 @@ namespace pan
 
     public:
 
-      virtual void fire_article_flag_changed (const Article* a, const Quark& group);
+      virtual void fire_article_flag_changed (articles_t& a, const Quark& group);
 
     /*****************************************************************
     ***
