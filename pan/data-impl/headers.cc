@@ -47,10 +47,12 @@ DataImpl :: GroupHeaders :: GroupHeaders ():
   _ref (0),
   _dirty (false)
 {
+
 }
 
 DataImpl :: GroupHeaders :: ~GroupHeaders ()
 {
+
 }
 
 DataImpl :: ArticleNode*
@@ -177,7 +179,7 @@ DataImpl :: ref_group (const Quark& group)
     load_headers (*_data_io, group);
   }
   ++h->_ref;
-  //std::cerr << LINE_ID << " group " << group << " refcount up to " << h->_ref << std::endl;
+//  std::cerr << LINE_ID << " group " << group << " refcount up to " << h->_ref << std::endl;
 }
 
 void
@@ -187,14 +189,22 @@ DataImpl :: unref_group   (const Quark& group)
   pan_return_if_fail (h != 0);
 
   --h->_ref;
-  //std::cerr << LINE_ID << " group " << group << " refcount down to " << h->_ref << std::endl;
+//  std::cerr << LINE_ID << " group " << group << " refcount down to " << h->_ref << std::endl;
   if (h->_ref == 0)
   {
-    if (h->_dirty)
+    if (h->_dirty )
       save_headers (*_data_io, group);
     h->_dirty = false;
     free_group_headers_memory (group);
   }
+}
+
+void
+DataImpl :: fire_article_flag_changed (const Article* a, const Quark& group)
+{
+  GroupHeaders * h (get_group_headers (group));
+  h->_dirty = true;
+  Data::fire_article_flag_changed(a,group);
 }
 
 void

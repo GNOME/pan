@@ -340,6 +340,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _prefs.add_listener (this);
   _certstore.add_listener(this);
   Log::get().add_listener (this);
+  _data.add_listener (this);
 
   gtk_accel_map_load (get_accel_filename().c_str());
 
@@ -364,6 +365,10 @@ namespace
 GUI :: ~GUI ()
 {
   _certstore.remove_listener(this);
+  _data.remove_listener(this);
+  _prefs.remove_listener (this);
+  _queue.remove_listener (this);
+  Log::get().remove_listener (this);
 
   const std::string accel_filename (get_accel_filename());
   gtk_accel_map_save (accel_filename.c_str());
@@ -378,9 +383,7 @@ GUI :: ~GUI ()
                       && (gdk_window_get_state( gtk_widget_get_window(_root)) & GDK_WINDOW_STATE_MAXIMIZED);
   _prefs.set_flag ("main-window-is-maximized", maximized);
 
-  _prefs.remove_listener (this);
-  _queue.remove_listener (this);
-  Log::get().remove_listener (this);
+
   g_source_remove (upkeep_tag);
 
   std::set<GtkWidget*> unref;
@@ -1138,9 +1141,12 @@ void GUI :: do_ignore ()
 void
 GUI :: do_flag ()
 {
+  /// TODO flag selection
   Article* a = _header_pane->get_first_selected_article();
+  g_return_if_fail(a);
   a->toggle_flag();
-  _header_pane->on_article_flag_toggled(a);
+  const Quark& g(_header_pane->get_group());
+  _data.fire_article_flag_changed(a, g);
 }
 
 void

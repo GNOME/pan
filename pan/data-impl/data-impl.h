@@ -90,6 +90,7 @@ namespace pan
 
       virtual CertStore& get_certstore () { return _certstore; }
       virtual const CertStore& get_certstore () const { return _certstore; }
+
     private:
       EncodeCache _encode_cache;
       ArticleCache _cache;
@@ -309,19 +310,6 @@ namespace pan
 
     private: // implementation
 
-//      struct Headers
-//      {
-//        struct Listener
-//        {
-//          virtual ~Listener() {}
-//          /* functions that other listeners listen on */
-//          virtual void on_articles_plus (const Quark&, const quarks_t&) = 0;
-//        };
-//      };
-
-//      typedef std::set<Listener*> listeners_t;
-//      listeners_t _header_listeners;
-
       /** 'article' MUST have been allocated by GroupHeaders::alloc_new_article()!! */
       void load_article (const Quark& g, Article * article, const StringView& references);
 
@@ -384,6 +372,11 @@ namespace pan
         }
       };
 
+      /***
+       **
+      ***/
+      virtual void fire_article_flag_changed (const Article* a, const Quark& group);
+
       struct GroupHeaders
       {
         int _ref;
@@ -409,6 +402,7 @@ namespace pan
         const Article* find_article (const Quark& mid) const;
         void remove_articles (const quarks_t& mids);
         void build_references_header (const Article* article, std::string& setme) const;
+
       };
 
       static void find_nodes (const quarks_t           & mids,
@@ -497,6 +491,7 @@ namespace pan
         private:
           void cache_articles (std::set<const Article*> s);
           void download_articles (std::set<const Article*> s);
+
       };
 
 

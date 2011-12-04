@@ -106,6 +106,7 @@ DataImpl :: rebuild_backend ()
 DataImpl :: ~DataImpl ()
 {
   save_state ();
+
 }
 
 void
@@ -118,3 +119,4 @@ DataImpl :: save_state ()
     save_newsrc_files (*_data_io);
   }
 }
+

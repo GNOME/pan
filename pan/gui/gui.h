@@ -25,6 +25,7 @@
 #include <pan/data/article-cache.h>
 #include <pan/data/encode-cache.h>
 #include <pan/tasks/queue.h>
+#include <pan/data/article.h>
 #include <pan/data/cert-store.h>
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-ui.h>
@@ -53,7 +54,8 @@ namespace pan
     private Progress::Listener,
     private Queue::Listener,
     private Prefs::Listener,
-    private CertStore::Listener
+    private CertStore::Listener,
+    private Data::Listener
   {
 
     public:
