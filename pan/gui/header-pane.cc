@@ -2026,6 +2026,7 @@ HeaderPane :: action_next_if (const ArticleTester& test, RowActionFunctor& actio
 void
 HeaderPane :: read_next_if (const ArticleTester& test)
 {
+
   GtkTreeView * v (GTK_TREE_VIEW(_tree_view));
   ReadFunctor read (v, _prefs.get_flag("expand-selected-articles", false), _action_manager);
   action_next_if (test, read);
@@ -2034,6 +2035,7 @@ HeaderPane :: read_next_if (const ArticleTester& test)
 void
 HeaderPane :: read_prev_if (const ArticleTester & test)
 {
+
   GtkTreeView * v (GTK_TREE_VIEW(_tree_view));
   GtkTreeModel * m (GTK_TREE_MODEL(_tree_store));
   ReadFunctor read (v, _prefs.get_flag("expand-selected-articles", false), _action_manager);
@@ -2043,6 +2045,7 @@ HeaderPane :: read_prev_if (const ArticleTester & test)
 void
 HeaderPane :: select_next_if (const ArticleTester& test)
 {
+
   GtkTreeView * v (GTK_TREE_VIEW(_tree_view));
   SelectFunctor sel (v, _prefs.get_flag("expand-selected-articles", false));
   action_next_if (test, sel);
@@ -2051,9 +2054,11 @@ HeaderPane :: select_next_if (const ArticleTester& test)
 void
 HeaderPane :: select_prev_if (const ArticleTester& test)
 {
+
   GtkTreeView * v (GTK_TREE_VIEW(_tree_view));
+  GtkTreeModel * m (GTK_TREE_MODEL(_tree_store));
   SelectFunctor sel (v, _prefs.get_flag("expand-selected-articles", false));
-  action_next_if (test, sel);
+  next_iterator (v, m, TreeIteratorPrev(), test, sel);
 }
 
 void
