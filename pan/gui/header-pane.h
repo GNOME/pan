@@ -100,6 +100,7 @@ namespace pan
       void read_previous_thread ();
       void read_parent_article ();
 
+      void mark_all_flagged ();
       void move_to_next_bookmark(int);
 
     private:
@@ -119,6 +120,8 @@ namespace pan
       std::vector<const Article*> get_full_selection_v () const;
       const guint get_full_selection_rows_num();
       std::set<const Article*> get_nested_selection () const;
+      const guint get_full_selection_rows_num () const;
+      std::set<const Article*> get_nested_selection (bool do_mark_all) const;
       bool set_group (const Quark& group);
       const Quark& get_group () { return _group; }
 
@@ -159,6 +162,7 @@ namespace pan
     private:
       virtual void on_cache_added (const Quark& mid);
       virtual void on_cache_removed (const quarks_t& mids);
+
 
     public: // pretend it's private
       ActionManager& _action_manager;
@@ -335,6 +339,8 @@ namespace pan
       class RowInserter;
       class SimilarWalk;
       void walk_and_collect (GtkTreeModel*, GtkTreeIter*, std::set<const Article*>&) const;
+      void walk_and_collect_flagged (GtkTreeModel*, GtkTreeIter*, GtkTreeSelection*) const;
+
     private:
       typedef void RenderFunc (GtkTreeViewColumn*, GtkCellRenderer*, GtkTreeModel*, GtkTreeIter*, gpointer);
       static RenderFunc render_action;

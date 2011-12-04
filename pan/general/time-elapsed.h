@@ -24,6 +24,13 @@ namespace pan
       diff += (finish.tv_usec - start.tv_usec)/(double)G_USEC_PER_SEC;
       return diff;
     }
+
+    double get_usecs_elapsed () const {
+      GTimeVal finish;
+      g_get_current_time (&finish);
+      double diff = finish.tv_usec - start.tv_usec;
+      return diff;
+    }
   };
 }
 

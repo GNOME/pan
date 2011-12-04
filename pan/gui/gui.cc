@@ -1062,6 +1062,12 @@ GUI :: do_flag ()
 }
 
 void
+GUI :: do_mark_all_flagged()
+{
+  _header_pane->mark_all_flagged();
+}
+
+void
 GUI :: step_bookmarks(int step)
 {
   _header_pane->move_to_next_bookmark(step);
