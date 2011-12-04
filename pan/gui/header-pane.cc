@@ -1551,7 +1551,7 @@ HeaderPane :: ~HeaderPane ()
   _cache.remove_listener (this);
   _queue.remove_listener (this);
   _prefs.remove_listener (this);
-  _data.remove_listener (this);
+  _data.remove_listener  (this);
 
   // save the column widths
   GList * columns = gtk_tree_view_get_columns (GTK_TREE_VIEW(_tree_view));
@@ -2169,7 +2169,7 @@ HeaderPane :: rebuild_article_action (const Quark& message_id)
 }
 
 void
-HeaderPane :: on_article_flag_toggled (Article* a)
+HeaderPane :: on_article_flag_changed (const Article* a, const Quark& group)
 {
   g_return_if_fail(a);
   rebuild_article_action (a->message_id);
@@ -2250,10 +2250,10 @@ struct HeaderPane::SimilarWalk: public PanTreeStore::WalkFunctor
       // strip out frequent substrings that tend to skew string_likeness too high
       static const char * const frequent_substrings [] = { "mp3", "gif", "jpg", "jpeg", "yEnc" };
       for (size_t i=0; i!=G_N_ELEMENTS(frequent_substrings); ++i) {
-	std::string::size_type pos;
-	const char * needle (frequent_substrings[i]);
-	while (((pos = sa.find (needle))) != std::string::npos) sa.erase (pos, strlen(needle));
-	while (((pos = sb.find (needle))) != std::string::npos) sb.erase (pos, strlen(needle));
+        std::string::size_type pos;
+        const char * needle (frequent_substrings[i]);
+        while (((pos = sa.find (needle))) != std::string::npos) sa.erase (pos, strlen(needle));
+        while (((pos = sb.find (needle))) != std::string::npos) sb.erase (pos, strlen(needle));
       }
 
       // strip out non-alpha characters
@@ -2268,11 +2268,11 @@ struct HeaderPane::SimilarWalk: public PanTreeStore::WalkFunctor
       const bool is_long_string (min_len >= 30);
       double min_closeness;
       if (is_short_string)
-	min_closeness = 0.6;
+        min_closeness = 0.6;
       else if (is_long_string)
-	min_closeness = 0.5;
+        min_closeness = 0.5;
       else
-	min_closeness = 0.55;
+        min_closeness = 0.55;
 
       return string_likeness (sa, sb) >= min_closeness;
     }
@@ -2284,30 +2284,29 @@ struct HeaderPane::SimilarWalk: public PanTreeStore::WalkFunctor
 
       if (!a.strchr(' ')) // only one word, so count common characters
       {
-	int common_chars = 0;
+        int common_chars = 0;
 
-	foreach_const (StringView, a, it) {
-	  const char * pos = b.strchr (*it);
-	  if (pos) {
-	    ++common_chars;
-	    b.eat_chars (pos - b.str);
-	  }
-	}
+        foreach_const (StringView, a, it) {
+          const char * pos = b.strchr (*it);
+          if (pos) {
+            ++common_chars;
+            b.eat_chars (pos - b.str);
+          }
+        }
 
-	retval = (double)common_chars / a.len;
+        retval = (double)common_chars / a.len;
       }
-      else // more than one word, so count common words
+        else // more than one word, so count common words
       {
-	StringView tok;
-	int str1_words(0), common_words(0);
-	while (a.pop_token (tok)) {
-	  ++str1_words;
-	  const char *pch = b.strstr (tok);
-	  if (pch) ++common_words;
-	}
-	retval = (double)common_words / str1_words;
+        StringView tok;
+        int str1_words(0), common_words(0);
+        while (a.pop_token (tok)) {
+          ++str1_words;
+          const char *pch = b.strstr (tok);
+          if (pch) ++common_words;
+        }
+        retval = (double)common_words / str1_words;
       }
-
       return retval;
     }
 };

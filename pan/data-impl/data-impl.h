@@ -71,6 +71,7 @@ namespace pan
     public:
       virtual ArticleCache& get_cache () { return _cache; }
       virtual const ArticleCache& get_cache () const { return _cache; }
+
     private:
       ArticleCache _cache;
 
@@ -353,6 +354,11 @@ namespace pan
         }
       };
 
+      /***
+       **
+      ***/
+      virtual void fire_article_flag_changed (const Article* a, const Quark& group);
+
       struct GroupHeaders
       {
         int _ref;
@@ -378,6 +384,7 @@ namespace pan
         const Article* find_article (const Quark& mid) const;
         void remove_articles (const quarks_t& mids);
         void build_references_header (const Article* article, std::string& setme) const;
+
       };
 
       static void find_nodes (const quarks_t           & mids,
@@ -454,6 +461,7 @@ namespace pan
           void accumulate_descendants (unique_nodes_t&, const ArticleNode*) const;
           void add_articles (const const_nodes_v&);
           void apply_filter (const const_nodes_v&);
+
       };
 
       std::set<MyTree*> _trees;

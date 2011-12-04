@@ -224,6 +224,9 @@ namespace pan
         virtual void on_group_counts (const Quark& group   UNUSED,
                                       unsigned long unread UNUSED,
                                       unsigned long total  UNUSED) {}
+
+        /* listener for article flag, don't call too often */
+        virtual void on_article_flag_changed (const Article* a UNUSED, const Quark& group UNUSED) {}
       };
 
       void add_listener (Listener * l);
@@ -246,6 +249,10 @@ namespace pan
 
       typedef std::set<Listener*> listeners_t;
       listeners_t _listeners;
+
+    public:
+
+      virtual void fire_article_flag_changed (const Article* a, const Quark& group);
 
     /*****************************************************************
     ***

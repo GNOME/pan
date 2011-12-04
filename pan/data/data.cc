@@ -69,3 +69,10 @@ Data :: fire_group_subscribe (const Quark& group, bool sub)
   for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
     (*it++)->on_group_subscribe (group, sub);
 }
+
+void
+Data :: fire_article_flag_changed (const Article* a, const Quark& group)
+{
+  for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
+    (*it++)->on_article_flag_changed (a, group);
+}

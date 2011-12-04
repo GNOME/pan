@@ -23,7 +23,7 @@
 #include <pan/general/progress.h>
 #include <pan/data/article-cache.h>
 #include <pan/tasks/queue.h>
-
+#include <pan/data/article.h>
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-ui.h>
 #include <pan/gui/prefs.h>
@@ -50,7 +50,8 @@ namespace pan
     private Log::Listener,
     private Progress::Listener,
     private Queue::Listener,
-    private Prefs::Listener
+    private Prefs::Listener,
+    private Data::Listener
   {
     public:
       GUI (Data& data, Queue&, ArticleCache&, Prefs&, GroupPrefs&);

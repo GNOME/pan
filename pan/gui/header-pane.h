@@ -144,7 +144,7 @@ namespace pan
       virtual void on_prefs_color_changed  (const StringView&, const GdkColor&) {}
 
     public:
-      void on_article_flag_toggled(Article*) ;
+      virtual void on_article_flag_changed (const Article* a, const Quark& group);
 
     private:
       virtual void on_queue_task_active_changed (Queue&, Task&, bool active UNUSED) { }
