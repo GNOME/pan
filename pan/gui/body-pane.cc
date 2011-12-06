@@ -969,6 +969,11 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
     is_done = true;
   }
 
+  else if (g_mime_content_type_is_type (type, "text", "*"))
+  {
+
+  }
+
   // otherwise, bitch and moan.
   if (!is_done) {
     const char * filename = g_mime_part_get_filename (part);
@@ -1049,7 +1054,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
 {
   const char * fallback_charset (_charset.empty() ? 0 : _charset.c_str());
 
-  // manditory headers...
+  // mandatory headers...
   std::string s;
   size_t w(0), l(0);
   l = add_header_line (s, message, _("Subject"), "Subject", fallback_charset);
@@ -1098,6 +1103,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     GdkPixbuf *pixbuf = NULL;
     pixbuf = pan_gdk_pixbuf_create_from_x_face (pch);
     gtk_image_set_from_pixbuf (GTK_IMAGE(_xface), pixbuf);
+    gtk_widget_show_all(_verbose);
     g_object_unref (pixbuf);
   }
   // set the face
@@ -1416,7 +1422,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_label_set_ellipsize (GTK_LABEL(w), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_use_markup (GTK_LABEL(w), true);
   gtk_box_pack_start (GTK_BOX(hbox), w, true, true, PAD_SMALL);
-  w = _xface = gtk_image_new ();
+  w = _xface = gtk_image_new();
   gtk_widget_set_size_request (w, 48, 48);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
   w = _face = gtk_image_new ();

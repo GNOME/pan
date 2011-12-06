@@ -1,4 +1,6 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@
+AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @GPGME_CFLAGS@
+
+AM_LDFLAGS = @GPGME_LIBS@
 
 noinst_LIBRARIES = libusenetutils.a
 

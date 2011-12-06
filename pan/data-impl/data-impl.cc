@@ -125,35 +125,9 @@ DataImpl :: save_state ()
   }
 }
 
-
-namespace
-{
-
-  static void
-  stored_password (GnomeKeyringResult res, gpointer user_data)
-  {
-    if (res == GNOME_KEYRING_RESULT_OK)
-    g_print ("password saved successfully!\n");
-    else
-      g_print ("couldn't save password: %s", gnome_keyring_result_to_message (res));
-  }
-
-  static void
-  found_password (GnomeKeyringResult res, const gchar* password, gpointer user_data)
-  {
-    if (res == GNOME_KEYRING_RESULT_OK)
-      g_print ("password found was: %s\n", password);
-    else
-      g_print ("couldn't find password: %s", gnome_keyring_result_to_message (res));
-
-    /* Once this function returns |password| will be freed */
-  }
-
-}
-
 #ifdef HAVE_GKR
 GnomeKeyringResult
-DataImpl :: password_encrypt (const PasswordData& pw)
+DataImpl :: password_encrypt (const PasswordData* pw)
 {
   g_return_val_if_fail (gnome_keyring_is_available(), GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
 
@@ -161,17 +135,17 @@ DataImpl :: password_encrypt (const PasswordData& pw)
     gnome_keyring_store_password_sync (
       GNOME_KEYRING_NETWORK_PASSWORD,
       GNOME_KEYRING_DEFAULT,
-      _("Pan server password"),
-      pw.pw.str,
-      "user", pw.user.str,
-      "server", pw.server.c_str(),
+      _("Pan newsreader server passwords"),
+      pw->pw.str,
+      "user", pw->user.str,
+      "server", pw->server.c_str(),
       NULL)
     );
 
 }
 
 GnomeKeyringResult
-DataImpl :: password_decrypt (PasswordData& pw) const
+DataImpl :: password_decrypt (PasswordData* pw) const
 {
 
   gchar* pwd(0);
@@ -181,13 +155,14 @@ DataImpl :: password_decrypt (PasswordData& pw) const
     gnome_keyring_find_password_sync (
     GNOME_KEYRING_NETWORK_PASSWORD,
     &pwd,
-    "user", pw.user.str,
-    "server", pw.server.c_str(),
+    "user", pw->user.str,
+    "server", pw->server.c_str(),
     NULL);
 
-  std::string tmp(pwd);
+  std::string tmp;
+  if (pwd) tmp = pwd;
   gnome_keyring_free_password(pwd);
-  pw.pw = tmp;
+  pw->pw = tmp;
 
   return ret;
 }

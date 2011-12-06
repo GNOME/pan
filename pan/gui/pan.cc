@@ -51,6 +51,12 @@ extern "C" {
   #include <pan/tasks/socket-impl-openssl.h>
 #endif
 
+#ifdef HAVE_GPGME
+  #include <gpgme.h>
+  #define GPG_DEF 1
+  #include <pan/gui/gpg.h>
+#endif
+
 #include <pan/data/cert-store.h>
 #include <pan/tasks/socket-impl-gio.h>
 #include <pan/tasks/socket-impl-main.h>
@@ -82,8 +88,6 @@ namespace
 
 namespace
 {
-//  bool keyring_active(gnome_keyring_is_available());
-
   GMainLoop * nongui_gmainloop (0);
 
   void mainloop ()
@@ -544,7 +548,7 @@ _("General Options\n"
   }
 
   /***
-   ** DBUS STUFF
+   ** DBUS
    ***/
 
   #define PAN_DBUS_SERVICE_NAME      "news.pan.NZB"

@@ -51,7 +51,7 @@ static gboolean
 gtkspell_text_iter_forward_word_end(GtkTextIter *i) {
 	GtkTextIter iter;
 
-/* heuristic: 
+/* heuristic:
  * if we're on an singlequote/apostrophe and
  * if the next letter is alphanumeric,
  * this is an apostrophe. */
@@ -122,7 +122,7 @@ static void
 check_range(GtkSpell *spell, GtkTextBuffer *buffer,
             GtkTextIter start, GtkTextIter end, gboolean force_all) {
 	/* we need to "split" on word boundaries.
-	 * luckily, pango knows what "words" are 
+	 * luckily, pango knows what "words" are
 	 * so we don't have to figure it out. */
 
 	GtkTextIter wstart, wend, cursor, precursor;
@@ -134,7 +134,7 @@ check_range(GtkSpell *spell, GtkTextBuffer *buffer,
 	if (gtk_text_iter_inside_word(&end))
 		gtk_text_iter_forward_word_end(&end);
 	if (!gtk_text_iter_starts_word(&start)) {
-		if (gtk_text_iter_inside_word(&start) || 
+		if (gtk_text_iter_inside_word(&start) ||
 				gtk_text_iter_ends_word(&start)) {
 			gtk_text_iter_backward_word_start(&start);
 		} else {
@@ -153,7 +153,7 @@ check_range(GtkSpell *spell, GtkTextBuffer *buffer,
 	gtk_text_iter_backward_char(&precursor);
 	highlight = gtk_text_iter_has_tag(&cursor, spell->tag_highlight) ||
 			gtk_text_iter_has_tag(&precursor, spell->tag_highlight);
-	
+
 	gtk_text_buffer_remove_tag(buffer, spell->tag_highlight, &start, &end);
 
 	/* Fix a corner case when replacement occurs at beginning of buffer:
@@ -173,11 +173,11 @@ check_range(GtkSpell *spell, GtkTextBuffer *buffer,
 		wend = wstart;
 		gtk_text_iter_forward_word_end(&wend);
 
-		inword = (gtk_text_iter_compare(&wstart, &cursor) < 0) && 
+		inword = (gtk_text_iter_compare(&wstart, &cursor) < 0) &&
 				(gtk_text_iter_compare(&cursor, &wend) <= 0);
 
 		if (inword && !force_all) {
-			/* this word is being actively edited, 
+			/* this word is being actively edited,
 			 * only check if it's already highligted,
 			 * otherwise defer this check until later. */
 			if (highlight)
@@ -232,7 +232,7 @@ insert_text_after(GtkTextBuffer *buffer, GtkTextIter *iter,
 	/* we need to check a range of text. */
 	gtk_text_buffer_get_iter_at_mark(buffer, &start, spell->mark_insert_start);
 	check_range(spell, buffer, start, *iter, FALSE);
-	
+
 	gtk_text_buffer_move_mark(buffer, spell->mark_insert_end, iter);
 }
 
@@ -251,7 +251,7 @@ delete_range_after(GtkTextBuffer *buffer,
 }
 
 static void
-mark_set(GtkTextBuffer *buffer, GtkTextIter *iter, 
+mark_set(GtkTextBuffer *buffer, GtkTextIter *iter,
 		 GtkTextMark *mark, GtkSpell *spell) {
 	/* if the cursor has moved and there is a deferred check so handle it now */
 	if ((mark == gtk_text_buffer_get_insert(buffer)) && spell->deferred_check)
@@ -262,7 +262,7 @@ static void
 get_word_extents_from_mark(GtkTextBuffer *buffer,
                      GtkTextIter *start, GtkTextIter *end, GtkTextMark *mark) {
 	gtk_text_buffer_get_iter_at_mark(buffer, start, mark);
-	if (!gtk_text_iter_starts_word(start)) 
+	if (!gtk_text_iter_starts_word(start))
 		gtk_text_iter_backward_word_start(start);
 	*end = *start;
 	if (gtk_text_iter_inside_word(end))
@@ -276,7 +276,7 @@ add_to_dictionary(GtkWidget *menuitem, GtkSpell *spell) {
 
 	get_word_extents_from_mark(spell->buffer, &start, &end, spell->mark_click);
 	word = gtk_text_buffer_get_text(spell->buffer, &start, &end, FALSE);
-	
+
 	enchant_dict_add_to_pwl( spell->speller, word, strlen(word));
 
 	gtkspell_recheck_all(spell);
@@ -291,7 +291,7 @@ ignore_all(GtkWidget *menuitem, GtkSpell *spell) {
 
 	get_word_extents_from_mark(spell->buffer, &start, &end, spell->mark_click);
 	word = gtk_text_buffer_get_text(spell->buffer, &start, &end, FALSE);
-	
+
 	enchant_dict_add_to_session(spell->speller, word, strlen(word));
 
 	gtkspell_recheck_all(spell);
@@ -304,7 +304,7 @@ replace_word(GtkWidget *menuitem, GtkSpell *spell) {
 	char *oldword;
 	const char *newword;
 	GtkTextIter start, end;
-	
+
 	if (!spell->speller)
 		return;
 
@@ -324,7 +324,7 @@ replace_word(GtkWidget *menuitem, GtkSpell *spell) {
 	gtk_text_buffer_insert(spell->buffer, &start, newword, -1);
 	gtk_text_buffer_end_user_action(spell->buffer);
 
-	enchant_dict_store_replacement(spell->speller, 
+	enchant_dict_store_replacement(spell->speller,
 			oldword, strlen(oldword),
 			newword, strlen(newword));
 
@@ -340,7 +340,7 @@ add_suggestion_menus(GtkSpell *spell, GtkTextBuffer *buffer,
 	char **suggestions;
 	size_t n_suggs, i;
 	char *label;
-	
+
 	menu = topmenu;
 
 	if (!spell->speller)
@@ -389,7 +389,7 @@ add_suggestion_menus(GtkSpell *spell, GtkTextBuffer *buffer,
 	label = g_strdup_printf(_("Add \"%s\" to Dictionary"), word);
 	mi = gtk_image_menu_item_new_with_label(label);
 	g_free(label);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), 
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),
 			gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU));
 	g_signal_connect(G_OBJECT(mi), "activate",
 			G_CALLBACK(add_to_dictionary), spell);
@@ -398,7 +398,7 @@ add_suggestion_menus(GtkSpell *spell, GtkTextBuffer *buffer,
 
 	/* - Ignore All */
 	mi = gtk_image_menu_item_new_with_label(_("Ignore All"));
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), 
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),
 			gtk_image_new_from_stock(GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU));
 	g_signal_connect(G_OBJECT(mi), "activate",
 			G_CALLBACK(ignore_all), spell);
@@ -500,7 +500,7 @@ populate_popup(GtkTextView *textview, GtkMenu *menu, GtkSpell *spell) {
 	/* we need to figure out if they picked a misspelled word. */
 	get_word_extents_from_mark(spell->buffer, &start, &end, spell->mark_click);
 
-	/* if our highlight algorithm ever messes up, 
+	/* if our highlight algorithm ever messes up,
 	 * this isn't correct, either. */
 	if (!gtk_text_iter_has_tag(&start, spell->tag_highlight))
 		return; /* word wasn't misspelled. */
@@ -524,8 +524,8 @@ button_press_event(GtkTextView *view, GdkEventButton *event, GtkSpell *spell) {
 		if (spell->deferred_check)
 			check_deferred_range(spell, spell->buffer, TRUE);
 
-		gtk_text_view_window_to_buffer_coords(view, 
-				GTK_TEXT_WINDOW_TEXT, 
+		gtk_text_view_window_to_buffer_coords(view,
+				GTK_TEXT_WINDOW_TEXT,
 				event->x, event->y,
 				&x, &y);
 		gtk_text_view_get_iter_at_location(view, &iter, x, y);
@@ -542,7 +542,7 @@ static gboolean
 popup_menu_event(GtkTextView *view, GtkSpell *spell) {
 	GtkTextIter iter;
 
-	gtk_text_buffer_get_iter_at_mark(spell->buffer, &iter, 
+	gtk_text_buffer_get_iter_at_mark(spell->buffer, &iter,
 			gtk_text_buffer_get_insert(spell->buffer));
 	gtk_text_buffer_move_mark(spell->buffer, spell->mark_click, &iter);
 	return FALSE; /* false: let gtk process this event, too. */
@@ -693,7 +693,7 @@ gtkspell_set_buffer(GtkSpell *spell, GtkTextBuffer *buffer)
 #ifdef HAVE_PANGO_UNDERLINE_ERROR
 					"underline", PANGO_UNDERLINE_ERROR,
 #else
-					"foreground", "red", 
+					"foreground", "red",
 					"underline", PANGO_UNDERLINE_SINGLE,
 #endif
 					NULL);
@@ -711,7 +711,7 @@ gtkspell_set_buffer(GtkSpell *spell, GtkTextBuffer *buffer)
 		spell->mark_click = gtk_text_buffer_create_mark(spell->buffer,
 				"gtkspell-click",
 				&start, TRUE);
-			
+
 		spell->deferred_check = FALSE;
 
 		/* now check the entire text buffer. */

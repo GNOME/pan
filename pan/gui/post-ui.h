@@ -84,6 +84,8 @@ namespace pan
       void set_wrap_mode (bool wrap);
       void set_always_run_editor (bool);
 
+      std::string gpg_sign_and_encrypt(const std::string& body, bool&);
+
       void update_parts_tab();
 
       //popup action entries
@@ -94,7 +96,6 @@ namespace pan
       void move_down     ();
       void move_top      ();
       void move_bottom   ();
-//      void select_encode (GtkAction*);  deactivated for now
 
       static void do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g);
       static gboolean on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gpointer userdata);
@@ -161,7 +162,6 @@ namespace pan
       int _total_parts;
       std::string _save_file;
       MTRand rng;
-      GMimeMultipart * _multipart;
 
     private:
       friend class UploadQueue;
@@ -173,9 +173,8 @@ namespace pan
       void add_actions (GtkWidget* box);
       void apply_profile_to_body ();
       void apply_profile_to_headers ();
-      enum Mode { DRAFTING, POSTING, UPLOADING, MULTI };
+      enum Mode { DRAFTING, POSTING, UPLOADING, MULTI};
       GMimeMessage * new_message_from_ui (Mode mode, bool copy_body=true);
-      GMimeMultipart* new_multipart_from_ui (bool copy_body=true);
       Profile get_current_profile ();
       bool check_message (const Quark& server, GMimeMessage*, bool binpost=false);
       bool check_charset ();

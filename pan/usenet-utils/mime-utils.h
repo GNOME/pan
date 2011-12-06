@@ -55,6 +55,17 @@
 #define YENC_SHIFT             42
 #define YENC_QUOTE_SHIFT       64
 
+/***
+**** GPG
+***/
+
+#define GPG_MARKER_BEGIN          "-----BEGIN PGP MESSAGE-----"
+#define GPG_MARKER_BEGIN_LEN      27
+#define GPG_MARKER_END            "-----END PGP MESSAGE-----"
+#define GPG_MARKER_END_LEN        25
+#define GPG_MARKER_SIGNED_BEGIN   "-----BEGIN PGP SIGNED MESSAGE-----"
+#define GPG_MARKER_SIGNED_LEN
+
 namespace pan
 {
   /**

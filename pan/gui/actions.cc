@@ -150,7 +150,6 @@ namespace
   void do_flag_off                     (GtkAction*) { pan_ui->do_flag_off(); }
   void do_next_flag                    (GtkAction*) { pan_ui->do_next_flag(); }
   void do_last_flag                    (GtkAction*) { pan_ui->do_last_flag(); }
-  void do_download_flagged             (GtkAction*) { pan_ui->do_download_flagged(); }
   void do_invert_selection             (GtkAction*) { pan_ui->do_invert_selection(); }
   void do_mark_all_flagged             (GtkAction*) { pan_ui->do_mark_all_flagged(); }
   void do_show_score_dialog            (GtkAction*) { pan_ui->do_show_score_dialog(); }
@@ -576,11 +575,6 @@ namespace
       N_("_Goto last flagged Thread"), "minus",
       N_("_Goto last flagged Thread"),
       G_CALLBACK(do_last_flag) },
-
-    { "get-all-flagged", NULL,
-      N_("_Get all flagged Thread"), NULL, ///TODO invent shortcut
-      N_("_Get all flagged Thread"),
-      G_CALLBACK(do_download_flagged) },
 
     { "invert-selection", NULL,
       N_("_Invert Selection"), "<control>I",

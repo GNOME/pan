@@ -101,22 +101,6 @@ namespace pan
       unsigned long get_bytes_remaining () const;
       void stop ();
       const std::string& get_basename()  { return  _basename; }
-//      std::string enc_mode_to_str(EncodeMode& e)
-//      {
-//        std::string res;
-//        switch (e)
-//        {
-//            case YENC:
-//              res += "yEnc";
-//              break;
-//            case PLAIN:
-//              break;
-//            default:
-//              res += "yEnc";
-//              break;
-//        }
-//        return res;
-//      }
 
       /** only call this for tasks in the NEED_ENCODE state
        * attempts to acquire the encoder thread and start encoding

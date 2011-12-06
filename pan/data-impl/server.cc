@@ -130,10 +130,11 @@ DataImpl :: set_server_auth (const Quark       & server,
 #ifndef HAVE_GKR
   s->password = password;
 #else
-  PasswordData pw ;
+  PasswordData pw;
   pw.server = s->host;
   pw.user = username;
   pw.pw = password;
+  password_encrypt(&pw);
 #endif
 
 }
@@ -211,7 +212,31 @@ DataImpl :: get_server_auth (const Quark   & server,
   bool found (s);
   if (found) {
     setme_username = s->username;
+#ifndef HAVE_GKR
     setme_password = s->password;
+#else
+    PasswordData pw;
+    pw.server = s->host;
+    pw.user = s->username;
+    GnomeKeyringResult res (password_decrypt(&pw));
+    switch (res)
+    {
+      case GNOME_KEYRING_RESULT_NO_MATCH:
+        Log::add_info_va(_("There seems to be no Password set for Server %s."), s->host.c_str());
+        break;
+
+      case GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON:
+        Log::add_urgent_va (_("The Gnome keyring denied access to the Passwords."), s->host.c_str());
+        break;
+
+      case GNOME_KEYRING_RESULT_OK:
+        setme_password.assign(pw.pw.str, pw.pw.len);
+        break;
+
+      default:
+        break;
+    }
+#endif
   }
   return found;
 
@@ -393,29 +418,6 @@ DataImpl :: load_server_properties (const DataIO& source)
     s.username = kv["username"];
 #ifndef HAVE_GKR
     s.password = kv["password"];
-#else
-    PasswordData pw ;
-    pw.server = s.host;
-    pw.user = s.username;
-    GnomeKeyringResult res (password_decrypt(pw));
-    switch (res)
-    {
-      case GNOME_KEYRING_RESULT_NO_MATCH:
-        Log::add_info_va(_("There seems to be no password set for server %s."), s.host.c_str());
-        break;
-
-      case GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON:
-        Log::add_urgent_va (_("The gnome keyring denied access to the passwords."), s.host.c_str());
-        break;
-
-      case GNOME_KEYRING_RESULT_OK:
-        s.password.assign(pw.pw.str, pw.pw.len);
-        break;
-
-      default:
-        Log::add_info_va ("%s %s",gnome_keyring_result_to_message (res),res);
-        break;
-    }
 #endif
     s.port = to_int (kv["port"], STD_NNTP_PORT);
     s.max_connections = to_int (kv["connection-limit"], 2);
@@ -467,12 +469,13 @@ DataImpl :: save_server_properties (DataIO& data_io) const
   *out << indent(depth++) << "<server-properties>\n";
   foreach_const (alpha_quarks_t, servers, it) {
     const Server* s (find_server (*it));
-    debug("saving server, "<<s->cert);
+    std::string user, pass;
+    get_server_auth(*it, user, pass);
     *out << indent(depth++) << "<server id=\"" << escaped(it->to_string()) << "\">\n";
     *out << indent(depth) << "<host>" << escaped(s->host) << "</host>\n"
          << indent(depth) << "<port>" << s->port << "</port>\n"
-         << indent(depth) << "<username>" << escaped(s->username) << "</username>\n"
-         << indent(depth) << "<password>" << escaped(s->password) << "</password>\n"
+         << indent(depth) << "<username>" << escaped(user) << "</username>\n"
+         << indent(depth) << "<password>" << escaped(pass) << "</password>\n"
          << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
          << indent(depth) << "<connection-limit>" << s->max_connections << "</connection-limit>\n"
          << indent(depth) << "<newsrc>" << s->newsrc_filename << "</newsrc>\n"

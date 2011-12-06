@@ -59,6 +59,11 @@ extern "C" {
 #define DEFAULT_SPELLCHECK_FLAG false
 #endif
 
+#ifdef HAVE_GPGME
+  #include <gpgme.h>
+  #include <pan/gui/gpg.h>
+#endif
+
 using namespace pan;
 
 #define USER_AGENT_PREFS_KEY "add-user-agent-header-when-posting"
@@ -97,6 +102,7 @@ namespace
 
   bool remember_charsets (true);
   bool master_reply (true);
+  bool gpg_enc (false);
 
   void on_remember_charset_toggled (GtkToggleAction * toggle, gpointer)
   {
@@ -106,6 +112,11 @@ namespace
   void on_mr_toggled (GtkToggleAction * toggle, gpointer)
   {
     master_reply = gtk_toggle_action_get_active (toggle);
+  }
+
+  void on_enc_toggled (GtkToggleAction * toggle, gpointer)
+  {
+    gpg_enc = gtk_toggle_action_get_active (toggle);
   }
 
   void on_spellcheck_toggled (GtkToggleAction * toggle, gpointer post_g)
@@ -259,9 +270,12 @@ PostUI :: set_spellcheck_enabled (bool enabled)
   {
 #ifdef HAVE_GTKSPELL
     GtkTextView * view = GTK_TEXT_VIEW(_body_view);
-    GtkSpell * spell = gtkspell_get_from_text_view (view);
-    if (spell)
-      gtkspell_detach (spell);
+    if (view)
+    {
+      GtkSpell * spell = gtkspell_get_from_text_view (view);
+      if (spell)
+        gtkspell_detach (spell);
+    }
 #endif
   }
 }
@@ -309,6 +323,68 @@ void
 PostUI :: set_always_run_editor (bool run)
 {
   _prefs.set_flag ("always-run-editor", run);
+}
+
+std::string
+PostUI :: gpg_sign_and_encrypt(const std::string& body, bool& fail)
+{
+  fail = true;
+
+  const Profile profile (get_current_profile ());
+  std::string uid = profile.gpg_sig_uid;
+  if (uid.empty()) return "";
+
+  gpgme_data_t gpg_buf, gpg_out_buf;
+  gpgme_error_t err;
+  gpgme_key_t mykey(0), key;
+
+  StringView v(body);
+  gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
+  gpgme_data_new (&gpg_out_buf);
+  gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
+
+  /* find key to uid */
+  err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
+  while (!err)
+  {
+    err = gpgme_op_keylist_next (gpg_ctx, &key);
+    if (err) break;
+    if (strcmp(key->subkeys->keyid, uid.c_str()) == 0) { mykey = key; break; }
+  }
+  if (!mykey) return std::string("");
+
+  gpgme_key_t keys[] = { key, NULL} ;
+
+  if (gpg_enc)
+  {
+    gpgme_encrypt_result_t enc_res;
+    err = gpgme_op_encrypt (gpg_ctx, keys, GPGME_ENCRYPT_EXPECT_SIGN, gpg_buf, gpg_out_buf);
+    enc_res = gpgme_op_encrypt_result (gpg_ctx);
+  }
+  else if (profile.use_sigfile)
+  {
+    gpgme_sign_result_t sign_res;
+    gpgme_op_sign (gpg_ctx, gpg_buf, gpg_out_buf, GPGME_SIG_MODE_CLEAR);
+    sign_res = gpgme_op_sign_result (gpg_ctx);
+  }
+
+  gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
+  /* print buf */
+  ssize_t ret;
+  std::stringstream ret_str;
+  char buffer[4096]={0};
+
+  while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer)) > 0))
+  {
+    ret_str << buffer;
+    ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer));
+  }
+
+  gpgme_data_release(gpg_buf);
+  gpgme_data_release(gpg_out_buf);
+
+  fail = false;
+  return ret_str.str();
 }
 
 void
@@ -427,6 +503,7 @@ namespace
     { "always-run-editor", 0, N_("Always Run Editor"), 0, 0, G_CALLBACK(do_edit2), false },
     { "remember-charset", 0, N_("Remember Character Encoding for this Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
     { "master-reply", 0, N_("Thread attached replies"), 0, 0, G_CALLBACK(on_mr_toggled), true },
+    { "gpg-encrypt", 0, N_("GPG-Encrypt the message"), 0, 0, G_CALLBACK(on_enc_toggled), true },
     { "spellcheck", 0, N_("Check _Spelling"), 0, 0, G_CALLBACK(on_spellcheck_toggled), true }
   };
 
@@ -612,7 +689,7 @@ namespace
     return true; // don't invoke the default handler that destroys the widget
   }
 
-   gboolean delete_parts_cb (GtkWidget* w, GdkEvent*, gpointer user_data)
+  gboolean delete_parts_cb (GtkWidget* w, GdkEvent*, gpointer user_data)
   {
     return false;
   }
@@ -984,9 +1061,18 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
   if(_file_queue_empty)
   {
-    _post_task = new TaskPost (server, message);
-    _post_task->add_listener (this);
-    _queue.add_task (_post_task, Queue::TOP);
+    bool fail;
+    std::string res = gpg_sign_and_encrypt(get_body(), fail);
+    if (!fail)
+    {
+      gtk_text_buffer_set_text (_body_buf, res.c_str(), res.size());
+      GMimeMessage* msg = new_message_from_ui(POSTING);
+      _post_task = new TaskPost (server, msg);
+      _post_task->add_listener (this);
+      _queue.add_task (_post_task, Queue::TOP);
+    } else
+      Log::add_urgent_va("Failed to sign the Message with your public key.");
+      return false;
   } else {
 
     // prepend header for xml file (if one was chosen)
@@ -1367,27 +1453,18 @@ GMimeMessage*
 PostUI :: new_message_from_ui (Mode mode, bool copy_body)
 {
   GMimeMessage * msg(0);
-  if (mode!=MULTI)
-    msg = g_mime_message_new (false);
-  else
-    msg = (GMimeMessage*)g_mime_multipart_new_with_subtype("mixed");
+  msg = g_mime_message_new (false);
 
   // headers from the ui: From
   const Profile profile (get_current_profile ());
   std::string s;
   profile.get_from_header (s);
-  if (mode!=MULTI)
-    g_mime_message_set_sender (msg, s.c_str());
-  else
-    g_mime_object_set_header ((GMimeObject *) msg, "From", s.c_str());
+  g_mime_message_set_sender (msg, s.c_str());
 
   // headers from the ui: Subject
   const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
   if (cpch) {
-    if (mode!=MULTI)
-      g_mime_message_set_subject (msg, cpch);
-    else
-      g_mime_object_set_header ((GMimeObject *) msg, "Subject", cpch);
+    g_mime_message_set_subject (msg, cpch);
   }
 
   // headers from the ui: To
@@ -1439,11 +1516,11 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   g_free (pch);
 
   // User-Agent
-  if ((mode==POSTING || mode == UPLOADING || mode == MULTI) && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
+  if ((mode==POSTING || mode == UPLOADING) && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
     g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent());
 
   // Message-ID for single text-only posts
-  if ((mode==POSTING || mode==UPLOADING || mode == MULTI) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
+  if ((mode==POSTING || mode==UPLOADING) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
     const std::string message_id = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
@@ -1451,137 +1528,42 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   }
 
     // body & charset
-    if (mode != MULTI)
-    {
-      std::string body;
-      if (copy_body) body = get_body();
-      GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
-      const std::string charset ((mode==POSTING && !_charset.empty()) ? _charset : "UTF-8");
-      if (charset != "UTF-8") {
-        // add a wrapper to convert from UTF-8 to $charset
-        GMimeStream * tmp = g_mime_stream_filter_new (stream);
-        g_object_unref (stream);
-        GMimeFilter * filter = g_mime_filter_charset_new ("UTF-8", charset.c_str());
-        g_mime_stream_filter_add (GMIME_STREAM_FILTER(tmp), filter);
-        g_object_unref (filter);
-        stream = tmp;
-      }
-      GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
+  {
+    std::string body;
+    if (copy_body) body = get_body();
+    GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
+    const std::string charset ((mode==POSTING && !_charset.empty()) ? _charset : "UTF-8");
+    if (charset != "UTF-8") {
+      // add a wrapper to convert from UTF-8 to $charset
+      GMimeStream * tmp = g_mime_stream_filter_new (stream);
       g_object_unref (stream);
-      GMimePart * part = g_mime_part_new ();
-      pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
-
-      GMimeContentType * type = g_mime_content_type_new_from_string (pch);
-      g_free (pch);
-      g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
-      g_mime_part_set_content_object (part, content_object);
-      g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
-      g_object_unref (content_object);
-      g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
-      g_object_unref (part);
+      GMimeFilter * filter = g_mime_filter_charset_new ("UTF-8", charset.c_str());
+      g_mime_stream_filter_add (GMIME_STREAM_FILTER(tmp), filter);
+      g_object_unref (filter);
+      stream = tmp;
     }
+    GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
+    g_object_unref (stream);
+    GMimePart * part = g_mime_part_new ();
+    pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+//    pch = g_strdup_printf ("multipart/encrypted;"
+//                           "protocol=\"application/pgp-encrypted\";"
+//                           "boundary=\"------------24i8m5cwm904t8v\"; charset=%s", charset.c_str());
+
+    g_mime_object_set_header ((GMimeObject *) msg, "Content-Transfer-Encoding", "Base64");
+
+    GMimeContentType * type = g_mime_content_type_new_from_string (pch);
+    g_free (pch);
+    g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
+    g_mime_part_set_content_object (part, content_object);
+    g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
+    g_object_unref (content_object);
+    g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
+    g_object_unref (part);
+  }
 
   return msg;
 }
-
-GMimeMultipart*
-PostUI :: new_multipart_from_ui (bool copy_body)
-{
-  GMimeMultipart * msg(g_mime_multipart_new_with_subtype("mixed"));
-
-  // headers from the ui: From
-  const Profile profile (get_current_profile ());
-  std::string s;
-  profile.get_from_header (s);
-  g_mime_object_set_header ((GMimeObject *) msg, "From", s.c_str());
-
-  // headers from the ui: Subject
-  const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
-  if (cpch)
-    g_mime_object_set_header ((GMimeObject *) msg, "Subject", cpch);
-
-  // headers from the ui: To
-  const StringView to (gtk_entry_get_text (GTK_ENTRY(_to_entry)));
-  if (!to.empty())
-    pan_g_mime_message_add_recipients_from_string ((GMimeMessage*)msg, GMIME_RECIPIENT_TYPE_TO, to.str);
-
-  // headers from the ui: Newsgroups
-  const StringView groups (gtk_entry_get_text (GTK_ENTRY(_groups_entry)));
-  if (!groups.empty())
-    g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", groups.str);
-
-  // headers from the ui: Followup-To
-  const StringView followupto (gtk_entry_get_text (GTK_ENTRY(_followupto_entry)));
-  if (!followupto.empty())
-    g_mime_object_set_header ((GMimeObject *) msg, "Followup-To", followupto.str);
-
-  // headers from the ui: Reply-To
-  const StringView replyto (gtk_entry_get_text (GTK_ENTRY(_replyto_entry)));
-  if (!replyto.empty())
-    g_mime_object_set_header ((GMimeObject *) msg, "Reply-To", replyto.str);
-
-  // build headers from the 'more headers' entry field
-  std::map<std::string,std::string> headers;
-  GtkTextBuffer * buf (_headers_buf);
-  GtkTextIter start, end;
-  gtk_text_buffer_get_bounds (buf, &start, &end);
-  char * pch = gtk_text_buffer_get_text (buf, &start, &end, false);
-  StringView key, val, v(pch);
-  v.trim ();
-  while (v.pop_token (val, '\n') && val.pop_token(key,':')) {
-    key.trim ();
-    val.eat_chars (1);
-    val.trim ();
-    std::string key_str (key.to_string());
-    if (extra_header_is_editable (key, val))
-      g_mime_object_set_header ((GMimeObject *) msg, key.to_string().c_str(),
-                                val.to_string().c_str());
-  }
-  g_free (pch);
-
-  // User-Agent
-  if (_prefs.get_flag (USER_AGENT_PREFS_KEY, true))
-    g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent());
-
-  // Message-ID for single text-only posts
-  if (_prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
-    const std::string message_id = !profile.fqdn.empty()
-      ? GNKSA::generate_message_id (profile.fqdn)
-      : GNKSA::generate_message_id_from_email_address (profile.address);
-    pan_g_mime_message_set_message_id ((GMimeMessage*)msg, message_id.c_str());
-  }
-
-    // body & charset
-      std::string body;
-      if (copy_body) body = get_body();
-      GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
-      const std::string charset (_charset.empty() ? _charset : "UTF-8");
-      if (charset != "UTF-8") {
-        // add a wrapper to convert from UTF-8 to $charset
-        GMimeStream * tmp = g_mime_stream_filter_new (stream);
-        g_object_unref (stream);
-        GMimeFilter * filter = g_mime_filter_charset_new ("UTF-8", charset.c_str());
-        g_mime_stream_filter_add (GMIME_STREAM_FILTER(tmp), filter);
-        g_object_unref (filter);
-        stream = tmp;
-      }
-      GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
-      g_object_unref (stream);
-      GMimePart * part = g_mime_part_new ();
-      pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
-
-      GMimeContentType * type = g_mime_content_type_new_from_string (pch);
-      g_free (pch);
-      g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
-      g_mime_part_set_content_object (part, content_object);
-      g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
-      g_object_unref (content_object);
-      g_mime_message_set_mime_part ((GMimeMessage*)msg, GMIME_OBJECT(part));
-      g_object_unref (part);
-
-  return msg;
-}
-
 
 void
 PostUI :: save_draft ()
@@ -1767,7 +1749,7 @@ namespace
     {
       file :: get_text_file_contents (pch, sig);
     }
-    else // command
+    else if (type == Profile::COMMAND)
     {
       int argc = 0;
       char ** argv = 0;
@@ -1806,6 +1788,10 @@ namespace
       }
 
       g_strfreev (argv);
+    }
+    else if (type == Profile::GPGSIG)
+    {
+
     }
 
     /* Convert signature to UTF-8. Since the signature is a local file,
@@ -1926,11 +1912,11 @@ PostUI :: apply_profile_to_body ()
 
   // get the new signature
   std::string sig;
-  if (profile.use_sigfile) {
-    load_signature (profile.signature_file, profile.sig_type, sig);
-    int ignored;
-    if (GNKSA::find_signature_delimiter (sig, ignored) == GNKSA::SIG_NONE)
-      sig = std::string("\n\n-- \n") + sig;
+  if (profile.use_sigfile && !profile.use_gpgsig) {
+      load_signature (profile.signature_file, profile.sig_type, sig);
+      int ignored;
+      if (GNKSA::find_signature_delimiter (sig, ignored) == GNKSA::SIG_NONE)
+        sig = std::string("\n\n-- \n") + sig;
   }
   _current_signature = sig;
 
@@ -2942,18 +2928,16 @@ PostUI :: PostUI (GtkWindow    * parent,
   _body_changed_id(0),
   _body_changed_idle_tag(0),
   _filequeue_eventbox (0),
-  _filequeue_label (0),
-  _multipart(g_mime_multipart_new_with_subtype("mixed"))
-{
+  _filequeue_label (0)
 
-  g_mime_multipart_set_boundary(_multipart,"$pan_multipart_gmime_message$");
+{
 
   rng.seed();
 
   _upload_queue.add_listener (this);
 
   /* init timer for autosave */
-  set_draft_autosave_timeout( prefs.get_int("draft-autosave-timeout-min", 10 ));
+//  set_draft_autosave_timeout( prefs.get_int("draft-autosave-timeout-min", 10 ));
 //  _draft_autosave_id = g_timeout_add_seconds( _draft_autosave_timeout * 60, draft_save_cb, this);
 
   g_assert (profiles.has_profiles());

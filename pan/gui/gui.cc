@@ -69,6 +69,10 @@ extern "C" {
 
 #include "profiles-dialog.h"
 
+#ifdef HAVE_GPGME
+  #include "gpg.h"
+#endif
+
 namespace pan
 {
   void
@@ -169,20 +173,6 @@ namespace
     return ret;
   }
 }
-
-//namespace
-//{
-//  enum {
-//        TARGET_STRING,
-//        TARGET_ROOTWIN
-//  };
-//
-//  static GtkTargetEntry target_list[] = {
-//          { const_cast<char*>("STRING"),     0, TARGET_STRING },
-//          { const_cast<char*>("text/plain"), 0, TARGET_STRING },
-//          { const_cast<char*>("application/x-rootwindow-drop"), 0, TARGET_ROOTWIN }
-//  };
-//}
 
 GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),
@@ -354,6 +344,9 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
         on_queue_task_active_changed (queue, *(*it), true);
     }
   }
+#ifdef HAVE_GPGME
+  init_gpg();
+#endif
 }
 
 namespace
@@ -372,7 +365,7 @@ GUI :: ~GUI ()
 
   const std::string accel_filename (get_accel_filename());
   gtk_accel_map_save (accel_filename.c_str());
-  chmod (accel_filename.c_str(), 0600);
+  ::chmod (accel_filename.c_str(), 0600);
 
   if (hpane)
     _prefs.set_int ("main-window-hpane-position", gtk_paned_get_position(GTK_PANED(hpane)));
@@ -402,6 +395,10 @@ GUI :: ~GUI ()
   foreach (std::set<GtkWidget*>, unref, it)
     g_object_unref (*it);
   g_object_unref (G_OBJECT(_ui_manager));
+
+#ifdef HAVE_GPGME
+  deinit_gpg();
+#endif
 }
 
 /***
@@ -1191,14 +1188,6 @@ GUI :: do_last_flag ()
 }
 
 void
-GUI :: do_download_flagged ()
-{
-  do_mark_all_flagged();
-  do_download_selected_article();
-  do_unselect_all_articles();
-}
-
-void
 GUI :: do_invert_selection ()
 {
 //  std::cerr<<__LINE__<< " "<<__FILE__<<" : implement me.\n";
@@ -1646,7 +1635,6 @@ void GUI :: do_tabbed_layout (bool tabbed)
     vpane = 0;
   }
 
-  //gtk_widget_hide_all (_workarea_bin);
   gtk_widget_hide (_workarea_bin);
 
   GtkWidget * group_w (_group_pane->root());

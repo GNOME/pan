@@ -46,12 +46,16 @@ namespace pan
       GtkWidget * _xface_entry;
       GtkWidget * _attribution_entry;
       GtkWidget * _signature_file_check;
-      GtkWidget * _signature_file;
-      GtkWidget * _signature_file_combo;
       GtkWidget * _server_combo;
       GtkWidget * _extra_headers_tv;
-
+      GtkWidget * _signature_file_combo_box;
+      GtkWidget * _signature_file_combo;
+      GtkWidget * _gpg_sig_entry_box;
     public:
+
+      GtkWidget * _signature_file;
+      GtkWidget * _gpg_sig_entry;
+
       static bool run_until_valid_or_cancel (ProfileDialog& p);
   };
 

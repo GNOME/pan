@@ -94,8 +94,10 @@ namespace pan
     std::string username;
     std::string address;
     bool use_sigfile;
-    enum { TEXT, FILE, COMMAND };
+    bool use_gpgsig;
+    enum { TEXT, FILE, COMMAND, GPGSIG };
     int sig_type;
+    std::string gpg_sig_uid;
     std::string signature_file;
     std::string attribution;
     std::string fqdn;
@@ -113,10 +115,11 @@ namespace pan
       return it==headers.end() ? nil : it->second;
     }
 
-    Profile(): use_sigfile(false), sig_type(TEXT) {}
+    Profile(): use_sigfile(false), use_gpgsig(false), sig_type(TEXT) {}
 
     void clear() { username.clear(); address.clear();
                    use_sigfile = false;
+                   use_gpgsig = false;
                    sig_type = TEXT;
                    signature_file.clear(); attribution.clear(); }
   };
@@ -216,8 +219,8 @@ namespace pan
 
     public:
 #ifdef HAVE_GKR
-      virtual GnomeKeyringResult password_encrypt (const PasswordData&) = 0;
-      virtual GnomeKeyringResult password_decrypt (PasswordData&) const = 0;
+      virtual GnomeKeyringResult password_encrypt (const PasswordData*) = 0;
+      virtual GnomeKeyringResult password_decrypt (PasswordData*) const = 0;
 #endif
       /** Gets a quark to the provided hostname */
       virtual bool find_server_by_hn (const Quark& server, Quark& setme) const = 0;

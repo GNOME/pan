@@ -22,6 +22,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <iostream>
+#include <sstream>
 extern "C"
 {
   #include <unistd.h>
@@ -35,6 +36,11 @@ extern "C"
 #include "mime-utils.h"
 
 #define is_nonempty_string(a) ((a) && (*a))
+
+#ifdef HAVE_GPGME
+  #include <gpgme.h>
+  #include <pan/gui/gpg.h>
+#endif
 
 using namespace pan;
 
@@ -329,6 +335,37 @@ namespace
    }
 }
 
+/***
+**** GPG
+***/
+
+namespace
+{
+
+  bool
+  gpg_is_beginning_line (const StringView& line)
+  {
+    if (line.len <= 1) return false;//g_return_val_if_fail(line.len > 1, false);
+    StringView l(line);
+//    l.ltrim(); l.ltrim();
+    return !strncmp (l.str, GPG_MARKER_BEGIN, GPG_MARKER_BEGIN_LEN);
+  }
+
+  bool
+  gpg_is_ending_line (const StringView& line)
+  {
+    if (line.len <= 1) return false;//g_return_val_if_fail(line.len > 1, false);
+    StringView l(line);
+//    l.ltrim(); l.ltrim();
+    return !strncmp (l.str, GPG_MARKER_END, GPG_MARKER_END_LEN);
+  }
+
+}
+
+/***
+****
+***/
+
 namespace
 {
   guint
@@ -359,9 +396,11 @@ namespace
 
 enum EncType
 {
-	ENC_PLAIN,
-	ENC_YENC,
-	ENC_UU
+	ENC_PLAIN = 1 ,
+	ENC_YENC = 1 << 1,
+	ENC_UU = 1 << 2,
+	ENC_GPG = 1 << 3,
+	ENC_BASE64 = 1<< 4
 };
 
 namespace
@@ -423,22 +462,81 @@ namespace
     return true;
   }
 
+  GMimeStream* gpg_decrypt (gpgme_ctx_t gpg_ctx, GMimeStream* s, TempPart* part)
+  {
+
+    GMimeStream* decrypted = g_mime_stream_mem_new ();
+
+    ssize_t stream_len = g_mime_stream_length(s);
+    char* streambuf = new char[stream_len];
+    g_mime_stream_read(s, streambuf, stream_len);
+    g_object_unref(s);
+
+    gpgme_data_t gpg_buf, gpg_out_buf;
+    gpgme_key_t key;
+    gpgme_error_t err;
+    bool found(false);
+
+    StringView v(streambuf);
+    gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
+
+    gpgme_strerror(gpgme_data_new (&gpg_out_buf));
+
+    gpgme_signers_clear(gpg_ctx);
+
+    gpgme_set_armor (gpg_ctx, 1);
+    gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_NONE);
+
+    err = gpgme_op_decrypt (gpg_ctx, gpg_buf, gpg_out_buf);
+//    gpgme_op_decrypt_result
+
+    delete streambuf;
+
+    gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
+
+    ssize_t ret(0);
+    char buffer[4096]={0};
+    gint64 len(0);
+
+    while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
+    {
+      len += g_mime_stream_write(decrypted, buffer, ret);
+    }
+
+    g_mime_stream_flush (decrypted);
+
+    gpgme_data_release(gpg_buf);
+    gpgme_data_release(gpg_out_buf);
+
+    g_mime_stream_reset(decrypted);
+
+    return decrypted;
+  }
+
   void apply_source_and_maybe_filter (TempPart * part, GMimeStream * s)
   {
+
     if (!part->stream) {
       part->stream = g_mime_stream_mem_new ();
-      if (part->type != ENC_PLAIN) {
-        part->filter_stream =
-          g_mime_stream_filter_new (part->stream);
-        part->filter = part->type == ENC_UU
-          ? g_mime_filter_basic_new (GMIME_CONTENT_ENCODING_UUENCODE, FALSE)
-          : g_mime_filter_yenc_new (FALSE);
+      if (part->type != ENC_PLAIN && part->type != ENC_GPG) {
+        part->filter_stream = g_mime_stream_filter_new (part->stream);
+        switch (part->type)
+        {
+          case ENC_UU:
+            part->filter = g_mime_filter_basic_new (GMIME_CONTENT_ENCODING_UUENCODE, FALSE);
+            break;
+
+          case ENC_YENC:
+            part->filter = g_mime_filter_yenc_new (FALSE);
+            break;
+        }
+
         g_mime_stream_filter_add (GMIME_STREAM_FILTER(part->filter_stream),
                                   part->filter);
       }
     }
 
-    g_mime_stream_write_to_stream (s, part->type == ENC_PLAIN ?
+    g_mime_stream_write_to_stream (s, (part->type == ENC_PLAIN || part->type == ENC_GPG) ?
 				   part->stream : part->filter_stream);
     g_object_unref (s);
   }
@@ -452,212 +550,245 @@ namespace
     sep_state():uu_temp(NULL) {};
   };
 
-bool
-separate_encoded_parts (GMimeStream  * istream, sep_state &state)
-{
-  temp_parts_t& master(state.master_list);
-  temp_parts_t& appendme(state.current_list);
-  TempPart * cur = NULL;
-  EncType type = ENC_PLAIN;
-  GByteArray * line;
-  gboolean yenc_looking_for_part_line = FALSE;
-  gint64 linestart_pos = 0;
-  gint64 sub_begin = 0;
-  guint line_len;
-  bool found = false;
-
-  /* sanity clause */
-  pan_return_val_if_fail (istream!=NULL,false);
-
-  sub_begin = 0;
-  line = g_byte_array_sized_new (4096);
-
-  while ((line_len = stream_readln (istream, line, &linestart_pos)))
+  bool
+  separate_encoded_parts (GMimeStream  * istream, sep_state &state)
   {
-    char * line_str = (char*) line->data;
-    char * pch = strchr (line_str, '\n');
-    if (pch != NULL) {
-      pch[1] = '\0';
-      line_len = pch - line_str;
-    }
+    temp_parts_t& master(state.master_list);
+    temp_parts_t& appendme(state.current_list);
+    TempPart * cur = NULL;
+    EncType type = ENC_PLAIN;
+    GByteArray * line;
+    gboolean yenc_looking_for_part_line = FALSE;
+    gboolean gpg_looking_for_line = FALSE;
+    gint64 linestart_pos = 0;
+    gint64 sub_begin = 0;
+    guint line_len;
+    bool found = false;
 
-    switch (type)
+    /* sanity clause */
+    pan_return_val_if_fail (istream!=NULL,false);
+
+    sub_begin = 0;
+    line = g_byte_array_sized_new (4096);
+
+    while ((line_len = stream_readln (istream, line, &linestart_pos)))
     {
-      case ENC_PLAIN:
-      {
-        const StringView line_pstr (line_str, line_len);
-
-        if (uu_is_beginning_line (line_pstr))
-        {
-          gulong mode = 0ul;
-          char * filename = NULL;
-
-          found=true;
-          // flush the current entry
-          if (cur != NULL) {
-            GMimeStream * s = g_mime_stream_substream (istream, sub_begin, linestart_pos);
-              apply_source_and_maybe_filter (cur, s);
-            if ( append_if_not_present (master, cur) )
-              append_if_not_present (appendme, cur);
-            cur = NULL;
-          }
-
-          // start a new section (or, if filename matches, continue an existing one)
-          sub_begin = linestart_pos;
-          uu_parse_begin_line (line_pstr, &filename, &mode);
-          cur = find_filename_part (master, filename);
-          if (cur)
-            g_free (filename);
-          else
-            cur = new TempPart (type=ENC_UU, filename);
-          state.uu_temp = cur;
-        }
-        else if (yenc_is_beginning_line (line_str))
-        {
-          found = true;
-          // flush the current entry
-          if (cur != NULL) {
-            GMimeStream * s = g_mime_stream_substream (istream, sub_begin, linestart_pos);
-              apply_source_and_maybe_filter (cur, s);
-            if ( append_if_not_present (master, cur) )
-              append_if_not_present (appendme, cur);
-            cur = NULL;
-          }
-          sub_begin = linestart_pos;
-
-          // start a new section (or, if filename matches, continue an existing one)
-          char * fname;
-          int line_len, attach_size, part;
-          yenc_parse_begin_line (line_str, &fname, &line_len, &attach_size, &part);
-          cur = find_filename_part (master, fname);
-          if (cur) {
-            g_free (fname);
-            g_mime_filter_yenc_set_state (GMIME_FILTER_YENC (cur->filter),
-                                          GMIME_YDECODE_STATE_INIT);
-          }
-          else
-          {
-            cur = new TempPart (type=ENC_YENC, fname);
-            cur->y_line_len = line_len;
-            cur->y_attach_size = attach_size;
-            cur->y_part = part;
-            yenc_looking_for_part_line = cur->y_part!=0;
-          }
-        }
-        else if (state.uu_temp != NULL && is_uu_line(line_str, line_len) )
-        {
-          // continue an incomplete uu decode
-          found = true;
-          // flush the current entry
-          if (cur != NULL) {
-            GMimeStream * s = g_mime_stream_substream (istream, sub_begin, linestart_pos);
-              apply_source_and_maybe_filter (cur, s);
-            if ( append_if_not_present (master, cur) )
-              append_if_not_present (appendme, cur);
-            cur = NULL;
-          }
-          sub_begin = linestart_pos;
-          cur = state.uu_temp;
-          ++cur->valid_lines;
-          type = ENC_UU;
-        }
-        else if (cur == NULL)
-        {
-          sub_begin = linestart_pos;
-
-          cur = new TempPart (type = ENC_PLAIN);
-        }
-        break;
+      char * line_str = (char*) line->data;
+      char * pch = strchr (line_str, '\n');
+      if (pch != NULL) {
+        pch[1] = '\0';
+        line_len = pch - line_str;
       }
-      case ENC_UU:
+
+      switch (type)
       {
-        if (uu_is_ending_line(line_str))
+        case ENC_PLAIN:
         {
-          GMimeStream * stream;
-          if (sub_begin < 0)
+          const StringView line_pstr (line_str, line_len);
+
+          if (uu_is_beginning_line (line_pstr))
+          {
+            gulong mode = 0ul;
+            char * filename = NULL;
+
+            found=true;
+            // flush the current entry
+            if (cur != NULL) {
+              GMimeStream * s = g_mime_stream_substream (istream, sub_begin, linestart_pos);
+              apply_source_and_maybe_filter (cur, s);
+
+              if ( append_if_not_present (master, cur) )
+                append_if_not_present (appendme, cur);
+              cur = NULL;
+            }
+
+            // start a new section (or, if filename matches, continue an existing one)
             sub_begin = linestart_pos;
-          stream = g_mime_stream_substream (istream, sub_begin, linestart_pos+line_len);
-          apply_source_and_maybe_filter (cur, stream);
-          if( append_if_not_present (master, cur) )
-            append_if_not_present (appendme, cur);
-
-          cur = NULL;
-          type = ENC_PLAIN;
-          state.uu_temp = NULL;
-        }
-        else if (!is_uu_line(line_str, line_len))
-        {
-          /* hm, this isn't a uenc line, so ending the cat and setting sub_begin to -1 */
-          if (sub_begin >= 0)
-          {
-            GMimeStream * stream = g_mime_stream_substream (istream, sub_begin, linestart_pos);
-              apply_source_and_maybe_filter (cur, stream);
+            uu_parse_begin_line (line_pstr, &filename, &mode);
+            cur = find_filename_part (master, filename);
+            if (cur)
+              g_free (filename);
+            else
+              cur = new TempPart (type=ENC_UU, filename);
+            state.uu_temp = cur;
           }
+          else if (yenc_is_beginning_line (line_str))
+          {
+            found = true;
+            // flush the current entry
+            if (cur != NULL) {
+              GMimeStream * s = g_mime_stream_substream (istream, sub_begin, linestart_pos);
+              apply_source_and_maybe_filter (cur, s);
 
-          sub_begin = -1;
+              if ( append_if_not_present (master, cur) )
+                append_if_not_present (appendme, cur);
+              cur = NULL;
+            }
+            sub_begin = linestart_pos;
+
+            // start a new section (or, if filename matches, continue an existing one)
+            char * fname;
+            int line_len, attach_size, part;
+            yenc_parse_begin_line (line_str, &fname, &line_len, &attach_size, &part);
+            cur = find_filename_part (master, fname);
+            if (cur) {
+              g_free (fname);
+              g_mime_filter_yenc_set_state (GMIME_FILTER_YENC (cur->filter),
+                                            GMIME_YDECODE_STATE_INIT);
+            }
+            else
+            {
+              cur = new TempPart (type=ENC_YENC, fname);
+              cur->y_line_len = line_len;
+              cur->y_attach_size = attach_size;
+              cur->y_part = part;
+              yenc_looking_for_part_line = cur->y_part!=0;
+            }
+          }
+          else if (gpg_is_beginning_line (line_str))
+          {
+
+            found = true;
+            cur = new TempPart (type = ENC_GPG);
+            gpg_looking_for_line = true;
+            sub_begin = linestart_pos;
+          }
+          else if (state.uu_temp != NULL && is_uu_line(line_str, line_len) )
+          {
+            // continue an incomplete uu decode
+            found = true;
+            // flush the current entry
+            if (cur != NULL) {
+              GMimeStream * s = g_mime_stream_substream (istream, sub_begin, linestart_pos);
+              apply_source_and_maybe_filter (cur, s);
+
+              if ( append_if_not_present (master, cur) )
+                append_if_not_present (appendme, cur);
+              cur = NULL;
+            }
+            sub_begin = linestart_pos;
+            cur = state.uu_temp;
+            ++cur->valid_lines;
+            type = ENC_UU;
+          }
+          else if (cur == NULL)
+          {
+            sub_begin = linestart_pos;
+
+            cur = new TempPart (type = ENC_PLAIN);
+          }
+          break;
         }
-        else if (sub_begin == -1)
+        case ENC_UU:
         {
-          /* looks like they decided to start using uu lines again. */
-          ++cur->valid_lines;
-          sub_begin = linestart_pos;
-        }
-        else
-        {
-          ++cur->valid_lines;
-        }
-        break;
-      }
-      case ENC_YENC:
-      {
-        if (yenc_is_ending_line (line_str))
-        {
-          GMimeStream * stream = g_mime_stream_substream (istream, sub_begin, linestart_pos+line_len);
+          if (uu_is_ending_line(line_str))
+          {
+            GMimeStream * stream;
+            if (sub_begin < 0)
+              sub_begin = linestart_pos;
+            stream = g_mime_stream_substream (istream, sub_begin, linestart_pos+line_len);
             apply_source_and_maybe_filter (cur, stream);
-          yenc_parse_end_line (line_str, &cur->y_size, NULL, &cur->y_pcrc, &cur->y_crc);
-          if( append_if_not_present (master, cur) )
-            append_if_not_present (appendme, cur);
+            if( append_if_not_present (master, cur) )
+              append_if_not_present (appendme, cur);
 
-          cur = NULL;
-          type = ENC_PLAIN;
+            cur = NULL;
+            type = ENC_PLAIN;
+            state.uu_temp = NULL;
+          }
+          else if (!is_uu_line(line_str, line_len))
+          {
+            /* hm, this isn't a uenc line, so ending the cat and setting sub_begin to -1 */
+            if (sub_begin >= 0)
+            {
+              GMimeStream * stream = g_mime_stream_substream (istream, sub_begin, linestart_pos);
+                apply_source_and_maybe_filter (cur, stream);
+            }
+
+            sub_begin = -1;
+          }
+          else if (sub_begin == -1)
+          {
+            /* looks like they decided to start using uu lines again. */
+            ++cur->valid_lines;
+            sub_begin = linestart_pos;
+          }
+          else
+          {
+            ++cur->valid_lines;
+          }
+          break;
         }
-        else if (yenc_looking_for_part_line && yenc_is_part_line(line_str))
+        case ENC_YENC:
         {
-          yenc_parse_part_line (line_str, &cur->y_offset_begin, &cur->y_offset_end);
-          yenc_looking_for_part_line = FALSE;
-          ++cur->valid_lines;
+          if (yenc_is_ending_line (line_str))
+          {
+            GMimeStream * stream = g_mime_stream_substream (istream, sub_begin, linestart_pos+line_len);
+            apply_source_and_maybe_filter (cur, stream);
+            yenc_parse_end_line (line_str, &cur->y_size, NULL, &cur->y_pcrc, &cur->y_crc);
+            if( append_if_not_present (master, cur) )
+              append_if_not_present (appendme, cur);
+
+            cur = NULL;
+            type = ENC_PLAIN;
+          }
+          else if (yenc_looking_for_part_line && yenc_is_part_line(line_str))
+          {
+            yenc_parse_part_line (line_str, &cur->y_offset_begin, &cur->y_offset_end);
+            yenc_looking_for_part_line = FALSE;
+            ++cur->valid_lines;
+          }
+          else
+          {
+            ++cur->valid_lines;
+          }
+          break;
         }
-        else
+        case ENC_GPG:
         {
-          ++cur->valid_lines;
+          if (gpg_is_ending_line(line_str))
+          {
+            GMimeStream * stream = g_mime_stream_substream (istream, sub_begin, linestart_pos+line_len);
+            GMimeStream * dec = gpg_decrypt(gpg_ctx, stream, cur);
+            apply_source_and_maybe_filter (cur, dec);
+            gpg_looking_for_line = false;
+            if( append_if_not_present (master, cur) )
+              append_if_not_present (appendme, cur);
+
+            cur = NULL;
+            type = ENC_PLAIN;
+            sub_begin = -1;
+          }
+          else if (gpg_looking_for_line)
+          {
+            ++cur->valid_lines;
+          }
+          break;
         }
-        break;
       }
     }
-  }
 
-  /* close last entry */
-  if (cur != NULL)
-  {
-    if (sub_begin >= 0)
+    /* close last entry */
+    if (cur != NULL)
     {
-      GMimeStream * stream = g_mime_stream_substream (istream, sub_begin, linestart_pos);
+      if (sub_begin >= 0)
+      {
+        GMimeStream * stream = g_mime_stream_substream (istream, sub_begin, linestart_pos);
         apply_source_and_maybe_filter (cur, stream);
+      }
+
+      /* just in case someone started with "yenc" or "begin 644 asf" in a text message to fuck with unwary newsreaders */
+      if (cur->valid_lines < 10u)
+        cur->type = ENC_PLAIN;
+
+      if( append_if_not_present (master, cur) )
+        append_if_not_present (appendme, cur);
+      cur = NULL;
+      type = ENC_PLAIN;
     }
 
-    /* just in case someone started with "yenc" or "begin 644 asf" in a text message to fuck with unwary newsreaders */
-    if (cur->valid_lines < 10u)
-      cur->type = ENC_PLAIN;
-
-    if( append_if_not_present (master, cur) )
-      append_if_not_present (appendme, cur);
-    cur = NULL;
-    type = ENC_PLAIN;
+    g_byte_array_free (line, TRUE);
+    return found;
   }
-
-  g_byte_array_free (line, TRUE);
-  return found;
-}
 
 }
 
@@ -782,7 +913,7 @@ namespace
     // break it into separate parts for text, uu, and yenc pieces.
     sep_state &state(*(sep_state*)data);
     temp_parts_t &parts(state.current_list);
-    bool split=separate_encoded_parts (istream, state);
+    bool split = separate_encoded_parts (istream, state);
     g_mime_stream_reset (istream);
 
     // split?
@@ -883,6 +1014,21 @@ namespace{
       return;
     v->push_back(temp_p(parent,part) );
   }
+
+  void find_gpg_parts_cb(GMimeObject *parent, GMimeObject *part, gpointer data)
+  {
+    if(!GMIME_IS_PART(part))
+      return;
+
+    temp_p_t *v( (temp_p_t *) data);
+
+    GMimeContentType * content_type = g_mime_object_get_content_type (part);
+    if (!(g_mime_content_type_is_type (content_type, "multipart", "encrypted") ||
+          g_mime_content_type_is_type (content_type, "text", "plain")))
+      return;
+    v->push_back(temp_p(parent,part) );
+  }
+
 }
 
 /***
@@ -939,6 +1085,15 @@ mime :: construct_message (GMimeStream  ** istreams,
     temp_p &data(*it);
     handle_uu_and_yenc_in_text_plain_cb(data.parent, data.part, &state);
   }
+
+//  partslist.clear();
+//  if (retval != NULL)
+//    g_mime_message_foreach(retval, find_text_cb, &partslist);
+//  foreach(temp_p_t, partslist, it)
+//  {
+//    temp_p &data(*it);
+//    handle_gpg_encrypted_parts_cb(data.parent, data.part, &state);
+//  }
 
   // cleanup
   foreach (temp_parts_t, state.master_list, it)
@@ -1186,7 +1341,7 @@ namespace
     g_return_val_if_fail (GMIME_IS_PART (mime_part), NULL);
 
     if (!mime_part->content || !mime_part->content->stream) {
-      g_warning ("no content set on this mime part");
+//      g_warning ("no content set on this mime part");  // dbg
       return NULL;
     }
 

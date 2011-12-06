@@ -81,7 +81,7 @@ pan :: file_entry_new (const char * title, int chooser_action)
   g_object_set_data (G_OBJECT(hbox), "chooser-action", GINT_TO_POINTER(chooser_action));
   g_object_set_data (G_OBJECT(hbox), "entry", e);
   file_entry_set (hbox, g_get_home_dir());
-  
+
   gtk_widget_show (e);
   gtk_widget_show (b);
   return hbox;

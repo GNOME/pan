@@ -137,6 +137,7 @@ namespace
     pan_spin_button_set (d->connection_limit_spin, max_conn);
     pan_entry_set_text (d->auth_username_entry, user);
     pan_entry_set_text (d->auth_password_entry, pass);
+    d->cert = cert;
 
     // set the age combobox
     GtkComboBox * combo (GTK_COMBO_BOX (d->expiration_age_combo));
@@ -183,7 +184,6 @@ namespace
   server_edit_response_cb (GtkDialog * w, int response, gpointer user_data)
   {
     bool destroy (true);
-    bool bf_set (false);
 
     ServerEditDialog * d (static_cast<ServerEditDialog*>(user_data));
     g_assert (d!=NULL);
@@ -208,7 +208,9 @@ namespace
       if (gtk_combo_box_get_active_iter (combo, &iter))
         gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &rank, -1);
       int ssl(0);
+
       StringView cert(d->cert);
+
 #ifdef HAVE_OPENSSL
       combo = GTK_COMBO_BOX (d->ssl_combo);
       if (gtk_combo_box_get_active_iter (combo, &iter))
