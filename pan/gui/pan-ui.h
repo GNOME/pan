@@ -71,6 +71,8 @@ namespace pan
     virtual void do_next_flag () = 0;
     virtual void do_last_flag () = 0;
     virtual void do_mark_all_flagged () = 0;
+    virtual void do_download_flagged () = 0;
+    virtual void do_invert_selection () = 0;
     virtual void do_cancel_article () = 0;
     virtual void do_supersede_article () = 0;
     virtual void do_delete_article () = 0;

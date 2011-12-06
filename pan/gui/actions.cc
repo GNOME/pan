@@ -64,7 +64,8 @@ namespace
     { icon_read_unread_thread, "ICON_READ_UNREAD_THREAD" },
     { icon_score, "ICON_SCORE" },
     { icon_search_pulldown, "ICON_SEARCH_PULLDOWN" },
-    { icon_red_flag, "ICON_FLAGGED"}
+    { icon_red_flag, "ICON_FLAGGED"},
+    { icon_get_flagged, "ICON_GET_FLAGGED" }
   };
 
   void
@@ -149,6 +150,8 @@ namespace
   void do_flag_off                     (GtkAction*) { pan_ui->do_flag_off(); }
   void do_next_flag                    (GtkAction*) { pan_ui->do_next_flag(); }
   void do_last_flag                    (GtkAction*) { pan_ui->do_last_flag(); }
+  void do_download_flagged             (GtkAction*) { pan_ui->do_download_flagged(); }
+  void do_invert_selection             (GtkAction*) { pan_ui->do_invert_selection(); }
   void do_mark_all_flagged             (GtkAction*) { pan_ui->do_mark_all_flagged(); }
   void do_show_score_dialog            (GtkAction*) { pan_ui->do_show_score_dialog(); }
   void do_show_new_score_dialog        (GtkAction*) { pan_ui->do_show_new_score_dialog(); }
@@ -302,6 +305,11 @@ namespace
       G_CALLBACK(do_xover_selected_groups) },
 
     { "get-new-headers-in-subscribed-groups", "ICON_GET_SUBSCRIBED",
+      N_("Get New _Headers in Subscribed Groups"), "<shift>A",
+      N_("Get New Headers in Subscribed Groups"),
+      G_CALLBACK(do_xover_subscribed_groups) },
+
+    { "update-stats-in-selected-groups", "ICON_GET_SUBSCRIBED",
       N_("Get New _Headers in Subscribed Groups"), "<shift>A",
       N_("Get New Headers in Subscribed Groups"),
       G_CALLBACK(do_xover_subscribed_groups) },
@@ -568,6 +576,16 @@ namespace
       N_("_Goto last flagged Thread"), "minus",
       N_("_Goto last flagged Thread"),
       G_CALLBACK(do_last_flag) },
+
+    { "get-all-flagged", NULL,
+      N_("_Get all flagged Thread"), NULL, ///TODO invent shortcut
+      N_("_Get all flagged Thread"),
+      G_CALLBACK(do_download_flagged) },
+
+    { "invert-selection", NULL,
+      N_("_Invert Selection"), "<control>I",
+      N_("_Invert Selection"),
+      G_CALLBACK(do_invert_selection) },
 
     { "view-article-score", "ICON_SCORE",
       N_("Edit Article's Watch/Ignore/Score..."), "<control><shift>C",

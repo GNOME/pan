@@ -127,7 +127,14 @@ DataImpl :: set_server_auth (const Quark       & server,
   assert (s);
 
   s->username = username;
+#ifndef HAVE_GKR
   s->password = password;
+#else
+  PasswordData pw ;
+  pw.server = s->host;
+  pw.user = username;
+  pw.pw = password;
+#endif
 
 }
 
@@ -194,13 +201,14 @@ DataImpl :: save_server_info (const Quark& server)
 
 }
 
+
 bool
 DataImpl :: get_server_auth (const Quark   & server,
                              std::string   & setme_username,
                              std::string   & setme_password) const
 {
   const Server * s (find_server (server));
-  const bool found (s);
+  bool found (s);
   if (found) {
     setme_username = s->username;
     setme_password = s->password;
@@ -383,7 +391,32 @@ DataImpl :: load_server_properties (const DataIO& source)
     keyvals_t kv (it->second);
     s.host = kv["host"];
     s.username = kv["username"];
+#ifndef HAVE_GKR
     s.password = kv["password"];
+#else
+    PasswordData pw ;
+    pw.server = s.host;
+    pw.user = s.username;
+    GnomeKeyringResult res (password_decrypt(pw));
+    switch (res)
+    {
+      case GNOME_KEYRING_RESULT_NO_MATCH:
+        Log::add_info_va(_("There seems to be no password set for server %s."), s.host.c_str());
+        break;
+
+      case GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON:
+        Log::add_urgent_va (_("The gnome keyring denied access to the passwords."), s.host.c_str());
+        break;
+
+      case GNOME_KEYRING_RESULT_OK:
+        s.password.assign(pw.pw.str, pw.pw.len);
+        break;
+
+      default:
+        Log::add_info_va ("%s %s",gnome_keyring_result_to_message (res),res);
+        break;
+    }
+#endif
     s.port = to_int (kv["port"], STD_NNTP_PORT);
     s.max_connections = to_int (kv["connection-limit"], 2);
     s.article_expiration_age = to_int(kv["expire-articles-n-days-old"], 31);

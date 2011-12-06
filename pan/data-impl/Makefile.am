@@ -1,4 +1,6 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @OPENSSL_CFLAGS@
+AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @OPENSSL_CFLAGS@ @LIBGNOME_KEYRING_1_CFLAGS@
+
+AM_LDFLAGS = @LIBGNOME_KEYRING_1_LIBS@
 
 noinst_LIBRARIES = libpandata.a
 
@@ -13,7 +15,7 @@ libpandata_a_SOURCES = \
  server.cc \
  my-tree.cc \
  task-archive.cc \
- xover.cc 
+ xover.cc
 
 noinst_HEADERS = \
  article-filter.h \
@@ -22,7 +24,7 @@ noinst_HEADERS = \
  data-io.h \
  defgroup.h \
  profiles.h \
- memchunk.h 
+ memchunk.h
 
 #noinst_PROGRAMS = \
 # add-server \

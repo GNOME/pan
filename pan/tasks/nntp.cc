@@ -302,6 +302,15 @@ NNTP :: help (Listener * l)
 }
 
 void
+NNTP :: get_group (Listener * l)
+{
+   _listener = l;
+   _commands.push_back ("GROUP \r\n");
+   write_next_command();
+}
+
+
+void
 NNTP :: xover (const Quark   & group,
                uint64_t        low,
                uint64_t        high,
@@ -309,10 +318,22 @@ NNTP :: xover (const Quark   & group,
 {
    _listener = l;
 
-   if (group != _group)
-      _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
+   get_group(l);
 
    _commands.push_back (build_command ("XOVER %"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT"\r\n", low, high));
+
+   write_next_command ();
+}
+
+void
+NNTP :: xover_count_only (const Quark   & group,
+                          Listener      * l)
+{
+   _listener = l;
+
+   get_group(l);
+
+   _commands.push_back (build_command ("XOVER"));
 
    write_next_command ();
 }
@@ -340,8 +361,7 @@ NNTP :: article (const Quark     & group,
 {
    _listener = l;
 
-   if (group != _group)
-      _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
+   get_group(l);
 
    _commands.push_back (build_command ("ARTICLE %"G_GUINT64_FORMAT"\r\n", article_number));
 
@@ -355,13 +375,69 @@ NNTP :: article (const Quark     & group,
 {
    _listener = l;
 
-   if (group != _group)
-      _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
+   get_group(l);
 
    _commands.push_back (build_command ("ARTICLE %s\r\n", message_id));
 
    write_next_command ();
 }
+
+void
+NNTP :: get_headers (const Quark     & group,
+                     const char      * message_id,
+                     Listener        * l)
+{
+  _listener = l;
+
+   get_group(l);
+
+   _commands.push_back (build_command ("HEAD %s\r\n", message_id));
+
+   write_next_command ();
+}
+
+void
+NNTP :: get_headers (const Quark     & group,
+                     uint64_t          article_number,
+                     Listener        * l)
+{
+   _listener = l;
+
+   get_group(l);
+
+   _commands.push_back (build_command ("HEAD %"G_GUINT64_FORMAT"\r\n", article_number));
+
+   write_next_command ();
+}
+
+void
+NNTP :: get_body (const Quark     & group,
+                  const char      * message_id,
+                  Listener        * l)
+{
+  _listener = l;
+
+   get_group(l);
+
+   _commands.push_back (build_command ("BODY %s\r\n", message_id));
+
+   write_next_command ();
+}
+
+void
+NNTP :: get_body (const Quark     & group,
+                  uint64_t          article_number,
+                  Listener        * l)
+{
+   _listener = l;
+
+   if (group != _group) get_group(l);
+
+   _commands.push_back (build_command ("BODY %"G_GUINT64_FORMAT"\r\n", article_number));
+
+   write_next_command ();
+}
+
 
 void
 NNTP :: group (const Quark  & group,

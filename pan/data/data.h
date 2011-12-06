@@ -35,6 +35,9 @@
 #include <pan/data/cert-store.h>
 #include <pan/data/server-info.h>
 
+#include <gnome-keyring-1/gnome-keyring.h>
+#include <gnome-keyring-1/gnome-keyring-memory.h>
+
 namespace pan
 {
   class FilterInfo;
@@ -165,6 +168,14 @@ namespace pan
   {
 
     public:
+      struct PasswordData
+      {
+        Quark server;
+        StringView user;
+        StringView pw;
+      };
+
+    public:
       struct Server
       {
          std::string username;
@@ -204,7 +215,10 @@ namespace pan
       virtual const CertStore& get_certstore () const = 0;
 
     public:
-
+#ifdef HAVE_GKR
+      virtual GnomeKeyringResult password_encrypt (const PasswordData&) = 0;
+      virtual GnomeKeyringResult password_decrypt (PasswordData&) const = 0;
+#endif
       /** Gets a quark to the provided hostname */
       virtual bool find_server_by_hn (const Quark& server, Quark& setme) const = 0;
 

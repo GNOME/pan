@@ -33,6 +33,9 @@ extern "C" {
 #include <pan/general/time-elapsed.h>
 #include "data-impl.h"
 
+#include <gnome-keyring-1/gnome-keyring.h>
+#include <gnome-keyring-1/gnome-keyring-memory.h>
+
 using namespace pan;
 
 /**
@@ -71,6 +74,8 @@ DataImpl :: DataImpl (bool unit_test, int cache_megs, DataIO * io):
   _descriptions_loaded (false),
   newsrc_autosave_id (0),
   newsrc_autosave_timeout (0)
+//  ,
+//  _blowfish_inited(false)
 {
   rebuild_backend ();
 }
@@ -119,4 +124,114 @@ DataImpl :: save_state ()
     save_newsrc_files (*_data_io);
   }
 }
+
+
+namespace
+{
+
+  static void
+  stored_password (GnomeKeyringResult res, gpointer user_data)
+  {
+    if (res == GNOME_KEYRING_RESULT_OK)
+    g_print ("password saved successfully!\n");
+    else
+      g_print ("couldn't save password: %s", gnome_keyring_result_to_message (res));
+  }
+
+  static void
+  found_password (GnomeKeyringResult res, const gchar* password, gpointer user_data)
+  {
+    if (res == GNOME_KEYRING_RESULT_OK)
+      g_print ("password found was: %s\n", password);
+    else
+      g_print ("couldn't find password: %s", gnome_keyring_result_to_message (res));
+
+    /* Once this function returns |password| will be freed */
+  }
+
+}
+
+#ifdef HAVE_GKR
+GnomeKeyringResult
+DataImpl :: password_encrypt (const PasswordData& pw)
+{
+  g_return_val_if_fail (gnome_keyring_is_available(), GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
+
+  return (
+    gnome_keyring_store_password_sync (
+      GNOME_KEYRING_NETWORK_PASSWORD,
+      GNOME_KEYRING_DEFAULT,
+      _("Pan server password"),
+      pw.pw.str,
+      "user", pw.user.str,
+      "server", pw.server.c_str(),
+      NULL)
+    );
+
+}
+
+GnomeKeyringResult
+DataImpl :: password_decrypt (PasswordData& pw) const
+{
+
+  gchar* pwd(0);
+  g_return_val_if_fail (gnome_keyring_is_available(), GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
+
+  GnomeKeyringResult ret =
+    gnome_keyring_find_password_sync (
+    GNOME_KEYRING_NETWORK_PASSWORD,
+    &pwd,
+    "user", pw.user.str,
+    "server", pw.server.c_str(),
+    NULL);
+
+  std::string tmp(pwd);
+  gnome_keyring_free_password(pwd);
+  pw.pw = tmp;
+
+  return ret;
+}
+#endif
+
+//void
+//DataImpl :: blowfish_init ()
+//{
+//
+//  /TODO : Custom key with gtkwidget*
+//  if (!_blowfish_inited)
+//  {
+//    _blowfish_inited = true;
+//    char* key = (char*)"fjghdfjghdfkjg";
+//    _blowfish.Initialize(key, 14);
+//  }
+//}
+
+//void
+//DataImpl :: blowfish_encrypt (char* t, const StringView& s)
+//{
+//
+//  std::cerr<<"bf encrypt "<<s<<"\n";
+//
+//  size_t len (s.len);
+//  std::string str(s);
+//  int i(0);
+//  for (;i<len%8;++i) str += " ";
+//  _blowfish.Encode ((char*)str.c_str(),t,len+i);
+//
+//}
+
+//void
+//DataImpl :: blowfish_decrypt (char* t, size_t len)
+//{
+//
+//  std::cerr<<"bf decrypt "<<t<<" "<<len<<"\n";
+//
+//  std::string str((char*)t);
+//  int i(0);
+//  for (;i<len%8;++i) str += " ";
+//  char* buf = (char*)str.c_str();
+//  _blowfish.Decode (buf,buf,len+i);
+//  t = buf;
+//
+//}
 

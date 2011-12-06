@@ -33,6 +33,7 @@
 #include <pan/general/sorted-vector.h>
 #include <pan/usenet-utils/numbers.h>
 #include <pan/usenet-utils/scorefile.h>
+#include <pan/usenet-utils/blowfish.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/encode-cache.h>
@@ -72,6 +73,8 @@ namespace pan
     public ProfilesImpl
   {
 
+    typedef Data::PasswordData PasswordData;
+
     /**
     *** SERVERS
     **/
@@ -96,6 +99,21 @@ namespace pan
       ArticleCache _cache;
       CertStore _certstore;
 
+    private:
+//      CBlowFish _blowfish;
+//      bool _blowfish_inited;
+
+    public:
+//      void blowfish_init ();
+//      void blowfish_encrypt (char*, const StringView&);
+//      void blowfish_decrypt (char* t, size_t len);
+
+
+    public:
+#ifdef HAVE_GKR
+      GnomeKeyringResult password_encrypt (const PasswordData&);
+      GnomeKeyringResult password_decrypt (PasswordData&) const;
+#endif
     private:
 
       void rebuild_backend ();
@@ -670,6 +688,7 @@ namespace pan
         save_newsrc_files(*_data_io);
         newsrc_autosave_id = 0;
       }
+
   };
 }
 

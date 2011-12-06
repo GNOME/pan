@@ -53,6 +53,7 @@ GTKSPELL_REQUIRED=2.0.7
 OPENSSL_REQUIRED=1.0.0
 LIBNOTIFY_REQUIRED=0.4.1
 LIBGSASL_REQUIRED=1.6.1
+LIBGKR_REQUIRED=6.2.2
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GMIME_REQUIRED)
 AC_SUBST(GTK_REQUIRED)
@@ -60,6 +61,7 @@ AC_SUBST(GTKSPELL_REQUIRED)
 AC_SUBST(OPENSSL_REQUIRED)
 AC_SUBST(LIBNOTIFY_REQUIRED)
 AC_SUBST(LIBGSASL_REQUIRED)
+AC_SUBST(LIBGKR_REQUIRED)
 
 AC_PROG_CXX
 AC_HEADER_STDC
@@ -137,6 +139,14 @@ if test "x$HAVE_SASL" = "xyes"; then
   AC_DEFINE([HAVE_SASL],[1],[libgsasl for secure NNTP authentication])
 fi
 
+dnl Check for gnome-keyring for password storage
+PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[gnome-keyring-1 >= $LIBGKR_REQUIRED],[HAVE_GKR="yes"],[HAVE_GKR="no"])
+AC_SUBST([LIBGNOME_KEYRING_1_CFLAGS])
+AC_SUBST([LIBGNOME_KEYRING_1_LIBS])
+if test "x$HAVE_GKR" = "xyes"; then
+  AC_DEFINE([HAVE_GKR],[1],[gnome-keyring-1 for password storage])
+fi
+
 
 dnl Check to see if strftime supports the use of %l and %k
 AC_MSG_CHECKING(for %l and %k support in strftime)
@@ -188,9 +198,9 @@ case $host_os in
 esac
 AM_CONDITIONAL([HAVE_WIN32],[test "$win32" = "yes"])
 
-CXXFLAGS="$CXXFLAGS -g"
-CPPFLAGS="$CPPFLAGS -g"
-CFLAGS="$CFLAGS -g"
+CXXFLAGS="$CXXFLAGS -g -I/usr/lib/"
+CPPFLAGS="$CPPFLAGS -g -I/usr/lib/"
+CFLAGS="$CFLAGS -g -I/usr/lib/"
 
 dnl build the output files
 AC_SUBST(panlocaledir)

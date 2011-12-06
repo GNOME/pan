@@ -90,6 +90,7 @@ namespace
     ICON_ERROR,
     ICON_EMPTY,
     ICON_FLAGGED,
+    ICON_GET_FLAGGED,
     ICON_QTY
    };
 
@@ -110,7 +111,8 @@ namespace
     { icon_bluecheck,              0 },
     { icon_x,                      0 },
     { icon_empty,                  0 },
-    { icon_red_flag,               0 }
+    { icon_red_flag,               0 },
+    { icon_get_flagged,            0 }
   };
 
   int
@@ -839,6 +841,39 @@ HeaderPane :: mark_all_flagged ()
   gtk_tree_selection_unselect_all(sel);
   gtk_tree_model_get_iter_first (model, &iter);
   walk_and_collect_flagged(model, &iter, sel);
+
+}
+
+void
+HeaderPane :: invert_selection ()
+{
+
+  GtkTreeIter iter;
+  GtkTreeModel * model(gtk_tree_view_get_model(GTK_TREE_VIEW(_tree_view)));
+  GtkTreeSelection * sel (gtk_tree_view_get_selection (GTK_TREE_VIEW(_tree_view)));
+  gtk_tree_model_get_iter_first (model, &iter);
+  walk_and_invert_selection (model, &iter, sel);
+
+}
+
+
+void
+HeaderPane :: walk_and_invert_selection (GtkTreeModel          * model,
+                                         GtkTreeIter           * cur,
+                                         GtkTreeSelection      * ref) const
+{
+   for (;;) {
+    const bool selected(gtk_tree_selection_iter_is_selected (ref, cur));
+    if (selected)
+      gtk_tree_selection_unselect_iter(ref,cur);
+    else
+      gtk_tree_selection_select_iter(ref,cur);
+    GtkTreeIter child;
+    if (gtk_tree_model_iter_children (model, &child, cur))
+      walk_and_invert_selection (model, &child, ref);
+    if (!gtk_tree_model_iter_next (model, cur))
+      break;
+  }
 
 }
 

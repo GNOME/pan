@@ -170,8 +170,9 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
                                 bool                ok,
                                 Socket            * socket)
 {
-
-  debug("on socket created "<<host<<" "<<ok<<" "<<socket);
+  std::string user, pass;
+  _server_info.get_server_auth (_server, user, pass);
+  debug("on socket created "<<host<<" "<<ok<<" "<<socket<<" "<<pass);
   if (!ok)
   {
     delete socket;

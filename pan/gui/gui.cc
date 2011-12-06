@@ -1190,6 +1190,21 @@ GUI :: do_last_flag ()
   step_bookmarks(-1);
 }
 
+void
+GUI :: do_download_flagged ()
+{
+  do_mark_all_flagged();
+  do_download_selected_article();
+  do_unselect_all_articles();
+}
+
+void
+GUI :: do_invert_selection ()
+{
+//  std::cerr<<__LINE__<< " "<<__FILE__<<" : implement me.\n";
+  _header_pane->invert_selection();
+}
+
 void GUI :: do_plonk ()
 {
   score_add (ScoreAddDialog::PLONK);

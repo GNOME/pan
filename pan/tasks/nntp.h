@@ -157,11 +157,16 @@ namespace pan
        {}
 
        virtual ~NNTP ()
-       {
-       }
+       {}
 
     public:
 
+      /* Internal only */
+      void get_group (Listener * l);
+      void get_headers (const Quark & group, const char * message_id, Listener  * l);
+      void get_headers (const Quark & group, uint64_t article_number, Listener * l);
+      void get_body (const Quark & group, const char * message_id, Listener  * l);
+      void get_body (const Quark & group, uint64_t article_number, Listener * l);
       /**
        * Lists all available commands.
        */
@@ -188,7 +193,18 @@ namespace pan
                              uint64_t             low,
                              uint64_t             high,
                              Listener           * l);
-
+      /**
+       * Executes an XOVER command: "XOVER" to count
+       * the xover numbers internally
+       *
+       * If successful, this will invoke Listener::on_nntp_line()
+       * for each article header line we get back.
+       *
+       * Listener::on_nntp_done() will be called whether the
+       * command is successful or not.
+       */
+      void xover_count_only (const Quark        & group,
+                             Listener           * l);
 
       /**
        * Executes a LIST command: "LIST"

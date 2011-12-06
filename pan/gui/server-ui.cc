@@ -183,6 +183,7 @@ namespace
   server_edit_response_cb (GtkDialog * w, int response, gpointer user_data)
   {
     bool destroy (true);
+    bool bf_set (false);
 
     ServerEditDialog * d (static_cast<ServerEditDialog*>(user_data));
     g_assert (d!=NULL);
@@ -195,7 +196,8 @@ namespace
       const int port (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(d->port_spin)));
       const int max_conn (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(d->connection_limit_spin)));
       StringView user (pan_entry_get_text (d->auth_username_entry));
-      StringView pass (pan_entry_get_text (d->auth_password_entry));
+      StringView pass = pan_entry_get_text (d->auth_password_entry);
+
       int age (31);
       GtkTreeIter iter;
       GtkComboBox * combo (GTK_COMBO_BOX (d->expiration_age_combo));
@@ -415,8 +417,10 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     e = gtk_event_box_new ();
     gtk_container_add (GTK_CONTAINER(e), l);
     gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
-    gtk_widget_set_tooltip_text( e, _("You can set the option for using/disabling secure SSL/TLS connections here. If you enable SSL/TLS, your data is encrypted and secure. "
-                                      "It is encouraged to use this option for privacy reasons."));
+    gtk_widget_set_tooltip_text( e,
+          _("You can set the option for using/disabling secure SSL/TLS connections here. "
+            "If you enable SSL/TLS, your data is encrypted and secure. "
+            "It is encouraged to use this option for privacy reasons."));
     HIG::workarea_add_row (t, &row, e, w);
 #endif
 

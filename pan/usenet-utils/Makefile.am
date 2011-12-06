@@ -11,7 +11,8 @@ libusenetutils_a_SOURCES = \
  numbers.cc \
  scorefile.cc \
  text-massager.cc \
- url-find.cc
+ url-find.cc \
+ blowfish.cc
 
 noinst_HEADERS = \
  defgroup.h \
@@ -24,7 +25,9 @@ noinst_HEADERS = \
  scorefile.h \
  text-massager.h \
  url-find.h \
- ssl-utils.h
+ ssl-utils.h \
+ blowfish.h \
+ blowfish_cyphers.h
 
 #noinst_PROGRAMS = \
 # gnksa-test \

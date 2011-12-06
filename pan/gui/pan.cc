@@ -67,6 +67,10 @@ extern "C" {
 #include "server-ui.h"
 #include "pad.h"
 
+#include <gnome-keyring-1/gnome-keyring.h>
+#include <gnome-keyring-1/gnome-keyring-memory.h>
+
+
 //#define DEBUG_LOCALE 1
 
 using namespace pan;
@@ -78,6 +82,8 @@ namespace
 
 namespace
 {
+//  bool keyring_active(gnome_keyring_is_available());
+
   GMainLoop * nongui_gmainloop (0);
 
   void mainloop ()
