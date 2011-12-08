@@ -27,6 +27,11 @@
 #include <gmime/gmime-message.h>
 #include <pan/general/string-view.h>
 
+#ifdef HAVE_GPGME
+  #include <gpgme.h>
+  #include <pan/gui/gpg.h>
+#endif
+
 /***
 **** YENC
 ***/
@@ -59,15 +64,28 @@
 **** GPG
 ***/
 
-#define GPG_MARKER_BEGIN          "-----BEGIN PGP MESSAGE-----"
-#define GPG_MARKER_BEGIN_LEN      27
-#define GPG_MARKER_END            "-----END PGP MESSAGE-----"
-#define GPG_MARKER_END_LEN        25
-#define GPG_MARKER_SIGNED_BEGIN   "-----BEGIN PGP SIGNED MESSAGE-----"
-#define GPG_MARKER_SIGNED_LEN
+#define GPG_MARKER_BEGIN            "-----BEGIN PGP MESSAGE-----"
+#define GPG_MARKER_BEGIN_LEN        27
+#define GPG_MARKER_END              "-----END PGP MESSAGE-----"
+#define GPG_MARKER_END_LEN          25
+#define GPG_MARKER_SIGNED_BEGIN     "-----BEGIN PGP SIGNED MESSAGE-----"
+#define GPG_MARKER_SIGNED_BEGIN_LEN 34
+#define GPG_MARKER_SIGNED_END       "-----END PGP SIGNATURE-----"
+#define GPG_MARKER_SIGNED_END_LEN   27
 
 namespace pan
 {
+
+  struct GPGDecErr
+  {
+    gpg_error_t err;
+    gpgme_decrypt_result_t dec_res;
+    gpgme_verify_result_t v_res;
+    bool dec_ok;
+    bool verify_ok;
+    GPGDecErr() : dec_ok(false), verify_ok(false) {}
+  };
+
   /**
    * Utilities to build and parse GMimeMessages.
    *

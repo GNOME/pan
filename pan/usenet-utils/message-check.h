@@ -41,7 +41,7 @@ namespace pan
        * is OKAY, or it deserves a warning, or Pan should refuse to post it.
        */
       struct Goodness {
-        enum { OKAY, WARN, REFUSE };
+        enum { OKAY=0, WARN, REFUSE };
         int state;
         Goodness(): state(OKAY) {}
         void clear()           { state = OKAY; }

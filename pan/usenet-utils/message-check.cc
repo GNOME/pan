@@ -427,6 +427,9 @@ MessageCheck :: message_check (const GMimeMessage * message_const,
                                Goodness           & goodness,
                                bool                 binpost)
 {
+
+  std::cerr<<"message check entry\n";
+
   goodness.clear ();
   errors.clear ();
 
@@ -454,6 +457,7 @@ MessageCheck :: message_check (const GMimeMessage * message_const,
   if (!binpost)
     check_body (errors, goodness, tm, message, body, attribution);
   g_free (body);
+  std::cerr<<"goodness "<<goodness.state<<"\n";
 
   // check the optional followup-to...
   bool followup_to_set (false);

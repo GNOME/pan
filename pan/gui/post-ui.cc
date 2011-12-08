@@ -94,7 +94,7 @@ PostUI :: generate_unique_id (StringView& mid, int cnt, std::string& s)
   s = out.str();
 }
 
-namespace
+namespace pan
 {
 #ifndef HAVE_CLOSE
   inline int close(int fd) {return _close(fd);}
@@ -103,6 +103,7 @@ namespace
   bool remember_charsets (true);
   bool master_reply (true);
   bool gpg_enc (false);
+  bool gpg_sign (false);
 
   void on_remember_charset_toggled (GtkToggleAction * toggle, gpointer)
   {
@@ -114,9 +115,34 @@ namespace
     master_reply = gtk_toggle_action_get_active (toggle);
   }
 
-  void on_enc_toggled (GtkToggleAction * toggle, gpointer)
+  void on_enc_toggled (GtkToggleAction * toggle, gpointer post_g)
   {
+
+    PostUI* self = static_cast<PostUI*>(post_g);
+    if (!self->_realized) return;
+
     gpg_enc = gtk_toggle_action_get_active (toggle);
+    std::cerr<<"gpg enc "<<gpg_enc<<"\n";
+    if (gpg_enc)
+    {
+      gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (self->_agroup, "gpg-sign")),false);
+      gpg_sign = false;
+    }
+  }
+
+  void on_sign_toggled (GtkToggleAction * toggle, gpointer post_g)
+  {
+
+    PostUI* self = static_cast<PostUI*>(post_g);
+    if (!self->_realized) return;
+
+    gpg_sign = gtk_toggle_action_get_active (toggle);
+    std::cerr<<"gpg sign "<<gpg_sign<<"\n";
+    if (gpg_sign)
+    {
+      gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (self->_agroup, "gpg-encrypt")),false);
+      gpg_enc = false;
+    }
   }
 
   void on_spellcheck_toggled (GtkToggleAction * toggle, gpointer post_g)
@@ -325,17 +351,17 @@ PostUI :: set_always_run_editor (bool run)
   _prefs.set_flag ("always-run-editor", run);
 }
 
+
 std::string
-PostUI :: gpg_sign_and_encrypt(const std::string& body, bool& fail)
+PostUI :: gpg_sign_and_encrypt(const std::string& body, GPGEncErr& fail)
 {
-  fail = true;
+  fail.err = GPG_ERR_GENERAL;
 
   const Profile profile (get_current_profile ());
   std::string uid = profile.gpg_sig_uid;
   if (uid.empty()) return "";
 
   gpgme_data_t gpg_buf, gpg_out_buf;
-  gpgme_error_t err;
   gpgme_key_t mykey(0), key;
 
   StringView v(body);
@@ -344,32 +370,40 @@ PostUI :: gpg_sign_and_encrypt(const std::string& body, bool& fail)
   gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
 
   /* find key to uid */
-  err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
-  while (!err)
+  fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
+  while (!fail.err)
   {
-    err = gpgme_op_keylist_next (gpg_ctx, &key);
-    if (err) break;
+    fail.err = gpgme_op_keylist_next (gpg_ctx, &key);
+    if (fail.err) break;
     if (strcmp(key->subkeys->keyid, uid.c_str()) == 0) { mykey = key; break; }
   }
-  if (!mykey) return std::string("");
+  if (!mykey) { fail.err = GPG_ERR_NO_PUBKEY; return std::string(""); }
 
-  gpgme_key_t keys[] = { key, NULL} ;
+  gpgme_key_t keys[] = { mykey, NULL} ;
+  gpgme_key_t enc_keys[] = { mykey, NULL};
 
-  if (gpg_enc)
+
+  if (gpg_sign)
+  {
+
+    gpgme_sign_result_t sign_res;
+    fail.err = gpgme_op_sign (gpg_ctx, gpg_buf, gpg_out_buf, GPGME_SIG_MODE_CLEAR);
+    sign_res = gpgme_op_sign_result (gpg_ctx);
+    fail.sign_res = sign_res;
+    if (fail.err) return std::string("");
+  }
+  else if (gpg_enc)
   {
     gpgme_encrypt_result_t enc_res;
-    err = gpgme_op_encrypt (gpg_ctx, keys, GPGME_ENCRYPT_EXPECT_SIGN, gpg_buf, gpg_out_buf);
+    fail.err = gpgme_op_encrypt (gpg_ctx, enc_keys, GPGME_ENCRYPT_PREPARE, gpg_buf, gpg_out_buf);
     enc_res = gpgme_op_encrypt_result (gpg_ctx);
-  }
-  else if (profile.use_sigfile)
-  {
-    gpgme_sign_result_t sign_res;
-    gpgme_op_sign (gpg_ctx, gpg_buf, gpg_out_buf, GPGME_SIG_MODE_CLEAR);
-    sign_res = gpgme_op_sign_result (gpg_ctx);
+    fail.enc_res = enc_res;
+    if (fail.err) return std::string("");
   }
 
+
+
   gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
-  /* print buf */
   ssize_t ret;
   std::stringstream ret_str;
   char buffer[4096]={0};
@@ -383,7 +417,9 @@ PostUI :: gpg_sign_and_encrypt(const std::string& body, bool& fail)
   gpgme_data_release(gpg_buf);
   gpgme_data_release(gpg_out_buf);
 
-  fail = false;
+  std::cerr<<"\n"<<ret_str.str()<<"\n";
+
+  fail.err = GPG_ERR_NO_ERROR;
   return ret_str.str();
 }
 
@@ -455,7 +491,6 @@ namespace
   void do_move_down          (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->move_down(); }
   void do_move_top           (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->move_top(); }
   void do_move_bottom        (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->move_bottom(); }
-//  void do_select_encode      (GtkAction* a, gpointer p) { static_cast<PostUI*>(p)->select_encode(a); }
 
   GtkActionEntry filequeue_popup_entries[] =
   {
@@ -503,7 +538,8 @@ namespace
     { "always-run-editor", 0, N_("Always Run Editor"), 0, 0, G_CALLBACK(do_edit2), false },
     { "remember-charset", 0, N_("Remember Character Encoding for this Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
     { "master-reply", 0, N_("Thread attached replies"), 0, 0, G_CALLBACK(on_mr_toggled), true },
-    { "gpg-encrypt", 0, N_("GPG-Encrypt the message"), 0, 0, G_CALLBACK(on_enc_toggled), true },
+    { "gpg-encrypt", 0, N_("GPG-Encrypt the message"), 0, 0, G_CALLBACK(on_enc_toggled), false },
+    { "gpg-sign", 0, N_("GPG-Sign the message"), 0, 0, G_CALLBACK(on_sign_toggled), false },
     { "spellcheck", 0, N_("Check _Spelling"), 0, 0, G_CALLBACK(on_spellcheck_toggled), true }
   };
 
@@ -630,6 +666,8 @@ PostUI :: add_actions (GtkWidget * box)
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "wrap")),
                                 _prefs.get_flag ("compose-wrap-enabled", true));
 
+
+
    //add popup actions
   gtk_action_group_add_actions (_agroup, filequeue_popup_entries, G_N_ELEMENTS(filequeue_popup_entries), this);
   gtk_ui_manager_insert_action_group (_uim, _agroup, 0);
@@ -749,7 +787,7 @@ PostUI :: check_message (const Quark& server, GMimeMessage * msg, bool binpost)
   std::string s;
   foreach_const (MessageCheck::unique_strings_t, errors, it)
     s += *it + "\n";
-  s.resize (s.size()-1); // eat trailing linefeed
+  if (s.size()>1) s.resize (s.size()-1); // eat trailing linefeed
 
   const GtkMessageType type (goodness.is_refuse() ? GTK_MESSAGE_ERROR : GTK_MESSAGE_WARNING);
   GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
@@ -1002,6 +1040,8 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   ***  Find the server to use
   **/
 
+  g_return_val_if_fail(message, false);
+
   // get the profile...
   const Profile profile (get_current_profile ());
   // get the server associated with that profile...
@@ -1061,9 +1101,9 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
   if(_file_queue_empty)
   {
-    bool fail;
+    GPGEncErr fail;
     std::string res = gpg_sign_and_encrypt(get_body(), fail);
-    if (!fail)
+    if (gpgme_err_code(fail.err) == GPG_ERR_NO_ERROR)
     {
       gtk_text_buffer_set_text (_body_buf, res.c_str(), res.size());
       GMimeMessage* msg = new_message_from_ui(POSTING);
@@ -1071,7 +1111,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       _post_task->add_listener (this);
       _queue.add_task (_post_task, Queue::TOP);
     } else
-      Log::add_urgent_va("Failed to sign the Message with your public key.");
+      Log::add_err_va("Failed to sign the Message with your public key : \"%s\"",gpgme_strerror(fail.err));
       return false;
   } else {
 
@@ -2176,6 +2216,12 @@ PostUI :: body_view_realized_cb (GtkWidget*, gpointer self_gpointer)
     self->spawn_editor ();
 
   g_signal_handler_disconnect (self->_body_view, self->body_view_realized_handler);
+  self->_realized = true;
+
+  /* gpg stuff */
+  const Profile profile (self->get_current_profile ());
+  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (self->_agroup, "gpg-sign")),profile.use_sigfile);
+
 }
 
 /***
@@ -2928,7 +2974,8 @@ PostUI :: PostUI (GtkWindow    * parent,
   _body_changed_id(0),
   _body_changed_idle_tag(0),
   _filequeue_eventbox (0),
-  _filequeue_label (0)
+  _filequeue_label (0),
+  _realized(false)
 
 {
 

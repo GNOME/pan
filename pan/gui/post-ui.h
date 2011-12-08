@@ -31,6 +31,10 @@
 
 #include <pan/usenet-utils/MersenneTwister.h>
 
+#ifdef HAVE_GPGME
+  #include <gpgme.h>
+#endif
+
 namespace pan
 {
   class Profiles;
@@ -84,7 +88,27 @@ namespace pan
       void set_wrap_mode (bool wrap);
       void set_always_run_editor (bool);
 
-      std::string gpg_sign_and_encrypt(const std::string& body, bool&);
+      /** Error struct for gpg_sign_and_encrypt
+        * @see gpg_sign_and_encrypt
+       **/
+      struct GPGEncErr
+      {
+#ifdef HAVE_GPGME
+        /** common gpg errcode */
+        gpgme_error_t err;
+        /** encode result */
+        gpgme_encrypt_result_t enc_res;
+        /** sign result */
+        gpgme_sign_result_t sign_res;
+#endif
+      };
+
+      /** Encrypts a message with GPG and signs it.
+        * @return The encrypted/signed message
+        * @param body The unencrypted/unsigned message body
+        * @param fail Error struct that holds the GPG errcode and two gpgme error info structs.
+       **/
+      std::string gpg_sign_and_encrypt(const std::string& body, GPGEncErr& fail);
 
       void update_parts_tab();
 
@@ -147,7 +171,6 @@ namespace pan
       std::string _charset;
       TextMassager _tm;
       GtkUIManager * _uim;
-      GtkActionGroup * _agroup;
       std::string _current_signature;
       TaskPost * _post_task;
       typedef std::map<std::string, std::string> str2str_t;
@@ -163,6 +186,9 @@ namespace pan
       std::string _save_file;
       MTRand rng;
 
+    public:
+      bool _realized;
+
     private:
       friend class UploadQueue;
       virtual void on_queue_tasks_added (UploadQueue&, int index, int count);
@@ -175,9 +201,12 @@ namespace pan
       void apply_profile_to_headers ();
       enum Mode { DRAFTING, POSTING, UPLOADING, MULTI};
       GMimeMessage * new_message_from_ui (Mode mode, bool copy_body=true);
-      Profile get_current_profile ();
       bool check_message (const Quark& server, GMimeMessage*, bool binpost=false);
       bool check_charset ();
+
+    public:
+      Profile get_current_profile ();
+      GtkActionGroup * _agroup;
 
     private:
       GtkWidget* create_main_tab ();

@@ -78,6 +78,7 @@ extern "C" {
 
 
 //#define DEBUG_LOCALE 1
+#define DEBUG_PARALLEL 1
 
 using namespace pan;
 
@@ -824,6 +825,7 @@ main (int argc, char *argv[])
     /// TODO : make it work with win32
     Pan pan(data, queue, cache, encode_cache, prefs, group_prefs);
 #ifndef G_OS_WIN32
+  #ifndef DEBUG_PARALLEL
     pan_dbus_init(&pan);
 
     GError* error(NULL);
@@ -846,6 +848,7 @@ main (int argc, char *argv[])
       std::cerr<<"Added "<<nzb_files.size()<<" files to the queue. Exiting.\n";
       exit(EXIT_SUCCESS);
     }
+  #endif
 #endif
     queue.set_online(true);
     queue.set_task_save_delay(prefs.get_int ("task-save-delay-secs", 10));

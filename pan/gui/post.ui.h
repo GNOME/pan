@@ -23,6 +23,7 @@ const char * fallback_post_ui =
 "      <menuitem action='master-reply' />\n"
 "      <separator />\n"
 "      <menuitem action='gpg-encrypt' />\n"
+"      <menuitem action='gpg-sign' />\n"
 "      <separator />\n"
 "      <menuitem action='run-editor' />\n"
 "      <menuitem action='always-run-editor' />\n"

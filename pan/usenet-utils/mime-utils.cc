@@ -37,11 +37,6 @@ extern "C"
 
 #define is_nonempty_string(a) ((a) && (*a))
 
-#ifdef HAVE_GPGME
-  #include <gpgme.h>
-  #include <pan/gui/gpg.h>
-#endif
-
 using namespace pan;
 
 namespace
@@ -345,19 +340,35 @@ namespace
   bool
   gpg_is_beginning_line (const StringView& line)
   {
-    if (line.len <= 1) return false;//g_return_val_if_fail(line.len > 1, false);
+    if (line.len <= 1) return false;
     StringView l(line);
-//    l.ltrim(); l.ltrim();
-    return !strncmp (l.str, GPG_MARKER_BEGIN, GPG_MARKER_BEGIN_LEN);
+    return  !strncmp (l.str, GPG_MARKER_BEGIN, GPG_MARKER_BEGIN_LEN) ||
+            !strncmp (l.str, GPG_MARKER_SIGNED_BEGIN, GPG_MARKER_SIGNED_BEGIN_LEN) ;
   }
 
   bool
   gpg_is_ending_line (const StringView& line)
   {
-    if (line.len <= 1) return false;//g_return_val_if_fail(line.len > 1, false);
+    if (line.len <= 1) return false;
     StringView l(line);
-//    l.ltrim(); l.ltrim();
-    return !strncmp (l.str, GPG_MARKER_END, GPG_MARKER_END_LEN);
+    return  !strncmp (l.str, GPG_MARKER_END, GPG_MARKER_END_LEN) ||
+            !strncmp (l.str, GPG_MARKER_SIGNED_END, GPG_MARKER_SIGNED_END_LEN);
+  }
+
+  bool
+  gpg_is_signed_begin_line (const StringView& line)
+  {
+    if (line.len <= 1) return false;
+    StringView l(line);
+    return !strncmp (l.str, GPG_MARKER_SIGNED_BEGIN, GPG_MARKER_SIGNED_BEGIN_LEN);
+  }
+
+  bool
+  gpg_is_signed_end_line (const StringView& line)
+  {
+    if (line.len <= 1) return false;
+    StringView l(line);
+    return !strncmp (l.str, GPG_MARKER_SIGNED_END, GPG_MARKER_SIGNED_END_LEN);
   }
 
 }
@@ -427,7 +438,8 @@ namespace
       filter_stream(0), filename(infilename), valid_lines(0), type(intype),
       y_line_len(0), y_attach_size(0), y_part(0),
       y_offset_begin(0), y_offset_end(0),
-      y_crc(0), y_pcrc(0), y_size(0) {}
+      y_crc(0), y_pcrc(0), y_size(0)
+      {}
 
     ~TempPart () {
       g_free (filename);
@@ -462,33 +474,50 @@ namespace
     return true;
   }
 
-  GMimeStream* gpg_decrypt (gpgme_ctx_t gpg_ctx, GMimeStream* s, TempPart* part)
+  GMimeStream* gpg_decrypt (GPGDecErr& info, GMimeStream* s, TempPart* part)
   {
 
     GMimeStream* decrypted = g_mime_stream_mem_new ();
 
     ssize_t stream_len = g_mime_stream_length(s);
+
     char* streambuf = new char[stream_len];
+
     g_mime_stream_read(s, streambuf, stream_len);
     g_object_unref(s);
 
+    info.err = GPG_ERR_NO_ERROR;
+
     gpgme_data_t gpg_buf, gpg_out_buf;
     gpgme_key_t key;
-    gpgme_error_t err;
-    bool found(false);
 
     StringView v(streambuf);
     gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
 
     gpgme_strerror(gpgme_data_new (&gpg_out_buf));
 
-    gpgme_signers_clear(gpg_ctx);
-
-    gpgme_set_armor (gpg_ctx, 1);
     gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_NONE);
 
-    err = gpgme_op_decrypt (gpg_ctx, gpg_buf, gpg_out_buf);
-//    gpgme_op_decrypt_result
+    info.err = gpgme_op_decrypt_verify (gpg_ctx, gpg_buf, gpg_out_buf);
+
+    // no data to decrypt, check for signature validity anyway....
+    if (gpgme_err_code(info.err) == GPG_ERR_NO_DATA || gpgme_err_code(info.err) == GPG_ERR_NO_ERROR)
+      info.dec_ok = true;
+    else
+      return decrypted;
+
+    std::cerr<<"dec "<<gpgme_strerror(info.err)<<" "<<info.err<<"\n";
+
+    info.dec_res  = gpgme_op_decrypt_result (gpg_ctx);
+    info.v_res    = gpgme_op_verify_result (gpg_ctx);
+
+    if (info.v_res->signatures)
+    {
+      if (gpgme_err_code(info.v_res->signatures->status) == GPG_ERR_NO_ERROR)
+        info.verify_ok = true;
+      else
+        return decrypted;
+    }
 
     delete streambuf;
 
@@ -509,6 +538,8 @@ namespace
     gpgme_data_release(gpg_out_buf);
 
     g_mime_stream_reset(decrypted);
+
+    std::cerr<<"infos "<<info.dec_ok<<" "<<info.verify_ok<<"\n";
 
     return decrypted;
   }
@@ -546,8 +577,9 @@ namespace
     temp_parts_t master_list;
     temp_parts_t current_list;
     TempPart *uu_temp;
+    bool gpg_verified;
 
-    sep_state():uu_temp(NULL) {};
+    sep_state():uu_temp(NULL), gpg_verified(false) {};
   };
 
   bool
@@ -560,8 +592,12 @@ namespace
     GByteArray * line;
     gboolean yenc_looking_for_part_line = FALSE;
     gboolean gpg_looking_for_line = FALSE;
+    gboolean gpg_is_signed = FALSE;
+    gboolean gpg_signed_end_found = FALSE;
     gint64 linestart_pos = 0;
     gint64 sub_begin = 0;
+    gint64 signed_msg_start = 0;
+    gint64 signed_msg_end = 0;
     guint line_len;
     bool found = false;
 
@@ -578,6 +614,19 @@ namespace
       if (pch != NULL) {
         pch[1] = '\0';
         line_len = pch - line_str;
+      }
+
+      if (gpg_is_signed_begin_line(line_str))
+      {
+        std::cerr<<"signed begin\n";
+        gpg_is_signed = true;
+        signed_msg_start = linestart_pos;
+      }
+      if (gpg_is_signed_end_line(line_str))
+      {
+        gboolean gpg_signed_end_found = true;
+        signed_msg_end = linestart_pos+line_len;
+        std::cerr<<"signed offsets "<<signed_msg_start<<" "<<signed_msg_end<<"\n";
       }
 
       switch (type)
@@ -748,12 +797,16 @@ namespace
           if (gpg_is_ending_line(line_str))
           {
             GMimeStream * stream = g_mime_stream_substream (istream, sub_begin, linestart_pos+line_len);
-            GMimeStream * dec = gpg_decrypt(gpg_ctx, stream, cur);
-            apply_source_and_maybe_filter (cur, dec);
+            GPGDecErr info;
+            GMimeStream * dec = gpg_decrypt(info, stream, cur);
+            if (info.verify_ok) state.gpg_verified = true;
             gpg_looking_for_line = false;
-            if( append_if_not_present (master, cur) )
-              append_if_not_present (appendme, cur);
-
+            if (info.dec_ok)
+            {
+              apply_source_and_maybe_filter (cur, dec);
+              if( append_if_not_present (master, cur) )
+                append_if_not_present (appendme, cur);
+            }
             cur = NULL;
             type = ENC_PLAIN;
             sub_begin = -1;
@@ -892,6 +945,9 @@ namespace
 
   void handle_uu_and_yenc_in_text_plain_cb (GMimeObject *parent, GMimeObject *part, gpointer data)
   {
+
+    std::cerr<<"handle uu yenc "<<part<<"\n";
+
     if (!part)
       return;
 
@@ -922,6 +978,7 @@ namespace
       //this part was completely folded into a previous part
       //so delete it
       if(parts.size()==0) {
+        std::cerr<<"folded\n";
         GMimeMultipart *mp = GMIME_MULTIPART (parent);
         int index = g_mime_multipart_index_of (mp,part);
         if(index>0)
@@ -930,6 +987,8 @@ namespace
       }
       else
       {
+        std::cerr<<"not folded "<<parts.size()<<"\n";
+
         GMimeMultipart * multipart = g_mime_multipart_new_with_subtype ("mixed");
 
         const TempPart *tmp_part;
@@ -955,6 +1014,9 @@ namespace
           content = g_mime_data_wrapper_new_with_stream (subpart_stream, GMIME_CONTENT_ENCODING_DEFAULT);
           g_mime_part_set_content_object (subpart, content);
           g_mime_multipart_add (GMIME_MULTIPART (multipart), GMIME_OBJECT (subpart));
+          std::cerr<<"setting gpg header "<<(state.gpg_verified ? "true" : "false")<<"\n";
+          g_mime_object_set_header (GMIME_OBJECT(subpart), "Gpg-Verified", state.gpg_verified  ? "true" : "false");
+          std::cerr<<"headers now:\n"<< g_mime_object_get_headers(GMIME_OBJECT(subpart))<<"\n";
 
           g_object_unref (content);
           g_object_unref (subpart);
@@ -1042,6 +1104,8 @@ mime :: construct_message (GMimeStream  ** istreams,
   const char * message_id = "Foo <bar@mum>";
   GMimeMessage * retval = 0;
 
+  std::cerr<<"construct message "<<qty<<"\n";
+
   // sanity clause
   pan_return_val_if_fail (is_nonempty_string(message_id), NULL);
   pan_return_val_if_fail (istreams!=NULL, NULL);
@@ -1055,6 +1119,7 @@ mime :: construct_message (GMimeStream  ** istreams,
   for (int i=0; i<qty; ++i) {
     g_mime_parser_init_with_stream (parser, istreams[i]);
     messages[i] = g_mime_parser_construct_message (parser);
+    std::cerr<<"\nfirst gpg: "<<g_mime_object_get_header(GMIME_OBJECT(messages[i]), "Gpg-Verified")<<"\n";
   }
   g_object_unref (parser);
 
@@ -1086,21 +1151,16 @@ mime :: construct_message (GMimeStream  ** istreams,
     handle_uu_and_yenc_in_text_plain_cb(data.parent, data.part, &state);
   }
 
-//  partslist.clear();
-//  if (retval != NULL)
-//    g_mime_message_foreach(retval, find_text_cb, &partslist);
-//  foreach(temp_p_t, partslist, it)
-//  {
-//    temp_p &data(*it);
-//    handle_gpg_encrypted_parts_cb(data.parent, data.part, &state);
-//  }
-
   // cleanup
   foreach (temp_parts_t, state.master_list, it)
   {
     delete *it;
   }
   g_free (messages);
+
+  /* test for gpg */
+  std::cerr<<"\nsecond gpg: "<<g_mime_object_get_header(GMIME_OBJECT(retval), "Gpg-Verified")<<"\n";
+
   return retval;
 }
 

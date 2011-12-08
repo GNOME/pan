@@ -102,7 +102,7 @@ namespace
       Profile& p (mc.profiles[mc.profile_name]);
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
         if (!strcmp(*k,"active"))
-          p.use_sigfile = false;
+          p.use_sigfile = !strcmp (*v, "true");
         p.sig_type = p.GPGSIG;
         p.use_gpgsig = true;
       }

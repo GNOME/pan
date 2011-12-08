@@ -370,8 +370,6 @@ ProfileDialog :: get_profile (std::string& profile_name, Profile& profile)
   if (!profile.use_gpgsig)
     from_entry (file_entry_gtk_entry(_signature_file), profile.signature_file);
 
-  std::cerr<<"use gpgsig get profile "<<profile.use_gpgsig<<"\n";
-
   char* uid;
   combo = GTK_COMBO_BOX (_gpg_sig_entry_box);
   gtk_combo_box_get_active_iter (combo, &iter);
