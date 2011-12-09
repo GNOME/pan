@@ -76,6 +76,8 @@
 namespace pan
 {
 
+  GMimeStream* gpd_decrypt_and_verify (GPGSignersInfo& signer_info, GPGDecErr& info, GMimeStream* s);
+
   /**
    * Utilities to build and parse GMimeMessages.
    *
@@ -88,9 +90,10 @@ namespace pan
   struct mime
   {
     static GMimeMessage *
-    construct_message (GMimeStream ** istreams,
-                         int            qty,
-                         GPGDecErr  & gpgerr);
+    construct_message (GMimeStream      ** istreams,
+                         int              qty,
+                         GPGSignersInfo & signer_info,
+                         GPGDecErr      & gpgerr);
 
 
     static const char *

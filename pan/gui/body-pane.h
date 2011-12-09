@@ -109,7 +109,10 @@ namespace pan
       gboolean mouse_button_pressed (GtkWidget*, GdkEventButton*);
 
       /* updated with values from gmimemessage */
+   public:
       GPGDecErr _gpgerr;
+      GPGSignersInfo _signer_info;
+      bool get_gpgsig_from_gmime_part (GMimePart * part);
 
     private:
       std::string _hover_url;

@@ -302,7 +302,7 @@ NNTP :: help (Listener * l)
 }
 
 void
-NNTP :: get_group (Listener * l, const Quark& group)
+NNTP :: get_group (const Quark& group)
 {
    if (group != _group)
     _commands.push_back (build_command ("GROUP %s\r\n",group.c_str()));
@@ -330,7 +330,7 @@ NNTP :: xover_count_only (const Quark   & group,
 {
    _listener = l;
 
-   get_group(l,group);
+   get_group(group);
 
    _commands.push_back (build_command ("XOVER"));
 
@@ -388,7 +388,7 @@ NNTP :: get_headers (const Quark     & group,
 {
   _listener = l;
 
-   get_group(l,group);
+   get_group(group);
 
    _commands.push_back (build_command ("HEAD %s\r\n", message_id));
 
@@ -402,7 +402,7 @@ NNTP :: get_headers (const Quark     & group,
 {
    _listener = l;
 
-   get_group(l,group);
+   get_group(group);
 
    _commands.push_back (build_command ("HEAD %"G_GUINT64_FORMAT"\r\n", article_number));
 
@@ -416,7 +416,7 @@ NNTP :: get_body (const Quark     & group,
 {
   _listener = l;
 
-   get_group(l,group);
+   get_group(group);
 
    _commands.push_back (build_command ("BODY %s\r\n", message_id));
 
@@ -430,7 +430,7 @@ NNTP :: get_body (const Quark     & group,
 {
    _listener = l;
 
-   if (group != _group) get_group(l,group);
+   get_group(group);
 
    _commands.push_back (build_command ("BODY %"G_GUINT64_FORMAT"\r\n", article_number));
 

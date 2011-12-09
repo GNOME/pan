@@ -122,7 +122,6 @@ namespace pan
     if (!self->_realized) return;
 
     gpg_enc = gtk_toggle_action_get_active (toggle);
-    std::cerr<<"gpg enc "<<gpg_enc<<"\n";
     if (gpg_enc)
     {
       gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (self->_agroup, "gpg-sign")),false);
@@ -137,7 +136,6 @@ namespace pan
     if (!self->_realized) return;
 
     gpg_sign = gtk_toggle_action_get_active (toggle);
-    std::cerr<<"gpg sign "<<gpg_sign<<"\n";
     if (gpg_sign)
     {
       gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (self->_agroup, "gpg-encrypt")),false);
@@ -379,9 +377,10 @@ PostUI :: gpg_sign_and_encrypt(const std::string& body, GPGEncErr& fail)
   }
   if (!mykey) { fail.err = GPG_ERR_NO_PUBKEY; return std::string(""); }
 
-  gpgme_key_t keys[] = { mykey, NULL} ;
   gpgme_key_t enc_keys[] = { mykey, NULL};
 
+  gpgme_signers_clear(gpg_ctx);
+  gpgme_signers_add(gpg_ctx, mykey);
 
   if (gpg_sign)
   {
@@ -416,8 +415,6 @@ PostUI :: gpg_sign_and_encrypt(const std::string& body, GPGEncErr& fail)
 
   gpgme_data_release(gpg_buf);
   gpgme_data_release(gpg_out_buf);
-
-  std::cerr<<"\n"<<ret_str.str()<<"\n";
 
   fail.err = GPG_ERR_NO_ERROR;
   return ret_str.str();

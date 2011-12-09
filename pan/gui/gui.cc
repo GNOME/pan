@@ -696,8 +696,9 @@ namespace
     virtual void on_progress_finished (Progress&, int status)
     {
       GPGDecErr unused;
+      GPGSignersInfo unuse;
       if (status == OK) {
-        GMimeMessage * message = _cache.get_message (_article.get_part_mids(), unused);
+        GMimeMessage * message = _cache.get_message (_article.get_part_mids(), unuse, unused);
         g_mime_message_foreach (message, foreach_part_cb, this);
         g_object_unref (message);
       }

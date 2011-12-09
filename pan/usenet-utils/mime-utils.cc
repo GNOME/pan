@@ -418,7 +418,7 @@ enum EncType
 	ENC_BASE64 = 1<< 4
 };
 
-namespace
+namespace pan
 {
   struct TempPart
   {
@@ -478,10 +478,8 @@ namespace
     return true;
   }
 
-  GMimeStream* gpg_decrypt (GPGDecErr& info, GMimeStream* s, TempPart* part)
+  GMimeStream* gpd_decrypt_and_verify (GPGSignersInfo& signer_info, GPGDecErr& info, GMimeStream* s)
   {
-
-    std::cerr<<"gpg decrypt\n";
 
     GMimeStream* decrypted = g_mime_stream_mem_new ();
 
@@ -513,17 +511,15 @@ namespace
       return decrypted;
 
     info.dec_res  = gpgme_op_decrypt_result (gpg_ctx);
-    info.v_res    = gpgme_op_verify_result (gpg_ctx);
+    info.v_res    = gpgme_op_verify_result  (gpg_ctx);
 
     if (info.v_res->signatures)
     {
       info.no_sigs = false;
-
       if (gpgme_err_code(info.v_res->signatures->status) == GPG_ERR_NO_ERROR)
         info.verify_ok = true;
-      else
-        return decrypted;
-    } else
+    }
+    else
       info.no_sigs = true;
 
     delete streambuf;
@@ -540,14 +536,24 @@ namespace
     }
 
     g_mime_stream_flush (decrypted);
+    g_mime_stream_reset(decrypted);
 
     gpgme_data_release(gpg_buf);
     gpgme_data_release(gpg_out_buf);
 
-    g_mime_stream_reset(decrypted);
+    GPGSignersInfo si;
 
-    std::cerr<<"infos "<<info.dec_ok<<" "<<info.verify_ok<<"\n";
+    if (info.verify_ok && !info.no_sigs)
+    {
+      if (info.v_res->signatures->fpr)
+        gpgme_get_key (gpg_ctx, info.v_res->signatures->fpr, &key, 0);
+      if (key)
+      {
+        fill_signer_info(si, key);
+      }
+    }
 
+    signer_info = si;
     info.err = GPG_ERR_NO_ERROR;
 
     return decrypted;
@@ -588,6 +594,7 @@ namespace
     TempPart *uu_temp;
     std::string gpg_verified;
     GPGDecErr gpgerr;
+    GPGSignersInfo signer_info;
 
     sep_state():uu_temp(NULL), gpg_verified("") {};
   };
@@ -626,11 +633,8 @@ namespace
         line_len = pch - line_str;
       }
 
-      std::cerr<<"LINE   "<<line_str;
-
       if (gpg_is_signed_begin_line(line_str))
       {
-        std::cerr<<"signed begin\n";
         gpg_is_signed = true;
         signed_msg_start = linestart_pos;
       }
@@ -638,7 +642,6 @@ namespace
       {
         gboolean gpg_signed_end_found = true;
         signed_msg_end = linestart_pos+line_len;
-        std::cerr<<"signed offsets "<<signed_msg_start<<" "<<signed_msg_end<<"\n";
       }
 
       switch (type)
@@ -809,16 +812,14 @@ namespace
           if (gpg_is_ending_line(line_str))
           {
             GMimeStream * stream = g_mime_stream_substream (istream, sub_begin, linestart_pos+line_len);
-            GPGDecErr info;
-            GMimeStream * dec = gpg_decrypt(info, stream, cur);
-            std::cerr<<"info verify "<<info.verify_ok<<"\n";
-            if (info.verify_ok)
+            GMimeStream * dec = gpd_decrypt_and_verify(state.signer_info, state.gpgerr, stream);
+            if (state.gpgerr.verify_ok)
               state.gpg_verified = "valid";
-            else if (!info.verify_ok && !info.no_sigs)
+            else if (!state.gpgerr.verify_ok && !state.gpgerr.no_sigs)
               state.gpg_verified = "invalid";
-            state.gpgerr = info;
+
             gpg_looking_for_line = false;
-            if (info.dec_ok)
+            if (state.gpgerr.dec_ok)
             {
               apply_source_and_maybe_filter (cur, dec);
               if( append_if_not_present (master, cur) )
@@ -963,8 +964,6 @@ namespace
   void handle_uu_and_yenc_in_text_plain_cb (GMimeObject *parent, GMimeObject *part, gpointer data)
   {
 
-    std::cerr<<"handle uu yenc "<<part<<"\n";
-
     if (!part)
       return;
 
@@ -995,7 +994,6 @@ namespace
       //this part was completely folded into a previous part
       //so delete it
       if(parts.size()==0) {
-        std::cerr<<"folded\n";
         GMimeMultipart *mp = GMIME_MULTIPART (parent);
         int index = g_mime_multipart_index_of (mp,part);
         if(index>0)
@@ -1004,8 +1002,6 @@ namespace
       }
       else
       {
-        std::cerr<<"not folded "<<parts.size()<<"\n";
-
         GMimeMultipart * multipart = g_mime_multipart_new_with_subtype ("mixed");
 
         const TempPart *tmp_part;
@@ -1047,7 +1043,6 @@ namespace
         }
         if(GMIME_IS_MULTIPART(parent))
         {
-          std::cerr<<"parent is multipart\n";
           GMimeMultipart *mp = GMIME_MULTIPART (parent);
           int index = g_mime_multipart_index_of (mp, part);
           g_mime_multipart_remove_at (mp, index);
@@ -1062,7 +1057,6 @@ namespace
         }
         else if(GMIME_IS_MESSAGE(parent))
         {
-          std::cerr<<"parent is msg\n";
           g_mime_message_set_mime_part((GMimeMessage*)parent, newpart);
         }
         g_object_unref(newpart);
@@ -1116,14 +1110,13 @@ namespace{
 ***/
 
 GMimeMessage*
-mime :: construct_message (GMimeStream  ** istreams,
+mime :: construct_message (GMimeStream    ** istreams,
                            int             qty,
-                           GPGDecErr     & gpgerr)
+                           GPGSignersInfo & signer_info,
+                           GPGDecErr      & gpgerr)
 {
   const char * message_id = "Foo <bar@mum>";
   GMimeMessage * retval = 0;
-
-  std::cerr<<"construct message "<<qty<<"\n";
 
   // sanity clause
   pan_return_val_if_fail (is_nonempty_string(message_id), NULL);
@@ -1170,6 +1163,7 @@ mime :: construct_message (GMimeStream  ** istreams,
     /* set gpg signature verify success/fail flag */
     g_mime_object_set_header(GMIME_OBJECT(data.parent), "X-GPG-Signed", state.gpg_verified.c_str());
     gpgerr = state.gpgerr;
+    signer_info = state.signer_info;
   }
 
   // cleanup

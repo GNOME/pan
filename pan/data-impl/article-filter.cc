@@ -189,8 +189,9 @@ ArticleFilter :: test_article (const Data        & data,
         {
           if (cache.contains(article.message_id)) {
             GPGDecErr unused_for_now;
+            GPGSignersInfo unused;
             ArticleCache::mid_sequence_t mid(1, article.message_id);
-            GMimeMessage *msg = cache.get_message(mid, unused_for_now);
+            GMimeMessage *msg = cache.get_message(mid, unused, unused_for_now);
             const char *hdr = g_mime_object_get_header(GMIME_OBJECT(msg), criteria._header);
             pass = criteria._text.test (hdr);
             g_object_unref(msg);

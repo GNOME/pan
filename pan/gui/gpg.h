@@ -34,6 +34,8 @@ namespace pan
     std::string uid;  // userid /hex
     long int creation_timestamp;
 
+    GPGSignersInfo() : real_name(""), auth(false), sign(false),
+        certify(false), enc(false), expires(0), uid(""), creation_timestamp(0) {}
   };
 
   typedef std::map<std::string,GPGSignersInfo> signers_m;
@@ -42,6 +44,7 @@ namespace pan
   extern bool gpg_inited;
   extern signers_m gpg_signers;
 
+  /* Error struct for gpg_decrypt */
   struct GPGDecErr
   {
     gpg_error_t err;
@@ -50,25 +53,25 @@ namespace pan
     bool dec_ok;
     bool verify_ok;
     bool no_sigs;
+
     GPGDecErr() : dec_ok(false), verify_ok(false), no_sigs(true), err(GPG_ERR_NO_ERROR) {}
   };
 
-  /** Error struct for gpg_sign_and_encrypt
-    * @see gpg_sign_and_encrypt
-   **/
+  /* Error struct for gpg_sign_and_encrypt */
   struct GPGEncErr
   {
-    /** common gpg errcode */
     gpgme_error_t err;
-    /** encode result */
     gpgme_encrypt_result_t enc_res;
-    /** sign result */
     gpgme_sign_result_t sign_res;
+
+    GPGEncErr() : err(GPG_ERR_NO_ERROR) {}
+
   };
 
   GPGSignersInfo get_uids_from_fingerprint(char*);
   void init_gpg();
   void deinit_gpg();
+  void fill_signer_info(GPGSignersInfo& info, gpgme_key_t key);
 
 }
 

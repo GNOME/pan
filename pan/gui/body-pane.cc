@@ -886,6 +886,22 @@ namespace
     g_object_unref (G_OBJECT(l));
     return pixbuf;
   }
+
+}
+
+bool
+BodyPane ::get_gpgsig_from_gmime_part (GMimePart * part)
+{
+  GMimeDataWrapper * wrapper (g_mime_part_get_content_object (part));
+  GMimeStream * mem_stream (g_mime_stream_mem_new ());
+  if (wrapper)
+  {
+    g_mime_data_wrapper_write_to_stream (wrapper, mem_stream);
+    g_mime_stream_reset(mem_stream);
+    gpd_decrypt_and_verify(_signer_info, _gpgerr, mem_stream);
+    return true;
+  }
+  return false;
 }
 
 void
@@ -927,6 +943,7 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
       // rembember the location of the first picture.
       if (gtk_text_buffer_get_mark (_buffer, FIRST_PICTURE) == NULL)
         gtk_text_buffer_create_mark (_buffer, FIRST_PICTURE, &iter, true);
+        gtk_text_buffer_create_mark (_buffer, FIRST_PICTURE, &iter, true);
 
       // add the picture
       const int begin_offset (gtk_text_iter_get_offset (&iter));
@@ -952,7 +969,8 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
   }
 
   // or, if it's text, display it
-  else if (g_mime_content_type_is_type (type, "text", "*"))
+  else if (g_mime_content_type_is_type (type, "text", "*") ||
+           (g_mime_content_type_is_type (type, "application", "pgp-signature")))
   {
     const char * fallback_charset (_charset.c_str());
     const char * p_flowed (g_mime_object_get_content_type_parameter(obj,"format"));
@@ -968,10 +986,13 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
     const bool do_urls (_prefs.get_flag ("highlight-urls", true));
     append_text_buffer_nolock (&_tm, _buffer, str, do_mute, do_smilies, do_markup, do_urls);
     is_done = true;
-  }
 
-  else if (g_mime_content_type_is_type (type, "text", "*"))
-  {
+    /* verify signature */
+    if (g_mime_content_type_is_type (type, "*", "pgp-signature"))
+    {
+      bool res = get_gpgsig_from_gmime_part(part);
+      if (res) update_sig_valid(_gpgerr.verify_ok);
+    }
 
   }
 
@@ -987,6 +1008,7 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
     g_free (pch);
   }
 }
+
 void
 BodyPane :: foreach_part_cb (GMimeObject* /*parent*/, GMimeObject* o, gpointer self)
 {
@@ -1228,7 +1250,6 @@ namespace
   {
     size_t in = s.find("<");
     size_t out = s.find(">");
-    std::cerr<<s<<" "<<in<<" "<<out<<"\n";
     if (in == std::string::npos || out == std::string::npos) return "...";
 
     return s.substr (in+1,out-in-1);
@@ -1243,34 +1264,26 @@ BodyPane:: on_tooltip_query(GtkWidget  *widget,
                             GtkTooltip *tooltip,
                             gpointer    data)
 {
-  GPGDecErr* err = static_cast<GPGDecErr*>(data);
+  BodyPane* pane = static_cast<BodyPane*>(data);
+  GPGDecErr& err = pane->_gpgerr;
+  GPGSignersInfo& info = pane->_signer_info;
 
-  g_return_val_if_fail(err, false);
-  g_return_val_if_fail(err->dec_ok, false);
-  g_return_val_if_fail(err->err == GPG_ERR_NO_ERROR, false);
+  g_return_val_if_fail(err.dec_ok, false);
+  g_return_val_if_fail(err.err == GPG_ERR_NO_ERROR || err.err == GPG_ERR_NO_DATA, false);
 
-  if (err->no_sigs) return false;
-  std::cerr<<"bla 1\n";
-  if (!err->v_res) return false;
-  std::cerr<<"bla 2\n";
-  if (!err->v_res->signatures) return false;
-  std::cerr<<"bla 3\n";
-  if (!err->v_res->signatures->fpr) return false;
-  std::cerr<<"bla 4\n";
+  if (err.no_sigs) return false;
+  if (!err.v_res) return false;
+  if (!err.v_res->signatures) return false;
+  if (!err.v_res->signatures->fpr) return false;
 
-  // get uid from fingerprint
-  // mask out higher bytes of key (example) 0E A9 59 12 68 0A D9 CF
-  size_t len (strlen(err->v_res->signatures->fpr));
-  size_t off (0);
-  if (len > 16) off += len - 16;
-  GPGSignersInfo info = get_uids_from_fingerprint(err->v_res->signatures->fpr+off);
-  std::cerr<<"infos "<<info.expires<<" "<<info.creation_timestamp<<" "<<info.real_name<<"\n";
+// get uid from fingerprint
+//  GPGSignersInfo info = get_uids_from_fingerprint(err->v_res->signatures->fpr);
+
   EvolutionDateMaker ed;
 
   char buf[2048];
   g_snprintf(buf, sizeof(buf),
              "<u>This is a <b>GPG-Signed</b> message.</u>\n\n"
-             "Information:\n"
              "<b>Signer</b> : %s (\"%s\")\n"
              "<b>Valid until</b> : %s\n"
              "<b>Created on</b> : %s",
@@ -1288,8 +1301,6 @@ BodyPane:: on_tooltip_query(GtkWidget  *widget,
 void
 BodyPane :: update_sig_valid(int i)
 {
-
-  std::cerr<<"udpate icon "<<i<<"\n";
 
   gtk_image_clear(GTK_IMAGE(_sig_icon));
 
@@ -1312,15 +1323,13 @@ BodyPane :: set_article (const Article& a)
 
   if (_message)
     g_object_unref (_message);
-  _message = _cache.get_message (_article.get_part_mids(), _gpgerr);
+  _message = _cache.get_message (_article.get_part_mids(), _signer_info, _gpgerr);
 
   const char* gpg_sign = g_mime_object_get_header(GMIME_OBJECT(_message), "X-GPG-Signed");
   int val(-1);
 
   if (gpg_sign)
   {
-    std::cerr<<"gpg flag "<<gpg_sign<<"\n";
-
     if (!strcmp(gpg_sign, "valid"))
       val = 1;
     else if (!strcmp(gpg_sign, "invalid"))
@@ -1569,7 +1578,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_widget_set_size_request (_sig_icon, 32, 32);
   gtk_box_pack_start (GTK_BOX(hbox), _sig_icon, true, true, PAD_SMALL);
   gtk_widget_set_has_tooltip (_sig_icon, true);
-  g_signal_connect(_sig_icon,"query-tooltip",G_CALLBACK(on_tooltip_query), &_gpgerr);
+  g_signal_connect(_sig_icon,"query-tooltip",G_CALLBACK(on_tooltip_query), this);
 
   w = _xface = gtk_image_new();
   gtk_widget_set_size_request (w, 48, 48);
