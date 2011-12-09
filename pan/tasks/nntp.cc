@@ -304,10 +304,8 @@ NNTP :: help (Listener * l)
 void
 NNTP :: get_group (Listener * l, const Quark& group)
 {
-   _listener = l;
-   std::cerr<<"get group "<<group<<"\n";
-   _commands.push_back (build_command ("GROUP %s\r\n",group.c_str()));
-   write_next_command();
+   if (group != _group)
+    _commands.push_back (build_command ("GROUP %s\r\n",group.c_str()));
 }
 
 
@@ -319,7 +317,7 @@ NNTP :: xover (const Quark   & group,
 {
    _listener = l;
 
-   get_group(l,group);
+   get_group(group);
 
    _commands.push_back (build_command ("XOVER %"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT"\r\n", low, high));
 
@@ -362,7 +360,7 @@ NNTP :: article (const Quark     & group,
 {
    _listener = l;
 
-   get_group(l,group);
+   get_group(group);
 
    _commands.push_back (build_command ("ARTICLE %"G_GUINT64_FORMAT"\r\n", article_number));
 
@@ -376,7 +374,7 @@ NNTP :: article (const Quark     & group,
 {
    _listener = l;
 
-   get_group(l,group);
+   get_group(group);
 
    _commands.push_back (build_command ("ARTICLE %s\r\n", message_id));
 
