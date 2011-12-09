@@ -42,6 +42,7 @@ namespace pan
       Data& _data;
       ArticleCache& _cache;
       GtkWidget* _sig_icon;
+#ifdef HAVE_GPGME
       void update_sig_valid(int i);
       static gboolean on_tooltip_query(GtkWidget  *widget,
                                        gint        x,
@@ -49,7 +50,7 @@ namespace pan
                                        gboolean    keyboard_tip,
                                        GtkTooltip *tooltip,
                                        gpointer    data);
-
+#endif
     public:
       BodyPane (Data&, ArticleCache&, Prefs&);
       ~BodyPane ();
@@ -110,9 +111,11 @@ namespace pan
 
       /* updated with values from gmimemessage */
    public:
+#ifdef HAVE_GPGME
       GPGDecErr _gpgerr;
       GPGSignersInfo _signer_info;
       bool get_gpgsig_from_gmime_part (GMimePart * part);
+#endif
 
     private:
       std::string _hover_url;

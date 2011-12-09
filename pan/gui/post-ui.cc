@@ -104,6 +104,7 @@ namespace pan
   bool master_reply (true);
   bool gpg_enc (false);
   bool gpg_sign (false);
+  bool user_has_gpg (false);
 
   void on_remember_charset_toggled (GtkToggleAction * toggle, gpointer)
   {
@@ -349,7 +350,7 @@ PostUI :: set_always_run_editor (bool run)
   _prefs.set_flag ("always-run-editor", run);
 }
 
-
+#ifdef HAVE_GPGME
 std::string
 PostUI :: gpg_sign_and_encrypt(const std::string& body, GPGEncErr& fail)
 {
@@ -419,6 +420,7 @@ PostUI :: gpg_sign_and_encrypt(const std::string& body, GPGEncErr& fail)
   fail.err = GPG_ERR_NO_ERROR;
   return ret_str.str();
 }
+#endif
 
 void
 PostUI :: set_wrap_mode (bool wrap)
@@ -1098,18 +1100,26 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
   if(_file_queue_empty)
   {
-    GPGEncErr fail;
-    std::string res = gpg_sign_and_encrypt(get_body(), fail);
-    if (gpgme_err_code(fail.err) == GPG_ERR_NO_ERROR)
+#ifdef HAVE_GPGME
+    if (user_has_gpg)
     {
-      gtk_text_buffer_set_text (_body_buf, res.c_str(), res.size());
-      GMimeMessage* msg = new_message_from_ui(POSTING);
-      _post_task = new TaskPost (server, msg);
-      _post_task->add_listener (this);
-      _queue.add_task (_post_task, Queue::TOP);
-    } else
-      Log::add_err_va("Failed to sign the Message with your public key : \"%s\"",gpgme_strerror(fail.err));
-      return false;
+      GPGEncErr fail;
+      std::string res = gpg_sign_and_encrypt(get_body(), fail);
+      if (gpgme_err_code(fail.err) == GPG_ERR_NO_ERROR)
+      {
+        gtk_text_buffer_set_text (_body_buf, res.c_str(), res.size());
+      }
+      else
+      {
+        Log::add_err_va("Failed to sign the Message with your public key : \"%s\"",gpgme_strerror(fail.err));
+        return false;
+      }
+    }
+#endif
+    GMimeMessage* msg = new_message_from_ui(POSTING);
+    _post_task = new TaskPost (server, msg);
+    _post_task->add_listener (this);
+    _queue.add_task (_post_task, Queue::TOP);
   } else {
 
     // prepend header for xml file (if one was chosen)
@@ -1823,7 +1833,7 @@ namespace
     }
     else if (type == Profile::GPGSIG)
     {
-
+      /// TODO : Perhaps show but omit in gmimemessage, or make a multipart ??
     }
 
     /* Convert signature to UTF-8. Since the signature is a local file,
@@ -2208,12 +2218,13 @@ PostUI :: body_view_realized_cb (GtkWidget*, gpointer self_gpointer)
     self->spawn_editor ();
 
   g_signal_handler_disconnect (self->_body_view, self->body_view_realized_handler);
-  self->_realized = true;
 
   /* gpg stuff */
   const Profile profile (self->get_current_profile ());
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (self->_agroup, "gpg-sign")),profile.use_sigfile);
+  user_has_gpg == profile.sig_type != Profile::GPGSIG;
 
+  self->_realized = true;
 }
 
 /***

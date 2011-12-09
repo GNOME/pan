@@ -74,8 +74,11 @@ namespace pan
       void resize ();
       void clear ();
 
+#ifdef HAVE_GPGME
       GMimeMessage* get_message (const mid_sequence_t&, GPGSignersInfo&, GPGDecErr&) const;
-
+#else
+      GMimeMessage* get_message (const mid_sequence_t&) const;
+#endif
       typedef std::vector<std::string> strings_t;
       strings_t get_filenames (const mid_sequence_t&);
 

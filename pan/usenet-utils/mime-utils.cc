@@ -478,6 +478,7 @@ namespace pan
     return true;
   }
 
+#ifdef HAVE_GPGME
   GMimeStream* gpd_decrypt_and_verify (GPGSignersInfo& signer_info, GPGDecErr& info, GMimeStream* s)
   {
 
@@ -558,6 +559,7 @@ namespace pan
 
     return decrypted;
   }
+#endif
 
   void apply_source_and_maybe_filter (TempPart * part, GMimeStream * s)
   {
@@ -593,9 +595,10 @@ namespace pan
     temp_parts_t current_list;
     TempPart *uu_temp;
     std::string gpg_verified;
+#ifdef HAVE_GPGME
     GPGDecErr gpgerr;
     GPGSignersInfo signer_info;
-
+#endif
     sep_state():uu_temp(NULL), gpg_verified("") {};
   };
 
@@ -807,6 +810,7 @@ namespace pan
           }
           break;
         }
+#ifdef HAVE_GPGME
         case ENC_GPG:
         {
           if (gpg_is_ending_line(line_str))
@@ -835,6 +839,7 @@ namespace pan
           }
           break;
         }
+#endif
       }
     }
 
@@ -1109,11 +1114,17 @@ namespace{
 ****
 ***/
 
+#ifdef HAVE_GPGME
 GMimeMessage*
 mime :: construct_message (GMimeStream    ** istreams,
                            int             qty,
                            GPGSignersInfo & signer_info,
                            GPGDecErr      & gpgerr)
+#else
+GMimeMessage*
+mime :: construct_message (GMimeStream    ** istreams,
+                           int             qty)
+#endif
 {
   const char * message_id = "Foo <bar@mum>";
   GMimeMessage * retval = 0;
@@ -1161,9 +1172,11 @@ mime :: construct_message (GMimeStream    ** istreams,
     temp_p &data(*it);
     handle_uu_and_yenc_in_text_plain_cb(data.parent, data.part, &state);
     /* set gpg signature verify success/fail flag */
+#ifdef HAVE_GPGME
     g_mime_object_set_header(GMIME_OBJECT(data.parent), "X-GPG-Signed", state.gpg_verified.c_str());
     gpgerr = state.gpgerr;
     signer_info = state.signer_info;
+#endif
   }
 
   // cleanup

@@ -36,6 +36,13 @@ namespace pan
       ~ProfileDialog ();
       GtkWidget* root() { return _root; }
       void get_profile (std::string& setme_name, Profile& setme_profile);
+      enum
+      {
+        ROW_FILE=0,
+        ROW_TEXT=1,
+        ROW_GPGSIG=2,
+        ROW_COMMAND=3
+      };
 
     private:
       GtkWidget * _root;

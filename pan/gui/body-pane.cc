@@ -889,6 +889,7 @@ namespace
 
 }
 
+#ifdef HAVE_GPGME
 bool
 BodyPane ::get_gpgsig_from_gmime_part (GMimePart * part)
 {
@@ -903,6 +904,7 @@ BodyPane ::get_gpgsig_from_gmime_part (GMimePart * part)
   }
   return false;
 }
+#endif
 
 void
 BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
@@ -986,14 +988,14 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
     const bool do_urls (_prefs.get_flag ("highlight-urls", true));
     append_text_buffer_nolock (&_tm, _buffer, str, do_mute, do_smilies, do_markup, do_urls);
     is_done = true;
-
+#ifdef HAVE_GPGME
     /* verify signature */
     if (g_mime_content_type_is_type (type, "*", "pgp-signature"))
     {
       bool res = get_gpgsig_from_gmime_part(part);
       if (res) update_sig_valid(_gpgerr.verify_ok);
     }
-
+#endif
   }
 
   // otherwise, bitch and moan.
@@ -1256,6 +1258,7 @@ namespace
   }
 }
 
+#ifdef HAVE_GPGME
 gboolean
 BodyPane:: on_tooltip_query(GtkWidget  *widget,
                             gint        x,
@@ -1298,6 +1301,7 @@ BodyPane:: on_tooltip_query(GtkWidget  *widget,
   return true;
 }
 
+
 void
 BodyPane :: update_sig_valid(int i)
 {
@@ -1315,19 +1319,25 @@ BodyPane :: update_sig_valid(int i)
       break;
   }
 }
+#endif
 
 void
 BodyPane :: set_article (const Article& a)
 {
   _article = a;
 
+  const char* gpg_sign(0);
+
   if (_message)
     g_object_unref (_message);
+#ifdef HAVE_GPGME
   _message = _cache.get_message (_article.get_part_mids(), _signer_info, _gpgerr);
+  gpg_sign = g_mime_object_get_header(GMIME_OBJECT(_message), "X-GPG-Signed");
+#else
+  _message = _cache.get_message (_article.get_part_mids());
+#endif
 
-  const char* gpg_sign = g_mime_object_get_header(GMIME_OBJECT(_message), "X-GPG-Signed");
   int val(-1);
-
   if (gpg_sign)
   {
     if (!strcmp(gpg_sign, "valid"))
@@ -1335,9 +1345,9 @@ BodyPane :: set_article (const Article& a)
     else if (!strcmp(gpg_sign, "invalid"))
       val = 0;
   }
-
+#ifdef HAVE_GPGME
   update_sig_valid(val);
-
+#endif
   refresh ();
 
   _data.mark_read (_article);
@@ -1574,12 +1584,12 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_label_set_ellipsize (GTK_LABEL(w), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_use_markup (GTK_LABEL(w), true);
   gtk_box_pack_start (GTK_BOX(hbox), w, true, true, PAD_SMALL);
-
+#ifdef HAVE_GPGME
   gtk_widget_set_size_request (_sig_icon, 32, 32);
   gtk_box_pack_start (GTK_BOX(hbox), _sig_icon, true, true, PAD_SMALL);
   gtk_widget_set_has_tooltip (_sig_icon, true);
   g_signal_connect(_sig_icon,"query-tooltip",G_CALLBACK(on_tooltip_query), this);
-
+#endif
   w = _xface = gtk_image_new();
   gtk_widget_set_size_request (w, 48, 48);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
@@ -1625,8 +1635,9 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   g_signal_connect (_root, "show", G_CALLBACK(show_cb), this);
 
   gtk_widget_show_all (_root);
-
+#ifdef HAVE_GPGME
   update_sig_valid(-1);
+#endif
 }
 
 BodyPane :: ~BodyPane ()
