@@ -537,8 +537,8 @@ namespace
     { "always-run-editor", 0, N_("Always Run Editor"), 0, 0, G_CALLBACK(do_edit2), false },
     { "remember-charset", 0, N_("Remember Character Encoding for this Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
     { "master-reply", 0, N_("Thread attached replies"), 0, 0, G_CALLBACK(on_mr_toggled), true },
-    { "gpg-encrypt", 0, N_("GPG-Encrypt the message"), 0, 0, G_CALLBACK(on_enc_toggled), false },
-    { "gpg-sign", 0, N_("GPG-Sign the message"), 0, 0, G_CALLBACK(on_sign_toggled), false },
+    { "gpg-encrypt", 0, N_("PGP-Encrypt the message"), 0, 0, G_CALLBACK(on_enc_toggled), false },
+    { "gpg-sign", 0, N_("PGP-Sign the message"), 0, 0, G_CALLBACK(on_sign_toggled), false },
     { "spellcheck", 0, N_("Check _Spelling"), 0, 0, G_CALLBACK(on_spellcheck_toggled), true }
   };
 

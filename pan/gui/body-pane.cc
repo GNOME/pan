@@ -50,6 +50,33 @@ extern "C" {
 
 using namespace pan;
 
+/***
+****
+***/
+
+namespace
+{
+
+  enum Icons
+  {
+    ICON_SIG_OK,
+    ICON_SIG_FAIL,
+    NUM_ICONS
+  };
+
+  struct Icon {
+  const guint8 * pixbuf_txt;
+  GdkPixbuf * pixbuf;
+  } icons[NUM_ICONS] = {
+    { icon_sig_ok,          0 },
+    { icon_sig_fail,        0 }
+  };
+}
+
+/***
+****
+***/
+
 /**
 ***  Pixbuf Cache
 **/
@@ -993,6 +1020,7 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
     if (g_mime_content_type_is_type (type, "*", "pgp-signature"))
     {
       bool res = get_gpgsig_from_gmime_part(part);
+      std::cerr<<"1023\n";
       if (res) update_sig_valid(_gpgerr.verify_ok);
     }
 #endif
@@ -1209,6 +1237,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     gtk_text_buffer_get_start_iter  (_buffer, &iter);
     gtk_text_view_scroll_to_iter (GTK_TEXT_VIEW(_text), &iter, 0.0, true, 0.0, 0.0);
   }
+  std::cerr<<"1240\n";
 
 }
 
@@ -1217,33 +1246,6 @@ BodyPane :: refresh ()
 {
   set_text_from_message (_message);
 }
-
-/***
-****
-***/
-
-namespace
-{
-
-  enum Icons
-  {
-    ICON_SIG_OK,
-    ICON_SIG_FAIL,
-    NUM_ICONS
-  };
-
-  struct Icon {
-  const guint8 * pixbuf_txt;
-  GdkPixbuf * pixbuf;
-  } icons[NUM_ICONS] = {
-    { icon_sig_ok,          0 },
-    { icon_sig_fail,        0 }
-  };
-}
-
-/***
-****
-***/
 
 namespace
 {
@@ -1306,6 +1308,8 @@ void
 BodyPane :: update_sig_valid(int i)
 {
 
+  std::cerr<<"update sig "<<i<<"\n";
+
   gtk_image_clear(GTK_IMAGE(_sig_icon));
 
   switch (i)
@@ -1346,6 +1350,7 @@ BodyPane :: set_article (const Article& a)
       val = 0;
   }
 #ifdef HAVE_GPGME
+  std::cerr<<"1354\n";
   update_sig_valid(val);
 #endif
   refresh ();
@@ -1360,6 +1365,7 @@ BodyPane :: clear ()
     g_object_unref (_message);
   _message = 0;
   refresh ();
+  update_sig_valid(-1);
 }
 
 void
@@ -1635,9 +1641,6 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   g_signal_connect (_root, "show", G_CALLBACK(show_cb), this);
 
   gtk_widget_show_all (_root);
-#ifdef HAVE_GPGME
-  update_sig_valid(-1);
-#endif
 }
 
 BodyPane :: ~BodyPane ()
@@ -1649,6 +1652,9 @@ BodyPane :: ~BodyPane ()
 
   if (_message)
     g_object_unref (_message);
+
+  for (int i=0; i<NUM_ICONS; ++i)
+    g_object_unref (icons[i].pixbuf);
 }
 
 

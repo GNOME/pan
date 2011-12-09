@@ -205,7 +205,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     gtk_list_store_set (store, &iter, 0, _("Text"),         1, Profile::TEXT, -1);
     gtk_list_store_append (store, &iter);
 #ifdef HAVE_GPGME
-    gtk_list_store_set (store, &iter, 0, _("GPG Signature"),1, Profile::GPGSIG, -1);
+    gtk_list_store_set (store, &iter, 0, _("PGP Signature"),1, Profile::GPGSIG, -1);
     gtk_list_store_append (store, &iter);
 #endif
     gtk_list_store_set (store, &iter, 0, _("Command"),      1, Profile::COMMAND, -1);

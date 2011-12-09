@@ -106,6 +106,7 @@ namespace pan
       void read_parent_article ();
 
       void mark_all_flagged ();
+      void invert_selection ();
       void move_to_next_bookmark(int);
 
     private:
@@ -123,8 +124,6 @@ namespace pan
       Article* get_first_selected_article ();
       std::set<const Article*> get_full_selection () const;
       std::vector<const Article*> get_full_selection_v () const;
-      void mark_all_flagged ();
-      void invert_selection ();
       const guint get_full_selection_rows_num () const;
       std::set<const Article*> get_nested_selection (bool do_mark_all) const;
       bool set_group (const Quark& group);
