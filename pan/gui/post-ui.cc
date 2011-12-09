@@ -367,7 +367,7 @@ PostUI :: gpg_sign_and_encrypt(const std::string& body, GPGEncErr& fail)
   StringView v(body);
   gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
   gpgme_data_new (&gpg_out_buf);
-  gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
+  gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BINARY);
 
   /* find key to uid */
   fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
@@ -1586,15 +1586,10 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
     g_object_unref (stream);
     GMimePart * part = g_mime_part_new ();
     pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
-//    pch = g_strdup_printf ("multipart/encrypted;"
-//                           "protocol=\"application/pgp-encrypted\";"
-//                           "boundary=\"------------24i8m5cwm904t8v\"; charset=%s", charset.c_str());
-
-    g_mime_object_set_header ((GMimeObject *) msg, "Content-Transfer-Encoding", "Base64");
 
     GMimeContentType * type = g_mime_content_type_new_from_string (pch);
     g_free (pch);
-    g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
+//    g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
     g_mime_part_set_content_object (part, content_object);
     g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
     g_object_unref (content_object);

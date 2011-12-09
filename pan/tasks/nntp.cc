@@ -305,6 +305,7 @@ void
 NNTP :: get_group (Listener * l, const Quark& group)
 {
    _listener = l;
+   std::cerr<<"get group "<<group<<"\n";
    _commands.push_back (build_command ("GROUP %s\r\n",group.c_str()));
    write_next_command();
 }

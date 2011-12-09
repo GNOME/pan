@@ -53,7 +53,9 @@ stock_images = \
   icon_status_queue_empty.png \
   icon_status_error.png \
   icon_status_idle.png \
-  icon_status_new_articles.png
+  icon_status_new_articles.png \
+  icon_sig_ok.png \
+  icon_sig_fail.png
 
 
 EXTRA_DIST = \

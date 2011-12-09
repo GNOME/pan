@@ -41,6 +41,14 @@ namespace pan
       Prefs& _prefs;
       Data& _data;
       ArticleCache& _cache;
+      GtkWidget* _sig_icon;
+      void update_sig_valid(int i);
+      static gboolean on_tooltip_query(GtkWidget  *widget,
+                                       gint        x,
+                                       gint        y,
+                                       gboolean    keyboard_tip,
+                                       GtkTooltip *tooltip,
+                                       gpointer    data);
 
     public:
       BodyPane (Data&, ArticleCache&, Prefs&);
@@ -99,6 +107,9 @@ namespace pan
       void copy_url ();
       static gboolean mouse_button_pressed_cb (GtkWidget*, GdkEventButton*, gpointer);
       gboolean mouse_button_pressed (GtkWidget*, GdkEventButton*);
+
+      /* updated with values from gmimemessage */
+      GPGDecErr _gpgerr;
 
     private:
       std::string _hover_url;

@@ -71,6 +71,7 @@ extern "C" {
 
 #ifdef HAVE_GPGME
   #include "gpg.h"
+  #define GPG_DEF 1
 #endif
 
 namespace pan
@@ -694,8 +695,9 @@ namespace
 
     virtual void on_progress_finished (Progress&, int status)
     {
+      GPGDecErr unused;
       if (status == OK) {
-        GMimeMessage * message = _cache.get_message (_article.get_part_mids());
+        GMimeMessage * message = _cache.get_message (_article.get_part_mids(), unused);
         g_mime_message_foreach (message, foreach_part_cb, this);
         g_object_unref (message);
       }

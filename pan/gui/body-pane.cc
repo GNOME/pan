@@ -21,6 +21,7 @@
 #include <cctype>
 #include <cmath>
 #include <iostream>
+#include <sstream>
 extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
@@ -30,10 +31,10 @@ extern "C" {
 }
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pan/general/debug.h>
-//#include <pan/general/gdk-threads.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
+#include <pan/general/e-util.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/usenet-utils/url-find.h>
@@ -1047,6 +1048,7 @@ namespace
     const char * val (msg ? g_mime_object_get_header ((GMimeObject *) msg, key) : "");
     return add_header_line (s, key_i18n, key, val, fallback_charset);
   }
+
 }
 
 void
@@ -1087,6 +1089,15 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
         w = std::max (w, l);
       }
     }
+
+      // obsolete in favor of the certificate icon tooltip (bodypane)
+//    const StringView gpg (g_mime_object_get_header ((GMimeObject *) message, "X-GPG-Signed"));
+//    if (!gpg.empty())
+//    {
+//      char buf[256];
+//      l = add_header_line (s, message, _("GPG-Signed message signature "), "X-GPG-Signed", fallback_charset);
+//      w = std::max (w, l);
+//    }
   }
 
   s.resize (s.size()-1); // remove trailing linefeed
@@ -1103,7 +1114,6 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     GdkPixbuf *pixbuf = NULL;
     pixbuf = pan_gdk_pixbuf_create_from_x_face (pch);
     gtk_image_set_from_pixbuf (GTK_IMAGE(_xface), pixbuf);
-    gtk_widget_show_all(_verbose);
     g_object_unref (pixbuf);
   }
   // set the face
@@ -1175,12 +1185,124 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     gtk_text_buffer_get_start_iter  (_buffer, &iter);
     gtk_text_view_scroll_to_iter (GTK_TEXT_VIEW(_text), &iter, 0.0, true, 0.0, 0.0);
   }
+
 }
 
 void
 BodyPane :: refresh ()
 {
   set_text_from_message (_message);
+}
+
+/***
+****
+***/
+
+namespace
+{
+
+  enum Icons
+  {
+    ICON_SIG_OK,
+    ICON_SIG_FAIL,
+    NUM_ICONS
+  };
+
+  struct Icon {
+  const guint8 * pixbuf_txt;
+  GdkPixbuf * pixbuf;
+  } icons[NUM_ICONS] = {
+    { icon_sig_ok,          0 },
+    { icon_sig_fail,        0 }
+  };
+}
+
+/***
+****
+***/
+
+namespace
+{
+
+  std::string get_email_address(std::string& s)
+  {
+    size_t in = s.find("<");
+    size_t out = s.find(">");
+    std::cerr<<s<<" "<<in<<" "<<out<<"\n";
+    if (in == std::string::npos || out == std::string::npos) return "...";
+
+    return s.substr (in+1,out-in-1);
+  }
+}
+
+gboolean
+BodyPane:: on_tooltip_query(GtkWidget  *widget,
+                            gint        x,
+                            gint        y,
+                            gboolean    keyboard_tip,
+                            GtkTooltip *tooltip,
+                            gpointer    data)
+{
+  GPGDecErr* err = static_cast<GPGDecErr*>(data);
+
+  g_return_val_if_fail(err, false);
+  g_return_val_if_fail(err->dec_ok, false);
+  g_return_val_if_fail(err->err == GPG_ERR_NO_ERROR, false);
+
+  if (err->no_sigs) return false;
+  std::cerr<<"bla 1\n";
+  if (!err->v_res) return false;
+  std::cerr<<"bla 2\n";
+  if (!err->v_res->signatures) return false;
+  std::cerr<<"bla 3\n";
+  if (!err->v_res->signatures->fpr) return false;
+  std::cerr<<"bla 4\n";
+
+  // get uid from fingerprint
+  // mask out higher bytes of key (example) 0E A9 59 12 68 0A D9 CF
+  size_t len (strlen(err->v_res->signatures->fpr));
+  size_t off (0);
+  if (len > 16) off += len - 16;
+  GPGSignersInfo info = get_uids_from_fingerprint(err->v_res->signatures->fpr+off);
+  std::cerr<<"infos "<<info.expires<<" "<<info.creation_timestamp<<" "<<info.real_name<<"\n";
+  EvolutionDateMaker ed;
+
+  char buf[2048];
+  g_snprintf(buf, sizeof(buf),
+             "<u>This is a <b>GPG-Signed</b> message.</u>\n\n"
+             "Information:\n"
+             "<b>Signer</b> : %s (\"%s\")\n"
+             "<b>Valid until</b> : %s\n"
+             "<b>Created on</b> : %s",
+             info.real_name.c_str(), get_email_address(info.uid).c_str(),
+             ed.get_date_string(info.expires),
+             ed.get_date_string(info.creation_timestamp)
+             );
+
+  gtk_tooltip_set_icon_from_stock (tooltip, GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
+  gtk_tooltip_set_markup (tooltip, buf);
+
+  return true;
+}
+
+void
+BodyPane :: update_sig_valid(int i)
+{
+
+  std::cerr<<"udpate icon "<<i<<"\n";
+
+  gtk_image_clear(GTK_IMAGE(_sig_icon));
+
+  switch (i)
+  {
+    case 0:
+      gtk_image_set_from_pixbuf (GTK_IMAGE(_sig_icon), icons[ICON_SIG_FAIL].pixbuf);
+      break;
+
+    case 1:
+      gtk_image_set_from_pixbuf (GTK_IMAGE(_sig_icon), icons[ICON_SIG_OK].pixbuf);
+      break;
+  }
 }
 
 void
@@ -1190,7 +1312,23 @@ BodyPane :: set_article (const Article& a)
 
   if (_message)
     g_object_unref (_message);
-  _message = _cache.get_message (_article.get_part_mids());
+  _message = _cache.get_message (_article.get_part_mids(), _gpgerr);
+
+  const char* gpg_sign = g_mime_object_get_header(GMIME_OBJECT(_message), "X-GPG-Signed");
+  int val(-1);
+
+  if (gpg_sign)
+  {
+    std::cerr<<"gpg flag "<<gpg_sign<<"\n";
+
+    if (!strcmp(gpg_sign, "valid"))
+      val = 1;
+    else if (!strcmp(gpg_sign, "invalid"))
+      val = 0;
+  }
+
+  update_sig_valid(val);
+
   refresh ();
 
   _data.mark_read (_article);
@@ -1377,7 +1515,6 @@ BodyPane :: populate_popup (GtkTextView *v G_GNUC_UNUSED, GtkMenu *m)
   gtk_menu_shell_prepend (GTK_MENU_SHELL(m), mi);
 }
 
-
 /***
 ****
 ***/
@@ -1390,6 +1527,12 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   _vscroll_visible (false),
   _message (0)
 {
+
+  for (guint i=0; i<NUM_ICONS; ++i)
+    icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, icons[i].pixbuf_txt, FALSE, 0);
+
+  _sig_icon = gtk_image_new();
+
   GtkWidget * vbox = gtk_vbox_new (false, PAD);
   gtk_container_set_resize_mode (GTK_CONTAINER(vbox), GTK_RESIZE_QUEUE);
 
@@ -1422,6 +1565,12 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_label_set_ellipsize (GTK_LABEL(w), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_use_markup (GTK_LABEL(w), true);
   gtk_box_pack_start (GTK_BOX(hbox), w, true, true, PAD_SMALL);
+
+  gtk_widget_set_size_request (_sig_icon, 32, 32);
+  gtk_box_pack_start (GTK_BOX(hbox), _sig_icon, true, true, PAD_SMALL);
+  gtk_widget_set_has_tooltip (_sig_icon, true);
+  g_signal_connect(_sig_icon,"query-tooltip",G_CALLBACK(on_tooltip_query), &_gpgerr);
+
   w = _xface = gtk_image_new();
   gtk_widget_set_size_request (w, 48, 48);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
@@ -1467,6 +1616,8 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   g_signal_connect (_root, "show", G_CALLBACK(show_cb), this);
 
   gtk_widget_show_all (_root);
+
+  update_sig_valid(-1);
 }
 
 BodyPane :: ~BodyPane ()

@@ -28,6 +28,10 @@ extern "C" {
 #include <pan/general/string-view.h>
 #include <pan/general/quark.h>
 
+#ifdef HAVE_GPGME
+  #include <pan/gui/gpg.h>
+#endif
+
 extern "C"
 {
   typedef struct _GMimeMessage GMimeMessage;
@@ -70,7 +74,7 @@ namespace pan
       void resize ();
       void clear ();
 
-      GMimeMessage* get_message (const mid_sequence_t&) const;
+      GMimeMessage* get_message (const mid_sequence_t&, GPGDecErr&) const;
 
       typedef std::vector<std::string> strings_t;
       strings_t get_filenames (const mid_sequence_t&);

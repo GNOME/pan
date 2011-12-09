@@ -88,21 +88,6 @@ namespace pan
       void set_wrap_mode (bool wrap);
       void set_always_run_editor (bool);
 
-      /** Error struct for gpg_sign_and_encrypt
-        * @see gpg_sign_and_encrypt
-       **/
-      struct GPGEncErr
-      {
-#ifdef HAVE_GPGME
-        /** common gpg errcode */
-        gpgme_error_t err;
-        /** encode result */
-        gpgme_encrypt_result_t enc_res;
-        /** sign result */
-        gpgme_sign_result_t sign_res;
-#endif
-      };
-
       /** Encrypts a message with GPG and signs it.
         * @return The encrypted/signed message
         * @param body The unencrypted/unsigned message body

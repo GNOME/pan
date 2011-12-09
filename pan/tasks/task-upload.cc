@@ -207,13 +207,6 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
     if (_first_mid != n->last_mid && !_first && !n->last_mid.empty())  mids += " <" + n->last_mid + ">";
     if (!mids.empty()) g_mime_object_set_header ((GMimeObject *) msg, "References", mids.c_str());
 
-    // modify content type
-//    g_snprintf(buf,sizeof(buf), "Message/Partial; number=%d; total=%d", n->partno, _total_parts);
-//    GMimeContentType * new_type = g_mime_content_type_new_from_string (buf);
-//    g_mime_object_set_content_type ((GMimeObject *) msg, new_type);
-//    g_object_unref (new_type);
-//    g_mime_object_set_header ((GMimeObject *) msg, "Content-Type",buf);
-
     char * all(g_mime_object_get_headers ((GMimeObject *) msg));
     if (_first && _queue_pos==-1)
       all = g_mime_object_to_string ((GMimeObject *) msg);

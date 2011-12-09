@@ -76,16 +76,6 @@
 namespace pan
 {
 
-  struct GPGDecErr
-  {
-    gpg_error_t err;
-    gpgme_decrypt_result_t dec_res;
-    gpgme_verify_result_t v_res;
-    bool dec_ok;
-    bool verify_ok;
-    GPGDecErr() : dec_ok(false), verify_ok(false) {}
-  };
-
   /**
    * Utilities to build and parse GMimeMessages.
    *
@@ -99,7 +89,8 @@ namespace pan
   {
     static GMimeMessage *
     construct_message (GMimeStream ** istreams,
-                         int            qty);
+                         int            qty,
+                         GPGDecErr  & gpgerr);
 
 
     static const char *
