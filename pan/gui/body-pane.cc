@@ -999,7 +999,7 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
 
   // or, if it's text, display it
   else if (g_mime_content_type_is_type (type, "text", "*") ||
-           (g_mime_content_type_is_type (type, "application", "pgp-signature")))
+           (g_mime_content_type_is_type (type, "*", "signed")))
   {
     const char * fallback_charset (_charset.c_str());
     const char * p_flowed (g_mime_object_get_content_type_parameter(obj,"format"));
@@ -1017,11 +1017,16 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
     is_done = true;
 #ifdef HAVE_GPGME
     /* verify signature */
-    if (g_mime_content_type_is_type (type, "*", "pgp-signature"))
-    {
-      bool res = get_gpgsig_from_gmime_part(part);
-      std::cerr<<"1023\n";
-      if (res) update_sig_valid(_gpgerr.verify_ok);
+    const char* gpg (g_mime_object_get_content_type_parameter(obj,"protocol"));
+    if (gpg)
+      {
+      const bool is_gpg (!strcmp(gpg,"pgp-signature"));
+      if (g_mime_content_type_is_type (type, "*", "signed") && is_gpg)
+      {
+        bool res = get_gpgsig_from_gmime_part(part);
+        std::cerr<<"1023\n";
+        if (res) update_sig_valid(_gpgerr.verify_ok);
+      }
     }
 #endif
   }

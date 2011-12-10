@@ -103,7 +103,7 @@ namespace pan
   bool remember_charsets (true);
   bool master_reply (true);
   bool gpg_enc (false);
-  bool gpg_sign (false);
+  bool gpg_sign (true);
   bool user_has_gpg (false);
 
   void on_remember_charset_toggled (GtkToggleAction * toggle, gpointer)
@@ -123,11 +123,6 @@ namespace pan
     if (!self->_realized) return;
 
     gpg_enc = gtk_toggle_action_get_active (toggle);
-    if (gpg_enc)
-    {
-      gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (self->_agroup, "gpg-sign")),false);
-      gpg_sign = false;
-    }
   }
 
   void on_sign_toggled (GtkToggleAction * toggle, gpointer post_g)
@@ -137,11 +132,7 @@ namespace pan
     if (!self->_realized) return;
 
     gpg_sign = gtk_toggle_action_get_active (toggle);
-    if (gpg_sign)
-    {
-      gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (self->_agroup, "gpg-encrypt")),false);
-      gpg_enc = false;
-    }
+    std::cerr<<"gpg sign toggle "<<gpg_sign<<"\n";
   }
 
   void on_spellcheck_toggled (GtkToggleAction * toggle, gpointer post_g)
@@ -351,8 +342,90 @@ PostUI :: set_always_run_editor (bool run)
 }
 
 #ifdef HAVE_GPGME
+
+namespace
+{
+  void
+  mime_part_set_content (GMimePart *part, const char *str)
+  {
+    GMimeDataWrapper *content;
+    GMimeStream *stream;
+
+    stream = g_mime_stream_mem_new_with_buffer (str, strlen (str));
+    content = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
+    g_object_unref (stream);
+
+    g_mime_part_set_content_object (part, content);
+    g_object_unref (content);
+  }
+}
+
+GMimeMessage*
+PostUI :: message_add_signed_part (const std::string& body_str, GMimeMessage* body, GPGEncErr& fail)
+{
+
+  const Profile profile (get_current_profile ());
+  std::string uid = profile.gpg_sig_uid;
+  if (uid.empty()) return 0;
+
+  GMimeMultipart *mp = g_mime_multipart_new_with_subtype ("mixed");
+  g_mime_multipart_set_boundary(mp, NULL);
+  g_mime_multipart_add(mp,g_mime_message_get_mime_part(body));
+
+  gpgme_data_t gpg_buf, gpg_out_buf;
+  gpgme_key_t mykey(0), key;
+
+  StringView v(body_str);
+  gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
+  gpgme_data_new (&gpg_out_buf);
+//  gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
+//  gpgme_data_set_file_name(gpg_out_buf, "signature.asc");
+
+  fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
+  while (!fail.err)
+  {
+    fail.err = gpgme_op_keylist_next (gpg_ctx, &key);
+    if (fail.err) break;
+    if (strcmp(key->subkeys->keyid, uid.c_str()) == 0) { mykey = key; break; }
+  }
+  if (!mykey) { fail.err = GPG_ERR_NO_PUBKEY; return 0; }
+
+  gpgme_signers_clear(gpg_ctx);
+  gpgme_signers_add(gpg_ctx, mykey);
+
+  fail.err      = gpgme_op_sign (gpg_ctx, gpg_buf, gpg_out_buf, GPGME_SIG_MODE_DETACH);
+  fail.sign_res = gpgme_op_sign_result (gpg_ctx);
+  if (fail.err) return 0;
+
+  gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
+  ssize_t ret;
+  std::stringstream ret_str;
+  char buffer[4096]={0};
+
+  while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
+  {
+    ret_str << buffer;
+  }
+
+  GMimePart *sig = g_mime_part_new_with_type("multipart", "signed");
+  g_mime_object_set_content_type_parameter(GMIME_OBJECT(sig),"protocol","pgp-signature");
+  mime_part_set_content (sig, ret_str.str().c_str());
+
+  gpgme_data_release(gpg_buf);
+  gpgme_data_release(gpg_out_buf);
+
+  g_mime_multipart_add (GMIME_MULTIPART (mp), GMIME_OBJECT (sig));
+
+  g_mime_message_set_mime_part(body,GMIME_OBJECT(mp));
+  g_object_unref(mp);
+
+  fail.err = GPG_ERR_NO_ERROR;
+
+  return body;
+}
+
 std::string
-PostUI :: gpg_sign_and_encrypt(const std::string& body, GPGEncErr& fail)
+PostUI :: gpg_encrypt(const std::string& body, GPGEncErr& fail)
 {
   fail.err = GPG_ERR_GENERAL;
 
@@ -366,7 +439,7 @@ PostUI :: gpg_sign_and_encrypt(const std::string& body, GPGEncErr& fail)
   StringView v(body);
   gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
   gpgme_data_new (&gpg_out_buf);
-  gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BINARY);
+  gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
 
   /* find key to uid */
   fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
@@ -380,39 +453,21 @@ PostUI :: gpg_sign_and_encrypt(const std::string& body, GPGEncErr& fail)
 
   gpgme_key_t enc_keys[] = { mykey, NULL};
 
-  gpgme_signers_clear(gpg_ctx);
-  gpgme_signers_add(gpg_ctx, mykey);
-
-  if (gpg_sign)
-  {
-
-    gpgme_sign_result_t sign_res;
-    fail.err = gpgme_op_sign (gpg_ctx, gpg_buf, gpg_out_buf, GPGME_SIG_MODE_CLEAR);
-    sign_res = gpgme_op_sign_result (gpg_ctx);
-    fail.sign_res = sign_res;
-    if (fail.err) return std::string("");
-  }
-  else if (gpg_enc)
-  {
-    gpgme_encrypt_result_t enc_res;
-    fail.err = gpgme_op_encrypt (gpg_ctx, enc_keys, GPGME_ENCRYPT_PREPARE, gpg_buf, gpg_out_buf);
-    enc_res = gpgme_op_encrypt_result (gpg_ctx);
-    fail.enc_res = enc_res;
-    if (fail.err) return std::string("");
-  }
-
-
+  fail.err     = gpgme_op_encrypt (gpg_ctx, enc_keys, GPGME_ENCRYPT_PREPARE, gpg_buf, gpg_out_buf);
+  fail.enc_res = gpgme_op_encrypt_result (gpg_ctx);
+  if (fail.err) return std::string("");
 
   gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
   ssize_t ret;
   std::stringstream ret_str;
   char buffer[4096]={0};
 
-  while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer)) > 0))
+  while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
   {
     ret_str << buffer;
-    ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer));
   }
+
+  std::cerr<<"encrypted:\n"<<ret_str.str()<<"\n\n";
 
   gpgme_data_release(gpg_buf);
   gpgme_data_release(gpg_out_buf);
@@ -1101,25 +1156,37 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   if(_file_queue_empty)
   {
 #ifdef HAVE_GPGME
+    GPGEncErr fail;
+    std::string tmp = get_body();
     if (user_has_gpg)
     {
-      GPGEncErr fail;
-      std::string res = gpg_sign_and_encrypt(get_body(), fail);
-      if (gpgme_err_code(fail.err) == GPG_ERR_NO_ERROR)
+      if (gpg_enc)
       {
-        gtk_text_buffer_set_text (_body_buf, res.c_str(), res.size());
-      }
-      else
-      {
-        Log::add_err_va("Failed to sign the Message with your public key : \"%s\"",gpgme_strerror(fail.err));
-        return false;
+        std::cerr<<"encrypt\n";
+        std::string res = gpg_encrypt(tmp, fail);
+        if (gpgme_err_code(fail.err) == GPG_ERR_NO_ERROR)
+          gtk_text_buffer_set_text (_body_buf, res.c_str(), res.size());
+        else
+        {
+          Log::add_err_va("Failed to sign the Message with your public key : \"%s\"",gpgme_strerror(fail.err));
+          return false;
+        }
       }
     }
 #endif
     GMimeMessage* msg = new_message_from_ui(POSTING);
-    _post_task = new TaskPost (server, msg);
-    _post_task->add_listener (this);
-    _queue.add_task (_post_task, Queue::TOP);
+
+    bool go_on(true);
+
+    if (user_has_gpg && gpg_sign)
+      go_on = go_on && message_add_signed_part(tmp, msg, fail);
+
+    if (go_on)
+    {
+      _post_task = new TaskPost (server, msg);
+      _post_task->add_listener (this);
+      _queue.add_task (_post_task, Queue::TOP);
+    }
   } else {
 
     // prepend header for xml file (if one was chosen)
@@ -1167,7 +1234,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       std::string out;
       generate_unique_id(domain, 1,out);
       first_mid = out;
-
 
       TaskUpload::UploadInfo f;
       f.total=1;
@@ -2219,12 +2285,12 @@ PostUI :: body_view_realized_cb (GtkWidget*, gpointer self_gpointer)
 
   g_signal_handler_disconnect (self->_body_view, self->body_view_realized_handler);
 
+  self->_realized = true;
+
   /* gpg stuff */
   const Profile profile (self->get_current_profile ());
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (self->_agroup, "gpg-sign")),profile.use_sigfile);
-  user_has_gpg == profile.sig_type != Profile::GPGSIG;
-
-  self->_realized = true;
+  user_has_gpg = profile.use_sigfile && profile.sig_type == Profile::GPGSIG;
 }
 
 /***
@@ -2763,6 +2829,9 @@ void
 PostUI :: remove_files (void)
 {
   _upload_queue.remove_tasks (get_selected_files());
+  GtkTreeView * view (GTK_TREE_VIEW (_filequeue_store));
+  int rows = gtk_tree_model_iter_n_children(GTK_TREE_MODEL(view), NULL);
+  if (rows == 0) _file_queue_empty = true;
 }
 
 void

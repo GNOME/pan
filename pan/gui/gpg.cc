@@ -77,8 +77,15 @@ namespace pan
 
     if (gpg_inited) return;
     gpgme_check_version(0);
+    gpgme_set_locale (NULL, LC_CTYPE, setlocale (LC_CTYPE, NULL));
+#ifndef G_OS_WIN32
+    gpgme_set_locale (NULL, LC_MESSAGES, setlocale (LC_MESSAGES, NULL));
+#endif
     gpg_err = gpgme_new (&gpg_ctx);
     if (!gpg_err) gpg_inited = true; else return;
+
+    gpgme_set_textmode (gpg_ctx, 1);
+    gpgme_set_armor (gpg_ctx, 1);
 
     /* get all keys */
     gpgme_key_t key;

@@ -105,6 +105,7 @@ namespace
           p.use_sigfile = !strcmp (*v, "true");
         p.sig_type = p.GPGSIG;
         p.use_gpgsig = true;
+        std::cerr<<"got profile "<<p.use_sigfile<<" "<<p.use_gpgsig<<"\n";
       }
     }
   }
