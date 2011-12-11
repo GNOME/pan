@@ -841,7 +841,7 @@ PostUI :: check_message (const Quark& server, GMimeMessage * msg, bool binpost)
   std::string s;
   foreach_const (MessageCheck::unique_strings_t, errors, it)
     s += *it + "\n";
-  if (s.size()>1) s.resize (s.size()-1); // eat trailing linefeed
+  s.resize (s.size()-1); // eat trailing linefeed
 
   const GtkMessageType type (goodness.is_refuse() ? GTK_MESSAGE_ERROR : GTK_MESSAGE_WARNING);
   GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
