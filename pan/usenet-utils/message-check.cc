@@ -194,13 +194,12 @@ namespace
 
     if (too_wide_qty) {
       char buf[1024];
-      if (too_wide_qty != 1)
-        g_snprintf (buf, sizeof(buf), ngettext("Warning: %d line is more than 80 characters wide.",
-                                               "Warning: %d lines are more than 80 characters wide.", too_wide_qty), too_wide_qty);
-      else
-
+      g_snprintf (buf, sizeof(buf), ngettext(
+                  "Warning: %d line is more than 80 characters wide.",
+                  "Warning: %d lines are more than 80 characters wide.", too_wide_qty), too_wide_qty);
       errors.insert (buf);
       goodness.raise_to_warn ();
+
     }
   }
 
