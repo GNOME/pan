@@ -196,6 +196,8 @@ void
 PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
 {
 
+  _uploads += count;
+
   GtkListStore *store = GTK_LIST_STORE(
                       gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store)));
 
@@ -226,6 +228,10 @@ PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
 void
 PostUI :: on_queue_task_removed (UploadQueue&, Task& task, int index)
 {
+
+  --_uploads;
+  if (_uploads == 0) _file_queue_empty = true;
+
   GtkListStore *store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store)));
 
   const int list_index (find_task_index (store, &task));
@@ -2830,8 +2836,6 @@ PostUI :: remove_files (void)
 {
   _upload_queue.remove_tasks (get_selected_files());
   GtkTreeView * view (GTK_TREE_VIEW (_filequeue_store));
-  int rows = gtk_tree_model_iter_n_children(GTK_TREE_MODEL(view), NULL);
-  if (rows == 0) _file_queue_empty = true;
 }
 
 void
@@ -3047,8 +3051,8 @@ PostUI :: PostUI (GtkWindow    * parent,
   _body_changed_idle_tag(0),
   _filequeue_eventbox (0),
   _filequeue_label (0),
-  _realized(false)
-
+  _realized(false),
+  _uploads(0)
 {
 
   rng.seed();

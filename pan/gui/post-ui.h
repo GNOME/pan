@@ -171,6 +171,7 @@ namespace pan
       int _total_parts;
       std::string _save_file;
       MTRand rng;
+      int _uploads;
 
     public:
       bool _realized;
