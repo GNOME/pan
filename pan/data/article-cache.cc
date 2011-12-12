@@ -398,11 +398,7 @@ ArticleCache :: get_message_mem_stream (const Quark& mid) const
 }
 
 GMimeMessage*
-#ifdef HAVE_GPGME
-ArticleCache :: get_message (const mid_sequence_t& mids, GPGSignersInfo& signer_info, GPGDecErr& err) const
-#else
-ArticleCache :: get_message (const mid_sequence_t& mids) const
-#endif
+ArticleCache :: get_message (const mid_sequence_t& mids, GPGDecErr& err) const
 {
    debug ("trying to get a message with " << mids.size() << " parts");
    GMimeMessage * retval = NULL;
@@ -423,13 +419,11 @@ ArticleCache :: get_message (const mid_sequence_t& mids) const
         streams.push_back (stream);
    }
 
+
    // build the message
    if (!streams.empty())
-#ifdef HAVE_GPGME
-     retval = mime :: construct_message (&streams.front(), streams.size(), signer_info, err);
-#else
-     retval = mime :: construct_message (&streams.front(), streams.size());
-#endif
+     retval = mime :: construct_message (&streams.front(), streams.size(), err);
+
    // cleanup
    foreach (streams_t, streams, it)
      g_object_unref (*it);

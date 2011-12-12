@@ -1,6 +1,4 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @GPGME_CFLAGS@
-
-AM_LDFLAGS = @GPGME_LIBS@
+AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@
 
 noinst_LIBRARIES = libusenetutils.a
 
@@ -14,7 +12,8 @@ libusenetutils_a_SOURCES = \
  scorefile.cc \
  text-massager.cc \
  url-find.cc \
- blowfish.cc
+ blowfish.cc \
+ gpg.cc
 
 noinst_HEADERS = \
  defgroup.h \
@@ -29,7 +28,8 @@ noinst_HEADERS = \
  url-find.h \
  ssl-utils.h \
  blowfish.h \
- blowfish_cyphers.h
+ blowfish_cyphers.h \
+ gpg.h
 
 #noinst_PROGRAMS = \
 # gnksa-test \

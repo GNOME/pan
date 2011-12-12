@@ -26,11 +26,7 @@
 #include <gmime/gmime-stream.h>
 #include <gmime/gmime-message.h>
 #include <pan/general/string-view.h>
-
-#ifdef HAVE_GPGME
-  #include <gpgme.h>
-  #include <pan/gui/gpg.h>
-#endif
+#include <pan/usenet-utils/gpg.h>
 
 /***
 **** YENC
@@ -60,27 +56,12 @@
 #define YENC_SHIFT             42
 #define YENC_QUOTE_SHIFT       64
 
-/***
-**** GPG
-***/
-
-#define GPG_MARKER_BEGIN            "-----BEGIN PGP MESSAGE-----"
-#define GPG_MARKER_BEGIN_LEN        27
-#define GPG_MARKER_END              "-----END PGP MESSAGE-----"
-#define GPG_MARKER_END_LEN          25
-#define GPG_MARKER_SIGNED_BEGIN     "-----BEGIN PGP SIGNED MESSAGE-----"
-#define GPG_MARKER_SIGNED_BEGIN_LEN 34
-#define GPG_MARKER_SIGNED_END       "-----END PGP SIGNATURE-----"
-#define GPG_MARKER_SIGNED_END_LEN   27
-
 namespace pan
 {
-#ifdef HAVE_GPGME
-  GMimeStream* gpg_decrypt_and_verify (GPGSignersInfo& signer_info, GPGDecErr& info, GMimeStream* s, int index=0, GMimeObject* parent=0);
-  GMimeMessage* message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body, GPGEncErr& fail);
-  std::string gpg_encrypt(const std::string& uid, const std::string& body, GPGEncErr& fail);
-  std::string gpg_encrypt_and_sign(const std::string& uid, const std::string& body, GPGEncErr& fail);
-#endif
+
+  GMimeMessage* message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body);
+  GMimeMessage* gpg_encrypt (const std::string& uid, const std::string& body_str, GMimeMessage* body, GPtrArray* rcp, bool sign);
+  bool gpg_verify_mps (GMimeObject*, GPGDecErr&);
 
   /**
    * Utilities to build and parse GMimeMessages.
@@ -93,17 +74,10 @@ namespace pan
    */
   struct mime
   {
-#ifdef HAVE_GPGME
     static GMimeMessage *
     construct_message (GMimeStream      ** istreams,
-                         int              qty,
-                         GPGSignersInfo & signer_info,
-                         GPGDecErr      & gpgerr);
-#else
-    static GMimeMessage *
-    construct_message (GMimeStream      ** istreams,
-                         int              qty);
-#endif
+                       int                 qty,
+                       GPGDecErr         &);
 
     static const char *
     get_charset (GMimeMessage * message);

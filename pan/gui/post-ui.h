@@ -31,10 +31,6 @@
 
 #include <pan/usenet-utils/MersenneTwister.h>
 
-#ifdef HAVE_GPGME
-  #include <gpgme.h>
-#endif
-
 namespace pan
 {
   class Profiles;

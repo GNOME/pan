@@ -69,9 +69,7 @@ extern "C" {
 
 #include "profiles-dialog.h"
 
-#ifdef HAVE_GPGME
-  #include "gpg.h"
-#endif
+#include <pan/usenet-utils/gpg.h>
 
 namespace pan
 {
@@ -344,9 +342,8 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
         on_queue_task_active_changed (queue, *(*it), true);
     }
   }
-#ifdef HAVE_GPGME
+
   init_gpg();
-#endif
 }
 
 namespace
@@ -396,9 +393,7 @@ GUI :: ~GUI ()
     g_object_unref (*it);
   g_object_unref (G_OBJECT(_ui_manager));
 
-#ifdef HAVE_GPGME
   deinit_gpg();
-#endif
 }
 
 /***
@@ -695,13 +690,8 @@ namespace
     virtual void on_progress_finished (Progress&, int status)
     {
       if (status == OK) {
-#ifdef HAVE_GPGME
-        GPGDecErr unused;
-        GPGSignersInfo unuse;
-        GMimeMessage * message = _cache.get_message (_article.get_part_mids(), unuse, unused);
-#else
-        GMimeMessage * message = _cache.get_message (_article.get_part_mids());
-#endif
+        GPGDecErr err;
+        GMimeMessage * message = _cache.get_message (_article.get_part_mids(),err);
         g_mime_message_foreach (message, foreach_part_cb, this);
         g_object_unref (message);
       }

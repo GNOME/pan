@@ -38,6 +38,7 @@ extern "C" {
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/usenet-utils/gnksa.h>
+#include <pan/usenet-utils/gpg.h>
 #include <pan/usenet-utils/message-check.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/data/data.h>
@@ -57,11 +58,6 @@ extern "C" {
 #define DEFAULT_SPELLCHECK_FLAG true
 #else
 #define DEFAULT_SPELLCHECK_FLAG false
-#endif
-
-#ifdef HAVE_GPGME
-  #include <gpgme.h>
-  #include <pan/gui/gpg.h>
 #endif
 
 using namespace pan;
@@ -132,7 +128,6 @@ namespace pan
     if (!self->_realized) return;
 
     gpg_sign = gtk_toggle_action_get_active (toggle);
-    std::cerr<<"gpg sign toggle "<<gpg_sign<<"\n";
   }
 
   void on_spellcheck_toggled (GtkToggleAction * toggle, gpointer post_g)
@@ -1025,44 +1020,19 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
   if(_file_queue_empty)
   {
-#ifdef HAVE_GPGME
-    GPGEncErr fail;
-    if (user_has_gpg && gpg_enc && !gpg_sign)
-    {
-      std::cerr<<"encrypt\n";
-      Profile p(get_current_profile());
-      std::string res = gpg_encrypt(p.gpg_sig_uid, get_body(), fail);
-      if (gpgme_err_code(fail.err) == GPG_ERR_NO_ERROR)
-        gtk_text_buffer_set_text (_body_buf, res.c_str(), res.size());
-      else
-      {
-        Log::add_err_va("Failed to encode the Message with your key : \"%s\"",gpgme_strerror(fail.err));
-        return false;
-      }
-    }
-    if (user_has_gpg && gpg_enc && gpg_sign)
-    {
-      std::cerr<<"encrypt\n";
-      Profile p(get_current_profile());
-      std::string res = gpg_encrypt_and_sign(p.gpg_sig_uid,get_body(), fail);
-      if (gpgme_err_code(fail.err) == GPG_ERR_NO_ERROR)
-        gtk_text_buffer_set_text (_body_buf, res.c_str(), res.size());
-      else
-      {
-        Log::add_err_va("Failed to sign and encode the Message with your key : \"%s\"",gpgme_strerror(fail.err));
-        return false;
-      }
-    }
 
-#endif
     GMimeMessage* msg = new_message_from_ui(POSTING);
     bool go_on(true);
 
-#ifdef HAVE_GPGME
+    GPtrArray * rcp = g_ptr_array_new();
     Profile p(get_current_profile());
+    g_ptr_array_add(rcp, (gpointer)p.gpg_sig_uid.c_str());
     if (user_has_gpg && gpg_sign && !gpg_enc)
-      go_on = go_on && message_add_signed_part(p.gpg_sig_uid, get_body(), msg, fail);
-#endif
+      go_on = go_on && message_add_signed_part(p.gpg_sig_uid, get_body(), msg);
+    else if (user_has_gpg && gpg_enc && !gpg_sign)
+      go_on = go_on && gpg_encrypt(p.gpg_sig_uid, get_body(), msg, rcp, false);
+    else if (user_has_gpg && gpg_enc && gpg_sign)
+      go_on = go_on && gpg_encrypt(p.gpg_sig_uid, get_body(), msg, rcp, true);
 
     if (go_on)
     {
@@ -1070,6 +1040,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       _post_task->add_listener (this);
       _queue.add_task (_post_task, Queue::TOP);
     }
+
   } else {
 
     // prepend header for xml file (if one was chosen)
@@ -1545,7 +1516,7 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
 
     GMimeContentType * type = g_mime_content_type_new_from_string (pch);
     g_free (pch);
-//    g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
+    g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
     g_mime_part_set_content_object (part, content_object);
     g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
     g_object_unref (content_object);
@@ -1782,7 +1753,7 @@ namespace
     }
     else if (type == Profile::GPGSIG)
     {
-      /// TODO : Perhaps show but omit in gmimemessage, or make a multipart ??
+      /// TODO : Perhaps show but omit in gmimemessage ??
     }
 
     /* Convert signature to UTF-8. Since the signature is a local file,

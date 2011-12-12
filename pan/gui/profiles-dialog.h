@@ -55,11 +55,10 @@ namespace pan
       GtkWidget * _signature_file_check;
       GtkWidget * _server_combo;
       GtkWidget * _extra_headers_tv;
-      GtkWidget * _signature_file_combo_box;
       GtkWidget * _signature_file_combo;
-      GtkWidget * _gpg_sig_entry_box;
     public:
 
+      GtkWidget * _signature_file_combo_box;
       GtkWidget * _signature_file;
       GtkWidget * _gpg_sig_entry;
 

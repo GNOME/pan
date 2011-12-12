@@ -916,25 +916,6 @@ namespace
 
 }
 
-#ifdef HAVE_GPGME
-bool
-BodyPane ::get_gpgsig_from_gmime_part (GMimeObject* parent, GMimeObject* base, GMimePart * part)
-{
-  GMimeDataWrapper * wrapper (g_mime_part_get_content_object (part));
-  GMimeStream * mem_stream (g_mime_stream_mem_new ());
-  if (wrapper)
-  {
-    g_mime_data_wrapper_write_to_stream (wrapper, mem_stream);
-    g_mime_stream_reset(mem_stream);
-    gpg_decrypt_and_verify(_signer_info, _gpgerr, mem_stream,
-                           g_mime_multipart_index_of(GMIME_MULTIPART(parent),base),
-                           parent);
-    return true;
-  }
-  return false;
-}
-#endif
-
 void
 BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation * widget_size)
 {
@@ -1000,8 +981,7 @@ BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation 
   }
 
   // or, if it's text, display it
-  else if (g_mime_content_type_is_type (type, "text", "*") ||
-           (g_mime_content_type_is_type (type, "*", "pgp-signature")))
+  else if (g_mime_content_type_is_type (type, "text", "*"))
   {
     const char * fallback_charset (_charset.c_str());
     const char * p_flowed (g_mime_object_get_content_type_parameter(obj,"format"));
@@ -1017,16 +997,6 @@ BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation 
     const bool do_urls (_prefs.get_flag ("highlight-urls", true));
     append_text_buffer_nolock (&_tm, _buffer, str, do_mute, do_smilies, do_markup, do_urls);
     is_done = true;
-#ifdef HAVE_GPGME
-    /* verify signature */
-
-    if (g_mime_content_type_is_type (type, "*", "pgp-signature"))
-    {
-      bool res = get_gpgsig_from_gmime_part(parent, obj, part);
-      std::cerr<<"1023\n";
-      if (res) update_sig_valid(_gpgerr.verify_ok);
-    }
-#endif
   }
 
   // otherwise, bitch and moan.
@@ -1218,6 +1188,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   // the all-headers don't get included in the followup
 
   // set the text buffer...
+
   if (message)
     g_mime_message_foreach (message, foreach_part_cb, this);
 
@@ -1231,7 +1202,6 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     gtk_text_buffer_get_start_iter  (_buffer, &iter);
     gtk_text_view_scroll_to_iter (GTK_TEXT_VIEW(_text), &iter, 0.0, true, 0.0, 0.0);
   }
-  std::cerr<<"1234\n";
 
 }
 
@@ -1244,17 +1214,23 @@ BodyPane :: refresh ()
 namespace
 {
 
-  std::string get_email_address(std::string& s)
+  /** Separates user id into name and email address */
+  std::pair<std::string,std::string> get_email_address(std::string& s)
   {
+    std::pair<std::string,std::string> ret;
     size_t in = s.find("<");
     size_t out = s.find(">");
-    if (in == std::string::npos || out == std::string::npos) return "...";
+    if (in == std::string::npos ||
+        out == std::string::npos)
+      return ret;
 
-    return s.substr (in+1,out-in-1);
+    ret.first = s.substr(0,in-1);
+    ret.second = s.substr (in+1,out-in-1);
+
+    return ret;
   }
 }
 
-#ifdef HAVE_GPGME
 gboolean
 BodyPane:: on_tooltip_query(GtkWidget  *widget,
                             gint        x,
@@ -1265,27 +1241,23 @@ BodyPane:: on_tooltip_query(GtkWidget  *widget,
 {
   BodyPane* pane = static_cast<BodyPane*>(data);
   GPGDecErr& err = pane->_gpgerr;
-  GPGSignersInfo& info = pane->_signer_info;
-
-//  g_return_val_if_fail(err.dec_ok, false);
-  g_return_val_if_fail(err.err == GPG_ERR_NO_ERROR || err.err == GPG_ERR_NO_DATA, false);
+  GPGSignersInfo& info = err.signers;
 
   if (err.no_sigs) return false;
-  if (!err.v_res) return false;
-  if (!err.v_res->signatures) return false;
-  if (!err.v_res->signatures->fpr) return false;
+  if (info.signers.empty()) return false;
 
   EvolutionDateMaker ed;
 
   char buf[2048];
+  std::pair<std::string,std::string> name_and_email = get_email_address(info.signers[0].name);
   g_snprintf(buf, sizeof(buf),
-             "<u>This is a <b>GPG-Signed</b> message.</u>\n\n"
-             "<b>Signer</b> : %s (\"%s\")\n"
+             "<u>This is a <b>PGP-Signed</b> message.</u>\n\n"
+             "<b>Signer</b> : %s ('%s')\n"
              "<b>Valid until</b> : %s\n"
              "<b>Created on</b> : %s",
-             info.real_name.c_str(), get_email_address(info.uid).c_str(),
-             ed.get_date_string(info.expires),
-             ed.get_date_string(info.creation_timestamp)
+             name_and_email.first.c_str(), name_and_email.second.c_str(),
+             (info.signers[0].never_expires ? "always" : ed.get_date_string(info.signers[0].expires)),
+             ed.get_date_string(info.signers[0].created)
              );
 
   gtk_tooltip_set_icon_from_stock (tooltip, GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
@@ -1299,11 +1271,7 @@ void
 BodyPane :: update_sig_valid(int i)
 {
 
-  std::cerr<<"update sig "<<i<<"\n";
-
   gtk_image_clear(GTK_IMAGE(_sig_icon));
-
-  i = 1;
 
   switch (i)
   {
@@ -1316,36 +1284,30 @@ BodyPane :: update_sig_valid(int i)
       break;
   }
 }
-#endif
 
 void
 BodyPane :: set_article (const Article& a)
 {
   _article = a;
 
-  const char* gpg_sign(0);
-
   if (_message)
     g_object_unref (_message);
-#ifdef HAVE_GPGME
-  _message = _cache.get_message (_article.get_part_mids(), _signer_info, _gpgerr);
-  gpg_sign = g_mime_object_get_header(GMIME_OBJECT(_message), "X-GPG-Signed");
-#else
-  _message = _cache.get_message (_article.get_part_mids());
-#endif
+
+  _gpgerr.clear();
+
+  _message = _cache.get_message (_article.get_part_mids(), _gpgerr);
 
   int val(-1);
-  if (gpg_sign)
   {
-    if (!strcmp(gpg_sign, "valid"))
+    if (_gpgerr.verify_ok && !_gpgerr.no_sigs)
       val = 1;
-    else if (!strcmp(gpg_sign, "invalid"))
+    else if (!_gpgerr.verify_ok && !_gpgerr.no_sigs)
       val = 0;
+    else
+      val = -1;
   }
-#ifdef HAVE_GPGME
-  std::cerr<<"1344\n";
+
   update_sig_valid(val);
-#endif
   refresh ();
 
   _data.mark_read (_article);
@@ -1358,9 +1320,8 @@ BodyPane :: clear ()
     g_object_unref (_message);
   _message = 0;
   refresh ();
-#ifdef HAVE_GPGME
   update_sig_valid(-1);
-#endif
+
 }
 
 void
@@ -1545,7 +1506,8 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   _cache (cache),
   _hscroll_visible (false),
   _vscroll_visible (false),
-  _message (0)
+  _message (0),
+  _gpgerr(GPG_DECODE)
 {
 
   for (guint i=0; i<NUM_ICONS; ++i)
@@ -1585,12 +1547,10 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_label_set_ellipsize (GTK_LABEL(w), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_use_markup (GTK_LABEL(w), true);
   gtk_box_pack_start (GTK_BOX(hbox), w, true, true, PAD_SMALL);
-#ifdef HAVE_GPGME
   gtk_widget_set_size_request (_sig_icon, 32, 32);
   gtk_box_pack_start (GTK_BOX(hbox), _sig_icon, true, true, PAD_SMALL);
   gtk_widget_set_has_tooltip (_sig_icon, true);
   g_signal_connect(_sig_icon,"query-tooltip",G_CALLBACK(on_tooltip_query), this);
-#endif
   w = _xface = gtk_image_new();
   gtk_widget_set_size_request (w, 48, 48);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
@@ -1887,7 +1847,9 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     g_object_unref (wrapper);
     g_object_unref (part);
     g_object_unref (stream);
-//std::cerr << LINE_ID << " here is the modified clone\n [" << g_mime_object_to_string((GMimeObject *)msg) << ']' << std::endl;
+
+  //std::cerr << LINE_ID << " here is the modified clone\n [" << g_mime_object_to_string((GMimeObject *)msg) << ']' << std::endl;
+
   }
 
   return msg;

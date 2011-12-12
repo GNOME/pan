@@ -51,11 +51,7 @@ extern "C" {
   #include <pan/tasks/socket-impl-openssl.h>
 #endif
 
-#ifdef HAVE_GPGME
-  #include <gpgme.h>
-  #include <pan/gui/gpg.h>
-#endif
-
+#include <pan/usenet-utils/gpg.h>
 #include <pan/data/cert-store.h>
 #include <pan/tasks/socket-impl-gio.h>
 #include <pan/tasks/socket-impl-main.h>
