@@ -478,269 +478,6 @@ namespace pan
     return true;
   }
 
-#ifdef HAVE_GPGME
-  GMimeStream* gpg_decrypt_and_verify (GPGSignersInfo& signer_info, GPGDecErr& info, GMimeStream* s, const char* body)
-  {
-
-    GMimeStream* decrypted = g_mime_stream_mem_new ();
-
-    ssize_t stream_len = g_mime_stream_length(s);
-
-    char* streambuf = new char[stream_len];
-
-    g_mime_stream_read(s, streambuf, stream_len);
-    g_object_unref(s);
-
-    info.err = GPG_ERR_NO_ERROR;
-
-    gpgme_data_t gpg_buf, gpg_out_buf, body_data;
-    gpgme_key_t key;
-
-    StringView v(streambuf);
-    gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
-
-    if (body) gpgme_data_new_from_mem (&body_data, body, strlen(body), 0);
-
-    gpgme_strerror(gpgme_data_new (&gpg_out_buf));
-
-    gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_NONE);
-
-    info.err = gpgme_op_decrypt_verify (gpg_ctx, gpg_buf, gpg_out_buf);
-
-    // no data to decrypt, check for signature validity anyway....
-    if (gpgme_err_code(info.err) == GPG_ERR_NO_DATA || gpgme_err_code(info.err) == GPG_ERR_NO_ERROR)
-      info.dec_ok = true;
-    else
-      return decrypted;
-
-    if (gpgme_err_code(info.err) == GPG_ERR_NO_DATA && body) // verify attached sigs, too
-    {
-      info.err = gpgme_op_verify (gpg_ctx, gpg_buf, body_data, 0);
-    }
-
-    info.dec_res  = gpgme_op_decrypt_result (gpg_ctx);
-    info.v_res    = gpgme_op_verify_result  (gpg_ctx);
-
-    if (info.v_res->signatures)
-    {
-      info.no_sigs = false;
-      if (gpgme_err_code(info.v_res->signatures->status) == GPG_ERR_NO_ERROR)
-        info.verify_ok = true;
-    }
-    else
-      info.no_sigs = true;
-
-    delete streambuf;
-
-    gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
-
-    ssize_t ret(0);
-    char buffer[4096]={0};
-    gint64 len(0);
-
-    while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
-    {
-      len += g_mime_stream_write(decrypted, buffer, ret);
-    }
-
-    g_mime_stream_flush (decrypted);
-    g_mime_stream_reset(decrypted);
-
-    gpgme_data_release(gpg_buf);
-    gpgme_data_release(gpg_out_buf);
-
-    GPGSignersInfo si;
-
-    if (!info.no_sigs)
-    {
-      if (info.v_res->signatures->fpr)
-        gpgme_get_key (gpg_ctx, info.v_res->signatures->fpr, &key, 0);
-      if (key)
-        fill_signer_info(si, key);
-    }
-
-    signer_info = si;
-    info.err = GPG_ERR_NO_ERROR;
-
-    return decrypted;
-  }
-
-  void
-  mime_part_set_content (GMimePart *part, const char *str)
-  {
-    GMimeDataWrapper *content;
-    GMimeStream *stream;
-
-    stream = g_mime_stream_mem_new_with_buffer (str, strlen (str));
-    content = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
-    g_object_unref (stream);
-
-    g_mime_part_set_content_object (part, content);
-    g_object_unref (content);
-  }
-
-  GMimeMessage*
-  message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body, GPGEncErr& fail)
-  {
-    if (uid.empty()) return 0;
-
-    GMimeMultipart *mp = g_mime_multipart_new_with_subtype ("mixed");
-    g_mime_multipart_set_boundary(mp, NULL);
-    g_mime_multipart_add(mp,g_mime_message_get_mime_part(body));
-
-    gpgme_data_t gpg_buf, gpg_out_buf;
-    gpgme_key_t mykey(0), key;
-
-    StringView v(body_str);
-    gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
-    gpgme_data_new (&gpg_out_buf);
-  //  gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
-  //  gpgme_data_set_file_name(gpg_out_buf, "signature.asc");
-
-    fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
-    while (!fail.err)
-    {
-      fail.err = gpgme_op_keylist_next (gpg_ctx, &key);
-      if (fail.err) break;
-      if (strcmp(key->subkeys->keyid, uid.c_str()) == 0) { mykey = key; break; }
-    }
-    if (!mykey) { fail.err = GPG_ERR_NO_PUBKEY; return 0; }
-
-    gpgme_signers_clear(gpg_ctx);
-    gpgme_signers_add(gpg_ctx, mykey);
-
-    fail.err      = gpgme_op_sign (gpg_ctx, gpg_buf, gpg_out_buf, GPGME_SIG_MODE_DETACH);
-    fail.sign_res = gpgme_op_sign_result (gpg_ctx);
-    if (fail.err) return 0;
-
-    gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
-    ssize_t ret;
-    std::stringstream ret_str;
-    char buffer[4096]={0};
-
-    while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
-    {
-      ret_str << buffer;
-    }
-
-    GMimePart *sig = g_mime_part_new_with_type("multipart", "signed");
-    g_mime_object_set_content_type_parameter(GMIME_OBJECT(sig),"protocol","pgp-signature");
-    mime_part_set_content (sig, ret_str.str().c_str());
-
-    gpgme_data_release(gpg_buf);
-    gpgme_data_release(gpg_out_buf);
-
-    g_mime_multipart_add (GMIME_MULTIPART (mp), GMIME_OBJECT (sig));
-
-    g_mime_message_set_mime_part(body,GMIME_OBJECT(mp));
-    g_object_unref(mp);
-
-    fail.err = GPG_ERR_NO_ERROR;
-
-    return body;
-  }
-
-  std::string
-  gpg_encrypt(const std::string& uid, const std::string& body, GPGEncErr& fail)
-  {
-    fail.err = GPG_ERR_GENERAL;
-
-    if (uid.empty()) return "";
-
-    gpgme_data_t gpg_buf, gpg_out_buf;
-    gpgme_key_t mykey(0), key;
-
-    StringView v(body);
-    gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
-    gpgme_data_new (&gpg_out_buf);
-    gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
-
-    /* find key to uid */
-    fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
-    while (!fail.err)
-    {
-      fail.err = gpgme_op_keylist_next (gpg_ctx, &key);
-      if (fail.err) break;
-      if (strcmp(key->subkeys->keyid, uid.c_str()) == 0) { mykey = key; break; }
-    }
-    if (!mykey) { fail.err = GPG_ERR_NO_PUBKEY; return std::string(""); }
-
-    gpgme_key_t enc_keys[] = { mykey, NULL};
-
-    fail.err     = gpgme_op_encrypt (gpg_ctx, enc_keys, GPGME_ENCRYPT_PREPARE, gpg_buf, gpg_out_buf);
-    fail.enc_res = gpgme_op_encrypt_result (gpg_ctx);
-    if (fail.err) return std::string("");
-
-    gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
-    ssize_t ret;
-    std::stringstream ret_str;
-    char buffer[4096]={0};
-
-    while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
-    {
-      ret_str << buffer;
-    }
-
-    gpgme_data_release(gpg_buf);
-    gpgme_data_release(gpg_out_buf);
-
-    fail.err = GPG_ERR_NO_ERROR;
-    return ret_str.str();
-  }
-
-  std::string
-  gpg_encrypt_and_sign(const std::string& uid, const std::string& body, GPGEncErr& fail)
-  {
-    fail.err = GPG_ERR_GENERAL;
-
-    if (uid.empty()) return "";
-
-    gpgme_data_t gpg_buf, gpg_out_buf;
-    gpgme_key_t mykey(0), key;
-
-    StringView v(body);
-    gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
-    gpgme_data_new (&gpg_out_buf);
-    gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
-
-    /* find key to uid */
-    fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
-    while (!fail.err)
-    {
-      fail.err = gpgme_op_keylist_next (gpg_ctx, &key);
-      if (fail.err) break;
-      if (strcmp(key->subkeys->keyid, uid.c_str()) == 0) { mykey = key; break; }
-    }
-    if (!mykey) { fail.err = GPG_ERR_NO_PUBKEY; return std::string(""); }
-
-    gpgme_signers_clear(gpg_ctx);
-    gpgme_signers_add(gpg_ctx, mykey);
-
-    gpgme_key_t enc_keys[] = { mykey, NULL};
-
-    fail.err     = gpgme_op_encrypt_sign (gpg_ctx, enc_keys, GPGME_ENCRYPT_PREPARE, gpg_buf, gpg_out_buf);
-    fail.enc_res = gpgme_op_encrypt_result (gpg_ctx);
-    fail.sign_res= gpgme_op_sign_result (gpg_ctx);
-    if (fail.err) return std::string("");
-
-    gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
-    ssize_t ret;
-    std::stringstream ret_str;
-    char buffer[4096]={0};
-
-    while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
-    {
-      ret_str << buffer;
-    }
-
-    gpgme_data_release(gpg_buf);
-    gpgme_data_release(gpg_out_buf);
-
-    fail.err = GPG_ERR_NO_ERROR;
-    return ret_str.str();
-  }
-#endif
-
   void apply_source_and_maybe_filter (TempPart * part, GMimeStream * s)
   {
 
@@ -1681,6 +1418,300 @@ void pan::pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
     char * bracketed = g_strdup_printf ("<%s>", mid);
     g_mime_header_list_set (GMIME_OBJECT(msg)->headers, "Message-ID", bracketed);
     g_free (bracketed);
+}
+
+namespace pan
+
+{
+  #ifdef HAVE_GPGME
+  GMimeStream* gpg_decrypt_and_verify (GPGSignersInfo& signer_info, GPGDecErr& info,
+                                       GMimeStream* s, int index, GMimeObject* parent)
+  {
+
+    GMimeStream* decrypted = g_mime_stream_mem_new ();
+
+    ssize_t stream_len = g_mime_stream_length(s);
+
+    char* streambuf = new char[stream_len];
+
+    g_mime_stream_read(s, streambuf, stream_len);
+    g_object_unref(s);
+
+    info.err = GPG_ERR_NO_ERROR;
+
+    gpgme_data_t gpg_buf, gpg_out_buf;
+    gpgme_key_t key;
+
+    StringView v(streambuf);
+    gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
+
+    gpgme_strerror(gpgme_data_new (&gpg_out_buf));
+
+    gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_NONE);
+
+    info.err = gpgme_op_decrypt_verify (gpg_ctx, gpg_buf, gpg_out_buf);
+
+    // no data to decrypt, check for signature validity anyway....
+    if (gpgme_err_code(info.err) == GPG_ERR_NO_DATA || gpgme_err_code(info.err) == GPG_ERR_NO_ERROR)
+      info.dec_ok = true;
+    else
+      return decrypted;
+
+    info.dec_res  = gpgme_op_decrypt_result (gpg_ctx);
+    info.v_res    = gpgme_op_verify_result  (gpg_ctx);
+
+    // verify attached sigs, too. that means, no data to decrypt and no signatures found, yet
+    if (gpgme_err_code(info.err) == GPG_ERR_NO_DATA &&
+        gpgme_err_code(info.v_res->signatures->status) == GPG_ERR_BAD_SIGNATURE && parent)
+    {
+      int count(0); int no(0);
+      size_t len;
+      char* body(0);
+      count = g_mime_multipart_get_count (GMIME_MULTIPART(parent));
+      no = index;
+      gpgme_data_t body_data;
+
+      for (int i=0;i<count;++i)
+      {
+
+        if (i == no) continue;
+        GMimeObject* part_of = g_mime_multipart_get_part (GMIME_MULTIPART(parent), i);
+        if (part_of)
+        {
+          body = pan_g_mime_part_get_content(GMIME_PART(part_of),&len);
+          if (body)
+          {
+            gpgme_data_new_from_mem (&body_data, body, len, 0);
+            info.err  = gpgme_op_verify (gpg_ctx, gpg_buf, body_data, 0);
+            info.v_res= gpgme_op_verify_result  (gpg_ctx);
+            gpgme_data_release(body_data);
+            g_free(body);
+            if (info.err == GPG_ERR_NO_ERROR &&
+                gpgme_err_code(info.v_res->signatures->status) == GPG_ERR_NO_ERROR) break;
+          }
+        }
+      }
+    }
+
+    if (info.v_res->signatures)
+    {
+      info.no_sigs = false;
+      if (gpgme_err_code(info.v_res->signatures->status) == GPG_ERR_NO_ERROR)
+        info.verify_ok = true;
+    }
+    else
+      info.no_sigs = true;
+
+    delete streambuf;
+
+    gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
+
+    ssize_t ret(0);
+    char buffer[4096]={0};
+    gint64 len(0);
+
+    while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
+    {
+      len += g_mime_stream_write(decrypted, buffer, ret);
+    }
+
+    g_mime_stream_flush (decrypted);
+    g_mime_stream_reset(decrypted);
+
+    gpgme_data_release(gpg_buf);
+    gpgme_data_release(gpg_out_buf);
+
+    GPGSignersInfo si;
+
+    if (!info.no_sigs)
+    {
+      if (info.v_res->signatures->fpr)
+        gpgme_get_key (gpg_ctx, info.v_res->signatures->fpr, &key, 0);
+      if (key)
+        fill_signer_info(si, key);
+    }
+
+    signer_info = si;
+    info.err = GPG_ERR_NO_ERROR;
+
+    return decrypted;
+  }
+
+  void
+  mime_part_set_content (GMimePart *part, const char *str)
+  {
+    GMimeDataWrapper *content;
+    GMimeStream *stream;
+
+    stream = g_mime_stream_mem_new_with_buffer (str, strlen (str));
+    content = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
+    g_object_unref (stream);
+
+    g_mime_part_set_content_object (part, content);
+    g_object_unref (content);
+  }
+
+  GMimeMessage*
+  message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body, GPGEncErr& fail)
+  {
+    if (uid.empty()) return 0;
+
+    GMimeMultipart *mp = g_mime_multipart_new_with_subtype ("mixed");
+    g_mime_multipart_set_boundary(mp, NULL);
+    g_mime_multipart_add(mp,g_mime_message_get_mime_part(body));
+
+    gpgme_data_t gpg_buf, gpg_out_buf;
+    gpgme_key_t mykey(0), key;
+
+    StringView v(body_str);
+    gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
+    gpgme_data_new (&gpg_out_buf);
+  //  gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
+  //  gpgme_data_set_file_name(gpg_out_buf, "signature.asc");
+
+    fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
+    while (!fail.err)
+    {
+      fail.err = gpgme_op_keylist_next (gpg_ctx, &key);
+      if (fail.err) break;
+      if (strcmp(key->subkeys->keyid, uid.c_str()) == 0) { mykey = key; break; }
+    }
+    if (!mykey) { fail.err = GPG_ERR_NO_PUBKEY; return 0; }
+
+    gpgme_signers_clear(gpg_ctx);
+    gpgme_signers_add(gpg_ctx, mykey);
+
+    fail.err      = gpgme_op_sign (gpg_ctx, gpg_buf, gpg_out_buf, GPGME_SIG_MODE_DETACH);
+    fail.sign_res = gpgme_op_sign_result (gpg_ctx);
+    if (fail.err) return 0;
+
+    gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
+    ssize_t ret;
+    std::stringstream ret_str;
+    char buffer[4096]={0};
+
+    while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
+    {
+      ret_str << buffer;
+    }
+
+    GMimePart *sig = g_mime_part_new_with_type("multipart", "signed");
+    g_mime_object_set_content_type_parameter(GMIME_OBJECT(sig),"protocol","pgp-signature");
+    mime_part_set_content (sig, ret_str.str().c_str());
+
+    gpgme_data_release(gpg_buf);
+    gpgme_data_release(gpg_out_buf);
+
+    g_mime_multipart_add (GMIME_MULTIPART (mp), GMIME_OBJECT (sig));
+
+    g_mime_message_set_mime_part(body,GMIME_OBJECT(mp));
+    g_object_unref(mp);
+
+    fail.err = GPG_ERR_NO_ERROR;
+
+    return body;
+  }
+
+  std::string
+  gpg_encrypt(const std::string& uid, const std::string& body, GPGEncErr& fail)
+  {
+    fail.err = GPG_ERR_GENERAL;
+
+    if (uid.empty()) return "";
+
+    gpgme_data_t gpg_buf, gpg_out_buf;
+    gpgme_key_t mykey(0), key;
+
+    StringView v(body);
+    gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
+    gpgme_data_new (&gpg_out_buf);
+    gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
+
+    /* find key to uid */
+    fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
+    while (!fail.err)
+    {
+      fail.err = gpgme_op_keylist_next (gpg_ctx, &key);
+      if (fail.err) break;
+      if (strcmp(key->subkeys->keyid, uid.c_str()) == 0) { mykey = key; break; }
+    }
+    if (!mykey) { fail.err = GPG_ERR_NO_PUBKEY; return std::string(""); }
+
+    gpgme_key_t enc_keys[] = { mykey, NULL};
+
+    fail.err     = gpgme_op_encrypt (gpg_ctx, enc_keys, GPGME_ENCRYPT_PREPARE, gpg_buf, gpg_out_buf);
+    fail.enc_res = gpgme_op_encrypt_result (gpg_ctx);
+    if (fail.err) return std::string("");
+
+    gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
+    ssize_t ret;
+    std::stringstream ret_str;
+    char buffer[4096]={0};
+
+    while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
+    {
+      ret_str << buffer;
+    }
+
+    gpgme_data_release(gpg_buf);
+    gpgme_data_release(gpg_out_buf);
+
+    fail.err = GPG_ERR_NO_ERROR;
+    return ret_str.str();
+  }
+
+  std::string
+  gpg_encrypt_and_sign(const std::string& uid, const std::string& body, GPGEncErr& fail)
+  {
+    fail.err = GPG_ERR_GENERAL;
+
+    if (uid.empty()) return "";
+
+    gpgme_data_t gpg_buf, gpg_out_buf;
+    gpgme_key_t mykey(0), key;
+
+    StringView v(body);
+    gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
+    gpgme_data_new (&gpg_out_buf);
+    gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
+
+    /* find key to uid */
+    fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
+    while (!fail.err)
+    {
+      fail.err = gpgme_op_keylist_next (gpg_ctx, &key);
+      if (fail.err) break;
+      if (strcmp(key->subkeys->keyid, uid.c_str()) == 0) { mykey = key; break; }
+    }
+    if (!mykey) { fail.err = GPG_ERR_NO_PUBKEY; return std::string(""); }
+
+    gpgme_signers_clear(gpg_ctx);
+    gpgme_signers_add(gpg_ctx, mykey);
+
+    gpgme_key_t enc_keys[] = { mykey, NULL};
+
+    fail.err     = gpgme_op_encrypt_sign (gpg_ctx, enc_keys, GPGME_ENCRYPT_PREPARE, gpg_buf, gpg_out_buf);
+    fail.enc_res = gpgme_op_encrypt_result (gpg_ctx);
+    fail.sign_res= gpgme_op_sign_result (gpg_ctx);
+    if (fail.err) return std::string("");
+
+    gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
+    ssize_t ret;
+    std::stringstream ret_str;
+    char buffer[4096]={0};
+
+    while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
+    {
+      ret_str << buffer;
+    }
+
+    gpgme_data_release(gpg_buf);
+    gpgme_data_release(gpg_out_buf);
+
+    fail.err = GPG_ERR_NO_ERROR;
+    return ret_str.str();
+  }
+#endif
 }
 
 

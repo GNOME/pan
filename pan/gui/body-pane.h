@@ -92,7 +92,7 @@ namespace pan
       bool read_more_or_less (bool more);
       char* body_to_utf8 (GMimePart*);
       void set_text_from_message (GMimeMessage*);
-      void append_part (GMimeObject*, GtkAllocation*);
+      void append_part (GMimeObject*, GMimeObject*, GtkAllocation*);
       static gboolean expander_activated_idle (gpointer self);
       static void expander_activated_cb (GtkExpander*, gpointer self);
       static void foreach_part_cb (GMimeObject*, GMimeObject*, gpointer self);
@@ -114,7 +114,7 @@ namespace pan
 #ifdef HAVE_GPGME
       GPGDecErr _gpgerr;
       GPGSignersInfo _signer_info;
-      bool get_gpgsig_from_gmime_part (GMimePart * part);
+      bool get_gpgsig_from_gmime_part (GMimeObject* parent, GMimeObject* base, GMimePart * part);
 #endif
 
     private:

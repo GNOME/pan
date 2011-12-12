@@ -918,7 +918,7 @@ namespace
 
 #ifdef HAVE_GPGME
 bool
-BodyPane ::get_gpgsig_from_gmime_part (GMimePart * part)
+BodyPane ::get_gpgsig_from_gmime_part (GMimeObject* parent, GMimeObject* base, GMimePart * part)
 {
   GMimeDataWrapper * wrapper (g_mime_part_get_content_object (part));
   GMimeStream * mem_stream (g_mime_stream_mem_new ());
@@ -926,7 +926,9 @@ BodyPane ::get_gpgsig_from_gmime_part (GMimePart * part)
   {
     g_mime_data_wrapper_write_to_stream (wrapper, mem_stream);
     g_mime_stream_reset(mem_stream);
-    gpg_decrypt_and_verify(_signer_info, _gpgerr, mem_stream);
+    gpg_decrypt_and_verify(_signer_info, _gpgerr, mem_stream,
+                           g_mime_multipart_index_of(GMIME_MULTIPART(parent),base),
+                           parent);
     return true;
   }
   return false;
@@ -934,7 +936,7 @@ BodyPane ::get_gpgsig_from_gmime_part (GMimePart * part)
 #endif
 
 void
-BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
+BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation * widget_size)
 {
   bool is_done (false);
 
@@ -1017,9 +1019,10 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
     is_done = true;
 #ifdef HAVE_GPGME
     /* verify signature */
+
     if (g_mime_content_type_is_type (type, "*", "pgp-signature"))
     {
-      bool res = get_gpgsig_from_gmime_part(part);
+      bool res = get_gpgsig_from_gmime_part(parent, obj, part);
       std::cerr<<"1023\n";
       if (res) update_sig_valid(_gpgerr.verify_ok);
     }
@@ -1040,13 +1043,13 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
 }
 
 void
-BodyPane :: foreach_part_cb (GMimeObject* /*parent*/, GMimeObject* o, gpointer self)
+BodyPane :: foreach_part_cb (GMimeObject* parent, GMimeObject* o, gpointer self)
 {
   BodyPane * pane = static_cast<BodyPane*>(self);
   GtkWidget * w (pane->_text);
   GtkAllocation aloc;
   gtk_widget_get_allocation(w, &aloc);
-  pane->append_part (o, &aloc);
+  pane->append_part (parent, o, &aloc);
 }
 
 
@@ -1141,15 +1144,6 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
         w = std::max (w, l);
       }
     }
-
-      // obsolete in favor of the certificate icon tooltip (bodypane)
-//    const StringView gpg (g_mime_object_get_header ((GMimeObject *) message, "X-GPG-Signed"));
-//    if (!gpg.empty())
-//    {
-//      char buf[256];
-//      l = add_header_line (s, message, _("GPG-Signed message signature "), "X-GPG-Signed", fallback_charset);
-//      w = std::max (w, l);
-//    }
   }
 
   s.resize (s.size()-1); // remove trailing linefeed
@@ -1237,7 +1231,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     gtk_text_buffer_get_start_iter  (_buffer, &iter);
     gtk_text_view_scroll_to_iter (GTK_TEXT_VIEW(_text), &iter, 0.0, true, 0.0, 0.0);
   }
-  std::cerr<<"1240\n";
+  std::cerr<<"1234\n";
 
 }
 
@@ -1273,16 +1267,13 @@ BodyPane:: on_tooltip_query(GtkWidget  *widget,
   GPGDecErr& err = pane->_gpgerr;
   GPGSignersInfo& info = pane->_signer_info;
 
-  g_return_val_if_fail(err.dec_ok, false);
+//  g_return_val_if_fail(err.dec_ok, false);
   g_return_val_if_fail(err.err == GPG_ERR_NO_ERROR || err.err == GPG_ERR_NO_DATA, false);
 
   if (err.no_sigs) return false;
   if (!err.v_res) return false;
   if (!err.v_res->signatures) return false;
   if (!err.v_res->signatures->fpr) return false;
-
-// get uid from fingerprint
-//  GPGSignersInfo info = get_uids_from_fingerprint(err->v_res->signatures->fpr);
 
   EvolutionDateMaker ed;
 
@@ -1311,6 +1302,8 @@ BodyPane :: update_sig_valid(int i)
   std::cerr<<"update sig "<<i<<"\n";
 
   gtk_image_clear(GTK_IMAGE(_sig_icon));
+
+  i = 1;
 
   switch (i)
   {
@@ -1350,7 +1343,7 @@ BodyPane :: set_article (const Article& a)
       val = 0;
   }
 #ifdef HAVE_GPGME
-  std::cerr<<"1354\n";
+  std::cerr<<"1344\n";
   update_sig_valid(val);
 #endif
   refresh ();
