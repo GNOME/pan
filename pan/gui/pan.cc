@@ -53,7 +53,6 @@ extern "C" {
 
 #ifdef HAVE_GPGME
   #include <gpgme.h>
-  #define GPG_DEF 1
   #include <pan/gui/gpg.h>
 #endif
 
@@ -73,9 +72,10 @@ extern "C" {
 #include "server-ui.h"
 #include "pad.h"
 
-#include <gnome-keyring-1/gnome-keyring.h>
-#include <gnome-keyring-1/gnome-keyring-memory.h>
-
+#ifdef HAVE_GKR
+  #include <gnome-keyring-1/gnome-keyring.h>
+  #include <gnome-keyring-1/gnome-keyring-memory.h>
+#endif
 
 //#define DEBUG_LOCALE 1
 #define DEBUG_PARALLEL 1

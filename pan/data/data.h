@@ -35,8 +35,11 @@
 #include <pan/data/cert-store.h>
 #include <pan/data/server-info.h>
 
-#include <gnome-keyring-1/gnome-keyring.h>
-#include <gnome-keyring-1/gnome-keyring-memory.h>
+
+#ifdef HAVE_GKR
+  #include <gnome-keyring-1/gnome-keyring.h>
+  #include <gnome-keyring-1/gnome-keyring-memory.h>
+#endif
 
 namespace pan
 {

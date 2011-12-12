@@ -71,7 +71,6 @@ extern "C" {
 
 #ifdef HAVE_GPGME
   #include "gpg.h"
-  #define GPG_DEF 1
 #endif
 
 namespace pan

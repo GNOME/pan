@@ -347,142 +347,6 @@ PostUI :: set_always_run_editor (bool run)
   _prefs.set_flag ("always-run-editor", run);
 }
 
-#ifdef HAVE_GPGME
-
-namespace
-{
-  void
-  mime_part_set_content (GMimePart *part, const char *str)
-  {
-    GMimeDataWrapper *content;
-    GMimeStream *stream;
-
-    stream = g_mime_stream_mem_new_with_buffer (str, strlen (str));
-    content = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
-    g_object_unref (stream);
-
-    g_mime_part_set_content_object (part, content);
-    g_object_unref (content);
-  }
-}
-
-GMimeMessage*
-PostUI :: message_add_signed_part (const std::string& body_str, GMimeMessage* body, GPGEncErr& fail)
-{
-
-  const Profile profile (get_current_profile ());
-  std::string uid = profile.gpg_sig_uid;
-  if (uid.empty()) return 0;
-
-  GMimeMultipart *mp = g_mime_multipart_new_with_subtype ("mixed");
-  g_mime_multipart_set_boundary(mp, NULL);
-  g_mime_multipart_add(mp,g_mime_message_get_mime_part(body));
-
-  gpgme_data_t gpg_buf, gpg_out_buf;
-  gpgme_key_t mykey(0), key;
-
-  StringView v(body_str);
-  gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
-  gpgme_data_new (&gpg_out_buf);
-//  gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
-//  gpgme_data_set_file_name(gpg_out_buf, "signature.asc");
-
-  fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
-  while (!fail.err)
-  {
-    fail.err = gpgme_op_keylist_next (gpg_ctx, &key);
-    if (fail.err) break;
-    if (strcmp(key->subkeys->keyid, uid.c_str()) == 0) { mykey = key; break; }
-  }
-  if (!mykey) { fail.err = GPG_ERR_NO_PUBKEY; return 0; }
-
-  gpgme_signers_clear(gpg_ctx);
-  gpgme_signers_add(gpg_ctx, mykey);
-
-  fail.err      = gpgme_op_sign (gpg_ctx, gpg_buf, gpg_out_buf, GPGME_SIG_MODE_DETACH);
-  fail.sign_res = gpgme_op_sign_result (gpg_ctx);
-  if (fail.err) return 0;
-
-  gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
-  ssize_t ret;
-  std::stringstream ret_str;
-  char buffer[4096]={0};
-
-  while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
-  {
-    ret_str << buffer;
-  }
-
-  GMimePart *sig = g_mime_part_new_with_type("multipart", "signed");
-  g_mime_object_set_content_type_parameter(GMIME_OBJECT(sig),"protocol","pgp-signature");
-  mime_part_set_content (sig, ret_str.str().c_str());
-
-  gpgme_data_release(gpg_buf);
-  gpgme_data_release(gpg_out_buf);
-
-  g_mime_multipart_add (GMIME_MULTIPART (mp), GMIME_OBJECT (sig));
-
-  g_mime_message_set_mime_part(body,GMIME_OBJECT(mp));
-  g_object_unref(mp);
-
-  fail.err = GPG_ERR_NO_ERROR;
-
-  return body;
-}
-
-std::string
-PostUI :: gpg_encrypt(const std::string& body, GPGEncErr& fail)
-{
-  fail.err = GPG_ERR_GENERAL;
-
-  const Profile profile (get_current_profile ());
-  std::string uid = profile.gpg_sig_uid;
-  if (uid.empty()) return "";
-
-  gpgme_data_t gpg_buf, gpg_out_buf;
-  gpgme_key_t mykey(0), key;
-
-  StringView v(body);
-  gpgme_data_new_from_mem (&gpg_buf, v.str, v.len, 0);
-  gpgme_data_new (&gpg_out_buf);
-  gpgme_data_set_encoding (gpg_out_buf, GPGME_DATA_ENCODING_BASE64);
-
-  /* find key to uid */
-  fail.err = gpgme_op_keylist_start (gpg_ctx, 0, 0);
-  while (!fail.err)
-  {
-    fail.err = gpgme_op_keylist_next (gpg_ctx, &key);
-    if (fail.err) break;
-    if (strcmp(key->subkeys->keyid, uid.c_str()) == 0) { mykey = key; break; }
-  }
-  if (!mykey) { fail.err = GPG_ERR_NO_PUBKEY; return std::string(""); }
-
-  gpgme_key_t enc_keys[] = { mykey, NULL};
-
-  fail.err     = gpgme_op_encrypt (gpg_ctx, enc_keys, GPGME_ENCRYPT_PREPARE, gpg_buf, gpg_out_buf);
-  fail.enc_res = gpgme_op_encrypt_result (gpg_ctx);
-  if (fail.err) return std::string("");
-
-  gpgme_data_seek (gpg_out_buf,SEEK_SET, 0);
-  ssize_t ret;
-  std::stringstream ret_str;
-  char buffer[4096]={0};
-
-  while ((ret = gpgme_data_read (gpg_out_buf, buffer, sizeof(buffer))) > 0)
-  {
-    ret_str << buffer;
-  }
-
-  std::cerr<<"encrypted:\n"<<ret_str.str()<<"\n\n";
-
-  gpgme_data_release(gpg_buf);
-  gpgme_data_release(gpg_out_buf);
-
-  fail.err = GPG_ERR_NO_ERROR;
-  return ret_str.str();
-}
-#endif
-
 void
 PostUI :: set_wrap_mode (bool wrap)
 {
@@ -1163,29 +1027,42 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   {
 #ifdef HAVE_GPGME
     GPGEncErr fail;
-    std::string tmp = get_body();
-    if (user_has_gpg)
+    if (user_has_gpg && gpg_enc && !gpg_sign)
     {
-      if (gpg_enc)
+      std::cerr<<"encrypt\n";
+      Profile p(get_current_profile());
+      std::string res = gpg_encrypt(p.gpg_sig_uid, get_body(), fail);
+      if (gpgme_err_code(fail.err) == GPG_ERR_NO_ERROR)
+        gtk_text_buffer_set_text (_body_buf, res.c_str(), res.size());
+      else
       {
-        std::cerr<<"encrypt\n";
-        std::string res = gpg_encrypt(tmp, fail);
-        if (gpgme_err_code(fail.err) == GPG_ERR_NO_ERROR)
-          gtk_text_buffer_set_text (_body_buf, res.c_str(), res.size());
-        else
-        {
-          Log::add_err_va("Failed to sign the Message with your public key : \"%s\"",gpgme_strerror(fail.err));
-          return false;
-        }
+        Log::add_err_va("Failed to encode the Message with your key : \"%s\"",gpgme_strerror(fail.err));
+        return false;
       }
     }
+    if (user_has_gpg && gpg_enc && gpg_sign)
+    {
+      std::cerr<<"encrypt\n";
+      Profile p(get_current_profile());
+      std::string res = gpg_encrypt_and_sign(p.gpg_sig_uid,get_body(), fail);
+      if (gpgme_err_code(fail.err) == GPG_ERR_NO_ERROR)
+        gtk_text_buffer_set_text (_body_buf, res.c_str(), res.size());
+      else
+      {
+        Log::add_err_va("Failed to sign and encode the Message with your key : \"%s\"",gpgme_strerror(fail.err));
+        return false;
+      }
+    }
+
 #endif
     GMimeMessage* msg = new_message_from_ui(POSTING);
-
     bool go_on(true);
 
-    if (user_has_gpg && gpg_sign)
-      go_on = go_on && message_add_signed_part(tmp, msg, fail);
+#ifdef HAVE_GPGME
+    Profile p(get_current_profile());
+    if (user_has_gpg && gpg_sign && !gpg_enc)
+      go_on = go_on && message_add_signed_part(p.gpg_sig_uid, get_body(), msg, fail);
+#endif
 
     if (go_on)
     {

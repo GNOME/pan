@@ -87,15 +87,7 @@ namespace pan
       void close_window (bool flag=false);
       void set_wrap_mode (bool wrap);
       void set_always_run_editor (bool);
-#ifdef HAVE_GPGME
-      /** Encrypts a message with GPG.
-        * @return The encrypted message
-        * @param body The unencrypted message body
-        * @param fail Error struct that holds the GPG errcode and two gpgme error info structs.
-       **/
-      std::string gpg_encrypt(const std::string& body, GPGEncErr& fail);
-      GMimeMessage* message_add_signed_part (const std::string& body_str, GMimeMessage* body, GPGEncErr& fail);
-#endif
+
       void update_parts_tab();
 
       //popup action entries

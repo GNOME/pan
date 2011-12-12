@@ -33,8 +33,10 @@ extern "C" {
 #include <pan/general/time-elapsed.h>
 #include "data-impl.h"
 
-#include <gnome-keyring-1/gnome-keyring.h>
-#include <gnome-keyring-1/gnome-keyring-memory.h>
+#ifdef HAVE_GKR
+  #include <gnome-keyring-1/gnome-keyring.h>
+  #include <gnome-keyring-1/gnome-keyring-memory.h>
+#endif
 
 using namespace pan;
 

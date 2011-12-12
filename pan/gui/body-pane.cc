@@ -926,7 +926,7 @@ BodyPane ::get_gpgsig_from_gmime_part (GMimePart * part)
   {
     g_mime_data_wrapper_write_to_stream (wrapper, mem_stream);
     g_mime_stream_reset(mem_stream);
-    gpd_decrypt_and_verify(_signer_info, _gpgerr, mem_stream);
+    gpg_decrypt_and_verify(_signer_info, _gpgerr, mem_stream);
     return true;
   }
   return false;
@@ -999,7 +999,7 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
 
   // or, if it's text, display it
   else if (g_mime_content_type_is_type (type, "text", "*") ||
-           (g_mime_content_type_is_type (type, "*", "signed")))
+           (g_mime_content_type_is_type (type, "*", "pgp-signature")))
   {
     const char * fallback_charset (_charset.c_str());
     const char * p_flowed (g_mime_object_get_content_type_parameter(obj,"format"));
@@ -1017,16 +1017,11 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
     is_done = true;
 #ifdef HAVE_GPGME
     /* verify signature */
-    const char* gpg (g_mime_object_get_content_type_parameter(obj,"protocol"));
-    if (gpg)
-      {
-      const bool is_gpg (!strcmp(gpg,"pgp-signature"));
-      if (g_mime_content_type_is_type (type, "*", "signed") && is_gpg)
-      {
-        bool res = get_gpgsig_from_gmime_part(part);
-        std::cerr<<"1023\n";
-        if (res) update_sig_valid(_gpgerr.verify_ok);
-      }
+    if (g_mime_content_type_is_type (type, "*", "pgp-signature"))
+    {
+      bool res = get_gpgsig_from_gmime_part(part);
+      std::cerr<<"1023\n";
+      if (res) update_sig_valid(_gpgerr.verify_ok);
     }
 #endif
   }
@@ -1370,7 +1365,9 @@ BodyPane :: clear ()
     g_object_unref (_message);
   _message = 0;
   refresh ();
+#ifdef HAVE_GPGME
   update_sig_valid(-1);
+#endif
 }
 
 void

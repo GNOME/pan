@@ -76,7 +76,10 @@
 namespace pan
 {
 #ifdef HAVE_GPGME
-  GMimeStream* gpd_decrypt_and_verify (GPGSignersInfo& signer_info, GPGDecErr& info, GMimeStream* s);
+  GMimeStream* gpg_decrypt_and_verify (GPGSignersInfo& signer_info, GPGDecErr& info, GMimeStream* s, const char* body=0);
+  GMimeMessage* message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body, GPGEncErr& fail);
+  std::string gpg_encrypt(const std::string& uid, const std::string& body, GPGEncErr& fail);
+  std::string gpg_encrypt_and_sign(const std::string& uid, const std::string& body, GPGEncErr& fail);
 #endif
 
   /**
