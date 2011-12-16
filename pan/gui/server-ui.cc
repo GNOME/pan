@@ -107,7 +107,7 @@ namespace
     GtkTreeIter iter;
     if (gtk_combo_box_get_active_iter (w, &iter))
       gtk_tree_model_get (gtk_combo_box_get_model(w), &iter, 1, &ssl, -1);
-    pan_spin_button_set (d->port_spin, ssl==0 ? STD_NNTP_PORT : STD_SSL_PORT);
+    pan_spin_button_set (d->port_spin, ssl == 0 ? STD_NNTP_PORT : STD_SSL_PORT);
 #endif
   }
 

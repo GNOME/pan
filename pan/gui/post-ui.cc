@@ -41,11 +41,13 @@ extern "C" {
 #include <pan/usenet-utils/gpg.h>
 #include <pan/usenet-utils/message-check.h>
 #include <pan/usenet-utils/mime-utils.h>
+#include <pan/usenet-utils/MimeCodes.h>
 #include <pan/data/data.h>
 #include <pan/tasks/nzb.h>
 #include <pan/gui/gui.h>
 #include <pan/tasks/task-post.h>
 #include "e-charset-dialog.h"
+#include "e-cte-dialog.h"
 #include "pad.h"
 #include "hig.h"
 #include "post-ui.h"
@@ -375,6 +377,7 @@ namespace
   void do_save     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->save_draft (); }
   void do_open     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->open_draft (); }
   void do_charset  (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->prompt_for_charset (); }
+  void do_cte      (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->prompt_for_cte (); }
   void do_close    (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->close_window (); }
   void do_wrap     (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_wrap_mode (gtk_toggle_action_get_active (w)); }
   void do_edit2    (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_always_run_editor (gtk_toggle_action_get_active (w)); }
@@ -391,6 +394,7 @@ namespace
     { "post-article", GTK_STOCK_EXECUTE, N_("_Send Article"), "<control>Return", N_("Send Article Now"), G_CALLBACK(do_send) },
     { "post-and-save-articles", GTK_STOCK_FLOPPY, N_("_Send and Save Articles to NZB"), 0, N_("Send and Save Articles to NZB"), G_CALLBACK(do_send_and_save) },
     { "set-charset", 0, N_("Set Character _Encoding..."), 0, 0, G_CALLBACK(do_charset) },
+    { "set-encoding", 0, N_("Set Content _Transfer Encoding..."), 0, 0, G_CALLBACK(do_cte) },
     { "save-draft", GTK_STOCK_SAVE, N_("Sa_ve Draft"), "<control>s", N_("Save as a Draft for Future Posting"), G_CALLBACK(do_save) },
     { "open-draft", GTK_STOCK_OPEN, N_("_Open Draft..."), "<control>o", N_("Open an Article Draft"), G_CALLBACK(do_open) },
     { "close", GTK_STOCK_CLOSE, 0, 0, 0, G_CALLBACK(do_close) },
@@ -490,6 +494,15 @@ PostUI :: prompt_for_charset ()
                                  GTK_WINDOW(root()));
   set_charset (tmp);
   free (tmp);
+}
+
+void
+PostUI :: prompt_for_cte ()
+{
+  GMimeContentEncoding enc = e_cte_dialog (_("Content Transfer Encoding"),
+                                 _("New Article's Content Transfer Encoding:"),
+                                 _enc, GTK_WINDOW(root()));
+  _enc = enc;
 }
 
 void
@@ -995,6 +1008,8 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     return true;
   }
 
+  g_object_unref(message);
+
   /**
   ***  Make sure we're online...
   **/
@@ -1024,9 +1039,11 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     GMimeMessage* msg = new_message_from_ui(POSTING);
     bool go_on(true);
 
+    /* adding yourself to the list of recipients */
     GPtrArray * rcp = g_ptr_array_new();
     Profile p(get_current_profile());
     g_ptr_array_add(rcp, (gpointer)p.gpg_sig_uid.c_str());
+
     if (user_has_gpg && gpg_sign && !gpg_enc)
       go_on = go_on && message_add_signed_part(p.gpg_sig_uid, get_body(), msg);
     else if (user_has_gpg && gpg_enc && !gpg_sign)
@@ -1419,6 +1436,7 @@ namespace
 GMimeMessage*
 PostUI :: new_message_from_ui (Mode mode, bool copy_body)
 {
+
   GMimeMessage * msg(0);
   msg = g_mime_message_new (false);
 
@@ -1498,7 +1516,9 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   {
     std::string body;
     if (copy_body) body = get_body();
-    GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
+
+    GMimeStream *  stream =  g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
+
     const std::string charset ((mode==POSTING && !_charset.empty()) ? _charset : "UTF-8");
     if (charset != "UTF-8") {
       // add a wrapper to convert from UTF-8 to $charset
@@ -1518,7 +1538,7 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
     g_free (pch);
     g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
     g_mime_part_set_content_object (part, content_object);
-    g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
+    g_mime_part_set_content_encoding (part, _enc);
     g_object_unref (content_object);
     g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
     g_object_unref (part);
@@ -2900,7 +2920,8 @@ PostUI :: PostUI (GtkWindow    * parent,
   _filequeue_eventbox (0),
   _filequeue_label (0),
   _realized(false),
-  _uploads(0)
+  _uploads(0),
+  _enc(GMIME_CONTENT_ENCODING_8BIT)
 {
 
   rng.seed();

@@ -34,6 +34,7 @@ extern "C"
 #include <pan/general/string-view.h>
 #include <pan/general/log.h>
 #include "mime-utils.h"
+#include "gpg.h"
 
 #define is_nonempty_string(a) ((a) && (*a))
 
@@ -362,8 +363,135 @@ enum EncType
 {
 	ENC_PLAIN ,
 	ENC_YENC,
-	ENC_UU
+	ENC_UU,
+	ENC_BASE64,
+	ENC_QP
 };
+
+namespace pan
+{
+
+  /*
+   base64.cpp and base64.h
+
+   Copyright (C) 2004-2008 René Nyffenegger
+
+   This source code is provided 'as-is', without any express or implied
+   warranty. In no event will the author be held liable for any damages
+   arising from the use of this software.
+
+   Permission is granted to anyone to use this software for any purpose,
+   including commercial applications, and to alter it and redistribute it
+   freely, subject to the following restrictions:
+
+   1. The origin of this source code must not be misrepresented; you must not
+      claim that you wrote the original source code. If you use this source code
+      in a product, an acknowledgment in the product documentation would be
+      appreciated but is not required.
+
+   2. Altered source versions must be plainly marked as such, and must not be
+      misrepresented as being the original source code.
+
+   3. This notice may not be removed or altered from any source distribution.
+
+   René Nyffenegger rene.nyffenegger@adp-gmbh.ch
+
+*/
+
+  static const std::string base64_chars =
+             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+             "abcdefghijklmnopqrstuvwxyz"
+             "0123456789+/";
+
+
+  static inline bool is_base64(unsigned char c) {
+    return (isalnum(c) || (c == '+') || (c == '/'));
+  }
+
+  std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len) {
+    std::string ret;
+    int i = 0;
+    int j = 0;
+    unsigned char char_array_3[3];
+    unsigned char char_array_4[4];
+
+    while (in_len--) {
+      char_array_3[i++] = *(bytes_to_encode++);
+      if (i == 3) {
+        char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
+        char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
+        char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
+        char_array_4[3] = char_array_3[2] & 0x3f;
+
+        for(i = 0; (i <4) ; i++)
+          ret += base64_chars[char_array_4[i]];
+        i = 0;
+      }
+    }
+
+    if (i)
+    {
+      for(j = i; j < 3; j++)
+        char_array_3[j] = '\0';
+
+      char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;
+      char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);
+      char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);
+      char_array_4[3] = char_array_3[2] & 0x3f;
+
+      for (j = 0; (j < i + 1); j++)
+        ret += base64_chars[char_array_4[j]];
+
+      while((i++ < 3))
+        ret += '=';
+
+    }
+
+    return ret;
+
+  }
+
+  std::string base64_decode(std::string const& encoded_string) {
+    int in_len = encoded_string.size();
+    int i = 0;
+    int j = 0;
+    int in_ = 0;
+    unsigned char char_array_4[4], char_array_3[3];
+    std::string ret;
+
+    while (in_len-- && ( encoded_string[in_] != '=') && is_base64(encoded_string[in_])) {
+      char_array_4[i++] = encoded_string[in_]; in_++;
+      if (i ==4) {
+        for (i = 0; i <4; i++)
+          char_array_4[i] = base64_chars.find(char_array_4[i]);
+
+        char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
+        char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
+        char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
+
+        for (i = 0; (i < 3); i++)
+          ret += char_array_3[i];
+        i = 0;
+      }
+    }
+
+    if (i) {
+      for (j = i; j <4; j++)
+        char_array_4[j] = 0;
+
+      for (j = 0; j <4; j++)
+        char_array_4[j] = base64_chars.find(char_array_4[j]);
+
+      char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
+      char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
+      char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
+
+      for (j = 0; (j < i - 1); j++) ret += char_array_3[j];
+    }
+
+    return ret;
+  }
+}
 
 namespace pan
 {
@@ -398,7 +526,7 @@ namespace pan
       if (filter)
         g_object_unref (filter);
       if (filter_stream)
-	g_object_unref (filter_stream);
+        g_object_unref (filter_stream);
     }
   };
 
@@ -425,8 +553,11 @@ namespace pan
     return true;
   }
 
+
   void apply_source_and_maybe_filter (TempPart * part, GMimeStream * s)
   {
+
+    bool skip(false);
 
     if (!part->stream) {
       part->stream = g_mime_stream_mem_new ();
@@ -436,6 +567,14 @@ namespace pan
         {
           case ENC_UU:
             part->filter = g_mime_filter_basic_new (GMIME_CONTENT_ENCODING_UUENCODE, FALSE);
+            break;
+
+          case ENC_BASE64:
+            part->filter = g_mime_filter_basic_new (GMIME_CONTENT_ENCODING_BASE64, FALSE);
+            break;
+
+          case ENC_QP:
+            part->filter = g_mime_filter_basic_new (GMIME_CONTENT_ENCODING_QUOTEDPRINTABLE, FALSE);
             break;
 
           case ENC_YENC:
@@ -448,8 +587,8 @@ namespace pan
       }
     }
 
-    g_mime_stream_write_to_stream (s, (part->type == ENC_PLAIN ?
-				   part->stream : part->filter_stream));
+    g_mime_stream_write_to_stream (s, (part->type == ENC_PLAIN  ? part->stream : part->filter_stream));
+
     g_object_unref (s);
   }
 
@@ -462,12 +601,12 @@ namespace pan
   };
 
   bool
-  separate_encoded_parts (GMimeStream  * istream, sep_state &state)
+  separate_encoded_parts (GMimeStream  * istream, sep_state &state, EncType et)
   {
     temp_parts_t& master(state.master_list);
     temp_parts_t& appendme(state.current_list);
     TempPart * cur = NULL;
-    EncType type = ENC_PLAIN;
+    EncType type = et;
     GByteArray * line;
     gboolean yenc_looking_for_part_line = FALSE;
     gint64 linestart_pos = 0;
@@ -494,6 +633,17 @@ namespace pan
 
       switch (type)
       {
+
+        case ENC_QP:
+          sub_begin = linestart_pos;
+          cur = new TempPart(type = ENC_QP);
+          break;
+
+        case ENC_BASE64:
+          sub_begin = linestart_pos;
+          cur = new TempPart(type = ENC_BASE64);
+          break;
+
         case ENC_PLAIN:
         {
           const StringView line_pstr (line_str, line_len);
@@ -578,8 +728,8 @@ namespace pan
           else if (cur == NULL)
           {
             sub_begin = linestart_pos;
+            cur = new TempPart(type = type);
 
-            cur = new TempPart (type = ENC_PLAIN);
           }
           break;
         }
@@ -667,6 +817,7 @@ namespace pan
         append_if_not_present (appendme, cur);
       cur = NULL;
       type = ENC_PLAIN;
+
     }
 
     g_byte_array_free (line, TRUE);
@@ -685,6 +836,7 @@ mime :: guess_part_type_from_filename (const char   * filename,
 		const char * type;
 		const char * subtype;
 	} suffixes[] = {
+	  { ".asc",   "text",         "plain" }, // plain-encoded signature
 		{ ".avi",   "video",        "vnd.msvideo" },
 		{ ".dtd",   "text",         "xml-dtd" },
 		{ ".flac",  "audio",        "ogg" },
@@ -773,11 +925,11 @@ namespace
     array->pdata[index] = object;
   }
 
-  void handle_uu_and_yenc_in_text_plain_cb (GMimeObject *parent, GMimeObject *part, gpointer data)
+
+  void handle_encoded_in_text_plain_cb (GMimeObject *parent, GMimeObject *part, gpointer data)
   {
 
-    if (!part)
-      return;
+    if (!part) return;
 
     // we assume that inlined yenc and uu are only in text/plain blocks
     GMimeContentType * content_type = g_mime_object_get_content_type (part);
@@ -797,7 +949,7 @@ namespace
     // break it into separate parts for text, uu, and yenc pieces.
     sep_state &state(*(sep_state*)data);
     temp_parts_t &parts(state.current_list);
-    bool split = separate_encoded_parts (istream, state);
+    bool split = separate_encoded_parts (istream, state, ENC_PLAIN);
     g_mime_stream_reset (istream);
 
     // split?
@@ -1027,7 +1179,6 @@ mime :: construct_message (GMimeStream    ** istreams,
           g_mime_multipart_foreach (GMIME_MULTIPART(part), mixed_mp_cb, &qtype);
           err.verify_ok = gpg_verify_mps(GMIME_OBJECT(new_mp), err);
           g_mime_message_set_mime_part(messages[i], GMIME_OBJECT(new_mp));
-          std::cerr<<"algo : "<<g_mime_object_to_string(GMIME_OBJECT(new_mp))<<"\n";
         }
 
         if (qtype.type == GPG_DECODE)
@@ -1077,11 +1228,13 @@ mime :: construct_message (GMimeStream    ** istreams,
   if (retval != NULL)
     g_mime_message_foreach(retval, find_text_cb, &partslist);
 
+
   foreach(temp_p_t, partslist, it)
   {
     temp_p &data(*it);
-    handle_uu_and_yenc_in_text_plain_cb(data.parent, data.part, &state);
+    handle_encoded_in_text_plain_cb(data.parent, data.part, &state);
   }
+
 
   // cleanup
   foreach (temp_parts_t, state.master_list, it)
@@ -1317,9 +1470,6 @@ namespace
   }
 
 }
-#define NEEDS_DECODING(encoding) ((encoding == GMIME_CONTENT_ENCODING_BASE64) ||   \
-                                  (encoding == GMIME_CONTENT_ENCODING_UUENCODE) || \
-                                  (encoding == GMIME_CONTENT_ENCODING_QUOTEDPRINTABLE))
 
 namespace
 {
@@ -1472,7 +1622,6 @@ namespace pan
       if (!sig_list) return false;
       fill_signer_info(info.signers, sig_list);
 
-      return get_sig_status(sig_list) == GMIME_SIGNATURE_STATUS_GOOD;
     }
 
     if (info.type == GPG_DECODE)
@@ -1487,11 +1636,18 @@ namespace pan
         info.no_sigs = false;
         fill_signer_info(info.signers, sigs);
       }
-      return get_sig_status(info.result->signatures) == GMIME_SIGNATURE_STATUS_GOOD || !info.err;
+
     }
-    return false;
+
+    return get_sig_status(info.result->signatures) == GMIME_SIGNATURE_STATUS_GOOD || !info.err;
 
   }
+
+  enum
+  {
+    GMIME_MULTIPART_SIGNED_CONTENT,
+    GMIME_MULTIPART_SIGNED_SIGNATURE
+  };
 
   GMimeMessage*
   message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body)
@@ -1512,6 +1668,11 @@ namespace pan
       g_object_unref(G_OBJECT(part));
       return 0;
     }
+
+    /* GMIME _dirty_ hack : set filename for signature attachment */
+    /// FIXME : gets scrambled somehow, but _atm_ i don't care ....
+    GMimeObject * signature = g_mime_multipart_get_part (GMIME_MULTIPART (mps), GMIME_MULTIPART_SIGNED_SIGNATURE);
+    g_mime_part_set_filename (GMIME_PART(signature), "signature.asc");
 
     g_mime_message_set_mime_part(body,GMIME_OBJECT(mps));
     g_object_unref(G_OBJECT(part));

@@ -77,6 +77,7 @@ namespace pan
       void open_draft ();
       void import_draft (const char* fn);
       void prompt_for_charset ();
+      void prompt_for_cte ();
       void send_now ();
       void send_and_save_now ();
       void add_files ();
@@ -152,6 +153,8 @@ namespace pan
       str2str_t _profile_headers;
       std::string _unchanged_body;
       int _wrap_pixels;
+
+      GMimeContentEncoding _enc;
 
       /* binpost */
       bool _file_queue_empty;

@@ -11,6 +11,7 @@ libpangui_a_SOURCES = \
  e-charset.c \
  e-charset-combo-box.c \
  e-charset-dialog.c \
+ e-cte-dialog.c \
  group-pane.cc \
  group-prefs.cc \
  group-prefs-dialog.cc \
@@ -45,6 +46,7 @@ noinst_HEADERS = \
  e-charset.h \
  e-charset-combo-box.h \
  e-charset-dialog.h \
+ e-cte-dialog.h \
  group-pane.h \
  group-prefs.h \
  group-prefs-dialog.h \

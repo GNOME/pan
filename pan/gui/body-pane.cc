@@ -1003,8 +1003,8 @@ BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation 
   if (!is_done) {
     const char * filename = g_mime_part_get_filename (part);
     char * pch = (filename && *filename)
-      ? g_strdup_printf (_("Attachment not shown: MIME type %s/%s; filename %s\n"), type->type, type->subtype, filename)
-      : g_strdup_printf (_("Attachment not shown: MIME type %s/%s\n"), type->type, type->subtype);
+      ? g_strdup_printf (_("\nAttachment not shown: MIME type %s/%s; filename %s\n"), type->type, type->subtype, filename)
+      : g_strdup_printf (_("\nAttachment not shown: MIME type %s/%s\n"), type->type, type->subtype);
     GtkTextIter iter;
     gtk_text_buffer_get_end_iter (_buffer, &iter);
     gtk_text_buffer_insert (_buffer, &iter, pch, -1);

@@ -125,6 +125,10 @@ namespace pan
   void init_gpg();
   void deinit_gpg();
   void fill_signer_info(GPGSignersInfo& info, GMimeSignatureList * sig_list);
+  int
+  __g_mime_multipart_signed_sign (GMimeMultipartSigned *mps, GMimeObject *content,
+              GMimeCryptoContext *ctx, const char *userid,
+              GMimeDigestAlgo digest, GError **err);
 
 }
 

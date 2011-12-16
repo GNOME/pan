@@ -17,6 +17,7 @@ const char * fallback_post_ui =
 "      <menuitem action='paste' />\n"
 "      <menuitem action='rot13' />\n"
 "      <separator />\n"
+"      <menuitem action='set-encoding' />\n"
 "      <menuitem action='set-charset' />\n"
 "      <menuitem action='remember-charset' />\n"
 "      <separator />\n"

@@ -56,8 +56,14 @@
 #define YENC_SHIFT             42
 #define YENC_QUOTE_SHIFT       64
 
+#define NEEDS_DECODING(encoding) ((encoding == GMIME_CONTENT_ENCODING_BASE64) ||   \
+                                 (encoding == GMIME_CONTENT_ENCODING_QUOTEDPRINTABLE))
+
 namespace pan
 {
+
+  std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len);
+  std::string base64_decode(std::string const& encoded_string);
 
   GMimeMessage* message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body);
   GMimeMessage* gpg_encrypt (const std::string& uid, const std::string& body_str, GMimeMessage* body, GPtrArray* rcp, bool sign);

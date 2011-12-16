@@ -262,6 +262,10 @@ namespace
 
   GtkActionEntry entries[] =
   {
+
+    // dummy
+    { "set-charset", NULL, "", NULL, NULL, NULL },
+
     { "file-menu", NULL, N_("_File"), NULL, NULL, NULL },
     { "edit-menu", NULL, N_("_Edit"), NULL, NULL, NULL },
     { "view-layout-menu", NULL, N_("_Layout"), NULL, NULL, NULL },
@@ -277,11 +281,6 @@ namespace
     { "posting-actions-menu", NULL, N_("_Post"), NULL, NULL, NULL },
     { "post-menu", NULL, N_("_Post"), NULL, NULL, NULL },
     { "help-menu", NULL, N_("_Help"), NULL, NULL, NULL },
-
-    { "set-charset", NULL,
-      N_("Set Character _Encoding..."), NULL,
-      N_("Set Character Encoding..."),
-      G_CALLBACK(do_prompt_for_charset) },
 
     { "read-selected-group", "ICON_READ_MORE",
       N_("_Read Group"), NULL,

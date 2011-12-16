@@ -1978,6 +1978,8 @@ void GUI :: do_prompt_for_charset ()
   set_charset (tmp);
   free (tmp);
 }
+
+
 void GUI :: set_charset (const StringView& s)
 {
   _charset.assign (s.str, s.len);

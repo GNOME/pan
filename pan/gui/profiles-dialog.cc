@@ -260,8 +260,8 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     gtk_container_add (GTK_CONTAINER(eventbox), scrolled_window);
     HIG :: workarea_add_row (t, &row, _("E_xtra Headers:"), eventbox, w);
 
-  on_sig_file_toggled (GTK_TOGGLE_BUTTON(_signature_file_check), _signature_file);
-  on_sig_file_toggled (GTK_TOGGLE_BUTTON(_signature_file_check), _signature_file_combo_box);
+//  on_sig_file_toggled (GTK_TOGGLE_BUTTON(_signature_file_check), _signature_file);
+//  on_sig_file_toggled (GTK_TOGGLE_BUTTON(_signature_file_check), _signature_file_combo_box);
 
   gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(_root))), t, true, true, 0);
   gtk_widget_show_all (t);
