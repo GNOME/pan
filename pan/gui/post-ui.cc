@@ -41,7 +41,6 @@ extern "C" {
 #include <pan/usenet-utils/gpg.h>
 #include <pan/usenet-utils/message-check.h>
 #include <pan/usenet-utils/mime-utils.h>
-#include <pan/usenet-utils/MimeCodes.h>
 #include <pan/data/data.h>
 #include <pan/tasks/nzb.h>
 #include <pan/gui/gui.h>
