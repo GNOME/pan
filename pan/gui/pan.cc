@@ -74,7 +74,7 @@ extern "C" {
 #endif
 
 //#define DEBUG_LOCALE 1
-#define DEBUG_PARALLEL 1
+//#define DEBUG_PARALLEL 1
 
 using namespace pan;
 
