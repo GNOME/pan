@@ -298,6 +298,7 @@ Prefs :: set_string (const StringView& key, const StringView& value)
   std::string& lvalue = _strings[key];
   const std::string old (lvalue);
   lvalue.assign (value.str, value.len);
+
   if (old != lvalue)
     fire_string_changed (key, value);
 }

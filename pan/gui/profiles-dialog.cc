@@ -77,7 +77,7 @@ namespace
       int port;
       std::string addr;
       data.get_server_addr (server, addr, port);
-  
+
       GtkTreeIter iter;
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter, 0, addr.c_str(), 1, server.c_str(), -1);
@@ -102,7 +102,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                        GTK_STOCK_APPLY, GTK_RESPONSE_OK,
                                        NULL);
-  gtk_dialog_set_default_response (GTK_DIALOG(_root), GTK_RESPONSE_OK); 
+  gtk_dialog_set_default_response (GTK_DIALOG(_root), GTK_RESPONSE_OK);
   gtk_window_set_role (GTK_WINDOW(_root), "pan-edit-profile-dialog");
 
   int row (0);
@@ -148,9 +148,11 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     gtk_list_store_set (store, &iter, 0, _("Command"),   1, Profile::COMMAND, -1);
     w = _signature_file_combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
     g_signal_connect (_signature_file_check, "toggled", G_CALLBACK(on_sig_file_toggled), w);
+
     GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, TRUE);
     gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
+
     int active = 0;
     if (profile.sig_type == profile.TEXT) active = 1;
     if (profile.sig_type == profile.COMMAND) active = 2;

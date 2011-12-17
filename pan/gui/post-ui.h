@@ -41,7 +41,7 @@ namespace pan
     public:
       static PostUI* create_window (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
                                     GMimeMessage*, Prefs&, GroupPrefs&);
-    
+
     protected:
       PostUI (GtkWindow*, Data&, Queue&, GroupServer&, Profiles&,
               GMimeMessage*, Prefs&, GroupPrefs&);
@@ -112,6 +112,7 @@ namespace pan
       str2str_t _profile_headers;
       std::string _unchanged_body;
       int _wrap_pixels;
+      std::string _spellcheck_language;
 
     private:
       void add_actions (GtkWidget* box);
