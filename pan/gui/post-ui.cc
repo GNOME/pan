@@ -1572,6 +1572,9 @@ namespace {
 void
 PostUI :: set_message (GMimeMessage * message)
 {
+
+  if (!message) return;
+
   // update our message header
   if (message)
     g_object_ref (G_OBJECT(message));

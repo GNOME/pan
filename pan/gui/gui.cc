@@ -1620,11 +1620,11 @@ void GUI :: do_read_selected_group ()
   // set the charset encoding based upon that group's / global default
   if (!group.empty())
   {
-    std::string global_locale(_prefs.get_string("default-charset", ""));
-    if (global_locale.empty())
-      set_charset (_group_prefs.get_string (group, "character-encoding", "UTF-8"));
+    std::string local (_group_prefs.get_string (group, "character-encoding", ""));
+    if (local.empty())
+      set_charset (_prefs.get_string("default-charset", "UTF-8"));
     else
-      set_charset (global_locale);
+      set_charset (local);
 
   }
 
