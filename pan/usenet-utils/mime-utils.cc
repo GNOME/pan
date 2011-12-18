@@ -66,6 +66,99 @@ using namespace pan;
 #define YENC_SHIFT             42
 #define YENC_QUOTE_SHIFT       64
 
+namespace pan
+{
+
+  iconv_t conv;
+
+  char *
+  __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n)
+  {
+    size_t inleft, outleft, converted = 0;
+    char *out, *outbuf;
+    const char *inbuf;
+    size_t outlen;
+    int errnosav;
+
+    if (cd == (iconv_t) -1)
+      return g_strndup (str, n);
+
+    outlen = n * 2 + 16;
+    out = (char*)g_malloc (outlen + 4);
+
+    inbuf = str;
+    inleft = n;
+
+    do {
+      errno = 0;
+      outbuf = out + converted;
+      outleft = outlen - converted;
+
+      converted = iconv (cd, (char **) &inbuf, &inleft, &outbuf, &outleft);
+
+      if (converted != (size_t) -1 || errno == EINVAL) {
+        /*
+         * EINVAL  An  incomplete  multibyte sequence has been encoun­
+         *         tered in the input.
+         *
+         * We'll just have to ignore it...
+         */
+        break;
+      }
+
+      if (errno != E2BIG && errno != EILSEQ) {
+        errnosav = errno;
+        g_free (out);
+
+        /* reset the cd */
+        iconv (cd, NULL, NULL, NULL, NULL);
+
+        errno = errnosav;
+
+        return NULL;
+      }
+
+      /*
+		 * E2BIG   There is not sufficient room at *outbuf.
+		 *
+		 * We just need to grow our outbuffer and try again.
+		 */
+      {
+        converted = outbuf - out;
+        outlen += inleft * 2 + 16;
+        out = (char*)g_realloc (out, outlen + 4);
+        outbuf = out + converted;
+      }
+
+    } while (TRUE);
+
+    /* flush the iconv conversion */
+    while (iconv (cd, NULL, NULL, &outbuf, &outleft) == (size_t) -1) {
+      if (errno != E2BIG)
+        break;
+
+      outlen += 16;
+      converted = outbuf - out;
+      out = (char*)g_realloc (out, outlen + 4);
+      outleft = outlen - converted;
+      outbuf = out + converted;
+    }
+
+    /* Note: not all charsets can be nul-terminated with a single
+             nul byte. UCS2, for example, needs 2 nul bytes and UCS4
+             needs 4. I hope that 4 nul bytes is enough to terminate all
+             multibyte charsets? */
+
+    /* nul-terminate the string */
+    memset (outbuf, 0, 4);
+
+    /* reset the cd */
+    iconv (cd, NULL, NULL, NULL, NULL);
+
+    return out;
+  }
+}
+
 namespace
 {
    const char*
@@ -171,10 +264,10 @@ namespace
 
       // part is optional
       int part_num = __yenc_extract_tag_val_int (b, YENC_TAG_PART);
-	
+
       int a_sz = __yenc_extract_tag_val_int( b, YENC_TAG_SIZE );
       pan_return_val_if_fail( a_sz != 0, -1 );
-	
+
       const char * fname = __yenc_extract_tag_val_char (b, YENC_TAG_NAME);
       pan_return_val_if_fail( fname, -1 );
 

@@ -348,6 +348,7 @@ namespace pan
       static RenderFunc render_score;
       static RenderFunc render_bytes;
       static RenderFunc render_subject;
+      static RenderFunc render_author;
 
     private:
       Row* get_row (const Quark& message_id);

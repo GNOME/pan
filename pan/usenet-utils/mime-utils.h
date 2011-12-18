@@ -27,11 +27,16 @@
 #include <gmime/gmime-message.h>
 #include <pan/general/string-view.h>
 
+extern "C"
+{
+  #include <iconv.h>
+}
+
 namespace pan
 {
   /**
    * Utilities to build and parse GMimeMesasges.
-   * 
+   *
    * Most of nastiness this is to handle Usenet's use of chainging together
    * multiple articles as parts of a whole.  This code tries to build
    * a multipart GMimeMessage from multiple posts when necessary, and to
@@ -65,6 +70,15 @@ namespace pan
 
   char *pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html);
   void pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, GMimeRecipientType type, const char *string);
+
+  extern iconv_t conv;
+
+  char * __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n);
+
+  static char * __g_mime_iconv_strdup (iconv_t cd, const char *str)
+  {
+    return __g_mime_iconv_strndup(cd, str, strlen(str));
+  }
 
 }
 

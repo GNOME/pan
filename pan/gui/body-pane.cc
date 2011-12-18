@@ -1026,6 +1026,7 @@ namespace
     s += e;
     const size_t retval (g_utf8_strlen(key,-1) + g_utf8_strlen(utf8_val.c_str(),-1) + 2);
     g_free (e);
+
     return retval;
   }
 
@@ -1754,6 +1755,7 @@ BodyPane :: on_prefs_flag_changed (const StringView& key, bool value G_GNUC_UNUS
     refresh_fonts ();
 
   if ((key=="wrap-article-body") || (key=="mute-quoted-text") ||
+      (key=="mute-signature") ||
       (key=="show-smilies-as-graphics") || (key=="show-all-headers") ||
       (key=="size-pictures-to-fit") || (key=="show-text-markup") ||
       (key=="highlight-urls") )
