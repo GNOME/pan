@@ -916,9 +916,9 @@ void GUI :: do_clear_header_pane ()
 {
   gtk_window_set_title (get_window(_root), _("Pan"));
   _header_pane->set_group (Quark());
-  // close iconv handler
-  iconv_close(conv);
+
 }
+
 void GUI :: do_clear_body_pane ()
 {
   _body_pane->clear ();
@@ -1629,11 +1629,7 @@ void GUI :: do_read_selected_group ()
   // set the charset encoding based upon that group's / global default
   if (!group.empty())
   {
-    std::string local (_group_prefs.get_string (group, "character-encoding", ""));
-    if (local.empty())
-    {
-      local = _prefs.get_string("default-charset", "UTF-8");
-    }
+    std::string local (_group_prefs.get_string (group, "character-encoding", "UTF-8"));
     set_charset (local);
 
     // update iconv handler
@@ -1641,11 +1637,16 @@ void GUI :: do_read_selected_group ()
     char buf[256];
     g_snprintf(buf, sizeof(buf), "%s//IGNORE", _prefs.get_string("default-charset", "UTF-8").c_str());
     const char * to  = g_mime_charset_iconv_name(buf);
-    conv = iconv_open (to, from);
-    if (conv == (iconv_t)-1)
+    if (strncmp (from, buf, strlen(from)) != 0)
     {
-      Log::add_err(_("Error loading iconv library. Some Charsets in GUI will not be able to be encoded."));
+      conv = iconv_open (to, from);
+      if (conv == (iconv_t)-1)
+      {
+        Log::add_err(_("Error loading iconv library. Some Charsets in GUI will not be able to be encoded."));
+      } else
+        iconv_inited = true;
     }
+
   }
 
 

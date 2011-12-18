@@ -69,18 +69,20 @@ using namespace pan;
 namespace pan
 {
 
-  iconv_t conv;
+  iconv_t conv(0);
+  bool iconv_inited(false);
 
   char *
   __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n)
   {
+
     size_t inleft, outleft, converted = 0;
     char *out, *outbuf;
     const char *inbuf;
     size_t outlen;
     int errnosav;
 
-    if (cd == (iconv_t) -1)
+    if (cd == (iconv_t) -1 || !iconv_inited)
       return g_strndup (str, n);
 
     outlen = n * 2 + 16;
@@ -96,7 +98,7 @@ namespace pan
 
       converted = iconv (cd, (char **) &inbuf, &inleft, &outbuf, &outleft);
 
-      if (converted != (size_t) -1 || errno == EINVAL) {
+      if (converted != (size_t) -1 && errno == 0) {
         /*
          * EINVAL  An  incomplete  multibyte sequence has been encoun­
          *         tered in the input.

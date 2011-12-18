@@ -37,7 +37,7 @@ namespace pan
   /**
    * Utilities to build and parse GMimeMesasges.
    *
-   * Most of nastiness this is to handle Usenet's use of chainging together
+   * Most of this nastiness is to handle Usenet's use of chainging together
    * multiple articles as parts of a whole.  This code tries to build
    * a multipart GMimeMessage from multiple posts when necessary, and to
    * also handle Usenet's loose standards for uu/yenc by checking each line
@@ -72,6 +72,7 @@ namespace pan
   void pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, GMimeRecipientType type, const char *string);
 
   extern iconv_t conv;
+  extern bool iconv_inited;
 
   char * __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n);
 

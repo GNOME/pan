@@ -79,6 +79,10 @@ gnksa_init (void)
 	int i;
 	unsigned char ch;
 
+  /* '!' (char)33 is allowed for message-ids
+  http://tools.ietf.org/html/rfc5322#section-3.2.3
+  http://tools.ietf.org/html/rfc5536#section-3.1.3
+  */
 	for (ch=0; ch<UCHAR_MAX; ++ch) {
 		_unquoted_chars[ch] = isgraph(ch) && ch!='!' && ch!='(' && ch!=')' && ch!='<'
 		                                  && ch!='>' && ch!='@' && ch!=',' && ch!=';'
@@ -104,6 +108,16 @@ gnksa_init (void)
 #else
 
 static char _unquoted_chars[UCHAR_MAX] = {
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,
+0,0,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+
+/*
+static char _unquoted_chars[UCHAR_MAX] = {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,
 0,0,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -111,6 +125,24 @@ static char _unquoted_chars[UCHAR_MAX] = {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,};
+
+char   : 0
+char ! : 0
+char " : 0
+char # : 1
+char $ : 1
+char % : 1
+char & : 1
+char ' : 1
+char ( : 0
+char ) : 0
+char * : 1
+char + : 1
+char , : 0
+char - : 1
+char . : 0
+
+*/
 
 #endif
 
@@ -165,7 +197,7 @@ read_space (const char * start, const char ** end)
 		return true;
 	}
 	return false;
-	
+
 }
 
 static bool
@@ -314,7 +346,7 @@ gnksa_check_domain_literal (const StringView& domain)
 	bool need_closing_brace;
 	const char * pch;
 
-	// parse domain literal into ip number 
+	// parse domain literal into ip number
 
 	pch = domain.str;
 	need_closing_brace = *pch == '[';
@@ -366,11 +398,11 @@ GNKSA :: check_domain (const StringView& domain)
    while (mydomain.pop_token (token, '.'))
       ++label_qty;
 
-   // make sure we have more than one label in the domain 
+   // make sure we have more than one label in the domain
    if (label_qty < 2)
       return GNKSA::SINGLE_DOMAIN;
 
-   // check for illegal labels 
+   // check for illegal labels
    mydomain = domain;
    for (int i=0; i<label_qty-1; ++i) {
       mydomain.pop_token (token, '.');
@@ -380,14 +412,14 @@ GNKSA :: check_domain (const StringView& domain)
          return GNKSA::ILLEGAL_LABEL_HYPHEN;
    }
 
-   // last label -- toplevel domain 
+   // last label -- toplevel domain
    mydomain.pop_token (token, '.');
    switch (token.len)
    {
       case 1:
          if (isdigit((unsigned char)*token.str))
             return gnksa_check_domain_literal (domain);
-         // single-letter TLDs dont exist 
+         // single-letter TLDs dont exist
          return GNKSA::ILLEGAL_DOMAIN;
 
       case 2:
@@ -418,7 +450,7 @@ namespace
   int
   check_localpart (const StringView& localpart)
   {
-    // make sure it's not empty... 
+    // make sure it's not empty...
     if (localpart.empty())
       return GNKSA::LOCALPART_MISSING;
 
@@ -623,12 +655,12 @@ GNKSA :: do_check_from (const StringView   & from,
 {
    int addrtype = 0;
 
-   // split from 
+   // split from
    addr.clear ();
    name.clear ();
    int retval = split_from (from, addr, name, addrtype, strict);
 
-   // check address 
+   // check address
    if (retval==OK && !addr.empty())
       retval = check_address (addr);
 
@@ -681,7 +713,7 @@ namespace
     *
     * The purpose of this function is to remove severely broken,
     * usually suntactically-invalid Message-IDs, such as those
-    * missing '<', '@', or '>'. 
+    * missing '<', '@', or '>'.
     *
     * However we want to retain Message-IDs that might be sloppy,
     * such as ones that have possibly-invalid domains.
@@ -713,7 +745,7 @@ namespace
       if (pch == NULL)
          return GNKSA::ATSIGN_MISSING;
 
-      // check the domain name 
+      // check the domain name
       StringView domain (tmp.substr (pch+1, NULL));
       --domain.len; // remove trailing '>'
       if (domain.empty())
@@ -754,7 +786,7 @@ GNKSA :: remove_broken_message_ids_from_references (const StringView& references
     else if (*end == '>')
       ++end;
     v = v.substr (end, 0);
-                                                                                     
+
     // check the message-id for validity
     if (check_message_id (StringView(begin, end-begin)) == GNKSA::OK) {
       s.insert (s.end(), begin, end);
@@ -810,7 +842,7 @@ GNKSA :: generate_message_id (const StringView& domain)
 {
    std::string s;
 
-   // add unique local part to message-id 
+   // add unique local part to message-id
    s += "pan.";
    const time_t now (time(NULL));
    struct tm local_now = *gmtime (&now);
@@ -832,7 +864,7 @@ GNKSA :: generate_message_id_from_email_address (const StringView& addr)
 {
    StringView domain;
 
-   // find the domain in the email address 
+   // find the domain in the email address
    if (!addr.empty()) {
       const char * pch = addr.strchr ('@');
       if (pch != NULL)
@@ -879,7 +911,7 @@ GNKSA :: generate_references (const StringView   & references,
 ***/
 
 GNKSA::SigType
-GNKSA::is_signature_delimiter (const StringView& line) 
+GNKSA::is_signature_delimiter (const StringView& line)
 {
    switch (line.len) {
       case 2: if (!strncmp (line.str,"--"   ,2)) return SIG_NONSTANDARD;
