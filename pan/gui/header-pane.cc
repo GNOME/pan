@@ -1627,9 +1627,6 @@ HeaderPane :: ~HeaderPane ()
   for (guint i=0; i<ICON_QTY; ++i)
     g_object_unref (G_OBJECT(_icons[i].pixbuf));
 
-  // close iconv handler
-  if (iconv_inited) iconv_close(conv);
-  iconv_inited = false;
 }
 
 GtkWidget*
