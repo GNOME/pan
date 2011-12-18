@@ -20,7 +20,7 @@
 #include <config.h>
 extern "C" {
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
 }
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
@@ -31,7 +31,7 @@ extern "C" {
 #include "prefs-ui.h"
 #include "tango-colors.h"
 #include "url.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 #include "e-charset-dialog.h"
 
 using namespace pan;

@@ -24,7 +24,7 @@
 extern "C" {
   #include <glib.h>
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
 }
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
@@ -32,7 +32,7 @@ extern "C" {
 #include "server-ui.h"
 #include "pad.h"
 #include "hig.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 using namespace pan;
 
@@ -417,7 +417,7 @@ namespace
                                               GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
                                               GTK_MESSAGE_QUESTION,
                                               GTK_BUTTONS_NONE,
-                                              _("Really delete \"%s\"?"), 
+                                              _("Really delete \"%s\"?"),
                                               addr.c_str());
       gtk_dialog_add_buttons (GTK_DIALOG(w),
                               GTK_STOCK_NO, GTK_RESPONSE_NO,
@@ -471,7 +471,7 @@ namespace
   void
   server_tree_view_row_activated_cb (GtkTreeView*, GtkTreePath*, GtkTreeViewColumn*, gpointer user_data)
   {
-    edit_button_clicked_cb (NULL, user_data);	
+    edit_button_clicked_cb (NULL, user_data);
   }
 
   void
@@ -514,7 +514,7 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   gtk_tree_view_append_column (GTK_TREE_VIEW (d->server_tree_view), column);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (d->server_tree_view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
-	
+
   // add callbacks
   g_signal_connect (GTK_TREE_VIEW (d->server_tree_view), "row-activated",
                     G_CALLBACK (server_tree_view_row_activated_cb), d->dialog);

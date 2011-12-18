@@ -20,7 +20,7 @@
 extern "C" {
   #include <config.h>
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
   #include <gdk/gdkkeysyms.h>
   #include <iconv.h>
 }
@@ -41,7 +41,7 @@ extern "C" {
 #include "header-pane.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 using namespace pan;
 
@@ -1627,9 +1627,6 @@ HeaderPane :: ~HeaderPane ()
   for (guint i=0; i<ICON_QTY; ++i)
     g_object_unref (G_OBJECT(_icons[i].pixbuf));
 
-  // close iconv handler
-  if (iconv_inited) iconv_close(conv);
-  iconv_inited = false;
 }
 
 GtkWidget*

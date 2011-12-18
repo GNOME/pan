@@ -63,7 +63,7 @@ extern "C" {
 #include "server-ui.h"
 #include "task-pane.h"
 #include "url.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 namespace pan
 {
@@ -369,6 +369,8 @@ GUI :: ~GUI ()
   foreach (std::set<GtkWidget*>, unref, it)
     g_object_unref (*it);
   g_object_unref (G_OBJECT(_ui_manager));
+
+  if (iconv_inited) iconv_close(conv);
 }
 
 /***
@@ -1637,8 +1639,10 @@ void GUI :: do_read_selected_group ()
     char buf[256];
     g_snprintf(buf, sizeof(buf), "%s//IGNORE", _prefs.get_string("default-charset", "UTF-8").c_str());
     const char * to  = g_mime_charset_iconv_name(buf);
-    if (strncmp (from, buf, strlen(from)) != 0)
+//    if (strncmp (from, buf, strlen(from)) != 0)
     {
+      if (iconv_inited)
+        iconv_close(conv);
       conv = iconv_open (to, from);
       if (conv == (iconv_t)-1)
       {

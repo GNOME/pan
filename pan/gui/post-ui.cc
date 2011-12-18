@@ -25,7 +25,7 @@
 extern "C" {
   #include <gmime/gmime.h>
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
 #ifdef HAVE_GTKSPELL
   #include <gtkspell/gtkspell.h>
 #endif
@@ -47,7 +47,7 @@ extern "C" {
 #include "post.ui.h"
 #include "profiles-dialog.h"
 #include "url.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 #ifdef HAVE_GTKSPELL
 #define DEFAULT_SPELLCHECK_FLAG true

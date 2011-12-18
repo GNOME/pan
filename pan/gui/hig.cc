@@ -19,7 +19,7 @@
 
 #include <config.h>
 #include <glib.h>
-#include <gtk/gtk.h>
+#include <pan/gui/gtk-compat.h>
 #include "hig.h"
 
 using namespace pan;
@@ -129,7 +129,7 @@ HIG :: workarea_add_label   (GtkWidget   * table,
   return l;
 }
 
-                                                                                                                                                             
+
 void
 HIG :: workarea_add_control (GtkWidget   * table,
                               int           row,

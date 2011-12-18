@@ -19,7 +19,7 @@
 
 #include <config.h>
 extern "C" {
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
 }
 #include <pan/general/string-view.h>
 #include "progress-view.h"

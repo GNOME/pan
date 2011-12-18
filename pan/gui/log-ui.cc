@@ -22,7 +22,7 @@
 #include <fstream>
 extern "C" {
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
 }
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
@@ -51,7 +51,7 @@ namespace
     virtual void on_log_entry_added (const Log::Entry& e) {
       GtkTreeIter iter;
       gtk_list_store_prepend (myStore, &iter);
-      gtk_list_store_set (myStore, &iter, 
+      gtk_list_store_set (myStore, &iter,
                           COL_SEVERITY, (e.severity & Log::PAN_SEVERITY_ERROR),
                           COL_DATE, (unsigned long)e.date,
                           COL_MESSAGE, e.message.c_str(), -1);
@@ -122,7 +122,7 @@ namespace
     foreach_const (Log::entries_t, entries, it) {
       GtkTreeIter iter;
       gtk_list_store_prepend (store, &iter);
-      gtk_list_store_set (store, &iter, 
+      gtk_list_store_set (store, &iter,
                           COL_SEVERITY, (it->severity & Log::PAN_SEVERITY_ERROR),
                           COL_DATE, (unsigned long)it->date,
                           COL_MESSAGE, it->message.c_str(), -1);

@@ -21,7 +21,7 @@
 extern "C" {
   #include <glib/gi18n.h>
   #include <glib.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
 #ifdef HAVE_GTKSPELL
   #include <gtkspell/gtkspell.h>
   #include <enchant/enchant.h>
@@ -35,7 +35,7 @@ extern "C" {
 #include "hig.h"
 #include "pad.h"
 #include "pan-file-entry.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 using namespace pan;
 

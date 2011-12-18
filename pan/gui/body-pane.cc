@@ -23,8 +23,7 @@
 #include <iostream>
 extern "C" {
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
-  #include <gdk/gdk.h>
+  #include <pan/gui/gtk-compat.h>
   #include <gdk/gdkkeysyms.h>
   #include <gmime/gmime.h>
 }
@@ -42,7 +41,7 @@ extern "C" {
 #include "tango-colors.h"
 #include "xface.h"
 #include "url.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 #define FIRST_PICTURE "first-picture"
 
