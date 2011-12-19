@@ -207,7 +207,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
 
   _group_pane = new GroupPane (*this, data, _prefs);
   _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, _group_prefs, *this, *this);
-  _body_pane = new BodyPane (data, _cache, _prefs);
+  _body_pane = new BodyPane (data, _cache, _prefs, _group_prefs, _queue, _header_pane);
 
   std::string path = "/ui/main-window-toolbar";
   GtkWidget * toolbar = gtk_ui_manager_get_widget (_ui_manager, path.c_str());
@@ -1073,7 +1073,7 @@ void GUI :: do_show_servers_dialog ()
 
 void GUI :: do_show_sec_dialog ()
 {
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
   GtkWidget * w = sec_dialog_new (_data, _queue, get_window(_root));
   g_signal_connect (w, "destroy", G_CALLBACK(sec_dialog_destroyed_cb), this);
   gtk_widget_show_all (w);
@@ -1186,7 +1186,6 @@ GUI :: do_last_flag ()
 void
 GUI :: do_invert_selection ()
 {
-//  std::cerr<<__LINE__<< " "<<__FILE__<<" : implement me.\n";
   _header_pane->invert_selection();
 }
 
@@ -1372,20 +1371,21 @@ bool GUI::deletion_confirmation_dialog()
   return ret;
 }
 
-#ifdef HAVE_OPENSSL
-bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, X509* cert, const Quark& server)
+#ifdef HAVE_GNUTLS
+bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, gnutls_x509_crt_t cert, const Quark& server)
 {
-  bool ret(false);
 
-  char buf[4096];
+  char buf[4096*256];
   std::string host; int port;
   _data.get_server_addr(server,host,port);
-  pretty_print_x509(buf,sizeof(buf), host, cert,true);
+  pretty_print_x509(buf,sizeof(buf), host, cert, true);
   GtkWidget * d = gtk_message_dialog_new (
     parent,
     GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
     GTK_MESSAGE_WARNING,
     GTK_BUTTONS_NONE, NULL);
+
+  gtk_dialog_add_button (GTK_DIALOG(d), _("Always trust"), -66);
 
   HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d), buf,
     _("Do you want to accept it permanently (deletable afterwards) ?"));
@@ -1395,10 +1395,17 @@ bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, X509* cert, const
                           NULL);
   gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
 
-  debug("confirm cert gui");
-  ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
+  gint ret_code = gtk_dialog_run (GTK_DIALOG(d));
+
+  if (ret_code == -66)
+  {
+    _data.set_server_trust (server, 1);
+    _data.save_server_info(server);
+  }
+
   gtk_widget_destroy(d);
-  return ret;
+
+  return ret_code == GTK_RESPONSE_YES || ret_code == -66;
 }
 #endif
 
@@ -2170,7 +2177,7 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
     prev_path.assign (value.str, value.len);
 }
 
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
 
 void
 GUI :: do_show_cert_failed_dialog(VerifyData* data)
@@ -2194,16 +2201,14 @@ GUI :: show_cert_failed_cb(gpointer gp)
 }
 
 void
-GUI :: on_verify_cert_failed(X509* cert, std::string server, std::string cert_name, int nr)
+GUI :: on_verify_cert_failed(gnutls_x509_crt_t cert, std::string server, int nr)
 {
-  debug("on verify failed GUI ("<<cert<<") ("<<cert_name<<") ("<<server<<")");
+  debug("on verify failed GUI ("<<cert<<") ("<<server<<")");
   if (!cert || server.empty()) return;
 
-  debug(X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0));
   VerifyData* data = new VerifyData();
   data->cert = cert;
   data->server = server;
-  data->cert_name = cert_name;
   data->nr = nr;
   data->gui = this;
   g_idle_add(show_cert_failed_cb, data);
@@ -2211,10 +2216,9 @@ GUI :: on_verify_cert_failed(X509* cert, std::string server, std::string cert_na
 }
 
 void
-GUI :: on_valid_cert_added (X509* cert, std::string server)
+GUI :: on_valid_cert_added (gnutls_x509_crt_t cert, std::string server)
 {
   /* whitelist to make avaible for nntp-pool */
-  X509_free(cert); // refcount -1
   _certstore.whitelist(server);
 }
 

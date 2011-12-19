@@ -39,9 +39,8 @@
 #include <pan/general/worker-pool.h>
 #include "socket.h"
 
-#ifdef HAVE_OPENSSL
-  #include <openssl/crypto.h>
-  #include <openssl/ssl.h>
+#ifdef HAVE_GNUTLS
+  #include <gnutls/gnutls.h>
   #include "socket-impl-openssl.h"
 #endif
 
@@ -131,20 +130,12 @@ namespace pan
     private:
       //socket::creator::Listener
       virtual void on_socket_created (const StringView& host, int port, bool ok, Socket*) {}
-      virtual void on_socket_shutdown (const StringView& host, int port, Socket*)
-      {
-#ifdef HAVE_OPENSSL
+      virtual void on_socket_shutdown (const StringView& host, int port, Socket*) {}
 
-#endif
-      }
-
-#ifdef HAVE_OPENSSL
-      SSL_CTX* ssl_ctx;
-      std::multimap<std::string, Socket*> socket_map;
-
+#ifdef HAVE_GNUTLS
       // CertStore::Listener
-      virtual void on_verify_cert_failed(X509*, std::string, std::string, int);
-      virtual void on_valid_cert_added (X509*, std::string );
+      virtual void on_verify_cert_failed(gnutls_x509_crt_t, std::string, int);
+      virtual void on_valid_cert_added (gnutls_x509_crt_t, std::string );
 #endif
       CertStore & store;
       Data& data;

@@ -79,7 +79,9 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
                             ArticleRead               & read,
                             Progress::Listener        * listener,
                             SaveMode                    save_mode,
-                            const Quark               & save_path):
+                            const Quark               & save_path,
+                            const char                * filename,
+                            const SaveOptions         & options):
   Task (save_path.empty() ? "BODIES" : "SAVE", get_description (article, !save_path.empty())),
   _save_path (save_path),
   _server_rank (server_rank),
@@ -90,8 +92,11 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   _save_mode (save_mode),
   _decoder(0),
   _decoder_has_run (false),
-  _groups(get_groups_str(article))
+  _groups(get_groups_str(article)),
+  _attachment(filename),
+  _options(options)
 {
+
   cache.reserve (article.get_part_mids());
 
   if (listener != 0)
@@ -330,8 +335,8 @@ TaskArticle :: use_decoder (Decoder* decoder)
   init_steps(100);
   _state.set_working();
   const Article::mid_sequence_t mids (_article.get_part_mids());
-  const ArticleCache :: strings_t filenames (_cache.get_filenames (mids));
-  _decoder->enqueue (this, _save_path, filenames, _save_mode);
+  ArticleCache :: strings_t filenames (_cache.get_filenames (mids));
+  _decoder->enqueue (this, _save_path, filenames, _save_mode, _options, _attachment);
   set_status_va (_("Decoding %s"), _article.subject.c_str());
   debug ("decoder thread was free, enqueued work");
 }

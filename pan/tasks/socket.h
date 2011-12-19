@@ -23,13 +23,8 @@
 #include <string>
 #include <config.h>
 
-#ifdef HAVE_OPENSSL
-  #include <openssl/crypto.h>
-  #include <openssl/x509.h>
-  #include <openssl/x509v3.h>
-  #include <openssl/pem.h>
-  #include <openssl/ssl.h>
-  #include <openssl/err.h>
+#ifdef HAVE_GNUTLS
+  #include <gnutls/gnutls.h>
 #endif
 
 namespace pan

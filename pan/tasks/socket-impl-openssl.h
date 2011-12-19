@@ -31,15 +31,12 @@
 #include <pan/general/quark.h>
 #include <pan/tasks/socket.h>
 #include <pan/tasks/socket-impl-gio.h>
+#include <pan/tasks/socket-impl-main.h>
 
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
   #include <pan/data/cert-store.h>
-  #include <openssl/crypto.h>
-  #include <openssl/x509.h>
-  #include <openssl/x509v3.h>
-  #include <openssl/pem.h>
-  #include <openssl/ssl.h>
-  #include <openssl/err.h>
+  #include <gnutls/gnutls.h>
+  #include <gnutls/x509.h>
 #endif
 
 
@@ -50,14 +47,14 @@ namespace pan
    *
    * @ingroup tasks
    */
-#ifdef HAVE_OPENSSL
-  class GIOChannelSocketSSL:
+#ifdef HAVE_GNUTLS
+  class GIOChannelSocketGnuTLS:
     public Socket,
     private CertStore::Listener
   {
     public:
-      virtual ~GIOChannelSocketSSL ();
-      GIOChannelSocketSSL (ServerInfo&, const Quark&, SSL_CTX* ctx, CertStore& cs);
+      virtual ~GIOChannelSocketGnuTLS ();
+      GIOChannelSocketGnuTLS (ServerInfo&, const Quark&, CertStore& cs);
 
       virtual bool open (const StringView& address, int port, std::string& setme_err);
       virtual void write_command (const StringView& chars, Socket::Listener *);
@@ -68,23 +65,16 @@ namespace pan
       GIOChannel * _channel;
       unsigned int _tag_watch;
       unsigned int _tag_timeout;
-      unsigned int _handshake_timeout_tag;
       Socket::Listener * _listener;
       GString * _out_buf;
       GString * _in_buf;
       std::string _partial_read;
       std::string _host;
       bool _io_performed;
-      SSL_CTX * _ctx;
       CertStore& _certstore;
-      SSL_SESSION* _session;
       bool _rehandshake;
       Quark _server;
       bool _done;
-
-    public:
-      void set_rehandshake (bool setme) { _rehandshake = setme; }
-      bool get_done() { return _done; }
 
     private:
       enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };
@@ -97,23 +87,27 @@ namespace pan
       DoResult do_write ();
 
       // CertStore::Listener
-      virtual void on_verify_cert_failed (X509*, std::string, std::string, int) ;
-      virtual void on_valid_cert_added (X509*, std::string );
+      virtual void on_verify_cert_failed (gnutls_x509_crt_t, std::string, int) ;
+      virtual void on_valid_cert_added (gnutls_x509_crt_t, std::string );
 
       GIOChannel * create_channel (const StringView& host_in, int port, std::string& setme_err);
       void gio_lock(int mode, int type, const char *file, int line);
 
     private:
-      GIOChannel* ssl_get_iochannel(GIOChannel *handle, gboolean verify=true);
+      GIOChannel* gnutls_get_iochannel(GIOChannel* channel, const char* host, gboolean verify=true);
+      GIOStatus  _gnutls_handshake (GIOChannel *channel);
+      gboolean verify_certificate (gnutls_session_t session, GError **err);
       static gboolean handshake_cb(gpointer ptr);
+      GIOStatus gnutls_read_line(GString* g, gsize *ret, GError **gerr);
+      GIOStatus gnutls_write_line(GIOChannel *handle, const gchar *buf, gsize len, gsize *ret, GError **gerr);
 
 #else
-  class GIOChannelSocketSSL
+  class GIOChannelSocketGnuTLS
   {
     public:
-      virtual ~GIOChannelSocketSSL ();
-      GIOChannelSocketSSL () { debug("SocketSSL stub ctor"); }
-#endif  // HAVE_OPENSSL
+      virtual ~GIOChannelSocketGnuTLS ();
+      GIOChannelSocketGnuTLS () { debug("SocketSSL stub ctor"); }
+#endif  // HAVE_GNUTLS
   };
 }
 

@@ -27,7 +27,9 @@
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/data.h>
+#include <pan/gui/header-pane.h>
 #include "prefs.h"
+#include "group-prefs.h"
 
 namespace pan
 {
@@ -39,6 +41,9 @@ namespace pan
   {
     private:
       Prefs& _prefs;
+      GroupPrefs& _group_prefs;
+      Queue& _queue;
+      HeaderPane* _header_pane;
       Data& _data;
       ArticleCache& _cache;
       GtkWidget* _sig_icon;
@@ -53,7 +58,7 @@ namespace pan
                                        gpointer    data);
 
     public:
-      BodyPane (Data&, ArticleCache&, Prefs&);
+      BodyPane (Data&, ArticleCache&, Prefs&, GroupPrefs&, Queue&, HeaderPane*);
       ~BodyPane ();
       GtkWidget* root () { return _root; }
       GtkWidget* get_default_focus_widget() { return _text; }
@@ -83,6 +88,14 @@ namespace pan
         return _message;
       }
 
+
+    public:
+      enum MenuSelection
+      {
+        MENU_SAVE_AS,
+        MENU_SAVE_ALL
+      };
+
     public:
       void set_character_encoding (const char * character_encoding);
 
@@ -107,11 +120,17 @@ namespace pan
       void populate_popup (GtkTextView*, GtkMenu*);
       static void copy_url_cb (GtkMenuItem*, gpointer);
       void copy_url ();
+
+      GtkWidget* create_attachments_toolbar(GtkWidget*);
+      void add_attachment_to_toolbar (const char* fn);
+      void clear_attachments();
+      GtkWidget* new_attachment (const char* filename);
+
       static gboolean mouse_button_pressed_cb (GtkWidget*, GdkEventButton*, gpointer);
       gboolean mouse_button_pressed (GtkWidget*, GdkEventButton*);
-
-      /* updated with values from gmimemessage */
-   public:
+      void menu_clicked (const MenuSelection& ms);
+      static void menu_clicked_as_cb (GtkWidget* w, gpointer p);
+      static void menu_clicked_all_cb (GtkWidget* w, gpointer p);
 
     private:
       std::string _hover_url;
@@ -125,13 +144,28 @@ namespace pan
       GtkWidget * _root;
       GtkWidget * _text;
       GtkWidget * _scroll;
+      GtkWidget * _att_toolbar;
+      GtkWidget * _att_frame;
       bool _hscroll_visible;
       bool _vscroll_visible;
       Article _article;
       GMimeMessage * _message;
       TextMassager _tm;
       std::string _charset;
+
       GPGDecErr _gpgerr;
+
+      int _attachments;
+      int _cur_col, _cur_row;
+      std::set<char*> _freeme;
+      MenuSelection _selection;
+
+    public:
+      const char* _current_attachment;
+
+
+    public:
+      GtkWidget* _menu;
   };
 }
 

@@ -20,9 +20,6 @@
 
 #include "e-cte-dialog.h"
 
-#include <gmime/gmime.h>
-#include <glib/gi18n.h>
-
 /**
  * e_cte_dialog:
  * @title: title for the dialog box
@@ -44,11 +41,11 @@ e_cte_dialog (const char *title, const char *prompt, GMimeContentEncoding now, G
   GMimeContentEncoding ret = GMIME_CONTENT_ENCODING_8BIT;
 
 	dialog = GTK_DIALOG (gtk_dialog_new_with_buttons (title,
-							  parent,
-							  GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-							  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-							  GTK_STOCK_OK, GTK_RESPONSE_OK,
-							  NULL));
+                       parent,
+                       GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+                       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                       GTK_STOCK_OK, GTK_RESPONSE_OK,
+                       NULL));
 
 	//gtk_dialog_set_has_separator (dialog, FALSE);
 	gtk_dialog_set_default_response (dialog, GTK_RESPONSE_OK);

@@ -194,10 +194,11 @@ namespace pan
          int max_connections;
          int rank;
          int ssl_support;
+         int trust;
          typedef sorted_vector<Quark,true,AlphabeticalQuarkOrdering> groups_t;
          groups_t groups;
 
-         Server(): port(STD_NNTP_PORT), article_expiration_age(31), max_connections(2), rank(1), ssl_support(0) {}
+         Server(): port(STD_NNTP_PORT), article_expiration_age(31), max_connections(2), rank(1), ssl_support(0), trust(0) {}
       };
 
     protected:
@@ -230,6 +231,8 @@ namespace pan
 
       virtual const Server* find_server (const Quark& server) const = 0;
 
+      virtual Server* find_server (const Quark& server) = 0;
+
       virtual quarks_t get_servers () const = 0;
 
       virtual void delete_server (const Quark& server) = 0;
@@ -239,6 +242,9 @@ namespace pan
       virtual void set_server_auth (const Quark       & server,
                                     const StringView  & username,
                                     const StringView  & password) = 0;
+
+      virtual void set_server_trust (const Quark      & servername,
+                                     const int          setme) = 0;
 
       virtual void set_server_addr (const Quark       & server,
                                     const StringView  & address,
@@ -254,6 +260,8 @@ namespace pan
       virtual bool get_server_auth (const Quark   & server,
                                     std::string   & setme_username,
                                     std::string   & setme_password) const = 0;
+
+      virtual bool get_server_trust (const Quark  & servername, int&) const = 0;
 
       virtual std::string get_server_cert (const Quark & server) const = 0;
 

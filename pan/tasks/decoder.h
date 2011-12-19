@@ -59,7 +59,9 @@ namespace pan
       void enqueue (TaskArticle                    * task,
                     const Quark                    & save_path,
                     const strings_t                & input_files,
-                    const TaskArticle::SaveMode    & save_mode);
+                    const TaskArticle::SaveMode    & save_mode,
+                    const TaskArticle::SaveOptions & options,
+                    const StringView               & filename);
 
     public:
 
@@ -77,6 +79,8 @@ namespace pan
       std::string save_path;
       strings_t input_files;
       TaskArticle::SaveMode save_mode;
+      TaskArticle::SaveOptions options;
+      StringView attachment_filename;
 
       // These are set in the worker thread and polled in the main thread.
       Mutex mut;

@@ -66,8 +66,8 @@ namespace pan
 
       struct VerifyData
       {
-#ifdef HAVE_OPENSSL
-        X509* cert;
+#ifdef HAVE_GNUTLS
+        gnutls_x509_crt_t cert;
 #endif
         std::string server;
         std::string cert_name;
@@ -182,9 +182,9 @@ namespace pan
       virtual void do_refresh_groups ();
       virtual void do_subscribe_selected_groups ();
       virtual void do_unsubscribe_selected_groups ();
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
       void do_show_cert_failed_dialog(VerifyData* data);
-      bool confirm_accept_new_cert_dialog(GtkWindow*, X509*, const Quark&);
+      bool confirm_accept_new_cert_dialog(GtkWindow*, gnutls_x509_crt_t, const Quark&);
 #endif
 
       void step_bookmarks(int step);
@@ -205,10 +205,10 @@ namespace pan
       virtual void on_queue_size_changed (Queue&, int active, int total);
       virtual void on_queue_online_changed (Queue&, bool online);
       virtual void on_queue_error (Queue&, const StringView& message);
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
     private:  // CertStore::Listener
-      virtual void on_verify_cert_failed(X509*, std::string, std::string, int);
-      virtual void on_valid_cert_added (X509*, std::string);
+      virtual void on_verify_cert_failed(gnutls_x509_crt_t, std::string, int);
+      virtual void on_valid_cert_added (gnutls_x509_crt_t, std::string);
 #endif
     private: // Log::Listener
       virtual void on_log_entry_added (const Log::Entry& e);
@@ -280,9 +280,8 @@ namespace pan
       static void prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self);
       void prefs_dialog_destroyed (GtkWidget* w);
       int score_int_from_string(std::string val, const char* rules[]);
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
       static gboolean show_cert_failed_cb(gpointer gp);
-//      static void cert_failed_dty(gpointer gp);
 #endif
     public:
       GtkUIManager* get_ui_manager() { return _ui_manager; }

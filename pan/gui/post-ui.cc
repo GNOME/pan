@@ -1509,9 +1509,10 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
     pan_g_mime_message_set_message_id (msg, message_id.c_str());
+
   }
 
-    // body & charset
+  // body & charset
   {
     std::string body;
     if (copy_body) body = get_body();

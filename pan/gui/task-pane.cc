@@ -166,6 +166,8 @@ TaskPane:: on_tooltip_query(GtkWidget  *widget,
   }
   gtk_tree_path_free (path);
 
+  g_free (date);
+
   return true;
 }
 

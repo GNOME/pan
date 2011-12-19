@@ -1617,11 +1617,13 @@ namespace pan
 
     if (info.type == GPG_VERIFY)
     {
-      GMimeSignatureList * sig_list = g_mime_multipart_signed_verify (mps, gpg_ctx, &info.err);
-      if (sig_list) info.no_sigs = false;
-      if (!sig_list) return false;
-      fill_signer_info(info.signers, sig_list);
-
+      GMimeSignatureList * sigs = g_mime_multipart_signed_verify (mps, gpg_ctx, &info.err);
+      if (info.err || !sigs) return false;
+      if (sigs) info.no_sigs = false;
+      fill_signer_info(info.signers, sigs);
+      bool status = get_sig_status(sigs) == GMIME_SIGNATURE_STATUS_GOOD;
+      g_object_unref(sigs);
+      return status;
     }
 
     if (info.type == GPG_DECODE)
@@ -1635,12 +1637,14 @@ namespace pan
       {
         info.no_sigs = false;
         fill_signer_info(info.signers, sigs);
+        bool status = get_sig_status(info.result->signatures) == GMIME_SIGNATURE_STATUS_GOOD;
+        g_object_unref(sigs);
+        return status;
       }
-
+      return !info.err;
     }
 
-    return get_sig_status(info.result->signatures) == GMIME_SIGNATURE_STATUS_GOOD || !info.err;
-
+    return true;
   }
 
   enum

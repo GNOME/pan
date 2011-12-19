@@ -47,7 +47,7 @@ extern "C" {
 #include <pan/general/file-util.h>
 #include <pan/general/worker-pool.h>
 
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
   #include <pan/tasks/socket-impl-openssl.h>
 #endif
 
@@ -841,7 +841,7 @@ main (int argc, char *argv[])
                            &error);
     if (!error)
     {
-      std::cerr<<"Added "<<nzb_files.size()<<" files to the queue. Exiting.\n";
+      std::cout<<"Added "<<nzb_files.size()<<" files to the queue. Exiting.\n";
       exit(EXIT_SUCCESS);
     }
   #endif

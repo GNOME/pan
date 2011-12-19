@@ -289,7 +289,7 @@ NNTP_Pool :: request_nntp (WorkerPool& threadpool)
     {
       ++_pending_connections;
       const bool ssl(_server_info.get_server_ssl_support(_server));
-      _socket_creator->create_socket (_server_info,address, port, threadpool, this, ssl);
+      _socket_creator->create_socket (_server_info, address, port, threadpool, this, ssl);
     }
   }
 }
@@ -351,14 +351,14 @@ NNTP_Pool :: idle_upkeep ()
   }
 }
 
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
 void
-NNTP_Pool:: on_verify_cert_failed(X509* cert, std::string server, std::string cert_name, int nr)
+NNTP_Pool:: on_verify_cert_failed(gnutls_x509_crt_t cert, std::string server, int nr)
 {
 }
 
 void
-NNTP_Pool :: on_valid_cert_added (X509* cert, std::string server)
+NNTP_Pool :: on_valid_cert_added (gnutls_x509_crt_t cert, std::string server)
 {
 }
 #endif

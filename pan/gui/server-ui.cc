@@ -38,15 +38,9 @@ extern "C" {
 #include "hig.h"
 #include "gtk_compat.h"
 
-#ifdef HAVE_OPENSSL
-
+#ifdef HAVE_GNUTLS
   #include <pan/data/cert-store.h>
-  #include <openssl/crypto.h>
-  #include <openssl/x509.h>
-  #include <openssl/x509v3.h>
-  #include <openssl/pem.h>
-  #include <openssl/ssl.h>
-  #include <openssl/err.h>
+  #include <gnutls/gnutls.h>
 #endif
 
 using namespace pan;
@@ -73,6 +67,7 @@ namespace
     GtkWidget * expiration_age_combo;
     GtkWidget * rank_combo;
     GtkWidget * ssl_combo;
+    GtkWidget * always_trust_checkbox;
     ServerEditDialog (Data& d, Queue& q): data(d), queue(q) {}
   };
 
@@ -103,7 +98,7 @@ namespace
   void ssl_changed_cb(GtkComboBox* w, ServerEditDialog* d)
   {
     int ssl(0);
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
     GtkTreeIter iter;
     if (gtk_combo_box_get_active_iter (w, &iter))
       gtk_tree_model_get (gtk_combo_box_get_model(w), &iter, 1, &ssl, -1);
@@ -120,7 +115,7 @@ namespace
 
     d->server = server;
 
-    int port(STD_NNTP_PORT), max_conn(4), age(31*3), rank(1), ssl(0);
+    int port(STD_NNTP_PORT), max_conn(4), age(31*3), rank(1), ssl(0), trust(0);
     std::string addr, user, pass, cert;
     if (!server.empty()) {
       d->data.get_server_addr (server, addr, port);
@@ -130,6 +125,7 @@ namespace
       max_conn = d->data.get_server_limits (server);
       ssl = d->data.get_server_ssl_support(server);
       cert = d->data.get_server_cert(server);
+      d->data.get_server_trust (server, trust);
     }
 
     pan_entry_set_text (d->address_entry, addr);
@@ -164,7 +160,7 @@ namespace
       }
     } while (gtk_tree_model_iter_next(model, &iter));
 
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
     // set ssl combo
     combo = GTK_COMBO_BOX (d->ssl_combo);
     model = gtk_combo_box_get_model (combo);
@@ -176,8 +172,9 @@ namespace
         break;
       }
     } while (gtk_tree_model_iter_next(model, &iter));
-#endif
 
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(d->always_trust_checkbox), trust);
+#endif
   }
 
   void
@@ -208,13 +205,15 @@ namespace
       if (gtk_combo_box_get_active_iter (combo, &iter))
         gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &rank, -1);
       int ssl(0);
+      int trust(0);
 
       StringView cert(d->cert);
 
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
       combo = GTK_COMBO_BOX (d->ssl_combo);
       if (gtk_combo_box_get_active_iter (combo, &iter))
         gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &ssl, -1);
+      trust = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(d->always_trust_checkbox)) ? 1 : 0;
 #endif
 
       const char * err_msg (0);
@@ -240,6 +239,7 @@ namespace
         d->data.set_server_rank (d->server, rank);
         d->data.set_server_ssl_support(d->server, ssl);
         d->data.set_server_cert(d->server,cert);
+        d->data.set_server_trust(d->server,trust);
         d->data.save_server_info(d->server);
         d->queue.upkeep ();
       }
@@ -390,7 +390,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     HIG::workarea_add_row (t, &row, e, w);
 
     // ssl 3.0 option
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
     // select ssl/plaintext
     HIG::workarea_add_section_divider (t, &row);
     HIG::workarea_add_section_title (t, &row, _("Security"));
@@ -424,6 +424,10 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
             "If you enable SSL/TLS, your data is encrypted and secure. "
             "It is encouraged to use this option for privacy reasons."));
     HIG::workarea_add_row (t, &row, e, w);
+
+    d->always_trust_checkbox = w = gtk_check_button_new_with_label (_("Always trust this server's certificate"));
+    HIG::workarea_add_row (t, &row, NULL, w, NULL);
+
 #endif
 
   d->server = server;
@@ -659,7 +663,7 @@ namespace
   }
 }
 
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
 /* security dialog */
 namespace
 {
@@ -680,7 +684,7 @@ namespace
     char buf[4096] ;
 
     if (!selected_server.empty()) {
-      X509* cert (store.get_cert_to_server(selected_server));
+      const gnutls_x509_crt_t cert (store.get_cert_to_server(selected_server));
       if (cert)
       {
         pretty_print_x509(buf,sizeof(buf),addr, cert,false);
@@ -755,25 +759,25 @@ namespace
     const Quark selected_server (get_selected_server (d));
     CertStore& store (d->data.get_certstore());
 
-    if (!ret.empty() )
-    {
-      std::string addr; int port;
-      FILE *fp = fopen(ret.c_str(),"rb");
-      X509 *x;
-      if (!fp) goto _err;
-      x = X509_new();
-      if (!x) { fclose(fp); goto _err; }
-      PEM_read_X509(fp,&x, 0, 0);
-      fclose(fp);
-      d->data.get_server_addr(selected_server, addr, port);
-      if (!store.add(x,selected_server))
-      {
-      _err:
-        Log::add_err_va("Error adding certificate of server '%s' to CertStore. Check the console output!", addr.c_str());
-        file::print_file_info(std::cerr,ret.c_str());
-      }
-      sec_tree_view_refresh (d);
-    }
+//    if (!ret.empty() )
+//    {
+//      std::string addr; int port;
+//      FILE *fp = fopen(ret.c_str(),"rb");
+//      X509 *x;
+//      if (!fp) goto _err;
+//      x = X509_new();
+//      if (!x) { fclose(fp); goto _err; }
+//      PEM_read_X509(fp,&x, 0, 0);
+//      fclose(fp);
+//      d->data.get_server_addr(selected_server, addr, port);
+//      if (!store.add(x,selected_server))
+//      {
+//      _err:
+//        Log::add_err_va("Error adding certificate of server '%s' to CertStore. Check the console output!", addr.c_str());
+//        file::print_file_info(std::cerr,ret.c_str());
+//      }
+//      sec_tree_view_refresh (d);
+//    }
   }
 
 
@@ -908,7 +912,7 @@ pan :: render_cert_flag (GtkTreeViewColumn * ,
 GtkWidget*
 pan :: sec_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
 {
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
   ServerListDialog * d = new ServerListDialog (data, queue);
 
   for (guint i=0; i<ICON_QTY; ++i)

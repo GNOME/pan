@@ -45,14 +45,9 @@
 #include <pan/data-impl/profiles.h>
 #include <pan/data-impl/memchunk.h>
 
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
   #include <pan/data/cert-store.h>
-  #include <openssl/crypto.h>
-  #include <openssl/x509.h>
-  #include <openssl/x509v3.h>
-  #include <openssl/pem.h>
-  #include <openssl/ssl.h>
-  #include <openssl/err.h>
+  #include <gnutls/gnutls.h>
 #endif
 
 namespace pan
@@ -134,10 +129,11 @@ namespace pan
 
       servers_t _servers;
 
-      Server* find_server (const Quark& server);
+//      Server* find_server (const Quark& server);
 
     public:
       virtual const Server* find_server (const Quark& server) const;
+      virtual Server* find_server (const Quark& server);
       virtual bool find_server_by_hn (const Quark& server, Quark& setme) const;
 
     public: // mutators
@@ -150,6 +146,9 @@ namespace pan
       virtual void set_server_auth (const Quark       & server,
                                     const StringView  & username,
                                     const StringView  & password);
+
+      virtual void set_server_trust (const Quark      & servername,
+                                     int                setme);
 
       virtual void set_server_addr (const Quark       & server,
                                     const StringView  & host,
@@ -181,6 +180,8 @@ namespace pan
       virtual bool get_server_auth (const Quark   & server,
                                     std::string   & setme_username,
                                     std::string   & setme_password) const;
+
+      virtual bool get_server_trust (const Quark  & servername, int&) const;
 
       virtual bool get_server_addr (const Quark   & server,
                                     std::string   & setme_host,

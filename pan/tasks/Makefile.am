@@ -1,6 +1,6 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @OPENSSL_CFLAGS@
+AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @GNUTLS_CFLAGS@ @GTK_CFLAGS@
 
-AM_LDFLAGS = ../../uulib/libuu.a @OPENSSL_LIBS@
+AM_LDFLAGS = ../../uulib/libuu.a @GNUTLS_LIBS@
 
 noinst_LIBRARIES = libtasks.a
 

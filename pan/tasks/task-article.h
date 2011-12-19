@@ -48,6 +48,12 @@ namespace pan
   {
     public: // life cycle
 
+      enum SaveOptions
+      {
+        SAVE_ALL,
+        SAVE_AS
+      };
+
       enum SaveMode { NONE=0, DECODE=(1<<0), RAW=(1<<1) };
 
       TaskArticle (const ServerRank   & server_rank,
@@ -57,7 +63,9 @@ namespace pan
                    ArticleRead        & read,
                    Progress::Listener* l=0,
                    SaveMode             save_mode = NONE,
-                   const Quark        & save_path = Quark());
+                   const Quark        & save_path = Quark(),
+                   const char         * filename=0,
+                   const SaveOptions  & options=SAVE_ALL);
       virtual ~TaskArticle ();
       time_t get_time_posted () const { return _time_posted; }
       const Quark& get_save_path () const { return _save_path; }
@@ -95,6 +103,7 @@ namespace pan
       quarks_t _servers;
       const Article _article;
       const time_t _time_posted;
+      StringView _attachment;
 
     private: // implementation
       const SaveMode _save_mode;
@@ -102,20 +111,7 @@ namespace pan
       Decoder * _decoder;
       bool _decoder_has_run;
       std::string _groups;
-
-    private:
-
-//      typedef std::pair<std::string,StringView> lines_p;
-//      typedef std::vector<lines_p> lines_v;
-//
-//      struct CacheAdder
-//      {
-//        lines_v lines;
-//        void add(std::string& q, const StringView& v)
-//          { lines.push_back(lines_p(q,v)); }
-//      };
-//
-//      CacheAdder adder;
+      const SaveOptions _options;
 
       struct Needed {
         std::string message_id;

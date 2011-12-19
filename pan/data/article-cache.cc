@@ -438,6 +438,8 @@ ArticleCache :: get_filenames (const mid_sequence_t& mids)
   char filename[PATH_MAX];
   foreach_const (mid_sequence_t, mids, it)
     if (get_filename (filename, sizeof(filename), *it))
+    {
       ret.push_back (filename);
+    }
   return ret;
 }

@@ -37,7 +37,8 @@
 #include <cerrno>
 #include <cstring>
 
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
+  #include <gcrypt.h>
   #include <pan/usenet-utils/ssl-utils.h>
 #endif
 #include <pan/general/debug.h>
@@ -74,13 +75,11 @@ namespace
     std::string err;
     bool use_ssl;
     const Quark server;
-#ifdef HAVE_OPENSSL
-    std::multimap<std::string, Socket*>& socket_map;
-    SSL_CTX * context;
+#ifdef HAVE_GNUTLS
     CertStore& store;
     ThreadWorker (ServerInfo& d, const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l,
-                  bool ssl, SSL_CTX* ctx, CertStore& cs, std::multimap<std::string, Socket*>& m):
-      data(d), server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), context(ctx), store(cs), socket_map(m) {}
+                  bool ssl, CertStore& cs):
+      data(d), server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), store(cs) {}
 #else
     ThreadWorker (ServerInfo& d, const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l):
       data(d), server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(false) {}
@@ -88,11 +87,10 @@ namespace
 
     void do_work ()
     {
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
         if (use_ssl)
         {
-          socket = new GIOChannelSocketSSL (data, server, context, store);
-          socket_map.insert(std::pair<std::string, Socket*>(host, socket));
+          socket = new GIOChannelSocketGnuTLS (data, server, store);
         }
         else
 #endif
@@ -110,81 +108,22 @@ namespace
   };
 }
 
-#ifdef HAVE_OPENSSL
-
-// TODO remove this later if it works with GMutex
-#ifdef G_OS_WIN32
-  #define MUTEX_TYPE HANDLE
-  #define MUTEX_LOCK(x) WaitForSingleObject((x), INFINITE)
-  #define MUTEX_UNLOCK(x) ReleaseMutex(x)
-  #define THREAD_ID GetCurrentThreadId( )
-#else
-  #define MUTEX_TYPE Mutex
-  #define MUTEX_LOCK(x) x.lock()
-  #define MUTEX_UNLOCK(x) x.unlock()
-  #define THREAD_ID pthread_self( )
-#endif
-  #define MUTEX_SETUP(x) (x) = new MUTEX_TYPE[CRYPTO_num_locks()];
-  #define MUTEX_CLEANUP(x) delete [] x
-namespace
-{
-  static MUTEX_TYPE* mutex;
-
-  void gio_lock(int mode, int type, const char *file, int line)
-  {
-    if (mode & CRYPTO_LOCK)
-      MUTEX_LOCK(mutex[type]);//.lock();
-    else
-      MUTEX_UNLOCK(mutex[type]);//.unlock();
-  }
-
-  void ssl_thread_setup() {
-    MUTEX_SETUP(mutex);
-#ifdef G_OS_WIN32
-    for (int i = 0; i < CRYPTO_num_locks(); ++i) mutex[i] = CreateMutex(NULL, FALSE, NULL);
-#endif
-    CRYPTO_set_locking_callback(gio_lock);
-  }
-
-  void ssl_thread_cleanup() {
-#ifdef G_OS_WIN32
-    for (int i = 0; i < CRYPTO_num_locks(); ++i) CloseHandle(mutex[i]);
-#endif
-    MUTEX_CLEANUP(mutex);
-    CRYPTO_set_locking_callback(0);
-  }
-
-}
-#endif
-
 SocketCreator :: SocketCreator(Data& d, CertStore& cs) : data(d), store(cs)
 {
 
-#ifdef HAVE_OPENSSL
-  SSL_library_init();
-  SSL_load_error_strings();
-  OpenSSL_add_all_algorithms();
-  ERR_load_crypto_strings();
-
-  /* init static locks for threads */
-  ssl_thread_setup();
-  ssl_ctx = SSL_CTX_new(SSLv3_client_method());
-  cs.set_ctx(ssl_ctx);
-  SSL_CTX_set_mode(ssl_ctx, SSL_MODE_ENABLE_PARTIAL_WRITE | SSL_MODE_AUTO_RETRY);
-  SSL_CTX_set_session_cache_mode(ssl_ctx, SSL_SESS_CACHE_CLIENT);
-
+#ifdef HAVE_GNUTLS
+  gnutls_global_init();
   cs.add_listener(this);
+  cs.init();
 #endif
 }
 
 
 SocketCreator :: ~SocketCreator()
 {
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
+  gnutls_global_deinit();
   store.remove_listener(this);
-
-  ssl_thread_cleanup();
-  if (ssl_ctx) SSL_CTX_free(ssl_ctx);
 #endif
 }
 
@@ -200,20 +139,20 @@ SocketCreator :: create_socket (ServerInfo& info,
     data.find_server_by_hn(host, server);
     ensure_module_init ();
     if (store.in_blacklist(server)) return;
-#ifdef HAVE_OPENSSL
-    ThreadWorker * w = new ThreadWorker (info, server, host, port, listener, use_ssl, ssl_ctx, store, socket_map);
+#ifdef HAVE_GNUTLS
+    ThreadWorker * w = new ThreadWorker (info, server, host, port, listener, use_ssl, store);
 #else
     ThreadWorker * w = new ThreadWorker (info, server, host, port, listener);
 #endif
     threadpool.push_work (w, w, true);
 }
 
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
 void
-SocketCreator :: on_verify_cert_failed(X509* cert, std::string server, std::string cert_name, int nr)
+SocketCreator :: on_verify_cert_failed(gnutls_x509_crt_t cert, std::string server, int nr)
 {}
 
 void
-SocketCreator :: on_valid_cert_added (X509* cert, std::string server)
+SocketCreator :: on_valid_cert_added (gnutls_x509_crt_t cert, std::string server)
 {}
 #endif

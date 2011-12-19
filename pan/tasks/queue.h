@@ -36,7 +36,7 @@
 #include <pan/tasks/task-weak-ordering.h>
 #include <pan/tasks/socket-impl-main.h>
 
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
   #include <pan/data/cert-store.h>
 #endif
 

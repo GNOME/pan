@@ -140,6 +140,15 @@ DataImpl :: set_server_auth (const Quark       & server,
 }
 
 void
+DataImpl :: set_server_trust  (const Quark   & server,
+                               const int       setme)
+{
+  Server * s (find_server (server));
+  assert (s);
+  s->trust = setme;
+}
+
+void
 DataImpl :: set_server_addr (const Quark       & server,
                              const StringView  & host,
                              int                 port)
@@ -186,10 +195,10 @@ void
 DataImpl :: set_server_cert  (const Quark   & server,
                               const StringView & cert)
 {
+
   Server * s (find_server (server));
   assert (s);
   s->cert = cert;
-  debug(s->cert<<" "<<cert);
 
 }
 
@@ -238,8 +247,21 @@ DataImpl :: get_server_auth (const Quark   & server,
     }
 #endif
   }
+
   return found;
 
+}
+
+bool
+DataImpl :: get_server_trust (const Quark   & server, int& setme) const
+{
+  const Server * s (find_server (server));
+  const bool found (s);
+  if (found) {
+    setme = s->trust;
+  }
+
+  return found;
 }
 
 bool
@@ -253,6 +275,7 @@ DataImpl :: get_server_addr (const Quark   & server,
     setme_host = s->host;
     setme_port = s->port;
   }
+
   return found;
 
 }
@@ -267,6 +290,7 @@ DataImpl :: get_server_address (const Quark& server) const
     x << ":" << s->port;
     str = x.str();
   }
+
   return str;
 
 }
@@ -278,6 +302,7 @@ DataImpl :: get_server_ssl_support (const Quark & server) const
   const Server * s (find_server (server));
   if (s)
     retval = (s->ssl_support != 0);
+
   return retval;
 
 }
@@ -289,6 +314,7 @@ DataImpl :: get_server_cert (const Quark & server) const
   const Server * s (find_server (server));
   if (s)
     str = s->cert;
+
   return str;
 
 }
@@ -300,6 +326,7 @@ DataImpl :: get_server_limits (const Quark & server) const
   const Server * s (find_server (server));
   if (s)
     retval = s->max_connections;
+
   return retval;
 
 }
@@ -311,6 +338,7 @@ DataImpl :: get_server_rank (const Quark & server) const
   const Server * s (find_server (server));
   if (s)
     retval = s->rank;
+
   return retval;
 
 }
@@ -322,6 +350,7 @@ DataImpl :: get_server_article_expiration_age  (const Quark  & server) const
   const Server * s (find_server (server));
   if (s)
     retval = s->article_expiration_age;
+
   return retval;
 
 }
@@ -426,6 +455,8 @@ DataImpl :: load_server_properties (const DataIO& source)
     int ssl(to_int(kv["use-ssl"], 0));
     s.ssl_support = ssl;
     s.cert = kv["cert"];
+    int trust(to_int(kv["trust"], 0));
+    s.trust = trust;
     s.newsrc_filename = kv["newsrc"];
     if (s.newsrc_filename.empty()) { // set a default filename
       std::ostringstream o;
@@ -481,6 +512,7 @@ DataImpl :: save_server_properties (DataIO& data_io) const
          << indent(depth) << "<newsrc>" << s->newsrc_filename << "</newsrc>\n"
          << indent(depth) << "<rank>" << s->rank << "</rank>\n"
          << indent(depth) << "<use-ssl>" << s->ssl_support << "</use-ssl>\n"
+         << indent(depth) << "<trust>" << s->trust << "</trust>\n"
          << indent(depth) << "<cert>"    << s->cert << "</cert>\n";
 
     *out << indent(--depth) << "</server>\n";

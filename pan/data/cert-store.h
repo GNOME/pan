@@ -23,13 +23,9 @@
 #ifndef __CertStore_h__
 #define __CertStore_h__
 
-#ifdef HAVE_OPENSSL
-  #include <openssl/pem.h>
-  #include <openssl/err.h>
-  #include <openssl/pkcs12.h>
-  #include <openssl/bio.h>
-  #include <openssl/rand.h>
-  #include <openssl/x509.h>
+#ifdef HAVE_GNUTLS
+  #include <gnutls/gnutls.h>
+  #include <gnutls/x509.h>
 #endif
 
 #include <pan/data/data.h>
@@ -49,70 +45,50 @@ namespace pan
 
   class CertStore
   {
-#ifdef HAVE_OPENSSL
+#ifdef HAVE_GNUTLS
     public:
       CertStore (Data& data) ;
       virtual ~CertStore () ;
 
     private:
-      SSL_CTX* _ctx;
       typedef std::set<Quark> certs_t;
-      typedef std::set<X509*> certs_s;
       certs_t _certs;
-      certs_s _ignores;
-      typedef std::map<Quark,X509*> certs_m;
-      typedef std::pair<Quark,X509*> certs_p;
-      certs_m _cert_to_server;
-      X509_STORE* _store;
-      std::string _path;
-      std::vector<SSL_SESSION*> _sessions;
       certs_t _blacklist;
+      typedef std::map<Quark,gnutls_x509_crt_t> certs_m;
+      typedef std::pair<Quark,gnutls_x509_crt_t> certs_p;
+      std::string _path;
+      certs_m _cert_to_server;
       Data& _data;
 
+      gnutls_certificate_credentials_t _creds;
+
     public:
-      SSL_CTX* get_ctx() { return _ctx; }
-      X509_STORE* get_store() const { return _store; }
-      int get_all_certs_from_disk(std::set<X509*>& setme);
-      X509* get_cert_to_server(const Quark& server) const;
-      SSL_SESSION* get_session()
-      {
-        SSL_SESSION* ret(0);
-        if (!_sessions.empty())
-        {
-          ret = _sessions.back();
-          _sessions.pop_back();
-        }
-        return ret;
-      }
-      void add_session (SSL_SESSION* s)
-      {
-        if (!s) return;
-        _sessions.push_back(s);
-      }
+
+      int get_all_certs_from_disk();
 
       bool in_blacklist (const Quark& s)
       {
         return _blacklist.count(s);
       }
+
       void blacklist (const Quark& s)
       {
         _blacklist.insert(s);
       }
+
       void whitelist (const Quark& s)
       {
         _blacklist.erase(s);
       }
 
-      void ignore (X509* cert)
+      gnutls_x509_crt_t get_cert_to_server (const Quark& s)
       {
-        _ignores.insert(cert);
-      }
-
-      bool is_ignored(X509* c)
-      {
-        foreach (certs_s, _ignores, it)
-          if (X509_cmp(c, *it)==0) return true;
-        return false;
+        if (_cert_to_server.count(s) > 0)
+          return _cert_to_server[s];
+        std::cerr<<"server "<<s<<" cert to server "<<_cert_to_server.count(s)<<"\n";
+        foreach (certs_m, _cert_to_server, it)
+          std::cerr<<it->first<<" "<<it->second<<"\n";
+        return 0;
       }
 
     private:
@@ -120,18 +96,20 @@ namespace pan
 
     public:
 
-      bool add(X509*, const Quark&) ;
+      bool add (gnutls_x509_crt_t, const Quark&) ;
       void remove (const Quark&);
       bool exist (const Quark& q) { return (_certs.count(q) > 0); }
 
-      static std::string build_cert_name(std::string host);
+      static std::string build_cert_name(std::string& host);
+
+      gnutls_certificate_credentials_t get_creds() { return _creds; }
 
       struct Listener
       {
         virtual ~Listener() {}
         /* functions that other listeners listen on */
-        virtual void on_verify_cert_failed (X509* cert UNUSED, std::string server UNUSED, std::string cert_name UNUSED, int nr UNUSED) = 0;
-        virtual void on_valid_cert_added (X509* cert UNUSED, std::string server UNUSED) = 0;
+        virtual void on_verify_cert_failed (gnutls_x509_crt_t cert UNUSED, std::string server UNUSED, int nr UNUSED) = 0;
+        virtual void on_valid_cert_added   (gnutls_x509_crt_t cert UNUSED, std::string server UNUSED) = 0;
       };
 
       typedef std::set<Listener*> listeners_t;
@@ -141,36 +119,29 @@ namespace pan
       void remove_listener (Listener * l) { _listeners.erase(l);  }
 
       /* notify functions for listener list */
-      void verify_failed (X509* c, std::string server, std::string cn, int nr)
+      void verify_failed (gnutls_x509_crt_t c, std::string server, int nr)
       {
-        debug("verify failed listeners");
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; ++it)
-          (*it)->on_verify_cert_failed (c, server, cn, nr);
+          (*it)->on_verify_cert_failed (c, server, nr);
       }
 
-      void valid_cert_added (X509* c, std::string server)
+      void valid_cert_added (gnutls_x509_crt_t c, std::string server)
       {
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; ++it)
           (*it)->on_valid_cert_added (c, server);
       }
 
-    private:
-      void init_me();
-
-    protected:
-      friend class SocketCreator;
-      void set_ctx(SSL_CTX* c) { _ctx = c; init_me(); }
+    public:
+      void init();
   };
 
   struct mydata_t {
-   SSL_CTX* ctx;
-   int depth;
-   int ignore_all;
+   gnutls_session_t session;
+   Quark host;
+   Quark hostname_full;
    CertStore* cs;
-   std::string server;
-   std::string cert_name;
-   CertStore::Listener* l;
-
+   int always_trust;
+  };
 #else
 
   public:
@@ -185,10 +156,8 @@ namespace pan
     {
       virtual ~Listener() {}
     };
-
-#endif   // HAVE_OPENSSL
   };
-
+#endif   // HAVE_GNUTLS
 }
 
 
