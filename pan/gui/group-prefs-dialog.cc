@@ -123,7 +123,7 @@ GroupPrefsDialog :: save_from_gui ()
 	GtkTreeModel* model = gtk_combo_box_get_model (GTK_COMBO_BOX(_spellchecker_language));
 	gtk_tree_model_get (model, &iter, 0, &name, -1);
 
-  if (name) _group_prefs.set_string (_group, "spellcheck-language", name);
+  if (name) _group_prefs.set_string (_groups[0], "spellcheck-language", name);
   g_free(name);
 #endif
 
@@ -272,7 +272,7 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
 
     gtk_widget_set_sensitive (l, gtk_widget_get_sensitive(w));
 #ifdef HAVE_GTKSPELL
-    w = _spellchecker_language = create_spellcheck_combo_box ( group, group_prefs);
+    w = _spellchecker_language = create_spellcheck_combo_box ( groups[0], group_prefs);
 
     HIG :: workarea_add_row (t, &row, _("Spellchecker _language:"), w);
 #endif
