@@ -212,13 +212,15 @@ namespace pan
     }
 
     // get certs from ssl certs directory
-#ifdef SSL_DIR
     GError* err(NULL);
-    const char * ssldir = SSL_DIR;
+
+    const char * ssldir = getenv("SSL_CERT_DIR");
+    if (!ssldir) ssldir = getenv("SSL_DIR");
+
     GDir * dir = g_dir_open (ssldir, 0, &err);
     if (err != NULL)
     {
-      Log::add_err_va (_("Error opening SSL certificate directory: \"%s\": %s"), _path.c_str(), err->message);
+      Log::add_err_va (_("Error opening SSL certificate directory: \"%s\": %s"), ssldir, err->message);
       g_error_free (err);
     }
     else
@@ -239,7 +241,7 @@ namespace pan
       }
       g_dir_close (dir);
     }
-#endif
+
     return cnt;
   }
 
