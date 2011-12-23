@@ -320,10 +320,6 @@ namespace pan
 
     public:
 
-      virtual void fire_article_flag_changed (const Article* a, const Quark& group);
-
-    public:
-
       virtual void fire_article_flag_changed (articles_t& a, const Quark& group);
 
     /*****************************************************************

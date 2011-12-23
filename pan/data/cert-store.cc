@@ -162,6 +162,55 @@ namespace pan
 
   }
 
+  bool
+  CertStore :: import_from_file (const Quark& server, const char* fn)
+  {
+
+    size_t filelen;
+    char * buf;
+
+    Data::Server* s(_data.find_server(server));
+    if (!s) return false;
+
+    const char* filename(fn ? fn : s->cert.c_str());
+    if (!filename) return false;
+
+    FILE * fp = fopen(filename, "rb");
+    if (!fp) return false;
+
+    fseek (fp, 0, SEEK_END);
+    filelen = ftell (fp);
+    fseek (fp, 0, SEEK_SET);
+    buf = new char[filelen];
+    fread (buf, sizeof(char), filelen, fp);
+
+    gnutls_datum_t in;
+    in.data = (unsigned char*)buf;
+    in.size = filelen;
+    gnutls_x509_crt_t cert;
+    gnutls_x509_crt_init(&cert);
+    gnutls_x509_crt_import(cert, &in, GNUTLS_X509_FMT_PEM);
+
+    delete buf;
+
+    int ret = gnutls_certificate_set_x509_trust(_creds, &cert, 1);
+
+    if (ret < 0) goto fail;
+
+    _certs.insert(server);
+    _cert_to_server[server] = cert;
+
+    return true;
+
+    fail:
+      s->cert.clear();
+      gnutls_x509_crt_deinit (cert);
+      _data.save_server_info(server);
+
+    return false;
+
+  }
+
   int
   CertStore :: get_all_certs_from_disk()
   {
@@ -171,51 +220,15 @@ namespace pan
     int ret(0);
     size_t filelen;
     char * buf;
-
-    foreach_const(quarks_t, servers, it)
-    {
-      Data::Server* s(_data.find_server(*it));
-      if (!s) continue;
-      const char* filename(s->cert.c_str());
-      if (!filename) continue;
-
-      FILE * fp = fopen(filename, "rb");
-      if (!fp) continue;
-
-      fseek (fp, 0, SEEK_END);
-      filelen = ftell (fp);
-      fseek (fp, 0, SEEK_SET);
-      buf = new char[filelen];
-      fread (buf, sizeof(char), filelen, fp);
-
-      gnutls_datum_t in;
-      in.data = (unsigned char*)buf;
-      in.size = filelen;
-      gnutls_x509_crt_t cert;
-      gnutls_x509_crt_init(&cert);
-      gnutls_x509_crt_import(cert, &in, GNUTLS_X509_FMT_PEM);
-
-      delete buf;
-
-      ret = gnutls_certificate_set_x509_trust(_creds, &cert, 1);
-      if (ret > 0) cnt += ret; else goto fail;
-
-      _certs.insert(*it);
-      _cert_to_server[*it] = cert;
-
-      continue;
-
-      fail:
-        s->cert.clear();
-        gnutls_x509_crt_deinit (cert);
-        _data.save_server_info(*it);
-    }
-
-    // get certs from ssl certs directory
     GError* err(NULL);
 
+    foreach_const(quarks_t, servers, it)
+      if (import_from_file(*it)) ++cnt;
+
+    // get certs from ssl certs directory
     const char * ssldir = getenv("SSL_CERT_DIR");
     if (!ssldir) ssldir = getenv("SSL_DIR");
+    if (!ssldir) return cnt;
 
     GDir * dir = g_dir_open (ssldir, 0, &err);
     if (err != NULL)

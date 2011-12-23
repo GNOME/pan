@@ -250,8 +250,10 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
 
   HIG::workarea_add_section_title (t, &row, buf);
     HIG :: workarea_add_section_spacer (t, row, 4);
-    GtkWidget* box = _charset = e_charset_combo_box_new( );
-    e_charset_combo_box_set_charset( E_CHARSET_COMBO_BOX(_charset), _group_prefs.get_string (groups[0], "character-encoding", "UTF-8").c_str());
+    w = _charset = e_charset_combo_box_new( );
+    const char* cs = _group_prefs.get_string (groups[0], "character-encoding", "UTF-8").c_str();
+    e_charset_combo_box_set_charset( E_CHARSET_COMBO_BOX(w), cs ? cs : "");
+
     HIG :: workarea_add_row (t, &row, _("Character _encoding:"), w);
 
     w = _save_path = file_entry_new (_("Directory for Saving Attachments"));

@@ -1147,9 +1147,18 @@ GUI :: do_flag_off ()
   do_flag(false);
 }
 
-void GUI :: do_flag (bool t)
+void
+GUI :: do_flag (bool on)
 {
-
+  std::vector<const Article*> v(_header_pane->get_full_selection_v());
+  g_return_if_fail(!v.empty());
+  foreach (std::vector<const Article*>,v,it)
+  {
+    Article* a((Article*)*it);
+    a->set_flag(on);
+  }
+  const Quark& g(_header_pane->get_group());
+  _data.fire_article_flag_changed(v, g);
 }
 
 

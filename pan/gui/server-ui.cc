@@ -759,25 +759,18 @@ namespace
     const Quark selected_server (get_selected_server (d));
     CertStore& store (d->data.get_certstore());
 
-//    if (!ret.empty() )
-//    {
-//      std::string addr; int port;
-//      FILE *fp = fopen(ret.c_str(),"rb");
-//      X509 *x;
-//      if (!fp) goto _err;
-//      x = X509_new();
-//      if (!x) { fclose(fp); goto _err; }
-//      PEM_read_X509(fp,&x, 0, 0);
-//      fclose(fp);
-//      d->data.get_server_addr(selected_server, addr, port);
-//      if (!store.add(x,selected_server))
-//      {
-//      _err:
-//        Log::add_err_va("Error adding certificate of server '%s' to CertStore. Check the console output!", addr.c_str());
-//        file::print_file_info(std::cerr,ret.c_str());
-//      }
-//      sec_tree_view_refresh (d);
-//    }
+    if (!ret.empty() )
+    {
+      std::string addr; int port;
+      d->data.get_server_addr(selected_server, addr, port);
+      if (!store.import_from_file(selected_server, ret.c_str()))
+      {
+      _err:
+        Log::add_err_va("Error adding certificate of server '%s' to CertStore. Check the console output!", addr.c_str());
+        file::print_file_info(std::cerr,ret.c_str());
+      }
+      sec_tree_view_refresh (d);
+    }
   }
 
 

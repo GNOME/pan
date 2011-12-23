@@ -65,6 +65,7 @@ namespace pan
     public:
 
       int get_all_certs_from_disk();
+      bool import_from_file (const Quark& server, const char* fn = 0);
 
       bool in_blacklist (const Quark& s)
       {
