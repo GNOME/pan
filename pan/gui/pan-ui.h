@@ -66,7 +66,7 @@ namespace pan
     virtual void do_plonk () = 0;
     virtual void do_watch () = 0;
     virtual void do_ignore () = 0;
-    virtual void do_flag_on () = 0;
+    virtual void do_flag () = 0;
     virtual void do_flag_off () = 0;
     virtual void do_next_flag () = 0;
     virtual void do_last_flag () = 0;

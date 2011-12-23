@@ -31,7 +31,7 @@ extern "C" {
 #include "prefs-ui.h"
 #include "tango-colors.h"
 #include "url.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 #include "e-charset-dialog.h"
 
 using namespace pan;

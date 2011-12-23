@@ -51,7 +51,7 @@ noinst_HEADERS = \
  group-pane.h \
  group-prefs.h \
  group-prefs-dialog.h \
- gtk_compat.h \
+ gtk-compat.h \
  gui.h \
  header-pane.h \
  hig.h \

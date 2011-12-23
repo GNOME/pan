@@ -29,7 +29,7 @@ extern "C" {
 #include "pad.h"
 #include "score-add-ui.h"
 #include "score-view-ui.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 using namespace pan;
 

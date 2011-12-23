@@ -36,7 +36,7 @@ extern "C" {
 #include "server-ui.h"
 #include "pad.h"
 #include "hig.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 #ifdef HAVE_GNUTLS
   #include <pan/data/cert-store.h>

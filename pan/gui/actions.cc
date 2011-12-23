@@ -146,7 +146,7 @@ namespace
   void do_plonk                        (GtkAction*) { pan_ui->do_plonk(); }
   void do_ignore                       (GtkAction*) { pan_ui->do_ignore(); }
   void do_watch                        (GtkAction*) { pan_ui->do_watch(); }
-  void do_flag_on                      (GtkAction*) { pan_ui->do_flag_on(); }
+  void do_flag                         (GtkAction*) { pan_ui->do_flag(); }
   void do_flag_off                     (GtkAction*) { pan_ui->do_flag_off(); }
   void do_next_flag                    (GtkAction*) { pan_ui->do_next_flag(); }
   void do_last_flag                    (GtkAction*) { pan_ui->do_last_flag(); }
@@ -552,13 +552,13 @@ namespace
       G_CALLBACK(do_ignore) },
 
     { "flag-thread", "ICON_FLAGGED",
-      N_("_Toggle Flag on for Thread"), "X",
-      N_("_Toggle Flag on for Thread"),
-      G_CALLBACK(do_flag_on) },
+      N_("_Toggle Flag on/off for Thread"), "X",
+      N_("_Toggle Flag on/off for Thread"),
+      G_CALLBACK(do_flag) },
 
     { "unflag-thread", NULL,
-      N_("_Toggle Flag off for Thread"), "<shift>X",
-      N_("_Toggle Flag off for Thread"),
+      N_("_Turn Flag off for Thread"), "<shift>X",
+      N_("_Turn Flag off for Thread"),
       G_CALLBACK(do_flag_off) },
 
     { "mark-all-flagged", NULL,

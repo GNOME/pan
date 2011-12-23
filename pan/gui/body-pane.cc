@@ -26,7 +26,7 @@ extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
   #include <gdk/gdk.h>
-  #include <gdk/gdkkeysyms.h>
+  #include "gtk-compat.h"
   #include <gmime/gmime.h>
 }
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -44,7 +44,7 @@ extern "C" {
 #include "tango-colors.h"
 #include "xface.h"
 #include "url.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 #include "save-attach-ui.h"
 
 #define FIRST_PICTURE "first-picture"

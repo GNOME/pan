@@ -66,7 +66,7 @@ extern "C" {
 #include "server-ui.h"
 #include "task-pane.h"
 #include "url.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 #include "profiles-dialog.h"
 
@@ -1136,26 +1136,28 @@ void GUI :: do_ignore ()
 }
 
 void
-GUI :: do_flag_on ()
-{
-  do_flag(true);
-}
-
-void
-GUI :: do_flag_off ()
-{
-  do_flag(false);
-}
-
-void
-GUI :: do_flag (bool on)
+GUI :: do_flag ()
 {
   std::vector<const Article*> v(_header_pane->get_full_selection_v());
   g_return_if_fail(!v.empty());
   foreach (std::vector<const Article*>,v,it)
   {
     Article* a((Article*)*it);
-    a->set_flag(on);
+    a->set_flag(!a->get_flag());
+  }
+  const Quark& g(_header_pane->get_group());
+  _data.fire_article_flag_changed(v, g);
+}
+
+void
+GUI :: do_flag_off ()
+{
+  std::vector<const Article*> v(_header_pane->get_full_selection_v());
+  g_return_if_fail(!v.empty());
+  foreach (std::vector<const Article*>,v,it)
+  {
+    Article* a((Article*)*it);
+    a->set_flag(false);
   }
   const Quark& g(_header_pane->get_group());
   _data.fire_article_flag_changed(v, g);
@@ -1545,7 +1547,7 @@ void GUI :: do_about_pan ()
                                "Calin Culianu <calin@ajvar.org> - Threaded Decoding",
                                "K. Haley <haleykd@users.sf.net> - Contributor",
                                "Petr Kovar <pknbe@volny.cz> - Contributor",
-                               "Heinrich M\u00fceller <eddie_v@gmx.de> - Contributor",
+                               "Heinrich M\u00fcller <eddie_v@gmx.de> - Contributor",
                                "Christophe Lambin <chris@rebelbase.com> - Original Pan Development",
                                "Matt Eagleson <matt@rebelbase.com> - Original Pan Development", 0 };
   GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
@@ -1553,7 +1555,7 @@ void GUI :: do_about_pan ()
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
-  gtk_about_dialog_set_copyright (w, _("Copyright \u00A9 2002-2011 Charles Kerr and others")); // \u00A9 is unicode for �
+  gtk_about_dialog_set_copyright (w, _("Copyright \u00A9 2002-2011 Charles Kerr and others")); // \u00A9 is unicode for (c)
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
   gtk_about_dialog_set_license (w, LICENSE);

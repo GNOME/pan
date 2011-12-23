@@ -33,7 +33,7 @@
 #include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
 
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 namespace pan
 {
@@ -135,7 +135,7 @@ namespace pan
       virtual void do_plonk ();
       virtual void do_watch ();
       virtual void do_ignore ();
-      virtual void do_flag_on ();
+      virtual void do_flag ();
       virtual void do_flag_off ();
       virtual void do_next_flag ();
       virtual void do_last_flag ();
@@ -186,10 +186,8 @@ namespace pan
       void do_show_cert_failed_dialog(VerifyData* data);
       bool confirm_accept_new_cert_dialog(GtkWindow*, gnutls_x509_crt_t, const Quark&);
 #endif
-
       void step_bookmarks(int step);
       void do_read_or_save_articles ();
-      void do_flag(bool);
 
     public:
       static std::string prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs);

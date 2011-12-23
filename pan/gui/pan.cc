@@ -544,6 +544,7 @@ _("General Options\n"
 "  --no-gui                 Only show console output, not the download queue.\n") << std::endl;
   }
 
+#ifdef HAVE_DBUS
   /***
    ** DBUS
    ***/
@@ -718,7 +719,7 @@ _("General Options\n"
   /***
    ***
    ***/
-
+#endif
 }
 
 
@@ -817,10 +818,8 @@ main (int argc, char *argv[])
     SocketCreator socket_creator(data, certstore);
     Queue queue (data, data, &socket_creator, certstore, worker_pool, false, 32768);
 
-    ///////////// DBUS
-    /// TODO : make it work with win32
+#ifdef HAVE_DBUS
     Pan pan(data, queue, cache, encode_cache, prefs, group_prefs);
-#ifndef G_OS_WIN32
   #ifndef DEBUG_PARALLEL
     pan_dbus_init(&pan);
 
@@ -916,9 +915,10 @@ main (int argc, char *argv[])
       run_pan_in_window (data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
 
+#ifdef HAVE_DBUS
     if (pan.dbus_id != -1 ) g_bus_unown_name(pan.dbus_id);
     if (dbus_connection) g_dbus_connection_close(dbus_connection,NULL,0,NULL);
-
+#endif
     for (guint i=0; i<NUM_STATUS_ICONS; ++i)
       g_object_unref(status_icons[i].pixbuf);
     delete _status_icon;

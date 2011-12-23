@@ -32,7 +32,7 @@ extern "C" {
 #include "pad.h"
 #include "pan-file-entry.h"
 #include "save-attach-ui.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 using namespace pan;
 

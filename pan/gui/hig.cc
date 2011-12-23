@@ -137,7 +137,6 @@ HIG :: workarea_add_control (GtkWidget   * table,
                               int           row,
                               GtkWidget   * control)
 {
-  std::cerr<<"table attach "<<table<<" "<<control<<"\n";
   gtk_table_attach (GTK_TABLE(table), control, 3, 4, row, row+1, (GtkAttachOptions)(GTK_EXPAND|GTK_SHRINK|GTK_FILL), (GtkAttachOptions)0, 0, 0);
 }
 

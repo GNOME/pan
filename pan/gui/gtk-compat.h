@@ -1,13 +1,13 @@
 //========================================================================
-/**@file	pan/pan/gui/gtk_compat.h
+/**@file	pan/pan/gui/gtk-compat.h
  * @author	kid
  * @date
  * 	Created:	Mon 09 May 2011 04:42:46 PM MDT \n
  * 	Last Update:	Mon 09 May 2011 04:42:46 PM MDT
  */
 /*------------------------------------------------------------------------
- * Description:	«description»
- * 
+ * Description:	GTK Compatibility layer for GTK2/3+ migration
+ *
  *========================================================================
  */
 
@@ -103,6 +103,10 @@ namespace
   }
 #endif
 #if GTK_CHECK_VERSION(3,0,0)
+
+// include this for conversion of old key names to new
+#include <gdk/gdkkeysyms.h>
+
 #define GTK_OBJECT(w) w
   typedef GtkWidget GtkObject;
 #ifdef GTK_DISABLE_DEPRECATED
@@ -116,5 +120,5 @@ namespace
 #ifdef __cplusplus
 }
 #endif
-  
+
 #endif

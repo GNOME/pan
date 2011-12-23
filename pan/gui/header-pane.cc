@@ -21,7 +21,7 @@ extern "C" {
   #include <config.h>
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
-  #include <gdk/gdkkeysyms.h>
+  #include "gtk-compat.h"
   #include <iconv.h>
 }
 #include <cctype>
@@ -42,7 +42,7 @@ extern "C" {
 #include "header-pane.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 using namespace pan;
 
