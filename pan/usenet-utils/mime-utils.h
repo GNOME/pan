@@ -59,6 +59,11 @@
 #define NEEDS_DECODING(encoding) ((encoding == GMIME_CONTENT_ENCODING_BASE64) ||   \
                                  (encoding == GMIME_CONTENT_ENCODING_QUOTEDPRINTABLE))
 
+extern "C"
+{
+  #include <iconv.h>
+}
+
 namespace pan
 {
 
@@ -72,7 +77,7 @@ namespace pan
   /**
    * Utilities to build and parse GMimeMessages.
    *
-   * Most of nastiness this is to handle Usenet's use of chainging together
+   * Most of this nastiness is to handle Usenet's use of chainging together
    * multiple articles as parts of a whole.  This code tries to build
    * a multipart GMimeMessage from multiple posts when necessary, and to
    * also handle Usenet's loose standards for uu/yenc by checking each line
@@ -106,6 +111,16 @@ namespace pan
   char *pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html);
   void pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, GMimeRecipientType type, const char *string);
   void pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid);
+
+  extern iconv_t conv;
+  extern bool iconv_inited;
+
+  char * __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n);
+
+  static char * __g_mime_iconv_strdup (iconv_t cd, const char *str)
+  {
+    return __g_mime_iconv_strndup(cd, str, strlen(str));
+  }
 
 }
 

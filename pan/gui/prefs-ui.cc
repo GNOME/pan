@@ -333,7 +333,7 @@ PrefsDialog :: update_default_charset_label(const StringView& value)
   g_snprintf(buf, sizeof(buf),_("  Select default <u>global</u> charset. Current setting : <b>%s</b> ."),
              value.str);
   gtk_label_set_markup(GTK_LABEL(charset_label), buf);
-  gtk_widget_show(charset_label);
+  gtk_widget_show_all(charset_label);
 }
 
 void
@@ -353,12 +353,13 @@ namespace
   void select_prefs_charset_cb (GtkButton *, gpointer user_data)
   {
     PrefsDialog* pd (static_cast<PrefsDialog*>(user_data));
-      char * tmp = e_charset_dialog (_("Character Encoding"),
-                                 _("Global Charset Settings"),
-                                 NULL, GTK_WINDOW(pd->root()));
+    std::string def = pd->prefs().get_string("default-charset", "UTF-8");
+    char * tmp = e_charset_dialog (_("Character Encoding"),
+                               _("Global Charset Settings"),
+                               def.c_str(), GTK_WINDOW(pd->root()));
 
-      g_return_if_fail(tmp);
-      pd->prefs().set_string("default-charset", tmp);
+    if (!tmp) return;
+    pd->prefs().set_string("default-charset", tmp);
   }
 
 }
@@ -585,7 +586,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     w = gtk_button_new_from_stock (GTK_STOCK_SELECT_FONT);
     l = charset_label = gtk_label_new (NULL);
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.0);
-    update_default_charset_label(_prefs.get_string("default_charset","UTF-8"));
+    update_default_charset_label(_prefs.get_string("default-charset","UTF-8"));
     g_signal_connect (w, "clicked", G_CALLBACK(select_prefs_charset_cb), this);
     HIG::workarea_add_row (t, &row, w, l);
     HIG::workarea_add_section_divider (t, &row);

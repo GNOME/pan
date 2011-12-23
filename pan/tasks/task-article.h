@@ -113,6 +113,19 @@ namespace pan
       std::string _groups;
       const SaveOptions _options;
 
+
+//      typedef std::pair<std::string,StringView> lines_p;
+//      typedef std::vector<lines_p> lines_v;
+//
+//      struct CacheAdder
+//      {
+//        lines_v lines;
+//        void add(std::string& q, const StringView& v)
+//          { lines.push_back(lines_p(q,v)); }
+//      };
+//
+//      CacheAdder adder;
+
       struct Needed {
         std::string message_id;
         unsigned long bytes;

@@ -44,6 +44,7 @@ namespace pan
       GtkWidget    * _root;
       GtkWidget    * _charset;
       GtkWidget    * _profile;
+      GtkWidget    * _spellchecker_language;
       GtkWidget    * _save_path;
 
     private:

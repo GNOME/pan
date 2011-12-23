@@ -1065,6 +1065,7 @@ namespace
     s += e;
     const size_t retval (g_utf8_strlen(key,-1) + g_utf8_strlen(utf8_val.c_str(),-1) + 2);
     g_free (e);
+
     return retval;
   }
 
@@ -1374,9 +1375,21 @@ BodyPane :: expander_activated_idle (gpointer self_gpointer)
   self->_prefs.set_flag ("body-pane-headers-expanded", expanded);
   return false;
 }
+
 void
 BodyPane :: expander_activated_cb (GtkExpander*, gpointer self_gpointer)
 {
+  g_idle_add (expander_activated_idle, self_gpointer);
+}
+
+void
+BodyPane :: verbose_clicked_cb (GtkWidget*, GdkEvent  *event, gpointer self_gpointer)
+{
+  BodyPane *  self (static_cast<BodyPane*>(self_gpointer));
+  GtkExpander * ex (GTK_EXPANDER(self->_expander));
+  bool expanded = gtk_expander_get_expanded (ex);
+  expanded = !expanded;
+  gtk_expander_set_expanded (ex, expanded);
   g_idle_add (expander_activated_idle, self_gpointer);
 }
 
@@ -1699,6 +1712,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_label_set_selectable (GTK_LABEL(_terse), true);
   gtk_label_set_ellipsize (GTK_LABEL(_terse), PANGO_ELLIPSIZE_MIDDLE);
   gtk_widget_show (_terse);
+  g_signal_connect (_terse, "button-press-event", G_CALLBACK(verbose_clicked_cb), this);
 
   GtkWidget * hbox = _verbose = gtk_hbox_new (false, 0);
   g_object_ref_sink (G_OBJECT(_verbose));
@@ -1719,6 +1733,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_widget_set_size_request (w, 48, 48);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
   gtk_widget_show_all (_verbose);
+  g_signal_connect (_verbose, "button-press-event", G_CALLBACK(verbose_clicked_cb), this);
 
   // setup
   _text = gtk_text_view_new ();
@@ -2053,6 +2068,7 @@ BodyPane :: on_prefs_flag_changed (const StringView& key, bool value G_GNUC_UNUS
     refresh_fonts ();
 
   if ((key=="wrap-article-body") || (key=="mute-quoted-text") ||
+      (key=="mute-signature") ||
       (key=="show-smilies-as-graphics") || (key=="show-all-headers") ||
       (key=="size-pictures-to-fit") || (key=="show-text-markup") ||
       (key=="highlight-urls") )

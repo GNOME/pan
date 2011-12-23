@@ -456,6 +456,7 @@ namespace
       N_("Clear _Header Pane"), NULL,
       NULL,
       G_CALLBACK(do_clear_header_pane) },
+
     { "clear-body-pane", NULL,
       N_("Clear _Body Pane"), NULL,
       NULL,

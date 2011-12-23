@@ -8,7 +8,7 @@
 
 using namespace pan;
 
-typedef struct 
+typedef struct
 {
 	int expected_retval;
 	const char * address;
@@ -35,7 +35,7 @@ test_generate_references (void)
 	msg_id = "<pan.2001.12.08.22.06.46.245566.1891@gmx.de>";
 	out = GNKSA::generate_references (refs, msg_id);
 	expected = "<9uh0rq$8g9ua$1@ID-41667.news.dfncis.de> <9596705.7QZiUf9aFP@aschiller.easynet.de> <Xns916D78745865Dvg@newsf1.volker-gringmuth.de> <3C111F64.D2AABC41@babsi.de> <pan.2001.12.07.21.44.36.620796.4981@gmx.de> <pan.2001.12.08.21.19.07.420400.7547@babsi.de> <pan.2001.12.08.21.30.14.714578.7547@babsi.de> <pan.2001.12.08.22.06.46.245566.1891@gmx.de>";
-        check (expected == out)
+  check (expected == out)
 
 	refs = "<qm2vdvs9kmd9nualp7gpcuqp02ommq191p@4ax.com> <3EE5A096.98029307@hotmail.com> <bc4sb4$fbmlp$1@ID-191099.news.dfncis.de> <3EE6DE5C.A8D18620@hotmail.com> <bc6qeb$g02ia$9@ID-191099.news.dfncis.de> <3EE70552.FFBAD8F1@hotmail.com> <bc80jt$gjfab$9@ID-191099.news.dfncis.de> <3EE7B742.CB99E2A9@hotmail.com> <bc8esv$god63$2@ID-191099.news.dfncis.de> <3EE83795.BAB1A91B@hotmail.com> <bc9o49$glr0p$1@ID-191099.news.dfncis.de> <3EE8F9DD.18250DED@hotmail.com> <1231781.L8vHGuMyzo@cleeson.com> <3EEB7C07.4752E42A@hotmail.com> <1296817.URW5Hf7Ksp@pedro-loves-maide.cleeson.com> <3EEEF80E.861F9856@hotmail.com> <28546748.CjhBzqWdrr@pedro-loves-maide.cleeson.com> <3EF04A70.BCC38BF9@hotmail.com> <3009961.k4EQsI0dRT@pedro-loves-maide.cleeson.com> <3EF2E85E.904F3FBA@hotmail.com> <352040964.KGvfqQSRi4@pedro-loves-maide.cleeson.com> <3EFC7072.C6E6D00E@hotmail.com> <1622701.ZSR7dHnD1g@pedro.loves.maide> <3F13C513.6CDFABEB@hotmail.com> <3F13DBF6.8000505@gmx.net>";
 	msg_id = "<3f13ffeb$0$301$ba620e4c@reader1.news.skynet.be>";
@@ -50,6 +50,11 @@ test_generate_references (void)
 
   refs = "as.com> <asdf <qm2vdvs9kmd9nualp7gpcuqp02ommq191p@4ax.com> <3EE5A096.98029307@hotmail.com> <as";
   expected = "<qm2vdvs9kmd9nualp7gpcuqp02ommq191p@4ax.com> <3EE5A096.98029307@hotmail.com>";
+  out = GNKSA::remove_broken_message_ids_from_references (refs);
+  check (expected == out)
+
+  refs = "as.com> <asdf <qm2vdvs9kmd9nualp7gpcuqp02ommq191p_!dfdsfsd@4ax.com> <3EE5A096.98029307@hotmail.com> <as";
+  expected = "<qm2vdvs9kmd9nualp7gpcuqp02ommq191p_!dfdsfsd@4ax.com> <3EE5A096.98029307@hotmail.com>";
   out = GNKSA::remove_broken_message_ids_from_references (refs);
   check (expected == out)
 
@@ -199,7 +204,7 @@ static ReferencesCheck references [] =
 	},
 	/* make sure that twisted domains like [10.0.0.4] don't get stripped.
 	   see comments on pan/base/gnksa.c gnksa_check_message_id() for details. */
-	{       
+	{
 		998,
 
 		"<B8CE15E0.2DBE%frederic.platzer@wanadoo.fr> "

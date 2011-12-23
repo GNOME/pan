@@ -199,6 +199,7 @@ namespace
                   "Warning: %d lines are more than 80 characters wide.", too_wide_qty), too_wide_qty);
       errors.insert (buf);
       goodness.raise_to_warn ();
+
     }
   }
 

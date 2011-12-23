@@ -267,11 +267,29 @@ PostUI :: set_spellcheck_enabled (bool enabled)
 #ifdef HAVE_GTKSPELL
     GtkTextView * view = GTK_TEXT_VIEW(_body_view);
     GError * err (0);
-    const char * locale = NULL;
-    gtkspell_new_attach (view, locale, &err);
-    if (err) {
-      Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
-      g_clear_error (&err);
+
+    // set the language
+    if(!_spellcheck_language.empty())	// some language was set
+    {
+      gtkspell_new_attach (view, _spellcheck_language.c_str(), &err);	// sets custom spell checker
+      if (err) {
+        Log::add_err_va (_("Error setting custom spellchecker: %s"), err->message);
+        g_clear_error (&err);
+        // custom spellchecker failed. defaults to env spellchecker
+        gtkspell_new_attach (view, NULL, &err);	// tries default env language
+        if (err) {
+          Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
+          g_clear_error (&err);
+        }
+      }
+    }
+    else
+    {
+      gtkspell_new_attach (view, NULL, &err);	// tries default env language
+      if (err) {
+        Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
+        g_clear_error (&err);
+      }
     }
 #else
     GtkWidget * w = gtk_message_dialog_new_with_markup (
@@ -2045,6 +2063,9 @@ namespace {
 void
 PostUI :: set_message (GMimeMessage * message)
 {
+
+  if (!message) return;
+
   // update our message header
   if (message)
     g_object_ref (G_OBJECT(message));
@@ -2936,6 +2957,23 @@ PostUI :: PostUI (GtkWindow    * parent,
   g_return_if_fail (message != 0);
 
   ua_extra = prefs.get_flag(USER_AGENT_EXTRA_PREFS_KEY, false);
+
+  #ifdef HAVE_GTKSPELL
+  // set the spellchecker language according to the first destination newsgroup's options
+  StringView line (g_mime_object_get_header ((GMimeObject *) message, "Newsgroups"));
+  StringView groupname;
+  // get the first newsgroup
+  while (line.pop_token (groupname, ',')) {
+    groupname.trim ();
+    if (groupname.empty())
+      continue;
+    // set the language as defined in the newsgroup's options or, if it doesn't have one, the system locale
+    _spellcheck_language = group_prefs.get_string (groupname, "spellcheck-language", "");
+
+    if (!_spellcheck_language.empty())
+      break;
+  }
+  #endif
 
   // create the window
   _root = gtk_window_new (GTK_WINDOW_TOPLEVEL);

@@ -27,6 +27,7 @@ extern "C" {
   #include <sys/stat.h> // for chmod
   #include <glib/gi18n.h>
   #include <dirent.h>
+  #include <iconv.h>
 
 }
 #include <pan/general/debug.h>
@@ -394,6 +395,7 @@ GUI :: ~GUI ()
   g_object_unref (G_OBJECT(_ui_manager));
 
   deinit_gpg();
+  if (iconv_inited) iconv_close(conv);
 }
 
 /***
@@ -946,7 +948,9 @@ void GUI :: do_clear_header_pane ()
 {
   gtk_window_set_title (get_window(_root), _("Pan"));
   _header_pane->set_group (Quark());
+
 }
+
 void GUI :: do_clear_body_pane ()
 {
   _body_pane->clear ();
@@ -1143,21 +1147,11 @@ GUI :: do_flag_off ()
   do_flag(false);
 }
 
-
-void
-GUI :: do_flag (bool on)
+void GUI :: do_flag (bool t)
 {
-  /// TODO flag selection
-  std::vector<const Article*> v(_header_pane->get_full_selection_v());
-  g_return_if_fail(!v.empty());
-  foreach (std::vector<const Article*>,v,it)
-  {
-    Article* a((Article*)*it);
-    a->set_flag(on);
-  }
-  const Quark& g(_header_pane->get_group());
-  _data.fire_article_flag_changed(v, g);
+
 }
+
 
 void
 GUI :: do_mark_all_flagged()
@@ -1538,10 +1532,13 @@ void GUI :: do_tip_jar ()
 }
 void GUI :: do_about_pan ()
 {
-  const gchar * authors [] = {
-  "Charles Kerr <charles@rebelbase.com> - Pan Author", "Calin Culianu <calin@ajvar.org> - Threaded Decoding", "K. Haley <haleykd@users.sf.net> - Contributor",
-  "Petr Kovar <pknbe@volny.cz> - Contributor", "Heinrich M�ller <eddie_v@gmx.de> - Contributor", "Christophe Lambin <chris@rebelbase.com> - Original Pan Development",
-  "Matt Eagleson <matt@rebelbase.com> - Original Pan Development", 0 };
+  const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com> - Pan Author",
+                               "Calin Culianu <calin@ajvar.org> - Threaded Decoding",
+                               "K. Haley <haleykd@users.sf.net> - Contributor",
+                               "Petr Kovar <pknbe@volny.cz> - Contributor",
+                               "Heinrich M\u00fceller <eddie_v@gmx.de> - Contributor",
+                               "Christophe Lambin <chris@rebelbase.com> - Original Pan Development",
+                               "Matt Eagleson <matt@rebelbase.com> - Original Pan Development", 0 };
   GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));
@@ -1844,11 +1841,25 @@ void GUI :: do_read_selected_group ()
   // set the charset encoding based upon that group's / global default
   if (!group.empty())
   {
-    std::string global_locale(_prefs.get_string("default-charset", ""));
-    if (global_locale.empty())
-      set_charset (_group_prefs.get_string (group, "character-encoding", "UTF-8"));
-    else
-      set_charset (global_locale);
+    std::string local (_group_prefs.get_string (group, "character-encoding", "UTF-8"));
+    set_charset (local);
+
+    // update iconv handler
+    const char * from = g_mime_charset_iconv_name(local.c_str());
+    char buf[256];
+    g_snprintf(buf, sizeof(buf), "%s//IGNORE", _prefs.get_string("default-charset", "UTF-8").c_str());
+    const char * to  = g_mime_charset_iconv_name(buf);
+//    if (strncmp (from, buf, strlen(from)) != 0)
+    {
+      if (iconv_inited)
+        iconv_close(conv);
+      conv = iconv_open (to, from);
+      if (conv == (iconv_t)-1)
+      {
+        Log::add_err(_("Error loading iconv library. Some Charsets in GUI will not be able to be encoded."));
+      } else
+        iconv_inited = true;
+    }
 
   }
 

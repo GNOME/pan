@@ -153,6 +153,7 @@ namespace pan
       str2str_t _profile_headers;
       std::string _unchanged_body;
       int _wrap_pixels;
+      std::string _spellcheck_language;
 
       GMimeContentEncoding _enc;
 

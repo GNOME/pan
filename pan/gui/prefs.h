@@ -22,6 +22,7 @@
 
 #include <map>
 #include <set>
+#include <iostream>
 #include <string>
 #include <vector>
 #include <pan/general/string-view.h>

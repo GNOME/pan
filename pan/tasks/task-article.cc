@@ -24,11 +24,14 @@
 #include <config.h>
 #include <algorithm>
 #include <cassert>
-extern "C" {
-#include <glib/gi18n.h>
+extern "C"
+{
+  #include <glib/gi18n.h>
+  #include <iconv.h>
 }
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
+#include <pan/general/utf8-utils.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/mime-utils.h>
@@ -49,11 +52,19 @@ namespace
     std::string stripped;
     mime::remove_multipart_from_subject (article.subject.c_str(), stripped);
 
+    const char* str = stripped.c_str();
+    iconv_t c = iconv_open("UTF-8","UTF-8");
+    char * res = __g_mime_iconv_strdup(c, str);
+    iconv_close(c);
+
     char buf[1024];
     if (save)
-      snprintf (buf, sizeof(buf), _("Saving %s"), stripped.c_str());
+      snprintf (buf, sizeof(buf), _("Saving %s"), res);
     else
-      snprintf (buf, sizeof(buf), _("Reading %s"), stripped.c_str());
+      snprintf (buf, sizeof(buf), _("Reading %s"), res);
+
+    g_free(res);
+
     return std::string (buf);
   }
 

@@ -40,6 +40,101 @@ extern "C"
 
 using namespace pan;
 
+namespace pan
+{
+
+  iconv_t conv(0);
+  bool iconv_inited(false);
+
+  char *
+  __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n)
+  {
+
+    size_t inleft, outleft, converted = 0;
+    char *out, *outbuf;
+    const char *inbuf;
+    size_t outlen;
+    int errnosav;
+
+    if (cd == (iconv_t) -1 || !iconv_inited)
+      return g_strndup (str, n);
+
+    outlen = n * 2 + 16;
+    out = (char*)g_malloc (outlen + 4);
+
+    inbuf = str;
+    inleft = n;
+
+    do {
+      errno = 0;
+      outbuf = out + converted;
+      outleft = outlen - converted;
+
+      converted = iconv (cd, (char **) &inbuf, &inleft, &outbuf, &outleft);
+
+      if (converted != (size_t) -1 && errno == 0) {
+        /*
+         * EINVAL  An  incomplete  multibyte sequence has been encounï¿½
+         *         tered in the input.
+         *
+         * We'll just have to ignore it...
+         */
+        break;
+      }
+
+      if (errno != E2BIG && errno != EILSEQ) {
+        errnosav = errno;
+        g_free (out);
+
+        /* reset the cd */
+        iconv (cd, NULL, NULL, NULL, NULL);
+
+        errno = errnosav;
+
+        return NULL;
+      }
+
+      /*
+		 * E2BIG   There is not sufficient room at *outbuf.
+		 *
+		 * We just need to grow our outbuffer and try again.
+		 */
+      {
+        converted = outbuf - out;
+        outlen += inleft * 2 + 16;
+        out = (char*)g_realloc (out, outlen + 4);
+        outbuf = out + converted;
+      }
+
+    } while (TRUE);
+
+    /* flush the iconv conversion */
+    while (iconv (cd, NULL, NULL, &outbuf, &outleft) == (size_t) -1) {
+      if (errno != E2BIG)
+        break;
+
+      outlen += 16;
+      converted = outbuf - out;
+      out = (char*)g_realloc (out, outlen + 4);
+      outleft = outlen - converted;
+      outbuf = out + converted;
+    }
+
+    /* Note: not all charsets can be nul-terminated with a single
+             nul byte. UCS2, for example, needs 2 nul bytes and UCS4
+             needs 4. I hope that 4 nul bytes is enough to terminate all
+             multibyte charsets? */
+
+    /* nul-terminate the string */
+    memset (outbuf, 0, 4);
+
+    /* reset the cd */
+    iconv (cd, NULL, NULL, NULL, NULL);
+
+    return out;
+  }
+}
+
 namespace
 {
    const char*
@@ -374,7 +469,7 @@ namespace pan
   /*
    base64.cpp and base64.h
 
-   Copyright (C) 2004-2008 René Nyffenegger
+   Copyright (C) 2004-2008 Renï¿½ Nyffenegger
 
    This source code is provided 'as-is', without any express or implied
    warranty. In no event will the author be held liable for any damages
@@ -394,7 +489,7 @@ namespace pan
 
    3. This notice may not be removed or altered from any source distribution.
 
-   René Nyffenegger rene.nyffenegger@adp-gmbh.ch
+   Renï¿½ Nyffenegger rene.nyffenegger@adp-gmbh.ch
 
 */
 

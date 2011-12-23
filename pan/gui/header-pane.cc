@@ -22,18 +22,20 @@ extern "C" {
   #include <glib/gi18n.h>
   #include <gtk/gtk.h>
   #include <gdk/gdkkeysyms.h>
+  #include <iconv.h>
 }
 #include <cctype>
 #include <cmath>
 #include <algorithm>
 #include <pan/general/debug.h>
-//#include <pan/general/gdk-threads.h>
 #include <pan/general/e-util.h>
+#include <pan/general/utf8-utils.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/filter-info.h>
 #include <pan/usenet-utils/rules-info.h>
+#include <pan/usenet-utils/mime-utils.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
 #include <pan/icons/pan-pixbufs.h>
@@ -248,6 +250,24 @@ HeaderPane :: render_score (GtkTreeViewColumn * ,
 }
 
 void
+HeaderPane :: render_author (GtkTreeViewColumn * ,
+                            GtkCellRenderer   * renderer,
+                            GtkTreeModel      * model,
+                            GtkTreeIter       * iter,
+                            gpointer            user_data)
+{
+
+  const HeaderPane * self (static_cast<HeaderPane*>(user_data));
+  const Row * row (dynamic_cast<Row*>(self->_tree_store->get_row (iter)));
+
+  const Article * a (self->get_article (model, iter));
+
+  char* ret = __g_mime_iconv_strdup(conv, a->author.c_str());
+  if (ret) g_object_set (renderer, "text", ret, NULL);
+  g_free(ret);
+}
+
+void
 HeaderPane :: render_bytes (GtkTreeViewColumn * ,
                             GtkCellRenderer   * renderer,
                             GtkTreeModel      * model,
@@ -258,6 +278,7 @@ HeaderPane :: render_bytes (GtkTreeViewColumn * ,
   gtk_tree_model_get (model, iter, COL_BYTES, &bytes, -1);
   g_object_set (renderer, "text", pan::render_bytes(bytes), NULL);
 }
+
 
 struct HeaderPane::CountUnread: public PanTreeStore::WalkFunctor
 {
@@ -294,7 +315,12 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
   const bool bold (!row->is_read);
 
   const Article * a (self->get_article (model, iter));
-  const char * text (a->subject.c_str());
+
+  char* ret = __g_mime_iconv_strdup(conv, a->subject.c_str());
+  std::string res;
+  if (ret) res = ret;
+  g_free(ret);
+
   char buf[512];
 
   bool unread (false);
@@ -309,8 +335,8 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
 
     if (!expanded) {
       unread = row->is_read;
-      snprintf (buf, sizeof(buf), "%s (%lu)", text, counter.unread_children);
-      text = buf;
+      snprintf (buf, sizeof(buf), "%s (%lu)", res.c_str(), counter.unread_children);
+      res = buf;
     }
   }
 
@@ -319,7 +345,7 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
   def_bg = p.get_color_str_wo_fallback("color-read-bg");
 
   g_object_set (renderer,
-    "text", text,
+    "text", res.c_str(),
     "weight", (bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
     "foreground", unread ? (def_fg.empty() ? NULL : def_fg.c_str()) : NULL,
     "background", unread ? (def_bg.empty() ? NULL : def_bg.c_str()) : NULL, NULL);
@@ -1620,11 +1646,12 @@ HeaderPane :: build_tree_columns ()
         "ypad", 0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes (_("Author"), r, "text", COL_SHORT_AUTHOR, NULL);
+      col = gtk_tree_view_column_new_with_attributes (_("Author"), r, NULL);
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 133));
       gtk_tree_view_column_set_resizable (col, true);
       gtk_tree_view_column_set_sort_column_id (col, COL_SHORT_AUTHOR);
+      gtk_tree_view_column_set_cell_data_func (col, r, render_author, this, 0);
       gtk_tree_view_append_column (tree_view, col);
     }
     else if (name == "lines")
@@ -1719,6 +1746,7 @@ HeaderPane :: ~HeaderPane ()
 
   for (guint i=0; i<ICON_QTY; ++i)
     g_object_unref (G_OBJECT(_icons[i].pixbuf));
+
 }
 
 GtkWidget*

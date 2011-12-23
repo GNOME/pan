@@ -20,7 +20,12 @@
 #include <config.h>
 extern "C" {
   #include <glib/gi18n.h>
+  #include <glib.h>
   #include <gtk/gtk.h>
+#ifdef HAVE_GTKSPELL
+  #include <gtkspell/gtkspell.h>
+  #include <enchant/enchant.h>
+#endif
 }
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
@@ -34,8 +39,50 @@ extern "C" {
 
 using namespace pan;
 
+
 namespace
 {
+
+  struct Langs
+  {
+    GList* langs;
+  };
+
+  static void
+  dict_describe_cb(const char * const lang_tag,
+		 const char * const provider_name,
+		 const char * const provider_desc,
+		 const char * const provider_file,
+		 void * user_data)
+  {
+    Langs *langs = (Langs *)user_data;
+    langs->langs = g_list_insert_sorted(langs->langs, g_strdup(lang_tag), (GCompareFunc) strcmp);
+  }
+
+#ifdef HAVE_GTKSPELL
+  static EnchantBroker *broker = NULL;
+  static GList *langs = NULL;
+  static GtkTextView* view = NULL;
+  Langs l;
+#endif
+  void init_spell()
+  {
+#ifdef HAVE_GTKSPELL
+    view = GTK_TEXT_VIEW(gtk_text_view_new());
+    broker = enchant_broker_init();
+    l.langs = langs;
+    enchant_broker_list_dicts(broker, dict_describe_cb, &l);
+#endif
+  }
+
+  void deinit_spell()
+  {
+#ifdef HAVE_GTKSPELL
+    if (view) g_object_ref_sink(view);
+    if (broker) enchant_broker_free(broker);
+#endif
+  }
+
   void delete_dialog (gpointer castme)
   {
     delete static_cast<GroupPrefsDialog*>(castme);
@@ -65,6 +112,21 @@ GroupPrefsDialog :: save_from_gui ()
     _group_prefs.set_string (*it, "default-group-save-path", pch);
 
   _group_prefs.save () ;
+
+  // spellchecker language
+#ifdef HAVE_GTKSPELL
+  GtkTreeIter iter;
+  if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX(_spellchecker_language), &iter))
+		return;
+
+  gchar* name(0);
+	GtkTreeModel* model = gtk_combo_box_get_model (GTK_COMBO_BOX(_spellchecker_language));
+	gtk_tree_model_get (model, &iter, 0, &name, -1);
+
+  if (name) _group_prefs.set_string (_group, "spellcheck-language", name);
+  g_free(name);
+#endif
+
 }
 
 void
@@ -110,7 +172,53 @@ namespace
 
     return w;
   }
+
+  GtkWidget*
+  create_spellcheck_combo_box ( const Quark      & group,
+                                const GroupPrefs & group_prefs)
+  {
+    GtkWidget * w;
+
+#ifdef HAVE_GTKSPELL
+    init_spell();
+    deinit_spell();
+
+    GtkTreeModel *model;
+    GtkListStore * store = gtk_list_store_new (1, G_TYPE_STRING);
+    GtkTreeIter iter, storeit;
+    bool valid(false);
+
+
+    std::string lang = group_prefs.get_string(group, "spellcheck-language","");
+
+    while (l.langs)
+    {
+      gchar* data = (gchar*)l.langs->data;
+      if (data)
+      {
+        gtk_list_store_append (store, &iter);
+        gtk_list_store_set (store, &iter, 0, data, -1);
+        if (g_strcmp0 ((const char*)l.langs->data,lang.c_str())==0) { storeit = iter; valid=true; }
+      }
+      l.langs = l.langs->next;
+    }
+    model = GTK_TREE_MODEL(store);
+    w = gtk_combo_box_new_with_model (model);
+    g_object_unref(store);
+
+    GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, TRUE);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
+
+    if (valid) gtk_combo_box_set_active_iter (GTK_COMBO_BOX(w), &storeit);
+
+    if (l.langs) g_list_free(l.langs);
+#endif
+    return w;
+  }
+
 }
+
 
 GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
                                       const quarks_v  & groups,
@@ -141,10 +249,11 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
     g_snprintf (buf, sizeof(buf), _("Properties for %s"), groups[0].c_str());
 
   HIG::workarea_add_section_title (t, &row, buf);
-    HIG :: workarea_add_section_spacer (t, row, 3);
-    _charset = w = e_charset_combo_box_new( );
+    HIG :: workarea_add_section_spacer (t, row, 4);
+    GtkWidget* box = _charset = e_charset_combo_box_new( );
     e_charset_combo_box_set_charset( E_CHARSET_COMBO_BOX(_charset), _group_prefs.get_string (groups[0], "character-encoding", "UTF-8").c_str());
     HIG :: workarea_add_row (t, &row, _("Character _encoding:"), w);
+
     w = _save_path = file_entry_new (_("Directory for Saving Attachments"));
     char * pch = g_build_filename (g_get_home_dir(), "News", NULL);
     std::string dir;
@@ -154,13 +263,20 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
       dir = _group_prefs.get_string (groups[0], "default-group-save-path", pch);
     g_free (pch);
     file_entry_set (w, dir.c_str());
+
     HIG :: workarea_add_row (t, &row, _("Directory for _saving attachments:"), w);
     w = _profile = create_profiles_combo_box (data, groups, group_prefs);
     l = HIG :: workarea_add_row (t, &row, _("Posting _profile:"), w);
 
     gtk_widget_set_sensitive (l, gtk_widget_get_sensitive(w));
+#ifdef HAVE_GTKSPELL
+    w = _spellchecker_language = create_spellcheck_combo_box ( group, group_prefs);
+
+    HIG :: workarea_add_row (t, &row, _("Spellchecker _language:"), w);
+#endif
 
   gtk_widget_show_all (t);
   gtk_box_pack_start ( GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG( dialog))), t, true, true, 0);
   _root = dialog;
+
 }
