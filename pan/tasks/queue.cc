@@ -29,11 +29,14 @@
 ****
 ***/
 
+// TODO Mulithreading downloads!
+
 using namespace pan;
 
 Queue :: Queue (ServerInfo         & server_info,
                 TaskArchive        & archive,
-                Socket::Creator    * socket_creator,
+                SocketCreator      * socket_creator,
+                CertStore          & certstore,
                 WorkerPool         & pool,
                 bool                 online,
                 int                  save_delay_secs):
@@ -42,12 +45,18 @@ Queue :: Queue (ServerInfo         & server_info,
   _socket_creator (socket_creator),
   _worker_pool (pool),
   _decoder (pool),
+  _encoder (pool),
   _decoder_task (0),
+  _encoder_task (0),
   _save_delay_secs (save_delay_secs),
   _needs_saving (false),
   _last_time_saved (0),
-  _archive (archive)
+  _archive (archive),
+  _certstore(certstore),
+  _uploads_total(0),
+  _downloads_total(0)
 {
+
   tasks_t tasks;
   _archive.load_tasks (tasks);
   add_tasks (tasks, BOTTOM);
@@ -95,7 +104,7 @@ Queue :: get_pool (const Quark& servername)
   }
   else // have to build one
   {
-    pool = new NNTP_Pool (servername, _server_info, _socket_creator);
+    pool = new NNTP_Pool (servername, _server_info, _socket_creator, _certstore);
     pool->add_listener (this);
     _pools[servername] = pool;
   }
@@ -109,6 +118,7 @@ Queue :: get_pool (const Quark& servername)
 void
 Queue :: clean_n_save ()
 {
+
   const tasks_t tmp (_tasks.begin(), _tasks.end());
   // remove completed tasks.
   foreach_const (tasks_t, tmp, it) {
@@ -142,7 +152,7 @@ Queue :: upkeep ()
   // ref #352170, #354779
   foreach_const (tasks_t, tmp, it) {
     Task * task (*it);
-    if (task->get_state()._work == Task::NEED_NNTP) {
+    if (task->get_state()._work == Task::NEED_NNTP ) {
       process_task (task);
       break;
     }
@@ -155,6 +165,10 @@ Queue :: upkeep ()
     active.insert (it->second);
   foreach (std::set<Task*>, active, it)
     process_task (*it);
+
+  //upkeep on paused upload slots
+//  foreach (std::set<TaskUpload*>, _uploads, it)
+//    process_task (*it);
 
   // idle socket upkeep
   foreach (pools_t, _pools, it)
@@ -200,6 +214,8 @@ Queue :: get_task_counts (int& active, int& total)
     active_tasks.insert (it->second);
   if (_decoder_task)
     active_tasks.insert (_decoder_task);
+  if (_encoder_task)
+    active_tasks.insert (_encoder_task);
   active = active_tasks.size ();
   total = _tasks.size ();
 }
@@ -215,6 +231,16 @@ Queue :: give_task_a_decoder (Task * task)
 }
 
 void
+Queue :: give_task_a_encoder (Task * task)
+{
+  const bool was_active (task_is_active (task));
+  _encoder_task = task;
+  if (!was_active)
+    fire_task_active_changed (task, true);
+  task->give_encoder (this, &_encoder); // it's active now...
+}
+
+void
 Queue :: give_task_a_connection (Task * task, NNTP * nntp)
 {
   const bool was_active (task_is_active (task));
@@ -226,9 +252,35 @@ Queue :: give_task_a_connection (Task * task, NNTP * nntp)
 }
 
 void
+Queue :: give_task_an_upload_slot (TaskUpload* task)
+{
+  int max (_server_info.get_server_limits(task->_server));
+  if (_uploads.size() < max)
+  {
+    _uploads.insert(task);
+    task->wakeup();
+    fire_task_active_changed (task, true);
+    process_task(task);
+  }
+}
+
+void
+Queue :: give_task_a_download_slot (TaskArticle* task)
+{
+  int max (8);//DBG!!(_server_info.get_server_limits(task->_server));
+  if (_downloads.size() < max)
+  {
+    _downloads.insert(task);
+    task->wakeup();
+    fire_task_active_changed (task, true);
+    process_task(task);
+  }
+}
+
+void
 Queue :: process_task (Task * task)
 {
-  pan_return_if_fail (task!=0);
+  pan_return_if_fail (task != 0);
 
   debug ("in process_task with a task of type " << task->get_type());
 
@@ -257,30 +309,59 @@ Queue :: process_task (Task * task)
   else if (state._work == Task::WORKING)
   {
     debug ("working");
-    // do nothing
+  }
+  else if (state._work == Task::PAUSED)
+  {
+    debug("paused");
+    TaskUpload* t = dynamic_cast<TaskUpload*>(task);
+    if (t)
+      give_task_an_upload_slot(t);
+
+//    TaskArticle* t2 = dynamic_cast<TaskArticle*>(task);
+//    if (t2)
+//      give_task_a_download_slot(t2);
+
   }
   else if (state._work == Task::NEED_DECODER)
   {
+
     if (!_decoder_task)
       give_task_a_decoder (task);
   }
+  else if (state._work == Task::NEED_ENCODER)
+  {
+    if (!_encoder_task)
+      give_task_a_encoder (task);
+  }
+
   else while (_is_online && (state._work == Task::NEED_NNTP))
   {
+    debug("online");
     // make the requests...
     const Task::State::unique_servers_t& servers (state._servers);
     foreach_const (Task::State::unique_servers_t, servers, it)
+    {
+      if (_certstore.in_blacklist(*it)) continue;
       get_pool(*it).request_nntp (_worker_pool);
+    }
 
     Quark server;
     if (!find_best_server (servers, server))
+    {
+      debug("break");
       break;
+    }
 
     NNTP * nntp (get_pool(server).check_out ());
     if (!nntp)
+    {
+      debug("break");
       break;
+    }
 
     give_task_a_connection (task, nntp);
   }
+  debug("end loop");
 }
 
 /***
@@ -293,6 +374,20 @@ Queue :: find_first_task_needing_decoder ()
   foreach (TaskSet, _tasks, it) {
     const Task::State& state ((*it)->get_state ());
     if  ((state._work == Task::NEED_DECODER)
+      && (!_stopped.count (*it))
+      && (!_removing.count (*it)))
+      return *it;
+  }
+
+  return 0;
+}
+
+Task*
+Queue :: find_first_task_needing_encoder ()
+{
+  foreach (TaskSet, _tasks, it) {
+    const Task::State& state ((*it)->get_state ());
+    if  ((state._work == Task::NEED_ENCODER)
       && (!_stopped.count (*it))
       && (!_removing.count (*it)))
       return *it;
@@ -516,6 +611,9 @@ Queue :: task_is_active (const Task * task) const
   if (task && task==_decoder_task)
     return true;
 
+  if (task && task==_encoder_task)
+    return true;
+
   bool task_has_nntp (false);
   foreach_const (nntp_to_task_t, _nntp_to_task, it)
     if ((task_has_nntp = task==it->second))
@@ -547,10 +645,27 @@ Queue :: remove_task (Task * task)
     TaskArticle * ta (dynamic_cast<TaskArticle*>(task));
     if (ta)
       _mids.erase (ta->get_article().message_id);
-
     _stopped.erase (task);
     _removing.erase (task);
     _tasks.remove (index);
+
+    // manually upkeep on ONE new taskupload to keep the queue going
+    TaskUpload * t  (dynamic_cast<TaskUpload*>(task));
+    if (t)
+    {
+      int max (_server_info.get_server_limits(t->_server));
+      _uploads.erase(t);
+      const tasks_t tmp (_tasks.begin(), _tasks.end());
+      foreach_const (tasks_t, tmp, it) {
+        Task * task (*it);
+        if (task->get_state()._work == Task::PAUSED)
+        {
+          give_task_an_upload_slot(dynamic_cast<TaskUpload*>(*it));
+          break;
+        }
+      }
+    }
+
     delete task;
   }
 
@@ -656,6 +771,30 @@ Queue :: check_in (Decoder* decoder UNUSED, Task* task)
 
   // pass our worker thread on to another task
   Task * next = find_first_task_needing_decoder ();
+  if (next && (next!=task))
+    process_task (next);
+
+  // what to do now with this task...
+  process_task (task);
+}
+
+void
+Queue :: check_in (Encoder* encoder UNUSED, Task* task)
+{
+  // take care of our decoder counting...
+  _encoder_task = 0;
+
+  // notify the listeners if the task isn't active anymore...
+  if (!task_is_active (task))
+    fire_task_active_changed (task, false);
+
+  // if the task hit an error, fire an error message
+  const Task::State state (task->get_state ());
+  if (state._health == ERR_LOCAL)
+    fire_queue_error ("");
+
+  // pass our worker thread on to another task
+  Task * next = find_first_task_needing_encoder ();
   if (next && (next!=task))
     process_task (next);
 
@@ -786,11 +925,11 @@ Queue :: get_stats (unsigned long   & queued_count,
     Task * task (*it);
 
     const Queue::TaskState state (tasks.get_state (task));
-    if (state == Queue::RUNNING || state == Queue::DECODING)
+    if (state == Queue::RUNNING || state == Queue::DECODING || state == Queue::ENCODING)
       ++running_count;
     else if (state == Queue::STOPPED)
       ++stopped_count;
-    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE)
+    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE || state == Queue::QUEUED_FOR_ENCODE)
       ++queued_count;
 
     if (state==Queue::RUNNING || state==Queue::QUEUED)

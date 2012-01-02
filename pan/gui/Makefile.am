@@ -1,4 +1,5 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GTKSPELL_CFLAGS@ @GTK_CFLAGS@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ -DPANLOCALEDIR=\""$(panlocaledir)"\"
+AM_CPPFLAGS = -I@top_srcdir@ @GTKSPELL_CFLAGS@ @GTK_CFLAGS@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ \
+							@GNUTLS_CFLAGS@ @LIBNOTIFY_CFLAGS@ @LIBGNOME_KEYRING_1_CFLAGS@ -DPANLOCALEDIR=\""$(panlocaledir)"\"
 
 noinst_LIBRARIES = libpangui.a
 
@@ -10,6 +11,7 @@ libpangui_a_SOURCES = \
  e-charset.c \
  e-charset-combo-box.c \
  e-charset-dialog.c \
+ e-cte-dialog.c \
  group-pane.cc \
  group-prefs.cc \
  group-prefs-dialog.cc \
@@ -27,6 +29,7 @@ libpangui_a_SOURCES = \
  profiles-dialog.cc \
  render-bytes.cc \
  save-ui.cc \
+ save-attach-ui.cc \
  score-add-ui.cc \
  score-view-ui.cc \
  server-ui.cc \
@@ -44,6 +47,7 @@ noinst_HEADERS = \
  e-charset.h \
  e-charset-combo-box.h \
  e-charset-dialog.h \
+ e-cte-dialog.h \
  group-pane.h \
  group-prefs.h \
  group-prefs-dialog.h \
@@ -67,6 +71,7 @@ noinst_HEADERS = \
  progress-view.h \
  render-bytes.h \
  save-ui.h \
+ save-attach-ui.h \
  score-add-ui.h \
  score-view-ui.h \
  server-ui.h \
@@ -93,8 +98,8 @@ WINRCOBJ =
 endif
 
 pan_SOURCES = gui.cc pan.cc $(WINRC)
-pan_LDADD = ./libpangui.a $(WINRCOBJ) -lenchant ../data-impl/libpandata.a ../tasks/libtasks.a ../data/libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a ../../uulib/libuu.a @GTKSPELL_LIBS@ @GTK_LIBS@ @GMIME_LIBS@ @GLIB_LIBS@
-
+pan_LDADD = ./libpangui.a $(WINRCOBJ) -lenchant ../data-impl/libpandata.a ../tasks/libtasks.a ../data/libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a ../../uulib/libuu.a \
+		@GTKSPELL_LIBS@ @GTK_LIBS@ @GMIME_LIBS@ @GLIB_LIBS@ @GNUTLS_LIBS@ @LIBNOTIFY_LIBS@ @LIBGNOME_KEYRING_1_LIBS@
 if HAVE_WIN32
 pan_LDFLAGS = -mwindows
 endif

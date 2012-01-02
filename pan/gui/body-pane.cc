@@ -21,10 +21,10 @@
 #include <cctype>
 #include <cmath>
 #include <iostream>
+#include <sstream>
 extern "C" {
   #include <glib/gi18n.h>
   #include <pan/gui/gtk-compat.h>
-  #include <gdk/gdkkeysyms.h>
   #include <gmime/gmime.h>
 }
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -32,6 +32,7 @@ extern "C" {
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
+#include <pan/general/e-util.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/usenet-utils/url-find.h>
@@ -42,10 +43,43 @@ extern "C" {
 #include "xface.h"
 #include "url.h"
 #include "gtk-compat.h"
+#include "save-attach-ui.h"
 
 #define FIRST_PICTURE "first-picture"
 
 using namespace pan;
+
+/***
+****
+***/
+
+namespace
+{
+
+  GtkWindow* get_window (GtkWidget* w)
+  {
+    return GTK_WINDOW (gtk_widget_get_toplevel (w));
+  }
+
+  enum Icons
+  {
+    ICON_SIG_OK,
+    ICON_SIG_FAIL,
+    NUM_ICONS
+  };
+
+  struct Icon {
+  const guint8 * pixbuf_txt;
+  GdkPixbuf * pixbuf;
+  } icons[NUM_ICONS] = {
+    { icon_sig_ok,          0 },
+    { icon_sig_fail,        0 }
+  };
+}
+
+/***
+****
+***/
 
 /**
 ***  Pixbuf Cache
@@ -336,6 +370,7 @@ namespace
                                const GtkAllocation  * size,
                                GtkTextTag           * apply_tag)
   {
+
     const int begin_offset (gtk_text_iter_get_offset (iter));
 
     GdkPixbuf * original (0);
@@ -497,6 +532,7 @@ namespace
     gboolean handled (false);
 
     g_return_val_if_fail (GTK_IS_TEXT_VIEW(w), false);
+
     const bool up = event->keyval==GDK_KEY_Up || event->keyval==GDK_KEY_KP_Up;
     const bool down = event->keyval==GDK_KEY_Down || event->keyval==GDK_KEY_KP_Down;
 
@@ -680,6 +716,7 @@ namespace
                              bool                  do_markup,
                              bool                  do_urls)
   {
+
     g_return_if_fail (buffer!=0);
     g_return_if_fail (GTK_IS_TEXT_BUFFER(buffer));
 
@@ -880,10 +917,11 @@ namespace
     g_object_unref (G_OBJECT(l));
     return pixbuf;
   }
+
 }
 
 void
-BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
+BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation * widget_size)
 {
   bool is_done (false);
 
@@ -920,6 +958,7 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
 
       // rembember the location of the first picture.
       if (gtk_text_buffer_get_mark (_buffer, FIRST_PICTURE) == NULL)
+        gtk_text_buffer_create_mark (_buffer, FIRST_PICTURE, &iter, true);
         gtk_text_buffer_create_mark (_buffer, FIRST_PICTURE, &iter, true);
 
       // add the picture
@@ -964,26 +1003,25 @@ BodyPane :: append_part (GMimeObject * obj, GtkAllocation * widget_size)
     is_done = true;
   }
 
-  // otherwise, bitch and moan.
+  // otherwise, add to list of attachments
   if (!is_done) {
     const char * filename = g_mime_part_get_filename (part);
     char * pch = (filename && *filename)
-      ? g_strdup_printf (_("Attachment not shown: MIME type %s/%s; filename %s\n"), type->type, type->subtype, filename)
-      : g_strdup_printf (_("Attachment not shown: MIME type %s/%s\n"), type->type, type->subtype);
-    GtkTextIter iter;
-    gtk_text_buffer_get_end_iter (_buffer, &iter);
-    gtk_text_buffer_insert (_buffer, &iter, pch, -1);
-    g_free (pch);
+      ? g_strdup_printf ("%s", filename)
+      : g_strdup_printf (_("Unnamed File"));
+    add_attachment_to_toolbar (pch);
+    _freeme.insert(pch);
   }
 }
+
 void
-BodyPane :: foreach_part_cb (GMimeObject* /*parent*/, GMimeObject* o, gpointer self)
+BodyPane :: foreach_part_cb (GMimeObject* parent, GMimeObject* o, gpointer self)
 {
   BodyPane * pane = static_cast<BodyPane*>(self);
   GtkWidget * w (pane->_text);
   GtkAllocation aloc;
   gtk_widget_get_allocation(w, &aloc);
-  pane->append_part (o, &aloc);
+  pane->append_part (parent, o, &aloc);
 }
 
 
@@ -1038,6 +1076,7 @@ namespace
     const char * val (msg ? g_mime_object_get_header ((GMimeObject *) msg, key) : "");
     return add_header_line (s, key_i18n, key, val, fallback_charset);
   }
+
 }
 
 void
@@ -1045,7 +1084,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
 {
   const char * fallback_charset (_charset.empty() ? 0 : _charset.c_str());
 
-  // manditory headers...
+  // mandatory headers...
   std::string s;
   size_t w(0), l(0);
   l = add_header_line (s, message, _("Subject"), "Subject", fallback_charset);
@@ -1148,6 +1187,8 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     g_free (headers);
   }
 
+  clear_attachments();
+
   // FIXME: need to set a mark here so that when user hits follow-up,
   // the all-headers don't get included in the followup
 
@@ -1165,12 +1206,87 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     gtk_text_buffer_get_start_iter  (_buffer, &iter);
     gtk_text_view_scroll_to_iter (GTK_TEXT_VIEW(_text), &iter, 0.0, true, 0.0, 0.0);
   }
+
 }
 
 void
 BodyPane :: refresh ()
 {
   set_text_from_message (_message);
+}
+
+namespace
+{
+
+  /** Separates user id into name and email address */
+  std::pair<std::string,std::string> get_email_address(std::string& s)
+  {
+    std::pair<std::string,std::string> ret;
+    size_t in = s.find("<");
+    size_t out = s.find(">");
+    if (in == std::string::npos ||
+        out == std::string::npos)
+      return ret;
+
+    ret.first = s.substr(0,in-1);
+    ret.second = s.substr (in+1,out-in-1);
+
+    return ret;
+  }
+}
+
+gboolean
+BodyPane:: on_tooltip_query(GtkWidget  *widget,
+                            gint        x,
+                            gint        y,
+                            gboolean    keyboard_tip,
+                            GtkTooltip *tooltip,
+                            gpointer    data)
+{
+  BodyPane* pane = static_cast<BodyPane*>(data);
+  GPGDecErr& err = pane->_gpgerr;
+  GPGSignersInfo& info = err.signers;
+
+  if (err.no_sigs) return false;
+  if (info.signers.empty()) return false;
+
+  EvolutionDateMaker ed;
+
+  char buf[2048];
+  std::pair<std::string,std::string> name_and_email = get_email_address(info.signers[0].name);
+  g_snprintf(buf, sizeof(buf),
+             "<u>This is a <b>PGP-Signed</b> message.</u>\n\n"
+             "<b>Signer</b> : %s ('%s')\n"
+             "<b>Valid until</b> : %s\n"
+             "<b>Created on</b> : %s",
+             name_and_email.first.c_str(), name_and_email.second.c_str(),
+             (info.signers[0].never_expires ? "always" : ed.get_date_string(info.signers[0].expires)),
+             ed.get_date_string(info.signers[0].created)
+             );
+
+  gtk_tooltip_set_icon_from_stock (tooltip, GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
+  gtk_tooltip_set_markup (tooltip, buf);
+
+  return true;
+}
+
+
+void
+BodyPane :: update_sig_valid(int i)
+{
+
+  gtk_image_clear(GTK_IMAGE(_sig_icon));
+
+  switch (i)
+  {
+    case 0:
+      gtk_image_set_from_pixbuf (GTK_IMAGE(_sig_icon), icons[ICON_SIG_FAIL].pixbuf);
+      break;
+
+    case 1:
+      gtk_image_set_from_pixbuf (GTK_IMAGE(_sig_icon), icons[ICON_SIG_OK].pixbuf);
+      break;
+  }
 }
 
 void
@@ -1180,7 +1296,22 @@ BodyPane :: set_article (const Article& a)
 
   if (_message)
     g_object_unref (_message);
-  _message = _cache.get_message (_article.get_part_mids());
+
+  _gpgerr.clear();
+
+  _message = _cache.get_message (_article.get_part_mids(), _gpgerr);
+
+  int val(-1);
+  {
+    if (_gpgerr.verify_ok && !_gpgerr.no_sigs)
+      val = 1;
+    else if (!_gpgerr.verify_ok && !_gpgerr.no_sigs)
+      val = 0;
+    else
+      val = -1;
+  }
+
+  update_sig_valid(val);
   refresh ();
 
   _data.mark_read (_article);
@@ -1192,7 +1323,10 @@ BodyPane :: clear ()
   if (_message)
     g_object_unref (_message);
   _message = 0;
+
   refresh ();
+
+  update_sig_valid(-1);
 }
 
 void
@@ -1298,6 +1432,7 @@ BodyPane :: text_size_allocated_idle_cb (gpointer pane)
 void
 BodyPane :: text_size_allocated_idle ()
 {
+
   // prevent oscillation
   const bool old_h (_hscroll_visible);
   const bool old_v (_vscroll_visible);
@@ -1320,6 +1455,7 @@ BodyPane :: text_size_allocated_idle ()
     if (gtk_text_iter_begins_tag (&iter, tag))
     {
       gtk_widget_get_allocation(_text, &aloc);
+      // BUG : resize
       resize_picture_at_iter (buf, &iter, fullsize, &aloc, tag);
     }
     if (!gtk_text_iter_forward_char (&iter))
@@ -1379,19 +1515,178 @@ BodyPane :: populate_popup (GtkTextView *v G_GNUC_UNUSED, GtkMenu *m)
   gtk_menu_shell_prepend (GTK_MENU_SHELL(m), mi);
 }
 
+namespace
+{
+  static gboolean
+  attachment_clicked_cb (GtkWidget *w, GdkEventButton *event, gpointer p)
+  {
+    BodyPane * bp = static_cast<BodyPane*>(p);
+    const gchar * fn = (char*)g_object_get_data (G_OBJECT(w), "filename");
+    if (!fn) return TRUE;
+
+    bp->_current_attachment = fn;
+
+    if (event->type == GDK_BUTTON_PRESS && event->button == 3)
+    {
+      gtk_menu_popup
+      (GTK_MENU(bp->_menu), NULL, NULL, NULL, NULL,
+      (event ? event->button : 0),
+      (event ? event->time : 0));
+    }
+
+    return TRUE;
+  }
+}
+
+void
+BodyPane :: menu_clicked (const MenuSelection& ms)
+{
+  std::vector<Article> copies;
+  copies.push_back(_article);
+  GroupPrefs _group_prefs;
+  SaveAttachmentsDialog * dialog = new SaveAttachmentsDialog (
+    _prefs, _group_prefs, _data, _data, _cache,
+    _data, _queue, get_window(_root),
+    _header_pane->get_group(), copies,
+    ms == MENU_SAVE_ALL ? TaskArticle::SAVE_ALL : TaskArticle::SAVE_AS,
+    _current_attachment);
+  gtk_widget_show (dialog->root());
+}
+
+void
+BodyPane :: menu_clicked_as_cb (GtkWidget* w, gpointer ptr)
+{
+  BodyPane* p = static_cast<BodyPane*>(ptr);
+  if (!p) return;
+  p->menu_clicked(MENU_SAVE_AS);
+}
+
+void
+BodyPane :: menu_clicked_all_cb (GtkWidget* w, gpointer ptr)
+{
+  BodyPane* p = static_cast<BodyPane*>(ptr);
+  if (!p) return;
+  p->menu_clicked(MENU_SAVE_ALL);
+}
+
+
+GtkWidget*
+BodyPane :: new_attachment (const char* filename)
+{
+  if (!filename) return NULL;
+
+  GtkWidget* w = gtk_hbox_new(false, 0);
+  GtkWidget* attachment = gtk_label_new(filename);
+  GtkWidget * image = gtk_image_new_from_stock(GTK_STOCK_FILE, GTK_ICON_SIZE_MENU);
+
+  gtk_label_set_selectable (GTK_LABEL(attachment), true);
+  gtk_label_set_ellipsize (GTK_LABEL(attachment), PANGO_ELLIPSIZE_MIDDLE);
+
+  GtkWidget *event_box = gtk_event_box_new ();
+  gtk_container_add (GTK_CONTAINER (event_box), image);
+  g_object_set_data (G_OBJECT(event_box), "filename", (gpointer)filename);
+
+  gtk_box_pack_start (GTK_BOX(w), event_box, false, false, 0);
+  gtk_box_pack_start (GTK_BOX(w), attachment, false, false, 0);
+
+  g_signal_connect(event_box, "button_press_event", G_CALLBACK(attachment_clicked_cb), this);
+
+  return w;
+}
+
+
+void
+BodyPane :: clear_attachments()
+{
+  _cur_col = 0;
+  _cur_row = 0;
+  _attachments = 0;
+  _current_attachment = 0;
+
+  {
+    gtk_container_remove (GTK_CONTAINER (_att_frame), _att_toolbar);
+    if (G_IS_OBJECT(_att_toolbar)) g_object_unref(_att_toolbar);
+    (void)create_attachments_toolbar(_att_frame);
+  }
+
+}
+
+void
+BodyPane :: add_attachment_to_toolbar (const char* fn)
+{
+  if (!fn) return;
+
+  GtkWidget* w = new_attachment(fn);
+  guint cols(0), rows(0);
+  gtk_table_get_size (GTK_TABLE(_att_toolbar), &rows, &cols);
+
+  if (_attachments % 4 == 0 && _attachments != 0)
+  {
+    gtk_table_resize (GTK_TABLE(_att_toolbar), rows+1, cols);
+    ++_cur_row;
+    _cur_col = 0;
+  }
+
+  gtk_table_attach_defaults (GTK_TABLE(_att_toolbar), w, _cur_col, _cur_col+1, _cur_row,_cur_row+1);
+
+  ++_attachments;
+  ++_cur_col;
+
+  gtk_widget_show_all(_att_toolbar);
+}
+
+GtkWidget*
+BodyPane :: create_attachments_toolbar (GtkWidget* frame)
+{
+
+  _cur_col = 0;
+  _cur_row = 0;
+
+  GtkWidget * w = _att_toolbar = gtk_table_new(4,1,TRUE);
+  gtk_widget_set_size_request (w, -1, 20);
+  gtk_table_set_col_spacings (GTK_TABLE(w), PAD);
+  gtk_container_add (GTK_CONTAINER (frame), w);
+  gtk_widget_show_all (frame);
+
+  return frame;
+}
 
 /***
 ****
 ***/
 
-BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
+BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs & gp, Queue& q, HeaderPane* hp):
   _prefs (prefs),
+  _group_prefs(gp),
+  _queue(q),
+  _header_pane(hp),
   _data (data),
   _cache (cache),
   _hscroll_visible (false),
   _vscroll_visible (false),
-  _message (0)
+  _message (0),
+  _gpgerr(GPG_DECODE),
+  _attachments(0),
+  _current_attachment(0)
 {
+
+  for (guint i=0; i<NUM_ICONS; ++i)
+    icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, icons[i].pixbuf_txt, FALSE, 0);
+
+  // signature pgp valid/invalid icon
+  _sig_icon = gtk_image_new();
+
+  // menu for popup menu for attachments
+  _menu = gtk_menu_new ();
+  GtkWidget* l = gtk_menu_item_new_with_label(_("Save attachment as ...."));
+  g_signal_connect (l, "activate", G_CALLBACK(menu_clicked_as_cb), this);
+  gtk_menu_shell_append (GTK_MENU_SHELL(_menu), l);
+  l =  gtk_menu_item_new_with_label(_("Save all attachments"));
+  _selection = MENU_SAVE_ALL;
+  g_signal_connect (l, "activate", G_CALLBACK(menu_clicked_all_cb), this);
+  gtk_menu_shell_append (GTK_MENU_SHELL(_menu),l);
+  gtk_widget_show_all(_menu);
+
   GtkWidget * vbox = gtk_vbox_new (false, PAD);
   gtk_container_set_resize_mode (GTK_CONTAINER(vbox), GTK_RESIZE_QUEUE);
 
@@ -1425,7 +1720,11 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_label_set_ellipsize (GTK_LABEL(w), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_use_markup (GTK_LABEL(w), true);
   gtk_box_pack_start (GTK_BOX(hbox), w, true, true, PAD_SMALL);
-  w = _xface = gtk_image_new ();
+  gtk_widget_set_size_request (_sig_icon, 32, 32);
+  gtk_box_pack_start (GTK_BOX(hbox), _sig_icon, true, true, PAD_SMALL);
+  gtk_widget_set_has_tooltip (_sig_icon, true);
+  g_signal_connect(_sig_icon,"query-tooltip",G_CALLBACK(on_tooltip_query), this);
+  w = _xface = gtk_image_new();
   gtk_widget_set_size_request (w, 48, 48);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
   w = _face = gtk_image_new ();
@@ -1449,6 +1748,11 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs):
   gtk_container_add (GTK_CONTAINER(_scroll), _text);
   gtk_widget_show_all (vbox);
   gtk_box_pack_start (GTK_BOX(vbox), _scroll, true, true, 0);
+
+  // add a toolbar for attachments
+  GtkWidget * frame = _att_frame = gtk_frame_new (_("Attachments"));
+  gtk_widget_set_size_request (frame, -1, 20);
+  gtk_box_pack_start (GTK_BOX(vbox), create_attachments_toolbar(frame), false, false, 0);
 
   // set up the buffer tags
   _buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW(_text));
@@ -1482,6 +1786,12 @@ BodyPane :: ~BodyPane ()
 
   if (_message)
     g_object_unref (_message);
+
+  for (int i=0; i<NUM_ICONS; ++i)
+    g_object_unref (icons[i].pixbuf);
+
+  foreach (std::set<char*>, _freeme, it)
+    g_free(*it);
 }
 
 
@@ -1719,7 +2029,9 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     g_object_unref (wrapper);
     g_object_unref (part);
     g_object_unref (stream);
-//std::cerr << LINE_ID << " here is the modified clone\n [" << g_mime_object_to_string((GMimeObject *)msg) << ']' << std::endl;
+
+  //std::cerr << LINE_ID << " here is the modified clone\n [" << g_mime_object_to_string((GMimeObject *)msg) << ']' << std::endl;
+
   }
 
   return msg;

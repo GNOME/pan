@@ -20,6 +20,7 @@
 #include <config.h>
 #include <ostream>
 #include <fstream>
+#include <iostream>
 extern "C" {
   #include <glib/gi18n.h>
   #include <pan/gui/gtk-compat.h>
@@ -34,13 +35,13 @@ using namespace pan;
 
 namespace
 {
-  enum { COL_SEVERITY, COL_DATE, COL_MESSAGE, N_COLS };
+  enum { COL_HIDDEN, COL_SEVERITY, COL_DATE, COL_MESSAGE, N_COLS };
 
   struct MyLogListener: private Log::Listener
   {
-    GtkListStore * myStore;
+    GtkTreeStore * myStore;
 
-    MyLogListener (GtkListStore * store): myStore(store) {
+    MyLogListener (GtkTreeStore * store): myStore(store) {
       Log::get().add_listener (this);
     }
 
@@ -50,15 +51,30 @@ namespace
 
     virtual void on_log_entry_added (const Log::Entry& e) {
       GtkTreeIter iter;
-      gtk_list_store_prepend (myStore, &iter);
-      gtk_list_store_set (myStore, &iter,
+      gtk_tree_store_prepend (myStore, &iter, NULL);
+      gtk_tree_store_set (myStore, &iter,
+                          COL_HIDDEN, "",
                           COL_SEVERITY, (e.severity & Log::PAN_SEVERITY_ERROR),
                           COL_DATE, (unsigned long)e.date,
-                          COL_MESSAGE, e.message.c_str(), -1);
+                          COL_MESSAGE, &e, -1);
+       if (!e.messages.empty())
+       {
+        GtkTreeIter child;
+
+        foreach_const (Log::entries_t, e.messages, lit)
+        {
+          gtk_tree_store_prepend (myStore, &child, &iter );
+          gtk_tree_store_set (myStore, &child,
+                          COL_HIDDEN, "",
+                          COL_SEVERITY, (lit->severity & Log::PAN_SEVERITY_ERROR),
+                          COL_DATE, (unsigned long)lit->date,
+                          COL_MESSAGE, &*lit, -1);
+        }
+      }
     }
 
     virtual void on_log_cleared () {
-      gtk_list_store_clear (myStore);
+      gtk_tree_store_clear (myStore);
     }
   };
 
@@ -110,24 +126,48 @@ namespace
 
 namespace
 {
-  GtkListStore*
+  std::string to_string(std::deque<Log::Entry> d)
+  {
+    std::string tmp;
+    foreach_const(std::deque<Log::Entry>, d, it)
+      tmp += it->message + "\n";
+    return tmp;
+  }
+}
+
+namespace
+{
+  GtkTreeStore*
   create_model ()
   {
-    GtkListStore * store = gtk_list_store_new (N_COLS,
+    GtkTreeStore * store = gtk_tree_store_new (N_COLS,
+                                               G_TYPE_STRING,
                                                G_TYPE_BOOLEAN, // true==error, false==info
                                                G_TYPE_ULONG, // date
-                                               G_TYPE_STRING); // message
+                                               G_TYPE_POINTER); // message
 
     const Log::entries_t& entries (Log::get().get_entries());
     foreach_const (Log::entries_t, entries, it) {
-      GtkTreeIter iter;
-      gtk_list_store_prepend (store, &iter);
-      gtk_list_store_set (store, &iter,
+      GtkTreeIter   top, child, tmp;
+      gtk_tree_store_prepend (store, &top, 0);
+      gtk_tree_store_set (store, &top,
+                          COL_HIDDEN, "",
                           COL_SEVERITY, (it->severity & Log::PAN_SEVERITY_ERROR),
                           COL_DATE, (unsigned long)it->date,
-                          COL_MESSAGE, it->message.c_str(), -1);
+                          COL_MESSAGE, &*it, -1);
+      if (!it->messages.empty())
+      {
+        foreach_const (Log::entries_t, it->messages, lit)
+        {
+          gtk_tree_store_prepend (store, &child, &top );
+          gtk_tree_store_set (store, &child,
+                          COL_HIDDEN, "",
+                          COL_SEVERITY, (lit->severity & Log::PAN_SEVERITY_ERROR),
+                          COL_DATE, (unsigned long)lit->date,
+                          COL_MESSAGE, &*lit, -1);
+        }
+      }
     }
-
     return store;
   }
 }
@@ -161,6 +201,53 @@ namespace
     s.resize (s.size()-1); // remove \n
     g_object_set (renderer, "text", s.c_str(), NULL);
   }
+
+    void
+  render_message (GtkTreeViewColumn * ,
+                  GtkCellRenderer   * renderer,
+                  GtkTreeModel      * model,
+                  GtkTreeIter       * iter,
+                  gpointer            )
+  {
+    Log::Entry* log_entry(0);
+    gtk_tree_model_get (model, iter, COL_MESSAGE, &log_entry, -1);
+    bool bold (log_entry->is_child);
+    g_object_set (renderer,
+                  "text", log_entry ? log_entry->message.c_str() : "",
+                  "weight", bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL,
+                  NULL);
+  }
+
+
+}
+
+gboolean
+pan :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
+{
+  // single click with the right mouse button?
+  if (event->type == GDK_BUTTON_PRESS && event->button == 3)
+  {
+    GtkTreeSelection * selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+    GtkTreePath * path;
+    if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW(treeview),
+                                       (gint)event->x, (gint)event->y,
+                                       &path, NULL, NULL, NULL))
+    {
+      if (!gtk_tree_selection_path_is_selected (selection, path))
+      {
+        gtk_tree_selection_unselect_all (selection);
+        gtk_tree_selection_select_path (selection, path);
+      }
+    }
+    const bool expanded (gtk_tree_view_row_expanded (GTK_TREE_VIEW(treeview), path));
+    if (expanded)
+      gtk_tree_view_collapse_row(GTK_TREE_VIEW(treeview),path);
+    else
+      gtk_tree_view_expand_row (GTK_TREE_VIEW(treeview),path,false);
+    gtk_tree_path_free (path);
+    return true;
+  }
+  return false;
 }
 
 GtkWidget*
@@ -181,8 +268,11 @@ pan :: log_dialog_new (Prefs& prefs, GtkWindow* window)
   GdkPixbuf * info_pixbuf = gtk_icon_theme_load_icon (theme, GTK_STOCK_DIALOG_INFO, 20, (GtkIconLookupFlags)0, NULL);
   g_object_set_data_full (G_OBJECT(dialog), "pixbuf-info", info_pixbuf, g_object_unref);
 
-  GtkListStore * store = create_model ();
+  GtkTreeStore * store = create_model ();
   GtkWidget * view = gtk_tree_view_new_with_model (GTK_TREE_MODEL(store));
+
+  gtk_tree_view_set_show_expanders(GTK_TREE_VIEW(view),false);
+
   g_object_set_data_full (G_OBJECT(view), "listener", new MyLogListener(store), delete_my_log_listener);
   GtkWidget * scroll = gtk_scrolled_window_new (0, 0);
   gtk_container_set_border_width (GTK_CONTAINER(scroll), PAD_BIG);
@@ -191,10 +281,17 @@ pan :: log_dialog_new (Prefs& prefs, GtkWindow* window)
   GtkCellRenderer * pixbuf_renderer = gtk_cell_renderer_pixbuf_new ();
   GtkCellRenderer * text_renderer = gtk_cell_renderer_text_new ();
 
-  // severity
+  /* placeholder for expander */
   GtkTreeViewColumn * col = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_resizable (col, false);
+  gtk_tree_view_append_column (GTK_TREE_VIEW(view), col);
+  gtk_tree_view_column_set_visible(col,false);
+  gtk_tree_view_set_expander_column(GTK_TREE_VIEW(view), col);
+
+  // severity
+  col = gtk_tree_view_column_new ();
   gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
-  gtk_tree_view_column_set_fixed_width (col, 24);
+  gtk_tree_view_column_set_fixed_width (col, 35);
   gtk_tree_view_column_set_resizable (col, false);
   gtk_tree_view_column_pack_start (col, pixbuf_renderer, false);
   gtk_tree_view_column_set_cell_data_func (col, pixbuf_renderer, render_severity, dialog, 0);
@@ -217,8 +314,9 @@ pan :: log_dialog_new (Prefs& prefs, GtkWindow* window)
   gtk_tree_view_column_set_sort_column_id (col, COL_MESSAGE);
   gtk_tree_view_column_set_title (col, _("Message"));
   gtk_tree_view_column_pack_start (col, text_renderer, true);
-  gtk_tree_view_column_set_attributes (col, text_renderer, "text", COL_MESSAGE, NULL);
+  gtk_tree_view_column_set_cell_data_func (col, text_renderer, render_message, 0, 0);
   gtk_tree_view_append_column (GTK_TREE_VIEW(view), col);
+  gtk_tree_view_set_expander_column(GTK_TREE_VIEW(view), col);
 
   gtk_widget_show (view);
   gtk_widget_show (scroll);
@@ -229,6 +327,8 @@ pan :: log_dialog_new (Prefs& prefs, GtkWindow* window)
   gtk_window_set_resizable (GTK_WINDOW(dialog), true);
   if (window != 0)
     gtk_window_set_transient_for (GTK_WINDOW(dialog), window);
+
+  g_signal_connect (view, "button-press-event", G_CALLBACK(on_button_pressed), view);
 
   return dialog;
 }

@@ -26,11 +26,13 @@
 #include <pan/data/article-cache.h>
 #include <pan/data/data.h>
 #include <pan/usenet-utils/filter-info.h>
+#include <pan/usenet-utils/rules-info.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/tasks/queue.h>
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-tree.h>
 #include <pan/gui/prefs.h>
+#include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
 #include <pan/gui/gui.h>
 
@@ -63,6 +65,9 @@ namespace pan
     virtual void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article& a) = 0;
   };
 
+  typedef std::vector<const Article*> articles_t;
+  typedef std::set<const Article*> articles_set;
+
   /**
    * Header Pane in the main window of Pan's GUI.
    * @ingroup GUI
@@ -75,7 +80,7 @@ namespace pan
     private ArticleCache::Listener
   {
     public:
-      HeaderPane (ActionManager&, Data& data, Queue&, ArticleCache&, Prefs&, WaitUI&, GUI&);
+      HeaderPane (ActionManager&, Data& data, Queue&, ArticleCache&, Prefs&, GroupPrefs&, WaitUI&, GUI&);
       ~HeaderPane ();
 
     public:
@@ -101,6 +106,7 @@ namespace pan
       void read_parent_article ();
 
       void mark_all_flagged ();
+      void invert_selection ();
       void move_to_next_bookmark(int);
 
     private:
@@ -118,8 +124,6 @@ namespace pan
       Article* get_first_selected_article ();
       std::set<const Article*> get_full_selection () const;
       std::vector<const Article*> get_full_selection_v () const;
-      const guint get_full_selection_rows_num();
-      std::set<const Article*> get_nested_selection () const;
       const guint get_full_selection_rows_num () const;
       std::set<const Article*> get_nested_selection (bool do_mark_all) const;
       bool set_group (const Quark& group);
@@ -147,7 +151,7 @@ namespace pan
       virtual void on_prefs_color_changed  (const StringView&, const GdkColor&) {}
 
     public:
-      virtual void on_article_flag_changed (const Article* a, const Quark& group);
+      virtual void on_article_flag_changed (articles_t& a, const Quark& group);
 
     private:
       virtual void on_queue_task_active_changed (Queue&, Task&, bool active UNUSED) { }
@@ -304,6 +308,7 @@ namespace pan
       Data& _data;
       Queue& _queue;
       Prefs& _prefs;
+      GroupPrefs& _group_prefs;
       WaitUI& _wait;
       Quark _group;
       Data::ArticleTree * _atree;
@@ -311,15 +316,19 @@ namespace pan
       GtkWidget * _tree_view;
       PanTreeStore * _tree_store;
       FilterInfo _filter;
+      RulesInfo _rules;
       Data::ShowType _show_type;
       guint _selection_changed_idle_tag;
 
     private:
       void rebuild_filter (const std::string&, int);
+      void rebuild_rules (bool enable=false);
+      std::pair <int,int> get_int_from_rules_str(std::string val);
       void refresh_font ();
 
     public: // public so that anonymous namespace can reach -- don't call
       void filter (const std::string& text, int mode);
+      void rules (bool enable=false);
       static void do_popup_menu (GtkWidget*, GdkEventButton*, gpointer);
       static void on_row_activated (GtkTreeView*, GtkTreePath*, GtkTreeViewColumn*, gpointer);
       static gboolean on_button_pressed (GtkWidget*, GdkEventButton*, gpointer);
@@ -338,8 +347,9 @@ namespace pan
       class CountUnread;
       class RowInserter;
       class SimilarWalk;
-      void walk_and_collect (GtkTreeModel*, GtkTreeIter*, std::set<const Article*>&) const;
-      void walk_and_collect_flagged (GtkTreeModel*, GtkTreeIter*, GtkTreeSelection*) const;
+      void walk_and_collect (GtkTreeModel*, GtkTreeIter*, articles_set&) const;
+      void walk_and_collect_flagged  (GtkTreeModel*, GtkTreeIter*, GtkTreeSelection*) const;
+      void walk_and_invert_selection (GtkTreeModel*, GtkTreeIter*, GtkTreeSelection*) const;
 
     private:
       typedef void RenderFunc (GtkTreeViewColumn*, GtkCellRenderer*, GtkTreeModel*, GtkTreeIter*, gpointer);

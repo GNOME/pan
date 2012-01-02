@@ -67,15 +67,19 @@ namespace pan
     virtual void do_watch () = 0;
     virtual void do_ignore () = 0;
     virtual void do_flag () = 0;
+    virtual void do_flag_off () = 0;
     virtual void do_next_flag () = 0;
     virtual void do_last_flag () = 0;
     virtual void do_mark_all_flagged () = 0;
+    virtual void do_invert_selection () = 0;
     virtual void do_cancel_article () = 0;
     virtual void do_supersede_article () = 0;
     virtual void do_delete_article () = 0;
     virtual void do_clear_article_cache () = 0;
     virtual void do_mark_article_read () = 0;
     virtual void do_mark_article_unread () = 0;
+    virtual void do_mark_thread_read () = 0;
+    virtual void do_mark_thread_unread () = 0;
     virtual void do_post () = 0;
     virtual void do_followup_to () = 0;
     virtual void do_reply_to () = 0;
@@ -91,6 +95,7 @@ namespace pan
     virtual void do_show_group_preferences_dialog () = 0;
     virtual void do_show_profiles_dialog () = 0;
     virtual void do_show_servers_dialog () = 0;
+    virtual void do_show_sec_dialog () = 0;
     virtual void do_show_score_dialog () = 0;
     virtual void do_show_new_score_dialog () = 0;
     virtual void do_show_selected_article_info () = 0;
@@ -119,6 +124,8 @@ namespace pan
     virtual void do_match_only_binary_articles (bool) = 0;
     virtual void do_match_only_my_articles (bool) = 0;
     virtual void do_show_matches (const Data::ShowType) = 0;
+
+    virtual void do_enable_toggle_rules (bool enable) = 0;
 
 #define MATCH_IGNORED         (1<<0)
 #define MATCH_LOW_SCORING     (1<<1)

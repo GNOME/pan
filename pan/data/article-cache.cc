@@ -50,7 +50,7 @@ using namespace pan;
 
 namespace
 {
-   /** 
+   /**
     * Some characters in message-ids don't work well in filenames,
     * so we transform them to a safer name.
     */
@@ -61,7 +61,7 @@ namespace
       pan_return_val_if_fail (!mid.empty(), 0);
       pan_return_val_if_fail (buf!=0, NULL);
       pan_return_val_if_fail (len>0, NULL);
-                                                                                                                     
+
       // some characters in message-ids are illegal on older Windows boxes,
       // so we transform those illegal characters using URL encoding
       char * out = buf;
@@ -104,7 +104,7 @@ namespace
       pan_return_val_if_fail (basename && *basename, 0);
       pan_return_val_if_fail (buf!=NULL, 0);
       pan_return_val_if_fail (len>0, 0);
-                                                                                                                     
+
       // remove the trailing ".msg"
       g_strlcpy (tmp_basename, basename, sizeof(tmp_basename));
       if ((pch = g_strrstr (tmp_basename, ".msg")))
@@ -127,7 +127,7 @@ namespace
       }
       *out++ = '>';
       *out = '\0';
-                                                                                                                     
+
       return out - buf;
    }
 };
@@ -201,7 +201,7 @@ ArticleCache :: fire_removed (const quarks_t& mids)
 /*****
 ******
 *****/
-                                                                                                                                                                 
+
 bool
 ArticleCache :: contains (const Quark& mid) const
 {
@@ -398,7 +398,7 @@ ArticleCache :: get_message_mem_stream (const Quark& mid) const
 }
 
 GMimeMessage*
-ArticleCache :: get_message (const mid_sequence_t& mids) const
+ArticleCache :: get_message (const mid_sequence_t& mids, GPGDecErr& err) const
 {
    debug ("trying to get a message with " << mids.size() << " parts");
    GMimeMessage * retval = NULL;
@@ -419,15 +419,15 @@ ArticleCache :: get_message (const mid_sequence_t& mids) const
         streams.push_back (stream);
    }
 
+
    // build the message
    if (!streams.empty())
-     retval = mime :: construct_message (&streams.front(), streams.size());
+     retval = mime :: construct_message (&streams.front(), streams.size(), err);
 
    // cleanup
    foreach (streams_t, streams, it)
      g_object_unref (*it);
 
-   debug ("returning " << retval);
    return retval;
 }
 
@@ -438,6 +438,8 @@ ArticleCache :: get_filenames (const mid_sequence_t& mids)
   char filename[PATH_MAX];
   foreach_const (mid_sequence_t, mids, it)
     if (get_filename (filename, sizeof(filename), *it))
+    {
       ret.push_back (filename);
+    }
   return ret;
 }

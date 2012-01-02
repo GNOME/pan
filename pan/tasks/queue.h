@@ -26,18 +26,27 @@
 #include <pan/general/macros.h> // for UNUSED
 #include <pan/general/map-vector.h>
 #include <pan/tasks/decoder.h>
+#include <pan/tasks/encoder.h>
 #include <pan/general/quark.h>
 #include <pan/tasks/nntp-pool.h>
 #include <pan/tasks/socket.h>
 #include <pan/tasks/adaptable-set.h>
 #include <pan/tasks/task.h>
+#include <pan/tasks/encoder.h>
 #include <pan/tasks/task-weak-ordering.h>
+#include <pan/tasks/socket-impl-main.h>
+
+#ifdef HAVE_GNUTLS
+  #include <pan/data/cert-store.h>
+#endif
 
 namespace pan
 {
   class NNTP;
   class ServerInfo;
   class WorkerPool;
+  struct Encoder;
+  struct Decoder;
 
   /**
    * A Queue helper that saves tasks to disk and restores them from disk.
@@ -60,11 +69,12 @@ namespace pan
   class Queue:
     public NNTP::Source,
     public Task::DecoderSource,
+    public Task::EncoderSource,
     private NNTP_Pool::Listener,
     private AdaptableSet<Task*, TaskWeakOrdering>::Listener
   {
     public:
-      Queue (ServerInfo&, TaskArchive&, Socket::Creator*, WorkerPool&,
+      Queue (ServerInfo&, TaskArchive&, SocketCreator*, CertStore&, WorkerPool&,
              bool online, int save_delay_secs);
       virtual ~Queue ();
 
@@ -101,8 +111,8 @@ namespace pan
 
 
     public:
-      enum TaskState { QUEUED, RUNNING, DECODING, STOPPED, REMOVING,
-                       QUEUED_FOR_DECODE };
+      enum TaskState { QUEUED, RUNNING, DECODING, ENCODING, STOPPED, REMOVING,
+                       QUEUED_FOR_DECODE, QUEUED_FOR_ENCODE};
 
       /**
        * An ordered collection of tasks and their corresponding TaskState s.
@@ -116,15 +126,19 @@ namespace pan
           sorted_tasks_t _running;
           sorted_tasks_t _removing;
           sorted_tasks_t _need_decode;
+          sorted_tasks_t _need_encode;
           Task * _decoding;
+          Task * _encoding;
         public:
           tasks_t tasks;
           TaskState get_state (Task* task) const {
             if (_decoding && (task==_decoding)) return DECODING;
+            if (_encoding && (task==_encoding)) return ENCODING;
             if (_removing.count(task)) return REMOVING;
             if (_stopped.count(task)) return STOPPED;
             if (_running.count(task)) return RUNNING;
             if (_need_decode.count(task)) return QUEUED_FOR_DECODE;
+            if (_need_encode.count(task)) return QUEUED_FOR_ENCODE;
             if (_queued.count(task)) return QUEUED;
             return STOPPED;
           }
@@ -162,8 +176,9 @@ namespace pan
     public: // inherited from NNTP::Source
       virtual void check_in (NNTP*, Health);
 
-    public: // inherited from Task::DecoderSource
+    public: // inherited from Task::De/EncoderSource
       virtual void check_in (Decoder*, Task*);
+      virtual void check_in (Encoder*, Task*);
 
     private: // inherited from NNTP_Pool::Listener
       virtual void on_pool_has_nntp_available (const Quark& server);
@@ -172,23 +187,33 @@ namespace pan
     protected:
       void process_task (Task *);
       void give_task_a_decoder (Task*);
+      void give_task_a_encoder (Task*);
       void give_task_a_connection (Task*, NNTP*);
       ServerInfo& _server_info;
       bool _is_online;
       Task* find_first_task_needing_server (const Quark& server);
       Task* find_first_task_needing_decoder ();
+      Task* find_first_task_needing_encoder ();
+
+      void give_task_an_upload_slot (TaskUpload* task);
+      void give_task_a_download_slot (TaskArticle* task);
+
       bool find_best_server (const Task::State::unique_servers_t& servers, Quark& setme);
       bool task_is_active (const Task*) const;
 
       typedef std::map<NNTP*,Task*> nntp_to_task_t;
       nntp_to_task_t _nntp_to_task;
 
+      std::set<TaskUpload*> _uploads;
+      std::set<TaskArticle*> _downloads;
       std::set<Task*> _removing;
       std::set<Task*> _stopped;
-      Socket::Creator * _socket_creator;
+      SocketCreator * _socket_creator;
       WorkerPool & _worker_pool;
       Decoder _decoder;
+      Encoder _encoder;
       Task * _decoder_task;
+      Task * _encoder_task;
 
     protected:
       virtual void fire_tasks_added  (int index, int count);
@@ -225,6 +250,8 @@ namespace pan
     private:
       TaskArchive& _archive;
       void clean_n_save ();
+      int _uploads_total, _downloads_total;
+      CertStore& _certstore;
 
     private:
       typedef AdaptableSet<Task*, TaskWeakOrdering> TaskSet;

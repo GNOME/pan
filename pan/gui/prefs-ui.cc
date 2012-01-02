@@ -99,6 +99,7 @@ namespace
     Prefs *prefs = static_cast<Prefs*>(data);
     prefs->set_int(key, gtk_spin_button_get_value_as_int(spin));
   }
+
   GtkWidget* new_spin_button (const char *key, int low, int high, Prefs &prefs)
   {
     guint tm = prefs.get_int(key, 5 );
@@ -180,6 +181,7 @@ namespace
   {
     Prefs * prefs (static_cast<Prefs*>(user_data));
     const char * key = (const char*) g_object_get_data (G_OBJECT(c), PREFS_KEY);
+    prefs->_rules_changed = strcmp(key,"rules-");
     const int column = GPOINTER_TO_INT (g_object_get_data (G_OBJECT(c), "column"));
     const int row (gtk_combo_box_get_active (c));
     GtkTreeModel * m = gtk_combo_box_get_model (c);
@@ -215,6 +217,7 @@ namespace
       if (mode == strings[i][1])
         sel_index = i;
     }
+
     GtkWidget * c = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
     GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (c), renderer, true);
@@ -240,6 +243,49 @@ namespace
     maybe_make_widget_visible (GTK_COMBO_BOX(c), e);
     setme_mnemonic_target = c;
     return h;
+  }
+
+/*
+      Scores:
+    "Scores of 9999 or more:"
+    "Scores from 5000 to 9998:"
+    "Scores from 1 to 4999:"
+    "Scores from -9998 to -1:" */
+  GtkWidget* score_handler_new (Prefs& prefs,
+                              const char * mode_key,
+                              const char * mode_fallback,
+                              GtkWidget *& setme_mnemonic_target)
+  {
+    // build the combo box...
+    const std::string mode (prefs.get_string (mode_key, mode_fallback));
+    GtkListStore * store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+    const char* strings[7][2] = { { N_("Disabled"),"never" },
+                                  { N_("Only new (Score == 0)"),"new" },
+                                  { N_("9999 or more"), "watched" },
+                                  { N_("5000 to 9998"), "high" },
+                                  { N_("1 to 4999"),    "medium" },
+                                  { N_("-9998 to -1"),  "low" },
+                                  { N_("-9999 or less"),"ignored" }};
+    int sel_index (0);
+    for (size_t i=0; i<G_N_ELEMENTS(strings); ++i) {
+      GtkTreeIter iter;
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter, 0, _(strings[i][0]), 1, strings[i][1], -1);
+      if (mode == strings[i][1])
+        sel_index = i;
+    }
+
+    GtkWidget * c = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
+    GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (c), renderer, true);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (c), renderer, "text", 0, NULL);
+    gtk_combo_box_set_active (GTK_COMBO_BOX(c), sel_index);
+    g_object_set_data_full (G_OBJECT(c), PREFS_KEY, g_strdup(mode_key), g_free);
+    g_object_set_data (G_OBJECT(c), "column", GINT_TO_POINTER(1));
+    g_signal_connect (c, "changed", G_CALLBACK(set_prefs_string_from_combobox), &prefs);
+
+    setme_mnemonic_target = c;
+    return c;
   }
 
   void font_set_cb (GtkFontButton* b, gpointer prefs_gpointer)
@@ -486,6 +532,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   g_signal_connect_swapped (dialog, "destroy", G_CALLBACK(delete_prefs_dialog), this);
   GtkWidget * notebook = gtk_notebook_new ();
 
+  // Behaviour
   int row (0);
   GtkWidget *h, *w, *l, *b, *t;
   t = HIG :: workarea_create ();
@@ -508,17 +555,26 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("E_xpand all threads when entering group"), "expand-threads-when-entering-group", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
-  HIG::workarea_add_section_divider (t, &row);
-  HIG :: workarea_add_section_title (t, &row, _("Articles"));
+    HIG::workarea_add_section_divider (t, &row);
+    HIG :: workarea_add_section_title (t, &row, _("Articles"));
     HIG :: workarea_add_section_spacer (t, row, 5);
     w = new_check_button (_("Space selects next article rather than next unread"), "space-selects-next-article", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Expand threads upon selection."), "expand-selected-articles", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
+    w = new_check_button (_("Always show article deletion confirmation dialog"), "show-deletion-confirm-dialog", true, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Smooth scrolling"), "smooth-scrolling", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Clear article cache on shutdown"), "clear-article-cache-on-shutdown", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
+    w = new_spin_button ("cache-size-megs", 10, 1024*16, prefs);
+    l = gtk_label_new(_("Size of Article Cache (in MiB). "));
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
+    HIG::workarea_add_row (t, &row, w, l);
+    HIG::workarea_add_section_divider (t, &row);
+    HIG :: workarea_add_section_title (t, &row, _("Autosave Articles"));
     w = new_spin_button ("newsrc-autosave-timeout-min", 0, 60, prefs);
     l = gtk_label_new(_("Minutes to autosave newsrc files."));
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
@@ -533,9 +589,28 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     update_default_charset_label(_prefs.get_string("default-charset","UTF-8"));
     g_signal_connect (w, "clicked", G_CALLBACK(select_prefs_charset_cb), this);
     HIG::workarea_add_row (t, &row, w, l);
+    HIG::workarea_add_section_divider (t, &row);
+    HIG :: workarea_add_section_title (t, &row, _("Autosave Article Draft"));
+    w = new_spin_button ("draft-autosave-timeout-min", 0, 60, prefs);
+    l = gtk_label_new(_("Minutes to autosave the current Article Draft."));
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
+    HIG::workarea_add_row (t, &row, w, l);
+    HIG::workarea_add_section_divider (t, &row);
+    HIG :: workarea_add_section_title (t, &row, _("Systray Behaviour"));
+    HIG :: workarea_add_section_spacer (t, row, 2);
+    w = new_check_button (_("Hide to system tray"), "status-icon", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
+    w = new_check_button (_("Start Pan minimized"), "start-minimized", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
+#ifdef HAVE_LIBNOTIFY
+    w = new_check_button (_("Show notifications"), "use-notify", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
+#endif
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Behavior")));
 
+  // Layout
   row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Pane Layout"));
@@ -572,6 +647,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Layout")));
 
+  // Headers
   row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Header Pane Columns"));
@@ -580,6 +656,24 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Headers")));
 
+  row = 0;
+  t = HIG :: workarea_create ();
+
+    gtk_widget_set_tooltip_text (t, _("This menu lets you configure Pan to take certain actions on your behalf automatically, based on a post's score."));
+
+    w = score_handler_new (prefs, "rules-delete-value", "never", b);
+    HIG :: workarea_add_row (t, &row, _("_Delete Posts scoring at: "), w);
+    w = score_handler_new (prefs, "rules-mark-read-value", "never", b);
+    HIG :: workarea_add_row (t, &row, _("Mark Posts _read scoring at: "), w);
+    w = score_handler_new (prefs, "rules-autocache-value", "never", b);
+    HIG :: workarea_add_row (t, &row, _("_Cache Posts scoring at: "), w);
+    w = score_handler_new (prefs, "rules-auto-dl-value", "never", b);
+    HIG :: workarea_add_row (t, &row, _("Download _attachments of Posts scoring at: "), w);
+
+  HIG :: workarea_finish (t, &row);
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Actions")));
+
+  // Fonts
   row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Fonts"));
@@ -605,10 +699,11 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Fonts")));
 
+  // Colors
   row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Header Pane"));
-    HIG :: workarea_add_section_spacer(t, row, 5);
+    HIG :: workarea_add_section_spacer(t, row, 6);
     h = gtk_hbox_new (false, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-watched-fg", "black", prefs));
@@ -639,6 +734,12 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-ignored-bg", "black", prefs));
     HIG :: workarea_add_row (t, &row, _("Scores of -9999 or less:"), h);
+    h = gtk_hbox_new (false, PAD);
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-fg", TANGO_ORANGE, prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-bg", "white", prefs));
+    HIG :: workarea_add_row (t, &row, _("Read collapsed Thread:"), h);
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Body Pane"));
     HIG :: workarea_add_section_spacer (t, row, 3);
@@ -652,6 +753,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Colors")));
 
+  // Applications
   row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Preferred Applications"));
@@ -666,6 +768,20 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_row (t, &row, _("_Text Editor:"), w);
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("A_pplications")));
+
+  // Upload Options
+  row = 0;
+  t = HIG :: workarea_create ();
+  HIG :: workarea_add_section_title (t, &row, _("Encoding Options"));
+  HIG :: workarea_add_section_spacer (t, row, 4);
+  // 16 MiB blocks max, 512 kb min
+  w = new_spin_button ("upload-option-bpf", 512*1024, 1024*1024*16, prefs);
+  l = gtk_label_new(_("Default Bytes per File (for Encoder). "));
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+  HIG::workarea_add_row (t, &row, w, l);
+
+  HIG :: workarea_finish (t, &row);
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Upload options")));
 
   gtk_widget_show_all (notebook);
   gtk_box_pack_start (GTK_BOX(gtk_dialog_get_content_area( GTK_DIALOG(dialog))), notebook, true, true, 0);

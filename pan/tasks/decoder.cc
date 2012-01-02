@@ -22,7 +22,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 #include <config.h>
-#include <algorithm>
 #include <cerrno>
 #include <ostream>
 #include <fstream>
@@ -31,6 +30,7 @@ extern "C" {
 #  include <uulib/uudeview.h>
 #  include <glib/gi18n.h>
 };
+#include <pan/general/worker-pool.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
@@ -55,10 +55,12 @@ Decoder :: ~Decoder()
 ***/
 
 void
-Decoder :: enqueue (TaskArticle                 * task,
-                    const Quark                 & save_path,
-                    const strings_t             & input_files,
-                    const TaskArticle::SaveMode & save_mode)
+Decoder :: enqueue (TaskArticle                     * task,
+                    const Quark                     & save_path,
+                    const strings_t                 & input_files,
+                    const TaskArticle::SaveMode     & save_mode,
+                    const TaskArticle::SaveOptions  & options,
+                    const StringView                & filename)
 {
   disable_progress_update ();
 
@@ -66,6 +68,8 @@ Decoder :: enqueue (TaskArticle                 * task,
   this->save_path = save_path;
   this->input_files = input_files;
   this->save_mode = save_mode;
+  this->options = options;
+  this->attachment_filename = filename;
 
   mark_read = false;
   percent = 0;
@@ -141,6 +145,7 @@ Decoder :: do_work()
       int i (0);
       foreach_const (strings_t, input_files, it)
       {
+
         if (was_cancelled()) break;
         if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), 0, 0, ++i)) != UURET_OK) {
           g_snprintf(buf, bufsz,
@@ -162,6 +167,11 @@ Decoder :: do_work()
       i = 0;
       while ((item = UUGetFileListItem (i++)))
       {
+        // skip all other attachments in SAVE_AS mode (single attachment download)
+        /// DBG why is this failing if article isn't cached????
+        if (!attachment_filename.empty())
+          if(strcmp(item->filename, attachment_filename.str) != 0 && options == TaskArticle::SAVE_AS) continue;
+
         file_errors.clear ();
 
         if (was_cancelled()) break; // poll WorkerPool::Worker stop flag
@@ -171,8 +181,8 @@ Decoder :: do_work()
           file :: ensure_dir_exists (save_path.c_str());
 
         // find a unique filename...
-        char * fname = file::get_unique_fname(save_path.c_str(), 
-                                              (item->filename 
+        char * fname = file::get_unique_fname(save_path.c_str(),
+                                              (item->filename
                                                && *item->filename)
                                               ? item->filename
                                               : "pan-saved-file" );

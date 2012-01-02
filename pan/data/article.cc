@@ -97,9 +97,18 @@ Article :: get_part_mids () const
 {
   mid_sequence_t mids;
   for (part_iterator it(pbegin()), end(pend()); it!=end; ++it)
+  {
     mids.push_back (it.mid());
+  }
   return mids;
 }
+
+//const Quark&
+//Article :: get_attachment () const
+//{
+//  for (part_iterator it(pbegin()), end(pend()); it!=end; ++it)
+//    if (it.mid() == search)
+//}
 
 void
 Article :: clear ()

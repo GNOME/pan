@@ -29,8 +29,8 @@ namespace pan
     public Prefs::Listener
   {
     public:
-      PrefsDialog (Prefs&, GtkWindow*);
-      ~PrefsDialog () {}
+      PrefsDialog (Prefs&, GtkWindow*) ;
+      ~PrefsDialog () { }
       Prefs& prefs () { return _prefs; }
       GtkWidget* root() { return _root; }
 

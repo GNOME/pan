@@ -21,7 +21,7 @@ extern "C" {
   #include <config.h>
   #include <glib/gi18n.h>
   #include <pan/gui/gtk-compat.h>
-  #include <gdk/gdkkeysyms.h>
+  #include "gtk-compat.h"
   #include <iconv.h>
 }
 #include <cctype>
@@ -34,6 +34,7 @@ extern "C" {
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/filter-info.h>
+#include <pan/usenet-utils/rules-info.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
@@ -91,6 +92,7 @@ namespace
     ICON_ERROR,
     ICON_EMPTY,
     ICON_FLAGGED,
+    ICON_GET_FLAGGED,
     ICON_QTY
    };
 
@@ -111,7 +113,8 @@ namespace
     { icon_bluecheck,              0 },
     { icon_x,                      0 },
     { icon_empty,                  0 },
-    { icon_red_flag,               0 }
+    { icon_red_flag,               0 },
+    { icon_get_flagged,            0 }
   };
 
   int
@@ -303,6 +306,7 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
                               gpointer            user_data)
 {
   const HeaderPane * self (static_cast<HeaderPane*>(user_data));
+  const Prefs & p(self->_prefs);
   const Row * row (dynamic_cast<Row*>(self->_tree_store->get_row (iter)));
 
   CountUnread counter (row);
@@ -319,7 +323,7 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
 
   char buf[512];
 
-  bool underlined (false);
+  bool unread (false);
 
   if (counter.unread_children)
   {
@@ -330,17 +334,22 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
     gtk_tree_path_free (path);
 
     if (!expanded) {
-      underlined = row->is_read;
+      unread = row->is_read;
       snprintf (buf, sizeof(buf), "%s (%lu)", res.c_str(), counter.unread_children);
       res = buf;
     }
   }
 
+  std::string def_bg, def_fg;
+  def_fg = p.get_color_str_wo_fallback("color-read-fg");
+  def_bg = p.get_color_str_wo_fallback("color-read-bg");
+
   g_object_set (renderer,
     "text", res.c_str(),
     "weight", (bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
-    "underline", (underlined ? PANGO_UNDERLINE_SINGLE : PANGO_UNDERLINE_NONE),
-    NULL);
+    "foreground", unread ? (def_fg.empty() ? NULL : def_fg.c_str()) : NULL,
+    "background", unread ? (def_bg.empty() ? NULL : def_bg.c_str()) : NULL, NULL);
+
 }
 
 HeaderPane::Row*
@@ -525,8 +534,8 @@ HeaderPane :: rebuild ()
 {
   quarks_t selectme;
   if (1) {
-    const articles_t old_selection (get_full_selection ());
-    foreach_const (articles_t, old_selection, it)
+    const articles_set old_selection (get_full_selection ());
+    foreach_const (articles_set, old_selection, it)
       selectme.insert ((*it)->message_id);
   }
 
@@ -580,9 +589,13 @@ HeaderPane :: set_group (const Quark& new_group)
     delete _atree;
     _atree = 0;
 
+    char * pch = g_build_filename (g_get_home_dir(), "News", NULL);
+    Quark path(_group_prefs.get_string (_group, "default-group-save-path", pch));
+    g_free(pch);
+
     if (!_group.empty())
     {
-      _atree = _data.group_get_articles (new_group, _show_type, &_filter);
+      _atree = _data.group_get_articles (new_group, path, _show_type, &_filter,&_rules,&_queue);
       _atree->add_listener (this);
 
       rebuild ();
@@ -806,7 +819,7 @@ HeaderPane :: get_first_selected_article ()
 }
 
 const guint
-HeaderPane :: get_full_selection_rows_num()
+HeaderPane :: get_full_selection_rows_num() const
 {
   return (gtk_tree_selection_count_selected_rows(gtk_tree_view_get_selection(GTK_TREE_VIEW(_tree_view))));
 }
@@ -858,6 +871,39 @@ HeaderPane :: mark_all_flagged ()
 }
 
 void
+HeaderPane :: invert_selection ()
+{
+
+  GtkTreeIter iter;
+  GtkTreeModel * model(gtk_tree_view_get_model(GTK_TREE_VIEW(_tree_view)));
+  GtkTreeSelection * sel (gtk_tree_view_get_selection (GTK_TREE_VIEW(_tree_view)));
+  gtk_tree_model_get_iter_first (model, &iter);
+  walk_and_invert_selection (model, &iter, sel);
+
+}
+
+
+void
+HeaderPane :: walk_and_invert_selection (GtkTreeModel          * model,
+                                         GtkTreeIter           * cur,
+                                         GtkTreeSelection      * ref) const
+{
+   for (;;) {
+    const bool selected(gtk_tree_selection_iter_is_selected (ref, cur));
+    if (selected)
+      gtk_tree_selection_unselect_iter(ref,cur);
+    else
+      gtk_tree_selection_select_iter(ref,cur);
+    GtkTreeIter child;
+    if (gtk_tree_model_iter_children (model, &child, cur))
+      walk_and_invert_selection (model, &child, ref);
+    if (!gtk_tree_model_iter_next (model, cur))
+      break;
+  }
+
+}
+
+void
 HeaderPane :: walk_and_collect_flagged (GtkTreeModel  * model,
                                 GtkTreeIter           * cur,
                                 GtkTreeSelection      * setme) const
@@ -877,7 +923,7 @@ HeaderPane :: walk_and_collect_flagged (GtkTreeModel  * model,
 void
 HeaderPane :: walk_and_collect (GtkTreeModel          * model,
                                 GtkTreeIter           * cur,
-                                articles_t            & setme) const
+                                articles_set          & setme) const
 {
   for (;;) {
     setme.insert (get_article (model, cur));
@@ -893,6 +939,7 @@ namespace {
   struct NestedData {
     const HeaderPane * pane;
     articles_t articles;
+    bool mark_all; /* for mark_article_(un)read and mark_thread_(un)read */
   };
 }
 
@@ -902,13 +949,15 @@ HeaderPane :: get_nested_foreach (GtkTreeModel  * model,
                                   GtkTreeIter   * iter,
                                   gpointer        data) const
 {
-  articles_t& articles (*static_cast<articles_t*>(data));
+  NestedData& ndata (*static_cast<NestedData*>(data));
+  articles_set& articles (ndata.articles);
   articles.insert (get_article (model, iter));
   const bool expanded (gtk_tree_view_row_expanded (GTK_TREE_VIEW(_tree_view), path));
   GtkTreeIter child;
-  if (!expanded && gtk_tree_model_iter_children(model,&child,iter))
+  if ((!expanded || ndata.mark_all) && gtk_tree_model_iter_children(model,&child,iter))
     walk_and_collect (model, &child, articles);
 }
+
 void
 HeaderPane :: get_nested_foreach_static (GtkTreeModel* model,
                                          GtkTreePath* path,
@@ -916,14 +965,15 @@ HeaderPane :: get_nested_foreach_static (GtkTreeModel* model,
                                          gpointer data)
 {
   NestedData& ndata (*static_cast<NestedData*>(data));
-  ndata.pane->get_nested_foreach (model, path, iter, &ndata.articles);
+  ndata.pane->get_nested_foreach (model, path, iter, &ndata);
 }
 
-articles_t
-HeaderPane :: get_nested_selection () const
+articles_set
+HeaderPane :: get_nested_selection (bool do_mark_all) const
 {
   NestedData data;
   data.pane = this;
+  data.mark_all = do_mark_all;
   GtkTreeSelection * selection (gtk_tree_view_get_selection (GTK_TREE_VIEW(_tree_view)));
   gtk_tree_selection_selected_foreach (selection, get_nested_foreach_static, &data);
   return data.articles;
@@ -1148,11 +1198,62 @@ namespace
     AUTHOR,
     MESSAGE_ID
   };
+
+}
+
+#define RANGE 4998
+std::pair<int,int>
+HeaderPane :: get_int_from_rules_str(std::string val)
+{
+  std::pair<int,int> res;
+  if (val == "new")     { res.first = 0;      res.second = 0; }
+  if (val == "never")   { res.first = 10;     res.second = 5; } // inversed, so never true
+  if (val == "watched") { res.first = 9999;   res.second = 99999; }
+  if (val == "high")    { res.first = 5000;   res.second = 5000+RANGE; }
+  if (val == "medium")  { res.first = 1;      res.second = 1+RANGE; }
+  if (val == "low")     { res.first = -9998;  res.second = -1; }
+  if (val == "ignored") { res.first = -9999;  res.second = -99999; }
+  return res;
+}
+
+void
+HeaderPane :: rebuild_rules (bool enable)
+{
+
+  if (!enable)
+  {
+    _rules.clear();
+    return;
+  }
+
+  RulesInfo &r (_rules);
+  r.set_type_aggregate_and ();
+  RulesInfo tmp;
+
+  std::pair<int,int> res;
+
+  res = get_int_from_rules_str(_prefs.get_string("rules-delete-value", "never"));
+  tmp.set_type_delete_b (res.first, res.second);
+  r._aggregates.push_back (tmp);
+
+  res = get_int_from_rules_str(_prefs.get_string("rules-mark-read-value", "never"));
+  tmp.set_type_mark_read_b (res.first, res.second);
+  r._aggregates.push_back (tmp);
+
+  res = get_int_from_rules_str(_prefs.get_string("rules-autocache-value", "never"));
+  tmp.set_type_autocache_b (res.first, res.second);
+  r._aggregates.push_back (tmp);
+
+  res = get_int_from_rules_str(_prefs.get_string("rules-auto-dl-value", "never"));
+  tmp.set_type_dl_b (res.first, res.second);
+   r._aggregates.push_back (tmp);
+
 }
 
 void
 HeaderPane :: rebuild_filter (const std::string& text, int mode)
 {
+
   TextMatch::Description d;
   d.negate = false;
   d.case_sensitive = false;
@@ -1160,6 +1261,7 @@ HeaderPane :: rebuild_filter (const std::string& text, int mode)
   d.text = text;
 
   FilterInfo &f (_filter);
+
   f.set_type_aggregate_and ();
 
   // entry field filter...
@@ -1293,6 +1395,24 @@ HeaderPane :: filter (const std::string& text, int mode)
       _atree->set_filter ();
     else
       _atree->set_filter (_show_type, &_filter);
+
+    _wait.watch_cursor_off ();
+  }
+}
+
+void
+HeaderPane :: rules(bool enable)
+{
+  rebuild_rules(enable);
+
+  if (_atree)
+  {
+    _wait.watch_cursor_on ();
+
+    if (_rules._aggregates.empty())
+      _atree->set_rules();
+    else
+      _atree->set_rules(_show_type, &_rules);
 
     _wait.watch_cursor_off ();
   }
@@ -1695,6 +1815,8 @@ HeaderPane :: on_selection_changed_idle (gpointer self_gpointer)
     "show-selected-article-info",
     "mark-article-read",
     "mark-article-unread",
+    "mark-thread-read",
+    "mark-thread-unread",
     "watch-thread",
     "ignore-thread",
     "plonk",
@@ -1720,12 +1842,14 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
                           Queue               & queue,
                           ArticleCache        & cache,
                           Prefs               & prefs,
+                          GroupPrefs          & group_prefs,
                           WaitUI              & wait,
                           GUI                 & gui):
   _action_manager (action_manager),
   _data (data),
   _queue (queue),
   _prefs (prefs),
+  _group_prefs (group_prefs),
   _wait (wait),
   _atree (0),
   _root (0),
@@ -1781,6 +1905,7 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _root = scroll;
 
   search_activate (this); // calls rebuild_filter
+  rules(_prefs._rules_enabled);
 
   _data.add_listener (this);
   _prefs.add_listener (this);
@@ -2230,10 +2355,11 @@ HeaderPane :: rebuild_article_action (const Quark& message_id)
 }
 
 void
-HeaderPane :: on_article_flag_changed (const Article* a, const Quark& group)
+HeaderPane :: on_article_flag_changed (articles_t& a, const Quark& group)
 {
-  g_return_if_fail(a);
-  rebuild_article_action (a->message_id);
+  g_return_if_fail(!a.empty());
+  foreach_const (articles_t, a, it)
+    rebuild_article_action ((*it)->message_id);
 }
 
 void
@@ -2253,6 +2379,7 @@ HeaderPane :: on_queue_task_removed (Queue&, Task& task, int)
   if (ta)
     rebuild_article_action (ta->get_article().message_id);
 }
+
 void
 HeaderPane :: on_cache_added (const Quark& message_id)
 {
@@ -2260,6 +2387,7 @@ HeaderPane :: on_cache_added (const Quark& message_id)
   q.insert(message_id);
   _data.rescore_articles ( _group, q );
   rebuild_article_action (message_id);
+
 }
 void
 HeaderPane :: on_cache_removed (const quarks_t& message_ids)

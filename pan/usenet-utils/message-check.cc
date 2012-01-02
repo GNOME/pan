@@ -314,9 +314,9 @@ namespace
   void check_body (unique_strings_t       & errors,
                    MessageCheck::Goodness & goodness,
                    const TextMassager     & tm,
-	           GMimeMessage           * message,
-	           const StringView       & body,
-	           const StringView       & attribution)
+                   GMimeMessage           * message,
+                   const StringView       & body,
+                   const StringView       & attribution)
   {
     check_empty         (errors, goodness, body);
     check_wide_body     (errors, goodness, body);
@@ -423,8 +423,10 @@ MessageCheck :: message_check (const GMimeMessage * message_const,
                                const StringView   & attribution,
                                const quarks_t     & groups_our_server_has,
                                unique_strings_t   & errors,
-                               Goodness           & goodness)
+                               Goodness           & goodness,
+                               bool                 binpost)
 {
+
   goodness.clear ();
   errors.clear ();
 
@@ -444,22 +446,28 @@ MessageCheck :: message_check (const GMimeMessage * message_const,
   TextMassager tm;
   gboolean is_html;
   char * body = pan_g_mime_message_get_body (message, &is_html);
-  if (is_html) {
+  if (is_html && !binpost) {
     errors.insert (_("Warning: Most newsgroups frown upon HTML posts."));
     goodness.raise_to_warn ();
   }
-  check_body (errors, goodness, tm, message, body, attribution);
+
+  if (!binpost)
+    check_body (errors, goodness, tm, message, body, attribution);
   g_free (body);
 
   // check the optional followup-to...
   bool followup_to_set (false);
   const char * cpch = g_mime_object_get_header ((GMimeObject *) message, "Followup-To");
-  if (cpch && *cpch) {
-    quarks_t groups;
-    get_nntp_rcpts (cpch, groups);
-    followup_to_set = !groups.empty();
-    check_followup_to (errors, goodness, groups_our_server_has, groups);
-  }
+  if (!binpost)
+  {
+    if (cpch && *cpch) {
+      quarks_t groups;
+      get_nntp_rcpts (cpch, groups);
+      followup_to_set = !groups.empty();
+      check_followup_to (errors, goodness, groups_our_server_has, groups);
+    }
+  } else
+    followup_to_set = true;
 
   // check the groups...
   size_t group_qty (0);

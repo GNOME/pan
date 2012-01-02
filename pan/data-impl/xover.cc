@@ -242,6 +242,8 @@ DataImpl :: xover_add (const Quark         & server,
     return 0;
   }
 
+//  std::cerr<<"xover add : "<<subject<<" "<<author<<" "<<message_id<<" lines "<<line_count<<" bytes "<<byte_count<<std::endl;
+
   const Article* new_article (0);
   h->_dirty = true;
   XOverEntry& workarea (xover_get_workarea (group));

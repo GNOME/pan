@@ -26,19 +26,29 @@ extern "C" {
   #include <glib/gi18n.h>
   #include <pan/gui/gtk-compat.h>
 }
+
+#include <pan/icons/pan-pixbufs.h>
+#include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
+#include <pan/usenet-utils/ssl-utils.h>
 #include "server-ui.h"
 #include "pad.h"
 #include "hig.h"
 #include "gtk-compat.h"
+
+#ifdef HAVE_GNUTLS
+  #include <pan/data/cert-store.h>
+  #include <gnutls/gnutls.h>
+#endif
 
 using namespace pan;
 
 /************
 *************  EDIT DIALOG
 ************/
+
 
 namespace
 {
@@ -47,6 +57,7 @@ namespace
     Data& data;
     Queue& queue;
     Quark server;
+    StringView cert;
     GtkWidget * dialog;
     GtkWidget * address_entry;
     GtkWidget * port_spin;
@@ -55,6 +66,8 @@ namespace
     GtkWidget * connection_limit_spin;
     GtkWidget * expiration_age_combo;
     GtkWidget * rank_combo;
+    GtkWidget * ssl_combo;
+    GtkWidget * always_trust_checkbox;
     ServerEditDialog (Data& d, Queue& q): data(d), queue(q) {}
   };
 
@@ -82,6 +95,17 @@ namespace
     gtk_adjustment_set_value (a, i);
   }
 
+  void ssl_changed_cb(GtkComboBox* w, ServerEditDialog* d)
+  {
+    int ssl(0);
+#ifdef HAVE_GNUTLS
+    GtkTreeIter iter;
+    if (gtk_combo_box_get_active_iter (w, &iter))
+      gtk_tree_model_get (gtk_combo_box_get_model(w), &iter, 1, &ssl, -1);
+    pan_spin_button_set (d->port_spin, ssl == 0 ? STD_NNTP_PORT : STD_SSL_PORT);
+#endif
+  }
+
   void
   edit_dialog_populate (Data&, const Quark& server, ServerEditDialog * d)
   {
@@ -91,14 +115,17 @@ namespace
 
     d->server = server;
 
-    int port(119), max_conn(4), age(31*3), rank(1);
-    std::string addr, user, pass;
+    int port(STD_NNTP_PORT), max_conn(4), age(31*3), rank(1), ssl(0), trust(0);
+    std::string addr, user, pass, cert;
     if (!server.empty()) {
       d->data.get_server_addr (server, addr, port);
       d->data.get_server_auth (server, user, pass);
       age = d->data.get_server_article_expiration_age (server);
       rank = d->data.get_server_rank (server);
       max_conn = d->data.get_server_limits (server);
+      ssl = d->data.get_server_ssl_support(server);
+      cert = d->data.get_server_cert(server);
+      d->data.get_server_trust (server, trust);
     }
 
     pan_entry_set_text (d->address_entry, addr);
@@ -106,6 +133,7 @@ namespace
     pan_spin_button_set (d->connection_limit_spin, max_conn);
     pan_entry_set_text (d->auth_username_entry, user);
     pan_entry_set_text (d->auth_password_entry, pass);
+    d->cert = cert;
 
     // set the age combobox
     GtkComboBox * combo (GTK_COMBO_BOX (d->expiration_age_combo));
@@ -131,6 +159,22 @@ namespace
         break;
       }
     } while (gtk_tree_model_iter_next(model, &iter));
+
+#ifdef HAVE_GNUTLS
+    // set ssl combo
+    combo = GTK_COMBO_BOX (d->ssl_combo);
+    model = gtk_combo_box_get_model (combo);
+    if (gtk_tree_model_get_iter_first(model, &iter)) do {
+      int that;
+      gtk_tree_model_get (model, &iter, 1, &that, -1);
+      if (that == ssl) {
+        gtk_combo_box_set_active_iter (combo, &iter);
+        break;
+      }
+    } while (gtk_tree_model_iter_next(model, &iter));
+
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(d->always_trust_checkbox), trust);
+#endif
   }
 
   void
@@ -149,7 +193,8 @@ namespace
       const int port (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(d->port_spin)));
       const int max_conn (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(d->connection_limit_spin)));
       StringView user (pan_entry_get_text (d->auth_username_entry));
-      StringView pass (pan_entry_get_text (d->auth_password_entry));
+      StringView pass = pan_entry_get_text (d->auth_password_entry);
+
       int age (31);
       GtkTreeIter iter;
       GtkComboBox * combo (GTK_COMBO_BOX (d->expiration_age_combo));
@@ -159,6 +204,18 @@ namespace
       combo = GTK_COMBO_BOX (d->rank_combo);
       if (gtk_combo_box_get_active_iter (combo, &iter))
         gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &rank, -1);
+      int ssl(0);
+      int trust(0);
+
+      StringView cert(d->cert);
+
+#ifdef HAVE_GNUTLS
+      combo = GTK_COMBO_BOX (d->ssl_combo);
+      if (gtk_combo_box_get_active_iter (combo, &iter))
+        gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &ssl, -1);
+      trust = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(d->always_trust_checkbox)) ? 1 : 0;
+#endif
+
       const char * err_msg (0);
       if (addr.empty())
         err_msg = _("Please specify the server's address.");
@@ -180,6 +237,10 @@ namespace
         d->data.set_server_limits (d->server, max_conn);
         d->data.set_server_article_expiration_age (d->server, age);
         d->data.set_server_rank (d->server, rank);
+        d->data.set_server_ssl_support(d->server, ssl);
+        d->data.set_server_cert(d->server,cert);
+        d->data.set_server_trust(d->server,trust);
+        d->data.save_server_info(d->server);
         d->queue.upkeep ();
       }
     }
@@ -192,6 +253,32 @@ namespace
   {
     delete (ServerEditDialog*)p;
   }
+}
+
+std::string
+pan :: import_sec_from_disk_dialog_new (Data& data, Queue& queue, GtkWindow * window)
+{
+  std::string prev_path = g_get_home_dir ();
+  std::string res;
+
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Import SSL certificate (PEM format) from File"),
+				      window,
+				      GTK_FILE_CHOOSER_ACTION_OPEN,
+				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+				      NULL);
+	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
+	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (w), false);
+	gtk_file_chooser_set_show_hidden (GTK_FILE_CHOOSER (w), false);
+
+	const int response (gtk_dialog_run (GTK_DIALOG(w)));
+	if (response == GTK_RESPONSE_ACCEPT) {
+    res = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w));
+    gtk_widget_destroy (w);
+  } else
+    gtk_widget_destroy (w);
+
+  return res;
 }
 
 GtkWidget*
@@ -217,10 +304,10 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
   ***  workarea
   **/
 
-  int row (0);
-  GtkWidget * t (HIG::workarea_create ());
-  gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(d->dialog))), t, TRUE, TRUE, 0);
-  HIG::workarea_add_section_title (t, &row, _("Location"));
+    int row (0);
+    GtkWidget * t (HIG::workarea_create ());
+    gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(d->dialog))), t, TRUE, TRUE, 0);
+    HIG::workarea_add_section_title (t, &row, _("Location"));
     HIG::workarea_add_section_spacer (t, row, 2);
 
     GtkWidget * w = d->address_entry = gtk_entry_new ();
@@ -232,8 +319,8 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     gtk_widget_set_tooltip_text( w, _("The news server's port number.  Typically 119."));
     HIG::workarea_add_row (t, &row, _("Por_t:"), w, NULL);
 
-  HIG::workarea_add_section_divider (t, &row);
-  HIG::workarea_add_section_title (t, &row, _("Login (if Required)"));
+    HIG::workarea_add_section_divider (t, &row);
+    HIG::workarea_add_section_title (t, &row, _("Login (if Required)"));
     HIG::workarea_add_section_spacer (t, row, 2);
 
     w = d->auth_username_entry = gtk_entry_new ();
@@ -245,15 +332,17 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     HIG::workarea_add_row (t, &row, _("_Password:"), w, NULL);
     gtk_widget_set_tooltip_text( w, _("The password to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
 
-  HIG::workarea_add_section_divider (t, &row);
-  HIG::workarea_add_section_title (t, &row, _("Settings"));
+    HIG::workarea_add_section_divider (t, &row);
+    HIG::workarea_add_section_title (t, &row, _("Settings"));
     HIG::workarea_add_section_spacer (t, row, 2);
 
+    // max connections
     const int DEFAULT_MAX_PER_SERVER (4);
     a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 0.0, DEFAULT_MAX_PER_SERVER, 1.0, 1.0, 0.0));
     d->connection_limit_spin = w = gtk_spin_button_new (GTK_ADJUSTMENT(a), 1.0, 0u);
     HIG::workarea_add_row (t, &row, _("Connection _Limit:"), w, NULL);
 
+    // expiration
     struct { int type; const char * str; } items[] = {
       { 14,  N_("After Two Weeks") },
       { 31,  N_("After One Month") },
@@ -276,6 +365,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
     HIG::workarea_add_row (t, &row, _("E_xpire Old Articles:"), w, NULL);
 
+    //rank
     struct { int rank; const char * str; } rank_items[] = {
       { 1, N_("Primary") },
       { 2, N_("Fallback") }
@@ -299,10 +389,69 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     gtk_widget_set_tooltip_text( e, _("Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."));
     HIG::workarea_add_row (t, &row, e, w);
 
+    // ssl 3.0 option
+#ifdef HAVE_GNUTLS
+    // select ssl/plaintext
+    HIG::workarea_add_section_divider (t, &row);
+    HIG::workarea_add_section_title (t, &row, _("Security"));
+    HIG::workarea_add_section_spacer (t, row, 2);
+
+    struct { int o; const char * str; } ssl_items[] = {
+
+      { 0, N_("Use Plaintext (Unsecured) Connections") },
+      { 1, N_("Use Secure SSL Connections") }
+    };
+
+    store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+    for (unsigned int i(0); i<G_N_ELEMENTS(ssl_items); ++i) {
+      GtkTreeIter iter;
+      gtk_list_store_append (store,  &iter);
+      gtk_list_store_set (store, &iter, 0, _(ssl_items[i].str), 1, ssl_items[i].o, -1);
+    }
+
+    d->ssl_combo = w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
+    g_signal_connect(w, "changed", G_CALLBACK(ssl_changed_cb), d);
+    g_object_unref (G_OBJECT(store));
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
+    gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
+    l = gtk_label_new (_("TLS (SSL) Options:"));
+    e = gtk_event_box_new ();
+    gtk_container_add (GTK_CONTAINER(e), l);
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+    gtk_widget_set_tooltip_text( e,
+          _("You can set the option for using/disabling secure SSL/TLS connections here. "
+            "If you enable SSL/TLS, your data is encrypted and secure. "
+            "It is encouraged to use this option for privacy reasons."));
+    HIG::workarea_add_row (t, &row, e, w);
+
+    d->always_trust_checkbox = w = gtk_check_button_new_with_label (_("Always trust this server's certificate"));
+    HIG::workarea_add_row (t, &row, NULL, w, NULL);
+
+#endif
+
   d->server = server;
   edit_dialog_populate (data, server, d);
   gtk_widget_show_all (d->dialog);
   return d->dialog;
+}
+
+namespace
+{
+  enum
+  {
+    ICON_PLAIN,
+    ICON_CERT,
+    ICON_QTY
+   };
+
+  struct Icon {
+    const guint8 * pixbuf_txt;
+    GdkPixbuf * pixbuf;
+  } _icons[ICON_QTY] = {
+    { icon_plain,  0 },
+    { icon_cert,   0 }
+  };
 }
 
 
@@ -314,6 +463,7 @@ namespace
 {
   enum
   {
+    COL_FLAG,
     COL_HOST,
     COL_DATA,
     N_COLUMNS
@@ -331,6 +481,7 @@ namespace
     ServerListDialog (Data& d, Queue& q): data(d), queue(q) {}
   };
 
+
   Quark
   get_selected_server (ServerListDialog * d)
   {
@@ -344,6 +495,29 @@ namespace
     if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
       char * host (0);
       gtk_tree_model_get (model, &iter, COL_DATA, &host, -1);
+      if (host) {
+        server = host;
+        g_free (host);
+      }
+    }
+
+    //std::cerr << LINE_ID << " selected server is " << server << std::endl;
+    return server;
+  }
+
+  Quark
+  get_selected_server_name (ServerListDialog * d)
+  {
+    g_assert (d != 0);
+
+    Quark server;
+
+    GtkTreeSelection * selection (gtk_tree_view_get_selection(GTK_TREE_VIEW (d->server_tree_view)));
+    GtkTreeModel * model;
+    GtkTreeIter iter;
+    if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+      char * host (0);
+      gtk_tree_model_get (model, &iter, COL_HOST, &host, -1);
       if (host) {
         server = host;
         g_free (host);
@@ -396,11 +570,19 @@ namespace
     delete (ServerListDialog*)p;
   }
 
+  void delete_sec_dialog (gpointer p)
+  {
+   for (guint i=0; i<ICON_QTY; ++i)
+      g_object_unref (_icons[i].pixbuf);
+   delete (ServerListDialog*)p;
+  }
+
   void
   server_list_dialog_response_cb (GtkDialog * dialog, int, gpointer)
   {
     gtk_widget_destroy (GTK_WIDGET(dialog));
   }
+
 
   void
   remove_button_clicked_cb (GtkButton * button, gpointer data)
@@ -481,6 +663,155 @@ namespace
   }
 }
 
+#ifdef HAVE_GNUTLS
+/* security dialog */
+namespace
+{
+
+  /* Show the current certificate of the selected server, if any */
+  void
+  cert_edit_button_clicked_cb (GtkButton *, gpointer user_data)
+  {
+    GtkWidget * list_dialog = GTK_WIDGET (user_data);
+    ServerListDialog * d = (ServerListDialog*) g_object_get_data (G_OBJECT(list_dialog), "dialog");
+    Quark selected_server (get_selected_server (d));
+    CertStore& store (d->data.get_certstore());
+
+    int port;
+    std::string addr;
+    d->data.get_server_addr (selected_server, addr, port);
+
+    char buf[4096] ;
+
+    if (!selected_server.empty()) {
+      const gnutls_x509_crt_t cert (store.get_cert_to_server(selected_server));
+      if (cert)
+      {
+        pretty_print_x509(buf,sizeof(buf),addr, cert,false);
+        if (!buf) g_snprintf(buf,sizeof(buf), "%s", _("No information available.")) ;
+        GtkWidget * w = gtk_message_dialog_new_with_markup (
+        0,
+        GTK_DIALOG_MODAL,
+        GTK_MESSAGE_INFO,
+        GTK_BUTTONS_CLOSE, buf);
+        g_snprintf(buf,sizeof(buf), _("Server Certificate for '%s'"), addr.c_str());
+        gtk_window_set_title(GTK_WINDOW(w), buf);
+        gtk_widget_show_all (w);
+        g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
+      }
+    }
+  }
+
+  void
+  sec_tree_view_refresh (ServerListDialog * d)
+  {
+    GtkTreeSelection * selection (gtk_tree_view_get_selection(GTK_TREE_VIEW (d->server_tree_view)));
+    const quarks_t servers (d->data.get_servers ());
+    const Quark selected_server (get_selected_server (d));
+    CertStore& store (d->data.get_certstore());
+
+    bool found_selected (false);
+    GtkTreeIter selected_iter;
+    gtk_list_store_clear (d->servers_store);
+    foreach_const (quarks_t, servers, it)
+    {
+      const Quark& server (*it);
+      std::string addr; int port;
+      d->data.get_server_addr (server, addr, port);
+
+      if(d->data.get_server_ssl_support(server))
+      {
+        GtkTreeIter iter;
+        gtk_list_store_append (d->servers_store, &iter);
+        gtk_list_store_set (d->servers_store, &iter,
+                            COL_FLAG, store.exist(server),
+                            COL_HOST, addr.c_str(),
+                            COL_DATA, server.c_str(),
+                            -1);
+        if ((found_selected = (server == selected_server)))
+          selected_iter = iter;
+      }
+    }
+
+    if (found_selected)
+      gtk_tree_selection_select_iter (selection, &selected_iter);
+  }
+
+  void
+  sec_dialog_destroy_cb (GtkWidget *, gpointer user_data)
+  {
+    if (GTK_IS_WIDGET (user_data))
+    {
+      ServerListDialog * d = (ServerListDialog*) g_object_get_data (G_OBJECT(user_data), "dialog");
+      sec_tree_view_refresh (d);
+    }
+  }
+
+
+  /* add a cert from disk, overwriting the current setting for the selected server */
+  void
+  cert_add_button_clicked_cb (GtkButton *, gpointer user_data)
+  {
+    const Quark empty_quark;
+    GtkWidget * list_dialog = GTK_WIDGET (user_data);
+    ServerListDialog * d = (ServerListDialog*) g_object_get_data (G_OBJECT(list_dialog), "dialog");
+    std::string ret = import_sec_from_disk_dialog_new (d->data, d->queue, GTK_WINDOW(list_dialog));
+    const Quark selected_server (get_selected_server (d));
+    CertStore& store (d->data.get_certstore());
+
+    if (!ret.empty() )
+    {
+      std::string addr; int port;
+      d->data.get_server_addr(selected_server, addr, port);
+      if (!store.import_from_file(selected_server, ret.c_str()))
+      {
+      _err:
+        Log::add_err_va("Error adding certificate of server '%s' to CertStore. Check the console output!", addr.c_str());
+        file::print_file_info(std::cerr,ret.c_str());
+      }
+      sec_tree_view_refresh (d);
+    }
+  }
+
+
+  /* remove cert from certstore */
+  void
+  cert_remove_button_clicked_cb (GtkButton * button, gpointer data)
+  {
+    ServerListDialog * d (static_cast<ServerListDialog*>(data));
+    Quark selected_server (get_selected_server (d));
+    CertStore& store (d->data.get_certstore());
+
+    if (!selected_server.empty())
+    {
+      int port;
+      std::string addr;
+      d->data.get_server_addr (selected_server, addr, port);
+
+      GtkWidget * w = gtk_message_dialog_new (GTK_WINDOW(gtk_widget_get_toplevel(GTK_WIDGET(button))),
+                                              GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+                                              GTK_MESSAGE_QUESTION,
+                                              GTK_BUTTONS_NONE,
+                                              _("Really delete certificate for \"%s\"?"),
+                                              addr.c_str());
+      gtk_dialog_add_buttons (GTK_DIALOG(w),
+                              GTK_STOCK_NO, GTK_RESPONSE_NO,
+                              GTK_STOCK_DELETE, GTK_RESPONSE_YES,
+                              NULL);
+      gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_NO);
+      const int response (gtk_dialog_run (GTK_DIALOG (w)));
+      gtk_widget_destroy (w);
+      store.remove(selected_server);
+
+      if (response == GTK_RESPONSE_YES)
+        sec_tree_view_refresh (d);
+
+      button_refresh (d);
+    }
+  }
+
+}
+#endif
 
 GtkWidget*
 pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
@@ -506,7 +837,7 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
 
 
   // create the list
-  d->servers_store = gtk_list_store_new (N_COLUMNS, G_TYPE_STRING, G_TYPE_STRING);
+  d->servers_store = gtk_list_store_new (N_COLUMNS, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING);
   w = d->server_tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (d->servers_store));
   GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
   GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Servers"), renderer, "text", COL_HOST, NULL);
@@ -555,4 +886,105 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
   server_tree_view_refresh (d);
   button_refresh (d);
   return d->dialog;
+}
+
+
+void
+pan :: render_cert_flag (GtkTreeViewColumn * ,
+                         GtkCellRenderer   * renderer,
+                         GtkTreeModel      * model,
+                         GtkTreeIter       * iter,
+                         gpointer            )
+{
+  bool index (false);
+  gtk_tree_model_get (model, iter, COL_FLAG, &index, -1);
+  g_object_set (renderer, "pixbuf", _icons[index].pixbuf, NULL);
+}
+
+
+GtkWidget*
+pan :: sec_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
+{
+#ifdef HAVE_GNUTLS
+  ServerListDialog * d = new ServerListDialog (data, queue);
+
+  for (guint i=0; i<ICON_QTY; ++i)
+    _icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, _icons[i].pixbuf_txt, FALSE, 0);
+
+  // dialog
+  char * title = g_strdup_printf ("Pan: %s", _("SSL Certificates"));
+  GtkWidget * w = d->dialog = gtk_dialog_new_with_buttons (title, parent,
+                                                           GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                           GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
+                                                           NULL);
+  g_free (title);
+  gtk_window_set_role (GTK_WINDOW(w), "pan-sec-dialog");
+  gtk_window_set_resizable (GTK_WINDOW(w), TRUE);
+  g_signal_connect (GTK_OBJECT(w), "response", G_CALLBACK(server_list_dialog_response_cb), d);
+  g_object_set_data_full (G_OBJECT(w), "dialog", d, delete_sec_dialog);
+
+  // workarea
+  GtkWidget * hbox = gtk_hbox_new (FALSE, PAD);
+  gtk_container_set_border_width (GTK_CONTAINER(hbox), 12);
+  gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(w))), hbox, TRUE, TRUE, 0);
+
+  // create the list
+  d->servers_store = gtk_list_store_new (N_COLUMNS, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING);
+  w = d->server_tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (d->servers_store));
+
+  GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF, "xpad", 2,"ypad", 0,NULL));
+  GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Certificates"), r, NULL);
+  gtk_tree_view_column_set_cell_data_func (column, r, render_cert_flag, 0, 0);
+  gtk_tree_view_append_column (GTK_TREE_VIEW(w), column);
+
+  r = gtk_cell_renderer_text_new ();
+  column = gtk_tree_view_column_new_with_attributes (_("Servers"), r, "text", COL_HOST, NULL);
+  gtk_tree_view_column_set_sort_column_id (column, COL_HOST);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (w), column);
+  GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (w));
+  gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
+
+  // add callbacks
+  g_signal_connect (GTK_TREE_VIEW (w), "row-activated",
+                    G_CALLBACK (server_tree_view_row_activated_cb), d->dialog);
+  g_signal_connect (G_OBJECT (selection), "changed",
+                    G_CALLBACK (server_tree_view_selection_changed_cb), d);
+
+  w = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER(w), d->server_tree_view);
+  gtk_box_pack_start (GTK_BOX (hbox), w, TRUE, TRUE, 0);
+  gtk_widget_set_size_request (w, 300, 300);
+
+  // button box
+  GtkWidget * bbox = gtk_vbox_new (FALSE, PAD_SMALL);
+  gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
+
+  // add button
+  w = gtk_button_new_from_stock (GTK_STOCK_ADD);
+  gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
+  gtk_widget_set_tooltip_text(w, _("Import Certificate"));
+  g_signal_connect (w, "clicked", G_CALLBACK(cert_add_button_clicked_cb), d->dialog);
+
+  // inspect button
+  w = gtk_button_new_from_stock (GTK_STOCK_FIND);
+  gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
+  gtk_widget_set_tooltip_text(w, _("Inspect Certificate"));
+  g_signal_connect (w, "clicked", G_CALLBACK(cert_edit_button_clicked_cb), d->dialog);
+  d->edit_button = w;
+
+  // remove button
+  w = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
+  gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
+  gtk_widget_set_tooltip_text(w, _("Remove Certificate"));
+  g_signal_connect (w, "clicked", G_CALLBACK(cert_remove_button_clicked_cb), d);
+  d->remove_button = w;
+
+  sec_tree_view_refresh (d);
+  button_refresh (d);
+  return d->dialog;
+#else
+  return 0;
+#endif
 }

@@ -28,6 +28,8 @@ extern "C" {
 #include <pan/general/string-view.h>
 #include <pan/general/quark.h>
 
+#include <pan/usenet-utils/gpg.h>
+
 extern "C"
 {
   typedef struct _GMimeMessage GMimeMessage;
@@ -70,7 +72,7 @@ namespace pan
       void resize ();
       void clear ();
 
-      GMimeMessage* get_message (const mid_sequence_t&) const;
+      GMimeMessage* get_message (const mid_sequence_t&, GPGDecErr&) const;
 
       typedef std::vector<std::string> strings_t;
       strings_t get_filenames (const mid_sequence_t&);
@@ -85,6 +87,9 @@ namespace pan
       };
       void add_listener (Listener * l) { _listeners.insert(l); }
       void remove_listener (Listener * l) { _listeners.erase(l); }
+
+    public:
+      void set_max_megs (size_t value) { _max_megs = value; }
 
     private:
 
@@ -109,7 +114,7 @@ namespace pan
       };
 
       std::string _path;
-      const size_t _max_megs;
+      size_t _max_megs; // changeable via prefs
       guint64 _current_bytes;
 
       typedef std::set<Listener*> listeners_t;
