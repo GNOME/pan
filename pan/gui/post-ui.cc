@@ -47,7 +47,7 @@ extern "C" {
 #include "post.ui.h"
 #include "profiles-dialog.h"
 #include "url.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 #ifdef HAVE_GTKSPELL
 #define DEFAULT_SPELLCHECK_FLAG true

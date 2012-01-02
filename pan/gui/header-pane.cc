@@ -41,7 +41,7 @@ extern "C" {
 #include "header-pane.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 using namespace pan;
 

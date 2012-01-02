@@ -33,7 +33,7 @@ extern "C" {
 #include <pan/data/data.h>
 #include "group-pane.h"
 #include "pad.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 using namespace pan;
 
@@ -215,7 +215,7 @@ namespace
     blah->path = path;
     blah->col = col;
     g_idle_add (maybe_activate_on_idle_idle, blah);
-  } 
+  }
 }
 
 gboolean
@@ -343,8 +343,8 @@ namespace
     headers[0].groupname = *sub_title_quark;
     headers[1].groupname = *other_title_quark;
     g_object_weak_ref (G_OBJECT(store), delete_rows, headers);
- 
-    // 
+
+    //
     //  subscribed
     //
 
@@ -428,7 +428,7 @@ GroupPane :: on_group_subscribe (const Quark& groupname, bool sub)
       ++pos;
     } while (gtk_tree_model_iter_next (model, &group_iter));
   }
-  
+
   // move the row
   _tree_store->reparent (_tree_store->get_row(&section_iter), find_row(groupname), pos);
 

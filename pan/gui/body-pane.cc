@@ -42,7 +42,7 @@ extern "C" {
 #include "tango-colors.h"
 #include "xface.h"
 #include "url.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 #define FIRST_PICTURE "first-picture"
 

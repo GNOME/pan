@@ -30,7 +30,7 @@
 #include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
 
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 namespace pan
 {
