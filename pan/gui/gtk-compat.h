@@ -14,6 +14,9 @@
 #ifndef PAN_GTK_COMPAT_H
 #define PAN_GTK_COMPAT_H
 
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
+
 #ifdef __cplusplus
 namespace
 {
