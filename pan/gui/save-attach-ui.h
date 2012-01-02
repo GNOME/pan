@@ -27,7 +27,7 @@
 #include <pan/data/article-cache.h>
 #include <pan/data/data.h>
 #include <pan/tasks/task-article.h>
-#include <pan/gui/gtk-compat.h>
+#include "gtk-compat.h"
 #include "group-prefs.h"
 #include "prefs.h"
 

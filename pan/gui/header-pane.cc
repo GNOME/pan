@@ -20,7 +20,7 @@
 extern "C" {
   #include <config.h>
   #include <glib/gi18n.h>
-  #include <pan/gui/gtk-compat.h>
+  #include "gtk-compat.h"
   #include "gtk-compat.h"
   #include <iconv.h>
 }

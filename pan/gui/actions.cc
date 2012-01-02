@@ -20,7 +20,7 @@
 #include <config.h>
 extern "C" {
   #include <glib/gi18n.h>
-  #include <pan/gui/gtk-compat.h>
+  #include "gtk-compat.h"
 }
 #include <pan/general/debug.h>
 #include <pan/tasks/task-xover.h>

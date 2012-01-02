@@ -20,7 +20,7 @@
 #ifndef __ProfilesDialog_h__
 #define __ProfilesDialog_h__
 
-#include <pan/gui/gtk-compat.h>
+#include "gtk-compat.h"
 #include <pan/data/data.h>
 
 namespace pan

@@ -21,7 +21,7 @@
 extern "C" {
   #include <glib.h>
   #include <glib/gi18n.h>
-  #include <pan/gui/gtk-compat.h>
+  #include "gtk-compat.h"
 }
 #include <pan/general/e-util.h>
 #include <pan/general/debug.h>

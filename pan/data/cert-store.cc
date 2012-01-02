@@ -178,8 +178,6 @@ namespace pan
     FILE * fp = fopen(filename, "rb");
     if (!fp) return false;
 
-    std::cerr<<"importing cert for server "<<server<<" "<<(filename ? filename : "empty")<<"\n";
-
     fseek (fp, 0, SEEK_END);
     filelen = ftell (fp);
     fseek (fp, 0, SEEK_SET);
@@ -319,8 +317,6 @@ namespace pan
   {
     debug("adding server cert "<<server<<" "<<cert);
     if (!cert || server.empty()) return false;
-
-    std::cerr<<"adding cert for server "<<server<<"\n";
 
     std::string addr; int port;
     _data.get_server_addr(server, addr, port);

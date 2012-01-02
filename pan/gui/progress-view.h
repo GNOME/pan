@@ -20,7 +20,7 @@
 #ifndef __Progress_View_h__
 #define __Progress_View_h__
 
-#include <pan/gui/gtk-compat.h>
+#include "gtk-compat.h"
 #include <pan/general/progress.h>
 
 namespace pan

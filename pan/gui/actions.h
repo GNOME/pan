@@ -19,7 +19,7 @@
 #ifndef _actions_h_
 #define _actions_h_
 
-#include <pan/gui/gtk-compat.h>
+#include "gtk-compat.h"
 #include <pan/gui/pan-ui.h>
 #include <pan/gui/prefs.h>
 

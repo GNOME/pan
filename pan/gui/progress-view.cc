@@ -19,7 +19,7 @@
 
 #include <config.h>
 extern "C" {
-  #include <pan/gui/gtk-compat.h>
+  #include "gtk-compat.h"
 }
 #include <pan/general/string-view.h>
 #include <pan/usenet-utils/mime-utils.h>

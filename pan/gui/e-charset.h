@@ -21,7 +21,7 @@
 #ifndef E_CHARSET_H
 #define E_CHARSET_H
 
-#include <pan/gui/gtk-compat.h>
+#include "gtk-compat.h"
 
 G_BEGIN_DECLS
 

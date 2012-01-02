@@ -21,7 +21,7 @@
 #define SERVER_UI_H
 
 #include <set>
-#include <pan/gui/gtk-compat.h>
+#include "gtk-compat.h"
 #include <pan/data/data.h>
 #include <pan/tasks/queue.h>
 

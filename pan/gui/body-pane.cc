@@ -24,7 +24,7 @@
 #include <sstream>
 extern "C" {
   #include <glib/gi18n.h>
-  #include <pan/gui/gtk-compat.h>
+  #include "gtk-compat.h"
   #include <gmime/gmime.h>
 }
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -1010,6 +1010,7 @@ BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation 
       ? g_strdup_printf ("%s", filename)
       : g_strdup_printf (_("Unnamed File"));
     add_attachment_to_toolbar (pch);
+    std::cerr<<"add attach "<<pch<<"\n";
     _freeme.insert(pch);
   }
 }
@@ -1643,7 +1644,7 @@ BodyPane :: create_attachments_toolbar (GtkWidget* frame)
   _cur_row = 0;
 
   GtkWidget * w = _att_toolbar = gtk_table_new(4,1,TRUE);
-  gtk_widget_set_size_request (w, -1, 20);
+  gtk_widget_set_size_request (w, -1, 40);
   gtk_table_set_col_spacings (GTK_TABLE(w), PAD);
   gtk_container_add (GTK_CONTAINER (frame), w);
   gtk_widget_show_all (frame);

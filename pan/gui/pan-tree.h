@@ -22,7 +22,7 @@
 
 #include <map>
 #include <vector>
-#include <pan/gui/gtk-compat.h>
+#include "gtk-compat.h"
 
 #define PAN_TREE_STORE_TYPE (PanTreeStore::get_type())
 #define PAN_TREE_STORE(obj) \

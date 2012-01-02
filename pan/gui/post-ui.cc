@@ -25,7 +25,6 @@
 extern "C" {
   #include <gmime/gmime.h>
   #include <glib/gi18n.h>
-  #include <pan/gui/gtk-compat.h>
   #include "gtk-compat.h"
   #include <sys/time.h>
 #ifdef HAVE_GTKSPELL
@@ -1575,7 +1574,7 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
     g_free (pch);
     g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
     g_mime_part_set_content_object (part, content_object);
-    g_mime_part_set_content_encoding (part, _enc);
+    if (mode != UPLOADING) g_mime_part_set_content_encoding (part, _enc);
     g_object_unref (content_object);
     g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
     g_object_unref (part);

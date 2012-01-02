@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 #include <pan/general/string-view.h>
-#include <pan/gui/gtk-compat.h>
+#include "gtk-compat.h"
 
 namespace pan
 {

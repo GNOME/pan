@@ -20,7 +20,7 @@
 #ifndef PREFS_UI_H
 #define PREFS_UI_H
 
-#include <pan/gui/gtk-compat.h>
+#include "gtk-compat.h"
 #include <pan/gui/prefs.h>
 
 namespace pan
