@@ -25,7 +25,7 @@
  * Just plug in a GtkRadioAction and the widget will handle the rest.
  * (Based on GtkhtmlComboBox.) */
 
-#include <gtk/gtk.h>
+#include <pan/gui/gtk-compat.h>
 
 /* Standard GObject macros */
 #define E_TYPE_ACTION_COMBO_BOX \

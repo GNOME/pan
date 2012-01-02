@@ -25,7 +25,7 @@
 extern "C" {
   #include <gmime/gmime.h>
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
 #ifdef HAVE_GTKSPELL
   #include <gtkspell/gtkspell.h>
 #endif

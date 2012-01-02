@@ -22,7 +22,7 @@
 
 #include <map>
 #include <vector>
-#include <gtk/gtk.h>
+#include <pan/gui/gtk-compat.h>
 
 #define PAN_TREE_STORE_TYPE (PanTreeStore::get_type())
 #define PAN_TREE_STORE(obj) \
@@ -75,7 +75,7 @@ struct PanTreeStoreClass
  *  6. Entire subtrees can be reparented in a single call.
  *
  *
- * WARTS 
+ * WARTS
  *
  *  _  Sorting is not triggered when a row changes.
  *     When you're done with a batch of changes, call sort() manually.
@@ -334,7 +334,7 @@ struct PanTreeStore
     /** one of GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID,
                GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID,
                or [0...n_columns) */
-    int sort_column_id; 
+    int sort_column_id;
 
     /** the model's sort order -- ascending or descending */
     GtkSortType order;
@@ -376,7 +376,7 @@ struct PanTreeStore
         passed as arguments to us actually do belong to this tree. */
     int stamp;
 
-    /** Defines the GType of each column. */    
+    /** Defines the GType of each column. */
     std::vector<GType> * column_types;
 
     /** number of columns in each row. */
@@ -442,7 +442,7 @@ struct PanTreeStore
                                                     gpointer,
                                                     GDestroyNotify);
     static gboolean sortable_has_default_sort_func (GtkTreeSortable*);
- 
+
   private:
     struct SortData;
     struct SortRowInfo;

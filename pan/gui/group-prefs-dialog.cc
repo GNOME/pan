@@ -21,7 +21,7 @@
 extern "C" {
   #include <glib/gi18n.h>
   #include <glib.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
 #ifdef HAVE_GTKSPELL
   #include <gtkspell/gtkspell.h>
   #include <enchant/enchant.h>

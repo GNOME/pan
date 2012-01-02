@@ -21,7 +21,7 @@
 extern "C" {
   #include <glib.h>
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
 }
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
@@ -225,7 +225,7 @@ TaskPane :: update_status (const task_states_t& tasks)
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks (%d Queued, %d Running, %d Stopped)"), queued_count, running_count, stopped_count);
   else if (running_count || queued_count)
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks (%d Queued, %d Running)"), queued_count, running_count);
-  else 
+  else
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks"));
   gtk_window_set_title (GTK_WINDOW(_root), buf);
 

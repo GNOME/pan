@@ -20,7 +20,7 @@
 #ifndef __PanFileEntry_h__
 #define __PanFileEntry_h__
 
-#include <gtk/gtk.h>
+#include <pan/gui/gtk-compat.h>
 
 namespace pan
 {

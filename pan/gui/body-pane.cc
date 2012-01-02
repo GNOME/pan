@@ -23,8 +23,7 @@
 #include <iostream>
 extern "C" {
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
-  #include <gdk/gdk.h>
+  #include <pan/gui/gtk-compat.h>
   #include <gdk/gdkkeysyms.h>
   #include <gmime/gmime.h>
 }

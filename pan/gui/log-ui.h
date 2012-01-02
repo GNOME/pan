@@ -19,7 +19,7 @@
 #ifndef LOG_UI_H
 #define LOG_UI_H
 
-#include <gtk/gtk.h>
+#include <pan/gui/gtk-compat.h>
 #include "prefs.h"
 
 namespace pan

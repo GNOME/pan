@@ -22,7 +22,7 @@
 
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
-#include <gtk/gtk.h>
+#include <pan/gui/gtk-compat.h>
 #include "group-prefs.h"
 
 namespace pan
@@ -51,5 +51,5 @@ namespace pan
       static void response_cb (GtkDialog*, int, gpointer);
       void save_from_gui ();
   };
-} 
+}
 #endif
