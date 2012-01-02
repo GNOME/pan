@@ -49,6 +49,9 @@ namespace pan
    */
   namespace file
   {
+    /** Stats a file and prints out some useful info. Umask etc.... */
+    std::ostream& print_file_info (std::ostream&, const char*);
+
     /** just like strerror but never returns NULL */
     const char * pan_strerror (int error_number);
 
@@ -76,6 +79,8 @@ namespace pan
      * <ol>
      * <li>Replacing illegal characters with '_'.
      * <li>Ensure the resulting string is UTF8-safe
+     * <li>This function assumes the input is UTF8 since gmime uses UTF8 interface.
+     * <li>Return value must be g_free'd.
      * </ol>
      */
     std::string sanitize (const StringView& filename);

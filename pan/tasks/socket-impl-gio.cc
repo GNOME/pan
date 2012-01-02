@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-/* #define DEBUG_SOCKET_IO */
+ #define DEBUG_SOCKET_IO
 
 /******
 *******
@@ -41,6 +41,7 @@ extern "C" {
 
 #ifdef G_OS_WIN32
   // this #define is necessary for mingw
+  #undef _WIN32_WINNT
   #define _WIN32_WINNT 0x0501
   #include <ws2tcpip.h>
   #undef gai_strerror
@@ -89,71 +90,17 @@ extern "C" {
 #include <pan/general/string-view.h>
 #include <pan/usenet-utils/gnksa.h>
 #include "socket-impl-gio.h"
+#include "socket-impl-main.h"
 
 using namespace pan;
 
+#ifndef G_OS_WIN32
+extern t_getaddrinfo p_getaddrinfo;
+extern t_freeaddrinfo p_freeaddrinfo;
+#endif
+
 namespace
 {
-  typedef int (*t_getaddrinfo)(const char *,const char *, const struct addrinfo*, struct addrinfo **);
-  t_getaddrinfo p_getaddrinfo (0);
-
-  typedef void (*t_freeaddrinfo)(struct addrinfo*);
-  t_freeaddrinfo p_freeaddrinfo (0);
-
-  void ensure_module_inited (void)
-  {
-    static bool inited (false);
-
-    if (!inited)
-    {
-      p_freeaddrinfo=NULL;
-      p_getaddrinfo=NULL;
-
-#ifdef G_OS_WIN32
-      WSADATA wsaData;
-      WSAStartup(MAKEWORD(2,2), &wsaData);
-
-      char sysdir[MAX_PATH], path[MAX_PATH+8];
-
-      if(GetSystemDirectory(sysdir,MAX_PATH)!=0)
-      {
-        HMODULE lib=NULL;
-        FARPROC pfunc=NULL;
-        const char *libs[]={"ws2_32","wship6",NULL};
-
-        for(const char **p=libs;*p!=NULL;++p)
-        {
-          g_snprintf(path,MAX_PATH+8,"%s\\%s",sysdir,*p);
-          lib=LoadLibrary(path);
-          if(!lib)
-            continue;
-          pfunc=GetProcAddress(lib,"getaddrinfo");
-          if(!pfunc)
-          {
-            FreeLibrary(lib);
-            lib=NULL;
-            continue;
-          }
-          p_getaddrinfo=reinterpret_cast<t_getaddrinfo>(pfunc);
-          pfunc=GetProcAddress(lib,"freeaddrinfo");
-          if(!pfunc)
-          {
-            FreeLibrary(lib);
-            lib=NULL;
-            p_getaddrinfo=NULL;
-            continue;
-          }
-          p_freeaddrinfo=reinterpret_cast<t_freeaddrinfo>(pfunc);
-          break;
-        }
-      }
-#else
-      p_freeaddrinfo=::freeaddrinfo;
-      p_getaddrinfo=::getaddrinfo;
-#endif
-      inited = true;
-    }
-  }
 
   GIOChannel *
   create_channel (const StringView& host_in, int port, std::string& setme_err)
@@ -220,7 +167,7 @@ namespace
       hints.ai_family = 0;
       hints.ai_socktype = SOCK_STREAM;
       struct addrinfo * ans;
-      err = p_getaddrinfo (host.c_str(), portbuf, &hints, &ans);
+      err = ::getaddrinfo (host.c_str(), portbuf, &hints, &ans);
       if (err != 0) {
         char buf[512];
         snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
@@ -255,7 +202,7 @@ namespace
       }
 
       // cleanup
-      p_freeaddrinfo (ans);
+      ::freeaddrinfo (ans);
     }
 
     // create the giochannel...
@@ -278,8 +225,7 @@ namespace
 #else
     channel = g_io_channel_win32_new_socket (sockfd);
 #endif
-    if (g_io_channel_get_encoding (channel) != NULL)
-      g_io_channel_set_encoding (channel, NULL, NULL);
+    g_io_channel_set_encoding (channel, NULL, NULL);
     g_io_channel_set_buffered (channel, true);
     g_io_channel_set_line_term (channel, "\n", 1);
     return channel;
@@ -501,12 +447,7 @@ GIOChannelSocket :: gio_func (GIOChannel   * channel,
   else // G_IO_IN or G_IO_OUT
   {
     const DoResult result = (cond & G_IO_IN) ? do_read () : do_write ();
-    /* I keep reading about crashes due to this check on OSX.
-     * _abort_flag is never set so this won't cause a problem.
-     * could be a bug in gcc 4.2.1.
-     */
-    /*if (_abort_flag)        _listener->on_socket_abort (this);
-    else*/ if (result == IO_ERR)   _listener->on_socket_error (this);
+    if (result == IO_ERR)   _listener->on_socket_error (this);
     else if (result == IO_READ)  set_watch_mode (READ_NOW);
     else if (result == IO_WRITE) set_watch_mode (WRITE_NOW);
   }
@@ -552,52 +493,4 @@ GIOChannelSocket :: set_watch_mode (WatchMode mode)
   }
 
   debug ("set_watch_mode " << mode << ": _tag_watch is now " << _tag_watch);
-}
-
-/***
-****  GIOChannel::SocketCreator -- create a socket in a worker thread
-***/
-
-namespace
-{
-  struct ThreadWorker : public WorkerPool::Worker,
-                        public WorkerPool::Worker::Listener
-  {
-    std::string host;
-    int port;
-    Socket::Creator::Listener * listener;
-
-    bool ok;
-    Socket * socket;
-    std::string err;
-
-    ThreadWorker (const StringView& h, int p, Socket::Creator::Listener *l):
-      host(h), port(p), listener(l), ok(false), socket(0) {}
-
-    void do_work ()
-    {
-      socket = new GIOChannelSocket ();
-      ok = socket->open (host, port, err);
-    }
-
-    /** called in main thread after do_work() is done */
-    void on_worker_done (bool cancelled UNUSED)
-    {
-      // pass results to main thread...
-      if (!err.empty())   Log :: add_err (err.c_str());
-      listener->on_socket_created (host, port, ok, socket);
-    }
-  };
-}
-
-void
-GIOChannelSocket :: Creator :: create_socket (const StringView & host,
-                                              int                port,
-                                              WorkerPool       & threadpool,
-                                              Listener         * listener)
-{
-  ensure_module_inited ();
-
-  ThreadWorker * w = new ThreadWorker (host, port, listener);
-  threadpool.push_work (w, w, true);
 }

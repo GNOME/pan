@@ -273,6 +273,15 @@ Prefs :: get_int (const StringView& key, int fallback) const
   return _ints[key];
 }
 
+int
+Prefs :: get_int_min (const StringView& key, int fallback) const
+{
+  if (!_ints.count (key))
+    _ints[key] = fallback;
+  if (_ints[key] < fallback) _ints[key] = fallback;
+  return _ints[key];
+}
+
 void
 Prefs :: set_int (const StringView& key, int value)
 {
@@ -350,4 +359,14 @@ std::string
 Prefs :: get_color_str (const StringView& key, const StringView& fallback) const
 {
   return color_to_string (get_color (key, fallback));
+}
+
+/* get string without fallback option */
+std::string
+Prefs :: get_color_str_wo_fallback (const StringView& key) const
+{
+  std::string res;
+  if (!_colors.count(key)) return res;
+  const GdkColor& col(_colors[key]);
+  return color_to_string (col);
 }

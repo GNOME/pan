@@ -21,11 +21,17 @@
 #define __Socket_h__
 
 #include <string>
+#include <config.h>
+
+#ifdef HAVE_GNUTLS
+  #include <gnutls/gnutls.h>
+#endif
 
 namespace pan
 {
   class StringView;
   class WorkerPool;
+  class Data;
 
   /**
    * Defines primitive interactions with a remote server:
@@ -83,10 +89,11 @@ namespace pan
         struct Listener {
           virtual ~Listener () {}
           virtual void on_socket_created (const StringView& host, int port, bool ok, Socket*) = 0;
+          virtual void on_socket_shutdown (const StringView& host, int port, Socket*) = 0;
         };
 
         virtual ~Creator () { }
-        virtual void create_socket (const StringView& host, int port, WorkerPool&, Listener*) = 0;
+        virtual void create_socket (Data&, const StringView& host, int port, WorkerPool&, Listener*, bool) = 0;
       };
   };
 }

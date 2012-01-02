@@ -20,7 +20,7 @@
 #include <config.h>
 extern "C" {
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include "gtk-compat.h"
 }
 #include <pan/general/debug.h>
 #include <pan/tasks/task-xover.h>
@@ -63,7 +63,9 @@ namespace
     { icon_read_unread_article, "ICON_READ_UNREAD_ARTICLE" },
     { icon_read_unread_thread, "ICON_READ_UNREAD_THREAD" },
     { icon_score, "ICON_SCORE" },
-    { icon_search_pulldown, "ICON_SEARCH_PULLDOWN" }
+    { icon_search_pulldown, "ICON_SEARCH_PULLDOWN" },
+    { icon_red_flag, "ICON_FLAGGED"},
+    { icon_get_flagged, "ICON_GET_FLAGGED" }
   };
 
   void
@@ -140,12 +142,15 @@ namespace
   void do_read_previous_thread         (GtkAction*) { pan_ui->do_read_previous_thread(); }
   void do_read_parent_article          (GtkAction*) { pan_ui->do_read_parent_article(); }
   void do_show_servers_dialog          (GtkAction*) { pan_ui->do_show_servers_dialog(); }
+  void do_show_sec_dialog              (GtkAction*) { pan_ui->do_show_sec_dialog(); }
   void do_plonk                        (GtkAction*) { pan_ui->do_plonk(); }
   void do_ignore                       (GtkAction*) { pan_ui->do_ignore(); }
   void do_watch                        (GtkAction*) { pan_ui->do_watch(); }
   void do_flag                         (GtkAction*) { pan_ui->do_flag(); }
+  void do_flag_off                     (GtkAction*) { pan_ui->do_flag_off(); }
   void do_next_flag                    (GtkAction*) { pan_ui->do_next_flag(); }
   void do_last_flag                    (GtkAction*) { pan_ui->do_last_flag(); }
+  void do_invert_selection             (GtkAction*) { pan_ui->do_invert_selection(); }
   void do_mark_all_flagged             (GtkAction*) { pan_ui->do_mark_all_flagged(); }
   void do_show_score_dialog            (GtkAction*) { pan_ui->do_show_score_dialog(); }
   void do_show_new_score_dialog        (GtkAction*) { pan_ui->do_show_new_score_dialog(); }
@@ -155,6 +160,8 @@ namespace
   void do_clear_article_cache          (GtkAction*) { pan_ui->do_clear_article_cache(); }
   void do_mark_article_read            (GtkAction*) { pan_ui->do_mark_article_read(); }
   void do_mark_article_unread          (GtkAction*) { pan_ui->do_mark_article_unread(); }
+  void do_mark_thread_read             (GtkAction*) { pan_ui->do_mark_thread_read(); }
+  void do_mark_thread_unread           (GtkAction*) { pan_ui->do_mark_thread_unread(); }
   void do_post                         (GtkAction*) { pan_ui->do_post(); }
   void do_followup_to                  (GtkAction*) { pan_ui->do_followup_to(); }
   void do_reply_to                     (GtkAction*) { pan_ui->do_reply_to(); }
@@ -230,6 +237,12 @@ namespace
     set_new_match_on_score_state (new_state);
   }
 
+  void do_toggle_rules  (GtkToggleAction * a)
+  {
+    prefs->_rules_enabled = gtk_toggle_action_get_active (a);
+    pan_ui->do_enable_toggle_rules(prefs->_rules_enabled);
+  }
+
   void do_match_only_watched_articles (GtkToggleAction * a)   { set_new_match_on_score_state (gtk_toggle_action_get_active(a) ? MATCH_WATCHED : prev_score_state); }
   void do_match_watched_articles (GtkToggleAction * a)        { set_score_state_bit_from_toggle (a, MATCH_WATCHED); }
   void do_match_high_scoring_articles (GtkToggleAction * a)   { set_score_state_bit_from_toggle (a, MATCH_HIGH_SCORING); }
@@ -249,6 +262,10 @@ namespace
 
   GtkActionEntry entries[] =
   {
+
+    // dummy
+    { "set-charset", NULL, "", NULL, NULL, NULL },
+
     { "file-menu", NULL, N_("_File"), NULL, NULL, NULL },
     { "edit-menu", NULL, N_("_Edit"), NULL, NULL, NULL },
     { "view-layout-menu", NULL, N_("_Layout"), NULL, NULL, NULL },
@@ -264,11 +281,6 @@ namespace
     { "posting-actions-menu", NULL, N_("_Post"), NULL, NULL, NULL },
     { "post-menu", NULL, N_("_Post"), NULL, NULL, NULL },
     { "help-menu", NULL, N_("_Help"), NULL, NULL, NULL },
-
-    { "set-charset", NULL,
-      N_("Set Character _Encoding..."), NULL,
-      N_("Set Character Encoding..."),
-      G_CALLBACK(do_prompt_for_charset) },
 
     { "read-selected-group", "ICON_READ_MORE",
       N_("_Read Group"), NULL,
@@ -291,6 +303,11 @@ namespace
       G_CALLBACK(do_xover_selected_groups) },
 
     { "get-new-headers-in-subscribed-groups", "ICON_GET_SUBSCRIBED",
+      N_("Get New _Headers in Subscribed Groups"), "<shift>A",
+      N_("Get New Headers in Subscribed Groups"),
+      G_CALLBACK(do_xover_subscribed_groups) },
+
+    { "update-stats-in-selected-groups", "ICON_GET_SUBSCRIBED",
       N_("Get New _Headers in Subscribed Groups"), "<shift>A",
       N_("Get New Headers in Subscribed Groups"),
       G_CALLBACK(do_xover_subscribed_groups) },
@@ -410,6 +427,14 @@ namespace
       NULL,
       G_CALLBACK(do_show_servers_dialog) },
 
+#ifdef HAVE_GNUTLS
+    { "show-sec-dialog", GTK_STOCK_DIALOG_AUTHENTICATION,
+      N_("Edit _SSL Certificates"), NULL,
+      NULL,
+      G_CALLBACK(do_show_sec_dialog) },
+#else
+    { "show-sec-dialog", NULL, NULL, NULL, NULL, NULL},
+#endif
     { "jump-to-group-tab", GTK_STOCK_JUMP_TO,
       N_("Jump to _Group Tab"), "1",
       NULL,
@@ -529,14 +554,19 @@ namespace
       NULL,
       G_CALLBACK(do_ignore) },
 
-    { "flag-thread", NULL,
-      N_("_Flag Thread"), "X",
-      N_("_Flag Thread"),
+    { "flag-thread", "ICON_FLAGGED",
+      N_("_Toggle Flag on/off for Thread"), "X",
+      N_("_Toggle Flag on/off for Thread"),
       G_CALLBACK(do_flag) },
 
-    { "mark-all-flagged", NULL,
-      N_("_Mark all flagged Threads"), "<control>X",
-      N_("_Mark all flagged Threads"),
+    { "unflag-thread", NULL,
+      N_("_Turn Flag off for Thread"), "<shift>X",
+      N_("_Turn Flag off for Thread"),
+      G_CALLBACK(do_flag_off) },
+
+    { "select-all-flagged", NULL,
+      N_("_Select all flagged Threads"), "<control>X",
+      N_("_Select all flagged Threads"),
       G_CALLBACK(do_mark_all_flagged) },
 
     { "next-flagged", NULL,
@@ -548,6 +578,11 @@ namespace
       N_("_Goto last flagged Thread"), "minus",
       N_("_Goto last flagged Thread"),
       G_CALLBACK(do_last_flag) },
+
+    { "invert-selection", NULL,
+      N_("_Invert Selection"), "<control>I",
+      N_("_Invert Selection"),
+      G_CALLBACK(do_invert_selection) },
 
     { "view-article-score", "ICON_SCORE",
       N_("Edit Article's Watch/Ignore/Score..."), "<control><shift>C",
@@ -588,6 +623,17 @@ namespace
       N_("Mark Article as _Unread"), "<control>M",
       NULL,
       G_CALLBACK(do_mark_article_unread) },
+
+    ///TODO create icons for the next two actions
+    { "mark-thread-read", "ICON_ARTICLE_READ",
+      N_("_Mark Thread as Read"), "<Shift>T",
+      NULL,
+      G_CALLBACK(do_mark_thread_read) },
+
+    { "mark-thread-unread", "ICON_ARTICLE_UNREAD",
+      N_("Mark Thread as _Unread"), "<control><Shift>T",
+      NULL,
+      G_CALLBACK(do_mark_thread_unread) },
 
     { "post", "ICON_COMPOSE_POST",
       N_("_Post to Newsgroup"), "P",
@@ -636,7 +682,7 @@ namespace
   GtkToggleActionEntry toggle_entries[] =
   {
     { "thread-headers",           NULL, N_("_Thread Headers"),                NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
-    { "wrap-article-body",        NULL, N_("_Wrap Article Body"),              "W", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
+    { "wrap-article-body",GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Article Body"),    "W", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "mute-quoted-text",         NULL, N_("Mute _Quoted Text"),               "Q", NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
     { "show-all-headers",         NULL, N_("Show All _Headers in Body Pane"),  "H", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "show-smilies-as-graphics", NULL, N_("Show _Smilies as Graphics"),      NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
@@ -666,7 +712,9 @@ namespace
     { "match-medium-scoring-articles", NULL, N_("Match Scores of 1...4999 (Me_dium)"), NULL, NULL, G_CALLBACK(do_match_medium_scoring_articles), true },
     { "match-normal-scoring-articles", NULL, N_("Match Scores of 0 (_Normal)"), NULL, NULL, G_CALLBACK(do_match_normal_scoring_articles), true },
     { "match-low-scoring-articles", NULL, N_("Match Scores of -9998...-1 (_Low)"), NULL, NULL, G_CALLBACK(do_match_low_scoring_articles), true },
-    { "match-ignored-articles", NULL, N_("Match Scores of -9999 (_Ignored)"), NULL, NULL, G_CALLBACK(do_match_ignored_articles), false }
+    { "match-ignored-articles", NULL, N_("Match Scores of -9999 (_Ignored)"), NULL, NULL, G_CALLBACK(do_match_ignored_articles), false },
+
+    { "enable-rules", NULL, N_("Enable/Disable all _Rules"), "R", NULL, G_CALLBACK(do_toggle_rules), true    }
   };
 
   const guint n_toggle_entries (G_N_ELEMENTS(toggle_entries));

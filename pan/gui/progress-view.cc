@@ -19,9 +19,10 @@
 
 #include <config.h>
 extern "C" {
-  #include <gtk/gtk.h>
+  #include "gtk-compat.h"
 }
 #include <pan/general/string-view.h>
+#include <pan/usenet-utils/mime-utils.h>
 #include "progress-view.h"
 
 using namespace pan;
@@ -94,8 +95,14 @@ ProgressView :: on_progress_status_idle (gpointer self_gpointer)
   std::string status;
   if (self->_progress)
     status = self->_progress->get_status();
-  gtk_progress_bar_set_text (GTK_PROGRESS_BAR(self->_progressbar), status.c_str());
+
+  const char* _status = iconv_inited ? __g_mime_iconv_strdup(conv,status.c_str()) : status.c_str();
+
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR(self->_progressbar), _status);
   self->_progress_status_idle_tag = 0;
+
+  if (iconv_inited) g_free((char*)_status);
+
   return false;
 }
 

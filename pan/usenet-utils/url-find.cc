@@ -33,14 +33,16 @@ namespace {
         // reserved for schemas: ;/?:@=&
         // % (hex encoding) # (fragment)
         // allowed: a-z A-Z 0-9 $-_.+!*'(),
+        // imhotep : * removed ')' from allowed characters
+        //           * added '~' & '-' to allowed characters
         regex = g_regex_new("(?:"
             "https?://|"
             "ftps?(?:://|\\.)|" //ftp:// ftp.
             "news:|nntp:|"
             "www\\.|"
-            "[[:alnum:]][[:alnum:]_\\.]*@" //email
+            "[[:alnum:]][[:alnum:]_+-\\.]*@" //email
           ")"
-          "[" "[:alnum:]$_\\-\\.!+*()',%#" ";:/?&=@" "]+" /* uri */,
+          "[" "[:alnum:]$_\\-\\.!+*()',%#~" ";:/?&=@" "]+" /* uri */,
           G_REGEX_OPTIMIZE, (GRegexMatchFlags)0, NULL);
       }
       ~fooregex()

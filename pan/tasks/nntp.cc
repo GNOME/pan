@@ -54,51 +54,6 @@ namespace
    }
 };
 
-namespace
-{
-   enum
-   {
-      AUTH_REQUIRED              = 480,
-      AUTH_NEED_MORE             = 381,
-      AUTH_ACCEPTED              = 281,
-      AUTH_REJECTED              = 482,
-
-      SERVER_READY               = 200,
-      SERVER_READY_NO_POSTING    = 201,
-      SERVER_READY_STREAMING_OK  = 203,
-
-      GOODBYE                    = 205,
-
-      GROUP_RESPONSE             = 211,
-      GROUP_NONEXISTENT          = 411,
-
-      INFORMATION_FOLLOWS        = 215,
-
-      XOVER_FOLLOWS              = 224,
-      XOVER_NO_ARTICLES          = 420,
-
-      ARTICLE_FOLLOWS            = 220,
-
-      NEWGROUPS_FOLLOWS          = 231,
-
-      ARTICLE_POSTED_OK          = 240,
-      SEND_ARTICLE_NOW           = 340,
-      NO_POSTING                 = 440,
-      POSTING_FAILED             = 441,
-
-      TOO_MANY_CONNECTIONS       = 400,
-
-      NO_GROUP_SELECTED          = 412,
-      NO_SUCH_ARTICLE_NUMBER     = 423,
-      NO_SUCH_ARTICLE            = 430,
-
-      ERROR_CMD_NOT_UNDERSTOOD   = 500,
-      ERROR_CMD_NOT_SUPPORTED    = 501,
-      NO_PERMISSION              = 502,
-      FEATURE_NOT_SUPPORTED      = 503
-   };
-}
-
 void
 NNTP :: fire_done_func (Health health, const StringView& response)
 {
@@ -124,9 +79,9 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 
    // strip off trailing \r\n
    if (line.len>=2 && line.str[line.len-2]=='\r' && line.str[line.len-1]=='\n')
-      line.truncate (line.len-2);
+     line.truncate (line.len-2);
 
-//debug ("_nntp_response_text: " << _nntp_response_text);
+//    std::cerr <<"_nntp_response_text: " << _nntp_response_text<<std::endl;
    if (_nntp_response_text)
    {
       if (line.len==1 && line.str[0]=='.') // end-of-list
@@ -218,6 +173,12 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 
       case NO_POSTING:
       case POSTING_FAILED:
+        // if we hit a dupe, we silently continue
+        if (line.strstr("435"))
+        {
+          state = CMD_DONE;
+          break;
+        }
       case GROUP_NONEXISTENT:
          state = CMD_FAIL;
          break;
@@ -283,7 +244,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    switch (state) {
       case CMD_FAIL: fire_done_func (ERR_COMMAND, line); more = false; break;
       case CMD_DONE: if (_commands.empty()) fire_done_func (OK, line); more = false; break;
-      case CMD_MORE: more = true; break; // keep listining for more on this command
+      case CMD_MORE: more = true; break; // keep listening for more on this command
       case CMD_NEXT: more = false; break; // no more responses on this command; wait for next...
       case CMD_RETRY: fire_done_func (ERR_NETWORK, line); more = false; break;
       default: abort(); break;
@@ -333,6 +294,22 @@ NNTP :: write_next_command ()
 ***/
 
 void
+NNTP :: help (Listener * l)
+{
+   _listener = l;
+   _commands.push_back ("HELP \r\n");
+   write_next_command();
+}
+
+void
+NNTP :: get_group (const Quark& group)
+{
+   if (group != _group)
+    _commands.push_back (build_command ("GROUP %s\r\n",group.c_str()));
+}
+
+
+void
 NNTP :: xover (const Quark   & group,
                uint64_t        low,
                uint64_t        high,
@@ -340,10 +317,22 @@ NNTP :: xover (const Quark   & group,
 {
    _listener = l;
 
-   if (group != _group)
-      _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
+   get_group(group);
 
    _commands.push_back (build_command ("XOVER %"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT"\r\n", low, high));
+
+   write_next_command ();
+}
+
+void
+NNTP :: xover_count_only (const Quark   & group,
+                          Listener      * l)
+{
+   _listener = l;
+
+   get_group(group);
+
+   _commands.push_back (build_command ("XOVER"));
 
    write_next_command ();
 }
@@ -371,8 +360,7 @@ NNTP :: article (const Quark     & group,
 {
    _listener = l;
 
-   if (group != _group)
-      _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
+   get_group(group);
 
    _commands.push_back (build_command ("ARTICLE %"G_GUINT64_FORMAT"\r\n", article_number));
 
@@ -386,13 +374,69 @@ NNTP :: article (const Quark     & group,
 {
    _listener = l;
 
-   if (group != _group)
-      _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
+   get_group(group);
 
    _commands.push_back (build_command ("ARTICLE %s\r\n", message_id));
 
    write_next_command ();
 }
+
+void
+NNTP :: get_headers (const Quark     & group,
+                     const char      * message_id,
+                     Listener        * l)
+{
+  _listener = l;
+
+   get_group(group);
+
+   _commands.push_back (build_command ("HEAD %s\r\n", message_id));
+
+   write_next_command ();
+}
+
+void
+NNTP :: get_headers (const Quark     & group,
+                     uint64_t          article_number,
+                     Listener        * l)
+{
+   _listener = l;
+
+   get_group(group);
+
+   _commands.push_back (build_command ("HEAD %"G_GUINT64_FORMAT"\r\n", article_number));
+
+   write_next_command ();
+}
+
+void
+NNTP :: get_body (const Quark     & group,
+                  const char      * message_id,
+                  Listener        * l)
+{
+  _listener = l;
+
+   get_group(group);
+
+   _commands.push_back (build_command ("BODY %s\r\n", message_id));
+
+   write_next_command ();
+}
+
+void
+NNTP :: get_body (const Quark     & group,
+                  uint64_t          article_number,
+                  Listener        * l)
+{
+   _listener = l;
+
+   get_group(group);
+
+   _commands.push_back (build_command ("BODY %"G_GUINT64_FORMAT"\r\n", article_number));
+
+   write_next_command ();
+}
+
 
 void
 NNTP :: group (const Quark  & group,

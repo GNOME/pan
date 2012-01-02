@@ -22,6 +22,7 @@
 
 #include <vector>
 #include <pan/data/data.h>
+#include <pan/usenet-utils/MersenneTwister.h>
 
 namespace pan
 {
@@ -38,6 +39,7 @@ namespace pan
     static void tasks_from_nzb_string (const StringView     & nzb,
                                        const StringView     & save_path,
                                        ArticleCache         & cache,
+                                       EncodeCache          & encode_cache,
                                        ArticleRead          & read,
                                        const ServerRank     & ranks,
                                        const GroupServer    & gs,
@@ -46,6 +48,7 @@ namespace pan
     static void tasks_from_nzb_file (const StringView     & filename,
                                      const StringView     & save_path,
                                      ArticleCache         & cache,
+                                     EncodeCache          & encode_cache,
                                      ArticleRead          & read,
                                      const ServerRank     & ranks,
                                      const GroupServer    & gs,
@@ -53,10 +56,14 @@ namespace pan
 
     static std::ostream&  nzb_to_xml (std::ostream             & out,
                                       const std::vector<Task*> & tasks);
-                                      
-    
+
+    static std::ostream&  upload_list_to_xml_file (std::ostream& out,
+                                                   const std::vector<Article*> & tasks);
+
     static std::ostream&  nzb_to_xml_file (std::ostream             & out,
-                                      const std::vector<Task*> & tasks);
+                                           const std::vector<Task*> & tasks);
+
+
 
   };
 }

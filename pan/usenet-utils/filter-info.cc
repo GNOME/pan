@@ -54,6 +54,7 @@ FilterInfo :: set_type_ge (Type type, unsigned long ge) {
   _type = type;
   _ge = ge;
 }
+
 void
 FilterInfo :: set_type_le (Type type, unsigned long le) {
   clear ();

@@ -39,13 +39,16 @@ namespace
 
 NNTP_Pool :: NNTP_Pool (const Quark        & server,
                         ServerInfo         & server_info,
-                        Socket::Creator    * creator):
+                        SocketCreator      * creator,
+                        CertStore          & store):
+
   _server_info (server_info),
   _server (server),
   _socket_creator (creator),
   _pending_connections (0),
   _active_count (0),
-  _time_to_allow_new_connections (0)
+  _time_to_allow_new_connections (0),
+  _certstore(store)
 {
 }
 
@@ -91,12 +94,21 @@ NNTP_Pool :: abort_tasks ()
       it->nntp->_socket->set_abort_flag (true);
 }
 
+void
+NNTP_Pool :: kill_tasks ()
+{
+  foreach (pool_items_t, _pool_items, it)
+    it->nntp->_socket->set_abort_flag (true);
+}
+
+
 NNTP*
 NNTP_Pool :: check_out ()
 {
   NNTP * nntp (0);
 
   foreach (pool_items_t, _pool_items, it) {
+    debug("pool item "<<it->is_checked_in<<" "<<it->nntp);
     if (it->is_checked_in) {
       nntp = it->nntp;
       it->is_checked_in = false;
@@ -153,11 +165,14 @@ NNTP_Pool :: check_in (NNTP * nntp, Health health)
 ***/
 
 void
-NNTP_Pool :: on_socket_created (const StringView  & host UNUSED,
+NNTP_Pool :: on_socket_created (const StringView  & host,
                                 int                 port UNUSED,
                                 bool                ok,
                                 Socket            * socket)
 {
+  std::string user, pass;
+  _server_info.get_server_auth (_server, user, pass);
+  debug("on socket created "<<host<<" "<<ok<<" "<<socket<<" "<<pass);
   if (!ok)
   {
     delete socket;
@@ -173,6 +188,7 @@ NNTP_Pool :: on_socket_created (const StringView  & host UNUSED,
     nntp->handshake (this);
   }
 }
+
 
 void
 NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response)
@@ -266,14 +282,14 @@ NNTP_Pool :: request_nntp (WorkerPool& threadpool)
 
   if (!idle && ((pending+active)<max) && new_connections_are_allowed())
   {
-    debug ("trying to create a socket");
-
     std::string address;
     int port;
-    if (_server_info.get_server_addr (_server, address, port))
+    _server_info.get_server_addr (_server, address, port);
+    if (!_certstore.in_blacklist(_server))
     {
       ++_pending_connections;
-      _socket_creator->create_socket (address, port, threadpool, this);
+      const bool ssl(_server_info.get_server_ssl_support(_server));
+      _socket_creator->create_socket (_server_info, address, port, threadpool, this, ssl);
     }
   }
 }
@@ -334,3 +350,16 @@ NNTP_Pool :: idle_upkeep ()
     item = 0;
   }
 }
+
+#ifdef HAVE_GNUTLS
+void
+NNTP_Pool:: on_verify_cert_failed(gnutls_x509_crt_t cert, std::string server, int nr)
+{
+}
+
+void
+NNTP_Pool :: on_valid_cert_added (gnutls_x509_crt_t cert, std::string server)
+{
+}
+#endif
+

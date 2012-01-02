@@ -38,6 +38,7 @@ extern "C"
 #include "log.h"
 #include "messages.h"
 #include "file-util.h"
+#include "e-util.h"
 #include "utf8-utils.h"
 #include <algorithm>
 
@@ -46,6 +47,31 @@ extern "C"
 using namespace pan;
 
 #define is_nonempty_string(a) ((a) && (*a))
+#define NL std::endl
+
+std::ostream&
+file :: print_file_info (std::ostream& os, const char* file)
+{
+  EvolutionDateMaker dm;
+  struct stat sb;
+  int ret = stat(file,&sb);
+
+  os << "File information for file "<<file<<NL;
+  if (ret)
+  {
+    os << "File not found / accessible!"<<NL;
+    return os;
+  }
+  os << "Umask : "<<sb.st_mode<<NL;
+  os << "User ID : "<< sb.st_uid<<NL;
+  os << "Group ID : "<< sb.st_gid<<NL;
+  os << "Size (Bytes) : "<<sb.st_size<<NL;
+  os << "Last accessed : "<<dm.get_date_string(sb.st_atime)<<NL;
+  os << "Last modified : "<<dm.get_date_string(sb.st_mtime)<<NL;
+  os << "Last status change : "<<dm.get_date_string(sb.st_ctime)<<NL;
+
+  return os;
+}
 
 /***
 ****
@@ -67,7 +93,7 @@ file :: get_pan_home ()
     }
   }
 
-  file :: ensure_dir_exists (pan_home);
+  ensure_dir_exists (pan_home);
   return pan_home;
 }
 
@@ -138,6 +164,7 @@ file :: file_exists (const char * filename)
 {
    return filename && *filename && g_file_test (filename, G_FILE_TEST_EXISTS);
 }
+
 
 /**
 *** Attempt to make a filename safe for use.

@@ -70,11 +70,26 @@ Task :: give_decoder (DecoderSource* s, Decoder* d)
   _decoder_to_source[d] = s;
   use_decoder (d);
 }
+
+void
+Task :: give_encoder (EncoderSource* s, Encoder* d)
+{
+  _encoder_to_source[d] = s;
+  use_encoder (d);
+}
+
 void
 Task :: use_decoder (Decoder * d UNUSED)
 {
-  abort ();
+  assert(0 && "oops, child class task.cc called!\n");
 }
+
+void
+Task :: use_encoder (Encoder * d UNUSED)
+{
+  assert(0 && "oops, child class task.cc called!\n");
+}
+
 void
 Task :: check_in (Decoder * d)
 {
@@ -84,6 +99,19 @@ Task :: check_in (Decoder * d)
   {
     DecoderSource * s (it->second);
     _decoder_to_source.erase (d);
+    s->check_in (d, this);
+  }
+}
+
+void
+Task :: check_in (Encoder * d)
+{
+  encoder_to_source_t::iterator it (_encoder_to_source.find (d));
+
+  if (it != _encoder_to_source.end())
+  {
+    EncoderSource * s (it->second);
+    _encoder_to_source.erase (d);
     s->check_in (d, this);
   }
 }

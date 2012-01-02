@@ -20,25 +20,25 @@
 #include <config.h>
 extern "C" {
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include "gtk-compat.h"
 }
 #include <pan/general/debug.h>
 #include "pad.h"
 #include "score-add-ui.h"
 #include "score-view-ui.h"
-#include "gtk_compat.h"
+#include "gtk-compat.h"
 
 using namespace pan;
 
 namespace
 {
-  void                                          
+  void
   response_cb (GtkDialog * dialog, int response, gpointer data)
   {
     if (response == GTK_RESPONSE_APPLY)
       static_cast<Data*>(data)->rescore ();
 
-    gtk_widget_destroy (GTK_WIDGET(dialog));     
+    gtk_widget_destroy (GTK_WIDGET(dialog));
   }
 
   enum
@@ -55,13 +55,13 @@ namespace
     GtkWidget * button = gtk_button_new ();
     GtkWidget * label = gtk_label_new_with_mnemonic (_("Close and Re_score"));
     gtk_label_set_mnemonic_widget (GTK_LABEL (label), GTK_WIDGET (button));
-			      
+
     GtkWidget * image = gtk_image_new_from_stock (GTK_STOCK_CLOSE, GTK_ICON_SIZE_BUTTON);
     GtkWidget * image2 = gtk_image_new_from_stock (GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
     GtkWidget * hbox = gtk_hbox_new (FALSE, 2);
 
     GtkWidget * align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-					        
+
     gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (hbox), image2, FALSE, FALSE, 0);
     gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -167,7 +167,7 @@ ScoreView :: tree_view_refresh ()
                                        COLUMN_DATA, i, // index into _items
                                        -1);
 
-    // cleanup 
+    // cleanup
     g_string_free (criteria, TRUE);
   }
 }
@@ -185,7 +185,7 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
 	                                               GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
 	                                               NULL);
   GtkWidget * button = create_rescore_button ();
-  gtk_widget_show (button); 
+  gtk_widget_show (button);
   gtk_dialog_add_action_widget (GTK_DIALOG(w), button, GTK_RESPONSE_APPLY);
   gtk_window_set_resizable (GTK_WINDOW(w), true);
   g_signal_connect (GTK_OBJECT(w), "response", G_CALLBACK(response_cb), &data);

@@ -1,13 +1,13 @@
 #ifndef __SCORE_ADD_UI_H__
 #define __SCORE_ADD_UI_H__
 
-#include <gtk/gtk.h>
+#include "gtk-compat.h"
 #include <pan/data/article.h>
 #include <pan/data/data.h>
 
 namespace pan
 {
-  /** 
+  /**
    * Dialog for creating a new entry for the Scorefile.
    * @ingroup GUI
    */

@@ -67,6 +67,20 @@ namespace
 
     return std::string (buf);
   }
+
+  std::string get_groups_str(const Article& a)
+  {
+    std::string r;
+    quarks_t groups;
+    int cnt(1);
+    foreach_const (Xref, a.xref, xit)
+    {
+      r += xit->group.to_string();
+      if (cnt != a.xref.size() && a.xref.size() != 1) r+=", ";
+      ++cnt;
+    }
+    return r;
+  }
 }
 
 TaskArticle :: TaskArticle (const ServerRank          & server_rank,
@@ -76,7 +90,9 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
                             ArticleRead               & read,
                             Progress::Listener        * listener,
                             SaveMode                    save_mode,
-                            const Quark               & save_path):
+                            const Quark               & save_path,
+                            const char                * filename,
+                            const SaveOptions         & options):
   Task (save_path.empty() ? "BODIES" : "SAVE", get_description (article, !save_path.empty())),
   _save_path (save_path),
   _server_rank (server_rank),
@@ -86,8 +102,12 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   _time_posted (article.time_posted),
   _save_mode (save_mode),
   _decoder(0),
-  _decoder_has_run (false)
+  _decoder_has_run (false),
+  _groups(get_groups_str(article)),
+  _attachment(filename),
+  _options(options)
 {
+
   cache.reserve (article.get_part_mids());
 
   if (listener != 0)
@@ -130,10 +150,15 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   // initialize our progress status...
   init_steps (all_bytes);
   set_step (all_bytes - need_bytes);
+  const char *artsub(article.subject.c_str());
   if (save_path.empty())
-    set_status (article.subject.c_str());
+    set_status (artsub);
   else
-    set_status_va (_("Saving %s"), article.subject.c_str());
+    set_status_va (_("Saving %s"), artsub);
+
+  char buf[2048];
+  g_snprintf(buf,sizeof(buf), _("Saving %s"), artsub);
+  verbose (buf);
 
   update_work ();
 }
@@ -321,8 +346,8 @@ TaskArticle :: use_decoder (Decoder* decoder)
   init_steps(100);
   _state.set_working();
   const Article::mid_sequence_t mids (_article.get_part_mids());
-  const ArticleCache :: strings_t filenames (_cache.get_filenames (mids));
-  _decoder->enqueue (this, _save_path, filenames, _save_mode);
+  ArticleCache :: strings_t filenames (_cache.get_filenames (mids));
+  _decoder->enqueue (this, _save_path, filenames, _save_mode, _options, _attachment);
   set_status_va (_("Decoding %s"), _article.subject.c_str());
   debug ("decoder thread was free, enqueued work");
 }
@@ -347,11 +372,20 @@ TaskArticle :: on_worker_done (bool cancelled)
     // now that we're back in the main thread.
 
     foreach_const(Decoder::log_t, _decoder->log_severe, it)
+    {
       Log :: add_err(it->c_str());
+      verbose (it->c_str());
+    }
     foreach_const(Decoder::log_t, _decoder->log_errors, it)
+    {
       Log :: add_err(it->c_str());
+      verbose (it->c_str());
+    }
     foreach_const(Decoder::log_t, _decoder->log_infos, it)
+    {
       Log :: add_info(it->c_str());
+      verbose (it->c_str());
+    }
 
     if (_decoder->mark_read)
       _read.mark_read(_article);

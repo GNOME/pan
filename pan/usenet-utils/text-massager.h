@@ -60,7 +60,7 @@ namespace pan
    *
    * @ingroup usenet_utils
    */
-   std::string subject_to_path (const char * subjectline, const std::string &seperator);
+   std::string subject_to_path (const char * subjectline, bool full_subj, const std::string &seperator);
 
 }
 

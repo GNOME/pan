@@ -448,12 +448,11 @@ TextMassager :: rot13_inplace (char * text)
 }
 
 std::string
-pan :: subject_to_path (const char * subjectline, const std::string &seperator)
+pan :: subject_to_path (const char * subjectline, bool full_subj, const std::string &seperator)
 {
   gchar *str1, *str2;
   const char *sep;
-  std::string val (subjectline);
-  //std::string::size_type pos;
+  std::string val;
   //stupid hack to silence the compiler
   GRegexCompileFlags cf0((GRegexCompileFlags)0);
   GRegexMatchFlags mf0((GRegexMatchFlags)0);
@@ -467,16 +466,18 @@ pan :: subject_to_path (const char * subjectline, const std::string &seperator)
     default : sep = "-"; break;
   }
 
-  // strip out newspost/Xnews-style multi-part strings
-  GRegex *mp1 =g_regex_new("\\s*(?:[Ff]ile|[Pp]ost)\\s[0-9]+\\s*(?:of|_)\\s*[0-9]+[:\\s]?", cf0, mf0, NULL);
-  str1 = g_regex_replace_literal(mp1, val.c_str(), -1, 0, " ", mf0, NULL);
-  g_regex_unref(mp1);
+  if(!full_subj)
+  {
+    // strip out newspost/Xnews-style multi-part strings
+    GRegex *mp1 =g_regex_new("\\s*(?:[Ff]ile|[Pp]ost)\\s[0-9]+\\s*(?:of|_)\\s*[0-9]+[:\\s]?", cf0, mf0, NULL);
+    str1 = g_regex_replace_literal(mp1, subjectline, -1, 0, " ", mf0, NULL);
+    g_regex_unref(mp1);
 
-  // and the rest.  the last check is for pans collapsed part count
-  GRegex *mp2 =g_regex_new("\\s*([\[(]?'?[0-9]+'?\\s*(?:of|/)\\s*'?[0-9]+'?.)|\\(/[0-9]+\\)", cf0, mf0, NULL);
-  str2 = g_regex_replace_literal(mp2, str1, -1, 0, "", mf0, NULL);
-  g_free(str1);
-  g_regex_unref(mp2);
+    // and the rest.  the last check is for pans collapsed part count
+    GRegex *mp2 =g_regex_new("\\s*([\[(]?'?[0-9]+'?\\s*(?:of|/)\\s*'?[0-9]+'?.)|\\(/[0-9]+\\)", cf0, mf0, NULL);
+    str2 = g_regex_replace_literal(mp2, str1, -1, 0, "", mf0, NULL);
+    g_free(str1);
+    g_regex_unref(mp2);
 
   // try to strip out the filename (may fail if it contains spaces)
   GRegex *fn =g_regex_new("\"[^\"]+?\" yEnc.*"    "|"
@@ -487,11 +488,14 @@ pan :: subject_to_path (const char * subjectline, const std::string &seperator)
   g_free(str2);
   g_regex_unref(fn);
 
-  // try to strip out any byte counts
-  GRegex *cnt =g_regex_new("\\[?[0-9]+\\s*(?:[Bb](ytes)?|[Kk][Bb]?)\\]?", cf0, mf0, NULL);
-  str2 = g_regex_replace_literal(cnt, str1, -1, 0, "", mf0, NULL);
-  g_free(str1);
-  g_regex_unref(cnt);
+    // try to strip out any byte counts
+    GRegex *cnt =g_regex_new("\\[?[0-9]+\\s*(?:[Bb](ytes)?|[Kk][Bb]?)\\]?", cf0, mf0, NULL);
+    str2 = g_regex_replace_literal(cnt, str1, -1, 0, "", mf0, NULL);
+    g_free(str1);
+    g_regex_unref(cnt);
+  }
+  else
+    str2 = g_strdup(subjectline);
 
   // remove any illegal / annoying characters
   GRegex *badc =g_regex_new("[\\\\/<>|*?'\"\\.\\s]+", cf0, mf0, NULL);

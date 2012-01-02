@@ -1,9 +1,12 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@
+AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @GNUTLS_CFLAGS@ @LIBGNOME_KEYRING_1_CFLAGS@
+
+AM_LDFLAGS = @LIBGNOME_KEYRING_1_LIBS@
 
 noinst_LIBRARIES = libpandata.a
 
 libpandata_a_SOURCES = \
  article-filter.cc \
+ rules-filter.cc \
  data-io.cc \
  data-impl.cc \
  groups.cc \
@@ -16,6 +19,7 @@ libpandata_a_SOURCES = \
 
 noinst_HEADERS = \
  article-filter.h \
+ rules-filter.h \
  data-impl.h \
  data-io.h \
  defgroup.h \

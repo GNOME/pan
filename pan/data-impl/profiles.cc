@@ -84,9 +84,9 @@ namespace
           mc.profile_name = *v;
       if (!mc.profile_name.empty())
         mc.profiles[mc.profile_name].clear ();
-    } 
+    }
 
-    if ((element_name == "signature_file") && !mc.profile_name.empty()) {
+    if ((element_name == "signature-file") && !mc.profile_name.empty()) {
       Profile& p (mc.profiles[mc.profile_name]);
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
         if (!strcmp(*k,"active"))
@@ -96,6 +96,15 @@ namespace
           else if (!strcmp (*v, "command")) p.sig_type = p.COMMAND;
           else p.sig_type = p.TEXT;
         }
+      }
+    }
+    if ((element_name == "gpg-signature") && !mc.profile_name.empty()) {
+      Profile& p (mc.profiles[mc.profile_name]);
+      for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
+        if (!strcmp(*k,"active"))
+          p.use_sigfile = !strcmp (*v, "true");
+        p.sig_type = p.GPGSIG;
+        p.use_gpgsig = true;
       }
     }
   }
@@ -113,9 +122,11 @@ namespace
 
     if (!mc.profile_name.empty()) {
       Profile& p (mc.profiles[mc.profile_name]);
-      if (element_name == "signature_file") p.signature_file.assign (t.str, t.len);
+      if (element_name == "signature-file") p.signature_file.assign (t.str, t.len);
+      else if (element_name == "gpg-signature") p.gpg_sig_uid.assign (t.str, t.len);
       else if (element_name == "attribution") p.attribution.assign (t.str, t.len);
       else if (element_name == "fqdn") p.fqdn.assign (t.str, t.len);
+      else if (element_name == "xface") p.xface.assign (t.str, t.len);
       else if (element_name == "username") p.username.assign (t.str, t.len);
       else if (element_name == "address") p.address.assign (t.str, t.len);
       else if (element_name == "server") p.posting_server = t;
@@ -127,7 +138,7 @@ namespace
 
   void text (GMarkupParseContext *context    UNUSED,
              const gchar         *text,
-             gsize                text_len,  
+             gsize                text_len,
              gpointer             user_data,
              GError             **error      UNUSED)
   {
@@ -186,8 +197,8 @@ void
 ProfilesImpl :: serialize (std::ostream& out) const
 {
   int depth (0);
- 
-  // xml header... 
+
+  // xml header...
   out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n";
   out << indent(depth++) << "<posting>\n";
 
@@ -198,17 +209,24 @@ ProfilesImpl :: serialize (std::ostream& out) const
     out << indent(depth) << "<username>" << escaped(it->second.username) << "</username>\n";
     out << indent(depth) << "<address>" << escaped(it->second.address) << "</address>\n";
     out << indent(depth) << "<server>" << escaped(it->second.posting_server.to_view()) << "</server>\n";
-    if (!it->second.signature_file.empty()) {
+    out << indent(depth) << "<xface>" << escaped(it->second.xface) << "</xface>\n";
+    if (!it->second.signature_file.empty() && it->second.sig_type != Profile::GPGSIG) {
       const char * type;
       switch (it->second.sig_type) {
         case Profile::FILE: type = "file"; break;
         case Profile::COMMAND: type = "command"; break;
         default: type = "text"; break;
       }
-      out << indent(depth) << "<signature_file"
+      out << indent(depth) << "<signature-file"
                            << " active=\"" << (it->second.use_sigfile ? "true" : "false") << '"'
                            << " type=\"" << type << '"'
-                           << ">" << escaped(it->second.signature_file) << "</signature_file>\n";
+                           << ">" << escaped(it->second.signature_file) << "</signature-file>\n";
+    }
+    if (it->second.use_gpgsig && !it->second.gpg_sig_uid.empty())
+    {
+      out << indent(depth) << "<gpg-signature"
+                           << " active=\"" << (it->second.use_sigfile ? "true" : "false") << '"'
+                           << ">" << escaped(it->second.gpg_sig_uid) << "</gpg-signature>\n";
     }
     if (!it->second.attribution.empty())
       out << indent(depth) << "<attribution>" << escaped(it->second.attribution) << "</attribution>\n";

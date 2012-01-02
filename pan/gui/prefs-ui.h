@@ -20,7 +20,7 @@
 #ifndef PREFS_UI_H
 #define PREFS_UI_H
 
-#include <gtk/gtk.h>
+#include "gtk-compat.h"
 #include <pan/gui/prefs.h>
 
 namespace pan
@@ -29,8 +29,8 @@ namespace pan
     public Prefs::Listener
   {
     public:
-      PrefsDialog (Prefs&, GtkWindow*);
-      ~PrefsDialog () {}
+      PrefsDialog (Prefs&, GtkWindow*) ;
+      ~PrefsDialog () { }
       Prefs& prefs () { return _prefs; }
       GtkWidget* root() { return _root; }
 

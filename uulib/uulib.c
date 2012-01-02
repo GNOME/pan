@@ -84,7 +84,7 @@
 char * uulib_id = "$Id$";
 
 #ifdef SYSTEM_WINDLL
-BOOL _export WINAPI 
+BOOL _export WINAPI
 DllEntryPoint (HINSTANCE hInstance, DWORD seginfo,
 	       LPVOID lpCmdLine)
 {
@@ -574,7 +574,7 @@ UUstrerror (int code)
  */
 
 int UUEXPORT
-UUSetMsgCallback (void *opaque, 
+UUSetMsgCallback (void *opaque,
 		  void (*func) _ANSI_ARGS_((void *, char *, int)))
 {
   uu_MsgCallback = func;
@@ -719,7 +719,7 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno)
     fileid = filename;
 
   while (!feof (datei) && !ferror (datei)) {
-    /* 
+    /*
      * Peek file, or some systems won't detect EOF
      */
     res = fgetc (datei);
@@ -727,7 +727,7 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno)
       break;
     else
       ungetc (res, datei);
-    
+
     if ((loaded = ScanPart (datei, fileid, &sr)) == NULL) {
       if (sr != UURET_NODATA && sr != UURET_OK && sr != UURET_CONT) {
 	UUkillfread (loaded);
@@ -778,7 +778,7 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno)
       if (uu_fast_scanning && sr != UURET_CONT) break;
       continue;
     }
-    
+
     if ((fload = UUPreProcessPart (loaded, &res)) == NULL) {
       /*
        * no useful data found
@@ -808,7 +808,7 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno)
 		 (loaded->end)      ? "end"   : "",
 		 codenames[loaded->uudet]);
     }
-    
+
     if ((res = UUInsertPartToList (fload))) {
       /*
        * couldn't use the data
@@ -915,7 +915,7 @@ UUDecodeFile (uulist *thefile, char *destname)
 
   /*
    * Determine the name of the target file according to the rules:
-   * 
+   *
    * IF (destname!=NULL) THEN filename=destname;
    * ELSE
    *   filename = thefile->filename
@@ -1068,7 +1068,7 @@ UUInfoFile (uulist *thefile, void *opaque,
    */
 
   if (uu_FileCallback) {
-    if ((res = (*uu_FileCallback) (uu_FileCBArg, 
+    if ((res = (*uu_FileCallback) (uu_FileCBArg,
 				   thefile->thisfile->data->sfname,
 				   uugen_fnbuffer,
 				   1)) != UURET_OK)
@@ -1085,7 +1085,7 @@ UUInfoFile (uulist *thefile, void *opaque,
   else {
     if ((inpfile = fopen (thefile->thisfile->data->sfname, "rb")) == NULL) {
       UUMessage (uulib_id, __LINE__, UUMSG_ERROR,
-		 uustring (S_NOT_OPEN_FILE), 
+		 uustring (S_NOT_OPEN_FILE),
 		 thefile->thisfile->data->sfname,
 		 strerror (uu_errno=errno));
       return UURET_IOERR;
@@ -1100,7 +1100,7 @@ UUInfoFile (uulist *thefile, void *opaque,
   fseek (inpfile, thefile->thisfile->data->startpos, SEEK_SET);
   maxpos = thefile->thisfile->data->startpos + thefile->thisfile->data->length;
 
-  while (!feof (inpfile) && 
+  while (!feof (inpfile) &&
 	 (uu_fast_scanning || ftell(inpfile) < maxpos)) {
     if (_FP_fgets (uugen_inbuffer, 511, inpfile) == NULL)
       break;
@@ -1136,7 +1136,7 @@ UUInfoFile (uulist *thefile, void *opaque,
   fclose (inpfile);
 
   if (uu_FileCallback)
-    (*uu_FileCallback) (uu_FileCBArg, 
+    (*uu_FileCallback) (uu_FileCBArg,
 			thefile->thisfile->data->sfname,
 			uugen_fnbuffer, 0);
 
@@ -1145,7 +1145,7 @@ UUInfoFile (uulist *thefile, void *opaque,
 
   return UURET_OK;
 }
-	    
+
 int UUEXPORT
 UURenameFile (uulist *thefile, char *newname)
 {
@@ -1262,10 +1262,10 @@ UUCleanUp (void)
    * clean up the malloc'ed stuff
    */
 
-  for (aiter=toallocate; aiter->ptr; aiter++) {
-    _FP_free (*(aiter->ptr));
-    *(aiter->ptr) = NULL;
-  }
+//  for (aiter=toallocate; aiter->ptr; aiter++) {
+//    _FP_free (*(aiter->ptr));
+//    *(aiter->ptr) = NULL;
+//   }
 
   return UURET_OK;
 }

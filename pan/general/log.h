@@ -39,6 +39,8 @@ namespace pan
         PAN_SEVERITY_URGENT = (1<<10)
       };
 
+
+
       /**
        * A log message specifying the message's text, severity, and time.
        * @see Log
@@ -47,8 +49,13 @@ namespace pan
       struct Entry {
         time_t date;
         Severity severity;
+        std::deque<Entry> messages;
         std::string message;
+        bool is_child;
+        Entry() : is_child(false) { }
       };
+
+      void add_entry(Entry& e, std::deque<Entry>& list);
 
       /** Interface class for objects that listen to a Log's events */
       struct Listener {
@@ -85,6 +92,9 @@ namespace pan
       static void add_err_va (const char *, ...);
       static void add_urgent (const char * s) { Log::get().add ((Severity)(PAN_SEVERITY_ERROR|PAN_SEVERITY_URGENT), s); }
       static void add_urgent_va (const char *, ...);
+      static void entry_added (const Entry& e) { Log::get().fire_entry_added(e); }
+
+      static void add_entry_list(Entry& e, std::deque<Entry>& list) { Log::get().add_entry (e, list); }
   };
 }
 

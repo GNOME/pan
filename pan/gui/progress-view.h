@@ -20,14 +20,14 @@
 #ifndef __Progress_View_h__
 #define __Progress_View_h__
 
-#include <gtk/gtk.h>
+#include "gtk-compat.h"
 #include <pan/general/progress.h>
 
 namespace pan
 {
   /**
    * GtkProgressBar representations of general::Progress objects.
-   * 
+   *
    * These are used at the bottom of Pan's main window to show
    * the status of running Task objects.
    *

@@ -25,7 +25,7 @@
 #include <iostream>
 extern "C" {
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include "gtk-compat.h"
 }
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
@@ -34,6 +34,8 @@ extern "C" {
 #include "pad.h"
 #include "pan-file-entry.h"
 #include "profiles-dialog.h"
+
+#include <pan/usenet-utils/gpg.h>
 
 using namespace pan;
 
@@ -59,6 +61,26 @@ namespace
   void on_sig_file_toggled (GtkToggleButton * tb, gpointer sensitize)
   {
     gtk_widget_set_sensitive (GTK_WIDGET(sensitize), gtk_toggle_button_get_active(tb));
+  }
+
+  void on_signature_type_changed (GtkComboBox* w, gpointer g)
+  {
+    ProfileDialog* d(static_cast<ProfileDialog*>(g));
+    g_return_if_fail(d);
+    gint row = gtk_combo_box_get_active (w);
+
+    if (row == 2) // GPG
+    {
+      gtk_widget_set_tooltip_text(d->_signature_file_combo_box,
+                                  _("Please choose your Email Address according to your PGP key's user id."));
+      gtk_widget_hide (d->_signature_file);
+
+    }
+    else
+    {
+      gtk_widget_set_has_tooltip(d->_signature_file_combo_box,false);
+      gtk_widget_show (d->_signature_file);
+    }
   }
 
   GtkWidget* make_servers_combo (const Data& data, const Quark sel)
@@ -92,6 +114,7 @@ namespace
   }
 }
 
+
 ProfileDialog :: ProfileDialog (const Data         & data,
                                 const StringView   & profile_name,
                                 const Profile      & profile,
@@ -104,6 +127,8 @@ ProfileDialog :: ProfileDialog (const Data         & data,
                                        NULL);
   gtk_dialog_set_default_response (GTK_DIALOG(_root), GTK_RESPONSE_OK);
   gtk_window_set_role (GTK_WINDOW(_root), "pan-edit-profile-dialog");
+
+  GtkWidget* hbox(0), * l(0);
 
   int row (0);
   GtkWidget *t = HIG :: workarea_create ();
@@ -121,6 +146,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     HIG :: workarea_add_row (t, &row, _("_Full Name:"), w);
     w = _address_entry = gtk_entry_new ();
     set_entry (w, profile.address);
+    gtk_widget_set_tooltip_text(w, _("Your Email Address. Note that this has to match your GPG Signature's Address to verify messages correctly."));
     HIG :: workarea_add_row (t, &row, _("_Email Address:"), w);
     w = _server_combo = make_servers_combo (data, profile.posting_server);
     HIG :: workarea_add_row (t, &row, _("_Post Articles via:"), w);
@@ -136,36 +162,64 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     w = _signature_file = pan:: file_entry_new (_("Signature File"), GTK_FILE_CHOOSER_ACTION_OPEN);
     g_signal_connect (_signature_file_check, "toggled", G_CALLBACK(on_sig_file_toggled), w);
     file_entry_set (w, profile.signature_file.c_str());
-    HIG :: workarea_add_row (t, &row, _("_Signature:"), w);
 
-    GtkListStore * store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     GtkTreeIter iter;
-    gtk_list_store_append (store, &iter);
-    gtk_list_store_set (store, &iter, 0, _("Text File"), 1, Profile::FILE, -1);
-    gtk_list_store_append (store, &iter);
-    gtk_list_store_set (store, &iter, 0, _("Text"),      1, Profile::TEXT, -1);
-    gtk_list_store_append (store, &iter);
-    gtk_list_store_set (store, &iter, 0, _("Command"),   1, Profile::COMMAND, -1);
-    w = _signature_file_combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
-    g_signal_connect (_signature_file_check, "toggled", G_CALLBACK(on_sig_file_toggled), w);
+    GtkListStore * store;
+    GtkCellRenderer * renderer;
 
-    GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
-    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, TRUE);
+    store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+    gtk_list_store_append (store, &iter);
+    gtk_list_store_set (store, &iter, 0, _("Text File"),    1, Profile::FILE, -1);
+    gtk_list_store_append (store, &iter);
+    gtk_list_store_set (store, &iter, 0, _("Text"),         1, Profile::TEXT, -1);
+    gtk_list_store_append (store, &iter);
+    gtk_list_store_set (store, &iter, 0, _("PGP Signature"),1, Profile::GPGSIG, -1);
+    gtk_list_store_append (store, &iter);
+    gtk_list_store_set (store, &iter, 0, _("Command"),      1, Profile::COMMAND, -1);
+    w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
+
+    hbox = gtk_hbox_new(FALSE, 3);
+    l = gtk_label_new(_("Signature Type : "));
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
+    gtk_box_pack_start(GTK_BOX(hbox), l, false, false, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), w, true, true, 0);
+    _signature_file_combo = hbox;
+    _signature_file_combo_box = w;
+
+    g_signal_connect (w, "changed", G_CALLBACK(on_signature_type_changed), this);
+
+    renderer = gtk_cell_renderer_text_new ();
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
     gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
 
-    int active = 0;
-    if (profile.sig_type == profile.TEXT) active = 1;
-    if (profile.sig_type == profile.COMMAND) active = 2;
-    gtk_combo_box_set_active (GTK_COMBO_BOX(w), active);
-    HIG :: workarea_add_row (t, &row, _("Signature _Type:"), w);
+    int active = ROW_FILE;
+    if (profile.sig_type == profile.TEXT) active = ROW_TEXT;
+    if (profile.sig_type == profile.GPGSIG) active = ROW_GPGSIG;
+    if (profile.sig_type == profile.COMMAND) active = ROW_COMMAND;
 
+    gtk_combo_box_set_active (GTK_COMBO_BOX(w), active);
+    GtkWidget* vbox = gtk_vbox_new(TRUE, 3);
+    gtk_box_pack_start(GTK_BOX(vbox), _signature_file_combo, false, false, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), _signature_file, false, false, 0);
+    HIG :: workarea_add_row (t, &row, "",vbox);
+
+  HIG :: workarea_add_section_divider (t, &row);
+  HIG :: workarea_add_section_title (t, &row, _("X-Face (Avatar)"));
+    w = _xface_entry = gtk_entry_new ();
+    set_entry (w, profile.xface);
+    gtk_widget_set_tooltip_markup (w, _("You can add an avatar icon to your postings with a unique X-Face code. \n"
+                                        "Add the code without the trailing <b>\"X-Face:\"</b> \n if it was generated "
+                                        "by a helper program (for example : http://www.dairiki.org/xface/xface.php)."));
+    HIG :: workarea_add_row (t, &row, _("_X-Face:"), w, NULL);
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Optional Information"));
     HIG :: workarea_add_section_spacer (t, row, 3);
 
     w = _msgid_fqdn_entry = gtk_entry_new ();
     set_entry (w, profile.fqdn);
-    gtk_widget_set_tooltip_text (w, _("When posting to Usenet, your article's Message-ID contains a domain name.  You can set a custom domain name here, or leave it blank to let Pan use the domain name from your email address."));
+    gtk_widget_set_tooltip_text (w, _("When posting to Usenet, your article's Message-ID contains a domain name.  \n"
+                                      "You can set a custom domain name here, or leave it blank to let Pan use the "
+                                      "domain name from your email address."));
     HIG :: workarea_add_row (t, &row, _("Message-ID _Domain Name:"), w, NULL);
 
     w = _attribution_entry = gtk_entry_new ();
@@ -194,7 +248,8 @@ ProfileDialog :: ProfileDialog (const Data         & data,
       s += it->first + ": " + it->second + "\n";
     gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)), s.c_str(), s.size());
     GtkWidget * eventbox = gtk_event_box_new ();
-    gtk_widget_set_tooltip_text (eventbox, _("Extra headers to be included in your posts, such as\nReply-To: \"Your Name\" <yourname@somewhere.com>\nOrganization: Your Organization"));
+    gtk_widget_set_tooltip_text (eventbox, _("Extra headers to be included in your posts, such as\nReply-To: \"Your Name\""
+                                             "<yourname@somewhere.com>\nOrganization: Your Organization\n"));
     GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),
                                          GTK_SHADOW_IN);
@@ -205,8 +260,9 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     gtk_container_add (GTK_CONTAINER(eventbox), scrolled_window);
     HIG :: workarea_add_row (t, &row, _("E_xtra Headers:"), eventbox, w);
 
-  on_sig_file_toggled (GTK_TOGGLE_BUTTON(_signature_file_check), _signature_file);
-  on_sig_file_toggled (GTK_TOGGLE_BUTTON(_signature_file_check), _signature_file_combo);
+//  on_sig_file_toggled (GTK_TOGGLE_BUTTON(_signature_file_check), _signature_file);
+//  on_sig_file_toggled (GTK_TOGGLE_BUTTON(_signature_file_check), _signature_file_combo_box);
+
   gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(_root))), t, true, true, 0);
   gtk_widget_show_all (t);
 
@@ -214,6 +270,8 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     gtk_window_set_transient_for (GTK_WINDOW(_root), parent);
     gtk_window_set_position (GTK_WINDOW(_root), GTK_WIN_POS_CENTER_ON_PARENT);
   }
+
+  on_signature_type_changed(GTK_COMBO_BOX(_signature_file_combo_box), this);
 }
 
 ProfileDialog :: ~ProfileDialog ()
@@ -227,7 +285,8 @@ ProfileDialog :: run_until_valid_or_cancel (ProfileDialog& pd)
   {
     const int response (gtk_dialog_run (GTK_DIALOG(pd.root())));
 
-    if (response == GTK_RESPONSE_CANCEL)
+    /* abort profile creation on cancel and closing of the window */
+    if (response == GTK_RESPONSE_CANCEL || response == GTK_RESPONSE_DELETE_EVENT)
       return false;
 
     std::string name;
@@ -260,18 +319,24 @@ ProfileDialog :: get_profile (std::string& profile_name, Profile& profile)
   from_entry (_username_entry, profile.username);
   from_entry (_address_entry, profile.address);
   from_entry (_msgid_fqdn_entry, profile.fqdn);
+  from_entry (_xface_entry, profile.xface);
   from_entry (_attribution_entry, profile.attribution);
 
   profile.use_sigfile = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(_signature_file_check));
-  from_entry (file_entry_gtk_entry(_signature_file), profile.signature_file);
 
   int type;
   GtkTreeIter iter;
-  GtkComboBox * combo = GTK_COMBO_BOX (_signature_file_combo);
+  GtkComboBox * combo = GTK_COMBO_BOX (_signature_file_combo_box);
   gtk_combo_box_get_active_iter (combo, &iter);
   GtkTreeModel * model (gtk_combo_box_get_model (combo));
   gtk_tree_model_get (model, &iter, 1, &type, -1);
   profile.sig_type = type;
+
+  profile.use_gpgsig = (type == profile.GPGSIG);
+  if (!profile.use_gpgsig)
+    from_entry (file_entry_gtk_entry(_signature_file), profile.signature_file);
+
+  profile.gpg_sig_uid = profile.address;
 
   char * pch;
   combo = GTK_COMBO_BOX (_server_combo);

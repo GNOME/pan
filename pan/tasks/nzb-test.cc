@@ -4,6 +4,7 @@
 #include <pan/general/string-view.h>
 #include <pan/general/test.h>
 #include <pan/data/article-cache.h>
+#include <pan/data/encode-cache.h>
 #include "nzb.h"
 #include "task-article.h"
 
@@ -62,10 +63,11 @@ int main ()
   MyGroupServer gs (gmap);
 
   ArticleCache cache ("/tmp");
+  EncodeCache e_cache ("/tmp");
   MyArticleRead read;
   StringView v (test_1);
   std::vector<Task*> tasks;
-  NZB :: tasks_from_nzb_string (v, StringView("/tmp"), cache, read, ranks, gs, tasks);
+  NZB :: tasks_from_nzb_string (v, StringView("/tmp"), cache, e_cache, read, ranks, gs, tasks);
   check (tasks.size() == 1)
   const Article a (dynamic_cast<TaskArticle*>(tasks[0])->get_article());
   check (a.author == "Joe Bloggs <bloggs@nowhere.example>")

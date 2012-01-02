@@ -6,1876 +6,1913 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan 0.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-18 10:27-0500\n"
+"POT-Creation-Date: 2011-12-08 11:23+0100\n"
 "PO-Revision-Date: 2002-04-29 11:43+0800\n"
 "Last-Translator: Gediminas Paulauskas <menesis@delfi.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
+"Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pan.desktop.in.h:1
+#: ../pan.desktop.in.h:1
 #, fuzzy
 msgid "Pan Newsreader"
 msgstr "Pimp Ass Naujienų skaityklė"
 
-#: pan.desktop.in.h:2
+#: ../pan.desktop.in.h:2
 msgid "Read News from Usenet"
 msgstr ""
 
-#: pan/data-impl/data-impl.cc:82
+#. load_group_descriptions (*_data_io);
+#: ../pan/data-impl/data-impl.cc:107
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr ""
 
-#: pan/data-impl/data-io.cc:220 pan/data-impl/data-io.cc:241
-#: pan/data/article-cache.cc:236 pan/data/article-cache.cc:246
-#: pan/gui/post-ui.cc:1261
+#: ../pan/data-impl/data-impl.cc:138
+msgid "Pan newsreader server passwords"
+msgstr ""
+
+#: ../pan/data-impl/data-io.cc:193 ../pan/data-impl/data-io.cc:217
+#: ../pan/data/article-cache.cc:236 ../pan/data/article-cache.cc:247
+#: ../pan/gui/post-ui.cc:1619
 #, fuzzy, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Negaliu nurodyti grupės: %s"
 
-#: pan/data-impl/groups.cc:92
+#: ../pan/data-impl/groups.cc:94
 #, fuzzy, c-format
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "Prisijungti dėl serverio „%s“?"
 
-#: pan/data-impl/headers.cc:551
+#: ../pan/data-impl/headers.cc:606
 #, fuzzy, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr "Ištrinti %d laiškai iš grupės %s"
 
-#: pan/data-impl/headers.cc:558
+#: ../pan/data-impl/headers.cc:613
 #, fuzzy, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
 "Are you running an old version of Pan by accident?"
 msgstr "Nepalaikoma duomenų versija %s antraštėse: %d"
 
-#: pan/data-impl/headers.cc:573
+#: ../pan/data-impl/headers.cc:628
 #, fuzzy, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr "Išsaugoti %d laiškai per %.1f sekundes (%.0f laiškų/s)"
 
-#: pan/data-impl/headers.cc:797
+#: ../pan/data-impl/headers.cc:857
 #, fuzzy, c-format
-msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgid ""
+"Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
 msgstr "Išsaugoti %d laiškai per %.1f sekundes (%.0f laiškų/s)"
 
-#: pan/data-impl/headers.cc:1089
+#: ../pan/data-impl/headers.cc:1172
 #, fuzzy, c-format
 msgid "Added %lu articles to %s."
 msgstr "Ištrinti %d laiškai iš grupės %s"
 
-#: pan/data-impl/profiles.cc:173
-#, fuzzy, c-format
-msgid "Error reading \"%s\": %s"
-msgstr "Klaida skaitant iš lizdo."
-
-#: pan/data-impl/server.cc:296
-#, c-format
-msgid "Error loading newsserver information: %s"
-msgstr ""
-
-#: pan/data/article-cache.cc:148
-#, fuzzy, c-format
-msgid "Error opening directory: \"%s\": %s"
-msgstr "Klaida skaitant iš lizdo."
-
-#: pan/data/article-cache.cc:364 pan/general/line-reader.cc:24
-#, fuzzy, c-format
-msgid "Error opening file \"%s\" %s"
-msgstr "Klaida skaitant iš lizdo."
-
-#: pan/data/article-cache.cc:395 pan/gui/post-ui.cc:1028
+#: ../pan/data-impl/profiles.cc:174 ../pan/data-impl/server.cc:407
+#: ../pan/data/article-cache.cc:391 ../pan/general/file-util.cc:298
+#: ../pan/gui/post-ui.cc:625 ../pan/gui/task-pane.cc:681
 #, fuzzy, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Klaida skaitant iš lizdo."
 
-#: pan/data/filter-info.cc:152
-#, fuzzy
-msgid "article doesn't have attachments"
-msgstr "laiške yra %s dvejetainių priedų"
-
-#: pan/data/filter-info.cc:156
-#, fuzzy
-msgid "the article has attachments"
-msgstr "laiške yra %s dvejetainių priedų"
-
-#: pan/data/filter-info.cc:160
-#, fuzzy
-msgid "the article isn't cached locally"
-msgstr "Laiškas y_ra pažymėtas"
-
-#: pan/data/filter-info.cc:164
-#, fuzzy
-msgid "the article is cached locally"
-msgstr "Laiškas y_ra pažymėtas"
-
-#: pan/data/filter-info.cc:168
-#, fuzzy
-msgid "the article wasn't posted by you"
-msgstr "Laiškas _buvo paskelbtas prieš daugiau nei"
-
-#: pan/data/filter-info.cc:172
-#, fuzzy
-msgid "the article was posted by you"
-msgstr "Laiškas _buvo paskelbtas prieš daugiau nei"
-
-#: pan/data/filter-info.cc:176
-#, fuzzy
-msgid "the article has been read"
-msgstr "La_iške yra"
-
-#: pan/data/filter-info.cc:180
-#, fuzzy
-msgid "the article hasn't been read"
-msgstr "La_iške yra"
-
-#: pan/data/filter-info.cc:184
-#, fuzzy, c-format
-msgid "the article is less than %ld bytes long"
-msgstr "laiškas yra daugiau nei %d dienų senumo"
-
-#: pan/data/filter-info.cc:189
-#, fuzzy, c-format
-msgid "the article is at least %ld bytes long"
-msgstr "laiškas yra daugiau nei %d dienų senumo"
-
-#: pan/data/filter-info.cc:194
-#, fuzzy, c-format
-msgid "the article is less than %ld lines long"
-msgstr "laiškas yra daugiau nei %d dienų senumo"
-
-#: pan/data/filter-info.cc:199
-#, fuzzy, c-format
-msgid "the article is at least %ld lines long"
-msgstr "laiškas yra daugiau nei %d dienų senumo"
-
-#: pan/data/filter-info.cc:204
-#, fuzzy, c-format
-msgid "the article is less than %ld days old"
-msgstr "laiškas yra daugiau nei %d dienų senumo"
-
-#: pan/data/filter-info.cc:209
-#, fuzzy, c-format
-msgid "the article is at least %ld days old"
-msgstr "laiškas yra daugiau nei %d dienų senumo"
-
-#: pan/data/filter-info.cc:214
-#, fuzzy, c-format
-msgid "the article was posted to less than %ld groups"
-msgstr "laiškas buvo paskelbtas daugiau nei %d grupėse"
-
-#: pan/data/filter-info.cc:219
-#, fuzzy, c-format
-msgid "the article was posted to at least %ld groups"
-msgstr "laiškas buvo paskelbtas daugiau nei %d grupėse"
-
-#: pan/data/filter-info.cc:224
-#, fuzzy, c-format
-msgid "the article's score is less than %ld"
-msgstr "Laiške yra _daugiau nei"
-
-#: pan/data/filter-info.cc:229
-#, fuzzy, c-format
-msgid "the article's score is %ld or higher"
-msgstr "Laiške yra _daugiau nei"
-
-#: pan/data/filter-info.cc:238 pan/data/filter-info.cc:248
-#, fuzzy, c-format
-msgid "%s doesn't contain \"%s\""
-msgstr "%s neturi %s \"%s\""
-
-#: pan/data/filter-info.cc:239 pan/data/filter-info.cc:249
-#, fuzzy, c-format
-msgid "%s isn't \"%s\""
-msgstr "%s turi %s \"%s\""
-
-#: pan/data/filter-info.cc:240 pan/data/filter-info.cc:250
-#, fuzzy, c-format
-msgid "%s doesn't begin with \"%s\""
-msgstr "%s neturi %s \"%s\""
-
-#: pan/data/filter-info.cc:241 pan/data/filter-info.cc:251
-#, fuzzy, c-format
-msgid "%s doesn't end with \"%s\""
-msgstr "%s neturi %s \"%s\""
-
-#: pan/data/filter-info.cc:242 pan/data/filter-info.cc:252
-#, fuzzy, c-format
-msgid "%s doesn't match the regex \"%s\""
-msgstr "%s neturi %s \"%s\""
-
-#: pan/data/filter-info.cc:264
-#, fuzzy, c-format
-msgid "%s contains \"%s\""
-msgstr "%s turi %s \"%s\""
-
-#: pan/data/filter-info.cc:265
-#, fuzzy, c-format
-msgid "%s is \"%s\""
-msgstr "%s turi %s \"%s\""
-
-#: pan/data/filter-info.cc:266
-#, fuzzy, c-format
-msgid "%s begins with \"%s\""
-msgstr "%s turi %s \"%s\""
-
-#: pan/data/filter-info.cc:267
-#, fuzzy, c-format
-msgid "%s ends with \"%s\""
-msgstr "%s turi %s \"%s\""
-
-#: pan/data/filter-info.cc:268
-#, fuzzy, c-format
-msgid "%s matches the regex \"%s\""
-msgstr "laiškas yra pažymėtas %s"
-
-#: pan/data/filter-info.cc:274
-msgid "Any of these tests fail:"
-msgstr ""
-
-#: pan/data/filter-info.cc:281
-msgid "All of these tests pass:"
-msgstr ""
-
-#: pan/data/filter-info.cc:288
-msgid "None of these tests pass:"
-msgstr ""
-
-#: pan/data/filter-info.cc:295
-msgid "Any of these tests pass:"
-msgstr ""
-
-#: pan/data/scorefile.cc:299
+#: ../pan/data-impl/server.cc:225
 #, c-format
-msgid ""
-"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
-"'Expires: DD-MM-YYYY'."
+msgid "There seems to be no Password set for Server %s."
 msgstr ""
 
-#: pan/data/scorefile.cc:302
-#, c-format
-msgid "Expired old score from %*.*s, line %d"
+#: ../pan/data-impl/server.cc:229
+msgid "The Gnome keyring denied access to the Passwords."
 msgstr ""
 
-#: pan/data/scorefile.cc:373
-#, c-format
-msgid "Error reading score in %*.*s, line %d: unexpected line."
-msgstr ""
+#: ../pan/data-impl/xover.cc:239
+#, fuzzy, c-format
+msgid "Error reading from %s: unknown group \"%s\""
+msgstr "Klaida skaitant iš lizdo."
 
-#: pan/data/scorefile.cc:421
-#, c-format
-msgid "Read %lu scoring rules in %lu sections from \"%s\""
-msgstr ""
+#: ../pan/data/article-cache.cc:148
+#, fuzzy, c-format
+msgid "Error opening directory: \"%s\": %s"
+msgstr "Klaida skaitant iš lizdo."
+
+#: ../pan/data/article-cache.cc:360
+#, fuzzy, c-format
+msgid "Error opening file \"%s\" %s"
+msgstr "Klaida skaitant iš lizdo."
 
 #. build the locale strings
-#: pan/general/e-util.cc:213
+#: ../pan/general/e-util.cc:213
 msgid "%l:%M %p"
 msgstr ""
 
-#: pan/general/e-util.cc:214
+#: ../pan/general/e-util.cc:214
 msgid "Today %l:%M %p"
 msgstr ""
 
-#: pan/general/e-util.cc:215
+#: ../pan/general/e-util.cc:215
 msgid "%a %l:%M %p"
 msgstr ""
 
-#: pan/general/e-util.cc:216
+#: ../pan/general/e-util.cc:216
 msgid "%b %d %l:%M %p"
 msgstr ""
 
-#: pan/general/e-util.cc:217
+#: ../pan/general/e-util.cc:217
 msgid "%b %d %Y"
 msgstr ""
 
-#: pan/general/e-util.cc:242
+#: ../pan/general/e-util.cc:242
 msgid "?"
 msgstr "?"
 
-#: pan/general/file-util.cc:139
-#, fuzzy, c-format
-msgid "Creating directory \"%s\""
-msgstr "Nepavyko sukurti katalogo „%s“: %s"
-
-#: pan/general/file-util.cc:142
-#, fuzzy, c-format
-msgid "Couldn't create directory \"%s\": %s"
-msgstr "Nepavyko sukurti katalogo „%s“: %s"
-
-#: pan/general/text-match.cc:210
-msgid ""
-"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
-"fail."
-msgstr ""
-
-#: pan/general/text-match.cc:221
-#, c-format
-msgid "Can't use regular expression \"%s\": %s at position %d"
-msgstr ""
-
-#: pan/general/text-match.cc:229
+#: ../pan/general/text-match.cc:193
 #, fuzzy, c-format
 msgid "Can't use regular expression \"%s\": %s"
 msgstr "Nepavyko sukurti katalogo „%s“: %s"
 
-#: pan/gui/actions.cc:258 pan/gui/post-ui.cc:238
+#: ../pan/general/utf8-utils.cc:213
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgstr ""
+
+#: ../pan/gui/actions.cc:265 ../pan/gui/post-ui.cc:443
 #, fuzzy
 msgid "_File"
 msgstr "Nepavyko"
 
-#: pan/gui/actions.cc:259 pan/gui/post-ui.cc:239
+#: ../pan/gui/actions.cc:266 ../pan/gui/post-ui.cc:444
 msgid "_Edit"
 msgstr "_Keisti"
 
-#: pan/gui/actions.cc:260 pan/gui/prefs-ui.cc:460
+#: ../pan/gui/actions.cc:267 ../pan/gui/prefs-ui.cc:645
 #, fuzzy
 msgid "_Layout"
 msgstr "Išdėstymas"
 
-#: pan/gui/actions.cc:261
+#: ../pan/gui/actions.cc:268
 #, fuzzy
 msgid "_Group Pane"
 msgstr "Grupių sąrašo skydelis"
 
-#: pan/gui/actions.cc:262
+#: ../pan/gui/actions.cc:269
 #, fuzzy
 msgid "_Header Pane"
 msgstr "Gijų skydelis"
 
-#: pan/gui/actions.cc:263
+#: ../pan/gui/actions.cc:270
 msgid "_Body Pane"
 msgstr ""
 
-#: pan/gui/actions.cc:264
+#: ../pan/gui/actions.cc:271
 #, fuzzy
 msgid "_View"
 msgstr "_Rodinys"
 
-#: pan/gui/actions.cc:265
-msgid "Character _Encoding"
-msgstr ""
-
-#: pan/gui/actions.cc:266
+#: ../pan/gui/actions.cc:272
 #, fuzzy
 msgid "Filte_r"
 msgstr "Filtras"
 
-#: pan/gui/actions.cc:267
+#: ../pan/gui/actions.cc:273
 #, fuzzy
 msgid "_Go"
 msgstr "_Grupė"
 
-#: pan/gui/actions.cc:268
+#: ../pan/gui/actions.cc:274 ../pan/gui/prefs-ui.cc:671
 #, fuzzy
 msgid "_Actions"
 msgstr "Veiksmai"
 
-#: pan/gui/actions.cc:269
+#: ../pan/gui/actions.cc:275
 #, fuzzy
 msgid "_Articles"
 msgstr "Laiškai"
 
-#: pan/gui/actions.cc:270
+#: ../pan/gui/actions.cc:276
 #, fuzzy
-msgid "_Groups"
+msgid "G_roups"
 msgstr "Grupės"
 
-#: pan/gui/actions.cc:271 pan/gui/actions.cc:272
+#: ../pan/gui/actions.cc:277 ../pan/gui/actions.cc:278
 #, fuzzy
 msgid "_Post"
 msgstr "_Rašymas"
 
-#: pan/gui/actions.cc:273 pan/gui/save-ui.cc:202
+#: ../pan/gui/actions.cc:279
 msgid "_Help"
 msgstr ""
 
-#: pan/gui/actions.cc:274
+#: ../pan/gui/actions.cc:282 ../pan/gui/post-ui.cc:450
+msgid "Set Character _Encoding..."
+msgstr ""
+
+#: ../pan/gui/actions.cc:283
+msgid "Set Character Encoding..."
+msgstr ""
+
+#: ../pan/gui/actions.cc:287
 #, fuzzy
 msgid "_Read Group"
 msgstr "Įkeliamos grupės"
 
-#: pan/gui/actions.cc:274
+#: ../pan/gui/actions.cc:288
 #, fuzzy
-msgid "Read Selected Group"
-msgstr "Pažymi grupę"
+msgid "Read Group"
+msgstr "Įkeliamos grupės"
 
-#: pan/gui/actions.cc:275
+#: ../pan/gui/actions.cc:292
 #, fuzzy
-msgid "_Mark Group _Read"
-msgstr "Pažymėti skaitytais"
+msgid "_Mark Selected Groups Read"
+msgstr "Pažymėtą grupę pažymėti skaityta"
 
-#: pan/gui/actions.cc:275
+#: ../pan/gui/actions.cc:293
 #, fuzzy
 msgid "Mark Selected Groups Read"
 msgstr "Pažymėtą grupę pažymėti skaityta"
 
-#: pan/gui/actions.cc:276
+#: ../pan/gui/actions.cc:297
 #, fuzzy
-msgid "_Delete Group's Articles"
+msgid "_Delete Selected Groups' Articles"
 msgstr "Ištrinti senus laiškus"
 
-#: pan/gui/actions.cc:276
+#: ../pan/gui/actions.cc:298
 #, fuzzy
 msgid "Delete Selected Groups' Articles"
 msgstr "Ištrinti senus laiškus"
 
-#: pan/gui/actions.cc:277
+#: ../pan/gui/actions.cc:302
 #, fuzzy
 msgid "Get New _Headers in Selected Groups"
 msgstr "Gauti visas antraštes iš pažymėtų grupių"
 
-#: pan/gui/actions.cc:277
+#: ../pan/gui/actions.cc:303
 #, fuzzy
-msgid "Get New Headers for Selected Groups"
-msgstr "Gauti naujas antraštes ir tekstus pažymėtose grupėse"
+msgid "Get New Headers in Selected Groups"
+msgstr "Gauti visas antraštes iš pažymėtų grupių"
 
-#: pan/gui/actions.cc:278
+#: ../pan/gui/actions.cc:307 ../pan/gui/actions.cc:312
 #, fuzzy
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "Gauti naujas antraštes ir tekstus iš pažymėtų grupių"
 
-#: pan/gui/actions.cc:278
+#: ../pan/gui/actions.cc:308 ../pan/gui/actions.cc:313
 #, fuzzy
-msgid "Get New Headers for Subscribed Groups"
+msgid "Get New Headers in Subscribed Groups"
 msgstr "Gauti naujas antraštes ir tekstus iš pažymėtų grupių"
 
-#: pan/gui/actions.cc:279
+#: ../pan/gui/actions.cc:317
 #, fuzzy
 msgid "Get _Headers..."
 msgstr "Parsiųsti naujas antraštes"
 
-#: pan/gui/actions.cc:279
+#: ../pan/gui/actions.cc:318
 #, fuzzy
-msgid "Get Headers from Server"
-msgstr "Mėginti antraštes iš pažymėtų grupių"
+msgid "Get Headers..."
+msgstr "Parsiųsti naujas antraštes"
 
-#: pan/gui/actions.cc:280
+#: ../pan/gui/actions.cc:322 ../pan/gui/actions.cc:323
 #, fuzzy
 msgid "Refresh Group List"
 msgstr "Pervadinti grupę „%s“"
 
-#: pan/gui/actions.cc:280
-#, fuzzy
-msgid "Get a new Group list from the Server"
-msgstr "Mėginti antraštes iš pažymėtų grupių"
-
-#: pan/gui/actions.cc:281
+#: ../pan/gui/actions.cc:327
 #, fuzzy
 msgid "_Subscribe"
 msgstr "Užsisakyti"
 
-#: pan/gui/actions.cc:281
+#: ../pan/gui/actions.cc:328
 #, fuzzy
-msgid "Subscribe to Selected Groups"
-msgstr "Užsisakyti pažymėtą grupę (es)"
+msgid "Subscribe"
+msgstr "Užsisakyti"
 
-#: pan/gui/actions.cc:282
+#: ../pan/gui/actions.cc:332
 #, fuzzy
 msgid "_Unsubscribe"
 msgstr "Atsisakyti"
 
-#: pan/gui/actions.cc:282
+#: ../pan/gui/actions.cc:333
 #, fuzzy
-msgid "Unsubscribe from Selected Groups"
-msgstr "Atsisakyti pažymėtos grupės (ių)"
+msgid "Unsubscribe"
+msgstr "Atsisakyti"
 
-#: pan/gui/actions.cc:284
+#: ../pan/gui/actions.cc:337
 #, fuzzy
 msgid "_Save Articles..."
 msgstr "Iš_saugoti laišką kaip..."
 
-#: pan/gui/actions.cc:284
+#: ../pan/gui/actions.cc:338
 #, fuzzy
-msgid "Save Selected Articles..."
-msgstr "Pažymėti laiškus vėliavėlėmis"
+msgid "Save Articles..."
+msgstr "Iš_saugoti laišką kaip..."
 
-#: pan/gui/actions.cc:286
+#: ../pan/gui/actions.cc:342
+#, fuzzy
+msgid "Save Articles from this _NZB..."
+msgstr "Iš_saugoti laišką kaip..."
+
+#: ../pan/gui/actions.cc:343
+#, fuzzy
+msgid "Save Articles from this NZB"
+msgstr "Išsaugoti priedą kaip"
+
+#: ../pan/gui/actions.cc:347
+#, fuzzy
+msgid "Save Articles to an NZB _File..."
+msgstr "Iš_saugoti laišką kaip..."
+
+#: ../pan/gui/actions.cc:348
+#, fuzzy
+msgid "Save Articles to an NZB File"
+msgstr "Išsaugoti šį logą į bylą."
+
+#: ../pan/gui/actions.cc:357
 msgid "_Import NZB Files..."
 msgstr ""
 
-#: pan/gui/actions.cc:287
+#: ../pan/gui/actions.cc:362
 #, fuzzy
 msgid "_Cancel Last Task"
 msgstr "Nutraukti pažymėtas užduotis"
 
-#: pan/gui/actions.cc:287
+#: ../pan/gui/actions.cc:367
 #, fuzzy
-msgid "Cancel Last Task"
-msgstr "Nutraukti pažymėtas užduotis"
-
-#: pan/gui/actions.cc:288
-#, fuzzy
-msgid "_Task Manager..."
+msgid "_Task Manager"
 msgstr "_Užduočių tvarkyklė"
 
-#: pan/gui/actions.cc:289
-msgid "_Event Log..."
-msgstr ""
+#: ../pan/gui/actions.cc:372
+#, fuzzy
+msgid "_Event Log"
+msgstr "Atidaryti Užduočių tvarkyklę"
 
-#: pan/gui/actions.cc:290
+#: ../pan/gui/actions.cc:377
 #, fuzzy
 msgid "_Quit"
 msgstr "_Keisti"
 
-#: pan/gui/actions.cc:292
+#: ../pan/gui/actions.cc:382
 #, fuzzy
 msgid "Select _All Articles"
 msgstr "Pažymėtus laiškus"
 
-#: pan/gui/actions.cc:293
+#: ../pan/gui/actions.cc:387
 #, fuzzy
 msgid "_Deselect All Articles"
 msgstr "Pažymėti visus laiškus"
 
-#: pan/gui/actions.cc:294
+#: ../pan/gui/actions.cc:392
 msgid "Add Su_bthreads to Selection"
 msgstr ""
 
-#: pan/gui/actions.cc:295
+#: ../pan/gui/actions.cc:397
 msgid "Add _Threads to Selection"
 msgstr ""
 
-#: pan/gui/actions.cc:296
-msgid "Add _Similar Artilces to Selection"
+#: ../pan/gui/actions.cc:402
+msgid "Add _Similar Articles to Selection"
 msgstr ""
 
-#: pan/gui/actions.cc:297
+#: ../pan/gui/actions.cc:407
 #, fuzzy
 msgid "Select Article _Body"
 msgstr "Taisyti pažymėtą laišką"
 
-#: pan/gui/actions.cc:298
+#: ../pan/gui/actions.cc:412
 #, fuzzy
-msgid "Edit _Preferences..."
+msgid "Edit _Preferences"
 msgstr "Pan: Nuostatos"
 
-#: pan/gui/actions.cc:299
+#: ../pan/gui/actions.cc:417
 #, fuzzy
-msgid "Edit _Group Preferences..."
+msgid "Edit Selected _Group's Preferences"
 msgstr "Pan: Nuostatos"
 
-#: pan/gui/actions.cc:300
+#: ../pan/gui/actions.cc:422 ../pan/gui/post-ui.cc:459
 #, fuzzy
-msgid "Edit P_osting Profiles..."
+msgid "Edit P_osting Profiles"
 msgstr "Skelbiamas laiškas „%s“"
 
-#: pan/gui/actions.cc:301
-msgid "Edit _News Servers..."
+#: ../pan/gui/actions.cc:427
+#, fuzzy
+msgid "Edit _News Servers"
+msgstr "Naujienų serverio vardas"
+
+#: ../pan/gui/actions.cc:432
+msgid "Edit _SSL Certificates"
 msgstr ""
 
-#: pan/gui/actions.cc:303
+#: ../pan/gui/actions.cc:437
 msgid "Jump to _Group Tab"
 msgstr ""
 
-#: pan/gui/actions.cc:304
+#: ../pan/gui/actions.cc:442
 #, fuzzy
 msgid "Jump to _Header Tab"
 msgstr "Papildomos antraštės"
 
-#: pan/gui/actions.cc:305
+#: ../pan/gui/actions.cc:447
 #, fuzzy
 msgid "Jump to _Body Tab"
 msgstr "Papildomos antraštės"
 
-#: pan/gui/actions.cc:306
+#: ../pan/gui/actions.cc:452
 #, fuzzy
 msgid "_Rot13 Selected Text"
 msgstr "Pritaikyti Rot13 kodavimą pažymėtam tekstui"
 
-#: pan/gui/actions.cc:308
+#: ../pan/gui/actions.cc:457
 #, fuzzy
 msgid "Clear _Header Pane"
 msgstr "Gijų skydelis"
 
-#: pan/gui/actions.cc:308
-#, fuzzy
-msgid "Clear Header Pane"
-msgstr "Gijų skydelis"
-
-#: pan/gui/actions.cc:309
+#: ../pan/gui/actions.cc:461
 #, fuzzy
 msgid "Clear _Body Pane"
 msgstr "Grupių sąrašo skydelis"
 
-#: pan/gui/actions.cc:309
+#: ../pan/gui/actions.cc:466
 #, fuzzy
-msgid "Clear Body Pane"
-msgstr "Grupių sąrašo skydelis"
+msgid "Cache Article"
+msgstr "Mėginami %d laiškus"
 
-#: pan/gui/actions.cc:311
+#: ../pan/gui/actions.cc:471
 #, fuzzy
-msgid "Download _Selected Article"
-msgstr "Atžymėti laiškų vėliavėles"
+msgid "Read Article"
+msgstr "Rodyti skaitytus laiškus"
 
-#: pan/gui/actions.cc:311
+#: ../pan/gui/actions.cc:476
 #, fuzzy
-msgid "Download Selected Article"
-msgstr "Atžymėti laiškų vėliavėles"
+msgid "Show Article Information"
+msgstr "Serveri informacija"
 
-#: pan/gui/actions.cc:312
-#, fuzzy
-msgid "Read _Selected Article"
-msgstr "Pažymėtus laiškus"
-
-#: pan/gui/actions.cc:312
-#, fuzzy
-msgid "Read Selected Article"
-msgstr "Pažymėtus laiškus"
-
-#: pan/gui/actions.cc:313
+#: ../pan/gui/actions.cc:481
 #, fuzzy
 msgid "Read _More"
 msgstr "Skaityti laiškai"
 
-#: pan/gui/actions.cc:313
+#: ../pan/gui/actions.cc:482
 #, fuzzy
 msgid "Read More"
 msgstr "Skaityti laiškai"
 
-#: pan/gui/actions.cc:314
+#: ../pan/gui/actions.cc:486
 msgid "Read _Back"
 msgstr ""
 
-#: pan/gui/actions.cc:314
+#: ../pan/gui/actions.cc:487
 #, fuzzy
 msgid "Read Back"
 msgstr "Skaitytas"
 
-#: pan/gui/actions.cc:315
+#: ../pan/gui/actions.cc:491
 #, fuzzy
 msgid "Next _Unread Group"
 msgstr "Kita neskaityta _grupė"
 
-#: pan/gui/actions.cc:315
-#, fuzzy
-msgid "Next Unread Group"
-msgstr "Kita neskaityta _grupė"
-
-#: pan/gui/actions.cc:316
+#: ../pan/gui/actions.cc:496
 #, fuzzy
 msgid "Next _Group"
 msgstr "Kita grupė"
 
-#: pan/gui/actions.cc:316
-#, fuzzy
-msgid "Next Group"
-msgstr "Kita grupė"
-
-#: pan/gui/actions.cc:317
+#: ../pan/gui/actions.cc:501
 #, fuzzy
 msgid "Next _Unread Article"
 msgstr "Rodyti neskaitytus laiškus"
 
-#: pan/gui/actions.cc:317
+#: ../pan/gui/actions.cc:502
 #, fuzzy
 msgid "Next Unread Article"
 msgstr "Rodyti neskaitytus laiškus"
 
-#: pan/gui/actions.cc:318
+#: ../pan/gui/actions.cc:506
 #, fuzzy
 msgid "Next _Article"
 msgstr "Rikiuoti laiškus"
 
-#: pan/gui/actions.cc:319
+#: ../pan/gui/actions.cc:507
+#, fuzzy
+msgid "Next Article"
+msgstr "Rikiuoti laiškus"
+
+#: ../pan/gui/actions.cc:511
 #, fuzzy
 msgid "Next _Watched Article"
 msgstr "Keše esantis laiškas „%s“"
 
-#: pan/gui/actions.cc:319
-#, fuzzy
-msgid "Next Watched Article"
-msgstr "Keše esantis laiškas „%s“"
-
-#: pan/gui/actions.cc:320
+#: ../pan/gui/actions.cc:516
 #, fuzzy
 msgid "Next Unread _Thread"
 msgstr "Kita neskaityta _grupė"
 
-#: pan/gui/actions.cc:320
+#: ../pan/gui/actions.cc:517
 #, fuzzy
 msgid "Next Unread Thread"
 msgstr "Kita neskaityta _grupė"
 
-#: pan/gui/actions.cc:321
+#: ../pan/gui/actions.cc:521
 #, fuzzy
 msgid "Next Threa_d"
 msgstr "Ignoruoti giją"
 
-#: pan/gui/actions.cc:321
-#, fuzzy
-msgid "Next Thread"
-msgstr "Ignoruoti giją"
-
-#: pan/gui/actions.cc:322
+#: ../pan/gui/actions.cc:526
 #, fuzzy
 msgid "Pre_vious Article"
 msgstr "_Aukštyn pažymėti praeitą laišką"
 
-#: pan/gui/actions.cc:322
-#, fuzzy
-msgid "Previous Article"
-msgstr "_Aukštyn pažymėti praeitą laišką"
-
-#: pan/gui/actions.cc:323
+#: ../pan/gui/actions.cc:531
 #, fuzzy
 msgid "Previous _Thread"
 msgstr "Aukštyn pažymėti praeitą giją"
 
-#: pan/gui/actions.cc:323
-#, fuzzy
-msgid "Previous Thread"
-msgstr "Aukštyn pažymėti praeitą giją"
-
-#: pan/gui/actions.cc:324
+#: ../pan/gui/actions.cc:536
 #, fuzzy
 msgid "_Parent Article"
 msgstr "Rikiuoti laiškus"
 
-#: pan/gui/actions.cc:324
+#: ../pan/gui/actions.cc:541
 #, fuzzy
-msgid "Parent Article"
-msgstr "Rikiuoti laiškus"
+msgid "Ignore _Author"
+msgstr "Ignoruojamos gijos"
 
-#: pan/gui/actions.cc:326
-#, fuzzy
-msgid "_Plonk Author"
-msgstr "- Autorius"
-
-#: pan/gui/actions.cc:327
+#: ../pan/gui/actions.cc:545
 #, fuzzy
 msgid "_Watch Thread"
 msgstr "Stebimos gijos"
 
-#: pan/gui/actions.cc:328
+#: ../pan/gui/actions.cc:550
 #, fuzzy
 msgid "_Ignore Thread"
 msgstr "Ignoruojamos gijos"
 
-#: pan/gui/actions.cc:329
+#: ../pan/gui/actions.cc:555 ../pan/gui/actions.cc:556
 #, fuzzy
-msgid "View Article's S_core"
-msgstr "Iš_saugoti laišką kaip..."
+msgid "_Toggle Flag on for Thread"
+msgstr "Stebimos gijos"
 
-#: pan/gui/actions.cc:330
+#: ../pan/gui/actions.cc:560 ../pan/gui/actions.cc:561
 #, fuzzy
-msgid "_Add a _Scoring Rule"
+msgid "_Toggle Flag off for Thread"
+msgstr "Stebimos gijos"
+
+#: ../pan/gui/actions.cc:565 ../pan/gui/actions.cc:566
+#, fuzzy
+msgid "_Mark all flagged Threads"
+msgstr "Kita neskaityta _grupė"
+
+#: ../pan/gui/actions.cc:570 ../pan/gui/actions.cc:571
+#, fuzzy
+msgid "_Goto next flagged Thread"
+msgstr "Kita neskaityta _grupė"
+
+#: ../pan/gui/actions.cc:575 ../pan/gui/actions.cc:576
+msgid "_Goto last flagged Thread"
+msgstr ""
+
+#: ../pan/gui/actions.cc:580 ../pan/gui/actions.cc:581
+#, fuzzy
+msgid "_Invert Selection"
+msgstr "Pažymėjimas"
+
+#: ../pan/gui/actions.cc:585
+msgid "Edit Article's Watch/Ignore/Score..."
+msgstr ""
+
+#: ../pan/gui/actions.cc:590
+#, fuzzy
+msgid "Add a _Scoring Rule..."
 msgstr "Sukurti naują aplanką"
 
-#: pan/gui/actions.cc:331
+#: ../pan/gui/actions.cc:595
 #, fuzzy
 msgid "Cance_l Article..."
 msgstr "Mėginami %d laiškus"
 
-#: pan/gui/actions.cc:332
+#: ../pan/gui/actions.cc:600
 #, fuzzy
 msgid "_Supersede Article..."
 msgstr "Iš_saugoti laišką kaip..."
 
-#: pan/gui/actions.cc:333
+#: ../pan/gui/actions.cc:605
 #, fuzzy
 msgid "_Delete Article"
 msgstr "Iš_trinti laišką"
 
-#: pan/gui/actions.cc:334
+#: ../pan/gui/actions.cc:610
+#, fuzzy
+msgid "Clear Article Cache"
+msgstr "Laiškų kešas"
+
+#: ../pan/gui/actions.cc:615
 #, fuzzy
 msgid "_Mark Article as Read"
 msgstr "Laiškas _yra "
 
-#: pan/gui/actions.cc:334
-#, fuzzy
-msgid "Mark Article as Read"
-msgstr "Laiškas _yra "
-
-#: pan/gui/actions.cc:335
+#: ../pan/gui/actions.cc:620
 #, fuzzy
 msgid "Mark Article as _Unread"
 msgstr "Laiškas _yra "
 
-#: pan/gui/actions.cc:335
+#: ../pan/gui/actions.cc:626
 #, fuzzy
-msgid "Mark Article as Unread"
+msgid "_Mark Thread as Read"
 msgstr "Laiškas _yra "
 
-#: pan/gui/actions.cc:337
+#: ../pan/gui/actions.cc:631
+#, fuzzy
+msgid "Mark Thread as _Unread"
+msgstr "Laiškas _yra "
+
+#: ../pan/gui/actions.cc:636
 #, fuzzy
 msgid "_Post to Newsgroup"
 msgstr "_Skelbti naujienų grupėje"
 
-#: pan/gui/actions.cc:337
+#: ../pan/gui/actions.cc:637
 #, fuzzy
 msgid "Post to Newsgroup"
 msgstr "_Skelbti naujienų grupėje"
 
-#: pan/gui/actions.cc:338
+#: ../pan/gui/actions.cc:641
 #, fuzzy
-msgid "_Followup to  Newsgroup"
+msgid "_Followup to Newsgroup"
 msgstr "_Tęsti naujienų grupėje"
 
-#: pan/gui/actions.cc:338
+#: ../pan/gui/actions.cc:642
 #, fuzzy
 msgid "Followup to Newsgroup"
 msgstr "_Tęsti naujienų grupėje"
 
-#: pan/gui/actions.cc:339
+#: ../pan/gui/actions.cc:646
 #, fuzzy
-msgid "_Reply to Author"
+msgid "_Reply to Author in Mail"
 msgstr "- Autorius"
 
-#: pan/gui/actions.cc:339
+#: ../pan/gui/actions.cc:651
 #, fuzzy
-msgid "Reply to Author"
-msgstr "- Autorius"
-
-#: pan/gui/actions.cc:341
-#, fuzzy
-msgid "_Pan Home Page..."
+msgid "_Pan Home Page"
 msgstr "Pan _tinklapis"
 
-#: pan/gui/actions.cc:342
+#: ../pan/gui/actions.cc:656
 msgid "Give _Feedback or Report a Bug..."
 msgstr ""
 
-#: pan/gui/actions.cc:343
+#: ../pan/gui/actions.cc:661
 msgid "_Tip Jar..."
 msgstr ""
 
-#: pan/gui/actions.cc:345 pan/gui/actions.cc:347
+#: ../pan/gui/actions.cc:666
 #, fuzzy
-msgid "_About..."
+msgid "_About"
 msgstr "Apie"
 
-#: pan/gui/actions.cc:361
+#: ../pan/gui/actions.cc:681
 #, fuzzy
 msgid "_Thread Headers"
 msgstr "Daugiau antraščių"
 
-#: pan/gui/actions.cc:362
+#: ../pan/gui/actions.cc:682
 #, fuzzy
 msgid "_Wrap Article Body"
 msgstr "Užpildyti/Sulaužyti laiško tekstą"
 
-#: pan/gui/actions.cc:363
+#: ../pan/gui/actions.cc:683
 #, fuzzy
 msgid "Mute _Quoted Text"
 msgstr "Paslėpti cituojamą tekstą"
 
-#: pan/gui/actions.cc:364
+#: ../pan/gui/actions.cc:684
 #, fuzzy
 msgid "Show All _Headers in Body Pane"
 msgstr "Rodyti visas antraštes tekste"
 
-#: pan/gui/actions.cc:365
+#: ../pan/gui/actions.cc:685
 #, fuzzy
 msgid "Show _Smilies as Graphics"
 msgstr "Rodyti įspė_jimą:"
 
-#: pan/gui/actions.cc:366
+#: ../pan/gui/actions.cc:686
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr ""
 
-#: pan/gui/actions.cc:367
+#: ../pan/gui/actions.cc:687
 msgid "Size Pictures to _Fit"
 msgstr ""
 
-#: pan/gui/actions.cc:368
-msgid "Smooth Scrolling"
-msgstr ""
-
-#: pan/gui/actions.cc:369
+#: ../pan/gui/actions.cc:688
 msgid "Use _Monospace Font"
 msgstr ""
 
-#: pan/gui/actions.cc:371
+#: ../pan/gui/actions.cc:689
+msgid "Set Focus to Images"
+msgstr ""
+
+#: ../pan/gui/actions.cc:690
+msgid "Highlight _URLs"
+msgstr ""
+
+#: ../pan/gui/actions.cc:693
 #, fuzzy
 msgid "_Work Online"
 msgstr "_Jungtis"
 
-#: pan/gui/actions.cc:372
+#: ../pan/gui/actions.cc:694
 #, fuzzy
 msgid "_Tabbed Layout"
 msgstr "Išdėstymas"
 
-#: pan/gui/actions.cc:373
+#: ../pan/gui/actions.cc:695
 #, fuzzy
 msgid "Show Group _Pane"
 msgstr "Grupių sąrašo skydelis"
 
-#: pan/gui/actions.cc:374
+#: ../pan/gui/actions.cc:696
 #, fuzzy
 msgid "Show Hea_der Pane"
 msgstr "Gijų skydelis"
 
-#: pan/gui/actions.cc:375
+#: ../pan/gui/actions.cc:697
 msgid "Show Bod_y Pane"
 msgstr ""
 
-#: pan/gui/actions.cc:376
+#: ../pan/gui/actions.cc:698
 msgid "Show _Toolbar"
 msgstr ""
 
-#: pan/gui/actions.cc:377
-msgid "Abbreviate _Names in Group Pane"
-msgstr ""
-
-#: pan/gui/actions.cc:377
+#: ../pan/gui/actions.cc:699
 #, fuzzy
-msgid "Abbreviate Newsgroup Names"
+msgid "Abbreviate Group Names"
 msgstr "Užsakytos grupės:"
 
-#: pan/gui/actions.cc:379
+#: ../pan/gui/actions.cc:701
 #, fuzzy
 msgid "Match Only _Unread Articles"
 msgstr "Rūšiuojami laiškai"
 
-#: pan/gui/actions.cc:379
+#: ../pan/gui/actions.cc:701
 #, fuzzy
 msgid "Match Only Unread Articles"
 msgstr "Rūšiuojami laiškai"
 
-#: pan/gui/actions.cc:380
+#: ../pan/gui/actions.cc:702
 #, fuzzy
 msgid "Match Only _Cached Articles"
 msgstr "Rūšiuojami laiškai"
 
-#: pan/gui/actions.cc:380
+#: ../pan/gui/actions.cc:702
 #, fuzzy
 msgid "Match Only Cached Articles"
 msgstr "Rūšiuojami laiškai"
 
-#: pan/gui/actions.cc:381
+#: ../pan/gui/actions.cc:703
 #, fuzzy
 msgid "Match Only _Complete Articles"
 msgstr "Rodyti pilnus dvejetainius laiškus"
 
-#: pan/gui/actions.cc:381
+#: ../pan/gui/actions.cc:703
 #, fuzzy
 msgid "Match Only Complete Articles"
 msgstr "Rodyti pilnus dvejetainius laiškus"
 
-#: pan/gui/actions.cc:382
+#: ../pan/gui/actions.cc:704
 #, fuzzy
 msgid "Match Only _My Articles"
 msgstr "Rūšiuojami laiškai"
 
-#: pan/gui/actions.cc:382
+#: ../pan/gui/actions.cc:704
 #, fuzzy
-msgid "Match Only Articles Posted by Me"
-msgstr "Laiškas _buvo paskelbtas prieš daugiau nei"
+msgid "Match Only My Articles"
+msgstr "Rūšiuojami laiškai"
 
-#: pan/gui/actions.cc:383
+#: ../pan/gui/actions.cc:705
 #, fuzzy
 msgid "Match Only _Watched Articles"
 msgstr "Rūšiuojami laiškai"
 
-#: pan/gui/actions.cc:383
+#: ../pan/gui/actions.cc:705
 #, fuzzy
 msgid "Match Only Watched Articles"
 msgstr "Rūšiuojami laiškai"
 
-#: pan/gui/actions.cc:385
+#: ../pan/gui/actions.cc:707
 msgid "Match Scores of 9999 (_Watched)"
 msgstr ""
 
-#: pan/gui/actions.cc:386
+#: ../pan/gui/actions.cc:708
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr ""
 
-#: pan/gui/actions.cc:387
+#: ../pan/gui/actions.cc:709
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr ""
 
-#: pan/gui/actions.cc:388
+#: ../pan/gui/actions.cc:710
 msgid "Match Scores of 0 (_Normal)"
 msgstr ""
 
-#: pan/gui/actions.cc:389
+#: ../pan/gui/actions.cc:711
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr ""
 
-#: pan/gui/actions.cc:390
+#: ../pan/gui/actions.cc:712
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr ""
 
-#: pan/gui/actions.cc:416
+#: ../pan/gui/actions.cc:714
+msgid "Enable/Disable all _Rules"
+msgstr ""
+
+#: ../pan/gui/actions.cc:740
 #, fuzzy
 msgid "Show Matching _Articles"
 msgstr "Rūšiuojami laiškai"
 
-#: pan/gui/actions.cc:417
+#: ../pan/gui/actions.cc:741
 #, fuzzy
 msgid "Show Matching Articles' _Threads"
 msgstr "Rūšiuojami laiškai"
 
-#: pan/gui/actions.cc:418
+#: ../pan/gui/actions.cc:742
 #, fuzzy
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Pažymėtus laiškus ir atsakymus"
 
-#: pan/gui/actions.cc:435
-msgid "Baltic (ISO-8859-4)"
-msgstr ""
-
-#: pan/gui/actions.cc:436
-msgid "Baltic (ISO-8859-13)"
-msgstr ""
-
-#: pan/gui/actions.cc:437
-msgid "Baltic (Windows-1257)"
-msgstr ""
-
-#: pan/gui/actions.cc:438
-msgid "Central European (ISO-8859-2)"
-msgstr ""
-
-#: pan/gui/actions.cc:439
-msgid "Central European (Windows-1250)"
-msgstr ""
-
-#: pan/gui/actions.cc:440
-msgid "Chinese Simplified (gb2312)"
-msgstr ""
-
-#: pan/gui/actions.cc:441
-msgid "Chinese Traditional (big5)"
-msgstr ""
-
-#: pan/gui/actions.cc:442
-msgid "Cyrillic (ISO-8859-5)"
-msgstr ""
-
-#: pan/gui/actions.cc:443
-msgid "Cyrillic (Windows-1251)"
-msgstr ""
-
-#: pan/gui/actions.cc:444
-msgid "Cyrillic (KOI8-R)"
-msgstr ""
-
-#: pan/gui/actions.cc:445
-msgid "Cyrillic, Ukrainian (KOI8-U)"
-msgstr ""
-
-#: pan/gui/actions.cc:446
-msgid "Greek (ISO-8859-7)"
-msgstr ""
-
-#: pan/gui/actions.cc:447
-msgid "Japanese (ISO-2022-jp)"
-msgstr ""
-
-#: pan/gui/actions.cc:448
-msgid "Korean (euc-kr)"
-msgstr ""
-
-#: pan/gui/actions.cc:449
-msgid "Turkish (ISO-8859-9)"
-msgstr ""
-
-#: pan/gui/actions.cc:450
-msgid "Western (ISO-8859-1)"
-msgstr ""
-
-#: pan/gui/actions.cc:451
-msgid "Western, New (ISO-8859-15)"
-msgstr ""
-
-#: pan/gui/actions.cc:452
-msgid "Western (Windows-1252)"
-msgstr ""
-
-#: pan/gui/actions.cc:453
-msgid "Unicode (UTF-8)"
-msgstr ""
-
-#: pan/gui/body-pane.cc:855
+#: ../pan/gui/body-pane.cc:981
 #, c-format
 msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
 msgstr ""
 
-#: pan/gui/body-pane.cc:856
+#: ../pan/gui/body-pane.cc:982
 #, fuzzy, c-format
 msgid "Attachment not shown: MIME type %s/%s\n"
 msgstr "Priedas: %s - %s - %s\n"
 
-#: pan/gui/body-pane.cc:936 pan/gui/header-pane.cc:1167
-#: pan/gui/header-pane.cc:1502 pan/gui/prefs-ui.cc:322
-#: pan/gui/score-add-ui.cc:136
+#: ../pan/gui/body-pane.cc:1060 ../pan/gui/gui.cc:1811
+#: ../pan/gui/header-pane.cc:1162 ../pan/gui/header-pane.cc:1591
+#: ../pan/gui/post-ui.cc:2466 ../pan/gui/prefs-ui.cc:452
+#: ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
 msgstr "Tema"
 
-#: pan/gui/body-pane.cc:938
+#: ../pan/gui/body-pane.cc:1062 ../pan/gui/gui.cc:1811
 #, fuzzy
 msgid "From"
 msgstr "Nuo:"
 
-#: pan/gui/body-pane.cc:940 pan/gui/header-pane.cc:1579 pan/gui/log-ui.cc:206
-#: pan/gui/prefs-ui.cc:318
+#: ../pan/gui/body-pane.cc:1064 ../pan/gui/gui.cc:1812
+#: ../pan/gui/header-pane.cc:1668 ../pan/gui/log-ui.cc:305
+#: ../pan/gui/prefs-ui.cc:448
 msgid "Date"
 msgstr "Data"
 
-#: pan/gui/body-pane.cc:947
+#: ../pan/gui/body-pane.cc:1071
 msgid "Newsgroups"
 msgstr "Naujienų grupės"
 
-#: pan/gui/body-pane.cc:952
+#: ../pan/gui/body-pane.cc:1076
 #, fuzzy
 msgid "Followup-To"
 msgstr "Pratęsimas-į:"
 
-#: pan/gui/body-pane.cc:962
+#: ../pan/gui/body-pane.cc:1086
 #, fuzzy
 msgid "Reply-To"
 msgstr "Atsakyti-kam:"
 
-#: pan/gui/body-pane.cc:988
+#: ../pan/gui/body-pane.cc:1129
 #, fuzzy
 msgid " from "
 msgstr "Nuo:"
 
-#: pan/gui/body-pane.cc:990
+#: ../pan/gui/body-pane.cc:1131
 #, fuzzy
 msgid " at "
 msgstr "- Data"
 
-#: pan/gui/dl-headers-ui.cc:102
-#, fuzzy
-msgid "Pan: "
-msgstr "Pan %s"
+#: ../pan/gui/body-pane.cc:1372
+msgid "Copy _URL"
+msgstr ""
 
-#: pan/gui/dl-headers-ui.cc:128
+#. update the titlebar
+#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:951
+#: ../pan/gui/gui.cc:1544 ../pan/gui/gui.cc:1834
+#: ../pan/gui/score-add-ui.cc:602
+msgid "Pan"
+msgstr "Pan"
+
+#: ../pan/gui/dl-headers-ui.cc:112
+#, fuzzy, c-format
+msgid "%d Group"
+msgid_plural "%d Groups"
+msgstr[0] "Grupės"
+msgstr[1] "Grupės"
+
+#: ../pan/gui/dl-headers-ui.cc:135
 #, fuzzy
 msgid "Get the last N _days' headers: "
 msgstr "naujausias antraštes"
 
-#: pan/gui/dl-headers-ui.cc:136
+#: ../pan/gui/dl-headers-ui.cc:143
 #, fuzzy
 msgid "Get _new headers"
 msgstr "naujos antraštės"
 
-#: pan/gui/dl-headers-ui.cc:140
+#: ../pan/gui/dl-headers-ui.cc:147
 #, fuzzy
 msgid "Get _all headers"
 msgstr "visos antraštės"
 
-#: pan/gui/dl-headers-ui.cc:144
+#: ../pan/gui/dl-headers-ui.cc:151
 #, fuzzy
 msgid "Get the _latest N headers: "
 msgstr "naujausias antraštes"
 
-#: pan/gui/group-pane.cc:608
+#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:445
 #, fuzzy
-msgid "Group Name"
-msgstr "Tavo vardas"
+msgid "Action"
+msgstr "Veiksmai"
 
-#: pan/gui/group-pane.cc:700
-#, c-format
-msgid " (%lu)"
+#: ../pan/gui/e-action-combo-box.c:389
+msgid "A GtkRadioAction"
 msgstr ""
 
-#: pan/gui/group-pane.cc:829 pan/gui/header-pane.cc:1668
+#: ../pan/gui/e-charset.c:52 ../pan/gui/task-pane.cc:511
 #, fuzzy
-msgid "Clear the Filter"
-msgstr "Išvalyti šį logą."
+msgid "Unknown"
+msgstr "Nežinomas domenas"
 
-#: pan/gui/group-pane.cc:857
+#: ../pan/gui/e-charset.c:53
+msgid "Arabic"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:54
+msgid "Baltic"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:55
+#, fuzzy
+msgid "Central European"
+msgstr "Vidinė klaida"
+
+#: ../pan/gui/e-charset.c:56
+#, fuzzy
+msgid "Chinese"
+msgstr "Eilutės"
+
+#: ../pan/gui/e-charset.c:57
+msgid "Cyrillic"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:58
+msgid "Greek"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:59
+msgid "Hebrew"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:60
+#, fuzzy
+msgid "Japanese"
+msgstr "pan.sent"
+
+#: ../pan/gui/e-charset.c:61
+#, fuzzy
+msgid "Korean"
+msgstr "skaitytu"
+
+#: ../pan/gui/e-charset.c:62
+msgid "Thai"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:63
+msgid "Turkish"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:64
+msgid "Unicode"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:65
+#, fuzzy
+msgid "Western European"
+msgstr "Vidinė klaida"
+
+#: ../pan/gui/e-charset.c:66
+#, fuzzy
+msgid "Western European, New"
+msgstr "Vidinė klaida"
+
+#: ../pan/gui/e-charset.c:85 ../pan/gui/e-charset.c:86
+#: ../pan/gui/e-charset.c:87
+msgid "Traditional"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:88 ../pan/gui/e-charset.c:89
+#: ../pan/gui/e-charset.c:90 ../pan/gui/e-charset.c:91
+msgid "Simplified"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:94
+msgid "Ukrainian"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:97
+msgid "Visual"
+msgstr ""
+
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:1978
+#: ../pan/gui/post-ui.cc:544 ../pan/gui/prefs-ui.cc:356
+msgid "Character Encoding"
+msgstr ""
+
+#: ../pan/gui/e-charset-combo-box.c:117
+msgid "Enter the character set to use"
+msgstr ""
+
+#: ../pan/gui/e-charset-combo-box.c:336
+msgid "Other..."
+msgstr ""
+
+#: ../pan/gui/group-pane.cc:500
+#, fuzzy
+msgid "Group"
+msgstr "Grupės"
+
+#: ../pan/gui/group-pane.cc:501
+#, fuzzy
+msgid "Group (regex)"
+msgstr "Tavo vardas"
+
+#: ../pan/gui/group-pane.cc:913
 msgid "Subscribed Groups"
 msgstr "Užsakytos grupės"
 
-#: pan/gui/group-pane.cc:858
+#: ../pan/gui/group-pane.cc:914
 #, fuzzy
 msgid "Other Groups"
 msgstr "Naujos grupės"
 
-#: pan/gui/group-pane.cc:900
+#: ../pan/gui/group-pane.cc:954 ../pan/gui/score-view-ui.cc:157
 msgid "Name"
 msgstr "Vardas"
 
-#: pan/gui/group-prefs-dialog.cc:101
+#: ../pan/gui/group-prefs-dialog.cc:94
 #, fuzzy
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "Skelbiamas laiškas „%s“"
 
-#: pan/gui/group-prefs-dialog.cc:129
+#: ../pan/gui/group-prefs-dialog.cc:123
 #, fuzzy
 msgid "Pan: Group Preferences"
 msgstr "Pan: Nuostatos"
 
-#: pan/gui/group-prefs-dialog.cc:143
+#: ../pan/gui/group-prefs-dialog.cc:139
+#, fuzzy, c-format
+msgid "Properties for Groups"
+msgstr "Skelbiamas laiškas „%s“"
+
+#: ../pan/gui/group-prefs-dialog.cc:141
 #, fuzzy, c-format
 msgid "Properties for %s"
 msgstr "Skelbiamas laiškas „%s“"
 
-#: pan/gui/group-prefs-dialog.cc:147
+#: ../pan/gui/group-prefs-dialog.cc:147
 msgid "Character _encoding:"
 msgstr ""
 
-#: pan/gui/group-prefs-dialog.cc:148
+#: ../pan/gui/group-prefs-dialog.cc:148
 #, fuzzy
 msgid "Directory for Saving Attachments"
 msgstr "Katalogas, į kurį saugoti prisegtas bylas"
 
-#: pan/gui/group-prefs-dialog.cc:153
+#: ../pan/gui/group-prefs-dialog.cc:157
 #, fuzzy
 msgid "Directory for _saving attachments:"
 msgstr "Katalogas, į kurį saugoti prisegtas bylas"
 
-#: pan/gui/group-prefs-dialog.cc:155
+#: ../pan/gui/group-prefs-dialog.cc:159
 #, fuzzy
 msgid "Posting _profile:"
 msgstr "Išsaugoti profilį"
 
-#: pan/gui/gui.cc:236
+#: ../pan/gui/gui.cc:269
 msgid "Open the Task Manager"
 msgstr "Atidaryti Užduočių tvarkyklę"
 
-#: pan/gui/gui.cc:257
+#: ../pan/gui/gui.cc:297
 #, fuzzy
 msgid "Open the Event Log"
 msgstr "Atidaryti Užduočių tvarkyklę"
 
-#: pan/gui/gui.cc:481
+#: ../pan/gui/gui.cc:544
+msgid "Save NZB's Files"
+msgstr ""
+
+#: ../pan/gui/gui.cc:571
+msgid "Untitled.nzb"
+msgstr ""
+
+#: ../pan/gui/gui.cc:573
 #, fuzzy
-msgid "Save Attachments"
-msgstr "Išsaugoti priedą kaip"
+msgid "Save NZB File as..."
+msgstr "Iš_saugoti laišką kaip..."
 
-#: pan/gui/gui.cc:529
-msgid "Import NZB File(s)"
-msgstr ""
+#: ../pan/gui/gui.cc:735
+#, fuzzy
+msgid "Import NZB Files"
+msgstr "Importuoti bylą .newsrc"
 
-#: pan/gui/gui.cc:605
-msgid ""
-"Pan is now offline. Please ensure that space is available, then use File|"
-"Work Online to continue."
-msgstr ""
+#: ../pan/gui/gui.cc:743 ../pan/gui/post-ui.cc:3141
+#, fuzzy
+msgid "NZB Files"
+msgstr "Filtrai:"
 
-#: pan/gui/gui.cc:730 pan/gui/gui.cc:1092 pan/gui/gui.cc:1296
-msgid "Pan"
-msgstr "Pan"
+#: ../pan/gui/gui.cc:748
+#, fuzzy
+msgid "All Files"
+msgstr "Filtrai:"
 
-#: pan/gui/gui.cc:902
+#: ../pan/gui/gui.cc:1238
 #, fuzzy
 msgid "Unable to supersede article."
 msgstr "Iš_saugoti laišką kaip..."
 
-#: pan/gui/gui.cc:903 pan/gui/gui.cc:970
+#: ../pan/gui/gui.cc:1239 ../pan/gui/gui.cc:1313
 msgid "The article doesn't match any of your posting profiles."
 msgstr ""
 
-#: pan/gui/gui.cc:944
+#: ../pan/gui/gui.cc:1286
 msgid "Revise and send this article to replace the old one."
 msgstr ""
 
-#: pan/gui/gui.cc:945 pan/gui/gui.cc:1005
+#: ../pan/gui/gui.cc:1287 ../pan/gui/gui.cc:1350
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
 
-#: pan/gui/gui.cc:969
+#: ../pan/gui/gui.cc:1312
 #, fuzzy
 msgid "Unable to cancel article."
 msgstr "Mėginami %d laiškus"
 
-#: pan/gui/gui.cc:1004
+#: ../pan/gui/gui.cc:1349
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
 
-#: pan/gui/gui.cc:1095 pan/gui/gui.cc:1115
-msgid "Copyright © 2002-2006 Charles Kerr"
+#: ../pan/gui/gui.cc:1367
+#, fuzzy
+msgid "You marked some articles for deletion"
+msgstr "Tu pirmiausia turi įkelti laišką."
+
+#: ../pan/gui/gui.cc:1368
+msgid "Are you sure you want to delete them?"
 msgstr ""
 
-#: pan/gui/gui.cc:1100
+#: ../pan/gui/gui.cc:1395
+msgid "Do you want to accept it permanently (deletable afterwards) ?"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1547
+msgid "Copyright \\u00A9 2002-2011 Charles Kerr and others"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1552
 msgid "translator-credits"
 msgstr ""
 
-#: pan/gui/gui.cc:1211
+#: ../pan/gui/gui.cc:1660
 #, fuzzy
 msgid "_1. Group Pane"
 msgstr "Grupių sąrašo skydelis"
 
-#: pan/gui/gui.cc:1212
+#: ../pan/gui/gui.cc:1661
 #, fuzzy
 msgid "_2. Header Pane"
 msgstr "Gijų skydelis"
 
-#: pan/gui/gui.cc:1213
+#: ../pan/gui/gui.cc:1662
 msgid "_3. Body Pane"
 msgstr ""
 
-#: pan/gui/gui.cc:1298
-#, fuzzy, c-format
-msgid "Pan: %s"
-msgstr "Pan %s"
+#: ../pan/gui/gui.cc:1751 ../pan/gui/gui.cc:1766
+msgid " Bytes"
+msgstr ""
 
-#: pan/gui/gui.cc:1415
+#: ../pan/gui/gui.cc:1754
+msgid " KB"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1757
+msgid " MB"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1760
+msgid " GB"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1763
+msgid " TB"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1795
+#, fuzzy, c-format
+msgid "This article is complete with %d part."
+msgid_plural "This article has all %d parts."
+msgstr[0] "laiške yra %s dvejetainių priedų"
+msgstr[1] "laiške yra %s dvejetainių priedų"
+
+#: ../pan/gui/gui.cc:1797
+#, fuzzy, c-format
+msgid "This article is missing %d part."
+msgid_plural "This article is missing %d of its %d parts:"
+msgstr[0] "laiške yra %s dvejetainių priedų"
+msgstr[1] "laiške yra %s dvejetainių priedų"
+
+#: ../pan/gui/gui.cc:1812 ../pan/gui/header-pane.cc:1164
+#, fuzzy
+msgid "Message-ID"
+msgstr "Laiško ID:"
+
+#: ../pan/gui/gui.cc:1813 ../pan/gui/header-pane.cc:1638
+#: ../pan/gui/prefs-ui.cc:449
+msgid "Lines"
+msgstr "Eilutės"
+
+#: ../pan/gui/gui.cc:1813
+msgid "Size"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1814 ../pan/gui/header-pane.cc:1653
+#: ../pan/gui/prefs-ui.cc:447
+msgid "Bytes"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1979
+#, fuzzy
+msgid "Body Pane Encoding"
+msgstr "Grupių sąrašo skydelis"
+
+#: ../pan/gui/gui.cc:2008 ../pan/gui/task-pane.cc:560
+#, c-format
 msgid "Offline"
 msgstr "Atsijungęs"
 
-#: pan/gui/gui.cc:1418
+#: ../pan/gui/gui.cc:2012
 #, fuzzy, c-format
-msgid "Closing %d connections"
-msgstr "Jungiasi"
+msgid "Closing %d connection"
+msgid_plural "Closing %d connections"
+msgstr[0] "Jungiasi"
+msgstr[1] "Jungiasi"
 
-#: pan/gui/gui.cc:1420 pan/gui/gui.cc:1450
-#, fuzzy
+#: ../pan/gui/gui.cc:2014 ../pan/gui/gui.cc:2044
+#, fuzzy, c-format
 msgid "No Connections"
 msgstr "Jungiasi"
 
-#: pan/gui/gui.cc:1424
-#, fuzzy
+#: ../pan/gui/gui.cc:2018
+#, fuzzy, c-format
 msgid "Connecting"
 msgstr "Jungiasi"
 
-#: pan/gui/gui.cc:1437
+#: ../pan/gui/gui.cc:2031
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr ""
 
-#: pan/gui/gui.cc:1493
+#: ../pan/gui/gui.cc:2087
+#, c-format
 msgid "No Tasks"
 msgstr "Nėra užduočių"
 
-#: pan/gui/gui.cc:1496
-#, fuzzy, c-format
-msgid "Tasks: %u/%u"
-msgstr "Užduotys: %d/%d"
+#: ../pan/gui/gui.cc:2089 ../pan/gui/prefs-ui.cc:629
+#, fuzzy
+msgid "Tasks"
+msgstr "Nėra užduočių"
 
-#: pan/gui/gui.cc:1497
+#: ../pan/gui/gui.cc:2100 ../pan/gui/task-pane.cc:428
 #, c-format
-msgid "%u Tasks Running, %u Tasks Total"
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr ""
 
-#: pan/gui/gui.cc:1546
+#: ../pan/gui/gui.cc:2152
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
 msgstr ""
 
-#. less than a kibi...
-#: pan/gui/header-pane.cc:363 pan/gui/task-pane.cc:208
-#, c-format
-msgid "%lu B"
-msgstr ""
-
-#: pan/gui/header-pane.cc:365
-#, fuzzy, c-format
-msgid "%.1f KiB"
-msgstr "%d @ %.1f kB/s"
-
-#: pan/gui/header-pane.cc:367
-#, c-format
-msgid "%.1f MiB"
-msgstr ""
-
-#: pan/gui/header-pane.cc:369
-#, c-format
-msgid "%.1f GiB"
-msgstr ""
-
-#: pan/gui/header-pane.cc:1166
+#: ../pan/gui/header-pane.cc:1160
 #, fuzzy
 msgid "Subject or Author"
 msgstr "Tema:"
 
-#: pan/gui/header-pane.cc:1168 pan/gui/header-pane.cc:1534
-#: pan/gui/prefs-ui.cc:316 pan/gui/score-add-ui.cc:137
+#: ../pan/gui/header-pane.cc:1161
+#, fuzzy
+msgid "Sub or Auth (regex)"
+msgstr "Tema:"
+
+#: ../pan/gui/header-pane.cc:1163 ../pan/gui/header-pane.cc:1623
+#: ../pan/gui/prefs-ui.cc:446 ../pan/gui/score-add-ui.cc:140
 msgid "Author"
 msgstr "Autorius"
 
-#: pan/gui/header-pane.cc:1169
-#, fuzzy
-msgid "Message-ID"
-msgstr "Laiško ID:"
-
-#: pan/gui/header-pane.cc:1519 pan/gui/prefs-ui.cc:320
+#: ../pan/gui/header-pane.cc:1608 ../pan/gui/prefs-ui.cc:450
 msgid "Score"
 msgstr ""
 
-#: pan/gui/header-pane.cc:1549 pan/gui/prefs-ui.cc:319
-msgid "Lines"
-msgstr "Eilutės"
-
-#: pan/gui/header-pane.cc:1564 pan/gui/prefs-ui.cc:317
-msgid "Bytes"
-msgstr ""
-
-#: pan/gui/log-ui.cc:85
+#: ../pan/gui/log-ui.cc:103
 msgid "Save Event List"
 msgstr ""
 
-#: pan/gui/log-ui.cc:167
+#: ../pan/gui/log-ui.cc:256
 #, fuzzy
 msgid "Pan: Events"
 msgstr "Taisyklės"
 
-#: pan/gui/log-ui.cc:216
+#: ../pan/gui/log-ui.cc:315
 msgid "Message"
 msgstr "Laiškas"
 
-#: pan/gui/pan.cc:120
+#: ../pan/gui/pan.cc:318
+#, fuzzy
+msgid "Error!"
+msgstr "Klaida"
+
+#: ../pan/gui/pan.cc:319
+#, fuzzy
+msgid "An error has occured. Maximize Pan to investigate."
+msgstr "Įvyko klaida rašant į serverį"
+
+#: ../pan/gui/pan.cc:341
+#, fuzzy
+msgid "New Articles!"
+msgstr "Rodyti naujus laiškus"
+
+#: ../pan/gui/pan.cc:342
+msgid "There are new articles available."
+msgstr ""
+
+#: ../pan/gui/pan.cc:450
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
 "To start newsreading, first Add a Server."
 msgstr ""
 
-#: pan/gui/pan.cc:141
+#: ../pan/gui/pan.cc:530
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
+"  --verbose                Be verbose (in non-GUI mode).\n"
 "\n"
 "URL Options\n"
-"  news:message-id          Show the specified article.\n"
-"  news:group.name          Show the specified newsgroup.\n"
-"  --nogui                  On news:message-id, dump the article to stdout.\n"
+"  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
 "  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
 "  -o path, --output=path   Path to save attachments listed in the nzb "
 "files.\n"
-"  --nogui                  Only show console output, not the download "
+"  --no-gui                 Only show console output, not the download "
 "queue.\n"
 msgstr ""
 
-#: pan/gui/pan.cc:198
-msgid "Error: nzb arguments used without nzb files."
+#: ../pan/gui/pan.cc:790
+msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr ""
 
-#: pan/gui/pan.cc:203
-msgid "Error: --nogui used without nzb files or news:message-id."
-msgstr ""
-
-#: pan/gui/pan.cc:207
+#: ../pan/gui/pan.cc:794
 #, fuzzy, c-format
 msgid "Pan %s started"
 msgstr "Pan %s paleista\n"
 
-#: pan/gui/pan.cc:223
+#: ../pan/gui/pan.cc:813
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 
-#: pan/gui/post-ui.cc:86
+#: ../pan/gui/pan.cc:915
+msgid "Pan notification"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:171
+#, c-format
+msgid "Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:255
 #, fuzzy, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "Klaida: skaitant iš lizdo gauta %d: %s"
 
-#: pan/gui/post-ui.cc:95
+#: ../pan/gui/post-ui.cc:264
 msgid ""
 "<b>Spellchecker not found!</b>\n"
 " \n"
 "Was this copy of Pan compiled with GtkSpell enabled?"
 msgstr ""
 
-#: pan/gui/post-ui.cc:240
+#: ../pan/gui/post-ui.cc:445
 #, fuzzy
 msgid "_Profile"
 msgstr "Profilio pavadinimas"
 
-#: pan/gui/post-ui.cc:241
-msgid "Character Encoding"
-msgstr ""
-
-#: pan/gui/post-ui.cc:242
+#: ../pan/gui/post-ui.cc:446
 #, fuzzy
 msgid "Set Editor"
 msgstr "_Keisti"
 
-#: pan/gui/post-ui.cc:244
+#: ../pan/gui/post-ui.cc:448
 #, fuzzy
 msgid "_Send Article"
 msgstr "Rikiuoti laiškus"
 
-#: pan/gui/post-ui.cc:244
+#: ../pan/gui/post-ui.cc:448
 #, fuzzy
 msgid "Send Article Now"
 msgstr "Išsiųsti dabar"
 
-#: pan/gui/post-ui.cc:245
+#: ../pan/gui/post-ui.cc:449
+#, fuzzy
+msgid "_Send and Save Articles to NZB"
+msgstr "Rodyti išsaugotus laiškus"
+
+#: ../pan/gui/post-ui.cc:449
+#, fuzzy
+msgid "Send and Save Articles to NZB"
+msgstr "Rodyti išsaugotus laiškus"
+
+#: ../pan/gui/post-ui.cc:451
 #, fuzzy
 msgid "Sa_ve Draft"
 msgstr "Pažymi laišką"
 
-#: pan/gui/post-ui.cc:245
+#: ../pan/gui/post-ui.cc:451
 msgid "Save as a Draft for Future Posting"
 msgstr ""
 
-#: pan/gui/post-ui.cc:246
+#: ../pan/gui/post-ui.cc:452
 #, fuzzy
 msgid "_Open Draft..."
 msgstr "Skirstyti į gijas"
 
-#: pan/gui/post-ui.cc:246
+#: ../pan/gui/post-ui.cc:452
 #, fuzzy
 msgid "Open an Article Draft"
 msgstr "Skirstyti į gijas"
 
-#: pan/gui/post-ui.cc:247
-msgid "Wrap _Now"
-msgstr ""
-
-#: pan/gui/post-ui.cc:247
-#, fuzzy
-msgid "Wrap the Article Body to 80 Columns"
-msgstr "Užpildyti/Sulaužyti laiško tekstą"
-
-#: pan/gui/post-ui.cc:248
-#, fuzzy
-msgid "_Close"
-msgstr "Uždaryti"
-
-#: pan/gui/post-ui.cc:248
-#, fuzzy
-msgid "Close Window"
-msgstr "Uždaryti šį langą"
-
-#: pan/gui/post-ui.cc:249
-msgid "Cu_t"
-msgstr ""
-
-#: pan/gui/post-ui.cc:249
-#, fuzzy
-msgid "Cut Text"
-msgstr "Cituojamas tekstas"
-
-#: pan/gui/post-ui.cc:250
-#, fuzzy
-msgid "_Copy"
-msgstr "_Kopijuoti"
-
-#: pan/gui/post-ui.cc:250
-#, fuzzy
-msgid "Copy Text"
-msgstr "Laužyti tekstą"
-
-#: pan/gui/post-ui.cc:251
-#, fuzzy
-msgid "_Paste"
-msgstr "_Rašymas"
-
-#: pan/gui/post-ui.cc:251
-#, fuzzy
-msgid "Paste Text"
-msgstr "Cituojamas tekstas"
-
-#: pan/gui/post-ui.cc:252
+#: ../pan/gui/post-ui.cc:457
 msgid "_Rot13"
 msgstr ""
 
-#: pan/gui/post-ui.cc:252
+#: ../pan/gui/post-ui.cc:457
 msgid "Rot13 Selected Text"
 msgstr "Pritaikyti Rot13 kodavimą pažymėtam tekstui"
 
-#: pan/gui/post-ui.cc:253
+#: ../pan/gui/post-ui.cc:458
 #, fuzzy
 msgid "Run _Editor"
 msgstr "_Keisti"
 
-#: pan/gui/post-ui.cc:254
-msgid "_Manage Editor List..."
+#: ../pan/gui/post-ui.cc:458
+#, fuzzy
+msgid "Run Editor"
+msgstr "_Keisti"
+
+#: ../pan/gui/post-ui.cc:460
+msgid "Add _Files to Queue"
 msgstr ""
 
-#: pan/gui/post-ui.cc:255
-#, fuzzy
-msgid "Manage Posting Pr_ofiles..."
-msgstr "Nepavyko paskelbti naujienų grupėse.\n"
+#: ../pan/gui/post-ui.cc:460
+msgid "Add Files to Queue"
+msgstr ""
 
-#: pan/gui/post-ui.cc:260
+#: ../pan/gui/post-ui.cc:476 ../pan/gui/post-ui.cc:477
+#, fuzzy
+msgid "Remove from Queue"
+msgstr "Naujienų serveris"
+
+#: ../pan/gui/post-ui.cc:481 ../pan/gui/post-ui.cc:482
+#, fuzzy
+msgid "Clear List"
+msgstr "Išvalyti"
+
+#: ../pan/gui/post-ui.cc:486 ../pan/gui/post-ui.cc:487
+#, fuzzy
+msgid "Select needed Parts"
+msgstr "Pažymėtas gijas"
+
+#: ../pan/gui/post-ui.cc:491 ../pan/gui/post-ui.cc:492
+#: ../pan/gui/task-pane.cc:626 ../pan/gui/task-pane.cc:627
+#, fuzzy
+msgid "Move Up"
+msgstr "Eilute ž_emyn"
+
+#: ../pan/gui/post-ui.cc:496 ../pan/gui/post-ui.cc:497
+#: ../pan/gui/task-pane.cc:631 ../pan/gui/task-pane.cc:632
+#, fuzzy
+msgid "Move Down"
+msgstr "Eilute ž_emyn"
+
+#: ../pan/gui/post-ui.cc:501 ../pan/gui/post-ui.cc:502
+#, fuzzy
+msgid "Move to Top"
+msgstr "Eilute ž_emyn"
+
+#: ../pan/gui/post-ui.cc:506 ../pan/gui/post-ui.cc:507
+#, fuzzy
+msgid "Move to Bottom"
+msgstr "Perkelti pažymėtas užduotis į apačią"
+
+#: ../pan/gui/post-ui.cc:514
 #, fuzzy
 msgid "_Wrap Text"
 msgstr "Laužyti tekstą"
 
-#: pan/gui/post-ui.cc:261
-msgid "Remember _Charset for This Group"
+#: ../pan/gui/post-ui.cc:514
+#, fuzzy
+msgid "Wrap Text"
+msgstr "Laužyti tekstą"
+
+#: ../pan/gui/post-ui.cc:515
+#, fuzzy
+msgid "Always Run Editor"
+msgstr "_Keisti"
+
+#: ../pan/gui/post-ui.cc:516
+msgid "Remember Character Encoding for this Group"
 msgstr ""
 
-#: pan/gui/post-ui.cc:262
+#: ../pan/gui/post-ui.cc:517
+#, fuzzy
+msgid "Thread attached replies"
+msgstr "Rodyti laiškus, kurie nei stebimi, nei ignoruojami"
+
+#: ../pan/gui/post-ui.cc:518
+#, fuzzy
+msgid "GPG-Encrypt the message"
+msgstr "Spausdinti šį laišką"
+
+#: ../pan/gui/post-ui.cc:519
 msgid "Check _Spelling"
 msgstr ""
 
-#: pan/gui/post-ui.cc:317 pan/gui/post-ui.cc:318 pan/gui/post-ui.cc:319
-msgid "Baltic"
-msgstr ""
-
-#: pan/gui/post-ui.cc:320 pan/gui/post-ui.cc:321
+#: ../pan/gui/post-ui.cc:545
 #, fuzzy
-msgid "Central European"
-msgstr "Vidinė klaida"
+msgid "New Article's Encoding:"
+msgstr "Iš_saugoti laišką kaip..."
 
-#: pan/gui/post-ui.cc:322
-msgid "Chinese Simplified"
-msgstr ""
-
-#: pan/gui/post-ui.cc:323
-msgid "Chinese Traditional"
-msgstr ""
-
-#: pan/gui/post-ui.cc:324 pan/gui/post-ui.cc:325 pan/gui/post-ui.cc:326
-msgid "Cyrillic"
-msgstr ""
-
-#: pan/gui/post-ui.cc:327
-msgid "Cyrillic, Ukrainian"
-msgstr ""
-
-#: pan/gui/post-ui.cc:328
-msgid "Greek"
-msgstr ""
-
-#: pan/gui/post-ui.cc:329
-#, fuzzy
-msgid "Japanese"
-msgstr "pan.sent"
-
-#: pan/gui/post-ui.cc:330
-#, fuzzy
-msgid "Korean"
-msgstr "skaitytu"
-
-#: pan/gui/post-ui.cc:331
-msgid "Turkish"
-msgstr ""
-
-#: pan/gui/post-ui.cc:332 pan/gui/post-ui.cc:334
-msgid "Western"
-msgstr ""
-
-#: pan/gui/post-ui.cc:333
-msgid "Western, New"
-msgstr ""
-
-#: pan/gui/post-ui.cc:335
-msgid "Unicode, UTF-8"
-msgstr ""
-
-#: pan/gui/post-ui.cc:431
-#, fuzzy, c-format
-msgid "Error loading post.ui: \"%s\""
-msgstr "Klaida skaitant iš lizdo."
-
-#: pan/gui/post-ui.cc:502
-msgid "Manage Editor List"
-msgstr ""
-
-#: pan/gui/post-ui.cc:509
-#, fuzzy
-msgid "Editors"
-msgstr "_Keisti"
-
-#: pan/gui/post-ui.cc:609
+#: ../pan/gui/post-ui.cc:725
 msgid "Your changes will be lost!"
 msgstr ""
 
-#: pan/gui/post-ui.cc:610
+#: ../pan/gui/post-ui.cc:726
 msgid "Close this window and lose your changes?"
 msgstr ""
 
-#: pan/gui/post-ui.cc:647
+#: ../pan/gui/post-ui.cc:771 ../pan/gui/post-ui.cc:810
 msgid "There were problems with this post."
 msgstr ""
 
-#: pan/gui/post-ui.cc:649
+#: ../pan/gui/post-ui.cc:773 ../pan/gui/post-ui.cc:812
+#: ../pan/gui/post-ui.cc:875
 msgid "Go Back"
 msgstr ""
 
-#: pan/gui/post-ui.cc:651
+#: ../pan/gui/post-ui.cc:775
 msgid "Post Anyway"
 msgstr ""
 
-#: pan/gui/post-ui.cc:662
+#. Prompt the user
+#: ../pan/gui/post-ui.cc:804
+#, c-format
+msgid ""
+"Message uses characters not specified in charset '%s' - possibly use '%s' "
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:827
 #, fuzzy
 msgid "Go _Online"
 msgstr "_Jungtis"
 
-#: pan/gui/post-ui.cc:834
+#: ../pan/gui/post-ui.cc:874
+msgid "The file queue is empty, so no files can be saved."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1030
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
 msgstr ""
 
-#: pan/gui/post-ui.cc:867
+#: ../pan/gui/post-ui.cc:1063
 #, fuzzy
 msgid "Pan is Offline."
 msgstr "Atsijungęs"
 
-#: pan/gui/post-ui.cc:868
+#: ../pan/gui/post-ui.cc:1064
 msgid "Go online to post the article?"
 msgstr ""
 
-#. *
-#. ***  Pop up a ``Posting'' Dialog...
-#. *
-#: pan/gui/post-ui.cc:881
-#, fuzzy
-msgid "Posting Article"
-msgstr "Rūšiuojami laiškai"
-
-#: pan/gui/post-ui.cc:887
-msgid "Posting..."
-msgstr ""
-
-#: pan/gui/post-ui.cc:938
+#: ../pan/gui/post-ui.cc:1246
 #, fuzzy
 msgid "Error opening temporary file"
 msgstr "Nepavyko gauti laiško iš serverio: %s"
 
-#: pan/gui/post-ui.cc:958
+#: ../pan/gui/post-ui.cc:1258
 #, fuzzy, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Nepavyko gauti laiško iš serverio: %s"
 
-#: pan/gui/post-ui.cc:977
+#: ../pan/gui/post-ui.cc:1277
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr ""
 
-#: pan/gui/post-ui.cc:1015
+#: ../pan/gui/post-ui.cc:1318
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr ""
 
-#: pan/gui/post-ui.cc:1070
+#: ../pan/gui/post-ui.cc:1374
 #, fuzzy
 msgid "Open Draft Article"
 msgstr "Skirstyti į gijas"
 
-#: pan/gui/post-ui.cc:1233
+#: ../pan/gui/post-ui.cc:1586
 #, fuzzy
 msgid "Save Draft Article"
 msgstr "Pažymi laišką"
 
-#: pan/gui/post-ui.cc:1390
-#, fuzzy, c-format
-msgid "Couldn't read signature file \"%s\": %s"
-msgstr "Nepavyko sukurti katalogo „%s“: %s"
-
-#: pan/gui/post-ui.cc:1411
+#: ../pan/gui/post-ui.cc:1783
 #, fuzzy, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Nepavyko sukurti katalogo „%s“: %s"
 
-#: pan/gui/post-ui.cc:1448
+#: ../pan/gui/post-ui.cc:1819
 #, fuzzy
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Nepavyko sukurti katalogo „%s“: %s"
 
-#: pan/gui/post-ui.cc:1790
-#, fuzzy
-msgid "Post Article"
-msgstr "Įkelia laišką"
-
-#: pan/gui/post-ui.cc:1812
+#: ../pan/gui/post-ui.cc:2304
 #, fuzzy
 msgid "F_rom"
 msgstr "Nuo"
 
-#: pan/gui/post-ui.cc:1819
+#: ../pan/gui/post-ui.cc:2322
 #, fuzzy
 msgid "_Subject"
 msgstr "Tema"
 
-#: pan/gui/post-ui.cc:1825
+#: ../pan/gui/post-ui.cc:2335
 #, fuzzy
 msgid "_Newsgroups"
 msgstr "Naujienų grupės"
 
-#: pan/gui/post-ui.cc:1832
+#: ../pan/gui/post-ui.cc:2349
 #, fuzzy
-msgid "_Mail To"
+msgid "Mail _To"
 msgstr "Siųsti kam:"
 
-#: pan/gui/post-ui.cc:1842
-msgid "One header per line, in the form HeaderName: Value"
+#: ../pan/gui/post-ui.cc:2451
+#, fuzzy
+msgid "Delete from Queue"
+msgstr "Pažymi grupę"
+
+#: ../pan/gui/post-ui.cc:2464
+msgid "No."
 msgstr ""
 
-#: pan/gui/post-ui.cc:1845
+#: ../pan/gui/post-ui.cc:2468 ../pan/gui/post-ui.cc:2564
+#: ../pan/gui/post-ui.cc:2605
+msgid "Filename"
+msgstr "Bylos vardas"
+
+#: ../pan/gui/post-ui.cc:2470
+msgid "Size (kB)"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2572
 #, fuzzy
-msgid "_More Headers"
+msgid "The current filename"
+msgstr "Naudoti norimą bylos vardą"
+
+#: ../pan/gui/post-ui.cc:2576
+#, fuzzy
+msgid "Subject Line"
+msgstr "Tema"
+
+#: ../pan/gui/post-ui.cc:2584
+msgid "The current Subject Line"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2598
+msgid "No. "
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2602
+msgid "Enable/Disable"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2636
+#, fuzzy
+msgid "Follo_wup-To"
+msgstr "Pratęsimas-į:"
+
+#. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
+#: ../pan/gui/post-ui.cc:2645
+#, fuzzy
+msgid ""
+"The newsgroups where replies to your message should go.  This is only needed "
+"if it differs from the \"Newsgroups\" header.\n"
+"\n"
+"To direct all replies to your email address, use \"Followup-To: poster\""
+msgstr ""
+"Naujienų grupė ar grupės, kur turėtų eiti atsakymai į tavo paskelbtą laišką. "
+"Tai reikalinga tik tada, jei skiriasi nuo „Skelbti grupėse“ lauko.\n"
+"Kad visi atsakymai eitų į tavo el. paštą, naudok „Skelbti-kur: poster“"
+
+#: ../pan/gui/post-ui.cc:2651
+#, fuzzy
+msgid "_Reply-To"
+msgstr "Atsakyti-kam:"
+
+#: ../pan/gui/post-ui.cc:2659
+#, fuzzy
+msgid ""
+"The email account where mail replies to your posted message should go.  This "
+"is only needed if it differs from the \"From\" header."
+msgstr ""
+"El. pašto adresas, kur turėtų eiti atsakymai paštu į tavo paskelbtą laišką. "
+"Tai reikalinga tik tuomet, jei skiriasi nuo „Nuo“ lauko."
+
+#: ../pan/gui/post-ui.cc:2665
+#, fuzzy
+msgid "_Custom Headers"
 msgstr "Daugiau antraščių"
 
-#: pan/gui/post-ui.cc:1867 pan/gui/profiles-dialog.cc:398
-#, fuzzy, c-format
+#: ../pan/gui/post-ui.cc:2689
+#, fuzzy
+msgid "Add \"_User-Agent\" header"
+msgstr "Nepridėti „User-Agent“ atpažinimo antraštės"
+
+#: ../pan/gui/post-ui.cc:2696
+#, fuzzy
+msgid "Add \"Message-_Id\" header"
+msgstr "Laiško Id:"
+
+#: ../pan/gui/post-ui.cc:2825
+#, fuzzy
+msgid "Select Parts"
+msgstr "Pažymėjimas"
+
+#: ../pan/gui/post-ui.cc:2836
+msgid "_Parts"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2966
+#, fuzzy
+msgid "Post Article"
+msgstr "Įkelia laišką"
+
+#: ../pan/gui/post-ui.cc:2987
+msgid "_Message"
+msgstr "_Laiškas"
+
+#: ../pan/gui/post-ui.cc:2988
+#, fuzzy
+msgid "More _Headers"
+msgstr "Daugiau antraščių"
+
+#: ../pan/gui/post-ui.cc:2989
+#, fuzzy
+msgid "File _Queue"
+msgstr "Išvalyti eilę"
+
+#: ../pan/gui/post-ui.cc:3021 ../pan/gui/profiles-dialog.cc:499
+#, fuzzy, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "Laiške %i, %a rašė:"
 
-#: pan/gui/profiles-dialog.cc:102
+#: ../pan/gui/post-ui.cc:3050
+msgid "Add files to queue"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:3128
+msgid "Save Upload Queue as NZB File"
+msgstr ""
+
+#: ../pan/gui/profiles-dialog.cc:125
 #, fuzzy
 msgid "Posting Profile"
 msgstr "Išsaugoti profilį"
 
-#: pan/gui/profiles-dialog.cc:110
+#: ../pan/gui/profiles-dialog.cc:137
 #, fuzzy
 msgid "Profile Information"
 msgstr "Serveri informacija"
 
-#: pan/gui/profiles-dialog.cc:114
+#: ../pan/gui/profiles-dialog.cc:141
 #, fuzzy
 msgid "_Profile Name:"
 msgstr "Profilio pavadinimas:"
 
-#: pan/gui/profiles-dialog.cc:117
+#: ../pan/gui/profiles-dialog.cc:144
 #, fuzzy
 msgid "Required Information"
 msgstr "Serveri informacija"
 
-#: pan/gui/profiles-dialog.cc:121
+#: ../pan/gui/profiles-dialog.cc:148
 #, fuzzy
 msgid "_Full Name:"
 msgstr "Visas vardas:"
 
-#: pan/gui/profiles-dialog.cc:124
+#: ../pan/gui/profiles-dialog.cc:151
 #, fuzzy
 msgid "_Email Address:"
 msgstr "El. pašto adresas:"
 
-#: pan/gui/profiles-dialog.cc:126
+#: ../pan/gui/profiles-dialog.cc:153
 #, fuzzy
 msgid "_Post Articles via:"
 msgstr "Įkelia laišką"
 
-#: pan/gui/profiles-dialog.cc:129
+#: ../pan/gui/profiles-dialog.cc:156
 #, fuzzy
 msgid "Signature"
 msgstr "ignoruojamoje"
 
-#: pan/gui/profiles-dialog.cc:132
+#: ../pan/gui/profiles-dialog.cc:159
 msgid "_Use a Signature"
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:136
+#: ../pan/gui/profiles-dialog.cc:163
 #, fuzzy
 msgid "Signature File"
 msgstr "Parašo byla:"
 
-#: pan/gui/profiles-dialog.cc:139
-msgid "_Signature:"
+#: ../pan/gui/profiles-dialog.cc:180
+msgid "Signer : "
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:144
+#: ../pan/gui/profiles-dialog.cc:202
 #, fuzzy
 msgid "Text File"
 msgstr "Rikiuoti laiškus"
 
-#: pan/gui/profiles-dialog.cc:146
+#: ../pan/gui/profiles-dialog.cc:204
 #, fuzzy
 msgid "Text"
 msgstr "Cituojamas tekstas"
 
-#: pan/gui/profiles-dialog.cc:148
+#: ../pan/gui/profiles-dialog.cc:206
+#, fuzzy
+msgid "GPG Signature"
+msgstr "ignoruojamoje"
+
+#: ../pan/gui/profiles-dialog.cc:208
 #, fuzzy
 msgid "Command"
 msgstr "Spausdinimo komanda:"
 
-#: pan/gui/profiles-dialog.cc:158
-msgid "Signature _Type:"
+#: ../pan/gui/profiles-dialog.cc:211
+#, fuzzy
+msgid "Signature Type : "
+msgstr "Parašo byla:"
+
+#: ../pan/gui/profiles-dialog.cc:239
+msgid "X-Face (Avatar)"
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:161
+#: ../pan/gui/profiles-dialog.cc:242
+msgid ""
+"You can add an avatar icon to your postings with a unique X-Face code. \n"
+"Add the code without the trailing <b>\"X-Face:\"</b> \n"
+" if it was generated by a helper program (for example : http://www.dairiki."
+"org/xface/xface.php)."
+msgstr ""
+
+#: ../pan/gui/profiles-dialog.cc:245
+msgid "_X-Face:"
+msgstr ""
+
+#: ../pan/gui/profiles-dialog.cc:247
 #, fuzzy
 msgid "Optional Information"
 msgstr "Serveri informacija"
 
-#: pan/gui/profiles-dialog.cc:169
+#: ../pan/gui/profiles-dialog.cc:252
+msgid ""
+"When posting to Usenet, your article's Message-ID contains a domain name.  \n"
+"You can set a custom domain name here, or leave it blank to let Pan use the "
+"domain name from your email address."
+msgstr ""
+
+#: ../pan/gui/profiles-dialog.cc:255
+#, fuzzy
+msgid "Message-ID _Domain Name:"
+msgstr "Laiško ID:"
+
+#: ../pan/gui/profiles-dialog.cc:259
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -1884,322 +1921,445 @@ msgid ""
 "%d for Date"
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:170
+#: ../pan/gui/profiles-dialog.cc:260
 #, fuzzy
 msgid "_Attribution:"
 msgstr "Autorizacija"
 
-#: pan/gui/profiles-dialog.cc:190
+#: ../pan/gui/profiles-dialog.cc:283
 msgid ""
 "Extra headers to be included in your posts, such as\n"
-"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
-"Organization: Your Organization"
+"Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
+"Organization: Your Organization\n"
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:199
+#: ../pan/gui/profiles-dialog.cc:293
 #, fuzzy
 msgid "E_xtra Headers:"
 msgstr "Daugiau antraščių"
 
-#: pan/gui/profiles-dialog.cc:253
+#: ../pan/gui/profiles-dialog.cc:339
 #, fuzzy
 msgid "Invalid email address."
 msgstr "Blogas tikrasis vardas"
 
-#: pan/gui/profiles-dialog.cc:254
+#: ../pan/gui/profiles-dialog.cc:340
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:399
+#: ../pan/gui/profiles-dialog.cc:500
 #, fuzzy
 msgid "New Profile"
 msgstr "Išsaugoti profilį"
 
-#: pan/gui/profiles-dialog.cc:442
+#: ../pan/gui/profiles-dialog.cc:546
 #, fuzzy
 msgid "Posting Profiles"
 msgstr "Skelbiamas laiškas „%s“"
 
-#: pan/gui/profiles-dialog.cc:458
+#: ../pan/gui/profiles-dialog.cc:562
 #, fuzzy
 msgid "Profiles"
 msgstr "Profilio pavadinimas"
 
-#: pan/gui/profiles-dialog.cc:482
-#, fuzzy
-msgid "Add a New Profile"
-msgstr "Išsaugoti profilį"
-
-#: pan/gui/profiles-dialog.cc:493
-#, fuzzy
-msgid "Edit the selected profile"
-msgstr "Taisyti pažymėtą laišką"
-
-#: pan/gui/profiles-dialog.cc:499
-#, fuzzy
-msgid "Remove the selected profile"
-msgstr "Pervadinti pažymėtą aplanką"
-
-#: pan/gui/prefs.cc:320
+#: ../pan/gui/prefs.cc:332
 #, fuzzy, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "Negalėjau pasirinkti grupės „%s“"
 
-#: pan/gui/prefs-ui.cc:159
+#: ../pan/gui/prefs-ui.cc:207
 #, fuzzy
 msgid "Use GNOME Preferences"
 msgstr "Pan: Nuostatos"
 
-#: pan/gui/prefs-ui.cc:160
+#: ../pan/gui/prefs-ui.cc:208
 #, fuzzy
 msgid "Use KDE Preferences"
 msgstr "Nuorodos:"
 
-#: pan/gui/prefs-ui.cc:161
+#: ../pan/gui/prefs-ui.cc:209
 #, fuzzy
-msgid "Use OS/X Preferences"
+msgid "Use OS X Preferences"
 msgstr "Nuorodos:"
 
-#: pan/gui/prefs-ui.cc:162
+#: ../pan/gui/prefs-ui.cc:210
 #, fuzzy
 msgid "Use Windows Preferences"
 msgstr "Pan: Nuostatos"
 
-#: pan/gui/prefs-ui.cc:163
+#: ../pan/gui/prefs-ui.cc:211
 #, fuzzy
 msgid "Custom Command:"
 msgstr "Spausdinimo komanda:"
 
-#: pan/gui/prefs-ui.cc:315
+#: ../pan/gui/prefs-ui.cc:262
 #, fuzzy
-msgid "Action"
-msgstr "Veiksmai"
+msgid "Disabled"
+msgstr "Nepavyko"
 
-#: pan/gui/prefs-ui.cc:321
+#: ../pan/gui/prefs-ui.cc:263
+msgid "Only new (Score == 0)"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:264
+msgid "9999 or more"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:265
+msgid "5000 to 9998"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:266
+msgid "1 to 4999"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:267
+msgid "-9998 to -1"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:268
+msgid "-9999 or less"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:333
+#, c-format
+msgid "  Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:357
+#, fuzzy
+msgid "Global Charset Settings"
+msgstr "Bendros nuostatos"
+
+#: ../pan/gui/prefs-ui.cc:451 ../pan/gui/task-pane.cc:760
 #, fuzzy
 msgid "State"
 msgstr "Būsena"
 
-#: pan/gui/prefs-ui.cc:354
+#: ../pan/gui/prefs-ui.cc:485
 #, fuzzy
 msgid "Enabled"
 msgstr "Nepavyko"
 
-#: pan/gui/prefs-ui.cc:358
+#: ../pan/gui/prefs-ui.cc:489
 #, fuzzy
 msgid "Column Name"
 msgstr "Tavo vardas"
 
-#: pan/gui/prefs-ui.cc:392
+#: ../pan/gui/prefs-ui.cc:525
 msgid "Pan: Preferences"
 msgstr "Pan: Nuostatos"
 
-#: pan/gui/prefs-ui.cc:404
+#: ../pan/gui/prefs-ui.cc:538
 msgid "Mouse"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:406
+#: ../pan/gui/prefs-ui.cc:540
 msgid "Single-click activates, rather than selects, _groups"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:408
+#: ../pan/gui/prefs-ui.cc:542
 msgid "Single-click activates, rather than selects, _articles"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:411
+#: ../pan/gui/prefs-ui.cc:545
 #, fuzzy
 msgid "Groups"
 msgstr "Grupės"
 
-#: pan/gui/prefs-ui.cc:413
+#: ../pan/gui/prefs-ui.cc:547
 #, fuzzy
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Gauti naujas antraštes ir tekstus iš pažymėtų grupių"
 
-#: pan/gui/prefs-ui.cc:415
+#: ../pan/gui/prefs-ui.cc:549
 #, fuzzy
 msgid "Get new headers when _entering group"
 msgstr "Gauti naujas antraštes ir tekstus pažymėtose grupėse"
 
-#: pan/gui/prefs-ui.cc:417
+#: ../pan/gui/prefs-ui.cc:551
 msgid "Mark entire group _read when leaving group"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:420
-msgid "Articles"
-msgstr "Laiškai"
-
-#: pan/gui/prefs-ui.cc:421
-msgid "Space selects next article, not next unread"
+#: ../pan/gui/prefs-ui.cc:553
+msgid "Mark entire group read before getting _new headers"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:424
-msgid "_Behavior"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:428
-#, fuzzy
-msgid "Pane Layout"
-msgstr "Išdėstymas"
-
-#: pan/gui/prefs-ui.cc:444
-#, fuzzy
-msgid "Tasks"
-msgstr "Nėra užduočių"
-
-#: pan/gui/prefs-ui.cc:447
-msgid "1=Groups, 2=Headers, 3=Body"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:449
-msgid "1=Groups, 2=Body, 3=Headers"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:451
-msgid "1=Headers, 2=Groups, 3=Body"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:453
-msgid "1=Headers, 2=Body, 3=Groups"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:455
-#, fuzzy
-msgid "1=Body, 2=Groups, 3=Headers"
-msgstr "Įkeliamos grupės antraštės"
-
-#: pan/gui/prefs-ui.cc:457
-msgid "1=Body, 2=Headers, 3=Groups"
-msgstr ""
-
-#: pan/gui/prefs-ui.cc:464
-#, fuzzy
-msgid "Header Pane Columns"
-msgstr "Gijų skydelis"
-
-#: pan/gui/prefs-ui.cc:468
-#, fuzzy
-msgid "Threads"
-msgstr "gijoje"
-
-#: pan/gui/prefs-ui.cc:470
+#: ../pan/gui/prefs-ui.cc:555
 #, fuzzy
 msgid "E_xpand all threads when entering group"
 msgstr "Gauti naujas antraštes ir tekstus pažymėtose grupėse"
 
-#: pan/gui/prefs-ui.cc:473
+#: ../pan/gui/prefs-ui.cc:558
+msgid "Articles"
+msgstr "Laiškai"
+
+#: ../pan/gui/prefs-ui.cc:560
+msgid "Space selects next article rather than next unread"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:562
+#, fuzzy
+msgid "Expand threads upon selection."
+msgstr "Išplėsti visas gijas"
+
+#: ../pan/gui/prefs-ui.cc:564
+msgid "Always show article deletion confirmation dialog"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:566
+msgid "Smooth scrolling"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:568
+msgid "Clear article cache on shutdown"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:571
+msgid "Size of Article Cache (in MiB). "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:576
+#, fuzzy
+msgid "Autosave Articles"
+msgstr "Iš_saugoti laišką kaip..."
+
+#: ../pan/gui/prefs-ui.cc:578
+msgid "Minutes to autosave newsrc files."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:583
+#, fuzzy
+msgid "Language Settings"
+msgstr "Ryšio nuostatos"
+
+#: ../pan/gui/prefs-ui.cc:592
+#, fuzzy
+msgid "Autosave Article Draft"
+msgstr "Skirstyti į gijas"
+
+#: ../pan/gui/prefs-ui.cc:594
+msgid "Minutes to autosave the current Article Draft."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:599
+msgid "Systray Behaviour"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:601
+msgid "Hide to system tray"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:603
+msgid "Start Pan minimized"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:605
+#, fuzzy
+msgid "Show notifications"
+msgstr "Serveri informacija"
+
+#: ../pan/gui/prefs-ui.cc:608
+msgid "_Behavior"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:613
+#, fuzzy
+msgid "Pane Layout"
+msgstr "Išdėstymas"
+
+#: ../pan/gui/prefs-ui.cc:632
+msgid "1=Groups, 2=Headers, 3=Body"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:634
+msgid "1=Groups, 2=Body, 3=Headers"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:636
+msgid "1=Headers, 2=Groups, 3=Body"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:638
+msgid "1=Headers, 2=Body, 3=Groups"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:640
+#, fuzzy
+msgid "1=Body, 2=Groups, 3=Headers"
+msgstr "Įkeliamos grupės antraštės"
+
+#: ../pan/gui/prefs-ui.cc:642
+msgid "1=Body, 2=Headers, 3=Groups"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:650
+#, fuzzy
+msgid "Header Pane Columns"
+msgstr "Gijų skydelis"
+
+#: ../pan/gui/prefs-ui.cc:654
 #, fuzzy
 msgid "_Headers"
 msgstr "Daugiau antraščių"
 
-#: pan/gui/prefs-ui.cc:477
+#: ../pan/gui/prefs-ui.cc:659
+msgid ""
+"This menu lets you configure Pan to take certain actions on your behalf "
+"automatically, based on a post's score."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:662
+msgid "_Delete Posts scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:664
+msgid "Mark Posts _read scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:666
+msgid "_Cache Posts scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:668
+msgid "Download _attachments of Posts scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:676
 msgid "Fonts"
 msgstr "Šriftai"
 
-#: pan/gui/prefs-ui.cc:479
+#: ../pan/gui/prefs-ui.cc:678
 msgid "Use custom font in Group Pane:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:484
+#: ../pan/gui/prefs-ui.cc:683
 msgid "Use custom font in Header Pane:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:489
+#: ../pan/gui/prefs-ui.cc:688
 msgid "Use custom font in Body Pane:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:494
+#: ../pan/gui/prefs-ui.cc:693
 msgid "Monospace font:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:498
+#: ../pan/gui/prefs-ui.cc:697
 #, fuzzy
 msgid "_Fonts"
 msgstr "Šriftai"
 
-#: pan/gui/prefs-ui.cc:502
+#: ../pan/gui/prefs-ui.cc:702
 #, fuzzy
 msgid "Header Pane"
 msgstr "Gijų skydelis"
 
-#: pan/gui/prefs-ui.cc:505 pan/gui/prefs-ui.cc:511 pan/gui/prefs-ui.cc:517
-#: pan/gui/prefs-ui.cc:523 pan/gui/prefs-ui.cc:529
+#: ../pan/gui/prefs-ui.cc:705 ../pan/gui/prefs-ui.cc:711
+#: ../pan/gui/prefs-ui.cc:717 ../pan/gui/prefs-ui.cc:723
+#: ../pan/gui/prefs-ui.cc:729 ../pan/gui/prefs-ui.cc:735
 #, fuzzy
 msgid "Text:"
 msgstr "Cituojamas tekstas"
 
-#: pan/gui/prefs-ui.cc:507 pan/gui/prefs-ui.cc:513 pan/gui/prefs-ui.cc:519
-#: pan/gui/prefs-ui.cc:525 pan/gui/prefs-ui.cc:531
+#: ../pan/gui/prefs-ui.cc:707 ../pan/gui/prefs-ui.cc:713
+#: ../pan/gui/prefs-ui.cc:719 ../pan/gui/prefs-ui.cc:725
+#: ../pan/gui/prefs-ui.cc:731 ../pan/gui/prefs-ui.cc:737
 #, fuzzy
 msgid "Background:"
 msgstr "Laiško fonas"
 
-#: pan/gui/prefs-ui.cc:509
+#: ../pan/gui/prefs-ui.cc:709
 msgid "Scores of 9999 or more:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:515
+#: ../pan/gui/prefs-ui.cc:715
 msgid "Scores from 5000 to 9998:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:521
+#: ../pan/gui/prefs-ui.cc:721
 msgid "Scores from 1 to 4999:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:527
+#: ../pan/gui/prefs-ui.cc:727
 msgid "Scores from -9998 to -1:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:533
+#: ../pan/gui/prefs-ui.cc:733
 msgid "Scores of -9999 or less:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:535
+#: ../pan/gui/prefs-ui.cc:739
+msgid "Read collapsed Thread:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:741
 #, fuzzy
 msgid "Body Pane"
 msgstr "Grupių sąrašo skydelis"
 
-#: pan/gui/prefs-ui.cc:541
+#: ../pan/gui/prefs-ui.cc:747
 #, fuzzy
 msgid "Quoted Text:"
 msgstr "Cituojamas tekstas"
 
-#: pan/gui/prefs-ui.cc:542
+#: ../pan/gui/prefs-ui.cc:748
 msgid "URL:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:543
+#: ../pan/gui/prefs-ui.cc:749
 msgid "Signature:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:545
+#: ../pan/gui/prefs-ui.cc:751
 #, fuzzy
 msgid "_Colors"
 msgstr "Spalvos"
 
-#: pan/gui/prefs-ui.cc:549
+#: ../pan/gui/prefs-ui.cc:756
 msgid "Preferred Applications"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:553
+#: ../pan/gui/prefs-ui.cc:760
 msgid "_Web Browser:"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:556
+#: ../pan/gui/prefs-ui.cc:763
 #, fuzzy
 msgid "_Mail Reader:"
 msgstr "El. pašto adresas:"
 
-#: pan/gui/prefs-ui.cc:558
+#: ../pan/gui/prefs-ui.cc:765
+#, fuzzy
+msgid "_Text Editor:"
+msgstr "_Keisti"
+
+#: ../pan/gui/prefs-ui.cc:767
 #, fuzzy
 msgid "A_pplications"
 msgstr "Veiksmai"
 
-#: pan/gui/save-ui.cc:61
+#: ../pan/gui/prefs-ui.cc:772
+#, fuzzy
+msgid "Encoding Options"
+msgstr "Sąlygos"
+
+#: ../pan/gui/prefs-ui.cc:776
+msgid "Default Bytes per File (for Encoder). "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:781
+#, fuzzy
+msgid "_Upload options"
+msgstr "Veiksmai"
+
+#: ../pan/gui/save-ui.cc:77
 #, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - subject line excerpt\n"
+"%S - subject line\n"
 " \n"
 "\"/home/user/News/Pan/%g\" becomes\n"
 "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
@@ -2207,698 +2367,1291 @@ msgid ""
 "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgstr ""
 
-#: pan/gui/save-ui.cc:156
+#: ../pan/gui/save-ui.cc:233
+#, fuzzy
+msgid "Save attachments"
+msgstr "Išsaugoti priedą kaip"
+
+#: ../pan/gui/save-ui.cc:234
+#, fuzzy
+msgid "Save text"
+msgstr "Cituojamas tekstas"
+
+#: ../pan/gui/save-ui.cc:235
+#, fuzzy
+msgid "Save attachments and text"
+msgstr "Išsaugoti priedą kaip"
+
+#: ../pan/gui/save-ui.cc:242
+msgid "Add to the queue sorted by date posted"
+msgstr ""
+
+#: ../pan/gui/save-ui.cc:243
+#, fuzzy
+msgid "Add to the front of the queue"
+msgstr "Pridėti užduotį eilės pradžioje"
+
+#: ../pan/gui/save-ui.cc:244
+#, fuzzy
+msgid "Add to the back of the queue"
+msgstr "Pridėti užduotį eilės pabaigoje"
+
+#: ../pan/gui/save-ui.cc:271
 #, fuzzy
 msgid "Pan: Save Articles"
 msgstr "Rodyti išsaugotus laiškus"
 
-#: pan/gui/save-ui.cc:173
+#: ../pan/gui/save-ui.cc:296 ../pan/gui/save-ui.cc:314
 #, fuzzy
-msgid "Files"
-msgstr "Filtrai:"
+msgid "_Location:"
+msgstr "Vieta"
 
-#: pan/gui/save-ui.cc:176
+#: ../pan/gui/save-ui.cc:300
 #, fuzzy
-msgid "Save _Text"
-msgstr "Cituojamas tekstas"
+msgid "Save Articles"
+msgstr "Iš_saugoti laišką kaip..."
 
-#: pan/gui/save-ui.cc:179
-#, fuzzy
-msgid "Save _Attachments"
-msgstr "Išsaugoti priedą kaip"
-
-#: pan/gui/save-ui.cc:185
-#, fuzzy
-msgid "Path"
-msgstr "Spausdinti"
-
-#: pan/gui/save-ui.cc:191
-msgid "C_ustom path:"
-msgstr ""
-
-#: pan/gui/save-ui.cc:195
-#, fuzzy
-msgid "Save Files to Path"
-msgstr "Išsaugoti priedą kaip"
-
-#: pan/gui/save-ui.cc:208
-#, fuzzy
-msgid "_Path:"
-msgstr "_Rašymas"
-
-#: pan/gui/save-ui.cc:211
+#: ../pan/gui/save-ui.cc:317
 #, c-format
-msgid "Group's _default path: %s"
+msgid "_Group's path: %s"
 msgstr ""
 
-#: pan/gui/save-ui.cc:220
+#: ../pan/gui/save-ui.cc:328
 #, fuzzy
-msgid "Group Management"
-msgstr "Kaliausių tvarkymas."
+msgid "_Action:"
+msgstr "Veiksmai"
 
-#. sort by age
-#: pan/gui/save-ui.cc:224
-msgid "Add to the queue sorted by a_ge"
+#: ../pan/gui/save-ui.cc:332
+msgid "_Priority:"
 msgstr ""
 
-#. top of queue
-#: pan/gui/save-ui.cc:229
-#, fuzzy
-msgid "Add to the _front of the queue"
-msgstr "Pridėti užduotį eilės pradžioje"
-
-#. bottom of queue
-#: pan/gui/save-ui.cc:234
-#, fuzzy
-msgid "Add to the _back of the queue"
-msgstr "Pridėti užduotį eilės pabaigoje"
-
-#: pan/gui/score-add-ui.cc:86
+#: ../pan/gui/score-add-ui.cc:89
 msgid "is more than"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:87
+#: ../pan/gui/score-add-ui.cc:90
 msgid "is at most"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:109
+#: ../pan/gui/score-add-ui.cc:112
 #, fuzzy
 msgid "increase the article's score by"
 msgstr "Užpildyti/Sulaužyti laiško tekstą"
 
-#: pan/gui/score-add-ui.cc:110
+#: ../pan/gui/score-add-ui.cc:113
 #, fuzzy
 msgid "decrease the article's score by"
 msgstr "Užpildyti/Sulaužyti laiško tekstą"
 
-#: pan/gui/score-add-ui.cc:111
+#: ../pan/gui/score-add-ui.cc:114
 msgid "set the article's score to"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:112
+#: ../pan/gui/score-add-ui.cc:115
 msgid "watch the article (set its score to 9999)"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:113
+#: ../pan/gui/score-add-ui.cc:116
 msgid "ignore the article (set its score to -9999)"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:138
+#: ../pan/gui/score-add-ui.cc:141
 #, fuzzy
 msgid "References"
 msgstr "Nuorodos:"
 
-#: pan/gui/score-add-ui.cc:139
+#: ../pan/gui/score-add-ui.cc:142
 #, fuzzy
 msgid "Line Count"
 msgstr "- Eilučių skaičius"
 
-#: pan/gui/score-add-ui.cc:140
+#: ../pan/gui/score-add-ui.cc:143
 #, fuzzy
 msgid "Byte Count"
 msgstr "- Eilučių skaičius"
 
-#: pan/gui/score-add-ui.cc:141
+#: ../pan/gui/score-add-ui.cc:144
 msgid "Crosspost Group Count"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:142
+#: ../pan/gui/score-add-ui.cc:145
 msgid "Age (in days)"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:164
-msgid "the next week"
+#: ../pan/gui/score-add-ui.cc:167
+msgid "for the next month"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:165
-msgid "the next month"
+#: ../pan/gui/score-add-ui.cc:168
+msgid "for the next six months"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:166
+#: ../pan/gui/score-add-ui.cc:169
 msgid "forever"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:191
+#: ../pan/gui/score-add-ui.cc:194
 msgid "contains"
 msgstr "turi"
 
-#: pan/gui/score-add-ui.cc:192
+#: ../pan/gui/score-add-ui.cc:195
 #, fuzzy
 msgid "doesn't contain"
 msgstr "neturi"
 
-#: pan/gui/score-add-ui.cc:193
+#: ../pan/gui/score-add-ui.cc:196
 #, fuzzy
 msgid "is"
 msgstr "Tinka"
 
-#: pan/gui/score-add-ui.cc:194
+#: ../pan/gui/score-add-ui.cc:197
 msgid "isn't"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:195
+#: ../pan/gui/score-add-ui.cc:198
 msgid "starts with"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:196
+#: ../pan/gui/score-add-ui.cc:199
 msgid "ends with"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:197
+#: ../pan/gui/score-add-ui.cc:200
 msgid "matches regex"
 msgstr ""
 
-#: pan/gui/score-add-ui.cc:525
+#: ../pan/gui/score-add-ui.cc:481
+#, fuzzy
+msgid "Another rule already sets this article's score."
+msgstr "Užpildyti/Sulaužyti laiško tekstą"
+
+#: ../pan/gui/score-add-ui.cc:482
+msgid "You may want to go back or delete the old rule."
+msgstr ""
+
+#: ../pan/gui/score-add-ui.cc:553
 #, fuzzy
 msgid "Add and Re_score"
 msgstr "Pašto serveris"
 
-#: pan/gui/score-add-ui.cc:573
-#, fuzzy
-msgid "Pan: New Scoring Rule"
-msgstr "Keisti taisyklę"
-
-#: pan/gui/score-add-ui.cc:592
+#: ../pan/gui/score-add-ui.cc:604 ../pan/gui/score-add-ui.cc:624
 #, fuzzy
 msgid "New Scoring Rule"
 msgstr "Naujos taisyklės pavadinimas"
 
-#: pan/gui/score-add-ui.cc:603
+#: ../pan/gui/score-add-ui.cc:635
 #, fuzzy
 msgid "If the group name"
 msgstr "Pritraukti Naujienų grupių sritį"
 
-#: pan/gui/score-add-ui.cc:610
+#: ../pan/gui/score-add-ui.cc:642
 #, fuzzy
 msgid "And the article's"
 msgstr "Rodyti stebimus laiškus"
 
-#: pan/gui/score-add-ui.cc:622
-#, fuzzy
-msgid "Then"
-msgstr "Dėkojame"
-
-#: pan/gui/score-add-ui.cc:630
-#, fuzzy
-msgid "For"
-msgstr "_Aplankas"
-
-#: pan/gui/score-view-ui.cc:64
+#: ../pan/gui/score-view-ui.cc:56
 #, fuzzy
 msgid "Close and Re_score"
 msgstr "Uždaryti šį langą"
 
-#: pan/gui/score-view-ui.cc:167
+#: ../pan/gui/score-view-ui.cc:154
 #, c-format
 msgid "File %s, Lines %d - %d"
 msgstr ""
 
-#: pan/gui/score-view-ui.cc:170
-#, fuzzy, c-format
-msgid "Name: \"%s\""
-msgstr "Išsaugotas „%s“"
-
-#: pan/gui/score-view-ui.cc:199
+#: ../pan/gui/score-view-ui.cc:182
 #, fuzzy
 msgid "Pan: Article's Scores"
 msgstr "Iš_saugoti laišką kaip..."
 
-#: pan/gui/score-view-ui.cc:225
+#: ../pan/gui/score-view-ui.cc:208
 #, fuzzy
 msgid "Add"
 msgstr "Pri_dėti"
 
-#: pan/gui/score-view-ui.cc:230
+#: ../pan/gui/score-view-ui.cc:213
 #, fuzzy
 msgid "New Score"
 msgstr "Naujienų serveriai"
 
-#: pan/gui/score-view-ui.cc:235
+#: ../pan/gui/score-view-ui.cc:218
 msgid "Criteria"
 msgstr ""
 
-#: pan/gui/score-view-ui.cc:258
+#: ../pan/gui/score-view-ui.cc:241
 #, fuzzy
 msgid "Add a New Scoring Rule"
 msgstr "Sukurti naują aplanką"
 
-#: pan/gui/score-view-ui.cc:265
+#: ../pan/gui/score-view-ui.cc:248
 #, fuzzy
 msgid "Remove the Selected Scoring Rule"
 msgstr "Pervadinti pažymėtą grupę"
 
-#: pan/gui/server-ui.cc:162
+#: ../pan/gui/server-ui.cc:222
 msgid "Please specify the server's address."
 msgstr ""
 
-#. create the dialog
-#: pan/gui/server-ui.cc:201
-#, fuzzy
-msgid "Pan: Add a Server"
-msgstr "Pridėti/Keisti serverį"
+#: ../pan/gui/server-ui.cc:264
+msgid "Import SSL certificate (PEM format) from File"
+msgstr ""
 
-#: pan/gui/server-ui.cc:201
+#. create the dialog
+#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:872
 #, fuzzy
-msgid "Pan: Edit a Server's Settings"
+msgid "Add a Server"
+msgstr "Pašto serveris"
+
+#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:878
+#, fuzzy
+msgid "Edit a Server's Settings"
 msgstr "Kiekvieno serverio nuostatos"
 
-#: pan/gui/server-ui.cc:222
+#: ../pan/gui/server-ui.cc:310
 msgid "Location"
 msgstr "Vieta"
 
-#: pan/gui/server-ui.cc:226
+#: ../pan/gui/server-ui.cc:314
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr ""
 
-#: pan/gui/server-ui.cc:227
+#: ../pan/gui/server-ui.cc:315
 #, fuzzy
 msgid "_Address:"
 msgstr "Adresas:"
 
-#: pan/gui/server-ui.cc:231
+#: ../pan/gui/server-ui.cc:319
 msgid "The news server's port number.  Typically 119."
 msgstr ""
 
-#: pan/gui/server-ui.cc:232
+#: ../pan/gui/server-ui.cc:320
 #, fuzzy
 msgid "Por_t:"
 msgstr "Prievadas:"
 
-#: pan/gui/server-ui.cc:235
+#: ../pan/gui/server-ui.cc:323
 msgid "Login (if Required)"
 msgstr ""
 
-#: pan/gui/server-ui.cc:239
+#: ../pan/gui/server-ui.cc:327
 #, fuzzy
 msgid "_Username:"
 msgstr "Vartotojas"
 
-#: pan/gui/server-ui.cc:240
+#: ../pan/gui/server-ui.cc:328
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
 
-#: pan/gui/server-ui.cc:244
+#: ../pan/gui/server-ui.cc:332
 #, fuzzy
 msgid "_Password:"
 msgstr "Slaptažodis:"
 
-#: pan/gui/server-ui.cc:245
+#: ../pan/gui/server-ui.cc:333
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
 
-#: pan/gui/server-ui.cc:248
+#: ../pan/gui/server-ui.cc:336
 #, fuzzy
 msgid "Settings"
 msgstr "Ryšio nuostatos"
 
-#: pan/gui/server-ui.cc:254
+#: ../pan/gui/server-ui.cc:343
 #, fuzzy
 msgid "Connection _Limit:"
 msgstr "Jungiasi"
 
-#: pan/gui/server-ui.cc:257
+#: ../pan/gui/server-ui.cc:347
 msgid "After Two Weeks"
 msgstr ""
 
-#: pan/gui/server-ui.cc:258
+#: ../pan/gui/server-ui.cc:348
 msgid "After One Month"
 msgstr ""
 
-#: pan/gui/server-ui.cc:259
+#: ../pan/gui/server-ui.cc:349
 msgid "After Two Months"
 msgstr ""
 
-#: pan/gui/server-ui.cc:260
+#: ../pan/gui/server-ui.cc:350
+msgid "After Three Months"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:351
+msgid "After Six Months"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:352
 #, fuzzy
 msgid "Never Expire Old Articles"
 msgstr "Perkelti pažymėtus laiškus"
 
-#: pan/gui/server-ui.cc:274
+#: ../pan/gui/server-ui.cc:366
 #, fuzzy
 msgid "E_xpire Old Articles:"
 msgstr "Pažymėtus laiškus"
 
-#: pan/gui/server-ui.cc:277
+#: ../pan/gui/server-ui.cc:370
 #, fuzzy
 msgid "Primary"
 msgstr "Prioritetas"
 
-#: pan/gui/server-ui.cc:278
+#: ../pan/gui/server-ui.cc:371
 msgid "Fallback"
 msgstr ""
 
-#: pan/gui/server-ui.cc:292
+#: ../pan/gui/server-ui.cc:385
 #, fuzzy
 msgid "Server Rank:"
 msgstr "Serveris"
 
-#: pan/gui/server-ui.cc:296
+#: ../pan/gui/server-ui.cc:389
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
 "subscription servers as fallbacks."
 msgstr ""
 
-#: pan/gui/server-ui.cc:420
+#: ../pan/gui/server-ui.cc:396
+msgid "Security"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:401
+msgid "Use Plaintext (Unsecured) Connections"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:402
+#, fuzzy
+msgid "Use Secure SSL Connections"
+msgstr "Nustatyti jungčių ribas kiekvienam serveriui"
+
+#: ../pan/gui/server-ui.cc:418
+msgid "TLS (SSL) Options:"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:423
+msgid ""
+"You can set the option for using/disabling secure SSL/TLS connections here. "
+"If you enable SSL/TLS, your data is encrypted and secure. It is encouraged "
+"to use this option for privacy reasons."
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:598
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr ""
 
-#. dialog
-#: pan/gui/server-ui.cc:492
-#, fuzzy
-msgid "Pan: Servers"
-msgstr "Pašto serveris"
+#: ../pan/gui/server-ui.cc:687
+msgid "No information available."
+msgstr ""
 
-#: pan/gui/server-ui.cc:512
+#: ../pan/gui/server-ui.cc:693
+#, c-format
+msgid "Server Certificate for '%s'"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:798
+#, c-format
+msgid "Really delete certificate for \"%s\"?"
+msgstr ""
+
+#. dialog
+#: ../pan/gui/server-ui.cc:825 ../pan/gui/server-ui.cc:846
+#: ../pan/gui/server-ui.cc:944
 #, fuzzy
 msgid "Servers"
 msgstr "Serveris"
 
-#: pan/gui/server-ui.cc:538
-#, fuzzy
-msgid "Add a Server"
-msgstr "Pašto serveris"
-
-#: pan/gui/server-ui.cc:548
-#, fuzzy
-msgid "Edit a Server's Settings"
-msgstr "Kiekvieno serverio nuostatos"
-
-#: pan/gui/server-ui.cc:555
+#: ../pan/gui/server-ui.cc:885
 #, fuzzy
 msgid "Remove a Server"
 msgstr "Naujienų serveris"
 
-#. less than a mebi...
-#: pan/gui/task-pane.cc:210
-#, c-format
-msgid "%.2f KiB"
+#. dialog
+#: ../pan/gui/server-ui.cc:918
+msgid "SSL Certificates"
 msgstr ""
 
-#. less than a gibi...
-#: pan/gui/task-pane.cc:212
-#, c-format
-msgid "%.2f MiB"
+#: ../pan/gui/server-ui.cc:939
+msgid "Certificates"
 msgstr ""
 
-#: pan/gui/task-pane.cc:214
-#, c-format
-msgid "%.2f GiB"
+#: ../pan/gui/server-ui.cc:970
+msgid "Import Certificate"
 msgstr ""
 
-#: pan/gui/task-pane.cc:250
+#: ../pan/gui/server-ui.cc:976
+msgid "Inspect Certificate"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:983
+#, fuzzy
+msgid "Remove Certificate"
+msgstr "Naujienų serveris"
+
+#: ../pan/gui/task-pane.cc:142
+#, c-format
+msgid ""
+"\n"
+"<u>Upload</u>\n"
+"\n"
+"<i>Subject:</i> <b>\"%s\"</b>\n"
+"<i>From:</i> <b>%s</b>\n"
+"<i>Groups:</i> <b>%s</b>\n"
+"<i>Sourcefile:</i> <b>%s</b>\n"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:154
+#, c-format
+msgid ""
+"\n"
+"<u>Download</u>\n"
+"\n"
+"<i>Subject:</i> <b>\"%s\"</b>\n"
+"<i>From:</i> <b>%s</b>\n"
+"<i>Date:</i> <b>%s</b>\n"
+"<i>Groups:</i> <b>%s</b>\n"
+"<i>Save Path:</i> <b>%s</b>\n"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:156
+#, fuzzy
+msgid "unknown"
+msgstr "Nežinomas domenas"
+
+#: ../pan/gui/task-pane.cc:260
+msgid "Choose new destination for selected Tasks"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:410
 #, fuzzy, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan %s Užduočių tvarkyklė (%d Eilėje, %d Vykdoma, %d Nepavyko)"
 
-#: pan/gui/task-pane.cc:252
+#: ../pan/gui/task-pane.cc:412
 #, fuzzy, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan %s Užduočių tvarkyklė (%d Eilėje, %d Vykdoma)"
 
-#: pan/gui/task-pane.cc:254
-#, fuzzy
+#: ../pan/gui/task-pane.cc:414
+#, fuzzy, c-format
 msgid "Pan: Tasks"
 msgstr "Nėra užduočių"
 
-#: pan/gui/task-pane.cc:268
+#: ../pan/gui/task-pane.cc:439
 #, c-format
-msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
+msgid "%lu selected, %s"
 msgstr ""
 
-#: pan/gui/task-pane.cc:326
+#: ../pan/gui/task-pane.cc:503
 msgid "Running"
 msgstr "Vykdoma"
 
-#: pan/gui/task-pane.cc:327
+#: ../pan/gui/task-pane.cc:504
+#, fuzzy
+msgid "Decoding"
+msgstr "Iškoduojamas „%s“"
+
+#: ../pan/gui/task-pane.cc:505
+#, fuzzy
+msgid "Encoding"
+msgstr "Nežinomas kodavimas"
+
+#: ../pan/gui/task-pane.cc:506
+msgid "Queued for Decode"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:507
+msgid "Queued for Encode"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:508
 msgid "Queued"
 msgstr "Yra eilėje"
 
-#: pan/gui/task-pane.cc:328
+#: ../pan/gui/task-pane.cc:509
 msgid "Stopped"
 msgstr ""
 
-#: pan/gui/task-pane.cc:329
+#: ../pan/gui/task-pane.cc:510
 #, fuzzy
 msgid "Removing"
 msgstr "Pe_rvadinti"
 
-#: pan/gui/task-pane.cc:330
-#, fuzzy
-msgid "Unknown"
-msgstr "Nežinomas domenas"
-
-#: pan/gui/task-pane.cc:354
+#: ../pan/gui/task-pane.cc:537
 #, fuzzy, c-format
-msgid "%d%% Done; %d:%02d:%02d Remaining (%d @ %lu KiB/s)"
-msgstr "%.2f kBps, liko %d:%02d:%02d"
-
-#: pan/gui/task-pane.cc:358
-#, fuzzy, c-format
-msgid "%d%% Done; %s"
+msgid "%d%% Done"
 msgstr "% Atlikta"
 
-#: pan/gui/task-pane.cc:366
+#: ../pan/gui/task-pane.cc:543
 #, fuzzy, c-format
-msgid "to %s"
-msgstr "Apie %s"
+msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
+msgstr "%.2f kBps, liko %d:%02d:%02d"
 
-#: pan/gui/task-pane.cc:433
+#: ../pan/gui/task-pane.cc:636 ../pan/gui/task-pane.cc:637
+#, fuzzy
+msgid "Move To Top"
+msgstr "Eilute ž_emyn"
+
+#: ../pan/gui/task-pane.cc:641 ../pan/gui/task-pane.cc:642
+#, fuzzy
+msgid "Move To Bottom"
+msgstr "Perkelti pažymėtas užduotis į apačią"
+
+#: ../pan/gui/task-pane.cc:646 ../pan/gui/task-pane.cc:647
+#, fuzzy
+msgid "Stop Task"
+msgstr "Nėra užduočių"
+
+#: ../pan/gui/task-pane.cc:651 ../pan/gui/task-pane.cc:652
+#, fuzzy
+msgid "Delete Task"
+msgstr "Ištrinti"
+
+#: ../pan/gui/task-pane.cc:656 ../pan/gui/task-pane.cc:657
+msgid "Restart Task"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:661 ../pan/gui/task-pane.cc:662
+msgid "Change Download Destination"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:719
+#, fuzzy
+msgid "_Online"
+msgstr "Prisijungęs"
+
+#: ../pan/gui/task-pane.cc:736
 msgid "Restart Tasks"
 msgstr ""
 
-#: pan/gui/task-pane.cc:438
+#: ../pan/gui/task-pane.cc:738
 #, fuzzy
 msgid "Stop Tasks"
 msgstr "Nėra užduočių"
 
-#: pan/gui/task-pane.cc:443
+#: ../pan/gui/task-pane.cc:740
 #, fuzzy
 msgid "Delete Tasks"
 msgstr "Ištrinti"
 
-#: pan/gui/task-pane.cc:467
-msgid "Status"
-msgstr "Būsena"
-
-#: pan/gui/url.cc:92
+#: ../pan/gui/url.cc:123
 #, c-format
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr ""
 
-#: pan/tasks/nntp.cc:214
+#: ../pan/tasks/decoder.cc:111
 #, fuzzy, c-format
-msgid "Unable to set group: %s"
-msgstr "Negaliu nurodyti grupės: %s"
+msgid "Couldn't save file \"%s\": %s"
+msgstr "Nepavyko sukurti katalogo „%s“: %s"
 
-#: pan/tasks/nntp.cc:231
-#, fuzzy, c-format
-msgid "Error: %s"
-msgstr "Klaida"
-
-#: pan/tasks/socket-impl-gio.cc:112
-#, c-format
-msgid "Making a new connection to %*.*s"
-msgstr ""
-
-#: pan/tasks/socket-impl-gio.cc:347
-#, fuzzy
-msgid "Unknown Error"
-msgstr "Nežinomas domenas"
-
-#: pan/tasks/socket-impl-gio.cc:348
-#, fuzzy, c-format
-msgid "Error reading from socket: %s"
-msgstr "Klaida skaitant iš lizdo."
-
-#: pan/tasks/task-article.cc:54 pan/tasks/task-article.cc:124
-#, fuzzy, c-format
-msgid "Saving %s"
-msgstr "Saugomas „%s“"
-
-#: pan/tasks/task-article.cc:56
-#, fuzzy, c-format
-msgid "Reading %s"
-msgstr "Įkeliamas %s"
-
-#: pan/tasks/task-article.cc:291
+#: ../pan/tasks/decoder.cc:133
 msgid "Error initializing uulib"
 msgstr ""
 
-#: pan/tasks/task-article.cc:302
+#: ../pan/tasks/decoder.cc:147 ../pan/tasks/socket-impl-gio.cc:352
 #, fuzzy, c-format
-msgid "Couldn't load \"%s\": %s"
-msgstr "Negaliu įkelti šrifto „%s“"
+msgid "Error reading from %s: %s"
+msgstr "Klaida skaitant iš lizdo."
 
-#: pan/tasks/task-article.cc:335
+#: ../pan/tasks/decoder.cc:182
 #, c-format
 msgid "Saved \"%s\""
 msgstr "Išsaugotas „%s“"
 
-#: pan/tasks/task-article.cc:339
-#, fuzzy, c-format
-msgid ""
-"Error saving \"%s\":\n"
-"%s. %s"
-msgstr "Klaida skaitant iš lizdo."
-
-#: pan/tasks/task-article.cc:341
+#: ../pan/tasks/decoder.cc:189
 #, fuzzy, c-format
 msgid ""
 "Error saving \"%s\":\n"
 "%s."
 msgstr "Klaida skaitant iš lizdo."
 
-#: pan/tasks/task-groups.cc:40
+#: ../pan/tasks/decoder.cc:304 ../pan/tasks/task-article.cc:335
+#, fuzzy, c-format
+msgid "Decoding %s"
+msgstr "Iškoduojamas „%s“"
+
+#: ../pan/tasks/nntp.cc:126
+#, fuzzy, c-format
+msgid "%s requires a username, but none is set."
+msgstr "Mano serveris reikalauja vartotojo vardo ir slaptažodžio"
+
+#: ../pan/tasks/nntp.cc:139
+#, fuzzy, c-format
+msgid "%s requires a password, but none is set."
+msgstr "Mano serveris reikalauja vartotojo vardo ir slaptažodžio"
+
+#: ../pan/tasks/nntp.cc:205
+#, c-format
+msgid "Sending \"%s\" to %s returned an error: %s"
+msgstr ""
+
+#: ../pan/tasks/nntp.cc:228
+#, c-format
+msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
+msgstr ""
+
+#: ../pan/tasks/nntp-pool.cc:222
+#, fuzzy, c-format
+msgid "Unable to connect to \"%s\""
+msgstr "Nepavyko prisijungti prie pašto serverio „%s“"
+
+#: ../pan/tasks/socket-impl-gio.cc:173 ../pan/tasks/socket-impl-gio.cc:211
+#, fuzzy, c-format
+msgid "Error connecting to \"%s\""
+msgstr "Klaida skaitant iš lizdo."
+
+#: ../pan/tasks/socket-impl-gio.cc:351
+#, fuzzy
+msgid "Unknown Error"
+msgstr "Nežinomas domenas"
+
+#: ../pan/tasks/task-article.cc:54 ../pan/tasks/task-article.cc:141
+#: ../pan/tasks/task-article.cc:144
+#, fuzzy, c-format
+msgid "Saving %s"
+msgstr "Saugomas „%s“"
+
+#: ../pan/tasks/task-article.cc:56
+#, fuzzy, c-format
+msgid "Reading %s"
+msgstr "Įkeliamas %s"
+
+#: ../pan/tasks/task-article.cc:307
+#, c-format
+msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
+msgstr ""
+
+#: ../pan/tasks/task-groups.cc:40
 #, fuzzy, c-format
 msgid "Getting group list from \"%s\""
 msgstr "Gaunu %s iš %s"
 
-#: pan/tasks/task-groups.cc:121
+#: ../pan/tasks/task-groups.cc:122
 #, c-format
 msgid "Fetched %lu Groups"
 msgstr ""
 
-#: pan/tasks/task-post.cc:34
+#: ../pan/tasks/task-post.cc:35
 #, fuzzy, c-format
 msgid "Posting \"%s\""
 msgstr "Apdorojamas „%s“"
 
-#: pan/tasks/task-xover.cc:71
+#: ../pan/tasks/task-post.cc:76
+#, fuzzy, c-format
+msgid "Posting of \"%s\" failed: %s"
+msgstr "Skelbiamas laiškas „%s“"
+
+#: ../pan/tasks/task-post.cc:81
+#, c-format
+msgid "Posting of \"%s\" succesful: %s"
+msgstr ""
+
+#: ../pan/tasks/task-xover.cc:79
 #, fuzzy, c-format
 msgid "Getting all headers for \"%s\""
 msgstr "Gaunamos %s į „%s“"
 
-#: pan/tasks/task-xover.cc:73
+#: ../pan/tasks/task-xover.cc:81
 #, fuzzy, c-format
 msgid "Getting new headers for \"%s\""
 msgstr "Gaunamos %s į „%s“"
 
 #. SAMPLE
-#: pan/tasks/task-xover.cc:75
+#: ../pan/tasks/task-xover.cc:83
 #, fuzzy, c-format
 msgid "Sampling headers for \"%s\""
 msgstr "Gaunamos %s į „%s“"
 
-#: pan/tasks/task-xover.cc:321
+#: ../pan/tasks/task-xover.cc:368
 #, fuzzy, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "Skirstoma į gijas %u laiškų"
 
-#: pan/usenet-utils/gnksa.cc:879
+#: ../pan/usenet-utils/filter-info.cc:163
+#, fuzzy
+msgid "article doesn't have attachments"
+msgstr "laiške yra %s dvejetainių priedų"
+
+#: ../pan/usenet-utils/filter-info.cc:167
+#, fuzzy
+msgid "the article has attachments"
+msgstr "laiške yra %s dvejetainių priedų"
+
+#: ../pan/usenet-utils/filter-info.cc:171
+#, fuzzy
+msgid "the article isn't cached locally"
+msgstr "Laiškas y_ra pažymėtas"
+
+#: ../pan/usenet-utils/filter-info.cc:175
+#, fuzzy
+msgid "the article is cached locally"
+msgstr "Laiškas y_ra pažymėtas"
+
+#: ../pan/usenet-utils/filter-info.cc:179
+#, fuzzy
+msgid "the article wasn't posted by you"
+msgstr "Laiškas _buvo paskelbtas prieš daugiau nei"
+
+#: ../pan/usenet-utils/filter-info.cc:183
+#, fuzzy
+msgid "the article was posted by you"
+msgstr "Laiškas _buvo paskelbtas prieš daugiau nei"
+
+#: ../pan/usenet-utils/filter-info.cc:187
+#, fuzzy
+msgid "the article has been read"
+msgstr "La_iške yra"
+
+#: ../pan/usenet-utils/filter-info.cc:191
+#, fuzzy
+msgid "the article hasn't been read"
+msgstr "La_iške yra"
+
+#: ../pan/usenet-utils/filter-info.cc:195
+#, fuzzy, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "laiškas yra daugiau nei %d dienų senumo"
+
+#: ../pan/usenet-utils/filter-info.cc:200
+#, fuzzy, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "laiškas yra daugiau nei %d dienų senumo"
+
+#: ../pan/usenet-utils/filter-info.cc:205
+#, fuzzy, c-format
+msgid "the article is less than %ld lines long"
+msgstr "laiškas yra daugiau nei %d dienų senumo"
+
+#: ../pan/usenet-utils/filter-info.cc:210
+#, fuzzy, c-format
+msgid "the article is at least %ld lines long"
+msgstr "laiškas yra daugiau nei %d dienų senumo"
+
+#: ../pan/usenet-utils/filter-info.cc:215
+#, fuzzy, c-format
+msgid "the article is less than %ld days old"
+msgstr "laiškas yra daugiau nei %d dienų senumo"
+
+#: ../pan/usenet-utils/filter-info.cc:220
+#, fuzzy, c-format
+msgid "the article is at least %ld days old"
+msgstr "laiškas yra daugiau nei %d dienų senumo"
+
+#: ../pan/usenet-utils/filter-info.cc:225
+#, fuzzy, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "laiškas buvo paskelbtas daugiau nei %d grupėse"
+
+#: ../pan/usenet-utils/filter-info.cc:230
+#, fuzzy, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "laiškas buvo paskelbtas daugiau nei %d grupėse"
+
+#: ../pan/usenet-utils/filter-info.cc:235
+#, fuzzy, c-format
+msgid "the article's score is less than %ld"
+msgstr "Laiške yra _daugiau nei"
+
+#: ../pan/usenet-utils/filter-info.cc:240
+#, fuzzy, c-format
+msgid "the article's score is %ld or higher"
+msgstr "Laiške yra _daugiau nei"
+
+#: ../pan/usenet-utils/filter-info.cc:249
+#: ../pan/usenet-utils/filter-info.cc:259
+#, fuzzy, c-format
+msgid "%s doesn't contain \"%s\""
+msgstr "%s neturi %s \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:250
+#: ../pan/usenet-utils/filter-info.cc:260
+#, fuzzy, c-format
+msgid "%s isn't \"%s\""
+msgstr "%s turi %s \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:251
+#: ../pan/usenet-utils/filter-info.cc:261
+#, fuzzy, c-format
+msgid "%s doesn't begin with \"%s\""
+msgstr "%s neturi %s \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:252
+#: ../pan/usenet-utils/filter-info.cc:262
+#, fuzzy, c-format
+msgid "%s doesn't end with \"%s\""
+msgstr "%s neturi %s \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:253
+#: ../pan/usenet-utils/filter-info.cc:263
+#, fuzzy, c-format
+msgid "%s doesn't match the regex \"%s\""
+msgstr "%s neturi %s \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:275
+#, fuzzy, c-format
+msgid "%s contains \"%s\""
+msgstr "%s turi %s \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:276
+#, fuzzy, c-format
+msgid "%s is \"%s\""
+msgstr "%s turi %s \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:277
+#, fuzzy, c-format
+msgid "%s begins with \"%s\""
+msgstr "%s turi %s \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:278
+#, fuzzy, c-format
+msgid "%s ends with \"%s\""
+msgstr "%s turi %s \"%s\""
+
+#: ../pan/usenet-utils/filter-info.cc:279
+#, fuzzy, c-format
+msgid "%s matches the regex \"%s\""
+msgstr "laiškas yra pažymėtas %s"
+
+#: ../pan/usenet-utils/filter-info.cc:285
+msgid "Any of these tests fail:"
+msgstr ""
+
+#: ../pan/usenet-utils/filter-info.cc:292
+msgid "All of these tests pass:"
+msgstr ""
+
+#: ../pan/usenet-utils/filter-info.cc:299
+msgid "None of these tests pass:"
+msgstr ""
+
+#: ../pan/usenet-utils/filter-info.cc:306
+msgid "Any of these tests pass:"
+msgstr ""
+
+#: ../pan/usenet-utils/gnksa.cc:846
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr ""
 
-#: pan/usenet-utils/message-check.cc:123
+#: ../pan/usenet-utils/message-check.cc:124
 msgid "Warning: Reply seems to be top-posted."
 msgstr ""
 
-#: pan/usenet-utils/message-check.cc:144
+#: ../pan/usenet-utils/message-check.cc:145
 msgid "Warning: The signature marker should be \"-- \", not \"--\"."
 msgstr ""
 
-#: pan/usenet-utils/message-check.cc:161
+#: ../pan/usenet-utils/message-check.cc:162
 #, fuzzy
 msgid "Warning: Signature prefix with no signature."
 msgstr "DĖMESIO: Parašo skyriklis be paties parašo."
 
-#: pan/usenet-utils/message-check.cc:166
+#: ../pan/usenet-utils/message-check.cc:167
 #, fuzzy
 msgid "Warning: Signature is more than 4 lines long."
 msgstr "DĖMESIO: parašas yra ilgesnis nei 4 eilutės"
 
-#: pan/usenet-utils/message-check.cc:171
+#: ../pan/usenet-utils/message-check.cc:172
 #, fuzzy
 msgid "Warning: Signature is more than 80 characters wide."
 msgstr "DĖMESIO: parašas yra ilgesnis nei 4 eilutės"
 
-#: pan/usenet-utils/message-check.cc:196
-#, c-format
-msgid "Warning: %d lines are more than 80 characters wide."
-msgstr ""
+#: ../pan/usenet-utils/message-check.cc:198
+#, fuzzy, c-format
+msgid "Warning: %d line is more than 80 characters wide."
+msgid_plural "Warning: %d lines are more than 80 characters wide."
+msgstr[0] "DĖMESIO: parašas yra ilgesnis nei 4 eilutės"
+msgstr[1] "DĖMESIO: parašas yra ilgesnis nei 4 eilutės"
 
-#: pan/usenet-utils/message-check.cc:219
+#: ../pan/usenet-utils/message-check.cc:224
 #, fuzzy
 msgid "Error: Message is empty."
 msgstr "KLAIDA: Laiškas yra tuščias."
 
-#: pan/usenet-utils/message-check.cc:254
+#: ../pan/usenet-utils/message-check.cc:259
 #, fuzzy
 msgid "Warning: The message is entirely quoted text!"
 msgstr "DĖMESIO: Laiške yra vien tik cituojamas tekstas!"
 
-#: pan/usenet-utils/message-check.cc:255
+#: ../pan/usenet-utils/message-check.cc:260
 #, fuzzy
 msgid "Warning: The message is mostly quoted text."
 msgstr "DĖMESIO: Laiške yra beveik tik cituojamas tekstas."
 
-#: pan/usenet-utils/message-check.cc:305
+#: ../pan/usenet-utils/message-check.cc:310
 #, fuzzy
 msgid "Error: Message appears to have no new content."
 msgstr "KLAIDA: Atrodo, kad laiške nėra nieko naujo."
 
-#: pan/usenet-utils/message-check.cc:340 pan/usenet-utils/message-check.cc:375
-#, fuzzy, c-format
-msgid "Warning: Unknown group \"%s\"."
-msgstr "DĖMESIO: Nežinoma grupė: „%s“."
+#: ../pan/usenet-utils/message-check.cc:345
+#: ../pan/usenet-utils/message-check.cc:384
+#, c-format
+msgid ""
+"Warning: The posting profile's server doesn't carry newsgroup\n"
+"\t\"%s\".\n"
+"\tIf the group name is correct, switch profiles in the \"From:\"\n"
+"\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
+msgstr ""
 
-#: pan/usenet-utils/message-check.cc:347
+#: ../pan/usenet-utils/message-check.cc:356
 #, fuzzy
 msgid "Warning: Following-Up to too many groups."
 msgstr "DĖMESIO: Dalyvaujama-kur daugelyje grupių."
 
-#: pan/usenet-utils/message-check.cc:358
+#: ../pan/usenet-utils/message-check.cc:367
 #, fuzzy
 msgid "Error: No Subject specified."
 msgstr "KLAIDA: Nenurodyta jokia tema."
 
-#: pan/usenet-utils/message-check.cc:383
+#: ../pan/usenet-utils/message-check.cc:396
 #, fuzzy, c-format
 msgid "Warning: Group \"%s\" is read-only."
 msgstr "DĖMESIO: Grupė „%s“ yra tik skaitymui."
 
-#: pan/usenet-utils/message-check.cc:392
+#: ../pan/usenet-utils/message-check.cc:405
 #, fuzzy
 msgid "Error: Posting to a very large number of groups."
 msgstr "KLAIDA: Siunčiama į labai didelį kiekį grupių."
 
-#: pan/usenet-utils/message-check.cc:397
+#: ../pan/usenet-utils/message-check.cc:410
 #, fuzzy
 msgid "Warning: Posting to a large number of groups."
 msgstr "DĖMESIO: Siunčiama į labai didelį kiekį grupių."
 
-#: pan/usenet-utils/message-check.cc:404
+#: ../pan/usenet-utils/message-check.cc:417
 #, fuzzy
 msgid "Warning: Crossposting without setting Followup-To header."
 msgstr "DĖMESIO: Kryžminis skelbimas nenurodant Pratęsimas-į:"
 
-#: pan/usenet-utils/message-check.cc:428
+#: ../pan/usenet-utils/message-check.cc:444
 #, fuzzy
 msgid "Error: Bad email address."
 msgstr "El. pašto adresas:"
 
-#: pan/usenet-utils/message-check.cc:437
+#: ../pan/usenet-utils/message-check.cc:453
 msgid "Warning: Most newsgroups frown upon HTML posts."
 msgstr ""
 
-#: pan/usenet-utils/message-check.cc:467
+#: ../pan/usenet-utils/message-check.cc:490
 #, fuzzy
 msgid "Error: No Recipients."
 msgstr "Nėra gavėjų!"
 
-#: pan/usenet-utils/text-massager.cc:309
+#: ../pan/usenet-utils/scorefile.cc:304
+#, c-format
+msgid ""
+"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
+"'Expires: DD-MM-YYYY'."
+msgstr ""
+
+#: ../pan/usenet-utils/scorefile.cc:307
+#, c-format
+msgid "Expired old score from %*.*s, line %d"
+msgstr ""
+
+#: ../pan/usenet-utils/scorefile.cc:380
+#, c-format
+msgid "Error reading score in %*.*s, line %d: unexpected line."
+msgstr ""
+
+#: ../pan/usenet-utils/scorefile.cc:428
+#, c-format
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
+msgstr ""
+
+#: ../pan/usenet-utils/text-massager.cc:397
 msgid "> [quoted text muted]"
 msgstr "> [cituojamas tekstas paslėptas]"
 
-#: pan/usenet-utils/utf8-utils.cc:252
-msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
-msgstr ""
+#, fuzzy
+#~ msgid "Error reading \"%s\": %s"
+#~ msgstr "Klaida skaitant iš lizdo."
+
+#, fuzzy
+#~ msgid "Creating directory \"%s\""
+#~ msgstr "Nepavyko sukurti katalogo „%s“: %s"
+
+#, fuzzy
+#~ msgid "Couldn't create directory \"%s\": %s"
+#~ msgstr "Nepavyko sukurti katalogo „%s“: %s"
+
+#, fuzzy
+#~ msgid "_Groups"
+#~ msgstr "Grupės"
+
+#, fuzzy
+#~ msgid "Read Selected Group"
+#~ msgstr "Pažymi grupę"
+
+#, fuzzy
+#~ msgid "_Mark Group _Read"
+#~ msgstr "Pažymėti skaitytais"
+
+#, fuzzy
+#~ msgid "_Delete Group's Articles"
+#~ msgstr "Ištrinti senus laiškus"
+
+#, fuzzy
+#~ msgid "Get New Headers for Selected Groups"
+#~ msgstr "Gauti naujas antraštes ir tekstus pažymėtose grupėse"
+
+#, fuzzy
+#~ msgid "Get New Headers for Subscribed Groups"
+#~ msgstr "Gauti naujas antraštes ir tekstus iš pažymėtų grupių"
+
+#, fuzzy
+#~ msgid "Get Headers from Server"
+#~ msgstr "Mėginti antraštes iš pažymėtų grupių"
+
+#, fuzzy
+#~ msgid "Get a new Group list from the Server"
+#~ msgstr "Mėginti antraštes iš pažymėtų grupių"
+
+#, fuzzy
+#~ msgid "Subscribe to Selected Groups"
+#~ msgstr "Užsisakyti pažymėtą grupę (es)"
+
+#, fuzzy
+#~ msgid "Unsubscribe from Selected Groups"
+#~ msgstr "Atsisakyti pažymėtos grupės (ių)"
+
+#, fuzzy
+#~ msgid "Save Selected Articles..."
+#~ msgstr "Pažymėti laiškus vėliavėlėmis"
+
+#, fuzzy
+#~ msgid "Cancel Last Task"
+#~ msgstr "Nutraukti pažymėtas užduotis"
+
+#, fuzzy
+#~ msgid "Clear Header Pane"
+#~ msgstr "Gijų skydelis"
+
+#, fuzzy
+#~ msgid "Clear Body Pane"
+#~ msgstr "Grupių sąrašo skydelis"
+
+#, fuzzy
+#~ msgid "Download _Selected Article"
+#~ msgstr "Atžymėti laiškų vėliavėles"
+
+#, fuzzy
+#~ msgid "Download Selected Article"
+#~ msgstr "Atžymėti laiškų vėliavėles"
+
+#, fuzzy
+#~ msgid "Read _Selected Article"
+#~ msgstr "Pažymėtus laiškus"
+
+#, fuzzy
+#~ msgid "Read Selected Article"
+#~ msgstr "Pažymėtus laiškus"
+
+#, fuzzy
+#~ msgid "Next Unread Group"
+#~ msgstr "Kita neskaityta _grupė"
+
+#, fuzzy
+#~ msgid "Next Group"
+#~ msgstr "Kita grupė"
+
+#, fuzzy
+#~ msgid "Next Watched Article"
+#~ msgstr "Keše esantis laiškas „%s“"
+
+#, fuzzy
+#~ msgid "Next Thread"
+#~ msgstr "Ignoruoti giją"
+
+#, fuzzy
+#~ msgid "Previous Article"
+#~ msgstr "_Aukštyn pažymėti praeitą laišką"
+
+#, fuzzy
+#~ msgid "Previous Thread"
+#~ msgstr "Aukštyn pažymėti praeitą giją"
+
+#, fuzzy
+#~ msgid "Parent Article"
+#~ msgstr "Rikiuoti laiškus"
+
+#, fuzzy
+#~ msgid "_Plonk Author"
+#~ msgstr "- Autorius"
+
+#, fuzzy
+#~ msgid "Mark Article as Read"
+#~ msgstr "Laiškas _yra "
+
+#, fuzzy
+#~ msgid "Mark Article as Unread"
+#~ msgstr "Laiškas _yra "
+
+#, fuzzy
+#~ msgid "Reply to Author"
+#~ msgstr "- Autorius"
+
+#, fuzzy
+#~ msgid "Match Only Articles Posted by Me"
+#~ msgstr "Laiškas _buvo paskelbtas prieš daugiau nei"
+
+#, fuzzy
+#~ msgid "Pan: "
+#~ msgstr "Pan %s"
+
+#, fuzzy
+#~ msgid "Clear the Filter"
+#~ msgstr "Išvalyti šį logą."
+
+#, fuzzy
+#~ msgid "Pan: %s"
+#~ msgstr "Pan %s"
+
+#, fuzzy
+#~ msgid "Tasks: %u/%u"
+#~ msgstr "Užduotys: %d/%d"
+
+#, fuzzy
+#~ msgid "%.1f KiB"
+#~ msgstr "%d @ %.1f kB/s"
+
+#, fuzzy
+#~ msgid "Wrap the Article Body to 80 Columns"
+#~ msgstr "Užpildyti/Sulaužyti laiško tekstą"
+
+#, fuzzy
+#~ msgid "_Close"
+#~ msgstr "Uždaryti"
+
+#, fuzzy
+#~ msgid "Close Window"
+#~ msgstr "Uždaryti šį langą"
+
+#, fuzzy
+#~ msgid "Cut Text"
+#~ msgstr "Cituojamas tekstas"
+
+#, fuzzy
+#~ msgid "_Copy"
+#~ msgstr "_Kopijuoti"
+
+#, fuzzy
+#~ msgid "Copy Text"
+#~ msgstr "Laužyti tekstą"
+
+#, fuzzy
+#~ msgid "_Paste"
+#~ msgstr "_Rašymas"
+
+#, fuzzy
+#~ msgid "Paste Text"
+#~ msgstr "Cituojamas tekstas"
+
+#, fuzzy
+#~ msgid "Manage Posting Pr_ofiles..."
+#~ msgstr "Nepavyko paskelbti naujienų grupėse.\n"
+
+#, fuzzy
+#~ msgid "Error loading post.ui: \"%s\""
+#~ msgstr "Klaida skaitant iš lizdo."
+
+#, fuzzy
+#~ msgid "Editors"
+#~ msgstr "_Keisti"
+
+#, fuzzy
+#~ msgid "Posting Article"
+#~ msgstr "Rūšiuojami laiškai"
+
+#, fuzzy
+#~ msgid "Add a New Profile"
+#~ msgstr "Išsaugoti profilį"
+
+#, fuzzy
+#~ msgid "Edit the selected profile"
+#~ msgstr "Taisyti pažymėtą laišką"
+
+#, fuzzy
+#~ msgid "Remove the selected profile"
+#~ msgstr "Pervadinti pažymėtą aplanką"
+
+#, fuzzy
+#~ msgid "Threads"
+#~ msgstr "gijoje"
+
+#, fuzzy
+#~ msgid "Save _Attachments"
+#~ msgstr "Išsaugoti priedą kaip"
+
+#, fuzzy
+#~ msgid "Path"
+#~ msgstr "Spausdinti"
+
+#, fuzzy
+#~ msgid "_Path:"
+#~ msgstr "_Rašymas"
+
+#, fuzzy
+#~ msgid "Group Management"
+#~ msgstr "Kaliausių tvarkymas."
+
+#, fuzzy
+#~ msgid "Pan: New Scoring Rule"
+#~ msgstr "Keisti taisyklę"
+
+#, fuzzy
+#~ msgid "Then"
+#~ msgstr "Dėkojame"
+
+#, fuzzy
+#~ msgid "For"
+#~ msgstr "_Aplankas"
+
+#, fuzzy
+#~ msgid "Name: \"%s\""
+#~ msgstr "Išsaugotas „%s“"
+
+#, fuzzy
+#~ msgid "Pan: Add a Server"
+#~ msgstr "Pridėti/Keisti serverį"
+
+#, fuzzy
+#~ msgid "Pan: Edit a Server's Settings"
+#~ msgstr "Kiekvieno serverio nuostatos"
+
+#, fuzzy
+#~ msgid "Pan: Servers"
+#~ msgstr "Pašto serveris"
+
+#, fuzzy
+#~ msgid "to %s"
+#~ msgstr "Apie %s"
+
+#~ msgid "Status"
+#~ msgstr "Būsena"
+
+#, fuzzy
+#~ msgid "Unable to set group: %s"
+#~ msgstr "Negaliu nurodyti grupės: %s"
+
+#, fuzzy
+#~ msgid "Couldn't load \"%s\": %s"
+#~ msgstr "Negaliu įkelti šrifto „%s“"
+
+#, fuzzy
+#~ msgid ""
+#~ "Error saving \"%s\":\n"
+#~ "%s. %s"
+#~ msgstr "Klaida skaitant iš lizdo."
+
+#, fuzzy
+#~ msgid "Warning: Unknown group \"%s\"."
+#~ msgstr "DĖMESIO: Nežinoma grupė: „%s“."
 
 #, fuzzy
 #~ msgid "_Posting"
@@ -2959,14 +3712,6 @@ msgstr ""
 #~ msgid "Automatic Downloads"
 #~ msgstr "_Parsiųsti"
 
-#, fuzzy
-#~ msgid "Save a_ttachments to path:"
-#~ msgstr "Išsaugoti priedą kaip"
-
-#, fuzzy
-#~ msgid "Error decoding \"%s\": %s"
-#~ msgstr "Klaida skaitant iš lizdo."
-
 #~ msgid "UNKNOWN"
 #~ msgstr "NEŽINOMAS"
 
@@ -2980,10 +3725,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Header Pane background:"
 #~ msgstr "Gijų skydelis"
-
-#, fuzzy
-#~ msgid "Read articles:"
-#~ msgstr "Rodyti skaitytus laiškus"
 
 #, fuzzy
 #~ msgid "Unread articles:"
@@ -3036,10 +3777,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "/Group _Properties..."
 #~ msgstr "_Savybės..."
-
-#, fuzzy
-#~ msgid "/Dele_te Group"
-#~ msgstr "Pažymi grupę"
 
 #~ msgid " (Moderated)"
 #~ msgstr " (Moderuojama)"
@@ -3184,9 +3921,6 @@ msgstr ""
 
 #~ msgid "Newsgroups: "
 #~ msgstr "Naujienų grupės:"
-
-#~ msgid "Message-Id: "
-#~ msgstr "Laiško Id:"
 
 #~ msgid "Date: "
 #~ msgstr "Data:"
@@ -3403,10 +4137,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Move the selected line up one line"
 #~ msgstr "Perkelti pažymėtus laiškus ir atsakymus"
-
-#, fuzzy
-#~ msgid "Move Down"
-#~ msgstr "Eilute ž_emyn"
 
 #, fuzzy
 #~ msgid "Move the selected line down one line"
@@ -3675,9 +4405,6 @@ msgstr ""
 #~ msgid "Select the file to attach."
 #~ msgstr "Pasirink, kurią .newsrc bylą nuskaityti:"
 
-#~ msgid "Filename"
-#~ msgstr "Bylos vardas"
-
 #, fuzzy
 #~ msgid "Remove a File from the Attachment List"
 #~ msgstr "Ištrinti visas laiškus iš pažymėtos grupės(ių)"
@@ -3694,27 +4421,9 @@ msgstr ""
 #~ msgid "<b>Followup-To:</b>"
 #~ msgstr "Pratęsimas-į:"
 
-#~ msgid ""
-#~ "The newsgroup or newsgroups where replies to your posted message should "
-#~ "go.  This is only needed if it differs from the \"Post To Groups\" "
-#~ "header. \n"
-#~ "To direct all replies to your email address, use \"Followup-To: poster\""
-#~ msgstr ""
-#~ "Naujienų grupė ar grupės, kur turėtų eiti atsakymai į tavo paskelbtą "
-#~ "laišką. Tai reikalinga tik tada, jei skiriasi nuo „Skelbti grupėse“ "
-#~ "lauko.\n"
-#~ "Kad visi atsakymai eitų į tavo el. paštą, naudok „Skelbti-kur: poster“"
-
 #, fuzzy
 #~ msgid "<b>Reply-To:</b>"
 #~ msgstr "Atsakyti-kam:"
-
-#~ msgid ""
-#~ "The e-mail account where mail replies to your posted message should go.  "
-#~ "This is only needed if it differs from the \"From\" header."
-#~ msgstr ""
-#~ "El. pašto adresas, kur turėtų eiti atsakymai paštu į tavo paskelbtą "
-#~ "laišką. Tai reikalinga tik tuomet, jei skiriasi nuo „Nuo“ lauko."
 
 #, fuzzy
 #~ msgid "<b>Organization:</b>"
@@ -3722,9 +4431,6 @@ msgstr ""
 
 #~ msgid "The organization you're associated with."
 #~ msgstr "Organizacija, kuriai tu priklausai"
-
-#~ msgid "Don't add the \"User-Agent\" identification header"
-#~ msgstr "Nepridėti „User-Agent“ atpažinimo antraštės"
 
 #, fuzzy
 #~ msgid "<b>Subject:</b>"
@@ -3747,10 +4453,6 @@ msgstr ""
 
 #~ msgid "Save message to file"
 #~ msgstr "Išsaugoti laišką į bylą"
-
-#, fuzzy
-#~ msgid "Pan: Import .newsrc File"
-#~ msgstr "Importuoti bylą .newsrc"
 
 #~ msgid "Select .newsrc File to Read:"
 #~ msgstr "Pasirink, kurią .newsrc bylą nuskaityti:"
@@ -3843,10 +4545,6 @@ msgstr ""
 #~ msgstr "_Kaliausės..."
 
 #, fuzzy
-#~ msgid "Select Font"
-#~ msgstr "Pažymėjimas"
-
-#, fuzzy
 #~ msgid "Family"
 #~ msgstr "Nepavyko"
 
@@ -3870,9 +4568,6 @@ msgstr ""
 
 #~ msgid "Authorization"
 #~ msgstr "Autorizacija"
-
-#~ msgid "My server requires my username and password"
-#~ msgstr "Mano serveris reikalauja vartotojo vardo ir slaptažodžio"
 
 #~ msgid "Password"
 #~ msgstr "Slaptažodis"
@@ -3954,9 +4649,6 @@ msgstr ""
 #~ msgid "Middle Mouse Button:"
 #~ msgstr "Pelės mygtukas 1:"
 
-#~ msgid "Selection"
-#~ msgstr "Pažymėjimas"
-
 #, fuzzy
 #~ msgid "Old Articles with no New Replies"
 #~ msgstr "Pažymėtus laiškus ir atsakymus"
@@ -3976,10 +4668,6 @@ msgstr ""
 #~ msgid "When a followup changes the subject, show as new thread"
 #~ msgstr "Kai pratęsime pakeičiama tema, rodyti lyg naują giją"
 
-#, fuzzy
-#~ msgid "Expand all threads by default"
-#~ msgstr "Išplėsti visas gijas"
-
 #~ msgid "Show only the first part of complete multipart binary posts"
 #~ msgstr "Rodyti tik pirmąją pilnų kelių dalių dvejetainių skelbimų dalį."
 
@@ -3988,10 +4676,6 @@ msgstr ""
 
 #~ msgid "Article Pane"
 #~ msgstr "Laiškų skydelis"
-
-#, fuzzy
-#~ msgid "Selected layout: "
-#~ msgstr "Pažymėtas gijas"
 
 #~ msgid "Loads Group"
 #~ msgstr "Įkelia grupę"
@@ -4023,9 +4707,6 @@ msgstr ""
 
 #~ msgid "Pan should quietly stay offline until told otherwise"
 #~ msgstr "Pan turi tyliai būti atsijungusi, kol nepaliepta kitaip"
-
-#~ msgid "Global Settings"
-#~ msgstr "Bendros nuostatos"
 
 #~ msgid ""
 #~ "Maximum\n"
@@ -4070,9 +4751,6 @@ msgstr ""
 
 #~ msgid "Delete Cache when exiting Pan"
 #~ msgstr "Išvalyti kešą išeinant iš Pan"
-
-#~ msgid "Article Cache"
-#~ msgstr "Laiškų kešas"
 
 #, fuzzy
 #~ msgid "Import/Export .newsrc files automatically"
@@ -4144,10 +4822,6 @@ msgstr ""
 #~ msgid "You haven't loaded an article to print."
 #~ msgstr "Tu neįkėlei laiško, kurį spausdinti."
 
-#, fuzzy
-#~ msgid "Unable to connect to server %s:%d\n"
-#~ msgstr "Nepavyko prisijungti prie pašto serverio „%s“"
-
 #~ msgid "Connect Failure"
 #~ msgstr "Prisijungimo nesėkmė"
 
@@ -4179,9 +4853,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Use Subject"
 #~ msgstr "+ Tema"
-
-#~ msgid "Use Custom Filename"
-#~ msgstr "Naudoti norimą bylos vardą"
 
 #, fuzzy
 #~ msgid "Specify Filename"
@@ -4256,9 +4927,6 @@ msgstr ""
 #~ msgid "Timed out waiting for the goahead to write to the server."
 #~ msgstr "Baigėsi laikas laukiant, kada serveris leis rašyti."
 
-#~ msgid "An error occurred writing to the server."
-#~ msgstr "Įvyko klaida rašant į serverį"
-
 #, fuzzy
 #~ msgid "Error saving article \"%s\" (is %s full?)"
 #~ msgstr "Skelbiu laiško „%s“ %d dalį iš %d."
@@ -4293,9 +4961,6 @@ msgstr ""
 
 #~ msgid "Waiting to decode \"%s\""
 #~ msgstr "Laukiu kol galėsiu iškoduoti „%s“"
-
-#~ msgid "Decoding \"%s\""
-#~ msgstr "Iškoduojamas „%s“"
 
 #, fuzzy
 #~ msgid "Decode unable to create file \"%s\" %s"
@@ -4414,9 +5079,6 @@ msgstr ""
 #~ msgid "Pan - Log Viewer"
 #~ msgstr "Pan - Logų peržiūra"
 
-#~ msgid "Save this log to a file."
-#~ msgstr "Išsaugoti šį logą į bylą."
-
 #~ msgid "Time"
 #~ msgstr "Laikas"
 
@@ -4498,10 +5160,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Jei tu turi užsiregistruoti savo naujienų (NNTP) serveryje, uždėk varnelę "
 #~ "žemiau."
-
-#, fuzzy
-#~ msgid "My server requires a password."
-#~ msgstr "Mano serveris reikalauja vartotojo vardo ir slaptažodžio"
 
 #~ msgid "Account name:"
 #~ msgstr "Sąskaitos vardas:"
@@ -4665,19 +5323,12 @@ msgstr ""
 #~ msgid "Move Selected Task(s) Down"
 #~ msgstr "Perkelti pažymėtas užduotis žemyn"
 
-#, fuzzy
-#~ msgid "Move Selected Task(s) to Bottom"
-#~ msgstr "Perkelti pažymėtas užduotis į apačią"
-
 #~ msgid "Requeue selected failed Task(s)"
 #~ msgstr "Iš naujo įdėti į eilę nepavykusias užduotis"
 
 #, fuzzy
 #~ msgid "Pause the Task Manager"
 #~ msgstr "Atidaryti Užduočių tvarkyklę"
-
-#~ msgid "Set Per-Server Connection Limits"
-#~ msgstr "Nustatyti jungčių ribas kiekvienam serveriui"
 
 #~ msgid "Cancel Selected Task(s)"
 #~ msgstr "Nutraukti pažymėtas užduotis"
@@ -4774,10 +5425,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Thread is ignored"
 #~ msgstr "Gijų skydelis"
-
-#, fuzzy
-#~ msgid "Thread is watched or ignored"
-#~ msgstr "Rodyti laiškus, kurie nei stebimi, nei ignoruojami"
 
 #, fuzzy
 #~ msgid "Thread is neither watched nor ignored"
@@ -4898,10 +5545,6 @@ msgstr ""
 #~ msgstr "Pritaikyti _užsakytoms grupėms"
 
 #, fuzzy
-#~ msgid "Message ID FQDN:"
-#~ msgstr "Laiško ID:"
-
-#, fuzzy
 #~ msgid "Pan: Edit Profile"
 #~ msgstr "Išsaugoti profilį"
 
@@ -4986,9 +5629,6 @@ msgstr ""
 #~ msgid "Threaded %u of %u articles"
 #~ msgstr "Išskirstyta į gijas %u iš %u laiškų"
 
-#~ msgid "Show New Articles"
-#~ msgstr "Rodyti naujus laiškus"
-
 #~ msgid "Show Ignored Articles"
 #~ msgstr "Rodyti ignoruojamas laiškus"
 
@@ -5023,9 +5663,6 @@ msgstr ""
 #~ msgid "Translations & PR"
 #~ msgstr "Vertimai ir spauda"
 
-#~ msgid "Clear"
-#~ msgstr "Išvalyti"
-
 #~ msgid "Close the Log Viewer."
 #~ msgstr "Uždaryti logų peržiūrą."
 
@@ -5046,9 +5683,6 @@ msgstr ""
 #~ "Sveiki pamatę Pan!\n"
 #~ "Kadangi tai pirmas kartas, kai tu pasileidai Pan,\n"
 #~ "mes turime surinkti šiek tiek informacijos.\n"
-
-#~ msgid "News Server Name"
-#~ msgstr "Naujienų serverio vardas"
 
 #~ msgid "News Server Logon"
 #~ msgstr "Registracija naujienų serveryje"
@@ -5100,9 +5734,6 @@ msgstr ""
 
 #~ msgid "Line_Up"
 #~ msgstr "Eilute _aukštyn"
-
-#~ msgid "Conditions"
-#~ msgstr "Sąlygos"
 
 #~ msgid "_Play a Sound:"
 #~ msgstr "_Groti garsą:"
@@ -5495,17 +6126,11 @@ msgstr ""
 #~ msgid "Create a mail reply to the sender with your favorite MUA."
 #~ msgstr "Atsakyti siuntėjui el. paštu, naudojant tavo mėgstamą MUA."
 
-#~ msgid "_Message"
-#~ msgstr "_Laiškas"
-
 #~ msgid "Post Followup"
 #~ msgstr "Skelbti atsakymą"
 
 #~ msgid "E-mail Reply"
 #~ msgstr "Atsakymas el. paštu"
-
-#~ msgid "Print this message"
-#~ msgstr "Spausdinti šį laišką"
 
 #~ msgid "Turn line wrap on/off in the Message Body"
 #~ msgstr "Įjungti/Išjungti eilučių laužymą laiško tekste"
@@ -5705,17 +6330,11 @@ msgstr ""
 #~ msgid "Delete Bozos"
 #~ msgstr "Pašalinti kaliauses"
 
-#~ msgid "You must load the article first."
-#~ msgstr "Tu pirmiausia turi įkelti laišką."
-
 #~ msgid "File Exists.  Overwrite this file?"
 #~ msgstr "Jau yra tokia byla. Užrašyti ant viršaus?"
 
 #~ msgid "No Servers Defined"
 #~ msgstr "Nėra apibrėžtų serverių"
-
-#~ msgid "Online"
-#~ msgstr "Prisijungęs"
 
 #~ msgid "Timed out waiting to read from the server: %s"
 #~ msgstr "Baigėsi laikas laukiant skaityti iš serverio: %s"
@@ -5741,9 +6360,6 @@ msgstr ""
 
 #~ msgid "Getting Article Header %lu of %lu"
 #~ msgstr "Gaunama laiško antraštė %lu iš %lu"
-
-#~ msgid "Clear Queue"
-#~ msgstr "Išvalyti eilę"
 
 #~ msgid "Reply by E-mail"
 #~ msgstr "Atsakyti el. paštu"
@@ -5777,9 +6393,6 @@ msgstr ""
 
 #~ msgid "Unknown Content Type"
 #~ msgstr "Nežinomas turinio tipas"
-
-#~ msgid "Unknown Encoding"
-#~ msgstr "Nežinomas kodavimas"
 
 #~ msgid "couldn't allocate \"headers\" color"
 #~ msgstr "nepavyko paskirti „antraščių“ spalvos"

@@ -23,6 +23,7 @@
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
 #include <pan/tasks/task.h>
+#include <pan/data/cert-store.h>
 #include <pan/tasks/nntp.h>
 
 namespace pan
@@ -31,7 +32,9 @@ namespace pan
    * Task for downloading the grouplist of a new server.
    * @ingroup tasks
    */
-  class TaskGroups: public Task, private NNTP::Listener
+  class TaskGroups:
+    public Task,
+    private NNTP::Listener
   {
     public: // life cycle
       TaskGroups (Data& data, const Quark& server);

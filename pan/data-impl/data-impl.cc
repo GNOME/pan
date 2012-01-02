@@ -33,6 +33,11 @@ extern "C" {
 #include <pan/general/time-elapsed.h>
 #include "data-impl.h"
 
+#ifdef HAVE_GKR
+  #include <gnome-keyring-1/gnome-keyring.h>
+  #include <gnome-keyring-1/gnome-keyring-memory.h>
+#endif
+
 using namespace pan;
 
 /**
@@ -49,16 +54,30 @@ namespace
     g_free (pch);
     return path;
   }
+
+  std::string get_encode_cache_path ()
+  {
+    char * pch (g_build_filename (file::get_pan_home().c_str(), "encode-cache", NULL));
+    file :: ensure_dir_exists (pch);
+    std::string path (pch);
+    g_free (pch);
+    return path;
+  }
+
 }
 
 DataImpl :: DataImpl (bool unit_test, int cache_megs, DataIO * io):
   ProfilesImpl (*io),
   _cache (get_cache_path(), cache_megs),
+  _encode_cache (get_encode_cache_path(), cache_megs),
+  _certstore(*this),
   _unit_test (unit_test),
   _data_io (io),
   _descriptions_loaded (false),
   newsrc_autosave_id (0),
   newsrc_autosave_timeout (0)
+//  ,
+//  _blowfish_inited(false)
 {
   rebuild_backend ();
 }
@@ -107,4 +126,89 @@ DataImpl :: save_state ()
     save_newsrc_files (*_data_io);
   }
 }
+
+#ifdef HAVE_GKR
+GnomeKeyringResult
+DataImpl :: password_encrypt (const PasswordData* pw)
+{
+  g_return_val_if_fail (gnome_keyring_is_available(), GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
+
+  return (
+    gnome_keyring_store_password_sync (
+      GNOME_KEYRING_NETWORK_PASSWORD,
+      GNOME_KEYRING_DEFAULT,
+      _("Pan newsreader server passwords"),
+      pw->pw.str,
+      "user", pw->user.str,
+      "server", pw->server.c_str(),
+      NULL)
+    );
+
+}
+
+GnomeKeyringResult
+DataImpl :: password_decrypt (PasswordData* pw) const
+{
+
+  gchar* pwd(0);
+  g_return_val_if_fail (gnome_keyring_is_available(), GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
+
+  GnomeKeyringResult ret =
+    gnome_keyring_find_password_sync (
+    GNOME_KEYRING_NETWORK_PASSWORD,
+    &pwd,
+    "user", pw->user.str,
+    "server", pw->server.c_str(),
+    NULL);
+
+  std::string tmp;
+  if (pwd) tmp = pwd;
+  gnome_keyring_free_password(pwd);
+  pw->pw = tmp;
+
+  return ret;
+}
+#endif
+
+//void
+//DataImpl :: blowfish_init ()
+//{
+//
+//  /TODO : Custom key with gtkwidget*
+//  if (!_blowfish_inited)
+//  {
+//    _blowfish_inited = true;
+//    char* key = (char*)"fjghdfjghdfkjg";
+//    _blowfish.Initialize(key, 14);
+//  }
+//}
+
+//void
+//DataImpl :: blowfish_encrypt (char* t, const StringView& s)
+//{
+//
+//  std::cerr<<"bf encrypt "<<s<<"\n";
+//
+//  size_t len (s.len);
+//  std::string str(s);
+//  int i(0);
+//  for (;i<len%8;++i) str += " ";
+//  _blowfish.Encode ((char*)str.c_str(),t,len+i);
+//
+//}
+
+//void
+//DataImpl :: blowfish_decrypt (char* t, size_t len)
+//{
+//
+//  std::cerr<<"bf decrypt "<<t<<" "<<len<<"\n";
+//
+//  std::string str((char*)t);
+//  int i(0);
+//  for (;i<len%8;++i) str += " ";
+//  char* buf = (char*)str.c_str();
+//  _blowfish.Decode (buf,buf,len+i);
+//  t = buf;
+//
+//}
 

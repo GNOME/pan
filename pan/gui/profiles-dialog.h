@@ -20,7 +20,7 @@
 #ifndef __ProfilesDialog_h__
 #define __ProfilesDialog_h__
 
-#include <gtk/gtk.h>
+#include "gtk-compat.h"
 #include <pan/data/data.h>
 
 namespace pan
@@ -36,6 +36,13 @@ namespace pan
       ~ProfileDialog ();
       GtkWidget* root() { return _root; }
       void get_profile (std::string& setme_name, Profile& setme_profile);
+      enum
+      {
+        ROW_FILE=0,
+        ROW_TEXT=1,
+        ROW_GPGSIG=2,
+        ROW_COMMAND=3
+      };
 
     private:
       GtkWidget * _root;
@@ -43,14 +50,18 @@ namespace pan
       GtkWidget * _username_entry;
       GtkWidget * _address_entry;
       GtkWidget * _msgid_fqdn_entry;
+      GtkWidget * _xface_entry;
       GtkWidget * _attribution_entry;
       GtkWidget * _signature_file_check;
-      GtkWidget * _signature_file;
-      GtkWidget * _signature_file_combo;
       GtkWidget * _server_combo;
       GtkWidget * _extra_headers_tv;
-
+      GtkWidget * _signature_file_combo;
     public:
+
+      GtkWidget * _signature_file_combo_box;
+      GtkWidget * _signature_file;
+      GtkWidget * _gpg_sig_entry;
+
       static bool run_until_valid_or_cancel (ProfileDialog& p);
   };
 

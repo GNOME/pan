@@ -21,16 +21,20 @@
 extern "C" {
   #include <glib.h>
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include "gtk-compat.h"
 }
+#include <pan/general/e-util.h>
 #include <pan/general/debug.h>
+#include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
+#include <pan/usenet-utils/mime-utils.h>
 #include <pan/tasks/queue.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "pad.h"
 #include "render-bytes.h"
 #include "task-pane.h"
+#include "taskpane.ui.h"
 
 enum
 {
@@ -39,12 +43,9 @@ enum
   NUM_COLS
 };
 
-
 /**
 ***  Internal Utility
 **/
-
-typedef Queue::tasks_t tasks_t;
 
 void
 TaskPane :: get_selected_tasks_foreach (GtkTreeModel *model, GtkTreePath *, GtkTreeIter *iter, gpointer list_g)
@@ -91,6 +92,130 @@ namespace
   }
 }
 
+namespace
+{
+  std::string escaped (const std::string& s)
+  {
+    char * pch = g_markup_escape_text (s.c_str(), s.size());
+    const std::string ret (pch);
+    g_free (pch);
+    return ret;
+  }
+}
+
+gboolean
+TaskPane:: on_tooltip_query(GtkWidget  *widget,
+                            gint        x,
+                            gint        y,
+                            gboolean    keyboard_tip,
+                            GtkTooltip *tooltip,
+                            gpointer    data)
+{
+  TaskPane* tp(static_cast<TaskPane*>(data));
+
+  gtk_tooltip_set_icon_from_stock (tooltip, GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
+
+  GtkTreeIter iter;
+  GtkTreeView *tree_view = GTK_TREE_VIEW (widget);
+  GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
+  GtkTreePath *path(0);
+
+  char buffer[4096];
+  Task * task(0);
+  bool task_found(false);
+
+  if (!gtk_tree_view_get_tooltip_context (tree_view, &x, &y, keyboard_tip, &model, &path, &iter))
+    return false;
+
+  gtk_tree_model_get (model, &iter, COL_TASK_POINTER, &task, -1);
+
+  g_snprintf(buffer,sizeof(buffer),"...");
+
+  EvolutionDateMaker date_maker;
+  char * date(0);
+
+  TaskUpload * tu (dynamic_cast<TaskUpload*>(task));
+  if (tu)
+  {
+    const Article& a(tu->get_article());
+    date = date_maker.get_date_string (tu->get_article().time_posted);
+    g_snprintf(buffer,sizeof(buffer),
+               _("\n<u>Upload</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n"
+                 "<i>Groups:</i> <b>%s</b>\n<i>Sourcefile:</i> <b>%s</b>\n"),
+               a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(),
+               tu->get_groups().c_str(), tu->get_filename().c_str());
+  }
+
+  TaskArticle * ta (dynamic_cast<TaskArticle*>(task));
+  if (ta)
+  {
+    const Article& a(ta->get_article());
+    date = date_maker.get_date_string (ta->get_article().time_posted);
+    g_snprintf(buffer,sizeof(buffer),
+               _("\n<u>Download</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n<i>Date:</i> <b>%s</b>\n"
+                 "<i>Groups:</i> <b>%s</b>\n<i>Save Path:</i> <b>%s</b>\n"),
+               a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(), date ? date : _("unknown"),
+               ta->get_groups().c_str(), ta->get_save_path().to_string().c_str());
+  }
+
+  task_found = tu || ta;
+
+  if (task_found)
+  {
+    gtk_tooltip_set_markup (tooltip, buffer);
+    gtk_tree_view_set_tooltip_row (tree_view, tooltip, path);
+  }
+  gtk_tree_path_free (path);
+
+  g_free (date);
+
+  return true;
+}
+
+void
+TaskPane::  do_popup_menu (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
+{
+  TaskPane * self (static_cast<TaskPane*>(userdata));
+  GtkWidget * menu (gtk_ui_manager_get_widget (self->_uim, "/taskpane-popup"));
+  gtk_menu_popup (GTK_MENU(menu), NULL, NULL, NULL, NULL,
+                  (event ? event->button : 0),
+                  (event ? event->time : 0));
+}
+
+gboolean
+TaskPane :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
+{
+
+  if (event->type == GDK_BUTTON_PRESS )
+  {
+    GtkTreeSelection *selection;
+    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+
+    if ( event->button == 3)
+    {
+
+      if (gtk_tree_selection_count_selected_rows(selection)  <= 1)
+      {
+         GtkTreePath *path;
+         /* Get tree path for row that was clicked */
+         if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
+                                           (gint) event->x,
+                                           (gint) event->y,
+                                           &path, NULL, NULL, NULL))
+         {
+           gtk_tree_selection_unselect_all(selection);
+           gtk_tree_selection_select_path(selection, path);
+           gtk_tree_path_free(path);
+         }
+      }
+      do_popup_menu(treeview, event, userdata);
+      return true;
+    }
+
+  }
+  return false;
+}
+
 void TaskPane :: online_toggled_cb (GtkToggleButton* b, Queue *queue)
 {
   queue->set_online (gtk_toggle_button_get_active (b));
@@ -124,6 +249,60 @@ void TaskPane :: restart_clicked_cb (GtkButton*, TaskPane* pane)
   pane->_queue.restart_tasks (pane->get_selected_tasks());
 }
 
+std::string
+TaskPane :: prompt_user_for_new_dest (GtkWindow * parent, const Quark& current_path)
+{
+  char buf[4096];
+  struct stat sb;
+  std::string path;
+
+  std::string prev_path(current_path.c_str());
+  if (!file :: file_exists (prev_path.c_str()))
+    prev_path = g_get_home_dir ();
+
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Choose new destination for selected Tasks"),
+                                                GTK_WINDOW(parent),
+                                                GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
+                                                GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                                GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+                                                NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_ACCEPT);
+  gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (w), TRUE);
+  gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
+
+  if (GTK_RESPONSE_ACCEPT == gtk_dialog_run(GTK_DIALOG(w)))
+  {
+    char * tmp = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w));
+    path = tmp;
+    g_free (tmp);
+  } else
+    path.clear();
+
+  gtk_widget_destroy (w);
+  return path;
+}
+
+void
+TaskPane :: change_destination (const tasks_t& tasks)
+{
+
+  if (tasks.empty()) return;
+  TaskArticle * t (dynamic_cast<TaskArticle*>(tasks[0]));
+  std::string new_path(prompt_user_for_new_dest(GTK_WINDOW(_root),t->get_save_path()));
+  if (new_path.empty()) return; // user cancelled/aborted
+  foreach_const (tasks_t, tasks, it) {
+    TaskArticle * task (dynamic_cast<TaskArticle*>(*it));
+    if (task)
+      task->set_save_path(Quark(new_path));
+  }
+
+}
+
+void TaskPane :: change_dest_clicked_cb (GtkButton*, TaskPane* pane)
+{
+  pane->change_destination (pane->get_selected_tasks());
+}
+
 /**
 ***  Display
 **/
@@ -143,6 +322,10 @@ TaskPane :: on_queue_tasks_added (Queue& queue, int index, int count)
   task_states_t states;
   queue.get_all_task_states (states);
 
+  GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(_store));
+  g_object_ref(model);
+  gtk_tree_view_set_model(GTK_TREE_VIEW(_store), NULL);
+
   for (int i=0; i<count; ++i)
   {
     const int pos (index + i);
@@ -154,6 +337,9 @@ TaskPane :: on_queue_tasks_added (Queue& queue, int index, int count)
                         COL_TASK_STATE, (int)states.get_state(task),
                         -1);
   }
+  gtk_tree_view_set_model(GTK_TREE_VIEW(_store), model);
+  g_object_unref(model);
+
 }
 
 void
@@ -208,11 +394,13 @@ TaskPane :: update_status (const task_states_t& tasks)
   {
     Task * task (*it);
     const Queue::TaskState state (tasks.get_state (task));
-    if (state == Queue::RUNNING || state == Queue::DECODING)
+    if (state == Queue::RUNNING || state == Queue::DECODING
+        || state == Queue::ENCODING)
       ++running_count;
     else if (state == Queue::STOPPED)
       ++stopped_count;
-    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE)
+    else if (state == Queue::QUEUED || state == Queue::QUEUED_FOR_DECODE
+             || state == Queue::QUEUED_FOR_ENCODE)
       ++queued_count;
 
     if (state==Queue::RUNNING || state==Queue::QUEUED)
@@ -225,7 +413,7 @@ TaskPane :: update_status (const task_states_t& tasks)
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks (%d Queued, %d Running, %d Stopped)"), queued_count, running_count, stopped_count);
   else if (running_count || queued_count)
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks (%d Queued, %d Running)"), queued_count, running_count);
-  else 
+  else
     g_snprintf (buf, sizeof(buf), _("Pan: Tasks"));
   gtk_window_set_title (GTK_WINDOW(_root), buf);
 
@@ -249,7 +437,8 @@ TaskPane :: update_status (const task_states_t& tasks)
   if (selected_count) {
     guint64 selected_bytes (0ul);
     foreach_const (tasks_t, tasks_selected, it)
-      selected_bytes += (*it)->get_bytes_remaining ();
+      if (*it)
+        selected_bytes += (*it)->get_bytes_remaining ();
     g_snprintf (buf, sizeof(buf), _("%lu selected, %s"), selected_count, render_bytes(selected_bytes));
     line += '\n';
     line += buf;
@@ -309,12 +498,16 @@ namespace
                                      COL_TASK_STATE,  &state,
                                      -1);
 
+    if (!task) return;
+
     // build the state string
     const char * state_str (0);
     switch (state) {
       case Queue::RUNNING:  state_str = _("Running"); break;
       case Queue::DECODING: state_str = _("Decoding"); break;
+      case Queue::ENCODING: state_str = _("Encoding"); break;
       case Queue::QUEUED_FOR_DECODE: state_str = _("Queued for Decode"); break;
+      case Queue::QUEUED_FOR_ENCODE: state_str = _("Queued for Encode"); break;
       case Queue::QUEUED:   state_str = _("Queued"); break;
       case Queue::STOPPED:  state_str = _("Stopped"); break;
       case Queue::REMOVING: state_str = _("Removing"); break;
@@ -339,6 +532,8 @@ namespace
 
     // get the description
     const std::string description (task->describe ());
+
+    const char * descr = iconv_inited ? __g_mime_iconv_strdup(conv, description.c_str()) : description.c_str();
 
     std::string status (state_str);
 
@@ -372,13 +567,15 @@ namespace
     }
 
     char * str (0);
-    if (state == Queue::RUNNING || state == Queue::DECODING)
-      str = g_markup_printf_escaped ("<b>%s</b>\n<small>%s</small>", description.c_str(), status.c_str());
+    if (state == Queue::RUNNING || state == Queue::DECODING
+        || state == Queue::ENCODING)
+      str = g_markup_printf_escaped ("<b>%s</b>\n<small>%s</small>", descr, status.c_str());
     else
-      str = g_markup_printf_escaped ("%s\n<small>%s</small>", description.c_str(), status.c_str());
+      str = g_markup_printf_escaped ("%s\n<small>%s</small>", descr, status.c_str());
     const std::string str_utf8 = clean_utf8 (str);
     g_object_set(rend, "markup", str_utf8.c_str(), "xpad", 10, "ypad", 5, NULL);
     g_free (str);
+    if (iconv_inited) g_free ((char*)descr);
   }
 }
 
@@ -413,6 +610,102 @@ namespace
       g_signal_connect (w, "clicked", callback, user_data);
     gtk_box_pack_start (GTK_BOX(box), w, false, false, 0);
     return w;
+  }
+}
+
+namespace
+{
+
+  void do_move_up        (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->up_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_move_down      (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->down_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_move_top       (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->top_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_move_bottom    (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->bottom_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_stop           (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->stop_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_delete         (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->delete_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_restart        (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->restart_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_change_dest    (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->change_dest_clicked_cb(0, static_cast<TaskPane*>(p)); }
+
+  GtkActionEntry taskpane_popup_entries[] =
+  {
+
+    { "move-up", NULL,
+      N_("Move Up"), "",
+      N_("Move Up"),
+      G_CALLBACK(do_move_up) },
+
+    { "move-down", NULL,
+      N_("Move Down"), "",
+      N_("Move Down"),
+      G_CALLBACK(do_move_down) },
+
+    { "move-top", NULL,
+      N_("Move To Top"), "",
+      N_("Move To Top"),
+      G_CALLBACK(do_move_top) },
+
+    { "move-bottom", NULL,
+      N_("Move To Bottom"), "",
+      N_("Move To Bottom"),
+      G_CALLBACK(do_move_bottom) },
+
+    { "stop", NULL,
+      N_("Stop Task"), "",
+      N_("Stop Task"),
+      G_CALLBACK(do_stop) },
+
+    { "delete", "Delete",
+      N_("Delete Task"), "Delete",
+      N_("Delete Task"),
+      G_CALLBACK(do_delete) },
+
+    { "restart", NULL,
+      N_("Restart Task"), "",
+      N_("Restart Task"),
+      G_CALLBACK(do_restart) },
+
+    { "change-dest", NULL,
+      N_("Change Download Destination"), "",
+      N_("Change Download Destination"),
+      G_CALLBACK(do_change_dest) }
+  };
+
+}
+
+void
+TaskPane :: add_actions (GtkWidget * box)
+{
+  // action manager for popup
+  _uim = gtk_ui_manager_new ();
+  // read the file...
+  char * filename = g_build_filename (file::get_pan_home().c_str(), "taskpane.ui", NULL);
+  GError * err (0);
+  if (!gtk_ui_manager_add_ui_from_file (_uim, filename, &err)) {
+    g_clear_error (&err);
+    gtk_ui_manager_add_ui_from_string (_uim, fallback_taskpane_ui, -1, &err);
+  }
+  if (err) {
+    Log::add_err_va (_("Error reading file \"%s\": %s"), filename, err->message);
+    g_clear_error (&err);
+
+  }
+  g_free (filename);
+
+//  g_signal_connect (_uim, "add_widget", G_CALLBACK(add_widget), box);
+
+   //add popup actions
+  _pgroup = gtk_action_group_new ("taskpane");
+  gtk_action_group_set_translation_domain (_pgroup, NULL);
+  gtk_action_group_add_actions (_pgroup, taskpane_popup_entries, G_N_ELEMENTS(taskpane_popup_entries), this);
+  gtk_ui_manager_insert_action_group (_uim, _pgroup, 0);
+
+}
+
+namespace
+{
+  gboolean on_popup_menu (GtkWidget * treeview, gpointer userdata)
+  {
+    TaskPane::do_popup_menu (treeview, NULL, userdata);
+    return true;
   }
 }
 
@@ -454,7 +747,7 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
     gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
     w = add_button (buttons, GTK_STOCK_CLOSE, 0, 0);
     g_signal_connect_swapped (w, "clicked", G_CALLBACK(gtk_widget_destroy), _root);
-    pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new()); // eat h space
+    pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new()); // eat horizontal space
 
   gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
   gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
@@ -475,6 +768,18 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
   gtk_tree_view_append_column (GTK_TREE_VIEW(_view), col);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
+
+  // tooltips for articles
+  gtk_widget_set_has_tooltip (_view, true);
+  g_signal_connect(_view,"query-tooltip",G_CALLBACK(on_tooltip_query), this);
+
+  // connect signals for popup menu
+  g_signal_connect (_view, "popup-menu", G_CALLBACK(on_popup_menu), this);
+  g_signal_connect (_view, "button-press-event", G_CALLBACK(on_button_pressed), this);
+
+  // actions
+  add_actions(_view);
+  gtk_window_add_accel_group (GTK_WINDOW(_root), gtk_ui_manager_get_accel_group (_uim));
 
   w = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);

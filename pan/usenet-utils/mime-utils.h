@@ -26,6 +26,38 @@
 #include <gmime/gmime-stream.h>
 #include <gmime/gmime-message.h>
 #include <pan/general/string-view.h>
+#include <pan/usenet-utils/gpg.h>
+
+/***
+**** YENC
+***/
+
+#define YENC_MARKER_BEGIN      "=ybegin"
+#define YENC_MARKER_BEGIN_LEN  7
+#define YENC_MARKER_PART       "=ypart"
+#define YENC_MARKER_PART_LEN   6
+#define YENC_MARKER_END        "=yend"
+#define YENC_MARKER_END_LEN    5
+#define YENC_TAG_PART          " part="
+#define YENC_TAG_LINE          " line="
+#define YENC_TAG_SIZE          " size="
+#define YENC_TAG_NAME          " name="
+#define YENC_TAG_BEGIN         " begin="
+#define YENC_TAG_END           " end="
+#define YENC_TAG_PCRC32        " pcrc32="
+#define YENC_TAG_CRC32         " crc32="
+#define YENC_FULL_LINE_LEN     256
+#define YENC_HALF_LINE_LEN     128
+#define YENC_ESC_NULL          "=@"
+#define YENC_ESC_TAB           "=I"
+#define YENC_ESC_LF            "=J"
+#define YENC_ESC_CR            "=M"
+#define YENC_ESC_ESC           "={"
+#define YENC_SHIFT             42
+#define YENC_QUOTE_SHIFT       64
+
+#define NEEDS_DECODING(encoding) ((encoding == GMIME_CONTENT_ENCODING_BASE64) ||   \
+                                 (encoding == GMIME_CONTENT_ENCODING_QUOTEDPRINTABLE))
 
 extern "C"
 {
@@ -34,8 +66,16 @@ extern "C"
 
 namespace pan
 {
+
+  std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len);
+  std::string base64_decode(std::string const& encoded_string);
+
+  GMimeMessage* message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body);
+  GMimeMessage* gpg_encrypt (const std::string& uid, const std::string& body_str, GMimeMessage* body, GPtrArray* rcp, bool sign);
+  bool gpg_verify_mps (GMimeObject*, GPGDecErr&);
+
   /**
-   * Utilities to build and parse GMimeMesasges.
+   * Utilities to build and parse GMimeMessages.
    *
    * Most of this nastiness is to handle Usenet's use of chainging together
    * multiple articles as parts of a whole.  This code tries to build
@@ -46,9 +86,9 @@ namespace pan
   struct mime
   {
     static GMimeMessage *
-    construct_message (GMimeStream ** istreams,
-                         int            qty);
-
+    construct_message (GMimeStream      ** istreams,
+                       int                 qty,
+                       GPGDecErr         &);
 
     static const char *
     get_charset (GMimeMessage * message);
@@ -70,15 +110,16 @@ namespace pan
 
   char *pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html);
   void pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, GMimeRecipientType type, const char *string);
+  void pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid);
 
   extern iconv_t conv;
   extern bool iconv_inited;
 
-  char * __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n);
+  char * __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n, const char* charset=0);
 
-  static char * __g_mime_iconv_strdup (iconv_t cd, const char *str)
+  static char * __g_mime_iconv_strdup (iconv_t cd, const char *str, const char* charset=0)
   {
-    return __g_mime_iconv_strndup(cd, str, strlen(str));
+    return __g_mime_iconv_strndup(cd, str, strlen(str), charset);
   }
 
 }

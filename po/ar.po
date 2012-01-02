@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Arabic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-31 11:08+0100\n"
+"POT-Creation-Date: 2011-12-08 11:23+0100\n"
 "PO-Revision-Date: 2007-04-14 18:49+0100\n"
 "Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team: Arabeyes <doc@arabeyes.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,56 +27,70 @@ msgid "Read News from Usenet"
 msgstr "أخبار من %s"
 
 #. load_group_descriptions (*_data_io);
-#: ../pan/data-impl/data-impl.cc:88
+#: ../pan/data-impl/data-impl.cc:107
 #, fuzzy, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "حُمِّلت السِمة \"%s\" في %g ثواني\n"
 
-#: ../pan/data-impl/data-io.cc:187 ../pan/data-impl/data-io.cc:211
+#: ../pan/data-impl/data-impl.cc:138
+msgid "Pan newsreader server passwords"
+msgstr ""
+
+#: ../pan/data-impl/data-io.cc:193 ../pan/data-impl/data-io.cc:217
 #: ../pan/data/article-cache.cc:236 ../pan/data/article-cache.cc:247
-#: ../pan/gui/post-ui.cc:1049
+#: ../pan/gui/post-ui.cc:1619
 #, fuzzy, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "فشل في حفظ %s: %s"
 
-#: ../pan/data-impl/groups.cc:93
+#: ../pan/data-impl/groups.cc:94
 #, fuzzy, c-format
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "إعدادات الخدمة \"%s\""
 
-#: ../pan/data-impl/headers.cc:580
+#: ../pan/data-impl/headers.cc:606
 #, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr ""
 
-#: ../pan/data-impl/headers.cc:587
+#: ../pan/data-impl/headers.cc:613
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
 "Are you running an old version of Pan by accident?"
 msgstr ""
 
-#: ../pan/data-impl/headers.cc:602
+#: ../pan/data-impl/headers.cc:628
 #, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr ""
 
-#: ../pan/data-impl/headers.cc:827
+#: ../pan/data-impl/headers.cc:857
 #, c-format
-msgid "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f art/sec)"
+msgid ""
+"Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
 msgstr ""
 
-#: ../pan/data-impl/headers.cc:1123
+#: ../pan/data-impl/headers.cc:1172
 #, fuzzy, c-format
 msgid "Added %lu articles to %s."
 msgstr "اضف %s إلى %s"
 
-#: ../pan/data-impl/profiles.cc:163 ../pan/data-impl/server.cc:302
-#: ../pan/data/article-cache.cc:391 ../pan/general/file-util.cc:296
-#: ../pan/gui/post-ui.cc:268
+#: ../pan/data-impl/profiles.cc:174 ../pan/data-impl/server.cc:407
+#: ../pan/data/article-cache.cc:391 ../pan/general/file-util.cc:298
+#: ../pan/gui/post-ui.cc:625 ../pan/gui/task-pane.cc:681
 #, fuzzy, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "خطأ عند إعادة تسمية الملف \"%s\": %s"
+
+#: ../pan/data-impl/server.cc:225
+#, c-format
+msgid "There seems to be no Password set for Server %s."
+msgstr ""
+
+#: ../pan/data-impl/server.cc:229
+msgid "The Gnome keyring denied access to the Passwords."
+msgstr ""
 
 #: ../pan/data-impl/xover.cc:239
 #, fuzzy, c-format
@@ -118,748 +133,789 @@ msgstr "%b %d %Y"
 msgid "?"
 msgstr "؟"
 
-#: ../pan/general/file-util.cc:136
-#, fuzzy, c-format
-msgid "Creating directory \"%s\""
-msgstr "تعذّر ايجاد الدليل %s\n"
-
-#: ../pan/general/file-util.cc:139
-#, fuzzy, c-format
-msgid "Couldn't create directory \"%s\": %s"
-msgstr "لا يمكن انشاء الدليل  `%s': %s"
-
-#: ../pan/general/text-match.cc:210
-msgid ""
-"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
-"fail."
-msgstr ""
-
-#: ../pan/general/text-match.cc:221
-#, fuzzy, c-format
-msgid "Can't use regular expression \"%s\": %s at position %d"
-msgstr ""
-"لا يمكن تحليل تعبير البحث: %s: \n"
-"%s"
-
-#: ../pan/general/text-match.cc:229
+#: ../pan/general/text-match.cc:193
 #, fuzzy, c-format
 msgid "Can't use regular expression \"%s\": %s"
 msgstr ""
 "لا يمكن تحليل تعبير البحث: %s: \n"
 "%s"
 
-#: ../pan/general/utf8-utils.cc:208
+#: ../pan/general/utf8-utils.cc:213
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr ""
 
-#: ../pan/gui/actions.cc:255 ../pan/gui/post-ui.cc:200
+#: ../pan/gui/actions.cc:265 ../pan/gui/post-ui.cc:443
 #, fuzzy
 msgid "_File"
 msgstr "/ملف"
 
-#: ../pan/gui/actions.cc:256 ../pan/gui/post-ui.cc:201
+#: ../pan/gui/actions.cc:266 ../pan/gui/post-ui.cc:444
 #, fuzzy
 msgid "_Edit"
 msgstr "_تحرير/"
 
-#: ../pan/gui/actions.cc:257 ../pan/gui/prefs-ui.cc:509
+#: ../pan/gui/actions.cc:267 ../pan/gui/prefs-ui.cc:645
 #, fuzzy
 msgid "_Layout"
 msgstr "ت_خطيط"
 
-#: ../pan/gui/actions.cc:258
+#: ../pan/gui/actions.cc:268
 #, fuzzy
 msgid "_Group Pane"
 msgstr "اسم المجموعة"
 
-#: ../pan/gui/actions.cc:259
+#: ../pan/gui/actions.cc:269
 #, fuzzy
 msgid "_Header Pane"
 msgstr "حشو الرأس"
 
-#: ../pan/gui/actions.cc:260
+#: ../pan/gui/actions.cc:270
 #, fuzzy
 msgid "_Body Pane"
 msgstr "اللوحة ال_سفلية"
 
-#: ../pan/gui/actions.cc:261
+#: ../pan/gui/actions.cc:271
 #, fuzzy
 msgid "_View"
 msgstr "_عرض/"
 
-#: ../pan/gui/actions.cc:262
+#: ../pan/gui/actions.cc:272
 #, fuzzy
 msgid "Filte_r"
 msgstr "فلاتر"
 
-#: ../pan/gui/actions.cc:263
+#: ../pan/gui/actions.cc:273
 msgid "_Go"
 msgstr "ا_ذهب"
 
-#: ../pan/gui/actions.cc:264
+#: ../pan/gui/actions.cc:274 ../pan/gui/prefs-ui.cc:671
 msgid "_Actions"
 msgstr "أ_حداث"
 
-#: ../pan/gui/actions.cc:265
+#: ../pan/gui/actions.cc:275
 #, fuzzy
 msgid "_Articles"
 msgstr "ال_فنان"
 
-#: ../pan/gui/actions.cc:266
+#: ../pan/gui/actions.cc:276
 #, fuzzy
 msgid "G_roups"
 msgstr "المجموعات"
 
-#: ../pan/gui/actions.cc:267 ../pan/gui/actions.cc:268
+#: ../pan/gui/actions.cc:277 ../pan/gui/actions.cc:278
 #, fuzzy
 msgid "_Post"
 msgstr "_معظم"
 
-#: ../pan/gui/actions.cc:269
+#: ../pan/gui/actions.cc:279
 #, fuzzy
 msgid "_Help"
 msgstr "مساعدة"
 
-#: ../pan/gui/actions.cc:272 ../pan/gui/post-ui.cc:206
+#: ../pan/gui/actions.cc:282 ../pan/gui/post-ui.cc:450
 #, fuzzy
 msgid "Set Character _Encoding..."
 msgstr "اضبط ترميز ال_محارف"
 
-#: ../pan/gui/actions.cc:273
+#: ../pan/gui/actions.cc:283
 #, fuzzy
 msgid "Set Character Encoding..."
 msgstr "اضبط ترميز ال_محارف"
 
-#: ../pan/gui/actions.cc:277
+#: ../pan/gui/actions.cc:287
 #, fuzzy
 msgid "_Read Group"
 msgstr "_اضف مجموعة"
 
-#: ../pan/gui/actions.cc:278
+#: ../pan/gui/actions.cc:288
 #, fuzzy
 msgid "Read Group"
 msgstr "_اضف مجموعة"
 
-#: ../pan/gui/actions.cc:282
+#: ../pan/gui/actions.cc:292
 #, fuzzy
 msgid "_Mark Selected Groups Read"
 msgstr "_علّم المهام المنتقاة كمكتملة"
 
-#: ../pan/gui/actions.cc:283
+#: ../pan/gui/actions.cc:293
 #, fuzzy
 msgid "Mark Selected Groups Read"
 msgstr "_علّم المهام المنتقاة كمكتملة"
 
-#: ../pan/gui/actions.cc:287
+#: ../pan/gui/actions.cc:297
 #, fuzzy
 msgid "_Delete Selected Groups' Articles"
 msgstr "حذف المراسَلين المنتقَيين"
 
-#: ../pan/gui/actions.cc:288
+#: ../pan/gui/actions.cc:298
 #, fuzzy
 msgid "Delete Selected Groups' Articles"
 msgstr "حذف المراسَلين المنتقَيين"
 
-#: ../pan/gui/actions.cc:292
+#: ../pan/gui/actions.cc:302
 #, fuzzy
 msgid "Get New _Headers in Selected Groups"
 msgstr "أدلة جديدة من الا_ختيار"
 
-#: ../pan/gui/actions.cc:293
+#: ../pan/gui/actions.cc:303
 #, fuzzy
 msgid "Get New Headers in Selected Groups"
 msgstr "أدلة جديدة من الا_ختيار"
 
-#: ../pan/gui/actions.cc:297
+#: ../pan/gui/actions.cc:307 ../pan/gui/actions.cc:312
 msgid "Get New _Headers in Subscribed Groups"
 msgstr ""
 
-#: ../pan/gui/actions.cc:298
+#: ../pan/gui/actions.cc:308 ../pan/gui/actions.cc:313
 #, fuzzy
 msgid "Get New Headers in Subscribed Groups"
 msgstr "أدلة جديدة من الا_ختيار"
 
-#: ../pan/gui/actions.cc:302
+#: ../pan/gui/actions.cc:317
 #, fuzzy
 msgid "Get _Headers..."
 msgstr "ترويسة عنوان ويب..."
 
-#: ../pan/gui/actions.cc:303
+#: ../pan/gui/actions.cc:318
 #, fuzzy
 msgid "Get Headers..."
 msgstr "ترويسة عنوان ويب..."
 
-#: ../pan/gui/actions.cc:307 ../pan/gui/actions.cc:308
+#: ../pan/gui/actions.cc:322 ../pan/gui/actions.cc:323
 #, fuzzy
 msgid "Refresh Group List"
 msgstr "حدِّث القائمة"
 
-#: ../pan/gui/actions.cc:312
+#: ../pan/gui/actions.cc:327
 #, fuzzy
 msgid "_Subscribe"
 msgstr "إشترِك"
 
-#: ../pan/gui/actions.cc:313
+#: ../pan/gui/actions.cc:328
 #, fuzzy
 msgid "Subscribe"
 msgstr "إشترِك"
 
-#: ../pan/gui/actions.cc:317
+#: ../pan/gui/actions.cc:332
 msgid "_Unsubscribe"
 msgstr "إل_غاء الإشتراك"
 
-#: ../pan/gui/actions.cc:318
+#: ../pan/gui/actions.cc:333
 #, fuzzy
 msgid "Unsubscribe"
 msgstr "إل_غاء الإشتراك"
 
-#: ../pan/gui/actions.cc:322
+#: ../pan/gui/actions.cc:337
 #, fuzzy
 msgid "_Save Articles..."
 msgstr "_حفظ إلى ملف"
 
-#: ../pan/gui/actions.cc:323
+#: ../pan/gui/actions.cc:338
 #, fuzzy
 msgid "Save Articles..."
 msgstr "_حفظ إلى ملف"
 
-#: ../pan/gui/actions.cc:327
+#: ../pan/gui/actions.cc:342
 #, fuzzy
-msgid "_Save Articles from this NZB..."
+msgid "Save Articles from this _NZB..."
 msgstr "_حفظ إلى ملف"
 
-#: ../pan/gui/actions.cc:328
+#: ../pan/gui/actions.cc:343
 #, fuzzy
 msgid "Save Articles from this NZB"
 msgstr "_حفظ إلى ملف"
 
-#: ../pan/gui/actions.cc:337
+#: ../pan/gui/actions.cc:347
+#, fuzzy
+msgid "Save Articles to an NZB _File..."
+msgstr "_حفظ إلى ملف"
+
+#: ../pan/gui/actions.cc:348
+#, fuzzy
+msgid "Save Articles to an NZB File"
+msgstr "_حفظ إلى ملف"
+
+#: ../pan/gui/actions.cc:357
 #, fuzzy
 msgid "_Import NZB Files..."
 msgstr "استورد ملفات..."
 
-#: ../pan/gui/actions.cc:342
+#: ../pan/gui/actions.cc:362
 #, fuzzy
 msgid "_Cancel Last Task"
 msgstr "حوِّل إلى مهمَّة"
 
-#: ../pan/gui/actions.cc:347
+#: ../pan/gui/actions.cc:367
 #, fuzzy
 msgid "_Task Manager"
 msgstr "الم_دير:"
 
-#: ../pan/gui/actions.cc:352
+#: ../pan/gui/actions.cc:372
 #, fuzzy
 msgid "_Event Log"
 msgstr "صندوق حدث"
 
-#: ../pan/gui/actions.cc:357
+#: ../pan/gui/actions.cc:377
 #, fuzzy
 msgid "_Quit"
 msgstr "اخرج"
 
-#: ../pan/gui/actions.cc:362
+#: ../pan/gui/actions.cc:382
 #, fuzzy
 msgid "Select _All Articles"
 msgstr "اختر كل الملفات"
 
-#: ../pan/gui/actions.cc:367
+#: ../pan/gui/actions.cc:387
 #, fuzzy
 msgid "_Deselect All Articles"
 msgstr "إلغي إختيار جميع الملفات"
 
-#: ../pan/gui/actions.cc:372
+#: ../pan/gui/actions.cc:392
 #, fuzzy
 msgid "Add Su_bthreads to Selection"
 msgstr "ألفا إلى تحديد"
 
-#: ../pan/gui/actions.cc:377
+#: ../pan/gui/actions.cc:397
 #, fuzzy
 msgid "Add _Threads to Selection"
 msgstr "ألفا إلى تحديد"
 
-#: ../pan/gui/actions.cc:382
+#: ../pan/gui/actions.cc:402
 #, fuzzy
 msgid "Add _Similar Articles to Selection"
 msgstr "إضافة إلى التحديد"
 
-#: ../pan/gui/actions.cc:387
+#: ../pan/gui/actions.cc:407
 #, fuzzy
 msgid "Select Article _Body"
 msgstr "انتقاء هذا اليوم"
 
-#: ../pan/gui/actions.cc:392
+#: ../pan/gui/actions.cc:412
 #, fuzzy
 msgid "Edit _Preferences"
 msgstr "تفضيلات gedit"
 
-#: ../pan/gui/actions.cc:397
+#: ../pan/gui/actions.cc:417
 #, fuzzy
 msgid "Edit Selected _Group's Preferences"
 msgstr "تحرير تفضيلات متعدّدة"
 
-#: ../pan/gui/actions.cc:402 ../pan/gui/post-ui.cc:215
+#: ../pan/gui/actions.cc:422 ../pan/gui/post-ui.cc:459
 #, fuzzy
 msgid "Edit P_osting Profiles"
 msgstr "تحرير ملف شخصي"
 
-#: ../pan/gui/actions.cc:407
+#: ../pan/gui/actions.cc:427
 #, fuzzy
 msgid "Edit _News Servers"
 msgstr "خوادم الشبكة"
 
-#: ../pan/gui/actions.cc:412
+#: ../pan/gui/actions.cc:432
+msgid "Edit _SSL Certificates"
+msgstr ""
+
+#: ../pan/gui/actions.cc:437
 #, fuzzy
 msgid "Jump to _Group Tab"
 msgstr "اقفز إلى الصفحة:"
 
-#: ../pan/gui/actions.cc:417
+#: ../pan/gui/actions.cc:442
 #, fuzzy
 msgid "Jump to _Header Tab"
 msgstr "أعد تحميل اللسان تلقائيا"
 
-#: ../pan/gui/actions.cc:422
+#: ../pan/gui/actions.cc:447
 #, fuzzy
 msgid "Jump to _Body Tab"
 msgstr "أعد تحميل اللسان تلقائيا"
 
-#: ../pan/gui/actions.cc:427
+#: ../pan/gui/actions.cc:452
 #, fuzzy
 msgid "_Rot13 Selected Text"
 msgstr "ا_بحث عن النص المنتقى"
 
-#: ../pan/gui/actions.cc:432
+#: ../pan/gui/actions.cc:457
 #, fuzzy
 msgid "Clear _Header Pane"
 msgstr "حشو الرأس"
 
-#: ../pan/gui/actions.cc:436
+#: ../pan/gui/actions.cc:461
 #, fuzzy
 msgid "Clear _Body Pane"
 msgstr "امسح الملاح_ظات"
 
-#: ../pan/gui/actions.cc:441
+#: ../pan/gui/actions.cc:466
 #, fuzzy
 msgid "Cache Article"
 msgstr "عنوان الصفحة"
 
-#: ../pan/gui/actions.cc:446
+#: ../pan/gui/actions.cc:471
 #, fuzzy
 msgid "Read Article"
 msgstr "تعلم القراءة"
 
-#: ../pan/gui/actions.cc:451
+#: ../pan/gui/actions.cc:476
 #, fuzzy
 msgid "Show Article Information"
 msgstr "اعرض معلومات الصورة"
 
-#: ../pan/gui/actions.cc:456
+#: ../pan/gui/actions.cc:481
 #, fuzzy
 msgid "Read _More"
 msgstr "أحمر أو تدرج"
 
-#: ../pan/gui/actions.cc:457
+#: ../pan/gui/actions.cc:482
 #, fuzzy
 msgid "Read More"
 msgstr "أحمر أو تدرج"
 
-#: ../pan/gui/actions.cc:461
+#: ../pan/gui/actions.cc:486
 #, fuzzy
 msgid "Read _Back"
 msgstr "رد أوك"
 
-#: ../pan/gui/actions.cc:462
+#: ../pan/gui/actions.cc:487
 #, fuzzy
 msgid "Read Back"
 msgstr "رد أوك"
 
-#: ../pan/gui/actions.cc:466
+#: ../pan/gui/actions.cc:491
 #, fuzzy
 msgid "Next _Unread Group"
 msgstr "الرّسالة _غير المقروءة التالية"
 
-#: ../pan/gui/actions.cc:471
+#: ../pan/gui/actions.cc:496
 #, fuzzy
 msgid "Next _Group"
 msgstr "مجموعة جديدة"
 
-#: ../pan/gui/actions.cc:476
+#: ../pan/gui/actions.cc:501
 #, fuzzy
 msgid "Next _Unread Article"
 msgstr "الرّسالة _غير المقروءة التالية"
 
-#: ../pan/gui/actions.cc:477
+#: ../pan/gui/actions.cc:502
 #, fuzzy
 msgid "Next Unread Article"
 msgstr "الرّسالة _غير المقروءة التالية"
 
-#: ../pan/gui/actions.cc:481
+#: ../pan/gui/actions.cc:506
 #, fuzzy
 msgid "Next _Article"
 msgstr "تدو_ير النص..."
 
-#: ../pan/gui/actions.cc:482
+#: ../pan/gui/actions.cc:507
 #, fuzzy
 msgid "Next Article"
 msgstr "تدو_ير النص..."
 
-#: ../pan/gui/actions.cc:486
+#: ../pan/gui/actions.cc:511
 msgid "Next _Watched Article"
 msgstr ""
 
-#: ../pan/gui/actions.cc:491
+#: ../pan/gui/actions.cc:516
 #, fuzzy
 msgid "Next Unread _Thread"
 msgstr "ال_نّقاش التالي"
 
-#: ../pan/gui/actions.cc:492
+#: ../pan/gui/actions.cc:517
 #, fuzzy
 msgid "Next Unread Thread"
 msgstr "الرّسالة _غير المقروءة التالية"
 
-#: ../pan/gui/actions.cc:496
+#: ../pan/gui/actions.cc:521
 #, fuzzy
 msgid "Next Threa_d"
 msgstr "ال_نّقاش التالي"
 
-#: ../pan/gui/actions.cc:501
+#: ../pan/gui/actions.cc:526
 #, fuzzy
 msgid "Pre_vious Article"
 msgstr "المقطوعة ال_سابقة"
 
-#: ../pan/gui/actions.cc:506
+#: ../pan/gui/actions.cc:531
 #, fuzzy
 msgid "Previous _Thread"
 msgstr "المقطوعة ال_سابقة"
 
-#: ../pan/gui/actions.cc:511
+#: ../pan/gui/actions.cc:536
 #, fuzzy
 msgid "_Parent Article"
 msgstr "الكائن ا?ب"
 
-#: ../pan/gui/actions.cc:516
+#: ../pan/gui/actions.cc:541
 #, fuzzy
 msgid "Ignore _Author"
 msgstr "تجاهل الك_ل"
 
-#: ../pan/gui/actions.cc:520
+#: ../pan/gui/actions.cc:545
 #, fuzzy
 msgid "_Watch Thread"
 msgstr "ال_نّقاش التالي"
 
-#: ../pan/gui/actions.cc:525
+#: ../pan/gui/actions.cc:550
 #, fuzzy
 msgid "_Ignore Thread"
 msgstr "تج_اهل الحالة"
 
-#: ../pan/gui/actions.cc:530
+#: ../pan/gui/actions.cc:555 ../pan/gui/actions.cc:556
+#, fuzzy
+msgid "_Toggle Flag on for Thread"
+msgstr "ال_نّقاش التالي"
+
+#: ../pan/gui/actions.cc:560 ../pan/gui/actions.cc:561
+#, fuzzy
+msgid "_Toggle Flag off for Thread"
+msgstr "ال_نّقاش التالي"
+
+#: ../pan/gui/actions.cc:565 ../pan/gui/actions.cc:566
+#, fuzzy
+msgid "_Mark all flagged Threads"
+msgstr "الرّسالة _غير المقروءة التالية"
+
+#: ../pan/gui/actions.cc:570 ../pan/gui/actions.cc:571
+#, fuzzy
+msgid "_Goto next flagged Thread"
+msgstr "الرّسالة _غير المقروءة التالية"
+
+#: ../pan/gui/actions.cc:575 ../pan/gui/actions.cc:576
+msgid "_Goto last flagged Thread"
+msgstr ""
+
+#: ../pan/gui/actions.cc:580 ../pan/gui/actions.cc:581
+#, fuzzy
+msgid "_Invert Selection"
+msgstr "ألفا إلى تحديد"
+
+#: ../pan/gui/actions.cc:585
 msgid "Edit Article's Watch/Ignore/Score..."
 msgstr ""
 
-#: ../pan/gui/actions.cc:535
+#: ../pan/gui/actions.cc:590
 #, fuzzy
 msgid "Add a _Scoring Rule..."
 msgstr "أضف _مجلّد..."
 
-#: ../pan/gui/actions.cc:540
+#: ../pan/gui/actions.cc:595
 #, fuzzy
 msgid "Cance_l Article..."
 msgstr "إلغاء الحفظ..."
 
-#: ../pan/gui/actions.cc:545
+#: ../pan/gui/actions.cc:600
 #, fuzzy
 msgid "_Supersede Article..."
 msgstr "_حفظ إلى ملف"
 
-#: ../pan/gui/actions.cc:550
+#: ../pan/gui/actions.cc:605
 #, fuzzy
 msgid "_Delete Article"
 msgstr "ا_حذف الكل"
 
-#: ../pan/gui/actions.cc:555
+#: ../pan/gui/actions.cc:610
 #, fuzzy
 msgid "Clear Article Cache"
 msgstr "امسح الذاكرة المؤقتة"
 
-#: ../pan/gui/actions.cc:560
+#: ../pan/gui/actions.cc:615
 #, fuzzy
 msgid "_Mark Article as Read"
 msgstr "علّم ك _مقروءة"
 
-#: ../pan/gui/actions.cc:565
+#: ../pan/gui/actions.cc:620
 #, fuzzy
 msgid "Mark Article as _Unread"
 msgstr "_علّم ك_غير مقروء"
 
-#: ../pan/gui/actions.cc:570
+#: ../pan/gui/actions.cc:626
+#, fuzzy
+msgid "_Mark Thread as Read"
+msgstr "علّم ك _مقروءة"
+
+#: ../pan/gui/actions.cc:631
+#, fuzzy
+msgid "Mark Thread as _Unread"
+msgstr "_علّم ك_غير مقروء"
+
+#: ../pan/gui/actions.cc:636
 #, fuzzy
 msgid "_Post to Newsgroup"
 msgstr "مجموعات أخبار"
 
-#: ../pan/gui/actions.cc:571
+#: ../pan/gui/actions.cc:637
 #, fuzzy
 msgid "Post to Newsgroup"
 msgstr "مجموعات أخبار"
 
-#: ../pan/gui/actions.cc:575
+#: ../pan/gui/actions.cc:641
 #, fuzzy
 msgid "_Followup to Newsgroup"
 msgstr "مجموعات أخبار"
 
-#: ../pan/gui/actions.cc:576
+#: ../pan/gui/actions.cc:642
 #, fuzzy
 msgid "Followup to Newsgroup"
 msgstr "مجموعات أخبار"
 
-#: ../pan/gui/actions.cc:580
+#: ../pan/gui/actions.cc:646
 #, fuzzy
 msgid "_Reply to Author in Mail"
 msgstr "رد على الجميع"
 
-#: ../pan/gui/actions.cc:585
+#: ../pan/gui/actions.cc:651
 #, fuzzy
 msgid "_Pan Home Page"
 msgstr "ال_صفحة الرئيسيّة:"
 
-#: ../pan/gui/actions.cc:590
+#: ../pan/gui/actions.cc:656
 msgid "Give _Feedback or Report a Bug..."
 msgstr ""
 
-#: ../pan/gui/actions.cc:595
+#: ../pan/gui/actions.cc:661
 #, fuzzy
 msgid "_Tip Jar..."
 msgstr "_ترويسة كبيرة..."
 
-#: ../pan/gui/actions.cc:601 ../pan/gui/actions.cc:606
+#: ../pan/gui/actions.cc:666
 #, fuzzy
 msgid "_About"
 msgstr "_6 عن البرنامج"
 
-#: ../pan/gui/actions.cc:622
+#: ../pan/gui/actions.cc:681
 #, fuzzy
 msgid "_Thread Headers"
 msgstr "ترويسات _HTTP"
 
-#: ../pan/gui/actions.cc:623
+#: ../pan/gui/actions.cc:682
 #, fuzzy
 msgid "_Wrap Article Body"
 msgstr "_لف حول"
 
-#: ../pan/gui/actions.cc:624
+#: ../pan/gui/actions.cc:683
 #, fuzzy
 msgid "Mute _Quoted Text"
 msgstr "أصمت عند الخروج"
 
-#: ../pan/gui/actions.cc:625
+#: ../pan/gui/actions.cc:684
 msgid "Show All _Headers in Body Pane"
 msgstr ""
 
-#: ../pan/gui/actions.cc:626
+#: ../pan/gui/actions.cc:685
 #, fuzzy
 msgid "Show _Smilies as Graphics"
 msgstr "لا تعرض _سوى قائمة المهام هذه"
 
-#: ../pan/gui/actions.cc:627
+#: ../pan/gui/actions.cc:686
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr ""
 
-#: ../pan/gui/actions.cc:628
+#: ../pan/gui/actions.cc:687
 msgid "Size Pictures to _Fit"
 msgstr ""
 
-#: ../pan/gui/actions.cc:629
+#: ../pan/gui/actions.cc:688
 #, fuzzy
 msgid "Use _Monospace Font"
 msgstr "خط ثابت العرض"
 
-#: ../pan/gui/actions.cc:630
+#: ../pan/gui/actions.cc:689
 #, fuzzy
 msgid "Set Focus to Images"
 msgstr "اختر صورة الشعار"
 
-#: ../pan/gui/actions.cc:633
+#: ../pan/gui/actions.cc:690
+msgid "Highlight _URLs"
+msgstr ""
+
+#: ../pan/gui/actions.cc:693
 msgid "_Work Online"
 msgstr "ا_عمل باتّصال"
 
-#: ../pan/gui/actions.cc:634
+#: ../pan/gui/actions.cc:694
 #, fuzzy
 msgid "_Tabbed Layout"
 msgstr "مخطط القائمة"
 
-#: ../pan/gui/actions.cc:635
+#: ../pan/gui/actions.cc:695
 #, fuzzy
 msgid "Show Group _Pane"
 msgstr "اعرض الشريط الجانبي"
 
-#: ../pan/gui/actions.cc:636
+#: ../pan/gui/actions.cc:696
 #, fuzzy
 msgid "Show Hea_der Pane"
 msgstr "اعرض الشريط الجانبي"
 
-#: ../pan/gui/actions.cc:637
+#: ../pan/gui/actions.cc:697
 #, fuzzy
 msgid "Show Bod_y Pane"
 msgstr "اعرض الشريط الجانبي"
 
-#: ../pan/gui/actions.cc:638
+#: ../pan/gui/actions.cc:698
 msgid "Show _Toolbar"
 msgstr "أظهر شريط الأ_دوات"
 
-#: ../pan/gui/actions.cc:639
+#: ../pan/gui/actions.cc:699
 #, fuzzy
 msgid "Abbreviate Group Names"
 msgstr "أ_سماء وضائف مختصرة"
 
-#: ../pan/gui/actions.cc:641
+#: ../pan/gui/actions.cc:701
 msgid "Match Only _Unread Articles"
 msgstr ""
 
-#: ../pan/gui/actions.cc:641
+#: ../pan/gui/actions.cc:701
 #, fuzzy
 msgid "Match Only Unread Articles"
 msgstr "خصائص القيم الرياضية"
 
-#: ../pan/gui/actions.cc:642
+#: ../pan/gui/actions.cc:702
 msgid "Match Only _Cached Articles"
 msgstr ""
 
-#: ../pan/gui/actions.cc:642
+#: ../pan/gui/actions.cc:702
 #, fuzzy
 msgid "Match Only Cached Articles"
 msgstr "خصائص القيم الرياضية"
 
-#: ../pan/gui/actions.cc:643
+#: ../pan/gui/actions.cc:703
 #, fuzzy
 msgid "Match Only _Complete Articles"
 msgstr "خصائص القيم الرياضية"
 
-#: ../pan/gui/actions.cc:643
+#: ../pan/gui/actions.cc:703
 #, fuzzy
 msgid "Match Only Complete Articles"
 msgstr "خصائص القيم الرياضية"
 
-#: ../pan/gui/actions.cc:644
+#: ../pan/gui/actions.cc:704
 msgid "Match Only _My Articles"
 msgstr ""
 
-#: ../pan/gui/actions.cc:644
+#: ../pan/gui/actions.cc:704
 #, fuzzy
 msgid "Match Only My Articles"
 msgstr "خصائص القيم الرياضية"
 
-#: ../pan/gui/actions.cc:645
+#: ../pan/gui/actions.cc:705
 msgid "Match Only _Watched Articles"
 msgstr ""
 
-#: ../pan/gui/actions.cc:645
+#: ../pan/gui/actions.cc:705
 #, fuzzy
 msgid "Match Only Watched Articles"
 msgstr "خصائص القيم الرياضية"
 
-#: ../pan/gui/actions.cc:647
+#: ../pan/gui/actions.cc:707
 msgid "Match Scores of 9999 (_Watched)"
 msgstr ""
 
-#: ../pan/gui/actions.cc:648
+#: ../pan/gui/actions.cc:708
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr ""
 
-#: ../pan/gui/actions.cc:649
+#: ../pan/gui/actions.cc:709
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr ""
 
-#: ../pan/gui/actions.cc:650
+#: ../pan/gui/actions.cc:710
 msgid "Match Scores of 0 (_Normal)"
 msgstr ""
 
-#: ../pan/gui/actions.cc:651
+#: ../pan/gui/actions.cc:711
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr ""
 
-#: ../pan/gui/actions.cc:652
+#: ../pan/gui/actions.cc:712
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr ""
 
-#: ../pan/gui/actions.cc:678
+#: ../pan/gui/actions.cc:714
+msgid "Enable/Disable all _Rules"
+msgstr ""
+
+#: ../pan/gui/actions.cc:740
 #, fuzzy
 msgid "Show Matching _Articles"
 msgstr "بمطابقة ال_فنان"
 
-#: ../pan/gui/actions.cc:679
+#: ../pan/gui/actions.cc:741
 msgid "Show Matching Articles' _Threads"
 msgstr ""
 
-#: ../pan/gui/actions.cc:680
+#: ../pan/gui/actions.cc:742
 msgid "Show Matching Articles' _Subthreads"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:950
+#: ../pan/gui/body-pane.cc:981
 #, c-format
 msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:951
+#: ../pan/gui/body-pane.cc:982
 #, c-format
 msgid "Attachment not shown: MIME type %s/%s\n"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1031 ../pan/gui/gui.cc:1507
-#: ../pan/gui/header-pane.cc:1014 ../pan/gui/header-pane.cc:1356
-#: ../pan/gui/prefs-ui.cc:361 ../pan/gui/score-add-ui.cc:142
+#: ../pan/gui/body-pane.cc:1060 ../pan/gui/gui.cc:1811
+#: ../pan/gui/header-pane.cc:1162 ../pan/gui/header-pane.cc:1591
+#: ../pan/gui/post-ui.cc:2466 ../pan/gui/prefs-ui.cc:452
+#: ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
 msgstr "الموضوع"
 
-#: ../pan/gui/body-pane.cc:1033 ../pan/gui/gui.cc:1507
+#: ../pan/gui/body-pane.cc:1062 ../pan/gui/gui.cc:1811
 msgid "From"
 msgstr "مِن"
 
-#: ../pan/gui/body-pane.cc:1035 ../pan/gui/gui.cc:1508
-#: ../pan/gui/header-pane.cc:1433 ../pan/gui/log-ui.cc:208
-#: ../pan/gui/prefs-ui.cc:357
+#: ../pan/gui/body-pane.cc:1064 ../pan/gui/gui.cc:1812
+#: ../pan/gui/header-pane.cc:1668 ../pan/gui/log-ui.cc:305
+#: ../pan/gui/prefs-ui.cc:448
 #, fuzzy
 msgid "Date"
 msgstr "التّاريخ:"
 
-#: ../pan/gui/body-pane.cc:1042
+#: ../pan/gui/body-pane.cc:1071
 msgid "Newsgroups"
 msgstr "مجموعات أخبار"
 
-#: ../pan/gui/body-pane.cc:1047
+#: ../pan/gui/body-pane.cc:1076
 #, fuzzy
 msgid "Followup-To"
 msgstr "متابعة"
 
-#: ../pan/gui/body-pane.cc:1057
+#: ../pan/gui/body-pane.cc:1086
 msgid "Reply-To"
 msgstr "رُد إلى"
 
-#: ../pan/gui/body-pane.cc:1083
+#: ../pan/gui/body-pane.cc:1129
 #, fuzzy
 msgid " from "
 msgstr "من"
 
-#: ../pan/gui/body-pane.cc:1085
+#: ../pan/gui/body-pane.cc:1131
 #, fuzzy
 msgid " at "
 msgstr " إلى "
 
-#: ../pan/gui/body-pane.cc:1324
+#: ../pan/gui/body-pane.cc:1372
 msgid "Copy _URL"
 msgstr ""
 
 # 48x48/emblems/emblem-plan.icon.in.h:1
 #. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:853
-#: ../pan/gui/gui.cc:1251 ../pan/gui/gui.cc:1528
-#: ../pan/gui/score-add-ui.cc:605
+#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:951
+#: ../pan/gui/gui.cc:1544 ../pan/gui/gui.cc:1834
+#: ../pan/gui/score-add-ui.cc:602
 #, fuzzy
 msgid "Pan"
 msgstr "خطّة"
 
 #: ../pan/gui/dl-headers-ui.cc:112
 #, fuzzy, c-format
-msgid "%d Groups"
-msgstr "المجموعات"
+msgid "%d Group"
+msgid_plural "%d Groups"
+msgstr[0] "المجموعات"
+msgstr[1] "المجموعات"
 
 #: ../pan/gui/dl-headers-ui.cc:135
 msgid "Get the last N _days' headers: "
@@ -880,367 +936,462 @@ msgstr "اجلب _كل الترويسات"
 msgid "Get the _latest N headers: "
 msgstr "حدد ترويسة العمود"
 
-#: ../pan/gui/e-charset-picker.c:62 ../pan/gui/task-pane.cc:323
+#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:445
+#, fuzzy
+msgid "Action"
+msgstr "أفعال"
+
+#: ../pan/gui/e-action-combo-box.c:389
+msgid "A GtkRadioAction"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:52 ../pan/gui/task-pane.cc:511
 msgid "Unknown"
 msgstr "مجهول"
 
-#: ../pan/gui/e-charset-picker.c:63
+#: ../pan/gui/e-charset.c:53
+msgid "Arabic"
+msgstr ""
+
+#: ../pan/gui/e-charset.c:54
 #, fuzzy
 msgid "Baltic"
 msgstr "البحر البلطيقي"
 
-#: ../pan/gui/e-charset-picker.c:64
+#: ../pan/gui/e-charset.c:55
 #, fuzzy
 msgid "Central European"
 msgstr "وسط أوروبي  (_MacCE)"
 
-#: ../pan/gui/e-charset-picker.c:65
+#: ../pan/gui/e-charset.c:56
 #, fuzzy
 msgid "Chinese"
 msgstr "سطور"
 
-#: ../pan/gui/e-charset-picker.c:66
+#: ../pan/gui/e-charset.c:57
 #, fuzzy
 msgid "Cyrillic"
 msgstr "روسية سريالية"
 
-#: ../pan/gui/e-charset-picker.c:67
+#: ../pan/gui/e-charset.c:58
 #, fuzzy
 msgid "Greek"
 msgstr "أخضر"
 
-#: ../pan/gui/e-charset-picker.c:68
+#: ../pan/gui/e-charset.c:59
 msgid "Hebrew"
 msgstr ""
 
-#: ../pan/gui/e-charset-picker.c:69
+#: ../pan/gui/e-charset.c:60
 #, fuzzy
 msgid "Japanese"
 msgstr "ض-ي|ياباني"
 
-#: ../pan/gui/e-charset-picker.c:70
+#: ../pan/gui/e-charset.c:61
 #, fuzzy
 msgid "Korean"
 msgstr "ض-ي|كوري"
 
-#: ../pan/gui/e-charset-picker.c:71
+#: ../pan/gui/e-charset.c:62
 msgid "Thai"
 msgstr ""
 
-#: ../pan/gui/e-charset-picker.c:72
+#: ../pan/gui/e-charset.c:63
 #, fuzzy
 msgid "Turkish"
 msgstr "ا-ص|تركي"
 
-#: ../pan/gui/e-charset-picker.c:73
+#: ../pan/gui/e-charset.c:64
 msgid "Unicode"
 msgstr "يونيكود"
 
-#: ../pan/gui/e-charset-picker.c:74
+#: ../pan/gui/e-charset.c:65
 #, fuzzy
 msgid "Western European"
 msgstr "وسط أوروبي  (_MacCE)"
 
-#: ../pan/gui/e-charset-picker.c:75
+#: ../pan/gui/e-charset.c:66
 #, fuzzy
 msgid "Western European, New"
 msgstr "غربي"
 
-#: ../pan/gui/e-charset-picker.c:93 ../pan/gui/e-charset-picker.c:94
-#: ../pan/gui/e-charset-picker.c:95
+#: ../pan/gui/e-charset.c:85 ../pan/gui/e-charset.c:86
+#: ../pan/gui/e-charset.c:87
 #, fuzzy
 msgid "Traditional"
 msgstr "صيني تقليدي"
 
-#: ../pan/gui/e-charset-picker.c:96 ../pan/gui/e-charset-picker.c:97
-#: ../pan/gui/e-charset-picker.c:98 ../pan/gui/e-charset-picker.c:99
+#: ../pan/gui/e-charset.c:88 ../pan/gui/e-charset.c:89
+#: ../pan/gui/e-charset.c:90 ../pan/gui/e-charset.c:91
 #, fuzzy
 msgid "Simplified"
 msgstr "صيني مبسّط"
 
-#: ../pan/gui/e-charset-picker.c:102
+#: ../pan/gui/e-charset.c:94
 #, fuzzy
 msgid "Ukrainian"
 msgstr "سيريالي / اوكراني (_KOI8-U)"
 
-#: ../pan/gui/e-charset-picker.c:105
+#: ../pan/gui/e-charset.c:97
 msgid "Visual"
 msgstr ""
 
-#: ../pan/gui/e-charset-picker.c:216 ../pan/gui/gui.cc:1644
-#: ../pan/gui/post-ui.cc:247
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:1978
+#: ../pan/gui/post-ui.cc:544 ../pan/gui/prefs-ui.cc:356
 #, fuzzy
 msgid "Character Encoding"
 msgstr "ترميز المحارف"
 
-#: ../pan/gui/e-charset-picker.c:231
+#: ../pan/gui/e-charset-combo-box.c:117
 msgid "Enter the character set to use"
 msgstr ""
 
-#: ../pan/gui/e-charset-picker.c:338
+#: ../pan/gui/e-charset-combo-box.c:336
 msgid "Other..."
 msgstr ""
 
-#: ../pan/gui/group-pane.cc:568
+#: ../pan/gui/group-pane.cc:500
 #, fuzzy
-msgid "Group Name"
+msgid "Group"
+msgstr "المجموعات"
+
+#: ../pan/gui/group-pane.cc:501
+#, fuzzy
+msgid "Group (regex)"
 msgstr "اسم الم_جمعة:"
 
-#: ../pan/gui/group-pane.cc:840
+#: ../pan/gui/group-pane.cc:913
 #, fuzzy
 msgid "Subscribed Groups"
 msgstr "إشترِك"
 
-#: ../pan/gui/group-pane.cc:841
+#: ../pan/gui/group-pane.cc:914
 #, fuzzy
 msgid "Other Groups"
 msgstr "تحرير المجموعات"
 
-#: ../pan/gui/group-pane.cc:885 ../pan/gui/score-view-ui.cc:160
+#: ../pan/gui/group-pane.cc:954 ../pan/gui/score-view-ui.cc:157
 #, fuzzy
 msgid "Name"
 msgstr "الإ_سم"
 
-#: ../pan/gui/group-prefs-dialog.cc:102
+#: ../pan/gui/group-prefs-dialog.cc:94
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr ""
 
-#: ../pan/gui/group-prefs-dialog.cc:130
+#: ../pan/gui/group-prefs-dialog.cc:123
 #, fuzzy
 msgid "Pan: Group Preferences"
 msgstr "تفضيلات إيغنو"
 
-#: ../pan/gui/group-prefs-dialog.cc:144
+#: ../pan/gui/group-prefs-dialog.cc:139
+#, fuzzy, c-format
+msgid "Properties for Groups"
+msgstr "خصائص"
+
+#: ../pan/gui/group-prefs-dialog.cc:141
 #, fuzzy, c-format
 msgid "Properties for %s"
 msgstr "خصائص"
 
-#: ../pan/gui/group-prefs-dialog.cc:150
+#: ../pan/gui/group-prefs-dialog.cc:147
 #, fuzzy
 msgid "Character _encoding:"
 msgstr "ترميز المحارف"
 
-#: ../pan/gui/group-prefs-dialog.cc:151
+#: ../pan/gui/group-prefs-dialog.cc:148
 #, fuzzy
 msgid "Directory for Saving Attachments"
 msgstr "دليل حفظ ملفات مكون البريد"
 
-#: ../pan/gui/group-prefs-dialog.cc:156
+#: ../pan/gui/group-prefs-dialog.cc:157
 #, fuzzy
 msgid "Directory for _saving attachments:"
 msgstr "دليل حفظ ملفات مكون البريد"
 
-#: ../pan/gui/group-prefs-dialog.cc:158
+#: ../pan/gui/group-prefs-dialog.cc:159
 #, fuzzy
 msgid "Posting _profile:"
 msgstr "تحرير الملف الشخصي: "
 
-#: ../pan/gui/gui.cc:259
+#: ../pan/gui/gui.cc:269
 #, fuzzy
 msgid "Open the Task Manager"
 msgstr "يفتح مدير الأدوات الخارجية"
 
-#: ../pan/gui/gui.cc:281
+#: ../pan/gui/gui.cc:297
 #, fuzzy
 msgid "Open the Event Log"
 msgstr "افتح المجلد الأب"
 
-#: ../pan/gui/gui.cc:519
+#: ../pan/gui/gui.cc:544
 #, fuzzy
 msgid "Save NZB's Files"
 msgstr "احفظ ملف"
 
-#: ../pan/gui/gui.cc:639
+#: ../pan/gui/gui.cc:571
+msgid "Untitled.nzb"
+msgstr ""
+
+#: ../pan/gui/gui.cc:573
+#, fuzzy
+msgid "Save NZB File as..."
+msgstr "احفظ ملف"
+
+#: ../pan/gui/gui.cc:735
 #, fuzzy
 msgid "Import NZB Files"
 msgstr "إستيراد ملف"
 
-#: ../pan/gui/gui.cc:647
+#: ../pan/gui/gui.cc:743 ../pan/gui/post-ui.cc:3141
 #, fuzzy
 msgid "NZB Files"
 msgstr "احفظ ملف"
 
-#: ../pan/gui/gui.cc:652
+#: ../pan/gui/gui.cc:748
 msgid "All Files"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1030
+#: ../pan/gui/gui.cc:1238
 #, fuzzy
 msgid "Unable to supersede article."
 msgstr "لا يمكن إرسال الملف"
 
-#: ../pan/gui/gui.cc:1031 ../pan/gui/gui.cc:1102
+#: ../pan/gui/gui.cc:1239 ../pan/gui/gui.cc:1313
 msgid "The article doesn't match any of your posting profiles."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1075
+#: ../pan/gui/gui.cc:1286
 #, fuzzy
 msgid "Revise and send this article to replace the old one."
 msgstr "الإسم الجديد مساو للاسم القديم."
 
-#: ../pan/gui/gui.cc:1076 ../pan/gui/gui.cc:1139
+#: ../pan/gui/gui.cc:1287 ../pan/gui/gui.cc:1350
 #, fuzzy
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr "ستحتاج للخروج من النظام ليأخذ التغيير أثره."
 
-#: ../pan/gui/gui.cc:1101
+#: ../pan/gui/gui.cc:1312
 #, fuzzy
 msgid "Unable to cancel article."
 msgstr "غير قادر على تغيير الثقة"
 
-#: ../pan/gui/gui.cc:1138
+#: ../pan/gui/gui.cc:1349
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1254 ../pan/gui/gui.cc:1274
+#: ../pan/gui/gui.cc:1367
 #, fuzzy
-msgid "Copyright © 2002-2007 Charles Kerr"
+msgid "You marked some articles for deletion"
+msgstr "إضافة إلى التحديد"
+
+#: ../pan/gui/gui.cc:1368
+msgid "Are you sure you want to delete them?"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1395
+msgid "Do you want to accept it permanently (deletable afterwards) ?"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1547
+#, fuzzy
+msgid "Copyright \\u00A9 2002-2011 Charles Kerr and others"
 msgstr "حقوق النسخ © 2002-2005 Bastien Nocera"
 
-#: ../pan/gui/gui.cc:1259
+#: ../pan/gui/gui.cc:1552
 #, fuzzy
 msgid "translator-credits"
 msgstr "المترجمون:"
 
-#: ../pan/gui/gui.cc:1390
+#: ../pan/gui/gui.cc:1660
 #, fuzzy
 msgid "_1. Group Pane"
 msgstr "اسم المجموعة"
 
-#: ../pan/gui/gui.cc:1391
+#: ../pan/gui/gui.cc:1661
 #, fuzzy
 msgid "_2. Header Pane"
 msgstr "حشو الرأس"
 
-#: ../pan/gui/gui.cc:1392
+#: ../pan/gui/gui.cc:1662
 #, fuzzy
 msgid "_3. Body Pane"
 msgstr "اللوحة ال_سفلية"
 
-#: ../pan/gui/gui.cc:1490
-#, fuzzy, c-format
-msgid "This article has all %d parts."
-msgstr "لهذا الحدث منبّهات"
+#: ../pan/gui/gui.cc:1751 ../pan/gui/gui.cc:1766
+#, fuzzy
+msgid " Bytes"
+msgstr "بايتات"
 
-#: ../pan/gui/gui.cc:1492
-#, c-format
-msgid "This article is missing %d of its %d parts:"
+#: ../pan/gui/gui.cc:1754
+msgid " KB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1508 ../pan/gui/header-pane.cc:1016
+#: ../pan/gui/gui.cc:1757
+msgid " MB"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1760
+msgid " GB"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1763
+msgid " TB"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1795
+#, fuzzy, c-format
+msgid "This article is complete with %d part."
+msgid_plural "This article has all %d parts."
+msgstr[0] "لهذا الحدث منبّهات"
+msgstr[1] "لهذا الحدث منبّهات"
+
+#: ../pan/gui/gui.cc:1797
+#, fuzzy, c-format
+msgid "This article is missing %d part."
+msgid_plural "This article is missing %d of its %d parts:"
+msgstr[0] "لهذا الحدث منبّهات"
+msgstr[1] "لهذا الحدث منبّهات"
+
+#: ../pan/gui/gui.cc:1812 ../pan/gui/header-pane.cc:1164
 #, fuzzy
 msgid "Message-ID"
 msgstr "رسائل"
 
-#: ../pan/gui/gui.cc:1509 ../pan/gui/header-pane.cc:1403
-#: ../pan/gui/prefs-ui.cc:358
+#: ../pan/gui/gui.cc:1813 ../pan/gui/header-pane.cc:1638
+#: ../pan/gui/prefs-ui.cc:449
 msgid "Lines"
 msgstr "سطور"
 
-#: ../pan/gui/gui.cc:1509 ../pan/gui/header-pane.cc:1418
-#: ../pan/gui/prefs-ui.cc:356
+#: ../pan/gui/gui.cc:1813
+msgid "Size"
+msgstr ""
+
+#: ../pan/gui/gui.cc:1814 ../pan/gui/header-pane.cc:1653
+#: ../pan/gui/prefs-ui.cc:447
 msgid "Bytes"
 msgstr "بايتات"
 
-#: ../pan/gui/gui.cc:1645
+#: ../pan/gui/gui.cc:1979
 #, fuzzy
 msgid "Body Pane Encoding"
 msgstr "اللوحة ال_سفلية"
 
-#: ../pan/gui/gui.cc:1674 ../pan/gui/task-pane.cc:372
+#: ../pan/gui/gui.cc:2008 ../pan/gui/task-pane.cc:560
 #, c-format
 msgid "Offline"
 msgstr "غير متّصلل"
 
-#: ../pan/gui/gui.cc:1677
+#: ../pan/gui/gui.cc:2012
 #, fuzzy, c-format
-msgid "Closing %d connections"
-msgstr "اتصال غير سليم"
+msgid "Closing %d connection"
+msgid_plural "Closing %d connections"
+msgstr[0] "اتصال غير سليم"
+msgstr[1] "اتصال غير سليم"
 
-#: ../pan/gui/gui.cc:1679 ../pan/gui/gui.cc:1709
+#: ../pan/gui/gui.cc:2014 ../pan/gui/gui.cc:2044
 #, fuzzy, c-format
 msgid "No Connections"
 msgstr "إتّصالات VPN"
 
-#: ../pan/gui/gui.cc:1683
+#: ../pan/gui/gui.cc:2018
 #, fuzzy, c-format
 msgid "Connecting"
 msgstr "الإتصال"
 
-#: ../pan/gui/gui.cc:1696
+#: ../pan/gui/gui.cc:2031
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1752
+#: ../pan/gui/gui.cc:2087
 #, fuzzy, c-format
 msgid "No Tasks"
 msgstr "_مهام"
 
-#: ../pan/gui/gui.cc:1754 ../pan/gui/prefs-ui.cc:493
+#: ../pan/gui/gui.cc:2089 ../pan/gui/prefs-ui.cc:629
 #, fuzzy
 msgid "Tasks"
 msgstr "_مهام"
 
-#: ../pan/gui/gui.cc:1764 ../pan/gui/task-pane.cc:245
+#: ../pan/gui/gui.cc:2100 ../pan/gui/task-pane.cc:428
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1816
+#: ../pan/gui/gui.cc:2152
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
 msgstr ""
 
-#: ../pan/gui/header-pane.cc:1013
+#: ../pan/gui/header-pane.cc:1160
 #, fuzzy
 msgid "Subject or Author"
 msgstr "الموضوع يحتوي"
 
-#: ../pan/gui/header-pane.cc:1015 ../pan/gui/header-pane.cc:1388
-#: ../pan/gui/prefs-ui.cc:355 ../pan/gui/score-add-ui.cc:143
+#: ../pan/gui/header-pane.cc:1161
+#, fuzzy
+msgid "Sub or Auth (regex)"
+msgstr "الموضوع يحتوي"
+
+#: ../pan/gui/header-pane.cc:1163 ../pan/gui/header-pane.cc:1623
+#: ../pan/gui/prefs-ui.cc:446 ../pan/gui/score-add-ui.cc:140
 #, fuzzy
 msgid "Author"
 msgstr "المؤلف:"
 
-#: ../pan/gui/header-pane.cc:1373 ../pan/gui/prefs-ui.cc:359
+#: ../pan/gui/header-pane.cc:1608 ../pan/gui/prefs-ui.cc:450
 #, fuzzy
 msgid "Score"
 msgstr "النّتيجة:"
 
-#: ../pan/gui/log-ui.cc:87
+#: ../pan/gui/log-ui.cc:103
 #, fuzzy
 msgid "Save Event List"
 msgstr "احفظ التفاصيل"
 
-#: ../pan/gui/log-ui.cc:169
+#: ../pan/gui/log-ui.cc:256
 #, fuzzy
 msgid "Pan: Events"
 msgstr "أحداث"
 
-#: ../pan/gui/log-ui.cc:218
+#: ../pan/gui/log-ui.cc:315
 #, fuzzy
 msgid "Message"
 msgstr "رسائل"
 
-#: ../pan/gui/pan.cc:145
+#: ../pan/gui/pan.cc:318
+msgid "Error!"
+msgstr ""
+
+#: ../pan/gui/pan.cc:319
+msgid "An error has occured. Maximize Pan to investigate."
+msgstr ""
+
+#: ../pan/gui/pan.cc:341
+#, fuzzy
+msgid "New Articles!"
+msgstr "تدو_ير النص..."
+
+#: ../pan/gui/pan.cc:342
+msgid "There are new articles available."
+msgstr ""
+
+#: ../pan/gui/pan.cc:450
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
 "To start newsreading, first Add a Server."
 msgstr ""
 
-#: ../pan/gui/pan.cc:190
+#: ../pan/gui/pan.cc:530
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
+"  --verbose                Be verbose (in non-GUI mode).\n"
 "\n"
 "URL Options\n"
-"  news:message-id          Show the specified article.\n"
-"  news:group.name          Show the specified newsgroup.\n"
-"  headers:group.name       Download new headers for the specified "
-"newsgroup.\n"
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -1251,240 +1402,347 @@ msgid ""
 "queue.\n"
 msgstr ""
 
-#: ../pan/gui/pan.cc:255
+#: ../pan/gui/pan.cc:790
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr ""
 
-#: ../pan/gui/pan.cc:259
+#: ../pan/gui/pan.cc:794
 #, fuzzy, c-format
 msgid "Pan %s started"
 msgstr "أضيفت لوحة المهام '%s'"
 
-#: ../pan/gui/pan.cc:275
+#: ../pan/gui/pan.cc:813
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:94
+#: ../pan/gui/pan.cc:915
+msgid "Pan notification"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:171
+#, c-format
+msgid "Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:255
 #, fuzzy, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "خطأ ضبط القيمة: %s"
 
-#: ../pan/gui/post-ui.cc:103
+#: ../pan/gui/post-ui.cc:264
 msgid ""
 "<b>Spellchecker not found!</b>\n"
 " \n"
 "Was this copy of Pan compiled with GtkSpell enabled?"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:202
+#: ../pan/gui/post-ui.cc:445
 msgid "_Profile"
 msgstr "_ملف شخصي"
 
-#: ../pan/gui/post-ui.cc:203
+#: ../pan/gui/post-ui.cc:446
 #, fuzzy
 msgid "Set Editor"
 msgstr "محرر التحديد"
 
-#: ../pan/gui/post-ui.cc:205
+#: ../pan/gui/post-ui.cc:448
 #, fuzzy
 msgid "_Send Article"
 msgstr "أر_سل تنبيه"
 
-#: ../pan/gui/post-ui.cc:205
+#: ../pan/gui/post-ui.cc:448
 #, fuzzy
 msgid "Send Article Now"
 msgstr "أر_سل تنبيه"
 
-#: ../pan/gui/post-ui.cc:207
+#: ../pan/gui/post-ui.cc:449
+#, fuzzy
+msgid "_Send and Save Articles to NZB"
+msgstr "_حفظ إلى ملف"
+
+#: ../pan/gui/post-ui.cc:449
+#, fuzzy
+msgid "Send and Save Articles to NZB"
+msgstr "احفظ الملف كـ"
+
+#: ../pan/gui/post-ui.cc:451
 #, fuzzy
 msgid "Sa_ve Draft"
 msgstr "احفظ _مسودّة"
 
-#: ../pan/gui/post-ui.cc:207
+#: ../pan/gui/post-ui.cc:451
 msgid "Save as a Draft for Future Posting"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:208
+#: ../pan/gui/post-ui.cc:452
 #, fuzzy
 msgid "_Open Draft..."
 msgstr "إفتح ملف..."
 
-#: ../pan/gui/post-ui.cc:208
+#: ../pan/gui/post-ui.cc:452
 #, fuzzy
 msgid "Open an Article Draft"
 msgstr "افتح ملف"
 
-#: ../pan/gui/post-ui.cc:213
+#: ../pan/gui/post-ui.cc:457
 #, fuzzy
 msgid "_Rot13"
 msgstr "_بعيد"
 
-#: ../pan/gui/post-ui.cc:213
+#: ../pan/gui/post-ui.cc:457
 #, fuzzy
 msgid "Rot13 Selected Text"
 msgstr "ا_بحث عن النص المنتقى"
 
-#: ../pan/gui/post-ui.cc:214
+#: ../pan/gui/post-ui.cc:458
 #, fuzzy
 msgid "Run _Editor"
 msgstr "محرر القوائم"
 
-#: ../pan/gui/post-ui.cc:220
+#: ../pan/gui/post-ui.cc:458
+#, fuzzy
+msgid "Run Editor"
+msgstr "محرر القوائم"
+
+#: ../pan/gui/post-ui.cc:460
+msgid "Add _Files to Queue"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:460
+msgid "Add Files to Queue"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:476 ../pan/gui/post-ui.cc:477
+#, fuzzy
+msgid "Remove from Queue"
+msgstr "احذ_ف الخادم"
+
+#: ../pan/gui/post-ui.cc:481 ../pan/gui/post-ui.cc:482
+msgid "Clear List"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:486 ../pan/gui/post-ui.cc:487
+msgid "Select needed Parts"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:491 ../pan/gui/post-ui.cc:492
+#: ../pan/gui/task-pane.cc:626 ../pan/gui/task-pane.cc:627
+msgid "Move Up"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:496 ../pan/gui/post-ui.cc:497
+#: ../pan/gui/task-pane.cc:631 ../pan/gui/task-pane.cc:632
+msgid "Move Down"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:501 ../pan/gui/post-ui.cc:502
+msgid "Move to Top"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:506 ../pan/gui/post-ui.cc:507
+msgid "Move to Bottom"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:514
 msgid "_Wrap Text"
 msgstr "_كسر النص"
 
-#: ../pan/gui/post-ui.cc:221
+#: ../pan/gui/post-ui.cc:514
+#, fuzzy
+msgid "Wrap Text"
+msgstr "_كسر النص"
+
+#: ../pan/gui/post-ui.cc:515
 #, fuzzy
 msgid "Always Run Editor"
 msgstr "محرر القوائم"
 
-#: ../pan/gui/post-ui.cc:222
+#: ../pan/gui/post-ui.cc:516
 #, fuzzy
 msgid "Remember Character Encoding for this Group"
 msgstr "_تذكّر كلمة سر هذه الجلسة"
 
-#: ../pan/gui/post-ui.cc:223
+#: ../pan/gui/post-ui.cc:517
+msgid "Thread attached replies"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:518
+msgid "GPG-Encrypt the message"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:519
 #, fuzzy
 msgid "Check _Spelling"
 msgstr "ت_دقيق هجائي"
 
-#: ../pan/gui/post-ui.cc:248
+#: ../pan/gui/post-ui.cc:545
 #, fuzzy
 msgid "New Article's Encoding:"
 msgstr "اضبط ترميز ال_محارف"
 
-#: ../pan/gui/post-ui.cc:342
+#: ../pan/gui/post-ui.cc:725
 #, fuzzy
 msgid "Your changes will be lost!"
 msgstr "إذا خرجت من جمب الآن،هذه التغييرات ستفقد"
 
-#: ../pan/gui/post-ui.cc:343
+#: ../pan/gui/post-ui.cc:726
 #, fuzzy
 msgid "Close this window and lose your changes?"
 msgstr "هل تريد حفظ تغييراتك؟"
 
-#: ../pan/gui/post-ui.cc:380 ../pan/gui/post-ui.cc:419
+#: ../pan/gui/post-ui.cc:771 ../pan/gui/post-ui.cc:810
 #, fuzzy
 msgid "There were problems with this post."
 msgstr "هناك ملف شخصي يحمل هذا الاسم"
 
-#: ../pan/gui/post-ui.cc:382 ../pan/gui/post-ui.cc:421
+#: ../pan/gui/post-ui.cc:773 ../pan/gui/post-ui.cc:812
+#: ../pan/gui/post-ui.cc:875
 #, fuzzy
 msgid "Go Back"
 msgstr "تراجُع إلى الخلف"
 
-#: ../pan/gui/post-ui.cc:384
+#: ../pan/gui/post-ui.cc:775
 #, fuzzy
 msgid "Post Anyway"
 msgstr "_حرّر على أي حال  "
 
 #. Prompt the user
-#: ../pan/gui/post-ui.cc:413
+#: ../pan/gui/post-ui.cc:804
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:436
+#: ../pan/gui/post-ui.cc:827
 #, fuzzy
 msgid "Go _Online"
 msgstr "متصل"
 
-#: ../pan/gui/post-ui.cc:615
+#: ../pan/gui/post-ui.cc:874
+msgid "The file queue is empty, so no files can be saved."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1030
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:648
+#: ../pan/gui/post-ui.cc:1063
 #, fuzzy
 msgid "Pan is Offline."
 msgstr "غير متّصلل"
 
-#: ../pan/gui/post-ui.cc:649
+#: ../pan/gui/post-ui.cc:1064
 msgid "Go online to post the article?"
 msgstr ""
 
-#. *
-#. ***  Pop up a ``Posting'' Dialog...
-#. *
-#: ../pan/gui/post-ui.cc:662
-#, fuzzy
-msgid "Posting Article"
-msgstr "فشل النشر: %s"
-
-#: ../pan/gui/post-ui.cc:668
-#, fuzzy
-msgid "Posting..."
-msgstr "جاري المعالجة..."
-
-#: ../pan/gui/post-ui.cc:719
+#: ../pan/gui/post-ui.cc:1246
 #, fuzzy
 msgid "Error opening temporary file"
 msgstr "خطاء في فتح الملف"
 
-#: ../pan/gui/post-ui.cc:731
+#: ../pan/gui/post-ui.cc:1258
 #, fuzzy, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "خطأ أثناء كتابة ملف البريد المؤقّت: %s"
 
-#: ../pan/gui/post-ui.cc:750
+#: ../pan/gui/post-ui.cc:1277
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:788
+#: ../pan/gui/post-ui.cc:1318
 #, fuzzy, c-format
 msgid "Error starting external editor: %s"
 msgstr "%s: خطأ أثناء تشغيل المرحب على العرض %s"
 
-#: ../pan/gui/post-ui.cc:833
+#: ../pan/gui/post-ui.cc:1374
 #, fuzzy
 msgid "Open Draft Article"
 msgstr "افتح ملف"
 
-#: ../pan/gui/post-ui.cc:1017
+#: ../pan/gui/post-ui.cc:1586
 #, fuzzy
 msgid "Save Draft Article"
 msgstr "احفظ _مسودّة"
 
-#: ../pan/gui/post-ui.cc:1213
+#: ../pan/gui/post-ui.cc:1783
 #, fuzzy, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "تعذّر الاتّصال باستخدام الأمر \"%s\": %s"
 
-#: ../pan/gui/post-ui.cc:1245
+#: ../pan/gui/post-ui.cc:1819
 #, fuzzy
 msgid "Couldn't convert signature to UTF-8."
 msgstr "تعذّر التحقق من التوقيع"
 
-#: ../pan/gui/post-ui.cc:1670
+#: ../pan/gui/post-ui.cc:2304
 #, fuzzy
 msgid "F_rom"
 msgstr "مِن"
 
-#: ../pan/gui/post-ui.cc:1688
+#: ../pan/gui/post-ui.cc:2322
 #, fuzzy
 msgid "_Subject"
 msgstr "الموضوع"
 
-#: ../pan/gui/post-ui.cc:1701
+#: ../pan/gui/post-ui.cc:2335
 #, fuzzy
 msgid "_Newsgroups"
 msgstr "مجموعات أخبار"
 
-#: ../pan/gui/post-ui.cc:1715
+#: ../pan/gui/post-ui.cc:2349
 #, fuzzy
 msgid "Mail _To"
 msgstr "_بريد"
 
-#: ../pan/gui/post-ui.cc:1764
+#: ../pan/gui/post-ui.cc:2451
+msgid "Delete from Queue"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2464
+msgid "No."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2468 ../pan/gui/post-ui.cc:2564
+#: ../pan/gui/post-ui.cc:2605
+#, fuzzy
+msgid "Filename"
+msgstr "/ملف"
+
+#: ../pan/gui/post-ui.cc:2470
+msgid "Size (kB)"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2572
+msgid "The current filename"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2576
+#, fuzzy
+msgid "Subject Line"
+msgstr "الموضوع"
+
+#: ../pan/gui/post-ui.cc:2584
+msgid "The current Subject Line"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2598
+msgid "No. "
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2602
+msgid "Enable/Disable"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2636
 #, fuzzy
 msgid "Follo_wup-To"
 msgstr "متابعة"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: ../pan/gui/post-ui.cc:1773
+#: ../pan/gui/post-ui.cc:2645
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1492,139 +1750,181 @@ msgid ""
 "To direct all replies to your email address, use \"Followup-To: poster\""
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1779
+#: ../pan/gui/post-ui.cc:2651
 #, fuzzy
 msgid "_Reply-To"
 msgstr "_رد إلى"
 
-#: ../pan/gui/post-ui.cc:1787
+#: ../pan/gui/post-ui.cc:2659
 msgid ""
 "The email account where mail replies to your posted message should go.  This "
 "is only needed if it differs from the \"From\" header."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1793
+#: ../pan/gui/post-ui.cc:2665
 #, fuzzy
 msgid "_Custom Headers"
 msgstr "ترويسات مخصصة"
 
-#: ../pan/gui/post-ui.cc:1817
+#: ../pan/gui/post-ui.cc:2689
 msgid "Add \"_User-Agent\" header"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1824
+#: ../pan/gui/post-ui.cc:2696
 #, fuzzy
-msgid "Add \"Message-_Id header"
+msgid "Add \"Message-_Id\" header"
 msgstr "ترويسة الرّسالة"
 
-#: ../pan/gui/post-ui.cc:1881
+#: ../pan/gui/post-ui.cc:2825
+#, fuzzy
+msgid "Select Parts"
+msgstr "اختر كل الملفات"
+
+#: ../pan/gui/post-ui.cc:2836
+msgid "_Parts"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:2966
 #, fuzzy
 msgid "Post Article"
 msgstr "غير حرِج"
 
-#: ../pan/gui/post-ui.cc:1903
+#: ../pan/gui/post-ui.cc:2987
 msgid "_Message"
 msgstr "_رسالة"
 
-#: ../pan/gui/post-ui.cc:1904
+#: ../pan/gui/post-ui.cc:2988
 #, fuzzy
 msgid "More _Headers"
 msgstr "ترويسات حية"
 
-#: ../pan/gui/post-ui.cc:1931 ../pan/gui/profiles-dialog.cc:397
+#: ../pan/gui/post-ui.cc:2989
+msgid "File _Queue"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:3021 ../pan/gui/profiles-dialog.cc:499
 #, fuzzy, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "ملاحظة واحدة"
 
-#: ../pan/gui/profiles-dialog.cc:100
+#: ../pan/gui/post-ui.cc:3050
+msgid "Add files to queue"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:3128
+msgid "Save Upload Queue as NZB File"
+msgstr ""
+
+#: ../pan/gui/profiles-dialog.cc:125
 #, fuzzy
 msgid "Posting Profile"
 msgstr "تحرير ملف شخصي"
 
-#: ../pan/gui/profiles-dialog.cc:114
+#: ../pan/gui/profiles-dialog.cc:137
 #, fuzzy
 msgid "Profile Information"
 msgstr "معلومات الملف"
 
-#: ../pan/gui/profiles-dialog.cc:118
+#: ../pan/gui/profiles-dialog.cc:141
 #, fuzzy
 msgid "_Profile Name:"
 msgstr "اسم ال_طور:"
 
-#: ../pan/gui/profiles-dialog.cc:121
+#: ../pan/gui/profiles-dialog.cc:144
 #, fuzzy
 msgid "Required Information"
 msgstr "<b>معلومات مطلوبة</b>"
 
-#: ../pan/gui/profiles-dialog.cc:125
+#: ../pan/gui/profiles-dialog.cc:148
 #, fuzzy
 msgid "_Full Name:"
 msgstr "الاسم الكامل:"
 
-#: ../pan/gui/profiles-dialog.cc:128
+#: ../pan/gui/profiles-dialog.cc:151
 msgid "_Email Address:"
 msgstr "_عنوان البريد الإلكتروني:"
 
-#: ../pan/gui/profiles-dialog.cc:130
+#: ../pan/gui/profiles-dialog.cc:153
 msgid "_Post Articles via:"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:133
+#: ../pan/gui/profiles-dialog.cc:156
 #, fuzzy
 msgid "Signature"
 msgstr "توقيعات"
 
-#: ../pan/gui/profiles-dialog.cc:136
+#: ../pan/gui/profiles-dialog.cc:159
 #, fuzzy
 msgid "_Use a Signature"
 msgstr "توقيع سيّء"
 
-#: ../pan/gui/profiles-dialog.cc:140
+#: ../pan/gui/profiles-dialog.cc:163
 #, fuzzy
 msgid "Signature File"
 msgstr "جدول التوقيعات"
 
-#: ../pan/gui/profiles-dialog.cc:143
+#: ../pan/gui/profiles-dialog.cc:180
 #, fuzzy
-msgid "_Signature:"
+msgid "Signer : "
 msgstr "تو_قيع:"
 
-#: ../pan/gui/profiles-dialog.cc:148
+#: ../pan/gui/profiles-dialog.cc:202
 msgid "Text File"
 msgstr "ملف نصي"
 
-#: ../pan/gui/profiles-dialog.cc:150
+#: ../pan/gui/profiles-dialog.cc:204
 #, fuzzy
 msgid "Text"
 msgstr "_نص"
 
-#: ../pan/gui/profiles-dialog.cc:152
+#: ../pan/gui/profiles-dialog.cc:206
+#, fuzzy
+msgid "GPG Signature"
+msgstr "توقيعات"
+
+#: ../pan/gui/profiles-dialog.cc:208
 #, fuzzy
 msgid "Command"
 msgstr "أوامر"
 
-#: ../pan/gui/profiles-dialog.cc:162
+#: ../pan/gui/profiles-dialog.cc:211
 #, fuzzy
-msgid "Signature _Type:"
+msgid "Signature Type : "
 msgstr "جدول التوقيعات"
 
-#: ../pan/gui/profiles-dialog.cc:165
+#: ../pan/gui/profiles-dialog.cc:239
+msgid "X-Face (Avatar)"
+msgstr ""
+
+#: ../pan/gui/profiles-dialog.cc:242
+msgid ""
+"You can add an avatar icon to your postings with a unique X-Face code. \n"
+"Add the code without the trailing <b>\"X-Face:\"</b> \n"
+" if it was generated by a helper program (for example : http://www.dairiki."
+"org/xface/xface.php)."
+msgstr ""
+
+#: ../pan/gui/profiles-dialog.cc:245
+msgid "_X-Face:"
+msgstr ""
+
+#: ../pan/gui/profiles-dialog.cc:247
 msgid "Optional Information"
 msgstr "معلومات اختيارية:"
 
-#: ../pan/gui/profiles-dialog.cc:170
+#: ../pan/gui/profiles-dialog.cc:252
 msgid ""
-"When posting to Usenet, your article's Message-ID contains a domain name.  "
+"When posting to Usenet, your article's Message-ID contains a domain name.  \n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
 "domain name from your email address."
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:171
+#: ../pan/gui/profiles-dialog.cc:255
 #, fuzzy
 msgid "Message-ID _Domain Name:"
 msgstr "اسم ال_نطاق:"
 
-#: ../pan/gui/profiles-dialog.cc:175
+#: ../pan/gui/profiles-dialog.cc:259
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -1633,315 +1933,443 @@ msgid ""
 "%d for Date"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:176
+#: ../pan/gui/profiles-dialog.cc:260
 #, fuzzy
 msgid "_Attribution:"
 msgstr "مساهمات:"
 
-#: ../pan/gui/profiles-dialog.cc:199
+#: ../pan/gui/profiles-dialog.cc:283
 msgid ""
 "Extra headers to be included in your posts, such as\n"
-"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
-"Organization: Your Organization"
+"Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
+"Organization: Your Organization\n"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:208
+#: ../pan/gui/profiles-dialog.cc:293
 #, fuzzy
 msgid "E_xtra Headers:"
 msgstr "استخرج هنا"
 
-#: ../pan/gui/profiles-dialog.cc:248
+#: ../pan/gui/profiles-dialog.cc:339
 #, fuzzy
 msgid "Invalid email address."
 msgstr "عنوان غير صحيح."
 
-#: ../pan/gui/profiles-dialog.cc:249
+#: ../pan/gui/profiles-dialog.cc:340
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:398
+#: ../pan/gui/profiles-dialog.cc:500
 msgid "New Profile"
 msgstr "طور جديد"
 
-#: ../pan/gui/profiles-dialog.cc:444
+#: ../pan/gui/profiles-dialog.cc:546
 #, fuzzy
 msgid "Posting Profiles"
 msgstr "فشل النشر: %s"
 
-#: ../pan/gui/profiles-dialog.cc:460
+#: ../pan/gui/profiles-dialog.cc:562
 #, fuzzy
 msgid "Profiles"
 msgstr "_ملفات التعريف"
 
-#: ../pan/gui/prefs.cc:323
+#: ../pan/gui/prefs.cc:332
 #, fuzzy, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "لا يمكن تحليل اللون \"%s\""
 
-#: ../pan/gui/prefs-ui.cc:198
+#: ../pan/gui/prefs-ui.cc:207
 #, fuzzy
 msgid "Use GNOME Preferences"
 msgstr "تفضيلات عين جنوم"
 
-#: ../pan/gui/prefs-ui.cc:199
+#: ../pan/gui/prefs-ui.cc:208
 #, fuzzy
 msgid "Use KDE Preferences"
 msgstr "تفضيلات الفأرة"
 
-#: ../pan/gui/prefs-ui.cc:200
+#: ../pan/gui/prefs-ui.cc:209
 #, fuzzy
 msgid "Use OS X Preferences"
 msgstr "تفضيلات الفأرة"
 
-#: ../pan/gui/prefs-ui.cc:201
+#: ../pan/gui/prefs-ui.cc:210
 #, fuzzy
 msgid "Use Windows Preferences"
 msgstr "تفضيلات النافذة"
 
-#: ../pan/gui/prefs-ui.cc:202
+#: ../pan/gui/prefs-ui.cc:211
 #, fuzzy
 msgid "Custom Command:"
 msgstr "ال_أمر المخصّص:"
 
-#: ../pan/gui/prefs-ui.cc:354
+#: ../pan/gui/prefs-ui.cc:262
 #, fuzzy
-msgid "Action"
-msgstr "أفعال"
+msgid "Disabled"
+msgstr "/_مفعّل"
 
-#: ../pan/gui/prefs-ui.cc:360 ../pan/gui/task-pane.cc:478
+#: ../pan/gui/prefs-ui.cc:263
+msgid "Only new (Score == 0)"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:264
+msgid "9999 or more"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:265
+msgid "5000 to 9998"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:266
+msgid "1 to 4999"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:267
+msgid "-9998 to -1"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:268
+msgid "-9999 or less"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:333
+#, c-format
+msgid "  Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:357
+msgid "Global Charset Settings"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:451 ../pan/gui/task-pane.cc:760
 msgid "State"
 msgstr "الحالة"
 
-#: ../pan/gui/prefs-ui.cc:394
+#: ../pan/gui/prefs-ui.cc:485
 #, fuzzy
 msgid "Enabled"
 msgstr "/_مفعّل"
 
-#: ../pan/gui/prefs-ui.cc:398
+#: ../pan/gui/prefs-ui.cc:489
 #, fuzzy
 msgid "Column Name"
 msgstr "الإسم المتداول"
 
-#: ../pan/gui/prefs-ui.cc:432
+#: ../pan/gui/prefs-ui.cc:525
 #, fuzzy
 msgid "Pan: Preferences"
 msgstr "تفضيلات إيغنو"
 
-#: ../pan/gui/prefs-ui.cc:444
+#: ../pan/gui/prefs-ui.cc:538
 msgid "Mouse"
 msgstr "الفأرة"
 
-#: ../pan/gui/prefs-ui.cc:446
+#: ../pan/gui/prefs-ui.cc:540
 msgid "Single-click activates, rather than selects, _groups"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:448
+#: ../pan/gui/prefs-ui.cc:542
 msgid "Single-click activates, rather than selects, _articles"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:451
+#: ../pan/gui/prefs-ui.cc:545
 msgid "Groups"
 msgstr "المجموعات"
 
-#: ../pan/gui/prefs-ui.cc:453
+#: ../pan/gui/prefs-ui.cc:547
 msgid "Get new headers in subscribed groups on _startup"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:455
+#: ../pan/gui/prefs-ui.cc:549
 msgid "Get new headers when _entering group"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:457
+#: ../pan/gui/prefs-ui.cc:551
 msgid "Mark entire group _read when leaving group"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:459
+#: ../pan/gui/prefs-ui.cc:553
 msgid "Mark entire group read before getting _new headers"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:461
+#: ../pan/gui/prefs-ui.cc:555
 msgid "E_xpand all threads when entering group"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:464
+#: ../pan/gui/prefs-ui.cc:558
 #, fuzzy
 msgid "Articles"
 msgstr "الفنان"
 
-#: ../pan/gui/prefs-ui.cc:466
+#: ../pan/gui/prefs-ui.cc:560
 msgid "Space selects next article rather than next unread"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:468
+#: ../pan/gui/prefs-ui.cc:562
+#, fuzzy
+msgid "Expand threads upon selection."
+msgstr "ألفا إلى تحديد"
+
+#: ../pan/gui/prefs-ui.cc:564
+msgid "Always show article deletion confirmation dialog"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:566
 #, fuzzy
 msgid "Smooth scrolling"
 msgstr "اللف"
 
-#: ../pan/gui/prefs-ui.cc:470
+#: ../pan/gui/prefs-ui.cc:568
 msgid "Clear article cache on shutdown"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:473
+#: ../pan/gui/prefs-ui.cc:571
+msgid "Size of Article Cache (in MiB). "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:576
+#, fuzzy
+msgid "Autosave Articles"
+msgstr "احفظ ملف"
+
+#: ../pan/gui/prefs-ui.cc:578
+msgid "Minutes to autosave newsrc files."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:583
+#, fuzzy
+msgid "Language Settings"
+msgstr "الإعدادات"
+
+#: ../pan/gui/prefs-ui.cc:592
+#, fuzzy
+msgid "Autosave Article Draft"
+msgstr "افتح ملف"
+
+#: ../pan/gui/prefs-ui.cc:594
+msgid "Minutes to autosave the current Article Draft."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:599
+#, fuzzy
+msgid "Systray Behaviour"
+msgstr "السّلوك"
+
+#: ../pan/gui/prefs-ui.cc:601
+msgid "Hide to system tray"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:603
+msgid "Start Pan minimized"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:605
+#, fuzzy
+msgid "Show notifications"
+msgstr "اعرض معلومات الصورة"
+
+#: ../pan/gui/prefs-ui.cc:608
 #, fuzzy
 msgid "_Behavior"
 msgstr "السّلوك"
 
-#: ../pan/gui/prefs-ui.cc:477
+#: ../pan/gui/prefs-ui.cc:613
 #, fuzzy
 msgid "Pane Layout"
 msgstr "مخطط القائمة"
 
-#: ../pan/gui/prefs-ui.cc:496
+#: ../pan/gui/prefs-ui.cc:632
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:498
+#: ../pan/gui/prefs-ui.cc:634
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:500
+#: ../pan/gui/prefs-ui.cc:636
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:502
+#: ../pan/gui/prefs-ui.cc:638
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:504
+#: ../pan/gui/prefs-ui.cc:640
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:506
+#: ../pan/gui/prefs-ui.cc:642
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:513
+#: ../pan/gui/prefs-ui.cc:650
 #, fuzzy
 msgid "Header Pane Columns"
 msgstr "عمود تسطير"
 
-#: ../pan/gui/prefs-ui.cc:517
+#: ../pan/gui/prefs-ui.cc:654
 #, fuzzy
 msgid "_Headers"
 msgstr "ترويسات"
 
-#: ../pan/gui/prefs-ui.cc:521
+#: ../pan/gui/prefs-ui.cc:659
+msgid ""
+"This menu lets you configure Pan to take certain actions on your behalf "
+"automatically, based on a post's score."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:662
+msgid "_Delete Posts scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:664
+msgid "Mark Posts _read scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:666
+msgid "_Cache Posts scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:668
+msgid "Download _attachments of Posts scoring at: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:676
 msgid "Fonts"
 msgstr "خطوط"
 
-#: ../pan/gui/prefs-ui.cc:523
+#: ../pan/gui/prefs-ui.cc:678
 #, fuzzy
 msgid "Use custom font in Group Pane:"
 msgstr "إستعمال خطوط مخصّصة"
 
-#: ../pan/gui/prefs-ui.cc:528
+#: ../pan/gui/prefs-ui.cc:683
 #, fuzzy
 msgid "Use custom font in Header Pane:"
 msgstr "إستعمال خطوط مخصّصة"
 
-#: ../pan/gui/prefs-ui.cc:533
+#: ../pan/gui/prefs-ui.cc:688
 #, fuzzy
 msgid "Use custom font in Body Pane:"
 msgstr "إستعمال خطوط مخصّصة"
 
-#: ../pan/gui/prefs-ui.cc:538
+#: ../pan/gui/prefs-ui.cc:693
 #, fuzzy
 msgid "Monospace font:"
 msgstr "خط ثابت العرض"
 
-#: ../pan/gui/prefs-ui.cc:542
+#: ../pan/gui/prefs-ui.cc:697
 msgid "_Fonts"
 msgstr "الخطوط"
 
-#: ../pan/gui/prefs-ui.cc:546
+#: ../pan/gui/prefs-ui.cc:702
 #, fuzzy
 msgid "Header Pane"
 msgstr "حشو الرأس"
 
-#: ../pan/gui/prefs-ui.cc:549 ../pan/gui/prefs-ui.cc:555
-#: ../pan/gui/prefs-ui.cc:561 ../pan/gui/prefs-ui.cc:567
-#: ../pan/gui/prefs-ui.cc:573
+#: ../pan/gui/prefs-ui.cc:705 ../pan/gui/prefs-ui.cc:711
+#: ../pan/gui/prefs-ui.cc:717 ../pan/gui/prefs-ui.cc:723
+#: ../pan/gui/prefs-ui.cc:729 ../pan/gui/prefs-ui.cc:735
 #, fuzzy
 msgid "Text:"
 msgstr "_نص"
 
-#: ../pan/gui/prefs-ui.cc:551 ../pan/gui/prefs-ui.cc:557
-#: ../pan/gui/prefs-ui.cc:563 ../pan/gui/prefs-ui.cc:569
-#: ../pan/gui/prefs-ui.cc:575
+#: ../pan/gui/prefs-ui.cc:707 ../pan/gui/prefs-ui.cc:713
+#: ../pan/gui/prefs-ui.cc:719 ../pan/gui/prefs-ui.cc:725
+#: ../pan/gui/prefs-ui.cc:731 ../pan/gui/prefs-ui.cc:737
 msgid "Background:"
 msgstr "الخلفية:"
 
-#: ../pan/gui/prefs-ui.cc:553
+#: ../pan/gui/prefs-ui.cc:709
 msgid "Scores of 9999 or more:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:559
+#: ../pan/gui/prefs-ui.cc:715
 msgid "Scores from 5000 to 9998:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:565
+#: ../pan/gui/prefs-ui.cc:721
 msgid "Scores from 1 to 4999:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:571
+#: ../pan/gui/prefs-ui.cc:727
 msgid "Scores from -9998 to -1:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:577
+#: ../pan/gui/prefs-ui.cc:733
 msgid "Scores of -9999 or less:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:579
+#: ../pan/gui/prefs-ui.cc:739
+msgid "Read collapsed Thread:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:741
 #, fuzzy
 msgid "Body Pane"
 msgstr "اللوحة ال_سفلية"
 
-#: ../pan/gui/prefs-ui.cc:585
+#: ../pan/gui/prefs-ui.cc:747
 #, fuzzy
 msgid "Quoted Text:"
 msgstr "مقتبس"
 
-#: ../pan/gui/prefs-ui.cc:586
+#: ../pan/gui/prefs-ui.cc:748
 msgid "URL:"
 msgstr "العنوان:"
 
-#: ../pan/gui/prefs-ui.cc:587
+#: ../pan/gui/prefs-ui.cc:749
 #, fuzzy
 msgid "Signature:"
 msgstr "تو_قيع:"
 
-#: ../pan/gui/prefs-ui.cc:589
+#: ../pan/gui/prefs-ui.cc:751
 msgid "_Colors"
 msgstr "الألوان"
 
-#: ../pan/gui/prefs-ui.cc:593
+#: ../pan/gui/prefs-ui.cc:756
 msgid "Preferred Applications"
 msgstr "التطبيقات المفضّلة"
 
-#: ../pan/gui/prefs-ui.cc:597
+#: ../pan/gui/prefs-ui.cc:760
 #, fuzzy
 msgid "_Web Browser:"
 msgstr "متصفح الويب"
 
-#: ../pan/gui/prefs-ui.cc:600
+#: ../pan/gui/prefs-ui.cc:763
 #, fuzzy
 msgid "_Mail Reader:"
 msgstr "مجلّد البريد:"
 
-#: ../pan/gui/prefs-ui.cc:602
+#: ../pan/gui/prefs-ui.cc:765
 #, fuzzy
 msgid "_Text Editor:"
 msgstr "محرر التحديد"
 
-#: ../pan/gui/prefs-ui.cc:604
+#: ../pan/gui/prefs-ui.cc:767
 msgid "A_pplications"
 msgstr "_تطبيقات"
 
-#: ../pan/gui/save-ui.cc:58
+#: ../pan/gui/prefs-ui.cc:772
+msgid "Encoding Options"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:776
+msgid "Default Bytes per File (for Encoder). "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:781
+#, fuzzy
+msgid "_Upload options"
+msgstr "_تطبيقات"
+
+#: ../pan/gui/save-ui.cc:77
 #, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - subject line excerpt\n"
+"%S - subject line\n"
 " \n"
 "\"/home/user/News/Pan/%g\" becomes\n"
 "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
@@ -1949,446 +2377,581 @@ msgid ""
 "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgstr ""
 
-#: ../pan/gui/save-ui.cc:201
+#: ../pan/gui/save-ui.cc:233
 msgid "Save attachments"
 msgstr "احفظ المرفقات"
 
-#: ../pan/gui/save-ui.cc:202
+#: ../pan/gui/save-ui.cc:234
 #, fuzzy
 msgid "Save text"
 msgstr "نص مُوقّع"
 
-#: ../pan/gui/save-ui.cc:203
+#: ../pan/gui/save-ui.cc:235
 #, fuzzy
 msgid "Save attachments and text"
 msgstr "احفظ المرفقات"
 
-#: ../pan/gui/save-ui.cc:210
+#: ../pan/gui/save-ui.cc:242
 msgid "Add to the queue sorted by date posted"
 msgstr ""
 
-#: ../pan/gui/save-ui.cc:211
+#: ../pan/gui/save-ui.cc:243
 #, fuzzy
 msgid "Add to the front of the queue"
 msgstr "اضف الملفات المحددة الى طابور التشغيل"
 
-#: ../pan/gui/save-ui.cc:212
+#: ../pan/gui/save-ui.cc:244
 #, fuzzy
 msgid "Add to the back of the queue"
 msgstr "اضف الملفات المحددة الى طابور التشغيل"
 
-#: ../pan/gui/save-ui.cc:239
+#: ../pan/gui/save-ui.cc:271
 #, fuzzy
 msgid "Pan: Save Articles"
 msgstr "احفظ الملف كـ"
 
-#: ../pan/gui/save-ui.cc:264 ../pan/gui/save-ui.cc:282
+#: ../pan/gui/save-ui.cc:296 ../pan/gui/save-ui.cc:314
 msgid "_Location:"
 msgstr "ال_موقع:"
 
-#: ../pan/gui/save-ui.cc:268
+#: ../pan/gui/save-ui.cc:300
 #, fuzzy
 msgid "Save Articles"
 msgstr "احفظ ملف"
 
-#: ../pan/gui/save-ui.cc:285
+#: ../pan/gui/save-ui.cc:317
 #, fuzzy, c-format
 msgid "_Group's path: %s"
 msgstr "اسم المجموعة:  %s"
 
-#: ../pan/gui/save-ui.cc:296
+#: ../pan/gui/save-ui.cc:328
 #, fuzzy
 msgid "_Action:"
 msgstr "_فعل"
 
-#: ../pan/gui/save-ui.cc:300
+#: ../pan/gui/save-ui.cc:332
 msgid "_Priority:"
 msgstr "الأ_ولويّة:"
 
-#: ../pan/gui/score-add-ui.cc:92
+#: ../pan/gui/score-add-ui.cc:89
 #, fuzzy
 msgid "is more than"
 msgstr "أكثر من"
 
-#: ../pan/gui/score-add-ui.cc:93
+#: ../pan/gui/score-add-ui.cc:90
 #, fuzzy
 msgid "is at most"
 msgstr "على الأكثر"
 
-#: ../pan/gui/score-add-ui.cc:115
+#: ../pan/gui/score-add-ui.cc:112
 msgid "increase the article's score by"
 msgstr ""
 
-#: ../pan/gui/score-add-ui.cc:116
+#: ../pan/gui/score-add-ui.cc:113
 msgid "decrease the article's score by"
 msgstr ""
 
-#: ../pan/gui/score-add-ui.cc:117
+#: ../pan/gui/score-add-ui.cc:114
 #, fuzzy
 msgid "set the article's score to"
 msgstr "حرك العقارب لتحديد الساعة :"
 
-#: ../pan/gui/score-add-ui.cc:118
+#: ../pan/gui/score-add-ui.cc:115
 msgid "watch the article (set its score to 9999)"
 msgstr ""
 
-#: ../pan/gui/score-add-ui.cc:119
+#: ../pan/gui/score-add-ui.cc:116
 msgid "ignore the article (set its score to -9999)"
 msgstr ""
 
-#: ../pan/gui/score-add-ui.cc:144
+#: ../pan/gui/score-add-ui.cc:141
 #, fuzzy
 msgid "References"
 msgstr "تفضيلات"
 
-#: ../pan/gui/score-add-ui.cc:145
+#: ../pan/gui/score-add-ui.cc:142
 #, fuzzy
 msgid "Line Count"
 msgstr "تعليق عن السطر"
 
-#: ../pan/gui/score-add-ui.cc:146
+#: ../pan/gui/score-add-ui.cc:143
 #, fuzzy
 msgid "Byte Count"
 msgstr "بتلر المقاطعه"
 
-#: ../pan/gui/score-add-ui.cc:147
+#: ../pan/gui/score-add-ui.cc:144
 msgid "Crosspost Group Count"
 msgstr ""
 
-#: ../pan/gui/score-add-ui.cc:148
+#: ../pan/gui/score-add-ui.cc:145
 msgid "Age (in days)"
 msgstr ""
 
-#: ../pan/gui/score-add-ui.cc:170
+#: ../pan/gui/score-add-ui.cc:167
 #, fuzzy
 msgid "for the next month"
 msgstr "اظهر النقلة التالية"
 
-#: ../pan/gui/score-add-ui.cc:171
+#: ../pan/gui/score-add-ui.cc:168
 #, fuzzy
 msgid "for the next six months"
 msgstr "شغّل الأغنية السابقة"
 
-#: ../pan/gui/score-add-ui.cc:172
+#: ../pan/gui/score-add-ui.cc:169
 msgid "forever"
 msgstr "إلى الأبد"
 
-#: ../pan/gui/score-add-ui.cc:197
+#: ../pan/gui/score-add-ui.cc:194
 msgid "contains"
 msgstr "يحتوي"
 
-#: ../pan/gui/score-add-ui.cc:198
+#: ../pan/gui/score-add-ui.cc:195
 #, fuzzy
 msgid "doesn't contain"
 msgstr "لا يحتوي"
 
-#: ../pan/gui/score-add-ui.cc:199
+#: ../pan/gui/score-add-ui.cc:196
 #, fuzzy
 msgid "is"
 msgstr "قائمة"
 
-#: ../pan/gui/score-add-ui.cc:200
+#: ../pan/gui/score-add-ui.cc:197
 #, fuzzy
 msgid "isn't"
 msgstr "ليس"
 
-#: ../pan/gui/score-add-ui.cc:201
+#: ../pan/gui/score-add-ui.cc:198
 #, fuzzy
 msgid "starts with"
 msgstr "لا يبدء بـ"
 
-#: ../pan/gui/score-add-ui.cc:202
+#: ../pan/gui/score-add-ui.cc:199
 msgid "ends with"
 msgstr "ينتهي بـ"
 
-#: ../pan/gui/score-add-ui.cc:203
+#: ../pan/gui/score-add-ui.cc:200
 #, fuzzy
 msgid "matches regex"
 msgstr "ترييش الحواف"
 
-#: ../pan/gui/score-add-ui.cc:484
+#: ../pan/gui/score-add-ui.cc:481
 msgid "Another rule already sets this article's score."
 msgstr ""
 
-#: ../pan/gui/score-add-ui.cc:485
+#: ../pan/gui/score-add-ui.cc:482
 #, fuzzy
 msgid "You may want to go back or delete the old rule."
 msgstr "لم يمكن محو المحفوظة القديمة."
 
-#: ../pan/gui/score-add-ui.cc:556
+#: ../pan/gui/score-add-ui.cc:553
 #, fuzzy
 msgid "Add and Re_score"
 msgstr "ابحث و استبدل"
 
-#: ../pan/gui/score-add-ui.cc:607 ../pan/gui/score-add-ui.cc:627
+#: ../pan/gui/score-add-ui.cc:604 ../pan/gui/score-add-ui.cc:624
 #, fuzzy
 msgid "New Scoring Rule"
 msgstr "مستوى التسجيل"
 
-#: ../pan/gui/score-add-ui.cc:638
+#: ../pan/gui/score-add-ui.cc:635
 #, fuzzy
 msgid "If the group name"
 msgstr "اسم المجموعة"
 
-#: ../pan/gui/score-add-ui.cc:645
+#: ../pan/gui/score-add-ui.cc:642
 #, fuzzy
 msgid "And the article's"
 msgstr "القارة القطبية الجنوبية"
 
-#: ../pan/gui/score-view-ui.cc:59
+#: ../pan/gui/score-view-ui.cc:56
 #, fuzzy
 msgid "Close and Re_score"
 msgstr "اغلق و ا_خرج"
 
-#: ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/score-view-ui.cc:154
 #, fuzzy, c-format
 msgid "File %s, Lines %d - %d"
 msgstr "فشل عند الرّسالة %d من أصل %d"
 
-#: ../pan/gui/score-view-ui.cc:185
+#: ../pan/gui/score-view-ui.cc:182
 #, fuzzy
 msgid "Pan: Article's Scores"
 msgstr "نتائج نيبلس"
 
-#: ../pan/gui/score-view-ui.cc:215
+#: ../pan/gui/score-view-ui.cc:208
 #, fuzzy
 msgid "Add"
 msgstr "أ_ضف"
 
-#: ../pan/gui/score-view-ui.cc:220
+#: ../pan/gui/score-view-ui.cc:213
 #, fuzzy
 msgid "New Score"
 msgstr "نيويورك"
 
-#: ../pan/gui/score-view-ui.cc:225
+#: ../pan/gui/score-view-ui.cc:218
 #, fuzzy
 msgid "Criteria"
 msgstr "معايير:"
 
-#: ../pan/gui/score-view-ui.cc:248
+#: ../pan/gui/score-view-ui.cc:241
 #, fuzzy
 msgid "Add a New Scoring Rule"
 msgstr "أضف قاعدة جديدة"
 
-#: ../pan/gui/score-view-ui.cc:255
+#: ../pan/gui/score-view-ui.cc:248
 #, fuzzy
 msgid "Remove the Selected Scoring Rule"
 msgstr "احذف شريط الأدوات المحدد"
 
-#: ../pan/gui/server-ui.cc:163
+#: ../pan/gui/server-ui.cc:222
 #, fuzzy
 msgid "Please specify the server's address."
 msgstr "رجاء اختر خادماً."
 
+#: ../pan/gui/server-ui.cc:264
+msgid "Import SSL certificate (PEM format) from File"
+msgstr ""
+
 #. create the dialog
-#: ../pan/gui/server-ui.cc:202 ../pan/gui/server-ui.cc:548
+#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:872
 #, fuzzy
 msgid "Add a Server"
 msgstr "اضف خادم NTP"
 
-#: ../pan/gui/server-ui.cc:202 ../pan/gui/server-ui.cc:558
+#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:878
 #, fuzzy
 msgid "Edit a Server's Settings"
 msgstr "إعدادات الخادم"
 
-#: ../pan/gui/server-ui.cc:227
+#: ../pan/gui/server-ui.cc:310
 msgid "Location"
 msgstr "الموقع"
 
-#: ../pan/gui/server-ui.cc:231
+#: ../pan/gui/server-ui.cc:314
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:232
+#: ../pan/gui/server-ui.cc:315
 msgid "_Address:"
 msgstr "ال_عنوان:"
 
-#: ../pan/gui/server-ui.cc:236
+#: ../pan/gui/server-ui.cc:319
 msgid "The news server's port number.  Typically 119."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:237
+#: ../pan/gui/server-ui.cc:320
 #, fuzzy
 msgid "Por_t:"
 msgstr "منفد:"
 
-#: ../pan/gui/server-ui.cc:240
+#: ../pan/gui/server-ui.cc:323
 #, fuzzy
 msgid "Login (if Required)"
 msgstr "فشل الولوج"
 
-#: ../pan/gui/server-ui.cc:244
+#: ../pan/gui/server-ui.cc:327
 #, fuzzy
 msgid "_Username:"
 msgstr "ا_سم المستخدم:"
 
-#: ../pan/gui/server-ui.cc:245
+#: ../pan/gui/server-ui.cc:328
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:249
+#: ../pan/gui/server-ui.cc:332
 msgid "_Password:"
 msgstr "_كلمة السر:"
 
-#: ../pan/gui/server-ui.cc:250
+#: ../pan/gui/server-ui.cc:333
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:253
+#: ../pan/gui/server-ui.cc:336
 msgid "Settings"
 msgstr "الإعدادات"
 
-#: ../pan/gui/server-ui.cc:259
+#: ../pan/gui/server-ui.cc:343
 #, fuzzy
 msgid "Connection _Limit:"
 msgstr "فقد الاتصال "
 
-#: ../pan/gui/server-ui.cc:262
+#: ../pan/gui/server-ui.cc:347
 msgid "After Two Weeks"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:263
+#: ../pan/gui/server-ui.cc:348
 msgid "After One Month"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:264
+#: ../pan/gui/server-ui.cc:349
 msgid "After Two Months"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:265
+#: ../pan/gui/server-ui.cc:350
 #, fuzzy
 msgid "After Three Months"
 msgstr "اظهر النقلة التالية"
 
-#: ../pan/gui/server-ui.cc:266
+#: ../pan/gui/server-ui.cc:351
 #, fuzzy
 msgid "After Six Months"
 msgstr "شغّل الأغنية السابقة"
 
-#: ../pan/gui/server-ui.cc:267
+#: ../pan/gui/server-ui.cc:352
 #, fuzzy
 msgid "Never Expire Old Articles"
 msgstr "لا ينتهي"
 
-#: ../pan/gui/server-ui.cc:281
+#: ../pan/gui/server-ui.cc:366
 #, fuzzy
 msgid "E_xpire Old Articles:"
 msgstr "اس_تثني الملفات:"
 
-#: ../pan/gui/server-ui.cc:284
+#: ../pan/gui/server-ui.cc:370
 msgid "Primary"
 msgstr "أوّلي"
 
-#: ../pan/gui/server-ui.cc:285
+#: ../pan/gui/server-ui.cc:371
 #, fuzzy
 msgid "Fallback"
 msgstr "اتصال معاكس"
 
-#: ../pan/gui/server-ui.cc:299
+#: ../pan/gui/server-ui.cc:385
 #, fuzzy
 msgid "Server Rank:"
 msgstr "الخادم:"
 
-#: ../pan/gui/server-ui.cc:303
+#: ../pan/gui/server-ui.cc:389
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
 "subscription servers as fallbacks."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:426
+#: ../pan/gui/server-ui.cc:396
+msgid "Security"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:401
+msgid "Use Plaintext (Unsecured) Connections"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:402
+#, fuzzy
+msgid "Use Secure SSL Connections"
+msgstr "إتّصالات VPN"
+
+#: ../pan/gui/server-ui.cc:418
+msgid "TLS (SSL) Options:"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:423
+msgid ""
+"You can set the option for using/disabling secure SSL/TLS connections here. "
+"If you enable SSL/TLS, your data is encrypted and secure. It is encouraged "
+"to use this option for privacy reasons."
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:598
 #, fuzzy, c-format
 msgid "Really delete \"%s\"?"
 msgstr "أتريد حقاً حذف الملف \"%s\"؟"
 
+#: ../pan/gui/server-ui.cc:687
+msgid "No information available."
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:693
+#, c-format
+msgid "Server Certificate for '%s'"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:798
+#, fuzzy, c-format
+msgid "Really delete certificate for \"%s\"?"
+msgstr "أتريد حقاً حذف الملف \"%s\"؟"
+
 #. dialog
-#: ../pan/gui/server-ui.cc:497 ../pan/gui/server-ui.cc:522
+#: ../pan/gui/server-ui.cc:825 ../pan/gui/server-ui.cc:846
+#: ../pan/gui/server-ui.cc:944
 msgid "Servers"
 msgstr "الخوادم"
 
-#: ../pan/gui/server-ui.cc:565
+#: ../pan/gui/server-ui.cc:885
 #, fuzzy
 msgid "Remove a Server"
 msgstr "احذ_ف الخادم"
 
-#: ../pan/gui/task-pane.cc:227
+#. dialog
+#: ../pan/gui/server-ui.cc:918
+msgid "SSL Certificates"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:939
+msgid "Certificates"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:970
+msgid "Import Certificate"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:976
+msgid "Inspect Certificate"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:983
+#, fuzzy
+msgid "Remove Certificate"
+msgstr "احذ_ف الخادم"
+
+#: ../pan/gui/task-pane.cc:142
+#, c-format
+msgid ""
+"\n"
+"<u>Upload</u>\n"
+"\n"
+"<i>Subject:</i> <b>\"%s\"</b>\n"
+"<i>From:</i> <b>%s</b>\n"
+"<i>Groups:</i> <b>%s</b>\n"
+"<i>Sourcefile:</i> <b>%s</b>\n"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:154
+#, c-format
+msgid ""
+"\n"
+"<u>Download</u>\n"
+"\n"
+"<i>Subject:</i> <b>\"%s\"</b>\n"
+"<i>From:</i> <b>%s</b>\n"
+"<i>Date:</i> <b>%s</b>\n"
+"<i>Groups:</i> <b>%s</b>\n"
+"<i>Save Path:</i> <b>%s</b>\n"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:156
+#, fuzzy
+msgid "unknown"
+msgstr "مجهول"
+
+#: ../pan/gui/task-pane.cc:260
+msgid "Choose new destination for selected Tasks"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:410
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:229
+#: ../pan/gui/task-pane.cc:412
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:231
+#: ../pan/gui/task-pane.cc:414
 #, fuzzy, c-format
 msgid "Pan: Tasks"
 msgstr "اطبع المهام"
 
-#: ../pan/gui/task-pane.cc:255
+#: ../pan/gui/task-pane.cc:439
 #, fuzzy, c-format
 msgid "%lu selected, %s"
 msgstr "\"%s\" selected (%s)"
 
-#: ../pan/gui/task-pane.cc:317
+#: ../pan/gui/task-pane.cc:503
 #, fuzzy
 msgid "Running"
 msgstr "يجري تشغيل..."
 
-#: ../pan/gui/task-pane.cc:318
+#: ../pan/gui/task-pane.cc:504
 #, fuzzy
 msgid "Decoding"
 msgstr "يجري التسجيل"
 
-#: ../pan/gui/task-pane.cc:319
+#: ../pan/gui/task-pane.cc:505
+#, fuzzy
+msgid "Encoding"
+msgstr "يجري التسجيل"
+
+#: ../pan/gui/task-pane.cc:506
 msgid "Queued for Decode"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:320
+#: ../pan/gui/task-pane.cc:507
+msgid "Queued for Encode"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:508
 #, fuzzy
 msgid "Queued"
 msgstr "طابور"
 
-#: ../pan/gui/task-pane.cc:321
+#: ../pan/gui/task-pane.cc:509
 msgid "Stopped"
 msgstr "أوقٍِفَ"
 
-#: ../pan/gui/task-pane.cc:322
+#: ../pan/gui/task-pane.cc:510
 #, fuzzy
 msgid "Removing"
 msgstr "يجري حذف:"
 
-#: ../pan/gui/task-pane.cc:349
+#: ../pan/gui/task-pane.cc:537
 #, fuzzy, c-format
 msgid "%d%% Done"
 msgstr "الحمار الأحمر"
 
-#: ../pan/gui/task-pane.cc:355
+#: ../pan/gui/task-pane.cc:543
 #, fuzzy, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "(%d:%02d:%d متبقيّة)"
 
-#: ../pan/gui/task-pane.cc:437
+#: ../pan/gui/task-pane.cc:636 ../pan/gui/task-pane.cc:637
+msgid "Move To Top"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:641 ../pan/gui/task-pane.cc:642
+msgid "Move To Bottom"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:646 ../pan/gui/task-pane.cc:647
+#, fuzzy
+msgid "Stop Task"
+msgstr "مهمة الزر"
+
+#: ../pan/gui/task-pane.cc:651 ../pan/gui/task-pane.cc:652
+#, fuzzy
+msgid "Delete Task"
+msgstr "إحذف %s"
+
+#: ../pan/gui/task-pane.cc:656 ../pan/gui/task-pane.cc:657
+#, fuzzy
+msgid "Restart Task"
+msgstr "ريسيا الممر"
+
+#: ../pan/gui/task-pane.cc:661 ../pan/gui/task-pane.cc:662
+msgid "Change Download Destination"
+msgstr ""
+
+#: ../pan/gui/task-pane.cc:719
 #, fuzzy
 msgid "_Online"
 msgstr "متصل"
 
-#: ../pan/gui/task-pane.cc:454
+#: ../pan/gui/task-pane.cc:736
 #, fuzzy
 msgid "Restart Tasks"
 msgstr "ريسيا الممر"
 
-#: ../pan/gui/task-pane.cc:456
+#: ../pan/gui/task-pane.cc:738
 #, fuzzy
 msgid "Stop Tasks"
 msgstr "مهمة الزر"
 
-#: ../pan/gui/task-pane.cc:458
+#: ../pan/gui/task-pane.cc:740
 #, fuzzy
 msgid "Delete Tasks"
 msgstr "إحذف %s"
@@ -2408,63 +2971,64 @@ msgstr "لم يمكن فتح الملفّ '%s': %s"
 msgid "Error initializing uulib"
 msgstr "خطأ أثناء بدأ libnotify\n"
 
-#: ../pan/tasks/decoder.cc:146 ../pan/tasks/socket-impl-gio.cc:404
+#: ../pan/tasks/decoder.cc:147 ../pan/tasks/socket-impl-gio.cc:352
 #, fuzzy, c-format
 msgid "Error reading from %s: %s"
 msgstr "فشل في قراءة %s: %s"
 
-#: ../pan/tasks/decoder.cc:181
+#: ../pan/tasks/decoder.cc:182
 #, fuzzy, c-format
 msgid "Saved \"%s\""
 msgstr "ا_حفظ باسم"
 
-#: ../pan/tasks/decoder.cc:188
+#: ../pan/tasks/decoder.cc:189
 #, fuzzy, c-format
 msgid ""
 "Error saving \"%s\":\n"
 "%s."
 msgstr "فشل في قراءة \"%s\": %s\n"
 
-#: ../pan/tasks/decoder.cc:303 ../pan/tasks/task-article.cc:315
+#: ../pan/tasks/decoder.cc:304 ../pan/tasks/task-article.cc:335
 #, fuzzy, c-format
 msgid "Decoding %s"
 msgstr "تحميل %s "
 
-#: ../pan/tasks/nntp.cc:170
+#: ../pan/tasks/nntp.cc:126
 #, c-format
 msgid "%s requires a username, but none is set."
 msgstr ""
 
-#: ../pan/tasks/nntp.cc:183
+#: ../pan/tasks/nntp.cc:139
 #, fuzzy, c-format
 msgid "%s requires a password, but none is set."
 msgstr "الموسيقى المشتركة '%s' تتطلب كلمة سر للإتصال"
 
-#: ../pan/tasks/nntp.cc:242
+#: ../pan/tasks/nntp.cc:205
 #, fuzzy, c-format
 msgid "Sending \"%s\" to %s returned an error: %s"
 msgstr "ضبط %s لـ %s إلى %s"
 
-#: ../pan/tasks/nntp.cc:266
+#: ../pan/tasks/nntp.cc:228
 #, c-format
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr ""
 
-#: ../pan/tasks/nntp-pool.cc:205
+#: ../pan/tasks/nntp-pool.cc:222
 #, fuzzy, c-format
 msgid "Unable to connect to \"%s\""
 msgstr "فشل الإتصال بـ GConf"
 
-#: ../pan/tasks/socket-impl-gio.cc:224 ../pan/tasks/socket-impl-gio.cc:262
+#: ../pan/tasks/socket-impl-gio.cc:173 ../pan/tasks/socket-impl-gio.cc:211
 #, fuzzy, c-format
 msgid "Error connecting to \"%s\""
 msgstr "خطأ في الاتصال بالخادم: %s"
 
-#: ../pan/tasks/socket-impl-gio.cc:403
+#: ../pan/tasks/socket-impl-gio.cc:351
 msgid "Unknown Error"
 msgstr "خطأ مجهول"
 
-#: ../pan/tasks/task-article.cc:54 ../pan/tasks/task-article.cc:125
+#: ../pan/tasks/task-article.cc:54 ../pan/tasks/task-article.cc:141
+#: ../pan/tasks/task-article.cc:144
 #, c-format
 msgid "Saving %s"
 msgstr "حفظ %s"
@@ -2474,7 +3038,7 @@ msgstr "حفظ %s"
 msgid "Reading %s"
 msgstr "جاري القراءة من %s"
 
-#: ../pan/tasks/task-article.cc:287
+#: ../pan/tasks/task-article.cc:307
 #, c-format
 msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
 msgstr ""
@@ -2484,192 +3048,202 @@ msgstr ""
 msgid "Getting group list from \"%s\""
 msgstr "استرجاع %s من %s"
 
-#: ../pan/tasks/task-groups.cc:123
+#: ../pan/tasks/task-groups.cc:122
 #, c-format
 msgid "Fetched %lu Groups"
 msgstr ""
 
-#: ../pan/tasks/task-post.cc:34
+#: ../pan/tasks/task-post.cc:35
 #, fuzzy, c-format
 msgid "Posting \"%s\""
 msgstr "الخيار \"%s\""
 
-#: ../pan/tasks/task-xover.cc:71
+#: ../pan/tasks/task-post.cc:76
+#, fuzzy, c-format
+msgid "Posting of \"%s\" failed: %s"
+msgstr "فشل النشر: %s"
+
+#: ../pan/tasks/task-post.cc:81
+#, c-format
+msgid "Posting of \"%s\" succesful: %s"
+msgstr ""
+
+#: ../pan/tasks/task-xover.cc:79
 #, fuzzy, c-format
 msgid "Getting all headers for \"%s\""
 msgstr "يجري جلب معلومات كافّة المستخدمين على \"%s\""
 
-#: ../pan/tasks/task-xover.cc:73
+#: ../pan/tasks/task-xover.cc:81
 #, fuzzy, c-format
 msgid "Getting new headers for \"%s\""
 msgstr "خطأ تلقي قيمة جديدة لـ \"%s\": %s"
 
 #. SAMPLE
-#: ../pan/tasks/task-xover.cc:75
+#: ../pan/tasks/task-xover.cc:83
 #, fuzzy, c-format
 msgid "Sampling headers for \"%s\""
 msgstr "مسح الرسائل في \"%s\""
 
-#: ../pan/tasks/task-xover.cc:325
+#: ../pan/tasks/task-xover.cc:368
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:152
+#: ../pan/usenet-utils/filter-info.cc:163
 #, fuzzy
 msgid "article doesn't have attachments"
 msgstr "تعذر فتح المرفقات"
 
-#: ../pan/usenet-utils/filter-info.cc:156
+#: ../pan/usenet-utils/filter-info.cc:167
 #, fuzzy
 msgid "the article has attachments"
 msgstr "احفظ جميع المرفقات"
 
-#: ../pan/usenet-utils/filter-info.cc:160
+#: ../pan/usenet-utils/filter-info.cc:171
 msgid "the article isn't cached locally"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:164
+#: ../pan/usenet-utils/filter-info.cc:175
 msgid "the article is cached locally"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:168
+#: ../pan/usenet-utils/filter-info.cc:179
 msgid "the article wasn't posted by you"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:172
+#: ../pan/usenet-utils/filter-info.cc:183
 msgid "the article was posted by you"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:176
+#: ../pan/usenet-utils/filter-info.cc:187
 #, fuzzy
 msgid "the article has been read"
 msgstr "لا يمكن قراءة أالملف"
 
-#: ../pan/usenet-utils/filter-info.cc:180
+#: ../pan/usenet-utils/filter-info.cc:191
 #, fuzzy
 msgid "the article hasn't been read"
 msgstr "لا يمكن قراءة أالملف"
 
-#: ../pan/usenet-utils/filter-info.cc:184
+#: ../pan/usenet-utils/filter-info.cc:195
 #, c-format
 msgid "the article is less than %ld bytes long"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:189
+#: ../pan/usenet-utils/filter-info.cc:200
 #, fuzzy, c-format
 msgid "the article is at least %ld bytes long"
 msgstr "يجب أن يكون طوله 5 محارف على الأقل"
 
-#: ../pan/usenet-utils/filter-info.cc:194
+#: ../pan/usenet-utils/filter-info.cc:205
 #, c-format
 msgid "the article is less than %ld lines long"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:199
+#: ../pan/usenet-utils/filter-info.cc:210
 #, c-format
 msgid "the article is at least %ld lines long"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:204
+#: ../pan/usenet-utils/filter-info.cc:215
 #, fuzzy, c-format
 msgid "the article is less than %ld days old"
 msgstr "الأعداد الأولية الأصغر من %d"
 
-#: ../pan/usenet-utils/filter-info.cc:209
+#: ../pan/usenet-utils/filter-info.cc:220
 #, c-format
 msgid "the article is at least %ld days old"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:214
+#: ../pan/usenet-utils/filter-info.cc:225
 #, c-format
 msgid "the article was posted to less than %ld groups"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:219
+#: ../pan/usenet-utils/filter-info.cc:230
 #, c-format
 msgid "the article was posted to at least %ld groups"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:224
+#: ../pan/usenet-utils/filter-info.cc:235
 #, fuzzy, c-format
 msgid "the article's score is less than %ld"
 msgstr "الأعداد الأولية الأصغر من %d"
 
-#: ../pan/usenet-utils/filter-info.cc:229
+#: ../pan/usenet-utils/filter-info.cc:240
 #, c-format
 msgid "the article's score is %ld or higher"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:238
-#: ../pan/usenet-utils/filter-info.cc:248
+#: ../pan/usenet-utils/filter-info.cc:249
+#: ../pan/usenet-utils/filter-info.cc:259
 #, fuzzy, c-format
 msgid "%s doesn't contain \"%s\""
 msgstr "لا يحتوي"
 
-#: ../pan/usenet-utils/filter-info.cc:239
-#: ../pan/usenet-utils/filter-info.cc:249
+#: ../pan/usenet-utils/filter-info.cc:250
+#: ../pan/usenet-utils/filter-info.cc:260
 #, fuzzy, c-format
 msgid "%s isn't \"%s\""
 msgstr "\"%s\"في %s"
 
-#: ../pan/usenet-utils/filter-info.cc:240
-#: ../pan/usenet-utils/filter-info.cc:250
+#: ../pan/usenet-utils/filter-info.cc:251
+#: ../pan/usenet-utils/filter-info.cc:261
 #, fuzzy, c-format
 msgid "%s doesn't begin with \"%s\""
 msgstr "لا ينتهي بـ"
 
-#: ../pan/usenet-utils/filter-info.cc:241
-#: ../pan/usenet-utils/filter-info.cc:251
+#: ../pan/usenet-utils/filter-info.cc:252
+#: ../pan/usenet-utils/filter-info.cc:262
 #, fuzzy, c-format
 msgid "%s doesn't end with \"%s\""
 msgstr "لا ينتهي بـ"
 
-#: ../pan/usenet-utils/filter-info.cc:242
-#: ../pan/usenet-utils/filter-info.cc:252
+#: ../pan/usenet-utils/filter-info.cc:253
+#: ../pan/usenet-utils/filter-info.cc:263
 #, c-format
 msgid "%s doesn't match the regex \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:264
+#: ../pan/usenet-utils/filter-info.cc:275
 #, fuzzy, c-format
 msgid "%s contains \"%s\""
 msgstr "يحتوي"
 
-#: ../pan/usenet-utils/filter-info.cc:265
+#: ../pan/usenet-utils/filter-info.cc:276
 #, fuzzy, c-format
 msgid "%s is \"%s\""
 msgstr "%s %s %s"
 
-#: ../pan/usenet-utils/filter-info.cc:266
+#: ../pan/usenet-utils/filter-info.cc:277
 #, fuzzy, c-format
 msgid "%s begins with \"%s\""
 msgstr "افتح بـ \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:267
+#: ../pan/usenet-utils/filter-info.cc:278
 #, fuzzy, c-format
 msgid "%s ends with \"%s\""
 msgstr "افتح بـ \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:268
+#: ../pan/usenet-utils/filter-info.cc:279
 #, c-format
 msgid "%s matches the regex \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:274
+#: ../pan/usenet-utils/filter-info.cc:285
 msgid "Any of these tests fail:"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:281
+#: ../pan/usenet-utils/filter-info.cc:292
 msgid "All of these tests pass:"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:288
+#: ../pan/usenet-utils/filter-info.cc:299
 #, fuzzy
 msgid "None of these tests pass:"
 msgstr "اسم الصنف"
 
-#: ../pan/usenet-utils/filter-info.cc:295
+#: ../pan/usenet-utils/filter-info.cc:306
 msgid "Any of these tests pass:"
 msgstr ""
 
@@ -2678,51 +3252,53 @@ msgstr ""
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:123
+#: ../pan/usenet-utils/message-check.cc:124
 msgid "Warning: Reply seems to be top-posted."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:144
+#: ../pan/usenet-utils/message-check.cc:145
 msgid "Warning: The signature marker should be \"-- \", not \"--\"."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:161
+#: ../pan/usenet-utils/message-check.cc:162
 msgid "Warning: Signature prefix with no signature."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:166
+#: ../pan/usenet-utils/message-check.cc:167
 msgid "Warning: Signature is more than 4 lines long."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:171
+#: ../pan/usenet-utils/message-check.cc:172
 msgid "Warning: Signature is more than 80 characters wide."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:196
+#: ../pan/usenet-utils/message-check.cc:198
 #, c-format
-msgid "Warning: %d lines are more than 80 characters wide."
-msgstr ""
+msgid "Warning: %d line is more than 80 characters wide."
+msgid_plural "Warning: %d lines are more than 80 characters wide."
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../pan/usenet-utils/message-check.cc:219
+#: ../pan/usenet-utils/message-check.cc:224
 #, fuzzy
 msgid "Error: Message is empty."
 msgstr "خطاء حجم الرسالة%d كبير جدا \n"
 
-#: ../pan/usenet-utils/message-check.cc:254
+#: ../pan/usenet-utils/message-check.cc:259
 msgid "Warning: The message is entirely quoted text!"
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:255
+#: ../pan/usenet-utils/message-check.cc:260
 #, fuzzy
 msgid "Warning: The message is mostly quoted text."
 msgstr "هذه الرّسالة تحتوي فقط طلبات غير مدعومة."
 
-#: ../pan/usenet-utils/message-check.cc:305
+#: ../pan/usenet-utils/message-check.cc:310
 msgid "Error: Message appears to have no new content."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:340
-#: ../pan/usenet-utils/message-check.cc:379
+#: ../pan/usenet-utils/message-check.cc:345
+#: ../pan/usenet-utils/message-check.cc:384
 #, c-format
 msgid ""
 "Warning: The posting profile's server doesn't carry newsgroup\n"
@@ -2731,43 +3307,43 @@ msgid ""
 "\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:351
+#: ../pan/usenet-utils/message-check.cc:356
 #, fuzzy
 msgid "Warning: Following-Up to too many groups."
 msgstr "تحذير من وجود العديد من اﻷعلام"
 
-#: ../pan/usenet-utils/message-check.cc:362
+#: ../pan/usenet-utils/message-check.cc:367
 #, fuzzy
 msgid "Error: No Subject specified."
 msgstr "%s: لم يحدد مُرِحّب."
 
-#: ../pan/usenet-utils/message-check.cc:391
+#: ../pan/usenet-utils/message-check.cc:396
 #, fuzzy, c-format
 msgid "Warning: Group \"%s\" is read-only."
 msgstr "الملف \"%s\" للقراءة فقط."
 
-#: ../pan/usenet-utils/message-check.cc:400
+#: ../pan/usenet-utils/message-check.cc:405
 msgid "Error: Posting to a very large number of groups."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:405
+#: ../pan/usenet-utils/message-check.cc:410
 msgid "Warning: Posting to a large number of groups."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:412
+#: ../pan/usenet-utils/message-check.cc:417
 msgid "Warning: Crossposting without setting Followup-To header."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:436
+#: ../pan/usenet-utils/message-check.cc:444
 #, fuzzy
 msgid "Error: Bad email address."
 msgstr "أدخل عنوان بريدك الالكتروني"
 
-#: ../pan/usenet-utils/message-check.cc:445
+#: ../pan/usenet-utils/message-check.cc:453
 msgid "Warning: Most newsgroups frown upon HTML posts."
 msgstr ""
 
-#: ../pan/usenet-utils/message-check.cc:475
+#: ../pan/usenet-utils/message-check.cc:490
 #, fuzzy
 msgid "Error: No Recipients."
 msgstr "اختر المستلمين"
@@ -2794,9 +3370,35 @@ msgstr ""
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/text-massager.cc:309
+#: ../pan/usenet-utils/text-massager.cc:397
 msgid "> [quoted text muted]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "_Signature:"
+#~ msgstr "تو_قيع:"
+
+#, fuzzy
+#~ msgid "Creating directory \"%s\""
+#~ msgstr "تعذّر ايجاد الدليل %s\n"
+
+#, fuzzy
+#~ msgid "Couldn't create directory \"%s\": %s"
+#~ msgstr "لا يمكن انشاء الدليل  `%s': %s"
+
+#, fuzzy
+#~ msgid "Can't use regular expression \"%s\": %s at position %d"
+#~ msgstr ""
+#~ "لا يمكن تحليل تعبير البحث: %s: \n"
+#~ "%s"
+
+#, fuzzy
+#~ msgid "Posting Article"
+#~ msgstr "فشل النشر: %s"
+
+#, fuzzy
+#~ msgid "Posting..."
+#~ msgstr "جاري المعالجة..."
 
 #, fuzzy
 #~ msgid "Read Selected Group"

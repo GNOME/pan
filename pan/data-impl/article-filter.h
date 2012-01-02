@@ -22,6 +22,7 @@
 
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/filter-info.h>
+#include <pan/usenet-utils/rules-info.h>
 #include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>

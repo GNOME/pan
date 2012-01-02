@@ -48,6 +48,9 @@ namespace pan
                                     const StringView  & username,
                                     const StringView  & password) = 0;
 
+      virtual void set_server_trust (const Quark       & servername,
+                                     const int           setme) = 0;
+
       virtual void set_server_addr (const Quark       & servername,
                                     const StringView  & address,
                                     const int           port) = 0;
@@ -61,11 +64,20 @@ namespace pan
       virtual void set_server_rank (const Quark& server,
                                     int          rank) = 0;
 
+      virtual void set_server_ssl_support (const Quark& server,
+                                    int          ssl) = 0;
+
+      virtual void set_server_cert (const Quark & server, const StringView & cert) = 0;
+
+      virtual void save_server_info (const Quark& server) = 0;
+
     public: // accessors
 
       virtual bool get_server_auth (const Quark   & servername,
                                     std::string   & setme_username,
                                     std::string   & setme_password) const=0;
+
+      virtual bool get_server_trust (const Quark  & servername, int&) const = 0;
 
       virtual bool get_server_addr (const Quark   & servername,
                                     std::string   & setme_address,
@@ -74,10 +86,16 @@ namespace pan
 	  // only used for debug and loging output
       virtual std::string get_server_address (const Quark& servername) const = 0;
 
+      virtual bool get_server_ssl_support (const Quark & server) const = 0;
+
+      virtual std::string get_server_cert (const Quark & server) const = 0;
+
       /** If set_server_limits() has never been called, 2 is returned. */
       virtual int get_server_limits (const Quark & server) const = 0;
 
       virtual int get_server_article_expiration_age  (const Quark  & server) const = 0;
+
+      virtual bool find_server_by_hn (const Quark& server, Quark& setme) const = 0;
   };
 }
 
