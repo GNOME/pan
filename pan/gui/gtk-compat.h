@@ -6,13 +6,16 @@
  * 	Last Update:	Mon 09 May 2011 04:42:46 PM MDT
  */
 /*------------------------------------------------------------------------
- * Description:	«description»
+ * Description:	GTK Compatibility layer for GTK2/3+ migration
  *
  *========================================================================
  */
 
 #ifndef PAN_GTK_COMPAT_H
 #define PAN_GTK_COMPAT_H
+
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 #ifdef __cplusplus
 namespace
@@ -103,6 +106,10 @@ namespace
   }
 #endif
 #if GTK_CHECK_VERSION(3,0,0)
+
+// include this for conversion of old key names to new
+#include <gdk/gdkkeysyms.h>
+
 #define GTK_OBJECT(w) w
   typedef GtkWidget GtkObject;
 #ifdef GTK_DISABLE_DEPRECATED
