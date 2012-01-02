@@ -25,7 +25,7 @@
 extern "C" {
   #include <gmime/gmime.h>
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
   #include "gtk-compat.h"
   #include <sys/time.h>
 #ifdef HAVE_GTKSPELL
@@ -204,15 +204,22 @@ PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
   for (int i=0; i<count; ++i)
   {
     const int pos (index + i);
+
     TaskUpload * task (dynamic_cast<TaskUpload*>(_upload_queue[pos]));
     if (!task) continue;
+
     GtkTreeIter iter;
     gtk_list_store_insert (store, &iter, pos);
+
+    float size = task->_bytes/1024.0f;
+    char numbuf[256];
+    g_snprintf(numbuf,sizeof(numbuf), "%.2f", size);
+
     gtk_list_store_set (store, &iter,
                       0, pos+1,
                       1, task->_subject.c_str(),
                       2, task,
-                      3, task->_bytes/1024.0f,
+                      3, numbuf,
                       -1);
   }
   gtk_tree_view_set_model(GTK_TREE_VIEW(_filequeue_store), model);
@@ -1050,16 +1057,21 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
   gtk_widget_hide (_root);
 
+  GMimeMessage* msg = new_message_from_ui(POSTING);
+
   if(_file_queue_empty)
   {
-
-    GMimeMessage* msg = new_message_from_ui(POSTING);
     bool go_on(true);
 
     /* adding yourself to the list of recipients */
-    GPtrArray * rcp = g_ptr_array_new();
+    GPtrArray * rcp;
     Profile p(get_current_profile());
-    g_ptr_array_add(rcp, (gpointer)p.gpg_sig_uid.c_str());
+
+    if (user_has_gpg)
+    {
+      rcp = g_ptr_array_new();
+      g_ptr_array_add(rcp, (gpointer)p.gpg_sig_uid.c_str());
+    }
 
     if (user_has_gpg && gpg_sign && !gpg_enc)
       go_on = go_on && message_add_signed_part(p.gpg_sig_uid, get_body(), msg);
@@ -1088,8 +1100,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
     std::vector<Task*> tasks;
     _upload_queue.get_all_tasks(tasks);
-    int cnt(0);
-    char buf[2048];
     struct stat sb;
     _running_uploads = tasks.size();
     if (master_reply) ++_running_uploads;
@@ -1104,7 +1114,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     StringView domain;
       const char * pch = d2.strchr ('@');
       if (pch != NULL)
-         domain = d2.substr (pch+1, NULL);
+        domain = d2.substr (pch+1, NULL);
       else
         domain = d2;
 
@@ -1129,17 +1139,26 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       n.mid = out;
 
       {
-        TaskUpload * tmp = new TaskUpload(a.subject.to_string(),profile.posting_server,_cache,a,f,new_message_from_ui(UPLOADING));
+        TaskUpload * tmp = new TaskUpload(a.subject.to_string(),profile.posting_server,_cache,a,f,msg);
         tmp->_needed.insert(std::pair<int, TaskUpload::Needed>(1,n));
         tmp->_queue_pos = -1;
         _queue.add_task (tmp, Queue::BOTTOM);
         tmp->add_listener(this);
       }
     }
+    else
+    {
+      g_object_unref(G_OBJECT(msg));
+    }
+
 
     /* init taskupload variables before adding the tasks to the queue for processing */
 
     {
+
+      char buf[2048];
+      int cnt(0);
+
       foreach (PostUI::tasks_t, tasks, it)
       {
 
@@ -2464,8 +2483,6 @@ PostUI :: create_filequeue_tab ()
   gtk_tree_view_insert_column_with_data_func(t, 2, (_("Filename")), renderer, render_filename, 0, 0);
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_insert_column_with_attributes (t, 3, (_("Size (kB)")),renderer,"text", 3,NULL);
-//  renderer = gtk_cell_renderer_text_new ();
-//  gtk_tree_view_insert_column_with_attributes (t, 4, (_("Encode Mode")),renderer,"text", 4,NULL);
 
   // connect signals for popup menu
   g_signal_connect (w, "popup-menu", G_CALLBACK(on_popup_menu), this);

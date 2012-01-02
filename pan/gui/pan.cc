@@ -27,7 +27,7 @@
 
 extern "C" {
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
   #include <gmime/gmime.h>
   #include <gio/gio.h>
   #include <sys/types.h>

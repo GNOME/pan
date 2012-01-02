@@ -24,8 +24,7 @@
 #include <sstream>
 extern "C" {
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
-  #include <gdk/gdk.h>
+  #include <pan/gui/gtk-compat.h>
   #include "gtk-compat.h"
   #include <gmime/gmime.h>
 }

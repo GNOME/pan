@@ -20,7 +20,7 @@
 #ifndef _GroupPane_h_
 #define _GroupPane_h_
 
-#include <gtk/gtk.h>
+#include <pan/gui/gtk-compat.h>
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
 #include <pan/gui/action-manager.h>

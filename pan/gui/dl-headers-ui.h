@@ -19,7 +19,7 @@
 #ifndef DOWNLOAD_HEADERS_UI_H
 #define DOWNLOAD_HEADERS_UI_H
 
-#include <gtk/gtk.h>
+#include <pan/gui/gtk-compat.h>
 #include <pan/general/quark.h>
 #include "prefs.h"
 

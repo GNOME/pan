@@ -20,7 +20,7 @@
 #ifndef _BodyPane_h_
 #define _BodyPane_h_
 
-#include <gtk/gtk.h>
+#include <pan/gui/gtk-compat.h>
 #include <gmime/gmime.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/text-massager.h>

@@ -28,7 +28,7 @@
 #include <pan/general/string-view.h>
 extern "C"
 {
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
 }
 
 namespace pan

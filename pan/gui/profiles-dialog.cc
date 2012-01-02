@@ -25,7 +25,7 @@
 #include <iostream>
 extern "C" {
   #include <glib/gi18n.h>
-  #include <gtk/gtk.h>
+  #include <pan/gui/gtk-compat.h>
 }
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>

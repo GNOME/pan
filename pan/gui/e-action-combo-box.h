@@ -25,7 +25,7 @@
  * Just plug in a GtkRadioAction and the widget will handle the rest.
  * (Based on GtkhtmlComboBox.) */
 
-#include <gtk/gtk.h>
+#include <pan/gui/gtk-compat.h>
 
 /* Standard GObject macros */
 #define E_TYPE_ACTION_COMBO_BOX \
@@ -55,6 +55,9 @@ typedef struct _EActionComboBoxPrivate EActionComboBoxPrivate;
 struct _EActionComboBox {
 	GtkComboBox parent;
 	EActionComboBoxPrivate *priv;
+	// quick fix for error : "specified instance size for type `EActionComboBox' is
+  // smaller than the parent type's `GtkComboBox' instance size"
+	double pad;
 };
 
 struct _EActionComboBoxClass {

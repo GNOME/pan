@@ -19,7 +19,7 @@
 
 #include <config.h>
 #include <glib.h>
-#include <gtk/gtk.h>
+#include <pan/gui/gtk-compat.h>
 #include "hig.h"
 
 #include <iostream>
