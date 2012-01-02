@@ -561,9 +561,9 @@ namespace
       N_("_Turn Flag off for Thread"),
       G_CALLBACK(do_flag_off) },
 
-    { "mark-all-flagged", NULL,
-      N_("_Mark all flagged Threads"), "<control>X",
-      N_("_Mark all flagged Threads"),
+    { "select-all-flagged", NULL,
+      N_("_Select all flagged Threads"), "<control>X",
+      N_("_Select all flagged Threads"),
       G_CALLBACK(do_mark_all_flagged) },
 
     { "next-flagged", NULL,

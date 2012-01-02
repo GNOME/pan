@@ -28,6 +28,7 @@ extern "C" {
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
+#include <pan/usenet-utils/mime-utils.h>
 #include <pan/tasks/queue.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "pad.h"
@@ -532,6 +533,8 @@ namespace
     // get the description
     const std::string description (task->describe ());
 
+    const char * descr = iconv_inited ? __g_mime_iconv_strdup(conv, description.c_str()) : description.c_str();
+
     std::string status (state_str);
 
     if (percent) {
@@ -566,12 +569,13 @@ namespace
     char * str (0);
     if (state == Queue::RUNNING || state == Queue::DECODING
         || state == Queue::ENCODING)
-      str = g_markup_printf_escaped ("<b>%s</b>\n<small>%s</small>", description.c_str(), status.c_str());
+      str = g_markup_printf_escaped ("<b>%s</b>\n<small>%s</small>", descr, status.c_str());
     else
-      str = g_markup_printf_escaped ("%s\n<small>%s</small>", description.c_str(), status.c_str());
+      str = g_markup_printf_escaped ("%s\n<small>%s</small>", descr, status.c_str());
     const std::string str_utf8 = clean_utf8 (str);
     g_object_set(rend, "markup", str_utf8.c_str(), "xpad", 10, "ypad", 5, NULL);
     g_free (str);
+    if (iconv_inited) g_free ((char*)descr);
   }
 }
 

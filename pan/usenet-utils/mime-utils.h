@@ -115,11 +115,11 @@ namespace pan
   extern iconv_t conv;
   extern bool iconv_inited;
 
-  char * __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n);
+  char * __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n, const char* charset=0);
 
-  static char * __g_mime_iconv_strdup (iconv_t cd, const char *str)
+  static char * __g_mime_iconv_strdup (iconv_t cd, const char *str, const char* charset=0)
   {
-    return __g_mime_iconv_strndup(cd, str, strlen(str));
+    return __g_mime_iconv_strndup(cd, str, strlen(str), charset);
   }
 
 }

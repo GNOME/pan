@@ -47,8 +47,15 @@ namespace pan
   bool iconv_inited(false);
 
   char *
-  __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n)
+  __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n, const char* charset)
   {
+    iconv_t ic(0), backup(0);
+    if (charset)
+    {
+      ic = iconv_open ("UTF-8", charset);
+      backup = conv;
+      conv = ic;
+    }
 
     size_t inleft, outleft, converted = 0;
     char *out, *outbuf;
@@ -130,6 +137,8 @@ namespace pan
 
     /* reset the cd */
     iconv (cd, NULL, NULL, NULL, NULL);
+
+    if (backup) conv = backup;
 
     return out;
   }
