@@ -1039,13 +1039,7 @@ void GUI :: server_list_dialog_destroyed (GtkWidget *)
 
 void GUI :: sec_dialog_destroyed (GtkWidget * w)
 {
-//  quarks_t empty_servers, all_servers (_data.get_servers());
-//  foreach_const (quarks_t, all_servers, it) {
-//    quarks_t tmp;
-//    _data.server_get_groups (*it, tmp);
-//    if (tmp.empty() && _data.get_server_limits(*it))
-//      _queue.add_task (new TaskGroups (_data, *it));
-//  }
+  // NOTE : unused for now
 }
 
 void GUI ::  prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self)

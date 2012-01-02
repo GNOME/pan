@@ -178,6 +178,8 @@ namespace pan
     FILE * fp = fopen(filename, "rb");
     if (!fp) return false;
 
+    std::cerr<<"importing cert for server "<<server<<" "<<(filename ? filename : "empty")<<"\n";
+
     fseek (fp, 0, SEEK_END);
     filelen = ftell (fp);
     fseek (fp, 0, SEEK_SET);
@@ -197,7 +199,6 @@ namespace pan
 
     if (ret < 0) goto fail;
 
-    _certs.insert(server);
     _cert_to_server[server] = cert;
 
     return true;
@@ -226,7 +227,8 @@ namespace pan
       if (import_from_file(*it)) ++cnt;
 
     // get certs from ssl certs directory
-    const char * ssldir = getenv("SSL_CERT_DIR");
+    char * ssldir(0);
+    ssldir = getenv("SSL_CERT_DIR");
     if (!ssldir) ssldir = getenv("SSL_DIR");
     if (!ssldir) return cnt;
 
@@ -273,8 +275,9 @@ namespace pan
   CertStore :: remove_hard(const Quark& server)
   {
     char buf[2048];
-    g_snprintf (buf, sizeof(buf), "%s%c%s.pem", _path.c_str(), G_DIR_SEPARATOR, server.c_str());
-    unlink(buf);
+    std::string fn = _data.get_server_cert(server);
+    std::cerr<<"unlink "<<fn<<"\n";
+    unlink(fn.c_str());
   }
 
   void
@@ -317,9 +320,10 @@ namespace pan
     debug("adding server cert "<<server<<" "<<cert);
     if (!cert || server.empty()) return false;
 
+    std::cerr<<"adding cert for server "<<server<<"\n";
+
     std::string addr; int port;
     _data.get_server_addr(server, addr, port);
-    _certs.insert(server);
     _cert_to_server[server] = cert;
 
     const char* buf(build_cert_name(addr).c_str());

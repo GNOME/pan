@@ -52,7 +52,6 @@ namespace pan
 
     private:
       typedef std::set<Quark> certs_t;
-      certs_t _certs;
       certs_t _blacklist;
       typedef std::map<Quark,gnutls_x509_crt_t> certs_m;
       typedef std::pair<Quark,gnutls_x509_crt_t> certs_p;
@@ -86,20 +85,17 @@ namespace pan
       {
         if (_cert_to_server.count(s) > 0)
           return _cert_to_server[s];
-        std::cerr<<"server "<<s<<" cert to server "<<_cert_to_server.count(s)<<"\n";
-        foreach (certs_m, _cert_to_server, it)
-          std::cerr<<it->first<<" "<<it->second<<"\n";
         return 0;
       }
 
     private:
-      void remove_hard(const Quark&);
+      void remove_hard(const Quark& server);
 
     public:
 
       bool add (gnutls_x509_crt_t, const Quark&) ;
       void remove (const Quark&);
-      bool exist (const Quark& q) { return (_certs.count(q) > 0); }
+      bool exist (const Quark& q) { return (_cert_to_server.count(q) > 0); }
 
       static std::string build_cert_name(std::string& host);
 
