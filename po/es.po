@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: pan2.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=pan2&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-02 15:37+0000\n"
-"PO-Revision-Date: 2012-01-02 23:13+0100\n"
+"POT-Creation-Date: 2012-01-02 22:18+0000\n"
+"PO-Revision-Date: 2012-01-03 19:44+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -76,12 +76,12 @@ msgstr ""
 "Se han cargado %lu artículos del grupo «%s» en %.1f segundos (%.0f art/seg)"
 
 #: ../pan/data-impl/headers.cc:857
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
 msgstr ""
-"Se han guardado %lu partes, %lu artículos en «%s» en %.1f segundos (%.0f art/"
-"seg)"
+"Se han guardado %lu partes, %lu artículos en «%s» en %.1f segundos (%.0f "
+"artículos/seg)"
 
 #: ../pan/data-impl/headers.cc:1172
 #, c-format
@@ -365,7 +365,7 @@ msgstr "Editar servidores de _noticias"
 
 #: ../pan/gui/actions.cc:432
 msgid "Edit _SSL Certificates"
-msgstr ""
+msgstr "Editar certificados _SSL"
 
 #: ../pan/gui/actions.cc:439
 msgid "Jump to _Group Tab"
@@ -508,9 +508,8 @@ msgid "_Goto last flagged Thread"
 msgstr ""
 
 #: ../pan/gui/actions.cc:583 ../pan/gui/actions.cc:584
-#, fuzzy
 msgid "_Invert Selection"
-msgstr "Añadir _conversaciones a la selección"
+msgstr "_Invertir selección"
 
 #: ../pan/gui/actions.cc:588
 msgid "Edit Article's Watch/Ignore/Score..."
@@ -545,14 +544,12 @@ msgid "Mark Article as _Unread"
 msgstr "Marcar artículo como _no leído"
 
 #: ../pan/gui/actions.cc:629
-#, fuzzy
 msgid "_Mark Thread as Read"
-msgstr "_Marcar artículo como leído"
+msgstr "_Marcar conversación como leída"
 
 #: ../pan/gui/actions.cc:634
-#, fuzzy
 msgid "Mark Thread as _Unread"
-msgstr "Marcar artículo como _no leído"
+msgstr "Marcar conversación como _no leída"
 
 #: ../pan/gui/actions.cc:639
 msgid "_Post to Newsgroup"
@@ -739,10 +736,10 @@ msgid "Show Matching Articles' _Subthreads"
 msgstr "Mostrar _conversaciones de los artículos coincidentes"
 
 #: ../pan/gui/body-pane.cc:1011
-#, fuzzy, c-format
+#, c-format
 #| msgid "Signature File"
 msgid "Unnamed File"
-msgstr "Archivo de firma"
+msgstr "Archivo sin nombre"
 
 #: ../pan/gui/body-pane.cc:1091 ../pan/gui/gui.cc:1820
 #: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1617
@@ -786,19 +783,16 @@ msgid "Copy _URL"
 msgstr "Copiar _URL"
 
 #: ../pan/gui/body-pane.cc:1682
-#, fuzzy
 #| msgid "Save attachments"
 msgid "Save attachment as ...."
-msgstr "Guardar los adjuntos"
+msgstr "Grabar adjunto como…"
 
 #: ../pan/gui/body-pane.cc:1685
-#| msgid "Save attachments"
 msgid "Save all attachments"
 msgstr "Guardar todos los adjuntos"
 
 #. add a toolbar for attachments
 #: ../pan/gui/body-pane.cc:1754
-#| msgid "Save attachments"
 msgid "Attachments"
 msgstr "Adjuntos"
 
@@ -1055,7 +1049,6 @@ msgid "Are you sure you want to delete them?"
 msgstr ""
 
 #: ../pan/gui/gui.cc:1387
-#| msgid "Always Run Editor"
 msgid "Always trust"
 msgstr "Confiar siempre"
 
@@ -1113,10 +1106,10 @@ msgstr[0] "Este artículo tiene %d partes."
 msgstr[1] "Este artículo tiene %d partes."
 
 #: ../pan/gui/gui.cc:1802
-#, fuzzy, c-format
+#, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
-msgstr[0] "A este artículo le faltan %d de sus %d partes:"
+msgstr[0] "A este artículo le falta %d parte."
 msgstr[1] "A este artículo le faltan %d de sus %d partes:"
 
 #: ../pan/gui/gui.cc:1821 ../pan/gui/header-pane.cc:1190
@@ -1234,13 +1227,12 @@ msgid "An error has occured. Maximize Pan to investigate."
 msgstr ""
 
 #: ../pan/gui/pan.cc:338
-#, fuzzy
 msgid "New Articles!"
-msgstr "Siguiente artículo"
+msgstr "Artículos nuevos."
 
 #: ../pan/gui/pan.cc:339
 msgid "There are new articles available."
-msgstr ""
+msgstr "Hay artículos nuevos disponibles."
 
 #: ../pan/gui/pan.cc:447
 msgid ""
@@ -1253,7 +1245,6 @@ msgstr ""
 "Para empezar a leer noticias, primero añada un servidor."
 
 #: ../pan/gui/pan.cc:527
-#, fuzzy
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -1271,19 +1262,19 @@ msgid ""
 msgstr ""
 "Opciones generales\n"
 "  -h, --help                Mostrar esta página de uso.\n"
+"  --verbose                 Modo detallado (en modo no gráfico).\n"
 "\n"
 "Opciones de URL\n"
-"..noticias:id-mensaje       Mostrar el artículo especificado.\n"
-"  noticias:grupo.nombre     Mostrar el grupo de noticias especificado.\n"
-"  --no-gui                   En noticias:id-mensaje, volcar el artículo a "
+"  --no-gui                  En noticias:id-mensaje, volcar el artículo a "
 "stdout.\n"
 "\n"
 "Opciones de lotes NZB\n"
-"  -nzb archivo1 archivo2    Procesar archivos nzb sin lanzar todo Pan.\n"
-"  -o ruta, --output=ruta    Ruta en la que guardar adjuntos listados en "
-"los                             archivos nzb.\n"
-"..--no-gui            Sólo mostrar la salida de la consola, no la cola de\n"
-"                            descarga.\n"
+"  -nzb archivo1 archivo2    Procesar archivos nzb sin ejecutar Pan "
+"completo.\n"
+"  -o ruta, --output=ruta    Ruta en la que guardar adjuntos listados en los "
+"archivos nzb.\n"
+"  --no-gui                  Mostrar sólo la salida de la consola, no la cola "
+"de descarga.\n"
 
 #: ../pan/gui/pan.cc:788
 msgid "Error: --no-gui used without nzb files or news:message-id."
@@ -1302,7 +1293,7 @@ msgstr ""
 
 #: ../pan/gui/pan.cc:913
 msgid "Pan notification"
-msgstr ""
+msgstr "Notificación de Pan"
 
 #: ../pan/gui/post-ui.cc:182
 #, c-format
@@ -1405,7 +1396,7 @@ msgstr ""
 
 #: ../pan/gui/post-ui.cc:430
 msgid "Add Files to Queue"
-msgstr ""
+msgstr "Añadir archivos a la cola"
 
 #: ../pan/gui/post-ui.cc:445 ../pan/gui/post-ui.cc:446
 msgid "Remove from Queue"
@@ -1413,7 +1404,7 @@ msgstr "Quitar de la cola"
 
 #: ../pan/gui/post-ui.cc:450 ../pan/gui/post-ui.cc:451
 msgid "Clear List"
-msgstr ""
+msgstr "Limpiar lista"
 
 #: ../pan/gui/post-ui.cc:455 ../pan/gui/post-ui.cc:456
 msgid "Select needed Parts"
@@ -1459,11 +1450,11 @@ msgstr ""
 
 #: ../pan/gui/post-ui.cc:487
 msgid "PGP-Encrypt the message"
-msgstr ""
+msgstr "Cifrar con PGP el mensaje"
 
 #: ../pan/gui/post-ui.cc:488
 msgid "PGP-Sign the message"
-msgstr ""
+msgstr "Firmar con PGP el mensaje"
 
 #: ../pan/gui/post-ui.cc:489
 msgid "Check _Spelling"
@@ -1596,7 +1587,7 @@ msgstr "Enviar correo-e _a"
 
 #: ../pan/gui/post-ui.cc:2465
 msgid "Delete from Queue"
-msgstr ""
+msgstr "Eliminar de la cola"
 
 #: ../pan/gui/post-ui.cc:2478
 msgid "No."
@@ -1613,7 +1604,7 @@ msgstr "Tamaño (Kib)"
 
 #: ../pan/gui/post-ui.cc:2584
 msgid "The current filename"
-msgstr ""
+msgstr "El nombre actual del archivo"
 
 #: ../pan/gui/post-ui.cc:2588
 #, fuzzy
@@ -1630,7 +1621,7 @@ msgstr "No. "
 
 #: ../pan/gui/post-ui.cc:2614
 msgid "Enable/Disable"
-msgstr ""
+msgstr "Activar/Desactivar"
 
 #: ../pan/gui/post-ui.cc:2648
 msgid "Follo_wup-To"
@@ -1676,9 +1667,8 @@ msgid "Add \"Message-_Id\" header"
 msgstr "Añadir cabecera «Message-_Id»"
 
 #: ../pan/gui/post-ui.cc:2838
-#, fuzzy
 msgid "Select Parts"
-msgstr "Seleccionar todos los _artículos"
+msgstr "Seleccionar partes"
 
 #: ../pan/gui/post-ui.cc:2849
 msgid "_Parts"
@@ -1937,7 +1927,7 @@ msgstr ""
 
 #: ../pan/gui/prefs-ui.cc:358
 msgid "Global Charset Settings"
-msgstr ""
+msgstr "Configuración global del conjunto de caracteres"
 
 #: ../pan/gui/prefs-ui.cc:452 ../pan/gui/task-pane.cc:766
 msgid "State"
@@ -2053,11 +2043,11 @@ msgstr "Comportam_iento"
 
 #: ../pan/gui/prefs-ui.cc:602
 msgid "Hide to system tray"
-msgstr ""
+msgstr "Ocultar a la bandeja del sistema"
 
 #: ../pan/gui/prefs-ui.cc:604
 msgid "Start Pan minimized"
-msgstr ""
+msgstr "Iniciar Pan minimizado"
 
 #: ../pan/gui/prefs-ui.cc:607
 msgid "Show notifications"
@@ -2231,7 +2221,7 @@ msgstr "_Aplicaciones"
 
 #: ../pan/gui/prefs-ui.cc:775
 msgid "Encoding Options"
-msgstr ""
+msgstr "Opciones de codificación"
 
 #: ../pan/gui/prefs-ui.cc:779
 msgid "Default Bytes per File (for Encoder). "
@@ -2464,7 +2454,7 @@ msgstr "Especifique la dirección del servidor."
 
 #: ../pan/gui/server-ui.cc:264
 msgid "Import SSL certificate (PEM format) from File"
-msgstr ""
+msgstr "Importar certificado SSL (formato PEM) desde un archivo"
 
 #. create the dialog
 #: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:869
@@ -2597,7 +2587,7 @@ msgstr "Sin conexiones"
 
 #: ../pan/gui/server-ui.cc:418
 msgid "TLS (SSL) Options:"
-msgstr ""
+msgstr "Opciones de TLS (SSL):"
 
 #: ../pan/gui/server-ui.cc:423
 msgid ""
@@ -2608,7 +2598,7 @@ msgstr ""
 
 #: ../pan/gui/server-ui.cc:428
 msgid "Always trust this server's certificate"
-msgstr ""
+msgstr "Confiar siempre en el certificado de este servidor"
 
 #: ../pan/gui/server-ui.cc:602
 #, c-format
@@ -2617,7 +2607,7 @@ msgstr "¿Quiere borrar «%s»?"
 
 #: ../pan/gui/server-ui.cc:691
 msgid "No information available."
-msgstr ""
+msgstr "No hay información disponible."
 
 #: ../pan/gui/server-ui.cc:697
 #, c-format
@@ -2642,7 +2632,7 @@ msgstr "Quitar un servidor"
 #. dialog
 #: ../pan/gui/server-ui.cc:915
 msgid "SSL Certificates"
-msgstr ""
+msgstr "Certificados SSL"
 
 #: ../pan/gui/server-ui.cc:936
 msgid "Certificates"
@@ -2650,11 +2640,11 @@ msgstr "Certificados"
 
 #: ../pan/gui/server-ui.cc:967
 msgid "Import Certificate"
-msgstr ""
+msgstr "Importar certificado"
 
 #: ../pan/gui/server-ui.cc:973
 msgid "Inspect Certificate"
-msgstr ""
+msgstr "Inspeccionar certificado"
 
 #: ../pan/gui/server-ui.cc:980
 msgid "Remove Certificate"
@@ -2699,7 +2689,7 @@ msgstr "desconocido"
 
 #: ../pan/gui/task-pane.cc:263
 msgid "Choose new destination for selected Tasks"
-msgstr ""
+msgstr "Elegir el destino nuevo para las tareas seleccionadas"
 
 #: ../pan/gui/task-pane.cc:413
 #, c-format
@@ -2786,7 +2776,7 @@ msgstr "Reiniciar tarea"
 
 #: ../pan/gui/task-pane.cc:667 ../pan/gui/task-pane.cc:668
 msgid "Change Download Destination"
-msgstr ""
+msgstr "Cambiar el destino de la descarga"
 
 #: ../pan/gui/task-pane.cc:725
 msgid "_Online"
