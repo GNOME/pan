@@ -48,7 +48,7 @@ dnl needed if you want to build Pan with spellchecking in the Post window.
 GLIB_REQUIRED=2.17.6
 GMIME_REQUIRED=2.6.0
 GTK_REQUIRED=2.16.0
-GTK3_REQUIRED=3.0.0g
+GTK3_REQUIRED=3.0.0
 GTKSPELL_REQUIRED=2.0.7
 GNUTLS_REQUIRED=3.0.9
 LIBNOTIFY_REQUIRED=0.4.1
@@ -93,7 +93,7 @@ if test "x$want_dbus" = "xyes" ; then
 fi
 
 gtkspell_msg=no
-AC_ARG_WITH(gtkspell, AC_HELP_STRING([--with-gtkspell], [Enable gtkspell support]), [want_gtkspell=$withval], [want_gtkspell=yes])
+AC_ARG_WITH(gtkspell, AC_HELP_STRING([--with-gtkspell], [Enable GtkSpell support]), [want_gtkspell=$withval], [want_gtkspell=yes])
 if test "x$want_gtkspell" = "xyes" ; then
 	PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED],
 	                  [gtkspell_msg=yes
