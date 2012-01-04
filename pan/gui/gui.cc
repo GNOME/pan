@@ -1538,12 +1538,12 @@ void GUI :: do_tip_jar ()
 void GUI :: do_about_pan ()
 {
   const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com> - Pan Author",
-                               "Calin Culianu <calin@ajvar.org> - Threaded Decoding",
-                               "K. Haley <haleykd@users.sf.net> - Contributor",
+                               "Heinrich M\u00fcller <eddie_v@gmx.de> - Developer",
+                               "Kenneth Haley <haleykd@users.sf.net> - Developer",
                                "Petr Kovar <pknbe@volny.cz> - Contributor",
-                               "Heinrich M\u00fcller <eddie_v@gmx.de> - Contributor",
-                               "Christophe Lambin <chris@rebelbase.com> - Original Pan Development",
-                               "Matt Eagleson <matt@rebelbase.com> - Original Pan Development", 0 };
+                               "Calin Culianu <calin@ajvar.org> - Threaded Decoding",
+                               "Christophe Lambin <chris@rebelbase.com> - Original Developer",
+                               "Matt Eagleson <matt@rebelbase.com> - Original Developer", 0 };
   GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));

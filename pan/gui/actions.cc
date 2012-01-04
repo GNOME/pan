@@ -338,8 +338,8 @@ namespace
       G_CALLBACK(do_save_articles) },
 
     { "save-articles-from-nzb", GTK_STOCK_SAVE,
-      N_("Save Articles from this _NZB..."), "<control><shift>S",
-      N_("Save Articles from this NZB"),
+      N_("Save Articles from Selected _NZB..."), "<control><shift>S",
+      N_("Save Articles from Selected NZB"),
       G_CALLBACK(do_save_articles_from_nzb) },
 
     { "save-articles-to-nzb", GTK_STOCK_SAVE,
@@ -682,7 +682,7 @@ namespace
   GtkToggleActionEntry toggle_entries[] =
   {
     { "thread-headers",           NULL, N_("_Thread Headers"),                NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
-    { "wrap-article-body",GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Article Body"),    "W", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
+    { "wrap-article-body",GTK_STOCK_JUSTIFY_FILL, N_("Wrap Article Body"),    "W", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "mute-quoted-text",         NULL, N_("Mute _Quoted Text"),               "Q", NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
     { "show-all-headers",         NULL, N_("Show All _Headers in Body Pane"),  "H", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "show-smilies-as-graphics", NULL, N_("Show _Smilies as Graphics"),      NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
@@ -714,7 +714,7 @@ namespace
     { "match-low-scoring-articles", NULL, N_("Match Scores of -9998...-1 (_Low)"), NULL, NULL, G_CALLBACK(do_match_low_scoring_articles), true },
     { "match-ignored-articles", NULL, N_("Match Scores of -9999 (_Ignored)"), NULL, NULL, G_CALLBACK(do_match_ignored_articles), false },
 
-    { "enable-rules", NULL, N_("Enable/Disable all _Rules"), "R", NULL, G_CALLBACK(do_toggle_rules), true    }
+    { "enable-rules", NULL, N_("Enable/Disable All _Rules"), "R", NULL, G_CALLBACK(do_toggle_rules), true    }
   };
 
   const guint n_toggle_entries (G_N_ELEMENTS(toggle_entries));

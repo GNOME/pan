@@ -89,7 +89,7 @@ PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME_REQUIRED],[],)
 
 AC_ARG_WITH(dbus, AC_HELP_STRING([--with-dbus], [Enable DBUS support]), [want_dbus=$withval], [want_dbus=yes])
 if test "x$want_dbus" = "xyes" ; then
-  AC_DEFINE(HAVE_DBUS,[1],[DBUS support for multiple Pan instances]),
+  AC_DEFINE(HAVE_DBUS,[1],[DBUS support for multiple Pan instances])
 fi
 
 gtkspell_msg=no

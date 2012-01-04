@@ -146,7 +146,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     HIG :: workarea_add_row (t, &row, _("_Full Name:"), w);
     w = _address_entry = gtk_entry_new ();
     set_entry (w, profile.address);
-    gtk_widget_set_tooltip_text(w, _("Your Email Address. Note that this has to match your GPG Signature's Address to verify messages correctly."));
+    gtk_widget_set_tooltip_text(w, _("Your email address. Note that this has to match your PGP Signature's Address to verify messages correctly."));
     HIG :: workarea_add_row (t, &row, _("_Email Address:"), w);
     w = _server_combo = make_servers_combo (data, profile.posting_server);
     HIG :: workarea_add_row (t, &row, _("_Post Articles via:"), w);
@@ -207,9 +207,9 @@ ProfileDialog :: ProfileDialog (const Data         & data,
   HIG :: workarea_add_section_title (t, &row, _("X-Face (Avatar)"));
     w = _xface_entry = gtk_entry_new ();
     set_entry (w, profile.xface);
-    gtk_widget_set_tooltip_markup (w, _("You can add an avatar icon to your postings with a unique X-Face code. \n"
+    gtk_widget_set_tooltip_markup (w, _("You can add an avatar icon to your articles with a unique X-Face code. \n"
                                         "Add the code without the trailing <b>\"X-Face:\"</b> \n if it was generated "
-                                        "by a helper program (for example : http://www.dairiki.org/xface/xface.php)."));
+                                        "by a helper program (for example http://www.dairiki.org/xface/xface.php)."));
     HIG :: workarea_add_row (t, &row, _("_X-Face:"), w, NULL);
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Optional Information"));
