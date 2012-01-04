@@ -800,6 +800,7 @@ GIOChannelSocketGnuTLS :: gnutls_get_iochannel(GIOChannel* channel, const char* 
 
   gnutls_priority_set_direct (
   session,
+  // prefer tls 1.0 for now....
   // "NONE:+VERS-SSL3.0:+CIPHER-ALL:+COMP-ALL:+RSA:+DHE-RSA:+DHE-DSS:+MAC-ALL"
   "NONE:+VERS-TLS1.0:+CIPHER-ALL:+COMP-ALL:+RSA:+DHE-RSA:+DHE-DSS:+MAC-ALL", NULL);
 

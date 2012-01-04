@@ -8,7 +8,7 @@ REQUIREMENTS
 
     Pan requires these libraries:
     * GTK+ 2.16.0 or higher (optionally GTK+ 3.0.0 or higher) <http://www.gtk.org/>
-    * GMime 2.6.0 or higher <http://spruce.sourceforge.net/gmime/>
+    * GMime 2.5.5 or higher <http://spruce.sourceforge.net/gmime/>
 
     Spellchecking requires the following library:
     * GtkSpell 2.0.7 or higher <http://gtkspell.sourceforge.net>
@@ -17,18 +17,20 @@ REQUIREMENTS
     * libnotify 0.4.1 or higher <http://www.galago-project.org/news/index.php>
     * GNOME Keyring 3.2.2 or higher <https://live.gnome.org/GnomeKeyring>
     * D-Bus <http://www.freedesktop.org/wiki/Software/dbus>
+    * GnuTLS 2.12.10 or higher for TLS 1.0 Support (encrypted connections)
+        <http://www.gnu.org/software/gnutls/>
 
     Most Linux distributions already have these; they can also be downloaded
     from their home pages.
 
     On Debian-based systems (for example Ubuntu), you can install the
     requirements with the following command:
-         
+
     sudo apt-get install <REQUIREMENT>
 
     On Fedora-based systems, run the following command to install the
     requirements:
-    
+
     sudo yum install -y <REQUIREMENT>
 
 
@@ -50,7 +52,6 @@ THE SALES PITCH
         * Works well as an offline reader.
         * Articles can be queued until you want to go online, and can be
           re-edited at any point before they're posted.
-        * Pan saves your posted messages in a folder for future reference.
         * A flexible rules system allows you to delete, hide, download,
           or notify you of, etc. articles that match a subject, or are
           posted by a particular user, and so on.
@@ -74,7 +75,7 @@ THE SALES PITCH
           automatically yEnc-encrypted, threaded and referenced by Pan.
         * Articles can be encrypted and/or signed with a public/private PGP key,
           so your privacy and security are ensured.
-        * Connections can be encrypted with secure SSL 3.0 connections.
+        * Connections can be encrypted with secure TLS 1.0 connections.
 
     The rest of the sales pitch is at <http://pan.rebelbase.com/features/>.
 
