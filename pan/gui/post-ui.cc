@@ -2832,9 +2832,10 @@ PostUI :: select_parts ()
 {
 
   PostUI::tasks_t set(get_selected_files());
+  if (set.empty()) return;
   _upload_ptr = dynamic_cast<TaskUpload*>(set[0]);
-
   if (!_upload_ptr) return;
+
   GtkTreeIter iter;
   GtkWidget * w = _part_select = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_signal_connect (_part_select, "delete-event", G_CALLBACK(delete_parts_cb), this);

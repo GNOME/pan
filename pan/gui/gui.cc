@@ -364,7 +364,7 @@ GUI :: ~GUI ()
 
   const std::string accel_filename (get_accel_filename());
   gtk_accel_map_save (accel_filename.c_str());
-  ::chmod (accel_filename.c_str(), 0600);
+  chmod (accel_filename.c_str(), 0600);
 
   int res(0);
 

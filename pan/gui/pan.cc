@@ -168,33 +168,51 @@ namespace
     return true;
   }
 
-/* ****** Status Icon **********************************************************/
-  namespace
-  {
-    enum StatusIcons
-    {
-      ICON_STATUS_ONLINE,
-      ICON_STATUS_OFFLINE,
-      ICON_STATUS_ACTIVE,
-      ICON_STATUS_QUEUE_EMPTY,
-      ICON_STATUS_ERROR,
-      ICON_STATUS_IDLE,
-      ICON_STATUS_NEW_ARTICLES,
-      NUM_STATUS_ICONS
-    };
+/* ****** Status Icon and Notification *******************************************/
 
-    struct Icon {
-    const guint8 * pixbuf_txt;
-    GdkPixbuf * pixbuf;
-    } status_icons[NUM_STATUS_ICONS] = {
-      { icon_status_online,          0 },
-      { icon_status_offline,         0 },
-      { icon_status_active,          0 },
-      { icon_status_queue_empty,     0 },
-      { icon_status_error,           0 },
-      { icon_status_idle,            0 },
-      { icon_status_new_articles,    0 }
-    };
+  enum StatusIcons
+  {
+    ICON_STATUS_ONLINE,
+    ICON_STATUS_OFFLINE,
+    ICON_STATUS_ACTIVE,
+    ICON_STATUS_QUEUE_EMPTY,
+    ICON_STATUS_ERROR,
+    ICON_STATUS_IDLE,
+    ICON_STATUS_NEW_ARTICLES,
+    NUM_STATUS_ICONS
+  };
+
+  struct Icon {
+  const guint8 * pixbuf_txt;
+  GdkPixbuf * pixbuf;
+  } status_icons[NUM_STATUS_ICONS] = {
+    { icon_status_online,          0 },
+    { icon_status_offline,         0 },
+    { icon_status_active,          0 },
+    { icon_status_queue_empty,     0 },
+    { icon_status_error,           0 },
+    { icon_status_idle,            0 },
+    { icon_status_new_articles,    0 }
+  };
+
+
+  void status_icon_activate (GtkStatusIcon *icon, gpointer data)
+  {
+
+    GtkWindow * window = GTK_WINDOW(data);
+
+    if (gtk_window_is_active(window))
+    {
+      gtk_window_iconify (window);
+      gtk_widget_hide (GTK_WIDGET(window));
+    }
+    else
+    {
+      gtk_window_deiconify(window);
+      gtk_widget_hide(GTK_WIDGET(window));
+      gtk_widget_show (GTK_WIDGET(window));
+    }
+
   }
 
   struct StatusIconListener : public Prefs::Listener,
@@ -207,14 +225,35 @@ namespace
       static_cast<StatusIconListener*>(p)->update_status_tooltip();
     }
 
+    static void notif_maximize_cb(NotifyNotification *notification,
+                               char *action,
+                               gpointer user_data)
+    {
+      notify_notification_close (notification, NULL);
+
+      StatusIconListener* s = static_cast<StatusIconListener*>(user_data);
+      status_icon_activate (s->icon, s->root); // use this for toggling main window visibility
+    }
+
+    static void notif_close_cb (NotifyNotification *notification,
+                                gpointer            user_data)
+    {
+
+      StatusIconListener* s = static_cast<StatusIconListener*>(user_data);
+      s->notif_shown = false;
+      g_object_unref (notification);
+    }
+
+    bool n() { return notif_shown; }
+
     StatusIconListener(GtkStatusIcon * i, GtkWidget* r, Prefs& p, Queue& q, Data& d, bool v) : icon(i), root(r), prefs(p), queue(q), data(d),
-      tasks_active(0), tasks_total(0), minimized(v)
+      tasks_active(0), tasks_total(0), minimized(v), notif_shown(false)
     {
       prefs.add_listener(this);
       queue.add_listener(this);
       data.add_listener(this);
       update_status_tooltip();
-      status_icon_timeout_tag = g_timeout_add (500, status_icon_periodic_refresh, this);
+      status_icon_timeout_tag = g_timeout_add (200, status_icon_periodic_refresh, this);
 
       is_online = q.is_online();
 
@@ -248,6 +287,7 @@ namespace
                                   "<b>Speed:</b> %.1f KiBps\n",
                                   PACKAGE_VERSION, is_online ? "online" : "offline",
                                   tasks_active, tasks_total, queue.get_speed_KiBps());
+
       gtk_status_icon_set_tooltip_markup(icon, buf);
     }
 
@@ -268,31 +308,32 @@ namespace
       if (!prefs.get_flag("use-notify", false)) return;
 #ifdef HAVE_LIBNOTIFY
       NotifyNotification *notif(0);
-      bool show(false);
+//      bool show(false);
       GError* error(0);
       notif = notify_notification_new (summary, body, NULL);
 
-      switch (si)
-      {
-        case ICON_STATUS_ERROR:
-
-          show = true;
-          break;
-        case ICON_STATUS_NEW_ARTICLES:
-          show = true;
-          break;
-      }
+//      switch (si)
+//      {
+//        case ICON_STATUS_ERROR:
+//          show = true;
+//          break;
+//        case ICON_STATUS_NEW_ARTICLES:
+//          show = true;
+//          break;
+//      }
 
       notify_notification_set_icon_from_pixbuf(notif, status_icons[si].pixbuf);
+      notify_notification_set_timeout (notif,NOTIFY_EXPIRES_NEVER);
+      notify_notification_add_action(notif,"close",_("Maximize"),NOTIFY_ACTION_CALLBACK(notif_maximize_cb),this,NULL);
+      g_signal_connect (G_OBJECT(notif), "closed", G_CALLBACK(notif_close_cb), this);
 
-      if (show)
-        notify_notification_show (notif, &error);
+//      if (show)
+      notify_notification_show (notif, &error);
 
       if (error) {
         debug ("Error showing notification: "<<error->message);
         g_error_free (error);
       }
-      g_object_unref (notif);
 #endif
     }
 
@@ -319,10 +360,7 @@ namespace
       tasks_active = active;
       if (tasks_total == 0 || tasks_active == 0)
       {
-        update_status_icon(ICON_STATUS_IDLE);
-        const char* summary = _("Error!");
-        const char* body = _("An error has occured. Maximize Pan to investigate.");
-        notify_of(ICON_STATUS_IDLE, body, summary);
+
       }
       update_status_tooltip();
     }
@@ -337,15 +375,30 @@ namespace
     virtual void on_queue_error (Queue&, const StringView& message)
     {
       update_status_icon(ICON_STATUS_ERROR);
+      if (n()) return;
+      notif_shown = true;
+      notify_of(ICON_STATUS_ERROR, message.str, _("An Error has occurred!"));
+    }
+
+    virtual void on_queue_size_changed (Queue&, unsigned long, unsigned long)
+    {
+      if (n()) return;
+      notif_shown = true;
     }
 
     /* data::listener */
-    virtual void on_group_counts (const Quark&, unsigned long, unsigned long)
+    virtual void on_group_counts (const Quark&, unsigned long unread, unsigned long total)
     {
-      update_status_icon(ICON_STATUS_NEW_ARTICLES);
-      const char* summary = _("New Articles!");
-      const char* body = _("There are new articles available.");
-      notify_of(ICON_STATUS_NEW_ARTICLES, body, summary);
+
+      if (unread)
+      {
+        update_status_icon(ICON_STATUS_NEW_ARTICLES);
+        if (n()) return;
+        notif_shown = true;
+        const char* summary = _("New Articles!");
+        const char* body = _("There are new\narticles available.");
+        notify_of(ICON_STATUS_NEW_ARTICLES, body, summary);
+      }
     }
 
     private:
@@ -356,6 +409,7 @@ namespace
       bool is_online;
       bool minimized;
       guint status_icon_timeout_tag;
+      bool notif_shown;
 
     public:
       Prefs& prefs;
@@ -364,28 +418,8 @@ namespace
   };
 
   static StatusIconListener* _status_icon;
-  static bool iconified = false;
 
-/* ****** End Status Icon ******************************************************/
-
-  void status_icon_activate (GtkStatusIcon *icon, gpointer data)
-  {
-
-    GtkWindow * window = GTK_WINDOW(data);
-
-    if (gtk_window_is_active(window))
-    {
-      gtk_window_iconify (window);
-      gtk_widget_hide (GTK_WIDGET(window));
-    }
-    else
-    {
-      gtk_window_deiconify(window);
-      gtk_widget_hide(GTK_WIDGET(window));
-      gtk_widget_show (GTK_WIDGET(window));
-    }
-
-  }
+/* ****** End Status Icon and Notification ****************************************/
 
   static gboolean window_state_event (GtkWidget *widget, GdkEventWindowState *event, gpointer trayIcon)
   {

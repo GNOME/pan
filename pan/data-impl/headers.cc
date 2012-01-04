@@ -1017,7 +1017,7 @@ DataImpl :: add_score (const StringView           & section_wildmat,
     std::ofstream o (filename.c_str(), std::ofstream::app|std::ofstream::out);
     o << '\n' << str << '\n';
     o.close ();
-    ::chmod (filename.c_str(), 0600);
+    chmod (filename.c_str(), 0600);
   }
 
   if (do_rescore)
@@ -1050,7 +1050,7 @@ DataImpl :: comment_out_scorefile_line (const StringView    & filename,
   std::ofstream o (f.c_str(), std::ofstream::trunc|std::ofstream::out);
   o << buf;
   o.close ();
-  ::chmod (f.c_str(), 0600);
+  chmod (f.c_str(), 0600);
 
   // rescore
   if (do_rescore)

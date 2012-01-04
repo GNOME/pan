@@ -311,7 +311,7 @@ ProfilesImpl :: save () const
   std::ofstream out (f.c_str());
   serialize (out);
   out.close ();
-  ::chmod (f.c_str(), 0600);
+  chmod (f.c_str(), 0600);
 }
 
 ProfilesImpl :: ~ProfilesImpl ()
