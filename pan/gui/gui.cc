@@ -361,7 +361,6 @@ namespace
 
 GUI :: ~GUI ()
 {
-  std::cerr<<"dtor gui\n";
 
   const std::string accel_filename (get_accel_filename());
   gtk_accel_map_save (accel_filename.c_str());
@@ -1601,8 +1600,6 @@ namespace
 
   GtkWidget* pack_widgets (Prefs& prefs, GtkWidget * w1, GtkWidget * w2, int orient, gint uglyhack_idx)
   {
-
-    std::cerr<<"pack widgets\n";
 
     GtkWidget * w;
     if (w1!=NULL && w2!=NULL) {

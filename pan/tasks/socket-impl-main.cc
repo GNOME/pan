@@ -38,9 +38,9 @@
 #include <cstring>
 
 #ifdef HAVE_GNUTLS
-  #include <gcrypt.h>
   #include <pan/usenet-utils/ssl-utils.h>
 #endif
+
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/locking.h>
@@ -107,6 +107,7 @@ namespace
     }
   };
 }
+
 
 SocketCreator :: SocketCreator(Data& d, CertStore& cs) : data(d), store(cs)
 {

@@ -98,11 +98,12 @@ namespace pan
       iss = dn_buf;
       delete dn_buf;
 
-      gnutls_x509_crt_get_subject_unique_id(cert, NULL, &size);
-      dn_buf = new char[size];
-      gnutls_x509_crt_get_subject_unique_id(cert, dn_buf, &size);
-      sub = dn_buf;
-      delete dn_buf;
+      // FIXME : LEAVE this out for now
+//      gnutls_x509_crt_get_subject_unique_id(cert, NULL, &size);
+//      dn_buf = new char[size];
+//      gnutls_x509_crt_get_subject_unique_id(cert, dn_buf, &size);
+//      sub = dn_buf;
+//      delete dn_buf;
 
       /* init map */
       int i(0);

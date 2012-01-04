@@ -795,7 +795,7 @@ GIOChannelSocketGnuTLS :: gnutls_get_iochannel(GIOChannel* channel, const char* 
 
 	if(!(fd = g_io_channel_unix_get_fd(channel))) return 0;
 
-  if (gnutls_init (&session, GNUTLS_CLIENT | GNUTLS_NONBLOCK) != 0) return 0;
+  if (gnutls_init (&session, GNUTLS_CLIENT) != 0) return 0;
   if (gnutls_set_default_priority (session) != 0) return 0;
 
   gnutls_priority_set_direct (
