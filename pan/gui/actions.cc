@@ -555,28 +555,28 @@ namespace
       G_CALLBACK(do_ignore) },
 
     { "flag-thread", "ICON_FLAGGED",
-      N_("_Toggle Flag on/off for Thread"), "X",
-      N_("_Toggle Flag on/off for Thread"),
+      N_("_Toggle Flag On/Off for Thread"), "X",
+      N_("_Toggle Flag On/Off for Thread"),
       G_CALLBACK(do_flag) },
 
     { "unflag-thread", NULL,
-      N_("_Turn Flag off for Thread"), "<shift>X",
-      N_("_Turn Flag off for Thread"),
+      N_("_Turn Flag Off for Thread"), "<shift>X",
+      N_("_Turn Flag Off for Thread"),
       G_CALLBACK(do_flag_off) },
 
     { "select-all-flagged", NULL,
-      N_("_Select all flagged Threads"), "<control>X",
-      N_("_Select all flagged Threads"),
+      N_("_Select All Flagged Threads"), "<control>X",
+      N_("_Select All Flagged Threads"),
       G_CALLBACK(do_mark_all_flagged) },
 
     { "next-flagged", NULL,
-      N_("_Goto next flagged Thread"), "plus",
-      N_("_Goto next flagged Thread"),
+      N_("_Go to Next Flagged Thread"), "plus",
+      N_("_Go to Next Flagged Thread"),
       G_CALLBACK(do_next_flag) },
 
     { "last-flagged", NULL,
-      N_("_Goto last flagged Thread"), "minus",
-      N_("_Goto last flagged Thread"),
+      N_("_Go to Last Flagged Thread"), "minus",
+      N_("_Go to Last Flagged Thread"),
       G_CALLBACK(do_last_flag) },
 
     { "invert-selection", NULL,
@@ -682,7 +682,7 @@ namespace
   GtkToggleActionEntry toggle_entries[] =
   {
     { "thread-headers",           NULL, N_("_Thread Headers"),                NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
-    { "wrap-article-body",GTK_STOCK_JUSTIFY_FILL, N_("Wrap Article Body"),    "W", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
+    { "wrap-article-body",GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Article Body"),    "W", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "mute-quoted-text",         NULL, N_("Mute _Quoted Text"),               "Q", NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
     { "show-all-headers",         NULL, N_("Show All _Headers in Body Pane"),  "H", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "show-smilies-as-graphics", NULL, N_("Show _Smilies as Graphics"),      NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
