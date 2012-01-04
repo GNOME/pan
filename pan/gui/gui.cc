@@ -54,7 +54,13 @@ extern "C" {
 #include "log-ui.h"
 #include "gui.h"
 #include "pad.h"
-#include "pan.ui.h"
+
+#ifdef HAVE_GNUTLS
+  #include "pan.ui.ssl.h"
+#else
+  #include "pan.ui.h"
+
+#endif
 #include "prefs-ui.h"
 #include "progress-view.h"
 #include "profiles-dialog.h"
@@ -355,20 +361,25 @@ namespace
 
 GUI :: ~GUI ()
 {
-  _certstore.remove_listener(this);
-  _data.remove_listener(this);
-  _prefs.remove_listener (this);
-  _queue.remove_listener (this);
-  Log::get().remove_listener (this);
+  std::cerr<<"dtor gui\n";
 
   const std::string accel_filename (get_accel_filename());
   gtk_accel_map_save (accel_filename.c_str());
   ::chmod (accel_filename.c_str(), 0600);
 
+  int res(0);
+
   if (hpane)
-    _prefs.set_int ("main-window-hpane-position", gtk_paned_get_position(GTK_PANED(hpane)));
+  {
+    res = gtk_paned_get_position(GTK_PANED(hpane));
+    if (res > 0) _prefs.set_int ("main-window-hpane-position", res);
+  }
   if (vpane)
-    _prefs.set_int ("main-window-vpane-position", gtk_paned_get_position(GTK_PANED(vpane)));
+  {
+    res = gtk_paned_get_position(GTK_PANED(vpane));
+    if (res > 0) _prefs.set_int ("main-window-vpane-position", res);
+  }
+
 
   const bool maximized = gtk_widget_get_window(_root)
                       && (gdk_window_get_state( gtk_widget_get_window(_root)) & GDK_WINDOW_STATE_MAXIMIZED);
@@ -387,6 +398,7 @@ GUI :: ~GUI ()
   delete _header_pane;
   delete _group_pane;
   delete _body_pane;
+
   for (size_t i(0), size(_views.size()); i!=size; ++i)
     delete _views[i];
 
@@ -395,7 +407,15 @@ GUI :: ~GUI ()
   g_object_unref (G_OBJECT(_ui_manager));
 
   deinit_gpg();
+
   if (iconv_inited) iconv_close(conv);
+
+  _certstore.remove_listener(this);
+  _data.remove_listener(this);
+  _prefs.remove_listener (this);
+  _queue.remove_listener (this);
+  Log::get().remove_listener (this);
+
 }
 
 /***
@@ -1581,6 +1601,9 @@ namespace
 
   GtkWidget* pack_widgets (Prefs& prefs, GtkWidget * w1, GtkWidget * w2, int orient, gint uglyhack_idx)
   {
+
+    std::cerr<<"pack widgets\n";
+
     GtkWidget * w;
     if (w1!=NULL && w2!=NULL) {
       int pos = uglyhack_idx==0

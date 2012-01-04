@@ -263,9 +263,6 @@ namespace
   GtkActionEntry entries[] =
   {
 
-    // dummy
-    { "set-charset", NULL, "", NULL, NULL, NULL },
-
     { "file-menu", NULL, N_("_File"), NULL, NULL, NULL },
     { "edit-menu", NULL, N_("_Edit"), NULL, NULL, NULL },
     { "view-layout-menu", NULL, N_("_Layout"), NULL, NULL, NULL },
@@ -427,14 +424,6 @@ namespace
       NULL,
       G_CALLBACK(do_show_servers_dialog) },
 
-#ifdef HAVE_GNUTLS
-    { "show-sec-dialog", GTK_STOCK_DIALOG_AUTHENTICATION,
-      N_("Edit _SSL Certificates"), NULL,
-      NULL,
-      G_CALLBACK(do_show_sec_dialog) },
-#else
-    { "show-sec-dialog", NULL, NULL, NULL, NULL, NULL},
-#endif
     { "jump-to-group-tab", GTK_STOCK_JUMP_TO,
       N_("Jump to _Group Tab"), "1",
       NULL,
@@ -668,7 +657,12 @@ namespace
     { "about-pan", GTK_STOCK_ABOUT,
       N_("_About"), NULL,
       NULL,
-      G_CALLBACK(do_about_pan) }
+      G_CALLBACK(do_about_pan) },
+
+    { "show-sec-dialog", GTK_STOCK_DIALOG_AUTHENTICATION,
+      N_("Edit _SSL Certificates"), NULL,
+      NULL,
+      G_CALLBACK(do_show_sec_dialog) },
   };
 
   void prefs_toggle_callback_impl (GtkToggleAction * action)

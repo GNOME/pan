@@ -114,7 +114,10 @@ namespace
   {
     Prefs* prefs (static_cast<Prefs*>(user_data));
     if(prefs->get_flag ("status-icon", true))
+    {
       gtk_widget_hide(w);
+      gtk_window_iconify (GTK_WINDOW(w));
+    }
     else
       mainloop_quit ();
     return true; // don't invoke the default handler that destroys the widget
@@ -205,13 +208,17 @@ namespace
     }
 
     StatusIconListener(GtkStatusIcon * i, GtkWidget* r, Prefs& p, Queue& q, Data& d, bool v) : icon(i), root(r), prefs(p), queue(q), data(d),
-      tasks_active(0), tasks_total(0), is_online(false), minimized(v)
+      tasks_active(0), tasks_total(0), minimized(v)
     {
       prefs.add_listener(this);
       queue.add_listener(this);
       data.add_listener(this);
       update_status_tooltip();
       status_icon_timeout_tag = g_timeout_add (500, status_icon_periodic_refresh, this);
+
+      is_online = q.is_online();
+
+      update_status_icon(ICON_STATUS_IDLE);
     }
 
     ~StatusIconListener()
@@ -243,6 +250,7 @@ namespace
                                   tasks_active, tasks_total, queue.get_speed_KiBps());
       gtk_status_icon_set_tooltip_markup(icon, buf);
     }
+
     void update_status_icon(StatusIcons si)
     {
       if (si==ICON_STATUS_IDLE)
@@ -356,39 +364,61 @@ namespace
   };
 
   static StatusIconListener* _status_icon;
+  static bool iconified = false;
+
 /* ****** End Status Icon ******************************************************/
 
   void status_icon_activate (GtkStatusIcon *icon, gpointer data)
   {
-//    gtk_widget_show(GTK_WIDGET(data));
-//    gtk_window_deiconify(GTK_WINDOW(data));
 
     GtkWindow * window = GTK_WINDOW(data);
-    if(gtk_window_is_active (window))
-      gtk_widget_hide ((GtkWidget *) window);
-    else {
-      gtk_widget_hide ((GtkWidget *) window); // dirty hack
-      gtk_widget_show ((GtkWidget *) window);
+
+    if (gtk_window_is_active(window))
+    {
+      gtk_window_iconify (window);
+      gtk_widget_hide (GTK_WIDGET(window));
     }
+    else
+    {
+      gtk_window_deiconify(window);
+      gtk_widget_hide(GTK_WIDGET(window));
+      gtk_widget_show (GTK_WIDGET(window));
+    }
+
   }
 
   static gboolean window_state_event (GtkWidget *widget, GdkEventWindowState *event, gpointer trayIcon)
   {
-    StatusIconListener* l(static_cast<StatusIconListener*>(trayIcon));
-    if (!l->prefs.get_flag("status-icon",false)) return TRUE;
 
-    if(event->changed_mask == GDK_WINDOW_STATE_ICONIFIED && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED ||
-                                                             event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
+    StatusIconListener* l(static_cast<StatusIconListener*>(trayIcon));
+
+    if(event->changed_mask == GDK_WINDOW_STATE_ICONIFIED
+       && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED
+       || event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
     {
-        gtk_widget_hide (GTK_WIDGET(widget));
         gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), TRUE);
+        gtk_widget_hide (GTK_WIDGET(widget));
     }
-    else if(event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED ||
-                                                                  event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
+    else if(event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN
+            && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED
+            || event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
     {
         gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), FALSE);
     }
     return TRUE;
+  }
+
+  struct QueueAndGui
+  {
+    Queue& queue;
+    GUI& gui;
+    QueueAndGui (Queue& q, GUI& g) : queue(q), gui(g) {}
+  };
+
+  static void work_online_cb (GtkWidget* w, gpointer data)
+  {
+    QueueAndGui* d = static_cast<QueueAndGui*>(data);
+    d->gui.do_work_online(!d->queue.is_online());
   }
 
   void status_icon_popup_menu (GtkStatusIcon *icon,
@@ -400,35 +430,58 @@ namespace
     gtk_menu_popup(menu, NULL, NULL, NULL, NULL, button, activation_time);
   }
 
-  void run_pan_with_status_icon (GtkWindow * window, GdkPixbuf * pixbuf, Queue& queue, Prefs & prefs, Data& data)
+  static QueueAndGui* queue_and_gui(0);
+
+  void run_pan_with_status_icon (GtkWindow * window, GdkPixbuf * pixbuf, Queue& queue, Prefs & prefs, Data& data, GUI* _gui)
   {
+
+    GUI& gui (*_gui);
+
     for (guint i=0; i<NUM_STATUS_ICONS; ++i)
         status_icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, status_icons[i].pixbuf_txt, FALSE, 0);
 
     GtkStatusIcon * icon = gtk_status_icon_new_from_pixbuf (status_icons[ICON_STATUS_IDLE].pixbuf);
     GtkWidget * menu = gtk_menu_new ();
+
     GtkWidget * menu_quit = gtk_image_menu_item_new_from_stock ( GTK_STOCK_QUIT, NULL);
+    g_signal_connect(menu_quit, "activate", G_CALLBACK(mainloop_quit), NULL);
+
     gtk_status_icon_set_visible(icon, prefs.get_flag("status-icon", false));
     StatusIconListener* pl = _status_icon = new StatusIconListener(icon, GTK_WIDGET(window), prefs, queue, data, prefs.get_flag("start-minimized", false));
+
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), menu_quit);
+
+    const char* label_names[] = {"Toggle on/offline"};
+
+    GtkWidget* labels[G_N_ELEMENTS(label_names)];
+
+    labels[0] = gtk_menu_item_new_with_label(label_names[0]);
+    queue_and_gui = new QueueAndGui(queue, gui);
+    g_signal_connect(labels[0], "activate", G_CALLBACK(work_online_cb), queue_and_gui);
+
+    for (int i=0; i < G_N_ELEMENTS(label_names); ++i)
+      gtk_menu_shell_append(GTK_MENU_SHELL(menu), labels[i]);
+
     gtk_widget_show_all(menu);
     g_signal_connect(icon, "activate", G_CALLBACK(status_icon_activate), window);
     g_signal_connect(icon, "popup-menu", G_CALLBACK(status_icon_popup_menu), menu);
-    g_signal_connect(menu_quit, "activate", G_CALLBACK(mainloop_quit), NULL);
     g_signal_connect (G_OBJECT (window), "window-state-event", G_CALLBACK (window_state_event), pl);
   }
 
 
-  void run_pan_in_window (Data          & data,
+  void run_pan_in_window (GUI           * _gui,
+                          Data          & data,
                           Queue         & queue,
                           Prefs         & prefs,
                           GroupPrefs    & group_prefs,
                           GtkWindow     * window)
   {
-    {
+//    {
+
+      GUI& gui (*_gui);
+
       const gulong delete_cb_id =  g_signal_connect (window, "delete-event", G_CALLBACK(delete_event_cb), &prefs);
 
-      GUI gui (data, queue, prefs, group_prefs);
       gtk_container_add (GTK_CONTAINER(window), gui.root());
       const bool minimized(prefs.get_flag("start-minimized", false));
       if (minimized) gtk_window_iconify (window);
@@ -457,7 +510,9 @@ namespace
       register_shutdown_signals ();
       mainloop ();
       g_signal_handler_disconnect (window, delete_cb_id);
-    }
+//    }
+
+    delete _gui;
 
     gtk_widget_destroy (GTK_WIDGET(window));
   }
@@ -482,6 +537,7 @@ namespace
     void on_queue_connection_count_changed (Queue&, int) {}
     void on_queue_online_changed (Queue&, bool) {}
     void on_queue_error (Queue&, const StringView&) {}
+
   private:
     Queue & q;
   };
@@ -722,6 +778,11 @@ _("General Options\n"
 #endif
 }
 
+namespace
+{
+  GUI * gui_ptr (0);
+}
+
 
 int
 main (int argc, char *argv[])
@@ -777,6 +838,7 @@ main (int argc, char *argv[])
 #ifdef DEBUG_LOCALE
   setlocale(LC_ALL,"C");
 #endif
+
   if (verbosed && !gui && nzb)
     _verbose_flag = true;
 
@@ -906,13 +968,19 @@ main (int argc, char *argv[])
       gtk_window_set_title (GTK_WINDOW(window), "Pan");
       gtk_window_set_resizable (GTK_WINDOW(window), true);
       gtk_window_set_default_icon (pixbuf);
-      run_pan_with_status_icon(GTK_WINDOW(window), pixbuf, queue, prefs, data);
+
+
+      gui_ptr = new GUI (data, queue, prefs, group_prefs);
+
+      run_pan_with_status_icon(GTK_WINDOW(window), pixbuf, queue, prefs, data, gui_ptr);
+
       g_object_unref (pixbuf);
+
 #ifdef HAVE_LIBNOTIFY
       if (!notify_is_initted ())
         notify_init (_("Pan notification"));
 #endif
-      run_pan_in_window (data, queue, prefs, group_prefs, GTK_WINDOW(window));
+      run_pan_in_window (gui_ptr, data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
 
 #ifdef HAVE_DBUS
@@ -929,6 +997,8 @@ main (int argc, char *argv[])
       cache.clear ();
       encode_cache.clear();
     }
+
+    delete queue_and_gui;
   }
 
   g_mime_shutdown ();

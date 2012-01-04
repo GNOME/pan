@@ -574,41 +574,55 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
     HIG::workarea_add_row (t, &row, w, l);
     HIG::workarea_add_section_divider (t, &row);
-    HIG :: workarea_add_section_title (t, &row, _("Autosave Articles"));
-    w = new_spin_button ("newsrc-autosave-timeout-min", 0, 60, prefs);
-    l = gtk_label_new(_("Minutes to autosave newsrc files"));
-    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
-    gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
-    HIG::workarea_add_row (t, &row, w, l);
-  HIG::workarea_add_section_divider (t, &row);
-  HIG :: workarea_add_section_title (t, &row, _("Language Settings"));
-    HIG :: workarea_add_section_spacer (t, row, 2);
-    w = gtk_button_new_from_stock (GTK_STOCK_SELECT_FONT);
-    l = charset_label = gtk_label_new (NULL);
-    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.0);
-    update_default_charset_label(_prefs.get_string("default-charset","UTF-8"));
-    g_signal_connect (w, "clicked", G_CALLBACK(select_prefs_charset_cb), this);
-    HIG::workarea_add_row (t, &row, w, l);
-    HIG::workarea_add_section_divider (t, &row);
-    HIG :: workarea_add_section_title (t, &row, _("Autosave Article Draft"));
-    w = new_spin_button ("draft-autosave-timeout-min", 0, 60, prefs);
-    l = gtk_label_new(_("Minutes to autosave the current Article Draft."));
-    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
-    gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
-    HIG::workarea_add_row (t, &row, w, l);
-    HIG::workarea_add_section_divider (t, &row);
-    HIG :: workarea_add_section_title (t, &row, _("System Tray Behavior"));
-    HIG :: workarea_add_section_spacer (t, row, 2);
-    w = new_check_button (_("Hide to system tray"), "status-icon", false, prefs);
-    HIG :: workarea_add_wide_control (t, &row, w);
-    w = new_check_button (_("Start Pan minimized"), "start-minimized", false, prefs);
-    HIG :: workarea_add_wide_control (t, &row, w);
-#ifdef HAVE_LIBNOTIFY
-    w = new_check_button (_("Show notifications"), "use-notify", false, prefs);
-    HIG :: workarea_add_wide_control (t, &row, w);
-#endif
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Behavior")));
+
+  //charset
+  t = HIG :: workarea_create ();
+  HIG :: workarea_add_section_spacer (t, row, 1);
+  HIG :: workarea_add_section_title (t, &row, _("Language Settings"));
+  w = gtk_button_new_from_stock (GTK_STOCK_SELECT_FONT);
+  l = charset_label = gtk_label_new (NULL);
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.0);
+  update_default_charset_label(_prefs.get_string("default-charset","UTF-8"));
+  g_signal_connect (w, "clicked", G_CALLBACK(select_prefs_charset_cb), this);
+  HIG::workarea_add_row (t, &row, w, l);
+  HIG :: workarea_finish (t, &row);
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Charset")));
+
+  // systray and notify popup
+  t = HIG :: workarea_create ();
+  HIG :: workarea_add_section_title (t, &row, _("System Tray Behavior"));
+  HIG :: workarea_add_section_spacer (t, row, 3);
+  w = new_check_button (_("Hide to system tray"), "status-icon", false, prefs);
+  HIG :: workarea_add_wide_control (t, &row, w);
+  w = new_check_button (_("Start Pan minimized"), "start-minimized", false, prefs);
+  HIG :: workarea_add_wide_control (t, &row, w);
+#ifdef HAVE_LIBNOTIFY
+  w = new_check_button (_("Show notifications"), "use-notify", false, prefs);
+  HIG :: workarea_add_wide_control (t, &row, w);
+#endif
+  HIG :: workarea_finish (t, &row);
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Status and Notifications")));
+
+  // Autosave Features
+  t = HIG :: workarea_create ();
+  HIG :: workarea_add_section_spacer (t, row, 2);
+  HIG :: workarea_add_section_title (t, &row, _("Autosave Article Draft"));
+  w = new_spin_button ("draft-autosave-timeout-min", 0, 60, prefs);
+  l = gtk_label_new(_("Minutes to autosave the current Article Draft."));
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+  gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
+  HIG::workarea_add_row (t, &row, w, l);
+  HIG::workarea_add_section_divider (t, &row);
+  HIG :: workarea_add_section_title (t, &row, _("Autosave Articles"));
+  w = new_spin_button ("newsrc-autosave-timeout-min", 0, 60, prefs);
+  l = gtk_label_new(_("Minutes to autosave newsrc files"));
+  gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+  gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
+  HIG::workarea_add_row (t, &row, w, l);
+  HIG :: workarea_finish (t, &row);
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Autosave")));
 
   // Layout
   row = 0;

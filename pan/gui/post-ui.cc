@@ -298,14 +298,15 @@ PostUI :: set_spellcheck_enabled (bool enabled)
       }
     }
 #else
-    GtkWidget * w = gtk_message_dialog_new_with_markup (
-      GTK_WINDOW(_root),
-      GTK_DIALOG_DESTROY_WITH_PARENT,
-      GTK_MESSAGE_ERROR,
-      GTK_BUTTONS_CLOSE,
-      _("<b>Spellchecker not found!</b>\n \nWas this copy of Pan compiled with GtkSpell enabled?"));
-    g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
-    gtk_widget_show_all (w);
+    // disable this for now, it is annoying
+//    GtkWidget * w = gtk_message_dialog_new_with_markup (
+//      GTK_WINDOW(_root),
+//      GTK_DIALOG_DESTROY_WITH_PARENT,
+//      GTK_MESSAGE_ERROR,
+//      GTK_BUTTONS_CLOSE,
+//      _("<b>Spellchecker not found!</b>\n \nWas this copy of Pan compiled with GtkSpell enabled?"));
+//    g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
+//    gtk_widget_show_all (w);
 #endif
   }
   else // disable
@@ -854,6 +855,9 @@ PostUI :: send_and_save_now ()
       HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
       _("The file queue is empty, so no files can be saved."),"");
       gtk_dialog_add_button (GTK_DIALOG(d), _("Go Back"), GTK_RESPONSE_CANCEL);
+      gtk_dialog_run(GTK_DIALOG(d));
+      gtk_widget_destroy(d);
+      return;
   } else
     _save_file = prompt_user_for_upload_nzb_dir (GTK_WINDOW(_root), _prefs);
 
@@ -2469,7 +2473,7 @@ PostUI :: create_filequeue_tab ()
   gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
 
   //add filestore
-  list_store = gtk_list_store_new (4, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_FLOAT);
+  list_store = gtk_list_store_new (4, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_STRING);
   w = _filequeue_store = gtk_tree_view_new_with_model (GTK_TREE_MODEL(list_store));
 
   // add columns
@@ -2864,15 +2868,22 @@ PostUI :: update_parts_tab()
   gtk_list_store_clear(store);
   gboolean res(FALSE);
 
-  for (int i=1;i<=_total_parts;++i)
+  GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(w));
+  g_object_ref(model);
+  gtk_tree_view_set_model(GTK_TREE_VIEW(w), NULL);
+
+  for (int i=1;i<=_upload_ptr->_total_parts;++i)
   {
     gtk_list_store_append (store, &iter);
     res = (_upload_ptr->_wanted.find(i) != _upload_ptr->_wanted.end()) ? TRUE : FALSE;
     gtk_list_store_set (store, &iter,
                         0, i,
                         1, res,
-                        2, _upload_ptr->_basename.c_str(), -1);
+                        2, _upload_ptr->_basename.c_str(),
+                        -1);
   }
+  gtk_tree_view_set_model(GTK_TREE_VIEW(w), model);
+  g_object_unref(model);
 }
 
 gboolean
