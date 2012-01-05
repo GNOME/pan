@@ -345,10 +345,7 @@ namespace
     }
 
     /* queue::listener */
-    virtual void on_queue_task_active_changed (Queue&, Task&, bool active)
-    {
-      update_status_tooltip();
-    }
+    virtual void on_queue_task_active_changed (Queue&, Task&, bool active) {}
     virtual void on_queue_tasks_added (Queue&, int index UNUSED, int count)
     {
       tasks_total += count;
@@ -366,16 +363,18 @@ namespace
       tasks_total = total;
       tasks_active = active;
       if (tasks_total == 0 || tasks_active == 0)
-      {
-
-      }
+        update_status_icon(ICON_STATUS_IDLE);
       update_status_tooltip();
     }
 
     virtual void on_queue_online_changed (Queue&, bool online)
     {
       is_online = online;
-      update_status_icon(ICON_STATUS_IDLE);
+      if (tasks_total)
+        update_status_icon(ICON_STATUS_ACTIVE);
+      else
+        update_status_icon(ICON_STATUS_IDLE);
+
       update_status_tooltip();
     }
 
@@ -387,17 +386,11 @@ namespace
       notify_of(ICON_STATUS_ERROR, message.str, _("An Error has occurred!"));
     }
 
-    virtual void on_queue_size_changed (Queue&, unsigned long, unsigned long)
-    {
-      if (n()) return;
-      notif_shown = true;
-    }
+    virtual void on_queue_size_changed (Queue&, unsigned long, unsigned long) {}
 
     /* data::listener */
     virtual void on_group_entered (const Quark& group, unsigned long unread, unsigned long total)
     {
-
-      std::cerr<<"on group entered "<<unread<<"\n";
 
       if (unread)
       {

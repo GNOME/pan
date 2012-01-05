@@ -1937,8 +1937,11 @@ void GUI :: do_read_selected_group ()
   }
 
   // fire group_entered for status icon
-  _data.get_group_counts (group, unread, total);
-  _data.fire_group_entered (group, unread, total);
+  if (changed)
+  {
+    _data.get_group_counts (group, unread, total);
+    _data.fire_group_entered (group, unread, total);
+  }
 }
 
 void GUI :: do_mark_selected_groups_read ()

@@ -131,6 +131,7 @@ TaskXOver :: ~TaskXOver ()
       _data.set_xover_high (_group, it->first, it->second);
     _data.xover_unref (_group);
   }
+  _data.fire_group_entered(_group, 1, 0);
 }
 
 void

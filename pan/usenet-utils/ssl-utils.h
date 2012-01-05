@@ -98,7 +98,7 @@ namespace pan
       iss = dn_buf;
       delete dn_buf;
 
-      // FIXME : LEAVE this out for now
+//      LEAVE this out for now
 //      gnutls_x509_crt_get_subject_unique_id(cert, NULL, &size);
 //      dn_buf = new char[size];
 //      gnutls_x509_crt_get_subject_unique_id(cert, dn_buf, &size);
@@ -114,8 +114,8 @@ namespace pan
       tags.insert(quarks_p(cleaned_tags[i++],"Organization"));
       tags.insert(quarks_p(cleaned_tags[i++],"State"));
       tags.insert(quarks_p(cleaned_tags[i++],"Email Address"));
-      tags.insert(quarks_p(cleaned_tags[i],"Email Address"));
-      tags.insert(quarks_p(cleaned_tags[i],"serialNumber"));
+      tags.insert(quarks_p(cleaned_tags[i],  "Email Address"));
+      tags.insert(quarks_p(cleaned_tags[i],  "serialNumber"));
     }
 
     void parse(std::vector<quarks_p>& i, std::vector<quarks_p>& s)
@@ -214,31 +214,21 @@ namespace pan
 
     char email1[2048], email2[2048];
     char tmp1[2048], tmp2[2048];
-    g_snprintf(tmp1,sizeof(tmp1), "The current server <b>'%s'</b> sent this security certificate :\n\n", server.c_str());
-    g_snprintf(tmp2,sizeof(tmp2), "Certificate information for server <b>'%s'</b> :\n\n", server.c_str());
-    size_t md5_size;
-    gnutls_x509_crt_get_fingerprint(c, GNUTLS_DIG_MD5, NULL, &md5_size);
-    char * md5_buf = new char[size];
-    gnutls_x509_crt_get_fingerprint(c, GNUTLS_DIG_MD5, md5_buf, &md5_size);
+    g_snprintf(tmp1,sizeof(tmp1), _("The current server <b>'%s'</b> sent this security certificate :\n\n"), server.c_str());
+    g_snprintf(tmp2,sizeof(tmp2), _("Certificate information for server <b>'%s'</b> :\n\n"), server.c_str());
 
     g_snprintf(buf,size, _("%s"
                            "<b>Issuer information:</b>\n"
                            "%s\n"
-                           //"<b>Subject information: </b>\n"
-                           //"%s\n"
                            "<b>Valid until : </b>%s\n\n"
                            "<b>Not valid before : </b>%s\n\n"),
-                           //"<b>Fingerprint (MD5) : </b>\n%s\n\n"),
                            on_connect ? tmp1 : tmp2,
                            cp.build_complete(p_issuer).c_str(),
-                           //cp.build_complete(p_subject).c_str(),
                            until,
                            before);
-//                           md5_buf);
 
     g_free (before);
     g_free (until);
-    delete md5_buf;
 
   }
 

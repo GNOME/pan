@@ -83,5 +83,4 @@ Data :: fire_group_entered (const Quark& group, unsigned long unread, unsigned l
   for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
     (*it++)->on_group_entered (group, unread, total);
 
-  std::cerr<<"fire group entered\n";
 }
