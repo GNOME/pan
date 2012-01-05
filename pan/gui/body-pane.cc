@@ -1575,7 +1575,7 @@ BodyPane :: menu_clicked_all_cb (GtkWidget* w, gpointer ptr)
 GtkWidget*
 BodyPane :: new_attachment (const char* filename)
 {
-  if (!filename) return NULL;
+  if (!filename) return 0;
 
   GtkWidget* w = gtk_hbox_new(false, 0);
   GtkWidget* attachment = gtk_label_new(filename);
@@ -1613,12 +1613,16 @@ BodyPane :: clear_attachments()
 
 }
 
+/// FIXME : shows only half the icon on gtk2+, gtk3+ works fine. hm....
 void
 BodyPane :: add_attachment_to_toolbar (const char* fn)
 {
   if (!fn) return;
 
   GtkWidget* w = new_attachment(fn);
+  ++_attachments;
+#if !GTK_CHECK_VERSION(3,0,0)
+
   guint cols(0), rows(0);
   gtk_table_get_size (GTK_TABLE(_att_toolbar), &rows, &cols);
 
@@ -1629,10 +1633,21 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
     _cur_col = 0;
   }
 
-  gtk_table_attach_defaults (GTK_TABLE(_att_toolbar), w, _cur_col, _cur_col+1, _cur_row,_cur_row+1);
+  gtk_table_attach_defaults (GTK_TABLE(_att_toolbar), w, _cur_col, _cur_col+2, _cur_row,_cur_row+2);
 
-  ++_attachments;
+
   ++_cur_col;
+
+#else
+
+  if (_attachments % 4 == 0 && _attachments != 0)
+  {
+    gtk_grid_insert_row (GTK_GRID(_att_toolbar), ++_cur_row);
+    _cur_col = 0;
+  }
+
+  gtk_grid_attach (GTK_GRID(_att_toolbar), w, _cur_col++, _cur_row, 1, 1);
+#endif
 
   gtk_widget_show_all(_att_toolbar);
 }
@@ -1644,9 +1659,16 @@ BodyPane :: create_attachments_toolbar (GtkWidget* frame)
   _cur_col = 0;
   _cur_row = 0;
 
+#if !GTK_CHECK_VERSION(3,0,0)
   GtkWidget * w = _att_toolbar = gtk_table_new(4,1,TRUE);
-  gtk_widget_set_size_request (w, -1, 20);
   gtk_table_set_col_spacings (GTK_TABLE(w), PAD);
+  gtk_table_set_row_spacings (GTK_TABLE(w), PAD);
+#else
+  GtkWidget * w = _att_toolbar = gtk_grid_new();
+  gtk_grid_insert_row (GTK_GRID(w), 0);
+  gtk_grid_set_column_spacing (GTK_GRID(w), 3);
+  gtk_grid_set_row_spacing (GTK_GRID (w), 4);
+#endif
   gtk_container_add (GTK_CONTAINER (frame), w);
   gtk_widget_show_all (frame);
 
@@ -1753,7 +1775,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
 
   // add a toolbar for attachments
   GtkWidget * frame = _att_frame = gtk_frame_new (_("Attachments"));
-  gtk_widget_set_size_request (frame, -1, 20);
+  gtk_widget_set_size_request (frame, -1, 40);
   gtk_box_pack_start (GTK_BOX(vbox), create_attachments_toolbar(frame), false, false, 0);
 
   // set up the buffer tags
