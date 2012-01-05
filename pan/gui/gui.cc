@@ -1890,7 +1890,7 @@ void GUI :: do_read_selected_group ()
       conv = iconv_open (to, from);
       if (conv == (iconv_t)-1)
       {
-        Log::add_err(_("Error loading iconv library. Some Charsets in GUI will not be able to be encoded."));
+        Log::add_err(_("Error loading iconv library. Some Charsets in the GUI will not be able to be encoded."));
       } else
         iconv_inited = true;
     }
@@ -1923,8 +1923,9 @@ void GUI :: do_read_selected_group ()
 
   // if it's the first time in this group, pop up a download-headers dialog.
   // otherwise if get-new-headers is turned on, queue an xover-new task.
+  unsigned long unread(0), total(0);
+
   if (changed && !group.empty() && _queue.is_online()) {
-    unsigned long unread(0), total(0);
     _data.get_group_counts (group, unread, total);
     if (!total)
       activate_action ("download-headers");
@@ -1934,6 +1935,10 @@ void GUI :: do_read_selected_group ()
       _queue.add_task (new TaskXOver (_data, group, TaskXOver::NEW), Queue::TOP);
     }
   }
+
+  // fire group_entered for status icon
+  _data.get_group_counts (group, unread, total);
+  _data.fire_group_entered (group, unread, total);
 }
 
 void GUI :: do_mark_selected_groups_read ()

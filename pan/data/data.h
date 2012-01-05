@@ -293,6 +293,10 @@ namespace pan
                                       unsigned long unread UNUSED,
                                       unsigned long total  UNUSED) {}
 
+        virtual void on_group_entered (const Quark& group   UNUSED,
+                                      unsigned long unread UNUSED,
+                                      unsigned long total  UNUSED) {}
+
         /* listener for article flag, don't call too often */
         virtual void on_article_flag_changed (articles_t& a UNUSED, const Quark& group UNUSED) {}
       };
@@ -321,6 +325,7 @@ namespace pan
     public:
 
       virtual void fire_article_flag_changed (articles_t& a, const Quark& group);
+      virtual void fire_group_entered (const Quark& group, unsigned long unread, unsigned long total);
 
     /*****************************************************************
     ***

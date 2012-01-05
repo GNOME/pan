@@ -232,7 +232,8 @@ namespace
       notify_notification_close (notification, NULL);
 
       StatusIconListener* s = static_cast<StatusIconListener*>(user_data);
-      status_icon_activate (s->icon, s->root); // use this for toggling main window visibility
+      gtk_widget_show (GTK_WIDGET(s->root));
+      gtk_window_deiconify(GTK_WINDOW(s->root));
     }
 
     static void notif_close_cb (NotifyNotification *notification,
@@ -241,6 +242,7 @@ namespace
 
       StatusIconListener* s = static_cast<StatusIconListener*>(user_data);
       s->notif_shown = false;
+      s->_notifs.erase(G_OBJECT(notification));
       g_object_unref (notification);
     }
 
@@ -253,11 +255,12 @@ namespace
       queue.add_listener(this);
       data.add_listener(this);
       update_status_tooltip();
-      status_icon_timeout_tag = g_timeout_add (200, status_icon_periodic_refresh, this);
+      status_icon_timeout_tag = g_timeout_add (500, status_icon_periodic_refresh, this);
 
       is_online = q.is_online();
 
       update_status_icon(ICON_STATUS_IDLE);
+
     }
 
     ~StatusIconListener()
@@ -266,6 +269,11 @@ namespace
       queue.remove_listener(this);
       data.remove_listener(this);
       g_source_remove (status_icon_timeout_tag);
+      foreach(std::set<GObject*>, _notifs, it)
+      {
+        notify_notification_close(NOTIFY_NOTIFICATION(*it), NULL);
+        g_object_unref (*it);
+      }
     }
 
     /* prefs::listener */
@@ -274,6 +282,7 @@ namespace
        if(key == "status-icon")
          gtk_status_icon_set_visible(icon, value);
     }
+
     virtual void on_prefs_int_changed (const StringView& key, int color) {}
     virtual void on_prefs_string_changed (const StringView& key, const StringView& value) {}
     virtual void on_prefs_color_changed (const StringView& key, const GdkColor& color) {}
@@ -289,6 +298,7 @@ namespace
                                   tasks_active, tasks_total, queue.get_speed_KiBps());
 
       gtk_status_icon_set_tooltip_markup(icon, buf);
+
     }
 
     void update_status_icon(StatusIcons si)
@@ -305,34 +315,31 @@ namespace
 
     void notify_of(StatusIcons si, const char* body, const char* summary)
     {
+      if (!body || !summary) return;
       if (!prefs.get_flag("use-notify", false)) return;
+
 #ifdef HAVE_LIBNOTIFY
       NotifyNotification *notif(0);
-//      bool show(false);
-      GError* error(0);
-      notif = notify_notification_new (summary, body, NULL);
 
-//      switch (si)
-//      {
-//        case ICON_STATUS_ERROR:
-//          show = true;
-//          break;
-//        case ICON_STATUS_NEW_ARTICLES:
-//          show = true;
-//          break;
-//      }
+      GError* error(0);
+
+      notif = notify_notification_new (summary, body, NULL);
+      if (!notif) return;
+
+      _notifs.insert(G_OBJECT(notif));
 
       notify_notification_set_icon_from_pixbuf(notif, status_icons[si].pixbuf);
-      notify_notification_set_timeout (notif,NOTIFY_EXPIRES_NEVER);
+      notify_notification_set_timeout (notif,5000);
       notify_notification_add_action(notif,"close",_("Maximize"),NOTIFY_ACTION_CALLBACK(notif_maximize_cb),this,NULL);
       g_signal_connect (G_OBJECT(notif), "closed", G_CALLBACK(notif_close_cb), this);
 
-//      if (show)
       notify_notification_show (notif, &error);
 
       if (error) {
         debug ("Error showing notification: "<<error->message);
         g_error_free (error);
+        _notifs.erase(G_OBJECT(notif));
+        g_object_unref(G_OBJECT(notif));
       }
 #endif
     }
@@ -387,8 +394,10 @@ namespace
     }
 
     /* data::listener */
-    virtual void on_group_counts (const Quark&, unsigned long unread, unsigned long total)
+    virtual void on_group_entered (const Quark& group, unsigned long unread, unsigned long total)
     {
+
+      std::cerr<<"on group entered "<<unread<<"\n";
 
       if (unread)
       {
@@ -415,6 +424,7 @@ namespace
       Prefs& prefs;
       GtkStatusIcon *icon;
       GtkWidget* root;
+      std::set<GObject*> _notifs;
   };
 
   static StatusIconListener* _status_icon;
@@ -433,12 +443,12 @@ namespace
         gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), TRUE);
         gtk_widget_hide (GTK_WIDGET(widget));
     }
-    else if(event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN
-            && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED
-            || event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
-    {
-        gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), FALSE);
-    }
+//    else if(event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN
+//            && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED
+//            || event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
+//    {
+//        gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), FALSE);
+//    }
     return TRUE;
   }
 
@@ -772,7 +782,6 @@ _("General Options\n"
 
     if (connection)
     {
-      dbus_connection = connection;
       pan->name_valid = true;
       pan->lost_name = false;
     }
@@ -786,10 +795,12 @@ _("General Options\n"
     Pan* pan(static_cast<Pan*>(user_data));
     g_return_if_fail (pan);
 
+    if (connection) g_dbus_connection_close(connection,NULL,0,NULL);
+    g_bus_unown_name(pan->dbus_id);
+
     pan->name_valid = false;
     pan->lost_name = true;
     pan->dbus_id= -1;
-
   }
 
 
@@ -804,6 +815,8 @@ _("General Options\n"
         on_name_acquired,
         on_name_lost,
         pan,NULL);
+
+    dbus_connection = g_bus_get_sync  (G_BUS_TYPE_SESSION , NULL, NULL);
   }
 
   /***
@@ -920,10 +933,13 @@ main (int argc, char *argv[])
     pan_dbus_init(&pan);
 
     GError* error(NULL);
+    GVariant* var;
 
-    GVariant* var = g_variant_new ("(sssbb)",
+    if (!dbus_connection) goto _fail;
+
+    var = g_variant_new ("(sssbb)",
                     groups.c_str(), nzb_output_path.c_str(), nzb_str.c_str(),  gui, nzb);
-    g_dbus_connection_call_sync (g_bus_get_sync  (G_BUS_TYPE_SESSION , NULL, NULL),
+    g_dbus_connection_call_sync (dbus_connection,
                            PAN_DBUS_SERVICE_NAME,
                            PAN_DBUS_SERVICE_PATH,
                            "news.pan.NZB",
@@ -938,8 +954,10 @@ main (int argc, char *argv[])
     {
       std::cout<<"Added "<<nzb_files.size()<<" files to the queue. Exiting.\n";
       exit(EXIT_SUCCESS);
-    }
+    } else
+      g_error_free(error);
   #endif
+    _fail:
 #endif
     queue.set_online(true);
     queue.set_task_save_delay(prefs.get_int ("task-save-delay-secs", 10));
@@ -1006,21 +1024,18 @@ main (int argc, char *argv[])
 
       gui_ptr = new GUI (data, queue, prefs, group_prefs);
 
-      run_pan_with_status_icon(GTK_WINDOW(window), pixbuf, queue, prefs, data, gui_ptr);
-
-      g_object_unref (pixbuf);
-
 #ifdef HAVE_LIBNOTIFY
       if (!notify_is_initted ())
         notify_init (_("Pan notification"));
 #endif
+
+      run_pan_with_status_icon(GTK_WINDOW(window), pixbuf, queue, prefs, data, gui_ptr);
+
+      g_object_unref (pixbuf);
+
       run_pan_in_window (gui_ptr, data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
 
-#ifdef HAVE_DBUS
-    if (pan.dbus_id != -1 ) g_bus_unown_name(pan.dbus_id);
-    if (dbus_connection) g_dbus_connection_close(dbus_connection,NULL,0,NULL);
-#endif
     for (guint i=0; i<NUM_STATUS_ICONS; ++i)
       g_object_unref(status_icons[i].pixbuf);
     delete _status_icon;

@@ -229,6 +229,7 @@ namespace pan
       void fire_connection_count_changed (int count);
       void fire_size_changed (int active, int total);
       void fire_online_changed (bool online);
+    public:
       void fire_queue_error (const StringView& message);
 
     private:

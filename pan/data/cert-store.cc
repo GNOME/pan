@@ -68,8 +68,6 @@ namespace pan
     gnutls_x509_crt_t cert;
     bool fail(false);
 
-
-
     ret = gnutls_certificate_verify_peers2 (session, &status);
 
     if (ret < 0)
