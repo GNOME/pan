@@ -1,5 +1,8 @@
 [encoding: UTF-8]
 pan.desktop.in
+pan/data/article-cache.cc
+pan/data/cert-store.cc
+pan/data/encode-cache.cc
 pan/data-impl/data-impl.cc
 pan/data-impl/data-io.cc
 pan/data-impl/groups.cc
@@ -7,7 +10,6 @@ pan/data-impl/headers.cc
 pan/data-impl/profiles.cc
 pan/data-impl/server.cc
 pan/data-impl/xover.cc
-pan/data/article-cache.cc
 pan/general/e-util.cc
 pan/general/file-util.cc
 pan/general/line-reader.cc
@@ -20,6 +22,7 @@ pan/gui/e-action-combo-box.c
 pan/gui/e-charset.c
 pan/gui/e-charset-combo-box.c
 pan/gui/e-charset-dialog.c
+pan/gui/e-cte-dialog.c
 pan/gui/group-pane.cc
 pan/gui/group-prefs-dialog.cc
 pan/gui/gui.cc
@@ -28,9 +31,10 @@ pan/gui/log-ui.cc
 pan/gui/pan.cc
 pan/gui/pan-file-entry.cc
 pan/gui/post-ui.cc
-pan/gui/profiles-dialog.cc
 pan/gui/prefs.cc
 pan/gui/prefs-ui.cc
+pan/gui/profiles-dialog.cc
+pan/gui/save-attach-ui.cc
 pan/gui/save-ui.cc
 pan/gui/score-add-ui.cc
 pan/gui/score-view-ui.cc
@@ -38,15 +42,20 @@ pan/gui/server-ui.cc
 pan/gui/task-pane.cc
 pan/gui/url.cc
 pan/tasks/decoder.cc
+pan/tasks/encoder.cc
 pan/tasks/nntp.cc
 pan/tasks/nntp-pool.cc
 pan/tasks/socket-impl-gio.cc
+pan/tasks/socket-impl-openssl.cc
 pan/tasks/task-article.cc
 pan/tasks/task-groups.cc
 pan/tasks/task-post.cc
+pan/tasks/task-upload.cc
 pan/tasks/task-xover.cc
+pan/tasks/task-xoverinfo.cc
 pan/usenet-utils/filter-info.cc
 pan/usenet-utils/gnksa.cc
 pan/usenet-utils/message-check.cc
 pan/usenet-utils/scorefile.cc
+pan/usenet-utils/ssl-utils.h
 pan/usenet-utils/text-massager.cc
