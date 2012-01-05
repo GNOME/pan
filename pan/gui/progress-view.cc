@@ -37,6 +37,9 @@ ProgressView :: ProgressView ():
   gtk_progress_bar_set_ellipsize (GTK_PROGRESS_BAR(_progressbar), PANGO_ELLIPSIZE_MIDDLE);
   gtk_container_add (GTK_CONTAINER(_root), _progressbar);
   gtk_widget_show (_progressbar);
+#if GTK_CHECK_VERSION(3,0,0)
+  gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR(_progressbar), false);
+#endif
 }
 
 void
@@ -93,12 +96,21 @@ ProgressView :: on_progress_status_idle (gpointer self_gpointer)
 {
   ProgressView * self (static_cast<ProgressView*>(self_gpointer));
   std::string status;
+  const char* _status(0);
   if (self->_progress)
-    status = self->_progress->get_status();
+  {
+    status  = self->_progress->get_status();
+    if (!status.empty()) _status = iconv_inited ? __g_mime_iconv_strdup(conv,status.c_str()) : status.c_str();
+#if GTK_CHECK_VERSION(3,0,0)
+    gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR(self->_progressbar), true);
+#endif
+  }
+#if GTK_CHECK_VERSION(3,0,0)
+  else
+    gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR(self->_progressbar), false);
+#endif
+  if (_status) gtk_progress_bar_set_text (GTK_PROGRESS_BAR(self->_progressbar), _status);
 
-  const char* _status = iconv_inited ? __g_mime_iconv_strdup(conv,status.c_str()) : status.c_str();
-
-  gtk_progress_bar_set_text (GTK_PROGRESS_BAR(self->_progressbar), _status);
   self->_progress_status_idle_tag = 0;
 
   if (iconv_inited) g_free((char*)_status);
