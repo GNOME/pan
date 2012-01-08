@@ -397,8 +397,13 @@ ArticleCache :: get_message_mem_stream (const Quark& mid) const
    return retval;
 }
 
+#ifdef HAVE_GMIME_CRYPTO
 GMimeMessage*
 ArticleCache :: get_message (const mid_sequence_t& mids, GPGDecErr& err) const
+#else
+GMimeMessage*
+ArticleCache :: get_message (const mid_sequence_t& mids) const
+#endif
 {
    debug ("trying to get a message with " << mids.size() << " parts");
    GMimeMessage * retval = NULL;
@@ -422,8 +427,11 @@ ArticleCache :: get_message (const mid_sequence_t& mids, GPGDecErr& err) const
 
    // build the message
    if (!streams.empty())
+#ifdef HAVE_GMIME_CRYPTO
      retval = mime :: construct_message (&streams.front(), streams.size(), err);
-
+#else
+     retval = mime :: construct_message (&streams.front(), streams.size());
+#endif
    // cleanup
    foreach (streams_t, streams, it)
      g_object_unref (*it);

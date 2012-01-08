@@ -69,11 +69,11 @@ namespace pan
 
   std::string base64_encode(unsigned char const* bytes_to_encode, unsigned int in_len);
   std::string base64_decode(std::string const& encoded_string);
-
+#ifdef HAVE_GMIME_CRYPTO
   GMimeMessage* message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body);
   GMimeMessage* gpg_encrypt (const std::string& uid, const std::string& body_str, GMimeMessage* body, GPtrArray* rcp, bool sign);
   bool gpg_verify_mps (GMimeObject*, GPGDecErr&);
-
+#endif
   /**
    * Utilities to build and parse GMimeMessages.
    *
@@ -85,11 +85,16 @@ namespace pan
    */
   struct mime
   {
+#ifdef HAVE_GMIME_CRYPTO
     static GMimeMessage *
     construct_message (GMimeStream      ** istreams,
                        int                 qty,
                        GPGDecErr         &);
-
+#else
+    static GMimeMessage *
+    construct_message (GMimeStream      ** istreams,
+                       int                 qty);
+#endif
     static const char *
     get_charset (GMimeMessage * message);
 

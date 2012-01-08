@@ -815,8 +815,8 @@ _("General Options\n"
   static void
   pan_dbus_deinit (Pan* pan)
   {
-    if (dbus_connection) g_dbus_connection_close(dbus_connection,NULL,0,NULL);
     g_bus_unown_name(pan->dbus_id);
+    if (dbus_connection) g_dbus_connection_close(dbus_connection,NULL,0,NULL);
   }
 
   /***

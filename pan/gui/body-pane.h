@@ -153,9 +153,9 @@ namespace pan
       GMimeMessage * _message;
       TextMassager _tm;
       std::string _charset;
-
+#ifdef HAVE_GMIME_CRYPTO
       GPGDecErr _gpgerr;
-
+#endif
       int _attachments;
       int _cur_col, _cur_row;
       std::set<char*> _freeme;

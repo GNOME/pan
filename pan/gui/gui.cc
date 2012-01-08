@@ -350,7 +350,9 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
     }
   }
 
+#ifdef HAVE_GMIME_CRYPTO
   init_gpg();
+#endif
 }
 
 namespace
@@ -404,9 +406,9 @@ GUI :: ~GUI ()
   foreach (std::set<GtkWidget*>, unref, it)
     g_object_unref (*it);
   g_object_unref (G_OBJECT(_ui_manager));
-
+#ifdef HAVE_GMIME_CRYPTO
   deinit_gpg();
-
+#endif
   if (iconv_inited) iconv_close(conv);
 
   _certstore.remove_listener(this);
@@ -711,8 +713,12 @@ namespace
     virtual void on_progress_finished (Progress&, int status)
     {
       if (status == OK) {
+#ifdef HAVE_GMIME_CRYPTO
         GPGDecErr err;
         GMimeMessage * message = _cache.get_message (_article.get_part_mids(),err);
+#else
+        GMimeMessage * message = _cache.get_message (_article.get_part_mids());
+#endif
         g_mime_message_foreach (message, foreach_part_cb, this);
         g_object_unref (message);
       }

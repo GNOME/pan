@@ -1237,6 +1237,7 @@ namespace
   }
 }
 
+#ifdef HAVE_GMIME_CRYPTO
 gboolean
 BodyPane:: on_tooltip_query(GtkWidget  *widget,
                             gint        x,
@@ -1271,6 +1272,7 @@ BodyPane:: on_tooltip_query(GtkWidget  *widget,
 
   return true;
 }
+#endif
 
 
 void
@@ -1298,11 +1300,14 @@ BodyPane :: set_article (const Article& a)
 
   if (_message)
     g_object_unref (_message);
-
+#ifdef HAVE_GMIME_CRYPTO
   _gpgerr.clear();
-
   _message = _cache.get_message (_article.get_part_mids(), _gpgerr);
+#else
+  _message = _cache.get_message (_article.get_part_mids());
+#endif
 
+#ifdef HAVE_GMIME_CRYPTO
   int val(-1);
   {
     if (_gpgerr.verify_ok && !_gpgerr.no_sigs)
@@ -1314,6 +1319,7 @@ BodyPane :: set_article (const Article& a)
   }
 
   update_sig_valid(val);
+#endif
   refresh ();
 
   _data.mark_read (_article);
@@ -1614,6 +1620,7 @@ BodyPane :: clear_attachments()
 }
 
 /// FIXME : shows only half the icon on gtk2+, gtk3+ works fine. hm....
+/// NOTE :
 void
 BodyPane :: add_attachment_to_toolbar (const char* fn)
 {
@@ -1624,8 +1631,15 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
 #if !GTK_CHECK_VERSION(3,0,0)
 
   guint cols(0), rows(0);
+#if GTK_CHECK_VERSION(2,22,0)
   gtk_table_get_size (GTK_TABLE(_att_toolbar), &rows, &cols);
-
+#else
+  GtkTablePrivate *priv = _att_toolbar->priv;
+  if (rows)
+    *rows = priv->nrows;
+  if (cols)
+    *cols = priv->ncols;
+#endif
   if (_attachments % 4 == 0 && _attachments != 0)
   {
     gtk_table_resize (GTK_TABLE(_att_toolbar), rows+1, cols);
@@ -1633,7 +1647,7 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
     _cur_col = 0;
   }
 
-  gtk_table_attach_defaults (GTK_TABLE(_att_toolbar), w, _cur_col, _cur_col+2, _cur_row,_cur_row+2);
+  gtk_table_attach_defaults (GTK_TABLE(_att_toolbar), w, _cur_col, _cur_col+1, _cur_row,_cur_row+1);
 
 
   ++_cur_col;
@@ -1689,17 +1703,19 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   _hscroll_visible (false),
   _vscroll_visible (false),
   _message (0),
+#ifdef HAVE_GMIME_CRYPTO
   _gpgerr(GPG_DECODE),
+#endif
   _attachments(0),
   _current_attachment(0)
 {
 
   for (guint i=0; i<NUM_ICONS; ++i)
     icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, icons[i].pixbuf_txt, FALSE, 0);
-
+#ifdef HAVE_GMIME_CRYPTO
   // signature pgp valid/invalid icon
   _sig_icon = gtk_image_new();
-
+#endif
   // menu for popup menu for attachments
   _menu = gtk_menu_new ();
   GtkWidget* l = gtk_menu_item_new_with_label(_("Save attachment as ...."));
@@ -1744,10 +1760,12 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_label_set_ellipsize (GTK_LABEL(w), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_use_markup (GTK_LABEL(w), true);
   gtk_box_pack_start (GTK_BOX(hbox), w, true, true, PAD_SMALL);
+#ifdef HAVE_GMIME_CRYPTO
   gtk_widget_set_size_request (_sig_icon, 32, 32);
   gtk_box_pack_start (GTK_BOX(hbox), _sig_icon, true, true, PAD_SMALL);
   gtk_widget_set_has_tooltip (_sig_icon, true);
   g_signal_connect(_sig_icon,"query-tooltip",G_CALLBACK(on_tooltip_query), this);
+#endif
   w = _xface = gtk_image_new();
   gtk_widget_set_size_request (w, 48, 48);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);

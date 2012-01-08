@@ -1065,7 +1065,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   if(_file_queue_empty)
   {
     bool go_on(true);
-
+#ifdef HAVE_GMIME_CRYPTO
     /* adding yourself to the list of recipients */
     GPtrArray * rcp;
     Profile p(get_current_profile());
@@ -1082,7 +1082,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       go_on = go_on && gpg_encrypt(p.gpg_sig_uid, get_body(), msg, rcp, false);
     else if (user_has_gpg && gpg_enc && gpg_sign)
       go_on = go_on && gpg_encrypt(p.gpg_sig_uid, get_body(), msg, rcp, true);
-
+#endif
     if (go_on)
     {
       _post_task = new TaskPost (server, msg);

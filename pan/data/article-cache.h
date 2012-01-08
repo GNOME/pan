@@ -71,9 +71,11 @@ namespace pan
       void release (const mid_sequence_t& mids);
       void resize ();
       void clear ();
-
+#ifdef HAVE_GMIME_CRYPTO
       GMimeMessage* get_message (const mid_sequence_t&, GPGDecErr&) const;
-
+#else
+      GMimeMessage* get_message (const mid_sequence_t&) const;
+#endif
       typedef std::vector<std::string> strings_t;
       strings_t get_filenames (const mid_sequence_t&);
 

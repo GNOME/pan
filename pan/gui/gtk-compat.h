@@ -1,9 +1,10 @@
 //========================================================================
 /**@file	pan/pan/gui/gtk-compat.h
+ * @author imhotep
  * @author	kid
  * @date
  * 	Created:	Mon 09 May 2011 04:42:46 PM MDT \n
- * 	Last Update:	Mon 09 May 2011 04:42:46 PM MDT
+ * 	Last Update:	Sun 08 Jan 2012 11:56:00 PM GMT
  */
 /*------------------------------------------------------------------------
  * Description:	GTK Compatibility layer for GTK2/3+ migration
@@ -22,30 +23,30 @@ namespace
 {
 #endif
 #if !GTK_CHECK_VERSION(2,18,0)
-  void gtk_widget_get_allocation( GtkWidget *w, GtkAllocation *a)
+  static inline void gtk_widget_get_allocation( GtkWidget *w, GtkAllocation *a)
   {
     *a = w->allocation;
   }
-  bool gtk_widget_has_focus( GtkWidget *w)
+  static inline bool gtk_widget_has_focus( GtkWidget *w)
   {
     return GTK_WIDGET_HAS_FOCUS(w);
   }
-  bool gtk_widget_get_sensitive( GtkWidget *w)
+  static inline bool gtk_widget_get_sensitive( GtkWidget *w)
   {
     return GTK_WIDGET_SENSITIVE(w);
   }
-  bool gtk_widget_get_visible(GtkWidget *w)
+  static inline bool gtk_widget_get_visible(GtkWidget *w)
   {
     return GTK_WIDGET_VISIBLE(w);
   }
-  bool gtk_widget_is_toplevel(GtkWidget *w)
+  static inline bool gtk_widget_is_toplevel(GtkWidget *w)
   {
     return GTK_WIDGET_TOPLEVEL(w);
   }
 #endif
 
 #if !GTK_CHECK_VERSION(2,20,0)
-  gboolean gtk_widget_get_realized(GtkWidget *w)
+  static inline gboolean gtk_widget_get_realized(GtkWidget *w)
   {
     return GTK_WIDGET_REALIZED(w);
   }
@@ -60,23 +61,23 @@ namespace
 #if !GTK_CHECK_VERSION(2,24,0)
 #define GTK_COMBO_BOX_TEXT(cb) GTK_COMBO_BOX(cb)
   typedef GtkComboBox GtkComboBoxText;
-  GtkWidget* gtk_combo_box_text_new()
+  static inline GtkWidget* gtk_combo_box_text_new()
   {
     return gtk_combo_box_new_text();
   }
-  GtkWidget* gtk_combo_box_text_new_with_entry()
+  static inline GtkWidget* gtk_combo_box_text_new_with_entry()
   {
     return gtk_combo_box_entry_new_text();
   }
-  void gtk_combo_box_text_append_text(GtkComboBoxText *cb, const gchar *t)
+  static inline void gtk_combo_box_text_append_text(GtkComboBoxText *cb, const gchar *t)
   {
     gtk_combo_box_append_text(cb,t);
   }
-  gchar *gtk_combo_box_text_get_active_text(GtkComboBoxText *cb)
+  static inline gchar *gtk_combo_box_text_get_active_text(GtkComboBoxText *cb)
   {
     return gtk_combo_box_get_active_text(cb);
   }
-  void gtk_combo_box_text_remove(GtkComboBoxText *cb, int p)
+  static inline void gtk_combo_box_text_remove(GtkComboBoxText *cb, int p)
   {
     gtk_combo_box_remove_text(cb, p);
   }
@@ -101,6 +102,8 @@ namespace
   #define GDK_KEY_Return GDK_Return
   #define GDK_KEY_Down GDK_Down
   #define GDK_KEY_Up GDK_Up
+  #define GDK_KEY_KP_Up GDK_KP_Up
+  #define GDK_KEY_KP_Down GDK_KP_Down
 #endif
 
 #if !GTK_CHECK_VERSION(3,0,0)
@@ -129,7 +132,7 @@ namespace
 #define GTK_OBJECT(w) w
   typedef GtkWidget GtkObject;
 #ifdef GTK_DISABLE_DEPRECATED
-  void gdk_cursor_unref(GdkCursor *p)
+  static inline void gdk_cursor_unref(GdkCursor *p)
   {
     g_object_unref(p);
   }

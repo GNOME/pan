@@ -24,6 +24,8 @@
 #include <map>
 #include <vector>
 
+#ifdef HAVE_GMIME_CRYPTO
+
 namespace pan
 {
 
@@ -131,6 +133,8 @@ namespace pan
               GMimeDigestAlgo digest, GError **err);
 
 }
+
+#endif // g_mime_crypto
 
 #endif
 

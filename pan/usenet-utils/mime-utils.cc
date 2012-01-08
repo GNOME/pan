@@ -1144,6 +1144,7 @@ namespace pan
     temp_p(GMimeObject *p, GMimeObject *par):parent(p),part(par) {};
   };
 
+#ifdef HAVE_GMIME_CRYPTO
   struct QueryMPType
   {
     GMimeObject* obj;
@@ -1152,6 +1153,15 @@ namespace pan
 
     QueryMPType() : obj(0), type(GPG_DECODE) {}
   };
+#else
+   struct QueryMPType
+  {
+    GMimeObject* obj;
+    std::string algo;
+
+    QueryMPType() : obj(0) {}
+  };
+#endif
 }
 
 namespace
@@ -1213,11 +1223,12 @@ namespace
     GMimeContentType * content_type = g_mime_object_get_content_type (part);
 
     if (!content_type) return;
-
+#ifdef HAVE_GMIME_CRYPTO
     if (g_mime_content_type_is_type (content_type, "application", "pgp-signature"))
       type->type = GPG_VERIFY;
     else if (g_mime_content_type_is_type (content_type, "application", "pgp-encrypted"))
       type->type = GPG_DECODE;
+#endif
 
   }
 
@@ -1227,10 +1238,16 @@ namespace
 ****
 ***/
 
+#ifdef HAVE_GMIME_CRYPTO
 GMimeMessage*
 mime :: construct_message (GMimeStream    ** istreams,
                            int               qty,
                            GPGDecErr      &  err)
+#else
+GMimeMessage*
+mime :: construct_message (GMimeStream    ** istreams,
+                           int               qty)
+#endif
 {
   const char * message_id = "Foo <bar@mum>";
   GMimeMessage * retval = 0;
@@ -1255,7 +1272,7 @@ mime :: construct_message (GMimeStream    ** istreams,
     GMimeObject* part = g_mime_parser_construct_part(parser);
     GMimeContentType * type = g_mime_object_get_content_type (part);
     const bool multipart (GMIME_IS_MULTIPART_SIGNED(part) || GMIME_IS_MULTIPART_ENCRYPTED(part));
-
+#ifdef HAVE_GMIME_CRYPTO
     if (GMIME_IS_MULTIPART_SIGNED(part))
     {
       err.type = GPG_VERIFY;
@@ -1266,7 +1283,7 @@ mime :: construct_message (GMimeStream    ** istreams,
       err.type = GPG_DECODE;
       err.verify_ok =  gpg_verify_mps(part, err);
     }
-
+#endif
     if (type)
     {
       if (g_mime_content_type_is_type (type, "multipart", "mixed"))
@@ -1274,7 +1291,7 @@ mime :: construct_message (GMimeStream    ** istreams,
         QueryMPType qtype;
         g_mime_multipart_foreach (GMIME_MULTIPART(part), mixed_mp_find_gpg_params_cb, &qtype);
         GMimeObject* o(0);
-
+#ifdef HAVE_GMIME_CRYPTO
         if (qtype.type == GPG_VERIFY)
         {
           GMimeMultipartSigned* new_mp = g_mime_multipart_signed_new();
@@ -1294,16 +1311,20 @@ mime :: construct_message (GMimeStream    ** istreams,
           err.verify_ok =  gpg_verify_mps(GMIME_OBJECT(new_mp), err);
           g_mime_message_set_mime_part(messages[i], GMIME_OBJECT(new_mp));
         }
-
+#endif
         g_object_unref(o);
 
       }
       else if (multipart)
       {
+#ifdef HAVE_GMIME_CRYPTO
         if (err.decrypted)
           g_mime_message_set_mime_part(messages[i], err.decrypted);
       } else
+      {
+#endif
           g_mime_message_set_mime_part(messages[i], part);
+      }
     }
 
   }
@@ -1678,7 +1699,7 @@ namespace pan
     g_mime_part_set_content_object (part, content);
     g_object_unref (content);
   }
-
+#ifdef HAVE_GMIME_CRYPTO
   GMimeSignatureStatus
   get_sig_status (GMimeSignatureList *signatures)
   {
@@ -1813,7 +1834,7 @@ namespace pan
     g_object_unref(mpe);
 
   }
-
+#endif
 }
 
 

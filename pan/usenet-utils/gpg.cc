@@ -32,6 +32,8 @@ extern "C" {
   #include <gmime/gmime.h>
 }
 
+#ifdef HAVE_GMIME_CRYPTO
+
 namespace pan
 {
 
@@ -134,3 +136,4 @@ namespace pan
 
 
 }
+#endif // g_mime_crypto
