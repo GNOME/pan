@@ -319,12 +319,11 @@ namespace
 
     void notify_of(StatusIcons si, const char* body, const char* summary)
     {
+#ifdef HAVE_LIBNOTIFY
       if (!body || !summary) return;
       if (!prefs.get_flag("use-notify", false)) return;
 
-#ifdef HAVE_LIBNOTIFY
       NotifyNotification *notif(0);
-
       GError* error(0);
 
       notif = notify_notification_new (summary, body, NULL);
