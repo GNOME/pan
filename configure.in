@@ -212,9 +212,9 @@ case $host_os in
 esac
 AM_CONDITIONAL([HAVE_WIN32],[test "$win32" = "yes"])
 
-CXXFLAGS="-g -I/usr/lib/"
-CPPFLAGS="-g -I/usr/lib/"
-CFLAGS="-g -I/usr/lib/"
+dnl CXXFLAGS="-g -I/usr/lib/"
+dnl CPPFLAGS="-g -I/usr/lib/"
+dnl CFLAGS="-g -I/usr/lib/"
 
 dnl build the output files
 AC_SUBST(panlocaledir)
