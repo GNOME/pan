@@ -225,6 +225,7 @@ namespace
       static_cast<StatusIconListener*>(p)->update_status_tooltip();
     }
 
+#ifdef HAVE_LIBNOTIFY
     static void notif_maximize_cb(NotifyNotification *notification,
                                char *action,
                                gpointer user_data)
@@ -245,6 +246,7 @@ namespace
       s->_notifs.erase(G_OBJECT(notification));
       g_object_unref (notification);
     }
+#endif
 
     bool n() { return notif_shown; }
 
@@ -269,11 +271,13 @@ namespace
       queue.remove_listener(this);
       data.remove_listener(this);
       g_source_remove (status_icon_timeout_tag);
+#ifdef HAVE_LIBNOTIFY
       foreach(std::set<GObject*>, _notifs, it)
       {
         notify_notification_close(NOTIFY_NOTIFICATION(*it), NULL);
         g_object_unref (*it);
       }
+#endif
     }
 
     /* prefs::listener */
@@ -788,9 +792,6 @@ _("General Options\n"
     Pan* pan(static_cast<Pan*>(user_data));
     g_return_if_fail (pan);
 
-    if (connection) g_dbus_connection_close(connection,NULL,0,NULL);
-    g_bus_unown_name(pan->dbus_id);
-
     pan->name_valid = false;
     pan->lost_name = true;
     pan->dbus_id= -1;
@@ -810,6 +811,13 @@ _("General Options\n"
         pan,NULL);
 
     dbus_connection = g_bus_get_sync  (G_BUS_TYPE_SESSION , NULL, NULL);
+  }
+
+  static void
+  pan_dbus_deinit (Pan* pan)
+  {
+    if (dbus_connection) g_dbus_connection_close(dbus_connection,NULL,0,NULL);
+    g_bus_unown_name(pan->dbus_id);
   }
 
   /***
@@ -1041,6 +1049,11 @@ main (int argc, char *argv[])
     }
 
     delete queue_and_gui;
+#ifdef HAVE_DBUS
+  #ifndef DEBUG_PARALLEL
+    pan_dbus_deinit(&pan);
+  #endif
+#endif
   }
 
   g_mime_shutdown ();
