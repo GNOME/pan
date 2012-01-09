@@ -1712,10 +1712,10 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
 
   for (guint i=0; i<NUM_ICONS; ++i)
     icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, icons[i].pixbuf_txt, FALSE, 0);
-#ifdef HAVE_GMIME_CRYPTO
+
   // signature pgp valid/invalid icon
   _sig_icon = gtk_image_new();
-#endif
+
   // menu for popup menu for attachments
   _menu = gtk_menu_new ();
   GtkWidget* l = gtk_menu_item_new_with_label(_("Save attachment as ...."));

@@ -87,11 +87,9 @@ AM_GLIB_GNU_GETTEXT
 panlocaledir='${prefix}/${DATADIRNAME}/locale'
 
 AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
-dnl PKG_CHECK_MODULES([GMIME], [ gmime-2.6    >= $GMIME26_REQUIRED ],
-dnl  AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[crypto support (pgp) with gmime 2.6])],
-	dnl [
-	PKG_CHECK_MODULES( [GMIME], [gmime-2.4    >= $GMIME24_REQUIRED] )
-	dnl ] )
+PKG_CHECK_MODULES([GMIME], [ gmime-2.6    >= $GMIME26_REQUIRED ],
+AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[crypto support (pgp) with gmime 2.6])],
+[PKG_CHECK_MODULES( [GMIME], [gmime-2.4    >= $GMIME24_REQUIRED] )] )
 
 AC_ARG_WITH(dbus, AC_HELP_STRING([--with-dbus], [Enable DBUS support]), [want_dbus=$withval], [want_dbus=yes])
 if test "x$want_dbus" = "xyes" ; then
