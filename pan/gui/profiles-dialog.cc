@@ -154,7 +154,11 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     HIG :: workarea_add_row (t, &row, _("_Full Name:"), w);
     w = _address_entry = gtk_entry_new ();
     set_entry (w, profile.address);
-    gtk_widget_set_tooltip_text(w, _("Your email address. Note that this has to match your PGP Signature's Address to verify messages correctly."));
+#ifdef HAVE_GMIME_CRYPTO
+    gtk_widget_set_tooltip_text(w, _("Your Email Address.\n"
+                                     "Note that this has to match your PGP Signature's Address\n"
+                                     "if you want to PGP-Sign or Encrypt your messages correctly."));
+#endif
     HIG :: workarea_add_row (t, &row, _("_Email Address:"), w);
     w = _server_combo = make_servers_combo (data, profile.posting_server);
     HIG :: workarea_add_row (t, &row, _("_Post Articles via:"), w);
