@@ -45,6 +45,14 @@ using namespace pan;
 
 namespace
 {
+  enum
+  {
+    ROW_FILE,
+    ROW_TEXT,
+    ROW_COMMAND,
+    ROW_GPGSIG
+  };
+
   void set_entry (GtkWidget * w, const std::string& str)
   {
     const char * s = str.empty() ? "" : str.c_str();
@@ -69,7 +77,7 @@ namespace
     g_return_if_fail(d);
     gint row = gtk_combo_box_get_active (w);
 
-    if (row == 2) // GPG
+    if (row == ROW_GPGSIG)
     {
       gtk_widget_set_tooltip_text(d->_signature_file_combo_box,
                                   _("Please choose your Email Address according to your PGP key's user id."));
@@ -173,9 +181,11 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     gtk_list_store_append (store, &iter);
     gtk_list_store_set (store, &iter, 0, _("Text"),         1, Profile::TEXT, -1);
     gtk_list_store_append (store, &iter);
-    gtk_list_store_set (store, &iter, 0, _("PGP Signature"),1, Profile::GPGSIG, -1);
-    gtk_list_store_append (store, &iter);
     gtk_list_store_set (store, &iter, 0, _("Command"),      1, Profile::COMMAND, -1);
+#ifdef HAVE_GMIME_CRYPTO
+    gtk_list_store_append (store, &iter);
+    gtk_list_store_set (store, &iter, 0, _("PGP Signature"),1, Profile::GPGSIG, -1);
+#endif
     w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
 
     hbox = gtk_hbox_new(FALSE, 3);
@@ -185,17 +195,19 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     gtk_box_pack_start(GTK_BOX(hbox), w, true, true, 0);
     _signature_file_combo = hbox;
     _signature_file_combo_box = w;
-
+#ifdef HAVE_GMIME_CRYPTO
     g_signal_connect (w, "changed", G_CALLBACK(on_signature_type_changed), this);
-
+#endif
     renderer = gtk_cell_renderer_text_new ();
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
     gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
 
     int active = ROW_FILE;
     if (profile.sig_type == profile.TEXT) active = ROW_TEXT;
-    if (profile.sig_type == profile.GPGSIG) active = ROW_GPGSIG;
     if (profile.sig_type == profile.COMMAND) active = ROW_COMMAND;
+#ifdef HAVE_GMIME_CRYPTO
+    if (profile.sig_type == profile.GPGSIG) active = ROW_GPGSIG;
+#endif
 
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), active);
     GtkWidget* vbox = gtk_vbox_new(TRUE, 3);
@@ -270,8 +282,9 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     gtk_window_set_transient_for (GTK_WINDOW(_root), parent);
     gtk_window_set_position (GTK_WINDOW(_root), GTK_WIN_POS_CENTER_ON_PARENT);
   }
-
+#ifdef HAVE_GMIME_CRYPTO
   on_signature_type_changed(GTK_COMBO_BOX(_signature_file_combo_box), this);
+#endif
 }
 
 ProfileDialog :: ~ProfileDialog ()

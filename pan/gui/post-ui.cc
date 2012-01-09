@@ -49,7 +49,11 @@ extern "C" {
 #include "pad.h"
 #include "hig.h"
 #include "post-ui.h"
-#include "post.ui.h"
+#ifdef HAVE_GMIME_CRYPTO
+  #include "post.ui.pgp.h"
+#else
+  #include "post.ui.h"
+#endif
 #include "profiles-dialog.h"
 #include "url.h"
 #include "gtk-compat.h"
@@ -1061,6 +1065,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   gtk_widget_hide (_root);
 
   GMimeMessage* msg = new_message_from_ui(POSTING);
+  Profile p(get_current_profile());
 
   if(_file_queue_empty)
   {
@@ -1068,7 +1073,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 #ifdef HAVE_GMIME_CRYPTO
     /* adding yourself to the list of recipients */
     GPtrArray * rcp;
-    Profile p(get_current_profile());
 
     if (user_has_gpg)
     {
@@ -1076,18 +1080,26 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       g_ptr_array_add(rcp, (gpointer)p.gpg_sig_uid.c_str());
     }
 
-    if (user_has_gpg && gpg_sign && !gpg_enc)
-      go_on = go_on && message_add_signed_part(p.gpg_sig_uid, get_body(), msg);
-    else if (user_has_gpg && gpg_enc && !gpg_sign)
-      go_on = go_on && gpg_encrypt(p.gpg_sig_uid, get_body(), msg, rcp, false);
-    else if (user_has_gpg && gpg_enc && gpg_sign)
-      go_on = go_on && gpg_encrypt(p.gpg_sig_uid, get_body(), msg, rcp, true);
+    if (user_has_gpg)
+    {
+      if (gpg_sign && !gpg_enc)
+        go_on = go_on && message_add_signed_part(p.gpg_sig_uid, get_body(), msg);
+      else if (user_has_gpg && gpg_enc && !gpg_sign)
+        go_on = go_on && gpg_encrypt(p.gpg_sig_uid, get_body(), msg, rcp, false);
+      else if (user_has_gpg && gpg_enc && gpg_sign)
+        go_on = go_on && gpg_encrypt(p.gpg_sig_uid, get_body(), msg, rcp, true);
+    }
 #endif
     if (go_on)
     {
       _post_task = new TaskPost (server, msg);
       _post_task->add_listener (this);
       _queue.add_task (_post_task, Queue::TOP);
+    }
+    else
+    {
+      if (user_has_gpg)
+         Log::add_err_va(_("Error signing/encrypting your message. Perhaps you misspelled your email-address (%s) ?"),p.gpg_sig_uid.c_str());
     }
 
   } else {

@@ -1333,8 +1333,9 @@ BodyPane :: clear ()
   _message = 0;
 
   refresh ();
-
+#ifdef HAVE_GMIME_CRYPTO
   update_sig_valid(-1);
+#endif
 }
 
 void
@@ -1409,7 +1410,7 @@ BodyPane :: refresh_scroll_visible_state ()
   _vscroll_visible = gtk_adjustment_get_page_size(adj) < gtk_adjustment_get_upper(adj);
 }
 
-// show*_cb exist to ensure that _hscroll_visible and _vscroll_visible
+// show*_cb exists to ensure that _hscroll_visible and _vscroll_visible
 // are initialized properly when the body pane becomes shown onscreen.
 
 gboolean
@@ -1619,8 +1620,19 @@ BodyPane :: clear_attachments()
 
 }
 
+#if !GTK_CHECK_VERSION(2,22,0)
+//define private struct for gtktable for older gtk versions
+namespace
+{
+  typedef struct _GtkTablePrivate GtkTablePrivate;
+}
+#endif
+
 /// FIXME : shows only half the icon on gtk2+, gtk3+ works fine. hm....
-/// NOTE :
+/// NOTE : I use gtk_table for versions up to 3,0,0, and then gtk_grid for versions
+/// higher than that because gtk_table_get_size is deprecated since 3,4,0. Additionally,
+/// gtk_table_get_size is only defined since 2,22,0 , so I use the private struct as defined in
+/// gtk_table.c (prototype in gtk_table.h)
 void
 BodyPane :: add_attachment_to_toolbar (const char* fn)
 {
