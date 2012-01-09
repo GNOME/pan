@@ -57,8 +57,7 @@ struct _EActionComboBox {
 	EActionComboBoxPrivate *priv;
 	// quick fix for error : "specified instance size for type `EActionComboBox' is
   // smaller than the parent type's `GtkComboBox' instance size"
-	double pad;
-	double pad2;
+	double pad, pad2, pad3;
 };
 
 struct _EActionComboBoxClass {
