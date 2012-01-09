@@ -101,12 +101,15 @@ gtkspell_msg=no
 AC_ARG_WITH(gtkspell, AC_HELP_STRING([--with-gtkspell], [Enable GtkSpell support]), [want_gtkspell=$withval], [want_gtkspell=yes])
 if test "x$want_gtkspell" = "xyes" ; then
 	PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED],
-	                  [gtkspell_msg=yes
+	                  [
+	                  gtkspell_msg=yes
 	                  AC_DEFINE(HAVE_GTKSPELL,[1],[Spellcheck Library])
-                    PKG_CHECK_MODULES([ENCHANT], [enchant >= $ENCHANT_REQUIRED,[],[])
+                    PKG_CHECK_MODULES([ENCHANT], [enchant >= $ENCHANT_REQUIRED])
 	                  ],
-	                  [gtkspell_msg=no
-	                  AC_MSG_RESULT(no)])
+	                  [
+	                  gtkspell_msg=no
+	                  AC_MSG_RESULT(no)
+	                  ])
 fi
 
 gtk_msg=no
