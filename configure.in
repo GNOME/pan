@@ -89,7 +89,7 @@ panlocaledir='${prefix}/${DATADIRNAME}/locale'
 
 AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
 PKG_CHECK_MODULES([GMIME], [ gmime-2.6    >= $GMIME26_REQUIRED ],
-AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[crypto support (pgp) with gmime 2.6])],
+[AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[crypto support (pgp) with gmime 2.6])],
 [PKG_CHECK_MODULES( [GMIME], [gmime-2.4    >= $GMIME24_REQUIRED] )] )
 
 AC_ARG_WITH(dbus, AC_HELP_STRING([--with-dbus], [Enable DBUS support]), [want_dbus=$withval], [want_dbus=yes])
