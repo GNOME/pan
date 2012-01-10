@@ -155,6 +155,7 @@ namespace pan
       virtual void do_post ();
       virtual void do_followup_to ();
       virtual void do_reply_to ();
+      virtual void do_pan_manual ();
       virtual void do_pan_web ();
       virtual void do_bug_report ();
       virtual void do_tip_jar ();
