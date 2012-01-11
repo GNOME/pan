@@ -39,6 +39,16 @@ namespace pan
    */
   class BodyPane: private Prefs::Listener
   {
+    //#if !GTK_CHECK_VERSION(2,22,0)
+    //define private struct for gtktable for older gtk versions
+    struct TablePrivate
+    {
+      guint16         ncols;
+      guint16         nrows;
+    };
+
+    //#endif
+
     private:
       Prefs& _prefs;
       GroupPrefs& _group_prefs;

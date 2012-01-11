@@ -1620,19 +1620,11 @@ BodyPane :: clear_attachments()
 
 }
 
-#if !GTK_CHECK_VERSION(2,22,0)
-//define private struct for gtktable for older gtk versions
-namespace
-{
-  typedef struct _GtkTablePrivate GtkTablePrivate;
-}
-#endif
 
 /// FIXME : shows only half the icon on gtk2+, gtk3+ works fine. hm....
 /// NOTE : I use gtk_table for versions up to 3,0,0, and then gtk_grid for versions
 /// higher than that because gtk_table_get_size is deprecated since 3,4,0. Additionally,
-/// gtk_table_get_size is only defined since 2,22,0 , so I use the private struct as defined in
-/// gtk_table.c (prototype in gtk_table.h)
+/// gtk_table_get_size is only defined since 2,22,0 , so I use a private struct
 void
 BodyPane :: add_attachment_to_toolbar (const char* fn)
 {
@@ -1646,12 +1638,12 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
 #if GTK_CHECK_VERSION(2,22,0)
   gtk_table_get_size (GTK_TABLE(_att_toolbar), &rows, &cols);
 #else
-  GtkTablePrivate *priv = _att_toolbar->priv;
+  TablePrivate *priv = (TablePrivate*)g_object_get_data(G_OBJECT(_att_toolbar),"priv");
   if (rows)
-    *rows = priv->nrows;
+    rows = priv->nrows;
   if (cols)
-    *cols = priv->ncols;
-#endif
+    cols = priv->ncols;
+#endif // 2.22.0
   if (_attachments % 4 == 0 && _attachments != 0)
   {
     gtk_table_resize (GTK_TABLE(_att_toolbar), rows+1, cols);
@@ -1673,6 +1665,12 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
   }
 
   gtk_grid_attach (GTK_GRID(_att_toolbar), w, _cur_col++, _cur_row, 1, 1);
+#endif  // 3.0.0
+
+#if !GTK_CHECK_VERSION(2,22,0)
+  priv->nrows = _cur_row;
+  priv->ncols = cols;
+  g_object_set_data(G_OBJECT(_att_toolbar),"priv",priv);
 #endif
 
   gtk_widget_show_all(_att_toolbar);
@@ -1689,6 +1687,10 @@ BodyPane :: create_attachments_toolbar (GtkWidget* frame)
   GtkWidget * w = _att_toolbar = gtk_table_new(4,1,TRUE);
   gtk_table_set_col_spacings (GTK_TABLE(w), PAD);
   gtk_table_set_row_spacings (GTK_TABLE(w), PAD);
+  TablePrivate p;
+  p.ncols = 0;
+  p.nrows = 0;
+  g_object_set_data (G_OBJECT(w), "priv", (gpointer)&p);
 #else
   GtkWidget * w = _att_toolbar = gtk_grid_new();
   gtk_grid_insert_row (GTK_GRID(w), 0);
