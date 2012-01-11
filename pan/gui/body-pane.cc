@@ -1634,16 +1634,9 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
   ++_attachments;
 #if !GTK_CHECK_VERSION(3,0,0)
 
-  guint cols(0), rows(0);
-#if GTK_CHECK_VERSION(2,22,0)
-  gtk_table_get_size (GTK_TABLE(_att_toolbar), &rows, &cols);
-#else
-  TablePrivate *priv = (TablePrivate*)g_object_get_data(G_OBJECT(_att_toolbar),"priv");
-  if (rows)
-    rows = priv->nrows;
-  if (cols)
-    cols = priv->ncols;
-#endif // 2.22.0
+  guint cols(4), rows(0);
+  rows = _cur_row;
+
   if (_attachments % 4 == 0 && _attachments != 0)
   {
     gtk_table_resize (GTK_TABLE(_att_toolbar), rows+1, cols);
@@ -1652,7 +1645,6 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
   }
 
   gtk_table_attach_defaults (GTK_TABLE(_att_toolbar), w, _cur_col, _cur_col+1, _cur_row,_cur_row+1);
-
 
   ++_cur_col;
 
@@ -1666,12 +1658,6 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
 
   gtk_grid_attach (GTK_GRID(_att_toolbar), w, _cur_col++, _cur_row, 1, 1);
 #endif  // 3.0.0
-
-#if !GTK_CHECK_VERSION(2,22,0)
-  priv->nrows = _cur_row;
-  priv->ncols = cols;
-  g_object_set_data(G_OBJECT(_att_toolbar),"priv",priv);
-#endif
 
   gtk_widget_show_all(_att_toolbar);
 }
