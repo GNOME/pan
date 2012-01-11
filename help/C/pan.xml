@@ -7,13 +7,13 @@
   <!ENTITY app "<application>Pan</application>">
   <!ENTITY appname "Pan">
   <!-- Information about the entities
-       The legal.xml file contains legal information, there is no need to edit the file. 
+       The legal.xml file contains legal information, there is no need to edit the file.
        Use the appversion entity to specify the version of the application.
        Use the manrevision entity to specify the revision number of this manual.
        Use the date entity to specify the release date of this manual.
        Use the app entity to specify the name of the application. -->
 ]>
-<!-- 
+<!--
   This is a GNOME documentation template, designed by the GNOME
   Documentation Project Team. Please use it for writing GNOME
   documentation, making obvious changes. In particular, all the words
@@ -25,7 +25,7 @@
   slavishly. Make your manual logical and readable.  And don't forget
   to remove these comments in your final documentation!  ;-)
 -->
-<!-- 
+<!--
       (Do not remove this comment block.)
   Maintained by the GNOME Documentation Project
   http://developer.gnome.org/projects/gdp
@@ -36,57 +36,62 @@
 <article id="index" lang="en">
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
-  <articleinfo> 
+  <articleinfo>
     <abstract role="description">
       <para>Pan is a powerful and user-friendly USENET newsreader for GTK+.</para>
     </abstract>
 
-    <title><application>Pan</application> Manual</title> 
+    <title><application>Pan</application> Manual</title>
 
-    <copyright> 
-      <year>2006</year> 
-      <holder>Douglas Bollinger</holder> 
+    <copyright>
+      <year>2006</year>
+      <holder>Douglas Bollinger</holder>
+    </copyright>
+
+    <copyright>
+      <year>2011</year>
+      <holder>Heinrich M&#252;ller</holder>
     </copyright>
 <!-- translators: uncomment this:
 
   <copyright>
-   <year>2002</year>
+   <year>2011</year>
    <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
   </copyright>
 
    -->
-<!-- An address can be added to the publisher information.  If a role is 
-     not specified, the publisher/author is the same for all versions of the 
+<!-- An address can be added to the publisher information.  If a role is
+     not specified, the publisher/author is the same for all versions of the
      document.  -->
-    <publisher> 
-      <publishername>Pan Documentation Project</publishername> 
-    </publisher> 
-  
-   <!-- This file  contains link to license for the documentation (GNU FDL), and 
-        other legal stuff such as "NO WARRANTY" statement. Please do not change 
+    <publisher>
+      <publishername>Pan Documentation Project</publishername>
+    </publisher>
+
+   <!-- This file  contains link to license for the documentation (GNU FDL), and
+        other legal stuff such as "NO WARRANTY" statement. Please do not change
 	any of this. -->
 
     &legal;
 
-    <authorgroup> 
-      <author role="maintainer"> 
-		<firstname>Douglas</firstname> 
-		<surname>Bollinger</surname> 
-		<affiliation> 
-	  		<orgname>Pan Documentation Project</orgname> 
-	  		<address><email>pan@rebelbase.com</email></address> 
-		</affiliation> 
-      </author> 
-      
+    <authorgroup>
+      <author role="maintainer">
+		<firstname>Douglas</firstname>
+		<surname>Bollinger</surname>
+		<affiliation>
+	  		<orgname>Pan Documentation Project</orgname>
+	  		<address><email>pan@rebelbase.com</email></address>
+		</affiliation>
+      </author>
+
 <!-- This is appropriate place for other contributors: translators,
      maintainers,  etc. Commented out by default.
-     
+
       <othercredit role="translator">
-		<firstname>Latin</firstname> 
-		<surname>Translator 1</surname> 
-		<affiliation> 
-	  		<orgname>Latin Translation Team</orgname> 
-	  		<address> <email>translator@gnome.org</email> </address> 
+		<firstname>Latin</firstname>
+		<surname>Translator 1</surname>
+		<affiliation>
+	  		<orgname>Latin Translation Team</orgname>
+	  		<address> <email>translator@gnome.org</email> </address>
 		</affiliation>
 		<contrib>Latin translation</contrib>
       </othercredit>
@@ -106,44 +111,44 @@
 <!-- For example, if the GNOME desktop release is V2.x, the first version of the manual that -->
 <!-- is written in that desktop timeframe is V2.0, the second version of the manual is V2.1, etc. -->
 <!-- When the desktop release version changes to V3.x, the revision number of the manual changes -->
-<!-- to V3.0, and so on. -->  
+<!-- to V3.0, and so on. -->
     <revhistory>
-      <revision> 
-		<revnumber>V 0.1</revnumber> 
-		<date>December 2006</date> 
-		<revdescription> 
+      <revision>
+		<revnumber>V 0.1</revnumber>
+		<date>December 2006</date>
+		<revdescription>
 	  		<para role="author">Douglas Bollinger
 	    	<email>pan@rebelbase.com</email>
 	  		</para>
 	  		<para role="publisher">GNOME Documentation Project</para>
-		</revdescription> 
-      </revision> 
-    </revhistory> 
+		</revdescription>
+      </revision>
+    </revhistory>
 
-    <releaseinfo>This manual describes Pan version 1.0.</releaseinfo> 
-    <legalnotice> 
-      <title>Feedback</title> 
+    <releaseinfo>This manual describes Pan version 1.0.</releaseinfo>
+    <legalnotice>
+      <title>Feedback</title>
       <para>To report a bug or make a suggestion regarding the <application>Pan</application> application or
-      this manual, follow the directions in the <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. 
+      this manual, follow the directions in the <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>.
       </para>
 <!-- Translators may also add here feedback address for translations -->
-    </legalnotice> 
-  </articleinfo> 
+    </legalnotice>
+  </articleinfo>
 
-  <indexterm zone="index"> 
-    <primary>Pan</primary> 
-  </indexterm> 
-  <indexterm zone="index"> 
-    <primary>pan</primary> 
+  <indexterm zone="index">
+    <primary>Pan</primary>
+  </indexterm>
+  <indexterm zone="index">
+    <primary>pan</primary>
   </indexterm>
 
 <!-- ============= Document Body ============================= -->
 
 <!-- ============= Introduction ============================== -->
 
-  <sect1 id="pan-introduction"> 
-    <title>Introduction</title> 
-	<para>The &app; application enables you to read and post articles on Usenet.</para>
+  <sect1 id="pan-introduction">
+    <title>Introduction</title>
+	<para>The &app; application enables you to read and post articles and binaries on Usenet.</para>
   </sect1>
 
 <!-- ============= Getting Started ============================== -->
@@ -155,12 +160,12 @@
   <sect2 id="pan-getstart-start">
     <title>To Start <application>Pan</application></title>
     <para>You can start &app; in the following ways:
-    </para> 
+    </para>
     <variablelist>
     	<varlistentry>
     		<term><guimenu>Applications</guimenu> menu</term>
     		<listitem>
-    		<para>Choose 
+    		<para>Choose
     		<menuchoice>
     		<guisubmenu>Internet </guisubmenu>
     		<guimenuitem>Pan Newsreader</guimenuitem>
@@ -170,11 +175,11 @@
     	<varlistentry>
     		<term>Command line</term>
     		<listitem>
-    		<para>To start &app; from a command line, type the following command, 
+    		<para>To start &app; from a command line, type the following command,
     		then press <keycap>Return</keycap>:</para>
-    		<para> 
-			<command>pan</command> 
-    		</para> 
+    		<para>
+			<command>pan</command>
+    		</para>
     		</listitem>
     	</varlistentry>
     </variablelist>
@@ -185,28 +190,28 @@
 	<sect2 id="pan-getstart-mainwindow">
 	<title>When You Start <application>Pan</application></title>
 	<para>When you start &app;, the following window is displayed:</para>
-	
+
 	<!-- ==== Figure ==== -->
-	<figure id="mainwindow-fig"> 
+	<figure id="mainwindow-fig">
 	<title><application>Pan</application> Main Window</title>
-	<screenshot> 
-	  <mediaobject> 
-	    <imageobject><imagedata fileref="figures/pan_window.png" format="PNG"/> 
+	<screenshot>
+	  <mediaobject>
+	    <imageobject><imagedata fileref="figures/pan_window.png" format="PNG"/>
 	    </imageobject>
 	    <!-- EPS versions of the figures are not required at the moment. -->
-            <!-- 
+            <!--
 		    <imageobject>
       		<imagedata fileref="figures/image.eps" format="EPS"/>
     		    </imageobject>
 	    -->
-	    <textobject> 
-	      <phrase>This is the &app; main window</phrase> 
-	    </textobject> 
-	  </mediaobject> 
-	</screenshot> 
+	    <textobject>
+	      <phrase>This is the &app; main window</phrase>
+	    </textobject>
+	  </mediaobject>
+	</screenshot>
       </figure>
     <!-- ==== End of Figure ==== -->
-    
+
 	<!-- Include any descriptions of the GUI immediately after the screenshot of the main UI, -->
     <!-- for example, the items on the menubar and on the toolbar. This section is optional. -->
 
@@ -219,7 +224,7 @@
 		<para> The menubar contains all the commands that you need to run &app;.</para>
 		</listitem>
 		</varlistentry>
-		
+
 		<varlistentry>
 			<term><interface>Toolbar.</interface> </term>
 		<listitem>
@@ -227,7 +232,7 @@
 			two textboxes that allow you to limit the number of groups and/or the number of articles displayed.</para>
 		</listitem>
 		</varlistentry>
-		
+
 		<varlistentry>
 			<term><interface>Group Pane.</interface> </term>
 		<listitem>
@@ -236,7 +241,7 @@
 			    available groups from the server.</para>
 		</listitem>
 		</varlistentry>
-	
+
 		<varlistentry>
 			<term><interface>Header Pane.</interface> </term>
 		<listitem>
@@ -244,14 +249,14 @@
 				The Header Pane is highly customizable via sorting, threading and scoring.</para>
 		</listitem>
 		</varlistentry>
-	
+
 		<varlistentry>
 			<term><interface>Body Pane.</interface> </term>
 		<listitem>
 			<para>The Body Pane displays the text of the selected article header.</para>
 		</listitem>
 		</varlistentry>
-	
+
 		<varlistentry>
 			<term><interface>Statusbar. </interface></term>
 		<listitem>
@@ -272,11 +277,11 @@
 		or with shortcut keys.  The shortcut key for most menu items is shown in the menu itself, following the menu
 		command.</para>
 	</sect2>
-	
-</sect1>	
-  
+
+</sect1>
+
   <!-- ================ Usenet in a Nutshell================================ -->
-	
+
     <sect1 id="pan-nutshell">
     <title>Usenet in a Nutshell</title>
 	<para>Knowledge about how Usenet works will make using Pan easier.</para>
@@ -309,41 +314,41 @@
 				movies.</para>
 	</sect2>
 	</sect1>
-	
+
 <!-- ================ Basic Usage =========================== -->
 
-  <sect1 id="pan-basic-usage"> 
-    <title>Basic Usage</title> 
+  <sect1 id="pan-basic-usage">
+    <title>Basic Usage</title>
     <para>This section is an overview on how to perform basic Usenet actions with &app;.
-      <itemizedlist> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-basic-server"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-basic-groups"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
+      <itemizedlist>
+		<listitem>
+		  <para>
+			<xref linkend="pan-basic-server"/></para>
+		</listitem>
+		<listitem>
+		  <para>
+			<xref linkend="pan-basic-groups"/></para>
+		</listitem>
+		<listitem>
+		  <para>
 			<xref linkend="pan-basic-articles"/></para>
-		</listitem> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-basic-post"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-basic-reply"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-basic-binaries"/></para> 
-		</listitem> 
+		</listitem>
+		<listitem>
+		  <para>
+			<xref linkend="pan-basic-post"/></para>
+		</listitem>
+		<listitem>
+		  <para>
+			<xref linkend="pan-basic-reply"/></para>
+		</listitem>
+		<listitem>
+		  <para>
+			<xref linkend="pan-basic-binaries"/></para>
+		</listitem>
       </itemizedlist> </para>
-	
+
     <!-- ================ Basic Usage Subsection ================================ -->
-	
+
     <sect2 id="pan-basic-server">
 		<title>Setup a News Server</title>
 		<para>When you start &app; for the first time, the <interface>Add a Server</interface> dialog is displayed.</para>
@@ -351,17 +356,17 @@
 			<para>At this point, you must enter the connection information for the server you wish to access.  After you
 				enter this information, &app; will contact the server and download a list of all the groups the server
 				carries and save it to disk.. </para>
-			
+
 			<para> Refer to <xref linkend="pan-custom-servers"/> for more detailed information:</para>
 	</sect2>
-	
+
 	<!-- ================ Basic Usage Subsection ================================ -->
-	
-    <sect2 id="pan-basic-groups"> 
-      <title>Selecting a News Group</title> 
+
+    <sect2 id="pan-basic-groups">
+      <title>Selecting a News Group</title>
 	 <para>The Group Pane contains a list of all the news groups available on the server.  Scroll through the list
 		 and enter a group by clicking on it's name.</para>
-	  
+
 	 <para>If this is the first time you have entered this group, you will be prompted on how many article headers you wish to
 		 retrieve from the server.  You can choose to retreive all article headers available for that group or limit the
 		 retrieval by either quantity of articles or number of days. </para>
@@ -375,7 +380,7 @@
 	 <para>After article header retrieval, the group name in the Group Pane will turn bold, which means there are unread
 	 articles in that particular group.  Also the number of unread articles in the group will be displayed in parenthesis
 	 following the group name.</para>
-	 
+
  	 <para>It's not unusual for a server to have tens of thousands of groups, but usually a user is only interested in a few.
 	 To better keep track of the interesting groups, select the group name by middle-clicking on it and choose
 	 <menuchoice>
@@ -385,11 +390,11 @@
 	 .  Scroll the group window to the top if necessary and you will see that the selected newsgroup is listed directly under
 	 the Subscribed Groups section.</para>
 
-    </sect2> 
-	
+    </sect2>
+
 	<!-- ================ Basic Usage Subsection ================================ -->
-    <sect2 id="pan-basic-articles"> 
-      <title>Reading Articles</title> 
+    <sect2 id="pan-basic-articles">
+      <title>Reading Articles</title>
 	  <para>After entering a group, the header pane will be filled with article headers.  The header pane can be sorted by
 		  clicking on the topmost row of a column, where the column name is located.  Clicking again will reverse the sort.
 		  The column that is used for sorting will have a downward arrow after the column name and the entire column will
@@ -407,8 +412,8 @@
 		  article.</para>
     </sect2>
     <!-- ================ Basic Usage Subsection ================================ -->
-    <sect2 id="pan-basic-post"> 
-      <title>Posting Articles</title> 
+    <sect2 id="pan-basic-post">
+      <title>Posting Articles</title>
 	  <para>To post an article in a group and start a new thread, select the group you wish to post to in the Group Pane
 		  and then choose
 		 <menuchoice>
@@ -416,7 +421,7 @@
 			<guimenuitem>Post to a Newsgroup</guimenuitem>
 		 </menuchoice>.
 		 If this is the first time you have posted an article to a newsgroup, the <interface>Posting Profile</interface>
-		 dialog will appear and you will be required to fill in some information.  Next, the 
+		 dialog will appear and you will be required to fill in some information.  Next, the
 		 <interface>Post Article</interface> dialog will appear.  Type in a subject and then enter the body of the message
 		 at the bottom.  When done, choose
 		 <menuchoice>
@@ -424,13 +429,13 @@
 			<guimenuitem>Send Article</guimenuitem>
 		 </menuchoice>
        to send the article to the news server and out to the rest of Usenet.</para>
-	  
+
 	   <para> Refer to <xref linkend="pan-posting-profiles"/>  and <xref linkend="pan-posting-dialog"/> for more detailed
 		   information:</para>
-    </sect2> 
+    </sect2>
 	<!-- ================ Basic Usage Subsection ================================ -->
-    <sect2 id="pan-basic-reply"> 
-		<title>Replying to Articles</title> 
+    <sect2 id="pan-basic-reply">
+		<title>Replying to Articles</title>
 		<para>If you want to post a reply to a specific	article and have your followup appear in that article's thread,
 			highlight that article in the Header Pane with the middle mouse button and use
 		 <menuchoice>
@@ -456,12 +461,12 @@
 			<guimenu>File</guimenu>
 			<guimenuitem>Send Article</guimenuitem>
 		 </menuchoice>
-		 and the text will be sent to the default external email application.  Double-check the To: field and then send the 
+		 and the text will be sent to the default external email application.  Double-check the To: field and then send the
 		 email as you normally would with that application.</para>
 	</sect2>
 	<!-- ================ Basic Usage Subsection ================================ -->
-    <sect2 id="pan-basic-binaries"> 
-		<title>Downloading Binaries</title> 
+    <sect2 id="pan-basic-binaries">
+		<title>Downloading Binaries</title>
 		<para>A binary file in Usenet is usually composed of many smaller articles.  &app; automatically organizes all
 			these articles under one special article header.  If all the data that comprises the binary header made it
 			through the Usenet network successfully, a green, full  puzzle-piece is displayed in the first column.  To save
@@ -471,38 +476,38 @@
 			<guimenuitem>Save Articles</guimenuitem>
 		 </menuchoice>
 		 to download and save the binary data to disk.</para>
-			
+
 		<para>If the binary posts are corrupted by missing or incorrect data, a red, incomplete puzzle-piece is displayed
 			in the first column.  The file may be saved, but it will probably be corrupt in some way.</para>
 		<note><para>Supporting binary newsgroups takes a large amount of bandwidth.  Unless you are using a premium news
 				server provider, it is not unusual for many binary files to be missing or corrupt.</para></note>
 	</sect2>
 </sect1>
-	  
+
   <!-- ============= News Groups ================== -->
   <sect1 id="pan-groups">
 	  <title>Groups</title>
-	  <para>Working with groups in &app;.  
-      <itemizedlist> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-groups-view"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-groups-actions"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
+	  <para>Working with groups in &app;.
+      <itemizedlist>
+		<listitem>
+		  <para>
+			<xref linkend="pan-groups-view"/></para>
+		</listitem>
+		<listitem>
+		  <para>
+			<xref linkend="pan-groups-actions"/></para>
+		</listitem>
+		<listitem>
+		  <para>
 			<xref linkend="pan-groups-newsrc"/></para>
-		</listitem> 
+		</listitem>
       </itemizedlist> </para>
-	
+
   <!-- ================ Groups Subsection ================================ -->
 
   <sect2 id="pan-groups-view">
 	  <title>Group Views</title>
-	  
+
 	  <para>The total number of groups on a news server can be quite extensive.  An easy way to find a specific group is
 		  to use the Group Name textbox in the toolbar.  Only groups that match the characters typed in the box will be
 		  displayed in the Group Pane.  If you wish to return the Group Pane to it's original state, simply delete the
@@ -516,11 +521,11 @@
 		</menuchoice>
 		.  This only alters the way the names are presented in this pane.</para>
 	</sect2>
-	
+
 	<!-- ================ Groups Subsection ================================ -->
 	<sect2 id="pan-groups-actions">
 		<title>Group Actions</title>
-	
+
 		<para>While a news group is selected, you can perform the following actions:</para>
 
 	    <variablelist>
@@ -533,7 +538,7 @@
 				  </term>
 					  <listitem>
 						  <para>Mark all articles in a group read.</para>
-						  <para>A typical way to read news is to read all the interesting threads and when done mark the 
+						  <para>A typical way to read news is to read all the interesting threads and when done mark the
 							  group read.  The next time you start the news reader,  choose
 						  <menuchoice>
 							  <guimenu>Groups</guimenu>
@@ -568,7 +573,7 @@
 			  </term>
 			  <listitem>
 				  <para>Opens the Group Preferences dialog.  Within this dialog you can customize certain &app;
-					  features per group: 
+					  features per group:
 					  <itemizedlist>
 						  <listitem><para>Character encoding</para></listitem>
 						  <listitem><para>Location in the file hierarchy where attachments are
@@ -624,31 +629,31 @@
 		  information between these applications.</para>
   </sect2>
   </sect1>
-  
+
   <!-- ============= Article Headers ================== -->
   <sect1 id="pan-headers">
 	  <title>Headers</title>
 	  <para>Users will spend most of their time in &app; interacting with the article headers in the Header Pane.  &app; has
 		  many features to optimize header viewing and article retreival.
-      <itemizedlist> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-headers-view"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-headers-movement"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
+      <itemizedlist>
+		<listitem>
+		  <para>
+			<xref linkend="pan-headers-view"/></para>
+		</listitem>
+		<listitem>
+		  <para>
+			<xref linkend="pan-headers-movement"/></para>
+		</listitem>
+		<listitem>
+		  <para>
 			<xref linkend="pan-headers-selection"/></para>
-		</listitem> 
-		<listitem> 
-		  <para> 
+		</listitem>
+		<listitem>
+		  <para>
 			<xref linkend="pan-headers-action"/></para>
-		</listitem> 
+		</listitem>
       </itemizedlist> </para>
-	
+
   <!-- ================ Headers Subsection ================================ -->
   <sect2 id="pan-headers-view">
 	  <title>Header View</title>
@@ -681,13 +686,13 @@
 					<guisubmenu>Header Pane</guisubmenu>
 					<guimenuitem>Thread Headers</guimenuitem>
 				  </menuchoice>
-			  </term>			  
+			  </term>
 			  <listitem>
 				  <para>To enable or disable header threading in the Header Pane.</para>
 			  </listitem>
 		  </varlistentry>
 	   </variablelist>
-		  
+
 	  <!-- ================ Headers Sub-Subsection ================================ -->
 
 	  <sect3 id="pan-headers-view-replies">
@@ -725,7 +730,7 @@
 			  </varlistentry>
 		  </variablelist>
 	  </sect3>
-		  
+
       <!-- ================ Headers Sub-Subsection ================================ -->
 
 	  <sect3 id="pan-headers-view-matches">
@@ -932,7 +937,7 @@
   <!-- ================ Headers Subsection ================================ -->
   <sect2 id="pan-headers-selection">
 	  <title>Header Selection</title>
-	  
+
 	  <para>In order to perform an action on a article header, you must select it first.  Use the middle mouse button to
 		  select a article.  Drag the selection field with the mouse to select multiple articles.  Hold down the control
 		  key while clicking articles with the middle mouse button to add individual articles to the selection.</para>
@@ -1010,13 +1015,13 @@
   </variablelist>
   </sect2>
   <!-- ================ Headers Subsection ================================ -->
-  
+
   <sect2 id="pan-headers-action">
 	  <title>Header Action</title>
 	  <para>Whenever &app; downloads a article body, the data is saved to disk in the article cache.  The article cache is
 		  a fixed-size buffer and when the cache has beened filled, the older articles are erased to make room for newer
 		  ones.</para>
-	  
+
 	  <para>These are the actions you can perform on a article selected in the Header Pane.</para>
 	  <variablelist>
 		<varlistentry>
@@ -1153,7 +1158,7 @@
 								  &app; uses proportional fonts for all text which renders ASCII artwork unreadable.  By
 								  choosing this option, the text of the Body Pane will be displayed using the Monospace
 								  Font.</para>
-							  <para> You can configure the monospace font in 
+							  <para> You can configure the monospace font in
 								  <menuchoice>
 									  <guimenu>Edit</guimenu>
 									  <guisubmenu>Preferences</guisubmenu>
@@ -1182,28 +1187,28 @@
 		  </variablelist>
 	  </sect2>
   </sect1>
-  
+
   <!-- ================ Posting ================================ -->
   <sect1 id="pan-posting">
 	  <title>Posting</title>
-	  <para>How to post articles in &app;.  
-      <itemizedlist> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-posting-actions"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-posting-profiles"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
+	  <para>How to post articles in &app;.
+      <itemizedlist>
+		<listitem>
+		  <para>
+			<xref linkend="pan-posting-actions"/></para>
+		</listitem>
+		<listitem>
+		  <para>
+			<xref linkend="pan-posting-profiles"/></para>
+		</listitem>
+		<listitem>
+		  <para>
 			<xref linkend="pan-posting-dialog"/></para>
-		</listitem> 
+		</listitem>
       </itemizedlist> </para>
-	
+
   <!-- ================ Posting Subsection ================================ -->
-	
+
   <sect2 id="pan-posting-actions">
 		  <title>Actions</title>
 	  <variablelist>
@@ -1241,7 +1246,7 @@
 			  </listitem>
 		  </varlistentry>
 	  </variablelist>
-	  
+
 	  <para>While highlighting in the Header Pane the article header of a post that you posted to the news server, you can
 		  perform these two actions:</para>
 	  <variablelist>
@@ -1272,7 +1277,7 @@
 			  are comfortable with your article before you post it to the news server, because in most cases it will be
 			  impossible to take back or alter what you have said.</para></note>
   </sect2>
-  
+
   <!-- ================ Posting Subsection ================================ -->
   <sect2 id="pan-posting-profiles">
 	  <title>Posting Profiles Dialog</title>
@@ -1325,6 +1330,11 @@
 					  signature text.</para>
 				  <para>Example: <command>fortune -s</command></para>
 			  </listitem>
+			  <listitem>
+				  <para><guilabel>PGP-Signature</guilabel></para>
+				  <para>Choose this if you want to sign/encrypt your message with PGP. The given Email-Address has to match the PGP Email-Address for
+				  this method to work.</para>
+			  </listitem>
 		  </itemizedlist>
 	  </sect3>
 
@@ -1350,7 +1360,7 @@
   <sect2 id="pan-posting-dialog">
 	  <title>Post Article Dialog</title>
 	  <para>Whenever you post an article you use the <interface>Post Article Dialog</interface>.</para>
-	  
+
 	  <sect3 id="pan-posting-dialog-composition">
 		  <title>Composition</title>
 		  <para>The <interface>Post Article Dialog</interface> is composed of the following parts:</para>
@@ -1361,21 +1371,21 @@
 						<para> The menubar contains all the commands that you need to post an article.</para>
 					</listitem>
 				</varlistentry>
-			
+
 				<varlistentry>
 					<term><guilabel>Toolbar.</guilabel> </term>
 					<listitem>
 						<para> The toolbar contains a subset of the commands that you can access from the menubar.</para>
 					</listitem>
 				</varlistentry>
-				
+
 				<varlistentry>
 					<term><guilabel>From</guilabel></term>
 					<listitem>
 						<para>Select which Posting Profile to use.</para>
 					</listitem>
 				</varlistentry>
-			
+
 				<varlistentry>
 					<term><guilabel>Subject</guilabel></term>
 					<listitem>
@@ -1383,28 +1393,28 @@
 							filled-in.</para>
 					</listitem>
 				</varlistentry>
-			
+
 				<varlistentry>
 					<term><guilabel>Newsgroups</guilabel></term>
 					<listitem>
 						<para>A commoa seperated list of all the groups that will receive this article.</para>
 					</listitem>
 				</varlistentry>
-			
+
 				<varlistentry>
 					<term><guilabel>Mailto</guilabel></term>
 					<listitem>
 						<para>Enter a email address to send the article.</para>
 					</listitem>
 				</varlistentry>
-				
+
 				<varlistentry>
 					<term><guilabel>More Headers</guilabel></term>
 					<listitem>
 						<para>An advanced option to manually add more headers.</para>
 					</listitem>
 				</varlistentry>
-				
+
 				<varlistentry>
 					<term><guilabel>Text Area</guilabel></term>
 					<listitem>
@@ -1456,8 +1466,8 @@
 	  </sect3>
 
 	  <sect3 id="pan-posting-dialog-edit">
-		  <title>Editing Coammands</title>
-		  <para>These editing commands are available from within the <interface>Post Article Dialog</interface>.</para>
+		  <title>Editing Commands</title>
+		  <para>This option is available from within the <interface>Post Article Dialog</interface>.</para>
 		  <variablelist>
 			  <varlistentry>
 				  <term>
@@ -1547,8 +1557,7 @@
 					  </menuchoice>
 				  </term>
 				  <listitem>
-					  <para>Set this option and possible spelling errors in the text area will be unlined by a
-						  red wavy line.</para>
+					  <para>Set this option and possible spelling errors in the text area will marked with a red wavy line.</para>
 				  </listitem>
 			  </varlistentry>
 			  <varlistentry>
@@ -1564,31 +1573,30 @@
 				  </listitem>
 			  </varlistentry>
 		  </variablelist>
-		  <tip><para>&app; does not support the posting of binary data (pictures, music, etc) at this time.</para></tip>
 	  </sect3>
   </sect2>
   </sect1>
-  
+
   <!-- ================ Tasks  ================================ -->
 
   <sect1 id="pan-tasks">
 	  <title>Tasks</title>
 	  <para>Certains tasks performed by &app;, like downloading binary posts or grabbing new headers for a group, can take
-		  a long time.  These tasks are queued and performed in the background while &app; is doing other things like
-		  grabbing a article.
-      <itemizedlist> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-tasks-cancel"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
-			<xref linkend="pan-tasks-taskmanager"/></para> 
-		</listitem> 
-		<listitem> 
-		  <para> 
+		  a long time. These tasks are queued and performed in the background while &app; is processing other tasks like
+		  grabbing an article.
+      <itemizedlist>
+		<listitem>
+		  <para>
+			<xref linkend="pan-tasks-cancel"/></para>
+		</listitem>
+		<listitem>
+		  <para>
+			<xref linkend="pan-tasks-taskmanager"/></para>
+		</listitem>
+		<listitem>
+		  <para>
 			<xref linkend="pan-tasks-nzb"/></para>
-		</listitem> 
+		</listitem>
       </itemizedlist> </para>
 
   <!-- ================ Tasks Subsection ================================ -->
@@ -1601,17 +1609,17 @@
 		</menuchoice>
 	   .</para>
   </sect2>
-  
+
   <!-- ================ Tasks Subsection ================================ -->
-  <sect2 id="pan-tasks-taskmanager"> 
-		<title>Task Manager</title> 
+  <sect2 id="pan-tasks-taskmanager">
+		<title>Task Manager</title>
 		<para>Background tasks can be manipulated by using the Task Manager.  The Task Manager can be accessed with
 		 <menuchoice>
 			<guimenu>File</guimenu>
 			<guimenuitem>Task Manger</guimenuitem>
 		 </menuchoice>
 		 or by left-clicking in the task area of the Status Bar at the bottom of the &app; screen.</para>
-	 <para> The Task Manger window is composed of the following parts:</para>	
+	 <para> The Task Manger window is composed of the following parts:</para>
 		<variablelist>
 			<varlistentry>
 				<term><guilabel>Toolbar.</guilabel> </term>
@@ -1638,13 +1646,14 @@
 		<para>In order to manipulate a task, click on it and the row will be highlighted.  Then click on one of the
 			buttons in the toolbar.</para>
 		<tip><para>If &app; is shutdown whiles tasks are still waiting in the task manager, the task list is saved to disk
-				and resumed when &app; is restarted. </para></tip>
+				and resumed when &app; is restarted. This, however is not true for upload tasks at the moment. In the next version,
+				this will be possible.</para></tip>
 	</sect2>
 
   <!-- ================ Tasks Subsection ================================ -->
 	<sect2 id="pan-tasks-nzb">
 		<title>NZB Files</title>
-		<para>&app; saves it's task list in <filename>~/.pan2/tasks.nzb</filename> file.  You can import other task lists
+		<para>&app; saves its task list in <filename>~/.pan2/tasks.nzb</filename> file.  You can import other task lists
 			into &app; by choosing
 			 <menuchoice>
 				<guimenu>File</guimenu>
@@ -1659,29 +1668,29 @@
 	  <title>Scoring</title>
   <para>Scoring allows the user to give an article a rating based on user-defined scoring rules.  This rating can then be
 	  used by &app; to perform score-based actions.</para>
-  
+
   <para>When a group's article headers are first downloaded from the news server, all the articles have a score of 0.
 	  Then the list of scoring rules in the score file are applied to each article.  The score file rules might give an
 	  article from John Smith a high score, while articles with a subject line containing the phrase "For Sale" a negative
 	  score.</para>
-  
-  <itemizedlist> 
-	<listitem> 
-	  <para> 
-	    <xref linkend="pan-scoring-actions"/></para> 
-	</listitem> 
-	<listitem> 
-	  <para> 
-	    <xref linkend="pan-scoring-addrules"/></para> 
-	</listitem> 
-	<listitem> 
-	  <para> 
-	    <xref linkend="pan-scoring-editrules"/></para> 
-    </listitem> 
-	<listitem> 
-	  <para> 
-	    <xref linkend="pan-scoring-advanced"/></para> 
-    </listitem> 
+
+  <itemizedlist>
+	<listitem>
+	  <para>
+	    <xref linkend="pan-scoring-actions"/></para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <xref linkend="pan-scoring-addrules"/></para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <xref linkend="pan-scoring-editrules"/></para>
+    </listitem>
+	<listitem>
+	  <para>
+	    <xref linkend="pan-scoring-advanced"/></para>
+    </listitem>
   </itemizedlist>
   <!-- ============= Scoring Subsection ================== -->
 
@@ -1722,7 +1731,7 @@
 				  </menuchoice>
 				 .  This rule sets the score of any post located in the thread of the selected article to 9999.
 		  </para>
-		  
+
 		  <para>The opposite of the above rule is
 				  <menuchoice>
 					<guimenu>Articles</guimenu>
@@ -1730,7 +1739,7 @@
 				  </menuchoice>
 				 .  This rule sets the score of any post located in the thread of the selected article to -9999.
 		  </para>
-		  
+
 		  <para>Both of these scoring rules only work in the selected group and expire in one month.</para>
 
 		  <para>Selecting a article and selecting
@@ -1747,7 +1756,7 @@
 			  article, making it a watch rule.  So the name "Ignore Author" can be somewhat of a misnomer.</para>
 
 		  <para>When finished, click add and rescore to close the dialog box.</para>
-  
+
 		  <para>Selecting a article and selecting
 				  <menuchoice>
 					<guimenu>Articles</guimenu>
@@ -1762,7 +1771,7 @@
 	  <sect2 id="pan-scoring-editrules">
 	  <title>Editing or Deleting Scoring Rules</title>
 
-	  <para>Selecting a article that is currently being scored and choosing 
+	  <para>Selecting a article that is currently being scored and choosing
 			  <menuchoice>
 				<guimenu>Articles</guimenu>
 				<guisubmenu>Edit Article's Watch/Ignore/Score</guisubmenu>
@@ -1788,31 +1797,31 @@
   </sect1>
 
   <!-- ============= Customization ============================= -->
-  <sect1 id="pan-custom"> 
-	  <title>Customization</title> 
+  <sect1 id="pan-custom">
+	  <title>Customization</title>
 	  <para>This section describes how certain features or actions in &app; can be customized.</para>
-      <itemizedlist> 
-	<listitem> 
-	  <para> 
-	    <xref linkend="pan-custom-behavior"/></para> 
-	</listitem> 
-	<listitem> 
-	  <para> 
-	    <xref linkend="pan-custom-gui"/></para> 
-	</listitem> 
-	<listitem> 
-	  <para> 
-	    <xref linkend="pan-custom-externalapps"/></para> 
-	</listitem> 
-	<listitem> 
-	  <para> 
-	    <xref linkend="pan-custom-articlecache"/></para> 
-	</listitem> 
-	<listitem> 
-	  <para> 
-	    <xref linkend="pan-custom-servers"/></para> 
-	</listitem> 
-	  </itemizedlist> 
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    <xref linkend="pan-custom-behavior"/></para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <xref linkend="pan-custom-gui"/></para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <xref linkend="pan-custom-externalapps"/></para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <xref linkend="pan-custom-articlecache"/></para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <xref linkend="pan-custom-servers"/></para>
+	</listitem>
+	  </itemizedlist>
   <!-- ============= Customization Subsection ================== -->
   <sect2 id="pan-custom-behavior">
       <title>Behavior</title>
@@ -1841,7 +1850,7 @@
 						  <itemizedlist>
 							  <listitem>
 								  <para>The first box, when activated, will automatically get new headers for all
-									  subscribed groups whenever Pan is started.  This is the equivilant of using  
+									  subscribed groups whenever Pan is started.  This is the equivilant of using
 									 <menuchoice>
 										<guimenu>Groups</guimenu>
 										<guimenuitem>Get New Headers in Subscribed Groups</guimenuitem>
@@ -1849,16 +1858,16 @@
 									 from the menubar.
 								  </para>
 							  </listitem>
-							  <listitem> 
+							  <listitem>
 								 <para>The next box, when activated, will automatically get new headers when entering a
-									  group.  This is the equivilant of using  
+									  group.  This is the equivilant of using
 								 <menuchoice>
 									<guimenu>Groups</guimenu>
 									<guimenuitem>Get New Headers in Selected Group</guimenuitem>
 								 </menuchoice>
 								 from the menubar.
 								 </para>
-							 </listitem> 
+							 </listitem>
 							 <listitem>
 								 <para>The next box, when activated, will mark the entire group read when leaving a group.
 									 This is the equivilant of using
@@ -1866,7 +1875,7 @@
 										<guimenu>Groups</guimenu>
 										<guimenuitem>Mark Group Read</guimenuitem>
 									 </menuchoice>
-									 from the menubar.  
+									 from the menubar.
 								 </para>
 							 </listitem>
 							 <listitem>
@@ -1886,23 +1895,23 @@
 			   </listitem>
 		   </varlistentry>
 	   </variablelist>
-  </sect2> 
+  </sect2>
   <!-- ============= Customization Subsection ================== -->
   <sect2 id="pan-custom-gui">
 	  <title>GUI Composition</title>
 	  <para>The layout and view of the Group, Header and Body Panes in &app; can customized in serveral ways.</para>
-	  
-      <variablelist>	  
+
+      <variablelist>
 		  <varlistentry>
 			  <term><guilabel>Pane Layout</guilabel></term>
 		  <listitem>
-			  <para>In 
+			  <para>In
 				  <menuchoice>
 					<guimenu>Edit</guimenu>
 					<guisubmenu>Preferences</guisubmenu>
 					<guimenuitem>Layout</guimenuitem>
 				  </menuchoice>
-			   the orientation of the Groups, Header and Body Panes can be manipulated.</para> 
+			   the orientation of the Groups, Header and Body Panes can be manipulated.</para>
 			  </listitem>
 	      </varlistentry>
 		  <varlistentry>
@@ -2002,15 +2011,20 @@
 				</menuchoice>
 			</para>
   </sect2>
-  
+
   <!-- ============= Customization Subsection ================== -->
   <sect2 id="pan-custom-articlecache">
 	  <title>Article Cache Size</title>
 	  <para>The article cache is a fixed-size disk buffer where &app; stores articles when they are downloaded from a
 		  news server.  If the user downloads a large amount of binary attachments, the default cache size might be
 		  inadequate.</para>
-	  <para>The artice cache size can be altered by manual editing the <filename>~/.pan2/Preferences.xml</filename> file and
-		  changing the value at 'cache-size-megs' value='xxxx' to whatever you need.</para>
+	  <para>The article cache size can be altered by changing
+      <menuchoice>
+              <guimenu>Edit</guimenu>
+              <guisubmenu>Preferences</guisubmenu>
+              <guimenuitem>Behavior</guimenuitem>
+      </menuchoice>
+	  </para>
   </sect2>
 
   <!-- ============= Customization Subsection ================== -->
@@ -2038,7 +2052,7 @@
 		  </listitem>
 		  <listitem>
 			  <para><guilabel>Port</guilabel></para>
-			  <para>The port of the server.  Port 119 is the standard port number.</para>
+			  <para>The port of the server.  Port 119 is the standard port number for unsecured NNTP connections, 563 is for TLS/SSL connections.</para>
 		  </listitem>
 	  </itemizedlist>
 	  <para>The next section is the login information for the server.  If you server requires a username and password,
@@ -2077,16 +2091,25 @@
 				  byte-limited premium server.  Server ranking allows &app; to use the fallback server as little as
 				  possible.</para>
 		  </listitem>
+		  <listitem>
+			  <para><guilabel>TLS (SSL) Options</guilabel></para>
+			  <para>If security and privacy are concerns, choose secured connections if the server supports it.
+				  article index.</para>
+		  </listitem>
+		  <listitem>
+			  <para><guilabel>Always trust</guilabel></para>
+			  <para>If you want to trust the server regardless of the authenticity of its certificate, you can enable this option. Use with caution!</para>
+		  </listitem>
 	  </itemizedlist>
   </sect2>
   </sect1>
-  
+
 <!-- ============= Bugs ================================== -->
-<!-- This section is optional and is commented out by default. 
-     You can use it to describe known bugs and limitations of the 
+<!-- This section is optional and is commented out by default.
+     You can use it to describe known bugs and limitations of the
 	  program if there are any - please be frank and list all
-     problems you know of. 
-  
+     problems you know of.
+
   <sect1 id="mayapp-bugs">
   <title>Known Bugs and Limitations</title>
   <para> </para>
