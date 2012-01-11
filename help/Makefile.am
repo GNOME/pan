@@ -6,5 +6,4 @@ DOC_MODULE = pan
 DOC_ENTITIES = legal.xml
 DOC_INCLUDES =
 DOC_FIGURES = figures/pan_window.png
-DOC_LINGUAS = de
-
+DOC_LINGUAS = de es
