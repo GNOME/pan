@@ -927,6 +927,8 @@ main (int argc, char *argv[])
     SocketCreator socket_creator(data, certstore);
     Queue queue (data, data, &socket_creator, certstore, worker_pool, false, 32768);
 
+    data.set_queue(&queue);
+
 #ifdef HAVE_DBUS
     Pan pan(data, queue, cache, encode_cache, prefs, group_prefs);
   #ifndef DEBUG_PARALLEL

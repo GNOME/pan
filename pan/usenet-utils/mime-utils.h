@@ -59,11 +59,6 @@
 #define NEEDS_DECODING(encoding) ((encoding == GMIME_CONTENT_ENCODING_BASE64) ||   \
                                  (encoding == GMIME_CONTENT_ENCODING_QUOTEDPRINTABLE))
 
-extern "C"
-{
-  #include <iconv.h>
-}
-
 namespace pan
 {
 

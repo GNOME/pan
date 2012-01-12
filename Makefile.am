@@ -1,4 +1,6 @@
-SUBDIRS = help po uulib pan
+SUBDIRS = po uulib pan
+SUBDIRS += $(HELP_SUBDIR)
+
 
 @INTLTOOL_DESKTOP_RULE@
 

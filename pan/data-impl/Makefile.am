@@ -15,7 +15,8 @@ libpandata_a_SOURCES = \
  server.cc \
  my-tree.cc \
  task-archive.cc \
- xover.cc
+ xover.cc \
+ hotkeys.cc
 
 noinst_HEADERS = \
  article-filter.h \

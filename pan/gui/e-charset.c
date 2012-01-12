@@ -26,7 +26,6 @@
 #include "e-charset.h"
 
 #include <string.h>
-#include <iconv.h>
 
 #include <glib/gi18n-lib.h>
 

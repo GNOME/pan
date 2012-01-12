@@ -148,14 +148,12 @@ DataImpl :: MyTree :: MyTree (DataImpl              & data_impl,
                               const Quark           & save_path,
                               const Data::ShowType    show_type,
                               const FilterInfo      * filter,
-                              const RulesInfo       * rules,
-                                    Queue           * queue):
+                              const RulesInfo       * rules):
   _group (group),
   _data (data_impl),
   _save_path(save_path)
 {
 
-  _data.set_queue(queue);
   _data.ref_group (_group);
   _data._trees.insert (this);
 

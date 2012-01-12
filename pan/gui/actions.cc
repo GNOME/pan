@@ -23,6 +23,7 @@ extern "C" {
   #include "gtk-compat.h"
 }
 #include <pan/general/debug.h>
+#include <pan/data-impl/data-impl.h>
 #include <pan/tasks/task-xover.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "actions.h"
@@ -33,6 +34,7 @@ using pan::PanUI;
 
 namespace
 {
+
   PanUI * pan_ui (0);
   Prefs * prefs (0);
 
@@ -261,415 +263,413 @@ namespace
   void do_match_only_my_articles (GtkToggleAction * a) { pan_ui->do_match_only_my_articles (gtk_toggle_action_get_active(a)); }
   void do_match_only_unread_articles (GtkToggleAction * a) { pan_ui->do_match_only_unread_articles (gtk_toggle_action_get_active(a)); }
 
-  GtkActionEntry entries[] =
-  {
-
-    { "file-menu", NULL, N_("_File"), NULL, NULL, NULL },
-    { "edit-menu", NULL, N_("_Edit"), NULL, NULL, NULL },
-    { "view-layout-menu", NULL, N_("_Layout"), NULL, NULL, NULL },
-    { "view-group-pane-menu", NULL, N_("_Group Pane"), NULL, NULL, NULL },
-    { "view-header-pane-menu", NULL, N_("_Header Pane"), NULL, NULL, NULL },
-    { "view-body-pane-menu", NULL, N_("_Body Pane"), NULL, NULL, NULL },
-    { "view-menu", NULL, N_("_View"), NULL, NULL, NULL },
-    { "filter-menu", NULL, N_("Filte_r"), NULL, NULL, NULL },
-    { "go-menu", NULL, N_("_Go"), NULL, NULL, NULL },
-    { "actions-menu", NULL, N_("_Actions"), NULL, NULL, NULL },
-    { "article-actions-menu", NULL, N_("_Articles"), NULL, NULL, NULL },
-    { "group-actions-menu", NULL, N_("G_roups"), NULL, NULL, NULL },
-    { "posting-actions-menu", NULL, N_("_Post"), NULL, NULL, NULL },
-    { "post-menu", NULL, N_("_Post"), NULL, NULL, NULL },
-    { "help-menu", NULL, N_("_Help"), NULL, NULL, NULL },
-
-    { "read-selected-group", "ICON_READ_MORE",
-      N_("_Read Group"), NULL,
-      N_("Read Group"),
-      G_CALLBACK(do_read_selected_group) },
-
-    { "mark-groups-read", GTK_STOCK_CLEAR,
-      N_("_Mark Selected Groups Read"), "<control><shift>M",
-      N_("Mark Selected Groups Read"),
-      G_CALLBACK(do_mark_selected_groups_read) },
-
-    { "delete-groups-articles", GTK_STOCK_DELETE,
-      N_("_Delete Selected Groups' Articles"), "<control><shift>Delete",
-      N_("Delete Selected Groups' Articles"),
-      G_CALLBACK(do_clear_selected_groups) },
-
-    { "get-new-headers-in-selected-groups", "ICON_GET_SELECTED",
-      N_("Get New _Headers in Selected Groups"), "A",
-      N_("Get New Headers in Selected Groups"),
-      G_CALLBACK(do_xover_selected_groups) },
-
-    { "get-new-headers-in-subscribed-groups", "ICON_GET_SUBSCRIBED",
-      N_("Get New _Headers in Subscribed Groups"), "<shift>A",
-      N_("Get New Headers in Subscribed Groups"),
-      G_CALLBACK(do_xover_subscribed_groups) },
-
-    { "update-stats-in-selected-groups", "ICON_GET_SUBSCRIBED",
-      N_("Get New _Headers in Subscribed Groups"), "<shift>A",
-      N_("Get New Headers in Subscribed Groups"),
-      G_CALLBACK(do_xover_subscribed_groups) },
-
-    { "download-headers", "ICON_GET_DIALOG",
-      N_("Get _Headers..."), "",
-      N_("Get Headers..."),
-      G_CALLBACK(do_download_headers) },
-
-    { "refresh-group-list", NULL,
-      N_("Refresh Group List"), "",
-      N_("Refresh Group List"),
-      G_CALLBACK(do_refresh_groups) },
-
-    { "subscribe", NULL,
-      N_("_Subscribe"), NULL,
-      N_("Subscribe"),
-      G_CALLBACK(do_subscribe_selected_groups) },
-
-    { "unsubscribe", NULL,
-      N_("_Unsubscribe"), NULL,
-      N_("Unsubscribe"),
-      G_CALLBACK(do_unsubscribe_selected_groups) },
-
-    { "save-articles", GTK_STOCK_SAVE,
-      N_("_Save Articles..."), "<shift>S",
-      N_("Save Articles..."),
-      G_CALLBACK(do_save_articles) },
-
-    { "save-articles-from-nzb", GTK_STOCK_SAVE,
-      N_("Save Articles from Selected _NZB..."), "<control><shift>S",
-      N_("Save Articles from Selected NZB"),
-      G_CALLBACK(do_save_articles_from_nzb) },
-
-    { "save-articles-to-nzb", GTK_STOCK_SAVE,
-      N_("Save Articles to an NZB _File..."), "<control><shift>F",
-      N_("Save Articles to an NZB File"),
-      G_CALLBACK(do_save_articles_to_nzb) },
-
-    { "print", GTK_STOCK_PRINT,
-      NULL, "<control>P",
-      NULL,
-      G_CALLBACK(do_print) },
-
-    { "import-tasks", GTK_STOCK_OPEN,
-      N_("_Import NZB Files..."), NULL,
-      NULL,
-      G_CALLBACK(do_import_tasks) },
-
-    { "cancel-last-task", GTK_STOCK_CANCEL,
-      N_("_Cancel Last Task"), "<control>Delete",
-      NULL,
-      G_CALLBACK(do_cancel_latest_task) },
-
-    { "show-task-window", NULL,
-      N_("_Task Manager"), NULL,
-      NULL,
-      G_CALLBACK(do_show_task_window) },
-
-    { "show-log-dialog", GTK_STOCK_DIALOG_INFO,
-      N_("_Event Log"), NULL,
-      NULL,
-      G_CALLBACK(do_show_log_window) },
-
-    { "quit", NULL,
-      N_("_Quit"), "<control>Q",
-      NULL,
-      G_CALLBACK(do_quit) },
-
-    { "select-all-articles", NULL,
-      N_("Select _All Articles"), "<control>D",
-      NULL,
-      G_CALLBACK(do_select_all_articles) },
-
-    { "unselect-all-articles", NULL,
-      N_("_Deselect All Articles"), "<shift><control>D",
-      NULL,
-      G_CALLBACK(do_unselect_all_articles) },
-
-    { "add-subthreads-to-selection", NULL,
-      N_("Add Su_bthreads to Selection"), "D",
-      NULL,
-      G_CALLBACK(do_add_subthreads_to_selection) },
-
-    { "add-threads-to-selection", NULL,
-      N_("Add _Threads to Selection"), "<shift>D",
-      NULL,
-      G_CALLBACK(do_add_threads_to_selection) },
-
-    { "add-similar-articles-to-selection", NULL,
-      N_("Add _Similar Articles to Selection"), "<control>S",
-      NULL,
-      G_CALLBACK(do_add_similar_to_selection) },
-
-    { "select-article-body", NULL,
-      N_("Select Article _Body"), NULL,
-      NULL,
-      G_CALLBACK(do_select_article_body) },
-
-    { "show-preferences-dialog", GTK_STOCK_PREFERENCES,
-      N_("Edit _Preferences"), NULL,
-      NULL,
-      G_CALLBACK(do_show_preferences_dialog) },
-
-    { "show-group-preferences-dialog", GTK_STOCK_PREFERENCES,
-      N_("Edit Selected _Group's Preferences"), NULL,
-      NULL,
-      G_CALLBACK(do_show_group_preferences_dialog) },
-
-    { "show-profiles-dialog", GTK_STOCK_EDIT,
-      N_("Edit P_osting Profiles"), NULL,
-      NULL,
-      G_CALLBACK(do_show_profiles_dialog) },
-
-    { "show-servers-dialog", GTK_STOCK_NETWORK,
-      N_("Edit _News Servers"), NULL,
-      NULL,
-      G_CALLBACK(do_show_servers_dialog) },
-
-    { "jump-to-group-tab", GTK_STOCK_JUMP_TO,
-      N_("Jump to _Group Tab"), "1",
-      NULL,
-      G_CALLBACK(do_jump_to_group_tab) },
-
-    { "jump-to-header-tab", GTK_STOCK_JUMP_TO,
-      N_("Jump to _Header Tab"), "2",
-      NULL,
-      G_CALLBACK(do_jump_to_header_tab) },
-
-    { "jump-to-body-tab", GTK_STOCK_JUMP_TO,
-      N_("Jump to _Body Tab"), "3",
-      NULL,
-      G_CALLBACK(do_jump_to_body_tab) },
-
-    { "rot13-selected-text", NULL,
-      N_("_Rot13 Selected Text"), "<control><shift>R",
-      NULL,
-      G_CALLBACK(do_rot13_selected_text) },
-
-    { "clear-header-pane", NULL,
-      N_("Clear _Header Pane"), NULL,
-      NULL,
-      G_CALLBACK(do_clear_header_pane) },
-
-    { "clear-body-pane", NULL,
-      N_("Clear _Body Pane"), NULL,
-      NULL,
-      G_CALLBACK(do_clear_body_pane) },
-
-    { "download-selected-article", "ICON_DISK",
-      N_("Cache Article"), NULL,
-      NULL,
-      G_CALLBACK(do_download_selected_article) },
-
-    { "read-selected-article", "ICON_READ_MORE",
-      N_("Read Article"), NULL,
-      NULL,
-      G_CALLBACK(do_read_selected_article) },
-
-    { "show-selected-article-info", NULL,
-      N_("Show Article Information"), NULL,
-      NULL,
-      G_CALLBACK(do_show_selected_article_info) },
-
-    { "read-more", "ICON_READ_MORE",
-      N_("Read _More"), "space",
-      N_("Read More"),
-      G_CALLBACK(do_read_more) },
-
-    { "read-less", "ICON_READ_LESS",
-      N_("Read _Back"), "BackSpace",
-      N_("Read Back"),
-      G_CALLBACK(do_read_less) },
-
-    { "read-next-unread-group", "ICON_READ_UNREAD_GROUP",
-      N_("Next _Unread Group"), "G",
-      NULL,
-      G_CALLBACK(do_read_next_unread_group) },
-
-    { "read-next-group", "ICON_READ_GROUP",
-      N_("Next _Group"), "<shift>G",
-      NULL,
-      G_CALLBACK(do_read_next_group) },
-
-    { "read-next-unread-article", "ICON_READ_UNREAD_ARTICLE",
-      N_("Next _Unread Article"), "N",
-      N_("Next Unread Article"),
-      G_CALLBACK(do_read_next_unread_article) },
-
-    { "read-next-article", NULL,
-      N_("Next _Article"), "<control>N",
-      N_("Next Article"),
-      G_CALLBACK(do_read_next_article) },
-
-    { "read-next-watched-article", NULL,
-      N_("Next _Watched Article"), "<control><shift>N",
-      NULL,
-      G_CALLBACK(do_read_next_watched_article) },
-
-    { "read-next-unread-thread", "ICON_READ_UNREAD_THREAD",
-      N_("Next Unread _Thread"), "T",
-      N_("Next Unread Thread"),
-      G_CALLBACK(do_read_next_unread_thread) },
-
-    { "read-next-thread", NULL,
-      N_("Next Threa_d"), "<control>T",
-      NULL,
-      G_CALLBACK(do_read_next_thread) },
-
-    { "read-previous-article", NULL,
-      N_("Pre_vious Article"), "V",
-      NULL,
-      G_CALLBACK(do_read_previous_article) },
-
-    { "read-previous-thread", NULL,
-      N_("Previous _Thread"), "<control>V",
-      NULL,
-
-      G_CALLBACK(do_read_previous_thread) },
-    { "read-parent-article", NULL,
-      N_("_Parent Article"), "U",
-      NULL,
-      G_CALLBACK(do_read_parent_article) },
-
-    { "plonk", NULL,
-      N_("Ignore _Author"), NULL,
-      NULL,
-      G_CALLBACK(do_plonk) },
-    { "watch-thread", NULL,
-      N_("_Watch Thread"), NULL,
-      NULL,
-      G_CALLBACK(do_watch) },
-
-    { "ignore-thread", NULL,
-      N_("_Ignore Thread"), NULL,
-      NULL,
-      G_CALLBACK(do_ignore) },
-
-    { "flag-thread", "ICON_FLAGGED",
-      N_("_Toggle Flag On/Off for Thread"), "X",
-      N_("_Toggle Flag On/Off for Thread"),
-      G_CALLBACK(do_flag) },
-
-    { "unflag-thread", NULL,
-      N_("_Turn Flag Off for Thread"), "<shift>X",
-      N_("_Turn Flag Off for Thread"),
-      G_CALLBACK(do_flag_off) },
-
-    { "select-all-flagged", NULL,
-      N_("_Select All Flagged Threads"), "<control>X",
-      N_("_Select All Flagged Threads"),
-      G_CALLBACK(do_mark_all_flagged) },
-
-    { "next-flagged", NULL,
-      N_("_Go to Next Flagged Thread"), "plus",
-      N_("_Go to Next Flagged Thread"),
-      G_CALLBACK(do_next_flag) },
-
-    { "last-flagged", NULL,
-      N_("_Go to Last Flagged Thread"), "minus",
-      N_("_Go to Last Flagged Thread"),
-      G_CALLBACK(do_last_flag) },
-
-    { "invert-selection", NULL,
-      N_("_Invert Selection"), "<control>I",
-      N_("_Invert Selection"),
-      G_CALLBACK(do_invert_selection) },
-
-    { "view-article-score", "ICON_SCORE",
-      N_("Edit Article's Watch/Ignore/Score..."), "<control><shift>C",
-      NULL,
-      G_CALLBACK(do_show_score_dialog) },
-
-    { "add-article-score", "ICON_SCORE",
-      N_("Add a _Scoring Rule..."), "S",
-      NULL,
-      G_CALLBACK(do_show_new_score_dialog) },
-
-    { "cancel-article", NULL,
-      N_("Cance_l Article..."), NULL,
-      NULL,
-      G_CALLBACK(do_cancel_article) },
-
-    { "supersede-article", NULL,
-      N_("_Supersede Article..."), NULL,
-      NULL,
-      G_CALLBACK(do_supersede_article) },
-
-    { "delete-article", GTK_STOCK_DELETE,
-      N_("_Delete Article"), "Delete",
-      NULL,
-      G_CALLBACK(do_delete_article) },
-
-    { "clear-article-cache", NULL,
-      N_("Clear Article Cache"), NULL,
-      NULL,
-      G_CALLBACK(do_clear_article_cache) },
-
-    { "mark-article-read", "ICON_ARTICLE_READ",
-      N_("_Mark Article as Read"), "M",
-      NULL,
-      G_CALLBACK(do_mark_article_read) },
-
-    { "mark-article-unread", "ICON_ARTICLE_UNREAD",
-      N_("Mark Article as _Unread"), "<control>M",
-      NULL,
-      G_CALLBACK(do_mark_article_unread) },
-
-    ///TODO create icons for the next two actions
-    { "mark-thread-read", "ICON_ARTICLE_READ",
-      N_("_Mark Thread as Read"), "<Shift>T",
-      NULL,
-      G_CALLBACK(do_mark_thread_read) },
-
-    { "mark-thread-unread", "ICON_ARTICLE_UNREAD",
-      N_("Mark Thread as _Unread"), "<control><Shift>T",
-      NULL,
-      G_CALLBACK(do_mark_thread_unread) },
-
-    { "post", "ICON_COMPOSE_POST",
-      N_("_Post to Newsgroup"), "P",
-      N_("Post to Newsgroup"),
-      G_CALLBACK(do_post) },
-
-    { "followup-to", "ICON_COMPOSE_FOLLOWUP",
-      N_("_Followup to Newsgroup"), "F",
-      N_("Followup to Newsgroup"),
-      G_CALLBACK(do_followup_to) },
-
-    { "reply-to", NULL,
-      N_("_Reply to Author in Mail"), "R",
-      NULL,
-      G_CALLBACK(do_reply_to) },
-
-    { "pan-manual", NULL,
-      N_("_Contents"), "F1", 
-      NULL,
-      G_CALLBACK(do_pan_manual) },
-
-    { "pan-web-page", NULL,
-      N_("_Pan Home Page"), NULL,
-      NULL,
-      G_CALLBACK(do_pan_web) },
-
-    { "bug-report", NULL,
-      N_("Give _Feedback or Report a Bug..."), NULL,
-      NULL,
-      G_CALLBACK(do_bug_report) },
-
-    { "tip-jar", NULL,
-      N_("_Tip Jar..."), NULL,
-      NULL,
-      G_CALLBACK(do_tip_jar) },
-
-    { "about-pan", GTK_STOCK_ABOUT,
-      N_("_About"), NULL,
-      NULL,
-      G_CALLBACK(do_about_pan) },
-
-    { "show-sec-dialog", GTK_STOCK_DIALOG_AUTHENTICATION,
-      N_("Edit _SSL Certificates"), NULL,
-      NULL,
-      G_CALLBACK(do_show_sec_dialog) },
-  };
+    GtkActionEntry entries[] =
+    {
+      { "file-menu", NULL, N_("_File"), NULL, NULL, NULL },
+      { "edit-menu", NULL, N_("_Edit"), NULL, NULL, NULL },
+      { "view-layout-menu", NULL, N_("_Layout"), NULL, NULL, NULL },
+      { "view-group-pane-menu", NULL, N_("_Group Pane"), NULL, NULL, NULL },
+      { "view-header-pane-menu", NULL, N_("_Header Pane"), NULL, NULL, NULL },
+      { "view-body-pane-menu", NULL, N_("_Body Pane"), NULL, NULL, NULL },
+      { "view-menu", NULL, N_("_View"), NULL, NULL, NULL },
+      { "filter-menu", NULL, N_("Filte_r"), NULL, NULL, NULL },
+      { "go-menu", NULL, N_("_Go"), NULL, NULL, NULL },
+      { "actions-menu", NULL, N_("_Actions"), NULL, NULL, NULL },
+      { "article-actions-menu", NULL, N_("_Articles"), NULL, NULL, NULL },
+      { "group-actions-menu", NULL, N_("G_roups"), NULL, NULL, NULL },
+      { "posting-actions-menu", NULL, N_("_Post"), NULL, NULL, NULL },
+      { "post-menu", NULL, N_("_Post"), NULL, NULL, NULL },
+      { "help-menu", NULL, N_("_Help"), NULL, NULL, NULL },
+
+      { "read-selected-group", "ICON_READ_MORE",
+        N_("_Read Group"), NULL,
+        N_("Read Group"),
+        G_CALLBACK(do_read_selected_group) },
+
+      { "mark-groups-read", GTK_STOCK_CLEAR,
+        N_("_Mark Selected Groups Read"), "<control><shift>M",
+        N_("Mark Selected Groups Read"),
+        G_CALLBACK(do_mark_selected_groups_read) },
+
+      { "delete-groups-articles", GTK_STOCK_DELETE,
+        N_("_Delete Selected Groups' Articles"), "<control><shift>Delete",
+        N_("Delete Selected Groups' Articles"),
+        G_CALLBACK(do_clear_selected_groups) },
+
+      { "get-new-headers-in-selected-groups", "ICON_GET_SELECTED",
+        N_("Get New _Headers in Selected Groups"), "A",
+        N_("Get New Headers in Selected Groups"),
+        G_CALLBACK(do_xover_selected_groups) },
+
+      { "get-new-headers-in-subscribed-groups", "ICON_GET_SUBSCRIBED",
+        N_("Get New _Headers in Subscribed Groups"), "<shift>A",
+        N_("Get New Headers in Subscribed Groups"),
+        G_CALLBACK(do_xover_subscribed_groups) },
+
+      { "update-stats-in-selected-groups", "ICON_GET_SUBSCRIBED",
+        N_("Get New _Headers in Subscribed Groups"), "<shift>A",
+        N_("Get New Headers in Subscribed Groups"),
+        G_CALLBACK(do_xover_subscribed_groups) },
+
+      { "download-headers", "ICON_GET_DIALOG",
+        N_("Get _Headers..."), "",
+        N_("Get Headers..."),
+        G_CALLBACK(do_download_headers) },
+
+      { "refresh-group-list", NULL,
+        N_("Refresh Group List"), "",
+        N_("Refresh Group List"),
+        G_CALLBACK(do_refresh_groups) },
+
+      { "subscribe", NULL,
+        N_("_Subscribe"), NULL,
+        N_("Subscribe"),
+        G_CALLBACK(do_subscribe_selected_groups) },
+
+      { "unsubscribe", NULL,
+        N_("_Unsubscribe"), NULL,
+        N_("Unsubscribe"),
+        G_CALLBACK(do_unsubscribe_selected_groups) },
+
+      { "save-articles", GTK_STOCK_SAVE,
+        N_("_Save Articles..."), "<shift>S",
+        N_("Save Articles..."),
+        G_CALLBACK(do_save_articles) },
+
+      { "save-articles-from-nzb", GTK_STOCK_SAVE,
+        N_("Save Articles from Selected _NZB..."), "<control><shift>S",
+        N_("Save Articles from Selected NZB"),
+        G_CALLBACK(do_save_articles_from_nzb) },
+
+      { "save-articles-to-nzb", GTK_STOCK_SAVE,
+        N_("Save Articles to an NZB _File..."), "<control><shift>F",
+        N_("Save Articles to an NZB File"),
+        G_CALLBACK(do_save_articles_to_nzb) },
+
+      { "print", GTK_STOCK_PRINT,
+        NULL, "<control>P",
+        NULL,
+        G_CALLBACK(do_print) },
+
+      { "import-tasks", GTK_STOCK_OPEN,
+        N_("_Import NZB Files..."), NULL,
+        NULL,
+        G_CALLBACK(do_import_tasks) },
+
+      { "cancel-last-task", GTK_STOCK_CANCEL,
+        N_("_Cancel Last Task"), "<control>Delete",
+        NULL,
+        G_CALLBACK(do_cancel_latest_task) },
+
+      { "show-task-window", NULL,
+        N_("_Task Manager"), NULL,
+        NULL,
+        G_CALLBACK(do_show_task_window) },
+
+      { "show-log-dialog", GTK_STOCK_DIALOG_INFO,
+        N_("_Event Log"), NULL,
+        NULL,
+        G_CALLBACK(do_show_log_window) },
+
+      { "quit", NULL,
+        N_("_Quit"), "<control>Q",
+        NULL,
+        G_CALLBACK(do_quit) },
+
+      { "select-all-articles", NULL,
+        N_("Select _All Articles"), "<control>D",
+        NULL,
+        G_CALLBACK(do_select_all_articles) },
+
+      { "unselect-all-articles", NULL,
+        N_("_Deselect All Articles"), "<shift><control>D",
+        NULL,
+        G_CALLBACK(do_unselect_all_articles) },
+
+      { "add-subthreads-to-selection", NULL,
+        N_("Add Su_bthreads to Selection"), "D",
+        NULL,
+        G_CALLBACK(do_add_subthreads_to_selection) },
+
+      { "add-threads-to-selection", NULL,
+        N_("Add _Threads to Selection"), "<shift>D",
+        NULL,
+        G_CALLBACK(do_add_threads_to_selection) },
+
+      { "add-similar-articles-to-selection", NULL,
+        N_("Add _Similar Articles to Selection"), "<control>S",
+        NULL,
+        G_CALLBACK(do_add_similar_to_selection) },
+
+      { "select-article-body", NULL,
+        N_("Select Article _Body"), NULL,
+        NULL,
+        G_CALLBACK(do_select_article_body) },
+
+      { "show-preferences-dialog", GTK_STOCK_PREFERENCES,
+        N_("Edit _Preferences"), NULL,
+        NULL,
+        G_CALLBACK(do_show_preferences_dialog) },
+
+      { "show-group-preferences-dialog", GTK_STOCK_PREFERENCES,
+        N_("Edit Selected _Group's Preferences"), NULL,
+        NULL,
+        G_CALLBACK(do_show_group_preferences_dialog) },
+
+      { "show-profiles-dialog", GTK_STOCK_EDIT,
+        N_("Edit P_osting Profiles"), NULL,
+        NULL,
+        G_CALLBACK(do_show_profiles_dialog) },
+
+      { "show-servers-dialog", GTK_STOCK_NETWORK,
+        N_("Edit _News Servers"), NULL,
+        NULL,
+        G_CALLBACK(do_show_servers_dialog) },
+
+      { "jump-to-group-tab", GTK_STOCK_JUMP_TO,
+        N_("Jump to _Group Tab"), "1",
+        NULL,
+        G_CALLBACK(do_jump_to_group_tab) },
+
+      { "jump-to-header-tab", GTK_STOCK_JUMP_TO,
+        N_("Jump to _Header Tab"), "2",
+        NULL,
+        G_CALLBACK(do_jump_to_header_tab) },
+
+      { "jump-to-body-tab", GTK_STOCK_JUMP_TO,
+        N_("Jump to _Body Tab"), "3",
+        NULL,
+        G_CALLBACK(do_jump_to_body_tab) },
+
+      { "rot13-selected-text", NULL,
+        N_("_Rot13 Selected Text"), "<control><shift>R",
+        NULL,
+        G_CALLBACK(do_rot13_selected_text) },
+
+      { "clear-header-pane", NULL,
+        N_("Clear _Header Pane"), NULL,
+        NULL,
+        G_CALLBACK(do_clear_header_pane) },
+
+      { "clear-body-pane", NULL,
+        N_("Clear _Body Pane"), NULL,
+        NULL,
+        G_CALLBACK(do_clear_body_pane) },
+
+      { "download-selected-article", "ICON_DISK",
+        N_("Cache Article"), NULL,
+        NULL,
+        G_CALLBACK(do_download_selected_article) },
+
+      { "read-selected-article", "ICON_READ_MORE",
+        N_("Read Article"), NULL,
+        NULL,
+        G_CALLBACK(do_read_selected_article) },
+
+      { "show-selected-article-info", NULL,
+        N_("Show Article Information"), NULL,
+        NULL,
+        G_CALLBACK(do_show_selected_article_info) },
+
+      { "read-more", "ICON_READ_MORE",
+        N_("Read _More"), "space",
+        N_("Read More"),
+        G_CALLBACK(do_read_more) },
+
+      { "read-less", "ICON_READ_LESS",
+        N_("Read _Back"), "BackSpace",
+        N_("Read Back"),
+        G_CALLBACK(do_read_less) },
+
+      { "read-next-unread-group", "ICON_READ_UNREAD_GROUP",
+        N_("Next _Unread Group"), "G",
+        NULL,
+        G_CALLBACK(do_read_next_unread_group) },
+
+      { "read-next-group", "ICON_READ_GROUP",
+        N_("Next _Group"), "<shift>G",
+        NULL,
+        G_CALLBACK(do_read_next_group) },
+
+      { "read-next-unread-article", "ICON_READ_UNREAD_ARTICLE",
+        N_("Next _Unread Article"), "N",
+        N_("Next Unread Article"),
+        G_CALLBACK(do_read_next_unread_article) },
+
+      { "read-next-article", NULL,
+        N_("Next _Article"), "<control>N",
+        N_("Next Article"),
+        G_CALLBACK(do_read_next_article) },
+
+      { "read-next-watched-article", NULL,
+        N_("Next _Watched Article"), "<control><shift>N",
+        NULL,
+        G_CALLBACK(do_read_next_watched_article) },
+
+      { "read-next-unread-thread", "ICON_READ_UNREAD_THREAD",
+        N_("Next Unread _Thread"), "T",
+        N_("Next Unread Thread"),
+        G_CALLBACK(do_read_next_unread_thread) },
+
+      { "read-next-thread", NULL,
+        N_("Next Threa_d"), "<control>T",
+        NULL,
+        G_CALLBACK(do_read_next_thread) },
+
+      { "read-previous-article", NULL,
+        N_("Pre_vious Article"), "V",
+        NULL,
+        G_CALLBACK(do_read_previous_article) },
+
+      { "read-previous-thread", NULL,
+        N_("Previous _Thread"), "<control>V",
+        NULL,
+
+        G_CALLBACK(do_read_previous_thread) },
+      { "read-parent-article", NULL,
+        N_("_Parent Article"), "U",
+        NULL,
+        G_CALLBACK(do_read_parent_article) },
+
+      { "plonk", NULL,
+        N_("Ignore _Author"), NULL,
+        NULL,
+        G_CALLBACK(do_plonk) },
+      { "watch-thread", NULL,
+        N_("_Watch Thread"), NULL,
+        NULL,
+        G_CALLBACK(do_watch) },
+
+      { "ignore-thread", NULL,
+        N_("_Ignore Thread"), NULL,
+        NULL,
+        G_CALLBACK(do_ignore) },
+
+      { "flag-thread", "ICON_FLAGGED",
+        N_("_Toggle Flag On/Off for Thread"), "X",
+        N_("_Toggle Flag On/Off for Thread"),
+        G_CALLBACK(do_flag) },
+
+      { "unflag-thread", NULL,
+        N_("_Turn Flag Off for Thread"), "<shift>X",
+        N_("_Turn Flag Off for Thread"),
+        G_CALLBACK(do_flag_off) },
+
+      { "select-all-flagged", NULL,
+        N_("_Select All Flagged Threads"), "<control>X",
+        N_("_Select All Flagged Threads"),
+        G_CALLBACK(do_mark_all_flagged) },
+
+      { "next-flagged", NULL,
+        N_("_Go to Next Flagged Thread"), "plus",
+        N_("_Go to Next Flagged Thread"),
+        G_CALLBACK(do_next_flag) },
+
+      { "last-flagged", NULL,
+        N_("_Go to Last Flagged Thread"), "minus",
+        N_("_Go to Last Flagged Thread"),
+        G_CALLBACK(do_last_flag) },
+
+      { "invert-selection", NULL,
+        N_("_Invert Selection"), "<control>I",
+        N_("_Invert Selection"),
+        G_CALLBACK(do_invert_selection) },
+
+      { "view-article-score", "ICON_SCORE",
+        N_("Edit Article's Watch/Ignore/Score..."), "<control><shift>C",
+        NULL,
+        G_CALLBACK(do_show_score_dialog) },
+
+      { "add-article-score", "ICON_SCORE",
+        N_("Add a _Scoring Rule..."), "S",
+        NULL,
+        G_CALLBACK(do_show_new_score_dialog) },
+
+      { "cancel-article", NULL,
+        N_("Cance_l Article..."), NULL,
+        NULL,
+        G_CALLBACK(do_cancel_article) },
+
+      { "supersede-article", NULL,
+        N_("_Supersede Article..."), NULL,
+        NULL,
+        G_CALLBACK(do_supersede_article) },
+
+      { "delete-article", GTK_STOCK_DELETE,
+        N_("_Delete Article"), "Delete",
+        NULL,
+        G_CALLBACK(do_delete_article) },
+
+      { "clear-article-cache", NULL,
+        N_("Clear Article Cache"), NULL,
+        NULL,
+        G_CALLBACK(do_clear_article_cache) },
+
+      { "mark-article-read", "ICON_ARTICLE_READ",
+        N_("_Mark Article as Read"), "M",
+        NULL,
+        G_CALLBACK(do_mark_article_read) },
+
+      { "mark-article-unread", "ICON_ARTICLE_UNREAD",
+        N_("Mark Article as _Unread"), "<control>M",
+        NULL,
+        G_CALLBACK(do_mark_article_unread) },
+
+      ///TODO create icons for the next two actions
+      { "mark-thread-read", "ICON_ARTICLE_READ",
+        N_("_Mark Thread as Read"), "<Shift>T",
+        NULL,
+        G_CALLBACK(do_mark_thread_read) },
+
+      { "mark-thread-unread", "ICON_ARTICLE_UNREAD",
+        N_("Mark Thread as _Unread"), "<control><Shift>T",
+        NULL,
+        G_CALLBACK(do_mark_thread_unread) },
+
+      { "post", "ICON_COMPOSE_POST",
+        N_("_Post to Newsgroup"), "P",
+        N_("Post to Newsgroup"),
+        G_CALLBACK(do_post) },
+
+      { "followup-to", "ICON_COMPOSE_FOLLOWUP",
+        N_("_Followup to Newsgroup"), "F",
+        N_("Followup to Newsgroup"),
+        G_CALLBACK(do_followup_to) },
+
+      { "reply-to", NULL,
+        N_("_Reply to Author in Mail"), "R",
+        NULL,
+        G_CALLBACK(do_reply_to) },
+
+      { "pan-manual", NULL,
+        N_("_Contents"), "F1",
+        NULL,
+        G_CALLBACK(do_pan_manual) },
+
+      { "pan-web-page", NULL,
+        N_("_Pan Home Page"), NULL,
+        NULL,
+        G_CALLBACK(do_pan_web) },
+
+      { "bug-report", NULL,
+        N_("Give _Feedback or Report a Bug..."), NULL,
+        NULL,
+        G_CALLBACK(do_bug_report) },
+
+      { "tip-jar", NULL,
+        N_("_Tip Jar..."), NULL,
+        NULL,
+        G_CALLBACK(do_tip_jar) },
+
+      { "about-pan", GTK_STOCK_ABOUT,
+        N_("_About"), NULL,
+        NULL,
+        G_CALLBACK(do_about_pan) },
+
+      { "show-sec-dialog", GTK_STOCK_DIALOG_AUTHENTICATION,
+        N_("Edit _SSL Certificates"), NULL,
+        NULL,
+        G_CALLBACK(do_show_sec_dialog) } };
 
   void prefs_toggle_callback_impl (GtkToggleAction * action)
   {
@@ -765,12 +765,67 @@ namespace
 }
 
 void
-pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p)
+pan :: add_hotkeys_to_actions (hotkeys_t& hk, hotkeys_t& t_hk)
+{
+  for (GtkToggleActionEntry *it(toggle_entries), *end(it+n_toggle_entries); it!=end; ++it)
+  {
+    GtkActionEntry* e (reinterpret_cast<GtkActionEntry*>(it));
+    if (t_hk.count(e->name) > 0)
+    {
+      e->accelerator = t_hk[e->name];
+//      std::cerr<<"setting hotkey for action '"<<e->name<<"' to '"<<t_hk[e->name]<<"', count "<<t_hk.count(e->name)<<"\n";
+    }
+  }
+
+  for (GtkActionEntry *it(entries), *end(it+n_entries); it!=end; ++it)
+  {
+    GtkActionEntry* e(it);
+
+    if (hk.count(e->name) > 0)
+    {
+      e->accelerator = hk[e->name];
+//      std::cerr<<"setting hotkey for action '"<<e->name<<"' to '"<<hk[e->name]<<"', count "<<hk.count(e->name)<<"\n";
+    }
+  }
+}
+
+void
+pan :: add_new_hotkeys_from_ui (hotkeys_t& hk, hotkeys_t& t_hk)
+{
+  for (GtkActionEntry *it(entries), *end(it+n_entries); it!=end; ++it)
+  {
+    GtkActionEntry* e(it);
+//    std::cerr<<"setting hotkey for action '"<<e->name<<"' to '"<<(e->accelerator ? e->accelerator : "NULL")<<"\n";
+    hk[e->name] = (e->accelerator ? e->accelerator : "");
+  }
+
+  for (GtkToggleActionEntry *it(toggle_entries), *end(it+n_toggle_entries); it!=end; ++it)
+  {
+    GtkActionEntry* e (reinterpret_cast<GtkActionEntry*>(it));
+//    std::cerr<<"setting hotkey for action '"<<e->name<<"' to '"<<(e->accelerator ? e->accelerator : "NULL")<<"\n";
+    t_hk[e->name] = (e->accelerator ? e->accelerator : "");
+  }
+
+  std::cerr<<"sizes "<<hk.size()<<" "<<t_hk.size()<<"\n";
+
+}
+
+void
+pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p, Data* data)
 {
   pan_ui = ui;
   prefs = p;
 
   register_my_builtin_icons ();
+
+  int ret = data->get_all_hotkeys ();
+  if (ret > 0)
+    add_hotkeys_to_actions(data->get_hotkeys(), data->get_toggle_hotkeys());
+  else
+  {
+    // create initial shortcuts file for the user
+    add_new_hotkeys_from_ui (data->get_hotkeys(), data->get_toggle_hotkeys());
+  }
 
   for (GtkToggleActionEntry *it(toggle_entries), *end(it+n_toggle_entries); it!=end; ++it)
   {

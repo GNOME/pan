@@ -869,6 +869,7 @@ DataImpl :: save_headers (DataIO& data_io, const Quark& group) const
 *******/
 namespace
 {
+  /* autosave newsrc files */
   gboolean nrc_as_cb(gpointer ptr)
   {
     DataImpl *data = static_cast<DataImpl*>(ptr);
@@ -1225,9 +1226,8 @@ DataImpl :: group_get_articles (const Quark       & group,
                                 const Quark       & save_path,
                                 const ShowType      show_type,
                                 const FilterInfo  * filter,
-                                const RulesInfo   * rules,
-                                      Queue       * queue) const
+                                const RulesInfo   * rules) const
 {
   // cast const away for group_ref()... consider _groups mutable
-  return new MyTree (*const_cast<DataImpl*>(this), group, save_path, show_type, filter, rules,queue);
+  return new MyTree (*const_cast<DataImpl*>(this), group, save_path, show_type, filter, rules);
 }

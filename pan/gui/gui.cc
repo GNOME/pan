@@ -27,8 +27,6 @@ extern "C" {
   #include <sys/stat.h> // for chmod
   #include <glib/gi18n.h>
   #include <dirent.h>
-  #include <iconv.h>
-
 }
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
@@ -207,7 +205,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
     gtk_ui_manager_add_ui_from_string (_ui_manager, fallback_ui_file, -1, NULL);
   g_free (filename);
   g_signal_connect (_ui_manager, "add_widget", G_CALLBACK (add_widget), this);
-  add_actions (this, _ui_manager, &prefs);
+  add_actions (this, _ui_manager, &prefs, &data);
   g_signal_connect (_root, "parent-set", G_CALLBACK(parent_set_cb), _ui_manager);
   gtk_box_pack_start (GTK_BOX(_root), _menu_vbox, FALSE, FALSE, 0);
   gtk_widget_show (_menu_vbox);
@@ -1158,7 +1156,8 @@ void
 GUI :: do_flag ()
 {
   std::vector<const Article*> v(_header_pane->get_full_selection_v());
-  g_return_if_fail(!v.empty());
+  if (v.empty()) return;
+
   foreach (std::vector<const Article*>,v,it)
   {
     Article* a((Article*)*it);
@@ -1172,7 +1171,8 @@ void
 GUI :: do_flag_off ()
 {
   std::vector<const Article*> v(_header_pane->get_full_selection_v());
-  g_return_if_fail(!v.empty());
+  if (v.empty()) return;
+
   foreach (std::vector<const Article*>,v,it)
   {
     Article* a((Article*)*it);
@@ -1549,6 +1549,7 @@ void GUI :: do_reply_to ()
 }
 void GUI :: do_pan_manual ()
 {
+#ifdef HAVE_HELP
   GError * error (NULL);
   gtk_show_uri (NULL, "ghelp:pan", gtk_get_current_event_time (), &error);
     if (error) {
@@ -1560,6 +1561,7 @@ void GUI :: do_pan_manual ()
       g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
       gtk_widget_show_all (w);
   }
+#endif
 }
 void GUI :: do_pan_web ()
 {

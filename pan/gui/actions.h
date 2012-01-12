@@ -22,10 +22,13 @@
 #include "gtk-compat.h"
 #include <pan/gui/pan-ui.h>
 #include <pan/gui/prefs.h>
+#include <pan/data/data.h>
 
 namespace pan
 {
-  void add_actions (PanUI*, GtkUIManager*, Prefs*);
+  void add_actions (PanUI*, GtkUIManager*, Prefs*, Data*);
+  void add_hotkeys_to_actions (hotkeys_t& hk, hotkeys_t& t_hk);
+  void add_new_hotkeys_from_ui (hotkeys_t& hk, hotkeys_t& t_hk);
 }
 
 #endif /* __PAN_H__ */

@@ -22,7 +22,6 @@ extern "C" {
   #include <glib/gi18n.h>
   #include "gtk-compat.h"
   #include "gtk-compat.h"
-  #include <iconv.h>
 }
 #include <cctype>
 #include <cmath>
@@ -595,7 +594,7 @@ HeaderPane :: set_group (const Quark& new_group)
 
     if (!_group.empty())
     {
-      _atree = _data.group_get_articles (new_group, path, _show_type, &_filter,&_rules,&_queue);
+      _atree = _data.group_get_articles (new_group, path, _show_type, &_filter,&_rules);
       _atree->add_listener (this);
 
       rebuild ();

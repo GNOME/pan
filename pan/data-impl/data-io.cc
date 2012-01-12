@@ -117,9 +117,9 @@ DataIO :: get_server_filename () const
 }
 
 std::string
-DataIO :: get_lock_filename ()
+DataIO :: get_hotkey_filename () const
 {
-  return get_pan_home_file ("pan.lock");
+  return get_pan_home_file ("pan.hotkeys");
 }
 
 /****
@@ -167,6 +167,12 @@ DataIO :: read_group_headers (const Quark& group) const
 {
   const std::string filename (get_group_headers_filename (group));
   return file::file_exists(filename.c_str()) ? read_file(filename) : 0;
+}
+
+LineReader*
+DataIO :: read_hotkeys () const
+{
+  return new FileLineReader (get_hotkey_filename());
 }
 
 LineReader*
@@ -248,6 +254,12 @@ std::ostream*
 DataIO :: write_group_permissions ()
 {
   return write_file (get_group_permissions_filename ());
+}
+
+std::ostream*
+DataIO :: write_hotkeys ()
+{
+  return write_file (get_hotkey_filename ());
 }
 
 std::ostream*

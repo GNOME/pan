@@ -53,6 +53,7 @@
 namespace pan
 {
   typedef std::vector<const Article*> articles_t;
+  typedef Data::PasswordData PasswordData;
 
   /**
    * File-based implementation of the `Data' backend interface.
@@ -67,8 +68,6 @@ namespace pan
     public TaskArchive,
     public ProfilesImpl
   {
-
-    typedef Data::PasswordData PasswordData;
 
     /**
     *** SERVERS
@@ -93,16 +92,6 @@ namespace pan
       EncodeCache _encode_cache;
       ArticleCache _cache;
       CertStore _certstore;
-
-    private:
-//      CBlowFish _blowfish;
-//      bool _blowfish_inited;
-
-    public:
-//      void blowfish_init ();
-//      void blowfish_encrypt (char*, const StringView&);
-//      void blowfish_decrypt (char* t, size_t len);
-
 
     public:
 #ifdef HAVE_GKR
@@ -295,10 +284,21 @@ namespace pan
       void load_group_permissions (const DataIO&);
       void save_group_permissions (DataIO&) const;
 
+      int  load_hotkeys (const DataIO&);
+      void save_hotkeys (DataIO&) const;
+      void create_hotkeys (const DataIO&);
+
       std::string get_newsrc_filename (const Quark& server) const;
       void load_newsrc (const Quark& server, LineReader*, alpha_groups_t&, alpha_groups_t&);
       void load_newsrc_files (const DataIO&);
       void save_newsrc_files (DataIO&) const;
+
+    public:
+
+      virtual int get_all_hotkeys()
+      {
+        return load_hotkeys(*_data_io);
+      }
 
     public: // mutators
 
@@ -469,8 +469,7 @@ namespace pan
                   const Quark           & save_path,  // for auto-download
                   const Data::ShowType    show_type,
                   const FilterInfo      * filter_info=0,
-                  const RulesInfo       * rules=0,
-                        Queue           * queue=0);
+                  const RulesInfo       * rules=0);
           virtual ~MyTree ();
 
         public: // from ArticleTree
@@ -530,8 +529,7 @@ namespace pan
                                                 const Quark        & save_path,
                                                 const ShowType      show_type = SHOW_ARTICLES,
                                                 const FilterInfo   * criteria=0,
-                                                const RulesInfo    * rules=0,
-                                                      Queue        * queue=0) const;
+                                                const RulesInfo    * rules=0) const;
 
       virtual void group_clear_articles        (const Quark        & group);
 

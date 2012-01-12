@@ -46,6 +46,7 @@ using namespace pan;
 
 namespace
 {
+
   std::string get_cache_path ()
   {
     char * pch (g_build_filename (file::get_pan_home().c_str(), "article-cache", NULL));
@@ -76,8 +77,7 @@ DataImpl :: DataImpl (bool unit_test, int cache_megs, DataIO * io):
   _descriptions_loaded (false),
   newsrc_autosave_id (0),
   newsrc_autosave_timeout (0)
-//  ,
-//  _blowfish_inited(false)
+
 {
   rebuild_backend ();
 }
@@ -124,6 +124,7 @@ DataImpl :: save_state ()
     debug ("data-impl dtor saving xov, newsrc...");
     save_group_xovers (*_data_io);
     save_newsrc_files (*_data_io);
+    save_hotkeys (*_data_io);
   }
 }
 
@@ -161,54 +162,11 @@ DataImpl :: password_decrypt (PasswordData* pw) const
     "server", pw->server.c_str(),
     NULL);
 
-  std::string tmp;
-  if (pwd) tmp = pwd;
+  if (pwd) pw->pw = pwd;
   gnome_keyring_free_password(pwd);
-  pw->pw = tmp;
 
   return ret;
 }
 #endif
 
-//void
-//DataImpl :: blowfish_init ()
-//{
-//
-//  /TODO : Custom key with gtkwidget*
-//  if (!_blowfish_inited)
-//  {
-//    _blowfish_inited = true;
-//    char* key = (char*)"fjghdfjghdfkjg";
-//    _blowfish.Initialize(key, 14);
-//  }
-//}
-
-//void
-//DataImpl :: blowfish_encrypt (char* t, const StringView& s)
-//{
-//
-//  std::cerr<<"bf encrypt "<<s<<"\n";
-//
-//  size_t len (s.len);
-//  std::string str(s);
-//  int i(0);
-//  for (;i<len%8;++i) str += " ";
-//  _blowfish.Encode ((char*)str.c_str(),t,len+i);
-//
-//}
-
-//void
-//DataImpl :: blowfish_decrypt (char* t, size_t len)
-//{
-//
-//  std::cerr<<"bf decrypt "<<t<<" "<<len<<"\n";
-//
-//  std::string str((char*)t);
-//  int i(0);
-//  for (;i<len%8;++i) str += " ";
-//  char* buf = (char*)str.c_str();
-//  _blowfish.Decode (buf,buf,len+i);
-//  t = buf;
-//
-//}
 
