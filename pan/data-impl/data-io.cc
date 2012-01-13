@@ -214,7 +214,7 @@ namespace
 
     const std::string tmpfile (filename + ".tmp");
     if (ok) {
-//      unlink (filename.c_str());
+      remove (filename.c_str());
       if (rename (tmpfile.c_str(), filename.c_str()))
         std::cerr << LINE_ID << " ERROR renaming from [" << tmpfile << "] to [" << filename << "]: " << g_strerror(errno) << '\n';
       if (chmod (filename.c_str(), 0600))

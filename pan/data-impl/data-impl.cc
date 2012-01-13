@@ -162,8 +162,10 @@ DataImpl :: password_decrypt (PasswordData* pw) const
     "server", pw->server.c_str(),
     NULL);
 
-  if (pwd) pw->pw = pwd;
+  std::string tmp;
+  if (pwd) tmp = pwd;
   gnome_keyring_free_password(pwd);
+  pw->pw = tmp;
 
   return ret;
 }

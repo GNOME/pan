@@ -73,7 +73,7 @@ extern "C" {
   #include <gnome-keyring-1/gnome-keyring-memory.h>
 #endif
 
-#define DEBUG_LOCALE 1
+//#define DEBUG_LOCALE 1
 //#define DEBUG_PARALLEL 1
 
 using namespace pan;
