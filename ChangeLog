@@ -1,11 +1,14 @@
 1.0 "Asieoniezi"
 
 0.136 "TBD"
-* Support for uploading attachments to Usenet. (Heinrich Mueller)
-* Support for encrypting and signing articles with a public/private PGP key.
-  (Heinrich Mueller)
-* Connections can now be encrypted with SSL 3.0. (Heinrich Mueller)
-* Updated translations: Spanish (Daniel Mustieles, Nicolás Satragno), Slovenian
+* Support for uploading attachments (with NZB creation) to Usenet. (Heinrich Müller)
+* Selectable Content-Transfer-Encoding (Heinrich Müller)
+* Selectable GtkSpell default language (Heinrich Müller)
+* Support for encrypting and signing articles with a public/private PGP key. (Heinrich Müller)
+* Connections can now be encrypted with SSL 3.0. (Heinrich Müller)
+* Various bugfixes/enhancements from bugzilla
+* Auto-Cache/-Download/-Delete based on Scores (Heinrich Müller)
+* Updated translations and help: Spanish (Daniel Mustieles, Nicolás Satragno), Slovenian
   (Andrej Žnidaršič, Matej Urbančič), German (Christian Kirbach, Mario
   Blättermann), Czech (Marek Černocký), Esperanto (Kristjan SCHMIDT), Danish
   (Joe Hansen), Japanese (OKANO Takayoshi), Russian (Yuri Myasoedov), French
@@ -16,7 +19,7 @@
 * Make highlighting of URIs in the body pane optional. (K. Haley)
 * Add a newsrc autosave timer. (K. Haley)
 * Fix mailto URI encoding. (K. Haley, #648375)
-* Create a NZB file from the list of articles. (Heinrich Mueller)
+* Create a NZB file from the list of articles. (Heinrich Müller)
 * Optional compatibility with GTK+ 3. (K. Haley)
 * Fix the text-massager-test failure. (K. Haley, #642746)
 * Support format=flowed in text-massager. (K. Haley)
@@ -455,7 +458,7 @@
  350371 Headers shown in 'show all headers' were included in follow-ups. (gbzzl)
  349850 No way to make servers go online after an error occurs. (Sam Guidice)
  346579 Couldn't show some articles with mislabeled encodings (Artur Jachacy)
- 350485 Poor handling of noise in multipart uu messages. (Per Hedeland) 
+ 350485 Poor handling of noise in multipart uu messages. (Per Hedeland)
  349734 followup quoting error (odd character in "From:" header issue?) (Duncan)
  349700 Fixed bug when queueing multiparts that had missing parts. (K. Haley)
  350026 Mark the group preferences dialog for translation. (Frederic Bezies)
