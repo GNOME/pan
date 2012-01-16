@@ -89,23 +89,32 @@ AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[Gettext package])
 AM_GLIB_GNU_GETTEXT
 panlocaledir='${prefix}/${DATADIRNAME}/locale'
 
+have_gmime26 =no
+AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
+PKG_CHECK_MODULES([GMIME], [ gmime-2.6    >= $GMIME26_REQUIRED ],[have_gmime26=yes],
+  [
+    PKG_CHECK_MODULES( [GMIME], [gmime-2.4    >= $GMIME24_REQUIRED] )
+  ]
+  )
+
 AC_ARG_WITH(gnome-doc-help, AC_HELP_STRING([--with-gnome-doc-help], [Enable Docbook Help (gnome-doc-utils) in Pan]),[want_gnome_doc_help=$withval], [want_gnome_doc_help=yes])
 if test "x$want_gnome_doc_help" = "xyes" ; then
   AC_DEFINE(HAVE_HELP,[1], [Docbook Help in Pan (with gnome-doc-utils)])
-  HELP_SUBDIR = help
+  AM_CONDITIONAL(ENABLE_HELP, true)
+else
+  AM_CONDITIONAL(ENABLE_HELP, false)
 fi
-AC_SUBST([HELP_SUBDIR])
+
 
 AC_ARG_WITH(gmime-crypto, AC_HELP_STRING([--with-gmime-crypto], [Enable GMIME Crypto support (overrides auto-on if GMime 2.6 is found)]),
     [want_gmime_crypto=$withval], [want_gmime_crypto=yes])
 
 if test "x$want_gmime_crypto" = "xyes" ; then
-  AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[crypto support (pgp) with gmime 2.6])
+  if test "x$have_gmime26" = "xyes" ; then
+    AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[crypto support (pgp) with gmime 2.6])
+  fi
 fi
 
-AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
-PKG_CHECK_MODULES([GMIME], [ gmime-2.6    >= $GMIME26_REQUIRED ],[],
-  [PKG_CHECK_MODULES( [GMIME], [gmime-2.4    >= $GMIME24_REQUIRED] )] )
 
 AC_ARG_WITH(dbus, AC_HELP_STRING([--with-dbus], [Enable DBUS support]), [want_dbus=$withval], [want_dbus=yes])
 if test "x$want_dbus" = "xyes" ; then

@@ -1,6 +1,8 @@
 SUBDIRS = po uulib pan
-SUBDIRS += $(HELP_SUBDIR)
 
+if ENABLE_HELP
+SUBDIRS += help
+endif
 
 @INTLTOOL_DESKTOP_RULE@
 
