@@ -43,104 +43,105 @@ extern "C"
 #include "article-cache.h"
 
 using namespace pan;
+/**
+* Message-IDs are transformed via message_id_to_filename()
+* to play nicely with some filesystems, so to extract the Message-ID
+* from a filename we need to reverse the transform.
+*
+* @return string length, or 0 on failure
+*/
 
-/*****
-******
-*****/
-
-namespace
+int
+ArticleCache :: filename_to_message_id (char * buf, int len, const char * basename)
 {
-   /**
-    * Some characters in message-ids don't work well in filenames,
-    * so we transform them to a safer name.
-    */
-   char*
-   message_id_to_filename (char * buf, int len, const StringView& mid)
-   {
-      // sanity clause
-      pan_return_val_if_fail (!mid.empty(), 0);
-      pan_return_val_if_fail (buf!=0, NULL);
-      pan_return_val_if_fail (len>0, NULL);
+  const char * in;
+  char * out;
+  char * pch;
+  char tmp_basename[PATH_MAX];
 
-      // some characters in message-ids are illegal on older Windows boxes,
-      // so we transform those illegal characters using URL encoding
-      char * out = buf;
-      for (const char *in=mid.begin(), *end=mid.end(); in!=end; ++in) {
-         switch (*in) {
-            case '%': /* this is the escape character */
-            case '"': case '*': case '/': case ':': case '?': case '|':
-            case '\\': /* these are illegal on vfat, fat32 */
-               g_snprintf (out, len-(out-buf), "%%%02x", (int)*in);
-               out += 3;
-               break;
-            case '<': case '>': /* these are illegal too, but rather than encoding
-                                   them, follow the convention of omitting them */
-               break;
-            default:
-               *out++ = *in;
-         }
-      }
+  // sanity clause
+  pan_return_val_if_fail (basename && *basename, 0);
+  pan_return_val_if_fail (buf!=NULL, 0);
+  pan_return_val_if_fail (len>0, 0);
 
-      g_snprintf (out, len-(out-buf), ".msg");
-      return buf;
-   }
+  // remove the trailing ".msg" or similar
+  g_strlcpy (tmp_basename, basename, sizeof(tmp_basename));
+//  if ((pch = g_strrstr (tmp_basename, msg_extension.c_str())))
+//     *pch = '\0';
+  if ((pch = g_strrstr (tmp_basename, ".")))
+     *pch = '\0';
+  g_strstrip (tmp_basename);
 
-   /**
-    * Message-IDs are transformed via message_id_to_filename()
-    * to play nicely with some filesystems, so to extract the Message-ID
-    * from a filename we need to reverse the transform.
-    *
-    * @return string length, or 0 on failure
-    */
-   int
-   filename_to_message_id (char * buf, int len, const char * basename)
-   {
-      const char * in;
-      char * out;
-      char * pch;
-      char tmp_basename[PATH_MAX];
+  std::cerr<<"debug "<<tmp_basename<<"\n";
 
-      // sanity clause
-      pan_return_val_if_fail (basename && *basename, 0);
-      pan_return_val_if_fail (buf!=NULL, 0);
-      pan_return_val_if_fail (len>0, 0);
+  // transform
+  out = buf;
+  *out++ = '<';
+  for (in=tmp_basename; *in; ++in) {
+     if (in[0]!='%' || !g_ascii_isxdigit(in[1]) || !g_ascii_isxdigit(in[2]))
+        *out++ = *in;
+     else {
+        char buf[3];
+        buf[0] = *++in;
+        buf[1] = *++in;
+        buf[2] = '\0';
+        *out++ = (char) strtoul (buf, NULL, 16);
+     }
+  }
+  *out++ = '>';
+  *out = '\0';
 
-      // remove the trailing ".msg"
-      g_strlcpy (tmp_basename, basename, sizeof(tmp_basename));
-      if ((pch = g_strrstr (tmp_basename, ".msg")))
-         *pch = '\0';
-      g_strstrip (tmp_basename);
+  return out - buf;
+}
 
-      // transform
-      out = buf;
-      *out++ = '<';
-      for (in=tmp_basename; *in; ++in) {
-         if (in[0]!='%' || !g_ascii_isxdigit(in[1]) || !g_ascii_isxdigit(in[2]))
-            *out++ = *in;
-         else {
-            char buf[3];
-            buf[0] = *++in;
-            buf[1] = *++in;
-            buf[2] = '\0';
-            *out++ = (char) strtoul (buf, NULL, 16);
-         }
-      }
-      *out++ = '>';
-      *out = '\0';
+/**
+* Some characters in message-ids don't work well in filenames,
+* so we transform them to a safer name.
+*/
+char*
+ArticleCache :: message_id_to_filename (char * buf, int len, const StringView& mid) const
+{
+  // sanity clause
+  pan_return_val_if_fail (!mid.empty(), 0);
+  pan_return_val_if_fail (buf!=0, NULL);
+  pan_return_val_if_fail (len>0, NULL);
 
-      return out - buf;
-   }
-};
+  // some characters in message-ids are illegal on older Windows boxes,
+  // so we transform those illegal characters using URL encoding
+  char * out = buf;
+  for (const char *in=mid.begin(), *end=mid.end(); in!=end; ++in) {
+     switch (*in) {
+        case '%': /* this is the escape character */
+        case '"': case '*': case '/': case ':': case '?': case '|':
+        case '\\': /* these are illegal on vfat, fat32 */
+           g_snprintf (out, len-(out-buf), "%%%02x", (int)*in);
+           out += 3;
+           break;
+        case '<': case '>': /* these are illegal too, but rather than encoding
+                               them, follow the convention of omitting them */
+           break;
+        default:
+           *out++ = *in;
+     }
+  }
 
-/*****
-******
-*****/
+  // add the filename extension
+  char* tmp = new char[msg_extension.length()+1];
+  g_snprintf (tmp, sizeof(tmp), ".%s", msg_extension.c_str());
+  g_snprintf (out, len-(out-buf), tmp);
 
-ArticleCache :: ArticleCache (const StringView& path, size_t max_megs):
+  delete tmp;
+
+  return buf;
+}
+
+ArticleCache :: ArticleCache (const StringView& path, const StringView& extension, size_t max_megs):
+   msg_extension(extension),
    _path (path.str, path.len),
    _max_megs (max_megs),
    _current_bytes (0ul)
 {
+
    GError * err = NULL;
    GDir * dir = g_dir_open (_path.c_str(), 0, &err);
    if (err != NULL)

@@ -23,7 +23,13 @@
 #include <pan/general/macros.h>
 #include <pan/data/data.h>
 #include <gmime/gmime.h>
-#include <glib/gprintf.h>
+
+//#include <glib/gprintf.h>
+extern "C"
+{
+  #include <glib.h>
+}
+
 #include "article-filter.h"
 
 using namespace pan;

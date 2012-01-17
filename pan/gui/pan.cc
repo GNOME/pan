@@ -911,7 +911,7 @@ main (int argc, char *argv[])
 
     // instantiate the backend...
     const int cache_megs = prefs.get_int ("cache-size-megs", 10);
-    DataImpl data (false, cache_megs);
+    DataImpl data (prefs.get_string("cache-file-extension","msg"), false, cache_megs);
     ArticleCache& cache (data.get_cache ());
     EncodeCache& encode_cache (data.get_encode_cache());
     CertStore& certstore (data.get_certstore());

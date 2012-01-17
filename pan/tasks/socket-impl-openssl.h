@@ -25,8 +25,13 @@
 #define __SocketSSL_h__
 
 #include <string>
-#include <glib/giochannel.h>
-#include <glib/gstring.h>
+//#include <glib/giochannel.h>
+//#include <glib/gstring.h>
+extern "C"
+{
+  #include <glib.h>
+}
+
 #include <pan/general/debug.h>
 #include <pan/general/quark.h>
 #include <pan/tasks/socket.h>

@@ -2249,6 +2249,15 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
 
   if (key == "default-save-attachments-path")
     prev_path.assign (value.str, value.len);
+
+  if (key == "cache-file-extension")
+  {
+    _prefs.save();
+    StringView tmp(value);
+    // default to "eml" if value is empty to conform with article-cache
+    if (tmp.empty()) tmp ="eml";
+    _data.get_cache().set_msg_extension(tmp);
+  }
 }
 
 #ifdef HAVE_GNUTLS

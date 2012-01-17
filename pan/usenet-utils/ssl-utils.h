@@ -41,7 +41,6 @@
 #include <pan/tasks/socket.h>
 #include <pan/general/e-util.h>
 #include <gnutls/gnutls.h>
-#include <gnutls/openssl.h>
 #include <gnutls/x509.h>
 #include <map>
 #include <sstream>

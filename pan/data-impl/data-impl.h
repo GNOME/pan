@@ -74,7 +74,7 @@ namespace pan
     **/
 
     public:
-      DataImpl (bool unit_test=false, int cache_megs=10, DataIO * source=new DataIO());
+      DataImpl (const StringView& cache_ext, bool unit_test=false, int cache_megs=10, DataIO * source=new DataIO());
       virtual ~DataImpl ();
       virtual void save_state ();
 

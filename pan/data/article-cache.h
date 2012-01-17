@@ -38,6 +38,7 @@ extern "C"
 
 namespace pan
 {
+
   class Article;
   class StringView;
 
@@ -60,7 +61,7 @@ namespace pan
   {
     public:
 
-      ArticleCache (const StringView& path, size_t max_megs=10);
+      ArticleCache (const StringView& path, const StringView& extension, size_t max_megs=10);
       ~ArticleCache ();
 
       typedef std::vector<Quark> mid_sequence_t;
@@ -92,10 +93,14 @@ namespace pan
 
     public:
       void set_max_megs (size_t value) { _max_megs = value; }
+      void set_msg_extension (const std::string& s) { msg_extension = s; }
+      const std::string& get_msg_extension () const { return msg_extension; }
 
     private:
 
       std::map<Quark,int> _locks;
+
+      std::string msg_extension;
 
       struct MsgInfo {
         Quark _message_id;
@@ -130,6 +135,10 @@ namespace pan
       char* get_filename (char* buf, int buflen, const Quark& mid) const;
       GMimeStream* get_message_file_stream (const Quark& mid) const;
       GMimeStream* get_message_mem_stream (const Quark& mid) const;
+
+      int filename_to_message_id (char * buf, int len, const char * basename);
+      char* message_id_to_filename (char * buf, int len, const StringView& mid) const;
+
   };
 }
 

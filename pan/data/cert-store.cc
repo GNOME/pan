@@ -21,8 +21,10 @@
  */
 
 #include <string>
-#include <glib/giochannel.h>
-#include <glib/gstring.h>
+
+//#include <glib/giochannel.h>
+//#include <glib/gstring.h>
+
 #include <pan/tasks/socket.h>
 #include <config.h>
 #include <map>
@@ -34,6 +36,7 @@
 
 extern "C" {
   #include <glib/gi18n.h>
+  #include <glib.h>
 }
 
 #include <pan/general/debug.h>

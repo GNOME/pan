@@ -60,6 +60,14 @@ namespace
       static_cast<Prefs*>(prefs_gpointer)->set_flag (key, gtk_toggle_button_get_active(toggle));
   }
 
+  void entry_changed_cb (GtkEntry * e, gpointer prefs_gpointer)
+  {
+    const char * key = (const char*) g_object_get_data (G_OBJECT(e), PREFS_KEY);
+    const char * val = gtk_entry_get_text (GTK_ENTRY(e));
+    if (key && val)
+      static_cast<Prefs*>(prefs_gpointer)->set_string (key, val);
+  }
+
   void set_string_from_radio_cb (GtkToggleButton * toggle, gpointer prefs_gpointer)
   {
     const char * key = (const char*) g_object_get_data (G_OBJECT(toggle), PREFS_KEY);
@@ -76,6 +84,16 @@ namespace
     g_signal_connect (t, "toggled", G_CALLBACK(toggled_cb), &prefs);
     return t;
   }
+
+  GtkWidget* new_entry (const char* key, const char* fallback, Prefs& prefs)
+  {
+    GtkWidget * t = gtk_entry_new();
+    g_object_set_data_full (G_OBJECT(t), PREFS_KEY, g_strdup(key), g_free);
+    gtk_entry_set_text (GTK_ENTRY(t), prefs.get_string (key, fallback).c_str());
+    g_signal_connect (t, "changed", G_CALLBACK(entry_changed_cb), &prefs);
+    return t;
+  }
+
 
   GtkWidget* new_layout_radio (GtkWidget* prev, const guint8* line, const char* value, std::string& cur, Prefs& prefs)
   {
@@ -340,7 +358,7 @@ void
 PrefsDialog :: on_prefs_string_changed (const StringView& key, const StringView& value)
 {
 
-  if (key.strcmp("default-charset") == 0)
+  if (key == "default-charset")
   {
     _prefs.save();
     update_default_charset_label(value);
@@ -555,7 +573,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("E_xpand all threads when entering group"), "expand-threads-when-entering-group", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
+
     HIG::workarea_add_section_divider (t, &row);
+
     HIG :: workarea_add_section_title (t, &row, _("Articles"));
     HIG :: workarea_add_section_spacer (t, row, 5);
     w = new_check_button (_("Space selects next article rather than next unread"), "space-selects-next-article", true, prefs);
@@ -566,6 +586,10 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Smooth scrolling"), "smooth-scrolling", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
+
+    HIG::workarea_add_section_divider (t, &row);
+
+    HIG :: workarea_add_section_title (t, &row, _("Article Cache"));
     w = new_check_button (_("Clear article cache on shutdown"), "clear-article-cache-on-shutdown", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_spin_button ("cache-size-megs", 10, 1024*16, prefs);
@@ -573,7 +597,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
     HIG::workarea_add_row (t, &row, w, l);
-    HIG::workarea_add_section_divider (t, &row);
+    w = new_entry ("cache-file-extension", "msg", prefs);
+    HIG :: workarea_add_row (t, &row, w, gtk_label_new(_("File extension for Cached Articles")));
+
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Behavior")));
 

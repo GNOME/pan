@@ -27,8 +27,14 @@
 ***/
 
 #include <string>
-#include <glib/giochannel.h>
-#include <glib/gstring.h>
+//#include <glib/giochannel.h>
+//#include <glib/gstring.h>
+
+extern "C"
+{
+  #include <glib.h>
+}
+
 #include <pan/tasks/socket.h>
 
 #include <config.h>
