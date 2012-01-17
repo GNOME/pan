@@ -89,11 +89,11 @@ AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[Gettext package])
 AM_GLIB_GNU_GETTEXT
 panlocaledir='${prefix}/${DATADIRNAME}/locale'
 
-have_gmime26 =no
 AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
 PKG_CHECK_MODULES([GMIME], [ gmime-2.6    >= $GMIME26_REQUIRED ],[have_gmime26=yes],
   [
     PKG_CHECK_MODULES( [GMIME], [gmime-2.4    >= $GMIME24_REQUIRED] )
+    have_gmime26=no
   ]
   )
 
