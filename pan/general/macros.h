@@ -68,9 +68,7 @@ extern "C"
   #include <glib.h>
 
   // pick up g_assert()
-  #if GLIB_CHECK_VERSION(2,16,0)
-    #include <glib.h>
-  #else
+  #if !GLIB_CHECK_VERSION(2,16,0)
     #include <glib/gmessages.h>
   #endif
 }
