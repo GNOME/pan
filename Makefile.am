@@ -10,11 +10,14 @@ DESKTOP_IN_FILES=pan.desktop.in
 DESKTOP_FILES=$(DESKTOP_IN_FILES:.desktop.in=.desktop)
 
 DISTCLEANFILES = \
- gnome-doc-utils.make \
  intltool-extract \
  intltool-merge \
  intltool-update \
  pan.desktop
+
+if ENABLE_HELP
+DISTCLEANFILES += gnome-doc-utils.make 
+endif 
 
 EXTRA_DIST = \
  README \
@@ -22,13 +25,16 @@ EXTRA_DIST = \
  README.mingw \
  ChangeLog \
  Pan.ico \
- gnome-doc-utils.make \
  pan.spec \
  pan.png \
  $(DESKTOP_IN_FILES) \
  $(DESKTOP_FILES) \
  intltool-extract.in intltool-merge.in intltool-update.in \
  pan_git_rev
+
+if ENABLE_HELP
+EXTRA_DIST += gnome-doc-utils.make 
+endif 
 
 DISTCHECK_CONFIGURE_FLAGS="--disable-scrollkeeper"
 

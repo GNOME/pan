@@ -31,24 +31,37 @@ namespace pan
    *
    * @author Calin Culianu <calin@ajvar.org>
    * @ingroup general
+   * (changed for glib >= 3.32)
    */
   class Mutex
   {
     private:
+      static GMutex mutex;
       GMutex * m;
-      Mutex& operator= (const Mutex&); ///< unimplemented
-      Mutex (const Mutex&); ///< unimplemented
 
     public:
 
       /** Create a new mutex */
-      Mutex(): m(g_mutex_new()) { }
+      Mutex()
+      {
+#if !GLIB_CHECK_VERSION(3,32,0)
+        m = g_mutex_new();
+#else
+        g_mutex_init(&mutex);
+        m = &mutex;
+#endif
+      }
 
       /** Destroy the mutex */
-      ~Mutex() { g_mutex_free(m); }
+      ~Mutex()
+      {
+#if !GLIB_CHECK_VERSION(3,32,0)
+        g_mutex_free(m);
+#endif
+      }
 
       /** Block until a lock is acquired */
-      void lock() { g_mutex_lock(m); }
+      void lock()   { g_mutex_lock(m); }
 
       /** Unlock the mutex - may wake another thread waiting on it */
       void unlock() { g_mutex_unlock(m); }

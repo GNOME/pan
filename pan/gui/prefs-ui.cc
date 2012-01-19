@@ -598,7 +598,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
     HIG::workarea_add_row (t, &row, w, l);
     w = new_entry ("cache-file-extension", "msg", prefs);
-    HIG :: workarea_add_row (t, &row, w, gtk_label_new(_("File extension for Cached Articles")));
+    l = gtk_label_new(_("File extension for Cached Articles"));
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+    HIG :: workarea_add_row (t, &row, w, l);
 
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Behavior")));

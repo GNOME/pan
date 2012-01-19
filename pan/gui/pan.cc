@@ -839,7 +839,9 @@ main (int argc, char *argv[])
   textdomain (GETTEXT_PACKAGE);
 
   g_type_init();
+#if !GLIB_CHECK_VERSION(2,32,0)
   g_thread_init (0);
+#endif
   g_mime_init (GMIME_ENABLE_RFC2047_WORKAROUNDS);
 
   bool gui(true), nzb(false), verbosed(false);
