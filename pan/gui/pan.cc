@@ -491,7 +491,7 @@ namespace
 
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), menu_quit);
 
-    const char* label_names[] = {"Toggle on/offline"};
+    const char* label_names[] = {_("Toggle on/offline")};
 
     GtkWidget* labels[G_N_ELEMENTS(label_names)];
 
