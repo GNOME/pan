@@ -31,6 +31,7 @@ extern "C" {
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include "prefs.h"
+#include "hotkeys.h"
 
 using namespace pan;
 
@@ -98,6 +99,16 @@ Prefs :: start_element (GMarkupParseContext *,
     if (name && *name && value && *value)
       prefs.set_color (name, value);
   }
+
+//  if (s == "hotkey") {
+//    const char * name (0);
+//    const char * value (0);
+//    for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
+//      if (!strcmp (*k,"name"))  name = *v;
+//      else if (!strcmp(*k,"value")) value = *v;
+//    if (name && *name && value && *value)
+//      prefs.set_hotkey (name, value);
+//  }
 }
 
 void
@@ -370,3 +381,19 @@ Prefs :: get_color_str_wo_fallback (const StringView& key) const
   const GdkColor& col(_colors[key]);
   return color_to_string (col);
 }
+
+//void
+//Prefs :: set_hotkey (const StringView& key, const StringView& value)
+//{
+////  _hotkeys[key] = value;
+////  fire_hotkey_changed (key, value);
+//}
+
+
+//std::string
+//Prefs :: get_hotkey (const StringView& key) const
+//{
+//  std::string res;
+//  if (!_hotkeys.count(key)) return "";
+//  return _hotkeys[key];
+//}

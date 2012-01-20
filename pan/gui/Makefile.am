@@ -35,7 +35,8 @@ libpangui_a_SOURCES = \
  server-ui.cc \
  task-pane.cc \
  xface.c \
- url.cc
+ url.cc \
+ hotkeys.cc
 
 noinst_HEADERS = \
  action-manager.h \

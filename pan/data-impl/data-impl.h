@@ -284,21 +284,10 @@ namespace pan
       void load_group_permissions (const DataIO&);
       void save_group_permissions (DataIO&) const;
 
-      int  load_hotkeys (const DataIO&);
-      void save_hotkeys (DataIO&) const;
-      void create_hotkeys (const DataIO&);
-
       std::string get_newsrc_filename (const Quark& server) const;
       void load_newsrc (const Quark& server, LineReader*, alpha_groups_t&, alpha_groups_t&);
       void load_newsrc_files (const DataIO&);
       void save_newsrc_files (DataIO&) const;
-
-    public:
-
-      virtual int get_all_hotkeys()
-      {
-        return load_hotkeys(*_data_io);
-      }
 
     public: // mutators
 

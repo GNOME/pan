@@ -124,7 +124,6 @@ DataImpl :: save_state ()
     debug ("data-impl dtor saving xov, newsrc...");
     save_group_xovers (*_data_io);
     save_newsrc_files (*_data_io);
-    save_hotkeys (*_data_io);
   }
 }
 

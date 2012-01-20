@@ -72,8 +72,6 @@ ArticleCache :: filename_to_message_id (char * buf, int len, const char * basena
      *pch = '\0';
   g_strstrip (tmp_basename);
 
-  std::cerr<<"debug "<<tmp_basename<<"\n";
-
   // transform
   out = buf;
   *out++ = '<';

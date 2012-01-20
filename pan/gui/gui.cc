@@ -76,6 +76,16 @@ extern "C" {
 
 #include <pan/usenet-utils/gpg.h>
 
+namespace
+{
+  std::string get_accel_filename () {
+    char * tmp = g_build_filename (file::get_pan_home().c_str(), "accels.txt", NULL);
+    std::string ret (tmp);
+    g_free (tmp);
+    return ret;
+  }
+}
+
 namespace pan
 {
   void
@@ -167,15 +177,6 @@ void GUI :: show_task_window_cb (GtkWidget *, gpointer gui_gpointer)
   static_cast<GUI*>(gui_gpointer)->activate_action ("show-task-window");
 }
 
-namespace
-{
-  std::string get_accel_filename () {
-    char * tmp = g_build_filename (file::get_pan_home().c_str(), "accels.txt", NULL);
-    std::string ret (tmp);
-    g_free (tmp);
-    return ret;
-  }
-}
 
 GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),

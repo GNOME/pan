@@ -43,8 +43,6 @@
 
 namespace pan
 {
-  typedef std::map<Quark,Quark> hotkeys_t;
-
   class FilterInfo;
   class RulesInfo;
   class Queue;
@@ -174,9 +172,6 @@ namespace pan
     public virtual Profiles,
     public virtual ArticleReferences
   {
-
-    public:
-      hotkeys_t _hotkeys, _toggle_hotkeys;
 
     public:
       struct PasswordData
@@ -596,13 +591,6 @@ namespace pan
 
       void set_queue (Queue* q) { _queue = q; }
       Queue* get_queue () { return _queue; }
-
-      const hotkeys_t& get_hotkeys() const { return _hotkeys; }
-      const hotkeys_t& get_toggle_hotkeys() const { return _toggle_hotkeys; }
-      hotkeys_t& get_hotkeys() { return _hotkeys; }
-      hotkeys_t& get_toggle_hotkeys() { return _toggle_hotkeys; }
-      ///TODO move these upper two to dataimpl and make virtual
-      virtual int get_all_hotkeys () = 0;
 
     private:
       Queue * _queue;

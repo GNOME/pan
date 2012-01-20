@@ -816,7 +816,6 @@ _("General Options\n"
   pan_dbus_deinit (Pan* pan)
   {
     g_bus_unown_name(pan->dbus_id);
-    if (dbus_connection) g_dbus_connection_close(dbus_connection,NULL,0,NULL);
   }
 
   /***
@@ -940,20 +939,23 @@ main (int argc, char *argv[])
     GVariant* var;
 
     if (!dbus_connection) goto _fail;
+    if (pan->dbus_id == -1)
+    {
 
-    var = g_variant_new ("(sssbb)",
-                    groups.c_str(), nzb_output_path.c_str(), nzb_str.c_str(),  gui, nzb);
-    g_dbus_connection_call_sync (dbus_connection,
-                           PAN_DBUS_SERVICE_NAME,
-                           PAN_DBUS_SERVICE_PATH,
-                           "news.pan.NZB",
-                           "NZBEnqueue",
-                           var,
-                           NULL,
-                           G_DBUS_CALL_FLAGS_NONE,
-                           -1,
-                           NULL,
-                           &error);
+      var = g_variant_new ("(sssbb)",
+                      groups.c_str(), nzb_output_path.c_str(), nzb_str.c_str(),  gui, nzb);
+      g_dbus_connection_call_sync (dbus_connection,
+                             PAN_DBUS_SERVICE_NAME,
+                             PAN_DBUS_SERVICE_PATH,
+                             "news.pan.NZB",
+                             "NZBEnqueue",
+                             var,
+                             NULL,
+                             G_DBUS_CALL_FLAGS_NONE,
+                             -1,
+                             NULL,
+                             &error);
+    }
     if (!error)
     {
       std::cout<<"Added "<<nzb_files.size()<<" files to the queue. Exiting.\n";

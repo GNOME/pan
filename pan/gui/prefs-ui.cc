@@ -24,6 +24,7 @@ extern "C" {
 }
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
+#include <pan/general/file-util.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "hig.h"
 #include "pad.h"
@@ -33,14 +34,160 @@ extern "C" {
 #include "url.h"
 #include "gtk-compat.h"
 #include "e-charset-dialog.h"
+#include "hotkeys.h"
 
 using namespace pan;
 
 namespace
 {
+  std::string get_accel_filename () {
+    char * tmp = g_build_filename (file::get_pan_home().c_str(), "accels.txt", NULL);
+    std::string ret (tmp);
+    g_free (tmp);
+    return ret;
+  }
+
+  typedef struct std::map<std::string,GtkAccelKey> keymap_t;
+
+  struct HotkeyData
+  {
+    GtkWidget* w;
+    int* row;
+    Prefs* prefs;
+    keymap_t keys;
+  };
+
+  static HotkeyData hotkey_data;
+
+//  void hotkey_entry_icon_press_cb(GtkEntry             * entry,
+//                                  GtkEntryIconPosition,
+//                                  GdkEvent             *,
+//                                  gpointer               gpointer)
+//  {
+//    char* ptr = static_cast<char*>(gpointer);
+//
+//    guint key;
+//    GdkModifierType mod;
+//
+//    gtk_accelerator_parse (gtk_entry_get_text(entry),&key,&mod);
+//
+//    std::cerr<<"click parse "<<ptr<<" "<<key<<" "<<mod<<"\n";
+//
+//    GtkAccelKey newkey;
+//
+//    // reset the other keybinding
+//    gtk_accel_map_change_entry ("", key, mod, true);
+//
+//    newkey.accel_key = key;
+//    newkey.accel_mods = mod;
+//
+//    gtk_accel_map_change_entry (ptr, key, mod, true);
+//    hotkey_data.keys[ptr] = newkey;
+//  }
+
+  // TODO offer replace with context menu!
+  void hotkey_entry_changed_cb (GtkEntry * e, gpointer gpointer)
+  {
+
+    char* name = static_cast<char*>(gpointer);
+    const char * value = gtk_entry_get_text(e);
+
+    gtk_entry_set_icon_activatable(e, GTK_ENTRY_ICON_PRIMARY, false);
+    gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, 0);
+    gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, 0);
+
+    // empty text
+    if (!value || !*value)
+    {
+      gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, 0);
+      gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, 0);
+      // reset in map and remove accelerator
+      GtkAccelKey tmp;
+      guint tmpkey;
+      GdkModifierType tmpmod;
+      gtk_accelerator_parse ("",&tmpkey,&tmpmod);
+      hotkey_data.keys[name] = tmp;
+      gtk_accel_map_change_entry (name, tmpkey, tmpmod, true);
+      return;
+    }
+
+    guint key;
+    GdkModifierType mod;
+    GtkAccelKey acc_key;
+
+    gtk_accelerator_parse (value,&key,&mod);
+    acc_key.accel_key = key;
+    acc_key.accel_mods = mod;
+
+    if (!gtk_accelerator_valid(acc_key.accel_key, acc_key.accel_mods))
+    {
+      gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_DIALOG_WARNING);
+      gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, _("Error: Shortkey is invalid!"));
+      return;
+    }
+
+    bool found(false);
+
+    // search for duplicate key entry
+    foreach (keymap_t, hotkey_data.keys, it)
+    {
+      if (!strcmp(name, it->first.c_str())) continue;
+      if (it->second.accel_key == key && it->second.accel_mods == mod) { found=true; break;}
+    }
+
+
+    if (found)
+    {
+      gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_DIALOG_WARNING);
+      gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, _("Error: Shortkey already exists!"));
+      gtk_entry_set_icon_activatable(e, GTK_ENTRY_ICON_PRIMARY, true);
+
+    }
+    else
+    {
+      hotkey_data.keys[name] = acc_key;
+    }
+
+  }
+
+  void process_accels  (gpointer _data,
+                       const gchar *accel_path,
+                       guint accel_key,
+                       GdkModifierType accel_mods,
+                       gboolean changed)
+  {
+    HotkeyData* data = static_cast<HotkeyData*>(_data);
+    GtkAccelKey key;
+    key.accel_key = accel_key;
+    key.accel_mods = accel_mods;
+    data->keys[accel_path] = key;
+
+  }
+
+
+  void save_accels()
+  {
+
+    // get changed accels from map and reset them to their values
+    foreach (keymap_t, hotkey_data.keys, it)
+    {
+      gtk_accel_map_change_entry (it->first.c_str(),
+                                  it->second.accel_key,
+                                  it->second.accel_mods,
+                                  true);
+
+    }
+
+    // save 'em
+    const std::string accel_filename (get_accel_filename());
+    gtk_accel_map_save (accel_filename.c_str());
+    chmod (accel_filename.c_str(), 0600);
+  }
+
   void delete_prefs_dialog (gpointer castme)
   {
     PrefsDialog* pd(static_cast<PrefsDialog*>(castme));
+    save_accels();
     pd->prefs().remove_listener(pd);
     delete pd;
   }
@@ -95,6 +242,15 @@ namespace
   }
 
 
+  GtkWidget* new_hotkey_entry (const char* value, const char* name)
+  {
+    GtkWidget * t = gtk_entry_new();
+    gtk_entry_set_text (GTK_ENTRY(t), value);
+    g_signal_connect (t, "changed", G_CALLBACK(hotkey_entry_changed_cb), gpointer(name));
+//    g_signal_connect (t, "icon-press", G_CALLBACK(hotkey_entry_icon_press_cb), gpointer(name));
+    return t;
+  }
+
   GtkWidget* new_layout_radio (GtkWidget* prev, const guint8* line, const char* value, std::string& cur, Prefs& prefs)
   {
     GtkWidget * r = prev==0
@@ -138,6 +294,23 @@ namespace
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(r), cur==value);
     g_signal_connect (r, "toggled", G_CALLBACK(set_string_from_radio_cb), &prefs);
     return r;
+  }
+
+  void fill_pref_hotkeys(GtkWidget* t, int& row, Prefs& prefs)
+  {
+
+    HIG::workarea_add_section_spacer (t, row, hotkey_data.keys.size());
+
+    GtkWidget* w, *l;
+    gchar* keyval;
+
+    foreach (keymap_t, hotkey_data.keys, it)
+    {
+      keyval = gtk_accelerator_name (it->second.accel_key, it->second.accel_mods);
+      w = new_hotkey_entry(keyval, it->first.c_str());
+      l = gtk_label_new(it->first.c_str());
+      HIG :: workarea_add_row (t, &row, w, l);
+    }
   }
 
   void set_prefs_string_from_editable (GtkEditable * editable, gpointer prefs_gpointer)
@@ -541,6 +714,8 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 {
   prefs.add_listener(this);
 
+  gtk_accel_map_foreach (&hotkey_data, process_accels);
+
   GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Pan: Preferences"), parent,
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                                     GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
@@ -548,7 +723,11 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-preferences-dialog");
   g_signal_connect (dialog, "response", G_CALLBACK(response_cb), this);
   g_signal_connect_swapped (dialog, "destroy", G_CALLBACK(delete_prefs_dialog), this);
+
   GtkWidget * notebook = gtk_notebook_new ();
+
+  gtk_notebook_set_homogeneous_tabs (GTK_NOTEBOOK(notebook), true);
+  gtk_notebook_set_scrollable (GTK_NOTEBOOK(notebook), true);
 
   // Behavior
   int row (0);
@@ -605,7 +784,26 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Behavior")));
 
+  // Hotkeys
+  row = 0;
+  t = HIG :: workarea_create ();
+  fill_pref_hotkeys(t, row, _prefs);
+
+  HIG :: workarea_finish (t, &row);
+
+  GtkWidget* scroll = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scroll), GTK_SHADOW_IN);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(scroll), t);
+
+  gtk_widget_show_all (scroll);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), scroll, gtk_label_new_with_mnemonic(_("_Hotkeys")));
+
   //charset
+  row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_spacer (t, row, 1);
   HIG :: workarea_add_section_title (t, &row, _("Language Settings"));
@@ -619,6 +817,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Charset")));
 
   // systray and notify popup
+  row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("System Tray Behavior"));
   HIG :: workarea_add_section_spacer (t, row, 3);
@@ -634,6 +833,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Status and Notifications")));
 
   // Autosave Features
+  row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_spacer (t, row, 2);
   HIG :: workarea_add_section_title (t, &row, _("Autosave Article Draft"));

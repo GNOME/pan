@@ -352,7 +352,7 @@ namespace
         G_CALLBACK(do_print) },
 
       { "import-tasks", GTK_STOCK_OPEN,
-        N_("_Import NZB Files..."), NULL,
+        N_("_Import NZB Files..."), "<constrol>O",
         NULL,
         G_CALLBACK(do_import_tasks) },
 
@@ -765,52 +765,6 @@ namespace
 }
 
 void
-pan :: add_hotkeys_to_actions (hotkeys_t& hk, hotkeys_t& t_hk)
-{
-  for (GtkToggleActionEntry *it(toggle_entries), *end(it+n_toggle_entries); it!=end; ++it)
-  {
-    GtkActionEntry* e (reinterpret_cast<GtkActionEntry*>(it));
-    if (t_hk.count(e->name) > 0)
-    {
-      e->accelerator = t_hk[e->name];
-//      std::cerr<<"setting hotkey for action '"<<e->name<<"' to '"<<t_hk[e->name]<<"', count "<<t_hk.count(e->name)<<"\n";
-    }
-  }
-
-  for (GtkActionEntry *it(entries), *end(it+n_entries); it!=end; ++it)
-  {
-    GtkActionEntry* e(it);
-
-    if (hk.count(e->name) > 0)
-    {
-      e->accelerator = hk[e->name];
-//      std::cerr<<"setting hotkey for action '"<<e->name<<"' to '"<<hk[e->name]<<"', count "<<hk.count(e->name)<<"\n";
-    }
-  }
-}
-
-void
-pan :: add_new_hotkeys_from_ui (hotkeys_t& hk, hotkeys_t& t_hk)
-{
-  for (GtkActionEntry *it(entries), *end(it+n_entries); it!=end; ++it)
-  {
-    GtkActionEntry* e(it);
-//    std::cerr<<"setting hotkey for action '"<<e->name<<"' to '"<<(e->accelerator ? e->accelerator : "NULL")<<"\n";
-    hk[e->name] = (e->accelerator ? e->accelerator : "");
-  }
-
-  for (GtkToggleActionEntry *it(toggle_entries), *end(it+n_toggle_entries); it!=end; ++it)
-  {
-    GtkActionEntry* e (reinterpret_cast<GtkActionEntry*>(it));
-//    std::cerr<<"setting hotkey for action '"<<e->name<<"' to '"<<(e->accelerator ? e->accelerator : "NULL")<<"\n";
-    t_hk[e->name] = (e->accelerator ? e->accelerator : "");
-  }
-
-  std::cerr<<"sizes "<<hk.size()<<" "<<t_hk.size()<<"\n";
-
-}
-
-void
 pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p, Data* data)
 {
   pan_ui = ui;
@@ -818,14 +772,9 @@ pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p, Data* data
 
   register_my_builtin_icons ();
 
-  int ret = data->get_all_hotkeys ();
-  if (ret > 0)
-    add_hotkeys_to_actions(data->get_hotkeys(), data->get_toggle_hotkeys());
-  else
-  {
-    // create initial shortcuts file for the user
-    add_new_hotkeys_from_ui (data->get_hotkeys(), data->get_toggle_hotkeys());
-  }
+  std::map<gchar*,guint> keymap;
+
+//  int ret = get_all_hotkeys (keymap);
 
   for (GtkToggleActionEntry *it(toggle_entries), *end(it+n_toggle_entries); it!=end; ++it)
   {

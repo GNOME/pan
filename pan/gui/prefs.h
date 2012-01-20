@@ -43,6 +43,7 @@ namespace pan
         virtual void on_prefs_int_changed (const StringView& key, int color) = 0;
         virtual void on_prefs_string_changed (const StringView& key, const StringView& value) = 0;
         virtual void on_prefs_color_changed (const StringView& key, const GdkColor& color) = 0;
+        virtual void on_prefs_hotkey_changed (const StringView& key, const StringView& value) {}
       };
       void add_listener (Listener* l) { _listeners.insert(l); }
       void remove_listener (Listener* l) {_listeners.erase(l); }
@@ -67,6 +68,10 @@ namespace pan
       void fire_color_changed (const StringView& key, const GdkColor& value) {
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
           (*it++)->on_prefs_color_changed (key, value);
+      }
+      void fire_hotkey_changed (const StringView& key, const StringView& value) {
+        for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
+          (*it++)->on_prefs_hotkey_changed (key, value);
       }
 
     public:
@@ -95,6 +100,9 @@ namespace pan
       GdkColor get_color (const StringView& key, const GdkColor& fallback) const;
       GdkColor get_color (const StringView& key, const StringView& fallback_str) const;
 
+//      void set_hotkey (const StringView& key, const StringView& value);
+//      std::string get_hotkey (const StringView& key) const;
+
       void set_window (const StringView& key, GtkWindow* window,
                        int default_x, int default_y,
                        int default_width, int default_height);
@@ -111,6 +119,7 @@ namespace pan
     public:
       void to_string (int indent, std::string& setme) const;
       void from_string (const StringView& xml);
+      void get_hotkeys ();
 
     private:
       struct Geometry {
@@ -131,6 +140,9 @@ namespace pan
       mutable colors_t _colors;
       typedef std::map<std::string,int> ints_t;
       mutable ints_t _ints;
+      typedef std::map<std::string,std::string> hotkeys_t;
+      mutable hotkeys_t _hotkeys;
+
 
     public:
       bool _rules_changed;
