@@ -939,7 +939,7 @@ main (int argc, char *argv[])
     GVariant* var;
 
     if (!dbus_connection) goto _fail;
-    if (pan->dbus_id == -1)
+    if (pan.dbus_id == -1)
     {
 
       var = g_variant_new ("(sssbb)",
