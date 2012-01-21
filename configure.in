@@ -58,6 +58,7 @@ GNUTLS_REQUIRED=2.12.10
 LIBNOTIFY_REQUIRED=0.4.1
 LIBGKR_REQUIRED=3.2.2
 ODB_REQUIRED=1.7.0
+SQLITE3_REQUIRED=3.7.0
 AC_SUBST(ODB_REQUIRED)
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GMIME_REQUIRED)
@@ -66,6 +67,7 @@ AC_SUBST(GTKSPELL_REQUIRED)
 AC_SUBST(GNUTLS_REQUIRED)
 AC_SUBST(LIBNOTIFY_REQUIRED)
 AC_SUBST(LIBGKR_REQUIRED)
+AC_SUBST(SQLITE3_REQUIRED)
 
 dnl LIBGSASL_REQUIRED=1.6.1
 dnl AC_SUBST(LIBGSASL_REQUIRED)
@@ -203,7 +205,7 @@ dnl check for odb and libodb-sqlite for database support
 AC_ARG_ENABLE([sqlite-support],
 AC_HELP_STRING([--enable-sqlite-support],[enable sqlite support with libodb]),[enable_sqlite_support=$enableval],[enable_sqlite_support=yes])
 if test "x$enable_sqlite_support" = "xyes" ; then
-  PKG_CHECK_MODULES([LIBODB],[libodb >= ODB_REQUIRED libodb-sqlite >= ODB_REQUIRED],[HAVE_ODB="yes"],[HAVE_ODB="no"])
+  PKG_CHECK_MODULES([LIBODB],[libodb >= ODB_REQUIRED libodb-sqlite >= ODB_REQUIRED sqlite3 >= SQLITE3_REQUIRED],[HAVE_ODB="yes"],[HAVE_ODB="no"])
   AC_SUBST([LIBODB_CFLAGS])
   AC_SUBST([LIBODB_LIBS])
   if test "x$HAVE_ODB" = "xyes"; then

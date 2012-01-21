@@ -73,8 +73,10 @@ extern "C" {
   #include <gnome-keyring-1/gnome-keyring-memory.h>
 #endif
 
+
+/* NOTE : Dbus is disabled for now, it's buggy */
 //#define DEBUG_LOCALE 1
-//#define DEBUG_PARALLEL 1
+#define DEBUG_PARALLEL 1
 
 using namespace pan;
 
@@ -765,6 +767,8 @@ _("General Options\n"
       NULL
     );
 
+    std::cerr<<"bus acquired\n";
+
   }
 
   static void
@@ -776,11 +780,10 @@ _("General Options\n"
     Pan* pan(static_cast<Pan*>(user_data));
     g_return_if_fail (pan);
 
-    if (connection)
-    {
-      pan->name_valid = true;
-      pan->lost_name = false;
-    }
+    pan->name_valid = true;
+    pan->lost_name = false;
+
+    std::cerr<<"name acquired "<<pan->name_valid<<"\n";
   }
 
   static void
@@ -794,6 +797,8 @@ _("General Options\n"
     pan->name_valid = false;
     pan->lost_name = true;
     pan->dbus_id= -1;
+
+    std::cerr<<"name lost\n";
   }
 
 
@@ -810,12 +815,16 @@ _("General Options\n"
         pan,NULL);
 
     dbus_connection = g_bus_get_sync  (G_BUS_TYPE_SESSION , NULL, NULL);
+
+//    while (!pan->name_valid && !pan->lost_name) std::cerr<<pan->name_valid<<" "<<pan->lost_name<<"\n";
+
+    std::cerr<<"dbus id "<<pan->dbus_id<<" "<<dbus_connection<<"\n";
   }
 
   static void
   pan_dbus_deinit (Pan* pan)
   {
-    g_bus_unown_name(pan->dbus_id);
+    if (pan->dbus_id != -1) g_bus_unown_name(pan->dbus_id);
   }
 
   /***
@@ -938,30 +947,39 @@ main (int argc, char *argv[])
     GError* error(NULL);
     GVariant* var;
 
+    if (!dbus_connection) std::cerr<<"connection null\n";
+
     if (!dbus_connection) goto _fail;
-    if (pan.dbus_id == -1)
+
+    std::cerr<<"dbg "<<pan.dbus_id<<" "<<pan.lost_name<<" "<<pan.name_valid<<"\n";
+
+//    if (pan.dbus_id == -1 || pan.lost_name)
     {
 
-      var = g_variant_new ("(sssbb)",
-                      groups.c_str(), nzb_output_path.c_str(), nzb_str.c_str(),  gui, nzb);
+      std::cerr<<"dbus id -1\n";
       g_dbus_connection_call_sync (dbus_connection,
                              PAN_DBUS_SERVICE_NAME,
                              PAN_DBUS_SERVICE_PATH,
                              "news.pan.NZB",
                              "NZBEnqueue",
-                             var,
+                             g_variant_new ("(sssbb)",
+                                groups.c_str(), nzb_output_path.c_str(), nzb_str.c_str(),  gui, nzb),
                              NULL,
                              G_DBUS_CALL_FLAGS_NONE,
                              -1,
                              NULL,
                              &error);
+
+      if (!error)
+      {
+        std::cout<<"Added "<<nzb_files.size()<<" files to the queue. Exiting.\n";
+        exit(EXIT_SUCCESS);
+      } else
+      {
+        std::cerr<<error->message<<"\n";
+        g_error_free(error);
+      }
     }
-    if (!error)
-    {
-      std::cout<<"Added "<<nzb_files.size()<<" files to the queue. Exiting.\n";
-      exit(EXIT_SUCCESS);
-    } else
-      g_error_free(error);
   #endif
     _fail:
 #endif
