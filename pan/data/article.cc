@@ -26,6 +26,11 @@
 #include <pan/general/string-view.h>
 #include "article.h"
 
+#ifdef HAVE_ODB
+  #include <odb/database.hxx>
+  #include <odb/transaction.hxx>
+#endif
+
 using namespace pan;
 
 Article :: PartState
