@@ -726,7 +726,11 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
   GtkWidget * notebook = gtk_notebook_new ();
 
+#if !GTK_CHECK_VERSION(2,24,0)
   gtk_notebook_set_homogeneous_tabs (GTK_NOTEBOOK(notebook), true);
+#else
+  g_object_set (notebook, "homogeneous", true, NULL);
+#endif
   gtk_notebook_set_scrollable (GTK_NOTEBOOK(notebook), true);
 
   // Behavior
