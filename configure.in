@@ -235,17 +235,12 @@ case $host_os in
 esac
 AM_CONDITIONAL([HAVE_WIN32],[test "$win32" = "yes"])
 
-dnl CXXFLAGS="-g -I/usr/lib/"
-dnl CPPFLAGS="-g -I/usr/lib/"
-dnl CFLAGS="-g -I/usr/lib/"
-
 dnl build the output files
 AC_SUBST(panlocaledir)
 AC_CONFIG_FILES([Makefile
                  pan.spec
                  pan.iss
                  README.windows
-                 help/Makefile
                  po/Makefile.in
                  uulib/Makefile
                  pan/Makefile
@@ -257,6 +252,11 @@ AC_CONFIG_FILES([Makefile
                  pan/icons/Makefile
                  pan/data-impl/Makefile
                  pan/gui/Makefile])
+
+
+if test "x$want_gnome_doc_help" = "xyes" ; then
+  AC_CONFIG_FILES([help/Makefile])
+fi
 
 AC_OUTPUT
 
