@@ -1,5 +1,5 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @GTK_CFLAGS@ @LIBODB_CFLAGS@
-LDADD = @GTK_LIBS@ @LIBODB_LIBS@
+AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @GTK_CFLAGS@
+LDADD = @GTK_LIBS@
 
 AM_CPPFLAGS += -DDATABASE_SQLITE
 
@@ -14,7 +14,7 @@ libdata_a_SOURCES = \
  cert-store.cc \
  data.cc \
  parts.cc \
- xref.cc \
+ xref.cc
 
 noinst_HEADERS = \
  article.h \
