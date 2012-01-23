@@ -74,7 +74,7 @@ extern "C" {
 #endif
 
 
-/* NOTE : Dbus is disabled for now, it's buggy */
+/* NOTE : Dbus is disabled for now, my implementation is buggy */
 //#define DEBUG_LOCALE 1
 #define DEBUG_PARALLEL 1
 
@@ -114,14 +114,7 @@ namespace
 
   gboolean delete_event_cb (GtkWidget * w, GdkEvent *, gpointer user_data)
   {
-    Prefs* prefs (static_cast<Prefs*>(user_data));
-    if(prefs->get_flag ("status-icon", true))
-    {
-      gtk_widget_hide(w);
-      gtk_window_iconify (GTK_WINDOW(w));
-    }
-    else
-      mainloop_quit ();
+    mainloop_quit ();
     return true; // don't invoke the default handler that destroys the widget
   }
 
@@ -429,26 +422,26 @@ namespace
 
 /* ****** End Status Icon and Notification ****************************************/
 
-  static gboolean window_state_event (GtkWidget *widget, GdkEventWindowState *event, gpointer trayIcon)
-  {
-
-    StatusIconListener* l(static_cast<StatusIconListener*>(trayIcon));
-
-    if(event->changed_mask == GDK_WINDOW_STATE_ICONIFIED
-       && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED
-       || event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
-    {
-        gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), TRUE);
-        gtk_widget_hide (GTK_WIDGET(widget));
-    }
-//    else if(event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN
-//            && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED
-//            || event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
+//  static gboolean window_state_event (GtkWidget *widget, GdkEventWindowState *event, gpointer trayIcon)
+//  {
+//
+//    StatusIconListener* l(static_cast<StatusIconListener*>(trayIcon));
+//
+//    if(event->changed_mask == GDK_WINDOW_STATE_ICONIFIED
+//       && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED
+//       || event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
 //    {
-//        gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), FALSE);
+//        gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), TRUE);
+//        gtk_widget_hide (GTK_WIDGET(widget));
 //    }
-    return TRUE;
-  }
+////    else if(event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN
+////            && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED
+////            || event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
+////    {
+////        gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), FALSE);
+////    }
+//    return TRUE;
+//  }
 
   struct QueueAndGui
   {
@@ -507,7 +500,7 @@ namespace
     gtk_widget_show_all(menu);
     g_signal_connect(icon, "activate", G_CALLBACK(status_icon_activate), window);
     g_signal_connect(icon, "popup-menu", G_CALLBACK(status_icon_popup_menu), menu);
-    g_signal_connect (G_OBJECT (window), "window-state-event", G_CALLBACK (window_state_event), pl);
+//    g_signal_connect (G_OBJECT (window), "window-state-event", G_CALLBACK (window_state_event), pl);
   }
 
 
@@ -518,41 +511,39 @@ namespace
                           GroupPrefs    & group_prefs,
                           GtkWindow     * window)
   {
-//    {
 
-      GUI& gui (*_gui);
+    GUI& gui (*_gui);
 
-      const gulong delete_cb_id =  g_signal_connect (window, "delete-event", G_CALLBACK(delete_event_cb), &prefs);
+    const gulong delete_cb_id =  g_signal_connect (window, "delete-event", G_CALLBACK(delete_event_cb), NULL);
 
-      gtk_container_add (GTK_CONTAINER(window), gui.root());
-      const bool minimized(prefs.get_flag("start-minimized", false));
-      if (minimized) gtk_window_iconify (window);
-      gtk_widget_show (GTK_WIDGET(window));
+    gtk_container_add (GTK_CONTAINER(window), gui.root());
+    const bool minimized(prefs.get_flag("start-minimized", false));
+    if (minimized) gtk_window_iconify (window);
+    gtk_widget_show (GTK_WIDGET(window));
 
-      const quarks_t servers (data.get_servers ());
-      if (servers.empty())
-      {
-        const Quark empty_server;
-        GtkWidget * w = server_edit_dialog_new (data, queue, window, empty_server);
-        gtk_widget_show_all (w);
-        GtkWidget * msg = gtk_message_dialog_new (GTK_WINDOW(w),
-                                                  GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                  GTK_MESSAGE_INFO,
-                                                  GTK_BUTTONS_CLOSE,
-                                                _("Thank you for trying Pan!\n \nTo start newsreading, first Add a Server."));
-        g_signal_connect_swapped (msg, "response", G_CALLBACK (gtk_widget_destroy), msg);
-        gtk_widget_show_all (msg);
+    const quarks_t servers (data.get_servers ());
+    if (servers.empty())
+    {
+      const Quark empty_server;
+      GtkWidget * w = server_edit_dialog_new (data, queue, window, empty_server);
+      gtk_widget_show_all (w);
+      GtkWidget * msg = gtk_message_dialog_new (GTK_WINDOW(w),
+                                                GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                GTK_MESSAGE_INFO,
+                                                GTK_BUTTONS_CLOSE,
+                                              _("Thank you for trying Pan!\n \nTo start newsreading, first Add a Server."));
+      g_signal_connect_swapped (msg, "response", G_CALLBACK (gtk_widget_destroy), msg);
+      gtk_widget_show_all (msg);
 
-        DataAndQueue * foo = g_new0 (DataAndQueue, 1);
-        foo->data = &data;
-        foo->queue = &queue;
-        g_signal_connect (w, "destroy", G_CALLBACK(add_grouplist_task), foo);
-      }
+      DataAndQueue * foo = g_new0 (DataAndQueue, 1);
+      foo->data = &data;
+      foo->queue = &queue;
+      g_signal_connect (w, "destroy", G_CALLBACK(add_grouplist_task), foo);
+    }
 
-      register_shutdown_signals ();
-      mainloop ();
-      g_signal_handler_disconnect (window, delete_cb_id);
-//    }
+    register_shutdown_signals ();
+    mainloop ();
+    g_signal_handler_disconnect (window, delete_cb_id);
 
     delete _gui;
 

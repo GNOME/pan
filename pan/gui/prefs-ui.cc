@@ -296,6 +296,21 @@ namespace
     return r;
   }
 
+  GtkWidget* new_label_with_icon(const char* mnemonic, const char* label, const guint8* line, Prefs& prefs)
+  {
+    const bool show_text =!prefs.get_flag("show-only-icons-in-preftabs", "false");
+
+    GtkWidget* hbox = gtk_hbox_new(false, 2);
+    GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, line, false, 0);
+    GtkWidget * image = gtk_image_new_from_pixbuf (pixbuf);
+    g_object_unref (pixbuf);
+    if (line) gtk_box_pack_start (GTK_BOX(hbox), image, true, true, 0);
+    if (show_text) gtk_box_pack_start (GTK_BOX(hbox), gtk_label_new_with_mnemonic(mnemonic), true, true, 0);
+    gtk_widget_set_tooltip_text (hbox, label);
+    gtk_widget_show_all(hbox);
+    return hbox;
+  }
+
   void fill_pref_hotkeys(GtkWidget* t, int& row, Prefs& prefs)
   {
 
@@ -785,76 +800,56 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
     HIG :: workarea_add_row (t, &row, w, l);
 
-  HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Behavior")));
-
-  // Hotkeys
-  row = 0;
-  t = HIG :: workarea_create ();
-  fill_pref_hotkeys(t, row, _prefs);
+    HIG::workarea_add_section_divider (t, &row);
+    HIG :: workarea_add_section_title (t, &row, _("Tabs"));
+    w = new_check_button (_("Show only icons in Preferences tabs"), "show-only-icons-in-preftabs", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
 
   HIG :: workarea_finish (t, &row);
-
-  GtkWidget* scroll = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scroll), GTK_SHADOW_IN);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(scroll), t);
-
-  gtk_widget_show_all (scroll);
-
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), scroll, gtk_label_new_with_mnemonic(_("_Hotkeys")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Behavior"), _("Behavior"), icon_prefs_behavior, prefs));
 
   //charset
   row = 0;
   t = HIG :: workarea_create ();
-  HIG :: workarea_add_section_spacer (t, row, 1);
-  HIG :: workarea_add_section_title (t, &row, _("Language Settings"));
-  w = gtk_button_new_from_stock (GTK_STOCK_SELECT_FONT);
-  l = charset_label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.0);
-  update_default_charset_label(_prefs.get_string("default-charset","UTF-8"));
-  g_signal_connect (w, "clicked", G_CALLBACK(select_prefs_charset_cb), this);
-  HIG::workarea_add_row (t, &row, w, l);
-  HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Charset")));
+    HIG :: workarea_add_section_spacer (t, row, 1);
+    HIG :: workarea_add_section_title (t, &row, _("Language Settings"));
+    w = gtk_button_new_from_stock (GTK_STOCK_SELECT_FONT);
+    l = charset_label = gtk_label_new (NULL);
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.0);
+    update_default_charset_label(_prefs.get_string("default-charset","UTF-8"));
+    g_signal_connect (w, "clicked", G_CALLBACK(select_prefs_charset_cb), this);
+    HIG::workarea_add_row (t, &row, w, l);
 
-  // systray and notify popup
-  row = 0;
-  t = HIG :: workarea_create ();
-  HIG :: workarea_add_section_title (t, &row, _("System Tray Behavior"));
-  HIG :: workarea_add_section_spacer (t, row, 3);
-  w = new_check_button (_("Hide to system tray"), "status-icon", false, prefs);
-  HIG :: workarea_add_wide_control (t, &row, w);
-  w = new_check_button (_("Start Pan minimized"), "start-minimized", false, prefs);
-  HIG :: workarea_add_wide_control (t, &row, w);
+    // systray and notify popup
+    HIG :: workarea_add_section_title (t, &row, _("System Tray Behavior"));
+    HIG :: workarea_add_section_spacer (t, row, 3);
+    w = new_check_button (_("Hide to system tray"), "status-icon", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
+    w = new_check_button (_("Start Pan minimized"), "start-minimized", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
 #ifdef HAVE_LIBNOTIFY
-  w = new_check_button (_("Show notifications"), "use-notify", false, prefs);
-  HIG :: workarea_add_wide_control (t, &row, w);
+    w = new_check_button (_("Show notifications"), "use-notify", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
 #endif
-  HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Status and Notifications")));
 
-  // Autosave Features
-  row = 0;
-  t = HIG :: workarea_create ();
-  HIG :: workarea_add_section_spacer (t, row, 2);
-  HIG :: workarea_add_section_title (t, &row, _("Autosave Article Draft"));
-  w = new_spin_button ("draft-autosave-timeout-min", 0, 60, prefs);
-  l = gtk_label_new(_("Minutes to autosave the current Article Draft."));
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
-  gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
-  HIG::workarea_add_row (t, &row, w, l);
-  HIG::workarea_add_section_divider (t, &row);
-  HIG :: workarea_add_section_title (t, &row, _("Autosave Articles"));
-  w = new_spin_button ("newsrc-autosave-timeout-min", 0, 60, prefs);
-  l = gtk_label_new(_("Minutes to autosave newsrc files"));
-  gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
-  gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
-  HIG::workarea_add_row (t, &row, w, l);
+    // Autosave Features
+    HIG :: workarea_add_section_spacer (t, row, 2);
+    HIG :: workarea_add_section_title (t, &row, _("Autosave Article Draft"));
+    w = new_spin_button ("draft-autosave-timeout-min", 0, 60, prefs);
+    l = gtk_label_new(_("Minutes to autosave the current Article Draft."));
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
+    HIG::workarea_add_row (t, &row, w, l);
+    HIG::workarea_add_section_divider (t, &row);
+    HIG :: workarea_add_section_title (t, &row, _("Autosave Articles"));
+    w = new_spin_button ("newsrc-autosave-timeout-min", 0, 60, prefs);
+    l = gtk_label_new(_("Minutes to autosave newsrc files"));
+    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
+    HIG::workarea_add_row (t, &row, w, l);
+
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Autosave")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Miscellaneous"), _("Miscellaneous"), icon_prefs_extras, prefs));
 
   // Layout
   row = 0;
@@ -890,8 +885,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_orient_radio (w, _("1=Body, 2=Headers, 3=Groups"), "body,headers,groups", cur, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
+
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Layout")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Layout"), _("Layout"), icon_prefs_layout, prefs));
 
   // Headers
   row = 0;
@@ -900,8 +896,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_section_spacer(t, row, 1);
     HIG :: workarea_add_wide_control (t, &row, header_columns_layout_new (prefs));
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Headers")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Headers"), _("Headers"), icon_prefs_headers, prefs));
 
+  // customizable actionss
   row = 0;
   t = HIG :: workarea_create ();
 
@@ -917,7 +914,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_row (t, &row, _("Download _attachments of posts scoring at: "), w);
 
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Actions")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Actions"), _("Actions"), icon_prefs_actions, prefs));
 
   // Fonts
   row = 0;
@@ -943,7 +940,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     b = new_font_button ("monospace-font", "Monospace 10", prefs);
     HIG :: workarea_add_row (t, &row, l, b);
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Fonts")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Fonts"), _("Fonts"), icon_prefs_fonts, prefs));
 
   // Colors
   row = 0;
@@ -997,7 +994,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_row (t, &row, _("URL:"), new_color_button ("body-pane-color-url", TANGO_SKY_BLUE_DARK, prefs));
     HIG :: workarea_add_row (t, &row, _("Signature:"), new_color_button ("body-pane-color-signature", TANGO_SKY_BLUE_LIGHT, prefs));
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Colors")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Colors"), _("Colors"), icon_prefs_colors, prefs));
 
   // Applications
   row = 0;
@@ -1013,7 +1010,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     w = editor_new (prefs);
     HIG :: workarea_add_row (t, &row, _("_Text editor:"), w);
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("A_pplications")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Applications"), _("Applications"), icon_prefs_applications, prefs));
 
   // Upload Options
   row = 0;
@@ -1027,9 +1024,30 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG::workarea_add_row (t, &row, w, l);
 
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, gtk_label_new_with_mnemonic(_("_Upload")));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Upload"), _("Upload"), icon_prefs_upload, prefs));
+
+  // Hotkeys
+  row = 0;
+  t = HIG :: workarea_create ();
+  fill_pref_hotkeys(t, row, _prefs);
+
+  HIG :: workarea_finish (t, &row);
+
+  GtkWidget* scroll = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scroll), GTK_SHADOW_IN);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(scroll), t);
+
+  gtk_widget_show_all (scroll);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), scroll, new_label_with_icon(_("_Hotkeys"), _("Hotkeys"), icon_prefs_hotkeys, prefs));
 
   gtk_widget_show_all (notebook);
   gtk_box_pack_start (GTK_BOX(gtk_dialog_get_content_area( GTK_DIALOG(dialog))), notebook, true, true, 0);
+
+  gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
+
   _root = dialog;
 }

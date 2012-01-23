@@ -124,11 +124,7 @@ ArticleCache :: message_id_to_filename (char * buf, int len, const StringView& m
   }
 
   // add the filename extension
-  char* tmp = new char[msg_extension.length()+1];
-  g_snprintf (tmp, sizeof(tmp), ".%s", msg_extension.c_str());
-  g_snprintf (out, len-(out-buf), tmp);
-
-  delete tmp;
+  g_snprintf (out, len-(out-buf), ".%s", msg_extension.c_str());
 
   return buf;
 }

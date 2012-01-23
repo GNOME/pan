@@ -55,8 +55,17 @@ stock_images = \
   icon_status_idle.png \
   icon_status_new_articles.png \
   icon_sig_ok.png \
-  icon_sig_fail.png
-
+  icon_sig_fail.png \
+  icon_prefs_applications.png \
+  icon_prefs_extras.png \
+  icon_prefs_hotkeys.png \
+  icon_prefs_behavior.png \
+  icon_prefs_fonts.png \
+  icon_prefs_upload.png \
+  icon_prefs_colors.png \
+  icon_prefs_headers.png \
+  icon_prefs_layout.png \
+  icon_prefs_actions.png
 
 EXTRA_DIST = \
 	pan-template.xcf \
