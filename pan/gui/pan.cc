@@ -203,9 +203,9 @@ namespace
     }
     else
     {
-      gtk_window_deiconify(window);
-      gtk_widget_hide(GTK_WIDGET(window));
+//      gtk_widget_hide(GTK_WIDGET(window));
       gtk_widget_show (GTK_WIDGET(window));
+      gtk_window_deiconify(window);
     }
 
   }
