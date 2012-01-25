@@ -42,7 +42,6 @@ namespace pan
     virtual std::string get_scorefile_name () const;
     virtual std::string get_posting_name () const;
     virtual std::string get_server_filename () const;
-    virtual std::string get_hotkey_filename () const;
 
     virtual void clear_group_headers (const Quark& group);
 
@@ -51,7 +50,6 @@ namespace pan
     virtual LineReader* read_group_headers (const Quark& group) const;
     virtual LineReader* read_group_descriptions () const;
     virtual LineReader* read_group_permissions () const;
-    virtual LineReader* read_hotkeys () const;
 
     virtual std::ostream* write_tasks ();
     virtual std::ostream* write_server_properties ();
@@ -59,7 +57,6 @@ namespace pan
     virtual std::ostream* write_group_descriptions ();
     virtual std::ostream* write_group_permissions ();
     virtual std::ostream* write_group_headers (const Quark& group);
-    virtual std::ostream* write_hotkeys ();
     virtual void write_done (std::ostream*);
 
     virtual LineReader* read_file (const StringView& filename) const;

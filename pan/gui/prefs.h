@@ -119,7 +119,6 @@ namespace pan
     public:
       void to_string (int indent, std::string& setme) const;
       void from_string (const StringView& xml);
-      void get_hotkeys ();
 
     private:
       struct Geometry {
@@ -140,8 +139,6 @@ namespace pan
       mutable colors_t _colors;
       typedef std::map<std::string,int> ints_t;
       mutable ints_t _ints;
-      typedef std::map<std::string,std::string> hotkeys_t;
-      mutable hotkeys_t _hotkeys;
 
 
     public:

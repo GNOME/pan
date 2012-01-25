@@ -34,20 +34,15 @@ extern "C" {
 #include "url.h"
 #include "gtk-compat.h"
 #include "e-charset-dialog.h"
-#include "hotkeys.h"
+#include "actions-extern.h"
 
 using namespace pan;
 
-namespace
+namespace pan
 {
-  std::string get_accel_filename () {
-    char * tmp = g_build_filename (file::get_pan_home().c_str(), "accels.txt", NULL);
-    std::string ret (tmp);
-    g_free (tmp);
-    return ret;
-  }
+  typedef PrefsDialog::CallBackData CallBackData;
 
-  typedef struct std::map<std::string,GtkAccelKey> keymap_t;
+  typedef std::map<std::string,GtkAccelKey> keymap_t;
 
   struct HotkeyData
   {
@@ -59,33 +54,94 @@ namespace
 
   static HotkeyData hotkey_data;
 
-//  void hotkey_entry_icon_press_cb(GtkEntry             * entry,
-//                                  GtkEntryIconPosition,
-//                                  GdkEvent             *,
-//                                  gpointer               gpointer)
-//  {
-//    char* ptr = static_cast<char*>(gpointer);
-//
-//    guint key;
-//    GdkModifierType mod;
-//
-//    gtk_accelerator_parse (gtk_entry_get_text(entry),&key,&mod);
-//
-//    std::cerr<<"click parse "<<ptr<<" "<<key<<" "<<mod<<"\n";
-//
-//    GtkAccelKey newkey;
-//
-//    // reset the other keybinding
-//    gtk_accel_map_change_entry ("", key, mod, true);
-//
-//    newkey.accel_key = key;
-//    newkey.accel_mods = mod;
-//
-//    gtk_accel_map_change_entry (ptr, key, mod, true);
-//    hotkey_data.keys[ptr] = newkey;
-//  }
+  gboolean  hotkey_pressed_cb        (GtkWidget *,
+                                      GdkEvent  *event,
+                                      gpointer   user_data)
+  {
 
-  // TODO offer replace with context menu!
+    CallBackData* data = static_cast<CallBackData*>(user_data);
+
+    GdkEventKey* key = (GdkEventKey*)event;
+
+//    if (key->is_modifier) return false;
+
+    guint keyval = key->keyval;
+    guint state = key->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK);
+
+    GtkAccelKey acc_key;
+    acc_key.accel_key = keyval;
+    acc_key.accel_mods = GdkModifierType(state);
+
+    gtk_accel_map_change_entry(data->name.c_str(), keyval, GdkModifierType(state), true);
+
+    gtk_widget_destroy(data->win);
+
+    hotkey_data.keys[data->name] = acc_key;
+
+    return true;
+  }
+
+}
+
+void
+PrefsDialog :: edit_shortkey (CallBackData* data)
+{
+  GtkAccelKey key;
+
+  GtkWidget * win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_title(GTK_WINDOW(win), _("Select a new Hotkey"));
+
+  data->win = win;
+  g_signal_connect(win, "key-press-event", G_CALLBACK(hotkey_pressed_cb), data);
+
+  gtk_widget_set_size_request(win, 400,100);
+
+  gtk_widget_show_all(win);
+
+}
+
+void
+PrefsDialog :: edit_shortkey_cb (GtkMenuItem *mi, gpointer ptr)
+{
+  CallBackData* data = static_cast<CallBackData*>(ptr);
+  data->dialog->edit_shortkey(data);
+}
+
+void
+PrefsDialog :: populate_popup (GtkEntry *e, GtkMenu *m)
+{
+  GtkWidget * mi = gtk_menu_item_new();
+  gtk_widget_show (mi);
+  gtk_menu_shell_prepend (GTK_MENU_SHELL(m), mi);
+
+  GtkWidget * img = gtk_image_new_from_stock (GTK_STOCK_EDIT, GTK_ICON_SIZE_MENU);
+  mi = gtk_image_menu_item_new_with_mnemonic (_("Edit Hotkey"));
+
+  CallBackData* data = (CallBackData*)g_object_get_data(G_OBJECT(e), "data");
+
+  g_signal_connect (mi, "activate", G_CALLBACK(edit_shortkey_cb), data);
+  gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
+  gtk_widget_show_all (mi);
+  gtk_menu_shell_prepend (GTK_MENU_SHELL(m), mi);
+}
+
+namespace pan
+{
+
+  std::string get_accel_filename () {
+    char * tmp = g_build_filename (file::get_pan_home().c_str(), "accels.txt", NULL);
+    std::string ret (tmp);
+    g_free (tmp);
+    return ret;
+  }
+
+  void
+  populate_popup_cb (GtkEntry *e, GtkMenu *m, gpointer ptr)
+  {
+    g_object_set_data (G_OBJECT (e), "data", ptr);
+    static_cast<PrefsDialog::CallBackData*>(ptr)->dialog->populate_popup(e, m);
+  }
+
   void hotkey_entry_changed_cb (GtkEntry * e, gpointer gpointer)
   {
 
@@ -135,13 +191,10 @@ namespace
       if (it->second.accel_key == key && it->second.accel_mods == mod) { found=true; break;}
     }
 
-
     if (found)
     {
       gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_DIALOG_WARNING);
       gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, _("Error: Shortkey already exists!"));
-      gtk_entry_set_icon_activatable(e, GTK_ENTRY_ICON_PRIMARY, true);
-
     }
     else
     {
@@ -162,6 +215,10 @@ namespace
     key.accel_mods = accel_mods;
     data->keys[accel_path] = key;
 
+    guint _key;
+    GdkModifierType _mod;
+    GtkAccelKey acc_key;
+
   }
 
 
@@ -175,7 +232,6 @@ namespace
                                   it->second.accel_key,
                                   it->second.accel_mods,
                                   true);
-
     }
 
     // save 'em
@@ -241,13 +297,14 @@ namespace
     return t;
   }
 
-
-  GtkWidget* new_hotkey_entry (const char* value, const char* name)
+  GtkWidget* new_hotkey_entry (const char* value, const char* name, gpointer ptr)
   {
+
     GtkWidget * t = gtk_entry_new();
     gtk_entry_set_text (GTK_ENTRY(t), value);
     g_signal_connect (t, "changed", G_CALLBACK(hotkey_entry_changed_cb), gpointer(name));
-//    g_signal_connect (t, "icon-press", G_CALLBACK(hotkey_entry_icon_press_cb), gpointer(name));
+    g_signal_connect (t, "populate-popup", G_CALLBACK(populate_popup_cb), ptr);
+
     return t;
   }
 
@@ -298,7 +355,7 @@ namespace
 
   GtkWidget* new_label_with_icon(const char* mnemonic, const char* label, const guint8* line, Prefs& prefs)
   {
-    const bool show_text =!prefs.get_flag("show-only-icons-in-preftabs", "false");
+    const bool show_text = !prefs.get_flag("show-only-icons-in-preftabs", "false");
 
     GtkWidget* hbox = gtk_hbox_new(false, 2);
     GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, line, false, 0);
@@ -311,7 +368,7 @@ namespace
     return hbox;
   }
 
-  void fill_pref_hotkeys(GtkWidget* t, int& row, Prefs& prefs)
+  void fill_pref_hotkeys(GtkWidget* t, int& row, Prefs& prefs, gpointer dialog_ptr)
   {
 
     HIG::workarea_add_section_spacer (t, row, hotkey_data.keys.size());
@@ -322,8 +379,20 @@ namespace
     foreach (keymap_t, hotkey_data.keys, it)
     {
       keyval = gtk_accelerator_name (it->second.accel_key, it->second.accel_mods);
-      w = new_hotkey_entry(keyval, it->first.c_str());
-      l = gtk_label_new(it->first.c_str());
+
+      std::string stripped = it->first;
+      size_t f = stripped.find_last_of("/");
+      stripped = f != std::string::npos ? stripped.substr(f+1,stripped.size()) : stripped;
+
+      CallBackData* data = new CallBackData();
+      data->dialog = (PrefsDialog*)dialog_ptr;
+      if (!it->first.empty()) data->name = it->first;
+      data->value = stripped;
+
+      w = new_hotkey_entry(keyval, it->first.c_str(), data);
+
+      std::string label = action_trans[stripped];
+      l = gtk_label_new(label.c_str());
       HIG :: workarea_add_row (t, &row, w, l);
     }
   }
@@ -530,7 +599,6 @@ namespace
     return b;
   }
 }
-
 
 void
 PrefsDialog :: update_default_charset_label(const StringView& value)
@@ -741,11 +809,16 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
   GtkWidget * notebook = gtk_notebook_new ();
 
-#if !GTK_CHECK_VERSION(2,24,0)
-  gtk_notebook_set_homogeneous_tabs (GTK_NOTEBOOK(notebook), true);
-#else
-  g_object_set (notebook, "homogeneous", true, NULL);
-#endif
+// remove this for now, it's not needed
+//
+//if (prefs.get_flag("show-only-icons-in-preftabs", false))
+//{
+//#if !GTK_CHECK_VERSION(2,24,0)
+//  gtk_notebook_set_homogeneous_tabs (GTK_NOTEBOOK(notebook), true);
+//#else
+//  g_object_set (notebook, "homogeneous", true, NULL);
+//#endif
+//}
   gtk_notebook_set_scrollable (GTK_NOTEBOOK(notebook), true);
 
   // Behavior
@@ -898,7 +971,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Headers"), _("Headers"), icon_prefs_headers, prefs));
 
-  // customizable actionss
+  // customizable actions
   row = 0;
   t = HIG :: workarea_create ();
 
@@ -1029,7 +1102,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   // Hotkeys
   row = 0;
   t = HIG :: workarea_create ();
-  fill_pref_hotkeys(t, row, _prefs);
+  fill_pref_hotkeys(t, row, _prefs, this);
 
   HIG :: workarea_finish (t, &row);
 

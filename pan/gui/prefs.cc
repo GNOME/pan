@@ -31,7 +31,6 @@ extern "C" {
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include "prefs.h"
-#include "hotkeys.h"
 
 using namespace pan;
 
@@ -381,19 +380,3 @@ Prefs :: get_color_str_wo_fallback (const StringView& key) const
   const GdkColor& col(_colors[key]);
   return color_to_string (col);
 }
-
-//void
-//Prefs :: set_hotkey (const StringView& key, const StringView& value)
-//{
-////  _hotkeys[key] = value;
-////  fire_hotkey_changed (key, value);
-//}
-
-
-//std::string
-//Prefs :: get_hotkey (const StringView& key) const
-//{
-//  std::string res;
-//  if (!_hotkeys.count(key)) return "";
-//  return _hotkeys[key];
-//}

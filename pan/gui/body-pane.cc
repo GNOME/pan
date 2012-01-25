@@ -1505,6 +1505,7 @@ BodyPane :: populate_popup_cb (GtkTextView *v, GtkMenu *m, gpointer pane)
 {
   static_cast<BodyPane*>(pane)->populate_popup(v, m);
 }
+
 void
 BodyPane :: populate_popup (GtkTextView *v G_GNUC_UNUSED, GtkMenu *m)
 {
