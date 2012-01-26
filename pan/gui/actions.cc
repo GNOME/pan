@@ -354,8 +354,8 @@ namespace pan
         G_CALLBACK(do_save_articles_to_nzb) },
 
       { "print", GTK_STOCK_PRINT,
-        NULL, "<control>P",
-        NULL,
+        N_("Print"), "<control>P",
+        N_("Print"),
         G_CALLBACK(do_print) },
 
       { "import-tasks", GTK_STOCK_OPEN,
