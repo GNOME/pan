@@ -54,57 +54,97 @@ namespace pan
 
   static HotkeyData hotkey_data;
 
-  gboolean  hotkey_pressed_cb        (GtkWidget *,
-                                      GdkEvent  *event,
-                                      gpointer   user_data)
+  static gboolean hotkey_key_press_cb(GtkWidget *dialog, GdkEventKey *event, gpointer user_data)
   {
+    gchar *str;
+    gint state;
 
     CallBackData* data = static_cast<CallBackData*>(user_data);
 
-    GdkEventKey* key = (GdkEventKey*)event;
+    state = event->state & gtk_accelerator_get_default_mod_mask();
 
-//    if (key->is_modifier) return false;
+    if (event->keyval == GDK_Escape)
+      return FALSE;	/* close the dialog, don't allow escape when detecting keybindings. */
 
-    guint keyval = key->keyval;
-    guint state = key->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK);
+    str = gtk_accelerator_name(event->keyval, GdkModifierType(state));
 
-    GtkAccelKey acc_key;
-    acc_key.accel_key = keyval;
-    acc_key.accel_mods = GdkModifierType(state);
+    gtk_label_set_text(GTK_LABEL(data->label), str);
+    g_free(str);
 
-    gtk_accel_map_change_entry(data->name.c_str(), keyval, GdkModifierType(state), true);
-
-    gtk_widget_destroy(data->win);
-
-    hotkey_data.keys[data->name] = acc_key;
-
-    return true;
+    return TRUE;
   }
+
+
+  static void hotkey_dialog_response_cb(GtkWidget *dialog, gint response, gpointer user_data)
+  {
+    if (response == GTK_RESPONSE_ACCEPT)
+    {
+      // update hotkey in database
+      static_cast<CallBackData*>(user_data)->dialog->update_hotkey(user_data);
+    }
+    gtk_widget_destroy(dialog);
+  }
+}
+
+void
+PrefsDialog :: update_hotkey (gpointer user_data)
+{
+
+  CallBackData* data = static_cast<CallBackData*>(user_data);
+
+  guint lkey;
+  GdkModifierType lmods;
+  GtkAccelKey acc_key;
+  const gchar* str = gtk_label_get_text(GTK_LABEL(data->label));
+  gtk_accelerator_parse(str, &lkey, &lmods);
+
+  acc_key.accel_key = lkey;
+  acc_key.accel_mods = lmods;
+
+  gtk_accel_map_change_entry(data->name.c_str(), lkey, lmods, true);
+  hotkey_data.keys[data->name] = acc_key;
+
+  gtk_entry_set_text(GTK_ENTRY(data->entry), str);
 
 }
 
 void
-PrefsDialog :: edit_shortkey (CallBackData* data)
+PrefsDialog :: edit_shortkey (gpointer user_data)
 {
-  GtkAccelKey key;
+  CallBackData* data = static_cast<CallBackData*>(user_data);
 
-  GtkWidget * win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(win), _("Select a new Hotkey"));
+  GtkWidget *dialog;
+  GtkWidget *label;
+  gchar *str;
 
-  data->win = win;
-  g_signal_connect(win, "key-press-event", G_CALLBACK(hotkey_pressed_cb), data);
+  dialog = gtk_dialog_new_with_buttons(_("Grab Key"), GTK_WINDOW(root()),
+      GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+      GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 
-  gtk_widget_set_size_request(win, 400,100);
+  str = g_strdup_printf(
+      _("Press the combination of the keys\nyou want to use for \"%s\"."), data->value.c_str());
+  label = gtk_label_new(str);
+  gtk_misc_set_padding(GTK_MISC(label), 5, 10);
+  gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), label);
 
-  gtk_widget_show_all(win);
+  data->label = gtk_label_new("");
+  gtk_misc_set_padding(GTK_MISC(data->label), 5, 10);
+  gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog)->vbox), data->label);
 
+  g_signal_connect(dialog, "key-press-event",
+            G_CALLBACK(hotkey_key_press_cb), user_data);
+  g_signal_connect(dialog, "response", G_CALLBACK(hotkey_dialog_response_cb), user_data);
+
+  gtk_widget_show_all(dialog);
+
+  g_free(str);
 }
 
 void
 PrefsDialog :: edit_shortkey_cb (GtkMenuItem *mi, gpointer ptr)
 {
-  CallBackData* data = static_cast<CallBackData*>(ptr);
-  data->dialog->edit_shortkey(data);
+  static_cast<CallBackData*>(ptr)->dialog->edit_shortkey(ptr);
 }
 
 void
@@ -117,9 +157,8 @@ PrefsDialog :: populate_popup (GtkEntry *e, GtkMenu *m)
   GtkWidget * img = gtk_image_new_from_stock (GTK_STOCK_EDIT, GTK_ICON_SIZE_MENU);
   mi = gtk_image_menu_item_new_with_mnemonic (_("Edit Hotkey"));
 
-  CallBackData* data = (CallBackData*)g_object_get_data(G_OBJECT(e), "data");
-
-  g_signal_connect (mi, "activate", G_CALLBACK(edit_shortkey_cb), data);
+  g_signal_connect (mi, "activate", G_CALLBACK(edit_shortkey_cb),
+                    g_object_get_data(G_OBJECT(e), "data"));
   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
   gtk_widget_show_all (mi);
   gtk_menu_shell_prepend (GTK_MENU_SHELL(m), mi);
@@ -301,6 +340,7 @@ namespace pan
   {
 
     GtkWidget * t = gtk_entry_new();
+    static_cast<CallBackData*>(ptr)->entry = t;
     gtk_entry_set_text (GTK_ENTRY(t), value);
     g_signal_connect (t, "changed", G_CALLBACK(hotkey_entry_changed_cb), gpointer(name));
     g_signal_connect (t, "populate-popup", G_CALLBACK(populate_popup_cb), ptr);

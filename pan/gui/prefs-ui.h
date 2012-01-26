@@ -37,7 +37,8 @@ namespace pan
         PrefsDialog* dialog;
         std::string name;
         std::string value;
-        GtkWidget* win;
+        GtkWidget* entry;
+        GtkWidget* label;
       };
 
     public:
@@ -67,7 +68,8 @@ namespace pan
 
     public:
       void populate_popup (GtkEntry*, GtkMenu*);
-      void edit_shortkey (CallBackData* data);
+      void edit_shortkey (gpointer);
+      void update_hotkey (gpointer);
 
 
   };
