@@ -22,6 +22,8 @@ extern "C" {
   #include <glib/gi18n.h>
   #include "gtk-compat.h"
 }
+
+#include <pan/general/macros.h>
 #include <pan/general/debug.h>
 #include <pan/data-impl/data-impl.h>
 #include <pan/tasks/task-xover.h>
@@ -30,9 +32,14 @@ extern "C" {
 #include "pad.h"
 #include "gui.h"
 
+namespace pan
+{
+  std::map<std::string,std::string> action_trans;
+}
+
 using pan::PanUI;
 
-namespace
+namespace pan
 {
 
   PanUI * pan_ui (0);
@@ -767,14 +774,29 @@ namespace
 void
 pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p, Data* data)
 {
+
+  for (int i=0;i<n_entries;++i)
+  {
+    if (!entries[i].label) continue;
+    action_trans[entries[i].name] = (entries[i].label ? entries[i].label : "");
+  }
+
+  for (int i=0;i<n_toggle_entries;++i)
+  {
+    if (!toggle_entries[i].label) continue;
+    action_trans[toggle_entries[i].name] = (toggle_entries[i].label ? toggle_entries[i].label : "");
+  }
+
+  for (int i=0;i<G_N_ELEMENTS(match_toggle_entries);++i)
+  {
+    if (!match_toggle_entries[i].label) continue;
+    action_trans[match_toggle_entries[i].name] = (match_toggle_entries[i].label ? match_toggle_entries[i].label : "");
+  }
+
   pan_ui = ui;
   prefs = p;
 
   register_my_builtin_icons ();
-
-  std::map<gchar*,guint> keymap;
-
-//  int ret = get_all_hotkeys (keymap);
 
   for (GtkToggleActionEntry *it(toggle_entries), *end(it+n_toggle_entries); it!=end; ++it)
   {

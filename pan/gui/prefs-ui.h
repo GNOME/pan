@@ -25,14 +25,33 @@
 
 namespace pan
 {
+
   class PrefsDialog :
     public Prefs::Listener
   {
+
+    public:
+
+      struct CallBackData
+      {
+        PrefsDialog* dialog;
+        std::string name;
+        std::string value;
+        GtkWidget* entry;
+        GtkWidget* label;
+      };
+
     public:
       PrefsDialog (Prefs&, GtkWindow*) ;
       ~PrefsDialog () { }
       Prefs& prefs () { return _prefs; }
       GtkWidget* root() { return _root; }
+
+      static void populate_popup_cb (GtkEntry*, GtkMenu*, gpointer);
+      static void edit_shortkey_cb (GtkMenuItem*, gpointer);
+
+      void set_current_hotkey(const char* s) { _hotkey = s; }
+      const char* get_current_hotkey() const { return _hotkey; }
 
     private:
       Prefs& _prefs;
@@ -44,6 +63,14 @@ namespace pan
       void on_prefs_int_changed (const StringView& key, int color) {}
       void on_prefs_string_changed (const StringView& key, const StringView& value) ;
       void on_prefs_color_changed (const StringView& key, const GdkColor& color) {}
+
+      const char* _hotkey;
+
+    public:
+      void populate_popup (GtkEntry*, GtkMenu*);
+      void edit_shortkey (gpointer);
+      void update_hotkey (gpointer);
+
 
   };
 }
