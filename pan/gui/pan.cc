@@ -73,10 +73,8 @@ extern "C" {
   #include <gnome-keyring-1/gnome-keyring-memory.h>
 #endif
 
-
-/* NOTE : Dbus is disabled for now, my implementation is buggy */
 //#define DEBUG_LOCALE 1
-#define DEBUG_PARALLEL 1
+//#define DEBUG_PARALLEL 1
 
 using namespace pan;
 
@@ -806,8 +804,6 @@ _("General Options\n"
         pan,NULL);
 
     dbus_connection = g_bus_get_sync  (G_BUS_TYPE_SESSION , NULL, NULL);
-
-//    while (!pan->name_valid && !pan->lost_name) std::cerr<<pan->name_valid<<" "<<pan->lost_name<<"\n";
 
     std::cerr<<"dbus id "<<pan->dbus_id<<" "<<dbus_connection<<"\n";
   }

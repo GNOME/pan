@@ -131,7 +131,7 @@ DataImpl :: save_state ()
 GnomeKeyringResult
 DataImpl :: password_encrypt (const PasswordData* pw)
 {
-  g_return_val_if_fail (gnome_keyring_is_available(), GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
+//  g_return_val_if_fail (gnome_keyring_is_available(), GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
 
   return (
     gnome_keyring_store_password_sync (
@@ -151,7 +151,7 @@ DataImpl :: password_decrypt (PasswordData* pw) const
 {
 
   gchar* pwd(0);
-  g_return_val_if_fail (gnome_keyring_is_available(), GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
+//  g_return_val_if_fail (gnome_keyring_is_available(), GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
 
   GnomeKeyringResult ret =
     gnome_keyring_find_password_sync (

@@ -116,10 +116,10 @@ if test "x$want_gmime_crypto" = "xyes" ; then
 fi
 
 
-dnl AC_ARG_WITH(dbus, AC_HELP_STRING([--with-dbus], [Enable DBUS support]), [want_dbus=$withval], [want_dbus=yes])
-dnl if test "x$want_dbus" = "xyes" ; then
-dnl   AC_DEFINE(HAVE_DBUS,[1],[DBUS support for multiple Pan instances])
-dnl fi
+AC_ARG_WITH(dbus, AC_HELP_STRING([--with-dbus], [Enable DBUS support]), [want_dbus=$withval], [want_dbus=yes])
+if test "x$want_dbus" = "xyes" ; then
+  AC_DEFINE(HAVE_DBUS,[1],[DBUS support for multiple Pan instances])
+fi
 
 gtkspell_msg=no
 AC_ARG_WITH(gtkspell, AC_HELP_STRING([--with-gtkspell], [Enable GtkSpell support]), [want_gtkspell=$withval], [want_gtkspell=yes])
