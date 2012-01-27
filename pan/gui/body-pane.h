@@ -39,15 +39,6 @@ namespace pan
    */
   class BodyPane: private Prefs::Listener
   {
-    //#if !GTK_CHECK_VERSION(2,22,0)
-    //define private struct for gtktable for older gtk versions
-    struct TablePrivate
-    {
-      guint16         ncols;
-      guint16         nrows;
-    };
-
-    //#endif
 
     private:
       Prefs& _prefs;
@@ -56,16 +47,14 @@ namespace pan
       HeaderPane* _header_pane;
       Data& _data;
       ArticleCache& _cache;
-      GtkWidget* _sig_icon;
+      GtkWidget* _sig_status;
+      GtkWidget* _sig_status_hbox;
 
       void update_sig_valid(int i);
 
-      static gboolean on_tooltip_query(GtkWidget  *widget,
-                                       gint        x,
-                                       gint        y,
-                                       gboolean    keyboard_tip,
-                                       GtkTooltip *tooltip,
-                                       gpointer    data);
+      static gboolean sig_status_clicked_cb(GtkWidget  *widget,
+                                            GdkEvent  *event,
+                                            gpointer   user_data);
 
     public:
       BodyPane (Data&, ArticleCache&, Prefs&, GroupPrefs&, Queue&, HeaderPane*);

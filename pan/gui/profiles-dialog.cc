@@ -262,7 +262,8 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     std::string s;
     foreach_const (Profile::headers_t, profile.headers, it)
       s += it->first + ": " + it->second + "\n";
-    gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)), s.c_str(), s.size());
+    if (!s.empty())
+      gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)), s.c_str(), s.size());
     GtkWidget * eventbox = gtk_event_box_new ();
     gtk_widget_set_tooltip_text (eventbox, _("Extra headers to be included in your posts, such as\nReply-To: \"Your Name\""
                                              "<yourname@somewhere.com>\nOrganization: Your Organization\n"));

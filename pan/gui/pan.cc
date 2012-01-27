@@ -119,7 +119,7 @@ namespace
 #ifndef G_OS_WIN32
   void sighandler (int signum)
   {
-    std::cerr << "shutting down pan." << std::endl;
+    std::cerr << "Shutting down Pan." << std::endl;
     signal (signum, SIG_DFL);
     mainloop_quit ();
   }
@@ -756,8 +756,6 @@ _("General Options\n"
       NULL
     );
 
-    std::cerr<<"bus acquired\n";
-
   }
 
   static void
@@ -771,8 +769,6 @@ _("General Options\n"
 
     pan->name_valid = true;
     pan->lost_name = false;
-
-    std::cerr<<"name acquired "<<pan->name_valid<<"\n";
   }
 
   static void
@@ -786,8 +782,6 @@ _("General Options\n"
     pan->name_valid = false;
     pan->lost_name = true;
     pan->dbus_id= -1;
-
-    std::cerr<<"name lost\n";
   }
 
 
@@ -804,8 +798,6 @@ _("General Options\n"
         pan,NULL);
 
     dbus_connection = g_bus_get_sync  (G_BUS_TYPE_SESSION , NULL, NULL);
-
-    std::cerr<<"dbus id "<<pan->dbus_id<<" "<<dbus_connection<<"\n";
   }
 
   static void
@@ -934,16 +926,10 @@ main (int argc, char *argv[])
     GError* error(NULL);
     GVariant* var;
 
-    if (!dbus_connection) std::cerr<<"connection null\n";
-
     if (!dbus_connection) goto _fail;
-
-    std::cerr<<"dbg "<<pan.dbus_id<<" "<<pan.lost_name<<" "<<pan.name_valid<<"\n";
 
 //    if (pan.dbus_id == -1 || pan.lost_name)
     {
-
-      std::cerr<<"dbus id -1\n";
       g_dbus_connection_call_sync (dbus_connection,
                              PAN_DBUS_SERVICE_NAME,
                              PAN_DBUS_SERVICE_PATH,

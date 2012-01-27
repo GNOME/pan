@@ -403,14 +403,17 @@ namespace pan
 
   GtkWidget* new_label_with_icon(const char* mnemonic, const char* label, const guint8* line, Prefs& prefs)
   {
-    const bool show_text = !prefs.get_flag("show-only-icons-in-preftabs", "false");
+    std::string what = prefs.get_string("elements-show-tabs", "text");
+    const bool text  = "text"  == what;
+    const bool icons = "icons" == what;
+    const bool both  = "both"  == what;
 
     GtkWidget* hbox = gtk_hbox_new(false, 2);
     GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, line, false, 0);
     GtkWidget * image = gtk_image_new_from_pixbuf (pixbuf);
     g_object_unref (pixbuf);
-    if (line) gtk_box_pack_start (GTK_BOX(hbox), image, true, true, 0);
-    if (show_text) gtk_box_pack_start (GTK_BOX(hbox), gtk_label_new_with_mnemonic(mnemonic), true, true, 0);
+    if (line && (icons || both)) gtk_box_pack_start (GTK_BOX(hbox), image, true, true, 0);
+    if (text || both) gtk_box_pack_start (GTK_BOX(hbox), gtk_label_new_with_mnemonic(mnemonic), true, true, 0);
     gtk_widget_set_tooltip_text (hbox, label);
     gtk_widget_show_all(hbox);
     return hbox;
@@ -462,7 +465,10 @@ namespace pan
     GtkTreeModel * model = gtk_combo_box_get_model (c);
     const int n_rows (gtk_tree_model_iter_n_children (model, NULL));
     const bool do_show (gtk_combo_box_get_active(c) == (n_rows-1));
-    if (do_show && !w_parent) // add it
+
+    std::cerr<<"dbg  "<<do_show<<" "<<w_parent<<" "<<n_rows<<"\n";
+
+    if (do_show && !w_parent && c_parent) // add it
     {
       gtk_box_pack_start (GTK_BOX(c_parent), w, true, true, 0);
       gtk_widget_show (w);
@@ -472,6 +478,10 @@ namespace pan
     {
       g_object_ref (G_OBJECT(w));
       gtk_container_remove (GTK_CONTAINER(w_parent), w);
+    }
+    else if (!do_show && !w_parent && !c_parent)
+    {
+      gtk_widget_show_all (GTK_WIDGET(c));
     }
   }
 
@@ -504,7 +514,9 @@ namespace pan
   {
     Prefs * prefs (static_cast<Prefs*>(user_data));
     const char * key = (const char*) g_object_get_data (G_OBJECT(c), PREFS_KEY);
+
     prefs->_rules_changed = strcmp(key,"rules-");
+
     const int column = GPOINTER_TO_INT (g_object_get_data (G_OBJECT(c), "column"));
     const int row (gtk_combo_box_get_active (c));
     GtkTreeModel * m = gtk_combo_box_get_model (c);
@@ -515,6 +527,44 @@ namespace pan
       prefs->set_string (key, val);
       g_free (val);
     }
+  }
+
+  /* TODO ! static array for now */
+  GtkWidget* new_tabs_combo_box (Prefs& prefs,
+                                 const char * mode_key)
+  {
+
+    const char* strings[3][2] =
+    {
+      {N_("Show only icons"), "icons"},
+      {N_("Show only text"), "text"},
+      {N_("Show icons and text"), "both"},
+    };
+
+    const std::string mode (prefs.get_string (mode_key, "text"));
+    GtkListStore * store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+
+    int sel_index (0);
+    for (size_t i=0; i<G_N_ELEMENTS(strings); ++i) {
+      GtkTreeIter iter;
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter, 0, strings[i][0], 1, strings[i][1], -1);
+      if (mode == strings[i][1])
+        sel_index = i;
+    }
+
+    GtkWidget * c = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
+    GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
+    gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (c), renderer, true);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (c), renderer, "text", 0, NULL);
+    gtk_combo_box_set_active (GTK_COMBO_BOX(c), sel_index);
+    g_object_set_data_full (G_OBJECT(c), PREFS_KEY, g_strdup(mode_key), g_free);
+    g_object_set_data (G_OBJECT(c), "column", GINT_TO_POINTER(1));
+    g_signal_connect (c, "changed", G_CALLBACK(set_prefs_string_from_combobox), &prefs);
+
+    gtk_widget_show_all(c);
+
+    return c;
   }
 
   GtkWidget* url_handler_new (Prefs& prefs,
@@ -652,7 +702,7 @@ void
 PrefsDialog :: update_default_charset_label(const StringView& value)
 {
   char buf[256];
-  g_snprintf(buf, sizeof(buf),_("  Select default <u>global</u> charset. Current setting : <b>%s</b> ."),
+  g_snprintf(buf, sizeof(buf),_("Select default <u>global</u> charset. Current setting : <b>%s</b> ."),
              value.str);
   gtk_label_set_markup(GTK_LABEL(charset_label), buf);
   gtk_widget_show_all(charset_label);
@@ -912,18 +962,18 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     w = new_check_button (_("Clear article cache on shutdown"), "clear-article-cache-on-shutdown", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_spin_button ("cache-size-megs", 10, 1024*16, prefs);
-    l = gtk_label_new(_("Size of article cache (in MiB)"));
+    l = gtk_label_new(_("Size of article cache (in MiB) :"));
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
-    HIG::workarea_add_row (t, &row, w, l);
+    HIG::workarea_add_row (t, &row, l, w);
     w = new_entry ("cache-file-extension", "msg", prefs);
-    l = gtk_label_new(_("File extension for Cached Articles"));
+    l = gtk_label_new(_("File extension for Cached Articles: "));
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
-    HIG :: workarea_add_row (t, &row, w, l);
+    HIG :: workarea_add_row (t, &row, l, w);
 
     HIG::workarea_add_section_divider (t, &row);
     HIG :: workarea_add_section_title (t, &row, _("Tabs"));
-    w = new_check_button (_("Show only icons in Preferences tabs"), "show-only-icons-in-preftabs", false, prefs);
+    w = new_tabs_combo_box(prefs, "elements-show-tabs");
     HIG :: workarea_add_wide_control (t, &row, w);
 
   HIG :: workarea_finish (t, &row);
@@ -957,17 +1007,17 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_section_spacer (t, row, 2);
     HIG :: workarea_add_section_title (t, &row, _("Autosave Article Draft"));
     w = new_spin_button ("draft-autosave-timeout-min", 0, 60, prefs);
-    l = gtk_label_new(_("Minutes to autosave the current Article Draft."));
+    l = gtk_label_new(_("Minutes to autosave the current Article Draft: "));
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
-    HIG::workarea_add_row (t, &row, w, l);
+    HIG::workarea_add_row (t, &row, l, w);
     HIG::workarea_add_section_divider (t, &row);
     HIG :: workarea_add_section_title (t, &row, _("Autosave Articles"));
     w = new_spin_button ("newsrc-autosave-timeout-min", 0, 60, prefs);
-    l = gtk_label_new(_("Minutes to autosave newsrc files"));
+    l = gtk_label_new(_("Minutes to autosave newsrc files: "));
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
-    HIG::workarea_add_row (t, &row, w, l);
+    HIG::workarea_add_row (t, &row, l, w);
 
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Miscellaneous"), _("Miscellaneous"), icon_prefs_extras, prefs));
@@ -1140,9 +1190,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_add_section_spacer (t, row, 4);
   // 16 MiB blocks max, 512 kb min
   w = new_spin_button ("upload-option-bpf", 512*1024, 1024*1024*16, prefs);
-  l = gtk_label_new(_("Default bytes per file (for encoder)"));
+  l = gtk_label_new(_("Default bytes per file (for encoder): "));
   gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
-  HIG::workarea_add_row (t, &row, w, l);
+  HIG::workarea_add_row (t, &row, l, w);
 
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Upload"), _("Upload"), icon_prefs_upload, prefs));
