@@ -10,14 +10,29 @@ DESKTOP_IN_FILES=pan.desktop.in
 DESKTOP_FILES=$(DESKTOP_IN_FILES:.desktop.in=.desktop)
 
 DISTCLEANFILES = \
- intltool-extract \
- intltool-merge \
- intltool-update \
- pan.desktop
+ $(srcdir)/intltool-extract \
+ $(srcdir)/intltool-merge \
+ $(srcdir)/intltool-update \
+ $(srcdir)/pan.desktop
 
 if ENABLE_HELP
-DISTCLEANFILES += gnome-doc-utils.make 
-endif 
+DISTCLEANFILES += $(srcdir)/gnome-doc-utils.make
+endif
+
+MAINTAINERCLEANFILES = \
+ $(srcdir)/INSTALL \
+ $(srcdir)/aclocal.m4 \
+ $(srcdir)/config.guess \
+ $(srcdir)/config.h.in \
+ $(srcdir)/config.sub \
+ $(srcdir)/configure \
+ $(srcdir)/depcomp \
+ $(srcdir)/install-sh \
+ $(srcdir)/missing \
+ $(srcdir)/mkinstalldirs \
+ $(srcdir)/po/Makefile.in.in \
+ `find "$(srcdir)" -type f -name Makefile.in -print` \
+ $(NULL)
 
 EXTRA_DIST = \
  README \
@@ -43,3 +58,4 @@ Productivity_DATA = $(DESKTOP_FILES)
 
 icon_DATA = pan.png
 icondir = $(datadir)/pixmaps
+
