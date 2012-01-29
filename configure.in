@@ -1,11 +1,11 @@
-AC_INIT([pan],[0.135],[http://bugzilla.gnome.org/enter_bug.cgi?product=Pan])
+AC_INIT([Pan],[0.135],[https://bugzilla.gnome.org/enter_bug.cgi?product=Pan],[pan],[http://pan.rebelbase.com/])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
 AC_DEFINE(VERSION_MINOR,135,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
 AC_DEFINE(VERSION_TITLE,["Tomorrow I'll Wake Up and Scald Myself with Tea"],[Release Name])
-AC_PREREQ(2.54)
+AC_PREREQ([2.64])
 
-dnl expanded by export-archive
+dnl Expanded by export-archive
 GIT_HASH='$Format:%h$'
 if test '0' \< $GIT_HASH ;then
 	GIT_BRANCH=`echo '$Format:%d$' | awk -F , '{print gensub("[[\(\)]]","","g",$NF)}' 2>/dev/null`
@@ -32,21 +32,17 @@ fi
 
 AC_DEFINE_UNQUOTED([GIT_REV],["$GIT_REV"],[Git branch and hash])
 
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR(pan/general/quark.cc)
 
-AM_INIT_AUTOMAKE(AC_PACKAGE_NAME,AC_PACKAGE_VERSION)
-AM_MAINTAINER_MODE
+AM_INIT_AUTOMAKE([1.11.1 tar-ustar dist-bzip2])
+AM_MAINTAINER_MODE([enable])
 
 GNOME_DOC_INIT
 
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 dnl glib, gmime, and gtk are mandatory prerequisites.
-dnl
-dnl GtkSpell is optional: GTKSPELL_REQUIRED refers to the minimum version
-dnl needed if you want to build Pan with spellchecking in the Post window.
-
 GLIB_REQUIRED=2.17.6
 GMIME24_REQUIRED=2.4.0
 GMIME26_REQUIRED=2.5.5
@@ -82,52 +78,56 @@ AC_PROG_RANLIB
 dnl for libuu
 AC_CHECK_HEADERS([errno.h fcntl.h])
 
-IT_PROG_INTLTOOL([0.35.5])
+dnl I18n support
+IT_PROG_INTLTOOL([0.40.6])
 GETTEXT_PACKAGE=pan
 AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[Gettext package])
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[gettext package name])
 AM_GLIB_GNU_GETTEXT
 panlocaledir='${prefix}/${DATADIRNAME}/locale'
 
 AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
-PKG_CHECK_MODULES([GMIME], [ gmime-2.6    >= $GMIME26_REQUIRED ],[have_gmime26=yes],
+
+dnl Check for GMime
+PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED],[have_gmime26=yes],
   [
-    PKG_CHECK_MODULES( [GMIME], [gmime-2.4    >= $GMIME24_REQUIRED] )
+    PKG_CHECK_MODULES([GMIME], [gmime-2.4 >= $GMIME24_REQUIRED])
     have_gmime26=no
   ]
   )
 
-AC_ARG_WITH(gnome-doc-help, AC_HELP_STRING([--with-gnome-doc-help], [Enable Docbook Help (gnome-doc-utils) in Pan]),[want_gnome_doc_help=$withval], [want_gnome_doc_help=yes])
+AC_ARG_WITH(gmime-crypto, AS_HELP_STRING([--with-gmime-crypto],[enable GMime cryptography support (overrides auto-on if GMime 2.6 is found)]),
+    [want_gmime_crypto=$withval], [want_gmime_crypto=yes])
+
+if test "x$want_gmime_crypto" = "xyes" ; then
+  if test "x$have_gmime26" = "xyes" ; then
+    AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[cryptography (PGP) support with GMime 2.6])
+  fi
+fi
+
+dnl User help support
+AC_ARG_WITH(gnome-doc-help, AS_HELP_STRING([--with-gnome-doc-help],[enable support for user help (gnome-doc-utils)]),[want_gnome_doc_help=$withval], [want_gnome_doc_help=yes])
 if test "x$want_gnome_doc_help" = "xyes" ; then
-  AC_DEFINE(HAVE_HELP,[1], [Docbook Help in Pan (with gnome-doc-utils)])
+  AC_DEFINE(HAVE_HELP,[1], [user help in Pan (with gnome-doc-utils)])
   AM_CONDITIONAL(ENABLE_HELP, true)
 else
   AM_CONDITIONAL(ENABLE_HELP, false)
 fi
 
-
-AC_ARG_WITH(gmime-crypto, AC_HELP_STRING([--with-gmime-crypto], [Enable GMIME Crypto support (overrides auto-on if GMime 2.6 is found)]),
-    [want_gmime_crypto=$withval], [want_gmime_crypto=yes])
-
-if test "x$want_gmime_crypto" = "xyes" ; then
-  if test "x$have_gmime26" = "xyes" ; then
-    AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[crypto support (pgp) with gmime 2.6])
-  fi
-fi
-
-
-AC_ARG_WITH(dbus, AC_HELP_STRING([--with-dbus], [Enable DBUS support]), [want_dbus=$withval], [want_dbus=yes])
+dnl D-Bus support
+AC_ARG_WITH(dbus, AS_HELP_STRING([--with-dbus],[enable D-Bus support]), [want_dbus=$withval], [want_dbus=yes])
 if test "x$want_dbus" = "xyes" ; then
-  AC_DEFINE(HAVE_DBUS,[1],[DBUS support for multiple Pan instances])
+  AC_DEFINE(HAVE_DBUS,[1],[D-Bus support for multiple Pan instances])
 fi
 
+dnl GtkSpell support
 gtkspell_msg=no
-AC_ARG_WITH(gtkspell, AC_HELP_STRING([--with-gtkspell], [Enable GtkSpell support]), [want_gtkspell=$withval], [want_gtkspell=yes])
+AC_ARG_WITH(gtkspell, AS_HELP_STRING([--with-gtkspell],[enable GtkSpell support]), [want_gtkspell=$withval], [want_gtkspell=yes])
 if test "x$want_gtkspell" = "xyes" ; then
 	PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
 	                  [
 	                  gtkspell_msg=yes
-	                  AC_DEFINE(HAVE_GTKSPELL,[1],[Spellcheck Library])
+	                  AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
                     ],
 	                  [
 	                  gtkspell_msg=no
@@ -137,24 +137,25 @@ fi
 AC_SUBST(ENCHANT_CFLAGS)
 AC_SUBST(ENCHANT_LIBS)
 
-
+dnl GTK+ 3 support
 gtk_msg=no
-AC_ARG_WITH(gtk3, AC_HELP_STRING([--with-gtk3], [Enable GTK3 support]), [want_gtk3=$withval], [want_gtk3=no])
+AC_ARG_WITH(gtk3, AS_HELP_STRING([--with-gtk3],[enable GTK+ 3 support]), [want_gtk3=$withval], [want_gtk3=no])
 if test "x$want_gtk3" = "xyes" ; then
 	PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= $GTK3_REQUIRED],
 	                  [gtk_msg="yes >= $GTK3_REQUIRED"
-	                  AC_DEFINE(HAVE_GTK,[1],[GTK 3.0])]
+	                  AC_DEFINE(HAVE_GTK,[1],[GTK+ 3 support])]
 	                  )
 else
     AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
 fi
 
+dnl GnuTLS support
 gnutls_msg=no
-AC_ARG_WITH(gnutls, AC_HELP_STRING([--with-gnutls], [Enable GnuTLS support]), [want_gnutls=$withval], [want_gnutls=no])
+AC_ARG_WITH(gnutls, AS_HELP_STRING([--with-gnutls],[enable GnuTLS support]), [want_gnutls=$withval], [want_gnutls=no])
 if test "x$want_gnutls" = "xyes" ; then
   PKG_CHECK_MODULES([GNUTLS],[gnutls >= $GNUTLS_REQUIRED],
   [gnutls_msg="yes >= $GNUTLS_REQUIRED"
-  AC_DEFINE(HAVE_GNUTLS,[1],[GnuTLS])],
+  AC_DEFINE(HAVE_GNUTLS,[1],[GnuTLS support])],
   [gnutls_msg=no
   AC_MSG_RESULT(no)])
   AC_SUBST([GNUTLS_CFLAGS])
@@ -163,31 +164,31 @@ fi
 
 dnl Check for libnotify if user-enabled for popup notifications
 AC_ARG_ENABLE([libnotify],
-AC_HELP_STRING([--enable-libnotify],[enable libnotify support]),[enable_libnotify=$enableval],[enable_libnotify=yes])
+AS_HELP_STRING([--enable-libnotify],[enable libnotify support]),[enable_libnotify=$enableval],[enable_libnotify=yes])
 if test "x$enable_libnotify" = "xyes" ; then
   PKG_CHECK_MODULES([LIBNOTIFY],[libnotify >= $LIBNOTIFY_REQUIRED],[HAVE_LIBNOTIFY="yes"],[HAVE_LIBNOTIFY="no"])
   AC_SUBST([LIBNOTIFY_CFLAGS])
   AC_SUBST([LIBNOTIFY_LIBS])
   if test "x$HAVE_LIBNOTIFY" = "xyes"; then
-    AC_DEFINE([HAVE_LIBNOTIFY],[1],[libnotify for popup notifications (experimental)])
+    AC_DEFINE([HAVE_LIBNOTIFY],[1],[libnotify support for popup notifications (experimental)])
   fi
 fi
 
-dnl Check for gnome-keyring if user-enabled for popup notifications
+dnl Check for gnome-keyring if user-enabled for password storage
 AC_ARG_ENABLE([gkr],
-AC_HELP_STRING([--enable-gkr],[enable gnome-keyring support]),[enable_gkr=$enableval],[enable_gkr=yes])
+AS_HELP_STRING([--enable-gkr],[enable gnome-keyring support]),[enable_gkr=$enableval],[enable_gkr=yes])
 if test "x$enable_gkr" = "xyes" ; then
   PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[gnome-keyring-1 >= $LIBGKR_REQUIRED],[HAVE_GKR="yes"],[HAVE_GKR="no"])
   AC_SUBST([LIBGNOME_KEYRING_1_CFLAGS])
   AC_SUBST([LIBGNOME_KEYRING_1_LIBS])
   if test "x$HAVE_GKR" = "xyes"; then
-    AC_DEFINE([HAVE_GKR],[1],[gnome-keyring-1 for password storage])
+    AC_DEFINE([HAVE_GKR],[1],[gnome-keyring-1 support for password storage])
   fi
 fi
 
 dnl Check to see if strftime supports the use of %l and %k
 AC_MSG_CHECKING(for %l and %k support in strftime)
-AC_TRY_RUN([
+AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <string.h>
 #include <time.h>
 int main(int argc, char **argv) {
@@ -196,17 +197,17 @@ int main(int argc, char **argv) {
   struct tm *timeinfo = localtime (&rawtime);
   strftime(buf, 10, "%l %k", timeinfo);
   exit (strstr(buf, "l") || strstr(buf, "k") || !strcmp(buf," "));
-}],[
+}]])],[
 AC_DEFINE(HAVE_LKSTRFTIME, 1, [strftime supports use of l and k])
 ac_cv_lkstrftime=yes
-],ac_cv_lkstrftime=no,ac_cv_lkstrftime=no)
+],[ac_cv_lkstrftime=no],[ac_cv_lkstrftime=no])
 AC_MSG_RESULT($ac_cv_lkstrftime)
 
 AC_CANONICAL_HOST
 
 AC_DEFINE_UNQUOTED([PLATFORM_INFO],["$host"],[uname cpu-vendor-platformbuild])
 
-dnl windows-specific stuff.
+dnl Windows-specific stuff
 win32="no"
 case $host_os in
 
@@ -235,7 +236,7 @@ case $host_os in
 esac
 AM_CONDITIONAL([HAVE_WIN32],[test "$win32" = "yes"])
 
-dnl build the output files
+dnl Build the output files
 AC_SUBST(panlocaledir)
 AC_CONFIG_FILES([Makefile
                  pan.spec
@@ -253,12 +254,11 @@ AC_CONFIG_FILES([Makefile
                  pan/data-impl/Makefile
                  pan/gui/Makefile])
 
-
 if test "x$want_gnome_doc_help" = "xyes" ; then
-  echo "Building with gnome-doc-utils ... yes"
+  echo "checking whether we are building with gnome-doc-utils... yes"
   AC_CONFIG_FILES([help/Makefile])
 else
-  echo "Building with gnome-doc-utils ... no"
+  echo "checking whether we are building with gnome-doc-utils... no"
 fi
 
 AC_OUTPUT
@@ -267,8 +267,8 @@ echo "
 
 Configuration:
 
-        Source code location:	${srcdir}
-        Compiler:		${CXX}
+        Source code location:   ${srcdir}
+        Compiler:               ${CXX}
         With GtkSpell:          ${gtkspell_msg}
         With GTK3:              ${gtk_msg}
         With GnuTLS:            ${gnutls_msg}

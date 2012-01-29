@@ -1,5 +1,5 @@
 
-    This is Pan, a powerful and user-friendly USENET newsreader for GTK+.
+    This is Pan, a powerful and user-friendly Usenet newsreader for GTK+.
     The latest info and versions of Pan can always be found at
     <http://pan.rebelbase.com/>.
 
@@ -7,19 +7,24 @@
 REQUIREMENTS
 
     Pan requires these libraries:
-    * GTK+ 2.16.0 or higher (optionally GTK+ 3.0.0 or higher) <http://www.gtk.org/>
+    * GTK+ 2.16.0 or higher (optionally GTK+ 3.0.0 or higher)
+      <http://www.gtk.org/>
     * GMime 2.4.0 or higher <http://spruce.sourceforge.net/gmime/>
-      (GMime 2.5.5 or higher for PGP crypto support)
-
-    Spellchecking requires the following library:
-    * GtkSpell 2.0.7 or higher <http://gtkspell.sourceforge.net>
+      (optionally GMime 2.5.5 or higher for PGP cryptography support)
 
     The following libraries, which enhance Pan's functionality, are optional:
-    * libnotify 0.4.1 or higher <http://www.galago-project.org/news/index.php>
-    * GNOME Keyring 3.2.2 or higher <https://live.gnome.org/GnomeKeyring>
-    * D-Bus <http://www.freedesktop.org/wiki/Software/dbus>
-    * GnuTLS 2.12.10 or higher for TLS 1.0 Support (encrypted connections)
-        <http://www.gnu.org/software/gnutls/>
+    * GtkSpell 2.0.7 or higher for spellchecking
+      <http://gtkspell.sourceforge.net>
+    * Enchant 1.6.0 or higher for spellchecking
+      <http://www.abisource.com/projects/enchant/>
+    * libnotify 0.4.1 or higher for notifications
+      <http://www.galago-project.org/news/index.php>
+    * GNOME Keyring 3.2.0 or higher for password storage
+      <https://live.gnome.org/GnomeKeyring>
+    * D-Bus for multiple Pan instances
+      <http://www.freedesktop.org/wiki/Software/dbus>
+    * GnuTLS 2.12.10 or higher for encrypted connections (TLS 1.0)
+      <http://www.gnu.org/software/gnutls/>
 
     Most Linux distributions already have these; they can also be downloaded
     from their home pages.
@@ -61,7 +66,7 @@ THE SALES PITCH
           or notify you of, etc. articles that match a subject, or are
           posted by a particular user, and so on.
         * The same system can be used to define automatic actions on behalf
-          of the user: auto-download, auto-cache, auto-delete etc...
+          of the user: auto-download, auto-cache, auto-delete etc.
         * Groups can be filtered by regular expression matching
           subscribed/new/all, etc.
 
@@ -83,7 +88,8 @@ THE SALES PITCH
           automatically yEnc-encrypted, threaded and referenced by Pan.
         * Articles can be encrypted and/or signed with a public/private PGP key,
           so your privacy and security are ensured.
-        * Connections can be encrypted with the TLS 1.0 protocol (the successor to SSL 3.0).
+        * Connections can be encrypted with the TLS 1.0 protocol (the successor
+          to SSL 3.0).
 
     The rest of the sales pitch is at <http://pan.rebelbase.com/features/>.
 
