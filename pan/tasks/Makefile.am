@@ -46,7 +46,7 @@ noinst_HEADERS = \
   upload-queue.h \
   socket.h \
   socket-impl-main.h \
-  socket-impl-openssl.cc \
+  socket-impl-openssl.h \
   socket-impl-gio.h \
   socket-impl-scripted.h \
   nntp-pool.h

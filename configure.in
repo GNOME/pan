@@ -248,12 +248,13 @@ AC_CONFIG_FILES([Makefile
                  pan/general/Makefile
                  pan/usenet-utils/Makefile
                  pan/data/Makefile
-                 pan/data/decode-test-cache/Makefile
                  pan/tasks/Makefile
                  pan/icons/Makefile
                  pan/data-impl/Makefile
                  pan/gui/Makefile])
+dnl                 pan/data/decode-test-cache/Makefile
 
+dnl Check whether we are building with gnome-doc-utils
 if test "x$want_gnome_doc_help" = "xyes" ; then
   echo "checking whether we are building with gnome-doc-utils... yes"
   AC_CONFIG_FILES([help/Makefile])

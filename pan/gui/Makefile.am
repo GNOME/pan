@@ -40,6 +40,7 @@ libpangui_a_SOURCES = \
 noinst_HEADERS = \
  action-manager.h \
  actions.h \
+ actions-extern.h \
  body-pane.h \
  defgroup.h \
  dl-headers-ui.h \
@@ -67,6 +68,7 @@ noinst_HEADERS = \
  prefs-ui.h \
  post-ui.h \
  post.ui.h \
+ post.ui.pgp.h \
  profiles-dialog.h \
  progress-view.h \
  render-bytes.h \
@@ -77,6 +79,7 @@ noinst_HEADERS = \
  server-ui.h \
  tango-colors.h \
  task-pane.h \
+ taskpane.ui.h \
  url.h \
  wait.h \
  xface.h

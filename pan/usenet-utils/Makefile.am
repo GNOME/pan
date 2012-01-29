@@ -14,7 +14,7 @@ libusenetutils_a_SOURCES = \
  url-find.cc \
  blowfish.cc \
  gpg.cc
-
+	
 noinst_HEADERS = \
  defgroup.h \
  filter-info.h \
@@ -29,7 +29,8 @@ noinst_HEADERS = \
  ssl-utils.h \
  blowfish.h \
  blowfish_cyphers.h \
- gpg.h
+ gpg.h \
+ MersenneTwister.h
 
 #noinst_PROGRAMS = \
 # gnksa-test \
