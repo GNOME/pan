@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: pan2.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-27 10:10+0000\n"
-"PO-Revision-Date: 2012-01-27 11:16+0100\n"
+"POT-Creation-Date: 2012-01-28 22:40+0000\n"
+"PO-Revision-Date: 2012-01-29 13:21+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,13 +31,13 @@ msgid "Pan Newsreader"
 msgstr "Lector de noticias Pan"
 
 #: ../pan.desktop.in.h:2
-msgid "Read News from Usenet"
-msgstr "Lea las noticias de Usenet"
+msgid "Read and Post Usenet Articles"
+msgstr "Leer y publicar artículos en Usenet"
 
 #: ../pan/data/article-cache.cc:143 ../pan/data/encode-cache.cc:62
 #, c-format
 msgid "Error opening directory: \"%s\": %s"
-msgstr "Error al abrir el directorio: «%s»: %s"
+msgstr "Error al abrir la carpeta: «%s»: %s"
 
 #: ../pan/data/article-cache.cc:231 ../pan/data/article-cache.cc:242
 #: ../pan/data-impl/data-io.cc:187 ../pan/data-impl/data-io.cc:211
@@ -175,7 +175,7 @@ msgstr "_Archivo"
 msgid "_Edit"
 msgstr "_Editar"
 
-#: ../pan/gui/actions.cc:277 ../pan/gui/prefs-ui.cc:1003
+#: ../pan/gui/actions.cc:277 ../pan/gui/prefs-ui.cc:1061
 msgid "_Layout"
 msgstr "_Distribución"
 
@@ -203,7 +203,7 @@ msgstr "_Filtro"
 msgid "_Go"
 msgstr "_Ir"
 
-#: ../pan/gui/actions.cc:284 ../pan/gui/prefs-ui.cc:1030
+#: ../pan/gui/actions.cc:284 ../pan/gui/prefs-ui.cc:1088
 msgid "_Actions"
 msgstr "_Acciones"
 
@@ -316,7 +316,6 @@ msgid "Save Articles to an NZB File"
 msgstr "Guardar artículos en un archivo NZB"
 
 #: ../pan/gui/actions.cc:357 ../pan/gui/actions.cc:358
-#| msgid "isn't"
 msgid "Print"
 msgstr "Imprimir"
 
@@ -759,7 +758,7 @@ msgstr "Archivo sin nombre"
 
 #: ../pan/gui/body-pane.cc:1092 ../pan/gui/gui.cc:1862
 #: ../pan/gui/header-pane.cc:1187 ../pan/gui/header-pane.cc:1616
-#: ../pan/gui/post-ui.cc:2496 ../pan/gui/prefs-ui.cc:767
+#: ../pan/gui/post-ui.cc:2496 ../pan/gui/prefs-ui.cc:825
 #: ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
 msgstr "Asunto"
@@ -770,7 +769,7 @@ msgstr "De"
 
 #: ../pan/gui/body-pane.cc:1096 ../pan/gui/gui.cc:1863
 #: ../pan/gui/header-pane.cc:1694 ../pan/gui/log-ui.cc:305
-#: ../pan/gui/prefs-ui.cc:763
+#: ../pan/gui/prefs-ui.cc:821
 msgid "Date"
 msgstr "Fecha"
 
@@ -794,20 +793,46 @@ msgstr " de "
 msgid " at "
 msgstr " es "
 
-#: ../pan/gui/body-pane.cc:1520
+#. FIXME : GLib-GObject-WARNING **: invalid cast from `GtkVBox' to `GtkWindow'
+#: ../pan/gui/body-pane.cc:1268
+#| msgid "PGP Signature"
+msgid "PGP Signature Information"
+msgstr "Información de la firma PGP"
+
+#: ../pan/gui/body-pane.cc:1301
+#| msgid "Signature"
+msgid "no Signature found."
+msgstr "no se ha encontrado la firma."
+
+#: ../pan/gui/body-pane.cc:1306
+#| msgid "Signature File"
+msgid "Signature verified."
+msgstr "Firma verificada."
+
+#: ../pan/gui/body-pane.cc:1540
 msgid "Copy _URL"
 msgstr "Copiar _URL"
 
-#: ../pan/gui/body-pane.cc:1722
+#: ../pan/gui/body-pane.cc:1742
 msgid "Save attachment as ...."
 msgstr "Grabar adjunto como…"
 
-#: ../pan/gui/body-pane.cc:1725
+#: ../pan/gui/body-pane.cc:1745
 msgid "Save all attachments"
 msgstr "Guardar todos los adjuntos"
 
+#. line for signature status
+#: ../pan/gui/body-pane.cc:1787
+#| msgid "PGP Signature"
+msgid "PGP Signature : "
+msgstr "Firma PGP: "
+
+#: ../pan/gui/body-pane.cc:1788
+msgid "no signature found."
+msgstr "no se ha encontrado la firma."
+
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1796
+#: ../pan/gui/body-pane.cc:1824
 msgid "Attachments"
 msgstr "Adjuntos"
 
@@ -841,7 +866,7 @@ msgstr "Descargar t_odas las cabeceras"
 msgid "Get the _latest N headers: "
 msgstr "Descargar cabeceras _recientes:"
 
-#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:760
+#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:818
 msgid "Action"
 msgstr "Acción"
 
@@ -928,7 +953,7 @@ msgid "Visual"
 msgstr "Visual"
 
 #: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2056
-#: ../pan/gui/post-ui.cc:519 ../pan/gui/prefs-ui.cc:671
+#: ../pan/gui/post-ui.cc:519 ../pan/gui/prefs-ui.cc:729
 msgid "Character Encoding"
 msgstr "Codificación de caracteres"
 
@@ -1004,11 +1029,11 @@ msgstr "_Codificación de caracteres:"
 
 #: ../pan/gui/group-prefs-dialog.cc:259
 msgid "Directory for Saving Attachments"
-msgstr "Directorio para guardar adjuntos"
+msgstr "Carpeta para guardar adjuntos"
 
 #: ../pan/gui/group-prefs-dialog.cc:269
 msgid "Directory for _saving attachments:"
-msgstr "Directorio para _guardar adjuntos:"
+msgstr "Carpeta para _guardar adjuntos:"
 
 #: ../pan/gui/group-prefs-dialog.cc:271
 msgid "Posting _profile:"
@@ -1156,7 +1181,7 @@ msgid "Message-ID"
 msgstr "ID del mensaje"
 
 #: ../pan/gui/gui.cc:1864 ../pan/gui/header-pane.cc:1664
-#: ../pan/gui/prefs-ui.cc:764
+#: ../pan/gui/prefs-ui.cc:822
 msgid "Lines"
 msgstr "Líneas"
 
@@ -1165,7 +1190,7 @@ msgid "Size"
 msgstr "Tamaño"
 
 #: ../pan/gui/gui.cc:1865 ../pan/gui/header-pane.cc:1679
-#: ../pan/gui/prefs-ui.cc:762
+#: ../pan/gui/prefs-ui.cc:820
 msgid "Bytes"
 msgstr "Bytes"
 
@@ -1213,7 +1238,7 @@ msgstr "%s: %d inactivos, %d activos @ %.1f KiBps"
 msgid "No Tasks"
 msgstr "No hay tareas"
 
-#: ../pan/gui/gui.cc:2169 ../pan/gui/prefs-ui.cc:986
+#: ../pan/gui/gui.cc:2169 ../pan/gui/prefs-ui.cc:1044
 msgid "Tasks"
 msgstr "Tareas"
 
@@ -1239,11 +1264,11 @@ msgid "Sub or Auth (regex)"
 msgstr "Asunto o autor (exp-reg)"
 
 #: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1648
-#: ../pan/gui/prefs-ui.cc:761 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/prefs-ui.cc:819 ../pan/gui/score-add-ui.cc:140
 msgid "Author"
 msgstr "Autor"
 
-#: ../pan/gui/header-pane.cc:1633 ../pan/gui/prefs-ui.cc:765
+#: ../pan/gui/header-pane.cc:1633 ../pan/gui/prefs-ui.cc:823
 msgid "Score"
 msgstr "Puntuación"
 
@@ -1325,22 +1350,22 @@ msgstr ""
 "  --no-gui                  Mostrar sólo la salida de la consola, no la cola "
 "de descarga.\n"
 
-#: ../pan/gui/pan.cc:894
+#: ../pan/gui/pan.cc:886
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Error: Se usó --no-gui sin archivos nzb o noticias:id-mensaje."
 
-#: ../pan/gui/pan.cc:898
+#: ../pan/gui/pan.cc:890
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s iniciado"
 
-#: ../pan/gui/pan.cc:917
+#: ../pan/gui/pan.cc:909
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Configure los servidores de noticias de Pan antes de usarlo como un cliente "
 "nzb."
 
-#: ../pan/gui/pan.cc:1040
+#: ../pan/gui/pan.cc:1026
 msgid "Pan notification"
 msgstr "Notificación de Pan"
 
@@ -1534,8 +1559,8 @@ msgstr "Publicar de todas formas"
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr ""
-"El mensaje usa caracteres no especificados en el conjunto de caracteres «%s», "
-"posiblemente usando «%s»"
+"El mensaje usa caracteres no especificados en el conjunto de caracteres "
+"«%s», posiblemente usando «%s»"
 
 #: ../pan/gui/post-ui.cc:813
 msgid "Go _Online"
@@ -1729,7 +1754,7 @@ msgstr "Más _cabeceras"
 msgid "File _Queue"
 msgstr "_Cola de archivos"
 
-#: ../pan/gui/post-ui.cc:3077 ../pan/gui/profiles-dialog.cc:477
+#: ../pan/gui/post-ui.cc:3077 ../pan/gui/profiles-dialog.cc:478
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "El %d, %n escribió:"
@@ -1760,275 +1785,292 @@ msgstr ""
 "Pulse la combinación de teclas\n"
 "que quiere usar para «%s»."
 
-#: ../pan/gui/prefs-ui.cc:158
+#: ../pan/gui/prefs-ui.cc:166
 msgid "Edit Hotkey"
 msgstr "Editar tecla rápida"
 
-#: ../pan/gui/prefs-ui.cc:220
+#: ../pan/gui/prefs-ui.cc:228
 msgid "Error: Shortkey is invalid!"
 msgstr "Error: tecla rápida no válida"
 
-#: ../pan/gui/prefs-ui.cc:236
+#: ../pan/gui/prefs-ui.cc:244
 msgid "Error: Shortkey already exists!"
 msgstr "Error: la tecla rápida ya existe"
 
-#: ../pan/gui/prefs-ui.cc:522
+#: ../pan/gui/prefs-ui.cc:539
+#| msgid "Show notifications"
+msgid "Show only icons"
+msgstr "Mostrar solo los iconos"
+
+#: ../pan/gui/prefs-ui.cc:540
+#| msgid "Show Bod_y Pane"
+msgid "Show only text"
+msgstr "Mostrar solo el texto"
+
+#: ../pan/gui/prefs-ui.cc:541
+#| msgid "Save attachments and text"
+msgid "Show icons and text"
+msgstr "Mostrar iconos y texto"
+
+#: ../pan/gui/prefs-ui.cc:580
 msgid "Use GNOME Preferences"
 msgstr "Usar las preferencias de GNOME"
 
-#: ../pan/gui/prefs-ui.cc:523
+#: ../pan/gui/prefs-ui.cc:581
 msgid "Use KDE Preferences"
 msgstr "Usar las preferencias de KDE"
 
-#: ../pan/gui/prefs-ui.cc:524
+#: ../pan/gui/prefs-ui.cc:582
 msgid "Use OS X Preferences"
 msgstr "Usar las preferencias de OS X"
 
-#: ../pan/gui/prefs-ui.cc:525
+#: ../pan/gui/prefs-ui.cc:583
 msgid "Use Windows Preferences"
 msgstr "Usar las preferencias de Windows"
 
-#: ../pan/gui/prefs-ui.cc:526
+#: ../pan/gui/prefs-ui.cc:584
 msgid "Custom Command:"
 msgstr "Comando personalizado:"
 
-#: ../pan/gui/prefs-ui.cc:577
+#: ../pan/gui/prefs-ui.cc:635
 msgid "Disabled"
 msgstr "Desactivado"
 
-#: ../pan/gui/prefs-ui.cc:578
+#: ../pan/gui/prefs-ui.cc:636
 msgid "Only new (Score == 0)"
 msgstr "Sólo nuevos (puntuación == 0)"
 
-#: ../pan/gui/prefs-ui.cc:579
+#: ../pan/gui/prefs-ui.cc:637
 msgid "9999 or more"
 msgstr "9999 o más"
 
-#: ../pan/gui/prefs-ui.cc:580
+#: ../pan/gui/prefs-ui.cc:638
 msgid "5000 to 9998"
 msgstr "5000 a 9998"
 
-#: ../pan/gui/prefs-ui.cc:581
+#: ../pan/gui/prefs-ui.cc:639
 msgid "1 to 4999"
 msgstr "1 a 4999"
 
-#: ../pan/gui/prefs-ui.cc:582
+#: ../pan/gui/prefs-ui.cc:640
 msgid "-9998 to -1"
 msgstr "-9998 a -1"
 
-#: ../pan/gui/prefs-ui.cc:583
+#: ../pan/gui/prefs-ui.cc:641
 msgid "-9999 or less"
 msgstr "-9999 o menos"
 
-#: ../pan/gui/prefs-ui.cc:647
+#: ../pan/gui/prefs-ui.cc:705
 #, c-format
-msgid "  Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+#| msgid ""
+#| "  Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+msgid "Select default <u>global</u> charset. Current setting : <b>%s</b> ."
 msgstr ""
-"  Seleccionar el conjunto <u>global</u> de caracteres. Selección actual: <b>%"
-"s</b>."
+"Seleccionar el conjunto <u>global</u> de caracteres. Selección actual: <b>"
+"%s</b>."
 
-#: ../pan/gui/prefs-ui.cc:672
+#: ../pan/gui/prefs-ui.cc:730
 msgid "Global Charset Settings"
 msgstr "Configuración global del conjunto de caracteres"
 
-#: ../pan/gui/prefs-ui.cc:766 ../pan/gui/task-pane.cc:766
+#: ../pan/gui/prefs-ui.cc:824 ../pan/gui/task-pane.cc:766
 msgid "State"
 msgstr "Estado"
 
-#: ../pan/gui/prefs-ui.cc:800
+#: ../pan/gui/prefs-ui.cc:858
 msgid "Enabled"
 msgstr "Activado"
 
-#: ../pan/gui/prefs-ui.cc:804
+#: ../pan/gui/prefs-ui.cc:862
 msgid "Column Name"
 msgstr "Nombre de columna"
 
-#: ../pan/gui/prefs-ui.cc:842
+#: ../pan/gui/prefs-ui.cc:900
 msgid "Pan: Preferences"
 msgstr "Preferencias de Pan"
 
-#: ../pan/gui/prefs-ui.cc:868
+#: ../pan/gui/prefs-ui.cc:926
 msgid "Mouse"
 msgstr "Ratón"
 
-#: ../pan/gui/prefs-ui.cc:870
+#: ../pan/gui/prefs-ui.cc:928
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Una sola _pulsación activa, en lugar de seleccionar, grupos"
 
-#: ../pan/gui/prefs-ui.cc:872
+#: ../pan/gui/prefs-ui.cc:930
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Una sola pulsación activa, en lugar de seleccionar, _artículos"
 
-#: ../pan/gui/prefs-ui.cc:875
+#: ../pan/gui/prefs-ui.cc:933
 msgid "Groups"
 msgstr "Grupos"
 
-#: ../pan/gui/prefs-ui.cc:877
+#: ../pan/gui/prefs-ui.cc:935
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Obtener cabeceras en grupos suscritos al _iniciar"
 
 # download new headers
-#: ../pan/gui/prefs-ui.cc:879
+#: ../pan/gui/prefs-ui.cc:937
 msgid "Get new headers when _entering group"
 msgstr "Descargar cabeceras cuando se entre en un _grupo"
 
-#: ../pan/gui/prefs-ui.cc:881
+#: ../pan/gui/prefs-ui.cc:939
 msgid "Mark entire group _read when leaving group"
 msgstr "Marcar el grupo entero como _leído cuando deje un grupo"
 
-#: ../pan/gui/prefs-ui.cc:883
+#: ../pan/gui/prefs-ui.cc:941
 msgid "Mark entire group read before getting _new headers"
 msgstr "Marcar el grupo entero como _leído antes de obtener nuevas cabeceras"
 
 # download new headers
-#: ../pan/gui/prefs-ui.cc:885
+#: ../pan/gui/prefs-ui.cc:943
 msgid "E_xpand all threads when entering group"
 msgstr "_Expandir todas las conversaciones cuando ente en un grupo"
 
-#: ../pan/gui/prefs-ui.cc:890
+#: ../pan/gui/prefs-ui.cc:948
 msgid "Articles"
 msgstr "Artículos"
 
-#: ../pan/gui/prefs-ui.cc:892
+#: ../pan/gui/prefs-ui.cc:950
 msgid "Space selects next article rather than next unread"
 msgstr ""
 "La barra espaciadora selecciona el siguiente artículo en lugar del siguiente "
 "no leído"
 
-#: ../pan/gui/prefs-ui.cc:894
+#: ../pan/gui/prefs-ui.cc:952
 msgid "Expand threads upon selection"
 msgstr "Expandir conversaciones al seleccionar"
 
-#: ../pan/gui/prefs-ui.cc:896
+#: ../pan/gui/prefs-ui.cc:954
 msgid "Always show article deletion confirmation dialog"
 msgstr "Mostrar siempre el diálogo de confirmación de eliminación del artículo"
 
-#: ../pan/gui/prefs-ui.cc:898
+#: ../pan/gui/prefs-ui.cc:956
 msgid "Smooth scrolling"
 msgstr "Desplazamiento suave"
 
-#: ../pan/gui/prefs-ui.cc:903
+#: ../pan/gui/prefs-ui.cc:961
 msgid "Article Cache"
 msgstr "Caché de artículos"
 
-#: ../pan/gui/prefs-ui.cc:904
+#: ../pan/gui/prefs-ui.cc:962
 msgid "Clear article cache on shutdown"
 msgstr "Limpiar la caché de artículos al salir"
 
-#: ../pan/gui/prefs-ui.cc:907
-msgid "Size of article cache (in MiB)"
-msgstr "Tamaño de la caché del artículo (en MiB)"
+#: ../pan/gui/prefs-ui.cc:965
+#| msgid "Size of article cache (in MiB)"
+msgid "Size of article cache (in MiB) :"
+msgstr "Tamaño de la caché del artículo (en MiB): "
 
-#: ../pan/gui/prefs-ui.cc:912
-msgid "File extension for Cached Articles"
-msgstr "Extensión de archivo para los artículos de la caché"
+#: ../pan/gui/prefs-ui.cc:970
+#| msgid "File extension for Cached Articles"
+msgid "File extension for Cached Articles: "
+msgstr "Extensión de archivo para los artículos de la caché: "
 
-#: ../pan/gui/prefs-ui.cc:917
+#: ../pan/gui/prefs-ui.cc:975
 msgid "Tabs"
 msgstr "Pestañas"
 
-#: ../pan/gui/prefs-ui.cc:918
-msgid "Show only icons in Preferences tabs"
-msgstr "Sólo mostrar iconos en las pestañas de preferencias"
-
-#: ../pan/gui/prefs-ui.cc:922
+#: ../pan/gui/prefs-ui.cc:980
 msgid "_Behavior"
 msgstr "Comportam_iento"
 
-#: ../pan/gui/prefs-ui.cc:922
+#: ../pan/gui/prefs-ui.cc:980
 msgid "Behavior"
 msgstr "Comportamiento"
 
-#: ../pan/gui/prefs-ui.cc:928
+#: ../pan/gui/prefs-ui.cc:986
 msgid "Language Settings"
 msgstr "Ajustes del idioma"
 
 #. systray and notify popup
-#: ../pan/gui/prefs-ui.cc:937
+#: ../pan/gui/prefs-ui.cc:995
 msgid "System Tray Behavior"
 msgstr "Comportamiento de la bandeja del sistema"
 
-#: ../pan/gui/prefs-ui.cc:939
+#: ../pan/gui/prefs-ui.cc:997
 msgid "Hide to system tray"
 msgstr "Ocultar a la bandeja del sistema"
 
-#: ../pan/gui/prefs-ui.cc:941
+#: ../pan/gui/prefs-ui.cc:999
 msgid "Start Pan minimized"
 msgstr "Iniciar Pan minimizado"
 
-#: ../pan/gui/prefs-ui.cc:944
+#: ../pan/gui/prefs-ui.cc:1002
 msgid "Show notifications"
 msgstr "Mostrar notificaciones"
 
-#: ../pan/gui/prefs-ui.cc:950
+#: ../pan/gui/prefs-ui.cc:1008
 msgid "Autosave Article Draft"
 msgstr "Autoguardado del borrador del artículo"
 
-#: ../pan/gui/prefs-ui.cc:952
-msgid "Minutes to autosave the current Article Draft."
-msgstr "Minutos para autoguardar el borrador del artículo actual."
+#: ../pan/gui/prefs-ui.cc:1010
+#| msgid "Minutes to autosave the current Article Draft."
+msgid "Minutes to autosave the current Article Draft: "
+msgstr "Minutos para autoguardar el borrador del artículo actual: "
 
-#: ../pan/gui/prefs-ui.cc:957
+#: ../pan/gui/prefs-ui.cc:1015
 msgid "Autosave Articles"
 msgstr "Autoguardar artículos"
 
-#: ../pan/gui/prefs-ui.cc:959
-msgid "Minutes to autosave newsrc files"
-msgstr "Minutos para autoguardar los archivos newsrc"
+#: ../pan/gui/prefs-ui.cc:1017
+#| msgid "Minutes to autosave newsrc files"
+msgid "Minutes to autosave newsrc files: "
+msgstr "Minutos para autoguardar los archivos newsrc: "
 
-#: ../pan/gui/prefs-ui.cc:965
+#: ../pan/gui/prefs-ui.cc:1023
 msgid "_Miscellaneous"
 msgstr "_Miscelánea"
 
-#: ../pan/gui/prefs-ui.cc:965
+#: ../pan/gui/prefs-ui.cc:1023
 msgid "Miscellaneous"
 msgstr "Miscelánea"
 
-#: ../pan/gui/prefs-ui.cc:970
+#: ../pan/gui/prefs-ui.cc:1028
 msgid "Pane Layout"
 msgstr "Distribución de los paneles"
 
-#: ../pan/gui/prefs-ui.cc:989
+#: ../pan/gui/prefs-ui.cc:1047
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=Grupos, 2=Cabeceras, 3=Cuerpo"
 
-#: ../pan/gui/prefs-ui.cc:991
+#: ../pan/gui/prefs-ui.cc:1049
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=Grupos, 2=Cuerpo, 3=Cabeceras"
 
-#: ../pan/gui/prefs-ui.cc:993
+#: ../pan/gui/prefs-ui.cc:1051
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=Cabeceras, 2=Grupos, 3=Cuerpo"
 
-#: ../pan/gui/prefs-ui.cc:995
+#: ../pan/gui/prefs-ui.cc:1053
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=Cabeceras, 2=Cuerpo, 3=Grupos"
 
-#: ../pan/gui/prefs-ui.cc:997
+#: ../pan/gui/prefs-ui.cc:1055
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=Cuerpo, 2=Grupos, 3=Cabeceras"
 
-#: ../pan/gui/prefs-ui.cc:999
+#: ../pan/gui/prefs-ui.cc:1057
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=Cuerpo, 2=Cabeceras, 3=Grupos"
 
-#: ../pan/gui/prefs-ui.cc:1003
+#: ../pan/gui/prefs-ui.cc:1061
 msgid "Layout"
 msgstr "Disposición"
 
-#: ../pan/gui/prefs-ui.cc:1008
+#: ../pan/gui/prefs-ui.cc:1066
 msgid "Header Pane Columns"
 msgstr "Columnas del panel de la cabecera"
 
-#: ../pan/gui/prefs-ui.cc:1012
+#: ../pan/gui/prefs-ui.cc:1070
 msgid "_Headers"
 msgstr "_Cabeceras"
 
-#: ../pan/gui/prefs-ui.cc:1012
+#: ../pan/gui/prefs-ui.cc:1070
 msgid "Headers"
 msgstr "Cabeceras"
 
-#: ../pan/gui/prefs-ui.cc:1018
+#: ../pan/gui/prefs-ui.cc:1076
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
 "automatically, based on a post's score."
@@ -2036,159 +2078,160 @@ msgstr ""
 "Este menú le permite configurar Pan para que tome determinadas acciones a su "
 "favor automáticamente, basadas en la puntuación de una publicación."
 
-#: ../pan/gui/prefs-ui.cc:1021
+#: ../pan/gui/prefs-ui.cc:1079
 msgid "_Delete posts scoring at: "
 msgstr "_Eliminar publicaciones con puntuación: "
 
-#: ../pan/gui/prefs-ui.cc:1023
+#: ../pan/gui/prefs-ui.cc:1081
 msgid "Mark posts _read scoring at: "
 msgstr "Marcar como _leídas publicaciones con puntuación:"
 
-#: ../pan/gui/prefs-ui.cc:1025
+#: ../pan/gui/prefs-ui.cc:1083
 msgid "_Cache posts scoring at: "
 msgstr "Poner en _caché publicaciones con puntuación:"
 
-#: ../pan/gui/prefs-ui.cc:1027
+#: ../pan/gui/prefs-ui.cc:1085
 msgid "Download _attachments of posts scoring at: "
 msgstr "Descargar _adjuntos de publicaciones con puntuación:"
 
-#: ../pan/gui/prefs-ui.cc:1030
+#: ../pan/gui/prefs-ui.cc:1088
 msgid "Actions"
 msgstr "Acciones"
 
-#: ../pan/gui/prefs-ui.cc:1035 ../pan/gui/prefs-ui.cc:1056
+#: ../pan/gui/prefs-ui.cc:1093 ../pan/gui/prefs-ui.cc:1114
 msgid "Fonts"
 msgstr "Tipografías"
 
-#: ../pan/gui/prefs-ui.cc:1037
+#: ../pan/gui/prefs-ui.cc:1095
 msgid "Use custom font in Group Pane:"
 msgstr "Usar una tipografía personalizada en el panel de grupo:"
 
-#: ../pan/gui/prefs-ui.cc:1042
+#: ../pan/gui/prefs-ui.cc:1100
 msgid "Use custom font in Header Pane:"
 msgstr "Usar una tipografía personalizada en el panel de la cabecera:"
 
-#: ../pan/gui/prefs-ui.cc:1047
+#: ../pan/gui/prefs-ui.cc:1105
 msgid "Use custom font in Body Pane:"
 msgstr "Usar una tipografía personalizada en el panel del cuerpo:"
 
-#: ../pan/gui/prefs-ui.cc:1052
+#: ../pan/gui/prefs-ui.cc:1110
 msgid "Monospace font:"
 msgstr "Tipografía monoespaciada:"
 
-#: ../pan/gui/prefs-ui.cc:1056
+#: ../pan/gui/prefs-ui.cc:1114
 msgid "_Fonts"
 msgstr "_Tipografías"
 
-#: ../pan/gui/prefs-ui.cc:1061
+#: ../pan/gui/prefs-ui.cc:1119
 msgid "Header Pane"
 msgstr "Panel de la cabecera"
 
-#: ../pan/gui/prefs-ui.cc:1064 ../pan/gui/prefs-ui.cc:1070
-#: ../pan/gui/prefs-ui.cc:1076 ../pan/gui/prefs-ui.cc:1082
-#: ../pan/gui/prefs-ui.cc:1088 ../pan/gui/prefs-ui.cc:1094
+#: ../pan/gui/prefs-ui.cc:1122 ../pan/gui/prefs-ui.cc:1128
+#: ../pan/gui/prefs-ui.cc:1134 ../pan/gui/prefs-ui.cc:1140
+#: ../pan/gui/prefs-ui.cc:1146 ../pan/gui/prefs-ui.cc:1152
 msgid "Text:"
 msgstr "Texto:"
 
-#: ../pan/gui/prefs-ui.cc:1066 ../pan/gui/prefs-ui.cc:1072
-#: ../pan/gui/prefs-ui.cc:1078 ../pan/gui/prefs-ui.cc:1084
-#: ../pan/gui/prefs-ui.cc:1090 ../pan/gui/prefs-ui.cc:1096
+#: ../pan/gui/prefs-ui.cc:1124 ../pan/gui/prefs-ui.cc:1130
+#: ../pan/gui/prefs-ui.cc:1136 ../pan/gui/prefs-ui.cc:1142
+#: ../pan/gui/prefs-ui.cc:1148 ../pan/gui/prefs-ui.cc:1154
 msgid "Background:"
 msgstr "Fondo:"
 
-#: ../pan/gui/prefs-ui.cc:1068
+#: ../pan/gui/prefs-ui.cc:1126
 msgid "Scores of 9999 or more:"
 msgstr "Puntúa 9999 o más:"
 
-#: ../pan/gui/prefs-ui.cc:1074
+#: ../pan/gui/prefs-ui.cc:1132
 msgid "Scores from 5000 to 9998:"
 msgstr "Puntúa 5000 a 9998:"
 
-#: ../pan/gui/prefs-ui.cc:1080
+#: ../pan/gui/prefs-ui.cc:1138
 msgid "Scores from 1 to 4999:"
 msgstr "Puntúa de 1 a 4999:"
 
-#: ../pan/gui/prefs-ui.cc:1086
+#: ../pan/gui/prefs-ui.cc:1144
 msgid "Scores from -9998 to -1:"
 msgstr "Puntúa de -9998 a -1:"
 
-#: ../pan/gui/prefs-ui.cc:1092
+#: ../pan/gui/prefs-ui.cc:1150
 msgid "Scores of -9999 or less:"
 msgstr "Puntúa -9999 o menos:"
 
-#: ../pan/gui/prefs-ui.cc:1098
+#: ../pan/gui/prefs-ui.cc:1156
 msgid "Read collapsed thread:"
 msgstr "Leer conversación colapsada:"
 
-#: ../pan/gui/prefs-ui.cc:1100
+#: ../pan/gui/prefs-ui.cc:1158
 msgid "Body Pane"
 msgstr "Panel del cuerpo"
 
-#: ../pan/gui/prefs-ui.cc:1106
+#: ../pan/gui/prefs-ui.cc:1164
 msgid "Quoted text:"
 msgstr "Texto citado:"
 
-#: ../pan/gui/prefs-ui.cc:1107
+#: ../pan/gui/prefs-ui.cc:1165
 msgid "URL:"
 msgstr "URL:"
 
-#: ../pan/gui/prefs-ui.cc:1108
+#: ../pan/gui/prefs-ui.cc:1166
 msgid "Signature:"
 msgstr "Firma:"
 
-#: ../pan/gui/prefs-ui.cc:1110
+#: ../pan/gui/prefs-ui.cc:1168
 msgid "_Colors"
 msgstr "_Colores"
 
-#: ../pan/gui/prefs-ui.cc:1110
+#: ../pan/gui/prefs-ui.cc:1168
 msgid "Colors"
 msgstr "Colores"
 
-#: ../pan/gui/prefs-ui.cc:1115
+#: ../pan/gui/prefs-ui.cc:1173
 msgid "Preferred Applications"
 msgstr "Aplicaciones preferidas"
 
-#: ../pan/gui/prefs-ui.cc:1119
+#: ../pan/gui/prefs-ui.cc:1177
 msgid "_Web browser:"
 msgstr "_Navegador web_"
 
-#: ../pan/gui/prefs-ui.cc:1122
+#: ../pan/gui/prefs-ui.cc:1180
 msgid "_Mail reader:"
 msgstr "_Lector de correo-e:"
 
-#: ../pan/gui/prefs-ui.cc:1124
+#: ../pan/gui/prefs-ui.cc:1182
 msgid "_Text editor:"
 msgstr "Editor de _texto:"
 
-#: ../pan/gui/prefs-ui.cc:1126
+#: ../pan/gui/prefs-ui.cc:1184
 msgid "_Applications"
 msgstr "_Aplicaciones"
 
-#: ../pan/gui/prefs-ui.cc:1126
+#: ../pan/gui/prefs-ui.cc:1184
 msgid "Applications"
 msgstr "Aplicaciones"
 
-#: ../pan/gui/prefs-ui.cc:1131 ../pan/gui/task-pane.cc:508
+#: ../pan/gui/prefs-ui.cc:1189 ../pan/gui/task-pane.cc:508
 msgid "Encoding"
 msgstr "Codificando"
 
-#: ../pan/gui/prefs-ui.cc:1135
-msgid "Default bytes per file (for encoder)"
-msgstr "Bytes por archivo predeterminados (para el codificador)"
+#: ../pan/gui/prefs-ui.cc:1193
+#| msgid "Default bytes per file (for encoder)"
+msgid "Default bytes per file (for encoder): "
+msgstr "Bytes por archivo predeterminados (para el codificador): "
 
-#: ../pan/gui/prefs-ui.cc:1140
+#: ../pan/gui/prefs-ui.cc:1198
 msgid "_Upload"
 msgstr "_Subir"
 
-#: ../pan/gui/prefs-ui.cc:1140
+#: ../pan/gui/prefs-ui.cc:1198
 msgid "Upload"
 msgstr "Subir"
 
-#: ../pan/gui/prefs-ui.cc:1158
+#: ../pan/gui/prefs-ui.cc:1216
 msgid "_Hotkeys"
 msgstr "_Teclas rápidas"
 
-#: ../pan/gui/prefs-ui.cc:1158
+#: ../pan/gui/prefs-ui.cc:1216
 msgid "Hotkeys"
 msgstr "Teclas rápidas"
 
@@ -2324,7 +2367,7 @@ msgstr ""
 msgid "_Attribution:"
 msgstr "_Atributos:"
 
-#: ../pan/gui/profiles-dialog.cc:267
+#: ../pan/gui/profiles-dialog.cc:268
 msgid ""
 "Extra headers to be included in your posts, such as\n"
 "Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
@@ -2334,28 +2377,28 @@ msgstr ""
 "Reply-To: \"Su nombre\" <sunombre@algunlugar.com>\n"
 "Organization: Su organización\n"
 
-#: ../pan/gui/profiles-dialog.cc:277
+#: ../pan/gui/profiles-dialog.cc:278
 msgid "E_xtra Headers:"
 msgstr "Cabeceras _adicionales:"
 
-#: ../pan/gui/profiles-dialog.cc:322
+#: ../pan/gui/profiles-dialog.cc:323
 msgid "Invalid email address."
 msgstr "Dirección correo-e inválida."
 
-#: ../pan/gui/profiles-dialog.cc:323
+#: ../pan/gui/profiles-dialog.cc:324
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Debe usar una dirección de la forma joe@somewhere.org"
 
-#: ../pan/gui/profiles-dialog.cc:478
+#: ../pan/gui/profiles-dialog.cc:479
 msgid "New Profile"
 msgstr "Perfil nuevo"
 
-#: ../pan/gui/profiles-dialog.cc:524
+#: ../pan/gui/profiles-dialog.cc:525
 msgid "Posting Profiles"
 msgstr "Perfiles de publicación"
 
 # profile name label
-#: ../pan/gui/profiles-dialog.cc:540
+#: ../pan/gui/profiles-dialog.cc:541
 msgid "Profiles"
 msgstr "Perfiles"
 
@@ -3468,6 +3511,12 @@ msgstr ""
 #: ../pan/usenet-utils/text-massager.cc:397
 msgid "> [quoted text muted]"
 msgstr "> [texto citado ocultado]"
+
+#~ msgid "Read News from Usenet"
+#~ msgstr "Lea las noticias de Usenet"
+
+#~ msgid "Show only icons in Preferences tabs"
+#~ msgstr "Sólo mostrar iconos en las pestañas de preferencias"
 
 #~ msgid "_Charset"
 #~ msgstr "_Conjunto de caracteres"
