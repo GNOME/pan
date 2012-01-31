@@ -1294,7 +1294,7 @@ BodyPane :: sig_status_clicked_cb(GtkWidget  *widget,
 void
 BodyPane :: update_sig_valid(int i)
 {
-#ifdef HAVE_GIME_CRYPTO
+#ifdef HAVE_GMIME_CRYPTO
   switch (i)
   {
       case 0:
