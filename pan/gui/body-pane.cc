@@ -1294,7 +1294,7 @@ BodyPane :: sig_status_clicked_cb(GtkWidget  *widget,
 void
 BodyPane :: update_sig_valid(int i)
 {
-
+#ifdef HAVE_GIME_CRYPTO
   switch (i)
   {
       case 0:
@@ -1311,6 +1311,7 @@ BodyPane :: update_sig_valid(int i)
         gtk_widget_hide(_sig_status_hbox);
         break;
   }
+#endif
 }
 
 void
@@ -1337,7 +1338,6 @@ BodyPane :: set_article (const Article& a)
     else
       val = -1;
   }
-
   update_sig_valid(val);
 #endif
   refresh ();

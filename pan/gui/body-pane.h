@@ -47,9 +47,10 @@ namespace pan
       HeaderPane* _header_pane;
       Data& _data;
       ArticleCache& _cache;
+#ifdef HAVE_GMIME_CRYPTO
       GtkWidget* _sig_status;
       GtkWidget* _sig_status_hbox;
-
+#endif
       void update_sig_valid(int i);
 
       static gboolean sig_status_clicked_cb(GtkWidget  *widget,
