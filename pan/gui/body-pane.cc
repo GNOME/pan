@@ -1260,7 +1260,7 @@ BodyPane :: sig_status_clicked_cb(GtkWidget  *widget,
              "<b>Valid until</b> : %s\n"
              "<b>Created on</b> : %s",
              name_and_email.first.c_str(), name_and_email.second.c_str(),
-             (info.signers[0].never_expires ? "always" : ed.get_date_string(info.signers[0].expires)),
+             (info.signers[0].never_expires ? _("always") : ed.get_date_string(info.signers[0].expires)),
              ed.get_date_string(info.signers[0].created)
              );
 
