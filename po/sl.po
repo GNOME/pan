@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan2\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=pan2&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-20 21:08+0000\n"
-"PO-Revision-Date: 2012-01-20 22:14+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=Pan&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-01-31 20:43+0000\n"
+"PO-Revision-Date: 2012-02-02 21:05+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -27,30 +27,30 @@ msgid "Pan Newsreader"
 msgstr "Pan bralnik novic"
 
 #: ../pan.desktop.in.h:2
-msgid "Read News from Usenet"
-msgstr "Branje novic iz Usenet"
+msgid "Read and Post Usenet Articles"
+msgstr ""
 
-#: ../pan/data/article-cache.cc:147
+#: ../pan/data/article-cache.cc:143
 #: ../pan/data/encode-cache.cc:62
 #, c-format
 msgid "Error opening directory: \"%s\": %s"
 msgstr "Napaka med odpiranjem mape: \"%s\": %s"
 
-#: ../pan/data/article-cache.cc:235
-#: ../pan/data/article-cache.cc:246
-#: ../pan/data-impl/data-io.cc:199
-#: ../pan/data-impl/data-io.cc:223
+#: ../pan/data/article-cache.cc:231
+#: ../pan/data/article-cache.cc:242
+#: ../pan/data-impl/data-io.cc:187
+#: ../pan/data-impl/data-io.cc:211
 #: ../pan/gui/post-ui.cc:1639
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Ni mogoče shraniti \"%s\" %s"
 
-#: ../pan/data/article-cache.cc:359
+#: ../pan/data/article-cache.cc:355
 #, c-format
 msgid "Error opening file \"%s\" %s"
 msgstr "Napaka med odpiranjem datoteke \"%s\" %s"
 
-#: ../pan/data/article-cache.cc:390
+#: ../pan/data/article-cache.cc:386
 #: ../pan/data-impl/profiles.cc:174
 #: ../pan/data-impl/server.cc:436
 #: ../pan/general/file-util.cc:298
@@ -61,9 +61,9 @@ msgid "Error reading file \"%s\": %s"
 msgstr "Napaka med branjem datoteke \"%s\": %s"
 
 #: ../pan/data/cert-store.cc:237
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening SSL certificate directory: \"%s\": %s"
-msgstr "Napaka med odpiranjem mape: \"%s\": %s"
+msgstr "Napaka med odpiranjem mape potrdila SSL: \"%s\": %s"
 
 #: ../pan/data/cert-store.cc:269
 #, c-format
@@ -117,7 +117,7 @@ msgstr "Dodajanje %lu člankov v %s."
 #: ../pan/data-impl/server.cc:234
 #, c-format
 msgid "There seems to be no Password set for Server %s."
-msgstr ""
+msgstr "Za strežnik %s ni navedenega gesla."
 
 #: ../pan/data-impl/server.cc:238
 msgid "The Gnome keyring denied access to the Passwords."
@@ -162,606 +162,610 @@ msgstr "Logičnega izraza \"%s\" ni mogoče uporabiti: %s"
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr "Kodiranja članka ni mogoče določiti. Ne-UTF8 znaki so bili odstranjeni."
 
-#: ../pan/gui/actions.cc:268
+#: ../pan/gui/actions.cc:275
 #: ../pan/gui/post-ui.cc:417
 msgid "_File"
 msgstr "_Datoteka"
 
-#: ../pan/gui/actions.cc:269
+#: ../pan/gui/actions.cc:276
 #: ../pan/gui/post-ui.cc:418
 msgid "_Edit"
 msgstr "_Uredi"
 
-#: ../pan/gui/actions.cc:270
-#: ../pan/gui/prefs-ui.cc:890
+#: ../pan/gui/actions.cc:277
+#: ../pan/gui/prefs-ui.cc:1061
 msgid "_Layout"
 msgstr "_Razporeditev"
 
-#: ../pan/gui/actions.cc:271
+#: ../pan/gui/actions.cc:278
 msgid "_Group Pane"
 msgstr "Pladenj _skupin"
 
-#: ../pan/gui/actions.cc:272
+#: ../pan/gui/actions.cc:279
 msgid "_Header Pane"
 msgstr "_Pladenj glave"
 
-#: ../pan/gui/actions.cc:273
+#: ../pan/gui/actions.cc:280
 msgid "_Body Pane"
 msgstr "Pladenj _telesa"
 
-#: ../pan/gui/actions.cc:274
+#: ../pan/gui/actions.cc:281
 msgid "_View"
 msgstr "_Pogled"
 
-#: ../pan/gui/actions.cc:275
+#: ../pan/gui/actions.cc:282
 msgid "Filte_r"
 msgstr "Filt_riraj"
 
-#: ../pan/gui/actions.cc:276
+#: ../pan/gui/actions.cc:283
 msgid "_Go"
 msgstr "Po_jdi"
 
-#: ../pan/gui/actions.cc:277
-#: ../pan/gui/prefs-ui.cc:916
+#: ../pan/gui/actions.cc:284
+#: ../pan/gui/prefs-ui.cc:1088
 msgid "_Actions"
 msgstr "_Dejanja"
 
-#: ../pan/gui/actions.cc:278
+#: ../pan/gui/actions.cc:285
 msgid "_Articles"
 msgstr "Č_lanki"
 
-#: ../pan/gui/actions.cc:279
+#: ../pan/gui/actions.cc:286
 msgid "G_roups"
 msgstr "S_kupine"
 
-#: ../pan/gui/actions.cc:280
-#: ../pan/gui/actions.cc:281
+#: ../pan/gui/actions.cc:287
+#: ../pan/gui/actions.cc:288
 msgid "_Post"
 msgstr "Po_šlji"
 
-#: ../pan/gui/actions.cc:282
+#: ../pan/gui/actions.cc:289
 msgid "_Help"
 msgstr "Pomo_č"
 
-#: ../pan/gui/actions.cc:285
+#: ../pan/gui/actions.cc:292
 msgid "_Read Group"
 msgstr "_Preberi skupino"
 
-#: ../pan/gui/actions.cc:286
+#: ../pan/gui/actions.cc:293
 msgid "Read Group"
 msgstr "Prebere skupino"
 
-#: ../pan/gui/actions.cc:290
+#: ../pan/gui/actions.cc:297
 msgid "_Mark Selected Groups Read"
 msgstr "_Označi izbrane skupine kot prebrane"
 
-#: ../pan/gui/actions.cc:291
+#: ../pan/gui/actions.cc:298
 msgid "Mark Selected Groups Read"
 msgstr "Označi izbrane skupine kot prebrane"
 
-#: ../pan/gui/actions.cc:295
+#: ../pan/gui/actions.cc:302
 msgid "_Delete Selected Groups' Articles"
 msgstr "_Izbriši članke izbranih skupin"
 
-#: ../pan/gui/actions.cc:296
+#: ../pan/gui/actions.cc:303
 msgid "Delete Selected Groups' Articles"
 msgstr "Izbriši članke izbranih skupin"
 
-#: ../pan/gui/actions.cc:300
+#: ../pan/gui/actions.cc:307
 msgid "Get New _Headers in Selected Groups"
 msgstr "Dobi nove _glave v izbranih skupinah"
 
-#: ../pan/gui/actions.cc:301
+#: ../pan/gui/actions.cc:308
 msgid "Get New Headers in Selected Groups"
 msgstr "Dobi nove glave v izbranih skupinah"
 
-#: ../pan/gui/actions.cc:305
-#: ../pan/gui/actions.cc:310
+#: ../pan/gui/actions.cc:312
+#: ../pan/gui/actions.cc:317
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "Dobi nove _glave v naročenih skupinah"
 
-#: ../pan/gui/actions.cc:306
-#: ../pan/gui/actions.cc:311
+#: ../pan/gui/actions.cc:313
+#: ../pan/gui/actions.cc:318
 msgid "Get New Headers in Subscribed Groups"
 msgstr "Dobi nove glave v naročenih skupinah"
 
-#: ../pan/gui/actions.cc:315
+#: ../pan/gui/actions.cc:322
 msgid "Get _Headers..."
 msgstr "Dobi _glave ..."
 
-#: ../pan/gui/actions.cc:316
+#: ../pan/gui/actions.cc:323
 msgid "Get Headers..."
 msgstr "Dobi glave ..."
 
-#: ../pan/gui/actions.cc:320
-#: ../pan/gui/actions.cc:321
+#: ../pan/gui/actions.cc:327
+#: ../pan/gui/actions.cc:328
 msgid "Refresh Group List"
 msgstr "Osveži seznam skupin"
 
-#: ../pan/gui/actions.cc:325
+#: ../pan/gui/actions.cc:332
 msgid "_Subscribe"
 msgstr "_Naroči se"
 
-#: ../pan/gui/actions.cc:326
+#: ../pan/gui/actions.cc:333
 msgid "Subscribe"
 msgstr "Naroči se"
 
-#: ../pan/gui/actions.cc:330
+#: ../pan/gui/actions.cc:337
 msgid "_Unsubscribe"
 msgstr "P_rekliči naročnino"
 
-#: ../pan/gui/actions.cc:331
+#: ../pan/gui/actions.cc:338
 msgid "Unsubscribe"
 msgstr "Prekliče naročnino"
 
-#: ../pan/gui/actions.cc:335
+#: ../pan/gui/actions.cc:342
 msgid "_Save Articles..."
 msgstr "_Shrani članke ..."
 
-#: ../pan/gui/actions.cc:336
+#: ../pan/gui/actions.cc:343
 msgid "Save Articles..."
 msgstr "Shrani članke ..."
 
-#: ../pan/gui/actions.cc:340
+#: ../pan/gui/actions.cc:347
 #, fuzzy
 msgid "Save Articles from Selected _NZB..."
 msgstr "Shrani članke iz te datoteke _NZB ..."
 
-#: ../pan/gui/actions.cc:341
+#: ../pan/gui/actions.cc:348
 #, fuzzy
 msgid "Save Articles from Selected NZB"
 msgstr "Shrani članke iz te datoteke _NZB ..."
 
-#: ../pan/gui/actions.cc:345
+#: ../pan/gui/actions.cc:352
 msgid "Save Articles to an NZB _File..."
 msgstr "Shrani članke v _datoteko NZB ..."
 
-#: ../pan/gui/actions.cc:346
+#: ../pan/gui/actions.cc:353
 msgid "Save Articles to an NZB File"
 msgstr "Shrani članeke v datoteko NZB"
 
-#: ../pan/gui/actions.cc:355
+#: ../pan/gui/actions.cc:357
+#: ../pan/gui/actions.cc:358
+msgid "Print"
+msgstr "Natisni"
+
+#: ../pan/gui/actions.cc:362
 msgid "_Import NZB Files..."
 msgstr "_Uvozi datoteke NZB ..."
 
-#: ../pan/gui/actions.cc:360
+#: ../pan/gui/actions.cc:367
 msgid "_Cancel Last Task"
 msgstr "_Prekliči zadnjo nalogo"
 
-#: ../pan/gui/actions.cc:365
+#: ../pan/gui/actions.cc:372
 msgid "_Task Manager"
 msgstr "_Upravljalnik nalog"
 
-#: ../pan/gui/actions.cc:370
+#: ../pan/gui/actions.cc:377
 msgid "_Event Log"
 msgstr "Dn_evnik dogodkov"
 
-#: ../pan/gui/actions.cc:375
+#: ../pan/gui/actions.cc:382
 msgid "_Quit"
 msgstr "_Končaj"
 
-#: ../pan/gui/actions.cc:380
+#: ../pan/gui/actions.cc:387
 msgid "Select _All Articles"
 msgstr "Izberi _vse članke"
 
-#: ../pan/gui/actions.cc:385
+#: ../pan/gui/actions.cc:392
 msgid "_Deselect All Articles"
 msgstr "_Odstrani izbor vseh člankov"
 
-#: ../pan/gui/actions.cc:390
+#: ../pan/gui/actions.cc:397
 msgid "Add Su_bthreads to Selection"
 msgstr "Dodaj po_dniti v izbor "
 
-#: ../pan/gui/actions.cc:395
+#: ../pan/gui/actions.cc:402
 msgid "Add _Threads to Selection"
 msgstr "Dodaj _niti v izbor"
 
-#: ../pan/gui/actions.cc:400
+#: ../pan/gui/actions.cc:407
 msgid "Add _Similar Articles to Selection"
 msgstr "Dodaj _podobne članke v izbor"
 
-#: ../pan/gui/actions.cc:405
+#: ../pan/gui/actions.cc:412
 msgid "Select Article _Body"
 msgstr "Izberi _telo članka"
 
-#: ../pan/gui/actions.cc:410
+#: ../pan/gui/actions.cc:417
 msgid "Edit _Preferences"
 msgstr "Uredi _možnosti"
 
-#: ../pan/gui/actions.cc:415
+#: ../pan/gui/actions.cc:422
 msgid "Edit Selected _Group's Preferences"
 msgstr "Uredi možnosti izbrane _skupine"
 
-#: ../pan/gui/actions.cc:420
+#: ../pan/gui/actions.cc:427
 #: ../pan/gui/post-ui.cc:434
 msgid "Edit P_osting Profiles"
 msgstr "Uredi p_rofile pošiljanja"
 
-#: ../pan/gui/actions.cc:425
+#: ../pan/gui/actions.cc:432
 msgid "Edit _News Servers"
 msgstr "_Uredi strežnike novic"
 
-#: ../pan/gui/actions.cc:430
+#: ../pan/gui/actions.cc:437
 msgid "Jump to _Group Tab"
 msgstr "Skok na zavihek _skupine"
 
-#: ../pan/gui/actions.cc:435
+#: ../pan/gui/actions.cc:442
 msgid "Jump to _Header Tab"
 msgstr "Skok na zavihek _glave"
 
-#: ../pan/gui/actions.cc:440
+#: ../pan/gui/actions.cc:447
 msgid "Jump to _Body Tab"
 msgstr "Skok na zavihek _telesa"
 
-#: ../pan/gui/actions.cc:445
+#: ../pan/gui/actions.cc:452
 msgid "_Rot13 Selected Text"
 msgstr "Izbrano besedilo _Rot13"
 
-#: ../pan/gui/actions.cc:450
+#: ../pan/gui/actions.cc:457
 msgid "Clear _Header Pane"
 msgstr "Počisti pladenj _glave"
 
-#: ../pan/gui/actions.cc:455
+#: ../pan/gui/actions.cc:462
 msgid "Clear _Body Pane"
 msgstr "Počisti _pladenj telesa"
 
-#: ../pan/gui/actions.cc:460
+#: ../pan/gui/actions.cc:467
 msgid "Cache Article"
 msgstr "Predpomni članek"
 
-#: ../pan/gui/actions.cc:465
+#: ../pan/gui/actions.cc:472
 msgid "Read Article"
 msgstr "Preberi članek"
 
-#: ../pan/gui/actions.cc:470
+#: ../pan/gui/actions.cc:477
 msgid "Show Article Information"
 msgstr "Prikaz podrobnosti članka"
 
-#: ../pan/gui/actions.cc:475
+#: ../pan/gui/actions.cc:482
 msgid "Read _More"
 msgstr "Preberi _več"
 
-#: ../pan/gui/actions.cc:476
+#: ../pan/gui/actions.cc:483
 msgid "Read More"
 msgstr "Preberi več"
 
-#: ../pan/gui/actions.cc:480
+#: ../pan/gui/actions.cc:487
 msgid "Read _Back"
 msgstr "Pre_beri nazaj"
 
-#: ../pan/gui/actions.cc:481
+#: ../pan/gui/actions.cc:488
 msgid "Read Back"
 msgstr "Preberi nazaj"
 
-#: ../pan/gui/actions.cc:485
+#: ../pan/gui/actions.cc:492
 msgid "Next _Unread Group"
 msgstr "Naslednja _neprebrana skupina"
 
-#: ../pan/gui/actions.cc:490
+#: ../pan/gui/actions.cc:497
 msgid "Next _Group"
 msgstr "Naslednja _skupina"
 
-#: ../pan/gui/actions.cc:495
+#: ../pan/gui/actions.cc:502
 msgid "Next _Unread Article"
 msgstr "Naslednji _neprebran članek"
 
-#: ../pan/gui/actions.cc:496
+#: ../pan/gui/actions.cc:503
 msgid "Next Unread Article"
 msgstr "Naslednji neprebran članek"
 
-#: ../pan/gui/actions.cc:500
+#: ../pan/gui/actions.cc:507
 msgid "Next _Article"
 msgstr "Naslednji _članek"
 
-#: ../pan/gui/actions.cc:501
+#: ../pan/gui/actions.cc:508
 msgid "Next Article"
 msgstr "Naslednji članek"
 
-#: ../pan/gui/actions.cc:505
+#: ../pan/gui/actions.cc:512
 msgid "Next _Watched Article"
 msgstr "Naslednji _gledani članek"
 
-#: ../pan/gui/actions.cc:510
+#: ../pan/gui/actions.cc:517
 msgid "Next Unread _Thread"
 msgstr "Naslednja neprebrana n_it"
 
-#: ../pan/gui/actions.cc:511
+#: ../pan/gui/actions.cc:518
 msgid "Next Unread Thread"
 msgstr "Naslednja neprebrana nit"
 
-#: ../pan/gui/actions.cc:515
+#: ../pan/gui/actions.cc:522
 msgid "Next Threa_d"
 msgstr "Na_slednja nit"
 
-#: ../pan/gui/actions.cc:520
+#: ../pan/gui/actions.cc:527
 msgid "Pre_vious Article"
 msgstr "Pre_dhodni članek"
 
-#: ../pan/gui/actions.cc:525
+#: ../pan/gui/actions.cc:532
 msgid "Previous _Thread"
 msgstr "P_redhodna nit"
 
-#: ../pan/gui/actions.cc:530
+#: ../pan/gui/actions.cc:537
 msgid "_Parent Article"
 msgstr "Nadr_ejeni članek"
 
-#: ../pan/gui/actions.cc:535
+#: ../pan/gui/actions.cc:542
 msgid "Ignore _Author"
 msgstr "Prezri _avtorja"
 
-#: ../pan/gui/actions.cc:539
+#: ../pan/gui/actions.cc:546
 msgid "_Watch Thread"
 msgstr "_Oglej si nit"
 
-#: ../pan/gui/actions.cc:544
+#: ../pan/gui/actions.cc:551
 msgid "_Ignore Thread"
 msgstr "_Prezri nit"
 
-#: ../pan/gui/actions.cc:549
-#: ../pan/gui/actions.cc:550
+#: ../pan/gui/actions.cc:556
+#: ../pan/gui/actions.cc:557
 msgid "_Toggle Flag On/Off for Thread"
 msgstr ""
 
-#: ../pan/gui/actions.cc:554
-#: ../pan/gui/actions.cc:555
+#: ../pan/gui/actions.cc:561
+#: ../pan/gui/actions.cc:562
 #, fuzzy
 msgid "_Turn Flag Off for Thread"
 msgstr "Ugasni zaslon ob nedejavnosti:"
 
-#: ../pan/gui/actions.cc:559
-#: ../pan/gui/actions.cc:560
+#: ../pan/gui/actions.cc:566
+#: ../pan/gui/actions.cc:567
 #, fuzzy
 msgid "_Select All Flagged Threads"
 msgstr "Zloži vse razširjene niti"
 
-#: ../pan/gui/actions.cc:564
-#: ../pan/gui/actions.cc:565
+#: ../pan/gui/actions.cc:571
+#: ../pan/gui/actions.cc:572
 #, fuzzy
 msgid "_Go to Next Flagged Thread"
 msgstr "Pojdi na naslednjo stran v zbirki"
 
-#: ../pan/gui/actions.cc:569
-#: ../pan/gui/actions.cc:570
+#: ../pan/gui/actions.cc:576
+#: ../pan/gui/actions.cc:577
 #, fuzzy
 msgid "_Go to Last Flagged Thread"
 msgstr "Pojdi na zadnjo stran v zbirki"
 
-#: ../pan/gui/actions.cc:574
-#: ../pan/gui/actions.cc:575
+#: ../pan/gui/actions.cc:581
+#: ../pan/gui/actions.cc:582
 msgid "_Invert Selection"
 msgstr "Obrni _izbor"
 
-#: ../pan/gui/actions.cc:579
+#: ../pan/gui/actions.cc:586
 msgid "Edit Article's Watch/Ignore/Score..."
 msgstr "Uredi stanje članka ogled/prezri/točke ..."
 
-#: ../pan/gui/actions.cc:584
+#: ../pan/gui/actions.cc:591
 msgid "Add a _Scoring Rule..."
 msgstr "Dodaj pravilo _točkovanja ..."
 
-#: ../pan/gui/actions.cc:589
+#: ../pan/gui/actions.cc:596
 msgid "Cance_l Article..."
 msgstr "Prek_liči članek ..."
 
-#: ../pan/gui/actions.cc:594
+#: ../pan/gui/actions.cc:601
 msgid "_Supersede Article..."
 msgstr "N_adomesti članek ..."
 
-#: ../pan/gui/actions.cc:599
+#: ../pan/gui/actions.cc:606
 msgid "_Delete Article"
 msgstr "_Izbriši članek"
 
-#: ../pan/gui/actions.cc:604
+#: ../pan/gui/actions.cc:611
 msgid "Clear Article Cache"
 msgstr "Počisti predpomnilnik članka"
 
-#: ../pan/gui/actions.cc:609
+#: ../pan/gui/actions.cc:616
 msgid "_Mark Article as Read"
 msgstr "_Označi članek kot prebran"
 
-#: ../pan/gui/actions.cc:614
+#: ../pan/gui/actions.cc:621
 msgid "Mark Article as _Unread"
 msgstr "Označi članek kot _neprebran"
 
-#: ../pan/gui/actions.cc:620
+#: ../pan/gui/actions.cc:627
 msgid "_Mark Thread as Read"
 msgstr "Označi kot p_rebrano"
 
-#: ../pan/gui/actions.cc:625
+#: ../pan/gui/actions.cc:632
 msgid "Mark Thread as _Unread"
 msgstr "Označi kot _neprebrano"
 
-#: ../pan/gui/actions.cc:630
+#: ../pan/gui/actions.cc:637
 msgid "_Post to Newsgroup"
 msgstr "_Objavi v novičarsko skupino"
 
-#: ../pan/gui/actions.cc:631
+#: ../pan/gui/actions.cc:638
 msgid "Post to Newsgroup"
 msgstr "Objavi v novičarsko skupino"
 
-#: ../pan/gui/actions.cc:635
+#: ../pan/gui/actions.cc:642
 msgid "_Followup to Newsgroup"
 msgstr "_Navezava v novičarsko skupino"
 
-#: ../pan/gui/actions.cc:636
+#: ../pan/gui/actions.cc:643
 msgid "Followup to Newsgroup"
 msgstr "Navezava na novičarsko skupino"
 
-#: ../pan/gui/actions.cc:640
+#: ../pan/gui/actions.cc:647
 msgid "_Reply to Author in Mail"
 msgstr "_Odgovori avtorju preko elektronske pošte"
 
-#: ../pan/gui/actions.cc:645
-#, fuzzy
+#: ../pan/gui/actions.cc:652
 msgid "_Contents"
 msgstr "_Vsebina"
 
-#: ../pan/gui/actions.cc:650
+#: ../pan/gui/actions.cc:657
 msgid "_Pan Home Page"
 msgstr "Domača stran _programa"
 
-#: ../pan/gui/actions.cc:655
+#: ../pan/gui/actions.cc:662
 msgid "Give _Feedback or Report a Bug..."
 msgstr "Pošiljanje _odziva ali poročila o hrošču ..."
 
-#: ../pan/gui/actions.cc:660
+#: ../pan/gui/actions.cc:667
 msgid "_Tip Jar..."
 msgstr "_Kozarec namigov ..."
 
-#: ../pan/gui/actions.cc:665
+#: ../pan/gui/actions.cc:672
 msgid "_About"
 msgstr "_O Programu"
 
-#: ../pan/gui/actions.cc:670
+#: ../pan/gui/actions.cc:677
 msgid "Edit _SSL Certificates"
 msgstr "Uredi potrdila _SSL"
 
-#: ../pan/gui/actions.cc:684
+#: ../pan/gui/actions.cc:691
 msgid "_Thread Headers"
 msgstr "Glave _niti"
 
-#: ../pan/gui/actions.cc:685
+#: ../pan/gui/actions.cc:692
 msgid "_Wrap Article Body"
 msgstr "_Prelomi telo članka"
 
-#: ../pan/gui/actions.cc:686
+#: ../pan/gui/actions.cc:693
 msgid "Mute _Quoted Text"
 msgstr "Utišaj _navedeno besedilo"
 
-#: ../pan/gui/actions.cc:687
+#: ../pan/gui/actions.cc:694
 msgid "Show All _Headers in Body Pane"
 msgstr "Pokaži vse gl_ave v pultu telesa"
 
-#: ../pan/gui/actions.cc:688
+#: ../pan/gui/actions.cc:695
 msgid "Show _Smilies as Graphics"
 msgstr "Pokaži _smeške kot slike"
 
-#: ../pan/gui/actions.cc:689
+#: ../pan/gui/actions.cc:696
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr "Pokaži *Krepko*, __Podčrtano__, in /Poševno/"
 
-#: ../pan/gui/actions.cc:690
+#: ../pan/gui/actions.cc:697
 msgid "Size Pictures to _Fit"
 msgstr "Prilag_odi velikost slik"
 
-#: ../pan/gui/actions.cc:691
+#: ../pan/gui/actions.cc:698
 msgid "Use _Monospace Font"
 msgstr "Uporabi pisavo _monospace"
 
-#: ../pan/gui/actions.cc:692
+#: ../pan/gui/actions.cc:699
 msgid "Set Focus to Images"
 msgstr "Nastavi žarišče na slike"
 
-#: ../pan/gui/actions.cc:693
+#: ../pan/gui/actions.cc:700
 msgid "Highlight _URLs"
 msgstr "Poudari_URL-je"
 
-#: ../pan/gui/actions.cc:696
+#: ../pan/gui/actions.cc:703
 msgid "_Work Online"
 msgstr "_Delo s povezavo"
 
-#: ../pan/gui/actions.cc:697
+#: ../pan/gui/actions.cc:704
 msgid "_Tabbed Layout"
 msgstr "Razporeditev _zavihkov"
 
-#: ../pan/gui/actions.cc:698
+#: ../pan/gui/actions.cc:705
 msgid "Show Group _Pane"
 msgstr "Pokaži _pladenj skupine"
 
-#: ../pan/gui/actions.cc:699
+#: ../pan/gui/actions.cc:706
 msgid "Show Hea_der Pane"
 msgstr "Pokaži pladenj gl_ave"
 
-#: ../pan/gui/actions.cc:700
+#: ../pan/gui/actions.cc:707
 msgid "Show Bod_y Pane"
 msgstr "Pokaži pladenj te_lesa"
 
-#: ../pan/gui/actions.cc:701
+#: ../pan/gui/actions.cc:708
 msgid "Show _Toolbar"
 msgstr "Pokaži orodno vrs_tico"
 
-#: ../pan/gui/actions.cc:702
+#: ../pan/gui/actions.cc:709
 msgid "Abbreviate Group Names"
 msgstr "Okrajšaj imena skupin"
 
-#: ../pan/gui/actions.cc:704
+#: ../pan/gui/actions.cc:711
 msgid "Match Only _Unread Articles"
 msgstr "Skladanje le n_eprebranih člankov"
 
-#: ../pan/gui/actions.cc:704
+#: ../pan/gui/actions.cc:711
 msgid "Match Only Unread Articles"
 msgstr "Skladanje le neprebranih člankov"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:712
 msgid "Match Only _Cached Articles"
 msgstr "Skladanje le p_redpomjenih člankov"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:712
 msgid "Match Only Cached Articles"
 msgstr "Skladanje le predpomjenih člankov"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:713
 msgid "Match Only _Complete Articles"
 msgstr "Skladanje le _celotnih člankov"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:713
 msgid "Match Only Complete Articles"
 msgstr "Skladanje le celotnih člankov"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:714
 msgid "Match Only _My Articles"
 msgstr "Skladanje le _mojih člankov"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:714
 msgid "Match Only My Articles"
 msgstr "Skladanje le mojih člankov"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:715
 msgid "Match Only _Watched Articles"
 msgstr "Skladanje le _gledanih člankov"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:715
 msgid "Match Only Watched Articles"
 msgstr "Skladanje le gledanih člankov"
 
-#: ../pan/gui/actions.cc:710
+#: ../pan/gui/actions.cc:717
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "Skladanje točk na 9999 (_gledano)"
 
-#: ../pan/gui/actions.cc:711
+#: ../pan/gui/actions.cc:718
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr "Skladanje točk med 5000 in 9998 (_visoko)"
 
-#: ../pan/gui/actions.cc:712
+#: ../pan/gui/actions.cc:719
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "Skladanje točk med 1 in 4999 (sre_dnje)"
 
-#: ../pan/gui/actions.cc:713
+#: ../pan/gui/actions.cc:720
 msgid "Match Scores of 0 (_Normal)"
 msgstr "Skladanje 0 točk (_običajno)"
 
-#: ../pan/gui/actions.cc:714
+#: ../pan/gui/actions.cc:721
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "Skladanje točk med -9998 in -1 (n_izko)"
 
-#: ../pan/gui/actions.cc:715
+#: ../pan/gui/actions.cc:722
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "Skladanje točk -9999 (Pre_zrto)"
 
-#: ../pan/gui/actions.cc:717
+#: ../pan/gui/actions.cc:724
 #, fuzzy
 msgid "Enable/Disable All _Rules"
 msgstr "Izklopi vse zunanje izdelovalce pomanjšanih sličic"
 
-#: ../pan/gui/actions.cc:743
+#: ../pan/gui/actions.cc:750
 msgid "Show Matching _Articles"
 msgstr "Pokaži skladajoče _članke"
 
-#: ../pan/gui/actions.cc:744
+#: ../pan/gui/actions.cc:751
 msgid "Show Matching Articles' _Threads"
 msgstr "Pokaži _niti, ki se skladajo s člankom"
 
-#: ../pan/gui/actions.cc:745
+#: ../pan/gui/actions.cc:752
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Pokaži _podniti, ki se skladajo s člankom"
 
@@ -775,7 +779,7 @@ msgstr "Neimenovana datoteka"
 #: ../pan/gui/header-pane.cc:1187
 #: ../pan/gui/header-pane.cc:1616
 #: ../pan/gui/post-ui.cc:2496
-#: ../pan/gui/prefs-ui.cc:644
+#: ../pan/gui/prefs-ui.cc:825
 #: ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
 msgstr "Zadeva"
@@ -789,7 +793,7 @@ msgstr "Od"
 #: ../pan/gui/gui.cc:1863
 #: ../pan/gui/header-pane.cc:1694
 #: ../pan/gui/log-ui.cc:305
-#: ../pan/gui/prefs-ui.cc:640
+#: ../pan/gui/prefs-ui.cc:821
 msgid "Date"
 msgstr "Datum"
 
@@ -813,20 +817,47 @@ msgstr " od"
 msgid " at "
 msgstr " ob"
 
-#: ../pan/gui/body-pane.cc:1519
+#. FIXME : GLib-GObject-WARNING **: invalid cast from `GtkVBox' to `GtkWindow'
+#: ../pan/gui/body-pane.cc:1268
+#, fuzzy
+msgid "PGP Signature Information"
+msgstr "Dodaj podrobnosti dovoljenja"
+
+#: ../pan/gui/body-pane.cc:1301
+#, fuzzy
+msgid "no Signature found."
+msgstr "Ni mogoče najti podpisa!"
+
+#: ../pan/gui/body-pane.cc:1306
+#, fuzzy
+msgid "Signature verified."
+msgstr "Overjeno preko"
+
+#: ../pan/gui/body-pane.cc:1540
 msgid "Copy _URL"
 msgstr "_Kopiraj URL"
 
-#: ../pan/gui/body-pane.cc:1721
+#: ../pan/gui/body-pane.cc:1742
 msgid "Save attachment as ...."
 msgstr "Shrani priloge kot ..."
 
-#: ../pan/gui/body-pane.cc:1724
+#: ../pan/gui/body-pane.cc:1745
 msgid "Save all attachments"
 msgstr "Shrani vse priloge"
 
+#. line for signature status
+#: ../pan/gui/body-pane.cc:1787
+#, fuzzy
+msgid "PGP Signature : "
+msgstr "Podpis PGP: "
+
+#: ../pan/gui/body-pane.cc:1788
+#, fuzzy
+msgid "no signature found."
+msgstr "Ni mogoče najti podpisa!"
+
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1795
+#: ../pan/gui/body-pane.cc:1824
 msgid "Attachments"
 msgstr "Priloge"
 
@@ -865,7 +896,7 @@ msgid "Get the _latest N headers: "
 msgstr "Dobi _zadnjih N glav:"
 
 #: ../pan/gui/e-action-combo-box.c:388
-#: ../pan/gui/prefs-ui.cc:637
+#: ../pan/gui/prefs-ui.cc:818
 msgid "Action"
 msgstr "Dejanje"
 
@@ -958,7 +989,7 @@ msgstr "Vidno"
 #: ../pan/gui/e-charset-combo-box.c:93
 #: ../pan/gui/gui.cc:2056
 #: ../pan/gui/post-ui.cc:519
-#: ../pan/gui/prefs-ui.cc:548
+#: ../pan/gui/prefs-ui.cc:729
 msgid "Character Encoding"
 msgstr "Znakovno kodiranje"
 
@@ -1129,14 +1160,12 @@ msgid "Do you want to accept it permanently (deletable afterwards) ?"
 msgstr ""
 
 #: ../pan/gui/gui.cc:1561
-#, fuzzy
 msgid "Unable to open help file"
 msgstr "Ni mogoče odpreti datoteke pomoči"
 
 #: ../pan/gui/gui.cc:1593
-#, fuzzy
 msgid "Copyright \\u00A9 2002-2011 Charles Kerr and others"
-msgstr "Avtorske pravice (C) 2002-2011 Charles Kerr in drugi"
+msgstr "Avtorske pravice \\u00A9 2002-2011 Charles Kerr in drugi"
 
 #: ../pan/gui/gui.cc:1598
 msgid "translator-credits"
@@ -1202,7 +1231,7 @@ msgstr "ID sporočila"
 
 #: ../pan/gui/gui.cc:1864
 #: ../pan/gui/header-pane.cc:1664
-#: ../pan/gui/prefs-ui.cc:641
+#: ../pan/gui/prefs-ui.cc:822
 msgid "Lines"
 msgstr "Vrstic"
 
@@ -1212,12 +1241,11 @@ msgstr "Velikost"
 
 #: ../pan/gui/gui.cc:1865
 #: ../pan/gui/header-pane.cc:1679
-#: ../pan/gui/prefs-ui.cc:639
+#: ../pan/gui/prefs-ui.cc:820
 msgid "Bytes"
 msgstr "Bajtov"
 
 #: ../pan/gui/gui.cc:1915
-#, fuzzy
 msgid "Error loading iconv library. Some Charsets in the GUI will not be able to be encoded."
 msgstr "Napaka med nalaganjem knjižnice iconv. Nekaterih naborov znakov v grafičnem vmesniku, ne bo mogoče kodirati."
 
@@ -1262,7 +1290,7 @@ msgid "No Tasks"
 msgstr "Ni nalog"
 
 #: ../pan/gui/gui.cc:2169
-#: ../pan/gui/prefs-ui.cc:874
+#: ../pan/gui/prefs-ui.cc:1044
 msgid "Tasks"
 msgstr "Naloge"
 
@@ -1286,13 +1314,13 @@ msgstr "Zadeva ali avtor (logični izraz)"
 
 #: ../pan/gui/header-pane.cc:1188
 #: ../pan/gui/header-pane.cc:1648
-#: ../pan/gui/prefs-ui.cc:638
+#: ../pan/gui/prefs-ui.cc:819
 #: ../pan/gui/score-add-ui.cc:140
 msgid "Author"
 msgstr "Avtor"
 
 #: ../pan/gui/header-pane.cc:1633
-#: ../pan/gui/prefs-ui.cc:642
+#: ../pan/gui/prefs-ui.cc:823
 msgid "Score"
 msgstr "Točke"
 
@@ -1308,32 +1336,31 @@ msgstr "Pan: dogodki"
 msgid "Message"
 msgstr "Sporočilo"
 
-#: ../pan/gui/pan.cc:336
+#: ../pan/gui/pan.cc:329
 msgid "Maximize"
 msgstr "Razpni"
 
-#: ../pan/gui/pan.cc:389
+#: ../pan/gui/pan.cc:382
 msgid "An Error has occurred!"
 msgstr "Prišlo je do napake!"
 
-#: ../pan/gui/pan.cc:403
-#, fuzzy
+#: ../pan/gui/pan.cc:396
 msgid "New Articles!"
-msgstr "Preveri nove članke"
+msgstr "Novi članki!"
 
-#: ../pan/gui/pan.cc:404
+#: ../pan/gui/pan.cc:397
 #, fuzzy
 msgid ""
 "There are new\n"
 "articles available."
 msgstr "Ni razpoložljivih posodobitev"
 
-#: ../pan/gui/pan.cc:494
+#: ../pan/gui/pan.cc:487
 #, fuzzy
 msgid "Toggle on/offline"
 msgstr "Preklop zaslonske tipkovnice"
 
-#: ../pan/gui/pan.cc:540
+#: ../pan/gui/pan.cc:532
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1343,7 +1370,7 @@ msgstr ""
 " \n"
 "Za začetek branja novic najprej dodajte strežnik."
 
-#: ../pan/gui/pan.cc:623
+#: ../pan/gui/pan.cc:614
 #, fuzzy
 msgid ""
 "General Options\n"
@@ -1369,20 +1396,20 @@ msgstr ""
 "  -o pot, --output=pot    Pot za shranjevanje prilog naštetih v datotekah nzb.\n"
 "  --no-gui                 Prikaže le izhod konzole, ne pa vrste prejemanj.\n"
 
-#: ../pan/gui/pan.cc:898
+#: ../pan/gui/pan.cc:886
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Napaka: --no-gui je uporabljen brez datotek nzb ali novic:id-sporočila"
 
-#: ../pan/gui/pan.cc:902
+#: ../pan/gui/pan.cc:890
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s je zagnan"
 
-#: ../pan/gui/pan.cc:921
+#: ../pan/gui/pan.cc:909
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr "Pred uporabo programa kot privzetega odjemalca je treba nastaviti strežnike novic."
 
-#: ../pan/gui/pan.cc:1035
+#: ../pan/gui/pan.cc:1026
 #, fuzzy
 msgid "Pan notification"
 msgstr "Obvestilo dogodka"
@@ -1471,24 +1498,20 @@ msgid "Run Editor"
 msgstr "Zažene urejevalnik"
 
 #: ../pan/gui/post-ui.cc:435
-#, fuzzy
 msgid "Add _Files to Queue"
-msgstr "Dodaj v čakalno vrsto predvajanja"
+msgstr "Dodaj _datoteke v čakalno vrsto"
 
 #: ../pan/gui/post-ui.cc:435
-#, fuzzy
 msgid "Add Files to Queue"
-msgstr "Dodaj v čakalno vrsto predvajanja"
+msgstr "Dodaj v čakalno vrsto"
 
 #: ../pan/gui/post-ui.cc:450
 #: ../pan/gui/post-ui.cc:451
-#, fuzzy
 msgid "Remove from Queue"
-msgstr "Odstrani iz čakalne vrste predvajanja"
+msgstr "Odstrani iz čakalne vrste"
 
 #: ../pan/gui/post-ui.cc:455
 #: ../pan/gui/post-ui.cc:456
-#, fuzzy
 msgid "Clear List"
 msgstr "Počisti seznam"
 
@@ -1789,7 +1812,7 @@ msgid "File _Queue"
 msgstr "Čakalna vrsta datotečnega sistema"
 
 #: ../pan/gui/post-ui.cc:3077
-#: ../pan/gui/profiles-dialog.cc:477
+#: ../pan/gui/profiles-dialog.cc:478
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "Na %d je %n napisal:"
@@ -1804,426 +1827,492 @@ msgstr "Dodaj v čakalno vrsto predvajanja"
 msgid "Save Upload Queue as NZB File"
 msgstr "Shrani članeke v datoteko NZB"
 
-#: ../pan/gui/prefs.cc:344
+#: ../pan/gui/prefs.cc:343
 #, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "Ni mogoče razčleniti %s barve \"%s\""
 
-#: ../pan/gui/prefs-ui.cc:125
+#: ../pan/gui/prefs-ui.cc:120
+#, fuzzy
+msgid "Grab Key"
+msgstr "Zgrabi izbor tipk"
+
+#: ../pan/gui/prefs-ui.cc:126
+#, c-format
+msgid ""
+"Press the combination of the keys\n"
+"you want to use for \"%s\"."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:166
+msgid "Edit Hotkey"
+msgstr "Uredi hitro tipko"
+
+#: ../pan/gui/prefs-ui.cc:228
 #, fuzzy
 msgid "Error: Shortkey is invalid!"
 msgstr "Napaka: ime načina `%s' ni veljavno\n"
 
-#: ../pan/gui/prefs-ui.cc:142
+#: ../pan/gui/prefs-ui.cc:244
 #, fuzzy
 msgid "Error: Shortkey already exists!"
 msgstr "Izpuščanje %s: datoteka že obstaja"
 
-#: ../pan/gui/prefs-ui.cc:398
+#: ../pan/gui/prefs-ui.cc:539
+msgid "Show only icons"
+msgstr "Pokaži le ikone"
+
+#: ../pan/gui/prefs-ui.cc:540
+msgid "Show only text"
+msgstr "Pokaži le besedilo"
+
+#: ../pan/gui/prefs-ui.cc:541
+msgid "Show icons and text"
+msgstr "Pokaži ikone in besedilo"
+
+#: ../pan/gui/prefs-ui.cc:580
 msgid "Use GNOME Preferences"
 msgstr "Uporabi možnosti GNOME"
 
-#: ../pan/gui/prefs-ui.cc:399
+#: ../pan/gui/prefs-ui.cc:581
 msgid "Use KDE Preferences"
 msgstr "Uporabi možnosti KDE"
 
-#: ../pan/gui/prefs-ui.cc:400
+#: ../pan/gui/prefs-ui.cc:582
 msgid "Use OS X Preferences"
 msgstr "Uporabi možnosti OS X"
 
-#: ../pan/gui/prefs-ui.cc:401
+#: ../pan/gui/prefs-ui.cc:583
 msgid "Use Windows Preferences"
 msgstr "Uporabi možnosti Windows"
 
-#: ../pan/gui/prefs-ui.cc:402
+#: ../pan/gui/prefs-ui.cc:584
 msgid "Custom Command:"
 msgstr "Ukaz po meri:"
 
-#: ../pan/gui/prefs-ui.cc:453
+#: ../pan/gui/prefs-ui.cc:635
 msgid "Disabled"
 msgstr "Onemogočeno"
 
-#: ../pan/gui/prefs-ui.cc:454
+#: ../pan/gui/prefs-ui.cc:636
 #, fuzzy
 msgid "Only new (Score == 0)"
 msgstr "Samo novi zvitki"
 
-#: ../pan/gui/prefs-ui.cc:455
+#: ../pan/gui/prefs-ui.cc:637
 #, fuzzy
 msgid "9999 or more"
 msgstr "9999 točk ali več"
 
-#: ../pan/gui/prefs-ui.cc:456
+#: ../pan/gui/prefs-ui.cc:638
 #, fuzzy
 msgid "5000 to 9998"
 msgstr "Med -9998 in -1 točko:"
 
-#: ../pan/gui/prefs-ui.cc:457
+#: ../pan/gui/prefs-ui.cc:639
 #, fuzzy
 msgid "1 to 4999"
 msgstr "Med 1 in 4999 točk:"
 
-#: ../pan/gui/prefs-ui.cc:458
+#: ../pan/gui/prefs-ui.cc:640
 #, fuzzy
 msgid "-9998 to -1"
 msgstr "Med -9998 in -1 točko:"
 
-#: ../pan/gui/prefs-ui.cc:459
+#: ../pan/gui/prefs-ui.cc:641
 #, fuzzy
 msgid "-9999 or less"
 msgstr "-9999 točk ali manj:"
 
-#: ../pan/gui/prefs-ui.cc:524
-#, c-format
-msgid "  Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+#: ../pan/gui/prefs-ui.cc:705
+#, fuzzy, c-format
+msgid "Select default <u>global</u> charset. Current setting : <b>%s</b> ."
 msgstr "  Izberi privzet <u>splošni</u> nabor znakov. Trenutno je izbrano: <b>%s</b> ."
 
-#: ../pan/gui/prefs-ui.cc:549
+#: ../pan/gui/prefs-ui.cc:730
 msgid "Global Charset Settings"
 msgstr "Splošne nastavitve kodnega nabora"
 
-#: ../pan/gui/prefs-ui.cc:643
+#: ../pan/gui/prefs-ui.cc:824
 #: ../pan/gui/task-pane.cc:766
 msgid "State"
 msgstr "Stanje"
 
-#: ../pan/gui/prefs-ui.cc:677
+#: ../pan/gui/prefs-ui.cc:858
 msgid "Enabled"
 msgstr "Omogočeno"
 
-#: ../pan/gui/prefs-ui.cc:681
+#: ../pan/gui/prefs-ui.cc:862
 msgid "Column Name"
 msgstr "Ime stolpca"
 
-#: ../pan/gui/prefs-ui.cc:719
+#: ../pan/gui/prefs-ui.cc:900
 msgid "Pan: Preferences"
 msgstr "Pan: Možnosti"
 
-#: ../pan/gui/prefs-ui.cc:736
+#: ../pan/gui/prefs-ui.cc:926
 msgid "Mouse"
 msgstr "Miška"
 
-#: ../pan/gui/prefs-ui.cc:738
+#: ../pan/gui/prefs-ui.cc:928
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Enojni klik zažene namesto izbere, _skupine"
 
-#: ../pan/gui/prefs-ui.cc:740
+#: ../pan/gui/prefs-ui.cc:930
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Enojni klik zažene namesto izbere, _članke"
 
-#: ../pan/gui/prefs-ui.cc:743
+#: ../pan/gui/prefs-ui.cc:933
 msgid "Groups"
 msgstr "Skupine"
 
-#: ../pan/gui/prefs-ui.cc:745
+#: ../pan/gui/prefs-ui.cc:935
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Ob _zagonu dobi nove glave v naročenih skupinah"
 
-#: ../pan/gui/prefs-ui.cc:747
+#: ../pan/gui/prefs-ui.cc:937
 msgid "Get new headers when _entering group"
 msgstr "Ob _vstopu v skupino dobi nove glave"
 
-#: ../pan/gui/prefs-ui.cc:749
+#: ../pan/gui/prefs-ui.cc:939
 msgid "Mark entire group _read when leaving group"
 msgstr "Ob zapuščanju skupine označi celotno skupino kot _prebrano"
 
-#: ../pan/gui/prefs-ui.cc:751
+#: ../pan/gui/prefs-ui.cc:941
 msgid "Mark entire group read before getting _new headers"
 msgstr "Označi celotno skupino kot prebrano pred pridobivanjem _novih glav"
 
-#: ../pan/gui/prefs-ui.cc:753
+#: ../pan/gui/prefs-ui.cc:943
 msgid "E_xpand all threads when entering group"
 msgstr "Ob vstopu v skupino _razširi vse niti"
 
-#: ../pan/gui/prefs-ui.cc:758
+#: ../pan/gui/prefs-ui.cc:948
 msgid "Articles"
 msgstr "Članki"
 
-#: ../pan/gui/prefs-ui.cc:760
+#: ../pan/gui/prefs-ui.cc:950
 msgid "Space selects next article rather than next unread"
 msgstr "S preslednico se izbere naslednji članek namesto naslednjega neprebranega članka"
 
-#: ../pan/gui/prefs-ui.cc:762
+#: ../pan/gui/prefs-ui.cc:952
 #, fuzzy
 msgid "Expand threads upon selection"
 msgstr "Dodaj _niti v izbor"
 
-#: ../pan/gui/prefs-ui.cc:764
+#: ../pan/gui/prefs-ui.cc:954
 msgid "Always show article deletion confirmation dialog"
-msgstr ""
+msgstr "Vedno zahtevaj potrditev pred brisanjem člankov"
 
-#: ../pan/gui/prefs-ui.cc:766
+#: ../pan/gui/prefs-ui.cc:956
 msgid "Smooth scrolling"
 msgstr "Gladko drsenje"
 
-#: ../pan/gui/prefs-ui.cc:771
+#: ../pan/gui/prefs-ui.cc:961
 #, fuzzy
 msgid "Article Cache"
 msgstr "Počisti predpomnilnik članka"
 
-#: ../pan/gui/prefs-ui.cc:772
+#: ../pan/gui/prefs-ui.cc:962
 msgid "Clear article cache on shutdown"
 msgstr "Ob zaustavitvi počisti predpomnilnik članka "
 
-#: ../pan/gui/prefs-ui.cc:775
-msgid "Size of article cache (in MiB)"
+#: ../pan/gui/prefs-ui.cc:965
+msgid "Size of article cache (in MiB) :"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:780
+#: ../pan/gui/prefs-ui.cc:970
 #, fuzzy
-msgid "File extension for Cached Articles"
+msgid "File extension for Cached Articles: "
 msgstr "Privzeta pripona datotek za ta profil"
 
-#: ../pan/gui/prefs-ui.cc:785
+#: ../pan/gui/prefs-ui.cc:975
+#, fuzzy
+msgid "Tabs"
+msgstr "Zavihki"
+
+#: ../pan/gui/prefs-ui.cc:980
 msgid "_Behavior"
 msgstr "_Obnašanje"
 
-#: ../pan/gui/prefs-ui.cc:803
-msgid "_Hotkeys"
-msgstr "_Hitre tipke"
+#: ../pan/gui/prefs-ui.cc:980
+#, fuzzy
+msgid "Behavior"
+msgstr "Obnašanje"
 
-#: ../pan/gui/prefs-ui.cc:809
+#: ../pan/gui/prefs-ui.cc:986
 msgid "Language Settings"
 msgstr "Jezikovne nastavitve"
 
-#: ../pan/gui/prefs-ui.cc:817
-#, fuzzy
-msgid "_Charset"
-msgstr "Izberite znakovni nabor"
-
-#: ../pan/gui/prefs-ui.cc:822
+#. systray and notify popup
+#: ../pan/gui/prefs-ui.cc:995
 #, fuzzy
 msgid "System Tray Behavior"
 msgstr "Zagon programa v sistemski vrstici."
 
-#: ../pan/gui/prefs-ui.cc:824
+#: ../pan/gui/prefs-ui.cc:997
 #, fuzzy
 msgid "Hide to system tray"
 msgstr "Poveži s sistemskim vodilom"
 
-#: ../pan/gui/prefs-ui.cc:826
+#: ../pan/gui/prefs-ui.cc:999
 #, fuzzy
 msgid "Start Pan minimized"
 msgstr "Obnavljanje skrčenih oken"
 
-#: ../pan/gui/prefs-ui.cc:829
+#: ../pan/gui/prefs-ui.cc:1002
 #, fuzzy
 msgid "Show notifications"
 msgstr "_Prikaži obvestila"
 
-#: ../pan/gui/prefs-ui.cc:833
-#, fuzzy
-msgid "_Status and Notifications"
-msgstr "Vrste stanj in ikone"
-
-#: ../pan/gui/prefs-ui.cc:839
+#: ../pan/gui/prefs-ui.cc:1008
 #, fuzzy
 msgid "Autosave Article Draft"
 msgstr "Odpre osnutek članka"
 
-#: ../pan/gui/prefs-ui.cc:841
+#: ../pan/gui/prefs-ui.cc:1010
 #, fuzzy
-msgid "Minutes to autosave the current Article Draft."
+msgid "Minutes to autosave the current Article Draft: "
 msgstr "Na koliko minut naj se datoteke newsrc samodejno shranjujejo."
 
-#: ../pan/gui/prefs-ui.cc:846
+#: ../pan/gui/prefs-ui.cc:1015
 #, fuzzy
 msgid "Autosave Articles"
 msgstr "_Shrani članke ..."
 
-#: ../pan/gui/prefs-ui.cc:848
+#: ../pan/gui/prefs-ui.cc:1017
 #, fuzzy
-msgid "Minutes to autosave newsrc files"
+msgid "Minutes to autosave newsrc files: "
 msgstr "Na koliko minut naj se datoteke newsrc samodejno shranjujejo."
 
-#: ../pan/gui/prefs-ui.cc:853
-msgid "_Autosave"
-msgstr "_Samodejno shrani"
+#: ../pan/gui/prefs-ui.cc:1023
+#, fuzzy
+msgid "_Miscellaneous"
+msgstr "Različno"
 
-#: ../pan/gui/prefs-ui.cc:858
+#: ../pan/gui/prefs-ui.cc:1023
+#, fuzzy
+msgid "Miscellaneous"
+msgstr "Različno"
+
+#: ../pan/gui/prefs-ui.cc:1028
 msgid "Pane Layout"
 msgstr "Postavitev pladnja"
 
-#: ../pan/gui/prefs-ui.cc:877
+#: ../pan/gui/prefs-ui.cc:1047
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=Skupine, 2=Glave, 3=Telo"
 
-#: ../pan/gui/prefs-ui.cc:879
+#: ../pan/gui/prefs-ui.cc:1049
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=Skupine, 2=Telo, 3=Glave"
 
-#: ../pan/gui/prefs-ui.cc:881
+#: ../pan/gui/prefs-ui.cc:1051
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=Glave, 2=Skupine, 3=Telo"
 
-#: ../pan/gui/prefs-ui.cc:883
+#: ../pan/gui/prefs-ui.cc:1053
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=Glave, 2=Telo, 3=Skupine"
 
-#: ../pan/gui/prefs-ui.cc:885
+#: ../pan/gui/prefs-ui.cc:1055
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=Telo, 2=Skupine, 3=Glave"
 
-#: ../pan/gui/prefs-ui.cc:887
+#: ../pan/gui/prefs-ui.cc:1057
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=Telo, 2=Glave, 3=Skupine"
 
-#: ../pan/gui/prefs-ui.cc:895
+#: ../pan/gui/prefs-ui.cc:1061
+#, fuzzy
+msgid "Layout"
+msgstr "Razporeditev"
+
+#: ../pan/gui/prefs-ui.cc:1066
 msgid "Header Pane Columns"
 msgstr "Stolpci pladnja glave"
 
-#: ../pan/gui/prefs-ui.cc:899
+#: ../pan/gui/prefs-ui.cc:1070
 msgid "_Headers"
 msgstr "_Glave"
 
-#: ../pan/gui/prefs-ui.cc:904
+#: ../pan/gui/prefs-ui.cc:1070
+#, fuzzy
+msgid "Headers"
+msgstr "Glave"
+
+#: ../pan/gui/prefs-ui.cc:1076
 msgid "This menu lets you configure Pan to take certain actions on your behalf automatically, based on a post's score."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:907
+#: ../pan/gui/prefs-ui.cc:1079
 msgid "_Delete posts scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:909
+#: ../pan/gui/prefs-ui.cc:1081
 msgid "Mark posts _read scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:911
+#: ../pan/gui/prefs-ui.cc:1083
 msgid "_Cache posts scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:913
+#: ../pan/gui/prefs-ui.cc:1085
 msgid "Download _attachments of posts scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:921
+#: ../pan/gui/prefs-ui.cc:1088
+#, fuzzy
+msgid "Actions"
+msgstr "Dejanja"
+
+#: ../pan/gui/prefs-ui.cc:1093
+#: ../pan/gui/prefs-ui.cc:1114
 msgid "Fonts"
 msgstr "Pisave"
 
-#: ../pan/gui/prefs-ui.cc:923
+#: ../pan/gui/prefs-ui.cc:1095
 msgid "Use custom font in Group Pane:"
 msgstr "Uporabi pisavo po meri v pladnju skupine"
 
-#: ../pan/gui/prefs-ui.cc:928
+#: ../pan/gui/prefs-ui.cc:1100
 msgid "Use custom font in Header Pane:"
 msgstr "Uporabi pisavo po meri v pladnju glave:"
 
-#: ../pan/gui/prefs-ui.cc:933
+#: ../pan/gui/prefs-ui.cc:1105
 msgid "Use custom font in Body Pane:"
 msgstr "Uporabi pisavo po meri v pladnju telesa:"
 
-#: ../pan/gui/prefs-ui.cc:938
+#: ../pan/gui/prefs-ui.cc:1110
 msgid "Monospace font:"
 msgstr "Pisava Monospace:"
 
-#: ../pan/gui/prefs-ui.cc:942
+#: ../pan/gui/prefs-ui.cc:1114
 msgid "_Fonts"
 msgstr "P_isave"
 
-#: ../pan/gui/prefs-ui.cc:947
+#: ../pan/gui/prefs-ui.cc:1119
 msgid "Header Pane"
 msgstr "Pladenj glave"
 
-#: ../pan/gui/prefs-ui.cc:950
-#: ../pan/gui/prefs-ui.cc:956
-#: ../pan/gui/prefs-ui.cc:962
-#: ../pan/gui/prefs-ui.cc:968
-#: ../pan/gui/prefs-ui.cc:974
-#: ../pan/gui/prefs-ui.cc:980
+#: ../pan/gui/prefs-ui.cc:1122
+#: ../pan/gui/prefs-ui.cc:1128
+#: ../pan/gui/prefs-ui.cc:1134
+#: ../pan/gui/prefs-ui.cc:1140
+#: ../pan/gui/prefs-ui.cc:1146
+#: ../pan/gui/prefs-ui.cc:1152
 msgid "Text:"
 msgstr "Besedilo:"
 
-#: ../pan/gui/prefs-ui.cc:952
-#: ../pan/gui/prefs-ui.cc:958
-#: ../pan/gui/prefs-ui.cc:964
-#: ../pan/gui/prefs-ui.cc:970
-#: ../pan/gui/prefs-ui.cc:976
-#: ../pan/gui/prefs-ui.cc:982
+#: ../pan/gui/prefs-ui.cc:1124
+#: ../pan/gui/prefs-ui.cc:1130
+#: ../pan/gui/prefs-ui.cc:1136
+#: ../pan/gui/prefs-ui.cc:1142
+#: ../pan/gui/prefs-ui.cc:1148
+#: ../pan/gui/prefs-ui.cc:1154
 msgid "Background:"
 msgstr "Ozadje:"
 
-#: ../pan/gui/prefs-ui.cc:954
+#: ../pan/gui/prefs-ui.cc:1126
 msgid "Scores of 9999 or more:"
 msgstr "9999 točk ali več"
 
-#: ../pan/gui/prefs-ui.cc:960
+#: ../pan/gui/prefs-ui.cc:1132
 msgid "Scores from 5000 to 9998:"
 msgstr "Med 5000 in 9998 točk:"
 
-#: ../pan/gui/prefs-ui.cc:966
+#: ../pan/gui/prefs-ui.cc:1138
 msgid "Scores from 1 to 4999:"
 msgstr "Med 1 in 4999 točk:"
 
-#: ../pan/gui/prefs-ui.cc:972
+#: ../pan/gui/prefs-ui.cc:1144
 msgid "Scores from -9998 to -1:"
 msgstr "Med -9998 in -1 točko:"
 
-#: ../pan/gui/prefs-ui.cc:978
+#: ../pan/gui/prefs-ui.cc:1150
 msgid "Scores of -9999 or less:"
 msgstr "-9999 točk ali manj:"
 
-#: ../pan/gui/prefs-ui.cc:984
+#: ../pan/gui/prefs-ui.cc:1156
 #, fuzzy
 msgid "Read collapsed thread:"
 msgstr "Določi trenutno nit"
 
-#: ../pan/gui/prefs-ui.cc:986
+#: ../pan/gui/prefs-ui.cc:1158
 msgid "Body Pane"
 msgstr "Pladenj telesa"
 
-#: ../pan/gui/prefs-ui.cc:992
+#: ../pan/gui/prefs-ui.cc:1164
 #, fuzzy
 msgid "Quoted text:"
 msgstr "Citirano besedilo:"
 
-#: ../pan/gui/prefs-ui.cc:993
+#: ../pan/gui/prefs-ui.cc:1165
 msgid "URL:"
 msgstr "URL:"
 
-#: ../pan/gui/prefs-ui.cc:994
+#: ../pan/gui/prefs-ui.cc:1166
 msgid "Signature:"
 msgstr "Podpis:"
 
-#: ../pan/gui/prefs-ui.cc:996
+#: ../pan/gui/prefs-ui.cc:1168
 msgid "_Colors"
 msgstr "_Barve"
 
-#: ../pan/gui/prefs-ui.cc:1001
+#: ../pan/gui/prefs-ui.cc:1168
+#, fuzzy
+msgid "Colors"
+msgstr "Barve"
+
+#: ../pan/gui/prefs-ui.cc:1173
 msgid "Preferred Applications"
 msgstr "Prednostni programi"
 
-#: ../pan/gui/prefs-ui.cc:1005
+#: ../pan/gui/prefs-ui.cc:1177
 #, fuzzy
 msgid "_Web browser:"
 msgstr "Spletni brskalnik"
 
-#: ../pan/gui/prefs-ui.cc:1008
+#: ../pan/gui/prefs-ui.cc:1180
 #, fuzzy
 msgid "_Mail reader:"
 msgstr "_Bralnik pošte:"
 
-#: ../pan/gui/prefs-ui.cc:1010
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1182
 msgid "_Text editor:"
-msgstr "Gedit - urejevalnik besedil"
+msgstr "_Urejevalnik besedil:"
 
-#: ../pan/gui/prefs-ui.cc:1012
-msgid "A_pplications"
+#: ../pan/gui/prefs-ui.cc:1184
+msgid "_Applications"
 msgstr "_Programi"
 
-#: ../pan/gui/prefs-ui.cc:1017
-#: ../pan/gui/task-pane.cc:508
-#, fuzzy
-msgid "Encoding"
-msgstr "Kodiranje"
+#: ../pan/gui/prefs-ui.cc:1184
+msgid "Applications"
+msgstr "Programi"
 
-#: ../pan/gui/prefs-ui.cc:1021
-msgid "Default bytes per file (for encoder)"
+#: ../pan/gui/prefs-ui.cc:1189
+#: ../pan/gui/task-pane.cc:508
+msgid "Encoding"
+msgstr "Nabor znakov"
+
+#: ../pan/gui/prefs-ui.cc:1193
+msgid "Default bytes per file (for encoder): "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1026
+#: ../pan/gui/prefs-ui.cc:1198
 msgid "_Upload"
 msgstr "_Pošlji"
+
+#: ../pan/gui/prefs-ui.cc:1198
+msgid "Upload"
+msgstr "Pošlji"
+
+#: ../pan/gui/prefs-ui.cc:1216
+msgid "_Hotkeys"
+msgstr "_Hitre tipke"
+
+#: ../pan/gui/prefs-ui.cc:1216
+msgid "Hotkeys"
+msgstr "Hitre tipke"
 
 #: ../pan/gui/profiles-dialog.cc:83
 msgid "Please choose your Email Address according to your PGP key's user id."
@@ -2293,9 +2382,8 @@ msgid "PGP Signature"
 msgstr "Podpis PGP"
 
 #: ../pan/gui/profiles-dialog.cc:196
-#, fuzzy
 msgid "Signature Type : "
-msgstr "_Vrsta podpisa:"
+msgstr "Vrsta podpisa :"
 
 #: ../pan/gui/profiles-dialog.cc:223
 #, fuzzy
@@ -2346,7 +2434,7 @@ msgstr ""
 msgid "_Attribution:"
 msgstr "P_ripis:"
 
-#: ../pan/gui/profiles-dialog.cc:267
+#: ../pan/gui/profiles-dialog.cc:268
 #, fuzzy
 msgid ""
 "Extra headers to be included in your posts, such as\n"
@@ -2357,27 +2445,27 @@ msgstr ""
 "Odgovorite na: \"Vaše ime\" <vašeime@nekje.com>\n"
 "Organizacija: Vaša organizacija"
 
-#: ../pan/gui/profiles-dialog.cc:277
+#: ../pan/gui/profiles-dialog.cc:278
 msgid "E_xtra Headers:"
 msgstr "_Dodatne glave:"
 
-#: ../pan/gui/profiles-dialog.cc:322
+#: ../pan/gui/profiles-dialog.cc:323
 msgid "Invalid email address."
 msgstr "Neveljaven naslov elektronske pošte."
 
-#: ../pan/gui/profiles-dialog.cc:323
+#: ../pan/gui/profiles-dialog.cc:324
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Uporabite naslov v obliki janez@nekje.org"
 
-#: ../pan/gui/profiles-dialog.cc:478
+#: ../pan/gui/profiles-dialog.cc:479
 msgid "New Profile"
 msgstr "Nov profil"
 
-#: ../pan/gui/profiles-dialog.cc:524
+#: ../pan/gui/profiles-dialog.cc:525
 msgid "Posting Profiles"
 msgstr "Pošiljanje profilov"
 
-#: ../pan/gui/profiles-dialog.cc:540
+#: ../pan/gui/profiles-dialog.cc:541
 msgid "Profiles"
 msgstr "Profili"
 
@@ -3468,6 +3556,20 @@ msgstr ""
 #: ../pan/usenet-utils/text-massager.cc:397
 msgid "> [quoted text muted]"
 msgstr "> [navedeno besedilo je utišano]"
+
+#~ msgid "Read News from Usenet"
+#~ msgstr "Branje novic iz Usenet"
+
+#, fuzzy
+#~ msgid "_Charset"
+#~ msgstr "Izberite znakovni nabor"
+
+#, fuzzy
+#~ msgid "_Status and Notifications"
+#~ msgstr "Vrste stanj in ikone"
+
+#~ msgid "_Autosave"
+#~ msgstr "_Samodejno shrani"
 
 #~ msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
 #~ msgstr "Priloga ni prikazana: MIME vrsta %s/%s; ime datoteke %s\n"
