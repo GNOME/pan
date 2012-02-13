@@ -466,8 +466,6 @@ namespace pan
     const int n_rows (gtk_tree_model_iter_n_children (model, NULL));
     const bool do_show (gtk_combo_box_get_active(c) == (n_rows-1));
 
-    std::cerr<<"dbg  "<<do_show<<" "<<w_parent<<" "<<n_rows<<"\n";
-
     if (do_show && !w_parent && c_parent) // add it
     {
       gtk_box_pack_start (GTK_BOX(c_parent), w, true, true, 0);
@@ -529,7 +527,6 @@ namespace pan
     }
   }
 
-  /* TODO ! static array for now */
   GtkWidget* new_tabs_combo_box (Prefs& prefs,
                                  const char * mode_key)
   {
@@ -623,7 +620,8 @@ namespace pan
     "Scores of 9999 or more:"
     "Scores from 5000 to 9998:"
     "Scores from 1 to 4999:"
-    "Scores from -9998 to -1:" */
+    "Scores from -9998 to -1:"
+*/
   GtkWidget* score_handler_new (Prefs& prefs,
                               const char * mode_key,
                               const char * mode_fallback,
@@ -716,6 +714,17 @@ PrefsDialog :: on_prefs_string_changed (const StringView& key, const StringView&
   {
     _prefs.save();
     update_default_charset_label(value);
+  }
+
+}
+
+void
+PrefsDialog :: on_prefs_flag_changed (const StringView& key, bool value)
+{
+
+  if (key == "allow-multiple-instances")
+  {
+    _prefs.save();
   }
 
 }
@@ -1002,6 +1011,12 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     w = new_check_button (_("Show notifications"), "use-notify", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
 #endif
+
+    // allow multiple instances (seperate, not communicating with dbus)
+    HIG :: workarea_add_section_title (t, &row, _("Startup Behavior"));
+    HIG :: workarea_add_section_spacer (t, row, 1);
+    w = new_check_button (_("Allow multiple instances of Pan"), "allow-multiple-instances", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
 
     // Autosave Features
     HIG :: workarea_add_section_spacer (t, row, 2);

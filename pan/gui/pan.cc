@@ -21,10 +21,6 @@
 #include <config.h>
 #include <signal.h>
 
-#ifdef HAVE_LIBNOTIFY
-  #include <libnotify/notify.h>
-#endif
-
 extern "C" {
   #include <glib/gi18n.h>
   #include "gtk-compat.h"
@@ -41,16 +37,19 @@ extern "C" {
   #include <windows.h>
 #endif
 
-#include <config.h>
-#include <pan/general/debug.h>
-#include <pan/general/log.h>
-#include <pan/general/file-util.h>
-#include <pan/general/worker-pool.h>
+#ifdef HAVE_LIBNOTIFY
+  #include <libnotify/notify.h>
+#endif
 
 #ifdef HAVE_GNUTLS
   #include <pan/tasks/socket-impl-openssl.h>
 #endif
 
+#include <config.h>
+#include <pan/general/debug.h>
+#include <pan/general/log.h>
+#include <pan/general/file-util.h>
+#include <pan/general/worker-pool.h>
 #include <pan/usenet-utils/gpg.h>
 #include <pan/data/cert-store.h>
 #include <pan/tasks/socket-impl-gio.h>
@@ -67,11 +66,6 @@ extern "C" {
 #include "task-pane.h"
 #include "server-ui.h"
 #include "pad.h"
-
-#ifdef HAVE_GKR
-  #include <gnome-keyring-1/gnome-keyring.h>
-  #include <gnome-keyring-1/gnome-keyring-memory.h>
-#endif
 
 //#define DEBUG_LOCALE 1
 //#define DEBUG_PARALLEL 1
@@ -201,7 +195,6 @@ namespace
     }
     else
     {
-//      gtk_widget_hide(GTK_WIDGET(window));
       gtk_widget_show (GTK_WIDGET(window));
       gtk_window_deiconify(window);
     }
@@ -243,7 +236,8 @@ namespace
 
     bool n() { return notif_shown; }
 
-    StatusIconListener(GtkStatusIcon * i, GtkWidget* r, Prefs& p, Queue& q, Data& d, bool v) : icon(i), root(r), prefs(p), queue(q), data(d),
+    StatusIconListener(GtkStatusIcon * i, GtkWidget* r, Prefs& p, Queue& q, Data& d, bool v) :
+      icon(i), root(r), prefs(p), queue(q), data(d),
       tasks_active(0), tasks_total(0), minimized(v), notif_shown(false)
     {
       prefs.add_listener(this);
@@ -291,8 +285,11 @@ namespace
                                   "<b>Tasks running:</b> %d\n"
                                   "<b>Total queued:</b> %d\n"
                                   "<b>Speed:</b> %.1f KiBps\n",
-                                  PACKAGE_VERSION, is_online ? "online" : "offline",
-                                  tasks_active, tasks_total, queue.get_speed_KiBps());
+                                  PACKAGE_VERSION,
+                                  is_online ? "online" : "offline",
+                                  tasks_active,
+                                  tasks_total,
+                                  queue.get_speed_KiBps());
 
       gtk_status_icon_set_tooltip_markup(icon, buf);
 
@@ -418,29 +415,6 @@ namespace
 
   static StatusIconListener* _status_icon;
 
-/* ****** End Status Icon and Notification ****************************************/
-
-//  static gboolean window_state_event (GtkWidget *widget, GdkEventWindowState *event, gpointer trayIcon)
-//  {
-//
-//    StatusIconListener* l(static_cast<StatusIconListener*>(trayIcon));
-//
-//    if(event->changed_mask == GDK_WINDOW_STATE_ICONIFIED
-//       && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED
-//       || event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
-//    {
-//        gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), TRUE);
-//        gtk_widget_hide (GTK_WIDGET(widget));
-//    }
-////    else if(event->changed_mask == GDK_WINDOW_STATE_WITHDRAWN
-////            && (event->new_window_state == GDK_WINDOW_STATE_ICONIFIED
-////            || event->new_window_state == (GDK_WINDOW_STATE_ICONIFIED | GDK_WINDOW_STATE_MAXIMIZED)))
-////    {
-////        gtk_status_icon_set_visible(GTK_STATUS_ICON(l->icon), FALSE);
-////    }
-//    return TRUE;
-//  }
-
   struct QueueAndGui
   {
     Queue& queue;
@@ -471,7 +445,7 @@ namespace
     GUI& gui (*_gui);
 
     for (guint i=0; i<NUM_STATUS_ICONS; ++i)
-        status_icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, status_icons[i].pixbuf_txt, FALSE, 0);
+      status_icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, status_icons[i].pixbuf_txt, FALSE, 0);
 
     GtkStatusIcon * icon = gtk_status_icon_new_from_pixbuf (status_icons[ICON_STATUS_IDLE].pixbuf);
     GtkWidget * menu = gtk_menu_new ();
@@ -498,7 +472,7 @@ namespace
     gtk_widget_show_all(menu);
     g_signal_connect(icon, "activate", G_CALLBACK(status_icon_activate), window);
     g_signal_connect(icon, "popup-menu", G_CALLBACK(status_icon_popup_menu), menu);
-//    g_signal_connect (G_OBJECT (window), "window-state-event", G_CALLBACK (window_state_event), pl);
+
   }
 
 
@@ -516,7 +490,10 @@ namespace
 
     gtk_container_add (GTK_CONTAINER(window), gui.root());
     const bool minimized(prefs.get_flag("start-minimized", false));
+    const bool status_icon(prefs.get_flag("start-minimized", false));
+
     if (minimized) gtk_window_iconify (window);
+
     gtk_widget_show (GTK_WIDGET(window));
 
     const quarks_t servers (data.get_servers ());
@@ -921,36 +898,38 @@ main (int argc, char *argv[])
 #ifdef HAVE_DBUS
     Pan pan(data, queue, cache, encode_cache, prefs, group_prefs);
   #ifndef DEBUG_PARALLEL
-    pan_dbus_init(&pan);
-
-    GError* error(NULL);
-    GVariant* var;
-
-    if (!dbus_connection) goto _fail;
-
-//    if (pan.dbus_id == -1 || pan.lost_name)
+    if (!prefs.get_flag("allow-multiple-instances", false))
     {
-      g_dbus_connection_call_sync (dbus_connection,
-                             PAN_DBUS_SERVICE_NAME,
-                             PAN_DBUS_SERVICE_PATH,
-                             "news.pan.NZB",
-                             "NZBEnqueue",
-                             g_variant_new ("(sssbb)",
-                                groups.c_str(), nzb_output_path.c_str(), nzb_str.c_str(),  gui, nzb),
-                             NULL,
-                             G_DBUS_CALL_FLAGS_NONE,
-                             -1,
-                             NULL,
-                             &error);
 
-      if (!error)
+      pan_dbus_init(&pan);
+
+      GError* error(NULL);
+      GVariant* var;
+
+      if (!dbus_connection) goto _fail;
       {
-        std::cout<<"Added "<<nzb_files.size()<<" files to the queue. Exiting.\n";
-        exit(EXIT_SUCCESS);
-      } else
-      {
-        std::cerr<<error->message<<"\n";
-        g_error_free(error);
+        g_dbus_connection_call_sync (dbus_connection,
+                               PAN_DBUS_SERVICE_NAME,
+                               PAN_DBUS_SERVICE_PATH,
+                               "news.pan.NZB",
+                               "NZBEnqueue",
+                               g_variant_new ("(sssbb)",
+                                  groups.c_str(), nzb_output_path.c_str(), nzb_str.c_str(),  gui, nzb),
+                               NULL,
+                               G_DBUS_CALL_FLAGS_NONE,
+                               -1,
+                               NULL,
+                               &error);
+
+        if (!error)
+        {
+          std::cout<<"Added "<<nzb_files.size()<<" files to the queue. Exiting.\n";
+          exit(EXIT_SUCCESS);
+        } else
+        {
+          std::cerr<<error->message<<"\n";
+          g_error_free(error);
+        }
       }
     }
   #endif
