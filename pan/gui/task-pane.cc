@@ -287,15 +287,19 @@ TaskPane :: change_destination (const tasks_t& tasks)
 {
 
   if (tasks.empty()) return;
-  TaskArticle * t (dynamic_cast<TaskArticle*>(tasks[0]));
-  std::string new_path(prompt_user_for_new_dest(GTK_WINDOW(_root),t->get_save_path()));
-  if (new_path.empty()) return; // user cancelled/aborted
-  foreach_const (tasks_t, tasks, it) {
-    TaskArticle * task (dynamic_cast<TaskArticle*>(*it));
-    if (task)
-      task->set_save_path(Quark(new_path));
-  }
 
+  TaskArticle * t (dynamic_cast<TaskArticle*>(tasks[0]));
+
+  if (t)
+  {
+    std::string new_path(prompt_user_for_new_dest(GTK_WINDOW(_root),t->get_save_path()));
+    if (new_path.empty()) return; // user cancelled/aborted
+    foreach_const (tasks_t, tasks, it) {
+      TaskArticle * task (dynamic_cast<TaskArticle*>(*it));
+      if (task)
+        task->set_save_path(Quark(new_path));
+    }
+  }
 }
 
 void TaskPane :: change_dest_clicked_cb (GtkButton*, TaskPane* pane)
