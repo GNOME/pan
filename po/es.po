@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: pan2.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-02-13 18:21+0000\n"
-"PO-Revision-Date: 2012-02-15 11:05+0100\n"
+"POT-Creation-Date: 2012-02-16 20:05+0000\n"
+"PO-Revision-Date: 2012-02-17 18:01+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,7 @@ msgstr "Error al abrir el archivo «%s» %s"
 
 #: ../pan/data/article-cache.cc:386 ../pan/data-impl/profiles.cc:174
 #: ../pan/data-impl/server.cc:436 ../pan/general/file-util.cc:298
-#: ../pan/gui/post-ui.cc:609 ../pan/gui/task-pane.cc:687
+#: ../pan/gui/post-ui.cc:609 ../pan/gui/task-pane.cc:691
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Ocurrió un error al leer el archivo «%s»: %s"
@@ -874,7 +874,7 @@ msgstr "Acción"
 msgid "A GtkRadioAction"
 msgstr "Un GtkRadioAction"
 
-#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:514
+#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:518
 msgid "Unknown"
 msgstr "Desconocido"
 
@@ -1120,8 +1120,9 @@ msgid "Unable to open help file"
 msgstr "No se pudo abrir el archivo de ayuda"
 
 #: ../pan/gui/gui.cc:1593
-msgid "Copyright \\u00A9 2002-2011 Charles Kerr and others"
-msgstr "Copyright \\u00A9 2002-2011 Charles Kerr y otros"
+#| msgid "Copyright \\u00A9 2002-2011 Charles Kerr and others"
+msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
+msgstr "Copyright \\u00A9 2002-2012 Charles Kerr y otros"
 
 #: ../pan/gui/gui.cc:1598
 msgid "translator-credits"
@@ -1206,7 +1207,7 @@ msgstr ""
 msgid "Body Pane Encoding"
 msgstr "Codificación del panel del cuerpo"
 
-#: ../pan/gui/gui.cc:2088 ../pan/gui/task-pane.cc:565
+#: ../pan/gui/gui.cc:2088 ../pan/gui/task-pane.cc:569
 #, c-format
 msgid "Offline"
 msgstr "Desconectado"
@@ -1242,7 +1243,7 @@ msgstr "No hay tareas"
 msgid "Tasks"
 msgstr "Tareas"
 
-#: ../pan/gui/gui.cc:2180 ../pan/gui/task-pane.cc:431
+#: ../pan/gui/gui.cc:2180 ../pan/gui/task-pane.cc:435
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu tareas, %s, %.1f KiBps, TE %d:%02d:%02d"
@@ -1471,12 +1472,12 @@ msgid "Select Needed Parts"
 msgstr "Seleccionar las partes necesarias"
 
 #: ../pan/gui/post-ui.cc:465 ../pan/gui/post-ui.cc:466
-#: ../pan/gui/task-pane.cc:632 ../pan/gui/task-pane.cc:633
+#: ../pan/gui/task-pane.cc:636 ../pan/gui/task-pane.cc:637
 msgid "Move Up"
 msgstr "Subir"
 
 #: ../pan/gui/post-ui.cc:470 ../pan/gui/post-ui.cc:471
-#: ../pan/gui/task-pane.cc:637 ../pan/gui/task-pane.cc:638
+#: ../pan/gui/task-pane.cc:641 ../pan/gui/task-pane.cc:642
 msgid "Move Down"
 msgstr "Bajar"
 
@@ -1868,7 +1869,7 @@ msgstr ""
 msgid "Global Charset Settings"
 msgstr "Configuración global del conjunto de caracteres"
 
-#: ../pan/gui/prefs-ui.cc:833 ../pan/gui/task-pane.cc:766
+#: ../pan/gui/prefs-ui.cc:833 ../pan/gui/task-pane.cc:770
 msgid "State"
 msgstr "Estado"
 
@@ -1995,7 +1996,6 @@ msgstr "Mostrar notificaciones"
 
 #. allow multiple instances (seperate, not communicating with dbus)
 #: ../pan/gui/prefs-ui.cc:1016
-#| msgid "Behavior"
 msgid "Startup Behavior"
 msgstr "Comportamiento al inicio"
 
@@ -2211,7 +2211,7 @@ msgstr "_Aplicaciones"
 msgid "Applications"
 msgstr "Aplicaciones"
 
-#: ../pan/gui/prefs-ui.cc:1204 ../pan/gui/task-pane.cc:508
+#: ../pan/gui/prefs-ui.cc:1204 ../pan/gui/task-pane.cc:512
 msgid "Encoding"
 msgstr "Codificando"
 
@@ -2876,101 +2876,101 @@ msgstr "desconocido"
 msgid "Choose new destination for selected Tasks"
 msgstr "Elegir el destino nuevo para las tareas seleccionadas"
 
-#: ../pan/gui/task-pane.cc:413
+#: ../pan/gui/task-pane.cc:417
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan: tareas (%d en cola %d ejecutándose, %d detenidas)"
 
-#: ../pan/gui/task-pane.cc:415
+#: ../pan/gui/task-pane.cc:419
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan: tareas (%d en cola, %d ejecutándose)"
 
-#: ../pan/gui/task-pane.cc:417
+#: ../pan/gui/task-pane.cc:421
 #, c-format
 msgid "Pan: Tasks"
 msgstr "Pan: tareas"
 
-#: ../pan/gui/task-pane.cc:442
+#: ../pan/gui/task-pane.cc:446
 #, c-format
 msgid "%lu selected, %s"
 msgstr "%lu seleccionados, %s"
 
-#: ../pan/gui/task-pane.cc:506
+#: ../pan/gui/task-pane.cc:510
 msgid "Running"
 msgstr "Ejecutándose"
 
-#: ../pan/gui/task-pane.cc:507
+#: ../pan/gui/task-pane.cc:511
 msgid "Decoding"
 msgstr "Decodificándose"
 
-#: ../pan/gui/task-pane.cc:509
+#: ../pan/gui/task-pane.cc:513
 msgid "Queued for Decode"
 msgstr "Encolada para decodificar"
 
-#: ../pan/gui/task-pane.cc:510
+#: ../pan/gui/task-pane.cc:514
 msgid "Queued for Encode"
 msgstr "Encolada para codificar"
 
-#: ../pan/gui/task-pane.cc:511
+#: ../pan/gui/task-pane.cc:515
 msgid "Queued"
 msgstr "Encolada"
 
-#: ../pan/gui/task-pane.cc:512
+#: ../pan/gui/task-pane.cc:516
 msgid "Stopped"
 msgstr "Detenida"
 
-#: ../pan/gui/task-pane.cc:513
+#: ../pan/gui/task-pane.cc:517
 msgid "Removing"
 msgstr "Quitando"
 
-#: ../pan/gui/task-pane.cc:542
+#: ../pan/gui/task-pane.cc:546
 #, c-format
 msgid "%d%% Done"
 msgstr "%d%% Terminado"
 
-#: ../pan/gui/task-pane.cc:548
+#: ../pan/gui/task-pane.cc:552
 #, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%d:%02d:%02d restantes (%d @ %lu KiB/s)"
 
-#: ../pan/gui/task-pane.cc:642 ../pan/gui/task-pane.cc:643
+#: ../pan/gui/task-pane.cc:646 ../pan/gui/task-pane.cc:647
 msgid "Move To Top"
 msgstr "Mover arriba"
 
-#: ../pan/gui/task-pane.cc:647 ../pan/gui/task-pane.cc:648
+#: ../pan/gui/task-pane.cc:651 ../pan/gui/task-pane.cc:652
 msgid "Move To Bottom"
 msgstr "Mover abajo"
 
-#: ../pan/gui/task-pane.cc:652 ../pan/gui/task-pane.cc:653
+#: ../pan/gui/task-pane.cc:656 ../pan/gui/task-pane.cc:657
 msgid "Stop Task"
 msgstr "Detener tarea"
 
-#: ../pan/gui/task-pane.cc:657 ../pan/gui/task-pane.cc:658
+#: ../pan/gui/task-pane.cc:661 ../pan/gui/task-pane.cc:662
 msgid "Delete Task"
 msgstr "Eliminar tarea"
 
-#: ../pan/gui/task-pane.cc:662 ../pan/gui/task-pane.cc:663
+#: ../pan/gui/task-pane.cc:666 ../pan/gui/task-pane.cc:667
 msgid "Restart Task"
 msgstr "Reiniciar tarea"
 
-#: ../pan/gui/task-pane.cc:667 ../pan/gui/task-pane.cc:668
+#: ../pan/gui/task-pane.cc:671 ../pan/gui/task-pane.cc:672
 msgid "Change Download Destination"
 msgstr "Cambiar el destino de la descarga"
 
-#: ../pan/gui/task-pane.cc:725
+#: ../pan/gui/task-pane.cc:729
 msgid "_Online"
 msgstr "_Conectarse"
 
-#: ../pan/gui/task-pane.cc:742
+#: ../pan/gui/task-pane.cc:746
 msgid "Restart Tasks"
 msgstr "Reiniciar tareas"
 
-#: ../pan/gui/task-pane.cc:744
+#: ../pan/gui/task-pane.cc:748
 msgid "Stop Tasks"
 msgstr "Detener tareas"
 
-#: ../pan/gui/task-pane.cc:746
+#: ../pan/gui/task-pane.cc:750
 msgid "Delete Tasks"
 msgstr "Borrar tareas"
 
