@@ -480,10 +480,11 @@ enum EncType
 {
 	ENC_PLAIN ,
 	ENC_YENC,
-	ENC_UU,
-	ENC_BASE64,
-	ENC_QP,
-	ENC_HTML
+	ENC_UU
+//	,
+//	ENC_BASE64,
+//	ENC_QP,
+//	ENC_HTML
 };
 
 namespace pan
@@ -562,13 +563,13 @@ namespace pan
             part->filter = g_mime_filter_basic_new (GMIME_CONTENT_ENCODING_UUENCODE, FALSE);
             break;
 
-          case ENC_BASE64:
-            part->filter = g_mime_filter_basic_new (GMIME_CONTENT_ENCODING_BASE64, FALSE);
-            break;
-
-          case ENC_QP:
-            part->filter = g_mime_filter_basic_new (GMIME_CONTENT_ENCODING_QUOTEDPRINTABLE, FALSE);
-            break;
+//          case ENC_BASE64:
+//            part->filter = g_mime_filter_basic_new (GMIME_CONTENT_ENCODING_BASE64, FALSE);
+//            break;
+//
+//          case ENC_QP:
+//            part->filter = g_mime_filter_basic_new (GMIME_CONTENT_ENCODING_QUOTEDPRINTABLE, FALSE);
+//            break;
 
           case ENC_YENC:
             part->filter = g_mime_filter_yenc_new (FALSE);
@@ -627,15 +628,15 @@ namespace pan
       switch (type)
       {
 
-        case ENC_QP:
-          sub_begin = linestart_pos;
-          cur = new TempPart(type = ENC_QP);
-          break;
-
-        case ENC_BASE64:
-          sub_begin = linestart_pos;
-          cur = new TempPart(type = ENC_BASE64);
-          break;
+//        case ENC_QP:
+//          sub_begin = linestart_pos;
+//          cur = new TempPart(type = ENC_QP);
+//          break;
+//
+//        case ENC_BASE64:
+//          sub_begin = linestart_pos;
+//          cur = new TempPart(type = ENC_BASE64);
+//          break;
 
         case ENC_PLAIN:
         {
@@ -727,7 +728,7 @@ namespace pan
           else if (cur == NULL)
           {
             sub_begin = linestart_pos;
-            cur = new TempPart(type = ENC_HTML);
+            cur = new TempPart(type = type);
 
           }
           break;
