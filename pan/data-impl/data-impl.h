@@ -95,8 +95,8 @@ namespace pan
 
     public:
 #ifdef HAVE_GKR
-      GnomeKeyringResult password_encrypt (const PasswordData*);
-      GnomeKeyringResult password_decrypt (PasswordData*) const;
+      GnomeKeyringResult password_encrypt (const PasswordData&);
+      GnomeKeyringResult password_decrypt (PasswordData&) const;
 #endif
     private:
 

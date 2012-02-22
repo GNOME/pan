@@ -134,7 +134,7 @@ DataImpl :: set_server_auth (const Quark       & server,
   pw.server = s->host;
   pw.user = username;
   pw.pw = password;
-  password_encrypt(&pw);
+  password_encrypt(pw);
 #endif
 
 }
@@ -227,7 +227,7 @@ DataImpl :: get_server_auth (const Quark   & server,
     PasswordData pw;
     pw.server = s->host;
     pw.user = s->username;
-    GnomeKeyringResult res (password_decrypt(&pw));
+    GnomeKeyringResult res (password_decrypt(pw));
     switch (res)
     {
       case GNOME_KEYRING_RESULT_NO_MATCH:

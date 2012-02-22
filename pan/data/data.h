@@ -223,8 +223,8 @@ namespace pan
 
     public:
 #ifdef HAVE_GKR
-      virtual GnomeKeyringResult password_encrypt (const PasswordData*) = 0;
-      virtual GnomeKeyringResult password_decrypt (PasswordData*) const = 0;
+      virtual GnomeKeyringResult password_encrypt (const PasswordData&) = 0;
+      virtual GnomeKeyringResult password_decrypt (PasswordData&) const = 0;
 #endif
       /** Gets a quark to the provided hostname */
       virtual bool find_server_by_hn (const Quark& server, Quark& setme) const = 0;

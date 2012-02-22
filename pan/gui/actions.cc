@@ -775,22 +775,31 @@ void
 pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p, Data* data)
 {
 
+  GtkActionGroup * action_group = _group = gtk_action_group_new ("Actions");
+  gtk_action_group_set_translation_domain (action_group, NULL);
+
   for (int i=0;i<n_entries;++i)
   {
     if (!entries[i].label) continue;
     action_trans[entries[i].name] = (entries[i].label ? entries[i].label : "");
+    const gchar* translation = gtk_action_group_translate_string (action_group, action_trans[entries[i].name].c_str());
+    action_trans[entries[i].name] = translation ? translation : "";
   }
 
   for (int i=0;i<n_toggle_entries;++i)
   {
     if (!toggle_entries[i].label) continue;
     action_trans[toggle_entries[i].name] = (toggle_entries[i].label ? toggle_entries[i].label : "");
+    const gchar* translation = gtk_action_group_translate_string (action_group, action_trans[toggle_entries[i].name].c_str());
+    action_trans[toggle_entries[i].name] = translation ? translation : "";
   }
 
   for (int i=0;i<G_N_ELEMENTS(match_toggle_entries);++i)
   {
     if (!match_toggle_entries[i].label) continue;
     action_trans[match_toggle_entries[i].name] = (match_toggle_entries[i].label ? match_toggle_entries[i].label : "");
+    const gchar* translation = gtk_action_group_translate_string (action_group, action_trans[match_toggle_entries[i].name].c_str());
+    action_trans[match_toggle_entries[i].name] = translation ? translation : "";
   }
 
   pan_ui = ui;
@@ -821,8 +830,6 @@ pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p, Data* data
   for (GtkActionEntry *it(entries), *end(it+n_entries); it!=end; ++it)
     ensure_tooltip (it);
 
-  GtkActionGroup * action_group = _group = gtk_action_group_new ("Actions");
-  gtk_action_group_set_translation_domain (action_group, NULL);
   gtk_action_group_add_actions (action_group, entries, n_entries, NULL);
   gtk_action_group_add_toggle_actions (action_group, toggle_entries, n_toggle_entries, NULL);
   gtk_action_group_add_radio_actions (action_group,

@@ -129,18 +129,18 @@ DataImpl :: save_state ()
 
 #ifdef HAVE_GKR
 GnomeKeyringResult
-DataImpl :: password_encrypt (const PasswordData* pw)
+DataImpl :: password_encrypt (const PasswordData& pw)
 {
-  g_return_val_if_fail (pw, GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
+//  g_return_val_if_fail (pw, GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
 
   return (
     gnome_keyring_store_password_sync (
       GNOME_KEYRING_NETWORK_PASSWORD,
       GNOME_KEYRING_DEFAULT,
       _("Pan newsreader server passwords"),
-      pw->pw.str,
-      "user", pw->user.str,
-      "server", pw->server.c_str(),
+      pw.pw.str,
+      "user", pw.user.str,
+      "server", pw.server.c_str(),
       NULL)
     );
 
@@ -148,24 +148,24 @@ DataImpl :: password_encrypt (const PasswordData* pw)
 
 // TODO use gnome_keyring_memory_new etc
 GnomeKeyringResult
-DataImpl :: password_decrypt (PasswordData* pw) const
+DataImpl :: password_decrypt (PasswordData& pw) const
 {
 
   gchar* pwd = NULL;
-  g_return_val_if_fail (pw, GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
+//  g_return_val_if_fail (pw, GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
 
   GnomeKeyringResult ret =
     gnome_keyring_find_password_sync (
     GNOME_KEYRING_NETWORK_PASSWORD,
     &pwd,
-    "user", pw->user.str,
-    "server", pw->server.c_str(),
+    "user", pw.user.str,
+    "server", pw.server.c_str(),
     NULL);
 
   std::string tmp;
   if (pwd) tmp = pwd;
   gnome_keyring_free_password(pwd);
-  pw->pw = tmp;
+  pw.pw = tmp;
 
   return ret;
 }

@@ -441,7 +441,6 @@ namespace pan
       data->value = stripped;
 
       w = new_hotkey_entry(keyval, it->first.c_str(), data);
-
       std::string label = action_trans[stripped];
       l = gtk_label_new(label.c_str());
       HIG :: workarea_add_row (t, &row, w, l);
@@ -915,17 +914,6 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   g_signal_connect_swapped (dialog, "destroy", G_CALLBACK(delete_prefs_dialog), this);
 
   GtkWidget * notebook = gtk_notebook_new ();
-
-// remove this for now, it's not needed
-//
-//if (prefs.get_flag("show-only-icons-in-preftabs", false))
-//{
-//#if !GTK_CHECK_VERSION(2,24,0)
-//  gtk_notebook_set_homogeneous_tabs (GTK_NOTEBOOK(notebook), true);
-//#else
-//  g_object_set (notebook, "homogeneous", true, NULL);
-//#endif
-//}
   gtk_notebook_set_scrollable (GTK_NOTEBOOK(notebook), true);
 
   // Behavior
