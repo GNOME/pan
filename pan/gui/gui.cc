@@ -714,7 +714,7 @@ namespace
       if (status == OK) {
 #ifdef HAVE_GMIME_CRYPTO
         GPGDecErr err;
-        GMimeMessage * message = _cache.get_message (_article.get_part_mids(),err);
+        GMimeMessage * message = _cache.get_message (_article.get_part_mids(), err);
 #else
         GMimeMessage * message = _cache.get_message (_article.get_part_mids());
 #endif
