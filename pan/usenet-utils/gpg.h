@@ -82,12 +82,12 @@ namespace pan
     GMimeObject * decrypted;
     GMimeDecryptResult * result;
 
-    GPGDecErr(GPGDecType t) : err(NULL), type(t), decrypted(0), result(g_mime_decrypt_result_new())  {}
+    GPGDecErr(GPGDecType t) : err(NULL), type(t), decrypted(NULL), result(g_mime_decrypt_result_new())  {}
     ~GPGDecErr()
       {
         if (err) g_error_free(err);
         err = NULL;
-        if (decrypted) g_object_unref(decrypted) ;
+//        if (decrypted) g_object_unref(decrypted) ;
         if (result) g_object_unref(result);
       }
       GPGDecErr() : no_sigs(true) {}
