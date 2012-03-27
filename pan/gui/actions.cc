@@ -780,24 +780,24 @@ pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p, Data* data
 
   for (int i=0;i<n_entries;++i)
   {
-    if (!entries[i].label) continue;
-    action_trans[entries[i].name] = (entries[i].label ? entries[i].label : "");
+    const gchar* abbrev = entries[i].tooltip ? entries[i].tooltip : entries[i].label ? entries[i].label : "";
+    action_trans[entries[i].name] = abbrev;
     const gchar* translation = gtk_action_group_translate_string (action_group, action_trans[entries[i].name].c_str());
     action_trans[entries[i].name] = translation ? translation : "";
   }
 
   for (int i=0;i<n_toggle_entries;++i)
   {
-    if (!toggle_entries[i].label) continue;
-    action_trans[toggle_entries[i].name] = (toggle_entries[i].label ? toggle_entries[i].label : "");
+    const gchar* abbrev = toggle_entries[i].tooltip ? toggle_entries[i].tooltip : toggle_entries[i].label ? toggle_entries[i].label : "";
+    action_trans[toggle_entries[i].name] = abbrev;
     const gchar* translation = gtk_action_group_translate_string (action_group, action_trans[toggle_entries[i].name].c_str());
     action_trans[toggle_entries[i].name] = translation ? translation : "";
   }
 
   for (int i=0;i<G_N_ELEMENTS(match_toggle_entries);++i)
   {
-    if (!match_toggle_entries[i].label) continue;
-    action_trans[match_toggle_entries[i].name] = (match_toggle_entries[i].label ? match_toggle_entries[i].label : "");
+    const gchar* abbrev = match_toggle_entries[i].tooltip ? match_toggle_entries[i].tooltip : match_toggle_entries[i].label ? match_toggle_entries[i].label : "";
+    action_trans[match_toggle_entries[i].name] = abbrev;
     const gchar* translation = gtk_action_group_translate_string (action_group, action_trans[match_toggle_entries[i].name].c_str());
     action_trans[match_toggle_entries[i].name] = translation ? translation : "";
   }
