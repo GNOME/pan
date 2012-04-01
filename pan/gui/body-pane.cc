@@ -1239,14 +1239,20 @@ namespace
 
 #ifdef HAVE_GMIME_CRYPTO
 gboolean
-BodyPane :: sig_status_clicked_cb(GtkWidget  *widget,
-                               GdkEvent  *event,
-                               gpointer   user_data)
+BodyPane :: on_verbose_tooltip_cb(GtkWidget  *widget,
+                                  gint        x,
+                                  gint        y,
+                                  gboolean    keyboard_tip,
+                                  GtkTooltip *tooltip,
+                                  gpointer    data)
 {
-  BodyPane* pane = static_cast<BodyPane*>(user_data);
-  GPGDecErr& err = pane->_gpgerr;
-  GPGSignersInfo& info = err.signers;
+  BodyPane* pane = static_cast<BodyPane*>(data);
+  if (!pane) return false;
 
+  gtk_tooltip_set_icon_from_stock (tooltip, GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
+
+  GPGDecErr err = pane->_gpgerr;
+  GPGSignersInfo info = err.signers;
   if (err.no_sigs) return false;
   if (info.signers.empty()) return false;
 
@@ -1264,55 +1270,11 @@ BodyPane :: sig_status_clicked_cb(GtkWidget  *widget,
              ed.get_date_string(info.signers[0].created)
              );
 
-  // FIXME : GLib-GObject-WARNING **: invalid cast from `GtkVBox' to `GtkWindow'
-  GtkWidget* dialog = gtk_dialog_new_with_buttons(_("PGP Signature Information"), GTK_WINDOW(pane->root()),
-      GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
-      GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
-
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-		      gtk_image_new_from_stock(GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG),
-		      FALSE, FALSE,
-		      2);
-
-  GtkWidget* label = gtk_label_new(NULL);
-  gtk_label_set_markup(GTK_LABEL(label), buf);
-
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-		      label,
-		      FALSE, FALSE,
-		      2);
-
-  g_signal_connect(dialog, "response", G_CALLBACK(gtk_widget_destroy), NULL);
-
-  gtk_widget_show_all(dialog);
+  gtk_tooltip_set_markup (tooltip, buf);
 
   return true;
 }
 #endif
-
-
-void
-BodyPane :: update_sig_valid(int i)
-{
-#ifdef HAVE_GMIME_CRYPTO
-  switch (i)
-  {
-      case 0:
-        gtk_button_set_label (GTK_BUTTON(_sig_status),  _("no Signature found."));
-        gtk_widget_show_all(_sig_status_hbox);
-        break;
-
-      case 1:
-        gtk_button_set_label (GTK_BUTTON(_sig_status), _("Signature verified."));
-        gtk_widget_show_all(_sig_status_hbox);
-        break;
-
-      case -1:
-        gtk_widget_hide(_sig_status_hbox);
-        break;
-  }
-#endif
-}
 
 void
 BodyPane :: set_article (const Article& a)
@@ -1328,18 +1290,6 @@ BodyPane :: set_article (const Article& a)
   _message = _cache.get_message (_article.get_part_mids());
 #endif
 
-#ifdef HAVE_GMIME_CRYPTO
-  int val(-1);
-  {
-    if (_gpgerr.verify_ok && !_gpgerr.no_sigs)
-      val = 1;
-    else if (!_gpgerr.verify_ok && !_gpgerr.no_sigs)
-      val = 0;
-    else
-      val = -1;
-  }
-  update_sig_valid(val);
-#endif
   refresh ();
 
   _data.mark_read (_article);
@@ -1353,9 +1303,6 @@ BodyPane :: clear ()
   _message = 0;
 
   refresh ();
-#ifdef HAVE_GMIME_CRYPTO
-  update_sig_valid(-1);
-#endif
 }
 
 void
@@ -1410,13 +1357,11 @@ BodyPane :: expander_activated_cb (GtkExpander*, gpointer self_gpointer)
 }
 
 void
-BodyPane :: verbose_clicked_cb (GtkWidget*, GdkEvent  *event, gpointer self_gpointer)
+BodyPane :: verbose_clicked_cb (GtkWidget* w, GdkEvent  *event, gpointer self_gpointer)
 {
   BodyPane *  self (static_cast<BodyPane*>(self_gpointer));
   GtkExpander * ex (GTK_EXPANDER(self->_expander));
-  bool expanded = gtk_expander_get_expanded (ex);
-  expanded = !expanded;
-  gtk_expander_set_expanded (ex, expanded);
+  gtk_expander_set_expanded (ex, !gtk_expander_get_expanded (ex));
   g_idle_add (expander_activated_idle, self_gpointer);
 }
 
@@ -1610,7 +1555,6 @@ BodyPane :: new_attachment (const char* filename)
   GtkWidget * image = gtk_image_new_from_stock(GTK_STOCK_FILE, GTK_ICON_SIZE_MENU);
 
   gtk_label_set_selectable (GTK_LABEL(attachment), true);
-//  gtk_label_set_ellipsize (GTK_LABEL(attachment), PANGO_ELLIPSIZE_MIDDLE);
 
   GtkWidget *event_box = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (event_box), image);
@@ -1643,9 +1587,6 @@ BodyPane :: clear_attachments()
 
 
 /// FIXME : shows only half the icon on gtk2+, gtk3+ works fine. hm....
-/// NOTE : I use gtk_table for versions up to 3,0,0, and then gtk_grid for versions
-/// higher than that because gtk_table_get_size is deprecated since 3,4,0. Additionally,
-/// gtk_table_get_size is only defined since 2,22,0 , so I use a private struct
 void
 BodyPane :: add_attachment_to_toolbar (const char* fn)
 {
@@ -1723,7 +1664,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   _vscroll_visible (false),
   _message (0),
 #ifdef HAVE_GMIME_CRYPTO
-  _gpgerr(GPG_DECODE),
+//  _gpgerr(GPG_DECODE),
 #endif
   _attachments(0),
   _current_attachment(0)
@@ -1733,9 +1674,6 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
 
   for (guint i=0; i<NUM_ICONS; ++i)
     icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, icons[i].pixbuf_txt, FALSE, 0);
-
-  // signature pgp valid/invalid icon
-//  _sig_icon = gtk_image_new();
 
   // menu for popup menu for attachments
   _menu = gtk_menu_new ();
@@ -1782,19 +1720,6 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_label_set_use_markup (GTK_LABEL(w), true);
   gtk_box_pack_start (GTK_BOX(hbox), w, true, true, PAD_SMALL);
 
-#ifdef HAVE_GMIME_CRYPTO
-  //line for signature status
-  l = gtk_label_new(_("PGP Signature : "));
-  w = _sig_status = gtk_button_new_with_label (_("no signature found."));
-  hbox = _sig_status_hbox = gtk_hbox_new (false, 0);
-
-  gtk_box_pack_start (GTK_BOX(hbox), l, false, false, PAD_SMALL);
-  gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
-  gtk_box_pack_start (GTK_BOX(vbox), hbox, false, false, PAD_SMALL);
-
-  g_signal_connect(w,"button-press-event",G_CALLBACK(sig_status_clicked_cb), this);
-
-#endif
   w = _xface = gtk_image_new();
   gtk_widget_set_size_request (w, 48, 48);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
@@ -1803,6 +1728,10 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
   gtk_widget_show_all (_verbose);
   g_signal_connect (_verbose, "button-press-event", G_CALLBACK(verbose_clicked_cb), this);
+#ifdef HAVE_GMIME_CRYPTO
+  gtk_widget_set_has_tooltip (_verbose, true);
+  g_signal_connect(_verbose,"query-tooltip",G_CALLBACK(on_verbose_tooltip_cb), this);
+#endif
 
   // setup
   _text = gtk_text_view_new ();
@@ -1822,7 +1751,6 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
 
   // add a toolbar for attachments
   GtkWidget * frame = _att_frame = gtk_frame_new (_("Attachments"));
-//  gtk_widget_set_size_request (frame, -1, 40);
   gtk_box_pack_start (GTK_BOX(vbox), create_attachments_toolbar(frame), false, false, 0);
 
   // set up the buffer tags
@@ -1846,13 +1774,13 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   g_signal_connect (_root, "show", G_CALLBACK(show_cb), this);
 
   gtk_widget_show_all (_root);
-
-  // hide hbox for pgp at first
-  update_sig_valid(-1);
 }
 
 BodyPane :: ~BodyPane ()
 {
+
+  std::cerr<<"dtor bodypane"<<std::endl;
+
   _prefs.remove_listener (this);
 
   g_object_unref (_verbose);

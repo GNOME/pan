@@ -47,19 +47,17 @@ namespace pan
       HeaderPane* _header_pane;
       Data& _data;
       ArticleCache& _cache;
-#ifdef HAVE_GMIME_CRYPTO
-      GtkWidget* _sig_status;
-      GtkWidget* _sig_status_hbox;
-#endif
-      void update_sig_valid(int i);
 
-      static gboolean sig_status_clicked_cb(GtkWidget  *widget,
-                                            GdkEvent  *event,
-                                            gpointer   user_data);
+      static gboolean on_verbose_tooltip_cb(GtkWidget  *widget,
+                                            gint        x,
+                                            gint        y,
+                                            gboolean    keyboard_tip,
+                                            GtkTooltip *tooltip,
+                                            gpointer    data);
 
     public:
       BodyPane (Data&, ArticleCache&, Prefs&, GroupPrefs&, Queue&, HeaderPane*);
-      ~BodyPane ();
+      ~BodyPane () ;
       GtkWidget* root () { return _root; }
       GtkWidget* get_default_focus_widget() { return _text; }
 
