@@ -1778,9 +1778,6 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
 
 BodyPane :: ~BodyPane ()
 {
-
-  std::cerr<<"dtor bodypane"<<std::endl;
-
   _prefs.remove_listener (this);
 
   g_object_unref (_verbose);

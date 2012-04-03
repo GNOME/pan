@@ -139,8 +139,9 @@ namespace pan
 
     if (!gnutls_x509_crt_check_hostname (cert, mydata->hostname_full.c_str()))
     {
-      g_error ("The certificate's owner does not match hostname '%s' !\n", mydata->hostname_full.c_str());
-      goto _fail;
+     if (!mydata->always_trust)
+        g_warning ("The certificate's owner does not match hostname '%s' !\n", mydata->hostname_full.c_str());
+     goto _fail;
     }
 
     if (fail) goto _fail;
