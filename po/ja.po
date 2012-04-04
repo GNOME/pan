@@ -10,12 +10,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan HEAD\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=pan2&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-01-12 23:40+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-04 20:58+0200\n"
 "PO-Revision-Date: 2012-01-08 14:56+0900\n"
 "Last-Translator: OKANO Takayoshi <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,39 +25,39 @@ msgid "Pan Newsreader"
 msgstr "ニュースリーダー Pan"
 
 #: ../pan.desktop.in.h:2
-msgid "Read News from Usenet"
-msgstr "Usenet のニュースを読みます"
+msgid "Read and Post Usenet Articles"
+msgstr ""
 
-#: ../pan/data/article-cache.cc:148 ../pan/data/encode-cache.cc:62
+#: ../pan/data/article-cache.cc:143 ../pan/data/encode-cache.cc:62
 #, fuzzy, c-format
 msgid "Error opening directory: \"%s\": %s"
 msgstr "ディレクトリ \"%s\" の読み込みエラー: %s)"
 
-#: ../pan/data/article-cache.cc:236 ../pan/data/article-cache.cc:247
-#: ../pan/data-impl/data-io.cc:199 ../pan/data-impl/data-io.cc:223
+#: ../pan/data/article-cache.cc:231 ../pan/data/article-cache.cc:242
+#: ../pan/data-impl/data-io.cc:187 ../pan/data-impl/data-io.cc:211
 #: ../pan/gui/post-ui.cc:1639
 #, fuzzy, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "グループ \"%*.*s\" をセットできません: %s"
 
-#: ../pan/data/article-cache.cc:360
+#: ../pan/data/article-cache.cc:355
 #, fuzzy, c-format
 msgid "Error opening file \"%s\" %s"
 msgstr "ファイル \"%s\" を開く時にエラー: %s"
 
-#: ../pan/data/article-cache.cc:391 ../pan/data-impl/profiles.cc:174
+#: ../pan/data/article-cache.cc:386 ../pan/data-impl/profiles.cc:174
 #: ../pan/data-impl/server.cc:436 ../pan/general/file-util.cc:298
-#: ../pan/gui/post-ui.cc:609 ../pan/gui/task-pane.cc:687
+#: ../pan/gui/post-ui.cc:609 ../pan/gui/task-pane.cc:691
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "\"%s\" の読み込みエラー: %s"
 
-#: ../pan/data/cert-store.cc:234
+#: ../pan/data/cert-store.cc:238
 #, fuzzy, c-format
 msgid "Error opening SSL certificate directory: \"%s\": %s"
 msgstr "ディレクトリ \"%s\" の読み込みエラー: %s)"
 
-#: ../pan/data/cert-store.cc:266
+#: ../pan/data/cert-store.cc:270
 #, c-format
 msgid "Succesfully added %d SSL PEM certificate(s) to Certificate Store."
 msgstr ""
@@ -68,7 +68,7 @@ msgstr ""
 msgid "Loaded data backend in %.1f seconds"
 msgstr ""
 
-#: ../pan/data-impl/data-impl.cc:141
+#: ../pan/data-impl/data-impl.cc:140
 msgid "Pan newsreader server passwords"
 msgstr ""
 
@@ -119,7 +119,6 @@ msgstr ""
 
 #: ../pan/data-impl/xover.cc:239
 #, fuzzy, c-format
-#| msgid "Error reading from socket: %s"
 msgid "Error reading from %s: unknown group \"%s\""
 msgstr "ソケットからの読み込みエラー: %s"
 
@@ -157,716 +156,706 @@ msgstr "正規表現 \"%s\" を使えません: %s"
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr ""
 
-#: ../pan/gui/actions.cc:268 ../pan/gui/post-ui.cc:417
+#: ../pan/gui/actions.cc:274 ../pan/gui/post-ui.cc:417
 #, fuzzy
 msgid "_File"
 msgstr "/ファイル(_F)"
 
-#: ../pan/gui/actions.cc:269 ../pan/gui/post-ui.cc:418
+#: ../pan/gui/actions.cc:275 ../pan/gui/post-ui.cc:418
 msgid "_Edit"
 msgstr "編集(_E)"
 
-#: ../pan/gui/actions.cc:270 ../pan/gui/prefs-ui.cc:662
+#: ../pan/gui/actions.cc:276 ../pan/gui/prefs-ui.cc:1064
 msgid "_Layout"
 msgstr "配置(_L)"
 
-#: ../pan/gui/actions.cc:271
+#: ../pan/gui/actions.cc:277
 #, fuzzy
 msgid "_Group Pane"
 msgstr "グループペイン"
 
-#: ../pan/gui/actions.cc:272
+#: ../pan/gui/actions.cc:278
 #, fuzzy
 msgid "_Header Pane"
 msgstr "ヘッダーペイン(_H):"
 
-#: ../pan/gui/actions.cc:273
+#: ../pan/gui/actions.cc:279
 #, fuzzy
 msgid "_Body Pane"
 msgstr "本文ペイン"
 
-#: ../pan/gui/actions.cc:274
+#: ../pan/gui/actions.cc:280
 #, fuzzy
 msgid "_View"
 msgstr "/表示(_V)"
 
-#: ../pan/gui/actions.cc:275
+#: ../pan/gui/actions.cc:281
 #, fuzzy
 msgid "Filte_r"
 msgstr "/フィルター(_R)"
 
-#: ../pan/gui/actions.cc:276
+#: ../pan/gui/actions.cc:282
 #, fuzzy
 msgid "_Go"
 msgstr "/移動(_G)"
 
-#: ../pan/gui/actions.cc:277 ../pan/gui/prefs-ui.cc:688
+#: ../pan/gui/actions.cc:283 ../pan/gui/prefs-ui.cc:1091
 #, fuzzy
 msgid "_Actions"
 msgstr "アクション"
 
-#: ../pan/gui/actions.cc:278
+#: ../pan/gui/actions.cc:284
 #, fuzzy
 msgid "_Articles"
 msgstr "/記事(_A)"
 
-#: ../pan/gui/actions.cc:279
+#: ../pan/gui/actions.cc:285
 #, fuzzy
-#| msgid "Groups"
 msgid "G_roups"
 msgstr "グループ"
 
-#: ../pan/gui/actions.cc:280 ../pan/gui/actions.cc:281
+#: ../pan/gui/actions.cc:286 ../pan/gui/actions.cc:287
 msgid "_Post"
 msgstr "投稿(_P)"
 
-#: ../pan/gui/actions.cc:282
+#: ../pan/gui/actions.cc:288
 msgid "_Help"
 msgstr "ヘルプ(_H)"
 
-#: ../pan/gui/actions.cc:285
+#: ../pan/gui/actions.cc:291
 #, fuzzy
 msgid "_Read Group"
 msgstr "グループ再読み込み"
 
-#: ../pan/gui/actions.cc:286
+#: ../pan/gui/actions.cc:292
 #, fuzzy
 msgid "Read Group"
 msgstr "グループ再読み込み"
 
-#: ../pan/gui/actions.cc:290
+#: ../pan/gui/actions.cc:296
 #, fuzzy
 msgid "_Mark Selected Groups Read"
 msgstr "選択した記事に既読マークを付与する"
 
-#: ../pan/gui/actions.cc:291
+#: ../pan/gui/actions.cc:297
 #, fuzzy
 msgid "Mark Selected Groups Read"
 msgstr "選択した記事に既読マークを付与する"
 
-#: ../pan/gui/actions.cc:295
+#: ../pan/gui/actions.cc:301
 #, fuzzy
 msgid "_Delete Selected Groups' Articles"
 msgstr "/グループの記事を削除(_D)"
 
-#: ../pan/gui/actions.cc:296
+#: ../pan/gui/actions.cc:302
 #, fuzzy
 msgid "Delete Selected Groups' Articles"
 msgstr "/グループの記事を削除(_D)"
 
-#: ../pan/gui/actions.cc:300
+#: ../pan/gui/actions.cc:306
 #, fuzzy
 msgid "Get New _Headers in Selected Groups"
 msgstr "選択したグループの新規ヘッダーを取得します"
 
-#: ../pan/gui/actions.cc:301
+#: ../pan/gui/actions.cc:307
 #, fuzzy
 msgid "Get New Headers in Selected Groups"
 msgstr "選択したグループの新規ヘッダーを取得します"
 
-#: ../pan/gui/actions.cc:305 ../pan/gui/actions.cc:310
+#: ../pan/gui/actions.cc:311 ../pan/gui/actions.cc:316
 #, fuzzy
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "購読グループの新規ヘッダーを取得します"
 
-#: ../pan/gui/actions.cc:306 ../pan/gui/actions.cc:311
+#: ../pan/gui/actions.cc:312 ../pan/gui/actions.cc:317
 #, fuzzy
 msgid "Get New Headers in Subscribed Groups"
 msgstr "購読グループの新規ヘッダーを取得します"
 
-#: ../pan/gui/actions.cc:315
+#: ../pan/gui/actions.cc:321
 #, fuzzy
 msgid "Get _Headers..."
 msgstr "/新規ヘッダーのダウンロード(_H)"
 
-#: ../pan/gui/actions.cc:316
+#: ../pan/gui/actions.cc:322
 #, fuzzy
 msgid "Get Headers..."
 msgstr "/新規ヘッダーのダウンロード(_H)"
 
-#: ../pan/gui/actions.cc:320 ../pan/gui/actions.cc:321
+#: ../pan/gui/actions.cc:326 ../pan/gui/actions.cc:327
 #, fuzzy
 msgid "Refresh Group List"
 msgstr "グループ \"%s\" の更新中"
 
-#: ../pan/gui/actions.cc:325
+#: ../pan/gui/actions.cc:331
 #, fuzzy
 msgid "_Subscribe"
 msgstr "/購読(_S)"
 
-#: ../pan/gui/actions.cc:326
+#: ../pan/gui/actions.cc:332
 msgid "Subscribe"
 msgstr "購読"
 
-#: ../pan/gui/actions.cc:330
+#: ../pan/gui/actions.cc:336
 #, fuzzy
 msgid "_Unsubscribe"
 msgstr "/購読解除(_U)"
 
-#: ../pan/gui/actions.cc:331
+#: ../pan/gui/actions.cc:337
 msgid "Unsubscribe"
 msgstr "購読解除"
 
-#: ../pan/gui/actions.cc:335
+#: ../pan/gui/actions.cc:341
 #, fuzzy
 msgid "_Save Articles..."
 msgstr "記事を別名で保存..."
 
-#: ../pan/gui/actions.cc:336
+#: ../pan/gui/actions.cc:342
 #, fuzzy
 msgid "Save Articles..."
 msgstr "記事を別名で保存..."
 
-#: ../pan/gui/actions.cc:340
+#: ../pan/gui/actions.cc:346
 #, fuzzy
 msgid "Save Articles from Selected _NZB..."
 msgstr "記事を別名で保存..."
 
-#: ../pan/gui/actions.cc:341
+#: ../pan/gui/actions.cc:347
 #, fuzzy
-#| msgid "Save Article Attachments"
 msgid "Save Articles from Selected NZB"
 msgstr "記事の添付を保存"
 
-#: ../pan/gui/actions.cc:345
+#: ../pan/gui/actions.cc:351
 #, fuzzy
 msgid "Save Articles to an NZB _File..."
 msgstr "記事を別名で保存..."
 
-#: ../pan/gui/actions.cc:346
+#: ../pan/gui/actions.cc:352
 #, fuzzy
-#| msgid "Save Article Attachments"
 msgid "Save Articles to an NZB File"
 msgstr "記事の添付を保存"
 
-#: ../pan/gui/actions.cc:355
+#: ../pan/gui/actions.cc:356 ../pan/gui/actions.cc:357
+msgid "Print"
+msgstr ""
+
+#: ../pan/gui/actions.cc:361
 #, fuzzy
 msgid "_Import NZB Files..."
 msgstr ".newsrcのインポート..."
 
-#: ../pan/gui/actions.cc:360
+#: ../pan/gui/actions.cc:366
 #, fuzzy
 msgid "_Cancel Last Task"
 msgstr "最後に選択したタスクのキャンセル"
 
-#: ../pan/gui/actions.cc:365
+#: ../pan/gui/actions.cc:371
 #, fuzzy
 msgid "_Task Manager"
 msgstr "/ツール(_T)/タスクマネージャー(_T)..."
 
-#: ../pan/gui/actions.cc:370
+#: ../pan/gui/actions.cc:376
 #, fuzzy
 msgid "_Event Log"
 msgstr "ステータスログを開く"
 
-#: ../pan/gui/actions.cc:375
+#: ../pan/gui/actions.cc:381
 #, fuzzy
 msgid "_Quit"
 msgstr "編集(_E)"
 
-#: ../pan/gui/actions.cc:380
+#: ../pan/gui/actions.cc:386
 #, fuzzy
 msgid "Select _All Articles"
 msgstr "全ての記事を取得します"
 
-#: ../pan/gui/actions.cc:385
+#: ../pan/gui/actions.cc:391
 #, fuzzy
 msgid "_Deselect All Articles"
 msgstr "/編集(_E)/全ての記事の選択解除(_L)"
 
-#: ../pan/gui/actions.cc:390
+#: ../pan/gui/actions.cc:396
 #, fuzzy
 msgid "Add Su_bthreads to Selection"
 msgstr "/編集(_E)/サブスレッドを選択範囲に追加(_S)"
 
-#: ../pan/gui/actions.cc:395
+#: ../pan/gui/actions.cc:401
 #, fuzzy
 msgid "Add _Threads to Selection"
 msgstr "/編集(_E)/スレッドを選択範囲に追加(_T)"
 
-#: ../pan/gui/actions.cc:400
+#: ../pan/gui/actions.cc:406
 #, fuzzy
 msgid "Add _Similar Articles to Selection"
 msgstr "/編集(_E)/スレッドを選択範囲に追加(_T)"
 
-#: ../pan/gui/actions.cc:405
+#: ../pan/gui/actions.cc:411
 #, fuzzy
 msgid "Select Article _Body"
 msgstr "/編集(_E)/記事本文の選択(_B)"
 
-#: ../pan/gui/actions.cc:410
+#: ../pan/gui/actions.cc:416
 #, fuzzy
 msgid "Edit _Preferences"
 msgstr "/編集(_E)/設定(_P)..."
 
-#: ../pan/gui/actions.cc:415
+#: ../pan/gui/actions.cc:421
 #, fuzzy
 msgid "Edit Selected _Group's Preferences"
 msgstr "/編集(_E)/設定(_P)..."
 
-#: ../pan/gui/actions.cc:420 ../pan/gui/post-ui.cc:434
+#: ../pan/gui/actions.cc:426 ../pan/gui/post-ui.cc:434
 #, fuzzy
 msgid "Edit P_osting Profiles"
 msgstr "/ツール(_T)/投稿時のプロファイル(_P)..."
 
-#: ../pan/gui/actions.cc:425
+#: ../pan/gui/actions.cc:431
 #, fuzzy
 msgid "Edit _News Servers"
 msgstr "/ツール(_T)/ニュースサーバー(_S)..."
 
-#: ../pan/gui/actions.cc:430
+#: ../pan/gui/actions.cc:436
 #, fuzzy
 msgid "Jump to _Group Tab"
 msgstr "/表示(_V)/グループタブへ移動(_G)"
 
-#: ../pan/gui/actions.cc:435
+#: ../pan/gui/actions.cc:441
 #, fuzzy
 msgid "Jump to _Header Tab"
 msgstr "/表示(_V)/ヘッダータブへ移動(_H)"
 
-#: ../pan/gui/actions.cc:440
+#: ../pan/gui/actions.cc:446
 #, fuzzy
 msgid "Jump to _Body Tab"
 msgstr "/表示(_V)/本文タブへ移動(_B)"
 
-#: ../pan/gui/actions.cc:445
+#: ../pan/gui/actions.cc:451
 #, fuzzy
 msgid "_Rot13 Selected Text"
 msgstr "Rot13 選択した記事"
 
-#: ../pan/gui/actions.cc:450
+#: ../pan/gui/actions.cc:456
 #, fuzzy
 msgid "Clear _Header Pane"
 msgstr "ヘッダーペイン(_H):"
 
-#: ../pan/gui/actions.cc:455
+#: ../pan/gui/actions.cc:461
 #, fuzzy
 msgid "Clear _Body Pane"
 msgstr "本文ペイン"
 
-#: ../pan/gui/actions.cc:460
+#: ../pan/gui/actions.cc:466
 #, fuzzy
-#| msgid "Cached Article \"%s\""
 msgid "Cache Article"
 msgstr "キャッシュ済みの記事 \"%s\""
 
-#: ../pan/gui/actions.cc:465
+#: ../pan/gui/actions.cc:471
 #, fuzzy
 msgid "Read Article"
 msgstr "/記事を読む(_R)"
 
-#: ../pan/gui/actions.cc:470
+#: ../pan/gui/actions.cc:476
 #, fuzzy
-#| msgid "Profile Information"
 msgid "Show Article Information"
 msgstr "プロファイル情報"
 
-#: ../pan/gui/actions.cc:475
+#: ../pan/gui/actions.cc:481
 #, fuzzy
 msgid "Read _More"
 msgstr "もっと読む"
 
-#: ../pan/gui/actions.cc:476
+#: ../pan/gui/actions.cc:482
 msgid "Read More"
 msgstr "もっと読む"
 
-#: ../pan/gui/actions.cc:480
+#: ../pan/gui/actions.cc:486
 msgid "Read _Back"
 msgstr ""
 
-#: ../pan/gui/actions.cc:481
+#: ../pan/gui/actions.cc:487
 #, fuzzy
 msgid "Read Back"
 msgstr "/移動(_G)/前を読む"
 
-#: ../pan/gui/actions.cc:485
+#: ../pan/gui/actions.cc:491
 #, fuzzy
 msgid "Next _Unread Group"
 msgstr "/移動(_G)/次の未読グループ(_G)"
 
-#: ../pan/gui/actions.cc:490
+#: ../pan/gui/actions.cc:496
 #, fuzzy
 msgid "Next _Group"
 msgstr "/移動(_G)/次のグループ(_E)"
 
-#: ../pan/gui/actions.cc:495
+#: ../pan/gui/actions.cc:501
 #, fuzzy
 msgid "Next _Unread Article"
 msgstr "/移動(_G)/次の未読記事(_U)"
 
-#: ../pan/gui/actions.cc:496
+#: ../pan/gui/actions.cc:502
 #, fuzzy
 msgid "Next Unread Article"
 msgstr "次の未読記事を読む"
 
-#: ../pan/gui/actions.cc:500
+#: ../pan/gui/actions.cc:506
 msgid "Next _Article"
 msgstr "次の記事へ(_A)"
 
-#: ../pan/gui/actions.cc:501
+#: ../pan/gui/actions.cc:507
 #, fuzzy
-#| msgid "Next _Article"
 msgid "Next Article"
 msgstr "次の記事へ(_A)"
 
-#: ../pan/gui/actions.cc:505
+#: ../pan/gui/actions.cc:511
 #, fuzzy
 msgid "Next _Watched Article"
 msgstr "/移動(_G)/次の監視記事(_W)"
 
-#: ../pan/gui/actions.cc:510
+#: ../pan/gui/actions.cc:516
 #, fuzzy
 msgid "Next Unread _Thread"
 msgstr "/移動(_G)/次の未読スレッド(_T)"
 
-#: ../pan/gui/actions.cc:511
+#: ../pan/gui/actions.cc:517
 #, fuzzy
 msgid "Next Unread Thread"
 msgstr "次の未読スレッドを読む"
 
-#: ../pan/gui/actions.cc:515
+#: ../pan/gui/actions.cc:521
 #, fuzzy
 msgid "Next Threa_d"
 msgstr "次のスレッドにジャンプします"
 
-#: ../pan/gui/actions.cc:520
+#: ../pan/gui/actions.cc:526
 #, fuzzy
 msgid "Pre_vious Article"
 msgstr "/移動(_G)/前の記事(_V)"
 
-#: ../pan/gui/actions.cc:525
+#: ../pan/gui/actions.cc:531
 #, fuzzy
 msgid "Previous _Thread"
 msgstr "前のスレッドにジャンプします"
 
-#: ../pan/gui/actions.cc:530
+#: ../pan/gui/actions.cc:536
 #, fuzzy
 msgid "_Parent Article"
 msgstr "/移動(_G)/親記事(_P)"
 
-#: ../pan/gui/actions.cc:535
+#: ../pan/gui/actions.cc:541
 #, fuzzy
 msgid "Ignore _Author"
 msgstr "/スレッドを無視する(_I)"
 
-#: ../pan/gui/actions.cc:539
+#: ../pan/gui/actions.cc:545
 #, fuzzy
 msgid "_Watch Thread"
 msgstr "/スレッドの監視(_W)"
 
-#: ../pan/gui/actions.cc:544
+#: ../pan/gui/actions.cc:550
 #, fuzzy
 msgid "_Ignore Thread"
 msgstr "無視されたスレッド(_I):"
 
-#: ../pan/gui/actions.cc:549 ../pan/gui/actions.cc:550
+#: ../pan/gui/actions.cc:555 ../pan/gui/actions.cc:556
 msgid "_Toggle Flag On/Off for Thread"
 msgstr ""
 
-#: ../pan/gui/actions.cc:554 ../pan/gui/actions.cc:555
+#: ../pan/gui/actions.cc:560 ../pan/gui/actions.cc:561
 #, fuzzy
 msgid "_Turn Flag Off for Thread"
 msgstr "/スレッドの監視(_W)"
 
-#: ../pan/gui/actions.cc:559 ../pan/gui/actions.cc:560
+#: ../pan/gui/actions.cc:565 ../pan/gui/actions.cc:566
 #, fuzzy
 msgid "_Select All Flagged Threads"
 msgstr "次の未読スレッドを読む"
 
-#: ../pan/gui/actions.cc:564 ../pan/gui/actions.cc:565
+#: ../pan/gui/actions.cc:570 ../pan/gui/actions.cc:571
 #, fuzzy
 msgid "_Go to Next Flagged Thread"
 msgstr "次の未読スレッドを読む"
 
-#: ../pan/gui/actions.cc:569 ../pan/gui/actions.cc:570
+#: ../pan/gui/actions.cc:575 ../pan/gui/actions.cc:576
 #, fuzzy
 msgid "_Go to Last Flagged Thread"
 msgstr "次の未読スレッドを読む"
 
-#: ../pan/gui/actions.cc:574 ../pan/gui/actions.cc:575
+#: ../pan/gui/actions.cc:580 ../pan/gui/actions.cc:581
 #, fuzzy
 msgid "_Invert Selection"
 msgstr "/編集(_E)/スレッドを選択範囲に追加(_T)"
 
-#: ../pan/gui/actions.cc:579
+#: ../pan/gui/actions.cc:585
 #, fuzzy
-#| msgid "/_Articles/_Create Score..."
 msgid "Edit Article's Watch/Ignore/Score..."
 msgstr "/記事(_A)/スコアの生成(_C)..."
 
-#: ../pan/gui/actions.cc:584
+#: ../pan/gui/actions.cc:590
 #, fuzzy
 msgid "Add a _Scoring Rule..."
 msgstr "新規スコアを追加"
 
-#: ../pan/gui/actions.cc:589
+#: ../pan/gui/actions.cc:595
 #, fuzzy
 msgid "Cance_l Article..."
 msgstr "記事の購読取り消し中"
 
-#: ../pan/gui/actions.cc:594
+#: ../pan/gui/actions.cc:600
 #, fuzzy
 msgid "_Supersede Article..."
 msgstr "/記事を別名で保存(_S)..."
 
-#: ../pan/gui/actions.cc:599
+#: ../pan/gui/actions.cc:605
 #, fuzzy
 msgid "_Delete Article"
 msgstr "記事の削除(_D)"
 
-#: ../pan/gui/actions.cc:604
+#: ../pan/gui/actions.cc:610
 #, fuzzy
-#| msgid "Article Cache"
 msgid "Clear Article Cache"
 msgstr "記事キャッシュ"
 
-#: ../pan/gui/actions.cc:609
+#: ../pan/gui/actions.cc:615
 #, fuzzy
 msgid "_Mark Article as Read"
 msgstr "選択した記事に既読マークを付与する"
 
-#: ../pan/gui/actions.cc:614
+#: ../pan/gui/actions.cc:620
 #, fuzzy
 msgid "Mark Article as _Unread"
 msgstr "未読にする(_U)"
 
-#: ../pan/gui/actions.cc:620
+#: ../pan/gui/actions.cc:626
 #, fuzzy
 msgid "_Mark Thread as Read"
 msgstr "選択した記事に既読マークを付与する"
 
-#: ../pan/gui/actions.cc:625
+#: ../pan/gui/actions.cc:631
 #, fuzzy
 msgid "Mark Thread as _Unread"
 msgstr "未読にする(_U)"
 
-#: ../pan/gui/actions.cc:630
+#: ../pan/gui/actions.cc:636
 #, fuzzy
 msgid "_Post to Newsgroup"
 msgstr "ニュースグループに投稿"
 
-#: ../pan/gui/actions.cc:631
+#: ../pan/gui/actions.cc:637
 msgid "Post to Newsgroup"
 msgstr "ニュースグループに投稿"
 
-#: ../pan/gui/actions.cc:635
+#: ../pan/gui/actions.cc:641
 #, fuzzy
 msgid "_Followup to Newsgroup"
 msgstr "/投稿(_P)/ニュースグループにフォロー(_F)..."
 
-#: ../pan/gui/actions.cc:636
+#: ../pan/gui/actions.cc:642
 #, fuzzy
 msgid "Followup to Newsgroup"
 msgstr "/投稿(_P)/ニュースグループにフォロー(_F)..."
 
-#: ../pan/gui/actions.cc:640
+#: ../pan/gui/actions.cc:646
 #, fuzzy
 msgid "_Reply to Author in Mail"
 msgstr "/記事(_A)/この投稿者の記事を表示しない(_P)"
 
-#: ../pan/gui/actions.cc:645
-#, fuzzy
-msgid "_Contents"
-msgstr "フォント"
-
-#: ../pan/gui/actions.cc:650
+#: ../pan/gui/actions.cc:651
 #, fuzzy
 msgid "_Pan Home Page"
 msgstr "/ヘルプ(_H)/Pan ホームページ(_H)..."
 
-#: ../pan/gui/actions.cc:655
+#: ../pan/gui/actions.cc:656
 #, fuzzy
 msgid "Give _Feedback or Report a Bug..."
 msgstr "/ヘルプ(_H)/バグの報告(_B)..."
 
-#: ../pan/gui/actions.cc:660
+#: ../pan/gui/actions.cc:661
 msgid "_Tip Jar..."
 msgstr ""
 
-#: ../pan/gui/actions.cc:665
+#: ../pan/gui/actions.cc:666
 #, fuzzy
-#| msgid "About"
 msgid "_About"
 msgstr "情報"
 
-#: ../pan/gui/actions.cc:670
+#: ../pan/gui/actions.cc:671
 msgid "Edit _SSL Certificates"
 msgstr ""
 
-#: ../pan/gui/actions.cc:684
+#: ../pan/gui/actions.cc:685
 #, fuzzy
 msgid "_Thread Headers"
 msgstr "ヘッダーの詳細"
 
-#: ../pan/gui/actions.cc:685
+#: ../pan/gui/actions.cc:686
 #, fuzzy
 msgid "_Wrap Article Body"
 msgstr "記事の整形/ワードラップ(_L)"
 
-#: ../pan/gui/actions.cc:686
+#: ../pan/gui/actions.cc:687
 #, fuzzy
 msgid "Mute _Quoted Text"
 msgstr "引用した本文を隠す"
 
-#: ../pan/gui/actions.cc:687
+#: ../pan/gui/actions.cc:688
 #, fuzzy
 msgid "Show All _Headers in Body Pane"
 msgstr "/表示(_V)/全ヘッダーを本文ペインに表示(_H)"
 
-#: ../pan/gui/actions.cc:688
+#: ../pan/gui/actions.cc:689
 #, fuzzy
 msgid "Show _Smilies as Graphics"
 msgstr "アラートを出す:"
 
-#: ../pan/gui/actions.cc:689
+#: ../pan/gui/actions.cc:690
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr ""
 
-#: ../pan/gui/actions.cc:690
+#: ../pan/gui/actions.cc:691
 msgid "Size Pictures to _Fit"
 msgstr ""
 
-#: ../pan/gui/actions.cc:691
+#: ../pan/gui/actions.cc:692
 #, fuzzy
 msgid "Use _Monospace Font"
 msgstr "等幅フォント(_E):"
 
-#: ../pan/gui/actions.cc:692
+#: ../pan/gui/actions.cc:693
 msgid "Set Focus to Images"
 msgstr ""
 
-#: ../pan/gui/actions.cc:693
+#: ../pan/gui/actions.cc:694
 msgid "Highlight _URLs"
 msgstr ""
 
-#: ../pan/gui/actions.cc:696
+#: ../pan/gui/actions.cc:697
 #, fuzzy
 msgid "_Work Online"
 msgstr "/ファイル/オンラインで動作(_L)"
 
-#: ../pan/gui/actions.cc:697
+#: ../pan/gui/actions.cc:698
 #, fuzzy
 msgid "_Tabbed Layout"
 msgstr "/表示(_V)/タブレイアウト(_T)"
 
-#: ../pan/gui/actions.cc:698
+#: ../pan/gui/actions.cc:699
 #, fuzzy
 msgid "Show Group _Pane"
 msgstr "/表示(_V)/グループペインの表示(_P)"
 
-#: ../pan/gui/actions.cc:699
+#: ../pan/gui/actions.cc:700
 #, fuzzy
 msgid "Show Hea_der Pane"
 msgstr "/表示(_V)/ヘッダーペインの表示(_D)"
 
-#: ../pan/gui/actions.cc:700
+#: ../pan/gui/actions.cc:701
 #, fuzzy
 msgid "Show Bod_y Pane"
 msgstr "/表示(_V)/本文ペインの表示(_Y)"
 
-#: ../pan/gui/actions.cc:701
+#: ../pan/gui/actions.cc:702
 msgid "Show _Toolbar"
 msgstr ""
 
-#: ../pan/gui/actions.cc:702
+#: ../pan/gui/actions.cc:703
 #, fuzzy
 msgid "Abbreviate Group Names"
 msgstr "/表示(_V)/グループ・ペインに省略形表示(_N)"
 
-#: ../pan/gui/actions.cc:704
+#: ../pan/gui/actions.cc:705
 #, fuzzy
 msgid "Match Only _Unread Articles"
 msgstr "新規記事にのみマッチ"
 
-#: ../pan/gui/actions.cc:704
+#: ../pan/gui/actions.cc:705
 #, fuzzy
 msgid "Match Only Unread Articles"
 msgstr "新規記事にのみマッチ"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:706
 #, fuzzy
 msgid "Match Only _Cached Articles"
 msgstr "キャッシュされている記事にのみマッチ"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:706
 #, fuzzy
 msgid "Match Only Cached Articles"
 msgstr "キャッシュされている記事にのみマッチ"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:707
 #, fuzzy
 msgid "Match Only _Complete Articles"
 msgstr "完全な添付にのみマッチ"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:707
 #, fuzzy
 msgid "Match Only Complete Articles"
 msgstr "完全な添付にのみマッチ"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:708
 #, fuzzy
 msgid "Match Only _My Articles"
 msgstr "自分の記事にのみマッチ"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:708
 #, fuzzy
 msgid "Match Only My Articles"
 msgstr "自分の記事にのみマッチ"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:709
 #, fuzzy
 msgid "Match Only _Watched Articles"
 msgstr "監視している記事にのみマッチ"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:709
 msgid "Match Only Watched Articles"
 msgstr "監視している記事にのみマッチ"
 
-#: ../pan/gui/actions.cc:710
+#: ../pan/gui/actions.cc:711
 #, fuzzy
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "/フィルター(_R)/スコアが 9999 にマッチ (監視)"
 
-#: ../pan/gui/actions.cc:711
+#: ../pan/gui/actions.cc:712
 #, fuzzy
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr "/フィルター(_R)/スコアが 5000 から 9998 にマッチ (高)"
 
-#: ../pan/gui/actions.cc:712
+#: ../pan/gui/actions.cc:713
 #, fuzzy
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "/フィルター(_R)/スコアが 1 から 4999 に (中)"
 
-#: ../pan/gui/actions.cc:713
+#: ../pan/gui/actions.cc:714
 #, fuzzy
 msgid "Match Scores of 0 (_Normal)"
 msgstr "/フィルター(_R)/スコアが 0 にマッチ (通常)"
 
-#: ../pan/gui/actions.cc:714
+#: ../pan/gui/actions.cc:715
 #, fuzzy
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "/フィルター(_R)/スコアが -9998 から -1 にマッチ (低)"
 
-#: ../pan/gui/actions.cc:715
+#: ../pan/gui/actions.cc:716
 #, fuzzy
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "/フィルター(_R)/スコアが -9999 にマッチ (無視)"
 
-#: ../pan/gui/actions.cc:717
+#: ../pan/gui/actions.cc:718
 msgid "Enable/Disable All _Rules"
 msgstr ""
 
-#: ../pan/gui/actions.cc:743
+#: ../pan/gui/actions.cc:744
 #, fuzzy
 msgid "Show Matching _Articles"
 msgstr "/フィルター(_R)/マッチする記事の表示"
 
-#: ../pan/gui/actions.cc:744
+#: ../pan/gui/actions.cc:745
 #, fuzzy
 msgid "Show Matching Articles' _Threads"
 msgstr "/フィルター(_R)/マッチする記事のスレッドを表示"
 
-#: ../pan/gui/actions.cc:745
+#: ../pan/gui/actions.cc:746
 #, fuzzy
 msgid "Show Matching Articles' _Subthreads"
 msgstr "/フィルター(_R)/マッチする記事のサブスレッドを表示"
@@ -876,21 +865,21 @@ msgstr "/フィルター(_R)/マッチする記事のサブスレッドを表示
 msgid "Unnamed File"
 msgstr "署名ファイルを選択"
 
-#: ../pan/gui/body-pane.cc:1092 ../pan/gui/gui.cc:1861
-#: ../pan/gui/header-pane.cc:1187 ../pan/gui/header-pane.cc:1616
-#: ../pan/gui/post-ui.cc:2496 ../pan/gui/prefs-ui.cc:453
+#: ../pan/gui/body-pane.cc:1092 ../pan/gui/gui.cc:1864
+#: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1617
+#: ../pan/gui/post-ui.cc:2496 ../pan/gui/prefs-ui.cc:833
 #: ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
 msgstr "件名"
 
-#: ../pan/gui/body-pane.cc:1094 ../pan/gui/gui.cc:1861
+#: ../pan/gui/body-pane.cc:1094 ../pan/gui/gui.cc:1864
 #, fuzzy
 msgid "From"
 msgstr "投稿者"
 
-#: ../pan/gui/body-pane.cc:1096 ../pan/gui/gui.cc:1862
-#: ../pan/gui/header-pane.cc:1694 ../pan/gui/log-ui.cc:305
-#: ../pan/gui/prefs-ui.cc:449
+#: ../pan/gui/body-pane.cc:1096 ../pan/gui/gui.cc:1865
+#: ../pan/gui/header-pane.cc:1695 ../pan/gui/log-ui.cc:305
+#: ../pan/gui/prefs-ui.cc:829
 msgid "Date"
 msgstr "投稿日"
 
@@ -917,39 +906,49 @@ msgstr "送信元: "
 msgid " at "
 msgstr "投稿日: "
 
-#: ../pan/gui/body-pane.cc:1519
+#: ../pan/gui/body-pane.cc:1264
+#, c-format
+msgid ""
+"<u>This is a <b>PGP-Signed</b> message.</u>\n"
+"\n"
+"<b>Signer</b> : %s ('%s')\n"
+"<b>Valid until</b> : %s\n"
+"<b>Created on</b> : %s"
+msgstr ""
+
+#: ../pan/gui/body-pane.cc:1269
+msgid "always"
+msgstr ""
+
+#: ../pan/gui/body-pane.cc:1485
 msgid "Copy _URL"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1721
+#: ../pan/gui/body-pane.cc:1680
 #, fuzzy
-#| msgid "Save Attachments"
 msgid "Save attachment as ...."
 msgstr "記事の添付を保存"
 
-#: ../pan/gui/body-pane.cc:1724
+#: ../pan/gui/body-pane.cc:1683
 #, fuzzy
-#| msgid "Save Attachments"
 msgid "Save all attachments"
 msgstr "記事の添付を保存"
 
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1795
+#: ../pan/gui/body-pane.cc:1753
 #, fuzzy
-#| msgid "Save Attachments"
 msgid "Attachments"
 msgstr "記事の添付を保存"
 
 #. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:972
-#: ../pan/gui/gui.cc:1589 ../pan/gui/gui.cc:1890
+#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:973
+#: ../pan/gui/gui.cc:1592 ../pan/gui/gui.cc:1893
 #: ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
 
 #: ../pan/gui/dl-headers-ui.cc:112
 #, fuzzy, c-format
-#| msgid "Groups"
 msgid "%d Group"
 msgid_plural "%d Groups"
 msgstr[0] "グループ"
@@ -975,7 +974,7 @@ msgstr "全ヘッダー"
 msgid "Get the _latest N headers: "
 msgstr "最近のヘッダーのダウンロード(_R):"
 
-#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:446
+#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:826
 #, fuzzy
 msgid "Action"
 msgstr "アクション"
@@ -984,7 +983,7 @@ msgstr "アクション"
 msgid "A GtkRadioAction"
 msgstr ""
 
-#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:514
+#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:518
 msgid "Unknown"
 msgstr "不明"
 
@@ -1002,7 +1001,6 @@ msgstr "中央ヨーロッパ"
 
 #: ../pan/gui/e-charset.c:55
 #, fuzzy
-#| msgid "Lines"
 msgid "Chinese"
 msgstr "行数"
 
@@ -1036,39 +1034,33 @@ msgstr "トルコ語"
 
 #: ../pan/gui/e-charset.c:63
 #, fuzzy
-#| msgid "Unicode, UTF-8"
 msgid "Unicode"
 msgstr "Unicode, UTF-8"
 
 #: ../pan/gui/e-charset.c:64
 #, fuzzy
-#| msgid "Central European"
 msgid "Western European"
 msgstr "中央ヨーロッパ"
 
 #: ../pan/gui/e-charset.c:65
 #, fuzzy
-#| msgid "Western, New"
 msgid "Western European, New"
 msgstr "西欧 (新)"
 
 #: ../pan/gui/e-charset.c:84 ../pan/gui/e-charset.c:85
 #: ../pan/gui/e-charset.c:86
 #, fuzzy
-#| msgid "Chinese Traditional"
 msgid "Traditional"
 msgstr "繁体中国語"
 
 #: ../pan/gui/e-charset.c:87 ../pan/gui/e-charset.c:88
 #: ../pan/gui/e-charset.c:89 ../pan/gui/e-charset.c:90
 #, fuzzy
-#| msgid "Chinese Simplified"
 msgid "Simplified"
 msgstr "簡体中国語"
 
 #: ../pan/gui/e-charset.c:93
 #, fuzzy
-#| msgid "Cyrillic, Ukrainian"
 msgid "Ukrainian"
 msgstr "キリル文字、ウクライナ語"
 
@@ -1076,8 +1068,8 @@ msgstr "キリル文字、ウクライナ語"
 msgid "Visual"
 msgstr ""
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2055
-#: ../pan/gui/post-ui.cc:519 ../pan/gui/prefs-ui.cc:357
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2058
+#: ../pan/gui/post-ui.cc:519 ../pan/gui/prefs-ui.cc:737
 #, fuzzy
 msgid "Character Encoding"
 msgstr "エンコーディング"
@@ -1092,7 +1084,6 @@ msgstr ""
 
 #: ../pan/gui/e-cte-dialog.c:78
 #, fuzzy
-#| msgid "Decoding \"%s\""
 msgid "Default encoding"
 msgstr "\"%s\" の解読中"
 
@@ -1122,7 +1113,6 @@ msgstr "グループ"
 
 #: ../pan/gui/group-pane.cc:501
 #, fuzzy
-#| msgid "Group Properties"
 msgid "Group (regex)"
 msgstr "グループのプロパティ"
 
@@ -1183,243 +1173,235 @@ msgstr "Pan: プロファイル"
 msgid "Spellchecker _language:"
 msgstr ""
 
-#: ../pan/gui/gui.cc:272
+#: ../pan/gui/gui.cc:273
 msgid "Open the Task Manager"
 msgstr "タスクマネージャーを開く"
 
-#: ../pan/gui/gui.cc:300
+#: ../pan/gui/gui.cc:301
 #, fuzzy
 msgid "Open the Event Log"
 msgstr "ステータスログを開く"
 
-#: ../pan/gui/gui.cc:560
+#: ../pan/gui/gui.cc:561
 msgid "Save NZB's Files"
 msgstr ""
 
-#: ../pan/gui/gui.cc:587
+#: ../pan/gui/gui.cc:588
 msgid "Untitled.nzb"
 msgstr ""
 
-#: ../pan/gui/gui.cc:589
+#: ../pan/gui/gui.cc:590
 #, fuzzy
 msgid "Save NZB File as..."
 msgstr "記事を別名で保存..."
 
-#: ../pan/gui/gui.cc:756
+#: ../pan/gui/gui.cc:757
 #, fuzzy
 msgid "Import NZB Files"
 msgstr ".newsrcのインポート..."
 
-#: ../pan/gui/gui.cc:764 ../pan/gui/post-ui.cc:3197
+#: ../pan/gui/gui.cc:765 ../pan/gui/post-ui.cc:3197
 #, fuzzy
-#| msgid "Files"
 msgid "NZB Files"
 msgstr "ファイル"
 
-#: ../pan/gui/gui.cc:769
+#: ../pan/gui/gui.cc:770
 #, fuzzy
-#| msgid "Files"
 msgid "All Files"
 msgstr "ファイル"
 
-#: ../pan/gui/gui.cc:1257
+#: ../pan/gui/gui.cc:1258
 #, fuzzy
 msgid "Unable to supersede article."
 msgstr "/記事を別名で保存(_S)..."
 
-#: ../pan/gui/gui.cc:1258 ../pan/gui/gui.cc:1332
+#: ../pan/gui/gui.cc:1259 ../pan/gui/gui.cc:1333
 msgid "The article doesn't match any of your posting profiles."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1305
+#: ../pan/gui/gui.cc:1306
 msgid "Revise and send this article to replace the old one."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1306 ../pan/gui/gui.cc:1369
+#: ../pan/gui/gui.cc:1307 ../pan/gui/gui.cc:1370
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1331
+#: ../pan/gui/gui.cc:1332
 #, fuzzy
 msgid "Unable to cancel article."
 msgstr "ファイル権限を変更できません"
 
-#: ../pan/gui/gui.cc:1368
+#: ../pan/gui/gui.cc:1369
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1386
+#: ../pan/gui/gui.cc:1387
 #, fuzzy
 msgid "You marked some articles for deletion"
 msgstr "/編集(_E)/スレッドを選択範囲に追加(_T)"
 
-#: ../pan/gui/gui.cc:1387
+#: ../pan/gui/gui.cc:1388
 msgid "Are you sure you want to delete them?"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1412
+#: ../pan/gui/gui.cc:1413
 #, fuzzy
 msgid "Always trust"
 msgstr "エディター"
 
-#: ../pan/gui/gui.cc:1415
+#: ../pan/gui/gui.cc:1416
 msgid "Do you want to accept it permanently (deletable afterwards) ?"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1560
+#: ../pan/gui/gui.cc:1595
 #, fuzzy
-msgid "Unable to open help file"
-msgstr "ファイル権限を変更できません"
-
-#: ../pan/gui/gui.cc:1592
-#, fuzzy
-msgid "Copyright \\u00A9 2002-2011 Charles Kerr and others"
+msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
 msgstr "Copyright (C) 2003 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1597
+#: ../pan/gui/gui.cc:1600
 msgid "translator-credits"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1706
+#: ../pan/gui/gui.cc:1709
 #, fuzzy
 msgid "_1. Group Pane"
 msgstr "グループペイン"
 
-#: ../pan/gui/gui.cc:1707
+#: ../pan/gui/gui.cc:1710
 #, fuzzy
 msgid "_2. Header Pane"
 msgstr "ヘッダーペイン(_H):"
 
-#: ../pan/gui/gui.cc:1708
+#: ../pan/gui/gui.cc:1711
 #, fuzzy
 msgid "_3. Body Pane"
 msgstr "本文ペイン"
 
-#: ../pan/gui/gui.cc:1797 ../pan/gui/gui.cc:1812
+#: ../pan/gui/gui.cc:1800 ../pan/gui/gui.cc:1815
 msgid " Bytes"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1800
+#: ../pan/gui/gui.cc:1803
 msgid " KB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1803
+#: ../pan/gui/gui.cc:1806
 msgid " MB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1806
+#: ../pan/gui/gui.cc:1809
 msgid " GB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1809
+#: ../pan/gui/gui.cc:1812
 msgid " TB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1841
+#: ../pan/gui/gui.cc:1844
 #, fuzzy, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
 msgstr[0] "記事に添付ファイルがありません"
 msgstr[1] "記事に添付ファイルがありません"
 
-#: ../pan/gui/gui.cc:1843
+#: ../pan/gui/gui.cc:1846
 #, fuzzy, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "記事に添付ファイルがありません"
 msgstr[1] "記事に添付ファイルがありません"
 
-#: ../pan/gui/gui.cc:1862 ../pan/gui/header-pane.cc:1189
+#: ../pan/gui/gui.cc:1865 ../pan/gui/header-pane.cc:1190
 msgid "Message-ID"
 msgstr "Message-ID"
 
-#: ../pan/gui/gui.cc:1863 ../pan/gui/header-pane.cc:1664
-#: ../pan/gui/prefs-ui.cc:450
+#: ../pan/gui/gui.cc:1866 ../pan/gui/header-pane.cc:1665
+#: ../pan/gui/prefs-ui.cc:830
 msgid "Lines"
 msgstr "行数"
 
-#: ../pan/gui/gui.cc:1863
+#: ../pan/gui/gui.cc:1866
 msgid "Size"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1864 ../pan/gui/header-pane.cc:1679
-#: ../pan/gui/prefs-ui.cc:448
+#: ../pan/gui/gui.cc:1867 ../pan/gui/header-pane.cc:1680
+#: ../pan/gui/prefs-ui.cc:828
 msgid "Bytes"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1914
+#: ../pan/gui/gui.cc:1917
 msgid ""
 "Error loading iconv library. Some Charsets in the GUI will not be able to be "
 "encoded."
 msgstr ""
 
-#: ../pan/gui/gui.cc:2056
+#: ../pan/gui/gui.cc:2059
 #, fuzzy
 msgid "Body Pane Encoding"
 msgstr "本文ペイン(_Y)"
 
-#: ../pan/gui/gui.cc:2087 ../pan/gui/task-pane.cc:565
+#: ../pan/gui/gui.cc:2090 ../pan/gui/task-pane.cc:569
 #, c-format
 msgid "Offline"
 msgstr "オフライン"
 
-#: ../pan/gui/gui.cc:2091
+#: ../pan/gui/gui.cc:2094
 #, fuzzy, c-format
-#| msgid "Closing %d connections"
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
 msgstr[0] "%d 個の接続を閉じています"
 msgstr[1] "%d 個の接続を閉じています"
 
-#: ../pan/gui/gui.cc:2093 ../pan/gui/gui.cc:2123
+#: ../pan/gui/gui.cc:2096 ../pan/gui/gui.cc:2126
 #, c-format
 msgid "No Connections"
 msgstr "接続していません"
 
-#: ../pan/gui/gui.cc:2097
+#: ../pan/gui/gui.cc:2100
 #, c-format
 msgid "Connecting"
 msgstr "接続中"
 
-#: ../pan/gui/gui.cc:2110
+#: ../pan/gui/gui.cc:2113
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr ""
 
-#: ../pan/gui/gui.cc:2166
+#: ../pan/gui/gui.cc:2169
 #, c-format
 msgid "No Tasks"
 msgstr "タスク無し"
 
-#: ../pan/gui/gui.cc:2168 ../pan/gui/prefs-ui.cc:646
+#: ../pan/gui/gui.cc:2171 ../pan/gui/prefs-ui.cc:1047
 msgid "Tasks"
 msgstr "タスク"
 
-#: ../pan/gui/gui.cc:2179 ../pan/gui/task-pane.cc:431
+#: ../pan/gui/gui.cc:2182 ../pan/gui/task-pane.cc:435
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr ""
 
-#: ../pan/gui/gui.cc:2231
+#: ../pan/gui/gui.cc:2234
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
 msgstr ""
 
-#: ../pan/gui/header-pane.cc:1185
+#: ../pan/gui/header-pane.cc:1186
 msgid "Subject or Author"
 msgstr ""
 
-#: ../pan/gui/header-pane.cc:1186
+#: ../pan/gui/header-pane.cc:1187
 msgid "Sub or Auth (regex)"
 msgstr ""
 
-#: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1648
-#: ../pan/gui/prefs-ui.cc:447 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/header-pane.cc:1189 ../pan/gui/header-pane.cc:1649
+#: ../pan/gui/prefs-ui.cc:827 ../pan/gui/score-add-ui.cc:140
 msgid "Author"
 msgstr "投稿者"
 
-#: ../pan/gui/header-pane.cc:1633 ../pan/gui/prefs-ui.cc:451
+#: ../pan/gui/header-pane.cc:1634 ../pan/gui/prefs-ui.cc:831
 msgid "Score"
 msgstr "スコア"
 
@@ -1436,34 +1418,37 @@ msgstr "Pan: サーバー"
 msgid "Message"
 msgstr "メッセージ"
 
-#: ../pan/gui/pan.cc:336
+#: ../pan/gui/pan.cc:330
 msgid "Maximize"
 msgstr ""
 
-#: ../pan/gui/pan.cc:389
+#: ../pan/gui/pan.cc:383
 msgid "An Error has occurred!"
 msgstr ""
 
-#: ../pan/gui/pan.cc:403
+#: ../pan/gui/pan.cc:397
 #, fuzzy
-#| msgid "Next _Article"
 msgid "New Articles!"
 msgstr "次の記事へ(_A)"
 
-#: ../pan/gui/pan.cc:404
+#: ../pan/gui/pan.cc:398
 msgid ""
 "There are new\n"
 "articles available."
 msgstr ""
 
-#: ../pan/gui/pan.cc:540
+#: ../pan/gui/pan.cc:465
+msgid "Toggle on/offline"
+msgstr ""
+
+#: ../pan/gui/pan.cc:513
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
 "To start newsreading, first Add a Server."
 msgstr ""
 
-#: ../pan/gui/pan.cc:623
+#: ../pan/gui/pan.cc:595
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -1480,20 +1465,20 @@ msgid ""
 "queue.\n"
 msgstr ""
 
-#: ../pan/gui/pan.cc:897
+#: ../pan/gui/pan.cc:867
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr ""
 
-#: ../pan/gui/pan.cc:901
+#: ../pan/gui/pan.cc:871
 #, fuzzy, c-format
 msgid "Pan %s started"
 msgstr "Pan %s の起動完了"
 
-#: ../pan/gui/pan.cc:920
+#: ../pan/gui/pan.cc:890
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 
-#: ../pan/gui/pan.cc:1031
+#: ../pan/gui/pan.cc:1009
 msgid "Pan notification"
 msgstr ""
 
@@ -1534,13 +1519,11 @@ msgstr "今すぐ送信"
 
 #: ../pan/gui/post-ui.cc:423
 #, fuzzy
-#| msgid "Save Article Attachments"
 msgid "_Send and Save Articles to NZB"
 msgstr "記事の添付を保存"
 
 #: ../pan/gui/post-ui.cc:423
 #, fuzzy
-#| msgid "Save Article Attachments"
 msgid "Send and Save Articles to NZB"
 msgstr "記事の添付を保存"
 
@@ -1614,12 +1597,12 @@ msgid "Select Needed Parts"
 msgstr ""
 
 #: ../pan/gui/post-ui.cc:465 ../pan/gui/post-ui.cc:466
-#: ../pan/gui/task-pane.cc:632 ../pan/gui/task-pane.cc:633
+#: ../pan/gui/task-pane.cc:636 ../pan/gui/task-pane.cc:637
 msgid "Move Up"
 msgstr ""
 
 #: ../pan/gui/post-ui.cc:470 ../pan/gui/post-ui.cc:471
-#: ../pan/gui/task-pane.cc:637 ../pan/gui/task-pane.cc:638
+#: ../pan/gui/task-pane.cc:641 ../pan/gui/task-pane.cc:642
 msgid "Move Down"
 msgstr ""
 
@@ -1707,9 +1690,6 @@ msgstr ""
 #. Prompt the user
 #: ../pan/gui/post-ui.cc:790
 #, fuzzy, c-format
-#| msgid ""
-#| "Message uses characters not specified in charset '%s' - possibly use '%s' "
-#| "instead?"
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr ""
@@ -1833,7 +1813,6 @@ msgstr ""
 
 #: ../pan/gui/post-ui.cc:2604
 #, fuzzy
-#| msgid "Subject"
 msgid "Subject Line"
 msgstr "件名"
 
@@ -1857,10 +1836,6 @@ msgstr "フォロー先:"
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
 #: ../pan/gui/post-ui.cc:2673
 #, fuzzy
-#| msgid ""
-#| "The newsgroups where replies to your message should go.  This is only "
-#| "needed if it differs from the \"Post To Groups\" header. \n"
-#| "To direct all replies to your email address, use \"Followup-To: poster\""
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1874,7 +1849,6 @@ msgstr ""
 
 #: ../pan/gui/post-ui.cc:2679
 #, fuzzy
-#| msgid "Reply-To"
 msgid "_Reply-To"
 msgstr "リプライ先"
 
@@ -1888,19 +1862,16 @@ msgstr ""
 
 #: ../pan/gui/post-ui.cc:2693
 #, fuzzy
-#| msgid "Custom Headers"
 msgid "_Custom Headers"
 msgstr "カスタムヘッダー"
 
 #: ../pan/gui/post-ui.cc:2717
 #, fuzzy
-#| msgid "Add \"User-Agent\" header"
 msgid "Add \"_User-Agent\" header"
 msgstr "\"User-Agent\" ヘッダーを追加"
 
 #: ../pan/gui/post-ui.cc:2724
 #, fuzzy
-#| msgid "Add \"Message-Id\" header"
 msgid "Add \"Message-_Id\" header"
 msgstr "Message-ID を付加"
 
@@ -1920,7 +1891,6 @@ msgstr "記事の読み込み"
 
 #: ../pan/gui/post-ui.cc:3043
 #, fuzzy
-#| msgid "Message"
 msgid "_Message"
 msgstr "メッセージ"
 
@@ -1933,7 +1903,7 @@ msgstr "ヘッダーの詳細"
 msgid "File _Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3077 ../pan/gui/profiles-dialog.cc:477
+#: ../pan/gui/post-ui.cc:3077 ../pan/gui/profiles-dialog.cc:478
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "%d に %n さんは書きました:"
@@ -1944,423 +1914,522 @@ msgstr ""
 
 #: ../pan/gui/post-ui.cc:3184
 #, fuzzy
-#| msgid "Save Article Attachments"
 msgid "Save Upload Queue as NZB File"
 msgstr "記事の添付を保存"
 
-#: ../pan/gui/prefs.cc:333
+#: ../pan/gui/prefs.cc:343
 #, fuzzy, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "署名コマンド \"%s\" を解析できませんでした"
 
-#: ../pan/gui/prefs-ui.cc:207
+#: ../pan/gui/prefs-ui.cc:120
+msgid "Grab Key"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:126
+#, c-format
+msgid ""
+"Press the combination of the keys\n"
+"you want to use for \"%s\"."
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:166
+msgid "Edit Hotkey"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:228
+msgid "Error: Shortkey is invalid!"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:244
+msgid "Error: Shortkey already exists!"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:535
+#, fuzzy
+msgid "Show only icons"
+msgstr "プロファイル情報"
+
+#: ../pan/gui/prefs-ui.cc:536
+#, fuzzy
+msgid "Show only text"
+msgstr "/表示(_V)/本文ペインの表示(_Y)"
+
+#: ../pan/gui/prefs-ui.cc:537
+#, fuzzy
+msgid "Show icons and text"
+msgstr "添付ファイルをディレクトリに保存(_T):"
+
+#: ../pan/gui/prefs-ui.cc:576
 #, fuzzy
 msgid "Use GNOME Preferences"
 msgstr "オンライン設定"
 
-#: ../pan/gui/prefs-ui.cc:208
+#: ../pan/gui/prefs-ui.cc:577
 #, fuzzy
 msgid "Use KDE Preferences"
 msgstr "オンライン設定"
 
-#: ../pan/gui/prefs-ui.cc:209
+#: ../pan/gui/prefs-ui.cc:578
 #, fuzzy
 msgid "Use OS X Preferences"
 msgstr "オンライン設定"
 
-#: ../pan/gui/prefs-ui.cc:210
+#: ../pan/gui/prefs-ui.cc:579
 #, fuzzy
 msgid "Use Windows Preferences"
 msgstr "セッションの設定"
 
-#: ../pan/gui/prefs-ui.cc:211
+#: ../pan/gui/prefs-ui.cc:580
 #, fuzzy
 msgid "Custom Command:"
 msgstr "印刷コマンド:"
 
-#: ../pan/gui/prefs-ui.cc:262
+#: ../pan/gui/prefs-ui.cc:632
 #, fuzzy
 msgid "Disabled"
 msgstr "失敗しました"
 
-#: ../pan/gui/prefs-ui.cc:263
+#: ../pan/gui/prefs-ui.cc:633
 msgid "Only new (Score == 0)"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:264
+#: ../pan/gui/prefs-ui.cc:634
 #, fuzzy
 msgid "9999 or more"
 msgstr "/フィルター(_R)/スコアが -9999 にマッチ (無視)"
 
-#: ../pan/gui/prefs-ui.cc:265
+#: ../pan/gui/prefs-ui.cc:635
 msgid "5000 to 9998"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:266
+#: ../pan/gui/prefs-ui.cc:636
 msgid "1 to 4999"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:267
+#: ../pan/gui/prefs-ui.cc:637
 msgid "-9998 to -1"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:268
+#: ../pan/gui/prefs-ui.cc:638
 #, fuzzy
 msgid "-9999 or less"
 msgstr "/フィルター(_R)/スコアが -9999 にマッチ (無視)"
 
-#: ../pan/gui/prefs-ui.cc:333
+#: ../pan/gui/prefs-ui.cc:702
 #, c-format
-msgid "  Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+msgid "Select default <u>global</u> charset. Current setting : <b>%s</b> ."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:358
+#: ../pan/gui/prefs-ui.cc:738
 msgid "Global Charset Settings"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:452 ../pan/gui/task-pane.cc:766
+#: ../pan/gui/prefs-ui.cc:832 ../pan/gui/task-pane.cc:770
 #, fuzzy
 msgid "State"
 msgstr "ステータス"
 
-#: ../pan/gui/prefs-ui.cc:486
+#: ../pan/gui/prefs-ui.cc:866
 #, fuzzy
 msgid "Enabled"
 msgstr "失敗しました"
 
-#: ../pan/gui/prefs-ui.cc:490
+#: ../pan/gui/prefs-ui.cc:870
 #, fuzzy
 msgid "Column Name"
 msgstr "カラム"
 
-#: ../pan/gui/prefs-ui.cc:526
+#: ../pan/gui/prefs-ui.cc:908
 #, fuzzy
 msgid "Pan: Preferences"
 msgstr "Pan 設定"
 
-#: ../pan/gui/prefs-ui.cc:539
+#: ../pan/gui/prefs-ui.cc:923
 msgid "Mouse"
 msgstr "マウス"
 
-#: ../pan/gui/prefs-ui.cc:541
+#: ../pan/gui/prefs-ui.cc:925
 #, fuzzy
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "シングルクリックでグループを読みこむのではなく、選択(_K)"
 
-#: ../pan/gui/prefs-ui.cc:543
+#: ../pan/gui/prefs-ui.cc:927
 #, fuzzy
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "シングルクリックでヘッダーを読みこむのではなく、選択(_R)"
 
-#: ../pan/gui/prefs-ui.cc:546
+#: ../pan/gui/prefs-ui.cc:930
 msgid "Groups"
 msgstr "グループ"
 
-#: ../pan/gui/prefs-ui.cc:548
+#: ../pan/gui/prefs-ui.cc:932
 #, fuzzy
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "購読グループの新規ヘッダーを取得します"
 
-#: ../pan/gui/prefs-ui.cc:550
+#: ../pan/gui/prefs-ui.cc:934
 #, fuzzy
 msgid "Get new headers when _entering group"
 msgstr "グループを読み込むときに新しいヘッダーをダウンロードする(_G)"
 
-#: ../pan/gui/prefs-ui.cc:552
+#: ../pan/gui/prefs-ui.cc:936
 #, fuzzy
 msgid "Mark entire group _read when leaving group"
 msgstr "グループから抜ける時に記事を既読にする(_M)"
 
-#: ../pan/gui/prefs-ui.cc:554
+#: ../pan/gui/prefs-ui.cc:938
 #, fuzzy
 msgid "Mark entire group read before getting _new headers"
 msgstr "グループから抜ける時に記事を既読にする(_M)"
 
-#: ../pan/gui/prefs-ui.cc:556
+#: ../pan/gui/prefs-ui.cc:940
 #, fuzzy
 msgid "E_xpand all threads when entering group"
 msgstr "グループを読み込むときに新しいヘッダーをダウンロードする(_G)"
 
-#: ../pan/gui/prefs-ui.cc:559
+#: ../pan/gui/prefs-ui.cc:945
 #, fuzzy
 msgid "Articles"
 msgstr "/記事(_A)"
 
-#: ../pan/gui/prefs-ui.cc:561
+#: ../pan/gui/prefs-ui.cc:947
 #, fuzzy
-#| msgid "Save the selected articles and their attachments."
 msgid "Space selects next article rather than next unread"
 msgstr "選択した記事とその添付物を保存します"
 
-#: ../pan/gui/prefs-ui.cc:563
+#: ../pan/gui/prefs-ui.cc:949
 #, fuzzy
 msgid "Expand threads upon selection"
 msgstr "/編集(_E)/スレッドを選択範囲に追加(_T)"
 
-#: ../pan/gui/prefs-ui.cc:565
+#: ../pan/gui/prefs-ui.cc:951
 msgid "Always show article deletion confirmation dialog"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:567
+#: ../pan/gui/prefs-ui.cc:953
 #, fuzzy
 msgid "Smooth scrolling"
 msgstr "スムーズスクロールの速度(_M):"
 
-#: ../pan/gui/prefs-ui.cc:569
+#: ../pan/gui/prefs-ui.cc:958
+#, fuzzy
+msgid "Article Cache"
+msgstr "記事キャッシュ"
+
+#: ../pan/gui/prefs-ui.cc:959
 msgid "Clear article cache on shutdown"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:572
-msgid "Size of article cache (in MiB)"
+#: ../pan/gui/prefs-ui.cc:962
+msgid "Size of article cache (in MiB) :"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:578
+#: ../pan/gui/prefs-ui.cc:967
+msgid "File extension for Cached Articles: "
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:972
+msgid "Tabs"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:977
 #, fuzzy
 msgid "_Behavior"
 msgstr "マウスの振る舞い(_V)"
 
-#: ../pan/gui/prefs-ui.cc:583
+#: ../pan/gui/prefs-ui.cc:977
+#, fuzzy
+msgid "Behavior"
+msgstr "マウスの振る舞い(_V)"
+
+#: ../pan/gui/prefs-ui.cc:983
 #, fuzzy
 msgid "Language Settings"
 msgstr "その他の設定"
 
-#: ../pan/gui/prefs-ui.cc:591
-msgid "_Charset"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:595
+#. systray and notify popup
+#: ../pan/gui/prefs-ui.cc:992
 msgid "System Tray Behavior"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:597
+#: ../pan/gui/prefs-ui.cc:994
 msgid "Hide to system tray"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:599
+#: ../pan/gui/prefs-ui.cc:996
 msgid "Start Pan minimized"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:602
+#: ../pan/gui/prefs-ui.cc:999
 #, fuzzy
-#| msgid "Profile Information"
 msgid "Show notifications"
 msgstr "プロファイル情報"
 
-#: ../pan/gui/prefs-ui.cc:606
-msgid "_Status and Notifications"
+#. allow multiple instances (seperate, not communicating with dbus)
+#: ../pan/gui/prefs-ui.cc:1004
+#, fuzzy
+msgid "Startup Behavior"
+msgstr "マウスの振る舞い(_V)"
+
+#: ../pan/gui/prefs-ui.cc:1006
+msgid "Allow multiple instances of Pan"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:611
+#: ../pan/gui/prefs-ui.cc:1011
 #, fuzzy
 msgid "Autosave Article Draft"
 msgstr "この記事の上の記事にジャンプします"
 
-#: ../pan/gui/prefs-ui.cc:613
-msgid "Minutes to autosave the current Article Draft."
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1013
+#, fuzzy
+msgid "Minutes to autosave the current Article Draft: "
+msgstr "この記事の上の記事にジャンプします"
 
-#: ../pan/gui/prefs-ui.cc:618
+#: ../pan/gui/prefs-ui.cc:1018
 #, fuzzy
 msgid "Autosave Articles"
 msgstr "記事を別名で保存..."
 
-#: ../pan/gui/prefs-ui.cc:620
-msgid "Minutes to autosave newsrc files"
+#: ../pan/gui/prefs-ui.cc:1020
+msgid "Minutes to autosave newsrc files: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:625
-msgid "_Autosave"
+#: ../pan/gui/prefs-ui.cc:1026
+msgid "_Miscellaneous"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:630
+#: ../pan/gui/prefs-ui.cc:1026
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1031
 msgid "Pane Layout"
 msgstr "ペインの配置"
 
-#: ../pan/gui/prefs-ui.cc:649
+#: ../pan/gui/prefs-ui.cc:1050
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:651
+#: ../pan/gui/prefs-ui.cc:1052
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:653
+#: ../pan/gui/prefs-ui.cc:1054
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:655
+#: ../pan/gui/prefs-ui.cc:1056
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:657
+#: ../pan/gui/prefs-ui.cc:1058
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:659
+#: ../pan/gui/prefs-ui.cc:1060
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:667
+#: ../pan/gui/prefs-ui.cc:1064
+#, fuzzy
+msgid "Layout"
+msgstr "配置(_L)"
+
+#: ../pan/gui/prefs-ui.cc:1069
 #, fuzzy
 msgid "Header Pane Columns"
 msgstr "ヘッダーペイン"
 
-#: ../pan/gui/prefs-ui.cc:671
+#: ../pan/gui/prefs-ui.cc:1073
 #, fuzzy
 msgid "_Headers"
 msgstr "ヘッダー"
 
-#: ../pan/gui/prefs-ui.cc:676
+#: ../pan/gui/prefs-ui.cc:1073
+#, fuzzy
+msgid "Headers"
+msgstr "ヘッダー"
+
+#: ../pan/gui/prefs-ui.cc:1079
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
 "automatically, based on a post's score."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:679
+#: ../pan/gui/prefs-ui.cc:1082
 msgid "_Delete posts scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:681
+#: ../pan/gui/prefs-ui.cc:1084
 msgid "Mark posts _read scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:683
+#: ../pan/gui/prefs-ui.cc:1086
 msgid "_Cache posts scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:685
+#: ../pan/gui/prefs-ui.cc:1088
 msgid "Download _attachments of posts scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:693
+#: ../pan/gui/prefs-ui.cc:1091
+#, fuzzy
+msgid "Actions"
+msgstr "アクション"
+
+#: ../pan/gui/prefs-ui.cc:1096 ../pan/gui/prefs-ui.cc:1117
 msgid "Fonts"
 msgstr "フォント"
 
-#: ../pan/gui/prefs-ui.cc:695
+#: ../pan/gui/prefs-ui.cc:1098
 msgid "Use custom font in Group Pane:"
 msgstr "グループペインでカスタムフォントを使う:"
 
-#: ../pan/gui/prefs-ui.cc:700
+#: ../pan/gui/prefs-ui.cc:1103
 msgid "Use custom font in Header Pane:"
 msgstr "ヘッダーペインでカスタムフォントを使う:"
 
-#: ../pan/gui/prefs-ui.cc:705
+#: ../pan/gui/prefs-ui.cc:1108
 msgid "Use custom font in Body Pane:"
 msgstr "本文ペインでカスタムフォントを使う:"
 
-#: ../pan/gui/prefs-ui.cc:710
+#: ../pan/gui/prefs-ui.cc:1113
 #, fuzzy
 msgid "Monospace font:"
 msgstr "等幅フォント(_E):"
 
-#: ../pan/gui/prefs-ui.cc:714
+#: ../pan/gui/prefs-ui.cc:1117
 #, fuzzy
 msgid "_Fonts"
 msgstr "フォント"
 
-#: ../pan/gui/prefs-ui.cc:719
+#: ../pan/gui/prefs-ui.cc:1122
 msgid "Header Pane"
 msgstr "ヘッダーペイン"
 
-#: ../pan/gui/prefs-ui.cc:722 ../pan/gui/prefs-ui.cc:728
-#: ../pan/gui/prefs-ui.cc:734 ../pan/gui/prefs-ui.cc:740
-#: ../pan/gui/prefs-ui.cc:746 ../pan/gui/prefs-ui.cc:752
+#: ../pan/gui/prefs-ui.cc:1125 ../pan/gui/prefs-ui.cc:1131
+#: ../pan/gui/prefs-ui.cc:1137 ../pan/gui/prefs-ui.cc:1143
+#: ../pan/gui/prefs-ui.cc:1149 ../pan/gui/prefs-ui.cc:1155
 msgid "Text:"
 msgstr "テキスト:"
 
-#: ../pan/gui/prefs-ui.cc:724 ../pan/gui/prefs-ui.cc:730
-#: ../pan/gui/prefs-ui.cc:736 ../pan/gui/prefs-ui.cc:742
-#: ../pan/gui/prefs-ui.cc:748 ../pan/gui/prefs-ui.cc:754
+#: ../pan/gui/prefs-ui.cc:1127 ../pan/gui/prefs-ui.cc:1133
+#: ../pan/gui/prefs-ui.cc:1139 ../pan/gui/prefs-ui.cc:1145
+#: ../pan/gui/prefs-ui.cc:1151 ../pan/gui/prefs-ui.cc:1157
 msgid "Background:"
 msgstr "背景"
 
-#: ../pan/gui/prefs-ui.cc:726
+#: ../pan/gui/prefs-ui.cc:1129
 #, fuzzy
 msgid "Scores of 9999 or more:"
 msgstr "/フィルター(_R)/スコアが -9999 にマッチ (無視)"
 
-#: ../pan/gui/prefs-ui.cc:732
+#: ../pan/gui/prefs-ui.cc:1135
 msgid "Scores from 5000 to 9998:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:738
+#: ../pan/gui/prefs-ui.cc:1141
 msgid "Scores from 1 to 4999:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:744
+#: ../pan/gui/prefs-ui.cc:1147
 msgid "Scores from -9998 to -1:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:750
+#: ../pan/gui/prefs-ui.cc:1153
 #, fuzzy
 msgid "Scores of -9999 or less:"
 msgstr "/フィルター(_R)/スコアが -9999 にマッチ (無視)"
 
-#: ../pan/gui/prefs-ui.cc:756
+#: ../pan/gui/prefs-ui.cc:1159
 msgid "Read collapsed thread:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:758
+#: ../pan/gui/prefs-ui.cc:1161
 #, fuzzy
 msgid "Body Pane"
 msgstr "本文ペイン(_Y)"
 
-#: ../pan/gui/prefs-ui.cc:764
+#: ../pan/gui/prefs-ui.cc:1167
 #, fuzzy
 msgid "Quoted text:"
 msgstr "引用された文 2(_2):"
 
-#: ../pan/gui/prefs-ui.cc:765
+#: ../pan/gui/prefs-ui.cc:1168
 #, fuzzy
 msgid "URL:"
 msgstr "URL:"
 
-#: ../pan/gui/prefs-ui.cc:766
+#: ../pan/gui/prefs-ui.cc:1169
 #, fuzzy
 msgid "Signature:"
 msgstr "署名ファイル(_S):"
 
-#: ../pan/gui/prefs-ui.cc:768
+#: ../pan/gui/prefs-ui.cc:1171
 #, fuzzy
 msgid "_Colors"
 msgstr "カラー"
 
-#: ../pan/gui/prefs-ui.cc:773
+#: ../pan/gui/prefs-ui.cc:1171
+#, fuzzy
+msgid "Colors"
+msgstr "カラー"
+
+#: ../pan/gui/prefs-ui.cc:1176
 #, fuzzy
 msgid "Preferred Applications"
 msgstr "アプリケーション(_P)"
 
-#: ../pan/gui/prefs-ui.cc:777
+#: ../pan/gui/prefs-ui.cc:1180
 #, fuzzy
 msgid "_Web browser:"
 msgstr "ウェブブラウザー (%s は URL)(_W):"
 
-#: ../pan/gui/prefs-ui.cc:780
+#: ../pan/gui/prefs-ui.cc:1183
 #, fuzzy
 msgid "_Mail reader:"
 msgstr "メールサーバー"
 
-#: ../pan/gui/prefs-ui.cc:782
+#: ../pan/gui/prefs-ui.cc:1185
 #, fuzzy
 msgid "_Text editor:"
 msgstr "エディター"
 
-#: ../pan/gui/prefs-ui.cc:784
-msgid "A_pplications"
+#: ../pan/gui/prefs-ui.cc:1187
+#, fuzzy
+msgid "_Applications"
 msgstr "アプリケーション(_P)"
 
-#: ../pan/gui/prefs-ui.cc:789 ../pan/gui/task-pane.cc:508
+#: ../pan/gui/prefs-ui.cc:1187
 #, fuzzy
-#| msgid "Decoding \"%s\""
+msgid "Applications"
+msgstr "アプリケーション(_P)"
+
+#: ../pan/gui/prefs-ui.cc:1192 ../pan/gui/task-pane.cc:512
+#, fuzzy
 msgid "Encoding"
 msgstr "\"%s\" の解読中"
 
-#: ../pan/gui/prefs-ui.cc:793
-msgid "Default bytes per file (for encoder)"
+#: ../pan/gui/prefs-ui.cc:1196
+msgid "Default bytes per file (for encoder): "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:798
+#: ../pan/gui/prefs-ui.cc:1201
 msgid "_Upload"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1201
+#, fuzzy
+msgid "Upload"
+msgstr "読みこみ中"
+
+#: ../pan/gui/prefs-ui.cc:1219
+msgid "_Hotkeys"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1219
+msgid "Hotkeys"
 msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:83
@@ -2466,10 +2535,6 @@ msgstr "オプション情報"
 
 #: ../pan/gui/profiles-dialog.cc:236
 #, fuzzy
-#| msgid ""
-#| "When posting to Usenet, your article's Message-ID contains a domain "
-#| "name.  You can set a custom domain name here, or leave it blank to let "
-#| "Pan use the domain name from your email address."
 msgid ""
 "When posting to Usenet, your article's Message-ID contains a domain name.  \n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
@@ -2500,51 +2565,43 @@ msgstr ""
 msgid "_Attribution:"
 msgstr "属性(_A):"
 
-#: ../pan/gui/profiles-dialog.cc:267
+#: ../pan/gui/profiles-dialog.cc:268
 msgid ""
 "Extra headers to be included in your posts, such as\n"
 "Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
 "Organization: Your Organization\n"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:277
+#: ../pan/gui/profiles-dialog.cc:278
 #, fuzzy
 msgid "E_xtra Headers:"
 msgstr "追加ヘッダー"
 
-#: ../pan/gui/profiles-dialog.cc:322
+#: ../pan/gui/profiles-dialog.cc:323
 #, fuzzy
 msgid "Invalid email address."
 msgstr "アドレス \"%s\" は正しくありません"
 
-#: ../pan/gui/profiles-dialog.cc:323
+#: ../pan/gui/profiles-dialog.cc:324
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:478
+#: ../pan/gui/profiles-dialog.cc:479
 msgid "New Profile"
 msgstr "新規のプロファイル"
 
-#: ../pan/gui/profiles-dialog.cc:524
+#: ../pan/gui/profiles-dialog.cc:525
 #, fuzzy
 msgid "Posting Profiles"
 msgstr "/ツール(_T)/投稿時のプロファイル(_P)..."
 
-#: ../pan/gui/profiles-dialog.cc:540
+#: ../pan/gui/profiles-dialog.cc:541
 #, fuzzy
 msgid "Profiles"
 msgstr "プロファイル"
 
 #: ../pan/gui/save-attach-ui.cc:77 ../pan/gui/save-ui.cc:77
 #, fuzzy, c-format
-#| msgid ""
-#| "%g - group as one directory (alt.binaries.pictures.trains)\n"
-#| "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
-#| " \n"
-#| "\"/home/user/News/Pan/%g\" becomes\n"
-#| "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
-#| "\"/home/user/News/Pan/%G\" becomes\n"
-#| "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
@@ -2580,7 +2637,6 @@ msgstr "キューの末尾にタスクを追加する"
 
 #: ../pan/gui/save-attach-ui.cc:257
 #, fuzzy
-#| msgid "Save Attachments"
 msgid "Pan: Save Attachments"
 msgstr "記事の添付を保存"
 
@@ -2602,13 +2658,11 @@ msgstr ""
 
 #: ../pan/gui/save-attach-ui.cc:314 ../pan/gui/save-ui.cc:332
 #, fuzzy
-#| msgid "Port:"
 msgid "_Priority:"
 msgstr "ポート:"
 
 #: ../pan/gui/save-ui.cc:233
 #, fuzzy
-#| msgid "Save Attachments"
 msgid "Save attachments"
 msgstr "記事の添付を保存"
 
@@ -2619,7 +2673,6 @@ msgstr "記事テキストを保存(_X)"
 
 #: ../pan/gui/save-ui.cc:235
 #, fuzzy
-#| msgid "Save a_ttachments in directory:"
 msgid "Save attachments and text"
 msgstr "添付ファイルをディレクトリに保存(_T):"
 
@@ -2931,7 +2984,6 @@ msgstr ""
 
 #: ../pan/gui/server-ui.cc:402
 #, fuzzy
-#| msgid "No Connections"
 msgid "Use Secure SSL Connections"
 msgstr "接続していません"
 
@@ -3030,7 +3082,6 @@ msgstr ""
 
 #: ../pan/gui/task-pane.cc:157
 #, fuzzy
-#| msgid "Unknown"
 msgid "unknown"
 msgstr "不明"
 
@@ -3038,114 +3089,110 @@ msgstr "不明"
 msgid "Choose new destination for selected Tasks"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:413
+#: ../pan/gui/task-pane.cc:417
 #, fuzzy, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan %s タスクマネージャー (キュー %d、実行中 %d、停止 %d)"
 
-#: ../pan/gui/task-pane.cc:415
+#: ../pan/gui/task-pane.cc:419
 #, fuzzy, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan %s タスクマネージャー (キュー %d、実行中 %d)"
 
-#: ../pan/gui/task-pane.cc:417
+#: ../pan/gui/task-pane.cc:421
 #, fuzzy, c-format
 msgid "Pan: Tasks"
 msgstr "Pan: タスクマネージャー"
 
-#: ../pan/gui/task-pane.cc:442
+#: ../pan/gui/task-pane.cc:446
 #, fuzzy, c-format
-#| msgid "(%u selected)"
 msgid "%lu selected, %s"
 msgstr "(%u 個選択)"
 
-#: ../pan/gui/task-pane.cc:506
+#: ../pan/gui/task-pane.cc:510
 msgid "Running"
 msgstr "実行中"
 
-#: ../pan/gui/task-pane.cc:507
+#: ../pan/gui/task-pane.cc:511
 #, fuzzy
-#| msgid "Decoding \"%s\""
 msgid "Decoding"
 msgstr "\"%s\" の解読中"
 
-#: ../pan/gui/task-pane.cc:509
+#: ../pan/gui/task-pane.cc:513
 #, fuzzy
-#| msgid "Queued for Saving"
 msgid "Queued for Decode"
 msgstr "保存待ち"
 
-#: ../pan/gui/task-pane.cc:510
+#: ../pan/gui/task-pane.cc:514
 #, fuzzy
-#| msgid "Queued for Saving"
 msgid "Queued for Encode"
 msgstr "保存待ち"
 
-#: ../pan/gui/task-pane.cc:511
+#: ../pan/gui/task-pane.cc:515
 msgid "Queued"
 msgstr "キューに入れました"
 
-#: ../pan/gui/task-pane.cc:512
+#: ../pan/gui/task-pane.cc:516
 msgid "Stopped"
 msgstr "停止"
 
-#: ../pan/gui/task-pane.cc:513
+#: ../pan/gui/task-pane.cc:517
 msgid "Removing"
 msgstr "削除中"
 
-#: ../pan/gui/task-pane.cc:542
+#: ../pan/gui/task-pane.cc:546
 #, fuzzy, c-format
 msgid "%d%% Done"
 msgstr "% 完了"
 
-#: ../pan/gui/task-pane.cc:548
+#: ../pan/gui/task-pane.cc:552
 #, fuzzy, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%.2f Kバイト/秒、残り %d:%02d:%02d"
 
-#: ../pan/gui/task-pane.cc:642 ../pan/gui/task-pane.cc:643
+#: ../pan/gui/task-pane.cc:646 ../pan/gui/task-pane.cc:647
 msgid "Move To Top"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:647 ../pan/gui/task-pane.cc:648
+#: ../pan/gui/task-pane.cc:651 ../pan/gui/task-pane.cc:652
 msgid "Move To Bottom"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:652 ../pan/gui/task-pane.cc:653
+#: ../pan/gui/task-pane.cc:656 ../pan/gui/task-pane.cc:657
 #, fuzzy
 msgid "Stop Task"
 msgstr "タスク無し"
 
-#: ../pan/gui/task-pane.cc:657 ../pan/gui/task-pane.cc:658
+#: ../pan/gui/task-pane.cc:661 ../pan/gui/task-pane.cc:662
 #, fuzzy
 msgid "Delete Task"
 msgstr "スレッドを削除します"
 
-#: ../pan/gui/task-pane.cc:662 ../pan/gui/task-pane.cc:663
+#: ../pan/gui/task-pane.cc:666 ../pan/gui/task-pane.cc:667
 #, fuzzy
 msgid "Restart Task"
 msgstr "選択したタスクを再起動"
 
-#: ../pan/gui/task-pane.cc:667 ../pan/gui/task-pane.cc:668
+#: ../pan/gui/task-pane.cc:671 ../pan/gui/task-pane.cc:672
 msgid "Change Download Destination"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:725
+#: ../pan/gui/task-pane.cc:729
 #, fuzzy
 msgid "_Online"
 msgstr "オンライン"
 
-#: ../pan/gui/task-pane.cc:742
+#: ../pan/gui/task-pane.cc:746
 #, fuzzy
 msgid "Restart Tasks"
 msgstr "選択したタスクを再起動"
 
-#: ../pan/gui/task-pane.cc:744
+#: ../pan/gui/task-pane.cc:748
 #, fuzzy
 msgid "Stop Tasks"
 msgstr "タスク無し"
 
-#: ../pan/gui/task-pane.cc:746
+#: ../pan/gui/task-pane.cc:750
 #, fuzzy
 msgid "Delete Tasks"
 msgstr "スレッドを削除します"
@@ -3157,7 +3204,6 @@ msgstr "\"ウェブブラウザー\" コマンド行の解析時にエラー: %s
 
 #: ../pan/tasks/decoder.cc:115
 #, fuzzy, c-format
-#| msgid "Couldn't read signature file \"%s\": %s"
 msgid "Couldn't save file \"%s\": %s"
 msgstr "署名ファイル \"%s\" を読みこめませんでした: %s"
 
@@ -3168,7 +3214,6 @@ msgstr ""
 #: ../pan/tasks/decoder.cc:152 ../pan/tasks/socket-impl-gio.cc:352
 #: ../pan/tasks/socket-impl-openssl.cc:634
 #, fuzzy, c-format
-#| msgid "Error reading from socket: %s"
 msgid "Error reading from %s: %s"
 msgstr "ソケットからの読み込みエラー: %s"
 
@@ -3186,25 +3231,21 @@ msgstr "\"%s\" の読み込みエラー: %s"
 
 #: ../pan/tasks/decoder.cc:314 ../pan/tasks/task-article.cc:350
 #, fuzzy, c-format
-#| msgid "Decoding \"%s\""
 msgid "Decoding %s"
 msgstr "\"%s\" の解読中"
 
 #: ../pan/tasks/encoder.cc:102 ../pan/tasks/encoder.cc:155
 #, fuzzy, c-format
-#| msgid "Error reading from socket: %s"
 msgid "Error loading %s from cache."
 msgstr "ソケットからの読み込みエラー: %s"
 
 #: ../pan/tasks/encoder.cc:177
 #, fuzzy, c-format
-#| msgid "Error reading from socket: %s"
 msgid "Error encoding %s: %s"
 msgstr "ソケットからの読み込みエラー: %s"
 
 #: ../pan/tasks/encoder.cc:269
 #, fuzzy, c-format
-#| msgid "Decoding \"%s\""
 msgid "Encoding %s"
 msgstr "\"%s\" の解読中"
 
@@ -3215,7 +3256,6 @@ msgstr ""
 
 #: ../pan/tasks/nntp.cc:139
 #, fuzzy, c-format
-#| msgid "My server requires a password."
 msgid "%s requires a password, but none is set."
 msgstr "サーバーはログインが必要"
 
@@ -3231,7 +3271,6 @@ msgstr ""
 
 #: ../pan/tasks/nntp-pool.cc:222
 #, fuzzy, c-format
-#| msgid "Unable to connect to mail server \"%*.*s\""
 msgid "Unable to connect to \"%s\""
 msgstr "メールサーバー \"%*.*s\" に接続できません"
 
@@ -3359,7 +3398,6 @@ msgstr "(%lu 行 / %lu 個の記事)"
 
 #: ../pan/tasks/task-xoverinfo.cc:78
 #, fuzzy, c-format
-#| msgid "Getting all headers for \"%s\""
 msgid "Getting header counts for \"%s\""
 msgstr "\"%s\" の全ヘッダーを取得中"
 
@@ -3660,27 +3698,26 @@ msgstr ""
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:200
+#: ../pan/usenet-utils/ssl-utils.h:199
 #, fuzzy, c-format
-#| msgid "Error starting external editor: %s"
 msgid "Error printing the server certificate for '%s'"
 msgstr "外部エディターの起動時にエラー: %s"
 
-#: ../pan/usenet-utils/ssl-utils.h:217
+#: ../pan/usenet-utils/ssl-utils.h:216
 #, c-format
 msgid ""
 "The current server <b>'%s'</b> sent this security certificate :\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:218
+#: ../pan/usenet-utils/ssl-utils.h:217
 #, c-format
 msgid ""
 "Certificate information for server <b>'%s'</b> :\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:220
+#: ../pan/usenet-utils/ssl-utils.h:219
 #, c-format
 msgid ""
 "%s<b>Issuer information:</b>\n"
@@ -3694,6 +3731,17 @@ msgstr ""
 #: ../pan/usenet-utils/text-massager.cc:397
 msgid "> [quoted text muted]"
 msgstr "> [引用された本文を隠しています]"
+
+#~ msgid "Read News from Usenet"
+#~ msgstr "Usenet のニュースを読みます"
+
+#, fuzzy
+#~ msgid "_Contents"
+#~ msgstr "フォント"
+
+#, fuzzy
+#~ msgid "Unable to open help file"
+#~ msgstr "ファイル権限を変更できません"
 
 #, fuzzy
 #~ msgid "Attachment not shown: MIME type %s/%s\n"

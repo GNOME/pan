@@ -1261,10 +1261,10 @@ BodyPane :: on_verbose_tooltip_cb(GtkWidget  *widget,
   char buf[2048];
   std::pair<std::string,std::string> name_and_email = get_email_address(info.signers[0].name);
   g_snprintf(buf, sizeof(buf),
-             "<u>This is a <b>PGP-Signed</b> message.</u>\n\n"
+             _("<u>This is a <b>PGP-Signed</b> message.</u>\n\n"
              "<b>Signer</b> : %s ('%s')\n"
              "<b>Valid until</b> : %s\n"
-             "<b>Created on</b> : %s",
+             "<b>Created on</b> : %s"),
              name_and_email.first.c_str(), name_and_email.second.c_str(),
              (info.signers[0].never_expires ? _("always") : ed.get_date_string(info.signers[0].expires)),
              ed.get_date_string(info.signers[0].created)
