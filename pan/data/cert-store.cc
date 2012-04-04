@@ -91,19 +91,19 @@ namespace pan
     if (status & GNUTLS_CERT_REVOKED)
     {
       g_warning ("The certificate has been revoked.\n");
-      fail = true;
+      fail = !mydata->always_trust;
     }
 
     if (status & GNUTLS_CERT_EXPIRED)
     {
       g_warning ("The certificate has expired\n");
-      fail = true;
+      fail = !mydata->always_trust;
     }
 
     if (status & GNUTLS_CERT_NOT_ACTIVATED)
     {
       g_warning ("The certificate is not yet activated\n");
-      fail = true;
+      fail = !mydata->always_trust;
     }
 
     /* Up to here the process is the same for X.509 certificates and
@@ -139,9 +139,9 @@ namespace pan
 
     if (!gnutls_x509_crt_check_hostname (cert, mydata->hostname_full.c_str()))
     {
-     if (!mydata->always_trust)
+      if (!mydata->always_trust)
         g_warning ("The certificate's owner does not match hostname '%s' !\n", mydata->hostname_full.c_str());
-     goto _fail;
+      goto _fail;
     }
 
     if (fail) goto _fail;
