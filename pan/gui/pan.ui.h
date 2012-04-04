@@ -149,7 +149,6 @@ const char * fallback_ui_file =
 "        <menuitem action='cancel-article' />\n"
 "      </menu>\n"
 "    <menu action='help-menu'>\n"
-"      <menuitem action='pan-manual' />\n"
 "      <menuitem action='pan-web-page' />\n"
 "      <menuitem action='tip-jar' />\n"
 "      <menuitem action='bug-report' />\n"

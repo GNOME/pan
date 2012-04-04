@@ -38,8 +38,6 @@ AC_CONFIG_SRCDIR(pan/general/quark.cc)
 AM_INIT_AUTOMAKE([1.11.1 tar-ustar dist-bzip2])
 AM_MAINTAINER_MODE([enable])
 
-GNOME_DOC_INIT
-
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 dnl glib, gmime, and gtk are mandatory prerequisites.
@@ -49,6 +47,7 @@ GMIME26_REQUIRED=2.5.5
 GTK_REQUIRED=2.16.0
 GTK3_REQUIRED=3.0.0
 GTKSPELL_REQUIRED=2.0.7
+GTKSPELL3_REQUIRED=2.0.16
 ENCHANT_REQUIRED=1.6.0
 GNUTLS_REQUIRED=2.12.10
 LIBNOTIFY_REQUIRED=0.4.1
@@ -105,15 +104,6 @@ if test "x$want_gmime_crypto" = "xyes" ; then
   fi
 fi
 
-dnl User help support
-AC_ARG_WITH(gnome-doc-help, AS_HELP_STRING([--with-gnome-doc-help],[enable support for user help (gnome-doc-utils)]),[want_gnome_doc_help=$withval], [want_gnome_doc_help=yes])
-if test "x$want_gnome_doc_help" = "xyes" ; then
-  AC_DEFINE(HAVE_HELP,[1], [user help in Pan (with gnome-doc-utils)])
-  AM_CONDITIONAL(ENABLE_HELP, true)
-else
-  AM_CONDITIONAL(ENABLE_HELP, false)
-fi
-
 dnl D-Bus support
 AC_ARG_WITH(dbus, AS_HELP_STRING([--with-dbus],[enable D-Bus support]), [want_dbus=$withval], [want_dbus=yes])
 if test "x$want_dbus" = "xyes" ; then
@@ -123,19 +113,7 @@ fi
 dnl GtkSpell support
 gtkspell_msg=no
 AC_ARG_WITH(gtkspell, AS_HELP_STRING([--with-gtkspell],[enable GtkSpell support]), [want_gtkspell=$withval], [want_gtkspell=yes])
-if test "x$want_gtkspell" = "xyes" ; then
-	PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
-	                  [
-	                  gtkspell_msg=yes
-	                  AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
-                    ],
-	                  [
-	                  gtkspell_msg=no
-	                  AC_MSG_RESULT(no)
-	                  ])
-fi
-AC_SUBST(ENCHANT_CFLAGS)
-AC_SUBST(ENCHANT_LIBS)
+
 
 dnl GTK+ 3 support
 gtk_msg=no
@@ -145,9 +123,35 @@ if test "x$want_gtk3" = "xyes" ; then
 	                  [gtk_msg="yes >= $GTK3_REQUIRED"
 	                  AC_DEFINE(HAVE_GTK,[1],[GTK+ 3 support])]
 	                  )
+  if test "x$want_gtkspell" = "xyes" ; then
+    PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-2.0 >= $GTKSPELL3_REQUIRED enchant >= $ENCHANT_REQUIRED],
+                      [
+                      gtkspell_msg=yes
+                      AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
+                      ],
+                      [
+                      gtkspell_msg=no
+                      AC_MSG_RESULT(no)
+                      ])
+  fi
+  
 else
+    if test "x$want_gtkspell" = "xyes" ; then
+    PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
+                      [
+                      gtkspell_msg=yes
+                      AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
+                      ],
+                      [
+                      gtkspell_msg=no
+                      AC_MSG_RESULT(no)
+                      ])
+    fi
     AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
 fi
+
+AC_SUBST(ENCHANT_CFLAGS)
+AC_SUBST(ENCHANT_LIBS)
 
 dnl GnuTLS support
 gnutls_msg=no
@@ -253,14 +257,6 @@ AC_CONFIG_FILES([Makefile
                  pan/data-impl/Makefile
                  pan/gui/Makefile])
 dnl                 pan/data/decode-test-cache/Makefile
-
-dnl Check whether we are building with gnome-doc-utils
-if test "x$want_gnome_doc_help" = "xyes" ; then
-  echo "checking whether we are building with gnome-doc-utils... yes"
-  AC_CONFIG_FILES([help/Makefile])
-else
-  echo "checking whether we are building with gnome-doc-utils... no"
-fi
 
 AC_OUTPUT
 

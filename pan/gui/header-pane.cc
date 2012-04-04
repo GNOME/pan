@@ -515,7 +515,7 @@ HeaderPane :: build_model (const Quark               & group,
 
 namespace
 {
-  void save_sort_order (Prefs& prefs, PanTreeStore* store)
+  void save_sort_order (const Quark& group, GroupPrefs& prefs, PanTreeStore* store)
   {
     g_assert (store);
     g_assert (GTK_IS_TREE_SORTABLE(store));
@@ -523,8 +523,8 @@ namespace
     gint sort_column (0);
     GtkSortType sort_type;
     gtk_tree_sortable_get_sort_column_id (GTK_TREE_SORTABLE(store), &sort_column,  &sort_type);
-    prefs.set_int ("header-pane-sort-column", sort_column);
-    prefs.set_flag ("header-pane-sort-ascending", sort_type==GTK_SORT_ASCENDING);
+    prefs.set_int  (group, "header-pane-sort-column", sort_column);
+    prefs.set_flag (group, "header-pane-sort-ascending", sort_type==GTK_SORT_ASCENDING);
   }
 }
 
@@ -541,8 +541,8 @@ HeaderPane :: rebuild ()
   _mid_to_row.clear ();
   _tree_store = build_model (_group, _atree, NULL);
 
-  const bool sort_ascending = _prefs.get_flag ("header-pane-sort-ascending", false);
-  int sort_column = _prefs.get_int ("header-pane-sort-column", COL_DATE);
+  const bool sort_ascending = _group_prefs.get_flag (_group, "header-pane-sort-ascending", false);
+  int sort_column = _group_prefs.get_int (_group, "header-pane-sort-column", COL_DATE);
   if (sort_column<0 || sort_column>=N_COLUMNS) // safeguard against odd settings
     sort_column = COL_DATE;
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE(_tree_store),
@@ -577,7 +577,7 @@ HeaderPane :: set_group (const Quark& new_group)
 
     if (_tree_store)
     {
-      save_sort_order (_prefs, _tree_store);
+      save_sort_order (get_group(), _group_prefs, _tree_store);
       _mid_to_row.clear ();
       _tree_store = 0;
       gtk_tree_view_set_model (GTK_TREE_VIEW(_tree_view), NULL);
@@ -1056,6 +1056,7 @@ namespace
   static gboolean return_pressed_download_all (gpointer data)
   {
     HeaderPane * self (static_cast<HeaderPane*>(data));
+    // TODO move this into headerpane
     self->_gui.do_read_or_save_articles();
     return false;
 

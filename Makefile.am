@@ -1,9 +1,5 @@
 SUBDIRS = po uulib pan
 
-if ENABLE_HELP
-SUBDIRS += help
-endif
-
 @INTLTOOL_DESKTOP_RULE@
 
 DESKTOP_IN_FILES=pan.desktop.in
@@ -14,10 +10,6 @@ DISTCLEANFILES = \
  $(srcdir)/intltool-merge \
  $(srcdir)/intltool-update \
  $(srcdir)/pan.desktop
-
-if ENABLE_HELP
-DISTCLEANFILES += $(srcdir)/gnome-doc-utils.make
-endif
 
 MAINTAINERCLEANFILES = \
  $(srcdir)/INSTALL \
@@ -46,10 +38,6 @@ EXTRA_DIST = \
  $(DESKTOP_FILES) \
  intltool-extract.in intltool-merge.in intltool-update.in \
  pan_git_rev
-
-if ENABLE_HELP
-EXTRA_DIST += gnome-doc-utils.make 
-endif 
 
 DISTCHECK_CONFIGURE_FLAGS="--disable-scrollkeeper"
 

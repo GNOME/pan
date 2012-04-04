@@ -1548,22 +1548,24 @@ void GUI :: do_reply_to ()
     g_object_unref (message);
   }
 }
-void GUI :: do_pan_manual ()
-{
-#ifdef HAVE_HELP
-  GError * error (NULL);
-  gtk_show_uri (NULL, "ghelp:pan", gtk_get_current_event_time (), &error);
-    if (error) {
-      GtkWidget * w = gtk_message_dialog_new (get_window(_root),
-                                              GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
-                                              GTK_MESSAGE_ERROR,
-                                              GTK_BUTTONS_CLOSE,
-                                              _("Unable to open help file"));
-      g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
-      gtk_widget_show_all (w);
-  }
-#endif
-}
+
+//void GUI :: do_pan_manual ()
+//{
+//#ifdef HAVE_HELP
+//  GError * error (NULL);
+//  gtk_show_uri (NULL, "ghelp:pan", gtk_get_current_event_time (), &error);
+//    if (error) {
+//      GtkWidget * w = gtk_message_dialog_new (get_window(_root),
+//                                              GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+//                                              GTK_MESSAGE_ERROR,
+//                                              GTK_BUTTONS_CLOSE,
+//                                              _("Unable to open help file"));
+//      g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
+//      gtk_widget_show_all (w);
+//  }
+//#endif
+//}
+
 void GUI :: do_pan_web ()
 {
   URL :: open (_prefs, "http://pan.rebelbase.com/");
