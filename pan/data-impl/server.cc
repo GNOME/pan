@@ -227,24 +227,24 @@ DataImpl :: get_server_auth (const Quark   & server,
     PasswordData pw;
     pw.server = s->host;
     pw.user = s->username;
-    GnomeKeyringResult res (password_decrypt(pw));
-    switch (res)
-    {
-      case GNOME_KEYRING_RESULT_NO_MATCH:
-        Log::add_info_va(_("There seems to be no Password set for Server %s."), s->host.c_str());
-        break;
-
-      case GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON:
-        Log::add_urgent_va (_("The Gnome keyring denied access to the Passwords."), s->host.c_str());
-        break;
-
-      case GNOME_KEYRING_RESULT_OK:
-        setme_password.assign(pw.pw.str, pw.pw.len);
-        break;
-
-      default:
-        break;
-    }
+    password_decrypt(pw);
+//    switch (res)
+//    {
+//      case GNOME_KEYRING_RESULT_NO_MATCH:
+//        Log::add_info_va(_("There seems to be no Password set for Server %s."), s->host.c_str());
+//        break;
+//
+//      case GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON:
+//        Log::add_urgent_va (_("The Gnome keyring denied access to the Passwords."), s->host.c_str());
+//        break;
+//
+//      case GNOME_KEYRING_RESULT_OK:
+//        setme_password.assign(pw.pw.str, pw.pw.len);
+//        break;
+//
+//      default:
+//        break;
+//    }
 #endif
   }
 

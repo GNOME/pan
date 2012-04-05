@@ -163,11 +163,13 @@ DataImpl :: password_decrypt (PasswordData& pw) const
     NULL);
 
   std::string tmp;
-  if (pwd) tmp = pwd;
-  gnome_keyring_free_password(pwd);
+  if (pwd)
+  { tmp = pwd;
+    gnome_keyring_free_password(pwd);
+  }
   pw.pw = tmp;
 
-  return ret;
+  return (pwd ? GNOME_KEYRING_RESULT_OK : GNOME_KEYRING_RESULT_DENIED) ;
 }
 #endif
 

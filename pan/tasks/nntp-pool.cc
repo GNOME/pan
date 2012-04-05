@@ -171,7 +171,7 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
                                 Socket            * socket)
 {
   std::string user, pass;
-  _server_info.get_server_auth (_server, user, pass);
+  ok = ok && _server_info.get_server_auth (_server, user, pass);
   debug("on socket created "<<host<<" "<<ok<<" "<<socket<<" "<<pass);
   if (!ok)
   {
@@ -182,8 +182,6 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
   {
     // okay, we at least we established a connection.
     // now try to handshake and pass the buck to on_nntp_done().
-    std::string user, pass;
-    _server_info.get_server_auth (_server, user, pass);
     NNTP * nntp = new NNTP (_server, user, pass, socket);
     nntp->handshake (this);
   }
