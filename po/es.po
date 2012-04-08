@@ -13,15 +13,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan2.master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-04 20:58+0200\n"
-"PO-Revision-Date: 2012-02-17 18:01+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=Pan&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2012-04-08 03:32+0000\n"
+"PO-Revision-Date: 2012-04-08 12:36+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
@@ -64,7 +65,8 @@ msgstr "Error al abrir la carpeta de certificados SSL: «%s»: %s"
 
 #: ../pan/data/cert-store.cc:270
 #, c-format
-msgid "Succesfully added %d SSL PEM certificate(s) to Certificate Store."
+#| msgid "Succesfully added %d SSL PEM certificate(s) to Certificate Store."
+msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
 msgstr ""
 "%d certificado(s) SSL PEM añadido(s) con éxito al almacén de certificados."
 
@@ -75,7 +77,8 @@ msgid "Loaded data backend in %.1f seconds"
 msgstr "Se cargó el backend de datos en %.1f segundos"
 
 #: ../pan/data-impl/data-impl.cc:140
-msgid "Pan newsreader server passwords"
+#| msgid "Pan newsreader server passwords"
+msgid "Pan Newsreader's server passwords"
 msgstr "Contraseñas del servidor del lector de noticias Pan"
 
 #: ../pan/data-impl/groups.cc:94
@@ -118,11 +121,13 @@ msgstr "Se han añadido %lu artículos a %s."
 
 #: ../pan/data-impl/server.cc:234
 #, c-format
-msgid "There seems to be no Password set for Server %s."
+#| msgid "There seems to be no Password set for Server %s."
+msgid "There seems to be no password set for server %s."
 msgstr "Parece que no hay una contraseña establecida para el servidor %s."
 
 #: ../pan/data-impl/server.cc:238
-msgid "The Gnome keyring denied access to the Passwords."
+#| msgid "The Gnome keyring denied access to the Passwords."
+msgid "GNOME Keyring denied access to the passwords."
 msgstr "El depósito de claves de GNOME denegó el acceso a las contraseñas."
 
 #: ../pan/data-impl/xover.cc:239
@@ -793,10 +798,15 @@ msgstr " es "
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
 "\n"
-"<b>Signer</b> : %s ('%s')\n"
-"<b>Valid until</b> : %s\n"
-"<b>Created on</b> : %s"
+"<b>Signer:</b> %s ('%s')\n"
+"<b>Valid until:</b> %s\n"
+"<b>Created on:</b> %s"
 msgstr ""
+"<u>Esto es un mensaje <b>firmado con PGP</b> message.</u>\n"
+"\n"
+"<b>Firmante:</b> %s ('%s')\n"
+"<b>Válido hasta:</b> %s\n"
+"<b>Creado en:</b> %s"
 
 #: ../pan/gui/body-pane.cc:1269
 msgid "always"
@@ -807,11 +817,13 @@ msgid "Copy _URL"
 msgstr "Copiar _URL"
 
 #: ../pan/gui/body-pane.cc:1680
-msgid "Save attachment as ...."
-msgstr "Grabar adjunto como…"
+#| msgid "Save attachment as ...."
+msgid "Save Attachment As..."
+msgstr "Guardar adjunto como…"
 
 #: ../pan/gui/body-pane.cc:1683
-msgid "Save all attachments"
+#| msgid "Save all attachments"
+msgid "Save All Attachments"
 msgstr "Guardar todos los adjuntos"
 
 #. add a toolbar for attachments
@@ -949,20 +961,24 @@ msgid "Other..."
 msgstr "Otro…"
 
 #: ../pan/gui/e-cte-dialog.c:78
-msgid "Default encoding"
+#| msgid "Default encoding"
+msgid "Default Encoding"
 msgstr "Codificación predeterminada"
 
 #: ../pan/gui/e-cte-dialog.c:80
-msgid "7Bit Encoding"
+#| msgid "7Bit Encoding"
+msgid "7-Bit Encoding"
 msgstr "Codificación de 7 bits"
 
 #: ../pan/gui/e-cte-dialog.c:82
-msgid "8Bit Encoding"
+#| msgid "8Bit Encoding"
+msgid "8-Bit Encoding"
 msgstr "Codificación de 8 bits"
 
 #: ../pan/gui/e-cte-dialog.c:84
-msgid "BASE64 Encoding"
-msgstr "Codificación en BASE64"
+#| msgid "BASE64 Encoding"
+msgid "Base64 Encoding"
+msgstr "Codificación en Base64"
 
 #: ../pan/gui/e-cte-dialog.c:86
 msgid "Quoted-Printable Encoding"
@@ -1083,7 +1099,8 @@ msgid "Send this article to ask your server to cancel your other one."
 msgstr "Envíe este artículo para pedirle a su servidor que cancele el otro."
 
 #: ../pan/gui/gui.cc:1387
-msgid "You marked some articles for deletion"
+#| msgid "You marked some articles for deletion"
+msgid "You have marked some articles for deletion."
 msgstr "Marcó algunos artículos para eliminarlos"
 
 #: ../pan/gui/gui.cc:1388
@@ -1095,8 +1112,9 @@ msgid "Always trust"
 msgstr "Confiar siempre"
 
 #: ../pan/gui/gui.cc:1416
-msgid "Do you want to accept it permanently (deletable afterwards) ?"
-msgstr "¿Desea aceptarlo permanentemente (luego se puede eliminar)?"
+#| msgid "Do you want to accept it permanently (deletable afterwards) ?"
+msgid "Do you want to accept it permanently? (You can change this later.)"
+msgstr "¿Desea aceptarlo permanentemente? (luego se puede eliminar)"
 
 #: ../pan/gui/gui.cc:1595
 msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
@@ -1174,9 +1192,12 @@ msgid "Bytes"
 msgstr "Bytes"
 
 #: ../pan/gui/gui.cc:1917
+#| msgid ""
+#| "Error loading iconv library. Some Charsets in the GUI will not be able to "
+#| "be encoded."
 msgid ""
-"Error loading iconv library. Some Charsets in the GUI will not be able to be "
-"encoded."
+"Error loading iconv library. Encoding certain character sets will not work "
+"in GUI."
 msgstr ""
 "Error al cargar la biblioteca iconv. Algunos caracteres en la GUI no se "
 "podrán codificar."
@@ -1268,7 +1289,8 @@ msgid "Maximize"
 msgstr "Maximizar"
 
 #: ../pan/gui/pan.cc:383
-msgid "An Error has occurred!"
+#| msgid "An Error has occurred!"
+msgid "An error has occurred!"
 msgstr "Ha ocurrido un error."
 
 #: ../pan/gui/pan.cc:397
@@ -1350,7 +1372,8 @@ msgstr "Notificación de Pan"
 
 #: ../pan/gui/post-ui.cc:186
 #, c-format
-msgid "Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."
+#| msgid "Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."
+msgid "Upload queue: %ld tasks, %ld KB (~ %.2f MB) total."
 msgstr "Cola de subida: %ld tareas, %ld KB (~ %.2f MB) total."
 
 #: ../pan/gui/post-ui.cc:286
@@ -1480,7 +1503,8 @@ msgid "Always Run Editor"
 msgstr "Siempre ejecutar el editor"
 
 #: ../pan/gui/post-ui.cc:490
-msgid "Remember Character Encoding for this Group"
+#| msgid "Remember Character Encoding for this Group"
+msgid "Remember Character Encoding for This Group"
 msgstr "Recordar el conjunto de caracteres para este grupo"
 
 #: ../pan/gui/post-ui.cc:491
@@ -1488,11 +1512,13 @@ msgid "Thread Attached Replies"
 msgstr "Anidar las respuestas adjuntas"
 
 #: ../pan/gui/post-ui.cc:492
-msgid "PGP-Encrypt the Message"
+#| msgid "PGP-Encrypt the Message"
+msgid "PGP-Encrypt the Article"
 msgstr "Cifrar el mensaje con PGP"
 
 #: ../pan/gui/post-ui.cc:493
-msgid "PGP-Sign the Message"
+#| msgid "PGP-Sign the Message"
+msgid "PGP-Sign the Article"
 msgstr "Firmar el mensaje con PGP"
 
 #: ../pan/gui/post-ui.cc:494
@@ -1529,8 +1555,9 @@ msgid "Go Back"
 msgstr "Retroceder"
 
 #: ../pan/gui/post-ui.cc:761
-msgid "Post Anyway"
-msgstr "Publicar de todas formas"
+#| msgid "Post Anyway"
+msgid "Continue Anyway"
+msgstr "Continuar de todas formas"
 
 #. Prompt the user
 #: ../pan/gui/post-ui.cc:790
@@ -1569,9 +1596,12 @@ msgstr "¿Conectarse para publicar este artículo?"
 
 #: ../pan/gui/post-ui.cc:1102
 #, c-format
+#| msgid ""
+#| "Error signing/encrypting your message. Perhaps you misspelled your email-"
+#| "address (%s) ?"
 msgid ""
-"Error signing/encrypting your message. Perhaps you misspelled your email-"
-"address (%s) ?"
+"Error signing/encrypting your message. Perhaps you misspelled your email "
+"address (%s)?"
 msgstr ""
 "Error al firmar/cifrar el mensaje. ¿La dirección de correo-e (%s) es "
 "correcta?"
@@ -1644,7 +1674,8 @@ msgid "Filename"
 msgstr "Nombre de archivo"
 
 #: ../pan/gui/post-ui.cc:2500
-msgid "Size (kB)"
+#| msgid "Size (kB)"
+msgid "Size (KB)"
 msgstr "Tamaño (KB)"
 
 #: ../pan/gui/post-ui.cc:2600
@@ -1656,7 +1687,8 @@ msgid "Subject Line"
 msgstr "Línea de asunto"
 
 #: ../pan/gui/post-ui.cc:2612
-msgid "The current Subject Line"
+#| msgid "The current Subject Line"
+msgid "The current subject line"
 msgstr "La línea de asunto actual"
 
 #: ../pan/gui/post-ui.cc:2626
@@ -1706,7 +1738,8 @@ msgid "Add \"_User-Agent\" header"
 msgstr "Añadir cabecera «_User-Agent»"
 
 #: ../pan/gui/post-ui.cc:2724
-msgid "Add \"Message-_Id\" header"
+#| msgid "Add \"Message-_Id\" header"
+msgid "Add \"Message-_ID\" header"
 msgstr "Añadir cabecera «Message-_Id»"
 
 #: ../pan/gui/post-ui.cc:2855
@@ -1765,16 +1798,18 @@ msgstr ""
 "que quiere usar para «%s»."
 
 #: ../pan/gui/prefs-ui.cc:166
-msgid "Edit Hotkey"
-msgstr "Editar tecla rápida"
+msgid "Edit Shortcut"
+msgstr "Editar atajo"
 
 #: ../pan/gui/prefs-ui.cc:228
-msgid "Error: Shortkey is invalid!"
-msgstr "Error: tecla rápida no válida"
+#| msgid "Error: Shortkey is invalid!"
+msgid "Error: Shortcut key is invalid!"
+msgstr "Error: atajo no válido"
 
 #: ../pan/gui/prefs-ui.cc:244
-msgid "Error: Shortkey already exists!"
-msgstr "Error: la tecla rápida ya existe"
+#| msgid "Error: Shortkey already exists!"
+msgid "Error: Shortcut key already exists!"
+msgstr "Error: el atajo ya existe"
 
 #: ../pan/gui/prefs-ui.cc:535
 msgid "Show only icons"
@@ -1813,7 +1848,8 @@ msgid "Disabled"
 msgstr "Desactivado"
 
 #: ../pan/gui/prefs-ui.cc:633
-msgid "Only new (Score == 0)"
+#| msgid "Only new (Score == 0)"
+msgid "Only new (score == 0)"
 msgstr "Sólo nuevos (puntuación == 0)"
 
 #: ../pan/gui/prefs-ui.cc:634
@@ -1838,13 +1874,15 @@ msgstr "-9999 o menos"
 
 #: ../pan/gui/prefs-ui.cc:702
 #, c-format
-msgid "Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+#| msgid "Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
 "Seleccionar el conjunto <u>global</u> de caracteres. Selección actual: <b>"
 "%s</b>."
 
 #: ../pan/gui/prefs-ui.cc:738
-msgid "Global Charset Settings"
+#| msgid "Global Charset Settings"
+msgid "Global Character Set Settings"
 msgstr "Configuración global del conjunto de caracteres"
 
 #: ../pan/gui/prefs-ui.cc:832 ../pan/gui/task-pane.cc:770
@@ -1916,8 +1954,8 @@ msgid "Expand threads upon selection"
 msgstr "Expandir conversaciones al seleccionar"
 
 #: ../pan/gui/prefs-ui.cc:951
-msgid "Always show article deletion confirmation dialog"
-msgstr "Mostrar siempre el diálogo de confirmación de eliminación del artículo"
+msgid "Always ask before deleting an article"
+msgstr "Preguntar siempre antes de eliminar un artículo"
 
 #: ../pan/gui/prefs-ui.cc:953
 msgid "Smooth scrolling"
@@ -1932,11 +1970,13 @@ msgid "Clear article cache on shutdown"
 msgstr "Limpiar la caché de artículos al salir"
 
 #: ../pan/gui/prefs-ui.cc:962
-msgid "Size of article cache (in MiB) :"
+#| msgid "Size of article cache (in MiB) :"
+msgid "Size of article cache (in MiB):"
 msgstr "Tamaño de la caché del artículo (en MiB): "
 
 #: ../pan/gui/prefs-ui.cc:967
-msgid "File extension for Cached Articles: "
+#| msgid "File extension for Cached Articles: "
+msgid "File extension for cached articles: "
 msgstr "Extensión de archivo para los artículos de la caché: "
 
 #: ../pan/gui/prefs-ui.cc:972
@@ -2050,27 +2090,34 @@ msgid "Headers"
 msgstr "Cabeceras"
 
 #: ../pan/gui/prefs-ui.cc:1079
+#| msgid ""
+#| "This menu lets you configure Pan to take certain actions on your behalf "
+#| "automatically, based on a post's score."
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
-"automatically, based on a post's score."
+"automatically, based on an article's score."
 msgstr ""
 "Este menú le permite configurar Pan para que tome determinadas acciones a su "
 "favor automáticamente, basadas en la puntuación de una publicación."
 
 #: ../pan/gui/prefs-ui.cc:1082
-msgid "_Delete posts scoring at: "
+#| msgid "_Delete posts scoring at: "
+msgid "_Delete articles scoring at: "
 msgstr "_Eliminar publicaciones con puntuación: "
 
 #: ../pan/gui/prefs-ui.cc:1084
-msgid "Mark posts _read scoring at: "
-msgstr "Marcar como _leídas publicaciones con puntuación:"
+#| msgid "Mark posts _read scoring at: "
+msgid "Mark articles as _read scoring at: "
+msgstr "Marcar como _leídas las publicaciones con puntuación:"
 
 #: ../pan/gui/prefs-ui.cc:1086
-msgid "_Cache posts scoring at: "
-msgstr "Poner en _caché publicaciones con puntuación:"
+#| msgid "_Cache posts scoring at: "
+msgid "_Cache articles scoring at: "
+msgstr "Poner en _caché publicaciones con puntuación: "
 
 #: ../pan/gui/prefs-ui.cc:1088
-msgid "Download _attachments of posts scoring at: "
+#| msgid "Download _attachments of posts scoring at: "
+msgid "Download _attachments of articles scoring at: "
 msgstr "Descargar _adjuntos de publicaciones con puntuación:"
 
 #: ../pan/gui/prefs-ui.cc:1091
@@ -2206,15 +2253,17 @@ msgid "Upload"
 msgstr "Subir"
 
 #: ../pan/gui/prefs-ui.cc:1219
-msgid "_Hotkeys"
-msgstr "_Teclas rápidas"
+msgid "_Shortcuts"
+msgstr "_Atajos"
 
 #: ../pan/gui/prefs-ui.cc:1219
-msgid "Hotkeys"
-msgstr "Teclas rápidas"
+msgid "Shortcuts"
+msgstr "Atajos"
 
 #: ../pan/gui/profiles-dialog.cc:83
-msgid "Please choose your Email Address according to your PGP key's user id."
+#| msgid ""
+#| "Please choose your Email Address according to your PGP key's user id."
+msgid "Please choose your email address according to your PGP key's user id."
 msgstr ""
 "Escoja su dirección de correo-e de acuerdo a su ID de usuario de clave PGP."
 
@@ -2240,10 +2289,14 @@ msgid "_Full Name:"
 msgstr "Nombre co_mpleto:"
 
 #: ../pan/gui/profiles-dialog.cc:158
+#| msgid ""
+#| "Your Email Address.\n"
+#| "Note that this has to match your PGP Signature's Address\n"
+#| "if you want to PGP-Sign or Encrypt your messages correctly."
 msgid ""
-"Your Email Address.\n"
-"Note that this has to match your PGP Signature's Address\n"
-"if you want to PGP-Sign or Encrypt your messages correctly."
+"Your email address.\n"
+"Note that this has to match your PGP signature's address\n"
+"if you want your messages to be PGP-signed or encrypted correctly."
 msgstr ""
 "Su dirección de correo-e.\n"
 "Tenga en cuenta que debe coincidir con la dirección de su firma PGP\n"
@@ -2286,7 +2339,8 @@ msgid "PGP Signature"
 msgstr "Firma PGP"
 
 #: ../pan/gui/profiles-dialog.cc:196
-msgid "Signature Type : "
+#| msgid "Signature Type : "
+msgid "Signature Type: "
 msgstr "Tipo de firma: "
 
 #: ../pan/gui/profiles-dialog.cc:223
@@ -2294,8 +2348,13 @@ msgid "X-Face (Avatar)"
 msgstr "X-Face (Avatar)"
 
 #: ../pan/gui/profiles-dialog.cc:226
+#| msgid ""
+#| "You can add an avatar icon to your articles with a unique X-Face code. \n"
+#| "Add the code without the trailing <b>\"X-Face:\"</b> \n"
+#| " if it was generated by a helper program (for example http://www.dairiki."
+#| "org/xface/xface.php)."
 msgid ""
-"You can add an avatar icon to your articles with a unique X-Face code. \n"
+"You can add an avatar icon to your articles with a unique X-Face code.\n"
 "Add the code without the trailing <b>\"X-Face:\"</b> \n"
 " if it was generated by a helper program (for example http://www.dairiki.org/"
 "xface/xface.php)."
@@ -2314,8 +2373,13 @@ msgid "Optional Information"
 msgstr "Información opcional"
 
 #: ../pan/gui/profiles-dialog.cc:236
+#| msgid ""
+#| "When posting to Usenet, your article's Message-ID contains a domain "
+#| "name.  \n"
+#| "You can set a custom domain name here, or leave it blank to let Pan use "
+#| "the domain name from your email address."
 msgid ""
-"When posting to Usenet, your article's Message-ID contains a domain name.  \n"
+"When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
 "domain name from your email address."
 msgstr ""
@@ -2346,8 +2410,12 @@ msgid "_Attribution:"
 msgstr "_Atributos:"
 
 #: ../pan/gui/profiles-dialog.cc:268
+#| msgid ""
+#| "Extra headers to be included in your posts, such as\n"
+#| "Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
+#| "Organization: Your Organization\n"
 msgid ""
-"Extra headers to be included in your posts, such as\n"
+"Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
 "Organization: Your Organization\n"
 msgstr ""
@@ -2607,7 +2675,8 @@ msgid "Please specify the server's address."
 msgstr "Especifique la dirección del servidor."
 
 #: ../pan/gui/server-ui.cc:264
-msgid "Import SSL certificate (PEM format) from File"
+#| msgid "Import SSL certificate (PEM format) from File"
+msgid "Import SSL Certificate (PEM Format) From File"
 msgstr "Importar certificado SSL (formato PEM) desde un archivo"
 
 #. create the dialog
@@ -2731,7 +2800,8 @@ msgid "Security"
 msgstr "Seguridad"
 
 #: ../pan/gui/server-ui.cc:401
-msgid "Use Plaintext (Unsecured) Connections"
+#| msgid "Use Plaintext (Unsecured) Connections"
+msgid "Use Unsecure (Plaintext) Connections"
 msgstr "Usar conexiones de texto plano (no seguras)"
 
 #: ../pan/gui/server-ui.cc:402
@@ -2739,14 +2809,19 @@ msgid "Use Secure SSL Connections"
 msgstr "Usar conexiones SSL seguras"
 
 #: ../pan/gui/server-ui.cc:418
-msgid "TLS (SSL) Options:"
+#| msgid "TLS (SSL) Options:"
+msgid "TLS (SSL) Settings:"
 msgstr "Opciones de TLS (SSL):"
 
 #: ../pan/gui/server-ui.cc:423
+#| msgid ""
+#| "You can set the option for using/disabling secure SSL/TLS connections "
+#| "here. If you enable SSL/TLS, your data is encrypted and secure. It is "
+#| "encouraged to use this option for privacy reasons."
 msgid ""
-"You can set the option for using/disabling secure SSL/TLS connections here. "
-"If you enable SSL/TLS, your data is encrypted and secure. It is encouraged "
-"to use this option for privacy reasons."
+"You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
+"TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
+"for privacy reasons."
 msgstr ""
 "Puede establecer la opción para activar/desactivar las conexiones seguras "
 "SSL/TLS aquí. Si activa SSL/TLS, sus datos se cifran de forma segura. Se "
@@ -2851,7 +2926,8 @@ msgid "unknown"
 msgstr "desconocido"
 
 #: ../pan/gui/task-pane.cc:263
-msgid "Choose new destination for selected Tasks"
+#| msgid "Choose new destination for selected Tasks"
+msgid "Choose New Destination for Selected Tasks"
 msgstr "Elegir el destino nuevo para las tareas seleccionadas"
 
 #: ../pan/gui/task-pane.cc:417
@@ -3026,7 +3102,7 @@ msgstr "El envío «%s» a %s devolvió un error: %s"
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr "El envío «%s» a %s devolvió una respuesta no reconocida: «%s»"
 
-#: ../pan/tasks/nntp-pool.cc:222
+#: ../pan/tasks/nntp-pool.cc:220
 #, c-format
 msgid "Unable to connect to \"%s\""
 msgstr "Imposible conectar con «%s»"
@@ -3082,7 +3158,8 @@ msgstr "Falló la publicación de «%s»: %s"
 
 #: ../pan/tasks/task-post.cc:81
 #, c-format
-msgid "Posting of \"%s\" succesful: %s"
+#| msgid "Posting of \"%s\" succesful: %s"
+msgid "Posting of \"%s\" successful: %s"
 msgstr "Publicación de «%s» correcta: %s"
 
 #: ../pan/tasks/task-upload.cc:51
@@ -3097,44 +3174,56 @@ msgstr "Subiendo %s: parte %d de %d"
 
 #: ../pan/tasks/task-upload.cc:251
 #, c-format
-msgid "Uploading Message body with Subject \"%s\""
+#| msgid "Uploading Message body with Subject \"%s\""
+msgid "Uploading message body with subject \"%s\""
 msgstr "Subiendo cuerpo del mensaje con asunto «%s»"
 
 #: ../pan/tasks/task-upload.cc:308
 #, c-format
-msgid "Posting of File %s (Part %d of %d) failed: No Posts allowed by server."
+#| msgid ""
+#| "Posting of File %s (Part %d of %d) failed: No Posts allowed by server."
+msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
 msgstr ""
 "Falló la publicación del archivo %s (parte %d de %d): el servidor no permite "
 "publicaciones."
 
 #: ../pan/tasks/task-upload.cc:316
 #, c-format
-msgid "Posting of File %s (Part %d of %d) failed: %s"
+#| msgid "Posting of File %s (Part %d of %d) failed: %s"
+msgid "Posting of file %s (part %d of %d) failed: %s"
 msgstr "Falló la publicación del archivo %s (parte %d de %d): %s"
 
 #: ../pan/tasks/task-upload.cc:326 ../pan/tasks/task-upload.cc:333
 #, c-format
-msgid "Posting of file %s (Part %d of %d) succesful: %s"
+#| msgid "Posting of file %s (Part %d of %d) succesful: %s"
+msgid "Posting of file %s (part %d of %d) successful: %s"
 msgstr "Publicación del archivo %s (parte %d de %d) con éxito: %s"
 
 #: ../pan/tasks/task-upload.cc:343
 #, c-format
-msgid "Posting of file %s succesful: %s"
+#| msgid "Posting of file %s succesful: %s"
+msgid "Posting of file %s successful: %s"
 msgstr "Publicación del archivo %s con éxito: %s"
 
 #: ../pan/tasks/task-upload.cc:347
 #, c-format
+#| msgid ""
+#| "Posting of file %s not completely successful: Check the log (right-click "
+#| "on list item) !"
 msgid ""
-"Posting of file %s not completely successful: Check the log (right-click on "
-"list item) !"
+"Posting of file %s not completely successful: Check the log (right-click "
+"list item)."
 msgstr ""
 "Error parcial al publicar el archivo %s: compruebe el registro (botón "
 "derecho sobre el elemento de la lista)."
 
 #: ../pan/tasks/task-upload.cc:364
 #, c-format
+#| msgid ""
+#| "Posting of file %s not successful: Check the log (right-click on list "
+#| "item) !"
 msgid ""
-"Posting of file %s not successful: Check the log (right-click on list item) !"
+"Posting of file %s not successful: Check the log (right-click list item)."
 msgstr ""
 "Error al publicar el archivo %s: compruebe el registro (botón derecho sobre "
 "el elemento de la lista)."
@@ -3453,8 +3542,11 @@ msgstr "Error al imprimir el certificado del servidor para «%s»"
 
 #: ../pan/usenet-utils/ssl-utils.h:216
 #, c-format
+#| msgid ""
+#| "The current server <b>'%s'</b> sent this security certificate :\n"
+#| "\n"
 msgid ""
-"The current server <b>'%s'</b> sent this security certificate :\n"
+"The current server <b>'%s'</b> sent this security certificate:\n"
 "\n"
 msgstr ""
 "El servidor actual <b>«%s»</b> envió este certificado de seguridad:\n"
@@ -3462,21 +3554,31 @@ msgstr ""
 
 #: ../pan/usenet-utils/ssl-utils.h:217
 #, c-format
+#| msgid ""
+#| "Certificate information for server <b>'%s'</b> :\n"
+#| "\n"
 msgid ""
-"Certificate information for server <b>'%s'</b> :\n"
+"Certificate information for server <b>'%s'</b>:\n"
 "\n"
 msgstr ""
-"Información del certificado para el servidor <b>«%s»</b> :\n"
+"Información del certificado para el servidor <b>«%s»</b>:\n"
 "\n"
 
 #: ../pan/usenet-utils/ssl-utils.h:219
 #, c-format
+#| msgid ""
+#| "%s<b>Issuer information:</b>\n"
+#| "%s\n"
+#| "<b>Valid until : </b>%s\n"
+#| "\n"
+#| "<b>Not valid before : </b>%s\n"
+#| "\n"
 msgid ""
 "%s<b>Issuer information:</b>\n"
 "%s\n"
-"<b>Valid until : </b>%s\n"
+"<b>Valid until:</b> %s\n"
 "\n"
-"<b>Not valid before : </b>%s\n"
+"<b>Not valid before:</b> %s\n"
 "\n"
 msgstr ""
 "%s<b>Información del emisor:</b>\n"
@@ -3489,6 +3591,19 @@ msgstr ""
 #: ../pan/usenet-utils/text-massager.cc:397
 msgid "> [quoted text muted]"
 msgstr "> [texto citado ocultado]"
+
+#~ msgid "Edit Hotkey"
+#~ msgstr "Editar tecla rápida"
+
+#~ msgid "Always show article deletion confirmation dialog"
+#~ msgstr ""
+#~ "Mostrar siempre el diálogo de confirmación de eliminación del artículo"
+
+#~ msgid "_Hotkeys"
+#~ msgstr "_Teclas rápidas"
+
+#~ msgid "Hotkeys"
+#~ msgstr "Teclas rápidas"
 
 #~ msgid "_Contents"
 #~ msgstr "_Contenido"
