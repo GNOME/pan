@@ -183,7 +183,7 @@ PostUI:: update_filequeue_label (GtkTreeSelection *selection)
       TaskUpload * task (dynamic_cast<TaskUpload*>(*it));
       if (task) kb += task->_bytes/1024;
     }
-    g_snprintf(str,sizeof(str), _("Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."), tasks.size(), kb, kb/1024.0f);
+    g_snprintf(str,sizeof(str), _("Upload queue: %ld tasks, %ld KB (~ %.2f MB) total."), tasks.size(), kb, kb/1024.0f);
     gtk_label_set_text (GTK_LABEL(_filequeue_label), str);
 }
 
@@ -487,10 +487,10 @@ namespace
   {
     { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), 0, N_("Wrap Text"), G_CALLBACK(do_wrap), true },
     { "always-run-editor", 0, N_("Always Run Editor"), 0, 0, G_CALLBACK(do_edit2), false },
-    { "remember-charset", 0, N_("Remember Character Encoding for this Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
+    { "remember-charset", 0, N_("Remember Character Encoding for This Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
     { "master-reply", 0, N_("Thread Attached Replies"), 0, 0, G_CALLBACK(on_mr_toggled), true },
-    { "gpg-encrypt", 0, N_("PGP-Encrypt the Message"), 0, 0, G_CALLBACK(on_enc_toggled), false },
-    { "gpg-sign", 0, N_("PGP-Sign the Message"), 0, 0, G_CALLBACK(on_sign_toggled), false },
+    { "gpg-encrypt", 0, N_("PGP-Encrypt the Article"), 0, 0, G_CALLBACK(on_enc_toggled), false },
+    { "gpg-sign", 0, N_("PGP-Sign the Article"), 0, 0, G_CALLBACK(on_sign_toggled), false },
     { "spellcheck", 0, N_("Check _Spelling"), 0, 0, G_CALLBACK(on_spellcheck_toggled), true }
   };
 
@@ -758,7 +758,7 @@ PostUI :: check_message (const Quark& server, GMimeMessage * msg, bool binpost)
                            s.c_str());
   gtk_dialog_add_button (GTK_DIALOG(d), _("Go Back"), GTK_RESPONSE_CANCEL);
   if (goodness.is_warn())
-    gtk_dialog_add_button (GTK_DIALOG(d), _("Post Anyway"), GTK_RESPONSE_APPLY);
+    gtk_dialog_add_button (GTK_DIALOG(d), _("Continue Anyway"), GTK_RESPONSE_APPLY);
   const int response = gtk_dialog_run (GTK_DIALOG(d));
   gtk_widget_destroy (d);
   return response == GTK_RESPONSE_APPLY;
@@ -1099,7 +1099,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     else
     {
       if (user_has_gpg)
-         Log::add_err_va(_("Error signing/encrypting your message. Perhaps you misspelled your email-address (%s) ?"),p.gpg_sig_uid.c_str());
+         Log::add_err_va(_("Error signing/encrypting your message. Perhaps you misspelled your email address (%s)?"),p.gpg_sig_uid.c_str());
     }
 
   } else {
@@ -2497,7 +2497,7 @@ PostUI :: create_filequeue_tab ()
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_insert_column_with_data_func(t, 2, (_("Filename")), renderer, render_filename, 0, 0);
   renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_insert_column_with_attributes (t, 3, (_("Size (kB)")),renderer,"text", 3,NULL);
+  gtk_tree_view_insert_column_with_attributes (t, 3, (_("Size (KB)")),renderer,"text", 3,NULL);
 
   // connect signals for popup menu
   g_signal_connect (w, "popup-menu", G_CALLBACK(on_popup_menu), this);
@@ -2609,7 +2609,7 @@ PostUI :: create_parts_tab ()
   g_snprintf (buf, sizeof(buf), "%s", _upload_ptr->_subject.c_str());
   l = gtk_label_new (buf);
   gtk_misc_set_alignment (GTK_MISC(l), 0.5f, 0.5f);
-  gtk_widget_set_tooltip_text (l, _("The current Subject Line"));
+  gtk_widget_set_tooltip_text (l, _("The current subject line"));
   gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
 
   ++row;
@@ -2721,7 +2721,7 @@ gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your 
   gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   ++row;
-  w = _message_id_check = gtk_check_button_new_with_mnemonic (_("Add \"Message-_Id\" header"));
+  w = _message_id_check = gtk_check_button_new_with_mnemonic (_("Add \"Message-_ID\" header"));
   b = _prefs.get_flag(MESSAGE_ID_PREFS_KEY,false);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
   g_signal_connect (w, "toggled", G_CALLBACK(message_id_toggled_cb), this);

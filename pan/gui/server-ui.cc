@@ -261,7 +261,7 @@ pan :: import_sec_from_disk_dialog_new (Data& data, Queue& queue, GtkWindow * wi
   std::string prev_path = g_get_home_dir ();
   std::string res;
 
-  GtkWidget * w = gtk_file_chooser_dialog_new (_("Import SSL certificate (PEM format) from File"),
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Import SSL Certificate (PEM Format) From File"),
 				      window,
 				      GTK_FILE_CHOOSER_ACTION_OPEN,
 				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -398,7 +398,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
 
     struct { int o; const char * str; } ssl_items[] = {
 
-      { 0, N_("Use Plaintext (Unsecured) Connections") },
+      { 0, N_("Use Unsecure (Plaintext) Connections") },
       { 1, N_("Use Secure SSL Connections") }
     };
 
@@ -415,14 +415,14 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
     gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
-    l = gtk_label_new (_("TLS (SSL) Options:"));
+    l = gtk_label_new (_("TLS (SSL) Settings:"));
     e = gtk_event_box_new ();
     gtk_container_add (GTK_CONTAINER(e), l);
     gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
     gtk_widget_set_tooltip_text( e,
-          _("You can set the option for using/disabling secure SSL/TLS connections here. "
+          _("You can enable/disable secure SSL/TLS connections here. "
             "If you enable SSL/TLS, your data is encrypted and secure. "
-            "It is encouraged to use this option for privacy reasons."));
+            "It is encouraged to enable SSL/TLS for privacy reasons."));
     HIG::workarea_add_row (t, &row, e, w);
 
     d->always_trust_checkbox = w = gtk_check_button_new_with_label (_("Always trust this server's certificate"));

@@ -248,7 +248,7 @@ TaskUpload :: use_nntp (NNTP * nntp)
     if (_queue_pos != -1)
       set_status_va (_("Uploading %s - Part %d of %d"), _basename.c_str(), needed->partno, _total_parts);
     else
-      set_status_va (_("Uploading Message body with Subject \"%s\""), _subject.c_str());
+      set_status_va (_("Uploading message body with subject \"%s\""), _subject.c_str());
 
     std::string data;
     if (_queue_pos != -1) _cache.get_data(data,needed->message_id.c_str());
@@ -305,7 +305,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
   switch (atoi(response.str))
   {
     case NO_POSTING:
-      Log :: add_err_va (_("Posting of File %s (Part %d of %d) failed: No Posts allowed by server."),
+      Log :: add_err_va (_("Posting of file %s (part %d of %d) failed: No posts allowed by server."),
                  _basename.c_str(), it->second.partno,  _total_parts);
       this->stop();
       break;
@@ -313,7 +313,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       if (health != OK)     // if we got a dupe, the health is OK, so skip that
       {
         tmp.severity = Log :: PAN_SEVERITY_ERROR;
-        g_snprintf(buf,sizeof(buf), _("Posting of File %s (Part %d of %d) failed: %s"),
+        g_snprintf(buf,sizeof(buf), _("Posting of file %s (part %d of %d) failed: %s"),
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
         tmp.message = buf;
         _logfile.push_front(tmp);
@@ -323,14 +323,14 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       tmp.severity = Log :: PAN_SEVERITY_INFO;
       if (post_ok && !_needed.empty())
       {
-        g_snprintf(buf,sizeof(buf), _("Posting of file %s (Part %d of %d) succesful: %s"),
+        g_snprintf(buf,sizeof(buf), _("Posting of file %s (part %d of %d) successful: %s"),
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
         tmp.message = buf;
         _logfile.push_front(tmp);
       }
       else if (post_ok && _needed.empty())
       {
-        g_snprintf(buf,sizeof(buf), _("Posting of file %s (Part %d of %d) succesful: %s"),
+        g_snprintf(buf,sizeof(buf), _("Posting of file %s (part %d of %d) successful: %s"),
                    _basename.c_str(), it->second.partno, _total_parts, response.str);
         tmp.message = buf;
         _logfile.push_front(tmp);
@@ -340,11 +340,11 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
         foreach_const (std::deque<Log::Entry>, _logfile, it)
           if (it->severity  == Log :: PAN_SEVERITY_ERROR) error = true;
         if (!error)
-          g_snprintf(buf,sizeof(buf), _("Posting of file %s succesful: %s"),
+          g_snprintf(buf,sizeof(buf), _("Posting of file %s successful: %s"),
                    _basename.c_str(), response.str);
         else
         {
-          g_snprintf(buf,sizeof(buf), _("Posting of file %s not completely successful: Check the log (right-click on list item) !"),
+          g_snprintf(buf,sizeof(buf), _("Posting of file %s not completely successful: Check the log (right-click list item)."),
                  _basename.c_str(), response.str);
           tmp.severity = Log :: PAN_SEVERITY_ERROR;
         }
@@ -361,7 +361,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
       _needed.erase (it);
       Log::add_entry_list (tmp, _logfile);
       _logfile.clear();
-      Log :: add_err_va (_("Posting of file %s not successful: Check the log (right-click on list item) !"),
+      Log :: add_err_va (_("Posting of file %s not successful: Check the log (right-click list item)."),
                  _basename.c_str(), response.str);
       break;
   }

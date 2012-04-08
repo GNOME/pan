@@ -267,7 +267,7 @@ namespace pan
     int r(0);
     r = get_all_certs_from_disk ();
 
-    if (r != 0) Log::add_info_va(_("Succesfully added %d SSL PEM certificate(s) to Certificate Store."), r);
+    if (r != 0) Log::add_info_va(_("Successfully added %d SSL PEM certificate(s) to Certificate Store."), r);
 
   }
 

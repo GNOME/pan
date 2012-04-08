@@ -213,14 +213,14 @@ namespace pan
 
     char email1[2048], email2[2048];
     char tmp1[2048], tmp2[2048];
-    g_snprintf(tmp1,sizeof(tmp1), _("The current server <b>'%s'</b> sent this security certificate :\n\n"), server.c_str());
-    g_snprintf(tmp2,sizeof(tmp2), _("Certificate information for server <b>'%s'</b> :\n\n"), server.c_str());
+    g_snprintf(tmp1,sizeof(tmp1), _("The current server <b>'%s'</b> sent this security certificate:\n\n"), server.c_str());
+    g_snprintf(tmp2,sizeof(tmp2), _("Certificate information for server <b>'%s'</b>:\n\n"), server.c_str());
 
     g_snprintf(buf,size, _("%s"
                            "<b>Issuer information:</b>\n"
                            "%s\n"
-                           "<b>Valid until : </b>%s\n\n"
-                           "<b>Not valid before : </b>%s\n\n"),
+                           "<b>Valid until:</b> %s\n\n"
+                           "<b>Not valid before:</b> %s\n\n"),
                            on_connect ? tmp1 : tmp2,
                            cp.build_complete(p_issuer).c_str(),
                            until,

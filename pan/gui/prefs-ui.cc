@@ -163,7 +163,7 @@ PrefsDialog :: populate_popup (GtkEntry *e, GtkMenu *m)
   gtk_menu_shell_prepend (GTK_MENU_SHELL(m), mi);
 
   GtkWidget * img = gtk_image_new_from_stock (GTK_STOCK_EDIT, GTK_ICON_SIZE_MENU);
-  mi = gtk_image_menu_item_new_with_mnemonic (_("Edit Hotkey"));
+  mi = gtk_image_menu_item_new_with_mnemonic (_("Edit Shortcut"));
 
   g_signal_connect (mi, "activate", G_CALLBACK(edit_shortkey_cb),
                     g_object_get_data(G_OBJECT(e), "data"));
@@ -225,7 +225,7 @@ namespace pan
     if (!gtk_accelerator_valid(acc_key.accel_key, acc_key.accel_mods))
     {
       gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_DIALOG_WARNING);
-      gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, _("Error: Shortkey is invalid!"));
+      gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, _("Error: Shortcut key is invalid!"));
       return;
     }
 
@@ -241,7 +241,7 @@ namespace pan
     if (found)
     {
       gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_DIALOG_WARNING);
-      gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, _("Error: Shortkey already exists!"));
+      gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, _("Error: Shortcut key already exists!"));
     }
     else
     {
@@ -630,7 +630,7 @@ namespace pan
     const std::string mode (prefs.get_string (mode_key, mode_fallback));
     GtkListStore * store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
     const char* strings[7][2] = { { N_("Disabled"),"never" },
-                                  { N_("Only new (Score == 0)"),"new" },
+                                  { N_("Only new (score == 0)"),"new" },
                                   { N_("9999 or more"), "watched" },
                                   { N_("5000 to 9998"), "high" },
                                   { N_("1 to 4999"),    "medium" },
@@ -699,7 +699,7 @@ void
 PrefsDialog :: update_default_charset_label(const StringView& value)
 {
   char buf[256];
-  g_snprintf(buf, sizeof(buf),_("Select default <u>global</u> charset. Current setting : <b>%s</b> ."),
+  g_snprintf(buf, sizeof(buf),_("Select default <u>global</u> character set. Current setting: <b>%s</b>."),
              value.str);
   gtk_label_set_markup(GTK_LABEL(charset_label), buf);
   gtk_widget_show_all(charset_label);
@@ -735,7 +735,7 @@ namespace
     PrefsDialog* pd (static_cast<PrefsDialog*>(user_data));
     std::string def = pd->prefs().get_string("default-charset", "UTF-8");
     char * tmp = e_charset_dialog (_("Character Encoding"),
-                               _("Global Charset Settings"),
+                               _("Global Character Set Settings"),
                                def.c_str(), GTK_WINDOW(pd->root()));
 
     if (!tmp) return;
@@ -948,7 +948,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Expand threads upon selection"), "expand-selected-articles", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
-    w = new_check_button (_("Always show article deletion confirmation dialog"), "show-deletion-confirm-dialog", true, prefs);
+    w = new_check_button (_("Always ask before deleting an article"), "show-deletion-confirm-dialog", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Smooth scrolling"), "smooth-scrolling", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
@@ -959,12 +959,12 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     w = new_check_button (_("Clear article cache on shutdown"), "clear-article-cache-on-shutdown", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_spin_button ("cache-size-megs", 10, 1024*16, prefs);
-    l = gtk_label_new(_("Size of article cache (in MiB) :"));
+    l = gtk_label_new(_("Size of article cache (in MiB):"));
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
     HIG::workarea_add_row (t, &row, l, w);
     w = new_entry ("cache-file-extension", "msg", prefs);
-    l = gtk_label_new(_("File extension for Cached Articles: "));
+    l = gtk_label_new(_("File extension for cached articles: "));
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
     HIG :: workarea_add_row (t, &row, l, w);
 
@@ -1076,16 +1076,16 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   row = 0;
   t = HIG :: workarea_create ();
 
-    gtk_widget_set_tooltip_text (t, _("This menu lets you configure Pan to take certain actions on your behalf automatically, based on a post's score."));
+    gtk_widget_set_tooltip_text (t, _("This menu lets you configure Pan to take certain actions on your behalf automatically, based on an article's score."));
 
     w = score_handler_new (prefs, "rules-delete-value", "never", b);
-    HIG :: workarea_add_row (t, &row, _("_Delete posts scoring at: "), w);
+    HIG :: workarea_add_row (t, &row, _("_Delete articles scoring at: "), w);
     w = score_handler_new (prefs, "rules-mark-read-value", "never", b);
-    HIG :: workarea_add_row (t, &row, _("Mark posts _read scoring at: "), w);
+    HIG :: workarea_add_row (t, &row, _("Mark articles as _read scoring at: "), w);
     w = score_handler_new (prefs, "rules-autocache-value", "never", b);
-    HIG :: workarea_add_row (t, &row, _("_Cache posts scoring at: "), w);
+    HIG :: workarea_add_row (t, &row, _("_Cache articles scoring at: "), w);
     w = score_handler_new (prefs, "rules-auto-dl-value", "never", b);
-    HIG :: workarea_add_row (t, &row, _("Download _attachments of posts scoring at: "), w);
+    HIG :: workarea_add_row (t, &row, _("Download _attachments of articles scoring at: "), w);
 
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Actions"), _("Actions"), icon_prefs_actions, prefs));
@@ -1216,7 +1216,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
   gtk_widget_show_all (scroll);
 
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), scroll, new_label_with_icon(_("_Hotkeys"), _("Hotkeys"), icon_prefs_hotkeys, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), scroll, new_label_with_icon(_("_Shortcuts"), _("Shortcuts"), icon_prefs_hotkeys, prefs));
 
   gtk_widget_show_all (notebook);
   gtk_box_pack_start (GTK_BOX(gtk_dialog_get_content_area( GTK_DIALOG(dialog))), notebook, true, true, 0);

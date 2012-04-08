@@ -80,7 +80,7 @@ namespace
     if (row == ROW_GPGSIG)
     {
       gtk_widget_set_tooltip_text(d->_signature_file_combo_box,
-                                  _("Please choose your Email Address according to your PGP key's user id."));
+                                  _("Please choose your email address according to your PGP key's user id."));
       gtk_widget_hide (d->_signature_file);
 
     }
@@ -155,9 +155,9 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     w = _address_entry = gtk_entry_new ();
     set_entry (w, profile.address);
 #ifdef HAVE_GMIME_CRYPTO
-    gtk_widget_set_tooltip_text(w, _("Your Email Address.\n"
-                                     "Note that this has to match your PGP Signature's Address\n"
-                                     "if you want to PGP-Sign or Encrypt your messages correctly."));
+    gtk_widget_set_tooltip_text(w, _("Your email address.\n"
+                                     "Note that this has to match your PGP signature's address\n"
+                                     "if you want your messages to be PGP-signed or encrypted correctly."));
 #endif
     HIG :: workarea_add_row (t, &row, _("_Email Address:"), w);
     w = _server_combo = make_servers_combo (data, profile.posting_server);
@@ -193,7 +193,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
 
     hbox = gtk_hbox_new(FALSE, 3);
-    l = gtk_label_new(_("Signature Type : "));
+    l = gtk_label_new(_("Signature Type: "));
     gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
     gtk_box_pack_start(GTK_BOX(hbox), l, false, false, 0);
     gtk_box_pack_start(GTK_BOX(hbox), w, true, true, 0);
@@ -223,7 +223,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
   HIG :: workarea_add_section_title (t, &row, _("X-Face (Avatar)"));
     w = _xface_entry = gtk_entry_new ();
     set_entry (w, profile.xface);
-    gtk_widget_set_tooltip_markup (w, _("You can add an avatar icon to your articles with a unique X-Face code. \n"
+    gtk_widget_set_tooltip_markup (w, _("You can add an avatar icon to your articles with a unique X-Face code.\n"
                                         "Add the code without the trailing <b>\"X-Face:\"</b> \n if it was generated "
                                         "by a helper program (for example http://www.dairiki.org/xface/xface.php)."));
     HIG :: workarea_add_row (t, &row, _("_X-Face:"), w, NULL);
@@ -233,7 +233,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
 
     w = _msgid_fqdn_entry = gtk_entry_new ();
     set_entry (w, profile.fqdn);
-    gtk_widget_set_tooltip_text (w, _("When posting to Usenet, your article's Message-ID contains a domain name.  \n"
+    gtk_widget_set_tooltip_text (w, _("When posting to Usenet, your article's Message-ID contains a domain name.\n"
                                       "You can set a custom domain name here, or leave it blank to let Pan use the "
                                       "domain name from your email address."));
     HIG :: workarea_add_row (t, &row, _("Message-ID _Domain Name:"), w, NULL);
@@ -265,7 +265,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     if (!s.empty())
       gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)), s.c_str(), s.size());
     GtkWidget * eventbox = gtk_event_box_new ();
-    gtk_widget_set_tooltip_text (eventbox, _("Extra headers to be included in your posts, such as\nReply-To: \"Your Name\""
+    gtk_widget_set_tooltip_text (eventbox, _("Extra headers to be included in your articles, such as\nReply-To: \"Your Name\""
                                              "<yourname@somewhere.com>\nOrganization: Your Organization\n"));
     GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),

@@ -1384,7 +1384,7 @@ bool GUI::deletion_confirmation_dialog()
     GTK_MESSAGE_WARNING,
     GTK_BUTTONS_NONE, NULL);
   HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
-    _("You marked some articles for deletion"),
+    _("You have marked some articles for deletion."),
     _("Are you sure you want to delete them?"));
   gtk_dialog_add_buttons (GTK_DIALOG(d),
                           GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
@@ -1413,7 +1413,7 @@ bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, gnutls_x509_crt_t
   gtk_dialog_add_button (GTK_DIALOG(d), _("Always trust"), -66);
 
   HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d), buf,
-    _("Do you want to accept it permanently (deletable afterwards) ?"));
+    _("Do you want to accept it permanently? (You can change this later.)"));
   gtk_dialog_add_buttons (GTK_DIALOG(d),
                           GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
                           GTK_STOCK_APPLY, GTK_RESPONSE_YES,
@@ -1914,7 +1914,7 @@ void GUI :: do_read_selected_group ()
       conv = iconv_open (to, from);
       if (conv == (iconv_t)-1)
       {
-        Log::add_err(_("Error loading iconv library. Some Charsets in the GUI will not be able to be encoded."));
+        Log::add_err(_("Error loading iconv library. Encoding certain character sets will not work in GUI."));
       } else
         iconv_inited = true;
     }

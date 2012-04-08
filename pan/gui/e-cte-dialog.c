@@ -75,13 +75,13 @@ e_cte_dialog (const char *title, const char *prompt, GMimeContentEncoding now, G
 
   store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
   gtk_list_store_append (store, &iter);
-  gtk_list_store_set (store, &iter, 0, _("Default encoding"),           1, GMIME_CONTENT_ENCODING_DEFAULT, -1);
+  gtk_list_store_set (store, &iter, 0, _("Default Encoding"),           1, GMIME_CONTENT_ENCODING_DEFAULT, -1);
   gtk_list_store_append (store, &iter);
-  gtk_list_store_set (store, &iter, 0, _("7Bit Encoding"),              1, GMIME_CONTENT_ENCODING_7BIT, -1);
+  gtk_list_store_set (store, &iter, 0, _("7-Bit Encoding"),              1, GMIME_CONTENT_ENCODING_7BIT, -1);
   gtk_list_store_append (store, &iter);
-  gtk_list_store_set (store, &iter, 0, _("8Bit Encoding"),              1, GMIME_CONTENT_ENCODING_8BIT, -1);
+  gtk_list_store_set (store, &iter, 0, _("8-Bit Encoding"),              1, GMIME_CONTENT_ENCODING_8BIT, -1);
   gtk_list_store_append (store, &iter);
-  gtk_list_store_set (store, &iter, 0, _("BASE64 Encoding"),            1, GMIME_CONTENT_ENCODING_BASE64, -1);
+  gtk_list_store_set (store, &iter, 0, _("Base64 Encoding"),            1, GMIME_CONTENT_ENCODING_BASE64, -1);
   gtk_list_store_append (store, &iter);
   gtk_list_store_set (store, &iter, 0, _("Quoted-Printable Encoding"),  1, GMIME_CONTENT_ENCODING_QUOTEDPRINTABLE, -1);
 

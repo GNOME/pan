@@ -380,7 +380,7 @@ namespace
       update_status_icon(ICON_STATUS_ERROR);
       if (n()) return;
       notif_shown = true;
-      notify_of(ICON_STATUS_ERROR, message.str, _("An Error has occurred!"));
+      notify_of(ICON_STATUS_ERROR, message.str, _("An error has occurred!"));
     }
 
     virtual void on_queue_size_changed (Queue&, unsigned long, unsigned long) {}

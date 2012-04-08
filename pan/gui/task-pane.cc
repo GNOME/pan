@@ -260,7 +260,7 @@ TaskPane :: prompt_user_for_new_dest (GtkWindow * parent, const Quark& current_p
   if (!file :: file_exists (prev_path.c_str()))
     prev_path = g_get_home_dir ();
 
-  GtkWidget * w = gtk_file_chooser_dialog_new (_("Choose new destination for selected Tasks"),
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Choose New Destination for Selected Tasks"),
                                                 GTK_WINDOW(parent),
                                                 GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

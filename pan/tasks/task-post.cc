@@ -78,7 +78,7 @@ TaskPost :: on_nntp_done (NNTP              * nntp,
     _state.set_need_nntp (_server);
   }
   else {
-    Log :: add_info_va (_("Posting of \"%s\" succesful: %s"),
+    Log :: add_info_va (_("Posting of \"%s\" successful: %s"),
                           res, response.str);
     _state.set_completed ();
     set_error (response);
