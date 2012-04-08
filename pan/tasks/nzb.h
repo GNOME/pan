@@ -23,6 +23,7 @@
 #include <vector>
 #include <pan/data/data.h>
 #include <pan/usenet-utils/MersenneTwister.h>
+#include <unistd.h>
 
 namespace pan
 {

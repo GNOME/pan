@@ -320,7 +320,15 @@ namespace
       NotifyNotification *notif(0);
       GError* error(0);
 
-      notif = notify_notification_new (summary, body, NULL);
+#ifdef NOTIFY_CHECK_VERSION
+  #if NOTIFY_CHECK_VERSION (0, 7, 0)
+      notif=notify_notification_new(summary, body, NULL);
+  #else
+      notif=notify_notification_new(summary, body, NULL,NULL);
+  #endif
+#else
+      notif=notify_notification_new(summary, body, NULL,NULL);
+#endif
       if (!notif) return;
 
       _notifs.insert(G_OBJECT(notif));
