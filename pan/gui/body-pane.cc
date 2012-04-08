@@ -1251,8 +1251,8 @@ BodyPane :: on_verbose_tooltip_cb(GtkWidget  *widget,
 
   gtk_tooltip_set_icon_from_stock (tooltip, GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
 
-  GPGDecErr err = pane->_gpgerr;
-  GPGSignersInfo info = err.signers;
+  GPGDecErr& err = pane->_gpgerr;
+  GPGSignersInfo& info = err.signers;
   if (err.no_sigs) return false;
   if (info.signers.empty()) return false;
 

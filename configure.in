@@ -99,16 +99,16 @@ AC_ARG_WITH(gmime-crypto, AS_HELP_STRING([--with-gmime-crypto],[enable GMime cry
     [want_gmime_crypto=$withval], [want_gmime_crypto=yes])
 
 if test "x$want_gmime_crypto" = "xyes" ; then
-  if test "x$have_gmime26" = "xyes" ; then
+if test "x$have_gmime26" = "xyes" ; then
     AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[cryptography (PGP) support with GMime 2.6])
   fi
 fi
 
 dnl D-Bus support
-AC_ARG_WITH(dbus, AS_HELP_STRING([--with-dbus],[enable D-Bus support]), [want_dbus=$withval], [want_dbus=yes])
-if test "x$want_dbus" = "xyes" ; then
-  AC_DEFINE(HAVE_DBUS,[1],[D-Bus support for multiple Pan instances])
-fi
+  AC_ARG_WITH(dbus, AS_HELP_STRING([--with-dbus],[enable D-Bus support]), [want_dbus=$withval], [want_dbus=yes])
+  if test "x$want_dbus" = "xyes" ; then
+    AC_DEFINE(HAVE_DBUS,[1],[D-Bus support for multiple Pan instances])
+  fi
 
 dnl GtkSpell support
 gtkspell_msg=no
@@ -134,7 +134,7 @@ if test "x$want_gtk3" = "xyes" ; then
                       AC_MSG_RESULT(no)
                       ])
   fi
-  
+
 else
     if test "x$want_gtkspell" = "xyes" ; then
     PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
