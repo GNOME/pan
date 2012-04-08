@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2012-04-08 21:05+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
@@ -66,7 +66,8 @@ msgid "Error opening SSL certificate directory: \"%s\": %s"
 msgstr "Napaka med odpiranjem mape potrdila SSL: \"%s\": %s"
 
 #: ../pan/data/cert-store.cc:270
-#, fuzzy, c-format
+#, c-format
+#| msgid "Succesfully added %d SSL PEM certificate(s) to Certificate Store."
 msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
 msgstr "Dodajanje %d potrdil SSL PEM v shrambo potrdil je uspelo."
 
@@ -78,6 +79,7 @@ msgid "Loaded data backend in %.1f seconds"
 msgstr "Zaledje podatkov je bilo naloženo v %.1f sekundah"
 
 #: ../pan/data-impl/data-impl.cc:140
+#| msgid "Pan newsreader server passwords"
 msgid "Pan Newsreader's server passwords"
 msgstr "Strežniška gesla bralnika novic Pan"
 
@@ -117,10 +119,12 @@ msgstr "Dodajanje %lu prispevkov v %s."
 
 #: ../pan/data-impl/server.cc:234
 #, c-format
+#| msgid "There seems to be no Password set for Server %s."
 msgid "There seems to be no password set for server %s."
 msgstr "Za strežnik %s ni nastavljenega gesla."
 
 #: ../pan/data-impl/server.cc:238
+#| msgid "The Gnome keyring denied access to the Passwords."
 msgid "GNOME Keyring denied access to the passwords."
 msgstr "Dostop do gesel v zbirka ključev GNOME je zavrnjen."
 
@@ -816,7 +820,7 @@ msgid ""
 "<b>Valid until:</b> %s\n"
 "<b>Created on:</b> %s"
 msgstr ""
-"<u>To sporočilo je podpisano <b>PGP</b>.</u>\n"
+"<u>To sporočilo je podpisano s <b>PGP</b>.</u>\n"
 "\n"
 "<b>Podpisnik:</b> %s ('%s')\n"
 "<b>Veljavnost:</b> %s\n"
@@ -831,10 +835,12 @@ msgid "Copy _URL"
 msgstr "_Kopiraj URL"
 
 #: ../pan/gui/body-pane.cc:1680
+#| msgid "Save attachment as ...."
 msgid "Save Attachment As..."
 msgstr "Shrani prilogo kot ..."
 
 #: ../pan/gui/body-pane.cc:1683
+#| msgid "Save all attachments"
 msgid "Save All Attachments"
 msgstr "Shrani vse priloge"
 
@@ -984,20 +990,24 @@ msgid "Other..."
 msgstr "Drugo ..."
 
 #: ../pan/gui/e-cte-dialog.c:78
+#| msgid "Default encoding"
 msgid "Default Encoding"
-msgstr "Privzeto kodiranje"
+msgstr "Privzet nabor znakov"
 
 #: ../pan/gui/e-cte-dialog.c:80
+#| msgid "7Bit Encoding"
 msgid "7-Bit Encoding"
 msgstr "7-bitno kodiranje"
 
 #: ../pan/gui/e-cte-dialog.c:82
+#| msgid "8Bit Encoding"
 msgid "8-Bit Encoding"
 msgstr "8-bitno kodiranje"
 
 #: ../pan/gui/e-cte-dialog.c:84
+#| msgid "BASE64 Encoding"
 msgid "Base64 Encoding"
-msgstr "Kodiranje BASE64"
+msgstr "Kodiranje Base64"
 
 #: ../pan/gui/e-cte-dialog.c:86
 msgid "Quoted-Printable Encoding"
@@ -1122,6 +1132,7 @@ msgid "Send this article to ask your server to cancel your other one."
 msgstr "Pošljite ta prispevek s prošnjo strežniku za preklic drugega."
 
 #: ../pan/gui/gui.cc:1387
+#| msgid "You marked some articles for deletion"
 msgid "You have marked some articles for deletion."
 msgstr "Nekaj prispevkov je označenih za brisanje."
 
@@ -1134,6 +1145,7 @@ msgid "Always trust"
 msgstr "Vedno zaupaj"
 
 #: ../pan/gui/gui.cc:1416
+#| msgid "Do you want to accept it permanently (deletable afterwards) ?"
 msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr "Ali naj se sprejme za stalno (še vedno ga je mogoče kasneje izbrisati)?"
 
@@ -1220,9 +1232,8 @@ msgid "Bytes"
 msgstr "Bajtov"
 
 #: ../pan/gui/gui.cc:1917
-#, fuzzy
 msgid "Error loading iconv library. Encoding certain character sets will not work in GUI."
-msgstr "Napaka med nalaganjem knjižnice iconv. Nekaterih naborov znakov v grafičnem vmesniku, ne bo mogoče kodirati."
+msgstr "Napaka med nalaganjem knjižnice iconv. Nekaterih naborov znakov v grafičnem vmesniku ne bo mogoče kodirati."
 
 #: ../pan/gui/gui.cc:2059
 msgid "Body Pane Encoding"
@@ -1389,9 +1400,9 @@ msgid "Pan notification"
 msgstr "Obvestilo Pan"
 
 #: ../pan/gui/post-ui.cc:186
-#, fuzzy, c-format
+#, c-format
 msgid "Upload queue: %ld tasks, %ld KB (~ %.2f MB) total."
-msgstr "Vrsta prenosov na strežnik: %ld nalog, skupaj %ld KB (~ %.2f MB)."
+msgstr "Vrsta za pošiljanje na strežnik: %ld nalog, skupaj %ld KB (~ %.2f MB)."
 
 #: ../pan/gui/post-ui.cc:286
 #, c-format
@@ -1613,9 +1624,9 @@ msgid "Go online to post the article?"
 msgstr "Ali naj se računalnik poveže za pošiljanje prispevka?"
 
 #: ../pan/gui/post-ui.cc:1102
-#, fuzzy, c-format
+#, c-format
 msgid "Error signing/encrypting your message. Perhaps you misspelled your email address (%s)?"
-msgstr "Napaka pri podpisovanju/šifriranju vašega sporočila. Ste morda napačno vnesli svoj e-poštni naslov (%s)?"
+msgstr "Prišlo je do napake pri podpisovanju oziroma šifriranju sporočila. Morda je napačno vnesen elektronski naslov (%s)?"
 
 #: ../pan/gui/post-ui.cc:1267
 msgid "Error opening temporary file"
@@ -1697,7 +1708,7 @@ msgstr "Vrstica zadeve"
 
 #: ../pan/gui/post-ui.cc:2612
 msgid "The current subject line"
-msgstr "Trenutna vrstica Zadeva"
+msgstr "Trenutna vrstica zadeve"
 
 #: ../pan/gui/post-ui.cc:2626
 msgid "No. "
@@ -1739,7 +1750,6 @@ msgid "Add \"_User-Agent\" header"
 msgstr "Dodaj glavo \"_User-Agent\""
 
 #: ../pan/gui/post-ui.cc:2724
-#, fuzzy
 msgid "Add \"Message-_ID\" header"
 msgstr "Dodaj glavo \"_ID sporočila\""
 
@@ -1848,9 +1858,8 @@ msgid "Disabled"
 msgstr "Onemogočeno"
 
 #: ../pan/gui/prefs-ui.cc:633
-#, fuzzy
 msgid "Only new (score == 0)"
-msgstr "Samo novi (rezultat = 0)"
+msgstr "Samo novi (rezultat == 0)"
 
 #: ../pan/gui/prefs-ui.cc:634
 msgid "9999 or more"
@@ -1873,14 +1882,13 @@ msgid "-9999 or less"
 msgstr "-9999 ali manj"
 
 #: ../pan/gui/prefs-ui.cc:702
-#, fuzzy, c-format
+#, c-format
 msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
-msgstr "Izberi privzet <u>splošni</u> nabor znakov. Trenutno je izbran: <b>%s</b>."
+msgstr "Izbran privzet <u>splošni</u> nabor znakov. Trenutno je izbran: <b>%s</b>."
 
 #: ../pan/gui/prefs-ui.cc:738
-#, fuzzy
 msgid "Global Character Set Settings"
-msgstr "Nastavi znak za ločevanje izhoda"
+msgstr "Splošne nastavitve kodnega nabora"
 
 #: ../pan/gui/prefs-ui.cc:832
 #: ../pan/gui/task-pane.cc:770
@@ -1969,7 +1977,7 @@ msgstr "Velikost predpomnilnika prispevkov (v MiB):"
 
 #: ../pan/gui/prefs-ui.cc:967
 msgid "File extension for cached articles: "
-msgstr "Pripona datotek za predpomnilnik prispevkov:"
+msgstr "Pripona datotek za predpomnjene prispevke:"
 
 #: ../pan/gui/prefs-ui.cc:972
 msgid "Tabs"
@@ -2872,7 +2880,6 @@ msgid "unknown"
 msgstr "neznano"
 
 #: ../pan/gui/task-pane.cc:263
-#, fuzzy
 msgid "Choose New Destination for Selected Tasks"
 msgstr "Izberite nov cilj za izbrane naloge"
 
@@ -3114,9 +3121,9 @@ msgid "Posting of \"%s\" failed: %s"
 msgstr "Objava \"%s\" ni uspela: %s"
 
 #: ../pan/tasks/task-post.cc:81
-#, fuzzy, c-format
+#, c-format
 msgid "Posting of \"%s\" successful: %s"
-msgstr "Uspešni vnosi"
+msgstr "Objava \"%s\" je uspela: %s"
 
 #: ../pan/tasks/task-upload.cc:51
 #, c-format
@@ -3129,40 +3136,40 @@ msgid "Uploading %s - Part %d of %d"
 msgstr "Prenašanje %s na strežnik - %d. del od %d"
 
 #: ../pan/tasks/task-upload.cc:251
-#, fuzzy, c-format
+#, c-format
 msgid "Uploading message body with subject \"%s\""
 msgstr "Pošiljanje besedila sporočila z zadevo \"%s\""
 
 #: ../pan/tasks/task-upload.cc:308
-#, fuzzy, c-format
+#, c-format
 msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
 msgstr "Objava datoteke %s (%d. del %d) ni uspela: strežnik ne dovoljuje objav."
 
 #: ../pan/tasks/task-upload.cc:316
-#, fuzzy, c-format
+#, c-format
 msgid "Posting of file %s (part %d of %d) failed: %s"
 msgstr "Objava datoteke %s (%d. del od %d) ni uspela: %s"
 
 #: ../pan/tasks/task-upload.cc:326
 #: ../pan/tasks/task-upload.cc:333
-#, fuzzy, c-format
+#, c-format
 msgid "Posting of file %s (part %d of %d) successful: %s"
-msgstr "Objava datoteke %s (%d. del od %d) ni uspela: %s"
+msgstr "Objava datoteke %s (%d. del od %d) je uspela: %s"
 
 #: ../pan/tasks/task-upload.cc:343
-#, fuzzy, c-format
+#, c-format
 msgid "Posting of file %s successful: %s"
 msgstr "Objava datoteke %s je uspela: %s"
 
 #: ../pan/tasks/task-upload.cc:347
-#, fuzzy, c-format
+#, c-format
 msgid "Posting of file %s not completely successful: Check the log (right-click list item)."
-msgstr "Objava datoteke %s ni v celoti uspela: preverite dnevnik (z desnim klikom na element)!"
+msgstr "Objava datoteke %s ni v celoti uspela: preverite dnevnik (z desnim klikom na element)."
 
 #: ../pan/tasks/task-upload.cc:364
-#, fuzzy, c-format
+#, c-format
 msgid "Posting of file %s not successful: Check the log (right-click list item)."
-msgstr "Objava datoteke %s ni uspela: preverite dnevnik (z desnim klikom na element)!"
+msgstr "Objava datoteke %s ni uspela: preverite dnevnik (z desnim klikom na element)."
 
 #: ../pan/tasks/task-xover.cc:79
 #, c-format
@@ -3480,16 +3487,16 @@ msgid "Error printing the server certificate for '%s'"
 msgstr "Napaka pri tiskanju strežniškega potrdila za '%s'"
 
 #: ../pan/usenet-utils/ssl-utils.h:216
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The current server <b>'%s'</b> sent this security certificate:\n"
 "\n"
 msgstr ""
-"Trenutni strežnik <b>'%s'</b> je poslal svoje varnostno potrdilo:\n"
+"Trenutni strežnik <b>'%s'</b> je poslal varnostno potrdilo:\n"
 "\n"
 
 #: ../pan/usenet-utils/ssl-utils.h:217
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Certificate information for server <b>'%s'</b>:\n"
 "\n"
@@ -3498,7 +3505,7 @@ msgstr ""
 "\n"
 
 #: ../pan/usenet-utils/ssl-utils.h:219
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s<b>Issuer information:</b>\n"
 "%s\n"
@@ -3517,36 +3524,3 @@ msgstr ""
 #: ../pan/usenet-utils/text-massager.cc:397
 msgid "> [quoted text muted]"
 msgstr "> [navedeno besedilo je utišano]"
-
-#~ msgid "_Contents"
-#~ msgstr "_Vsebina"
-
-#~ msgid "PGP Signature Information"
-#~ msgstr "Podrobnosti podpisa PGP"
-
-#~ msgid "no Signature found."
-#~ msgstr "Podpisa ni mogoče najti."
-
-#~ msgid "Signature verified."
-#~ msgstr "Podpis overjen."
-
-#~ msgid "PGP Signature : "
-#~ msgstr "Podpis PGP: "
-
-#~ msgid "no signature found."
-#~ msgstr "Podpisa ni mogoče najti."
-
-#~ msgid "Unable to open help file"
-#~ msgstr "Ni mogoče odpreti datoteke pomoči"
-
-#~ msgid "Edit Hotkey"
-#~ msgstr "Uredi hitro tipko"
-
-#~ msgid "Always show article deletion confirmation dialog"
-#~ msgstr "Vedno zahtevaj potrditev pred brisanjem prispevkov"
-
-#~ msgid "_Hotkeys"
-#~ msgstr "_Hitre tipke"
-
-#~ msgid "Hotkeys"
-#~ msgstr "Hitre tipke"
