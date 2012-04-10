@@ -127,12 +127,12 @@ e_cte_dialog (const char *title, const char *prompt, GMimeContentEncoding now, G
     GtkTreeIter iter;
     GMimeContentEncoding value;
 
-    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX(picker), &iter))
-      return;
-
-    model = gtk_combo_box_get_model (GTK_COMBO_BOX(picker));
-    gtk_tree_model_get (model, &iter, 1, &value, -1);
-    ret = value;
+    if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX(picker), &iter))
+    {
+      model = gtk_combo_box_get_model (GTK_COMBO_BOX(picker));
+      gtk_tree_model_get (model, &iter, 1, &value, -1);
+      ret = value;
+    }
 	}
 
 	gtk_widget_destroy (GTK_WIDGET (dialog));

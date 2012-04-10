@@ -35,7 +35,8 @@ noinst_HEADERS = \
  text-match.h \
  time-elapsed.h \
  utf8-utils.h \
- worker-pool.h
+ worker-pool.h \
+ typedefs.h
 
 #noinst_PROGRAMS = \
 #  progress-test \

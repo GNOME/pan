@@ -1724,7 +1724,7 @@ namespace pan
     return body;
   }
 
-  GMimeMessage*
+  bool
   gpg_encrypt (const std::string& uid, const std::string& body_str,
                GMimeMessage* body, GPtrArray* rcp, bool sign)
   {
@@ -1740,13 +1740,14 @@ namespace pan
     {
       g_object_unref(mpe);
       g_object_unref(G_OBJECT(part));
-      return 0;
+      return false;
     }
 
     g_mime_message_set_mime_part(body,GMIME_OBJECT(mpe));
     g_object_unref(G_OBJECT(part));
     g_object_unref(mpe);
 
+    return true;
   }
 #endif
 }

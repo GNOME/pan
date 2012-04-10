@@ -213,6 +213,7 @@ namespace
     static gboolean status_icon_periodic_refresh (gpointer p)
     {
       static_cast<StatusIconListener*>(p)->update_status_tooltip();
+      return true;
     }
 
 #ifdef HAVE_LIBNOTIFY

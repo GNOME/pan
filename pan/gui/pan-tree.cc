@@ -296,7 +296,7 @@ PanTreeStore :: model_iter_parent (GtkTreeModel * model,
 GtkTreePath*
 PanTreeStore :: get_path (const Row * row) const
 {
-  g_return_val_if_fail (row, false);
+  g_return_val_if_fail (row, NULL);
 
   std::vector<int> indices;
   while (row && row!=root) {
@@ -314,8 +314,8 @@ PanTreeStore :: get_path (const Row * row) const
 GtkTreePath*
 PanTreeStore :: get_path (GtkTreeIter  * iter)
 {
-  g_return_val_if_fail (iter, false);
-  g_return_val_if_fail (iter->stamp == stamp, false);
+  g_return_val_if_fail (iter, NULL);
+  g_return_val_if_fail (iter->stamp == stamp, NULL);
 
   return get_path (get_row (iter));
 }
@@ -361,7 +361,7 @@ PanTreeStore :: is_in_tree (Row * row) const
     row = row->parent;
   return row == root;
 }
-  
+
 /*****
 ******
 ******  implementing GtkTreeSortable
@@ -816,7 +816,7 @@ PanTreeStore :: insert_sorted (const parent_to_children_t& new_parents)
 
     // sort these from shallowest to deepest
     std::sort (keys.begin(), keys.end(), depth_compare);
- 
+
     // process each of them
     foreach_const (rows_t, keys, it)
     {
@@ -1117,7 +1117,7 @@ PanTreeStore :: reparent (const parent_to_children_t& new_parents)
 
   insert_sorted (new_parents);
 }
-  
+
 /***
 ****
 ***/

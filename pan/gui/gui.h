@@ -32,6 +32,7 @@
 #include <pan/gui/prefs.h>
 #include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
+#include <pan/general/typedefs.h>
 
 #include "gtk-compat.h"
 

@@ -69,7 +69,7 @@ namespace pan
 
 #ifdef HAVE_GMIME_CRYPTO
   GMimeMessage* message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body);
-  GMimeMessage* gpg_encrypt (const std::string& uid, const std::string& body_str, GMimeMessage* body, GPtrArray* rcp, bool sign);
+  bool gpg_encrypt (const std::string& uid, const std::string& body_str, GMimeMessage* body, GPtrArray* rcp, bool sign);
   bool gpg_verify_mps (GMimeObject*, GPGDecErr&);
 #endif
   /**
@@ -120,10 +120,10 @@ namespace pan
 
   char * __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n, const char* charset=0);
 
-  static char * __g_mime_iconv_strdup (iconv_t cd, const char *str, const char* charset=0)
-  {
-    return __g_mime_iconv_strndup(cd, str, strlen(str), charset);
-  }
+//  static char * __g_mime_iconv_strdup (iconv_t cd, const char *str, const char* charset=0)
+//  {
+//    return __g_mime_iconv_strndup(cd, str, strlen(str), charset);
+//  }
 
 }
 
