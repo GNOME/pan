@@ -2171,8 +2171,8 @@ GUI :: set_queue_size_label (unsigned int running,
     g_snprintf (str, sizeof(str), "%s: %u/%u", _("Tasks"), running, size);
 
   // build the tooltip
-  gulong queued, unused, stopped;
-  guint64 KiB_remain;
+  unsigned long queued, unused, stopped;
+  unsigned long KiB_remain;
   double KiBps;
   int hr, min, sec;
   _queue.get_stats (queued, unused, stopped,
