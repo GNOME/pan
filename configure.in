@@ -124,7 +124,7 @@ if test "x$want_gtk3" = "xyes" ; then
 	                  AC_DEFINE(HAVE_GTK,[1],[GTK+ 3 support])]
 	                  )
   if test "x$want_gtkspell" = "xyes" ; then
-    PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-2.0 >= $GTKSPELL3_REQUIRED enchant >= $ENCHANT_REQUIRED],
+    PKG_CHECK_MODULES([GTKSPELL], [gtkspell-3.0 >= $GTKSPELL3_REQUIRED enchant >= $ENCHANT_REQUIRED],
                       [
                       gtkspell_msg=yes
                       AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
