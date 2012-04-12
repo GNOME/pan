@@ -118,14 +118,14 @@ namespace pan
 
     if (gnutls_x509_crt_init (&cert) < 0)
     {
-      g_error ("Error in initialization\n");
+      g_warning ("Error in initialization\n");
       goto _fail;
     }
 
     cert_list = gnutls_certificate_get_peers (session, &cert_list_size);
     if (cert_list == NULL)
     {
-      g_error ("No certificate found!\n");
+      g_warning ("No certificate found!\n");
       goto _fail;
     }
 
@@ -133,7 +133,7 @@ namespace pan
      */
     if (gnutls_x509_crt_import (cert, &cert_list[0], GNUTLS_X509_FMT_DER) < 0)
     {
-      g_error ("Error parsing certificate!\n");
+      g_warning ("Error parsing certificate!\n");
       goto _fail;
     }
 
@@ -143,6 +143,9 @@ namespace pan
         g_warning ("The certificate's owner does not match hostname '%s' !\n", mydata->hostname_full.c_str());
       goto _fail;
     }
+
+    // for debugging SSL certs let through everything(!)
+    if (_dbg_ssl) { fail = false; mydata->always_trust = 1; }
 
     if (fail) goto _fail;
 
