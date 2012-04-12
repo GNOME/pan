@@ -28,7 +28,8 @@ namespace pan
   extern bool _debug_flag;
   extern bool _debug_verbose_flag;
   extern bool _verbose_flag;
-  extern std::ofstream dbg_file;
+  extern bool _dbg_ssl;
+  extern std::ofstream _dbg_file;
 
 }
 
@@ -50,6 +51,18 @@ namespace pan
   do { \
     if (_verbose_flag) \
       std::cout << A << '\n'; \
+  } while (0)
+
+#define debug_SSL(A) \
+  do { \
+    if (_dbg_ssl) \
+      _dbg_file<< LINE_ID << ' ' << A << '\n'; \
+  } while (0)
+
+#define debug_SSL_verbatim(A) \
+  do { \
+    if (_dbg_ssl) \
+      _dbg_file<< A ; \
   } while (0)
 
 #ifndef UNUSED

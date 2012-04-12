@@ -1422,8 +1422,10 @@ bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, gnutls_x509_crt_t
 
   gint ret_code = gtk_dialog_run (GTK_DIALOG(d));
 
+  // magic number, sorry. can be externalized later....
   if (ret_code == -66)
   {
+    debug_SSL("set server trust to enabled");
     _data.set_server_trust (server, 1);
     _data.save_server_info(server);
   }
@@ -2259,7 +2261,7 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
   {
     _prefs.save();
     StringView tmp(value);
-    // default to "eml" if value is empty to conform with article-cache
+    // default to "eml" if value is empty to conform to article-cache
     if (tmp.empty()) tmp ="eml";
     _data.get_cache().set_msg_extension(tmp);
   }
@@ -2308,6 +2310,7 @@ GUI :: on_valid_cert_added (gnutls_x509_crt_t cert, std::string server)
 {
   /* whitelist to make avaible for nntp-pool */
   _certstore.whitelist(server);
+  debug_SSL("whitelist ("<<server<<") ("<<cert<<")");
 }
 
 

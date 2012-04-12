@@ -228,8 +228,8 @@ namespace pan
 
     // get certs from ssl certs directory
     char * ssldir(0);
-    ssldir = getenv("SSL_CERT_DIR");
-    if (!ssldir) ssldir = getenv("SSL_DIR");
+//    ssldir = getenv("SSL_CERT_DIR");
+//    if (!ssldir) ssldir = getenv("SSL_DIR");
     if (!ssldir) return cnt;
 
     GDir * dir = g_dir_open (ssldir, 0, &err);
@@ -341,10 +341,12 @@ namespace pan
 
     fputs ((const char*)out, fp);
 
+    debug_SSL_verbatim("\n===========================================");
+    debug_SSL_verbatim(out);
+    debug_SSL_verbatim("\n===========================================");
+
     fclose(fp);
-
     delete out;
-
     chmod (buf, 0600);
 
     gnutls_certificate_set_x509_trust(_creds, &cert, 1); // for now, only 1 is saved

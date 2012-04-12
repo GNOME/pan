@@ -836,6 +836,7 @@ GIOChannelSocketGnuTLS :: gnutls_get_iochannel(GIOChannel* channel, const char* 
 void
 GIOChannelSocketGnuTLS :: on_verify_cert_failed (gnutls_x509_crt_t cert, std::string server, int nr)
 {
+   debug_SSL("on_verify_cert_failed "<<server<<" "<<nr);
   _certstore.blacklist(server);
 }
 

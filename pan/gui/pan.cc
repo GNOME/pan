@@ -119,6 +119,9 @@ namespace
   {
     std::cerr << "Shutting down Pan." << std::endl;
     signal (signum, SIG_DFL);
+
+    _dbg_file.close();
+
     mainloop_quit ();
   }
 #endif // G_OS_WIN32
@@ -843,6 +846,13 @@ main (int argc, char *argv[])
       else _debug_flag = true;
     } else if (!strcmp (tok, "--nzb"))
       nzb = true;
+
+    // undocumented, internal(!) debug flag for ssl problems (after 0.136)
+    else if (!strcmp (tok, "--debug-ssl")) {
+      _dbg_ssl = true;
+      _dbg_file.open("ssl.debug");
+    }
+
     else if (!strcmp (tok, "--version") || !strcmp (tok, "-v"))
       { std::cerr << "Pan " << VERSION << '\n'; return EXIT_SUCCESS; }
     else if (!strcmp (tok, "-o") && i<argc-1)
