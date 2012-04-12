@@ -228,8 +228,8 @@ namespace pan
 
     // get certs from ssl certs directory
     char * ssldir(0);
-//    ssldir = getenv("SSL_CERT_DIR");
-//    if (!ssldir) ssldir = getenv("SSL_DIR");
+    ssldir = getenv("SSL_CERT_DIR");
+    if (!ssldir) ssldir = getenv("SSL_DIR");
     if (!ssldir) return cnt;
 
     GDir * dir = g_dir_open (ssldir, 0, &err);
