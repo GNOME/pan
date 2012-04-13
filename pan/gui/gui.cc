@@ -1410,8 +1410,6 @@ bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, gnutls_x509_crt_t
     GTK_MESSAGE_WARNING,
     GTK_BUTTONS_NONE, NULL);
 
-  gtk_dialog_add_button (GTK_DIALOG(d), _("Always trust"), -66);
-
   HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d), buf,
     _("Do you want to accept it permanently? (You can change this later.)"));
   gtk_dialog_add_buttons (GTK_DIALOG(d),
@@ -1422,8 +1420,7 @@ bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, gnutls_x509_crt_t
 
   gint ret_code = gtk_dialog_run (GTK_DIALOG(d));
 
-  // magic number, sorry. can be externalized later....
-  if (ret_code == -66)
+  if (ret_code == GTK_RESPONSE_YES)
   {
     debug_SSL("set server trust to enabled");
     _data.set_server_trust (server, 1);
@@ -1432,7 +1429,7 @@ bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, gnutls_x509_crt_t
 
   gtk_widget_destroy(d);
 
-  return ret_code == GTK_RESPONSE_YES || ret_code == -66;
+  return ret_code == GTK_RESPONSE_YES;
 }
 #endif
 

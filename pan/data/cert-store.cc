@@ -144,9 +144,6 @@ namespace pan
       goto _fail;
     }
 
-    // for debugging SSL certs let through everything(!)
-    if (_dbg_ssl) { fail = false; mydata->always_trust = 1; }
-
     if (fail) goto _fail;
 
     /* auto-add new cert if we always trust this server */
