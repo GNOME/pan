@@ -381,7 +381,7 @@ namespace pan
     char buf[2048];
     g_snprintf(buf,sizeof(buf),"%s%cssl_certs%c%s.pem",file::get_pan_home().c_str(),
                G_DIR_SEPARATOR,G_DIR_SEPARATOR, host.c_str());
-    return buf;
+    return std::string(buf);
   }
 
 
