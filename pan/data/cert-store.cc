@@ -58,6 +58,22 @@ using namespace pan;
 namespace pan
 {
 
+  struct SaveCBStruct
+  {
+    CertStore& cs;
+    Data& data;
+    const Quark& server;
+    SaveCBStruct(CertStore& store, const Quark& s, Data& d) : cs(store), server(s), data(d) {}
+  };
+
+  gboolean
+  save_server_props_cb (gpointer gp)
+  {
+    SaveCBStruct*  data (static_cast<SaveCBStruct*>(gp));
+    data->data.save_server_info(data->server);
+    return false;
+  }
+
   int
   verify_callback(gnutls_session_t session)
   {
@@ -206,7 +222,8 @@ namespace pan
     fail:
       s->cert.clear();
       gnutls_x509_crt_deinit (cert);
-      _data.save_server_info(server);
+      SaveCBStruct cbstruct(*this, server, _data);
+      g_idle_add (save_server_props_cb, &cbstruct);
 
     return false;
 
@@ -328,7 +345,8 @@ namespace pan
 
     _data.set_server_cert(server, buf);
 
-    _data.save_server_info(server);
+    SaveCBStruct cbstruct(*this, server, _data);
+    g_idle_add (save_server_props_cb, &cbstruct);
 
     FILE * fp = fopen(buf, "wb");
     if (!fp) return false;
