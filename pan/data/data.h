@@ -591,7 +591,6 @@ namespace pan
        virtual void rescore () = 0;
 
     public:
-
       void set_queue (Queue* q) { _queue = q; }
       Queue* get_queue () { return _queue; }
 

@@ -669,7 +669,7 @@ _("General Options\n"
     Pan* pan(static_cast<Pan*>(user_data));
     if (!pan) return;
 
-    gboolean gui(false), nzb(false);
+    gboolean nzb(false);
     gchar* groups;
     gchar* nzb_output_path;
     gchar* nzbs;
@@ -677,19 +677,18 @@ _("General Options\n"
 
     if (g_strcmp0 (method_name, "NZBEnqueue") == 0)
     {
-      g_variant_get (parameters, "(sssbb)", &groups, &nzb_output_path, &nzbs, &gui, &nzb);
+      g_variant_get (parameters, "(sssb)", &groups, &nzb_output_path, &nzbs, &nzb);
 
-      if (groups)
-        if (strlen(groups)!=0)
-        {
-          StringView tok, v(groups);
-          while (v.pop_token(tok,','))
-            pan->queue.add_task (new TaskXOver (pan->data, tok, TaskXOver::NEW), Queue::BOTTOM);
-        }
+      if (groups && strlen(groups)!=0)
+      {
+        StringView tok, v(groups);
+        while (v.pop_token(tok,','))
+          pan->queue.add_task (new TaskXOver (pan->data, tok, TaskXOver::NEW), Queue::BOTTOM);
+      }
 
       if (nzb && nzbs)
       {
-        //parse the files
+        //parse the file list
         StringView tok, nzb(nzbs);
         while (nzb.pop_token(tok))
           nzb_files.push_back(tok);
@@ -714,7 +713,6 @@ _("General Options\n"
   "      <arg type='s' name='groups'    direction='in'/>"
   "      <arg type='s' name='nzb_files' direction='in'/>"
   "      <arg type='s' name='nzb_path'  direction='in'/>"
-  "      <arg type='b' name='gui'       direction='in'/>"
   "      <arg type='b' name='nzb'       direction='in'/>"
   "    </method>"
   "  </interface>"
@@ -915,8 +913,7 @@ main (int argc, char *argv[])
     WorkerPool worker_pool (4, true);
     SocketCreator socket_creator(data, certstore);
     Queue queue (data, data, &socket_creator, certstore, worker_pool, false, 32768);
-
-    data.set_queue(&queue);
+    data.set_queue (&queue);
 
 #ifdef HAVE_DBUS
     Pan pan(data, queue, cache, encode_cache, prefs, group_prefs);
@@ -936,7 +933,7 @@ main (int argc, char *argv[])
                                PAN_DBUS_SERVICE_PATH,
                                "news.pan.NZB",
                                "NZBEnqueue",
-                               g_variant_new ("(sssbb)",
+                               g_variant_new ("(sssb)",
                                   groups.c_str(), nzb_output_path.c_str(), nzb_str.c_str(),  gui, nzb),
                                NULL,
                                G_DBUS_CALL_FLAGS_NONE,
@@ -958,6 +955,8 @@ main (int argc, char *argv[])
   #endif
     _fail:
 #endif
+
+    // set queue prefs _after_ initializing dbus
     queue.set_online(true);
     queue.set_task_save_delay(prefs.get_int ("task-save-delay-secs", 10));
 
@@ -1035,6 +1034,7 @@ main (int argc, char *argv[])
       run_pan_in_window (gui_ptr, data, queue, prefs, group_prefs, GTK_WINDOW(window));
     }
 
+    // free status icons
     for (guint i=0; i<NUM_STATUS_ICONS; ++i)
       g_object_unref(status_icons[i].pixbuf);
     delete _status_icon;
