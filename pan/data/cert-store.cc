@@ -71,6 +71,7 @@ namespace pan
   {
     SaveCBStruct*  data (static_cast<SaveCBStruct*>(gp));
     data->data.save_server_info(data->server);
+    delete data;
     return false;
   }
 
@@ -222,8 +223,8 @@ namespace pan
     fail:
       s->cert.clear();
       gnutls_x509_crt_deinit (cert);
-      SaveCBStruct cbstruct(*this, server, _data);
-      g_idle_add (save_server_props_cb, &cbstruct);
+      SaveCBStruct* cbstruct = new SaveCBStruct(*this, server, _data);
+      g_idle_add (save_server_props_cb, cbstruct);
 
     return false;
 
@@ -345,8 +346,8 @@ namespace pan
 
     _data.set_server_cert(server, buf);
 
-    SaveCBStruct cbstruct(*this, server, _data);
-    g_idle_add (save_server_props_cb, &cbstruct);
+    SaveCBStruct* cbstruct = new SaveCBStruct(*this, server, _data);
+    g_idle_add (save_server_props_cb, cbstruct);
 
     FILE * fp = fopen(buf, "wb");
     if (!fp) return false;
@@ -363,8 +364,8 @@ namespace pan
     debug_SSL_verbatim(out);
     debug_SSL_verbatim("\n===========================================");
 
-    fclose(fp);
     delete out;
+    fclose(fp);
     chmod (buf, 0600);
 
     gnutls_certificate_set_x509_trust(_creds, &cert, 1); // for now, only 1 is saved
