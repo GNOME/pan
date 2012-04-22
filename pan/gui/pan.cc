@@ -1047,10 +1047,24 @@ main (int argc, char *argv[])
     }
 
     delete queue_and_gui;
+
+  // free dbus pan struct and handle
 #ifdef HAVE_DBUS
   #ifndef DEBUG_PARALLEL
     pan_dbus_deinit(&pan);
   #endif
+#endif
+
+#ifdef HAVE_GKR
+    // free secure passwords
+    foreach(quarks_t, data.get_servers(), it)
+    {
+      Data::Server* s(data.find_server(*it));
+      if (s && s->gkr_pw)
+      {
+        gnome_keyring_memory_free(s->gkr_pw);
+      }
+    }
 #endif
   }
 

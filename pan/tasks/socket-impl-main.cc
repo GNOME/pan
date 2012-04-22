@@ -143,7 +143,7 @@ SocketCreator :: create_socket (ServerInfo& info,
                                 bool               use_ssl)
 {
     Quark server;
-    data.find_server_by_hn(host, server);
+    data.find_server_by_hn(host.to_string(), server);
     ensure_module_init ();
     if (store.in_blacklist(server)) return;
 #ifdef HAVE_GNUTLS

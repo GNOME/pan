@@ -46,7 +46,7 @@ namespace pan
 
       virtual void set_server_auth (const Quark       & servername,
                                     const StringView  & username,
-                                    const StringView  & password) = 0;
+                                    gchar             *&password) = 0;
 
       virtual void set_server_trust (const Quark       & servername,
                                      const int           setme) = 0;
@@ -75,7 +75,7 @@ namespace pan
 
       virtual bool get_server_auth (const Quark   & servername,
                                     std::string   & setme_username,
-                                    std::string   & setme_password) const=0;
+                                    gchar         *&setme_password) = 0;
 
       virtual bool get_server_trust (const Quark  & servername, int&) const = 0;
 
@@ -95,7 +95,7 @@ namespace pan
 
       virtual int get_server_article_expiration_age  (const Quark  & server) const = 0;
 
-      virtual bool find_server_by_hn (const Quark& server, Quark& setme) const = 0;
+      virtual bool find_server_by_hn (const std::string& server, Quark& setme) const = 0;
   };
 }
 

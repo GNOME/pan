@@ -100,10 +100,10 @@ DataImpl :: find_server (const Quark& server) const
 }
 
 bool
-DataImpl :: find_server_by_hn (const Quark& server, Quark& setme) const
+DataImpl :: find_server_by_hn (const std::string& server, Quark& setme) const
 {
   foreach_const(servers_t, _servers, it)
-    if (it->second.host == server.c_str()) { setme = it->first; return true; }
+    if (it->second.host == server) { setme = it->first; return true; }
   return false;
 }
 
@@ -121,7 +121,7 @@ DataImpl :: set_server_article_expiration_age  (const Quark  & server,
 void
 DataImpl :: set_server_auth (const Quark       & server,
                              const StringView  & username,
-                             const StringView  & password)
+                             gchar             *&password)
 {
   Server * s (find_server (server));
   assert (s);
@@ -215,35 +215,43 @@ DataImpl :: save_server_info (const Quark& server)
 bool
 DataImpl :: get_server_auth (const Quark   & server,
                              std::string   & setme_username,
-                             std::string   & setme_password) const
+                             gchar         *&setme_password)
 {
-  const Server * s (find_server (server));
+  Server * s (find_server (server));
   bool found (s);
   if (found) {
     setme_username = s->username;
 #ifndef HAVE_GKR
     setme_password = s->password;
 #else
-    PasswordData pw;
-    pw.server = s->host;
-    pw.user = s->username;
-    GnomeKeyringResult res = password_decrypt(pw);
-    switch (res)
+    if (s->gkr_pw)
     {
-      case GNOME_KEYRING_RESULT_NO_MATCH:
-        Log::add_info_va(_("There seems to be no password set for server %s."), s->host.c_str());
-        break;
+      setme_password = s->gkr_pw;
+    }
+    else
+    {
+      PasswordData pw;
+      pw.server = s->host;
+      pw.user = s->username;
+      switch (password_decrypt(pw))
+      {
+        case GNOME_KEYRING_RESULT_NO_MATCH:
+          Log::add_info_va(_("There seems to be no password set for server %s."), s->host.c_str());
+          break;
 
-      case GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON:
-        Log::add_urgent_va (_("GNOME Keyring denied access to the passwords."), s->host.c_str());
-        break;
+        case GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON:
+          Log::add_urgent_va (_("GNOME Keyring denied access to the passwords."), s->host.c_str());
+          break;
 
-      case GNOME_KEYRING_RESULT_OK:
-        setme_password.assign(pw.pw.str, pw.pw.len);
-        break;
+        case GNOME_KEYRING_RESULT_OK:
+//          setme_password.assign(pw.pw.str, pw.pw.len);
+          setme_password = pw.pw;
+          s->gkr_pw = pw.pw;
+          break;
 
-      default:
-        break;
+        default:
+          break;
+      }
     }
 #endif
   }
@@ -483,7 +491,7 @@ namespace
 }
 
 void
-DataImpl :: save_server_properties (DataIO& data_io) const
+DataImpl :: save_server_properties (DataIO& data_io)
 {
   int depth (0);
   std::ostream * out = data_io.write_server_properties ();
@@ -500,13 +508,18 @@ DataImpl :: save_server_properties (DataIO& data_io) const
   *out << indent(depth++) << "<server-properties>\n";
   foreach_const (alpha_quarks_t, servers, it) {
     const Server* s (find_server (*it));
-    std::string user, pass;
+    std::string user;
+    gchar* pass(NULL);
     get_server_auth(*it, user, pass);
     *out << indent(depth++) << "<server id=\"" << escaped(it->to_string()) << "\">\n";
     *out << indent(depth) << "<host>" << escaped(s->host) << "</host>\n"
          << indent(depth) << "<port>" << s->port << "</port>\n"
          << indent(depth) << "<username>" << escaped(user) << "</username>\n"
+#ifdef HAVE_GKR
+         << indent(depth) << "<password>" << "HANDLED_BY_GNOME_KEYRING" << "</password>\n"
+#else
          << indent(depth) << "<password>" << escaped(pass) << "</password>\n"
+#endif
          << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
          << indent(depth) << "<connection-limit>" << s->max_connections << "</connection-limit>\n"
          << indent(depth) << "<newsrc>" << s->newsrc_filename << "</newsrc>\n"

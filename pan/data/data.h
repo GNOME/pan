@@ -178,7 +178,8 @@ namespace pan
       {
         Quark server;
         StringView user;
-        StringView pw;
+//        StringView pw;
+        gchar* pw;
       };
 
     public:
@@ -197,8 +198,10 @@ namespace pan
          int trust;
          typedef sorted_vector<Quark,true,AlphabeticalQuarkOrdering> groups_t;
          groups_t groups;
+         gchar* gkr_pw;
 
-         Server(): port(STD_NNTP_PORT), article_expiration_age(31), max_connections(2), rank(1), ssl_support(0), trust(0) {}
+         Server(): port(STD_NNTP_PORT), article_expiration_age(31), max_connections(2),
+                    rank(1), ssl_support(0), trust(0), gkr_pw(NULL) {}
       };
 
     protected:
@@ -227,7 +230,7 @@ namespace pan
       virtual GnomeKeyringResult password_decrypt (PasswordData&) const = 0;
 #endif
       /** Gets a quark to the provided hostname */
-      virtual bool find_server_by_hn (const Quark& server, Quark& setme) const = 0;
+      virtual bool find_server_by_hn (const std::string& server, Quark& setme) const = 0;
 
       virtual const Server* find_server (const Quark& server) const = 0;
 
@@ -241,7 +244,7 @@ namespace pan
 
       virtual void set_server_auth (const Quark       & server,
                                     const StringView  & username,
-                                    const StringView  & password) = 0;
+                                    gchar             *&password) = 0;
 
       virtual void set_server_trust (const Quark      & servername,
                                      const int          setme) = 0;
@@ -259,7 +262,7 @@ namespace pan
 
       virtual bool get_server_auth (const Quark   & server,
                                     std::string   & setme_username,
-                                    std::string   & setme_password) const = 0;
+                                    gchar         *& setme_password) = 0;
 
       virtual bool get_server_trust (const Quark  & servername, int&) const = 0;
 

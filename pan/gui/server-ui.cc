@@ -116,7 +116,8 @@ namespace
     d->server = server;
 
     int port(STD_NNTP_PORT), max_conn(4), age(31*3), rank(1), ssl(0), trust(0);
-    std::string addr, user, pass, cert;
+    std::string addr, user, cert;
+    gchar* pass(NULL);
     if (!server.empty()) {
       d->data.get_server_addr (server, addr, port);
       d->data.get_server_auth (server, user, pass);
@@ -193,7 +194,7 @@ namespace
       const int port (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(d->port_spin)));
       const int max_conn (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(d->connection_limit_spin)));
       StringView user (pan_entry_get_text (d->auth_username_entry));
-      StringView pass = pan_entry_get_text (d->auth_password_entry);
+      gchar* pass = gnome_keyring_memory_strdup(gtk_entry_get_text(GTK_ENTRY(d->auth_password_entry)));
 
       int age (31);
       GtkTreeIter iter;
@@ -247,6 +248,7 @@ namespace
 
     if (destroy)
       gtk_widget_destroy (GTK_WIDGET(w));
+
   }
 
   void delete_server_edit_dialog (gpointer p)

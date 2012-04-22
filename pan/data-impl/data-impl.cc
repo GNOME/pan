@@ -138,7 +138,7 @@ DataImpl :: password_encrypt (const PasswordData& pw)
       GNOME_KEYRING_NETWORK_PASSWORD,
       GNOME_KEYRING_DEFAULT,
       _("Pan Newsreader's server passwords"),
-      pw.pw.str,
+      pw.pw,
       "user", pw.user.str,
       "server", pw.server.c_str(),
       NULL)
@@ -152,7 +152,6 @@ DataImpl :: password_decrypt (PasswordData& pw) const
 {
 
   gchar* pwd = NULL;
-//  g_return_val_if_fail (pw, GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
 
   GnomeKeyringResult ret =
     gnome_keyring_find_password_sync (
@@ -162,14 +161,13 @@ DataImpl :: password_decrypt (PasswordData& pw) const
     "server", pw.server.c_str(),
     NULL);
 
-  std::string tmp;
   if (pwd)
-  { tmp = pwd;
+  {
+    pw.pw = gnome_keyring_memory_strdup(pwd);
     gnome_keyring_free_password(pwd);
   }
-  pw.pw = tmp;
 
-  return (pwd ? GNOME_KEYRING_RESULT_OK : GNOME_KEYRING_RESULT_DENIED) ;
+  return (pw.pw ? GNOME_KEYRING_RESULT_OK : GNOME_KEYRING_RESULT_DENIED) ;
 }
 #endif
 

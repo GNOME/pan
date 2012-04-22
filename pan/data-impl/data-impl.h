@@ -112,18 +112,16 @@ namespace pan
 
       void load_server_properties (const DataIO&);
 
-      void save_server_properties (DataIO&) const;
+      void save_server_properties (DataIO&);
 
       typedef Loki::AssocVector<Quark,Server> servers_t;
 
       servers_t _servers;
 
-//      Server* find_server (const Quark& server);
-
     public:
       virtual const Server* find_server (const Quark& server) const;
       virtual Server* find_server (const Quark& server);
-      virtual bool find_server_by_hn (const Quark& server, Quark& setme) const;
+      virtual bool find_server_by_hn (const std::string& server, Quark& setme) const;
 
     public: // mutators
 
@@ -134,7 +132,7 @@ namespace pan
 
       virtual void set_server_auth (const Quark       & server,
                                     const StringView  & username,
-                                    const StringView  & password);
+                                    gchar             *&password);
 
       virtual void set_server_trust (const Quark      & servername,
                                      int                setme);
@@ -168,7 +166,7 @@ namespace pan
 
       virtual bool get_server_auth (const Quark   & server,
                                     std::string   & setme_username,
-                                    std::string   & setme_password) const;
+                                    gchar         *&setme_password);
 
       virtual bool get_server_trust (const Quark  & servername, int&) const;
 

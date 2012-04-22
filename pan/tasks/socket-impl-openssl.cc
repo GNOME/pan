@@ -308,6 +308,8 @@ namespace
     gnutls_deinit (chan->session);
     g_free(chan->host);
     g_free(chan);
+    // free callback struct
+    delete (mydata_t*)gnutls_session_get_ptr (chan->session);
   }
 }
 
@@ -569,17 +571,17 @@ GIOChannelSocketGnuTLS :: _gnutls_handshake (GIOChannel *channel)
   g_return_val_if_fail (chan->session, G_IO_STATUS_ERROR);
 
   /* init custom data for callback */
-  mydata_t mydata;
+  mydata_t* mydata = new mydata_t();
 
-  mydata.cs = &_certstore;
+  mydata->cs = &_certstore;
   Quark setme;
-  _data.find_server_by_hn(_host.c_str(), setme);
-  mydata.host = setme;
-  mydata.hostname_full = _host;
+  _data.find_server_by_hn(_host, setme);
+  mydata->host = setme;
+  mydata->hostname_full = _host;
   int res(0); // always trust server cert
   _data.get_server_trust (setme, res);
-  mydata.always_trust = res;
-  gnutls_session_set_ptr (chan->session, (void *) &mydata);
+  mydata->always_trust = res;
+  gnutls_session_set_ptr (chan->session, (void *) mydata);
 
   int status = gnutls_handshake (chan->session);
 
