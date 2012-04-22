@@ -194,8 +194,11 @@ namespace
       const int port (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(d->port_spin)));
       const int max_conn (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(d->connection_limit_spin)));
       StringView user (pan_entry_get_text (d->auth_username_entry));
+#ifdef HAVE_GKR
       gchar* pass = gnome_keyring_memory_strdup(gtk_entry_get_text(GTK_ENTRY(d->auth_password_entry)));
-
+#else
+      gchar* pass = (gchar*)gtk_entry_get_text(GTK_ENTRY(d->auth_password_entry));
+#endif
       int age (31);
       GtkTreeIter iter;
       GtkComboBox * combo (GTK_COMBO_BOX (d->expiration_age_combo));
