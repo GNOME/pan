@@ -118,12 +118,11 @@ Encoder :: do_work()
 {
 
   const int bufsz = 4096;
-  char buf[bufsz], buf2[bufsz];
+  char buf[bufsz];
   int cnt(1);
   crc32_t crc(0);
   struct stat sb;
   std::string s;
-  FILE* outfile, * infile ;
   char cachename[4096];
   FILE * fp ;
   Article* tmp = article;
@@ -145,7 +144,6 @@ Encoder :: do_work()
     {
       g_snprintf(buf,sizeof(buf),"%s.%d",basename.c_str(), cnt);
 
-      int enc(YENC_ENCODED);
       std::ofstream out;
       std::ifstream in;
 
