@@ -245,8 +245,8 @@ namespace
     bool n() { return notif_shown; }
 
     StatusIconListener(GtkStatusIcon * i, GtkWidget* r, Prefs& p, Queue& q, Data& d, bool v) :
-      icon(i), root(r), prefs(p), queue(q), data(d),
-      tasks_active(0), tasks_total(0), minimized(v), notif_shown(false)
+      icon(i), root(r), prefs(p), queue(q), data(d), minimized(v),
+      tasks_active(0), tasks_total(0), notif_shown(false)
     {
       prefs.add_listener(this);
       queue.add_listener(this);
@@ -641,11 +641,11 @@ _("General Options\n"
     EncodeCache& encode_cache;
     Prefs& prefs;
     GroupPrefs& group_prefs;
-    int dbus_id;
-    bool name_valid;
-    bool lost_name;
-
     GDBusNodeInfo * busnodeinfo;
+    int dbus_id;
+    bool lost_name;
+    bool name_valid;
+
     GDBusInterfaceVTable ifacetable;
 
     Pan(Data& d, Queue& q, ArticleCache& c, EncodeCache& ec, Prefs& p, GroupPrefs& gp) :

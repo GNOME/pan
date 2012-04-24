@@ -180,7 +180,7 @@ PostUI:: update_filequeue_label (GtkTreeSelection *selection)
       TaskUpload * task (dynamic_cast<TaskUpload*>(*it));
       if (task) kb += task->_bytes/1024;
     }
-    g_snprintf(str,sizeof(str), _("Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."), tasks.size(), kb, kb/1024.0f);
+    g_snprintf(str,sizeof(str), _("Upload queue: %u tasks, %ld KB (~ %.2f MB) total."), tasks.size(), kb, kb/1024.0f);
     gtk_label_set_text (GTK_LABEL(_filequeue_label), str);
 }
 

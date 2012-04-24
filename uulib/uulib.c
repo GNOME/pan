@@ -1193,7 +1193,7 @@ UUCleanUp (void)
   itbd *iter=ftodel, *ptr;
   uulist *liter;
   uufile *fiter;
-  allomap *aiter;
+  //allomap *aiter;
 
   /*
    * delete temporary input files (such as the copy of stdin)

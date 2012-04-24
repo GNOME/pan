@@ -52,6 +52,7 @@ ENCHANT_REQUIRED=1.6.0
 GNUTLS_REQUIRED=2.12.10
 LIBNOTIFY_REQUIRED=0.4.1
 LIBGKR_REQUIRED=3.2.0
+LIBGIO_REQUIRED=2.26.0
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GMIME_REQUIRED)
 AC_SUBST(GTK_REQUIRED)
@@ -59,6 +60,7 @@ AC_SUBST(GTKSPELL_REQUIRED)
 AC_SUBST(GNUTLS_REQUIRED)
 AC_SUBST(LIBNOTIFY_REQUIRED)
 AC_SUBST(LIBGKR_REQUIRED)
+AC_SUBST(LIBGIO_REQUIRED)
 
 dnl LIBGSASL_REQUIRED=1.6.1
 dnl AC_SUBST(LIBGSASL_REQUIRED)
@@ -105,10 +107,10 @@ if test "x$have_gmime26" = "xyes" ; then
 fi
 
 dnl D-Bus support
-  AC_ARG_WITH(dbus, AS_HELP_STRING([--with-dbus],[enable D-Bus support (normally: yes)]), [want_dbus=$withval], [want_dbus=yes])
-  if test "x$want_dbus" = "xyes" ; then
-    AC_DEFINE(HAVE_DBUS,[1],[D-Bus support for multiple Pan instances])
-  fi
+AC_ARG_WITH(dbus, AS_HELP_STRING([--with-dbus],[enable D-Bus support (normally: yes)]), [want_dbus=$withval], [want_dbus=yes])
+if test "x$want_dbus" = "xyes" ; then
+  PKG_CHECK_MODULES([LIBGIO],[gio-2.0 >= $LIBGIO_REQUIRED],AC_DEFINE(HAVE_DBUS,[1],[D-Bus support for multiple Pan instances]),[])
+fi
 
 dnl GtkSpell support
 gtkspell_msg=no
