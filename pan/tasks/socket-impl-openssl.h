@@ -4,7 +4,7 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ * Copyright (C) 2011 Heinrich Müller <henmull@src.gnome.org>
  * SSL functions : Copyright (C) 2002 vjt (irssi project)
  *
  * This program is free software; you can redistribute it and/or modify

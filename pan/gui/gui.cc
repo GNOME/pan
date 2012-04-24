@@ -358,6 +358,7 @@ namespace
 {
   GtkWidget * hpane (0);
   GtkWidget * vpane (0);
+  GtkWidget * sep_vpane (0);
 }
 
 GUI :: ~GUI ()
@@ -378,6 +379,11 @@ GUI :: ~GUI ()
   {
     res = gtk_paned_get_position(GTK_PANED(vpane));
     if (res > 0) _prefs.set_int ("main-window-vpane-position", res);
+  }
+  if (sep_vpane)
+  {
+    res = gtk_paned_get_position(GTK_PANED(sep_vpane));
+    if (res > 0) _prefs.set_int ("sep-vpane-position", res);
   }
 
 
@@ -1626,11 +1632,28 @@ namespace
 
     GtkWidget * w;
     if (w1!=NULL && w2!=NULL) {
-      int pos = uglyhack_idx==0
-        ? prefs.get_int ("main-window-vpane-position", 300)
-        : prefs.get_int ("main-window-hpane-position", 266);
+      int pos(0);
+      if (uglyhack_idx==0)
+      {
+        pos = prefs.get_int ("main-window-vpane-position", 300);
+      }
+      else if (uglyhack_idx==1)
+      {
+        pos = prefs.get_int ("main-window-hpane-position", 266);
+      }
+      else if (uglyhack_idx==2)
+      {
+        pos = prefs.get_int ("sep-vpane-position", 266);
+      }
       if (orient == VERTICAL) {
-        w = vpane = gtk_vpaned_new ();
+        if (uglyhack_idx==0)
+        {
+          w = vpane = gtk_vpaned_new ();
+        }
+        else if (uglyhack_idx==2)
+        {
+          w = sep_vpane = gtk_vpaned_new ();
+        }
         gtk_widget_set_size_request (w1, -1, 50);
         gtk_widget_set_size_request (w2, -1, 50);
       } else {
@@ -1732,7 +1755,7 @@ void GUI :: do_tabbed_layout (bool tabbed)
       w = pack_widgets (_prefs, w, p[2], HORIZONTAL, 1);
     } else if (layout == "stacked-vertical") {
       w = pack_widgets (_prefs, p[0], p[1], VERTICAL, 0);
-      w = pack_widgets (_prefs, w, p[2], VERTICAL, 1);
+      w = pack_widgets (_prefs, w, p[2], VERTICAL, 2);
     } else { // stacked right
       w = pack_widgets (_prefs, p[1], p[2], VERTICAL, 0);
       w = pack_widgets (_prefs, p[0], w,    HORIZONTAL, 1);
@@ -1845,7 +1868,6 @@ void GUI :: do_show_selected_article_info ()
       g_snprintf (msg, sizeof(msg), ngettext("This article is missing %d part.","This article is missing %d of its %d parts:",(int)n_parts), (int)missing_parts.size(), (int)n_parts);
     foreach_const (std::set<number_t>, missing_parts, it)
       s << ' ' << *it;
-
 
     const char* author = iconv_inited ? __g_mime_iconv_strdup(conv, a->author.c_str()) : a->author.c_str();
     const char* subject = iconv_inited ? __g_mime_iconv_strdup(conv, a->subject.c_str()) : a->subject.c_str();

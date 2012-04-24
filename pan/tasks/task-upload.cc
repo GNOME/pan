@@ -66,7 +66,7 @@ namespace
   {
     std::string r;
     quarks_t groups;
-    int cnt(1);
+    size_t cnt(1);
     foreach_const (Xref, a.xref, xit)
     {
       r += xit->group.to_string();

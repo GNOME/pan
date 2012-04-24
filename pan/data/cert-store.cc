@@ -4,7 +4,7 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich M�ller <sphemuel@stud.informatik.uni-erlangen.de>
+ * Copyright (C) 2011 Heinrich M�ller <henmull@src.gnome.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -61,8 +61,8 @@ namespace pan
   struct SaveCBStruct
   {
     CertStore& cs;
-    Data& data;
     const Quark& server;
+    Data& data;
     SaveCBStruct(CertStore& store, const Quark& s, Data& d) : cs(store), server(s), data(d) {}
   };
 
@@ -237,8 +237,6 @@ namespace pan
     int cnt(0);
     quarks_t servers(_data.get_servers());
     int ret(0);
-    size_t filelen;
-    char * buf;
     GError* err(NULL);
 
     foreach_const(quarks_t, servers, it)
@@ -260,7 +258,6 @@ namespace pan
     {
       char filename[PATH_MAX];
       const char * fname;
-      struct stat stat_p;
       while ((fname = g_dir_read_name (dir)))
       {
         struct stat stat_p;
@@ -292,9 +289,7 @@ namespace pan
   void
   CertStore :: remove_hard(const Quark& server)
   {
-    char buf[2048];
     std::string fn = _data.get_server_cert(server);
-    std::cerr<<"unlink "<<fn<<"\n";
     unlink(fn.c_str());
   }
 

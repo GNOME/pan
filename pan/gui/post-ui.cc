@@ -78,10 +78,7 @@ PostUI :: generate_unique_id (StringView& mid, int cnt, std::string& s)
 {
 
   std::stringstream out;
-  struct stat sb;
   struct timeval tv;
-  const time_t now (time(NULL));
-  struct tm local_now = *gmtime (&now);
   out << "pan$";
   gettimeofday (&tv, NULL);
   out << std::hex << tv.tv_usec << "$" << std::hex
@@ -183,7 +180,7 @@ PostUI:: update_filequeue_label (GtkTreeSelection *selection)
       TaskUpload * task (dynamic_cast<TaskUpload*>(*it));
       if (task) kb += task->_bytes/1024;
     }
-    g_snprintf(str,sizeof(str), _("Upload queue: %ld tasks, %ld KB (~ %.2f MB) total."), tasks.size(), kb, kb/1024.0f);
+    g_snprintf(str,sizeof(str), _("Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."), tasks.size(), kb, kb/1024.0f);
     gtk_label_set_text (GTK_LABEL(_filequeue_label), str);
 }
 
@@ -1115,7 +1112,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
     std::vector<Task*> tasks;
     _upload_queue.get_all_tasks(tasks);
-    struct stat sb;
     _running_uploads = tasks.size();
     if (master_reply) ++_running_uploads;
 
@@ -2547,8 +2543,6 @@ PostUI:: on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, 
 {
   PostUI* data(static_cast<PostUI*>(user_data));
   GtkWidget    * w    = data->parts_store() ;
-  GtkListStore *store = GTK_LIST_STORE(
-                      gtk_tree_view_get_model(GTK_TREE_VIEW(w)));
   GtkTreeModel * model = gtk_tree_view_get_model(GTK_TREE_VIEW(w));
   int part(42);
   GtkTreeIter  iter;
@@ -2756,7 +2750,6 @@ void
 PostUI :: remove_files (void)
 {
   _upload_queue.remove_tasks (get_selected_files());
-  GtkTreeView * view (GTK_TREE_VIEW (_filequeue_store));
 }
 
 void
@@ -2848,7 +2841,6 @@ PostUI :: select_parts ()
   _upload_ptr = dynamic_cast<TaskUpload*>(set[0]);
   if (!_upload_ptr) return;
 
-  GtkTreeIter iter;
   GtkWidget * w = _part_select = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_signal_connect (_part_select, "delete-event", G_CALLBACK(delete_parts_cb), this);
   gtk_window_set_role (GTK_WINDOW(w), "pan-parts-window");
@@ -2909,7 +2901,6 @@ PostUI::draft_save_cb(gpointer ptr)
     char * filename = g_build_filename (draft_filename.c_str(), "autosave", NULL);
 
     std::ofstream o (filename);
-    gboolean unused;
     char * headers (g_mime_object_get_headers ((GMimeObject *) msg));
     o << headers;
     const std::string body (data->get_body ());
@@ -3143,7 +3134,6 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
       GMimeMessage * msg (new_message_from_ui (UPLOADING));
       TaskUpload* tmp;
       Article a;
-      struct stat sb;
       a.subject = subject;
       a.author = author;
       foreach_const (quarks_t, groups, git)
@@ -3171,7 +3161,6 @@ std::string
 PostUI :: prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs)
 {
   char buf[4096];
-  struct stat sb;
   std::string path;
 
   std::string prev_path = prefs.get_string ("default-save-attachments-path", g_get_home_dir ());

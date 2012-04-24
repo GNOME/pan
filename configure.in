@@ -1,7 +1,7 @@
-AC_INIT([Pan],[0.136],[https://bugzilla.gnome.org/enter_bug.cgi?product=Pan],[pan],[http://pan.rebelbase.com/])
+AC_INIT([Pan],[0.137],[https://bugzilla.gnome.org/enter_bug.cgi?product=Pan],[pan],[http://pan.rebelbase.com/])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
-AC_DEFINE(VERSION_MINOR,136,[Minor part of version number])
-AC_DEFINE(VERSION_REVISION,1,[Revision part of version number])
+AC_DEFINE(VERSION_MINOR,137,[Minor part of version number])
+AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
 AC_DEFINE(VERSION_TITLE,["I'm far too busy being delicious"],[Release Name])
 AC_PREREQ([2.64])
 
@@ -240,8 +240,8 @@ case $host_os in
 esac
 AM_CONDITIONAL([HAVE_WIN32],[test "$win32" = "yes"])
 
-dnl CXXFLAGS="$CXXFLAGS -Wall"
-dnl CPPFLAGS="$CPPFLAGS -Wall"
+CXXFLAGS="-O0 -Wall"
+CPPFLAGS="-O0 -Wall"
 
 dnl Build the output files
 AC_SUBST(panlocaledir)

@@ -5,10 +5,8 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ * Copyright (C) 2011 Heinrich Müller <henmull@src.gnome.org>
  * SSL functions : Copyright (C) 2002 vjt (irssi project)
- * getTimeFromASN1 : Copyright (C) 2003 Jay Case,
- * taken from : http://www.mail-archive.com/openssl-users@openssl.org/msg33365.html
  *
  * GnuTLS functions and code
  * Copyright (C) 2002, 2003, 2004, 2005, 2007, 2008, 2010 Free Software
@@ -77,14 +75,14 @@ namespace pan
   {
     std::map<Quark, Quark> tags;
     std::string iss, sub;
-    int pos1, pos2, tmp_pos1, idx;
     char buf[2048];
     char * dn_buf;
-    size_t num_tags;
+    gnutls_x509_crt_t cert;
     const char delim;
     size_t len;
     gnutls_datum_t d;
-    gnutls_x509_crt_t cert;
+    int pos1, pos2, tmp_pos1, idx;
+    int num_tags;
     gnutls_x509_dn_t dn;
     size_t size;
 
@@ -127,6 +125,7 @@ namespace pan
           pos1 = (int)index + strlen(tags_idx[idx]);
           pos2 = (int)iss.find(delim, pos1);
           if (pos2<=0) goto _end;
+          // seperate handling for CN tag
           if (!strcmp(cleaned_tags[idx],"CN"))
           {
             int tmp_pos = (int)iss.find("://",pos2-1);
@@ -169,7 +168,7 @@ namespace pan
     std::string build_complete (std::vector<quarks_p>& v)
     {
       std::stringstream s;
-      for (int i=0;i<v.size(); ++i)
+      for (size_t i=0; i< v.size(); ++i)
       {
         s << "\t<b>"<<v[i].first<<"</b> : "<<v[i].second<<"\n";
       }
@@ -180,15 +179,6 @@ namespace pan
     {
     }
   };
-
-  static std::string escaped (const std::string& s)
-  {
-    char * pch = g_markup_escape_text (s.c_str(), s.size());
-    const std::string ret (pch);
-    g_free (pch);
-    return ret;
-  }
-
 
   static void
   pretty_print_x509 (char* buf, size_t size, const Quark& server, gnutls_x509_crt_t c, bool on_connect)
@@ -211,7 +201,6 @@ namespace pan
     char * until = date_maker.get_date_string (t);
     char * before = date_maker.get_date_string (t2);
 
-    char email1[2048], email2[2048];
     char tmp1[2048], tmp2[2048];
     g_snprintf(tmp1,sizeof(tmp1), _("The current server <b>'%s'</b> sent this security certificate:\n\n"), server.c_str());
     g_snprintf(tmp2,sizeof(tmp2), _("Certificate information for server <b>'%s'</b>:\n\n"), server.c_str());

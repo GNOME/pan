@@ -5,7 +5,7 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ * Copyright (C) 2011 Heinrich Müller <henmull@src.gnome.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,16 +71,17 @@ namespace
   struct ThreadWorker : public WorkerPool::Worker,
                         public WorkerPool::Worker::Listener
   {
+
+
+    ServerInfo& data;
+    std::string err;
+    const Quark server;
     std::string host;
     int port;
     Socket::Creator::Listener * listener;
-
     bool ok;
-    ServerInfo& data;
     Socket * socket;
-    std::string err;
     bool use_ssl;
-    const Quark server;
 #ifdef HAVE_GNUTLS
     CertStore& store;
     ThreadWorker (ServerInfo& d, const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l,

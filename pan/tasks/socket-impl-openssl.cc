@@ -4,7 +4,7 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ * Copyright (C) 2011 Heinrich Müller <henmull@src.gnome.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -409,9 +409,8 @@ namespace
   GIOStatus gnutls_seek(GIOChannel *handle, gint64 offset, GSeekType type, GError **gerr)
   {
     GIOGnuTLSChannel *chan = (GIOGnuTLSChannel *)handle;
-    GIOError e;
-    e = g_io_channel_seek(chan->giochan, offset, type);
-    return (e == G_IO_ERROR_NONE) ? G_IO_STATUS_NORMAL : G_IO_STATUS_ERROR;
+    g_io_channel_seek_position(chan->giochan, offset, type, gerr);
+    return !gerr ? G_IO_STATUS_NORMAL : G_IO_STATUS_ERROR;
   }
 
   GIOStatus gnutls_close(GIOChannel *handle, GError **gerr)

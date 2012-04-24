@@ -73,9 +73,11 @@ namespace pan
       typedef std::vector<Quark> mid_sequence_t;
 
       struct Needed {
+
+        NNTP* nntp;
         unsigned long bytes;
         int partno;
-        NNTP* nntp;
+
         std::string message_id, last_mid;
         std::string mid; // for rng
         std::string cachename;

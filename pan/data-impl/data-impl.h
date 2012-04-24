@@ -89,8 +89,8 @@ namespace pan
       virtual const CertStore& get_certstore () const { return _certstore; }
 
     private:
-      EncodeCache _encode_cache;
       ArticleCache _cache;
+      EncodeCache _encode_cache;
       CertStore _certstore;
 
     public:
@@ -476,8 +476,8 @@ namespace pan
 
         private: // implementation fields
           const Quark _group;
-          const Quark _save_path;  // for auto-download
           DataImpl & _data;
+          const Quark _save_path;  // for auto-download
           nodes_t _nodes;
           MemChunk<ArticleNode> _node_chunk;
           FilterInfo _filter;

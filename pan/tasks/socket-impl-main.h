@@ -4,7 +4,7 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich Müller <sphemuel@stud.informatik.uni-erlangen.de>
+ * Copyright (C) 2011 Heinrich Müller <henmull@src.gnome.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -137,8 +137,8 @@ namespace pan
       virtual void on_verify_cert_failed(gnutls_x509_crt_t, std::string, int);
       virtual void on_valid_cert_added (gnutls_x509_crt_t, std::string );
 #endif
-      CertStore & store;
       Data& data;
+      CertStore & store;
 
     public:
       virtual void create_socket (ServerInfo&,

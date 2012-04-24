@@ -75,8 +75,8 @@ namespace
     tasks_t tasks;
     Article a;
     ArticleCache& cache;
-    ArticleRead& read;
     EncodeCache& encode_cache;
+    ArticleRead& read;
     const ServerRank& ranks;
     const GroupServer& gs;
     Quark server;
