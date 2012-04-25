@@ -181,10 +181,10 @@ void GUI :: show_task_window_cb (GtkWidget *, gpointer gui_gpointer)
 GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),
   _queue (queue),
-  _cache (data.get_cache()),
-  _encode_cache (data.get_encode_cache()),
   _prefs (prefs),
   _group_prefs (group_prefs),
+  _cache (data.get_cache()),
+  _encode_cache (data.get_encode_cache()),
   _root (gtk_vbox_new (FALSE, 0)),
   _menu_vbox (gtk_vbox_new (FALSE, 0)),
   _group_pane (0),
@@ -211,7 +211,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   gtk_box_pack_start (GTK_BOX(_root), _menu_vbox, FALSE, FALSE, 0);
   gtk_widget_show (_menu_vbox);
 
-  _group_pane = new GroupPane (*this, data, _prefs);
+  _group_pane = new GroupPane (*this, data, _prefs, _group_prefs);
   _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, _group_prefs, *this, *this);
   _body_pane = new BodyPane (data, _cache, _prefs, _group_prefs, _queue, _header_pane);
 

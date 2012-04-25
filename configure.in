@@ -242,9 +242,6 @@ case $host_os in
 esac
 AM_CONDITIONAL([HAVE_WIN32],[test "$win32" = "yes"])
 
-CXXFLAGS="-O0 -Wall"
-CPPFLAGS="-O0 -Wall"
-
 dnl Build the output files
 AC_SUBST(panlocaledir)
 AC_CONFIG_FILES([Makefile

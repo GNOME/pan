@@ -185,7 +185,7 @@ EncodeCache :: clear ()
 void
 EncodeCache :: get_data(std::string& data, const Quark& where)
 {
-  char buf[4096], buf2[4096];
+  char buf[4096];
   get_filename(buf, where);
   std::ifstream in(buf, std::ios::in);
   std::stringstream out;

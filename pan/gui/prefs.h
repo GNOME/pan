@@ -142,6 +142,10 @@ namespace pan
 
 
     public:
+      colors_t& get_colors() { return _colors; }
+      const colors_t& get_colors() const { return _colors; }
+
+    public:
       bool _rules_changed;
       bool _rules_enabled;
   };

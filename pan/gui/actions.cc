@@ -772,7 +772,7 @@ pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p, Data* data
   GtkActionGroup * action_group = _group = gtk_action_group_new ("Actions");
   gtk_action_group_set_translation_domain (action_group, NULL);
 
-  for (int i=0;i<n_entries;++i)
+  for (size_t i=0;i<n_entries;++i)
   {
     const gchar* abbrev = entries[i].tooltip ? entries[i].tooltip : entries[i].label ? entries[i].label : "";
     action_trans[entries[i].name] = abbrev;
@@ -780,7 +780,7 @@ pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p, Data* data
     action_trans[entries[i].name] = translation ? translation : "";
   }
 
-  for (int i=0;i<n_toggle_entries;++i)
+  for (size_t i=0;i<n_toggle_entries;++i)
   {
     const gchar* abbrev = toggle_entries[i].tooltip ? toggle_entries[i].tooltip : toggle_entries[i].label ? toggle_entries[i].label : "";
     action_trans[toggle_entries[i].name] = abbrev;
@@ -788,7 +788,7 @@ pan :: add_actions (PanUI * ui, GtkUIManager * ui_manager, Prefs * p, Data* data
     action_trans[toggle_entries[i].name] = translation ? translation : "";
   }
 
-  for (int i=0;i<G_N_ELEMENTS(match_toggle_entries);++i)
+  for (size_t i=0;i<G_N_ELEMENTS(match_toggle_entries);++i)
   {
     const gchar* abbrev = match_toggle_entries[i].tooltip ? match_toggle_entries[i].tooltip : match_toggle_entries[i].label ? match_toggle_entries[i].label : "";
     action_trans[match_toggle_entries[i].name] = abbrev;

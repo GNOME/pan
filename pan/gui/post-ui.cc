@@ -2571,7 +2571,7 @@ PostUI :: create_parts_tab ()
   const GtkAttachOptions fill ((GtkAttachOptions)(GTK_FILL));
   const GtkAttachOptions fe ((GtkAttachOptions)(GTK_FILL|GTK_EXPAND|GTK_SHRINK));
 
-  GtkWidget *w, *l, *store ;
+  GtkWidget *w, *l;
   char buf[512];
   int row = -1;
   GtkCellRenderer * renderer;

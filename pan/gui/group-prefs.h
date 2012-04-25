@@ -54,6 +54,12 @@ namespace pan
                               const StringView  & key,
                               const StringView  & fallback);
 
+      void set_group_color   (const Quark& group, const GdkColor& color);
+
+      std::string get_group_color_str (const Quark& group) const;
+      static std::string color_to_string (const GdkColor& c);
+      GdkColor get_group_color (const Quark& group, const StringView& fallback_str) const;
+
     protected:
       static void start_element (GMarkupParseContext *context,
                                  const gchar         *element_name,

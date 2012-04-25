@@ -37,6 +37,8 @@ extern "C" {
 #include "pan-file-entry.h"
 #include "gtk-compat.h"
 
+#include <iostream>
+
 using namespace pan;
 
 
@@ -111,8 +113,6 @@ GroupPrefsDialog :: save_from_gui ()
   foreach_const (quarks_v, _groups, it)
     _group_prefs.set_string (*it, "default-group-save-path", pch);
 
-  _group_prefs.save () ;
-
   // spellchecker language
 #ifdef HAVE_GTKSPELL
   GtkTreeIter iter;
@@ -123,9 +123,25 @@ GroupPrefsDialog :: save_from_gui ()
 	GtkTreeModel* model = gtk_combo_box_get_model (GTK_COMBO_BOX(_spellchecker_language));
 	gtk_tree_model_get (model, &iter, 0, &name, -1);
 
-  if (name) _group_prefs.set_string (_groups[0], "spellcheck-language", name);
-  g_free(name);
+  if (name)
+  {
+    foreach_const (quarks_v, _groups, it)
+	  _group_prefs.set_string (*it, "spellcheck-language", name);
+    g_free(name);
+  }
 #endif
+
+  _group_prefs.save () ;
+
+  // group color
+  GdkColor val;
+  foreach_const (quarks_v, _groups, it)
+  {
+    _group_prefs.set_group_color(*it, _color);
+	std::cout<<"output: "<<*it<<" "<<_group_prefs.get_group_color_str(*it)<<"\n";
+  }
+
+  _group_prefs.save () ;
 
 }
 
@@ -217,6 +233,20 @@ namespace
     return w;
   }
 
+  void color_set_cb (GtkColorButton* b, gpointer gp)
+  {
+    GdkColor* col = (GdkColor*)gp;
+	gtk_color_button_get_color (b, col);
+  }
+
+  GtkWidget* new_color_button (const Quark& group, GroupPrefs& prefs, GdkColor* color)
+  {
+    const GdkColor& val (prefs.get_group_color (group, "black"));
+    GtkWidget * b = gtk_color_button_new_with_color (&val);
+    g_signal_connect (b, "color-set", G_CALLBACK(color_set_cb), color);
+    return b;
+  }
+
 }
 
 
@@ -231,12 +261,11 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
   GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Pan: Group Preferences"),
                                                     parent_window,
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-	                                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                                                    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
                                                     NULL);
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-group-dialog");
   g_signal_connect (dialog, "response", G_CALLBACK(response_cb), this);
   g_signal_connect_swapped (dialog, "destroy", G_CALLBACK(delete_dialog), this);
-
 
   int row (0);
   GtkWidget *t, *w, *l;
@@ -273,9 +302,10 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
     gtk_widget_set_sensitive (l, gtk_widget_get_sensitive(w));
 #ifdef HAVE_GTKSPELL
     w = _spellchecker_language = create_spellcheck_combo_box ( groups[0], group_prefs);
-
     HIG :: workarea_add_row (t, &row, _("Spellchecker _language:"), w);
 #endif
+    w = _group_color = new_color_button (groups[0], _group_prefs, &_color);
+    HIG :: workarea_add_row(t, &row, _("Group color:"), w);
 
   gtk_widget_show_all (t);
   gtk_box_pack_start ( GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG( dialog))), t, true, true, 0);

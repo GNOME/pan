@@ -34,7 +34,7 @@ extern "C" {
 #include <pan/data/data.h>
 #include "group-pane.h"
 #include "pad.h"
-#include "gtk-compat.h"
+#include "tango-colors.h"
 
 using namespace pan;
 
@@ -691,8 +691,9 @@ namespace
                      GtkCellRenderer   * renderer,
                      GtkTreeModel      * model,
                      GtkTreeIter       * iter,
-                     gpointer            )
+                     gpointer          gp)
   {
+	GroupPane* pane (static_cast<GroupPane*>(gp));
     PanTreeStore * tree (PAN_TREE_STORE(model));
     MyRow * row (dynamic_cast<MyRow*>(tree->get_row (iter)));
     const unsigned long& unread (row->unread);
@@ -713,6 +714,7 @@ namespace
       //else
     g_object_set (renderer, "text", group_name.c_str(),
                             "weight", (!is_g || unread ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
+                            "foreground", pane->get_group_prefs().get_group_color_str(name).c_str(),
                             NULL);
   }
 }
@@ -902,8 +904,9 @@ GroupPane :: on_selection_changed (GtkTreeSelection*, gpointer pane_gpointer)
     self->_action_manager.sensitize_action (actions_that_require_a_group[i], have_group);
 }
 
-GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs):
+GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs, GroupPrefs& group_prefs):
   _prefs (prefs),
+  _group_prefs(group_prefs),
   _data (data),
   _tree_view (0),
   _action_manager (action_manager),
@@ -955,7 +958,7 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs)
    gtk_tree_view_append_column (GTK_TREE_VIEW(_tree_view), col);
    gtk_tree_view_set_expander_column (GTK_TREE_VIEW(_tree_view), col);
    gtk_tree_view_column_pack_start (col, text_renderer, true);
-   gtk_tree_view_column_set_cell_data_func (col, text_renderer, render_group_name, 0, 0);
+   gtk_tree_view_column_set_cell_data_func (col, text_renderer, render_group_name, this, 0);
 
   _root = scroll;
   _data.add_listener (this);
@@ -1002,4 +1005,11 @@ GroupPane :: on_prefs_string_changed (const StringView& key, const StringView&)
 {
   if (key == "group-pane-font")
     refresh_font ();
+}
+
+void
+GroupPane :: on_prefs_color_changed (const StringView& key, const GdkColor&)
+{
+  if (key == "group-color")
+    refresh_dirty_groups ();
 }

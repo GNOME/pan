@@ -26,6 +26,7 @@
 #include <pan/gui/action-manager.h>
 #include <pan/gui/pan-tree.h>
 #include <pan/gui/prefs.h>
+#include <pan/gui/group-prefs.h>
 
 namespace pan
 {
@@ -44,7 +45,7 @@ namespace pan
                                     unsigned long total);
 
     public:
-      GroupPane (ActionManager&, Data&, Prefs&);
+      GroupPane (ActionManager&, Data&, Prefs&, GroupPrefs&);
       ~GroupPane ();
       GtkWidget* root () { return _root; }
       GtkWidget* get_default_focus_widget() { return _tree_view; }
@@ -57,11 +58,15 @@ namespace pan
 
     private:
       Prefs& _prefs;
+      GroupPrefs& _group_prefs;
       Data& _data;
       bool _collapsed;
       GtkWidget * _root;
       GtkWidget * _tree_view;
       PanTreeStore * _tree_store;
+
+    public:
+      GroupPrefs& get_group_prefs() { return _group_prefs; }
 
     private:
       GtkTreePath* find_next_subscribed_group (bool unread_only);
@@ -84,7 +89,7 @@ namespace pan
       virtual void on_prefs_flag_changed (const StringView& key, bool value);
       virtual void on_prefs_int_changed (const StringView&, int) { }
       virtual void on_prefs_string_changed (const StringView& key, const StringView& value);
-      virtual void on_prefs_color_changed (const StringView&, const GdkColor&) { }
+      virtual void on_prefs_color_changed (const StringView&, const GdkColor&);
 
     private:
       quarks_t _dirty_groups;

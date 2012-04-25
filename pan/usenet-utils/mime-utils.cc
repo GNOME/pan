@@ -551,8 +551,6 @@ namespace pan
   void apply_source_and_maybe_filter (TempPart * part, GMimeStream * s)
   {
 
-    bool skip(false);
-
     if (!part->stream) {
       part->stream = g_mime_stream_mem_new ();
       if (part->type != ENC_PLAIN) {
@@ -605,8 +603,6 @@ namespace pan
     gboolean yenc_looking_for_part_line = FALSE;
     gint64 linestart_pos = 0;
     gint64 sub_begin = 0;
-    gint64 signed_msg_start = 0;
-    gint64 signed_msg_end = 0;
     guint line_len;
     bool found = false;
 

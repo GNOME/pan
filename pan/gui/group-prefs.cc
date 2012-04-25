@@ -21,6 +21,7 @@ extern "C" {
   #include <config.h>
   #include <sys/types.h> // chmod
   #include <sys/stat.h> // chmod
+  #include <glib.h>
 }
 #include <iostream>
 #include <fstream>
@@ -202,4 +203,33 @@ GroupPrefs :: set_from_file (const StringView& filename)
   std::string s;
   if (file :: get_text_file_contents (filename, s))
     from_string (s);
+}
+
+std::string
+GroupPrefs :: color_to_string (const GdkColor& c)
+{
+  char buf[8];
+  g_snprintf (buf, sizeof(buf), "#%02x%02x%02x", c.red/0x100, c.green/0x100, c.blue/0x100);
+  return buf;
+}
+
+std::string
+GroupPrefs :: get_group_color_str (const Quark& group) const
+{
+  const GdkColor& col (_prefs[group].get_colors()["group-color"]);
+  return color_to_string (col);
+}
+
+GdkColor
+GroupPrefs :: get_group_color (const Quark& group, const StringView& fallback_str) const
+{
+  GdkColor fallback;
+  gdk_color_parse (fallback_str.to_string().c_str(), &fallback);
+  return _prefs[group].get_color("group-color", fallback);
+}
+
+void
+GroupPrefs :: set_group_color (const Quark& group, const GdkColor& color)
+{
+	_prefs[group].set_color("group-color", color);
 }

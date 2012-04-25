@@ -58,8 +58,7 @@ namespace pan
   enum GPGDecType
   {
     GPG_VERIFY,
-    GPG_DECODE,
-    GPG_VERIFY_AND_DECODE
+    GPG_DECODE
   };
 
   enum GPGEncType

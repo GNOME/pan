@@ -45,11 +45,17 @@ namespace pan
       GtkWidget    * _charset;
       GtkWidget    * _profile;
       GtkWidget    * _spellchecker_language;
+      GtkWidget    * _group_color;
+      GdkColor       _color;
       GtkWidget    * _save_path;
 
     private:
       static void response_cb (GtkDialog*, int, gpointer);
       void save_from_gui ();
+
+    public:
+      	 GdkColor& get_color() { return _color; }
+      	 GtkWidget* get_color_button() { return _group_color; }
   };
 }
 #endif
