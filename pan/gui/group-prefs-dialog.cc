@@ -131,14 +131,10 @@ GroupPrefsDialog :: save_from_gui ()
   }
 #endif
 
-  _group_prefs.save () ;
-
   // group color
-  GdkColor val;
   foreach_const (quarks_v, _groups, it)
   {
     _group_prefs.set_group_color(*it, _color);
-	std::cout<<"output: "<<*it<<" "<<_group_prefs.get_group_color_str(*it)<<"\n";
   }
 
   _group_prefs.save () ;
@@ -236,7 +232,7 @@ namespace
   void color_set_cb (GtkColorButton* b, gpointer gp)
   {
     GdkColor* col = (GdkColor*)gp;
-	gtk_color_button_get_color (b, col);
+	  gtk_color_button_get_color (b, col);
   }
 
   GtkWidget* new_color_button (const Quark& group, GroupPrefs& prefs, GdkColor* color)
