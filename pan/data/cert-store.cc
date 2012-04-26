@@ -61,7 +61,7 @@ namespace pan
   struct SaveCBStruct
   {
     CertStore& cs;
-    const Quark& server;
+    const Quark server;
     Data& data;
     SaveCBStruct(CertStore& store, const Quark& s, Data& d) : cs(store), server(s), data(d) {}
   };
