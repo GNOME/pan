@@ -159,9 +159,11 @@ dnl GnuTLS support
 gnutls_msg=no
 AC_ARG_WITH(gnutls, AS_HELP_STRING([--with-gnutls],[enable GnuTLS support (normally: no)]), [want_gnutls=$withval], [want_gnutls=no])
 if test "x$want_gnutls" = "xyes" ; then
-  GNUTLS_VER=`echo pkg-config --modversion gnutls`	
+  
   PKG_CHECK_MODULES([GNUTLS],[gnutls >= $GNUTLS_REQUIRED],
-  [gnutls_msg="yes = $GNUTLS_VER"
+  [
+  GNUTLS_VER=`pkg-config --modversion gnutls`	
+  gnutls_msg="yes = $GNUTLS_VER"
   AC_DEFINE(HAVE_GNUTLS,[1],[GnuTLS support])],
   [gnutls_msg=no
   AC_MSG_RESULT(no)])
