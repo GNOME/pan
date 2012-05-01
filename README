@@ -7,6 +7,7 @@
 REQUIREMENTS
 
     Pan requires these libraries:
+    * GLib 2.26.0 or higher <http://developer.gnome.org/glib/>
     * GTK+ 2.16.0 or higher (optionally GTK+ 3.0.0 or higher)
       <http://www.gtk.org/>
     * GMime 2.4.0 or higher <http://spruce.sourceforge.net/gmime/>
@@ -138,7 +139,7 @@ RELEASE NOTES
    server instead of creating a new entry. If you create a new entry, Pan will see this as a new
    server entirely even though you may be connecting to the same account as before.
    Your subscribed groups will be lost!
-   By editing the existing the localhost:119 server entry, your subscriptions will be preserved.
+   By editing the existing 'localhost:119' server entry, your subscriptions will be preserved.
 
 *  For SSL support, remember to do a
       './configure --with-gnutls', or a respective 'sh autogen.sh --with-gnutls'

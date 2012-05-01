@@ -229,7 +229,7 @@ namespace
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                                     GTK_MESSAGE_ERROR,
                                                     GTK_BUTTONS_CLOSE,
-                                                    err_msg));
+                                                    "%s",err_msg));
         g_signal_connect_swapped (dialog, "response", G_CALLBACK(gtk_widget_destroy), dialog);
         gtk_widget_show (dialog);
         destroy = false;
@@ -698,7 +698,7 @@ namespace
         0,
         GTK_DIALOG_MODAL,
         GTK_MESSAGE_INFO,
-        GTK_BUTTONS_CLOSE, buf);
+        GTK_BUTTONS_CLOSE, "%s",buf);
         g_snprintf(buf,sizeof(buf), _("Server Certificate for '%s'"), addr.c_str());
         gtk_window_set_title(GTK_WINDOW(w), buf);
         gtk_widget_show_all (w);

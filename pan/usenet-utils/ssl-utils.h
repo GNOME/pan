@@ -89,7 +89,7 @@ namespace pan
     CertParser(gnutls_x509_crt_t c) : cert(c), delim(','), pos1(0), pos2(0), idx(0), num_tags(G_N_ELEMENTS(tags_idx))
     {
 
-      gnutls_x509_crt_get_issuer_dn(cert,NULL, &size);
+      gnutls_x509_crt_get_issuer_dn(cert, NULL, &size);
       dn_buf = new char[size];
       gnutls_x509_crt_get_issuer_dn(cert,dn_buf, &size);
       iss = dn_buf;

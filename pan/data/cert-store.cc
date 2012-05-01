@@ -64,6 +64,7 @@ namespace pan
     const Quark server;
     Data& data;
     SaveCBStruct(CertStore& store, const Quark& s, Data& d) : cs(store), server(s), data(d) {}
+    ~SaveCBStruct() { delete server; }
   };
 
   gboolean
@@ -87,6 +88,7 @@ namespace pan
     int ret;
     gnutls_x509_crt_t cert;
     bool fail(false);
+    bool fatal(false);
 
     ret = gnutls_certificate_verify_peers2 (session, &status);
 
@@ -95,32 +97,37 @@ namespace pan
 
     if (status & GNUTLS_CERT_INVALID)
     {
-      g_warning ("The certificate is not trusted.\n");
-      fail = !mydata->always_trust;
+      if (!mydata->always_trust)
+        g_warning ("The certificate is not trusted.\n");
+      fail = true;
     }
 
     if (status & GNUTLS_CERT_SIGNER_NOT_FOUND)
     {
-      fail = !mydata->always_trust;
-      g_warning ("The certificate hasn't got a known issuer.\n");
+      fail = true;
+      if (!mydata->always_trust)
+        g_warning ("The certificate hasn't got a known issuer.\n");
     }
 
     if (status & GNUTLS_CERT_REVOKED)
     {
-      g_warning ("The certificate has been revoked.\n");
-      fail = !mydata->always_trust;
+      if (!mydata->always_trust)
+        g_warning ("The certificate has been revoked.\n");
+      fail = true;
     }
 
     if (status & GNUTLS_CERT_EXPIRED)
     {
-      g_warning ("The certificate has expired\n");
-      fail = !mydata->always_trust;
+      if (!mydata->always_trust)
+        g_warning ("The certificate has expired\n");
+      fail = true;
     }
 
     if (status & GNUTLS_CERT_NOT_ACTIVATED)
     {
-      g_warning ("The certificate is not yet activated\n");
-      fail = !mydata->always_trust;
+      if (!mydata->always_trust)
+        g_warning ("The certificate is not yet activated\n");
+      fail = true;
     }
 
     /* Up to here the process is the same for X.509 certificates and
@@ -130,20 +137,23 @@ namespace pan
     if (gnutls_certificate_type_get (session) != GNUTLS_CRT_X509)
     {
       g_warning ("The certificate is not a X509 certificate!\n");
-      goto _fail;
+      fail = true;
+      fatal = true;
     }
 
     if (gnutls_x509_crt_init (&cert) < 0)
     {
       g_warning ("Error in initialization\n");
-      goto _fail;
+      fail = true;
+      fatal = true;
     }
 
     cert_list = gnutls_certificate_get_peers (session, &cert_list_size);
     if (cert_list == NULL)
     {
       g_warning ("No certificate found!\n");
-      goto _fail;
+      fail = true;
+      fatal = true;
     }
 
     /* TODO verify whole chain perhaps?
@@ -151,23 +161,25 @@ namespace pan
     if (gnutls_x509_crt_import (cert, &cert_list[0], GNUTLS_X509_FMT_DER) < 0)
     {
       g_warning ("Error parsing certificate!\n");
-      goto _fail;
+      fail = true;
+      fatal = true;
     }
 
     if (!gnutls_x509_crt_check_hostname (cert, mydata->hostname_full.c_str()))
     {
       if (!mydata->always_trust)
         g_warning ("The certificate's owner does not match hostname '%s' !\n", mydata->hostname_full.c_str());
-      goto _fail;
+      fail = true;
     }
 
-    if (fail) goto _fail;
+    if (fatal) goto _fail;
 
-    /* auto-add new cert if we always trust this server */
+    /* auto-add new cert if we always trust this server , no matter what */
     if (mydata->always_trust)
       mydata->cs->add(cert, mydata->host);
-    else
-      gnutls_x509_crt_deinit(cert);
+    else if (fail) goto _fail;
+
+    gnutls_x509_crt_deinit(cert);
 
     /* notify gnutls to continue handshake normally */
     return 0;

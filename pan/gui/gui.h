@@ -74,6 +74,7 @@ namespace pan
         std::string cert_name;
         int nr;
         GUI* gui;
+        ~VerifyData() { gnutls_x509_crt_deinit(cert); }
       };
 
     public: // ActionManager

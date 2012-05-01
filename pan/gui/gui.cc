@@ -2320,7 +2320,6 @@ GUI :: on_verify_cert_failed(gnutls_x509_crt_t cert, std::string server, int nr)
   data->nr = nr;
   data->gui = this;
   g_idle_add(show_cert_failed_cb, data);
-
 }
 
 void
