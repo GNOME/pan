@@ -1012,7 +1012,7 @@ BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation 
 
     add_attachment_to_toolbar (pch);
 
-    _freeme.insert(pch);
+    _attach_names.insert(pch);
   }
 }
 
@@ -1789,7 +1789,7 @@ BodyPane :: ~BodyPane ()
   for (int i=0; i<NUM_ICONS; ++i)
     g_object_unref (icons[i].pixbuf);
 
-  foreach (std::set<char*>, _freeme, it)
+  foreach (std::set<char*>, _attach_names, it)
     g_free(*it);
 }
 
