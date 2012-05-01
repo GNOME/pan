@@ -156,11 +156,8 @@ namespace pan
 #endif
       int _attachments;
       int _cur_col, _cur_row;
-      std::set<char*> _attach_names; //attachment names
+      std::set<char*> _attach_names;
       MenuSelection _selection;
-
-      GdkCursor ** cursors;
-      pixbufs_t emoticon_pixbufs;
 
     public:
       const char* _current_attachment;
