@@ -179,6 +179,7 @@ TaskXOver :: use_nntp (NNTP* nntp)
 ****
 ***/
 
+///TODO show low and high in UI (is this already there?)
 void
 TaskXOver :: on_nntp_group (NNTP          * nntp,
                             const Quark   & group,

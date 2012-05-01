@@ -900,7 +900,7 @@ void GUI :: do_show_group_preferences_dialog ()
 {
   quarks_v groups(_group_pane->get_full_selection());
   if (!groups.empty()) {
-    GroupPrefsDialog * dialog = new GroupPrefsDialog (_data, groups, _group_prefs, get_window(_root));
+    GroupPrefsDialog * dialog = new GroupPrefsDialog (_data, groups, _prefs, _group_prefs, get_window(_root));
     gtk_widget_show (dialog->root());
   }
 }

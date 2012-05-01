@@ -24,6 +24,7 @@
 #include <pan/data/data.h>
 #include "gtk-compat.h"
 #include "group-prefs.h"
+#include "prefs.h"
 
 namespace pan
 {
@@ -32,6 +33,7 @@ namespace pan
     public:
       GroupPrefsDialog (Data            & data,
                         const quarks_v  & groups,
+                        Prefs           & prefs,
                         GroupPrefs      & group_prefs,
                         GtkWindow       * parent_window);
 
@@ -40,6 +42,7 @@ namespace pan
 
     private:
       const quarks_v   _groups;
+      Prefs        & _prefs;
       GroupPrefs   & _group_prefs;
       GtkWidget    * _root;
       GtkWidget    * _charset;

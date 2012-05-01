@@ -72,6 +72,7 @@ namespace pan
 
       typedef std::list<std::string> log_t;
       log_t log_severe, log_errors, log_infos, file_errors;
+      Health health;
 
     protected: // inherited from WorkerPool::Worker
 

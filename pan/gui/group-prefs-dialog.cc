@@ -248,9 +248,11 @@ namespace
 
 GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
                                       const quarks_v  & groups,
+                                      Prefs           & prefs,
                                       GroupPrefs      & group_prefs,
                                       GtkWindow       * parent_window):
   _groups (groups),
+  _prefs(prefs),
   _group_prefs (group_prefs)
 {
 
@@ -283,11 +285,9 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
 
     w = _save_path = file_entry_new (_("Directory for Saving Attachments"));
     char * pch = g_build_filename (g_get_home_dir(), "News", NULL);
-    std::string dir;
-    if (groups.size() != 1)
-      dir = pch;
-    else
-      dir = _group_prefs.get_string (groups[0], "default-group-save-path", pch);
+    std::string dir (_prefs.get_string ("default-save-attachments-path", pch));
+    if (groups.size() == 1)
+      dir = _group_prefs.get_string (groups[0], "default-group-save-path", dir);
     g_free (pch);
     file_entry_set (w, dir.c_str());
 

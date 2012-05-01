@@ -301,10 +301,15 @@ Queue :: process_task (Task * task)
     debug ("stopped");
     task->stop();
   }
-  else if ((state._health == ERR_COMMAND) || (state._health == ERR_LOCAL))
+  else if (state._health == ERR_COMMAND || state._health == ERR_LOCAL)
   {
     debug ("fail");
     // do nothing
+  }
+  else if (state._health==ERR_NOSPACE)
+  {
+    debug ("no space");
+    set_online(false);
   }
   else if (state._work == Task::WORKING)
   {
@@ -316,7 +321,7 @@ Queue :: process_task (Task * task)
     TaskUpload* t = dynamic_cast<TaskUpload*>(task);
     if (t)
       give_task_an_upload_slot(t);
-
+    // todo multihtreading for taskarticle
 //    TaskArticle* t2 = dynamic_cast<TaskArticle*>(task);
 //    if (t2)
 //      give_task_a_download_slot(t2);
@@ -361,7 +366,6 @@ Queue :: process_task (Task * task)
 
     give_task_a_connection (task, nntp);
   }
-  debug("end loop");
 }
 
 /***
@@ -401,7 +405,8 @@ Queue :: find_first_task_needing_server (const Quark& server)
 {
   foreach (TaskSet, _tasks, it) {
     const Task::State& state ((*it)->get_state ());
-    if  (((state._health != ERR_COMMAND) && (state._health != ERR_LOCAL))
+    if  (state._health != ERR_COMMAND && state._health != ERR_LOCAL
+      && state._health != ERR_NOSPACE
       && (state._work == Task::NEED_NNTP)
       && (state._servers.count(server))
       && (!_stopped.count (*it))
@@ -722,7 +727,8 @@ Queue :: check_in (NNTP * nntp, Health nntp_health)
 
   if ((nntp_health != ERR_NETWORK)
     && _is_online
-    && ((state._health != ERR_COMMAND) && (state._health != ERR_LOCAL))
+    && state._health != ERR_COMMAND && state._health != ERR_LOCAL
+    && state._health != ERR_NOSPACE
     && (state._work == Task::NEED_NNTP)
     && !_removing.count(task)
     && state._servers.count(nntp->_server)
@@ -743,6 +749,10 @@ Queue :: check_in (NNTP * nntp, Health nntp_health)
     // if we encountered a local error, fire an error message.
     if (state._health == ERR_LOCAL)
       fire_queue_error ("");
+
+    // tell if we reached the end of disk space
+    if (state._health == ERR_NOSPACE)
+      fire_queue_error (_("No space left on device."));
 
     // return the nntp to the pool
     const Quark& servername (nntp->_server);
@@ -769,6 +779,9 @@ Queue :: check_in (Decoder* decoder UNUSED, Task* task)
   if (state._health == ERR_LOCAL)
     fire_queue_error ("");
 
+  if (state._health == ERR_NOSPACE)
+    fire_queue_error (_("No space left on device."));
+
   // pass our worker thread on to another task
   Task * next = find_first_task_needing_decoder ();
   if (next && (next!=task))
@@ -792,6 +805,9 @@ Queue :: check_in (Encoder* encoder UNUSED, Task* task)
   const Task::State state (task->get_state ());
   if (state._health == ERR_LOCAL)
     fire_queue_error ("");
+
+  if (state._health == ERR_NOSPACE)
+    fire_queue_error (_("No space left on device."));
 
   // pass our worker thread on to another task
   Task * next = find_first_task_needing_encoder ();

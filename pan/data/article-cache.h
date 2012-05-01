@@ -61,13 +61,26 @@ namespace pan
   {
     public:
 
+      enum CacheResponse_types
+      {
+        CACHE_IO_ERR,
+        CACHE_DISK_FULL,
+        CACHE_OK
+      };
+
+      struct CacheResponse
+      {
+        CacheResponse_types type;
+        std::string err; // perhaps use gerror here??
+      };
+
       ArticleCache (const StringView& path, const StringView& extension, size_t max_megs=10);
       ~ArticleCache ();
 
       typedef std::vector<Quark> mid_sequence_t;
 
       bool contains (const Quark& message_id) const;
-      bool add (const Quark& message_id, const StringView& article);
+      CacheResponse add (const Quark& message_id, const StringView& article);
       void reserve (const mid_sequence_t& mids);
       void release (const mid_sequence_t& mids);
       void resize ();

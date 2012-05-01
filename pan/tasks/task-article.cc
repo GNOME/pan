@@ -295,8 +295,11 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
 
   if (health == OK) { // if download succeeded, save it in the cache
     const StringView view (&it->buf.front(), it->buf.size());
-    if (!_cache.add (it->message_id, view))
-      health = ERR_LOCAL;
+    ArticleCache::CacheResponse res (_cache.add (it->message_id, view));
+    if (ArticleCache::CACHE_OK != res.type)
+      health = res.type == ArticleCache::CACHE_DISK_FULL ? ERR_NOSPACE : ERR_LOCAL;
+      if (health == ERR_NOSPACE)
+        _state.set_health (ERR_NOSPACE);
   }
 
   // std::cerr << LINE_ID << ' ' << it->message_id << " from " << nntp->_server << ": health " << health << std::endl;
@@ -308,6 +311,7 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
       break;
 
     case ERR_NETWORK: // if the network is bad...
+    case ERR_NOSPACE: // if there's no space, try again, but pause the queue!
     case ERR_LOCAL: // ...or if we got it but couldn't save it
       it->reset ();
       break;
@@ -391,6 +395,8 @@ TaskArticle :: on_worker_done (bool cancelled)
 
     if (!_decoder->log_errors.empty())
       set_error (_decoder->log_errors.front());
+
+    _state.set_health(_decoder->health);
 
     if (!_decoder->log_severe.empty())
       _state.set_health (ERR_LOCAL);

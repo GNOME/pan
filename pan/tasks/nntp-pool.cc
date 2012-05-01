@@ -136,10 +136,11 @@ NNTP_Pool :: check_in (NNTP * nntp, Health health)
   if (it != _pool_items.end())
   {
     const bool bad_connection = (health == ERR_NETWORK);
+    const bool nospace = (health == ERR_NOSPACE);
     int active, idle, pending, max;
     get_counts (active, idle, pending, max);
     const bool too_many = (pending + active) > max;
-    const bool discard = bad_connection || too_many;
+    const bool discard = bad_connection || too_many || nospace;
 
     --_active_count;
 

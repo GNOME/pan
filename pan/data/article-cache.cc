@@ -213,13 +213,16 @@ ArticleCache :: get_filename (char * buf, int buflen, const Quark& mid) const
    return buf && *buf ? buf : 0;
 };
 
-bool
+ArticleCache :: CacheResponse
 ArticleCache :: add (const Quark& message_id, const StringView& article)
 {
   debug ("adding " << message_id << ", which is " << article.len << " bytes long");
 
-  pan_return_val_if_fail (!message_id.empty(), false);
-  pan_return_val_if_fail (!article.empty(), false);
+  CacheResponse res;
+  res.type = CACHE_IO_ERR;
+
+  pan_return_val_if_fail (!message_id.empty(), res);
+  pan_return_val_if_fail (!article.empty(), res);
 
   FILE * fp = 0;
   char filename[PATH_MAX];
@@ -230,18 +233,19 @@ ArticleCache :: add (const Quark& message_id, const StringView& article)
   {
       Log::add_err_va (_("Unable to save \"%s\" %s"),
                        filename, file::pan_strerror(errno));
-      return false;
+      res.type = CACHE_IO_ERR;
   }
   else
   {
     const size_t bytes_written (fwrite (article.str, sizeof(char), article.len, fp));
-    fclose (fp);
-
     if (bytes_written < article.len)
     {
       Log::add_err_va (_("Unable to save \"%s\" %s"),
                        filename, file::pan_strerror(errno));
-      return false;
+      if (errno ==  ENOSPC || errno == ENOMEM)
+      {
+          res.type = CACHE_DISK_FULL;
+      }
     }
     else
     {
@@ -254,10 +258,11 @@ ArticleCache :: add (const Quark& message_id, const StringView& article)
 
       _current_bytes += info._size;
       resize ();
+      res.type = CACHE_OK;
     }
+    fclose (fp);
   }
-
-  return true;
+  return res;
 }
 
 /***

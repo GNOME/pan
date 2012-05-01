@@ -45,11 +45,14 @@ namespace pan
     ERR_COMMAND,
 
     /** The task has failed because of some local
-        environment problem, such as disk full.
+        environment problem.
         Further tasks are likely to fail for the
         same reason, so the queue should go offline
         until the user intervenes to fix the problem. */
-    ERR_LOCAL
+    ERR_LOCAL,
+
+    /** Handle disk full by setting the queue offline */
+    ERR_NOSPACE
   };
 }
 

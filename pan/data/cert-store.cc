@@ -201,7 +201,7 @@ namespace pan
     filelen = ftell (fp);
     fseek (fp, 0, SEEK_SET);
     buf = new char[filelen];
-    fread (buf, sizeof(char), filelen, fp);
+    size_t dummy (fread (buf, sizeof(char), filelen, fp)); // silence compiler
 
     gnutls_datum_t in;
     in.data = (unsigned char*)buf;

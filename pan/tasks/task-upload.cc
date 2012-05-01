@@ -433,6 +433,8 @@ TaskUpload :: on_worker_done (bool cancelled)
         _needed.clear(); //update_work will then set the status to complete
     }
 
+    _state.set_health(_encoder->health);
+
     if (!_encoder->log_severe.empty())
       _state.set_health (ERR_LOCAL);
     else
