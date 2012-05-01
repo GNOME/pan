@@ -1121,7 +1121,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     }
   }
 
-  s.resize (s.size()-1); // remove trailing linefeed
+  s.resize (std::max((size_t)0,s.size()-1)); // remove trailing linefeed
   gtk_label_set_markup (GTK_LABEL(_headers), s.c_str());
 
   // ellipsize mode is useless w/o this in expander...
@@ -1144,7 +1144,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   {
     GMimeEncoding dec;
     g_mime_encoding_init_decode(&dec, GMIME_CONTENT_ENCODING_BASE64);
-    guchar buf[1024];
+    guchar* buf = new guchar[strlen(pch)];
     int len = g_mime_encoding_step(&dec, pch, strlen(pch), (char*)buf);
     GdkPixbufLoader *pl = gdk_pixbuf_loader_new_with_type( "png", NULL);
     gdk_pixbuf_loader_write(pl, buf, len, NULL);
@@ -1152,6 +1152,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     GdkPixbuf *pixbuf = gdk_pixbuf_loader_get_pixbuf(pl);
     gtk_image_set_from_pixbuf (GTK_IMAGE(_face), pixbuf);
     g_object_unref(pl);
+    delete buf;
   }
 
   // set the terse headers...
@@ -1208,7 +1209,6 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     gtk_text_buffer_get_start_iter  (_buffer, &iter);
     gtk_text_view_scroll_to_iter (GTK_TEXT_VIEW(_text), &iter, 0.0, true, 0.0, 0.0);
   }
-
 }
 
 void
