@@ -53,6 +53,8 @@ using namespace pan;
 ****
 ***/
 
+/// TODO : replace g_atexit (deprecated)
+
 namespace
 {
 

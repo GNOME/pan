@@ -137,23 +137,20 @@ namespace pan
     if (gnutls_certificate_type_get (session) != GNUTLS_CRT_X509)
     {
       g_warning ("The certificate is not a X509 certificate!\n");
-      fail = true;
-      fatal = true;
+      goto _fail;
     }
 
     if (gnutls_x509_crt_init (&cert) < 0)
     {
       g_warning ("Error in initialization\n");
-      fail = true;
-      fatal = true;
+      goto _fail;
     }
 
     cert_list = gnutls_certificate_get_peers (session, &cert_list_size);
     if (cert_list == NULL)
     {
       g_warning ("No certificate found!\n");
-      fail = true;
-      fatal = true;
+      goto _fail;
     }
 
     /* TODO verify whole chain perhaps?
@@ -161,8 +158,7 @@ namespace pan
     if (gnutls_x509_crt_import (cert, &cert_list[0], GNUTLS_X509_FMT_DER) < 0)
     {
       g_warning ("Error parsing certificate!\n");
-      fail = true;
-      fatal = true;
+      goto _fail;
     }
 
     if (!gnutls_x509_crt_check_hostname (cert, mydata->hostname_full.c_str()))
@@ -171,8 +167,6 @@ namespace pan
         g_warning ("The certificate's owner does not match hostname '%s' !\n", mydata->hostname_full.c_str());
       fail = true;
     }
-
-    if (fatal) goto _fail;
 
     /* auto-add new cert if we always trust this server , no matter what */
     if (mydata->always_trust)
