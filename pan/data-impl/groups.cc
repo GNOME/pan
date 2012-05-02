@@ -116,7 +116,7 @@ DataImpl :: load_newsrc (const Quark       & server,
 
       if (subscribed)
         tmp_sub.push_back (group);
-      else 
+      else
         tmp_unsub.push_back (group);
 
       if (!numbers.empty())
@@ -189,8 +189,8 @@ DataImpl :: load_newsrc_files (const DataIO& data_io)
   }
 
   // remove duplicates
-  s.erase (std::unique(s.begin(), s.end()), s.end()); 
-  u.erase (std::unique(u.begin(), u.end()), u.end()); 
+  s.erase (std::unique(s.begin(), s.end()), s.end());
+  u.erase (std::unique(u.begin(), u.end()), u.end());
 
   // unsub -= sub
   AlphabeticalQuarkOrdering o;
@@ -215,7 +215,7 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
     return;
 
   // overly-complex optimization: both sit->second.groups and _subscribed
-  // are both ordered by AlphabeticalQuarkOrdering.  
+  // are both ordered by AlphabeticalQuarkOrdering.
   // Where N==sit->second.groups.size() and M==_subscribed.size(),
   // "bool subscribed = _subscribed.count (group)" is N*log(M),
   // but a sorted set comparison is M+N comparisons.
@@ -290,11 +290,11 @@ DataImpl :: load_group_permissions (const DataIO& data_io)
   }
 
   std::sort (m.begin(), m.end());
-  m.erase (std::unique(m.begin(), m.end()), m.end()); 
+  m.erase (std::unique(m.begin(), m.end()), m.end());
   _moderated.get_container().swap (m);
 
   std::sort (n.begin(), n.end());
-  n.erase (std::unique(n.begin(), n.end()), n.end()); 
+  n.erase (std::unique(n.begin(), n.end()), n.end());
   _nopost.get_container().swap (n);
 
   delete in;
@@ -312,7 +312,7 @@ DataImpl :: save_group_permissions (DataIO& data_io) const
   tmp_t tmp;
   foreach_const (groups_t, _moderated, it) tmp[*it] = 'm';
   foreach_const (groups_t, _nopost, it) tmp[*it] = 'n';
-  
+
   out << "# Permissions: y means posting ok; n means posting not okay; m means moderated.\n"
       << "# Since almost all groups allow posting, Pan assumes that as the default.\n"
       << "# Only moderated or no-posting groups are listed here.\n";
@@ -369,7 +369,7 @@ DataImpl :: load_group_xovers (const DataIO& data_io)
       line.trim();
       if (line.empty() || *line.str=='#')
         continue;
-     
+
       if (line.pop_token(groupname) && line.pop_token(total) && line.pop_token(unread))
       {
         ReadGroup& g (_read_groups[groupname]);
@@ -485,7 +485,7 @@ DataImpl :: get_xover_high (const Quark  & groupname,
     high = rgs->_xover_high;
   return high;
 }
-                                                                                
+
 void
 DataImpl :: set_xover_high (const Quark & group,
                             const Quark & server,
@@ -520,7 +520,7 @@ DataImpl :: add_groups (const Quark       & server,
     std::set_union (s->groups.begin(), s->groups.end(),
                     groups.begin(), groups.end(),
                     std::back_inserter (tmp), o);
-    tmp.erase (std::unique(tmp.begin(), tmp.end()), tmp.end()); 
+    tmp.erase (std::unique(tmp.begin(), tmp.end()), tmp.end());
     s->groups.get_container().swap (tmp);
 
     // make a groups_t of groups we didn't already have,
@@ -534,7 +534,7 @@ DataImpl :: add_groups (const Quark       & server,
     std::set_union (groups.begin(), groups.end(),
                     _unsubscribed.begin(), _unsubscribed.end(),
                     std::back_inserter (tmp), o);
-    tmp.erase (std::unique(tmp.begin(), tmp.end()), tmp.end()); 
+    tmp.erase (std::unique(tmp.begin(), tmp.end()), tmp.end());
     _unsubscribed.get_container().swap (tmp);
   }
 
@@ -565,7 +565,7 @@ DataImpl :: add_groups (const Quark       & server,
     tmp.clear ();
     std::set_difference (_nopost.begin(), _nopost.end(), post.begin(), post.end(), inserter (tmp, tmp.begin()));
     _nopost.swap (tmp);
-    // _nopost += nopost 
+    // _nopost += nopost
     tmp.clear ();
     std::set_union (_nopost.begin(), _nopost.end(), nopost.begin(), nopost.end(), inserter (tmp, tmp.begin()));
     _nopost.swap (tmp);
@@ -666,11 +666,11 @@ DataImpl :: server_get_groups (const Quark& servername, quarks_t& addme) const
 void
 DataImpl :: get_subscribed_groups (std::vector<Quark>& setme) const
 {
-  setme.assign (_subscribed.begin(), _subscribed.end()); 
+  setme.assign (_subscribed.begin(), _subscribed.end());
 }
 
 void
 DataImpl :: get_other_groups (std::vector<Quark>& setme) const
 {
-  setme.assign (_unsubscribed.begin(), _unsubscribed.end()); 
+  setme.assign (_unsubscribed.begin(), _unsubscribed.end());
 }

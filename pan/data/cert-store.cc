@@ -64,7 +64,6 @@ namespace pan
     const Quark server;
     Data& data;
     SaveCBStruct(CertStore& store, const Quark& s, Data& d) : cs(store), server(s), data(d) {}
-    ~SaveCBStruct() { delete server; }
   };
 
   gboolean
@@ -137,20 +136,24 @@ namespace pan
     if (gnutls_certificate_type_get (session) != GNUTLS_CRT_X509)
     {
       g_warning ("The certificate is not a X509 certificate!\n");
-      goto _fail;
+      fail = true;
+      fatal = true;
     }
 
     if (gnutls_x509_crt_init (&cert) < 0)
     {
       g_warning ("Error in initialization\n");
-      goto _fail;
+      fail = true;
+      goto _fatal;
     }
+
 
     cert_list = gnutls_certificate_get_peers (session, &cert_list_size);
     if (cert_list == NULL)
     {
       g_warning ("No certificate found!\n");
-      goto _fail;
+      fail = true;
+      goto _fatal;
     }
 
     /* TODO verify whole chain perhaps?
@@ -158,7 +161,8 @@ namespace pan
     if (gnutls_x509_crt_import (cert, &cert_list[0], GNUTLS_X509_FMT_DER) < 0)
     {
       g_warning ("Error parsing certificate!\n");
-      goto _fail;
+      fail = true;
+      goto _fatal;
     }
 
     if (!gnutls_x509_crt_check_hostname (cert, mydata->hostname_full.c_str()))
@@ -173,16 +177,15 @@ namespace pan
       mydata->cs->add(cert, mydata->host);
     else if (fail) goto _fail;
 
-    gnutls_x509_crt_deinit(cert);
-
     /* notify gnutls to continue handshake normally */
     return 0;
 
+    _fatal:
+    gnutls_x509_crt_deinit(cert);
+    return GNUTLS_E_CERTIFICATE_ERROR;
+
     _fail:
-
-    if (cert)
-      mydata->cs->verify_failed (cert, mydata->host.c_str(), status);
-
+    mydata->cs->verify_failed (cert, mydata->host.c_str(), status);
     return GNUTLS_E_CERTIFICATE_ERROR;
 
   }
