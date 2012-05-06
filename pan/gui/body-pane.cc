@@ -1219,26 +1219,6 @@ BodyPane :: refresh ()
   set_text_from_message (_message);
 }
 
-namespace
-{
-
-  /** Separates user id into name and email address */
-  std::pair<std::string,std::string> get_email_address(std::string& s)
-  {
-    std::pair<std::string,std::string> ret;
-    size_t in = s.find("<");
-    size_t out = s.find(">");
-    if (in == std::string::npos ||
-        out == std::string::npos)
-      return ret;
-
-    ret.first = s.substr(0,in-1);
-    ret.second = s.substr (in+1,out-in-1);
-
-    return ret;
-  }
-}
-
 #ifdef HAVE_GMIME_CRYPTO
 gboolean
 BodyPane :: on_verbose_tooltip_cb(GtkWidget  *widget,

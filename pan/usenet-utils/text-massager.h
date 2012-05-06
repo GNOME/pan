@@ -24,6 +24,8 @@
 #include <climits>
 #include <set>
 #include <pan/general/string-view.h>
+#include <pan/general/quark.h>
+#include <pan/data/article.h>
 
 namespace pan
 {
@@ -61,6 +63,12 @@ namespace pan
    * @ingroup usenet_utils
    */
    std::string subject_to_path (const char * subjectline, bool full_subj, const std::string &seperator);
+
+   std::string expand_download_dir_subject (const char * dir, const char * subjectline, const std::string &sep);
+   std::string expand_download_dir (const char * dir, const StringView& group);
+   std::string expand_attachment_headers(const Quark& path, const Article& article);
+
+   std::pair<std::string,std::string> get_email_address(std::string& s);
 
 }
 

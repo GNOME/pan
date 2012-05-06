@@ -27,6 +27,8 @@ extern "C" {
 }
 #include "text-massager.h"
 #include <pan/general/log.h>
+#include <pan/general/e-util.h>
+
 using namespace pan;
 
 TextMassager :: TextMassager ():
@@ -519,4 +521,103 @@ pan :: subject_to_path (const char * subjectline, bool full_subj, const std::str
   g_free(str1);
   //std::cout << "\nSubject was: '" << subjectline << "'\nSubject now: '" << val << "'" << std::endl;
   return val;
+}
+
+std::string
+pan :: expand_download_dir (const char * dir, const StringView& group)
+{
+  std::string val (dir);
+  std::string::size_type pos;
+
+  while (((pos = val.find ("%g"))) != val.npos)
+    val.replace (pos, 2, group.str, group.len);
+
+  std::string tmp (group.str, group.len);
+  std::replace (tmp.begin(), tmp.end(), '.', G_DIR_SEPARATOR);
+  while (((pos = val.find ("%G"))) != val.npos)
+    val.replace (pos, 2, tmp);
+
+  return val;
+}
+
+std::string
+pan :: expand_download_dir_subject (const char * dir, const char * subjectline, const std::string &sep)
+{
+  std::string val (dir);
+  std::string sub (subject_to_path(subjectline, false, sep));
+  std::string::size_type pos;
+
+  while (((pos = val.find ("%s"))) != val.npos)
+    val.replace (pos, 2, sub);
+
+  sub = subject_to_path(subjectline, true, sep);
+  while (((pos = val.find ("%S"))) != val.npos)
+    val.replace (pos, 2, sub);
+
+  return val;
+}
+
+/*
+"%n - Poster display name\n"
+"%e - Poster e-mail adress\n"
+"%d - Current Date\n"
+*/
+std::string
+pan :: expand_attachment_headers(const Quark& path, const Article& article)
+{
+  std::string val(path.c_str());
+  std::string::size_type pos;
+  std::string author_str (article.author.c_str());
+  std::pair<std::string,std::string> author (get_email_address(author_str));
+  std::string author_name (author.first);
+  std::string author_email (author.second);
+
+  EvolutionDateMaker ed;
+  std::string now (ed.get_date_string (article.time_posted));
+
+  if (author_name.empty())  author_name  = _("no_name");
+  if (author_email.empty()) author_email = _("no_mail");
+
+  while (((pos = val.find ("%n"))) != val.npos)
+    val.replace (pos, 2, author_name);
+
+  while (((pos = val.find ("%e"))) != val.npos)
+    val.replace (pos, 2, author_email);
+
+  while (((pos = val.find ("%d"))) != val.npos)
+    val.replace (pos, 2, now);
+
+  return val;
+}
+
+/** Separates user id into name and email address */
+std::pair<std::string,std::string> pan :: get_email_address(std::string& s)
+{
+  std::pair<std::string,std::string> ret;
+  size_t in  (s.find("<"));
+  size_t out (s.find(">"));
+  if (in == s.npos && out == s.npos)
+  {
+    if (s.find("@") != s.npos)
+    {
+      size_t bracket_in (s.find("("));
+      size_t bracket_out (s.find(")"));
+      if (bracket_in != s.npos && bracket_out != s.npos)
+      {
+        ret.first = s.substr(0, bracket_in-1);
+        ret.second = s.substr(bracket_in+1, bracket_out-bracket_in-1);
+      }
+    }
+  }
+  else if (in == s.npos || out == s.npos)
+  {
+    return ret;
+  }
+  else
+  {
+    ret.first = s.substr(0,in-1);
+    ret.second = s.substr (in+1,out-in-1);
+  }
+
+  return ret;
 }

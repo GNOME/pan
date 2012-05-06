@@ -38,38 +38,6 @@ using namespace pan;
 
 namespace
 {
-  std::string expand_download_dir (const char * dir, const StringView& group)
-  {
-    std::string val (dir);
-    std::string::size_type pos;
-
-    while (((pos = val.find ("%g"))) != val.npos)
-      val.replace (pos, 2, group.str, group.len);
-
-    std::string tmp (group.str, group.len);
-    std::replace (tmp.begin(), tmp.end(), '.', G_DIR_SEPARATOR);
-    while (((pos = val.find ("%G"))) != val.npos)
-      val.replace (pos, 2, tmp);
-
-    return val;
-  }
-
-  std::string expand_download_dir_subject (const char * dir, const char * subjectline, const std::string &sep)
-  {
-    std::string val (dir);
-    std::string sub (subject_to_path(subjectline, false, sep));
-    std::string::size_type pos;
-
-    while (((pos = val.find ("%s"))) != val.npos)
-      val.replace (pos, 2, sub);
-
-    sub = subject_to_path(subjectline, true, sep);
-    while (((pos = val.find ("%S"))) != val.npos)
-      val.replace (pos, 2, sub);
-
-    return val;
-  }
-
 
   void
   show_group_substitution_help_dialog (gpointer window)
@@ -78,6 +46,9 @@ namespace
                          "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
                          "%s - subject line excerpt\n"
                          "%S - subject line\n"
+                         "%n - Poster display name\n"
+                         "%e - Poster e-mail adress\n"
+                         "%d - Current Date\n"
                          " \n"
                          "\"/home/user/News/Pan/%g\" becomes\n"
                          "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"

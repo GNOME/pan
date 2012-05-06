@@ -34,6 +34,7 @@ extern "C"
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/mime-utils.h>
+#include <pan/usenet-utils/text-massager.h>
 #include <pan/data/article-cache.h>
 #include "decoder.h"
 #include "task-article.h"
@@ -93,7 +94,7 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
                             const char                * filename,
                             const SaveOptions         & options):
   Task (save_path.empty() ? "BODIES" : "SAVE", get_description (article, !save_path.empty())),
-  _save_path (save_path),
+  _save_path (expand_attachment_headers(save_path, article)),
   _server_rank (server_rank),
   _cache (cache),
   _read (read),
