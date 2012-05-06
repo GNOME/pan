@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: pan2.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-01 13:11+0000\n"
-"PO-Revision-Date: 2012-05-02 13:04+0200\n"
+"POT-Creation-Date: 2012-05-06 12:33+0000\n"
+"PO-Revision-Date: 2012-05-06 18:13+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -58,12 +58,12 @@ msgstr "Error al abrir el archivo «%s» %s"
 msgid "Error reading file \"%s\": %s"
 msgstr "Ocurrió un error al leer el archivo «%s»: %s"
 
-#: ../pan/data/cert-store.cc:254
+#: ../pan/data/cert-store.cc:263
 #, c-format
 msgid "Error opening SSL certificate directory: \"%s\": %s"
 msgstr "Error al abrir la carpeta de certificados SSL: «%s»: %s"
 
-#: ../pan/data/cert-store.cc:285
+#: ../pan/data/cert-store.cc:294
 #, c-format
 msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
 msgstr ""
@@ -747,49 +747,49 @@ msgstr "Mostrar las conversaciones de los artículos que coinciden"
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Mostrar _conversaciones de los artículos coincidentes"
 
-#: ../pan/gui/body-pane.cc:1011
+#: ../pan/gui/body-pane.cc:1013
 #, c-format
 msgid "Unnamed File"
 msgstr "Archivo sin nombre"
 
-#: ../pan/gui/body-pane.cc:1092 ../pan/gui/gui.cc:1885
+#: ../pan/gui/body-pane.cc:1094 ../pan/gui/gui.cc:1885
 #: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1617
 #: ../pan/gui/post-ui.cc:2492 ../pan/gui/prefs-ui.cc:833
 #: ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
 msgstr "Asunto"
 
-#: ../pan/gui/body-pane.cc:1094 ../pan/gui/gui.cc:1885
+#: ../pan/gui/body-pane.cc:1096 ../pan/gui/gui.cc:1885
 msgid "From"
 msgstr "De"
 
-#: ../pan/gui/body-pane.cc:1096 ../pan/gui/gui.cc:1886
+#: ../pan/gui/body-pane.cc:1098 ../pan/gui/gui.cc:1886
 #: ../pan/gui/header-pane.cc:1695 ../pan/gui/log-ui.cc:305
 #: ../pan/gui/prefs-ui.cc:829
 msgid "Date"
 msgstr "Fecha"
 
-#: ../pan/gui/body-pane.cc:1103
+#: ../pan/gui/body-pane.cc:1105
 msgid "Newsgroups"
 msgstr "Grupos de noticias"
 
-#: ../pan/gui/body-pane.cc:1108
+#: ../pan/gui/body-pane.cc:1110
 msgid "Followup-To"
 msgstr "Reenviar A"
 
-#: ../pan/gui/body-pane.cc:1118
+#: ../pan/gui/body-pane.cc:1120
 msgid "Reply-To"
 msgstr "Responder a"
 
-#: ../pan/gui/body-pane.cc:1160
+#: ../pan/gui/body-pane.cc:1163
 msgid " from "
 msgstr " de "
 
-#: ../pan/gui/body-pane.cc:1162
+#: ../pan/gui/body-pane.cc:1165
 msgid " at "
 msgstr " es "
 
-#: ../pan/gui/body-pane.cc:1264
+#: ../pan/gui/body-pane.cc:1246
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
@@ -804,24 +804,24 @@ msgstr ""
 "<b>Válido hasta:</b> %s\n"
 "<b>Creado en:</b> %s"
 
-#: ../pan/gui/body-pane.cc:1269
+#: ../pan/gui/body-pane.cc:1251
 msgid "always"
 msgstr "siempre"
 
-#: ../pan/gui/body-pane.cc:1485
+#: ../pan/gui/body-pane.cc:1467
 msgid "Copy _URL"
 msgstr "Copiar _URL"
 
-#: ../pan/gui/body-pane.cc:1680
+#: ../pan/gui/body-pane.cc:1662
 msgid "Save Attachment As..."
 msgstr "Guardar adjunto como…"
 
-#: ../pan/gui/body-pane.cc:1683
+#: ../pan/gui/body-pane.cc:1665
 msgid "Save All Attachments"
 msgstr "Guardar todos los adjuntos"
 
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1753
+#: ../pan/gui/body-pane.cc:1735
 msgid "Attachments"
 msgstr "Adjuntos"
 
@@ -2386,13 +2386,97 @@ msgstr "Perfiles de publicación"
 msgid "Profiles"
 msgstr "Perfiles"
 
-#: ../pan/gui/save-attach-ui.cc:77 ../pan/gui/save-ui.cc:77
+#: ../pan/gui/save-attach-ui.cc:45
 #, c-format
+#| msgid ""
+#| "%g - group as one directory (alt.binaries.pictures.trains)\n"
+#| "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+#| "%s - subject line excerpt\n"
+#| "%S - subject line\n"
+#| " \n"
+#| "\"/home/user/News/Pan/%g\" becomes\n"
+#| "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+#| "\"/home/user/News/Pan/%G\" becomes\n"
+#| "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - Subject line excerpt\n"
+"%S - Subject line\n"
+"%n - Poster display name\n"
+"%e - Poster e-mail adress\n"
+"%d - Current Date\n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g: grupo como un directorio (alt.binaries.pictures.trains)\n"
+"%G: grupo como un directorio anidado (/alt/binaries/pictures/trains)\n"
+"%s: extracto de la línea de asunto\n"
+"%S: línea de asunto\n"
+"%n: mostrar nombre\n"
+"%e: mostrar dirección de correo-e\n"
+"%d: fecha actual\n"
+"«/home/usuario/News/Pan/%g» se convierte en\n"
+"«/home/usuario/News/Pan/alt.binaries.pictures.trains», y\n"
+"«/home/usuario/News/Pan/%G» se convierte en\n"
+"«/home/usuario/News/Pan/alt/binaries/pictures/trains»,"
+
+#: ../pan/gui/save-attach-ui.cc:193 ../pan/gui/save-ui.cc:213
+msgid "Add to the queue sorted by date posted"
+msgstr "Añadir a la cola ordenada por antigüedad"
+
+#: ../pan/gui/save-attach-ui.cc:194 ../pan/gui/save-ui.cc:214
+msgid "Add to the front of the queue"
+msgstr "Añadir al principio de la cola"
+
+#: ../pan/gui/save-attach-ui.cc:195 ../pan/gui/save-ui.cc:215
+msgid "Add to the back of the queue"
+msgstr "Añadir al final de la cola"
+
+#: ../pan/gui/save-attach-ui.cc:227
+msgid "Pan: Save Attachments"
+msgstr "Pan: guardar los adjuntos"
+
+#: ../pan/gui/save-attach-ui.cc:252 ../pan/gui/save-attach-ui.cc:270
+#: ../pan/gui/save-ui.cc:267 ../pan/gui/save-ui.cc:285
+msgid "_Location:"
+msgstr "_Lugar:"
+
+#: ../pan/gui/save-attach-ui.cc:256 ../pan/gui/save-ui.cc:271
+msgid "Save Articles"
+msgstr "Guardar artículos"
+
+#: ../pan/gui/save-attach-ui.cc:273 ../pan/gui/save-ui.cc:288
+#, c-format
+msgid "_Group's path: %s"
+msgstr "Ruta del _grupo: %s"
+
+#: ../pan/gui/save-attach-ui.cc:284 ../pan/gui/save-ui.cc:303
+msgid "_Priority:"
+msgstr "_Prioridad:"
+
+#: ../pan/gui/save-ui.cc:45
+#, c-format
+#| msgid ""
+#| "%g - group as one directory (alt.binaries.pictures.trains)\n"
+#| "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+#| "%s - subject line excerpt\n"
+#| "%S - subject line\n"
+#| " \n"
+#| "\"/home/user/News/Pan/%g\" becomes\n"
+#| "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+#| "\"/home/user/News/Pan/%G\" becomes\n"
+#| "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
 "%s - subject line excerpt\n"
 "%S - subject line\n"
+"%n - Poster display name\n"
+"%e - Poster e-mail adress\n"
+"%d - Current Date\n"
 " \n"
 "\"/home/user/News/Pan/%g\" becomes\n"
 "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
@@ -2403,63 +2487,32 @@ msgstr ""
 "%G: grupo como un directorio anidado (/alt/binaries/pictures/trains)\n"
 "%s: extracto de la línea de asunto\n"
 "%S: línea de asunto\n"
+"%n: mostrar nombre\n"
+"%e: mostrar dirección de correo-e\n"
+"%d: fecha actual\n"
 " \n"
 "«/home/usuario/News/Pan/%g» se convierte en\n"
 "«/home/usuario/News/Pan/alt.binaries.pictures.trains», y\n"
 "«/home/usuario/News/Pan/%G» se convierte en\n"
 "«/home/usuario/News/Pan/alt/binaries/pictures/trains»,"
 
-#: ../pan/gui/save-attach-ui.cc:223 ../pan/gui/save-ui.cc:242
-msgid "Add to the queue sorted by date posted"
-msgstr "Añadir a la cola ordenada por antigüedad"
-
-#: ../pan/gui/save-attach-ui.cc:224 ../pan/gui/save-ui.cc:243
-msgid "Add to the front of the queue"
-msgstr "Añadir al principio de la cola"
-
-#: ../pan/gui/save-attach-ui.cc:225 ../pan/gui/save-ui.cc:244
-msgid "Add to the back of the queue"
-msgstr "Añadir al final de la cola"
-
-#: ../pan/gui/save-attach-ui.cc:257
-msgid "Pan: Save Attachments"
-msgstr "Pan: guardar los adjuntos"
-
-#: ../pan/gui/save-attach-ui.cc:282 ../pan/gui/save-attach-ui.cc:300
-#: ../pan/gui/save-ui.cc:296 ../pan/gui/save-ui.cc:314
-msgid "_Location:"
-msgstr "_Lugar:"
-
-#: ../pan/gui/save-attach-ui.cc:286 ../pan/gui/save-ui.cc:300
-msgid "Save Articles"
-msgstr "Guardar artículos"
-
-#: ../pan/gui/save-attach-ui.cc:303 ../pan/gui/save-ui.cc:317
-#, c-format
-msgid "_Group's path: %s"
-msgstr "Ruta del _grupo: %s"
-
-#: ../pan/gui/save-attach-ui.cc:314 ../pan/gui/save-ui.cc:332
-msgid "_Priority:"
-msgstr "_Prioridad:"
-
-#: ../pan/gui/save-ui.cc:233
+#: ../pan/gui/save-ui.cc:204
 msgid "Save attachments"
 msgstr "Guardar los adjuntos"
 
-#: ../pan/gui/save-ui.cc:234
+#: ../pan/gui/save-ui.cc:205
 msgid "Save text"
 msgstr "Guardar el texto"
 
-#: ../pan/gui/save-ui.cc:235
+#: ../pan/gui/save-ui.cc:206
 msgid "Save attachments and text"
 msgstr "Guardar los adjuntos y el texto"
 
-#: ../pan/gui/save-ui.cc:271
+#: ../pan/gui/save-ui.cc:242
 msgid "Pan: Save Articles"
 msgstr "Pan: Guardar artículos"
 
-#: ../pan/gui/save-ui.cc:328
+#: ../pan/gui/save-ui.cc:299
 msgid "_Action:"
 msgstr "_Acción:"
 
@@ -2992,7 +3045,7 @@ msgstr ""
 "Error al guardar «%s»:\n"
 "%s."
 
-#: ../pan/tasks/decoder.cc:315 ../pan/tasks/task-article.cc:354
+#: ../pan/tasks/decoder.cc:315 ../pan/tasks/task-article.cc:355
 #, c-format
 msgid "Decoding %s"
 msgstr "Decodificando %s"
@@ -3053,18 +3106,18 @@ msgstr "Error al conectar con «%s»"
 msgid "Unknown Error"
 msgstr "Error desconocido"
 
-#: ../pan/tasks/task-article.cc:61 ../pan/tasks/task-article.cc:156
-#: ../pan/tasks/task-article.cc:159
+#: ../pan/tasks/task-article.cc:62 ../pan/tasks/task-article.cc:157
+#: ../pan/tasks/task-article.cc:160
 #, c-format
 msgid "Saving %s"
 msgstr "Guardando %s"
 
-#: ../pan/tasks/task-article.cc:63
+#: ../pan/tasks/task-article.cc:64
 #, c-format
 msgid "Reading %s"
 msgstr "Leyendo %s"
 
-#: ../pan/tasks/task-article.cc:326
+#: ../pan/tasks/task-article.cc:327
 #, c-format
 msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
 msgstr ""
@@ -3497,9 +3550,17 @@ msgstr ""
 "<b>No válido antes de: </b>%s\n"
 "\n"
 
-#: ../pan/usenet-utils/text-massager.cc:397
+#: ../pan/usenet-utils/text-massager.cc:399
 msgid "> [quoted text muted]"
 msgstr "> [texto citado ocultado]"
+
+#: ../pan/usenet-utils/text-massager.cc:578
+msgid "no_name"
+msgstr "sin_nombre"
+
+#: ../pan/usenet-utils/text-massager.cc:579
+msgid "no_mail"
+msgstr "sin_correo-e"
 
 #~ msgid "Always trust"
 #~ msgstr "Confiar siempre"
