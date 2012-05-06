@@ -48,7 +48,7 @@ namespace
                          "%S - Subject line\n"
                          "%n - Poster display name\n"
                          "%e - Poster e-mail adress\n"
-                         "%d - Current Date\n"
+                         "%d - Article timestamp\n"
                          "\"/home/user/News/Pan/%g\" becomes\n"
                          "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
                          "\"/home/user/News/Pan/%G\" becomes\n"
