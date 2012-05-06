@@ -565,6 +565,7 @@ pan :: expand_download_dir_subject (const char * dir, const char * subjectline, 
 std::string
 pan :: expand_attachment_headers(const Quark& path, const Article& article)
 {
+  if (path.empty()) return std::string("");
   std::string val(path.c_str());
   std::string::size_type pos;
   std::string author_str (article.author.c_str());
