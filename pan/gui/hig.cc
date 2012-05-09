@@ -194,5 +194,5 @@ HIG :: message_dialog_set_text (GtkMessageDialog * dialog,
 {
   gtk_widget_show_all(GTK_WIDGET(dialog));
   gtk_message_dialog_set_markup (dialog, primary);
-  gtk_message_dialog_format_secondary_text (dialog, "%s", secondary);
+  if (secondary) gtk_message_dialog_format_secondary_text (dialog, "%s", secondary);
 }

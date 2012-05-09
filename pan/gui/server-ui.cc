@@ -692,15 +692,20 @@ namespace
       const gnutls_x509_crt_t cert (store.get_cert_to_server(selected_server));
       if (cert)
       {
-        pretty_print_x509(buf,sizeof(buf),addr, cert,false);
+        pretty_print_x509(buf,sizeof(buf),addr, cert, false);
         if (!buf) g_snprintf(buf,sizeof(buf), "%s", _("No information available.")) ;
-        GtkWidget * w = gtk_message_dialog_new_with_markup (
+
+        GtkWidget * w = gtk_message_dialog_new (
         0,
-        GTK_DIALOG_MODAL,
+        GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
         GTK_MESSAGE_INFO,
-        GTK_BUTTONS_CLOSE, "%s",buf);
+        GTK_BUTTONS_CLOSE, NULL);
+
+        HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(w), buf, NULL);
+
         g_snprintf(buf,sizeof(buf), _("Server Certificate for '%s'"), addr.c_str());
         gtk_window_set_title(GTK_WINDOW(w), buf);
+
         gtk_widget_show_all (w);
         g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
       }
