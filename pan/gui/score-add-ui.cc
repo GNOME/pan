@@ -632,14 +632,14 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
     w = _section_entry = gtk_entry_new ();
     gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
-    HIG::workarea_add_row (t, &row, _("If the group name"), h);
+    HIG::workarea_add_row (t, &row, _("Group name"), h);
     gtk_widget_show_all (h);
 
     // criteria
     w = criteria_line_new (_field_menu, _criteria_menu,
                            _text_criteria_entry, _numeric_criteria_spin,
                            &_article);
-    HIG::workarea_add_row (t, &row, _("And the article's"), w);
+    HIG::workarea_add_row (t, &row, _("and"), w);
     gtk_widget_show (w);
 
     // score
