@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: pan2.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-06 18:02+0000\n"
-"PO-Revision-Date: 2012-05-07 12:57+0200\n"
+"POT-Creation-Date: 2012-05-15 15:02+0000\n"
+"PO-Revision-Date: 2012-05-16 11:23+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2388,18 +2388,6 @@ msgstr "Perfiles"
 
 #: ../pan/gui/save-attach-ui.cc:45
 #, c-format
-#| msgid ""
-#| "%g - group as one directory (alt.binaries.pictures.trains)\n"
-#| "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
-#| "%s - Subject line excerpt\n"
-#| "%S - Subject line\n"
-#| "%n - Poster display name\n"
-#| "%e - Poster e-mail adress\n"
-#| "%d - Current Date\n"
-#| "\"/home/user/News/Pan/%g\" becomes\n"
-#| "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
-#| "\"/home/user/News/Pan/%G\" becomes\n"
-#| "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
@@ -2461,19 +2449,6 @@ msgstr "_Prioridad:"
 
 #: ../pan/gui/save-ui.cc:45
 #, c-format
-#| msgid ""
-#| "%g - group as one directory (alt.binaries.pictures.trains)\n"
-#| "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
-#| "%s - subject line excerpt\n"
-#| "%S - subject line\n"
-#| "%n - Poster display name\n"
-#| "%e - Poster e-mail adress\n"
-#| "%d - Current Date\n"
-#| " \n"
-#| "\"/home/user/News/Pan/%g\" becomes\n"
-#| "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
-#| "\"/home/user/News/Pan/%G\" becomes\n"
-#| "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
@@ -2626,12 +2601,14 @@ msgid "New Scoring Rule"
 msgstr "Regla de puntuación nueva"
 
 #: ../pan/gui/score-add-ui.cc:635
-msgid "If the group name"
-msgstr "Si el nombre del grupo"
+#| msgid "_Group Pane"
+msgid "Group name"
+msgstr "Nombre del grupo"
 
 #: ../pan/gui/score-add-ui.cc:642
-msgid "And the article's"
-msgstr "Y los artículos"
+#| msgid "Pan"
+msgid "and"
+msgstr "y"
 
 #: ../pan/gui/score-view-ui.cc:56
 msgid "Close and Re_score"
@@ -2675,11 +2652,11 @@ msgid "Import SSL Certificate (PEM Format) From File"
 msgstr "Importar certificado SSL (formato PEM) desde un archivo"
 
 #. create the dialog
-#: ../pan/gui/server-ui.cc:295 ../pan/gui/server-ui.cc:874
+#: ../pan/gui/server-ui.cc:295 ../pan/gui/server-ui.cc:879
 msgid "Add a Server"
 msgstr "Añadir un servidor"
 
-#: ../pan/gui/server-ui.cc:295 ../pan/gui/server-ui.cc:880
+#: ../pan/gui/server-ui.cc:295 ../pan/gui/server-ui.cc:885
 msgid "Edit a Server's Settings"
 msgstr "Editar la configuración de un servidor"
 
@@ -2829,44 +2806,44 @@ msgstr "¿Quiere borrar «%s»?"
 msgid "No information available."
 msgstr "No hay información disponible."
 
-#: ../pan/gui/server-ui.cc:702
+#: ../pan/gui/server-ui.cc:706
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr "Certificado del servidor para «%s»"
 
-#: ../pan/gui/server-ui.cc:800
+#: ../pan/gui/server-ui.cc:805
 #, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr "¿Realmente quiere borrar el certificado para «%s»?"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:827 ../pan/gui/server-ui.cc:848
-#: ../pan/gui/server-ui.cc:946
+#: ../pan/gui/server-ui.cc:832 ../pan/gui/server-ui.cc:853
+#: ../pan/gui/server-ui.cc:951
 msgid "Servers"
 msgstr "Servidores"
 
-#: ../pan/gui/server-ui.cc:887
+#: ../pan/gui/server-ui.cc:892
 msgid "Remove a Server"
 msgstr "Quitar un servidor"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:920
+#: ../pan/gui/server-ui.cc:925
 msgid "SSL Certificates"
 msgstr "Certificados SSL"
 
-#: ../pan/gui/server-ui.cc:941
+#: ../pan/gui/server-ui.cc:946
 msgid "Certificates"
 msgstr "Certificados"
 
-#: ../pan/gui/server-ui.cc:972
+#: ../pan/gui/server-ui.cc:977
 msgid "Import Certificate"
 msgstr "Importar certificado"
 
-#: ../pan/gui/server-ui.cc:978
+#: ../pan/gui/server-ui.cc:983
 msgid "Inspect Certificate"
 msgstr "Inspeccionar certificado"
 
-#: ../pan/gui/server-ui.cc:985
+#: ../pan/gui/server-ui.cc:990
 msgid "Remove Certificate"
 msgstr "Quitar certficado"
 
@@ -3566,6 +3543,12 @@ msgstr "sin_nombre"
 #: ../pan/usenet-utils/text-massager.cc:580
 msgid "no_mail"
 msgstr "sin_correo-e"
+
+#~ msgid "If the group name"
+#~ msgstr "Si el nombre del grupo"
+
+#~ msgid "And the article's"
+#~ msgstr "Y los artículos"
 
 #~ msgid "Always trust"
 #~ msgstr "Confiar siempre"
