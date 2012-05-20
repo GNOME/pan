@@ -6,53 +6,62 @@
 
 RELEASE NOTES
 
-    * Keep in mind that if you have been using the localhost server with an
-      stunnel setup and you change Pan to connect directly to the server using
-      the actual server address, you should edit the existing server instead of
-      creating a new entry. If you create a new entry, Pan will see this as a
-      new server entirely even though you may be connecting to the same account
-      as before.
-      Your subscribed groups will be lost!
-      By editing the existing 'localhost:119' server entry, your subscriptions
-      will be preserved.
+        * Keep in mind that if you have been using the localhost server with an
+          stunnel setup and you change Pan to connect directly to the server
+          using the actual server address, you should edit the existing server
+          instead of creating a new entry. If you create a new entry, Pan will
+          see this as a new server entirely even though you may be connecting to
+          the same account as before.
+          Your subscribed groups will be lost!
+          By editing the existing 'localhost:119' server entry, your
+          subscriptions will be preserved.
 
-    * To get SSL support in Pan, remember to run the following command:
+        * To get SSL support in Pan, remember to run the following command:
 
-      ./configure --with-gnutls
+          ./configure --with-gnutls
 
-      If you are building Pan from the Git code repository, run the following
-      command:
+          If you are building Pan from the Git code repository, run the following
+          command:
 
-      sh autogen.sh --with-gnutls
+          sh autogen.sh --with-gnutls
 
-    * Directories to search for SSL certificates can be defined with the
-      environment variable 'SSL_CERT_DIR' or 'SSL_DIR'.
+        * Directories to search for SSL certificates can be defined with the
+          environment variable 'SSL_CERT_DIR' or 'SSL_DIR'.
 
 
 REQUIREMENTS
 
     Pan requires these libraries:
-    * GLib 2.17.6 or higher <http://developer.gnome.org/glib/>
-      (optionally Glib 2.26.0 or higher for multiple Pan instances)
-    * GTK+ 2.16.0 or higher (optionally GTK+ 3.0.0 or higher)
-      <http://www.gtk.org/>
-    * GMime 2.4.0 or higher <http://spruce.sourceforge.net/gmime/>
-      (optionally GMime 2.5.5 or higher for PGP cryptography support)
+
+        * GLib 2.17.6 or higher <http://developer.gnome.org/glib/>
+          (optionally Glib 2.26.0 or higher for multiple Pan instances)
+
+        * GTK+ 2.16.0 or higher (optionally GTK+ 3.0.0 or higher)
+          <http://www.gtk.org/>
+
+        * GMime 2.4.0 or higher <http://spruce.sourceforge.net/gmime/>
+          (optionally GMime 2.5.5 or higher for PGP cryptography support)
 
     The following libraries, which enhance Pan's functionality, are optional:
-    * GtkSpell 2.0.7 or higher for spellchecking
-      <http://gtkspell.sourceforge.net>
-      (optionally GtkSpell 2.0.16 for spellchecking with GTK+ 3)
-    * Enchant 1.6.0 or higher for spellchecking
-      <http://www.abisource.com/projects/enchant/>
-    * libnotify 0.4.1 or higher for notifications
-      <http://www.galago-project.org/news/index.php>
-    * GNOME Keyring 3.2.0 or higher for password storage
-      <https://live.gnome.org/GnomeKeyring>
-    * GnuTLS 2.12.10 or higher for encrypted connections (TLS 1.0)
-      <http://www.gnu.org/software/gnutls/>
-    * D-Bus for multiple Pan instances
-      <http://www.freedesktop.org/wiki/Software/dbus>
+
+        * GtkSpell 2.0.7 or higher for spellchecking
+          <http://gtkspell.sourceforge.net>
+          (optionally GtkSpell 2.0.16 for spellchecking with GTK+ 3)
+
+        * Enchant 1.6.0 or higher for spellchecking
+          <http://www.abisource.com/projects/enchant/>
+
+        * libnotify 0.4.1 or higher for notifications
+          <http://www.galago-project.org/news/index.php>
+
+        * GNOME Keyring 3.2.0 or higher for password storage
+          <https://live.gnome.org/GnomeKeyring>
+
+        * D-Bus for multiple Pan instances
+          <http://www.freedesktop.org/wiki/Software/dbus>
+
+        * GnuTLS 2.12.10 or higher for encrypted connections (TLS 1.0)
+          <http://www.gnu.org/software/gnutls/>
 
     Run the following command to get a list of available options that you can
     enable or disable at configure time:
@@ -70,7 +79,7 @@ OBTAINING THE REQUIREMENTS
 
     sudo apt-get install <REQUIREMENT>
 
-    Alternatively, there is a PPA maintained by Klaus Vormweg that can be fund at
+    Alternatively, there is a PPA maintained by Klaus Vormweg that can be found at
     https://launchpad.net/~klaus-vormweg/+archive/pan
 
     On Fedora-based systems, run the following command to install the
