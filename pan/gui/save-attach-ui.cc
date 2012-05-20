@@ -47,7 +47,7 @@ namespace
                          "%s - Subject line excerpt\n"
                          "%S - Subject line\n"
                          "%n - Poster display name\n"
-                         "%e - Poster e-mail adress\n"
+                         "%e - Poster email adress\n"
                          "%d - Article timestamp\n"
                          "\"/home/user/News/Pan/%g\" becomes\n"
                          "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
