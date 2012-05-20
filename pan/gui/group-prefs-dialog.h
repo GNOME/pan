@@ -59,6 +59,8 @@ namespace pan
     public:
       	 GdkColor& get_color() { return _color; }
       	 GtkWidget* get_color_button() { return _group_color; }
+      	 const quarks_v& get_groups() { return _groups; }
+      	 GroupPrefs& get_prefs() { return _group_prefs; }
   };
 }
 #endif

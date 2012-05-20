@@ -22,6 +22,7 @@
 
 #include "gtk-compat.h"
 #include <pan/gui/prefs.h>
+#include <pan/gui/group-prefs.h>
 
 namespace pan
 {

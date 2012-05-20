@@ -642,7 +642,6 @@ void GUI :: do_read_or_save_articles ()
     do_read_selected_article();
 }
 
-
 void GUI :: do_save_articles_to_nzb ()
 {
 

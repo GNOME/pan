@@ -1117,25 +1117,35 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Fonts"), _("Fonts"), icon_prefs_fonts, prefs));
 
   // Colors
+  GdkColor def_color, def_color_bg;
+  GtkStyle *style = gtk_rc_get_style(dialog);
+  if(!gtk_style_lookup_color(style, "text_color", &def_color))
+    gdk_color_parse("black", &def_color);
+  if(!gtk_style_lookup_color(style, "bg_color", &def_color_bg))
+    gdk_color_parse("white", &def_color_bg);
+
+  std::string def_color_str (GroupPrefs::color_to_string(def_color));
+  std::string def_color_bg_str (GroupPrefs::color_to_string(def_color_bg));
+
   row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Header Pane"));
     HIG :: workarea_add_section_spacer(t, row, 6);
     h = gtk_hbox_new (false, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-watched-fg", "black", prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-watched-fg", def_color_str.c_str(), prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-watched-bg", TANGO_CHAMELEON_LIGHT, prefs));
     HIG :: workarea_add_row (t, &row, _("Scores of 9999 or more:"), h);
     h = gtk_hbox_new (false, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-high-fg", "black", prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-high-fg", def_color_str.c_str(), prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-high-bg", TANGO_BUTTER_LIGHT, prefs));
     HIG :: workarea_add_row (t, &row, _("Scores from 5000 to 9998:"), h);
     h = gtk_hbox_new (false, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-fg", "black", prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-fg", def_color_str.c_str(), prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-bg", TANGO_SKY_BLUE_LIGHT, prefs));
     HIG :: workarea_add_row (t, &row, _("Scores from 1 to 4999:"), h);
@@ -1143,19 +1153,19 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-low-fg", TANGO_ALUMINUM_2, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-low-bg", "black", prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-low-bg", def_color_str.c_str(), prefs));
     HIG :: workarea_add_row (t, &row, _("Scores from -9998 to -1:"), h);
     h = gtk_hbox_new (false, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-ignored-fg", TANGO_ALUMINUM_4, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-ignored-bg", "black", prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-ignored-bg", def_color_str.c_str(), prefs));
     HIG :: workarea_add_row (t, &row, _("Scores of -9999 or less:"), h);
     h = gtk_hbox_new (false, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-fg", TANGO_ORANGE, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-bg", "white", prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-bg", def_color_bg_str.c_str(), prefs));
     HIG :: workarea_add_row (t, &row, _("Read collapsed thread:"), h);
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Body Pane"));

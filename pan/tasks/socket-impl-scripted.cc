@@ -45,8 +45,7 @@ ScriptedSocket :: open (const StringView& address UNUSED, int port UNUSED)
   return true;
 }
 
-void
-ScriptedSocket :: write_command (const StringView& chars, Listener * l)
+void ScriptedSocket :: write_command (const StringView& chars, Listener * l)
 {
    if (_script.empty()) {
       debug ("UNEXPECTED [" << chars << ']');

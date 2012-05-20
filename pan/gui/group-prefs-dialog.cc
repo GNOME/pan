@@ -131,7 +131,6 @@ GroupPrefsDialog :: save_from_gui ()
   }
 #endif
 
-  // group color
   foreach_const (quarks_v, _groups, it)
   {
     _group_prefs.set_group_color(*it, _color);
@@ -229,17 +228,23 @@ namespace
     return w;
   }
 
-  void color_set_cb (GtkColorButton* b, gpointer gp)
+  void color_set_cb (GtkColorButton* b, gpointer p)
   {
-    GdkColor* col = (GdkColor*)gp;
-	  gtk_color_button_get_color (b, col);
+    GroupPrefsDialog* dialog = static_cast<GroupPrefsDialog*>(p);
+	  GdkColor col;
+	  gtk_color_button_get_color (b, &(dialog->get_color()));
   }
 
-  GtkWidget* new_color_button (const Quark& group, GroupPrefs& prefs, GdkColor* color)
+  GtkWidget* new_color_button (const Quark& group, GroupPrefs& prefs, GroupPrefsDialog* dialog)
   {
-    const GdkColor& val (prefs.get_group_color (group, "black"));
+    GdkColor color;
+    GtkStyle *style = gtk_rc_get_style(dialog->root());
+    if(!gtk_style_lookup_color(style, "text_color", &color))
+      gdk_color_parse("black", &color);
+
+    const GdkColor& val (prefs.get_group_color (group, GroupPrefs::color_to_string(color)));
     GtkWidget * b = gtk_color_button_new_with_color (&val);
-    g_signal_connect (b, "color-set", G_CALLBACK(color_set_cb), color);
+    g_signal_connect (b, "color-set", G_CALLBACK(color_set_cb), dialog);
     return b;
   }
 
@@ -300,11 +305,11 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
     w = _spellchecker_language = create_spellcheck_combo_box ( groups[0], group_prefs);
     HIG :: workarea_add_row (t, &row, _("Spellchecker _language:"), w);
 #endif
-    w = _group_color = new_color_button (groups[0], _group_prefs, &_color);
+    w = _group_color = new_color_button (groups[0], _group_prefs, this);
     HIG :: workarea_add_row(t, &row, _("Group color:"), w);
 
-  gtk_widget_show_all (t);
   gtk_box_pack_start ( GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG( dialog))), t, true, true, 0);
   _root = dialog;
+  gtk_widget_show_all (t);
 
 }
