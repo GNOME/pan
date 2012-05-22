@@ -559,7 +559,7 @@ pan :: expand_download_dir_subject (const char * dir, const char * subjectline, 
 
 /*
 "%n - Poster display name\n"
-"%e - Poster e-mail adress\n"
+"%e - Poster e-mail address\n"
 "%d - Current Date\n"
 */
 std::string

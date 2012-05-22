@@ -47,7 +47,7 @@ namespace
                          "%s - subject line excerpt\n"
                          "%S - subject line\n"
                          "%n - Poster display name\n"
-                         "%e - Poster email adress\n"
+                         "%e - Poster email address\n"
                          "%d - Article timestamp\n"
                          " \n"
                          "\"/home/user/News/Pan/%g\" becomes\n"
