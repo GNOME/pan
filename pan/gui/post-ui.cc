@@ -347,6 +347,7 @@ PostUI :: get_body () const
   line_start = line_end = body_start;
   while ((gtk_text_view_forward_display_line (view, &line_end))) {
     char * line = gtk_text_buffer_get_text (buf, &line_start, &line_end, false);
+//    std::cerr<<"line : "<<line<<"\n";
     body += line;
     g_free (line);
     if (wrap && *body.rbegin() != '\n')
@@ -1970,6 +1971,8 @@ PostUI :: apply_profile_to_body ()
     body += sig;
   }
 
+  std::cerr<<body.empty()<<" "<<sig.empty()<<"\n==================================\n"<<body<<"\n====================================\n";
+
   GtkTextBuffer * buf (_body_buf);
   if (!body.empty())
     gtk_text_buffer_set_text (buf, body.c_str(), body.size());
@@ -2221,6 +2224,9 @@ PostUI :: body_view_realized_cb (GtkWidget*, gpointer self_gpointer)
   const Profile profile (self->get_current_profile ());
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (self->_agroup, "gpg-sign")),profile.use_sigfile);
   user_has_gpg = profile.use_sigfile && profile.sig_type == Profile::GPGSIG;
+
+  /* connect this here so signature isn't appended double */
+  g_signal_connect (self->_from_combo, "changed", G_CALLBACK(on_from_combo_changed), self);
 }
 
 /***
@@ -2344,7 +2350,6 @@ PostUI :: create_main_tab ()
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT(w), r, true);
   gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT(w), r, render_from, &_profiles, 0);
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
-  g_signal_connect (w, "changed", G_CALLBACK(on_from_combo_changed), this);
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fill, fill, 0, 0);
 
   // Subject
