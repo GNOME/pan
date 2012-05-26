@@ -2,7 +2,7 @@ AC_INIT([Pan],[0.138],[https://bugzilla.gnome.org/enter_bug.cgi?product=Pan],[pa
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
 AC_DEFINE(VERSION_MINOR,138,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
-AC_DEFINE(VERSION_TITLE,["Der Gerät"],[Release Name])
+AC_DEFINE(VERSION_TITLE,["Der Ger\u00e4t"],[Release Name])
 AC_PREREQ([2.64])
 
 dnl Expanded by export-archive
@@ -92,7 +92,7 @@ AC_ARG_WITH(dbus, AS_HELP_STRING([--with-dbus],[enable D-Bus support (normally: 
 if test "x$want_dbus" = "xyes" ; then
   AM_PATH_GLIB_2_0($GLIB_REQUIRED_FOR_DBUS,AC_DEFINE(HAVE_DBUS,[1],[D-Bus support for multiple Pan instances],exit 1,gobject gmodule gthread))
 else
-  AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)	
+  AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
 fi
 
 
@@ -161,10 +161,10 @@ dnl GnuTLS support
 gnutls_msg=no
 AC_ARG_WITH(gnutls, AS_HELP_STRING([--with-gnutls],[enable GnuTLS support (normally: no)]), [want_gnutls=$withval], [want_gnutls=no])
 if test "x$want_gnutls" = "xyes" ; then
-  
+
   PKG_CHECK_MODULES([GNUTLS],[gnutls >= $GNUTLS_REQUIRED],
   [
-  GNUTLS_VER=`pkg-config --modversion gnutls`	
+  GNUTLS_VER=`pkg-config --modversion gnutls`
   gnutls_msg="yes = $GNUTLS_VER"
   AC_DEFINE(HAVE_GNUTLS,[1],[GnuTLS support])],
   [gnutls_msg=no
