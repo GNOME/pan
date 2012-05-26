@@ -44,6 +44,7 @@
 #include <pan/data-impl/rules-filter.h>
 #include <pan/data-impl/profiles.h>
 #include <pan/data-impl/memchunk.h>
+#include <pan/gui/prefs.h>
 
 #ifdef HAVE_GNUTLS
   #include <pan/data/cert-store.h>
@@ -74,7 +75,7 @@ namespace pan
     **/
 
     public:
-      DataImpl (const StringView& cache_ext, bool unit_test=false, int cache_megs=10, DataIO * source=new DataIO());
+      DataImpl (const StringView& cache_ext, Prefs& prefs, bool unit_test=false, int cache_megs=10, DataIO * source=new DataIO());
       virtual ~DataImpl ();
       virtual void save_state ();
 
@@ -103,6 +104,7 @@ namespace pan
       void rebuild_backend ();
       const bool _unit_test;
       DataIO * _data_io;
+      Prefs& _prefs;
 
     /**
     *** SERVERS
@@ -112,7 +114,7 @@ namespace pan
 
       void load_server_properties (const DataIO&);
 
-      void save_server_properties (DataIO&);
+      void save_server_properties (DataIO&, Prefs&);
 
       typedef Loki::AssocVector<Quark,Server> servers_t;
 
@@ -132,7 +134,8 @@ namespace pan
 
       virtual void set_server_auth (const Quark       & server,
                                     const StringView  & username,
-                                    gchar             *&password);
+                                    gchar             *&password,
+                                    bool                use_gkr);
 
       virtual void set_server_trust (const Quark      & servername,
                                      int                setme);
@@ -166,7 +169,8 @@ namespace pan
 
       virtual bool get_server_auth (const Quark   & server,
                                     std::string   & setme_username,
-                                    gchar         *&setme_password);
+                                    gchar         *&setme_password,
+                                    bool            use_gkr);
 
       virtual bool get_server_trust (const Quark  & servername, int&) const;
 

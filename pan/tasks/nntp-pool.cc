@@ -39,10 +39,12 @@ namespace
 
 NNTP_Pool :: NNTP_Pool (const Quark        & server,
                         ServerInfo         & server_info,
+                        Prefs              & prefs,
                         SocketCreator      * creator,
                         CertStore          & store):
 
   _server_info (server_info),
+  _prefs (prefs),
   _server (server),
   _socket_creator (creator),
   _pending_connections (0),
@@ -173,7 +175,7 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
 {
   std::string user;
   gchar* pass(NULL);
-  ok = ok && _server_info.get_server_auth (_server, user, pass);
+  ok = ok && _server_info.get_server_auth (_server, user, pass, _prefs.get_flag("use-gnome-keyring", false));
   debug("on socket created "<<host<<" "<<ok<<" "<<socket);
   if (!ok)
   {

@@ -35,6 +35,7 @@
 #include <pan/tasks/encoder.h>
 #include <pan/tasks/task-weak-ordering.h>
 #include <pan/tasks/socket-impl-main.h>
+#include <pan/gui/prefs.h>
 
 #ifdef HAVE_GNUTLS
   #include <pan/data/cert-store.h>
@@ -74,7 +75,7 @@ namespace pan
     private AdaptableSet<Task*, TaskWeakOrdering>::Listener
   {
     public:
-      Queue (ServerInfo&, TaskArchive&, SocketCreator*, CertStore&, WorkerPool&,
+      Queue (ServerInfo&, TaskArchive&, SocketCreator*, CertStore&, Prefs&, WorkerPool&,
              bool online, int save_delay_secs);
       virtual ~Queue ();
 
@@ -253,6 +254,7 @@ namespace pan
       void clean_n_save ();
       int _uploads_total, _downloads_total;
       CertStore& _certstore;
+      Prefs& _prefs;
 
     private:
       typedef AdaptableSet<Task*, TaskWeakOrdering> TaskSet;

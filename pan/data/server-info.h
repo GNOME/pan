@@ -46,7 +46,8 @@ namespace pan
 
       virtual void set_server_auth (const Quark       & servername,
                                     const StringView  & username,
-                                    gchar             *&password) = 0;
+                                    gchar             *&password,
+                                    bool                use_gkr) = 0;
 
       virtual void set_server_trust (const Quark       & servername,
                                      const int           setme) = 0;
@@ -75,7 +76,8 @@ namespace pan
 
       virtual bool get_server_auth (const Quark   & servername,
                                     std::string   & setme_username,
-                                    gchar         *&setme_password) = 0;
+                                    gchar         *&setme_password,
+                                    bool            use_gkr) = 0;
 
       virtual bool get_server_trust (const Quark  & servername, int&) const = 0;
 

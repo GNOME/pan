@@ -55,7 +55,7 @@ int main (int argc, char *argv[])
   if (have_password) password = argv[4];
   if (have_username || have_password) {
     std::cerr << "Username [" << username << "], password [" << password << "]\n";
-    data.set_server_auth (servername, username, password.str);
+    data.set_server_auth (servername, username, password.str, false);
   }
 
   // initialize the queue

@@ -516,7 +516,7 @@ namespace
     if (servers.empty())
     {
       const Quark empty_server;
-      GtkWidget * w = server_edit_dialog_new (data, queue, window, empty_server);
+      GtkWidget * w = server_edit_dialog_new (data, queue, prefs, window, empty_server);
       gtk_widget_show_all (w);
       GtkWidget * msg = gtk_message_dialog_new (GTK_WINDOW(w),
                                                 GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -898,7 +898,7 @@ main (int argc, char *argv[])
 
     // instantiate the backend...
     const int cache_megs = prefs.get_int ("cache-size-megs", 10);
-    DataImpl data (prefs.get_string("cache-file-extension","msg"), false, cache_megs);
+    DataImpl data (prefs.get_string("cache-file-extension","msg"), prefs, false, cache_megs);
     ArticleCache& cache (data.get_cache ());
     EncodeCache& encode_cache (data.get_encode_cache());
     CertStore& certstore (data.get_certstore());
@@ -912,7 +912,7 @@ main (int argc, char *argv[])
     // instantiate the queue...
     WorkerPool worker_pool (4, true);
     SocketCreator socket_creator(data, certstore);
-    Queue queue (data, data, &socket_creator, certstore, worker_pool, false, 32768);
+    Queue queue (data, data, &socket_creator, certstore, prefs, worker_pool, false, 32768);
     data.set_queue (&queue);
 
 #ifdef HAVE_DBUS

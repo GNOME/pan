@@ -31,13 +31,13 @@ namespace pan
   typedef std::set<std::string> strings_t;
 
   /** @ingroup GUI */
-  GtkWidget* server_edit_dialog_new (Data&, Queue&, GtkWindow*, const Quark& server);
+  GtkWidget* server_edit_dialog_new (Data&, Queue&, Prefs&, GtkWindow*, const Quark& server);
 
   /** @ingroup GUI */
-  GtkWidget* server_list_dialog_new (Data&, Queue&, GtkWindow*);
+  GtkWidget* server_list_dialog_new (Data&, Queue&, Prefs&, GtkWindow*);
 
   /** @ingroup GUI */
-  GtkWidget* sec_dialog_new (Data& data, Queue& queue, GtkWindow* parent);
+  GtkWidget* sec_dialog_new (Data& data, Queue& queue, Prefs&, GtkWindow* parent);
 
   /** @ingroup GUI */
   std::string

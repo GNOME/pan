@@ -37,10 +37,12 @@ Queue :: Queue (ServerInfo         & server_info,
                 TaskArchive        & archive,
                 SocketCreator      * socket_creator,
                 CertStore          & certstore,
+                Prefs              & prefs,
                 WorkerPool         & pool,
                 bool                 online,
                 int                  save_delay_secs):
   _server_info (server_info),
+  _prefs (prefs),
   _is_online (online),
   _socket_creator (socket_creator),
   _worker_pool (pool),
@@ -104,7 +106,7 @@ Queue :: get_pool (const Quark& servername)
   }
   else // have to build one
   {
-    pool = new NNTP_Pool (servername, _server_info, _socket_creator, _certstore);
+    pool = new NNTP_Pool (servername, _server_info, _prefs, _socket_creator, _certstore);
     pool->add_listener (this);
     _pools[servername] = pool;
   }

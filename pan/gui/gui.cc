@@ -1092,7 +1092,7 @@ void GUI :: prefs_dialog_destroyed (GtkWidget *)
 
 void GUI :: do_show_servers_dialog ()
 {
-  GtkWidget * w = server_list_dialog_new (_data, _queue, get_window(_root));
+  GtkWidget * w = server_list_dialog_new (_data, _queue, _prefs, get_window(_root));
   gtk_widget_show_all (w);
   g_signal_connect (w, "destroy", G_CALLBACK(server_list_dialog_destroyed_cb), this);
 }
@@ -1101,7 +1101,7 @@ void GUI :: do_show_servers_dialog ()
 void GUI :: do_show_sec_dialog ()
 {
 #ifdef HAVE_GNUTLS
-  GtkWidget * w = sec_dialog_new (_data, _queue, get_window(_root));
+  GtkWidget * w = sec_dialog_new (_data, _queue, _prefs, get_window(_root));
   g_signal_connect (w, "destroy", G_CALLBACK(sec_dialog_destroyed_cb), this);
   gtk_widget_show_all (w);
 #endif

@@ -1558,7 +1558,7 @@ UUDecode (uulist *data)
     r[0] = fgetc (datain);
     hb   = (int) r[0] + 22;
     fseek (datain, (int) r[0] + 12, SEEK_SET);
-    fread (r, 1, 8, datain);
+    size_t res = fread (r, 1, 8, datain);
 
     dsize = (((long) 1 << 24) * (long) r[0]) +
             (((long) 1 << 16) * (long) r[1]) +

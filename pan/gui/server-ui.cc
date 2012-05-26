@@ -56,6 +56,7 @@ namespace
   {
     Data& data;
     Queue& queue;
+    Prefs& prefs;
     Quark server;
     StringView cert;
     GtkWidget * dialog;
@@ -68,7 +69,7 @@ namespace
     GtkWidget * rank_combo;
     GtkWidget * ssl_combo;
     GtkWidget * always_trust_checkbox;
-    ServerEditDialog (Data& d, Queue& q): data(d), queue(q) {}
+    ServerEditDialog (Data& d, Queue& q, Prefs& p): data(d), queue(q), prefs(p) {}
   };
 
   void pan_entry_set_text (GtkWidget * w, const StringView& v)
@@ -107,7 +108,7 @@ namespace
   }
 
   void
-  edit_dialog_populate (Data&, const Quark& server, ServerEditDialog * d)
+  edit_dialog_populate (Data&, Prefs& prefs, const Quark& server, ServerEditDialog * d)
   {
     // sanity clause
     g_return_if_fail (d!=0);
@@ -120,7 +121,7 @@ namespace
     gchar* pass(NULL);
     if (!server.empty()) {
       d->data.get_server_addr (server, addr, port);
-      d->data.get_server_auth (server, user, pass);
+      d->data.get_server_auth (server, user, pass, prefs.get_flag("use-gnome-keyring",false));
       age = d->data.get_server_article_expiration_age (server);
       rank = d->data.get_server_rank (server);
       max_conn = d->data.get_server_limits (server);
@@ -237,7 +238,7 @@ namespace
         if (d->server.empty())
           d->server = d->data.add_new_server ();
         d->data.set_server_addr (d->server, addr, port);
-        d->data.set_server_auth (d->server, user, pass);
+        d->data.set_server_auth (d->server, user, pass, d->prefs.get_flag("use-gnome-keyring",false));
         d->data.set_server_limits (d->server, max_conn);
         d->data.set_server_article_expiration_age (d->server, age);
         d->data.set_server_rank (d->server, rank);
@@ -287,9 +288,9 @@ pan :: import_sec_from_disk_dialog_new (Data& data, Queue& queue, GtkWindow * wi
 }
 
 GtkWidget*
-pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, const Quark& server)
+pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * window, const Quark& server)
 {
-  ServerEditDialog * d (new ServerEditDialog (data, queue));
+  ServerEditDialog * d (new ServerEditDialog (data, queue, prefs));
 
   // create the dialog
   char * title = g_strdup_printf ("Pan: %s", server.empty() ? _("Add a Server") : _("Edit a Server's Settings"));
@@ -436,7 +437,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, GtkWindow * window, con
 #endif
 
   d->server = server;
-  edit_dialog_populate (data, server, d);
+  edit_dialog_populate (data, prefs, server, d);
   gtk_widget_show_all (d->dialog);
   return d->dialog;
 }
@@ -478,12 +479,13 @@ namespace
   {
     Data& data;
     Queue& queue;
+    Prefs& prefs;
     GtkWidget * server_tree_view;
     GtkWidget * dialog;
     GtkListStore * servers_store;
     GtkWidget * remove_button;
     GtkWidget * edit_button;
-    ServerListDialog (Data& d, Queue& q): data(d), queue(q) {}
+    ServerListDialog (Data& d, Queue& q, Prefs& p): data(d), queue(q), prefs(p) {}
   };
 
 
@@ -637,7 +639,7 @@ namespace
     const Quark empty_quark;
     GtkWidget * list_dialog = GTK_WIDGET (user_data);
     ServerListDialog * d = (ServerListDialog*) g_object_get_data (G_OBJECT(list_dialog), "dialog");
-    GtkWidget * edit_dialog = server_edit_dialog_new (d->data, d->queue, GTK_WINDOW(list_dialog), empty_quark);
+    GtkWidget * edit_dialog = server_edit_dialog_new (d->data, d->queue, d->prefs, GTK_WINDOW(list_dialog), empty_quark);
     g_signal_connect (edit_dialog, "destroy", G_CALLBACK(server_edit_dialog_destroy_cb), list_dialog);
     gtk_widget_show_all (edit_dialog);
   }
@@ -649,7 +651,7 @@ namespace
     ServerListDialog * d = (ServerListDialog*) g_object_get_data (G_OBJECT(list_dialog), "dialog");
     Quark selected_server (get_selected_server (d));
     if (!selected_server.empty()) {
-      GtkWidget * edit_dialog = server_edit_dialog_new (d->data, d->queue, GTK_WINDOW(list_dialog), selected_server);
+      GtkWidget * edit_dialog = server_edit_dialog_new (d->data, d->queue, d->prefs, GTK_WINDOW(list_dialog), selected_server);
       g_signal_connect (GTK_OBJECT(edit_dialog), "destroy", G_CALLBACK(server_edit_dialog_destroy_cb), list_dialog);
       gtk_widget_show_all (edit_dialog);
     }
@@ -824,9 +826,9 @@ namespace
 #endif
 
 GtkWidget*
-pan :: server_list_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
+pan :: server_list_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
 {
-  ServerListDialog * d = new ServerListDialog (data, queue);
+  ServerListDialog * d = new ServerListDialog (data, queue, prefs);
 
   // dialog
   char * title = g_strdup_printf ("Pan: %s", _("Servers"));
@@ -913,10 +915,10 @@ pan :: render_cert_flag (GtkTreeViewColumn * ,
 
 
 GtkWidget*
-pan :: sec_dialog_new (Data& data, Queue& queue, GtkWindow* parent)
+pan :: sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
 {
 #ifdef HAVE_GNUTLS
-  ServerListDialog * d = new ServerListDialog (data, queue);
+  ServerListDialog * d = new ServerListDialog (data, queue, prefs);
 
   for (guint i=0; i<ICON_QTY; ++i)
     _icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, _icons[i].pixbuf_txt, FALSE, 0);

@@ -1022,6 +1022,12 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
     HIG::workarea_add_row (t, &row, l, w);
 
+    // Gnome Keyring Option
+    HIG :: workarea_add_section_spacer (t, row, 2);
+    HIG :: workarea_add_section_title (t, &row, _("Gnome Keyring Options"));
+    w = new_check_button (_("Store Passwords in Gnome Keyring"), "use-gnome-keyring", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
+
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Miscellaneous"), _("Miscellaneous"), icon_prefs_extras, prefs));
 
@@ -1119,9 +1125,10 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   // Colors
   GdkColor def_color, def_color_bg;
   GtkStyle *style = gtk_rc_get_style(dialog);
-  if(!gtk_style_lookup_color(style, "text_color", &def_color))
+
+  if(!style || !gtk_style_lookup_color(style, "text_color", &def_color))
     gdk_color_parse("black", &def_color);
-  if(!gtk_style_lookup_color(style, "bg_color", &def_color_bg))
+  if(!style || !gtk_style_lookup_color(style, "bg_color", &def_color_bg))
     gdk_color_parse("white", &def_color_bg);
 
   std::string def_color_str (GroupPrefs::color_to_string(def_color));

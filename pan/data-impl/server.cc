@@ -51,7 +51,7 @@ DataImpl :: delete_server (const Quark& server_in)
   {
     const std::string newsrc_filename (_servers[server].newsrc_filename);
     _servers.erase (server);
-    save_server_properties (*_data_io);
+    save_server_properties (*_data_io, _prefs);
     std::remove (newsrc_filename.c_str());
     rebuild_backend ();
   }
@@ -121,7 +121,8 @@ DataImpl :: set_server_article_expiration_age  (const Quark  & server,
 void
 DataImpl :: set_server_auth (const Quark       & server,
                              const StringView  & username,
-                             gchar             *&password)
+                             gchar             *&password,
+                             bool                use_gkr)
 {
   Server * s (find_server (server));
   assert (s);
@@ -130,11 +131,18 @@ DataImpl :: set_server_auth (const Quark       & server,
 #ifndef HAVE_GKR
   s->password = password;
 #else
-  PasswordData pw;
-  pw.server = s->host;
-  pw.user = username;
-  pw.pw = password;
-  password_encrypt(pw);
+  if (use_gkr)
+  {
+    PasswordData pw;
+    pw.server = s->host;
+    pw.user = username;
+    pw.pw = password;
+    password_encrypt(pw);
+  }
+  else
+  {
+    s->password = password;
+  }
 #endif
 
 }
@@ -207,7 +215,7 @@ DataImpl :: save_server_info (const Quark& server)
 {
   Server * s (find_server (server));
   assert (s);
-  save_server_properties (*_data_io);
+  save_server_properties (*_data_io, _prefs);
 
 }
 
@@ -215,16 +223,21 @@ DataImpl :: save_server_info (const Quark& server)
 bool
 DataImpl :: get_server_auth (const Quark   & server,
                              std::string   & setme_username,
-                             gchar         *&setme_password)
+                             gchar         *&setme_password,
+                             bool            use_gkr)
 {
   Server * s (find_server (server));
   bool found (s);
   if (found) {
     setme_username = s->username;
 #ifndef HAVE_GKR
-    setme_password = (gchar*)s->password.c_str();
+      setme_password = (gchar*)s->password.c_str();
 #else
-    if (s->gkr_pw)
+    if (!use_gkr)
+    {
+      setme_password = (gchar*)s->password.c_str();
+    }
+    else if (s->gkr_pw)
     {
       setme_password = s->gkr_pw;
     }
@@ -491,7 +504,7 @@ namespace
 }
 
 void
-DataImpl :: save_server_properties (DataIO& data_io)
+DataImpl :: save_server_properties (DataIO& data_io, Prefs& prefs)
 {
   int depth (0);
   std::ostream * out = data_io.write_server_properties ();
@@ -510,15 +523,18 @@ DataImpl :: save_server_properties (DataIO& data_io)
     const Server* s (find_server (*it));
     std::string user;
     gchar* pass(NULL);
-    get_server_auth(*it, user, pass);
+    get_server_auth(*it, user, pass, prefs.get_flag("use-gnome-keyring",false));
     *out << indent(depth++) << "<server id=\"" << escaped(it->to_string()) << "\">\n";
     *out << indent(depth) << "<host>" << escaped(s->host) << "</host>\n"
          << indent(depth) << "<port>" << s->port << "</port>\n"
-         << indent(depth) << "<username>" << escaped(user) << "</username>\n"
+         << indent(depth) << "<username>" << escaped(user) << "</username>\n";
 #ifdef HAVE_GKR
-         << indent(depth) << "<password>" << "HANDLED_BY_GNOME_KEYRING" << "</password>\n"
+if (prefs.get_flag("use-gnome-keyring", false))
+    *out << indent(depth) << "<password>" << "HANDLED_BY_GNOME_KEYRING" << "</password>\n";
+else
+    *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n"
 #else
-         << indent(depth) << "<password>" << escaped(pass) << "</password>\n"
+    *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n"
 #endif
          << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
          << indent(depth) << "<connection-limit>" << s->max_connections << "</connection-limit>\n"

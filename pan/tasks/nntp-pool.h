@@ -27,6 +27,7 @@
 #include <pan/tasks/socket.h>
 #include <pan/tasks/nntp.h>
 #include <pan/tasks/socket-impl-main.h>
+#include <pan/gui/prefs.h>
 
 #ifdef HAVE_GNUTLS
 #include <pan/data/cert-store.h>
@@ -46,7 +47,7 @@ class NNTP_Pool: public NNTP::Source,
 		private CertStore::Listener {
 public:
 
-	NNTP_Pool(const Quark & server, ServerInfo & server_info, SocketCreator *,
+	NNTP_Pool(const Quark & server, ServerInfo & server_info, Prefs& prefs, SocketCreator *,
 			CertStore &);
 	virtual ~NNTP_Pool();
 
@@ -114,6 +115,7 @@ private:
 	SocketCreator * _socket_creator;
 	int _pending_connections;
 	CertStore& _certstore;
+	Prefs& _prefs;
 
 	struct PoolItem {
 		NNTP * nntp;
