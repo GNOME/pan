@@ -72,6 +72,8 @@ namespace pan
       void  set_save_path (const Quark& q) { _save_path = q;}
       const Article& get_article () const { return _article; }
       const std::string& get_groups () const { return _groups; }
+      const bool get_paused () const { return _paused; }
+      void set_paused (bool val) { _paused = val; }
 
     public: // Task subclass
       unsigned long get_bytes_remaining () const;
@@ -112,19 +114,7 @@ namespace pan
       bool _decoder_has_run;
       std::string _groups;
       const SaveOptions _options;
-
-
-//      typedef std::pair<std::string,StringView> lines_p;
-//      typedef std::vector<lines_p> lines_v;
-//
-//      struct CacheAdder
-//      {
-//        lines_v lines;
-//        void add(std::string& q, const StringView& v)
-//          { lines.push_back(lines_p(q,v)); }
-//      };
-//
-//      CacheAdder adder;
+      bool _paused;
 
       struct Needed {
         std::string message_id;

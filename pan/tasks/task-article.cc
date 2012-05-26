@@ -105,7 +105,8 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   _decoder_has_run (false),
   _groups(get_groups_str(article)),
   _attachment(filename),
-  _options(options)
+  _options(options),
+  _paused(false)
 {
 
   cache.reserve (article.get_part_mids());

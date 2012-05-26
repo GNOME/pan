@@ -136,6 +136,8 @@ namespace pan
 
          const State& get_state () const { return _state; }
 
+         State& get_state () { return _state; }
+
          const Quark& get_type () const { return _type; }
 
          virtual unsigned long get_bytes_remaining () const = 0;

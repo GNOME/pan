@@ -166,10 +166,6 @@ Queue :: upkeep ()
   foreach (std::set<Task*>, active, it)
     process_task (*it);
 
-  //upkeep on paused upload slots
-//  foreach (std::set<TaskUpload*>, _uploads, it)
-//    process_task (*it);
-
   // idle socket upkeep
   foreach (pools_t, _pools, it)
     it->second->idle_upkeep ();
@@ -548,6 +544,12 @@ Queue :: stop_tasks (const tasks_t& tasks)
     if (_tasks.index_of (task) != -1) {
       _stopped.insert (task);
       process_task (task);
+      TaskArticle* ta = dynamic_cast<TaskArticle*>(*it);
+      if (ta)
+      {
+        Task* t = (Task*)*it;
+        t->get_state().set_paused();
+      }
     }
   }
 }
@@ -560,6 +562,12 @@ Queue :: restart_tasks (const tasks_t& tasks)
     if (_tasks.index_of(task) != -1) {
       _stopped.erase (task);
       process_task (task);
+      TaskArticle* ta = dynamic_cast<TaskArticle*>(*it);
+      if (ta)
+      {
+        Task* t = (Task*)*it;
+        t->get_state().set_working();
+      }
     }
   }
 }
@@ -575,10 +583,18 @@ Queue :: add_task (Task * task, AddMode mode)
 void
 Queue :: add_tasks (const tasks_t& tasks, AddMode mode)
 {
+  tasks_t paused_tasks;
   foreach_const (tasks_t, tasks, it) {
     TaskArticle * ta (dynamic_cast<TaskArticle*>(*it));
     if (ta)
+    {
       _mids.insert (ta->get_article().message_id);
+      const bool paused (ta->get_paused());
+      if (paused)
+      {
+        _stopped.insert(*it);
+      }
+    }
   }
 
   if (mode == TOP)
@@ -588,7 +604,7 @@ Queue :: add_tasks (const tasks_t& tasks, AddMode mode)
   else
     _tasks.add (tasks);
 
-  // asdf
+  // process all new tasks
   tasks_t tmp (tasks);
   foreach (tasks_t, tmp, it)
     process_task (*it);

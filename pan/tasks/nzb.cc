@@ -71,6 +71,7 @@ namespace
     quarks_t groups;
     std::string text;
     std::string path;
+    std::string paused;
     PartBatch parts;
     tasks_t tasks;
     Article a;
@@ -92,6 +93,7 @@ namespace
       groups.clear ();
       text.clear ();
       path.clear ();
+      paused.clear ();
       a.clear ();
       bytes = 0;
       number = 0;
@@ -152,6 +154,9 @@ namespace
     else if (!strcmp(element_name,"path"))
       mc.path = mc.text;
 
+    else if (!strcmp(element_name,"paused"))
+      mc.paused = mc.text;
+
     else if (!strcmp (element_name, "file"))
     {
       mc.parts.sort ();
@@ -164,7 +169,9 @@ namespace
           mc.a.xref.insert (*sit, *git, 0);
       }
       const StringView p (mc.path.empty() ? mc.fallback_path : StringView(mc.path));
-      mc.tasks.push_back (new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, 0, TaskArticle::DECODE, p));
+      TaskArticle* a = new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, 0, TaskArticle::DECODE, p);
+      a->set_paused(mc.paused == "1");
+      mc.tasks.push_back (a);
     }
 
   }
@@ -283,6 +290,8 @@ NZB :: nzb_to_xml (std::ostream             & out,
         escaped (out, path.to_view());
         out << "</path>\n";
       }
+      out << indent(depth) <<"<paused>";
+      out << task->get_paused() << "</paused>\n";
 
       // what groups was this crossposted in?
       quarks_t groups;

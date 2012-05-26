@@ -378,7 +378,8 @@ PostUI :: set_wrap_mode (bool wrap)
     const std::string s (get_body());
     gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(_body_view),
                                  wrap ? GTK_WRAP_WORD : GTK_WRAP_NONE);
-    gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
+    if (!s.empty())
+      gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
   }
 }
 
@@ -1970,7 +1971,8 @@ PostUI :: apply_profile_to_body ()
   }
 
   GtkTextBuffer * buf (_body_buf);
-  gtk_text_buffer_set_text (buf, body.c_str(), body.size());
+  if (!body.empty())
+    gtk_text_buffer_set_text (buf, body.c_str(), body.size());
 
   // set & scroll-to the insert point
   GtkTextIter iter;
@@ -2027,7 +2029,8 @@ PostUI :: apply_profile_to_headers ()
   std::string s;
   foreach_const (Profile::headers_t, headers, it)
     s += it->first + ": " + it->second + "\n";
-  gtk_text_buffer_set_text (buf, s.c_str(), s.size());
+  if (!s.empty())
+    gtk_text_buffer_set_text (buf, s.c_str(), s.size());
 }
 
 namespace
@@ -2146,7 +2149,8 @@ PostUI :: set_message (GMimeMessage * message)
   }
 
   s = utf8ize (data.visible_headers);
-  gtk_text_buffer_set_text (_headers_buf, s.c_str(), -1);
+  if (!s.empty())
+    gtk_text_buffer_set_text (_headers_buf, s.c_str(), -1);
   _hidden_headers = data.hidden_headers;
 
   // update body
@@ -2159,7 +2163,8 @@ PostUI :: set_message (GMimeMessage * message)
       s = TextMassager().fill (s);
       s += "\n\n";
     }
-    gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
+    if (!s.empty())
+      gtk_text_buffer_set_text (_body_buf, s.c_str(), s.size());
   }
 
   // apply the profiles
