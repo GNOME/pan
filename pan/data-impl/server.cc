@@ -231,7 +231,7 @@ DataImpl :: get_server_auth (const Quark   & server,
   if (found) {
     setme_username = s->username;
 #ifndef HAVE_GKR
-      setme_password = (gchar*)s->password.c_str();
+    setme_password = (gchar*)s->password.c_str();
 #else
     if (!use_gkr)
     {
@@ -469,6 +469,9 @@ DataImpl :: load_server_properties (const DataIO& source)
 #ifndef HAVE_GKR
     s.password = kv["password"];
 #endif
+    if (!_prefs.get_flag("use-gnome-keyring", false))
+      s.password = kv["password"];
+
     s.port = to_int (kv["port"], STD_NNTP_PORT);
     s.max_connections = to_int (kv["connection-limit"], 2);
     s.article_expiration_age = to_int(kv["expire-articles-n-days-old"], 31);

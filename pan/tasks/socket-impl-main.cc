@@ -66,7 +66,6 @@ using namespace pan;
 
 namespace
 {
-  const unsigned int TIMEOUT_SECS (10);
 
   struct ThreadWorker : public WorkerPool::Worker,
                         public WorkerPool::Worker::Listener
