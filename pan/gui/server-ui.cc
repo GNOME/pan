@@ -245,7 +245,9 @@ namespace
         d->data.set_server_ssl_support(d->server, ssl);
         d->data.set_server_cert(d->server,cert);
         d->data.set_server_trust(d->server,trust);
+
         d->data.save_server_info(d->server);
+
         d->queue.upkeep ();
       }
     }

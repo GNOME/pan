@@ -2290,11 +2290,18 @@ void
 GUI :: do_show_cert_failed_dialog(VerifyData* data)
 {
   debug("do show cert failed dialog");
-  const VerifyData& d(*data);
+  VerifyData& d(*data);
+  bool delete_cert = false;
   if (GUI::confirm_accept_new_cert_dialog(get_window(_root),d.cert,d.server))
+  {
     if (!_certstore.add(d.cert, d.server))
+    {
       Log::add_urgent_va("Error adding certificate of server '%s' to Certificate Store",d.server.c_str());
+      delete_cert = true;
+    }
+  }
 
+  if (delete_cert) d.deinit_cert();
   delete data;
 }
 

@@ -1173,7 +1173,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-fg", TANGO_ORANGE, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-bg", def_color_bg_str.c_str(), prefs));
-    HIG :: workarea_add_row (t, &row, _("Read collapsed thread:"), h);
+    HIG :: workarea_add_row (t, &row, _("Collapsed thread with unread messages:"), h);
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Body Pane"));
     HIG :: workarea_add_section_spacer (t, row, 3);

@@ -535,11 +535,11 @@ DataImpl :: save_server_properties (DataIO& data_io, Prefs& prefs)
 if (prefs.get_flag("use-gnome-keyring", false))
     *out << indent(depth) << "<password>" << "HANDLED_BY_GNOME_KEYRING" << "</password>\n";
 else
-    *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n"
+    *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";
 #else
-    *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n"
+    *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";
 #endif
-         << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
+    *out << indent(depth) << "<expire-articles-n-days-old>" << s->article_expiration_age << "</expire-articles-n-days-old>\n"
          << indent(depth) << "<connection-limit>" << s->max_connections << "</connection-limit>\n"
          << indent(depth) << "<newsrc>" << s->newsrc_filename << "</newsrc>\n"
          << indent(depth) << "<rank>" << s->rank << "</rank>\n"

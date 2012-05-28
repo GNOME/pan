@@ -97,36 +97,46 @@ namespace pan
     if (status & GNUTLS_CERT_INVALID)
     {
       if (!mydata->always_trust)
+      {
         g_warning ("The certificate is not trusted.\n");
-      fail = true;
+        fail = true;
+      }
     }
 
     if (status & GNUTLS_CERT_SIGNER_NOT_FOUND)
     {
-      fail = true;
       if (!mydata->always_trust)
+      {
         g_warning ("The certificate hasn't got a known issuer.\n");
+        fail = true;
+      }
     }
 
     if (status & GNUTLS_CERT_REVOKED)
     {
       if (!mydata->always_trust)
+      {
         g_warning ("The certificate has been revoked.\n");
-      fail = true;
+        fail = true;
+      }
     }
 
     if (status & GNUTLS_CERT_EXPIRED)
     {
       if (!mydata->always_trust)
+      {
         g_warning ("The certificate has expired\n");
-      fail = true;
+        fail = true;
+      }
     }
 
     if (status & GNUTLS_CERT_NOT_ACTIVATED)
     {
       if (!mydata->always_trust)
+      {
         g_warning ("The certificate is not yet activated\n");
-      fail = true;
+        fail = true;
+      }
     }
 
     /* Up to here the process is the same for X.509 certificates and
@@ -168,12 +178,17 @@ namespace pan
     if (!gnutls_x509_crt_check_hostname (cert, mydata->hostname_full.c_str()))
     {
       if (!mydata->always_trust)
+      {
         g_warning ("The certificate's owner does not match hostname '%s' !\n", mydata->hostname_full.c_str());
-      fail = true;
+        fail = true;
+      }
     }
 
-    /* auto-add new cert if we always trust this server , no matter what */
-    if (mydata->always_trust)
+    std::cerr<<mydata->always_trust<<" "<<ret<<" "<<fail<<"\n";
+
+    /* auto-add new cert if we always trust this server and the cert isn't already stored in the store */
+    /* fail is only set if we don't always trust this server and a critical condition occurred, e.g. hostname mismatch */
+    if (mydata->always_trust && ret < 0)
       mydata->cs->add(cert, mydata->host);
     else if (fail) goto _fail;
 
@@ -223,20 +238,16 @@ namespace pan
 
     int ret = gnutls_certificate_set_x509_trust(_creds, &cert, 1);
 
-    if (ret < 0) goto fail;
+    if (ret < 0)
+    {
+      s->cert.clear();
+      gnutls_x509_crt_deinit (cert);
+      return false;
+    }
 
     _cert_to_server[server] = cert;
 
     return true;
-
-    fail:
-      s->cert.clear();
-      gnutls_x509_crt_deinit (cert);
-      SaveCBStruct* cbstruct = new SaveCBStruct(*this, server, _data);
-      g_idle_add (save_server_props_cb, cbstruct);
-
-    return false;
-
   }
 
   int
@@ -316,8 +327,8 @@ namespace pan
     _path = buf;
     if (!file::ensure_dir_exists (buf))
     {
-      std::cerr<<"Error initializing certstore. Check your permissions for the pan2 subfolder \"ssl-certs\" and "
-                 "the pan2 folder in your Home directory! Fatal, exiting.";
+      std::cerr<<_("Error initializing Certstore. Check your permissions for the pan2 subfolder \"ssl-certs\" and "
+                 "the pan2 folder in your Home directory! Fatal, exiting.");
       file::print_file_info(std::cerr, buf);
       exit(EXIT_FAILURE);
     }
@@ -339,7 +350,6 @@ namespace pan
   bool
   CertStore :: add (gnutls_x509_crt_t cert, const Quark& server)
   {
-    debug("adding server cert "<<server<<" "<<cert);
     if (!cert || server.empty()) return false;
 
     std::string addr; int port;
@@ -374,6 +384,8 @@ namespace pan
 
     gnutls_certificate_set_x509_trust(_creds, &cert, 1); // for now, only 1 is saved
     valid_cert_added(cert, server.c_str());
+
+    debug("adding server cert "<<server<<" "<<cert);
 
     return true;
   }
