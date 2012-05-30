@@ -323,7 +323,6 @@ Queue :: process_task (Task * task)
 //    TaskArticle* t2 = dynamic_cast<TaskArticle*>(task);
 //    if (t2)
 //      give_task_a_download_slot(t2);
-
   }
   else if (state._work == Task::NEED_DECODER)
   {
@@ -546,11 +545,11 @@ Queue :: stop_tasks (const tasks_t& tasks)
     if (_tasks.index_of (task) != -1) {
       _stopped.insert (task);
       process_task (task);
+
       TaskArticle* ta = dynamic_cast<TaskArticle*>(*it);
       if (ta)
       {
-        Task* t = (Task*)*it;
-        t->get_state().set_paused();
+        ta->set_start_paused(true);
       }
     }
   }
@@ -564,11 +563,11 @@ Queue :: restart_tasks (const tasks_t& tasks)
     if (_tasks.index_of(task) != -1) {
       _stopped.erase (task);
       process_task (task);
+
       TaskArticle* ta = dynamic_cast<TaskArticle*>(*it);
       if (ta)
       {
-        Task* t = (Task*)*it;
-        t->get_state().set_working();
+        ta->set_start_paused(false);
       }
     }
   }
@@ -585,14 +584,13 @@ Queue :: add_task (Task * task, AddMode mode)
 void
 Queue :: add_tasks (const tasks_t& tasks, AddMode mode)
 {
-  tasks_t paused_tasks;
+
   foreach_const (tasks_t, tasks, it) {
     TaskArticle * ta (dynamic_cast<TaskArticle*>(*it));
     if (ta)
     {
       _mids.insert (ta->get_article().message_id);
-      const bool paused (ta->get_paused());
-      if (paused)
+      if (ta->start_paused())
       {
         _stopped.insert(*it);
       }

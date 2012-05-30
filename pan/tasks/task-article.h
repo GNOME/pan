@@ -72,8 +72,8 @@ namespace pan
       void  set_save_path (const Quark& q) { _save_path = q;}
       const Article& get_article () const { return _article; }
       const std::string& get_groups () const { return _groups; }
-      const bool get_paused () const { return _paused; }
-      void set_paused (bool val) { _paused = val; }
+      const bool start_paused () const { return _paused; }
+      void set_start_paused (bool val) { _paused = val; }
 
     public: // Task subclass
       unsigned long get_bytes_remaining () const;

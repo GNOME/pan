@@ -153,9 +153,9 @@ TaskPane:: on_tooltip_query(GtkWidget  *widget,
     date = date_maker.get_date_string (ta->get_article().time_posted);
     g_snprintf(buffer,sizeof(buffer),
                _("\n<u>Download</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n<i>Date:</i> <b>%s</b>\n"
-                 "<i>Groups:</i> <b>%s</b>\n<i>Save Path:</i> <b>%s</b>\n"),
+                 "<i>Groups:</i> <b>%s</b>\n<i>Save Path:</i> <b>%s</b>\nPaused: %d"),
                a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(), date ? date : _("unknown"),
-               ta->get_groups().c_str(), ta->get_save_path().to_string().c_str());
+               ta->get_groups().c_str(), ta->get_save_path().to_string().c_str(), ta->start_paused());
   }
 
   task_found = tu || ta;

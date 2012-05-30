@@ -170,7 +170,8 @@ namespace
       }
       const StringView p (mc.path.empty() ? mc.fallback_path : StringView(mc.path));
       TaskArticle* a = new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, 0, TaskArticle::DECODE, p);
-      a->set_paused(mc.paused == "1");
+      if (mc.paused == "1")
+        a->set_start_paused(true);
       mc.tasks.push_back (a);
     }
 
@@ -291,7 +292,7 @@ NZB :: nzb_to_xml (std::ostream             & out,
         out << "</path>\n";
       }
       out << indent(depth) <<"<paused>";
-      out << task->get_paused() << "</paused>\n";
+      out << (task->start_paused()) << "</paused>\n";
 
       // what groups was this crossposted in?
       quarks_t groups;
