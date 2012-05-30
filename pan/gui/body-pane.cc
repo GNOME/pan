@@ -671,6 +671,21 @@ namespace
   }
 
   void
+  show_signature (GtkTextBuffer      * buffer,
+                    GtkTextMark        * mark,
+                    std::string        & body,
+                    bool                show)
+  {
+    GtkTextTagTable * tags (gtk_text_buffer_get_tag_table (buffer));
+    if (tags)
+    {
+      GtkTextTag * sig_tag (gtk_text_tag_table_lookup (tags, "signature"));
+      if (sig_tag)
+        g_object_set (sig_tag, "invisible", !show, NULL);
+    }
+  }
+
+  void
   replace_emoticon_text_with_pixbuf (GtkTextBuffer      * buffer,
                                      GtkTextMark        * mark,
                                      std::string        & body,
@@ -715,6 +730,7 @@ namespace
                              const StringView    & body_in,
                              bool                  mute_quotes,
                              bool                  show_smilies,
+                             bool                  show_sig,
                              bool                  do_markup,
                              bool                  do_urls)
   {
@@ -853,6 +869,8 @@ namespace
       foreach_const (pixbufs_t, emoticons, it)
         replace_emoticon_text_with_pixbuf (buffer, mark, body, it->first, it->second);
     }
+
+    show_signature (buffer, mark, body, show_sig);
 
     gtk_text_buffer_delete_mark (buffer, mark);
   }
@@ -1001,7 +1019,8 @@ BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation 
     const bool do_smilies (_prefs.get_flag ("show-smilies-as-graphics", true));
     const bool do_markup (_prefs.get_flag ("show-text-markup", true));
     const bool do_urls (_prefs.get_flag ("highlight-urls", true));
-    append_text_buffer_nolock (&_tm, _buffer, str, do_mute, do_smilies, do_markup, do_urls);
+    const bool do_sig(_prefs.get_flag ("show-article-sig", true));
+    append_text_buffer_nolock (&_tm, _buffer, str, do_mute, do_smilies, do_sig, do_markup, do_urls);
     is_done = true;
   }
 
@@ -2050,7 +2069,9 @@ BodyPane :: on_prefs_flag_changed (const StringView& key, bool value G_GNUC_UNUS
       (key=="mute-signature") ||
       (key=="show-smilies-as-graphics") || (key=="show-all-headers") ||
       (key=="size-pictures-to-fit") || (key=="show-text-markup") ||
-      (key=="highlight-urls") )
+      (key=="highlight-urls") ||
+      (key=="show-article-sig")
+     )
     refresh ();
 }
 

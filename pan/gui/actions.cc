@@ -683,13 +683,14 @@ namespace pan
   GtkToggleActionEntry toggle_entries[] =
   {
     { "thread-headers",           NULL, N_("_Thread Headers"),                NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
-    { "wrap-article-body",GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Article Body"),    "W", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
-    { "mute-quoted-text",         NULL, N_("Mute _Quoted Text"),               "Q", NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
-    { "show-all-headers",         NULL, N_("Show All _Headers in Body Pane"),  "H", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
+    { "wrap-article-body",GTK_STOCK_JUSTIFY_FILL, N_("Wrap Article Body"),    "W", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
+    { "show-article-sig",GTK_STOCK_EDIT, N_("Show Article Signature"),        "I", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
+    { "mute-quoted-text",         NULL, N_("Mute _Quoted Text"),              "Q", NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
+    { "show-all-headers",         NULL, N_("Show All _Headers in Body Pane"), "H", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "show-smilies-as-graphics", NULL, N_("Show _Smilies as Graphics"),      NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
     { "show-text-markup",         NULL, N_("Show *Bold*, __Underlined__, and /Italic/"), NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
     { "size-pictures-to-fit",     NULL, N_("Size Pictures to _Fit"),          NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
-    { "monospace-font-enabled",   NULL, N_("Use _Monospace Font"),             "C", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
+    { "monospace-font-enabled",   NULL, N_("Use _Monospace Font"),            "C", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "focus-on-image",           NULL, N_("Set Focus to Images"),            NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
     { "highlight-urls",           NULL, N_("Highlight _URLs"),                 NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
 
