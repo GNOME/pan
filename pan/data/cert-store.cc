@@ -184,8 +184,6 @@ namespace pan
       }
     }
 
-    std::cerr<<mydata->always_trust<<" "<<ret<<" "<<fail<<"\n";
-
     /* auto-add new cert if we always trust this server and the cert isn't already stored in the store */
     /* fail is only set if we don't always trust this server and a critical condition occurred, e.g. hostname mismatch */
     if (mydata->always_trust && ret < 0)
