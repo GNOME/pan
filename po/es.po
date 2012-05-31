@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: pan2.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-05-28 08:42+0000\n"
-"PO-Revision-Date: 2012-05-28 11:53+0200\n"
+"POT-Creation-Date: 2012-05-30 22:12+0000\n"
+"PO-Revision-Date: 2012-05-31 11:16+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -58,18 +58,18 @@ msgstr "Error al abrir el archivo «%s» %s"
 msgid "Error reading file \"%s\": %s"
 msgstr "Ocurrió un error al leer el archivo «%s»: %s"
 
-#: ../pan/data/cert-store.cc:274
+#: ../pan/data/cert-store.cc:272
 #, c-format
 msgid "Error opening SSL certificate directory: \"%s\": %s"
 msgstr "Error al abrir la carpeta de certificados SSL: «%s»: %s"
 
-#: ../pan/data/cert-store.cc:305
+#: ../pan/data/cert-store.cc:303
 #, c-format
 msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
 msgstr ""
 "%d certificado(s) SSL PEM añadido(s) con éxito al almacén de certificados."
 
-#: ../pan/data/cert-store.cc:330
+#: ../pan/data/cert-store.cc:328
 msgid ""
 "Error initializing Certstore. Check your permissions for the pan2 subfolder "
 "\"ssl-certs\" and the pan2 folder in your Home directory! Fatal, exiting."
@@ -613,192 +613,198 @@ msgid "_Thread Headers"
 msgstr "_Cabeceras por conversaciones"
 
 #: ../pan/gui/actions.cc:686
-msgid "_Wrap Article Body"
-msgstr "_Ajustar el cuerpo del artículo"
+#| msgid "_Wrap Article Body"
+msgid "Wrap Article Body"
+msgstr "Ajustar el cuerpo del artículo"
 
 #: ../pan/gui/actions.cc:687
+#| msgid "Show Article Information"
+msgid "Show Article Signature"
+msgstr "Mostrar la firma del artículo"
+
+#: ../pan/gui/actions.cc:688
 msgid "Mute _Quoted Text"
 msgstr "Ocultar el texto c_itado"
 
-#: ../pan/gui/actions.cc:688
+#: ../pan/gui/actions.cc:689
 msgid "Show All _Headers in Body Pane"
 msgstr "Mostrar todas las cab_eceras en el panel del cuerpo"
 
-#: ../pan/gui/actions.cc:689
+#: ../pan/gui/actions.cc:690
 msgid "Show _Smilies as Graphics"
 msgstr "Mostrar _emoticonos gráficos:"
 
-#: ../pan/gui/actions.cc:690
+#: ../pan/gui/actions.cc:691
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr "Mostrar *Negrita*, __Subrayado__, y "
 
-#: ../pan/gui/actions.cc:691
+#: ../pan/gui/actions.cc:692
 msgid "Size Pictures to _Fit"
 msgstr "Redimensionar imágenes para que _quepan"
 
-#: ../pan/gui/actions.cc:692
+#: ../pan/gui/actions.cc:693
 msgid "Use _Monospace Font"
 msgstr "Usar tipografía mono_espaciada"
 
-#: ../pan/gui/actions.cc:693
+#: ../pan/gui/actions.cc:694
 msgid "Set Focus to Images"
 msgstr "Establecer el foco en las imágenes"
 
-#: ../pan/gui/actions.cc:694
+#: ../pan/gui/actions.cc:695
 msgid "Highlight _URLs"
 msgstr "Resaltar _URL"
 
-#: ../pan/gui/actions.cc:697
+#: ../pan/gui/actions.cc:698
 msgid "_Work Online"
 msgstr "_Trabajar conectado"
 
-#: ../pan/gui/actions.cc:698
+#: ../pan/gui/actions.cc:699
 msgid "_Tabbed Layout"
 msgstr "D_isposición con pestañas"
 
-#: ../pan/gui/actions.cc:699
+#: ../pan/gui/actions.cc:700
 msgid "Show Group _Pane"
 msgstr "Mostrar el _panel del grupo"
 
-#: ../pan/gui/actions.cc:700
+#: ../pan/gui/actions.cc:701
 msgid "Show Hea_der Pane"
 msgstr "Mostrar el panel de la ca_becera"
 
-#: ../pan/gui/actions.cc:701
+#: ../pan/gui/actions.cc:702
 msgid "Show Bod_y Pane"
 msgstr "Mostrar el panel del c_uerpo"
 
-#: ../pan/gui/actions.cc:702
+#: ../pan/gui/actions.cc:703
 msgid "Show _Toolbar"
 msgstr "Mostrar barra de _herramientas"
 
-#: ../pan/gui/actions.cc:703
+#: ../pan/gui/actions.cc:704
 msgid "Abbreviate Group Names"
 msgstr "Abreviar nombres de grupos de noticias"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:706
 msgid "Match Only _Unread Articles"
 msgstr "Coincidir sólo con los artículos _no leídos"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:706
 msgid "Match Only Unread Articles"
 msgstr "Coincidir sólo con los artículos no leídos"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:707
 msgid "Match Only _Cached Articles"
 msgstr "Coincidir sólo con los artículos _almacenados"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:707
 msgid "Match Only Cached Articles"
 msgstr "Coincidir sólo con los artículos almacenados"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:708
 msgid "Match Only _Complete Articles"
 msgstr "Coincidir sólo con los adjuntos _completos"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:708
 msgid "Match Only Complete Articles"
 msgstr "Coincidir sólo con los adjuntos completos"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:709
 msgid "Match Only _My Articles"
 msgstr "Coincidir sólo con _mis artículos"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:709
 msgid "Match Only My Articles"
 msgstr "Coincidir sólo con mis artículos"
 
-#: ../pan/gui/actions.cc:709
+#: ../pan/gui/actions.cc:710
 msgid "Match Only _Watched Articles"
 msgstr "Coincidir sólo con los artículos _vigilados"
 
-#: ../pan/gui/actions.cc:709
+#: ../pan/gui/actions.cc:710
 msgid "Match Only Watched Articles"
 msgstr "Coincidir sólo con los artículos vigilados"
 
-#: ../pan/gui/actions.cc:711
+#: ../pan/gui/actions.cc:712
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "Coincidir puntuación de 9999 (_vigilados)"
 
-#: ../pan/gui/actions.cc:712
+#: ../pan/gui/actions.cc:713
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr "Coincidir con puntuación entre 5000…9998 (_alta)"
 
-#: ../pan/gui/actions.cc:713
+#: ../pan/gui/actions.cc:714
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "Coincidir con puntuación entre 1…4999 (me_dia)"
 
-#: ../pan/gui/actions.cc:714
+#: ../pan/gui/actions.cc:715
 msgid "Match Scores of 0 (_Normal)"
 msgstr "Coincidir con una puntuación de 0 (_normal)"
 
-#: ../pan/gui/actions.cc:715
+#: ../pan/gui/actions.cc:716
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "Coincidir con una puntuación entre -9998…-1 (_baja)"
 
-#: ../pan/gui/actions.cc:716
+#: ../pan/gui/actions.cc:717
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "Coincidir con una puntuación de -9999 (_ignorado)"
 
-#: ../pan/gui/actions.cc:718
+#: ../pan/gui/actions.cc:719
 msgid "Enable/Disable All _Rules"
 msgstr "Activar/Desactivar todas las _reglas"
 
-#: ../pan/gui/actions.cc:744
+#: ../pan/gui/actions.cc:745
 msgid "Show Matching _Articles"
 msgstr "Mostrar los _artículos que coinciden"
 
-#: ../pan/gui/actions.cc:745
+#: ../pan/gui/actions.cc:746
 msgid "Show Matching Articles' _Threads"
 msgstr "Mostrar las conversaciones de los artículos que coinciden"
 
-#: ../pan/gui/actions.cc:746
+#: ../pan/gui/actions.cc:747
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Mostrar _conversaciones de los artículos coincidentes"
 
-#: ../pan/gui/body-pane.cc:1013
+#: ../pan/gui/body-pane.cc:1032
 #, c-format
 msgid "Unnamed File"
 msgstr "Archivo sin nombre"
 
-#: ../pan/gui/body-pane.cc:1094 ../pan/gui/gui.cc:1884
+#: ../pan/gui/body-pane.cc:1113 ../pan/gui/gui.cc:1884
 #: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1617
 #: ../pan/gui/post-ui.cc:2502 ../pan/gui/prefs-ui.cc:833
 #: ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
 msgstr "Asunto"
 
-#: ../pan/gui/body-pane.cc:1096 ../pan/gui/gui.cc:1884
+#: ../pan/gui/body-pane.cc:1115 ../pan/gui/gui.cc:1884
 msgid "From"
 msgstr "De"
 
-#: ../pan/gui/body-pane.cc:1098 ../pan/gui/gui.cc:1885
+#: ../pan/gui/body-pane.cc:1117 ../pan/gui/gui.cc:1885
 #: ../pan/gui/header-pane.cc:1695 ../pan/gui/log-ui.cc:305
 #: ../pan/gui/prefs-ui.cc:829
 msgid "Date"
 msgstr "Fecha"
 
-#: ../pan/gui/body-pane.cc:1105
+#: ../pan/gui/body-pane.cc:1124
 msgid "Newsgroups"
 msgstr "Grupos de noticias"
 
-#: ../pan/gui/body-pane.cc:1110
+#: ../pan/gui/body-pane.cc:1129
 msgid "Followup-To"
 msgstr "Reenviar A"
 
-#: ../pan/gui/body-pane.cc:1120
+#: ../pan/gui/body-pane.cc:1139
 msgid "Reply-To"
 msgstr "Responder a"
 
-#: ../pan/gui/body-pane.cc:1163
+#: ../pan/gui/body-pane.cc:1182
 msgid " from "
 msgstr " de "
 
-#: ../pan/gui/body-pane.cc:1165
+#: ../pan/gui/body-pane.cc:1184
 msgid " at "
 msgstr " es "
 
-#: ../pan/gui/body-pane.cc:1246
+#: ../pan/gui/body-pane.cc:1265
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
@@ -813,24 +819,24 @@ msgstr ""
 "<b>Válido hasta:</b> %s\n"
 "<b>Creado en:</b> %s"
 
-#: ../pan/gui/body-pane.cc:1251
+#: ../pan/gui/body-pane.cc:1270
 msgid "always"
 msgstr "siempre"
 
-#: ../pan/gui/body-pane.cc:1467
+#: ../pan/gui/body-pane.cc:1486
 msgid "Copy _URL"
 msgstr "Copiar _URL"
 
-#: ../pan/gui/body-pane.cc:1662
+#: ../pan/gui/body-pane.cc:1681
 msgid "Save Attachment As..."
 msgstr "Guardar adjunto como…"
 
-#: ../pan/gui/body-pane.cc:1665
+#: ../pan/gui/body-pane.cc:1684
 msgid "Save All Attachments"
 msgstr "Guardar todos los adjuntos"
 
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1735
+#: ../pan/gui/body-pane.cc:1754
 msgid "Attachments"
 msgstr "Adjuntos"
 
@@ -2883,6 +2889,15 @@ msgstr ""
 
 #: ../pan/gui/task-pane.cc:155
 #, c-format
+#| msgid ""
+#| "\n"
+#| "<u>Download</u>\n"
+#| "\n"
+#| "<i>Subject:</i> <b>\"%s\"</b>\n"
+#| "<i>From:</i> <b>%s</b>\n"
+#| "<i>Date:</i> <b>%s</b>\n"
+#| "<i>Groups:</i> <b>%s</b>\n"
+#| "<i>Save Path:</i> <b>%s</b>\n"
 msgid ""
 "\n"
 "<u>Download</u>\n"
@@ -2892,15 +2907,17 @@ msgid ""
 "<i>Date:</i> <b>%s</b>\n"
 "<i>Groups:</i> <b>%s</b>\n"
 "<i>Save Path:</i> <b>%s</b>\n"
+"Paused: %d"
 msgstr ""
 "\n"
 "<u>Descargar</u>\n"
 "\n"
-"<i>Asunto:</i> <b>\"%s\"</b>\n"
+"<i>Asunto:</i> <b>«%s»</b>\n"
 "<i>De:</i> <b>%s</b>\n"
 "<i>Fecha:</i> <b>%s</b>\n"
 "<i>Grupos:</i> <b>%s</b>\n"
 "<i>Guardar ruta:</i> <b>%s</b>\n"
+"Pausado: %d"
 
 #: ../pan/gui/task-pane.cc:157
 msgid "unknown"
@@ -3087,8 +3104,8 @@ msgstr "El envío «%s» a %s devolvió una respuesta no reconocida: «%s»"
 msgid "Unable to connect to \"%s\""
 msgstr "Imposible conectar con «%s»"
 
-#: ../pan/tasks/queue.cc:773 ../pan/tasks/queue.cc:801
-#: ../pan/tasks/queue.cc:828
+#: ../pan/tasks/queue.cc:771 ../pan/tasks/queue.cc:799
+#: ../pan/tasks/queue.cc:826
 msgid "No space left on device."
 msgstr "No queda espacio en el dispositivo."
 
