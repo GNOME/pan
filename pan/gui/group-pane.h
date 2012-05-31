@@ -73,6 +73,9 @@ namespace pan
       void read_group (GtkTreePath*);
       void read_next_group_impl (bool unread_only);
 
+    public:
+      void read_group (const StringView&);
+
     private:
       static void do_popup_menu (GtkWidget*, GdkEventButton*, gpointer);
       static gboolean on_button_pressed (GtkWidget*, GdkEventButton*, gpointer);

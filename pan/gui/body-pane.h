@@ -97,13 +97,15 @@ namespace pan
     public:
       void set_character_encoding (const char * character_encoding);
 
+    public:
+      void set_text_from_message (GMimeMessage*);
+
     private:
       void refresh ();
       void refresh_fonts ();
       void refresh_colors ();
       bool read_more_or_less (bool more);
       char* body_to_utf8 (GMimePart*);
-      void set_text_from_message (GMimeMessage*);
       void append_part (GMimeObject*, GMimeObject*, GtkAllocation*);
       static gboolean expander_activated_idle (gpointer self);
       static void expander_activated_cb (GtkExpander*, gpointer self);

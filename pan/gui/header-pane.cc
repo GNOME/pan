@@ -1742,11 +1742,11 @@ HeaderPane :: ~HeaderPane ()
   }
   g_list_free (columns);
 
+  _prefs.set_string("last-visited-group", _group.to_view());
   set_group (Quark());
 
   for (guint i=0; i<ICON_QTY; ++i)
     g_object_unref (G_OBJECT(_icons[i].pixbuf));
-
 }
 
 GtkWidget*
@@ -1882,7 +1882,6 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   gtk_tree_selection_set_mode (sel, GTK_SELECTION_MULTIPLE);
   g_signal_connect (sel, "changed", G_CALLBACK(on_selection_changed), this);
   on_selection_changed (sel, this);
-
 
   g_signal_connect (w, "button-release-event", G_CALLBACK(on_button_pressed), this);
   g_signal_connect (w, "button-press-event", G_CALLBACK(on_button_pressed), this);

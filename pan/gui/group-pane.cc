@@ -708,10 +708,6 @@ namespace
       g_snprintf (buf, sizeof(buf), " (%lu)", unread);
       group_name += buf;
     }
-    //if (unread || total)
-      //if (unread)
-      //  g_snprintf (buf, sizeof(buf), _(" (%lu of %lu)"), unread, total);
-      //else
     g_object_set (renderer, "text", group_name.c_str(),
                             "weight", (!is_g || unread ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
                             "foreground", pane->get_group_prefs().get_group_color_str(name).c_str(),
@@ -783,6 +779,18 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
     if (!unread_only || row->unread)
       return gtk_tree_model_get_path (model, &group_iter);
   }
+}
+
+void
+GroupPane :: read_group (const StringView& groupname)
+{
+    GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
+    PanTreeStore * tree (PAN_TREE_STORE(gtk_tree_view_get_model(view)));
+    GtkTreeIter iter;
+//    gtk_tree_model_iter_nth_child (model, &iter, 0, 0);
+    const MyRow* row = find_row (groupname);
+    iter = tree->get_iter (row);
+    read_group(gtk_tree_model_get_path(gtk_tree_view_get_model(view), &iter));
 }
 
 void

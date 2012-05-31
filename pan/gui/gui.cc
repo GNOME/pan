@@ -177,6 +177,38 @@ void GUI :: show_task_window_cb (GtkWidget *, gpointer gui_gpointer)
   static_cast<GUI*>(gui_gpointer)->activate_action ("show-task-window");
 }
 
+void
+GUI :: root_realized_cb (GtkWidget*, gpointer self_gpointer)
+{
+  GUI* gui (static_cast<GUI*>(self_gpointer));
+
+  StringView last_group = gui->_prefs.get_string("last-visited-group", "");
+  if (!last_group.empty())
+  {
+    gui->_group_pane->read_group(last_group.str);
+  }
+
+  // TODO if article is not cached, load with a taskarticle action!
+  StringView last_msg = gui->_prefs.get_string("last-opened-msg", "");
+  if (!last_msg.empty() && !last_group.empty())
+  {
+    GPGDecErr err;
+    mid_sequence_t files;
+    files.push_back(last_msg);
+    GMimeMessage* msg = gui->_cache.get_message(files,err);
+    gui->_body_pane->set_text_from_message(msg);
+
+//    Article article;
+//    PartBatch part_batch;
+//    last_msg = last_msg.substr(last_msg.strchr('<')+1, last_msg.strchr('>'));
+//    std::cerr<<"msg "<<last_msg<<"\n";
+//    part_batch.init (last_msg, 1, 0);
+//    part_batch.add_part (0, last_msg, 0);
+//    article.set_parts(part_batch);
+//    Task * t = new TaskArticle (_data, _data, article, _cache, _data, this);
+//    _queue.add_task (t, Queue::TOP);
+  }
+}
 
 GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),
@@ -352,6 +384,10 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
 #ifdef HAVE_GMIME_CRYPTO
   init_gpg();
 #endif
+
+  g_signal_connect (_root, "realize", G_CALLBACK(root_realized_cb), this);
+
+
 }
 
 namespace

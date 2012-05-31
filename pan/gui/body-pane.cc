@@ -1792,6 +1792,9 @@ BodyPane :: ~BodyPane ()
 
   foreach (std::set<char*>, _attach_names, it)
     g_free(*it);
+
+  // store last opened message in prefs
+  _prefs.set_string("last-opened-msg", get_message_id ().to_view());
 }
 
 

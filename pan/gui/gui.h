@@ -60,6 +60,9 @@ namespace pan
   {
 
     public:
+
+      typedef std::vector<Quark> mid_sequence_t;
+
       GUI (Data& data, Queue&, Prefs&, GroupPrefs&);
       virtual ~GUI ();
       GtkWidget* root () { return _root; }
@@ -270,6 +273,8 @@ namespace pan
       void score_add (int);
 
       static void notebook_page_switched_cb (GtkNotebook*, GtkNotebookPage*, gint, gpointer);
+
+      static void root_realized_cb (GtkWidget*, gpointer self_gpointer);
 
     private:
       static void add_widget (GtkUIManager*, GtkWidget*, gpointer);
