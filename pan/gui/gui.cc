@@ -190,7 +190,7 @@ GUI :: root_realized_cb (GtkWidget*, gpointer self_gpointer)
 
   // TODO if article is not cached, load with a taskarticle action!
   StringView last_msg = gui->_prefs.get_string("last-opened-msg", "");
-  if (!last_msg.empty() && !last_group.empty())
+  if (!last_msg.empty())
   {
     GPGDecErr err;
     mid_sequence_t files;
