@@ -192,10 +192,15 @@ GUI :: root_realized_cb (GtkWidget*, gpointer self_gpointer)
   StringView last_msg = gui->_prefs.get_string("last-opened-msg", "");
   if (!last_msg.empty())
   {
-    GPGDecErr err;
     mid_sequence_t files;
     files.push_back(last_msg);
-    GMimeMessage* msg = gui->_cache.get_message(files,err);
+    GMimeMessage* msg;
+#ifdef HAVE_GMIME_CRYPTO
+    GPGDecErr err;
+    msg = gui->_cache.get_message(files,err);
+#else
+    msg = gui->_cache.get_message(files);
+#endif
     gui->_body_pane->set_text_from_message(msg);
 
 //    Article article;
