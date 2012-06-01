@@ -231,11 +231,11 @@ DataImpl :: get_server_auth (const Quark   & server,
   if (found) {
     setme_username = s->username;
 #ifndef HAVE_GKR
-    setme_password = (gchar*)s->password.c_str();
+    setme_password = g_strdup(s->password.c_str());
 #else
     if (!use_gkr)
     {
-      setme_password = (gchar*)s->password.c_str();
+      setme_password = g_strdup(s->password.c_str());
     }
     else if (s->gkr_pw)
     {

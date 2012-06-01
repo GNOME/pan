@@ -186,7 +186,17 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
   {
     // okay, we at least we established a connection.
     // now try to handshake and pass the buck to on_nntp_done().
-    NNTP * nntp = new NNTP (_server, user, pass, socket);
+    NNTP * nntp;
+    if (!_prefs.get_flag("use-gnome-keyring", false))
+    {
+      std::string pw (pass ? pass : "");
+      if (pass) g_free(pass);
+      nntp = new NNTP (_server, user, pw, socket);
+    }
+    else
+    {
+      nntp = new NNTP (_server, user, pass, socket);
+    }
     nntp->handshake (this);
   }
 }
