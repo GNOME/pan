@@ -325,8 +325,8 @@ namespace pan
     _path = buf;
     if (!file::ensure_dir_exists (buf))
     {
-      std::cerr<<_("Error initializing Certstore. Check your permissions for the pan2 subfolder \"ssl-certs\" and "
-                 "the pan2 folder in your Home directory! Fatal, exiting.");
+      std::cerr<<_("Error initializing Certificate Store. Check that the permissions for the folders "
+                   "~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting.");
       file::print_file_info(std::cerr, buf);
       exit(EXIT_FAILURE);
     }

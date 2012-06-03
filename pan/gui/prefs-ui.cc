@@ -1024,8 +1024,8 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
     // Gnome Keyring Option
     HIG :: workarea_add_section_spacer (t, row, 2);
-    HIG :: workarea_add_section_title (t, &row, _("Gnome Keyring Options"));
-    w = new_check_button (_("Store Passwords in Gnome Keyring"), "use-gnome-keyring", false, prefs);
+    HIG :: workarea_add_section_title (t, &row, _("GNOME Keyring"));
+    w = new_check_button (_("Store passwords in GNOME Keyring"), "use-gnome-keyring", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
 
   HIG :: workarea_finish (t, &row);
@@ -1173,7 +1173,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-fg", TANGO_ORANGE, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-bg", def_color_bg_str.c_str(), prefs));
-    HIG :: workarea_add_row (t, &row, _("Collapsed thread with unread messages:"), h);
+    HIG :: workarea_add_row (t, &row, _("Collapsed thread with unread articles:"), h);
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Body Pane"));
     HIG :: workarea_add_section_spacer (t, row, 3);
