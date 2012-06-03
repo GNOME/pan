@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-03 15:55+0200\n"
-"PO-Revision-Date: 2012-06-03 16:40+0200\n"
+"POT-Creation-Date: 2012-06-03 16:51+0200\n"
+"PO-Revision-Date: 2012-06-03 16:51+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -65,9 +65,12 @@ msgstr "Úspěšně přidaných certifikátů SSL PEM do Úložiště certifiká
 
 #: ../pan/data/cert-store.cc:328
 msgid ""
-"Error initializing Certstore. Check your permissions for the pan2 subfolder "
-"\"ssl-certs\" and the pan2 folder in your Home directory! Fatal, exiting."
+"Error initializing Certificate Store. Check that the permissions for the "
+"folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
 msgstr ""
+"Chyba při spouštění Úložiště certifikátů. Zkontrolujte, že jsou práva ke "
+"složkám ~/.pan2 a ~/.pan2/ssl_certs nastavena správně. Kritická chyba, "
+"ukončuje se."
 
 #. load_group_descriptions (*_data_io);
 #: ../pan/data-impl/data-impl.cc:110
@@ -2006,12 +2009,12 @@ msgid "Minutes to autosave newsrc files: "
 msgstr "Minut do automatického uložení souborů newsrc:"
 
 #: ../pan/gui/prefs-ui.cc:1027
-msgid "Gnome Keyring Options"
-msgstr ""
+msgid "GNOME Keyring"
+msgstr "GNOME Keyring"
 
 #: ../pan/gui/prefs-ui.cc:1028
-msgid "Store Passwords in Gnome Keyring"
-msgstr ""
+msgid "Store passwords in GNOME Keyring"
+msgstr "Ukládat hesla v aplikaci GNOME Keyring"
 
 #: ../pan/gui/prefs-ui.cc:1032
 msgid "_Miscellaneous"
@@ -2154,7 +2157,7 @@ msgid "Scores of -9999 or less:"
 msgstr "Hodnocení -9999 či méně:"
 
 #: ../pan/gui/prefs-ui.cc:1176
-msgid "Collapsed thread with unread messages:"
+msgid "Collapsed thread with unread articles:"
 msgstr "Sbalené vlákno s nepřečtenými příspěvky:"
 
 #: ../pan/gui/prefs-ui.cc:1178
@@ -2456,7 +2459,7 @@ msgid "_Priority:"
 msgstr "_Priorita:"
 
 #: ../pan/gui/save-ui.cc:45
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
