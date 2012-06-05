@@ -77,7 +77,9 @@ namespace pan
         std::string cert_name;
         int nr;
         GUI* gui;
+#ifdef HAVE_GNUTLS
         void deinit_cert() { gnutls_x509_crt_deinit(cert); }
+#endif
       };
 
     public: // ActionManager
