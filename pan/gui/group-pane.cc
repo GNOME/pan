@@ -43,6 +43,7 @@ namespace
   enum ModelColumns
   {
     COL_UNREAD,
+    COL_TOTAL,
     COL_QTY
   };
 
@@ -51,13 +52,18 @@ namespace
     public:
       Quark groupname;
       unsigned long unread;
+      unsigned long total;
 
     public:
       virtual void get_value (int column, GValue* setme) {
         switch (column) {
           case COL_UNREAD: set_value_ulong (setme, unread); break;
         }
+        switch (column) {
+          case COL_TOTAL: set_value_ulong (setme, total); break;
+        }
       }
+      MyRow() : unread(0), total(0) {}
   };
 
   Quark * sub_title_quark (0);
@@ -449,8 +455,7 @@ GroupPane :: refresh_dirty_groups ()
     MyRow * row (find_row (*it));
     if (row)
     {
-      unsigned long unused;
-      _data.get_group_counts (row->groupname, row->unread, unused);
+      _data.get_group_counts (row->groupname, row->unread, row->total);
       _tree_store->row_changed (row);
     }
   }
@@ -693,11 +698,14 @@ namespace
                      GtkTreeIter       * iter,
                      gpointer          gp)
   {
-	GroupPane* pane (static_cast<GroupPane*>(gp));
+
+    GroupPane* pane (static_cast<GroupPane*>(gp));
     PanTreeStore * tree (PAN_TREE_STORE(model));
     MyRow * row (dynamic_cast<MyRow*>(tree->get_row (iter)));
+
     const unsigned long& unread (row->unread);
-    //const unsigned long& total (row->total);
+    const unsigned long& total (row->total);
+
     const Quark& name (row->groupname);
 
     const bool is_g (is_group(name));
@@ -705,7 +713,7 @@ namespace
     std::string group_name (do_shorten ? get_short_name(StringView(name)) : name.to_string());
     if (is_g && unread) {
       char buf[64];
-      g_snprintf (buf, sizeof(buf), " (%lu)", unread);
+      g_snprintf (buf, sizeof(buf), " (%lu) (%lu)", unread, total);
       group_name += buf;
     }
     g_object_set (renderer, "text", group_name.c_str(),

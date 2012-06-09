@@ -105,6 +105,7 @@ namespace pan
     virtual void do_clear_selected_groups () = 0;
     virtual void do_xover_selected_groups () = 0;
     virtual void do_xover_subscribed_groups () = 0;
+    virtual void do_xover_count_subscribed_groups () = 0;
     virtual void do_download_headers () = 0;
     virtual void do_refresh_groups () = 0;
     virtual void do_subscribe_selected_groups () = 0;

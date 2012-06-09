@@ -74,7 +74,8 @@ namespace pan
     { icon_score, "ICON_SCORE" },
     { icon_search_pulldown, "ICON_SEARCH_PULLDOWN" },
     { icon_red_flag, "ICON_FLAGGED"},
-    { icon_get_flagged, "ICON_GET_FLAGGED" }
+    { icon_get_flagged, "ICON_GET_FLAGGED" },
+    { icon_refresh, "ICON_REFRESH" }
   };
 
   void
@@ -107,6 +108,7 @@ namespace pan
   void do_clear_selected_groups        (GtkAction*) { pan_ui->do_clear_selected_groups(); }
   void do_xover_selected_groups        (GtkAction*) { pan_ui->do_xover_selected_groups(); }
   void do_xover_subscribed_groups      (GtkAction*) { pan_ui->do_xover_subscribed_groups(); }
+  void do_xover_count_subscribed_groups(GtkAction*) { pan_ui->do_xover_count_subscribed_groups(); }
   void do_download_headers             (GtkAction*) { pan_ui->do_download_headers(); }
   void do_refresh_groups               (GtkAction*) { pan_ui->do_refresh_groups(); }
   void do_subscribe_selected_groups    (GtkAction*) { pan_ui->do_subscribe_selected_groups(); }
@@ -301,6 +303,11 @@ namespace pan
         N_("_Delete Selected Groups' Articles"), "<control><shift>Delete",
         N_("Delete Selected Groups' Articles"),
         G_CALLBACK(do_clear_selected_groups) },
+
+      { "refresh-xovers-in-subscribed-groups", "ICON_REFRESH",
+        N_("Refresh group counts for all subscribed groups"), "Y",
+        N_("Refresh group counts for all subscribed groups"),
+        G_CALLBACK(do_xover_count_subscribed_groups) },
 
       { "get-new-headers-in-selected-groups", "ICON_GET_SELECTED",
         N_("Get New _Headers in Selected Groups"), "A",

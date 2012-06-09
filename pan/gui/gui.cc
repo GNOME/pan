@@ -38,6 +38,7 @@ extern "C" {
 #include <pan/tasks/task-article.h>
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>
+#include <pan/tasks/task-xoverinfo.h>
 #include <pan/tasks/nzb.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "actions.h"
@@ -2077,6 +2078,14 @@ void GUI :: do_xover_subscribed_groups ()
       _data.mark_group_read (*it);
     _queue.add_task (new TaskXOver (_data, *it, TaskXOver::NEW), Queue::TOP);
   }
+}
+void GUI :: do_xover_count_subscribed_groups ()
+{
+  typedef std::vector<Quark> quarks_v;
+  quarks_v groups;
+  _data.get_subscribed_groups (groups);
+  foreach_const_r (quarks_v, groups, it)
+    _queue.add_task (new TaskXOverInfo (_data, *it), Queue::TOP);
 }
 
 void GUI :: do_download_headers ()

@@ -178,7 +178,6 @@ namespace pan
       {
         Quark server;
         StringView user;
-//        StringView pw;
         gchar* pw;
       };
 
@@ -315,6 +314,8 @@ namespace pan
       void fire_grouplist_rebuilt ();
 
       void fire_group_read (const Quark&);
+
+    public:
 
       void fire_group_counts (const Quark&,
                               unsigned long unread,

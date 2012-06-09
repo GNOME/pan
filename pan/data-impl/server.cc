@@ -257,7 +257,6 @@ DataImpl :: get_server_auth (const Quark   & server,
           break;
 
         case GNOME_KEYRING_RESULT_OK:
-//          setme_password.assign(pw.pw.str, pw.pw.len);
           setme_password = pw.pw;
           s->gkr_pw = pw.pw;
           break;

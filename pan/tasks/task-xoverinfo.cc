@@ -81,13 +81,11 @@ namespace
 }
 
 TaskXOverInfo :: TaskXOverInfo (Data         & data,
-                                const Quark  & group,
-                                std::map<Quark,xover_t>& xovers) :
+                                const Quark  & group) :
   Task("XOVER", get_description(group)),
   _data (data),
   _group (group),
-  _short_group_name (get_short_name (StringView (group.c_str()))),
-  _xovers(xovers)
+  _short_group_name (get_short_name (StringView (group.c_str())))
 {
 
   debug ("ctor for " << group);
@@ -99,21 +97,22 @@ TaskXOverInfo :: TaskXOverInfo (Data         & data,
   _data.group_get_servers (group, servers);
 
   foreach_const (quarks_t, servers, it)
-  {
     if (_data.get_server_limits(*it))
-    {
       _server_to_minitasks[*it].push_front (group_minitask);
-      std::pair<uint64_t,uint64_t>& p (xovers[*it]);
-      p.first = data.get_xover_high (group, *it);
-    }
-  }
+
   init_steps (0);
 
   update_work ();
 }
 
 TaskXOverInfo :: ~TaskXOverInfo ()
-{}
+{
+    foreach (server_to_high_t, _high, it)
+    {
+      std::cerr<<_data.get_xover_high(_group, it->first)-it->second<<"\n";
+//      _data.set_xover_high (_group, it->first, it->second);
+    }
+}
 
 void
 TaskXOverInfo :: use_nntp (NNTP* nntp)
@@ -121,7 +120,20 @@ TaskXOverInfo :: use_nntp (NNTP* nntp)
   const Quark& server (nntp->_server);
   debug ("got an nntp from " << nntp->_server);
 
-  nntp->xover_count_only (_group, this);
+  MiniTasks_t& minitasks (_server_to_minitasks[server]);
+  if (minitasks.empty())
+  {
+    debug ("That's interesting, I got a socket for " << server << " but have no use for it!");
+    _state._servers.erase (server);
+    check_in (nntp, OK);
+  }
+  else
+  {
+    const MiniTask mt (minitasks.front());
+    minitasks.pop_front ();
+    nntp->xover_count_only (_group, this);
+    update_work ();
+  }
 }
 
 /***
@@ -169,9 +181,35 @@ void
 TaskXOverInfo :: on_nntp_line         (NNTP               * nntp,
                                        const StringView   & line)
 {
-  uint64_t new_high(atoi(line.str));
-//  nntp
+
 }
+
+void
+TaskXOverInfo :: on_nntp_group (NNTP          * nntp,
+                                const Quark   & group,
+                                unsigned long   qty,
+                                uint64_t        low,
+                                uint64_t        high)
+{
+  const Quark& servername (nntp->_server);
+
+  std::cerr<< "got GROUP result from " << nntp->_server << " (" << nntp << "): "
+         << " qty " << qty
+         << " low " << low
+         << " high " << high;
+
+  uint64_t l(low);
+  _data.set_xover_low (group, nntp->_server, low);
+
+  uint64_t xh (_data.get_xover_high (group, nntp->_server));
+  l = std::max (xh+1, low);
+
+  if (l > high)
+  {
+    _high[nntp->_server] = high;
+  }
+}
+
 
 void
 TaskXOverInfo :: on_nntp_done (NNTP              * nntp,

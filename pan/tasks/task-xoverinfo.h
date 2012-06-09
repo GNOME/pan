@@ -42,7 +42,7 @@ namespace pan
 
       typedef std::pair<uint64_t,uint64_t> xover_t;
 
-      TaskXOverInfo (Data& data, const Quark& group, std::map<Quark,xover_t>& xovers);
+      TaskXOverInfo (Data& data, const Quark& group);
       virtual ~TaskXOverInfo ();
 
     public: // task subclass
@@ -74,14 +74,13 @@ namespace pan
       std::string _short_group_name;
       typedef std::map<Quark,uint64_t> server_to_high_t;
       server_to_high_t _high;
+      bool _group_xover_is_reffed;
       void update_work (bool subtract_one_from_nntp_count=false);
       std::set<Quark> _servers_that_got_xover_minitasks;
       std::map<NNTP*,uint64_t> _last_xover_number;
       unsigned long _bytes_so_far;
       unsigned long _parts_so_far;
       unsigned long _articles_so_far;
-      unsigned long _total_minitasks;
-      std::map<Quark,xover_t>& _xovers;
 
 
   };

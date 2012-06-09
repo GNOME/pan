@@ -48,24 +48,25 @@ stock_images = \
 	icon_plain.png \
 	icon_cert.png \
 	icon_status_online.png \
-  icon_status_offline.png \
-  icon_status_active.png \
-  icon_status_queue_empty.png \
-  icon_status_error.png \
-  icon_status_idle.png \
-  icon_status_new_articles.png \
-  icon_sig_ok.png \
-  icon_sig_fail.png \
-  icon_prefs_applications.png \
-  icon_prefs_extras.png \
-  icon_prefs_hotkeys.png \
-  icon_prefs_behavior.png \
-  icon_prefs_fonts.png \
-  icon_prefs_upload.png \
-  icon_prefs_colors.png \
-  icon_prefs_headers.png \
-  icon_prefs_layout.png \
-  icon_prefs_actions.png
+	icon_status_offline.png \
+	icon_status_active.png \
+	icon_status_queue_empty.png \
+	icon_status_error.png \
+	icon_status_idle.png \
+	icon_status_new_articles.png \
+	icon_sig_ok.png \
+	icon_sig_fail.png \
+	icon_prefs_applications.png \
+	icon_prefs_extras.png \
+	icon_prefs_hotkeys.png \
+	icon_prefs_behavior.png \
+	icon_prefs_fonts.png \
+	icon_prefs_upload.png \
+	icon_prefs_colors.png \
+	icon_prefs_headers.png \
+	icon_prefs_layout.png \
+	icon_prefs_actions.png \
+	icon_refresh.png
 
 EXTRA_DIST = \
 	pan-template.xcf \

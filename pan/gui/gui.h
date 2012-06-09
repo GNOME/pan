@@ -185,6 +185,7 @@ namespace pan
       virtual void do_clear_selected_groups ();
       virtual void do_xover_selected_groups ();
       virtual void do_xover_subscribed_groups ();
+      virtual void do_xover_count_subscribed_groups ();
       virtual void do_download_headers ();
       virtual void do_refresh_groups ();
       virtual void do_subscribe_selected_groups ();
