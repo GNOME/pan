@@ -167,6 +167,10 @@ DataImpl :: password_decrypt (PasswordData& pw) const
     pw.pw = gnome_keyring_memory_strdup(pwd);
     gnome_keyring_free_password(pwd);
   }
+  else
+  {
+    pw.pw = "";
+  }
 
   return (pw.pw ? GNOME_KEYRING_RESULT_OK : GNOME_KEYRING_RESULT_DENIED) ;
 }
