@@ -366,6 +366,8 @@ namespace pan
     private:
       static void on_selection_changed (GtkTreeSelection*, gpointer);
       static gboolean on_selection_changed_idle (gpointer);
+      static void sort_column_changed_cb (GtkTreeSortable *sortable,
+                                           gpointer         user_data);
 
     private:
       void find_next_iterator_from (GtkTreeModel            * model,

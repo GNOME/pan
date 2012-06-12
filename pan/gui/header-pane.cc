@@ -483,6 +483,20 @@ HeaderPane :: column_compare_func (GtkTreeModel  * model,
   return ret;
 }
 
+void
+HeaderPane :: sort_column_changed_cb (GtkTreeSortable *sortable,
+                                      gpointer         user_data)
+{
+
+  HeaderPane * self(static_cast<HeaderPane*>(user_data));
+
+  const articles_set old_selection (self->get_full_selection ());
+
+  if (!old_selection.empty())
+    self->select_message_id ((*(old_selection.begin()))->message_id);
+
+}
+
 PanTreeStore*
 HeaderPane :: build_model (const Quark               & group,
                            Data::ArticleTree         * atree,
@@ -531,6 +545,7 @@ namespace
 void
 HeaderPane :: rebuild ()
 {
+
   quarks_t selectme;
   if (1) {
     const articles_set old_selection (get_full_selection ());
@@ -553,6 +568,9 @@ HeaderPane :: rebuild ()
   GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
   gtk_tree_view_set_model (view, model);
   g_object_unref (G_OBJECT(_tree_store)); // store is deleted w/view
+
+  // add signal here to avoid loop
+  g_signal_connect (GTK_TREE_SORTABLE(_tree_store), "sort-column-changed", G_CALLBACK(sort_column_changed_cb), this);
 
   if (_prefs.get_flag ("expand-threads-when-entering-group", false))
     gtk_tree_view_expand_all (view);
@@ -671,6 +689,7 @@ namespace
 void
 HeaderPane :: select_message_id (const Quark& mid, bool do_scroll)
 {
+
   HeaderPane::Row * row = get_row (mid);
   GtkTreePath * path (_tree_store->get_path(row));
   GtkTreeView * view (GTK_TREE_VIEW(_tree_view));
@@ -1793,7 +1812,7 @@ HeaderPane :: create_filter_entry ()
 }
 
 void
-HeaderPane :: on_selection_changed (GtkTreeSelection*, gpointer self_gpointer)
+HeaderPane :: on_selection_changed (GtkTreeSelection* sel, gpointer self_gpointer)
 {
   HeaderPane * self (static_cast<HeaderPane*>(self_gpointer));
 
