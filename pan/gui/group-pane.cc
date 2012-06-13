@@ -1019,5 +1019,6 @@ void
 GroupPane :: on_prefs_color_changed (const StringView& key, const GdkColor&)
 {
   if (key == "group-color")
+    refresh_font ();
     refresh_dirty_groups ();
 }

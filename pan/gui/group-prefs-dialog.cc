@@ -131,13 +131,6 @@ GroupPrefsDialog :: save_from_gui ()
   }
 #endif
 
-  GdkColor col;
-  gtk_color_button_get_color (GTK_COLOR_BUTTON(_group_color), &col);
-  foreach_const (quarks_v, _groups, it)
-  {
-    _group_prefs.set_group_color(*it, col);
-  }
-
   _group_prefs.save () ;
 
 }
@@ -238,6 +231,18 @@ namespace
 //	  dialog->_color = col;
 //  }
 
+  void color_set_cb (GtkColorButton* b, gpointer p)
+  {
+    GroupPrefsDialog* dialog = static_cast<GroupPrefsDialog*>(p);
+    GdkColor val;
+    gtk_color_button_get_color (b, &val);
+    {
+      foreach_const (quarks_v, dialog->get_groups(), it)
+        dialog->get_prefs().set_group_color(*it, val);
+    }
+  }
+
+
   GtkWidget* new_color_button (const Quark& group, GroupPrefs& prefs, GroupPrefsDialog* dialog, GtkWidget* w)
   {
     GdkColor color;
@@ -247,7 +252,7 @@ namespace
 
     const GdkColor& val (prefs.get_group_color (group, GroupPrefs::color_to_string(color)));
     GtkWidget * b = gtk_color_button_new_with_color (&val);
-//    g_signal_connect (b, "color-set", G_CALLBACK(color_set_cb), dialog);
+    g_signal_connect (b, "color-set", G_CALLBACK(color_set_cb), dialog);
     return b;
   }
 
