@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: pan2.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-06-03 14:42+0000\n"
-"PO-Revision-Date: 2012-06-03 18:03+0200\n"
+"POT-Creation-Date: 2012-06-15 04:55+0000\n"
+"PO-Revision-Date: 2012-06-15 12:06+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -70,10 +70,6 @@ msgstr ""
 "%d certificado(s) SSL PEM añadido(s) con éxito al almacén de certificados."
 
 #: ../pan/data/cert-store.cc:328
-#| msgid ""
-#| "Error initializing Certstore. Check your permissions for the pan2 "
-#| "subfolder \"ssl-certs\" and the pan2 folder in your Home directory! "
-#| "Fatal, exiting."
 msgid ""
 "Error initializing Certificate Store. Check that the permissions for the "
 "folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
@@ -770,7 +766,7 @@ msgid "Unnamed File"
 msgstr "Archivo sin nombre"
 
 #: ../pan/gui/body-pane.cc:1113 ../pan/gui/gui.cc:1925
-#: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1617
+#: ../pan/gui/header-pane.cc:1207 ../pan/gui/header-pane.cc:1636
 #: ../pan/gui/post-ui.cc:2502 ../pan/gui/prefs-ui.cc:833
 #: ../pan/gui/score-add-ui.cc:139
 msgid "Subject"
@@ -781,7 +777,7 @@ msgid "From"
 msgstr "De"
 
 #: ../pan/gui/body-pane.cc:1117 ../pan/gui/gui.cc:1926
-#: ../pan/gui/header-pane.cc:1695 ../pan/gui/log-ui.cc:305
+#: ../pan/gui/header-pane.cc:1714 ../pan/gui/log-ui.cc:305
 #: ../pan/gui/prefs-ui.cc:829
 msgid "Date"
 msgstr "Fecha"
@@ -999,57 +995,57 @@ msgstr "Grupo"
 msgid "Group (regex)"
 msgstr "Grupo (exp-reg)"
 
-#: ../pan/gui/group-pane.cc:924
+#: ../pan/gui/group-pane.cc:941
 msgid "Subscribed Groups"
 msgstr "Grupos suscritos"
 
-#: ../pan/gui/group-pane.cc:925
+#: ../pan/gui/group-pane.cc:942
 msgid "Other Groups"
 msgstr "Otros grupos"
 
-#: ../pan/gui/group-pane.cc:965 ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/group-pane.cc:982 ../pan/gui/score-view-ui.cc:157
 msgid "Name"
 msgstr "Nombre"
 
-#: ../pan/gui/group-prefs-dialog.cc:169
+#: ../pan/gui/group-prefs-dialog.cc:162
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "No hay ningún perfil definido en los Perfiles de publicación|edición."
 
-#: ../pan/gui/group-prefs-dialog.cc:267
+#: ../pan/gui/group-prefs-dialog.cc:272
 msgid "Pan: Group Preferences"
 msgstr "Pan: preferencias de grupo"
 
-#: ../pan/gui/group-prefs-dialog.cc:282
+#: ../pan/gui/group-prefs-dialog.cc:287
 #, c-format
 msgid "Properties for Groups"
 msgstr "Propiedades de los grupos"
 
-#: ../pan/gui/group-prefs-dialog.cc:284
+#: ../pan/gui/group-prefs-dialog.cc:289
 #, c-format
 msgid "Properties for %s"
 msgstr "Propiedades de %s"
 
-#: ../pan/gui/group-prefs-dialog.cc:292
+#: ../pan/gui/group-prefs-dialog.cc:297
 msgid "Character _encoding:"
 msgstr "_Codificación de caracteres:"
 
-#: ../pan/gui/group-prefs-dialog.cc:294
+#: ../pan/gui/group-prefs-dialog.cc:299
 msgid "Directory for Saving Attachments"
 msgstr "Carpeta para guardar adjuntos"
 
-#: ../pan/gui/group-prefs-dialog.cc:302
+#: ../pan/gui/group-prefs-dialog.cc:307
 msgid "Directory for _saving attachments:"
 msgstr "Carpeta para _guardar adjuntos:"
 
-#: ../pan/gui/group-prefs-dialog.cc:304
+#: ../pan/gui/group-prefs-dialog.cc:309
 msgid "Posting _profile:"
 msgstr "_Perfil de publicación"
 
-#: ../pan/gui/group-prefs-dialog.cc:309
+#: ../pan/gui/group-prefs-dialog.cc:314
 msgid "Spellchecker _language:"
 msgstr "_Idioma del corrector ortográfico:"
 
-#: ../pan/gui/group-prefs-dialog.cc:312
+#: ../pan/gui/group-prefs-dialog.cc:317
 msgid "Group color:"
 msgstr "Color del grupo:"
 
@@ -1178,11 +1174,11 @@ msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "A este artículo le falta %d parte."
 msgstr[1] "A este artículo le faltan %d de sus %d partes:"
 
-#: ../pan/gui/gui.cc:1926 ../pan/gui/header-pane.cc:1190
+#: ../pan/gui/gui.cc:1926 ../pan/gui/header-pane.cc:1209
 msgid "Message-ID"
 msgstr "ID del mensaje"
 
-#: ../pan/gui/gui.cc:1927 ../pan/gui/header-pane.cc:1665
+#: ../pan/gui/gui.cc:1927 ../pan/gui/header-pane.cc:1684
 #: ../pan/gui/prefs-ui.cc:830
 msgid "Lines"
 msgstr "Líneas"
@@ -1191,7 +1187,7 @@ msgstr "Líneas"
 msgid "Size"
 msgstr "Tamaño"
 
-#: ../pan/gui/gui.cc:1928 ../pan/gui/header-pane.cc:1680
+#: ../pan/gui/gui.cc:1928 ../pan/gui/header-pane.cc:1699
 #: ../pan/gui/prefs-ui.cc:828
 msgid "Bytes"
 msgstr "Bytes"
@@ -1257,20 +1253,20 @@ msgstr ""
 "Pan está ahora desconectado. Vea «Archivo|Visor de sucesos» y corrija el "
 "problema, después use «Archivo|Trabajar conectado» para continuar"
 
-#: ../pan/gui/header-pane.cc:1186
+#: ../pan/gui/header-pane.cc:1205
 msgid "Subject or Author"
 msgstr "Asunto o autor"
 
-#: ../pan/gui/header-pane.cc:1187
+#: ../pan/gui/header-pane.cc:1206
 msgid "Sub or Auth (regex)"
 msgstr "Asunto o autor (exp-reg)"
 
-#: ../pan/gui/header-pane.cc:1189 ../pan/gui/header-pane.cc:1649
+#: ../pan/gui/header-pane.cc:1208 ../pan/gui/header-pane.cc:1668
 #: ../pan/gui/prefs-ui.cc:827 ../pan/gui/score-add-ui.cc:140
 msgid "Author"
 msgstr "Autor"
 
-#: ../pan/gui/header-pane.cc:1634 ../pan/gui/prefs-ui.cc:831
+#: ../pan/gui/header-pane.cc:1653 ../pan/gui/prefs-ui.cc:831
 msgid "Score"
 msgstr "Puntuación"
 
@@ -1561,8 +1557,8 @@ msgstr "Continuar de todas formas"
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr ""
-"El mensaje usa caracteres no especificados en el conjunto de caracteres "
-"«%s», posiblemente usando «%s»"
+"El mensaje usa caracteres no especificados en el conjunto de caracteres «%s», "
+"posiblemente usando «%s»"
 
 #: ../pan/gui/post-ui.cc:812
 msgid "Go _Online"
@@ -1863,8 +1859,8 @@ msgstr "-9999 o menos"
 #, c-format
 msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
-"Seleccionar el conjunto <u>global</u> de caracteres. Selección actual: <b>"
-"%s</b>."
+"Seleccionar el conjunto <u>global</u> de caracteres. Selección actual: <b>%"
+"s</b>."
 
 #: ../pan/gui/prefs-ui.cc:738
 msgid "Global Character Set Settings"
@@ -2025,7 +2021,6 @@ msgid "GNOME Keyring"
 msgstr "Depósito de claves de GNOME"
 
 #: ../pan/gui/prefs-ui.cc:1028
-#| msgid "Store Passwords in Gnome Keyring"
 msgid "Store passwords in GNOME Keyring"
 msgstr "Guardar contraseñas en el depósito de claves de GNOME"
 
@@ -2170,11 +2165,10 @@ msgid "Scores of -9999 or less:"
 msgstr "Puntúa -9999 o menos:"
 
 #: ../pan/gui/prefs-ui.cc:1176
-#| msgid "Collapsed thread with unread messages:"
 msgid "Collapsed thread with unread articles:"
 msgstr "Conversación contraída con artículos sin leer:"
 
-#: ../pan/gui/prefs-ui.cc:1178
+#: ../pan/gui/prefs-ui.cc:1178 ../pan/gui/prefs-ui.cc:1190
 msgid "Body Pane"
 msgstr "Panel del cuerpo"
 
@@ -2190,59 +2184,64 @@ msgstr "URL:"
 msgid "Signature:"
 msgstr "Firma:"
 
-#: ../pan/gui/prefs-ui.cc:1188
+#: ../pan/gui/prefs-ui.cc:1192
+#| msgid "Group color:"
+msgid "Group Color Foreground:"
+msgstr "Color de fondo del grupo:"
+
+#: ../pan/gui/prefs-ui.cc:1195
 msgid "_Colors"
 msgstr "_Colores"
 
-#: ../pan/gui/prefs-ui.cc:1188
+#: ../pan/gui/prefs-ui.cc:1195
 msgid "Colors"
 msgstr "Colores"
 
-#: ../pan/gui/prefs-ui.cc:1193
+#: ../pan/gui/prefs-ui.cc:1200
 msgid "Preferred Applications"
 msgstr "Aplicaciones preferidas"
 
-#: ../pan/gui/prefs-ui.cc:1197
+#: ../pan/gui/prefs-ui.cc:1204
 msgid "_Web browser:"
 msgstr "_Navegador web_"
 
-#: ../pan/gui/prefs-ui.cc:1200
+#: ../pan/gui/prefs-ui.cc:1207
 msgid "_Mail reader:"
 msgstr "_Lector de correo-e:"
 
-#: ../pan/gui/prefs-ui.cc:1202
+#: ../pan/gui/prefs-ui.cc:1209
 msgid "_Text editor:"
 msgstr "Editor de _texto:"
 
-#: ../pan/gui/prefs-ui.cc:1204
+#: ../pan/gui/prefs-ui.cc:1211
 msgid "_Applications"
 msgstr "_Aplicaciones"
 
-#: ../pan/gui/prefs-ui.cc:1204
+#: ../pan/gui/prefs-ui.cc:1211
 msgid "Applications"
 msgstr "Aplicaciones"
 
-#: ../pan/gui/prefs-ui.cc:1209 ../pan/gui/task-pane.cc:512
+#: ../pan/gui/prefs-ui.cc:1216 ../pan/gui/task-pane.cc:512
 msgid "Encoding"
 msgstr "Codificando"
 
-#: ../pan/gui/prefs-ui.cc:1213
+#: ../pan/gui/prefs-ui.cc:1220
 msgid "Default bytes per file (for encoder): "
 msgstr "Bytes por archivo predeterminados (para el codificador): "
 
-#: ../pan/gui/prefs-ui.cc:1218
+#: ../pan/gui/prefs-ui.cc:1225
 msgid "_Upload"
 msgstr "_Subir"
 
-#: ../pan/gui/prefs-ui.cc:1218
+#: ../pan/gui/prefs-ui.cc:1225
 msgid "Upload"
 msgstr "Subir"
 
-#: ../pan/gui/prefs-ui.cc:1236
+#: ../pan/gui/prefs-ui.cc:1243
 msgid "_Shortcuts"
 msgstr "_Atajos"
 
-#: ../pan/gui/prefs-ui.cc:1236
+#: ../pan/gui/prefs-ui.cc:1243
 msgid "Shortcuts"
 msgstr "Atajos"
 
