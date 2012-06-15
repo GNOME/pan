@@ -216,6 +216,8 @@ GroupPrefs :: color_to_string (const GdkColor& c)
 std::string
 GroupPrefs :: get_group_color_str (const Quark& group) const
 {
+  if (!_prefs[group].get_colors().count("group-color"))
+    return "";
   const GdkColor& col (_prefs[group].get_colors()["group-color"]);
   return color_to_string (col);
 }

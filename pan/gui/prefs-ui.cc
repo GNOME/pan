@@ -1185,6 +1185,13 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_row (t, &row, _("URL:"), new_color_button ("body-pane-color-url", TANGO_SKY_BLUE_DARK, prefs));
     HIG :: workarea_add_row (t, &row, _("Signature:"), new_color_button ("body-pane-color-signature", TANGO_SKY_BLUE_LIGHT, prefs));
   HIG :: workarea_finish (t, &row);
+
+  HIG :: workarea_add_section_divider (t, &row);
+  HIG :: workarea_add_section_title (t, &row, _("Body Pane"));
+    HIG :: workarea_add_section_spacer (t, row, 3);
+    HIG :: workarea_add_row (t, &row, _("Group Color Foreground:"), new_color_button ("group-pane-fg-color", TANGO_BLACK, prefs));
+  HIG :: workarea_finish (t, &row);
+
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Colors"), _("Colors"), icon_prefs_colors, prefs));
 
   // Applications

@@ -100,9 +100,6 @@ namespace pan
       GdkColor get_color (const StringView& key, const GdkColor& fallback) const;
       GdkColor get_color (const StringView& key, const StringView& fallback_str) const;
 
-//      void set_hotkey (const StringView& key, const StringView& value);
-//      std::string get_hotkey (const StringView& key) const;
-
       void set_window (const StringView& key, GtkWindow* window,
                        int default_x, int default_y,
                        int default_width, int default_height);

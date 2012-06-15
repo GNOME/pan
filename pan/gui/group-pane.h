@@ -67,6 +67,7 @@ namespace pan
 
     public:
       GroupPrefs& get_group_prefs() { return _group_prefs; }
+      Prefs& get_prefs() { return _prefs; }
 
     private:
       GtkTreePath* find_next_subscribed_group (bool unread_only);

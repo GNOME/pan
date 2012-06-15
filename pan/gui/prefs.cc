@@ -376,7 +376,7 @@ std::string
 Prefs :: get_color_str_wo_fallback (const StringView& key) const
 {
   std::string res;
-  if (!_colors.count(key)) return res;
+  if (!_colors.count(key)) return "";
   const GdkColor& col(_colors[key]);
   return color_to_string (col);
 }

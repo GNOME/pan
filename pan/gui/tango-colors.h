@@ -38,4 +38,6 @@
 #define TANGO_ALUMINUM_5         "#555753"
 #define TANGO_ALUMINUM_6         "#2e3436"
 
+#define TANGO_BLACK              "#000000"
+
 #endif

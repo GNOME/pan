@@ -708,9 +708,26 @@ namespace
       g_snprintf (buf, sizeof(buf), " (%lu)", unread);
       group_name += buf;
     }
+
+
+
+
+    std::string fg_col(pane->get_group_prefs().get_group_color_str(name));
+    if (fg_col.empty())
+      fg_col = pane->get_prefs().get_color_str_wo_fallback("group-pane-fg-color");
+
+    if (fg_col.empty())
+    {
+      GdkColor def_fg;
+      GtkStyle *style = gtk_rc_get_style(pane->root());
+      if(!gtk_style_lookup_color(style, "text_color", &def_fg))
+        gdk_color_parse("black", &def_fg);
+      fg_col = GroupPrefs::color_to_string(def_fg);
+    }
+
     g_object_set (renderer, "text", group_name.c_str(),
                             "weight", (!is_g || unread ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
-                            "foreground", pane->get_group_prefs().get_group_color_str(name).c_str(),
+                            "foreground", fg_col.c_str(),
                             NULL);
   }
 }
