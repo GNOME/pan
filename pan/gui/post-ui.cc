@@ -31,6 +31,7 @@ extern "C" {
   #include <gtkspell/gtkspell.h>
 #endif
 }
+#include <pan/data/data.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
@@ -833,6 +834,8 @@ PostUI :: add_files ()
 void
 PostUI :: send_now ()
 {
+
+
   if (!check_charset())
     return;
   GMimeMessage * message (new_message_from_ui (POSTING));
@@ -1009,13 +1012,31 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   // get the server associated with that profile...
   const Quark& server (profile.posting_server);
   // if the server's invalid, bitch about it to the user
-  if (server.empty() || !_data.get_servers().count(server)) {
+  std::string error_msg;
+  bool error = false;
+  if (server.empty() || !_data.get_servers().count(server))
+    error_msg = _("No posting server is set for this posting profile.\nPlease edit the profile via Edit|Manage Posting Profiles.");
+
+  //invalid connection count, can't post
+  Data::Server* s = _data.find_server(server);
+  if (s && s->max_connections == 0)
+    error_msg =  _("The selected posting server is currently disabled. Please choose an appropriate alternative.");
+
+//  if (server.empty() || !_data.get_servers().count(server)) {
+//    GtkWidget * d = gtk_message_dialog_new (
+//      GTK_WINDOW(_root),
+//      GTK_DIALOG_DESTROY_WITH_PARENT,
+//      GTK_MESSAGE_ERROR,
+//      GTK_BUTTONS_CLOSE,
+//      _("No posting server is set for this posting profile.\nPlease edit the profile via Edit|Manage Posting Profiles."));
+
+  if (!error_msg.empty())
+  {
     GtkWidget * d = gtk_message_dialog_new (
       GTK_WINDOW(_root),
       GTK_DIALOG_DESTROY_WITH_PARENT,
       GTK_MESSAGE_ERROR,
-      GTK_BUTTONS_CLOSE,
-      _("No posting server is set for this posting profile.\nPlease edit the profile via Edit|Manage Posting Profiles."));
+      GTK_BUTTONS_CLOSE, "%s", error_msg.c_str());
     gtk_dialog_run (GTK_DIALOG(d));
     gtk_widget_destroy (d);
     return false;

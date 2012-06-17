@@ -169,7 +169,7 @@ DataImpl :: password_decrypt (PasswordData& pw) const
   }
   else
   {
-    pw.pw = "";
+    pw.pw = const_cast<gchar*>("");
   }
 
   return (pw.pw ? GNOME_KEYRING_RESULT_OK : GNOME_KEYRING_RESULT_DENIED) ;
