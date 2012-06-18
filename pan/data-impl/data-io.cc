@@ -202,14 +202,19 @@ namespace
 
     const std::string tmpfile (filename + ".tmp");
     if (ok) {
-//      ::remove (filename.c_str()); not needed
-      if (rename (tmpfile.c_str(), filename.c_str()))
-        std::cerr << LINE_ID << " ERROR renaming from [" << tmpfile << "] to [" << filename << "]: " << g_strerror(errno) << '\n';
-      if (chmod (filename.c_str(), 0600))
-        std::cerr << LINE_ID << " ERROR chmodding [" << filename << "]: " << g_strerror(errno) << '\n';
+      remove (filename.c_str());
+      int ret = 0;
+      if ((ret = rename (tmpfile.c_str(), filename.c_str())))
+      {
+        std::cerr << LINE_ID << " ERROR renaming from [" << tmpfile << "] to [" << filename << "]: " << g_strerror(errno) <<" : "<<ret<< '\n';
+      } else
+      {
+        if ((ret = chmod (filename.c_str(), 0600)))
+          std::cerr << LINE_ID << " ERROR chmodding [" << filename << "]: " << g_strerror(errno) << " : "<<ret<<'\n';
+      }
+//      std::cerr<<"dbg "<<ret<<"\n";
     } else {
       Log::add_err_va (_("Unable to save \"%s\" %s"), filename.c_str(), file::pan_strerror(my_errno));
-      ::remove (tmpfile.c_str());
     }
   }
 }
