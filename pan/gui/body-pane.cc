@@ -1293,6 +1293,8 @@ BodyPane :: set_article (const Article& a)
 
   refresh ();
 
+  set_cleared(false);
+
   _data.mark_read (_article);
 }
 
@@ -1302,6 +1304,8 @@ BodyPane :: clear ()
   if (_message)
     g_object_unref (_message);
   _message = 0;
+
+  set_cleared(true);
 
   refresh ();
 }
@@ -1668,7 +1672,8 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
 //  _gpgerr(GPG_DECODE),
 #endif
   _attachments(0),
-  _current_attachment(0)
+  _current_attachment(0),
+  _cleared (true)
 {
 
   GtkWidget * w, * l, * hbox;
@@ -1777,6 +1782,11 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_widget_show_all (_root);
 }
 
+namespace
+{
+
+}
+
 BodyPane :: ~BodyPane ()
 {
   _prefs.remove_listener (this);
@@ -1794,7 +1804,7 @@ BodyPane :: ~BodyPane ()
     g_free(*it);
 
   // store last opened message in prefs
-  _prefs.set_string("last-opened-msg", get_message_id ().to_view());
+  _prefs.set_string("last-opened-msg", get_cleared() ? "" : get_message_id().to_view());
 }
 
 

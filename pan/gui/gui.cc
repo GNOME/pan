@@ -203,15 +203,6 @@ GUI :: root_realized_cb (GtkWidget*, gpointer self_gpointer)
 #endif
     gui->_body_pane->set_text_from_message(msg);
 
-//    Article article;
-//    PartBatch part_batch;
-//    last_msg = last_msg.substr(last_msg.strchr('<')+1, last_msg.strchr('>'));
-//    std::cerr<<"msg "<<last_msg<<"\n";
-//    part_batch.init (last_msg, 1, 0);
-//    part_batch.add_part (0, last_msg, 0);
-//    article.set_parts(part_batch);
-//    Task * t = new TaskArticle (_data, _data, article, _cache, _data, this);
-//    _queue.add_task (t, Queue::TOP);
   }
 }
 
@@ -1018,7 +1009,7 @@ void GUI :: do_clear_header_pane ()
 {
   gtk_window_set_title (get_window(_root), _("Pan"));
   _header_pane->set_group (Quark());
-
+//  _header_pane->set_cleared(true);
 }
 
 void GUI :: do_clear_body_pane ()

@@ -582,6 +582,9 @@ HeaderPane :: rebuild ()
 bool
 HeaderPane :: set_group (const Quark& new_group)
 {
+
+  set_cleared(new_group.empty());
+
   const Quark old_group (_group);
   bool change (old_group != new_group);
 
@@ -1761,7 +1764,7 @@ HeaderPane :: ~HeaderPane ()
   }
   g_list_free (columns);
 
-  _prefs.set_string("last-visited-group", _group.to_view());
+  _prefs.set_string("last-visited-group", get_cleared() ? "" : _group.to_view());
   set_group (Quark());
 
   for (guint i=0; i<ICON_QTY; ++i)
@@ -1876,7 +1879,8 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _tree_store (0),
   _selection_changed_idle_tag (0),
   _cache (cache),
-  _gui (gui)
+  _gui (gui),
+  _cleared (true)
 {
   // init the icons
   for (guint i=0; i<ICON_QTY; ++i)

@@ -161,6 +161,12 @@ namespace pan
       std::set<char*> _attach_names;
       MenuSelection _selection;
 
+      bool _cleared;
+
+    public:
+      void set_cleared(bool val) { _cleared = val; }
+      bool get_cleared() { return _cleared; }
+
     public:
       const char* _current_attachment;
 

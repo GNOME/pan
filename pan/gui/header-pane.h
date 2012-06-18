@@ -381,6 +381,13 @@ namespace pan
                           const TreeIterFunctor  & iterate_func,
                           const ArticleTester    & test_func,
                           RowActionFunctor       & success_func);
+    private:
+
+      bool _cleared;
+
+    public:
+      void set_cleared(bool val) { _cleared = val; }
+      bool get_cleared() { return _cleared; }
   };
 }
 
