@@ -374,7 +374,6 @@ namespace
 
   static void set_blocking(gnutls_session_t& session, bool val)
   {
-//    int fd(-1), flags;
     int fd(-1);
     gnutls_transport_ptr_t tmp = gnutls_transport_get_ptr (session);
     fd = GPOINTER_TO_INT (tmp);
@@ -382,7 +381,7 @@ namespace
     if(fd)
     {
 #ifndef G_OS_WIN32
-      flags = fcntl(fd, F_GETFL);
+      int flags = fcntl(fd, F_GETFL);
       if (!val)
         flags |= O_NONBLOCK;
       else
