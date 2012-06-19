@@ -131,7 +131,6 @@ namespace
     }
 
     pan_entry_set_text (d->address_entry, addr);
-    pan_spin_button_set (d->port_spin, port);
     pan_spin_button_set (d->connection_limit_spin, max_conn);
     pan_entry_set_text (d->auth_username_entry, user);
     pan_entry_set_text (d->auth_password_entry, pass);
@@ -177,6 +176,8 @@ namespace
 
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(d->always_trust_checkbox), trust);
 #endif
+
+    pan_spin_button_set (d->port_spin, port);
   }
 
   void

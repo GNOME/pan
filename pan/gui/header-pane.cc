@@ -1767,6 +1767,7 @@ HeaderPane :: ~HeaderPane ()
   _prefs.set_string("last-visited-group", get_cleared() ? "" : _group.to_view());
   set_group (Quark());
 
+
   for (guint i=0; i<ICON_QTY; ++i)
     g_object_unref (G_OBJECT(_icons[i].pixbuf));
 }

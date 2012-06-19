@@ -386,6 +386,7 @@ namespace pan
       bool _cleared;
 
     public:
+      void clear() { set_group(Quark()); set_cleared(true); }
       void set_cleared(bool val) { _cleared = val; }
       bool get_cleared() { return _cleared; }
   };

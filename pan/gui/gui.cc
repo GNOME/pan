@@ -1008,8 +1008,7 @@ void GUI :: do_download_selected_article ()
 void GUI :: do_clear_header_pane ()
 {
   gtk_window_set_title (get_window(_root), _("Pan"));
-  _header_pane->set_group (Quark());
-//  _header_pane->set_cleared(true);
+  _header_pane->clear ();
 }
 
 void GUI :: do_clear_body_pane ()

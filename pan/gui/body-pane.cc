@@ -1782,11 +1782,6 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_widget_show_all (_root);
 }
 
-namespace
-{
-
-}
-
 BodyPane :: ~BodyPane ()
 {
   _prefs.remove_listener (this);

@@ -305,11 +305,11 @@ namespace
   {
     GIOGnuTLSChannel *chan = (GIOGnuTLSChannel *)handle;
     g_io_channel_unref(chan->giochan);
+    // free callback struct
+    delete (mydata_t*)gnutls_session_get_ptr (chan->session);
     gnutls_deinit (chan->session);
     g_free(chan->host);
     g_free(chan);
-    // free callback struct
-    delete (mydata_t*)gnutls_session_get_ptr (chan->session);
   }
 }
 
@@ -325,10 +325,9 @@ GIOChannelSocketGnuTLS :: ~GIOChannelSocketGnuTLS ()
 
   if (_channel)
   {
-    GIOGnuTLSChannel *chan = (GIOGnuTLSChannel *)_channel;
     g_io_channel_shutdown (_channel, true, 0);
-    _gnutls_free(_channel);
     g_string_free(_channel->read_buf,true);
+    _gnutls_free(_channel);
     _channel = 0;
   }
 
@@ -375,7 +374,8 @@ namespace
 
   static void set_blocking(gnutls_session_t& session, bool val)
   {
-    int fd(-1), flags;
+//    int fd(-1), flags;
+    int fd(-1);
     gnutls_transport_ptr_t tmp = gnutls_transport_get_ptr (session);
     fd = GPOINTER_TO_INT (tmp);
 
@@ -601,7 +601,7 @@ GIOChannelSocketGnuTLS :: do_read ()
 
   bool more (true);
 
-  GIOGnuTLSChannel * chan = (GIOGnuTLSChannel*)_channel;
+//  GIOGnuTLSChannel * chan = (GIOGnuTLSChannel*)_channel;
 
   while (more && !_abort_flag)
   {
@@ -787,7 +787,7 @@ GIOChannelSocketGnuTLS :: gnutls_get_iochannel(GIOChannel* channel, const char* 
 
 	GIOGnuTLSChannel *chan(0);
 	GIOChannel *gchan(0);
-	int err(0), fd(0);
+	int fd(0);
 
 	chan = g_new0(GIOGnuTLSChannel, 1);
 	g_return_val_if_fail(chan, 0);
@@ -820,7 +820,6 @@ GIOChannelSocketGnuTLS :: gnutls_get_iochannel(GIOChannel* channel, const char* 
 	g_io_channel_init(gchan);
   gchan->read_buf = g_string_sized_new(4096*128);
 
-  int ret;
   set_blocking(session, true);
 
   if (_gnutls_handshake(gchan) == G_IO_STATUS_NORMAL)

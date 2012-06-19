@@ -340,7 +340,8 @@ namespace pan
   {
     gnutls_certificate_free_credentials (_creds);
     foreach (certs_m, _cert_to_server, it)
-      gnutls_x509_crt_deinit(it->second);
+      if (it->second)
+        gnutls_x509_crt_deinit(it->second);
   }
 
 

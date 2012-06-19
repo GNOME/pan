@@ -202,7 +202,9 @@ namespace
 
     const std::string tmpfile (filename + ".tmp");
     if (ok) {
-      remove (filename.c_str());
+#if defined(G_OS_WIN32)
+      ::remove (filename.c_str());
+#endif
       int ret = 0;
       if ((ret = rename (tmpfile.c_str(), filename.c_str())))
       {

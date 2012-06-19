@@ -27,6 +27,7 @@
 #include <vector>
 #include <deque>
 
+#include <pan/tasks/queue.h>
 #include <pan/general/quark.h>
 #include <pan/general/macros.h>
 #include <pan/general/map-vector.h>
@@ -38,7 +39,7 @@
 #include <pan/data/article-cache.h>
 #include <pan/data/encode-cache.h>
 #include <pan/data/data.h>
-#include <pan/tasks/queue.h>
+
 #include <pan/data-impl/data-io.h>
 #include <pan/data-impl/article-filter.h>
 #include <pan/data-impl/rules-filter.h>
