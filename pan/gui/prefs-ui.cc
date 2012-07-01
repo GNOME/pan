@@ -85,6 +85,7 @@ namespace pan
       static_cast<CallBackData*>(user_data)->dialog->update_hotkey(user_data);
     }
     gtk_widget_destroy(dialog);
+    delete static_cast<CallBackData*>(user_data);
   }
 }
 
