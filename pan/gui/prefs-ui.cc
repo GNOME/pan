@@ -36,6 +36,8 @@ extern "C" {
 #include "e-charset-dialog.h"
 #include "actions-extern.h"
 
+#include <algorithm>
+
 using namespace pan;
 
 namespace pan
@@ -419,6 +421,13 @@ namespace pan
     return hbox;
   }
 
+  std::string remove_underscores (std::string& src)
+  {
+    std::string res (src);
+    res.erase(std::remove(res.begin(), res.end(), '_'), res.end());
+    return res;
+  }
+
   void fill_pref_hotkeys(GtkWidget* t, int& row, Prefs& prefs, gpointer dialog_ptr)
   {
 
@@ -441,7 +450,7 @@ namespace pan
       data->value = stripped;
 
       w = new_hotkey_entry(keyval, it->first.c_str(), data);
-      std::string label = action_trans[stripped];
+      std::string label = remove_underscores(action_trans[stripped]);
       l = gtk_label_new(label.c_str());
       HIG :: workarea_add_row (t, &row, w, l);
     }
