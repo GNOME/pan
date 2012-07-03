@@ -28,9 +28,11 @@ RELEASE NOTES
         * Directories to search for SSL certificates can be defined with the
           environment variable 'SSL_CERT_DIR' or 'SSL_DIR'.
 
-	* Gnome Keyring enable/disable is now an option in Preferences(!), 
-          besides being automatically enabled/disabled if you or the package
-	  maintainer chose to compile it into Pan or leave it out. 
+        * Even if support for GNOME Keyring has been enabled at configure time
+          and compiled in, you can now specifically disable or enable support
+          for GNOME Keyring in Pan's GUI. To enable support, go to Edit ->
+          Preferences -> Miscellaneous and check "Store passwords in GNOME
+          Keyring".
 
 REQUIREMENTS
 
