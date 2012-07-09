@@ -894,8 +894,11 @@ namespace
           GRegexMatchFlags mf0((GRegexMatchFlags)0);
           GRegex* rex = g_regex_new (search_text.c_str(), cf0, mf0, NULL);
           if (!rex) return false;
-          return g_regex_match (rex, ta->get_article().subject.c_str(), G_REGEX_MATCH_NOTEMPTY, NULL) ||
-                  g_regex_match (rex, ta->get_article().author.c_str(), G_REGEX_MATCH_NOTEMPTY, NULL);
+          const bool match =
+            g_regex_match (rex, ta->get_article().subject.c_str(), G_REGEX_MATCH_NOTEMPTY, NULL) ||
+            g_regex_match (rex, ta->get_article().author.c_str(), G_REGEX_MATCH_NOTEMPTY, NULL);
+          g_regex_unref(rex);
+          return match;
        }
        if (search_mode == 2)
         s1 = ta->get_article().subject.c_str();
