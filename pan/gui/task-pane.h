@@ -94,7 +94,13 @@ namespace pan
       static void get_selected_tasks_foreach (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer);
       static void online_toggled_cb  (GtkToggleButton*, Queue*);
 
-    public:   /// FIXME, privatize this again...
+    private:
+      GtkWidget* create_filter_entry ();
+
+    public:
+      void filter (const std::string& text, int mode);
+
+    public:
       static void up_clicked_cb      (GtkButton*, TaskPane*);
       static void down_clicked_cb    (GtkButton*, TaskPane*);
       static void top_clicked_cb     (GtkButton*, TaskPane*);
