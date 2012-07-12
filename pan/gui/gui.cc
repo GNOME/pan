@@ -1138,6 +1138,16 @@ void GUI :: do_show_sec_dialog ()
 #endif
 }
 
+void GUI :: do_collapse_thread ()
+{
+  _header_pane->collapse_selected();
+}
+
+void GUI :: do_expand_thread ()
+{
+  _header_pane->expand_selected();
+}
+
 
 void GUI :: do_show_score_dialog ()
 {

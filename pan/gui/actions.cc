@@ -74,7 +74,10 @@ namespace pan
     { icon_score, "ICON_SCORE" },
     { icon_search_pulldown, "ICON_SEARCH_PULLDOWN" },
     { icon_red_flag, "ICON_FLAGGED"},
-    { icon_get_flagged, "ICON_GET_FLAGGED" }
+    { icon_get_flagged, "ICON_GET_FLAGGED" },
+    { icon_expand_thread, "ICON_EXPAND_THREAD" },
+    { icon_collapse_thread, "ICON_COLLAPSE_THREAD" }
+
   };
 
   void
@@ -152,6 +155,8 @@ namespace pan
   void do_read_parent_article          (GtkAction*) { pan_ui->do_read_parent_article(); }
   void do_show_servers_dialog          (GtkAction*) { pan_ui->do_show_servers_dialog(); }
   void do_show_sec_dialog              (GtkAction*) { pan_ui->do_show_sec_dialog(); }
+  void do_collapse_thread              (GtkAction*) { pan_ui->do_collapse_thread(); }
+  void do_expand_thread                (GtkAction*) { pan_ui->do_expand_thread(); }
   void do_plonk                        (GtkAction*) { pan_ui->do_plonk(); }
   void do_ignore                       (GtkAction*) { pan_ui->do_ignore(); }
   void do_watch                        (GtkAction*) { pan_ui->do_watch(); }
@@ -250,6 +255,15 @@ namespace pan
   {
     prefs->_rules_enabled = gtk_toggle_action_get_active (a);
     pan_ui->do_enable_toggle_rules(prefs->_rules_enabled);
+  }
+
+  void do_toggle_expand_thread (GtkToggleAction * a)
+  {
+    const bool active (gtk_toggle_action_get_active (a));
+    if (active)
+      do_expand_thread(NULL);
+    else
+      do_collapse_thread(NULL);
   }
 
   void do_match_only_watched_articles (GtkToggleAction * a)   { set_new_match_on_score_state (gtk_toggle_action_get_active(a) ? MATCH_WATCHED : prev_score_state); }
@@ -670,7 +684,22 @@ namespace pan
       { "show-sec-dialog", GTK_STOCK_DIALOG_AUTHENTICATION,
         N_("Edit _SSL Certificates"), NULL,
         NULL,
-        G_CALLBACK(do_show_sec_dialog) } };
+        G_CALLBACK(do_show_sec_dialog) }
+/*
+       { "collapse-thread", "ICON_COLLAPSE_THREAD",
+         N_("Collapse selected Thread"), NULL,
+         NULL,
+         G_CALLBACK(do_collapse_thread)
+       },
+
+       { "expand-thread", "ICON_EXPAND_THREAD",
+         N_("Expand selected thread"), "E",
+         NULL,
+         G_CALLBACK(do_expand_thread)
+       }
+*/
+
+     };
 
   void prefs_toggle_callback_impl (GtkToggleAction * action)
   {
@@ -716,7 +745,9 @@ namespace pan
     { "match-low-scoring-articles", NULL, N_("Match Scores of -9998...-1 (_Low)"), NULL, NULL, G_CALLBACK(do_match_low_scoring_articles), true },
     { "match-ignored-articles", NULL, N_("Match Scores of -9999 (_Ignored)"), NULL, NULL, G_CALLBACK(do_match_ignored_articles), false },
 
-    { "enable-rules", NULL, N_("Enable/Disable All _Rules"), "R", NULL, G_CALLBACK(do_toggle_rules), true    }
+    { "enable-rules", NULL, N_("Enable/Disable All _Rules"), "R", NULL, G_CALLBACK(do_toggle_rules), true }
+
+    //{"toggle-expand-thread", NULL, N_("Toggle expansion of selected thread"), NULL, NULL, G_CALLBACK(do_toggle_expand_thread), true }
   };
 
   const guint n_toggle_entries (G_N_ELEMENTS(toggle_entries));

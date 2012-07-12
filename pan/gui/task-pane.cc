@@ -941,7 +941,7 @@ TaskPane :: create_filter_entry ()
                                  GTK_ENTRY_ICON_SECONDARY,
                                  GTK_STOCK_CLEAR );
 
-  bool regex = false;//_prefs.get_flag ("use-regex", false);
+  bool regex = _prefs.get_flag ("use-regex", false);
   GtkWidget * menu = gtk_menu_new ();
   if (regex == true )
     search_mode = 1;
@@ -966,7 +966,7 @@ TaskPane :: create_filter_entry ()
   return entry;
 }
 
-TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue)
+TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
 {
   _root = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 

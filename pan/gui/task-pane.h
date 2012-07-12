@@ -62,6 +62,7 @@ namespace pan
 
     private:
       Queue& _queue;
+      Prefs& _prefs;
       GtkWidget * _root;
       GtkWidget * _view;
       GtkWidget * _online_image;

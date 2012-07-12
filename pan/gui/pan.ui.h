@@ -40,6 +40,8 @@ const char * fallback_ui_file =
 "        <menuitem action='shorten-group-names' />\n"
 "      </menu>\n"
 "      <menu action='view-header-pane-menu'>\n"
+"        <menuitem action='toggle-expand-thread' />\n"
+"        <separator />\n"
 "        <menuitem action='thread-headers' />\n"
 "        <separator />\n"
 "        <menuitem action='enable-rules' />\n"

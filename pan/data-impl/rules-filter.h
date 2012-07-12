@@ -39,7 +39,7 @@ namespace pan
 
     public:
 
-      RulesFilter() {  }
+      RulesFilter(bool cache, bool dl, bool del) : _auto_cache_mark_read(cache), _auto_dl_mark_read(dl), _auto_delete_mark_read(del) {  }
 
       bool test_article (Data        & data,
                          RulesInfo   & rules,
@@ -49,6 +49,7 @@ namespace pan
       private:
         std::set<const Article*> _mark_read;
         std::set<const Article*> _delete;
+        bool _auto_cache_mark_read, _auto_dl_mark_read, _auto_delete_mark_read;
 
       public:
 

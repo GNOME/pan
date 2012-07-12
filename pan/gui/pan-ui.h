@@ -100,6 +100,9 @@ namespace pan
     virtual void do_show_new_score_dialog () = 0;
     virtual void do_show_selected_article_info () = 0;
 
+    virtual void do_collapse_thread () = 0;
+    virtual void do_expand_thread () = 0;
+
     virtual void do_read_selected_group () = 0;
     virtual void do_mark_selected_groups_read () = 0;
     virtual void do_clear_selected_groups () = 0;

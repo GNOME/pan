@@ -77,7 +77,9 @@ DataImpl :: DataImpl (const StringView& cache_ext, Prefs& prefs, bool unit_test,
   _prefs (prefs),
   _descriptions_loaded (false),
   newsrc_autosave_id (0),
-  newsrc_autosave_timeout (0)
+  newsrc_autosave_timeout (0),
+  _rules_filter (prefs.get_flag("autocache-mark-read", false), prefs.get_flag("auto-dl-mark-read", false),
+                 prefs.get_flag("auto-delete-mark-read", false))
 
 {
   rebuild_backend ();

@@ -67,6 +67,7 @@ namespace pan
 
   typedef std::vector<const Article*> articles_t;
   typedef std::set<const Article*> articles_set;
+  typedef std::vector<const Article*> article_v;
 
   /**
    * Header Pane in the main window of Pan's GUI.
@@ -95,6 +96,7 @@ namespace pan
       void select_subthreads ();
       void select_similar ();
       void expand_selected ();
+      void collapse_selected();
 
     public:
       void read_next_article ();

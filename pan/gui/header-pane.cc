@@ -373,11 +373,6 @@ HeaderPane :: create_row (const EvolutionDateMaker & e,
   return row;
 }
 
-namespace
-{
-  typedef std::vector<const Article*> article_v;
-}
-
 void
 HeaderPane ::  add_children_to_model (PanTreeStore               * store,
                                       PanTreeStore::Row          * parent_row,
@@ -687,6 +682,26 @@ namespace
       mids.insert (article.message_id);
     }
   };
+}
+
+void
+HeaderPane :: collapse_selected()
+{
+  {
+  // get a list of paths
+  GtkTreeModel * model (0);
+  GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
+  GtkTreeSelection * selection (gtk_tree_view_get_selection (view));
+  GList * list (gtk_tree_selection_get_selected_rows (selection, &model));
+  if (list)
+  {
+    GtkTreePath * path (static_cast<GtkTreePath*>(list->data));
+    gtk_tree_view_collapse_row (view, path);
+//    gtk_tree_view_expand_to_path (view, path);
+  }
+  g_list_foreach (list, (GFunc)gtk_tree_path_free, NULL);
+  g_list_free (list);
+}
 }
 
 void
@@ -1083,8 +1098,25 @@ namespace
     return false;
 
   }
+  static gboolean left_pressed (gpointer data)
+  {
+    HeaderPane * self (static_cast<HeaderPane*>(data));
+    // TODO move this into headerpane
+    self->_gui.do_collapse_thread ();
+    return false;
+
+  }
+  static gboolean right_pressed (gpointer data)
+  {
+    HeaderPane * self (static_cast<HeaderPane*>(data));
+    // TODO move this into headerpane
+    self->_gui.do_expand_thread ();
+    return false;
+
+  }
 }
 
+// TODO just pass TRUE and let actions.cc handle that!
 gboolean
 HeaderPane :: on_keyboard_button_pressed ( GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
@@ -1093,6 +1125,16 @@ HeaderPane :: on_keyboard_button_pressed ( GtkWidget *widget, GdkEventKey *event
     if (event->keyval == GDK_KEY_Return)
     {
       g_idle_add(return_pressed_download_all, data);
+      return TRUE;
+    }
+    if (event->keyval == GDK_KEY_Left)
+    {
+      g_idle_add(left_pressed, data);
+      return TRUE;
+    }
+    if (event->keyval == GDK_KEY_Right)
+    {
+      g_idle_add(right_pressed, data);
       return TRUE;
     }
   }
@@ -1910,7 +1952,7 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   g_signal_connect (w, "button-release-event", G_CALLBACK(on_button_pressed), this);
   g_signal_connect (w, "button-press-event", G_CALLBACK(on_button_pressed), this);
 
-  /* intercept ENTER for selection of multiple articles */
+  /* intercept ENTER and left/right for article selection */
   g_signal_connect (w, "key-press-event", G_CALLBACK(on_keyboard_button_pressed), this);
 
   g_signal_connect (w, "row-collapsed", G_CALLBACK(row_collapsed_cb), NULL);

@@ -101,6 +101,8 @@ namespace
   #define GDK_KEY_Delete GDK_Delete
   #define GDK_KEY_Return GDK_Return
   #define GDK_KEY_Down GDK_Down
+  #define GDK_KEY_Left GDK_Left
+  #define GDK_KEY_Right GDK_Right
   #define GDK_KEY_Up GDK_Up
   #define GDK_KEY_KP_Up GDK_KP_Up
   #define GDK_KEY_KP_Down GDK_KP_Down

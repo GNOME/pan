@@ -39,11 +39,9 @@ RulesFilter :: finalize (Data& data)
   _mark_read.clear();
 
   const std::vector<const Article*> tmp2 ( _cached.begin(),  _cached.end());
-  data.mark_read ((const Article**)&tmp2.front(), tmp2.size());
   _cached.clear();
 
   const std::vector<const Article*> tmp3 (_downloaded.begin(), _downloaded.end());
-  data.mark_read ((const Article**)&tmp3.front(), tmp3.size());
   _downloaded.clear();
 }
 
@@ -88,17 +86,26 @@ RulesFilter :: test_article ( Data        & data,
 
     case RulesInfo::AUTOCACHE:
       if (pass)
+      {
         _cached.insert (&article);
+        if (_auto_cache_mark_read) _mark_read.insert(&article);
+      }
       break;
 
     case RulesInfo::AUTODOWNLOAD:
       if (pass)
+      {
         _downloaded.insert (&article);
+        if (_auto_dl_mark_read) _mark_read.insert(&article);
+      }
       break;
 
     case RulesInfo::DELETE_ARTICLE:
       if (pass)
+      {
          _delete.insert (&article);
+         if (_auto_delete_mark_read) _mark_read.insert(&article);
+      }
       break;
 
     default:

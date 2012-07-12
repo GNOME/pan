@@ -1092,16 +1092,37 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   row = 0;
   t = HIG :: workarea_create ();
 
-    gtk_widget_set_tooltip_text (t, _("This menu lets you configure Pan to take certain actions on your behalf automatically, based on an article's score."));
+    gtk_widget_set_tooltip_text (t, _("This menu lets you configure Pan to take certain actions on your behalf automatically, "
+                                      "based on an article's score."));
+
+    int i(0);
+    GtkWidget** action_combo = new GtkWidget*[2];
+    char* tmp = _("Mark affected articles read");
+    action_combo[i++] = new_check_button (tmp, "auto-delete-mark-read", false, prefs);
+    action_combo[i++] = new_check_button (tmp, "autocache-mark-read", false, prefs);
+    action_combo[i++] = new_check_button (tmp, "auto-dl-mark-read", false, prefs);
+    i=0;
 
     w = score_handler_new (prefs, "rules-delete-value", "never", b);
+    h = gtk_hbox_new (false, PAD);
+    gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
+    gtk_box_pack_start (GTK_BOX(h), action_combo[i++], false, false, 0);
     HIG :: workarea_add_row (t, &row, _("_Delete articles scoring at: "), w);
+
     w = score_handler_new (prefs, "rules-mark-read-value", "never", b);
     HIG :: workarea_add_row (t, &row, _("Mark articles as _read scoring at: "), w);
+
     w = score_handler_new (prefs, "rules-autocache-value", "never", b);
-    HIG :: workarea_add_row (t, &row, _("_Cache articles scoring at: "), w);
+    h = gtk_hbox_new (false, PAD);
+    gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
+    gtk_box_pack_start (GTK_BOX(h), action_combo[i++], false, false, 0);
+    HIG :: workarea_add_row (t, &row, _("_Cache articles scoring at: "), h);
+
     w = score_handler_new (prefs, "rules-auto-dl-value", "never", b);
-    HIG :: workarea_add_row (t, &row, _("Download _attachments of articles scoring at: "), w);
+    h = gtk_hbox_new (false, PAD);
+    gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
+    gtk_box_pack_start (GTK_BOX(h), action_combo[i++], false, false, 0);
+    HIG :: workarea_add_row (t, &row, _("Download _attachments of articles scoring at: "), h);
 
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Actions"), _("Actions"), icon_prefs_actions, prefs));
