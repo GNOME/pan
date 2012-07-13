@@ -254,14 +254,13 @@ DataImpl :: MyTree :: cache_articles (std::set<const Article*> s)
   Queue* queue (_data.get_queue());
   Prefs& prefs (_data.get_prefs());
   const bool action (prefs.get_flag("rules-autocache-mark-read", false));
-  const bool always (prefs.get_flag("mark-downloaded-articles-read", false));
 
   Queue::tasks_t tasks;
   ArticleCache& cache(_data.get_cache());
   foreach_const (std::set<const Article*>, s, it)
     if (!_data.is_read(*it))
       tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data,
-                                        always ? TaskArticle::ALWAYS_MARK : action ? TaskArticle::ACTION_TRUE : TaskArticle::ACTION_FALSE));
+                                        action ? TaskArticle::ACTION_TRUE : TaskArticle::ACTION_FALSE));
   if (!tasks.empty())
     queue->add_tasks (tasks, Queue::BOTTOM);
 }
