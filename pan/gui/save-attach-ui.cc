@@ -28,6 +28,7 @@ extern "C" {
 #include <pan/tasks/task-article.h>
 #include <pan/tasks/queue.h>
 #include <pan/usenet-utils/text-massager.h>
+#include <pan/data-impl/rules-filter.h>
 #include "hig.h"
 #include "pad.h"
 #include "pan-file-entry.h"
@@ -106,6 +107,8 @@ SaveAttachmentsDialog :: response_cb (GtkDialog * dialog,
 
     std::string sep( self->_prefs.get_string("save-subj-seperator", "-") );
 
+    const bool always (self->_prefs.get_flag("mark-downloaded-articles-read", false));
+
     // make the tasks...
     Queue::tasks_t tasks;
     foreach_const (std::vector<Article>, self->_articles, it)
@@ -117,6 +120,7 @@ SaveAttachmentsDialog :: response_cb (GtkDialog * dialog,
                                         *it,
                                         self->_cache,
                                         self->_read,
+                                        always ? TaskArticle::ALWAYS_MARK : TaskArticle::NEVER_MARK,
                                         0,
                                         TaskArticle::DECODE,
                                         path,

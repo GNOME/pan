@@ -35,6 +35,7 @@ extern "C" {
 #include <pan/general/string-view.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/general/utf8-utils.h>
+#include <pan/data-impl/rules-filter.h>
 #include "nzb.h"
 #include "task-article.h"
 #include "task-upload.h"
@@ -169,7 +170,8 @@ namespace
           mc.a.xref.insert (*sit, *git, 0);
       }
       const StringView p (mc.path.empty() ? mc.fallback_path : StringView(mc.path));
-      TaskArticle* a = new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, 0, TaskArticle::DECODE, p);
+      /// TODO get action mark read from prefs (?)
+      TaskArticle* a = new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, TaskArticle::NO_ACTION, 0, TaskArticle::DECODE, p);
       if (mc.paused == "1")
         a->set_start_paused(true);
       mc.tasks.push_back (a);

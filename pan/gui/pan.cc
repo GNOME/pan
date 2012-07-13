@@ -913,6 +913,7 @@ main (int argc, char *argv[])
     WorkerPool worker_pool (4, true);
     SocketCreator socket_creator(data, certstore);
     Queue queue (data, data, &socket_creator, certstore, prefs, worker_pool, false, 32768);
+
     data.set_queue (&queue);
 
 #ifdef HAVE_DBUS

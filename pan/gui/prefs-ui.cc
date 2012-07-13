@@ -724,7 +724,6 @@ PrefsDialog :: on_prefs_string_changed (const StringView& key, const StringView&
     _prefs.save();
     update_default_charset_label(value);
   }
-
 }
 
 void
@@ -953,7 +952,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG::workarea_add_section_divider (t, &row);
 
     HIG :: workarea_add_section_title (t, &row, _("Articles"));
-    HIG :: workarea_add_section_spacer (t, row, 5);
+    HIG :: workarea_add_section_spacer (t, row, 6);
+    w = new_check_button (_("Mark downloaded articles read"), "mark-downloaded-articles-read", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Space selects next article rather than next unread"), "space-selects-next-article", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Expand threads upon selection"), "expand-selected-articles", false, prefs);
@@ -1098,16 +1099,16 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     int i(0);
     GtkWidget** action_combo = new GtkWidget*[2];
     char* tmp = _("Mark affected articles read");
-    action_combo[i++] = new_check_button (tmp, "auto-delete-mark-read", false, prefs);
-    action_combo[i++] = new_check_button (tmp, "autocache-mark-read", false, prefs);
-    action_combo[i++] = new_check_button (tmp, "auto-dl-mark-read", false, prefs);
+    action_combo[i++] = new_check_button (tmp, "rules-autocache-mark-read", false, prefs);
+    action_combo[i++] = new_check_button (tmp, "rules-autocache-mark-read", false, prefs);
+    action_combo[i++] = new_check_button (tmp, "rules-auto-dl-mark-read", false, prefs);
     i=0;
 
     w = score_handler_new (prefs, "rules-delete-value", "never", b);
     h = gtk_hbox_new (false, PAD);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
     gtk_box_pack_start (GTK_BOX(h), action_combo[i++], false, false, 0);
-    HIG :: workarea_add_row (t, &row, _("_Delete articles scoring at: "), w);
+    HIG :: workarea_add_row (t, &row, _("_Delete articles scoring at: "), h);
 
     w = score_handler_new (prefs, "rules-mark-read-value", "never", b);
     HIG :: workarea_add_row (t, &row, _("Mark articles as _read scoring at: "), w);
@@ -1272,11 +1273,11 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   gtk_widget_show_all (scroll);
 
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), scroll, new_label_with_icon(_("_Shortcuts"), _("Shortcuts"), icon_prefs_hotkeys, prefs));
+  gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
 
   gtk_widget_show_all (notebook);
   gtk_box_pack_start (GTK_BOX(gtk_dialog_get_content_area( GTK_DIALOG(dialog))), notebook, true, true, 0);
 
-  gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
-
   _root = dialog;
+
 }

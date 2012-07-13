@@ -88,6 +88,7 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
                             const Article             & article,
                             ArticleCache              & cache,
                             ArticleRead               & read,
+                            const ArticleActionType& mark_read_action,
                             Progress::Listener        * listener,
                             SaveMode                    save_mode,
                             const Quark               & save_path,
@@ -98,6 +99,7 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   _server_rank (server_rank),
   _cache (cache),
   _read (read),
+  _mark_read_action (mark_read_action),
   _article (article),
   _time_posted (article.time_posted),
   _save_mode (save_mode),
@@ -392,8 +394,17 @@ TaskArticle :: on_worker_done (bool cancelled)
       verbose (it->c_str());
     }
 
-    if (_decoder->mark_read)
-      _read.mark_read(_article);
+    // marks read if either there was no filter action involved or
+    // the user chose to mark read after the action
+    const bool act_on_action (_mark_read_action == ACTION_TRUE);
+    const bool no_action (_mark_read_action == NO_ACTION);
+    const bool always (_mark_read_action == ALWAYS_MARK);
+    const bool never (_mark_read_action == NEVER_MARK);
+    if (!never)
+    {
+      if (_decoder->mark_read && (no_action || act_on_action || always))
+        _read.mark_read(_article);
+    }
 
     if (!_decoder->log_errors.empty())
       set_error (_decoder->log_errors.front());

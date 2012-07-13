@@ -251,32 +251,39 @@ DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
 void
 DataImpl :: MyTree :: cache_articles (std::set<const Article*> s)
 {
-  Queue * q (_data.get_queue());
-  if (!q) return;
+  Queue* queue (_data.get_queue());
+  Prefs& prefs (_data.get_prefs());
+  const bool action (prefs.get_flag("rules-autocache-mark-read", false));
+  const bool always (prefs.get_flag("mark-downloaded-articles-read", false));
 
   Queue::tasks_t tasks;
   ArticleCache& cache(_data.get_cache());
   foreach_const (std::set<const Article*>, s, it)
     if (!_data.is_read(*it))
-      tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data));
+      tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data,
+                                        always ? TaskArticle::ALWAYS_MARK : action ? TaskArticle::ACTION_TRUE : TaskArticle::ACTION_FALSE));
   if (!tasks.empty())
-    q->add_tasks (tasks, Queue::BOTTOM);
+    queue->add_tasks (tasks, Queue::BOTTOM);
 }
 
 void
 DataImpl :: MyTree :: download_articles (std::set<const Article*> s)
 {
-  Queue * q (_data.get_queue());
-  if (!q) return;
+  Queue* queue (_data.get_queue());
 
   Queue::tasks_t tasks;
   ArticleCache& cache(_data.get_cache());
+  Prefs& prefs (_data.get_prefs());
+  const bool action (prefs.get_flag("rules-auto-dl-mark-read", false));
+  const bool always (prefs.get_flag("mark-downloaded-articles-read", false));
 
   foreach_const (std::set<const Article*>, s, it)
     if (!_data.is_read(*it))
-      tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data, 0, TaskArticle::DECODE, _save_path));
+      tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data,
+                                        always ? TaskArticle::ALWAYS_MARK : action ? TaskArticle::ACTION_TRUE : TaskArticle::ACTION_FALSE,
+                                        0, TaskArticle::DECODE, _save_path));
   if (!tasks.empty())
-    q->add_tasks (tasks, Queue::BOTTOM);
+    queue->add_tasks (tasks, Queue::BOTTOM);
 }
 
 

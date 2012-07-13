@@ -40,6 +40,7 @@ extern "C" {
 #include <pan/tasks/task-xover.h>
 #include <pan/tasks/nzb.h>
 #include <pan/icons/pan-pixbufs.h>
+#include <pan/data-impl/rules-filter.h>
 #include "actions.h"
 #include "body-pane.h"
 #include "dl-headers-ui.h"
@@ -685,12 +686,14 @@ void GUI :: do_save_articles_to_nzb ()
   foreach_const (std::vector<const Article*>, articles, it)
     copies.push_back (**it);
 
+  const bool always (_prefs.get_flag("mark-downloaded-articles-read", false));
+
   const std::string file (GUI :: prompt_user_for_filename (get_window(_root), _prefs));
     if (!file.empty()) {
       Queue::tasks_t tasks;
       std::string emptystring;
       foreach_const (std::vector<Article>, copies, it)
-        tasks.push_back (new TaskArticle (_data, _data, *it, _cache, _data, 0, TaskArticle::RAW,emptystring));
+        tasks.push_back (new TaskArticle (_data, _data, *it, _cache, _data, always ? TaskArticle::ALWAYS_MARK : TaskArticle::NEVER_MARK, 0, TaskArticle::RAW,emptystring));
 
       // write them to a file
       std::ofstream tmp(file.c_str());
@@ -765,6 +768,7 @@ namespace
 
 void GUI :: do_save_articles_from_nzb ()
 {
+  const bool always (_prefs.get_flag("mark-downloaded-articles-read", false));
   const Article* article (_header_pane->get_first_selected_article ());
   if (article)
   {
@@ -773,7 +777,7 @@ void GUI :: do_save_articles_from_nzb ()
     {
       SaveArticlesFromNZB * listener = new SaveArticlesFromNZB (_data, _queue, _root,
                                                                 _prefs, _cache, _encode_cache, *article, path);
-      Task * t = new TaskArticle (_data, _data, *article, _cache, _data, listener);
+      Task * t = new TaskArticle (_data, _data, *article, _cache, _data, always ? TaskArticle::ALWAYS_MARK : TaskArticle::NEVER_MARK, listener);
       _queue.add_task (t, Queue::TOP);
     }
   }
@@ -989,9 +993,11 @@ void GUI :: do_read_selected_article ()
   if (article)
   {
     const bool expand (_prefs.get_flag("expand-selected-articles",false));
+    const bool always (_prefs.get_flag("mark-downloaded-articles-read", false));
+
     if (expand) _header_pane->expand_selected ();
 
-    Task * t = new TaskArticle (_data, _data, *article, _cache, _data, this);
+    Task * t = new TaskArticle (_data, _data, *article, _cache, _data, always ? TaskArticle::ALWAYS_MARK : TaskArticle::NEVER_MARK, this);
     _queue.add_task (t, Queue::TOP);
   }
 }
@@ -999,9 +1005,10 @@ void GUI :: do_download_selected_article ()
 {
   typedef std::vector<const Article*> article_vector_t;
   const article_vector_t articles (_header_pane->get_full_selection_v ());
+  const bool always (_prefs.get_flag("mark-downloaded-articles-read", false));
   Queue::tasks_t tasks;
   foreach_const (article_vector_t, articles, it)
-    tasks.push_back (new TaskArticle (_data, _data, **it, _cache, _data));
+    tasks.push_back (new TaskArticle (_data, _data, **it, _cache, _data, always ? TaskArticle::ALWAYS_MARK : TaskArticle::NEVER_MARK));
   if (!tasks.empty())
     _queue.add_tasks (tasks, Queue::TOP);
 }

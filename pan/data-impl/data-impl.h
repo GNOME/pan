@@ -90,10 +90,20 @@ namespace pan
       virtual CertStore& get_certstore () { return _certstore; }
       virtual const CertStore& get_certstore () const { return _certstore; }
 
+      virtual Prefs& get_prefs () { return _prefs; }
+      virtual const Prefs& get_prefs () const { return _prefs; }
+
+      virtual Queue* get_queue () { return _queue; }
+      virtual const Queue* get_queue () const { return _queue; }
+
+      virtual void set_queue (Queue* q) { _queue = q; }
+
     private:
       ArticleCache _cache;
       EncodeCache _encode_cache;
       CertStore _certstore;
+      Prefs _prefs;
+      Queue* _queue;
 
     public:
 #ifdef HAVE_GKR
@@ -105,7 +115,6 @@ namespace pan
       void rebuild_backend ();
       const bool _unit_test;
       DataIO * _data_io;
-      Prefs& _prefs;
 
     /**
     *** SERVERS

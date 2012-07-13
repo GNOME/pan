@@ -73,6 +73,7 @@ Decoder :: enqueue (TaskArticle                     * task,
   this->attachment_filename = filename;
 
   mark_read = false;
+
   percent = 0;
   num_scanned_files = 0;
   current_file.clear ();

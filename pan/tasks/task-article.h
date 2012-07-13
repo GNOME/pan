@@ -54,6 +54,15 @@ namespace pan
         SAVE_AS
       };
 
+      enum ArticleActionType
+      {
+        ACTION_TRUE,
+        ACTION_FALSE,
+        NO_ACTION,
+        NEVER_MARK,
+        ALWAYS_MARK // TODO implement this in prefs (mark articles read after download ....)
+      };
+
       enum SaveMode { NONE=0, DECODE=(1<<0), RAW=(1<<1) };
 
       TaskArticle (const ServerRank   & server_rank,
@@ -61,6 +70,7 @@ namespace pan
                    const Article      & article,
                    ArticleCache       & cache,
                    ArticleRead        & read,
+                   const ArticleActionType&  mark_read_action,
                    Progress::Listener* l=0,
                    SaveMode             save_mode = NONE,
                    const Quark        & save_path = Quark(),
@@ -106,6 +116,7 @@ namespace pan
       const Article _article;
       const time_t _time_posted;
       StringView _attachment;
+      ArticleActionType _mark_read_action;
 
     private: // implementation
       const SaveMode _save_mode;

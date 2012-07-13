@@ -34,7 +34,7 @@
 #include <pan/data/encode-cache.h>
 #include <pan/data/cert-store.h>
 #include <pan/data/server-info.h>
-
+#include <pan/gui/prefs.h>
 
 #ifdef HAVE_GKR
   #include <gnome-keyring-1/gnome-keyring.h>
@@ -591,14 +591,6 @@ namespace pan
        virtual void rescore_articles (const Quark& group, const quarks_t mids) = 0;
 
        virtual void rescore () = 0;
-
-    public:
-      void set_queue (Queue* q) { _queue = q; }
-      Queue* get_queue () { return _queue; }
-
-    private:
-      Queue * _queue;
-
 
     /*****************************************************************
     ***
