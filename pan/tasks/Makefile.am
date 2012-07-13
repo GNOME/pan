@@ -1,11 +1,12 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @GNUTLS_CFLAGS@ @GTK_CFLAGS@
+AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @GNUTLS_CFLAGS@ @GTK_CFLAGS@ @ZLIB_CFLAGS@
 
-AM_LDFLAGS = ../../uulib/libuu.a @GNUTLS_LIBS@ @GTK_LIBS@
+AM_LDFLAGS = ../../uulib/libuu.a @GNUTLS_LIBS@ @ZLIB_LIBS@
 
 noinst_LIBRARIES = libtasks.a
 
 libtasks_a_SOURCES = \
   decoder.cc \
+  xzver-decoder.cc \
   encoder.cc \
   task.cc \
   task-article.cc \
@@ -29,6 +30,7 @@ noinst_HEADERS = \
   adaptable-set.cc \
   adaptable-set.h \
   decoder.h \
+  xzver-decoder.h \
   encoder.h \
   defgroup.h \
   health.h \

@@ -30,6 +30,7 @@ extern "C" {
 }
 #include <fstream>
 #include <iostream>
+#include <pan/general/log.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
@@ -38,12 +39,13 @@ extern "C" {
 #include <pan/data/data.h>
 #include "nntp.h"
 #include "task-xover.h"
-
+#include "xzver-decoder.h"
 
 using namespace pan;
 
 namespace
 {
+
    std::string
    get_short_name (const StringView& in)
    {
@@ -85,6 +87,16 @@ namespace
   }
 }
 
+namespace
+{
+  char* build_cachename (char* buf, size_t len, const char* name)
+  {
+    const char * home(file::get_pan_home().c_str());
+    g_snprintf(buf,len,"%s%c%s%c%s",home, G_DIR_SEPARATOR, "encode-cache", G_DIR_SEPARATOR, name);
+    return buf;
+  }
+}
+
 TaskXOver :: TaskXOver (Data         & data,
                         const Quark  & group,
                         Mode           mode,
@@ -100,8 +112,13 @@ TaskXOver :: TaskXOver (Data         & data,
   _bytes_so_far (0),
   _parts_so_far (0ul),
   _articles_so_far (0ul),
-  _total_minitasks (0)
+  _total_minitasks (0),
+  _running_minitasks (0),
+  _decoder(0),
+  _decoder_has_run (false)
 {
+
+
 
   debug ("ctor for " << group);
 
@@ -124,6 +141,12 @@ TaskXOver :: TaskXOver (Data         & data,
   update_work ();
 }
 
+void
+TaskXOver :: setHigh(const Quark& server, uint64_t& h)
+{
+  _high[server] = h;
+}
+
 TaskXOver :: ~TaskXOver ()
 {
   if (_group_xover_is_reffed) {
@@ -131,6 +154,9 @@ TaskXOver :: ~TaskXOver ()
       _data.set_xover_high (_group, it->first, it->second);
     _data.xover_unref (_group);
   }
+  if (_decoder)
+    _decoder->cancel_silently();
+
   _data.fire_group_entered(_group, 1, 0);
 }
 
@@ -139,6 +165,10 @@ TaskXOver :: use_nntp (NNTP* nntp)
 {
   const Quark& server (nntp->_server);
   debug ("got an nntp from " << nntp->_server);
+  CompressionType type;
+  _data.get_server_compression_type(nntp->_server, type);
+
+  _compression_enabled = type != HEADER_COMPRESS_NONE;
 
   // if this is the first nntp we've gotten, ref the xover data
   if (!_group_xover_is_reffed) {
@@ -149,7 +179,7 @@ TaskXOver :: use_nntp (NNTP* nntp)
   MiniTasks_t& minitasks (_server_to_minitasks[server]);
   if (minitasks.empty())
   {
-    debug ("That's interesting, I got a socket for " << server << " but have no use for it!");
+    debug ("That's interesting, I got a socket for " << server << " but _have no use for it!");
     _state._servers.erase (server);
     check_in (nntp, OK);
   }
@@ -166,7 +196,18 @@ TaskXOver :: use_nntp (NNTP* nntp)
       case MiniTask::XOVER:
         debug ("XOVER " << mt._low << '-' << mt._high << " to " << server);
         _last_xover_number[nntp] = mt._low;
-        nntp->xover (_group, mt._low, mt._high, this);
+        if (_compression_enabled)
+        {
+// TODO support XFEATURE!
+//          if (type == XZVER)
+            nntp->xzver (_group, mt._low, mt._high, this);
+//          if (type == XFEATURE)
+//            nntp->xfeat (_group, mt._low, mt._high, this);
+          // TODO diablo
+        }
+        else
+          nntp->xover (_group, mt._low, mt._high, this);
+        --_running_minitasks;
         break;
       default:
         assert (0);
@@ -179,7 +220,6 @@ TaskXOver :: use_nntp (NNTP* nntp)
 ****
 ***/
 
-///TODO show low and high in UI (is this already there?)
 void
 TaskXOver :: on_nntp_group (NNTP          * nntp,
                             const Quark   & group,
@@ -219,15 +259,32 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
 
   if (l <= high)
   {
-    //std::cerr << LINE_ID << " okay, I'll try to get articles in [" << l << "..." << h << ']' << std::endl;
+//    std::cerr << LINE_ID << " okay, I'll try to get articles in [" << l << "..." << h << ']' << std::endl;
+
     add_steps (h-l);
-    const int INCREMENT(1000);
+
     MiniTasks_t& minitasks (_server_to_minitasks[servername]);
-    for (uint64_t m=l; m<=h; m+=INCREMENT) {
-      MiniTask mt (MiniTask::XOVER, m, m+INCREMENT);
-      debug ("adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << "]");
-      minitasks.push_front (mt);
-      ++_total_minitasks;
+    if (_compression_enabled)
+    {
+      const int INCREMENT(100000);
+      MiniTasks_t& minitasks (_server_to_minitasks[servername]);
+      for (uint64_t m=l; m<=h; m+=INCREMENT) {
+        MiniTask mt (MiniTask::XOVER, m, m+INCREMENT);
+        debug ("adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << "]");
+        minitasks.push_front (mt);
+        ++_total_minitasks;
+      }
+    }
+    else
+    {
+      const int INCREMENT(1000);
+      MiniTasks_t& minitasks (_server_to_minitasks[servername]);
+      for (uint64_t m=l; m<=h; m+=INCREMENT) {
+        MiniTask mt (MiniTask::XOVER, m, m+INCREMENT);
+        debug ("adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << "]");
+        minitasks.push_front (mt);
+        ++_total_minitasks;
+      }
     }
   }
   else
@@ -235,6 +292,7 @@ TaskXOver :: on_nntp_group (NNTP          * nntp,
     //std::cerr << LINE_ID << " nothing new here..." << std::endl;
     _high[nntp->_server] = high;
   }
+  _running_minitasks = _total_minitasks;
 }
 
 namespace
@@ -278,6 +336,31 @@ void
 TaskXOver :: on_nntp_line         (NNTP               * nntp,
                                    const StringView   & line)
 {
+    if (_compression_enabled) {
+
+      std::string l(line.str);
+
+      if (line.strstr("=ybegin line=128"))
+      {
+        l += " name=xzver_decoded\n";
+        nntp->_socket->write(l);
+      }
+      else
+      {
+        l += "\n";
+        nntp->_socket->write(l);
+      }
+    }
+    else
+    {
+      on_nntp_line_process (nntp, line);
+    }
+}
+
+void
+TaskXOver :: on_nntp_line_process (NNTP               * nntp,
+                                   const StringView   & line)
+{
 
   pan_return_if_fail (nntp != 0);
   pan_return_if_fail (!nntp->_server.empty());
@@ -299,6 +382,7 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
 
   //handle multiple "References:"-message-ids correctly.
   ok = ok && l.pop_token (tmp, '\t');
+  ref += tmp;
   do
   {
     if (tmp.empty()) continue;
@@ -339,9 +423,6 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
                                   nntp->_group.c_str(),
                                   number);
 
-  uint64_t& h (_high[nntp->_server]);
-  h = std::max (h, number);
-
   const char * fallback_charset = NULL; // FIXME
 
   // are we done?
@@ -362,8 +443,11 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
   if (article)
     ++_articles_so_far;
 
-  // emit a status update
+//   emit a status update
   uint64_t& prev = _last_xover_number[nntp];
+  uint64_t& h (_high[nntp->_server]);
+  h = std::max (h, number);
+
   increment_step (number - prev);
   prev = number;
   if (!(_parts_so_far % 500))
@@ -378,6 +462,15 @@ TaskXOver :: on_nntp_done (NNTP              * nntp,
                            Health              health,
                            const StringView  & response UNUSED)
 {
+  if (_compression_enabled)
+  {
+    DataStream stream;
+    stream.stream = nntp->_socket->get_stream();
+    stream.group = nntp->_group;
+    stream.server = nntp->_server;
+    _data_streams.push_back(stream);
+  }
+
   update_work (true);
   check_in (nntp, health);
 }
@@ -385,6 +478,7 @@ TaskXOver :: on_nntp_done (NNTP              * nntp,
 void
 TaskXOver :: update_work (bool subtract_one_from_nntp_count)
 {
+
   int nntp_count (get_nntp_count ());
   if (subtract_one_from_nntp_count)
     --nntp_count;
@@ -395,16 +489,50 @@ TaskXOver :: update_work (bool subtract_one_from_nntp_count)
     if (!it->second.empty())
       servers.insert (it->first);
 
-  //std::cerr << LINE_ID << " servers: " << servers.size() << " nntp: " << nntp_count << std::endl;
-
   if (!servers.empty())
+  {
     _state.set_need_nntp (servers);
-  else if (nntp_count)
-    _state.set_working ();
-  else {
-    _state.set_completed();
-    set_finished(OK);
   }
+  else if (nntp_count)
+  {
+    _state.set_working ();
+  }
+  else if (_data_streams.size() != 0 || (!_decoder && !_decoder_has_run)) {
+    _state.set_need_xzverdecoder ();
+  } else if (_decoder_has_run) {
+    _state.set_completed();
+    set_finished (OK);
+  } else if (!_compression_enabled)
+  {
+    _state.set_completed();
+    set_finished (OK);
+  } else assert(0 && "hm, missed a state.");
+}
+
+void
+TaskXOver:: use_decoder (Decoder* decoder)
+{
+  if (_state._work != NEED_XZVER_DECODER)
+    check_in (decoder);
+
+  _decoder = static_cast<XZVERDecoder*>(decoder);
+  _state.set_working();
+
+  DataStream* stream = new DataStream();
+  DataStream& ref(_data_streams.back());
+  stream->stream = ref.stream;
+  stream->group = ref.group;
+  stream->server = ref.server;
+  _data_streams.pop_back();
+  _decoder->enqueue (this, stream, &_data);
+  debug ("decoder thread was free, enqueued work");
+}
+
+void
+TaskXOver :: stop ()
+{
+  if (_decoder)
+      _decoder->cancel();
 }
 
 unsigned long
@@ -419,4 +547,51 @@ TaskXOver :: get_bytes_remaining () const
     return 0;
   const unsigned long total_bytes = (unsigned long)(_bytes_so_far / percent_done);
   return total_bytes - _bytes_so_far;
+}
+
+
+void
+TaskXOver :: on_worker_done (bool cancelled)
+{
+  assert(_decoder);
+  if (!_decoder) return;
+
+  if (!cancelled)
+  {
+    // the decoder is done... catch up on all housekeeping
+    // now that we're back in the main thread.
+
+    foreach_const(Decoder::log_t, _decoder->log_severe, it)
+    {
+      Log :: add_err(it->c_str());
+      verbose (it->c_str());
+    }
+    foreach_const(Decoder::log_t, _decoder->log_errors, it)
+    {
+      Log :: add_err(it->c_str());
+      verbose (it->c_str());
+    }
+    foreach_const(Decoder::log_t, _decoder->log_infos, it)
+    {
+      Log :: add_info(it->c_str());
+      verbose (it->c_str());
+    }
+
+    if (!_decoder->log_errors.empty())
+      set_error (_decoder->log_errors.front());
+
+    _state.set_health(_decoder->health);
+
+    if (!_decoder->log_severe.empty())
+      _state.set_health (ERR_LOCAL);
+    else {
+      _state.set_completed();
+      _decoder_has_run = true;
+    }
+  }
+
+  Decoder * d (_decoder);
+  _decoder = 0;
+  update_work ();
+  check_in (d);
 }

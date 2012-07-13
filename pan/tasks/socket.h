@@ -27,6 +27,8 @@
   #include <gnutls/gnutls.h>
 #endif
 
+#include <sstream>
+
 namespace pan
 {
   class StringView;
@@ -54,6 +56,10 @@ namespace pan
         virtual void on_socket_abort (Socket*) = 0;
       };
 
+      void write(const std::string& str) { *_stream << str; }
+      void clear() { (*_stream).clear(); }
+      std::stringstream*& get_stream() { return _stream; }
+
     public:
       virtual bool open (const StringView& address, int port, std::string& setme_err) = 0;
       virtual void write_command (const StringView& chars, Listener *) = 0;
@@ -72,6 +78,7 @@ namespace pan
       mutable time_t _time_of_last_check;
       mutable double _speed_KiBps;
       bool _abort_flag;
+      std::stringstream* _stream;
 
     public:
 
