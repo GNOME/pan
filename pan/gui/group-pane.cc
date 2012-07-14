@@ -686,6 +686,8 @@ namespace
 {
   bool shorten;
 
+  std::string def_fg, def_bg;
+
   void
   render_group_name (GtkTreeViewColumn * ,
                      GtkCellRenderer   * renderer,
@@ -693,7 +695,8 @@ namespace
                      GtkTreeIter       * iter,
                      gpointer          gp)
   {
-	GroupPane* pane (static_cast<GroupPane*>(gp));
+
+    GroupPane* pane (static_cast<GroupPane*>(gp));
     PanTreeStore * tree (PAN_TREE_STORE(model));
     MyRow * row (dynamic_cast<MyRow*>(tree->get_row (iter)));
     const unsigned long& unread (row->unread);
@@ -709,25 +712,22 @@ namespace
       group_name += buf;
     }
 
-
-
-
     std::string fg_col(pane->get_group_prefs().get_group_color_str(name));
     if (fg_col.empty())
-      fg_col = pane->get_prefs().get_color_str_wo_fallback("group-pane-fg-color");
-
-    if (fg_col.empty())
     {
-      GdkColor def_fg;
-      GtkStyle *style = gtk_rc_get_style(pane->root());
-      if(!gtk_style_lookup_color(style, "text_color", &def_fg))
-        gdk_color_parse("black", &def_fg);
-      fg_col = GroupPrefs::color_to_string(def_fg);
+      fg_col = pane->get_prefs().get_color_str_wo_fallback("group-pane-color-fg");
+        if (fg_col.empty())
+          fg_col = def_fg;
     }
+
+    std::string bg_col (pane->get_prefs().get_color_str_wo_fallback("group-pane-color-bg"));
+    if (bg_col.empty())
+        bg_col = def_bg;
 
     g_object_set (renderer, "text", group_name.c_str(),
                             "weight", (!is_g || unread ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
-                            "foreground", fg_col.c_str(),
+                            "foreground", fg_col.empty() ? NULL : fg_col.c_str(),
+                            "background", bg_col.empty() ? NULL : bg_col.c_str(),
                             NULL);
   }
 }
@@ -937,6 +937,11 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs,
   _action_manager (action_manager),
   _dirty_groups_idle_tag (0)
 {
+
+  const PanColors& colors (PanColors::get());
+  def_bg = colors.def_bg;
+  def_fg = colors.def_fg;
+
   shorten = prefs.get_flag ("shorten-group-names", false);
   sub_title_quark = new Quark (_("Subscribed Groups"));
   other_title_quark = new Quark (_("Other Groups"));

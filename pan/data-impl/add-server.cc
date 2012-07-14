@@ -62,7 +62,6 @@ int main (int argc, char *argv[])
 //  TaskArchive null_task_archive;
 //  WorkerPool pool;
 //  CertStore cs;
-//  // FIXME : adapt!
 //  SocketCreator _socket_creator(cs);
 //  Queue queue (data, null_task_archive, &_socket_creator, cs, pool, true, 10);
 //  queue.add_task (new TaskGroups (data, servername));

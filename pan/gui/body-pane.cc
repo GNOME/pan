@@ -196,7 +196,7 @@ namespace
   void free_cursors (void)
   {
     for (int i=0; i<CURSOR_QTY; ++i)
-      gdk_cursor_unref (cursors[i]);
+      cursor_unref (cursors[i]);
   }
 
   void ensure_cursors_created (GtkWidget * w)
@@ -321,7 +321,7 @@ namespace
     {
       int x, y;
       if (event->is_hint)
-        gdk_window_get_pointer (event->window, &x, &y, NULL);
+        gdk_window_get_device_position (event->window, event->device, &x, &y, NULL);
       else {
         x = (int) event->x;
         y = (int) event->y;
@@ -454,6 +454,7 @@ BodyPane :: mouse_button_pressed (GtkWidget *w, GdkEventButton *event)
         const bool fullsize (toggle_fullsize_flag (buf));
         GtkAllocation aloc;
         gtk_widget_get_allocation(w, &aloc);
+//        std::cerr<<"457 alloc "<<aloc.x<<" "<<aloc.y<<" "<<aloc.width<<" "<<aloc.height<<"\n";
         resize_picture_at_iter (buf, &iter, fullsize, &aloc, pix_tag);
         gtk_text_iter_set_offset (&iter, offset);
         set_cursor_from_iter (event->window, w, &iter);
@@ -475,6 +476,7 @@ BodyPane :: mouse_button_pressed (GtkWidget *w, GdkEventButton *event)
 ***/
 namespace
 {
+
   GtkTextTag* get_or_create_tag (GtkTextTagTable * table, const char * key)
   {
     g_assert (table);
@@ -492,9 +494,14 @@ namespace
   void
   set_text_buffer_tags (GtkTextBuffer * buffer, const Prefs& p)
   {
+    const PanColors& colors (PanColors::get());
+    const std::string& bg (colors.def_bg);
+
     GtkTextTagTable * table = gtk_text_buffer_get_tag_table (buffer);
+
     get_or_create_tag (table, "pixbuf");
     get_or_create_tag (table, "quote_0");
+
     g_object_set (get_or_create_tag(table,"bold"),
       "weight", PANGO_WEIGHT_BOLD,
       NULL);
@@ -507,18 +514,23 @@ namespace
     g_object_set (get_or_create_tag (table, "url"),
       "underline", PANGO_UNDERLINE_SINGLE,
       "foreground", p.get_color_str ("body-pane-color-url", TANGO_SKY_BLUE_DARK).c_str(),
+      "background", p.get_color_str ("body-pane-color-url-bg", bg).c_str(),
       NULL);
     g_object_set (get_or_create_tag (table, "quote_1"),
       "foreground", p.get_color_str ("body-pane-color-quote-1", TANGO_CHAMELEON_DARK).c_str(),
+      "background", p.get_color_str ("body-pane-color-quote-1-bg", bg).c_str(),
       NULL);
     g_object_set (get_or_create_tag (table, "quote_2"),
       "foreground", p.get_color_str ("body-pane-color-quote-2", TANGO_ORANGE_DARK).c_str(),
+      "background", p.get_color_str ("body-pane-color-quote-2-bg", bg).c_str(),
       NULL);
     g_object_set (get_or_create_tag (table, "quote_3"),
       "foreground", p.get_color_str ("body-pane-color-quote-3", TANGO_PLUM_DARK).c_str(),
+      "background", p.get_color_str ("body-pane-color-quote-3-bg", bg).c_str(),
       NULL);
     g_object_set (get_or_create_tag (table, "signature"),
       "foreground", p.get_color_str ("body-pane-color-signature", TANGO_SKY_BLUE_LIGHT).c_str(),
+      "background", p.get_color_str ("body-pane-color-signature-bg", bg).c_str(),
       NULL);
   }
 }
@@ -1434,7 +1446,7 @@ BodyPane :: text_size_allocated_idle ()
     if (gtk_text_iter_begins_tag (&iter, tag))
     {
       gtk_widget_get_allocation(_text, &aloc);
-      // BUG : resize
+//      std::cerr<<"1449 alloc "<<aloc.x<<" "<<aloc.y<<" "<<aloc.width<<" "<<aloc.height<<"\n";
       resize_picture_at_iter (buf, &iter, fullsize, &aloc, tag);
     }
     if (!gtk_text_iter_forward_char (&iter))
@@ -1555,7 +1567,7 @@ BodyPane :: new_attachment (const char* filename)
 {
   if (!filename) return 0;
 
-  GtkWidget* w = gtk_hbox_new(false, 0);
+  GtkWidget* w = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   GtkWidget* attachment = gtk_label_new(filename);
   GtkWidget * image = gtk_image_new_from_stock(GTK_STOCK_FILE, GTK_ICON_SIZE_MENU);
 
@@ -1598,7 +1610,7 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
   if (!fn) return;
 
   GtkWidget* w = new_attachment(fn);
-  gtk_widget_set_size_request(w, -1, 32);
+//  gtk_widget_set_size_request(w, -1, 32);
 
   ++_attachments;
 #if !GTK_CHECK_VERSION(3,0,0)
@@ -1692,7 +1704,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_menu_shell_append (GTK_MENU_SHELL(_menu),l);
   gtk_widget_show_all(_menu);
 
-  GtkWidget * vbox = gtk_vbox_new (false, PAD);
+  GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, PAD);
   gtk_container_set_resize_mode (GTK_CONTAINER(vbox), GTK_RESIZE_QUEUE);
 
   // about this expander... getting the ellipsis to work is a strange process.
@@ -1717,7 +1729,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_widget_show (_terse);
   g_signal_connect (_terse, "button-press-event", G_CALLBACK(verbose_clicked_cb), this);
 
-  hbox = _verbose = gtk_hbox_new (false, 0);
+  hbox = _verbose = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   g_object_ref_sink (G_OBJECT(_verbose));
   w = _headers = gtk_label_new ("Headers");
   gtk_label_set_selectable (GTK_LABEL(_headers), TRUE);

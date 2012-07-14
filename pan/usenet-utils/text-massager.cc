@@ -450,7 +450,7 @@ TextMassager :: rot13_inplace (char * text)
 }
 
 std::string
-pan :: subject_to_path (const char * subjectline, bool full_subj, const std::string &seperator)
+pan :: subject_to_path (const char * subjectline, bool full_subj, const std::string &separator)
 {
   gchar *str1, *str2;
   const char *sep;
@@ -459,12 +459,12 @@ pan :: subject_to_path (const char * subjectline, bool full_subj, const std::str
   GRegexCompileFlags cf0((GRegexCompileFlags)0);
   GRegexMatchFlags mf0((GRegexMatchFlags)0);
 
-  if (seperator.length() != 1)
+  if (separator.length() != 1)
     sep = "-";
-  else switch (seperator[0]) {
+  else switch (separator[0]) {
     case ' ':
     case '-':
-    case '_': sep = seperator.c_str(); break;
+    case '_': sep = separator.c_str(); break;
     default : sep = "-"; break;
   }
 

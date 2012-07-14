@@ -62,7 +62,7 @@ namespace pan
    *
    * @ingroup usenet_utils
    */
-   std::string subject_to_path (const char * subjectline, bool full_subj, const std::string &seperator);
+   std::string subject_to_path (const char * subjectline, bool full_subj, const std::string &separator);
 
    std::string expand_download_dir_subject (const char * dir, const char * subjectline, const std::string &sep);
    std::string expand_download_dir (const char * dir, const StringView& group);

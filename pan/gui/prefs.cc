@@ -31,8 +31,58 @@ extern "C" {
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include "prefs.h"
+#include "group-prefs.h"
 
 using namespace pan;
+
+Prefs :: Prefs() :
+  _rules_changed(false)
+{
+
+  GtkWidget* root = gtk_entry_new();
+
+  GdkColor def_fg, def_bg;
+  std::string fg_col, bg_col;
+
+#if GTK_CHECK_VERSION(3,0,0)
+  GdkRGBA fg_color, bg_color;
+  GtkStyleContext* ctx = gtk_widget_get_style_context(root);
+  if(!ctx || !gtk_style_context_lookup_color(ctx, "color", &fg_color))
+    gdk_color_parse("black", &def_fg);
+  else
+  {
+    def_fg.red = fg_color.red;
+    def_fg.green = fg_color.red;
+    def_fg.blue = fg_color.blue;
+  }
+  if(!ctx || !gtk_style_context_lookup_color(ctx, "background-color", &bg_color))
+    gdk_color_parse("white", &def_bg);
+  else
+  {
+    def_bg.red = bg_color.red;
+    def_bg.green = bg_color.red;
+    def_bg.blue = bg_color.blue;
+  }
+#else
+  GtkStyle *style = gtk_rc_get_style(root);
+  if(!style || !gtk_style_lookup_color(style, "text_color", &def_fg))
+    gdk_color_parse("black", &def_fg);
+  if(!style || !gtk_style_lookup_color(style, "bg_color", &def_bg))
+    gdk_color_parse("white", &def_bg);
+
+#endif
+
+  fg_col = GroupPrefs::color_to_string(def_fg);
+  bg_col = GroupPrefs::color_to_string(def_bg);
+
+  gtk_widget_destroy (root);
+
+}
+
+Prefs :: ~Prefs()
+{
+//  delete _pan_colors; // TODO make pancolors a singleton?
+}
 
 // called for open tags <foo bar='baz'>
 void
@@ -98,16 +148,6 @@ Prefs :: start_element (GMarkupParseContext *,
     if (name && *name && value && *value)
       prefs.set_color (name, value);
   }
-
-//  if (s == "hotkey") {
-//    const char * name (0);
-//    const char * value (0);
-//    for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
-//      if (!strcmp (*k,"name"))  name = *v;
-//      else if (!strcmp(*k,"value")) value = *v;
-//    if (name && *name && value && *value)
-//      prefs.set_hotkey (name, value);
-//  }
 }
 
 void
@@ -380,3 +420,5 @@ Prefs :: get_color_str_wo_fallback (const StringView& key) const
   const GdkColor& col(_colors[key]);
   return color_to_string (col);
 }
+
+

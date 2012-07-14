@@ -890,7 +890,7 @@ main (int argc, char *argv[])
   {
     // load the preferences...
     char * filename = g_build_filename (file::get_pan_home().c_str(), "preferences.xml", NULL);
-    PrefsFile prefs (filename);
+    PrefsFile prefs (filename); // dummy is used to get fg/bg colors from UI
     g_free (filename);
     filename = g_build_filename (file::get_pan_home().c_str(), "group-preferences.xml", NULL);
     GroupPrefs group_prefs (filename);

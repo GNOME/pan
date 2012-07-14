@@ -26,6 +26,7 @@
 #include <string>
 #include <vector>
 #include <pan/general/string-view.h>
+#include <pan/gui/pan-colors.h>
 #include "gtk-compat.h"
 
 namespace pan
@@ -109,9 +110,9 @@ namespace pan
       bool get_geometry (const StringView&, int&, int&, int&, int&) const;
 
     public:
-      Prefs () { _rules_changed = false; }
+      Prefs ();
+      virtual ~Prefs () ;
       virtual void save () const {}
-      virtual ~Prefs () {}
 
     public:
       void to_string (int indent, std::string& setme) const;
@@ -136,7 +137,6 @@ namespace pan
       mutable colors_t _colors;
       typedef std::map<std::string,int> ints_t;
       mutable ints_t _ints;
-
 
     public:
       colors_t& get_colors() { return _colors; }

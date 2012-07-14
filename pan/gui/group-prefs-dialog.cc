@@ -36,6 +36,7 @@ extern "C" {
 #include "pad.h"
 #include "pan-file-entry.h"
 #include "gtk-compat.h"
+#include "pan-colors.h"
 
 #include <iostream>
 
@@ -243,14 +244,13 @@ namespace
   }
 
 
-  GtkWidget* new_color_button (const Quark& group, GroupPrefs& prefs, GroupPrefsDialog* dialog, GtkWidget* w)
+  GtkWidget* new_color_button (const Quark& group, Prefs& prefs, GroupPrefs& gprefs, GroupPrefsDialog* dialog, GtkWidget* w)
   {
-    GdkColor color;
-    GtkStyle *style = gtk_rc_get_style(w);
-    if(!gtk_style_lookup_color(style, "text_color", &color))
-      gdk_color_parse("black", &color);
 
-    const GdkColor& val (prefs.get_group_color (group, GroupPrefs::color_to_string(color)));
+    const PanColors& colors (PanColors::get());
+    const std::string& bg (colors.def_bg);
+
+    const GdkColor& val (gprefs.get_group_color (group, bg));
     GtkWidget * b = gtk_color_button_new_with_color (&val);
     g_signal_connect (b, "color-set", G_CALLBACK(color_set_cb), dialog);
     return b;
@@ -313,7 +313,7 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
     w = _spellchecker_language = create_spellcheck_combo_box ( groups[0], group_prefs);
     HIG :: workarea_add_row (t, &row, _("Spellchecker _language:"), w);
 #endif
-    w = _group_color = new_color_button (groups[0], _group_prefs, this, dialog);
+    w = _group_color = new_color_button (groups[0], _prefs, _group_prefs, this, dialog);
     HIG :: workarea_add_row(t, &row, _("Group color:"), w);
 
   gtk_box_pack_start ( GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG( dialog))), t, true, true, 0);

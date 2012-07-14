@@ -83,7 +83,8 @@ noinst_HEADERS = \
  taskpane.ui.h \
  url.h \
  wait.h \
- xface.h
+ xface.h \
+ pan-colors.h
 
 EXTRA_DIST = \
  panrc.rc

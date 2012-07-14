@@ -214,8 +214,8 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _group_prefs (group_prefs),
   _cache (data.get_cache()),
   _encode_cache (data.get_encode_cache()),
-  _root (gtk_vbox_new (FALSE, 0)),
-  _menu_vbox (gtk_vbox_new (FALSE, 0)),
+  _root (gtk_box_new (GTK_ORIENTATION_VERTICAL, 0)),
+  _menu_vbox (gtk_box_new (GTK_ORIENTATION_VERTICAL, 0)),
   _group_pane (0),
   _header_pane (0),
   _body_pane (0),
@@ -281,7 +281,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   gtk_box_pack_start (GTK_BOX(_root), w, false, false, 0);
   gtk_widget_show (w);
 
-  GtkWidget * status_bar (gtk_hbox_new (FALSE, 0));
+  GtkWidget * status_bar (gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0));
 
   // connection status
   w = _connection_size_label = gtk_label_new (NULL);
@@ -466,9 +466,7 @@ GUI :: watch_cursor_on ()
 {
   GdkCursor * cursor = gdk_cursor_new (GDK_WATCH);
   gdk_window_set_cursor ( gtk_widget_get_window(_root), cursor);
-  gdk_cursor_unref (cursor);
-//  while (gtk_events_pending ())
-//    gtk_main_iteration ();
+  cursor_unref (cursor);
 }
 
 void
@@ -1695,16 +1693,16 @@ namespace
       if (orient == VERTICAL) {
         if (uglyhack_idx==0)
         {
-          w = vpane = gtk_vpaned_new ();
+          w = vpane = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
         }
         else if (uglyhack_idx==2)
         {
-          w = sep_vpane = gtk_vpaned_new ();
+          w = sep_vpane = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
         }
         gtk_widget_set_size_request (w1, -1, 50);
         gtk_widget_set_size_request (w2, -1, 50);
       } else {
-        w = hpane = gtk_hpaned_new ();
+        w = hpane = gtk_paned_new(GTK_ORIENTATION_HORIZONTAL);
         gtk_widget_set_size_request (w1, 50, -1);
         gtk_widget_set_size_request (w2, 50, -1);
       }

@@ -51,7 +51,7 @@ PrefsFile :: ~PrefsFile ()
   save ();
 }
 
-void 
+void
 PrefsFile :: save () const
 {
   std::string s;

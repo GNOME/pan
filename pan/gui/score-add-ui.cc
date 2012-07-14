@@ -314,7 +314,7 @@ namespace
                                 GtkWidget     *& setme_spin,
                                 const Article  * article)
   {
-    GtkWidget * h = gtk_hbox_new (false, PAD);
+    GtkWidget * h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     g_object_set_data (G_OBJECT(h), "article", gpointer(article));
 
     GtkTreeModel * model = field_tree_model_new ();
@@ -555,7 +555,7 @@ namespace
 
     GtkWidget * image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_BUTTON);
     GtkWidget * image2 = gtk_image_new_from_stock (GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 2);
+    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
     GtkWidget * align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 
     gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
@@ -625,7 +625,7 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
     HIG::workarea_add_section_spacer (t, row, 4);
 
     // section
-    GtkWidget * h = gtk_hbox_new (false, PAD);
+    GtkWidget * h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     GtkTreeModel * model = text_tree_model_new (false);
     w = _section_menu = value_combo_new (model);
     g_object_unref (G_OBJECT(model));
@@ -643,7 +643,7 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
     gtk_widget_show (w);
 
     // score
-    h = gtk_hbox_new (false, PAD_SMALL);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
     model = score_tree_model_new ();
     w = _score_menu = value_combo_new (model);
     g_object_unref (model);

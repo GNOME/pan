@@ -411,7 +411,7 @@ namespace pan
     const bool icons = "icons" == what;
     const bool both  = "both"  == what;
 
-    GtkWidget* hbox = gtk_hbox_new(false, 2);
+    GtkWidget* hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
     GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, line, false, 0);
     GtkWidget * image = gtk_image_new_from_pixbuf (pixbuf);
     g_object_unref (pixbuf);
@@ -615,7 +615,7 @@ namespace pan
 
     // tie them together...
     g_signal_connect (c, "changed", G_CALLBACK(maybe_make_widget_visible), e);
-    GtkWidget * h = gtk_hbox_new (false, PAD);
+    GtkWidget * h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     gtk_box_pack_start (GTK_BOX(h), c, true, true, 0);
     gtk_box_pack_start (GTK_BOX(h), e, true, true, 0);
 
@@ -886,9 +886,9 @@ namespace
     GtkWidget * f = gtk_frame_new (NULL);
     gtk_frame_set_shadow_type (GTK_FRAME(f), GTK_SHADOW_IN);
     gtk_container_add (GTK_CONTAINER(f), view);
-    GtkWidget * hbox = gtk_hbox_new (false, PAD);
+    GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     gtk_box_pack_start (GTK_BOX(hbox), f, true, true, 0);
-    GtkWidget * vbox = gtk_vbox_new (false, PAD);
+    GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, PAD);
     GtkWidget * up = gtk_button_new_from_stock (GTK_STOCK_GO_UP);
     gtk_box_pack_start (GTK_BOX(vbox), up, false, false, 0);
     GtkWidget * down = gtk_button_new_from_stock (GTK_STOCK_GO_DOWN);
@@ -1048,7 +1048,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_add_section_title (t, &row, _("Pane Layout"));
     std::string cur = _prefs.get_string ("pane-layout", "stacked-right");
     HIG :: workarea_add_section_spacer (t, row, 1);
-    h = gtk_hbox_new (false, PAD);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     w = new_layout_radio (0, icon_layout_1, "stacked-top", cur, prefs);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
     w = new_layout_radio (w, icon_layout_2, "stacked-bottom", cur, prefs);
@@ -1105,7 +1105,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     i=0;
 
     w = score_handler_new (prefs, "rules-delete-value", "never", b);
-    h = gtk_hbox_new (false, PAD);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
     gtk_box_pack_start (GTK_BOX(h), action_combo[i++], false, false, 0);
     HIG :: workarea_add_row (t, &row, _("_Delete articles scoring at: "), h);
@@ -1114,13 +1114,13 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_row (t, &row, _("Mark articles as _read scoring at: "), w);
 
     w = score_handler_new (prefs, "rules-autocache-value", "never", b);
-    h = gtk_hbox_new (false, PAD);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
     gtk_box_pack_start (GTK_BOX(h), action_combo[i++], false, false, 0);
     HIG :: workarea_add_row (t, &row, _("_Cache articles scoring at: "), h);
 
     w = score_handler_new (prefs, "rules-auto-dl-value", "never", b);
-    h = gtk_hbox_new (false, PAD);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
     gtk_box_pack_start (GTK_BOX(h), action_combo[i++], false, false, 0);
     HIG :: workarea_add_row (t, &row, _("Download _attachments of articles scoring at: "), h);
@@ -1155,73 +1155,80 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Fonts"), _("Fonts"), icon_prefs_fonts, prefs));
 
   // Colors
-  GdkColor def_color, def_color_bg;
-  GtkStyle *style = gtk_rc_get_style(dialog);
-
-  if(!style || !gtk_style_lookup_color(style, "text_color", &def_color))
-    gdk_color_parse("black", &def_color);
-  if(!style || !gtk_style_lookup_color(style, "bg_color", &def_color_bg))
-    gdk_color_parse("white", &def_color_bg);
-
-  std::string def_color_str (GroupPrefs::color_to_string(def_color));
-  std::string def_color_bg_str (GroupPrefs::color_to_string(def_color_bg));
+  const PanColors& colors (PanColors::get());
+  const char* def_color_str (colors.def_bg.c_str());
+  const char* def_color_fg_str (colors.def_fg.c_str());
 
   row = 0;
   t = HIG :: workarea_create ();
   HIG :: workarea_add_section_title (t, &row, _("Header Pane"));
     HIG :: workarea_add_section_spacer(t, row, 6);
-    h = gtk_hbox_new (false, PAD);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-watched-fg", def_color_str.c_str(), prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-watched-fg", def_color_str, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-watched-bg", TANGO_CHAMELEON_LIGHT, prefs));
     HIG :: workarea_add_row (t, &row, _("Scores of 9999 or more:"), h);
-    h = gtk_hbox_new (false, PAD);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-high-fg", def_color_str.c_str(), prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-high-fg", def_color_str, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-high-bg", TANGO_BUTTER_LIGHT, prefs));
     HIG :: workarea_add_row (t, &row, _("Scores from 5000 to 9998:"), h);
-    h = gtk_hbox_new (false, PAD);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-fg", def_color_str.c_str(), prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-fg", def_color_str, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-medium-bg", TANGO_SKY_BLUE_LIGHT, prefs));
     HIG :: workarea_add_row (t, &row, _("Scores from 1 to 4999:"), h);
-    h = gtk_hbox_new (false, PAD);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-low-fg", TANGO_ALUMINUM_2, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-low-bg", def_color_str.c_str(), prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-low-bg", def_color_str, prefs));
     HIG :: workarea_add_row (t, &row, _("Scores from -9998 to -1:"), h);
-    h = gtk_hbox_new (false, PAD);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-ignored-fg", TANGO_ALUMINUM_4, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-ignored-bg", def_color_str.c_str(), prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("score-color-ignored-bg", def_color_str, prefs));
     HIG :: workarea_add_row (t, &row, _("Scores of -9999 or less:"), h);
-    h = gtk_hbox_new (false, PAD);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-fg", TANGO_ORANGE, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-bg", def_color_bg_str.c_str(), prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("color-read-bg", def_color_str, prefs));
     HIG :: workarea_add_row (t, &row, _("Collapsed thread with unread articles:"), h);
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Body Pane"));
     HIG :: workarea_add_section_spacer (t, row, 3);
-    h = gtk_hbox_new (false, PAD_SMALL);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-1", TANGO_CHAMELEON_DARK, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-2", TANGO_ORANGE_DARK, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-3", TANGO_PLUM_DARK, prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-bg", def_color_str, prefs));
     HIG :: workarea_add_row (t, &row, _("Quoted text:"), h);
-    HIG :: workarea_add_row (t, &row, _("URL:"), new_color_button ("body-pane-color-url", TANGO_SKY_BLUE_DARK, prefs));
-    HIG :: workarea_add_row (t, &row, _("Signature:"), new_color_button ("body-pane-color-signature", TANGO_SKY_BLUE_LIGHT, prefs));
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-url", TANGO_SKY_BLUE_DARK, prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-url-bg", def_color_str, prefs)); //
+    HIG :: workarea_add_row (t, &row, _("URL:"), h);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-signature", TANGO_SKY_BLUE_LIGHT, prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-signature-bg", def_color_str, prefs)); //
+    HIG :: workarea_add_row (t, &row, _("Signature:"), h);
   HIG :: workarea_finish (t, &row);
 
   HIG :: workarea_add_section_divider (t, &row);
-  HIG :: workarea_add_section_title (t, &row, _("Body Pane"));
-    HIG :: workarea_add_section_spacer (t, row, 3);
-    HIG :: workarea_add_row (t, &row, _("Group Color Foreground:"), new_color_button ("group-pane-fg-color", TANGO_BLACK, prefs));
+  HIG :: workarea_add_section_title (t, &row, _("Group Pane"));
+    HIG :: workarea_add_section_spacer (t, row, 1);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("group-pane-color-fg", def_color_fg_str, prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("group-pane-color-bg", def_color_str, prefs)); //
+    HIG :: workarea_add_row (t, &row, _("Group Color:"), h);
   HIG :: workarea_finish (t, &row);
 
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Colors"), _("Colors"), icon_prefs_colors, prefs));

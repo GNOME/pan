@@ -972,45 +972,45 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
 
   GtkWidget * w;
 
-  GtkWidget * vbox = gtk_vbox_new (false, 0);
+  GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
-    GtkWidget * buttons = gtk_hbox_new (false, PAD_SMALL);
+    GtkWidget * buttons = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
 
     w = _online_toggle = gtk_check_button_new ();
     _online_toggle_handler = g_signal_connect (w, "clicked", G_CALLBACK(online_toggled_cb), &queue);
     GtkWidget * i = _online_image = gtk_image_new ();
     GtkWidget * l = gtk_label_new_with_mnemonic (_("_Online"));
-    GtkWidget * v = gtk_hbox_new (false, PAD);
+    GtkWidget * v = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
     on_queue_online_changed (queue, queue.is_online());
     gtk_box_pack_start (GTK_BOX(v), i, 0, 0, 0);
     gtk_box_pack_start (GTK_BOX(v), l, 0, 0, 0);
     gtk_container_add (GTK_CONTAINER(w), v);
     gtk_box_pack_start (GTK_BOX(buttons), w, false, false, 0);
-    gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+    gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
 
     add_button (buttons, GTK_STOCK_GO_UP, G_CALLBACK(up_clicked_cb), this);
     add_button (buttons, GTK_STOCK_GOTO_TOP, G_CALLBACK(top_clicked_cb), this);
-    gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+    gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
     add_button (buttons, GTK_STOCK_GO_DOWN, G_CALLBACK(down_clicked_cb), this);
     add_button (buttons, GTK_STOCK_GOTO_BOTTOM, G_CALLBACK(bottom_clicked_cb), this);
-    gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+    gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
     w = add_button (buttons, GTK_STOCK_REDO, G_CALLBACK(restart_clicked_cb), this);
     gtk_widget_set_tooltip_text( w, _("Restart Tasks"));
     w = add_button (buttons, GTK_STOCK_STOP, G_CALLBACK(stop_clicked_cb), this);
     gtk_widget_set_tooltip_text( w, _("Stop Tasks"));
     w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
     gtk_widget_set_tooltip_text( w, _("Delete Tasks"));
-    gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+    gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
     w = add_button (buttons, GTK_STOCK_CLOSE, 0, 0);
     g_signal_connect_swapped (w, "clicked", G_CALLBACK(gtk_widget_destroy), _root);
     pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new()); // eat horizontal space
 
   gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
-  gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
+  gtk_box_pack_start (GTK_BOX(vbox), gtk_separator_new(GTK_ORIENTATION_HORIZONTAL), false, false, 0);
 
   // statusbar
-  GtkWidget * hbox = gtk_hbox_new (false, PAD);
+  GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
   w = _status_label = gtk_label_new (0);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
 
@@ -1038,7 +1038,7 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
   gtk_window_add_accel_group (GTK_WINDOW(_root), gtk_ui_manager_get_accel_group (_uim));
 
   // search filter
-  gtk_box_pack_start (GTK_BOX(hbox), gtk_vseparator_new(), 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX(hbox), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
   gtk_box_pack_start (GTK_BOX(hbox), create_filter_entry(), false, false, PAD);
   GtkTreeModel* initial_model= gtk_tree_view_get_model(GTK_TREE_VIEW( _view ));
   GtkTreeModel* filter_model = gtk_tree_model_filter_new( initial_model, NULL );

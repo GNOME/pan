@@ -113,7 +113,7 @@ SaveDialog :: response_cb (GtkDialog * dialog,
     else if (s == "save-attachments-and-text") save_mode = TaskArticle::DECODE | TaskArticle::RAW;
     else                                       save_mode = TaskArticle::DECODE;
 
-    std::string sep( self->_prefs.get_string("save-subj-seperator", "-") );
+    std::string sep( self->_prefs.get_string("save-subj-separator", "-") );
 
     const bool always (self->_prefs.get_flag("mark-downloaded-articles-read", false));
 
@@ -246,7 +246,7 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
   GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Pan: Save Articles"),
                                                     parent_window,
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                    NULL);
+                                                    NULL, NULL);
   gtk_dialog_add_button (GTK_DIALOG(dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
   GtkWidget * focus = gtk_dialog_add_button (GTK_DIALOG(dialog), GTK_STOCK_SAVE, GTK_RESPONSE_OK);
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-save-articles-dialog");
@@ -266,7 +266,7 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
   if (path_mode==PATH_GROUP && !have_group_default)
       path_mode = PATH_ENTRY;
 
-  h = gtk_hbox_new (FALSE, 0);
+  h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   if (have_group_default) {
     w = _save_custom_path_radio = gtk_radio_button_new_with_mnemonic (NULL, _("_Location:"));
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);

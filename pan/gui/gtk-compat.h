@@ -22,6 +22,64 @@
 namespace
 {
 #endif
+
+#if !GTK_CHECK_VERSION(3, 0, 0)
+  static inline GtkWidget* gtk_box_new (GtkOrientation orientation, int space)
+  {
+    GtkWidget* ret;
+    if (orientation == GTK_ORIENTATION_HORIZONTAL)
+      ret = gtk_hbox_new (FALSE, space);
+    else
+      ret = gtk_vbox_new (FALSE, space);
+    return ret;
+  }
+#endif
+
+#if !GTK_CHECK_VERSION(3, 0, 0)
+static inline GdkWindow * gdk_window_get_device_position (GdkWindow *window,
+                                                           GdkDevice *device,
+                                                           gint *x,
+                                                           gint *y,
+                                                           GdkModifierType *mask)
+{
+  return gdk_window_get_pointer (window, x, y, mask);
+}
+#endif
+
+#if !GTK_CHECK_VERSION(3, 0, 0)
+  static inline GtkWidget* gtk_paned_new(GtkOrientation orientation)
+  {
+    GtkWidget* ret;
+    if (orientation == GTK_ORIENTATION_HORIZONTAL)
+      ret = gtk_hpaned_new();
+    else
+      ret = gtk_vpaned_new();
+    return ret;
+  }
+#endif
+
+#if !GTK_CHECK_VERSION(3, 0, 0)
+  static inline GtkWidget* gtk_separator_new(GtkOrientation orientation)
+  {
+    GtkWidget* ret;
+    if (orientation == GTK_ORIENTATION_HORIZONTAL)
+      ret = gtk_hseparator_new();
+    else
+      ret = gtk_vseparator_new();
+    return ret;
+  }
+#endif
+
+  static inline void window_get_pointer (GdkEventMotion* event, int* x, int* y, GdkModifierType* t)
+  {
+#if !GTK_CHECK_VERSION(3, 0, 0)
+    gdk_window_get_pointer (event->window, x, y, t);
+#else
+    gdk_window_get_device_position (event->window, event->device, x, y, t);
+#endif
+  }
+
+
 #if !GTK_CHECK_VERSION(2,18,0)
   static inline void gtk_widget_get_allocation( GtkWidget *w, GtkAllocation *a)
   {
@@ -111,35 +169,40 @@ namespace
 #if !GTK_CHECK_VERSION(3,0,0)
 
   typedef GtkStyle GtkStyleContext;
+
   static inline GtkStyleContext* gtk_widget_get_style_context(GtkWidget *w)
   {
     return gtk_widget_get_style(w);
   }
+
   static inline GtkIconSet* gtk_style_context_lookup_icon_set(GtkStyleContext *s,
       const char *id)
   {
-
     return gtk_style_lookup_icon_set(s,id);
   }
+
   static inline void gtk_widget_override_font(GtkWidget *w, PangoFontDescription *f)
   {
     gtk_widget_modify_font(w,f);
   }
 #endif
+
 #if GTK_CHECK_VERSION(3,0,0)
-
 // include this for conversion of old key names to new
-#include <gdk/gdkkeysyms-compat.h>
+  #include <gdk/gdkkeysyms-compat.h>
 
-#define GTK_OBJECT(w) w
+  #define GTK_OBJECT(w) w
   typedef GtkWidget GtkObject;
-#ifdef GTK_DISABLE_DEPRECATED
-  static inline void gdk_cursor_unref(GdkCursor *p)
+#endif
+
+  static inline void cursor_unref(GdkCursor *p)
   {
+#if GTK_CHECK_VERSION(3,0,0)
     g_object_unref(p);
+#else
+    gdk_cursor_unref(p);
+#endif
   }
-#endif
-#endif
 
 #ifdef __cplusplus
 }
