@@ -919,7 +919,7 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
   g_object_set_data_full (G_OBJECT(w), "dialog", d, delete_server_list_dialog);
 
   // workarea
-  GtkWidget * hbox = gtk_hbox_new (FALSE, PAD);
+  GtkWidget * hbox = hbox_new (FALSE, PAD);
   gtk_container_set_border_width (GTK_CONTAINER(hbox), 12);
   gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(w))), hbox, TRUE, TRUE, 0);
 
@@ -948,7 +948,7 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
   gtk_widget_set_size_request (w, 300, 300);
 
   // button box
-  GtkWidget * bbox = gtk_vbox_new (FALSE, PAD_SMALL);
+  GtkWidget * bbox = vbox_new (FALSE, PAD_SMALL);
   gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
 
   // add button
@@ -1012,7 +1012,7 @@ pan :: sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent
   g_object_set_data_full (G_OBJECT(w), "dialog", d, delete_sec_dialog);
 
   // workarea
-  GtkWidget * hbox = gtk_hbox_new (FALSE, PAD);
+  GtkWidget * hbox = hbox_new (FALSE, PAD);
   gtk_container_set_border_width (GTK_CONTAINER(hbox), 12);
   gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(w))), hbox, TRUE, TRUE, 0);
 
@@ -1046,7 +1046,7 @@ pan :: sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent
   gtk_widget_set_size_request (w, 300, 300);
 
   // button box
-  GtkWidget * bbox = gtk_vbox_new (FALSE, PAD_SMALL);
+  GtkWidget * bbox = vbox_new (FALSE, PAD_SMALL);
   gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
 
   // add button

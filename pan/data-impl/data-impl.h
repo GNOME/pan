@@ -165,6 +165,9 @@ namespace pan
       virtual void set_server_article_expiration_age  (const Quark  & server,
                                                        int            days);
 
+      virtual void set_server_compression_type  (const Quark   & server,
+                                                 const int       setme);
+
       virtual void save_server_info (const Quark& server);
 
     public: // accessors

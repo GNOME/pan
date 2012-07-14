@@ -192,7 +192,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
 #endif
     w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
 
-    hbox = gtk_hbox_new(FALSE, 3);
+    hbox = hbox_new(FALSE, 3);
     l = gtk_label_new(_("Signature Type: "));
     gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
     gtk_box_pack_start(GTK_BOX(hbox), l, false, false, 0);
@@ -214,7 +214,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
 #endif
 
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), active);
-    GtkWidget* vbox = gtk_vbox_new(TRUE, 3);
+    GtkWidget* vbox = vbox_new(TRUE, 3);
     gtk_box_pack_start(GTK_BOX(vbox), _signature_file_combo, false, false, 0);
     gtk_box_pack_start(GTK_BOX(vbox), _signature_file, false, false, 0);
     HIG :: workarea_add_row (t, &row, "",vbox);
@@ -530,7 +530,7 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
   //g_signal_connect (GTK_OBJECT(_root), "response", G_CALLBACK(response_cb), this);
 
   // workarea
-  GtkWidget * hbox = gtk_hbox_new (false, PAD);
+  GtkWidget * hbox = hbox_new (false, PAD);
   gtk_container_set_border_width (GTK_CONTAINER(hbox), PAD_BIG);
   gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(_root))), hbox, true, true, 0);
 
@@ -555,7 +555,7 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
   gtk_widget_set_size_request (w, 300, 300);
 
   // button box
-  GtkWidget * bbox = gtk_vbox_new (FALSE, PAD_SMALL);
+  GtkWidget * bbox = vbox_new (FALSE, PAD_SMALL);
   gtk_box_pack_start (GTK_BOX (hbox), bbox, false, false, 0);
 
   // add button

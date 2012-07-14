@@ -812,7 +812,7 @@ namespace
     GtkWidget * button = gtk_button_new ();
     GtkWidget * label = gtk_label_new_with_mnemonic (_("Go _Online"));
     GtkWidget * image = gtk_image_new_from_stock (GTK_STOCK_NETWORK, GTK_ICON_SIZE_BUTTON);
-    GtkWidget * hbox = gtk_hbox_new (false, 2);
+    GtkWidget * hbox = hbox_new (false, 2);
     GtkWidget * align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
     gtk_box_pack_start (GTK_BOX (hbox), image, false, false, 0);
     gtk_box_pack_end (GTK_BOX (hbox), label, false, false, 0);
@@ -2418,7 +2418,7 @@ PostUI :: create_main_tab ()
   set_spellcheck_enabled (_prefs.get_flag ("spellcheck-enabled", DEFAULT_SPELLCHECK_FLAG));
   _body_changed_id = g_signal_connect (_body_buf, "changed", G_CALLBACK(body_changed_cb), this);
 
-  GtkWidget * v = gtk_vbox_new (false, PAD);
+  GtkWidget * v = vbox_new (false, PAD);
   gtk_container_set_border_width (GTK_CONTAINER(v), PAD);
   gtk_box_pack_start (GTK_BOX(v), t, false, false, 0);
   pan_box_pack_start_defaults (GTK_BOX(v), w);
@@ -2494,22 +2494,22 @@ PostUI :: create_filequeue_tab ()
   GtkWidget *w ;
   GtkListStore *list_store;
   GtkCellRenderer *renderer;
-  GtkWidget * vbox = gtk_vbox_new (false, 0);
-  GtkWidget * buttons = gtk_hbox_new (false, PAD_SMALL);
+  GtkWidget * vbox = vbox_new (false, 0);
+  GtkWidget * buttons = hbox_new (false, PAD_SMALL);
 
   // add button row
   add_button (buttons, GTK_STOCK_GO_UP, G_CALLBACK(up_clicked_cb), this);
   add_button (buttons, GTK_STOCK_GOTO_TOP, G_CALLBACK(top_clicked_cb), this);
-  gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX(buttons), vseparator_new(), 0, 0, 0);
   add_button (buttons, GTK_STOCK_GO_DOWN, G_CALLBACK(down_clicked_cb), this);
   add_button (buttons, GTK_STOCK_GOTO_BOTTOM, G_CALLBACK(bottom_clicked_cb), this);
-  gtk_box_pack_start (GTK_BOX(buttons), gtk_vseparator_new(), 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX(buttons), vseparator_new(), 0, 0, 0);
   w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
   gtk_widget_set_tooltip_text( w, _("Delete from Queue"));
   pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new());
 
   gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
-  gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
+  gtk_box_pack_start (GTK_BOX(vbox), hseparator_new(), false, false, 0);
 
   //add filestore
   list_store = gtk_list_store_new (4, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_STRING);
@@ -2555,7 +2555,7 @@ GtkWidget*
 PostUI:: create_filequeue_status_bar ()
 {
   GtkWidget * w;
-  GtkWidget * status_bar (gtk_hbox_new (FALSE, 0));
+  GtkWidget * status_bar (hbox_new (FALSE, 0));
 
   // connection status
   w = _filequeue_label = gtk_label_new (NULL);
@@ -2882,7 +2882,7 @@ PostUI :: select_parts ()
   y = _prefs.get_int("post-ui-height", 450);
   gtk_window_set_default_size (GTK_WINDOW(w), x, y);
   // populate the window
-  GtkWidget * vbox = gtk_vbox_new (false, PAD_SMALL);
+  GtkWidget * vbox = vbox_new (false, PAD_SMALL);
   gtk_container_add (GTK_CONTAINER(w), vbox);
 
   GtkWidget * notebook = gtk_notebook_new ();
@@ -3053,8 +3053,8 @@ PostUI :: PostUI (GtkWindow    * parent,
   }
 
   // populate the window
-  GtkWidget * vbox = gtk_vbox_new (false, PAD_SMALL);
-  GtkWidget * menu_vbox = gtk_vbox_new (false, PAD_SMALL);
+  GtkWidget * vbox = vbox_new (false, PAD_SMALL);
+  GtkWidget * menu_vbox = vbox_new (false, PAD_SMALL);
   gtk_box_pack_start (GTK_BOX(vbox), menu_vbox, false, false, 0);
   add_actions (menu_vbox);
   gtk_window_add_accel_group (GTK_WINDOW(_root), gtk_ui_manager_get_accel_group (_uim));

@@ -1555,7 +1555,7 @@ BodyPane :: new_attachment (const char* filename)
 {
   if (!filename) return 0;
 
-  GtkWidget* w = gtk_hbox_new(false, 0);
+  GtkWidget* w = hbox_new(false, 0);
   GtkWidget* attachment = gtk_label_new(filename);
   GtkWidget * image = gtk_image_new_from_stock(GTK_STOCK_FILE, GTK_ICON_SIZE_MENU);
 
@@ -1692,7 +1692,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_menu_shell_append (GTK_MENU_SHELL(_menu),l);
   gtk_widget_show_all(_menu);
 
-  GtkWidget * vbox = gtk_vbox_new (false, PAD);
+  GtkWidget * vbox = vbox_new (false, PAD);
   gtk_container_set_resize_mode (GTK_CONTAINER(vbox), GTK_RESIZE_QUEUE);
 
   // about this expander... getting the ellipsis to work is a strange process.
@@ -1717,7 +1717,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_widget_show (_terse);
   g_signal_connect (_terse, "button-press-event", G_CALLBACK(verbose_clicked_cb), this);
 
-  hbox = _verbose = gtk_hbox_new (false, 0);
+  hbox = _verbose = hbox_new (false, 0);
   g_object_ref_sink (G_OBJECT(_verbose));
   w = _headers = gtk_label_new ("Headers");
   gtk_label_set_selectable (GTK_LABEL(_headers), TRUE);

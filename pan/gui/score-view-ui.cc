@@ -58,7 +58,7 @@ namespace
 
     GtkWidget * image = gtk_image_new_from_stock (GTK_STOCK_CLOSE, GTK_ICON_SIZE_BUTTON);
     GtkWidget * image2 = gtk_image_new_from_stock (GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
-    GtkWidget * hbox = gtk_hbox_new (FALSE, 2);
+    GtkWidget * hbox = hbox_new (FALSE, 2);
 
     GtkWidget * align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 
@@ -192,7 +192,7 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
   g_object_set_data_full (G_OBJECT(w), "score_view", this, delete_score_view);
 
   // workarea
-  GtkWidget * hbox = gtk_hbox_new (FALSE, PAD);
+  GtkWidget * hbox = hbox_new (FALSE, PAD);
   gtk_container_set_border_width (GTK_CONTAINER(hbox), 12);
   gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(w))), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
@@ -231,7 +231,7 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
   gtk_widget_show (w);
 
   // button box
-  GtkWidget * bbox = gtk_vbox_new (FALSE, PAD_SMALL);
+  GtkWidget * bbox = vbox_new (FALSE, PAD_SMALL);
   gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 

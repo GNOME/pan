@@ -53,7 +53,7 @@ e_charset_dialog (const char *title, const char *prompt,
 	//gtk_dialog_set_has_separator (dialog, FALSE);
 	gtk_dialog_set_default_response (dialog, GTK_RESPONSE_OK);
 
-	vbox = gtk_vbox_new (FALSE, 6);
+	vbox = vbox_new (FALSE, 6);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 	gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area(dialog)), vbox, FALSE, FALSE, 0);
 	gtk_widget_show (vbox);
@@ -64,7 +64,7 @@ e_charset_dialog (const char *title, const char *prompt,
 	gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 	gtk_widget_show (label);
 
-	hbox = gtk_hbox_new (FALSE, 12);
+	hbox = hbox_new (FALSE, 12);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbox);
 

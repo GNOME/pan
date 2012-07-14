@@ -69,7 +69,7 @@ GtkWidget*
 pan :: file_entry_new (const char * title, int chooser_action)
 {
   // create the widgetry
-  GtkWidget * hbox = gtk_hbox_new (false, PAD);
+  GtkWidget * hbox = hbox_new (false, PAD);
   GtkWidget * e = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX(hbox), e, true, true, 0);
   GtkWidget * b = gtk_button_new_from_stock (GTK_STOCK_OPEN);

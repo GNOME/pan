@@ -214,8 +214,8 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _group_prefs (group_prefs),
   _cache (data.get_cache()),
   _encode_cache (data.get_encode_cache()),
-  _root (gtk_vbox_new (FALSE, 0)),
-  _menu_vbox (gtk_vbox_new (FALSE, 0)),
+  _root (vbox_new (FALSE, 0)),
+  _menu_vbox (vbox_new (FALSE, 0)),
   _group_pane (0),
   _header_pane (0),
   _body_pane (0),
@@ -281,7 +281,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   gtk_box_pack_start (GTK_BOX(_root), w, false, false, 0);
   gtk_widget_show (w);
 
-  GtkWidget * status_bar (gtk_hbox_new (FALSE, 0));
+  GtkWidget * status_bar (hbox_new (FALSE, 0));
 
   // connection status
   w = _connection_size_label = gtk_label_new (NULL);

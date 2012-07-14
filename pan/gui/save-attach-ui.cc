@@ -251,7 +251,7 @@ SaveAttachmentsDialog :: SaveAttachmentsDialog
   if (path_mode==PATH_GROUP && !have_group_default)
       path_mode = PATH_ENTRY;
 
-  h = gtk_hbox_new (FALSE, 0);
+  h = hbox_new (FALSE, 0);
   if (have_group_default) {
     w = _save_custom_path_radio = gtk_radio_button_new_with_mnemonic (NULL, _("_Location:"));
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);

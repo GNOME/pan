@@ -22,6 +22,69 @@
 namespace
 {
 #endif
+
+  #if GTK_CHECK_VERSION(3,0,0)
+
+  // include this for conversion of old key names to new
+    #include <gdk/gdkkeysyms-compat.h>
+
+    #define GTK_OBJECT(w) w
+    typedef GtkWidget GtkObject;
+    #ifdef GTK_DISABLE_DEPRECATED
+      static inline void gdk_cursor_unref(GdkCursor *p)
+      {
+        g_object_unref(p);
+      }
+    #endif
+  #endif
+
+  // convenience for gtk3 conversion
+  static inline GtkWidget* vbox_new (gboolean homogen, int space)
+  {
+    GtkWidget* ret;
+#if !GTK_CHECK_VERSION(3, 0, 0)
+    ret = gtk_vbox_new (homogen, space);
+#else
+    ret = gtk_box_new (GTK_ORIENTATION_VERTICAL, space);
+    gtk_box_set_homogeneous (GTK_BOX(ret), homogen);
+#endif
+    return ret;
+  }
+
+  static inline GtkWidget* hbox_new (gboolean homogen, int space)
+  {
+    GtkWidget* ret;
+#if !GTK_CHECK_VERSION(3, 0, 0)
+    ret = gtk_hbox_new (homogen, space);
+#else
+    ret = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, space);
+    gtk_box_set_homogeneous (GTK_BOX(ret), homogen);
+#endif
+    return ret;
+  }
+
+  static inline GtkWidget* hseparator_new()
+  {
+    GtkWidget* ret;
+#if !GTK_CHECK_VERSION(3, 0, 0)
+    ret = gtk_hseparator_new();
+#else
+    ret = gtk_separator_new(GTK_ORIENTATION_HORIZONTAL);
+#endif
+    return ret;
+  }
+
+  static inline GtkWidget* vseparator_new()
+  {
+    GtkWidget* ret;
+#if !GTK_CHECK_VERSION(3, 0, 0)
+    ret = gtk_vseparator_new();
+#else
+    ret = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
+#endif
+    return ret;
+  }
+
 #if !GTK_CHECK_VERSION(2,18,0)
   static inline void gtk_widget_get_allocation( GtkWidget *w, GtkAllocation *a)
   {
@@ -125,20 +188,6 @@ namespace
   {
     gtk_widget_modify_font(w,f);
   }
-#endif
-#if GTK_CHECK_VERSION(3,0,0)
-
-// include this for conversion of old key names to new
-#include <gdk/gdkkeysyms-compat.h>
-
-#define GTK_OBJECT(w) w
-  typedef GtkWidget GtkObject;
-#ifdef GTK_DISABLE_DEPRECATED
-  static inline void gdk_cursor_unref(GdkCursor *p)
-  {
-    g_object_unref(p);
-  }
-#endif
 #endif
 
 #ifdef __cplusplus
