@@ -24,13 +24,14 @@
 #include <set>
 #include <string>
 #include <deque>
+#include <pan/general/singleton-template.h>
 
 namespace pan
 {
   /**
    * Logs information and error messages that that the user should see.
    */
-  class Log
+  class Log : public PanSingleton< Log >
   {
     public:
       enum Severity {
@@ -74,7 +75,6 @@ namespace pan
       void clear ();
       void add_listener (Listener* l) { _listeners.insert(l); }
       void remove_listener (Listener* l) { _listeners.erase(l); }
-      static Log& get();
 
     private:
       typedef std::set<Listener*> listeners_t;
@@ -82,8 +82,6 @@ namespace pan
       void fire_entry_added (const Entry& e);
       void fire_cleared ();
       entries_t _entries;
-      Log () { } // singleton
-      ~Log () { } // singleton
 
     public: // convenience functions
       static void add_info (const char * s) { Log::get().add (Log::PAN_SEVERITY_INFO, s); }

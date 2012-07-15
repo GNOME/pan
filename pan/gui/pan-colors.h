@@ -32,13 +32,6 @@ class PanColors : public PanSingleton< PanColors >
     GdkColor def_fg_col;
     GdkColor def_bg_col;
 
-    PanColors(std::string& fg, std::string& bg, GdkColor& fg_col, GdkColor& bg_col) :
-          def_fg (fg), def_bg(bg), def_fg_col(fg_col), def_bg_col(bg_col) // {}
-          {
-            if (!def_fg.empty()) std::cerr<<def_fg<<" "<<def_bg<<"\n";
-          }
-    PanColors() {}
-    virtual ~PanColors() {}
 };
 
 #endif

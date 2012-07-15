@@ -35,13 +35,6 @@ Log :: clear ()
    fire_cleared ();
 }
 
-Log&
-Log :: get()
-{
-  static Log * log = new Log;
-  return *log;
-}
-
 /***
 ***/
 

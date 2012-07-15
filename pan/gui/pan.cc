@@ -808,6 +808,58 @@ namespace
   GUI * gui_ptr (0);
 }
 
+namespace
+{
+  void init_colors()
+  {
+
+    GtkWidget* r = gtk_label_new("bla");
+
+    GdkColor def_fg, def_bg;
+    std::string fg_col, bg_col;
+
+    // init colors of PanColors
+#if GTK_CHECK_VERSION(3,0,0)
+    GdkRGBA fg_color, bg_color;
+    GtkStyleContext* ctx = gtk_widget_get_style_context(r);
+    if(!ctx || !gtk_style_context_lookup_color(ctx, "color", &fg_color))
+      gdk_color_parse("black", &def_fg);
+    else
+    {
+      def_fg.red = fg_color.red;
+      def_fg.green = fg_color.red;
+      def_fg.blue = fg_color.blue;
+    }
+    if(!ctx || !gtk_style_context_lookup_color(ctx, "background-color", &bg_color))
+      gdk_color_parse("white", &def_bg);
+    else
+    {
+      def_bg.red = bg_color.red;
+      def_bg.green = bg_color.red;
+      def_bg.blue = bg_color.blue;
+    }
+#else
+    GtkStyle *style = gtk_rc_get_style(r);
+    if(!style || !gtk_style_lookup_color(style, "text_color", &def_fg))
+      gdk_color_parse("black", &def_fg);
+    if(!style || !gtk_style_lookup_color(style, "bg_color", &def_bg))
+      gdk_color_parse("white", &def_bg);
+
+#endif
+
+    fg_col = GroupPrefs::color_to_string(def_fg);
+    bg_col = GroupPrefs::color_to_string(def_bg);
+
+    gtk_widget_destroy (r);
+
+    PanColors& c (PanColors::get());
+    c.def_fg = fg_col;
+    c.def_bg = bg_col;
+    c.def_fg_col = def_fg;
+    c.def_bg_col = def_bg;
+  }
+
+}
 
 int
 main (int argc, char *argv[])
@@ -895,6 +947,9 @@ main (int argc, char *argv[])
     filename = g_build_filename (file::get_pan_home().c_str(), "group-preferences.xml", NULL);
     GroupPrefs group_prefs (filename);
     g_free (filename);
+
+    //init color scheme
+    init_colors();
 
     // instantiate the backend...
     const int cache_megs = prefs.get_int ("cache-size-megs", 10);

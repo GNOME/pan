@@ -17,6 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifndef _PAN_SINGLETON_H_
+#define _PAN_SINGLETON_H_
 
 template <class T_DERIVED>
 class PanSingleton
@@ -35,3 +37,6 @@ class PanSingleton
      PanSingleton( const PanSingleton& ) ;
      PanSingleton& operator=( const PanSingleton& ) {return *this;}
 } ;
+
+
+#endif
