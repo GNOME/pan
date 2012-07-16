@@ -568,7 +568,7 @@ pan :: expand_attachment_headers(const Quark& path, const Article& article)
   if (path.empty()) return std::string("");
   std::string val(path.c_str());
   std::string::size_type pos;
-  std::string author_str (article.author.c_str());
+  std::string author_str (article.author.empty() ? "" : article.author);
   std::pair<std::string,std::string> author (get_email_address(author_str));
   std::string author_name (author.first);
   std::string author_email (author.second);

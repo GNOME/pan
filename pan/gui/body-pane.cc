@@ -1036,8 +1036,8 @@ BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation 
     is_done = true;
   }
 
-  // otherwise, add to list of attachments
-  if (!is_done) {
+  // picture or otherwise, add to list of attachments
+  if (is_image || !is_done) {
     const char * filename = g_mime_part_get_filename (part);
     char * pch = (filename && *filename)
       ? g_strdup_printf ("%s", filename)
