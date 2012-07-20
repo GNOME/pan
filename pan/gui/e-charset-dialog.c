@@ -20,6 +20,7 @@
 
 #include "e-charset-combo-box.h"
 #include "e-charset-dialog.h"
+#include "gtk-compat.h"
 
 /**
  * e_charset_dialog:
