@@ -80,7 +80,7 @@ namespace
     if (row == ROW_GPGSIG)
     {
       gtk_widget_set_tooltip_text(d->_signature_file_combo_box,
-                                  _("Please choose your email address according to your PGP key's user id."));
+            _("Please choose your email address according to your PGP key's user id."));
       gtk_widget_hide (d->_signature_file);
 
     }

@@ -66,6 +66,7 @@ stock_images = \
   icon_prefs_headers.png \
   icon_prefs_layout.png \
   icon_prefs_actions.png \
+  icon_prefs_panes.png \
   icon_expand_thread.png \
   icon_collapse_thread.png
 

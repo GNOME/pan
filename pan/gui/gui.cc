@@ -2307,8 +2307,13 @@ GUI :: on_queue_error (Queue&, const StringView& message)
 
 
 void
-GUI :: on_prefs_flag_changed (const StringView&, bool)
-{}
+GUI :: on_prefs_flag_changed (const StringView& key, bool val)
+{
+  if (key == "show-taskpane-popups")
+  {
+    _prefs.save();
+  }
+}
 
 
 void

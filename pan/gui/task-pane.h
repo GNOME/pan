@@ -74,6 +74,10 @@ namespace pan
       bool _dampen_move_feedback_loop;
       GtkUIManager * _uim;
       GtkActionGroup * _pgroup;
+
+    public:
+      Prefs& get_prefs() { return _prefs; }
+
     private:
       std::string prompt_user_for_new_dest (GtkWindow * parent, const Quark& current_path);
 

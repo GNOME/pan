@@ -734,7 +734,6 @@ PrefsDialog :: on_prefs_flag_changed (const StringView& key, bool value)
   {
     _prefs.save();
   }
-
 }
 
 namespace
@@ -986,6 +985,17 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Behavior"), _("Behavior"), icon_prefs_behavior, prefs));
+
+  // pane options
+  row = 0;
+  t = HIG :: workarea_create ();
+    HIG::workarea_add_section_spacer (t, row, 1);
+    HIG :: workarea_add_section_title (t, &row, _("Task Pane"));
+    w = new_check_button (_("Show Task Pane info popups"), "show-taskpane-popups", true, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
+    HIG::workarea_add_section_divider (t, &row);
+  HIG :: workarea_finish (t, &row);
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Panes"), _("Panes"), icon_prefs_panes, prefs));
 
   //charset
   row = 0;
