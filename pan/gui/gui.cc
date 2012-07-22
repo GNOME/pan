@@ -1631,7 +1631,7 @@ void GUI :: do_tip_jar ()
 void GUI :: do_about_pan ()
 {
   const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com> - Pan Author",
-                               "Heinrich M\u00fcller <eddie_v@gmx.de> - Developer",
+                               "Heinrich M\u00fcller <heinrich.mueller82@gmail.com> - Developer",
                                "Kenneth Haley <haleykd@users.sf.net> - Developer",
                                "Petr Kovar <pknbe@volny.cz> - Contributor",
                                "Calin Culianu <calin@ajvar.org> - Threaded Decoding",

@@ -43,7 +43,7 @@ namespace pan
   /**
    * Encodes attachments (yEnc) for posting to usenet groups.
    *
-   * @author Heinrich Mueller <eddie_v@gmx.de>
+   * @author Heinrich Mueller <heinrich.mueller82@gmail.com>
    * @author Calin Culianu <calin@ajvar.org>
    * @author Charles Kerr <charles@rebelbase.com>
    * @ingroup tasks
