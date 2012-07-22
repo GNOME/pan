@@ -59,6 +59,7 @@ namespace pan
                                        gboolean    keyboard_tip,
                                        GtkTooltip *tooltip,
                                        gpointer    data);
+      void show_task_info (const tasks_t& tasks);
 
     private:
       Queue& _queue;
@@ -110,6 +111,7 @@ namespace pan
       static void down_clicked_cb    (GtkButton*, TaskPane*);
       static void top_clicked_cb     (GtkButton*, TaskPane*);
       static void bottom_clicked_cb  (GtkButton*, TaskPane*);
+      static void show_info_clicked_cb (GtkButton*, TaskPane* pane);
       static void stop_clicked_cb    (GtkButton*, TaskPane*);
       static void delete_clicked_cb  (GtkButton*, TaskPane*);
       static void restart_clicked_cb (GtkButton*, TaskPane*);

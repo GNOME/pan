@@ -8,6 +8,8 @@ const char * fallback_taskpane_ui =
 "    <menuitem action='move-top' />\n"
 "    <menuitem action='move-bottom' />\n"
 "    <separator />\n"
+"    <menuitem action='show-info' />\n"
+"    <separator />\n"
 "    <menuitem action='stop' />\n"
 "    <menuitem action='delete' />\n"
 "    <menuitem action='restart' />\n"

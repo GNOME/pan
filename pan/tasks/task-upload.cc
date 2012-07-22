@@ -176,9 +176,6 @@ TaskUpload :: update_work (NNTP* checkin_pending)
   }
   else if (_encoder_has_run && !_needed.empty())
   {
-    // DBG
-//     _state.set_completed();
-//     set_finished(_queue_pos);
     _state.set_need_nntp(_server);
   }
   else if (_needed.empty())

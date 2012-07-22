@@ -103,6 +103,65 @@ namespace
   }
 }
 
+namespace
+{
+  bool fill_task_info (Task* task, char* buffer, size_t size)
+  {
+
+    EvolutionDateMaker date_maker;
+    char * date(0);
+
+    TaskUpload * tu (dynamic_cast<TaskUpload*>(task));
+    if (tu)
+    {
+      const Article& a(tu->get_article());
+      date = date_maker.get_date_string (tu->get_article().time_posted);
+      g_snprintf(buffer,size,
+                 _("\n<u>Upload</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n"
+                   "<i>Groups:</i> <b>%s</b>\n<i>Sourcefile:</i> <b>%s</b>\n"),
+                 a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(),
+                 tu->get_groups().c_str(), tu->get_filename().c_str());
+    }
+
+    TaskArticle * ta (dynamic_cast<TaskArticle*>(task));
+    if (ta)
+    {
+      const Article& a(ta->get_article());
+      date = date_maker.get_date_string (ta->get_article().time_posted);
+      g_snprintf(buffer, size,
+                 _("\n<u>Download</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n<i>Date:</i> <b>%s</b>\n"
+                   "<i>Groups:</i> <b>%s</b>\n<i>Save Path:</i><b>%s</b>\n"),
+                 a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(), date ? date : _("unknown"),
+                 ta->get_groups().c_str(), ta->get_save_path().to_string().c_str());
+    }
+
+    g_free (date);
+
+    return tu || ta;
+  }
+
+}
+
+void
+TaskPane :: show_task_info(const tasks_t& tasks)
+{
+  Task* task (tasks.front());
+  if (!task) return;
+
+  char buffer[4096];
+  const bool task_found (fill_task_info (task, buffer, sizeof(buffer)));
+
+  GtkWidget * w = gtk_message_dialog_new_with_markup (
+      GTK_WINDOW (gtk_widget_get_toplevel (_root)),
+      GTK_DIALOG_DESTROY_WITH_PARENT,
+      GTK_MESSAGE_INFO,
+      GTK_BUTTONS_CLOSE,
+        buffer, NULL);
+  g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
+  gtk_widget_show_all (w);
+
+}
+
 gboolean
 TaskPane:: on_tooltip_query(GtkWidget  *widget,
                             gint        x,
@@ -122,45 +181,15 @@ TaskPane:: on_tooltip_query(GtkWidget  *widget,
   GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
   GtkTreePath *path(0);
 
-  char buffer[4096];
-  Task * task(0);
-  bool task_found(false);
-
   if (!gtk_tree_view_get_tooltip_context (tree_view, &x, &y, keyboard_tip, &model, &path, &iter))
     return false;
 
+  Task * task(0);
   gtk_tree_model_get (model, &iter, COL_TASK_POINTER, &task, -1);
 
+  char buffer[4096];
   g_snprintf(buffer,sizeof(buffer),"...");
-
-  EvolutionDateMaker date_maker;
-  char * date(0);
-
-  TaskUpload * tu (dynamic_cast<TaskUpload*>(task));
-  if (tu)
-  {
-    const Article& a(tu->get_article());
-    date = date_maker.get_date_string (tu->get_article().time_posted);
-    g_snprintf(buffer,sizeof(buffer),
-               _("\n<u>Upload</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n"
-                 "<i>Groups:</i> <b>%s</b>\n<i>Sourcefile:</i> <b>%s</b>\n"),
-               a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(),
-               tu->get_groups().c_str(), tu->get_filename().c_str());
-  }
-
-  TaskArticle * ta (dynamic_cast<TaskArticle*>(task));
-  if (ta)
-  {
-    const Article& a(ta->get_article());
-    date = date_maker.get_date_string (ta->get_article().time_posted);
-    g_snprintf(buffer,sizeof(buffer),
-               _("\n<u>Download</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n<i>Date:</i> <b>%s</b>\n"
-                 "<i>Groups:</i> <b>%s</b>\n<i>Save Path:</i><b>%s</b>\n"),
-               a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(), date ? date : _("unknown"),
-               ta->get_groups().c_str(), ta->get_save_path().to_string().c_str());
-  }
-
-  task_found = tu || ta;
+  const bool task_found (fill_task_info (task, buffer, sizeof(buffer)));
 
   if (task_found)
   {
@@ -168,8 +197,6 @@ TaskPane:: on_tooltip_query(GtkWidget  *widget,
     gtk_tree_view_set_tooltip_row (tree_view, tooltip, path);
   }
   gtk_tree_path_free (path);
-
-  g_free (date);
 
   return true;
 }
@@ -237,6 +264,10 @@ void TaskPane :: top_clicked_cb (GtkButton*, TaskPane* pane)
 void TaskPane :: bottom_clicked_cb (GtkButton*, TaskPane* pane)
 {
   pane->_queue.move_bottom (pane->get_selected_tasks());
+}
+void TaskPane :: show_info_clicked_cb (GtkButton*, TaskPane* pane)
+{
+  pane->show_task_info (pane->get_selected_tasks());
 }
 void TaskPane :: stop_clicked_cb (GtkButton*, TaskPane* pane)
 {
@@ -626,6 +657,7 @@ namespace
   void do_move_down      (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->down_clicked_cb(0, static_cast<TaskPane*>(p)); }
   void do_move_top       (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->top_clicked_cb(0, static_cast<TaskPane*>(p)); }
   void do_move_bottom    (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->bottom_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_show_info      (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->show_info_clicked_cb(0, static_cast<TaskPane*>(p)); }
   void do_stop           (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->stop_clicked_cb(0, static_cast<TaskPane*>(p)); }
   void do_delete         (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->delete_clicked_cb(0, static_cast<TaskPane*>(p)); }
   void do_restart        (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->restart_clicked_cb(0, static_cast<TaskPane*>(p)); }
@@ -653,6 +685,11 @@ namespace
       N_("Move To Bottom"), "",
       N_("Move To Bottom"),
       G_CALLBACK(do_move_bottom) },
+
+    { "show-info", NULL,
+      N_("Show Task Information"), "",
+      N_("Show Task Information"),
+      G_CALLBACK(do_show_info) },
 
     { "stop", NULL,
       N_("Stop Task"), "",
