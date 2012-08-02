@@ -294,6 +294,8 @@ namespace pan
   {
     PrefsDialog* pd(static_cast<PrefsDialog*>(castme));
     save_accels();
+    pd->prefs().set_int("prefs-last-selected-page",
+                        gtk_notebook_get_current_page(GTK_NOTEBOOK(pd->notebook())));
     pd->prefs().remove_listener(pd);
     delete pd;
   }
@@ -921,7 +923,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   g_signal_connect (dialog, "response", G_CALLBACK(response_cb), this);
   g_signal_connect_swapped (dialog, "destroy", G_CALLBACK(delete_prefs_dialog), this);
 
-  GtkWidget * notebook = gtk_notebook_new ();
+  GtkWidget* notebook = _notebook = gtk_notebook_new ();
   gtk_notebook_set_scrollable (GTK_NOTEBOOK(notebook), true);
 
   // Behavior
@@ -1290,11 +1292,12 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   gtk_widget_show_all (scroll);
 
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), scroll, new_label_with_icon(_("_Shortcuts"), _("Shortcuts"), icon_prefs_hotkeys, prefs));
-  gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
 
   gtk_widget_show_all (notebook);
   gtk_box_pack_start (GTK_BOX(gtk_dialog_get_content_area( GTK_DIALOG(dialog))), notebook, true, true, 0);
 
   _root = dialog;
+
+  gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), prefs.get_int("prefs-last-selected-page",1));
 
 }

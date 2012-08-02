@@ -46,6 +46,7 @@ namespace pan
       PrefsDialog (Prefs&, GtkWindow*) ;
       ~PrefsDialog () { }
       Prefs& prefs () { return _prefs; }
+      GtkWidget* notebook () { return _notebook; }
       GtkWidget* root() { return _root; }
 
       static void populate_popup_cb (GtkEntry*, GtkMenu*, gpointer);
@@ -58,6 +59,8 @@ namespace pan
       Prefs& _prefs;
       GtkWidget* _root;
       GtkWidget* charset_label;
+      GtkWidget* _notebook;
+
       void update_default_charset_label(const StringView&);
 
       void on_prefs_flag_changed (const StringView& key, bool value) ;
