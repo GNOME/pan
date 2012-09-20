@@ -1109,7 +1109,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
                                       "based on an article's score."));
 
     int i(0);
-    GtkWidget** action_combo = new GtkWidget*[2];
+    GtkWidget** action_combo = new GtkWidget*[3];
     char* tmp = _("Mark affected articles read");
     action_combo[i++] = new_check_button (tmp, "rules-autocache-mark-read", false, prefs);
     action_combo[i++] = new_check_button (tmp, "rules-autocache-mark-read", false, prefs);
