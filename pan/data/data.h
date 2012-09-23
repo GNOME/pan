@@ -35,6 +35,7 @@
 #include <pan/data/cert-store.h>
 #include <pan/data/server-info.h>
 #include <pan/gui/prefs.h>
+#include <pan/gui/progress-view.h>
 
 #ifdef HAVE_GKR
   #include <gnome-keyring-1/gnome-keyring.h>
@@ -152,6 +153,51 @@ namespace pan
       Profiles () {}
   };
 
+  class DownloadMeter
+  {
+    public:
+
+      virtual ~DownloadMeter () {}
+
+      struct Listener {
+          Listener () {}
+          virtual ~Listener () {}
+          virtual void on_xfer_bytes (uint64_t) = 0;
+          virtual void on_reset_xfer_bytes () = 0;
+          virtual void on_dl_limit_reached () = 0;
+        };
+
+      virtual void add_listener (Listener * l) = 0;
+      virtual void remove_listener (Listener * l) = 0;
+
+    protected:
+
+      DownloadMeter() {}
+
+    public:
+      virtual void dl_meter_add (uint64_t bytes) = 0;
+      virtual void dl_meter_update () = 0;
+
+    public:
+
+      virtual ProgressView* get_view() = 0;
+      virtual GtkWidget* get_widget () = 0;
+      virtual GtkWidget* get_button () = 0;
+
+    public:
+
+      virtual uint64_t dl_meter_get_limit() = 0;
+      virtual void dl_meter_set_limit (uint64_t l) = 0;
+      virtual void dl_meter_reset () = 0;
+
+    public:
+
+      virtual void fire_xfer_bytes (uint64_t bytes) = 0;
+      virtual void fire_reset_xfer_bytes () = 0;
+      virtual void fire_dl_limit_reached () = 0;
+
+  };
+
   /**
    * The main interface class for Pan's data backend.
    *
@@ -167,6 +213,7 @@ namespace pan
    */
   class Data:
     public virtual ServerInfo,
+    public virtual DownloadMeter,
     public virtual GroupServer,
     public virtual ArticleRead,
     public virtual Profiles,
@@ -178,7 +225,6 @@ namespace pan
       {
         Quark server;
         StringView user;
-//        StringView pw;
         gchar* pw;
       };
 
@@ -667,6 +713,9 @@ namespace pan
        virtual void set_xover_low (const Quark         & group,
                                    const Quark         & server,
                                    const uint64_t   low) = 0;
+
+      /** Sets the queue interface */
+      virtual void set_queue (Queue* q) = 0;
 
   };
 }

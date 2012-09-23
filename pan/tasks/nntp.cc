@@ -265,6 +265,12 @@ NNTP :: on_socket_error (Socket * sock UNUSED)
    fire_done_func (ERR_NETWORK, StringView());
 }
 
+void
+NNTP :: on_socket_bytes_transferred (uint64_t bytes, Socket*)
+{
+   _meter.dl_meter_add (bytes);
+}
+
 namespace
 {
    void

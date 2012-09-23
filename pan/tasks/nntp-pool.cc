@@ -41,7 +41,8 @@ NNTP_Pool :: NNTP_Pool (const Quark        & server,
                         ServerInfo         & server_info,
                         Prefs              & prefs,
                         SocketCreator      * creator,
-                        CertStore          & store):
+                        CertStore          & store,
+                        DownloadMeter      & meter):
 
   _server_info (server_info),
   _prefs (prefs),
@@ -50,7 +51,8 @@ NNTP_Pool :: NNTP_Pool (const Quark        & server,
   _pending_connections (0),
   _active_count (0),
   _time_to_allow_new_connections (0),
-  _certstore(store)
+  _certstore(store),
+  _meter(meter)
 {
 }
 
@@ -191,11 +193,11 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
     {
       std::string pw (pass ? pass : "");
       if (pass) g_free(pass);
-      nntp = new NNTP (_server, user, pw, socket);
+      nntp = new NNTP (_server, user, pw, _meter, socket);
     }
     else
     {
-      nntp = new NNTP (_server, user, pass, socket);
+      nntp = new NNTP ( _server, user, pass, _meter, socket);
     }
     nntp->handshake (this);
   }

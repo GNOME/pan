@@ -50,12 +50,14 @@ namespace pan
     virtual LineReader* read_group_headers (const Quark& group) const;
     virtual LineReader* read_group_descriptions () const;
     virtual LineReader* read_group_permissions () const;
+    virtual LineReader* read_download_stats () const;
 
     virtual std::ostream* write_tasks ();
     virtual std::ostream* write_server_properties ();
     virtual std::ostream* write_group_xovers ();
     virtual std::ostream* write_group_descriptions ();
     virtual std::ostream* write_group_permissions ();
+    virtual std::ostream* write_download_stats ();
     virtual std::ostream* write_group_headers (const Quark& group);
     virtual void write_done (std::ostream*);
 

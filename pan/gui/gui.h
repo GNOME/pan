@@ -32,7 +32,9 @@
 #include <pan/gui/prefs.h>
 #include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
-//#include <pan/general/typedefs.h>
+#include <pan/data-impl/download-meter.h>
+
+#include <stdint.h>
 
 #include "gtk-compat.h"
 
@@ -63,7 +65,7 @@ namespace pan
 
       typedef std::vector<Quark> mid_sequence_t;
 
-      GUI (Data& data, Queue&, Prefs&, GroupPrefs&);
+      GUI (Data& data, Queue&, Prefs&, GroupPrefs&, DownloadMeter&);
       virtual ~GUI ();
       GtkWidget* root () { return _root; }
       typedef std::vector<std::string> strings_t;
@@ -106,6 +108,7 @@ namespace pan
       virtual void do_import_tasks ();
       virtual void do_cancel_latest_task ();
       virtual void do_show_task_window ();
+      virtual void do_show_dl_meter_prefs();
       virtual void do_show_log_window ();
       virtual void do_select_all_articles ();
       virtual void do_unselect_all_articles ();
@@ -239,6 +242,7 @@ namespace pan
       Prefs& _prefs;
       GroupPrefs& _group_prefs;
       CertStore& _certstore;
+      DownloadMeter& _meter;
 
     private:
       GtkWidget * _root;
@@ -260,8 +264,11 @@ namespace pan
       GtkWidget * _event_log_button;
       GtkWidget * _taskbar;
       std::vector<ProgressView*> _views;
+      ProgressView* _meter_view;
       std::list<Task*> _active_tasks;
       std::string _charset;
+
+      GtkWidget* _meter_button;
 
       void set_charset (const StringView& v);
 
@@ -273,6 +280,7 @@ namespace pan
 
       static void show_event_log_cb (GtkWidget*, gpointer);
       static void show_task_window_cb (GtkWidget*, gpointer);
+      static void show_download_meter_prefs_cb (GtkWidget*, gpointer);
 
       void score_add (int);
 
@@ -282,6 +290,8 @@ namespace pan
 
     public:
       BodyPane* body_pane() { return _body_pane; }
+
+      GtkWidget* meter_button () { return _meter_button; }
 
     private:
       static void add_widget (GtkUIManager*, GtkWidget*, gpointer);

@@ -23,6 +23,7 @@ libpangui_a_SOURCES = \
  pan-tree.cc \
  post-ui.cc \
  prefs.cc \
+ dl-prefs.cc \
  prefs-file.cc \
  prefs-ui.cc \
  progress-view.cc \
@@ -35,7 +36,7 @@ libpangui_a_SOURCES = \
  server-ui.cc \
  task-pane.cc \
  xface.c \
- url.cc
+ url.cc 
 
 noinst_HEADERS = \
  action-manager.h \
@@ -65,6 +66,7 @@ noinst_HEADERS = \
  pan.ui.h \
  pan.ui.ssl.h \
  prefs.h \
+ dl-prefs.h \
  prefs-file.h \
  prefs-ui.h \
  post-ui.h \
@@ -84,7 +86,7 @@ noinst_HEADERS = \
  url.h \
  wait.h \
  xface.h \
- pan-colors.h
+ pan-colors.h 
 
 EXTRA_DIST = \
  panrc.rc

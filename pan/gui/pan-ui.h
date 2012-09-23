@@ -90,6 +90,7 @@ namespace pan
     virtual void do_quit () = 0;
 
     virtual void do_show_task_window () = 0;
+    virtual void do_show_dl_meter_prefs() = 0;
     virtual void do_show_log_window () = 0;
     virtual void do_show_preferences_dialog () = 0;
     virtual void do_show_group_preferences_dialog () = 0;

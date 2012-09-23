@@ -27,6 +27,7 @@
 #include <pan/general/string-view.h>
 #include <pan/tasks/health.h>
 #include <pan/tasks/socket.h>
+#include <pan/data/data.h>
 
 namespace
 {
@@ -137,7 +138,8 @@ namespace pan
                                     const Quark        & group         UNUSED,
                                     unsigned long        estimated_qty UNUSED,
                                     uint64_t             low           UNUSED,
-                                    uint64_t             high          UNUSED) {}
+                                    uint64_t             high
+                                           UNUSED) {}
 
        };
 
@@ -146,8 +148,10 @@ namespace pan
         NNTP (const Quark        & server,
               const std::string  & username,
               const std::string  & password,
-              Socket         * socket):
+              DownloadMeter       & meter,
+              Socket              * socket):
           _server(server),
+          _meter(meter),
           _socket(socket),
           _socket_error(false),
           _listener(0),
@@ -305,6 +309,7 @@ namespace pan
       Quark _group;
       Quark _request_group;
       Socket * _socket;
+      DownloadMeter& _meter;
       bool _socket_error;
 
     protected:
@@ -331,6 +336,7 @@ namespace pan
       virtual bool on_socket_response (Socket*, const StringView& line);
       virtual void on_socket_error (Socket*);
       virtual void on_socket_abort (Socket*);
+      virtual void on_socket_bytes_transferred (uint64_t bytes, Socket*) ;
 
     public:
 

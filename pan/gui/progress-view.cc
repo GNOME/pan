@@ -129,3 +129,19 @@ ProgressView :: update_text_soon ()
   if (!_progress_status_idle_tag)
        _progress_status_idle_tag = g_timeout_add (333, on_progress_status_idle, this);
 }
+
+void ProgressView :: set_color (const std::string& color)
+{
+  GtkStyle* style = gtk_style_new ();
+  gdk_color_parse (color.c_str(), &style->bg[GTK_STATE_PRELIGHT]);
+  gtk_widget_set_style (_progressbar, style);
+  g_object_unref (style);
+
+}
+
+void ProgressView :: reset_color ()
+{
+  GtkStyle* style = gtk_style_new ();
+  gtk_widget_set_style (_progressbar, style);
+  g_object_unref (style);
+}

@@ -69,16 +69,17 @@ namespace
 
 DataImpl :: DataImpl (const StringView& cache_ext, Prefs& prefs, bool unit_test, int cache_megs, DataIO * io):
   ProfilesImpl (*io),
+  DownloadMeterImpl(prefs, *this),
   _cache (get_cache_path(), cache_ext, cache_megs),
   _encode_cache (get_encode_cache_path(), cache_megs),
   _certstore(*this),
   _unit_test (unit_test),
   _data_io (io),
-  _prefs (prefs),
   _descriptions_loaded (false),
   newsrc_autosave_id (0),
   newsrc_autosave_timeout (0),
-  _rules_filter (prefs.get_flag("rules-autocache-mark-read", false), prefs.get_flag("rules-auto-dl-mark-read", false),
+  _rules_filter (prefs.get_flag("rules-autocache-mark-read", false),
+                 prefs.get_flag("rules-auto-dl-mark-read", false),
                  prefs.get_flag("rules-autocache-mark-read", false))
 
 {
@@ -104,6 +105,7 @@ DataImpl :: rebuild_backend ()
     load_newsrc_files (*_data_io);
     load_group_xovers (*_data_io);
     load_group_permissions (*_data_io);
+    load_download_stats (*_data_io);
 
     _descriptions.clear ();
     _descriptions_loaded = false;
@@ -116,7 +118,6 @@ DataImpl :: rebuild_backend ()
 DataImpl :: ~DataImpl ()
 {
   save_state ();
-
 }
 
 void
@@ -127,6 +128,7 @@ DataImpl :: save_state ()
     debug ("data-impl dtor saving xov, newsrc...");
     save_group_xovers (*_data_io);
     save_newsrc_files (*_data_io);
+    save_download_stats (*_data_io);
   }
 }
 
@@ -179,3 +181,45 @@ DataImpl :: password_decrypt (PasswordData& pw) const
 #endif
 
 
+/***
+ **  Download stats
+ ***/
+
+ void
+DataImpl :: load_download_stats (const DataIO& data_io)
+{
+
+  LineReader * in (data_io.read_download_stats ());
+  StringView s, line;
+  uint64_t bytes (0ul);
+  while (in && !in->fail() && in->getline(line))
+  {
+    if (line.len && *line.str=='#')
+    {
+      continue;
+    }
+    else
+    {
+      bytes = atoll(line.str);
+      break;
+    }
+  }
+
+  dl_meter_init (bytes);
+
+  delete in;
+}
+
+void
+DataImpl :: save_download_stats(DataIO& data_io) const
+{
+  if (_unit_test)
+    return;
+
+  std::ostream& out (*data_io.write_download_stats ());
+
+  out << "# Download stats (single uint64_t showing bytes downloaded so far\n";
+  out << dl_meter_get_bytes() <<"\n";
+
+  data_io.write_done (&out);
+}

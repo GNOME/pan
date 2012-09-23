@@ -35,6 +35,8 @@ using namespace pan;
 
 Queue :: Queue (ServerInfo         & server_info,
                 TaskArchive        & archive,
+                Data               & data,
+                DownloadMeter      & meter,
                 SocketCreator      * socket_creator,
                 CertStore          & certstore,
                 Prefs              & prefs,
@@ -54,10 +56,14 @@ Queue :: Queue (ServerInfo         & server_info,
   _needs_saving (false),
   _last_time_saved (0),
   _archive (archive),
+  _meter (meter),
   _certstore(certstore),
   _uploads_total(0),
   _downloads_total(0)
 {
+
+  data.set_queue(this);
+  meter.add_listener(this);
 
   tasks_t tasks;
   _archive.load_tasks (tasks);
@@ -69,6 +75,7 @@ Queue :: Queue (ServerInfo         & server_info,
 Queue :: ~Queue ()
 {
   _tasks.remove_listener (this);
+  _meter.remove_listener(this);
 
   foreach (pools_t, _pools, it)
     delete it->second;
@@ -106,7 +113,7 @@ Queue :: get_pool (const Quark& servername)
   }
   else // have to build one
   {
-    pool = new NNTP_Pool (servername, _server_info, _prefs, _socket_creator, _certstore);
+    pool = new NNTP_Pool (servername, _server_info, _prefs, _socket_creator, _certstore, _meter);
     pool->add_listener (this);
     _pools[servername] = pool;
   }
@@ -979,3 +986,14 @@ Queue :: get_stats (unsigned long   & queued_count,
   }
 }
 
+void
+Queue :: on_dl_limit_reached ()
+{
+  set_online (false);
+}
+
+void
+Queue :: on_reset_xfer_bytes ()
+{
+  set_online (true);
+}

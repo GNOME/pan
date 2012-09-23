@@ -28,9 +28,10 @@
 #include <pan/tasks/nntp.h>
 #include <pan/tasks/socket-impl-main.h>
 #include <pan/gui/prefs.h>
+#include <pan/data/data.h>
 
 #ifdef HAVE_GNUTLS
-#include <pan/data/cert-store.h>
+  #include <pan/data/cert-store.h>
 #endif
 
 namespace pan {
@@ -48,7 +49,7 @@ class NNTP_Pool: public NNTP::Source,
 public:
 
 	NNTP_Pool(const Quark & server, ServerInfo & server_info, Prefs& prefs, SocketCreator *,
-			CertStore &);
+			CertStore &, DownloadMeter& meter);
 	virtual ~NNTP_Pool();
 
 	virtual void check_in(NNTP*, Health);
@@ -87,10 +88,8 @@ private:
 
 private:
 	// Socket::Creator::Listener
-	virtual void on_socket_created(const StringView& host, int port, bool ok,
-			Socket*);
-	virtual void on_socket_shutdown(const StringView& host, int port, Socket*) {
-	}
+	virtual void on_socket_created(const StringView& host, int port, bool ok,	Socket*);
+	virtual void on_socket_shutdown(const StringView& host, int port, Socket*) {}
 #ifdef HAVE_GNUTLS
 private:
 	// CertStore::Listener
@@ -116,6 +115,7 @@ private:
 	int _pending_connections;
 	CertStore& _certstore;
 	Prefs& _prefs;
+	DownloadMeter& _meter;
 
 	struct PoolItem {
 		NNTP * nntp;

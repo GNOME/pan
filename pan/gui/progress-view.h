@@ -43,6 +43,8 @@ namespace pan
       void set_progress (Progress *);
       Progress* get_progress () { return _progress; }
       const Progress* get_progress () const { return _progress; }
+      void set_color (const std::string& color);
+      void reset_color ();
 
     private: // inherited from progress listener
       virtual void on_progress_step (Progress&, int percentage);
@@ -63,6 +65,7 @@ namespace pan
       GtkWidget * _progressbar;
       std::string _last_status;
       Progress * _progress;
+
   };
 }
 

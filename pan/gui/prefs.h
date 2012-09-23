@@ -29,6 +29,10 @@
 #include <pan/gui/pan-colors.h>
 #include "gtk-compat.h"
 
+extern "C" {
+  #include <stdint.h>
+}
+
 namespace pan
 {
   /**
@@ -45,6 +49,7 @@ namespace pan
         virtual void on_prefs_string_changed (const StringView& key, const StringView& value) = 0;
         virtual void on_prefs_color_changed (const StringView& key, const GdkColor& color) = 0;
         virtual void on_prefs_hotkey_changed (const StringView& key, const StringView& value) {}
+        virtual void on_prefs_long64_changed(const StringView& key, const uint64_t& value) {}
       };
       void add_listener (Listener* l) { _listeners.insert(l); }
       void remove_listener (Listener* l) {_listeners.erase(l); }
@@ -61,6 +66,10 @@ namespace pan
       void fire_int_changed (const StringView& key, int value) {
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
           (*it++)->on_prefs_int_changed (key, value);
+      }
+      void fire_long64_changed (const StringView& key, uint64_t value) {
+        for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
+          (*it++)->on_prefs_long64_changed (key, value);
       }
       void fire_string_changed (const StringView& key, const StringView& value) {
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
@@ -86,9 +95,13 @@ namespace pan
     public:
       bool get_flag (const StringView& key, bool fallback) const;
       void set_flag (const StringView& key, bool);
+
       int get_int (const StringView& key, int fallback) const;
       int get_int_min  (const StringView& key, int fallback) const;
       void set_int (const StringView& key, int);
+
+      uint64_t get_long64 (const StringView& key, uint64_t fallback) const;
+      void set_long64 (const StringView& key, uint64_t value);
 
       std::string get_string (const StringView& key, const StringView& fallback) const;
       void set_string (const StringView& key, const StringView&);
@@ -137,6 +150,8 @@ namespace pan
       mutable colors_t _colors;
       typedef std::map<std::string,int> ints_t;
       mutable ints_t _ints;
+      typedef std::map<std::string,uint64_t> longs_t;
+      mutable longs_t _longs;
 
     public:
       colors_t& get_colors() { return _colors; }

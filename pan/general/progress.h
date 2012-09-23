@@ -26,6 +26,11 @@
 #include <pan/general/debug.h>
 #include <pan/general/string-view.h>
 
+extern "C"
+{
+    #include <stdint.h>
+}
+
 namespace pan
 {
   class StringView;
@@ -72,10 +77,10 @@ namespace pan
       std::string _description; // used for default describe()
       std::string _status_text; // the last status text emitted
       std::vector<std::string> _errors; // the emitted error strings
-      int _steps; // number of steps total
-      int _step; // number of steps completed so far
+      uint64_t _steps; // number of steps total
+      uint64_t _step; // number of steps completed so far
       int _done; // value of set_finished()
-      bool _active; 
+      bool _active;
 
     public:
 

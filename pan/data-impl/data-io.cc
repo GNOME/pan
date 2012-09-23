@@ -80,6 +80,12 @@ namespace
     g_free (filename);
     return retval;
   }
+
+  std::string get_download_stats_filename ()
+  {
+    return get_pan_home_file ("downloads.stats");
+  }
+
 }
 
 std::string
@@ -148,6 +154,12 @@ LineReader*
 DataIO :: read_group_permissions () const
 {
    return read_file (get_group_permissions_filename ());
+}
+
+LineReader*
+DataIO :: read_download_stats () const
+{
+   return read_file (get_download_stats_filename ());
 }
 
 LineReader*
@@ -255,6 +267,12 @@ std::ostream*
 DataIO :: write_group_headers (const Quark& group)
 {
   return write_file (get_group_headers_filename (group));
+}
+
+std::ostream*
+DataIO :: write_download_stats ()
+{
+   return write_file (get_download_stats_filename ());
 }
 
 std::ostream*

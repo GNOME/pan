@@ -123,6 +123,7 @@ Progress :: set_step (int step)
   const int old_of_100 (get_progress_of_100());
    _step = step;
   const int new_of_100 (get_progress_of_100());
+
   if (old_of_100 != new_of_100)
     fire_percentage (new_of_100);
 }
@@ -136,12 +137,11 @@ Progress :: increment_step (int increment)
 int
 Progress :: get_progress_of_100 () const
 {
-  int p = (int)(!_steps ? 0 : (_step*100.0)/_steps);
+  int p = (int)(!_steps ? 0 : (_step*100ul)/_steps);
   if (p < 0) p = 0;
   if (p > 100) p = 100;
   return p;
 }
-
 
 void
 Progress :: set_finished (int status)

@@ -164,6 +164,9 @@ Prefs :: to_string (int depth, std::string& setme) const
   foreach_const (ints_t, _ints, it)
     out << indent(depth) << "<int name='" << escaped(it->first) << "' value='" << it->second << "'/>\n";
 
+  foreach_const (longs_t, _longs, it)
+    out << indent(depth) << "<long name='" << escaped(it->first) << "' value='" << it->second << "'/>\n";
+
   foreach_const (strings_t, _strings, it)
     out << indent(depth) << "<string name='" << escaped(it->first) << "' value='" << escaped(it->second) << "'/>\n";
 
@@ -296,6 +299,26 @@ Prefs :: set_int (const StringView& key, int value)
   _ints[key] = value;
   fire_int_changed (key, value);
 }
+
+/***
+****  LONG64
+***/
+
+uint64_t
+Prefs :: get_long64 (const StringView& key, uint64_t fallback) const
+{
+  if (!_ints.count (key))
+    _longs[key] = fallback;
+  return _longs[key];
+}
+
+void
+Prefs :: set_long64 (const StringView& key, uint64_t value)
+{
+  _longs[key] = value;
+  fire_long64_changed (key, value);
+}
+
 
 /***
 ****  STRINGS

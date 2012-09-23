@@ -23,6 +23,10 @@
 #include <string>
 #include <config.h>
 
+extern "C" {
+  #include <stdint.h>
+}
+
 #ifdef HAVE_GNUTLS
   #include <gnutls/gnutls.h>
 #endif
@@ -30,6 +34,7 @@
 namespace pan
 {
   class StringView;
+  class Quark;
   class WorkerPool;
   class Data;
 
@@ -49,9 +54,11 @@ namespace pan
       /** Interface class for objects that listen to a Socket's events */
       struct Listener {
         virtual ~Listener () {}
+
         virtual bool on_socket_response (Socket*, const StringView& line) = 0;
         virtual void on_socket_error (Socket*) = 0;
         virtual void on_socket_abort (Socket*) = 0;
+        virtual void on_socket_bytes_transferred (uint64_t bytes, Socket*) = 0;
       };
 
     public:
@@ -90,7 +97,7 @@ namespace pan
           virtual ~Listener () {}
           virtual void on_socket_created (const StringView& host, int port, bool ok, Socket*) = 0;
           virtual void on_socket_shutdown (const StringView& host, int port, Socket*) = 0;
-        };
+      };
 
         virtual ~Creator () { }
         virtual void create_socket (Data&, const StringView& host, int port, WorkerPool&, Listener*, bool) = 0;

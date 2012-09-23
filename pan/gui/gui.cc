@@ -61,6 +61,7 @@ extern "C" {
 #endif
 
 #include "prefs-ui.h"
+#include "dl-prefs.h"
 #include "progress-view.h"
 #include "profiles-dialog.h"
 #include "post-ui.h"
@@ -178,6 +179,11 @@ void GUI :: show_task_window_cb (GtkWidget *, gpointer gui_gpointer)
   static_cast<GUI*>(gui_gpointer)->activate_action ("show-task-window");
 }
 
+void GUI :: show_download_meter_prefs_cb (GtkWidget *, gpointer gui_gpointer)
+{
+  static_cast<GUI*>(gui_gpointer)->activate_action ("show-dl-meter-prefs");
+}
+
 void
 GUI :: root_realized_cb (GtkWidget*, gpointer self_gpointer)
 {
@@ -207,7 +213,7 @@ GUI :: root_realized_cb (GtkWidget*, gpointer self_gpointer)
   }
 }
 
-GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
+GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, DownloadMeter& meter):
   _data (data),
   _queue (queue),
   _prefs (prefs),
@@ -227,7 +233,8 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _queue_size_label (0),
   _queue_size_button (0),
   _taskbar (0),
-  _certstore(data.get_certstore())
+  _certstore(data.get_certstore()),
+  _meter(meter)
 {
 
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
@@ -295,6 +302,16 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   gtk_container_add (GTK_CONTAINER(frame), w);
   gtk_box_pack_start (GTK_BOX(status_bar), frame, FALSE, FALSE, 0);
 
+  // download meter
+  w = _meter.get_widget();
+  gtk_box_pack_start (GTK_BOX(status_bar), w, FALSE, FALSE, 0);
+  g_signal_connect (_meter.get_button(), "clicked", G_CALLBACK(show_download_meter_prefs_cb), this);
+
+  // drag and drop for message-ids
+  //  gtk_drag_dest_set(_workarea_bin,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
+  //  gtk_drag_dest_add_text_targets(_workarea_bin);
+  //  gtk_drag_dest_add_uri_targets(_workarea_bin);
+
   // queue
   w = _queue_size_label = gtk_label_new (NULL);
   gtk_misc_set_padding (GTK_MISC(w), PAD, 0);
@@ -302,11 +319,6 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   gtk_widget_set_tooltip_text (w, _("Open the Task Manager"));
   gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
   g_signal_connect (w, "clicked", G_CALLBACK(show_task_window_cb), this);
-
-  // drag and drop for message-ids
-//  gtk_drag_dest_set(_workarea_bin,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
-//  gtk_drag_dest_add_text_targets(_workarea_bin);
-//  gtk_drag_dest_add_uri_targets(_workarea_bin);
 
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
   frame = gtk_frame_new (NULL);
@@ -857,6 +869,13 @@ void GUI :: do_show_task_window ()
   toggle_visible (task_pane->root());
 }
 
+void GUI :: do_show_dl_meter_prefs()
+{
+  DLMeterDialog * dialog = new DLMeterDialog (_prefs, _meter, get_window(_root));
+  g_signal_connect (dialog->root(), "destroy", G_CALLBACK(prefs_dialog_destroyed_cb), this);
+  gtk_widget_show (dialog->root());
+}
+
 namespace
 {
   void set_bin_child (GtkWidget * w, GtkWidget * new_child)
@@ -1122,6 +1141,8 @@ void GUI :: prefs_dialog_destroyed (GtkWidget *)
     _header_pane->rules(_prefs._rules_enabled);
   }
   _cache.set_max_megs(_prefs.get_int("cache-size-megs",10));
+
+  gtk_widget_set_visible(_meter.get_widget(), _prefs.get_flag("dl-meter-show", true));
 
 }
 

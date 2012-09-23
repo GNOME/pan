@@ -58,20 +58,16 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="config.h">
-			<Option target="all_linux" />
-		</Unit>
+		<Unit filename="config.h" />
 		<Unit filename="pan/data-impl/add-server.cc" />
 		<Unit filename="pan/data-impl/article-filter.cc" />
 		<Unit filename="pan/data-impl/article-filter.h" />
-		<Unit filename="pan/data-impl/cert-store.h">
-			<Option target="all_linux" />
-		</Unit>
 		<Unit filename="pan/data-impl/data-impl.cc" />
 		<Unit filename="pan/data-impl/data-impl.h" />
 		<Unit filename="pan/data-impl/data-io.cc" />
 		<Unit filename="pan/data-impl/data-io.h" />
-		<Unit filename="pan/data-impl/defgroup.h" />
+		<Unit filename="pan/data-impl/download-meter.cc" />
+		<Unit filename="pan/data-impl/download-meter.h" />
 		<Unit filename="pan/data-impl/groups.cc" />
 		<Unit filename="pan/data-impl/headers-test.cc" />
 		<Unit filename="pan/data-impl/headers.cc" />
@@ -83,9 +79,6 @@
 		<Unit filename="pan/data-impl/rules-filter.h" />
 		<Unit filename="pan/data-impl/server.cc" />
 		<Unit filename="pan/data-impl/speed-test-load-group.cc" />
-		<Unit filename="pan/data-impl/sql-db.h">
-			<Option target="all_linux" />
-		</Unit>
 		<Unit filename="pan/data-impl/task-archive.cc" />
 		<Unit filename="pan/data-impl/xover.cc" />
 		<Unit filename="pan/data/article-cache.cc" />
@@ -97,19 +90,14 @@
 		<Unit filename="pan/data/cert-store.h" />
 		<Unit filename="pan/data/data.cc" />
 		<Unit filename="pan/data/data.h" />
-		<Unit filename="pan/data/defgroup.h" />
 		<Unit filename="pan/data/encode-cache.cc" />
 		<Unit filename="pan/data/encode-cache.h" />
 		<Unit filename="pan/data/parts.cc" />
 		<Unit filename="pan/data/parts.h" />
 		<Unit filename="pan/data/server-info.h" />
-		<Unit filename="pan/data/xover-cache.h">
-			<Option target="all_linux" />
-		</Unit>
 		<Unit filename="pan/data/xref-test.cc" />
 		<Unit filename="pan/data/xref.cc" />
 		<Unit filename="pan/data/xref.h" />
-		<Unit filename="pan/general/compression.h" />
 		<Unit filename="pan/general/debug.cc" />
 		<Unit filename="pan/general/debug.h" />
 		<Unit filename="pan/general/defgroup.h" />
@@ -117,9 +105,6 @@
 		<Unit filename="pan/general/e-util.h" />
 		<Unit filename="pan/general/file-util.cc" />
 		<Unit filename="pan/general/file-util.h" />
-		<Unit filename="pan/general/gdk-threads.h">
-			<Option target="all_linux" />
-		</Unit>
 		<Unit filename="pan/general/line-reader.cc" />
 		<Unit filename="pan/general/line-reader.h" />
 		<Unit filename="pan/general/locking.h" />
@@ -128,9 +113,6 @@
 		<Unit filename="pan/general/macros.h" />
 		<Unit filename="pan/general/map-vector.h" />
 		<Unit filename="pan/general/messages.h" />
-		<Unit filename="pan/general/non-gui.h">
-			<Option target="all_linux" />
-		</Unit>
 		<Unit filename="pan/general/progress-test.cc" />
 		<Unit filename="pan/general/progress.cc" />
 		<Unit filename="pan/general/progress.h" />
@@ -147,7 +129,6 @@
 		<Unit filename="pan/general/text-match.cc" />
 		<Unit filename="pan/general/text-match.h" />
 		<Unit filename="pan/general/time-elapsed.h" />
-		<Unit filename="pan/general/typedefs.h" />
 		<Unit filename="pan/general/utf8-utils.cc" />
 		<Unit filename="pan/general/utf8-utils.h" />
 		<Unit filename="pan/general/worker-pool.cc" />
@@ -161,6 +142,9 @@
 		<Unit filename="pan/gui/defgroup.h" />
 		<Unit filename="pan/gui/dl-headers-ui.cc" />
 		<Unit filename="pan/gui/dl-headers-ui.h" />
+		<Unit filename="pan/gui/dl-prefs.cc" />
+		<Unit filename="pan/gui/dl-prefs.h" />
+		<Unit filename="pan/gui/download-meter.h" />
 		<Unit filename="pan/gui/e-action-combo-box.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -188,9 +172,6 @@
 		<Unit filename="pan/gui/group-prefs.cc" />
 		<Unit filename="pan/gui/group-prefs.h" />
 		<Unit filename="pan/gui/gtk-compat.h" />
-		<Unit filename="pan/gui/gtk_compat.h">
-			<Option target="all_linux" />
-		</Unit>
 		<Unit filename="pan/gui/gui.cc" />
 		<Unit filename="pan/gui/gui.h" />
 		<Unit filename="pan/gui/header-pane.cc" />
@@ -253,8 +234,6 @@
 		<Unit filename="pan/gui/xface.h" />
 		<Unit filename="pan/icons/pan-pixbufs-internal.h" />
 		<Unit filename="pan/icons/pan-pixbufs.h" />
-		<Unit filename="pan/icons/pan_icons/pan-pixbufs-internal.h" />
-		<Unit filename="pan/icons/pan_icons/pan-pixbufs.h" />
 		<Unit filename="pan/tasks/adaptable-set-test.cc" />
 		<Unit filename="pan/tasks/adaptable-set.cc" />
 		<Unit filename="pan/tasks/adaptable-set.h" />
@@ -287,9 +266,6 @@
 		<Unit filename="pan/tasks/task-article.h" />
 		<Unit filename="pan/tasks/task-groups.cc" />
 		<Unit filename="pan/tasks/task-groups.h" />
-		<Unit filename="pan/tasks/task-multipost.h">
-			<Option target="all_linux" />
-		</Unit>
 		<Unit filename="pan/tasks/task-post.cc" />
 		<Unit filename="pan/tasks/task-post.h" />
 		<Unit filename="pan/tasks/task-upload.cc" />
@@ -339,58 +315,35 @@
 		<Unit filename="pan/usenet-utils/url-find.h" />
 		<Unit filename="uulib/crc32.c">
 			<Option compilerVar="CC" />
-			<Option target="all_linux" />
 		</Unit>
-		<Unit filename="uulib/crc32.h">
-			<Option target="all_linux" />
-		</Unit>
+		<Unit filename="uulib/crc32.h" />
 		<Unit filename="uulib/fptools.c">
 			<Option compilerVar="CC" />
-			<Option target="all_linux" />
 		</Unit>
-		<Unit filename="uulib/fptools.h">
-			<Option target="all_linux" />
-		</Unit>
+		<Unit filename="uulib/fptools.h" />
 		<Unit filename="uulib/uucheck.c">
 			<Option compilerVar="CC" />
-			<Option target="all_linux" />
 		</Unit>
-		<Unit filename="uulib/uudeview.h">
-			<Option target="all_linux" />
-		</Unit>
+		<Unit filename="uulib/uudeview.h" />
 		<Unit filename="uulib/uuencode.c">
 			<Option compilerVar="CC" />
-			<Option target="all_linux" />
 		</Unit>
-		<Unit filename="uulib/uuencode2.c">
-			<Option compilerVar="CC" />
-			<Option target="all_linux" />
-		</Unit>
-		<Unit filename="uulib/uuint.h">
-			<Option target="all_linux" />
-		</Unit>
+		<Unit filename="uulib/uuint.h" />
 		<Unit filename="uulib/uulib.c">
 			<Option compilerVar="CC" />
-			<Option target="all_linux" />
 		</Unit>
 		<Unit filename="uulib/uunconc.c">
 			<Option compilerVar="CC" />
-			<Option target="all_linux" />
 		</Unit>
 		<Unit filename="uulib/uuscan.c">
 			<Option compilerVar="CC" />
-			<Option target="all_linux" />
 		</Unit>
 		<Unit filename="uulib/uustring.c">
 			<Option compilerVar="CC" />
-			<Option target="all_linux" />
 		</Unit>
-		<Unit filename="uulib/uustring.h">
-			<Option target="all_linux" />
-		</Unit>
+		<Unit filename="uulib/uustring.h" />
 		<Unit filename="uulib/uuutil.c">
 			<Option compilerVar="CC" />
-			<Option target="all_linux" />
 		</Unit>
 		<Extensions>
 			<envvars />
