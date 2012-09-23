@@ -2114,8 +2114,10 @@ BodyPane :: on_prefs_string_changed (const StringView& key, const StringView& va
 void
 BodyPane :: on_prefs_color_changed (const StringView& key, const GdkColor& color G_GNUC_UNUSED)
 {
-  if (key == "body-pane-color" || key == "font-color-fg" || key == "font-color-bg")
+  if (key == "body-pane-color" || key == "text-color-fg" || key == "text-color-bg")
+  {
     refresh_colors ();
+  }
 }
 
 void
