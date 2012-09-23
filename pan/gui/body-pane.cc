@@ -495,7 +495,8 @@ namespace
   set_text_buffer_tags (GtkTextBuffer * buffer, const Prefs& p)
   {
     const PanColors& colors (PanColors::get());
-    const std::string& bg (colors.def_bg);
+    const std::string fg (p.get_color_str ("text-color-fg", colors.def_fg));
+    const std::string bg (p.get_color_str ("text-color-bg", colors.def_bg));
 
     GtkTextTagTable * table = gtk_text_buffer_get_tag_table (buffer);
 
@@ -531,6 +532,10 @@ namespace
     g_object_set (get_or_create_tag (table, "signature"),
       "foreground", p.get_color_str ("body-pane-color-signature", TANGO_SKY_BLUE_LIGHT).c_str(),
       "background", p.get_color_str ("body-pane-color-signature-bg", bg).c_str(),
+      NULL);
+    g_object_set (get_or_create_tag (table, "text"),
+      "foreground", p.get_color_str ("text-color-fg", fg).c_str(),
+      "background", p.get_color_str ("text-color-bg", bg).c_str(),
       NULL);
   }
 }
@@ -767,6 +772,9 @@ namespace
 
     StringView v(body), line;
     GtkTextIter mark_start (start);
+
+    // colorize text
+    gtk_text_buffer_apply_tag_by_name (buffer, "text", &mark_start, &end);
 
     // find where the signature begins...
     const char * sig_point (0);
@@ -2106,7 +2114,7 @@ BodyPane :: on_prefs_string_changed (const StringView& key, const StringView& va
 void
 BodyPane :: on_prefs_color_changed (const StringView& key, const GdkColor& color G_GNUC_UNUSED)
 {
-  if (key.strstr ("body-pane-color") != 0)
+  if (key == "body-pane-color" || key == "font-color-fg" || key == "font-color-bg")
     refresh_colors ();
 }
 

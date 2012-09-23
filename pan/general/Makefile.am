@@ -36,7 +36,6 @@ noinst_HEADERS = \
  time-elapsed.h \
  utf8-utils.h \
  worker-pool.h \
- typedefs.h \
  singleton-template.h
 
 #noinst_PROGRAMS = \

@@ -35,6 +35,7 @@
 #include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
 #include <pan/gui/gui.h>
+#include <pan/gui/body-pane.h>
 
 namespace pan
 {
@@ -150,7 +151,7 @@ namespace pan
       virtual void on_prefs_flag_changed   (const StringView&, bool);
       virtual void on_prefs_int_changed    (const StringView&, int) { }
       virtual void on_prefs_string_changed (const StringView&, const StringView&);
-      virtual void on_prefs_color_changed  (const StringView&, const GdkColor&) {}
+      virtual void on_prefs_color_changed  (const StringView&, const GdkColor&);
 
     public:
       virtual void on_article_flag_changed (articles_t& a, const Quark& group);
@@ -322,6 +323,10 @@ namespace pan
       Data::ShowType _show_type;
       guint _selection_changed_idle_tag;
 
+      // default text colors, updated on prefs change
+      std::string _fg;
+      std::string _bg;
+
     private:
       void rebuild_filter (const std::string&, int);
       void rebuild_rules (bool enable=false);
@@ -361,6 +366,8 @@ namespace pan
       static RenderFunc render_bytes;
       static RenderFunc render_subject;
       static RenderFunc render_author;
+      static RenderFunc render_lines;
+      static RenderFunc render_date;
 
     private:
       Row* get_row (const Quark& message_id);

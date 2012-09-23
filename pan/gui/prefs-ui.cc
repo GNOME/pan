@@ -1166,7 +1166,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Fonts"), _("Fonts"), icon_prefs_fonts, prefs));
 
-  // Colors
+  // default color theme's Colors
   const PanColors& colors (PanColors::get());
   const char* def_color_str (colors.def_bg.c_str());
   const char* def_color_fg_str (colors.def_fg.c_str());
@@ -1231,6 +1231,14 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-signature-bg", def_color_str, prefs)); //
     HIG :: workarea_add_row (t, &row, _("Signature:"), h);
+  HIG :: workarea_finish (t, &row);
+
+  // colors for others texts (score == 0 or body pane etc.... )
+  HIG :: workarea_add_section_title (t, &row, _("Other Texts"));
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-fg", def_color_fg_str, prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-bg", def_color_str, prefs));
+    HIG :: workarea_add_row (t, &row, _("Text Color:"), h);
   HIG :: workarea_finish (t, &row);
 
   HIG :: workarea_add_section_divider (t, &row);
@@ -1298,6 +1306,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
   _root = dialog;
 
+  // initially set notebook to page 1 or last selected page from last visit
   gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), prefs.get_int("prefs-last-selected-page",1));
 
 }

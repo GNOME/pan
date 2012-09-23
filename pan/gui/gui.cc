@@ -2237,9 +2237,14 @@ GUI :: set_queue_size_label (unsigned int running,
     g_snprintf (str, sizeof(str), "%s: %u/%u", _("Tasks"), running, size);
 
   // build the tooltip
-  // todo : perhaps fix this for mac osx automatically....
+  // FIX : build fix for 64bit osx which doesn't seem to have guint64t nor gulong :(
+#ifdef G_OS_DARWIN
+  unsigned long queued, unused, stopped;
+  uint64_t KiB_remain;
+#else
   gulong queued, unused, stopped;
   guint64 KiB_remain;
+#endif
   double KiBps;
   int hr, min, sec;
   _queue.get_stats (queued, unused, stopped,

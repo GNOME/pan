@@ -59,6 +59,14 @@ namespace
   };
 }
 
+namespace
+{
+  // default color theme's Colors
+  const PanColors& colors (PanColors::get());
+  const char* def_color_str (colors.def_bg.c_str());
+  const char* def_color_fg_str (colors.def_fg.c_str());
+}
+
 const Article*
 HeaderPane :: get_article (GtkTreeModel* model, GtkTreeIter* iter)
 {
@@ -226,20 +234,25 @@ HeaderPane :: render_score (GtkTreeViewColumn * ,
   const Prefs& prefs (self->_prefs);
   std::string bg, fg;
   if (score >= 9999) {
-    fg = prefs.get_color_str ("score-color-watched-fg", "black");
+    fg = prefs.get_color_str ("score-color-watched-fg", def_color_fg_str);
     bg = prefs.get_color_str ("score-color-watched-bg", TANGO_CHAMELEON_LIGHT);
   } else if (score >= 5000) {
-    fg = prefs.get_color_str ("score-color-high-fg", "black");
+    fg = prefs.get_color_str ("score-color-high-fg", def_color_fg_str);
     bg = prefs.get_color_str ("score-color-high-bg", TANGO_BUTTER_LIGHT);
   } else if (score >= 1) {
-    fg = prefs.get_color_str ("score-color-medium-fg", "black");
+    fg = prefs.get_color_str ("score-color-medium-fg", def_color_fg_str);
     bg = prefs.get_color_str ("score-color-medium-bg", TANGO_SKY_BLUE_LIGHT);
   } else if (score <= -9999) {
     fg = prefs.get_color_str ("score-color-ignored-fg", TANGO_ALUMINUM_4);
-    bg = prefs.get_color_str ("score-color-ignored-bg", "black");
+    bg = prefs.get_color_str ("score-color-ignored-bg", def_color_str);
   } else if (score <= -1) {
     fg = prefs.get_color_str ("score-color-low-fg", TANGO_ALUMINUM_2);
-    bg = prefs.get_color_str ("score-color-low-bg", "black");
+    bg = prefs.get_color_str ("score-color-low-bg", def_color_str);
+  }
+  else if (score == 0)
+  {
+    fg = self->_fg;
+    bg = self->_bg;
   }
 
   g_object_set (renderer, "text", buf,
@@ -262,8 +275,33 @@ HeaderPane :: render_author (GtkTreeViewColumn * ,
   const Article * a (self->get_article (model, iter));
 
   char* ret = __g_mime_iconv_strdup(conv, a->author.c_str());
-  if (ret) g_object_set (renderer, "text", ret, NULL);
+  if (ret) g_object_set (renderer, "text", ret,
+                         "background", self->_bg.c_str(),
+                         "foreground", self->_fg.c_str(),
+                         NULL);
   g_free(ret);
+}
+
+void
+HeaderPane :: render_lines (GtkTreeViewColumn * ,
+                            GtkCellRenderer   * renderer,
+                            GtkTreeModel      * model,
+                            GtkTreeIter       * iter,
+                            gpointer            user_data)
+{
+
+  const HeaderPane * self (static_cast<HeaderPane*>(user_data));
+
+  unsigned long lines(0ul);
+  std::stringstream str;
+
+  gtk_tree_model_get (model, iter, COL_LINES, &lines, -1);
+  str << lines;
+
+  g_object_set (renderer, "text", str.str().c_str(),
+                "background", self->_bg.c_str(),
+                "foreground", self->_fg.c_str(),
+                NULL);
 }
 
 void
@@ -271,13 +309,36 @@ HeaderPane :: render_bytes (GtkTreeViewColumn * ,
                             GtkCellRenderer   * renderer,
                             GtkTreeModel      * model,
                             GtkTreeIter       * iter,
-                            gpointer            )
+                            gpointer            userdata)
 {
+  const HeaderPane * self (static_cast<HeaderPane*>(userdata));
+
   unsigned long bytes (0);
   gtk_tree_model_get (model, iter, COL_BYTES, &bytes, -1);
-  g_object_set (renderer, "text", pan::render_bytes(bytes), NULL);
+  g_object_set (renderer,
+                "text", pan::render_bytes(bytes),
+                "background", self->_bg.c_str(),
+                "foreground", self->_fg.c_str(),
+                NULL);
 }
 
+void
+HeaderPane :: render_date  (GtkTreeViewColumn * ,
+                            GtkCellRenderer   * renderer,
+                            GtkTreeModel      * model,
+                            GtkTreeIter       * iter,
+                            gpointer            userdata)
+{
+  const HeaderPane * self (static_cast<HeaderPane*>(userdata));
+
+  gchar* date (0);
+  gtk_tree_model_get (model, iter, COL_DATE_STR, &date, -1);
+  g_object_set (renderer,
+                "text", date,
+                "background", self->_bg.c_str(),
+                "foreground", self->_fg.c_str(),
+                NULL);
+}
 
 struct HeaderPane::CountUnread: public PanTreeStore::WalkFunctor
 {
@@ -346,8 +407,8 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
   g_object_set (renderer,
     "text", res.c_str(),
     "weight", (bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
-    "foreground", unread ? (def_fg.empty() ? NULL : def_fg.c_str()) : NULL,
-    "background", unread ? (def_bg.empty() ? NULL : def_bg.c_str()) : NULL, NULL);
+    "foreground", unread ? (def_fg.empty() ? self->_fg.c_str() : def_fg.c_str()) : self->_fg.c_str(),
+    "background", unread ? (def_bg.empty() ? self->_bg.c_str() : def_bg.c_str()) : self->_bg.c_str(), NULL);
 
 }
 
@@ -1726,11 +1787,12 @@ HeaderPane :: build_tree_columns ()
         "xalign", 1.0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes (_("Lines"), r, "text", COL_LINES, NULL);
+      col = gtk_tree_view_column_new_with_attributes (_("Lines"), r, NULL);
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 60));
       gtk_tree_view_column_set_resizable (col, true);
       gtk_tree_view_column_set_sort_column_id (col, COL_LINES);
+      gtk_tree_view_column_set_cell_data_func (col, r, render_lines, this, 0);
       gtk_tree_view_append_column (tree_view, col);
     }
     else if (name == "bytes")
@@ -1756,11 +1818,12 @@ HeaderPane :: build_tree_columns ()
         "ypad", 0,
         NULL));
       ellipsize_if_supported (G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes (_("Date"), r, "text", COL_DATE_STR, NULL);
+      col = gtk_tree_view_column_new_with_attributes (_("Date"), r, NULL);
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 120));
       gtk_tree_view_column_set_resizable (col, true);
       gtk_tree_view_column_set_sort_column_id (col, COL_DATE);
+      gtk_tree_view_column_set_cell_data_func (col, r, render_date, this, 0);
       gtk_tree_view_append_column (tree_view, col);
     }
 
@@ -1923,8 +1986,11 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _selection_changed_idle_tag (0),
   _cache (cache),
   _gui (gui),
-  _cleared (true)
+  _cleared (true),
+  _fg(prefs.get_color_str ("text-color-fg", def_color_fg_str)),
+  _bg(prefs.get_color_str ("text-color-bg", def_color_str))
 {
+
   // init the icons
   for (guint i=0; i<ICON_QTY; ++i)
     _icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, _icons[i].pixbuf_txt, FALSE, 0);
@@ -2403,6 +2469,19 @@ HeaderPane :: on_prefs_string_changed (const StringView& key, const StringView&)
     refresh_font ();
   else if (key == "header-pane-columns")
     build_tree_columns ();
+}
+
+void
+HeaderPane :: on_prefs_color_changed  (const StringView& key, const GdkColor&)
+{
+  if (key == "text-color-fg" || key == "text-color-bg")
+  {
+    _fg = _prefs.get_color_str ("text-color-fg", def_color_fg_str).c_str();
+    _bg = _prefs.get_color_str ("text-color-bg", def_color_str).c_str();
+    refresh_font();
+    build_tree_columns();
+  }
+
 }
 
 /***

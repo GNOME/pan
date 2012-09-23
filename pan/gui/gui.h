@@ -280,6 +280,9 @@ namespace pan
 
       static void root_realized_cb (GtkWidget*, gpointer self_gpointer);
 
+    public:
+      BodyPane* body_pane() { return _body_pane; }
+
     private:
       static void add_widget (GtkUIManager*, GtkWidget*, gpointer);
       static void server_list_dialog_destroyed_cb (GtkWidget*, gpointer);
