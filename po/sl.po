@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan2 master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-08-20 09:28+0000\n"
-"PO-Revision-Date: 2012-09-09 19:34+0100\n"
+"POT-Creation-Date: 2012-09-23 10:57+0000\n"
+"PO-Revision-Date: 2012-09-24 21:43+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -778,15 +778,15 @@ msgstr "Pokaži _niti, ki se skladajo s prispevkom"
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Pokaži _podniti, ki se skladajo s prispevkom"
 
-#: ../pan/gui/body-pane.cc:1044
+#: ../pan/gui/body-pane.cc:1052
 #, c-format
 msgid "Unnamed File"
 msgstr "Neimenovana datoteka"
 
-#: ../pan/gui/body-pane.cc:1125
+#: ../pan/gui/body-pane.cc:1133
 #: ../pan/gui/gui.cc:1930
-#: ../pan/gui/header-pane.cc:1252
-#: ../pan/gui/header-pane.cc:1681
+#: ../pan/gui/header-pane.cc:1313
+#: ../pan/gui/header-pane.cc:1742
 #: ../pan/gui/post-ui.cc:2523
 #: ../pan/gui/prefs-ui.cc:843
 #: ../pan/gui/score-add-ui.cc:139
@@ -794,40 +794,40 @@ msgstr "Neimenovana datoteka"
 msgid "Subject"
 msgstr "Zadeva"
 
-#: ../pan/gui/body-pane.cc:1127
+#: ../pan/gui/body-pane.cc:1135
 #: ../pan/gui/gui.cc:1930
 msgid "From"
 msgstr "Od"
 
-#: ../pan/gui/body-pane.cc:1129
+#: ../pan/gui/body-pane.cc:1137
 #: ../pan/gui/gui.cc:1931
-#: ../pan/gui/header-pane.cc:1759
+#: ../pan/gui/header-pane.cc:1821
 #: ../pan/gui/log-ui.cc:305
 #: ../pan/gui/prefs-ui.cc:839
 msgid "Date"
 msgstr "Datum"
 
-#: ../pan/gui/body-pane.cc:1136
+#: ../pan/gui/body-pane.cc:1144
 msgid "Newsgroups"
 msgstr "Novičarske skupine"
 
-#: ../pan/gui/body-pane.cc:1141
+#: ../pan/gui/body-pane.cc:1149
 msgid "Followup-To"
 msgstr "Navezava-na"
 
-#: ../pan/gui/body-pane.cc:1151
+#: ../pan/gui/body-pane.cc:1159
 msgid "Reply-To"
 msgstr "Odgovori-na"
 
-#: ../pan/gui/body-pane.cc:1194
+#: ../pan/gui/body-pane.cc:1202
 msgid " from "
 msgstr " od"
 
-#: ../pan/gui/body-pane.cc:1196
+#: ../pan/gui/body-pane.cc:1204
 msgid " at "
 msgstr " ob"
 
-#: ../pan/gui/body-pane.cc:1277
+#: ../pan/gui/body-pane.cc:1285
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
@@ -842,24 +842,24 @@ msgstr ""
 "<b>Veljavnost:</b> %s\n"
 "<b>Ustvarjeno:</b> %s"
 
-#: ../pan/gui/body-pane.cc:1282
+#: ../pan/gui/body-pane.cc:1290
 msgid "always"
 msgstr "vedno"
 
-#: ../pan/gui/body-pane.cc:1502
+#: ../pan/gui/body-pane.cc:1510
 msgid "Copy _URL"
 msgstr "_Kopiraj URL"
 
-#: ../pan/gui/body-pane.cc:1698
+#: ../pan/gui/body-pane.cc:1706
 msgid "Save Attachment As..."
 msgstr "Shrani prilogo kot ..."
 
-#: ../pan/gui/body-pane.cc:1701
+#: ../pan/gui/body-pane.cc:1709
 msgid "Save All Attachments"
 msgstr "Shrani vse priloge"
 
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1771
+#: ../pan/gui/body-pane.cc:1779
 msgid "Attachments"
 msgstr "Priloge"
 
@@ -1210,13 +1210,13 @@ msgstr[2] "Prispevku manjka %d od skupno %d delov:"
 msgstr[3] "Prispevku manjka %d od skupno %d delov:"
 
 #: ../pan/gui/gui.cc:1931
-#: ../pan/gui/header-pane.cc:1254
+#: ../pan/gui/header-pane.cc:1315
 #: ../pan/gui/task-pane.cc:792
 msgid "Message-ID"
 msgstr "ID sporočila"
 
 #: ../pan/gui/gui.cc:1932
-#: ../pan/gui/header-pane.cc:1729
+#: ../pan/gui/header-pane.cc:1790
 #: ../pan/gui/prefs-ui.cc:840
 msgid "Lines"
 msgstr "Vrstic"
@@ -1226,7 +1226,7 @@ msgid "Size"
 msgstr "Velikost"
 
 #: ../pan/gui/gui.cc:1933
-#: ../pan/gui/header-pane.cc:1744
+#: ../pan/gui/header-pane.cc:1806
 #: ../pan/gui/prefs-ui.cc:838
 msgid "Bytes"
 msgstr "Bajtov"
@@ -1280,35 +1280,35 @@ msgstr "Ni nalog"
 msgid "Tasks"
 msgstr "Naloge"
 
-#: ../pan/gui/gui.cc:2249
+#: ../pan/gui/gui.cc:2254
 #: ../pan/gui/task-pane.cc:468
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu nalog, %s, %.1f KiBps, PČP %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2301
+#: ../pan/gui/gui.cc:2306
 msgid "Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue."
 msgstr "Pan je v načinu brez povezave. Oglejte si \"Datoteka|Dnevnik dogodkov\" in popravite napako ter nato uporabite \"Datoteka|Delaj povezano\" za nadaljevanje."
 
-#: ../pan/gui/header-pane.cc:1250
+#: ../pan/gui/header-pane.cc:1311
 #: ../pan/gui/task-pane.cc:788
 msgid "Subject or Author"
 msgstr "Zadeva ali avtor"
 
-#: ../pan/gui/header-pane.cc:1251
+#: ../pan/gui/header-pane.cc:1312
 #: ../pan/gui/task-pane.cc:789
 msgid "Sub or Auth (regex)"
 msgstr "Zadeva ali avtor (logični izraz)"
 
-#: ../pan/gui/header-pane.cc:1253
-#: ../pan/gui/header-pane.cc:1713
+#: ../pan/gui/header-pane.cc:1314
+#: ../pan/gui/header-pane.cc:1774
 #: ../pan/gui/prefs-ui.cc:837
 #: ../pan/gui/score-add-ui.cc:140
 #: ../pan/gui/task-pane.cc:791
 msgid "Author"
 msgstr "Avtor"
 
-#: ../pan/gui/header-pane.cc:1698
+#: ../pan/gui/header-pane.cc:1759
 #: ../pan/gui/prefs-ui.cc:841
 msgid "Score"
 msgstr "Točke"
@@ -2199,7 +2199,7 @@ msgstr "Besedilo:"
 #: ../pan/gui/prefs-ui.cc:1221
 #: ../pan/gui/prefs-ui.cc:1226
 #: ../pan/gui/prefs-ui.cc:1231
-#: ../pan/gui/prefs-ui.cc:1241
+#: ../pan/gui/prefs-ui.cc:1249
 msgid "Background:"
 msgstr "Ozadje:"
 
@@ -2245,69 +2245,78 @@ msgstr "URL:"
 msgid "Signature:"
 msgstr "Podpis:"
 
+#. colors for others texts (score == 0 or body pane etc.... )
 #: ../pan/gui/prefs-ui.cc:1237
+msgid "Other Texts"
+msgstr "Druga besedila"
+
+#: ../pan/gui/prefs-ui.cc:1241
+msgid "Text Color:"
+msgstr "Barva besedila:"
+
+#: ../pan/gui/prefs-ui.cc:1245
 msgid "Group Pane"
 msgstr "Pladenj skupin"
 
 #.
-#: ../pan/gui/prefs-ui.cc:1243
+#: ../pan/gui/prefs-ui.cc:1251
 msgid "Group Color:"
 msgstr "Barva skupine:"
 
-#: ../pan/gui/prefs-ui.cc:1246
+#: ../pan/gui/prefs-ui.cc:1254
 msgid "_Colors"
 msgstr "_Barve"
 
-#: ../pan/gui/prefs-ui.cc:1246
+#: ../pan/gui/prefs-ui.cc:1254
 msgid "Colors"
 msgstr "Barve"
 
-#: ../pan/gui/prefs-ui.cc:1251
+#: ../pan/gui/prefs-ui.cc:1259
 msgid "Preferred Applications"
 msgstr "Prednostni programi"
 
-#: ../pan/gui/prefs-ui.cc:1255
+#: ../pan/gui/prefs-ui.cc:1263
 msgid "_Web browser:"
 msgstr "_Spletni brskalnik:"
 
-#: ../pan/gui/prefs-ui.cc:1258
+#: ../pan/gui/prefs-ui.cc:1266
 msgid "_Mail reader:"
 msgstr "_Bralnik pošte:"
 
-#: ../pan/gui/prefs-ui.cc:1260
+#: ../pan/gui/prefs-ui.cc:1268
 msgid "_Text editor:"
 msgstr "_Urejevalnik besedil:"
 
-#: ../pan/gui/prefs-ui.cc:1262
+#: ../pan/gui/prefs-ui.cc:1270
 msgid "_Applications"
 msgstr "_Programi"
 
-#: ../pan/gui/prefs-ui.cc:1262
+#: ../pan/gui/prefs-ui.cc:1270
 msgid "Applications"
 msgstr "Programi"
 
-#: ../pan/gui/prefs-ui.cc:1267
+#: ../pan/gui/prefs-ui.cc:1275
 #: ../pan/gui/task-pane.cc:545
 msgid "Encoding"
 msgstr "Nabor znakov"
 
-#: ../pan/gui/prefs-ui.cc:1271
+#: ../pan/gui/prefs-ui.cc:1279
 msgid "Default bytes per file (for encoder): "
 msgstr "Privzeto bajtov na datoteko (za kodirnik):"
 
-#: ../pan/gui/prefs-ui.cc:1276
+#: ../pan/gui/prefs-ui.cc:1284
 msgid "_Upload"
 msgstr "_Pošlji"
 
-#: ../pan/gui/prefs-ui.cc:1276
+#: ../pan/gui/prefs-ui.cc:1284
 msgid "Upload"
 msgstr "Pošlji"
 
-#: ../pan/gui/prefs-ui.cc:1294
+#: ../pan/gui/prefs-ui.cc:1302
 msgid "_Shortcuts"
 msgstr "_Tipkovne bližnjice"
 
-#: ../pan/gui/prefs-ui.cc:1294
+#: ../pan/gui/prefs-ui.cc:1302
 msgid "Shortcuts"
 msgstr "Tipkovne bližnjice"
 
@@ -3629,3 +3638,4 @@ msgstr "brez_imena"
 #: ../pan/usenet-utils/text-massager.cc:580
 msgid "no_mail"
 msgstr "brez_naslova"
+
