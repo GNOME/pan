@@ -1301,8 +1301,18 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), scroll, new_label_with_icon(_("_Shortcuts"), _("Shortcuts"), icon_prefs_hotkeys, prefs));
 
-  gtk_widget_show_all (notebook);
-  gtk_box_pack_start (GTK_BOX(gtk_dialog_get_content_area( GTK_DIALOG(dialog))), notebook, true, true, 0);
+  scroll = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(scroll), notebook);
+
+  GdkScreen* screen =gdk_screen_get_default ();
+  gtk_widget_set_size_request (scroll, gdk_screen_get_width(screen) - 400, gdk_screen_get_height(screen) - 200);
+
+  gtk_widget_show_all (scroll);
+
+  gtk_box_pack_start (GTK_BOX(gtk_dialog_get_content_area( GTK_DIALOG(dialog))), scroll, true, true, 0);
 
   _root = dialog;
 
