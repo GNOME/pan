@@ -56,6 +56,7 @@ stock_images = \
   icon_status_new_articles.png \
   icon_sig_ok.png \
   icon_sig_fail.png \
+  icon_show_signature.png \
   icon_prefs_applications.png \
   icon_prefs_extras.png \
   icon_prefs_hotkeys.png \

@@ -76,7 +76,8 @@ namespace pan
     { icon_red_flag, "ICON_FLAGGED"},
     { icon_get_flagged, "ICON_GET_FLAGGED" },
     { icon_expand_thread, "ICON_EXPAND_THREAD" },
-    { icon_collapse_thread, "ICON_COLLAPSE_THREAD" }
+    { icon_collapse_thread, "ICON_COLLAPSE_THREAD" },
+    { icon_show_signature, "ICON_SHOW_SIGNATURE" }
 
   };
 
@@ -691,20 +692,6 @@ namespace pan
         N_("Edit _SSL Certificates"), NULL,
         NULL,
         G_CALLBACK(do_show_sec_dialog) }
-/*
-       { "collapse-thread", "ICON_COLLAPSE_THREAD",
-         N_("Collapse selected Thread"), NULL,
-         NULL,
-         G_CALLBACK(do_collapse_thread)
-       },
-
-       { "expand-thread", "ICON_EXPAND_THREAD",
-         N_("Expand selected thread"), "E",
-         NULL,
-         G_CALLBACK(do_expand_thread)
-       }
-*/
-
      };
 
   void prefs_toggle_callback_impl (GtkToggleAction * action)
@@ -719,7 +706,7 @@ namespace pan
   {
     { "thread-headers",           NULL, N_("_Thread Headers"),                NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
     { "wrap-article-body",GTK_STOCK_JUSTIFY_FILL, N_("Wrap Article Body"),    "W", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
-    { "show-article-sig",GTK_STOCK_EDIT, N_("Show Article Signature"),        "I", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
+    { "show-article-sig", "ICON_SHOW_SIGNATURE", N_("Show Article Signature"),"I", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "mute-quoted-text",         NULL, N_("Mute _Quoted Text"),              "Q", NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
     { "show-all-headers",         NULL, N_("Show All _Headers in Body Pane"), "H", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "show-smilies-as-graphics", NULL, N_("Show _Smilies as Graphics"),      NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
