@@ -56,7 +56,6 @@ namespace pan
       GtkWidget* _widget;
       GtkWidget* _button;
       Prefs& _prefs;
-      Data& _data;
 
     public:
 

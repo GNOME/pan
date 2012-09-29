@@ -39,7 +39,6 @@ DownloadMeterImpl :: DownloadMeterImpl (Prefs& prefs, Data& data) :
                 _view(new ProgressView()),
                 _progress(new Progress("Downloaded bytes")),
                 _prefs(prefs),
-                _data(data),
                 _downloaded_bytes(0ul),
                 _limit(1ul)
 {
