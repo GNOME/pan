@@ -1232,9 +1232,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-signature-bg", def_color_str, prefs)); //
     HIG :: workarea_add_row (t, &row, _("Signature:"), h);
-  HIG :: workarea_finish (t, &row);
 
   // colors for others texts (score == 0 or body pane etc.... )
+  HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Other Texts"));
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-fg", def_color_fg_str, prefs));
