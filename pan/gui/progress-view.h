@@ -38,7 +38,7 @@ namespace pan
   {
     public:
       ProgressView ();
-      virtual ~ProgressView () { set_progress(0); }
+      virtual ~ProgressView () ;
       GtkWidget* root () { return _root; }
       void set_progress (Progress *);
       Progress* get_progress () { return _progress; }
@@ -63,6 +63,7 @@ namespace pan
     private:
       GtkWidget * _root;
       GtkWidget * _progressbar;
+      GtkStyle * _style;
       std::string _last_status;
       Progress * _progress;
 

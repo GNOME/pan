@@ -21,6 +21,7 @@
 #include <pan/data-impl/download-meter.h>
 #include <pan/data-impl/data-impl.h>
 #include <iostream>
+#include <iomanip>
 #include <math.h>
 
 extern "C" {
@@ -102,7 +103,7 @@ namespace
     std::stringstream str;
 
     uint64_t ret = factor == 0ul ? ret : bytes / factor;
-    str << (ret+rest) << " " << mnemonic(cnt);
+    str << std::setprecision (2) << (ret+rest) << " " << mnemonic(cnt);
     return str.str();
   }
 
