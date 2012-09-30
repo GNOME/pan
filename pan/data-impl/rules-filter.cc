@@ -31,6 +31,7 @@ using namespace pan;
 void
 RulesFilter :: finalize (Data& data)
 {
+
   data.delete_articles (_delete);
   _delete.clear();
 

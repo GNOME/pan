@@ -1110,21 +1110,23 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
                                       "based on an article's score."));
 
     int i(0);
-    GtkWidget** action_combo = new GtkWidget*[3];
+    GtkWidget** action_combo = new GtkWidget*[2];
     char* tmp = _("Mark affected articles read");
     action_combo[i++] = new_check_button (tmp, "rules-autocache-mark-read", false, prefs);
-    action_combo[i++] = new_check_button (tmp, "rules-autocache-mark-read", false, prefs);
     action_combo[i++] = new_check_button (tmp, "rules-auto-dl-mark-read", false, prefs);
-    i=0;
 
+    i=0;
     w = score_handler_new (prefs, "rules-delete-value", "never", b);
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
-    gtk_box_pack_start (GTK_BOX(h), action_combo[i++], false, false, 0);
+    gtk_box_pack_start (GTK_BOX(h), gtk_label_new(NULL), false, false, 0);
     HIG :: workarea_add_row (t, &row, _("_Delete articles scoring at: "), h);
 
     w = score_handler_new (prefs, "rules-mark-read-value", "never", b);
-    HIG :: workarea_add_row (t, &row, _("Mark articles as _read scoring at: "), w);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
+    gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
+    gtk_box_pack_start (GTK_BOX(h), gtk_label_new(NULL), false, false, 0);
+    HIG :: workarea_add_row (t, &row, _("Mark articles read scoring at: "), h);
 
     w = score_handler_new (prefs, "rules-autocache-value", "never", b);
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
@@ -1136,7 +1138,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
     gtk_box_pack_start (GTK_BOX(h), action_combo[i++], false, false, 0);
-    HIG :: workarea_add_row (t, &row, _("Download _attachments of articles scoring at: "), h);
+    HIG :: workarea_add_row (t, &row, _("Download attachments of articles scoring at: "), h);
 
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Actions"), _("Actions"), icon_prefs_actions, prefs));
