@@ -20,6 +20,7 @@
 #include <config.h>
 #include <cassert>
 #include <cerrno>
+
 extern "C" {
   #define PROTOTYPES
   #include <stdio.h>
@@ -28,6 +29,7 @@ extern "C" {
   #include <gmime/gmime-utils.h>
   #include <zlib.h>
 }
+
 #include <fstream>
 #include <iostream>
 #include <pan/general/debug.h>
@@ -274,6 +276,24 @@ namespace
   }
 }
 
+/*
+  http://tools.ietf.org/html/rfc2980#section-2.8
+
+  Each line of output will be formatted with the article number,
+  followed by each of the headers in the overview database or the
+  article itself (when the data is not available in the overview
+  database) for that article separated by a tab character.  The
+  sequence of fields must be in this order: subject, author, date,
+  message-id, references, byte count, and line count.  Other optional
+  fields may follow line count.  Other optional fields may follow line
+  count.  These fields are specified by examining the response to the
+  LIST OVERVIEW.FMT command.  Where no data exists, a null field must
+  be provided (i.e. the output will have two tab characters adjacent to
+  each other).  Servers should not output fields for articles that have
+  been removed since the XOVER database was created.
+
+*/
+
 void
 TaskXOver :: on_nntp_line         (NNTP               * nntp,
                                    const StringView   & line)
@@ -297,11 +317,12 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
   ok = ok && l.pop_token (date, '\t');   if (ok) date.trim ();
   ok = ok && l.pop_token (mid, '\t');    if (ok) mid.trim ();
 
-  //handle multiple "References:"-message-ids correctly.
+  //handle multiple "References:"-message-ids correctly. (hack for some faulty servers)
   ok = ok && l.pop_token (tmp, '\t');
   do
   {
-    if (tmp.empty()) continue;
+    // usenetbucket uses a (null) (sic!) value for an empty reference list. hence the following hack
+    if (tmp.empty() || tmp == "(null)" || tmp == "null") continue;
     if (tmp.front() == '<')
     {
       tmp.trim();
@@ -309,10 +330,11 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
       tmp.clear();
     } else break;
   } while ((ok = ok && l.pop_token (tmp, '\t'))) ;
-
                                          if (ok) bytes = view_to_ul (tmp); tmp.clear();
   ok = ok && l.pop_token (tmp, '\t');    if (ok) lines = view_to_ul (tmp);
   ok = ok && l.pop_token (xref, '\t');   if (ok) xref.trim ();
+
+  std::cerr<<"on line "<<line << "\n"<<number<<" "<<bytes<<" "<<lines<<"\n";
 
   if (xref.len>6 && !strncmp(xref.str,"Xref: ", 6)) {
     xref = xref.substr (xref.str+6, 0);
