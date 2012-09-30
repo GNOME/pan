@@ -334,8 +334,6 @@ TaskXOver :: on_nntp_line         (NNTP               * nntp,
   ok = ok && l.pop_token (tmp, '\t');    if (ok) lines = view_to_ul (tmp);
   ok = ok && l.pop_token (xref, '\t');   if (ok) xref.trim ();
 
-  std::cerr<<"on line "<<line << "\n"<<number<<" "<<bytes<<" "<<lines<<"\n";
-
   if (xref.len>6 && !strncmp(xref.str,"Xref: ", 6)) {
     xref = xref.substr (xref.str+6, 0);
     xref.trim ();

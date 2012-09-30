@@ -142,7 +142,6 @@ DownloadMeterImpl :: dl_meter_add (uint64_t bytes)
 void
 DownloadMeterImpl :: dl_meter_reset ()
 {
-  std::cerr<<"reset\n";
   _downloaded_bytes = 0;
   set_status ();
   fire_reset_xfer_bytes ();
