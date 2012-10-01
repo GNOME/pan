@@ -126,8 +126,9 @@ namespace pan
 
     private:
       void set_html_text (const char* text);
+#ifdef HAVE_WEBKIT
       GtkWidget* _web_view;
-
+#endif
     private:
       void add_attachment_to_toolbar (const char* fn);
       void clear_attachments();

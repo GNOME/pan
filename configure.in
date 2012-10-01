@@ -1,3 +1,5 @@
+dnl TODO : sasl, xzver, ....
+
 AC_INIT([Pan],[0.140],[https://bugzilla.gnome.org/enter_bug.cgi?product=Pan],[pan],[http://pan.rebelbase.com/])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
 AC_DEFINE(VERSION_MINOR,140,[Minor part of version number])
@@ -53,6 +55,7 @@ ENCHANT_REQUIRED=1.6.0
 GNUTLS_REQUIRED=3.0.0
 LIBNOTIFY_REQUIRED=0.4.1
 LIBGKR_REQUIRED=3.2.0
+WEBKIT_REQUIRED=1.8.1
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GLIB_REQUIRED_FOR_DBUS)
 AC_SUBST(GMIME_REQUIRED)
@@ -61,9 +64,7 @@ AC_SUBST(GTKSPELL_REQUIRED)
 AC_SUBST(GNUTLS_REQUIRED)
 AC_SUBST(LIBNOTIFY_REQUIRED)
 AC_SUBST(LIBGKR_REQUIRED)
-
-dnl LIBGSASL_REQUIRED=1.6.1
-dnl AC_SUBST(LIBGSASL_REQUIRED)
+AC_SUBST(WEBKIT_REQUIRED)
 
 AC_PROG_CXX
 AC_HEADER_STDC
@@ -94,8 +95,6 @@ if test "x$want_dbus" = "xyes" ; then
 else
   AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
 fi
-
-PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-3.0 >= 1.8.1],AC_DEFINE(HAVE_WEBKIT,[1],[webkit support for embedded html]),[])
 
 dnl Check for GMime
 PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED],[have_gmime26=yes],
@@ -140,6 +139,8 @@ if test "x$want_gtk3" = "xyes" ; then
                       ])
   fi
 
+  PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-3.0 >= $WEBKIT_REQUIRED],AC_DEFINE(HAVE_WEBKIT,[1],[webkit support (3.0) for embedded html]),[])
+
 else
     if test "x$want_gtkspell" = "xyes" ; then
     PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
@@ -152,6 +153,9 @@ else
                       AC_MSG_RESULT(no)
                       ])
     fi
+
+    PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-1.0 >= $WEBKIT_REQUIRED],AC_DEFINE(HAVE_WEBKIT,[1],[webkit support (1.0) for embedded html]),[])
+
     AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
 fi
 
