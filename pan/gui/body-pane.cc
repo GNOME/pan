@@ -1811,7 +1811,6 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   w = gtk_notebook_new ();
   GtkNotebook * n (GTK_NOTEBOOK (w));
   gtk_notebook_append_page (n, vbox, gtk_label_new (_("Text View")));
-  gtk_notebook_append_page (n, _web_view, gtk_label_new (_("HTML View")));
 
   // add scroll to html
   GtkWidget* scroll = gtk_scrolled_window_new (NULL, NULL);
@@ -1820,6 +1819,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER(scroll), _web_view);
+  gtk_notebook_append_page (n, scroll, gtk_label_new (_("HTML View")));
 #else
   w = vbox;
 #endif
