@@ -501,6 +501,21 @@ namespace pan
     g_free (val);
   }
 
+  GtkWidget* html_previewer_new (Prefs& prefs)
+  {
+    const char * key = "html-previewer";
+//    const std::string editor = prefs.get_string (key, "mutt");
+//    editors.insert (editor);
+    GtkWidget * c = gtk_combo_box_text_new_with_entry ();
+    g_object_set_data_full (G_OBJECT(c), PREFS_KEY, g_strdup(key), g_free);
+//    foreach_const (std::set<std::string>, editors, it)
+//      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT(c), it->c_str());
+//    gtk_combo_box_set_active (GTK_COMBO_BOX(c),
+//                              (int)std::distance (editors.begin(), editors.find(editor)));
+    g_signal_connect (c, "changed", G_CALLBACK(set_prefs_string_from_combo_box_entry), &prefs);
+    return c;
+  }
+
   GtkWidget* editor_new (Prefs& prefs)
   {
     std::set<std::string> editors;
@@ -732,9 +747,7 @@ PrefsDialog :: on_prefs_flag_changed (const StringView& key, bool value)
 {
 
   if (key == "allow-multiple-instances")
-  {
     _prefs.save();
-  }
 }
 
 namespace
@@ -1015,7 +1028,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     // systray and notify popup
     HIG :: workarea_add_section_title (t, &row, _("System Tray Behavior"));
     HIG :: workarea_add_section_spacer (t, row, 3);
-    w = new_check_button (_("Hide to system tray"), "status-icon", false, prefs);
+    w = new_check_button (_("Minimize to tray"), "status-icon", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Start Pan minimized"), "start-minimized", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
@@ -1269,6 +1282,8 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_row (t, &row, _("_Mail reader:"), w);
     w = editor_new (prefs);
     HIG :: workarea_add_row (t, &row, _("_Text editor:"), w);
+    w = html_previewer_new (prefs);
+    HIG :: workarea_add_row (t, &row, _("_HTML previewer:"), w);
   HIG :: workarea_finish (t, &row);
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Applications"), _("Applications"), icon_prefs_applications, prefs));
 

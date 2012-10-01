@@ -195,12 +195,23 @@ namespace
 
     GtkWindow * window = GTK_WINDOW(data);
 
-    if (gtk_window_is_active(window))
+    GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET(window));
+    GdkWindow *gdkwindow = gtk_widget_get_window (toplevel);
+    GdkWindowState state = gdk_window_get_state (gdkwindow);
+    gboolean maximized = state & GDK_WINDOW_STATE_MAXIMIZED;
+    gboolean iconified = state & GDK_WINDOW_STATE_ICONIFIED;
+
+//    std::cerr<<(state & GDK_WINDOW_STATE_MAXIMIZED)<<" "
+//    <<(state & GDK_WINDOW_STATE_ICONIFIED)<<" "
+//    <<(state & GDK_WINDOW_STATE_WITHDRAWN)<<" "
+//    <<(state & GDK_WINDOW_STATE_FULLSCREEN)<<"\n" ;
+
+    if (maximized || (maximized && iconified))
     {
       gtk_window_iconify (window);
       gtk_widget_hide (GTK_WIDGET(window));
     }
-    else
+    else if (!maximized || iconified)
     {
       gtk_widget_show (GTK_WIDGET(window));
       gtk_window_deiconify(window);
@@ -506,11 +517,11 @@ namespace
 
     gtk_container_add (GTK_CONTAINER(window), gui.root());
     const bool minimized(prefs.get_flag("start-minimized", false));
-    const bool status_icon(prefs.get_flag("start-minimized", false));
 
-    if (minimized) gtk_window_iconify (window);
+    if (minimized)
+      gtk_window_iconify (window);
 
-    gtk_widget_show (GTK_WIDGET(window));
+    gtk_widget_set_visible (GTK_WIDGET(window), !minimized);
 
     const quarks_t servers (data.get_servers ());
     if (servers.empty())
