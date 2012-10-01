@@ -95,6 +95,7 @@ else
   AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
 fi
 
+PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-3.0 >= 1.8.1],AC_DEFINE(HAVE_WEBKIT,[1],[webkit support for embedded html]),[])
 
 dnl Check for GMime
 PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED],[have_gmime26=yes],

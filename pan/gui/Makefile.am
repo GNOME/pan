@@ -1,5 +1,5 @@
 AM_CPPFLAGS = -I@top_srcdir@ @GTKSPELL_CFLAGS@ @ENCHANT_CFLAGS@ @GTK_CFLAGS@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ \
-							@GNUTLS_CFLAGS@ @LIBNOTIFY_CFLAGS@ @LIBGNOME_KEYRING_1_CFLAGS@ -DPANLOCALEDIR=\""$(panlocaledir)"\"
+							@GNUTLS_CFLAGS@ @LIBNOTIFY_CFLAGS@ @LIBGNOME_KEYRING_1_CFLAGS@ @WEBKITGTK_CFLAGS@ -DPANLOCALEDIR=\""$(panlocaledir)"\"
 
 noinst_LIBRARIES = libpangui.a
 
@@ -36,7 +36,7 @@ libpangui_a_SOURCES = \
  server-ui.cc \
  task-pane.cc \
  xface.c \
- url.cc 
+ url.cc
 
 noinst_HEADERS = \
  action-manager.h \
@@ -86,7 +86,7 @@ noinst_HEADERS = \
  url.h \
  wait.h \
  xface.h \
- pan-colors.h 
+ pan-colors.h
 
 EXTRA_DIST = \
  panrc.rc
@@ -106,7 +106,7 @@ endif
 
 pan_SOURCES = gui.cc pan.cc $(WINRC)
 pan_LDADD = ./libpangui.a $(WINRCOBJ) ../data-impl/libpandata.a ../tasks/libtasks.a ../data/libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a ../../uulib/libuu.a \
-		@GTKSPELL_LIBS@ @ENCHANT_LIBS@ @GTK_LIBS@ @GMIME_LIBS@ @GLIB_LIBS@ @GNUTLS_LIBS@ @LIBNOTIFY_LIBS@ @LIBGNOME_KEYRING_1_LIBS@
+		@GTKSPELL_LIBS@ @ENCHANT_LIBS@ @GTK_LIBS@ @GMIME_LIBS@ @GLIB_LIBS@ @GNUTLS_LIBS@ @LIBNOTIFY_LIBS@ @LIBGNOME_KEYRING_1_LIBS@ @WEBKITGTK_LIBS@
 if HAVE_WIN32
 pan_LDFLAGS = -mwindows
 endif

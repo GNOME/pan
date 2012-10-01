@@ -123,6 +123,12 @@ namespace pan
       void copy_url ();
 
       GtkWidget* create_attachments_toolbar(GtkWidget*);
+
+    private:
+      void set_html_text (const char* text);
+      GtkWidget* _web_view;
+
+    private:
       void add_attachment_to_toolbar (const char* fn);
       void clear_attachments();
       GtkWidget* new_attachment (const char* filename);

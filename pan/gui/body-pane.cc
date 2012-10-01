@@ -45,6 +45,10 @@ extern "C" {
 #include "gtk-compat.h"
 #include "save-attach-ui.h"
 
+#ifdef HAVE_WEBKIT
+  #include <webkitgtk-1.0/webkit/webkit.h>
+#endif
+
 #define FIRST_PICTURE "first-picture"
 
 using namespace pan;
@@ -1239,6 +1243,12 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   // set the text buffer...
   if (message)
     g_mime_message_foreach (message, foreach_part_cb, this);
+  // set the html view
+  GtkTextBuffer* buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW(_text));
+  GtkTextIter _start, _end;
+  gtk_text_buffer_get_bounds (buffer, &_start, &_end);
+  char* buf (gtk_text_buffer_get_text (buffer, &_start, &_end, false));
+  if (buf) set_html_text(buf);
 
   // if there was a picture, scroll to it.
   // otherwise scroll to the top of the body.
@@ -1650,6 +1660,12 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
   gtk_widget_show_all(_att_toolbar);
 }
 
+void
+BodyPane :: set_html_text (const char* text)
+{
+  webkit_web_view_load_string (WEBKIT_WEB_VIEW (_web_view), text, NULL, NULL, "");
+}
+
 GtkWidget*
 BodyPane :: create_attachments_toolbar (GtkWidget* frame)
 {
@@ -1693,7 +1709,8 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
 #endif
   _attachments(0),
   _current_attachment(0),
-  _cleared (true)
+  _cleared (true),
+  _web_view (webkit_web_view_new ())
 {
 
   GtkWidget * w, * l, * hbox;
@@ -1788,7 +1805,12 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_expander_set_expanded (GTK_EXPANDER(_expander), expanded);
   expander_activated_idle (this);
 
-  _root = vbox;
+  w = gtk_notebook_new ();
+  GtkNotebook * n (GTK_NOTEBOOK (w));
+  gtk_notebook_append_page (n, vbox, gtk_label_new (_("Text View")));
+  gtk_notebook_append_page (n, _web_view, gtk_label_new (_("HTML View")));
+
+  _root = w;
   _prefs.add_listener (this);
 
   // listen for user interaction

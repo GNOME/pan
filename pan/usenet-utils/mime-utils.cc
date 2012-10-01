@@ -324,18 +324,6 @@ namespace
              !yenc_parse_end_line (line, NULL, NULL, NULL, NULL);
    }
 
-//   bool
-//   html_is_beginning_line(const char *line)
-//   {
-//     return !strncmp (line, HTML_MARKER_BEGIN, HTML_MARKER_BEGIN_LEN) ;
-//   }
-//
-//   bool
-//   html_is_ending_line(const char *line)
-//   {
-//     return !strncmp (line, HTML_MARKER_END, HTML_MARKER_END_LEN) ;
-//   }
-
 };
 
 
@@ -481,10 +469,6 @@ enum EncType
 	ENC_PLAIN ,
 	ENC_YENC,
 	ENC_UU
-//	,
-//	ENC_BASE64,
-//	ENC_QP,
-//	ENC_HTML
 };
 
 namespace pan
@@ -697,12 +681,6 @@ namespace pan
               yenc_looking_for_part_line = cur->y_part!=0;
             }
           }
-//          else if (html_is_beginning_line (line_str))
-//          {
-//            found = true;
-//            sub_begin = linestart_pos;
-//
-//          }
           else if (state.uu_temp != NULL && is_uu_line(line_str, line_len) )
           {
             // continue an incomplete uu decode
@@ -793,24 +771,6 @@ namespace pan
           }
           break;
         }
-//        case ENC_HTML:
-//        {
-//          if (html_is_ending_line (line_str))
-//          {
-//            GMimeStream * stream = g_mime_stream_substream (istream, sub_begin, linestart_pos+line_len);
-//            apply_source_and_maybe_filter (cur, stream);
-//            if( append_if_not_present (master, cur) )
-//              append_if_not_present (appendme, cur);
-//
-//            cur = NULL;
-//            type = ENC_PLAIN;
-//          }
-//          else
-//          {
-//            ++cur->valid_lines;
-//          }
-//          break;
-//        }
       }
     }
 

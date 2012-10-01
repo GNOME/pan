@@ -56,11 +56,6 @@
 #define YENC_SHIFT             42
 #define YENC_QUOTE_SHIFT       64
 
-#define HTML_MARKER_BEGIN         "<html>"
-#define HTML_MARKER_BEGIN_LEN     6
-#define HTML_MARKER_END           "</html>"
-#define HTML_MARKER_END_LEN       7
-
 #define NEEDS_DECODING(encoding) ((encoding == GMIME_CONTENT_ENCODING_BASE64) ||   \
                                  (encoding == GMIME_CONTENT_ENCODING_QUOTEDPRINTABLE))
 
