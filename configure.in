@@ -139,8 +139,6 @@ if test "x$want_gtk3" = "xyes" ; then
                       ])
   fi
 
-  PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-3.0 >= $WEBKIT_REQUIRED],AC_DEFINE(HAVE_WEBKIT,[1],[webkit support (3.0) for embedded html]),[])
-
 else
     if test "x$want_gtkspell" = "xyes" ; then
     PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
@@ -154,9 +152,20 @@ else
                       ])
     fi
 
-    PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-1.0 >= $WEBKIT_REQUIRED],AC_DEFINE(HAVE_WEBKIT,[1],[webkit support (1.0) for embedded html]),[])
-
     AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
+
+fi
+
+AC_ARG_WITH(webkit, AS_HELP_STRING([--with-webkit],[enable webkit gtk support (normally: no)]), [want_webkit=$withval], [want_webkit=no])
+
+if test "x$want_gtk3" = "xyes" ; then
+	if test "x$want_webkit" = "xyes" ; then
+		PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-3.0 >= $WEBKIT_REQUIRED],AC_DEFINE(HAVE_WEBKIT,[1],[webkit support (3.0) for embedded html],[AC_MSG_RESULT(no)]))
+    fi
+else
+	if test "x$want_webkit" = "xyes" ; then
+		PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-1.0 >= $WEBKIT_REQUIRED],AC_DEFINE(HAVE_WEBKIT,[1],[webkit support (1.0) for embedded html], [AC_MSG_RESULT(no)]))
+	fi
 fi
 
 AC_SUBST(ENCHANT_CFLAGS)
