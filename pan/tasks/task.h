@@ -56,7 +56,6 @@ namespace pan
             /** Task waiting for a decoder/encoder */
             NEED_DECODER = 2,
             NEED_ENCODER = 3,
-            NEED_XZVER_DECODER = 4,
             /** Task is running */
             WORKING = 5,
             /** Task is paused, woken up if 'current_connections < max_connections' */
@@ -99,9 +98,6 @@ namespace pan
 
                void set_need_decoder () {
                    _work = NEED_DECODER; _servers.clear(); }
-
-               void set_need_xzverdecoder () {
-                   _work = NEED_XZVER_DECODER; _servers.clear(); }
 
                void set_need_encoder () {
                    _work = NEED_ENCODER; _servers.clear(); }

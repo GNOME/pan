@@ -294,14 +294,36 @@ DataImpl :: get_server_trust (const Quark   & server, int& setme) const
   return found;
 }
 
+namespace
+{
+  CompressionType get_compression_type(int val)
+  {
+    CompressionType ret = HEADER_COMPRESS_NONE;
+    switch (val)
+    {
+      case 1:
+        ret = HEADER_COMPRESS_XZVER;
+        break;
+
+      case 2:
+        ret = HEADER_COMPRESS_XFEATURE;
+        break;
+
+      case 3:
+        ret = HEADER_COMPRESS_DIABLO;
+        break;
+    }
+    return ret;
+  }
+}
+
 bool
 DataImpl :: get_server_compression_type (const Quark   & server, CompressionType& setme) const
 {
   const Server * s (find_server (server));
   const bool found (s);
-  if (found) {
+  if (found)
     setme = get_compression_type(s->compression_type);
-  }
 
   return found;
 }

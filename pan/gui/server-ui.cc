@@ -139,7 +139,7 @@ namespace
     {
       type = HEADER_COMPRESS_XFEATURE;
     }
-    char* others[] = {"newshosting", "easynews","usenetserver" };
+    static char* others[] = {const_cast<char*>("newshosting"), const_cast<char*>("easynews"), const_cast<char*>("usenetserver") };
     for (int i= 0; i < G_N_ELEMENTS(others); i++)
     {
         if (t.strstr(others[i]))
@@ -190,7 +190,6 @@ namespace
     pan_entry_set_text (d->auth_password_entry, pass);
     d->cert = cert;
     d->compressiontype = compression;
-    std::cerr<<compression<<"\n";
 
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(d->compression_checkbox), d->compressiontype != HEADER_COMPRESS_NONE);
 
@@ -485,7 +484,6 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
     }
 
     d->ssl_combo = w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
-    g_signal_connect(w, "changed", G_CALLBACK(ssl_changed_cb), d);
     g_object_unref (G_OBJECT(store));
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
     gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
@@ -514,6 +512,9 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
   {
     gtk_widget_hide(d->compression_checkbox);
   }
+
+  // avoid NPE on early init
+  g_signal_connect(d->ssl_combo, "changed", G_CALLBACK(ssl_changed_cb), d);
 
   return d->dialog;
 }

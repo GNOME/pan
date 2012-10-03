@@ -49,7 +49,6 @@ Queue :: Queue (ServerInfo         & server_info,
   _socket_creator (socket_creator),
   _worker_pool (pool),
   _decoder (pool),
-  _xzver_decoder (pool),
   _encoder (pool),
   _decoder_task (0),
   _encoder_task (0),
@@ -237,16 +236,6 @@ Queue :: give_task_a_decoder (Task * task)
 }
 
 void
-Queue :: give_task_a_xzver_decoder (Task * task)
-{
-  const bool was_active (task_is_active (task));
-  _decoder_task = task;
-  if (!was_active)
-    fire_task_active_changed (task, true);
-  task->give_decoder (this, static_cast<Decoder*>(&_xzver_decoder)); // it's active now...
-}
-
-void
 Queue :: give_task_a_encoder (Task * task)
 {
   const bool was_active (task_is_active (task));
@@ -347,11 +336,6 @@ Queue :: process_task (Task * task)
     if (!_decoder_task)
       give_task_a_decoder (task);
   }
-  else if (state._work == Task::NEED_XZVER_DECODER)
-  {
-    if (!_decoder_task)
-      give_task_a_xzver_decoder (task);
-  }
   else if (state._work == Task::NEED_ENCODER)
   {
     if (!_encoder_task)
@@ -397,20 +381,6 @@ Queue :: find_first_task_needing_decoder ()
   foreach (TaskSet, _tasks, it) {
     const Task::State& state ((*it)->get_state ());
     if  ((state._work == Task::NEED_DECODER)
-      && (!_stopped.count (*it))
-      && (!_removing.count (*it)))
-      return *it;
-  }
-
-  return 0;
-}
-
-Task*
-Queue :: find_first_task_needing_xzver_decoder ()
-{
-  foreach (TaskSet, _tasks, it) {
-    const Task::State& state ((*it)->get_state ());
-    if  ((state._work == Task::NEED_XZVER_DECODER)
       && (!_stopped.count (*it))
       && (!_removing.count (*it)))
       return *it;

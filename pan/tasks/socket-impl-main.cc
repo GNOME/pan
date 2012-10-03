@@ -5,7 +5,7 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich Müller <henmull@src.gnome.org>
+ * Copyright (C) 2011 Heinrich Mï¿½ller <henmull@src.gnome.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -71,7 +71,6 @@ namespace
                         public WorkerPool::Worker::Listener
   {
 
-
     ServerInfo& data;
     std::string err;
     const Quark server;
@@ -81,15 +80,11 @@ namespace
     bool ok;
     Socket * socket;
     bool use_ssl;
-#ifdef HAVE_GNUTLS
     CertStore& store;
+
     ThreadWorker (ServerInfo& d, const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l,
                   bool ssl, CertStore& cs):
       data(d), server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), store(cs) {}
-#else
-    ThreadWorker (ServerInfo& d, const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l):
-      data(d), server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(false) {}
-#endif
 
     void do_work ()
     {
@@ -136,21 +131,18 @@ SocketCreator :: ~SocketCreator()
 
 void
 SocketCreator :: create_socket (ServerInfo& info,
+                                const Quark& server,
                                 const StringView & host,
                                 int                port,
                                 WorkerPool       & threadpool,
-                                Socket::Creator::Listener * listener,
-                                bool               use_ssl)
+                                Socket::Creator::Listener * listener)
 {
-    Quark server;
-    data.find_server_by_hn(host.to_string(), server);
+
+    const bool use_ssl (info.get_server_ssl_support(server));
+
     ensure_module_init ();
     if (store.in_blacklist(server)) return;
-#ifdef HAVE_GNUTLS
     ThreadWorker * w = new ThreadWorker (info, server, host, port, listener, use_ssl, store);
-#else
-    ThreadWorker * w = new ThreadWorker (info, server, host, port, listener);
-#endif
     threadpool.push_work (w, w, true);
 }
 

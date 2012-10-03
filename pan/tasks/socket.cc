@@ -35,9 +35,12 @@ Socket :: Socket ():
   _time_of_last_check (time(0)),
   _speed_KiBps (0.0),
   _abort_flag (false),
-  _stream (new std::stringstream())
+  _id(0)
 {
 }
+
+Socket :: ~Socket ()
+{}
 
 void
 Socket :: set_abort_flag (bool b)

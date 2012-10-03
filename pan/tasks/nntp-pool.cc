@@ -302,8 +302,7 @@ NNTP_Pool :: request_nntp (WorkerPool& threadpool)
     if (!_certstore.in_blacklist(_server))
     {
       ++_pending_connections;
-      const bool ssl(_server_info.get_server_ssl_support(_server));
-      _socket_creator->create_socket (_server_info, address, port, threadpool, this, ssl);
+      _socket_creator->create_socket (_server_info, _server, address, port, threadpool, this);
     }
   }
 }

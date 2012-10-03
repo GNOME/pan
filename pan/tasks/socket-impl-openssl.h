@@ -44,6 +44,8 @@ extern "C"
   #include <gnutls/x509.h>
 #endif
 
+#include "xzver_filter.h"
+
 
 namespace pan
 {
@@ -113,6 +115,7 @@ namespace pan
       virtual ~GIOChannelSocketGnuTLS ();
       GIOChannelSocketGnuTLS () { debug("SocketSSL stub ctor"); }
 #endif  // HAVE_GNUTLS
+
   };
 }
 

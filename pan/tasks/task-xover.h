@@ -23,28 +23,21 @@
 #include <map>
 #include <vector>
 #include <sstream>
-#include <zlib.h>
 
+#include <pan/general/compression.h>
 #include <pan/data/data.h>
 #include <pan/tasks/task.h>
 #include <pan/tasks/nntp.h>
-#include <pan/general/worker-pool.h>
 #include <fstream>
 #include <iostream>
 
 namespace pan
 {
-
-  struct XZVERDecoder;
-
   /**
    * Task for downloading a some or all of a newsgroups' headers
    * @ingroup tasks
    */
-  class TaskXOver: public Task,
-                    private WorkerPool::Worker::Listener,
-                    private NNTP::Listener
-
+  class TaskXOver: public Task, private NNTP::Listener
   {
     public: // life cycle
       enum Mode { ALL, NEW, SAMPLE, DAYS };
@@ -53,20 +46,16 @@ namespace pan
 
     public: // task subclass
       virtual unsigned long get_bytes_remaining () const;
-      virtual void use_decoder (Decoder*);
-      void stop ();
 
     protected: // task subclass
       virtual void use_nntp (NNTP * nntp);
 
     private: // NNTP::Listener
-      void on_nntp_line_process (NNTP*, const StringView&);
       virtual void on_nntp_line (NNTP*, const StringView&);
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
       virtual void on_nntp_group (NNTP*, const Quark&, unsigned long, uint64_t, uint64_t);
 
-    private: // WorkerPool::Listener interface
-      void on_worker_done (bool cancelled);
+      void on_nntp_line_process (NNTP*, const StringView&);
 
     private: // implementation - minitasks
       struct MiniTask {
@@ -81,7 +70,6 @@ namespace pan
       server_to_minitasks_t _server_to_minitasks;
 
     private: // implementation
-      void process_headers (NNTP*);
       Data& _data;
       const Quark _group;
       std::string _short_group_name;
@@ -97,27 +85,10 @@ namespace pan
       unsigned long _bytes_so_far;
       unsigned long _parts_so_far;
       unsigned long _articles_so_far;
-      unsigned long _lines_so_far;
       unsigned long _total_minitasks;
-      unsigned long _running_minitasks;
-      bool _compression_enabled;
-      CompressionType _compressiontype;
 
-      struct DataStream
-      {
-        std::stringstream* stream;
-        Quark group;
-        Quark server;
-      };
+      std::map<int, std::stringstream*> _streams;
 
-      std::vector<DataStream> _data_streams;
-
-      friend class XZVERDecoder;
-      XZVERDecoder * _decoder;
-      bool _decoder_has_run;
-
-    public:
-      void setHigh(const Quark& server, uint64_t& h);
   };
 }
 

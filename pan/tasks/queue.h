@@ -26,7 +26,6 @@
 #include <pan/general/macros.h> // for UNUSED
 #include <pan/general/map-vector.h>
 #include <pan/tasks/decoder.h>
-#include <pan/tasks/xzver-decoder.h>
 #include <pan/tasks/encoder.h>
 #include <pan/general/quark.h>
 #include <pan/tasks/nntp-pool.h>
@@ -50,7 +49,6 @@ namespace pan
   class WorkerPool;
   struct Encoder;
   struct Decoder;
-  struct XZVERDecoder;
 
   /**
    * A Queue helper that saves tasks to disk and restores them from disk.
@@ -192,14 +190,12 @@ namespace pan
     protected:
       void process_task (Task *);
       void give_task_a_decoder (Task*);
-      void give_task_a_xzver_decoder (Task*);
       void give_task_a_encoder (Task*);
       void give_task_a_connection (Task*, NNTP*);
       ServerInfo& _server_info;
       bool _is_online;
       Task* find_first_task_needing_server (const Quark& server);
       Task* find_first_task_needing_decoder ();
-      Task* find_first_task_needing_xzver_decoder ();
       Task* find_first_task_needing_encoder ();
 
       void give_task_an_upload_slot (TaskUpload* task);
@@ -218,7 +214,6 @@ namespace pan
       SocketCreator * _socket_creator;
       WorkerPool & _worker_pool;
       Decoder _decoder;
-      XZVERDecoder _xzver_decoder;
       Encoder _encoder;
       Task * _decoder_task;
       Task * _encoder_task;

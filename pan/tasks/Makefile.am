@@ -6,7 +6,6 @@ noinst_LIBRARIES = libtasks.a
 
 libtasks_a_SOURCES = \
   decoder.cc \
-  xzver-decoder.cc \
   encoder.cc \
   task.cc \
   task-article.cc \
@@ -30,7 +29,6 @@ noinst_HEADERS = \
   adaptable-set.cc \
   adaptable-set.h \
   decoder.h \
-  xzver-decoder.h \
   encoder.h \
   defgroup.h \
   health.h \

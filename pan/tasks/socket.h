@@ -21,7 +21,10 @@
 #define __Socket_h__
 
 #include <string>
+#include <sstream>
+#include <vector>
 #include <config.h>
+#include <glib.h>
 
 extern "C" {
   #include <stdint.h>
@@ -31,10 +34,9 @@ extern "C" {
   #include <gnutls/gnutls.h>
 #endif
 
-#include <sstream>
-
 namespace pan
 {
+
   class StringView;
   class Quark;
   class WorkerPool;
@@ -49,8 +51,8 @@ namespace pan
   class Socket
   {
     public:
-      Socket ();
-      virtual ~Socket () {}
+      Socket () ;
+      virtual ~Socket () ;
 
     public:
       /** Interface class for objects that listen to a Socket's events */
@@ -63,10 +65,6 @@ namespace pan
         virtual void on_socket_bytes_transferred (uint64_t bytes, Socket*) = 0;
       };
 
-      void write(const std::string& str) { *_stream << str; }
-      void clear() { (*_stream).clear(); }
-      std::stringstream*& get_stream() { return _stream; }
-
     public:
       virtual bool open (const StringView& address, int port, std::string& setme_err) = 0;
       virtual void write_command (const StringView& chars, Listener *) = 0;
@@ -78,6 +76,7 @@ namespace pan
       void set_abort_flag (bool b);
       bool is_abort_set () const;
       virtual void get_host (std::string& setme) const = 0;
+      int get_id () { return _id; }
 
     protected:
       void increment_xfer_byte_count (unsigned long byte_count);
@@ -85,10 +84,9 @@ namespace pan
       mutable time_t _time_of_last_check;
       mutable double _speed_KiBps;
       bool _abort_flag;
-      std::stringstream* _stream;
+      int _id;
 
     public:
-
       /**
        * Interface class for code that creates sockets.
        *
