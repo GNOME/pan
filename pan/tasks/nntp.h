@@ -197,6 +197,17 @@ namespace pan
                              uint64_t             low,
                              uint64_t             high,
                              Listener           * l);
+
+      void xzver            (const Quark        & group,
+                             uint64_t             low,
+                             uint64_t             high,
+                             Listener           * l);
+
+      void xfeat            (const Quark        & group,
+                             uint64_t             low,
+                             uint64_t             high,
+                             Listener           * l);
+
       /**
        * Executes an XOVER command: "XOVER" to count
        * the xover numbers internally
@@ -307,10 +318,13 @@ namespace pan
 
       const Quark _server;
       Quark _group;
-      Quark _request_group;
       Socket * _socket;
       DownloadMeter& _meter;
       bool _socket_error;
+      const std::string& get_username()
+      {
+        return _username;
+      }
 
     protected:
 

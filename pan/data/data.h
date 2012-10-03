@@ -27,6 +27,7 @@
 
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
+#include <pan/general/compression.h>
 #include <pan/general/string-view.h>
 #include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>
@@ -34,6 +35,7 @@
 #include <pan/data/encode-cache.h>
 #include <pan/data/cert-store.h>
 #include <pan/data/server-info.h>
+
 #include <pan/gui/prefs.h>
 #include <pan/gui/progress-view.h>
 
@@ -242,12 +244,13 @@ namespace pan
          int rank;
          int ssl_support;
          int trust;
+         int compression_type;
          typedef sorted_vector<Quark,true,AlphabeticalQuarkOrdering> groups_t;
          groups_t groups;
          gchar* gkr_pw;
 
          Server(): port(STD_NNTP_PORT), article_expiration_age(31), max_connections(2),
-                    rank(1), ssl_support(0), trust(0), gkr_pw(NULL) {}
+                    rank(1), ssl_support(0), trust(0), gkr_pw(NULL), compression_type(0) /* NONE */ {}
       };
 
     protected:
@@ -313,6 +316,8 @@ namespace pan
                                     bool            use_gkr) = 0;
 
       virtual bool get_server_trust (const Quark  & servername, int&) const = 0;
+
+      virtual bool get_server_compression_type (const Quark  & servername, CompressionType&) const = 0;
 
       virtual std::string get_server_cert (const Quark & server) const = 0;
 
