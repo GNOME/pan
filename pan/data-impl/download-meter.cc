@@ -99,11 +99,11 @@ namespace
   {
     int cnt (log10f(bytes)/log10f(1024));
     uint64_t factor = ::pow(1024ul, (uint64_t)cnt);
-    float rest = cnt > 0.0f ? (((float)bytes / (float)factor)/10.0f) : 0.0f;
+    double rest = cnt > 0.0f ? (((double)bytes / (double)factor)/10.0f) : 0.0f;
     std::stringstream str;
 
     uint64_t ret = factor == 0ul ? ret : bytes / factor;
-    str << std::setprecision (2) << (ret+rest) << " " << mnemonic(cnt);
+    str << (ret+rest) << " " << mnemonic(cnt);
     return str.str();
   }
 
