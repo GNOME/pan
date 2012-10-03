@@ -78,10 +78,7 @@ static inline GdkWindow * gdk_window_get_device_position (GdkWindow *window,
     gdk_window_get_device_position (event->window, event->device, x, y, t);
 #endif
   }
-    ret = gtk_separator_new(GTK_ORIENTATION_VERTICAL);
-#endif
-    return ret;
-  }
+
 
 #if !GTK_CHECK_VERSION(2,18,0)
   static inline void gtk_widget_get_allocation( GtkWidget *w, GtkAllocation *a)
@@ -189,15 +186,22 @@ static inline GdkWindow * gdk_window_get_device_position (GdkWindow *window,
     gtk_widget_modify_font(w,f);
   }
 #endif
+
 #if GTK_CHECK_VERSION(3,0,0)
+// include this for conversion of old key names to new
   #include <gdk/gdkkeysyms-compat.h>
+
   #define GTK_OBJECT(w) w
+  typedef GtkWidget GtkObject;
 #endif
 
   static inline void cursor_unref(GdkCursor *p)
+  {
 #if GTK_CHECK_VERSION(3,0,0)
+    g_object_unref(p);
 #else
     gdk_cursor_unref(p);
+#endif
   }
 
 #ifdef __cplusplus
