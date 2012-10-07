@@ -303,9 +303,9 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
   gtk_box_pack_start (GTK_BOX(status_bar), frame, FALSE, FALSE, 0);
 
   // download meter
-//  w = _meter.get_widget();
-//  gtk_box_pack_start (GTK_BOX(status_bar), w, FALSE, FALSE, 0);
-//  g_signal_connect (_meter.get_button(), "clicked", G_CALLBACK(show_download_meter_prefs_cb), this);
+  w = _meter.get_widget();
+  gtk_box_pack_start (GTK_BOX(status_bar), w, FALSE, FALSE, 0);
+  g_signal_connect (_meter.get_button(), "clicked", G_CALLBACK(show_download_meter_prefs_cb), this);
 
   // drag and drop for message-ids
   //  gtk_drag_dest_set(_workarea_bin,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
