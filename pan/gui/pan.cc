@@ -110,7 +110,14 @@ namespace
 
   gboolean delete_event_cb (GtkWidget * w, GdkEvent *, gpointer user_data)
   {
-    mainloop_quit ();
+    if (static_cast<Prefs*>(user_data)->get_flag("status-icon", false))
+    {
+      gtk_widget_hide(w);
+    }
+    else
+    {
+      mainloop_quit ();
+    }
     return true; // don't invoke the default handler that destroys the widget
   }
 
@@ -513,7 +520,7 @@ namespace
 
     GUI& gui (*_gui);
 
-    const gulong delete_cb_id =  g_signal_connect (window, "delete-event", G_CALLBACK(delete_event_cb), NULL);
+    const gulong delete_cb_id =  g_signal_connect (window, "delete-event", G_CALLBACK(delete_event_cb), &prefs);
 
     gtk_container_add (GTK_CONTAINER(window), gui.root());
     const bool minimized(prefs.get_flag("start-minimized", false));

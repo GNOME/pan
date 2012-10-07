@@ -989,7 +989,8 @@ Queue :: get_stats (unsigned long   & queued_count,
 void
 Queue :: on_dl_limit_reached ()
 {
-  set_online (false);
+  if (_prefs.get_flag("disconnect-on-dl-limit-reached", false))
+    set_online (false);
 }
 
 void

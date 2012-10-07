@@ -168,9 +168,9 @@ namespace pan
     HIG::workarea_add_section_title (t, &row, _("Download Limit reached"));
 
       HIG :: workarea_add_section_spacer (t, row, 2);
-      w = new_check_button (_("Warn"), "warn-dl-limit-reached", true, prefs);
+      w = new_check_button (_("Warn"), "warn-dl-limit-reached", false, prefs);
       HIG :: workarea_add_wide_control (t, &row, w);
-      w = new_check_button (_("Disconnect from server"), "disconnect-on-dl-limit-reached", true, prefs);
+      w = new_check_button (_("Disconnect from server"), "disconnect-on-dl-limit-reached", false, prefs);
       HIG :: workarea_add_wide_control (t, &row, w);
       w = _spin = new_spin_button ("dl-limit", 1, 1024, prefs);
       HIG :: workarea_add_wide_control (t, &row, w);
