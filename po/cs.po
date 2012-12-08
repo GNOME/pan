@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=Pan&ke"
 "ywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-10-01 21:12+0000\n"
-"PO-Revision-Date: 2012-12-08 21:06+0200\n"
+"POT-Creation-Date: 2012-12-08 20:46+0000\n"
+"PO-Revision-Date: 2012-12-08 21:58+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -30,7 +30,6 @@ msgid "Pan"
 msgstr "Pan"
 
 #: ../pan.desktop.in.h:2
-#| msgid "Pan Newsreader"
 msgid "Newsreader"
 msgstr "Diskusní klient"
 
@@ -92,11 +91,10 @@ msgid "Pan Newsreader's server passwords"
 msgstr "Hesla serverů čtečky Pan"
 
 #: ../pan/data-impl/download-meter.cc:51
-msgid "DL Init ...."
-msgstr ""
+msgid "DL Initialization..."
+msgstr "Spouštění DL..."
 
 #: ../pan/data-impl/download-meter.cc:54
-#| msgid "Use KDE Preferences"
 msgid "Open Download Meter Preferences"
 msgstr "Otevřít předvolby měření stahování"
 
@@ -106,22 +104,18 @@ msgid "Bytes"
 msgstr "Bajtů"
 
 #: ../pan/data-impl/download-meter.cc:81
-#| msgid " KB"
 msgid "KB"
 msgstr "KB"
 
 #: ../pan/data-impl/download-meter.cc:84 ../pan/gui/dl-prefs.cc:113
-#| msgid " MB"
 msgid "MB"
 msgstr "MB"
 
 #: ../pan/data-impl/download-meter.cc:87 ../pan/gui/dl-prefs.cc:114
-#| msgid " GB"
 msgid "GB"
 msgstr "GB"
 
 #: ../pan/data-impl/download-meter.cc:90
-#| msgid " TB"
 msgid "TB"
 msgstr "TB"
 
@@ -379,7 +373,6 @@ msgid "_Task Manager"
 msgstr "Sprá_vce úloh"
 
 #: ../pan/gui/actions.cc:392
-#| msgid "Edit _Preferences"
 msgid "_Download Meter Preferences"
 msgstr "Pře_dvolby měření stahování"
 
@@ -882,11 +875,10 @@ msgid "Attachments"
 msgstr "Přílohy"
 
 #: ../pan/gui/body-pane.cc:1813
-#| msgid "Text File"
 msgid "Text View"
 msgstr "Zobrazení textu"
 
-#: ../pan/gui/body-pane.cc:1814
+#: ../pan/gui/body-pane.cc:1822
 msgid "HTML View"
 msgstr "Zobrazení HTML"
 
@@ -915,13 +907,12 @@ msgid "Get the _latest N headers: "
 msgstr "Stáhnout _posledních N záhlaví: "
 
 #: ../pan/gui/dl-prefs.cc:156
-#| msgid "Pan: Preferences"
 msgid "Pan: Download Meter Preferences"
 msgstr "Pan: Předvolby měření stahování"
 
 #: ../pan/gui/dl-prefs.cc:168
-msgid "Download Limit reached"
-msgstr ""
+msgid "When Download Limit Is Reached:"
+msgstr "Při dosažení omezení stahování:"
 
 #: ../pan/gui/dl-prefs.cc:171
 msgid "Warn"
@@ -931,7 +922,12 @@ msgstr "Upozornit"
 msgid "Disconnect from server"
 msgstr "Odpojit se od serveru"
 
-#: ../pan/gui/dl-prefs.cc:179
+#: ../pan/gui/dl-prefs.cc:175
+#| msgid "Show Download Meter"
+msgid "Download Limit"
+msgstr "Omezení stahování"
+
+#: ../pan/gui/dl-prefs.cc:180
 msgid "Reset"
 msgstr "Resetovat"
 
@@ -1354,19 +1350,19 @@ msgstr "Pan: Události"
 msgid "Message"
 msgstr "Zpráva"
 
-#: ../pan/gui/pan.cc:353
+#: ../pan/gui/pan.cc:360
 msgid "Maximize"
 msgstr "Maximalizovat"
 
-#: ../pan/gui/pan.cc:406
+#: ../pan/gui/pan.cc:413
 msgid "An error has occurred!"
 msgstr "Došlo k chybě!"
 
-#: ../pan/gui/pan.cc:420
+#: ../pan/gui/pan.cc:427
 msgid "New Articles!"
 msgstr "Nové příspěvky!"
 
-#: ../pan/gui/pan.cc:421
+#: ../pan/gui/pan.cc:428
 msgid ""
 "There are new\n"
 "articles available."
@@ -1374,11 +1370,11 @@ msgstr ""
 "Jsou dostupné\n"
 "nové příspěvky."
 
-#: ../pan/gui/pan.cc:488
+#: ../pan/gui/pan.cc:495
 msgid "Toggle on/offline"
 msgstr "Přepnout online/offline"
 
-#: ../pan/gui/pan.cc:536
+#: ../pan/gui/pan.cc:543
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1388,7 +1384,7 @@ msgstr ""
 " \n"
 "Chcete-li začít se čtením diskusí, je nutné nejprve přidat server."
 
-#: ../pan/gui/pan.cc:618
+#: ../pan/gui/pan.cc:625
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -1420,22 +1416,22 @@ msgstr ""
 "  --no-gui                 Zobrazí pouze textový výstup, nikoliv pozdržená "
 "stahování.\n"
 
-#: ../pan/gui/pan.cc:947
+#: ../pan/gui/pan.cc:954
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Chyba: --no-gui použito bez souborů nzb nebo news:message-id."
 
-#: ../pan/gui/pan.cc:951
+#: ../pan/gui/pan.cc:958
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s spuštěn"
 
-#: ../pan/gui/pan.cc:973
+#: ../pan/gui/pan.cc:980
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Před použitím aplikace Pan jako klienta NZB je nutné nastavit servery "
 "diskusních skupin."
 
-#: ../pan/gui/pan.cc:1091
+#: ../pan/gui/pan.cc:1098
 msgid "Pan notification"
 msgstr "Oznámení aplikace Pan"
 
@@ -1999,7 +1995,6 @@ msgid "Articles"
 msgstr "Příspěvky"
 
 #: ../pan/gui/prefs-ui.cc:969
-#| msgid "Mark Article as _Unread"
 msgid "Mark downloaded articles read"
 msgstr "Označit stažené příspěvky jako přečtené"
 
@@ -2048,26 +2043,23 @@ msgid "Behavior"
 msgstr "Chování"
 
 #: ../pan/gui/prefs-ui.cc:1007
-#| msgid "_Task Manager"
 msgid "Task Pane"
 msgstr "Panel úloh"
 
 #: ../pan/gui/prefs-ui.cc:1008
-msgid "Show Task Pane info popups"
-msgstr ""
+#| msgid "Show notifications"
+msgid "Show Task Pane notifications"
+msgstr "Zobrazovat oznámení panelu úloh"
 
 #: ../pan/gui/prefs-ui.cc:1010
-#| msgid "Show only text"
 msgid "Show Download Meter"
 msgstr "Zobrazovat měření stahování"
 
 #: ../pan/gui/prefs-ui.cc:1014
-#| msgid "_Body Pane"
 msgid "_Panes"
 msgstr "_Panely"
 
 #: ../pan/gui/prefs-ui.cc:1014
-#| msgid "Japanese"
 msgid "Panes"
 msgstr "Panely"
 
@@ -2186,7 +2178,6 @@ msgstr ""
 "prováděny automaticky na základě hodnocení příspěvku."
 
 #: ../pan/gui/prefs-ui.cc:1127
-#| msgid "Mark Article as _Unread"
 msgid "Mark affected articles read"
 msgstr "Označit ovlivněné příspěvky jako přečtené"
 
@@ -2195,7 +2186,6 @@ msgid "_Delete articles scoring at: "
 msgstr "Smazat příspěvky s ho_dnocením: "
 
 #: ../pan/gui/prefs-ui.cc:1142
-#| msgid "Mark articles as _read scoring at: "
 msgid "Mark articles read scoring at: "
 msgstr "Označit příspěvky jako přečtené s hodnocením: "
 
@@ -2204,7 +2194,6 @@ msgid "_Cache articles scoring at: "
 msgstr "U_ložit do mezipaměti příspěvky s hodnocením: "
 
 #: ../pan/gui/prefs-ui.cc:1154
-#| msgid "Download _attachments of articles scoring at: "
 msgid "Download attachments of articles scoring at: "
 msgstr "Stáhnout přílohy příspěvků s hodnocením: "
 
@@ -2297,23 +2286,20 @@ msgid "Signature:"
 msgstr "Podpis:"
 
 #: ../pan/gui/prefs-ui.cc:1253
-#| msgid "Other Groups"
-msgid "Other Texts"
+#| msgid "Other Texts"
+msgid "Other Text"
 msgstr "Jiný text"
 
 #: ../pan/gui/prefs-ui.cc:1257
-#| msgid "_Text editor:"
 msgid "Text Color:"
 msgstr "Barva textu:"
 
 #: ../pan/gui/prefs-ui.cc:1261
-#| msgid "_Group Pane"
 msgid "Group Pane"
 msgstr "Panel skupin"
 
 #.
 #: ../pan/gui/prefs-ui.cc:1267
-#| msgid "Group color:"
 msgid "Group Color:"
 msgstr "Barva skupiny:"
 
@@ -3030,8 +3016,7 @@ msgstr ""
 #| "<i>From:</i> <b>%s</b>\n"
 #| "<i>Date:</i> <b>%s</b>\n"
 #| "<i>Groups:</i> <b>%s</b>\n"
-#| "<i>Save Path:</i> <b>%s</b>\n"
-#| "Paused: %d"
+#| "<i>Save Path:</i><b>%s</b>\n"
 msgid ""
 "\n"
 "<u>Download</u>\n"
@@ -3040,7 +3025,7 @@ msgid ""
 "<i>From:</i> <b>%s</b>\n"
 "<i>Date:</i> <b>%s</b>\n"
 "<i>Groups:</i> <b>%s</b>\n"
-"<i>Save Path:</i><b>%s</b>\n"
+"<i>Save Path:</i> <b>%s</b>\n"
 msgstr ""
 "\n"
 "<u>Stažené</u>\n"
@@ -3126,7 +3111,6 @@ msgid "Move To Bottom"
 msgstr "Přesunout nejníže"
 
 #: ../pan/gui/task-pane.cc:690 ../pan/gui/task-pane.cc:691
-#| msgid "Show Article Information"
 msgid "Show Task Information"
 msgstr "Zobrazit informace o úloze"
 
