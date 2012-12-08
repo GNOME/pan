@@ -1,11 +1,11 @@
-dnl TODO : sasl, xzver, ....
-
 AC_INIT([Pan],[0.140],[https://bugzilla.gnome.org/enter_bug.cgi?product=Pan],[pan],[http://pan.rebelbase.com/])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
 AC_DEFINE(VERSION_MINOR,140,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
 AC_DEFINE(VERSION_TITLE,["Chocolate Salty Balls"],[Release Name])
 AC_PREREQ([2.64])
+
+dnl TODO : sasl, xzver, ....
 
 dnl Expanded by export-archive
 GIT_HASH='$Format:%h$'
@@ -156,15 +156,28 @@ else
 
 fi
 
-AC_ARG_WITH(webkit, AS_HELP_STRING([--with-webkit],[enable webkit gtk support (normally: no)]), [want_webkit=$withval], [want_webkit=no])
+dnl WebKitGTK+ support
+AC_ARG_WITH(webkit, AS_HELP_STRING([--with-webkit],[enable WebKitGTK+ support (normally: no)]), [want_webkit=$withval], [want_webkit=no])
 
 if test "x$want_gtk3" = "xyes" ; then
 	if test "x$want_webkit" = "xyes" ; then
-		PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-3.0 >= $WEBKIT_REQUIRED],AC_DEFINE(HAVE_WEBKIT,[1],[webkit support (3.0) for embedded html],[AC_MSG_RESULT(no)]))
-    fi
+		PKG_CHECK_MODULES([WEBKITGTK],[webkitgtk-3.0 >= $WEBKIT_REQUIRED],
+		[
+		AC_DEFINE(HAVE_WEBKIT,[1],[WebKit support (3.0) for embedded HTML])
+		],
+		[
+		AC_MSG_RESULT(no)
+		])
+	fi
 else
 	if test "x$want_webkit" = "xyes" ; then
-		PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-1.0 >= $WEBKIT_REQUIRED],AC_DEFINE(HAVE_WEBKIT,[1],[webkit support (1.0) for embedded html], [AC_MSG_RESULT(no)]))
+		PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-1.0 >= $WEBKIT_REQUIRED],
+		[
+		AC_DEFINE(HAVE_WEBKIT,[1],[WebKit support (1.0) for embedded HTML])
+		],
+		[
+		AC_MSG_RESULT(no)
+		])
 	fi
 fi
 
@@ -277,7 +290,7 @@ AC_CONFIG_FILES([Makefile
                  pan/icons/Makefile
                  pan/data-impl/Makefile
                  pan/gui/Makefile])
-dnl                 pan/data/decode-test-cache/Makefile
+dnl              pan/data/decode-test-cache/Makefile
 
 AC_OUTPUT
 
@@ -288,7 +301,7 @@ Configuration:
         Source code location:   ${srcdir}
         Compiler:               ${CXX}
         With GtkSpell:          ${gtkspell_msg}
-        With GTK3:              ${gtk_msg}
+        With GTK+ 3             ${gtk_msg}
         With GnuTLS:            ${gnutls_msg}
 
 "
