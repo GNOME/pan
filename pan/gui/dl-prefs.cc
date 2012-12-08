@@ -165,13 +165,14 @@ namespace pan
     int row (0);
     GtkWidget *h, *w, *l, *b, *t;
     t = HIG :: workarea_create ();
-    HIG::workarea_add_section_title (t, &row, _("Download Limit reached"));
+    HIG::workarea_add_section_title (t, &row, _("When Download Limit Is Reached:"));
 
       HIG :: workarea_add_section_spacer (t, row, 2);
       w = new_check_button (_("Warn"), "warn-dl-limit-reached", false, prefs);
       HIG :: workarea_add_wide_control (t, &row, w);
       w = new_check_button (_("Disconnect from server"), "disconnect-on-dl-limit-reached", false, prefs);
       HIG :: workarea_add_wide_control (t, &row, w);
+      HIG::workarea_add_section_title (t, &row, _("Download Limit"));
       w = _spin = new_spin_button ("dl-limit", 1, 1024, prefs);
       HIG :: workarea_add_wide_control (t, &row, w);
       w = new_bytes_combo_box(prefs, "dl-limit-type");

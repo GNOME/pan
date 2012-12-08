@@ -1005,7 +1005,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   t = HIG :: workarea_create ();
     HIG::workarea_add_section_spacer (t, row, 1);
     HIG :: workarea_add_section_title (t, &row, _("Task Pane"));
-    w = new_check_button (_("Show Task Pane info popups"), "show-taskpane-popups", true, prefs);
+    w = new_check_button (_("Show Task Pane notifications"), "show-taskpane-popups", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Show Download Meter"), "dl-meter-show", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
@@ -1250,7 +1250,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
   // colors for others texts (score == 0 or body pane etc.... )
   HIG :: workarea_add_section_divider (t, &row);
-  HIG :: workarea_add_section_title (t, &row, _("Other Texts"));
+  HIG :: workarea_add_section_title (t, &row, _("Other Text"));
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-fg", def_color_fg_str, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-bg", def_color_str, prefs));

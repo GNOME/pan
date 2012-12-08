@@ -48,7 +48,7 @@ DownloadMeterImpl :: DownloadMeterImpl (Prefs& prefs, Data& data) :
 
   _view->set_progress(_progress);
   _progress->init_steps(100);
-  _progress->set_status(_("DL Init ...."));
+  _progress->set_status(_("DL Initialization..."));
 
   GtkWidget* w = _button = gtk_button_new();
   gtk_widget_set_tooltip_text (w, _("Open Download Meter Preferences"));
