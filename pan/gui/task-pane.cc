@@ -145,6 +145,8 @@ namespace
 void
 TaskPane :: show_task_info(const tasks_t& tasks)
 {
+  
+  if (tasks.size() == 0) return;  
   Task* task (tasks.front());
   if (!task) return;
 
