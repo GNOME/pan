@@ -18,8 +18,6 @@
  */
 
 
-// TODO :: fix usage of gkr!!
-
 #include <memory>
 #include <fstream>
 #include <config.h>

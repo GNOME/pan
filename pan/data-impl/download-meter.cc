@@ -167,8 +167,6 @@ DownloadMeterImpl :: dl_meter_update ()
   int limit (_prefs.get_int("dl-limit", 1024));
   _limit = limit * ::pow(1024, type_idx);
 
-  std::cerr<<"diff "<<_limit-_downloaded_bytes<<"\n";
-
   set_status ();
 }
 
