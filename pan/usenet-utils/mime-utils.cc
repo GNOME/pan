@@ -77,7 +77,11 @@ namespace pan
       outbuf = out + converted;
       outleft = outlen - converted;
 
+#if defined(__NetBSD__)
+      converted = iconv (cd, &inbuf, &inleft, &outbuf, &outleft);
+#else
       converted = iconv (cd, (char **) &inbuf, &inleft, &outbuf, &outleft);
+#endif
 
       if (converted != (size_t) -1 && errno == 0) {
         /*
