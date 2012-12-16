@@ -97,6 +97,19 @@ file :: get_pan_home ()
   return pan_home;
 }
 
+std::string
+file :: absolute_fn(const std::string &dir, const std::string &base)
+{
+const char *fn = base.c_str();
+if (g_path_is_absolute(fn))
+  return base;
+const char *ph = file::get_pan_home().c_str();
+char *temp = g_build_filename(ph, dir.empty() ? "" : dir.c_str(), fn, NULL);
+std::string out(temp);
+g_free(temp);
+return out;
+}
+
 const char*
 file :: pan_strerror (int error_number)
 {
@@ -119,7 +132,7 @@ namespace
     if (stat (d, &sb) == -1) return EX_NOFILE;
     const char* user(g_get_user_name());
     struct passwd* pw(getpwnam(user));
-    if (sb.st_mode & S_IXUSR || ((sb.st_mode & S_IXGRP ) && pw->pw_gid == sb.st_gid))
+    if ((sb.st_mode & S_IXUSR) || ((sb.st_mode & S_IXGRP ) && pw->pw_gid == sb.st_gid))
       return EX_SUCCESS;
     return EX_BIT;
 #else

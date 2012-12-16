@@ -906,7 +906,7 @@ main (int argc, char *argv[])
       url = tok;
     else if (!strcmp(tok,"--no-gui") || !strcmp(tok,"--nogui"))
       gui = false;
-    else if (!strcmp (tok, "--debug")) { // do --debug --debug for verbose debug
+    else if (!strcmp (tok, "--debug")) { // use --debug --debug for verbose debug
       console();
       if (_debug_flag) _debug_verbose_flag = true;
       else _debug_flag = true;

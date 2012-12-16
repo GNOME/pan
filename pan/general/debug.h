@@ -56,13 +56,13 @@ namespace pan
 #define debug_SSL(A) \
   do { \
     if (_dbg_ssl) \
-      _dbg_file<< LINE_ID << ' ' << A << '\n'; \
+     std::cout << A << '\n'; \
   } while (0)
 
 #define debug_SSL_verbatim(A) \
   do { \
     if (_dbg_ssl) \
-      _dbg_file<< A ; \
+      std::cout << A << '\n'; \
   } while (0)
 
 #ifndef UNUSED

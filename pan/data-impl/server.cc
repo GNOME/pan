@@ -468,10 +468,10 @@ DataImpl :: load_server_properties (const DataIO& source)
     s.username = kv["username"];
 #ifndef HAVE_GKR
     s.password = kv["password"];
-#endif
+#else
     if (!_prefs.get_flag("use-gnome-keyring", false))
       s.password = kv["password"];
-
+#endif
     s.port = to_int (kv["port"], STD_NNTP_PORT);
     s.max_connections = to_int (kv["connection-limit"], 2);
     s.article_expiration_age = to_int(kv["expire-articles-n-days-old"], 31);

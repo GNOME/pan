@@ -97,8 +97,6 @@ namespace pan
       void remove (const Quark&);
       bool exist (const Quark& q) { return (_cert_to_server.count(q) > 0); }
 
-      static std::string build_cert_name(std::string& host);
-
       gnutls_certificate_credentials_t get_creds() { return _creds; }
 
       struct Listener

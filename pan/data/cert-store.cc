@@ -208,12 +208,12 @@ namespace pan
   {
 
     size_t filelen;
-    char * buf;
 
     Data::Server* s(_data.find_server(server));
     if (!s) return false;
+    if (s->cert.empty()) return false;
 
-    const char* filename(fn ? fn : s->cert.c_str());
+    const char* filename(fn ? fn : file::absolute_fn("ssl_certs", s->cert).c_str());
     if (!filename) return false;
 
     FILE * fp = fopen(filename, "rb");
@@ -222,7 +222,7 @@ namespace pan
     fseek (fp, 0, SEEK_END);
     filelen = ftell (fp);
     fseek (fp, 0, SEEK_SET);
-    buf = new char[filelen];
+    char * buf = new char[filelen];
     size_t dummy (fread (buf, sizeof(char), filelen, fp)); // silence compiler
 
     gnutls_datum_t in;
@@ -258,7 +258,17 @@ namespace pan
     GError* err(NULL);
 
     foreach_const(quarks_t, servers, it)
-      if (import_from_file(*it)) ++cnt;
+    {
+      if (import_from_file(*it))
+      {
+        ++cnt;
+      }
+      else
+      {
+        Data::Server* s(_data.find_server(*it));
+        s->cert.clear();
+      }
+    }
 
     // get certs from ssl certs directory
     char * ssldir(0);
@@ -320,14 +330,12 @@ namespace pan
 
   CertStore :: CertStore (Data& data): _data(data)
   {
-    char buf[2048];
-    g_snprintf(buf,sizeof(buf),"%s%cssl_certs",file::get_pan_home().c_str(), G_DIR_SEPARATOR);
-    _path = buf;
-    if (!file::ensure_dir_exists (buf))
+	_path = file::absolute_fn("ssl_certs", "");
+    if (!file::ensure_dir_exists (_path))
     {
       std::cerr<<_("Error initializing Certificate Store. Check that the permissions for the folders "
                    "~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting.");
-      file::print_file_info(std::cerr, buf);
+      file::print_file_info(std::cerr, _path.c_str());
       exit(EXIT_FAILURE);
     }
 
@@ -355,17 +363,21 @@ namespace pan
     _data.get_server_addr(server, addr, port);
     _cert_to_server[server] = cert;
 
-    const char* buf(build_cert_name(addr).c_str());
+    std::stringstream buffer;
+    buffer << addr << ".pem";
+    const char* buf (buffer.str().c_str());
+
+    std::cerr<<"adding cert "<<buf<<"\n";
+
+    FILE * fp = fopen(file::absolute_fn("ssl_certs", buf).c_str(), "wb");
+    if (!fp) return false;
 
     _data.set_server_cert(server, buf);
 
     SaveCBStruct* cbstruct = new SaveCBStruct(*this, server, _data);
     g_idle_add (save_server_props_cb, cbstruct);
 
-    FILE * fp = fopen(buf, "wb");
-    if (!fp) return false;
     size_t outsize;
-
     /* make up for dumbness of this function */
     gnutls_x509_crt_export (cert, GNUTLS_X509_FMT_PEM, NULL, &outsize);
     char* out = new char[outsize];
@@ -388,17 +400,6 @@ namespace pan
 
     return true;
   }
-
-
-  std::string
-  CertStore :: build_cert_name(std::string& host)
-  {
-    char buf[2048];
-    g_snprintf(buf,sizeof(buf),"%s%cssl_certs%c%s.pem",file::get_pan_home().c_str(),
-               G_DIR_SEPARATOR,G_DIR_SEPARATOR, host.c_str());
-    return std::string(buf);
-  }
-
 
 }  // namespace pan
 

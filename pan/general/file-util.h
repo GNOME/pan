@@ -62,6 +62,11 @@ namespace pan
     std::string get_pan_home ();
 
     /**
+	 * Returns an absolute filename of a file
+	 */
+    std::string absolute_fn(const std::string &dir, const std::string &base);
+
+    /**
      * If the specified directory doesn't exist, Pan tries to create it.
      * @param path
      * @return true if the directory already existed or was created; false otherwise
