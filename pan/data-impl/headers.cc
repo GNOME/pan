@@ -192,7 +192,7 @@ DataImpl :: unref_group   (const Quark& group)
 //  std::cerr << LINE_ID << " group " << group << " refcount down to " << h->_ref << std::endl;
   if (h->_ref == 0)
   {
-    if (h->_dirty )
+//    if (h->_dirty )
       save_headers (*_data_io, group);
     h->_dirty = false;
     free_group_headers_memory (group);

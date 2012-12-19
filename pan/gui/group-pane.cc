@@ -60,10 +60,12 @@ namespace
       }
   };
 
+  Quark * virtual_title_quark (0);
   Quark * sub_title_quark (0);
   Quark * other_title_quark (0);
+
   bool is_group (const Quark& name) {
-    return !name.empty() && name!=*sub_title_quark && name!=*other_title_quark;
+    return !name.empty() && name!=*sub_title_quark && name!=*other_title_quark && name!=*virtual_title_quark;
   }
 
   std::string
@@ -318,6 +320,15 @@ namespace
 
   NoopRowDispose noop_row_dispose;
 
+  namespace
+  {
+  	//Local folders
+  	static const char* folders_groupnames[] = {
+            _("Sent"),
+            _("Drafts")
+          };
+  }
+
   PanTreeStore*
   build_model (const Data         & data,
                const TextMatch    * match,
@@ -329,7 +340,7 @@ namespace
     store->set_row_dispose (&noop_row_dispose);
 
     // find the groups that we'll be adding.
-    std::vector<Quark> groups, sub, unsub;
+    std::vector<Quark> groups, local_folders, sub, unsub;
     data.get_other_groups (groups);
     find_matching_groups (match, groups, unsub);
     groups.clear ();
@@ -340,16 +351,40 @@ namespace
     group_rows.clear ();
     group_rows.reserve (sub.size() + unsub.size());
 
-    MyRow * headers = new MyRow[2];
-    headers[0].groupname = *sub_title_quark;
-    headers[1].groupname = *other_title_quark;
+    MyRow * headers = new MyRow[3];
+    headers[0].groupname = *virtual_title_quark;
+    headers[1].groupname = *sub_title_quark;
+    headers[2].groupname = *other_title_quark;
     g_object_weak_ref (G_OBJECT(store), delete_rows, headers);
 
+    //
+    // local folders
+    //
+    MyRow * row = &headers[0];
+    store->append (NULL, row);
+    {
+		const size_t n (G_N_ELEMENTS(folders_groupnames));
+		std::vector<PanTreeStore::Row*> appendme;
+		appendme.reserve (n);
+		MyRow *rows(new MyRow [n]), *r(rows);
+		g_object_weak_ref (G_OBJECT(store), delete_rows, rows);
+
+		unsigned long unused;
+		for (size_t i(0); i!=n; ++i, ++r)
+		{
+			r->groupname = folders_groupnames[i];
+			data.get_group_counts (r->groupname, r->unread, unused);
+			appendme.push_back (r);
+			group_rows.push_back (r);
+		}
+		store->append (row, appendme);
+		expandme.push_back (store->get_iter (row));
+    }
     //
     //  subscribed
     //
 
-    MyRow * row = &headers[0];
+    row = &headers[1];
     store->append (NULL, row);
     if (!sub.empty())
     {
@@ -374,8 +409,7 @@ namespace
     //
     // unsubscribed
     //
-
-    row = &headers[1];
+    row = &headers[2];
     store->append (NULL, row);
     if (!unsub.empty())
     {
@@ -925,8 +959,28 @@ GroupPane :: on_selection_changed (GtkTreeSelection*, gpointer pane_gpointer)
     "read-selected-group", "mark-groups-read", "delete-groups-articles",
     "get-new-headers-in-selected-groups", "download-headers"
   };
+  static const char* actions_in_nonvirtual_group[] = {
+    "show-group-preferences-dialog",
+    "subscribe", "unsubscribe",
+    "get-new-headers-in-selected-groups", "download-headers",
+    "refresh-group-list", "get-new-headers-in-subscribed-groups", "post"
+  };
   for (int i=0, n=G_N_ELEMENTS(actions_that_require_a_group); i<n; ++i)
     self->_action_manager.sensitize_action (actions_that_require_a_group[i], have_group);
+
+  // disable some functions for virtual mailbox folder
+  bool is_virtual = false;
+  for (int i(0); i != G_N_ELEMENTS(folders_groupnames); ++i)
+  {
+	  if (group == folders_groupnames[i])
+	  {
+		  is_virtual = true;
+		  break;
+	  }
+  }
+
+  for (int i=0, n=G_N_ELEMENTS(actions_in_nonvirtual_group); i<n; ++i)
+    self->_action_manager.hide_action (actions_in_nonvirtual_group[i], is_virtual);
 }
 
 GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs, GroupPrefs& group_prefs):
@@ -943,6 +997,7 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs,
   def_fg = colors.def_fg;
 
   shorten = prefs.get_flag ("shorten-group-names", false);
+  virtual_title_quark = new Quark (_("Local Folders"));
   sub_title_quark = new Quark (_("Subscribed Groups"));
   other_title_quark = new Quark (_("Other Groups"));
 
@@ -999,6 +1054,7 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs,
 
 GroupPane :: ~GroupPane ()
 {
+  delete virtual_title_quark;
   delete sub_title_quark;
   delete other_title_quark;
 

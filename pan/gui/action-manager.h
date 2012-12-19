@@ -14,6 +14,7 @@ struct ActionManager
   virtual void activate_action (const char * action) const = 0;
   virtual void toggle_action (const char * action, bool) const = 0;
   virtual void sensitize_action (const char * action, bool) const = 0;
+  virtual void hide_action (const char * key, bool b) const = 0;
   virtual GtkWidget* get_action_widget (const char * key) const = 0;
   virtual void disable_accelerators_when_focused (GtkWidget * entry) const = 0;
 };

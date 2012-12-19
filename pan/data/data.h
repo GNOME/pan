@@ -678,7 +678,8 @@ namespace pan
                                          const StringView     & references,
                                          const unsigned long    byte_count,
                                          const unsigned long    line_count,
-                                         const StringView     & xref) = 0;
+                                         const StringView     & xref,
+                                         const bool             is_virtual=false) = 0;
 
       /**
        * The last call to xover_unref() for a group can indicate to Data

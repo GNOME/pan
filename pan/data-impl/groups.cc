@@ -526,7 +526,7 @@ DataImpl :: add_groups (const Quark       & server,
   }
 
   {
-    // build lists of the groups that should and should not be in _moderated and _nopost.
+    // build lists of the groups that should and should not be in _moderated and _nopost.t
     // this is pretty cumbersome, but since these lists almost never change it's still
     // a worthwhile tradeoff to get the speed/memory wins of a sorted_vector
     groups_t mod, notmod, post, nopost, tmp;

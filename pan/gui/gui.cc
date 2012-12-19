@@ -547,6 +547,14 @@ GUI :: sensitize_action (const char * key, bool b) const
   //gtk_action_set_sensitive (get_action(key), b);
 }
 
+void
+GUI :: hide_action (const char * key, bool b) const
+{
+  ensure_action_map_loaded (_ui_manager);
+  g_object_set (get_action(key), "visible", gboolean(!b), NULL);
+  //gtk_action_set_sensitive (get_action(key), b);
+}
+
 
 void
 GUI :: toggle_action (const char * key, bool b) const
@@ -2036,7 +2044,7 @@ void GUI :: do_read_selected_group ()
   // otherwise if get-new-headers is turned on, queue an xover-new task.
   unsigned long unread(0), total(0);
 
-  if (changed && !group.empty() && _queue.is_online()) {
+  if (changed && !group.empty()){// && _queue.is_online()) {
     _data.get_group_counts (group, unread, total);
     if (!total)
       activate_action ("download-headers");

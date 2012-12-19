@@ -89,6 +89,7 @@ namespace pan
       virtual void activate_action (const char * action_name) const;
       virtual void toggle_action (const char * action_name, bool) const;
       virtual void sensitize_action (const char * action_name, bool) const;
+      virtual void hide_action (const char * key, bool b) const;
       virtual GtkWidget* get_action_widget (const char * key) const;
       virtual void disable_accelerators_when_focused (GtkWidget * entry) const;
 

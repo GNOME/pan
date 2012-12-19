@@ -232,20 +232,25 @@ DataImpl :: xover_add (const Quark         & server,
                        const StringView    & references_in,
                        const unsigned long   byte_count,
                        const unsigned long   line_count,
-                       const StringView    & xref)
+                       const StringView    & xref,
+                       const bool            is_virtual)
 {
+  if (is_virtual)
+    ref_group(group);
+
   GroupHeaders * h (get_group_headers (group));
-  if (!h) {
+  if (!h && !is_virtual) {
     Log::add_err_va (_("Error reading from %s: unknown group \"%s\""),
                      get_server_address(server).c_str(),
                      group.c_str());
     return 0;
   }
 
+
 //  std::cerr<<"xover add : "<<subject<<" "<<author<<" "<<message_id<<" lines "<<line_count<<" bytes "<<byte_count<<std::endl;
 
   const Article* new_article (0);
-  h->_dirty = true;
+
   XOverEntry& workarea (xover_get_workarea (group));
   const std::string references (
     GNKSA :: remove_broken_message_ids_from_references (references_in));
@@ -253,6 +258,8 @@ DataImpl :: xover_add (const Quark         & server,
   /***
   **** Multipart Handling
   ***/
+
+  h->_dirty = true;
 
   int part_index, part_count;
   std::string multipart_subject;
@@ -277,6 +284,7 @@ DataImpl :: xover_add (const Quark         & server,
         art_mid = candidate_mid;
     }
   }
+
 
   if (art_mid.empty())
   {
@@ -321,6 +329,9 @@ DataImpl :: xover_add (const Quark         & server,
   // maybe flush the batched changes
   if ((time(0) - workarea._last_flush_time) >= 10)
     xover_flush (group);
+
+  if (is_virtual)
+      unref_group(group);
 
   return new_article;
 }

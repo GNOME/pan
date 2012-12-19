@@ -104,6 +104,8 @@ namespace pan
       void done_sending_message (GMimeMessage*, bool);
       void maybe_mail_message (GMimeMessage*);
       bool maybe_post_message (GMimeMessage*);
+      enum Mode { DRAFTING, POSTING, UPLOADING};
+      bool save_message_in_local_folder(const Mode& mode, const std::string& folder);
 
     private:
       void update_widgetry ();
@@ -178,7 +180,6 @@ namespace pan
       void add_actions (GtkWidget* box);
       void apply_profile_to_body ();
       void apply_profile_to_headers ();
-      enum Mode { DRAFTING, POSTING, UPLOADING};
       GMimeMessage * new_message_from_ui (Mode mode, bool copy_body=true);
       bool check_message (const Quark& server, GMimeMessage*, bool binpost=false);
       bool check_charset ();

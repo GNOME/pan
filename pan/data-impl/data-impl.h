@@ -643,7 +643,8 @@ namespace pan
                                          const StringView     & references,
                                          const unsigned long    byte_count,
                                          const unsigned long    line_count,
-                                         const StringView     & xref);
+                                         const StringView     & xref,
+                                         const bool             is_virtual=false);
 
       /** useful for xover unit testing */
       virtual void xover_flush   (const Quark           & group);

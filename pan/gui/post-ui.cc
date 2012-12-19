@@ -348,7 +348,6 @@ PostUI :: get_body () const
   line_start = line_end = body_start;
   while ((gtk_text_view_forward_display_line (view, &line_end))) {
     char * line = gtk_text_buffer_get_text (buf, &line_start, &line_end, false);
-//    std::cerr<<"line : "<<line<<"\n";
     body += line;
     g_free (line);
     if (wrap && *body.rbegin() != '\n')
@@ -429,7 +428,7 @@ namespace
     { "cut", GTK_STOCK_CUT, 0, 0, 0, G_CALLBACK(do_cut) },
     { "copy", GTK_STOCK_COPY, 0, 0, 0, G_CALLBACK(do_copy) },
     { "paste", GTK_STOCK_PASTE, 0, 0, 0, G_CALLBACK(do_paste) },
-    { "rot13", GTK_STOCK_REFRESH, N_("_Rot13"), 0, N_("Rot13 Selected Text"), G_CALLBACK(do_rot13) },
+    { "rot13", GTK_STOCK_REFRESH, N_("_Rot13"), "<control>r", N_("Rot13 Selected Text"), G_CALLBACK(do_rot13) },
     { "run-editor", GTK_STOCK_JUMP_TO, N_("Run _Editor"), "<control>e", N_("Run Editor"), G_CALLBACK(do_edit) },
     { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), 0, 0, G_CALLBACK(do_profiles) },
     { "add-files", GTK_STOCK_ADD, N_("Add _Files to Queue"), "<control>O", N_("Add Files to Queue"), G_CALLBACK(do_add_files) },
@@ -626,11 +625,11 @@ PostUI :: add_actions (GtkWidget * box)
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "wrap")),
                                 _prefs.get_flag ("compose-wrap-enabled", true));
 
-
-
    //add popup actions
   gtk_action_group_add_actions (_agroup, filequeue_popup_entries, G_N_ELEMENTS(filequeue_popup_entries), this);
   gtk_ui_manager_insert_action_group (_uim, _agroup, 0);
+
+  gtk_action_group_set_sensitive(_agroup, true);
 
 }
 
@@ -999,18 +998,77 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
 }
 
 bool
+PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& folder)
+{
+	  // the following message is constructed solely for the purpose of adding the current message to
+	  // a local folder of pan
+	  GMimeMessage* msg = new_message_from_ui(mode);
+	  Profile p(get_current_profile());
+
+	  //domain name
+	  std::string d;
+	  d = !p.fqdn.empty()
+		? GNKSA::generate_message_id (p.fqdn)
+		: GNKSA::generate_message_id_from_email_address (p.address);
+	  StringView d2(d);
+	  StringView domain;
+		const char * pch = d2.strchr ('@');
+		if (pch != NULL)
+		  domain = d2.substr (pch+1, NULL);
+		else
+		  domain = d2;
+
+	  std::string author;
+	  p.get_from_header(author);
+	  std::string subject(utf8ize (g_mime_message_get_subject (msg)));
+	  const char * refs = g_mime_object_get_header(GMIME_OBJECT(msg), "References");
+	  g_mime_object_set_header((GMimeObject *) msg, "Newsgroups", folder.c_str());
+
+	  // pseudo mid to get data from cache
+	  std::string mid;
+	  generate_unique_id(domain, 42, mid);
+	  std::string message_id = pan_g_mime_message_set_message_id(msg, mid.c_str());
+
+	  std::stringstream xref;
+	  xref << folder << ":42";
+
+	  const Article* article = _data.xover_add (p.posting_server, folder, subject, author, time(0), message_id, refs, sizeof(*msg), 42, xref.str(), true);
+	  // set adjusted time from article
+	  if (article)
+	  {
+		  g_mime_message_set_date(msg, article->time_posted, 0);
+		  ArticleCache& cache(_data.get_cache());
+		  ArticleCache :: CacheResponse response = cache.add(mid, g_mime_object_to_string(GMIME_OBJECT(msg)));
+		  g_object_unref(msg);
+
+		  if (response.type != ArticleCache::CACHE_OK)
+		  {
+			  std::string reason(response.type == ArticleCache::CACHE_IO_ERR
+				? _("IO Error") : _("No space left on device"));
+			  Log::add_err_va(_("Error copying message to %s folder. Reason : %s"), folder.c_str(), reason.c_str());
+			  return false;
+		  }
+	  }
+	  else
+	  {
+		  Log::add_err_va(_("Error creating message in %s mail folder. Article isn't valid!"), folder.c_str());
+		  return false;
+	  }
+	  return true;
+}
+
+bool
 PostUI :: maybe_post_message (GMimeMessage * message)
 {
   /**
   ***  Find the server to use
   **/
-
   g_return_val_if_fail(message, false);
 
   // get the profile...
-  const Profile profile (get_current_profile ());
+  const Profile p (get_current_profile ());
   // get the server associated with that profile...
-  const Quark& server (profile.posting_server);
+  const Quark& server (p.posting_server);
   // if the server's invalid, bitch about it to the user
   std::string error_msg;
   bool error = false;
@@ -1045,7 +1103,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   /**
   ***  Make sure the message is OK...
   **/
-
   if (!check_message (server, message, !_file_queue_empty))
     return false;
 
@@ -1082,10 +1139,12 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     _queue.set_online (true);
   }
 
+  //TODO implement callback!!
   gtk_widget_hide (_root);
 
+  save_message_in_local_folder(POSTING, "Sent");
+
   GMimeMessage* msg = new_message_from_ui(POSTING);
-  Profile p(get_current_profile());
 
   if(_file_queue_empty)
   {
@@ -1140,20 +1199,22 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
     // generate domain name for upload if the flag is set / a save-file is set
     bool custom_mid(_prefs.get_flag(MESSAGE_ID_PREFS_KEY,false) || !_save_file.empty());
-    std::string d;
-    d = !profile.fqdn.empty()
-      ? GNKSA::generate_message_id (profile.fqdn)
-      : GNKSA::generate_message_id_from_email_address (profile.address);
-    StringView d2(d);
-    StringView domain;
-      const char * pch = d2.strchr ('@');
-      if (pch != NULL)
-        domain = d2.substr (pch+1, NULL);
-      else
-        domain = d2;
 
     std::string last_mid;
     std::string first_mid;
+
+    //domain name
+    std::string d;
+	d = !p.fqdn.empty()
+		? GNKSA::generate_message_id (p.fqdn)
+		: GNKSA::generate_message_id_from_email_address (p.address);
+    StringView d2(d);
+    StringView domain;
+	const char * pch = d2.strchr ('@');
+	if (pch != NULL)
+	  domain = d2.substr (pch+1, NULL);
+	else
+	  domain = d2;
 
     Article a;
     TaskUpload * tmp (dynamic_cast<TaskUpload*>(tasks[0]));
@@ -1161,6 +1222,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
     if (master_reply)
     {
+
       // master article, other attachments are threaded as replies to this
       const Profile profile (get_current_profile ());
       std::string out;
@@ -1187,45 +1249,41 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
 
     /* init taskupload variables before adding the tasks to the queue for processing */
+    char buf[2048];
+    int cnt(0);
 
+    foreach (PostUI::tasks_t, tasks, it)
     {
 
-      char buf[2048];
-      int cnt(0);
+      TaskUpload * t (dynamic_cast<TaskUpload*>(*it));
 
-      foreach (PostUI::tasks_t, tasks, it)
+      const char* basename = t->_basename.c_str();
+      TaskUpload::Needed n;
+
+      foreach (std::set<int>, t->_wanted, pit)
       {
-
-        TaskUpload * t (dynamic_cast<TaskUpload*>(*it));
-
-        const char* basename = t->_basename.c_str();
-        TaskUpload::Needed n;
-
-        foreach (std::set<int>, t->_wanted, pit)
+        if (custom_mid)
         {
-          if (custom_mid)
-          {
-              std::string out;
-              generate_unique_id(domain, *pit,out);
-              n.mid = out;
-              if (first_mid.empty()) first_mid = out;
-          }
-
-          g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);
-          n.message_id = buf;
-          n.partno = *pit;
-          n.last_mid = last_mid;
-          t->_first_mid = first_mid;
-          last_mid = n.mid;
-          t->_needed.insert(std::pair<int,TaskUpload::Needed>(*pit,n));
+            std::string out;
+            generate_unique_id(domain, *pit,out);
+            n.mid = out;
+            if (first_mid.empty()) first_mid = out;
         }
-        t->build_needed_tasks();
-        t->_save_file = _save_file;
-        t->_queue_pos = cnt++;
 
-        _queue.add_task (*it, Queue::BOTTOM);
-        t->add_listener(this);
+        g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);
+        n.message_id = buf;
+        n.partno = *pit;
+        n.last_mid = last_mid;
+        t->_first_mid = first_mid;
+        last_mid = n.mid;
+        t->_needed.insert(std::pair<int,TaskUpload::Needed>(*pit,n));
       }
+      t->build_needed_tasks();
+      t->_save_file = _save_file;
+      t->_queue_pos = cnt++;
+
+      _queue.add_task (*it, Queue::BOTTOM);
+      t->add_listener(this);
     }
   }
 
@@ -1575,7 +1633,7 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
     g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent());
 
   // Message-ID for single text-only posts
-  if ((mode==POSTING || mode==UPLOADING) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false)) {
+  if (mode==DRAFTING || ((mode==POSTING || mode==UPLOADING) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false))) {
     const std::string message_id = !profile.fqdn.empty()
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
@@ -1638,7 +1696,6 @@ PostUI :: save_draft ()
 
   if (gtk_dialog_run(GTK_DIALOG(d)) == GTK_RESPONSE_ACCEPT)
   {
-    //dbg DRAFTING
     GMimeMessage * msg = new_message_from_ui (UPLOADING);
     char * filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER(d));
     draft_filename = filename;
@@ -1663,6 +1720,8 @@ PostUI :: save_draft ()
     g_free (pch);
     g_free (filename);
     g_object_unref (msg);
+
+    save_message_in_local_folder(DRAFTING, "Drafts");
 
     _unchanged_body = get_body ();
   }
@@ -1991,8 +2050,6 @@ PostUI :: apply_profile_to_body ()
     body += "\n\n";
     body += sig;
   }
-
-  std::cerr<<body.empty()<<" "<<sig.empty()<<"\n==================================\n"<<body<<"\n====================================\n";
 
   GtkTextBuffer * buf (_body_buf);
   if (!body.empty())
@@ -3172,7 +3229,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
       foreach_const (quarks_t, groups, git)
          a.xref.insert (profile.posting_server, *git,0);
       ui.total = get_total_parts((const char*)cur->data);
-      tmp = new TaskUpload(std::string((const char*)cur->data),
+      tmp = new TaskUpload((const char*)cur->data,
                         profile.posting_server, _cache, a, ui, msg);
 
       // insert wanted parts to upload

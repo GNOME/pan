@@ -1549,12 +1549,14 @@ void pan::pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, 
 /**
 * Works around a GMime bug that uses `Message-Id' rather than `Message-ID'
 */
-void pan::pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
+std::string pan::pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
 {
     g_mime_object_append_header ((GMimeObject *) msg, "Message-ID", mid);
     char * bracketed = g_strdup_printf ("<%s>", mid);
     g_mime_header_list_set (GMIME_OBJECT(msg)->headers, "Message-ID", bracketed);
+    std::string ret (bracketed);
     g_free (bracketed);
+    return ret;
 }
 
 namespace pan

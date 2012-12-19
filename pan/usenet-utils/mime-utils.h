@@ -108,7 +108,7 @@ namespace pan
 
   char *pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html);
   void pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, GMimeRecipientType type, const char *string);
-  void pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid);
+  std::string pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid);
 
   extern iconv_t conv;
   extern bool iconv_inited;
