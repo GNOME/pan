@@ -104,7 +104,7 @@ namespace pan
       void done_sending_message (GMimeMessage*, bool);
       void maybe_mail_message (GMimeMessage*);
       bool maybe_post_message (GMimeMessage*);
-      enum Mode { DRAFTING, POSTING, UPLOADING};
+      enum Mode { DRAFTING, POSTING, UPLOADING, VIRTUAL};
       bool save_message_in_local_folder(const Mode& mode, const std::string& folder);
 
     private:

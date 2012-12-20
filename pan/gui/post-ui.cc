@@ -1002,7 +1002,7 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
 {
 	  // the following message is constructed solely for the purpose of adding the current message to
 	  // a local folder of pan
-	  GMimeMessage* msg = new_message_from_ui(mode);
+	  GMimeMessage* msg = new_message_from_ui(VIRTUAL);
 	  Profile p(get_current_profile());
 
 	  //domain name
@@ -1032,11 +1032,12 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
 	  std::stringstream xref;
 	  xref << folder << ":42";
 
-	  const Article* article = _data.xover_add (p.posting_server, folder, subject, author, time(0), message_id, refs, sizeof(*msg), 42, xref.str(), true);
+    time_t posted = time(0);
+	  const Article* article = _data.xover_add (p.posting_server, folder, subject, author, posted, message_id, refs, sizeof(*msg), 42, xref.str(), true);
 	  // set adjusted time from article
 	  if (article)
 	  {
-		  g_mime_message_set_date(msg, article->time_posted, 0);
+		  g_mime_message_set_date(msg, posted, 0);
 		  ArticleCache& cache(_data.get_cache());
 		  ArticleCache :: CacheResponse response = cache.add(mid, g_mime_object_to_string(GMIME_OBJECT(msg)));
 		  g_object_unref(msg);
@@ -1638,7 +1639,6 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
       ? GNKSA::generate_message_id (profile.fqdn)
       : GNKSA::generate_message_id_from_email_address (profile.address);
     pan_g_mime_message_set_message_id (msg, message_id.c_str());
-
   }
 
   // body & charset

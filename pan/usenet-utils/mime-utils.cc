@@ -586,7 +586,7 @@ namespace pan
     temp_parts_t& master(state.master_list);
     temp_parts_t& appendme(state.current_list);
     TempPart * cur = NULL;
-    EncType type = et;
+    EncType enc_type = et;
     GByteArray * line;
     gboolean yenc_looking_for_part_line = FALSE;
     gint64 linestart_pos = 0;
@@ -609,7 +609,7 @@ namespace pan
         line_len = pch - line_str;
       }
 
-      switch (type)
+      switch (enc_type)
       {
 
 //        case ENC_QP:
@@ -649,7 +649,7 @@ namespace pan
             if (cur)
               g_free (filename);
             else
-              cur = new TempPart (type=ENC_UU, filename);
+              cur = new TempPart (enc_type=ENC_UU, filename);
             state.uu_temp = cur;
           }
           else if (yenc_is_beginning_line (line_str))
@@ -678,7 +678,7 @@ namespace pan
             }
             else
             {
-              cur = new TempPart (type=ENC_YENC, fname);
+              cur = new TempPart (enc_type=ENC_YENC, fname);
               cur->y_line_len = line_len;
               cur->y_attach_size = attach_size;
               cur->y_part = part;
@@ -701,12 +701,12 @@ namespace pan
             sub_begin = linestart_pos;
             cur = state.uu_temp;
             ++cur->valid_lines;
-            type = ENC_UU;
+            enc_type = ENC_UU;
           }
           else if (cur == NULL)
           {
             sub_begin = linestart_pos;
-            cur = new TempPart(type = type);
+            cur = new TempPart(enc_type);
 
           }
           break;
@@ -724,7 +724,7 @@ namespace pan
               append_if_not_present (appendme, cur);
 
             cur = NULL;
-            type = ENC_PLAIN;
+            enc_type = ENC_PLAIN;
             state.uu_temp = NULL;
           }
           else if (!is_uu_line(line_str, line_len))
@@ -761,7 +761,7 @@ namespace pan
               append_if_not_present (appendme, cur);
 
             cur = NULL;
-            type = ENC_PLAIN;
+            enc_type = ENC_PLAIN;
           }
           else if (yenc_looking_for_part_line && yenc_is_part_line(line_str))
           {
@@ -794,7 +794,7 @@ namespace pan
       if( append_if_not_present (master, cur) )
         append_if_not_present (appendme, cur);
       cur = NULL;
-      type = ENC_PLAIN;
+      enc_type = ENC_PLAIN;
 
     }
 
