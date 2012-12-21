@@ -141,12 +141,12 @@ namespace pan
       CertStore & store;
 
     public:
-      virtual void create_socket (ServerInfo&,
-                                  const StringView & host,
-                                  int                port,
-                                  WorkerPool       & threadpool,
-                                  Socket::Creator::Listener * listener,
-                                  bool               use_ssl);
+      virtual void create_socket  (ServerInfo&,
+                                    const Quark&,
+                                    const StringView & host,
+                                    int                port,
+                                    WorkerPool       & threadpool,
+                                    Socket::Creator::Listener * listener);
 
   };
 

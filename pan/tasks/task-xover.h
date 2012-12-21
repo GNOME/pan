@@ -24,6 +24,7 @@
 #include <vector>
 #include <sstream>
 
+#include <pan/general/compression.h>
 #include <pan/data/data.h>
 #include <pan/tasks/task.h>
 #include <pan/tasks/nntp.h>
@@ -54,6 +55,8 @@ namespace pan
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
       virtual void on_nntp_group (NNTP*, const Quark&, unsigned long, uint64_t, uint64_t);
 
+      void on_nntp_line_process (NNTP*, const StringView&);
+
     private: // implementation - minitasks
       struct MiniTask {
         enum Type { GROUP, XOVER };
@@ -83,6 +86,8 @@ namespace pan
       unsigned long _parts_so_far;
       unsigned long _articles_so_far;
       unsigned long _total_minitasks;
+
+      std::map<int, std::stringstream*> _streams;
 
   };
 }

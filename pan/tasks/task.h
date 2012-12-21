@@ -50,16 +50,16 @@ namespace pan
          enum Work
          {
             /** Task finished successfully */
-            COMPLETED,
+            COMPLETED = 0,
             /** Task is waiting on an nntp connection */
-            NEED_NNTP,
+            NEED_NNTP = 1,
             /** Task waiting for a decoder/encoder */
-            NEED_DECODER,
-            NEED_ENCODER,
+            NEED_DECODER = 2,
+            NEED_ENCODER = 3,
             /** Task is running */
-            WORKING,
+            WORKING = 5,
             /** Task is paused, woken up if 'current_connections < max_connections' */
-            PAUSED
+            PAUSED = 6
          };
 
          /**

@@ -22,10 +22,12 @@
 
 #include <string>
 #include <pan/general/quark.h>
+#include <pan/general/compression.h>
 #include <pan/general/string-view.h>
 
 namespace pan
 {
+
   struct ServerRank
   {
     virtual ~ServerRank () {}
@@ -38,6 +40,7 @@ namespace pan
    */
   class ServerInfo: public ServerRank
   {
+
     public:
 
       virtual ~ServerInfo () {}
@@ -51,6 +54,9 @@ namespace pan
 
       virtual void set_server_trust (const Quark       & servername,
                                      const int           setme) = 0;
+
+      virtual void set_server_compression_type (const Quark       & servername,
+                                                  const int           setme) = 0;
 
       virtual void set_server_addr (const Quark       & servername,
                                     const StringView  & address,
@@ -80,6 +86,8 @@ namespace pan
                                     bool            use_gkr) = 0;
 
       virtual bool get_server_trust (const Quark  & servername, int&) const = 0;
+
+      virtual bool get_server_compression_type (const Quark  & servername, CompressionType&) const = 0;
 
       virtual bool get_server_addr (const Quark   & servername,
                                     std::string   & setme_address,

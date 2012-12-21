@@ -333,7 +333,6 @@ Queue :: process_task (Task * task)
   }
   else if (state._work == Task::NEED_DECODER)
   {
-
     if (!_decoder_task)
       give_task_a_decoder (task);
   }

@@ -157,6 +157,15 @@ DataImpl :: set_server_trust  (const Quark   & server,
 }
 
 void
+DataImpl :: set_server_compression_type  (const Quark   & server,
+                                          const int       setme)
+{
+  Server * s (find_server (server));
+  assert (s);
+  s->compression_type = setme;
+}
+
+void
 DataImpl :: set_server_addr (const Quark       & server,
                              const StringView  & host,
                              int                 port)
@@ -281,6 +290,40 @@ DataImpl :: get_server_trust (const Quark   & server, int& setme) const
   if (found) {
     setme = s->trust;
   }
+
+  return found;
+}
+
+namespace
+{
+  CompressionType get_compression_type(int val)
+  {
+    CompressionType ret = HEADER_COMPRESS_NONE;
+    switch (val)
+    {
+      case 1:
+        ret = HEADER_COMPRESS_XZVER;
+        break;
+
+      case 2:
+        ret = HEADER_COMPRESS_XFEATURE;
+        break;
+
+      case 3:
+        ret = HEADER_COMPRESS_DIABLO;
+        break;
+    }
+    return ret;
+  }
+}
+
+bool
+DataImpl :: get_server_compression_type (const Quark   & server, CompressionType& setme) const
+{
+  const Server * s (find_server (server));
+  const bool found (s);
+  if (found)
+    setme = get_compression_type(s->compression_type);
 
   return found;
 }
@@ -481,6 +524,7 @@ DataImpl :: load_server_properties (const DataIO& source)
     s.cert = kv["cert"];
     int trust(to_int(kv["trust"], 0));
     s.trust = trust;
+    s.compression_type = to_int(kv["compression-type"], 0); // NONE
     s.newsrc_filename = kv["newsrc"];
     if (s.newsrc_filename.empty()) { // set a default filename
       std::ostringstream o;
@@ -545,6 +589,7 @@ else
          << indent(depth) << "<rank>" << s->rank << "</rank>\n"
          << indent(depth) << "<use-ssl>" << s->ssl_support << "</use-ssl>\n"
          << indent(depth) << "<trust>" << s->trust << "</trust>\n"
+         << indent(depth) << "<compression-type>" << s->compression_type << "</compression-type>\n"
          << indent(depth) << "<cert>"    << s->cert << "</cert>\n";
 
     *out << indent(--depth) << "</server>\n";

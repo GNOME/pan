@@ -36,7 +36,7 @@ namespace pan
   class Mutex
   {
     private:
-      static GMutex mutex;
+      GMutex mutex;
       GMutex * m;
 
     public:
@@ -44,7 +44,7 @@ namespace pan
       /** Create a new mutex */
       Mutex()
       {
-#if !GLIB_CHECK_VERSION(3,32,0)
+#if !GLIB_CHECK_VERSION(2,34,1)
         m = g_mutex_new();
 #else
         g_mutex_init(&mutex);
@@ -53,9 +53,9 @@ namespace pan
       }
 
       /** Destroy the mutex */
-      ~Mutex()
+      virtual ~Mutex()
       {
-#if !GLIB_CHECK_VERSION(3,32,0)
+#if !GLIB_CHECK_VERSION(2,34,1)
         g_mutex_free(m);
 #endif
       }

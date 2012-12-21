@@ -69,7 +69,10 @@ namespace
     GtkWidget * rank_combo;
     GtkWidget * ssl_combo;
     GtkWidget * always_trust_checkbox;
+    GtkWidget * compression_checkbox;
     ServerEditDialog (Data& d, Queue& q, Prefs& p): data(d), queue(q), prefs(p) {}
+    CompressionType compressiontype;
+
   };
 
   void pan_entry_set_text (GtkWidget * w, const StringView& v)
@@ -103,8 +106,56 @@ namespace
     GtkTreeIter iter;
     if (gtk_combo_box_get_active_iter (w, &iter))
       gtk_tree_model_get (gtk_combo_box_get_model(w), &iter, 1, &ssl, -1);
+    if (ssl==0)
+    {
+      gtk_widget_hide(d->always_trust_checkbox);
+    }
+    else
+    {
+      gtk_widget_show(d->always_trust_checkbox);
+    }
     pan_spin_button_set (d->port_spin, ssl == 0 ? STD_NNTP_PORT : STD_SSL_PORT);
 #endif
+  }
+
+  void address_entry_changed_cb   (GtkEditable *editable,
+                                    gpointer     gp)
+  {
+    ServerEditDialog* d (static_cast<ServerEditDialog*>(gp));
+    if (!d) return;
+
+    gchar* text = gtk_editable_get_chars (editable, 0, -1);
+    StringView t(text);
+
+    CompressionType type(HEADER_COMPRESS_NONE);
+
+    // 0 == NONE
+
+    if (t.strstr("astraweb")) // 1
+    {
+      type = HEADER_COMPRESS_XZVER;
+    }
+    if (t.strstr("giganews"))  // 2
+    {
+      type = HEADER_COMPRESS_XFEATURE;
+    }
+    static char* others[] = {const_cast<char*>("newshosting"), const_cast<char*>("easynews"), const_cast<char*>("usenetserver") };
+    for (int i= 0; i < G_N_ELEMENTS(others); i++)
+    {
+        if (t.strstr(others[i]))
+        {
+          type = HEADER_COMPRESS_DIABLO; // 3
+          break;
+        }
+    }
+    d->compressiontype = type;
+
+    if (type != HEADER_COMPRESS_NONE)
+      gtk_widget_show(d->compression_checkbox);
+    else
+      gtk_widget_hide(d->compression_checkbox);
+
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(d->compression_checkbox), type != HEADER_COMPRESS_NONE);
   }
 
   void
@@ -117,6 +168,7 @@ namespace
     d->server = server;
 
     int port(STD_NNTP_PORT), max_conn(4), age(31*3), rank(1), ssl(0), trust(0);
+    CompressionType compression(HEADER_COMPRESS_NONE);
     std::string addr, user, cert;
     gchar* pass(NULL);
     if (!server.empty()) {
@@ -128,13 +180,19 @@ namespace
       ssl = d->data.get_server_ssl_support(server);
       cert = d->data.get_server_cert(server);
       d->data.get_server_trust (server, trust);
+      d->data.get_server_compression_type (server, compression);
     }
 
     pan_entry_set_text (d->address_entry, addr);
+    pan_spin_button_set (d->port_spin, port);
     pan_spin_button_set (d->connection_limit_spin, max_conn);
     pan_entry_set_text (d->auth_username_entry, user);
     pan_entry_set_text (d->auth_password_entry, pass);
     d->cert = cert;
+    d->compressiontype = compression;
+
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(d->compression_checkbox), d->compressiontype != HEADER_COMPRESS_NONE);
+
 
     // set the age combobox
     GtkComboBox * combo (GTK_COMBO_BOX (d->expiration_age_combo));
@@ -222,6 +280,8 @@ namespace
       trust = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(d->always_trust_checkbox)) ? 1 : 0;
 #endif
 
+      int header_comp = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(d->compression_checkbox)) ? 1 : 0;
+
       const char * err_msg (0);
       if (addr.empty())
         err_msg = _("Please specify the server's address.");
@@ -246,7 +306,7 @@ namespace
         d->data.set_server_ssl_support(d->server, ssl);
         d->data.set_server_cert(d->server,cert);
         d->data.set_server_trust(d->server,trust);
-
+        d->data.set_server_compression_type(d->server, header_comp);
         d->data.save_server_info(d->server);
 
         d->queue.upkeep ();
@@ -322,6 +382,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
     GtkWidget * w = d->address_entry = gtk_entry_new ();
     gtk_widget_set_tooltip_text( w, _("The news server's actual address, e.g. \"news.mynewsserver.com\""));
     HIG::workarea_add_row (t, &row, _("_Address:"), w, NULL);
+    g_signal_connect (w, "changed", G_CALLBACK(address_entry_changed_cb), d);
 
     GtkAdjustment * a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 1.0, ULONG_MAX, 1.0, 1.0, 0.0));
     w = d->port_spin = gtk_spin_button_new (GTK_ADJUSTMENT(a), 1.0, 0u);
@@ -398,6 +459,10 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
     gtk_widget_set_tooltip_text( e, _("Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."));
     HIG::workarea_add_row (t, &row, e, w);
 
+    // header compression options
+    d->compression_checkbox = w = gtk_check_button_new_with_label (_("Enable header compression for speedup"));
+    HIG::workarea_add_row (t, &row, e, w);
+
     // ssl 3.0 option
 #ifdef HAVE_GNUTLS
     // select ssl/plaintext
@@ -419,7 +484,6 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
     }
 
     d->ssl_combo = w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
-    g_signal_connect(w, "changed", G_CALLBACK(ssl_changed_cb), d);
     g_object_unref (G_OBJECT(store));
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
     gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
@@ -442,6 +506,16 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
   d->server = server;
   edit_dialog_populate (data, prefs, server, d);
   gtk_widget_show_all (d->dialog);
+
+  // perhaps hide compression checkbox
+  if (d->compressiontype==HEADER_COMPRESS_NONE)
+  {
+    gtk_widget_hide(d->compression_checkbox);
+  }
+
+  // avoid NPE on early init
+  g_signal_connect(d->ssl_combo, "changed", G_CALLBACK(ssl_changed_cb), d);
+
   return d->dialog;
 }
 

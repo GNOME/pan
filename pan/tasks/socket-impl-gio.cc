@@ -38,6 +38,7 @@ extern "C" {
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/worker-pool.h>
+#include <pan/usenet-utils/xzver.h>
 
 #ifdef G_OS_WIN32
   // this #define is necessary for mingw
@@ -91,6 +92,7 @@ extern "C" {
 #include <pan/usenet-utils/gnksa.h>
 #include "socket-impl-gio.h"
 #include "socket-impl-main.h"
+#include "xzver_filter.h"
 
 using namespace pan;
 
@@ -286,6 +288,11 @@ GIOChannelSocket :: open (const StringView& address, int port, std::string& setm
 {
   _host.assign (address.str, address.len);
   _channel = create_channel (address, port, setme_err);
+#ifdef G_OS_WIN32
+  _id = g_io_channel_win32_get_fd(_channel);
+#else
+   _id = g_io_channel_unix_get_fd(_channel);
+#endif // G_OS_WIN32
   return _channel != 0;
 }
 
@@ -329,12 +336,13 @@ GIOChannelSocket :: do_read ()
     if (status == G_IO_STATUS_NORMAL)
     {
       g_string_prepend_len (g, _partial_read.c_str(), _partial_read.size());
-      _partial_read.clear ();
 
       debug_v ("read [" << g->str << "]"); // verbose debug, if --debug --debug was on the command-line
       increment_xfer_byte_count (g->len);
+
       if (g_str_has_suffix (g->str, "\r\n"))
         g_string_truncate (g, g->len-2);
+
       more = _listener->on_socket_response (this, StringView (g->str, g->len));
       _listener->on_socket_bytes_transferred(g->len, this);
     }

@@ -331,6 +331,39 @@ NNTP :: xover (const Quark   & group,
 }
 
 void
+NNTP :: xzver (const Quark   & group,
+               uint64_t        low,
+               uint64_t        high,
+               Listener      * l)
+{
+   _listener = l;
+
+   if (group != _group)
+      _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
+
+   _commands.push_back (build_command ("XZVER %"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT"\r\n", low, high));
+
+   write_next_command ();
+}
+
+void
+NNTP :: xfeat (const Quark   & group,
+               uint64_t        low,
+               uint64_t        high,
+               Listener      * l)
+{
+   _listener = l;
+
+   _commands.push_back ("XFEATURE COMPRESS GZIP");
+   if (group != _group)
+         _commands.push_back (build_command ("GROUP %s\r\n", group.c_str()));
+   _commands.push_back (build_command ("XOVER %"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT"\r\n", low, high));
+
+   write_next_command ();
+}
+
+//TODO
+void
 NNTP :: xover_count_only (const Quark   & group,
                           Listener      * l)
 {

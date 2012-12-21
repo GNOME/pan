@@ -17,6 +17,7 @@ libgeneralutils_a_SOURCES = \
  worker-pool.cc
 
 noinst_HEADERS = \
+ compression.h \
  debug.h \
  defgroup.h \
  e-util.h \

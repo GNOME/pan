@@ -21,7 +21,10 @@
 #define __Socket_h__
 
 #include <string>
+#include <sstream>
+#include <vector>
 #include <config.h>
+#include <glib.h>
 
 extern "C" {
   #include <stdint.h>
@@ -33,6 +36,7 @@ extern "C" {
 
 namespace pan
 {
+
   class StringView;
   class Quark;
   class WorkerPool;
@@ -47,8 +51,8 @@ namespace pan
   class Socket
   {
     public:
-      Socket ();
-      virtual ~Socket () {}
+      Socket () ;
+      virtual ~Socket () ;
 
     public:
       /** Interface class for objects that listen to a Socket's events */
@@ -72,6 +76,7 @@ namespace pan
       void set_abort_flag (bool b);
       bool is_abort_set () const;
       virtual void get_host (std::string& setme) const = 0;
+      int get_id () { return _id; }
 
     protected:
       void increment_xfer_byte_count (unsigned long byte_count);
@@ -79,9 +84,9 @@ namespace pan
       mutable time_t _time_of_last_check;
       mutable double _speed_KiBps;
       bool _abort_flag;
+      int _id;
 
     public:
-
       /**
        * Interface class for code that creates sockets.
        *

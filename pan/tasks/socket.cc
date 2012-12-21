@@ -34,9 +34,13 @@ Socket :: Socket ():
   _bytes_since_last_check (0),
   _time_of_last_check (time(0)),
   _speed_KiBps (0.0),
-  _abort_flag (false)
+  _abort_flag (false),
+  _id(0)
 {
 }
+
+Socket :: ~Socket ()
+{}
 
 void
 Socket :: set_abort_flag (bool b)

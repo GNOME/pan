@@ -95,6 +95,8 @@ namespace pan
       /** tell our task about the decode's progress */
       static gboolean progress_update_timer_func(gpointer decoder);
 
+    protected:
+
       WorkerPool& _worker_pool;
       int _gsourceid;
       void disable_progress_update();

@@ -1,4 +1,6 @@
-AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@
+AM_CPPFLAGS = -I@top_srcdir@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ @ZLIB_CFLAGS@
+
+AM_LDFLAGS = @ZLIB_LIBS@
 
 noinst_LIBRARIES = libusenetutils.a
 
@@ -13,8 +15,9 @@ libusenetutils_a_SOURCES = \
  text-massager.cc \
  url-find.cc \
  blowfish.cc \
- gpg.cc
-	
+ gpg.cc \
+ xzver.cc
+
 noinst_HEADERS = \
  defgroup.h \
  filter-info.h \
@@ -30,7 +33,8 @@ noinst_HEADERS = \
  blowfish.h \
  blowfish_cyphers.h \
  gpg.h \
- MersenneTwister.h
+ MersenneTwister.h \
+ xzver.h
 
 #noinst_PROGRAMS = \
 # gnksa-test \

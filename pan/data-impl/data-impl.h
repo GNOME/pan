@@ -39,7 +39,6 @@
 #include <pan/data/article-cache.h>
 #include <pan/data/encode-cache.h>
 #include <pan/data/data.h>
-
 #include <pan/data-impl/data-io.h>
 #include <pan/data-impl/article-filter.h>
 #include <pan/data-impl/rules-filter.h>
@@ -105,7 +104,6 @@ namespace pan
       ArticleCache _cache;
       EncodeCache _encode_cache;
       CertStore _certstore;
-      Prefs _prefs;
       Queue* _queue;
 
     public:
@@ -118,6 +116,7 @@ namespace pan
       void rebuild_backend ();
       const bool _unit_test;
       DataIO * _data_io;
+      Prefs& _prefs;
 
     /**
     *** SERVERS
@@ -169,6 +168,9 @@ namespace pan
       virtual void set_server_article_expiration_age  (const Quark  & server,
                                                        int            days);
 
+      virtual void set_server_compression_type  (const Quark   & server,
+                                                 const int       setme);
+
       virtual void save_server_info (const Quark& server);
 
     public: // accessors
@@ -186,6 +188,8 @@ namespace pan
                                     bool            use_gkr);
 
       virtual bool get_server_trust (const Quark  & servername, int&) const;
+
+      virtual bool get_server_compression_type (const Quark  & servername, CompressionType&) const;
 
       virtual bool get_server_addr (const Quark   & server,
                                     std::string   & setme_host,
