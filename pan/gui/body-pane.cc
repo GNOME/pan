@@ -1148,6 +1148,29 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
       l = add_header_line (s, message, _("Newsgroups"), "Newsgroups", fallback_charset);
       w = std::max (w, l);
     }
+	const StringView user_agent(
+			g_mime_object_get_header((GMimeObject *) message,
+					"User-Agent"));
+	if (!user_agent.empty()) {
+		l = add_header_line(s, message, _("User-Agent"), "User-Agent",
+				fallback_charset);
+		w = std::max(w, l);
+	}
+	const StringView x_newsreader(
+			g_mime_object_get_header((GMimeObject *) message,
+					"X-Newsreader"));
+	if (!x_newsreader.empty()) {
+		l = add_header_line(s, message, _("User-Agent"), "X-Newsreader",
+				fallback_charset);
+		w = std::max(w, l);
+	}
+	const StringView x_mailer(
+			g_mime_object_get_header((GMimeObject *) message, "X-Mailer"));
+	if (!x_mailer.empty()) {
+		l = add_header_line(s, message, _("User-Agent"), "X-Mailer",
+				fallback_charset);
+		w = std::max(w, l);
+	}
     const StringView followup_to (g_mime_object_get_header ((GMimeObject *) message, "Followup-To"));
     if (!followup_to.empty() && (followup_to!=newsgroups)) {
       l = add_header_line (s, message, _("Followup-To"), "Followup-To", fallback_charset);
