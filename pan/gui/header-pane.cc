@@ -2529,6 +2529,7 @@ HeaderPane :: on_cache_added (const Quark& message_id)
 {
   quarks_t q;
   q.insert(message_id);
+  //TODO fixme!!
   _data.rescore_articles ( _group, q );
   rebuild_article_action (message_id);
 

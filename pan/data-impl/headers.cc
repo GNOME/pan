@@ -978,9 +978,9 @@ DataImpl :: rescore_group_articles (const Quark& group)
 
   ArticleFilter::sections_t sections;
   _scorefile.get_matching_sections (group.to_view(), sections);
-  foreach (nodes_v, gh->_nodes, it) {
-    if ((*it)->_article) {
-      Article& a (*(*it)->_article);
+  foreach (nodes_t, gh->_nodes, it) {
+    if (it->second->_article) {
+      Article& a (*(it->second->_article));
       a.score = _article_filter.score_article (*this, sections, group, a);
     }
   }
