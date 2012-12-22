@@ -38,7 +38,6 @@ extern "C" {
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/worker-pool.h>
-#include <pan/usenet-utils/xzver.h>
 
 #ifdef G_OS_WIN32
   // this #define is necessary for mingw
@@ -92,7 +91,6 @@ extern "C" {
 #include <pan/usenet-utils/gnksa.h>
 #include "socket-impl-gio.h"
 #include "socket-impl-main.h"
-#include "xzver_filter.h"
 
 using namespace pan;
 
