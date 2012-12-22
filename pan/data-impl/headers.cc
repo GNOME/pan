@@ -969,6 +969,24 @@ DataImpl :: rescore_articles (const Quark& group, const quarks_t mids)
 }
 
 void
+DataImpl :: rescore_group_articles (const Quark& group)
+{
+
+  GroupHeaders * gh (get_group_headers (group));
+  if (!gh) // group isn't loaded
+    return;
+
+  ArticleFilter::sections_t sections;
+  _scorefile.get_matching_sections (group.to_view(), sections);
+  foreach (nodes_v, gh->_nodes, it) {
+    if ((*it)->_article) {
+      Article& a (*(*it)->_article);
+      a.score = _article_filter.score_article (*this, sections, group, a);
+    }
+  }
+}
+
+void
 DataImpl :: rescore ()
 {
   //std::cerr << LINE_ID << " rescoring... " << std::endl;

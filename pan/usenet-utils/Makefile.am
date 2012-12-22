@@ -15,8 +15,7 @@ libusenetutils_a_SOURCES = \
  text-massager.cc \
  url-find.cc \
  blowfish.cc \
- gpg.cc \
- xzver.cc
+ gpg.cc
 
 noinst_HEADERS = \
  defgroup.h \
@@ -33,8 +32,7 @@ noinst_HEADERS = \
  blowfish.h \
  blowfish_cyphers.h \
  gpg.h \
- MersenneTwister.h \
- xzver.h
+ MersenneTwister.h 
 
 #noinst_PROGRAMS = \
 # gnksa-test \

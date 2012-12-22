@@ -641,6 +641,8 @@ namespace pan
 
        virtual void rescore_articles (const Quark& group, const quarks_t mids) = 0;
 
+       virtual void rescore_group_articles (const Quark& group) = 0;
+
        virtual void rescore () = 0;
 
     /*****************************************************************
