@@ -4,7 +4,7 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich M�ller <henmull@src.gnome.org>
+ * Copyright (C) 2011 Heinrich Müller <henmull@src.gnome.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -343,11 +343,14 @@ GIOChannelSocketGnuTLS :: open  (const StringView& address, int port, std::strin
 {
   _host.assign (address.str, address.len);
   _channel = create_channel (address, port, setme_err);
+  if (_channel)
+  {
 #ifdef G_OS_WIN32
-  _id = g_io_channel_win32_get_fd(_channel);
+      _id = g_io_channel_win32_get_fd(_channel);
 #else
-   _id = g_io_channel_unix_get_fd(_channel);
+      _id = g_io_channel_unix_get_fd(_channel);
 #endif // G_OS_WIN32
+  }
   return _channel != 0;
 }
 
