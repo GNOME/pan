@@ -175,7 +175,7 @@ TaskXOver::use_nntp(NNTP* nntp)
         _last_xover_number[nntp] = mt._low;
         if (comp == HEADER_COMPRESS_XFEATURE)
           nntp->xfeat(_group, mt._low, mt._high, this);
-        else if (comp == HEADER_COMPRESS_XZVER || HEADER_COMPRESS_DIABLO)
+        else if (comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO)
           nntp->xzver(_group, mt._low, mt._high, this);
         else
           nntp->xover(_group, mt._low, mt._high, this);

@@ -166,7 +166,7 @@ namespace pan
     public:
 
       /* Internal only */
-      void get_group (const Quark& group);
+      void enter_group (const Quark& group);
       void get_headers (const Quark & group, const char * message_id, Listener  * l);
       void get_headers (const Quark & group, uint64_t article_number, Listener * l);
       void get_body (const Quark & group, const char * message_id, Listener  * l);
