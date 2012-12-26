@@ -311,10 +311,7 @@ void
 NNTP :: enter_group (const Quark& group)
 {
    if (group != _group)
-   {
     _commands.push_back (build_command ("GROUP %s\r\n",group.c_str()));
-    write_next_command();
-   }
 }
 
 
@@ -352,11 +349,10 @@ NNTP :: xfeat (const Quark   & group,
 {
    _listener = l;
 
+   write_next_command();
    _commands.push_back ("XFEATURE COMPRESS GZIP");
    write_next_command();
-   enter_group(group);
-   _commands.push_back (build_command ("XOVER %"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT"\r\n", low, high));
-   write_next_command();
+   xover (group, low, high, l);
 
 }
 
