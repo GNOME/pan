@@ -863,6 +863,7 @@ namespace
 
 #endif
 
+    //todo move to pancolors
     fg_col = GroupPrefs::color_to_string(def_fg);
     bg_col = GroupPrefs::color_to_string(def_bg);
 

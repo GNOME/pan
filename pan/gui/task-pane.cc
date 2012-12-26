@@ -110,8 +110,8 @@ namespace
 
     EvolutionDateMaker date_maker;
     char * date(0);
-
     TaskUpload * tu (dynamic_cast<TaskUpload*>(task));
+
     if (tu)
     {
       const Article& a(tu->get_article());
@@ -119,7 +119,7 @@ namespace
       g_snprintf(buffer,size,
                  _("\n<u>Upload</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n"
                    "<i>Groups:</i> <b>%s</b>\n<i>Sourcefile:</i> <b>%s</b>\n"),
-                 a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(),
+                 escaped(a.subject.to_string()).c_str(), escaped(a.author.to_string()).c_str(),
                  tu->get_groups().c_str(), tu->get_filename().c_str());
     }
 
@@ -131,7 +131,7 @@ namespace
       g_snprintf(buffer, size,
                  _("\n<u>Download</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n<i>Date:</i> <b>%s</b>\n"
                    "<i>Groups:</i> <b>%s</b>\n<i>Save Path:</i> <b>%s</b>\n"),
-                 a.subject.to_string().c_str(), escaped(a.author.to_string()).c_str(), date ? date : _("unknown"),
+                 escaped(a.subject.to_string()).c_str(), escaped(a.author.to_string()).c_str(), date ? date : _("unknown"),
                  ta->get_groups().c_str(), ta->get_save_path().to_string().c_str());
     }
 
