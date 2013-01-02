@@ -626,7 +626,7 @@ GIOChannelSocketGnuTLS :: do_read ()
       if (g_str_has_suffix (g->str, "\r\n"))
         g_string_truncate (g, g->len-2);
       more = _listener->on_socket_response (this, StringView (g->str, g->len));
-      _listener->on_socket_bytes_transferred(g->len, this);
+      //_listener->on_socket_bytes_transferred(g->len, this);
     }
     else if (status == G_IO_STATUS_AGAIN)
     {
