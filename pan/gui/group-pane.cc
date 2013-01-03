@@ -947,6 +947,22 @@ GroupPane :: create_filter_entry ()
   return entry;
 }
 
+bool
+GroupPane :: is_virtual_group (const Quark& group)
+{
+  bool is_virtual = false;
+
+  for (int i(0); i != G_N_ELEMENTS(folders_groupnames); ++i)
+  {
+          if (group == folders_groupnames[i])
+          {
+                  is_virtual = true;
+                  break;
+          }
+  }
+  return is_virtual;
+}
+
 void
 GroupPane :: on_selection_changed (GtkTreeSelection*, gpointer pane_gpointer)
 {
@@ -969,18 +985,9 @@ GroupPane :: on_selection_changed (GtkTreeSelection*, gpointer pane_gpointer)
     self->_action_manager.sensitize_action (actions_that_require_a_group[i], have_group);
 
   // disable some functions for virtual mailbox folder
-  bool is_virtual = false;
-  for (int i(0); i != G_N_ELEMENTS(folders_groupnames); ++i)
-  {
-	  if (group == folders_groupnames[i])
-	  {
-		  is_virtual = true;
-		  break;
-	  }
-  }
 
   for (int i=0, n=G_N_ELEMENTS(actions_in_nonvirtual_group); i<n; ++i)
-    self->_action_manager.hide_action (actions_in_nonvirtual_group[i], is_virtual);
+    self->_action_manager.hide_action (actions_in_nonvirtual_group[i], is_virtual_group(group));
 }
 
 GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs, GroupPrefs& group_prefs):

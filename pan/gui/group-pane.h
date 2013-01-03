@@ -76,6 +76,7 @@ namespace pan
 
     public:
       void read_group (const StringView&);
+      static bool is_virtual_group (const Quark& group);
 
     private:
       static void do_popup_menu (GtkWidget*, GdkEventButton*, gpointer);

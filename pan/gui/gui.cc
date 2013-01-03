@@ -2044,14 +2044,18 @@ void GUI :: do_read_selected_group ()
   // otherwise if get-new-headers is turned on, queue an xover-new task.
   unsigned long unread(0), total(0);
 
-  if (changed && !group.empty()){// && _queue.is_online()) {
+  if (changed && !group.empty()){
     _data.get_group_counts (group, unread, total);
-    if (!total)
-      activate_action ("download-headers");
-    else if (_prefs.get_flag("get-new-headers-when-entering-group", true)) {
-      if (_prefs.get_flag ("mark-group-read-before-xover", false))
-        _data.mark_group_read (group);
-      _queue.add_task (new TaskXOver (_data, group, TaskXOver::NEW), Queue::TOP);
+    const bool virtual_group (GroupPane::is_virtual_group(group));
+    if (!virtual_group)
+    {
+      if (!total)
+        activate_action ("download-headers");
+      else if (_prefs.get_flag("get-new-headers-when-entering-group", true)) {
+        if (_prefs.get_flag ("mark-group-read-before-xover", false))
+          _data.mark_group_read (group);
+        _queue.add_task (new TaskXOver (_data, group, TaskXOver::NEW), Queue::TOP);
+      }
     }
   }
 
