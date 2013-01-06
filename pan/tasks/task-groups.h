@@ -48,6 +48,7 @@ namespace pan
 
     private: // NNTP::Listener's virtual functions
       virtual void on_nntp_line (NNTP*, const StringView&);
+      void on_nntp_line_process (NNTP*, const StringView&);
       virtual void on_nntp_done (NNTP*, Health, const StringView&);
 
     private: // implementation

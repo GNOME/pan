@@ -22,9 +22,12 @@
 
 #include <iostream>
 #include <fstream>
+#include <config.h>
+#include <pan/general/string-view.h>
 
 namespace pan
 {
+
   enum CompressionType
   {
     HEADER_COMPRESS_NONE = 0,
@@ -32,5 +35,21 @@ namespace pan
     HEADER_COMPRESS_XFEATURE = 2,
     HEADER_COMPRESS_DIABLO = 3
   };
+
+
+
+  const static char* COMPRESS_GZIP = "[COMPRESS=GZIP]";
+  const static char* ENABLE_COMPRESS_GZIP = "XFEATURE COMPRESS GZIP\r\n";
+
+  namespace compression
+  {
+    int inflate_zlib(std::stringstream *source, std::stringstream *dest,
+        const CompressionType& compression);
+
+    void ydecode(std::stringstream* in, std::stringstream* out);
+
+    void deflate_gzip (const StringView& line, std::vector<std::string>& fillme);
+  }
 }
+
 #endif

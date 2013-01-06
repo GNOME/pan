@@ -74,9 +74,23 @@ TaskGroups :: use_nntp (NNTP * nntp)
     assert (0);
 }
 
+
 void
-TaskGroups :: on_nntp_line (NNTP               * nntp UNUSED,
+TaskGroups :: on_nntp_line (NNTP               * nntp,
                             const StringView   & line)
+{
+  if (nntp->_compression)
+  {
+      std::vector<std::string> lines;
+      compression::deflate_gzip (line, lines);
+      foreach (std::vector<std::string>, lines, it)
+        on_nntp_line_process (nntp, *it);
+  }
+  else on_nntp_line_process (nntp, line);
+}
+void
+TaskGroups :: on_nntp_line_process (NNTP               * nntp UNUSED,
+                                    const StringView   & line)
 {
   char permission ('y');
   std::string name_str;
@@ -137,7 +151,7 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
   {
     _state.set_need_nntp (_servername);
   }
-  else // heath is OK or FAIL
+  else // health is OK or FAIL
   {
     if (_step == LIST_NEWSGROUPS)
     {

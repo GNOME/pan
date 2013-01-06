@@ -77,12 +77,26 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    State state;
    StringView line (line_in);
 
+   //check for compression
+   _compression = strcasestr (line.str, COMPRESS_GZIP);
+
    // strip off trailing \r\n
    if (line.len>=2 && line.str[line.len-2]=='\r' && line.str[line.len-1]=='\n')
      line.truncate (line.len-2);
 
 //    std::cerr <<"_nntp_response_text: " << _nntp_response_text<<std::endl;
-   if (_nntp_response_text)
+   if (_compression)
+   {
+      //check if we're done
+      if (strcasestr (line_in.str, ".\r\n") != 0)
+      {
+        if (_listener)
+          _listener->on_nntp_line (this, line);
+        line = ".";
+        state = CMD_DONE;
+      }
+   }
+   else if (_nntp_response_text)
    {
       if (line.len==1 && line.str[0]=='.') // end-of-list
       {
@@ -143,7 +157,13 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
       }
 
       case AUTH_ACCEPTED:
-         state = CMD_DONE;
+         // try to enable compression xfeature
+         _socket->write_command (ENABLE_COMPRESS_GZIP, this);
+         state = CMD_NEXT;
+         break;
+
+      case FEATURE_ENABLED:
+         state= CMD_DONE;
          break;
 
       case GROUP_RESPONSE: {

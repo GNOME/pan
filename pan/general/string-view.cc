@@ -112,7 +112,6 @@ StringView :: strstr (const char * haystack,
   return 0;
 }
 
-
 char*
 StringView :: strpbrk (const char * haystack,
                        size_t       haystack_len,

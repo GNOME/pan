@@ -322,6 +322,17 @@ pan :: import_sec_from_disk_dialog_new (Data& data, Queue& queue, GtkWindow * wi
   return res;
 }
 
+namespace
+{
+
+  static void server_edit_dialog_realized_cb (GtkWidget*, gpointer gp)
+  {
+    ServerEditDialog * d (static_cast<ServerEditDialog*>(gp));
+    // avoid NPE on early init
+    g_signal_connect(d->ssl_combo, "changed", G_CALLBACK(ssl_changed_cb), d);
+  }
+}
+
 GtkWidget*
 pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * window, const Quark& server)
 {
@@ -488,15 +499,12 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
 
     d->always_trust_checkbox = w = gtk_check_button_new_with_label (_("Always trust this server's certificate"));
     HIG::workarea_add_row (t, &row, NULL, w, NULL);
-
+    g_signal_connect (d->dialog, "realize", G_CALLBACK(server_edit_dialog_realized_cb), d);
 #endif
 
   d->server = server;
   edit_dialog_populate (data, prefs, server, d);
   gtk_widget_show_all (d->dialog);
-
-  // avoid NPE on early init
-  g_signal_connect(d->ssl_combo, "changed", G_CALLBACK(ssl_changed_cb), d);
 
   return d->dialog;
 }

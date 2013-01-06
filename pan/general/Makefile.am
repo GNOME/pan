@@ -14,7 +14,8 @@ libgeneralutils_a_SOURCES = \
  string-view.cc \
  text-match.cc \
  utf8-utils.cc \
- worker-pool.cc
+ worker-pool.cc \
+ compression.cc
 
 noinst_HEADERS = \
  compression.h \

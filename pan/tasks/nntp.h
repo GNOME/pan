@@ -57,6 +57,9 @@ namespace
       NEWGROUPS_FOLLOWS          = 231,
 
       ARTICLE_POSTED_OK          = 240,
+
+      FEATURE_ENABLED            = 290,
+
       SEND_ARTICLE_NOW           = 340,
       NO_POSTING                 = 440,
       POSTING_FAILED             = 441,
@@ -157,7 +160,8 @@ namespace pan
           _listener(0),
           _username(username),
           _password(password),
-          _nntp_response_text(false)
+          _nntp_response_text(false),
+          _compression(false)
        {}
 
        virtual ~NNTP ()
@@ -344,6 +348,10 @@ namespace pan
       void write_next_command ();
 
       void fire_done_func (Health, const StringView& response);
+
+    public:
+      /** session flag for compression (gzip-style) (giganews etc.)*/
+      bool _compression;
 
     private: // private socket listener funcs, for socket handshake
 
