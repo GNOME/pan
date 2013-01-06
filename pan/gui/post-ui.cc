@@ -1046,13 +1046,13 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
 		  {
 			  std::string reason(response.type == ArticleCache::CACHE_IO_ERR
 				? _("IO Error") : _("No space left on device"));
-			  Log::add_err_va(_("Error copying message to %s folder. Reason : %s"), folder.c_str(), reason.c_str());
+			  Log::add_err_va(_("Error copying message to %s folder. Reason: %s"), folder.c_str(), reason.c_str());
 			  return false;
 		  }
 	  }
 	  else
 	  {
-		  Log::add_err_va(_("Error creating message in %s mail folder. Article isn't valid!"), folder.c_str());
+		  Log::add_err_va(_("Error creating message in %s mail folder: Invalid article."), folder.c_str());
 		  return false;
 	  }
 	  return true;

@@ -434,8 +434,8 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
     // header compression list options
     struct { int type; const char * str; } compression_items[] = {
       { HEADER_COMPRESS_NONE, N_("Disable Compression (N/A)") },
-      { HEADER_COMPRESS_XZVER, N_("XZVER Compression (astraweb)") },
-      { HEADER_COMPRESS_XFEATURE, N_("GZIP Compression (giganews etc.)") }
+      { HEADER_COMPRESS_XZVER, N_("XZVER Compression (Astraweb)") },
+      { HEADER_COMPRESS_XFEATURE, N_("GZIP Compression (Giganews etc.)") }
     };
     store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     for (unsigned int i(0); i<G_N_ELEMENTS(compression_items); ++i) {
