@@ -172,9 +172,7 @@ TaskXOver::use_nntp(NNTP* nntp)
       case MiniTask::XOVER:
         debug("XOVER " << mt._low << '-' << mt._high << " to " << server);
         _last_xover_number[nntp] = mt._low;
-        if (comp == HEADER_COMPRESS_XFEATURE)
-          nntp->xfeat(_group, mt._low, mt._high, this);
-        else if (comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO)
+        if (comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO)
           nntp->xzver(_group, mt._low, mt._high, this);
         else
           nntp->xover(_group, mt._low, mt._high, this);
@@ -318,17 +316,14 @@ TaskXOver::on_nntp_line(NNTP * nntp, const StringView & line)
   _data.get_server_compression_type(server, comp);
 
   if (comp != HEADER_COMPRESS_NONE)
-    {
-      int sock_id = nntp->_socket->get_id();
-      if (_streams.count(sock_id) == 0)
-        _streams[sock_id] = new std::stringstream();
-      *_streams[sock_id] << line << "\r\n";
-    }
+  {
+    int sock_id = nntp->_socket->get_id();
+    if (_streams.count(sock_id) == 0)
+      _streams[sock_id] = new std::stringstream();
+    *_streams[sock_id] << line << "\r\n";
+  }
   else
-    {
-      on_nntp_line_process(nntp, line);
-    }
-
+    on_nntp_line_process(nntp, line);
 }
 
 void
@@ -464,8 +459,14 @@ TaskXOver::on_nntp_done(NNTP * nntp, Health health, const StringView & response)
     {
       std::stringstream* buffer = _streams[nntp->_socket->get_id()];
       std::stringstream out, out2;
+      if (comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO)
+      {
       compression::ydecode(buffer, &out);
       compression::inflate_zlib(&out, &out2, comp);
+      }
+      else
+        compression::inflate_zlib(buffer, &out2, comp);
+
       char buf1[4096];
       while (!out2.getline(buf1, sizeof(buf1)).eof())
         {

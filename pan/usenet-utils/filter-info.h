@@ -43,6 +43,7 @@ namespace pan
         IS_BINARY,
         IS_CACHED,
         IS_POSTED_BY_ME,
+        IS_READ,
         IS_UNREAD,
         BYTE_COUNT_GE,
         CROSSPOST_COUNT_GE,
@@ -103,6 +104,7 @@ namespace pan
       void set_type_line_count_ge (unsigned long ge);
       void set_type_score_ge (unsigned long ge);
       void set_type_score_le (unsigned long le);
+      void set_type_is_read ();
       void set_type_is_unread ();
       void set_type_posted_by_me ();
       void set_type_text (const Quark& header,const TextMatch::Description&);

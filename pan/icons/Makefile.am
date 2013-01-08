@@ -18,6 +18,7 @@ stock_images = \
 	icon_filter_only_attachments.png \
 	icon_filter_only_cached.png \
 	icon_filter_only_me.png \
+	icon_filter_only_read.png \
 	icon_filter_only_unread.png \
 	icon_filter_only_watched.png \
 	icon_get_dialog.png \

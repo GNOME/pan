@@ -48,7 +48,7 @@ namespace pan
 
     void ydecode(std::stringstream* in, std::stringstream* out);
 
-    void deflate_gzip (const StringView& line, std::vector<std::string>& fillme);
+    void inflate_gzip (std::stringstream* stream, std::vector<std::string>& fillme);
   }
 }
 

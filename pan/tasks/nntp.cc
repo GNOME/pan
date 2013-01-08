@@ -76,34 +76,20 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    enum State { CMD_FAIL, CMD_DONE, CMD_MORE, CMD_NEXT, CMD_RETRY };
    State state;
    StringView line (line_in);
-
-   //check for compression
-   _compression = strcasestr (line.str, COMPRESS_GZIP);
+   std::string old_line = line;
 
    // strip off trailing \r\n
    if (line.len>=2 && line.str[line.len-2]=='\r' && line.str[line.len-1]=='\n')
      line.truncate (line.len-2);
 
-//    std::cerr <<"_nntp_response_text: " << _nntp_response_text<<std::endl;
-   if (_compression)
-   {
-      //check if we're done
-      if (strcasestr (line_in.str, ".\r\n") != 0)
-      {
-        if (_listener)
-          _listener->on_nntp_line (this, line);
-        line = ".";
-        state = CMD_DONE;
-      }
-   }
-   else if (_nntp_response_text)
+   if (_nntp_response_text)
    {
       if (line.len==1 && line.str[0]=='.') // end-of-list
       {
          state = CMD_DONE;
          _nntp_response_text = false;
       }
-      else
+      else if (!_compression)
       {
          state = CMD_MORE;
 
@@ -114,144 +100,164 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
          if (_listener)
             _listener->on_nntp_line (this, line);
       }
-   }
-   else switch (atoi (line.str))
-   {
-      case SERVER_READY:
-      case SERVER_READY_NO_POSTING:
-      case SERVER_READY_STREAMING_OK:
-         state = CMD_DONE;
-         break;
 
-      case ARTICLE_POSTED_OK:
-      case GOODBYE:
-      case XOVER_NO_ARTICLES:
-         state = CMD_DONE;
-         break;
-
-      case AUTH_REQUIRED: { // must send username
-         if (!_username.empty()) {
-           _commands.push_front (_previous_command);
-           _socket->write_command_va (this, "AUTHINFO USER %s\r\n", _username.c_str());
-           state = CMD_NEXT;
-         } else {
-           std::string host;
-           _socket->get_host (host);
-           Log::add_err_va (_("%s requires a username, but none is set."), host.c_str());
-           state = CMD_FAIL;
-         }
-         break;
-      }
-
-      case AUTH_NEED_MORE: { // must send password
-        if (!_password.empty()) {
-           _socket->write_command_va (this, "AUTHINFO PASS %s\r\n", _password.c_str());
-           state = CMD_NEXT;
-        } else {
-           std::string host;
-           _socket->get_host (host);
-           Log::add_err_va (_("%s requires a password, but none is set."), host.c_str());
-           state = CMD_FAIL;
-        }
-        break;
-      }
-
-      case AUTH_ACCEPTED:
-         // try to enable compression xfeature
-         _socket->write_command (ENABLE_COMPRESS_GZIP, this);
-         state = CMD_NEXT;
-         break;
-
-      case FEATURE_ENABLED:
-         state= CMD_DONE;
-         break;
-
-      case GROUP_RESPONSE: {
-         // response is of form "211 qty low high group_name"
-         StringView tok, myline (line);
-         myline.pop_token (tok, ' ');
-         myline.pop_token (tok, ' ');
-         const unsigned long aqty (strtoul (tok.str, NULL, 10));
-         myline.pop_token (tok, ' ');
-         const unsigned long alo (strtoul (tok.str, NULL, 10));
-         myline.pop_token (tok, ' ');
-         const unsigned long ahi (strtoul (tok.str, NULL, 10));
-         myline.pop_token (tok, ' ');
-         const pan::Quark group (tok);
-         if (_listener)
-            _listener->on_nntp_group (this, group, aqty, alo, ahi);
-         _group = group;
-          state = CMD_DONE;
-         break;
-      }
-
-      case SEND_ARTICLE_NOW:
-         // ready to get article; send it now
-         _socket->write_command (_post, this);
-         state = CMD_NEXT;
-         break;
-
-      case NO_POSTING:
-      case POSTING_FAILED:
-        // if we hit a dupe, we silently continue
-        if (line.strstr("435"))
+      if (_compression)
+      {
+        state = CMD_MORE;
+        assert (_listener != 0);
+        if (_listener)
+          _listener->on_nntp_line (this, line_in);
+        if (line_in.len >= 3 && line_in.strstr(".\r\n"))
         {
-          state = CMD_DONE;
+          _compression = false;
+          _nntp_response_text = false;
+          line = ".";
+        }
+      }
+   }
+   else
+   {
+     //check for compression
+     _compression = strcasestr (line_in.str, COMPRESS_GZIP);
+
+     switch (atoi (line.str))
+     {
+        case SERVER_READY:
+        case SERVER_READY_NO_POSTING:
+        case SERVER_READY_STREAMING_OK:
+           state = CMD_DONE;
+           break;
+
+        case ARTICLE_POSTED_OK:
+        case GOODBYE:
+        case XOVER_NO_ARTICLES:
+           state = CMD_DONE;
+           break;
+
+        case AUTH_REQUIRED: { // must send username
+           if (!_username.empty()) {
+             _commands.push_front (_previous_command);
+             _socket->write_command_va (this, "AUTHINFO USER %s\r\n", _username.c_str());
+             state = CMD_NEXT;
+           } else {
+             std::string host;
+             _socket->get_host (host);
+             Log::add_err_va (_("%s requires a username, but none is set."), host.c_str());
+             state = CMD_FAIL;
+           }
+           break;
+        }
+
+        case AUTH_NEED_MORE: { // must send password
+          if (!_password.empty()) {
+             _socket->write_command_va (this, "AUTHINFO PASS %s\r\n", _password.c_str());
+             state = CMD_NEXT;
+          } else {
+             std::string host;
+             _socket->get_host (host);
+             Log::add_err_va (_("%s requires a password, but none is set."), host.c_str());
+             state = CMD_FAIL;
+          }
           break;
         }
-      case GROUP_NONEXISTENT:
-         state = CMD_FAIL;
-         break;
 
-      case XOVER_FOLLOWS:
-      case ARTICLE_FOLLOWS:
-      case NEWGROUPS_FOLLOWS:
-      case INFORMATION_FOLLOWS:
-         state = CMD_MORE;
-         _nntp_response_text = true;
-         break;
+        case AUTH_ACCEPTED:
+           // try to enable compression xfeature
+           _socket->write_command (ENABLE_COMPRESS_GZIP, this);
+           state = CMD_NEXT;
+           break;
 
-      case AUTH_REJECTED:
-      case NO_GROUP_SELECTED:
-      case ERROR_CMD_NOT_UNDERSTOOD:
-      case ERROR_CMD_NOT_SUPPORTED:
-      case NO_PERMISSION:
-      case FEATURE_NOT_SUPPORTED: {
-         std::string cmd (_previous_command);
-         if (cmd.size()>=2 && cmd[cmd.size()-1]=='\n' && cmd[cmd.size()-2]=='\r')
-           cmd.resize (cmd.size()-2);
-         std::string host;
-         _socket->get_host (host);
-         Log::add_err_va (_("Sending \"%s\" to %s returned an error: %s"),
-                          cmd.c_str(),
-                          host.c_str(),
-                          line.to_string().c_str());
-         state = CMD_FAIL;
-         break;
-      }
+        case FEATURE_ENABLED:
+           state= CMD_DONE;
+           break;
 
-      case NO_SUCH_ARTICLE_NUMBER:
-      case NO_SUCH_ARTICLE:
-         state = CMD_FAIL;
-         break;
+        case GROUP_RESPONSE: {
+           // response is of form "211 qty low high group_name"
+           StringView tok, myline (line);
+           myline.pop_token (tok, ' ');
+           myline.pop_token (tok, ' ');
+           const unsigned long aqty (strtoul (tok.str, NULL, 10));
+           myline.pop_token (tok, ' ');
+           const unsigned long alo (strtoul (tok.str, NULL, 10));
+           myline.pop_token (tok, ' ');
+           const unsigned long ahi (strtoul (tok.str, NULL, 10));
+           myline.pop_token (tok, ' ');
+           const pan::Quark group (tok);
+           if (_listener)
+              _listener->on_nntp_group (this, group, aqty, alo, ahi);
+           _group = group;
+            state = CMD_DONE;
+           break;
+        }
 
-      case TOO_MANY_CONNECTIONS:
-         state = CMD_RETRY;
-         break;
+        case SEND_ARTICLE_NOW:
+           // ready to get article; send it now
+           _socket->write_command (_post, this);
+           state = CMD_NEXT;
+           break;
 
-      default: {
-         std::string cmd (_previous_command);
-         if (cmd.size()>=2 && cmd[cmd.size()-1]=='\n' && cmd[cmd.size()-2]=='\r')
-           cmd.resize (cmd.size()-2);
-         std::string host;
-         _socket->get_host (host);
-         Log::add_err_va (_("Sending \"%s\" to %s returned an unrecognized response: \"%s\""),
-                          _previous_command.c_str(),
-                          host.c_str(),
-                          line.to_string().c_str());
-         state = CMD_FAIL;
-         break;
-      }
+        case NO_POSTING:
+        case POSTING_FAILED:
+          // if we hit a dupe, we silently continue
+          if (line.strstr("435"))
+          {
+            state = CMD_DONE;
+            break;
+          }
+        case GROUP_NONEXISTENT:
+           state = CMD_FAIL;
+           break;
+
+        case XOVER_FOLLOWS:
+        case ARTICLE_FOLLOWS:
+        case NEWGROUPS_FOLLOWS:
+        case INFORMATION_FOLLOWS:
+           state = CMD_MORE;
+           _nntp_response_text = true;
+           break;
+
+        case AUTH_REJECTED:
+        case NO_GROUP_SELECTED:
+        case ERROR_CMD_NOT_UNDERSTOOD:
+        case ERROR_CMD_NOT_SUPPORTED:
+        case NO_PERMISSION:
+        case FEATURE_NOT_SUPPORTED: {
+           std::string cmd (_previous_command);
+           if (cmd.size()>=2 && cmd[cmd.size()-1]=='\n' && cmd[cmd.size()-2]=='\r')
+             cmd.resize (cmd.size()-2);
+           std::string host;
+           _socket->get_host (host);
+           Log::add_err_va (_("Sending \"%s\" to %s returned an error: %s"),
+                            cmd.c_str(),
+                            host.c_str(),
+                            line.to_string().c_str());
+           state = CMD_FAIL;
+           break;
+        }
+
+        case NO_SUCH_ARTICLE_NUMBER:
+        case NO_SUCH_ARTICLE:
+           state = CMD_FAIL;
+           break;
+
+        case TOO_MANY_CONNECTIONS:
+           state = CMD_RETRY;
+           break;
+
+        default: {
+           std::string cmd (_previous_command);
+           if (cmd.size()>=2 && cmd[cmd.size()-1]=='\n' && cmd[cmd.size()-2]=='\r')
+             cmd.resize (cmd.size()-2);
+           std::string host;
+           _socket->get_host (host);
+           Log::add_err_va (_("Sending \"%s\" to %s returned an unrecognized response: \"%s\""),
+                            _previous_command.c_str(),
+                            host.c_str(),
+                            line.to_string().c_str());
+           state = CMD_FAIL;
+           break;
+        }
+     }
    }
 
    if ((state == CMD_DONE) && !_commands.empty())

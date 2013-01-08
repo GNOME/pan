@@ -21,6 +21,7 @@
 #include <cassert>
 extern "C" {
   #include <glib/gi18n.h>
+  #include <stdlib.h>
 }
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
@@ -74,18 +75,12 @@ TaskGroups :: use_nntp (NNTP * nntp)
     assert (0);
 }
 
-
 void
 TaskGroups :: on_nntp_line (NNTP               * nntp,
                             const StringView   & line)
 {
   if (nntp->_compression)
-  {
-      std::vector<std::string> lines;
-      compression::deflate_gzip (line, lines);
-      foreach (std::vector<std::string>, lines, it)
-        on_nntp_line_process (nntp, *it);
-  }
+    stream << line;
   else on_nntp_line_process (nntp, line);
 }
 void
@@ -143,7 +138,7 @@ TaskGroups :: on_nntp_line_process (NNTP               * nntp UNUSED,
 void
 TaskGroups :: on_nntp_done (NNTP              * nntp,
                             Health              health,
-                            const StringView  & response UNUSED)
+                            const StringView  & response)
 {
   debug ("groups task got an on_nntp_done() from " << nntp->_server);
 
@@ -153,6 +148,15 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
   }
   else // health is OK or FAIL
   {
+    if (response == ".")
+    {
+      std::vector<std::string> lines;
+      compression::inflate_gzip (&stream, lines);
+      foreach (std::vector<std::string>, lines, it)
+        on_nntp_line_process (nntp, *it);
+      stream.str().clear();
+    }
+
     if (_step == LIST_NEWSGROUPS)
     {
       int i (0);

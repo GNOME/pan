@@ -142,6 +142,11 @@ FilterInfo :: set_type_score_le (unsigned long le)
    set_type_le (SCORE_GE, le);
 }
 void
+FilterInfo :: set_type_is_read ()
+{
+   set_type_is (IS_READ);
+}
+void
 FilterInfo :: set_type_is_unread ()
 {
    set_type_is (IS_UNREAD);
@@ -182,7 +187,7 @@ FilterInfo :: describe () const
   {
     ret = _("the article was posted by you");
   }
-  else if (_type==IS_UNREAD && _negate)
+  else if (_type==IS_READ)
   {
     ret = _("the article has been read");
   }

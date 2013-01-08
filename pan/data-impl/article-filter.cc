@@ -96,6 +96,10 @@ ArticleFilter :: test_article (const Data        & data,
       pass = data.has_from_header (article.author.to_view());
       break;
 
+    case FilterInfo::IS_READ:
+      pass = data.is_read (&article);
+      break;
+
     case FilterInfo::IS_UNREAD:
       pass = !data.is_read (&article);
       break;

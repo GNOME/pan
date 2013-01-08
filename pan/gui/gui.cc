@@ -1867,6 +1867,7 @@ void GUI :: do_shorten_group_names (bool b)
   _group_pane->set_name_collapse (b);
 }
 
+void GUI :: do_match_only_read_articles   (bool) { _header_pane->refilter (); }
 void GUI :: do_match_only_unread_articles (bool) { _header_pane->refilter (); }
 void GUI :: do_match_only_cached_articles (bool) { _header_pane->refilter (); }
 void GUI :: do_match_only_binary_articles (bool) { _header_pane->refilter (); }

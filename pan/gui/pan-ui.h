@@ -123,6 +123,7 @@ namespace pan
     virtual void do_show_toolbar (bool) = 0;
     virtual void do_shorten_group_names (bool) = 0;
 
+    virtual void do_match_only_read_articles (bool) = 0;
     virtual void do_match_only_unread_articles (bool) = 0;
     virtual void do_match_only_cached_articles (bool) = 0;
     virtual void do_match_only_binary_articles (bool) = 0;

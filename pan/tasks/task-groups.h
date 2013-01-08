@@ -60,6 +60,8 @@ namespace pan
 
       enum Step { LIST, LIST_NEWSGROUPS, DONE };
       Step _step;
+
+      std::stringstream stream;
   };
 };
 

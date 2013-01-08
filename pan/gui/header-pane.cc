@@ -1418,6 +1418,12 @@ HeaderPane :: rebuild_filter (const std::string& text, int mode)
     f._aggregates.push_back (entry_filter);
   }
 
+  if (_action_manager.is_action_active("match-only-read-articles")) {
+//std::cerr << LINE_ID << " AND is read" << std::endl;
+    FilterInfo tmp;
+    tmp.set_type_is_read ();
+    f._aggregates.push_back (tmp);
+  }
   if (_action_manager.is_action_active("match-only-unread-articles")) {
 //std::cerr << LINE_ID << " AND is unread" << std::endl;
     FilterInfo tmp;

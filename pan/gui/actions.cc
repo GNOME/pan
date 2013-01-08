@@ -61,6 +61,7 @@ namespace pan
     { icon_filter_only_attachments, "ICON_ONLY_ATTACHMENTS" },
     { icon_filter_only_cached, "ICON_ONLY_CACHED" },
     { icon_filter_only_me, "ICON_ONLY_ME" },
+    { icon_filter_only_read, "ICON_ONLY_READ" },
     { icon_filter_only_unread, "ICON_ONLY_UNREAD" },
     { icon_filter_only_watched, "ICON_ONLY_WATCHED" },
     { icon_get_dialog, "ICON_GET_DIALOG" },
@@ -283,7 +284,22 @@ namespace pan
   void do_match_only_cached_articles (GtkToggleAction * a) { pan_ui->do_match_only_cached_articles (gtk_toggle_action_get_active(a)); }
   void do_match_only_binary_articles (GtkToggleAction * a) { pan_ui->do_match_only_binary_articles (gtk_toggle_action_get_active(a)); }
   void do_match_only_my_articles (GtkToggleAction * a) { pan_ui->do_match_only_my_articles (gtk_toggle_action_get_active(a)); }
-  void do_match_only_unread_articles (GtkToggleAction * a) { pan_ui->do_match_only_unread_articles (gtk_toggle_action_get_active(a)); }
+  void do_match_only_unread_articles (GtkToggleAction * a)
+  {
+    const bool active (gtk_toggle_action_get_active(a));
+    toggle_action_set_active("match-only-unread-articles", active);
+    if (active)
+      toggle_action_set_active("match-only-read-articles", !active);
+    pan_ui->do_match_only_unread_articles(true);
+  }
+  void do_match_only_read_articles (GtkToggleAction * a)
+  {
+    const bool active (gtk_toggle_action_get_active(a));
+    toggle_action_set_active("match-only-read-articles", active);
+    if (active)
+      toggle_action_set_active("match-only-unread-articles", !active);
+    pan_ui->do_match_only_read_articles(true);
+  }
 
     GtkActionEntry entries[] =
     {
@@ -725,6 +741,7 @@ namespace pan
     { "show-toolbar", NULL, N_("Show _Toolbar"), NULL, NULL, G_CALLBACK(do_show_toolbar), true },
     { "shorten-group-names", GTK_STOCK_ZOOM_OUT, N_("Abbreviate Group Names"), "B", NULL, G_CALLBACK(do_shorten_group_names), false },
 
+    { "match-only-read-articles", "ICON_ONLY_READ", N_("Match Only _Read Articles"), NULL, N_("Match Only Read Articles"), G_CALLBACK(do_match_only_read_articles), false },
     { "match-only-unread-articles", "ICON_ONLY_UNREAD", N_("Match Only _Unread Articles"), NULL, N_("Match Only Unread Articles"), G_CALLBACK(do_match_only_unread_articles), false },
     { "match-only-cached-articles", "ICON_ONLY_CACHED", N_("Match Only _Cached Articles"), NULL, N_("Match Only Cached Articles"), G_CALLBACK(do_match_only_cached_articles), false },
     { "match-only-binary-articles", "ICON_ONLY_ATTACHMENTS", N_("Match Only _Complete Articles"), NULL, N_("Match Only Complete Articles"), G_CALLBACK(do_match_only_binary_articles), false },

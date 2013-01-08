@@ -183,6 +183,7 @@ namespace pan
       virtual void do_match_only_binary_articles (bool);
       virtual void do_match_only_my_articles (bool);
       virtual void do_match_only_unread_articles (bool);
+      virtual void do_match_only_read_articles (bool);
       virtual void do_enable_toggle_rules (bool enable);
       virtual void do_match_on_score_state (int);
       virtual void do_show_matches (const Data::ShowType);
