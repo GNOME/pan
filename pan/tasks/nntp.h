@@ -76,6 +76,8 @@ namespace
       NO_PERMISSION              = 502,
       FEATURE_NOT_SUPPORTED      = 503
    };
+
+   const char* EOL = ".";
 }
 
 namespace pan
@@ -151,9 +153,11 @@ namespace pan
         NNTP (const Quark        & server,
               const std::string  & username,
               const std::string  & password,
-              DownloadMeter       & meter,
-              Socket              * socket):
+              DownloadMeter      & meter,
+              ServerInfo         & info,
+              Socket             * socket):
           _server(server),
+          _server_info(info),
           _meter(meter),
           _socket(socket),
           _socket_error(false),
@@ -203,11 +207,6 @@ namespace pan
                              Listener           * l);
 
       void xzver            (const Quark        & group,
-                             uint64_t             low,
-                             uint64_t             high,
-                             Listener           * l);
-
-      void xfeat            (const Quark        & group,
                              uint64_t             low,
                              uint64_t             high,
                              Listener           * l);
@@ -321,6 +320,7 @@ namespace pan
     public:
 
       const Quark _server;
+      ServerInfo& _server_info;
       Quark _group;
       Socket * _socket;
       DownloadMeter& _meter;

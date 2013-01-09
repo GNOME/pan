@@ -193,11 +193,11 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
     {
       std::string pw (pass ? pass : "");
       if (pass) g_free(pass);
-      nntp = new NNTP (_server, user, pw, _meter, socket);
+      nntp = new NNTP (_server, user, pw, _meter, _server_info, socket);
     }
     else
     {
-      nntp = new NNTP ( _server, user, pass, _meter, socket);
+      nntp = new NNTP ( _server, user, pass, _meter, _server_info, socket);
     }
     nntp->handshake (this);
   }

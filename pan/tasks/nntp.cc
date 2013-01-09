@@ -98,20 +98,20 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 
          assert (_listener != 0);
          if (_listener)
-            _listener->on_nntp_line (this, line);
+            _listener->on_nntp_line (this, line_in);
       }
 
       if (_compression)
       {
-        state = CMD_DONE;
+        state = CMD_MORE;
         assert (_listener != 0);
         if (_listener)
           _listener->on_nntp_line (this, line_in);
-        if (line_in.len >= 3 && line.str[line.len-1] == '.')
+        if (line_in.len >= 3 && strncmp(line_in.str + line_in.len - 3, ".\r\n", 3) == 0)
         {
           _compression = false;
           _nntp_response_text = false;
-          line = "COMPRESS_DONE";
+          line = EOL;
           state = CMD_DONE;
         }
       }
@@ -163,9 +163,15 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
         }
 
         case AUTH_ACCEPTED:
-           // try to enable compression xfeature
-           _socket->write_command (ENABLE_COMPRESS_GZIP, this);
-           state = CMD_NEXT;
+          CompressionType ctype;
+           _server_info.get_server_compression_type(_server, ctype);
+           if (ctype == HEADER_COMPRESS_XFEATURE)
+           {
+             // try to enable compression xfeature
+             _socket->write_command (ENABLE_COMPRESS_GZIP, this);
+             state = CMD_NEXT;
+           } else
+             state = CMD_DONE;
            break;
 
         case FEATURE_ENABLED:
@@ -366,21 +372,6 @@ NNTP :: xzver (const Quark   & group,
    enter_group(group);
    _commands.push_back (build_command ("XZVER %"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT"\r\n", low, high));
    write_next_command ();
-}
-
-void
-NNTP :: xfeat (const Quark   & group,
-               uint64_t        low,
-               uint64_t        high,
-               Listener      * l)
-{
-   _listener = l;
-
-   write_next_command();
-   _commands.push_back ("XFEATURE COMPRESS GZIP");
-   write_next_command();
-   xover (group, low, high, l);
-
 }
 
 //TODO

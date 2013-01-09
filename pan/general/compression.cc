@@ -185,7 +185,7 @@ compression::ydecode(std::stringstream* in, std::stringstream* out)
   char buf1[512], buf2[512], c, *p, *p2 = buf2;
   //unsigned int crc1 = 0, crc = _crc32(NULL, 0, 0);
 
-  while (!in->getline(buf1, sizeof(buf1)).eof())
+  while (!in->getline(buf1, sizeof(buf1)).bad())
     {
       if (gotbeg == 0 && strncmp(buf1, "=ybegin ", 8) == 0)
         {
@@ -247,7 +247,7 @@ int
 compression::inflate_zlib(std::stringstream *source, std::stringstream *dest,
     const CompressionType& compression)
 {
-  int ret;
+  int ret = Z_DATA_ERROR;
   size_t have;
   z_stream strm;
   char in[MEMCHUNK];
@@ -264,7 +264,7 @@ compression::inflate_zlib(std::stringstream *source, std::stringstream *dest,
     ret = inflateInit2(&strm, -MAX_WBITS); /* use -MAX_WBITS to indicate gzip style */
 
   if (compression == HEADER_COMPRESS_XFEATURE
-      || compression == HEADER_COMPRESS_DIABLO)
+     || compression == HEADER_COMPRESS_DIABLO)
     ret = inflateInit(&strm);
 
   if (ret != Z_OK)
@@ -273,36 +273,37 @@ compression::inflate_zlib(std::stringstream *source, std::stringstream *dest,
   /* decompress until deflate stream ends or end of file */
   do
     {
-      strm.avail_in = source->read(in, MEMCHUNK).gcount();
-      if (source->bad())
-        {
-          (void) inflateEnd(&strm);
-          return Z_ERRNO;
-        }
+      strm.avail_in = source->readsome(in, MEMCHUNK);
+      if (strm.avail_in < 0) strm.avail_in = 0;
+      if (source->fail())
+      {
+        (void) inflateEnd(&strm);
+        return Z_ERRNO;
+      }
       if (strm.avail_in == 0)
         break;
       strm.next_in = (unsigned char*) in;
 
       /* run inflate() on input until output buffer not full */
       do
+      {
+        strm.avail_out = MEMCHUNK;
+        strm.next_out = (unsigned char*) out;
+        ret = inflate(&strm, Z_NO_FLUSH);
+        assert(ret != Z_STREAM_ERROR);
+        /* state not clobbered */
+        switch (ret)
         {
-          strm.avail_out = MEMCHUNK;
-          strm.next_out = (unsigned char*) out;
-          ret = inflate(&strm, Z_NO_FLUSH);
-          assert(ret != Z_STREAM_ERROR);
-          /* state not clobbered */
-          switch (ret)
-            {
           case Z_NEED_DICT:
             ret = Z_DATA_ERROR; /* and fall through */
           case Z_DATA_ERROR:
           case Z_MEM_ERROR:
             (void) inflateEnd(&strm);
             return ret;
-            }
-          have = MEMCHUNK - strm.avail_out;
-          dest->write(out, have);
         }
+        have = MEMCHUNK - strm.avail_out;
+        dest->write(out, have);
+      }
       while (strm.avail_out == 0);
 
       /* done when inflate() says it's done */
@@ -321,28 +322,35 @@ void compression::inflate_gzip (std::stringstream* stream, std::vector<std::stri
   char* buf;
   char buf2[4096];
 
-  std::stringstream dest, dest2;
-  //line_init(&g_line, stream);
+  line_init(&g_line, stream);
 
-  /*
+  std::stringstream dest, dest2;
   while (!g_line.eof) {
-    while ((len = line_read(&g_line, &buf)) > 0) {
-        buf[len-1] = '\n';
-        dest.write(buf, len);
-        if (len >= 3 && strncmp(buf + len - 3, ".\r\n", 3) == 0) {
-            g_line.eof = 1;
-            break;
-        }
-    }
-  }*/
+      while ((len = line_read(&g_line, &buf)) > 0) {
+          buf[len-1] = '\n';
+          dest.write(buf, len);
+          if (len >= 3 && strncmp(buf + len - 1, ".", 1) == 0) {
+              g_line.eof = 1;
+              break;
+          }
+      }
+  }
+
+  std::cerr<<"inflate : "<<inflate_zlib(&dest, &dest2, HEADER_COMPRESS_XFEATURE)<<"\n\n";
 
   std::ofstream out ("/home/imhotep/compression/out");
-  out << stream->str();
-  out.close();
+    out << dest2.str();
+    out.close();
 
-  std::cerr<<"inflate : "<<inflate_zlib(stream, &dest2, HEADER_COMPRESS_XFEATURE)<<"\n\n";
-
+  int cnt=0;
   while (!dest2.getline(buf2,4096).eof())
-    fillme.push_back(std::string(buf2));
+    {if (buf2) fillme.push_back(std::string(buf2));
+    ++cnt;}
+
+  stream->clear();
+
+  std::cerr<<cnt<<"\n";
+
+
 
 }

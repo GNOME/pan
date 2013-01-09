@@ -334,12 +334,14 @@ GIOChannelSocket :: do_read ()
     if (status == G_IO_STATUS_NORMAL)
     {
       g_string_prepend_len (g, _partial_read.c_str(), _partial_read.size());
+      //TODO validate!
+      _partial_read.clear ();
 
       debug_v ("read [" << g->str << "]"); // verbose debug, if --debug --debug was on the command-line
       increment_xfer_byte_count (g->len);
 
-      if (g_str_has_suffix (g->str, "\r\n"))
-        g_string_truncate (g, g->len-2);
+      //if (g_str_has_suffix (g->str, "\r\n"))
+      //  g_string_truncate (g, g->len-2);
 
       more = _listener->on_socket_response (this, StringView (g->str, g->len));
       _listener->on_socket_bytes_transferred(g->len, this);

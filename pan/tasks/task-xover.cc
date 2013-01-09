@@ -289,24 +289,6 @@ namespace
   }
 }
 
-/*
- http://tools.ietf.org/html/rfc2980#section-2.8
-
- Each line of output will be formatted with the article number,
- followed by each of the headers in the overview database or the
- article itself (when the data is not available in the overview
- database) for that article separated by a tab character.  The
- sequence of fields must be in this order: subject, author, date,
- message-id, references, byte count, and line count.  Other optional
- fields may follow line count.  Other optional fields may follow line
- count.  These fields are specified by examining the response to the
- LIST OVERVIEW.FMT command.  Where no data exists, a null field must
- be provided (i.e. the output will have two tab characters adjacent to
- each other).  Servers should not output fields for articles that have
- been removed since the XOVER database was created.
-
- */
-
 void
 TaskXOver::on_nntp_line(NNTP * nntp, const StringView & line)
 {
@@ -320,7 +302,7 @@ TaskXOver::on_nntp_line(NNTP * nntp, const StringView & line)
     int sock_id = nntp->_socket->get_id();
     if (_streams.count(sock_id) == 0)
       _streams[sock_id] = new std::stringstream();
-    *_streams[sock_id] << line << "\r\n";
+    *_streams[sock_id] << line;
   }
   else
     on_nntp_line_process(nntp, line);
@@ -453,26 +435,28 @@ TaskXOver::on_nntp_done(NNTP * nntp, Health health, const StringView & response)
   const Quark& servername(nntp->_server);
   CompressionType comp;
   _data.get_server_compression_type(servername, comp);
-  const bool compression_enabled(comp != HEADER_COMPRESS_NONE);
+  const bool compression_enabled(comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO || comp == HEADER_COMPRESS_XFEATURE);
 
-  if (response == "." && compression_enabled)
+  if (response == EOL && compression_enabled)
+  {
+    std::stringstream* buffer = _streams[nntp->_socket->get_id()];
+    std::stringstream out, out2;
+    if (comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO )
     {
-      std::stringstream* buffer = _streams[nntp->_socket->get_id()];
-      std::stringstream out, out2;
-      if (comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO)
-      {
       compression::ydecode(buffer, &out);
       compression::inflate_zlib(&out, &out2, comp);
-      }
-      else
-        compression::inflate_zlib(buffer, &out2, comp);
-
-      char buf1[4096];
-      while (!out2.getline(buf1, sizeof(buf1)).eof())
-        {
-          on_nntp_line_process(nntp, buf1);
-        }
     }
+    else
+    {
+      compression::inflate_zlib(buffer, &out2, comp);
+    }
+
+    buffer->clear();
+
+    char buf1[4096];
+    while (!out2.getline(buf1, sizeof(buf1)).eof())
+      on_nntp_line_process(nntp, buf1);
+  }
   update_work(true);
   check_in(nntp, health);
 }

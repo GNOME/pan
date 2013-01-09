@@ -80,7 +80,7 @@ TaskGroups :: on_nntp_line (NNTP               * nntp,
                             const StringView   & line)
 {
   if (nntp->_compression)
-    stream << line;
+    stream<<line;
   else on_nntp_line_process (nntp, line);
 }
 void
@@ -148,14 +148,15 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
   }
   else // health is OK or FAIL
   {
-    if (response == "COMPRESS_DONE")
+
+    if (response == EOL)
     {
       std::vector<std::string> lines;
       compression::inflate_gzip (&stream, lines);
       foreach (std::vector<std::string>, lines, it)
         on_nntp_line_process (nntp, *it);
-      std::cerr<<"len "<<stream.str().length()<<"\n";
     }
+
 
     if (_step == LIST_NEWSGROUPS)
     {
