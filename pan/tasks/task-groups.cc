@@ -148,13 +148,13 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
   }
   else // health is OK or FAIL
   {
-    if (response == ".")
+    if (response == "COMPRESS_DONE")
     {
       std::vector<std::string> lines;
       compression::inflate_gzip (&stream, lines);
       foreach (std::vector<std::string>, lines, it)
         on_nntp_line_process (nntp, *it);
-      stream.str().clear();
+      std::cerr<<"len "<<stream.str().length()<<"\n";
     }
 
     if (_step == LIST_NEWSGROUPS)

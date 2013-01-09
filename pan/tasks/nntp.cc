@@ -103,15 +103,16 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 
       if (_compression)
       {
-        state = CMD_MORE;
+        state = CMD_DONE;
         assert (_listener != 0);
         if (_listener)
           _listener->on_nntp_line (this, line_in);
-        if (line_in.len >= 3 && line_in.strstr(".\r\n"))
+        if (line_in.len >= 3 && line.str[line.len-1] == '.')
         {
           _compression = false;
           _nntp_response_text = false;
-          line = ".";
+          line = "COMPRESS_DONE";
+          state = CMD_DONE;
         }
       }
    }
