@@ -149,7 +149,7 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
   else // health is OK or FAIL
   {
 
-    if (response == EOL)
+    if (response == EOL && nntp->_compression)
     {
       std::vector<std::string> lines;
       compression::inflate_gzip (&stream, lines);
