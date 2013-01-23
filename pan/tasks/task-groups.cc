@@ -149,7 +149,12 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
   else // health is OK or FAIL
   {
 
-    if (response == EOL && nntp->_compression)
+    const Quark& server(nntp->_server);
+    CompressionType comp;
+    _data.get_server_compression_type(server, comp);
+    const bool compression (comp == HEADER_COMPRESS_XFEATURE);
+
+    if (response == EOL && compression)
     {
       std::vector<std::string> lines;
       compression::inflate_gzip (&stream, lines);

@@ -286,11 +286,14 @@ GIOChannelSocket :: open (const StringView& address, int port, std::string& setm
 {
   _host.assign (address.str, address.len);
   _channel = create_channel (address, port, setme_err);
+  if (_channel)
+  {
 #ifdef G_OS_WIN32
   _id = g_io_channel_win32_get_fd(_channel);
 #else
    _id = g_io_channel_unix_get_fd(_channel);
 #endif // G_OS_WIN32
+  }
   return _channel != 0;
 }
 

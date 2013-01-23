@@ -63,6 +63,7 @@ NNTP :: fire_done_func (Health health, const StringView& response)
       debug ("I (" << (void*)this << ") am setting my _listener to 0");
       _listener = 0;
       l->on_nntp_done (this, health, response);
+      _compression = false;
    }
 }
 
@@ -76,7 +77,6 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    enum State { CMD_FAIL, CMD_DONE, CMD_MORE, CMD_NEXT, CMD_RETRY };
    State state;
    StringView line (line_in);
-   std::string old_line = line;
 
    // strip off trailing \r\n
    if (line.len>=2 && line.str[line.len-2]=='\r' && line.str[line.len-1]=='\n')
@@ -98,7 +98,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 
          assert (_listener != 0);
          if (_listener)
-            _listener->on_nntp_line (this, line_in);
+            _listener->on_nntp_line (this, line);
       }
 
       if (_compression)
@@ -109,7 +109,6 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
           _listener->on_nntp_line (this, line_in);
         if (line_in.len >= 3 && strncmp(line_in.str + line_in.len - 3, ".\r\n", 3) == 0)
         {
-          _compression = false;
           _nntp_response_text = false;
           line = EOL;
           state = CMD_DONE;
