@@ -31,6 +31,7 @@ extern "C" {
   #include <sys/types.h>
   #include <sys/stat.h>
   #include <unistd.h>
+  #include <uulib/crc32.h>
 }
 
 #ifdef G_OS_WIN32
@@ -967,6 +968,9 @@ main (int argc, char *argv[])
 
     //init color scheme
     init_colors();
+
+    //init crc polynomial
+    init_crc();
 
     // instantiate the backend...
     const int cache_megs = prefs.get_int ("cache-size-megs", 10);

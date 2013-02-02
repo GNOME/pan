@@ -32,6 +32,8 @@ crc32_t crc32 _ANSI_ARGS_((crc32_t crc, const unsigned char *buf, unsigned int l
      if (crc != original_crc) error();
 */
 
+void init_crc();
+
 #ifdef __cplusplus
 }
 #endif
