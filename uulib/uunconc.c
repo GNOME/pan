@@ -304,6 +304,9 @@ UUValidData (char *ptr, int encoding, int *bhflag)
     return 0;              /* bad string */
   }
 
+  if (encoding == YENC_ENCODED)
+    return YENC_ENCODED;
+
   while (*s && *s!='\012' && *s!='\015') {
     s++;
     len++;
