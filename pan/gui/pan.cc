@@ -969,9 +969,6 @@ main (int argc, char *argv[])
     //init color scheme
     init_colors();
 
-    //init crc polynomial
-    init_crc();
-
     // instantiate the backend...
     const int cache_megs = prefs.get_int ("cache-size-megs", 10);
     DataImpl data (prefs.get_string("cache-file-extension","msg"), prefs, false, cache_megs);
