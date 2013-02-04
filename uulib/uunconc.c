@@ -52,6 +52,7 @@
 #endif
 
 #include <crc32.h>
+#include <zlib.h>
 #include <uudeview.h>
 #include <uuint.h>
 #include <fptools.h>

@@ -48,6 +48,7 @@
 #include <fptools.h>
 #include <uustring.h>
 #include <crc32.h>
+#include <zlib.h>
 
 /* for braindead systems */
 #ifndef SEEK_SET
