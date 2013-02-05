@@ -302,7 +302,7 @@ TaskXOver::on_nntp_line(NNTP * nntp, const StringView & line)
     int sock_id = nntp->_socket->get_id();
     if (_streams.count(sock_id) == 0)
       _streams[sock_id] = new std::stringstream();
-    *_streams[sock_id] << line;
+    *_streams[sock_id] << line <<"\r\n";
   }
   else
     on_nntp_line_process(nntp, line);
@@ -436,6 +436,7 @@ TaskXOver::on_nntp_done(NNTP * nntp, Health health, const StringView & response)
   CompressionType comp;
   _data.get_server_compression_type(servername, comp);
   const bool compression_enabled(comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO || comp == HEADER_COMPRESS_XFEATURE);
+  bool fail (false);
 
   if (response == EOL && compression_enabled)
   {
@@ -443,22 +444,25 @@ TaskXOver::on_nntp_done(NNTP * nntp, Health health, const StringView & response)
     std::stringstream out, out2;
     if (comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO )
     {
-      compression::ydecode(buffer, &out);
-      compression::inflate_zlib(&out, &out2, comp);
+      if (compression::ydecode(buffer, &out))
+        fail = !compression::inflate_zlib(&out, &out2, comp);
+      else
+        fail = true;
     }
     else
-    {
-      compression::inflate_zlib(buffer, &out2, comp);
-    }
+      fail = !compression::inflate_zlib(buffer, &out2, comp);
 
     buffer->clear();
 
-    char buf1[4096];
-    while (!out2.getline(buf1, sizeof(buf1)).eof())
-      on_nntp_line_process(nntp, buf1);
+    if (!fail)
+    {
+      char buf1[4096];
+      while (!out2.getline(buf1, sizeof(buf1)).eof())
+        on_nntp_line_process(nntp, buf1);
+    }
   }
   update_work(true);
-  check_in(nntp, health);
+  check_in(nntp, fail ? ERR_LOCAL : health);
 }
 
 void

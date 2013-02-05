@@ -948,7 +948,10 @@ main (int argc, char *argv[])
 
 
   if (gui)
+  {
     gtk_init (&argc, &argv);
+    init_colors();
+  }
 
   if (!gui && nzb_files.empty() && url.empty() && groups.empty()) {
     std::cerr << _("Error: --no-gui used without nzb files or news:message-id.") << std::endl;
@@ -965,9 +968,6 @@ main (int argc, char *argv[])
     filename = g_build_filename (file::get_pan_home().c_str(), "group-preferences.xml", NULL);
     GroupPrefs group_prefs (filename);
     g_free (filename);
-
-    //init color scheme
-    init_colors();
 
     // instantiate the backend...
     const int cache_megs = prefs.get_int ("cache-size-megs", 10);

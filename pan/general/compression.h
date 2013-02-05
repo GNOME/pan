@@ -43,10 +43,10 @@ namespace pan
 
   namespace compression
   {
-    int inflate_zlib(std::stringstream *source, std::stringstream *dest,
+    bool inflate_zlib(std::stringstream *source, std::stringstream *dest,
         const CompressionType& compression);
 
-    void ydecode(std::stringstream* in, std::stringstream* out);
+    bool ydecode(std::stringstream* in, std::stringstream* out);
 
     void inflate_gzip (std::stringstream* stream, std::vector<std::string>& fillme);
   }
