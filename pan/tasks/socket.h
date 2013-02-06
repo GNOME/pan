@@ -62,7 +62,6 @@ namespace pan
         virtual bool on_socket_response (Socket*, const StringView& line) = 0;
         virtual void on_socket_error (Socket*) = 0;
         virtual void on_socket_abort (Socket*) = 0;
-        virtual void on_socket_bytes_transferred (uint64_t bytes, Socket*) = 0;
       };
 
     public:

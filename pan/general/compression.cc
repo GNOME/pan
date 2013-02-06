@@ -140,7 +140,6 @@ compression::ydecode(std::stringstream* in, std::stringstream* out)
       else if (gotbeg == 1 && strncmp(buf1, "=yend ", 6) == 0)
         {
           p = strstr(buf1, "crc32=");
-          std::cerr<<"crc loop "<<p<<"\n";
           if (p)
             sscanf(p + 6, "%x", &crc1);
           break;
@@ -282,8 +281,6 @@ void compression::inflate_gzip (std::stringstream* stream, std::vector<std::stri
       }
   }
 
-  std::cerr<<"inflate : "<<inflate_zlib(&dest, &dest2, HEADER_COMPRESS_XFEATURE)<<"\n\n";
-
   std::ofstream out ("/home/imhotep/compression/out");
     out << dest2.str();
     out.close();
@@ -294,9 +291,5 @@ void compression::inflate_gzip (std::stringstream* stream, std::vector<std::stri
     ++cnt;}
 
   stream->clear();
-
-  std::cerr<<cnt<<"\n";
-
-
 
 }

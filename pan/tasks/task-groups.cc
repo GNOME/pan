@@ -79,8 +79,9 @@ void
 TaskGroups :: on_nntp_line (NNTP               * nntp,
                             const StringView   & line)
 {
+  // gzip compression
   if (nntp->_compression)
-    stream<<line;
+    stream<<line<<"\r\n";
   else on_nntp_line_process (nntp, line);
 }
 void

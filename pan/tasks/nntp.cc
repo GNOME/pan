@@ -74,6 +74,10 @@ NNTP :: fire_done_func (Health health, const StringView& response)
 bool
 NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 {
+
+  //increase dl meter
+  _meter.dl_meter_add (line_in.len);
+
    enum State { CMD_FAIL, CMD_DONE, CMD_MORE, CMD_NEXT, CMD_RETRY };
    State state;
    StringView line (line_in);
@@ -89,7 +93,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
          state = CMD_DONE;
          _nntp_response_text = false;
       }
-      else if (!_compression)
+      else
       {
          state = CMD_MORE;
 
@@ -103,13 +107,11 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 
       if (_compression)
       {
-        state = CMD_MORE;
-        assert (_listener != 0);
-        if (_listener)
-          _listener->on_nntp_line (this, line_in);
-        if (line_in.len >= 3 && strncmp(line_in.str + line_in.len - 3, ".\r\n", 3) == 0)
+        if (line_in.len >= 3 &&
+            strncmp(line_in.str + line_in.len - 3, ".\r\n", 3) == 0)
         {
           _nntp_response_text = false;
+          _compression = false;
           line = EOL;
           state = CMD_DONE;
         }
@@ -117,8 +119,9 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    }
    else
    {
-     //check for compression
-     _compression = strcasestr (line_in.str, COMPRESS_GZIP);
+     //check for compression, enable once, disable at end
+     if (!_compression)
+       _compression = strcasestr (line_in.str, COMPRESS_GZIP);
 
      switch (atoi (line.str))
      {
@@ -297,12 +300,7 @@ NNTP :: on_socket_error (Socket * sock UNUSED)
    fire_done_func (ERR_NETWORK, StringView());
 }
 
-void
-NNTP :: on_socket_bytes_transferred (uint64_t bytes, Socket*)
-{
-   _meter.dl_meter_add (bytes);
-}
-
+/*
 namespace
 {
    void
@@ -312,6 +310,7 @@ namespace
          g_string_append (g, "\r\n");
    }
 };
+*/
 
 void
 NNTP :: write_next_command ()
