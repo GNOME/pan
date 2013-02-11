@@ -1232,6 +1232,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
       TaskUpload::UploadInfo f;
       f.total=1;
+      f.bpf = _prefs.get_int("upload-option-bpf",512*1024);
       TaskUpload::Needed n;
       n.mid = out;
 

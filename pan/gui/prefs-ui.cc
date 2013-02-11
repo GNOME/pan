@@ -385,7 +385,7 @@ namespace pan
 
   GtkWidget* new_spin_button (const char *key, int low, int high, Prefs &prefs)
   {
-    guint tm = prefs.get_int(key, 5 );
+    guint tm = prefs.get_int(key, low );
     GtkAdjustment *adj = (GtkAdjustment*) gtk_adjustment_new(tm, low, high, 1.0, 1.0, 0.0);
     GtkWidget *w = gtk_spin_button_new( adj, 1.0, 0);
     g_object_set_data_full(G_OBJECT(w), PREFS_KEY, g_strdup(key), g_free);

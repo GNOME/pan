@@ -909,33 +909,39 @@ UUEncodeStream_byFSize (FILE *outfile, FILE *infile, int encoding, long bpf, crc
 
           char tmp = (char) ((int) itemp[index] + 42);
 
-          switch (tmp)
-            {
-            case '\0':
-//          case '\t':  yEnc 1.3 draft
-            case '\n':
-            case '\r':
-            case '=':
-            case '\033':
-              *optr++ = '=';
-              *optr++ = tmp + 64;
-              llen += 2;
-              break;
+          switch ((char) ((int) itemp[index] + 42))
+                          {
+                          case '\0':
+          //                case '\t':  yEnc 1.3 draft
+                          case '\n':
+                          case '\r':
+                          case '=':
+                          case '\033':
+                            *optr++ = '=';
+                            *optr++ = (char) ((int) itemp[index] + 42 + 64);
+                            llen += 2;
+                            break;
 
-            case '.':
-              if (llen == 0)
-                {
-                  *optr++ = '=';
-                  *optr++ =  tmp + 64;
-                  llen += 2;
-                  break;
-              }
+                          case '.':
+                            if (llen == 0)
+                              {
+                                *optr++ = '=';
+                                *optr++ = (char) ((int) itemp[index] + 42 + 64);
+                                llen += 2;
+                              }
+                            else
+                              {
+                                *optr++ = (char) ((int) itemp[index] + 42);
+                                llen++;
+                              }
+                            break;
 
-            default:
-              *optr++ = tmp;
-              llen++;
-              break;
-            }
+                          default:
+                            *optr++ = (char) ((int) itemp[index] + 42);
+                            llen++;
+                            break;
+                          }
+
         }
 
         rest -= count;
