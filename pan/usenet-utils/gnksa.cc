@@ -31,12 +31,14 @@
 #include <climits>
 #include <ctime>
 #include <vector>
+#include <sstream>
 
 extern "C"
 {
   #include <ctype.h>
   #include <unistd.h>
   #include <glib/gi18n.h>
+  #include <sys/time.h>
 }
 
 #include <pan/general/debug.h>
@@ -830,6 +832,7 @@ GNKSA :: trim_references (const StringView& refs, size_t cutoff)
 **/
 
 static const char* default_domain = "nospam.com";
+static MTRand rng;
 
 /**
  * thus spake son-of-1036: "the most popular method of generating local parts
@@ -840,23 +843,22 @@ static const char* default_domain = "nospam.com";
 std::string
 GNKSA :: generate_message_id (const StringView& domain)
 {
-   std::string s;
+   static bool rand_inited (false);
+   if (!rand_inited)
+   {
+     rng.seed();
+     rand_inited = true;
+   }
 
-   // add unique local part to message-id
-   s += "pan.";
-   const time_t now (time(NULL));
-   struct tm local_now = *gmtime (&now);
-   char buf[64];
-   std::strftime (buf, sizeof(buf), "%Y.%m.%d.%H.%M.%S", &local_now);
-   s += buf;
-
-   // delimit
-   s += '@';
-
-   // add domain
-   s += domain.empty() ? default_domain : domain.to_string();
-
-   return s;
+   std::stringstream out;
+   struct timeval tv;
+   out << "pan$";
+   gettimeofday (&tv, NULL);
+   out << std::hex << tv.tv_usec << "$" << std::hex
+       << rng.randInt() << "$" << std::hex << rng.randInt() << "$"
+       << std::hex << rng.randInt();
+   out << '@' << (domain.empty() ? default_domain : domain);
+   return out.str();
 }
 
 std::string

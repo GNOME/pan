@@ -71,27 +71,6 @@ using namespace pan;
 #define MESSAGE_ID_PREFS_KEY "add-message-id-header-when-posting"
 #define USER_AGENT_EXTRA_PREFS_KEY "user-agent-extra-info"
 
-/** generates a unique message-id for a usenet post, consisting of
- *  the current time (in usec resolution) and three random numbers + part count
- */
-void
-PostUI :: generate_unique_id (StringView& mid, int cnt, std::string& s)
-{
-
-  std::stringstream out;
-  struct timeval tv;
-  out << "pan$";
-  gettimeofday (&tv, NULL);
-  out << std::hex << tv.tv_usec << "$" << std::hex
-      << rng.randInt() << "$" << std::hex << rng.randInt() << "$"
-      << std::hex << rng.randInt() << "$" << std::hex << cnt;
-  // delimit
-  out<< '@';
-  // add domain
-  out << (mid.empty() ? "nospam.com" : mid);
-  s = out.str();
-}
-
 namespace pan
 {
 #ifndef HAVE_CLOSE
@@ -997,6 +976,14 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
 
 }
 
+std::string
+PostUI::generate_message_id (const Profile& p)
+{
+  return !p.fqdn.empty()
+      ? GNKSA::generate_message_id (p.fqdn)
+      : GNKSA::generate_message_id_from_email_address (p.address);
+}
+
 bool
 PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& folder)
 {
@@ -1006,18 +993,7 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
 	  Profile p(get_current_profile());
 
 	  //domain name
-	  std::string d;
-	  d = !p.fqdn.empty()
-		? GNKSA::generate_message_id (p.fqdn)
-		: GNKSA::generate_message_id_from_email_address (p.address);
-	  StringView d2(d);
-	  StringView domain;
-		const char * pch = d2.strchr ('@');
-		if (pch != NULL)
-		  domain = d2.substr (pch+1, NULL);
-		else
-		  domain = d2;
-
+	  std::string mid = generate_message_id(p);
 	  std::string author;
 	  p.get_from_header(author);
 	  std::string subject(utf8ize (g_mime_message_get_subject (msg)));
@@ -1025,14 +1001,11 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
 	  g_mime_object_set_header((GMimeObject *) msg, "Newsgroups", folder.c_str());
 
 	  // pseudo mid to get data from cache
-	  std::string mid;
-	  generate_unique_id(domain, 42, mid);
 	  std::string message_id = pan_g_mime_message_set_message_id(msg, mid.c_str());
-
 	  std::stringstream xref;
 	  xref << folder << ":42";
 
-    time_t posted = time(0);
+          time_t posted = time(0);
 	  const Article* article = _data.xover_add (p.posting_server, folder, subject, author, posted, message_id, refs, sizeof(*msg), 42, xref.str(), true);
 	  // set adjusted time from article
 	  if (article)
@@ -1204,19 +1177,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     std::string last_mid;
     std::string first_mid;
 
-    //domain name
-    std::string d;
-	d = !p.fqdn.empty()
-		? GNKSA::generate_message_id (p.fqdn)
-		: GNKSA::generate_message_id_from_email_address (p.address);
-    StringView d2(d);
-    StringView domain;
-	const char * pch = d2.strchr ('@');
-	if (pch != NULL)
-	  domain = d2.substr (pch+1, NULL);
-	else
-	  domain = d2;
-
     Article a;
     TaskUpload * tmp (dynamic_cast<TaskUpload*>(tasks[0]));
     if (tmp) a = tmp->_article;
@@ -1226,15 +1186,13 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 
       // master article, other attachments are threaded as replies to this
       const Profile profile (get_current_profile ());
-      std::string out;
-      generate_unique_id(domain, 1,out);
-      first_mid = out;
+      first_mid = generate_message_id(p);
 
       TaskUpload::UploadInfo f;
       f.total=1;
       f.bpf = _prefs.get_int("upload-option-bpf",512*1024);
       TaskUpload::Needed n;
-      n.mid = out;
+      n.mid = first_mid;
 
       {
         TaskUpload * tmp = new TaskUpload(a.subject.to_string(),profile.posting_server,_cache,a,f,msg);
@@ -1266,8 +1224,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       {
         if (custom_mid)
         {
-            std::string out;
-            generate_unique_id(domain, *pit,out);
+            std::string out (generate_message_id(p));
             n.mid = out;
             if (first_mid.empty()) first_mid = out;
         }
@@ -3070,8 +3027,6 @@ PostUI :: PostUI (GtkWindow    * parent,
   _uploads(0),
   _enc(GMIME_CONTENT_ENCODING_8BIT)
 {
-
-  rng.seed();
 
   _upload_queue.add_listener (this);
 

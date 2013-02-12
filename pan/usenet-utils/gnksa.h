@@ -22,6 +22,7 @@
 
 #include <string>
 #include <ctime>
+#include <pan/usenet-utils/MersenneTwister.h>
 
 namespace pan
 {

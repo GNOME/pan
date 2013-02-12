@@ -29,8 +29,6 @@
 #include <pan/data/encode-cache.h>
 #include "group-prefs.h"
 
-#include <pan/usenet-utils/MersenneTwister.h>
-
 namespace pan
 {
   class Profiles;
@@ -106,6 +104,7 @@ namespace pan
       bool maybe_post_message (GMimeMessage*);
       enum Mode { DRAFTING, POSTING, UPLOADING, VIRTUAL};
       bool save_message_in_local_folder(const Mode& mode, const std::string& folder);
+      std::string generate_message_id (const Profile& p);
 
     private:
       void update_widgetry ();
@@ -164,7 +163,6 @@ namespace pan
       TaskUpload* _upload_ptr;
       int _total_parts;
       std::string _save_file;
-      MTRand rng;
       int _uploads;
 
     public:
