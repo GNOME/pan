@@ -216,7 +216,6 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
         case GROUP_NONEXISTENT:
            state = CMD_FAIL;
            break;
-
         case XOVER_FOLLOWS:
         case ARTICLE_FOLLOWS:
         case NEWGROUPS_FOLLOWS:

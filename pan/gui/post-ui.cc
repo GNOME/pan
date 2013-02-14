@@ -1224,9 +1224,8 @@ PostUI :: maybe_post_message (GMimeMessage * message)
       {
         if (custom_mid)
         {
-            std::string out (generate_message_id(p));
-            n.mid = out;
-            if (first_mid.empty()) first_mid = out;
+            n.mid = generate_message_id(p);
+            if (first_mid.empty()) first_mid = n.mid;
         }
 
         g_snprintf(buf,sizeof(buf),"%s.%d", basename, *pit);

@@ -71,7 +71,7 @@ TaskPost :: on_nntp_done (NNTP              * nntp,
 
   const char* res(g_mime_message_get_subject(_message));
 
-  if (health == ERR_NETWORK)
+  if (health == ERR_NETWORK || health == ERR_COMMAND)
   {
     Log :: add_err_va (_("Posting of \"%s\" failed: %s"),
                           res, response.str);
