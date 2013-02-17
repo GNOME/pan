@@ -304,6 +304,18 @@ PostUI :: set_spellcheck_enabled (bool enabled)
   }
 }
 
+int
+PostUI :: count_lines()
+{
+  GtkTextBuffer * buf (_body_buf);
+  GtkTextView * view (GTK_TEXT_VIEW(_body_view));
+  GtkTextIter body_start, body_end, line_end;
+  gtk_text_buffer_get_bounds (buf, &body_start, &body_end);
+  int count(0);
+  while ((gtk_text_view_forward_display_line (view, &line_end))) ++count;
+  return count;
+}
+
 /***
 ****  WRAP CODE
 ***/
@@ -1003,16 +1015,14 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
 	  // pseudo mid to get data from cache
 	  std::string message_id = pan_g_mime_message_set_message_id(msg, mid.c_str());
 	  std::stringstream xref;
-	  xref << folder << ":42";
-
-          time_t posted = time(0);
-	  const Article* article = _data.xover_add (p.posting_server, folder, subject, author, posted, message_id, refs, sizeof(*msg), 42, xref.str(), true);
-	  // set adjusted time from article
+	  time_t posted = time(0); // use posted as article number, this is unique anyway
+	  xref << folder << ":"<<posted;
+	  const Article* article = _data.xover_add (p.posting_server, folder, subject, author, posted, message_id, refs, sizeof(*msg), 3, xref.str(), true);
 	  if (article)
 	  {
 		  g_mime_message_set_date(msg, posted, 0);
 		  ArticleCache& cache(_data.get_cache());
-		  ArticleCache :: CacheResponse response = cache.add(mid, g_mime_object_to_string(GMIME_OBJECT(msg)));
+		  ArticleCache :: CacheResponse response = cache.add(mid, g_mime_object_to_string(GMIME_OBJECT(msg)), true);
 		  g_object_unref(msg);
 
 		  if (response.type != ArticleCache::CACHE_OK)
@@ -1053,14 +1063,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   Data::Server* s = _data.find_server(server);
   if (s && s->max_connections == 0)
     error_msg =  _("The selected posting server is currently disabled. Please choose an appropriate alternative.");
-
-//  if (server.empty() || !_data.get_servers().count(server)) {
-//    GtkWidget * d = gtk_message_dialog_new (
-//      GTK_WINDOW(_root),
-//      GTK_DIALOG_DESTROY_WITH_PARENT,
-//      GTK_MESSAGE_ERROR,
-//      GTK_BUTTONS_CLOSE,
-//      _("No posting server is set for this posting profile.\nPlease edit the profile via Edit|Manage Posting Profiles."));
 
   if (!error_msg.empty())
   {
@@ -1596,9 +1598,7 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
 
   // Message-ID for single text-only posts
   if (mode==DRAFTING || ((mode==POSTING || mode==UPLOADING) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false))) {
-    const std::string message_id = !profile.fqdn.empty()
-      ? GNKSA::generate_message_id (profile.fqdn)
-      : GNKSA::generate_message_id_from_email_address (profile.address);
+    const std::string message_id = generate_message_id(profile);
     pan_g_mime_message_set_message_id (msg, message_id.c_str());
   }
 

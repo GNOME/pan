@@ -201,6 +201,7 @@ namespace pan
     private:
       std::string utf8ize (const StringView&) const;
       std::string get_body () const;
+      int count_lines();
       gulong body_view_realized_handler;
       static void body_view_realized_cb (GtkWidget*, gpointer);
       GtkWidget* create_body_widget (GtkTextBuffer*&, GtkWidget*&, const pan::Prefs&);
@@ -246,8 +247,6 @@ namespace pan
       int _running_uploads;
       std::ofstream _out;
       static void message_id_toggled_cb (GtkToggleButton * tb, gpointer prefs_gpointer);
-
-      void generate_unique_id (StringView& mid, int cnt, std::string& s);
 
       int get_total_parts(const char* file);
 

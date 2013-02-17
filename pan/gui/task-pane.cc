@@ -174,7 +174,7 @@ TaskPane:: on_tooltip_query(GtkWidget  *widget,
 {
   TaskPane* tp(static_cast<TaskPane*>(data));
 
-  if (!tp->get_prefs().get_flag("show-taskpane-popups", true)) return false;
+  if (!tp->_prefs.get_flag("show-taskpane-popups", true)) return false;
 
   gtk_tooltip_set_icon_from_stock (tooltip, GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
 
@@ -250,6 +250,10 @@ TaskPane :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpoin
 void TaskPane :: online_toggled_cb (GtkToggleButton* b, Queue *queue)
 {
   queue->set_online (gtk_toggle_button_get_active (b));
+}
+void TaskPane :: popup_toggled_cb (GtkToggleButton* b, TaskPane* pane)
+{
+  pane->_prefs.set_flag("show-taskpane-popups", gtk_toggle_button_get_active(b));
 }
 void TaskPane :: up_clicked_cb (GtkButton*, TaskPane* pane)
 {
@@ -1045,6 +1049,14 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
     gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
     w = add_button (buttons, GTK_STOCK_CLOSE, 0, 0);
     g_signal_connect_swapped (w, "clicked", G_CALLBACK(gtk_widget_destroy), _root);
+    w = _popup_toggle = gtk_check_button_new ();
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), _prefs.get_flag("show-taskpane-popups", true));
+    l = gtk_label_new_with_mnemonic (_("Show info popups"));
+    v = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
+    gtk_box_pack_start (GTK_BOX(v), l, 0, 0, 0);
+    gtk_container_add (GTK_CONTAINER(w), v);
+    g_signal_connect (w, "clicked", G_CALLBACK(popup_toggled_cb), this);
+    gtk_box_pack_start (GTK_BOX(buttons), w, false, false, 0);
     pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new()); // eat horizontal space
 
   gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);

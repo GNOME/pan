@@ -214,7 +214,7 @@ ArticleCache :: get_filename (char * buf, int buflen, const Quark& mid) const
 };
 
 ArticleCache :: CacheResponse
-ArticleCache :: add (const Quark& message_id, const StringView& article)
+ArticleCache :: add (const Quark& message_id, const StringView& article, const bool virtual_file)
 {
   debug ("adding " << message_id << ", which is " << article.len << " bytes long");
 
@@ -257,6 +257,7 @@ ArticleCache :: add (const Quark& message_id, const StringView& article)
       fire_added (message_id);
 
       _current_bytes += info._size;
+      if (virtual_file) ++_locks[message_id];
       resize ();
       res.type = CACHE_OK;
     }

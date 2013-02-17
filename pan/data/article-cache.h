@@ -80,7 +80,7 @@ namespace pan
       typedef std::vector<Quark> mid_sequence_t;
 
       bool contains (const Quark& message_id) const;
-      CacheResponse add (const Quark& message_id, const StringView& article);
+      CacheResponse add (const Quark& message_id, const StringView& article, const bool virtual_file = false);
       void reserve (const mid_sequence_t& mids);
       void release (const mid_sequence_t& mids);
       void resize ();

@@ -68,6 +68,7 @@ namespace pan
       GtkWidget * _view;
       GtkWidget * _online_image;
       GtkWidget * _online_toggle;
+      GtkWidget * _popup_toggle;
       GtkWidget * _status_label;
       GtkListStore * _store;
       gulong _online_toggle_handler;
@@ -99,6 +100,7 @@ namespace pan
       task_list get_selected_tasks () const;
       static void get_selected_tasks_foreach (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer);
       static void online_toggled_cb  (GtkToggleButton*, Queue*);
+      static void popup_toggled_cb (GtkToggleButton* b,  TaskPane* pane);
 
     private:
       GtkWidget* create_filter_entry ();

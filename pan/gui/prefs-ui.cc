@@ -1005,7 +1005,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   t = HIG :: workarea_create ();
     HIG::workarea_add_section_spacer (t, row, 1);
     HIG :: workarea_add_section_title (t, &row, _("Task Pane"));
-    w = new_check_button (_("Show Task Pane notifications"), "show-taskpane-popups", true, prefs);
+    w = new_check_button (_("Show Task Pane info popups"), "show-taskpane-popups", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Show Download Meter"), "dl-meter-show", true, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
