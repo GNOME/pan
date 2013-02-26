@@ -1274,13 +1274,14 @@ namespace
 		GPid pid;
 		char *fname;
 		PostUI *pui;
+		gint watch;
 	} se_data;
 
 	void child_watch_cb(GPid pid, gint status, gpointer data)
 	{
 		se_data *d=static_cast<se_data*>(data);
-		static_cast<PostUI*>(d->pui)->spawn_editor_dead(static_cast<char*>(d->fname));
 		g_spawn_close_pid(pid);
+		static_cast<PostUI*>(d->pui)->spawn_editor_dead(static_cast<char*>(d->fname));
 		delete d;
 	}
 }
@@ -1378,7 +1379,7 @@ PostUI :: spawn_editor ()
       ok = false;
       delete data;
     } else {
-      g_child_watch_add(data->pid,child_watch_cb,static_cast<gpointer>(data));
+        _child_id = g_child_watch_add(data->pid,child_watch_cb,static_cast<gpointer>(data));
     }
   } else {
 	  g_free(fname);
@@ -1387,24 +1388,31 @@ PostUI :: spawn_editor ()
   g_strfreev (argv);
 }
 
-void PostUI::spawn_editor_dead(char *fname)
+void
+PostUI::spawn_editor_dead(char *fname)
 {
-	GtkTextBuffer * buf (_body_buf);
+  GtkTextBuffer * buf(_body_buf);
 
-  // read the file contents back in
-  std::string txt;
-  if (file :: get_text_file_contents (fname, txt)) {
-    GtkTextIter start, end;
-    gtk_text_buffer_get_bounds (buf, &start, &end);
-    gtk_text_buffer_delete (buf, &start, &end);
-    gtk_text_buffer_insert (buf, &start, txt.c_str(), txt.size());
+  if (buf)
+  {
+
+    // read the file contents back in
+    std::string txt;
+    if (file::get_text_file_contents(fname, txt))
+    {
+      GtkTextIter start, end;
+      gtk_text_buffer_get_bounds(buf, &start, &end);
+      gtk_text_buffer_delete(buf, &start, &end);
+      gtk_text_buffer_insert(buf, &start, txt.c_str(), txt.size());
+    }
+
+    // cleanup
+    ::remove(fname);
+    g_free(fname);
   }
 
-  // cleanup
-  ::remove (fname);
-  g_free (fname);
+  gtk_window_present(GTK_WINDOW(root()) );
 
-  gtk_window_present (GTK_WINDOW(root()));
 }
 
 namespace
@@ -2713,7 +2721,8 @@ PostUI :: create_extras_tab ()
   w = _followupto_entry = gtk_entry_new ();
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
   /* i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english. */
-  gtk_widget_set_tooltip_text (w, _("The newsgroups where replies to your message should go.  This is only needed if it differs from the \"Newsgroups\" header.\n\nTo direct all replies to your email address, use \"Followup-To: poster\""));
+  gtk_widget_set_tooltip_text (w, _("The newsgroups where replies to your message should go.  This is only needed if it differs from "
+      "the \"Newsgroups\" header.\n\nTo direct all replies to your email address, use \"Followup-To: poster\""));
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
 
   //  Reply-To
@@ -2727,7 +2736,8 @@ PostUI :: create_extras_tab ()
 
   w = _replyto_entry = gtk_entry_new ();
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
-gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your posted message should go.  This is only needed if it differs from the \"From\" header."));
+  gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your posted message should go. "
+    "This is only needed if it differs from the \"From\" header."));
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
 
   //  Extra Headers
@@ -2873,6 +2883,8 @@ PostUI :: ~PostUI ()
   if (_draft_autosave_idle_tag)
     g_source_remove (_draft_autosave_idle_tag);
 
+  if (_child_id != 0)
+    g_source_remove(_child_id);
 
   g_object_unref (G_OBJECT(_message));
 
@@ -3020,6 +3032,7 @@ PostUI :: PostUI (GtkWindow    * parent,
   _draft_autosave_idle_tag(0),
   _body_changed_id(0),
   _body_changed_idle_tag(0),
+  _child_id(0),
   _filequeue_eventbox (0),
   _filequeue_label (0),
   _realized(false),

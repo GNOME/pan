@@ -158,6 +158,8 @@ namespace pan
 
       GMimeContentEncoding _enc;
 
+      guint _child_id;
+
       /* binpost */
       bool _file_queue_empty;
       TaskUpload* _upload_ptr;
