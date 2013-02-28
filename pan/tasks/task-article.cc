@@ -159,10 +159,6 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   else
     set_status_va (_("Saving %s"), artsub);
 
-  char buf[2048];
-  g_snprintf(buf,sizeof(buf), _("Saving %s"), artsub);
-  verbose (buf);
-
   update_work ();
 }
 

@@ -26,6 +26,7 @@ using namespace pan;
 
 Task :: Task (const Quark& type, const StringView& description): Progress(description), _type(type)
 {
+  verbose (_description);
 }
 
 Task :: ~Task ()

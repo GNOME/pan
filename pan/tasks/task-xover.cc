@@ -487,6 +487,9 @@ TaskXOver::update_work(bool subtract_one_from_nntp_count)
     {
       _state.set_completed();
       set_finished(OK);
+      char str[4096];
+      g_snprintf(str, sizeof(str), _("Getting new headers for \"%s\" done."), _group.c_str());
+      verbose (str);
     }
 }
 

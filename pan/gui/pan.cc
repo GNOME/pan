@@ -627,12 +627,9 @@ _("General Options\n"
 "\n"
 "URL Options\n"
 
-// Doesn't work yet.
-/*"  news:message-id          Show the specified article.\n"
+"  news:message-id          Show the specified article.\n"
 "  news:group.name          Show the specified newsgroup.\n"
 "  headers:group.name       Download new headers for the specified newsgroup.\n"
-*/
-
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -887,9 +884,9 @@ main (int argc, char *argv[])
   textdomain (GETTEXT_PACKAGE);
 
   g_type_init();
-#if !GLIB_CHECK_VERSION(2,32,0)
+//#if !GLIB_CHECK_VERSION(2,32,0)
   g_thread_init (0);
-#endif
+//#endif
   g_mime_init (GMIME_ENABLE_RFC2047_WORKAROUNDS);
 
   bool gui(true), nzb(false), verbosed(false);
@@ -898,6 +895,8 @@ main (int argc, char *argv[])
   std::string nzb_output_path;
   strings_v nzb_files;
   std::string nzb_str;
+  bool fatal_dbg(true);
+  bool console_active(false);
 
   for (int i=1; i<argc; ++i)
   {
@@ -909,7 +908,7 @@ main (int argc, char *argv[])
     else if (!strcmp(tok,"--no-gui") || !strcmp(tok,"--nogui"))
       gui = false;
     else if (!strcmp (tok, "--debug")) { // use --debug --debug for verbose debug
-      console();
+      if (!console_active) { console_active = true; console(); }
       if (_debug_flag) _debug_verbose_flag = true;
       else _debug_flag = true;
     } else if (!strcmp (tok, "--nzb"))
@@ -930,8 +929,10 @@ main (int argc, char *argv[])
     else if (!strcmp(tok,"-h") || !strcmp(tok,"--help"))
       { usage (); return EXIT_SUCCESS; }
     else if (!strcmp(tok, "--verbose") )
+    {
+      if (!console_active) { console_active = true; console(); }
       verbosed = true;
-    else {
+    } else {
       nzb = true;
       nzb_files.push_back (tok);
       if (nzb_files.size() > 1) nzb_str +=" ";
@@ -943,9 +944,8 @@ main (int argc, char *argv[])
   setlocale(LC_ALL,"C");
 #endif
 
-  if (verbosed && !gui && nzb)
+  if (verbosed && !gui)
     _verbose_flag = true;
-
 
   if (gui)
   {

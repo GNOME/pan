@@ -50,19 +50,19 @@ namespace pan
 #define verbose(A) \
   do { \
     if (_verbose_flag) \
-      std::cout << A << '\n'; \
+      std::cerr << A << '\n'; \
   } while (0)
 
 #define debug_SSL(A) \
   do { \
     if (_dbg_ssl) \
-     std::cout << A << '\n'; \
+     std::cerr << A << '\n'; \
   } while (0)
 
 #define debug_SSL_verbatim(A) \
   do { \
     if (_dbg_ssl) \
-      std::cout << A << '\n'; \
+      std::cerr << A << '\n'; \
   } while (0)
 
 #ifndef UNUSED
