@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: pan2.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-02-26 17:36+0000\n"
-"PO-Revision-Date: 2013-02-27 13:39+0100\n"
+"POT-Creation-Date: 2013-03-01 17:13+0000\n"
+"PO-Revision-Date: 2013-03-04 13:55+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -1409,12 +1409,30 @@ msgstr ""
 "Para empezar a leer noticias, primero añada un servidor."
 
 #: ../pan/gui/pan.cc:624
+#| msgid ""
+#| "General Options\n"
+#| "  -h, --help               Show this usage page.\n"
+#| "  --verbose                Be verbose (in non-GUI mode).\n"
+#| "\n"
+#| "URL Options\n"
+#| "  --no-gui                 On news:message-id, dump the article to "
+#| "stdout.\n"
+#| "\n"
+#| "NZB Batch Options\n"
+#| "  --nzb file1 file2 ...    Process nzb files without launching all of "
+#| "Pan.\n"
+#| "  -o path, --output=path   Path to save attachments listed in the nzb "
+#| "files.\n"
+#| "  --no-gui                 Only show console output, not the download "
+#| "queue.\n"
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
 "\n"
 "URL Options\n"
+"  headers:group.name       Download new headers for the specified "
+"newsgroup.\n"
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -1429,6 +1447,8 @@ msgstr ""
 "  --verbose                 Modo detallado (en modo no gráfico).\n"
 "\n"
 "Opciones de URL\n"
+"  headers:group.name       Descargar las cabeceras nuevas para el grupo de "
+"noticias especificado.\n"
 "  --no-gui                  En noticias:id-mensaje, volcar el artículo a "
 "stdout.\n"
 "\n"
@@ -1440,22 +1460,22 @@ msgstr ""
 "  --no-gui                  Mostrar sólo la salida de la consola, no la cola "
 "de descarga.\n"
 
-#: ../pan/gui/pan.cc:957
+#: ../pan/gui/pan.cc:958
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Error: Se usó --no-gui sin archivos nzb o noticias:id-mensaje."
 
-#: ../pan/gui/pan.cc:961
+#: ../pan/gui/pan.cc:962
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s iniciado"
 
-#: ../pan/gui/pan.cc:980
+#: ../pan/gui/pan.cc:982
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Configure los servidores de noticias de Pan antes de usarlo como un cliente "
 "nzb."
 
-#: ../pan/gui/pan.cc:1098
+#: ../pan/gui/pan.cc:1100
 msgid "Pan notification"
 msgstr "Notificación de Pan"
 
@@ -1828,9 +1848,6 @@ msgid "_Reply-To"
 msgstr "_Responder a"
 
 #: ../pan/gui/post-ui.cc:2739
-#| msgid ""
-#| "The email account where mail replies to your posted message should go.  "
-#| "This is only needed if it differs from the \"From\" header."
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
@@ -3249,7 +3266,7 @@ msgstr ""
 "Error al guardar «%s»:\n"
 "%s."
 
-#: ../pan/tasks/decoder.cc:316 ../pan/tasks/task-article.cc:358
+#: ../pan/tasks/decoder.cc:316 ../pan/tasks/task-article.cc:354
 #, c-format
 msgid "Decoding %s"
 msgstr "Decodificando %s"
@@ -3311,7 +3328,6 @@ msgid "Unknown Error"
 msgstr "Error desconocido"
 
 #: ../pan/tasks/task-article.cc:62 ../pan/tasks/task-article.cc:160
-#: ../pan/tasks/task-article.cc:163
 #, c-format
 msgid "Saving %s"
 msgstr "Guardando %s"
@@ -3321,7 +3337,7 @@ msgstr "Guardando %s"
 msgid "Reading %s"
 msgstr "Leyendo %s"
 
-#: ../pan/tasks/task-article.cc:330
+#: ../pan/tasks/task-article.cc:326
 #, c-format
 msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
 msgstr ""
@@ -3427,6 +3443,12 @@ msgstr "Mostrando cabeceras para «%s»"
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu partes, %lu artículos)"
+
+#: ../pan/tasks/task-xover.cc:491
+#, c-format
+#| msgid "Getting new headers for \"%s\""
+msgid "Getting new headers for \"%s\" done."
+msgstr "Se terminó de obtener las cabeceras nuevas para «%s»."
 
 #: ../pan/tasks/task-xoverinfo.cc:78
 #, c-format
