@@ -65,7 +65,10 @@ namespace
   Quark * other_title_quark (0);
 
   bool is_group (const Quark& name) {
-    return !name.empty() && name!=*sub_title_quark && name!=*other_title_quark && name!=*virtual_title_quark;
+    return !name.empty() &&
+        name!=*sub_title_quark &&
+        name!=*other_title_quark &&
+        name!=*virtual_title_quark;
   }
 
   std::string
@@ -789,9 +792,9 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
   GtkTreeModel * model (gtk_tree_view_get_model (view));
 
   // find how many subscribed groups the tree's got
-  GtkTreeIter sub_iter;
-  gtk_tree_model_iter_nth_child (model, &sub_iter, 0, 0); // 'sub' node
-  const int n_groups = gtk_tree_model_iter_n_children (model, &sub_iter);
+  GtkTreeIter sub_iter, virtual_iter;
+  gtk_tree_model_iter_nth_child (model, &sub_iter, 0, 1); // 'sub' node
+  int n_groups = gtk_tree_model_iter_n_children (model, &sub_iter);
   if (n_groups < 1)
     return 0;
 
@@ -806,7 +809,7 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
     GtkTreePath * path = gtk_tree_model_get_path (model, &sel_iter);
     gint depth = gtk_tree_path_get_depth (path);
     gint* indices = gtk_tree_path_get_indices (path);
-    if (depth==2 && indices[0]==0) // a subscribed group is selected
+    if (depth==2 && indices[0]==1) // a subscribed group is selected
       start_pos = indices[1];
     gtk_tree_path_free (path);
   }
@@ -827,9 +830,11 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
     GtkTreeIter group_iter;
     gtk_tree_model_iter_nth_child (model, &group_iter, &sub_iter, n);
     const MyRow * row (dynamic_cast<MyRow*>(_tree_store->get_row (&group_iter)));
-    if (!unread_only || row->unread)
+    const bool is_virtual (is_virtual_group(row->groupname));
+    if (!is_virtual && (row->unread || !unread_only))
       return gtk_tree_model_get_path (model, &group_iter);
   }
+
 }
 
 void
@@ -838,7 +843,6 @@ GroupPane :: read_group (const StringView& groupname)
     GtkTreeView * view (GTK_TREE_VIEW (_tree_view));
     PanTreeStore * tree (PAN_TREE_STORE(gtk_tree_view_get_model(view)));
     GtkTreeIter iter;
-//    gtk_tree_model_iter_nth_child (model, &iter, 0, 0);
     const MyRow* row = find_row (groupname);
     iter = tree->get_iter (row);
     read_group(gtk_tree_model_get_path(gtk_tree_view_get_model(view), &iter));
@@ -985,7 +989,6 @@ GroupPane :: on_selection_changed (GtkTreeSelection*, gpointer pane_gpointer)
     self->_action_manager.sensitize_action (actions_that_require_a_group[i], have_group);
 
   // disable some functions for virtual mailbox folder
-
   for (int i=0, n=G_N_ELEMENTS(actions_in_nonvirtual_group); i<n; ++i)
     self->_action_manager.hide_action (actions_in_nonvirtual_group[i], is_virtual_group(group));
 }
