@@ -9,9 +9,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-04 20:58+0200\n"
-"PO-Revision-Date: 2009-01-16 23:43+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=Pan&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-03-25 22:00+0000\n"
+"PO-Revision-Date: 2013-04-18 17:12+0200\n"
 "Last-Translator: Joan Duran <jodufi@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -20,11 +21,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../pan.desktop.in.h:1
-msgid "Pan Newsreader"
-msgstr "Lector de notícies Pan"
+#. update the titlebar
+#: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106
+#: ../pan/gui/gui.cc:1042 ../pan/gui/gui.cc:1671 ../pan/gui/gui.cc:1989
+#: ../pan/gui/score-add-ui.cc:602
+msgid "Pan"
+msgstr "Pan"
 
 #: ../pan.desktop.in.h:2
+msgid "Newsreader"
+msgstr "Lector de notícies"
+
+#: ../pan.desktop.in.h:3
 msgid "Read and Post Usenet Articles"
 msgstr ""
 
@@ -33,43 +41,84 @@ msgstr ""
 msgid "Error opening directory: \"%s\": %s"
 msgstr "S'ha produït un error en obrir el directori «%s»: %s"
 
-#: ../pan/data/article-cache.cc:231 ../pan/data/article-cache.cc:242
-#: ../pan/data-impl/data-io.cc:187 ../pan/data-impl/data-io.cc:211
-#: ../pan/gui/post-ui.cc:1639
+#: ../pan/data/article-cache.cc:234 ../pan/data/article-cache.cc:243
+#: ../pan/data-impl/data-io.cc:199 ../pan/data-impl/data-io.cc:231
+#: ../pan/gui/post-ui.cc:1684
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "No s'ha pogut desar «%s» %s"
 
-#: ../pan/data/article-cache.cc:355
+#: ../pan/data/article-cache.cc:361
 #, c-format
 msgid "Error opening file \"%s\" %s"
 msgstr "S'ha produït un error en obrir el fitxer «%s»: %s"
 
-#: ../pan/data/article-cache.cc:386 ../pan/data-impl/profiles.cc:174
-#: ../pan/data-impl/server.cc:436 ../pan/general/file-util.cc:298
-#: ../pan/gui/post-ui.cc:609 ../pan/gui/task-pane.cc:691
+#: ../pan/data/article-cache.cc:392 ../pan/data-impl/profiles.cc:174
+#: ../pan/data-impl/server.cc:500 ../pan/general/file-util.cc:311
+#: ../pan/gui/post-ui.cc:599 ../pan/gui/task-pane.cc:736
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "S'ha produït un error en llegir el fitxer «%s»: %s"
 
-#: ../pan/data/cert-store.cc:238
+#: ../pan/data/cert-store.cc:262
 #, fuzzy, c-format
 msgid "Error opening SSL certificate directory: \"%s\": %s"
 msgstr "S'ha produït un error en obrir el directori «%s»: %s"
 
-#: ../pan/data/cert-store.cc:270
+#: ../pan/data/cert-store.cc:293
 #, c-format
-msgid "Succesfully added %d SSL PEM certificate(s) to Certificate Store."
+msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
+msgstr ""
+
+#: ../pan/data/cert-store.cc:313
+msgid ""
+"Error initializing Certificate Store. Check that the permissions for the "
+"folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
 msgstr ""
 
 #. load_group_descriptions (*_data_io);
-#: ../pan/data-impl/data-impl.cc:109
+#: ../pan/data-impl/data-impl.cc:115
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "S'ha carregat el rerefons de dades en %.1f segons"
 
-#: ../pan/data-impl/data-impl.cc:140
-msgid "Pan newsreader server passwords"
+#: ../pan/data-impl/data-impl.cc:146
+msgid "Pan Newsreader's server passwords"
+msgstr ""
+
+#: ../pan/data-impl/download-meter.cc:51
+msgid "DL Initialization..."
+msgstr ""
+
+#: ../pan/data-impl/download-meter.cc:54
+#, fuzzy
+msgid "Open Download Meter Preferences"
+msgstr "Utilitza les preferències del KDE"
+
+#: ../pan/data-impl/download-meter.cc:78 ../pan/gui/gui.cc:1963
+#: ../pan/gui/header-pane.cc:1812 ../pan/gui/prefs-ui.cc:850
+msgid "Bytes"
+msgstr "Bytes"
+
+#: ../pan/data-impl/download-meter.cc:81
+msgid "KB"
+msgstr "KB"
+
+#: ../pan/data-impl/download-meter.cc:84 ../pan/gui/dl-prefs.cc:113
+msgid "MB"
+msgstr "MB"
+
+#: ../pan/data-impl/download-meter.cc:87 ../pan/gui/dl-prefs.cc:114
+msgid "GB"
+msgstr "GB"
+
+#: ../pan/data-impl/download-meter.cc:90
+msgid "TB"
+msgstr "TB"
+
+#: ../pan/data-impl/download-meter.cc:127
+#, c-format
+msgid "DL %s"
 msgstr ""
 
 #: ../pan/data-impl/groups.cc:94
@@ -103,21 +152,21 @@ msgid ""
 msgstr ""
 "S'han desat %lu parts, %lu articles a «%s» en %.1f segons (%.0f art/seg)"
 
-#: ../pan/data-impl/headers.cc:1173
+#: ../pan/data-impl/headers.cc:1191
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "S'han afegit %lu articles a %s."
 
-#: ../pan/data-impl/server.cc:234
+#: ../pan/data-impl/server.cc:261
 #, c-format
-msgid "There seems to be no Password set for Server %s."
+msgid "There seems to be no password set for server %s."
 msgstr ""
 
-#: ../pan/data-impl/server.cc:238
-msgid "The Gnome keyring denied access to the Passwords."
+#: ../pan/data-impl/server.cc:265
+msgid "GNOME Keyring denied access to the passwords."
 msgstr ""
 
-#: ../pan/data-impl/xover.cc:239
+#: ../pan/data-impl/xover.cc:243
 #, c-format
 msgid "Error reading from %s: unknown group \"%s\""
 msgstr "S'ha produït un error en llegir des de %s: grup desconegut «%s»"
@@ -158,687 +207,713 @@ msgstr ""
 "No s'ha pogut determinar la codificació de l'article. S'han eliminat els "
 "caràcters que no eren UTF-8."
 
-#: ../pan/gui/actions.cc:274 ../pan/gui/post-ui.cc:417
+#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:407
 msgid "_File"
 msgstr "_Fitxer"
 
-#: ../pan/gui/actions.cc:275 ../pan/gui/post-ui.cc:418
+#: ../pan/gui/actions.cc:305 ../pan/gui/post-ui.cc:408
 msgid "_Edit"
 msgstr "_Edita"
 
-#: ../pan/gui/actions.cc:276 ../pan/gui/prefs-ui.cc:1064
+#: ../pan/gui/actions.cc:306 ../pan/gui/prefs-ui.cc:1107
 msgid "_Layout"
 msgstr "_Disposició"
 
-#: ../pan/gui/actions.cc:277
+#: ../pan/gui/actions.cc:307
 msgid "_Group Pane"
 msgstr "Subfinestra de _grup"
 
-#: ../pan/gui/actions.cc:278
+#: ../pan/gui/actions.cc:308
 msgid "_Header Pane"
 msgstr "Subfinestra de _capçalera"
 
-#: ../pan/gui/actions.cc:279
+#: ../pan/gui/actions.cc:309
 msgid "_Body Pane"
 msgstr "Subfinestra de c_os"
 
-#: ../pan/gui/actions.cc:280
+#: ../pan/gui/actions.cc:310
 msgid "_View"
 msgstr "_Visualitza"
 
-#: ../pan/gui/actions.cc:281
+#: ../pan/gui/actions.cc:311
 msgid "Filte_r"
 msgstr "Filt_re"
 
-#: ../pan/gui/actions.cc:282
+#: ../pan/gui/actions.cc:312
 msgid "_Go"
 msgstr "_Vés a"
 
-#: ../pan/gui/actions.cc:283 ../pan/gui/prefs-ui.cc:1091
+#: ../pan/gui/actions.cc:313 ../pan/gui/prefs-ui.cc:1157
 msgid "_Actions"
 msgstr "_Accions"
 
-#: ../pan/gui/actions.cc:284
+#: ../pan/gui/actions.cc:314
 msgid "_Articles"
 msgstr "_Articles"
 
-#: ../pan/gui/actions.cc:285
+#: ../pan/gui/actions.cc:315
 msgid "G_roups"
 msgstr "G_rups"
 
-#: ../pan/gui/actions.cc:286 ../pan/gui/actions.cc:287
+#: ../pan/gui/actions.cc:316 ../pan/gui/actions.cc:317
 msgid "_Post"
 msgstr "_Publica"
 
-#: ../pan/gui/actions.cc:288
+#: ../pan/gui/actions.cc:318
 msgid "_Help"
 msgstr "_Ajuda"
 
-#: ../pan/gui/actions.cc:291
+#: ../pan/gui/actions.cc:321
 msgid "_Read Group"
 msgstr "_Llegeix el grup"
 
-#: ../pan/gui/actions.cc:292
+#: ../pan/gui/actions.cc:322
 msgid "Read Group"
 msgstr "Llegeix el grup"
 
-#: ../pan/gui/actions.cc:296
+#: ../pan/gui/actions.cc:326
 msgid "_Mark Selected Groups Read"
 msgstr "_Marca els grups seleccionats com a llegits"
 
-#: ../pan/gui/actions.cc:297
+#: ../pan/gui/actions.cc:327
 msgid "Mark Selected Groups Read"
 msgstr "Marca els grups seleccionats com a llegits"
 
-#: ../pan/gui/actions.cc:301
+#: ../pan/gui/actions.cc:331
 msgid "_Delete Selected Groups' Articles"
 msgstr "_Suprimeix els articles dels grups seleccionats"
 
-#: ../pan/gui/actions.cc:302
+#: ../pan/gui/actions.cc:332
 msgid "Delete Selected Groups' Articles"
 msgstr "Suprimeix els articles dels grups seleccionats"
 
-#: ../pan/gui/actions.cc:306
+#: ../pan/gui/actions.cc:336
 msgid "Get New _Headers in Selected Groups"
 msgstr "Obtingues les _capçaleres noves dels grups seleccionats"
 
-#: ../pan/gui/actions.cc:307
+#: ../pan/gui/actions.cc:337
 msgid "Get New Headers in Selected Groups"
 msgstr "Obtingues les capçaleres noves dels grups seleccionats"
 
-#: ../pan/gui/actions.cc:311 ../pan/gui/actions.cc:316
+#: ../pan/gui/actions.cc:341 ../pan/gui/actions.cc:346
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "Obtingues les noves _capçaleres dels grups subscrits"
 
-#: ../pan/gui/actions.cc:312 ../pan/gui/actions.cc:317
+#: ../pan/gui/actions.cc:342 ../pan/gui/actions.cc:347
 msgid "Get New Headers in Subscribed Groups"
 msgstr "Obtingues les capçaleres noves dels grups subscrits"
 
-#: ../pan/gui/actions.cc:321
+#: ../pan/gui/actions.cc:351
 msgid "Get _Headers..."
 msgstr "Obtingues les _capçaleres..."
 
-#: ../pan/gui/actions.cc:322
+#: ../pan/gui/actions.cc:352
 msgid "Get Headers..."
 msgstr "Obtingues les capçaleres..."
 
-#: ../pan/gui/actions.cc:326 ../pan/gui/actions.cc:327
+#: ../pan/gui/actions.cc:356 ../pan/gui/actions.cc:357
 msgid "Refresh Group List"
 msgstr "Refresca la llista de grups"
 
-#: ../pan/gui/actions.cc:331
+#: ../pan/gui/actions.cc:361
 msgid "_Subscribe"
 msgstr "_Subscriu"
 
-#: ../pan/gui/actions.cc:332
+#: ../pan/gui/actions.cc:362
 msgid "Subscribe"
 msgstr "Subscriu"
 
-#: ../pan/gui/actions.cc:336
+#: ../pan/gui/actions.cc:366
 msgid "_Unsubscribe"
 msgstr "_Cancel·la la subscripció"
 
-#: ../pan/gui/actions.cc:337
+#: ../pan/gui/actions.cc:367
 msgid "Unsubscribe"
 msgstr "Cancel·la la subscripció"
 
-#: ../pan/gui/actions.cc:341
+#: ../pan/gui/actions.cc:371
 msgid "_Save Articles..."
 msgstr "_Desa els articles..."
 
-#: ../pan/gui/actions.cc:342
+#: ../pan/gui/actions.cc:372
 msgid "Save Articles..."
 msgstr "Desa els articles..."
 
-#: ../pan/gui/actions.cc:346
+#: ../pan/gui/actions.cc:376
 #, fuzzy
 msgid "Save Articles from Selected _NZB..."
 msgstr "_Desa els articles d'aquest NZB..."
 
-#: ../pan/gui/actions.cc:347
+#: ../pan/gui/actions.cc:377
 #, fuzzy
 msgid "Save Articles from Selected NZB"
 msgstr "Desa els articles d'aquest NZB"
 
-#: ../pan/gui/actions.cc:351
+#: ../pan/gui/actions.cc:381
 #, fuzzy
 msgid "Save Articles to an NZB _File..."
 msgstr "_Desa els articles d'aquest NZB..."
 
-#: ../pan/gui/actions.cc:352
+#: ../pan/gui/actions.cc:382
 #, fuzzy
 msgid "Save Articles to an NZB File"
 msgstr "Desa els articles d'aquest NZB"
 
-#: ../pan/gui/actions.cc:356 ../pan/gui/actions.cc:357
+#: ../pan/gui/actions.cc:386 ../pan/gui/actions.cc:387
 #, fuzzy
 msgid "Print"
 msgstr "Pan: imprimeix"
 
-#: ../pan/gui/actions.cc:361
+#: ../pan/gui/actions.cc:391
 msgid "_Import NZB Files..."
 msgstr "_Importa fitxers NZB..."
 
-#: ../pan/gui/actions.cc:366
+#: ../pan/gui/actions.cc:396
 msgid "_Cancel Last Task"
 msgstr "_Cancel·la la darrera tasca"
 
-#: ../pan/gui/actions.cc:371
+#: ../pan/gui/actions.cc:401
 msgid "_Task Manager"
 msgstr "Gestor de _tasques"
 
-#: ../pan/gui/actions.cc:376
+#: ../pan/gui/actions.cc:406
+#, fuzzy
+msgid "_Download Meter Preferences"
+msgstr "Edita les _preferències"
+
+#: ../pan/gui/actions.cc:411
 msgid "_Event Log"
 msgstr "_Registre d'esdeveniments"
 
-#: ../pan/gui/actions.cc:381
+#: ../pan/gui/actions.cc:416
 msgid "_Quit"
 msgstr "_Surt"
 
-#: ../pan/gui/actions.cc:386
+#: ../pan/gui/actions.cc:421
 msgid "Select _All Articles"
 msgstr "Selecciona tots els _articles"
 
-#: ../pan/gui/actions.cc:391
+#: ../pan/gui/actions.cc:426
 msgid "_Deselect All Articles"
 msgstr "No seleccionis _cap article"
 
-#: ../pan/gui/actions.cc:396
+#: ../pan/gui/actions.cc:431
 msgid "Add Su_bthreads to Selection"
 msgstr "Afegeix fi_ls secundaris a la selecció"
 
-#: ../pan/gui/actions.cc:401
+#: ../pan/gui/actions.cc:436
 msgid "Add _Threads to Selection"
 msgstr "Afegeix _fils a la selecció"
 
-#: ../pan/gui/actions.cc:406
+#: ../pan/gui/actions.cc:441
 msgid "Add _Similar Articles to Selection"
 msgstr "Afegeix articles _similars a la selecció"
 
-#: ../pan/gui/actions.cc:411
+#: ../pan/gui/actions.cc:446
 msgid "Select Article _Body"
 msgstr "Selecciona el _cos de l'article"
 
-#: ../pan/gui/actions.cc:416
+#: ../pan/gui/actions.cc:451
 msgid "Edit _Preferences"
 msgstr "Edita les _preferències"
 
-#: ../pan/gui/actions.cc:421
+#: ../pan/gui/actions.cc:456
 msgid "Edit Selected _Group's Preferences"
 msgstr "Edita les preferències del _grup seleccionat"
 
-#: ../pan/gui/actions.cc:426 ../pan/gui/post-ui.cc:434
+#: ../pan/gui/actions.cc:461 ../pan/gui/post-ui.cc:424
 msgid "Edit P_osting Profiles"
 msgstr "Edita els _perfils de publicació"
 
-#: ../pan/gui/actions.cc:431
+#: ../pan/gui/actions.cc:466
 msgid "Edit _News Servers"
 msgstr "Edita els servidors de _notícies"
 
-#: ../pan/gui/actions.cc:436
+#: ../pan/gui/actions.cc:471
 msgid "Jump to _Group Tab"
 msgstr "Vés a la pestanya de _grup"
 
-#: ../pan/gui/actions.cc:441
+#: ../pan/gui/actions.cc:476
 msgid "Jump to _Header Tab"
 msgstr "Vés a la _pestanya de capçalera"
 
-#: ../pan/gui/actions.cc:446
+#: ../pan/gui/actions.cc:481
 msgid "Jump to _Body Tab"
 msgstr "Vés a la pestanya de _cos"
 
-#: ../pan/gui/actions.cc:451
+#: ../pan/gui/actions.cc:486
 msgid "_Rot13 Selected Text"
 msgstr "Aplica la conversió _Rot13 al text seleccionat"
 
-#: ../pan/gui/actions.cc:456
+#: ../pan/gui/actions.cc:491
 msgid "Clear _Header Pane"
 msgstr "Neteja la _subfinestra de capçalera"
 
-#: ../pan/gui/actions.cc:461
+#: ../pan/gui/actions.cc:496
 msgid "Clear _Body Pane"
 msgstr "Neteja la subfinestra de _cos"
 
-#: ../pan/gui/actions.cc:466
+#: ../pan/gui/actions.cc:501
 msgid "Cache Article"
 msgstr "Posa l'article a la memòria cau"
 
-#: ../pan/gui/actions.cc:471
+#: ../pan/gui/actions.cc:506
 msgid "Read Article"
 msgstr "Llegeix l'article"
 
-#: ../pan/gui/actions.cc:476
+#: ../pan/gui/actions.cc:511
 msgid "Show Article Information"
 msgstr "Mostra informació de l'article"
 
-#: ../pan/gui/actions.cc:481
+#: ../pan/gui/actions.cc:516
 msgid "Read _More"
 msgstr "Llegeix _més"
 
-#: ../pan/gui/actions.cc:482
+#: ../pan/gui/actions.cc:517
 msgid "Read More"
 msgstr "Llegeix més"
 
-#: ../pan/gui/actions.cc:486
+#: ../pan/gui/actions.cc:521
 msgid "Read _Back"
 msgstr "_Torna a llegir"
 
-#: ../pan/gui/actions.cc:487
+#: ../pan/gui/actions.cc:522
 msgid "Read Back"
 msgstr "Torna a llegir"
 
-#: ../pan/gui/actions.cc:491
+#: ../pan/gui/actions.cc:526
 msgid "Next _Unread Group"
 msgstr "Següent gr_up sense llegir"
 
-#: ../pan/gui/actions.cc:496
+#: ../pan/gui/actions.cc:531
 msgid "Next _Group"
 msgstr "Següent _grup"
 
-#: ../pan/gui/actions.cc:501
+#: ../pan/gui/actions.cc:536
 msgid "Next _Unread Article"
 msgstr "_Següent article sense llegir"
 
-#: ../pan/gui/actions.cc:502
+#: ../pan/gui/actions.cc:537
 msgid "Next Unread Article"
 msgstr "Següent article sense llegir"
 
-#: ../pan/gui/actions.cc:506
+#: ../pan/gui/actions.cc:541
 msgid "Next _Article"
 msgstr "Següent _article"
 
-#: ../pan/gui/actions.cc:507
+#: ../pan/gui/actions.cc:542
 msgid "Next Article"
 msgstr "Següent article"
 
-#: ../pan/gui/actions.cc:511
+#: ../pan/gui/actions.cc:546
 msgid "Next _Watched Article"
 msgstr "Següent article _mirat"
 
-#: ../pan/gui/actions.cc:516
+#: ../pan/gui/actions.cc:551
 msgid "Next Unread _Thread"
 msgstr "Següent _fil sense llegir"
 
-#: ../pan/gui/actions.cc:517
+#: ../pan/gui/actions.cc:552
 msgid "Next Unread Thread"
 msgstr "Següent fil sense llegir"
 
-#: ../pan/gui/actions.cc:521
+#: ../pan/gui/actions.cc:556
 msgid "Next Threa_d"
 msgstr "Següent f_il"
 
-#: ../pan/gui/actions.cc:526
+#: ../pan/gui/actions.cc:561
 msgid "Pre_vious Article"
 msgstr "A_rticle anterior"
 
-#: ../pan/gui/actions.cc:531
+#: ../pan/gui/actions.cc:566
 msgid "Previous _Thread"
 msgstr "_Fil anterior"
 
-#: ../pan/gui/actions.cc:536
+#: ../pan/gui/actions.cc:571
 msgid "_Parent Article"
 msgstr "Article de _nivell superior"
 
-#: ../pan/gui/actions.cc:541
+#: ../pan/gui/actions.cc:576
 msgid "Ignore _Author"
 msgstr "Ignora l'_autor"
 
-#: ../pan/gui/actions.cc:545
+#: ../pan/gui/actions.cc:580
 msgid "_Watch Thread"
 msgstr "_Mira el fil"
 
-#: ../pan/gui/actions.cc:550
+#: ../pan/gui/actions.cc:585
 msgid "_Ignore Thread"
 msgstr "_Ignora el fil"
 
-#: ../pan/gui/actions.cc:555 ../pan/gui/actions.cc:556
+#: ../pan/gui/actions.cc:590 ../pan/gui/actions.cc:591
 #, fuzzy
 msgid "_Toggle Flag On/Off for Thread"
 msgstr "_Mira el fil"
 
-#: ../pan/gui/actions.cc:560 ../pan/gui/actions.cc:561
+#: ../pan/gui/actions.cc:595 ../pan/gui/actions.cc:596
 #, fuzzy
 msgid "_Turn Flag Off for Thread"
 msgstr "_Mira el fil"
 
-#: ../pan/gui/actions.cc:565 ../pan/gui/actions.cc:566
+#: ../pan/gui/actions.cc:600 ../pan/gui/actions.cc:601
 #, fuzzy
 msgid "_Select All Flagged Threads"
 msgstr "/_Vés/S_egüent fil de discussió nou"
 
-#: ../pan/gui/actions.cc:570 ../pan/gui/actions.cc:571
+#: ../pan/gui/actions.cc:605 ../pan/gui/actions.cc:606
 #, fuzzy
 msgid "_Go to Next Flagged Thread"
 msgstr "/_Vés/S_egüent fil de discussió nou"
 
-#: ../pan/gui/actions.cc:575 ../pan/gui/actions.cc:576
+#: ../pan/gui/actions.cc:610 ../pan/gui/actions.cc:611
 #, fuzzy
 msgid "_Go to Last Flagged Thread"
 msgstr "/_Vés/S_egüent fil de discussió nou"
 
-#: ../pan/gui/actions.cc:580 ../pan/gui/actions.cc:581
+#: ../pan/gui/actions.cc:615 ../pan/gui/actions.cc:616
 #, fuzzy
 msgid "_Invert Selection"
 msgstr "Inverteix la línia seleccionada"
 
-#: ../pan/gui/actions.cc:585
+#: ../pan/gui/actions.cc:620
 msgid "Edit Article's Watch/Ignore/Score..."
 msgstr "Edita el mira/ignora/puntua de l'article..."
 
-#: ../pan/gui/actions.cc:590
+#: ../pan/gui/actions.cc:625
 msgid "Add a _Scoring Rule..."
 msgstr "_Afegeix una regla de puntuació..."
 
-#: ../pan/gui/actions.cc:595
+#: ../pan/gui/actions.cc:630
 msgid "Cance_l Article..."
 msgstr "Cance_l·la l'article..."
 
-#: ../pan/gui/actions.cc:600
+#: ../pan/gui/actions.cc:635
 msgid "_Supersede Article..."
 msgstr "_Substitueix l'article..."
 
-#: ../pan/gui/actions.cc:605
+#: ../pan/gui/actions.cc:640
 msgid "_Delete Article"
 msgstr "_Suprimeix l'article"
 
-#: ../pan/gui/actions.cc:610
+#: ../pan/gui/actions.cc:645
 msgid "Clear Article Cache"
 msgstr "Neteja la memòria cau d'articles"
 
-#: ../pan/gui/actions.cc:615
+#: ../pan/gui/actions.cc:650
 msgid "_Mark Article as Read"
 msgstr "_Marca l'article com a llegit"
 
-#: ../pan/gui/actions.cc:620
+#: ../pan/gui/actions.cc:655
 msgid "Mark Article as _Unread"
 msgstr "Marca l'article com a _no llegit"
 
-#: ../pan/gui/actions.cc:626
+#: ../pan/gui/actions.cc:661
 #, fuzzy
 msgid "_Mark Thread as Read"
 msgstr "_Marca l'article com a llegit"
 
-#: ../pan/gui/actions.cc:631
+#: ../pan/gui/actions.cc:666
 #, fuzzy
 msgid "Mark Thread as _Unread"
 msgstr "Marca l'article com a _no llegit"
 
-#: ../pan/gui/actions.cc:636
+#: ../pan/gui/actions.cc:671
 msgid "_Post to Newsgroup"
 msgstr "_Publica al grup de notícies"
 
-#: ../pan/gui/actions.cc:637
+#: ../pan/gui/actions.cc:672
 msgid "Post to Newsgroup"
 msgstr "Publica al grup de notícies"
 
-#: ../pan/gui/actions.cc:641
+#: ../pan/gui/actions.cc:676
 msgid "_Followup to Newsgroup"
 msgstr "_Seguiment al grup de notícies"
 
-#: ../pan/gui/actions.cc:642
+#: ../pan/gui/actions.cc:677
 msgid "Followup to Newsgroup"
 msgstr "Seguiment al grup de notícies"
 
-#: ../pan/gui/actions.cc:646
+#: ../pan/gui/actions.cc:681
 msgid "_Reply to Author in Mail"
 msgstr "_Respon a l'autor amb un correu"
 
-#: ../pan/gui/actions.cc:651
+#: ../pan/gui/actions.cc:686
 msgid "_Pan Home Page"
 msgstr "Pàgina principal del _Pan"
 
-#: ../pan/gui/actions.cc:656
+#: ../pan/gui/actions.cc:691
 msgid "Give _Feedback or Report a Bug..."
 msgstr "Proporciona _comentaris o informa d'un error..."
 
-#: ../pan/gui/actions.cc:661
+#: ../pan/gui/actions.cc:696
 msgid "_Tip Jar..."
 msgstr "_Consells..."
 
-#: ../pan/gui/actions.cc:666
+#: ../pan/gui/actions.cc:701
 msgid "_About"
 msgstr "_Quant a"
 
-#: ../pan/gui/actions.cc:671
+#: ../pan/gui/actions.cc:706
 msgid "Edit _SSL Certificates"
 msgstr ""
 
-#: ../pan/gui/actions.cc:685
+#: ../pan/gui/actions.cc:721
 msgid "_Thread Headers"
 msgstr "Capçaleres dels _fils"
 
-#: ../pan/gui/actions.cc:686
-msgid "_Wrap Article Body"
-msgstr "_Ajusta el cos de l'article"
+#: ../pan/gui/actions.cc:722
+msgid "Wrap Article Body"
+msgstr "Ajusta el cos de l'article"
 
-#: ../pan/gui/actions.cc:687
+#: ../pan/gui/actions.cc:723
+#, fuzzy
+msgid "Show Article Signature"
+msgstr "Mostra informació de l'article"
+
+#: ../pan/gui/actions.cc:724
 msgid "Mute _Quoted Text"
 msgstr "_Omet el text citat"
 
-#: ../pan/gui/actions.cc:688
+#: ../pan/gui/actions.cc:725
 msgid "Show All _Headers in Body Pane"
 msgstr "Mostra totes les _capçaleres en la subfinestra de cos"
 
-#: ../pan/gui/actions.cc:689
+#: ../pan/gui/actions.cc:726
 msgid "Show _Smilies as Graphics"
 msgstr "Mostra les _emoticones com a imatges"
 
-#: ../pan/gui/actions.cc:690
+#: ../pan/gui/actions.cc:727
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr "Mostra *negreta*, __subratllat__, i /cursiva/"
 
-#: ../pan/gui/actions.cc:691
+#: ../pan/gui/actions.cc:728
 msgid "Size Pictures to _Fit"
 msgstr "_Dimensiona les imatges per ajustar"
 
-#: ../pan/gui/actions.cc:692
+#: ../pan/gui/actions.cc:729
 msgid "Use _Monospace Font"
 msgstr "Utilitza la lletra _monoespai"
 
-#: ../pan/gui/actions.cc:693
+#: ../pan/gui/actions.cc:730
 msgid "Set Focus to Images"
 msgstr "Estableix el focus de les imatges"
 
-#: ../pan/gui/actions.cc:694
+#: ../pan/gui/actions.cc:731
 msgid "Highlight _URLs"
 msgstr ""
 
-#: ../pan/gui/actions.cc:697
+#: ../pan/gui/actions.cc:734
 msgid "_Work Online"
 msgstr "_Treballa connectat"
 
-#: ../pan/gui/actions.cc:698
+#: ../pan/gui/actions.cc:735
 msgid "_Tabbed Layout"
 msgstr "Disposició en _pestanyes"
 
-#: ../pan/gui/actions.cc:699
+#: ../pan/gui/actions.cc:736
 msgid "Show Group _Pane"
 msgstr "Mostra la _subfinestra de grup"
 
-#: ../pan/gui/actions.cc:700
+#: ../pan/gui/actions.cc:737
 msgid "Show Hea_der Pane"
 msgstr "Mostra la subfinestra _de capçalera"
 
-#: ../pan/gui/actions.cc:701
+#: ../pan/gui/actions.cc:738
 msgid "Show Bod_y Pane"
 msgstr "Mostra la subfinestra de _cos"
 
-#: ../pan/gui/actions.cc:702
+#: ../pan/gui/actions.cc:739
 msgid "Show _Toolbar"
 msgstr "Mostra la _barra d'eines"
 
-#: ../pan/gui/actions.cc:703
+#: ../pan/gui/actions.cc:740
 msgid "Abbreviate Group Names"
 msgstr "Abrevia els noms dels grups"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:742
+#, fuzzy
+#| msgid "Match Only _Unread Articles"
+msgid "Match Only _Read Articles"
+msgstr "Només coincideix amb els articles per _llegir"
+
+#: ../pan/gui/actions.cc:742
+#, fuzzy
+#| msgid "Match Only Unread Articles"
+msgid "Match Only Read Articles"
+msgstr "Només coincideix amb els articles per llegir"
+
+#: ../pan/gui/actions.cc:743
 msgid "Match Only _Unread Articles"
 msgstr "Només coincideix amb els articles per _llegir"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:743
 msgid "Match Only Unread Articles"
 msgstr "Només coincideix amb els articles per llegir"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:744
 msgid "Match Only _Cached Articles"
 msgstr "Només coincideix amb els articles a la _memòria cau"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:744
 msgid "Match Only Cached Articles"
 msgstr "Només coincideix amb els articles a la memòria cau"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:745
 msgid "Match Only _Complete Articles"
 msgstr "Només coincideix amb els articles _complets"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:745
 msgid "Match Only Complete Articles"
 msgstr "Només coincideix amb els articles complets"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:746
 msgid "Match Only _My Articles"
 msgstr "Només coincideix amb els _vostres articles"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:746
 msgid "Match Only My Articles"
 msgstr "Només coincideix amb els vostres articles"
 
-#: ../pan/gui/actions.cc:709
+#: ../pan/gui/actions.cc:747
 msgid "Match Only _Watched Articles"
 msgstr "Només coincideix amb els articles _mirats"
 
-#: ../pan/gui/actions.cc:709
+#: ../pan/gui/actions.cc:747
 msgid "Match Only Watched Articles"
 msgstr "Només coincideix amb els articles mirats"
 
-#: ../pan/gui/actions.cc:711
+#: ../pan/gui/actions.cc:749
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "Puntuació de 9999 (_mirat)"
 
-#: ../pan/gui/actions.cc:712
+#: ../pan/gui/actions.cc:750
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr "Puntuació entre 5000...9998 (_alt)"
 
-#: ../pan/gui/actions.cc:713
+#: ../pan/gui/actions.cc:751
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "Puntuació entre 1...4999 (_mitjà)"
 
-#: ../pan/gui/actions.cc:714
+#: ../pan/gui/actions.cc:752
 msgid "Match Scores of 0 (_Normal)"
 msgstr "Puntuació de 0 (_normal)"
 
-#: ../pan/gui/actions.cc:715
+#: ../pan/gui/actions.cc:753
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "Puntuació entre -9998...-1 (_baix)"
 
-#: ../pan/gui/actions.cc:716
+#: ../pan/gui/actions.cc:754
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "Puntuació de -9999 (_ignorat)"
 
-#: ../pan/gui/actions.cc:718
+#: ../pan/gui/actions.cc:756
 msgid "Enable/Disable All _Rules"
 msgstr ""
 
-#: ../pan/gui/actions.cc:744
+#: ../pan/gui/actions.cc:784
 msgid "Show Matching _Articles"
 msgstr "Mostra els _articles que hi coincideixin"
 
-#: ../pan/gui/actions.cc:745
+#: ../pan/gui/actions.cc:785
 msgid "Show Matching Articles' _Threads"
 msgstr "Mostra els _fils que hi coincideixin"
 
-#: ../pan/gui/actions.cc:746
+#: ../pan/gui/actions.cc:786
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Mostra els _fils secundaris que hi coincideixin"
 
-#: ../pan/gui/body-pane.cc:1011
+#: ../pan/gui/body-pane.cc:1056
 #, fuzzy, c-format
 msgid "Unnamed File"
 msgstr "Fitxer de signatura"
 
-#: ../pan/gui/body-pane.cc:1092 ../pan/gui/gui.cc:1864
-#: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1617
-#: ../pan/gui/post-ui.cc:2496 ../pan/gui/prefs-ui.cc:833
-#: ../pan/gui/score-add-ui.cc:139
+#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1960
+#: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1748
+#: ../pan/gui/post-ui.cc:2549 ../pan/gui/prefs-ui.cc:855
+#: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:796
 msgid "Subject"
 msgstr "Assumpte"
 
-#: ../pan/gui/body-pane.cc:1094 ../pan/gui/gui.cc:1864
+#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1960
 msgid "From"
 msgstr "De"
 
-#: ../pan/gui/body-pane.cc:1096 ../pan/gui/gui.cc:1865
-#: ../pan/gui/header-pane.cc:1695 ../pan/gui/log-ui.cc:305
-#: ../pan/gui/prefs-ui.cc:829
+#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1961
+#: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:305
+#: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
 msgstr "Data"
 
-#: ../pan/gui/body-pane.cc:1103
+#: ../pan/gui/body-pane.cc:1148
 msgid "Newsgroups"
 msgstr "Grups de notícies"
 
-#: ../pan/gui/body-pane.cc:1108
+#: ../pan/gui/body-pane.cc:1155 ../pan/gui/body-pane.cc:1163
+#: ../pan/gui/body-pane.cc:1170
+msgid "User-Agent"
+msgstr "Agent d'usuari"
+
+#: ../pan/gui/body-pane.cc:1176
 msgid "Followup-To"
 msgstr "Seguiment-a"
 
-#: ../pan/gui/body-pane.cc:1118
+#: ../pan/gui/body-pane.cc:1186
 msgid "Reply-To"
 msgstr "Respon-a"
 
-#: ../pan/gui/body-pane.cc:1160
+#: ../pan/gui/body-pane.cc:1229
 msgid " from "
 msgstr " de "
 
-#: ../pan/gui/body-pane.cc:1162
+#: ../pan/gui/body-pane.cc:1231
 msgid " at "
 msgstr " a "
 
-#: ../pan/gui/body-pane.cc:1264
+#: ../pan/gui/body-pane.cc:1318
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
 "\n"
-"<b>Signer</b> : %s ('%s')\n"
-"<b>Valid until</b> : %s\n"
-"<b>Created on</b> : %s"
+"<b>Signer:</b> %s ('%s')\n"
+"<b>Valid until:</b> %s\n"
+"<b>Created on:</b> %s"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1269
+#: ../pan/gui/body-pane.cc:1323
 msgid "always"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1485
+#: ../pan/gui/body-pane.cc:1543
 msgid "Copy _URL"
 msgstr "Copia l'_URL"
 
-#: ../pan/gui/body-pane.cc:1680
-#, fuzzy
-msgid "Save attachment as ...."
-msgstr "Desa els adjunts"
+#: ../pan/gui/body-pane.cc:1748
+msgid "Save Attachment As..."
+msgstr "Anomena i desa els adjunts com a..."
 
-#: ../pan/gui/body-pane.cc:1683
-#, fuzzy
-msgid "Save all attachments"
-msgstr "Desa els adjunts"
+#: ../pan/gui/body-pane.cc:1751
+msgid "Save All Attachments"
+msgstr "Desa tots els adjunts"
 
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1753
+#: ../pan/gui/body-pane.cc:1821
 msgid "Attachments"
 msgstr "Fitxers adjunts"
 
-#. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:973
-#: ../pan/gui/gui.cc:1592 ../pan/gui/gui.cc:1893
-#: ../pan/gui/score-add-ui.cc:602
-msgid "Pan"
-msgstr "Pan"
+#: ../pan/gui/body-pane.cc:1836
+msgid "Text View"
+msgstr "Vista de text"
+
+#: ../pan/gui/body-pane.cc:1845
+msgid "HTML View"
+msgstr "Vista d'HTML"
 
 #: ../pan/gui/dl-headers-ui.cc:112
-#, fuzzy, c-format
+#, c-format
 msgid "%d Group"
 msgid_plural "%d Groups"
-msgstr[0] "Grups %d"
-msgstr[1] "Grups %d"
+msgstr[0] "%d grups"
+msgstr[1] "%d grups"
 
 #: ../pan/gui/dl-headers-ui.cc:135
 msgid "Get the last N _days' headers: "
@@ -856,7 +931,34 @@ msgstr "Obtingues _totes les capçaleres"
 msgid "Get the _latest N headers: "
 msgstr "Obtingues les _últimes N capçaleres: "
 
-#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:826
+#: ../pan/gui/dl-prefs.cc:156
+#, fuzzy
+msgid "Pan: Download Meter Preferences"
+msgstr "Pan: descarrega capçaleres"
+
+#: ../pan/gui/dl-prefs.cc:168
+msgid "When Download Limit Is Reached:"
+msgstr ""
+
+#: ../pan/gui/dl-prefs.cc:171
+msgid "Warn"
+msgstr ""
+
+#: ../pan/gui/dl-prefs.cc:173
+#, fuzzy
+msgid "Disconnect from server"
+msgstr "S'està connectant amb el servidor de correu"
+
+#: ../pan/gui/dl-prefs.cc:175
+#, fuzzy
+msgid "Download Limit"
+msgstr "Directori per descarregar"
+
+#: ../pan/gui/dl-prefs.cc:180
+msgid "Reset"
+msgstr "Reinicia"
+
+#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:848
 msgid "Action"
 msgstr "Acció"
 
@@ -864,13 +966,13 @@ msgstr "Acció"
 msgid "A GtkRadioAction"
 msgstr ""
 
-#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:518
+#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:557
 msgid "Unknown"
 msgstr "Desconegut"
 
 #: ../pan/gui/e-charset.c:52
 msgid "Arabic"
-msgstr ""
+msgstr "Àrab"
 
 #: ../pan/gui/e-charset.c:53
 msgid "Baltic"
@@ -942,8 +1044,8 @@ msgstr "Ucraïnès"
 msgid "Visual"
 msgstr "Visual"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2058
-#: ../pan/gui/post-ui.cc:519 ../pan/gui/prefs-ui.cc:737
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2158
+#: ../pan/gui/post-ui.cc:509 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Codificació de caràcters"
 
@@ -957,22 +1059,22 @@ msgstr "Altres..."
 
 #: ../pan/gui/e-cte-dialog.c:78
 #, fuzzy
-msgid "Default encoding"
+msgid "Default Encoding"
 msgstr "S'està descodificant"
 
 #: ../pan/gui/e-cte-dialog.c:80
 #, fuzzy
-msgid "7Bit Encoding"
+msgid "7-Bit Encoding"
 msgstr "S'està descodificant"
 
 #: ../pan/gui/e-cte-dialog.c:82
 #, fuzzy
-msgid "8Bit Encoding"
+msgid "8-Bit Encoding"
 msgstr "S'està descodificant"
 
 #: ../pan/gui/e-cte-dialog.c:84
 #, fuzzy
-msgid "BASE64 Encoding"
+msgid "Base64 Encoding"
 msgstr "S'està descodificant"
 
 #: ../pan/gui/e-cte-dialog.c:86
@@ -980,147 +1082,158 @@ msgstr "S'està descodificant"
 msgid "Quoted-Printable Encoding"
 msgstr "Codificació de la subfinestra de cos"
 
-#: ../pan/gui/group-pane.cc:500
+#: ../pan/gui/group-pane.cc:330
+msgid "Sent"
+msgstr "Enviat"
+
+#: ../pan/gui/group-pane.cc:331
+msgid "Drafts"
+msgstr "Esborranys"
+
+#: ../pan/gui/group-pane.cc:537
 msgid "Group"
 msgstr "Grup"
 
-#: ../pan/gui/group-pane.cc:501
+#: ../pan/gui/group-pane.cc:538
 #, fuzzy
 msgid "Group (regex)"
 msgstr "Propietats del grup"
 
-#: ../pan/gui/group-pane.cc:913
-msgid "Subscribed Groups"
-msgstr "Grups subscrits:"
+#: ../pan/gui/group-pane.cc:1010
+msgid "Local Folders"
+msgstr "Carpetes locals"
 
-#: ../pan/gui/group-pane.cc:914
+#: ../pan/gui/group-pane.cc:1011
+msgid "Subscribed Groups"
+msgstr "Grups subscrits"
+
+#: ../pan/gui/group-pane.cc:1012
 msgid "Other Groups"
 msgstr "Altres grups"
 
-#: ../pan/gui/group-pane.cc:954 ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/group-pane.cc:1052 ../pan/gui/score-view-ui.cc:157
 msgid "Name"
 msgstr "Nom"
 
-#: ../pan/gui/group-prefs-dialog.cc:156
+#: ../pan/gui/group-prefs-dialog.cc:163
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "No s'ha definit cap perfil en «Edita|Perfils de publicació»."
 
-#: ../pan/gui/group-prefs-dialog.cc:231
+#: ../pan/gui/group-prefs-dialog.cc:272
 msgid "Pan: Group Preferences"
 msgstr "Pan: preferències de grup"
 
-#: ../pan/gui/group-prefs-dialog.cc:247
+#: ../pan/gui/group-prefs-dialog.cc:287
 #, fuzzy, c-format
 msgid "Properties for Groups"
 msgstr "Propietats de %s"
 
-#: ../pan/gui/group-prefs-dialog.cc:249
+#: ../pan/gui/group-prefs-dialog.cc:289
 #, c-format
 msgid "Properties for %s"
 msgstr "Propietats de %s"
 
-#: ../pan/gui/group-prefs-dialog.cc:257
+#: ../pan/gui/group-prefs-dialog.cc:297
 msgid "Character _encoding:"
 msgstr "Codificació de caràct_ers:"
 
-#: ../pan/gui/group-prefs-dialog.cc:259
+#: ../pan/gui/group-prefs-dialog.cc:299
 msgid "Directory for Saving Attachments"
 msgstr "Directori on desar els adjunts"
 
-#: ../pan/gui/group-prefs-dialog.cc:269
+#: ../pan/gui/group-prefs-dialog.cc:307
 msgid "Directory for _saving attachments:"
 msgstr "Directori on _desar els adjunts"
 
-#: ../pan/gui/group-prefs-dialog.cc:271
+#: ../pan/gui/group-prefs-dialog.cc:309
 msgid "Posting _profile:"
 msgstr "S'està publicant el _perfil:"
 
-#: ../pan/gui/group-prefs-dialog.cc:277
+#: ../pan/gui/group-prefs-dialog.cc:314
 msgid "Spellchecker _language:"
 msgstr ""
 
-#: ../pan/gui/gui.cc:273
+#: ../pan/gui/group-prefs-dialog.cc:317
+msgid "Group color:"
+msgstr ""
+
+#: ../pan/gui/gui.cc:319
 msgid "Open the Task Manager"
 msgstr "Obre el gestor de tasques"
 
-#: ../pan/gui/gui.cc:301
+#: ../pan/gui/gui.cc:342
 msgid "Open the Event Log"
 msgstr "Obre el registre d'esdeveniments"
 
-#: ../pan/gui/gui.cc:561
+#: ../pan/gui/gui.cc:618
 msgid "Save NZB's Files"
 msgstr "Desa els fitxers NZB"
 
-#: ../pan/gui/gui.cc:588
+#: ../pan/gui/gui.cc:645
 msgid "Untitled.nzb"
 msgstr ""
 
-#: ../pan/gui/gui.cc:590
+#: ../pan/gui/gui.cc:647
 #, fuzzy
 msgid "Save NZB File as..."
 msgstr "Desa els fitxers NZB"
 
-#: ../pan/gui/gui.cc:757
+#: ../pan/gui/gui.cc:816
 msgid "Import NZB Files"
 msgstr "Importa fitxers NZB"
 
-#: ../pan/gui/gui.cc:765 ../pan/gui/post-ui.cc:3197
+#: ../pan/gui/gui.cc:824 ../pan/gui/post-ui.cc:3248
 msgid "NZB Files"
 msgstr "Fitxers NZB"
 
-#: ../pan/gui/gui.cc:770
+#: ../pan/gui/gui.cc:829
 msgid "All Files"
 msgstr "Tots els fitxers"
 
-#: ../pan/gui/gui.cc:1258
+#: ../pan/gui/gui.cc:1338
 msgid "Unable to supersede article."
 msgstr "No es pot substituir l'article."
 
-#: ../pan/gui/gui.cc:1259 ../pan/gui/gui.cc:1333
+#: ../pan/gui/gui.cc:1339 ../pan/gui/gui.cc:1413
 msgid "The article doesn't match any of your posting profiles."
 msgstr "L'article no coincideix amb cap dels vostres perfils de publicació."
 
-#: ../pan/gui/gui.cc:1306
+#: ../pan/gui/gui.cc:1386
 msgid "Revise and send this article to replace the old one."
 msgstr "Reviseu i envieu aquest article per a reemplaçar l'antic."
 
-#: ../pan/gui/gui.cc:1307 ../pan/gui/gui.cc:1370
+#: ../pan/gui/gui.cc:1387 ../pan/gui/gui.cc:1450
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr "Tingueu paciència. Efectuar els vostres canvis portarà un temps."
 
-#: ../pan/gui/gui.cc:1332
+#: ../pan/gui/gui.cc:1412
 msgid "Unable to cancel article."
 msgstr "No es pot cancel·lar l'article."
 
-#: ../pan/gui/gui.cc:1369
+#: ../pan/gui/gui.cc:1449
 msgid "Send this article to ask your server to cancel your other one."
 msgstr "Envieu aquest article per a demanar al servidor que cancel·li l'altre."
 
-#: ../pan/gui/gui.cc:1387
+#: ../pan/gui/gui.cc:1467
 #, fuzzy
-msgid "You marked some articles for deletion"
+msgid "You have marked some articles for deletion."
 msgstr "Afegeix articles _similars a la selecció"
 
-#: ../pan/gui/gui.cc:1388
+#: ../pan/gui/gui.cc:1468
 #, fuzzy
 msgid "Are you sure you want to delete them?"
 msgstr "Voleu suprimir els %d grups o carpetes i els seus articles?"
 
-#: ../pan/gui/gui.cc:1413
-#, fuzzy
-msgid "Always trust"
-msgstr "Executa sempre l'editor"
-
-#: ../pan/gui/gui.cc:1416
-msgid "Do you want to accept it permanently (deletable afterwards) ?"
+#: ../pan/gui/gui.cc:1494
+msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1595
+#: ../pan/gui/gui.cc:1674
 #, fuzzy
 msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
 msgstr "Copyright © 2002-2007 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1600
+#: ../pan/gui/gui.cc:1679
 msgid "translator-credits"
 msgstr ""
 "Joaquim Torres <quimelisenda@retemail.es>\n"
@@ -1128,123 +1241,119 @@ msgstr ""
 "Lluís Pàmies i Juarez <llpamies@tinet.cat>\n"
 "Joan Duran Fígols <jodufi@gmail.com>"
 
-#: ../pan/gui/gui.cc:1709
+#: ../pan/gui/gui.cc:1805
 msgid "_1. Group Pane"
 msgstr "_1. Subfinestra de grup"
 
-#: ../pan/gui/gui.cc:1710
+#: ../pan/gui/gui.cc:1806
 msgid "_2. Header Pane"
 msgstr "_2. Subfinestra de capçalera"
 
-#: ../pan/gui/gui.cc:1711
+#: ../pan/gui/gui.cc:1807
 msgid "_3. Body Pane"
 msgstr "_3. Subfinestra de cos"
 
-#: ../pan/gui/gui.cc:1800 ../pan/gui/gui.cc:1815
+#: ../pan/gui/gui.cc:1897 ../pan/gui/gui.cc:1912
 #, fuzzy
 msgid " Bytes"
 msgstr "Bytes"
 
-#: ../pan/gui/gui.cc:1803
+#: ../pan/gui/gui.cc:1900
 msgid " KB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1806
+#: ../pan/gui/gui.cc:1903
 msgid " MB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1809
+#: ../pan/gui/gui.cc:1906
 msgid " GB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1812
+#: ../pan/gui/gui.cc:1909
 msgid " TB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1844
+#: ../pan/gui/gui.cc:1941
 #, fuzzy, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
 msgstr[0] "Aquest article té les %d parts."
 msgstr[1] "Aquest article té les %d parts."
 
-#: ../pan/gui/gui.cc:1846
+#: ../pan/gui/gui.cc:1943
 #, fuzzy, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "En aquest article falten %d de les %d parts:"
 msgstr[1] "En aquest article falten %d de les %d parts:"
 
-#: ../pan/gui/gui.cc:1865 ../pan/gui/header-pane.cc:1190
+#: ../pan/gui/gui.cc:1961 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/task-pane.cc:798
 msgid "Message-ID"
 msgstr "Identificador del missatge"
 
-#: ../pan/gui/gui.cc:1866 ../pan/gui/header-pane.cc:1665
-#: ../pan/gui/prefs-ui.cc:830
+#: ../pan/gui/gui.cc:1962 ../pan/gui/header-pane.cc:1796
+#: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Línies"
 
-#: ../pan/gui/gui.cc:1866
+#: ../pan/gui/gui.cc:1962
 msgid "Size"
-msgstr ""
+msgstr "Mida"
 
-#: ../pan/gui/gui.cc:1867 ../pan/gui/header-pane.cc:1680
-#: ../pan/gui/prefs-ui.cc:828
-msgid "Bytes"
-msgstr "Bytes"
-
-#: ../pan/gui/gui.cc:1917
+#: ../pan/gui/gui.cc:2013
 msgid ""
-"Error loading iconv library. Some Charsets in the GUI will not be able to be "
-"encoded."
+"Error loading iconv library. Encoding certain character sets will not work "
+"in GUI."
 msgstr ""
 
-#: ../pan/gui/gui.cc:2059
+#: ../pan/gui/gui.cc:2159
 msgid "Body Pane Encoding"
 msgstr "Codificació de la subfinestra de cos"
 
-#: ../pan/gui/gui.cc:2090 ../pan/gui/task-pane.cc:569
+#: ../pan/gui/gui.cc:2190 ../pan/gui/task-pane.cc:608
 #, c-format
 msgid "Offline"
 msgstr "Desconnectat"
 
-#: ../pan/gui/gui.cc:2094
+#: ../pan/gui/gui.cc:2194
 #, fuzzy, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
 msgstr[0] "S'estan tancant %d connexions"
 msgstr[1] "S'estan tancant %d connexions"
 
-#: ../pan/gui/gui.cc:2096 ../pan/gui/gui.cc:2126
+#: ../pan/gui/gui.cc:2196 ../pan/gui/gui.cc:2226
 #, c-format
 msgid "No Connections"
 msgstr "Cap connexió"
 
-#: ../pan/gui/gui.cc:2100
+#: ../pan/gui/gui.cc:2200
 #, c-format
 msgid "Connecting"
 msgstr "S'està connectant"
 
-#: ../pan/gui/gui.cc:2113
+#: ../pan/gui/gui.cc:2213
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d inactius, %d actius @ %.1f KiBps"
 
-#: ../pan/gui/gui.cc:2169
+#: ../pan/gui/gui.cc:2269
 #, c-format
 msgid "No Tasks"
 msgstr "Cap tasca"
 
-#: ../pan/gui/gui.cc:2171 ../pan/gui/prefs-ui.cc:1047
+#: ../pan/gui/gui.cc:2271 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Tasques"
 
-#: ../pan/gui/gui.cc:2182 ../pan/gui/task-pane.cc:435
+#: ../pan/gui/gui.cc:2288 ../pan/gui/task-pane.cc:474
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu tasques, %s, %.1f KiBps, temps estimat %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2234
+#: ../pan/gui/gui.cc:2340
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1253,21 +1362,22 @@ msgstr ""
 "corregiu el problema, després utilitzeu «Fitxer|Treballa connectat» per a "
 "continuar"
 
-#: ../pan/gui/header-pane.cc:1186
+#: ../pan/gui/header-pane.cc:1311 ../pan/gui/task-pane.cc:794
 msgid "Subject or Author"
 msgstr "Assumpte o autor"
 
-#: ../pan/gui/header-pane.cc:1187
+#: ../pan/gui/header-pane.cc:1312 ../pan/gui/task-pane.cc:795
 #, fuzzy
 msgid "Sub or Auth (regex)"
 msgstr "Assumpte o autor"
 
-#: ../pan/gui/header-pane.cc:1189 ../pan/gui/header-pane.cc:1649
-#: ../pan/gui/prefs-ui.cc:827 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/header-pane.cc:1314 ../pan/gui/header-pane.cc:1780
+#: ../pan/gui/prefs-ui.cc:849 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/task-pane.cc:797
 msgid "Author"
 msgstr "Autor"
 
-#: ../pan/gui/header-pane.cc:1634 ../pan/gui/prefs-ui.cc:831
+#: ../pan/gui/header-pane.cc:1765 ../pan/gui/prefs-ui.cc:853
 msgid "Score"
 msgstr "Puntuació"
 
@@ -1283,30 +1393,30 @@ msgstr "Pan: esdeveniments"
 msgid "Message"
 msgstr "Missatge"
 
-#: ../pan/gui/pan.cc:330
+#: ../pan/gui/pan.cc:359
 msgid "Maximize"
+msgstr "Maximitza"
+
+#: ../pan/gui/pan.cc:412
+msgid "An error has occurred!"
 msgstr ""
 
-#: ../pan/gui/pan.cc:383
-msgid "An Error has occurred!"
-msgstr ""
-
-#: ../pan/gui/pan.cc:397
+#: ../pan/gui/pan.cc:426
 #, fuzzy
 msgid "New Articles!"
 msgstr "Següent article"
 
-#: ../pan/gui/pan.cc:398
+#: ../pan/gui/pan.cc:427
 msgid ""
 "There are new\n"
 "articles available."
 msgstr ""
 
-#: ../pan/gui/pan.cc:465
+#: ../pan/gui/pan.cc:494
 msgid "Toggle on/offline"
 msgstr ""
 
-#: ../pan/gui/pan.cc:513
+#: ../pan/gui/pan.cc:542
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1316,7 +1426,7 @@ msgstr ""
 " \n"
 "Per a començar a llegir noticies, primer afegiu un servidor."
 
-#: ../pan/gui/pan.cc:595
+#: ../pan/gui/pan.cc:624
 #, fuzzy
 msgid ""
 "General Options\n"
@@ -1324,6 +1434,8 @@ msgid ""
 "  --verbose                Be verbose (in non-GUI mode).\n"
 "\n"
 "URL Options\n"
+"  headers:group.name       Download new headers for the specified "
+"newsgroup.\n"
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -1352,221 +1464,224 @@ msgstr ""
 "  --no-gui                 Només mostra la sortida de la consola, no la cua "
 "de baixada.\n"
 
-#: ../pan/gui/pan.cc:867
+#: ../pan/gui/pan.cc:958
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr ""
 "Error: s'ha utilitzat --no-gui sense fitxers nzb o noticies:id-missatge."
 
-#: ../pan/gui/pan.cc:871
+#: ../pan/gui/pan.cc:962
 #, c-format
 msgid "Pan %s started"
 msgstr "S'ha iniciat el Pan %s"
 
-#: ../pan/gui/pan.cc:890
+#: ../pan/gui/pan.cc:982
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Configura els servidors de noticies del Pan abans d'utilitzar-lo com un "
 "client nzb."
 
-#: ../pan/gui/pan.cc:1009
+#: ../pan/gui/pan.cc:1100
 msgid "Pan notification"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:186
+#: ../pan/gui/post-ui.cc:163
 #, c-format
-msgid "Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."
+msgid "Upload queue: %u tasks, %ld KB (~ %.2f MB) total."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:286
+#: ../pan/gui/post-ui.cc:263
 #, fuzzy, c-format
 msgid "Error setting custom spellchecker: %s"
 msgstr "S'ha produït un error en configurar el corrector ortogràfic: %s"
 
-#: ../pan/gui/post-ui.cc:291 ../pan/gui/post-ui.cc:300
+#: ../pan/gui/post-ui.cc:268 ../pan/gui/post-ui.cc:277
 #, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "S'ha produït un error en configurar el corrector ortogràfic: %s"
 
-#: ../pan/gui/post-ui.cc:419
+#: ../pan/gui/post-ui.cc:409
 msgid "_Profile"
 msgstr "_Perfil"
 
-#: ../pan/gui/post-ui.cc:420
+#: ../pan/gui/post-ui.cc:410
 msgid "Set Editor"
 msgstr "Estableix l'editor"
 
-#: ../pan/gui/post-ui.cc:422
+#: ../pan/gui/post-ui.cc:412
 msgid "_Send Article"
 msgstr "_Envia l'article"
 
-#: ../pan/gui/post-ui.cc:422
+#: ../pan/gui/post-ui.cc:412
 msgid "Send Article Now"
 msgstr "Envia ara l'article"
 
-#: ../pan/gui/post-ui.cc:423
+#: ../pan/gui/post-ui.cc:413
 #, fuzzy
 msgid "_Send and Save Articles to NZB"
 msgstr "Desa els articles d'aquest NZB"
 
-#: ../pan/gui/post-ui.cc:423
+#: ../pan/gui/post-ui.cc:413
 #, fuzzy
 msgid "Send and Save Articles to NZB"
 msgstr "Pan: desa els articles"
 
-#: ../pan/gui/post-ui.cc:424
+#: ../pan/gui/post-ui.cc:414
 msgid "Set Character _Encoding..."
 msgstr "_Estableix la codificació dels caràcters..."
 
-#: ../pan/gui/post-ui.cc:425
+#: ../pan/gui/post-ui.cc:415
 #, fuzzy
 msgid "Set Content _Transfer Encoding..."
 msgstr "Estableix la codificació de caràcters..."
 
-#: ../pan/gui/post-ui.cc:426
+#: ../pan/gui/post-ui.cc:416
 msgid "Sa_ve Draft"
 msgstr "Desa un _esborrany"
 
-#: ../pan/gui/post-ui.cc:426
+#: ../pan/gui/post-ui.cc:416
 msgid "Save as a Draft for Future Posting"
 msgstr "Desa un esborrany per a publicar-lo més tard"
 
-#: ../pan/gui/post-ui.cc:427
+#: ../pan/gui/post-ui.cc:417
 msgid "_Open Draft..."
 msgstr "_Obre l'esborrany..."
 
-#: ../pan/gui/post-ui.cc:427
+#: ../pan/gui/post-ui.cc:417
 msgid "Open an Article Draft"
 msgstr "Obre l'esborrany d'un article"
 
-#: ../pan/gui/post-ui.cc:432
+#: ../pan/gui/post-ui.cc:422
 msgid "_Rot13"
 msgstr "_Rot13"
 
-#: ../pan/gui/post-ui.cc:432
+#: ../pan/gui/post-ui.cc:422
 msgid "Rot13 Selected Text"
 msgstr "Aplica conversió Rot13 a la selecció"
 
-#: ../pan/gui/post-ui.cc:433
+#: ../pan/gui/post-ui.cc:423
 msgid "Run _Editor"
 msgstr "Executa l'_editor"
 
-#: ../pan/gui/post-ui.cc:433
+#: ../pan/gui/post-ui.cc:423
 #, fuzzy
 msgid "Run Editor"
 msgstr "Executa l'_editor"
 
-#: ../pan/gui/post-ui.cc:435
+#: ../pan/gui/post-ui.cc:425
 msgid "Add _Files to Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:435
+#: ../pan/gui/post-ui.cc:425
 msgid "Add Files to Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:450 ../pan/gui/post-ui.cc:451
+#: ../pan/gui/post-ui.cc:440 ../pan/gui/post-ui.cc:441
 #, fuzzy
 msgid "Remove from Queue"
 msgstr "Suprimeix un servidor"
 
-#: ../pan/gui/post-ui.cc:455 ../pan/gui/post-ui.cc:456
+#: ../pan/gui/post-ui.cc:445 ../pan/gui/post-ui.cc:446
 #, fuzzy
 msgid "Clear List"
 msgstr "Neteja el filtre"
 
-#: ../pan/gui/post-ui.cc:460 ../pan/gui/post-ui.cc:461
+#: ../pan/gui/post-ui.cc:450 ../pan/gui/post-ui.cc:451
 #, fuzzy
 msgid "Select Needed Parts"
 msgstr "Seleccioneu un tipus de lletra"
 
-#: ../pan/gui/post-ui.cc:465 ../pan/gui/post-ui.cc:466
-#: ../pan/gui/task-pane.cc:636 ../pan/gui/task-pane.cc:637
+#: ../pan/gui/post-ui.cc:455 ../pan/gui/post-ui.cc:456
+#: ../pan/gui/task-pane.cc:676 ../pan/gui/task-pane.cc:677
 msgid "Move Up"
-msgstr ""
+msgstr "Mou cap amunt"
+
+#: ../pan/gui/post-ui.cc:460 ../pan/gui/post-ui.cc:461
+#: ../pan/gui/task-pane.cc:681 ../pan/gui/task-pane.cc:682
+msgid "Move Down"
+msgstr "Mou cap avall"
+
+#: ../pan/gui/post-ui.cc:465 ../pan/gui/post-ui.cc:466
+msgid "Move to Top"
+msgstr "Mou a la part superior"
 
 #: ../pan/gui/post-ui.cc:470 ../pan/gui/post-ui.cc:471
-#: ../pan/gui/task-pane.cc:641 ../pan/gui/task-pane.cc:642
-msgid "Move Down"
-msgstr ""
-
-#: ../pan/gui/post-ui.cc:475 ../pan/gui/post-ui.cc:476
-msgid "Move to Top"
-msgstr ""
-
-#: ../pan/gui/post-ui.cc:480 ../pan/gui/post-ui.cc:481
 #, fuzzy
 msgid "Move to Bottom"
 msgstr "Mou les tasques seleccionades al final"
 
-#: ../pan/gui/post-ui.cc:488
+#: ../pan/gui/post-ui.cc:478
 msgid "_Wrap Text"
 msgstr "_Ajusta el text"
 
-#: ../pan/gui/post-ui.cc:488
+#: ../pan/gui/post-ui.cc:478
 #, fuzzy
 msgid "Wrap Text"
 msgstr "_Ajusta el text"
 
-#: ../pan/gui/post-ui.cc:489
+#: ../pan/gui/post-ui.cc:479
 msgid "Always Run Editor"
 msgstr "Executa sempre l'editor"
 
-#: ../pan/gui/post-ui.cc:490
-msgid "Remember Character Encoding for this Group"
+#: ../pan/gui/post-ui.cc:480
+#, fuzzy
+msgid "Remember Character Encoding for This Group"
 msgstr "Recorda la codificació de caràcters per a aquest grup"
 
-#: ../pan/gui/post-ui.cc:491
+#: ../pan/gui/post-ui.cc:481
 msgid "Thread Attached Replies"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:492
-msgid "PGP-Encrypt the Message"
-msgstr ""
+#: ../pan/gui/post-ui.cc:482
+#, fuzzy
+msgid "PGP-Encrypt the Article"
+msgstr "Posa l'article a la memòria cau"
 
-#: ../pan/gui/post-ui.cc:493
-msgid "PGP-Sign the Message"
-msgstr ""
+#: ../pan/gui/post-ui.cc:483
+#, fuzzy
+msgid "PGP-Sign the Article"
+msgstr "I el dels articles"
 
-#: ../pan/gui/post-ui.cc:494
+#: ../pan/gui/post-ui.cc:484
 msgid "Check _Spelling"
 msgstr "Comprova l'_ortografia"
 
-#: ../pan/gui/post-ui.cc:520
+#: ../pan/gui/post-ui.cc:510
 msgid "New Article's Encoding:"
 msgstr "Codificació nova dels articles:"
 
-#: ../pan/gui/post-ui.cc:530
+#: ../pan/gui/post-ui.cc:520
 #, fuzzy
 msgid "Content Transfer Encoding"
 msgstr "Codificació de caràcters"
 
-#: ../pan/gui/post-ui.cc:531
+#: ../pan/gui/post-ui.cc:521
 #, fuzzy
 msgid "New Article's Content Transfer Encoding:"
 msgstr "Codificació nova dels articles:"
 
-#: ../pan/gui/post-ui.cc:711
+#: ../pan/gui/post-ui.cc:701
 msgid "Your changes will be lost!"
 msgstr "Els canvis es perdran!"
 
-#: ../pan/gui/post-ui.cc:712
+#: ../pan/gui/post-ui.cc:702
 msgid "Close this window and lose your changes?"
 msgstr "Voleu tancar aquesta finestra i perdre els canvis?"
 
-#: ../pan/gui/post-ui.cc:757 ../pan/gui/post-ui.cc:796
+#: ../pan/gui/post-ui.cc:747 ../pan/gui/post-ui.cc:786
 msgid "There were problems with this post."
 msgstr "Hi han hagut problemes amb aquesta publicació."
 
-#: ../pan/gui/post-ui.cc:759 ../pan/gui/post-ui.cc:798
-#: ../pan/gui/post-ui.cc:861
+#: ../pan/gui/post-ui.cc:749 ../pan/gui/post-ui.cc:788
+#: ../pan/gui/post-ui.cc:853
 msgid "Go Back"
 msgstr "Vés enrere"
 
-#: ../pan/gui/post-ui.cc:761
-msgid "Post Anyway"
-msgstr "Publica igualment"
+#: ../pan/gui/post-ui.cc:751
+msgid "Continue Anyway"
+msgstr "Continua igualment"
 
 #. Prompt the user
-#: ../pan/gui/post-ui.cc:790
+#: ../pan/gui/post-ui.cc:780
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
@@ -1574,15 +1689,33 @@ msgstr ""
 "El missatge fa servir caràcters no especificats al joc de caràcters «%s» - "
 "potser s'ha de fer servir «%s»."
 
-#: ../pan/gui/post-ui.cc:813
+#: ../pan/gui/post-ui.cc:803
 msgid "Go _Online"
 msgstr "_Connecta"
 
-#: ../pan/gui/post-ui.cc:860
+#: ../pan/gui/post-ui.cc:852
 msgid "The file queue is empty, so no files can be saved."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1019
+#: ../pan/gui/post-ui.cc:1031
+msgid "IO Error"
+msgstr "Error d'E/S"
+
+#: ../pan/gui/post-ui.cc:1031
+msgid "No space left on device"
+msgstr "No queda espai al dispositiu"
+
+#: ../pan/gui/post-ui.cc:1032
+#, c-format
+msgid "Error copying message to %s folder. Reason: %s"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1038
+#, c-format
+msgid "Error creating message in %s mail folder: Invalid article."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1060
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1591,120 +1724,126 @@ msgstr ""
 "publicació.\n"
 "Editeu el perfil utilitzant «Edita|Gestiona els perfils de publicació»"
 
-#: ../pan/gui/post-ui.cc:1054
+#: ../pan/gui/post-ui.cc:1065
+msgid ""
+"The selected posting server is currently disabled. Please choose an "
+"appropriate alternative."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1107
 msgid "Pan is Offline."
 msgstr "El Pan està desconnectat."
 
-#: ../pan/gui/post-ui.cc:1055
+#: ../pan/gui/post-ui.cc:1108
 msgid "Go online to post the article?"
 msgstr "Voleu connectar-vos per a publicar l'article?"
 
-#: ../pan/gui/post-ui.cc:1102
+#: ../pan/gui/post-ui.cc:1157
 #, c-format
 msgid ""
-"Error signing/encrypting your message. Perhaps you misspelled your email-"
-"address (%s) ?"
+"Error signing/encrypting your message. Perhaps you misspelled your email "
+"address (%s)?"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1267
+#: ../pan/gui/post-ui.cc:1305
 msgid "Error opening temporary file"
 msgstr "S'ha produït un error en obrir un fitxer temporal"
 
-#: ../pan/gui/post-ui.cc:1279
+#: ../pan/gui/post-ui.cc:1317
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "S'ha produït un error en escriure l'article a un fitxer temporal: %s"
 
-#: ../pan/gui/post-ui.cc:1298
+#: ../pan/gui/post-ui.cc:1336
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr ""
 "S'ha produït un error en analitzar la línia d'ordres «editor extern»: %s "
 "(l'ordre era: %s)"
 
-#: ../pan/gui/post-ui.cc:1339
+#: ../pan/gui/post-ui.cc:1377
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "S'ha produït un error en iniciar l'editor extern: %s"
 
-#: ../pan/gui/post-ui.cc:1395
+#: ../pan/gui/post-ui.cc:1440
 msgid "Open Draft Article"
 msgstr "Obre l'esborrany de l'article"
 
-#: ../pan/gui/post-ui.cc:1606
+#: ../pan/gui/post-ui.cc:1652
 msgid "Save Draft Article"
 msgstr "Desa l'esborrany de l'article"
 
-#: ../pan/gui/post-ui.cc:1803
+#: ../pan/gui/post-ui.cc:1850
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "No s'ha pogut analitzar l'ordre de signatura «%s»: %s"
 
-#: ../pan/gui/post-ui.cc:1839
+#: ../pan/gui/post-ui.cc:1886
 msgid "Couldn't convert signature to UTF-8."
 msgstr "No s'ha pogut convertir la signatura a UTF-8."
 
-#: ../pan/gui/post-ui.cc:2334
+#: ../pan/gui/post-ui.cc:2388
 msgid "F_rom"
 msgstr "_De"
 
-#: ../pan/gui/post-ui.cc:2352
+#: ../pan/gui/post-ui.cc:2405
 msgid "_Subject"
 msgstr "A_ssumpte"
 
-#: ../pan/gui/post-ui.cc:2365
+#: ../pan/gui/post-ui.cc:2418
 msgid "_Newsgroups"
 msgstr "Grups de _notícies"
 
-#: ../pan/gui/post-ui.cc:2379
+#: ../pan/gui/post-ui.cc:2432
 msgid "Mail _To"
 msgstr "_Envia un correu a"
 
-#: ../pan/gui/post-ui.cc:2481
+#: ../pan/gui/post-ui.cc:2534
 #, fuzzy
 msgid "Delete from Queue"
 msgstr "/Sup_rimeix grup"
 
-#: ../pan/gui/post-ui.cc:2494
+#: ../pan/gui/post-ui.cc:2547
 msgid "No."
-msgstr ""
+msgstr "Número"
 
-#: ../pan/gui/post-ui.cc:2498 ../pan/gui/post-ui.cc:2592
-#: ../pan/gui/post-ui.cc:2633
+#: ../pan/gui/post-ui.cc:2551 ../pan/gui/post-ui.cc:2643
+#: ../pan/gui/post-ui.cc:2684
 msgid "Filename"
 msgstr "Nom del fitxer"
 
-#: ../pan/gui/post-ui.cc:2500
-msgid "Size (kB)"
-msgstr ""
+#: ../pan/gui/post-ui.cc:2553
+msgid "Size (KB)"
+msgstr "Mida (Kb)"
 
-#: ../pan/gui/post-ui.cc:2600
+#: ../pan/gui/post-ui.cc:2651
 msgid "The current filename"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2604
+#: ../pan/gui/post-ui.cc:2655
 #, fuzzy
 msgid "Subject Line"
 msgstr "Assumpte"
 
-#: ../pan/gui/post-ui.cc:2612
-msgid "The current Subject Line"
+#: ../pan/gui/post-ui.cc:2663
+msgid "The current subject line"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2626
+#: ../pan/gui/post-ui.cc:2677
 msgid "No. "
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2630
+#: ../pan/gui/post-ui.cc:2681
 msgid "Enable/Disable"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2664
+#: ../pan/gui/post-ui.cc:2715
 msgid "Follo_wup-To"
 msgstr "_Seguiment-a"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: ../pan/gui/post-ui.cc:2673
+#: ../pan/gui/post-ui.cc:2724
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1717,565 +1856,641 @@ msgstr ""
 "Per dirigir totes les respostes a la vostra adreça de correu electrònic, "
 "utilitzeu «Seguiment-a: autor»"
 
-#: ../pan/gui/post-ui.cc:2679
+#: ../pan/gui/post-ui.cc:2731
 msgid "_Reply-To"
 msgstr "_Respondre-a"
 
-#: ../pan/gui/post-ui.cc:2687
+#: ../pan/gui/post-ui.cc:2739
+#, fuzzy
+#| msgid ""
+#| "The email account where mail replies to your posted message should go.  "
+#| "This is only needed if it differs from the \"From\" header."
 msgid ""
-"The email account where mail replies to your posted message should go.  This "
+"The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
 msgstr ""
 "El compte de correu electrònic on han d'anar les respostes al vostre "
 "missatge publicat. Només és necessari si és diferent de la capçalera «De»."
 
-#: ../pan/gui/post-ui.cc:2693
+#: ../pan/gui/post-ui.cc:2746
 msgid "_Custom Headers"
 msgstr "_Capçaleres personalitzades"
 
-#: ../pan/gui/post-ui.cc:2717
+#: ../pan/gui/post-ui.cc:2770
 msgid "Add \"_User-Agent\" header"
 msgstr "Afegeix la capçalera «Agent-d'_usuari»"
 
-#: ../pan/gui/post-ui.cc:2724
+#: ../pan/gui/post-ui.cc:2777
 #, fuzzy
-msgid "Add \"Message-_Id\" header"
+msgid "Add \"Message-_ID\" header"
 msgstr "Afegeix la capçalera «_Identificador del missatge»"
 
-#: ../pan/gui/post-ui.cc:2855
+#: ../pan/gui/post-ui.cc:2908
 #, fuzzy
 msgid "Select Parts"
 msgstr "Seleccioneu un tipus de lletra"
 
-#: ../pan/gui/post-ui.cc:2866
+#: ../pan/gui/post-ui.cc:2921
 msgid "_Parts"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3022
+#: ../pan/gui/post-ui.cc:3075
 msgid "Post Article"
 msgstr "Article publicat"
 
-#: ../pan/gui/post-ui.cc:3043
+#: ../pan/gui/post-ui.cc:3096
 msgid "_Message"
 msgstr "_Missatge"
 
-#: ../pan/gui/post-ui.cc:3044
+#: ../pan/gui/post-ui.cc:3097
 msgid "More _Headers"
 msgstr "_Més capçaleres"
 
-#: ../pan/gui/post-ui.cc:3045
+#: ../pan/gui/post-ui.cc:3098
 #, fuzzy
 msgid "File _Queue"
 msgstr "/_Fitxer/_Acaba"
 
-#: ../pan/gui/post-ui.cc:3077 ../pan/gui/profiles-dialog.cc:478
+#: ../pan/gui/post-ui.cc:3130 ../pan/gui/profiles-dialog.cc:481
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "El dia %d, en/na %n va escriure:"
 
-#: ../pan/gui/post-ui.cc:3106
+#: ../pan/gui/post-ui.cc:3159
 msgid "Add files to queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3184
+#: ../pan/gui/post-ui.cc:3235
 msgid "Save Upload Queue as NZB File"
 msgstr ""
 
-#: ../pan/gui/prefs.cc:343
+#: ../pan/gui/prefs.cc:364
 #, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "No s'ha pogut analitzar el color %s «%s»"
 
-#: ../pan/gui/prefs-ui.cc:120
+#: ../pan/gui/prefs-ui.cc:123
 msgid "Grab Key"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:126
+#: ../pan/gui/prefs-ui.cc:129
 #, c-format
 msgid ""
 "Press the combination of the keys\n"
 "you want to use for \"%s\"."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:166
+#: ../pan/gui/prefs-ui.cc:169
 #, fuzzy
-msgid "Edit Hotkey"
-msgstr "Edita filtres"
+msgid "Edit Shortcut"
+msgstr "Editors"
 
-#: ../pan/gui/prefs-ui.cc:228
-msgid "Error: Shortkey is invalid!"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:244
+#: ../pan/gui/prefs-ui.cc:231
 #, fuzzy
-msgid "Error: Shortkey already exists!"
+msgid "Error: Shortcut key is invalid!"
 msgstr "La carpeta «%*s» ja existeix."
 
-#: ../pan/gui/prefs-ui.cc:535
+#: ../pan/gui/prefs-ui.cc:247
+#, fuzzy
+msgid "Error: Shortcut key already exists!"
+msgstr "La carpeta «%*s» ja existeix."
+
+#: ../pan/gui/prefs-ui.cc:561
 #, fuzzy
 msgid "Show only icons"
 msgstr "Mostra informació de l'article"
 
-#: ../pan/gui/prefs-ui.cc:536
+#: ../pan/gui/prefs-ui.cc:562
 #, fuzzy
 msgid "Show only text"
 msgstr "Mostra la subfinestra de _cos"
 
-#: ../pan/gui/prefs-ui.cc:537
+#: ../pan/gui/prefs-ui.cc:563
 #, fuzzy
 msgid "Show icons and text"
 msgstr "Desa els adjunts i el text"
 
-#: ../pan/gui/prefs-ui.cc:576
+#: ../pan/gui/prefs-ui.cc:602
 msgid "Use GNOME Preferences"
 msgstr "Utilitza les preferències del GNOME"
 
-#: ../pan/gui/prefs-ui.cc:577
+#: ../pan/gui/prefs-ui.cc:603
 msgid "Use KDE Preferences"
 msgstr "Utilitza les preferències del KDE"
 
-#: ../pan/gui/prefs-ui.cc:578
+#: ../pan/gui/prefs-ui.cc:604
 msgid "Use OS X Preferences"
 msgstr "Utilitza les preferències de l'OS X"
 
-#: ../pan/gui/prefs-ui.cc:579
+#: ../pan/gui/prefs-ui.cc:605
 msgid "Use Windows Preferences"
 msgstr "Utilitza les preferències del Windows"
 
-#: ../pan/gui/prefs-ui.cc:580
+#: ../pan/gui/prefs-ui.cc:606
 msgid "Custom Command:"
 msgstr "Ordre personalitzada:"
 
-#: ../pan/gui/prefs-ui.cc:632
+#: ../pan/gui/prefs-ui.cc:658
 #, fuzzy
 msgid "Disabled"
 msgstr "Habilitat"
 
-#: ../pan/gui/prefs-ui.cc:633
-msgid "Only new (Score == 0)"
+#: ../pan/gui/prefs-ui.cc:659
+msgid "Only new (score == 0)"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:634
+#: ../pan/gui/prefs-ui.cc:660
 #, fuzzy
 msgid "9999 or more"
 msgstr "Puntuació de 9999 o superior:"
 
-#: ../pan/gui/prefs-ui.cc:635
+#: ../pan/gui/prefs-ui.cc:661
 #, fuzzy
 msgid "5000 to 9998"
 msgstr "Puntuació de 5000 a 9998:"
 
-#: ../pan/gui/prefs-ui.cc:636
+#: ../pan/gui/prefs-ui.cc:662
 msgid "1 to 4999"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:637
+#: ../pan/gui/prefs-ui.cc:663
 #, fuzzy
 msgid "-9998 to -1"
 msgstr "Puntuació de -9998 a -1:"
 
-#: ../pan/gui/prefs-ui.cc:638
+#: ../pan/gui/prefs-ui.cc:664
 #, fuzzy
 msgid "-9999 or less"
 msgstr "Puntuació de -9999 o inferior:"
 
-#: ../pan/gui/prefs-ui.cc:702
+#: ../pan/gui/prefs-ui.cc:728
 #, c-format
-msgid "Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:738
-msgid "Global Charset Settings"
+#: ../pan/gui/prefs-ui.cc:760
+msgid "Global Character Set Settings"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:832 ../pan/gui/task-pane.cc:770
+#: ../pan/gui/prefs-ui.cc:854 ../pan/gui/task-pane.cc:1075
 msgid "State"
 msgstr "Estat"
 
-#: ../pan/gui/prefs-ui.cc:866
+#: ../pan/gui/prefs-ui.cc:888
 msgid "Enabled"
 msgstr "Habilitat"
 
-#: ../pan/gui/prefs-ui.cc:870
+#: ../pan/gui/prefs-ui.cc:892
 msgid "Column Name"
 msgstr "Nom de la columna"
 
-#: ../pan/gui/prefs-ui.cc:908
+#: ../pan/gui/prefs-ui.cc:930
 msgid "Pan: Preferences"
 msgstr "Pan: preferències"
 
-#: ../pan/gui/prefs-ui.cc:923
+#: ../pan/gui/prefs-ui.cc:945
 msgid "Mouse"
 msgstr "Ratolí"
 
-#: ../pan/gui/prefs-ui.cc:925
+#: ../pan/gui/prefs-ui.cc:947
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Un sol clic activa els _grups, en comptes de seleccionar-los"
 
-#: ../pan/gui/prefs-ui.cc:927
+#: ../pan/gui/prefs-ui.cc:949
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Un sol clic activa els _articles, en comptes de seleccionar-los"
 
-#: ../pan/gui/prefs-ui.cc:930
+#: ../pan/gui/prefs-ui.cc:952
 msgid "Groups"
 msgstr "Grups"
 
-#: ../pan/gui/prefs-ui.cc:932
+#: ../pan/gui/prefs-ui.cc:954
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Obtingues noves capçaleres dels grups subscrits en _iniciar"
 
-#: ../pan/gui/prefs-ui.cc:934
+#: ../pan/gui/prefs-ui.cc:956
 msgid "Get new headers when _entering group"
 msgstr "Obtingues noves capçaleres quan s'_introdueixi un grup"
 
-#: ../pan/gui/prefs-ui.cc:936
+#: ../pan/gui/prefs-ui.cc:958
 msgid "Mark entire group _read when leaving group"
 msgstr "_Marca tot el grup com a _llegit quan es deixi el grup"
 
-#: ../pan/gui/prefs-ui.cc:938
+#: ../pan/gui/prefs-ui.cc:960
 msgid "Mark entire group read before getting _new headers"
 msgstr "_Marca tot el grup com a llegit abans d'obtenir noves capçaleres"
 
-#: ../pan/gui/prefs-ui.cc:940
+#: ../pan/gui/prefs-ui.cc:962
 msgid "E_xpand all threads when entering group"
 msgstr "_Amplia tots els fils quan entri a un grup"
 
-#: ../pan/gui/prefs-ui.cc:945
+#: ../pan/gui/prefs-ui.cc:967
 msgid "Articles"
 msgstr "Articles"
 
-#: ../pan/gui/prefs-ui.cc:947
+#: ../pan/gui/prefs-ui.cc:969
+#, fuzzy
+msgid "Mark downloaded articles read"
+msgstr "Marca l'article com a no llegit"
+
+#: ../pan/gui/prefs-ui.cc:971
 msgid "Space selects next article rather than next unread"
 msgstr ""
 "La barra espaiadora selecciona el següent article en comptes del següent no "
 "llegit"
 
-#: ../pan/gui/prefs-ui.cc:949
+#: ../pan/gui/prefs-ui.cc:973
 #, fuzzy
 msgid "Expand threads upon selection"
 msgstr "Afegeix _fils a la selecció"
 
-#: ../pan/gui/prefs-ui.cc:951
-msgid "Always show article deletion confirmation dialog"
+#: ../pan/gui/prefs-ui.cc:975
+msgid "Always ask before deleting an article"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:953
+#: ../pan/gui/prefs-ui.cc:977
 msgid "Smooth scrolling"
 msgstr "Desplaçament suau"
 
-#: ../pan/gui/prefs-ui.cc:958
+#: ../pan/gui/prefs-ui.cc:982
 #, fuzzy
 msgid "Article Cache"
 msgstr "Neteja la memòria cau d'articles"
 
-#: ../pan/gui/prefs-ui.cc:959
+#: ../pan/gui/prefs-ui.cc:983
 msgid "Clear article cache on shutdown"
 msgstr "Neteja la memòria cau d'articles en aturar"
 
-#: ../pan/gui/prefs-ui.cc:962
-msgid "Size of article cache (in MiB) :"
+#: ../pan/gui/prefs-ui.cc:986
+msgid "Size of article cache (in MiB):"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:967
+#: ../pan/gui/prefs-ui.cc:991
 #, fuzzy
-msgid "File extension for Cached Articles: "
+msgid "File extension for cached articles: "
 msgstr "/Filt_re/Es co_rrespon només amb articles llegits"
 
-#: ../pan/gui/prefs-ui.cc:972
+#: ../pan/gui/prefs-ui.cc:996
 msgid "Tabs"
-msgstr ""
+msgstr "Pestanyes"
 
-#: ../pan/gui/prefs-ui.cc:977
+#: ../pan/gui/prefs-ui.cc:1001
 msgid "_Behavior"
 msgstr "Com_portament"
 
-#: ../pan/gui/prefs-ui.cc:977
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1001
 msgid "Behavior"
-msgstr "Com_portament"
+msgstr "Comportament"
 
-#: ../pan/gui/prefs-ui.cc:983
+#: ../pan/gui/prefs-ui.cc:1007
+#, fuzzy
+msgid "Task Pane"
+msgstr "Gestor de _tasques"
+
+#: ../pan/gui/prefs-ui.cc:1008
+#, fuzzy
+msgid "Show Task Pane info popups"
+msgstr "Mostra informació de l'article"
+
+#: ../pan/gui/prefs-ui.cc:1010
+#, fuzzy
+msgid "Show Download Meter"
+msgstr "Mostra la subfinestra de _cos"
+
+#: ../pan/gui/prefs-ui.cc:1014
+#, fuzzy
+msgid "_Panes"
+msgstr "Subfinestra de c_os"
+
+#: ../pan/gui/prefs-ui.cc:1014
+#, fuzzy
+msgid "Panes"
+msgstr "Japonès"
+
+#: ../pan/gui/prefs-ui.cc:1020
 #, fuzzy
 msgid "Language Settings"
 msgstr "Configuracions"
 
 #. systray and notify popup
-#: ../pan/gui/prefs-ui.cc:992
+#: ../pan/gui/prefs-ui.cc:1029
 #, fuzzy
 msgid "System Tray Behavior"
 msgstr "Com_portament"
 
-#: ../pan/gui/prefs-ui.cc:994
-msgid "Hide to system tray"
+#: ../pan/gui/prefs-ui.cc:1031
+msgid "Minimize to tray"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:996
+#: ../pan/gui/prefs-ui.cc:1033
 msgid "Start Pan minimized"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:999
+#: ../pan/gui/prefs-ui.cc:1036
 #, fuzzy
 msgid "Show notifications"
 msgstr "Mostra informació de l'article"
 
 #. allow multiple instances (seperate, not communicating with dbus)
-#: ../pan/gui/prefs-ui.cc:1004
+#: ../pan/gui/prefs-ui.cc:1041
 #, fuzzy
 msgid "Startup Behavior"
 msgstr "Com_portament"
 
-#: ../pan/gui/prefs-ui.cc:1006
+#: ../pan/gui/prefs-ui.cc:1043
 msgid "Allow multiple instances of Pan"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1011
+#: ../pan/gui/prefs-ui.cc:1048
 #, fuzzy
 msgid "Autosave Article Draft"
 msgstr "Obre l'esborrany d'un article"
 
-#: ../pan/gui/prefs-ui.cc:1013
+#: ../pan/gui/prefs-ui.cc:1050
 #, fuzzy
 msgid "Minutes to autosave the current Article Draft: "
 msgstr "Obre l'esborrany d'un article"
 
-#: ../pan/gui/prefs-ui.cc:1018
+#: ../pan/gui/prefs-ui.cc:1055
 #, fuzzy
 msgid "Autosave Articles"
 msgstr "Desa els articles"
 
-#: ../pan/gui/prefs-ui.cc:1020
+#: ../pan/gui/prefs-ui.cc:1057
 msgid "Minutes to autosave newsrc files: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1026
+#: ../pan/gui/prefs-ui.cc:1064
+msgid "GNOME Keyring"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1065
+msgid "Store passwords in GNOME Keyring"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1069
 msgid "_Miscellaneous"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1026
+#: ../pan/gui/prefs-ui.cc:1069
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Miscel·lània"
 
-#: ../pan/gui/prefs-ui.cc:1031
+#: ../pan/gui/prefs-ui.cc:1074
 msgid "Pane Layout"
 msgstr "Disposició de les subfinestres"
 
-#: ../pan/gui/prefs-ui.cc:1050
+#: ../pan/gui/prefs-ui.cc:1093
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=Grups, 2=Capçaleres, 3=Cos"
 
-#: ../pan/gui/prefs-ui.cc:1052
+#: ../pan/gui/prefs-ui.cc:1095
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=Grups, 2=Cos, 3=Capçaleres"
 
-#: ../pan/gui/prefs-ui.cc:1054
+#: ../pan/gui/prefs-ui.cc:1097
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=Capçaleres, 2=Grups, 3=Cos"
 
-#: ../pan/gui/prefs-ui.cc:1056
+#: ../pan/gui/prefs-ui.cc:1099
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=Capçaleres, 2=Cos, 3=Grups"
 
-#: ../pan/gui/prefs-ui.cc:1058
+#: ../pan/gui/prefs-ui.cc:1101
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=Cos, 2=Grups, 3=Capçaleres"
 
-#: ../pan/gui/prefs-ui.cc:1060
+#: ../pan/gui/prefs-ui.cc:1103
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=Cos, 2=Capçaleres, 3=Grups"
 
-#: ../pan/gui/prefs-ui.cc:1064
+#: ../pan/gui/prefs-ui.cc:1107
 #, fuzzy
 msgid "Layout"
 msgstr "_Disposició"
 
-#: ../pan/gui/prefs-ui.cc:1069
+#: ../pan/gui/prefs-ui.cc:1112
 msgid "Header Pane Columns"
 msgstr "Columnes de la subfinestra de la capçalera"
 
-#: ../pan/gui/prefs-ui.cc:1073
+#: ../pan/gui/prefs-ui.cc:1116
 msgid "_Headers"
 msgstr "_Capçaleres"
 
-#: ../pan/gui/prefs-ui.cc:1073
+#: ../pan/gui/prefs-ui.cc:1116
 #, fuzzy
 msgid "Headers"
 msgstr "_Capçaleres"
 
-#: ../pan/gui/prefs-ui.cc:1079
+#: ../pan/gui/prefs-ui.cc:1122
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
-"automatically, based on a post's score."
+"automatically, based on an article's score."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1082
-msgid "_Delete posts scoring at: "
+#: ../pan/gui/prefs-ui.cc:1127
+#, fuzzy
+msgid "Mark affected articles read"
+msgstr "Marca l'article com a no llegit"
+
+#: ../pan/gui/prefs-ui.cc:1136
+#, fuzzy
+msgid "_Delete articles scoring at: "
+msgstr "estableix la puntuació de l'article a"
+
+#: ../pan/gui/prefs-ui.cc:1142
+#, fuzzy
+msgid "Mark articles read scoring at: "
+msgstr "Marca l'article com a no llegit"
+
+#: ../pan/gui/prefs-ui.cc:1148
+#, fuzzy
+msgid "_Cache articles scoring at: "
+msgstr "estableix la puntuació de l'article a"
+
+#: ../pan/gui/prefs-ui.cc:1154
+msgid "Download attachments of articles scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1084
-msgid "Mark posts _read scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1086
-msgid "_Cache posts scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1088
-msgid "Download _attachments of posts scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1091
+#: ../pan/gui/prefs-ui.cc:1157
 #, fuzzy
 msgid "Actions"
 msgstr "_Accions"
 
-#: ../pan/gui/prefs-ui.cc:1096 ../pan/gui/prefs-ui.cc:1117
+#: ../pan/gui/prefs-ui.cc:1162 ../pan/gui/prefs-ui.cc:1183
 msgid "Fonts"
 msgstr "Tipus de lletra"
 
-#: ../pan/gui/prefs-ui.cc:1098
+#: ../pan/gui/prefs-ui.cc:1164
 msgid "Use custom font in Group Pane:"
 msgstr "Lletra personalitzada a la subfinestra de grup:"
 
-#: ../pan/gui/prefs-ui.cc:1103
+#: ../pan/gui/prefs-ui.cc:1169
 msgid "Use custom font in Header Pane:"
 msgstr "Lletra personalitzada a la subfinestra de capçalera:"
 
-#: ../pan/gui/prefs-ui.cc:1108
+#: ../pan/gui/prefs-ui.cc:1174
 msgid "Use custom font in Body Pane:"
 msgstr "Lletra personalitzada a la subfinestra de cos:"
 
-#: ../pan/gui/prefs-ui.cc:1113
+#: ../pan/gui/prefs-ui.cc:1179
 msgid "Monospace font:"
 msgstr "Lletra monoespai:"
 
-#: ../pan/gui/prefs-ui.cc:1117
+#: ../pan/gui/prefs-ui.cc:1183
 msgid "_Fonts"
 msgstr "_Tipus de lletres"
 
-#: ../pan/gui/prefs-ui.cc:1122
+#: ../pan/gui/prefs-ui.cc:1192
 msgid "Header Pane"
 msgstr "Subfinestra de capçalera"
 
-#: ../pan/gui/prefs-ui.cc:1125 ../pan/gui/prefs-ui.cc:1131
-#: ../pan/gui/prefs-ui.cc:1137 ../pan/gui/prefs-ui.cc:1143
-#: ../pan/gui/prefs-ui.cc:1149 ../pan/gui/prefs-ui.cc:1155
+#: ../pan/gui/prefs-ui.cc:1195 ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1207 ../pan/gui/prefs-ui.cc:1213
+#: ../pan/gui/prefs-ui.cc:1219 ../pan/gui/prefs-ui.cc:1225
 msgid "Text:"
 msgstr "Text:"
 
-#: ../pan/gui/prefs-ui.cc:1127 ../pan/gui/prefs-ui.cc:1133
-#: ../pan/gui/prefs-ui.cc:1139 ../pan/gui/prefs-ui.cc:1145
-#: ../pan/gui/prefs-ui.cc:1151 ../pan/gui/prefs-ui.cc:1157
+#: ../pan/gui/prefs-ui.cc:1197 ../pan/gui/prefs-ui.cc:1203
+#: ../pan/gui/prefs-ui.cc:1209 ../pan/gui/prefs-ui.cc:1215
+#: ../pan/gui/prefs-ui.cc:1221 ../pan/gui/prefs-ui.cc:1227
+#: ../pan/gui/prefs-ui.cc:1237 ../pan/gui/prefs-ui.cc:1242
+#: ../pan/gui/prefs-ui.cc:1247 ../pan/gui/prefs-ui.cc:1265
 msgid "Background:"
 msgstr "Segon pla:"
 
-#: ../pan/gui/prefs-ui.cc:1129
+#: ../pan/gui/prefs-ui.cc:1199
 msgid "Scores of 9999 or more:"
 msgstr "Puntuació de 9999 o superior:"
 
-#: ../pan/gui/prefs-ui.cc:1135
+#: ../pan/gui/prefs-ui.cc:1205
 msgid "Scores from 5000 to 9998:"
 msgstr "Puntuació de 5000 a 9998:"
 
-#: ../pan/gui/prefs-ui.cc:1141
+#: ../pan/gui/prefs-ui.cc:1211
 msgid "Scores from 1 to 4999:"
 msgstr "Puntuació de 1 a 4999:"
 
-#: ../pan/gui/prefs-ui.cc:1147
+#: ../pan/gui/prefs-ui.cc:1217
 msgid "Scores from -9998 to -1:"
 msgstr "Puntuació de -9998 a -1:"
 
-#: ../pan/gui/prefs-ui.cc:1153
+#: ../pan/gui/prefs-ui.cc:1223
 msgid "Scores of -9999 or less:"
 msgstr "Puntuació de -9999 o inferior:"
 
-#: ../pan/gui/prefs-ui.cc:1159
-#, fuzzy
-msgid "Read collapsed thread:"
-msgstr "Fils de discussió _llegits:"
+#: ../pan/gui/prefs-ui.cc:1229
+msgid "Collapsed thread with unread articles:"
+msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1161
+#: ../pan/gui/prefs-ui.cc:1231
 msgid "Body Pane"
 msgstr "Subfinestra de cos"
 
-#: ../pan/gui/prefs-ui.cc:1167
+#: ../pan/gui/prefs-ui.cc:1239
 #, fuzzy
 msgid "Quoted text:"
 msgstr "Text citat:"
 
-#: ../pan/gui/prefs-ui.cc:1168
+#.
+#: ../pan/gui/prefs-ui.cc:1244
 msgid "URL:"
 msgstr "URL:"
 
-#: ../pan/gui/prefs-ui.cc:1169
+#.
+#: ../pan/gui/prefs-ui.cc:1249
 msgid "Signature:"
 msgstr "Signatura:"
 
-#: ../pan/gui/prefs-ui.cc:1171
+#: ../pan/gui/prefs-ui.cc:1253
+msgid "Other Text"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1257
+#, fuzzy
+msgid "Text Color:"
+msgstr "Seleccioneu un color"
+
+#: ../pan/gui/prefs-ui.cc:1261
+#, fuzzy
+msgid "Group Pane"
+msgstr "Subfinestra de _grup"
+
+#.
+#: ../pan/gui/prefs-ui.cc:1267
+msgid "Group Color:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1270
 msgid "_Colors"
 msgstr "_Colors"
 
-#: ../pan/gui/prefs-ui.cc:1171
+#: ../pan/gui/prefs-ui.cc:1270
 #, fuzzy
 msgid "Colors"
 msgstr "_Colors"
 
-#: ../pan/gui/prefs-ui.cc:1176
+#: ../pan/gui/prefs-ui.cc:1275
 msgid "Preferred Applications"
 msgstr "Aplicacions preferides"
 
-#: ../pan/gui/prefs-ui.cc:1180
+#: ../pan/gui/prefs-ui.cc:1279
 #, fuzzy
 msgid "_Web browser:"
 msgstr "Navegador _web:"
 
-#: ../pan/gui/prefs-ui.cc:1183
+#: ../pan/gui/prefs-ui.cc:1282
 #, fuzzy
 msgid "_Mail reader:"
 msgstr "_Lector de correu:"
 
-#: ../pan/gui/prefs-ui.cc:1185
+#: ../pan/gui/prefs-ui.cc:1284
 #, fuzzy
 msgid "_Text editor:"
 msgstr "Editor de _text:"
 
-#: ../pan/gui/prefs-ui.cc:1187
+#: ../pan/gui/prefs-ui.cc:1286
+msgid "_HTML previewer:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1288
 #, fuzzy
 msgid "_Applications"
 msgstr "_Aplicacions"
 
-#: ../pan/gui/prefs-ui.cc:1187
+#: ../pan/gui/prefs-ui.cc:1288
 #, fuzzy
 msgid "Applications"
 msgstr "_Aplicacions"
 
-#: ../pan/gui/prefs-ui.cc:1192 ../pan/gui/task-pane.cc:512
+#: ../pan/gui/prefs-ui.cc:1293 ../pan/gui/task-pane.cc:551
 #, fuzzy
 msgid "Encoding"
 msgstr "S'està descodificant"
 
-#: ../pan/gui/prefs-ui.cc:1196
+#: ../pan/gui/prefs-ui.cc:1297
 msgid "Default bytes per file (for encoder): "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1302
 #, fuzzy
 msgid "_Upload"
 msgstr "_Aplicacions"
 
-#: ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1302
 msgid "Upload"
-msgstr ""
+msgstr "Penjar"
 
-#: ../pan/gui/prefs-ui.cc:1219
-msgid "_Hotkeys"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1311
+msgid "_Shortcuts"
+msgstr "_Dreceres"
 
-#: ../pan/gui/prefs-ui.cc:1219
-msgid "Hotkeys"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1311
+msgid "Shortcuts"
+msgstr "Dreceres"
 
 #: ../pan/gui/profiles-dialog.cc:83
-msgid "Please choose your Email Address according to your PGP key's user id."
+msgid "Please choose your email address according to your PGP key's user id."
 msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:131
@@ -2300,9 +2515,9 @@ msgstr "Nom _complet:"
 
 #: ../pan/gui/profiles-dialog.cc:158
 msgid ""
-"Your Email Address.\n"
-"Note that this has to match your PGP Signature's Address\n"
-"if you want to PGP-Sign or Encrypt your messages correctly."
+"Your email address.\n"
+"Note that this has to match your PGP signature's address\n"
+"if you want your messages to be PGP-signed or encrypted correctly."
 msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:162
@@ -2344,33 +2559,33 @@ msgstr "Signatura"
 
 #: ../pan/gui/profiles-dialog.cc:196
 #, fuzzy
-msgid "Signature Type : "
+msgid "Signature Type: "
 msgstr "_Tipus de signatura:"
 
-#: ../pan/gui/profiles-dialog.cc:223
+#: ../pan/gui/profiles-dialog.cc:226
 msgid "X-Face (Avatar)"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:226
+#: ../pan/gui/profiles-dialog.cc:229
 msgid ""
-"You can add an avatar icon to your articles with a unique X-Face code. \n"
+"You can add an avatar icon to your articles with a unique X-Face code.\n"
 "Add the code without the trailing <b>\"X-Face:\"</b> \n"
 " if it was generated by a helper program (for example http://www.dairiki.org/"
 "xface/xface.php)."
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:229
+#: ../pan/gui/profiles-dialog.cc:232
 msgid "_X-Face:"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:231
+#: ../pan/gui/profiles-dialog.cc:234
 msgid "Optional Information"
 msgstr "Informació opcional"
 
-#: ../pan/gui/profiles-dialog.cc:236
+#: ../pan/gui/profiles-dialog.cc:239
 #, fuzzy
 msgid ""
-"When posting to Usenet, your article's Message-ID contains a domain name.  \n"
+"When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
 "domain name from your email address."
 msgstr ""
@@ -2379,11 +2594,11 @@ msgstr ""
 "en blanc perquè el Pan faci servir el nom de domini de la vostra adreça de "
 "correu electrònic."
 
-#: ../pan/gui/profiles-dialog.cc:239
+#: ../pan/gui/profiles-dialog.cc:242
 msgid "Message-ID _Domain Name:"
 msgstr "Nom de _domini de l'identificador del missatge:"
 
-#: ../pan/gui/profiles-dialog.cc:243
+#: ../pan/gui/profiles-dialog.cc:246
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2396,14 +2611,14 @@ msgstr ""
 "%n per a nom d'autor\n"
 "%d per a data"
 
-#: ../pan/gui/profiles-dialog.cc:244
+#: ../pan/gui/profiles-dialog.cc:247
 msgid "_Attribution:"
 msgstr "_Atribució:"
 
-#: ../pan/gui/profiles-dialog.cc:268
+#: ../pan/gui/profiles-dialog.cc:271
 #, fuzzy
 msgid ""
-"Extra headers to be included in your posts, such as\n"
+"Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
 "Organization: Your Organization\n"
 msgstr ""
@@ -2412,37 +2627,98 @@ msgstr ""
 "Respon-a: «El vostre nom» <elvostrenom@algunlloc.cat>\n"
 "Organització: la vostra organització"
 
-#: ../pan/gui/profiles-dialog.cc:278
+#: ../pan/gui/profiles-dialog.cc:281
 msgid "E_xtra Headers:"
 msgstr "Capçaleres e_xtra:"
 
-#: ../pan/gui/profiles-dialog.cc:323
+#: ../pan/gui/profiles-dialog.cc:326
 msgid "Invalid email address."
 msgstr "L'adreça de correu electrònic no és vàlida"
 
-#: ../pan/gui/profiles-dialog.cc:324
+#: ../pan/gui/profiles-dialog.cc:327
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Utilitzeu una adreça de la forma nom@algunlloc.cat"
 
-#: ../pan/gui/profiles-dialog.cc:479
+#: ../pan/gui/profiles-dialog.cc:482
 msgid "New Profile"
 msgstr "Nou perfil"
 
-#: ../pan/gui/profiles-dialog.cc:525
+#: ../pan/gui/profiles-dialog.cc:528
 msgid "Posting Profiles"
 msgstr "Perfils de publicació"
 
-#: ../pan/gui/profiles-dialog.cc:541
+#: ../pan/gui/profiles-dialog.cc:544
 msgid "Profiles"
 msgstr "Perfils"
 
-#: ../pan/gui/save-attach-ui.cc:77 ../pan/gui/save-ui.cc:77
+#: ../pan/gui/save-attach-ui.cc:46
+#, fuzzy, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - Subject line excerpt\n"
+"%S - Subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - agrupa en un únic directori (alt.binaries.pictures.trains)\n"
+"%G - agrupa en un directori de nivells (/alt/binaries/pictures/trains)\n"
+" \n"
+"«/home/user/News/Pan/%g» es converteix en\n"
+"«/home/user/News/Pan/alt.binaries.pictures.trains», i\n"
+"«/home/user/News/Pan/%G» es converteix en\n"
+"«/home/user/News/Pan/alt/binaries/pictures/trains»,"
+
+#: ../pan/gui/save-attach-ui.cc:197 ../pan/gui/save-ui.cc:217
+msgid "Add to the queue sorted by date posted"
+msgstr "Afegeix a la cua ordenada per la data de publicació"
+
+#: ../pan/gui/save-attach-ui.cc:198 ../pan/gui/save-ui.cc:218
+msgid "Add to the front of the queue"
+msgstr "Afegeix a l'inici de la cua"
+
+#: ../pan/gui/save-attach-ui.cc:199 ../pan/gui/save-ui.cc:219
+msgid "Add to the back of the queue"
+msgstr "Afegeix al final de la cua"
+
+#: ../pan/gui/save-attach-ui.cc:231
+#, fuzzy
+msgid "Pan: Save Attachments"
+msgstr "Des_a fitxers adjunts"
+
+#: ../pan/gui/save-attach-ui.cc:256 ../pan/gui/save-attach-ui.cc:274
+#: ../pan/gui/save-ui.cc:271 ../pan/gui/save-ui.cc:289
+msgid "_Location:"
+msgstr "_Ubicació:"
+
+#: ../pan/gui/save-attach-ui.cc:260 ../pan/gui/save-ui.cc:275
+msgid "Save Articles"
+msgstr "Desa els articles"
+
+#: ../pan/gui/save-attach-ui.cc:277 ../pan/gui/save-ui.cc:292
+#, c-format
+msgid "_Group's path: %s"
+msgstr "Camí del _grup: %s"
+
+#: ../pan/gui/save-attach-ui.cc:288 ../pan/gui/save-ui.cc:307
+msgid "_Priority:"
+msgstr "_Prioritat:"
+
+#: ../pan/gui/save-ui.cc:46
 #, fuzzy, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
 "%s - subject line excerpt\n"
 "%S - subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
 " \n"
 "\"/home/user/News/Pan/%g\" becomes\n"
 "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
@@ -2457,58 +2733,23 @@ msgstr ""
 "«/home/user/News/Pan/%G» es converteix en\n"
 "«/home/user/News/Pan/alt/binaries/pictures/trains»,"
 
-#: ../pan/gui/save-attach-ui.cc:223 ../pan/gui/save-ui.cc:242
-msgid "Add to the queue sorted by date posted"
-msgstr "Afegeix a la cua ordenada per la data de publicació"
-
-#: ../pan/gui/save-attach-ui.cc:224 ../pan/gui/save-ui.cc:243
-msgid "Add to the front of the queue"
-msgstr "Afegeix a l'inici de la cua"
-
-#: ../pan/gui/save-attach-ui.cc:225 ../pan/gui/save-ui.cc:244
-msgid "Add to the back of the queue"
-msgstr "Afegeix al final de la cua"
-
-#: ../pan/gui/save-attach-ui.cc:257
-#, fuzzy
-msgid "Pan: Save Attachments"
-msgstr "Des_a fitxers adjunts"
-
-#: ../pan/gui/save-attach-ui.cc:282 ../pan/gui/save-attach-ui.cc:300
-#: ../pan/gui/save-ui.cc:296 ../pan/gui/save-ui.cc:314
-msgid "_Location:"
-msgstr "_Ubicació:"
-
-#: ../pan/gui/save-attach-ui.cc:286 ../pan/gui/save-ui.cc:300
-msgid "Save Articles"
-msgstr "Desa els articles"
-
-#: ../pan/gui/save-attach-ui.cc:303 ../pan/gui/save-ui.cc:317
-#, c-format
-msgid "_Group's path: %s"
-msgstr "Camí del _grup: %s"
-
-#: ../pan/gui/save-attach-ui.cc:314 ../pan/gui/save-ui.cc:332
-msgid "_Priority:"
-msgstr "_Prioritat:"
-
-#: ../pan/gui/save-ui.cc:233
+#: ../pan/gui/save-ui.cc:208
 msgid "Save attachments"
 msgstr "Desa els adjunts"
 
-#: ../pan/gui/save-ui.cc:234
+#: ../pan/gui/save-ui.cc:209
 msgid "Save text"
 msgstr "Desa el text"
 
-#: ../pan/gui/save-ui.cc:235
+#: ../pan/gui/save-ui.cc:210
 msgid "Save attachments and text"
 msgstr "Desa els adjunts i el text"
 
-#: ../pan/gui/save-ui.cc:271
+#: ../pan/gui/save-ui.cc:246
 msgid "Pan: Save Articles"
 msgstr "Pan: desa els articles"
 
-#: ../pan/gui/save-ui.cc:328
+#: ../pan/gui/save-ui.cc:303
 msgid "_Action:"
 msgstr "_Acció:"
 
@@ -2617,12 +2858,12 @@ msgid "New Scoring Rule"
 msgstr "Nova regla de puntuació"
 
 #: ../pan/gui/score-add-ui.cc:635
-msgid "If the group name"
-msgstr "Si el nom del grup"
+msgid "Group name"
+msgstr "Nom del grup"
 
 #: ../pan/gui/score-add-ui.cc:642
-msgid "And the article's"
-msgstr "I el dels articles"
+msgid "and"
+msgstr "i"
 
 #: ../pan/gui/score-view-ui.cc:56
 msgid "Close and Re_score"
@@ -2657,54 +2898,58 @@ msgstr "Afegeix una nova regla de puntuació"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Suprimeix la regla de puntuació seleccionada"
 
-#: ../pan/gui/server-ui.cc:221
+#: ../pan/gui/server-ui.cc:259
 msgid "Please specify the server's address."
 msgstr "Especifiqueu l'adreça del servidor."
 
-#: ../pan/gui/server-ui.cc:264
-msgid "Import SSL certificate (PEM format) from File"
+#: ../pan/gui/server-ui.cc:305
+msgid "Import SSL Certificate (PEM Format) From File"
 msgstr ""
 
 #. create the dialog
-#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:869
+#: ../pan/gui/server-ui.cc:342 ../pan/gui/server-ui.cc:948
 msgid "Add a Server"
 msgstr "Afegeix un servidor"
 
-#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:875
+#: ../pan/gui/server-ui.cc:342 ../pan/gui/server-ui.cc:954
 msgid "Edit a Server's Settings"
 msgstr "Edita la configuració d'un servidor"
 
-#: ../pan/gui/server-ui.cc:310
+#: ../pan/gui/server-ui.cc:362
 msgid "Location"
 msgstr "Ubicació"
 
-#: ../pan/gui/server-ui.cc:314
+#: ../pan/gui/server-ui.cc:366
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr ""
 "L'adreça actual del servidor de notícies, per exemple «noticies.elservidor."
 "com»"
 
-#: ../pan/gui/server-ui.cc:315
+#: ../pan/gui/server-ui.cc:367
 msgid "_Address:"
 msgstr "_Adreça:"
 
-#: ../pan/gui/server-ui.cc:319
-msgid "The news server's port number.  Typically 119."
+#: ../pan/gui/server-ui.cc:372
+#, fuzzy
+#| msgid "The news server's port number.  Typically 119."
+msgid ""
+"The news server's port number.  Typically 119 for unencrypted and 563 for "
+"encrypted connections (SSL/TLS)."
 msgstr "El número del port del servidor de notícies. Habitualment és el 119."
 
-#: ../pan/gui/server-ui.cc:320
+#: ../pan/gui/server-ui.cc:373
 msgid "Por_t:"
 msgstr "Por_t:"
 
-#: ../pan/gui/server-ui.cc:323
+#: ../pan/gui/server-ui.cc:376
 msgid "Login (if Required)"
 msgstr "Inici de sessió (si és necessari)"
 
-#: ../pan/gui/server-ui.cc:327
+#: ../pan/gui/server-ui.cc:380
 msgid "_Username:"
 msgstr "Nom d'_usuari:"
 
-#: ../pan/gui/server-ui.cc:328
+#: ../pan/gui/server-ui.cc:381
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2712,11 +2957,11 @@ msgstr ""
 "El nom d'usuari a donar al servidor quan es demani. Si el vostre servidor no "
 "necessita autenticació, podeu deixar-ho en blanc."
 
-#: ../pan/gui/server-ui.cc:332
+#: ../pan/gui/server-ui.cc:385
 msgid "_Password:"
 msgstr "_Contrasenya:"
 
-#: ../pan/gui/server-ui.cc:333
+#: ../pan/gui/server-ui.cc:386
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2724,55 +2969,55 @@ msgstr ""
 "La contrasenya a donar al servidor quan es demani. Si el vostre servidor no "
 "necessita autenticació, podeu deixar-ho en blanc."
 
-#: ../pan/gui/server-ui.cc:336
+#: ../pan/gui/server-ui.cc:389
 msgid "Settings"
 msgstr "Configuracions"
 
-#: ../pan/gui/server-ui.cc:343
+#: ../pan/gui/server-ui.cc:396
 msgid "Connection _Limit:"
 msgstr "_Límit de connexions:"
 
-#: ../pan/gui/server-ui.cc:347
+#: ../pan/gui/server-ui.cc:400
 msgid "After Two Weeks"
 msgstr "Després de dues setmanes"
 
-#: ../pan/gui/server-ui.cc:348
+#: ../pan/gui/server-ui.cc:401
 msgid "After One Month"
 msgstr "Després d'un més"
 
-#: ../pan/gui/server-ui.cc:349
+#: ../pan/gui/server-ui.cc:402
 msgid "After Two Months"
 msgstr "Després de dos mesos"
 
-#: ../pan/gui/server-ui.cc:350
+#: ../pan/gui/server-ui.cc:403
 msgid "After Three Months"
 msgstr "Després de tres mesos"
 
-#: ../pan/gui/server-ui.cc:351
+#: ../pan/gui/server-ui.cc:404
 msgid "After Six Months"
 msgstr "Després de sis mesos"
 
-#: ../pan/gui/server-ui.cc:352
+#: ../pan/gui/server-ui.cc:405
 msgid "Never Expire Old Articles"
 msgstr "Els articles antics no caduquen mai"
 
-#: ../pan/gui/server-ui.cc:366
+#: ../pan/gui/server-ui.cc:419
 msgid "E_xpire Old Articles:"
 msgstr "Els articles antics _vencen:"
 
-#: ../pan/gui/server-ui.cc:370
+#: ../pan/gui/server-ui.cc:423
 msgid "Primary"
 msgstr "Primari"
 
-#: ../pan/gui/server-ui.cc:371
+#: ../pan/gui/server-ui.cc:424
 msgid "Fallback"
 msgstr "Alternatiu"
 
-#: ../pan/gui/server-ui.cc:385
+#: ../pan/gui/server-ui.cc:438
 msgid "Server Rank:"
 msgstr "Rang de servidors:"
 
-#: ../pan/gui/server-ui.cc:389
+#: ../pan/gui/server-ui.cc:442
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -2782,86 +3027,103 @@ msgstr ""
 "els primaris. Una aproximació comuna és utilitzar servidors gratuïts com a "
 "primaris i servidors de subscripció como a alternatius."
 
-#: ../pan/gui/server-ui.cc:396
+#: ../pan/gui/server-ui.cc:447
+msgid "Disable Compression (N/A)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:448
+msgid "XZVER Compression (Astraweb)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:449
+msgid "GZIP Compression (Giganews etc.)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:463
+msgid "Header Compression:"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:469
 msgid "Security"
-msgstr ""
+msgstr "Seguretat"
 
-#: ../pan/gui/server-ui.cc:401
-msgid "Use Plaintext (Unsecured) Connections"
-msgstr ""
+#: ../pan/gui/server-ui.cc:474
+#, fuzzy
+msgid "Use Unsecure (Plaintext) Connections"
+msgstr "Cap connexió"
 
-#: ../pan/gui/server-ui.cc:402
+#: ../pan/gui/server-ui.cc:475
 #, fuzzy
 msgid "Use Secure SSL Connections"
 msgstr "Cap connexió"
 
-#: ../pan/gui/server-ui.cc:418
-msgid "TLS (SSL) Options:"
+#: ../pan/gui/server-ui.cc:490
+msgid "TLS (SSL) Settings:"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:423
+#: ../pan/gui/server-ui.cc:495
 msgid ""
-"You can set the option for using/disabling secure SSL/TLS connections here. "
-"If you enable SSL/TLS, your data is encrypted and secure. It is encouraged "
-"to use this option for privacy reasons."
+"You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
+"TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
+"for privacy reasons."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:428
+#: ../pan/gui/server-ui.cc:500
 msgid "Always trust this server's certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:602
+#: ../pan/gui/server-ui.cc:676
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "Voleu suprimir «%s»?"
 
-#: ../pan/gui/server-ui.cc:691
+#: ../pan/gui/server-ui.cc:765
 msgid "No information available."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:697
+#: ../pan/gui/server-ui.cc:775
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:795
+#: ../pan/gui/server-ui.cc:874
 #, fuzzy, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr "Voleu suprimir «%s»?"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:822 ../pan/gui/server-ui.cc:843
-#: ../pan/gui/server-ui.cc:941
+#: ../pan/gui/server-ui.cc:901 ../pan/gui/server-ui.cc:922
+#: ../pan/gui/server-ui.cc:1020
 msgid "Servers"
 msgstr "Servidors"
 
-#: ../pan/gui/server-ui.cc:882
+#: ../pan/gui/server-ui.cc:961
 msgid "Remove a Server"
 msgstr "Suprimeix un servidor"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:915
+#: ../pan/gui/server-ui.cc:994
 msgid "SSL Certificates"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:936
+#: ../pan/gui/server-ui.cc:1015
 msgid "Certificates"
-msgstr ""
+msgstr "Certificats"
 
-#: ../pan/gui/server-ui.cc:967
+#: ../pan/gui/server-ui.cc:1046
 msgid "Import Certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:973
+#: ../pan/gui/server-ui.cc:1052
 msgid "Inspect Certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:980
+#: ../pan/gui/server-ui.cc:1059
 #, fuzzy
 msgid "Remove Certificate"
 msgstr "Suprimeix un servidor"
 
-#: ../pan/gui/task-pane.cc:143
+#: ../pan/gui/task-pane.cc:120
 #, c-format
 msgid ""
 "\n"
@@ -2873,7 +3135,7 @@ msgid ""
 "<i>Sourcefile:</i> <b>%s</b>\n"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:155
+#: ../pan/gui/task-pane.cc:132
 #, c-format
 msgid ""
 "\n"
@@ -2886,145 +3148,154 @@ msgid ""
 "<i>Save Path:</i> <b>%s</b>\n"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:157
+#: ../pan/gui/task-pane.cc:134
 #, fuzzy
 msgid "unknown"
 msgstr "Desconegut"
 
-#: ../pan/gui/task-pane.cc:263
-msgid "Choose new destination for selected Tasks"
+#: ../pan/gui/task-pane.cc:302
+msgid "Choose New Destination for Selected Tasks"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:417
+#: ../pan/gui/task-pane.cc:456
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan: tasques (%d en cua, %d executant-se, %d aturades)"
 
-#: ../pan/gui/task-pane.cc:419
+#: ../pan/gui/task-pane.cc:458
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan: tasques (%d en cua, %d executant-se)"
 
-#: ../pan/gui/task-pane.cc:421
+#: ../pan/gui/task-pane.cc:460
 #, c-format
 msgid "Pan: Tasks"
 msgstr "Pan: tasques"
 
-#: ../pan/gui/task-pane.cc:446
+#: ../pan/gui/task-pane.cc:485
 #, c-format
 msgid "%lu selected, %s"
 msgstr "%lu seleccionat, %s"
 
-#: ../pan/gui/task-pane.cc:510
+#: ../pan/gui/task-pane.cc:549
 msgid "Running"
 msgstr "S'està executant"
 
-#: ../pan/gui/task-pane.cc:511
+#: ../pan/gui/task-pane.cc:550
 msgid "Decoding"
 msgstr "S'està descodificant"
 
-#: ../pan/gui/task-pane.cc:513
+#: ../pan/gui/task-pane.cc:552
 msgid "Queued for Decode"
 msgstr "En cua per a descodificar"
 
-#: ../pan/gui/task-pane.cc:514
+#: ../pan/gui/task-pane.cc:553
 #, fuzzy
 msgid "Queued for Encode"
 msgstr "En cua per a descodificar"
 
-#: ../pan/gui/task-pane.cc:515
+#: ../pan/gui/task-pane.cc:554
 msgid "Queued"
 msgstr "En cua"
 
-#: ../pan/gui/task-pane.cc:516
+#: ../pan/gui/task-pane.cc:555
 msgid "Stopped"
 msgstr "Aturat"
 
-#: ../pan/gui/task-pane.cc:517
+#: ../pan/gui/task-pane.cc:556
 msgid "Removing"
 msgstr "S'està esborrant"
 
-#: ../pan/gui/task-pane.cc:546
+#: ../pan/gui/task-pane.cc:585
 #, c-format
 msgid "%d%% Done"
 msgstr "%d%% fet"
 
-#: ../pan/gui/task-pane.cc:552
+#: ../pan/gui/task-pane.cc:591
 #, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%d:%02d:%02d restant (%d @ %lu KiB/s)"
 
-#: ../pan/gui/task-pane.cc:646 ../pan/gui/task-pane.cc:647
+#: ../pan/gui/task-pane.cc:686 ../pan/gui/task-pane.cc:687
 #, fuzzy
 msgid "Move To Top"
 msgstr "Mou les tasques seleccionades al final"
 
-#: ../pan/gui/task-pane.cc:651 ../pan/gui/task-pane.cc:652
+#: ../pan/gui/task-pane.cc:691 ../pan/gui/task-pane.cc:692
 #, fuzzy
 msgid "Move To Bottom"
 msgstr "Mou les tasques seleccionades al final"
 
-#: ../pan/gui/task-pane.cc:656 ../pan/gui/task-pane.cc:657
+#: ../pan/gui/task-pane.cc:696 ../pan/gui/task-pane.cc:697
+#, fuzzy
+msgid "Show Task Information"
+msgstr "Mostra informació de l'article"
+
+#: ../pan/gui/task-pane.cc:701 ../pan/gui/task-pane.cc:702
 #, fuzzy
 msgid "Stop Task"
 msgstr "Atura les tasques"
 
-#: ../pan/gui/task-pane.cc:661 ../pan/gui/task-pane.cc:662
+#: ../pan/gui/task-pane.cc:706 ../pan/gui/task-pane.cc:707
 #, fuzzy
 msgid "Delete Task"
 msgstr "Suprimeix les tasques"
 
-#: ../pan/gui/task-pane.cc:666 ../pan/gui/task-pane.cc:667
+#: ../pan/gui/task-pane.cc:711 ../pan/gui/task-pane.cc:712
 #, fuzzy
 msgid "Restart Task"
 msgstr "Reinicia les tasques"
 
-#: ../pan/gui/task-pane.cc:671 ../pan/gui/task-pane.cc:672
+#: ../pan/gui/task-pane.cc:716 ../pan/gui/task-pane.cc:717
 msgid "Change Download Destination"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:729
+#: ../pan/gui/task-pane.cc:1027
 msgid "_Online"
 msgstr "_Connectat"
 
-#: ../pan/gui/task-pane.cc:746
+#: ../pan/gui/task-pane.cc:1044
 msgid "Restart Tasks"
 msgstr "Reinicia les tasques"
 
-#: ../pan/gui/task-pane.cc:748
+#: ../pan/gui/task-pane.cc:1046
 msgid "Stop Tasks"
 msgstr "Atura les tasques"
 
-#: ../pan/gui/task-pane.cc:750
+#: ../pan/gui/task-pane.cc:1048
 msgid "Delete Tasks"
 msgstr "Suprimeix les tasques"
+
+#: ../pan/gui/task-pane.cc:1054
+msgid "Show info popups"
+msgstr ""
 
 #: ../pan/gui/url.cc:123
 #, c-format
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr "S'ha produït un error en iniciar la URL: %s (l'ordre era: %s)"
 
-#: ../pan/tasks/decoder.cc:115
+#: ../pan/tasks/decoder.cc:117
 #, c-format
 msgid "Couldn't save file \"%s\": %s"
 msgstr "No s'ha pogut desar el fitxer «%s»: %s"
 
-#: ../pan/tasks/decoder.cc:137 ../pan/tasks/encoder.cc:136
+#: ../pan/tasks/decoder.cc:139 ../pan/tasks/encoder.cc:136
 msgid "Error initializing uulib"
 msgstr "S'ha produït un error en inicialitzar uulib"
 
-#: ../pan/tasks/decoder.cc:152 ../pan/tasks/socket-impl-gio.cc:352
-#: ../pan/tasks/socket-impl-openssl.cc:634
+#: ../pan/tasks/decoder.cc:154 ../pan/tasks/socket-impl-gio.cc:360
+#: ../pan/tasks/socket-impl-openssl.cc:642
 #, c-format
 msgid "Error reading from %s: %s"
 msgstr "S'ha produït un error en llegir des de %s: %s"
 
-#: ../pan/tasks/decoder.cc:192
+#: ../pan/tasks/decoder.cc:194
 #, c-format
 msgid "Saved \"%s\""
 msgstr "S'ha desat «%s»"
 
-#: ../pan/tasks/decoder.cc:199
+#: ../pan/tasks/decoder.cc:201
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -3033,50 +3304,55 @@ msgstr ""
 "S'ha produït un error al desar «%s»:\n"
 "%s."
 
-#: ../pan/tasks/decoder.cc:314 ../pan/tasks/task-article.cc:350
+#: ../pan/tasks/decoder.cc:316 ../pan/tasks/task-article.cc:354
 #, c-format
 msgid "Decoding %s"
 msgstr "S'està descodificant «%s»"
 
-#: ../pan/tasks/encoder.cc:102 ../pan/tasks/encoder.cc:155
+#: ../pan/tasks/encoder.cc:103 ../pan/tasks/encoder.cc:154
 #, fuzzy, c-format
 msgid "Error loading %s from cache."
 msgstr "S'ha produït un error quan es llegia del sòcol."
 
-#: ../pan/tasks/encoder.cc:177
+#: ../pan/tasks/encoder.cc:176
 #, fuzzy, c-format
 msgid "Error encoding %s: %s"
 msgstr "S'ha produït un error en llegir des de %s: %s"
 
-#: ../pan/tasks/encoder.cc:269
+#: ../pan/tasks/encoder.cc:268
 #, fuzzy, c-format
 msgid "Encoding %s"
 msgstr "S'està descodificant"
 
-#: ../pan/tasks/nntp.cc:126
+#: ../pan/tasks/nntp.cc:148
 #, c-format
 msgid "%s requires a username, but none is set."
 msgstr "%s requereix un nom d'usuari, però no n'hi ha cap d'establert."
 
-#: ../pan/tasks/nntp.cc:139
+#: ../pan/tasks/nntp.cc:161
 #, c-format
 msgid "%s requires a password, but none is set."
 msgstr "%s requereix una contrasenya, però no n'hi ha cap d'establerta."
 
-#: ../pan/tasks/nntp.cc:205
+#: ../pan/tasks/nntp.cc:238
 #, c-format
 msgid "Sending \"%s\" to %s returned an error: %s"
 msgstr "En enviar «%s» a %s s'ha retornat un error: %s"
 
-#: ../pan/tasks/nntp.cc:228
+#: ../pan/tasks/nntp.cc:261
 #, c-format
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr "En enviar «%s» a %s s'ha retornat una resposta desconeguda: «%s»"
 
-#: ../pan/tasks/nntp-pool.cc:222
+#: ../pan/tasks/nntp-pool.cc:237
 #, c-format
 msgid "Unable to connect to \"%s\""
 msgstr "No es pot connectar amb «%s»"
+
+#: ../pan/tasks/queue.cc:777 ../pan/tasks/queue.cc:805
+#: ../pan/tasks/queue.cc:832
+msgid "No space left on device."
+msgstr ""
 
 #: ../pan/tasks/socket-impl-gio.cc:173 ../pan/tasks/socket-impl-gio.cc:211
 #: ../pan/tasks/socket-impl-openssl.cc:214
@@ -3085,34 +3361,33 @@ msgstr "No es pot connectar amb «%s»"
 msgid "Error connecting to \"%s\""
 msgstr "S'ha produït un error en connectar amb «%s»"
 
-#: ../pan/tasks/socket-impl-gio.cc:351 ../pan/tasks/socket-impl-openssl.cc:633
+#: ../pan/tasks/socket-impl-gio.cc:359 ../pan/tasks/socket-impl-openssl.cc:641
 msgid "Unknown Error"
 msgstr "S'ha produït un error desconegut"
 
-#: ../pan/tasks/task-article.cc:61 ../pan/tasks/task-article.cc:156
-#: ../pan/tasks/task-article.cc:159
+#: ../pan/tasks/task-article.cc:62 ../pan/tasks/task-article.cc:160
 #, c-format
 msgid "Saving %s"
 msgstr "S'està desant %s"
 
-#: ../pan/tasks/task-article.cc:63
+#: ../pan/tasks/task-article.cc:64
 #, c-format
 msgid "Reading %s"
 msgstr "S'està llegint %s"
 
-#: ../pan/tasks/task-article.cc:322
+#: ../pan/tasks/task-article.cc:326
 #, c-format
 msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
 msgstr ""
 "L'article «%s» està incomplet -- els servidors de notícies no tenen la part "
 "%s"
 
-#: ../pan/tasks/task-groups.cc:40
+#: ../pan/tasks/task-groups.cc:41
 #, c-format
 msgid "Getting group list from \"%s\""
 msgstr "S'està obtenint la llista dels grups des de «%s»"
 
-#: ../pan/tasks/task-groups.cc:122
+#: ../pan/tasks/task-groups.cc:132
 #, c-format
 msgid "Fetched %lu Groups"
 msgstr "S'han recuperat %lu grups"
@@ -3128,238 +3403,244 @@ msgid "Posting of \"%s\" failed: %s"
 msgstr "No s'ha pogut recuperar el cos de l'article \"%s\": %s"
 
 #: ../pan/tasks/task-post.cc:81
-#, c-format
-msgid "Posting of \"%s\" succesful: %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Posting of \"%s\" successful: %s"
+msgstr "No s'ha pogut recuperar el cos de l'article \"%s\": %s"
 
 #: ../pan/tasks/task-upload.cc:51
 #, fuzzy, c-format
 msgid "Uploading %s"
 msgstr "S'està llegint %s"
 
-#: ../pan/tasks/task-upload.cc:249
+#: ../pan/tasks/task-upload.cc:246
 #, c-format
 msgid "Uploading %s - Part %d of %d"
 msgstr ""
 
-#: ../pan/tasks/task-upload.cc:251
+#: ../pan/tasks/task-upload.cc:248
 #, c-format
-msgid "Uploading Message body with Subject \"%s\""
+msgid "Uploading message body with subject \"%s\""
 msgstr ""
 
-#: ../pan/tasks/task-upload.cc:308
-#, c-format
-msgid "Posting of File %s (Part %d of %d) failed: No Posts allowed by server."
-msgstr ""
-
-#: ../pan/tasks/task-upload.cc:316
+#: ../pan/tasks/task-upload.cc:305
 #, fuzzy, c-format
-msgid "Posting of File %s (Part %d of %d) failed: %s"
+msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
 msgstr "No s'ha pogut recuperar el cos de l'article \"%s\": %s"
 
-#: ../pan/tasks/task-upload.cc:326 ../pan/tasks/task-upload.cc:333
-#, c-format
-msgid "Posting of file %s (Part %d of %d) succesful: %s"
-msgstr ""
-
-#: ../pan/tasks/task-upload.cc:343
+#: ../pan/tasks/task-upload.cc:313
 #, fuzzy, c-format
-msgid "Posting of file %s succesful: %s"
+msgid "Posting of file %s (part %d of %d) failed: %s"
 msgstr "No s'ha pogut recuperar el cos de l'article \"%s\": %s"
 
-#: ../pan/tasks/task-upload.cc:347
+#: ../pan/tasks/task-upload.cc:323 ../pan/tasks/task-upload.cc:330
+#, fuzzy, c-format
+msgid "Posting of file %s (part %d of %d) successful: %s"
+msgstr "No s'ha pogut recuperar el cos de l'article \"%s\": %s"
+
+#: ../pan/tasks/task-upload.cc:340
+#, fuzzy, c-format
+msgid "Posting of file %s successful: %s"
+msgstr "No s'ha pogut recuperar el cos de l'article \"%s\": %s"
+
+#: ../pan/tasks/task-upload.cc:344
 #, c-format
 msgid ""
-"Posting of file %s not completely successful: Check the log (right-click on "
-"list item) !"
+"Posting of file %s not completely successful: Check the log (right-click "
+"list item)."
 msgstr ""
 
-#: ../pan/tasks/task-upload.cc:364
+#: ../pan/tasks/task-upload.cc:361
 #, c-format
 msgid ""
-"Posting of file %s not successful: Check the log (right-click on list item) !"
+"Posting of file %s not successful: Check the log (right-click list item)."
 msgstr ""
 
-#: ../pan/tasks/task-xover.cc:79
+#: ../pan/tasks/task-xover.cc:83
 #, c-format
 msgid "Getting all headers for \"%s\""
 msgstr "S'estan obtenint totes les capçaleres per a «%s»"
 
-#: ../pan/tasks/task-xover.cc:81
+#: ../pan/tasks/task-xover.cc:86
 #, c-format
 msgid "Getting new headers for \"%s\""
 msgstr "S'estan obtenint noves capçaleres per a «%s»"
 
 #. SAMPLE
-#: ../pan/tasks/task-xover.cc:83
+#: ../pan/tasks/task-xover.cc:90
 #, c-format
 msgid "Sampling headers for \"%s\""
 msgstr "S'estan mostrejant les capçaleres de «%s»"
 
-#: ../pan/tasks/task-xover.cc:369
+#: ../pan/tasks/task-xover.cc:424
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu parts, %lu articles)"
+
+#: ../pan/tasks/task-xover.cc:491
+#, fuzzy, c-format
+#| msgid "Getting new headers for \"%s\""
+msgid "Getting new headers for \"%s\" done."
+msgstr "S'estan obtenint noves capçaleres per a «%s»"
 
 #: ../pan/tasks/task-xoverinfo.cc:78
 #, fuzzy, c-format
 msgid "Getting header counts for \"%s\""
 msgstr "S'estan obtenint totes les capçaleres per a «%s»"
 
-#: ../pan/usenet-utils/filter-info.cc:163
+#: ../pan/usenet-utils/filter-info.cc:168
 msgid "article doesn't have attachments"
 msgstr "l'article no té adjunts"
 
-#: ../pan/usenet-utils/filter-info.cc:167
+#: ../pan/usenet-utils/filter-info.cc:172
 msgid "the article has attachments"
 msgstr "l'article té adjunts"
 
-#: ../pan/usenet-utils/filter-info.cc:171
+#: ../pan/usenet-utils/filter-info.cc:176
 msgid "the article isn't cached locally"
 msgstr "l'article no es troba a la memòria cau local"
 
-#: ../pan/usenet-utils/filter-info.cc:175
+#: ../pan/usenet-utils/filter-info.cc:180
 msgid "the article is cached locally"
 msgstr "l'article es troba a la memòria cau local"
 
-#: ../pan/usenet-utils/filter-info.cc:179
+#: ../pan/usenet-utils/filter-info.cc:184
 msgid "the article wasn't posted by you"
 msgstr "l'article no va ser publicat per vós"
 
-#: ../pan/usenet-utils/filter-info.cc:183
+#: ../pan/usenet-utils/filter-info.cc:188
 msgid "the article was posted by you"
 msgstr "l'article va ser publicat per vós"
 
-#: ../pan/usenet-utils/filter-info.cc:187
+#: ../pan/usenet-utils/filter-info.cc:192
 msgid "the article has been read"
 msgstr "l'article s'ha llegit"
 
-#: ../pan/usenet-utils/filter-info.cc:191
+#: ../pan/usenet-utils/filter-info.cc:196
 msgid "the article hasn't been read"
 msgstr "l'article no s'ha llegit"
 
-#: ../pan/usenet-utils/filter-info.cc:195
+#: ../pan/usenet-utils/filter-info.cc:200
 #, c-format
 msgid "the article is less than %ld bytes long"
 msgstr "l'article té menys de %ld bytes de longitud"
 
-#: ../pan/usenet-utils/filter-info.cc:200
+#: ../pan/usenet-utils/filter-info.cc:205
 #, c-format
 msgid "the article is at least %ld bytes long"
 msgstr "l'article té almenys %ld bytes de longitud"
 
-#: ../pan/usenet-utils/filter-info.cc:205
+#: ../pan/usenet-utils/filter-info.cc:210
 #, c-format
 msgid "the article is less than %ld lines long"
 msgstr "l'article té menys de %ld línies de longitud"
 
-#: ../pan/usenet-utils/filter-info.cc:210
+#: ../pan/usenet-utils/filter-info.cc:215
 #, c-format
 msgid "the article is at least %ld lines long"
 msgstr "l'article té almenys %ld línies de longitud"
 
-#: ../pan/usenet-utils/filter-info.cc:215
+#: ../pan/usenet-utils/filter-info.cc:220
 #, c-format
 msgid "the article is less than %ld days old"
 msgstr "l'article té menys de %ld dies d'antiguitat"
 
-#: ../pan/usenet-utils/filter-info.cc:220
+#: ../pan/usenet-utils/filter-info.cc:225
 #, c-format
 msgid "the article is at least %ld days old"
 msgstr "l'article té almenys %ld dies d'antiguitat"
 
-#: ../pan/usenet-utils/filter-info.cc:225
+#: ../pan/usenet-utils/filter-info.cc:230
 #, c-format
 msgid "the article was posted to less than %ld groups"
 msgstr "l'article es va publicar a menys de %ld grups"
 
-#: ../pan/usenet-utils/filter-info.cc:230
+#: ../pan/usenet-utils/filter-info.cc:235
 #, c-format
 msgid "the article was posted to at least %ld groups"
 msgstr "l'article es va publicar almenys en %ld grups"
 
-#: ../pan/usenet-utils/filter-info.cc:235
+#: ../pan/usenet-utils/filter-info.cc:240
 #, c-format
 msgid "the article's score is less than %ld"
 msgstr "la puntuació de l'article és menys que %ld"
 
-#: ../pan/usenet-utils/filter-info.cc:240
+#: ../pan/usenet-utils/filter-info.cc:245
 #, c-format
 msgid "the article's score is %ld or higher"
 msgstr "la puntuació de l'article és %ld o superior"
 
-#: ../pan/usenet-utils/filter-info.cc:249
-#: ../pan/usenet-utils/filter-info.cc:259
+#: ../pan/usenet-utils/filter-info.cc:254
+#: ../pan/usenet-utils/filter-info.cc:264
 #, c-format
 msgid "%s doesn't contain \"%s\""
 msgstr "%s no conté «%s»"
 
-#: ../pan/usenet-utils/filter-info.cc:250
-#: ../pan/usenet-utils/filter-info.cc:260
+#: ../pan/usenet-utils/filter-info.cc:255
+#: ../pan/usenet-utils/filter-info.cc:265
 #, c-format
 msgid "%s isn't \"%s\""
 msgstr "%s no és «%s»"
 
-#: ../pan/usenet-utils/filter-info.cc:251
-#: ../pan/usenet-utils/filter-info.cc:261
+#: ../pan/usenet-utils/filter-info.cc:256
+#: ../pan/usenet-utils/filter-info.cc:266
 #, c-format
 msgid "%s doesn't begin with \"%s\""
 msgstr "%s no comença amb «%s»"
 
-#: ../pan/usenet-utils/filter-info.cc:252
-#: ../pan/usenet-utils/filter-info.cc:262
+#: ../pan/usenet-utils/filter-info.cc:257
+#: ../pan/usenet-utils/filter-info.cc:267
 #, c-format
 msgid "%s doesn't end with \"%s\""
 msgstr "%s no acaba amb «%s»"
 
-#: ../pan/usenet-utils/filter-info.cc:253
-#: ../pan/usenet-utils/filter-info.cc:263
+#: ../pan/usenet-utils/filter-info.cc:258
+#: ../pan/usenet-utils/filter-info.cc:268
 #, c-format
 msgid "%s doesn't match the regex \"%s\""
 msgstr "%s no coincideix amb l'expressió regular «%s»"
 
-#: ../pan/usenet-utils/filter-info.cc:275
+#: ../pan/usenet-utils/filter-info.cc:280
 #, c-format
 msgid "%s contains \"%s\""
 msgstr "%s conté «%s»"
 
-#: ../pan/usenet-utils/filter-info.cc:276
+#: ../pan/usenet-utils/filter-info.cc:281
 #, c-format
 msgid "%s is \"%s\""
 msgstr "%s és «%s»"
 
-#: ../pan/usenet-utils/filter-info.cc:277
+#: ../pan/usenet-utils/filter-info.cc:282
 #, c-format
 msgid "%s begins with \"%s\""
 msgstr "%s comença amb «%s»"
 
-#: ../pan/usenet-utils/filter-info.cc:278
+#: ../pan/usenet-utils/filter-info.cc:283
 #, c-format
 msgid "%s ends with \"%s\""
 msgstr "%s acaba amb «%s»"
 
-#: ../pan/usenet-utils/filter-info.cc:279
+#: ../pan/usenet-utils/filter-info.cc:284
 #, c-format
 msgid "%s matches the regex \"%s\""
 msgstr "%s coincideix amb l'expressió regular «%s»"
 
-#: ../pan/usenet-utils/filter-info.cc:285
+#: ../pan/usenet-utils/filter-info.cc:290
 msgid "Any of these tests fail:"
 msgstr "Qualsevol d'aquestes proves falla:"
 
-#: ../pan/usenet-utils/filter-info.cc:292
+#: ../pan/usenet-utils/filter-info.cc:297
 msgid "All of these tests pass:"
 msgstr "Totes aquestes proves passen:"
 
-#: ../pan/usenet-utils/filter-info.cc:299
+#: ../pan/usenet-utils/filter-info.cc:304
 msgid "None of these tests pass:"
 msgstr "Cap d'aquestes proves passen:"
 
-#: ../pan/usenet-utils/filter-info.cc:306
+#: ../pan/usenet-utils/filter-info.cc:311
 msgid "Any of these tests pass:"
 msgstr "Qualsevol d'aquestes proves passen:"
 
-#: ../pan/usenet-utils/gnksa.cc:878
+#: ../pan/usenet-utils/gnksa.cc:880
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr ""
@@ -3489,2347 +3770,46 @@ msgstr ""
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr "S'han llegit %lu regles de puntuació en %lu seccions de «%s»"
 
-#: ../pan/usenet-utils/ssl-utils.h:199
+#: ../pan/usenet-utils/ssl-utils.h:189
 #, fuzzy, c-format
 msgid "Error printing the server certificate for '%s'"
 msgstr ""
 "S'ha produït un error en analitzar el significat de la línia d'ordres "
 "«navegador web»: %s"
 
-#: ../pan/usenet-utils/ssl-utils.h:216
+#: ../pan/usenet-utils/ssl-utils.h:205
 #, c-format
 msgid ""
-"The current server <b>'%s'</b> sent this security certificate :\n"
+"The current server <b>'%s'</b> sent this security certificate:\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:217
+#: ../pan/usenet-utils/ssl-utils.h:206
 #, c-format
 msgid ""
-"Certificate information for server <b>'%s'</b> :\n"
+"Certificate information for server <b>'%s'</b>:\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:219
+#: ../pan/usenet-utils/ssl-utils.h:208
 #, c-format
 msgid ""
 "%s<b>Issuer information:</b>\n"
 "%s\n"
-"<b>Valid until : </b>%s\n"
+"<b>Valid until:</b> %s\n"
 "\n"
-"<b>Not valid before : </b>%s\n"
+"<b>Not valid before:</b> %s\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/text-massager.cc:397
+#: ../pan/usenet-utils/text-massager.cc:399
 msgid "> [quoted text muted]"
 msgstr "> [text citat omès]"
 
-#~ msgid "Read News from Usenet"
-#~ msgstr "Llegiu notícies de Usenet"
-
-#, fuzzy
-#~ msgid "_Toggle Flag on for Thread"
-#~ msgstr "_Mira el fil"
-
-#~ msgid "Attachment not shown: MIME type %s/%s; filename %s\n"
-#~ msgstr "L'adjunció no es mostra: tipus MIME %s/%s; nom del fitxer %s\n"
-
-#~ msgid "Attachment not shown: MIME type %s/%s\n"
-#~ msgstr "L'adjunció no es mostra: tipus MIME %s/%s\n"
-
-#, fuzzy
-#~ msgid "Error!"
-#~ msgstr "Error"
-
-#~ msgid ""
-#~ "<b>Spellchecker not found!</b>\n"
-#~ " \n"
-#~ "Was this copy of Pan compiled with GtkSpell enabled?"
-#~ msgstr ""
-#~ "<b>No s'ha trobat el corrector ortogràfic.</b>\n"
-#~ " \n"
-#~ "S'ha compilat aquesta copia del Pan amb el GtkSpell activat?"
-
-#, fuzzy
-#~ msgid "Signer : "
-#~ msgstr "Signatura:"
-
-#~ msgid "_Signature:"
-#~ msgstr "_Signatura:"
-
-#~ msgid "Creating directory \"%s\""
-#~ msgstr "S'està creant el directori «%s»"
-
-#~ msgid "Couldn't create directory \"%s\": %s"
-#~ msgstr "No s'ha pogut crear el directori «%s»: %s"
-
-#~ msgid ""
-#~ "Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions "
-#~ "may fail."
-#~ msgstr ""
-#~ "La vostra còpia de libpcre no disposa d'UTF-8. Les expressions regulars "
-#~ "UTF-8 poden fallar."
-
-#~ msgid "Can't use regular expression \"%s\": %s at position %d"
-#~ msgstr "No es pot fer servir l'expressió regular «%s»: %s a la posició %d"
-
-#~ msgid "Group Name"
-#~ msgstr "Nom del grup"
-
-#~ msgid "Posting Article"
-#~ msgstr "S'està publicant l'article"
-
-#~ msgid "Posting..."
-#~ msgstr "S'està publicant..."
-
-#~ msgid "Read Selected Group"
-#~ msgstr "Llegeix el grup seleccionat"
-
-#~ msgid "_Mark Group _Read"
-#~ msgstr "_Marca el grup com a llegit"
-
-#~ msgid "_Delete Group's Articles"
-#~ msgstr "_Suprimeix els articles del grup"
-
-#~ msgid "Get New Headers for Selected Group"
-#~ msgstr "Obtingues les noves capçaleres dels grups seleccionats"
-
-#~ msgid "Get New Headers for Subscribed Groups"
-#~ msgstr "Obtingues les noves capçaleres dels grups subscrits"
-
-#~ msgid "Get Headers from Server"
-#~ msgstr "Obtingues les capçaleres del servidor"
-
-#~ msgid "Get a new Group list from the Server"
-#~ msgstr "Obtingues una nova llista de grups des del servidor"
-
-#~ msgid "Subscribe to Selected Group"
-#~ msgstr "Subscriu als grups seleccionats"
-
-#~ msgid "Unsubscribe from Selected Group"
-#~ msgstr "Cancel·la la subscripció del grup seleccionat"
-
-#~ msgid "Save Selected Articles ..."
-#~ msgstr "Desa els articles seleccionats..."
-
-#~ msgid "Cancel Last Task"
-#~ msgstr "Cancel·la la darrera tasca"
-
-#~ msgid "Clear Header Pane"
-#~ msgstr "Neteja la subfinestra de capçalera"
-
-#~ msgid "Clear Body Pane"
-#~ msgstr "Neteja la subfinestra de cos"
-
-#~ msgid "Next Unread Group"
-#~ msgstr "Següent grup sense llegir"
-
-#~ msgid "Next Group"
-#~ msgstr "Següent grup"
-
-#~ msgid "Next Watched Article"
-#~ msgstr "Següent article mirat"
-
-#~ msgid "Next Thread"
-#~ msgstr "Següent fil"
-
-#~ msgid "Previous Article"
-#~ msgstr "Article anterior"
-
-#~ msgid "Previous Thread"
-#~ msgstr "Fil anterior"
-
-#~ msgid "Parent Article"
-#~ msgstr "Article de nivell superior"
-
-#~ msgid "Mark Article as Read"
-#~ msgstr "Marca l'article com a llegit"
-
-#~ msgid "Mark Article as Unread"
-#~ msgstr "Marca l'article com a no llegit"
-
-#~ msgid "Reply to Author in Mail"
-#~ msgstr "Respon a l'autor amb un correu"
-
-#~ msgid "Abbreviate _Names in Group Pane"
-#~ msgstr "_Abrevia els noms a la subfinestra de grup"
-
-#~ msgid "Match Only Articles Posted by Me"
-#~ msgstr "Només coincideix amb els articles enviats per vós"
-
-#~ msgid "Baltic (ISO-8859-4)"
-#~ msgstr "Bàltic (ISO-8859-4)"
-
-#~ msgid "Baltic (ISO-8859-13)"
-#~ msgstr "Bàltic (ISO-8859-13)"
-
-#~ msgid "Baltic (Windows-1257)"
-#~ msgstr "Bàltic (Windows-1257)"
-
-#~ msgid "Central European (ISO-8859-2)"
-#~ msgstr "Centreeuropeu (ISO-8859-2)"
-
-#~ msgid "Central European (Windows-1250)"
-#~ msgstr "Centreeuropeu (Windows-1250)"
-
-#~ msgid "Chinese Simplified (gb2312)"
-#~ msgstr "Xinès simplificat (gb2312)"
-
-#~ msgid "Chinese Traditional (big5)"
-#~ msgstr "Xinès tradicional (big5)"
-
-#~ msgid "Cyrillic (ISO-8859-5)"
-#~ msgstr "Ciríl·lic (ISO-8859-5)"
-
-#~ msgid "Cyrillic (Windows-1251)"
-#~ msgstr "Ciríl·lic (Windows-1251)"
-
-#~ msgid "Cyrillic (KOI8-R)"
-#~ msgstr "Ciríl·lic (KOI8-R)"
-
-#~ msgid "Cyrillic, Ukrainian (KOI8-U)"
-#~ msgstr "Ciríl·lic, ucraïnès (KOI8-U)"
-
-#~ msgid "Greek (ISO-8859-7)"
-#~ msgstr "Grec (ISO-8859-7)"
-
-#~ msgid "Japanese (ISO-2022-jp)"
-#~ msgstr "Japonès (ISO-2022-jp)"
-
-#~ msgid "Korean (euc-kr)"
-#~ msgstr "Coreà (euc-kr)"
-
-#~ msgid "Turkish (ISO-8859-9)"
-#~ msgstr "Turc (ISO-8859-9)"
-
-#~ msgid "Western (ISO-8859-1)"
-#~ msgstr "Occidental (ISO-8859-1)"
-
-#~ msgid "Western, New (ISO-8859-15)"
-#~ msgstr "Occidental nou (ISO-8859-15)"
-
-#~ msgid "Western (Windows-1252)"
-#~ msgstr "Occidental (Windows-1252)"
-
-#~ msgid "Unicode (UTF-8)"
-#~ msgstr "Unicode (UTF-8)"
-
-#~ msgid "Western"
-#~ msgstr "Occidental"
-
-#~ msgid ""
-#~ "Pan is now offline. Please ensure that space is available, then use File|"
-#~ "Work Online to continue."
-#~ msgstr ""
-#~ "El Pan ara està desconnectat. Assegureu-vos que hi ha espai disponible, "
-#~ "després utilitzeu «Fitxer|Treballa connectat» per a continuar."
-
-#~ msgid "%u Tasks Running, %u Tasks Total"
-#~ msgstr "S'estan executant %u tasques, d'un total de %u tasques"
-
-#~ msgid "_Manage Editor List..."
-#~ msgstr "_Gestiona la llista d'editors..."
-
-#~ msgid "Manage Posting Pr_ofiles..."
-#~ msgstr "Gestiona els perfils de _publicació..."
-
-#~ msgid "Unicode, UTF-8"
-#~ msgstr "Unicode, UTF-8"
-
-#~ msgid "Manage Editor List"
-#~ msgstr "Gestiona la llista d'editors"
-
-#~ msgid "Editors"
-#~ msgstr "Editors"
-
-#~ msgid "Couldn't read signature file \"%s\": %s"
-#~ msgstr "No s'ha pogut llegir el fitxer de signatura «%s»: %s"
-
-#~ msgid "Add a New Profile"
-#~ msgstr "Afegeix un nou perfil"
-
-#~ msgid "Edit the selected profile"
-#~ msgstr "Edita el perfil seleccionat"
-
-#~ msgid "Remove the selected profile"
-#~ msgstr "Suprimeix el perfil seleccionat"
-
-#~ msgid "Pan: Add a Server"
-#~ msgstr "Pan: afegeix un servidor"
-
-#~ msgid "Pan: Edit a Server's Settings"
-#~ msgstr "Pan: edita la configuració d'un servidor"
-
-#~ msgid "Pan: Servers"
-#~ msgstr "Pan: servidors"
-
-#~ msgid ""
-#~ "Error saving \"%s\":\n"
-#~ "%s. %s"
-#~ msgstr ""
-#~ "S'ha produït un error en desar «%s»:\n"
-#~ "%s. %s"
-
-#~ msgid "Pan: "
-#~ msgstr "Pan: "
-
-#~ msgid " (%lu)"
-#~ msgstr " (%lu)"
-
-#~ msgid "Pan: %s"
-#~ msgstr "Pan: %s"
-
-#~ msgid "Tasks: %u/%u"
-#~ msgstr "Tasques: %u/%u"
-
-#~ msgid "_Close"
-#~ msgstr "_Tanca"
-
-#~ msgid "Close Window"
-#~ msgstr "Tanca la finestra"
-
-#~ msgid "Cu_t"
-#~ msgstr "Re_talla"
-
-#~ msgid "Cut Text"
-#~ msgstr "Retalla el text"
-
-#~ msgid "_Copy"
-#~ msgstr "_Copia"
-
-#~ msgid "Copy Text"
-#~ msgstr "Copia el text"
-
-#~ msgid "_Paste"
-#~ msgstr "_Enganxa"
-
-#~ msgid "Paste Text"
-#~ msgstr "Engaxa el text"
-
-#, fuzzy
-#~ msgid "Error loading post.ui: \"%s\""
-#~ msgstr "S'ha produït un error quan es llegia del sòcol: %s"
-
-#, fuzzy
-#~ msgid "Path"
-#~ msgstr "Parts"
-
-#, fuzzy
-#~ msgid "Save Files to Path"
-#~ msgstr "Fitxers per adjuntar"
-
-#, fuzzy
-#~ msgid "Pan: New Scoring Rule"
-#~ msgstr "Pan: edita regla"
-
-#, fuzzy
-#~ msgid "Then"
-#~ msgstr "Agraïments"
-
-#, fuzzy
-#~ msgid "For"
-#~ msgstr "Carpetes"
-
-#, fuzzy
-#~ msgid "Name: \"%s\""
-#~ msgstr "S'ha desat «%s»"
-
-#~ msgid "Status"
-#~ msgstr "Estat"
-
-#, fuzzy
-#~ msgid "Unable to set group: %s"
-#~ msgstr "No es pot definir el grup: «%*.*s»: %s"
-
-#, fuzzy
-#~ msgid "Error: %s"
-#~ msgstr "Error"
-
-#, fuzzy
-#~ msgid "Couldn't load \"%s\": %s"
-#~ msgstr "No s'ha pogut crear el directori «%s»: %s"
-
-#, fuzzy
-#~ msgid "Warning: Unknown group \"%s\"."
-#~ msgstr "Atenció: grup desconegut: «%*.*s»."
-
-# No tradueixo pan.sent pq és un nom de sistema
-#~ msgid ""
-#~ "Unable to cancel article: Couldn't find matching article in folder `pan."
-#~ "sent'!"
-#~ msgstr ""
-#~ "No es pot cancel·lar l'article: no es pot trobar l'article corresponent a "
-#~ "la carpeta `pan.sent'"
-
-#~ msgid ""
-#~ "Unable to supersede article: Couldn't find matching article in folder "
-#~ "`pan.sent'!"
-#~ msgstr ""
-#~ "No es pot substituir l'article: no es pot trobar l'article corresponent a "
-#~ "la carpeta `pan.sent'"
-
-#~ msgid "You must download the article before you can cancel it."
-#~ msgstr "Heu de descarregar l'article abans que el pogueu cancel·lar."
-
-#~ msgid "You must download the article before you can supersede it."
-#~ msgstr "Heu de descarregar l'article abans que el pogueu substituir."
-
-#~ msgid "Pan: Find Article"
-#~ msgstr "Pan: troba article"
-
-#~ msgid "_Message-ID:"
-#~ msgstr "Id del _missatge:"
-
-#~ msgid "Case Sensiti_ve"
-#~ msgstr "Considera diferents _majúscules i minúscules"
-
-#~ msgid "_Unread Only"
-#~ msgstr "N_omés els no llegits"
-
-#~ msgid "Fin_d:"
-#~ msgstr "Cer_ca:"
-
-#~ msgid ""
-#~ "Type in a search string and press ENTER.\n"
-#~ "Wildcards are allowed."
-#~ msgstr ""
-#~ "Escriviu un text per cercar i premeu la tecla d'entrar.\n"
-#~ "Es poden fer servir comodins."
-
-#~ msgid "/---"
-#~ msgstr "/---"
-
-#, fuzzy
-#~ msgid "/Save Article A_ttachments"
-#~ msgstr "/Desa els fi_txers adjunts"
-
-#~ msgid "/_Manual Decode..."
-#~ msgstr "/Descodificació _manual..."
-
-#~ msgid "/D_ownload Flagged"
-#~ msgstr "/Des_carrega els senyalats"
-
-#~ msgid "/_Flag"
-#~ msgstr "/_Senyala"
-
-#~ msgid "/_Unflag"
-#~ msgstr "/_No senyalis"
-
-#~ msgid "/_Create Score"
-#~ msgstr "/_Crea puntuació"
-
-#~ msgid "/_Copy to Folder"
-#~ msgstr "/_Copia a carpeta"
-
-#~ msgid "/_Delete"
-#~ msgstr "/_Suprimeix"
-
-#~ msgid "Scoring Articles"
-#~ msgstr "Puntua articles"
-
-#~ msgid "Filtering Articles"
-#~ msgstr "S'estan filtrant els articles"
-
-#~ msgid "Updating Header Pane..."
-#~ msgstr "S'està actualitzant la subfinestra de capçalera..."
-
-#~ msgid "Loading group \"%s\""
-#~ msgstr "S'està carregant el grup «%s»"
-
-#~ msgid "Flushing article cache... "
-#~ msgstr "S'està actualitzant la memòria cau d'articles..."
-
-#~ msgid "%d files erased."
-#~ msgstr "S'han esborrat %d fitxers."
-
-#~ msgid "Error saving article \"%s\" (is %s full?)"
-#~ msgstr "S'ha produït un error en desar l'article «%s». Potser %s és ple."
-
-#~ msgid "Directory \"%s\" contains %.1f MB in %d files"
-#~ msgstr "El directori «%s» conté %.1f MB en %d fitxers"
-
-#~ msgid "Unparseable Subject"
-#~ msgstr "No es pot analitzar el significat de l'assumpte"
-
-#~ msgid "Couldn't parse a Message-ID from the raw message!"
-#~ msgstr ""
-#~ "No es pot analitzar el significat de l'id del missatge a partir del "
-#~ "missatge"
-
-#~ msgid "unknown@spammesenseless.com"
-#~ msgstr "nothodire@noalcorreuindesitjable.com"
-
-#~ msgid "UNKNOWN"
-#~ msgstr "Desconegut"
-
-#~ msgid "Decode can't access path \"%s\""
-#~ msgstr "La descodificació no pot accedir al camí «%s»"
-
-#~ msgid "Can't create file \"%s\" %s"
-#~ msgstr "No s'ha pogut crear el fitxer «%s» %s"
-
-#~ msgid "Could not decode article - file may be corrupt/incomplete"
-#~ msgstr ""
-#~ "No es pot descodificar l'article. El fitxer pot estar malmès o incomplet"
-
-#~ msgid "Checksum for `%s' part %d failed - file is corrupt"
-#~ msgstr ""
-#~ "La suma de comprovació de `%s' a la part %d ha fallat. El fitxer està "
-#~ "malmès"
-
-#~ msgid "Checksum for `%s' failed - file may be corrupt"
-#~ msgstr ""
-#~ "La suma de comprovació de `%s' ha fallat. El fitxer pot estar malmès"
-
-#~ msgid "Error saving file \"%s\" - is the disk full?"
-#~ msgstr "S'ha produït un error en desar «%s». Potser el disc és ple?"
-
-#, fuzzy
-#~ msgid "Decoded \"%s\" from group \"%s\", \"%s\""
-#~ msgstr "S'ha decodificat «%s» del grup «%*.*s», «%s»"
-
-#~ msgid "Loading %u of %d groups"
-#~ msgstr "S'estan carregant %u de %d grups"
-
-#~ msgid ""
-#~ "Unsupported data version %d for \"%s\" data file.\n"
-#~ "Are you running an old version of Pan by accident?"
-#~ msgstr ""
-#~ "No es pot fer servir la versió %d de dades per al fitxer «%s».\n"
-#~ "Esteu executant una versió antiga del Pan?"
-
-#~ msgid ""
-#~ "Skipped %d groups due to possible corruption in \"%s\" and \"%s\".  You "
-#~ "may want to delete these files and get a new grouplist from your news "
-#~ "server."
-#~ msgstr ""
-#~ "S'han ignorat %d grups degut a una possible corrupció a «%s» i «%s». "
-#~ "Hauríeu d'esborrar aquests fitxers i obtenir una nova llista de grup del "
-#~ "vostre servidor de notícies."
-
-#~ msgid "Loaded %d groups for server \"%s\" in %.1f seconds (%.0f groups/sec)"
-#~ msgstr ""
-#~ "S'han carregat %d grups per al servidor «%s» en %.1f segons (%.0f grups/"
-#~ "seg)"
-
-#~ msgid "Saved %d of %u groups"
-#~ msgstr "S'han desat %d de %u grups"
-
-#~ msgid "Error saving list of groups to \"%s\" - is the disk full?"
-#~ msgstr ""
-#~ "S'ha produït un error en desar la llista de grups a «%s». Potser el disc "
-#~ "és ple"
-
-#~ msgid "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
-#~ msgstr "S'han desat %d grups en «%s» en %.1f segons (%.0f grups/seg)"
-
-#~ msgid "Skipped unsupported old data file for group \"%s\"."
-#~ msgstr "S'ha omès el fitxer de dades no suportat per al grup «%s»."
-
-#~ msgid "Loaded %d of %d articles"
-#~ msgstr "S'han carregat %d de %d articles"
-
-#~ msgid ""
-#~ "Pan skipped %d corrupt headers from the local cache for group \"%*.*s\"."
-#~ msgstr ""
-#~ "El pan ha omès %d capçaleres malmeses de la memòria cau local del grup "
-#~ "«%*.*s»."
-
-#~ msgid "You may want to empty this group and download fresh headers."
-#~ msgstr "Hauríeu de buidar aquest grup i descarregar noves capçaleres."
-
-#~ msgid "The group will not be saved -- can't create file \"%s\""
-#~ msgstr "No es desarà el grup. No es pot crear el fitxer «%s»"
-
-#~ msgid "Unable to save headers for group \"%*.*s\" - is the disk full?"
-#~ msgstr ""
-#~ "No s'han pogut desar les capçaleres per al grup «%*.*s». Potser el disc "
-#~ "és ple."
-
-#~ msgid "(No Group)"
-#~ msgstr "(Cap grup)"
-
-#~ msgid "ERROR: invalid address \"%s\""
-#~ msgstr "S'ha produït un error: l'adreça «%s» no és vàlida"
-
-#~ msgid "ERROR: Must have one author in From: line"
-#~ msgstr "S'ha produït un error: hi ha d'haver un autor a la línia De:"
-
-#~ msgid "ERROR: No recipients specified."
-#~ msgstr "S'ha produït un error: no s'ha especificat cap destinatari."
-
-#~ msgid "Imported %d groups (%d new) from \"%s\""
-#~ msgstr "S'han importat %d grups (%d nous) de «%s»"
-
-#~ msgid "Could not create temporary file: %s"
-#~ msgstr "No s'ha pogut crear el fitxer temporal: %s"
-
-#~ msgid "Exported %d groups (%d subscribed) to \"%s\""
-#~ msgstr "S'han exportat %d grups (%d subscrits) a «%s»"
-
-#~ msgid "Imported %d lines from Gnome config file"
-#~ msgstr "S'han importat %d línies del fitxer de configuració del Gnome"
-
-#~ msgid "%s does not appear to be a valid datafile"
-#~ msgstr "%s no sembla un fitxer de dades vàlid"
-
-#~ msgid "Error converting string \"%*s\" to utf8: %d - %s"
-#~ msgstr ""
-#~ "S'ha produït un error en convertir el text «%*s» a la codificació utf8: "
-#~ "%d - %s"
-
-#~ msgid "No name specified!"
-#~ msgstr "No s'ha especificat cap nom"
-
-#~ msgid "pan.sent"
-#~ msgstr "pan.sent"
-
-#~ msgid "pan.sendlater"
-#~ msgstr "pan.sendlater"
-
-#~ msgid "Server is corrupt"
-#~ msgstr "El servidor està malmès"
-
-#~ msgid "A Server with that name already exists."
-#~ msgstr "Ja existeix un servidor amb aquest nom."
-
-#~ msgid "Error renaming \"%s\" as \"%s\": %s."
-#~ msgstr "S'ha produït un error en canviar el nom de «%s» a «%s»: %s."
-
-#~ msgid "Can't backup \"%s\" as \"%s\": %s"
-#~ msgstr "No es pot fer una còpia de seguretat de «%s» a «%s»: %s"
-
-#~ msgid "Can't write to \"%s\": %s"
-#~ msgstr "No es pot escriure a «%s»: %s"
-
-#~ msgid "A Usenet newsreader useful for both text and binaries newsgroups."
-#~ msgstr ""
-#~ "Un lector de notícies Usenet, útil tant per a grups de notícies en format "
-#~ "text o en format binari."
-
-#~ msgid "A newsreader for GNOME"
-#~ msgstr "Un lector de notícies per al GNOME"
-
-#~ msgid "Programmer"
-#~ msgstr "Programador"
-
-#~ msgid "Project Originator, Programmer"
-#~ msgstr "Creador del projecte, programador"
-
-#~ msgid "Programmer, 0.6 - 0.7"
-#~ msgstr "Programador, 0.6 - 0.7"
-
-# Sembla que no hi ha cap altre lloc on posar el nostre correu electrònic
-#~ msgid ""
-#~ "Pan %s Translations\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Pan %s Code or Patches\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Pan %s Suggestions and Testing\n"
-#~ "%s\n"
-#~ msgstr ""
-#~ "Traduccions del Pan %s\n"
-#~ "Catalan: Xavier Conde Rueda <xavi.conde@gmail.com>,\n"
-#~ "Softcatalà <tradgnome@softcatala.org>\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Codi o pedaços per al Pan %s\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Suggeriments i proves del Pan %s\n"
-#~ "%s\n"
-
-#~ msgid "_Directory for saving articles:"
-#~ msgstr "_Directori per desar els articles:"
-
-#~ msgid "Default charse_t:"
-#~ msgstr "Conjun_t de caràcters per defecte:"
-
-#~ msgid "Pan: Download Headers for group `%s'"
-#~ msgstr "Pan: descarrega capçaleres del grup `%s'"
-
-#~ msgid "Pan: Download Headers"
-#~ msgstr "Pan: descarrega capçaleres"
-
-#~ msgid "Download _new headers"
-#~ msgstr "Descarrega capçaleres _noves"
-
-#~ msgid "Download _recent headers: "
-#~ msgstr "Desca_rrega capçaleres recents: "
-
-#~ msgid "_Download bodies too"
-#~ msgstr "_Descarrega els cossos també"
-
-#~ msgid "How should you appear when posting articles?"
-#~ msgstr "Com heu de presentar-vos quan publiqueu nous articles"
-
-#~ msgid "Your _Name:"
-#~ msgstr "El vostre _nom:"
-
-#~ msgid "Email _Address:"
-#~ msgstr "_Adreça de correu electrònic:"
-
-#~ msgid "_Organization:"
-#~ msgstr "_Organització:"
-
-#~ msgid "Select Signature File"
-#~ msgstr "Seleccioneu el fitxer de signatura"
-
-#~ msgid "default"
-#~ msgstr "per defecte"
-
-#~ msgid "What mail server should Pan use?"
-#~ msgstr "Quin servidor de correu ha de fer servir el Pan?"
-
-#~ msgid "What news server should Pan use?"
-#~ msgstr "Quin servidor de notícies ha de fer servir el Pan?"
-
-#~ msgid "Short name for Pan to show, e.g. \"mynewsserver\""
-#~ msgstr "Nom reduït que mostrarà el Pan, per exemple «elservidor»"
-
-#~ msgid "Short _name for Pan to show:"
-#~ msgstr "_Nom reduït que mostrarà el Pan:"
-
-#~ msgid "Login"
-#~ msgstr "Entrada"
-
-#~ msgid "Server requires authori_zation"
-#~ msgstr "El servidor demana autorit_zació"
-
-#~ msgid "Pan Setup Wizard"
-#~ msgstr "Assistent de configuració del Pan"
-
-#~ msgid "Thank you for trying Pan!"
-#~ msgstr "Moltes gràcies per fer servir el Pan!"
-
-#~ msgid ""
-#~ "Thank you for trying Pan!\n"
-#~ " \n"
-#~ "If you are new to Usenet,\n"
-#~ "%s\n"
-#~ "is a starting point to see what Usenet is,\n"
-#~ "where to find a free news server,\n"
-#~ "and how to use Pan.\n"
-#~ " \n"
-#~ "Since this is your first time running Pan,\n"
-#~ "we'll need to gather some information.\n"
-#~ msgstr ""
-#~ "Moltes gràcies per fer servir el Pan! \n"
-#~ "Si feu servir Usenet per primera vegada,\n"
-#~ "%s\n"
-#~ "és un lloc per començar a saber de què es tracta,\n"
-#~ "on es pot trobar un servidor de notícies gratuït,\n"
-#~ "i com fer servir el Pan.\n"
-#~ "\n"
-#~ "Com que feu servir el Pan per primera vegada,\n"
-#~ "cal recollir alguna informació.\n"
-
-#~ msgid "About You"
-#~ msgstr "Quant a vós"
-
-#~ msgid "Ready!"
-#~ msgstr "Llest"
-
-#~ msgid ""
-#~ "You have successfully entered all of\n"
-#~ "the information required to set up Pan.\n"
-#~ "\n"
-#~ "To save these settings, click Save."
-#~ msgstr ""
-#~ "Heu entrat tota la informació \n"
-#~ "requerida per configurar el Pan.\n"
-#~ "\n"
-#~ "Per desar aquesta configuració, feu clic a Desa."
-
-#~ msgid "About %s"
-#~ msgstr "Quant a %s"
-
-#~ msgid "License"
-#~ msgstr "Llicència"
-
-#~ msgid "Authors"
-#~ msgstr "Autors"
-
-#~ msgid "Thanks to"
-#~ msgstr "Gràcies a"
-
-#~ msgid "  (No conditions -- no articles will match)"
-#~ msgstr "  (Cap condició -- no es trobarà correspondència amb cap article)"
-
-#~ msgid "  (No conditions -- all articles will match)"
-#~ msgstr ""
-#~ "  (Cap condició -- es trobarà correspondència amb tots els articles)"
-
-#~ msgid "Pan: Edit Filter"
-#~ msgstr "Pan: edita el filtre"
-
-#~ msgid "Filter name: "
-#~ msgstr "Nom del filtre: "
-
-#~ msgid "Show in Filter Menu"
-#~ msgstr "Mostra en el menú de filtre"
-
-#~ msgid "Move the selected line up one line"
-#~ msgstr "Mou les línies seleccionades un lloc cap amunt"
-
-#~ msgid "Move the selected line down one line"
-#~ msgstr "Mou les línies seleccionades un lloc cap abaix"
-
-#~ msgid "Invert"
-#~ msgstr "Inverteix"
-
-#~ msgid "All Of"
-#~ msgstr "Tots els de"
-
-#~ msgid "Any Of"
-#~ msgstr "Qualsevol de"
-
-#~ msgid "Delete the selected line"
-#~ msgstr "Esborra la línia seleccionada"
-
-#~ msgid "Add New Line to the Filter"
-#~ msgstr "Afegeix una nova línia al filtre"
-
-#~ msgid "New Filter Line"
-#~ msgstr "Nova línia de filtre"
-
-#~ msgid "does not start with"
-#~ msgstr "no comença en"
-
-#~ msgid "does not match regular expression"
-#~ msgstr "no es correspon amb cap expressió regular"
-
-#~ msgid "Article h_as"
-#~ msgstr "L'_article té"
-
-#~ msgid "Incomplete Attachments"
-#~ msgstr "Fitxers adjunts incomplets"
-
-#~ msgid "No Attachments"
-#~ msgstr "Cap fitxer adjunt"
-
-#~ msgid "Article _is"
-#~ msgstr "L'art_icle és"
-
-#~ msgid "New"
-#~ msgstr "Nou"
-
-#~ msgid "Unread"
-#~ msgstr "Sense llegir"
-
-#~ msgid "Read"
-#~ msgstr "Llegit"
-
-#~ msgid "Cached"
-#~ msgstr "Desat a la memòria cau"
-
-#~ msgid "Posted by Me"
-#~ msgstr "L'ha publicat vostè"
-
-#~ msgid "Article has at _least N lines:"
-#~ msgstr "_L'article té al menys N linies:"
-
-#~ msgid "Watched"
-#~ msgstr "Observat"
-
-#~ msgid "High"
-#~ msgstr "Alt"
-
-#~ msgid "Medium"
-#~ msgstr "Mitjà"
-
-#~ msgid "Zero"
-#~ msgstr "Zero"
-
-#~ msgid "Low"
-#~ msgstr "Baix"
-
-#~ msgid "Ignored"
-#~ msgstr "Ignorat"
-
-#~ msgid ""
-#~ "This filter is still used by the following rules:\n"
-#~ "%s\n"
-#~ "Please remove this dependency  first."
-#~ msgstr ""
-#~ "Les següents regles encara fan servir aquest filtre:\n"
-#~ "%s\n"
-#~ "Heu d'esborrar abans la dependència."
-
-#~ msgid "Pan: Filters"
-#~ msgstr "Pan: filtres"
-
-#~ msgid "Filters"
-#~ msgstr "Filtres"
-
-#~ msgid "Add a new filter"
-#~ msgstr "Afegeix un nou filtre"
-
-#~ msgid "Edit the selected filter"
-#~ msgstr "Edita el filtre seleccionat"
-
-#~ msgid "Remove the selected filter"
-#~ msgstr "Esborra el filtre seleccionat"
-
-#~ msgid "NONE OF:"
-#~ msgstr "Cap de:"
-
-#~ msgid "ALL OF:"
-#~ msgstr "Tots els de:"
-
-#~ msgid "ANY OF:"
-#~ msgstr "Qualsevol de:"
-
-#~ msgid "Article has complete attachments"
-#~ msgstr "L'article té fitxers adjunts complets"
-
-#~ msgid "Article does not have incomplete attachments"
-#~ msgstr "L'article no té fitxers adjunts incomplets"
-
-#~ msgid "Article has incomplete attachments"
-#~ msgstr "L'article té fitxers adjunts incomplets"
-
-#~ msgid "Article has complete or incomplete attachments"
-#~ msgstr "L'article té fitxers adjunts complets o incomplets"
-
-#~ msgid "Article is %d or more bytes long"
-#~ msgstr "L'article té %d o més bytes de longitud"
-
-#~ msgid "Article is crossposted to at least %d groups"
-#~ msgstr "L'article s'ha publicat simultàniament al menys a %d grups"
-
-#~ msgid "Article was posted in the last %d days"
-#~ msgstr "L'article es va publicar en els darrers %d dies"
-
-#~ msgid "Article is %d or more lines long"
-#~ msgstr "L'article té més de %d línies de longitud"
-
-#~ msgid "Article is unread or old"
-#~ msgstr "L'article no s'ha llegit o bé és antic"
-
-#~ msgid "Article is new"
-#~ msgstr "L'article és nou"
-
-#~ msgid "Article is new or read"
-#~ msgstr "L'article és nou o llegit"
-
-#~ msgid "Article is new or unread"
-#~ msgstr "L'article és nou o no s'ha llegit"
-
-#~ msgid "Xref"
-#~ msgstr "Xref"
-
-#~ msgid "watched"
-#~ msgstr "observat"
-
-#~ msgid "high"
-#~ msgstr "alt"
-
-#~ msgid "medium"
-#~ msgstr "mitjà"
-
-#~ msgid "zero"
-#~ msgstr "zero"
-
-#~ msgid "low"
-#~ msgstr "baix"
-
-#~ msgid "ignored"
-#~ msgstr "ignorat"
-
-#~ msgid "Score filter will match anything"
-#~ msgstr "El filtre de puntuació trobarà correspondència amb tot"
-
-#~ msgid "Score filter will match nothing"
-#~ msgstr "El filtre de puntuació no trobarà cap correspondència"
-
-#~ msgid "Article score one of: "
-#~ msgstr "Una de les puntuacions de l'article: "
-
-#~ msgid "Wrote filters to \"%s\""
-#~ msgstr "S'han escrit els filtres a «%s»"
-
-#~ msgid "Can't use regular expression \"%s\" from file \"%s\", line %d: %s"
-#~ msgstr ""
-#~ "No es pot fer servir l'expressió regular «%s» del fitxer «%s», a la línia "
-#~ "%d: %s"
-
-#~ msgid "expired old score"
-#~ msgstr "ha caducat la puntuació antiga"
-
-#~ msgid "skipping unsupported criteria"
-#~ msgstr "s'ignorarà el criteri no disponible"
-
-#~ msgid "unexpected line."
-#~ msgstr "línia inesperada."
-
-#~ msgid "Error reading file: "
-#~ msgstr "S'ha produït un error quan es llegia el fitxer: "
-
-#~ msgid "skipping score because it has no criteria"
-#~ msgstr "s'ignora la puntuació perquè no té cap criteri"
-
-#~ msgid ""
-#~ "Loaded %d score entries in %d sections in %.1f seconds (%.0f entries/sec)"
-#~ msgstr ""
-#~ "S'han carregat %d entrades de puntuació en %d seccions en %.1f segons "
-#~ "(%.0f entrades/seg)"
-
-#~ msgid "Error score to file \"%s\": %s"
-#~ msgstr "S'ha produït un error en puntuar el  fitxer «%s»: %s"
-
-#, fuzzy
-#~ msgid "Scored %d articles in %.1f seconds (%.0f art/sec)"
-#~ msgstr "S'han puntuat %d entrades en %.1f segons (%.0f articles/seg)"
-
-#~ msgid "Error removing scorefile entry: %s"
-#~ msgstr ""
-#~ "S'ha produït un error en esborrar una entrada del fitxer de puntuació: %s"
-
-#~ msgid "Scorefile entry removed -- old scorefile \"%s\" backed up as \"%s\""
-#~ msgstr ""
-#~ "S'ha suprimit l'entrada del fitxer de puntuació. S'ha fet una còpia de "
-#~ "seguretat del fitxer de puntuació «%s» com a «%s»"
-
-#, fuzzy
-#~ msgid "Please don't begin folders with \"pan.\"; it confuses me."
-#~ msgstr "Començar les carpetes amb «pan.» pot produir errors."
-
-#~ msgid "Create New Folder"
-#~ msgstr "Crea una nova carpeta"
-
-#~ msgid "New Folder Name:"
-#~ msgstr "Nom de la nova carpeta:"
-
-#~ msgid "/Get New Headers and _Bodies"
-#~ msgstr "/_Obtingues capçaleres i cossos nous"
-
-#~ msgid "/Get New Headers in Subscribed Groups"
-#~ msgstr "/Obtingues les noves capçaleres en els grups subscrits"
-
-#~ msgid "/More Download _Options..."
-#~ msgstr "/Més _opcions de descàrrega..."
-
-#~ msgid "/Refresh Article _Counts"
-#~ msgstr "/A_ctualitza totals d'article"
-
-#~ msgid "/Group _Properties..."
-#~ msgstr "/_Propietats del grup..."
-
-#~ msgid " (Moderated)"
-#~ msgstr " (Moderat)"
-
-#~ msgid " (Read-Only)"
-#~ msgstr " (Només per llegir)"
-
-#~ msgid "Subscribed"
-#~ msgstr "Subscrit"
-
-#~ msgid "All Groups"
-#~ msgstr "Tots els grups"
-
-#~ msgid ""
-#~ "We don't have a list of groups for \"%*.*s\".\n"
-#~ "Shall we download one?"
-#~ msgstr ""
-#~ "No tenim cap llista de grups per a «%*.*s».\n"
-#~ "Voleu descarregar-ne una?"
-
-#~ msgid "Total"
-#~ msgstr "Total"
-
-#~ msgid "Description"
-#~ msgstr "Descripció"
-
-#~ msgid "F_ind:"
-#~ msgstr "_Cerca:"
-
-#~ msgid ""
-#~ "Type in a group search string and press ENTER.  Wildcards are allowed."
-#~ msgstr ""
-#~ "Escriviu una cadena per cercar grups i premeu la tecla d'entrar. Es poden "
-#~ "fer servir comodins."
-
-#~ msgid "Body"
-#~ msgstr "Cos"
-
-#, fuzzy
-#~ msgid "%d connections totaling %.1f KiB per second"
-#~ msgstr "%d connexions que fan un total de %.1f KB per segon"
-
-#~ msgid "We now have %d connections to news servers"
-#~ msgstr "Hi ha %d connexions a servidors de notícies."
-
-#~ msgid "The Task Manager is Empty"
-#~ msgstr "El gestor de tasques és buit"
-
-#~ msgid "Connection"
-#~ msgstr "Connexió"
-
-#~ msgid "Post"
-#~ msgstr "Publica"
-
-#~ msgid "Get"
-#~ msgstr "Obtingues"
-
-#, fuzzy
-#~ msgid "Save Article Attachments"
-#~ msgstr "Desa els fitxers adjunts"
-
-#~ msgid "Mine"
-#~ msgstr "Meu"
-
-#~ msgid "Net"
-#~ msgstr "Xarxa"
-
-#~ msgid "/_File/_Save Article As..."
-#~ msgstr "/_Fitxer/Anomena i de_sa l'article..."
-
-#, fuzzy
-#~ msgid "/_File/Save Article A_ttachments"
-#~ msgstr "/_Fitxer/Desa fi_txers adjunts"
-
-#, fuzzy
-#~ msgid "/_File/Manual _Decode..."
-#~ msgstr "/_Fitxer/Descodificació _manual..."
-
-#~ msgid "/_File/_Print Article..."
-#~ msgstr "/_Fitxer/Im_primeix article..."
-
-#~ msgid "/_File/---"
-#~ msgstr "/_Fitxer/---"
-
-#~ msgid "/_File/_Cancel Last Task"
-#~ msgstr "/_Fitxer/_Cancel·la la darrera tasca"
-
-#, fuzzy
-#~ msgid "/_File/Task _Manager..."
-#~ msgstr "/Ei_nes/Ges_tor de tasques..."
-
-#, fuzzy
-#~ msgid "/_File/Log _Viewer..."
-#~ msgstr "/Ei_nes/Visua_litzador del registre..."
-
-#~ msgid "/_File/_New Folder..."
-#~ msgstr "/_Fitxer/_Nova carpeta..."
-
-#~ msgid "/_File/Delete _Folder..."
-#~ msgstr "/_Fitxer/Es_borra carpeta..."
-
-#~ msgid "/_File/_Edit Article in Folder"
-#~ msgstr "/_Fitxer/_Edita article en carpeta"
-
-#~ msgid "/_File/E_xit"
-#~ msgstr "/_Fitxer/S_urt"
-
-#~ msgid "/_Edit/Select all"
-#~ msgstr "/_Edita/Selecciona tot"
-
-#~ msgid "/_Edit/Deselect all"
-#~ msgstr "/_Edita/No seleccionis res"
-
-#~ msgid "/_Edit/---"
-#~ msgstr "/_Edita/---"
-
-#~ msgid "/_Edit/Select all _Groups"
-#~ msgstr "/_Edita/Selecciona tots els _grups"
-
-#~ msgid "/_Edit/Deselect all G_roups"
-#~ msgstr "/_Edita/Cap selecció de g_rups"
-
-#~ msgid "/_Edit/Add S_et to Selection"
-#~ msgstr "/_Edita/Afegeix a la _selecció"
-
-#~ msgid "/_Edit/_Find..."
-#~ msgstr "/_Edita/_Troba..."
-
-#~ msgid "/_Edit/Find _Next"
-#~ msgstr "/_Edita/Troba el següe_nt"
-
-#~ msgid "/_View/---"
-#~ msgstr "/_Visualitza/---"
-
-#~ msgid "/_View/Thr_ead Header Pane"
-#~ msgstr "/_Visualitza/Subfin_estra de capçalera de fil"
-
-#~ msgid "/_View/_Rot13 Selected Text"
-#~ msgstr "/_Visualitza/Aplica conve_rsió Rot13 a selecció"
-
-#~ msgid "/_View/Use _Monospace Font in Body Pane"
-#~ msgstr "/_Visualitza/Fonts _monoespai en la subfinestra de cos"
-
-#~ msgid "/_View/E_xpand Selected Threads"
-#~ msgstr "/_Visualitza/E_xpandeix aquests fils de discussió"
-
-#~ msgid "/_View/C_ollapse Selected Threads"
-#~ msgstr "/_Visualitza/Redueix aquests fils de discussi_ó"
-
-#~ msgid "/Filte_r/Custom _Filters..."
-#~ msgstr "/Filt_re/_Filtres personalitzats..."
-
-#~ msgid "/Filte_r/_Rules..."
-#~ msgstr "/Filt_re/_Regles..."
-
-#~ msgid "/Filte_r/_Edit Scorefile..."
-#~ msgstr "/Filt_re/_Edita fitxer de puntuació..."
-
-#~ msgid "/Filte_r/---"
-#~ msgstr "/Filt_re/---"
-
-#~ msgid "/Filte_r/Match Only _Cached Articles"
-#~ msgstr "/Filt_re/Es _correspon només amb articles a la memòria cau"
-
-#~ msgid "/Filte_r/Match Only _Text Articles"
-#~ msgstr "/Filt_re/Es correspon només amb ar_ticles de text"
-
-#~ msgid "/Filte_r/Match Only _Binary Attachment Articles"
-#~ msgstr "/Filt_re/Es correspon només am_b fitxes adjunts binaris"
-
-#~ msgid "/Filte_r/Match Only _My Articles"
-#~ msgstr "/Filt_re/Es correspon no_més amb articles vostres"
-
-#~ msgid "/Filte_r/Match _New Articles"
-#~ msgstr "/Filt_re/Es correspo_n només amb articles nous"
-
-#~ msgid "/Filte_r/Match _Unread Articles"
-#~ msgstr "/Filt_re/Es c_orrespon només amb articles sense llegir"
-
-#~ msgid "/_Go/Read More"
-#~ msgstr "/_Vés/Llegeix més"
-
-#~ msgid "/_Go/---"
-#~ msgstr "/_Vés/---"
-
-#~ msgid "/_Go/Next _New Article"
-#~ msgstr "/_Vés/Següe_nt article nou"
-
-#~ msgid "/_Go/Previous Article _Read"
-#~ msgstr "/_Vés/A_rticle anterior llegit"
-
-#~ msgid "/_Go/Next Unread _Group"
-#~ msgstr "/_Vés/Següent _grup sense llegir"
-
-#~ msgid "/_Go/N_ext Group"
-#~ msgstr "/_Vés/S_egüent grup"
-
-#~ msgid "/_Servers"
-#~ msgstr "/_Servidors"
-
-#, fuzzy
-#~ msgid "/_Servers/News _Servers..."
-#~ msgstr "/Ei_nes/_Servidors de notícies..."
-
-#~ msgid "/_Servers/---"
-#~ msgstr "/_Servidors/---"
-
-#, fuzzy
-#~ msgid "/_Servers/Get List of Groups"
-#~ msgstr "/_Servidors/Obté un_a llista de tots els grups"
-
-#~ msgid "/_Newsgroups/Mark Group _Read"
-#~ msgstr "/Grups de _notícies/Ma_rca grup com a llegit"
-
-#~ msgid "/_Newsgroups/_Delete Group's Articles"
-#~ msgstr "/Grups de _notícies/Esborra els articles _del grup"
-
-#~ msgid "/_Newsgroups/---"
-#~ msgstr "/Grups de _notícies/---"
-
-#~ msgid "/_Newsgroups/Get New _Headers"
-#~ msgstr "/Grups de _notícies/_Obté noves capçaleres"
-
-#~ msgid "/_Newsgroups/Get New Headers and _Bodies"
-#~ msgstr "/Grups de _notícies/O_bté noves capçaleres i cossos"
-
-#~ msgid "/_Newsgroups/More Download _Options..."
-#~ msgstr "/Grups de _notícies/Més opcions de descàrrega..."
-
-#~ msgid "/_Newsgroups/Refresh Article _Counts"
-#~ msgstr "/Grups de _notícies/A_ctualitza totals d'article"
-
-#~ msgid "/_Newsgroups/Get New Headers in Subscribed _Groups"
-#~ msgstr "/Grups de _notícies/Obté noves capçaleres en els _grups subscrits"
-
-#~ msgid "/_Newsgroups/_Subscribe"
-#~ msgstr "/Grups de _notícies/_Subscriu"
-
-#~ msgid "/_Newsgroups/_Unsubscribe"
-#~ msgstr "/Grups de _notícies/Retira s_ubscripció"
-
-#~ msgid "/_Newsgroups/Group _Properties..."
-#~ msgstr "/Grups de _notícies/_Propietats de grup..."
-
-#~ msgid "/_Newsgroups/Dele_te Group"
-#~ msgstr "/Grups de _notícies/E_sborra grup"
-
-#~ msgid "/_Articles/Mark _Read"
-#~ msgstr "/_Articles/Ma_rca com a llegit"
-
-#~ msgid "/_Articles/Mark _Unread"
-#~ msgstr "/_Articles/_Marca com a sense llegir"
-
-#~ msgid "/_Articles/---"
-#~ msgstr "/_Articles/---"
-
-#~ msgid "/_Articles/D_ownload Flagged"
-#~ msgstr "/_Articles/De_scarrega els senyalats"
-
-#~ msgid "/_Articles/_Flag"
-#~ msgstr "/_Article/Sen_yala"
-
-#~ msgid "/_Articles/U_nflag"
-#~ msgstr "/_Articles/_No senyalis"
-
-#~ msgid "/_Articles/Down_load"
-#~ msgstr "/_Articles/Des_carrega"
-
-#~ msgid "/_Articles/_Watch Thread"
-#~ msgstr "/_Articles/O_bserva fil de discussió"
-
-#~ msgid "/_Articles/_Ignore Thread"
-#~ msgstr "/_Articles/_Ignora el fil de discussió"
-
-#~ msgid "/_Articles/_Plonk Author"
-#~ msgstr "/_Articles/I_gnora els articles d'aquest autor"
-
-#~ msgid "/_Articles/_View Article's Scores"
-#~ msgstr "/_Articles/_Visualitza puntuacions d'article"
-
-#~ msgid "/_Articles/_Create Score..."
-#~ msgstr "/_Articles/_Crea puntuació..."
-
-#~ msgid "/_Articles/Cancel..."
-#~ msgstr "/_Articles/Cancel·la..."
-
-#~ msgid "/_Articles/Supersed_e..."
-#~ msgstr "/_Articles/Substitu_eix..."
-
-#~ msgid "/_Articles/_Delete"
-#~ msgstr "/_Articles/_Esborra"
-
-#~ msgid "/_Post"
-#~ msgstr "/_Publica"
-
-#~ msgid "/_Post/_Post to Newsgroup..."
-#~ msgstr "/_Publica/_Publica al grup de notícies..."
-
-#~ msgid "/_Post/_Followup to Newsgroup..."
-#~ msgstr "/_Publica/R_espon a grup de notícies..."
-
-#~ msgid "/_Post/_Reply by Email..."
-#~ msgstr "/_Publica/_Respon amb correu electrònic..."
-
-#~ msgid "/_Post/For_ward by Email..."
-#~ msgstr "/_Publica/Reen_via l'article per correu..."
-
-#~ msgid "/_Post/---"
-#~ msgstr "/_Publica/---"
-
-#~ msgid "/_Post/Send Pending _Messages"
-#~ msgstr "/_Publica/Envia _missatges pendents"
-
-#~ msgid "/_Help"
-#~ msgstr "/_Ajuda"
-
-#~ msgid "/_Help/Report a _Bug..."
-#~ msgstr "/_Ajuda/In_formeu d'un error..."
-
-#~ msgid "/_Help/---"
-#~ msgstr "/_Ajuda/---"
-
-#~ msgid "/_Help/_About..."
-#~ msgstr "/_Ajuda/Qu_ant a..."
-
-#~ msgid "%s (%u) [%d missing pieces]"
-#~ msgstr "%s (%u) [%d peces perdudes]"
-
-#~ msgid "%s [%d missing pieces]"
-#~ msgstr "%s [%d peces perdudes]"
-
-#~ msgid ""
-#~ "Used when email replies to your posts should go somewhere other than the "
-#~ "email address above.  Because Reply-To: is relatively difficult for "
-#~ "spammers to harvest, it's polite give your email address here if you gave "
-#~ "an invalid email address above."
-#~ msgstr ""
-#~ "Es fa servir quan les respostes per correu electrònic a les vostres "
-#~ "publicacions han d'anar a un lloc diferent a la vostra adreça d'adalt. "
-#~ "Donat que és relativament dificil que qui envia correus no desitjats "
-#~ "obtingui el valor de Respondre-a, és de bona educació donar la vostra "
-#~ "adreça de correu electrònic aquí si la vostra adreça d'adalt és invàlida."
-
-#~ msgid "_Reply-To Header:"
-#~ msgstr "Capçale_ra Contesta-a:"
-
-#~ msgid "Or_ganization Header:"
-#~ msgstr "Capçalera d'or_ganització:"
-
-#~ msgid "The default charset set for articles posted with this profile"
-#~ msgstr ""
-#~ "El conjunt de caràcters que es farà servir per publicar articles amb "
-#~ "aquest perfil"
-
-#~ msgid "Pan: Edit Profile"
-#~ msgstr "Pan: edita el perfil"
-
-#~ msgid "_User Profile"
-#~ msgstr "Perfil d'_usuari"
-
-#~ msgid "Cus_tom Headers"
-#~ msgstr "Capçaleres personali_tzades"
-
-#~ msgid "You must specify a username or disable authorization."
-#~ msgstr "Heu d'especificar un nom d'usuari o inhabilitar l'autorització."
-
-#~ msgid ""
-#~ "Your real name contained double quotes.\n"
-#~ "Converting into single quotes."
-#~ msgstr ""
-#~ "El vostre nom real contenia cometes dobles.\n"
-#~ "Es convertiran en cometes simples."
-
-#, fuzzy
-#~ msgid "Invalid address \"%s\" <%s>"
-#~ msgstr "L'adreça «%s» no és vàlida"
-
-#~ msgid "You need at least one profile"
-#~ msgstr "Necessiteu almenys un perfil"
-
-#~ msgid "Use the selected profile to create a new profile"
-#~ msgstr "Fes servir el perfil seleccionat per crear un nou perfil"
-
-#~ msgid "Wrote profiles to \"%s\""
-#~ msgstr "Els perfils s'han escrit a «%s»"
-
-#~ msgid "Save the log to a file"
-#~ msgstr "Desa el registre a un fitxer"
-
-#~ msgid "/_File/_Save..."
-#~ msgstr "/_Fitxer/De_sa..."
-
-#~ msgid "/_File/Clea_r"
-#~ msgstr "/_Fitxer/Nete_ja"
-
-#~ msgid "/_File/_Close"
-#~ msgstr "/_Fitxer/Tan_ca"
-
-#~ msgid "Pan: Status Log"
-#~ msgstr "Pan: resgistre d'estat"
-
-#~ msgid "Clear the log window"
-#~ msgstr "Neteja la finestra de registre"
-
-#~ msgid "Time"
-#~ msgstr "Data i hora"
-
-#~ msgid "Log Entry"
-#~ msgstr "Entrada del registre"
-
-#~ msgid "Post anyway, despite these problems?"
-#~ msgstr "S'ha de publicar, tot i aquests problemes?"
-
-#~ msgid "Post anyway, despite this problem?"
-#~ msgstr "S'ha de publicar, tot i aquest problema?"
-
-#~ msgid "/_File/_Save Changes"
-#~ msgstr "/_Fitxer/De_sa els canvis"
-
-#~ msgid "/_File/Save _As..."
-#~ msgstr "/_Fitxer/_Anomena i desa..."
-
-#~ msgid "/_Edit/Cu_t"
-#~ msgstr "_Edita/_Talla"
-
-#~ msgid "/_Edit/_Copy"
-#~ msgstr "/_Fitxer/_Copia"
-
-#~ msgid "/_Edit/_Paste"
-#~ msgstr "/_Fitxer/_Enganxa"
-
-#~ msgid "/_Edit/_Rot13 Selected Text"
-#~ msgstr "/_Edita/Aplica conve_rsió Rot13 a selecció"
-
-#~ msgid "/_Edit/Edit with E_xternal Editor"
-#~ msgstr "/_Edita/Edita amb editor e_xtern"
-
-#~ msgid "/_File/Send Now"
-#~ msgstr "/_Fitxer/Envia ara"
-
-#~ msgid "/_File/Send Later"
-#~ msgstr "/_Fitxer/Envia més tard"
-
-#~ msgid "Send Later"
-#~ msgstr "Envia més tard"
-
-#~ msgid "Rewrap"
-#~ msgstr "Torna a ajustar"
-
-#~ msgid "Turn line wrap on/off"
-#~ msgstr "Activa/desactiva l'ajust de línia"
-
-#~ msgid "Edit with an External Editor"
-#~ msgstr "Edita amb un editor extern"
-
-#~ msgid "Mime (single-part posts only)"
-#~ msgstr "Mime (només publicacions formades per una part)"
-
-#~ msgid " (%lu lines in 1 article)"
-#~ msgstr " (%lu linies en 1 article)"
-
-#~ msgid " (%lu lines in %lu articles)"
-#~ msgstr " (%lu linies en %lu articles)"
-
-#~ msgid "UUEncoded (universally accepted)"
-#~ msgstr "Codificació UUEncoded (acceptat universalment)"
-
-#~ msgid "yEnc (30 percent smaller than UUEnc but less universal)"
-#~ msgstr ""
-#~ "Codificació yEnc (30 percent més petit que UUEnc però no tan universal)"
-
-#~ msgid "Select the file to attach."
-#~ msgstr "Seleccioneu el fitxer per adjuntar."
-
-#~ msgid "Kilobytes"
-#~ msgstr "Kilobytes"
-
-#~ msgid "Add a File to the Attachment List"
-#~ msgstr "Afegeix un fitxer a la llista de fitxers adjunts"
-
-#~ msgid "Remove a File from the Attachment List"
-#~ msgstr "Esborra un fitxer de la llista de fitxers adjunts"
-
-#~ msgid "Estimated Article Size"
-#~ msgstr "Mida aproximada de l'article"
-
-#~ msgid "Organization"
-#~ msgstr "Organització"
-
-#~ msgid "The organization you're associated with."
-#~ msgstr "L'organització on esteu associat."
-
-#~ msgid "Charset"
-#~ msgstr "Joc de caràcters"
-
-#~ msgid ""
-#~ "Could not convert \"%s\" to UTF-8. Article may not display correctly."
-#~ msgstr ""
-#~ "No es pot convertir «%s» a UTF-8. És possible que l'article no es "
-#~ "visualitzi correctament."
-
-#~ msgid "\"Followup-To: poster\": sending email to author."
-#~ msgstr "«Respondre a: autor»: envia el correu electrònic a l'autor."
-
-#~ msgid "\"Followup-To:\" contains an email address: sending email to author."
-#~ msgstr ""
-#~ "«Respondre a:» conté una adreça de correu electrònic: s'enviarà un correu "
-#~ "electrònic a l'autor."
-
-#~ msgid "New Message"
-#~ msgstr "Missatge nou"
-
-#~ msgid ""
-#~ "ERROR: line %d, column %d uses a character not specified in charset \"%s"
-#~ "\" -- possibly change your charset in \"More Headers\" to \"%s\" instead?"
-#~ msgstr ""
-#~ "S'ha produït un error: a la línia %d, columna %d es fa servir un caràcter "
-#~ "que no pertany al joc de caràcters «%s». Potser hauríeu de canviar el "
-#~ "vostre joc de caràcters en «Més capçaleres» a «%s»."
-
-#~ msgid "Save message to file"
-#~ msgstr "Desa el missatge en un fitxer"
-
-#~ msgid "The command line was: %s"
-#~ msgstr "La línia d'ordres era: %s"
-
-#~ msgid "Select Color"
-#~ msgstr "Seleccioneu un color"
-
-#~ msgid "_Browse..."
-#~ msgstr "Na_vega..."
-
-#~ msgid "Font Family"
-#~ msgstr "Família del tipus de lletra"
-
-#~ msgid "  --resume         Resume tasks from last session without prompting"
-#~ msgstr ""
-#~ "  --resume         Continua les tasques de la última sessió "
-#~ "automàticament."
-
-#~ msgid "  --version        Prints Pan's version number"
-#~ msgstr "  --version        Escriu el número de versió del Pan"
-
-#~ msgid "  --help           Prints this message and exits"
-#~ msgstr "  --help           Escriu aquest missatge i surt"
-
-#~ msgid ""
-#~ "  --debug          Turns on the most commonly-used options for a bug "
-#~ "report"
-#~ msgstr ""
-#~ "  --debug          Activa les opcions més freqüents per emplenar un "
-#~ "informe d'error"
-
-#~ msgid ""
-#~ "  --mute           Debugging tool to send new posts to console, not the "
-#~ "server"
-#~ msgstr ""
-#~ "  --mute           L'eina de depuració enviarà noves publicacions a la "
-#~ "consola, no al servidor"
-
-#~ msgid "  --debug-cache    Print debugging messages for the article cache"
-#~ msgstr ""
-#~ "  --debug-cache    Escriu missatges de depuració per a la memòria cau "
-#~ "d'articles"
-
-#~ msgid ""
-#~ "  --debug-sockets  Print debugging messages when talking to the news "
-#~ "server"
-#~ msgstr ""
-#~ "  --debug-sockets  Escriu missatges de depuració quan es comuniqui amb el "
-#~ "servidor de notícies"
-
-#~ msgid ""
-#~ "  --debug-queue    Print debugging messages related to managing tasks"
-#~ msgstr ""
-#~ "  --debug-queue    Escriu missatges de depuració relatius a la gestió de "
-#~ "tasques"
-
-#~ msgid ""
-#~ "  --debug-decode   Print debugging messages related to decoding "
-#~ "attachments"
-#~ msgstr ""
-#~ "  --debug-decode   Escriu missatges de depuració relatius a la "
-#~ "decodificació de fitxers adjunts"
-
-#~ msgid "  --debug-newsrc   Print debugging messages related to .newsrc files"
-#~ msgstr ""
-#~ "  --debug-newsrc   Escriu missatges de depuració relatius als fitxers ."
-#~ "newsrc"
-
-#~ msgid ""
-#~ "  --debug-gnksa    Print debugging messages related to gnksa correctness"
-#~ msgstr ""
-#~ "  --debug-gnksa    Escriu missatges de depuració relatius a la correció "
-#~ "del gnksa"
-
-#~ msgid ""
-#~ "  --debug-trace    Print debugging messages when entering/leaving "
-#~ "functions"
-#~ msgstr ""
-#~ "  --debug-trace    Escriu missatges de depuració quan s'entri o surti de "
-#~ "funcions"
-
-#~ msgid ""
-#~ "  --debug-lock     Print debugging messages related to threaded gui locks"
-#~ msgstr ""
-#~ "  --debug-lock     Escriu missatges de depuració relatius a bloquejos de "
-#~ "la interfície deguts als fluxes"
-
-#~ msgid ""
-#~ "  --debug-object   Print debugging messages related to refcounted objects"
-#~ msgstr ""
-#~ "  --debug-object   Escriu missatges de depuració relatius als objectes "
-#~ "per als quals es compten les referències"
-
-#~ msgid "Error writing to socket."
-#~ msgstr "S'ha produït un error quan s'escrivia al sòcol."
-
-#~ msgid "Spellchecking disabled: gtkspell_init() failed with status %d"
-#~ msgstr ""
-#~ "S'ha deshabilitat la comprovació ortogràfica: gtkspell_init() ha fallat i "
-#~ "ha retornat l'estat %d"
-
-#~ msgid "Restored %d tasks from last session"
-#~ msgstr "S'han recuperat %d tasques de la darrera sessió"
-
-#~ msgid ""
-#~ "Some tasks were still queued the last time Pan exited.  Do you want to "
-#~ "resume those tasks?"
-#~ msgstr ""
-#~ "Algunes tasques eren a la cua quan el Pan va acabar. Desitgeu continuar "
-#~ "amb aquestes tasques?"
-
-#~ msgid "_Resume"
-#~ msgstr "_Continua"
-
-#~ msgid ""
-#~ "%a - abbreviated weekday name\n"
-#~ "%A - full weekday name\n"
-#~ "%b - abbreviated month name\n"
-#~ "%B - full month name\n"
-#~ "%c - local date & time\n"
-#~ "%d - day of the month\n"
-#~ "%H - hour (24-hour clock)\n"
-#~ "%I - hour (12-hour clock)\n"
-#~ "%j - day of the year (001-366)\n"
-#~ "%m - month (01-12)\n"
-#~ "%M - minute (00-59)\n"
-#~ "%p - local equivalent of AM/PM\n"
-#~ "%S - second (00-61)\n"
-#~ "%x - local date\n"
-#~ "%X - local time\n"
-#~ "%y - two-digit year\n"
-#~ "%Y - four-digit year\n"
-#~ "%% - %"
-#~ msgstr ""
-#~ "%a - nom de dia de la setmana abreviat\n"
-#~ "%A - nom de dia de la setmana complet\n"
-#~ "%b - nom de mes abreviat\n"
-#~ "%B - nom de mes complet\n"
-#~ "%c - data i hora local\n"
-#~ "%d - dia del mes\n"
-#~ "%H - hora (rellotge de 24 hores)\n"
-#~ "%I - hora (rellotge de 12 hores)\n"
-#~ "%j - dia de l'any (001-366)\n"
-#~ "%m - mes (01-12)\n"
-#~ "%M - minut (00-59)\n"
-#~ "%p - equivalent local d'AM/PM\n"
-#~ "%S - segon (00-61)\n"
-#~ "%x - data local\n"
-#~ "%X - hora local\n"
-#~ "%y - any amb dues xifres\n"
-#~ "%Y - any amb quatre xifres\n"
-#~ "%% - %"
-
-#~ msgid "_Unread Threads:"
-#~ msgstr "Fils de disc_ussió no llegits:"
-
-#~ msgid "Color the \"sub_ject\" column"
-#~ msgstr "Color de la columna «Assum_pte»"
-
-#~ msgid "Articles with a Score between 5000 and 9998:"
-#~ msgstr "Articles amb puntuació entre 5000 i 9998:"
-
-#~ msgid "Articles with a Score between 1 and 4999:"
-#~ msgstr "Articles amb puntuació entre 1 i 4999:"
-
-#~ msgid "Articles with a Score between -9998 and -1:"
-#~ msgstr "Articles amb puntuació entre -9998 i -1:"
-
-#~ msgid "_1:"
-#~ msgstr "_1:"
-
-#~ msgid "_2:"
-#~ msgstr "_2:"
-
-#~ msgid "_3:"
-#~ msgstr "_3:"
-
-#~ msgid "Pane Order"
-#~ msgstr "Ordre de les subfinestres"
-
-#~ msgid "Action State"
-#~ msgstr "Estat de l'acció"
-
-#~ msgid "Article State"
-#~ msgstr "Estat de l'article"
-
-#~ msgid "Column Layout"
-#~ msgstr "Disposició de columnes"
-
-#~ msgid "When a Followup subject header changes, show as _new thread"
-#~ msgstr ""
-#~ "Qua_n canviï una capçalera de respondre a assumpte, mostra com a un nou "
-#~ "fil de discussió"
-
-#~ msgid "E_xpand all threads by default"
-#~ msgstr "E_xpandeix els fils de discussió per defecte"
-
-#~ msgid "Date Forma_t:"
-#~ msgstr "Forma_t de data:"
-
-#~ msgid "Show \"%s\" header"
-#~ msgstr "Mostra la capçalera «%s»"
-
-#~ msgid "Newsreader"
-#~ msgstr "Lector de notícies"
-
-#~ msgid "Characters denoting _quoted text:"
-#~ msgstr "Caràcters _que delimiten text citat:"
-
-#~ msgid "Automatic Downloads"
-#~ msgstr "Descàrregues automàtiques"
-
-#~ msgid "Download new headers from s_ubscribed groups when starting Pan"
-#~ msgstr ""
-#~ "Descarrega noves capçaleres de gr_ups subscrits quan s'iniciï el Pan"
-
-#~ msgid ""
-#~ "Download new headers and bod_ies from subscribed groups when starting Pan"
-#~ msgstr ""
-#~ "Descarrega noves capçaleres i cossos de gr_ups subscrits quan s'iniciï el "
-#~ "Pan"
-
-#~ msgid "Download Directory"
-#~ msgstr "Directori per descarregar"
-
-#~ msgid "Save a_ttachments in directory:"
-#~ msgstr "Desa fi_txers adjunts en directori:"
-
-#~ msgid "Automatically remove _failed tasks from the task manager"
-#~ msgstr "Esborra les tasques _fallides automàticament del gestor de tasques"
-
-#~ msgid "_Erase cache when exiting Pan"
-#~ msgstr "_Esborra la memòria cau en sortir del Pan"
-
-#~ msgid "Ma_ximum Cache Size (Megs):"
-#~ msgstr "Mida mà_xima de la memòria cau (MB):"
-
-#~ msgid "_Editor (%t is filename):"
-#~ msgstr "_Editor (%t és el nom de fitxer):"
-
-#~ msgid ""
-#~ "Scorefile _Editor:\n"
-#~ "(%t is filename, %n is line number)"
-#~ msgstr ""
-#~ "_Editor de fitxer de puntuacions:\n"
-#~ "(%t és nom de fitxer, %n és número de línia)"
-
-#~ msgid "Scorefile"
-#~ msgstr "Fitxer de puntuacions"
-
-#~ msgid "Score_file"
-#~ msgstr "_Fitxer de puntuacions"
-
-#~ msgid "Sending Mail"
-#~ msgstr "Enviament de correu"
-
-#~ msgid "Mail Server Add_ress:"
-#~ msgstr "Ad_reça del servidor de correu:"
-
-#~ msgid "Mail Server Por_t:"
-#~ msgstr "Por_t del servidor de correu:"
-
-#~ msgid "Hea_der Pane"
-#~ msgstr "Subfinestra _de capçalera"
-
-#~ msgid "Bod_y Pane"
-#~ msgstr "Subfinestra _de cos"
-
-#~ msgid "A_pps & Mail"
-#~ msgstr "A_plicacions i correu"
-
-#~ msgid "You haven't loaded an article to print."
-#~ msgstr "No heu carregat cap article per imprimir-lo."
-
-#~ msgid ""
-#~ "%s\n"
-#~ "\n"
-#~ "Matches: %u\n"
-#~ "Group: %s\n"
-#~ "Rule: %s"
-#~ msgstr ""
-#~ "%s\n"
-#~ "\n"
-#~ "Coincidències: %u\n"
-#~ "Grup: %s\n"
-#~ "Regla: %s"
-
-#~ msgid "Mark as"
-#~ msgstr "Marca com a"
-
-#~ msgid "_Flag body for download"
-#~ msgstr "_Senyala el cos per descarregar"
-
-#~ msgid "_Retrieve Body"
-#~ msgstr "_Recupera el cos"
-
-#~ msgid "_Watch thread (highlights the thread)"
-#~ msgstr "Obser_va fil de discussió (ressalta el fil)"
-
-#~ msgid "_Ignore thread (hides the thread by default)"
-#~ msgstr "_Ignora fil de discussió (per defecte s'amaga el fil)"
-
-#~ msgid "Rule applies to all newsgroups"
-#~ msgstr "La regla s'aplica a tots els grups de notícies"
-
-#~ msgid "Wildcard group specification:"
-#~ msgstr "Indicació de grups mitjançant comodins:"
-
-#~ msgid "(e.g., *anime*)"
-#~ msgstr "(p.e., *anime*)"
-
-#~ msgid "Rule applies to specific newsgroups:"
-#~ msgstr "La regla s'aplica a grups de notícies específics:"
-
-#~ msgid "Rule applies to:"
-#~ msgstr "La regla s'aplica a:"
-
-#~ msgid "Rule Name:"
-#~ msgstr "Nom de la regla:"
-
-#~ msgid "Apply to Incoming"
-#~ msgstr "Aplica a entrants"
-
-#~ msgid ""
-#~ "If enabled, this rule will be applied to headers when they are downloaded."
-#~ msgstr ""
-#~ "Quan sigui activat, aquesta regla s'aplicarà a les capçaleres quan siguin "
-#~ "descarregades."
-
-#~ msgid "New Rule"
-#~ msgstr "Nova regla"
-
-#~ msgid "Delete Articles by Bozos"
-#~ msgstr "Esborra els articles dels babaus"
-
-#~ msgid "Applying rule to selected groups"
-#~ msgstr "S'està aplicant la regla als grups seleccionats"
-
-#~ msgid "Applying rule \"%s\" to group \"%s\""
-#~ msgstr "S'està aplicant la regla «%s» al grup «%s»"
-
-#~ msgid "Rules"
-#~ msgstr "Regles"
-
-#~ msgid "Hit Ratio"
-#~ msgstr "Promig d'encerts"
-
-#~ msgid ""
-#~ "Apply to\n"
-#~ "Selected\n"
-#~ "Groups"
-#~ msgstr ""
-#~ "Aplica als\n"
-#~ "grups\n"
-#~ "seleccionats"
-
-#~ msgid ""
-#~ "Apply to\n"
-#~ "Subscribed\n"
-#~ "Groups"
-#~ msgstr ""
-#~ "Aplica als\n"
-#~ "grups\n"
-#~ "subscrits"
-
-#~ msgid "Wrote rules to \"%s\""
-#~ msgstr "S'han escrit les regles a «%s»"
-
-#~ msgid ""
-#~ "Can't find filter \"%s\" needed by rule \"%s\", so no articles match."
-#~ msgstr ""
-#~ "No s'ha trobat el filtre «%s» que necessita la regla «%s». No s'ha trobat "
-#~ "cap correspondència amb cap article."
-
-#~ msgid "Pan: Manual Decode"
-#~ msgstr "Pan: decodificació manual"
-
-#~ msgid "Save Files in Directory"
-#~ msgstr "Desa fitxers en el directori"
-
-#~ msgid "_Directory:"
-#~ msgstr "_Directori:"
-
-#~ msgid "Add to the _top of the Task Manager's List"
-#~ msgstr "Afegeix al començamen_t del gestor de la llista de tasques"
-
-#~ msgid "Criterion \"%s\" is selected, but empty."
-#~ msgstr "S'ha seleccionat el criteri «%s», però és buit."
-
-#~ msgid "No criteria are selected."
-#~ msgstr "No s'ha seleccionat cap criteri."
-
-#~ msgid "Pan: Add to Scorefile"
-#~ msgstr "Pan: afegeix al fitxer de puntuació"
-
-#~ msgid "Su_bject:"
-#~ msgstr "Assum_pte:"
-
-#~ msgid "A_uthor:"
-#~ msgstr "A_utor:"
-
-#~ msgid "_References:"
-#~ msgstr "_Referències: "
-
-#~ msgid "_Lines:"
-#~ msgstr "_Línies:"
-
-#~ msgid "at least N lines long"
-#~ msgstr "almenys N línies de longitud"
-
-#~ msgid "less than N lines long"
-#~ msgstr "menys d'N línies de longitud"
-
-#~ msgid "Chan_ge Score:"
-#~ msgstr "Can_via puntuació:"
-
-#~ msgid "subtract"
-#~ msgstr "resta"
-
-#~ msgid "Expire in N _days:"
-#~ msgstr "Ca_duca en N dies:"
-
-#~ msgid "Change"
-#~ msgstr "Canvia"
-
-#~ msgid "Edit the selected score"
-#~ msgstr "Edita la puntuació seleccionada"
-
-#~ msgid "You must specify an address."
-#~ msgstr "Heu d'especificar una adreça."
-
-#~ msgid "You must specify a password or disable authorization."
-#~ msgstr "Heu d'especificar una contrasenya o inhabilitar l'autorització."
-
-#~ msgid "You must specify a .newsrc filename or disable newsrc support."
-#~ msgstr ""
-#~ "Heu d'especificar un nom de fitxer .newsrc o inhabilitar el suport per a "
-#~ "newsrc."
-
-#, fuzzy
-#~ msgid "Name may not contain '/'"
-#~ msgstr "no conté"
-
-#~ msgid "Connections"
-#~ msgstr "Connexions"
-
-#~ msgid "Newsrc"
-#~ msgstr "Newsrc"
-
-#~ msgid "Us_e .newsrc file"
-#~ msgstr "F_es servir fitxer .newsrc"
-
-#~ msgid "Select .newsrc File"
-#~ msgstr "Seleccioneu fitxer .newsrc"
-
-#~ msgid "_Filename:"
-#~ msgstr "Nom de _fitxer:"
-
-#~ msgid "Edit the selected server"
-#~ msgstr "Edita el servidor seleccionat"
-
-#~ msgid "Remove the selected server"
-#~ msgstr "Esborra el servidor seleccionat"
-
-#~ msgid "Got unexpected response from mail server: expected %d; got %s"
-#~ msgstr ""
-#~ "S'ha obtingut una resposta inesperada del servidor de correu: s'esperava "
-#~ "%d; s'ha obtingut %s"
-
-#~ msgid "Sending mail"
-#~ msgstr "S'està enviant el correu"
-
-#~ msgid "Mail sent!"
-#~ msgstr "S'ha enviat el correu"
-
-#~ msgid "Handshaking with mail server"
-#~ msgstr "S'està iniciant la connexió amb el servidor de correu"
-
-#~ msgid "Connecting to mail server"
-#~ msgstr "S'està connectant amb el servidor de correu"
-
-#~ msgid "Mail server not ready"
-#~ msgstr "El servidor de correu no està a punt"
-
-#, fuzzy
-#~ msgid "New connection %p for %s, port %d"
-#~ msgstr "Nova connexió %p per a %*.*s, port %d"
-
-#~ msgid "Downloading %u articles"
-#~ msgstr "S'estan descarregant %u articles"
-
-#~ msgid "Downloading 1 article"
-#~ msgstr "S'està descarregant 1 article"
-
-#, fuzzy
-#~ msgid "Downloading %d articles"
-#~ msgstr "S'estan descarregant %u articles"
-
-#~ msgid "\"%s\""
-#~ msgstr "«%s»"
-
-#~ msgid "Article %s (%s) canceled"
-#~ msgstr "S'ha cancel·lat l'article %s (%s)"
-
-#~ msgid "Updating article counts for %u groups from server \"%s\""
-#~ msgstr ""
-#~ "S'estan actualitzant els totals dels articles per a %u grups des del "
-#~ "servidor «%s»"
-
-#~ msgid "Failed to load newsgroup descriptions"
-#~ msgstr "No s'han pogut carregar les descripcions del grup de notícies"
-
-#, fuzzy
-#~ msgid "Got %d group descriptions"
-#~ msgstr "S'han obtingut %d descripcions del servidor \"%s\""
-
-#~ msgid "Fetching group descriptions"
-#~ msgstr "S'estan filtrant les descripcions"
-
-#~ msgid "Getting %d new groups from server \"%s\""
-#~ msgstr "S'estan obtenint %d grups nous del servidor «%s»"
-
-#, fuzzy
-#~ msgid "Corrupt header skipped: "
-#~ msgstr "S'ha ignorat la capçalera malmesa: %s"
-
-#, fuzzy
-#~ msgid "%lu Articles"
-#~ msgstr "/_Articles"
-
-#~ msgid "Not Queued"
-#~ msgstr "No està a la cua"
-
-#~ msgid "Stopping"
-#~ msgstr "S'està aturant"
-
-#~ msgid "Pan %s Task Manager"
-#~ msgstr "Gestor de tasques del Pan %s"
-
-#~ msgid "Move Selected Task(s) Up"
-#~ msgstr "Puja les tasques seleccionades"
-
-#~ msgid "Move Selected Task(s) to Top"
-#~ msgstr "Posa les tasques seleccionades al damunt"
-
-#~ msgid "Move Selected Task(s) Down"
-#~ msgstr "Baixa les tasques seleccionades"
-
-#~ msgid "Stop Selected Task(s)"
-#~ msgstr "Atura les tasques seleccionades"
-
-#~ msgid "Delete Selected Task(s)"
-#~ msgstr "Esborra tasques seleccionades"
-
-#~ msgid "Time Remaining"
-#~ msgstr "Temps restant"
-
-#~ msgid "Article \"%s\" posted."
-#~ msgstr "S'ha publicat l'article «%s»."
-
-#~ msgid "Article \"%s\" not posted."
-#~ msgstr "No s'ha publicat l'article «%s»."
-
-#~ msgid "Usenet posting failed.  "
-#~ msgstr "No s'ha pogut publicar a Usenet.  "
-
-#~ msgid "Check Tools|Log Viewer for more information.  "
-#~ msgstr ""
-#~ "Comproveu Eines|Visualitzador del registre per obtenir més informació.  "
-
-#~ msgid "Your message was saved in the folder \"pan.sendlater\""
-#~ msgstr "El vostre missatge s'ha desat a la carpeta «pan.sendlaterð"
-
-#~ msgid "Saving Attachments"
-#~ msgstr "S'estan desant els fitxers adjunts"
-
-#~ msgid "Save Article can't access path \"%s\""
-#~ msgstr "No es pot accedir al camí «%s» per desar l'article"
-
-#~ msgid "Saved article body to \"%s\""
-#~ msgstr "S'ha desat el cos de l'article a «%s»"
-
-#~ msgid "X-Newsreader"
-#~ msgstr "Lector de notícies"
-
-#~ msgid "X-Mailer"
-#~ msgstr "Client de correu"
-
-#~ msgid "User-Agent"
-#~ msgstr "Agent d'usuari"
-
-#~ msgid ""
-#~ "Pan %s\n"
-#~ "Copyright (c) %d by Charles Kerr\n"
-#~ "\n"
-#~ "If you find a bug, please report it.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Pan %s\n"
-#~ "Copyright (c) %d per Charles Kerr\n"
-#~ "\n"
-#~ "Si trobeu un error, envieu-ne un informe.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "http://pan.rebelbase.com/ - Pan Homepage\n"
-#~ "http://pan.rebelbase.com/bugs/ - Report a Bug\n"
-#~ "http://pan.rebelbase.com/download/ - Upgrade\n"
-#~ "\n"
-#~ msgstr ""
-#~ "http://pan.rebelbase.com/ - Pàgina principal del Pan\n"
-#~ "http://pan.rebelbase.com/bugs/ - Informeu d'un error\n"
-#~ "http://pan.rebelbase.com/download/ - Actualitzacions\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "This program is free software; you can redistribute it\n"
-#~ "and/or modify it under the terms of the GNU General Public\n"
-#~ "License as published by the Free Software Foundation;\n"
-#~ "version 2 of the License.\n"
-#~ "\n"
-#~ "This program is distributed in the hope that it will be\n"
-#~ "useful, but WITHOUT ANY WARRANTY; without even the implied\n"
-#~ "warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR\n"
-#~ "PURPOSE.  See the GNU General Public License for more\n"
-#~ "details.\n"
-#~ "\n"
-#~ "The GNU Public License can be found from the menu above\n"
-#~ "in Help|About|License."
-#~ msgstr ""
-#~ "Això és programari lliure; podeu redistribuir-lo i/o\n"
-#~ "modificar-lo sota els termes de la Llicència Pública General GNU tal i\n"
-#~ "com ha estat publicada per la Free Software Foundation; bé sota la\n"
-#~ "versió 2 de la Llicència.\n"
-#~ "\n"
-#~ "Aquest programa es distribueix amb l'expectativa de que serà útil,\n"
-#~ "però SENSE CAP GARANTIA; ni tan sols la garantia implícita de\n"
-#~ "COMERCIABILITAT o ADEQUACIÓ PER UN PROPÒSIT PARTICULAR.  Vegeu la\n"
-#~ "Llicència Pública General GNU per obtenir-ne\n"
-#~ "més detalls.\n"
-#~ "\n"
-#~ "Podeu trobar el text de la Llicència Pública GNU en el menú d'adalt,\n"
-#~ "en Ajuda|Quant a|Llicència."
-
-#~ msgid "Error starting external browser: %s"
-#~ msgstr "S'ha produït un error en iniciar el navegador extern: %s"
-
-#~ msgid "Error starting external scorefile editor: %s"
-#~ msgstr ""
-#~ "S'ha produït un error en iniciar l'editor extern del fitxer de puntuació: "
-#~ "%s"
-
-#~ msgid "Unable to create thread: %s"
-#~ msgstr "No s'ha pogut crear el fil de discussió: %s"
-
-#~ msgid "<More>"
-#~ msgstr "<Més>"
-
-#~ msgid "News server connection count: %d"
-#~ msgstr "Totals de la connexió al servidor de notícies: %d"
-
-#~ msgid "/_Servers/Get List of _New Groups"
-#~ msgstr "/_Servidors/Obté u_na llista de grups nous"
-
-#~ msgid "/_Tools"
-#~ msgstr "/Ei_nes"
-
-#~ msgid "/_Tools/---"
-#~ msgstr "/Ei_nes/---"
-
-#~ msgid "NNTP handshake failed: %s"
-#~ msgstr "S'ha produït un error en iniciar la connexió NNTP: %s"
-
-#~ msgid "Handshake failed: %s"
-#~ msgstr "Ha fallat l'inici de connexió: %s"
-
-#~ msgid "Handshake: %s"
-#~ msgstr "Inici la connexió: %s"
-
-#~ msgid "Authentication failed: bad handshake for SPA password"
-#~ msgstr ""
-#~ "No s'ha pogut autenticar: l'inici de connexió amb la contrasenya SPA era "
-#~ "incorrecte"
-
-#~ msgid "Bad SPA handshake: %s"
-#~ msgstr "Inici de connexió SPA incorrecte: %s"
-
-#~ msgid "Authentication failed: need a password"
-#~ msgstr "No s'ha pogut autenticar: es necessita una contrasenya"
-
-#~ msgid "Authentication failed: %s"
-#~ msgstr "No s'ha pogut autenticar: %s"
-
-#~ msgid "%*.*s handshake failed: %s"
-#~ msgstr "Ha fallat l'inici de connexió %*.*s: %s"
-
-#~ msgid "No supported authentication mechanism"
-#~ msgstr "No es pot fer servir aquest mecanisme d'autenticació"
-
-#~ msgid "No password found!"
-#~ msgstr "No s'ha trobat cap contrasenya"
-
-#~ msgid "MODE READER check failed: %s"
-#~ msgstr "No s'ha pogut comprovar MODE READER: %s"
-
-#~ msgid "Posting failed.  Server said: %s"
-#~ msgstr ""
-#~ "S'ha produït un error en publicar el missatge. Informació del servidor: %s"
-
-#~ msgid "Posting complete.  Server said: %s"
-#~ msgstr "S'ha publicat el missatge. Informació del servidor: %s"
-
-#~ msgid "\"stay connected\" sent to %*.*s"
-#~ msgstr "S'ha enviat el missatge \"seguiu connectat\" a %*.*s"
-
-#~ msgid "Getting header list failed: %s"
-#~ msgstr "No s'ha pogut obtenir la llista de capçaleres: %s"
-
-#~ msgid "Getting \"%s\""
-#~ msgstr "S'està obtenint \"%s\""
-
-#~ msgid "Getting %d of %d"
-#~ msgstr "S'estan obtenint %d de %d"
-
-#~ msgid "Show complete _multipart posts as a single article"
-#~ msgstr "_Mostra missatges formats per moltes parts com a un únic article"
-
-#~ msgid "Sending Keepalive"
-#~ msgstr "S'està enviant un missatge de connexió oberta"
-
-#~ msgid "Disconnecting Idle"
-#~ msgstr "S'està desconnectant un inactiu"
-
-#~ msgid "Disconnecting one connection from `%s' after %d seconds idle"
-#~ msgstr ""
-#~ "S'ha desconnectat una connexió des de '%s' després de %d segons inactiu"
-
-#~ msgid "Connection to %*.*s, port %d failed: %s"
-#~ msgstr "Ha fallat la connexió a %*.*s, port %d: %s"
-
-#~ msgid "Downloading %d"
-#~ msgstr "S'estan descarregant %d"
-
-#~ msgid "Updated counts for %u groups out of %u"
-#~ msgstr "Totals actualitzats per a %u grups sense %u"
-
-#~ msgid "Unable to update counts for group \"%s\""
-#~ msgstr "No s'han pogut actualitzar els totals per al grup \"%s\""
-
-#~ msgid "Adding groups to server \"%s\""
-#~ msgstr "S'estan afegint els grups al servidor \"%s\""
-
-#~ msgid "List Newsgroups failed: %s"
-#~ msgstr "No s'han pogut llistar els grups de notícies: %s"
-
-#~ msgid "New groups retrieval failed: %s"
-#~ msgstr "No s'ha pogut obtenir nous grups: %s"
-
-#~ msgid "Fetched %u headers for \"%s\""
-#~ msgstr "S'han recuperat %u capçaleres per a \"%s\""
-
-#~ msgid "No new articles in group \"%s\""
-#~ msgstr "Cap article nou al grup \"%s\""
-
-#~ msgid "New %lu of %lu"
-#~ msgstr "%lu nous de %lu"
-
-#~ msgid "All %lu of %lu"
-#~ msgstr "Tots els %lu de %lu"
-
-#~ msgid "[This is an email copy of a Usenet post to \"%s\"]"
-#~ msgstr ""
-#~ "[Això és una còpia de correu electrònic d'un missatge Usenet publicat a "
-#~ "\"%s\"]"
-
-#~ msgid "Email \"%s\" sent."
-#~ msgstr "S'ha enviat el missatge de correu electrònic \"%s\"."
-
-#~ msgid "Email \"%s\" not sent."
-#~ msgstr "No s'ha enviat el missatge de correu electrònic \"%s\"."
-
-#~ msgid "Posting and mailing article \"%s\""
-#~ msgstr "S'està enviant i publicant l'article \"%s\""
-
-#~ msgid "Mailing article \"%s\""
-#~ msgstr "S'està enviant l'article \"%s\""
-
-#~ msgid "Email send failed.  "
-#~ msgstr "No s'ha pogut enviar el correu electrònic.  "
-
-# c-format
-#~ msgid "Saving `%s'"
-#~ msgstr "S'està desant '%s'"
+#: ../pan/usenet-utils/text-massager.cc:579
+msgid "no_name"
+msgstr ""
+
+#: ../pan/usenet-utils/text-massager.cc:580
+msgid "no_mail"
+msgstr ""
