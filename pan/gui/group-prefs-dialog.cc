@@ -23,7 +23,6 @@ extern "C" {
   #include <glib.h>
   #include "gtk-compat.h"
 #ifdef HAVE_GTKSPELL
-  #include <gtkspell/gtkspell.h>
   #include <enchant/enchant.h>
 #endif
 }

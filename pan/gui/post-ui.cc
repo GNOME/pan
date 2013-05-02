@@ -255,30 +255,63 @@ PostUI :: set_spellcheck_enabled (bool enabled)
     GtkTextView * view = GTK_TEXT_VIEW(_body_view);
     GError * err (0);
 
-    // set the language
-    if(!_spellcheck_language.empty())	// some language was set
-    {
-      gtkspell_new_attach (view, _spellcheck_language.c_str(), &err);	// sets custom spell checker
+#if GTKSPELL_VERSION == 3
+    gboolean spell_attach = TRUE;
+    GtkSpellChecker* spell = gtk_spell_checker_new ();
+
+    // a language has been selected
+    if(!_spellcheck_language.empty()) {
+      // attempt to set the selected language
+      if (!gtk_spell_checker_set_language (spell, _spellcheck_language.c_str(), &err)) {
+        Log::add_err_va (_("Error setting custom spellchecker: %s"), err->message);
+        g_clear_error (&err);
+        // selected language failed, fall back upon the default system locale
+        if (!gtk_spell_checker_set_language (spell, NULL, &err)) {
+          Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
+          g_clear_error (&err);
+          spell_attach = FALSE;
+        }
+      }
+    }
+    else {
+      if (!gtk_spell_checker_set_language (spell, NULL, &err)) {
+        Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
+        g_clear_error (&err);
+        spell_attach = FALSE;
+      }
+    }
+
+    if (spell_attach) {
+      // sink the floating reference
+      gtk_spell_checker_attach (spell, view);
+    }
+    else {
+      // destroy the floating reference
+      g_object_ref_sink (spell);
+      g_object_unref (spell);
+    }
+#else // GTKSPELL_VERSION
+    if(!_spellcheck_language.empty()) {
+      gtkspell_new_attach (view, _spellcheck_language.c_str(), &err);
       if (err) {
         Log::add_err_va (_("Error setting custom spellchecker: %s"), err->message);
         g_clear_error (&err);
-        // custom spellchecker failed. defaults to env spellchecker
-        gtkspell_new_attach (view, NULL, &err);	// tries default env language
+        gtkspell_new_attach (view, NULL, &err);
         if (err) {
           Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
           g_clear_error (&err);
         }
       }
     }
-    else
-    {
-      gtkspell_new_attach (view, NULL, &err);	// tries default env language
+    else {
+      gtkspell_new_attach (view, NULL, &err);
       if (err) {
         Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
         g_clear_error (&err);
       }
     }
-#else
+#endif // GTKSPELL_VERSION
+#else // HAVE_GTKSPELL
     // disable this for now, it is annoying
 //    GtkWidget * w = gtk_message_dialog_new_with_markup (
 //      GTK_WINDOW(_root),
@@ -288,7 +321,7 @@ PostUI :: set_spellcheck_enabled (bool enabled)
 //      _("<b>Spellchecker not found!</b>\n \nWas this copy of Pan compiled with GtkSpell enabled?"));
 //    g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
 //    gtk_widget_show_all (w);
-#endif
+#endif // HAVE_GTKSPELL
   }
   else // disable
   {
@@ -296,11 +329,17 @@ PostUI :: set_spellcheck_enabled (bool enabled)
     GtkTextView * view = GTK_TEXT_VIEW(_body_view);
     if (view)
     {
+#if GTKSPELL_VERSION == 3
+      GtkSpellChecker * spell = gtk_spell_checker_get_from_text_view (view);
+      if (spell)
+        gtk_spell_checker_detach (spell);
+#else // GTKSPELL_VERSION
       GtkSpell * spell = gtkspell_get_from_text_view (view);
       if (spell)
         gtkspell_detach (spell);
+#endif // GTKSPELL_VERSION
     }
-#endif
+#endif // HAVE_GTKSPELL
   }
 }
 
