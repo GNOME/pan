@@ -54,6 +54,8 @@ GNUTLS_REQUIRED=3.0.0
 LIBNOTIFY_REQUIRED=0.4.1
 LIBGKR_REQUIRED=3.2.0
 WEBKIT_REQUIRED=1.8.1
+LIBGRSS_REQUIRED=0.5.0
+AC_SUBST(LIBGRSS_REQUIRED)
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GLIB_REQUIRED_FOR_DBUS)
 AC_SUBST(GMIME_REQUIRED)
@@ -90,6 +92,9 @@ dnl libz for xzver
 PKG_CHECK_MODULES([ZLIB], [zlib >= 1.2.0],AC_DEFINE(HAVE_ZLIB,[1],[Zlib for xzver support]),[])
 AC_SUBST(ZLIB_CFLAGS)
 AC_SUBST(ZLIB_LIBS)
+
+dnl rss feed support for nzbindex
+PKG_CHECK_MODULES([GRSS],[libgrss-0.5 >= $LIBGRSS_REQUIRED],[AC_DEFINE(HAVE_RSS,[1],[RSS support])],[AC_MSG_RESULT(no)])
 
 dnl D-Bus support
 AC_ARG_WITH(dbus, AS_HELP_STRING([--with-dbus],[enable D-Bus support (normally: no)]), [want_dbus=$withval], [want_dbus=no])
@@ -308,5 +313,4 @@ Configuration:
         With GtkSpell:          ${gtkspell_msg}
         With GTK+ 3             ${gtk_msg}
         With GnuTLS:            ${gnutls_msg}
-
 "
