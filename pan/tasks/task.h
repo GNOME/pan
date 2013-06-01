@@ -58,8 +58,7 @@ namespace pan
             NEED_ENCODER = 3,
             /** Task is running */
             WORKING = 5,
-            /** Task is paused, woken up if 'current_connections < max_connections' */
-            PAUSED = 6
+            INITIAL = 6
          };
 
          /**
@@ -84,8 +83,8 @@ namespace pan
                void set_completed () {
                    _work = COMPLETED; _servers.clear(); }
 
-               void set_paused () {
-                   _work = PAUSED; _servers.clear(); }
+               void set_initial () {
+                   _work = INITIAL; _servers.clear(); }
 
                void set_working () {
                   _work = WORKING; _servers.clear(); }

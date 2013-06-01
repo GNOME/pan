@@ -259,10 +259,8 @@ Encoder :: progress_update_timer_func (gpointer decoder)
   Task *task = self->task;
   if (!task || self->was_cancelled()) return false;
 
-  self->mut.lock();
-    const double percent (self->percent);
-    const std::string f (content_to_utf8 (self->current_file));
-  self->mut.unlock();
+  const double percent (self->percent);
+  const std::string f (content_to_utf8 (self->current_file));
 
   task->set_step(int(percent));
   task->set_status_va (_("Encoding %s"), f.c_str());

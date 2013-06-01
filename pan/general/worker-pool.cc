@@ -29,69 +29,68 @@
 
 using namespace pan;
 
-WorkerPool :: WorkerPool (int n, bool exclusive)
+WorkerPool::WorkerPool(int n, bool exclusive)
 {
-  assert ((!exclusive || n>0) && "can't have unlimited exclusive threads!");
-  tpool = g_thread_pool_new (Worker::worker_thread_func, this, n, exclusive, 0);
+  assert((!exclusive || n>0) && "can't have unlimited exclusive threads!");
+  tpool = g_thread_pool_new(Worker::worker_thread_func, this, n, exclusive, 0);
 }
 
 void
-WorkerPool :: cancel_all_silently ()
+WorkerPool::cancel_all_silently()
 {
-  foreach (WorkerSet, my_workers, it)
-    (*it)->cancel_silently ();
+  foreach (WorkerSet, my_workers, it)(*it)->cancel_silently ();
 }
 
-WorkerPool :: ~WorkerPool ()
+WorkerPool::~WorkerPool()
 {
-  foreach (WorkerSet, my_workers, it) {
+  foreach (WorkerSet, my_workers, it){
     (*it)->pool = 0;
     (*it)->cancel ();
   }
 
-  // blocks until *all* workers, both running and queued, have run.
+ // blocks until *all* workers, both running and queued, have run.
   g_thread_pool_free (tpool, false, true);
 }
 
 /***
-****
-***/
+ ****
+ ***/
 
 void
-WorkerPool :: push_work (Worker *w, Worker::Listener *l, bool delete_worker)
+WorkerPool::push_work(Worker *w, Worker::Listener *l, bool delete_worker)
 {
   w->cancelled = false;
   w->silent = false;
   w->pool = this;
   w->listener = l;
   w->delete_worker = delete_worker;
-  my_workers.insert (w);
-  g_thread_pool_push (tpool, w, 0); // jump to worker_thread_func
+  my_workers.insert(w);
+  g_thread_pool_push(tpool, w, 0); // jump to worker_thread_func
 }
 
 void
-WorkerPool :: Worker :: worker_thread_func (gpointer g, gpointer unused UNUSED)
+WorkerPool::Worker::worker_thread_func(gpointer g, gpointer unused UNUSED)
 {
-  static_cast<Worker*>(g)->do_work ();
-  g_idle_add (main_thread_cleanup_cb, g); // jump to main_thread_cleanup_cb
+  static_cast<Worker*>(g)->do_work();
+  g_idle_add(main_thread_cleanup_cb, g); // jump to main_thread_cleanup_cb
 }
 
 gboolean
-WorkerPool :: Worker :: main_thread_cleanup_cb (gpointer g)
+WorkerPool::Worker::main_thread_cleanup_cb(gpointer g)
 {
-  static_cast<Worker*>(g)->main_thread_cleanup ();
+  static_cast<Worker*>(g)->main_thread_cleanup();
   return false; // tell main loop that we're done
 }
 
 void
-WorkerPool :: Worker :: main_thread_cleanup ()
+WorkerPool::Worker::main_thread_cleanup()
 {
   if (listener && !silent)
-      listener->on_worker_done (was_cancelled());
+    listener->on_worker_done(was_cancelled());
 
   if (pool)
-      pool->my_workers.erase (this);
+    pool->my_workers.erase(this);
 
   if (delete_worker)
-      delete this;
+    delete this;
 }

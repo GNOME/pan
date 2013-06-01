@@ -320,9 +320,8 @@ Queue :: process_task (Task * task)
   {
     debug ("working");
   }
-  else if (state._work == Task::PAUSED)
+  else if (state._work == Task::INITIAL)
   {
-    debug("paused");
     TaskUpload* t = dynamic_cast<TaskUpload*>(task);
     if (t)
       give_task_an_upload_slot(t);
@@ -685,7 +684,7 @@ Queue :: remove_task (Task * task)
       const tasks_t tmp (_tasks.begin(), _tasks.end());
       foreach_const (tasks_t, tmp, it) {
         Task * task (*it);
-        if (task->get_state()._work == Task::PAUSED)
+        if (task->get_state()._work == Task::INITIAL)
         {
           give_task_an_upload_slot(dynamic_cast<TaskUpload*>(*it));
           break;

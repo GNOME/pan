@@ -105,7 +105,6 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   _queue_pos(0),
   _msg (msg),
   _first(true),
-  _paused(true),
   _groups(get_groups_str(article))
 {
 
@@ -115,8 +114,7 @@ TaskUpload :: TaskUpload (const std::string         & filename,
   struct stat sb;
   stat(filename.c_str(),&sb);
   _bytes = sb.st_size;
-
-  _state.set_paused();
+  _state.set_initial();
 }
 
 namespace
@@ -376,7 +374,6 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
 unsigned long
 TaskUpload :: get_bytes_remaining () const
 {
-  if (_paused) return _bytes*1.15;
   unsigned long bytes (0);
   foreach_const (needed_t, _needed, it)
     bytes += (unsigned long)it->second.bytes;

@@ -151,7 +151,6 @@ namespace pan
       needed_t _needed;
       std::string _references; // original references, not to be touched!
       std::string _first_mid;
-      bool _paused;
       std::set<int> _wanted;
       GMimeMessage * _msg;
       void prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::string& d);
@@ -165,7 +164,6 @@ namespace pan
       void set_encoder_done (bool setme) { _encoder_has_run = setme; }
       needed_t& needed() { return _needed; }
       void build_needed_tasks();
-      void wakeup() { _state.set_working(); _paused=false; update_work(); }
 
   };
 }
