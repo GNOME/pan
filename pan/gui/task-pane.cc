@@ -36,33 +36,12 @@ extern "C" {
 #include "task-pane.h"
 #include "taskpane.ui.h"
 
-#include <libgrss.h>
-
 enum
 {
   COL_TASK_POINTER,
   COL_TASK_STATE,
   NUM_COLS
 };
-
-namespace
-{
-  GrssFeedChannel *feed(0);
-
-  void init_feed()
-  {
-    feed = grss_feed_channel_new();
-    grss_feed_channel_set_update_interval (feed, 3);
-    GList* list = grss_feed_channel_fetch_all (feed, 0);
-
-    GList *iter;
-    for (iter = list; iter; iter = g_list_next (iter))
-    {
-        std::cerr<<"list entry "<<iter->data<<"\n";
-    }
-
-  }
-}
 
 /**
 ***  Internal Utility
@@ -1036,9 +1015,6 @@ TaskPane :: create_filter_entry ()
 TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
 {
   _root = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-
-  //DBG!!
-  init_feed();
 
   GtkWidget * w;
 

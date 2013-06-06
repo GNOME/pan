@@ -55,7 +55,9 @@ LIBNOTIFY_REQUIRED=0.4.1
 LIBGKR_REQUIRED=3.2.0
 WEBKIT_REQUIRED=1.8.1
 LIBGRSS_REQUIRED=0.5.0
+LIBSOUP_REQUIRED=2.26
 AC_SUBST(LIBGRSS_REQUIRED)
+AC_SUBST(LIBSOUP_REQUIRED)
 AC_SUBST(GLIB_REQUIRED)
 AC_SUBST(GLIB_REQUIRED_FOR_DBUS)
 AC_SUBST(GMIME_REQUIRED)
@@ -93,8 +95,8 @@ PKG_CHECK_MODULES([ZLIB], [zlib >= 1.2.0],AC_DEFINE(HAVE_ZLIB,[1],[Zlib for xzve
 AC_SUBST(ZLIB_CFLAGS)
 AC_SUBST(ZLIB_LIBS)
 
-dnl rss feed support for nzbindex
-PKG_CHECK_MODULES([GRSS],[libgrss-0.5 >= $LIBGRSS_REQUIRED],[AC_DEFINE(HAVE_RSS,[1],[RSS support])],[AC_MSG_RESULT(no)])
+dnl rss feed support for nzbindex using libgrss and libsoup for http GET (nzb file(s))
+PKG_CHECK_MODULES([GRSS],[libgrss-0.5 >= $LIBGRSS_REQUIRED libsoup-2.4 >= LIBSOUP_REQUIRED],[AC_DEFINE(HAVE_RSS,[1],[RSS support])],[AC_MSG_RESULT(no)])
 
 dnl D-Bus support
 AC_ARG_WITH(dbus, AS_HELP_STRING([--with-dbus],[enable D-Bus support (normally: no)]), [want_dbus=$withval], [want_dbus=no])
