@@ -16,6 +16,7 @@ libpangui_a_SOURCES = \
  group-prefs.cc \
  group-prefs-dialog.cc \
  header-pane.cc \
+ search-pane.cc \
  hig.cc \
  log-ui.cc \
  pan-file-entry.cc \
@@ -56,6 +57,7 @@ noinst_HEADERS = \
  gtk-compat.h \
  gui.h \
  header-pane.h \
+ search-pane.h \
  hig.h \
  license.h \
  log-ui.h \

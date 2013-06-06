@@ -42,6 +42,7 @@ namespace pan
 {
   class GroupPane;
   class HeaderPane;
+  class SearchPane;
   class BodyPane;
   class ProgressView;
 
@@ -253,6 +254,7 @@ namespace pan
       GtkWidget * _toolbar;
       GroupPane * _group_pane;
       HeaderPane * _header_pane;
+      SearchPane * _search_pane;
       BodyPane * _body_pane;
       GtkUIManager * _ui_manager;
 
