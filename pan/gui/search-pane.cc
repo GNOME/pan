@@ -576,13 +576,8 @@ SearchPane :: create_filter_entry ()
                                  GTK_ENTRY_ICON_SECONDARY,
                                  GTK_STOCK_CLEAR );
 
-  //TODO
-  bool regex = false;//_prefs.get_flag ("use-regex", false);
   GtkWidget * menu = gtk_menu_new ();
-  if (regex == true )
-    search_mode = 1;
-  else
-    search_mode = 0;
+  search_mode = 0;
   GSList * l = 0;
   for (int i=0, qty=G_N_ELEMENTS(mode_strings); i<qty; ++i) {
     GtkWidget * w = gtk_radio_menu_item_new_with_label (l, _(mode_strings[i]));
