@@ -179,8 +179,8 @@ namespace
     grss_feed_channel_add_cookie (feed, cookie);
 
     grss_feed_channel_fetch_all_async(feed, feed_downloaded, pane);
-  }
 #endif
+  }
 }
 
 SearchPane :: ~SearchPane ()
@@ -188,6 +188,7 @@ SearchPane :: ~SearchPane ()
 
 namespace
 {
+#ifdef HAVE_RSS
   const char* download_file(const std::string& filename)
   {
     SoupMessage *msg;
@@ -196,13 +197,16 @@ namespace
     soup_session_send_message (session, msg);
     return msg->response_body->data;
   }
+#endif
 }
 
 void SearchPane :: download_clicked_cb (GtkButton*, SearchPane* pane)
 {
+#ifdef HAVE_RSS
   FeedItem* sel = pane->get_selection ();
   if (sel)
     pane->_gui.do_import_tasks_from_nzb_stream(download_file(sel->url));
+#endif
 }
 
 void SearchPane :: refresh_clicked_cb (GtkButton*, SearchPane* pane)

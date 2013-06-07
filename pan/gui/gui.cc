@@ -251,7 +251,9 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
 
   _group_pane = new GroupPane (*this, data, _prefs, _group_prefs);
   _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, _group_prefs, *this, *this);
+#ifdef HAVE_RSS
   _search_pane = new SearchPane (data, queue, *this, *this);
+#endif
   _body_pane = new BodyPane (data, _cache, _prefs, _group_prefs, _queue, _header_pane);
 
   std::string path = "/ui/main-window-toolbar";
@@ -359,7 +361,9 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
   g_object_ref_sink (G_OBJECT(_error_image));
   g_object_ref (_group_pane->root());
   g_object_ref (_header_pane->root());
+#ifdef HAVE_RSS
   g_object_ref (_search_pane->root());
+#endif
   g_object_ref (_body_pane->root());
 
   do_work_online (is_action_active ("work-online"));
@@ -446,13 +450,17 @@ GUI :: ~GUI ()
   std::set<GtkWidget*> unref;
   unref.insert (_body_pane->root());
   unref.insert (_header_pane->root());
+#ifdef HAVE_RSS
   unref.insert (_search_pane->root());
+#endif
   unref.insert (_group_pane->root());
   unref.insert (_error_image);
   unref.insert (_info_image);
 
   delete _header_pane;
+#ifdef HAVE_RSS
   delete _search_pane;
+#endif
   delete _group_pane;
   delete _body_pane;
 
@@ -1803,12 +1811,17 @@ void GUI :: do_layout (bool tabbed)
 
   GtkWidget * group_w (_group_pane->root());
   GtkWidget * header_w (_header_pane->root());
-  GtkWidget * search_w (_search_pane->root());
+  GtkWidget * search_w;
+#ifdef HAVE_RSS
+  search_w = _search_pane->root();
+#endif
   GtkWidget * body_w (_body_pane->root());
 
   remove_from_parent (group_w);
   remove_from_parent (header_w);
+#ifdef HAVE_RSS
   remove_from_parent (search_w);
+#endif
   remove_from_parent (body_w);
 
   // remove workarea's current child
@@ -1819,18 +1832,22 @@ void GUI :: do_layout (bool tabbed)
   }
 
   GtkWidget * w (0);
-
+#ifdef HAVE_RSS
   GtkWidget* notebook = gtk_notebook_new ();
   GtkNotebook * n (GTK_NOTEBOOK (notebook));
   gtk_notebook_append_page (n, header_w, gtk_label_new_with_mnemonic (_("_1. Header Pane")));
   gtk_notebook_append_page (n, search_w, gtk_label_new_with_mnemonic (_("_2. Search Pane")));
-
+#endif
   if (tabbed)
   {
     w = gtk_notebook_new ();
     GtkNotebook * n (GTK_NOTEBOOK (w));
     gtk_notebook_append_page (n, group_w, gtk_label_new_with_mnemonic (_("_1. Group Pane")));
+#ifdef HAVE_RSS
     gtk_notebook_append_page (n, notebook, gtk_label_new_with_mnemonic (_("_2. Header Pane")));
+#else
+    gtk_notebook_append_page (n, header_w, gtk_label_new_with_mnemonic (_("_2. Header Pane")));
+#endif
     gtk_notebook_append_page (n, body_w, gtk_label_new_with_mnemonic (_("_3. Body Pane")));
     g_signal_connect (n, "switch-page", G_CALLBACK(notebook_page_switched_cb), this);
   }
@@ -1841,9 +1858,15 @@ void GUI :: do_layout (bool tabbed)
     const std::string orient (_prefs.get_string ("pane-orient", "groups,headers,body"));
 
     StringView tok, v(orient);
+#ifdef HAVE_RSS
     v.pop_token(tok,','); if (*tok.str=='g') p[0]=group_w; else if (*tok.str=='h') p[0]=notebook; else p[0]=body_w;
     v.pop_token(tok,','); if (*tok.str=='g') p[1]=group_w; else if (*tok.str=='h') p[1]=notebook; else p[1]=body_w;
     v.pop_token(tok,','); if (*tok.str=='g') p[2]=group_w; else if (*tok.str=='h') p[2]=notebook; else p[2]=body_w;
+#else
+    v.pop_token(tok,','); if (*tok.str=='g') p[0]=group_w; else if (*tok.str=='h') p[0]=header_w; else p[0]=body_w;
+    v.pop_token(tok,','); if (*tok.str=='g') p[1]=group_w; else if (*tok.str=='h') p[1]=header_w; else p[1]=body_w;
+    v.pop_token(tok,','); if (*tok.str=='g') p[2]=group_w; else if (*tok.str=='h') p[2]=header_w; else p[2]=body_w;
+#endif
 
     if (layout == "stacked-top") {
       w = pack_widgets (_prefs, p[0], p[1], HORIZONTAL, 1);
