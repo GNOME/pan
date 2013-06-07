@@ -44,6 +44,7 @@ namespace pan
   class HeaderPane;
   class SearchPane;
   class BodyPane;
+  class SearchPane;
   class ProgressView;
 
   /**
@@ -108,6 +109,7 @@ namespace pan
       virtual void do_print ();
       virtual void do_quit ();
       virtual void do_import_tasks ();
+      virtual void do_import_tasks_from_nzb_stream (const char*);
       virtual void do_cancel_latest_task ();
       virtual void do_show_task_window ();
       virtual void do_show_dl_meter_prefs();
@@ -174,7 +176,7 @@ namespace pan
       virtual void do_tip_jar ();
       virtual void do_about_pan ();
       virtual void do_work_online (bool);
-      virtual void do_tabbed_layout (bool);
+      virtual void do_layout (bool);
       virtual void do_show_toolbar (bool);
       virtual void do_show_group_pane (bool);
       virtual void do_show_header_pane (bool);

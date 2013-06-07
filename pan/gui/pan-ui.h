@@ -36,6 +36,7 @@ namespace pan
     virtual void do_save_articles_to_nzb () = 0;
     virtual void do_print () = 0;
     virtual void do_import_tasks () = 0;
+    virtual void do_import_tasks_from_nzb_stream (const char*) = 0;
     virtual void do_cancel_latest_task () = 0;
     virtual void do_select_all_articles () = 0;
     virtual void do_unselect_all_articles () = 0;
@@ -115,7 +116,7 @@ namespace pan
     virtual void do_unsubscribe_selected_groups () = 0;
 
     virtual void do_work_online (bool) = 0;
-    virtual void do_tabbed_layout (bool) = 0;
+    virtual void do_layout (bool) = 0;
 
     virtual void do_show_group_pane (bool) = 0;
     virtual void do_show_header_pane (bool) = 0;

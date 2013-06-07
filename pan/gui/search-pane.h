@@ -62,21 +62,20 @@ namespace pan
        ~SearchPane ();
        void refresh();
 
+       GtkWidget* view () { return _view; }
+       GtkListStore* store () { return _store; }
+
     public:
        GtkWidget* root () { return _root; }
        void add_actions(GtkWidget*);
        static void download_clicked_cb (GtkButton*, SearchPane*);
        static void refresh_clicked_cb (GtkButton*, SearchPane*);
-       static void page_clicked_cb (GtkButton*, SearchPane*);
 
        static void do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g);
        static gboolean on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gpointer userdata);
        static void get_selected_downloads_foreach (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, gpointer);
-
        FeedItem* get_selection();
-
        GtkWidget* create_filter_entry ();
-
        void filter (const std::string& text, int mode);
   };
 
