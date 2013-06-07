@@ -51,7 +51,6 @@ FeedItem :: FeedItem (const char* feed_title, const char* descr, const char* ite
 
 namespace
 {
-  GrssFeedChannel *feed(0);
 
   std::string escaped (const std::string& s)
   {
@@ -64,7 +63,7 @@ namespace
   namespace
   {
 
-    std::string sort_order ("age");
+    std::string sort_order ("agedesc");
     int page (0);
 
     void order_mode_changed_cb (GtkComboBox * c, gpointer user_data)
@@ -122,8 +121,51 @@ namespace
     }
   }
 
-  void init_feed(const std::string& query, std::vector<FeedItem*>& fillme)
+  enum
   {
+    S_COL_NAME,
+    S_COL_DATE,
+    S_NUM_COLS
+  };
+
+  static void
+  feed_downloaded (GObject *source, GAsyncResult *res, gpointer user_data)
+  {
+#ifdef HAVE_RSS
+    SearchPane* pane (static_cast<SearchPane*>(user_data));
+    GtkWidget* view (pane->view());
+    GtkListStore* store (pane->store());
+
+    GList* list = grss_feed_channel_fetch_all_finish (GRSS_FEED_CHANNEL (source), res, 0);
+    GList *iter;
+    std::vector<FeedItem*> items;
+
+    GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
+    GtkTreeIter t_iter;
+
+    g_object_ref(model);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(view), NULL);
+    gtk_list_store_clear(store);
+
+    for (iter = list; iter; iter = g_list_next (iter))
+    {
+        GrssFeedItem* item = (GrssFeedItem*)iter->data;
+        FeedItem* fitem = new FeedItem(grss_feed_item_get_title(item),
+            grss_feed_item_get_description(item),
+            grss_feed_item_get_source(item),
+            grss_feed_item_get_publish_time(item));
+        gtk_list_store_prepend(store, &t_iter);
+        gtk_list_store_set (store, &t_iter, S_COL_NAME, fitem, S_COL_DATE, fitem->date.c_str(), -1);
+    }
+
+    gtk_tree_view_set_model (GTK_TREE_VIEW(view), model);
+    gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(view), 0, 0);
+#endif
+  }
+
+  void init_feed(const std::string& query, SearchPane* pane)
+  {
+#ifdef HAVE_RSS
     std::stringstream str;
     str << "http://www.nzbindex.nl/rss/?q=";
     str << escaped(query)<<"&max=600&age=550&hidespam=1&nzblink=1";
@@ -136,18 +178,9 @@ namespace
     cookie = soup_cookie_new ("lang", "2", "www.nzbindex.nl", "/", -1);
     grss_feed_channel_add_cookie (feed, cookie);
 
-    GList* list = grss_feed_channel_fetch_all (feed, 0);
-    GList *iter;
-    for (iter = list; iter; iter = g_list_next (iter))
-    {
-        GrssFeedItem* item = (GrssFeedItem*)iter->data;
-        FeedItem* fitem = new FeedItem(grss_feed_item_get_title(item),
-            grss_feed_item_get_description(item),
-            grss_feed_item_get_source(item),
-            grss_feed_item_get_publish_time(item));
-        fillme.push_back(fitem);
-    }
+    grss_feed_channel_fetch_all_async(feed, feed_downloaded, pane);
   }
+#endif
 }
 
 SearchPane :: ~SearchPane ()
@@ -175,29 +208,6 @@ void SearchPane :: download_clicked_cb (GtkButton*, SearchPane* pane)
 void SearchPane :: refresh_clicked_cb (GtkButton*, SearchPane* pane)
 {
   pane->refresh();
-}
-
-void SearchPane :: page_clicked_cb (GtkButton* b, SearchPane* pane)
-{
-  gchar* val = (gchar*)g_object_get_data(G_OBJECT(b), "direction");
-  if (!strcmp(val, "next"))
-      ++page;
-  if (!strcmp(val, "prev"))
-  {
-      --page;
-      if (page<0) page = 0;
-  }
-  pane->refresh();
-}
-
-namespace
-{
-  enum
-  {
-    S_COL_NAME,
-    S_COL_DATE,
-    S_NUM_COLS
-  };
 }
 
 void
@@ -267,7 +277,8 @@ namespace
                     gpointer            userdata)
   {
 
-    //TODO strip a href tags!
+    /* TODO: this is ugly, perhaps use a clever regex here (?) */
+
     FeedItem* text (0);
     gtk_tree_model_get (model, iter, S_COL_NAME, &text, -1);
     std::string str(text->desc);
@@ -281,7 +292,24 @@ namespace
     replaceAll(str, "</font>", "</span>");
     replaceAll(str, "<div xmlns=\"http://www.w3.org/1999/xhtml\">", "");
     std::stringstream stream;
-    stream << text->title << "\n" << str;
+
+    // strip out <a href></a> tags
+    size_t pos1 = str.find("<a href");
+    size_t pos2 = str.find("</a>");
+    std::string first;
+    std::string second;
+    if (pos1 != std::string::npos)
+    {
+      first = str.substr(0, pos1);
+      second = str.substr(pos2 + 4, str.size() - pos2 + 4);
+    }
+    else
+      first = str;
+
+    stream << text->title << "\n" << first << second;
+
+    std::cerr<<"\n\n"<<stream.str()<<"\n==================================\n";
+
     g_object_set (renderer, "markup", stream.str().c_str(), NULL);
   }
 
@@ -647,14 +675,6 @@ SearchPane :: SearchPane(Data                & data,
   w = add_button(buttons, _("Refresh"), G_CALLBACK(refresh_clicked_cb), this);
   gtk_widget_set_tooltip_text(w, _("Refresh current results"));
 
-  //TODO dbg!
-  /*
-  w = add_button(buttons, _("Next Page"), G_CALLBACK(page_clicked_cb), this);
-  g_object_set_data_full (G_OBJECT(w), "direction", g_strdup("next"), g_free);
-  w = add_button(buttons, _("Prev Page"), G_CALLBACK(page_clicked_cb), this);
-  g_object_set_data_full (G_OBJECT(w), "direction", g_strdup("prev"), g_free);
-  */
-
   GtkWidget * hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, PAD);
   gtk_box_pack_start(GTK_BOX(hbox), buttons, false, false, PAD);
 
@@ -700,29 +720,9 @@ SearchPane::refresh()
 {
   if (!search_text.empty())
   {
-
-    foreach (download_v, items, it)
-      delete *it;
+    foreach (download_v, items, it) delete *it;
     items.clear();
-    init_feed(search_text, items);
-
-    if (items.size()!=0)
-    {
-      GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(_view));
-      g_object_ref(model);
-      gtk_tree_view_set_model(GTK_TREE_VIEW(_view), NULL);
-      gtk_list_store_clear(_store);
-      GtkTreeIter iter;
-      foreach (download_v, items, it)
-      {
-        gtk_list_store_append(_store, &iter);
-        gtk_list_store_set (_store, &iter, S_COL_NAME, *it, S_COL_DATE, (*it)->date.c_str(), -1);
-      }
-      gtk_tree_view_set_model (GTK_TREE_VIEW(_view), model);
-    }
-
-    gtk_tree_view_scroll_to_point(GTK_TREE_VIEW(_view), 0, 0);
+    init_feed(search_text, this);
   }
 }
-
 

@@ -188,7 +188,7 @@ namespace pan
   void do_about_pan                    (GtkAction*) { pan_ui->do_about_pan(); }
 
   void do_work_online         (GtkToggleAction * a) { pan_ui->do_work_online         (gtk_toggle_action_get_active(a)); }
-  void do_tabbed_layout       (GtkToggleAction * a) { pan_ui->do_tabbed_layout       (gtk_toggle_action_get_active(a)); }
+  void do_layout              (GtkToggleAction * a) { pan_ui->do_layout              (gtk_toggle_action_get_active(a)); }
   void do_show_group_pane     (GtkToggleAction * a) { pan_ui->do_show_group_pane     (gtk_toggle_action_get_active(a)); }
   void do_show_header_pane    (GtkToggleAction * a) { pan_ui->do_show_header_pane    (gtk_toggle_action_get_active(a)); }
   void do_show_body_pane      (GtkToggleAction * a) { pan_ui->do_show_body_pane      (gtk_toggle_action_get_active(a)); }
@@ -732,7 +732,7 @@ namespace pan
 
 
     { "work-online", "ICON_ONLINE", N_("_Work Online"), "L", NULL, G_CALLBACK(do_work_online), true },
-    { "tabbed-layout", GTK_STOCK_JUMP_TO, N_("_Tabbed Layout"), "Z", NULL, G_CALLBACK(do_tabbed_layout), false },
+    { "tabbed-layout", GTK_STOCK_JUMP_TO, N_("_Tabbed Layout"), "Z", NULL, G_CALLBACK(do_layout), false },
     { "show-group-pane", NULL, N_("Show Group _Pane"), "<control>1", NULL, G_CALLBACK(do_show_group_pane), true },
     { "show-header-pane", NULL, N_("Show Hea_der Pane"), "<control>2", NULL, G_CALLBACK(do_show_header_pane), true },
     { "show-body-pane", NULL, N_("Show Bod_y Pane"), "<control>3", NULL, G_CALLBACK(do_show_body_pane), true },

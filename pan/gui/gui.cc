@@ -48,6 +48,7 @@ extern "C" {
 #include "group-pane.h"
 #include "group-prefs-dialog.h"
 #include "header-pane.h"
+#include "search-pane.h"
 #include "hig.h"
 #include "license.h"
 #include "log-ui.h"
@@ -224,6 +225,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
   _menu_vbox (gtk_box_new (GTK_ORIENTATION_VERTICAL, 0)),
   _group_pane (0),
   _header_pane (0),
+  _search_pane (0),
   _body_pane (0),
   _ui_manager (gtk_ui_manager_new ()),
   _info_image (gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU)),
@@ -249,6 +251,8 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
 
   _group_pane = new GroupPane (*this, data, _prefs, _group_prefs);
   _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, _group_prefs, *this, *this);
+  _search_pane = new SearchPane (data, _queue, *this, *this);
+  //_search_pane->refresh();
   _body_pane = new BodyPane (data, _cache, _prefs, _group_prefs, _queue, _header_pane);
 
   std::string path = "/ui/main-window-toolbar";
@@ -275,7 +279,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
 
   // workarea
   _workarea_bin = gtk_event_box_new ();
-  do_tabbed_layout (is_action_active ("tabbed-layout"));
+  do_layout (is_action_active ("tabbed-layout"));
   gtk_box_pack_start (GTK_BOX(_root), _workarea_bin, TRUE, TRUE, 0);
   gtk_widget_show (_workarea_bin);
 
@@ -356,6 +360,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
   g_object_ref_sink (G_OBJECT(_error_image));
   g_object_ref (_group_pane->root());
   g_object_ref (_header_pane->root());
+  g_object_ref (_search_pane->root());
   g_object_ref (_body_pane->root());
 
   do_work_online (is_action_active ("work-online"));
@@ -442,11 +447,13 @@ GUI :: ~GUI ()
   std::set<GtkWidget*> unref;
   unref.insert (_body_pane->root());
   unref.insert (_header_pane->root());
+  unref.insert (_search_pane->root());
   unref.insert (_group_pane->root());
   unref.insert (_error_image);
   unref.insert (_info_image);
 
   delete _header_pane;
+  delete _search_pane;
   delete _group_pane;
   delete _body_pane;
 
@@ -850,6 +857,18 @@ void GUI :: do_import_tasks ()
       foreach_const (strings_t, filenames, it)
         NZB :: tasks_from_nzb_file (*it, path, _cache, _encode_cache, _data, _data, _data, tasks);
   }
+
+  if (!tasks.empty())
+    _queue.add_tasks (tasks, Queue::BOTTOM);
+}
+
+void GUI :: do_import_tasks_from_nzb_stream (const char* stream)
+{
+  // if we're importing files, build the tasks...
+  Queue::tasks_t tasks;
+  const std::string path (prompt_user_for_save_path (get_window(_root), _prefs));
+  if (!path.empty())
+    NZB :: tasks_from_nzb_string(stream, path, _cache, _encode_cache, _data, _data, _data, tasks);
 
   if (!tasks.empty())
     _queue.add_tasks (tasks, Queue::BOTTOM);
@@ -1769,7 +1788,8 @@ GUI :: notebook_page_switched_cb (GtkNotebook *, GtkNotebookPage *, gint page_nu
   g_idle_add (grab_focus_idle, w);
 }
 
-void GUI :: do_tabbed_layout (bool tabbed)
+//TODO
+void GUI :: do_layout (bool tabbed)
 {
   if (hpane) {
     _prefs.set_int ("main-window-hpane-position", gtk_paned_get_position(GTK_PANED(hpane)));
@@ -1784,10 +1804,12 @@ void GUI :: do_tabbed_layout (bool tabbed)
 
   GtkWidget * group_w (_group_pane->root());
   GtkWidget * header_w (_header_pane->root());
+  GtkWidget * search_w (_search_pane->root());
   GtkWidget * body_w (_body_pane->root());
 
   remove_from_parent (group_w);
   remove_from_parent (header_w);
+  remove_from_parent (search_w);
   remove_from_parent (body_w);
 
   // remove workarea's current child
@@ -1798,12 +1820,18 @@ void GUI :: do_tabbed_layout (bool tabbed)
   }
 
   GtkWidget * w (0);
+
+  GtkWidget* notebook = gtk_notebook_new ();
+  GtkNotebook * n (GTK_NOTEBOOK (notebook));
+  gtk_notebook_append_page (n, header_w, gtk_label_new_with_mnemonic (_("_1. Header Pane")));
+  gtk_notebook_append_page (n, search_w, gtk_label_new_with_mnemonic (_("_2. Search Pane")));
+
   if (tabbed)
   {
     w = gtk_notebook_new ();
     GtkNotebook * n (GTK_NOTEBOOK (w));
     gtk_notebook_append_page (n, group_w, gtk_label_new_with_mnemonic (_("_1. Group Pane")));
-    gtk_notebook_append_page (n, header_w, gtk_label_new_with_mnemonic (_("_2. Header Pane")));
+    gtk_notebook_append_page (n, notebook, gtk_label_new_with_mnemonic (_("_2. Header Pane")));
     gtk_notebook_append_page (n, body_w, gtk_label_new_with_mnemonic (_("_3. Body Pane")));
     g_signal_connect (n, "switch-page", G_CALLBACK(notebook_page_switched_cb), this);
   }
@@ -1814,9 +1842,9 @@ void GUI :: do_tabbed_layout (bool tabbed)
     const std::string orient (_prefs.get_string ("pane-orient", "groups,headers,body"));
 
     StringView tok, v(orient);
-    v.pop_token(tok,','); if (*tok.str=='g') p[0]=group_w; else if (*tok.str=='h') p[0]=header_w; else p[0]=body_w;
-    v.pop_token(tok,','); if (*tok.str=='g') p[1]=group_w; else if (*tok.str=='h') p[1]=header_w; else p[1]=body_w;
-    v.pop_token(tok,','); if (*tok.str=='g') p[2]=group_w; else if (*tok.str=='h') p[2]=header_w; else p[2]=body_w;
+    v.pop_token(tok,','); if (*tok.str=='g') p[0]=group_w; else if (*tok.str=='h') p[0]=notebook; else p[0]=body_w;
+    v.pop_token(tok,','); if (*tok.str=='g') p[1]=group_w; else if (*tok.str=='h') p[1]=notebook; else p[1]=body_w;
+    v.pop_token(tok,','); if (*tok.str=='g') p[2]=group_w; else if (*tok.str=='h') p[2]=notebook; else p[2]=body_w;
 
     if (layout == "stacked-top") {
       w = pack_widgets (_prefs, p[0], p[1], HORIZONTAL, 1);
@@ -2359,7 +2387,7 @@ void
 GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
 {
   if (key == "pane-layout" || key == "pane-orient")
-    GUI :: do_tabbed_layout (_prefs.get_flag ("tabbed-layout", false));
+    GUI :: do_layout (_prefs.get_flag ("tabbed-layout", false));
 
   if (key == "default-save-attachments-path")
     prev_path.assign (value.str, value.len);
