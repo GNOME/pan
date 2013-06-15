@@ -74,6 +74,8 @@ namespace
 
       SearchPane * pane (static_cast<SearchPane*>(user_data));
 
+      gtk_widget_set_sensitive(pane->view(), false);
+
       const int column (1);
       const int row (gtk_combo_box_get_active (c));
       GtkTreeModel * m = gtk_combo_box_get_model (c);
@@ -134,6 +136,7 @@ namespace
 #ifdef HAVE_RSS
     SearchPane* pane (static_cast<SearchPane*>(user_data));
     GtkWidget* view (pane->view());
+    gtk_widget_set_sensitive(view, true);
     GtkListStore* store (pane->store());
 
     GList* list = grss_feed_channel_fetch_all_finish (GRSS_FEED_CHANNEL (source), res, 0);
