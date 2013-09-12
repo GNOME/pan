@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the pan2 package.
 #
 # Andraž Tori <andraz.tori1@guest.arnes.si>, 2000.
-# Andrej Žnidaršič <andrej.znidarsic@gmail.com>, 2009 - 2010.
-# Matej Urbančič <mateju@svn.gnome.org>, 2006 - 2013.
+# Andrej Žnidaršič <andrej.znidarsic@gmail.com>, 2009-2010.
+# Matej Urbančič <mateju@svn.gnome.org>, 2006-2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pan2 master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-04 13:53+0000\n"
-"PO-Revision-Date: 2013-03-14 20:30+0100\n"
+"POT-Creation-Date: 2013-07-24 02:40+0000\n"
+"PO-Revision-Date: 2013-09-12 19:30+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #. update the titlebar
 #: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106
-#: ../pan/gui/gui.cc:1042 ../pan/gui/gui.cc:1671 ../pan/gui/gui.cc:1989
+#: ../pan/gui/gui.cc:1068 ../pan/gui/gui.cc:1697 ../pan/gui/gui.cc:2039
 #: ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
@@ -46,7 +46,7 @@ msgstr "Napaka med odpiranjem mape: \"%s\": %s"
 
 #: ../pan/data/article-cache.cc:234 ../pan/data/article-cache.cc:243
 #: ../pan/data-impl/data-io.cc:199 ../pan/data-impl/data-io.cc:231
-#: ../pan/gui/post-ui.cc:1684
+#: ../pan/gui/post-ui.cc:1723
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Ni mogoče shraniti \"%s\" %s"
@@ -58,7 +58,8 @@ msgstr "Napaka med odpiranjem datoteke \"%s\" %s"
 
 #: ../pan/data/article-cache.cc:392 ../pan/data-impl/profiles.cc:174
 #: ../pan/data-impl/server.cc:500 ../pan/general/file-util.cc:311
-#: ../pan/gui/post-ui.cc:599 ../pan/gui/task-pane.cc:736
+#: ../pan/gui/post-ui.cc:638 ../pan/gui/search-pane.cc:343
+#: ../pan/gui/task-pane.cc:737
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Napaka med branjem datoteke \"%s\": %s"
@@ -101,7 +102,7 @@ msgstr "Začenjanje prejema ..."
 msgid "Open Download Meter Preferences"
 msgstr "Odpri možnosti števca prejemanja"
 
-#: ../pan/data-impl/download-meter.cc:78 ../pan/gui/gui.cc:1963
+#: ../pan/data-impl/download-meter.cc:78 ../pan/gui/gui.cc:2013
 #: ../pan/gui/header-pane.cc:1812 ../pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr "Bajtov"
@@ -215,11 +216,11 @@ msgstr ""
 "Kodiranja prispevka ni mogoče določiti. Znaki, ki niso v naboru UTF8 so "
 "odstranjeni."
 
-#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:407
+#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:446
 msgid "_File"
 msgstr "_Datoteka"
 
-#: ../pan/gui/actions.cc:305 ../pan/gui/post-ui.cc:408
+#: ../pan/gui/actions.cc:305 ../pan/gui/post-ui.cc:447
 msgid "_Edit"
 msgstr "_Uredi"
 
@@ -423,7 +424,7 @@ msgstr "Uredi _možnosti"
 msgid "Edit Selected _Group's Preferences"
 msgstr "Uredi možnosti izbrane _skupine"
 
-#: ../pan/gui/actions.cc:461 ../pan/gui/post-ui.cc:424
+#: ../pan/gui/actions.cc:461 ../pan/gui/post-ui.cc:463
 msgid "Edit P_osting Profiles"
 msgstr "Uredi p_rofile pošiljanja"
 
@@ -816,20 +817,20 @@ msgstr "Pokaži _podniti, ki se skladajo s prispevkom"
 msgid "Unnamed File"
 msgstr "Neimenovana datoteka"
 
-#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1960
+#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:2010
 #: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1748
-#: ../pan/gui/post-ui.cc:2549 ../pan/gui/prefs-ui.cc:855
-#: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:796
+#: ../pan/gui/post-ui.cc:2588 ../pan/gui/prefs-ui.cc:855
+#: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Zadeva"
 
-#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1960
+#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:2010
 msgid "From"
 msgstr "Od"
 
-#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1961
+#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:2011
 #: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:305
-#: ../pan/gui/prefs-ui.cc:851
+#: ../pan/gui/prefs-ui.cc:851 ../pan/gui/search-pane.cc:663
 msgid "Date"
 msgstr "Datum"
 
@@ -959,7 +960,7 @@ msgstr "Dejanje"
 msgid "A GtkRadioAction"
 msgstr "GtkRadioAction"
 
-#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:557
+#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:558
 msgid "Unknown"
 msgstr "Neznano"
 
@@ -1037,8 +1038,8 @@ msgstr "Ukrajinščina"
 msgid "Visual"
 msgstr "Vidno"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2158
-#: ../pan/gui/post-ui.cc:509 ../pan/gui/prefs-ui.cc:759
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2208
+#: ../pan/gui/post-ui.cc:548 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Znakovno kodiranje"
 
@@ -1070,193 +1071,202 @@ msgstr "Kodiranje Base64"
 msgid "Quoted-Printable Encoding"
 msgstr "Kodiranje Quoted-Printable"
 
-#: ../pan/gui/group-pane.cc:327
+#: ../pan/gui/group-pane.cc:330
 msgid "Sent"
 msgstr "Poslano"
 
-#: ../pan/gui/group-pane.cc:328
+#: ../pan/gui/group-pane.cc:331
 msgid "Drafts"
 msgstr "Osnutki"
 
-#: ../pan/gui/group-pane.cc:534
+#: ../pan/gui/group-pane.cc:537
 msgid "Group"
 msgstr "Skupina"
 
-#: ../pan/gui/group-pane.cc:535
+#: ../pan/gui/group-pane.cc:538
 msgid "Group (regex)"
 msgstr "Skupina (logični izraz)"
 
-#: ../pan/gui/group-pane.cc:1007
+#: ../pan/gui/group-pane.cc:1010
 msgid "Local Folders"
 msgstr "Krajevne mape"
 
-#: ../pan/gui/group-pane.cc:1008
+#: ../pan/gui/group-pane.cc:1011
 msgid "Subscribed Groups"
 msgstr "Naročene skupine"
 
-#: ../pan/gui/group-pane.cc:1009
+#: ../pan/gui/group-pane.cc:1012
 msgid "Other Groups"
 msgstr "Druge skupine"
 
-#: ../pan/gui/group-pane.cc:1049 ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/group-pane.cc:1052 ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/search-pane.cc:440
 msgid "Name"
 msgstr "Ime"
 
-#: ../pan/gui/group-prefs-dialog.cc:163
+#: ../pan/gui/group-prefs-dialog.cc:162
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "V Uredi|Profili pošiljanja ni določen noben profil."
 
-#: ../pan/gui/group-prefs-dialog.cc:272
+#: ../pan/gui/group-prefs-dialog.cc:271
 msgid "Pan: Group Preferences"
 msgstr "Pan: Možnosti skupine"
 
-#: ../pan/gui/group-prefs-dialog.cc:287
+#: ../pan/gui/group-prefs-dialog.cc:286
 #, c-format
 msgid "Properties for Groups"
 msgstr "Lastnosti za skupine"
 
-#: ../pan/gui/group-prefs-dialog.cc:289
+#: ../pan/gui/group-prefs-dialog.cc:288
 #, c-format
 msgid "Properties for %s"
 msgstr "Lastnosti %s"
 
-#: ../pan/gui/group-prefs-dialog.cc:297
+#: ../pan/gui/group-prefs-dialog.cc:296
 msgid "Character _encoding:"
 msgstr "Znakovno _kodiranje:"
 
-#: ../pan/gui/group-prefs-dialog.cc:299
+#: ../pan/gui/group-prefs-dialog.cc:298
 msgid "Directory for Saving Attachments"
 msgstr "Mapa za shranjevanje prilog"
 
-#: ../pan/gui/group-prefs-dialog.cc:307
+#: ../pan/gui/group-prefs-dialog.cc:306
 msgid "Directory for _saving attachments:"
 msgstr "Mapa za _shranjevanje prilog:"
 
-#: ../pan/gui/group-prefs-dialog.cc:309
+#: ../pan/gui/group-prefs-dialog.cc:308
 msgid "Posting _profile:"
 msgstr "Pošiljanje _profila:"
 
-#: ../pan/gui/group-prefs-dialog.cc:314
+#: ../pan/gui/group-prefs-dialog.cc:313
 msgid "Spellchecker _language:"
 msgstr "Jezik _črkovalnika:"
 
-#: ../pan/gui/group-prefs-dialog.cc:317
+#: ../pan/gui/group-prefs-dialog.cc:316
 msgid "Group color:"
 msgstr "Barva skupine:"
 
-#: ../pan/gui/gui.cc:319
+#: ../pan/gui/gui.cc:324
 msgid "Open the Task Manager"
 msgstr "Odpri upravljalnika nalog"
 
-#: ../pan/gui/gui.cc:342
+#: ../pan/gui/gui.cc:347
 msgid "Open the Event Log"
 msgstr "Odpri dnevnik dogodkov"
 
-#: ../pan/gui/gui.cc:618
+#: ../pan/gui/gui.cc:632
 msgid "Save NZB's Files"
 msgstr "Shrani datoteke NZB"
 
-#: ../pan/gui/gui.cc:645
+#: ../pan/gui/gui.cc:659
 msgid "Untitled.nzb"
 msgstr "Neimenovano.nzb"
 
-#: ../pan/gui/gui.cc:647
+#: ../pan/gui/gui.cc:661
 msgid "Save NZB File as..."
 msgstr "Shrani datoteko NZB kot ..."
 
-#: ../pan/gui/gui.cc:816
+#: ../pan/gui/gui.cc:830
 msgid "Import NZB Files"
 msgstr "Uvozi datoteke NZB"
 
-#: ../pan/gui/gui.cc:824 ../pan/gui/post-ui.cc:3248
+#: ../pan/gui/gui.cc:838 ../pan/gui/post-ui.cc:3287
 msgid "NZB Files"
 msgstr "Datoteke NZB"
 
-#: ../pan/gui/gui.cc:829
+#: ../pan/gui/gui.cc:843
 msgid "All Files"
 msgstr "Vse datoteke"
 
-#: ../pan/gui/gui.cc:1338
+#: ../pan/gui/gui.cc:1364
 msgid "Unable to supersede article."
 msgstr "Prispevka ni mogoče nadomestiti."
 
-#: ../pan/gui/gui.cc:1339 ../pan/gui/gui.cc:1413
+#: ../pan/gui/gui.cc:1365 ../pan/gui/gui.cc:1439
 msgid "The article doesn't match any of your posting profiles."
 msgstr "Prispevek ni skladen z nobenim od vaših profilov pošiljanja."
 
-#: ../pan/gui/gui.cc:1386
+#: ../pan/gui/gui.cc:1412
 msgid "Revise and send this article to replace the old one."
 msgstr "Preglejte in pošljite ta prispevek za zamenjavo starega."
 
-#: ../pan/gui/gui.cc:1387 ../pan/gui/gui.cc:1450
+#: ../pan/gui/gui.cc:1413 ../pan/gui/gui.cc:1476
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
 "Bodite potrpežljivi! Vaše spremembe bodo imele učinek šele čez nekaj časa."
 
-#: ../pan/gui/gui.cc:1412
+#: ../pan/gui/gui.cc:1438
 msgid "Unable to cancel article."
 msgstr "Prispevka ni mogoče preklicati."
 
-#: ../pan/gui/gui.cc:1449
+#: ../pan/gui/gui.cc:1475
 msgid "Send this article to ask your server to cancel your other one."
 msgstr "Pošljite ta prispevek s prošnjo strežniku za preklic drugega."
 
-#: ../pan/gui/gui.cc:1467
+#: ../pan/gui/gui.cc:1493
 msgid "You have marked some articles for deletion."
 msgstr "Nekaj prispevkov je označenih za brisanje."
 
-#: ../pan/gui/gui.cc:1468
+#: ../pan/gui/gui.cc:1494
 msgid "Are you sure you want to delete them?"
 msgstr "Ali ste prepričani, da jih želite izbrisati?"
 
-#: ../pan/gui/gui.cc:1494
+#: ../pan/gui/gui.cc:1520
 msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr ""
 "Ali naj se sprejme za stalno (še vedno ga je mogoče kasneje izbrisati)?"
 
-#: ../pan/gui/gui.cc:1674
+#: ../pan/gui/gui.cc:1700
 msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
 msgstr "Avtorske pravice \\u00A9 2002-2012 Charles Kerr in drugi"
 
-#: ../pan/gui/gui.cc:1679
+#: ../pan/gui/gui.cc:1705
 msgid "translator-credits"
 msgstr ""
 "Matej Urbančič <matej.u@svn.gnome.org>\n"
 "Andrej Žnidaršič <andrej.znidarsic@gmail.com>"
 
-#: ../pan/gui/gui.cc:1805
+#: ../pan/gui/gui.cc:1838
+msgid "_1. Header Pane"
+msgstr "_1. Iskalni pladenj"
+
+#: ../pan/gui/gui.cc:1839
+msgid "_2. Search Pane"
+msgstr "_2. Iskalni pladenj"
+
+#: ../pan/gui/gui.cc:1845
 msgid "_1. Group Pane"
 msgstr "_1. Pladenj skupine"
 
-#: ../pan/gui/gui.cc:1806
+#: ../pan/gui/gui.cc:1847 ../pan/gui/gui.cc:1849
 msgid "_2. Header Pane"
 msgstr "_2. Pladenj glave"
 
-#: ../pan/gui/gui.cc:1807
+#: ../pan/gui/gui.cc:1851
 msgid "_3. Body Pane"
 msgstr "_3. Pladenj telesa"
 
-#: ../pan/gui/gui.cc:1897 ../pan/gui/gui.cc:1912
+#: ../pan/gui/gui.cc:1947 ../pan/gui/gui.cc:1962
 msgid " Bytes"
 msgstr " Bajti"
 
-#: ../pan/gui/gui.cc:1900
+#: ../pan/gui/gui.cc:1950
 msgid " KB"
 msgstr " KB"
 
-#: ../pan/gui/gui.cc:1903
+#: ../pan/gui/gui.cc:1953
 msgid " MB"
 msgstr " MB"
 
-#: ../pan/gui/gui.cc:1906
+#: ../pan/gui/gui.cc:1956
 msgid " GB"
 msgstr " GB"
 
-#: ../pan/gui/gui.cc:1909
+#: ../pan/gui/gui.cc:1959
 msgid " TB"
 msgstr " TB"
 
-#: ../pan/gui/gui.cc:1941
+#: ../pan/gui/gui.cc:1991
 #, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
@@ -1265,7 +1275,7 @@ msgstr[1] "Prispevek je popoln s skupno %d delom."
 msgstr[2] "Prispevek je popoln s skupno %d deloma."
 msgstr[3] "Prispevek je popoln s skupno %d deli."
 
-#: ../pan/gui/gui.cc:1943
+#: ../pan/gui/gui.cc:1993
 #, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
@@ -1274,21 +1284,21 @@ msgstr[1] "Prispevku manjka %d od skupno %d dela:"
 msgstr[2] "Prispevku manjka %d od skupno %d delov:"
 msgstr[3] "Prispevku manjka %d od skupno %d delov:"
 
-#: ../pan/gui/gui.cc:1961 ../pan/gui/header-pane.cc:1315
-#: ../pan/gui/task-pane.cc:798
+#: ../pan/gui/gui.cc:2011 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "ID sporočila"
 
-#: ../pan/gui/gui.cc:1962 ../pan/gui/header-pane.cc:1796
+#: ../pan/gui/gui.cc:2012 ../pan/gui/header-pane.cc:1796
 #: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Vrstic"
 
-#: ../pan/gui/gui.cc:1962
+#: ../pan/gui/gui.cc:2012
 msgid "Size"
 msgstr "Velikost"
 
-#: ../pan/gui/gui.cc:2013
+#: ../pan/gui/gui.cc:2063
 msgid ""
 "Error loading iconv library. Encoding certain character sets will not work "
 "in GUI."
@@ -1296,16 +1306,16 @@ msgstr ""
 "Napaka med nalaganjem knjižnice iconv. Nekaterih naborov znakov v grafičnem "
 "vmesniku ne bo mogoče kodirati."
 
-#: ../pan/gui/gui.cc:2159
+#: ../pan/gui/gui.cc:2209
 msgid "Body Pane Encoding"
 msgstr "Kodiranje pladnja telesa"
 
-#: ../pan/gui/gui.cc:2190 ../pan/gui/task-pane.cc:608
+#: ../pan/gui/gui.cc:2240 ../pan/gui/task-pane.cc:609
 #, c-format
 msgid "Offline"
 msgstr "Brez povezave"
 
-#: ../pan/gui/gui.cc:2194
+#: ../pan/gui/gui.cc:2244
 #, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
@@ -1314,36 +1324,36 @@ msgstr[1] "Zapiranje %d povezave"
 msgstr[2] "Zapiranje %d povezav"
 msgstr[3] "Zapiranje %d povezav"
 
-#: ../pan/gui/gui.cc:2196 ../pan/gui/gui.cc:2226
+#: ../pan/gui/gui.cc:2246 ../pan/gui/gui.cc:2276
 #, c-format
 msgid "No Connections"
 msgstr "Ni povezav"
 
-#: ../pan/gui/gui.cc:2200
+#: ../pan/gui/gui.cc:2250
 #, c-format
 msgid "Connecting"
 msgstr "Povezovanje"
 
-#: ../pan/gui/gui.cc:2213
+#: ../pan/gui/gui.cc:2263
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d nedejavno, %d dejavno pri %.1f KiBps"
 
-#: ../pan/gui/gui.cc:2269
+#: ../pan/gui/gui.cc:2319
 #, c-format
 msgid "No Tasks"
 msgstr "Ni nalog"
 
-#: ../pan/gui/gui.cc:2271 ../pan/gui/prefs-ui.cc:1090
+#: ../pan/gui/gui.cc:2321 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Naloge"
 
-#: ../pan/gui/gui.cc:2288 ../pan/gui/task-pane.cc:474
+#: ../pan/gui/gui.cc:2338 ../pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu nalog, %s, %.1f KiBps, PČP %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2340
+#: ../pan/gui/gui.cc:2390
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1352,17 +1362,17 @@ msgstr ""
 "popravite napako ter nato uporabite \"Datoteka|Delaj povezano\" za "
 "nadaljevanje."
 
-#: ../pan/gui/header-pane.cc:1311 ../pan/gui/task-pane.cc:794
+#: ../pan/gui/header-pane.cc:1311 ../pan/gui/task-pane.cc:795
 msgid "Subject or Author"
 msgstr "Zadeva ali avtor"
 
-#: ../pan/gui/header-pane.cc:1312 ../pan/gui/task-pane.cc:795
+#: ../pan/gui/header-pane.cc:1312 ../pan/gui/task-pane.cc:796
 msgid "Sub or Auth (regex)"
 msgstr "Zadeva ali avtor (logični izraz)"
 
 #: ../pan/gui/header-pane.cc:1314 ../pan/gui/header-pane.cc:1780
 #: ../pan/gui/prefs-ui.cc:849 ../pan/gui/score-add-ui.cc:140
-#: ../pan/gui/task-pane.cc:797
+#: ../pan/gui/task-pane.cc:798
 msgid "Author"
 msgstr "Avtor"
 
@@ -1439,7 +1449,7 @@ msgstr ""
 "  --verbose                Izpiše vsa sporočila (v načinu ukazne vrstice).\n"
 "\n"
 "Možnosti naslova URL\n"
-"  headers:ime.skupine      Prenese nove glave za navedeno novičarsko "
+"  glave:ime.skupine       Prejme nove glave za posamezno novičarsko "
 "skupino.\n"
 "  --no-gui                         Ob novicah: izpiše prispevek na "
 "standardni odvod.\n"
@@ -1475,185 +1485,186 @@ msgstr "Obvestilo Pan"
 msgid "Upload queue: %u tasks, %ld KB (~ %.2f MB) total."
 msgstr "Vrsta za pošiljanje na strežnik: %u nalog, skupaj %ld KB (~ %.2f MB)."
 
-#: ../pan/gui/post-ui.cc:263
+#: ../pan/gui/post-ui.cc:266 ../pan/gui/post-ui.cc:297
 #, c-format
 msgid "Error setting custom spellchecker: %s"
 msgstr "Napaka med nastavljanjem črkovalnika po meri: %s"
 
-#: ../pan/gui/post-ui.cc:268 ../pan/gui/post-ui.cc:277
+#: ../pan/gui/post-ui.cc:270 ../pan/gui/post-ui.cc:278
+#: ../pan/gui/post-ui.cc:301 ../pan/gui/post-ui.cc:309
 #, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "Napaka med nastavljanjem črkovalnika: %s"
 
-#: ../pan/gui/post-ui.cc:409
+#: ../pan/gui/post-ui.cc:448
 msgid "_Profile"
 msgstr "_Profil"
 
-#: ../pan/gui/post-ui.cc:410
+#: ../pan/gui/post-ui.cc:449
 msgid "Set Editor"
 msgstr "Nastavi urejevalnik"
 
-#: ../pan/gui/post-ui.cc:412
+#: ../pan/gui/post-ui.cc:451
 msgid "_Send Article"
 msgstr "_Pošlji prispevek"
 
-#: ../pan/gui/post-ui.cc:412
+#: ../pan/gui/post-ui.cc:451
 msgid "Send Article Now"
 msgstr "Pošlje prispevek takoj"
 
-#: ../pan/gui/post-ui.cc:413
+#: ../pan/gui/post-ui.cc:452
 msgid "_Send and Save Articles to NZB"
 msgstr "_Pošlji in shrani prispevke v datoteko NZB"
 
-#: ../pan/gui/post-ui.cc:413
+#: ../pan/gui/post-ui.cc:452
 msgid "Send and Save Articles to NZB"
 msgstr "Pošlji in shrani prispevke v datoteko NZB"
 
-#: ../pan/gui/post-ui.cc:414
+#: ../pan/gui/post-ui.cc:453
 msgid "Set Character _Encoding..."
 msgstr "Nastavi _znakovno kodiranje ..."
 
-#: ../pan/gui/post-ui.cc:415
+#: ../pan/gui/post-ui.cc:454
 msgid "Set Content _Transfer Encoding..."
 msgstr "Določi _kodiranje prenosa vsebine ..."
 
-#: ../pan/gui/post-ui.cc:416
+#: ../pan/gui/post-ui.cc:455
 msgid "Sa_ve Draft"
 msgstr "Shra_ni osnutek"
 
-#: ../pan/gui/post-ui.cc:416
+#: ../pan/gui/post-ui.cc:455
 msgid "Save as a Draft for Future Posting"
 msgstr "Shrani kot osnutek za kasnejše objavljanje"
 
-#: ../pan/gui/post-ui.cc:417
+#: ../pan/gui/post-ui.cc:456
 msgid "_Open Draft..."
 msgstr "_Odpri osnutek ..."
 
-#: ../pan/gui/post-ui.cc:417
+#: ../pan/gui/post-ui.cc:456
 msgid "Open an Article Draft"
 msgstr "Odpre osnutek prispevka"
 
-#: ../pan/gui/post-ui.cc:422
+#: ../pan/gui/post-ui.cc:461
 msgid "_Rot13"
 msgstr "_Rot13"
 
-#: ../pan/gui/post-ui.cc:422
+#: ../pan/gui/post-ui.cc:461
 msgid "Rot13 Selected Text"
 msgstr "Izbrano besedilo Rot13"
 
-#: ../pan/gui/post-ui.cc:423
+#: ../pan/gui/post-ui.cc:462
 msgid "Run _Editor"
 msgstr "_Zaženi urejevalnik"
 
-#: ../pan/gui/post-ui.cc:423
+#: ../pan/gui/post-ui.cc:462
 msgid "Run Editor"
 msgstr "Zažene urejevalnik"
 
-#: ../pan/gui/post-ui.cc:425
+#: ../pan/gui/post-ui.cc:464
 msgid "Add _Files to Queue"
 msgstr "Dodaj _datoteke v čakalno vrsto"
 
-#: ../pan/gui/post-ui.cc:425
+#: ../pan/gui/post-ui.cc:464
 msgid "Add Files to Queue"
 msgstr "Dodaj v čakalno vrsto"
 
-#: ../pan/gui/post-ui.cc:440 ../pan/gui/post-ui.cc:441
+#: ../pan/gui/post-ui.cc:479 ../pan/gui/post-ui.cc:480
 msgid "Remove from Queue"
 msgstr "Odstrani iz čakalne vrste"
 
-#: ../pan/gui/post-ui.cc:445 ../pan/gui/post-ui.cc:446
+#: ../pan/gui/post-ui.cc:484 ../pan/gui/post-ui.cc:485
 msgid "Clear List"
 msgstr "Počisti seznam"
 
-#: ../pan/gui/post-ui.cc:450 ../pan/gui/post-ui.cc:451
+#: ../pan/gui/post-ui.cc:489 ../pan/gui/post-ui.cc:490
 msgid "Select Needed Parts"
 msgstr "Izbor zahtevanih delov"
 
-#: ../pan/gui/post-ui.cc:455 ../pan/gui/post-ui.cc:456
-#: ../pan/gui/task-pane.cc:676 ../pan/gui/task-pane.cc:677
+#: ../pan/gui/post-ui.cc:494 ../pan/gui/post-ui.cc:495
+#: ../pan/gui/task-pane.cc:677 ../pan/gui/task-pane.cc:678
 msgid "Move Up"
 msgstr "Premakni navzgor"
 
-#: ../pan/gui/post-ui.cc:460 ../pan/gui/post-ui.cc:461
-#: ../pan/gui/task-pane.cc:681 ../pan/gui/task-pane.cc:682
+#: ../pan/gui/post-ui.cc:499 ../pan/gui/post-ui.cc:500
+#: ../pan/gui/task-pane.cc:682 ../pan/gui/task-pane.cc:683
 msgid "Move Down"
 msgstr "Premakni navzdol"
 
-#: ../pan/gui/post-ui.cc:465 ../pan/gui/post-ui.cc:466
+#: ../pan/gui/post-ui.cc:504 ../pan/gui/post-ui.cc:505
 msgid "Move to Top"
 msgstr "Premakni na vrh"
 
-#: ../pan/gui/post-ui.cc:470 ../pan/gui/post-ui.cc:471
+#: ../pan/gui/post-ui.cc:509 ../pan/gui/post-ui.cc:510
 msgid "Move to Bottom"
 msgstr "Premakni na dno"
 
-#: ../pan/gui/post-ui.cc:478
+#: ../pan/gui/post-ui.cc:517
 msgid "_Wrap Text"
 msgstr "_Prelomi besedilo"
 
-#: ../pan/gui/post-ui.cc:478
+#: ../pan/gui/post-ui.cc:517
 msgid "Wrap Text"
 msgstr "Prelomi besedil"
 
-#: ../pan/gui/post-ui.cc:479
+#: ../pan/gui/post-ui.cc:518
 msgid "Always Run Editor"
 msgstr "Vedno zaženi urejevalnik"
 
-#: ../pan/gui/post-ui.cc:480
+#: ../pan/gui/post-ui.cc:519
 msgid "Remember Character Encoding for This Group"
 msgstr "Zapomni si znakovno kodiranje za to skupino"
 
-#: ../pan/gui/post-ui.cc:481
+#: ../pan/gui/post-ui.cc:520
 msgid "Thread Attached Replies"
 msgstr "Postavi priložene odgovore v niti"
 
-#: ../pan/gui/post-ui.cc:482
+#: ../pan/gui/post-ui.cc:521
 msgid "PGP-Encrypt the Article"
 msgstr "Šifriranje prispevka s PGP"
 
-#: ../pan/gui/post-ui.cc:483
+#: ../pan/gui/post-ui.cc:522
 msgid "PGP-Sign the Article"
 msgstr "Podpisovanje prispevka s PGP"
 
-#: ../pan/gui/post-ui.cc:484
+#: ../pan/gui/post-ui.cc:523
 msgid "Check _Spelling"
 msgstr "_Preveri črkovanje"
 
-#: ../pan/gui/post-ui.cc:510
+#: ../pan/gui/post-ui.cc:549
 msgid "New Article's Encoding:"
 msgstr "Kodiranje novega prispevka:"
 
-#: ../pan/gui/post-ui.cc:520
+#: ../pan/gui/post-ui.cc:559
 msgid "Content Transfer Encoding"
 msgstr "Kodiranje prenosa vsebine"
 
-#: ../pan/gui/post-ui.cc:521
+#: ../pan/gui/post-ui.cc:560
 msgid "New Article's Content Transfer Encoding:"
 msgstr "Kodiranje prenosa vsebine novega prispevka:"
 
-#: ../pan/gui/post-ui.cc:701
+#: ../pan/gui/post-ui.cc:740
 msgid "Your changes will be lost!"
 msgstr "Vaše spremembe bodo izgubljene!"
 
-#: ../pan/gui/post-ui.cc:702
+#: ../pan/gui/post-ui.cc:741
 msgid "Close this window and lose your changes?"
 msgstr "Ali naj se to okno zapre in naj se prezrejo vse vaše spremembe?"
 
-#: ../pan/gui/post-ui.cc:747 ../pan/gui/post-ui.cc:786
+#: ../pan/gui/post-ui.cc:786 ../pan/gui/post-ui.cc:825
 msgid "There were problems with this post."
 msgstr "Prišlo je do težav s to objavo."
 
-#: ../pan/gui/post-ui.cc:749 ../pan/gui/post-ui.cc:788
-#: ../pan/gui/post-ui.cc:853
+#: ../pan/gui/post-ui.cc:788 ../pan/gui/post-ui.cc:827
+#: ../pan/gui/post-ui.cc:892
 msgid "Go Back"
 msgstr "Pojdi nazaj "
 
-#: ../pan/gui/post-ui.cc:751
+#: ../pan/gui/post-ui.cc:790
 msgid "Continue Anyway"
 msgstr "Vseeno nadaljuj"
 
 #. Prompt the user
-#: ../pan/gui/post-ui.cc:780
+#: ../pan/gui/post-ui.cc:819
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
@@ -1661,35 +1672,35 @@ msgstr ""
 "Sporočilo uporablja znake, ki niso navedeni v naboru znakov '%s' - poskusite "
 "z uporabo '%s'"
 
-#: ../pan/gui/post-ui.cc:803
+#: ../pan/gui/post-ui.cc:842
 msgid "Go _Online"
 msgstr "_Poveži se"
 
-#: ../pan/gui/post-ui.cc:852
+#: ../pan/gui/post-ui.cc:891
 msgid "The file queue is empty, so no files can be saved."
 msgstr "Vrsta datotek je prazna, zato ni mogoče shraniti nobene datoteke."
 
-#: ../pan/gui/post-ui.cc:1031
+#: ../pan/gui/post-ui.cc:1070
 msgid "IO Error"
 msgstr "V/I napaka"
 
-#: ../pan/gui/post-ui.cc:1031
+#: ../pan/gui/post-ui.cc:1070
 msgid "No space left on device"
 msgstr "Na napravi ni več prostora"
 
-#: ../pan/gui/post-ui.cc:1032
+#: ../pan/gui/post-ui.cc:1071
 #, c-format
 msgid "Error copying message to %s folder. Reason: %s"
 msgstr "Prišlo je do napake med kopiranjem sporočila v mapo %s. Vzrok: %s"
 
-#: ../pan/gui/post-ui.cc:1038
+#: ../pan/gui/post-ui.cc:1077
 #, c-format
 msgid "Error creating message in %s mail folder: Invalid article."
 msgstr ""
 "Prišlo je do napake med ustvarjanjem sporočila v poštni mapi %s: neveljaven "
 "prispevek."
 
-#: ../pan/gui/post-ui.cc:1060
+#: ../pan/gui/post-ui.cc:1099
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1697,7 +1708,7 @@ msgstr ""
 "V tem profilu objavljanja ni določen strežnik objavljanja.\n"
 "Uredite profil preko Uredi|Upravljanje profilov objavljanja."
 
-#: ../pan/gui/post-ui.cc:1065
+#: ../pan/gui/post-ui.cc:1104
 msgid ""
 "The selected posting server is currently disabled. Please choose an "
 "appropriate alternative."
@@ -1705,15 +1716,15 @@ msgstr ""
 "Trenutno izbrani strežnik za pošiljanje je onemogočen. Izbrati je treba "
 "ustrezno zamenjavo."
 
-#: ../pan/gui/post-ui.cc:1107
+#: ../pan/gui/post-ui.cc:1146
 msgid "Pan is Offline."
 msgstr "Pan ni povezan."
 
-#: ../pan/gui/post-ui.cc:1108
+#: ../pan/gui/post-ui.cc:1147
 msgid "Go online to post the article?"
 msgstr "Ali naj se računalnik poveže za pošiljanje prispevka?"
 
-#: ../pan/gui/post-ui.cc:1157
+#: ../pan/gui/post-ui.cc:1196
 #, c-format
 msgid ""
 "Error signing/encrypting your message. Perhaps you misspelled your email "
@@ -1722,103 +1733,103 @@ msgstr ""
 "Prišlo je do napake pri podpisovanju oziroma šifriranju sporočila. Morda je "
 "napačno vnesen elektronski naslov (%s)?"
 
-#: ../pan/gui/post-ui.cc:1305
+#: ../pan/gui/post-ui.cc:1344
 msgid "Error opening temporary file"
 msgstr "Napaka med odpiranjem začasne datoteke"
 
-#: ../pan/gui/post-ui.cc:1317
+#: ../pan/gui/post-ui.cc:1356
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Napaka med pisanjem prispevka v začasno datoteko: %s"
 
-#: ../pan/gui/post-ui.cc:1336
+#: ../pan/gui/post-ui.cc:1375
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr ""
 "Napaka razčlenjevanja vrstice ukaza \"zunanji urejevalnik\": %s (Ukaz je "
 "bil: %s)"
 
-#: ../pan/gui/post-ui.cc:1377
+#: ../pan/gui/post-ui.cc:1416
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Napaka med začenjanjem zunanjega urejevalnika: %s"
 
-#: ../pan/gui/post-ui.cc:1440
+#: ../pan/gui/post-ui.cc:1479
 msgid "Open Draft Article"
 msgstr "Odpri osnutek prispevka"
 
-#: ../pan/gui/post-ui.cc:1652
+#: ../pan/gui/post-ui.cc:1691
 msgid "Save Draft Article"
 msgstr "Shrani osnutek prispevka"
 
-#: ../pan/gui/post-ui.cc:1850
+#: ../pan/gui/post-ui.cc:1889
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Ukaza podpisa \"%s\" ni mogoče razčleniti: %s"
 
-#: ../pan/gui/post-ui.cc:1886
+#: ../pan/gui/post-ui.cc:1925
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Podpisa ni mogoče pretvoriti v UTF-8."
 
-#: ../pan/gui/post-ui.cc:2388
+#: ../pan/gui/post-ui.cc:2427
 msgid "F_rom"
 msgstr "O_d"
 
-#: ../pan/gui/post-ui.cc:2405
+#: ../pan/gui/post-ui.cc:2444
 msgid "_Subject"
 msgstr "_Zadeva"
 
-#: ../pan/gui/post-ui.cc:2418
+#: ../pan/gui/post-ui.cc:2457
 msgid "_Newsgroups"
 msgstr "_Novičarske skupine"
 
-#: ../pan/gui/post-ui.cc:2432
+#: ../pan/gui/post-ui.cc:2471
 msgid "Mail _To"
 msgstr "Pošlji pošto _k"
 
-#: ../pan/gui/post-ui.cc:2534
+#: ../pan/gui/post-ui.cc:2573
 msgid "Delete from Queue"
 msgstr "Izbriši iz vrste"
 
-#: ../pan/gui/post-ui.cc:2547
+#: ../pan/gui/post-ui.cc:2586
 msgid "No."
 msgstr "Št."
 
-#: ../pan/gui/post-ui.cc:2551 ../pan/gui/post-ui.cc:2643
-#: ../pan/gui/post-ui.cc:2684
+#: ../pan/gui/post-ui.cc:2590 ../pan/gui/post-ui.cc:2682
+#: ../pan/gui/post-ui.cc:2723
 msgid "Filename"
 msgstr "Ime datoteke"
 
-#: ../pan/gui/post-ui.cc:2553
+#: ../pan/gui/post-ui.cc:2592
 msgid "Size (KB)"
 msgstr "Velikost (kB)"
 
-#: ../pan/gui/post-ui.cc:2651
+#: ../pan/gui/post-ui.cc:2690
 msgid "The current filename"
 msgstr "Trenutno ime datoteke"
 
-#: ../pan/gui/post-ui.cc:2655
+#: ../pan/gui/post-ui.cc:2694
 msgid "Subject Line"
 msgstr "Vrstica zadeve"
 
-#: ../pan/gui/post-ui.cc:2663
+#: ../pan/gui/post-ui.cc:2702
 msgid "The current subject line"
 msgstr "Trenutna vrstica zadeve"
 
-#: ../pan/gui/post-ui.cc:2677
+#: ../pan/gui/post-ui.cc:2716
 msgid "No. "
 msgstr "Št."
 
-#: ../pan/gui/post-ui.cc:2681
+#: ../pan/gui/post-ui.cc:2720
 msgid "Enable/Disable"
 msgstr "Omogoči/Onemogoči"
 
-#: ../pan/gui/post-ui.cc:2715
+#: ../pan/gui/post-ui.cc:2754
 msgid "Follo_wup-To"
 msgstr "Nave_zava-na"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: ../pan/gui/post-ui.cc:2724
+#: ../pan/gui/post-ui.cc:2763
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1831,64 +1842,64 @@ msgstr ""
 "Za usmeritev vseh odgovorov na vaš naslov elektronske pošte uporabite "
 "\"Navezava na: pošiljatelj\""
 
-#: ../pan/gui/post-ui.cc:2731
+#: ../pan/gui/post-ui.cc:2770
 msgid "_Reply-To"
 msgstr "_Odgovori na"
 
-#: ../pan/gui/post-ui.cc:2739
+#: ../pan/gui/post-ui.cc:2778
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
 msgstr ""
-"Naslov elektronske poše, kamor bodo poslani odgovori na vaše sporočilo. "
-"Naslov je treba vnesti le, če se naslov razlikuje od glave \"Od\"."
+"Elektronski naslov, kamor bodo poslani odgovori na vaše sporočilo.  Naslov "
+"je treba vnesti le, če se ta razlikuje od podatkov pošiljatelja \"Od\"."
 
-#: ../pan/gui/post-ui.cc:2746
+#: ../pan/gui/post-ui.cc:2785
 msgid "_Custom Headers"
 msgstr "Glave po _meri"
 
-#: ../pan/gui/post-ui.cc:2770
+#: ../pan/gui/post-ui.cc:2809
 msgid "Add \"_User-Agent\" header"
 msgstr "Dodaj glavo \"_User-Agent\""
 
-#: ../pan/gui/post-ui.cc:2777
+#: ../pan/gui/post-ui.cc:2816
 msgid "Add \"Message-_ID\" header"
 msgstr "Dodaj glavo \"_ID sporočila\""
 
-#: ../pan/gui/post-ui.cc:2908
+#: ../pan/gui/post-ui.cc:2947
 msgid "Select Parts"
 msgstr "Izberi dele"
 
-#: ../pan/gui/post-ui.cc:2921
+#: ../pan/gui/post-ui.cc:2960
 msgid "_Parts"
 msgstr "_Deli"
 
-#: ../pan/gui/post-ui.cc:3075
+#: ../pan/gui/post-ui.cc:3114
 msgid "Post Article"
 msgstr "Pošlji prispevek"
 
-#: ../pan/gui/post-ui.cc:3096
+#: ../pan/gui/post-ui.cc:3135
 msgid "_Message"
 msgstr "_Sporočilo"
 
-#: ../pan/gui/post-ui.cc:3097
+#: ../pan/gui/post-ui.cc:3136
 msgid "More _Headers"
 msgstr "Več _glav"
 
-#: ../pan/gui/post-ui.cc:3098
+#: ../pan/gui/post-ui.cc:3137
 msgid "File _Queue"
 msgstr "_Čakalna vrsta datotek"
 
-#: ../pan/gui/post-ui.cc:3130 ../pan/gui/profiles-dialog.cc:481
+#: ../pan/gui/post-ui.cc:3169 ../pan/gui/profiles-dialog.cc:481
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "Na %d je %n napisal:"
 
-#: ../pan/gui/post-ui.cc:3159
+#: ../pan/gui/post-ui.cc:3198
 msgid "Add files to queue"
 msgstr "Dodaj datoteke v čakalno vrsto"
 
-#: ../pan/gui/post-ui.cc:3235
+#: ../pan/gui/post-ui.cc:3274
 msgid "Save Upload Queue as NZB File"
 msgstr "Shrani vrsto za pošiljanje na strežnik kot datoteko NZB"
 
@@ -1992,7 +2003,7 @@ msgstr ""
 msgid "Global Character Set Settings"
 msgstr "Splošne nastavitve kodnega nabora"
 
-#: ../pan/gui/prefs-ui.cc:854 ../pan/gui/task-pane.cc:1075
+#: ../pan/gui/prefs-ui.cc:854 ../pan/gui/task-pane.cc:1076
 msgid "State"
 msgstr "Stanje"
 
@@ -2395,7 +2406,7 @@ msgstr "_Programi"
 msgid "Applications"
 msgstr "Programi"
 
-#: ../pan/gui/prefs-ui.cc:1293 ../pan/gui/task-pane.cc:551
+#: ../pan/gui/prefs-ui.cc:1293 ../pan/gui/task-pane.cc:552
 msgid "Encoding"
 msgstr "Nabor znakov"
 
@@ -2839,6 +2850,48 @@ msgstr "Dodaj novo pravilo točkovanja"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Odstrani izbrano pravilo točkovanja"
 
+#. WTF nzbindex....
+#: ../pan/gui/search-pane.cc:99
+msgid "Age (newest first)"
+msgstr "Starost (najprej novejše)"
+
+#: ../pan/gui/search-pane.cc:100
+msgid "Age (oldest first)"
+msgstr "Starost (najprej najstarejše)"
+
+#: ../pan/gui/search-pane.cc:101
+msgid "Size (smallest first)"
+msgstr "Velikost (najprej najmanjše)"
+
+#: ../pan/gui/search-pane.cc:102
+msgid "Size (largest first)"
+msgstr "Velikost (najprej največje)"
+
+#: ../pan/gui/search-pane.cc:270 ../pan/gui/search-pane.cc:271
+#: ../pan/gui/search-pane.cc:674
+msgid "Download"
+msgstr "Prejmi"
+
+#: ../pan/gui/search-pane.cc:441
+msgid "Name (regex)"
+msgstr "Ime (logični izraz)"
+
+#: ../pan/gui/search-pane.cc:657
+msgid "Release Info"
+msgstr "Podrobnosti objave"
+
+#: ../pan/gui/search-pane.cc:675
+msgid "Download selected Release/Files"
+msgstr "Prejmi izbrane objave/datoteke"
+
+#: ../pan/gui/search-pane.cc:677
+msgid "Refresh"
+msgstr "Osveži"
+
+#: ../pan/gui/search-pane.cc:678
+msgid "Refresh current results"
+msgstr "Osveži trenutni zadetke"
+
 #: ../pan/gui/server-ui.cc:259
 msgid "Please specify the server's address."
 msgstr "Navedite naslov strežnika."
@@ -3063,7 +3116,7 @@ msgstr "Preuči potrdilo"
 msgid "Remove Certificate"
 msgstr "Odstrani potrdilo"
 
-#: ../pan/gui/task-pane.cc:120
+#: ../pan/gui/task-pane.cc:121
 #, c-format
 msgid ""
 "\n"
@@ -3082,7 +3135,7 @@ msgstr ""
 "<i>Skupine:</i> <b>%s</b>\n"
 "<i>Izvorna datoteka:</i> <b>%s</b>\n"
 
-#: ../pan/gui/task-pane.cc:132
+#: ../pan/gui/task-pane.cc:133
 #, c-format
 msgid ""
 "\n"
@@ -3103,119 +3156,119 @@ msgstr ""
 "<i>Skupine:</i> <b>%s</b>\n"
 "<i>Pot shranjevanja:</i> <b>%s</b>\n"
 
-#: ../pan/gui/task-pane.cc:134
+#: ../pan/gui/task-pane.cc:135
 msgid "unknown"
 msgstr "neznano"
 
-#: ../pan/gui/task-pane.cc:302
+#: ../pan/gui/task-pane.cc:303
 msgid "Choose New Destination for Selected Tasks"
 msgstr "Izberite nov cilj za izbrane naloge"
 
-#: ../pan/gui/task-pane.cc:456
+#: ../pan/gui/task-pane.cc:457
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan: naloge (%d v vrsti, %d v teku, %d zaustavljenih)"
 
-#: ../pan/gui/task-pane.cc:458
+#: ../pan/gui/task-pane.cc:459
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan: naloge (%d v vrsti, %d v teku)"
 
-#: ../pan/gui/task-pane.cc:460
+#: ../pan/gui/task-pane.cc:461
 #, c-format
 msgid "Pan: Tasks"
 msgstr "Pan: naloge"
 
-#: ../pan/gui/task-pane.cc:485
+#: ../pan/gui/task-pane.cc:486
 #, c-format
 msgid "%lu selected, %s"
 msgstr "%lu izbrano, %s"
 
-#: ../pan/gui/task-pane.cc:549
+#: ../pan/gui/task-pane.cc:550
 msgid "Running"
 msgstr "Teče"
 
-#: ../pan/gui/task-pane.cc:550
+#: ../pan/gui/task-pane.cc:551
 msgid "Decoding"
 msgstr "Dekodiranje"
 
-#: ../pan/gui/task-pane.cc:552
+#: ../pan/gui/task-pane.cc:553
 msgid "Queued for Decode"
 msgstr "V vrsti za dekodiranje"
 
-#: ../pan/gui/task-pane.cc:553
+#: ../pan/gui/task-pane.cc:554
 msgid "Queued for Encode"
 msgstr "V vrsti za kodiranje"
 
-#: ../pan/gui/task-pane.cc:554
+#: ../pan/gui/task-pane.cc:555
 msgid "Queued"
 msgstr "V vrsti"
 
-#: ../pan/gui/task-pane.cc:555
+#: ../pan/gui/task-pane.cc:556
 msgid "Stopped"
 msgstr "Zaustavljeno"
 
-#: ../pan/gui/task-pane.cc:556
+#: ../pan/gui/task-pane.cc:557
 msgid "Removing"
 msgstr "Odstranjevanje"
 
-#: ../pan/gui/task-pane.cc:585
+#: ../pan/gui/task-pane.cc:586
 #, c-format
 msgid "%d%% Done"
 msgstr "%d%% Končano"
 
-#: ../pan/gui/task-pane.cc:591
+#: ../pan/gui/task-pane.cc:592
 #, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%d:%02d:%02d Preostalo (%d pri %lu KiB/s)"
 
-#: ../pan/gui/task-pane.cc:686 ../pan/gui/task-pane.cc:687
+#: ../pan/gui/task-pane.cc:687 ../pan/gui/task-pane.cc:688
 msgid "Move To Top"
 msgstr "Premakni na vrh"
 
-#: ../pan/gui/task-pane.cc:691 ../pan/gui/task-pane.cc:692
+#: ../pan/gui/task-pane.cc:692 ../pan/gui/task-pane.cc:693
 msgid "Move To Bottom"
 msgstr "Premakni na dno"
 
-#: ../pan/gui/task-pane.cc:696 ../pan/gui/task-pane.cc:697
+#: ../pan/gui/task-pane.cc:697 ../pan/gui/task-pane.cc:698
 msgid "Show Task Information"
 msgstr "Prikaz podrobnosti naloge"
 
-#: ../pan/gui/task-pane.cc:701 ../pan/gui/task-pane.cc:702
+#: ../pan/gui/task-pane.cc:702 ../pan/gui/task-pane.cc:703
 msgid "Stop Task"
 msgstr "Zaustavi nalogo"
 
-#: ../pan/gui/task-pane.cc:706 ../pan/gui/task-pane.cc:707
+#: ../pan/gui/task-pane.cc:707 ../pan/gui/task-pane.cc:708
 msgid "Delete Task"
 msgstr "Izbriši nalogo"
 
-#: ../pan/gui/task-pane.cc:711 ../pan/gui/task-pane.cc:712
+#: ../pan/gui/task-pane.cc:712 ../pan/gui/task-pane.cc:713
 msgid "Restart Task"
 msgstr "Ponovno zaženi nalogo"
 
-#: ../pan/gui/task-pane.cc:716 ../pan/gui/task-pane.cc:717
+#: ../pan/gui/task-pane.cc:717 ../pan/gui/task-pane.cc:718
 msgid "Change Download Destination"
 msgstr "Spremeni cilj prejema s strežnika"
 
-#: ../pan/gui/task-pane.cc:1027
+#: ../pan/gui/task-pane.cc:1028
 msgid "_Online"
 msgstr "_Povezano"
 
-#: ../pan/gui/task-pane.cc:1044
+#: ../pan/gui/task-pane.cc:1045
 msgid "Restart Tasks"
 msgstr "Znova začni naloge"
 
-#: ../pan/gui/task-pane.cc:1046
+#: ../pan/gui/task-pane.cc:1047
 msgid "Stop Tasks"
 msgstr "Zaustavi naloge"
 
-#: ../pan/gui/task-pane.cc:1048
+#: ../pan/gui/task-pane.cc:1049
 msgid "Delete Tasks"
 msgstr "Izbriši naloge"
 
-#: ../pan/gui/task-pane.cc:1054
+#: ../pan/gui/task-pane.cc:1055
 msgid "Show info popups"
-msgstr "Pokaži pojavna sporočila"
+msgstr "Pokaži pojavna okna podrobnosti"
 
 #: ../pan/gui/url.cc:123
 #, c-format
@@ -3251,7 +3304,7 @@ msgstr ""
 "Napaka med shranjevanjem \"%s\":\n"
 "%s"
 
-#: ../pan/tasks/decoder.cc:316 ../pan/tasks/task-article.cc:354
+#: ../pan/tasks/decoder.cc:314 ../pan/tasks/task-article.cc:354
 #, c-format
 msgid "Decoding %s"
 msgstr "Dekodiranje %s"
@@ -3266,7 +3319,7 @@ msgstr "Prišlo je do napake med nalaganjem %s iz predpomnilnika."
 msgid "Error encoding %s: %s"
 msgstr "Napaka pri kodiranju %s: %s"
 
-#: ../pan/tasks/encoder.cc:268
+#: ../pan/tasks/encoder.cc:266
 #, c-format
 msgid "Encoding %s"
 msgstr "Kodiranje %s"
@@ -3296,8 +3349,8 @@ msgstr "Pošiljanje \"%s\" %s je vrnilo nepoznan odziv: \"%s\""
 msgid "Unable to connect to \"%s\""
 msgstr "Z \"%s\" se ni mogoče povezati"
 
-#: ../pan/tasks/queue.cc:777 ../pan/tasks/queue.cc:805
-#: ../pan/tasks/queue.cc:832
+#: ../pan/tasks/queue.cc:776 ../pan/tasks/queue.cc:804
+#: ../pan/tasks/queue.cc:831
 msgid "No space left on device."
 msgstr "Na napravi primanjkuje prostora."
 
@@ -3357,38 +3410,38 @@ msgstr "Objava \"%s\" je uspela: %s"
 msgid "Uploading %s"
 msgstr "Pošiljanje %s"
 
-#: ../pan/tasks/task-upload.cc:246
+#: ../pan/tasks/task-upload.cc:244
 #, c-format
 msgid "Uploading %s - Part %d of %d"
 msgstr "Prenašanje %s na strežnik - %d. del od %d"
 
-#: ../pan/tasks/task-upload.cc:248
+#: ../pan/tasks/task-upload.cc:246
 #, c-format
 msgid "Uploading message body with subject \"%s\""
 msgstr "Pošiljanje besedila sporočila z zadevo \"%s\""
 
-#: ../pan/tasks/task-upload.cc:305
+#: ../pan/tasks/task-upload.cc:303
 #, c-format
 msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
 msgstr ""
 "Objava datoteke %s (%d. del %d) ni uspela: strežnik ne dovoljuje objav."
 
-#: ../pan/tasks/task-upload.cc:313
+#: ../pan/tasks/task-upload.cc:311
 #, c-format
 msgid "Posting of file %s (part %d of %d) failed: %s"
 msgstr "Objava datoteke %s (%d. del od %d) ni uspela: %s"
 
-#: ../pan/tasks/task-upload.cc:323 ../pan/tasks/task-upload.cc:330
+#: ../pan/tasks/task-upload.cc:321 ../pan/tasks/task-upload.cc:328
 #, c-format
 msgid "Posting of file %s (part %d of %d) successful: %s"
 msgstr "Objava datoteke %s (%d. del od %d) je uspela: %s"
 
-#: ../pan/tasks/task-upload.cc:340
+#: ../pan/tasks/task-upload.cc:338
 #, c-format
 msgid "Posting of file %s successful: %s"
 msgstr "Objava datoteke %s je uspela: %s"
 
-#: ../pan/tasks/task-upload.cc:344
+#: ../pan/tasks/task-upload.cc:342
 #, c-format
 msgid ""
 "Posting of file %s not completely successful: Check the log (right-click "
@@ -3397,7 +3450,7 @@ msgstr ""
 "Objava datoteke %s ni v celoti uspela: preverite dnevnik (z desnim klikom na "
 "element)."
 
-#: ../pan/tasks/task-upload.cc:361
+#: ../pan/tasks/task-upload.cc:359
 #, c-format
 msgid ""
 "Posting of file %s not successful: Check the log (right-click list item)."
@@ -3428,7 +3481,7 @@ msgstr "%s (%lu delov, %lu prispevkov)"
 #: ../pan/tasks/task-xover.cc:491
 #, c-format
 msgid "Getting new headers for \"%s\" done."
-msgstr "Pridobivanje novih glav za \"%s\" opravljeno."
+msgstr "Pridobivanje glav za \"%s\" je končano."
 
 #: ../pan/tasks/task-xoverinfo.cc:78
 #, c-format
@@ -3777,3 +3830,9 @@ msgstr "brez_imena"
 #: ../pan/usenet-utils/text-massager.cc:580
 msgid "no_mail"
 msgstr "brez_elektronskega_naslova"
+
+#~ msgid "Show Task Pane notifications"
+#~ msgstr "Pokaži pladenj obvestil nalog"
+
+#~ msgid "Hide to system tray"
+#~ msgstr "Pomanjšaj v sistemsko vrstico"
