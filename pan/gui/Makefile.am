@@ -1,5 +1,5 @@
 AM_CPPFLAGS = -I@top_srcdir@ @GTKSPELL_CFLAGS@ @ENCHANT_CFLAGS@ @GTK_CFLAGS@ @GMIME_CFLAGS@ @GLIB_CFLAGS@ \
-	@GNUTLS_CFLAGS@ @LIBNOTIFY_CFLAGS@ @LIBGNOME_KEYRING_1_CFLAGS@ @WEBKITGTK_CFLAGS@-DPANLOCALEDIR=\""$(panlocaledir)"\" @ZLIB_CFLAGS@ @GRSS_CFLAGS@
+	@GNUTLS_CFLAGS@ @LIBNOTIFY_CFLAGS@ @LIBGNOME_KEYRING_1_CFLAGS@ @WEBKITGTK_CFLAGS@-DPANLOCALEDIR=\""$(panlocaledir)"\" @ZLIB_CFLAGS@
 
 noinst_LIBRARIES = libpangui.a
 
@@ -16,7 +16,6 @@ libpangui_a_SOURCES = \
  group-prefs.cc \
  group-prefs-dialog.cc \
  header-pane.cc \
- search-pane.cc \
  hig.cc \
  log-ui.cc \
  pan-file-entry.cc \
@@ -24,7 +23,6 @@ libpangui_a_SOURCES = \
  pan-tree.cc \
  post-ui.cc \
  prefs.cc \
- dl-prefs.cc \
  prefs-file.cc \
  prefs-ui.cc \
  progress-view.cc \
@@ -57,7 +55,6 @@ noinst_HEADERS = \
  gtk-compat.h \
  gui.h \
  header-pane.h \
- search-pane.h \
  hig.h \
  license.h \
  log-ui.h \
@@ -68,7 +65,6 @@ noinst_HEADERS = \
  pan.ui.h \
  pan.ui.ssl.h \
  prefs.h \
- dl-prefs.h \
  prefs-file.h \
  prefs-ui.h \
  post-ui.h \
@@ -108,7 +104,7 @@ endif
 
 pan_SOURCES = gui.cc pan.cc $(WINRC)
 pan_LDADD = ./libpangui.a $(WINRCOBJ) ../data-impl/libpandata.a ../tasks/libtasks.a ../data/libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a ../../uulib/libuu.a \
-		@GTKSPELL_LIBS@ @ENCHANT_LIBS@ @GTK_LIBS@ @GMIME_LIBS@ @GLIB_LIBS@ @GNUTLS_LIBS@ @LIBNOTIFY_LIBS@ @LIBGNOME_KEYRING_1_LIBS@ @WEBKITGTK_LIBS@ @ZLIB_LIBS@ @GRSS_LIBS@
+		@GTKSPELL_LIBS@ @ENCHANT_LIBS@ @GTK_LIBS@ @GMIME_LIBS@ @GLIB_LIBS@ @GNUTLS_LIBS@ @LIBNOTIFY_LIBS@ @LIBGNOME_KEYRING_1_LIBS@ @WEBKITGTK_LIBS@ @ZLIB_LIBS@
 if HAVE_WIN32
 pan_LDFLAGS = -mwindows
 endif

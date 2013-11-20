@@ -120,6 +120,7 @@ ArticleCache :: message_id_to_filename (char * buf, int len, const StringView& m
            break;
         default:
            *out++ = *in;
+           break;
      }
   }
 

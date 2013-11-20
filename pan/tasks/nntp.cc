@@ -75,9 +75,6 @@ bool
 NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 {
 
-  //increase dl meter
-  _meter.dl_meter_add (line_in.len);
-
    enum State { CMD_FAIL, CMD_DONE, CMD_MORE, CMD_NEXT, CMD_RETRY };
    State state;
    StringView line (line_in);
@@ -213,6 +210,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
             state = CMD_DONE;
             break;
           }
+          break;
         case GROUP_NONEXISTENT:
            state = CMD_FAIL;
            break;

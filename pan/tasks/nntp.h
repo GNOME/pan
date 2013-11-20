@@ -153,12 +153,10 @@ namespace pan
         NNTP (const Quark        & server,
               const std::string  & username,
               const std::string  & password,
-              DownloadMeter      & meter,
               ServerInfo         & info,
               Socket             * socket):
           _server(server),
           _server_info(info),
-          _meter(meter),
           _socket(socket),
           _socket_error(false),
           _listener(0),
@@ -323,7 +321,6 @@ namespace pan
       ServerInfo& _server_info;
       Quark _group;
       Socket * _socket;
-      DownloadMeter& _meter;
       bool _socket_error;
       const std::string& get_username()
       {

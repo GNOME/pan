@@ -123,7 +123,6 @@ namespace pan
   void do_import_tasks                 (GtkAction*) { pan_ui->do_import_tasks(); }
   void do_cancel_latest_task           (GtkAction*) { pan_ui->do_cancel_latest_task(); }
   void do_show_task_window             (GtkAction*) { pan_ui->do_show_task_window(); }
-  void do_show_dl_meter_prefs          (GtkAction*) { pan_ui->do_show_dl_meter_prefs(); }
   void do_show_log_window              (GtkAction*) { pan_ui->do_show_log_window(); }
   void do_quit                         (GtkAction*) { pan_ui->do_quit(); }
   void do_clear_header_pane            (GtkAction*) { pan_ui->do_clear_header_pane(); }
@@ -401,11 +400,6 @@ namespace pan
         N_("_Task Manager"), NULL,
         NULL,
         G_CALLBACK(do_show_task_window) },
-
-      { "show-dl-meter-prefs", NULL,
-        N_("_Download Meter Preferences"), NULL,
-        NULL,
-        G_CALLBACK(do_show_dl_meter_prefs) },
 
       { "show-log-dialog", GTK_STOCK_DIALOG_INFO,
         N_("_Event Log"), NULL,

@@ -43,7 +43,6 @@
 #include <pan/data-impl/article-filter.h>
 #include <pan/data-impl/rules-filter.h>
 #include <pan/data-impl/profiles.h>
-#include <pan/data-impl/download-meter.h>
 #include <pan/data-impl/memchunk.h>
 #include <pan/gui/prefs.h>
 
@@ -68,9 +67,7 @@ namespace pan
   class DataImpl:
     public Data,
     public TaskArchive,
-    public ProfilesImpl,
-    public DownloadMeterImpl
-//    public DownloadMeter::Listener
+    public ProfilesImpl
   {
 
     /**
@@ -698,15 +695,6 @@ namespace pan
         save_newsrc_files(*_data_io);
         newsrc_autosave_id = 0;
       }
-
-    /**
-    ***  Download stats
-    **/
-    public:
-
-      void load_download_stats (const DataIO&);
-      void save_download_stats (DataIO&) const;
-
   };
 }
 

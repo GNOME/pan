@@ -987,7 +987,7 @@ main (int argc, char *argv[])
     // instantiate the queue...
     WorkerPool worker_pool (4, true);
     SocketCreator socket_creator(data, certstore);
-    Queue queue (data, data, data, data, &socket_creator, certstore, prefs, worker_pool, false, 32768);
+    Queue queue (data, data, data, &socket_creator, certstore, prefs, worker_pool, false, 32768);
 
 #ifdef HAVE_DBUS
     Pan pan(data, queue, cache, encode_cache, prefs, group_prefs);
@@ -1093,7 +1093,7 @@ main (int argc, char *argv[])
       gtk_window_set_resizable (GTK_WINDOW(window), true);
       gtk_window_set_default_icon (pixbuf);
 
-      gui_ptr = new GUI (data, queue, prefs, group_prefs, data);
+      gui_ptr = new GUI (data, queue, prefs, group_prefs);
 
 #ifdef HAVE_LIBNOTIFY
       if (!notify_is_initted ())

@@ -49,7 +49,7 @@ class NNTP_Pool: public NNTP::Source,
 public:
 
 	NNTP_Pool(const Quark & server, ServerInfo & server_info, Prefs& prefs, SocketCreator *,
-			CertStore &, DownloadMeter& meter);
+			CertStore &);
 	virtual ~NNTP_Pool();
 
 	virtual void check_in(NNTP*, Health);
@@ -115,7 +115,6 @@ private:
 	int _pending_connections;
 	CertStore& _certstore;
 	Prefs& _prefs;
-	DownloadMeter& _meter;
 
 	struct PoolItem {
 		NNTP * nntp;

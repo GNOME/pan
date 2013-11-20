@@ -340,14 +340,13 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
         else
         {
           g_snprintf(buf,sizeof(buf), _("Posting of file %s not completely successful: Check the log (right-click list item)."),
-                 _basename.c_str(), response.str);
+                 _basename.c_str());
           tmp.severity = Log :: PAN_SEVERITY_ERROR;
         }
         tmp.message = buf;
         Log::add_entry_list (tmp, _logfile);
         _logfile.clear();
       }
-
     case TOO_MANY_CONNECTIONS:
       // lockout for 120 secs, but try
       it->second.reset();

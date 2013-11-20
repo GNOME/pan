@@ -73,11 +73,10 @@ namespace pan
     public Task::DecoderSource,
     public Task::EncoderSource,
     private NNTP_Pool::Listener,
-    private AdaptableSet<Task*, TaskWeakOrdering>::Listener,
-    private DownloadMeter::Listener
+    private AdaptableSet<Task*, TaskWeakOrdering>::Listener
   {
     public:
-      Queue (ServerInfo&, TaskArchive&, Data&, DownloadMeter&, SocketCreator*, CertStore&, Prefs&, WorkerPool&,
+      Queue (ServerInfo&, TaskArchive&, Data&, SocketCreator*, CertStore&, Prefs&, WorkerPool&,
              bool online, int save_delay_secs);
       virtual ~Queue ();
 
@@ -257,7 +256,6 @@ namespace pan
       int _uploads_total, _downloads_total;
       CertStore& _certstore;
       Prefs& _prefs;
-      DownloadMeter& _meter;
 
     private:
       typedef AdaptableSet<Task*, TaskWeakOrdering> TaskSet;

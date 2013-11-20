@@ -48,7 +48,6 @@ extern "C" {
 #include "group-pane.h"
 #include "group-prefs-dialog.h"
 #include "header-pane.h"
-#include "search-pane.h"
 #include "hig.h"
 #include "license.h"
 #include "log-ui.h"
@@ -62,7 +61,6 @@ extern "C" {
 #endif
 
 #include "prefs-ui.h"
-#include "dl-prefs.h"
 #include "progress-view.h"
 #include "profiles-dialog.h"
 #include "post-ui.h"
@@ -214,7 +212,7 @@ GUI :: root_realized_cb (GtkWidget*, gpointer self_gpointer)
   }
 }
 
-GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, DownloadMeter& meter):
+GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),
   _queue (queue),
   _prefs (prefs),
@@ -225,7 +223,6 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
   _menu_vbox (gtk_box_new (GTK_ORIENTATION_VERTICAL, 0)),
   _group_pane (0),
   _header_pane (0),
-  _search_pane (0),
   _body_pane (0),
   _ui_manager (gtk_ui_manager_new ()),
   _info_image (gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU)),
@@ -235,8 +232,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
   _queue_size_label (0),
   _queue_size_button (0),
   _taskbar (0),
-  _certstore(data.get_certstore()),
-  _meter(meter)
+  _certstore(data.get_certstore())
 {
 
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
@@ -251,9 +247,6 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
 
   _group_pane = new GroupPane (*this, data, _prefs, _group_prefs);
   _header_pane = new HeaderPane (*this, data, _queue, _cache, _prefs, _group_prefs, *this, *this);
-#ifdef HAVE_RSS
-  _search_pane = new SearchPane (data, queue, *this, *this);
-#endif
   _body_pane = new BodyPane (data, _cache, _prefs, _group_prefs, _queue, _header_pane);
 
   std::string path = "/ui/main-window-toolbar";
@@ -307,11 +300,6 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
   gtk_container_add (GTK_CONTAINER(frame), w);
   gtk_box_pack_start (GTK_BOX(status_bar), frame, FALSE, FALSE, 0);
 
-  // download meter
-  w = _meter.get_widget();
-  gtk_box_pack_start (GTK_BOX(status_bar), w, FALSE, FALSE, 0);
-  g_signal_connect (_meter.get_button(), "clicked", G_CALLBACK(show_download_meter_prefs_cb), this);
-
   // drag and drop for message-ids
   //  gtk_drag_dest_set(_workarea_bin,GTK_DEST_DEFAULT_ALL,target_list,3,GDK_ACTION_COPY);
   //  gtk_drag_dest_add_text_targets(_workarea_bin);
@@ -361,9 +349,6 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
   g_object_ref_sink (G_OBJECT(_error_image));
   g_object_ref (_group_pane->root());
   g_object_ref (_header_pane->root());
-#ifdef HAVE_RSS
-  g_object_ref (_search_pane->root());
-#endif
   g_object_ref (_body_pane->root());
 
   do_work_online (is_action_active ("work-online"));
@@ -379,7 +364,6 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs, Dow
   if (_prefs.get_flag ("get-new-headers-on-startup", false))
     activate_action ("get-new-headers-in-subscribed-groups");
 
-  _queue.add_listener (this);
   _prefs.add_listener (this);
   _certstore.add_listener(this);
   Log::get().add_listener (this);
@@ -450,17 +434,11 @@ GUI :: ~GUI ()
   std::set<GtkWidget*> unref;
   unref.insert (_body_pane->root());
   unref.insert (_header_pane->root());
-#ifdef HAVE_RSS
-  unref.insert (_search_pane->root());
-#endif
   unref.insert (_group_pane->root());
   unref.insert (_error_image);
   unref.insert (_info_image);
 
   delete _header_pane;
-#ifdef HAVE_RSS
-  delete _search_pane;
-#endif
   delete _group_pane;
   delete _body_pane;
 
@@ -478,7 +456,6 @@ GUI :: ~GUI ()
   _certstore.remove_listener(this);
   _data.remove_listener(this);
   _prefs.remove_listener (this);
-  _queue.remove_listener (this);
   Log::get().remove_listener (this);
 
 }
@@ -903,13 +880,6 @@ void GUI :: do_show_task_window ()
   toggle_visible (task_pane->root());
 }
 
-void GUI :: do_show_dl_meter_prefs()
-{
-  DLMeterDialog * dialog = new DLMeterDialog (_prefs, _meter, get_window(_root));
-  g_signal_connect (dialog->root(), "destroy", G_CALLBACK(prefs_dialog_destroyed_cb), this);
-  gtk_widget_show (dialog->root());
-}
-
 namespace
 {
   void set_bin_child (GtkWidget * w, GtkWidget * new_child)
@@ -1175,8 +1145,6 @@ void GUI :: prefs_dialog_destroyed (GtkWidget *)
     _header_pane->rules(_prefs._rules_enabled);
   }
   _cache.set_max_megs(_prefs.get_int("cache-size-megs",10));
-
-  gtk_widget_set_visible(_meter.get_widget(), _prefs.get_flag("dl-meter-show", true));
 
 }
 

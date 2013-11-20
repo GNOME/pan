@@ -32,7 +32,6 @@
 #include <pan/gui/prefs.h>
 #include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
-#include <pan/data-impl/download-meter.h>
 
 #include <stdint.h>
 
@@ -42,9 +41,7 @@ namespace pan
 {
   class GroupPane;
   class HeaderPane;
-  class SearchPane;
   class BodyPane;
-  class SearchPane;
   class ProgressView;
 
   /**
@@ -67,7 +64,7 @@ namespace pan
 
       typedef std::vector<Quark> mid_sequence_t;
 
-      GUI (Data& data, Queue&, Prefs&, GroupPrefs&, DownloadMeter&);
+      GUI (Data& data, Queue&, Prefs&, GroupPrefs&);
       virtual ~GUI ();
       GtkWidget* root () { return _root; }
       typedef std::vector<std::string> strings_t;
@@ -112,7 +109,6 @@ namespace pan
       virtual void do_import_tasks_from_nzb_stream (const char*);
       virtual void do_cancel_latest_task ();
       virtual void do_show_task_window ();
-      virtual void do_show_dl_meter_prefs();
       virtual void do_show_log_window ();
       virtual void do_select_all_articles ();
       virtual void do_unselect_all_articles ();
@@ -247,7 +243,6 @@ namespace pan
       Prefs& _prefs;
       GroupPrefs& _group_prefs;
       CertStore& _certstore;
-      DownloadMeter& _meter;
 
     private:
       GtkWidget * _root;
@@ -256,7 +251,6 @@ namespace pan
       GtkWidget * _toolbar;
       GroupPane * _group_pane;
       HeaderPane * _header_pane;
-      SearchPane * _search_pane;
       BodyPane * _body_pane;
       GtkUIManager * _ui_manager;
 
