@@ -440,17 +440,22 @@ TaskXOver::on_nntp_done(NNTP * nntp, Health health, const StringView & response)
 
   if (response == EOL && compression_enabled)
   {
-    std::stringstream* buffer = _streams[nntp->_socket->get_id()];
+    std::stringstream* buffer(0);
     std::stringstream out, out2;
     if (comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO )
     {
+      buffer = _streams[nntp->_socket->get_id()];
       if (compression::ydecode(buffer, &out))
         fail = !compression::inflate_zlib(&out, &out2, comp);
       else
         fail = true;
     }
     else
+    {
+      buffer = new std::stringstream();
+      compression::inflate_gzip(_streams[nntp->_socket->get_id()], buffer);
       fail = !compression::inflate_zlib(buffer, &out2, comp);
+    }
 
     buffer->clear();
 

@@ -81,7 +81,9 @@ TaskGroups :: on_nntp_line (NNTP               * nntp,
 {
   // gzip compression
   if (nntp->_compression)
-    stream<<line<<"\r\n";
+  {
+    stream<<line;
+  }
   else on_nntp_line_process (nntp, line);
 }
 void
@@ -153,16 +155,31 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
     const Quark& server(nntp->_server);
     CompressionType comp;
     _data.get_server_compression_type(server, comp);
-    const bool compression (comp == HEADER_COMPRESS_XFEATURE);
+    const bool is_gzipped (comp == HEADER_COMPRESS_XFEATURE);
 
-    if (response == EOL && compression)
+    if (is_gzipped)
     {
-      std::vector<std::string> lines;
-      compression::inflate_gzip (&stream, lines);
-      foreach (std::vector<std::string>, lines, it)
-        on_nntp_line_process (nntp, *it);
-    }
+      std::ofstream of("/home/imhotep/out");
+      of << stream.str();
+      of.close();
+      std::stringstream out,out2;
+      bool fail = !compression::inflate_zlib(&stream, &out, comp);
+      if (!fail)
+      {
+        char buf[4096];
+        while (true)
+        {
+          std::istream& str = out.getline(buf, sizeof(buf));
+          if (str.fail() || str.bad() || str.eof()) break;
+          on_nntp_line_process(nntp, buf);
+        }
+      } else
+      {
+        _state.set_completed();
+        set_finished(ERR_LOCAL);
+      }
 
+    }
 
     if (_step == LIST_NEWSGROUPS)
     {

@@ -85,15 +85,15 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 
    if (_nntp_response_text)
    {
+      state = CMD_MORE;
+
       if (line.len==1 && line.str[0]=='.') // end-of-list
       {
          state = CMD_DONE;
          _nntp_response_text = false;
       }
-      else
+      else if (!_compression)
       {
-         state = CMD_MORE;
-
          if (line.len>=2 && line.str[0]=='.' && line.str[1]=='.') // rfc 977: 2.4.1
             line.rtruncate (line.len-1);
 
@@ -104,12 +104,15 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
 
       if (_compression)
       {
-        if (line_in.len >= 3 &&
-            strncmp(line_in.str + line_in.len - 3, ".\r\n", 3) == 0)
+
+        StringView l(line);
+        if (_listener)
+          _listener->on_nntp_line (this, l);
+
+        if (l.str[l.len-1]=='.')
         {
           _nntp_response_text = false;
           _compression = false;
-          line = EOL;
           state = CMD_DONE;
         }
       }

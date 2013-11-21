@@ -40,86 +40,6 @@ namespace
   #define LINELEN_MIN     2048
   #define LINELEN_MAX     32768
 
-  struct gzip_line {
-    std::stringstream* stream;
-    char *start;
-    char *where;
-    size_t remaining;
-    size_t allocated;
-    int eof;
-  };
-
-  void
-  line_init(struct gzip_line *line, std::stringstream* stream)
-  {
-      line->stream = stream;
-      line->allocated = LINELEN_MIN;
-      line->where = line->start = (char*)calloc(1, line->allocated);
-      line->remaining = 0;
-      line->eof = 0;
-  }
-
-  int
-  line_read(struct gzip_line *line, char **p)
-  {
-      char *where;
-      char *lf = NULL;
-
-      if (line->remaining != 0) {
-          if (line->start != line->where) {
-              memmove(line->start, line->where, line->remaining);
-              lf = (char*)memchr(line->start, '\n', line->remaining);
-          }
-      }
-      where = line->start + line->remaining;
-
-      if (lf == NULL) {
-          do {
-              ssize_t count;
-              if (where == line->start + line->allocated) {
-                  size_t newsize = line->allocated * 2;
-                  if (newsize > LINELEN_MAX)
-                      newsize = LINELEN_MAX;
-                  if (newsize == line->allocated) {
-                      where = line->start;
-                      line->eof = 1;
-                  } else {
-                      line->start = (char*)realloc(line->start, newsize);
-                      where = line->start + line->allocated;
-                      line->allocated = newsize;
-                  }
-              }
-
-              do {
-                  count = line->stream->readsome(where, line->allocated - (where - line->start));
-              } while (count == -1);
-
-              if (count < 0) {
-                  count = 0;
-              }
-
-              if (count == 0) {
-                  line->eof = 1;
-                  lf = where;
-                  where++;
-                  break;
-              }
-              lf = (char*)memchr(where, '\n', count);
-              where += count;
-          } while (lf == NULL);
-      }
-
-      line->where = lf + 1;
-      line->remaining = where - line->where;
-
-      *lf = '\0';
-      *p = line->start;
-      if (line->eof)
-          return lf - line->start;
-      return lf - line->start + 1; /* <<=== length includes terminator '\0' */
-  }
-
-
 }
 
 bool
@@ -260,36 +180,21 @@ compression::inflate_zlib(std::stringstream *source, std::stringstream *dest,
   return ret == Z_STREAM_END ? true : false;
 }
 
-void compression::inflate_gzip (std::stringstream* stream, std::vector<std::string>& fillme)
+void compression::inflate_gzip (std::stringstream* stream, std::stringstream* out)
 {
-  struct gzip_line g_line;
-  size_t len;
-  char* buf;
-  char buf2[4096];
+  std::string line;
+  std::istringstream in_str(stream->str());
 
-  line_init(&g_line, stream);
-
-  std::stringstream dest, dest2;
-  while (!g_line.eof) {
-      while ((len = line_read(&g_line, &buf)) > 0) {
-          buf[len-1] = '\n';
-          dest.write(buf, len);
-          if (len >= 3 && strncmp(buf + len - 1, ".", 1) == 0) {
-              g_line.eof = 1;
-              break;
-          }
-      }
+  while (std::getline(in_str, line, '\r'))
+  {
+    StringView str(line.c_str());
+    if (str.str[str.len - 1] == '.')
+    {
+      str.rtruncate(1);
+      if (str.len != 0)
+        *out<<str<<"\n";
+      break;
+    }
   }
-
-  std::ofstream out ("/home/imhotep/compression/out");
-    out << dest2.str();
-    out.close();
-
-  int cnt=0;
-  while (!dest2.getline(buf2,4096).eof())
-    {if (buf2) fillme.push_back(std::string(buf2));
-    ++cnt;}
-
   stream->clear();
-
 }

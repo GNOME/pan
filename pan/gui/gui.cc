@@ -364,6 +364,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   if (_prefs.get_flag ("get-new-headers-on-startup", false))
     activate_action ("get-new-headers-in-subscribed-groups");
 
+  _queue.add_listener (this);
   _prefs.add_listener (this);
   _certstore.add_listener(this);
   Log::get().add_listener (this);
@@ -456,6 +457,7 @@ GUI :: ~GUI ()
   _certstore.remove_listener(this);
   _data.remove_listener(this);
   _prefs.remove_listener (this);
+  _queue.remove_listener (this);
   Log::get().remove_listener (this);
 
 }
