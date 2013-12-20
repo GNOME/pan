@@ -25,6 +25,7 @@
 #include <string>
 #include <deque>
 #include <pan/general/singleton-template.h>
+#include <pan/general/macros.h>
 
 namespace pan
 {
@@ -50,10 +51,11 @@ namespace pan
       struct Entry {
         time_t date;
         Severity severity;
-        std::deque<Entry> messages;
+        std::deque<Entry*> messages;
         std::string message;
         bool is_child;
-        Entry() : is_child(false) { }
+        Entry() : is_child(false), severity(PAN_SEVERITY_INFO), date(0) { }
+        virtual ~Entry () { foreach (std::deque<Entry*>, messages, it) delete *it; }
       };
 
       void add_entry(Entry& e, std::deque<Entry>& list);
@@ -67,6 +69,7 @@ namespace pan
       };
 
       typedef std::deque<Entry> entries_t;
+      typedef std::deque<Entry*> entries_p;
 
     public:
       void add (Severity, const char *);

@@ -61,7 +61,11 @@ Log :: add_entry(Entry& e, std::deque<Entry>& list)
   a.date = time(NULL);
   a.severity = e.severity;
   a.message = e.message;
-  a.messages = list;
+  foreach (std::deque<Entry>, list, it)
+  {
+    Entry* new_entry = new Entry(*it);
+    a.messages.push_back(new_entry);
+  }
   fire_entry_added (a);
 }
 
