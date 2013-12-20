@@ -303,6 +303,8 @@ TaskXOver::on_nntp_line(NNTP * nntp, const StringView & line)
     if (_streams.count(sock_id) == 0)
       _streams[sock_id] = new std::stringstream();
     *_streams[sock_id] << line;
+    // \r\n was stripped, append it again because ydecode needs it
+    if (comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO) *_streams[sock_id] <<"\r\n";
   }
   else
     on_nntp_line_process(nntp, line);

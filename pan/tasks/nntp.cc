@@ -109,7 +109,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
         if (_listener)
           _listener->on_nntp_line (this, l);
 
-        if (l.str[l.len-1]=='.')
+        if (l.str[l.len-1]=='.') // gzip compression, ends with a single "."
         {
           _nntp_response_text = false;
           _compression = false;
