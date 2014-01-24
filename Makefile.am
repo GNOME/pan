@@ -32,7 +32,6 @@ EXTRA_DIST = \
  README.mingw \
  ChangeLog \
  Pan.ico \
- pan.spec \
  pan.png \
  $(DESKTOP_IN_FILES) \
  $(DESKTOP_FILES) \
