@@ -1238,11 +1238,13 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-bg", def_color_str, prefs));
     HIG :: workarea_add_row (t, &row, _("Quoted text:"), h);
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-url", TANGO_SKY_BLUE_DARK, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-url-bg", def_color_str, prefs)); //
     HIG :: workarea_add_row (t, &row, _("URL:"), h);
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-signature", TANGO_SKY_BLUE_LIGHT, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-signature-bg", def_color_str, prefs)); //
@@ -1252,15 +1254,17 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Other Text"));
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-fg", def_color_fg_str, prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-bg", def_color_str, prefs));
     HIG :: workarea_add_row (t, &row, _("Text Color:"), h);
-  HIG :: workarea_finish (t, &row);
 
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Group Pane"));
     HIG :: workarea_add_section_spacer (t, row, 1);
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("group-pane-color-fg", def_color_fg_str, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("group-pane-color-bg", def_color_str, prefs)); //

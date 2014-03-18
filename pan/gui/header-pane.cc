@@ -1993,7 +1993,7 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _cache (cache),
   _gui (gui),
   _cleared (true),
-  _fg(prefs.get_color_str ("text-color-fg", def_color_fg_str)),
+  _fg(prefs.get_color_str_wo_fallback ("text-color-fg")),
   _bg(prefs.get_color_str ("text-color-bg", def_color_str))
 {
 

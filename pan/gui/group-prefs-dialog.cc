@@ -246,12 +246,14 @@ namespace
   GtkWidget* new_color_button (const Quark& group, Prefs& prefs, GroupPrefs& gprefs, GroupPrefsDialog* dialog, GtkWidget* w)
   {
 
-    const PanColors& colors (PanColors::get());
-    const std::string& bg (colors.def_bg);
-
-    const GdkColor& val (gprefs.get_group_color (group, bg));
     GtkWidget * b = gtk_color_button_new_with_color (&val);
+    
+    const std::string& def_fg (colors.def_fg);
+    const std::string& fg (prefs.get_color_str("group-pane-color-fg", def_fg));
+	const GdkColor& val (gprefs.get_group_color (group, fg));
+    
     g_signal_connect (b, "color-set", G_CALLBACK(color_set_cb), dialog);
+
     return b;
   }
 

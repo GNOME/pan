@@ -458,7 +458,7 @@ GroupPane :: on_group_subscribe (const Quark& groupname, bool sub)
   // find out where it should be moved to
   int pos (0);
   GtkTreeIter section_iter, group_iter;
-  if (gtk_tree_model_iter_nth_child (model, &section_iter, NULL, (sub?0:1))) {
+  if (gtk_tree_model_iter_nth_child (model, &section_iter, NULL, (sub?1:2))) {
     if (gtk_tree_model_iter_children (model, &group_iter, &section_iter)) do {
       MyRow * row (dynamic_cast<MyRow*>(_tree_store->get_row (&group_iter)));
       if (groupname.to_string() < row->groupname.c_str())
