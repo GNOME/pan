@@ -1994,7 +1994,7 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _gui (gui),
   _cleared (true),
   _fg(prefs.get_color_str_wo_fallback ("text-color-fg")),
-  _bg(prefs.get_color_str ("text-color-bg", def_color_str))
+  _bg(prefs.get_color_str_wo_fallback ("text-color-bg"))
 {
 
   // init the icons

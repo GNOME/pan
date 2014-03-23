@@ -507,6 +507,10 @@ namespace
     get_or_create_tag (table, "pixbuf");
     get_or_create_tag (table, "quote_0");
 
+    g_object_set (get_or_create_tag (table, "text"),
+      "foreground", p.get_color_str ("text-color-fg", fg).c_str(),
+      "background", p.get_color_str ("text-color-bg", bg).c_str(),
+      NULL);
     g_object_set (get_or_create_tag(table,"bold"),
       "weight", PANGO_WEIGHT_BOLD,
       NULL);
@@ -536,10 +540,6 @@ namespace
     g_object_set (get_or_create_tag (table, "signature"),
       "foreground", p.get_color_str ("body-pane-color-signature", TANGO_SKY_BLUE_LIGHT).c_str(),
       "background", p.get_color_str ("body-pane-color-signature-bg", bg).c_str(),
-      NULL);
-    g_object_set (get_or_create_tag (table, "text"),
-      "foreground", p.get_color_str ("text-color-fg", fg).c_str(),
-      "background", p.get_color_str ("text-color-bg", bg).c_str(),
       NULL);
   }
 }
