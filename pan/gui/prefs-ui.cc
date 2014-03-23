@@ -1229,14 +1229,25 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_row (t, &row, _("Collapsed thread with unread articles:"), h);
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Body Pane"));
-    HIG :: workarea_add_section_spacer (t, row, 3);
+    HIG :: workarea_add_section_spacer (t, row, 5);
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-1", TANGO_CHAMELEON_DARK, prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-1-bg", def_color_str, prefs));
+    HIG :: workarea_add_row (t, &row, _("First level of quoted text:"), h);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-2", TANGO_ORANGE_DARK, prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-2-bg", def_color_str, prefs));
+    HIG :: workarea_add_row (t, &row, _("Second level of quoted text:"), h);
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-3", TANGO_PLUM_DARK, prefs));
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-bg", def_color_str, prefs));
-    HIG :: workarea_add_row (t, &row, _("Quoted text:"), h);
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-quote-3-bg", def_color_str, prefs));
+    HIG :: workarea_add_row (t, &row, _("Third level of quoted text:"), h);
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-url", TANGO_SKY_BLUE_DARK, prefs));
@@ -1250,16 +1261,6 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("body-pane-color-signature-bg", def_color_str, prefs)); //
     HIG :: workarea_add_row (t, &row, _("Signature:"), h);
 
-  // colors for others texts (score == 0 or body pane etc.... )
-  HIG :: workarea_add_section_divider (t, &row);
-  HIG :: workarea_add_section_title (t, &row, _("Other Text"));
-    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
-    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-fg", def_color_fg_str, prefs));
-    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
-    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-bg", def_color_str, prefs));
-    HIG :: workarea_add_row (t, &row, _("Text Color:"), h);
-
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Group Pane"));
     HIG :: workarea_add_section_spacer (t, row, 1);
@@ -1269,8 +1270,18 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("group-pane-color-bg", def_color_str, prefs)); //
     HIG :: workarea_add_row (t, &row, _("Group Color:"), h);
-  HIG :: workarea_finish (t, &row);
 
+  // colors for others texts (score == 0 or body pane etc.... )
+  HIG :: workarea_add_section_divider (t, &row);
+  HIG :: workarea_add_section_title (t, &row, _("Other Text"));
+    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Text:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-fg", def_color_fg_str, prefs));
+    pan_box_pack_start_defaults (GTK_BOX(h), gtk_label_new (_("Background:")));
+    pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-bg", def_color_str, prefs));
+    HIG :: workarea_add_row (t, &row, _("Text Color:"), h);
+  HIG :: workarea_finish (t, &row);
+	
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Colors"), _("Colors"), icon_prefs_colors, prefs));
 
   // Applications
