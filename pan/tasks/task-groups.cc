@@ -159,7 +159,7 @@ TaskGroups :: on_nntp_done (NNTP              * nntp,
 
     if (is_gzipped)
     {
-      std::ofstream of("/home/imhotep/out");
+      std::ofstream of("tmp_out");
       of << stream.str();
       of.close();
       std::stringstream out,out2;
