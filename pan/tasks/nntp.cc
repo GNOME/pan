@@ -61,9 +61,9 @@ NNTP :: fire_done_func (Health health, const StringView& response)
    {
       Listener * l = _listener;
       debug ("I (" << (void*)this << ") am setting my _listener to 0");
+      _compression = false;
       _listener = 0;
       l->on_nntp_done (this, health, response);
-      _compression = false;
    }
 }
 
