@@ -1294,7 +1294,8 @@ UUEncodePartial (FILE *outfile, FILE *infile,
 {
   mimemap *miter=mimetable;
   static FILE *theifile;
-  int themode, numparts;
+  static int numparts;
+  int themode;
   struct stat finfo;
   long thesize;
   char *ptr;

@@ -164,7 +164,7 @@ namespace pan
       void set_encoder_done (bool setme) { _encoder_has_run = setme; }
       needed_t& needed() { return _needed; }
       void build_needed_tasks();
-
+      void wakeup() { _state.set_working(); update_work(); }
   };
 }
 

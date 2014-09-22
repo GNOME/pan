@@ -140,7 +140,10 @@ EncodeCache :: add (const Quark& message_id)
 void EncodeCache :: finalize (std::string message_id)
 {
   struct stat sb;
-  stat (message_id.c_str(), &sb);
+	char out_path[4096];
+	
+	get_filename(out_path, Quark(message_id));
+  stat (out_path, &sb);
   _mid_to_info[message_id]._size = sb.st_size;
   fire_added (message_id);
   _current_bytes += sb.st_size;
