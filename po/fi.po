@@ -31,8 +31,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Pan\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-04 20:58+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=Pan&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-03-23 17:15+0000\n"
 "PO-Revision-Date: 2007-01-29 17:46+0300\n"
 "Last-Translator: Flammie Pirinen <flammie@iki.fi>\n"
 "Language-Team: Finnish <laatu@lokalisointi.org>\n"
@@ -41,56 +42,71 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../pan.desktop.in.h:1
-msgid "Pan Newsreader"
-msgstr "Pan-keskusteluryhmäohjelma"
+#. update the titlebar
+#: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106
+#: ../pan/gui/gui.cc:1040 ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:2009
+#: ../pan/gui/score-add-ui.cc:602
+msgid "Pan"
+msgstr "Pan"
 
 #: ../pan.desktop.in.h:2
+#, fuzzy
+#| msgid "Pan Newsreader"
+msgid "Newsreader"
+msgstr "Pan-keskusteluryhmäohjelma"
+
+#: ../pan.desktop.in.h:3
 msgid "Read and Post Usenet Articles"
 msgstr ""
 
-#: ../pan/data/article-cache.cc:143 ../pan/data/encode-cache.cc:62
+#: ../pan/data/article-cache.cc:144 ../pan/data/encode-cache.cc:62
 #, c-format
 msgid "Error opening directory: \"%s\": %s"
 msgstr "Virhe avattaessa hakemistoa %s: %s"
 
-#: ../pan/data/article-cache.cc:231 ../pan/data/article-cache.cc:242
-#: ../pan/data-impl/data-io.cc:187 ../pan/data-impl/data-io.cc:211
-#: ../pan/gui/post-ui.cc:1639
+#: ../pan/data/article-cache.cc:235 ../pan/data/article-cache.cc:244
+#: ../pan/data-impl/data-io.cc:199 ../pan/data-impl/data-io.cc:231
+#: ../pan/gui/post-ui.cc:1723
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Tiedoston %s tallentaminen ei onnistu: %s"
 
-#: ../pan/data/article-cache.cc:355
+#: ../pan/data/article-cache.cc:362
 #, c-format
 msgid "Error opening file \"%s\" %s"
 msgstr "Virhe avattaessa tiedostoa %s: %s"
 
-#: ../pan/data/article-cache.cc:386 ../pan/data-impl/profiles.cc:174
-#: ../pan/data-impl/server.cc:436 ../pan/general/file-util.cc:298
-#: ../pan/gui/post-ui.cc:609 ../pan/gui/task-pane.cc:691
+#: ../pan/data/article-cache.cc:393 ../pan/data-impl/profiles.cc:174
+#: ../pan/data-impl/server.cc:500 ../pan/general/file-util.cc:311
+#: ../pan/gui/post-ui.cc:638 ../pan/gui/task-pane.cc:737
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Virhe luettaessa tiedostoa %s: %s"
 
-#: ../pan/data/cert-store.cc:238
+#: ../pan/data/cert-store.cc:262
 #, fuzzy, c-format
 msgid "Error opening SSL certificate directory: \"%s\": %s"
 msgstr "Virhe avattaessa hakemistoa %s: %s"
 
-#: ../pan/data/cert-store.cc:270
+#: ../pan/data/cert-store.cc:293
 #, c-format
-msgid "Succesfully added %d SSL PEM certificate(s) to Certificate Store."
+msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
+msgstr ""
+
+#: ../pan/data/cert-store.cc:313
+msgid ""
+"Error initializing Certificate Store. Check that the permissions for the "
+"folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
 msgstr ""
 
 #. load_group_descriptions (*_data_io);
-#: ../pan/data-impl/data-impl.cc:109
+#: ../pan/data-impl/data-impl.cc:113
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "Ladattiin datataustaosa %.1f sekunnissa"
 
-#: ../pan/data-impl/data-impl.cc:140
-msgid "Pan newsreader server passwords"
+#: ../pan/data-impl/data-impl.cc:143
+msgid "Pan Newsreader's server passwords"
 msgstr ""
 
 #: ../pan/data-impl/groups.cc:94
@@ -125,21 +141,21 @@ msgstr ""
 "Tallennettu %lu osaa, %lu artikkelissa ryhmässä %s %.1f sekunnissa (%.0f "
 "artikkelia∕sekunti)"
 
-#: ../pan/data-impl/headers.cc:1173
+#: ../pan/data-impl/headers.cc:1191
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "%lu lisätty ryhmään %s."
 
-#: ../pan/data-impl/server.cc:234
+#: ../pan/data-impl/server.cc:261
 #, c-format
-msgid "There seems to be no Password set for Server %s."
+msgid "There seems to be no password set for server %s."
 msgstr ""
 
-#: ../pan/data-impl/server.cc:238
-msgid "The Gnome keyring denied access to the Passwords."
+#: ../pan/data-impl/server.cc:265
+msgid "GNOME Keyring denied access to the passwords."
 msgstr ""
 
-#: ../pan/data-impl/xover.cc:239
+#: ../pan/data-impl/xover.cc:243
 #, c-format
 msgid "Error reading from %s: unknown group \"%s\""
 msgstr "Virhe luettaessa lähteestä %s: tuntematon ryhmä \"%s\""
@@ -147,31 +163,31 @@ msgstr "Virhe luettaessa lähteestä %s: tuntematon ryhmä \"%s\""
 # Oisko nää sit strftimeä? 
 # Esim: 12:30 AM → 12.30
 #. build the locale strings
-#: ../pan/general/e-util.cc:213
+#: ../pan/general/e-util.cc:211
 msgid "%l:%M %p"
 msgstr "%-H.%M"
 
 # Esim: Today 12:30 AM → Tänään 12.30
-#: ../pan/general/e-util.cc:214
+#: ../pan/general/e-util.cc:212
 msgid "Today %l:%M %p"
 msgstr "Tänään %-H.%M"
 
 # Esim: Thu 12:30 AM → Torstaina 12.30
-#: ../pan/general/e-util.cc:215
+#: ../pan/general/e-util.cc:213
 msgid "%a %l:%M %p"
 msgstr "%Ana %-H.%M"
 
 # Esim: Oct 04 12:30 AM → 4. Lokakuuta 12.30
-#: ../pan/general/e-util.cc:216
+#: ../pan/general/e-util.cc:214
 msgid "%b %d %l:%M %p"
 msgstr "%-d. %Bta %-H.%M"
 
 # Esim: Oct 04 2004 → 4. Lokakuuta 2004
-#: ../pan/general/e-util.cc:217
+#: ../pan/general/e-util.cc:215
 msgid "%b %d %Y"
 msgstr "%-d %Bta %Y"
 
-#: ../pan/general/e-util.cc:242
+#: ../pan/general/e-util.cc:240
 msgid "?"
 msgstr "?"
 
@@ -186,708 +202,735 @@ msgstr ""
 "Ei voitu selvittää artikkelin koodausta: UTF‐8:ksi kelpaamattomat merkit "
 "poistettiin."
 
-#: ../pan/gui/actions.cc:274 ../pan/gui/post-ui.cc:417
+#: ../pan/gui/actions.cc:303 ../pan/gui/post-ui.cc:446
 msgid "_File"
 msgstr "_Tiedosto"
 
-#: ../pan/gui/actions.cc:275 ../pan/gui/post-ui.cc:418
+#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:447
 msgid "_Edit"
 msgstr "_Muokkaa"
 
-#: ../pan/gui/actions.cc:276 ../pan/gui/prefs-ui.cc:1064
+#: ../pan/gui/actions.cc:305 ../pan/gui/prefs-ui.cc:1107
 msgid "_Layout"
 msgstr "Osioiden _asettelu"
 
-#: ../pan/gui/actions.cc:277
+#: ../pan/gui/actions.cc:306
 msgid "_Group Pane"
 msgstr "_Ryhmälistaosio"
 
-#: ../pan/gui/actions.cc:278
+#: ../pan/gui/actions.cc:307
 msgid "_Header Pane"
 msgstr "_Otsakeosio"
 
-#: ../pan/gui/actions.cc:279
+#: ../pan/gui/actions.cc:308
 msgid "_Body Pane"
 msgstr "_Viestiosio"
 
-#: ../pan/gui/actions.cc:280
+#: ../pan/gui/actions.cc:309
 msgid "_View"
 msgstr "_Näytä"
 
-#: ../pan/gui/actions.cc:281
+#: ../pan/gui/actions.cc:310
 msgid "Filte_r"
 msgstr "S_uodattimet"
 
 # ei huonommin nimetty valikko...
-#: ../pan/gui/actions.cc:282
+#: ../pan/gui/actions.cc:311
 msgid "_Go"
 msgstr "_Siirry"
 
-#: ../pan/gui/actions.cc:283 ../pan/gui/prefs-ui.cc:1091
+#: ../pan/gui/actions.cc:312 ../pan/gui/prefs-ui.cc:1157
 msgid "_Actions"
 msgstr "_Toiminnot"
 
-#: ../pan/gui/actions.cc:284
+#: ../pan/gui/actions.cc:313
 msgid "_Articles"
 msgstr "_Artikkelit"
 
-#: ../pan/gui/actions.cc:285
+#: ../pan/gui/actions.cc:314
 msgid "G_roups"
 msgstr "R_yhmät"
 
-#: ../pan/gui/actions.cc:286 ../pan/gui/actions.cc:287
+#: ../pan/gui/actions.cc:315 ../pan/gui/actions.cc:316
 msgid "_Post"
 msgstr "_Lähetä"
 
-#: ../pan/gui/actions.cc:288
+#: ../pan/gui/actions.cc:317
 msgid "_Help"
 msgstr "_Ohje"
 
-#: ../pan/gui/actions.cc:291
+#: ../pan/gui/actions.cc:320
 msgid "_Read Group"
 msgstr "_Lue ryhmä"
 
-#: ../pan/gui/actions.cc:292
+#: ../pan/gui/actions.cc:321
 #, fuzzy
 msgid "Read Group"
 msgstr "_Lue ryhmä"
 
-#: ../pan/gui/actions.cc:296
+#: ../pan/gui/actions.cc:325
 #, fuzzy
 msgid "_Mark Selected Groups Read"
 msgstr "Merkitse valitut ryhmät _luetuiksi"
 
-#: ../pan/gui/actions.cc:297
+#: ../pan/gui/actions.cc:326
 #, fuzzy
 msgid "Mark Selected Groups Read"
 msgstr "Merkitse valitut ryhmät _luetuiksi"
 
-#: ../pan/gui/actions.cc:301
+#: ../pan/gui/actions.cc:330
 msgid "_Delete Selected Groups' Articles"
 msgstr "_Poista valittujen ryhmien artikkelit"
 
-#: ../pan/gui/actions.cc:302
+#: ../pan/gui/actions.cc:331
 #, fuzzy
 msgid "Delete Selected Groups' Articles"
 msgstr "_Poista valittujen ryhmien artikkelit"
 
-#: ../pan/gui/actions.cc:306
+#: ../pan/gui/actions.cc:335
 msgid "Get New _Headers in Selected Groups"
 msgstr "Hae uudet _otsikot valituista ryhmistä"
 
-#: ../pan/gui/actions.cc:307
+#: ../pan/gui/actions.cc:336
 #, fuzzy
 msgid "Get New Headers in Selected Groups"
 msgstr "Hae uudet _otsikot valituista ryhmistä"
 
-#: ../pan/gui/actions.cc:311 ../pan/gui/actions.cc:316
+#: ../pan/gui/actions.cc:340 ../pan/gui/actions.cc:345
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "Hae uudet _otsikot tilatuista ryhmistä"
 
-#: ../pan/gui/actions.cc:312 ../pan/gui/actions.cc:317
+#: ../pan/gui/actions.cc:341 ../pan/gui/actions.cc:346
 #, fuzzy
 msgid "Get New Headers in Subscribed Groups"
 msgstr "Hae uudet _otsikot tilatuista ryhmistä"
 
-#: ../pan/gui/actions.cc:321
+#: ../pan/gui/actions.cc:350
 msgid "Get _Headers..."
 msgstr "Hae _otsikot..."
 
-#: ../pan/gui/actions.cc:322
+#: ../pan/gui/actions.cc:351
 #, fuzzy
 msgid "Get Headers..."
 msgstr "Hae _otsikot..."
 
-#: ../pan/gui/actions.cc:326 ../pan/gui/actions.cc:327
+#: ../pan/gui/actions.cc:355 ../pan/gui/actions.cc:356
 msgid "Refresh Group List"
 msgstr "Päivitä ryhmälista"
 
-#: ../pan/gui/actions.cc:331
+#: ../pan/gui/actions.cc:360
 msgid "_Subscribe"
 msgstr "_Tilaa"
 
-#: ../pan/gui/actions.cc:332
+#: ../pan/gui/actions.cc:361
 #, fuzzy
 msgid "Subscribe"
 msgstr "_Tilaa"
 
-#: ../pan/gui/actions.cc:336
+#: ../pan/gui/actions.cc:365
 msgid "_Unsubscribe"
 msgstr "P_eruuta tilaus"
 
-#: ../pan/gui/actions.cc:337
+#: ../pan/gui/actions.cc:366
 #, fuzzy
 msgid "Unsubscribe"
 msgstr "P_eruuta tilaus"
 
-#: ../pan/gui/actions.cc:341
+#: ../pan/gui/actions.cc:370
 msgid "_Save Articles..."
 msgstr "Tallenna _artikkelit..."
 
-#: ../pan/gui/actions.cc:342
+#: ../pan/gui/actions.cc:371
 #, fuzzy
 msgid "Save Articles..."
 msgstr "Tallenna _artikkelit..."
 
-#: ../pan/gui/actions.cc:346
+#: ../pan/gui/actions.cc:375
 #, fuzzy
 msgid "Save Articles from Selected _NZB..."
 msgstr "Tallenna _artikkelit tästä NZB:stä..."
 
-#: ../pan/gui/actions.cc:347
+#: ../pan/gui/actions.cc:376
 #, fuzzy
 msgid "Save Articles from Selected NZB"
 msgstr "Tallenna _artikkelit tästä NZB:stä..."
 
-#: ../pan/gui/actions.cc:351
+#: ../pan/gui/actions.cc:380
 #, fuzzy
 msgid "Save Articles to an NZB _File..."
 msgstr "Tallenna _artikkelit tästä NZB:stä..."
 
-#: ../pan/gui/actions.cc:352
+#: ../pan/gui/actions.cc:381
 #, fuzzy
 msgid "Save Articles to an NZB File"
 msgstr "Tallenna _artikkelit tästä NZB:stä..."
 
-#: ../pan/gui/actions.cc:356 ../pan/gui/actions.cc:357
+#: ../pan/gui/actions.cc:385 ../pan/gui/actions.cc:386
 msgid "Print"
 msgstr ""
 
-#: ../pan/gui/actions.cc:361
+#: ../pan/gui/actions.cc:390
 msgid "_Import NZB Files..."
 msgstr "_Tuo NZB‐tiedostoja..."
 
-#: ../pan/gui/actions.cc:366
+#: ../pan/gui/actions.cc:395
 msgid "_Cancel Last Task"
 msgstr "_Peruuta viimeisin toiminto"
 
-#: ../pan/gui/actions.cc:371
+#: ../pan/gui/actions.cc:400
 msgid "_Task Manager"
 msgstr "Toimintojen _hallinta"
 
-#: ../pan/gui/actions.cc:376
+#: ../pan/gui/actions.cc:405
 msgid "_Event Log"
 msgstr "_Tapahtumaloki"
 
-#: ../pan/gui/actions.cc:381
+#: ../pan/gui/actions.cc:410
 msgid "_Quit"
 msgstr "_Lopeta"
 
-#: ../pan/gui/actions.cc:386
+#: ../pan/gui/actions.cc:415
 msgid "Select _All Articles"
 msgstr "Hae k_aikki viestit"
 
-#: ../pan/gui/actions.cc:391
+#: ../pan/gui/actions.cc:420
 msgid "_Deselect All Articles"
 msgstr "Poista val_inta artikkeleista"
 
-#: ../pan/gui/actions.cc:396
+#: ../pan/gui/actions.cc:425
 msgid "Add Su_bthreads to Selection"
 msgstr "Lisää _alisäikeet valintaan"
 
-#: ../pan/gui/actions.cc:401
+#: ../pan/gui/actions.cc:430
 msgid "Add _Threads to Selection"
 msgstr "Lisää s_äikeet valintaan"
 
-#: ../pan/gui/actions.cc:406
+#: ../pan/gui/actions.cc:435
 msgid "Add _Similar Articles to Selection"
 msgstr "Lisää _samanlaiset artikkelit valintaan"
 
-#: ../pan/gui/actions.cc:411
+#: ../pan/gui/actions.cc:440
 msgid "Select Article _Body"
 msgstr "Valitse artikkelin _sisältö"
 
-#: ../pan/gui/actions.cc:416
+#: ../pan/gui/actions.cc:445
 msgid "Edit _Preferences"
 msgstr "Muokkaa _asetuksia"
 
-#: ../pan/gui/actions.cc:421
+#: ../pan/gui/actions.cc:450
 msgid "Edit Selected _Group's Preferences"
 msgstr "Muokkaa valittujen _ryhmien asetuksia"
 
-#: ../pan/gui/actions.cc:426 ../pan/gui/post-ui.cc:434
+#: ../pan/gui/actions.cc:455 ../pan/gui/post-ui.cc:463
 msgid "Edit P_osting Profiles"
 msgstr "Muokkaa _postitusprofiileja"
 
-#: ../pan/gui/actions.cc:431
+#: ../pan/gui/actions.cc:460
 msgid "Edit _News Servers"
 msgstr "Muokkaa _keskusteluryhmäpalvelinasetuksia"
 
-#: ../pan/gui/actions.cc:436
+#: ../pan/gui/actions.cc:465
 msgid "Jump to _Group Tab"
 msgstr "Siirry _ryhmälehteen"
 
-#: ../pan/gui/actions.cc:441
+#: ../pan/gui/actions.cc:470
 msgid "Jump to _Header Tab"
 msgstr "Siirry _otsikkolehteen"
 
-#: ../pan/gui/actions.cc:446
+#: ../pan/gui/actions.cc:475
 msgid "Jump to _Body Tab"
 msgstr "Siirry _sisältölehteen"
 
-#: ../pan/gui/actions.cc:451
+#: ../pan/gui/actions.cc:480
 msgid "_Rot13 Selected Text"
 msgstr "_Rot13 valitulle tekstille"
 
-#: ../pan/gui/actions.cc:456
+#: ../pan/gui/actions.cc:485
 msgid "Clear _Header Pane"
 msgstr "Tyhjennä _otsakeosio"
 
-#: ../pan/gui/actions.cc:461
+#: ../pan/gui/actions.cc:490
 msgid "Clear _Body Pane"
 msgstr "Tyhjennä _viestiosio"
 
-#: ../pan/gui/actions.cc:466
+#: ../pan/gui/actions.cc:495
 msgid "Cache Article"
 msgstr "Artikkeli välimuistiin"
 
-#: ../pan/gui/actions.cc:471
+#: ../pan/gui/actions.cc:500
 msgid "Read Article"
 msgstr "Lue artikkeli"
 
-#: ../pan/gui/actions.cc:476
+#: ../pan/gui/actions.cc:505
 msgid "Show Article Information"
 msgstr "Näytä artikkelin tiedot"
 
 # se toiminto joka perinteisesti spacea mätkimällä tapahtuu
-#: ../pan/gui/actions.cc:481
+#: ../pan/gui/actions.cc:510
 msgid "Read _More"
 msgstr "Lue _eteenpäin"
 
 # se toiminto joka perinteisesti spacea mätkimällä tapahtuu
-#: ../pan/gui/actions.cc:482
+#: ../pan/gui/actions.cc:511
 #, fuzzy
 msgid "Read More"
 msgstr "Lue _eteenpäin"
 
-#: ../pan/gui/actions.cc:486
+#: ../pan/gui/actions.cc:515
 msgid "Read _Back"
 msgstr "Palaa _taaksepäin"
 
-#: ../pan/gui/actions.cc:487
+#: ../pan/gui/actions.cc:516
 #, fuzzy
 msgid "Read Back"
 msgstr "Palaa _taaksepäin"
 
-#: ../pan/gui/actions.cc:491
+#: ../pan/gui/actions.cc:520
 msgid "Next _Unread Group"
 msgstr "Seuraavaan luke_mattomaan ryhmään"
 
-#: ../pan/gui/actions.cc:496
+#: ../pan/gui/actions.cc:525
 msgid "Next _Group"
 msgstr "Seuraavaan ry_hmään"
 
-#: ../pan/gui/actions.cc:501
+#: ../pan/gui/actions.cc:530
 msgid "Next _Unread Article"
 msgstr "Seuraavaan _lukemattomaan artikkeliin"
 
-#: ../pan/gui/actions.cc:502
+#: ../pan/gui/actions.cc:531
 #, fuzzy
 msgid "Next Unread Article"
 msgstr "Seuraavaan _lukemattomaan artikkeliin"
 
-#: ../pan/gui/actions.cc:506
+#: ../pan/gui/actions.cc:535
 msgid "Next _Article"
 msgstr "Seuraavaan _artikkeliin"
 
-#: ../pan/gui/actions.cc:507
+#: ../pan/gui/actions.cc:536
 #, fuzzy
 msgid "Next Article"
 msgstr "Seuraavaan _artikkeliin"
 
-#: ../pan/gui/actions.cc:511
+#: ../pan/gui/actions.cc:540
 msgid "Next _Watched Article"
 msgstr "Seuraavaan _seurattuun artikkeliin"
 
-#: ../pan/gui/actions.cc:516
+#: ../pan/gui/actions.cc:545
 msgid "Next Unread _Thread"
 msgstr "Seuraavaan l_ukemattomaan säikeeseen"
 
-#: ../pan/gui/actions.cc:517
+#: ../pan/gui/actions.cc:546
 #, fuzzy
 msgid "Next Unread Thread"
 msgstr "Seuraavaan l_ukemattomaan säikeeseen"
 
-#: ../pan/gui/actions.cc:521
+#: ../pan/gui/actions.cc:550
 msgid "Next Threa_d"
 msgstr "Seuraavaan s_äikeeseen"
 
-#: ../pan/gui/actions.cc:526
+#: ../pan/gui/actions.cc:555
 msgid "Pre_vious Article"
 msgstr "_Edelliseen artikkeliin"
 
-#: ../pan/gui/actions.cc:531
+#: ../pan/gui/actions.cc:560
 msgid "Previous _Thread"
 msgstr "E_delliseen säikeeseen"
 
-#: ../pan/gui/actions.cc:536
+#: ../pan/gui/actions.cc:565
 msgid "_Parent Article"
 msgstr "_Ylempään artikkeliin"
 
-#: ../pan/gui/actions.cc:541
+#: ../pan/gui/actions.cc:570
 msgid "Ignore _Author"
 msgstr "O_hita kirjoittaja"
 
-#: ../pan/gui/actions.cc:545
+#: ../pan/gui/actions.cc:574
 msgid "_Watch Thread"
 msgstr "_Seuraa säiettä"
 
-#: ../pan/gui/actions.cc:550
+#: ../pan/gui/actions.cc:579
 msgid "_Ignore Thread"
 msgstr "O_hita säie"
 
-#: ../pan/gui/actions.cc:555 ../pan/gui/actions.cc:556
+#: ../pan/gui/actions.cc:584 ../pan/gui/actions.cc:585
 #, fuzzy
 msgid "_Toggle Flag On/Off for Thread"
 msgstr "_Seuraa säiettä"
 
-#: ../pan/gui/actions.cc:560 ../pan/gui/actions.cc:561
+#: ../pan/gui/actions.cc:589 ../pan/gui/actions.cc:590
 #, fuzzy
 msgid "_Turn Flag Off for Thread"
 msgstr "_Seuraa säiettä"
 
-#: ../pan/gui/actions.cc:565 ../pan/gui/actions.cc:566
+#: ../pan/gui/actions.cc:594 ../pan/gui/actions.cc:595
 #, fuzzy
 msgid "_Select All Flagged Threads"
 msgstr "Seuraavaan l_ukemattomaan säikeeseen"
 
-#: ../pan/gui/actions.cc:570 ../pan/gui/actions.cc:571
+#: ../pan/gui/actions.cc:599 ../pan/gui/actions.cc:600
 #, fuzzy
 msgid "_Go to Next Flagged Thread"
 msgstr "Seuraavaan l_ukemattomaan säikeeseen"
 
-#: ../pan/gui/actions.cc:575 ../pan/gui/actions.cc:576
+#: ../pan/gui/actions.cc:604 ../pan/gui/actions.cc:605
 #, fuzzy
 msgid "_Go to Last Flagged Thread"
 msgstr "Seuraavaan l_ukemattomaan säikeeseen"
 
-#: ../pan/gui/actions.cc:580 ../pan/gui/actions.cc:581
+#: ../pan/gui/actions.cc:609 ../pan/gui/actions.cc:610
 #, fuzzy
 msgid "_Invert Selection"
 msgstr "Lisää s_äikeet valintaan"
 
-#: ../pan/gui/actions.cc:585
+#: ../pan/gui/actions.cc:614
 msgid "Edit Article's Watch/Ignore/Score..."
 msgstr "Muokkaa artikkelin seurausta, ohitusta ja pisteytystä..."
 
-#: ../pan/gui/actions.cc:590
+#: ../pan/gui/actions.cc:619
 #, fuzzy
 msgid "Add a _Scoring Rule..."
 msgstr "_Lisää uusi pisteytys..."
 
-#: ../pan/gui/actions.cc:595
+#: ../pan/gui/actions.cc:624
 msgid "Cance_l Article..."
 msgstr "_Peruuta artikkeli..."
 
-#: ../pan/gui/actions.cc:600
+#: ../pan/gui/actions.cc:629
 msgid "_Supersede Article..."
 msgstr "_Korvaa artikkeli..."
 
-#: ../pan/gui/actions.cc:605
+#: ../pan/gui/actions.cc:634
 msgid "_Delete Article"
 msgstr "_Poista artikkeli"
 
-#: ../pan/gui/actions.cc:610
+#: ../pan/gui/actions.cc:639
 msgid "Clear Article Cache"
 msgstr "Tyhjennä artikkelivälimuisti"
 
-#: ../pan/gui/actions.cc:615
+#: ../pan/gui/actions.cc:644
 msgid "_Mark Article as Read"
 msgstr "_Merkitse luetuksi"
 
-#: ../pan/gui/actions.cc:620
+#: ../pan/gui/actions.cc:649
 msgid "Mark Article as _Unread"
 msgstr "Me_rkitse lukemattomaksi"
 
-#: ../pan/gui/actions.cc:626
+#: ../pan/gui/actions.cc:655
 #, fuzzy
 msgid "_Mark Thread as Read"
 msgstr "_Merkitse luetuksi"
 
-#: ../pan/gui/actions.cc:631
+#: ../pan/gui/actions.cc:660
 #, fuzzy
 msgid "Mark Thread as _Unread"
 msgstr "Me_rkitse lukemattomaksi"
 
-#: ../pan/gui/actions.cc:636
+#: ../pan/gui/actions.cc:665
 msgid "_Post to Newsgroup"
 msgstr "_Lähetä viesti ryhmään"
 
-#: ../pan/gui/actions.cc:637
+#: ../pan/gui/actions.cc:666
 #, fuzzy
 msgid "Post to Newsgroup"
 msgstr "_Lähetä viesti ryhmään"
 
-#: ../pan/gui/actions.cc:641
+#: ../pan/gui/actions.cc:670
 msgid "_Followup to Newsgroup"
 msgstr "V_astaa uutisryhmään"
 
-#: ../pan/gui/actions.cc:642
+#: ../pan/gui/actions.cc:671
 #, fuzzy
 msgid "Followup to Newsgroup"
 msgstr "V_astaa uutisryhmään"
 
-#: ../pan/gui/actions.cc:646
+#: ../pan/gui/actions.cc:675
 msgid "_Reply to Author in Mail"
 msgstr "_Vastaa kirjoittajalle meilitse"
 
-#: ../pan/gui/actions.cc:651
+#: ../pan/gui/actions.cc:680
 msgid "_Pan Home Page"
 msgstr "Panin _kotisivu"
 
-#: ../pan/gui/actions.cc:656
+#: ../pan/gui/actions.cc:685
 msgid "Give _Feedback or Report a Bug..."
 msgstr "Anna _palautetta tai ilmoita viasta..."
 
 # Tälle on jokin oikea suomennoskin?
-#: ../pan/gui/actions.cc:661
+#: ../pan/gui/actions.cc:690
 msgid "_Tip Jar..."
 msgstr "_Lahjoituspurkki..."
 
-#: ../pan/gui/actions.cc:666
+#: ../pan/gui/actions.cc:695
 msgid "_About"
 msgstr "_Tietoja"
 
-#: ../pan/gui/actions.cc:671
+#: ../pan/gui/actions.cc:700
 msgid "Edit _SSL Certificates"
 msgstr ""
 
-#: ../pan/gui/actions.cc:685
+#: ../pan/gui/actions.cc:715
 msgid "_Thread Headers"
 msgstr "_Säikeistä otsakkeet"
 
-#: ../pan/gui/actions.cc:686
-msgid "_Wrap Article Body"
+#: ../pan/gui/actions.cc:716
+#, fuzzy
+#| msgid "_Wrap Article Body"
+msgid "Wrap Article Body"
 msgstr "_Rivitä viestin sisältö"
 
-#: ../pan/gui/actions.cc:687
+#: ../pan/gui/actions.cc:717
+#, fuzzy
+#| msgid "Show Article Information"
+msgid "Show Article Signature"
+msgstr "Näytä artikkelin tiedot"
+
+#: ../pan/gui/actions.cc:718
 msgid "Mute _Quoted Text"
 msgstr "_Piilota lainattu teksti"
 
-#: ../pan/gui/actions.cc:688
+#: ../pan/gui/actions.cc:719
 msgid "Show All _Headers in Body Pane"
 msgstr "Näytä _kaikki viestin otsakkeet sisältöosiossa"
 
-#: ../pan/gui/actions.cc:689
+#: ../pan/gui/actions.cc:720
 msgid "Show _Smilies as Graphics"
 msgstr "Näytä _graafiset hymiöt"
 
-#: ../pan/gui/actions.cc:690
+#: ../pan/gui/actions.cc:721
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr "Näytä *lihavointi*, __alleviivaus__ ja /kursivointi/"
 
-#: ../pan/gui/actions.cc:691
+#: ../pan/gui/actions.cc:722
 msgid "Size Pictures to _Fit"
 msgstr "_Sovita kuvien koko"
 
-#: ../pan/gui/actions.cc:692
+#: ../pan/gui/actions.cc:723
 msgid "Use _Monospace Font"
 msgstr "Käytä tasavälis_tä fonttia"
 
-#: ../pan/gui/actions.cc:693
+#: ../pan/gui/actions.cc:724
 msgid "Set Focus to Images"
 msgstr "Kohdista kuviin"
 
-#: ../pan/gui/actions.cc:694
+#: ../pan/gui/actions.cc:725
 msgid "Highlight _URLs"
 msgstr ""
 
-#: ../pan/gui/actions.cc:697
+#: ../pan/gui/actions.cc:728
 msgid "_Work Online"
 msgstr "T_yöskentele yhdistettynä"
 
-#: ../pan/gui/actions.cc:698
+#: ../pan/gui/actions.cc:729
 msgid "_Tabbed Layout"
 msgstr "_Välilehdellinen ulkoasu"
 
-#: ../pan/gui/actions.cc:699
+#: ../pan/gui/actions.cc:730
 msgid "Show Group _Pane"
 msgstr "Näytä ryhm_äosio"
 
-#: ../pan/gui/actions.cc:700
+#: ../pan/gui/actions.cc:731
 msgid "Show Hea_der Pane"
 msgstr "Näytä o_tsikko‐osio"
 
-#: ../pan/gui/actions.cc:701
+#: ../pan/gui/actions.cc:732
 msgid "Show Bod_y Pane"
 msgstr "Näytä v_iestiosio"
 
-#: ../pan/gui/actions.cc:702
+#: ../pan/gui/actions.cc:733
 msgid "Show _Toolbar"
 msgstr "Näytä _työkalupalkki"
 
-#: ../pan/gui/actions.cc:703
+#: ../pan/gui/actions.cc:734
 msgid "Abbreviate Group Names"
 msgstr "Lyhennä ryhmien nimet"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:736
+#, fuzzy
+#| msgid "Match Only _Unread Articles"
+msgid "Match Only _Read Articles"
+msgstr "Täsmää vain _lukemattomiin artikkeleihin"
+
+#: ../pan/gui/actions.cc:736
+#, fuzzy
+msgid "Match Only Read Articles"
+msgstr "Täsmää vain _lukemattomiin artikkeleihin"
+
+#: ../pan/gui/actions.cc:737
 msgid "Match Only _Unread Articles"
 msgstr "Täsmää vain _lukemattomiin artikkeleihin"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:737
 #, fuzzy
 msgid "Match Only Unread Articles"
 msgstr "Täsmää vain _lukemattomiin artikkeleihin"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:738
 msgid "Match Only _Cached Articles"
 msgstr "Täsmää vain _välimuistissa oleviin artikkeleihin"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:738
 #, fuzzy
 msgid "Match Only Cached Articles"
 msgstr "Täsmää vain _välimuistissa oleviin artikkeleihin"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:739
 msgid "Match Only _Complete Articles"
 msgstr "Täsmää vain _täydellisiin artikkeleihin"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:739
 #, fuzzy
 msgid "Match Only Complete Articles"
 msgstr "Täsmää vain _täydellisiin artikkeleihin"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:740
 msgid "Match Only _My Articles"
 msgstr "Täsmää vain kirjoitta_miini artikkeleihin"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:740
 #, fuzzy
 msgid "Match Only My Articles"
 msgstr "Täsmää vain kirjoitta_miini artikkeleihin"
 
-#: ../pan/gui/actions.cc:709
+#: ../pan/gui/actions.cc:741
 msgid "Match Only _Watched Articles"
 msgstr "Täsmää vain _seurattuihin artikkeleihin"
 
-#: ../pan/gui/actions.cc:709
+#: ../pan/gui/actions.cc:741
 #, fuzzy
 msgid "Match Only Watched Articles"
 msgstr "Täsmää vain _seurattuihin artikkeleihin"
 
-#: ../pan/gui/actions.cc:711
+#: ../pan/gui/actions.cc:743
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "Täsmää pisteisiin 9999 (_Seuratut)"
 
-#: ../pan/gui/actions.cc:712
+#: ../pan/gui/actions.cc:744
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr "Täsmää pisteisiin 5000—9998 (_Korkea)"
 
-#: ../pan/gui/actions.cc:713
+#: ../pan/gui/actions.cc:745
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "Täsmää pisteisiin 1—4999 (_Keskisuuri)"
 
-#: ../pan/gui/actions.cc:714
+#: ../pan/gui/actions.cc:746
 msgid "Match Scores of 0 (_Normal)"
 msgstr "Täsmää pisteisiin 0 (_Normaali)"
 
-#: ../pan/gui/actions.cc:715
+#: ../pan/gui/actions.cc:747
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "Täsmää pisteisiin −9998—−1 (_Matala)"
 
-#: ../pan/gui/actions.cc:716
+#: ../pan/gui/actions.cc:748
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "Täsmää pisteisiin −9999 (_Ohitetut)"
 
-#: ../pan/gui/actions.cc:718
+#: ../pan/gui/actions.cc:750
 msgid "Enable/Disable All _Rules"
 msgstr ""
 
-#: ../pan/gui/actions.cc:744
+#: ../pan/gui/actions.cc:778
 msgid "Show Matching _Articles"
 msgstr "Näytä täsmäävät _artikkelit"
 
-#: ../pan/gui/actions.cc:745
+#: ../pan/gui/actions.cc:779
 msgid "Show Matching Articles' _Threads"
 msgstr "Näytä täsmäävien artikkelien _säikeet"
 
-#: ../pan/gui/actions.cc:746
+#: ../pan/gui/actions.cc:780
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Näytä täsmäävien artikkelien _alisäikeet"
 
-#: ../pan/gui/body-pane.cc:1011
+#: ../pan/gui/body-pane.cc:1056
 #, fuzzy, c-format
 msgid "Unnamed File"
 msgstr "Allekirjoitustiedosto"
 
-#: ../pan/gui/body-pane.cc:1092 ../pan/gui/gui.cc:1864
-#: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1617
-#: ../pan/gui/post-ui.cc:2496 ../pan/gui/prefs-ui.cc:833
-#: ../pan/gui/score-add-ui.cc:139
+#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1980
+#: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1748
+#: ../pan/gui/post-ui.cc:2588 ../pan/gui/prefs-ui.cc:855
+#: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Aihe"
 
-#: ../pan/gui/body-pane.cc:1094 ../pan/gui/gui.cc:1864
+#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1980
 msgid "From"
 msgstr "Lähettäjä"
 
-#: ../pan/gui/body-pane.cc:1096 ../pan/gui/gui.cc:1865
-#: ../pan/gui/header-pane.cc:1695 ../pan/gui/log-ui.cc:305
-#: ../pan/gui/prefs-ui.cc:829
+#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1981
+#: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:307
+#: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
 msgstr "Päiväys"
 
-#: ../pan/gui/body-pane.cc:1103
+#: ../pan/gui/body-pane.cc:1148
 msgid "Newsgroups"
 msgstr "Keskusteluryhmät"
 
-#: ../pan/gui/body-pane.cc:1108
+#: ../pan/gui/body-pane.cc:1155 ../pan/gui/body-pane.cc:1163
+#: ../pan/gui/body-pane.cc:1170
+msgid "User-Agent"
+msgstr ""
+
+#: ../pan/gui/body-pane.cc:1176
 msgid "Followup-To"
 msgstr "Keskustelunsiirto"
 
-#: ../pan/gui/body-pane.cc:1118
+#: ../pan/gui/body-pane.cc:1186
 msgid "Reply-To"
 msgstr "Vastaus osoitteeseen"
 
-#: ../pan/gui/body-pane.cc:1160
+#: ../pan/gui/body-pane.cc:1229
 msgid " from "
 msgstr " lähettänyt "
 
 # möö
-#: ../pan/gui/body-pane.cc:1162
+#: ../pan/gui/body-pane.cc:1231
 msgid " at "
 msgstr " "
 
-#: ../pan/gui/body-pane.cc:1264
+#: ../pan/gui/body-pane.cc:1318
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
 "\n"
-"<b>Signer</b> : %s ('%s')\n"
-"<b>Valid until</b> : %s\n"
-"<b>Created on</b> : %s"
+"<b>Signer:</b> %s ('%s')\n"
+"<b>Valid until:</b> %s\n"
+"<b>Created on:</b> %s"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1269
+#: ../pan/gui/body-pane.cc:1323
 msgid "always"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1485
+#: ../pan/gui/body-pane.cc:1543
 msgid "Copy _URL"
 msgstr "Kopioi _URL"
 
-#: ../pan/gui/body-pane.cc:1680
+#: ../pan/gui/body-pane.cc:1748
 #, fuzzy
-msgid "Save attachment as ...."
+msgid "Save Attachment As..."
 msgstr "Tallenna liitteet"
 
-#: ../pan/gui/body-pane.cc:1683
+#: ../pan/gui/body-pane.cc:1751
 #, fuzzy
-msgid "Save all attachments"
+msgid "Save All Attachments"
 msgstr "Tallenna liitteet"
 
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1753
+#: ../pan/gui/body-pane.cc:1821
 #, fuzzy
 msgid "Attachments"
 msgstr "Tallenna liitteet"
 
-#. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:973
-#: ../pan/gui/gui.cc:1592 ../pan/gui/gui.cc:1893
-#: ../pan/gui/score-add-ui.cc:602
-msgid "Pan"
-msgstr "Pan"
+#: ../pan/gui/body-pane.cc:1836
+#, fuzzy
+#| msgid "Text File"
+msgid "Text View"
+msgstr "Tekstitiedosto"
+
+#: ../pan/gui/body-pane.cc:1845
+msgid "HTML View"
+msgstr ""
 
 #: ../pan/gui/dl-headers-ui.cc:112
 #, fuzzy, c-format
@@ -912,15 +955,15 @@ msgstr "Lataa k_aikki otsikot"
 msgid "Get the _latest N headers: "
 msgstr "Lataa _viimeisimmät N otsikkoa: "
 
-#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:826
+#: ../pan/gui/e-action-combo-box.c:386 ../pan/gui/prefs-ui.cc:848
 msgid "Action"
 msgstr "Toiminto"
 
-#: ../pan/gui/e-action-combo-box.c:389
+#: ../pan/gui/e-action-combo-box.c:387
 msgid "A GtkRadioAction"
 msgstr ""
 
-#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:518
+#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:558
 msgid "Unknown"
 msgstr "Tuntematon"
 
@@ -999,8 +1042,8 @@ msgstr "Ukraina"
 msgid "Visual"
 msgstr "Näkyvä"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2058
-#: ../pan/gui/post-ui.cc:519 ../pan/gui/prefs-ui.cc:737
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2178
+#: ../pan/gui/post-ui.cc:548 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Merkistökoodaus"
 
@@ -1012,297 +1055,321 @@ msgstr "Anna käytettävä merkistö"
 msgid "Other..."
 msgstr "Muu..."
 
+#: ../pan/gui/e-cte-dialog.c:76
+#, fuzzy
+msgid "Default Encoding"
+msgstr "Puretaan"
+
 #: ../pan/gui/e-cte-dialog.c:78
 #, fuzzy
-msgid "Default encoding"
+msgid "7-Bit Encoding"
 msgstr "Puretaan"
 
 #: ../pan/gui/e-cte-dialog.c:80
 #, fuzzy
-msgid "7Bit Encoding"
+msgid "8-Bit Encoding"
 msgstr "Puretaan"
 
 #: ../pan/gui/e-cte-dialog.c:82
 #, fuzzy
-msgid "8Bit Encoding"
+msgid "Base64 Encoding"
 msgstr "Puretaan"
 
 #: ../pan/gui/e-cte-dialog.c:84
 #, fuzzy
-msgid "BASE64 Encoding"
-msgstr "Puretaan"
-
-#: ../pan/gui/e-cte-dialog.c:86
-#, fuzzy
 msgid "Quoted-Printable Encoding"
 msgstr "Runkopaneelin merkistökoodaus"
 
-#: ../pan/gui/group-pane.cc:500
+#: ../pan/gui/group-pane.cc:330
+msgid "Sent"
+msgstr ""
+
+#: ../pan/gui/group-pane.cc:331
+msgid "Drafts"
+msgstr ""
+
+#: ../pan/gui/group-pane.cc:537
 #, fuzzy
 msgid "Group"
 msgstr "Ryhmät"
 
-#: ../pan/gui/group-pane.cc:501
+#: ../pan/gui/group-pane.cc:538
 #, fuzzy
 msgid "Group (regex)"
 msgstr "Ryhmän nimi"
 
-#: ../pan/gui/group-pane.cc:913
+#: ../pan/gui/group-pane.cc:1010
+msgid "Local Folders"
+msgstr ""
+
+#: ../pan/gui/group-pane.cc:1011
 msgid "Subscribed Groups"
 msgstr "Tilatut ryhmät"
 
-#: ../pan/gui/group-pane.cc:914
+#: ../pan/gui/group-pane.cc:1012
 msgid "Other Groups"
 msgstr "Muut ryhmät"
 
-#: ../pan/gui/group-pane.cc:954 ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/group-pane.cc:1052 ../pan/gui/score-view-ui.cc:157
 msgid "Name"
 msgstr "Nimi"
 
-#: ../pan/gui/group-prefs-dialog.cc:156
+#: ../pan/gui/group-prefs-dialog.cc:162
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "Profiilia ei ole määritelty valikossa Muokkaa→Lähetysprofiilit."
 
-#: ../pan/gui/group-prefs-dialog.cc:231
+#: ../pan/gui/group-prefs-dialog.cc:273
 msgid "Pan: Group Preferences"
 msgstr "Pan: Ryhmäasetukset"
 
-#: ../pan/gui/group-prefs-dialog.cc:247
+#: ../pan/gui/group-prefs-dialog.cc:288
 #, fuzzy, c-format
 msgid "Properties for Groups"
 msgstr "Asetukset kohteelle %s"
 
-#: ../pan/gui/group-prefs-dialog.cc:249
+#: ../pan/gui/group-prefs-dialog.cc:290
 #, c-format
 msgid "Properties for %s"
 msgstr "Asetukset kohteelle %s"
 
-#: ../pan/gui/group-prefs-dialog.cc:257
+#: ../pan/gui/group-prefs-dialog.cc:298
 msgid "Character _encoding:"
 msgstr "_Merkistökoodaus:"
 
-#: ../pan/gui/group-prefs-dialog.cc:259
+#: ../pan/gui/group-prefs-dialog.cc:300
 msgid "Directory for Saving Attachments"
 msgstr "Hakemisto johon liitetiedostot tallennetaan"
 
-#: ../pan/gui/group-prefs-dialog.cc:269
+#: ../pan/gui/group-prefs-dialog.cc:308
 msgid "Directory for _saving attachments:"
 msgstr "Hakemisto johon _liitetiedostot tallennetaan:"
 
-#: ../pan/gui/group-prefs-dialog.cc:271
+#: ../pan/gui/group-prefs-dialog.cc:310
 msgid "Posting _profile:"
 msgstr "Lähetys_profiili:"
 
-#: ../pan/gui/group-prefs-dialog.cc:277
+#: ../pan/gui/group-prefs-dialog.cc:315
 msgid "Spellchecker _language:"
 msgstr ""
 
-#: ../pan/gui/gui.cc:273
+#: ../pan/gui/group-prefs-dialog.cc:318
+msgid "Group color:"
+msgstr ""
+
+#: ../pan/gui/gui.cc:312
 msgid "Open the Task Manager"
 msgstr "Avaa toimintojen hallinta"
 
-#: ../pan/gui/gui.cc:301
+#: ../pan/gui/gui.cc:335
 msgid "Open the Event Log"
 msgstr "Avaa tapahtumaloki"
 
-#: ../pan/gui/gui.cc:561
+#: ../pan/gui/gui.cc:611
 msgid "Save NZB's Files"
 msgstr "Tallenna NZB:t tiedostoihin"
 
-#: ../pan/gui/gui.cc:588
+#: ../pan/gui/gui.cc:638
 msgid "Untitled.nzb"
 msgstr ""
 
-#: ../pan/gui/gui.cc:590
+#: ../pan/gui/gui.cc:640
 #, fuzzy
 msgid "Save NZB File as..."
 msgstr "Tallenna NZB:t tiedostoihin"
 
-#: ../pan/gui/gui.cc:757
+#: ../pan/gui/gui.cc:809
 msgid "Import NZB Files"
 msgstr "Tuo NZB‐tiedostoja"
 
-#: ../pan/gui/gui.cc:765 ../pan/gui/post-ui.cc:3197
+#: ../pan/gui/gui.cc:817 ../pan/gui/post-ui.cc:3287
 msgid "NZB Files"
 msgstr "NZB-tiedostot"
 
-#: ../pan/gui/gui.cc:770
+#: ../pan/gui/gui.cc:822
 msgid "All Files"
 msgstr "Kaikki tiedostot"
 
-#: ../pan/gui/gui.cc:1258
+#: ../pan/gui/gui.cc:1334
 msgid "Unable to supersede article."
 msgstr "Artikkelin korvaus ei onnistu."
 
-#: ../pan/gui/gui.cc:1259 ../pan/gui/gui.cc:1333
+#: ../pan/gui/gui.cc:1335 ../pan/gui/gui.cc:1409
 msgid "The article doesn't match any of your posting profiles."
 msgstr "Artikkeli ei täsmää lähetysprofiileihisi."
 
-#: ../pan/gui/gui.cc:1306
+#: ../pan/gui/gui.cc:1382
 msgid "Revise and send this article to replace the old one."
 msgstr "Tarkista ja lähetä uusi artikkeli korvaamaan vanhaa."
 
-#: ../pan/gui/gui.cc:1307 ../pan/gui/gui.cc:1370
+#: ../pan/gui/gui.cc:1383 ../pan/gui/gui.cc:1446
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
 "Ole kärsivällinen. Saattaa kestää tovin ennen kuin muutokset vaikuttavat."
 
-#: ../pan/gui/gui.cc:1332
+#: ../pan/gui/gui.cc:1408
 msgid "Unable to cancel article."
 msgstr "Artikkelin peruutus ei onnistu."
 
-#: ../pan/gui/gui.cc:1369
+#: ../pan/gui/gui.cc:1445
 msgid "Send this article to ask your server to cancel your other one."
 msgstr "Lähetä tämä artikkeli palvelimelle perumaan toista lähettämääsi."
 
-#: ../pan/gui/gui.cc:1387
+#: ../pan/gui/gui.cc:1463
 #, fuzzy
-msgid "You marked some articles for deletion"
+msgid "You have marked some articles for deletion."
 msgstr "Lisää _samanlaiset artikkelit valintaan"
 
-#: ../pan/gui/gui.cc:1388
+#: ../pan/gui/gui.cc:1464
 msgid "Are you sure you want to delete them?"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1413
-#, fuzzy
-msgid "Always trust"
-msgstr "Suorita aina muokkain"
-
-#: ../pan/gui/gui.cc:1416
-msgid "Do you want to accept it permanently (deletable afterwards) ?"
+#: ../pan/gui/gui.cc:1490
+msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1595
+#: ../pan/gui/gui.cc:1670
 #, fuzzy
 msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
 msgstr "Copyright © 2002—2007 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1600
+#: ../pan/gui/gui.cc:1675
 msgid "translator-credits"
 msgstr ""
 "Ilkka Tuohela, 2006-2007.\n"
 "Flammie Pirinen, 2002-2006.\n"
 "\n"
-"http://www.gnome.fi/"
+"https://l10n.gnome.org/teams/fi/"
 
-#: ../pan/gui/gui.cc:1709
+#: ../pan/gui/gui.cc:1808
+#, fuzzy
+#| msgid "_2. Header Pane"
+msgid "_1. Header Pane"
+msgstr "_2. Otsikko‐osio"
+
+#: ../pan/gui/gui.cc:1809
+#, fuzzy
+#| msgid "_2. Header Pane"
+msgid "_2. Search Pane"
+msgstr "_2. Otsikko‐osio"
+
+#: ../pan/gui/gui.cc:1815
 msgid "_1. Group Pane"
 msgstr "_1. Ryhmälistaosio"
 
-#: ../pan/gui/gui.cc:1710
+#: ../pan/gui/gui.cc:1817 ../pan/gui/gui.cc:1819
 msgid "_2. Header Pane"
 msgstr "_2. Otsikko‐osio"
 
-#: ../pan/gui/gui.cc:1711
+#: ../pan/gui/gui.cc:1821
 msgid "_3. Body Pane"
 msgstr "_3 Viestiosio"
 
-#: ../pan/gui/gui.cc:1800 ../pan/gui/gui.cc:1815
+#: ../pan/gui/gui.cc:1917 ../pan/gui/gui.cc:1932
 #, fuzzy
 msgid " Bytes"
 msgstr "Tavua"
 
-#: ../pan/gui/gui.cc:1803
+#: ../pan/gui/gui.cc:1920
 msgid " KB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1806
+#: ../pan/gui/gui.cc:1923
 msgid " MB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1809
+#: ../pan/gui/gui.cc:1926
 msgid " GB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1812
+#: ../pan/gui/gui.cc:1929
 msgid " TB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1844
+#: ../pan/gui/gui.cc:1961
 #, fuzzy, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
 msgstr[0] "artikkelissa on kaikki %d osaa."
 msgstr[1] "artikkelissa on kaikki %d osaa."
 
-#: ../pan/gui/gui.cc:1846
+#: ../pan/gui/gui.cc:1963
 #, fuzzy, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Artikkelista puuttuu %d %d osasta"
 msgstr[1] "Artikkelista puuttuu %d %d osasta"
 
-#: ../pan/gui/gui.cc:1865 ../pan/gui/header-pane.cc:1190
+#: ../pan/gui/gui.cc:1981 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "Viestin tunnus"
 
-#: ../pan/gui/gui.cc:1866 ../pan/gui/header-pane.cc:1665
-#: ../pan/gui/prefs-ui.cc:830
+#: ../pan/gui/gui.cc:1982 ../pan/gui/header-pane.cc:1796
+#: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Rivejä"
 
-#: ../pan/gui/gui.cc:1866
+#: ../pan/gui/gui.cc:1982
 msgid "Size"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1867 ../pan/gui/header-pane.cc:1680
-#: ../pan/gui/prefs-ui.cc:828
+#: ../pan/gui/gui.cc:1983 ../pan/gui/header-pane.cc:1812
+#: ../pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr "Tavua"
 
-#: ../pan/gui/gui.cc:1917
+#: ../pan/gui/gui.cc:2033
 msgid ""
-"Error loading iconv library. Some Charsets in the GUI will not be able to be "
-"encoded."
+"Error loading iconv library. Encoding certain character sets will not work "
+"in GUI."
 msgstr ""
 
-#: ../pan/gui/gui.cc:2059
+#: ../pan/gui/gui.cc:2179
 msgid "Body Pane Encoding"
 msgstr "Runkopaneelin merkistökoodaus"
 
-#: ../pan/gui/gui.cc:2090 ../pan/gui/task-pane.cc:569
+#: ../pan/gui/gui.cc:2210 ../pan/gui/task-pane.cc:609
 #, c-format
 msgid "Offline"
 msgstr "Ei yhteyttä"
 
-#: ../pan/gui/gui.cc:2094
+#: ../pan/gui/gui.cc:2214
 #, fuzzy, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
 msgstr[0] "Suljetaan %d yhteyttä"
 msgstr[1] "Suljetaan %d yhteyttä"
 
-#: ../pan/gui/gui.cc:2096 ../pan/gui/gui.cc:2126
+#: ../pan/gui/gui.cc:2216 ../pan/gui/gui.cc:2246
 #, c-format
 msgid "No Connections"
 msgstr "Ei yhteyksiä"
 
-#: ../pan/gui/gui.cc:2100
+#: ../pan/gui/gui.cc:2220
 #, c-format
 msgid "Connecting"
 msgstr "Yhdistetään"
 
-#: ../pan/gui/gui.cc:2113
+#: ../pan/gui/gui.cc:2233
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d jouten, %d toiminnassa nopeudella %1.f KiB∕s"
 
-#: ../pan/gui/gui.cc:2169
+#: ../pan/gui/gui.cc:2289
 #, c-format
 msgid "No Tasks"
 msgstr "Ei toimintoja"
 
-#: ../pan/gui/gui.cc:2171 ../pan/gui/prefs-ui.cc:1047
+#: ../pan/gui/gui.cc:2291 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Toiminnot"
 
-#: ../pan/gui/gui.cc:2182 ../pan/gui/task-pane.cc:435
+#: ../pan/gui/gui.cc:2308 ../pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu tehtävää, %s %.1f KiB∕s, arvioitu päättyminen %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2234
+#: ../pan/gui/gui.cc:2360
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1310,60 +1377,61 @@ msgstr ""
 "Pan on yhteydettömässä tilassa. Katso valikosta Tiedosto→Tapahtumaloki, ja "
 "korjaa ongelma. Valitse sitten Tiedosto→Yhdistetty tila jatkaaksesi."
 
-#: ../pan/gui/header-pane.cc:1186
+#: ../pan/gui/header-pane.cc:1311 ../pan/gui/task-pane.cc:795
 msgid "Subject or Author"
 msgstr "Kirjoittaja tai Aihe"
 
-#: ../pan/gui/header-pane.cc:1187
+#: ../pan/gui/header-pane.cc:1312 ../pan/gui/task-pane.cc:796
 #, fuzzy
 msgid "Sub or Auth (regex)"
 msgstr "Kirjoittaja tai Aihe"
 
-#: ../pan/gui/header-pane.cc:1189 ../pan/gui/header-pane.cc:1649
-#: ../pan/gui/prefs-ui.cc:827 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/header-pane.cc:1314 ../pan/gui/header-pane.cc:1780
+#: ../pan/gui/prefs-ui.cc:849 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/task-pane.cc:798
 msgid "Author"
 msgstr "Kirjoittaja"
 
-#: ../pan/gui/header-pane.cc:1634 ../pan/gui/prefs-ui.cc:831
+#: ../pan/gui/header-pane.cc:1765 ../pan/gui/prefs-ui.cc:853
 msgid "Score"
 msgstr "Pisteytys"
 
-#: ../pan/gui/log-ui.cc:103
+#: ../pan/gui/log-ui.cc:104
 msgid "Save Event List"
 msgstr "Tallenna tapahtumaluettelo"
 
-#: ../pan/gui/log-ui.cc:256
+#: ../pan/gui/log-ui.cc:258
 msgid "Pan: Events"
 msgstr "Pan: Tapahtumat"
 
-#: ../pan/gui/log-ui.cc:315
+#: ../pan/gui/log-ui.cc:317
 msgid "Message"
 msgstr "Viesti"
 
-#: ../pan/gui/pan.cc:330
+#: ../pan/gui/pan.cc:359
 msgid "Maximize"
 msgstr ""
 
-#: ../pan/gui/pan.cc:383
-msgid "An Error has occurred!"
+#: ../pan/gui/pan.cc:412
+msgid "An error has occurred!"
 msgstr ""
 
-#: ../pan/gui/pan.cc:397
+#: ../pan/gui/pan.cc:426
 #, fuzzy
 msgid "New Articles!"
 msgstr "Seuraavaan _artikkeliin"
 
-#: ../pan/gui/pan.cc:398
+#: ../pan/gui/pan.cc:427
 msgid ""
 "There are new\n"
 "articles available."
 msgstr ""
 
-#: ../pan/gui/pan.cc:465
+#: ../pan/gui/pan.cc:494
 msgid "Toggle on/offline"
 msgstr ""
 
-#: ../pan/gui/pan.cc:513
+#: ../pan/gui/pan.cc:542
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1373,7 +1441,7 @@ msgstr ""
 "\n"
 "Aloita valitsemalla Lisää palvelin."
 
-#: ../pan/gui/pan.cc:595
+#: ../pan/gui/pan.cc:624
 #, fuzzy
 msgid ""
 "General Options\n"
@@ -1381,6 +1449,8 @@ msgid ""
 "  --verbose                Be verbose (in non-GUI mode).\n"
 "\n"
 "URL Options\n"
+"  headers:group.name       Download new headers for the specified "
+"newsgroup.\n"
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -1408,216 +1478,225 @@ msgstr ""
 "  --no-gui                       Näytä vain konsolin tuloste ilman\n"
 "                                 latausjonoa.\n"
 
-#: ../pan/gui/pan.cc:867
+#: ../pan/gui/pan.cc:958
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Virhe: --no-gui ilman nbz‐tiedostoja tai news:viestin tunnusta."
 
-#: ../pan/gui/pan.cc:871
+#: ../pan/gui/pan.cc:962
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s käynnistetty"
 
-#: ../pan/gui/pan.cc:890
+#: ../pan/gui/pan.cc:982
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr "Aseta Panin palvelimet ennen kuin käytät sitä nzb‐asiakkaana."
 
-#: ../pan/gui/pan.cc:1009
+#: ../pan/gui/pan.cc:1100
 msgid "Pan notification"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:186
+#: ../pan/gui/post-ui.cc:163
 #, c-format
-msgid "Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."
+msgid "Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:286
+#: ../pan/gui/post-ui.cc:266 ../pan/gui/post-ui.cc:297
 #, fuzzy, c-format
 msgid "Error setting custom spellchecker: %s"
 msgstr "Virhe oikoluvun asettamisessa: %s"
 
-#: ../pan/gui/post-ui.cc:291 ../pan/gui/post-ui.cc:300
+#: ../pan/gui/post-ui.cc:270 ../pan/gui/post-ui.cc:278
+#: ../pan/gui/post-ui.cc:301 ../pan/gui/post-ui.cc:309
 #, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "Virhe oikoluvun asettamisessa: %s"
 
-#: ../pan/gui/post-ui.cc:419
+#: ../pan/gui/post-ui.cc:448
 msgid "_Profile"
 msgstr "_Profiili"
 
-#: ../pan/gui/post-ui.cc:420
+#: ../pan/gui/post-ui.cc:449
 msgid "Set Editor"
 msgstr "Editori"
 
-#: ../pan/gui/post-ui.cc:422
+#: ../pan/gui/post-ui.cc:451
 msgid "_Send Article"
 msgstr "Lähetä artikkel_i"
 
-#: ../pan/gui/post-ui.cc:422
+#: ../pan/gui/post-ui.cc:451
 msgid "Send Article Now"
 msgstr "Lähetä nyt"
 
-#: ../pan/gui/post-ui.cc:423
+#: ../pan/gui/post-ui.cc:452
 #, fuzzy
 msgid "_Send and Save Articles to NZB"
 msgstr "Pan: Tallenna artikkeleja"
 
-#: ../pan/gui/post-ui.cc:423
+#: ../pan/gui/post-ui.cc:452
 #, fuzzy
 msgid "Send and Save Articles to NZB"
 msgstr "Pan: Tallenna artikkeleja"
 
-#: ../pan/gui/post-ui.cc:424
+#: ../pan/gui/post-ui.cc:453
 msgid "Set Character _Encoding..."
 msgstr "Aseta merkistö_koodaus..."
 
-#: ../pan/gui/post-ui.cc:425
+#: ../pan/gui/post-ui.cc:454
 #, fuzzy
 msgid "Set Content _Transfer Encoding..."
 msgstr "Aseta merkistö_koodaus..."
 
-#: ../pan/gui/post-ui.cc:426
+#: ../pan/gui/post-ui.cc:455
 msgid "Sa_ve Draft"
 msgstr "Tallenna _luonnos"
 
-#: ../pan/gui/post-ui.cc:426
+#: ../pan/gui/post-ui.cc:455
 msgid "Save as a Draft for Future Posting"
 msgstr "Tallenna luonnos myöhempää lähetystä varten"
 
-#: ../pan/gui/post-ui.cc:427
+#: ../pan/gui/post-ui.cc:456
 msgid "_Open Draft..."
 msgstr "_Avaa luonnos..."
 
-#: ../pan/gui/post-ui.cc:427
+#: ../pan/gui/post-ui.cc:456
 msgid "Open an Article Draft"
 msgstr "Avaa artikkeliluonnos"
 
-#: ../pan/gui/post-ui.cc:432
+#: ../pan/gui/post-ui.cc:461
 msgid "_Rot13"
 msgstr "_Rot13"
 
-#: ../pan/gui/post-ui.cc:432
+#: ../pan/gui/post-ui.cc:461
 msgid "Rot13 Selected Text"
 msgstr "Rot13 valitulle tekstille"
 
-#: ../pan/gui/post-ui.cc:433
+#: ../pan/gui/post-ui.cc:462
 msgid "Run _Editor"
 msgstr "Käynnistä _muokkain"
 
-#: ../pan/gui/post-ui.cc:433
+#: ../pan/gui/post-ui.cc:462
 #, fuzzy
 msgid "Run Editor"
 msgstr "Käynnistä _muokkain"
 
-#: ../pan/gui/post-ui.cc:435
+#: ../pan/gui/post-ui.cc:464
 msgid "Add _Files to Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:435
+#: ../pan/gui/post-ui.cc:464
 msgid "Add Files to Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:450 ../pan/gui/post-ui.cc:451
+#: ../pan/gui/post-ui.cc:479 ../pan/gui/post-ui.cc:480
 #, fuzzy
 msgid "Remove from Queue"
 msgstr "Poista palvelimen asetuksia"
 
-#: ../pan/gui/post-ui.cc:455 ../pan/gui/post-ui.cc:456
+#: ../pan/gui/post-ui.cc:484 ../pan/gui/post-ui.cc:485
 msgid "Clear List"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:460 ../pan/gui/post-ui.cc:461
+#: ../pan/gui/post-ui.cc:489 ../pan/gui/post-ui.cc:490
 #, fuzzy
 msgid "Select Needed Parts"
 msgstr "Hae k_aikki viestit"
 
-#: ../pan/gui/post-ui.cc:465 ../pan/gui/post-ui.cc:466
-#: ../pan/gui/task-pane.cc:636 ../pan/gui/task-pane.cc:637
+#: ../pan/gui/post-ui.cc:494 ../pan/gui/post-ui.cc:495
+#: ../pan/gui/task-pane.cc:677 ../pan/gui/task-pane.cc:678
 msgid "Move Up"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:470 ../pan/gui/post-ui.cc:471
-#: ../pan/gui/task-pane.cc:641 ../pan/gui/task-pane.cc:642
+#: ../pan/gui/post-ui.cc:499 ../pan/gui/post-ui.cc:500
+#: ../pan/gui/task-pane.cc:682 ../pan/gui/task-pane.cc:683
 msgid "Move Down"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:475 ../pan/gui/post-ui.cc:476
+#: ../pan/gui/post-ui.cc:504 ../pan/gui/post-ui.cc:505
 msgid "Move to Top"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:480 ../pan/gui/post-ui.cc:481
+#: ../pan/gui/post-ui.cc:509 ../pan/gui/post-ui.cc:510
 msgid "Move to Bottom"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:488
+#: ../pan/gui/post-ui.cc:517
 msgid "_Wrap Text"
 msgstr "Ri_vitä teksti"
 
-#: ../pan/gui/post-ui.cc:488
+#: ../pan/gui/post-ui.cc:517
 #, fuzzy
 msgid "Wrap Text"
 msgstr "Ri_vitä teksti"
 
-#: ../pan/gui/post-ui.cc:489
+#: ../pan/gui/post-ui.cc:518
 msgid "Always Run Editor"
 msgstr "Suorita aina muokkain"
 
-#: ../pan/gui/post-ui.cc:490
-msgid "Remember Character Encoding for this Group"
+#: ../pan/gui/post-ui.cc:519
+#, fuzzy
+#| msgid "Remember Character Encoding for this Group"
+msgid "Remember Character Encoding for This Group"
 msgstr "Muista tämän ryhmän merkistökoodaus"
 
-#: ../pan/gui/post-ui.cc:491
+#: ../pan/gui/post-ui.cc:520
 msgid "Thread Attached Replies"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:492
-msgid "PGP-Encrypt the Message"
-msgstr ""
+#: ../pan/gui/post-ui.cc:521
+#, fuzzy
+#| msgid "Cache Article"
+msgid "PGP-Encrypt the Article"
+msgstr "Artikkeli välimuistiin"
 
-#: ../pan/gui/post-ui.cc:493
-msgid "PGP-Sign the Message"
-msgstr ""
+#: ../pan/gui/post-ui.cc:522
+#, fuzzy
+#| msgid "And the article's"
+msgid "PGP-Sign the Article"
+msgstr "Ja viestin"
 
-#: ../pan/gui/post-ui.cc:494
+#: ../pan/gui/post-ui.cc:523
 msgid "Check _Spelling"
 msgstr "_Oikolue"
 
-#: ../pan/gui/post-ui.cc:520
+#: ../pan/gui/post-ui.cc:549
 msgid "New Article's Encoding:"
 msgstr "Uuden artikkelin merkistökoodaus:"
 
-#: ../pan/gui/post-ui.cc:530
+#: ../pan/gui/post-ui.cc:559
 #, fuzzy
 msgid "Content Transfer Encoding"
 msgstr "Merkistökoodaus"
 
-#: ../pan/gui/post-ui.cc:531
+#: ../pan/gui/post-ui.cc:560
 #, fuzzy
 msgid "New Article's Content Transfer Encoding:"
 msgstr "Uuden artikkelin merkistökoodaus:"
 
-#: ../pan/gui/post-ui.cc:711
+#: ../pan/gui/post-ui.cc:740
 msgid "Your changes will be lost!"
 msgstr "Muutoksiasi ei tallenneta!"
 
-#: ../pan/gui/post-ui.cc:712
+#: ../pan/gui/post-ui.cc:741
 msgid "Close this window and lose your changes?"
 msgstr "Suljetaanko ikkuna tallentamatta muutoksia?"
 
-#: ../pan/gui/post-ui.cc:757 ../pan/gui/post-ui.cc:796
+#: ../pan/gui/post-ui.cc:786 ../pan/gui/post-ui.cc:825
 msgid "There were problems with this post."
 msgstr "Viestin kanssa esiintyi ongelmia."
 
-#: ../pan/gui/post-ui.cc:759 ../pan/gui/post-ui.cc:798
-#: ../pan/gui/post-ui.cc:861
+#: ../pan/gui/post-ui.cc:788 ../pan/gui/post-ui.cc:827
+#: ../pan/gui/post-ui.cc:892
 msgid "Go Back"
 msgstr "Taaksepäin"
 
-#: ../pan/gui/post-ui.cc:761
-msgid "Post Anyway"
+#: ../pan/gui/post-ui.cc:790
+#, fuzzy
+#| msgid "Post Anyway"
+msgid "Continue Anyway"
 msgstr "Lähetä viesti joka tapauksessa"
 
 #. Prompt the user
-#: ../pan/gui/post-ui.cc:790
+#: ../pan/gui/post-ui.cc:819
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
@@ -1625,15 +1704,33 @@ msgstr ""
 "Viestissä on merkkejä, joita ei ole määritelty merkistössä \"%s\", kokeile "
 "vaihtaa merkistöksi \"%s\""
 
-#: ../pan/gui/post-ui.cc:813
+#: ../pan/gui/post-ui.cc:842
 msgid "Go _Online"
 msgstr "_Yhdistä"
 
-#: ../pan/gui/post-ui.cc:860
+#: ../pan/gui/post-ui.cc:891
 msgid "The file queue is empty, so no files can be saved."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1019
+#: ../pan/gui/post-ui.cc:1070
+msgid "IO Error"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1070
+msgid "No space left on device"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1071
+#, c-format
+msgid "Error copying message to %s folder. Reason: %s"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1077
+#, c-format
+msgid "Error creating message in %s mail folder: Invalid article."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1099
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1641,118 +1738,124 @@ msgstr ""
 "Tälle profiilille ei ole määritelty lähetyspalvelinta.\n"
 "Aseta lähetyspalvelin valikosta Muokkaa→Muokkaa lähetysprofiileja."
 
-#: ../pan/gui/post-ui.cc:1054
+#: ../pan/gui/post-ui.cc:1104
+msgid ""
+"The selected posting server is currently disabled. Please choose an "
+"appropriate alternative."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1146
 msgid "Pan is Offline."
 msgstr "Pan ei ole yhteydessä."
 
-#: ../pan/gui/post-ui.cc:1055
+#: ../pan/gui/post-ui.cc:1147
 msgid "Go online to post the article?"
 msgstr "Yhdistetäänkö artikkelin lähettämistä varten?"
 
-#: ../pan/gui/post-ui.cc:1102
+#: ../pan/gui/post-ui.cc:1196
 #, c-format
 msgid ""
-"Error signing/encrypting your message. Perhaps you misspelled your email-"
-"address (%s) ?"
+"Error signing/encrypting your message. Perhaps you misspelled your email "
+"address (%s)?"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1267
+#: ../pan/gui/post-ui.cc:1344
 msgid "Error opening temporary file"
 msgstr "Virhe avattaessa väliaikaistiedostoa"
 
-#: ../pan/gui/post-ui.cc:1279
+#: ../pan/gui/post-ui.cc:1356
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Virhe kirjoitettaessa artikkelia väliaikaistiedostoon: %s"
 
-#: ../pan/gui/post-ui.cc:1298
+#: ../pan/gui/post-ui.cc:1375
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr "Virhe tulkitessa ulkoisen muokkaimen komentoa: %s (Komento oli: %s)"
 
-#: ../pan/gui/post-ui.cc:1339
+#: ../pan/gui/post-ui.cc:1416
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Virhe käynnistettäessä ulkoista muokkainta: %s"
 
-#: ../pan/gui/post-ui.cc:1395
+#: ../pan/gui/post-ui.cc:1479
 msgid "Open Draft Article"
 msgstr "Avaa artikkeliluonnos"
 
-#: ../pan/gui/post-ui.cc:1606
+#: ../pan/gui/post-ui.cc:1691
 msgid "Save Draft Article"
 msgstr "Tallenna artikkeliluonnos"
 
-#: ../pan/gui/post-ui.cc:1803
+#: ../pan/gui/post-ui.cc:1889
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Ei voitu jäsentää allekirjoituskomentoa %s: %s"
 
-#: ../pan/gui/post-ui.cc:1839
+#: ../pan/gui/post-ui.cc:1925
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Allekirjoitusta ei voitu muuntaa UTF-8-muotoon."
 
-#: ../pan/gui/post-ui.cc:2334
+#: ../pan/gui/post-ui.cc:2427
 msgid "F_rom"
 msgstr "L_ähettäjä"
 
-#: ../pan/gui/post-ui.cc:2352
+#: ../pan/gui/post-ui.cc:2444
 msgid "_Subject"
 msgstr "_Aihe"
 
-#: ../pan/gui/post-ui.cc:2365
+#: ../pan/gui/post-ui.cc:2457
 msgid "_Newsgroups"
 msgstr "_Keskusteluryhmät"
 
-#: ../pan/gui/post-ui.cc:2379
+#: ../pan/gui/post-ui.cc:2471
 msgid "Mail _To"
 msgstr "_Sähköposti osoitteeseen"
 
-#: ../pan/gui/post-ui.cc:2481
+#: ../pan/gui/post-ui.cc:2573
 msgid "Delete from Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2494
+#: ../pan/gui/post-ui.cc:2586
 msgid "No."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2498 ../pan/gui/post-ui.cc:2592
-#: ../pan/gui/post-ui.cc:2633
+#: ../pan/gui/post-ui.cc:2590 ../pan/gui/post-ui.cc:2682
+#: ../pan/gui/post-ui.cc:2723
 #, fuzzy
 msgid "Filename"
 msgstr "_Tiedosto"
 
-#: ../pan/gui/post-ui.cc:2500
-msgid "Size (kB)"
+#: ../pan/gui/post-ui.cc:2592
+msgid "Size (KB)"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2600
+#: ../pan/gui/post-ui.cc:2690
 msgid "The current filename"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2604
+#: ../pan/gui/post-ui.cc:2694
 #, fuzzy
 msgid "Subject Line"
 msgstr "Aihe"
 
-#: ../pan/gui/post-ui.cc:2612
-msgid "The current Subject Line"
+#: ../pan/gui/post-ui.cc:2702
+msgid "The current subject line"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2626
+#: ../pan/gui/post-ui.cc:2716
 msgid "No. "
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2630
+#: ../pan/gui/post-ui.cc:2720
 msgid "Enable/Disable"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2664
+#: ../pan/gui/post-ui.cc:2754
 msgid "Follo_wup-To"
 msgstr "_Keskustelunsiirto"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: ../pan/gui/post-ui.cc:2673
+#: ../pan/gui/post-ui.cc:2763
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1764,560 +1867,659 @@ msgstr ""
 "Ohjataksesi vastaukset sähköpostiisi, käytä \"Keskustelunsiirto: lähettäjä-"
 "otsaketta."
 
-#: ../pan/gui/post-ui.cc:2679
+#: ../pan/gui/post-ui.cc:2770
 msgid "_Reply-To"
 msgstr "_Vastausosoite"
 
-#: ../pan/gui/post-ui.cc:2687
+#: ../pan/gui/post-ui.cc:2778
+#, fuzzy
+#| msgid ""
+#| "The email account where mail replies to your posted message should go.  "
+#| "This is only needed if it differs from the \"From\" header."
 msgid ""
-"The email account where mail replies to your posted message should go.  This "
+"The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
 msgstr ""
 "Osoite johon viestiisi lähetettyjen sähköpostivastauksien tulisi mennä.  "
 "Tarvitaan vain jos eri kuin \"Lähettäjä\"-otsake."
 
-#: ../pan/gui/post-ui.cc:2693
+#: ../pan/gui/post-ui.cc:2785
 msgid "_Custom Headers"
 msgstr "_Mukautetut otsakkeet"
 
-#: ../pan/gui/post-ui.cc:2717
+#: ../pan/gui/post-ui.cc:2809
 msgid "Add \"_User-Agent\" header"
 msgstr "Lisää \"_User-agent\"-otsake"
 
-#: ../pan/gui/post-ui.cc:2724
+#: ../pan/gui/post-ui.cc:2816
 #, fuzzy
-msgid "Add \"Message-_Id\" header"
+msgid "Add \"Message-_ID\" header"
 msgstr "Lisää \"Message-Id\"-otsake"
 
-#: ../pan/gui/post-ui.cc:2855
+#: ../pan/gui/post-ui.cc:2947
 #, fuzzy
 msgid "Select Parts"
 msgstr "Hae k_aikki viestit"
 
-#: ../pan/gui/post-ui.cc:2866
+#: ../pan/gui/post-ui.cc:2960
 msgid "_Parts"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3022
+#: ../pan/gui/post-ui.cc:3114
 msgid "Post Article"
 msgstr "Lähetä artikkeli"
 
-#: ../pan/gui/post-ui.cc:3043
+#: ../pan/gui/post-ui.cc:3135
 msgid "_Message"
 msgstr "_Viesti"
 
-#: ../pan/gui/post-ui.cc:3044
+#: ../pan/gui/post-ui.cc:3136
 msgid "More _Headers"
 msgstr "Lisää _otsakkeita"
 
-#: ../pan/gui/post-ui.cc:3045
+#: ../pan/gui/post-ui.cc:3137
 msgid "File _Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3077 ../pan/gui/profiles-dialog.cc:478
+#: ../pan/gui/post-ui.cc:3169 ../pan/gui/profiles-dialog.cc:481
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "%d, %n kirjoitti:"
 
-#: ../pan/gui/post-ui.cc:3106
+#: ../pan/gui/post-ui.cc:3198
 msgid "Add files to queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3184
+#: ../pan/gui/post-ui.cc:3274
 msgid "Save Upload Queue as NZB File"
 msgstr ""
 
-#: ../pan/gui/prefs.cc:343
+#: ../pan/gui/prefs.cc:364
 #, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "Ei voitu tulkita kohteen %s väriä %s"
 
-#: ../pan/gui/prefs-ui.cc:120
+#: ../pan/gui/prefs-ui.cc:123
 msgid "Grab Key"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:126
+#: ../pan/gui/prefs-ui.cc:129
 #, c-format
 msgid ""
 "Press the combination of the keys\n"
 "you want to use for \"%s\"."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:166
-msgid "Edit Hotkey"
+#: ../pan/gui/prefs-ui.cc:169
+msgid "Edit Shortcut"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:228
-msgid "Error: Shortkey is invalid!"
+#: ../pan/gui/prefs-ui.cc:231
+msgid "Error: Shortcut key is invalid!"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:244
-msgid "Error: Shortkey already exists!"
+#: ../pan/gui/prefs-ui.cc:247
+msgid "Error: Shortcut key already exists!"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:535
+#: ../pan/gui/prefs-ui.cc:561
 #, fuzzy
 msgid "Show only icons"
 msgstr "Näytä artikkelin tiedot"
 
-#: ../pan/gui/prefs-ui.cc:536
+#: ../pan/gui/prefs-ui.cc:562
 #, fuzzy
 msgid "Show only text"
 msgstr "Näytä v_iestiosio"
 
-#: ../pan/gui/prefs-ui.cc:537
+#: ../pan/gui/prefs-ui.cc:563
 #, fuzzy
 msgid "Show icons and text"
 msgstr "Tallenna liitetiedostot ja teksti"
 
-#: ../pan/gui/prefs-ui.cc:576
+#: ../pan/gui/prefs-ui.cc:602
 msgid "Use GNOME Preferences"
 msgstr "Käytä Gnomen asetuksia"
 
-#: ../pan/gui/prefs-ui.cc:577
+#: ../pan/gui/prefs-ui.cc:603
 msgid "Use KDE Preferences"
 msgstr "Käytä KDE:n asetuksia"
 
-#: ../pan/gui/prefs-ui.cc:578
+#: ../pan/gui/prefs-ui.cc:604
 msgid "Use OS X Preferences"
 msgstr "Käytä OS X ‐asetuksia"
 
-#: ../pan/gui/prefs-ui.cc:579
+#: ../pan/gui/prefs-ui.cc:605
 msgid "Use Windows Preferences"
 msgstr "Käytä Windows‐asetuksia"
 
-#: ../pan/gui/prefs-ui.cc:580
+#: ../pan/gui/prefs-ui.cc:606
 msgid "Custom Command:"
 msgstr "Mukautettu komento:"
 
-#: ../pan/gui/prefs-ui.cc:632
+#: ../pan/gui/prefs-ui.cc:658
 #, fuzzy
 msgid "Disabled"
 msgstr "Päällä"
 
-#: ../pan/gui/prefs-ui.cc:633
-msgid "Only new (Score == 0)"
+#: ../pan/gui/prefs-ui.cc:659
+msgid "Only new (score == 0)"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:634
+#: ../pan/gui/prefs-ui.cc:660
 #, fuzzy
 msgid "9999 or more"
 msgstr "Vähintään 9999 pistettä:"
 
-#: ../pan/gui/prefs-ui.cc:635
+#: ../pan/gui/prefs-ui.cc:661
 #, fuzzy
 msgid "5000 to 9998"
 msgstr "Pisteet 5000—9998:"
 
-#: ../pan/gui/prefs-ui.cc:636
+#: ../pan/gui/prefs-ui.cc:662
 msgid "1 to 4999"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:637
+#: ../pan/gui/prefs-ui.cc:663
 #, fuzzy
 msgid "-9998 to -1"
 msgstr "Pisteet −9998—−1:"
 
-#: ../pan/gui/prefs-ui.cc:638
+#: ../pan/gui/prefs-ui.cc:664
 #, fuzzy
 msgid "-9999 or less"
 msgstr "Enintään −9999 pistettä:"
 
-#: ../pan/gui/prefs-ui.cc:702
+#: ../pan/gui/prefs-ui.cc:728
 #, c-format
-msgid "Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:738
-msgid "Global Charset Settings"
+#: ../pan/gui/prefs-ui.cc:760
+msgid "Global Character Set Settings"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:832 ../pan/gui/task-pane.cc:770
+#: ../pan/gui/prefs-ui.cc:854 ../pan/gui/task-pane.cc:1076
 msgid "State"
 msgstr "Tila"
 
-#: ../pan/gui/prefs-ui.cc:866
+#: ../pan/gui/prefs-ui.cc:888
 msgid "Enabled"
 msgstr "Päällä"
 
-#: ../pan/gui/prefs-ui.cc:870
+#: ../pan/gui/prefs-ui.cc:892
 msgid "Column Name"
 msgstr "Sarakenimi"
 
-#: ../pan/gui/prefs-ui.cc:908
+#: ../pan/gui/prefs-ui.cc:930
 msgid "Pan: Preferences"
 msgstr "Pan: Asetukset"
 
-#: ../pan/gui/prefs-ui.cc:923
+#: ../pan/gui/prefs-ui.cc:945
 msgid "Mouse"
 msgstr "Hiiri"
 
-#: ../pan/gui/prefs-ui.cc:925
+#: ../pan/gui/prefs-ui.cc:947
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Yksinkertainen hiirenpainallus aktivoi r_yhmät valitsemisen sijaan"
 
-#: ../pan/gui/prefs-ui.cc:927
+#: ../pan/gui/prefs-ui.cc:949
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Yksinkertainen hiirenpainallus aktivoi _otsikon valitsemisen sijaan"
 
-#: ../pan/gui/prefs-ui.cc:930
+#: ../pan/gui/prefs-ui.cc:952
 msgid "Groups"
 msgstr "Ryhmät"
 
-#: ../pan/gui/prefs-ui.cc:932
+#: ../pan/gui/prefs-ui.cc:954
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Hae uudet otsikot tilatuista ryhmistä _käynnistyksessä"
 
-#: ../pan/gui/prefs-ui.cc:934
+#: ../pan/gui/prefs-ui.cc:956
 msgid "Get new headers when _entering group"
 msgstr "Lataa uudet otsikot kun _ryhmä avataan"
 
-#: ../pan/gui/prefs-ui.cc:936
+#: ../pan/gui/prefs-ui.cc:958
 msgid "Mark entire group _read when leaving group"
 msgstr "_Merkitse ryhmän artikkelit luetuiksi ryhmästä poistuttaessa"
 
-#: ../pan/gui/prefs-ui.cc:938
+#: ../pan/gui/prefs-ui.cc:960
 msgid "Mark entire group read before getting _new headers"
 msgstr "_Merkitse ryhmän artikkelit luetuiksi _uusia haettaessa"
 
-#: ../pan/gui/prefs-ui.cc:940
+#: ../pan/gui/prefs-ui.cc:962
 msgid "E_xpand all threads when entering group"
 msgstr "L_aajenna säikeet ryhmään tultaessa"
 
-#: ../pan/gui/prefs-ui.cc:945
+#: ../pan/gui/prefs-ui.cc:967
 msgid "Articles"
 msgstr "Artikkelit"
 
-#: ../pan/gui/prefs-ui.cc:947
+#: ../pan/gui/prefs-ui.cc:969
+#, fuzzy
+#| msgid "Mark Article as _Unread"
+msgid "Mark downloaded articles read"
+msgstr "Me_rkitse lukemattomaksi"
+
+#: ../pan/gui/prefs-ui.cc:971
 msgid "Space selects next article rather than next unread"
 msgstr ""
 "Välilyönnillä valitaan seuraava artikkeli seuraavan lukemattoman sijaan"
 
-#: ../pan/gui/prefs-ui.cc:949
+#: ../pan/gui/prefs-ui.cc:973
 #, fuzzy
 msgid "Expand threads upon selection"
 msgstr "Lisää s_äikeet valintaan"
 
-#: ../pan/gui/prefs-ui.cc:951
-msgid "Always show article deletion confirmation dialog"
+#: ../pan/gui/prefs-ui.cc:975
+msgid "Always ask before deleting an article"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:953
+#: ../pan/gui/prefs-ui.cc:977
 msgid "Smooth scrolling"
 msgstr "Pehmeä vieritys"
 
-#: ../pan/gui/prefs-ui.cc:958
+#: ../pan/gui/prefs-ui.cc:982
 #, fuzzy
 msgid "Article Cache"
 msgstr "Tyhjennä artikkelivälimuisti"
 
-#: ../pan/gui/prefs-ui.cc:959
+#: ../pan/gui/prefs-ui.cc:983
 msgid "Clear article cache on shutdown"
 msgstr "Tyhjennä artikkelivälimuisti suljettaessa"
 
-#: ../pan/gui/prefs-ui.cc:962
-msgid "Size of article cache (in MiB) :"
+#: ../pan/gui/prefs-ui.cc:986
+msgid "Size of article cache (in MiB):"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:967
-msgid "File extension for Cached Articles: "
+#: ../pan/gui/prefs-ui.cc:991
+msgid "File extension for cached articles: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:972
+#: ../pan/gui/prefs-ui.cc:996
 msgid "Tabs"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:977
+#: ../pan/gui/prefs-ui.cc:1001
 msgid "_Behavior"
 msgstr "_Käyttäytyminen"
 
-#: ../pan/gui/prefs-ui.cc:977
+#: ../pan/gui/prefs-ui.cc:1001
 #, fuzzy
 msgid "Behavior"
 msgstr "_Käyttäytyminen"
 
-#: ../pan/gui/prefs-ui.cc:983
+#: ../pan/gui/prefs-ui.cc:1007
+#, fuzzy
+#| msgid "_Task Manager"
+msgid "Task Pane"
+msgstr "Toimintojen _hallinta"
+
+#: ../pan/gui/prefs-ui.cc:1008
+msgid "Show Task Pane info popups"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1010
+#, fuzzy
+msgid "Show Download Meter"
+msgstr "Näytä v_iestiosio"
+
+#: ../pan/gui/prefs-ui.cc:1014
+#, fuzzy
+#| msgid "_Body Pane"
+msgid "_Panes"
+msgstr "_Viestiosio"
+
+#: ../pan/gui/prefs-ui.cc:1014
+#, fuzzy
+#| msgid "Japanese"
+msgid "Panes"
+msgstr "Japanilainen"
+
+#: ../pan/gui/prefs-ui.cc:1020
 #, fuzzy
 msgid "Language Settings"
 msgstr "Asetukset"
 
 #. systray and notify popup
-#: ../pan/gui/prefs-ui.cc:992
+#: ../pan/gui/prefs-ui.cc:1029
 #, fuzzy
 msgid "System Tray Behavior"
 msgstr "_Käyttäytyminen"
 
-#: ../pan/gui/prefs-ui.cc:994
-msgid "Hide to system tray"
+#: ../pan/gui/prefs-ui.cc:1031
+msgid "Minimize to tray"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:996
+#: ../pan/gui/prefs-ui.cc:1033
 msgid "Start Pan minimized"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:999
+#: ../pan/gui/prefs-ui.cc:1036
 #, fuzzy
 msgid "Show notifications"
 msgstr "Näytä artikkelin tiedot"
 
 #. allow multiple instances (seperate, not communicating with dbus)
-#: ../pan/gui/prefs-ui.cc:1004
+#: ../pan/gui/prefs-ui.cc:1041
 #, fuzzy
 msgid "Startup Behavior"
 msgstr "_Käyttäytyminen"
 
-#: ../pan/gui/prefs-ui.cc:1006
+#: ../pan/gui/prefs-ui.cc:1043
 msgid "Allow multiple instances of Pan"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1011
+#: ../pan/gui/prefs-ui.cc:1048
 #, fuzzy
 msgid "Autosave Article Draft"
 msgstr "Avaa artikkeliluonnos"
 
-#: ../pan/gui/prefs-ui.cc:1013
+#: ../pan/gui/prefs-ui.cc:1050
 #, fuzzy
 msgid "Minutes to autosave the current Article Draft: "
 msgstr "Avaa artikkeliluonnos"
 
-#: ../pan/gui/prefs-ui.cc:1018
+#: ../pan/gui/prefs-ui.cc:1055
 #, fuzzy
 msgid "Autosave Articles"
 msgstr "Tallenna artikkeleja"
 
-#: ../pan/gui/prefs-ui.cc:1020
+#: ../pan/gui/prefs-ui.cc:1057
 msgid "Minutes to autosave newsrc files: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1026
+#: ../pan/gui/prefs-ui.cc:1064
+msgid "GNOME Keyring"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1065
+msgid "Store passwords in GNOME Keyring"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1069
 msgid "_Miscellaneous"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1026
+#: ../pan/gui/prefs-ui.cc:1069
 msgid "Miscellaneous"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1031
+#: ../pan/gui/prefs-ui.cc:1074
 msgid "Pane Layout"
 msgstr "Osioiden asettelu"
 
 # Nää on sellasia ikkuna-asetelmia
-#: ../pan/gui/prefs-ui.cc:1050
+#: ../pan/gui/prefs-ui.cc:1093
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=Ryhmät, 2=Otsakkeet, 3=Viesti"
 
-#: ../pan/gui/prefs-ui.cc:1052
+#: ../pan/gui/prefs-ui.cc:1095
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=Ryhmät, 2=Viesti, 3=Otsakkeet"
 
-#: ../pan/gui/prefs-ui.cc:1054
+#: ../pan/gui/prefs-ui.cc:1097
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=Otsakkeet, 2=Ryhmät, 3=Viesti"
 
-#: ../pan/gui/prefs-ui.cc:1056
+#: ../pan/gui/prefs-ui.cc:1099
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=Otsakkeet, 2=Viesti, 3=Ryhmät"
 
-#: ../pan/gui/prefs-ui.cc:1058
+#: ../pan/gui/prefs-ui.cc:1101
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=Viesti, 2=Ryhmät, 3=Otsakkeet"
 
-#: ../pan/gui/prefs-ui.cc:1060
+#: ../pan/gui/prefs-ui.cc:1103
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=Viesti, 2=Otsakkeet, 3=Ryhmät"
 
-#: ../pan/gui/prefs-ui.cc:1064
+#: ../pan/gui/prefs-ui.cc:1107
 #, fuzzy
 msgid "Layout"
 msgstr "Osioiden _asettelu"
 
-#: ../pan/gui/prefs-ui.cc:1069
+#: ../pan/gui/prefs-ui.cc:1112
 msgid "Header Pane Columns"
 msgstr "Otsikko-osion sarakkeet"
 
-#: ../pan/gui/prefs-ui.cc:1073
+#: ../pan/gui/prefs-ui.cc:1116
 msgid "_Headers"
 msgstr "_Otsikot"
 
-#: ../pan/gui/prefs-ui.cc:1073
+#: ../pan/gui/prefs-ui.cc:1116
 #, fuzzy
 msgid "Headers"
 msgstr "_Otsikot"
 
-#: ../pan/gui/prefs-ui.cc:1079
+#: ../pan/gui/prefs-ui.cc:1122
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
-"automatically, based on a post's score."
+"automatically, based on an article's score."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1082
-msgid "_Delete posts scoring at: "
+#: ../pan/gui/prefs-ui.cc:1127
+#, fuzzy
+#| msgid "Mark Article as _Unread"
+msgid "Mark affected articles read"
+msgstr "Me_rkitse lukemattomaksi"
+
+#: ../pan/gui/prefs-ui.cc:1136
+#, fuzzy
+#| msgid "set the article's score to"
+msgid "_Delete articles scoring at: "
+msgstr "aseta pisteiksi"
+
+#: ../pan/gui/prefs-ui.cc:1142
+#, fuzzy
+#| msgid "Mark Article as _Unread"
+msgid "Mark articles read scoring at: "
+msgstr "Me_rkitse lukemattomaksi"
+
+#: ../pan/gui/prefs-ui.cc:1148
+#, fuzzy
+#| msgid "set the article's score to"
+msgid "_Cache articles scoring at: "
+msgstr "aseta pisteiksi"
+
+#: ../pan/gui/prefs-ui.cc:1154
+msgid "Download attachments of articles scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1084
-msgid "Mark posts _read scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1086
-msgid "_Cache posts scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1088
-msgid "Download _attachments of posts scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1091
+#: ../pan/gui/prefs-ui.cc:1157
 #, fuzzy
 msgid "Actions"
 msgstr "_Toiminnot"
 
-#: ../pan/gui/prefs-ui.cc:1096 ../pan/gui/prefs-ui.cc:1117
+#: ../pan/gui/prefs-ui.cc:1162 ../pan/gui/prefs-ui.cc:1183
 msgid "Fonts"
 msgstr "Fontit"
 
-#: ../pan/gui/prefs-ui.cc:1098
+#: ../pan/gui/prefs-ui.cc:1164
 msgid "Use custom font in Group Pane:"
 msgstr "Käytä omaa fonttia ryhmäosiossa:"
 
-#: ../pan/gui/prefs-ui.cc:1103
+#: ../pan/gui/prefs-ui.cc:1169
 msgid "Use custom font in Header Pane:"
 msgstr "Käytä omaa fonttia otsikko‐osiossa:"
 
-#: ../pan/gui/prefs-ui.cc:1108
+#: ../pan/gui/prefs-ui.cc:1174
 msgid "Use custom font in Body Pane:"
 msgstr "Käytä omaa fonttia sisältöosiossa:"
 
-#: ../pan/gui/prefs-ui.cc:1113
+#: ../pan/gui/prefs-ui.cc:1179
 msgid "Monospace font:"
 msgstr "Tasavälinen fontti:"
 
-#: ../pan/gui/prefs-ui.cc:1117
+#: ../pan/gui/prefs-ui.cc:1183
 msgid "_Fonts"
 msgstr "_Fontit"
 
-#: ../pan/gui/prefs-ui.cc:1122
+#: ../pan/gui/prefs-ui.cc:1192
 msgid "Header Pane"
 msgstr "Otsikko-osio"
 
-#: ../pan/gui/prefs-ui.cc:1125 ../pan/gui/prefs-ui.cc:1131
-#: ../pan/gui/prefs-ui.cc:1137 ../pan/gui/prefs-ui.cc:1143
-#: ../pan/gui/prefs-ui.cc:1149 ../pan/gui/prefs-ui.cc:1155
+#: ../pan/gui/prefs-ui.cc:1195 ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1207 ../pan/gui/prefs-ui.cc:1213
+#: ../pan/gui/prefs-ui.cc:1219 ../pan/gui/prefs-ui.cc:1225
+#: ../pan/gui/prefs-ui.cc:1234 ../pan/gui/prefs-ui.cc:1240
+#: ../pan/gui/prefs-ui.cc:1246 ../pan/gui/prefs-ui.cc:1252
+#: ../pan/gui/prefs-ui.cc:1258 ../pan/gui/prefs-ui.cc:1268
+#: ../pan/gui/prefs-ui.cc:1278
 msgid "Text:"
 msgstr "Teksti:"
 
-#: ../pan/gui/prefs-ui.cc:1127 ../pan/gui/prefs-ui.cc:1133
-#: ../pan/gui/prefs-ui.cc:1139 ../pan/gui/prefs-ui.cc:1145
-#: ../pan/gui/prefs-ui.cc:1151 ../pan/gui/prefs-ui.cc:1157
+#: ../pan/gui/prefs-ui.cc:1197 ../pan/gui/prefs-ui.cc:1203
+#: ../pan/gui/prefs-ui.cc:1209 ../pan/gui/prefs-ui.cc:1215
+#: ../pan/gui/prefs-ui.cc:1221 ../pan/gui/prefs-ui.cc:1227
+#: ../pan/gui/prefs-ui.cc:1236 ../pan/gui/prefs-ui.cc:1242
+#: ../pan/gui/prefs-ui.cc:1248 ../pan/gui/prefs-ui.cc:1254
+#: ../pan/gui/prefs-ui.cc:1260 ../pan/gui/prefs-ui.cc:1270
+#: ../pan/gui/prefs-ui.cc:1280
 msgid "Background:"
 msgstr "Tausta:"
 
-#: ../pan/gui/prefs-ui.cc:1129
+#: ../pan/gui/prefs-ui.cc:1199
 msgid "Scores of 9999 or more:"
 msgstr "Vähintään 9999 pistettä:"
 
-#: ../pan/gui/prefs-ui.cc:1135
+#: ../pan/gui/prefs-ui.cc:1205
 msgid "Scores from 5000 to 9998:"
 msgstr "Pisteet 5000—9998:"
 
-#: ../pan/gui/prefs-ui.cc:1141
+#: ../pan/gui/prefs-ui.cc:1211
 msgid "Scores from 1 to 4999:"
 msgstr "Pisteet 1—4999:"
 
-#: ../pan/gui/prefs-ui.cc:1147
+#: ../pan/gui/prefs-ui.cc:1217
 msgid "Scores from -9998 to -1:"
 msgstr "Pisteet −9998—−1:"
 
-#: ../pan/gui/prefs-ui.cc:1153
+#: ../pan/gui/prefs-ui.cc:1223
 msgid "Scores of -9999 or less:"
 msgstr "Enintään −9999 pistettä:"
 
-#: ../pan/gui/prefs-ui.cc:1159
-msgid "Read collapsed thread:"
+#: ../pan/gui/prefs-ui.cc:1229
+msgid "Collapsed thread with unread articles:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1161
+#: ../pan/gui/prefs-ui.cc:1231
 msgid "Body Pane"
 msgstr "Viestiosio"
 
-#: ../pan/gui/prefs-ui.cc:1167
-#, fuzzy
-msgid "Quoted text:"
-msgstr "Lainattu teksti:"
+#: ../pan/gui/prefs-ui.cc:1238
+msgid "First level of quoted text:"
+msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1168
+#: ../pan/gui/prefs-ui.cc:1244
+msgid "Second level of quoted text:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1250
+msgid "Third level of quoted text:"
+msgstr ""
+
+#.
+#: ../pan/gui/prefs-ui.cc:1256
 msgid "URL:"
 msgstr "URLit:"
 
-#: ../pan/gui/prefs-ui.cc:1169
+#.
+#: ../pan/gui/prefs-ui.cc:1262
 msgid "Signature:"
 msgstr "Allekirjoitus:"
 
-#: ../pan/gui/prefs-ui.cc:1171
+#: ../pan/gui/prefs-ui.cc:1265
+#, fuzzy
+#| msgid "_Group Pane"
+msgid "Group Pane"
+msgstr "_Ryhmälistaosio"
+
+#.
+#: ../pan/gui/prefs-ui.cc:1272
+msgid "Group Color:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1276
+#, fuzzy
+msgid "Other Text"
+msgstr "Ri_vitä teksti"
+
+#: ../pan/gui/prefs-ui.cc:1282
+#, fuzzy
+msgid "Text Color:"
+msgstr "_Tekstimuokkain:"
+
+#: ../pan/gui/prefs-ui.cc:1285
 msgid "_Colors"
 msgstr "_Värit"
 
-#: ../pan/gui/prefs-ui.cc:1171
+#: ../pan/gui/prefs-ui.cc:1285
 #, fuzzy
 msgid "Colors"
 msgstr "_Värit"
 
-#: ../pan/gui/prefs-ui.cc:1176
+#: ../pan/gui/prefs-ui.cc:1290
 msgid "Preferred Applications"
 msgstr "Suosikkiohjelmat"
 
-#: ../pan/gui/prefs-ui.cc:1180
+#: ../pan/gui/prefs-ui.cc:1294
 #, fuzzy
 msgid "_Web browser:"
 msgstr "_Www-selain:"
 
-#: ../pan/gui/prefs-ui.cc:1183
+#: ../pan/gui/prefs-ui.cc:1297
 #, fuzzy
 msgid "_Mail reader:"
 msgstr "_Sähköposti:"
 
-#: ../pan/gui/prefs-ui.cc:1185
+#: ../pan/gui/prefs-ui.cc:1299
 #, fuzzy
 msgid "_Text editor:"
 msgstr "_Tekstimuokkain:"
 
-#: ../pan/gui/prefs-ui.cc:1187
+#: ../pan/gui/prefs-ui.cc:1301
+msgid "_HTML previewer:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1303
 #, fuzzy
 msgid "_Applications"
 msgstr "O_hjelmat"
 
-#: ../pan/gui/prefs-ui.cc:1187
+#: ../pan/gui/prefs-ui.cc:1303
 #, fuzzy
 msgid "Applications"
 msgstr "O_hjelmat"
 
-#: ../pan/gui/prefs-ui.cc:1192 ../pan/gui/task-pane.cc:512
+#: ../pan/gui/prefs-ui.cc:1308 ../pan/gui/task-pane.cc:552
 #, fuzzy
 msgid "Encoding"
 msgstr "Puretaan"
 
-#: ../pan/gui/prefs-ui.cc:1196
+#: ../pan/gui/prefs-ui.cc:1312
 msgid "Default bytes per file (for encoder): "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1317
 #, fuzzy
 msgid "_Upload"
 msgstr "O_hjelmat"
 
-#: ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1317
 msgid "Upload"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1219
-msgid "_Hotkeys"
+#: ../pan/gui/prefs-ui.cc:1326
+msgid "_Shortcuts"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1219
-msgid "Hotkeys"
+#: ../pan/gui/prefs-ui.cc:1326
+msgid "Shortcuts"
 msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:83
-msgid "Please choose your Email Address according to your PGP key's user id."
+msgid "Please choose your email address according to your PGP key's user id."
 msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:131
@@ -2342,9 +2544,9 @@ msgstr "_Koko nimi:"
 
 #: ../pan/gui/profiles-dialog.cc:158
 msgid ""
-"Your Email Address.\n"
-"Note that this has to match your PGP Signature's Address\n"
-"if you want to PGP-Sign or Encrypt your messages correctly."
+"Your email address.\n"
+"Note that this has to match your PGP signature's address\n"
+"if you want your messages to be PGP-signed or encrypted correctly."
 msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:162
@@ -2386,33 +2588,33 @@ msgstr "Allekirjoitus"
 
 #: ../pan/gui/profiles-dialog.cc:196
 #, fuzzy
-msgid "Signature Type : "
+msgid "Signature Type: "
 msgstr "_Allekirjoitustiedostotyyppi:"
 
-#: ../pan/gui/profiles-dialog.cc:223
+#: ../pan/gui/profiles-dialog.cc:226
 msgid "X-Face (Avatar)"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:226
+#: ../pan/gui/profiles-dialog.cc:229
 msgid ""
-"You can add an avatar icon to your articles with a unique X-Face code. \n"
+"You can add an avatar icon to your articles with a unique X-Face code.\n"
 "Add the code without the trailing <b>\"X-Face:\"</b> \n"
 " if it was generated by a helper program (for example http://www.dairiki.org/"
 "xface/xface.php)."
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:229
+#: ../pan/gui/profiles-dialog.cc:232
 msgid "_X-Face:"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:231
+#: ../pan/gui/profiles-dialog.cc:234
 msgid "Optional Information"
 msgstr "Valinnaiset tiedot"
 
-#: ../pan/gui/profiles-dialog.cc:236
+#: ../pan/gui/profiles-dialog.cc:239
 #, fuzzy
 msgid ""
-"When posting to Usenet, your article's Message-ID contains a domain name.  \n"
+"When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
 "domain name from your email address."
 msgstr ""
@@ -2420,11 +2622,11 @@ msgstr ""
 "syöttää verkko-osoitteen tähän tai jättää kentän tyhjäsi ja antaa Panin "
 "käyttää sähköpostiosoitteesi verkko-osaa."
 
-#: ../pan/gui/profiles-dialog.cc:239
+#: ../pan/gui/profiles-dialog.cc:242
 msgid "Message-ID _Domain Name:"
 msgstr "Viestin tunnuksen _verkko-osoite"
 
-#: ../pan/gui/profiles-dialog.cc:243
+#: ../pan/gui/profiles-dialog.cc:246
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2438,14 +2640,14 @@ msgstr ""
 "%d korvautuu päivämäärällä"
 
 # siis kenelle kunnia viestistä kuuluu?
-#: ../pan/gui/profiles-dialog.cc:244
+#: ../pan/gui/profiles-dialog.cc:247
 msgid "_Attribution:"
 msgstr "_Attribuutio:"
 
-#: ../pan/gui/profiles-dialog.cc:268
+#: ../pan/gui/profiles-dialog.cc:271
 #, fuzzy
 msgid ""
-"Extra headers to be included in your posts, such as\n"
+"Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
 "Organization: Your Organization\n"
 msgstr ""
@@ -2453,37 +2655,100 @@ msgstr ""
 "Reply-To: \"Oikea Nimi\" <niminimi@example.com>\n"
 "Organization: Yritys"
 
-#: ../pan/gui/profiles-dialog.cc:278
+#: ../pan/gui/profiles-dialog.cc:281
 msgid "E_xtra Headers:"
 msgstr "Li_sää otsakkeita"
 
-#: ../pan/gui/profiles-dialog.cc:323
+#: ../pan/gui/profiles-dialog.cc:326
 msgid "Invalid email address."
 msgstr "Virheellinen sähkopostiosoite:"
 
-#: ../pan/gui/profiles-dialog.cc:324
+#: ../pan/gui/profiles-dialog.cc:327
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Käytä osoitetta, joka on muotoa nimi@example.org"
 
-#: ../pan/gui/profiles-dialog.cc:479
+#: ../pan/gui/profiles-dialog.cc:482
 msgid "New Profile"
 msgstr "Uusi profiili"
 
-#: ../pan/gui/profiles-dialog.cc:525
+#: ../pan/gui/profiles-dialog.cc:528
 msgid "Posting Profiles"
 msgstr "Lähetysprofiilit"
 
-#: ../pan/gui/profiles-dialog.cc:541
+#: ../pan/gui/profiles-dialog.cc:544
 msgid "Profiles"
 msgstr "Profiilit"
 
-#: ../pan/gui/save-attach-ui.cc:77 ../pan/gui/save-ui.cc:77
+#: ../pan/gui/save-attach-ui.cc:46
+#, fuzzy, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - Subject line excerpt\n"
+"%S - Subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - ryhmän nimi yhtenä hakemistona muodossa \"alt.binaries.pictures.trains"
+"\"\n"
+"%G - ryhmän nimi sisäkkäisenä hakemistorakenteena muodossa\"alt/binaries/"
+"pictures/trains\"\n"
+" \n"
+"merkkijonosta \"/home/user/News/Pan/%g\" tulisi\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\" ja\n"
+"merkkijonosta \"/home/user/News/Pan/%G\" tulisi\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\"."
+
+#: ../pan/gui/save-attach-ui.cc:197 ../pan/gui/save-ui.cc:217
+msgid "Add to the queue sorted by date posted"
+msgstr "Lisää jonoon iän mukaan järjestettynä"
+
+#: ../pan/gui/save-attach-ui.cc:198 ../pan/gui/save-ui.cc:218
+msgid "Add to the front of the queue"
+msgstr "Lisää jonon alkuun"
+
+#: ../pan/gui/save-attach-ui.cc:199 ../pan/gui/save-ui.cc:219
+msgid "Add to the back of the queue"
+msgstr "Lisää jonon loppuun"
+
+#: ../pan/gui/save-attach-ui.cc:231
+#, fuzzy
+msgid "Pan: Save Attachments"
+msgstr "Tallenna liitteet"
+
+#: ../pan/gui/save-attach-ui.cc:256 ../pan/gui/save-attach-ui.cc:274
+#: ../pan/gui/save-ui.cc:271 ../pan/gui/save-ui.cc:289
+msgid "_Location:"
+msgstr "_Sijainti:"
+
+#: ../pan/gui/save-attach-ui.cc:260 ../pan/gui/save-ui.cc:275
+msgid "Save Articles"
+msgstr "Tallenna artikkeleja"
+
+#: ../pan/gui/save-attach-ui.cc:277 ../pan/gui/save-ui.cc:292
+#, c-format
+msgid "_Group's path: %s"
+msgstr "Ryhmän _hakemisto: %s"
+
+#: ../pan/gui/save-attach-ui.cc:288 ../pan/gui/save-ui.cc:307
+msgid "_Priority:"
+msgstr "_Prioriteetti:"
+
+#: ../pan/gui/save-ui.cc:46
 #, fuzzy, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
 "%s - subject line excerpt\n"
 "%S - subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
 " \n"
 "\"/home/user/News/Pan/%g\" becomes\n"
 "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
@@ -2500,58 +2765,23 @@ msgstr ""
 "merkkijonosta \"/home/user/News/Pan/%G\" tulisi\n"
 "\"/home/user/News/Pan/alt/binaries/pictures/trains\"."
 
-#: ../pan/gui/save-attach-ui.cc:223 ../pan/gui/save-ui.cc:242
-msgid "Add to the queue sorted by date posted"
-msgstr "Lisää jonoon iän mukaan järjestettynä"
-
-#: ../pan/gui/save-attach-ui.cc:224 ../pan/gui/save-ui.cc:243
-msgid "Add to the front of the queue"
-msgstr "Lisää jonon alkuun"
-
-#: ../pan/gui/save-attach-ui.cc:225 ../pan/gui/save-ui.cc:244
-msgid "Add to the back of the queue"
-msgstr "Lisää jonon loppuun"
-
-#: ../pan/gui/save-attach-ui.cc:257
-#, fuzzy
-msgid "Pan: Save Attachments"
-msgstr "Tallenna liitteet"
-
-#: ../pan/gui/save-attach-ui.cc:282 ../pan/gui/save-attach-ui.cc:300
-#: ../pan/gui/save-ui.cc:296 ../pan/gui/save-ui.cc:314
-msgid "_Location:"
-msgstr "_Sijainti:"
-
-#: ../pan/gui/save-attach-ui.cc:286 ../pan/gui/save-ui.cc:300
-msgid "Save Articles"
-msgstr "Tallenna artikkeleja"
-
-#: ../pan/gui/save-attach-ui.cc:303 ../pan/gui/save-ui.cc:317
-#, c-format
-msgid "_Group's path: %s"
-msgstr "Ryhmän _hakemisto: %s"
-
-#: ../pan/gui/save-attach-ui.cc:314 ../pan/gui/save-ui.cc:332
-msgid "_Priority:"
-msgstr "_Prioriteetti:"
-
-#: ../pan/gui/save-ui.cc:233
+#: ../pan/gui/save-ui.cc:208
 msgid "Save attachments"
 msgstr "Tallenna liitteet"
 
-#: ../pan/gui/save-ui.cc:234
+#: ../pan/gui/save-ui.cc:209
 msgid "Save text"
 msgstr "Tallenna teksti"
 
-#: ../pan/gui/save-ui.cc:235
+#: ../pan/gui/save-ui.cc:210
 msgid "Save attachments and text"
 msgstr "Tallenna liitetiedostot ja teksti"
 
-#: ../pan/gui/save-ui.cc:271
+#: ../pan/gui/save-ui.cc:246
 msgid "Pan: Save Articles"
 msgstr "Pan: Tallenna artikkeleja"
 
-#: ../pan/gui/save-ui.cc:328
+#: ../pan/gui/save-ui.cc:303
 msgid "_Action:"
 msgstr "_Toiminnot:"
 
@@ -2660,12 +2890,16 @@ msgid "New Scoring Rule"
 msgstr "Uusi pisteytys"
 
 #: ../pan/gui/score-add-ui.cc:635
-msgid "If the group name"
-msgstr "Kun ryhmän nimi on"
+#, fuzzy
+#| msgid "_Group Pane"
+msgid "Group name"
+msgstr "_Ryhmälistaosio"
 
 #: ../pan/gui/score-add-ui.cc:642
-msgid "And the article's"
-msgstr "Ja viestin"
+#, fuzzy
+#| msgid "Pan"
+msgid "and"
+msgstr "Pan"
 
 #: ../pan/gui/score-view-ui.cc:56
 msgid "Close and Re_score"
@@ -2700,53 +2934,57 @@ msgstr "Lisää uusi pisteytys"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Poista valittu pisteytys"
 
-#: ../pan/gui/server-ui.cc:221
+#: ../pan/gui/server-ui.cc:259
 msgid "Please specify the server's address."
 msgstr "Määrittele palvelimen osoite."
 
-#: ../pan/gui/server-ui.cc:264
-msgid "Import SSL certificate (PEM format) from File"
+#: ../pan/gui/server-ui.cc:305
+msgid "Import SSL Certificate (PEM Format) From File"
 msgstr ""
 
 #. create the dialog
-#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:869
+#: ../pan/gui/server-ui.cc:342 ../pan/gui/server-ui.cc:948
 msgid "Add a Server"
 msgstr "Lisää uusi palvelin"
 
-#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:875
+#: ../pan/gui/server-ui.cc:342 ../pan/gui/server-ui.cc:954
 msgid "Edit a Server's Settings"
 msgstr "Muokkaa palvelimen asetuksia"
 
-#: ../pan/gui/server-ui.cc:310
+#: ../pan/gui/server-ui.cc:362
 msgid "Location"
 msgstr "Sijainti"
 
-#: ../pan/gui/server-ui.cc:314
+#: ../pan/gui/server-ui.cc:366
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr ""
 "Keskusteluryhmäpalvelimen oikea osoite, kuten esimerkiksi news.example.com"
 
-#: ../pan/gui/server-ui.cc:315
+#: ../pan/gui/server-ui.cc:367
 msgid "_Address:"
 msgstr "_Osoite:"
 
-#: ../pan/gui/server-ui.cc:319
-msgid "The news server's port number.  Typically 119."
+#: ../pan/gui/server-ui.cc:372
+#, fuzzy
+#| msgid "The news server's port number.  Typically 119."
+msgid ""
+"The news server's port number.  Typically 119 for unencrypted and 563 for "
+"encrypted connections (SSL/TLS)."
 msgstr "Keskusteluryhmäpalvelimen portti, yleensä 119."
 
-#: ../pan/gui/server-ui.cc:320
+#: ../pan/gui/server-ui.cc:373
 msgid "Por_t:"
 msgstr "_Portti:"
 
-#: ../pan/gui/server-ui.cc:323
+#: ../pan/gui/server-ui.cc:376
 msgid "Login (if Required)"
 msgstr "Kirjaudu tarvittaessa"
 
-#: ../pan/gui/server-ui.cc:327
+#: ../pan/gui/server-ui.cc:380
 msgid "_Username:"
 msgstr "_Käyttäjätunnus:"
 
-#: ../pan/gui/server-ui.cc:328
+#: ../pan/gui/server-ui.cc:381
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2754,11 +2992,11 @@ msgstr ""
 "Käyttäjänimi, joka lähetetään palvelimelle pyydettäessä. Jos palvelin ei "
 "vaadi tunnistautumista, jätä tämä tyhjäksi."
 
-#: ../pan/gui/server-ui.cc:332
+#: ../pan/gui/server-ui.cc:385
 msgid "_Password:"
 msgstr "_Salasana:"
 
-#: ../pan/gui/server-ui.cc:333
+#: ../pan/gui/server-ui.cc:386
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2766,55 +3004,55 @@ msgstr ""
 "Salasana, joka lähetetään palvelimelle pyydettäessä. Jos palvelin ei vaadi "
 "tunnistautumista, jätä tämä tyhjäksi."
 
-#: ../pan/gui/server-ui.cc:336
+#: ../pan/gui/server-ui.cc:389
 msgid "Settings"
 msgstr "Asetukset"
 
-#: ../pan/gui/server-ui.cc:343
+#: ../pan/gui/server-ui.cc:396
 msgid "Connection _Limit:"
 msgstr "_Yhteysraja:"
 
-#: ../pan/gui/server-ui.cc:347
+#: ../pan/gui/server-ui.cc:400
 msgid "After Two Weeks"
 msgstr "Kahden viikon päästä"
 
-#: ../pan/gui/server-ui.cc:348
+#: ../pan/gui/server-ui.cc:401
 msgid "After One Month"
 msgstr "Kuukauden päästä"
 
-#: ../pan/gui/server-ui.cc:349
+#: ../pan/gui/server-ui.cc:402
 msgid "After Two Months"
 msgstr "Kahden kuukauden päästä"
 
-#: ../pan/gui/server-ui.cc:350
+#: ../pan/gui/server-ui.cc:403
 msgid "After Three Months"
 msgstr "Kolmen kuukauden päästä"
 
-#: ../pan/gui/server-ui.cc:351
+#: ../pan/gui/server-ui.cc:404
 msgid "After Six Months"
 msgstr "Kuuden kuukauden päästä"
 
-#: ../pan/gui/server-ui.cc:352
+#: ../pan/gui/server-ui.cc:405
 msgid "Never Expire Old Articles"
 msgstr "Älä hävitä vanhoja artikkeleja"
 
-#: ../pan/gui/server-ui.cc:366
+#: ../pan/gui/server-ui.cc:419
 msgid "E_xpire Old Articles:"
 msgstr "Po_ista vanhat artikkelit:"
 
-#: ../pan/gui/server-ui.cc:370
+#: ../pan/gui/server-ui.cc:423
 msgid "Primary"
 msgstr "Ensisijainen"
 
-#: ../pan/gui/server-ui.cc:371
+#: ../pan/gui/server-ui.cc:424
 msgid "Fallback"
 msgstr "Toissijainen"
 
-#: ../pan/gui/server-ui.cc:385
+#: ../pan/gui/server-ui.cc:438
 msgid "Server Rank:"
 msgstr "Palvelimen arvo:"
 
-#: ../pan/gui/server-ui.cc:389
+#: ../pan/gui/server-ui.cc:442
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -2824,86 +3062,103 @@ msgstr ""
 "Suosittu käytäntö on merkitä ilmaisia palvelimia ensisijaisiksi ja "
 "maksullisia toissijaisiksi."
 
-#: ../pan/gui/server-ui.cc:396
+#: ../pan/gui/server-ui.cc:447
+msgid "Disable Compression (N/A)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:448
+msgid "XZVER Compression (Astraweb)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:449
+msgid "GZIP Compression (Giganews etc.)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:463
+msgid "Header Compression:"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:469
 msgid "Security"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:401
-msgid "Use Plaintext (Unsecured) Connections"
-msgstr ""
+#: ../pan/gui/server-ui.cc:474
+#, fuzzy
+msgid "Use Unsecure (Plaintext) Connections"
+msgstr "Ei yhteyksiä"
 
-#: ../pan/gui/server-ui.cc:402
+#: ../pan/gui/server-ui.cc:475
 #, fuzzy
 msgid "Use Secure SSL Connections"
 msgstr "Ei yhteyksiä"
 
-#: ../pan/gui/server-ui.cc:418
-msgid "TLS (SSL) Options:"
+#: ../pan/gui/server-ui.cc:490
+msgid "TLS (SSL) Settings:"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:423
+#: ../pan/gui/server-ui.cc:495
 msgid ""
-"You can set the option for using/disabling secure SSL/TLS connections here. "
-"If you enable SSL/TLS, your data is encrypted and secure. It is encouraged "
-"to use this option for privacy reasons."
+"You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
+"TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
+"for privacy reasons."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:428
+#: ../pan/gui/server-ui.cc:500
 msgid "Always trust this server's certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:602
+#: ../pan/gui/server-ui.cc:676
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "Poistetaanko %s?"
 
-#: ../pan/gui/server-ui.cc:691
+#: ../pan/gui/server-ui.cc:765
 msgid "No information available."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:697
+#: ../pan/gui/server-ui.cc:775
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:795
+#: ../pan/gui/server-ui.cc:874
 #, fuzzy, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr "Poistetaanko %s?"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:822 ../pan/gui/server-ui.cc:843
-#: ../pan/gui/server-ui.cc:941
+#: ../pan/gui/server-ui.cc:901 ../pan/gui/server-ui.cc:922
+#: ../pan/gui/server-ui.cc:1020
 msgid "Servers"
 msgstr "Palvelimet"
 
-#: ../pan/gui/server-ui.cc:882
+#: ../pan/gui/server-ui.cc:961
 msgid "Remove a Server"
 msgstr "Poista palvelimen asetuksia"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:915
+#: ../pan/gui/server-ui.cc:994
 msgid "SSL Certificates"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:936
+#: ../pan/gui/server-ui.cc:1015
 msgid "Certificates"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:967
+#: ../pan/gui/server-ui.cc:1046
 msgid "Import Certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:973
+#: ../pan/gui/server-ui.cc:1052
 msgid "Inspect Certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:980
+#: ../pan/gui/server-ui.cc:1059
 #, fuzzy
 msgid "Remove Certificate"
 msgstr "Poista palvelimen asetuksia"
 
-#: ../pan/gui/task-pane.cc:143
+#: ../pan/gui/task-pane.cc:121
 #, c-format
 msgid ""
 "\n"
@@ -2915,7 +3170,7 @@ msgid ""
 "<i>Sourcefile:</i> <b>%s</b>\n"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:155
+#: ../pan/gui/task-pane.cc:133
 #, c-format
 msgid ""
 "\n"
@@ -2928,143 +3183,153 @@ msgid ""
 "<i>Save Path:</i> <b>%s</b>\n"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:157
+#: ../pan/gui/task-pane.cc:135
 #, fuzzy
 msgid "unknown"
 msgstr "Tuntematon"
 
-#: ../pan/gui/task-pane.cc:263
-msgid "Choose new destination for selected Tasks"
+#: ../pan/gui/task-pane.cc:303
+msgid "Choose New Destination for Selected Tasks"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:417
+#: ../pan/gui/task-pane.cc:457
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan: Toimintojen hallinta (%d jonossa, %d käynnissä, %d pysähtynyt)"
 
-#: ../pan/gui/task-pane.cc:419
+#: ../pan/gui/task-pane.cc:459
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan: Toimintojen hallinta (%d jonossa, %d käynnissä)"
 
-#: ../pan/gui/task-pane.cc:421
+#: ../pan/gui/task-pane.cc:461
 #, c-format
 msgid "Pan: Tasks"
 msgstr "Pan: Toimintojen hallinta"
 
-#: ../pan/gui/task-pane.cc:446
+#: ../pan/gui/task-pane.cc:486
 #, c-format
 msgid "%lu selected, %s"
 msgstr "%lu valittuna, %s"
 
-#: ../pan/gui/task-pane.cc:510
+#: ../pan/gui/task-pane.cc:550
 msgid "Running"
 msgstr "Käynnissä"
 
-#: ../pan/gui/task-pane.cc:511
+#: ../pan/gui/task-pane.cc:551
 msgid "Decoding"
 msgstr "Puretaan"
 
-#: ../pan/gui/task-pane.cc:513
+#: ../pan/gui/task-pane.cc:553
 msgid "Queued for Decode"
 msgstr "Lisätty purkujonoon"
 
-#: ../pan/gui/task-pane.cc:514
+#: ../pan/gui/task-pane.cc:554
 #, fuzzy
 msgid "Queued for Encode"
 msgstr "Lisätty purkujonoon"
 
-#: ../pan/gui/task-pane.cc:515
+#: ../pan/gui/task-pane.cc:555
 msgid "Queued"
 msgstr "Jonossa"
 
-#: ../pan/gui/task-pane.cc:516
+#: ../pan/gui/task-pane.cc:556
 msgid "Stopped"
 msgstr "Pysähtynyt"
 
-#: ../pan/gui/task-pane.cc:517
+#: ../pan/gui/task-pane.cc:557
 msgid "Removing"
 msgstr "Poistamassa"
 
-#: ../pan/gui/task-pane.cc:546
+#: ../pan/gui/task-pane.cc:586
 #, c-format
 msgid "%d%% Done"
 msgstr "%d %% Suoritettu"
 
-#: ../pan/gui/task-pane.cc:552
+#: ../pan/gui/task-pane.cc:592
 #, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%d:%02d:%02d jäljellä (%d @ %lu KiB∕s)"
 
-#: ../pan/gui/task-pane.cc:646 ../pan/gui/task-pane.cc:647
+#: ../pan/gui/task-pane.cc:687 ../pan/gui/task-pane.cc:688
 msgid "Move To Top"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:651 ../pan/gui/task-pane.cc:652
+#: ../pan/gui/task-pane.cc:692 ../pan/gui/task-pane.cc:693
 msgid "Move To Bottom"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:656 ../pan/gui/task-pane.cc:657
+#: ../pan/gui/task-pane.cc:697 ../pan/gui/task-pane.cc:698
+#, fuzzy
+#| msgid "Show Article Information"
+msgid "Show Task Information"
+msgstr "Näytä artikkelin tiedot"
+
+#: ../pan/gui/task-pane.cc:702 ../pan/gui/task-pane.cc:703
 #, fuzzy
 msgid "Stop Task"
 msgstr "Pysäytä toiminnot"
 
-#: ../pan/gui/task-pane.cc:661 ../pan/gui/task-pane.cc:662
+#: ../pan/gui/task-pane.cc:707 ../pan/gui/task-pane.cc:708
 #, fuzzy
 msgid "Delete Task"
 msgstr "Poista toiminnot"
 
-#: ../pan/gui/task-pane.cc:666 ../pan/gui/task-pane.cc:667
+#: ../pan/gui/task-pane.cc:712 ../pan/gui/task-pane.cc:713
 #, fuzzy
 msgid "Restart Task"
 msgstr "Käynnistä toiminnot uudestaan"
 
-#: ../pan/gui/task-pane.cc:671 ../pan/gui/task-pane.cc:672
+#: ../pan/gui/task-pane.cc:717 ../pan/gui/task-pane.cc:718
 msgid "Change Download Destination"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:729
+#: ../pan/gui/task-pane.cc:1028
 msgid "_Online"
 msgstr "_Yhteydellinen tila"
 
-#: ../pan/gui/task-pane.cc:746
+#: ../pan/gui/task-pane.cc:1045
 msgid "Restart Tasks"
 msgstr "Käynnistä toiminnot uudestaan"
 
-#: ../pan/gui/task-pane.cc:748
+#: ../pan/gui/task-pane.cc:1047
 msgid "Stop Tasks"
 msgstr "Pysäytä toiminnot"
 
-#: ../pan/gui/task-pane.cc:750
+#: ../pan/gui/task-pane.cc:1049
 msgid "Delete Tasks"
 msgstr "Poista toiminnot"
+
+#: ../pan/gui/task-pane.cc:1055
+msgid "Show info popups"
+msgstr ""
 
 #: ../pan/gui/url.cc:123
 #, c-format
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr "Virhe avattaessa URLia: %s (Komento oli: %s)"
 
-#: ../pan/tasks/decoder.cc:115
+#: ../pan/tasks/decoder.cc:117
 #, c-format
 msgid "Couldn't save file \"%s\": %s"
 msgstr "Ei voitu tallentaa tiedostoa %s: %s"
 
-#: ../pan/tasks/decoder.cc:137 ../pan/tasks/encoder.cc:136
+#: ../pan/tasks/decoder.cc:139 ../pan/tasks/encoder.cc:136
 msgid "Error initializing uulib"
 msgstr "Virhe uulibin alustuksessa"
 
-#: ../pan/tasks/decoder.cc:152 ../pan/tasks/socket-impl-gio.cc:352
-#: ../pan/tasks/socket-impl-openssl.cc:634
+#: ../pan/tasks/decoder.cc:154 ../pan/tasks/socket-impl-gio.cc:360
+#: ../pan/tasks/socket-impl-openssl.cc:642
 #, c-format
 msgid "Error reading from %s: %s"
 msgstr "Virhe luettaessa kohteesta %s: %s"
 
-#: ../pan/tasks/decoder.cc:192
+#: ../pan/tasks/decoder.cc:194
 #, c-format
 msgid "Saved \"%s\""
 msgstr "%s tallennettu"
 
-#: ../pan/tasks/decoder.cc:199
+#: ../pan/tasks/decoder.cc:201
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -3073,50 +3338,55 @@ msgstr ""
 "Virhe tallennettaessa tiedostoa %s:\n"
 "%s."
 
-#: ../pan/tasks/decoder.cc:314 ../pan/tasks/task-article.cc:350
+#: ../pan/tasks/decoder.cc:314 ../pan/tasks/task-article.cc:354
 #, c-format
 msgid "Decoding %s"
 msgstr "Puretaan \"%s\""
 
-#: ../pan/tasks/encoder.cc:102 ../pan/tasks/encoder.cc:155
+#: ../pan/tasks/encoder.cc:103 ../pan/tasks/encoder.cc:154
 #, fuzzy, c-format
 msgid "Error loading %s from cache."
 msgstr "Virhe luettaessa kohteesta %s: %s"
 
-#: ../pan/tasks/encoder.cc:177
+#: ../pan/tasks/encoder.cc:176
 #, fuzzy, c-format
 msgid "Error encoding %s: %s"
 msgstr "Virhe luettaessa kohteesta %s: %s"
 
-#: ../pan/tasks/encoder.cc:269
+#: ../pan/tasks/encoder.cc:266
 #, fuzzy, c-format
 msgid "Encoding %s"
 msgstr "Puretaan"
 
-#: ../pan/tasks/nntp.cc:126
+#: ../pan/tasks/nntp.cc:148
 #, c-format
 msgid "%s requires a username, but none is set."
 msgstr "%s vaatii käyttäjätunnuksen, mutta tunnusta ei ole asetettu."
 
-#: ../pan/tasks/nntp.cc:139
+#: ../pan/tasks/nntp.cc:161
 #, c-format
 msgid "%s requires a password, but none is set."
 msgstr "%s vaatii salasanan, mutta salasanaa ei ole asetettu."
 
-#: ../pan/tasks/nntp.cc:205
+#: ../pan/tasks/nntp.cc:239
 #, c-format
 msgid "Sending \"%s\" to %s returned an error: %s"
 msgstr "Lähetys %s kohteeseen %s aiheutti virheen: %s"
 
-#: ../pan/tasks/nntp.cc:228
+#: ../pan/tasks/nntp.cc:262
 #, c-format
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr "Lähetys %s kohteeseen %s aiheutti tuntemattoman vastauksen; %s"
 
-#: ../pan/tasks/nntp-pool.cc:222
+#: ../pan/tasks/nntp-pool.cc:235
 #, c-format
 msgid "Unable to connect to \"%s\""
 msgstr "Yhteyden avaaminen kohteeseen %s ei onnistu"
+
+#: ../pan/tasks/queue.cc:772 ../pan/tasks/queue.cc:800
+#: ../pan/tasks/queue.cc:827
+msgid "No space left on device."
+msgstr ""
 
 #: ../pan/tasks/socket-impl-gio.cc:173 ../pan/tasks/socket-impl-gio.cc:211
 #: ../pan/tasks/socket-impl-openssl.cc:214
@@ -3125,32 +3395,31 @@ msgstr "Yhteyden avaaminen kohteeseen %s ei onnistu"
 msgid "Error connecting to \"%s\""
 msgstr "Virhe luettaessa tiedostoa %s"
 
-#: ../pan/tasks/socket-impl-gio.cc:351 ../pan/tasks/socket-impl-openssl.cc:633
+#: ../pan/tasks/socket-impl-gio.cc:359 ../pan/tasks/socket-impl-openssl.cc:641
 msgid "Unknown Error"
 msgstr "Tuntematon virhe"
 
-#: ../pan/tasks/task-article.cc:61 ../pan/tasks/task-article.cc:156
-#: ../pan/tasks/task-article.cc:159
+#: ../pan/tasks/task-article.cc:62 ../pan/tasks/task-article.cc:160
 #, c-format
 msgid "Saving %s"
 msgstr "Tallennetaan kohdetta %s"
 
-#: ../pan/tasks/task-article.cc:63
+#: ../pan/tasks/task-article.cc:64
 #, c-format
 msgid "Reading %s"
 msgstr "Luetaan kohdetta %s"
 
-#: ../pan/tasks/task-article.cc:322
+#: ../pan/tasks/task-article.cc:326
 #, c-format
 msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
 msgstr "Artikkeli \"%s\" on vajaa, palvelimelta puuttuu osa %s"
 
-#: ../pan/tasks/task-groups.cc:40
+#: ../pan/tasks/task-groups.cc:41
 #, c-format
 msgid "Getting group list from \"%s\""
 msgstr "Haetaan ryhmiä palvelimelta %s"
 
-#: ../pan/tasks/task-groups.cc:122
+#: ../pan/tasks/task-groups.cc:134
 #, c-format
 msgid "Fetched %lu Groups"
 msgstr "Haettu %lu ryhmää"
@@ -3166,238 +3435,244 @@ msgid "Posting of \"%s\" failed: %s"
 msgstr "Lähetysprofiilit"
 
 #: ../pan/tasks/task-post.cc:81
-#, c-format
-msgid "Posting of \"%s\" succesful: %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Posting of \"%s\" successful: %s"
+msgstr "Lähetysprofiilit"
 
 #: ../pan/tasks/task-upload.cc:51
 #, fuzzy, c-format
 msgid "Uploading %s"
 msgstr "Luetaan kohdetta %s"
 
-#: ../pan/tasks/task-upload.cc:249
+#: ../pan/tasks/task-upload.cc:244
 #, c-format
 msgid "Uploading %s - Part %d of %d"
 msgstr ""
 
-#: ../pan/tasks/task-upload.cc:251
+#: ../pan/tasks/task-upload.cc:246
 #, c-format
-msgid "Uploading Message body with Subject \"%s\""
+msgid "Uploading message body with subject \"%s\""
 msgstr ""
 
-#: ../pan/tasks/task-upload.cc:308
-#, c-format
-msgid "Posting of File %s (Part %d of %d) failed: No Posts allowed by server."
-msgstr ""
-
-#: ../pan/tasks/task-upload.cc:316
+#: ../pan/tasks/task-upload.cc:303
 #, fuzzy, c-format
-msgid "Posting of File %s (Part %d of %d) failed: %s"
+msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
 msgstr "Lähetysprofiilit"
 
-#: ../pan/tasks/task-upload.cc:326 ../pan/tasks/task-upload.cc:333
-#, c-format
-msgid "Posting of file %s (Part %d of %d) succesful: %s"
-msgstr ""
-
-#: ../pan/tasks/task-upload.cc:343
+#: ../pan/tasks/task-upload.cc:311
 #, fuzzy, c-format
-msgid "Posting of file %s succesful: %s"
+msgid "Posting of file %s (part %d of %d) failed: %s"
 msgstr "Lähetysprofiilit"
 
-#: ../pan/tasks/task-upload.cc:347
+#: ../pan/tasks/task-upload.cc:321 ../pan/tasks/task-upload.cc:328
+#, fuzzy, c-format
+msgid "Posting of file %s (part %d of %d) successful: %s"
+msgstr "Lähetysprofiilit"
+
+#: ../pan/tasks/task-upload.cc:338
+#, fuzzy, c-format
+msgid "Posting of file %s successful: %s"
+msgstr "Lähetysprofiilit"
+
+#: ../pan/tasks/task-upload.cc:342
 #, c-format
 msgid ""
-"Posting of file %s not completely successful: Check the log (right-click on "
-"list item) !"
+"Posting of file %s not completely successful: Check the log (right-click "
+"list item)."
 msgstr ""
 
-#: ../pan/tasks/task-upload.cc:364
+#: ../pan/tasks/task-upload.cc:358
 #, c-format
 msgid ""
-"Posting of file %s not successful: Check the log (right-click on list item) !"
+"Posting of file %s not successful: Check the log (right-click list item)."
 msgstr ""
 
-#: ../pan/tasks/task-xover.cc:79
+#: ../pan/tasks/task-xover.cc:83
 #, c-format
 msgid "Getting all headers for \"%s\""
 msgstr "Haetaan kaikki otsikot ryhmälle \"%s\""
 
-#: ../pan/tasks/task-xover.cc:81
+#: ../pan/tasks/task-xover.cc:86
 #, c-format
 msgid "Getting new headers for \"%s\""
 msgstr "Haetaan uudet otsikot ryhmälle \"%s\""
 
 #. SAMPLE
-#: ../pan/tasks/task-xover.cc:83
+#: ../pan/tasks/task-xover.cc:90
 #, c-format
 msgid "Sampling headers for \"%s\""
 msgstr "Näytteistetään otsikot ryhmälle \"%s\""
 
-#: ../pan/tasks/task-xover.cc:369
+#: ../pan/tasks/task-xover.cc:426
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu osaa %lu artikkelissa)"
+
+#: ../pan/tasks/task-xover.cc:500
+#, fuzzy, c-format
+#| msgid "Getting new headers for \"%s\""
+msgid "Getting new headers for \"%s\" done."
+msgstr "Haetaan uudet otsikot ryhmälle \"%s\""
 
 #: ../pan/tasks/task-xoverinfo.cc:78
 #, fuzzy, c-format
 msgid "Getting header counts for \"%s\""
 msgstr "Haetaan kaikki otsikot ryhmälle \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:163
+#: ../pan/usenet-utils/filter-info.cc:168
 msgid "article doesn't have attachments"
 msgstr "artikkelissa ei ole liitetiedostoja"
 
-#: ../pan/usenet-utils/filter-info.cc:167
+#: ../pan/usenet-utils/filter-info.cc:172
 msgid "the article has attachments"
 msgstr "artikkelissa on liitetiedostoja"
 
-#: ../pan/usenet-utils/filter-info.cc:171
+#: ../pan/usenet-utils/filter-info.cc:176
 msgid "the article isn't cached locally"
 msgstr "artikkelin sisältö ei ole paikallisessa välimuistissa"
 
-#: ../pan/usenet-utils/filter-info.cc:175
+#: ../pan/usenet-utils/filter-info.cc:180
 msgid "the article is cached locally"
 msgstr "artikkelin sisältö on välimuistissa"
 
-#: ../pan/usenet-utils/filter-info.cc:179
+#: ../pan/usenet-utils/filter-info.cc:184
 msgid "the article wasn't posted by you"
 msgstr "artikkeli ei ole lähettämäsi"
 
-#: ../pan/usenet-utils/filter-info.cc:183
+#: ../pan/usenet-utils/filter-info.cc:188
 msgid "the article was posted by you"
 msgstr "artikkeli on lähettämäsi"
 
-#: ../pan/usenet-utils/filter-info.cc:187
+#: ../pan/usenet-utils/filter-info.cc:192
 msgid "the article has been read"
 msgstr "artikkeli on luettu"
 
-#: ../pan/usenet-utils/filter-info.cc:191
+#: ../pan/usenet-utils/filter-info.cc:196
 msgid "the article hasn't been read"
 msgstr "artikkelia ei ole luettu"
 
-#: ../pan/usenet-utils/filter-info.cc:195
+#: ../pan/usenet-utils/filter-info.cc:200
 #, c-format
 msgid "the article is less than %ld bytes long"
 msgstr "artikkeli on alle %ld tavua pitkä"
 
-#: ../pan/usenet-utils/filter-info.cc:200
+#: ../pan/usenet-utils/filter-info.cc:205
 #, c-format
 msgid "the article is at least %ld bytes long"
 msgstr "artikkeli on yli %ld tavua pitkä"
 
-#: ../pan/usenet-utils/filter-info.cc:205
+#: ../pan/usenet-utils/filter-info.cc:210
 #, c-format
 msgid "the article is less than %ld lines long"
 msgstr "artikkeli on alle %ld riviä pitkä"
 
-#: ../pan/usenet-utils/filter-info.cc:210
+#: ../pan/usenet-utils/filter-info.cc:215
 #, c-format
 msgid "the article is at least %ld lines long"
 msgstr "artikkeli on vähintään %ld riviä pitkä"
 
-#: ../pan/usenet-utils/filter-info.cc:215
+#: ../pan/usenet-utils/filter-info.cc:220
 #, c-format
 msgid "the article is less than %ld days old"
 msgstr "artikkeli on vähintään %ld päivää vanha"
 
-#: ../pan/usenet-utils/filter-info.cc:220
+#: ../pan/usenet-utils/filter-info.cc:225
 #, c-format
 msgid "the article is at least %ld days old"
 msgstr "artikkeli on vähintään %ld päivää vanha"
 
-#: ../pan/usenet-utils/filter-info.cc:225
+#: ../pan/usenet-utils/filter-info.cc:230
 #, c-format
 msgid "the article was posted to less than %ld groups"
 msgstr "artikkeli on yhteislähetetty alle %ld ryhmään"
 
-#: ../pan/usenet-utils/filter-info.cc:230
+#: ../pan/usenet-utils/filter-info.cc:235
 #, c-format
 msgid "the article was posted to at least %ld groups"
 msgstr "artikkeli on yhteislähetty vähintään %ld ryhmään"
 
-#: ../pan/usenet-utils/filter-info.cc:235
+#: ../pan/usenet-utils/filter-info.cc:240
 #, c-format
 msgid "the article's score is less than %ld"
 msgstr "artikkelin pistemäärä on alle %ld"
 
-#: ../pan/usenet-utils/filter-info.cc:240
+#: ../pan/usenet-utils/filter-info.cc:245
 #, c-format
 msgid "the article's score is %ld or higher"
 msgstr "artikkelin pistemäärä on %ld tai enemmän"
 
-#: ../pan/usenet-utils/filter-info.cc:249
-#: ../pan/usenet-utils/filter-info.cc:259
+#: ../pan/usenet-utils/filter-info.cc:254
+#: ../pan/usenet-utils/filter-info.cc:264
 #, c-format
 msgid "%s doesn't contain \"%s\""
 msgstr "%s ei sisällä merkkijonoa %s"
 
-#: ../pan/usenet-utils/filter-info.cc:250
-#: ../pan/usenet-utils/filter-info.cc:260
+#: ../pan/usenet-utils/filter-info.cc:255
+#: ../pan/usenet-utils/filter-info.cc:265
 #, c-format
 msgid "%s isn't \"%s\""
 msgstr "%s ei ole %s"
 
-#: ../pan/usenet-utils/filter-info.cc:251
-#: ../pan/usenet-utils/filter-info.cc:261
+#: ../pan/usenet-utils/filter-info.cc:256
+#: ../pan/usenet-utils/filter-info.cc:266
 #, c-format
 msgid "%s doesn't begin with \"%s\""
 msgstr "%s ei ala merkkijonolla %s"
 
-#: ../pan/usenet-utils/filter-info.cc:252
-#: ../pan/usenet-utils/filter-info.cc:262
+#: ../pan/usenet-utils/filter-info.cc:257
+#: ../pan/usenet-utils/filter-info.cc:267
 #, c-format
 msgid "%s doesn't end with \"%s\""
 msgstr "%s ei pääty merkkijonoon %s"
 
-#: ../pan/usenet-utils/filter-info.cc:253
-#: ../pan/usenet-utils/filter-info.cc:263
+#: ../pan/usenet-utils/filter-info.cc:258
+#: ../pan/usenet-utils/filter-info.cc:268
 #, c-format
 msgid "%s doesn't match the regex \"%s\""
 msgstr "%s ei täsmää säännöllistä ilmausta %s"
 
-#: ../pan/usenet-utils/filter-info.cc:275
+#: ../pan/usenet-utils/filter-info.cc:280
 #, c-format
 msgid "%s contains \"%s\""
 msgstr "%s sisältää merkkijonon %s"
 
-#: ../pan/usenet-utils/filter-info.cc:276
+#: ../pan/usenet-utils/filter-info.cc:281
 #, c-format
 msgid "%s is \"%s\""
 msgstr "%s on %s"
 
-#: ../pan/usenet-utils/filter-info.cc:277
+#: ../pan/usenet-utils/filter-info.cc:282
 #, c-format
 msgid "%s begins with \"%s\""
 msgstr "%s alkaa merkkijonolla %s"
 
-#: ../pan/usenet-utils/filter-info.cc:278
+#: ../pan/usenet-utils/filter-info.cc:283
 #, c-format
 msgid "%s ends with \"%s\""
 msgstr "%s päättyy merkkijonoon %s"
 
-#: ../pan/usenet-utils/filter-info.cc:279
+#: ../pan/usenet-utils/filter-info.cc:284
 #, c-format
 msgid "%s matches the regex \"%s\""
 msgstr "%s täsmää säännölliseen ilmaukseen %s"
 
-#: ../pan/usenet-utils/filter-info.cc:285
+#: ../pan/usenet-utils/filter-info.cc:290
 msgid "Any of these tests fail:"
 msgstr "Mikä tahansa säännöistä ei päde:"
 
-#: ../pan/usenet-utils/filter-info.cc:292
+#: ../pan/usenet-utils/filter-info.cc:297
 msgid "All of these tests pass:"
 msgstr "Mikä tahansa säännöistä pätee:"
 
-#: ../pan/usenet-utils/filter-info.cc:299
+#: ../pan/usenet-utils/filter-info.cc:304
 msgid "None of these tests pass:"
 msgstr "Yksikään säännöistä ei päde:"
 
-#: ../pan/usenet-utils/filter-info.cc:306
+#: ../pan/usenet-utils/filter-info.cc:311
 msgid "Any of these tests pass:"
 msgstr "Kaikki säännöt pätevät:"
 
-#: ../pan/usenet-utils/gnksa.cc:878
+#: ../pan/usenet-utils/gnksa.cc:880
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr ""
@@ -3524,39 +3799,58 @@ msgstr ""
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr "Luettu %lu pisteytystä %lu osiosta kohteesta %s"
 
-#: ../pan/usenet-utils/ssl-utils.h:199
+#: ../pan/usenet-utils/ssl-utils.h:189
 #, fuzzy, c-format
 msgid "Error printing the server certificate for '%s'"
 msgstr "Virhe käynnistettäessä ulkoista muokkainta: %s"
 
-#: ../pan/usenet-utils/ssl-utils.h:216
+#: ../pan/usenet-utils/ssl-utils.h:205
 #, c-format
 msgid ""
-"The current server <b>'%s'</b> sent this security certificate :\n"
+"The current server <b>'%s'</b> sent this security certificate:\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:217
+#: ../pan/usenet-utils/ssl-utils.h:206
 #, c-format
 msgid ""
-"Certificate information for server <b>'%s'</b> :\n"
+"Certificate information for server <b>'%s'</b>:\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:219
+#: ../pan/usenet-utils/ssl-utils.h:208
 #, c-format
 msgid ""
 "%s<b>Issuer information:</b>\n"
 "%s\n"
-"<b>Valid until : </b>%s\n"
+"<b>Valid until:</b> %s\n"
 "\n"
-"<b>Not valid before : </b>%s\n"
+"<b>Not valid before:</b> %s\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/text-massager.cc:397
+#: ../pan/usenet-utils/text-massager.cc:399
 msgid "> [quoted text muted]"
 msgstr "> [lainattu teksti piilotettu]"
+
+#: ../pan/usenet-utils/text-massager.cc:579
+msgid "no_name"
+msgstr ""
+
+#: ../pan/usenet-utils/text-massager.cc:580
+msgid "no_mail"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Always trust"
+#~ msgstr "Suorita aina muokkain"
+
+#, fuzzy
+#~ msgid "Quoted text:"
+#~ msgstr "Lainattu teksti:"
+
+#~ msgid "If the group name"
+#~ msgstr "Kun ryhmän nimi on"
 
 #~ msgid "Read News from Usenet"
 #~ msgstr "Lue Usenetin keskusteluryhmiä"
