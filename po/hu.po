@@ -1,83 +1,101 @@
-# PAN Newsreader Hungarian po file
-# Copyright (C) 2001 Free Software Foundation, Inc.
-# András Tímár <timar@gnome.hu>, 2001.
+# Hungarian translation for PAN Newsreader.
+# Copyright (C) 2001, 2014 Free Software Foundation, Inc.
+# This file is distributed under the same license as the pan2 package.
 #
+# András Tímár <timar@gnome.hu>, 2001.
+# Balázs Úr <urbalazs@gmail.com>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: pan 0.11.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-04 20:58+0200\n"
-"PO-Revision-Date: 2003-07-14 00:53+0200\n"
-"Last-Translator: Andras Timar <timar@gnome.hu>\n"
-"Language-Team: Hungarian <hu@gnome.hu>\n"
+"Project-Id-Version: pan2\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=Pan&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-03-23 17:15+0000\n"
+"PO-Revision-Date: 2014-12-30 22:11+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"Language-Team: Hungarian <openscope@googlegroups.com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.2\n"
 
-#: ../pan.desktop.in.h:1
-#, fuzzy
-msgid "Pan Newsreader"
-msgstr "Pan, a hírolvasó"
+#. update the titlebar
+#: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106
+#: ../pan/gui/gui.cc:1040 ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:2009
+#: ../pan/gui/score-add-ui.cc:602
+msgid "Pan"
+msgstr "Pan"
 
 #: ../pan.desktop.in.h:2
-#, fuzzy
+msgid "Newsreader"
+msgstr "Hírolvasó"
+
+#: ../pan.desktop.in.h:3
 msgid "Read and Post Usenet Articles"
-msgstr "Kijelölt cikkek letöltése"
+msgstr "Usenet cikkek olvasása és küldése"
 
-#: ../pan/data/article-cache.cc:143 ../pan/data/encode-cache.cc:62
-#, fuzzy, c-format
+#: ../pan/data/article-cache.cc:144 ../pan/data/encode-cache.cc:62
+#, c-format
 msgid "Error opening directory: \"%s\": %s"
-msgstr "Hiba a könyvtár megnyitása közben: \"%s\": %s)"
+msgstr "Hiba a(z) „%s” könyvtár megnyitásakor: %s"
 
-#: ../pan/data/article-cache.cc:231 ../pan/data/article-cache.cc:242
-#: ../pan/data-impl/data-io.cc:187 ../pan/data-impl/data-io.cc:211
-#: ../pan/gui/post-ui.cc:1639
-#, fuzzy, c-format
+#: ../pan/data/article-cache.cc:235 ../pan/data/article-cache.cc:244
+#: ../pan/data-impl/data-io.cc:199 ../pan/data-impl/data-io.cc:231
+#: ../pan/gui/post-ui.cc:1723
+#, c-format
 msgid "Unable to save \"%s\" %s"
-msgstr "Nem sikerült létrehozni a fájlt: \"%s\""
+msgstr "Nem sikerült a(z) „%s” mentése: %s"
 
-#: ../pan/data/article-cache.cc:355
-#, fuzzy, c-format
+#: ../pan/data/article-cache.cc:362
+#, c-format
 msgid "Error opening file \"%s\" %s"
-msgstr "Hiba a fájl megnyitása közben: \"%s\": %s"
+msgstr "Hiba a(z) „%s” fájl megnyitásakor: %s"
 
-#: ../pan/data/article-cache.cc:386 ../pan/data-impl/profiles.cc:174
-#: ../pan/data-impl/server.cc:436 ../pan/general/file-util.cc:298
-#: ../pan/gui/post-ui.cc:609 ../pan/gui/task-pane.cc:691
+#: ../pan/data/article-cache.cc:393 ../pan/data-impl/profiles.cc:174
+#: ../pan/data-impl/server.cc:500 ../pan/general/file-util.cc:311
+#: ../pan/gui/post-ui.cc:638 ../pan/gui/task-pane.cc:737
 #, c-format
 msgid "Error reading file \"%s\": %s"
-msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+msgstr "Hiba a(z) „%s” fájl olvasásakor: %s"
 
-#: ../pan/data/cert-store.cc:238
-#, fuzzy, c-format
-msgid "Error opening SSL certificate directory: \"%s\": %s"
-msgstr "Hiba a könyvtár megnyitása közben: \"%s\": %s)"
-
-#: ../pan/data/cert-store.cc:270
+#: ../pan/data/cert-store.cc:262
 #, c-format
-msgid "Succesfully added %d SSL PEM certificate(s) to Certificate Store."
+msgid "Error opening SSL certificate directory: \"%s\": %s"
+msgstr "Hiba a(z) „%s” SSL tanúsítvány könyvtár megnyitásakor: %s"
+
+#: ../pan/data/cert-store.cc:293
+#, c-format
+msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
+msgstr "%d SSL PEM tanúsítvány sikeresen hozzáadva a tanúsítványtárolóhoz."
+
+#: ../pan/data/cert-store.cc:313
+msgid ""
+"Error initializing Certificate Store. Check that the permissions for the "
+"folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
 msgstr ""
+"Hiba a tanúsítványtároló előkészítésekor. Ellenőrizze, hogy a ~/.pan2 és ~/."
+"pan2/ssl_certs mappák jogosultsága helyes-e. Végzetes, kilépés."
 
 #. load_group_descriptions (*_data_io);
-#: ../pan/data-impl/data-impl.cc:109
+#: ../pan/data-impl/data-impl.cc:113
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
-msgstr ""
+msgstr "Adat háttérprogram betöltve %.1f másodperc alatt"
 
-#: ../pan/data-impl/data-impl.cc:140
-msgid "Pan newsreader server passwords"
-msgstr ""
+#: ../pan/data-impl/data-impl.cc:143
+msgid "Pan Newsreader's server passwords"
+msgstr "Pan hírolvasó kiszolgáló jelszavak"
 
 #: ../pan/data-impl/groups.cc:94
-#, fuzzy, c-format
+#, c-format
 msgid "Skipping newsrc file for server \"%s\""
-msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+msgstr "A newsrc fájl kihagyása a(z) „%s” kiszolgálónál"
 
 #: ../pan/data-impl/headers.cc:606
-#, fuzzy, c-format
+#, c-format
 msgid "Expired %lu old articles from \"%s\""
-msgstr "%u cikk törölve \"%s\" hírcsoportból"
+msgstr "%lu régi cikk lejárt itt: „%s”"
 
 #: ../pan/data-impl/headers.cc:613
 #, c-format
@@ -85,1371 +103,1265 @@ msgid ""
 "Unsupported data version for %s headers: %d.\n"
 "Are you running an old version of Pan by accident?"
 msgstr ""
+"Nem támogatott adatverzió a(z) %s fejléceknél: %d.\n"
+"Véletlenül a Pan egy régi verzióját futtatja?"
 
 #: ../pan/data-impl/headers.cc:628
-#, fuzzy, c-format
+#, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
-msgstr ""
-"%d cikk betöltése `%s' hírcsoportba %.1f másodperc alatt (%.0f cikk/"
-"másodperc)"
+msgstr "%lu betöltve ehhez: „%s” %.1f másodperc alatt (%.0f másodpercenként)"
 
 #: ../pan/data-impl/headers.cc:857
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
 msgstr ""
-"%d cikk mentése \"%s\" hírcsoportból %.1f másodperc alatt (%.0f cikk/"
-"másodperc)"
+"%lu rész, %lu cikk elmentve ide: „%s” %.1f másodperc alatt (%.0f cikk/mp)"
 
-#: ../pan/data-impl/headers.cc:1173
-#, fuzzy, c-format
-msgid "Added %lu articles to %s."
-msgstr "%u cikk törölve \"%s\" hírcsoportból"
-
-#: ../pan/data-impl/server.cc:234
+#: ../pan/data-impl/headers.cc:1191
 #, c-format
-msgid "There seems to be no Password set for Server %s."
-msgstr ""
+msgid "Added %lu articles to %s."
+msgstr "%lu cikk hozzáadva ehhez: %s."
 
-#: ../pan/data-impl/server.cc:238
-msgid "The Gnome keyring denied access to the Passwords."
-msgstr ""
+#: ../pan/data-impl/server.cc:261
+#, c-format
+#| msgid "Type your user name and password for your news server."
+msgid "There seems to be no password set for server %s."
+msgstr "Úgy tűnik, hogy nincs beállítva jelszó a következő kiszolgálóhoz: %s."
 
-#: ../pan/data-impl/xover.cc:239
-#, fuzzy, c-format
+#: ../pan/data-impl/server.cc:265
+msgid "GNOME Keyring denied access to the passwords."
+msgstr "A GNOME kulcstartó megtagadta a hozzáférést a jelszavakhoz."
+
+#: ../pan/data-impl/xover.cc:243
+#, c-format
 msgid "Error reading from %s: unknown group \"%s\""
-msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+msgstr "Hiba az olvasás közben innen: %s: ismeretlen „%s” csoport"
 
 #. build the locale strings
-#: ../pan/general/e-util.cc:213
+#: ../pan/general/e-util.cc:211
 msgid "%l:%M %p"
-msgstr ""
+msgstr "%p %l.%M"
+
+#: ../pan/general/e-util.cc:212
+msgid "Today %l:%M %p"
+msgstr "Ma %p %l.%M"
+
+#: ../pan/general/e-util.cc:213
+msgid "%a %l:%M %p"
+msgstr "%a., %p %l.%M"
 
 #: ../pan/general/e-util.cc:214
-msgid "Today %l:%M %p"
-msgstr ""
+msgid "%b %d %l:%M %p"
+msgstr "%b. %d., %p %l.%M"
 
 #: ../pan/general/e-util.cc:215
-msgid "%a %l:%M %p"
-msgstr ""
-
-#: ../pan/general/e-util.cc:216
-msgid "%b %d %l:%M %p"
-msgstr ""
-
-#: ../pan/general/e-util.cc:217
 msgid "%b %d %Y"
-msgstr ""
+msgstr "%Y. %b. %d."
 
-#: ../pan/general/e-util.cc:242
+#: ../pan/general/e-util.cc:240
 msgid "?"
-msgstr ""
+msgstr "?"
 
 #: ../pan/general/text-match.cc:193
-#, fuzzy, c-format
+#, c-format
 msgid "Can't use regular expression \"%s\": %s"
-msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+msgstr "Nem lehet használni a(z) „%s” reguláris kifejezést: %s"
 
 #: ../pan/general/utf8-utils.cc:213
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr ""
+"Nem sikerült megállapítani a cikk kódolását. A nem UTF-8 karakterek "
+"eltávolításra kerültek."
 
-#: ../pan/gui/actions.cc:274 ../pan/gui/post-ui.cc:417
-#, fuzzy
+#: ../pan/gui/actions.cc:303 ../pan/gui/post-ui.cc:446
 msgid "_File"
-msgstr "/_Fájl"
+msgstr "_Fájl"
 
-#: ../pan/gui/actions.cc:275 ../pan/gui/post-ui.cc:418
-#, fuzzy
+#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:447
 msgid "_Edit"
-msgstr "/S_zerkesztés"
+msgstr "S_zerkesztés"
 
-#: ../pan/gui/actions.cc:276 ../pan/gui/prefs-ui.cc:1064
-#, fuzzy
+#: ../pan/gui/actions.cc:305 ../pan/gui/prefs-ui.cc:1107
 msgid "_Layout"
-msgstr "Elrendezés"
-
-#: ../pan/gui/actions.cc:277
-#, fuzzy
-msgid "_Group Pane"
-msgstr "A _hírcsoport mező nagyítása"
-
-#: ../pan/gui/actions.cc:278
-#, fuzzy
-msgid "_Header Pane"
-msgstr "Fejlécmező mutatása"
-
-#: ../pan/gui/actions.cc:279
-#, fuzzy
-msgid "_Body Pane"
-msgstr "Hírcsoportlista mező"
-
-#: ../pan/gui/actions.cc:280
-#, fuzzy
-msgid "_View"
-msgstr "/_Nézet"
-
-#: ../pan/gui/actions.cc:281
-#, fuzzy
-msgid "Filte_r"
-msgstr "Szűrők"
-
-#: ../pan/gui/actions.cc:282
-#, fuzzy
-msgid "_Go"
-msgstr "/_Hírcsoportok"
-
-#: ../pan/gui/actions.cc:283 ../pan/gui/prefs-ui.cc:1091
-#, fuzzy
-msgid "_Actions"
-msgstr "Műveletek"
-
-#: ../pan/gui/actions.cc:284
-#, fuzzy
-msgid "_Articles"
-msgstr "/_Cikkek"
-
-#: ../pan/gui/actions.cc:285
-#, fuzzy
-msgid "G_roups"
-msgstr "Hírcsoportok"
-
-#: ../pan/gui/actions.cc:286 ../pan/gui/actions.cc:287
-#, fuzzy
-msgid "_Post"
-msgstr "/_Küldés"
-
-#: ../pan/gui/actions.cc:288
-#, fuzzy
-msgid "_Help"
-msgstr "/_Súgó"
-
-#: ../pan/gui/actions.cc:291
-#, fuzzy
-msgid "_Read Group"
-msgstr "Hírcsoport újrabetöltése"
-
-#: ../pan/gui/actions.cc:292
-#, fuzzy
-msgid "Read Group"
-msgstr "Hírcsoport újrabetöltése"
-
-#: ../pan/gui/actions.cc:296
-#, fuzzy
-msgid "_Mark Selected Groups Read"
-msgstr "A kijelölt cikkek megjelölése elolvasottként"
-
-#: ../pan/gui/actions.cc:297
-#, fuzzy
-msgid "Mark Selected Groups Read"
-msgstr "A kijelölt cikkek megjelölése elolvasottként"
-
-#: ../pan/gui/actions.cc:301
-#, fuzzy
-msgid "_Delete Selected Groups' Articles"
-msgstr "/_Minden cikk törlése"
-
-#: ../pan/gui/actions.cc:302
-#, fuzzy
-msgid "Delete Selected Groups' Articles"
-msgstr "/_Minden cikk törlése"
+msgstr "_Elrendezés"
 
 #: ../pan/gui/actions.cc:306
-#, fuzzy
-msgid "Get New _Headers in Selected Groups"
-msgstr "Új fejlécek letöltése a kijelölt hírcsoportokhoz"
+msgid "_Group Pane"
+msgstr "_Csoport ablaktábla"
 
 #: ../pan/gui/actions.cc:307
-#, fuzzy
-msgid "Get New Headers in Selected Groups"
-msgstr "Új fejlécek _letöltése a kijelölt hírcsoportokhoz"
+msgid "_Header Pane"
+msgstr "_Fejléc ablaktábla"
 
-#: ../pan/gui/actions.cc:311 ../pan/gui/actions.cc:316
-#, fuzzy
-msgid "Get New _Headers in Subscribed Groups"
-msgstr "Új fejlécek letöltése az előfizetett hírcsoportokhoz"
+#: ../pan/gui/actions.cc:308
+msgid "_Body Pane"
+msgstr "_Törzs ablaktábla"
 
-#: ../pan/gui/actions.cc:312 ../pan/gui/actions.cc:317
-#, fuzzy
-msgid "Get New Headers in Subscribed Groups"
-msgstr "Új fejlécek letöltése az előfizetett hírcsoportokhoz"
+#: ../pan/gui/actions.cc:309
+msgid "_View"
+msgstr "_Nézet"
+
+#: ../pan/gui/actions.cc:310
+msgid "Filte_r"
+msgstr "Szű_rők"
+
+#: ../pan/gui/actions.cc:311
+msgid "_Go"
+msgstr "_Ugrás"
+
+#: ../pan/gui/actions.cc:312 ../pan/gui/prefs-ui.cc:1157
+msgid "_Actions"
+msgstr "_Műveletek"
+
+#: ../pan/gui/actions.cc:313
+msgid "_Articles"
+msgstr "_Cikkek"
+
+#: ../pan/gui/actions.cc:314
+msgid "G_roups"
+msgstr "Cs_oportok"
+
+#: ../pan/gui/actions.cc:315 ../pan/gui/actions.cc:316
+msgid "_Post"
+msgstr "_Küldés"
+
+#: ../pan/gui/actions.cc:317
+msgid "_Help"
+msgstr "_Súgó"
+
+#: ../pan/gui/actions.cc:320
+msgid "_Read Group"
+msgstr "Csoport _olvasása"
 
 #: ../pan/gui/actions.cc:321
-#, fuzzy
-msgid "Get _Headers..."
-msgstr "/Új fejlécek letöltése"
+msgid "Read Group"
+msgstr "Csoport olvasása"
 
-#: ../pan/gui/actions.cc:322
-#, fuzzy
-msgid "Get Headers..."
-msgstr "/Új fejlécek letöltése"
+#: ../pan/gui/actions.cc:325
+msgid "_Mark Selected Groups Read"
+msgstr "A kijelölt csoportok _megjelölése olvasottként"
 
-#: ../pan/gui/actions.cc:326 ../pan/gui/actions.cc:327
-#, fuzzy
-msgid "Refresh Group List"
-msgstr "\"%s\" hírcsoport frissítése"
+#: ../pan/gui/actions.cc:326
+msgid "Mark Selected Groups Read"
+msgstr "A kijelölt csoportok megjelölése olvasottként"
+
+#: ../pan/gui/actions.cc:330
+msgid "_Delete Selected Groups' Articles"
+msgstr "A kijelölt csoportok cikkeinek _törlése"
 
 #: ../pan/gui/actions.cc:331
-#, fuzzy
-msgid "_Subscribe"
-msgstr "/_Előfizetés"
+msgid "Delete Selected Groups' Articles"
+msgstr "A kijelölt csoportok cikkeinek törlése"
 
-#: ../pan/gui/actions.cc:332
-msgid "Subscribe"
-msgstr "Előfizetés"
+#: ../pan/gui/actions.cc:335
+msgid "Get New _Headers in Selected Groups"
+msgstr "Új _fejlécek letöltése a kijelölt csoportokban"
 
 #: ../pan/gui/actions.cc:336
-#, fuzzy
-msgid "_Unsubscribe"
-msgstr "/_Lemondás"
+msgid "Get New Headers in Selected Groups"
+msgstr "Új fejlécek letöltése a kijelölt csoportokban"
 
-#: ../pan/gui/actions.cc:337
-msgid "Unsubscribe"
-msgstr "Lemondás"
+#: ../pan/gui/actions.cc:340 ../pan/gui/actions.cc:345
+msgid "Get New _Headers in Subscribed Groups"
+msgstr "Új _fejlécek letöltése a feliratkozott csoportokban"
 
-#: ../pan/gui/actions.cc:341
-#, fuzzy
-msgid "_Save Articles..."
-msgstr "Cikk mentése másként..."
+#: ../pan/gui/actions.cc:341 ../pan/gui/actions.cc:346
+msgid "Get New Headers in Subscribed Groups"
+msgstr "Új fejlécek letöltése a feliratkozott csoportokban"
 
-#: ../pan/gui/actions.cc:342
-#, fuzzy
-msgid "Save Articles..."
-msgstr "Cikk mentése másként..."
-
-#: ../pan/gui/actions.cc:346
-#, fuzzy
-msgid "Save Articles from Selected _NZB..."
-msgstr "Cikk mentése másként..."
-
-#: ../pan/gui/actions.cc:347
-#, fuzzy
-msgid "Save Articles from Selected NZB"
-msgstr "Cikk mellékleteinek mentése"
+#: ../pan/gui/actions.cc:350
+msgid "Get _Headers..."
+msgstr "_Fejlécek letöltése…"
 
 #: ../pan/gui/actions.cc:351
-#, fuzzy
-msgid "Save Articles to an NZB _File..."
-msgstr "Cikk mentése másként..."
+msgid "Get Headers..."
+msgstr "Fejlécek letöltése…"
 
-#: ../pan/gui/actions.cc:352
-#, fuzzy
-msgid "Save Articles to an NZB File"
-msgstr "Napló mentése fájlba"
+#: ../pan/gui/actions.cc:355 ../pan/gui/actions.cc:356
+msgid "Refresh Group List"
+msgstr "Csoportlista frissítése"
 
-#: ../pan/gui/actions.cc:356 ../pan/gui/actions.cc:357
-#, fuzzy
-msgid "Print"
-msgstr "Pan: Nyomtatás"
+#: ../pan/gui/actions.cc:360
+msgid "_Subscribe"
+msgstr "_Feliratkozás"
 
 #: ../pan/gui/actions.cc:361
-#, fuzzy
-msgid "_Import NZB Files..."
-msgstr ".newsrc importálása..."
+msgid "Subscribe"
+msgstr "Feliratkozás"
+
+#: ../pan/gui/actions.cc:365
+msgid "_Unsubscribe"
+msgstr "_Leiratkozás"
 
 #: ../pan/gui/actions.cc:366
-#, fuzzy
-msgid "_Cancel Last Task"
-msgstr "Az utolsó feladat visszavonása"
+msgid "Unsubscribe"
+msgstr "Leiratkozás"
+
+#: ../pan/gui/actions.cc:370
+msgid "_Save Articles..."
+msgstr "Cikkek _mentése…"
 
 #: ../pan/gui/actions.cc:371
-#, fuzzy
-msgid "_Task Manager"
-msgstr "_Feladatkezelő..."
+msgid "Save Articles..."
+msgstr "Cikkek mentése…"
+
+#: ../pan/gui/actions.cc:375
+msgid "Save Articles from Selected _NZB..."
+msgstr "Cikkek mentése a kijelölt _NZB-ből…"
 
 #: ../pan/gui/actions.cc:376
-#, fuzzy
-msgid "_Event Log"
-msgstr "Az állapotnapló megnyitása"
+msgid "Save Articles from Selected NZB"
+msgstr "Cikkek mentése a kijelölt NZB-ből"
+
+#: ../pan/gui/actions.cc:380
+msgid "Save Articles to an NZB _File..."
+msgstr "Cikkek mentése egy NZB _fájlba…"
 
 #: ../pan/gui/actions.cc:381
-#, fuzzy
+msgid "Save Articles to an NZB File"
+msgstr "Cikkek mentése egy NZB fájlba"
+
+#: ../pan/gui/actions.cc:385 ../pan/gui/actions.cc:386
+msgid "Print"
+msgstr "Nyomtatás"
+
+#: ../pan/gui/actions.cc:390
+msgid "_Import NZB Files..."
+msgstr "NZB fájlok _importálása…"
+
+#: ../pan/gui/actions.cc:395
+msgid "_Cancel Last Task"
+msgstr "Az utolsó feladat _megszakítása"
+
+#: ../pan/gui/actions.cc:400
+msgid "_Task Manager"
+msgstr "_Feladatkezelő"
+
+#: ../pan/gui/actions.cc:405
+msgid "_Event Log"
+msgstr "_Eseménynapló"
+
+#: ../pan/gui/actions.cc:410
 msgid "_Quit"
-msgstr "/S_zerkesztés"
+msgstr "_Kilépés"
 
-#: ../pan/gui/actions.cc:386
-#, fuzzy
+#: ../pan/gui/actions.cc:415
 msgid "Select _All Articles"
-msgstr "Kijelölt _cikkek"
+msgstr "Ö_sszes cikk kijelölése"
 
-#: ../pan/gui/actions.cc:391
-#, fuzzy
+#: ../pan/gui/actions.cc:420
 msgid "_Deselect All Articles"
-msgstr "M_inden cikk kijelölése"
+msgstr "Cikkek _kijelölésének megszüntetése"
 
-#: ../pan/gui/actions.cc:396
+#: ../pan/gui/actions.cc:425
 msgid "Add Su_bthreads to Selection"
-msgstr ""
+msgstr "_Alszálak hozzáadása a kijelöléshez"
 
-#: ../pan/gui/actions.cc:401
+#: ../pan/gui/actions.cc:430
 msgid "Add _Threads to Selection"
-msgstr ""
+msgstr "_Szálak hozzáadása a kijelöléshez"
 
-#: ../pan/gui/actions.cc:406
+#: ../pan/gui/actions.cc:435
 msgid "Add _Similar Articles to Selection"
-msgstr ""
+msgstr "_Hasonló cikkek hozzáadása a kijelöléshez"
 
-#: ../pan/gui/actions.cc:411
-#, fuzzy
+#: ../pan/gui/actions.cc:440
 msgid "Select Article _Body"
-msgstr "/S_zerkesztés/Cikk _törzsének kijelölése"
+msgstr "Cikk _törzsének kijelölése"
 
-#: ../pan/gui/actions.cc:416
-#, fuzzy
+#: ../pan/gui/actions.cc:445
 msgid "Edit _Preferences"
-msgstr "/S_zerkesztés/_Beállítások..."
+msgstr "_Beállítások szerkesztése"
 
-#: ../pan/gui/actions.cc:421
-#, fuzzy
+#: ../pan/gui/actions.cc:450
 msgid "Edit Selected _Group's Preferences"
-msgstr "/S_zerkesztés/_Beállítások..."
+msgstr "A kijelölt _csoport beállításainak szerkesztése"
 
-#: ../pan/gui/actions.cc:426 ../pan/gui/post-ui.cc:434
-#, fuzzy
+#: ../pan/gui/actions.cc:455 ../pan/gui/post-ui.cc:463
 msgid "Edit P_osting Profiles"
-msgstr "/_Fájl/Cikk _nyomtatása..."
+msgstr "_Küldő profilok szerkesztése"
 
-#: ../pan/gui/actions.cc:431
-#, fuzzy
+#: ../pan/gui/actions.cc:460
 msgid "Edit _News Servers"
-msgstr "Egyéb szűrők szerkesztése..."
+msgstr "_Hírkiszolgálók szerkesztése"
 
-#: ../pan/gui/actions.cc:436
-#, fuzzy
+#: ../pan/gui/actions.cc:465
 msgid "Jump to _Group Tab"
-msgstr "Hírcsoportlista mező"
+msgstr "Ugrás a _csoport lapra"
 
-#: ../pan/gui/actions.cc:441
-#, fuzzy
+#: ../pan/gui/actions.cc:470
 msgid "Jump to _Header Tab"
-msgstr "Szálmező"
+msgstr "Ugrás a _fejléc lapra"
 
-#: ../pan/gui/actions.cc:446
-#, fuzzy
+#: ../pan/gui/actions.cc:475
 msgid "Jump to _Body Tab"
-msgstr "/_Nézet/_Idézett szöveg elrejtése"
+msgstr "Ugrás a _törzs lapra"
 
-#: ../pan/gui/actions.cc:451
-#, fuzzy
+#: ../pan/gui/actions.cc:480
 msgid "_Rot13 Selected Text"
-msgstr "A kijelölt szöveg rot13 kódolása"
+msgstr "A kijelölt szöveg _rot13 kódolása"
 
-#: ../pan/gui/actions.cc:456
-#, fuzzy
+#: ../pan/gui/actions.cc:485
 msgid "Clear _Header Pane"
-msgstr "Fejlécmező mutatása"
+msgstr "_Fejléc ablaktábla törlése"
 
-#: ../pan/gui/actions.cc:461
-#, fuzzy
+#: ../pan/gui/actions.cc:490
 msgid "Clear _Body Pane"
-msgstr "Hírcsoportlista mező"
+msgstr "_Törzs ablaktábla törlése"
 
-#: ../pan/gui/actions.cc:466
-#, fuzzy
+#: ../pan/gui/actions.cc:495
 msgid "Cache Article"
-msgstr "Cikk visszavonása"
+msgstr "Cikk gyorsítótárazása"
 
-#: ../pan/gui/actions.cc:471
-#, fuzzy
+#: ../pan/gui/actions.cc:500
 msgid "Read Article"
-msgstr "Elolvasott cikkek mutatása"
+msgstr "Cikk olvasása"
 
-#: ../pan/gui/actions.cc:476
-#, fuzzy
+#: ../pan/gui/actions.cc:505
 msgid "Show Article Information"
-msgstr "Információk a kiszolgálóról"
+msgstr "Cikkinformációk megjelenítése"
 
-#: ../pan/gui/actions.cc:481
-#, fuzzy
+#: ../pan/gui/actions.cc:510
 msgid "Read _More"
-msgstr "Olvasás tovább"
+msgstr "Olvasás _tovább"
 
-#: ../pan/gui/actions.cc:482
+#: ../pan/gui/actions.cc:511
 msgid "Read More"
 msgstr "Olvasás tovább"
 
-#: ../pan/gui/actions.cc:486
+#: ../pan/gui/actions.cc:515
 msgid "Read _Back"
-msgstr ""
+msgstr "Olvasás _vissza"
 
-#: ../pan/gui/actions.cc:487
-#, fuzzy
+#: ../pan/gui/actions.cc:516
 msgid "Read Back"
-msgstr "elolvasott"
+msgstr "Olvasás vissza"
 
-#: ../pan/gui/actions.cc:491
-#, fuzzy
+#: ../pan/gui/actions.cc:520
 msgid "Next _Unread Group"
-msgstr "/N_avigálás/Következő olvasatlan _hírcsoport"
+msgstr "Következő _olvasatlan csoport"
 
-#: ../pan/gui/actions.cc:496
-#, fuzzy
+#: ../pan/gui/actions.cc:525
 msgid "Next _Group"
-msgstr "/N_avigálás/Kö_vetkező hírcsoport"
+msgstr "Következő _csoport"
 
-#: ../pan/gui/actions.cc:501
-#, fuzzy
+#: ../pan/gui/actions.cc:530
 msgid "Next _Unread Article"
-msgstr "Következő olvasatlan cikk olvasása"
+msgstr "Következő _olvasatlan cikk"
 
-#: ../pan/gui/actions.cc:502
-#, fuzzy
+#: ../pan/gui/actions.cc:531
 msgid "Next Unread Article"
-msgstr "Következő olvasatlan cikk olvasása"
+msgstr "Következő olvasatlan cikk"
 
-#: ../pan/gui/actions.cc:506
-#, fuzzy
+#: ../pan/gui/actions.cc:535
 msgid "Next _Article"
-msgstr "Következő cikk"
+msgstr "Következő _cikk"
 
-#: ../pan/gui/actions.cc:507
-#, fuzzy
+#: ../pan/gui/actions.cc:536
 msgid "Next Article"
 msgstr "Következő cikk"
 
-#: ../pan/gui/actions.cc:511
-#, fuzzy
+#: ../pan/gui/actions.cc:540
 msgid "Next _Watched Article"
-msgstr "Minden cikk kijelölése"
-
-#: ../pan/gui/actions.cc:516
-#, fuzzy
-msgid "Next Unread _Thread"
-msgstr "Következő olvasatlan szál"
-
-#: ../pan/gui/actions.cc:517
-#, fuzzy
-msgid "Next Unread Thread"
-msgstr "Következő olvasatlan szál olvasása"
-
-#: ../pan/gui/actions.cc:521
-#, fuzzy
-msgid "Next Threa_d"
-msgstr "Következő szál"
-
-#: ../pan/gui/actions.cc:526
-#, fuzzy
-msgid "Pre_vious Article"
-msgstr "Előző cikk"
-
-#: ../pan/gui/actions.cc:531
-#, fuzzy
-msgid "Previous _Thread"
-msgstr "Előző szál"
-
-#: ../pan/gui/actions.cc:536
-#, fuzzy
-msgid "_Parent Article"
-msgstr "Szülő cikk"
-
-#: ../pan/gui/actions.cc:541
-#, fuzzy
-msgid "Ignore _Author"
-msgstr "/S_zál kihagyása"
+msgstr "Következő _megfigyelt cikk"
 
 #: ../pan/gui/actions.cc:545
-#, fuzzy
-msgid "_Watch Thread"
-msgstr "Figyelt szálak"
+msgid "Next Unread _Thread"
+msgstr "Következő olvasatlan _szál"
+
+#: ../pan/gui/actions.cc:546
+msgid "Next Unread Thread"
+msgstr "Következő olvasatlan szál"
 
 #: ../pan/gui/actions.cc:550
-#, fuzzy
+msgid "Next Threa_d"
+msgstr "Következő s_zál"
+
+#: ../pan/gui/actions.cc:555
+msgid "Pre_vious Article"
+msgstr "Előző _cikk"
+
+#: ../pan/gui/actions.cc:560
+msgid "Previous _Thread"
+msgstr "Előző _szál"
+
+#: ../pan/gui/actions.cc:565
+msgid "_Parent Article"
+msgstr "S_zülő cikk"
+
+#: ../pan/gui/actions.cc:570
+msgid "Ignore _Author"
+msgstr "_Szerző mellőzése"
+
+#: ../pan/gui/actions.cc:574
+msgid "_Watch Thread"
+msgstr "Szál meg_figyelése"
+
+#: ../pan/gui/actions.cc:579
 msgid "_Ignore Thread"
-msgstr "Figyelmen kívül hagyott szálak"
+msgstr "Szál _mellőzése"
 
-#: ../pan/gui/actions.cc:555 ../pan/gui/actions.cc:556
-#, fuzzy
+#: ../pan/gui/actions.cc:584 ../pan/gui/actions.cc:585
 msgid "_Toggle Flag On/Off for Thread"
-msgstr "/S_zálak megjelölése"
+msgstr "Jelző ki/be ka_pcsolása a szálnál"
 
-#: ../pan/gui/actions.cc:560 ../pan/gui/actions.cc:561
-#, fuzzy
+#: ../pan/gui/actions.cc:589 ../pan/gui/actions.cc:590
 msgid "_Turn Flag Off for Thread"
-msgstr "/S_zálak megjelölése"
+msgstr "Jelző _kikapcsolása a szálnál"
 
-#: ../pan/gui/actions.cc:565 ../pan/gui/actions.cc:566
-#, fuzzy
+#: ../pan/gui/actions.cc:594 ../pan/gui/actions.cc:595
 msgid "_Select All Flagged Threads"
-msgstr "K_ijelölt szálak becsukása"
+msgstr "Összes megjelölt szál _kijelölése"
 
-#: ../pan/gui/actions.cc:570 ../pan/gui/actions.cc:571
-#, fuzzy
+#: ../pan/gui/actions.cc:599 ../pan/gui/actions.cc:600
 msgid "_Go to Next Flagged Thread"
-msgstr "Következő olvasatlan szál olvasása"
+msgstr "_Ugrás a következő megjelölt szálhoz"
 
-#: ../pan/gui/actions.cc:575 ../pan/gui/actions.cc:576
-#, fuzzy
+#: ../pan/gui/actions.cc:604 ../pan/gui/actions.cc:605
 msgid "_Go to Last Flagged Thread"
-msgstr "K_ijelölt szálak becsukása"
+msgstr "_Ugrás az utolsó megjelölt szálhoz"
 
-#: ../pan/gui/actions.cc:580 ../pan/gui/actions.cc:581
-#, fuzzy
+#: ../pan/gui/actions.cc:609 ../pan/gui/actions.cc:610
 msgid "_Invert Selection"
-msgstr "Kijelölés"
+msgstr "_Kijelölés megfordítása"
 
-#: ../pan/gui/actions.cc:585
+#: ../pan/gui/actions.cc:614
 msgid "Edit Article's Watch/Ignore/Score..."
-msgstr ""
+msgstr "A cikk megfigyelésének/mellőzésének/pontszámának szerkesztése…"
 
-#: ../pan/gui/actions.cc:590
-#, fuzzy
+#: ../pan/gui/actions.cc:619
 msgid "Add a _Scoring Rule..."
-msgstr "Új szabály hozzáadása."
+msgstr "_Pontozási szabály hozzáadása…"
 
-#: ../pan/gui/actions.cc:595
-#, fuzzy
+#: ../pan/gui/actions.cc:624
 msgid "Cance_l Article..."
-msgstr "Cikk visszavonása"
+msgstr "Cikk _megszakítása…"
 
-#: ../pan/gui/actions.cc:600
-#, fuzzy
+#: ../pan/gui/actions.cc:629
 msgid "_Supersede Article..."
-msgstr "/Cikk _mentése másként..."
+msgstr "Cikk _felfüggesztése…"
 
-#: ../pan/gui/actions.cc:605
-#, fuzzy
+#: ../pan/gui/actions.cc:634
 msgid "_Delete Article"
-msgstr "_Cikk törlése"
+msgstr "Cikk _törlése"
 
-#: ../pan/gui/actions.cc:610
-#, fuzzy
+#: ../pan/gui/actions.cc:639
 msgid "Clear Article Cache"
-msgstr "Cikkgyorstár"
+msgstr "Cikk gyorsítótár törlése"
 
-#: ../pan/gui/actions.cc:615
-#, fuzzy
+#: ../pan/gui/actions.cc:644
 msgid "_Mark Article as Read"
-msgstr "A kijelölt cikkek megjelölése elolvasottként"
+msgstr "Cikk _megjelölése olvasottként"
 
-#: ../pan/gui/actions.cc:620
-#, fuzzy
+#: ../pan/gui/actions.cc:649
 msgid "Mark Article as _Unread"
-msgstr "Megjelölés olvasatlanként"
+msgstr "Cikk megjelölése _olvasatlanként"
 
-#: ../pan/gui/actions.cc:626
-#, fuzzy
+#: ../pan/gui/actions.cc:655
 msgid "_Mark Thread as Read"
-msgstr "A szálak megjelölése olvasottként"
+msgstr "Szál _megjelölése olvasottként"
 
-#: ../pan/gui/actions.cc:631
-#, fuzzy
+#: ../pan/gui/actions.cc:660
 msgid "Mark Thread as _Unread"
-msgstr "A szálak megjelölése olvasatlanként"
+msgstr "Szál megjelölése _olvasatlanként"
 
-#: ../pan/gui/actions.cc:636
-#, fuzzy
+#: ../pan/gui/actions.cc:665
 msgid "_Post to Newsgroup"
-msgstr "Küldés a hírcsoportba"
+msgstr "_Küldés a hírcsoportba"
 
-#: ../pan/gui/actions.cc:637
+#: ../pan/gui/actions.cc:666
 msgid "Post to Newsgroup"
 msgstr "Küldés a hírcsoportba"
 
-#: ../pan/gui/actions.cc:641
-#, fuzzy
+#: ../pan/gui/actions.cc:670
 msgid "_Followup to Newsgroup"
-msgstr "_Válasz írása a hírcsoportba"
+msgstr "_Követő írása a hírcsoportba"
 
-#: ../pan/gui/actions.cc:642
-#, fuzzy
+#: ../pan/gui/actions.cc:671
 msgid "Followup to Newsgroup"
-msgstr "_Válasz írása a hírcsoportba"
+msgstr "Követő írása a hírcsoportba"
 
-#: ../pan/gui/actions.cc:646
-#, fuzzy
+#: ../pan/gui/actions.cc:675
 msgid "_Reply to Author in Mail"
-msgstr "- Szerző"
+msgstr "_Válasz a szerzőnek levélben"
 
-#: ../pan/gui/actions.cc:651
-#, fuzzy
+#: ../pan/gui/actions.cc:680
 msgid "_Pan Home Page"
-msgstr "/_Súgó/Pan _honlap..."
+msgstr "_Pan honlap"
 
-#: ../pan/gui/actions.cc:656
-#, fuzzy
+#: ../pan/gui/actions.cc:685
 msgid "Give _Feedback or Report a Bug..."
-msgstr "/_Súgó/_Hibajelentés..."
+msgstr "_Visszajelzés küldése vagy hiba jelentése…"
 
-#: ../pan/gui/actions.cc:661
+#: ../pan/gui/actions.cc:690
 msgid "_Tip Jar..."
 msgstr ""
 
-#: ../pan/gui/actions.cc:666
-#, fuzzy
+#: ../pan/gui/actions.cc:695
 msgid "_About"
-msgstr "Névjegy"
-
-#: ../pan/gui/actions.cc:671
-msgid "Edit _SSL Certificates"
-msgstr ""
-
-#: ../pan/gui/actions.cc:685
-#, fuzzy
-msgid "_Thread Headers"
-msgstr "Fejlécek"
-
-#: ../pan/gui/actions.cc:686
-#, fuzzy
-msgid "_Wrap Article Body"
-msgstr "Az üzenet törzsének betördelése"
-
-#: ../pan/gui/actions.cc:687
-#, fuzzy
-msgid "Mute _Quoted Text"
-msgstr "Idézett szöveg elrejtése"
-
-#: ../pan/gui/actions.cc:688
-#, fuzzy
-msgid "Show All _Headers in Body Pane"
-msgstr "A teljes _fejléc mutatása az üzenettörzsben"
-
-#: ../pan/gui/actions.cc:689
-#, fuzzy
-msgid "Show _Smilies as Graphics"
-msgstr "_Figyelmeztés:"
-
-#: ../pan/gui/actions.cc:690
-msgid "Show *Bold*, __Underlined__, and /Italic/"
-msgstr ""
-
-#: ../pan/gui/actions.cc:691
-msgid "Size Pictures to _Fit"
-msgstr ""
-
-#: ../pan/gui/actions.cc:692
-msgid "Use _Monospace Font"
-msgstr ""
-
-#: ../pan/gui/actions.cc:693
-msgid "Set Focus to Images"
-msgstr ""
-
-#: ../pan/gui/actions.cc:694
-msgid "Highlight _URLs"
-msgstr ""
-
-#: ../pan/gui/actions.cc:697
-#, fuzzy
-msgid "_Work Online"
-msgstr "/_Fájl/On_line munka"
-
-#: ../pan/gui/actions.cc:698
-#, fuzzy
-msgid "_Tabbed Layout"
-msgstr "Elrendezés"
-
-#: ../pan/gui/actions.cc:699
-#, fuzzy
-msgid "Show Group _Pane"
-msgstr "Hírcsoportlista mező"
+msgstr "_Névjegy"
 
 #: ../pan/gui/actions.cc:700
-#, fuzzy
-msgid "Show Hea_der Pane"
-msgstr "Szálmező"
-
-#: ../pan/gui/actions.cc:701
-#, fuzzy
-msgid "Show Bod_y Pane"
-msgstr "Hírcsoportlista mező"
-
-#: ../pan/gui/actions.cc:702
-msgid "Show _Toolbar"
-msgstr ""
-
-#: ../pan/gui/actions.cc:703
-#, fuzzy
-msgid "Abbreviate Group Names"
-msgstr "A hírcsoport mező nagyítása"
-
-#: ../pan/gui/actions.cc:705
-#, fuzzy
-msgid "Match Only _Unread Articles"
-msgstr "Olvasatlan cikkek mutatása"
-
-#: ../pan/gui/actions.cc:705
-#, fuzzy
-msgid "Match Only Unread Articles"
-msgstr "Olvasatlan cikkek mutatása"
-
-#: ../pan/gui/actions.cc:706
-#, fuzzy
-msgid "Match Only _Cached Articles"
-msgstr "Csak a gyorstárban lévő cikkek mutatása"
-
-#: ../pan/gui/actions.cc:706
-#, fuzzy
-msgid "Match Only Cached Articles"
-msgstr "Csak a gyorstárban lévő cikkek mutatása"
-
-#: ../pan/gui/actions.cc:707
-#, fuzzy
-msgid "Match Only _Complete Articles"
-msgstr "Csak a teljes mellékletek megjelenítése"
-
-#: ../pan/gui/actions.cc:707
-#, fuzzy
-msgid "Match Only Complete Articles"
-msgstr "Csak a teljes mellékletek megjelenítése"
-
-#: ../pan/gui/actions.cc:708
-#, fuzzy
-msgid "Match Only _My Articles"
-msgstr "Csak az új cikkek megjelenítése"
-
-#: ../pan/gui/actions.cc:708
-#, fuzzy
-msgid "Match Only My Articles"
-msgstr "Csak az új cikkek megjelenítése"
-
-#: ../pan/gui/actions.cc:709
-#, fuzzy
-msgid "Match Only _Watched Articles"
-msgstr "Csak a figyelt cikkek megjelenítése"
-
-#: ../pan/gui/actions.cc:709
-#, fuzzy
-msgid "Match Only Watched Articles"
-msgstr "Csak a figyelt cikkek megjelenítése"
-
-#: ../pan/gui/actions.cc:711
-msgid "Match Scores of 9999 (_Watched)"
-msgstr ""
-
-#: ../pan/gui/actions.cc:712
-msgid "Match Scores of 5000...9998 (_High)"
-msgstr ""
-
-#: ../pan/gui/actions.cc:713
-msgid "Match Scores of 1...4999 (Me_dium)"
-msgstr ""
-
-#: ../pan/gui/actions.cc:714
-msgid "Match Scores of 0 (_Normal)"
-msgstr ""
+msgid "Edit _SSL Certificates"
+msgstr "_SSL tanúsítványok szerkesztése"
 
 #: ../pan/gui/actions.cc:715
-msgid "Match Scores of -9998...-1 (_Low)"
-msgstr ""
+msgid "_Thread Headers"
+msgstr "_Szál fejlécek"
 
 #: ../pan/gui/actions.cc:716
-msgid "Match Scores of -9999 (_Ignored)"
-msgstr ""
+msgid "Wrap Article Body"
+msgstr "Cikk törzsének tördelése"
+
+#: ../pan/gui/actions.cc:717
+#| msgid "Show Article Pane"
+msgid "Show Article Signature"
+msgstr "Cikk aláírásának megjelenítése"
 
 #: ../pan/gui/actions.cc:718
-msgid "Enable/Disable All _Rules"
-msgstr ""
+msgid "Mute _Quoted Text"
+msgstr "_Idézett szöveg elrejtése"
+
+#: ../pan/gui/actions.cc:719
+msgid "Show All _Headers in Body Pane"
+msgstr "Minden _fejléc megjelenítése a törzs ablaktáblában"
+
+#: ../pan/gui/actions.cc:720
+msgid "Show _Smilies as Graphics"
+msgstr "_Hangulatjelek megjelenítése grafikaként"
+
+#: ../pan/gui/actions.cc:721
+msgid "Show *Bold*, __Underlined__, and /Italic/"
+msgstr "*Félkövér*, __aláhúzott__ és /dőlt/ megjelenítése"
+
+#: ../pan/gui/actions.cc:722
+msgid "Size Pictures to _Fit"
+msgstr "Fényképek méretezése a _kitöltéshez"
+
+#: ../pan/gui/actions.cc:723
+msgid "Use _Monospace Font"
+msgstr "_Rögzített szélességű betűkészlet használata"
+
+#: ../pan/gui/actions.cc:724
+msgid "Set Focus to Images"
+msgstr "Fókusz beállítása a képekre"
+
+#: ../pan/gui/actions.cc:725
+msgid "Highlight _URLs"
+msgstr "URL-ek kiemelése"
+
+#: ../pan/gui/actions.cc:728
+msgid "_Work Online"
+msgstr "M_unka a hálózatban"
+
+#: ../pan/gui/actions.cc:729
+msgid "_Tabbed Layout"
+msgstr "_Füles elrendezés"
+
+#: ../pan/gui/actions.cc:730
+msgid "Show Group _Pane"
+msgstr "_Csoport ablaktábla megjelenítése"
+
+#: ../pan/gui/actions.cc:731
+msgid "Show Hea_der Pane"
+msgstr "_Fejléc ablaktábla megjelenítése"
+
+#: ../pan/gui/actions.cc:732
+msgid "Show Bod_y Pane"
+msgstr "_Törzs ablaktábla megjelenítése"
+
+#: ../pan/gui/actions.cc:733
+msgid "Show _Toolbar"
+msgstr "_Eszköztár megjelenítése"
+
+#: ../pan/gui/actions.cc:734
+msgid "Abbreviate Group Names"
+msgstr "Csoportnevek rövidítése"
+
+#: ../pan/gui/actions.cc:736
+msgid "Match Only _Read Articles"
+msgstr "Csak _olvasott cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:736
+msgid "Match Only Read Articles"
+msgstr "Csak olvasott cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:737
+msgid "Match Only _Unread Articles"
+msgstr "Csak olvasatla_n cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:737
+msgid "Match Only Unread Articles"
+msgstr "Csak olvasatlan cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:738
+msgid "Match Only _Cached Articles"
+msgstr "Csak a _gyorstárban lévő cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:738
+msgid "Match Only Cached Articles"
+msgstr "Csak a gyorstárban lévő cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:739
+msgid "Match Only _Complete Articles"
+msgstr "Csak _teljes cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:739
+msgid "Match Only Complete Articles"
+msgstr "Csak teljes cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:740
+msgid "Match Only _My Articles"
+msgstr "Csak _saját cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:740
+msgid "Match Only My Articles"
+msgstr "Csak saját cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:741
+msgid "Match Only _Watched Articles"
+msgstr "Csak meg_figyelt cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:741
+msgid "Match Only Watched Articles"
+msgstr "Csak megfigyelt cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:743
+msgid "Match Scores of 9999 (_Watched)"
+msgstr "9999 pontszámú megjelenítése (meg_figyelt)"
 
 #: ../pan/gui/actions.cc:744
-#, fuzzy
-msgid "Show Matching _Articles"
-msgstr "Elolvasott cikkek mutatása"
+msgid "Match Scores of 5000...9998 (_High)"
+msgstr "5000…9998 pontszámú megjelenítése (_magas)"
 
 #: ../pan/gui/actions.cc:745
-#, fuzzy
-msgid "Show Matching Articles' _Threads"
-msgstr "Elolvasott cikkek mutatása"
+msgid "Match Scores of 1...4999 (Me_dium)"
+msgstr "1…4999 pontszámú megjelenítése (_közepes)"
 
 #: ../pan/gui/actions.cc:746
-#, fuzzy
+msgid "Match Scores of 0 (_Normal)"
+msgstr "0 pontszámú megjelenítése (_normál)"
+
+#: ../pan/gui/actions.cc:747
+msgid "Match Scores of -9998...-1 (_Low)"
+msgstr "-9998…-1 pontszámú megjelenítése (_alacsony)"
+
+#: ../pan/gui/actions.cc:748
+msgid "Match Scores of -9999 (_Ignored)"
+msgstr "-9999 pontszámú megjelenítése (mellő_zött)"
+
+#: ../pan/gui/actions.cc:750
+msgid "Enable/Disable All _Rules"
+msgstr "Minden _szabály engedélyezése vagy tiltása"
+
+#: ../pan/gui/actions.cc:778
+msgid "Show Matching _Articles"
+msgstr "Megfelelő _cikkek megjelenítése"
+
+#: ../pan/gui/actions.cc:779
+msgid "Show Matching Articles' _Threads"
+msgstr "Megfelelő cikkek _szálainak megjelenítése"
+
+#: ../pan/gui/actions.cc:780
 msgid "Show Matching Articles' _Subthreads"
-msgstr "Egyező cikkek és válaszok mutatása"
+msgstr "Megfelelő cikkek _alszálainak megjelenítése"
 
-#: ../pan/gui/body-pane.cc:1011
-#, fuzzy, c-format
+#: ../pan/gui/body-pane.cc:1056
+#, c-format
 msgid "Unnamed File"
-msgstr "Aláírásfájl:"
+msgstr "Névtelen fájl"
 
-#: ../pan/gui/body-pane.cc:1092 ../pan/gui/gui.cc:1864
-#: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1617
-#: ../pan/gui/post-ui.cc:2496 ../pan/gui/prefs-ui.cc:833
-#: ../pan/gui/score-add-ui.cc:139
+#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1980
+#: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1748
+#: ../pan/gui/post-ui.cc:2588 ../pan/gui/prefs-ui.cc:855
+#: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Tárgy"
 
-#: ../pan/gui/body-pane.cc:1094 ../pan/gui/gui.cc:1864
-#, fuzzy
+#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1980
 msgid "From"
 msgstr "Feladó"
 
-#: ../pan/gui/body-pane.cc:1096 ../pan/gui/gui.cc:1865
-#: ../pan/gui/header-pane.cc:1695 ../pan/gui/log-ui.cc:305
-#: ../pan/gui/prefs-ui.cc:829
+#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1981
+#: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:307
+#: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
 msgstr "Dátum"
 
-#: ../pan/gui/body-pane.cc:1103
+#: ../pan/gui/body-pane.cc:1148
 msgid "Newsgroups"
 msgstr "Hírcsoportok"
 
-#: ../pan/gui/body-pane.cc:1108
-#, fuzzy
-msgid "Followup-To"
-msgstr "Followup-To:"
+#: ../pan/gui/body-pane.cc:1155 ../pan/gui/body-pane.cc:1163
+#: ../pan/gui/body-pane.cc:1170
+msgid "User-Agent"
+msgstr "User-Agent"
 
-#: ../pan/gui/body-pane.cc:1118
+#: ../pan/gui/body-pane.cc:1176
+msgid "Followup-To"
+msgstr "Követőcím"
+
+#: ../pan/gui/body-pane.cc:1186
 msgid "Reply-To"
 msgstr "Válaszcím"
 
-#: ../pan/gui/body-pane.cc:1160
-#, fuzzy
+#: ../pan/gui/body-pane.cc:1229
 msgid " from "
-msgstr "Feladó: "
+msgstr " tőle: "
 
-#: ../pan/gui/body-pane.cc:1162
-#, fuzzy
+#: ../pan/gui/body-pane.cc:1231
 msgid " at "
-msgstr "- Dátum"
+msgstr " ekkor: "
 
-#: ../pan/gui/body-pane.cc:1264
+#: ../pan/gui/body-pane.cc:1318
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
 "\n"
-"<b>Signer</b> : %s ('%s')\n"
-"<b>Valid until</b> : %s\n"
-"<b>Created on</b> : %s"
+"<b>Signer:</b> %s ('%s')\n"
+"<b>Valid until:</b> %s\n"
+"<b>Created on:</b> %s"
 msgstr ""
+"<u>Ez egy <b>PGP-vel aláírt</b> üzenet.</u>\n"
+"\n"
+"<b>Aláíró:</b> %s („%s”)\n"
+"<b>Érvényesség:</b> %s\n"
+"<b>Létrehozva:</b> %s"
 
-#: ../pan/gui/body-pane.cc:1269
+#: ../pan/gui/body-pane.cc:1323
 msgid "always"
-msgstr ""
+msgstr "mindig"
 
-#: ../pan/gui/body-pane.cc:1485
+#: ../pan/gui/body-pane.cc:1543
 msgid "Copy _URL"
-msgstr ""
+msgstr "_URL másolása"
 
-#: ../pan/gui/body-pane.cc:1680
-#, fuzzy
-msgid "Save attachment as ...."
-msgstr "Bináris melléklet mentése másként..."
+#: ../pan/gui/body-pane.cc:1748
+msgid "Save Attachment As..."
+msgstr "Melléklet mentése másként…"
 
-#: ../pan/gui/body-pane.cc:1683
-#, fuzzy
-msgid "Save all attachments"
-msgstr "Melléklet mentése ide:"
+#: ../pan/gui/body-pane.cc:1751
+msgid "Save All Attachments"
+msgstr "Minden melléklet mentése"
 
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1753
+#: ../pan/gui/body-pane.cc:1821
 msgid "Attachments"
 msgstr "Mellékletek"
 
-#. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:973
-#: ../pan/gui/gui.cc:1592 ../pan/gui/gui.cc:1893
-#: ../pan/gui/score-add-ui.cc:602
-msgid "Pan"
-msgstr "Pan"
+#: ../pan/gui/body-pane.cc:1836
+msgid "Text View"
+msgstr "Szövegnézet"
+
+#: ../pan/gui/body-pane.cc:1845
+msgid "HTML View"
+msgstr "HTML nézet"
 
 #: ../pan/gui/dl-headers-ui.cc:112
-#, fuzzy, c-format
+#, c-format
 msgid "%d Group"
 msgid_plural "%d Groups"
-msgstr[0] "Hírcsoportok"
-msgstr[1] "Hírcsoportok"
+msgstr[0] "%d csoport"
+msgstr[1] "%d csoport"
 
 #: ../pan/gui/dl-headers-ui.cc:135
-#, fuzzy
 msgid "Get the last N _days' headers: "
-msgstr "A legújabb fejlécek letöltése:"
+msgstr "Az elmúlt N _nap fejléceinek letöltése: "
 
 #: ../pan/gui/dl-headers-ui.cc:143
-#, fuzzy
 msgid "Get _new headers"
-msgstr "Az új fejlécek"
+msgstr "Ú_j fejlécek letöltése"
 
 #: ../pan/gui/dl-headers-ui.cc:147
-#, fuzzy
 msgid "Get _all headers"
-msgstr "Az összes fejléc"
+msgstr "_Minden fejléc letöltése"
 
 #: ../pan/gui/dl-headers-ui.cc:151
-#, fuzzy
 msgid "Get the _latest N headers: "
-msgstr "A legújabb fejlécek letöltése:"
+msgstr "A leg_utóbbi N fejléc letöltése: "
 
-#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:826
-#, fuzzy
+#: ../pan/gui/e-action-combo-box.c:386 ../pan/gui/prefs-ui.cc:848
 msgid "Action"
-msgstr "Műveletek"
+msgstr "Művelet"
 
-#: ../pan/gui/e-action-combo-box.c:389
+#: ../pan/gui/e-action-combo-box.c:387
 msgid "A GtkRadioAction"
-msgstr ""
+msgstr "Egy GtkRadiAction objektum"
 
-#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:518
+#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:558
 msgid "Unknown"
 msgstr "Ismeretlen"
 
 #: ../pan/gui/e-charset.c:52
 msgid "Arabic"
-msgstr ""
+msgstr "Arab"
 
 #: ../pan/gui/e-charset.c:53
 msgid "Baltic"
-msgstr ""
+msgstr "Balti"
 
 #: ../pan/gui/e-charset.c:54
 msgid "Central European"
-msgstr ""
+msgstr "Közép-európai"
 
 #: ../pan/gui/e-charset.c:55
-#, fuzzy
 msgid "Chinese"
-msgstr "Sor"
+msgstr "Kínai"
 
 #: ../pan/gui/e-charset.c:56
 msgid "Cyrillic"
-msgstr ""
+msgstr "Cirill"
 
 #: ../pan/gui/e-charset.c:57
 msgid "Greek"
-msgstr ""
+msgstr "Görög"
 
 #: ../pan/gui/e-charset.c:58
 msgid "Hebrew"
-msgstr ""
+msgstr "Héber"
 
 #: ../pan/gui/e-charset.c:59
-#, fuzzy
 msgid "Japanese"
-msgstr "pan.sent"
+msgstr "Japán"
 
 #: ../pan/gui/e-charset.c:60
-#, fuzzy
 msgid "Korean"
-msgstr "olvasottként"
+msgstr "Koreai"
 
 #: ../pan/gui/e-charset.c:61
 msgid "Thai"
-msgstr ""
+msgstr "Thai"
 
 #: ../pan/gui/e-charset.c:62
 msgid "Turkish"
-msgstr ""
+msgstr "Török"
 
 #: ../pan/gui/e-charset.c:63
 msgid "Unicode"
-msgstr ""
+msgstr "Unicode"
 
 #: ../pan/gui/e-charset.c:64
 msgid "Western European"
-msgstr ""
+msgstr "Nyugat-európai"
 
 #: ../pan/gui/e-charset.c:65
 msgid "Western European, New"
-msgstr ""
+msgstr "Nyugat-európai, új"
 
 #: ../pan/gui/e-charset.c:84 ../pan/gui/e-charset.c:85
 #: ../pan/gui/e-charset.c:86
-#, fuzzy
 msgid "Traditional"
-msgstr "Szervezet:"
+msgstr "Hagyományos"
 
 #: ../pan/gui/e-charset.c:87 ../pan/gui/e-charset.c:88
 #: ../pan/gui/e-charset.c:89 ../pan/gui/e-charset.c:90
 msgid "Simplified"
-msgstr ""
+msgstr "Egyszerűsített"
 
 #: ../pan/gui/e-charset.c:93
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ukrán"
 
 #: ../pan/gui/e-charset.c:96
 msgid "Visual"
-msgstr ""
+msgstr "Vizuális"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2058
-#: ../pan/gui/post-ui.cc:519 ../pan/gui/prefs-ui.cc:737
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2178
+#: ../pan/gui/post-ui.cc:548 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
-msgstr ""
+msgstr "Karakterkódolás"
 
 #: ../pan/gui/e-charset-combo-box.c:117
 msgid "Enter the character set to use"
-msgstr ""
+msgstr "Adja meg a használandó karakterkészlet"
 
 #: ../pan/gui/e-charset-combo-box.c:336
 msgid "Other..."
-msgstr ""
+msgstr "Egyéb…"
+
+#: ../pan/gui/e-cte-dialog.c:76
+msgid "Default Encoding"
+msgstr "Alapértelmezett kódolás"
 
 #: ../pan/gui/e-cte-dialog.c:78
-#, fuzzy
-msgid "Default encoding"
-msgstr "\"%s\" dekódolása"
+msgid "7-Bit Encoding"
+msgstr "7-bites kódolás"
 
 #: ../pan/gui/e-cte-dialog.c:80
-#, fuzzy
-msgid "7Bit Encoding"
-msgstr "Ismeretlen kódolás"
+msgid "8-Bit Encoding"
+msgstr "8-bites kódolás"
 
 #: ../pan/gui/e-cte-dialog.c:82
-#, fuzzy
-msgid "8Bit Encoding"
-msgstr "Ismeretlen kódolás"
+msgid "Base64 Encoding"
+msgstr "Base64 kódolás"
 
 #: ../pan/gui/e-cte-dialog.c:84
-#, fuzzy
-msgid "BASE64 Encoding"
-msgstr "Ismeretlen kódolás"
-
-#: ../pan/gui/e-cte-dialog.c:86
-#, fuzzy
 msgid "Quoted-Printable Encoding"
-msgstr "Hírcsoportlista mező"
+msgstr "Idézett nyomtatható kódolás"
 
-#: ../pan/gui/group-pane.cc:500
-#, fuzzy
+#: ../pan/gui/group-pane.cc:330
+msgid "Sent"
+msgstr "Elküldött"
+
+#: ../pan/gui/group-pane.cc:331
+msgid "Drafts"
+msgstr "Piszkozatok"
+
+#: ../pan/gui/group-pane.cc:537
 msgid "Group"
-msgstr "Hírcsoportok"
+msgstr "Csoport"
 
-#: ../pan/gui/group-pane.cc:501
-#, fuzzy
+#: ../pan/gui/group-pane.cc:538
 msgid "Group (regex)"
-msgstr "Csoport tulajdonságai"
+msgstr "Csoport (regex)"
 
-#: ../pan/gui/group-pane.cc:913
+#: ../pan/gui/group-pane.cc:1010
+#| msgid "Folders"
+msgid "Local Folders"
+msgstr "Helyi mappák"
+
+#: ../pan/gui/group-pane.cc:1011
 msgid "Subscribed Groups"
-msgstr "Előfizetett hírcsoportok"
+msgstr "Feliratkozott csoportok"
 
-#: ../pan/gui/group-pane.cc:914
-#, fuzzy
+#: ../pan/gui/group-pane.cc:1012
 msgid "Other Groups"
-msgstr "Új hírcsoportok"
+msgstr "Egyéb csoportok"
 
-#: ../pan/gui/group-pane.cc:954 ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/group-pane.cc:1052 ../pan/gui/score-view-ui.cc:157
 msgid "Name"
 msgstr "Név"
 
-#: ../pan/gui/group-prefs-dialog.cc:156
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:162
 msgid "No Profiles defined in Edit|Posting Profiles."
-msgstr "/_Fájl/Cikk _nyomtatása..."
+msgstr "Nincs profil meghatározva a Szerkesztés|Küldő profilok menüpontban."
 
-#: ../pan/gui/group-prefs-dialog.cc:231
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:273
 msgid "Pan: Group Preferences"
-msgstr "Pan: Beállítások"
+msgstr "Pan: Csoportbeállítások"
 
-#: ../pan/gui/group-prefs-dialog.cc:247
-#, fuzzy, c-format
+#: ../pan/gui/group-prefs-dialog.cc:288
+#, c-format
 msgid "Properties for Groups"
-msgstr "``%s'' tulajdonságai"
+msgstr "Csoportok tulajdonságai"
 
-#: ../pan/gui/group-prefs-dialog.cc:249
-#, fuzzy, c-format
+#: ../pan/gui/group-prefs-dialog.cc:290
+#, c-format
 msgid "Properties for %s"
-msgstr "``%s'' tulajdonságai"
+msgstr "%s tulajdonságai"
 
-#: ../pan/gui/group-prefs-dialog.cc:257
+#: ../pan/gui/group-prefs-dialog.cc:298
 msgid "Character _encoding:"
-msgstr ""
+msgstr "_Karakterkódolás:"
 
-#: ../pan/gui/group-prefs-dialog.cc:259
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:300
 msgid "Directory for Saving Attachments"
-msgstr "Könyvtár a mentett mellékletfájlok számára"
+msgstr "Könyvtár az elmentett mellékletekhez"
 
-#: ../pan/gui/group-prefs-dialog.cc:269
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:308
 msgid "Directory for _saving attachments:"
-msgstr "Könyvtár a mentett mellékletfájlok számára"
+msgstr "Könyvtár az _elmentett mellékletekhez:"
 
-#: ../pan/gui/group-prefs-dialog.cc:271
-#, fuzzy
+#: ../pan/gui/group-prefs-dialog.cc:310
 msgid "Posting _profile:"
-msgstr "Pan: Profil"
+msgstr "Küldő _profil:"
 
-#: ../pan/gui/group-prefs-dialog.cc:277
+#: ../pan/gui/group-prefs-dialog.cc:315
 msgid "Spellchecker _language:"
-msgstr ""
+msgstr "Helyesírás-ellenőrző _nyelve:"
 
-#: ../pan/gui/gui.cc:273
+#: ../pan/gui/group-prefs-dialog.cc:318
+msgid "Group color:"
+msgstr "Csoportszín:"
+
+#: ../pan/gui/gui.cc:312
 msgid "Open the Task Manager"
 msgstr "A feladatkezelő megnyitása"
 
-#: ../pan/gui/gui.cc:301
-#, fuzzy
+#: ../pan/gui/gui.cc:335
 msgid "Open the Event Log"
-msgstr "Az állapotnapló megnyitása"
+msgstr "Az eseménynapló megnyitása"
 
-#: ../pan/gui/gui.cc:561
+#: ../pan/gui/gui.cc:611
 msgid "Save NZB's Files"
-msgstr ""
+msgstr "NZB-fájlok mentése"
 
-#: ../pan/gui/gui.cc:588
+#: ../pan/gui/gui.cc:638
 msgid "Untitled.nzb"
-msgstr ""
+msgstr "Névtelen.nzb"
 
-#: ../pan/gui/gui.cc:590
-#, fuzzy
+#: ../pan/gui/gui.cc:640
 msgid "Save NZB File as..."
-msgstr ".newsrc importálása..."
+msgstr "NZB-fájl mentése másként…"
 
-#: ../pan/gui/gui.cc:757
-#, fuzzy
+#: ../pan/gui/gui.cc:809
 msgid "Import NZB Files"
-msgstr ".newsrc importálása..."
+msgstr "NZB-fájlok importálása…"
 
-#: ../pan/gui/gui.cc:765 ../pan/gui/post-ui.cc:3197
-#, fuzzy
+#: ../pan/gui/gui.cc:817 ../pan/gui/post-ui.cc:3287
 msgid "NZB Files"
-msgstr "Fájlok"
+msgstr "NZB-fájlok"
 
-#: ../pan/gui/gui.cc:770
-#, fuzzy
+#: ../pan/gui/gui.cc:822
 msgid "All Files"
-msgstr "Fájlok"
+msgstr "Minden fájl"
 
-#: ../pan/gui/gui.cc:1258
-#, fuzzy
+#: ../pan/gui/gui.cc:1334
 msgid "Unable to supersede article."
-msgstr "/Cikk _mentése másként..."
+msgstr "Nem lehet helyettesíteni a cikket."
 
-#: ../pan/gui/gui.cc:1259 ../pan/gui/gui.cc:1333
+#: ../pan/gui/gui.cc:1335 ../pan/gui/gui.cc:1409
 msgid "The article doesn't match any of your posting profiles."
-msgstr ""
+msgstr "A cikk nem illeszkedik egyik küldő profilra sem."
 
-#: ../pan/gui/gui.cc:1306
+#: ../pan/gui/gui.cc:1382
 msgid "Revise and send this article to replace the old one."
-msgstr ""
+msgstr "A cikk átvizsgálása és küldése a régi cseréjéhez."
 
-#: ../pan/gui/gui.cc:1307 ../pan/gui/gui.cc:1370
+#: ../pan/gui/gui.cc:1383 ../pan/gui/gui.cc:1446
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
+"Legyen türelmes! Eltarthat egy ideig, amíg a módosítások érvénybe lépnek."
 
-#: ../pan/gui/gui.cc:1332
-#, fuzzy
+#: ../pan/gui/gui.cc:1408
 msgid "Unable to cancel article."
-msgstr "Nem sikerült megváltoztatni a fájl jogosultságait"
+msgstr "Nem lehet megszakítani a cikket."
 
-#: ../pan/gui/gui.cc:1369
+#: ../pan/gui/gui.cc:1445
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
+"A cikk küldése, és arra kérve a kiszolgálót, hogy szakítsa meg a másikat."
 
-#: ../pan/gui/gui.cc:1387
-msgid "You marked some articles for deletion"
-msgstr ""
+#: ../pan/gui/gui.cc:1463
+#| msgid "You haven't loaded an article to print."
+msgid "You have marked some articles for deletion."
+msgstr "Néhány cikket törlésre jelölt meg."
 
-#: ../pan/gui/gui.cc:1388
-#, fuzzy
+#: ../pan/gui/gui.cc:1464
 msgid "Are you sure you want to delete them?"
-msgstr ""
-"Biztos, hogy törölni akarod ezt a %d hírcsoportot/mappát és az összes benne "
-"lévő cikket?"
+msgstr "Biztosan törölni szeretné azokat?"
 
-#: ../pan/gui/gui.cc:1413
-#, fuzzy
-msgid "Always trust"
-msgstr "Szerkesztés"
+#: ../pan/gui/gui.cc:1490
+msgid "Do you want to accept it permanently? (You can change this later.)"
+msgstr "Szeretné véglegesen elfogadni? (Ezt később is megváltoztathatja.)"
 
-#: ../pan/gui/gui.cc:1416
-msgid "Do you want to accept it permanently (deletable afterwards) ?"
-msgstr ""
-
-#: ../pan/gui/gui.cc:1595
-#, fuzzy
+#: ../pan/gui/gui.cc:1670
 msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
-msgstr "Copyright (C) 1999-2001, Pan Development Team"
+msgstr "Copyright © 2002-2012 Charles Kerr és mások"
 
-#: ../pan/gui/gui.cc:1600
+#: ../pan/gui/gui.cc:1675
 msgid "translator-credits"
-msgstr ""
+msgstr "Úr Balázs <urbalazs@gmail.com>, 2014."
 
-#: ../pan/gui/gui.cc:1709
-#, fuzzy
-msgid "_1. Group Pane"
-msgstr "A _hírcsoport mező nagyítása"
-
-#: ../pan/gui/gui.cc:1710
-#, fuzzy
-msgid "_2. Header Pane"
-msgstr "Fejlécmező mutatása"
-
-#: ../pan/gui/gui.cc:1711
-#, fuzzy
-msgid "_3. Body Pane"
-msgstr "Hírcsoportlista mező"
-
-#: ../pan/gui/gui.cc:1800 ../pan/gui/gui.cc:1815
-msgid " Bytes"
-msgstr ""
-
-#: ../pan/gui/gui.cc:1803
-msgid " KB"
-msgstr ""
-
-#: ../pan/gui/gui.cc:1806
-msgid " MB"
-msgstr ""
+#: ../pan/gui/gui.cc:1808
+msgid "_1. Header Pane"
+msgstr "_1. Fejléc ablaktábla"
 
 #: ../pan/gui/gui.cc:1809
+msgid "_2. Search Pane"
+msgstr "_2. Keresés ablaktábla"
+
+#: ../pan/gui/gui.cc:1815
+msgid "_1. Group Pane"
+msgstr "_1. Csoport ablaktábla"
+
+#: ../pan/gui/gui.cc:1817 ../pan/gui/gui.cc:1819
+msgid "_2. Header Pane"
+msgstr "_2. Fejléc ablaktábla"
+
+#: ../pan/gui/gui.cc:1821
+msgid "_3. Body Pane"
+msgstr "_3. Törzs ablaktábla"
+
+#: ../pan/gui/gui.cc:1917 ../pan/gui/gui.cc:1932
+msgid " Bytes"
+msgstr " bájt"
+
+#: ../pan/gui/gui.cc:1920
+msgid " KB"
+msgstr " KB"
+
+#: ../pan/gui/gui.cc:1923
+msgid " MB"
+msgstr " MB"
+
+#: ../pan/gui/gui.cc:1926
 msgid " GB"
-msgstr ""
+msgstr " GB"
 
-#: ../pan/gui/gui.cc:1812
+#: ../pan/gui/gui.cc:1929
 msgid " TB"
-msgstr ""
+msgstr " TB"
 
-#: ../pan/gui/gui.cc:1844
-#, fuzzy, c-format
+#: ../pan/gui/gui.cc:1961
+#, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
-msgstr[0] "A cikknek nincs melléklete"
-msgstr[1] "A cikknek nincs melléklete"
+msgstr[0] "Ez a cikk teljes %d résszel."
+msgstr[1] "Ennek a cikknek megvan mind a(z) %d része."
 
-#: ../pan/gui/gui.cc:1846
-#, fuzzy, c-format
+#: ../pan/gui/gui.cc:1963
+#, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
-msgstr[0] "A cikknek nincs melléklete"
-msgstr[1] "A cikknek nincs melléklete"
+msgstr[0] "Ebből a cikkből hiányzik %d rész."
+msgstr[1] "Ebből a cikkből hiányzik %d / %d rész:"
 
-#: ../pan/gui/gui.cc:1865 ../pan/gui/header-pane.cc:1190
+#: ../pan/gui/gui.cc:1981 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "Üzenetazonosító"
 
-#: ../pan/gui/gui.cc:1866 ../pan/gui/header-pane.cc:1665
-#: ../pan/gui/prefs-ui.cc:830
+#: ../pan/gui/gui.cc:1982 ../pan/gui/header-pane.cc:1796
+#: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Sor"
 
-#: ../pan/gui/gui.cc:1866
+#: ../pan/gui/gui.cc:1982
 msgid "Size"
-msgstr ""
+msgstr "Méret"
 
-#: ../pan/gui/gui.cc:1867 ../pan/gui/header-pane.cc:1680
-#: ../pan/gui/prefs-ui.cc:828
+#: ../pan/gui/gui.cc:1983 ../pan/gui/header-pane.cc:1812
+#: ../pan/gui/prefs-ui.cc:850
 msgid "Bytes"
-msgstr ""
+msgstr "Bájt"
 
-#: ../pan/gui/gui.cc:1917
+#: ../pan/gui/gui.cc:2033
 msgid ""
-"Error loading iconv library. Some Charsets in the GUI will not be able to be "
-"encoded."
+"Error loading iconv library. Encoding certain character sets will not work "
+"in GUI."
 msgstr ""
+"Hiba az iconv programkönyvtár betöltésekor. Bizonyos karakterkészletek "
+"kódolása nem fog működni a grafikus felületen."
 
-#: ../pan/gui/gui.cc:2059
-#, fuzzy
+#: ../pan/gui/gui.cc:2179
 msgid "Body Pane Encoding"
-msgstr "Hírcsoportlista mező"
+msgstr "Törzs ablaktábla kódolás"
 
-#: ../pan/gui/gui.cc:2090 ../pan/gui/task-pane.cc:569
+#: ../pan/gui/gui.cc:2210 ../pan/gui/task-pane.cc:609
 #, c-format
 msgid "Offline"
 msgstr "Offline"
 
-#: ../pan/gui/gui.cc:2094
-#, fuzzy, c-format
+#: ../pan/gui/gui.cc:2214
+#, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
 msgstr[0] "%d kapcsolat lezárása"
 msgstr[1] "%d kapcsolat lezárása"
 
-#: ../pan/gui/gui.cc:2096 ../pan/gui/gui.cc:2126
+#: ../pan/gui/gui.cc:2216 ../pan/gui/gui.cc:2246
 #, c-format
 msgid "No Connections"
 msgstr "Nincs kapcsolat"
 
-#: ../pan/gui/gui.cc:2100
+#: ../pan/gui/gui.cc:2220
 #, c-format
 msgid "Connecting"
 msgstr "Kapcsolódás"
 
-#: ../pan/gui/gui.cc:2113
+#: ../pan/gui/gui.cc:2233
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
-msgstr ""
+msgstr "%s: %d üresjárat, %d aktív @ %.1f KiBps"
 
-#: ../pan/gui/gui.cc:2169
+#: ../pan/gui/gui.cc:2289
 #, c-format
 msgid "No Tasks"
 msgstr "Nincs feladat"
 
-#: ../pan/gui/gui.cc:2171 ../pan/gui/prefs-ui.cc:1047
-#, fuzzy
+#: ../pan/gui/gui.cc:2291 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
-msgstr "Nincs feladat"
+msgstr "Feladatok"
 
-#: ../pan/gui/gui.cc:2182 ../pan/gui/task-pane.cc:435
+#: ../pan/gui/gui.cc:2308 ../pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
-msgstr ""
+msgstr "%lu feladat, %s, %.1f KiBps, ETA %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2234
+#: ../pan/gui/gui.cc:2360
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
 msgstr ""
+"A Pan most kapcsolat nélküli. Nézze meg a „Fájl|Eseménynapló” menüpontot és "
+"javítsa a hibát, majd használja a „Fájl|Munka a hálózaton” menüpontot a "
+"folytatáshoz."
 
-#: ../pan/gui/header-pane.cc:1186
-#, fuzzy
+#: ../pan/gui/header-pane.cc:1311 ../pan/gui/task-pane.cc:795
 msgid "Subject or Author"
-msgstr "Tárgy: "
+msgstr "Tárgy vagy szerző"
 
-#: ../pan/gui/header-pane.cc:1187
-#, fuzzy
+#: ../pan/gui/header-pane.cc:1312 ../pan/gui/task-pane.cc:796
 msgid "Sub or Auth (regex)"
-msgstr "Tárgy: "
+msgstr "Tár vagy szer (regex)"
 
-#: ../pan/gui/header-pane.cc:1189 ../pan/gui/header-pane.cc:1649
-#: ../pan/gui/prefs-ui.cc:827 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/header-pane.cc:1314 ../pan/gui/header-pane.cc:1780
+#: ../pan/gui/prefs-ui.cc:849 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/task-pane.cc:798
 msgid "Author"
 msgstr "Szerző"
 
-#: ../pan/gui/header-pane.cc:1634 ../pan/gui/prefs-ui.cc:831
+#: ../pan/gui/header-pane.cc:1765 ../pan/gui/prefs-ui.cc:853
 msgid "Score"
-msgstr ""
+msgstr "Pontszám"
 
-#: ../pan/gui/log-ui.cc:103
+#: ../pan/gui/log-ui.cc:104
 msgid "Save Event List"
-msgstr ""
+msgstr "Eseménylista mentése"
 
-#: ../pan/gui/log-ui.cc:256
-#, fuzzy
+#: ../pan/gui/log-ui.cc:258
 msgid "Pan: Events"
-msgstr "Pan: Szabályok"
+msgstr "Pan: Események"
 
-#: ../pan/gui/log-ui.cc:315
+#: ../pan/gui/log-ui.cc:317
 msgid "Message"
 msgstr "Üzenet"
 
-#: ../pan/gui/pan.cc:330
+#: ../pan/gui/pan.cc:359
 msgid "Maximize"
-msgstr ""
+msgstr "Teljes méretre"
 
-#: ../pan/gui/pan.cc:383
-msgid "An Error has occurred!"
-msgstr ""
+#: ../pan/gui/pan.cc:412
+msgid "An error has occurred!"
+msgstr "Hiba történt!"
 
-#: ../pan/gui/pan.cc:397
-#, fuzzy
+#: ../pan/gui/pan.cc:426
 msgid "New Articles!"
-msgstr "Következő cikk"
+msgstr "Új cikkek!"
 
-#: ../pan/gui/pan.cc:398
+#: ../pan/gui/pan.cc:427
 msgid ""
 "There are new\n"
 "articles available."
 msgstr ""
+"Új cikkek\n"
+"érhetők el."
 
-#: ../pan/gui/pan.cc:465
+#: ../pan/gui/pan.cc:494
 msgid "Toggle on/offline"
-msgstr ""
+msgstr "Kapcsolatban/kapcsolat nélkül átváltása"
 
-#: ../pan/gui/pan.cc:513
+#: ../pan/gui/pan.cc:542
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
 "To start newsreading, first Add a Server."
 msgstr ""
+"Köszönjük, hogy kipróbálta a Pan programot!\n"
+" \n"
+"A hírolvasáshoz először adjon hozzá egy kiszolgálót."
 
-#: ../pan/gui/pan.cc:595
+#: ../pan/gui/pan.cc:624
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
 "\n"
 "URL Options\n"
+"  headers:group.name       Download new headers for the specified "
+"newsgroup.\n"
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -1459,1080 +1371,1116 @@ msgid ""
 "  --no-gui                 Only show console output, not the download "
 "queue.\n"
 msgstr ""
+"Általános kapcsolók\n"
+"  -h, --help               Ezen használati oldal megjelenítése.\n"
+"  --verbose                Legyen bőbeszédű (nem grafikus módban).\n"
+"\n"
+"URL kapcsolók\n"
+"  headers:group.name       Új fejlécek letöltése a megadott hírcsoportnál.\n"
+"  --no-gui                 A news:message-id esetén a cikk kiírása a\n"
+"                             szabványos kimenetre.\n"
+"\n"
+"NZB kötegelt kapcsolók\n"
+"  --nzb file1 file2 ...    NZB-fájlok feldolgozása a Pan indítása nélkül.\n"
+"  -o út, --output=út       Az NZB-fájlokban felsorolt mellékletek mentési\n"
+"                             útvonala.\n"
+"  --no-gui                 Csak konzolos kimenet megjelenítése, nem a\n"
+"                             letöltési soré.\n"
 
-#: ../pan/gui/pan.cc:867
+#: ../pan/gui/pan.cc:958
 msgid "Error: --no-gui used without nzb files or news:message-id."
-msgstr ""
+msgstr "Hiba: a --no-gui NZB-fájlok vagy news:message-id nélkül van használva."
 
-#: ../pan/gui/pan.cc:871
-#, fuzzy, c-format
+#: ../pan/gui/pan.cc:962
+#, c-format
 msgid "Pan %s started"
 msgstr "A Pan %s elindult"
 
-#: ../pan/gui/pan.cc:890
+#: ../pan/gui/pan.cc:982
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
+"Állítsa be a Pan hírkiszolgálóit, mielőtt NZB-kliensként használná azt."
 
-#: ../pan/gui/pan.cc:1009
+#: ../pan/gui/pan.cc:1100
 msgid "Pan notification"
-msgstr ""
+msgstr "Pan értesítés"
 
-#: ../pan/gui/post-ui.cc:186
+#: ../pan/gui/post-ui.cc:163
 #, c-format
-msgid "Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."
-msgstr ""
+msgid "Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."
+msgstr "Feltöltési sor: %lu feladat, %ld KB (~ %.2f MB) összesen."
 
-#: ../pan/gui/post-ui.cc:286
-#, fuzzy, c-format
+#: ../pan/gui/post-ui.cc:266 ../pan/gui/post-ui.cc:297
+#, c-format
 msgid "Error setting custom spellchecker: %s"
-msgstr "Szerkesztés külső szüvegszerkesztővel"
+msgstr "Hiba az egyéni helyesírás-ellenőrző beállításakor: %s"
 
-#: ../pan/gui/post-ui.cc:291 ../pan/gui/post-ui.cc:300
-#, fuzzy, c-format
+#: ../pan/gui/post-ui.cc:270 ../pan/gui/post-ui.cc:278
+#: ../pan/gui/post-ui.cc:301 ../pan/gui/post-ui.cc:309
+#, c-format
 msgid "Error setting spellchecker: %s"
-msgstr "Szerkesztés külső szüvegszerkesztővel"
+msgstr "Hiba a helyesírás-ellenőrző beállításakor: %s"
 
-#: ../pan/gui/post-ui.cc:419
-#, fuzzy
+#: ../pan/gui/post-ui.cc:448
 msgid "_Profile"
-msgstr "Profil"
+msgstr "_Profil"
 
-#: ../pan/gui/post-ui.cc:420
-#, fuzzy
+#: ../pan/gui/post-ui.cc:449
 msgid "Set Editor"
-msgstr "Szerkesztés"
+msgstr "Szerkesztő beállítása"
 
-#: ../pan/gui/post-ui.cc:422
-#, fuzzy
+#: ../pan/gui/post-ui.cc:451
 msgid "_Send Article"
-msgstr "Szülő cikk"
+msgstr "Cikk _küldése"
 
-#: ../pan/gui/post-ui.cc:422
-#, fuzzy
+#: ../pan/gui/post-ui.cc:451
 msgid "Send Article Now"
-msgstr "Küldés most"
+msgstr "Cikk küldése most"
 
-#: ../pan/gui/post-ui.cc:423
-#, fuzzy
+#: ../pan/gui/post-ui.cc:452
 msgid "_Send and Save Articles to NZB"
-msgstr "Mentett cikkek mutatása"
+msgstr "_Küldés és cikkek mentése NZB-be"
 
-#: ../pan/gui/post-ui.cc:423
-#, fuzzy
+#: ../pan/gui/post-ui.cc:452
 msgid "Send and Save Articles to NZB"
-msgstr "Mentett cikkek mutatása"
+msgstr "Küldés és cikkek mentése NZB-be"
 
-#: ../pan/gui/post-ui.cc:424
+#: ../pan/gui/post-ui.cc:453
 msgid "Set Character _Encoding..."
-msgstr ""
+msgstr "_Karakterkódolás beállítása…"
 
-#: ../pan/gui/post-ui.cc:425
+#: ../pan/gui/post-ui.cc:454
 msgid "Set Content _Transfer Encoding..."
-msgstr ""
+msgstr "_Tartalomátvitel kódolásának beállítása…"
 
-#: ../pan/gui/post-ui.cc:426
-#, fuzzy
+#: ../pan/gui/post-ui.cc:455
 msgid "Sa_ve Draft"
-msgstr "M_entés"
+msgstr "Piszkozat _mentése"
 
-#: ../pan/gui/post-ui.cc:426
+#: ../pan/gui/post-ui.cc:455
 msgid "Save as a Draft for Future Posting"
-msgstr ""
+msgstr "Mentés piszkozatként egy későbbi küldéshez"
 
-#: ../pan/gui/post-ui.cc:427
-#, fuzzy
+#: ../pan/gui/post-ui.cc:456
 msgid "_Open Draft..."
-msgstr "M_entés"
+msgstr "Piszkozat meg_nyitása…"
 
-#: ../pan/gui/post-ui.cc:427
-#, fuzzy
+#: ../pan/gui/post-ui.cc:456
 msgid "Open an Article Draft"
-msgstr "/Cikk _olvasása"
+msgstr "Egy piszkozatcikk megnyitása"
 
-#: ../pan/gui/post-ui.cc:432
+#: ../pan/gui/post-ui.cc:461
 msgid "_Rot13"
-msgstr ""
+msgstr "_Rot13"
 
-#: ../pan/gui/post-ui.cc:432
+#: ../pan/gui/post-ui.cc:461
 msgid "Rot13 Selected Text"
 msgstr "A kijelölt szöveg rot13 kódolása"
 
-#: ../pan/gui/post-ui.cc:433
-#, fuzzy
+#: ../pan/gui/post-ui.cc:462
 msgid "Run _Editor"
-msgstr "Szerkesztés"
+msgstr "_Szerkesztő futtatása"
 
-#: ../pan/gui/post-ui.cc:433
-#, fuzzy
+#: ../pan/gui/post-ui.cc:462
 msgid "Run Editor"
-msgstr "Szerkesztés"
+msgstr "Szerkesztő futtatása"
 
-#: ../pan/gui/post-ui.cc:435
+#: ../pan/gui/post-ui.cc:464
 msgid "Add _Files to Queue"
-msgstr ""
+msgstr "_Fájlok hozzáadása a sorhoz"
 
-#: ../pan/gui/post-ui.cc:435
+#: ../pan/gui/post-ui.cc:464
 msgid "Add Files to Queue"
-msgstr ""
+msgstr "Fájlok hozzáadása a sorhoz"
 
-#: ../pan/gui/post-ui.cc:450 ../pan/gui/post-ui.cc:451
-#, fuzzy
+#: ../pan/gui/post-ui.cc:479 ../pan/gui/post-ui.cc:480
 msgid "Remove from Queue"
-msgstr "Hírkiszolgáló"
+msgstr "Eltávolítás a sorból"
 
-#: ../pan/gui/post-ui.cc:455 ../pan/gui/post-ui.cc:456
-#, fuzzy
+#: ../pan/gui/post-ui.cc:484 ../pan/gui/post-ui.cc:485
 msgid "Clear List"
-msgstr "Törlés"
+msgstr "Lista törlése"
 
-#: ../pan/gui/post-ui.cc:460 ../pan/gui/post-ui.cc:461
-#, fuzzy
+#: ../pan/gui/post-ui.cc:489 ../pan/gui/post-ui.cc:490
 msgid "Select Needed Parts"
-msgstr "Szűrő kijelölése"
+msgstr "Szükséges részek kijelölése"
 
-#: ../pan/gui/post-ui.cc:465 ../pan/gui/post-ui.cc:466
-#: ../pan/gui/task-pane.cc:636 ../pan/gui/task-pane.cc:637
+#: ../pan/gui/post-ui.cc:494 ../pan/gui/post-ui.cc:495
+#: ../pan/gui/task-pane.cc:677 ../pan/gui/task-pane.cc:678
 msgid "Move Up"
-msgstr "Fel"
+msgstr "Mozgatás fel"
 
-#: ../pan/gui/post-ui.cc:470 ../pan/gui/post-ui.cc:471
-#: ../pan/gui/task-pane.cc:641 ../pan/gui/task-pane.cc:642
+#: ../pan/gui/post-ui.cc:499 ../pan/gui/post-ui.cc:500
+#: ../pan/gui/task-pane.cc:682 ../pan/gui/task-pane.cc:683
 msgid "Move Down"
-msgstr "Le"
+msgstr "Mozgatás le"
 
-#: ../pan/gui/post-ui.cc:475 ../pan/gui/post-ui.cc:476
-#, fuzzy
+#: ../pan/gui/post-ui.cc:504 ../pan/gui/post-ui.cc:505
 msgid "Move to Top"
-msgstr "Áthelyezés mappába"
+msgstr "Mozgatás a tetejére"
 
-#: ../pan/gui/post-ui.cc:480 ../pan/gui/post-ui.cc:481
-#, fuzzy
+#: ../pan/gui/post-ui.cc:509 ../pan/gui/post-ui.cc:510
 msgid "Move to Bottom"
-msgstr "Áthelyezés mappába"
+msgstr "Mozgatás az aljára"
 
-#: ../pan/gui/post-ui.cc:488
-#, fuzzy
+#: ../pan/gui/post-ui.cc:517
 msgid "_Wrap Text"
-msgstr "Tördelés"
+msgstr "_Szöveg tördelése"
 
-#: ../pan/gui/post-ui.cc:488
-#, fuzzy
+#: ../pan/gui/post-ui.cc:517
 msgid "Wrap Text"
-msgstr "Tördelés"
+msgstr "Szöveg tördelése"
 
-#: ../pan/gui/post-ui.cc:489
-#, fuzzy
+#: ../pan/gui/post-ui.cc:518
 msgid "Always Run Editor"
-msgstr "Szerkesztés"
+msgstr "Mindig futtassa a szerkesztőt"
 
-#: ../pan/gui/post-ui.cc:490
-msgid "Remember Character Encoding for this Group"
-msgstr ""
-
-#: ../pan/gui/post-ui.cc:491
-#, fuzzy
-msgid "Thread Attached Replies"
-msgstr "Se nem megfigyelt, se nem figyelmen kívül hagyott szálak mutatása"
-
-#: ../pan/gui/post-ui.cc:492
-#, fuzzy
-msgid "PGP-Encrypt the Message"
-msgstr "Az üzenet nyomtatása"
-
-#: ../pan/gui/post-ui.cc:493
-#, fuzzy
-msgid "PGP-Sign the Message"
-msgstr "Az üzenet nyomtatása"
-
-#: ../pan/gui/post-ui.cc:494
-msgid "Check _Spelling"
-msgstr ""
+#: ../pan/gui/post-ui.cc:519
+msgid "Remember Character Encoding for This Group"
+msgstr "Emlékezzen a karakterkódolásra ennél a csoportnál"
 
 #: ../pan/gui/post-ui.cc:520
-#, fuzzy
+msgid "Thread Attached Replies"
+msgstr "Csatolt válaszok szálba rendezése"
+
+#: ../pan/gui/post-ui.cc:521
+msgid "PGP-Encrypt the Article"
+msgstr "A cikk titkosítása PGP-vel"
+
+#: ../pan/gui/post-ui.cc:522
+msgid "PGP-Sign the Article"
+msgstr "A cikk aláírása PGP-vel"
+
+#: ../pan/gui/post-ui.cc:523
+msgid "Check _Spelling"
+msgstr "_Helyesírás-ellenőrzés"
+
+#: ../pan/gui/post-ui.cc:549
 msgid "New Article's Encoding:"
-msgstr "Pan: Melléklet mentése másként"
+msgstr "Új cikk kódolása:"
 
-#: ../pan/gui/post-ui.cc:530
-#, fuzzy
+#: ../pan/gui/post-ui.cc:559
 msgid "Content Transfer Encoding"
-msgstr "Hírcsoportlista mező"
+msgstr "Tartalomátvitel kódolása"
 
-#: ../pan/gui/post-ui.cc:531
-#, fuzzy
+#: ../pan/gui/post-ui.cc:560
 msgid "New Article's Content Transfer Encoding:"
-msgstr "Pan: Melléklet mentése másként"
+msgstr "Új cikk tartalomátvitelének kódolása:"
 
-#: ../pan/gui/post-ui.cc:711
+#: ../pan/gui/post-ui.cc:740
 msgid "Your changes will be lost!"
-msgstr ""
+msgstr "A módosítások el fognak veszni!"
 
-#: ../pan/gui/post-ui.cc:712
+#: ../pan/gui/post-ui.cc:741
 msgid "Close this window and lose your changes?"
-msgstr ""
+msgstr "Bezárja ezt az ablakot és elveszíti a módosításokat?"
 
-#: ../pan/gui/post-ui.cc:757 ../pan/gui/post-ui.cc:796
+#: ../pan/gui/post-ui.cc:786 ../pan/gui/post-ui.cc:825
 msgid "There were problems with this post."
-msgstr ""
+msgstr "Problémák voltak ezzel a küldéssel."
 
-#: ../pan/gui/post-ui.cc:759 ../pan/gui/post-ui.cc:798
-#: ../pan/gui/post-ui.cc:861
+#: ../pan/gui/post-ui.cc:788 ../pan/gui/post-ui.cc:827
+#: ../pan/gui/post-ui.cc:892
 msgid "Go Back"
-msgstr ""
+msgstr "Vissza"
 
-#: ../pan/gui/post-ui.cc:761
-msgid "Post Anyway"
-msgstr ""
+#: ../pan/gui/post-ui.cc:790
+msgid "Continue Anyway"
+msgstr "Folytatás mindenképp"
 
 #. Prompt the user
-#: ../pan/gui/post-ui.cc:790
+#: ../pan/gui/post-ui.cc:819
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr ""
+"Az üzenet olyan karaktereket használ, amelyek nincsenek megadva a(z) „%s” "
+"karakterkészletben - talán használja ezt: „%s” "
 
-#: ../pan/gui/post-ui.cc:813
-#, fuzzy
+#: ../pan/gui/post-ui.cc:842
 msgid "Go _Online"
-msgstr "_Online"
+msgstr "_Kapcsolódás"
 
-#: ../pan/gui/post-ui.cc:860
+#: ../pan/gui/post-ui.cc:891
 msgid "The file queue is empty, so no files can be saved."
-msgstr ""
+msgstr "A fájl sor üres, így nem lehet fájlokat menteni."
 
-#: ../pan/gui/post-ui.cc:1019
+#: ../pan/gui/post-ui.cc:1070
+msgid "IO Error"
+msgstr "IO-hiba"
+
+#: ../pan/gui/post-ui.cc:1070
+msgid "No space left on device"
+msgstr "Nincs hely az eszközön"
+
+#: ../pan/gui/post-ui.cc:1071
+#, c-format
+msgid "Error copying message to %s folder. Reason: %s"
+msgstr "Hiba az üzenet másolásakor a következő mappába: %s. Ok: %s"
+
+#: ../pan/gui/post-ui.cc:1077
+#, c-format
+msgid "Error creating message in %s mail folder: Invalid article."
+msgstr ""
+"Hiba az üzenet létrehozásakor a követező levélmappába: %s: érvénytelen cikk."
+
+#: ../pan/gui/post-ui.cc:1099
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
 msgstr ""
+"Nincs küldő kiszolgáló beállítva ehhez a küldő profilhoz.\n"
+"Szerkessze a profilt a Szerkesztés|Küldő profilok kezelése menüpontban."
 
-#: ../pan/gui/post-ui.cc:1054
-#, fuzzy
-msgid "Pan is Offline."
-msgstr "Offline"
-
-#: ../pan/gui/post-ui.cc:1055
-msgid "Go online to post the article?"
+#: ../pan/gui/post-ui.cc:1104
+msgid ""
+"The selected posting server is currently disabled. Please choose an "
+"appropriate alternative."
 msgstr ""
+"A kijelölt küldő kiszolgáló jelenleg le van tiltva. Válasszon egy megfelelő "
+"alternatívát."
 
-#: ../pan/gui/post-ui.cc:1102
+#: ../pan/gui/post-ui.cc:1146
+msgid "Pan is Offline."
+msgstr "A Pan kapcsolat nélküli."
+
+#: ../pan/gui/post-ui.cc:1147
+msgid "Go online to post the article?"
+msgstr "Kapcsolódjon a cikk elküldéséhez?"
+
+#: ../pan/gui/post-ui.cc:1196
 #, c-format
 msgid ""
-"Error signing/encrypting your message. Perhaps you misspelled your email-"
-"address (%s) ?"
+"Error signing/encrypting your message. Perhaps you misspelled your email "
+"address (%s)?"
 msgstr ""
+"Hiba az üzenet aláírásakor vagy titkosításakor. Talán elírta az e-mail címét "
+"(%s)?"
 
-#: ../pan/gui/post-ui.cc:1267
-#, fuzzy
+#: ../pan/gui/post-ui.cc:1344
 msgid "Error opening temporary file"
-msgstr "Hiba a fájl megnyitása közben: \"%s\": %s"
+msgstr "Hiba az átmeneti fájl megnyitásakor"
 
-#: ../pan/gui/post-ui.cc:1279
+#: ../pan/gui/post-ui.cc:1356
 #, c-format
 msgid "Error writing article to temporary file: %s"
-msgstr ""
+msgstr "Hiba a cikk átmeneti fájlba írásakor: %s"
 
-#: ../pan/gui/post-ui.cc:1298
-#, fuzzy, c-format
+#: ../pan/gui/post-ui.cc:1375
+#, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
-msgstr "Szerkesztés külső szüvegszerkesztővel"
-
-#: ../pan/gui/post-ui.cc:1339
-#, fuzzy, c-format
-msgid "Error starting external editor: %s"
-msgstr "Szerkesztés külső szüvegszerkesztővel"
-
-#: ../pan/gui/post-ui.cc:1395
-#, fuzzy
-msgid "Open Draft Article"
-msgstr "/Cikk _olvasása"
-
-#: ../pan/gui/post-ui.cc:1606
-#, fuzzy
-msgid "Save Draft Article"
-msgstr "/_Cikkek mentése"
-
-#: ../pan/gui/post-ui.cc:1803
-#, fuzzy, c-format
-msgid "Couldn't parse signature command \"%s\": %s"
-msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
-
-#: ../pan/gui/post-ui.cc:1839
-#, fuzzy
-msgid "Couldn't convert signature to UTF-8."
-msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
-
-#: ../pan/gui/post-ui.cc:2334
-#, fuzzy
-msgid "F_rom"
-msgstr "Feladó"
-
-#: ../pan/gui/post-ui.cc:2352
-#, fuzzy
-msgid "_Subject"
-msgstr "Tárgy"
-
-#: ../pan/gui/post-ui.cc:2365
-#, fuzzy
-msgid "_Newsgroups"
-msgstr "Hírcsoportok"
-
-#: ../pan/gui/post-ui.cc:2379
-#, fuzzy
-msgid "Mail _To"
-msgstr "Email"
-
-#: ../pan/gui/post-ui.cc:2481
-#, fuzzy
-msgid "Delete from Queue"
-msgstr "Kijelöli a hírcsoportot"
-
-#: ../pan/gui/post-ui.cc:2494
-msgid "No."
 msgstr ""
+"Hiba az „külső szerkesztő” parancssor feldolgozásakor: %s (A parancs ez volt: "
+"%s)"
 
-#: ../pan/gui/post-ui.cc:2498 ../pan/gui/post-ui.cc:2592
-#: ../pan/gui/post-ui.cc:2633
+#: ../pan/gui/post-ui.cc:1416
+#, c-format
+msgid "Error starting external editor: %s"
+msgstr "Hiba a külső szerkesztő elindításakor: %s"
+
+#: ../pan/gui/post-ui.cc:1479
+msgid "Open Draft Article"
+msgstr "Piszkozatcikk megnyitása"
+
+#: ../pan/gui/post-ui.cc:1691
+msgid "Save Draft Article"
+msgstr "Piszkozatcikk mentése"
+
+#: ../pan/gui/post-ui.cc:1889
+#, c-format
+msgid "Couldn't parse signature command \"%s\": %s"
+msgstr "Nem sikerült feldolgozni a(z) „%s” aláírás parancsot: %s"
+
+#: ../pan/gui/post-ui.cc:1925
+msgid "Couldn't convert signature to UTF-8."
+msgstr "Nem sikerült átalakítani az aláírást UTF-8 formátumra."
+
+#: ../pan/gui/post-ui.cc:2427
+msgid "F_rom"
+msgstr "_Feladó"
+
+#: ../pan/gui/post-ui.cc:2444
+msgid "_Subject"
+msgstr "_Tárgy"
+
+#: ../pan/gui/post-ui.cc:2457
+msgid "_Newsgroups"
+msgstr "_Hírcsoportok"
+
+#: ../pan/gui/post-ui.cc:2471
+msgid "Mail _To"
+msgstr "Levél _címzettje"
+
+#: ../pan/gui/post-ui.cc:2573
+msgid "Delete from Queue"
+msgstr "Törlés a sorból"
+
+#: ../pan/gui/post-ui.cc:2586
+msgid "No."
+msgstr "Sz."
+
+#: ../pan/gui/post-ui.cc:2590 ../pan/gui/post-ui.cc:2682
+#: ../pan/gui/post-ui.cc:2723
 msgid "Filename"
 msgstr "Fájlnév"
 
-#: ../pan/gui/post-ui.cc:2500
-msgid "Size (kB)"
-msgstr ""
+#: ../pan/gui/post-ui.cc:2592
+msgid "Size (KB)"
+msgstr "Méret (KB)"
 
-#: ../pan/gui/post-ui.cc:2600
-#, fuzzy
+#: ../pan/gui/post-ui.cc:2690
 msgid "The current filename"
-msgstr "Kódolt fájlnév használata"
+msgstr "A jelenlegi fájlnév"
 
-#: ../pan/gui/post-ui.cc:2604
-#, fuzzy
+#: ../pan/gui/post-ui.cc:2694
 msgid "Subject Line"
-msgstr "Tárgy"
+msgstr "Tárgysor"
 
-#: ../pan/gui/post-ui.cc:2612
-msgid "The current Subject Line"
-msgstr ""
+#: ../pan/gui/post-ui.cc:2702
+msgid "The current subject line"
+msgstr "A jelenlegi tárgy sora"
 
-#: ../pan/gui/post-ui.cc:2626
+#: ../pan/gui/post-ui.cc:2716
 msgid "No. "
-msgstr ""
+msgstr "Sz. "
 
-#: ../pan/gui/post-ui.cc:2630
+#: ../pan/gui/post-ui.cc:2720
 msgid "Enable/Disable"
-msgstr ""
+msgstr "Engedélyezés/letiltás"
 
-#: ../pan/gui/post-ui.cc:2664
-#, fuzzy
+#: ../pan/gui/post-ui.cc:2754
 msgid "Follo_wup-To"
-msgstr "Followup-To:"
+msgstr "_Követőcím"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: ../pan/gui/post-ui.cc:2673
+#: ../pan/gui/post-ui.cc:2763
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
 "\n"
 "To direct all replies to your email address, use \"Followup-To: poster\""
 msgstr ""
+"Az a hírcsoport, ahova az üzenetre adott válasz menni fog. Ez csak akkor "
+"szükséges, ha eltér a „Hírcsoport” fejlécétől.\n"
+"\n"
+"Az összes válasznak közvetlenül az e-mail címére küldéséhez használja a "
+"„Követőcím: küldő” lehetőséget."
 
-#: ../pan/gui/post-ui.cc:2679
-#, fuzzy
+#: ../pan/gui/post-ui.cc:2770
 msgid "_Reply-To"
-msgstr "Válaszcím"
+msgstr "_Válaszcím"
 
-#: ../pan/gui/post-ui.cc:2687
+#: ../pan/gui/post-ui.cc:2778
 msgid ""
-"The email account where mail replies to your posted message should go.  This "
+"The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
 msgstr ""
+"Az az e-mail fiók, ahova az elküldött üzenetre adott válaszok mennek. Ez csak "
+"akkor szükséges, ha eltér a „Feladó” fejléctől."
 
-#: ../pan/gui/post-ui.cc:2693
-#, fuzzy
+#: ../pan/gui/post-ui.cc:2785
 msgid "_Custom Headers"
-msgstr "Egyéni fejléc"
+msgstr "_Egyéni fejlécek"
 
-#: ../pan/gui/post-ui.cc:2717
+#: ../pan/gui/post-ui.cc:2809
 msgid "Add \"_User-Agent\" header"
-msgstr ""
+msgstr "„_User-Agent” fejléc hozzáadása"
 
-#: ../pan/gui/post-ui.cc:2724
-#, fuzzy
-msgid "Add \"Message-_Id\" header"
-msgstr "Üzenetazonosító"
+#: ../pan/gui/post-ui.cc:2816
+msgid "Add \"Message-_ID\" header"
+msgstr "„Message-_ID” fejléc hozzáadása"
 
-#: ../pan/gui/post-ui.cc:2855
-#, fuzzy
+#: ../pan/gui/post-ui.cc:2947
 msgid "Select Parts"
-msgstr "Kijelölés"
+msgstr "Részek kijelölése"
 
-#: ../pan/gui/post-ui.cc:2866
+#: ../pan/gui/post-ui.cc:2960
 msgid "_Parts"
-msgstr ""
+msgstr "_Részek"
 
-#: ../pan/gui/post-ui.cc:3022
-#, fuzzy
+#: ../pan/gui/post-ui.cc:3114
 msgid "Post Article"
-msgstr "Betölti a cikket"
+msgstr "Cikk küldése"
 
-#: ../pan/gui/post-ui.cc:3043
+#: ../pan/gui/post-ui.cc:3135
 msgid "_Message"
 msgstr "Üz_enet"
 
-#: ../pan/gui/post-ui.cc:3044
-#, fuzzy
+#: ../pan/gui/post-ui.cc:3136
 msgid "More _Headers"
-msgstr "Fejlécek"
+msgstr "Több _fejléc"
 
-#: ../pan/gui/post-ui.cc:3045
-#, fuzzy
+#: ../pan/gui/post-ui.cc:3137
 msgid "File _Queue"
-msgstr "Várakozási sor törlése"
+msgstr "Fájl _sor"
 
-#: ../pan/gui/post-ui.cc:3077 ../pan/gui/profiles-dialog.cc:478
+#: ../pan/gui/post-ui.cc:3169 ../pan/gui/profiles-dialog.cc:481
 #, no-c-format
 msgid "On %d, %n wrote:"
-msgstr "%d keltezéssel %n azt írta:"
+msgstr "%d keltezéssel %n ezt írta:"
 
-#: ../pan/gui/post-ui.cc:3106
+#: ../pan/gui/post-ui.cc:3198
 msgid "Add files to queue"
-msgstr ""
+msgstr "Fájlok hozzáadása a sorhoz"
 
-#: ../pan/gui/post-ui.cc:3184
+#: ../pan/gui/post-ui.cc:3274
 msgid "Save Upload Queue as NZB File"
-msgstr ""
+msgstr "Feltöltési sor mentése NZB-fájlként"
 
-#: ../pan/gui/prefs.cc:343
-#, fuzzy, c-format
+#: ../pan/gui/prefs.cc:364
+#, c-format
 msgid "Couldn't parse %s color \"%s\""
-msgstr "Nem sikerült betölteni ezt a betűkészletet: %s"
+msgstr "Nem sikerült a(z) %s szín („%s”) feldolgozása"
 
-#: ../pan/gui/prefs-ui.cc:120
+#: ../pan/gui/prefs-ui.cc:123
 msgid "Grab Key"
-msgstr ""
+msgstr "Billentyű elkapása"
 
-#: ../pan/gui/prefs-ui.cc:126
+#: ../pan/gui/prefs-ui.cc:129
 #, c-format
 msgid ""
 "Press the combination of the keys\n"
 "you want to use for \"%s\"."
 msgstr ""
+"Nyomja meg azt a billentyűkombinációt,\n"
+"amelyet használni szeretne ehhez: „%s”."
 
-#: ../pan/gui/prefs-ui.cc:166
-#, fuzzy
-msgid "Edit Hotkey"
-msgstr "Szűrők szerkesztése"
+#: ../pan/gui/prefs-ui.cc:169
+msgid "Edit Shortcut"
+msgstr "Gyorsbillentyű szerkesztése"
 
-#: ../pan/gui/prefs-ui.cc:228
-msgid "Error: Shortkey is invalid!"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:231
+msgid "Error: Shortcut key is invalid!"
+msgstr "Hiba: a gyorsbillentyű érvénytelen!"
 
-#: ../pan/gui/prefs-ui.cc:244
-#, fuzzy
-msgid "Error: Shortkey already exists!"
-msgstr "\"%s\" mappa már létezik."
+#: ../pan/gui/prefs-ui.cc:247
+msgid "Error: Shortcut key already exists!"
+msgstr "Hiba: a gyorsbillentyű már létezik!"
 
-#: ../pan/gui/prefs-ui.cc:535
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:561
 msgid "Show only icons"
-msgstr "Csak a saját küldemények megjelenítése"
+msgstr "Csak ikonok megjelenítése"
 
-#: ../pan/gui/prefs-ui.cc:536
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:562
 msgid "Show only text"
-msgstr "Csak a saját küldemények megjelenítése"
+msgstr "Csak szöveg megjelenítése"
 
-#: ../pan/gui/prefs-ui.cc:537
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:563
 msgid "Show icons and text"
-msgstr "Melléklet mentése ide:"
+msgstr "Ikonok és szöveg megjelenítése"
 
-#: ../pan/gui/prefs-ui.cc:576
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:602
 msgid "Use GNOME Preferences"
-msgstr "Pan: Beállítások"
+msgstr "GNOME beállítások használata"
 
-#: ../pan/gui/prefs-ui.cc:577
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:603
 msgid "Use KDE Preferences"
-msgstr "Pan: Beállítások"
+msgstr "KDE beállítások használata"
 
-#: ../pan/gui/prefs-ui.cc:578
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:604
 msgid "Use OS X Preferences"
-msgstr "Pan: Beállítások"
+msgstr "OS X beállítások használata"
 
-#: ../pan/gui/prefs-ui.cc:579
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:605
 msgid "Use Windows Preferences"
-msgstr "Pan: Beállítások"
+msgstr "Windows beállítások használata"
 
-#: ../pan/gui/prefs-ui.cc:580
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:606
 msgid "Custom Command:"
-msgstr "Nyomtatási parancs"
+msgstr "Egyéni parancs:"
 
-#: ../pan/gui/prefs-ui.cc:632
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:658
 msgid "Disabled"
-msgstr "Sikertelen"
+msgstr "Letiltva"
 
-#: ../pan/gui/prefs-ui.cc:633
-msgid "Only new (Score == 0)"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:659
+msgid "Only new (score == 0)"
+msgstr "Csak új (pontszám == 0)"
 
-#: ../pan/gui/prefs-ui.cc:634
+#: ../pan/gui/prefs-ui.cc:660
 msgid "9999 or more"
-msgstr ""
+msgstr "9999 vagy több"
 
-#: ../pan/gui/prefs-ui.cc:635
+#: ../pan/gui/prefs-ui.cc:661
 msgid "5000 to 9998"
-msgstr ""
+msgstr "5000 - 9998"
 
-#: ../pan/gui/prefs-ui.cc:636
+#: ../pan/gui/prefs-ui.cc:662
 msgid "1 to 4999"
-msgstr ""
+msgstr "1 - 4999"
 
-#: ../pan/gui/prefs-ui.cc:637
+#: ../pan/gui/prefs-ui.cc:663
 msgid "-9998 to -1"
-msgstr ""
+msgstr "-9998 és -1 között"
 
-#: ../pan/gui/prefs-ui.cc:638
+#: ../pan/gui/prefs-ui.cc:664
 msgid "-9999 or less"
-msgstr ""
+msgstr "-9999 vagy kevesebb"
 
-#: ../pan/gui/prefs-ui.cc:702
+#: ../pan/gui/prefs-ui.cc:728
 #, c-format
-msgid "Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
+"Válassza ki a <u>globális</u> karakterkészletet. Jelenlegi beállítás: <b>%s<"
+"/b>."
 
-#: ../pan/gui/prefs-ui.cc:738
-#, fuzzy
-msgid "Global Charset Settings"
-msgstr "Globális beállítások"
+#: ../pan/gui/prefs-ui.cc:760
+msgid "Global Character Set Settings"
+msgstr "Globális karakterkészlet beállítások"
 
-#: ../pan/gui/prefs-ui.cc:832 ../pan/gui/task-pane.cc:770
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:854 ../pan/gui/task-pane.cc:1076
 msgid "State"
 msgstr "Állapot"
 
-#: ../pan/gui/prefs-ui.cc:866
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:888
 msgid "Enabled"
-msgstr "Sikertelen"
+msgstr "Engedélyezve"
 
-#: ../pan/gui/prefs-ui.cc:870
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:892
 msgid "Column Name"
-msgstr "A neved:"
+msgstr "Oszlopnév"
 
-#: ../pan/gui/prefs-ui.cc:908
+#: ../pan/gui/prefs-ui.cc:930
 msgid "Pan: Preferences"
 msgstr "Pan: Beállítások"
 
-#: ../pan/gui/prefs-ui.cc:923
+#: ../pan/gui/prefs-ui.cc:945
 msgid "Mouse"
-msgstr ""
+msgstr "Egér"
 
-#: ../pan/gui/prefs-ui.cc:925
+#: ../pan/gui/prefs-ui.cc:947
 msgid "Single-click activates, rather than selects, _groups"
-msgstr ""
+msgstr "Egyszeres kattintás aktivál a kijelölés helyett, cs_oportok"
 
-#: ../pan/gui/prefs-ui.cc:927
+#: ../pan/gui/prefs-ui.cc:949
 msgid "Single-click activates, rather than selects, _articles"
-msgstr ""
+msgstr "Egyszeres kattintás aktivál a kijelölés helyett, _cikkek"
 
-#: ../pan/gui/prefs-ui.cc:930
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:952
 msgid "Groups"
-msgstr "Hírcsoportok"
+msgstr "Csoportok"
 
-#: ../pan/gui/prefs-ui.cc:932
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:954
 msgid "Get new headers in subscribed groups on _startup"
-msgstr "Új fejlécek letöltése az előfizetett hírcsoportokhoz"
+msgstr "Új fejlécek letöltése a feliratkozott csoportokban _induláskor"
 
-#: ../pan/gui/prefs-ui.cc:934
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:956
 msgid "Get new headers when _entering group"
-msgstr "Új fejlécek letöltése a kijelölt hírcsoportokhoz"
+msgstr "Új fejlécek letöltése, amikor _belép egy csoportba"
 
-#: ../pan/gui/prefs-ui.cc:936
+#: ../pan/gui/prefs-ui.cc:958
 msgid "Mark entire group _read when leaving group"
-msgstr ""
+msgstr "Az egész csoport megjelölése _olvasottként, ha elhagyja a csoportot"
 
-#: ../pan/gui/prefs-ui.cc:938
+#: ../pan/gui/prefs-ui.cc:960
 msgid "Mark entire group read before getting _new headers"
 msgstr ""
+"Az egész csoport megjelölése olvasottként az ú_j fejlécek letöltése előtt"
 
-#: ../pan/gui/prefs-ui.cc:940
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:962
 msgid "E_xpand all threads when entering group"
-msgstr "Új fejlécek letöltése a kijelölt hírcsoportokhoz"
+msgstr "Összes szál ki_bontása, amikor belép egy csoportba"
 
-#: ../pan/gui/prefs-ui.cc:945
+#: ../pan/gui/prefs-ui.cc:967
 msgid "Articles"
 msgstr "Cikkek"
 
-#: ../pan/gui/prefs-ui.cc:947
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:969
+msgid "Mark downloaded articles read"
+msgstr "Letöltött cikkek megjelölése olvasottként"
+
+#: ../pan/gui/prefs-ui.cc:971
 msgid "Space selects next article rather than next unread"
-msgstr "A kijelölt cikkek és mellékleteik mentése."
+msgstr "A szóköz a következő cikket jelöli ki a következő olvasatlan helyett"
 
-#: ../pan/gui/prefs-ui.cc:949
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:973
 msgid "Expand threads upon selection"
-msgstr "Minden szál kibontása"
+msgstr "Szálak kibontása kijelöléskor"
 
-#: ../pan/gui/prefs-ui.cc:951
-msgid "Always show article deletion confirmation dialog"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:975
+msgid "Always ask before deleting an article"
+msgstr "Mindig kérdezzen egy cikk törlése előtt"
 
-#: ../pan/gui/prefs-ui.cc:953
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:977
 msgid "Smooth scrolling"
-msgstr "Finom görgetés sebessége:"
+msgstr "Finom görgetés"
 
-#: ../pan/gui/prefs-ui.cc:958
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:982
 msgid "Article Cache"
-msgstr "Cikkgyorstár"
-
-#: ../pan/gui/prefs-ui.cc:959
-msgid "Clear article cache on shutdown"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:962
-msgid "Size of article cache (in MiB) :"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:967
-#, fuzzy
-msgid "File extension for Cached Articles: "
-msgstr "/_Fájl/_Cikkek mentése"
-
-#: ../pan/gui/prefs-ui.cc:972
-msgid "Tabs"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:977
-msgid "_Behavior"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:977
-msgid "Behavior"
-msgstr ""
+msgstr "Cikk gyorsítótár"
 
 #: ../pan/gui/prefs-ui.cc:983
-#, fuzzy
-msgid "Language Settings"
-msgstr "Online beállítások"
+msgid "Clear article cache on shutdown"
+msgstr "Cikk gyorsítótár törlése leállításkor"
 
-#. systray and notify popup
-#: ../pan/gui/prefs-ui.cc:992
-msgid "System Tray Behavior"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:986
+msgid "Size of article cache (in MiB):"
+msgstr "Cikk gyorsítótár mérete (MiB):"
 
-#: ../pan/gui/prefs-ui.cc:994
-msgid "Hide to system tray"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:991
+msgid "File extension for cached articles: "
+msgstr "A gyorsítótárba tett cikkek fájlkiterjesztése: "
 
 #: ../pan/gui/prefs-ui.cc:996
-msgid "Start Pan minimized"
-msgstr ""
+msgid "Tabs"
+msgstr "Lapok"
 
-#: ../pan/gui/prefs-ui.cc:999
-#, fuzzy
-msgid "Show notifications"
-msgstr "Információk a kiszolgálóról"
+#: ../pan/gui/prefs-ui.cc:1001
+msgid "_Behavior"
+msgstr "_Viselkedés"
 
-#. allow multiple instances (seperate, not communicating with dbus)
-#: ../pan/gui/prefs-ui.cc:1004
-msgid "Startup Behavior"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1001
+msgid "Behavior"
+msgstr "Viselkedés"
 
-#: ../pan/gui/prefs-ui.cc:1006
-msgid "Allow multiple instances of Pan"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1007
+msgid "Task Pane"
+msgstr "Feladat ablaktábla"
 
-#: ../pan/gui/prefs-ui.cc:1011
-#, fuzzy
-msgid "Autosave Article Draft"
-msgstr "/Cikk _olvasása"
+#: ../pan/gui/prefs-ui.cc:1008
+msgid "Show Task Pane info popups"
+msgstr "Feladat ablaktábla felugró információk megjelenítése"
 
-#: ../pan/gui/prefs-ui.cc:1013
-#, fuzzy
-msgid "Minutes to autosave the current Article Draft: "
-msgstr "/Cikk _olvasása"
+#: ../pan/gui/prefs-ui.cc:1010
+msgid "Show Download Meter"
+msgstr "Letöltésmérő megjelenítése"
 
-#: ../pan/gui/prefs-ui.cc:1018
-#, fuzzy
-msgid "Autosave Articles"
-msgstr "Cikk mentése másként..."
+#: ../pan/gui/prefs-ui.cc:1014
+msgid "_Panes"
+msgstr "_Ablaktáblák"
+
+#: ../pan/gui/prefs-ui.cc:1014
+msgid "Panes"
+msgstr "Ablaktáblák"
 
 #: ../pan/gui/prefs-ui.cc:1020
-msgid "Minutes to autosave newsrc files: "
-msgstr ""
+msgid "Language Settings"
+msgstr "Nyelvi beállítások"
 
-#: ../pan/gui/prefs-ui.cc:1026
-msgid "_Miscellaneous"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1026
-msgid "Miscellaneous"
-msgstr ""
+#. systray and notify popup
+#: ../pan/gui/prefs-ui.cc:1029
+msgid "System Tray Behavior"
+msgstr "Rendszertálca viselkedése"
 
 #: ../pan/gui/prefs-ui.cc:1031
-#, fuzzy
-msgid "Pane Layout"
-msgstr "Megjelenítés - Hírcsoportok"
+msgid "Minimize to tray"
+msgstr "Kicsinyítés a tálcára"
+
+#: ../pan/gui/prefs-ui.cc:1033
+msgid "Start Pan minimized"
+msgstr "Pan indítása kicsinyített állapotban"
+
+#: ../pan/gui/prefs-ui.cc:1036
+msgid "Show notifications"
+msgstr "Értesítések megjelenítése"
+
+#. allow multiple instances (seperate, not communicating with dbus)
+#: ../pan/gui/prefs-ui.cc:1041
+msgid "Startup Behavior"
+msgstr "Indítási viselkedés"
+
+#: ../pan/gui/prefs-ui.cc:1043
+msgid "Allow multiple instances of Pan"
+msgstr "A Pan több példányának engedélyezése"
+
+#: ../pan/gui/prefs-ui.cc:1048
+msgid "Autosave Article Draft"
+msgstr "Piszkozatcikkek automatikus mentése"
 
 #: ../pan/gui/prefs-ui.cc:1050
-msgid "1=Groups, 2=Headers, 3=Body"
-msgstr ""
+msgid "Minutes to autosave the current Article Draft: "
+msgstr "A jelenlegi piszkozatcikk automatikus mentése percben: "
 
-#: ../pan/gui/prefs-ui.cc:1052
-msgid "1=Groups, 2=Body, 3=Headers"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1055
+msgid "Autosave Articles"
+msgstr "Cikkek automatikus mentése"
 
-#: ../pan/gui/prefs-ui.cc:1054
-msgid "1=Headers, 2=Groups, 3=Body"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1056
-msgid "1=Headers, 2=Body, 3=Groups"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1058
-#, fuzzy
-msgid "1=Body, 2=Groups, 3=Headers"
-msgstr "Hírcsoport-fejlécek betöltése"
-
-#: ../pan/gui/prefs-ui.cc:1060
-msgid "1=Body, 2=Headers, 3=Groups"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1057
+msgid "Minutes to autosave newsrc files: "
+msgstr "A newsrc fájlok automatikus mentése percben: "
 
 #: ../pan/gui/prefs-ui.cc:1064
-#, fuzzy
+msgid "GNOME Keyring"
+msgstr "GNOME kulcstartó"
+
+#: ../pan/gui/prefs-ui.cc:1065
+msgid "Store passwords in GNOME Keyring"
+msgstr "Jelszavak tárolása a GNOME kulcstartón"
+
+#: ../pan/gui/prefs-ui.cc:1069
+msgid "_Miscellaneous"
+msgstr "_Egyebek"
+
+#: ../pan/gui/prefs-ui.cc:1069
+msgid "Miscellaneous"
+msgstr "Egyebek"
+
+#: ../pan/gui/prefs-ui.cc:1074
+msgid "Pane Layout"
+msgstr "Ablaktábla elrendezése"
+
+#: ../pan/gui/prefs-ui.cc:1093
+msgid "1=Groups, 2=Headers, 3=Body"
+msgstr "1=Csoportok, 2=Fejlécek, 3=Törzs"
+
+#: ../pan/gui/prefs-ui.cc:1095
+msgid "1=Groups, 2=Body, 3=Headers"
+msgstr "1=Csoportok, 2=Törzs, 3=Fejlécek"
+
+#: ../pan/gui/prefs-ui.cc:1097
+msgid "1=Headers, 2=Groups, 3=Body"
+msgstr "1=Fejlécek, 2=Csoportok, 3=Törzs"
+
+#: ../pan/gui/prefs-ui.cc:1099
+msgid "1=Headers, 2=Body, 3=Groups"
+msgstr "1=Fejlécek, 2=Törzs, 3=Csoportok"
+
+#: ../pan/gui/prefs-ui.cc:1101
+msgid "1=Body, 2=Groups, 3=Headers"
+msgstr "1=Törzs, 2=Csoportok, 3=Fejlécek"
+
+#: ../pan/gui/prefs-ui.cc:1103
+msgid "1=Body, 2=Headers, 3=Groups"
+msgstr "1=Törzs, 2=Fejlécek, 3=Csoportok"
+
+#: ../pan/gui/prefs-ui.cc:1107
 msgid "Layout"
 msgstr "Elrendezés"
 
-#: ../pan/gui/prefs-ui.cc:1069
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1112
 msgid "Header Pane Columns"
-msgstr "Fejlécmező mutatása"
+msgstr "Fejléc ablaktábla oszlopok"
 
-#: ../pan/gui/prefs-ui.cc:1073
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1116
 msgid "_Headers"
-msgstr "Fejlécek"
+msgstr "_Fejlécek"
 
-#: ../pan/gui/prefs-ui.cc:1073
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1116
 msgid "Headers"
 msgstr "Fejlécek"
 
-#: ../pan/gui/prefs-ui.cc:1079
+#: ../pan/gui/prefs-ui.cc:1122
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
-"automatically, based on a post's score."
+"automatically, based on an article's score."
 msgstr ""
+"Ez a menü lehetővé teszi a Pan beállítását, hogy bizonyos műveleteket az Ön "
+"nevében automatikusan végrehajtson a cikk pontszáma alapján."
 
-#: ../pan/gui/prefs-ui.cc:1082
-msgid "_Delete posts scoring at: "
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1127
+msgid "Mark affected articles read"
+msgstr "Az érintett cikkek megjelölése olvasottként"
 
-#: ../pan/gui/prefs-ui.cc:1084
-msgid "Mark posts _read scoring at: "
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1136
+msgid "_Delete articles scoring at: "
+msgstr "A következő pontszámú cikkek _törlése: "
 
-#: ../pan/gui/prefs-ui.cc:1086
-msgid "_Cache posts scoring at: "
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1142
+msgid "Mark articles read scoring at: "
+msgstr "A következő pontszámú cikkek megjelölése olvasottként: "
 
-#: ../pan/gui/prefs-ui.cc:1088
-msgid "Download _attachments of posts scoring at: "
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1148
+msgid "_Cache articles scoring at: "
+msgstr "A következő pontszámú cikkek _gyorsítótárba helyezése: "
 
-#: ../pan/gui/prefs-ui.cc:1091
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1154
+msgid "Download attachments of articles scoring at: "
+msgstr "A következő pontszámú cikkek mellékleteinek letöltése: "
+
+#: ../pan/gui/prefs-ui.cc:1157
 msgid "Actions"
 msgstr "Műveletek"
 
-#: ../pan/gui/prefs-ui.cc:1096 ../pan/gui/prefs-ui.cc:1117
+#: ../pan/gui/prefs-ui.cc:1162 ../pan/gui/prefs-ui.cc:1183
 msgid "Fonts"
 msgstr "Betűkészletek"
 
-#: ../pan/gui/prefs-ui.cc:1098
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1164
 msgid "Use custom font in Group Pane:"
-msgstr "Egyéni fájlnév használata"
-
-#: ../pan/gui/prefs-ui.cc:1103
-#, fuzzy
-msgid "Use custom font in Header Pane:"
-msgstr "Egyéni fájlnév használata"
-
-#: ../pan/gui/prefs-ui.cc:1108
-#, fuzzy
-msgid "Use custom font in Body Pane:"
-msgstr "Egyéni fájlnév használata"
-
-#: ../pan/gui/prefs-ui.cc:1113
-msgid "Monospace font:"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1117
-#, fuzzy
-msgid "_Fonts"
-msgstr "Betűkészletek"
-
-#: ../pan/gui/prefs-ui.cc:1122
-#, fuzzy
-msgid "Header Pane"
-msgstr "Fejlécmező mutatása"
-
-#: ../pan/gui/prefs-ui.cc:1125 ../pan/gui/prefs-ui.cc:1131
-#: ../pan/gui/prefs-ui.cc:1137 ../pan/gui/prefs-ui.cc:1143
-#: ../pan/gui/prefs-ui.cc:1149 ../pan/gui/prefs-ui.cc:1155
-#, fuzzy
-msgid "Text:"
-msgstr "Idézett szöveg"
-
-#: ../pan/gui/prefs-ui.cc:1127 ../pan/gui/prefs-ui.cc:1133
-#: ../pan/gui/prefs-ui.cc:1139 ../pan/gui/prefs-ui.cc:1145
-#: ../pan/gui/prefs-ui.cc:1151 ../pan/gui/prefs-ui.cc:1157
-#, fuzzy
-msgid "Background:"
-msgstr "Törzs háttere"
-
-#: ../pan/gui/prefs-ui.cc:1129
-msgid "Scores of 9999 or more:"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1135
-msgid "Scores from 5000 to 9998:"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1141
-msgid "Scores from 1 to 4999:"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1147
-msgid "Scores from -9998 to -1:"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1153
-msgid "Scores of -9999 or less:"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1159
-#, fuzzy
-msgid "Read collapsed thread:"
-msgstr "Minden szál becsukása"
-
-#: ../pan/gui/prefs-ui.cc:1161
-#, fuzzy
-msgid "Body Pane"
-msgstr "Hírcsoportlista mező"
-
-#: ../pan/gui/prefs-ui.cc:1167
-#, fuzzy
-msgid "Quoted text:"
-msgstr "Idézett szöveg"
-
-#: ../pan/gui/prefs-ui.cc:1168
-#, fuzzy
-msgid "URL:"
-msgstr "URL-ek"
+msgstr "Egyéni betűkészlet használata a csoport ablaktáblán:"
 
 #: ../pan/gui/prefs-ui.cc:1169
+msgid "Use custom font in Header Pane:"
+msgstr "Egyéni betűkészlet használata a fejléc ablaktáblán:"
+
+#: ../pan/gui/prefs-ui.cc:1174
+msgid "Use custom font in Body Pane:"
+msgstr "Egyéni betűkészlet használata a törzs ablaktáblán:"
+
+#: ../pan/gui/prefs-ui.cc:1179
+msgid "Monospace font:"
+msgstr "Rögzített szélességű betűkészlet:"
+
+#: ../pan/gui/prefs-ui.cc:1183
+msgid "_Fonts"
+msgstr "_Betűkészletek"
+
+#: ../pan/gui/prefs-ui.cc:1192
+msgid "Header Pane"
+msgstr "Fejléc ablaktábla"
+
+#: ../pan/gui/prefs-ui.cc:1195 ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1207 ../pan/gui/prefs-ui.cc:1213
+#: ../pan/gui/prefs-ui.cc:1219 ../pan/gui/prefs-ui.cc:1225
+#: ../pan/gui/prefs-ui.cc:1234 ../pan/gui/prefs-ui.cc:1240
+#: ../pan/gui/prefs-ui.cc:1246 ../pan/gui/prefs-ui.cc:1252
+#: ../pan/gui/prefs-ui.cc:1258 ../pan/gui/prefs-ui.cc:1268
+#: ../pan/gui/prefs-ui.cc:1278
+msgid "Text:"
+msgstr "Szöveg:"
+
+#: ../pan/gui/prefs-ui.cc:1197 ../pan/gui/prefs-ui.cc:1203
+#: ../pan/gui/prefs-ui.cc:1209 ../pan/gui/prefs-ui.cc:1215
+#: ../pan/gui/prefs-ui.cc:1221 ../pan/gui/prefs-ui.cc:1227
+#: ../pan/gui/prefs-ui.cc:1236 ../pan/gui/prefs-ui.cc:1242
+#: ../pan/gui/prefs-ui.cc:1248 ../pan/gui/prefs-ui.cc:1254
+#: ../pan/gui/prefs-ui.cc:1260 ../pan/gui/prefs-ui.cc:1270
+#: ../pan/gui/prefs-ui.cc:1280
+msgid "Background:"
+msgstr "Háttér:"
+
+#: ../pan/gui/prefs-ui.cc:1199
+msgid "Scores of 9999 or more:"
+msgstr "9999 vagy több pontszám:"
+
+#: ../pan/gui/prefs-ui.cc:1205
+msgid "Scores from 5000 to 9998:"
+msgstr "5000 és 9998 közötti pontszám:"
+
+#: ../pan/gui/prefs-ui.cc:1211
+msgid "Scores from 1 to 4999:"
+msgstr "1 és 4999 közötti pontszám:"
+
+#: ../pan/gui/prefs-ui.cc:1217
+msgid "Scores from -9998 to -1:"
+msgstr "-9998 és -1 közötti pontszám:"
+
+#: ../pan/gui/prefs-ui.cc:1223
+msgid "Scores of -9999 or less:"
+msgstr "-9999 vagy kevesebb pontszám:"
+
+#: ../pan/gui/prefs-ui.cc:1229
+#| msgid "Collapse Selected Threads"
+msgid "Collapsed thread with unread articles:"
+msgstr "Összecsukott szál olvasatlan cikkekkel:"
+
+#: ../pan/gui/prefs-ui.cc:1231
+msgid "Body Pane"
+msgstr "Törzs ablaktábla"
+
+#: ../pan/gui/prefs-ui.cc:1238
+msgid "First level of quoted text:"
+msgstr "Idézett szöveg első szintje:"
+
+#: ../pan/gui/prefs-ui.cc:1244
+msgid "Second level of quoted text:"
+msgstr "Idézett szöveg második szintje:"
+
+#: ../pan/gui/prefs-ui.cc:1250
+msgid "Third level of quoted text:"
+msgstr "Idézett szöveg harmadik szintje:"
+
+#.
+#: ../pan/gui/prefs-ui.cc:1256
+msgid "URL:"
+msgstr "URL:"
+
+#.
+#: ../pan/gui/prefs-ui.cc:1262
 msgid "Signature:"
-msgstr ""
+msgstr "Aláírás:"
 
-#: ../pan/gui/prefs-ui.cc:1171
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1265
+msgid "Group Pane"
+msgstr "Csoport ablaktábla"
+
+#.
+#: ../pan/gui/prefs-ui.cc:1272
+msgid "Group Color:"
+msgstr "Csoportszín:"
+
+#: ../pan/gui/prefs-ui.cc:1276
+msgid "Other Text"
+msgstr "Egyéb szöveg"
+
+#: ../pan/gui/prefs-ui.cc:1282
+msgid "Text Color:"
+msgstr "Szövegszín:"
+
+#: ../pan/gui/prefs-ui.cc:1285
 msgid "_Colors"
-msgstr "Színek"
+msgstr "_Színek"
 
-#: ../pan/gui/prefs-ui.cc:1171
+#: ../pan/gui/prefs-ui.cc:1285
 msgid "Colors"
 msgstr "Színek"
 
-#: ../pan/gui/prefs-ui.cc:1176
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1290
 msgid "Preferred Applications"
-msgstr "Külső szövegszerkesztő"
+msgstr "Alapértelmezett alkalmazások"
 
-#: ../pan/gui/prefs-ui.cc:1180
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1294
 msgid "_Web browser:"
-msgstr "Új hírcsoportok"
+msgstr "_Webböngésző:"
 
-#: ../pan/gui/prefs-ui.cc:1183
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1297
 msgid "_Mail reader:"
-msgstr "Levélcím:"
+msgstr "_Levélolvasó:"
 
-#: ../pan/gui/prefs-ui.cc:1185
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1299
 msgid "_Text editor:"
-msgstr "Szerkesztés"
+msgstr "_Szövegszerkesztő:"
 
-#: ../pan/gui/prefs-ui.cc:1187
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1301
+msgid "_HTML previewer:"
+msgstr "_HTML megjelenítő:"
+
+#: ../pan/gui/prefs-ui.cc:1303
 msgid "_Applications"
-msgstr "Külső szövegszerkesztő"
+msgstr "_Alkalmazások"
 
-#: ../pan/gui/prefs-ui.cc:1187
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1303
 msgid "Applications"
-msgstr "Külső szövegszerkesztő"
+msgstr "Alkalmazások"
 
-#: ../pan/gui/prefs-ui.cc:1192 ../pan/gui/task-pane.cc:512
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1308 ../pan/gui/task-pane.cc:552
 msgid "Encoding"
-msgstr "Ismeretlen kódolás"
+msgstr "Kódolás"
 
-#: ../pan/gui/prefs-ui.cc:1196
+#: ../pan/gui/prefs-ui.cc:1312
 msgid "Default bytes per file (for encoder): "
-msgstr ""
+msgstr "Alapértelmezett bájt fájlonként (a kódolónál): "
 
-#: ../pan/gui/prefs-ui.cc:1201
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1317
 msgid "_Upload"
-msgstr "Külső szövegszerkesztő"
+msgstr "_Feltöltés"
 
-#: ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1317
 msgid "Upload"
-msgstr ""
+msgstr "Feltöltés"
 
-#: ../pan/gui/prefs-ui.cc:1219
-msgid "_Hotkeys"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1326
+msgid "_Shortcuts"
+msgstr "_Gyorsbillentyűk"
 
-#: ../pan/gui/prefs-ui.cc:1219
-msgid "Hotkeys"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1326
+msgid "Shortcuts"
+msgstr "Gyorsbillentyűk"
 
 #: ../pan/gui/profiles-dialog.cc:83
-msgid "Please choose your Email Address according to your PGP key's user id."
+msgid "Please choose your email address according to your PGP key's user id."
 msgstr ""
+"Válassza ki az e-mail címét a PGP kulcs felhasználó-azonosítója szerint."
 
 #: ../pan/gui/profiles-dialog.cc:131
-#, fuzzy
 msgid "Posting Profile"
-msgstr "Pan: Profil"
+msgstr "Küldő profil"
 
 #: ../pan/gui/profiles-dialog.cc:143
-#, fuzzy
 msgid "Profile Information"
-msgstr "Információk a kiszolgálóról"
+msgstr "Profil információk"
 
 #: ../pan/gui/profiles-dialog.cc:147
-#, fuzzy
 msgid "_Profile Name:"
-msgstr "Profilnév"
+msgstr "_Profilnév:"
 
 #: ../pan/gui/profiles-dialog.cc:150
 msgid "Required Information"
-msgstr "Kötelező adatok"
+msgstr "Kötelező információk"
 
 #: ../pan/gui/profiles-dialog.cc:154
-#, fuzzy
 msgid "_Full Name:"
-msgstr "Szabály neve:"
+msgstr "_Teljes név:"
 
 #: ../pan/gui/profiles-dialog.cc:158
 msgid ""
-"Your Email Address.\n"
-"Note that this has to match your PGP Signature's Address\n"
-"if you want to PGP-Sign or Encrypt your messages correctly."
+"Your email address.\n"
+"Note that this has to match your PGP signature's address\n"
+"if you want your messages to be PGP-signed or encrypted correctly."
 msgstr ""
+"Az Ön e-mail címe.\n"
+"Ne feledje, hogy ennek egyeznie kell a PGP aláírás címével,\n"
+"ha az üzenetet PGP-vel helyesen aláírni vagy titkosítani szeretné."
 
 #: ../pan/gui/profiles-dialog.cc:162
-#, fuzzy
 msgid "_Email Address:"
-msgstr "Emailcím:"
+msgstr "_E-mail cím:"
 
 #: ../pan/gui/profiles-dialog.cc:164
-#, fuzzy
 msgid "_Post Articles via:"
-msgstr "Betölti a cikket"
+msgstr "Cikkek _küldése ezzel:"
 
 #: ../pan/gui/profiles-dialog.cc:167
-#, fuzzy
 msgid "Signature"
-msgstr "figyelmen kívül hagyott"
+msgstr "Aláírás"
 
 #: ../pan/gui/profiles-dialog.cc:170
 msgid "_Use a Signature"
-msgstr ""
+msgstr "Aláírás _használata"
 
 #: ../pan/gui/profiles-dialog.cc:174
-#, fuzzy
 msgid "Signature File"
-msgstr "Aláírásfájl:"
+msgstr "Aláírásfájl"
 
 #: ../pan/gui/profiles-dialog.cc:184
-#, fuzzy
 msgid "Text File"
-msgstr "Következő cikk"
+msgstr "Szövegfájl"
 
 #: ../pan/gui/profiles-dialog.cc:186
-#, fuzzy
 msgid "Text"
-msgstr "Idézett szöveg"
+msgstr "Szöveg"
 
 #: ../pan/gui/profiles-dialog.cc:188
-#, fuzzy
 msgid "Command"
-msgstr "Nyomtatási parancs"
+msgstr "Parancs"
 
 #: ../pan/gui/profiles-dialog.cc:191
-#, fuzzy
 msgid "PGP Signature"
-msgstr "figyelmen kívül hagyott"
+msgstr "PGP aláírás"
 
 #: ../pan/gui/profiles-dialog.cc:196
-#, fuzzy
-msgid "Signature Type : "
-msgstr "Aláírásfájl:"
-
-#: ../pan/gui/profiles-dialog.cc:223
-msgid "X-Face (Avatar)"
-msgstr ""
+msgid "Signature Type: "
+msgstr "Aláírás típusa: "
 
 #: ../pan/gui/profiles-dialog.cc:226
+msgid "X-Face (Avatar)"
+msgstr "X-Face (Avatar)"
+
+#: ../pan/gui/profiles-dialog.cc:229
 msgid ""
-"You can add an avatar icon to your articles with a unique X-Face code. \n"
+"You can add an avatar icon to your articles with a unique X-Face code.\n"
 "Add the code without the trailing <b>\"X-Face:\"</b> \n"
 " if it was generated by a helper program (for example http://www.dairiki.org/"
 "xface/xface.php)."
 msgstr ""
+"Hozzáadhat egy avatar ikont a cikkekhez egy egyedi X-Face kóddal.\n"
+"Adja hozzá a kódot a záró <b>„X-Face:”</b> nélkül,\n"
+"ha azt egy segítő program állította elő (például http://www.dairiki."
+"org/xface/xface.php)."
 
-#: ../pan/gui/profiles-dialog.cc:229
+#: ../pan/gui/profiles-dialog.cc:232
 msgid "_X-Face:"
-msgstr ""
+msgstr "_X-Face:"
 
-#: ../pan/gui/profiles-dialog.cc:231
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:234
 msgid "Optional Information"
-msgstr "Információk a kiszolgálóról"
+msgstr "Opcionális információk"
 
-#: ../pan/gui/profiles-dialog.cc:236
+#: ../pan/gui/profiles-dialog.cc:239
 msgid ""
-"When posting to Usenet, your article's Message-ID contains a domain name.  \n"
+"When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
 "domain name from your email address."
 msgstr ""
+"A Usenetre küldéskor a cikk üzenetazonosítója tartalmaz egy tartománynevet.\n"
+"Itt állíthat be egyedi tartománynevet, vagy hagyja üresen, hogy a Pan az "
+"e-mail címéből használhassa a tartománynevet."
 
-#: ../pan/gui/profiles-dialog.cc:239
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:242
 msgid "Message-ID _Domain Name:"
-msgstr "Üzenetazonosító:"
+msgstr "Üzenetazonosító _tartománynév:"
 
-#: ../pan/gui/profiles-dialog.cc:243
+#: ../pan/gui/profiles-dialog.cc:246
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2540,500 +2488,532 @@ msgid ""
 "%n for Author name\n"
 "%d for Date"
 msgstr ""
+"%i az üzenetazonosítóhoz\n"
+"%a a szerzőhöz és címhez\n"
+"%n a szerző nevéhez\n"
+"%d a dátumhoz"
 
-#: ../pan/gui/profiles-dialog.cc:244
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:247
 msgid "_Attribution:"
-msgstr "Engedélyezés"
+msgstr "_Tulajdonság:"
 
-#: ../pan/gui/profiles-dialog.cc:268
+#: ../pan/gui/profiles-dialog.cc:271
 msgid ""
-"Extra headers to be included in your posts, such as\n"
+"Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
 "Organization: Your Organization\n"
 msgstr ""
+"A cikkekbe felvett további fejlécek, mint például\n"
+"Reply-To: \"Az Ön neve\"<azonneve@valahol.hu>\n"
+"Organization: Az Ön szervezete\n"
 
-#: ../pan/gui/profiles-dialog.cc:278
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:281
 msgid "E_xtra Headers:"
-msgstr "Fejlécek"
+msgstr "_További fejlécek:"
 
-#: ../pan/gui/profiles-dialog.cc:323
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:326
 msgid "Invalid email address."
-msgstr "E-mail cím:"
+msgstr "Érvénytelen e-mail cím."
 
-#: ../pan/gui/profiles-dialog.cc:324
+#: ../pan/gui/profiles-dialog.cc:327
 msgid "Please use an address of the form joe@somewhere.org"
-msgstr ""
+msgstr "A címet janos@valahol.hu formában használja."
 
-#: ../pan/gui/profiles-dialog.cc:479
+#: ../pan/gui/profiles-dialog.cc:482
 msgid "New Profile"
 msgstr "Új profil"
 
-#: ../pan/gui/profiles-dialog.cc:525
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:528
 msgid "Posting Profiles"
-msgstr "/_Fájl/Cikk _nyomtatása..."
+msgstr "Küldő profilok"
 
-#: ../pan/gui/profiles-dialog.cc:541
-#, fuzzy
+#: ../pan/gui/profiles-dialog.cc:544
 msgid "Profiles"
-msgstr "Profil"
+msgstr "Profilok"
 
-#: ../pan/gui/save-attach-ui.cc:77 ../pan/gui/save-ui.cc:77
+#: ../pan/gui/save-attach-ui.cc:46
+#, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - Subject line excerpt\n"
+"%S - Subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - csoport egy könyvtárként (alt.binaries.pictures.trains)\n"
+"%G - csoport beágyazott könyvtárként (/alt/binaries/pictures/trains)\n"
+"%s - tárgysor kivonat\n"
+"%S - tárgysor\n"
+"%n - küldő megjelenített neve\n"
+"%e - küldő e-mail címe\n"
+"%d - cikk időbélyege\n"
+"„/home/user/News/Pan/%g” helyettesítése\n"
+"„/home/user/News/Pan/alt.binaries.pictures.trains”, és\n"
+"„/home/user/News/Pan/%G” helyettesítése\n"
+"„/home/user/News/Pan/alt/binaries/pictures/trains”,"
+
+#: ../pan/gui/save-attach-ui.cc:197 ../pan/gui/save-ui.cc:217
+msgid "Add to the queue sorted by date posted"
+msgstr "Hozzáadás a sorhoz a küldés dátuma szerint rendezve"
+
+#: ../pan/gui/save-attach-ui.cc:198 ../pan/gui/save-ui.cc:218
+msgid "Add to the front of the queue"
+msgstr "Hozzáadás a sor elejéhez"
+
+#: ../pan/gui/save-attach-ui.cc:199 ../pan/gui/save-ui.cc:219
+msgid "Add to the back of the queue"
+msgstr "Hozzáadás a sor végéhez"
+
+#: ../pan/gui/save-attach-ui.cc:231
+msgid "Pan: Save Attachments"
+msgstr "Pan: Mellékletek mentése"
+
+#: ../pan/gui/save-attach-ui.cc:256 ../pan/gui/save-attach-ui.cc:274
+#: ../pan/gui/save-ui.cc:271 ../pan/gui/save-ui.cc:289
+msgid "_Location:"
+msgstr "_Hely:"
+
+#: ../pan/gui/save-attach-ui.cc:260 ../pan/gui/save-ui.cc:275
+msgid "Save Articles"
+msgstr "Cikkek mentése"
+
+#: ../pan/gui/save-attach-ui.cc:277 ../pan/gui/save-ui.cc:292
+#, c-format
+msgid "_Group's path: %s"
+msgstr "_Csoport útvonala: %s"
+
+#: ../pan/gui/save-attach-ui.cc:288 ../pan/gui/save-ui.cc:307
+msgid "_Priority:"
+msgstr "_Prioritás:"
+
+#: ../pan/gui/save-ui.cc:46
 #, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
 "%s - subject line excerpt\n"
 "%S - subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
 " \n"
 "\"/home/user/News/Pan/%g\" becomes\n"
 "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
 "\"/home/user/News/Pan/%G\" becomes\n"
 "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgstr ""
+"%g - csoport egy könyvtárként (alt.binaries.pictures.trains)\n"
+"%G - csoport beágyazott könyvtárként (/alt/binaries/pictures/trains)\n"
+"%s - tárgysor kivonat\n"
+"%S - tárgysor\n"
+"%n - küldő megjelenített neve\n"
+"%e - küldő e-mail címe\n"
+"%d - cikk időbélyege\n"
+" \n"
+"„/home/user/News/Pan/%g” helyettesítése\n"
+"„/home/user/News/Pan/alt.binaries.pictures.trains”, és\n"
+"„/home/user/News/Pan/%G” helyettesítése\n"
+"„/home/user/News/Pan/alt/binaries/pictures/trains”,"
 
-#: ../pan/gui/save-attach-ui.cc:223 ../pan/gui/save-ui.cc:242
-msgid "Add to the queue sorted by date posted"
-msgstr ""
-
-#: ../pan/gui/save-attach-ui.cc:224 ../pan/gui/save-ui.cc:243
-#, fuzzy
-msgid "Add to the front of the queue"
-msgstr "Feladat hozzáadása a sor elejére"
-
-#: ../pan/gui/save-attach-ui.cc:225 ../pan/gui/save-ui.cc:244
-#, fuzzy
-msgid "Add to the back of the queue"
-msgstr "Feladat hozzáadása a sor végére"
-
-#: ../pan/gui/save-attach-ui.cc:257
-#, fuzzy
-msgid "Pan: Save Attachments"
-msgstr "Melléklet mentése ide:"
-
-#: ../pan/gui/save-attach-ui.cc:282 ../pan/gui/save-attach-ui.cc:300
-#: ../pan/gui/save-ui.cc:296 ../pan/gui/save-ui.cc:314
-#, fuzzy
-msgid "_Location:"
-msgstr "Hely"
-
-#: ../pan/gui/save-attach-ui.cc:286 ../pan/gui/save-ui.cc:300
-#, fuzzy
-msgid "Save Articles"
-msgstr "Cikk mentése másként..."
-
-#: ../pan/gui/save-attach-ui.cc:303 ../pan/gui/save-ui.cc:317
-#, c-format
-msgid "_Group's path: %s"
-msgstr ""
-
-#: ../pan/gui/save-attach-ui.cc:314 ../pan/gui/save-ui.cc:332
-msgid "_Priority:"
-msgstr ""
-
-#: ../pan/gui/save-ui.cc:233
-#, fuzzy
+#: ../pan/gui/save-ui.cc:208
 msgid "Save attachments"
-msgstr "Melléklet mentése ide:"
+msgstr "Mellékletek mentése"
 
-#: ../pan/gui/save-ui.cc:234
-#, fuzzy
+#: ../pan/gui/save-ui.cc:209
 msgid "Save text"
-msgstr "Beállítások mentése"
+msgstr "Szöveg mentése"
 
-#: ../pan/gui/save-ui.cc:235
-#, fuzzy
+#: ../pan/gui/save-ui.cc:210
 msgid "Save attachments and text"
-msgstr "Melléklet mentése ide:"
+msgstr "Mellékletek és szöveg mentése"
 
-#: ../pan/gui/save-ui.cc:271
-#, fuzzy
+#: ../pan/gui/save-ui.cc:246
 msgid "Pan: Save Articles"
-msgstr "Mentett cikkek mutatása"
+msgstr "Pan: Cikkek mentése"
 
-#: ../pan/gui/save-ui.cc:328
-#, fuzzy
+#: ../pan/gui/save-ui.cc:303
 msgid "_Action:"
-msgstr "Műveletek"
+msgstr "_Művelet:"
 
 #: ../pan/gui/score-add-ui.cc:89
 msgid "is more than"
-msgstr ""
+msgstr "több mint"
 
 #: ../pan/gui/score-add-ui.cc:90
-#, fuzzy
 msgid "is at most"
-msgstr "A cikkben _van egy"
+msgstr "legfeljebb"
 
 #: ../pan/gui/score-add-ui.cc:112
-#, fuzzy
 msgid "increase the article's score by"
-msgstr "Az üzenet törzsének betördelése"
+msgstr "a cikk pontszámának növelése ennyivel:"
 
 #: ../pan/gui/score-add-ui.cc:113
-#, fuzzy
 msgid "decrease the article's score by"
-msgstr "Az üzenet törzsének betördelése"
+msgstr "a cikk pontszámának csökkentése ennyivel:"
 
 #: ../pan/gui/score-add-ui.cc:114
-#, fuzzy
 msgid "set the article's score to"
-msgstr "A cikk tárgyának használata"
+msgstr "a cikk pontszámának beállítása ennyire:"
 
 #: ../pan/gui/score-add-ui.cc:115
-#, fuzzy
 msgid "watch the article (set its score to 9999)"
-msgstr "A cikk tárgyának használata"
+msgstr "a cikk megfigyelése (pontszámának beállítása 9999-re)"
 
 #: ../pan/gui/score-add-ui.cc:116
 msgid "ignore the article (set its score to -9999)"
-msgstr ""
+msgstr "a cikk mellőzése (pontszámának beállítása -9999-re)"
 
 #: ../pan/gui/score-add-ui.cc:141
-#, fuzzy
 msgid "References"
-msgstr "Hivatkozások: "
+msgstr "Hivatkozások"
 
 #: ../pan/gui/score-add-ui.cc:142
-#, fuzzy
 msgid "Line Count"
-msgstr "- Sorok száma"
+msgstr "Sorok száma"
 
 #: ../pan/gui/score-add-ui.cc:143
-#, fuzzy
 msgid "Byte Count"
-msgstr "- Sorok száma"
+msgstr "Bájtok száma"
 
 #: ../pan/gui/score-add-ui.cc:144
 msgid "Crosspost Group Count"
-msgstr ""
+msgstr "Keresztküldés csoport száma"
 
 #: ../pan/gui/score-add-ui.cc:145
 msgid "Age (in days)"
-msgstr ""
+msgstr "Kor (napokban)"
 
 #: ../pan/gui/score-add-ui.cc:167
 msgid "for the next month"
-msgstr ""
+msgstr "a következő hónapra"
 
 #: ../pan/gui/score-add-ui.cc:168
 msgid "for the next six months"
-msgstr ""
+msgstr "a következő hat hónapra"
 
 #: ../pan/gui/score-add-ui.cc:169
 msgid "forever"
-msgstr ""
+msgstr "örökké"
 
 #: ../pan/gui/score-add-ui.cc:194
 msgid "contains"
 msgstr "tartalmazza"
 
 #: ../pan/gui/score-add-ui.cc:195
-#, fuzzy
 msgid "doesn't contain"
 msgstr "nem tartalmazza"
 
 #: ../pan/gui/score-add-ui.cc:196
-#, fuzzy
 msgid "is"
-msgstr "Találat"
+msgstr "ez:"
 
 #: ../pan/gui/score-add-ui.cc:197
 msgid "isn't"
-msgstr ""
+msgstr "nem ez:"
 
 #: ../pan/gui/score-add-ui.cc:198
 msgid "starts with"
-msgstr ""
+msgstr "ezzel kezdődik:"
 
 #: ../pan/gui/score-add-ui.cc:199
 msgid "ends with"
-msgstr ""
+msgstr "ezzel végződik:"
 
 #: ../pan/gui/score-add-ui.cc:200
 msgid "matches regex"
-msgstr ""
+msgstr "illeszkedik a reguláris kifejezésre"
 
 #: ../pan/gui/score-add-ui.cc:481
-#, fuzzy
 msgid "Another rule already sets this article's score."
-msgstr "Az üzenet törzsének betördelése"
+msgstr "Egy másik szabály már beállítja ennek a cikknek a pontszámát."
 
 #: ../pan/gui/score-add-ui.cc:482
 msgid "You may want to go back or delete the old rule."
-msgstr ""
+msgstr "Érdemes lehet visszamenni vagy törölje a régi szabályt."
 
 #: ../pan/gui/score-add-ui.cc:553
-#, fuzzy
 msgid "Add and Re_score"
-msgstr "Levelezőkiszolgáló"
+msgstr "Hozzáadás és újra_pontozás"
 
 #: ../pan/gui/score-add-ui.cc:604 ../pan/gui/score-add-ui.cc:624
-#, fuzzy
 msgid "New Scoring Rule"
-msgstr "Új szabály"
+msgstr "Új pontozási szabály"
 
 #: ../pan/gui/score-add-ui.cc:635
-msgid "If the group name"
-msgstr ""
+#| msgid "Group Name"
+msgid "Group name"
+msgstr "Csoportnév"
 
 #: ../pan/gui/score-add-ui.cc:642
-#, fuzzy
-msgid "And the article's"
-msgstr "Egyező cikkek mutatása"
+#| msgid "Pan"
+msgid "and"
+msgstr "és"
 
 #: ../pan/gui/score-view-ui.cc:56
-#, fuzzy
 msgid "Close and Re_score"
-msgstr "Naplóablak bezárása"
+msgstr "Bezárás és újra_pontozás"
 
 #: ../pan/gui/score-view-ui.cc:154
 #, c-format
 msgid "File %s, Lines %d - %d"
-msgstr ""
+msgstr "Fájl: %s, sorok: %d - %d"
 
 #: ../pan/gui/score-view-ui.cc:182
-#, fuzzy
 msgid "Pan: Article's Scores"
-msgstr "Pan: Melléklet mentése másként"
+msgstr "Pan: Cikk pontszámai"
 
 #: ../pan/gui/score-view-ui.cc:208
-#, fuzzy
 msgid "Add"
-msgstr "_Hozzáadás"
+msgstr "Hozzáadás"
 
 #: ../pan/gui/score-view-ui.cc:213
-#, fuzzy
 msgid "New Score"
-msgstr "News kiszolgálók"
+msgstr "Új pontszám"
 
 #: ../pan/gui/score-view-ui.cc:218
 msgid "Criteria"
-msgstr ""
+msgstr "Feltétel"
 
 #: ../pan/gui/score-view-ui.cc:241
-#, fuzzy
 msgid "Add a New Scoring Rule"
-msgstr "Új szabály hozzáadása."
+msgstr "Új pontozási szabály hozzáadása"
 
 #: ../pan/gui/score-view-ui.cc:248
-#, fuzzy
 msgid "Remove the Selected Scoring Rule"
-msgstr "A kijelölt szabály törlése."
+msgstr "A kijelölt pontozási szabály törlése"
 
-#: ../pan/gui/server-ui.cc:221
+#: ../pan/gui/server-ui.cc:259
 msgid "Please specify the server's address."
-msgstr ""
+msgstr "Adja meg a kiszolgáló címét."
 
-#: ../pan/gui/server-ui.cc:264
-msgid "Import SSL certificate (PEM format) from File"
-msgstr ""
+#: ../pan/gui/server-ui.cc:305
+msgid "Import SSL Certificate (PEM Format) From File"
+msgstr "SSL tanúsítvány (PEM formátum) importálása fájlból"
 
 #. create the dialog
-#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:869
-#, fuzzy
+#: ../pan/gui/server-ui.cc:342 ../pan/gui/server-ui.cc:948
 msgid "Add a Server"
-msgstr "Levelezőkiszolgáló"
+msgstr "Kiszolgáló hozzáadása"
 
-#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:875
-#, fuzzy
+#: ../pan/gui/server-ui.cc:342 ../pan/gui/server-ui.cc:954
 msgid "Edit a Server's Settings"
-msgstr "Beállítások kiszolgálónként"
+msgstr "Kiszolgáló beállításainak szerkesztése"
 
-#: ../pan/gui/server-ui.cc:310
+#: ../pan/gui/server-ui.cc:362
 msgid "Location"
 msgstr "Hely"
 
-#: ../pan/gui/server-ui.cc:314
+#: ../pan/gui/server-ui.cc:366
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
-msgstr ""
+msgstr "A hírkiszolgáló aktuális címe, például „news.mynewsserver.com”"
 
-#: ../pan/gui/server-ui.cc:315
-#, fuzzy
+#: ../pan/gui/server-ui.cc:367
 msgid "_Address:"
-msgstr "Cím:"
+msgstr "_Cím:"
 
-#: ../pan/gui/server-ui.cc:319
-msgid "The news server's port number.  Typically 119."
+#: ../pan/gui/server-ui.cc:372
+msgid ""
+"The news server's port number.  Typically 119 for unencrypted and 563 for "
+"encrypted connections (SSL/TLS)."
 msgstr ""
+"A hírkiszolgáló portszáma. Jellemzően 119 a titkosítatlan és 563 a "
+"titkosított kapcsolatokhoz (SSL/TLS)."
 
-#: ../pan/gui/server-ui.cc:320
-#, fuzzy
+#: ../pan/gui/server-ui.cc:373
 msgid "Por_t:"
-msgstr "Port:"
+msgstr "_Port:"
 
-#: ../pan/gui/server-ui.cc:323
+#: ../pan/gui/server-ui.cc:376
 msgid "Login (if Required)"
-msgstr ""
+msgstr "Bejelentkezés (ha szükséges)"
 
-#: ../pan/gui/server-ui.cc:327
-#, fuzzy
+#: ../pan/gui/server-ui.cc:380
 msgid "_Username:"
-msgstr "Felhasználónév"
+msgstr "_Felhasználónév:"
 
-#: ../pan/gui/server-ui.cc:328
+#: ../pan/gui/server-ui.cc:381
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
+"A kiszolgálónak átadott felhasználónév, ha kéri. Ha a kiszolgáló nem igényel "
+"hitelesítést, akkor hagyja ezt üresen."
 
-#: ../pan/gui/server-ui.cc:332
-#, fuzzy
+#: ../pan/gui/server-ui.cc:385
 msgid "_Password:"
-msgstr "Jelszó"
+msgstr "_Jelszó:"
 
-#: ../pan/gui/server-ui.cc:333
+#: ../pan/gui/server-ui.cc:386
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
-
-#: ../pan/gui/server-ui.cc:336
-#, fuzzy
-msgid "Settings"
-msgstr "%s letöltése a \"%s\" hírcsoporthoz"
-
-#: ../pan/gui/server-ui.cc:343
-#, fuzzy
-msgid "Connection _Limit:"
-msgstr "Kapcsolat"
-
-#: ../pan/gui/server-ui.cc:347
-msgid "After Two Weeks"
-msgstr ""
-
-#: ../pan/gui/server-ui.cc:348
-msgid "After One Month"
-msgstr ""
-
-#: ../pan/gui/server-ui.cc:349
-msgid "After Two Months"
-msgstr ""
-
-#: ../pan/gui/server-ui.cc:350
-msgid "After Three Months"
-msgstr ""
-
-#: ../pan/gui/server-ui.cc:351
-msgid "After Six Months"
-msgstr ""
-
-#: ../pan/gui/server-ui.cc:352
-#, fuzzy
-msgid "Never Expire Old Articles"
-msgstr "Kijelölt cikkek áthelyezése"
-
-#: ../pan/gui/server-ui.cc:366
-#, fuzzy
-msgid "E_xpire Old Articles:"
-msgstr "Cikkek szálakba rendezése"
-
-#: ../pan/gui/server-ui.cc:370
-#, fuzzy
-msgid "Primary"
-msgstr "Prioritás"
-
-#: ../pan/gui/server-ui.cc:371
-msgid "Fallback"
-msgstr ""
-
-#: ../pan/gui/server-ui.cc:385
-#, fuzzy
-msgid "Server Rank:"
-msgstr "Kiszolgáló port"
+"A kiszolgálónak átadott jelszó, ha kéri. Ha a kiszolgáló nem igényel "
+"hitelesítést, akkor hagyja ezt üresen."
 
 #: ../pan/gui/server-ui.cc:389
+msgid "Settings"
+msgstr "Beállítások"
+
+#: ../pan/gui/server-ui.cc:396
+msgid "Connection _Limit:"
+msgstr "Kapcsolati _korlát:"
+
+#: ../pan/gui/server-ui.cc:400
+msgid "After Two Weeks"
+msgstr "Két hét után"
+
+#: ../pan/gui/server-ui.cc:401
+msgid "After One Month"
+msgstr "Egy hónap után"
+
+#: ../pan/gui/server-ui.cc:402
+msgid "After Two Months"
+msgstr "Két hónap után"
+
+#: ../pan/gui/server-ui.cc:403
+msgid "After Three Months"
+msgstr "Három hónap után"
+
+#: ../pan/gui/server-ui.cc:404
+msgid "After Six Months"
+msgstr "Hat hónap után"
+
+#: ../pan/gui/server-ui.cc:405
+msgid "Never Expire Old Articles"
+msgstr "Sose járnak le a régi cikkek"
+
+#: ../pan/gui/server-ui.cc:419
+msgid "E_xpire Old Articles:"
+msgstr "Régi cikkek le_járata:"
+
+#: ../pan/gui/server-ui.cc:423
+msgid "Primary"
+msgstr "Elsődleges"
+
+#: ../pan/gui/server-ui.cc:424
+msgid "Fallback"
+msgstr "Tartalék"
+
+#: ../pan/gui/server-ui.cc:438
+msgid "Server Rank:"
+msgstr "Kiszolgáló rang:"
+
+#: ../pan/gui/server-ui.cc:442
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
 "subscription servers as fallbacks."
 msgstr ""
+"A tartalék kiszolgálók azokhoz a cikkekhez használhatók, amelyek nem "
+"találhatók az elsődlegesen. Egy gyakori megközelítés, hogy a szabad "
+"kiszolgálókat elsődlegesként és a feliratkozási kiszolgálókat tartalékként "
+"használják."
 
-#: ../pan/gui/server-ui.cc:396
+#: ../pan/gui/server-ui.cc:447
+msgid "Disable Compression (N/A)"
+msgstr "Tömörítés letiltása (N/A)"
+
+#: ../pan/gui/server-ui.cc:448
+msgid "XZVER Compression (Astraweb)"
+msgstr "XZVER tömörítés (Astraweb)"
+
+#: ../pan/gui/server-ui.cc:449
+msgid "GZIP Compression (Giganews etc.)"
+msgstr "GZIP tömörítés (Giganews, stb.)"
+
+#: ../pan/gui/server-ui.cc:463
+#| msgid "Regular Expression"
+msgid "Header Compression:"
+msgstr "Fejléc tömörítés:"
+
+#: ../pan/gui/server-ui.cc:469
 msgid "Security"
-msgstr ""
+msgstr "Biztonság"
 
-#: ../pan/gui/server-ui.cc:401
-msgid "Use Plaintext (Unsecured) Connections"
-msgstr ""
+#: ../pan/gui/server-ui.cc:474
+msgid "Use Unsecure (Plaintext) Connections"
+msgstr "Nem biztonságos (egyszerű szöveges) kapcsolatok használata"
 
-#: ../pan/gui/server-ui.cc:402
-#, fuzzy
+#: ../pan/gui/server-ui.cc:475
 msgid "Use Secure SSL Connections"
-msgstr "Kiszolgálónkénti kapcsolatok számának beállítása"
+msgstr "Biztonságos SSL kapcsolatok használata"
 
-#: ../pan/gui/server-ui.cc:418
-msgid "TLS (SSL) Options:"
-msgstr ""
+#: ../pan/gui/server-ui.cc:490
+msgid "TLS (SSL) Settings:"
+msgstr "TLS (SSL) beállítások:"
 
-#: ../pan/gui/server-ui.cc:423
+#: ../pan/gui/server-ui.cc:495
 msgid ""
-"You can set the option for using/disabling secure SSL/TLS connections here. "
-"If you enable SSL/TLS, your data is encrypted and secure. It is encouraged "
-"to use this option for privacy reasons."
+"You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
+"TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
+"for privacy reasons."
 msgstr ""
+"Itt engedélyezheti vagy tilthatja le a biztonságos SSL/TLS kapcsolatokat. Ha "
+"engedélyezi az SSL/TLS kapcsolatot, akkor az adatok titkosítva lesznek és "
+"biztonságosak. Javasoljuk az SSL/TLS engedélyezését adatvédelmi okokból."
 
-#: ../pan/gui/server-ui.cc:428
+#: ../pan/gui/server-ui.cc:500
 msgid "Always trust this server's certificate"
-msgstr ""
+msgstr "Mindig bízzon meg a kiszolgáló tanúsítványában"
 
-#: ../pan/gui/server-ui.cc:602
+#: ../pan/gui/server-ui.cc:676
 #, c-format
 msgid "Really delete \"%s\"?"
-msgstr ""
+msgstr "Valóban törli: „%s”?"
 
-#: ../pan/gui/server-ui.cc:691
+#: ../pan/gui/server-ui.cc:765
 msgid "No information available."
-msgstr ""
+msgstr "Nem érhetők el információk."
 
-#: ../pan/gui/server-ui.cc:697
+#: ../pan/gui/server-ui.cc:775
 #, c-format
 msgid "Server Certificate for '%s'"
-msgstr ""
+msgstr "Kiszolgáló tanúsítvány ehhez: „%s”"
 
-#: ../pan/gui/server-ui.cc:795
+#: ../pan/gui/server-ui.cc:874
 #, c-format
 msgid "Really delete certificate for \"%s\"?"
-msgstr ""
+msgstr "Valóban törli a tanúsítványt ehhez: „%s”?"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:822 ../pan/gui/server-ui.cc:843
-#: ../pan/gui/server-ui.cc:941
-#, fuzzy
+#: ../pan/gui/server-ui.cc:901 ../pan/gui/server-ui.cc:922
+#: ../pan/gui/server-ui.cc:1020
 msgid "Servers"
-msgstr "Kiszolgáló"
+msgstr "Kiszolgálók"
 
-#: ../pan/gui/server-ui.cc:882
-#, fuzzy
+#: ../pan/gui/server-ui.cc:961
 msgid "Remove a Server"
-msgstr "Hírkiszolgáló"
+msgstr "Kiszolgáló eltávolítása"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:915
+#: ../pan/gui/server-ui.cc:994
 msgid "SSL Certificates"
-msgstr ""
+msgstr "SSL tanúsítványok"
 
-#: ../pan/gui/server-ui.cc:936
+#: ../pan/gui/server-ui.cc:1015
 msgid "Certificates"
-msgstr ""
+msgstr "Tanúsítványok"
 
-#: ../pan/gui/server-ui.cc:967
+#: ../pan/gui/server-ui.cc:1046
 msgid "Import Certificate"
-msgstr ""
+msgstr "Tanúsítvány importálása"
 
-#: ../pan/gui/server-ui.cc:973
+#: ../pan/gui/server-ui.cc:1052
 msgid "Inspect Certificate"
-msgstr ""
+msgstr "Tanúsítvány vizsgálata"
 
-#: ../pan/gui/server-ui.cc:980
-#, fuzzy
+#: ../pan/gui/server-ui.cc:1059
 msgid "Remove Certificate"
-msgstr "Hírkiszolgáló"
+msgstr "Tanúsítvány eltávolítása"
 
-#: ../pan/gui/task-pane.cc:143
+#: ../pan/gui/task-pane.cc:121
 #, c-format
 msgid ""
 "\n"
@@ -3044,8 +3024,15 @@ msgid ""
 "<i>Groups:</i> <b>%s</b>\n"
 "<i>Sourcefile:</i> <b>%s</b>\n"
 msgstr ""
+"\n"
+"<u>Feltöltés</u>\n"
+"\n"
+"<i>Tárgy:</i> <b>„%s”</b>\n"
+"<i>Feladó:</i> <b>%s</b>\n"
+"<i>Csoportok:</i> <b>%s</b>\n"
+"<i>Forrásfájl:</i> <b>%s</b>\n"
 
-#: ../pan/gui/task-pane.cc:155
+#: ../pan/gui/task-pane.cc:133
 #, c-format
 msgid ""
 "\n"
@@ -3057,544 +3044,551 @@ msgid ""
 "<i>Groups:</i> <b>%s</b>\n"
 "<i>Save Path:</i> <b>%s</b>\n"
 msgstr ""
+"\n"
+"<u>Letöltés</u>\n"
+"\n"
+"<i>Tárgy:</i> <b>„%s”</b>\n"
+"<i>Feladó:</i> <b>%s</b>\n"
+"<i>Dátum:</i> <b>%s</b>\n"
+"<i>Csoportok:</i> <b>%s</b>\n"
+"<i>Mentési útvonal:</i> <b>%s</b>\n"
 
-#: ../pan/gui/task-pane.cc:157
-#, fuzzy
+#: ../pan/gui/task-pane.cc:135
 msgid "unknown"
-msgstr "Ismeretlen"
+msgstr "ismeretlen"
 
-#: ../pan/gui/task-pane.cc:263
-msgid "Choose new destination for selected Tasks"
-msgstr ""
+#: ../pan/gui/task-pane.cc:303
+msgid "Choose New Destination for Selected Tasks"
+msgstr "Válasszon új célt a kijelölt feladatokhoz"
 
-#: ../pan/gui/task-pane.cc:417
-#, fuzzy, c-format
+#: ../pan/gui/task-pane.cc:457
+#, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
-msgstr "Pan %s Feladatkezelő (%d sorban áll, %d fut, %d sikertelen)"
+msgstr "Pan: Feladatok (%d sorban áll, %d fut, %d leállítva)"
 
-#: ../pan/gui/task-pane.cc:419
-#, fuzzy, c-format
+#: ../pan/gui/task-pane.cc:459
+#, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
-msgstr "Pan %s Feladatkezelő (%d sorban áll, %d fut)"
+msgstr "Pan: Feladatok (%d sorban áll, %d fut)"
 
-#: ../pan/gui/task-pane.cc:421
-#, fuzzy, c-format
+#: ../pan/gui/task-pane.cc:461
+#, c-format
 msgid "Pan: Tasks"
-msgstr "Pan: Feladatkezelő"
+msgstr "Pan: Feladatok"
 
-#: ../pan/gui/task-pane.cc:446
-#, fuzzy, c-format
+#: ../pan/gui/task-pane.cc:486
+#, c-format
 msgid "%lu selected, %s"
-msgstr "(%u kiválasztva)"
+msgstr "%lu kiválasztva, %s"
 
-#: ../pan/gui/task-pane.cc:510
+#: ../pan/gui/task-pane.cc:550
 msgid "Running"
 msgstr "Fut"
 
-#: ../pan/gui/task-pane.cc:511
-#, fuzzy
+#: ../pan/gui/task-pane.cc:551
 msgid "Decoding"
-msgstr "\"%s\" dekódolása"
+msgstr "Visszafejtés"
 
-#: ../pan/gui/task-pane.cc:513
-#, fuzzy
+#: ../pan/gui/task-pane.cc:553
 msgid "Queued for Decode"
-msgstr "Mentve vagy dekódolva"
+msgstr "Sorba állítva a visszafejtéshez"
 
-#: ../pan/gui/task-pane.cc:514
-#, fuzzy
+#: ../pan/gui/task-pane.cc:554
 msgid "Queued for Encode"
-msgstr "Sorban áll a mentéshez"
+msgstr "Sorba állítva a kódoláshoz"
 
-#: ../pan/gui/task-pane.cc:515
+#: ../pan/gui/task-pane.cc:555
 msgid "Queued"
 msgstr "Sorban áll"
 
-#: ../pan/gui/task-pane.cc:516
+#: ../pan/gui/task-pane.cc:556
 msgid "Stopped"
-msgstr ""
+msgstr "Leállítva"
 
-#: ../pan/gui/task-pane.cc:517
-#, fuzzy
+#: ../pan/gui/task-pane.cc:557
 msgid "Removing"
-msgstr "Törlés"
+msgstr "Eltávolítás"
 
-#: ../pan/gui/task-pane.cc:546
-#, fuzzy, c-format
+#: ../pan/gui/task-pane.cc:586
+#, c-format
 msgid "%d%% Done"
-msgstr "% kész"
+msgstr "%d%% kész"
 
-#: ../pan/gui/task-pane.cc:552
-#, fuzzy, c-format
+#: ../pan/gui/task-pane.cc:592
+#, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
-msgstr "%.2f KB/s, %d:%02d:%02d maradt"
+msgstr "%d:%02d:%02d Hátravan (%d @ %lu KiB/s)"
 
-#: ../pan/gui/task-pane.cc:646 ../pan/gui/task-pane.cc:647
-#, fuzzy
+#: ../pan/gui/task-pane.cc:687 ../pan/gui/task-pane.cc:688
 msgid "Move To Top"
-msgstr "Áthelyezés mappába"
+msgstr "Mozgatás a tetejére"
 
-#: ../pan/gui/task-pane.cc:651 ../pan/gui/task-pane.cc:652
-#, fuzzy
+#: ../pan/gui/task-pane.cc:692 ../pan/gui/task-pane.cc:693
 msgid "Move To Bottom"
-msgstr "Áthelyezés mappába"
+msgstr "Mozgatás az aljára"
 
-#: ../pan/gui/task-pane.cc:656 ../pan/gui/task-pane.cc:657
-#, fuzzy
+#: ../pan/gui/task-pane.cc:697 ../pan/gui/task-pane.cc:698
+msgid "Show Task Information"
+msgstr "Feladatinformációk megjelenítése"
+
+#: ../pan/gui/task-pane.cc:702 ../pan/gui/task-pane.cc:703
 msgid "Stop Task"
-msgstr "Nincs feladat"
+msgstr "Feladat leállítása"
 
-#: ../pan/gui/task-pane.cc:661 ../pan/gui/task-pane.cc:662
-#, fuzzy
+#: ../pan/gui/task-pane.cc:707 ../pan/gui/task-pane.cc:708
 msgid "Delete Task"
-msgstr "Szálak törlése"
+msgstr "Feladat törlése"
 
-#: ../pan/gui/task-pane.cc:666 ../pan/gui/task-pane.cc:667
+#: ../pan/gui/task-pane.cc:712 ../pan/gui/task-pane.cc:713
 msgid "Restart Task"
-msgstr ""
+msgstr "Feladat újraindítása"
 
-#: ../pan/gui/task-pane.cc:671 ../pan/gui/task-pane.cc:672
+#: ../pan/gui/task-pane.cc:717 ../pan/gui/task-pane.cc:718
 msgid "Change Download Destination"
-msgstr ""
+msgstr "Letöltési cél módosítása"
 
-#: ../pan/gui/task-pane.cc:729
-#, fuzzy
+#: ../pan/gui/task-pane.cc:1028
 msgid "_Online"
-msgstr "_Online"
+msgstr "_Kapcsolatban"
 
-#: ../pan/gui/task-pane.cc:746
+#: ../pan/gui/task-pane.cc:1045
 msgid "Restart Tasks"
-msgstr ""
+msgstr "Feladatok újraindítása"
 
-#: ../pan/gui/task-pane.cc:748
-#, fuzzy
+#: ../pan/gui/task-pane.cc:1047
 msgid "Stop Tasks"
-msgstr "Nincs feladat"
+msgstr "Feladatok leállítása"
 
-#: ../pan/gui/task-pane.cc:750
-#, fuzzy
+#: ../pan/gui/task-pane.cc:1049
 msgid "Delete Tasks"
-msgstr "Szálak törlése"
+msgstr "Feladatok törlése"
+
+#: ../pan/gui/task-pane.cc:1055
+msgid "Show info popups"
+msgstr "Felugró információk megjelenítése"
 
 #: ../pan/gui/url.cc:123
-#, fuzzy, c-format
+#, c-format
 msgid "Error starting URL: %s (Command was: %s)"
-msgstr "Szerkesztés külső szüvegszerkesztővel"
+msgstr "Hiba az URL indításakor: %s (a parancs ez volt: %s)"
 
-#: ../pan/tasks/decoder.cc:115
-#, fuzzy, c-format
+#: ../pan/tasks/decoder.cc:117
+#, c-format
 msgid "Couldn't save file \"%s\": %s"
-msgstr "Nem sikerült létrehozni a `%s' könyvtárat: %s"
+msgstr "Nem sikerült elmenteni a(z) „%s” fájlt: %s"
 
-#: ../pan/tasks/decoder.cc:137 ../pan/tasks/encoder.cc:136
+#: ../pan/tasks/decoder.cc:139 ../pan/tasks/encoder.cc:136
 msgid "Error initializing uulib"
-msgstr ""
+msgstr "Hiba az uulib előkészítésekor"
 
-#: ../pan/tasks/decoder.cc:152 ../pan/tasks/socket-impl-gio.cc:352
-#: ../pan/tasks/socket-impl-openssl.cc:634
-#, fuzzy, c-format
+#: ../pan/tasks/decoder.cc:154 ../pan/tasks/socket-impl-gio.cc:360
+#: ../pan/tasks/socket-impl-openssl.cc:642
+#, c-format
 msgid "Error reading from %s: %s"
-msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+msgstr "Hiba a(z) %s olvasása közben: %s"
 
-#: ../pan/tasks/decoder.cc:192
+#: ../pan/tasks/decoder.cc:194
 #, c-format
 msgid "Saved \"%s\""
-msgstr "\"%s\" mentve"
+msgstr "„%s” mentve"
 
-#: ../pan/tasks/decoder.cc:199
-#, fuzzy, c-format
+#: ../pan/tasks/decoder.cc:201
+#, c-format
 msgid ""
 "Error saving \"%s\":\n"
 "%s."
-msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+msgstr ""
+"Hiba a következő mentésekor: „%s”:\n"
+"%s."
 
-#: ../pan/tasks/decoder.cc:314 ../pan/tasks/task-article.cc:350
-#, fuzzy, c-format
+#: ../pan/tasks/decoder.cc:314 ../pan/tasks/task-article.cc:354
+#, c-format
 msgid "Decoding %s"
-msgstr "\"%s\" dekódolása"
+msgstr "%s visszafejtése"
 
-#: ../pan/tasks/encoder.cc:102 ../pan/tasks/encoder.cc:155
-#, fuzzy, c-format
+#: ../pan/tasks/encoder.cc:103 ../pan/tasks/encoder.cc:154
+#, c-format
 msgid "Error loading %s from cache."
-msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+msgstr "Hiba a(z) %s gyorsítótárból való betöltésekor."
 
-#: ../pan/tasks/encoder.cc:177
-#, fuzzy, c-format
+#: ../pan/tasks/encoder.cc:176
+#, c-format
 msgid "Error encoding %s: %s"
-msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+msgstr "Hiba a(z) %s kódolásakor: %s"
 
-#: ../pan/tasks/encoder.cc:269
-#, fuzzy, c-format
+#: ../pan/tasks/encoder.cc:266
+#, c-format
 msgid "Encoding %s"
-msgstr "Ismeretlen kódolás"
+msgstr "%s kódolása"
 
-#: ../pan/tasks/nntp.cc:126
+#: ../pan/tasks/nntp.cc:148
 #, c-format
 msgid "%s requires a username, but none is set."
-msgstr ""
+msgstr "A(z) %s felhasználónevet igényel, de nincs beállítva."
 
-#: ../pan/tasks/nntp.cc:139
-#, fuzzy, c-format
+#: ../pan/tasks/nntp.cc:161
+#, c-format
 msgid "%s requires a password, but none is set."
-msgstr "A kiszolgálóm jelszót kér."
+msgstr "A(z) %s jelszót igényel, de nincs beállítva."
 
-#: ../pan/tasks/nntp.cc:205
+#: ../pan/tasks/nntp.cc:239
 #, c-format
 msgid "Sending \"%s\" to %s returned an error: %s"
-msgstr ""
+msgstr "A(z) „%s” küldése ide: %s, hibával tért vissza: %s"
 
-#: ../pan/tasks/nntp.cc:228
+#: ../pan/tasks/nntp.cc:262
 #, c-format
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
-msgstr ""
+msgstr "A(z) „%s” küldése ide: %s, azonosítatlan válasszal tért vissza: „%s”"
 
-#: ../pan/tasks/nntp-pool.cc:222
-#, fuzzy, c-format
+#: ../pan/tasks/nntp-pool.cc:235
+#, c-format
 msgid "Unable to connect to \"%s\""
-msgstr "Kapcsolódás a levélkiszolgálóhoz"
+msgstr "Nem lehet kapcsolódni a következőhöz: „%s”"
+
+#: ../pan/tasks/queue.cc:772 ../pan/tasks/queue.cc:800
+#: ../pan/tasks/queue.cc:827
+msgid "No space left on device."
+msgstr "Nincs hely az eszközön."
 
 #: ../pan/tasks/socket-impl-gio.cc:173 ../pan/tasks/socket-impl-gio.cc:211
 #: ../pan/tasks/socket-impl-openssl.cc:214
 #: ../pan/tasks/socket-impl-openssl.cc:252
-#, fuzzy, c-format
+#, c-format
 msgid "Error connecting to \"%s\""
-msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
+msgstr "Hiba a következőhöz csatlakozáskor: „%s”"
 
-#: ../pan/tasks/socket-impl-gio.cc:351 ../pan/tasks/socket-impl-openssl.cc:633
-#, fuzzy
+#: ../pan/tasks/socket-impl-gio.cc:359 ../pan/tasks/socket-impl-openssl.cc:641
 msgid "Unknown Error"
-msgstr "Ismeretlen"
+msgstr "Ismeretlen hiba"
 
-#: ../pan/tasks/task-article.cc:61 ../pan/tasks/task-article.cc:156
-#: ../pan/tasks/task-article.cc:159
-#, fuzzy, c-format
+#: ../pan/tasks/task-article.cc:62 ../pan/tasks/task-article.cc:160
+#, c-format
 msgid "Saving %s"
-msgstr "\"%s\" mentése"
+msgstr "%s mentése"
 
-#: ../pan/tasks/task-article.cc:63
-#, fuzzy, c-format
+#: ../pan/tasks/task-article.cc:64
+#, c-format
 msgid "Reading %s"
-msgstr "Olvasás"
+msgstr "%s olvasása"
 
-#: ../pan/tasks/task-article.cc:322
+#: ../pan/tasks/task-article.cc:326
 #, c-format
 msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
-msgstr ""
+msgstr "A(z) „%s” cikk nem teljes -- a hírkiszolgálónak nincs %s része"
 
-#: ../pan/tasks/task-groups.cc:40
-#, fuzzy, c-format
+#: ../pan/tasks/task-groups.cc:41
+#, c-format
 msgid "Getting group list from \"%s\""
-msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+msgstr "Csoportlista letöltése a következőről: „%s”"
 
-#: ../pan/tasks/task-groups.cc:122
-#, fuzzy, c-format
+#: ../pan/tasks/task-groups.cc:134
+#, c-format
 msgid "Fetched %lu Groups"
-msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+msgstr "%lu csoport letöltve"
 
 #: ../pan/tasks/task-post.cc:35
-#, fuzzy, c-format
+#, c-format
 msgid "Posting \"%s\""
-msgstr "\"%s\" feldolgozása"
+msgstr "„%s” küldése"
 
 #: ../pan/tasks/task-post.cc:76
-#, fuzzy, c-format
+#, c-format
 msgid "Posting of \"%s\" failed: %s"
-msgstr "/_Fájl/Cikk _nyomtatása..."
+msgstr "„%s” küldése sikertelen: %s"
 
 #: ../pan/tasks/task-post.cc:81
 #, c-format
-msgid "Posting of \"%s\" succesful: %s"
-msgstr ""
+msgid "Posting of \"%s\" successful: %s"
+msgstr "„%s” küldése sikeres: %s"
 
 #: ../pan/tasks/task-upload.cc:51
-#, fuzzy, c-format
+#, c-format
 msgid "Uploading %s"
-msgstr "%s betöltése"
+msgstr "%s feltöltése"
 
-#: ../pan/tasks/task-upload.cc:249
+#: ../pan/tasks/task-upload.cc:244
 #, c-format
 msgid "Uploading %s - Part %d of %d"
-msgstr ""
+msgstr "%s feltöltése - %d / %d rész"
 
-#: ../pan/tasks/task-upload.cc:251
+#: ../pan/tasks/task-upload.cc:246
 #, c-format
-msgid "Uploading Message body with Subject \"%s\""
-msgstr ""
+msgid "Uploading message body with subject \"%s\""
+msgstr "Üzenettörzs feltöltése a következő tárggyal: „%s”"
 
-#: ../pan/tasks/task-upload.cc:308
+#: ../pan/tasks/task-upload.cc:303
 #, c-format
-msgid "Posting of File %s (Part %d of %d) failed: No Posts allowed by server."
+msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
 msgstr ""
+"A(z) %s fájl küldése (%d / %d rész) sikertelen: A kiszolgáló nem engedélyezi "
+"a küldést."
 
-#: ../pan/tasks/task-upload.cc:316
-#, fuzzy, c-format
-msgid "Posting of File %s (Part %d of %d) failed: %s"
-msgstr "/_Fájl/Cikk _nyomtatása..."
-
-#: ../pan/tasks/task-upload.cc:326 ../pan/tasks/task-upload.cc:333
+#: ../pan/tasks/task-upload.cc:311
 #, c-format
-msgid "Posting of file %s (Part %d of %d) succesful: %s"
-msgstr ""
+msgid "Posting of file %s (part %d of %d) failed: %s"
+msgstr "A(z) %s fájl küldése (%d / %d rész) sikertelen: %s"
 
-#: ../pan/tasks/task-upload.cc:343
-#, fuzzy, c-format
-msgid "Posting of file %s succesful: %s"
-msgstr "/_Fájl/Cikk _nyomtatása..."
-
-#: ../pan/tasks/task-upload.cc:347
+#: ../pan/tasks/task-upload.cc:321 ../pan/tasks/task-upload.cc:328
 #, c-format
-msgid ""
-"Posting of file %s not completely successful: Check the log (right-click on "
-"list item) !"
-msgstr ""
+msgid "Posting of file %s (part %d of %d) successful: %s"
+msgstr "A(z) %s fájl küldése (%d / %d rész) sikeres: %s"
 
-#: ../pan/tasks/task-upload.cc:364
+#: ../pan/tasks/task-upload.cc:338
+#, c-format
+msgid "Posting of file %s successful: %s"
+msgstr "A(z) %s fájl küldése sikeres: %s"
+
+#: ../pan/tasks/task-upload.cc:342
 #, c-format
 msgid ""
-"Posting of file %s not successful: Check the log (right-click on list item) !"
+"Posting of file %s not completely successful: Check the log (right-click "
+"list item)."
 msgstr ""
+"A(z) %s fájl küldése nem teljesen sikeres: Ellenőrizze a naplót (jobb "
+"kattintás a listaelemre)."
 
-#: ../pan/tasks/task-xover.cc:79
-#, fuzzy, c-format
+#: ../pan/tasks/task-upload.cc:358
+#, c-format
+msgid ""
+"Posting of file %s not successful: Check the log (right-click list item)."
+msgstr ""
+"A(z) %s fájl küldése nem sikeres: Ellenőrizze a naplót (jobb kattintás a "
+"listaelemre)."
+
+#: ../pan/tasks/task-xover.cc:83
+#, c-format
 msgid "Getting all headers for \"%s\""
-msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+msgstr "Minden fejléc letöltése a következőhöz: „%s”"
 
-#: ../pan/tasks/task-xover.cc:81
-#, fuzzy, c-format
+#: ../pan/tasks/task-xover.cc:86
+#, c-format
 msgid "Getting new headers for \"%s\""
-msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+msgstr "Új fejlécek letöltése a következőhöz: „%s”"
 
 #. SAMPLE
-#: ../pan/tasks/task-xover.cc:83
-#, fuzzy, c-format
+#: ../pan/tasks/task-xover.cc:90
+#, c-format
 msgid "Sampling headers for \"%s\""
-msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+msgstr "Fejlécek mintavételezése a következőhöz: „%s”"
 
-#: ../pan/tasks/task-xover.cc:369
-#, fuzzy, c-format
+#: ../pan/tasks/task-xover.cc:426
+#, c-format
 msgid "%s (%lu parts, %lu articles)"
-msgstr "%u cikk szűrése"
+msgstr "%s (%lu rész, %lu cikk)"
+
+#: ../pan/tasks/task-xover.cc:500
+#, c-format
+msgid "Getting new headers for \"%s\" done."
+msgstr "Új fejlécek letöltése a következőhöz: „%s” kész."
 
 #: ../pan/tasks/task-xoverinfo.cc:78
-#, fuzzy, c-format
+#, c-format
 msgid "Getting header counts for \"%s\""
-msgstr "%s letöltése a \"%s\" hírcsoporthoz"
+msgstr "Fejlécszám letöltése a következőhöz: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:163
-#, fuzzy
+#: ../pan/usenet-utils/filter-info.cc:168
 msgid "article doesn't have attachments"
-msgstr "A cikkben nincsenek teljes mellékletek"
+msgstr "a cikknek nincsenek mellékletei"
 
-#: ../pan/usenet-utils/filter-info.cc:167
-#, fuzzy
+#: ../pan/usenet-utils/filter-info.cc:172
 msgid "the article has attachments"
-msgstr "A cikknek nincs melléklete"
+msgstr "a cikknek mellékletei vannak"
 
-#: ../pan/usenet-utils/filter-info.cc:171
-#, fuzzy
+#: ../pan/usenet-utils/filter-info.cc:176
 msgid "the article isn't cached locally"
-msgstr "Helyben nem gyorstárazott cikkek mutatása"
+msgstr "a cikk nincs helyileg gyorstárazva"
 
-#: ../pan/usenet-utils/filter-info.cc:175
-#, fuzzy
+#: ../pan/usenet-utils/filter-info.cc:180
 msgid "the article is cached locally"
-msgstr "Helyben gyorstárazott cikkek mutatása"
+msgstr "a cikk helyileg gyorstárazott"
 
-#: ../pan/usenet-utils/filter-info.cc:179
-#, fuzzy
+#: ../pan/usenet-utils/filter-info.cc:184
 msgid "the article wasn't posted by you"
-msgstr "A cikket nem én adtam fel"
+msgstr "a cikket nem Ön küldte el"
 
-#: ../pan/usenet-utils/filter-info.cc:183
-#, fuzzy
+#: ../pan/usenet-utils/filter-info.cc:188
 msgid "the article was posted by you"
-msgstr "A cikket én adtam fel"
+msgstr "a cikket Ön küldte el"
 
-#: ../pan/usenet-utils/filter-info.cc:187
-#, fuzzy
+#: ../pan/usenet-utils/filter-info.cc:192
 msgid "the article has been read"
-msgstr "A cikkben van egy"
+msgstr "a cikk el lett olvasva"
 
-#: ../pan/usenet-utils/filter-info.cc:191
-#, fuzzy
+#: ../pan/usenet-utils/filter-info.cc:196
 msgid "the article hasn't been read"
-msgstr "A cikkben van egy"
-
-#: ../pan/usenet-utils/filter-info.cc:195
-#, fuzzy, c-format
-msgid "the article is less than %ld bytes long"
-msgstr "a cikk több, mint %d nap régi"
+msgstr "a cikk nem lett elolvasva"
 
 #: ../pan/usenet-utils/filter-info.cc:200
-#, fuzzy, c-format
-msgid "the article is at least %ld bytes long"
-msgstr "A cikk legalább N _napos"
+#, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "a cikk kevesebb mint %ld bájt hosszú"
 
 #: ../pan/usenet-utils/filter-info.cc:205
-#, fuzzy, c-format
-msgid "the article is less than %ld lines long"
-msgstr "a cikk több, mint %d nap régi"
+#, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "a cikk legalább %ld bájt hosszú"
 
 #: ../pan/usenet-utils/filter-info.cc:210
-#, fuzzy, c-format
-msgid "the article is at least %ld lines long"
-msgstr "a cikk több, mint %d nap régi"
+#, c-format
+msgid "the article is less than %ld lines long"
+msgstr "a cikk kevesebb mint %ld sor hosszú"
 
 #: ../pan/usenet-utils/filter-info.cc:215
-#, fuzzy, c-format
-msgid "the article is less than %ld days old"
-msgstr "A cikk több, mint %d nap régi"
+#, c-format
+msgid "the article is at least %ld lines long"
+msgstr "a cikk legalább %ld sor hosszú"
 
 #: ../pan/usenet-utils/filter-info.cc:220
-#, fuzzy, c-format
-msgid "the article is at least %ld days old"
-msgstr "A cikk legalább N _napos"
+#, c-format
+msgid "the article is less than %ld days old"
+msgstr "a cikk kevesebb mint %ld napos"
 
 #: ../pan/usenet-utils/filter-info.cc:225
-#, fuzzy, c-format
-msgid "the article was posted to less than %ld groups"
-msgstr "A cikket kevesebb, mint %d hírcsoportba küldték el"
+#, c-format
+msgid "the article is at least %ld days old"
+msgstr "a cikk legalább %ld napos"
 
 #: ../pan/usenet-utils/filter-info.cc:230
-#, fuzzy, c-format
-msgid "the article was posted to at least %ld groups"
-msgstr "A ci_kket legalább N _csoportba elküldték:"
+#, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "a cikk kevesebb mint %ld csoportba lett elküldve"
 
 #: ../pan/usenet-utils/filter-info.cc:235
-#, fuzzy, c-format
-msgid "the article's score is less than %ld"
-msgstr "A cikk _több, mint"
+#, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "a cikk legalább %ld csoportba lett elküldve"
 
 #: ../pan/usenet-utils/filter-info.cc:240
-#, fuzzy, c-format
+#, c-format
+msgid "the article's score is less than %ld"
+msgstr "a cikk pontszáma kevesebb mint %ld"
+
+#: ../pan/usenet-utils/filter-info.cc:245
+#, c-format
 msgid "the article's score is %ld or higher"
-msgstr "A cikk tárgyának használata"
+msgstr "a cikk pontszáma %ld vagy magasabb"
 
-#: ../pan/usenet-utils/filter-info.cc:249
-#: ../pan/usenet-utils/filter-info.cc:259
-#, fuzzy, c-format
+#: ../pan/usenet-utils/filter-info.cc:254
+#: ../pan/usenet-utils/filter-info.cc:264
+#, c-format
 msgid "%s doesn't contain \"%s\""
-msgstr "%s nem tartalmazza %s \"%s\""
+msgstr "%s nem tartalmazza a következőt: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:250
-#: ../pan/usenet-utils/filter-info.cc:260
-#, fuzzy, c-format
+#: ../pan/usenet-utils/filter-info.cc:255
+#: ../pan/usenet-utils/filter-info.cc:265
+#, c-format
 msgid "%s isn't \"%s\""
-msgstr "%s tartalmazza %s \"%s\""
+msgstr "%s nem „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:251
-#: ../pan/usenet-utils/filter-info.cc:261
-#, fuzzy, c-format
+#: ../pan/usenet-utils/filter-info.cc:256
+#: ../pan/usenet-utils/filter-info.cc:266
+#, c-format
 msgid "%s doesn't begin with \"%s\""
-msgstr "%s nem tartalmazza %s \"%s\""
+msgstr "%s nem ezzel kezdődik: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:252
-#: ../pan/usenet-utils/filter-info.cc:262
-#, fuzzy, c-format
+#: ../pan/usenet-utils/filter-info.cc:257
+#: ../pan/usenet-utils/filter-info.cc:267
+#, c-format
 msgid "%s doesn't end with \"%s\""
-msgstr "%s nem tartalmazza %s \"%s\""
+msgstr "%s nem ezzel végződik: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:253
-#: ../pan/usenet-utils/filter-info.cc:263
-#, fuzzy, c-format
+#: ../pan/usenet-utils/filter-info.cc:258
+#: ../pan/usenet-utils/filter-info.cc:268
+#, c-format
 msgid "%s doesn't match the regex \"%s\""
-msgstr "%s nem tartalmazza %s \"%s\""
+msgstr "%s nem illeszkedik a következő reguláris kifejezésre: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:275
-#, fuzzy, c-format
+#: ../pan/usenet-utils/filter-info.cc:280
+#, c-format
 msgid "%s contains \"%s\""
-msgstr "%s tartalmazza %s \"%s\""
+msgstr "%s tartalmazza: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:276
-#, fuzzy, c-format
+#: ../pan/usenet-utils/filter-info.cc:281
+#, c-format
 msgid "%s is \"%s\""
-msgstr "%s tartalmazza %s \"%s\""
+msgstr "%s ez: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:277
-#, fuzzy, c-format
+#: ../pan/usenet-utils/filter-info.cc:282
+#, c-format
 msgid "%s begins with \"%s\""
-msgstr "%s tartalmazza %s \"%s\""
+msgstr "%s ezzel kezdődik: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:278
-#, fuzzy, c-format
+#: ../pan/usenet-utils/filter-info.cc:283
+#, c-format
 msgid "%s ends with \"%s\""
-msgstr "%s tartalmazza %s \"%s\""
+msgstr "%s ezzel végződik: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:279
-#, fuzzy, c-format
+#: ../pan/usenet-utils/filter-info.cc:284
+#, c-format
 msgid "%s matches the regex \"%s\""
-msgstr "%u cikk tesz eleget a %s szabálynak"
+msgstr "%s illeszkedik a következő reguláris kifejezésre: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:285
+#: ../pan/usenet-utils/filter-info.cc:290
 msgid "Any of these tests fail:"
-msgstr ""
+msgstr "A következő tesztek egyike sikertelen:"
 
-#: ../pan/usenet-utils/filter-info.cc:292
+#: ../pan/usenet-utils/filter-info.cc:297
 msgid "All of these tests pass:"
-msgstr ""
+msgstr "A következő tesztek mindegyike sikeres:"
 
-#: ../pan/usenet-utils/filter-info.cc:299
+#: ../pan/usenet-utils/filter-info.cc:304
 msgid "None of these tests pass:"
-msgstr ""
+msgstr "A következő tesztek egyike sem sikeres:"
 
-#: ../pan/usenet-utils/filter-info.cc:306
+#: ../pan/usenet-utils/filter-info.cc:311
 msgid "Any of these tests pass:"
-msgstr ""
+msgstr "A következő tesztek egyike sikeres:"
 
-#: ../pan/usenet-utils/gnksa.cc:878
+#: ../pan/usenet-utils/gnksa.cc:880
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr ""
+"Nincs e-mail cím megadva; üzenetazonosító előállítása a következő "
+"tartománnyal: „%s”"
 
 #: ../pan/usenet-utils/message-check.cc:124
 msgid "Warning: Reply seems to be top-posted."
-msgstr ""
+msgstr "Figyelmeztetés: A válasz legfelsőbbként küldöttnek tűnik."
 
 #: ../pan/usenet-utils/message-check.cc:145
 msgid "Warning: The signature marker should be \"-- \", not \"--\"."
-msgstr ""
+msgstr "Figyelmeztetés: Az aláírásjelzőnek „-- ” kell lennie, nem „--”."
 
 #: ../pan/usenet-utils/message-check.cc:162
-#, fuzzy
 msgid "Warning: Signature prefix with no signature."
-msgstr "FIGYELEM: Aláírás előtag aláírás nélkül."
+msgstr "Figyelmeztetés: Aláírás előtag aláírás nélkül."
 
 #: ../pan/usenet-utils/message-check.cc:167
-#, fuzzy
 msgid "Warning: Signature is more than 4 lines long."
-msgstr "FIGYELEM: Az aláírás több, mint négy sor."
+msgstr "Figyelmeztetés: Az aláírás több mint négy sor hosszú."
 
 #: ../pan/usenet-utils/message-check.cc:172
-#, fuzzy
 msgid "Warning: Signature is more than 80 characters wide."
-msgstr "FIGYELEM: Az aláírás több, mint négy sor."
+msgstr "Figyelmeztetés: Az aláírás több mint 80 karakter széles."
 
 #: ../pan/usenet-utils/message-check.cc:198
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: %d line is more than 80 characters wide."
 msgid_plural "Warning: %d lines are more than 80 characters wide."
-msgstr[0] "FIGYELEM: Az üzenetben %d sor hosszabb, mint 80 karakter."
-msgstr[1] "FIGYELEM: Az üzenetben %d sor hosszabb, mint 80 karakter."
+msgstr[0] "Figyelmeztetés: %d sor több mint 80 karakter széles."
+msgstr[1] "Figyelmeztetés: %d sor több mint 80 karakter széles."
 
 #: ../pan/usenet-utils/message-check.cc:223
-#, fuzzy
 msgid "Error: Message is empty."
-msgstr "HIBA: Az üzenet üres."
+msgstr "Hiba: Az üzenet üres."
 
 #: ../pan/usenet-utils/message-check.cc:258
-#, fuzzy
 msgid "Warning: The message is entirely quoted text!"
-msgstr "FIGYELEM: Az üzenet csak idézetből áll!"
+msgstr "Figyelmeztetés: Az üzenet csak idézetből áll!"
 
 #: ../pan/usenet-utils/message-check.cc:259
-#, fuzzy
 msgid "Warning: The message is mostly quoted text."
-msgstr "FIGYELEM: Az üzenet nagyrészt idézetet tartalmaz."
+msgstr "Figyelmeztetés: Az üzenet nagyrészt idézetet tartalmaz."
 
 #: ../pan/usenet-utils/message-check.cc:309
-#, fuzzy
 msgid "Error: Message appears to have no new content."
-msgstr "HIBA: Az üzenetben nincs új tartalom."
+msgstr "Hiba: Az üzenet nem jelenít meg új tartalmat."
 
 #: ../pan/usenet-utils/message-check.cc:344
 #: ../pan/usenet-utils/message-check.cc:383
@@ -3605,50 +3599,47 @@ msgid ""
 "\tIf the group name is correct, switch profiles in the \"From:\"\n"
 "\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
 msgstr ""
+"Figyelmeztetés: A küldő profil kiszolgálója nem viszi a hírcsoportot\n"
+"\t„%s”.\n"
+"\tHa a csoportnév helyes, váltson profilokat a „Feladó:” sorban, vagy\n"
+"\tszerkessze a profilt a „Szerkesztés|Küldő profilok kezelése” menüpontban."
 
 #: ../pan/usenet-utils/message-check.cc:355
-#, fuzzy
 msgid "Warning: Following-Up to too many groups."
-msgstr "FIGYELEM: Sok hírcsoportba küldted el ezt az üzenetet."
+msgstr "Figyelmeztetés: Túl sok hírcsoportba küldött követőt."
 
 #: ../pan/usenet-utils/message-check.cc:366
-#, fuzzy
 msgid "Error: No Subject specified."
-msgstr "HIBA: Nincs tárgy megadva."
+msgstr "Hiba: Nincs tárgy megadva."
 
 #: ../pan/usenet-utils/message-check.cc:395
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: Group \"%s\" is read-only."
-msgstr "FIGYELEM: \"%s\" csoport csak olvasható."
+msgstr "Figyelmeztetés: A(z) „%s” csoport csak olvasható."
 
 #: ../pan/usenet-utils/message-check.cc:404
-#, fuzzy
 msgid "Error: Posting to a very large number of groups."
-msgstr "HIBA: Nagyon sok hírcsoportba küldted el ezt az üzenetet."
+msgstr "Hiba: Nagyon sok csoportba küld üzenetet."
 
 #: ../pan/usenet-utils/message-check.cc:409
-#, fuzzy
 msgid "Warning: Posting to a large number of groups."
-msgstr "FIGYELEM: Sok hírcsoportba küldted el ezt az üzenetet."
+msgstr "Figyelmeztetés: Sok csoportba küld üzenetet."
 
 #: ../pan/usenet-utils/message-check.cc:416
-#, fuzzy
 msgid "Warning: Crossposting without setting Followup-To header."
-msgstr "FIGYELEM: Keresztpostázás Followup-To beállítása nélkül."
+msgstr "Figyelmeztetés: Keresztküldés követőcím fejléc beállítása nélkül."
 
 #: ../pan/usenet-utils/message-check.cc:441
-#, fuzzy
 msgid "Error: Bad email address."
-msgstr "E-mail cím:"
+msgstr "Hiba: Rossz e-mail cím."
 
 #: ../pan/usenet-utils/message-check.cc:450
 msgid "Warning: Most newsgroups frown upon HTML posts."
-msgstr ""
+msgstr "Figyelmeztetés: A legtöbb hírcsoport nem örül a HTML üzeneteknek."
 
 #: ../pan/usenet-utils/message-check.cc:486
-#, fuzzy
 msgid "Error: No Recipients."
-msgstr "Nincs címzett!"
+msgstr "Hiba: Nincsenek címzettek."
 
 #: ../pan/usenet-utils/scorefile.cc:304
 #, c-format
@@ -3656,55 +3647,101 @@ msgid ""
 "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
 "'Expires: DD-MM-YYYY'."
 msgstr ""
+"Hiba a pontszám olvasásakor ennek: %*.*s, a(z) %d. sorában: várt érték: "
+"„Expires: MM/DD/YYYY” vagy „Expires: DD-MM-YYYY”."
 
 #: ../pan/usenet-utils/scorefile.cc:307
 #, c-format
 msgid "Expired old score from %*.*s, line %d"
-msgstr ""
+msgstr "Lejárt régi pontszám ennek: %*.*s, a(z) %d. sorában"
 
 #: ../pan/usenet-utils/scorefile.cc:380
 #, c-format
 msgid "Error reading score in %*.*s, line %d: unexpected line."
 msgstr ""
+"Hiba a pontszám olvasásakor ennek: %*.*s, a(z) %d. sorában: váratlan sor."
 
 #: ../pan/usenet-utils/scorefile.cc:428
 #, c-format
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
-msgstr ""
+msgstr "%lu pontozási szabály olvasása %lu szakaszban a következőből: „%s”"
 
-#: ../pan/usenet-utils/ssl-utils.h:199
-#, fuzzy, c-format
+#: ../pan/usenet-utils/ssl-utils.h:189
+#, c-format
 msgid "Error printing the server certificate for '%s'"
-msgstr "\"%s\" feldolgozása"
+msgstr "Hiba a kiszolgáló tanúsítvány nyomtatásakor a következőnél: „%s”"
 
-#: ../pan/usenet-utils/ssl-utils.h:216
+#: ../pan/usenet-utils/ssl-utils.h:205
 #, c-format
 msgid ""
-"The current server <b>'%s'</b> sent this security certificate :\n"
+"The current server <b>'%s'</b> sent this security certificate:\n"
 "\n"
 msgstr ""
+"A jelenlegi <b>„%s”</b> kiszolgáló ezt a biztonsági tanúsítványt küldte:\n"
+"\n"
 
-#: ../pan/usenet-utils/ssl-utils.h:217
+#: ../pan/usenet-utils/ssl-utils.h:206
 #, c-format
 msgid ""
-"Certificate information for server <b>'%s'</b> :\n"
+"Certificate information for server <b>'%s'</b>:\n"
 "\n"
 msgstr ""
+"Tanúsítvány információk a következő kiszolgálóhoz: <b>„%s”</b>:\n"
+"\n"
 
-#: ../pan/usenet-utils/ssl-utils.h:219
+#: ../pan/usenet-utils/ssl-utils.h:208
 #, c-format
 msgid ""
 "%s<b>Issuer information:</b>\n"
 "%s\n"
-"<b>Valid until : </b>%s\n"
+"<b>Valid until:</b> %s\n"
 "\n"
-"<b>Not valid before : </b>%s\n"
+"<b>Not valid before:</b> %s\n"
 "\n"
 msgstr ""
+"%s<b>Kibocsátó információk:</b>\n"
+"%s\n"
+"<b>Érvényességi idő:</b> %s\n"
+"\n"
+"<b>Nem érvényes ez előtt:</b> %s\n"
+"\n"
 
-#: ../pan/usenet-utils/text-massager.cc:397
+#: ../pan/usenet-utils/text-massager.cc:399
 msgid "> [quoted text muted]"
-msgstr "> [idézet elrejtve]"
+msgstr "> [idézet szöveg elrejtve]"
+
+#: ../pan/usenet-utils/text-massager.cc:579
+msgid "no_name"
+msgstr "nincs_nev"
+
+#: ../pan/usenet-utils/text-massager.cc:580
+#| msgid "Email"
+msgid "no_mail"
+msgstr "nincs_level"
+
+#, fuzzy
+#~ msgid "Pan Newsreader"
+#~ msgstr "Pan, a hírolvasó"
+
+#, fuzzy
+#~ msgid "Always trust"
+#~ msgstr "Szerkesztés"
+
+#, fuzzy
+#~ msgid "Edit Hotkey"
+#~ msgstr "Szűrők szerkesztése"
+
+#, fuzzy
+#~ msgid "Read collapsed thread:"
+#~ msgstr "Minden szál becsukása"
+
+#, fuzzy
+#~ msgid "Quoted text:"
+#~ msgstr "Idézett szöveg"
+
+#, fuzzy
+#~ msgid "And the article's"
+#~ msgstr "Egyező cikkek mutatása"
 
 #, fuzzy
 #~ msgid "_Toggle Flag on for Thread"
@@ -3713,10 +3750,6 @@ msgstr "> [idézet elrejtve]"
 #, fuzzy
 #~ msgid "Attachment not shown: MIME type %s/%s\n"
 #~ msgstr "Melléklet: %s - %s - %s\n"
-
-#, fuzzy
-#~ msgid "Error!"
-#~ msgstr "Hiba"
 
 #, fuzzy
 #~ msgid "Encoding Options"
@@ -3745,10 +3778,6 @@ msgstr "> [idézet elrejtve]"
 #, fuzzy
 #~ msgid "_Delete Group's Articles"
 #~ msgstr "/_Minden cikk törlése"
-
-#, fuzzy
-#~ msgid "Get New Headers for Selected Groups"
-#~ msgstr "Új fejlécek letöltése a kijelölt hírcsoportokhoz"
 
 #, fuzzy
 #~ msgid "Get New Headers for Subscribed Groups"
@@ -3834,10 +3863,6 @@ msgstr "> [idézet elrejtve]"
 #~ msgstr "A kijelölt cikkek megjelölése elolvasottként"
 
 #, fuzzy
-#~ msgid "Mark Article as Unread"
-#~ msgstr "Megjelölés olvasatlanként"
-
-#, fuzzy
 #~ msgid "Reply to Author"
 #~ msgstr "- Szerző"
 
@@ -3856,9 +3881,6 @@ msgstr "> [idézet elrejtve]"
 #, fuzzy
 #~ msgid "Pan: "
 #~ msgstr "Pan %s "
-
-#~ msgid "Group Name"
-#~ msgstr "Csoportnév"
 
 #, fuzzy
 #~ msgid "Clear the Filter"
@@ -3906,20 +3928,12 @@ msgstr "> [idézet elrejtve]"
 #~ msgstr "Nyomtatás"
 
 #, fuzzy
-#~ msgid "Paste Text"
-#~ msgstr "Idézett szöveg"
-
-#, fuzzy
 #~ msgid "Manage Posting Pr_ofiles..."
 #~ msgstr "/_Fájl/Cikk _nyomtatása..."
 
 #, fuzzy
 #~ msgid "Error loading post.ui: \"%s\""
 #~ msgstr "Hiba a fájl olvasása közben: \"%s\": %s"
-
-#, fuzzy
-#~ msgid "Editors"
-#~ msgstr "Szerkesztés"
 
 #, fuzzy
 #~ msgid "Posting Article"
@@ -4153,9 +4167,6 @@ msgstr "> [idézet elrejtve]"
 
 #~ msgid "Add Author to Bozo Filter"
 #~ msgstr "A szerző hozzáadása a bunkókhoz"
-
-#~ msgid "Regular Expression"
-#~ msgstr "Reguláris kifejezés"
 
 #~ msgid "Add Author to Spam Filter"
 #~ msgstr "A szerző hozzáadása a levélszemetelőkhöz"
@@ -4405,9 +4416,6 @@ msgstr "> [idézet elrejtve]"
 
 #~ msgid "Thank you for trying Pan!"
 #~ msgstr "Köszönjük, hogy használod a Pan-t!"
-
-#~ msgid "Email"
-#~ msgstr "E-mail"
 
 #~ msgid "Ready!"
 #~ msgstr "Kész!"
@@ -4688,9 +4696,6 @@ msgstr "> [idézet elrejtve]"
 #~ msgid "Subscribed"
 #~ msgstr "Előfizetett"
 
-#~ msgid "Folders"
-#~ msgstr "Mappák"
-
 #~ msgid "Total"
 #~ msgstr "Összesen"
 
@@ -4718,9 +4723,6 @@ msgstr "> [idézet elrejtve]"
 
 #~ msgid "X-Mailer"
 #~ msgstr "X-Mailer"
-
-#~ msgid "User-Agent"
-#~ msgstr "User-Agent"
 
 #~ msgid "Connecting to news server"
 #~ msgstr "Kapcsolódás a hírkiszolgálóhoz"
@@ -5268,10 +5270,6 @@ msgstr "> [idézet elrejtve]"
 #~ msgstr "%s letöltése innen: %s"
 
 #, fuzzy
-#~ msgid "Select Color"
-#~ msgstr "Szűrő kijelölése"
-
-#, fuzzy
 #~ msgid "Browse..."
 #~ msgstr "_Bunkók..."
 
@@ -5373,9 +5371,6 @@ msgstr "> [idézet elrejtve]"
 #, fuzzy
 #~ msgid "Automatically remove failed tasks from the task manager"
 #~ msgstr "Eltávolítod az összes cikket ebből a %u hírcsoportból?"
-
-#~ msgid "Newsreader"
-#~ msgstr "Hírolvasó"
 
 #~ msgid "Headers to Show"
 #~ msgstr "Megjelenítendő fejlécek"
@@ -5553,9 +5548,6 @@ msgstr "> [idézet elrejtve]"
 #, fuzzy
 #~ msgid "Servers - Mail"
 #~ msgstr "Kiszolgálók"
-
-#~ msgid "You haven't loaded an article to print."
-#~ msgstr "Nem töltöttél be cikket, nincs mit kinyomtatni."
 
 #~ msgid "Connect Failure"
 #~ msgstr "Sikertelen kapcsolat"
@@ -6357,10 +6349,6 @@ msgstr "> [idézet elrejtve]"
 #~ msgstr "A feladatkezelő üres"
 
 #, fuzzy
-#~ msgid "The Task Manager is not Paused"
-#~ msgstr "A feladatkezelő üres"
-
-#, fuzzy
 #~ msgid "Pause the Task Manager"
 #~ msgstr "A feladatkezelő megnyitása"
 
@@ -6715,9 +6703,6 @@ msgstr "> [idézet elrejtve]"
 #~ msgid "View Article Tab"
 #~ msgstr "Cikkmező"
 
-#~ msgid "Show Article Pane"
-#~ msgstr "Cikkmező mutatása"
-
 #~ msgid "Rot13 Article Body"
 #~ msgstr "A törzs rot13 kódolása"
 
@@ -6727,9 +6712,6 @@ msgstr "> [idézet elrejtve]"
 
 #~ msgid "Expand Selected Threads"
 #~ msgstr "A kijelölt szálak kibontása"
-
-#~ msgid "Collapse Selected Threads"
-#~ msgstr "A kijelölt szálak becsukása"
 
 #, fuzzy
 #~ msgid "Mark All Articles in Selected Groups as Read"
@@ -7243,9 +7225,6 @@ msgstr "> [idézet elrejtve]"
 
 #~ msgid "E-mail Reply"
 #~ msgstr "Válasz emailben"
-
-#~ msgid "Type your user name and password for your news server."
-#~ msgstr "Add meg a felhasználóneved és a jelszavad a news kiszolgálóhoz."
 
 #~ msgid "News Server Name"
 #~ msgstr "News kiszolgáló neve:"
