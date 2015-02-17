@@ -2,71 +2,88 @@
 # Copyright (C) 2000-2003 Free Software Foundation, Inc.
 # Fatih Demir <kabalak@gtranslator.org>, 2000.
 # Görkem Çetin <gorkem@gelecek.com.tr>, 2001.
+# Muhammet Kara <muhammetk@gmail.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-04 20:58+0200\n"
-"PO-Revision-Date: 2003-01-31 15:01+0200\n"
-"Last-Translator: Arman Aksoy (Armish) <armish@linux-sevenler.de>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=Pan&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-03-23 17:15+0000\n"
+"PO-Revision-Date: 2015-02-17 12:01+0200\n"
+"Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
-#: ../pan.desktop.in.h:1
-msgid "Pan Newsreader"
-msgstr "Pan Haber Okuyucusu"
+#. update the titlebar
+#: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106
+#: ../pan/gui/gui.cc:1040 ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:2009
+#: ../pan/gui/score-add-ui.cc:602
+msgid "Pan"
+msgstr "Pan"
 
 #: ../pan.desktop.in.h:2
+msgid "Newsreader"
+msgstr "Haber okuyucu"
+
+#: ../pan.desktop.in.h:3
 #, fuzzy
 msgid "Read and Post Usenet Articles"
 msgstr "Seçilen Makaleleri Al"
 
-#: ../pan/data/article-cache.cc:143 ../pan/data/encode-cache.cc:62
+#: ../pan/data/article-cache.cc:144 ../pan/data/encode-cache.cc:62
 #, fuzzy, c-format
 msgid "Error opening directory: \"%s\": %s"
 msgstr "\"%s\" dizini okunurken hata oluştu : %s)"
 
-#: ../pan/data/article-cache.cc:231 ../pan/data/article-cache.cc:242
-#: ../pan/data-impl/data-io.cc:187 ../pan/data-impl/data-io.cc:211
-#: ../pan/gui/post-ui.cc:1639
+#: ../pan/data/article-cache.cc:235 ../pan/data/article-cache.cc:244
+#: ../pan/data-impl/data-io.cc:199 ../pan/data-impl/data-io.cc:231
+#: ../pan/gui/post-ui.cc:1723
 #, fuzzy, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Grup (\"%s\") tanımlanamadı: %s"
 
-#: ../pan/data/article-cache.cc:355
+#: ../pan/data/article-cache.cc:362
 #, fuzzy, c-format
 msgid "Error opening file \"%s\" %s"
 msgstr "\"%s\" dosyası açılırken hata oluştu: %s"
 
-#: ../pan/data/article-cache.cc:386 ../pan/data-impl/profiles.cc:174
-#: ../pan/data-impl/server.cc:436 ../pan/general/file-util.cc:298
-#: ../pan/gui/post-ui.cc:609 ../pan/gui/task-pane.cc:691
+#: ../pan/data/article-cache.cc:393 ../pan/data-impl/profiles.cc:174
+#: ../pan/data-impl/server.cc:500 ../pan/general/file-util.cc:311
+#: ../pan/gui/post-ui.cc:638 ../pan/gui/task-pane.cc:737
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "\"%s\" dosyası okunurken hata oluştu: %s"
 
-#: ../pan/data/cert-store.cc:238
+#: ../pan/data/cert-store.cc:262
 #, fuzzy, c-format
 msgid "Error opening SSL certificate directory: \"%s\": %s"
 msgstr "\"%s\" dizini okunurken hata oluştu : %s)"
 
-#: ../pan/data/cert-store.cc:270
+#: ../pan/data/cert-store.cc:293
 #, c-format
-msgid "Succesfully added %d SSL PEM certificate(s) to Certificate Store."
+msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
+msgstr ""
+
+#: ../pan/data/cert-store.cc:313
+msgid ""
+"Error initializing Certificate Store. Check that the permissions for the "
+"folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
 msgstr ""
 
 #. load_group_descriptions (*_data_io);
-#: ../pan/data-impl/data-impl.cc:109
+#: ../pan/data-impl/data-impl.cc:113
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr ""
 
-#: ../pan/data-impl/data-impl.cc:140
-msgid "Pan newsreader server passwords"
+#: ../pan/data-impl/data-impl.cc:143
+msgid "Pan Newsreader's server passwords"
 msgstr ""
 
 #: ../pan/data-impl/groups.cc:94
@@ -99,47 +116,47 @@ msgid ""
 "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
 msgstr "%d makaleyi %s grubuna %.1f saniyede kaydettim (%.0f makale/san.)"
 
-#: ../pan/data-impl/headers.cc:1173
+#: ../pan/data-impl/headers.cc:1191
 #, fuzzy, c-format
 msgid "Added %lu articles to %s."
 msgstr "%2$s grubundan %1$u makale  silindi"
 
-#: ../pan/data-impl/server.cc:234
+#: ../pan/data-impl/server.cc:261
 #, c-format
-msgid "There seems to be no Password set for Server %s."
+msgid "There seems to be no password set for server %s."
 msgstr ""
 
-#: ../pan/data-impl/server.cc:238
-msgid "The Gnome keyring denied access to the Passwords."
+#: ../pan/data-impl/server.cc:265
+msgid "GNOME Keyring denied access to the passwords."
 msgstr ""
 
-#: ../pan/data-impl/xover.cc:239
+#: ../pan/data-impl/xover.cc:243
 #, fuzzy, c-format
 msgid "Error reading from %s: unknown group \"%s\""
 msgstr "Soketten okurken hata oluştu: %s"
 
 #. build the locale strings
-#: ../pan/general/e-util.cc:213
+#: ../pan/general/e-util.cc:211
 msgid "%l:%M %p"
 msgstr ""
 
-#: ../pan/general/e-util.cc:214
+#: ../pan/general/e-util.cc:212
 msgid "Today %l:%M %p"
 msgstr ""
 
-#: ../pan/general/e-util.cc:215
+#: ../pan/general/e-util.cc:213
 msgid "%a %l:%M %p"
 msgstr ""
 
-#: ../pan/general/e-util.cc:216
+#: ../pan/general/e-util.cc:214
 msgid "%b %d %l:%M %p"
 msgstr ""
 
-#: ../pan/general/e-util.cc:217
+#: ../pan/general/e-util.cc:215
 msgid "%b %d %Y"
 msgstr ""
 
-#: ../pan/general/e-util.cc:242
+#: ../pan/general/e-util.cc:240
 msgid "?"
 msgstr ""
 
@@ -152,801 +169,817 @@ msgstr "Yazar düzgün deyimle eşleşiyor \"%s\""
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr ""
 
-#: ../pan/gui/actions.cc:274 ../pan/gui/post-ui.cc:417
+#: ../pan/gui/actions.cc:303 ../pan/gui/post-ui.cc:446
 #, fuzzy
 msgid "_File"
 msgstr "/_Dosya"
 
-#: ../pan/gui/actions.cc:275 ../pan/gui/post-ui.cc:418
+#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:447
 msgid "_Edit"
 msgstr "Dü_zenle"
 
-#: ../pan/gui/actions.cc:276 ../pan/gui/prefs-ui.cc:1064
+#: ../pan/gui/actions.cc:305 ../pan/gui/prefs-ui.cc:1107
 msgid "_Layout"
 msgstr "_Düzen"
 
-#: ../pan/gui/actions.cc:277
+#: ../pan/gui/actions.cc:306
 #, fuzzy
 msgid "_Group Pane"
 msgstr "_Grup Listesi Paneli"
 
-#: ../pan/gui/actions.cc:278
+#: ../pan/gui/actions.cc:307
 #, fuzzy
 msgid "_Header Pane"
 msgstr "_Başlık Paneli:"
 
-#: ../pan/gui/actions.cc:279
+#: ../pan/gui/actions.cc:308
 #, fuzzy
 msgid "_Body Pane"
 msgstr "Gövde Paneli"
 
-#: ../pan/gui/actions.cc:280
+#: ../pan/gui/actions.cc:309
 #, fuzzy
 msgid "_View"
 msgstr "/_Görünüm"
 
-#: ../pan/gui/actions.cc:281
+#: ../pan/gui/actions.cc:310
 #, fuzzy
 msgid "Filte_r"
 msgstr "/_Filtre"
 
-#: ../pan/gui/actions.cc:282
-#, fuzzy
+#: ../pan/gui/actions.cc:311
 msgid "_Go"
-msgstr "/G_it"
+msgstr "_Git"
 
-#: ../pan/gui/actions.cc:283 ../pan/gui/prefs-ui.cc:1091
-#, fuzzy
+#: ../pan/gui/actions.cc:312 ../pan/gui/prefs-ui.cc:1157
 msgid "_Actions"
-msgstr "Eylemler"
+msgstr "_Eylemler"
 
-#: ../pan/gui/actions.cc:284
-#, fuzzy
+#: ../pan/gui/actions.cc:313
 msgid "_Articles"
-msgstr "/_Makaleler"
+msgstr "_Makaleler"
 
-#: ../pan/gui/actions.cc:285
-#, fuzzy
+#: ../pan/gui/actions.cc:314
 msgid "G_roups"
-msgstr "Gruplar"
+msgstr "G_ruplar"
 
-#: ../pan/gui/actions.cc:286 ../pan/gui/actions.cc:287
+#: ../pan/gui/actions.cc:315 ../pan/gui/actions.cc:316
 #, fuzzy
 msgid "_Post"
 msgstr "/_Postala"
 
-#: ../pan/gui/actions.cc:288
+#: ../pan/gui/actions.cc:317
 msgid "_Help"
 msgstr "_Yardım"
 
-#: ../pan/gui/actions.cc:291
+#: ../pan/gui/actions.cc:320
 #, fuzzy
 msgid "_Read Group"
 msgstr "Grup Yeniden Yükleniyor"
 
-#: ../pan/gui/actions.cc:292
+#: ../pan/gui/actions.cc:321
 #, fuzzy
 msgid "Read Group"
 msgstr "Grup Yeniden Yükleniyor"
 
-#: ../pan/gui/actions.cc:296
+#: ../pan/gui/actions.cc:325
 #, fuzzy
 msgid "_Mark Selected Groups Read"
 msgstr "/_Grubu Okunmuş Olarak İşaretle"
 
-#: ../pan/gui/actions.cc:297
+#: ../pan/gui/actions.cc:326
 #, fuzzy
 msgid "Mark Selected Groups Read"
 msgstr "/_Grubu Okunmuş Olarak İşaretle"
 
-#: ../pan/gui/actions.cc:301
+#: ../pan/gui/actions.cc:330
 #, fuzzy
 msgid "_Delete Selected Groups' Articles"
 msgstr "/Grubun _Makalelerini Sil"
 
-#: ../pan/gui/actions.cc:302
+#: ../pan/gui/actions.cc:331
 #, fuzzy
 msgid "Delete Selected Groups' Articles"
 msgstr "/Grubun _Makalelerini Sil"
 
-#: ../pan/gui/actions.cc:306
+#: ../pan/gui/actions.cc:335
 #, fuzzy
 msgid "Get New _Headers in Selected Groups"
 msgstr "Seçilen Gruplardan Başlıkları Al"
 
-#: ../pan/gui/actions.cc:307
+#: ../pan/gui/actions.cc:336
 #, fuzzy
 msgid "Get New Headers in Selected Groups"
 msgstr "Seçilen Gruplardan Başlıkları Al"
 
-#: ../pan/gui/actions.cc:311 ../pan/gui/actions.cc:316
+#: ../pan/gui/actions.cc:340 ../pan/gui/actions.cc:345
 #, fuzzy
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "Üye Olunan Gruplardan Başlıkları al"
 
-#: ../pan/gui/actions.cc:312 ../pan/gui/actions.cc:317
+#: ../pan/gui/actions.cc:341 ../pan/gui/actions.cc:346
 #, fuzzy
 msgid "Get New Headers in Subscribed Groups"
 msgstr "Üye Olunan Gruplardan Başlıkları al"
 
-#: ../pan/gui/actions.cc:321
+#: ../pan/gui/actions.cc:350
 #, fuzzy
 msgid "Get _Headers..."
 msgstr "/Yeni _Başlıkları İndir"
 
-#: ../pan/gui/actions.cc:322
+#: ../pan/gui/actions.cc:351
 #, fuzzy
 msgid "Get Headers..."
 msgstr "/Yeni _Başlıkları İndir"
 
-#: ../pan/gui/actions.cc:326 ../pan/gui/actions.cc:327
+#: ../pan/gui/actions.cc:355 ../pan/gui/actions.cc:356
 #, fuzzy
 msgid "Refresh Group List"
 msgstr "\"%s\" Grubu Yenileniyor"
 
-#: ../pan/gui/actions.cc:331
+#: ../pan/gui/actions.cc:360
 #, fuzzy
 msgid "_Subscribe"
 msgstr "/Üye _ol"
 
-#: ../pan/gui/actions.cc:332
+#: ../pan/gui/actions.cc:361
 #, fuzzy
 msgid "Subscribe"
 msgstr "/Üye _ol"
 
-#: ../pan/gui/actions.cc:336
+#: ../pan/gui/actions.cc:365
 #, fuzzy
 msgid "_Unsubscribe"
 msgstr "/Üyelikten çı_k"
 
-#: ../pan/gui/actions.cc:337
+#: ../pan/gui/actions.cc:366
 #, fuzzy
 msgid "Unsubscribe"
 msgstr "/Üyelikten çı_k"
 
-#: ../pan/gui/actions.cc:341
+#: ../pan/gui/actions.cc:370
 #, fuzzy
 msgid "_Save Articles..."
 msgstr "/Makaleyi _Farklı Kaydet..."
 
-#: ../pan/gui/actions.cc:342
+#: ../pan/gui/actions.cc:371
 #, fuzzy
 msgid "Save Articles..."
 msgstr "/Makaleyi _Farklı Kaydet..."
 
-#: ../pan/gui/actions.cc:346
+#: ../pan/gui/actions.cc:375
 #, fuzzy
 msgid "Save Articles from Selected _NZB..."
 msgstr "/Makaleyi _Farklı Kaydet..."
 
-#: ../pan/gui/actions.cc:347
+#: ../pan/gui/actions.cc:376
 #, fuzzy
 msgid "Save Articles from Selected NZB"
 msgstr "Eklentiler Kaydediliyor"
 
-#: ../pan/gui/actions.cc:351
+#: ../pan/gui/actions.cc:380
 #, fuzzy
 msgid "Save Articles to an NZB _File..."
 msgstr "/Makaleyi _Farklı Kaydet..."
 
-#: ../pan/gui/actions.cc:352
+#: ../pan/gui/actions.cc:381
 #, fuzzy
 msgid "Save Articles to an NZB File"
 msgstr "Bu kaydı bir dosyaya kaydet."
 
-#: ../pan/gui/actions.cc:356 ../pan/gui/actions.cc:357
-#, fuzzy
+#: ../pan/gui/actions.cc:385 ../pan/gui/actions.cc:386
 msgid "Print"
-msgstr "Pan: Yazdır"
+msgstr "Yazdır"
 
-#: ../pan/gui/actions.cc:361
+#: ../pan/gui/actions.cc:390
 msgid "_Import NZB Files..."
 msgstr ""
 
-#: ../pan/gui/actions.cc:366
+#: ../pan/gui/actions.cc:395
 #, fuzzy
 msgid "_Cancel Last Task"
 msgstr "Seçili görev(ler)i iptal et"
 
-#: ../pan/gui/actions.cc:371
+#: ../pan/gui/actions.cc:400
 #, fuzzy
 msgid "_Task Manager"
 msgstr "/_Araçlar/_Görev Yöneticisi..."
 
-#: ../pan/gui/actions.cc:376
+#: ../pan/gui/actions.cc:405
 #, fuzzy
 msgid "_Event Log"
 msgstr "Durum Kayıtlarını Aç"
 
-#: ../pan/gui/actions.cc:381
+#: ../pan/gui/actions.cc:410
 #, fuzzy
 msgid "_Quit"
 msgstr "Dü_zenle"
 
-#: ../pan/gui/actions.cc:386
+#: ../pan/gui/actions.cc:415
 #, fuzzy
 msgid "Select _All Articles"
 msgstr "/_Düzenle/Tüm Makaleleri _Seç"
 
-#: ../pan/gui/actions.cc:391
+#: ../pan/gui/actions.cc:420
 #, fuzzy
 msgid "_Deselect All Articles"
 msgstr "/Dü_zenle/Tüm Makalelerin _Seçimini Kaldır"
 
-#: ../pan/gui/actions.cc:396
+#: ../pan/gui/actions.cc:425
 #, fuzzy
 msgid "Add Su_bthreads to Selection"
 msgstr "/Dü_zenle/Seçime K_onum Ekle"
 
-#: ../pan/gui/actions.cc:401
+#: ../pan/gui/actions.cc:430
 #, fuzzy
 msgid "Add _Threads to Selection"
 msgstr "/Dü_zenle/Seçime K_onum Ekle"
 
-#: ../pan/gui/actions.cc:406
+#: ../pan/gui/actions.cc:435
 #, fuzzy
 msgid "Add _Similar Articles to Selection"
 msgstr "/Dü_zenle/Seçime K_onum Ekle"
 
-#: ../pan/gui/actions.cc:411
+#: ../pan/gui/actions.cc:440
 #, fuzzy
 msgid "Select Article _Body"
 msgstr "/Dü_zenle/Makale _Gövdesini Seç"
 
-#: ../pan/gui/actions.cc:416
+#: ../pan/gui/actions.cc:445
 #, fuzzy
 msgid "Edit _Preferences"
 msgstr "/Dü_zenle/_Ayarlar"
 
-#: ../pan/gui/actions.cc:421
+#: ../pan/gui/actions.cc:450
 #, fuzzy
 msgid "Edit Selected _Group's Preferences"
 msgstr "/Dü_zenle/_Ayarlar"
 
-#: ../pan/gui/actions.cc:426 ../pan/gui/post-ui.cc:434
+#: ../pan/gui/actions.cc:455 ../pan/gui/post-ui.cc:463
 #, fuzzy
 msgid "Edit P_osting Profiles"
 msgstr "/_Araçlar/_Gönderme Profilleri..."
 
-#: ../pan/gui/actions.cc:431
+#: ../pan/gui/actions.cc:460
 #, fuzzy
 msgid "Edit _News Servers"
 msgstr "/_Araçlar/_Haber Sunucuları..."
 
-#: ../pan/gui/actions.cc:436
+#: ../pan/gui/actions.cc:465
 #, fuzzy
 msgid "Jump to _Group Tab"
 msgstr "/_Görünüm/Gr_up Sekmesini Göster"
 
-#: ../pan/gui/actions.cc:441
+#: ../pan/gui/actions.cc:470
 #, fuzzy
 msgid "Jump to _Header Tab"
 msgstr "/_Görünüm/Başlık S_ekmesini Göster"
 
-#: ../pan/gui/actions.cc:446
+#: ../pan/gui/actions.cc:475
 #, fuzzy
 msgid "Jump to _Body Tab"
 msgstr "/_Görünüm/G_övde Sekmesini Göster"
 
-#: ../pan/gui/actions.cc:451
+#: ../pan/gui/actions.cc:480
 #, fuzzy
 msgid "_Rot13 Selected Text"
 msgstr "Rot13 Seçili Metin"
 
-#: ../pan/gui/actions.cc:456
+#: ../pan/gui/actions.cc:485
 #, fuzzy
 msgid "Clear _Header Pane"
 msgstr "_Başlık Paneli:"
 
-#: ../pan/gui/actions.cc:461
+#: ../pan/gui/actions.cc:490
 #, fuzzy
 msgid "Clear _Body Pane"
 msgstr "Gövde Paneli"
 
-#: ../pan/gui/actions.cc:466
+#: ../pan/gui/actions.cc:495
 #, fuzzy
 msgid "Cache Article"
 msgstr "Makale iptal ediliyor"
 
-#: ../pan/gui/actions.cc:471
+#: ../pan/gui/actions.cc:500
 #, fuzzy
 msgid "Read Article"
 msgstr "%d makale şekillendiriliyor"
 
-#: ../pan/gui/actions.cc:476
+#: ../pan/gui/actions.cc:505
 #, fuzzy
 msgid "Show Article Information"
 msgstr "Profil Bilgileri"
 
-#: ../pan/gui/actions.cc:481
+#: ../pan/gui/actions.cc:510
 #, fuzzy
 msgid "Read _More"
 msgstr "Oku"
 
-#: ../pan/gui/actions.cc:482
+#: ../pan/gui/actions.cc:511
 msgid "Read More"
 msgstr "Oku"
 
-#: ../pan/gui/actions.cc:486
+#: ../pan/gui/actions.cc:515
 msgid "Read _Back"
 msgstr ""
 
-#: ../pan/gui/actions.cc:487
+#: ../pan/gui/actions.cc:516
 #, fuzzy
 msgid "Read Back"
 msgstr "/G_it/_Yeniden Oku"
 
-#: ../pan/gui/actions.cc:491
+#: ../pan/gui/actions.cc:520
 #, fuzzy
 msgid "Next _Unread Group"
 msgstr "Sonraki Okunmamış Grup"
 
-#: ../pan/gui/actions.cc:496
+#: ../pan/gui/actions.cc:525
 #, fuzzy
 msgid "Next _Group"
 msgstr "/G_it/Sonraki _Grup"
 
-#: ../pan/gui/actions.cc:501
+#: ../pan/gui/actions.cc:530
 #, fuzzy
 msgid "Next _Unread Article"
 msgstr "/G_it/Son_raki Okunmamış Makale"
 
-#: ../pan/gui/actions.cc:502
+#: ../pan/gui/actions.cc:531
 #, fuzzy
 msgid "Next Unread Article"
 msgstr "Son_raki Okunmamış Makale"
 
-#: ../pan/gui/actions.cc:506
+#: ../pan/gui/actions.cc:535
 #, fuzzy
 msgid "Next _Article"
 msgstr "/G_it/_Sonraki Makale"
 
-#: ../pan/gui/actions.cc:507
+#: ../pan/gui/actions.cc:536
 #, fuzzy
 msgid "Next Article"
 msgstr "/G_it/_Sonraki Makale"
 
-#: ../pan/gui/actions.cc:511
+#: ../pan/gui/actions.cc:540
 #, fuzzy
 msgid "Next _Watched Article"
 msgstr "/G_it/Son_raki Okunmamış Makale"
 
-#: ../pan/gui/actions.cc:516
+#: ../pan/gui/actions.cc:545
 #, fuzzy
 msgid "Next Unread _Thread"
 msgstr "/G_it/Sonraki _Okunmamış Konum"
 
-#: ../pan/gui/actions.cc:517
+#: ../pan/gui/actions.cc:546
 #, fuzzy
 msgid "Next Unread Thread"
 msgstr "Sonraki _Okunmamış Konum"
 
-#: ../pan/gui/actions.cc:521
+#: ../pan/gui/actions.cc:550
 #, fuzzy
 msgid "Next Threa_d"
 msgstr "/G_it/Sonraki _Konum"
 
-#: ../pan/gui/actions.cc:526
+#: ../pan/gui/actions.cc:555
 #, fuzzy
 msgid "Pre_vious Article"
 msgstr "/G_it/Ö_nceki Makale"
 
-#: ../pan/gui/actions.cc:531
+#: ../pan/gui/actions.cc:560
 #, fuzzy
 msgid "Previous _Thread"
 msgstr "/G_it/Önceki Konu_m"
 
-#: ../pan/gui/actions.cc:536
+#: ../pan/gui/actions.cc:565
 #, fuzzy
 msgid "_Parent Article"
 msgstr "/G_it/An_a Makaleler"
 
-#: ../pan/gui/actions.cc:541
+#: ../pan/gui/actions.cc:570
 #, fuzzy
 msgid "Ignore _Author"
 msgstr "/G_özardı Edilen Konumlar"
 
-#: ../pan/gui/actions.cc:545
+#: ../pan/gui/actions.cc:574
 #, fuzzy
 msgid "_Watch Thread"
 msgstr "_İzlenen Konumlar:"
 
-#: ../pan/gui/actions.cc:550
+#: ../pan/gui/actions.cc:579
 #, fuzzy
 msgid "_Ignore Thread"
 msgstr "_Gözardı Edilen Konumlar:"
 
-#: ../pan/gui/actions.cc:555 ../pan/gui/actions.cc:556
+#: ../pan/gui/actions.cc:584 ../pan/gui/actions.cc:585
 #, fuzzy
 msgid "_Toggle Flag On/Off for Thread"
 msgstr "_İzlenen Konumlar:"
 
-#: ../pan/gui/actions.cc:560 ../pan/gui/actions.cc:561
+#: ../pan/gui/actions.cc:589 ../pan/gui/actions.cc:590
 #, fuzzy
 msgid "_Turn Flag Off for Thread"
 msgstr "_İzlenen Konumlar:"
 
-#: ../pan/gui/actions.cc:565 ../pan/gui/actions.cc:566
+#: ../pan/gui/actions.cc:594 ../pan/gui/actions.cc:595
 #, fuzzy
 msgid "_Select All Flagged Threads"
 msgstr "/G_it/Sonraki _Konum"
 
-#: ../pan/gui/actions.cc:570 ../pan/gui/actions.cc:571
+#: ../pan/gui/actions.cc:599 ../pan/gui/actions.cc:600
 #, fuzzy
 msgid "_Go to Next Flagged Thread"
 msgstr "/G_it/Sonraki _Konum"
 
-#: ../pan/gui/actions.cc:575 ../pan/gui/actions.cc:576
+#: ../pan/gui/actions.cc:604 ../pan/gui/actions.cc:605
 #, fuzzy
 msgid "_Go to Last Flagged Thread"
 msgstr "/G_it/Sonraki _Konum"
 
-#: ../pan/gui/actions.cc:580 ../pan/gui/actions.cc:581
+#: ../pan/gui/actions.cc:609 ../pan/gui/actions.cc:610
 #, fuzzy
 msgid "_Invert Selection"
 msgstr "Seçim"
 
-#: ../pan/gui/actions.cc:585
+#: ../pan/gui/actions.cc:614
 #, fuzzy
 msgid "Edit Article's Watch/Ignore/Score..."
 msgstr "/_Makaleler/_İptal..."
 
-#: ../pan/gui/actions.cc:590
+#: ../pan/gui/actions.cc:619
 #, fuzzy
 msgid "Add a _Scoring Rule..."
 msgstr "Yeni bir sunucu ekle"
 
-#: ../pan/gui/actions.cc:595
+#: ../pan/gui/actions.cc:624
 #, fuzzy
 msgid "Cance_l Article..."
 msgstr "Makale iptal ediliyor"
 
-#: ../pan/gui/actions.cc:600
+#: ../pan/gui/actions.cc:629
 #, fuzzy
 msgid "_Supersede Article..."
 msgstr "/_Dosya/Makaleyi _Yazdır..."
 
-#: ../pan/gui/actions.cc:605
+#: ../pan/gui/actions.cc:634
 #, fuzzy
 msgid "_Delete Article"
 msgstr "Makaleyi _sil"
 
-#: ../pan/gui/actions.cc:610
+#: ../pan/gui/actions.cc:639
 #, fuzzy
 msgid "Clear Article Cache"
 msgstr "Makale Önbelleği"
 
-#: ../pan/gui/actions.cc:615
+#: ../pan/gui/actions.cc:644
 #, fuzzy
 msgid "_Mark Article as Read"
 msgstr "Makale okunmuş"
 
-#: ../pan/gui/actions.cc:620
+#: ../pan/gui/actions.cc:649
 #, fuzzy
 msgid "Mark Article as _Unread"
 msgstr "Makale okunmamış"
 
-#: ../pan/gui/actions.cc:626
+#: ../pan/gui/actions.cc:655
 #, fuzzy
 msgid "_Mark Thread as Read"
 msgstr "Makale okunmuş"
 
-#: ../pan/gui/actions.cc:631
+#: ../pan/gui/actions.cc:660
 #, fuzzy
 msgid "Mark Thread as _Unread"
 msgstr "Makale okunmamış"
 
-#: ../pan/gui/actions.cc:636
+#: ../pan/gui/actions.cc:665
 #, fuzzy
 msgid "_Post to Newsgroup"
 msgstr "Gruba postala"
 
-#: ../pan/gui/actions.cc:637
+#: ../pan/gui/actions.cc:666
 msgid "Post to Newsgroup"
 msgstr "Gruba postala"
 
-#: ../pan/gui/actions.cc:641
+#: ../pan/gui/actions.cc:670
 #, fuzzy
 msgid "_Followup to Newsgroup"
 msgstr "/_Postala/Gruba _cevapla"
 
-#: ../pan/gui/actions.cc:642
+#: ../pan/gui/actions.cc:671
 #, fuzzy
 msgid "Followup to Newsgroup"
 msgstr "/_Postala/Gruba _cevapla"
 
-#: ../pan/gui/actions.cc:646
+#: ../pan/gui/actions.cc:675
 #, fuzzy
 msgid "_Reply to Author in Mail"
 msgstr "/_Makaleler/_Sil"
 
-#: ../pan/gui/actions.cc:651
+#: ../pan/gui/actions.cc:680
 #, fuzzy
 msgid "_Pan Home Page"
 msgstr "/_Yardım/Pan _Web Sayfası..."
 
-#: ../pan/gui/actions.cc:656
+#: ../pan/gui/actions.cc:685
 #, fuzzy
 msgid "Give _Feedback or Report a Bug..."
 msgstr "/_Yardım/Hata _Raporla..."
 
-#: ../pan/gui/actions.cc:661
+#: ../pan/gui/actions.cc:690
 msgid "_Tip Jar..."
 msgstr ""
 
-#: ../pan/gui/actions.cc:666
+#: ../pan/gui/actions.cc:695
 #, fuzzy
 msgid "_About"
 msgstr "Hakkında"
 
-#: ../pan/gui/actions.cc:671
+#: ../pan/gui/actions.cc:700
 msgid "Edit _SSL Certificates"
 msgstr ""
 
-#: ../pan/gui/actions.cc:685
+#: ../pan/gui/actions.cc:715
 #, fuzzy
 msgid "_Thread Headers"
 msgstr "Daha Fazla Başlık"
 
-#: ../pan/gui/actions.cc:686
+#: ../pan/gui/actions.cc:716
 #, fuzzy
-msgid "_Wrap Article Body"
+msgid "Wrap Article Body"
 msgstr "/_Görünüm/Makale Metnini D_oldur"
 
-#: ../pan/gui/actions.cc:687
+#: ../pan/gui/actions.cc:717
+#, fuzzy
+msgid "Show Article Signature"
+msgstr "Profil Bilgileri"
+
+#: ../pan/gui/actions.cc:718
 #, fuzzy
 msgid "Mute _Quoted Text"
 msgstr "/_Görünüm/Alıntı Yapılmış Metni Gi_zle"
 
-#: ../pan/gui/actions.cc:688
+#: ../pan/gui/actions.cc:719
 #, fuzzy
 msgid "Show All _Headers in Body Pane"
 msgstr "/_Görünüm/Tüm Başlık _Bilgilerini Göster"
 
-#: ../pan/gui/actions.cc:689
+#: ../pan/gui/actions.cc:720
 #, fuzzy
 msgid "Show _Smilies as Graphics"
 msgstr "U_yarı göster:"
 
-#: ../pan/gui/actions.cc:690
+#: ../pan/gui/actions.cc:721
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr ""
 
-#: ../pan/gui/actions.cc:691
+#: ../pan/gui/actions.cc:722
 msgid "Size Pictures to _Fit"
 msgstr ""
 
-#: ../pan/gui/actions.cc:692
+#: ../pan/gui/actions.cc:723
 #, fuzzy
 msgid "Use _Monospace Font"
 msgstr "/_Görünüm/Makale Panelinde Eşaralıklı Yazıtipi Kullan"
 
-#: ../pan/gui/actions.cc:693
+#: ../pan/gui/actions.cc:724
 msgid "Set Focus to Images"
 msgstr ""
 
-#: ../pan/gui/actions.cc:694
+#: ../pan/gui/actions.cc:725
 msgid "Highlight _URLs"
 msgstr ""
 
-#: ../pan/gui/actions.cc:697
+#: ../pan/gui/actions.cc:728
 #, fuzzy
 msgid "_Work Online"
 msgstr "/_Dosya/Çevrimdı_şı Çalış"
 
-#: ../pan/gui/actions.cc:698
+#: ../pan/gui/actions.cc:729
 #, fuzzy
 msgid "_Tabbed Layout"
 msgstr "/_Görünüm/_Sekmeli Görünüm"
 
-#: ../pan/gui/actions.cc:699
+#: ../pan/gui/actions.cc:730
 #, fuzzy
 msgid "Show Group _Pane"
 msgstr "/_Görünüm/Grup _Panelini Göster"
 
-#: ../pan/gui/actions.cc:700
+#: ../pan/gui/actions.cc:731
 #, fuzzy
 msgid "Show Hea_der Pane"
 msgstr "/_Görünüm/Başlık _Panelini Göster"
 
-#: ../pan/gui/actions.cc:701
+#: ../pan/gui/actions.cc:732
 #, fuzzy
 msgid "Show Bod_y Pane"
 msgstr "/_Görünüm/G_övde Panelini Göster"
 
-#: ../pan/gui/actions.cc:702
+#: ../pan/gui/actions.cc:733
 msgid "Show _Toolbar"
 msgstr ""
 
-#: ../pan/gui/actions.cc:703
+#: ../pan/gui/actions.cc:734
 #, fuzzy
 msgid "Abbreviate Group Names"
 msgstr "/_Görünüm/Gr_up Panelindeki İsimleri Topla"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:736
+#, fuzzy
+msgid "Match Only _Read Articles"
+msgstr "Sadece Yeni Makaleleri göster"
+
+#: ../pan/gui/actions.cc:736
+#, fuzzy
+msgid "Match Only Read Articles"
+msgstr "Sadece Yeni Makaleleri göster"
+
+#: ../pan/gui/actions.cc:737
 #, fuzzy
 msgid "Match Only _Unread Articles"
 msgstr "Sadece Yeni Makaleleri göster"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:737
 #, fuzzy
 msgid "Match Only Unread Articles"
 msgstr "Sadece Yeni Makaleleri göster"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:738
 #, fuzzy
 msgid "Match Only _Cached Articles"
 msgstr "Sadece Önbellekteki Makaleleri Göster"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:738
 #, fuzzy
 msgid "Match Only Cached Articles"
 msgstr "Sadece Önbellekteki Makaleleri Göster"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:739
 #, fuzzy
 msgid "Match Only _Complete Articles"
 msgstr "Sadece Tamamlanmış Eklentileri Göster"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:739
 #, fuzzy
 msgid "Match Only Complete Articles"
 msgstr "Sadece Tamamlanmış Eklentileri Göster"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:740
 #, fuzzy
 msgid "Match Only _My Articles"
 msgstr "Eşlenen Makaleleri Göster"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:740
 #, fuzzy
 msgid "Match Only My Articles"
 msgstr "Eşlenen Makaleleri Göster"
 
-#: ../pan/gui/actions.cc:709
+#: ../pan/gui/actions.cc:741
 #, fuzzy
 msgid "Match Only _Watched Articles"
 msgstr "Sadece Önbellekteki Makaleleri Göster"
 
-#: ../pan/gui/actions.cc:709
+#: ../pan/gui/actions.cc:741
 #, fuzzy
 msgid "Match Only Watched Articles"
 msgstr "Sadece Önbellekteki Makaleleri Göster"
 
-#: ../pan/gui/actions.cc:711
+#: ../pan/gui/actions.cc:743
 #, fuzzy
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "/_Filtre/_Önbellekteki Makaleleri Eşle"
 
-#: ../pan/gui/actions.cc:712
+#: ../pan/gui/actions.cc:744
 #, fuzzy
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr "/_Filtre/Tara_fımdan Yazılan Makaleleri Eşle"
 
-#: ../pan/gui/actions.cc:713
+#: ../pan/gui/actions.cc:745
 #, fuzzy
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "/_Filtre/Tara_fımdan Yazılan Makaleleri Eşle"
 
-#: ../pan/gui/actions.cc:714
+#: ../pan/gui/actions.cc:746
 #, fuzzy
 msgid "Match Scores of 0 (_Normal)"
 msgstr "/_Filtre/G_özardı Edilen Konumları Eşle"
 
-#: ../pan/gui/actions.cc:715
+#: ../pan/gui/actions.cc:747
 #, fuzzy
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "/_Filtre/G_özardı Edilen Konumları Eşle"
 
-#: ../pan/gui/actions.cc:716
+#: ../pan/gui/actions.cc:748
 #, fuzzy
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "/_Filtre/G_özardı Edilen Konumları Eşle"
 
-#: ../pan/gui/actions.cc:718
+#: ../pan/gui/actions.cc:750
 msgid "Enable/Disable All _Rules"
 msgstr ""
 
-#: ../pan/gui/actions.cc:744
+#: ../pan/gui/actions.cc:778
 #, fuzzy
 msgid "Show Matching _Articles"
 msgstr "/_Filtre/E_şlenen Makaleleri Göster"
 
-#: ../pan/gui/actions.cc:745
+#: ../pan/gui/actions.cc:779
 #, fuzzy
 msgid "Show Matching Articles' _Threads"
 msgstr "/_Filtre/E_şlenen Makaleleri Göster"
 
-#: ../pan/gui/actions.cc:746
+#: ../pan/gui/actions.cc:780
 #, fuzzy
 msgid "Show Matching Articles' _Subthreads"
 msgstr "/_Filtre/E_şlenen Makaleleri Göster"
 
-#: ../pan/gui/body-pane.cc:1011
+#: ../pan/gui/body-pane.cc:1056
 #, fuzzy, c-format
 msgid "Unnamed File"
 msgstr "İmza dosyasını _seç"
 
-#: ../pan/gui/body-pane.cc:1092 ../pan/gui/gui.cc:1864
-#: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1617
-#: ../pan/gui/post-ui.cc:2496 ../pan/gui/prefs-ui.cc:833
-#: ../pan/gui/score-add-ui.cc:139
+#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1980
+#: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1748
+#: ../pan/gui/post-ui.cc:2588 ../pan/gui/prefs-ui.cc:855
+#: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Konu"
 
-#: ../pan/gui/body-pane.cc:1094 ../pan/gui/gui.cc:1864
+#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1980
 #, fuzzy
 msgid "From"
 msgstr "Kimden"
 
-#: ../pan/gui/body-pane.cc:1096 ../pan/gui/gui.cc:1865
-#: ../pan/gui/header-pane.cc:1695 ../pan/gui/log-ui.cc:305
-#: ../pan/gui/prefs-ui.cc:829
+#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1981
+#: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:307
+#: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
 msgstr "Tarih"
 
-#: ../pan/gui/body-pane.cc:1103
+#: ../pan/gui/body-pane.cc:1148
 msgid "Newsgroups"
 msgstr "Haber Grupları"
 
-#: ../pan/gui/body-pane.cc:1108
+#: ../pan/gui/body-pane.cc:1155 ../pan/gui/body-pane.cc:1163
+#: ../pan/gui/body-pane.cc:1170
+msgid "User-Agent"
+msgstr "Okuyucu"
+
+#: ../pan/gui/body-pane.cc:1176
 #, fuzzy
 msgid "Followup-To"
 msgstr "Ayrıca Cevapla: "
 
-#: ../pan/gui/body-pane.cc:1118
+#: ../pan/gui/body-pane.cc:1186
 msgid "Reply-To"
 msgstr "Cevapla"
 
-#: ../pan/gui/body-pane.cc:1160
+#: ../pan/gui/body-pane.cc:1229
 msgid " from "
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1162
+#: ../pan/gui/body-pane.cc:1231
 #, fuzzy
 msgid " at "
 msgstr "Tarih: "
 
-#: ../pan/gui/body-pane.cc:1264
+#: ../pan/gui/body-pane.cc:1318
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
 "\n"
-"<b>Signer</b> : %s ('%s')\n"
-"<b>Valid until</b> : %s\n"
-"<b>Created on</b> : %s"
+"<b>Signer:</b> %s ('%s')\n"
+"<b>Valid until:</b> %s\n"
+"<b>Created on:</b> %s"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1269
+#: ../pan/gui/body-pane.cc:1323
 msgid "always"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1485
+#: ../pan/gui/body-pane.cc:1543
 msgid "Copy _URL"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1680
+#: ../pan/gui/body-pane.cc:1748
 #, fuzzy
-msgid "Save attachment as ...."
+msgid "Save Attachment As..."
 msgstr "Eklentileri buraya kaydet:"
 
-#: ../pan/gui/body-pane.cc:1683
+#: ../pan/gui/body-pane.cc:1751
 #, fuzzy
-msgid "Save all attachments"
+msgid "Save All Attachments"
 msgstr "Eklentiler Kaydediliyor"
 
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1753
+#: ../pan/gui/body-pane.cc:1821
 msgid "Attachments"
 msgstr "Eklentiler"
 
-#. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:973
-#: ../pan/gui/gui.cc:1592 ../pan/gui/gui.cc:1893
-#: ../pan/gui/score-add-ui.cc:602
+#: ../pan/gui/body-pane.cc:1836
 #, fuzzy
-msgid "Pan"
-msgstr "Pan "
+msgid "Text View"
+msgstr "/G_it/_Sonraki Makale"
+
+#: ../pan/gui/body-pane.cc:1845
+msgid "HTML View"
+msgstr ""
 
 #: ../pan/gui/dl-headers-ui.cc:112
 #, fuzzy, c-format
@@ -975,16 +1008,16 @@ msgstr "tüm başlıklar"
 msgid "Get the _latest N headers: "
 msgstr "Ye_ni Başlıkları İndir"
 
-#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:826
+#: ../pan/gui/e-action-combo-box.c:386 ../pan/gui/prefs-ui.cc:848
 #, fuzzy
 msgid "Action"
 msgstr "Eylemler"
 
-#: ../pan/gui/e-action-combo-box.c:389
+#: ../pan/gui/e-action-combo-box.c:387
 msgid "A GtkRadioAction"
 msgstr ""
 
-#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:518
+#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:558
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
@@ -1069,8 +1102,8 @@ msgstr "Slav, Ukraynaca"
 msgid "Visual"
 msgstr ""
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2058
-#: ../pan/gui/post-ui.cc:519 ../pan/gui/prefs-ui.cc:737
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2178
+#: ../pan/gui/post-ui.cc:548 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr ""
 
@@ -1082,381 +1115,408 @@ msgstr ""
 msgid "Other..."
 msgstr ""
 
+#: ../pan/gui/e-cte-dialog.c:76
+#, fuzzy
+msgid "Default Encoding"
+msgstr "Çözülüyor: \"%s\""
+
 #: ../pan/gui/e-cte-dialog.c:78
 #, fuzzy
-msgid "Default encoding"
-msgstr "Çözülüyor: \"%s\""
+msgid "7-Bit Encoding"
+msgstr "Gövde Paneli"
 
 #: ../pan/gui/e-cte-dialog.c:80
 #, fuzzy
-msgid "7Bit Encoding"
+msgid "8-Bit Encoding"
 msgstr "Gövde Paneli"
 
 #: ../pan/gui/e-cte-dialog.c:82
 #, fuzzy
-msgid "8Bit Encoding"
+msgid "Base64 Encoding"
 msgstr "Gövde Paneli"
 
 #: ../pan/gui/e-cte-dialog.c:84
 #, fuzzy
-msgid "BASE64 Encoding"
-msgstr "Gövde Paneli"
-
-#: ../pan/gui/e-cte-dialog.c:86
-#, fuzzy
 msgid "Quoted-Printable Encoding"
 msgstr "Gövde Paneli"
 
-#: ../pan/gui/group-pane.cc:500
+#: ../pan/gui/group-pane.cc:330
+msgid "Sent"
+msgstr ""
+
+#: ../pan/gui/group-pane.cc:331
+msgid "Drafts"
+msgstr ""
+
+#: ../pan/gui/group-pane.cc:537
 msgid "Group"
 msgstr "Grup"
 
-#: ../pan/gui/group-pane.cc:501
+#: ../pan/gui/group-pane.cc:538
 #, fuzzy
 msgid "Group (regex)"
 msgstr "/Grup Ö_zellikleri..."
 
-#: ../pan/gui/group-pane.cc:913
+#: ../pan/gui/group-pane.cc:1010
+msgid "Local Folders"
+msgstr ""
+
+#: ../pan/gui/group-pane.cc:1011
 #, fuzzy
 msgid "Subscribed Groups"
 msgstr "Üye Olunan Haber Grupları"
 
-#: ../pan/gui/group-pane.cc:914
+#: ../pan/gui/group-pane.cc:1012
 #, fuzzy
 msgid "Other Groups"
 msgstr "Yeni Gruplar"
 
-#: ../pan/gui/group-pane.cc:954 ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/group-pane.cc:1052 ../pan/gui/score-view-ui.cc:157
 #, fuzzy
 msgid "Name"
 msgstr "_İsim"
 
-#: ../pan/gui/group-prefs-dialog.cc:156
+#: ../pan/gui/group-prefs-dialog.cc:162
 #, fuzzy
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "/_Araçlar/_Gönderme Profilleri..."
 
-#: ../pan/gui/group-prefs-dialog.cc:231
+#: ../pan/gui/group-prefs-dialog.cc:273
 #, fuzzy
 msgid "Pan: Group Preferences"
 msgstr "Pan: Tercihler"
 
-#: ../pan/gui/group-prefs-dialog.cc:247
+#: ../pan/gui/group-prefs-dialog.cc:288
 #, fuzzy, c-format
 msgid "Properties for Groups"
 msgstr "\"%s\" için ayarlar"
 
-#: ../pan/gui/group-prefs-dialog.cc:249
+#: ../pan/gui/group-prefs-dialog.cc:290
 #, fuzzy, c-format
 msgid "Properties for %s"
 msgstr "\"%s\" için ayarlar"
 
-#: ../pan/gui/group-prefs-dialog.cc:257
+#: ../pan/gui/group-prefs-dialog.cc:298
 #, fuzzy
 msgid "Character _encoding:"
 msgstr "Alıntı yapılan metni belirten karakterler:"
 
-#: ../pan/gui/group-prefs-dialog.cc:259
+#: ../pan/gui/group-prefs-dialog.cc:300
 #, fuzzy
 msgid "Directory for Saving Attachments"
 msgstr "Eklenmiş dosyaları k_aydetme dizini"
 
-#: ../pan/gui/group-prefs-dialog.cc:269
+#: ../pan/gui/group-prefs-dialog.cc:308
 #, fuzzy
 msgid "Directory for _saving attachments:"
 msgstr "Eklenmiş dosyaları k_aydetme dizini"
 
-#: ../pan/gui/group-prefs-dialog.cc:271
+#: ../pan/gui/group-prefs-dialog.cc:310
 #, fuzzy
 msgid "Posting _profile:"
 msgstr "Pan: Profil"
 
-#: ../pan/gui/group-prefs-dialog.cc:277
+#: ../pan/gui/group-prefs-dialog.cc:315
 msgid "Spellchecker _language:"
 msgstr ""
 
-#: ../pan/gui/gui.cc:273
+#: ../pan/gui/group-prefs-dialog.cc:318
+msgid "Group color:"
+msgstr ""
+
+#: ../pan/gui/gui.cc:312
 msgid "Open the Task Manager"
 msgstr "Görev Yöneticisini Aç"
 
-#: ../pan/gui/gui.cc:301
+#: ../pan/gui/gui.cc:335
 #, fuzzy
 msgid "Open the Event Log"
 msgstr "Durum Kayıtlarını Aç"
 
-#: ../pan/gui/gui.cc:561
+#: ../pan/gui/gui.cc:611
 msgid "Save NZB's Files"
 msgstr ""
 
-#: ../pan/gui/gui.cc:588
+#: ../pan/gui/gui.cc:638
 msgid "Untitled.nzb"
 msgstr ""
 
-#: ../pan/gui/gui.cc:590
+#: ../pan/gui/gui.cc:640
 #, fuzzy
 msgid "Save NZB File as..."
 msgstr "/Makaleyi _Farklı Kaydet..."
 
-#: ../pan/gui/gui.cc:757
+#: ../pan/gui/gui.cc:809
 #, fuzzy
 msgid "Import NZB Files"
 msgstr "Pan: .newrc Dosyasını Oku"
 
-#: ../pan/gui/gui.cc:765 ../pan/gui/post-ui.cc:3197
+#: ../pan/gui/gui.cc:817 ../pan/gui/post-ui.cc:3287
 #, fuzzy
 msgid "NZB Files"
 msgstr "Dosyalar"
 
-#: ../pan/gui/gui.cc:770
+#: ../pan/gui/gui.cc:822
 #, fuzzy
 msgid "All Files"
 msgstr "Dosyalar"
 
-#: ../pan/gui/gui.cc:1258
+#: ../pan/gui/gui.cc:1334
 #, fuzzy
 msgid "Unable to supersede article."
 msgstr "/_Dosya/Makaleyi _Yazdır..."
 
-#: ../pan/gui/gui.cc:1259 ../pan/gui/gui.cc:1333
+#: ../pan/gui/gui.cc:1335 ../pan/gui/gui.cc:1409
 msgid "The article doesn't match any of your posting profiles."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1306
+#: ../pan/gui/gui.cc:1382
 msgid "Revise and send this article to replace the old one."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1307 ../pan/gui/gui.cc:1370
+#: ../pan/gui/gui.cc:1383 ../pan/gui/gui.cc:1446
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1332
+#: ../pan/gui/gui.cc:1408
 #, fuzzy
 msgid "Unable to cancel article."
 msgstr "Komut yaratılamadı: %s"
 
-#: ../pan/gui/gui.cc:1369
+#: ../pan/gui/gui.cc:1445
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
 
-#: ../pan/gui/gui.cc:1387
-msgid "You marked some articles for deletion"
-msgstr ""
+#: ../pan/gui/gui.cc:1463
+#, fuzzy
+#| msgid "You haven't loaded an article to print."
+msgid "You have marked some articles for deletion."
+msgstr "Yazdırılacak bir makale açmadınız."
 
-#: ../pan/gui/gui.cc:1388
+#: ../pan/gui/gui.cc:1464
 #, fuzzy
 msgid "Are you sure you want to delete them?"
 msgstr "Gerçekten %d grubu ve içindeki makaleleri silmek istiyor musunuz?"
 
-#: ../pan/gui/gui.cc:1413
-#, fuzzy
-msgid "Always trust"
-msgstr "Düzenleyici"
-
-#: ../pan/gui/gui.cc:1416
-msgid "Do you want to accept it permanently (deletable afterwards) ?"
+#: ../pan/gui/gui.cc:1490
+msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1595
+#: ../pan/gui/gui.cc:1670
 #, fuzzy
 msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
 msgstr "Telif hakkı (C) 2002 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1600
+#: ../pan/gui/gui.cc:1675
 msgid "translator-credits"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1709
+#: ../pan/gui/gui.cc:1808
+#, fuzzy
+msgid "_1. Header Pane"
+msgstr "_Başlık Paneli:"
+
+#: ../pan/gui/gui.cc:1809
+#, fuzzy
+msgid "_2. Search Pane"
+msgstr "_Başlık Paneli:"
+
+#: ../pan/gui/gui.cc:1815
 #, fuzzy
 msgid "_1. Group Pane"
 msgstr "_Grup Listesi Paneli"
 
-#: ../pan/gui/gui.cc:1710
+#: ../pan/gui/gui.cc:1817 ../pan/gui/gui.cc:1819
 #, fuzzy
 msgid "_2. Header Pane"
 msgstr "_Başlık Paneli:"
 
-#: ../pan/gui/gui.cc:1711
+#: ../pan/gui/gui.cc:1821
 #, fuzzy
 msgid "_3. Body Pane"
 msgstr "Gövde Paneli"
 
-#: ../pan/gui/gui.cc:1800 ../pan/gui/gui.cc:1815
+#: ../pan/gui/gui.cc:1917 ../pan/gui/gui.cc:1932
 msgid " Bytes"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1803
+#: ../pan/gui/gui.cc:1920
 msgid " KB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1806
+#: ../pan/gui/gui.cc:1923
 msgid " MB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1809
+#: ../pan/gui/gui.cc:1926
 msgid " GB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1812
+#: ../pan/gui/gui.cc:1929
 msgid " TB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1844
+#: ../pan/gui/gui.cc:1961
 #, fuzzy, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
 msgstr[0] "Makalenin eklentisi yok"
 msgstr[1] "Makalenin eklentisi yok"
 
-#: ../pan/gui/gui.cc:1846
+#: ../pan/gui/gui.cc:1963
 #, fuzzy, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Makalenin eklentisi yok"
 msgstr[1] "Makalenin eklentisi yok"
 
-#: ../pan/gui/gui.cc:1865 ../pan/gui/header-pane.cc:1190
+#: ../pan/gui/gui.cc:1981 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "İleti-Numarası"
 
-#: ../pan/gui/gui.cc:1866 ../pan/gui/header-pane.cc:1665
-#: ../pan/gui/prefs-ui.cc:830
+#: ../pan/gui/gui.cc:1982 ../pan/gui/header-pane.cc:1796
+#: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Satır"
 
-#: ../pan/gui/gui.cc:1866
+#: ../pan/gui/gui.cc:1982
 msgid "Size"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1867 ../pan/gui/header-pane.cc:1680
-#: ../pan/gui/prefs-ui.cc:828
+#: ../pan/gui/gui.cc:1983 ../pan/gui/header-pane.cc:1812
+#: ../pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1917
+#: ../pan/gui/gui.cc:2033
 msgid ""
-"Error loading iconv library. Some Charsets in the GUI will not be able to be "
-"encoded."
+"Error loading iconv library. Encoding certain character sets will not work "
+"in GUI."
 msgstr ""
 
-#: ../pan/gui/gui.cc:2059
+#: ../pan/gui/gui.cc:2179
 #, fuzzy
 msgid "Body Pane Encoding"
 msgstr "Gövde Paneli"
 
-#: ../pan/gui/gui.cc:2090 ../pan/gui/task-pane.cc:569
+#: ../pan/gui/gui.cc:2210 ../pan/gui/task-pane.cc:609
 #, c-format
 msgid "Offline"
 msgstr "Bağlı değil"
 
-#: ../pan/gui/gui.cc:2094
+#: ../pan/gui/gui.cc:2214
 #, fuzzy, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
 msgstr[0] "%d bağlantı kapatılıyor"
 msgstr[1] "%d bağlantı kapatılıyor"
 
-#: ../pan/gui/gui.cc:2096 ../pan/gui/gui.cc:2126
+#: ../pan/gui/gui.cc:2216 ../pan/gui/gui.cc:2246
 #, c-format
 msgid "No Connections"
 msgstr "Bağlantı Yok"
 
-#: ../pan/gui/gui.cc:2100
+#: ../pan/gui/gui.cc:2220
 #, c-format
 msgid "Connecting"
 msgstr "Bağlanılıyor"
 
-#: ../pan/gui/gui.cc:2113
+#: ../pan/gui/gui.cc:2233
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr ""
 
-#: ../pan/gui/gui.cc:2169
+#: ../pan/gui/gui.cc:2289
 #, c-format
 msgid "No Tasks"
 msgstr "Görev Yok"
 
-#: ../pan/gui/gui.cc:2171 ../pan/gui/prefs-ui.cc:1047
+#: ../pan/gui/gui.cc:2291 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Görevler"
 
-#: ../pan/gui/gui.cc:2182 ../pan/gui/task-pane.cc:435
+#: ../pan/gui/gui.cc:2308 ../pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr ""
 
-#: ../pan/gui/gui.cc:2234
+#: ../pan/gui/gui.cc:2360
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
 msgstr ""
 
-#: ../pan/gui/header-pane.cc:1186
+#: ../pan/gui/header-pane.cc:1311 ../pan/gui/task-pane.cc:795
 msgid "Subject or Author"
 msgstr ""
 
-#: ../pan/gui/header-pane.cc:1187
+#: ../pan/gui/header-pane.cc:1312 ../pan/gui/task-pane.cc:796
 msgid "Sub or Auth (regex)"
 msgstr ""
 
-#: ../pan/gui/header-pane.cc:1189 ../pan/gui/header-pane.cc:1649
-#: ../pan/gui/prefs-ui.cc:827 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/header-pane.cc:1314 ../pan/gui/header-pane.cc:1780
+#: ../pan/gui/prefs-ui.cc:849 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/task-pane.cc:798
 msgid "Author"
 msgstr "Yazar"
 
-#: ../pan/gui/header-pane.cc:1634 ../pan/gui/prefs-ui.cc:831
+#: ../pan/gui/header-pane.cc:1765 ../pan/gui/prefs-ui.cc:853
 msgid "Score"
 msgstr ""
 
-#: ../pan/gui/log-ui.cc:103
+#: ../pan/gui/log-ui.cc:104
 msgid "Save Event List"
 msgstr ""
 
-#: ../pan/gui/log-ui.cc:256
+#: ../pan/gui/log-ui.cc:258
 #, fuzzy
 msgid "Pan: Events"
 msgstr "Pan: Sunucular"
 
-#: ../pan/gui/log-ui.cc:315
+#: ../pan/gui/log-ui.cc:317
 msgid "Message"
 msgstr "İleti"
 
-#: ../pan/gui/pan.cc:330
+#: ../pan/gui/pan.cc:359
 msgid "Maximize"
 msgstr ""
 
-#: ../pan/gui/pan.cc:383
-msgid "An Error has occurred!"
+#: ../pan/gui/pan.cc:412
+msgid "An error has occurred!"
 msgstr ""
 
-#: ../pan/gui/pan.cc:397
+#: ../pan/gui/pan.cc:426
 #, fuzzy
 msgid "New Articles!"
 msgstr "/G_it/_Sonraki Makale"
 
-#: ../pan/gui/pan.cc:398
+#: ../pan/gui/pan.cc:427
 msgid ""
 "There are new\n"
 "articles available."
 msgstr ""
 
-#: ../pan/gui/pan.cc:465
+#: ../pan/gui/pan.cc:494
 msgid "Toggle on/offline"
 msgstr ""
 
-#: ../pan/gui/pan.cc:513
+#: ../pan/gui/pan.cc:542
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
 "To start newsreading, first Add a Server."
 msgstr ""
 
-#: ../pan/gui/pan.cc:595
+#: ../pan/gui/pan.cc:624
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
 "\n"
 "URL Options\n"
+"  headers:group.name       Download new headers for the specified "
+"newsgroup.\n"
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -1467,236 +1527,237 @@ msgid ""
 "queue.\n"
 msgstr ""
 
-#: ../pan/gui/pan.cc:867
+#: ../pan/gui/pan.cc:958
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr ""
 
-#: ../pan/gui/pan.cc:871
+#: ../pan/gui/pan.cc:962
 #, fuzzy, c-format
 msgid "Pan %s started"
 msgstr "Pan %s Başlatıldı"
 
-#: ../pan/gui/pan.cc:890
+#: ../pan/gui/pan.cc:982
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 
-#: ../pan/gui/pan.cc:1009
+#: ../pan/gui/pan.cc:1100
 msgid "Pan notification"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:186
+#: ../pan/gui/post-ui.cc:163
 #, c-format
-msgid "Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."
+msgid "Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:286
+#: ../pan/gui/post-ui.cc:266 ../pan/gui/post-ui.cc:297
 #, fuzzy, c-format
 msgid "Error setting custom spellchecker: %s"
 msgstr "Soket kodlaması tanımlanırken hata oluştu: %s"
 
-#: ../pan/gui/post-ui.cc:291 ../pan/gui/post-ui.cc:300
+#: ../pan/gui/post-ui.cc:270 ../pan/gui/post-ui.cc:278
+#: ../pan/gui/post-ui.cc:301 ../pan/gui/post-ui.cc:309
 #, fuzzy, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "Soket kodlaması tanımlanırken hata oluştu: %s"
 
-#: ../pan/gui/post-ui.cc:419
+#: ../pan/gui/post-ui.cc:448
 #, fuzzy
 msgid "_Profile"
 msgstr "Profil"
 
-#: ../pan/gui/post-ui.cc:420
+#: ../pan/gui/post-ui.cc:449
 #, fuzzy
 msgid "Set Editor"
 msgstr "Düzenleyici"
 
-#: ../pan/gui/post-ui.cc:422
+#: ../pan/gui/post-ui.cc:451
 #, fuzzy
 msgid "_Send Article"
 msgstr "/G_it/An_a Makaleler"
 
-#: ../pan/gui/post-ui.cc:422
+#: ../pan/gui/post-ui.cc:451
 #, fuzzy
 msgid "Send Article Now"
 msgstr "Şimdi Gönder"
 
-#: ../pan/gui/post-ui.cc:423
+#: ../pan/gui/post-ui.cc:452
 #, fuzzy
 msgid "_Send and Save Articles to NZB"
 msgstr "Pan: Sunucular"
 
-#: ../pan/gui/post-ui.cc:423
+#: ../pan/gui/post-ui.cc:452
 #, fuzzy
 msgid "Send and Save Articles to NZB"
 msgstr "Pan: Sunucular"
 
-#: ../pan/gui/post-ui.cc:424
+#: ../pan/gui/post-ui.cc:453
 #, fuzzy
 msgid "Set Character _Encoding..."
 msgstr "Alıntı yapılan metni belirten karakterler:"
 
-#: ../pan/gui/post-ui.cc:425
+#: ../pan/gui/post-ui.cc:454
 #, fuzzy
 msgid "Set Content _Transfer Encoding..."
 msgstr "Alıntı yapılan metni belirten karakterler:"
 
-#: ../pan/gui/post-ui.cc:426
+#: ../pan/gui/post-ui.cc:455
 #, fuzzy
 msgid "Sa_ve Draft"
 msgstr "Makaleyi Farklı Kaydet..."
 
-#: ../pan/gui/post-ui.cc:426
+#: ../pan/gui/post-ui.cc:455
 msgid "Save as a Draft for Future Posting"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:427
+#: ../pan/gui/post-ui.cc:456
 #, fuzzy
 msgid "_Open Draft..."
 msgstr "/_Okunmuş Makaleler"
 
-#: ../pan/gui/post-ui.cc:427
+#: ../pan/gui/post-ui.cc:456
 #, fuzzy
 msgid "Open an Article Draft"
 msgstr "/_Okunmuş Makaleler"
 
-#: ../pan/gui/post-ui.cc:432
+#: ../pan/gui/post-ui.cc:461
 #, fuzzy
 msgid "_Rot13"
 msgstr "Rot13"
 
-#: ../pan/gui/post-ui.cc:432
+#: ../pan/gui/post-ui.cc:461
 msgid "Rot13 Selected Text"
 msgstr "Rot13 Seçili Metin"
 
-#: ../pan/gui/post-ui.cc:433
+#: ../pan/gui/post-ui.cc:462
 #, fuzzy
 msgid "Run _Editor"
 msgstr "Düzenleyici"
 
-#: ../pan/gui/post-ui.cc:433
+#: ../pan/gui/post-ui.cc:462
 #, fuzzy
 msgid "Run Editor"
 msgstr "Düzenleyici"
 
-#: ../pan/gui/post-ui.cc:435
+#: ../pan/gui/post-ui.cc:464
 msgid "Add _Files to Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:435
+#: ../pan/gui/post-ui.cc:464
 msgid "Add Files to Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:450 ../pan/gui/post-ui.cc:451
+#: ../pan/gui/post-ui.cc:479 ../pan/gui/post-ui.cc:480
 #, fuzzy
 msgid "Remove from Queue"
 msgstr "Yeni Sunucu"
 
-#: ../pan/gui/post-ui.cc:455 ../pan/gui/post-ui.cc:456
+#: ../pan/gui/post-ui.cc:484 ../pan/gui/post-ui.cc:485
 #, fuzzy
 msgid "Clear List"
 msgstr "Filtreyi Seçin:"
 
-#: ../pan/gui/post-ui.cc:460 ../pan/gui/post-ui.cc:461
+#: ../pan/gui/post-ui.cc:489 ../pan/gui/post-ui.cc:490
 #, fuzzy
 msgid "Select Needed Parts"
 msgstr "Seçili düzen: "
 
-#: ../pan/gui/post-ui.cc:465 ../pan/gui/post-ui.cc:466
-#: ../pan/gui/task-pane.cc:636 ../pan/gui/task-pane.cc:637
+#: ../pan/gui/post-ui.cc:494 ../pan/gui/post-ui.cc:495
+#: ../pan/gui/task-pane.cc:677 ../pan/gui/task-pane.cc:678
 msgid "Move Up"
 msgstr "Yukarı Taşı"
 
-#: ../pan/gui/post-ui.cc:470 ../pan/gui/post-ui.cc:471
-#: ../pan/gui/task-pane.cc:641 ../pan/gui/task-pane.cc:642
+#: ../pan/gui/post-ui.cc:499 ../pan/gui/post-ui.cc:500
+#: ../pan/gui/task-pane.cc:682 ../pan/gui/task-pane.cc:683
 msgid "Move Down"
 msgstr "Aşağı Taşı"
 
-#: ../pan/gui/post-ui.cc:475 ../pan/gui/post-ui.cc:476
+#: ../pan/gui/post-ui.cc:504 ../pan/gui/post-ui.cc:505
 #, fuzzy
 msgid "Move to Top"
 msgstr "Yukarı Taşı"
 
-#: ../pan/gui/post-ui.cc:480 ../pan/gui/post-ui.cc:481
+#: ../pan/gui/post-ui.cc:509 ../pan/gui/post-ui.cc:510
 #, fuzzy
 msgid "Move to Bottom"
 msgstr "Seçili görev(ler)i En Alta Taşı"
 
-#: ../pan/gui/post-ui.cc:488
+#: ../pan/gui/post-ui.cc:517
 #, fuzzy
 msgid "_Wrap Text"
 msgstr "Metni Kes"
 
-#: ../pan/gui/post-ui.cc:488
+#: ../pan/gui/post-ui.cc:517
 #, fuzzy
 msgid "Wrap Text"
 msgstr "Metni Kes"
 
-#: ../pan/gui/post-ui.cc:489
+#: ../pan/gui/post-ui.cc:518
 #, fuzzy
 msgid "Always Run Editor"
 msgstr "Düzenleyici"
 
-#: ../pan/gui/post-ui.cc:490
-msgid "Remember Character Encoding for this Group"
-msgstr ""
-
-#: ../pan/gui/post-ui.cc:491
-#, fuzzy
-msgid "Thread Attached Replies"
-msgstr "Konum gözardı ediliyor ya da izleniyor"
-
-#: ../pan/gui/post-ui.cc:492
-#, fuzzy
-msgid "PGP-Encrypt the Message"
-msgstr "Makale numarasını yarat"
-
-#: ../pan/gui/post-ui.cc:493
-#, fuzzy
-msgid "PGP-Sign the Message"
-msgstr "Bu Makaleyi Şimdi Gönder"
-
-#: ../pan/gui/post-ui.cc:494
-msgid "Check _Spelling"
+#: ../pan/gui/post-ui.cc:519
+msgid "Remember Character Encoding for This Group"
 msgstr ""
 
 #: ../pan/gui/post-ui.cc:520
 #, fuzzy
+msgid "Thread Attached Replies"
+msgstr "Konum gözardı ediliyor ya da izleniyor"
+
+#: ../pan/gui/post-ui.cc:521
+#, fuzzy
+msgid "PGP-Encrypt the Article"
+msgstr "Makale numarasını yarat"
+
+#: ../pan/gui/post-ui.cc:522
+#, fuzzy
+msgid "PGP-Sign the Article"
+msgstr "Bu Makaleyi Şimdi Gönder"
+
+#: ../pan/gui/post-ui.cc:523
+msgid "Check _Spelling"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:549
+#, fuzzy
 msgid "New Article's Encoding:"
 msgstr "Pan: Makaleleri Farklı Kaydet"
 
-#: ../pan/gui/post-ui.cc:530
+#: ../pan/gui/post-ui.cc:559
 #, fuzzy
 msgid "Content Transfer Encoding"
 msgstr "Gövde Paneli"
 
-#: ../pan/gui/post-ui.cc:531
+#: ../pan/gui/post-ui.cc:560
 #, fuzzy
 msgid "New Article's Content Transfer Encoding:"
 msgstr "Pan: Makaleleri Farklı Kaydet"
 
-#: ../pan/gui/post-ui.cc:711
+#: ../pan/gui/post-ui.cc:740
 msgid "Your changes will be lost!"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:712
+#: ../pan/gui/post-ui.cc:741
 msgid "Close this window and lose your changes?"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:757 ../pan/gui/post-ui.cc:796
+#: ../pan/gui/post-ui.cc:786 ../pan/gui/post-ui.cc:825
 msgid "There were problems with this post."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:759 ../pan/gui/post-ui.cc:798
-#: ../pan/gui/post-ui.cc:861
+#: ../pan/gui/post-ui.cc:788 ../pan/gui/post-ui.cc:827
+#: ../pan/gui/post-ui.cc:892
 #, fuzzy
 msgid "Go Back"
 msgstr "/G_it/_Yeniden Oku"
 
-#: ../pan/gui/post-ui.cc:761
-msgid "Post Anyway"
+#: ../pan/gui/post-ui.cc:790
+msgid "Continue Anyway"
 msgstr ""
 
 #. Prompt the user
-#: ../pan/gui/post-ui.cc:790
+#: ../pan/gui/post-ui.cc:819
 #, fuzzy, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
@@ -1704,144 +1765,170 @@ msgstr ""
 "İleti '%s' karakter kümesinde tanımlayan karakterler içeriyor - '%s' "
 "kullanılmış olabilir."
 
-#: ../pan/gui/post-ui.cc:813
+#: ../pan/gui/post-ui.cc:842
 #, fuzzy
 msgid "Go _Online"
 msgstr "Bağlı"
 
-#: ../pan/gui/post-ui.cc:860
+#: ../pan/gui/post-ui.cc:891
 msgid "The file queue is empty, so no files can be saved."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1019
+#: ../pan/gui/post-ui.cc:1070
+#, fuzzy
+msgid "IO Error"
+msgstr "Hata"
+
+#: ../pan/gui/post-ui.cc:1070
+msgid "No space left on device"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1071
+#, c-format
+msgid "Error copying message to %s folder. Reason: %s"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1077
+#, c-format
+msgid "Error creating message in %s mail folder: Invalid article."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1099
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1054
+#: ../pan/gui/post-ui.cc:1104
+msgid ""
+"The selected posting server is currently disabled. Please choose an "
+"appropriate alternative."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1146
 #, fuzzy
 msgid "Pan is Offline."
 msgstr "Pan bağlı değil"
 
-#: ../pan/gui/post-ui.cc:1055
+#: ../pan/gui/post-ui.cc:1147
 msgid "Go online to post the article?"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1102
+#: ../pan/gui/post-ui.cc:1196
 #, c-format
 msgid ""
-"Error signing/encrypting your message. Perhaps you misspelled your email-"
-"address (%s) ?"
+"Error signing/encrypting your message. Perhaps you misspelled your email "
+"address (%s)?"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1267
+#: ../pan/gui/post-ui.cc:1344
 #, fuzzy
 msgid "Error opening temporary file"
 msgstr "\"%s\" geçici dosyası açılırken hata oluştu"
 
-#: ../pan/gui/post-ui.cc:1279
+#: ../pan/gui/post-ui.cc:1356
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Makale geçici dosyaya yazılırken hata oluştu: %s"
 
-#: ../pan/gui/post-ui.cc:1298
+#: ../pan/gui/post-ui.cc:1375
 #, fuzzy, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr "\"Harici düzenleyici\" komutu yazımı sırasında hata oluştu: %s"
 
-#: ../pan/gui/post-ui.cc:1339
+#: ../pan/gui/post-ui.cc:1416
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Harici düzenleyici başlatılırken hata oluştu: %s"
 
-#: ../pan/gui/post-ui.cc:1395
+#: ../pan/gui/post-ui.cc:1479
 #, fuzzy
 msgid "Open Draft Article"
 msgstr "/_Okunmuş Makaleler"
 
-#: ../pan/gui/post-ui.cc:1606
+#: ../pan/gui/post-ui.cc:1691
 #, fuzzy
 msgid "Save Draft Article"
 msgstr "Makaleyi Farklı Kaydet..."
 
-#: ../pan/gui/post-ui.cc:1803
+#: ../pan/gui/post-ui.cc:1889
 #, fuzzy, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "\"%s\" imza programı çalıştırılamadı: %s"
 
-#: ../pan/gui/post-ui.cc:1839
+#: ../pan/gui/post-ui.cc:1925
 #, fuzzy
 msgid "Couldn't convert signature to UTF-8."
 msgstr "'%s' imza dosyası UTF-8'e çevirlemedi. İmza '%s' içinde olmalı."
 
-#: ../pan/gui/post-ui.cc:2334
+#: ../pan/gui/post-ui.cc:2427
 #, fuzzy
 msgid "F_rom"
 msgstr "Kimden"
 
-#: ../pan/gui/post-ui.cc:2352
+#: ../pan/gui/post-ui.cc:2444
 #, fuzzy
 msgid "_Subject"
 msgstr "_Konu:"
 
-#: ../pan/gui/post-ui.cc:2365
+#: ../pan/gui/post-ui.cc:2457
 #, fuzzy
 msgid "_Newsgroups"
 msgstr "/_Haber Grupları"
 
-#: ../pan/gui/post-ui.cc:2379
+#: ../pan/gui/post-ui.cc:2471
 #, fuzzy
 msgid "Mail _To"
 msgstr "Kime"
 
-#: ../pan/gui/post-ui.cc:2481
+#: ../pan/gui/post-ui.cc:2573
 #, fuzzy
 msgid "Delete from Queue"
 msgstr "/Grubu _Sil"
 
-#: ../pan/gui/post-ui.cc:2494
+#: ../pan/gui/post-ui.cc:2586
 msgid "No."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2498 ../pan/gui/post-ui.cc:2592
-#: ../pan/gui/post-ui.cc:2633
+#: ../pan/gui/post-ui.cc:2590 ../pan/gui/post-ui.cc:2682
+#: ../pan/gui/post-ui.cc:2723
 msgid "Filename"
 msgstr "Dosya Adı"
 
-#: ../pan/gui/post-ui.cc:2500
-msgid "Size (kB)"
+#: ../pan/gui/post-ui.cc:2592
+msgid "Size (KB)"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2600
+#: ../pan/gui/post-ui.cc:2690
 #, fuzzy
 msgid "The current filename"
 msgstr "Kodlanmış Dosya Adı Kullan"
 
-#: ../pan/gui/post-ui.cc:2604
+#: ../pan/gui/post-ui.cc:2694
 #, fuzzy
 msgid "Subject Line"
 msgstr "Konu"
 
-#: ../pan/gui/post-ui.cc:2612
-msgid "The current Subject Line"
-msgstr ""
+#: ../pan/gui/post-ui.cc:2702
+#, fuzzy
+msgid "The current subject line"
+msgstr "Kodlanmış Dosya Adı Kullan"
 
-#: ../pan/gui/post-ui.cc:2626
+#: ../pan/gui/post-ui.cc:2716
 msgid "No. "
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2630
+#: ../pan/gui/post-ui.cc:2720
 msgid "Enable/Disable"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2664
+#: ../pan/gui/post-ui.cc:2754
 #, fuzzy
 msgid "Follo_wup-To"
 msgstr "Ayrıca Cevapla: "
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: ../pan/gui/post-ui.cc:2673
+#: ../pan/gui/post-ui.cc:2763
 #, fuzzy
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
@@ -1854,594 +1941,686 @@ msgstr ""
 "Bütün cevapları kendi e-posta adresinize yönlendirmek için \"Cevapla: "
 "gönderen\"i kullanın."
 
-#: ../pan/gui/post-ui.cc:2679
+#: ../pan/gui/post-ui.cc:2770
 #, fuzzy
 msgid "_Reply-To"
 msgstr "Cevapla"
 
-#: ../pan/gui/post-ui.cc:2687
+#: ../pan/gui/post-ui.cc:2778
+#, fuzzy
+#| msgid ""
+#| "The email account where mail replies to your posted message should go.  "
+#| "This is only needed if it differs from the \"From\" header."
 msgid ""
-"The email account where mail replies to your posted message should go.  This "
+"The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
 msgstr ""
 "İletinize cevap veren haber sunucusuna erişilemedi. Böyle birşeye sadece "
 "\"Gönder\" başlığı farklı olduğunda gerek duyulur."
 
-#: ../pan/gui/post-ui.cc:2693
+#: ../pan/gui/post-ui.cc:2785
 #, fuzzy
 msgid "_Custom Headers"
 msgstr "Özel Başlıklar"
 
-#: ../pan/gui/post-ui.cc:2717
+#: ../pan/gui/post-ui.cc:2809
 #, fuzzy
 msgid "Add \"_User-Agent\" header"
 msgstr "\"User-Agent\"·bilgisini ekleme"
 
-#: ../pan/gui/post-ui.cc:2724
+#: ../pan/gui/post-ui.cc:2816
 #, fuzzy
-msgid "Add \"Message-_Id\" header"
+msgid "Add \"Message-_ID\" header"
 msgstr "İleti-numarası: "
 
-#: ../pan/gui/post-ui.cc:2855
+#: ../pan/gui/post-ui.cc:2947
 #, fuzzy
 msgid "Select Parts"
 msgstr "Yazıtipi Seçin"
 
-#: ../pan/gui/post-ui.cc:2866
+#: ../pan/gui/post-ui.cc:2960
 msgid "_Parts"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3022
+#: ../pan/gui/post-ui.cc:3114
 #, fuzzy
 msgid "Post Article"
 msgstr "Makaleleri Yükler"
 
-#: ../pan/gui/post-ui.cc:3043
+#: ../pan/gui/post-ui.cc:3135
 #, fuzzy
 msgid "_Message"
 msgstr "İleti"
 
-#: ../pan/gui/post-ui.cc:3044
+#: ../pan/gui/post-ui.cc:3136
 #, fuzzy
 msgid "More _Headers"
 msgstr "Daha Fazla Başlık"
 
-#: ../pan/gui/post-ui.cc:3045
+#: ../pan/gui/post-ui.cc:3137
 #, fuzzy
 msgid "File _Queue"
 msgstr "/_Dosya/_Çık"
 
-#: ../pan/gui/post-ui.cc:3077 ../pan/gui/profiles-dialog.cc:478
+#: ../pan/gui/post-ui.cc:3169 ../pan/gui/profiles-dialog.cc:481
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "%d tarihinde, %n dedi ki:"
 
-#: ../pan/gui/post-ui.cc:3106
+#: ../pan/gui/post-ui.cc:3198
 msgid "Add files to queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3184
+#: ../pan/gui/post-ui.cc:3274
 msgid "Save Upload Queue as NZB File"
 msgstr ""
 
-#: ../pan/gui/prefs.cc:343
+#: ../pan/gui/prefs.cc:364
 #, fuzzy, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "\"%s\" imza komutu yazılamadı"
 
-#: ../pan/gui/prefs-ui.cc:120
+#: ../pan/gui/prefs-ui.cc:123
 msgid "Grab Key"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:126
+#: ../pan/gui/prefs-ui.cc:129
 #, c-format
 msgid ""
 "Press the combination of the keys\n"
 "you want to use for \"%s\"."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:166
+#: ../pan/gui/prefs-ui.cc:169
 #, fuzzy
-msgid "Edit Hotkey"
-msgstr "Filtreleri Düzenle"
+msgid "Edit Shortcut"
+msgstr "Düzenle"
 
-#: ../pan/gui/prefs-ui.cc:228
-msgid "Error: Shortkey is invalid!"
+#: ../pan/gui/prefs-ui.cc:231
+msgid "Error: Shortcut key is invalid!"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:244
-msgid "Error: Shortkey already exists!"
+#: ../pan/gui/prefs-ui.cc:247
+msgid "Error: Shortcut key already exists!"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:535
+#: ../pan/gui/prefs-ui.cc:561
 #, fuzzy
 msgid "Show only icons"
 msgstr "Profil Bilgileri"
 
-#: ../pan/gui/prefs-ui.cc:536
+#: ../pan/gui/prefs-ui.cc:562
 #, fuzzy
 msgid "Show only text"
 msgstr "/_Görünüm/G_övde Panelini Göster"
 
-#: ../pan/gui/prefs-ui.cc:537
+#: ../pan/gui/prefs-ui.cc:563
 #, fuzzy
 msgid "Show icons and text"
 msgstr "Eklentileri buraya kaydet:"
 
-#: ../pan/gui/prefs-ui.cc:576
+#: ../pan/gui/prefs-ui.cc:602
 #, fuzzy
 msgid "Use GNOME Preferences"
 msgstr "Pan: Tercihler"
 
-#: ../pan/gui/prefs-ui.cc:577
+#: ../pan/gui/prefs-ui.cc:603
 #, fuzzy
 msgid "Use KDE Preferences"
 msgstr "Referanslar"
 
-#: ../pan/gui/prefs-ui.cc:578
+#: ../pan/gui/prefs-ui.cc:604
 #, fuzzy
 msgid "Use OS X Preferences"
 msgstr "Referanslar"
 
-#: ../pan/gui/prefs-ui.cc:579
+#: ../pan/gui/prefs-ui.cc:605
 #, fuzzy
 msgid "Use Windows Preferences"
 msgstr "Pan: Tercihler"
 
-#: ../pan/gui/prefs-ui.cc:580
+#: ../pan/gui/prefs-ui.cc:606
 #, fuzzy
 msgid "Custom Command:"
 msgstr "Yazdırma Komutu:"
 
-#: ../pan/gui/prefs-ui.cc:632
+#: ../pan/gui/prefs-ui.cc:658
 #, fuzzy
 msgid "Disabled"
 msgstr "Başarısız"
 
-#: ../pan/gui/prefs-ui.cc:633
-msgid "Only new (Score == 0)"
+#: ../pan/gui/prefs-ui.cc:659
+msgid "Only new (score == 0)"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:634
+#: ../pan/gui/prefs-ui.cc:660
 #, fuzzy
 msgid "9999 or more"
 msgstr "/_Filtre/G_özardı Edilen Konumları Eşle"
 
-#: ../pan/gui/prefs-ui.cc:635
+#: ../pan/gui/prefs-ui.cc:661
 msgid "5000 to 9998"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:636
+#: ../pan/gui/prefs-ui.cc:662
 msgid "1 to 4999"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:637
+#: ../pan/gui/prefs-ui.cc:663
 msgid "-9998 to -1"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:638
+#: ../pan/gui/prefs-ui.cc:664
 #, fuzzy
 msgid "-9999 or less"
 msgstr "/_Filtre/G_özardı Edilen Konumları Eşle"
 
-#: ../pan/gui/prefs-ui.cc:702
+#: ../pan/gui/prefs-ui.cc:728
 #, c-format
-msgid "Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:738
+#: ../pan/gui/prefs-ui.cc:760
 #, fuzzy
-msgid "Global Charset Settings"
+msgid "Global Character Set Settings"
 msgstr "Genel Ayarlar"
 
-#: ../pan/gui/prefs-ui.cc:832 ../pan/gui/task-pane.cc:770
+#: ../pan/gui/prefs-ui.cc:854 ../pan/gui/task-pane.cc:1076
 #, fuzzy
 msgid "State"
 msgstr "Durum"
 
-#: ../pan/gui/prefs-ui.cc:866
+#: ../pan/gui/prefs-ui.cc:888
 #, fuzzy
 msgid "Enabled"
 msgstr "Başarısız"
 
-#: ../pan/gui/prefs-ui.cc:870
+#: ../pan/gui/prefs-ui.cc:892
 #, fuzzy
 msgid "Column Name"
 msgstr "Panel Düzeni"
 
-#: ../pan/gui/prefs-ui.cc:908
+#: ../pan/gui/prefs-ui.cc:930
 #, fuzzy
 msgid "Pan: Preferences"
 msgstr "Pan: Tercihler"
 
-#: ../pan/gui/prefs-ui.cc:923
+#: ../pan/gui/prefs-ui.cc:945
 msgid "Mouse"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:925
+#: ../pan/gui/prefs-ui.cc:947
 #, fuzzy
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Tek tıklama, açmak yerine, grupları ve makaleleri seçsin"
 
-#: ../pan/gui/prefs-ui.cc:927
+#: ../pan/gui/prefs-ui.cc:949
 #, fuzzy
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Tek tıklama, açmak yerine, grupları ve makaleleri seçsin"
 
-#: ../pan/gui/prefs-ui.cc:930
+#: ../pan/gui/prefs-ui.cc:952
 #, fuzzy
 msgid "Groups"
 msgstr "Gruplar"
 
-#: ../pan/gui/prefs-ui.cc:932
+#: ../pan/gui/prefs-ui.cc:954
 #, fuzzy
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Üye Olunan Gruplardan Başlıkları al"
 
-#: ../pan/gui/prefs-ui.cc:934
+#: ../pan/gui/prefs-ui.cc:956
 #, fuzzy
 msgid "Get new headers when _entering group"
 msgstr "_Grup yüklendiği zaman yeni başlıkları indir"
 
-#: ../pan/gui/prefs-ui.cc:936
+#: ../pan/gui/prefs-ui.cc:958
 msgid "Mark entire group _read when leaving group"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:938
+#: ../pan/gui/prefs-ui.cc:960
 msgid "Mark entire group read before getting _new headers"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:940
+#: ../pan/gui/prefs-ui.cc:962
 #, fuzzy
 msgid "E_xpand all threads when entering group"
 msgstr "_Grup yüklendiği zaman yeni başlıkları indir"
 
-#: ../pan/gui/prefs-ui.cc:945
+#: ../pan/gui/prefs-ui.cc:967
 #, fuzzy
 msgid "Articles"
 msgstr "/_Makaleler"
 
-#: ../pan/gui/prefs-ui.cc:947
+#: ../pan/gui/prefs-ui.cc:969
+#, fuzzy
+msgid "Mark downloaded articles read"
+msgstr "Makale okunmamış"
+
+#: ../pan/gui/prefs-ui.cc:971
 msgid "Space selects next article rather than next unread"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:949
+#: ../pan/gui/prefs-ui.cc:973
 #, fuzzy
 msgid "Expand threads upon selection"
 msgstr "/Dü_zenle/Seçime K_onum Ekle"
 
-#: ../pan/gui/prefs-ui.cc:951
-msgid "Always show article deletion confirmation dialog"
+#: ../pan/gui/prefs-ui.cc:975
+msgid "Always ask before deleting an article"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:953
+#: ../pan/gui/prefs-ui.cc:977
 #, fuzzy
 msgid "Smooth scrolling"
 msgstr "Yumuşak _Kaydırma hızı:"
 
-#: ../pan/gui/prefs-ui.cc:958
+#: ../pan/gui/prefs-ui.cc:982
 #, fuzzy
 msgid "Article Cache"
 msgstr "Makale Önbelleği"
 
-#: ../pan/gui/prefs-ui.cc:959
+#: ../pan/gui/prefs-ui.cc:983
 msgid "Clear article cache on shutdown"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:962
-msgid "Size of article cache (in MiB) :"
+#: ../pan/gui/prefs-ui.cc:986
+msgid "Size of article cache (in MiB):"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:967
+#: ../pan/gui/prefs-ui.cc:991
 #, fuzzy
-msgid "File extension for Cached Articles: "
+msgid "File extension for cached articles: "
 msgstr "/_Filtre/_Okunmuş Makaleleri Eşle"
 
-#: ../pan/gui/prefs-ui.cc:972
+#: ../pan/gui/prefs-ui.cc:996
 msgid "Tabs"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:977
+#: ../pan/gui/prefs-ui.cc:1001
 msgid "_Behavior"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:977
+#: ../pan/gui/prefs-ui.cc:1001
 msgid "Behavior"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:983
+#: ../pan/gui/prefs-ui.cc:1007
+#, fuzzy
+msgid "Task Pane"
+msgstr "/_Araçlar/_Görev Yöneticisi..."
+
+#: ../pan/gui/prefs-ui.cc:1008
+#, fuzzy
+#| msgid "The Task Manager is not Paused"
+msgid "Show Task Pane info popups"
+msgstr "Görev Yöneticisi Bekletilmiyor"
+
+#: ../pan/gui/prefs-ui.cc:1010
+#, fuzzy
+msgid "Show Download Meter"
+msgstr "/_Görünüm/G_övde Panelini Göster"
+
+#: ../pan/gui/prefs-ui.cc:1014
+#, fuzzy
+msgid "_Panes"
+msgstr "Gövde Paneli"
+
+#: ../pan/gui/prefs-ui.cc:1014
+#, fuzzy
+#| msgid "Japanese"
+msgid "Panes"
+msgstr "Japonca"
+
+#: ../pan/gui/prefs-ui.cc:1020
 #, fuzzy
 msgid "Language Settings"
 msgstr "Bağlantı Ayarları"
 
 #. systray and notify popup
-#: ../pan/gui/prefs-ui.cc:992
+#: ../pan/gui/prefs-ui.cc:1029
 msgid "System Tray Behavior"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:994
-msgid "Hide to system tray"
+#: ../pan/gui/prefs-ui.cc:1031
+msgid "Minimize to tray"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:996
+#: ../pan/gui/prefs-ui.cc:1033
 #, fuzzy
 msgid "Start Pan minimized"
 msgstr "Pan'i bağlı modda _başlat"
 
-#: ../pan/gui/prefs-ui.cc:999
+#: ../pan/gui/prefs-ui.cc:1036
 #, fuzzy
 msgid "Show notifications"
 msgstr "Profil Bilgileri"
 
 #. allow multiple instances (seperate, not communicating with dbus)
-#: ../pan/gui/prefs-ui.cc:1004
+#: ../pan/gui/prefs-ui.cc:1041
 msgid "Startup Behavior"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1006
+#: ../pan/gui/prefs-ui.cc:1043
 msgid "Allow multiple instances of Pan"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1011
+#: ../pan/gui/prefs-ui.cc:1048
 #, fuzzy
 msgid "Autosave Article Draft"
 msgstr "/_Okunmuş Makaleler"
 
-#: ../pan/gui/prefs-ui.cc:1013
+#: ../pan/gui/prefs-ui.cc:1050
 #, fuzzy
 msgid "Minutes to autosave the current Article Draft: "
 msgstr "/_Okunmuş Makaleler"
 
-#: ../pan/gui/prefs-ui.cc:1018
+#: ../pan/gui/prefs-ui.cc:1055
 #, fuzzy
 msgid "Autosave Articles"
 msgstr "/Makaleyi _Farklı Kaydet..."
 
-#: ../pan/gui/prefs-ui.cc:1020
+#: ../pan/gui/prefs-ui.cc:1057
 msgid "Minutes to autosave newsrc files: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1026
+#: ../pan/gui/prefs-ui.cc:1064
+msgid "GNOME Keyring"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1065
+msgid "Store passwords in GNOME Keyring"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1069
 msgid "_Miscellaneous"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1026
+#: ../pan/gui/prefs-ui.cc:1069
 msgid "Miscellaneous"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1031
+#: ../pan/gui/prefs-ui.cc:1074
 msgid "Pane Layout"
 msgstr "Panel Düzeni"
 
-#: ../pan/gui/prefs-ui.cc:1050
+#: ../pan/gui/prefs-ui.cc:1093
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1052
+#: ../pan/gui/prefs-ui.cc:1095
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1054
+#: ../pan/gui/prefs-ui.cc:1097
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1056
+#: ../pan/gui/prefs-ui.cc:1099
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1058
+#: ../pan/gui/prefs-ui.cc:1101
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1060
+#: ../pan/gui/prefs-ui.cc:1103
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1064
+#: ../pan/gui/prefs-ui.cc:1107
 #, fuzzy
 msgid "Layout"
 msgstr "_Düzen"
 
-#: ../pan/gui/prefs-ui.cc:1069
+#: ../pan/gui/prefs-ui.cc:1112
 #, fuzzy
 msgid "Header Pane Columns"
 msgstr "Panel Başlığı"
 
-#: ../pan/gui/prefs-ui.cc:1073
+#: ../pan/gui/prefs-ui.cc:1116
 #, fuzzy
 msgid "_Headers"
 msgstr "Başlıklar"
 
-#: ../pan/gui/prefs-ui.cc:1073
+#: ../pan/gui/prefs-ui.cc:1116
 #, fuzzy
 msgid "Headers"
 msgstr "Başlıklar"
 
-#: ../pan/gui/prefs-ui.cc:1079
+#: ../pan/gui/prefs-ui.cc:1122
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
-"automatically, based on a post's score."
+"automatically, based on an article's score."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1082
-msgid "_Delete posts scoring at: "
+#: ../pan/gui/prefs-ui.cc:1127
+#, fuzzy
+msgid "Mark affected articles read"
+msgstr "Makale okunmamış"
+
+#: ../pan/gui/prefs-ui.cc:1136
+#, fuzzy
+msgid "_Delete articles scoring at: "
+msgstr "Makale Panelini Gö_ster"
+
+#: ../pan/gui/prefs-ui.cc:1142
+#, fuzzy
+msgid "Mark articles read scoring at: "
+msgstr "Makale okunmamış"
+
+#: ../pan/gui/prefs-ui.cc:1148
+#, fuzzy
+msgid "_Cache articles scoring at: "
+msgstr "Makale Panelini Gö_ster"
+
+#: ../pan/gui/prefs-ui.cc:1154
+msgid "Download attachments of articles scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1084
-msgid "Mark posts _read scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1086
-msgid "_Cache posts scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1088
-msgid "Download _attachments of posts scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1091
+#: ../pan/gui/prefs-ui.cc:1157
 #, fuzzy
 msgid "Actions"
 msgstr "Eylemler"
 
-#: ../pan/gui/prefs-ui.cc:1096 ../pan/gui/prefs-ui.cc:1117
+#: ../pan/gui/prefs-ui.cc:1162 ../pan/gui/prefs-ui.cc:1183
 msgid "Fonts"
 msgstr "Yazıtipleri"
 
-#: ../pan/gui/prefs-ui.cc:1098
+#: ../pan/gui/prefs-ui.cc:1164
 #, fuzzy
 msgid "Use custom font in Group Pane:"
 msgstr "Özel _yazıtiplerini kullan"
 
-#: ../pan/gui/prefs-ui.cc:1103
+#: ../pan/gui/prefs-ui.cc:1169
 #, fuzzy
 msgid "Use custom font in Header Pane:"
 msgstr "Özel _yazıtiplerini kullan"
 
-#: ../pan/gui/prefs-ui.cc:1108
+#: ../pan/gui/prefs-ui.cc:1174
 #, fuzzy
 msgid "Use custom font in Body Pane:"
 msgstr "Özel _yazıtiplerini kullan"
 
-#: ../pan/gui/prefs-ui.cc:1113
+#: ../pan/gui/prefs-ui.cc:1179
 msgid "Monospace font:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1117
+#: ../pan/gui/prefs-ui.cc:1183
 #, fuzzy
 msgid "_Fonts"
 msgstr "Yazıtipleri"
 
-#: ../pan/gui/prefs-ui.cc:1122
+#: ../pan/gui/prefs-ui.cc:1192
 msgid "Header Pane"
 msgstr "Panel Başlığı"
 
-#: ../pan/gui/prefs-ui.cc:1125 ../pan/gui/prefs-ui.cc:1131
-#: ../pan/gui/prefs-ui.cc:1137 ../pan/gui/prefs-ui.cc:1143
-#: ../pan/gui/prefs-ui.cc:1149 ../pan/gui/prefs-ui.cc:1155
+#: ../pan/gui/prefs-ui.cc:1195 ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1207 ../pan/gui/prefs-ui.cc:1213
+#: ../pan/gui/prefs-ui.cc:1219 ../pan/gui/prefs-ui.cc:1225
+#: ../pan/gui/prefs-ui.cc:1234 ../pan/gui/prefs-ui.cc:1240
+#: ../pan/gui/prefs-ui.cc:1246 ../pan/gui/prefs-ui.cc:1252
+#: ../pan/gui/prefs-ui.cc:1258 ../pan/gui/prefs-ui.cc:1268
+#: ../pan/gui/prefs-ui.cc:1278
 #, fuzzy
 msgid "Text:"
 msgstr "Tırnaklanmış Metin 1"
 
-#: ../pan/gui/prefs-ui.cc:1127 ../pan/gui/prefs-ui.cc:1133
-#: ../pan/gui/prefs-ui.cc:1139 ../pan/gui/prefs-ui.cc:1145
-#: ../pan/gui/prefs-ui.cc:1151 ../pan/gui/prefs-ui.cc:1157
+#: ../pan/gui/prefs-ui.cc:1197 ../pan/gui/prefs-ui.cc:1203
+#: ../pan/gui/prefs-ui.cc:1209 ../pan/gui/prefs-ui.cc:1215
+#: ../pan/gui/prefs-ui.cc:1221 ../pan/gui/prefs-ui.cc:1227
+#: ../pan/gui/prefs-ui.cc:1236 ../pan/gui/prefs-ui.cc:1242
+#: ../pan/gui/prefs-ui.cc:1248 ../pan/gui/prefs-ui.cc:1254
+#: ../pan/gui/prefs-ui.cc:1260 ../pan/gui/prefs-ui.cc:1270
+#: ../pan/gui/prefs-ui.cc:1280
 #, fuzzy
 msgid "Background:"
 msgstr "Gövde Arkaplanı"
 
-#: ../pan/gui/prefs-ui.cc:1129
+#: ../pan/gui/prefs-ui.cc:1199
 #, fuzzy
 msgid "Scores of 9999 or more:"
 msgstr "/_Filtre/G_özardı Edilen Konumları Eşle"
 
-#: ../pan/gui/prefs-ui.cc:1135
+#: ../pan/gui/prefs-ui.cc:1205
 msgid "Scores from 5000 to 9998:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1141
+#: ../pan/gui/prefs-ui.cc:1211
 msgid "Scores from 1 to 4999:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1147
+#: ../pan/gui/prefs-ui.cc:1217
 msgid "Scores from -9998 to -1:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1153
+#: ../pan/gui/prefs-ui.cc:1223
 #, fuzzy
 msgid "Scores of -9999 or less:"
 msgstr "/_Filtre/G_özardı Edilen Konumları Eşle"
 
-#: ../pan/gui/prefs-ui.cc:1159
-msgid "Read collapsed thread:"
+#: ../pan/gui/prefs-ui.cc:1229
+msgid "Collapsed thread with unread articles:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1161
+#: ../pan/gui/prefs-ui.cc:1231
 #, fuzzy
 msgid "Body Pane"
 msgstr "Gövde Paneli"
 
-#: ../pan/gui/prefs-ui.cc:1167
-#, fuzzy
-msgid "Quoted text:"
-msgstr "Alıntı Metin _3:"
+#: ../pan/gui/prefs-ui.cc:1238
+msgid "First level of quoted text:"
+msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1168
+#: ../pan/gui/prefs-ui.cc:1244
+msgid "Second level of quoted text:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1250
+msgid "Third level of quoted text:"
+msgstr ""
+
+#.
+#: ../pan/gui/prefs-ui.cc:1256
 #, fuzzy
 msgid "URL:"
 msgstr "_URL'ler:"
 
-#: ../pan/gui/prefs-ui.cc:1169
-#, fuzzy
+#.
+#: ../pan/gui/prefs-ui.cc:1262
 msgid "Signature:"
-msgstr "_İmza dosyası:"
+msgstr "İmza:"
 
-#: ../pan/gui/prefs-ui.cc:1171
+#: ../pan/gui/prefs-ui.cc:1265
+#, fuzzy
+msgid "Group Pane"
+msgstr "_Grup Listesi Paneli"
+
+#.
+#: ../pan/gui/prefs-ui.cc:1272
+msgid "Group Color:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1276
+#, fuzzy
+msgid "Other Text"
+msgstr "Tırnaklanmış Metin 1"
+
+#: ../pan/gui/prefs-ui.cc:1282
+#, fuzzy
+#| msgid "Select Color"
+msgid "Text Color:"
+msgstr "Renk Seçin"
+
+#: ../pan/gui/prefs-ui.cc:1285
 #, fuzzy
 msgid "_Colors"
 msgstr "Renkler"
 
-#: ../pan/gui/prefs-ui.cc:1171
+#: ../pan/gui/prefs-ui.cc:1285
 msgid "Colors"
 msgstr "Renkler"
 
-#: ../pan/gui/prefs-ui.cc:1176
+#: ../pan/gui/prefs-ui.cc:1290
 #, fuzzy
 msgid "Preferred Applications"
 msgstr "Uygulamalar"
 
-#: ../pan/gui/prefs-ui.cc:1180
+#: ../pan/gui/prefs-ui.cc:1294
 #, fuzzy
 msgid "_Web browser:"
 msgstr "_Web Tarayıcısı (%s URL'i temsil eder):"
 
-#: ../pan/gui/prefs-ui.cc:1183
+#: ../pan/gui/prefs-ui.cc:1297
 #, fuzzy
 msgid "_Mail reader:"
 msgstr "E-posta Sunucusu"
 
-#: ../pan/gui/prefs-ui.cc:1185
+#: ../pan/gui/prefs-ui.cc:1299
 #, fuzzy
 msgid "_Text editor:"
 msgstr "Düzenleyici"
 
-#: ../pan/gui/prefs-ui.cc:1187
+#: ../pan/gui/prefs-ui.cc:1301
+msgid "_HTML previewer:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1303
 #, fuzzy
 msgid "_Applications"
 msgstr "Uygulamalar"
 
-#: ../pan/gui/prefs-ui.cc:1187
-#, fuzzy
+#: ../pan/gui/prefs-ui.cc:1303
 msgid "Applications"
 msgstr "Uygulamalar"
 
-#: ../pan/gui/prefs-ui.cc:1192 ../pan/gui/task-pane.cc:512
+#: ../pan/gui/prefs-ui.cc:1308 ../pan/gui/task-pane.cc:552
 msgid "Encoding"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1196
+#: ../pan/gui/prefs-ui.cc:1312
 msgid "Default bytes per file (for encoder): "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1317
 #, fuzzy
 msgid "_Upload"
 msgstr "Uygulamalar"
 
-#: ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1317
 msgid "Upload"
+msgstr "Karşıya Yükle"
+
+#: ../pan/gui/prefs-ui.cc:1326
+msgid "_Shortcuts"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1219
-msgid "_Hotkeys"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1219
-msgid "Hotkeys"
-msgstr ""
+#: ../pan/gui/prefs-ui.cc:1326
+msgid "Shortcuts"
+msgstr "Kısayollar"
 
 #: ../pan/gui/profiles-dialog.cc:83
-msgid "Please choose your Email Address according to your PGP key's user id."
+msgid "Please choose your email address according to your PGP key's user id."
 msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:131
@@ -2468,9 +2647,9 @@ msgstr "_Ad Soyad:"
 
 #: ../pan/gui/profiles-dialog.cc:158
 msgid ""
-"Your Email Address.\n"
-"Note that this has to match your PGP Signature's Address\n"
-"if you want to PGP-Sign or Encrypt your messages correctly."
+"Your email address.\n"
+"Note that this has to match your PGP signature's address\n"
+"if you want your messages to be PGP-signed or encrypted correctly."
 msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:162
@@ -2498,62 +2677,58 @@ msgid "Signature File"
 msgstr "İmza dosyasını _seç"
 
 #: ../pan/gui/profiles-dialog.cc:184
-#, fuzzy
 msgid "Text File"
-msgstr "/G_it/_Sonraki Makale"
+msgstr "Metin Dosyası"
 
 #: ../pan/gui/profiles-dialog.cc:186
-#, fuzzy
 msgid "Text"
-msgstr "Tırnaklanmış Metin 1"
+msgstr "Metin"
 
 #: ../pan/gui/profiles-dialog.cc:188
-#, fuzzy
 msgid "Command"
-msgstr "Yazdırma Komutu:"
+msgstr "Komut"
 
 #: ../pan/gui/profiles-dialog.cc:191
-#, fuzzy
 msgid "PGP Signature"
-msgstr "_İmza dosyası:"
+msgstr "PGP İmzası"
 
 #: ../pan/gui/profiles-dialog.cc:196
 #, fuzzy
-msgid "Signature Type : "
+msgid "Signature Type: "
 msgstr "_İmza dosyası:"
 
-#: ../pan/gui/profiles-dialog.cc:223
+#: ../pan/gui/profiles-dialog.cc:226
 msgid "X-Face (Avatar)"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:226
+#: ../pan/gui/profiles-dialog.cc:229
 msgid ""
-"You can add an avatar icon to your articles with a unique X-Face code. \n"
+"You can add an avatar icon to your articles with a unique X-Face code.\n"
 "Add the code without the trailing <b>\"X-Face:\"</b> \n"
 " if it was generated by a helper program (for example http://www.dairiki.org/"
 "xface/xface.php)."
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:229
+#: ../pan/gui/profiles-dialog.cc:232
 msgid "_X-Face:"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:231
+#: ../pan/gui/profiles-dialog.cc:234
 msgid "Optional Information"
 msgstr "Seçimlik Bilgiler"
 
-#: ../pan/gui/profiles-dialog.cc:236
+#: ../pan/gui/profiles-dialog.cc:239
 msgid ""
-"When posting to Usenet, your article's Message-ID contains a domain name.  \n"
+"When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
 "domain name from your email address."
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:239
+#: ../pan/gui/profiles-dialog.cc:242
 msgid "Message-ID _Domain Name:"
 msgstr "İleti-Numarası A_lan Adı:"
 
-#: ../pan/gui/profiles-dialog.cc:243
+#: ../pan/gui/profiles-dialog.cc:246
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2562,52 +2737,118 @@ msgid ""
 "%d for Date"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:244
+#: ../pan/gui/profiles-dialog.cc:247
 msgid "_Attribution:"
 msgstr "D_oğrulama:"
 
-#: ../pan/gui/profiles-dialog.cc:268
+#: ../pan/gui/profiles-dialog.cc:271
 msgid ""
-"Extra headers to be included in your posts, such as\n"
+"Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
 "Organization: Your Organization\n"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:278
+#: ../pan/gui/profiles-dialog.cc:281
 #, fuzzy
 msgid "E_xtra Headers:"
 msgstr "Daha Fazla Başlık"
 
-#: ../pan/gui/profiles-dialog.cc:323
+#: ../pan/gui/profiles-dialog.cc:326
 #, fuzzy
 msgid "Invalid email address."
 msgstr "E-posta adresi:"
 
-#: ../pan/gui/profiles-dialog.cc:324
+#: ../pan/gui/profiles-dialog.cc:327
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:479
+#: ../pan/gui/profiles-dialog.cc:482
 msgid "New Profile"
 msgstr "Yeni Profil"
 
-#: ../pan/gui/profiles-dialog.cc:525
+#: ../pan/gui/profiles-dialog.cc:528
 #, fuzzy
 msgid "Posting Profiles"
 msgstr "/_Araçlar/_Gönderme Profilleri..."
 
-#: ../pan/gui/profiles-dialog.cc:541
+#: ../pan/gui/profiles-dialog.cc:544
 #, fuzzy
 msgid "Profiles"
 msgstr "Profil"
 
-#: ../pan/gui/save-attach-ui.cc:77 ../pan/gui/save-ui.cc:77
+#: ../pan/gui/save-attach-ui.cc:46
+#, fuzzy, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - Subject line excerpt\n"
+"%S - Subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - bir dizin olarak grup (alt.dosyalar.resimler)\n"
+"%G - konumlu dizin (/alt/dosyalar/resimler)\n"
+"\n"
+"\"/home/kullanıcı/News/Pan/%g\" => \"/home/kullanıcı/News/Pan/alt.dosyalar."
+"resimler\" ve\n"
+"\"/home/kullanıcı/News/Pan/%G\" => \"/home/user/News/Pan/alt/dosyalar/"
+"resimler\" olarak\n"
+"gösterilir. "
+
+#: ../pan/gui/save-attach-ui.cc:197 ../pan/gui/save-ui.cc:217
+msgid "Add to the queue sorted by date posted"
+msgstr ""
+
+#: ../pan/gui/save-attach-ui.cc:198 ../pan/gui/save-ui.cc:218
+#, fuzzy
+msgid "Add to the front of the queue"
+msgstr "Görev Yöneticisi Lİstesinin _ortasına ekle"
+
+#: ../pan/gui/save-attach-ui.cc:199 ../pan/gui/save-ui.cc:219
+#, fuzzy
+msgid "Add to the back of the queue"
+msgstr "Kuyruğun sonuna bir görev ekle"
+
+#: ../pan/gui/save-attach-ui.cc:231
+#, fuzzy
+msgid "Pan: Save Attachments"
+msgstr "Eklentiler Kaydediliyor"
+
+#: ../pan/gui/save-attach-ui.cc:256 ../pan/gui/save-attach-ui.cc:274
+#: ../pan/gui/save-ui.cc:271 ../pan/gui/save-ui.cc:289
+#, fuzzy
+msgid "_Location:"
+msgstr "Latianca"
+
+#: ../pan/gui/save-attach-ui.cc:260 ../pan/gui/save-ui.cc:275
+#, fuzzy
+msgid "Save Articles"
+msgstr "/Makaleyi _Farklı Kaydet..."
+
+#: ../pan/gui/save-attach-ui.cc:277 ../pan/gui/save-ui.cc:292
+#, c-format
+msgid "_Group's path: %s"
+msgstr ""
+
+#: ../pan/gui/save-attach-ui.cc:288 ../pan/gui/save-ui.cc:307
+msgid "_Priority:"
+msgstr ""
+
+#: ../pan/gui/save-ui.cc:46
 #, fuzzy, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
 "%s - subject line excerpt\n"
 "%S - subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
 " \n"
 "\"/home/user/News/Pan/%g\" becomes\n"
 "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
@@ -2623,69 +2864,29 @@ msgstr ""
 "resimler\" olarak\n"
 "gösterilir. "
 
-#: ../pan/gui/save-attach-ui.cc:223 ../pan/gui/save-ui.cc:242
-msgid "Add to the queue sorted by date posted"
-msgstr ""
-
-#: ../pan/gui/save-attach-ui.cc:224 ../pan/gui/save-ui.cc:243
-#, fuzzy
-msgid "Add to the front of the queue"
-msgstr "Görev Yöneticisi Lİstesinin _ortasına ekle"
-
-#: ../pan/gui/save-attach-ui.cc:225 ../pan/gui/save-ui.cc:244
-#, fuzzy
-msgid "Add to the back of the queue"
-msgstr "Kuyruğun sonuna bir görev ekle"
-
-#: ../pan/gui/save-attach-ui.cc:257
-#, fuzzy
-msgid "Pan: Save Attachments"
-msgstr "Eklentiler Kaydediliyor"
-
-#: ../pan/gui/save-attach-ui.cc:282 ../pan/gui/save-attach-ui.cc:300
-#: ../pan/gui/save-ui.cc:296 ../pan/gui/save-ui.cc:314
-#, fuzzy
-msgid "_Location:"
-msgstr "Latianca"
-
-#: ../pan/gui/save-attach-ui.cc:286 ../pan/gui/save-ui.cc:300
-#, fuzzy
-msgid "Save Articles"
-msgstr "/Makaleyi _Farklı Kaydet..."
-
-#: ../pan/gui/save-attach-ui.cc:303 ../pan/gui/save-ui.cc:317
-#, c-format
-msgid "_Group's path: %s"
-msgstr ""
-
-#: ../pan/gui/save-attach-ui.cc:314 ../pan/gui/save-ui.cc:332
-msgid "_Priority:"
-msgstr ""
-
-#: ../pan/gui/save-ui.cc:233
+#: ../pan/gui/save-ui.cc:208
 #, fuzzy
 msgid "Save attachments"
 msgstr "Eklentiler Kaydediliyor"
 
-#: ../pan/gui/save-ui.cc:234
+#: ../pan/gui/save-ui.cc:209
 #, fuzzy
 msgid "Save text"
 msgstr "Makale Metnini Kaydet"
 
-#: ../pan/gui/save-ui.cc:235
+#: ../pan/gui/save-ui.cc:210
 #, fuzzy
 msgid "Save attachments and text"
 msgstr "Eklentileri buraya kaydet:"
 
-#: ../pan/gui/save-ui.cc:271
+#: ../pan/gui/save-ui.cc:246
 #, fuzzy
 msgid "Pan: Save Articles"
 msgstr "Pan: Sunucular"
 
-#: ../pan/gui/save-ui.cc:328
-#, fuzzy
+#: ../pan/gui/save-ui.cc:303
 msgid "_Action:"
-msgstr "Eylemler"
+msgstr "_Eylem:"
 
 #: ../pan/gui/score-add-ui.cc:89
 msgid "is more than"
@@ -2805,13 +3006,14 @@ msgid "New Scoring Rule"
 msgstr "Yeni Sunucu"
 
 #: ../pan/gui/score-add-ui.cc:635
-msgid "If the group name"
-msgstr ""
+#| msgid "Group Name"
+msgid "Group name"
+msgstr "Grup adı"
 
 #: ../pan/gui/score-add-ui.cc:642
 #, fuzzy
-msgid "And the article's"
-msgstr "Makaleler"
+msgid "and"
+msgstr "Pan "
 
 #: ../pan/gui/score-view-ui.cc:56
 #, fuzzy
@@ -2829,9 +3031,8 @@ msgid "Pan: Article's Scores"
 msgstr "Pan: Makaleleri Farklı Kaydet"
 
 #: ../pan/gui/score-view-ui.cc:208
-#, fuzzy
 msgid "Add"
-msgstr "Adres"
+msgstr "Ekle"
 
 #: ../pan/gui/score-view-ui.cc:213
 #, fuzzy
@@ -2852,211 +3053,229 @@ msgstr "Yeni bir sunucu ekle"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Seçili sunucuyu sil"
 
-#: ../pan/gui/server-ui.cc:221
+#: ../pan/gui/server-ui.cc:259
 msgid "Please specify the server's address."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:264
-msgid "Import SSL certificate (PEM format) from File"
+#: ../pan/gui/server-ui.cc:305
+msgid "Import SSL Certificate (PEM Format) From File"
 msgstr ""
 
 #. create the dialog
-#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:869
+#: ../pan/gui/server-ui.cc:342 ../pan/gui/server-ui.cc:948
 #, fuzzy
 msgid "Add a Server"
 msgstr "Yeni bir sunucu ekle"
 
-#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:875
+#: ../pan/gui/server-ui.cc:342 ../pan/gui/server-ui.cc:954
 #, fuzzy
 msgid "Edit a Server's Settings"
 msgstr "Sunucuya Özgü Ayarlar"
 
-#: ../pan/gui/server-ui.cc:310
-#, fuzzy
+#: ../pan/gui/server-ui.cc:362
 msgid "Location"
-msgstr "Latianca"
+msgstr "Konum"
 
-#: ../pan/gui/server-ui.cc:314
+#: ../pan/gui/server-ui.cc:366
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:315
+#: ../pan/gui/server-ui.cc:367
 msgid "_Address:"
 msgstr "_Adres:"
 
-#: ../pan/gui/server-ui.cc:319
-msgid "The news server's port number.  Typically 119."
+#: ../pan/gui/server-ui.cc:372
+msgid ""
+"The news server's port number.  Typically 119 for unencrypted and 563 for "
+"encrypted connections (SSL/TLS)."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:320
+#: ../pan/gui/server-ui.cc:373
 msgid "Por_t:"
 msgstr "Por_t:"
 
-#: ../pan/gui/server-ui.cc:323
+#: ../pan/gui/server-ui.cc:376
 msgid "Login (if Required)"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:327
+#: ../pan/gui/server-ui.cc:380
 msgid "_Username:"
 msgstr "K_ullanıcı adı:"
 
-#: ../pan/gui/server-ui.cc:328
+#: ../pan/gui/server-ui.cc:381
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:332
+#: ../pan/gui/server-ui.cc:385
 msgid "_Password:"
 msgstr "_Parola:"
 
-#: ../pan/gui/server-ui.cc:333
+#: ../pan/gui/server-ui.cc:386
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:336
-#, fuzzy
+#: ../pan/gui/server-ui.cc:389
 msgid "Settings"
-msgstr "Bağlantı Ayarları"
+msgstr "Ayarlar"
 
-#: ../pan/gui/server-ui.cc:343
+#: ../pan/gui/server-ui.cc:396
 msgid "Connection _Limit:"
 msgstr "Bağlantı _Limiti:"
 
-#: ../pan/gui/server-ui.cc:347
+#: ../pan/gui/server-ui.cc:400
 msgid "After Two Weeks"
-msgstr ""
+msgstr "İki Hafta Sonra"
 
-#: ../pan/gui/server-ui.cc:348
+#: ../pan/gui/server-ui.cc:401
 msgid "After One Month"
-msgstr ""
+msgstr "Bir Ay Sonra"
 
-#: ../pan/gui/server-ui.cc:349
+#: ../pan/gui/server-ui.cc:402
 msgid "After Two Months"
-msgstr ""
+msgstr "İki Ay Sonra"
 
-#: ../pan/gui/server-ui.cc:350
+#: ../pan/gui/server-ui.cc:403
 msgid "After Three Months"
-msgstr ""
+msgstr "Üç Ay Sonra"
 
-#: ../pan/gui/server-ui.cc:351
+#: ../pan/gui/server-ui.cc:404
 msgid "After Six Months"
-msgstr ""
+msgstr "Altı Ay Sonra"
 
-#: ../pan/gui/server-ui.cc:352
+#: ../pan/gui/server-ui.cc:405
 #, fuzzy
 msgid "Never Expire Old Articles"
 msgstr "Seçilen Makaleleri Al"
 
-#: ../pan/gui/server-ui.cc:366
+#: ../pan/gui/server-ui.cc:419
 #, fuzzy
 msgid "E_xpire Old Articles:"
 msgstr "Seçilen Makaleleri Al"
 
-#: ../pan/gui/server-ui.cc:370
-#, fuzzy
+#: ../pan/gui/server-ui.cc:423
 msgid "Primary"
-msgstr "Öncelik"
+msgstr "Birincil"
 
-#: ../pan/gui/server-ui.cc:371
+#: ../pan/gui/server-ui.cc:424
 msgid "Fallback"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:385
+#: ../pan/gui/server-ui.cc:438
 #, fuzzy
 msgid "Server Rank:"
 msgstr "Sunucular"
 
-#: ../pan/gui/server-ui.cc:389
+#: ../pan/gui/server-ui.cc:442
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
 "subscription servers as fallbacks."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:396
+#: ../pan/gui/server-ui.cc:447
+msgid "Disable Compression (N/A)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:448
+msgid "XZVER Compression (Astraweb)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:449
+msgid "GZIP Compression (Giganews etc.)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:463
+#, fuzzy
+#| msgid "Regular Expression"
+msgid "Header Compression:"
+msgstr "Düzenli İfade"
+
+#: ../pan/gui/server-ui.cc:469
 msgid "Security"
-msgstr ""
+msgstr "Güvenlik"
 
-#: ../pan/gui/server-ui.cc:401
-msgid "Use Plaintext (Unsecured) Connections"
-msgstr ""
+#: ../pan/gui/server-ui.cc:474
+#, fuzzy
+msgid "Use Unsecure (Plaintext) Connections"
+msgstr "Sunucuya özgü bağlantı sınırlandırmasını belirle"
 
-#: ../pan/gui/server-ui.cc:402
+#: ../pan/gui/server-ui.cc:475
 #, fuzzy
 msgid "Use Secure SSL Connections"
 msgstr "Sunucuya özgü bağlantı sınırlandırmasını belirle"
 
-#: ../pan/gui/server-ui.cc:418
-msgid "TLS (SSL) Options:"
+#: ../pan/gui/server-ui.cc:490
+msgid "TLS (SSL) Settings:"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:423
+#: ../pan/gui/server-ui.cc:495
 msgid ""
-"You can set the option for using/disabling secure SSL/TLS connections here. "
-"If you enable SSL/TLS, your data is encrypted and secure. It is encouraged "
-"to use this option for privacy reasons."
+"You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
+"TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
+"for privacy reasons."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:428
+#: ../pan/gui/server-ui.cc:500
 msgid "Always trust this server's certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:602
+#: ../pan/gui/server-ui.cc:676
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:691
+#: ../pan/gui/server-ui.cc:765
 msgid "No information available."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:697
+#: ../pan/gui/server-ui.cc:775
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:795
+#: ../pan/gui/server-ui.cc:874
 #, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr ""
 
 #. dialog
-#: ../pan/gui/server-ui.cc:822 ../pan/gui/server-ui.cc:843
-#: ../pan/gui/server-ui.cc:941
+#: ../pan/gui/server-ui.cc:901 ../pan/gui/server-ui.cc:922
+#: ../pan/gui/server-ui.cc:1020
 msgid "Servers"
 msgstr "Sunucular"
 
-#: ../pan/gui/server-ui.cc:882
+#: ../pan/gui/server-ui.cc:961
 #, fuzzy
 msgid "Remove a Server"
 msgstr "Yeni Sunucu"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:915
+#: ../pan/gui/server-ui.cc:994
 msgid "SSL Certificates"
-msgstr ""
+msgstr "SSL Sertifikaları"
 
-#: ../pan/gui/server-ui.cc:936
+#: ../pan/gui/server-ui.cc:1015
 msgid "Certificates"
-msgstr ""
+msgstr "Sertifikalar"
 
-#: ../pan/gui/server-ui.cc:967
+#: ../pan/gui/server-ui.cc:1046
 msgid "Import Certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:973
+#: ../pan/gui/server-ui.cc:1052
 msgid "Inspect Certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:980
+#: ../pan/gui/server-ui.cc:1059
 #, fuzzy
 msgid "Remove Certificate"
 msgstr "Yeni Sunucu"
 
-#: ../pan/gui/task-pane.cc:143
+#: ../pan/gui/task-pane.cc:121
 #, c-format
 msgid ""
 "\n"
@@ -3068,7 +3287,7 @@ msgid ""
 "<i>Sourcefile:</i> <b>%s</b>\n"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:155
+#: ../pan/gui/task-pane.cc:133
 #, c-format
 msgid ""
 "\n"
@@ -3081,201 +3300,215 @@ msgid ""
 "<i>Save Path:</i> <b>%s</b>\n"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:157
-#, fuzzy
+#: ../pan/gui/task-pane.cc:135
 msgid "unknown"
-msgstr "Bilinmeyen"
+msgstr "bilinmiyor"
 
-#: ../pan/gui/task-pane.cc:263
-msgid "Choose new destination for selected Tasks"
-msgstr ""
+#: ../pan/gui/task-pane.cc:303
+#, fuzzy
+msgid "Choose New Destination for Selected Tasks"
+msgstr "Seçilen Gruplardan Başlıkları Al"
 
-#: ../pan/gui/task-pane.cc:417
+#: ../pan/gui/task-pane.cc:457
 #, fuzzy, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan %s Görev Yöneticisi (%d Kuyrukta, %d İşleniyor, %d Başarısız)"
 
-#: ../pan/gui/task-pane.cc:419
+#: ../pan/gui/task-pane.cc:459
 #, fuzzy, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan %s Görev Yöneticisi (%d Kuyrukta, %d İşleniyor)"
 
-#: ../pan/gui/task-pane.cc:421
+#: ../pan/gui/task-pane.cc:461
 #, fuzzy, c-format
 msgid "Pan: Tasks"
 msgstr "Pan - Görev Yöneticisi"
 
-#: ../pan/gui/task-pane.cc:446
+#: ../pan/gui/task-pane.cc:486
 #, fuzzy, c-format
 msgid "%lu selected, %s"
 msgstr "(%u seçili)"
 
-#: ../pan/gui/task-pane.cc:510
+#: ../pan/gui/task-pane.cc:550
 msgid "Running"
 msgstr "Çalıştırılıyor"
 
-#: ../pan/gui/task-pane.cc:511
+#: ../pan/gui/task-pane.cc:551
 #, fuzzy
 msgid "Decoding"
 msgstr "Çözülüyor: \"%s\""
 
-#: ../pan/gui/task-pane.cc:513
+#: ../pan/gui/task-pane.cc:553
 #, fuzzy
 msgid "Queued for Decode"
 msgstr "Kaydedilmek için Kuyrukta"
 
-#: ../pan/gui/task-pane.cc:514
+#: ../pan/gui/task-pane.cc:554
 #, fuzzy
 msgid "Queued for Encode"
 msgstr "Kaydedilmek için Kuyrukta"
 
-#: ../pan/gui/task-pane.cc:515
+#: ../pan/gui/task-pane.cc:555
 msgid "Queued"
 msgstr "Kuyrukta"
 
-#: ../pan/gui/task-pane.cc:516
+#: ../pan/gui/task-pane.cc:556
 msgid "Stopped"
 msgstr "Durduruldu"
 
-#: ../pan/gui/task-pane.cc:517
+#: ../pan/gui/task-pane.cc:557
 msgid "Removing"
 msgstr "Kaldırılıyor"
 
-#: ../pan/gui/task-pane.cc:546
+#: ../pan/gui/task-pane.cc:586
 #, fuzzy, c-format
 msgid "%d%% Done"
 msgstr "% Bitti"
 
-#: ../pan/gui/task-pane.cc:552
+#: ../pan/gui/task-pane.cc:592
 #, fuzzy, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%.2f KB/s, kalan: %d:%02d:%02d "
 
-#: ../pan/gui/task-pane.cc:646 ../pan/gui/task-pane.cc:647
+#: ../pan/gui/task-pane.cc:687 ../pan/gui/task-pane.cc:688
 #, fuzzy
 msgid "Move To Top"
 msgstr "Yukarı Taşı"
 
-#: ../pan/gui/task-pane.cc:651 ../pan/gui/task-pane.cc:652
+#: ../pan/gui/task-pane.cc:692 ../pan/gui/task-pane.cc:693
 #, fuzzy
 msgid "Move To Bottom"
 msgstr "Seçili görev(ler)i En Alta Taşı"
 
-#: ../pan/gui/task-pane.cc:656 ../pan/gui/task-pane.cc:657
+#: ../pan/gui/task-pane.cc:697 ../pan/gui/task-pane.cc:698
+#, fuzzy
+msgid "Show Task Information"
+msgstr "Profil Bilgileri"
+
+#: ../pan/gui/task-pane.cc:702 ../pan/gui/task-pane.cc:703
 #, fuzzy
 msgid "Stop Task"
 msgstr "Görev Yok"
 
-#: ../pan/gui/task-pane.cc:661 ../pan/gui/task-pane.cc:662
+#: ../pan/gui/task-pane.cc:707 ../pan/gui/task-pane.cc:708
 #, fuzzy
 msgid "Delete Task"
 msgstr "Spamları Sil"
 
-#: ../pan/gui/task-pane.cc:666 ../pan/gui/task-pane.cc:667
+#: ../pan/gui/task-pane.cc:712 ../pan/gui/task-pane.cc:713
 #, fuzzy
 msgid "Restart Task"
 msgstr "Seçili görev(ler)i Yeniden Başlat"
 
-#: ../pan/gui/task-pane.cc:671 ../pan/gui/task-pane.cc:672
+#: ../pan/gui/task-pane.cc:717 ../pan/gui/task-pane.cc:718
 msgid "Change Download Destination"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:729
+#: ../pan/gui/task-pane.cc:1028
 #, fuzzy
 msgid "_Online"
 msgstr "Bağlı"
 
-#: ../pan/gui/task-pane.cc:746
+#: ../pan/gui/task-pane.cc:1045
 #, fuzzy
 msgid "Restart Tasks"
 msgstr "Seçili görev(ler)i Yeniden Başlat"
 
-#: ../pan/gui/task-pane.cc:748
+#: ../pan/gui/task-pane.cc:1047
 #, fuzzy
 msgid "Stop Tasks"
 msgstr "Görev Yok"
 
-#: ../pan/gui/task-pane.cc:750
+#: ../pan/gui/task-pane.cc:1049
 #, fuzzy
 msgid "Delete Tasks"
 msgstr "Spamları Sil"
+
+#: ../pan/gui/task-pane.cc:1055
+msgid "Show info popups"
+msgstr ""
 
 #: ../pan/gui/url.cc:123
 #, fuzzy, c-format
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr "\"Harici düzenleyici\" komutu yazımı sırasında hata oluştu: %s"
 
-#: ../pan/tasks/decoder.cc:115
+#: ../pan/tasks/decoder.cc:117
 #, fuzzy, c-format
 msgid "Couldn't save file \"%s\": %s"
 msgstr "\"%s\" imza dosyası okunamadı: %s"
 
-#: ../pan/tasks/decoder.cc:137 ../pan/tasks/encoder.cc:136
+#: ../pan/tasks/decoder.cc:139 ../pan/tasks/encoder.cc:136
 msgid "Error initializing uulib"
 msgstr ""
 
-#: ../pan/tasks/decoder.cc:152 ../pan/tasks/socket-impl-gio.cc:352
-#: ../pan/tasks/socket-impl-openssl.cc:634
+#: ../pan/tasks/decoder.cc:154 ../pan/tasks/socket-impl-gio.cc:360
+#: ../pan/tasks/socket-impl-openssl.cc:642
 #, fuzzy, c-format
 msgid "Error reading from %s: %s"
 msgstr "Soketten okurken hata oluştu: %s"
 
-#: ../pan/tasks/decoder.cc:192
+#: ../pan/tasks/decoder.cc:194
 #, c-format
 msgid "Saved \"%s\""
 msgstr "\"%s\"·kaydedildi"
 
-#: ../pan/tasks/decoder.cc:199
+#: ../pan/tasks/decoder.cc:201
 #, fuzzy, c-format
 msgid ""
 "Error saving \"%s\":\n"
 "%s."
 msgstr "\"%s\" dosyası okunurken hata oluştu: %s"
 
-#: ../pan/tasks/decoder.cc:314 ../pan/tasks/task-article.cc:350
+#: ../pan/tasks/decoder.cc:314 ../pan/tasks/task-article.cc:354
 #, fuzzy, c-format
 msgid "Decoding %s"
 msgstr "Çözülüyor: \"%s\""
 
-#: ../pan/tasks/encoder.cc:102 ../pan/tasks/encoder.cc:155
+#: ../pan/tasks/encoder.cc:103 ../pan/tasks/encoder.cc:154
 #, fuzzy, c-format
 msgid "Error loading %s from cache."
 msgstr "Soketten okurken hata oldu."
 
-#: ../pan/tasks/encoder.cc:177
+#: ../pan/tasks/encoder.cc:176
 #, fuzzy, c-format
 msgid "Error encoding %s: %s"
 msgstr "\"%s\" dosyası okunurken hata oluştu: %s"
 
-#: ../pan/tasks/encoder.cc:269
+#: ../pan/tasks/encoder.cc:266
 #, fuzzy, c-format
 msgid "Encoding %s"
 msgstr "Çözülüyor: \"%s\""
 
-#: ../pan/tasks/nntp.cc:126
+#: ../pan/tasks/nntp.cc:148
 #, fuzzy, c-format
 msgid "%s requires a username, but none is set."
 msgstr "Benim sunucum kullanıcı adı ve parola istiyor"
 
-#: ../pan/tasks/nntp.cc:139
+#: ../pan/tasks/nntp.cc:161
 #, c-format
 msgid "%s requires a password, but none is set."
 msgstr ""
 
-#: ../pan/tasks/nntp.cc:205
+#: ../pan/tasks/nntp.cc:239
 #, c-format
 msgid "Sending \"%s\" to %s returned an error: %s"
 msgstr ""
 
-#: ../pan/tasks/nntp.cc:228
+#: ../pan/tasks/nntp.cc:262
 #, c-format
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr ""
 
-#: ../pan/tasks/nntp-pool.cc:222
+#: ../pan/tasks/nntp-pool.cc:235
 #, fuzzy, c-format
 msgid "Unable to connect to \"%s\""
 msgstr "E-posta sunucusu \"%s\" ile bağlantı kurulamadı"
+
+#: ../pan/tasks/queue.cc:772 ../pan/tasks/queue.cc:800
+#: ../pan/tasks/queue.cc:827
+msgid "No space left on device."
+msgstr ""
 
 #: ../pan/tasks/socket-impl-gio.cc:173 ../pan/tasks/socket-impl-gio.cc:211
 #: ../pan/tasks/socket-impl-openssl.cc:214
@@ -3284,33 +3517,32 @@ msgstr "E-posta sunucusu \"%s\" ile bağlantı kurulamadı"
 msgid "Error connecting to \"%s\""
 msgstr "\"%s\" dosyası okunurken hata oluştu: %s"
 
-#: ../pan/tasks/socket-impl-gio.cc:351 ../pan/tasks/socket-impl-openssl.cc:633
+#: ../pan/tasks/socket-impl-gio.cc:359 ../pan/tasks/socket-impl-openssl.cc:641
 #, fuzzy
 msgid "Unknown Error"
 msgstr "Bilinmeyen"
 
-#: ../pan/tasks/task-article.cc:61 ../pan/tasks/task-article.cc:156
-#: ../pan/tasks/task-article.cc:159
+#: ../pan/tasks/task-article.cc:62 ../pan/tasks/task-article.cc:160
 #, fuzzy, c-format
 msgid "Saving %s"
 msgstr "\"%s\"·kaydediliyor"
 
-#: ../pan/tasks/task-article.cc:63
+#: ../pan/tasks/task-article.cc:64
 #, fuzzy, c-format
 msgid "Reading %s"
 msgstr "Okunuyor"
 
-#: ../pan/tasks/task-article.cc:322
+#: ../pan/tasks/task-article.cc:326
 #, c-format
 msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
 msgstr ""
 
-#: ../pan/tasks/task-groups.cc:40
+#: ../pan/tasks/task-groups.cc:41
 #, fuzzy, c-format
 msgid "Getting group list from \"%s\""
 msgstr "\"%s\" sunucusundan yeni gruplar alınıyor"
 
-#: ../pan/tasks/task-groups.cc:122
+#: ../pan/tasks/task-groups.cc:134
 #, fuzzy, c-format
 msgid "Fetched %lu Groups"
 msgstr "`%2$s' için %1$u başlık alındı"
@@ -3326,246 +3558,252 @@ msgid "Posting of \"%s\" failed: %s"
 msgstr "Makale (\"%s\") gövdesi alınırken  hata oluştu: %s"
 
 #: ../pan/tasks/task-post.cc:81
-#, c-format
-msgid "Posting of \"%s\" succesful: %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Posting of \"%s\" successful: %s"
+msgstr "Makale (\"%s\") gövdesi alınırken  hata oluştu: %s"
 
 #: ../pan/tasks/task-upload.cc:51
 #, fuzzy, c-format
 msgid "Uploading %s"
 msgstr "%s yükleniyor"
 
-#: ../pan/tasks/task-upload.cc:249
+#: ../pan/tasks/task-upload.cc:244
 #, fuzzy, c-format
 msgid "Uploading %s - Part %d of %d"
 msgstr "\"%s\" makalesi postalanıyor (%d/%d)."
 
-#: ../pan/tasks/task-upload.cc:251
+#: ../pan/tasks/task-upload.cc:246
 #, c-format
-msgid "Uploading Message body with Subject \"%s\""
+msgid "Uploading message body with subject \"%s\""
 msgstr ""
 
-#: ../pan/tasks/task-upload.cc:308
-#, c-format
-msgid "Posting of File %s (Part %d of %d) failed: No Posts allowed by server."
-msgstr ""
-
-#: ../pan/tasks/task-upload.cc:316
+#: ../pan/tasks/task-upload.cc:303
 #, fuzzy, c-format
-msgid "Posting of File %s (Part %d of %d) failed: %s"
+msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
 msgstr "Makale (\"%s\") gövdesi alınırken  hata oluştu: %s"
 
-#: ../pan/tasks/task-upload.cc:326 ../pan/tasks/task-upload.cc:333
+#: ../pan/tasks/task-upload.cc:311
 #, fuzzy, c-format
-msgid "Posting of file %s (Part %d of %d) succesful: %s"
+msgid "Posting of file %s (part %d of %d) failed: %s"
+msgstr "Makale (\"%s\") gövdesi alınırken  hata oluştu: %s"
+
+#: ../pan/tasks/task-upload.cc:321 ../pan/tasks/task-upload.cc:328
+#, fuzzy, c-format
+msgid "Posting of file %s (part %d of %d) successful: %s"
 msgstr "\"%s\" makalesi postalanıyor (%d/%d)."
 
-#: ../pan/tasks/task-upload.cc:343
+#: ../pan/tasks/task-upload.cc:338
 #, fuzzy, c-format
-msgid "Posting of file %s succesful: %s"
+msgid "Posting of file %s successful: %s"
 msgstr "Makale (\"%s\") gövdesi alınırken  hata oluştu: %s"
 
-#: ../pan/tasks/task-upload.cc:347
+#: ../pan/tasks/task-upload.cc:342
 #, c-format
 msgid ""
-"Posting of file %s not completely successful: Check the log (right-click on "
-"list item) !"
+"Posting of file %s not completely successful: Check the log (right-click "
+"list item)."
 msgstr ""
 
-#: ../pan/tasks/task-upload.cc:364
+#: ../pan/tasks/task-upload.cc:358
 #, c-format
 msgid ""
-"Posting of file %s not successful: Check the log (right-click on list item) !"
+"Posting of file %s not successful: Check the log (right-click list item)."
 msgstr ""
 
-#: ../pan/tasks/task-xover.cc:79
+#: ../pan/tasks/task-xover.cc:83
 #, c-format
 msgid "Getting all headers for \"%s\""
 msgstr "\"%s\" için tüm başlıklar alınıyor"
 
-#: ../pan/tasks/task-xover.cc:81
+#: ../pan/tasks/task-xover.cc:86
 #, c-format
 msgid "Getting new headers for \"%s\""
 msgstr "\"%s\" için yeni başlıklar alınıyor"
 
 #. SAMPLE
-#: ../pan/tasks/task-xover.cc:83
+#: ../pan/tasks/task-xover.cc:90
 #, c-format
 msgid "Sampling headers for \"%s\""
 msgstr "\"%s\" için başlıklar şekillendiriliyor"
 
-#: ../pan/tasks/task-xover.cc:369
+#: ../pan/tasks/task-xover.cc:426
 #, fuzzy, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "(%lu satır - %lu makale)"
+
+#: ../pan/tasks/task-xover.cc:500
+#, fuzzy, c-format
+#| msgid "Getting new headers for \"%s\""
+msgid "Getting new headers for \"%s\" done."
+msgstr "\"%s\" için yeni başlıklar alınıyor"
 
 #: ../pan/tasks/task-xoverinfo.cc:78
 #, fuzzy, c-format
 msgid "Getting header counts for \"%s\""
 msgstr "\"%s\" için tüm başlıklar alınıyor"
 
-#: ../pan/usenet-utils/filter-info.cc:163
+#: ../pan/usenet-utils/filter-info.cc:168
 #, fuzzy
 msgid "article doesn't have attachments"
 msgstr "Makale tamamlanmamış eklenti(ler) içeriyor"
 
-#: ../pan/usenet-utils/filter-info.cc:167
+#: ../pan/usenet-utils/filter-info.cc:172
 #, fuzzy
 msgid "the article has attachments"
 msgstr "Makalenin eklentisi yok"
 
-#: ../pan/usenet-utils/filter-info.cc:171
+#: ../pan/usenet-utils/filter-info.cc:176
 #, fuzzy
 msgid "the article isn't cached locally"
 msgstr "Makalenin gövdesi yerel olarak önbelleğe atılmadı"
 
-#: ../pan/usenet-utils/filter-info.cc:175
+#: ../pan/usenet-utils/filter-info.cc:180
 #, fuzzy
 msgid "the article is cached locally"
 msgstr "Makale gövdesi yerel olarak önbelleğe atıldı"
 
-#: ../pan/usenet-utils/filter-info.cc:179
+#: ../pan/usenet-utils/filter-info.cc:184
 #, fuzzy
 msgid "the article wasn't posted by you"
 msgstr "Makale tarafımdan gönderilmedi"
 
-#: ../pan/usenet-utils/filter-info.cc:183
+#: ../pan/usenet-utils/filter-info.cc:188
 #, fuzzy
 msgid "the article was posted by you"
 msgstr "Makale tarafımdan gönderildi"
 
-#: ../pan/usenet-utils/filter-info.cc:187
+#: ../pan/usenet-utils/filter-info.cc:192
 #, fuzzy
 msgid "the article has been read"
 msgstr "Makale"
 
-#: ../pan/usenet-utils/filter-info.cc:191
+#: ../pan/usenet-utils/filter-info.cc:196
 #, fuzzy
 msgid "the article hasn't been read"
 msgstr "Makale"
 
-#: ../pan/usenet-utils/filter-info.cc:195
+#: ../pan/usenet-utils/filter-info.cc:200
 #, fuzzy, c-format
 msgid "the article is less than %ld bytes long"
 msgstr "Makale %d satırdan daha kısa"
 
-#: ../pan/usenet-utils/filter-info.cc:200
+#: ../pan/usenet-utils/filter-info.cc:205
 #, fuzzy, c-format
 msgid "the article is at least %ld bytes long"
 msgstr "Makale %d satırdan daha kısa"
 
-#: ../pan/usenet-utils/filter-info.cc:205
+#: ../pan/usenet-utils/filter-info.cc:210
 #, fuzzy, c-format
 msgid "the article is less than %ld lines long"
 msgstr "Makale %d satırdan daha kısa"
 
-#: ../pan/usenet-utils/filter-info.cc:210
+#: ../pan/usenet-utils/filter-info.cc:215
 #, fuzzy, c-format
 msgid "the article is at least %ld lines long"
 msgstr "Makale %d satırdan daha kısa"
 
-#: ../pan/usenet-utils/filter-info.cc:215
+#: ../pan/usenet-utils/filter-info.cc:220
 #, fuzzy, c-format
 msgid "the article is less than %ld days old"
 msgstr "Makale %d günden daha eski"
 
-#: ../pan/usenet-utils/filter-info.cc:220
+#: ../pan/usenet-utils/filter-info.cc:225
 #, fuzzy, c-format
 msgid "the article is at least %ld days old"
 msgstr "Makale N günden daha eski olmalı:"
 
-#: ../pan/usenet-utils/filter-info.cc:225
+#: ../pan/usenet-utils/filter-info.cc:230
 #, fuzzy, c-format
 msgid "the article was posted to less than %ld groups"
 msgstr "Makele %d'den az gruba postalandı"
 
-#: ../pan/usenet-utils/filter-info.cc:230
+#: ../pan/usenet-utils/filter-info.cc:235
 #, fuzzy, c-format
 msgid "the article was posted to at least %ld groups"
 msgstr "Makalenin en _az N gruba gönderilmiş olması gerek:"
 
-#: ../pan/usenet-utils/filter-info.cc:235
+#: ../pan/usenet-utils/filter-info.cc:240
 #, fuzzy, c-format
 msgid "the article's score is less than %ld"
 msgstr "Makale skoru %d den az"
 
-#: ../pan/usenet-utils/filter-info.cc:240
+#: ../pan/usenet-utils/filter-info.cc:245
 #, fuzzy, c-format
 msgid "the article's score is %ld or higher"
 msgstr "Makale Panelini Gö_ster"
 
-#: ../pan/usenet-utils/filter-info.cc:249
-#: ../pan/usenet-utils/filter-info.cc:259
+#: ../pan/usenet-utils/filter-info.cc:254
+#: ../pan/usenet-utils/filter-info.cc:264
 #, fuzzy, c-format
 msgid "%s doesn't contain \"%s\""
 msgstr "Eylemler"
 
-#: ../pan/usenet-utils/filter-info.cc:250
-#: ../pan/usenet-utils/filter-info.cc:260
+#: ../pan/usenet-utils/filter-info.cc:255
+#: ../pan/usenet-utils/filter-info.cc:265
 #, c-format
 msgid "%s isn't \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:251
-#: ../pan/usenet-utils/filter-info.cc:261
+#: ../pan/usenet-utils/filter-info.cc:256
+#: ../pan/usenet-utils/filter-info.cc:266
 #, c-format
 msgid "%s doesn't begin with \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:252
-#: ../pan/usenet-utils/filter-info.cc:262
+#: ../pan/usenet-utils/filter-info.cc:257
+#: ../pan/usenet-utils/filter-info.cc:267
 #, c-format
 msgid "%s doesn't end with \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:253
-#: ../pan/usenet-utils/filter-info.cc:263
+#: ../pan/usenet-utils/filter-info.cc:258
+#: ../pan/usenet-utils/filter-info.cc:268
 #, fuzzy, c-format
 msgid "%s doesn't match the regex \"%s\""
 msgstr "Konu, \"%s\" dizisi ile eşleşmiyor"
 
-#: ../pan/usenet-utils/filter-info.cc:275
+#: ../pan/usenet-utils/filter-info.cc:280
 #, fuzzy, c-format
 msgid "%s contains \"%s\""
 msgstr "Eylemler"
 
-#: ../pan/usenet-utils/filter-info.cc:276
+#: ../pan/usenet-utils/filter-info.cc:281
 #, c-format
 msgid "%s is \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:277
+#: ../pan/usenet-utils/filter-info.cc:282
 #, c-format
 msgid "%s begins with \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:278
+#: ../pan/usenet-utils/filter-info.cc:283
 #, c-format
 msgid "%s ends with \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:279
+#: ../pan/usenet-utils/filter-info.cc:284
 #, fuzzy, c-format
 msgid "%s matches the regex \"%s\""
 msgstr "Konu, \"%s\" dizisi ile eşleşiyor"
 
-#: ../pan/usenet-utils/filter-info.cc:285
+#: ../pan/usenet-utils/filter-info.cc:290
 msgid "Any of these tests fail:"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:292
+#: ../pan/usenet-utils/filter-info.cc:297
 msgid "All of these tests pass:"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:299
+#: ../pan/usenet-utils/filter-info.cc:304
 msgid "None of these tests pass:"
 msgstr ""
 
-#: ../pan/usenet-utils/filter-info.cc:306
+#: ../pan/usenet-utils/filter-info.cc:311
 msgid "Any of these tests pass:"
 msgstr ""
 
-#: ../pan/usenet-utils/gnksa.cc:878
+#: ../pan/usenet-utils/gnksa.cc:880
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr ""
@@ -3699,39 +3937,66 @@ msgstr ""
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:199
+#: ../pan/usenet-utils/ssl-utils.h:189
 #, fuzzy, c-format
 msgid "Error printing the server certificate for '%s'"
 msgstr "\"Harici düzenleyici\" komutu yazımı sırasında hata oluştu: %s"
 
-#: ../pan/usenet-utils/ssl-utils.h:216
+#: ../pan/usenet-utils/ssl-utils.h:205
 #, c-format
 msgid ""
-"The current server <b>'%s'</b> sent this security certificate :\n"
+"The current server <b>'%s'</b> sent this security certificate:\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:217
+#: ../pan/usenet-utils/ssl-utils.h:206
 #, c-format
 msgid ""
-"Certificate information for server <b>'%s'</b> :\n"
+"Certificate information for server <b>'%s'</b>:\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:219
+#: ../pan/usenet-utils/ssl-utils.h:208
 #, c-format
 msgid ""
 "%s<b>Issuer information:</b>\n"
 "%s\n"
-"<b>Valid until : </b>%s\n"
+"<b>Valid until:</b> %s\n"
 "\n"
-"<b>Not valid before : </b>%s\n"
+"<b>Not valid before:</b> %s\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/text-massager.cc:397
+#: ../pan/usenet-utils/text-massager.cc:399
 msgid "> [quoted text muted]"
 msgstr "> [alıntı yapılan metin gösterilmedi]"
+
+#: ../pan/usenet-utils/text-massager.cc:579
+msgid "no_name"
+msgstr ""
+
+#: ../pan/usenet-utils/text-massager.cc:580
+msgid "no_mail"
+msgstr ""
+
+#~ msgid "Pan Newsreader"
+#~ msgstr "Pan Haber Okuyucusu"
+
+#, fuzzy
+#~ msgid "Always trust"
+#~ msgstr "Düzenleyici"
+
+#, fuzzy
+#~ msgid "Edit Hotkey"
+#~ msgstr "Filtreleri Düzenle"
+
+#, fuzzy
+#~ msgid "Quoted text:"
+#~ msgstr "Alıntı Metin _3:"
+
+#, fuzzy
+#~ msgid "And the article's"
+#~ msgstr "Makaleler"
 
 #~ msgid "Read News from Usenet"
 #~ msgstr "Habeleri Usenet'ten Oku"
@@ -3739,10 +4004,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 #, fuzzy
 #~ msgid "_Toggle Flag on for Thread"
 #~ msgstr "_İzlenen Konumlar:"
-
-#, fuzzy
-#~ msgid "Error!"
-#~ msgstr "Hata"
 
 #, fuzzy
 #~ msgid "An error has occured. Maximize Pan to investigate."
@@ -3786,10 +4047,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 #, fuzzy
 #~ msgid "_Delete Group's Articles"
 #~ msgstr "/Grubun _Makalelerini Sil"
-
-#, fuzzy
-#~ msgid "Get New Headers for Selected Groups"
-#~ msgstr "Seçilen Gruplardan Başlıkları Al"
 
 #, fuzzy
 #~ msgid "Get New Headers for Subscribed Groups"
@@ -3875,10 +4132,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 #~ msgstr "Makale okunmuş"
 
 #, fuzzy
-#~ msgid "Mark Article as Unread"
-#~ msgstr "Makale okunmamış"
-
-#, fuzzy
 #~ msgid "Reply to Author"
 #~ msgstr "/_Makaleler/_Sil"
 
@@ -3930,9 +4183,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 #~ msgid "Pan: "
 #~ msgstr "Pan "
 
-#~ msgid "Group Name"
-#~ msgstr "Grup Adı"
-
 #, fuzzy
 #~ msgid "Pan: %s"
 #~ msgstr "Pan "
@@ -3976,10 +4226,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 #~ msgstr "/_Postala"
 
 #, fuzzy
-#~ msgid "Paste Text"
-#~ msgstr "Tırnaklanmış Metin 1"
-
-#, fuzzy
 #~ msgid "Manage Posting Pr_ofiles..."
 #~ msgstr "/_Araçlar/_Gönderme Profilleri..."
 
@@ -3989,10 +4235,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 #, fuzzy
 #~ msgid "Error loading post.ui: \"%s\""
 #~ msgstr "`%s' okunurken hata."
-
-#, fuzzy
-#~ msgid "Editors"
-#~ msgstr "Düzenle"
 
 #, fuzzy
 #~ msgid "Posting Article"
@@ -4823,9 +5065,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 #~ msgid "X-Mailer"
 #~ msgstr "X-Mailer"
 
-#~ msgid "User-Agent"
-#~ msgstr "Okuyucu"
-
 #~ msgid "News server connection count: %d"
 #~ msgstr "Haber grubu bağlantı sayısı: %d"
 
@@ -5328,9 +5567,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 #~ msgid "Getting %d of %d"
 #~ msgstr "%d/%d alınıyor"
 
-#~ msgid "Select Color"
-#~ msgstr "Renk Seçin"
-
 #~ msgid "_Browse..."
 #~ msgstr "_Tara..."
 
@@ -5429,9 +5665,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 #~ msgid "Show \"%s\" header"
 #~ msgstr "\"%s\" başlığını göster"
 
-#~ msgid "Newsreader"
-#~ msgstr "Haber okuyucu"
-
 #, fuzzy
 #~ msgid "Download new headers from s_ubscribed groups when starting Pan"
 #~ msgstr "Pan başlatılırken üye olunan gruplardan _yeni başlıkları indir"
@@ -5482,9 +5715,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 #, fuzzy
 #~ msgid "Hea_der Pane"
 #~ msgstr "Panel Başlığı"
-
-#~ msgid "You haven't loaded an article to print."
-#~ msgstr "Yazdırılacak bir makale açmadınız."
 
 #~ msgid ""
 #~ "%s\n"
@@ -5857,9 +6087,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 
 #~ msgid "Add Author to Bozo Filter"
 #~ msgstr "Yazarı İstenmeyenler Filtresine Ekle "
-
-#~ msgid "Regular Expression"
-#~ msgstr "Düzenli İfade"
 
 #~ msgid "Add Author to Spam Filter"
 #~ msgstr "Göndereni Spam Filtresine Ekle"
@@ -6863,9 +7090,6 @@ msgstr "> [alıntı yapılan metin gösterilmedi]"
 
 #~ msgid "The Task Manager is Paused"
 #~ msgstr "Görev Yöneticisi Bekletiliyor"
-
-#~ msgid "The Task Manager is not Paused"
-#~ msgstr "Görev Yöneticisi Bekletilmiyor"
 
 #~ msgid "Aborting"
 #~ msgstr "İptal ediliyor"
