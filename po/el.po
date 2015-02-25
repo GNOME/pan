@@ -12,23 +12,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=Pan&ke"
-"ywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-06-07 16:51+0000\n"
-"PO-Revision-Date: 2013-06-18 12:36+0300\n"
-"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=Pan&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-06-14 22:10+0000\n"
+"PO-Revision-Date: 2015-02-26 00:26+0200\n"
+"Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
 "Language-Team: team@gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Poedit 1.7.4\n"
 "X-Project-Style: gnome\n"
 
 #. update the titlebar
 #: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106
-#: ../pan/gui/gui.cc:1068 ../pan/gui/gui.cc:1697 ../pan/gui/gui.cc:2039
+#: ../pan/gui/gui.cc:1040 ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:2009
 #: ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
@@ -42,27 +42,26 @@ msgstr "Αναγνώστης ειδήσεων"
 msgid "Read and Post Usenet Articles"
 msgstr "Ανάγνωση και αποστολή άρθρων Usenet"
 
-#: ../pan/data/article-cache.cc:143 ../pan/data/encode-cache.cc:62
+#: ../pan/data/article-cache.cc:144 ../pan/data/encode-cache.cc:62
 #, c-format
 msgid "Error opening directory: \"%s\": %s"
 msgstr "Σφάλμα κατά το άνοιγμα καταλόγου \"%s\": %s"
 
-#: ../pan/data/article-cache.cc:234 ../pan/data/article-cache.cc:243
+#: ../pan/data/article-cache.cc:235 ../pan/data/article-cache.cc:244
 #: ../pan/data-impl/data-io.cc:199 ../pan/data-impl/data-io.cc:231
 #: ../pan/gui/post-ui.cc:1723
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Αδύνατη η αποθήκευση \"%s\" %s"
 
-#: ../pan/data/article-cache.cc:361
+#: ../pan/data/article-cache.cc:362
 #, c-format
 msgid "Error opening file \"%s\" %s"
 msgstr "Σφάλμα κατά το άνοιγμα του αρχείου \"%s\" %s"
 
-#: ../pan/data/article-cache.cc:392 ../pan/data-impl/profiles.cc:174
+#: ../pan/data/article-cache.cc:393 ../pan/data-impl/profiles.cc:174
 #: ../pan/data-impl/server.cc:500 ../pan/general/file-util.cc:311
-#: ../pan/gui/post-ui.cc:638 ../pan/gui/search-pane.cc:340
-#: ../pan/gui/task-pane.cc:737
+#: ../pan/gui/post-ui.cc:638 ../pan/gui/task-pane.cc:737
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Σφάλμα κατά την ανάγνωση του αρχείου \"%s\": %s"
@@ -88,48 +87,14 @@ msgstr ""
 "σωστά. Αν υπάρχει καίριο σφάλμα, έξοδος."
 
 #. load_group_descriptions (*_data_io);
-#: ../pan/data-impl/data-impl.cc:115
+#: ../pan/data-impl/data-impl.cc:113
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "Φορτώθηκαν δεδομένα νωτιαίας υποστήριξης σε %.1f δευτερόλεπτα"
 
-#: ../pan/data-impl/data-impl.cc:146
+#: ../pan/data-impl/data-impl.cc:143
 msgid "Pan Newsreader's server passwords"
 msgstr "Κωδικοί πρόσβασης διακομιστή του αναγνώστη ειδήσεων Pan"
-
-#: ../pan/data-impl/download-meter.cc:51
-msgid "DL Initialization..."
-msgstr "Αρχικοποίηση DL..."
-
-#: ../pan/data-impl/download-meter.cc:54
-msgid "Open Download Meter Preferences"
-msgstr "Άνοιγμα μεταφόρτωσης των προτιμήσεων μέτρου"
-
-#: ../pan/data-impl/download-meter.cc:78 ../pan/gui/gui.cc:2013
-#: ../pan/gui/header-pane.cc:1812 ../pan/gui/prefs-ui.cc:850
-msgid "Bytes"
-msgstr "Οκτάδες"
-
-#: ../pan/data-impl/download-meter.cc:81
-msgid "KB"
-msgstr "KB"
-
-#: ../pan/data-impl/download-meter.cc:84 ../pan/gui/dl-prefs.cc:113
-msgid "MB"
-msgstr "MB"
-
-#: ../pan/data-impl/download-meter.cc:87 ../pan/gui/dl-prefs.cc:114
-msgid "GB"
-msgstr "GB"
-
-#: ../pan/data-impl/download-meter.cc:90
-msgid "TB"
-msgstr "TB"
-
-#: ../pan/data-impl/download-meter.cc:127
-#, c-format
-msgid "DL %s"
-msgstr "DL %s"
 
 #: ../pan/data-impl/groups.cc:94
 #, c-format
@@ -185,27 +150,27 @@ msgid "Error reading from %s: unknown group \"%s\""
 msgstr "Σφάλμα κατά την ανάγνωση από %s: άγνωστη ομάδα \"%s\""
 
 #. build the locale strings
-#: ../pan/general/e-util.cc:213
+#: ../pan/general/e-util.cc:211
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: ../pan/general/e-util.cc:214
+#: ../pan/general/e-util.cc:212
 msgid "Today %l:%M %p"
 msgstr "Σήμερα %l:%M %p"
 
-#: ../pan/general/e-util.cc:215
+#: ../pan/general/e-util.cc:213
 msgid "%a %l:%M %p"
 msgstr "%a %l:%M %p"
 
-#: ../pan/general/e-util.cc:216
+#: ../pan/general/e-util.cc:214
 msgid "%b %d %l:%M %p"
 msgstr "%d %b %l:%M %p"
 
-#: ../pan/general/e-util.cc:217
+#: ../pan/general/e-util.cc:215
 msgid "%b %d %Y"
 msgstr "%d %b %Y"
 
-#: ../pan/general/e-util.cc:242
+#: ../pan/general/e-util.cc:240
 msgid "?"
 msgstr ";"
 
@@ -220,623 +185,618 @@ msgstr ""
 "Αδύνατος ο προσδιορισμός κωδικοποίησης άρθρου. Οι μη UTF8 χαρακτήρες "
 "αφαιρέθηκαν."
 
-#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:446
+#: ../pan/gui/actions.cc:303 ../pan/gui/post-ui.cc:446
 msgid "_File"
 msgstr "_Αρχείο"
 
 #
-#: ../pan/gui/actions.cc:305 ../pan/gui/post-ui.cc:447
+#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:447
 msgid "_Edit"
 msgstr "_Επεξεργασία"
 
-#: ../pan/gui/actions.cc:306 ../pan/gui/prefs-ui.cc:1107
+#: ../pan/gui/actions.cc:305 ../pan/gui/prefs-ui.cc:1107
 msgid "_Layout"
 msgstr "_Διάταξη"
 
-#: ../pan/gui/actions.cc:307
+#: ../pan/gui/actions.cc:306
 msgid "_Group Pane"
 msgstr "Παράθυρο _ομάδας"
 
-#: ../pan/gui/actions.cc:308
+#: ../pan/gui/actions.cc:307
 msgid "_Header Pane"
 msgstr "_Παράθυρο κεφαλίδας"
 
-#: ../pan/gui/actions.cc:309
+#: ../pan/gui/actions.cc:308
 msgid "_Body Pane"
 msgstr "Παράθυρο _σώματος"
 
 #
-#: ../pan/gui/actions.cc:310
+#: ../pan/gui/actions.cc:309
 msgid "_View"
 msgstr "_Προβολή"
 
-#: ../pan/gui/actions.cc:311
+#: ../pan/gui/actions.cc:310
 msgid "Filte_r"
 msgstr "_Φίλτρο"
 
-#: ../pan/gui/actions.cc:312
+#: ../pan/gui/actions.cc:311
 msgid "_Go"
 msgstr "_Μετάβαση"
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/actions.cc:313 ../pan/gui/prefs-ui.cc:1157
+#: ../pan/gui/actions.cc:312 ../pan/gui/prefs-ui.cc:1157
 msgid "_Actions"
 msgstr "Ε_νέργειες"
 
-#: ../pan/gui/actions.cc:314
+#: ../pan/gui/actions.cc:313
 msgid "_Articles"
 msgstr "Ά_ρθρα"
 
-#: ../pan/gui/actions.cc:315
+#: ../pan/gui/actions.cc:314
 msgid "G_roups"
 msgstr "_Ομάδες"
 
-#: ../pan/gui/actions.cc:316 ../pan/gui/actions.cc:317
+#: ../pan/gui/actions.cc:315 ../pan/gui/actions.cc:316
 msgid "_Post"
 msgstr "_Αποστολή"
 
 #
-#: ../pan/gui/actions.cc:318
+#: ../pan/gui/actions.cc:317
 msgid "_Help"
 msgstr "_Βοήθεια"
 
-#: ../pan/gui/actions.cc:321
+#: ../pan/gui/actions.cc:320
 msgid "_Read Group"
 msgstr "_Ανάγνωση ομάδας"
 
-#: ../pan/gui/actions.cc:322
+#: ../pan/gui/actions.cc:321
 msgid "Read Group"
 msgstr "Ανάγνωση ομάδας"
 
-#: ../pan/gui/actions.cc:326
+#: ../pan/gui/actions.cc:325
 msgid "_Mark Selected Groups Read"
 msgstr "_Σήμανση επιλεγμένων ομάδων ως αναγνωσμένα"
 
-#: ../pan/gui/actions.cc:327
+#: ../pan/gui/actions.cc:326
 msgid "Mark Selected Groups Read"
 msgstr "Σήμανση επιλεγμένων ομάδων ως αναγνωσμένα"
 
 #
-#: ../pan/gui/actions.cc:331
+#: ../pan/gui/actions.cc:330
 msgid "_Delete Selected Groups' Articles"
 msgstr "_Διαγραφή των άρθρων επιλεγμένων ομάδων"
 
 #
-#: ../pan/gui/actions.cc:332
+#: ../pan/gui/actions.cc:331
 msgid "Delete Selected Groups' Articles"
 msgstr "Διαγραφή των άρθρων επιλεγμένων ομάδων"
 
-#: ../pan/gui/actions.cc:336
+#: ../pan/gui/actions.cc:335
 msgid "Get New _Headers in Selected Groups"
 msgstr "Λήψη των νέων _κεφαλίδων στις επιλεγμένες ομάδες"
 
-#: ../pan/gui/actions.cc:337
+#: ../pan/gui/actions.cc:336
 msgid "Get New Headers in Selected Groups"
 msgstr "Λήψη των νέων κεφαλίδων στις επιλεγμένες ομάδες"
 
-#: ../pan/gui/actions.cc:341 ../pan/gui/actions.cc:346
+#: ../pan/gui/actions.cc:340 ../pan/gui/actions.cc:345
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "Λήψη των νέων _κεφαλίδων στις ομάδες με συνδρομή"
 
-#: ../pan/gui/actions.cc:342 ../pan/gui/actions.cc:347
+#: ../pan/gui/actions.cc:341 ../pan/gui/actions.cc:346
 msgid "Get New Headers in Subscribed Groups"
 msgstr "Λήψη νέων κεφαλίδων στις ομάδες με συνδρομή"
 
-#: ../pan/gui/actions.cc:351
+#: ../pan/gui/actions.cc:350
 msgid "Get _Headers..."
 msgstr "Λήψη _κεφαλίδων..."
 
-#: ../pan/gui/actions.cc:352
+#: ../pan/gui/actions.cc:351
 msgid "Get Headers..."
 msgstr "Λήψη κεφαλίδων..."
 
-#: ../pan/gui/actions.cc:356 ../pan/gui/actions.cc:357
+#: ../pan/gui/actions.cc:355 ../pan/gui/actions.cc:356
 msgid "Refresh Group List"
 msgstr "Ανανέωση λίστας ομάδας"
 
-#: ../pan/gui/actions.cc:361
+#: ../pan/gui/actions.cc:360
 msgid "_Subscribe"
 msgstr "_Συνδρομή"
 
-#: ../pan/gui/actions.cc:362
+#: ../pan/gui/actions.cc:361
 msgid "Subscribe"
 msgstr "Συνδρομή"
 
-#: ../pan/gui/actions.cc:366
+#: ../pan/gui/actions.cc:365
 msgid "_Unsubscribe"
 msgstr "_Κατάργηση συνδρομής"
 
-#: ../pan/gui/actions.cc:367
+#: ../pan/gui/actions.cc:366
 msgid "Unsubscribe"
 msgstr "Κατάργηση συνδρομής"
 
-#: ../pan/gui/actions.cc:371
+#: ../pan/gui/actions.cc:370
 msgid "_Save Articles..."
 msgstr "Απο_θήκευση άρθρων..."
 
-#: ../pan/gui/actions.cc:372
+#: ../pan/gui/actions.cc:371
 msgid "Save Articles..."
 msgstr "Αποθήκευση άρθρων..."
 
-#: ../pan/gui/actions.cc:376
+#: ../pan/gui/actions.cc:375
 msgid "Save Articles from Selected _NZB..."
 msgstr "Αποθήκευση άρθρων από επιλεγμένα _NZB..."
 
-#: ../pan/gui/actions.cc:377
+#: ../pan/gui/actions.cc:376
 msgid "Save Articles from Selected NZB"
 msgstr "Αποθήκευση άρθρων από επιλεγμένα NZB"
 
-#: ../pan/gui/actions.cc:381
+#: ../pan/gui/actions.cc:380
 msgid "Save Articles to an NZB _File..."
 msgstr "Αποθήκευση άρθρων σε _αρχείο NZB..."
 
-#: ../pan/gui/actions.cc:382
+#: ../pan/gui/actions.cc:381
 msgid "Save Articles to an NZB File"
 msgstr "Αποθήκευση άρθρων σε αρχείο NZB"
 
 #
-#: ../pan/gui/actions.cc:386 ../pan/gui/actions.cc:387
+#: ../pan/gui/actions.cc:385 ../pan/gui/actions.cc:386
 msgid "Print"
 msgstr "Εκτύπωση"
 
-#: ../pan/gui/actions.cc:391
+#: ../pan/gui/actions.cc:390
 msgid "_Import NZB Files..."
 msgstr "Ε_ισαγωγή αρχείων NZB..."
 
-#: ../pan/gui/actions.cc:396
+#: ../pan/gui/actions.cc:395
 msgid "_Cancel Last Task"
 msgstr "Α_κύρωση τελευταίας εργασίας"
 
-#: ../pan/gui/actions.cc:401
+#: ../pan/gui/actions.cc:400
 msgid "_Task Manager"
 msgstr "Διαχειριστής ερ_γασιών"
 
-#: ../pan/gui/actions.cc:406
-msgid "_Download Meter Preferences"
-msgstr "_Μεταφόρτωση προτιμήσεων μέτρου"
-
-#: ../pan/gui/actions.cc:411
+#: ../pan/gui/actions.cc:405
 msgid "_Event Log"
 msgstr "Καταγραφή _συμβάντων"
 
 #
-#: ../pan/gui/actions.cc:416
+#: ../pan/gui/actions.cc:410
 msgid "_Quit"
 msgstr "Έ_ξοδος"
 
 #
-#: ../pan/gui/actions.cc:421
+#: ../pan/gui/actions.cc:415
 msgid "Select _All Articles"
 msgstr "Λήψη ό_λων των άρθρων"
 
 #
-#: ../pan/gui/actions.cc:426
+#: ../pan/gui/actions.cc:420
 msgid "_Deselect All Articles"
 msgstr "_Αποεπιλογή όλων των άρθρων"
 
-#: ../pan/gui/actions.cc:431
+#: ../pan/gui/actions.cc:425
 msgid "Add Su_bthreads to Selection"
 msgstr "Προσθήκη _υποαλληλουχίας μηνυμάτων στην επιλογή"
 
-#: ../pan/gui/actions.cc:436
+#: ../pan/gui/actions.cc:430
 msgid "Add _Threads to Selection"
 msgstr "Προσθήκη α_λληλουχίας μηνυμάτων στην επιλογή"
 
-#: ../pan/gui/actions.cc:441
+#: ../pan/gui/actions.cc:435
 msgid "Add _Similar Articles to Selection"
 msgstr "Προσθήκη _παρόμοιων άρθρων στην επιλογή"
 
-#: ../pan/gui/actions.cc:446
+#: ../pan/gui/actions.cc:440
 msgid "Select Article _Body"
 msgstr "Επιλογή _σώματος άρθρου"
 
-#: ../pan/gui/actions.cc:451
+#: ../pan/gui/actions.cc:445
 msgid "Edit _Preferences"
 msgstr "Επεξεργασία _προτιμήσεων"
 
-#: ../pan/gui/actions.cc:456
+#: ../pan/gui/actions.cc:450
 msgid "Edit Selected _Group's Preferences"
 msgstr "Επεξεργασία προτιμήσεων της επιλεγμένης _ομάδας"
 
-#: ../pan/gui/actions.cc:461 ../pan/gui/post-ui.cc:463
+#: ../pan/gui/actions.cc:455 ../pan/gui/post-ui.cc:463
 msgid "Edit P_osting Profiles"
-msgstr "Επεξεργασία κατατομών α_ποστολής"
+msgstr "Επεξεργασία προφίλ α_ποστολής"
 
 #
-#: ../pan/gui/actions.cc:466
+#: ../pan/gui/actions.cc:460
 msgid "Edit _News Servers"
 msgstr "Επεξεργασία διακομιστών ε_ιδήσεων"
 
-#: ../pan/gui/actions.cc:471
+#: ../pan/gui/actions.cc:465
 msgid "Jump to _Group Tab"
 msgstr "Μετάβαση στην καρτέλα _ομάδας"
 
 #
-#: ../pan/gui/actions.cc:476
+#: ../pan/gui/actions.cc:470
 msgid "Jump to _Header Tab"
 msgstr "Μετάβαση στην καρτέλα _κεφαλίδας"
 
-#: ../pan/gui/actions.cc:481
+#: ../pan/gui/actions.cc:475
 msgid "Jump to _Body Tab"
 msgstr "Μετάβαση στην καρτέλα _σώματος"
 
 #
-#: ../pan/gui/actions.cc:486
+#: ../pan/gui/actions.cc:480
 msgid "_Rot13 Selected Text"
 msgstr "Επιλεγμένο κείμενο R_ot13"
 
-#: ../pan/gui/actions.cc:491
+#: ../pan/gui/actions.cc:485
 msgid "Clear _Header Pane"
 msgstr "Καθαρισμός παραθύρου _κεφαλίδας"
 
-#: ../pan/gui/actions.cc:496
+#: ../pan/gui/actions.cc:490
 msgid "Clear _Body Pane"
 msgstr "Καθαρισμός παραθύρου _σώματος"
 
-#: ../pan/gui/actions.cc:501
+#: ../pan/gui/actions.cc:495
 msgid "Cache Article"
 msgstr "Κρυφό άρθρο"
 
-#: ../pan/gui/actions.cc:506
+#: ../pan/gui/actions.cc:500
 msgid "Read Article"
 msgstr "Ανάγνωση άρθρου"
 
-#: ../pan/gui/actions.cc:511
+#: ../pan/gui/actions.cc:505
 msgid "Show Article Information"
 msgstr "Εμφάνιση πληροφοριών άρθρου"
 
-#: ../pan/gui/actions.cc:516
+#: ../pan/gui/actions.cc:510
 msgid "Read _More"
 msgstr "Ανάγνωση _περισσοτέρων"
 
-#: ../pan/gui/actions.cc:517
+#: ../pan/gui/actions.cc:511
 msgid "Read More"
 msgstr "Ανάγνωση περισσοτέρων"
 
-#: ../pan/gui/actions.cc:521
+#: ../pan/gui/actions.cc:515
 msgid "Read _Back"
 msgstr "Ανάγνωση προς τα πίσ_ω"
 
-#: ../pan/gui/actions.cc:522
+#: ../pan/gui/actions.cc:516
 msgid "Read Back"
 msgstr "Ανάγνωση προς τα πίσω"
 
 #
-#: ../pan/gui/actions.cc:526
+#: ../pan/gui/actions.cc:520
 msgid "Next _Unread Group"
 msgstr "Επόμενη αδιά_βαστη ομάδα"
 
-#: ../pan/gui/actions.cc:531
+#: ../pan/gui/actions.cc:525
 msgid "Next _Group"
 msgstr "Επόμενη ο_μάδα"
 
 #
-#: ../pan/gui/actions.cc:536
+#: ../pan/gui/actions.cc:530
 msgid "Next _Unread Article"
 msgstr "Επόμενο αδιά_βαστο άρθρο"
 
 #
-#: ../pan/gui/actions.cc:537
+#: ../pan/gui/actions.cc:531
 msgid "Next Unread Article"
 msgstr "Επόμενο αδιάβαστο άρθρο"
 
-#: ../pan/gui/actions.cc:541
+#: ../pan/gui/actions.cc:535
 msgid "Next _Article"
 msgstr "Επόμενο ά_ρθρο"
 
-#: ../pan/gui/actions.cc:542
+#: ../pan/gui/actions.cc:536
 msgid "Next Article"
 msgstr "Επόμενο άρθρο"
 
 #
-#: ../pan/gui/actions.cc:546
+#: ../pan/gui/actions.cc:540
 msgid "Next _Watched Article"
 msgstr "Επόμενο πα_ρακολουθούμενο άρθρο"
 
 #
-#: ../pan/gui/actions.cc:551
+#: ../pan/gui/actions.cc:545
 msgid "Next Unread _Thread"
 msgstr "Επόμενο αδιάβαστη α_λληλουχία μηνυμάτων"
 
-#: ../pan/gui/actions.cc:552
+#: ../pan/gui/actions.cc:546
 msgid "Next Unread Thread"
 msgstr "Επόμενο αδιάβαστη αλληλουχία μηνυμάτων"
 
-#: ../pan/gui/actions.cc:556
+#: ../pan/gui/actions.cc:550
 msgid "Next Threa_d"
 msgstr "Επόμενο _νήμα"
 
 #
-#: ../pan/gui/actions.cc:561
+#: ../pan/gui/actions.cc:555
 msgid "Pre_vious Article"
 msgstr "Προη_γούμενο άρθρο"
 
-#: ../pan/gui/actions.cc:566
+#: ../pan/gui/actions.cc:560
 msgid "Previous _Thread"
 msgstr "Προηγούμενη α_λληλουχία μηνυμάτων"
 
-#: ../pan/gui/actions.cc:571
+#: ../pan/gui/actions.cc:565
 msgid "_Parent Article"
 msgstr "_Γονικό άρθρο"
 
-#: ../pan/gui/actions.cc:576
+#: ../pan/gui/actions.cc:570
 msgid "Ignore _Author"
 msgstr "Παράβλεψη _συγγραφέα"
 
-#: ../pan/gui/actions.cc:580
+#: ../pan/gui/actions.cc:574
 msgid "_Watch Thread"
 msgstr "_Παρακολούθηση αλληλουχίας μηνυμάτων"
 
-#: ../pan/gui/actions.cc:585
+#: ../pan/gui/actions.cc:579
 msgid "_Ignore Thread"
 msgstr "_Παράβλεψη αλληλουχίας μηνυμάτων"
 
-#: ../pan/gui/actions.cc:590 ../pan/gui/actions.cc:591
+#: ../pan/gui/actions.cc:584 ../pan/gui/actions.cc:585
 msgid "_Toggle Flag On/Off for Thread"
 msgstr "Ε_ναλλαγή σημαίας ενεργή/ανενεργή για αλληλουχία μηνυμάτων"
 
-#: ../pan/gui/actions.cc:595 ../pan/gui/actions.cc:596
+#: ../pan/gui/actions.cc:589 ../pan/gui/actions.cc:590
 msgid "_Turn Flag Off for Thread"
 msgstr "_Απενεργοποίηση σημαίας για αλληλουχία μηνυμάτων"
 
 #
-#: ../pan/gui/actions.cc:600 ../pan/gui/actions.cc:601
+#: ../pan/gui/actions.cc:594 ../pan/gui/actions.cc:595
 msgid "_Select All Flagged Threads"
 msgstr "_Επιλογή όλων των αλληλουχιών μηνυμάτων με σημαία"
 
-#: ../pan/gui/actions.cc:605 ../pan/gui/actions.cc:606
+#: ../pan/gui/actions.cc:599 ../pan/gui/actions.cc:600
 msgid "_Go to Next Flagged Thread"
 msgstr "_Μετάβαση στην επόμενη αλληλουχία μηνυμάτων με σημαία"
 
 #
-#: ../pan/gui/actions.cc:610 ../pan/gui/actions.cc:611
+#: ../pan/gui/actions.cc:604 ../pan/gui/actions.cc:605
 msgid "_Go to Last Flagged Thread"
 msgstr "_Μετάβαση στην τελευταία αλληλουχία μηνυμάτων με σημαία"
 
-#: ../pan/gui/actions.cc:615 ../pan/gui/actions.cc:616
+#: ../pan/gui/actions.cc:609 ../pan/gui/actions.cc:610
 msgid "_Invert Selection"
 msgstr "_Αντιστροφή επιλογής"
 
-#: ../pan/gui/actions.cc:620
+#: ../pan/gui/actions.cc:614
 msgid "Edit Article's Watch/Ignore/Score..."
 msgstr "Επεξεργασία παρακολούθησης/παράβλεψης/βαθμολογίας του άρθρου..."
 
-#: ../pan/gui/actions.cc:625
+#: ../pan/gui/actions.cc:619
 msgid "Add a _Scoring Rule..."
 msgstr "Προσθήκη κανόνα _βαθμολογίας..."
 
-#: ../pan/gui/actions.cc:630
+#: ../pan/gui/actions.cc:624
 msgid "Cance_l Article..."
 msgstr "Α_κύρωση άρθρου..."
 
-#: ../pan/gui/actions.cc:635
+#: ../pan/gui/actions.cc:629
 msgid "_Supersede Article..."
 msgstr "Αν_τικατάσταση άρθρου..."
 
-#: ../pan/gui/actions.cc:640
+#: ../pan/gui/actions.cc:634
 msgid "_Delete Article"
 msgstr "_Διαγραφή άρθρου"
 
-#: ../pan/gui/actions.cc:645
+#: ../pan/gui/actions.cc:639
 msgid "Clear Article Cache"
 msgstr "Καθαρισμός κρυφού άρθρου"
 
-#: ../pan/gui/actions.cc:650
+#: ../pan/gui/actions.cc:644
 msgid "_Mark Article as Read"
 msgstr "_Σήμανση άρθρου ως διαβασμένου"
 
-#: ../pan/gui/actions.cc:655
+#: ../pan/gui/actions.cc:649
 msgid "Mark Article as _Unread"
 msgstr "Σήμανση ως αδ_ιάβαστου"
 
-#: ../pan/gui/actions.cc:661
+#: ../pan/gui/actions.cc:655
 msgid "_Mark Thread as Read"
 msgstr "_Σήμανση αλληλουχίας μηνυμάτων ως διαβασμένης"
 
-#: ../pan/gui/actions.cc:666
+#: ../pan/gui/actions.cc:660
 msgid "Mark Thread as _Unread"
 msgstr "Σήμανση αλληλουχίας μηνυμάτων ως αδ_ιάβαστης"
 
-#: ../pan/gui/actions.cc:671
+#: ../pan/gui/actions.cc:665
 msgid "_Post to Newsgroup"
 msgstr "_Αποστολή στην ομάδα ειδήσεων"
 
-#: ../pan/gui/actions.cc:672
+#: ../pan/gui/actions.cc:666
 msgid "Post to Newsgroup"
 msgstr "Αποστολή στην ομάδα συζήτησης"
 
-#: ../pan/gui/actions.cc:676
+#: ../pan/gui/actions.cc:670
 msgid "_Followup to Newsgroup"
 msgstr "_Παρακολούθηση ομάδας ειδήσεων"
 
-#: ../pan/gui/actions.cc:677
+#: ../pan/gui/actions.cc:671
 msgid "Followup to Newsgroup"
 msgstr "Παρακολούθηση ομάδας ειδήσεων"
 
-#: ../pan/gui/actions.cc:681
+#: ../pan/gui/actions.cc:675
 msgid "_Reply to Author in Mail"
 msgstr "Α_πάντηση στον συντάκτη με αλληλογραφία"
 
-#: ../pan/gui/actions.cc:686
+#: ../pan/gui/actions.cc:680
 msgid "_Pan Home Page"
 msgstr "Αρ_χική Σελίδα του Pan"
 
-#: ../pan/gui/actions.cc:691
+#: ../pan/gui/actions.cc:685
 msgid "Give _Feedback or Report a Bug..."
 msgstr "Ανά_δραση ή αναφορά ενός σφάλματος..."
 
-#: ../pan/gui/actions.cc:696
+#: ../pan/gui/actions.cc:690
 msgid "_Tip Jar..."
 msgstr "_Tip Jar..."
 
 #
-#: ../pan/gui/actions.cc:701
+#: ../pan/gui/actions.cc:695
 msgid "_About"
 msgstr "_Περί"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:700
 msgid "Edit _SSL Certificates"
 msgstr "Επε_ξεργασία πιστοποιητικών SSL"
 
-#: ../pan/gui/actions.cc:721
+#: ../pan/gui/actions.cc:715
 msgid "_Thread Headers"
 msgstr "Κεφαλίδες α_λληλουχίας μηνυμάτων"
 
-#: ../pan/gui/actions.cc:722
+#: ../pan/gui/actions.cc:716
 msgid "Wrap Article Body"
 msgstr "Αναδίπλωση σώματος άρθρου"
 
-#: ../pan/gui/actions.cc:723
-#| msgid "Show Article Pane"
+#: ../pan/gui/actions.cc:717
 msgid "Show Article Signature"
 msgstr "Εμφάνιση υπογραφής άρθρου"
 
 #
-#: ../pan/gui/actions.cc:724
+#: ../pan/gui/actions.cc:718
 msgid "Mute _Quoted Text"
-msgstr "Σίγαση κειμένου _σε εισαγωγικά"
+msgstr "Σίγαση κειμένου _σε παράθεση"
 
-#: ../pan/gui/actions.cc:725
+#: ../pan/gui/actions.cc:719
 msgid "Show All _Headers in Body Pane"
 msgstr "Εμφάνιση όλων των κε_φαλίδων στο παράθυρο σώματος"
 
-#: ../pan/gui/actions.cc:726
+#: ../pan/gui/actions.cc:720
 msgid "Show _Smilies as Graphics"
 msgstr "Εμφάνιση _μειδιαμάτων ως γραφικών"
 
-#: ../pan/gui/actions.cc:727
+#: ../pan/gui/actions.cc:721
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr "Εμφάνιση *έντονων*, __υπογραμμισμένων__ και /πλάγιων/"
 
-#: ../pan/gui/actions.cc:728
+#: ../pan/gui/actions.cc:722
 msgid "Size Pictures to _Fit"
 msgstr "_Προσαρμογή μεγέθους εικόνων"
 
-#: ../pan/gui/actions.cc:729
+#: ../pan/gui/actions.cc:723
 msgid "Use _Monospace Font"
 msgstr "Χρήση γραμματοσειράς στα_θερού πλάτους"
 
-#: ../pan/gui/actions.cc:730
+#: ../pan/gui/actions.cc:724
 msgid "Set Focus to Images"
 msgstr "Ορισμός εστίασης σε εικόνες"
 
-#: ../pan/gui/actions.cc:731
+#: ../pan/gui/actions.cc:725
 msgid "Highlight _URLs"
-msgstr "Επισήμανση _URLs"
+msgstr "Επισήμανση _διευθύνσεων"
 
-#: ../pan/gui/actions.cc:734
+#: ../pan/gui/actions.cc:728
 msgid "_Work Online"
 msgstr "Ερ_γασία με σύνδεση"
 
-#: ../pan/gui/actions.cc:735
+#: ../pan/gui/actions.cc:729
 msgid "_Tabbed Layout"
 msgstr "Διάταξη με _καρτέλες"
 
-#: ../pan/gui/actions.cc:736
+#: ../pan/gui/actions.cc:730
 msgid "Show Group _Pane"
 msgstr "Εμφάνιση _παραθύρου ομάδας"
 
-#: ../pan/gui/actions.cc:737
+#: ../pan/gui/actions.cc:731
 msgid "Show Hea_der Pane"
 msgstr "Εμφάνιση παραθύρου κε_φαλίδας"
 
-#: ../pan/gui/actions.cc:738
+#: ../pan/gui/actions.cc:732
 msgid "Show Bod_y Pane"
 msgstr "Εμφάνιση παραθύρου σώμα_τος"
 
-#: ../pan/gui/actions.cc:739
+#: ../pan/gui/actions.cc:733
 msgid "Show _Toolbar"
 msgstr "Εμφάνιση ερ_γαλειοθήκης"
 
-#: ../pan/gui/actions.cc:740
+#: ../pan/gui/actions.cc:734
 msgid "Abbreviate Group Names"
 msgstr "Συντόμευση ονομάτων ομάδων"
 
-#: ../pan/gui/actions.cc:742
+#: ../pan/gui/actions.cc:736
 msgid "Match Only _Read Articles"
 msgstr "Συμφωνία μόνο με _διαβασμένα άρθρα"
 
-#: ../pan/gui/actions.cc:742
+#: ../pan/gui/actions.cc:736
 msgid "Match Only Read Articles"
 msgstr "Συμφωνία μόνο με διαβασμένα άρθρα"
 
-#: ../pan/gui/actions.cc:743
+#: ../pan/gui/actions.cc:737
 msgid "Match Only _Unread Articles"
 msgstr "Συμφωνία μόνο με _αδιάβαστα άρθρα"
 
-#: ../pan/gui/actions.cc:743
+#: ../pan/gui/actions.cc:737
 msgid "Match Only Unread Articles"
 msgstr "Συμφωνία μόνο με αδιάβαστα άρθρα"
 
-#: ../pan/gui/actions.cc:744
+#: ../pan/gui/actions.cc:738
 msgid "Match Only _Cached Articles"
 msgstr "Συμφωνία μόνο με _κρυφά άρθρα"
 
-#: ../pan/gui/actions.cc:744
+#: ../pan/gui/actions.cc:738
 msgid "Match Only Cached Articles"
 msgstr "Συμφωνία μόνο με κρυφά άρθρα"
 
-#: ../pan/gui/actions.cc:745
+#: ../pan/gui/actions.cc:739
 msgid "Match Only _Complete Articles"
 msgstr "Συμφωνία μόνο με _ολοκληρωμένα άρθρα"
 
-#: ../pan/gui/actions.cc:745
+#: ../pan/gui/actions.cc:739
 msgid "Match Only Complete Articles"
 msgstr "Συμφωνία μόνο με ολοκληρωμένα άρθρα"
 
-#: ../pan/gui/actions.cc:746
+#: ../pan/gui/actions.cc:740
 msgid "Match Only _My Articles"
 msgstr "Συμφωνία μόνο με των π_ροσωπικά άρθρα"
 
-#: ../pan/gui/actions.cc:746
+#: ../pan/gui/actions.cc:740
 msgid "Match Only My Articles"
 msgstr "Συμφωνία μόνο με προσωπικά άρθρα"
 
-#: ../pan/gui/actions.cc:747
+#: ../pan/gui/actions.cc:741
 msgid "Match Only _Watched Articles"
 msgstr "Συμφωνία μόνο με π_αρακολουθούμενα άρθρα"
 
-#: ../pan/gui/actions.cc:747
+#: ../pan/gui/actions.cc:741
 msgid "Match Only Watched Articles"
 msgstr "Συμφωνία μόνο με τα παρακολουθούμενα άρθρα"
 
-#: ../pan/gui/actions.cc:749
+#: ../pan/gui/actions.cc:743
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "Συμφωνία με βαθμολογίες 9999 (πα_ρακολουθούμενη)"
 
-#: ../pan/gui/actions.cc:750
+#: ../pan/gui/actions.cc:744
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr "Συμφωνία με βαθμολογίες μεταξύ 5000...9998 (_υψηλή)"
 
-#: ../pan/gui/actions.cc:751
+#: ../pan/gui/actions.cc:745
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "Συμφωνία με βαθμολογίες μεταξύ 1...4999 (_μεσαία)"
 
-#: ../pan/gui/actions.cc:752
+#: ../pan/gui/actions.cc:746
 msgid "Match Scores of 0 (_Normal)"
 msgstr "Συμφωνία με βαθμολογίες 0 (_κανονική)"
 
-#: ../pan/gui/actions.cc:753
+#: ../pan/gui/actions.cc:747
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "Συμφωνία με βαθμολογίες μεταξύ -9998...-1 (_χαμηλή)"
 
-#: ../pan/gui/actions.cc:754
+#: ../pan/gui/actions.cc:748
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "Συμφωνία με βαθμολογίες -9999 (_αγνοούμενη)"
 
-#: ../pan/gui/actions.cc:756
+#: ../pan/gui/actions.cc:750
 msgid "Enable/Disable All _Rules"
 msgstr "Ενεργοποίηση/απενεργοποίηση όλων των _κανόνων"
 
-#: ../pan/gui/actions.cc:784
+#: ../pan/gui/actions.cc:778
 msgid "Show Matching _Articles"
 msgstr "Εμφάνιση ά_ρθρων που ταιριάζουν"
 
-#: ../pan/gui/actions.cc:785
+#: ../pan/gui/actions.cc:779
 msgid "Show Matching Articles' _Threads"
 msgstr "Εμφάνιση α_λληλουχιών μηνυμάτων άρθρων που ταιριάζουν"
 
-#: ../pan/gui/actions.cc:786
+#: ../pan/gui/actions.cc:780
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Εμφάνιση _υποαλληλουχιών θεμάτων άρθρων που ταιριάζουν"
 
@@ -847,7 +807,7 @@ msgid "Unnamed File"
 msgstr "Ανώνυμο αρχείο"
 
 #
-#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:2010
+#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1980
 #: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1748
 #: ../pan/gui/post-ui.cc:2588 ../pan/gui/prefs-ui.cc:855
 #: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
@@ -855,14 +815,14 @@ msgid "Subject"
 msgstr "Θέμα"
 
 #
-#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:2010
+#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1980
 msgid "From"
 msgstr "Από"
 
 #
-#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:2011
-#: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:305
-#: ../pan/gui/prefs-ui.cc:851 ../pan/gui/search-pane.cc:660
+#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1981
+#: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:307
+#: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
 msgstr "Ημερομηνία"
 
@@ -912,7 +872,7 @@ msgstr "πάντα"
 
 #: ../pan/gui/body-pane.cc:1543
 msgid "Copy _URL"
-msgstr "Αντιγραφή _URL"
+msgstr "Αντιγραφή _διευθύνσεων"
 
 #: ../pan/gui/body-pane.cc:1748
 msgid "Save Attachment As..."
@@ -958,38 +918,12 @@ msgstr "Λήψη ό_λων των κεφαλίδων"
 msgid "Get the _latest N headers: "
 msgstr "Λήψη των _τελευταίων Ν κεφαλίδων: "
 
-#: ../pan/gui/dl-prefs.cc:156
-#| msgid "Pan: Download Headers"
-msgid "Pan: Download Meter Preferences"
-msgstr "Pan: Μεταφόρτωση προτιμήσεων μέτρου"
-
-#: ../pan/gui/dl-prefs.cc:168
-msgid "When Download Limit Is Reached:"
-msgstr "Όταν φτάσει το όριο μεταφόρτωσης:"
-
-#: ../pan/gui/dl-prefs.cc:171
-msgid "Warn"
-msgstr "Προειδοποίηση"
-
-#: ../pan/gui/dl-prefs.cc:173
-#| msgid "Connecting to mail server"
-msgid "Disconnect from server"
-msgstr "Αποσύνδεση από τον διακομιστή"
-
-#: ../pan/gui/dl-prefs.cc:175
-msgid "Download Limit"
-msgstr "Όριο μεταφόρτωσης"
-
-#: ../pan/gui/dl-prefs.cc:180
-msgid "Reset"
-msgstr "Επαναφορά"
-
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:848
+#: ../pan/gui/e-action-combo-box.c:386 ../pan/gui/prefs-ui.cc:848
 msgid "Action"
 msgstr "Ενέργεια"
 
-#: ../pan/gui/e-action-combo-box.c:389
+#: ../pan/gui/e-action-combo-box.c:387
 msgid "A GtkRadioAction"
 msgstr "Μια GtkRadioAction"
 
@@ -1072,7 +1006,7 @@ msgstr "Ουκρανική"
 msgid "Visual"
 msgstr "Οπτική"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2208
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2178
 #: ../pan/gui/post-ui.cc:548 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Κωδικοποίηση χαρακτήρα"
@@ -1085,23 +1019,23 @@ msgstr "Εισάγετε το σύνολο χαρακτήρων για χρήσ�
 msgid "Other..."
 msgstr "Άλλο..."
 
-#: ../pan/gui/e-cte-dialog.c:78
+#: ../pan/gui/e-cte-dialog.c:76
 msgid "Default Encoding"
 msgstr "Προκαθορισμένη κωδικοποίηση"
 
-#: ../pan/gui/e-cte-dialog.c:80
+#: ../pan/gui/e-cte-dialog.c:78
 msgid "7-Bit Encoding"
-msgstr "Κωδικοποίηση 7 δυαδικών"
+msgstr "Κωδικοποίηση 7 Bit"
+
+#: ../pan/gui/e-cte-dialog.c:80
+msgid "8-Bit Encoding"
+msgstr "Κωδικοποίηση 8 Bit"
 
 #: ../pan/gui/e-cte-dialog.c:82
-msgid "8-Bit Encoding"
-msgstr "Κωδικοποίηση 8 δυαδικών"
-
-#: ../pan/gui/e-cte-dialog.c:84
 msgid "Base64 Encoding"
 msgstr "Κωδικοποίηση Base64"
 
-#: ../pan/gui/e-cte-dialog.c:86
+#: ../pan/gui/e-cte-dialog.c:84
 msgid "Quoted-Printable Encoding"
 msgstr "Κωδικοποίηση Quoted-Printable"
 
@@ -1135,182 +1069,185 @@ msgstr "Άλλες ομάδες"
 
 #
 #: ../pan/gui/group-pane.cc:1052 ../pan/gui/score-view-ui.cc:157
-#: ../pan/gui/search-pane.cc:437
 msgid "Name"
 msgstr "Όνομα"
 
 #: ../pan/gui/group-prefs-dialog.cc:162
 msgid "No Profiles defined in Edit|Posting Profiles."
-msgstr "Χωρίς ορισμένες κατατομές στις κατατομές επεξεργασίας|αποστολής."
+msgstr "Δεν έχουν καθοριστεί προφίλ στα προφίλ επεξεργασίας|αποστολής."
 
 #
-#: ../pan/gui/group-prefs-dialog.cc:271
+#: ../pan/gui/group-prefs-dialog.cc:273
 msgid "Pan: Group Preferences"
 msgstr "Pan: Προτιμήσεις ομάδας"
 
-#: ../pan/gui/group-prefs-dialog.cc:286
+#: ../pan/gui/group-prefs-dialog.cc:288
 #, c-format
 msgid "Properties for Groups"
 msgstr "Ιδιότητες για ομάδες"
 
-#: ../pan/gui/group-prefs-dialog.cc:288
+#: ../pan/gui/group-prefs-dialog.cc:290
 #, c-format
 msgid "Properties for %s"
 msgstr "Ιδιότητες για %s"
 
-#: ../pan/gui/group-prefs-dialog.cc:296
+#: ../pan/gui/group-prefs-dialog.cc:298
 msgid "Character _encoding:"
 msgstr "_Κωδικοποίηση χαρακτήρων:"
 
-#: ../pan/gui/group-prefs-dialog.cc:298
+#: ../pan/gui/group-prefs-dialog.cc:300
 msgid "Directory for Saving Attachments"
 msgstr "Κατάλογος για την αποθήκευση συνημμένων"
 
-#: ../pan/gui/group-prefs-dialog.cc:306
+#: ../pan/gui/group-prefs-dialog.cc:308
 msgid "Directory for _saving attachments:"
 msgstr "Κατάλογος για την _αποθήκευση συνημμένων:"
 
-#: ../pan/gui/group-prefs-dialog.cc:308
+#: ../pan/gui/group-prefs-dialog.cc:310
 msgid "Posting _profile:"
-msgstr "Αποστολή _κατατομής:"
+msgstr "Αποστολή _προφίλ:"
 
-#: ../pan/gui/group-prefs-dialog.cc:313
+#: ../pan/gui/group-prefs-dialog.cc:315
 msgid "Spellchecker _language:"
 msgstr "_Γλώσσα ελέγχου ορθογραφίας:"
 
-#: ../pan/gui/group-prefs-dialog.cc:316
+#: ../pan/gui/group-prefs-dialog.cc:318
 msgid "Group color:"
 msgstr "Χρώμα ομάδας:"
 
-#: ../pan/gui/gui.cc:324
+#: ../pan/gui/gui.cc:312
 msgid "Open the Task Manager"
 msgstr "Άνοιγμα του διαχειριστή εργασιών"
 
-#: ../pan/gui/gui.cc:347
+#: ../pan/gui/gui.cc:335
 msgid "Open the Event Log"
 msgstr "Άνοιγμα της καταγραφής συμβάντων"
 
-#: ../pan/gui/gui.cc:632
+#: ../pan/gui/gui.cc:611
 msgid "Save NZB's Files"
 msgstr "Αποθήκευση αρχείων NZB"
 
-#: ../pan/gui/gui.cc:659
+#: ../pan/gui/gui.cc:638
 msgid "Untitled.nzb"
 msgstr "Ανώνυμο.nzb"
 
-#: ../pan/gui/gui.cc:661
+#: ../pan/gui/gui.cc:640
 msgid "Save NZB File as..."
 msgstr "Αποθήκευση αρχείου NZB ως..."
 
-#: ../pan/gui/gui.cc:830
+#: ../pan/gui/gui.cc:809
 msgid "Import NZB Files"
 msgstr "Εισαγωγή αρχείων NZB"
 
-#: ../pan/gui/gui.cc:838 ../pan/gui/post-ui.cc:3287
+#: ../pan/gui/gui.cc:817 ../pan/gui/post-ui.cc:3287
 msgid "NZB Files"
 msgstr "Αρχεία NZB"
 
-#: ../pan/gui/gui.cc:843
+#: ../pan/gui/gui.cc:822
 msgid "All Files"
 msgstr "Όλα τα αρχεία"
 
-#: ../pan/gui/gui.cc:1364
+#: ../pan/gui/gui.cc:1334
 msgid "Unable to supersede article."
 msgstr "Αδύνατη η αντικατάσταση του άρθρου."
 
-#: ../pan/gui/gui.cc:1365 ../pan/gui/gui.cc:1439
+#: ../pan/gui/gui.cc:1335 ../pan/gui/gui.cc:1409
 msgid "The article doesn't match any of your posting profiles."
-msgstr "Το άρθρο δεν ταιριάζει με οποιαδήποτε από τις κατατομές αποστολής."
+msgstr "Το άρθρο δεν ταιριάζει με οποιαδήποτε από τα προφίλ αποστολής."
 
-#: ../pan/gui/gui.cc:1412
+#: ../pan/gui/gui.cc:1382
 msgid "Revise and send this article to replace the old one."
-msgstr "Επανεξέταση και αποστολή αυτού του άρθρου για αντικατάσταση του παλιού."
+msgstr ""
+"Επανεξέταση και αποστολή αυτού του άρθρου για αντικατάσταση του παλιού."
 
-#: ../pan/gui/gui.cc:1413 ../pan/gui/gui.cc:1476
+#: ../pan/gui/gui.cc:1383 ../pan/gui/gui.cc:1446
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr "Να είσαστε υπομονετικοί! Θα πάρει ώρα μέχρι να γίνουν οι αλλαγές σας."
 
-#: ../pan/gui/gui.cc:1438
+#: ../pan/gui/gui.cc:1408
 msgid "Unable to cancel article."
 msgstr "Αδύνατη η ακύρωση του άρθρου."
 
-#: ../pan/gui/gui.cc:1475
+#: ../pan/gui/gui.cc:1445
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
 "Αποστολή αυτού του άρθρου για να ζητήσετε από τον διακομιστή σας να ακυρώσει "
 "το άλλο."
 
-#: ../pan/gui/gui.cc:1493
+#: ../pan/gui/gui.cc:1463
 msgid "You have marked some articles for deletion."
 msgstr "Έχετε σημειώσει κάποια άρθρα για διαγραφή."
 
-#: ../pan/gui/gui.cc:1494
+#: ../pan/gui/gui.cc:1464
 msgid "Are you sure you want to delete them?"
 msgstr "Είστε βέβαιοι ότι θέλετε να τα διαγράψετε;"
 
-#: ../pan/gui/gui.cc:1520
+#: ../pan/gui/gui.cc:1490
 msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr "Θέλετε να το δεχτείτε μόνιμα; (Μπορείτε να το αλλάξετε αργότερα.)"
 
-#: ../pan/gui/gui.cc:1700
+#: ../pan/gui/gui.cc:1670
 msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
 msgstr "Πνευματικά δικαιώματα \\u00A9 2002-2012 Charles Kerr και άλλοι"
 
-#: ../pan/gui/gui.cc:1705
+#: ../pan/gui/gui.cc:1675
 msgid "translator-credits"
 msgstr ""
 "Ελληνική μεταφραστική ομάδα GNOME\n"
 " Δημήτρης Σπίγγος <dmtrs32@gmail.com>\n"
-"Για περισσότερες πληροφορίες http://gnome.gr"
+" Μαρία Μαυρίδου <mavridou@gmail.com>\n"
+"\n"
+"Για περισσότερες πληροφορίες, επισκεφθείτε τη σελίδα\n"
+"http://gnome.gr/"
 
-#: ../pan/gui/gui.cc:1838
+#: ../pan/gui/gui.cc:1808
 msgid "_1. Header Pane"
 msgstr "_1. Παράθυρο κεφαλίδων"
 
-#: ../pan/gui/gui.cc:1839
+#: ../pan/gui/gui.cc:1809
 msgid "_2. Search Pane"
 msgstr "_2. Παράθυρο αναζητήσεων"
 
-#: ../pan/gui/gui.cc:1845
+#: ../pan/gui/gui.cc:1815
 msgid "_1. Group Pane"
 msgstr "_1. Παράθυρο ομάδων"
 
-#: ../pan/gui/gui.cc:1847 ../pan/gui/gui.cc:1849
+#: ../pan/gui/gui.cc:1817 ../pan/gui/gui.cc:1819
 msgid "_2. Header Pane"
 msgstr "_2. Παράθυρο κεφαλίδας"
 
-#: ../pan/gui/gui.cc:1851
+#: ../pan/gui/gui.cc:1821
 msgid "_3. Body Pane"
 msgstr "_3. Παράθυρο σώματος"
 
-#: ../pan/gui/gui.cc:1947 ../pan/gui/gui.cc:1962
+#: ../pan/gui/gui.cc:1917 ../pan/gui/gui.cc:1932
 msgid " Bytes"
-msgstr " Οκτάδες"
+msgstr " Bytes"
 
-#: ../pan/gui/gui.cc:1950
+#: ../pan/gui/gui.cc:1920
 msgid " KB"
 msgstr " KB"
 
-#: ../pan/gui/gui.cc:1953
+#: ../pan/gui/gui.cc:1923
 msgid " MB"
 msgstr " MB"
 
-#: ../pan/gui/gui.cc:1956
+#: ../pan/gui/gui.cc:1926
 msgid " GB"
 msgstr " GB"
 
-#: ../pan/gui/gui.cc:1959
+#: ../pan/gui/gui.cc:1929
 msgid " TB"
 msgstr " TB"
 
-#: ../pan/gui/gui.cc:1991
+#: ../pan/gui/gui.cc:1961
 #, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
 msgstr[0] "Το άρθρο είναι πλήρες με %d μέρος."
 msgstr[1] "Αυτό το άρθρο έχει όλα τα %d μέρη."
 
-#: ../pan/gui/gui.cc:1993
+#: ../pan/gui/gui.cc:1963
 #, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
@@ -1318,21 +1255,26 @@ msgstr[0] "Σε αυτό το άρθρο λείπει %d μέρος."
 msgstr[1] "Σε αυτό το άρθρο λείπουν %d από τα %d μέρη του:"
 
 #
-#: ../pan/gui/gui.cc:2011 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/gui.cc:1981 ../pan/gui/header-pane.cc:1315
 #: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "Αναγνωριστικό μηνύματος"
 
-#: ../pan/gui/gui.cc:2012 ../pan/gui/header-pane.cc:1796
+#: ../pan/gui/gui.cc:1982 ../pan/gui/header-pane.cc:1796
 #: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Γραμμές"
 
-#: ../pan/gui/gui.cc:2012
+#: ../pan/gui/gui.cc:1982
 msgid "Size"
 msgstr "Μέγεθος"
 
-#: ../pan/gui/gui.cc:2063
+#: ../pan/gui/gui.cc:1983 ../pan/gui/header-pane.cc:1812
+#: ../pan/gui/prefs-ui.cc:850
+msgid "Bytes"
+msgstr "Οκτάδες"
+
+#: ../pan/gui/gui.cc:2033
 msgid ""
 "Error loading iconv library. Encoding certain character sets will not work "
 "in GUI."
@@ -1340,17 +1282,17 @@ msgstr ""
 "Σφάλμα κατά τη φόρτωση βιβλιοθήκης iconv. Η κωδικοποίηση συγκεκριμένων "
 "συνόλων χαρακτήρων δεν θα δουλέψει στο GUI."
 
-#: ../pan/gui/gui.cc:2209
+#: ../pan/gui/gui.cc:2179
 msgid "Body Pane Encoding"
 msgstr "Κωδικοποίηση του παραθύρου σώματος"
 
-#: ../pan/gui/gui.cc:2240 ../pan/gui/task-pane.cc:609
+#: ../pan/gui/gui.cc:2210 ../pan/gui/task-pane.cc:609
 #, c-format
 msgid "Offline"
 msgstr "Αποσυνδεδεμένος"
 
 #
-#: ../pan/gui/gui.cc:2244
+#: ../pan/gui/gui.cc:2214
 #, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
@@ -1358,43 +1300,43 @@ msgstr[0] "Κλείνει %d συνδέση"
 msgstr[1] "Κλείνουν %d συνδέσεις"
 
 #
-#: ../pan/gui/gui.cc:2246 ../pan/gui/gui.cc:2276
+#: ../pan/gui/gui.cc:2216 ../pan/gui/gui.cc:2246
 #, c-format
 msgid "No Connections"
 msgstr "Χωρίς συνδέσεις"
 
-#: ../pan/gui/gui.cc:2250
+#: ../pan/gui/gui.cc:2220
 #, c-format
 msgid "Connecting"
 msgstr "Συνδέεται"
 
-#: ../pan/gui/gui.cc:2263
+#: ../pan/gui/gui.cc:2233
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d αδρανές, %d ενεργό @ %.1f KiBps"
 
-#: ../pan/gui/gui.cc:2319
+#: ../pan/gui/gui.cc:2289
 #, c-format
 msgid "No Tasks"
 msgstr "Χωρίς εργασίες"
 
-#: ../pan/gui/gui.cc:2321 ../pan/gui/prefs-ui.cc:1090
+#: ../pan/gui/gui.cc:2291 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Εργασίες"
 
-#: ../pan/gui/gui.cc:2338 ../pan/gui/task-pane.cc:475
+#: ../pan/gui/gui.cc:2308 ../pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu εργασίες, %s, %.1f KiBps, ETA %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2390
+#: ../pan/gui/gui.cc:2360
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
 msgstr ""
 "Το Pan είναι τώρα αποσυνδεμένο. Παρακαλούμε δείτε \"Αρχείο|Καταγραφή "
-"συμβάντων\" και διορθώστε το πρόβλημα, έπειτα χρησιμοποιήστε \"Αρχείο|Εργασία "
-"με σύνδεση\" για να συνεχίσετε."
+"συμβάντων\" και διορθώστε το πρόβλημα, έπειτα χρησιμοποιήστε \"Αρχείο|"
+"Εργασία με σύνδεση\" για να συνεχίσετε."
 
 #
 #: ../pan/gui/header-pane.cc:1311 ../pan/gui/task-pane.cc:795
@@ -1416,17 +1358,17 @@ msgstr "Συντάκτης"
 msgid "Score"
 msgstr "Βαθμολογία"
 
-#: ../pan/gui/log-ui.cc:103
+#: ../pan/gui/log-ui.cc:104
 msgid "Save Event List"
 msgstr "Αποθήκευση λίστας συμβάντων"
 
 #
-#: ../pan/gui/log-ui.cc:256
+#: ../pan/gui/log-ui.cc:258
 msgid "Pan: Events"
 msgstr "Pan: Συμβάντα"
 
 #
-#: ../pan/gui/log-ui.cc:315
+#: ../pan/gui/log-ui.cc:317
 msgid "Message"
 msgstr "Μήνυμα"
 
@@ -1486,9 +1428,9 @@ msgstr ""
 "  -h, --help               Εμφάνιση αυτής της χρηστικής σελίδας.\n"
 "  --verbose                Αναλυτικά (σε κατάσταση όχι GUI).\n"
 "\n"
-"Επιλογές URL\n"
-"  headers:group.name       Μεταφόρτωση νέων κεφαλίδων για τη συγκεκριμένη "
-"ομάδα ειδήσεων.\n"
+"Επιλογές διευθύνσεων\n"
+"  headers:group.name       Λήψη νέων κεφαλίδων για τη συγκεκριμένη ομάδα "
+"ειδήσεων.\n"
 "  --no-gui                 Στις ειδήσεις:αναγνωριστικό μηνύματος, μεταφορά "
 "του άρθρου στην τυπική έξοδο.\n"
 "\n"
@@ -1523,8 +1465,8 @@ msgstr "Ειδοποίηση Pan"
 
 #: ../pan/gui/post-ui.cc:163
 #, c-format
-msgid "Upload queue: %u tasks, %ld KB (~ %.2f MB) total."
-msgstr "Ανέβασμα ουράς: %u εργασίες, %ld KB (~ %.2f MB) συνολικά."
+msgid "Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."
+msgstr "Αποστολή ουράς: %lu εργασίες, %ld KB (~ %.2f MB) συνολικά."
 
 #: ../pan/gui/post-ui.cc:266 ../pan/gui/post-ui.cc:297
 #, c-format
@@ -1539,7 +1481,7 @@ msgstr "Σφάλμα ορισμού ελέγχου ορθογραφίας: %s"
 
 #: ../pan/gui/post-ui.cc:448
 msgid "_Profile"
-msgstr "_Κατατομή"
+msgstr "_Προφίλ"
 
 #
 #: ../pan/gui/post-ui.cc:449
@@ -1715,8 +1657,8 @@ msgstr "Συνέχεια σε κάθε περίπτωση"
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr ""
-"Το μήνυμα χρησιμοποιεί χαρακτήρες που δεν ορίστηκαν στο σύνολο χαρακτήρων '%"
-"s' - πιθανόν χρήση του '%s' "
+"Το μήνυμα χρησιμοποιεί χαρακτήρες που δεν ορίστηκαν στο σύνολο χαρακτήρων "
+"'%s' - πιθανόν χρήση του '%s' "
 
 #: ../pan/gui/post-ui.cc:842
 msgid "Go _Online"
@@ -1753,9 +1695,9 @@ msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
 msgstr ""
-"Δεν ορίστηκε διακομιστής αποστολής για αυτήν την κατατομή αποστολής.\n"
-"Παρακαλούμε επεξεργαστείτε την κατατομή μέσα από Επεξεργασία|Διαχείριση "
-"κατατομών αποστολής."
+"Δεν ορίστηκε διακομιστής αποστολής για αυτό το προφίλ αποστολής.\n"
+"Παρακαλούμε επεξεργαστείτε το προφίλ μέσα από Επεξεργασία|Διαχείριση προφίλ "
+"αποστολής."
 
 #: ../pan/gui/post-ui.cc:1104
 msgid ""
@@ -1796,8 +1738,8 @@ msgstr "Σφάλμα κατά την εγγραφή άρθρου σε προσω
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr ""
-"Σφάλμα κατά την ανάλυση της γραμμής εντολών \"εξωτερικού επεξεργαστή\": %s (Η "
-"εντολή ήταν: %s)"
+"Σφάλμα κατά την ανάλυση της γραμμής εντολών \"εξωτερικού επεξεργαστή\": %s "
+"(Η εντολή ήταν: %s)"
 
 #: ../pan/gui/post-ui.cc:1416
 #, c-format
@@ -1901,9 +1843,6 @@ msgid "_Reply-To"
 msgstr "Α_πάντηση σε"
 
 #: ../pan/gui/post-ui.cc:2778
-#| msgid ""
-#| "The email account where mail replies to your posted message should go.  "
-#| "This is only needed if it differs from the \"From\" header."
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
@@ -1961,7 +1900,7 @@ msgstr "Προσθήκη αρχείων στην ουρά"
 
 #: ../pan/gui/post-ui.cc:3274
 msgid "Save Upload Queue as NZB File"
-msgstr "Αποθήκευση ουράς ανεβάσματος ως αρχείου NZB"
+msgstr "Αποθήκευση απεσταλμένης ουράς ως αρχείου NZB"
 
 #
 #: ../pan/gui/prefs.cc:364
@@ -2130,7 +2069,7 @@ msgstr "Άρθρα"
 
 #: ../pan/gui/prefs-ui.cc:969
 msgid "Mark downloaded articles read"
-msgstr "Σήμανση μεταφορτωμένων άρθρων ως διαβασμένων"
+msgstr "Σήμανση ληφθέντων άρθρων ως διαβασμένων"
 
 #: ../pan/gui/prefs-ui.cc:971
 msgid "Space selects next article rather than next unread"
@@ -2188,14 +2127,13 @@ msgstr "Εμφάνιση αναδυόμενων πληροφοριών παρα�
 
 #: ../pan/gui/prefs-ui.cc:1010
 msgid "Show Download Meter"
-msgstr "Εμφάνιση μεταφόρτωσης μέτρου"
+msgstr "Εμφάνιση λήψης μέτρου"
 
 #: ../pan/gui/prefs-ui.cc:1014
 msgid "_Panes"
 msgstr "_Παράθυρα"
 
 #: ../pan/gui/prefs-ui.cc:1014
-#| msgid "Japanese"
 msgid "Panes"
 msgstr "Παράθυρα"
 
@@ -2332,7 +2270,7 @@ msgstr "Απόκρυ_ψη άρθρων με βαθμολογία: "
 
 #: ../pan/gui/prefs-ui.cc:1154
 msgid "Download attachments of articles scoring at: "
-msgstr "Μεταφόρτωση συνημμένων άρθρων με βαθμολογία: "
+msgstr "Λήψη συνημμένων άρθρων με βαθμολογία: "
 
 # FIX? drop (see also "On Drop" above)
 #: ../pan/gui/prefs-ui.cc:1157
@@ -2372,6 +2310,10 @@ msgstr "Παράθυρο κεφαλίδας"
 #: ../pan/gui/prefs-ui.cc:1195 ../pan/gui/prefs-ui.cc:1201
 #: ../pan/gui/prefs-ui.cc:1207 ../pan/gui/prefs-ui.cc:1213
 #: ../pan/gui/prefs-ui.cc:1219 ../pan/gui/prefs-ui.cc:1225
+#: ../pan/gui/prefs-ui.cc:1234 ../pan/gui/prefs-ui.cc:1240
+#: ../pan/gui/prefs-ui.cc:1246 ../pan/gui/prefs-ui.cc:1252
+#: ../pan/gui/prefs-ui.cc:1258 ../pan/gui/prefs-ui.cc:1268
+#: ../pan/gui/prefs-ui.cc:1278
 msgid "Text:"
 msgstr "Κείμενο:"
 
@@ -2379,8 +2321,10 @@ msgstr "Κείμενο:"
 #: ../pan/gui/prefs-ui.cc:1197 ../pan/gui/prefs-ui.cc:1203
 #: ../pan/gui/prefs-ui.cc:1209 ../pan/gui/prefs-ui.cc:1215
 #: ../pan/gui/prefs-ui.cc:1221 ../pan/gui/prefs-ui.cc:1227
-#: ../pan/gui/prefs-ui.cc:1237 ../pan/gui/prefs-ui.cc:1242
-#: ../pan/gui/prefs-ui.cc:1247 ../pan/gui/prefs-ui.cc:1265
+#: ../pan/gui/prefs-ui.cc:1236 ../pan/gui/prefs-ui.cc:1242
+#: ../pan/gui/prefs-ui.cc:1248 ../pan/gui/prefs-ui.cc:1254
+#: ../pan/gui/prefs-ui.cc:1260 ../pan/gui/prefs-ui.cc:1270
+#: ../pan/gui/prefs-ui.cc:1280
 msgid "Background:"
 msgstr "Παρασκήνιο:"
 
@@ -2405,7 +2349,6 @@ msgid "Scores of -9999 or less:"
 msgstr "Βαθμολογίες από -9999 ή λιγότερο:"
 
 #: ../pan/gui/prefs-ui.cc:1229
-#| msgid "Show Threads with Matching Articles"
 msgid "Collapsed thread with unread articles:"
 msgstr "Συνεπτυγμένη αλληλουχία μηνυμάτων με αδιάβαστα άρθρα:"
 
@@ -2413,107 +2356,112 @@ msgstr "Συνεπτυγμένη αλληλουχία μηνυμάτων με α
 msgid "Body Pane"
 msgstr "Παράθυρο σώματος"
 
-# # NOTE: Translation of "Create" as "New" to
-# #       keep msg length relatively short...
-#: ../pan/gui/prefs-ui.cc:1239
-msgid "Quoted text:"
-msgstr "Κείμενο σε εισαγωγικά:"
+#: ../pan/gui/prefs-ui.cc:1238
+msgid "First level of quoted text:"
+msgstr "Πρώτο επίπεδο κειμένου σε παράθεση"
+
+#: ../pan/gui/prefs-ui.cc:1244
+msgid "Second level of quoted text:"
+msgstr "Δεύτερο επίπεδο κειμένου σε παράθεση"
+
+#: ../pan/gui/prefs-ui.cc:1250
+msgid "Third level of quoted text:"
+msgstr "Τρίτο επίπεδο κειμένου σε παράθεση"
 
 #.
-#: ../pan/gui/prefs-ui.cc:1244
+#: ../pan/gui/prefs-ui.cc:1256
 msgid "URL:"
-msgstr "URL:"
+msgstr "Διεύθυνση:"
 
 #
 #.
-#: ../pan/gui/prefs-ui.cc:1249
+#: ../pan/gui/prefs-ui.cc:1262
 msgid "Signature:"
 msgstr "Υπογραφή:"
 
-#: ../pan/gui/prefs-ui.cc:1253
-msgid "Other Text"
-msgstr "Άλλο κείμενο"
-
-#
-#: ../pan/gui/prefs-ui.cc:1257
-#| msgid "Select Color"
-msgid "Text Color:"
-msgstr "Χρώμα κειμένου:"
-
-#: ../pan/gui/prefs-ui.cc:1261
+#: ../pan/gui/prefs-ui.cc:1265
 msgid "Group Pane"
 msgstr "Παράθυρο ομάδας"
 
 #.
-#: ../pan/gui/prefs-ui.cc:1267
+#: ../pan/gui/prefs-ui.cc:1272
 msgid "Group Color:"
 msgstr "Χρώμα ομάδας:"
 
+#: ../pan/gui/prefs-ui.cc:1276
+msgid "Other Text"
+msgstr "Άλλο κείμενο"
+
 #
-#: ../pan/gui/prefs-ui.cc:1270
+#: ../pan/gui/prefs-ui.cc:1282
+msgid "Text Color:"
+msgstr "Χρώμα κειμένου:"
+
+#
+#: ../pan/gui/prefs-ui.cc:1285
 msgid "_Colors"
 msgstr "_Χρώματα"
 
 #
-#: ../pan/gui/prefs-ui.cc:1270
+#: ../pan/gui/prefs-ui.cc:1285
 msgid "Colors"
 msgstr "Χρώματα"
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/prefs-ui.cc:1275
+#: ../pan/gui/prefs-ui.cc:1290
 msgid "Preferred Applications"
 msgstr "Αγαπημένες εφαρμογές"
 
-#: ../pan/gui/prefs-ui.cc:1279
+#: ../pan/gui/prefs-ui.cc:1294
 msgid "_Web browser:"
 msgstr "Περιηγητές _ιστού:"
 
 #
-#: ../pan/gui/prefs-ui.cc:1282
+#: ../pan/gui/prefs-ui.cc:1297
 msgid "_Mail reader:"
 msgstr "Αναγνώστης α_λληλογραφίας:"
 
 #
-#: ../pan/gui/prefs-ui.cc:1284
+#: ../pan/gui/prefs-ui.cc:1299
 msgid "_Text editor:"
 msgstr "Επεξεργαστής _κειμένου:"
 
-#: ../pan/gui/prefs-ui.cc:1286
+#: ../pan/gui/prefs-ui.cc:1301
 msgid "_HTML previewer:"
 msgstr "Προεπισκόπηση _HTML:"
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/prefs-ui.cc:1288
+#: ../pan/gui/prefs-ui.cc:1303
 msgid "_Applications"
 msgstr "_Εφαρμογές"
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/prefs-ui.cc:1288
+#: ../pan/gui/prefs-ui.cc:1303
 msgid "Applications"
 msgstr "Εφαρμογές"
 
-#: ../pan/gui/prefs-ui.cc:1293 ../pan/gui/task-pane.cc:552
+#: ../pan/gui/prefs-ui.cc:1308 ../pan/gui/task-pane.cc:552
 msgid "Encoding"
 msgstr "Κωδικοποίηση"
 
-#: ../pan/gui/prefs-ui.cc:1297
+#: ../pan/gui/prefs-ui.cc:1312
 msgid "Default bytes per file (for encoder): "
 msgstr "Προεπιλεγμένες οκτάδες ανά αρχείο (για κωδικοποιητή): "
 
 # FIX? drop (see also "On Drop" above)
-#: ../pan/gui/prefs-ui.cc:1302
+#: ../pan/gui/prefs-ui.cc:1317
 msgid "_Upload"
-msgstr "_Ανέβασμα"
+msgstr "_Αποστολή"
 
-#: ../pan/gui/prefs-ui.cc:1302
+#: ../pan/gui/prefs-ui.cc:1317
 msgid "Upload"
-msgstr "Ανέβασμα"
+msgstr "Αποστολή"
 
-#: ../pan/gui/prefs-ui.cc:1311
+#: ../pan/gui/prefs-ui.cc:1326
 msgid "_Shortcuts"
 msgstr "_Συντομεύσεις"
 
-#: ../pan/gui/prefs-ui.cc:1311
+#: ../pan/gui/prefs-ui.cc:1326
 msgid "Shortcuts"
 msgstr "Συντομεύσεις"
 
@@ -2525,15 +2473,15 @@ msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:131
 msgid "Posting Profile"
-msgstr "Αποστολή κατατομής"
+msgstr "Αποστολή προφίλ"
 
 #: ../pan/gui/profiles-dialog.cc:143
 msgid "Profile Information"
-msgstr "Πληροφορίες για την κατατομή"
+msgstr "Πληροφορίες για το προφίλ"
 
 #: ../pan/gui/profiles-dialog.cc:147
 msgid "_Profile Name:"
-msgstr "Ό_νομα κατατομής:"
+msgstr "Ό_νομα προφίλ:"
 
 #: ../pan/gui/profiles-dialog.cc:150
 msgid "Required Information"
@@ -2617,8 +2565,8 @@ msgstr ""
 "Μπορείτε να προσθέσετε ένα εικονίδιο εικόνας στα άρθρα σας με έναν μοναδικό "
 "κώδικα όψης Χ.\n"
 "Προσθέστε τον κώδικα χωρίς το τελικό <b>\"X-Face:\"</b> \n"
-"αν δημιουργήθηκε από ένα βοηθητικό πρόγραμμα (για παράδειγμα "
-"http://www.dairiki.org/xface/xface.php)."
+"αν δημιουργήθηκε από ένα βοηθητικό πρόγραμμα (για παράδειγμα http://www."
+"dairiki.org/xface/xface.php)."
 
 #: ../pan/gui/profiles-dialog.cc:232
 msgid "_X-Face:"
@@ -2686,15 +2634,15 @@ msgstr "Παρακαλούμε χρησιμοποιήστε μια διεύθυ�
 
 #: ../pan/gui/profiles-dialog.cc:482
 msgid "New Profile"
-msgstr "Νέα κατατομή"
+msgstr "Νέο προφίλ"
 
 #: ../pan/gui/profiles-dialog.cc:528
 msgid "Posting Profiles"
-msgstr "Αποστολή κατατομών"
+msgstr "Αποστολή προφίλ"
 
 #: ../pan/gui/profiles-dialog.cc:544
 msgid "Profiles"
-msgstr "Κατατομές"
+msgstr "Προφίλ"
 
 #: ../pan/gui/save-attach-ui.cc:46
 #, c-format
@@ -2958,50 +2906,6 @@ msgstr "Προσθήκη νέου κανόνα βαθμολογίας"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Αφαίρεση του επιλεγμένου κανόνα βαθμολογίας"
 
-#. WTF nzbindex....
-#: ../pan/gui/search-pane.cc:97
-msgid "Age (newest first)"
-msgstr "Ηλικία (τα πιο νέα πρώτα)"
-
-#: ../pan/gui/search-pane.cc:98
-msgid "Age (oldest first)"
-msgstr "Ηλικία (τα πιο παλιά πρώτα)"
-
-#: ../pan/gui/search-pane.cc:99
-msgid "Size (smallest first)"
-msgstr "Μέγεθος (τα πιο μικρά πρώτα)"
-
-#: ../pan/gui/search-pane.cc:100
-msgid "Size (largest first)"
-msgstr "Μέγεθος (τα πιο μεγάλα πρώτα)"
-
-#: ../pan/gui/search-pane.cc:267 ../pan/gui/search-pane.cc:268
-#: ../pan/gui/search-pane.cc:671
-msgid "Download"
-msgstr "Μεταφόρτωση"
-
-#: ../pan/gui/search-pane.cc:438
-msgid "Name (regex)"
-msgstr "Όνομα (κανονική έκφραση)"
-
-#: ../pan/gui/search-pane.cc:654
-msgid "Release Info"
-msgstr "Πληροφορίες έκδοσης"
-
-#: ../pan/gui/search-pane.cc:672
-msgid "Download selected Release/Files"
-msgstr "Μεταφόρτωση επιλεγμένων εκδόσεων/αρχείων"
-
-#: ../pan/gui/search-pane.cc:674
-msgid "Refresh"
-msgstr "Ανανέωση"
-
-#
-#: ../pan/gui/search-pane.cc:675
-#| msgid "Refresh Article Counts"
-msgid "Refresh current results"
-msgstr "Ανανέωση τρεχόντων αποτελεσμάτων"
-
 #: ../pan/gui/server-ui.cc:259
 msgid "Please specify the server's address."
 msgstr "Παρακαλούμε ορίστε τη διεύθυνση του διακομιστή."
@@ -3027,7 +2931,7 @@ msgstr "Τοποθεσία"
 #: ../pan/gui/server-ui.cc:366
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr ""
-"Η ενεργή διεύθυνση του εξυπηρετητή ειδήσεων, π.χ. \"news.mynewsserver.com\""
+"Η ενεργή διεύθυνση του διακομιστή ειδήσεων, π.χ. \"news.mynewsserver.com\""
 
 #: ../pan/gui/server-ui.cc:367
 msgid "_Address:"
@@ -3149,7 +3053,6 @@ msgid "GZIP Compression (Giganews etc.)"
 msgstr "Συμπίεση GZIP (Giganews etc.)"
 
 #: ../pan/gui/server-ui.cc:463
-#| msgid "Regular Expression"
 msgid "Header Compression:"
 msgstr "Συμπίεση κεφαλίδας:"
 
@@ -3248,7 +3151,7 @@ msgid ""
 "<i>Sourcefile:</i> <b>%s</b>\n"
 msgstr ""
 "\n"
-"<u>Ανέβασμα</u>\n"
+"<u>Αποστολή</u>\n"
 "\n"
 "<i>Θέμα:</i> <b>\"%s\"</b>\n"
 "<i>Από:</i> <b>%s</b>\n"
@@ -3268,7 +3171,7 @@ msgid ""
 "<i>Save Path:</i> <b>%s</b>\n"
 msgstr ""
 "\n"
-"<u>Μεταφόρτωση</u>\n"
+"<u>Λήψη</u>\n"
 "\n"
 "<i>Θέμα:</i> <b>\"%s\"</b>\n"
 "<i>Από:</i> <b>%s</b>\n"
@@ -3370,7 +3273,7 @@ msgstr "Επανεκκίνηση εργασίας"
 
 #: ../pan/gui/task-pane.cc:717 ../pan/gui/task-pane.cc:718
 msgid "Change Download Destination"
-msgstr "Αλλαγή προορισμού μεταφόρτωσης"
+msgstr "Αλλαγή προορισμού λήψης"
 
 #: ../pan/gui/task-pane.cc:1028
 msgid "_Online"
@@ -3395,7 +3298,7 @@ msgstr "Εμφάνιση αναδυόμενων πληροφοριών"
 #: ../pan/gui/url.cc:123
 #, c-format
 msgid "Error starting URL: %s (Command was: %s)"
-msgstr "Σφάλμα κατά την εκκίνηση URL: %s (η εντολή ήταν: %s)"
+msgstr "Σφάλμα κατά την εκκίνηση της διεύθυνσης: %s (η εντολή ήταν: %s)"
 
 # gconf/gconf-internals.c:2333
 #: ../pan/tasks/decoder.cc:117
@@ -3457,23 +3360,24 @@ msgstr "το %s απαιτεί όνομα χρήστη, αλλά κανένα δ
 msgid "%s requires a password, but none is set."
 msgstr "το %s απαιτεί κωδικό πρόσβασης, αλλά κανένας δεν έχει οριστεί."
 
-#: ../pan/tasks/nntp.cc:238
+#: ../pan/tasks/nntp.cc:239
 #, c-format
 msgid "Sending \"%s\" to %s returned an error: %s"
 msgstr "Η αποστολή του \"%s\" στο %s επέστρεψε ένα σφάλμα: %s"
 
-#: ../pan/tasks/nntp.cc:261
+#: ../pan/tasks/nntp.cc:262
 #, c-format
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
-msgstr "Η αποστολή του \"%s\" στο %s επέστρεψε μια μη αναγνωρίσιμη απόκριση: \"%s\""
+msgstr ""
+"Η αποστολή του \"%s\" στο %s επέστρεψε μια μη αναγνωρίσιμη απόκριση: \"%s\""
 
-#: ../pan/tasks/nntp-pool.cc:237
+#: ../pan/tasks/nntp-pool.cc:235
 #, c-format
 msgid "Unable to connect to \"%s\""
 msgstr "Αδύνατη η σύνδεση με το \"%s\""
 
-#: ../pan/tasks/queue.cc:776 ../pan/tasks/queue.cc:804
-#: ../pan/tasks/queue.cc:831
+#: ../pan/tasks/queue.cc:772 ../pan/tasks/queue.cc:800
+#: ../pan/tasks/queue.cc:827
 msgid "No space left on device."
 msgstr "Δεν έμεινε καθόλου χώρος στη συσκευή."
 
@@ -3510,7 +3414,7 @@ msgstr ""
 msgid "Getting group list from \"%s\""
 msgstr "Λαμβάνεται η λίστα ομάδων από τον \"%s\""
 
-#: ../pan/tasks/task-groups.cc:132
+#: ../pan/tasks/task-groups.cc:134
 #, c-format
 msgid "Fetched %lu Groups"
 msgstr "Προσκομίστηκαν %lu ομάδες"
@@ -3533,17 +3437,17 @@ msgstr "Πετυχημένη αποστολή του \"%s\": %s"
 #: ../pan/tasks/task-upload.cc:51
 #, c-format
 msgid "Uploading %s"
-msgstr "Ανεβαίνει το %s"
+msgstr "Γίνεται αποστολή του %s"
 
 #: ../pan/tasks/task-upload.cc:244
 #, c-format
 msgid "Uploading %s - Part %d of %d"
-msgstr "Ανεβαίνει το %s - Τμήμα %d από %d"
+msgstr "Γίνεται αποστολή του %s - Τμήμα %d από %d"
 
 #: ../pan/tasks/task-upload.cc:246
 #, c-format
 msgid "Uploading message body with subject \"%s\""
-msgstr "Ανεβαίνει το σώμα του μηνύματος με θέμα \"%s\""
+msgstr "Γίνεται αποστολή του σώματος του μηνύματος με θέμα \"%s\""
 
 #: ../pan/tasks/task-upload.cc:303
 #, c-format
@@ -3576,7 +3480,7 @@ msgstr ""
 "Η αποστολή του αρχείου %s δεν ήταν πλήρως πετυχημένη: Ελέγξετε την καταγραφή "
 "(δεξιό πάτημα στο στοιχείο λίστας)."
 
-#: ../pan/tasks/task-upload.cc:359
+#: ../pan/tasks/task-upload.cc:358
 #, c-format
 msgid ""
 "Posting of file %s not successful: Check the log (right-click list item)."
@@ -3600,12 +3504,12 @@ msgstr "Λαμβάνονται οι νέες κεφαλίδες για το \"%s
 msgid "Sampling headers for \"%s\""
 msgstr "Δειγματοληψία κεφαλίδων για το \"%s\""
 
-#: ../pan/tasks/task-xover.cc:424
+#: ../pan/tasks/task-xover.cc:426
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu τμήματα, %lu άρθρα)"
 
-#: ../pan/tasks/task-xover.cc:491
+#: ../pan/tasks/task-xover.cc:500
 #, c-format
 msgid "Getting new headers for \"%s\" done."
 msgstr "Έτοιμη η λήψη των νέων κεφαλίδων για το \"%s\"."
@@ -3815,7 +3719,8 @@ msgstr "Προειδοποίηση: Το μήνυμα είναι πλήρης π
 
 #: ../pan/usenet-utils/message-check.cc:259
 msgid "Warning: The message is mostly quoted text."
-msgstr "Προειδοποίηση: Το μήνυμα είναι σχεδόν ολόκληρο παράθεση άλλου κειμένου."
+msgstr ""
+"Προειδοποίηση: Το μήνυμα είναι σχεδόν ολόκληρο παράθεση άλλου κειμένου."
 
 #: ../pan/usenet-utils/message-check.cc:309
 msgid "Error: Message appears to have no new content."
@@ -3830,12 +3735,11 @@ msgid ""
 "\tIf the group name is correct, switch profiles in the \"From:\"\n"
 "\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
 msgstr ""
-"Προειδοποίηση: Ο διακομιστής κατατομών αποστολής δεν μεταφέρει την ομάδα "
+"Προειδοποίηση: Ο διακομιστής προφίλ αποστολής δεν μεταφέρει την ομάδα "
 "ειδήσεων\n"
 "\t\"%s\".\n"
-"\tΑν το όνομα της ομάδας είναι σωστό, εναλλαγή κατατομών στη γραμμή \"Από:\"\n"
-"\tή επεξεργασία της κατατομής με \"Επεξεργασία|Διαχείριση κατατομών αποστολής "
-"\"."
+"\tΑν το όνομα της ομάδας είναι σωστό, εναλλαγή προφίλ στη γραμμή \"Από:\"\n"
+"\tή επεξεργασία του προφίλ με \"Επεξεργασία|Διαχείριση προφίλ αποστολής \"."
 
 #: ../pan/usenet-utils/message-check.cc:355
 msgid "Warning: Following-Up to too many groups."
@@ -3896,8 +3800,7 @@ msgstr "Έληξε η παλιά βαθμολογία από %*.*s, γραμμή
 #, c-format
 msgid "Error reading score in %*.*s, line %d: unexpected line."
 msgstr ""
-"Σφάλμα κατά την ανάγνωση βαθμολογίας στο %*.*s, γραμμή %d: αναπάντεχη "
-"γραμμή."
+"Σφάλμα κατά την ανάγνωση βαθμολογίας στο %*.*s, γραμμή %d: αναπάντεχη γραμμή."
 
 #: ../pan/usenet-utils/scorefile.cc:428
 #, c-format
@@ -3953,9 +3856,89 @@ msgid "no_name"
 msgstr "χωρίς ό_νομα"
 
 #: ../pan/usenet-utils/text-massager.cc:580
-#| msgid "E-mail"
 msgid "no_mail"
 msgstr "χωρίς ηλ. _διεύθυνση"
+
+#~ msgid "DL Initialization..."
+#~ msgstr "Αρχικοποίηση DL..."
+
+#~ msgid "Open Download Meter Preferences"
+#~ msgstr "Άνοιγμα μεταφόρτωσης των προτιμήσεων μέτρου"
+
+#~ msgid "KB"
+#~ msgstr "KB"
+
+#~ msgid "MB"
+#~ msgstr "MB"
+
+#~ msgid "GB"
+#~ msgstr "GB"
+
+#~ msgid "TB"
+#~ msgstr "TB"
+
+#~ msgid "DL %s"
+#~ msgstr "DL %s"
+
+#~ msgid "_Download Meter Preferences"
+#~ msgstr "_Μεταφόρτωση προτιμήσεων μέτρου"
+
+#~| msgid "Pan: Download Headers"
+#~ msgid "Pan: Download Meter Preferences"
+#~ msgstr "Pan: Μεταφόρτωση προτιμήσεων μέτρου"
+
+#~ msgid "When Download Limit Is Reached:"
+#~ msgstr "Όταν φτάσει το όριο μεταφόρτωσης:"
+
+#~ msgid "Warn"
+#~ msgstr "Προειδοποίηση"
+
+#~| msgid "Connecting to mail server"
+#~ msgid "Disconnect from server"
+#~ msgstr "Αποσύνδεση από τον διακομιστή"
+
+#~ msgid "Download Limit"
+#~ msgstr "Όριο μεταφόρτωσης"
+
+#~ msgid "Reset"
+#~ msgstr "Επαναφορά"
+
+# # NOTE: Translation of "Create" as "New" to
+# #       keep msg length relatively short...
+#~ msgid "Quoted text:"
+#~ msgstr "Κείμενο σε εισαγωγικά:"
+
+#~ msgid "Age (newest first)"
+#~ msgstr "Ηλικία (τα πιο νέα πρώτα)"
+
+#~ msgid "Age (oldest first)"
+#~ msgstr "Ηλικία (τα πιο παλιά πρώτα)"
+
+#~ msgid "Size (smallest first)"
+#~ msgstr "Μέγεθος (τα πιο μικρά πρώτα)"
+
+#~ msgid "Size (largest first)"
+#~ msgstr "Μέγεθος (τα πιο μεγάλα πρώτα)"
+
+#~ msgid "Download"
+#~ msgstr "Μεταφόρτωση"
+
+#~ msgid "Name (regex)"
+#~ msgstr "Όνομα (κανονική έκφραση)"
+
+#~ msgid "Release Info"
+#~ msgstr "Πληροφορίες έκδοσης"
+
+#~ msgid "Download selected Release/Files"
+#~ msgstr "Μεταφόρτωση επιλεγμένων εκδόσεων/αρχείων"
+
+#~ msgid "Refresh"
+#~ msgstr "Ανανέωση"
+
+#
+#~| msgid "Refresh Article Counts"
+#~ msgid "Refresh current results"
+#~ msgstr "Ανανέωση τρεχόντων αποτελεσμάτων"
 
 # Haven't come up (yet) with a satisfactory xlation of screensaver...
 #~ msgid "Pan Newsreader"
