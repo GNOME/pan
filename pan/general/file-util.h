@@ -59,7 +59,7 @@ namespace pan
      * Returns the home pan directory, which falls back to $HOME/.pan2
      * if the PAN_HOME environmental variable isn't set.
      */
-    std::string get_pan_home ();
+    const std::string & get_pan_home ();
 
     /**
 	 * Returns an absolute filename of a file

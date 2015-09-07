@@ -77,7 +77,7 @@ file :: print_file_info (std::ostream& os, const char* file)
 ****
 ***/
 
-std::string
+const std::string &
 file :: get_pan_home ()
 {
   static std::string pan_home;
