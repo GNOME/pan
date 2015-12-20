@@ -5,6 +5,15 @@ SUBDIRS = po uulib pan
 DESKTOP_IN_FILES=pan.desktop.in
 DESKTOP_FILES=$(DESKTOP_IN_FILES:.desktop.in=.desktop)
 
+@INTLTOOL_XML_RULE@
+appdatadir = $(datadir)/appdata
+appdata_DATA = $(appdata_in_files:.xml.in=.xml)
+appdata_in_files = pan.appdata.xml.in
+
+CLEANFILES = \
+ $(srcdir)/pan.appdata.xml \
+ $(appdata_DATA)
+
 DISTCLEANFILES = \
  $(srcdir)/intltool-extract \
  $(srcdir)/intltool-merge \
@@ -33,6 +42,7 @@ EXTRA_DIST = \
  ChangeLog \
  Pan.ico \
  pan.png \
+ $(appdata_in_files) \
  $(DESKTOP_IN_FILES) \
  $(DESKTOP_FILES) \
  intltool-extract.in intltool-merge.in intltool-update.in \
