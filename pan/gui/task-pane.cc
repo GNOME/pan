@@ -1052,7 +1052,7 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
     g_signal_connect_swapped (w, "clicked", G_CALLBACK(gtk_widget_destroy), _root);
     w = _popup_toggle = gtk_check_button_new ();
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), _prefs.get_flag("show-taskpane-popups", true));
-    l = gtk_label_new_with_mnemonic (_("Show info popups"));
+    l = gtk_label_new_with_mnemonic (_("Show popups"));
     v = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     gtk_box_pack_start (GTK_BOX(v), l, 0, 0, 0);
     gtk_container_add (GTK_CONTAINER(w), v);
