@@ -1,9 +1,9 @@
 SUBDIRS = po uulib pan
 
+desktopdir = $(datadir)/applications
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+desktop_in_files = pan.desktop.in
 @INTLTOOL_DESKTOP_RULE@
-
-DESKTOP_IN_FILES=pan.desktop.in
-DESKTOP_FILES=$(DESKTOP_IN_FILES:.desktop.in=.desktop)
 
 @INTLTOOL_XML_RULE@
 appdatadir = $(datadir)/appdata
@@ -18,7 +18,7 @@ DISTCLEANFILES = \
  $(srcdir)/intltool-extract \
  $(srcdir)/intltool-merge \
  $(srcdir)/intltool-update \
- $(srcdir)/pan.desktop
+ $(desktop_DATA)
 
 MAINTAINERCLEANFILES = \
  $(srcdir)/INSTALL \
@@ -43,15 +43,9 @@ EXTRA_DIST = \
  Pan.ico \
  pan.png \
  $(appdata_in_files) \
- $(DESKTOP_IN_FILES) \
- $(DESKTOP_FILES) \
+ $(desktop_in_files) \
  intltool-extract.in intltool-merge.in intltool-update.in \
  pan_git_rev
-
-DISTCHECK_CONFIGURE_FLAGS="--disable-scrollkeeper"
-
-Productivitydir = $(datadir)/applications
-Productivity_DATA = $(DESKTOP_FILES)
 
 icon_DATA = pan.png
 icondir = $(datadir)/pixmaps

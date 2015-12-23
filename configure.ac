@@ -84,7 +84,6 @@ IT_PROG_INTLTOOL([0.40.6])
 GETTEXT_PACKAGE=pan
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[gettext package name])
-AM_GLIB_GNU_GETTEXT
 panlocaledir='${prefix}/${DATADIRNAME}/locale'
 
 dnl libz for xzver
@@ -123,7 +122,7 @@ gtkspell_msg=no
 AC_ARG_WITH(gtkspell, AS_HELP_STRING([--with-gtkspell],[enable GtkSpell support (normally: yes)]), [want_gtkspell=$withval], [want_gtkspell=yes])
 
 
-dnl GTK+ 3 support
+dnl GTK+ 3, GtkSpell 3, and Enchant support
 gtk_msg=no
 AC_ARG_WITH(gtk3, AS_HELP_STRING([--with-gtk3],[enable GTK+ 3 support (normally: no)]), [want_gtk3=$withval], [want_gtk3=no])
 if test "x$want_gtk3" = "xyes" ; then
@@ -166,25 +165,25 @@ dnl WebKitGTK+ support
 AC_ARG_WITH(webkit, AS_HELP_STRING([--with-webkit],[enable WebKitGTK+ support (normally: no)]), [want_webkit=$withval], [want_webkit=no])
 
 if test "x$want_gtk3" = "xyes" ; then
-	if test "x$want_webkit" = "xyes" ; then
-		PKG_CHECK_MODULES([WEBKITGTK],[webkitgtk-3.0 >= $WEBKIT_REQUIRED],
-		[
-		AC_DEFINE(HAVE_WEBKIT,[1],[WebKit support (3.0) for embedded HTML])
-		],
-		[
-		AC_MSG_RESULT(no)
-		])
-	fi
+  if test "x$want_webkit" = "xyes" ; then
+    PKG_CHECK_MODULES([WEBKITGTK],[webkitgtk-3.0 >= $WEBKIT_REQUIRED],
+    [
+    AC_DEFINE(HAVE_WEBKIT,[1],[WebKit support (3.0) for embedded HTML])
+    ],
+    [
+    AC_MSG_RESULT(no)
+    ])
+  fi
 else
-	if test "x$want_webkit" = "xyes" ; then
-		PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-1.0 >= $WEBKIT_REQUIRED],
-		[
-		AC_DEFINE(HAVE_WEBKIT,[1],[WebKit support (1.0) for embedded HTML])
-		],
-		[
-		AC_MSG_RESULT(no)
-		])
-	fi
+  if test "x$want_webkit" = "xyes" ; then
+    PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-1.0 >= $WEBKIT_REQUIRED],
+    [
+    AC_DEFINE(HAVE_WEBKIT,[1],[WebKit support (1.0) for embedded HTML])
+    ],
+    [
+    AC_MSG_RESULT(no)
+    ])
+  fi
 fi
 
 AC_SUBST(ENCHANT_CFLAGS)
@@ -198,7 +197,7 @@ if test "x$want_gnutls" = "xyes" ; then
   PKG_CHECK_MODULES([GNUTLS],[gnutls >= $GNUTLS_REQUIRED],
   [
   GNUTLS_VER=`pkg-config --modversion gnutls`
-  gnutls_msg="yes = $GNUTLS_VER"
+  gnutls_msg="yes ($GNUTLS_VER)"
   AC_DEFINE(HAVE_GNUTLS,[1],[GnuTLS support])],
   [gnutls_msg=no
   AC_MSG_RESULT(no)])
@@ -218,15 +217,15 @@ if test "x$enable_libnotify" = "xyes" ; then
   fi
 fi
 
-dnl Check for gnome-keyring if user-enabled for password storage
+dnl Check for GNOME Keyring if user-enabled for password storage
 AC_ARG_ENABLE([gkr],
-AS_HELP_STRING([--enable-gkr],[enable gnome-keyring support (normally: no)]),[enable_gkr=$enableval],[enable_gkr=no])
+AS_HELP_STRING([--enable-gkr],[enable GNOME Keyring support (normally: no)]),[enable_gkr=$enableval],[enable_gkr=no])
 if test "x$enable_gkr" = "xyes" ; then
   PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[gnome-keyring-1 >= $LIBGKR_REQUIRED],[HAVE_GKR="yes"],[HAVE_GKR="no"])
   AC_SUBST([LIBGNOME_KEYRING_1_CFLAGS])
   AC_SUBST([LIBGNOME_KEYRING_1_LIBS])
   if test "x$HAVE_GKR" = "xyes"; then
-    AC_DEFINE([HAVE_GKR],[1],[gnome-keyring-1 support for password storage])
+    AC_DEFINE([HAVE_GKR],[1],[GNOME Keyring support for password storage])
   fi
 fi
 
@@ -303,9 +302,15 @@ echo "
 
 Configuration:
 
+        Prefix:                 ${prefix}
         Source code location:   ${srcdir}
         Compiler:               ${CXX}
+        With D-Bus:             ${want_dbus}
+        With GMime 2.6+:        ${have_gmime26}
         With GtkSpell:          ${gtkspell_msg}
-        With GTK+ 3             ${gtk_msg}
+        With GTK+ 3:            ${gtk_msg}
+        With WebKitGTK+:        ${want_webkit}
         With GnuTLS:            ${gnutls_msg}
+        With libnotify:         ${enable_libnotify}
+        With GNOME Keyring:     ${enable_gkr}
 "
