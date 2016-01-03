@@ -1,18 +1,15 @@
 # Serbian translation of pan
-# Courtesy of Prevod.org team (http://prevod.org/) -- 2003—2015.
-#
+# Courtesy of Prevod.org team (http://prevod.org/) -- 2003—2016.
 # This file is distributed under the same license as the pan package.
-#
 # Aleksandar Urošević <urke@gmx.net>, 2003—2004
-# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2012—2015.
-#
+# Miroslav Nikolić <miroslavnikolic@rocketmail.com>, 2012—2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=Pan&key"
 "words=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-03-23 17:15+0000\n"
-"PO-Revision-Date: 2015-01-17 10:35+0200\n"
+"POT-Creation-Date: 2015-12-23 20:19+0000\n"
+"PO-Revision-Date: 2016-01-03 20:07+0200\n"
 "Last-Translator: Miroslav Nikolić <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -23,10 +20,37 @@ msgstr ""
 "n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
 
+#: ../pan.appdata.xml.in.h:1
+#| msgid "Newsreader"
+msgid "Pan Newsreader"
+msgstr "Čitač vesti Pan"
+
+#: ../pan.appdata.xml.in.h:2 ../pan.desktop.in.h:3
+#| msgid "Read and Post Usenet Articles"
+msgid "Read and post Usenet articles"
+msgstr "Čitajte i objavljujte članke na Juznetu"
+
+#: ../pan.appdata.xml.in.h:3
+msgid ""
+"Pan is a Usenet newsreader that is good at both text and binaries. It "
+"supports offline reading, scoring and killfiles, yEnc, NZB, binary "
+"uploading, PGP handling, multiserver, and secure connections."
+msgstr ""
+"Pan je Juznetov čitač vesti koji je dobar kako sa tekstom tako i sa "
+"izvršnima. Podržava čitanje van mreže, bodovanje i ubijanje datoteka, uEnc, "
+"NZB, slanje izvršnih, PGP rukovanje, više servera i bezbedne veze."
+
+#: ../pan.appdata.xml.in.h:4
+msgid ""
+"It is also the only Unix newsreader to get a perfect score on the Good Net-"
+"Keeping Seal of Approval evaluations."
+msgstr ""
+"Takođe je jedini Juniksov čitač vesti koji je dobio odličnu ocenu na "
+"vrednovanjima pečata odobravanja dobrog održavanja mreže (GNKSA)."
+
 #. update the titlebar
-#: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106
-#: ../pan/gui/gui.cc:1040 ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:2009
-#: ../pan/gui/score-add-ui.cc:602
+#: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:1040
+#: ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:2009 ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
 
@@ -34,9 +58,10 @@ msgstr "Pan"
 msgid "Newsreader"
 msgstr "Čitač vesti"
 
-#: ../pan.desktop.in.h:3
-msgid "Read and Post Usenet Articles"
-msgstr "Čitajte i objavljujte članke na Juznetu"
+#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
+#: ../pan.desktop.in.h:5
+msgid "usenet;newsreader;newsgroup;usenet article;yenc,nzb;"
+msgstr "juznet;čitač vesti;grupe vesti;članak juzneta;uenc;nzb;"
 
 #: ../pan/data/article-cache.cc:144 ../pan/data/encode-cache.cc:62
 #, c-format
@@ -113,7 +138,8 @@ msgstr ""
 #: ../pan/data-impl/headers.cc:628
 #, c-format
 msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
-msgstr "Učitah %lu poruke za grupu „%s“ za %.1f sekunde (%.0f poruka po sekundi)"
+msgstr ""
+"Učitah %lu poruke za grupu „%s“ za %.1f sekunde (%.0f poruka po sekundi)"
 
 #: ../pan/data-impl/headers.cc:857
 #, c-format
@@ -173,7 +199,8 @@ msgstr "Ne mogu da koristim regularni izraz „%s“: %s"
 
 #: ../pan/general/utf8-utils.cc:213
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
-msgstr "Ne mogu da odredim kodiranje članka.  Uklonjeni su znaci koji nisu UTF-8."
+msgstr ""
+"Ne mogu da odredim kodiranje članka.  Uklonjeni su znaci koji nisu UTF-8."
 
 #: ../pan/gui/actions.cc:303 ../pan/gui/post-ui.cc:446
 msgid "_File"
@@ -383,7 +410,6 @@ msgstr "Uredi postavke izabranih _grupa"
 msgid "Edit P_osting Profiles"
 msgstr "Uredi profile _objavljivanja"
 
-# #-#-#-#-#  libslab.po (YaST2 (@memory@))  #-#-#-#-#
 #  table header
 #: ../pan/gui/actions.cc:460
 msgid "Edit _News Servers"
@@ -1149,8 +1175,9 @@ msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr "Da li želite da ga prihvatite trajno? (Kasnije možete izmeniti ovo.)"
 
 #: ../pan/gui/gui.cc:1670
-msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
-msgstr "Autorska prava \\u00A9 2002-2012 Čarls Ker i ostali"
+#| msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
+msgid "Copyright © 2002-2015 Charles Kerr and others"
+msgstr "Autorska prava © 2002-2015 Čarls Ker i ostali"
 
 #: ../pan/gui/gui.cc:1675
 msgid "translator-credits"
@@ -1787,9 +1814,6 @@ msgid "_Reply-To"
 msgstr "_Odgovori"
 
 #: ../pan/gui/post-ui.cc:2778
-#| msgid ""
-#| "The email account where mail replies to your posted message should go.  "
-#| "This is only needed if it differs from the \"From\" header."
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
@@ -2055,8 +2079,9 @@ msgid "Task Pane"
 msgstr "Površ zadatka"
 
 #: ../pan/gui/prefs-ui.cc:1008
-msgid "Show Task Pane info popups"
-msgstr "Prikaži oblačiće obaveštenja površi zadataka"
+#| msgid "Show Task Pane info popups"
+msgid "Show task pane popups"
+msgstr "Prikaži oblačiće površi zadataka"
 
 #: ../pan/gui/prefs-ui.cc:1010
 msgid "Show Download Meter"
@@ -2472,8 +2497,8 @@ msgid ""
 msgstr ""
 "Možete da dodate ikonicu avatara vašim člancima jedinstvenim kodom H-lica.\n"
 "Dodajte kod bez pratećeg <b>„H-lice:“</b> \n"
-" ako je stvoren pomoćničkim programom (na primer "
-"„http://www.dairiki.org/xface/xface.php“)."
+" ako je stvoren pomoćničkim programom (na primer „http://www.dairiki.org/"
+"xface/xface.php“)."
 
 #: ../pan/gui/profiles-dialog.cc:232
 msgid "_X-Face:"
@@ -3178,8 +3203,9 @@ msgid "Delete Tasks"
 msgstr "Obrišite zadatke"
 
 #: ../pan/gui/task-pane.cc:1055
-msgid "Show info popups"
-msgstr "Prikaži oblačiće obaveštenja"
+#| msgid "Show info popups"
+msgid "Show popups"
+msgstr "Prikaži oblačiće"
 
 #: ../pan/gui/url.cc:123
 #, c-format
@@ -3359,8 +3385,8 @@ msgid ""
 "Posting of file %s not completely successful: Check the log (right-click "
 "list item)."
 msgstr ""
-"Objavljivanje datoteke „%s“ nije u potpunosti uspelo: Proverite dnevnik ("
-"desnim tasterom miša na stavku spiska)."
+"Objavljivanje datoteke „%s“ nije u potpunosti uspelo: Proverite dnevnik "
+"(desnim tasterom miša na stavku spiska)."
 
 #: ../pan/tasks/task-upload.cc:358
 #, c-format
@@ -3732,595 +3758,610 @@ msgstr "bez_imena"
 msgid "no_mail"
 msgstr "nema_pošte"
 
-msgid ""
-"Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions may "
-"fail."
-msgstr ""
-"Vaš „libpcre“ primerak ne podržava UTF-8.  UTF-8 regularni izrazi mogu biti "
-"neuspešni."
-
-msgid "Get New Headers for Subscribed Groups"
-msgstr "Dobavite nova zaglavlja za praćene grupe"
-
-msgid "Abbreviate _Names in Group Pane"
-msgstr "Skrati _nazive u površi grupe"
-
-msgid "Match Only Articles Posted by Me"
-msgstr "Poklopi samo članke koje sam ja objavio"
-
-msgid "%u Tasks Running, %u Tasks Total"
-msgstr "Pokrenutih zadataka: %u, ukupno zadataka: %u"
-
-msgid "Wrap the Article Body to 80 Columns"
-msgstr "Preliomi razradu člana na 80 stubaca"
-
-msgid "Use _Monospace Font in Body Pane"
-msgstr "Koristi slova stalne _širine u površi razrade"
-
-msgid "%d connections totaling %.1f KiB per second"
-msgstr "%d veze sa ukupno %.1f KiB u sekundi"
-
-msgid ""
-"Used when email replies to your posts should go somewhere other than the "
-"email address above.  Because Reply-To: is relatively difficult for spammers "
-"to harvest, it's polite give your email address here if you gave an invalid "
-"email address above."
-msgstr ""
-"Koristi se kada odgovori na vašu poruku treba da budu poslati na neku drugu "
-"adresu umesto na gore navedenu.  Zato što je spamerima teže da iskoriste "
-"polje „Odgovori“, a ipak bi bilo učtivo sa vaše strane da prikažete pravu "
-"adresu u ovom polju ako ste gore naveli netačnu."
-
-msgid "Could not decode article - file may be corrupt/incomplete"
-msgstr "Ne mogu da dekodiram poruku — datoteka je možda oštećna ili nepotpuna"
-
-msgid "Checksum for `%s' part %d failed - file is corrupt"
-msgstr "Provera zbira za „%s“ %d. deo nije uspela — datoteka je oštećna"
-
-msgid "Checksum for `%s' failed - file may be corrupt"
-msgstr "Provera zbira za „%s“ nije uspela — datoteka je možda oštećna"
-
-msgid ""
-"Unsupported data version (%d) for server properties.  Are you running an old "
-"version of Pan by accident?"
-msgstr ""
-"Nepodržano izdanje podataka (%d) za svojstva servera.  Da li možda greškom "
-"koristite staro izdanje PAN-a?"
-
-msgid ""
-"Unable to cancel article: Couldn't find matching article in folder `pan."
-"sent'!"
-msgstr ""
-"Ne mogu da otkažem članak: Ne mogu da nađem odgovarajući članak u fascikli "
-"„pan.sent“!"
-
-msgid ""
-"Unable to supersede article: Couldn't find matching article in folder `pan."
-"sent'!"
-msgstr ""
-"Ne mogu da nadomestim članak: Ne mogu da nađem odgovarajući članak u "
-"fascikli „pan.sent“!"
-
-msgid ""
-"Type in a search string and press ENTER.\n"
-"Wildcards are allowed."
-msgstr ""
-"Ukucajte u polje za pretragu i pritisnite UNESI.\n"
-"Dozvoljena je upotreba džokerskih znakova."
-
-msgid "/---"
-msgstr "/---"
-
-msgid "unknown@spammesenseless.com"
-msgstr "nepoznato@spammesenseless.com"
-
-msgid "Decoded \"%s\" from group \"%*.*s\", \"%s\""
-msgstr "Dekodirano „%s“ iz grupe „%*.*s“, „%s“"
-
-msgid ""
-"Skipped %d groups due to possible corruption in \"%s\" and \"%s\".  You may "
-"want to delete these files and get a new grouplist from your news server."
-msgstr ""
-"Preskočih %d grupe zbog mogućeg oštećenja u „%s“ i „%s“.  Verovatno želite da "
-"obrišete ove datoteke i preuzmete novi spisak grupa sa servera."
-
-msgid "Loaded %d groups for server \"%s\" in %.1f seconds (%.0f groups/sec)"
-msgstr "Učitah %d grupe sa servera „%s“ za %.1f sekunde (%.0f grupe/sek.)"
-
-msgid "Error saving list of groups to \"%s\" - is the disk full?"
-msgstr "Greška čuvanja spiska grupa u „%s“ — da li je disk pun?"
-
-msgid "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
-msgstr "Sačuvah %d grupe u „%s“ za %.1f sekunde (%.0f grupe/sek.)"
-
-msgid ""
-"Pan skipped %d corrupt headers from the local cache for group \"%*.*s\"."
-msgstr ""
-"Pan je preskočio %d oštećena zaglavlja iz lokalne ostave za grupu „%*.*s“."
-
-msgid "You may want to empty this group and download fresh headers."
-msgstr "Možda želite da ispraznite ovu grupu i preuzmete sveža zaglavlja."
-
-msgid "Unable to save headers for group \"%*.*s\" - is the disk full?"
-msgstr "Ne mogu da sačuvam zaglavlja za grupu „%*.*s“ — da li je disk pun?"
-
-msgid "ERROR: Must have one author in From: line"
-msgstr "GREŠKA: Mora da postoji autor u redu „Šalje:“"
-
-msgid "Exported %d groups (%d subscribed) to \"%s\""
-msgstr "Izvezoh %d grupe (%d koje pratite) u „%s“"
-
-msgid ""
-"Pan %s Translations\n"
-"%s\n"
-"\n"
-"Pan %s Code or Patches\n"
-"%s\n"
-"\n"
-"Pan %s Suggestions and Testing\n"
-"%s\n"
-msgstr ""
-"Lokalizacija izdanja %s\n"
-"%s\n"
-"\n"
-"Kôd i/ili zakrpe izdanja %s\n"
-"%s\n"
-"\n"
-"Predlozi i testiranje izdanja %s\n"
-"%s\n"
-
-msgid "Pan: Download Headers for group `%s'"
-msgstr "Pan: Preuzimam zaglavlja za grupu „%s“"
-
-msgid "How should you appear when posting articles?"
-msgstr "Kako želite da budete prijavljeni kada šaljete članke?"
-
-msgid "Short name for Pan to show, e.g. \"mynewsserver\""
-msgstr "Kratak naziv koji će Pan prikazivati, npr. „mojserver“"
-
-msgid "Short _name for Pan to show:"
-msgstr "Kratak _naziv za prikazivanje:"
-
-msgid ""
-"Thank you for trying Pan!\n"
-" \n"
-"If you are new to Usenet,\n"
-"%s\n"
-"is a starting point to see what Usenet is,\n"
-"where to find a free news server,\n"
-"and how to use Pan.\n"
-" \n"
-"Since this is your first time running Pan,\n"
-"we'll need to gather some information.\n"
-msgstr ""
-"Hvala vam što isprobavate Pana!\n"
-"\n"
-"Ako po prvi put koristite Juznet,\n"
-"%s je\n"
-"pravo mesto za upoznavanje sa Juznetom,\n"
-"za pronalaženje besplatnih servera vesti,\n"
-"i za učenje rada sa Panom.\n"
-"\n"
-"Kako je ovo prvi put da ste pokrenuli Pana,\n"
-"treba da unesete neke podatke.\n"
-
-msgid ""
-"You have successfully entered all of\n"
-"the information required to set up Pan.\n"
-"\n"
-"To save these settings, click Save."
-msgstr ""
-"Uspešno ste uneli sve podatke\n"
-"potrebne za podešavanje Pana.\n"
-"\n"
-"Da sačuvate ova podešavanja, pritisnite „Sačuvaj“."
-
-msgid "  (No conditions -- no articles will match)"
-msgstr "  (Bez uslova —> neće odgovarati nijedna poruka)"
-
-msgid "  (No conditions -- all articles will match)"
-msgstr "  (Bez uslova —> sve poruke će odgovarati)"
-
-msgid "Any Of"
-msgstr "Bilo koji uslov"
-
-msgid "Article has at _least N lines:"
-msgstr "Poruka ima najmanje N _linija:"
-
-msgid ""
-"This filter is still used by the following rules:\n"
-"%s\n"
-"Please remove this dependency  first."
-msgstr ""
-"Ovaj propusnik se još uvek koristi pravilom:\n"
-"%s\n"
-"Prvo uklonite ovu zavisnost."
-
-msgid "ALL OF:"
-msgstr "SVAKA:"
-
-msgid "ANY OF:"
-msgstr "NEKA:"
-
-msgid "Article has complete or incomplete attachments"
-msgstr "Poruka sadrži potpune ili nepotpune priloge"
-
-msgid "Article is %d or more bytes long"
-msgstr "Poruka je veličine %d ili više bajta"
-
-msgid "Article is crossposted to at least %d groups"
-msgstr "Poruka je objavljena barem na %d grupe"
-
-msgid "Article was posted in the last %d days"
-msgstr "Poruka je objavljena u poslednja %d dana"
-
-msgid "Article is %d or more lines long"
-msgstr "Poruka je dužine %d ili više reda"
-
-msgid "Article is unread or old"
-msgstr "Poruka je nepročitana ili stara"
-
-msgid "Xref"
-msgstr "Huputa"
-
-msgid "Score filter will match anything"
-msgstr "Propusniku bodovanja će odgovarati bilo šta"
-
-msgid "Score filter will match nothing"
-msgstr "Propusniku bodovanja neće odgovarati ništa"
+#~ msgid ""
+#~ "Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions "
+#~ "may fail."
+#~ msgstr ""
+#~ "Vaš „libpcre“ primerak ne podržava UTF-8.  UTF-8 regularni izrazi mogu "
+#~ "biti neuspešni."
+
+#~ msgid "Get New Headers for Subscribed Groups"
+#~ msgstr "Dobavite nova zaglavlja za praćene grupe"
+
+#~ msgid "Abbreviate _Names in Group Pane"
+#~ msgstr "Skrati _nazive u površi grupe"
+
+#~ msgid "Match Only Articles Posted by Me"
+#~ msgstr "Poklopi samo članke koje sam ja objavio"
+
+#~ msgid "%u Tasks Running, %u Tasks Total"
+#~ msgstr "Pokrenutih zadataka: %u, ukupno zadataka: %u"
+
+#~ msgid "Wrap the Article Body to 80 Columns"
+#~ msgstr "Preliomi razradu člana na 80 stubaca"
+
+#~ msgid "Use _Monospace Font in Body Pane"
+#~ msgstr "Koristi slova stalne _širine u površi razrade"
+
+#~ msgid "%d connections totaling %.1f KiB per second"
+#~ msgstr "%d veze sa ukupno %.1f KiB u sekundi"
+
+#~ msgid ""
+#~ "Used when email replies to your posts should go somewhere other than the "
+#~ "email address above.  Because Reply-To: is relatively difficult for "
+#~ "spammers to harvest, it's polite give your email address here if you gave "
+#~ "an invalid email address above."
+#~ msgstr ""
+#~ "Koristi se kada odgovori na vašu poruku treba da budu poslati na neku "
+#~ "drugu adresu umesto na gore navedenu.  Zato što je spamerima teže da "
+#~ "iskoriste polje „Odgovori“, a ipak bi bilo učtivo sa vaše strane da "
+#~ "prikažete pravu adresu u ovom polju ako ste gore naveli netačnu."
+
+#~ msgid "Could not decode article - file may be corrupt/incomplete"
+#~ msgstr ""
+#~ "Ne mogu da dekodiram poruku — datoteka je možda oštećna ili nepotpuna"
+
+#~ msgid "Checksum for `%s' part %d failed - file is corrupt"
+#~ msgstr "Provera zbira za „%s“ %d. deo nije uspela — datoteka je oštećna"
+
+#~ msgid "Checksum for `%s' failed - file may be corrupt"
+#~ msgstr "Provera zbira za „%s“ nije uspela — datoteka je možda oštećna"
+
+#~ msgid ""
+#~ "Unsupported data version (%d) for server properties.  Are you running an "
+#~ "old version of Pan by accident?"
+#~ msgstr ""
+#~ "Nepodržano izdanje podataka (%d) za svojstva servera.  Da li možda greškom "
+#~ "koristite staro izdanje PAN-a?"
+
+#~ msgid ""
+#~ "Unable to cancel article: Couldn't find matching article in folder `pan."
+#~ "sent'!"
+#~ msgstr ""
+#~ "Ne mogu da otkažem članak: Ne mogu da nađem odgovarajući članak u "
+#~ "fascikli „pan.sent“!"
+
+#~ msgid ""
+#~ "Unable to supersede article: Couldn't find matching article in folder "
+#~ "`pan.sent'!"
+#~ msgstr ""
+#~ "Ne mogu da nadomestim članak: Ne mogu da nađem odgovarajući članak u "
+#~ "fascikli „pan.sent“!"
+
+#~ msgid ""
+#~ "Type in a search string and press ENTER.\n"
+#~ "Wildcards are allowed."
+#~ msgstr ""
+#~ "Ukucajte u polje za pretragu i pritisnite UNESI.\n"
+#~ "Dozvoljena je upotreba džokerskih znakova."
+
+#~ msgid "/---"
+#~ msgstr "/---"
+
+#~ msgid "unknown@spammesenseless.com"
+#~ msgstr "nepoznato@spammesenseless.com"
+
+#~ msgid "Decoded \"%s\" from group \"%*.*s\", \"%s\""
+#~ msgstr "Dekodirano „%s“ iz grupe „%*.*s“, „%s“"
+
+#~ msgid ""
+#~ "Skipped %d groups due to possible corruption in \"%s\" and \"%s\".  You "
+#~ "may want to delete these files and get a new grouplist from your news "
+#~ "server."
+#~ msgstr ""
+#~ "Preskočih %d grupe zbog mogućeg oštećenja u „%s“ i „%s“.  Verovatno želite "
+#~ "da obrišete ove datoteke i preuzmete novi spisak grupa sa servera."
+
+#~ msgid "Loaded %d groups for server \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr "Učitah %d grupe sa servera „%s“ za %.1f sekunde (%.0f grupe/sek.)"
+
+#~ msgid "Error saving list of groups to \"%s\" - is the disk full?"
+#~ msgstr "Greška čuvanja spiska grupa u „%s“ — da li je disk pun?"
+
+#~ msgid "Saved %d groups in \"%s\" in %.1f seconds (%.0f groups/sec)"
+#~ msgstr "Sačuvah %d grupe u „%s“ za %.1f sekunde (%.0f grupe/sek.)"
+
+#~ msgid ""
+#~ "Pan skipped %d corrupt headers from the local cache for group \"%*.*s\"."
+#~ msgstr ""
+#~ "Pan je preskočio %d oštećena zaglavlja iz lokalne ostave za grupu „%*.*s“."
+
+#~ msgid "You may want to empty this group and download fresh headers."
+#~ msgstr "Možda želite da ispraznite ovu grupu i preuzmete sveža zaglavlja."
+
+#~ msgid "Unable to save headers for group \"%*.*s\" - is the disk full?"
+#~ msgstr "Ne mogu da sačuvam zaglavlja za grupu „%*.*s“ — da li je disk pun?"
+
+#~ msgid "ERROR: Must have one author in From: line"
+#~ msgstr "GREŠKA: Mora da postoji autor u redu „Šalje:“"
+
+#~ msgid "Exported %d groups (%d subscribed) to \"%s\""
+#~ msgstr "Izvezoh %d grupe (%d koje pratite) u „%s“"
+
+#~ msgid ""
+#~ "Pan %s Translations\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Code or Patches\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Pan %s Suggestions and Testing\n"
+#~ "%s\n"
+#~ msgstr ""
+#~ "Lokalizacija izdanja %s\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Kôd i/ili zakrpe izdanja %s\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Predlozi i testiranje izdanja %s\n"
+#~ "%s\n"
+
+#~ msgid "Pan: Download Headers for group `%s'"
+#~ msgstr "Pan: Preuzimam zaglavlja za grupu „%s“"
+
+#~ msgid "How should you appear when posting articles?"
+#~ msgstr "Kako želite da budete prijavljeni kada šaljete članke?"
+
+#~ msgid "Short name for Pan to show, e.g. \"mynewsserver\""
+#~ msgstr "Kratak naziv koji će Pan prikazivati, npr. „mojserver“"
+
+#~ msgid "Short _name for Pan to show:"
+#~ msgstr "Kratak _naziv za prikazivanje:"
+
+#~ msgid ""
+#~ "Thank you for trying Pan!\n"
+#~ " \n"
+#~ "If you are new to Usenet,\n"
+#~ "%s\n"
+#~ "is a starting point to see what Usenet is,\n"
+#~ "where to find a free news server,\n"
+#~ "and how to use Pan.\n"
+#~ " \n"
+#~ "Since this is your first time running Pan,\n"
+#~ "we'll need to gather some information.\n"
+#~ msgstr ""
+#~ "Hvala vam što isprobavate Pana!\n"
+#~ "\n"
+#~ "Ako po prvi put koristite Juznet,\n"
+#~ "%s je\n"
+#~ "pravo mesto za upoznavanje sa Juznetom,\n"
+#~ "za pronalaženje besplatnih servera vesti,\n"
+#~ "i za učenje rada sa Panom.\n"
+#~ "\n"
+#~ "Kako je ovo prvi put da ste pokrenuli Pana,\n"
+#~ "treba da unesete neke podatke.\n"
+
+#~ msgid ""
+#~ "You have successfully entered all of\n"
+#~ "the information required to set up Pan.\n"
+#~ "\n"
+#~ "To save these settings, click Save."
+#~ msgstr ""
+#~ "Uspešno ste uneli sve podatke\n"
+#~ "potrebne za podešavanje Pana.\n"
+#~ "\n"
+#~ "Da sačuvate ova podešavanja, pritisnite „Sačuvaj“."
+
+#~ msgid "  (No conditions -- no articles will match)"
+#~ msgstr "  (Bez uslova —> neće odgovarati nijedna poruka)"
+
+#~ msgid "  (No conditions -- all articles will match)"
+#~ msgstr "  (Bez uslova —> sve poruke će odgovarati)"
+
+#~ msgid "Any Of"
+#~ msgstr "Bilo koji uslov"
+
+#~ msgid "Article has at _least N lines:"
+#~ msgstr "Poruka ima najmanje N _linija:"
+
+#~ msgid ""
+#~ "This filter is still used by the following rules:\n"
+#~ "%s\n"
+#~ "Please remove this dependency  first."
+#~ msgstr ""
+#~ "Ovaj propusnik se još uvek koristi pravilom:\n"
+#~ "%s\n"
+#~ "Prvo uklonite ovu zavisnost."
+
+#~ msgid "ALL OF:"
+#~ msgstr "SVAKA:"
+
+#~ msgid "ANY OF:"
+#~ msgstr "NEKA:"
+
+#~ msgid "Article has complete or incomplete attachments"
+#~ msgstr "Poruka sadrži potpune ili nepotpune priloge"
+
+#~ msgid "Article is %d or more bytes long"
+#~ msgstr "Poruka je veličine %d ili više bajta"
+
+#~ msgid "Article is crossposted to at least %d groups"
+#~ msgstr "Poruka je objavljena barem na %d grupe"
+
+#~ msgid "Article was posted in the last %d days"
+#~ msgstr "Poruka je objavljena u poslednja %d dana"
+
+#~ msgid "Article is %d or more lines long"
+#~ msgstr "Poruka je dužine %d ili više reda"
+
+#~ msgid "Article is unread or old"
+#~ msgstr "Poruka je nepročitana ili stara"
+
+#~ msgid "Xref"
+#~ msgstr "Huputa"
+
+#~ msgid "Score filter will match anything"
+#~ msgstr "Propusniku bodovanja će odgovarati bilo šta"
+
+#~ msgid "Score filter will match nothing"
+#~ msgstr "Propusniku bodovanja neće odgovarati ništa"
+
+#~ msgid ""
+#~ "Loaded %d score entries in %d sections in %.1f seconds (%.0f entries/sec)"
+#~ msgstr ""
+#~ "Učitah %d unosa bodovanja u %d odeljka za %.1f sekunde (%.0f unosa/sek.)"
+
+#~ msgid "Scored %d entries in %.1f seconds (%.0f articles/sec)"
+#~ msgstr "Bodovao sam %d poruke za %.1f sekunde (%.0f poruke/sek.)"
+
+#~ msgid "Scorefile entry removed -- old scorefile \"%s\" backed up as \"%s\""
+#~ msgstr ""
+#~ "Stavka datoteke bodovanje je uklonjena —— od stare datoteke bodovanja „%s“ "
+#~ "napravljena je rezerva kao „%s“"
+
+#~ msgid ""
+#~ "We don't have a list of groups for \"%*.*s\".\n"
+#~ "Shall we download one?"
+#~ msgstr ""
+#~ "Nemamo spisak grupa na serveru „%*.*s“.\n"
+#~ "Da li da preuzmem jedan?"
+
+#~ msgid ""
+#~ "Type in a group search string and press ENTER.  Wildcards are allowed."
+#~ msgstr ""
+#~ "Ukucajte u pretragu grupe i pritisnite UNESI.  Dozvoljena je upoterba "
+#~ "džokerskih znakova."
+
+#~ msgid "/_File/_Manual Decode..."
+#~ msgstr "/_Datoteka/_Ručno dekodiranje..."
+
+#~ msgid "/_File/_Cancel Last Task"
+#~ msgstr "/_Datoteka/_Otkaži poslednji zadatak"
+
+#~ msgid "/Filte_r/Match Only _Cached Articles"
+#~ msgstr "/_Propusnik/Prikaži samo poruke u _ostavi"
+
+#~ msgid "/Filte_r/Match Only _Text Articles"
+#~ msgstr "/_Propusnik/Prikaži samo _tekstualne poruke"
 
-msgid ""
-"Loaded %d score entries in %d sections in %.1f seconds (%.0f entries/sec)"
-msgstr "Učitah %d unosa bodovanja u %d odeljka za %.1f sekunde (%.0f unosa/sek.)"
+#~ msgid "/Filte_r/Match Only _Binary Attachment Articles"
+#~ msgstr "/_Propusnik/Prikaži samo poruke sa _binarnim prilozima"
 
-msgid "Scored %d entries in %.1f seconds (%.0f articles/sec)"
-msgstr "Bodovao sam %d poruke za %.1f sekunde (%.0f poruke/sek.)"
-
-msgid "Scorefile entry removed -- old scorefile \"%s\" backed up as \"%s\""
-msgstr ""
-"Stavka datoteke bodovanje je uklonjena —— od stare datoteke bodovanja „%s“ "
-"napravljena je rezerva kao „%s“"
-
-msgid ""
-"We don't have a list of groups for \"%*.*s\".\n"
-"Shall we download one?"
-msgstr ""
-"Nemamo spisak grupa na serveru „%*.*s“.\n"
-"Da li da preuzmem jedan?"
-
-msgid "Type in a group search string and press ENTER.  Wildcards are allowed."
-msgstr ""
-"Ukucajte u pretragu grupe i pritisnite UNESI.  Dozvoljena je upoterba "
-"džokerskih znakova."
-
-msgid "/_File/_Manual Decode..."
-msgstr "/_Datoteka/_Ručno dekodiranje..."
-
-msgid "/_File/_Cancel Last Task"
-msgstr "/_Datoteka/_Otkaži poslednji zadatak"
-
-msgid "/Filte_r/Match Only _Cached Articles"
-msgstr "/_Propusnik/Prikaži samo poruke u _ostavi"
-
-msgid "/Filte_r/Match Only _Text Articles"
-msgstr "/_Propusnik/Prikaži samo _tekstualne poruke"
-
-msgid "/Filte_r/Match Only _Binary Attachment Articles"
-msgstr "/_Propusnik/Prikaži samo poruke sa _binarnim prilozima"
-
-msgid "/Filte_r/Match Only _My Articles"
-msgstr "/_Propusnik/Prikaži samo _moje poruke"
-
-msgid "/Filte_r/Match _Unread Articles"
-msgstr "/_Propusnik/Prikaži _nepročitane poruke"
-
-msgid "/_Go/---"
-msgstr "/_Idi/---"
-
-msgid "/_Servers/Get List of _All Groups"
-msgstr "/_Serveri/Dobavi spisak _svih grupa"
-
-msgid "/_Servers/Get List of _New Groups"
-msgstr "/_Serveri/Dobavi spisak _novih grupa"
-
-msgid "/_Newsgroups/Mark Group _Read"
-msgstr "/_Pričaonice/Označi grupu _pročitanom"
-
-msgid "/_Newsgroups/_Delete Group's Articles"
-msgstr "/_Pričaonice/_Obriši poruke grupe"
-
-msgid "/_Newsgroups/Get New _Headers"
-msgstr "/_Pričaonice/Dobavi nova _zaglavlja"
-
-msgid "/_Newsgroups/Get New Headers and _Bodies"
-msgstr "/_Pričaonice/Dobavi nova zaglavlja i _razrade"
-
-msgid "/_Newsgroups/More Download _Options..."
-msgstr "/_Pričaonice/Još _opcija preuzimanja..."
-
-msgid "/_Newsgroups/Refresh Article _Counts"
-msgstr "/_Pričaonice/Osveži _broj članaka"
-
-msgid "/_Newsgroups/Get New Headers in Subscribed _Groups"
-msgstr "/_Pričaonice/Dobavi nova zaglavlja u praćenim _grupama"
-
-msgid "/_Articles/Mark _Read"
-msgstr "/_Poruke/Obeleži _pročitanom"
-
-msgid "/_Articles/D_ownload Flagged"
-msgstr "/_Poruke/Preuzmi _obeležene za preuzimanje"
-
-msgid "/_Articles/U_nflag"
-msgstr "/_Poruke/Ukloni _oznaku"
-
-msgid "/_Articles/_Watch Thread"
-msgstr "/_Poruke/Prati _raspravu"
-
-msgid "/_Articles/_Ignore Thread"
-msgstr "/_Poruke/_Zanemari rasprave"
-
-msgid "/_Articles/_View Article's Scores"
-msgstr "/_Poruke/Pregledaj _bodovanja poruke"
-
-msgid "/_Articles/Supersed_e..."
-msgstr "/_Poruke/_Smeni poruku..."
-
-msgid "/_Post/_Post to Newsgroup..."
-msgstr "/_Objava/_Objavi u pričaonici..."
-
-msgid "/_Post/_Reply by Email..."
-msgstr "/_Objava/Odgovori _el. poštom..."
-
-msgid "/_Post/For_ward by Email..."
-msgstr "/_Objava/Pre_usmeri el. poštom..."
-
-msgid "/_Post/---"
-msgstr "/_Objava/---"
-
-msgid ""
-"Your real name contained double quotes.\n"
-"Converting into single quotes."
-msgstr ""
-"Vaše ime i prezime sadrži dvostruke znake navoda.\n"
-"Pretvaram ih u jednostruke."
-
-msgid "Post anyway, despite these problems?"
-msgstr "Da ipak objavim, uprkos ovim problemima?"
-
-msgid "Post anyway, despite this problem?"
-msgstr "Da ipak objavim, uprkos ovom problemu?"
-
-msgid "Mime (single-part posts only)"
-msgstr "Mime (samo pojedinačne poruke)"
-
-msgid " (%lu lines in 1 article)"
-msgstr " (%lu reda u jednoj poruci)"
-
-msgid "yEnc (30 percent smaller than UUEnc but less universal)"
-msgstr "„yEnc“ (30 procenata je manji od „UUEnc“ ali manje univerzalan)"
-
-msgid "\"Followup-To: poster\": sending email to author."
-msgstr "„Prati: objavljivač“: šaljem poruku autoru el. poštom."
-
-msgid "\"Followup-To:\" contains an email address: sending email to author."
-msgstr "„Prati:“ sadrži adresu el. pošte: šaljem el. poštu autoru."
-
-msgid ""
-"ERROR: line %d, column %d uses a character not specified in charset \"%s\" "
-"-- possibly change your charset in \"More Headers\" to \"%s\" instead?"
-msgstr ""
-"GREŠKA: %d. red, %d. stubac sadrži znak koji nije naveden u skupu znakova "
-"„%s“. Da li želite da promenite skup znakova u „Više zaglavlja“ na „%s“?"
-
-msgid ""
-"  --debug          Turns on the most commonly-used options for a bug report"
-msgstr ""
-"  --debug          Uključuje najčešće korišćene opcije za izveštaj o greškama"
-
-msgid ""
-"  --mute           Debugging tool to send new posts to console, not the "
-"server"
-msgstr ""
-"  --mute           Alat za pronalaženje grešaka koji šalje poruke u konzolu, "
-"umesto na server"
-
-msgid "  --debug-cache    Print debugging messages for the article cache"
-msgstr "  --debug-cache    Ispisuje poruke pročišćavanja za ostavu poruka"
-
-msgid ""
-"  --debug-sockets  Print debugging messages when talking to the news server"
-msgstr ""
-"  --debug-sockets  Ispisuje poruke pročišćavanja pri komunikaciji sa serverom "
-"diskusionih grupa"
-
-msgid "  --debug-queue    Print debugging messages related to managing tasks"
-msgstr ""
-"  --debug-queue    Ispisuje poruke pročišćavanja u vezi sa dnevnikom zadataka"
-
-msgid ""
-"  --debug-decode   Print debugging messages related to decoding attachments"
-msgstr ""
-"  --debug-decode   Ispisuje poruke pročišćavanja u vezi sa dekodiranjem priloga"
-
-msgid "  --debug-newsrc   Print debugging messages related to .newsrc files"
-msgstr ""
-"  --debug-newsrc   Ispisuje poruke pročišćavanja u vezi sa „.newsrc“ "
-"datotekama"
-
-msgid ""
-"  --debug-gnksa    Print debugging messages related to gnksa correctness"
-msgstr ""
-"  --debug-gnksa    Ispisuje poruke pročišćavanja u vezi sa „gnksa“ ispravkama"
-
-msgid ""
-"  --debug-trace    Print debugging messages when entering/leaving functions"
-msgstr ""
-"  --debug-trace    Ispisuje poruke pročišćavanja pri pokretanju/završavanju "
-"funkcija"
-
-msgid ""
-"  --debug-lock     Print debugging messages related to threaded gui locks"
-msgstr ""
-"  --debug-lock     Ispisuje poruke pročišćavanja u vezi sa nizovima "
-"zaključavanja grafičkog sučelja"
-
-msgid ""
-"  --debug-object   Print debugging messages related to refcounted objects"
-msgstr ""
-"  --debug-object   Ispisuje poruke pročišćavanja u vezi sa prebrojavanjem "
-"objekata"
-
-msgid "pan.sent"
-msgstr "pan.sent"
-
-msgid "Spellchecking disabled: gtkspell_init() failed with status %d"
-msgstr ""
-"Pravopisna provera je isključena: funkcija „gtkspell_init()“ nije uspela sa "
-"stanjem %d"
-
-msgid ""
-"Some tasks were still queued the last time Pan exited.  Do you want to "
-"resume those tasks?"
-msgstr ""
-"Neki zadaci su ostali nedovršeni pri poslednjem napuštanju Pana.  Da li želite "
-"li da ih pokrenete?"
-
-msgid ""
-"%a - abbreviated weekday name\n"
-"%A - full weekday name\n"
-"%b - abbreviated month name\n"
-"%B - full month name\n"
-"%c - local date & time\n"
-"%d - day of the month\n"
-"%H - hour (24-hour clock)\n"
-"%I - hour (12-hour clock)\n"
-"%j - day of the year (001-366)\n"
-"%m - month (01-12)\n"
-"%M - minute (00-59)\n"
-"%p - local equivalent of AM/PM\n"
-"%S - second (00-61)\n"
-"%x - local date\n"
-"%X - local time\n"
-"%y - two-digit year\n"
-"%Y - four-digit year\n"
-"%% - %"
-msgstr ""
-"%a — skraćeni naziv dana u sedmici\n"
-"%A — pun naziv dana u sedmici\n"
-"%b — skraćeni naziv meseca\n"
-"%B — pun naziv meseca\n"
-"%c — lokalno vreme i datum\n"
-"%d — dan u mesecu\n"
-"%H — sati (24-časovni zapis)\n"
-"%I — sati (12-časovni zapis)\n"
-"%j — dan u godini (001-366)\n"
-"%m — mesec (01-12)\n"
-"%M — minut (00-59)\n"
-"%p — lokalni ekvivalent za PrP/PoP\n"
-"%S — sekunde (00-59)\n"
-"%x — lokalni datum\n"
-"%X — lokalno vreme\n"
-"%y — dvocifrena godina (GG)\n"
-"%Y — četvorocifrena godina (GGGG)\n"
-"%% — %"
-
-msgid "Articles with a Score of 9999 or higher:"
-msgstr "Poruke koje imaju 9999 i više bodova:"
-
-msgid "Articles with a Score between 5000 and 9998:"
-msgstr "Poruke koje imaju od 5000 do 9998 bodova:"
-
-msgid "Articles with a Score of -9999 or lower:"
-msgstr "Poruke koje imaju -9999 i manje bodova:"
-
-msgid "When a Followup subject header changes, show as _new thread"
-msgstr "Napravi _novu raspravu kada se promeni naziv praćene teme"
-
-msgid "Show complete _multipart posts as a single article"
-msgstr "Prikaži završene _višedelne poruke kao jednu celinu"
-
-msgid "Download new headers from s_ubscribed groups when starting Pan"
-msgstr "Preuzmi nova zaglavlja iz pra_ćenih grupa pri pokretanju Pana"
-
-msgid ""
-"Download new headers and bod_ies from subscribed groups when starting Pan"
-msgstr "Preuzmi nova zaglavlja i _razrade iz praćenih grupa pri pokretanju Pana"
-
-msgid ""
-"Scorefile _Editor:\n"
-"(%t is filename, %n is line number)"
-msgstr ""
-"Uređivač datoteke _bodovanja:\n"
-"(%t je naziv datoteke, %n je broj reda)"
-
-msgid ""
-"%s\n"
-"\n"
-"Matches: %u\n"
-"Group: %s\n"
-"Rule: %s"
-msgstr ""
-"%s\n"
-"\n"
-"Pronađeno: %u\n"
-"Grupa: %s\n"
-"Pravilo: %s"
-
-msgid "_Watch thread (highlights the thread)"
-msgstr "_Prati raspravu (istakni rasprave)"
-
-msgid "Rule applies to all newsgroups"
-msgstr "Pravilo važi za sve pričaonice"
-
-msgid "(e.g., *anime*)"
-msgstr "(npr. *anime*)"
-
-msgid ""
-"If enabled, this rule will be applied to headers when they are downloaded."
-msgstr ""
-"Ako je uključeno, ovo pravilo će se primeniti na zaglavlja pri samom "
-"preuzimanju."
-
-msgid "Can't find filter \"%s\" needed by rule \"%s\", so no articles match."
-msgstr ""
-"Ne mogu da pronađem propusnik „%s“ potreban pravilu „%s“, tako da nema "
-"rezultata."
-
-msgid "Disconnecting one connection from `%s' after %d seconds idle"
-msgstr "Prekidam vezu sa „%s“ nakon %d sekunde mirovanja"
-
-msgid "Updating article counts for %u groups from server \"%s\""
-msgstr "Osvežavam broj poruka za %u grupe sa servera „%s“"
-
-msgid "Updated counts for %u groups out of %u"
-msgstr "Osvežen je broj poruka za %u grupe od %u"
-
-msgid "[This is an email copy of a Usenet post to \"%s\"]"
-msgstr "[Ovo je umnožak poruke vašeg objavljivanja na „%s“]"
-
-msgid "Save Article can't access path \"%s\""
-msgstr "Ne mogu da pristupim putanji „%s“ za čuvanje poruke"
-
-msgid ""
-"Pan %s\n"
-"Copyright (c) %d by Charles Kerr\n"
-"\n"
-"If you find a bug, please report it.\n"
-"\n"
-msgstr ""
-"Pan %s\n"
-"Autorska prava (c) %d Čarls Ker\n"
-"\n"
-"Ako naiđete na grešku, obavestite nas o tome.\n"
-"\n"
-
-msgid ""
-"http://pan.rebelbase.com/ - Pan Homepage\n"
-"http://pan.rebelbase.com/bugs/ - Report a Bug\n"
-"http://pan.rebelbase.com/download/ - Upgrade\n"
-"\n"
-msgstr ""
-"http://pan.rebelbase.com/ — Matična stranica Pana\n"
-"http://pan.rebelbase.com/bugs/ — Prijava grešaka\n"
-"http://pan.rebelbase.com/download/ — Nadogradnja\n"
-"\n"
+#~ msgid "/Filte_r/Match Only _My Articles"
+#~ msgstr "/_Propusnik/Prikaži samo _moje poruke"
+
+#~ msgid "/Filte_r/Match _Unread Articles"
+#~ msgstr "/_Propusnik/Prikaži _nepročitane poruke"
+
+#~ msgid "/_Go/---"
+#~ msgstr "/_Idi/---"
+
+#~ msgid "/_Servers/Get List of _All Groups"
+#~ msgstr "/_Serveri/Dobavi spisak _svih grupa"
+
+#~ msgid "/_Servers/Get List of _New Groups"
+#~ msgstr "/_Serveri/Dobavi spisak _novih grupa"
+
+#~ msgid "/_Newsgroups/Mark Group _Read"
+#~ msgstr "/_Pričaonice/Označi grupu _pročitanom"
+
+#~ msgid "/_Newsgroups/_Delete Group's Articles"
+#~ msgstr "/_Pričaonice/_Obriši poruke grupe"
+
+#~ msgid "/_Newsgroups/Get New _Headers"
+#~ msgstr "/_Pričaonice/Dobavi nova _zaglavlja"
+
+#~ msgid "/_Newsgroups/Get New Headers and _Bodies"
+#~ msgstr "/_Pričaonice/Dobavi nova zaglavlja i _razrade"
+
+#~ msgid "/_Newsgroups/More Download _Options..."
+#~ msgstr "/_Pričaonice/Još _opcija preuzimanja..."
+
+#~ msgid "/_Newsgroups/Refresh Article _Counts"
+#~ msgstr "/_Pričaonice/Osveži _broj članaka"
+
+#~ msgid "/_Newsgroups/Get New Headers in Subscribed _Groups"
+#~ msgstr "/_Pričaonice/Dobavi nova zaglavlja u praćenim _grupama"
+
+#~ msgid "/_Articles/Mark _Read"
+#~ msgstr "/_Poruke/Obeleži _pročitanom"
+
+#~ msgid "/_Articles/D_ownload Flagged"
+#~ msgstr "/_Poruke/Preuzmi _obeležene za preuzimanje"
+
+#~ msgid "/_Articles/U_nflag"
+#~ msgstr "/_Poruke/Ukloni _oznaku"
+
+#~ msgid "/_Articles/_Watch Thread"
+#~ msgstr "/_Poruke/Prati _raspravu"
+
+#~ msgid "/_Articles/_Ignore Thread"
+#~ msgstr "/_Poruke/_Zanemari rasprave"
+
+#~ msgid "/_Articles/_View Article's Scores"
+#~ msgstr "/_Poruke/Pregledaj _bodovanja poruke"
+
+#~ msgid "/_Articles/Supersed_e..."
+#~ msgstr "/_Poruke/_Smeni poruku..."
+
+#~ msgid "/_Post/_Post to Newsgroup..."
+#~ msgstr "/_Objava/_Objavi u pričaonici..."
+
+#~ msgid "/_Post/_Reply by Email..."
+#~ msgstr "/_Objava/Odgovori _el. poštom..."
+
+#~ msgid "/_Post/For_ward by Email..."
+#~ msgstr "/_Objava/Pre_usmeri el. poštom..."
+
+#~ msgid "/_Post/---"
+#~ msgstr "/_Objava/---"
+
+#~ msgid ""
+#~ "Your real name contained double quotes.\n"
+#~ "Converting into single quotes."
+#~ msgstr ""
+#~ "Vaše ime i prezime sadrži dvostruke znake navoda.\n"
+#~ "Pretvaram ih u jednostruke."
+
+#~ msgid "Post anyway, despite these problems?"
+#~ msgstr "Da ipak objavim, uprkos ovim problemima?"
+
+#~ msgid "Post anyway, despite this problem?"
+#~ msgstr "Da ipak objavim, uprkos ovom problemu?"
+
+#~ msgid "Mime (single-part posts only)"
+#~ msgstr "Mime (samo pojedinačne poruke)"
+
+#~ msgid " (%lu lines in 1 article)"
+#~ msgstr " (%lu reda u jednoj poruci)"
+
+#~ msgid "yEnc (30 percent smaller than UUEnc but less universal)"
+#~ msgstr "„yEnc“ (30 procenata je manji od „UUEnc“ ali manje univerzalan)"
+
+#~ msgid "\"Followup-To: poster\": sending email to author."
+#~ msgstr "„Prati: objavljivač“: šaljem poruku autoru el. poštom."
+
+#~ msgid "\"Followup-To:\" contains an email address: sending email to author."
+#~ msgstr "„Prati:“ sadrži adresu el. pošte: šaljem el. poštu autoru."
+
+#~ msgid ""
+#~ "ERROR: line %d, column %d uses a character not specified in charset \"%s"
+#~ "\" -- possibly change your charset in \"More Headers\" to \"%s\" instead?"
+#~ msgstr ""
+#~ "GREŠKA: %d. red, %d. stubac sadrži znak koji nije naveden u skupu znakova "
+#~ "„%s“. Da li želite da promenite skup znakova u „Više zaglavlja“ na „%s“?"
+
+#~ msgid ""
+#~ "  --debug          Turns on the most commonly-used options for a bug "
+#~ "report"
+#~ msgstr ""
+#~ "  --debug          Uključuje najčešće korišćene opcije za izveštaj o "
+#~ "greškama"
+
+#~ msgid ""
+#~ "  --mute           Debugging tool to send new posts to console, not the "
+#~ "server"
+#~ msgstr ""
+#~ "  --mute           Alat za pronalaženje grešaka koji šalje poruke u "
+#~ "konzolu, umesto na server"
+
+#~ msgid "  --debug-cache    Print debugging messages for the article cache"
+#~ msgstr "  --debug-cache    Ispisuje poruke pročišćavanja za ostavu poruka"
+
+#~ msgid ""
+#~ "  --debug-sockets  Print debugging messages when talking to the news "
+#~ "server"
+#~ msgstr ""
+#~ "  --debug-sockets  Ispisuje poruke pročišćavanja pri komunikaciji sa "
+#~ "serverom diskusionih grupa"
+
+#~ msgid ""
+#~ "  --debug-queue    Print debugging messages related to managing tasks"
+#~ msgstr ""
+#~ "  --debug-queue    Ispisuje poruke pročišćavanja u vezi sa dnevnikom "
+#~ "zadataka"
+
+#~ msgid ""
+#~ "  --debug-decode   Print debugging messages related to decoding "
+#~ "attachments"
+#~ msgstr ""
+#~ "  --debug-decode   Ispisuje poruke pročišćavanja u vezi sa dekodiranjem "
+#~ "priloga"
+
+#~ msgid "  --debug-newsrc   Print debugging messages related to .newsrc files"
+#~ msgstr ""
+#~ "  --debug-newsrc   Ispisuje poruke pročišćavanja u vezi sa „.newsrc“ "
+#~ "datotekama"
+
+#~ msgid ""
+#~ "  --debug-gnksa    Print debugging messages related to gnksa correctness"
+#~ msgstr ""
+#~ "  --debug-gnksa    Ispisuje poruke pročišćavanja u vezi sa „gnksa“ "
+#~ "ispravkama"
+
+#~ msgid ""
+#~ "  --debug-trace    Print debugging messages when entering/leaving "
+#~ "functions"
+#~ msgstr ""
+#~ "  --debug-trace    Ispisuje poruke pročišćavanja pri pokretanju/završavanju "
+#~ "funkcija"
+
+#~ msgid ""
+#~ "  --debug-lock     Print debugging messages related to threaded gui locks"
+#~ msgstr ""
+#~ "  --debug-lock     Ispisuje poruke pročišćavanja u vezi sa nizovima "
+#~ "zaključavanja grafičkog sučelja"
+
+#~ msgid ""
+#~ "  --debug-object   Print debugging messages related to refcounted objects"
+#~ msgstr ""
+#~ "  --debug-object   Ispisuje poruke pročišćavanja u vezi sa prebrojavanjem "
+#~ "objekata"
+
+#~ msgid "pan.sent"
+#~ msgstr "pan.sent"
+
+#~ msgid "Spellchecking disabled: gtkspell_init() failed with status %d"
+#~ msgstr ""
+#~ "Pravopisna provera je isključena: funkcija „gtkspell_init()“ nije uspela "
+#~ "sa stanjem %d"
+
+#~ msgid ""
+#~ "Some tasks were still queued the last time Pan exited.  Do you want to "
+#~ "resume those tasks?"
+#~ msgstr ""
+#~ "Neki zadaci su ostali nedovršeni pri poslednjem napuštanju Pana.  Da li "
+#~ "želite li da ih pokrenete?"
+
+#~ msgid ""
+#~ "%a - abbreviated weekday name\n"
+#~ "%A - full weekday name\n"
+#~ "%b - abbreviated month name\n"
+#~ "%B - full month name\n"
+#~ "%c - local date & time\n"
+#~ "%d - day of the month\n"
+#~ "%H - hour (24-hour clock)\n"
+#~ "%I - hour (12-hour clock)\n"
+#~ "%j - day of the year (001-366)\n"
+#~ "%m - month (01-12)\n"
+#~ "%M - minute (00-59)\n"
+#~ "%p - local equivalent of AM/PM\n"
+#~ "%S - second (00-61)\n"
+#~ "%x - local date\n"
+#~ "%X - local time\n"
+#~ "%y - two-digit year\n"
+#~ "%Y - four-digit year\n"
+#~ "%% - %"
+#~ msgstr ""
+#~ "%a — skraćeni naziv dana u sedmici\n"
+#~ "%A — pun naziv dana u sedmici\n"
+#~ "%b — skraćeni naziv meseca\n"
+#~ "%B — pun naziv meseca\n"
+#~ "%c — lokalno vreme i datum\n"
+#~ "%d — dan u mesecu\n"
+#~ "%H — sati (24-časovni zapis)\n"
+#~ "%I — sati (12-časovni zapis)\n"
+#~ "%j — dan u godini (001-366)\n"
+#~ "%m — mesec (01-12)\n"
+#~ "%M — minut (00-59)\n"
+#~ "%p — lokalni ekvivalent za PrP/PoP\n"
+#~ "%S — sekunde (00-59)\n"
+#~ "%x — lokalni datum\n"
+#~ "%X — lokalno vreme\n"
+#~ "%y — dvocifrena godina (GG)\n"
+#~ "%Y — četvorocifrena godina (GGGG)\n"
+#~ "%% — %"
+
+#~ msgid "Articles with a Score of 9999 or higher:"
+#~ msgstr "Poruke koje imaju 9999 i više bodova:"
+
+#~ msgid "Articles with a Score between 5000 and 9998:"
+#~ msgstr "Poruke koje imaju od 5000 do 9998 bodova:"
+
+#~ msgid "Articles with a Score of -9999 or lower:"
+#~ msgstr "Poruke koje imaju -9999 i manje bodova:"
+
+#~ msgid "When a Followup subject header changes, show as _new thread"
+#~ msgstr "Napravi _novu raspravu kada se promeni naziv praćene teme"
+
+#~ msgid "Show complete _multipart posts as a single article"
+#~ msgstr "Prikaži završene _višedelne poruke kao jednu celinu"
+
+#~ msgid "Download new headers from s_ubscribed groups when starting Pan"
+#~ msgstr "Preuzmi nova zaglavlja iz pra_ćenih grupa pri pokretanju Pana"
+
+#~ msgid ""
+#~ "Download new headers and bod_ies from subscribed groups when starting Pan"
+#~ msgstr ""
+#~ "Preuzmi nova zaglavlja i _razrade iz praćenih grupa pri pokretanju Pana"
+
+#~ msgid ""
+#~ "Scorefile _Editor:\n"
+#~ "(%t is filename, %n is line number)"
+#~ msgstr ""
+#~ "Uređivač datoteke _bodovanja:\n"
+#~ "(%t je naziv datoteke, %n je broj reda)"
+
+#~ msgid ""
+#~ "%s\n"
+#~ "\n"
+#~ "Matches: %u\n"
+#~ "Group: %s\n"
+#~ "Rule: %s"
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Pronađeno: %u\n"
+#~ "Grupa: %s\n"
+#~ "Pravilo: %s"
+
+#~ msgid "_Watch thread (highlights the thread)"
+#~ msgstr "_Prati raspravu (istakni rasprave)"
+
+#~ msgid "Rule applies to all newsgroups"
+#~ msgstr "Pravilo važi za sve pričaonice"
+
+#~ msgid "(e.g., *anime*)"
+#~ msgstr "(npr. *anime*)"
+
+#~ msgid ""
+#~ "If enabled, this rule will be applied to headers when they are downloaded."
+#~ msgstr ""
+#~ "Ako je uključeno, ovo pravilo će se primeniti na zaglavlja pri samom "
+#~ "preuzimanju."
+
+#~ msgid ""
+#~ "Can't find filter \"%s\" needed by rule \"%s\", so no articles match."
+#~ msgstr ""
+#~ "Ne mogu da pronađem propusnik „%s“ potreban pravilu „%s“, tako da nema "
+#~ "rezultata."
+
+#~ msgid "Disconnecting one connection from `%s' after %d seconds idle"
+#~ msgstr "Prekidam vezu sa „%s“ nakon %d sekunde mirovanja"
+
+#~ msgid "Updating article counts for %u groups from server \"%s\""
+#~ msgstr "Osvežavam broj poruka za %u grupe sa servera „%s“"
+
+#~ msgid "Updated counts for %u groups out of %u"
+#~ msgstr "Osvežen je broj poruka za %u grupe od %u"
+
+#~ msgid "[This is an email copy of a Usenet post to \"%s\"]"
+#~ msgstr "[Ovo je umnožak poruke vašeg objavljivanja na „%s“]"
+
+#~ msgid "Save Article can't access path \"%s\""
+#~ msgstr "Ne mogu da pristupim putanji „%s“ za čuvanje poruke"
+
+#~ msgid ""
+#~ "Pan %s\n"
+#~ "Copyright (c) %d by Charles Kerr\n"
+#~ "\n"
+#~ "If you find a bug, please report it.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Pan %s\n"
+#~ "Autorska prava (c) %d Čarls Ker\n"
+#~ "\n"
+#~ "Ako naiđete na grešku, obavestite nas o tome.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "http://pan.rebelbase.com/ - Pan Homepage\n"
+#~ "http://pan.rebelbase.com/bugs/ - Report a Bug\n"
+#~ "http://pan.rebelbase.com/download/ - Upgrade\n"
+#~ "\n"
+#~ msgstr ""
+#~ "http://pan.rebelbase.com/ — Matična stranica Pana\n"
+#~ "http://pan.rebelbase.com/bugs/ — Prijava grešaka\n"
+#~ "http://pan.rebelbase.com/download/ — Nadogradnja\n"
+#~ "\n"
