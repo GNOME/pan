@@ -8,15 +8,15 @@
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2011.
 # Nicolás Satragno <nsatragno@gmail.com>, 2012.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pan2.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-19 23:49+0000\n"
-"PO-Revision-Date: 2015-12-01 15:30+0100\n"
+"POT-Creation-Date: 2015-12-23 20:19+0000\n"
+"PO-Revision-Date: 2016-01-07 16:38+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -25,6 +25,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Gtranslator 2.91.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../pan.appdata.xml.in.h:1
+#| msgid "Newsreader"
+msgid "Pan Newsreader"
+msgstr "Lector de noticias Pan"
+
+#: ../pan.appdata.xml.in.h:2 ../pan.desktop.in.h:3
+#| msgid "Read and Post Usenet Articles"
+msgid "Read and post Usenet articles"
+msgstr "Leer y publicar artículos en Usenet"
+
+#: ../pan.appdata.xml.in.h:3
+msgid ""
+"Pan is a Usenet newsreader that is good at both text and binaries. It "
+"supports offline reading, scoring and killfiles, yEnc, NZB, binary "
+"uploading, PGP handling, multiserver, and secure connections."
+msgstr ""
+"Pan es un lector de noticias de Usenet que funciona tanto con texto como con "
+"binarios. Soporta lectura sin conexión, puntuación, «killfiles», yEnc, NZB, "
+"subida de binarios, gestión de PGP, varios servidores y conexiones seguras."
+
+#: ../pan.appdata.xml.in.h:4
+msgid ""
+"It is also the only Unix newsreader to get a perfect score on the Good Net-"
+"Keeping Seal of Approval evaluations."
+msgstr ""
+"También es el único lector de noticias de Unix para obtener una puntuación "
+"perfecta en las pruebas del Sello de aprobación de lectores de noticias "
+"(GNKSA)."
 
 #. update the titlebar
 #: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106
@@ -37,9 +66,10 @@ msgstr "Pan"
 msgid "Newsreader"
 msgstr "Lector de noticias"
 
-#: ../pan.desktop.in.h:3
-msgid "Read and Post Usenet Articles"
-msgstr "Leer y publicar artículos en Usenet"
+#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
+#: ../pan.desktop.in.h:5
+msgid "usenet;newsreader;newsgroup;usenet article;yenc,nzb;"
+msgstr "usenet;lector;noticias;grupos;artículo;yenc,nzb;"
 
 #: ../pan/data/article-cache.cc:144 ../pan/data/encode-cache.cc:62
 #, c-format
@@ -1151,9 +1181,9 @@ msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr "¿Desea aceptarlo permanentemente? (luego se puede eliminar)"
 
 #: ../pan/gui/gui.cc:1670
-#| msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
-msgid "Copyright © 2002-2012 Charles Kerr and others"
-msgstr "Copyright © 2002-2012 Charles Kerr y otros"
+#| msgid "Copyright © 2002-2012 Charles Kerr and others"
+msgid "Copyright © 2002-2015 Charles Kerr and others"
+msgstr "Copyright © 2002-2015 Charles Kerr y otros"
 
 #: ../pan/gui/gui.cc:1675
 msgid "translator-credits"
@@ -2055,7 +2085,8 @@ msgid "Task Pane"
 msgstr "Panel de tareas"
 
 #: ../pan/gui/prefs-ui.cc:1008
-msgid "Show Task Pane info popups"
+#| msgid "Show Task Pane info popups"
+msgid "Show task pane popups"
 msgstr "Mostrar información emergente en el panel de tareas"
 
 #: ../pan/gui/prefs-ui.cc:1010
@@ -3180,8 +3211,9 @@ msgid "Delete Tasks"
 msgstr "Borrar tareas"
 
 #: ../pan/gui/task-pane.cc:1055
-msgid "Show info popups"
-msgstr "Mostrar información emergente"
+#| msgid "Show info popups"
+msgid "Show popups"
+msgstr "Mostrar ventanas emergentes"
 
 #: ../pan/gui/url.cc:123
 #, c-format
