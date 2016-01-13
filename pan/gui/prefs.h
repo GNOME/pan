@@ -103,7 +103,7 @@ namespace pan
       uint64_t get_long64 (const StringView& key, uint64_t fallback) const;
       void set_long64 (const StringView& key, uint64_t value);
 
-      std::string get_string (const StringView& key, const StringView& fallback) const;
+      StringView get_string (const StringView& key, const StringView& fallback) const;
       void set_string (const StringView& key, const StringView&);
 
       void set_color (const StringView& key, const GdkColor& color);

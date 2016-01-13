@@ -2022,7 +2022,7 @@ void GUI :: do_read_selected_group ()
     // update iconv handler
     const char * from = g_mime_charset_iconv_name(local.c_str());
     char buf[256];
-    g_snprintf(buf, sizeof(buf), "%s//IGNORE", _prefs.get_string("default-charset", "UTF-8").c_str());
+    g_snprintf(buf, sizeof(buf), "%s//IGNORE", _prefs.get_string("default-charset", "UTF-8").str);
     const char * to  = g_mime_charset_iconv_name(buf);
     {
       if (iconv_inited)

@@ -324,12 +324,14 @@ Prefs :: set_long64 (const StringView& key, uint64_t value)
 ****  STRINGS
 ***/
 
-std::string
+StringView
 Prefs :: get_string (const StringView& key, const StringView& fallback) const
 {
+  StringView prefs_string;
   if (!_strings.count (key))
     _strings[key] = fallback;
-  return _strings[key];
+  prefs_string = _strings[key];
+  return prefs_string;
 }
 
 void

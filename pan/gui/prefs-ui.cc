@@ -343,7 +343,7 @@ namespace pan
   {
     GtkWidget * t = gtk_entry_new();
     g_object_set_data_full (G_OBJECT(t), PREFS_KEY, g_strdup(key), g_free);
-    gtk_entry_set_text (GTK_ENTRY(t), prefs.get_string (key, fallback).c_str());
+    gtk_entry_set_text (GTK_ENTRY(t), prefs.get_string (key, fallback).str);
     g_signal_connect (t, "changed", G_CALLBACK(entry_changed_cb), &prefs);
     return t;
   }
