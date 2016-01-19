@@ -84,7 +84,7 @@ IT_PROG_INTLTOOL([0.40.6])
 GETTEXT_PACKAGE=pan
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[gettext package name])
-panlocaledir='${prefix}/${DATADIRNAME}/locale'
+panlocaledir=[${datadir}/locale]
 
 dnl libz for xzver
 PKG_CHECK_MODULES([ZLIB], [zlib >= 1.2.0],AC_DEFINE(HAVE_ZLIB,[1],[Zlib for xzver support]),[])
