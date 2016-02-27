@@ -331,39 +331,46 @@ bool CertStore::add(gnutls_x509_crt_t cert, const Quark& server) {
 	if (!cert || server.empty())
 		return false;
 
-	std::string addr;
+	std::string addr, cert_file_name, cert_file_name_wp;
 	int port;
 	_data.get_server_addr(server, addr, port);
 	_cert_to_server[server] = cert;
 
 	std::stringstream buffer;
 	buffer << addr << ".pem";
-	const char* buf(buffer.str().c_str());
+	cert_file_name = buffer.str().c_str();
+	cert_file_name_wp = file::absolute_fn("ssl_certs", cert_file_name.c_str()).c_str();
 
-	FILE * fp = fopen(file::absolute_fn("ssl_certs", buf).c_str(), "wb");
+	FILE * fp = fopen(cert_file_name_wp.c_str(), "wb"); 
 	if (!fp)
 		return false;
 
-	_data.set_server_cert(server, buf);
+	_data.set_server_cert(server, cert_file_name.c_str());
 
 	SaveCBStruct* cbstruct = new SaveCBStruct(*this, server, _data);
 	g_idle_add(save_server_props_cb, cbstruct);
 
-	size_t outsize;
+	int rc1 = 99;
+	int rc2 = 99;
+	size_t outsize = 0;
 	/* make up for dumbness of this function */
-	gnutls_x509_crt_export(cert, GNUTLS_X509_FMT_PEM, NULL, &outsize);
+	rc1 = gnutls_x509_crt_export(cert, GNUTLS_X509_FMT_PEM, NULL, &outsize);
 	char* out = new char[outsize];
-	gnutls_x509_crt_export(cert, GNUTLS_X509_FMT_PEM, out, &outsize);
+	rc2 = gnutls_x509_crt_export(cert, GNUTLS_X509_FMT_PEM, out, &outsize);
 
+	if (rc2 != 0) {
+	Log::add_err_va (_("Couldn't export certificate for server: %s"), addr.c_str());
+	} else {
 	fputs((const char*) out, fp);
-
+	}
+  
 	debug_SSL_verbatim("\n===========================================");
 	debug_SSL_verbatim(out);
 	debug_SSL_verbatim("\n===========================================");
 
 	delete out;
 	fclose(fp);
-	chmod(buf, 0600);
+	chmod(cert_file_name_wp.c_str(), 0600);
 
 	gnutls_certificate_set_x509_trust(_creds, &cert, 1); // for now, only 1 is saved
 	valid_cert_added(cert, server.c_str());
