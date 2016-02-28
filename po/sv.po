@@ -1,16 +1,16 @@
 # Swedish messages for Pan.
-# Copyright (C) 2000-2011 Free Software Foundation, Inc.
+# Copyright © 2000-2011 Free Software Foundation, Inc.
 # Andreas Hyden <a.hyden@cyberpoint.se>, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003, 2004.
 # Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2008, 2009, 2011.
 #
-# $Id: sv.po,v 1.4 2006/11/18 22:37:05 dnylande Exp $
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-04 20:58+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=Pan&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-12-23 20:19+0000\n"
 "PO-Revision-Date: 2011-02-21 22:13+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -19,57 +19,93 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../pan.desktop.in.h:1
+#: ../pan.appdata.xml.in.h:1
 msgid "Pan Newsreader"
 msgstr "Diskussionsgruppsläsaren Pan"
 
-#: ../pan.desktop.in.h:2
+#: ../pan.appdata.xml.in.h:2 ../pan.desktop.in.h:3
 #, fuzzy
-msgid "Read and Post Usenet Articles"
+msgid "Read and post Usenet articles"
 msgstr "Läs markerad artikel"
 
-#: ../pan/data/article-cache.cc:143 ../pan/data/encode-cache.cc:62
+#: ../pan.appdata.xml.in.h:3
+msgid ""
+"Pan is a Usenet newsreader that is good at both text and binaries. It "
+"supports offline reading, scoring and killfiles, yEnc, NZB, binary "
+"uploading, PGP handling, multiserver, and secure connections."
+msgstr ""
+
+#: ../pan.appdata.xml.in.h:4
+msgid ""
+"It is also the only Unix newsreader to get a perfect score on the Good Net-"
+"Keeping Seal of Approval evaluations."
+msgstr ""
+
+#. update the titlebar
+#: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:1040
+#: ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:2009 ../pan/gui/score-add-ui.cc:602
+msgid "Pan"
+msgstr "Pan"
+
+#: ../pan.desktop.in.h:2
+#, fuzzy
+#| msgid "Pan Newsreader"
+msgid "Newsreader"
+msgstr "Diskussionsgruppsläsaren Pan"
+
+#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
+#: ../pan.desktop.in.h:5
+msgid "usenet;newsreader;newsgroup;usenet article;yenc,nzb;"
+msgstr ""
+
+#: ../pan/data/article-cache.cc:144 ../pan/data/encode-cache.cc:62
 #, c-format
 msgid "Error opening directory: \"%s\": %s"
 msgstr "Fel vid öppnande av katalogen: \"%s\": %s"
 
-#: ../pan/data/article-cache.cc:231 ../pan/data/article-cache.cc:242
-#: ../pan/data-impl/data-io.cc:187 ../pan/data-impl/data-io.cc:211
-#: ../pan/gui/post-ui.cc:1639
+#: ../pan/data/article-cache.cc:235 ../pan/data/article-cache.cc:244
+#: ../pan/data-impl/data-io.cc:199 ../pan/data-impl/data-io.cc:231
+#: ../pan/gui/post-ui.cc:1723
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Kunde inte spara \"%s\" %s"
 
-#: ../pan/data/article-cache.cc:355
+#: ../pan/data/article-cache.cc:362
 #, c-format
 msgid "Error opening file \"%s\" %s"
 msgstr "Fel vid öppnande av filen \"%s\" %s"
 
-#: ../pan/data/article-cache.cc:386 ../pan/data-impl/profiles.cc:174
-#: ../pan/data-impl/server.cc:436 ../pan/general/file-util.cc:298
-#: ../pan/gui/post-ui.cc:609 ../pan/gui/task-pane.cc:691
+#: ../pan/data/article-cache.cc:393 ../pan/data-impl/profiles.cc:174
+#: ../pan/data-impl/server.cc:500 ../pan/general/file-util.cc:311
+#: ../pan/gui/post-ui.cc:638 ../pan/gui/task-pane.cc:737
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Fel vid läsning av filen \"%s\": %s"
 
-#: ../pan/data/cert-store.cc:238
+#: ../pan/data/cert-store.cc:262
 #, fuzzy, c-format
 msgid "Error opening SSL certificate directory: \"%s\": %s"
 msgstr "Fel vid öppnande av katalogen: \"%s\": %s"
 
-#: ../pan/data/cert-store.cc:270
+#: ../pan/data/cert-store.cc:293
 #, c-format
-msgid "Succesfully added %d SSL PEM certificate(s) to Certificate Store."
+msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
+msgstr ""
+
+#: ../pan/data/cert-store.cc:313
+msgid ""
+"Error initializing Certificate Store. Check that the permissions for the "
+"folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
 msgstr ""
 
 #. load_group_descriptions (*_data_io);
-#: ../pan/data-impl/data-impl.cc:109
+#: ../pan/data-impl/data-impl.cc:113
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "Läste in databakände på %.1f sekunder"
 
-#: ../pan/data-impl/data-impl.cc:140
-msgid "Pan newsreader server passwords"
+#: ../pan/data-impl/data-impl.cc:143
+msgid "Pan Newsreader's server passwords"
 msgstr ""
 
 #: ../pan/data-impl/groups.cc:94
@@ -105,47 +141,47 @@ msgstr ""
 "Sparade %lu delar, %lu artiklar i \"%s\" på %.1f sekunder (%.0f artiklar/"
 "sekund)"
 
-#: ../pan/data-impl/headers.cc:1173
+#: ../pan/data-impl/headers.cc:1191
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "Lade till %lu artiklar till %s."
 
-#: ../pan/data-impl/server.cc:234
+#: ../pan/data-impl/server.cc:261
 #, c-format
-msgid "There seems to be no Password set for Server %s."
+msgid "There seems to be no password set for server %s."
 msgstr ""
 
-#: ../pan/data-impl/server.cc:238
-msgid "The Gnome keyring denied access to the Passwords."
+#: ../pan/data-impl/server.cc:265
+msgid "GNOME Keyring denied access to the passwords."
 msgstr ""
 
-#: ../pan/data-impl/xover.cc:239
+#: ../pan/data-impl/xover.cc:243
 #, c-format
 msgid "Error reading from %s: unknown group \"%s\""
 msgstr "Fel vid läsning från %s: okänd grupp \"%s\""
 
 #. build the locale strings
-#: ../pan/general/e-util.cc:213
+#: ../pan/general/e-util.cc:211
 msgid "%l:%M %p"
-msgstr "%H.%M"
+msgstr "%H:%M"
+
+#: ../pan/general/e-util.cc:212
+msgid "Today %l:%M %p"
+msgstr "Idag %H:%M"
+
+#: ../pan/general/e-util.cc:213
+msgid "%a %l:%M %p"
+msgstr "%a %H:%M"
 
 #: ../pan/general/e-util.cc:214
-msgid "Today %l:%M %p"
-msgstr "Idag %H.%M"
+msgid "%b %d %l:%M %p"
+msgstr "%d %b %H:%M"
 
 #: ../pan/general/e-util.cc:215
-msgid "%a %l:%M %p"
-msgstr "%aen %H.%M"
-
-#: ../pan/general/e-util.cc:216
-msgid "%b %d %l:%M %p"
-msgstr "%d %b %H.%M"
-
-#: ../pan/general/e-util.cc:217
 msgid "%b %d %Y"
 msgstr "%Y %b %d"
 
-#: ../pan/general/e-util.cc:242
+#: ../pan/general/e-util.cc:240
 msgid "?"
 msgstr "?"
 
@@ -158,680 +194,708 @@ msgstr "Kan inte använda det reguljära utrycket \"%s\": %s"
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr "Kunde inte fastställa artikelns kodning. Icke-UTF8-tecken togs bort."
 
-#: ../pan/gui/actions.cc:274 ../pan/gui/post-ui.cc:417
+#: ../pan/gui/actions.cc:303 ../pan/gui/post-ui.cc:446
 msgid "_File"
 msgstr "_Arkiv"
 
-#: ../pan/gui/actions.cc:275 ../pan/gui/post-ui.cc:418
+#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:447
 msgid "_Edit"
 msgstr "R_edigera"
 
-#: ../pan/gui/actions.cc:276 ../pan/gui/prefs-ui.cc:1064
+#: ../pan/gui/actions.cc:305 ../pan/gui/prefs-ui.cc:1107
 msgid "_Layout"
 msgstr "_Layout"
 
-#: ../pan/gui/actions.cc:277
+#: ../pan/gui/actions.cc:306
 msgid "_Group Pane"
 msgstr "_Gruppanel"
 
-#: ../pan/gui/actions.cc:278
+#: ../pan/gui/actions.cc:307
 msgid "_Header Pane"
 msgstr "_Rubrikpanel"
 
-#: ../pan/gui/actions.cc:279
+#: ../pan/gui/actions.cc:308
 msgid "_Body Pane"
 msgstr "Ar_tikelpanel"
 
-#: ../pan/gui/actions.cc:280
+#: ../pan/gui/actions.cc:309
 msgid "_View"
 msgstr "_Visa"
 
-#: ../pan/gui/actions.cc:281
+#: ../pan/gui/actions.cc:310
 msgid "Filte_r"
 msgstr "Filte_r"
 
-#: ../pan/gui/actions.cc:282
+#: ../pan/gui/actions.cc:311
 msgid "_Go"
 msgstr "_Gå"
 
-#: ../pan/gui/actions.cc:283 ../pan/gui/prefs-ui.cc:1091
+#: ../pan/gui/actions.cc:312 ../pan/gui/prefs-ui.cc:1157
 msgid "_Actions"
 msgstr "_Åtgärder"
 
-#: ../pan/gui/actions.cc:284
+#: ../pan/gui/actions.cc:313
 msgid "_Articles"
 msgstr "Ar_tiklar"
 
-#: ../pan/gui/actions.cc:285
+#: ../pan/gui/actions.cc:314
 msgid "G_roups"
 msgstr "G_rupper"
 
-#: ../pan/gui/actions.cc:286 ../pan/gui/actions.cc:287
+#: ../pan/gui/actions.cc:315 ../pan/gui/actions.cc:316
 msgid "_Post"
 msgstr "_Posta"
 
-#: ../pan/gui/actions.cc:288
+#: ../pan/gui/actions.cc:317
 msgid "_Help"
 msgstr "_Hjälp"
 
-#: ../pan/gui/actions.cc:291
+#: ../pan/gui/actions.cc:320
 msgid "_Read Group"
 msgstr "_Läs grupp"
 
-#: ../pan/gui/actions.cc:292
+#: ../pan/gui/actions.cc:321
 msgid "Read Group"
 msgstr "Läs grupp"
 
-#: ../pan/gui/actions.cc:296
+#: ../pan/gui/actions.cc:325
 msgid "_Mark Selected Groups Read"
 msgstr "_Markera valda grupper som lästa"
 
-#: ../pan/gui/actions.cc:297
+#: ../pan/gui/actions.cc:326
 msgid "Mark Selected Groups Read"
 msgstr "Markera valda grupper som lästa"
 
-#: ../pan/gui/actions.cc:301
+#: ../pan/gui/actions.cc:330
 msgid "_Delete Selected Groups' Articles"
 msgstr "_Ta bort valda gruppens artiklar"
 
-#: ../pan/gui/actions.cc:302
+#: ../pan/gui/actions.cc:331
 msgid "Delete Selected Groups' Articles"
 msgstr "Ta bort valda gruppens artiklar"
 
-#: ../pan/gui/actions.cc:306
+#: ../pan/gui/actions.cc:335
 msgid "Get New _Headers in Selected Groups"
 msgstr "Hämta nya _rubriker i markerade grupper"
 
-#: ../pan/gui/actions.cc:307
+#: ../pan/gui/actions.cc:336
 msgid "Get New Headers in Selected Groups"
 msgstr "Hämta nya rubriker i markerade grupper"
 
-#: ../pan/gui/actions.cc:311 ../pan/gui/actions.cc:316
+#: ../pan/gui/actions.cc:340 ../pan/gui/actions.cc:345
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "Hämta nya _rubriker i prenumererade grupper"
 
-#: ../pan/gui/actions.cc:312 ../pan/gui/actions.cc:317
+#: ../pan/gui/actions.cc:341 ../pan/gui/actions.cc:346
 msgid "Get New Headers in Subscribed Groups"
 msgstr "Hämta nya rubriker i prenumererade grupper"
 
-#: ../pan/gui/actions.cc:321
+#: ../pan/gui/actions.cc:350
 msgid "Get _Headers..."
 msgstr "Hämta _rubriker..."
 
-#: ../pan/gui/actions.cc:322
+#: ../pan/gui/actions.cc:351
 msgid "Get Headers..."
 msgstr "Hämta rubriker..."
 
-#: ../pan/gui/actions.cc:326 ../pan/gui/actions.cc:327
+#: ../pan/gui/actions.cc:355 ../pan/gui/actions.cc:356
 msgid "Refresh Group List"
 msgstr "Uppdatera grupplista"
 
-#: ../pan/gui/actions.cc:331
+#: ../pan/gui/actions.cc:360
 msgid "_Subscribe"
 msgstr "_Prenumerera"
 
-#: ../pan/gui/actions.cc:332
+#: ../pan/gui/actions.cc:361
 msgid "Subscribe"
 msgstr "Prenumerera"
 
-#: ../pan/gui/actions.cc:336
+#: ../pan/gui/actions.cc:365
 msgid "_Unsubscribe"
-msgstr "_Säg upp prenumereration"
+msgstr "_Säg upp prenumeration"
 
-#: ../pan/gui/actions.cc:337
+#: ../pan/gui/actions.cc:366
 msgid "Unsubscribe"
-msgstr "Säg upp prenumereration"
+msgstr "Säg upp prenumeration"
 
-#: ../pan/gui/actions.cc:341
+#: ../pan/gui/actions.cc:370
 msgid "_Save Articles..."
 msgstr "_Spara artiklar..."
 
-#: ../pan/gui/actions.cc:342
+#: ../pan/gui/actions.cc:371
 msgid "Save Articles..."
 msgstr "Spara artiklar..."
 
-#: ../pan/gui/actions.cc:346
+#: ../pan/gui/actions.cc:375
 #, fuzzy
 msgid "Save Articles from Selected _NZB..."
 msgstr "_Spara artiklar från denna NZB..."
 
-#: ../pan/gui/actions.cc:347
+#: ../pan/gui/actions.cc:376
 #, fuzzy
 msgid "Save Articles from Selected NZB"
 msgstr "Spara artiklar från denna NZB"
 
-#: ../pan/gui/actions.cc:351
+#: ../pan/gui/actions.cc:380
 #, fuzzy
 msgid "Save Articles to an NZB _File..."
 msgstr "_Spara artiklar från denna NZB..."
 
-#: ../pan/gui/actions.cc:352
+#: ../pan/gui/actions.cc:381
 #, fuzzy
 msgid "Save Articles to an NZB File"
 msgstr "Spara artiklar från denna NZB"
 
-#: ../pan/gui/actions.cc:356 ../pan/gui/actions.cc:357
+#: ../pan/gui/actions.cc:385 ../pan/gui/actions.cc:386
 msgid "Print"
 msgstr ""
 
-#: ../pan/gui/actions.cc:361
+#: ../pan/gui/actions.cc:390
 msgid "_Import NZB Files..."
 msgstr "_Importera NZB-filer..."
 
-#: ../pan/gui/actions.cc:366
+#: ../pan/gui/actions.cc:395
 msgid "_Cancel Last Task"
 msgstr "_Avbryt senaste uppgift"
 
-#: ../pan/gui/actions.cc:371
+#: ../pan/gui/actions.cc:400
 msgid "_Task Manager"
 msgstr "_Uppgiftshanterare"
 
-#: ../pan/gui/actions.cc:376
+#: ../pan/gui/actions.cc:405
 msgid "_Event Log"
 msgstr "_Händelselogg"
 
-#: ../pan/gui/actions.cc:381
+#: ../pan/gui/actions.cc:410
 msgid "_Quit"
 msgstr "_Avsluta"
 
-#: ../pan/gui/actions.cc:386
+#: ../pan/gui/actions.cc:415
 msgid "Select _All Articles"
 msgstr "Markera alla _artiklar"
 
-#: ../pan/gui/actions.cc:391
+#: ../pan/gui/actions.cc:420
 msgid "_Deselect All Articles"
 msgstr "Avmarkera a_lla artiklar"
 
-#: ../pan/gui/actions.cc:396
+#: ../pan/gui/actions.cc:425
 msgid "Add Su_bthreads to Selection"
 msgstr "Lägg till _undertrådar till markeringen"
 
-#: ../pan/gui/actions.cc:401
+#: ../pan/gui/actions.cc:430
 msgid "Add _Threads to Selection"
 msgstr "Lägg till _trådar till markeringen"
 
-#: ../pan/gui/actions.cc:406
+#: ../pan/gui/actions.cc:435
 msgid "Add _Similar Articles to Selection"
 msgstr "Lägg till _liknande artiklar till markering"
 
-#: ../pan/gui/actions.cc:411
+#: ../pan/gui/actions.cc:440
 msgid "Select Article _Body"
 msgstr "Markera artikelte_xt"
 
-#: ../pan/gui/actions.cc:416
+#: ../pan/gui/actions.cc:445
 msgid "Edit _Preferences"
 msgstr "Redigera _inställningar"
 
-#: ../pan/gui/actions.cc:421
+#: ../pan/gui/actions.cc:450
 msgid "Edit Selected _Group's Preferences"
 msgstr "Redigera inställningar för vald _grupp"
 
-#: ../pan/gui/actions.cc:426 ../pan/gui/post-ui.cc:434
+#: ../pan/gui/actions.cc:455 ../pan/gui/post-ui.cc:463
 msgid "Edit P_osting Profiles"
 msgstr "Redigera _postandeprofiler"
 
-#: ../pan/gui/actions.cc:431
+#: ../pan/gui/actions.cc:460
 msgid "Edit _News Servers"
 msgstr "Redigera _diskussionsgruppsservrar"
 
-#: ../pan/gui/actions.cc:436
+#: ../pan/gui/actions.cc:465
 msgid "Jump to _Group Tab"
 msgstr "Hoppa till _gruppflik"
 
-#: ../pan/gui/actions.cc:441
+#: ../pan/gui/actions.cc:470
 msgid "Jump to _Header Tab"
 msgstr "Hoppa till _rubrikflik"
 
-#: ../pan/gui/actions.cc:446
+#: ../pan/gui/actions.cc:475
 msgid "Jump to _Body Tab"
 msgstr "Hoppa till _artikeltextflik"
 
-#: ../pan/gui/actions.cc:451
+#: ../pan/gui/actions.cc:480
 msgid "_Rot13 Selected Text"
 msgstr "_Rotera markerad text 13 tecken"
 
-#: ../pan/gui/actions.cc:456
+#: ../pan/gui/actions.cc:485
 msgid "Clear _Header Pane"
 msgstr "Töm _rubrikpanel"
 
-#: ../pan/gui/actions.cc:461
+#: ../pan/gui/actions.cc:490
 msgid "Clear _Body Pane"
 msgstr "Töm a_rtikeltextpanel"
 
-#: ../pan/gui/actions.cc:466
+#: ../pan/gui/actions.cc:495
 msgid "Cache Article"
 msgstr "Mellanlagra artikel"
 
-#: ../pan/gui/actions.cc:471
+#: ../pan/gui/actions.cc:500
 msgid "Read Article"
 msgstr "Läs artikel"
 
-#: ../pan/gui/actions.cc:476
+#: ../pan/gui/actions.cc:505
 msgid "Show Article Information"
 msgstr "Visa artikelinformation"
 
-#: ../pan/gui/actions.cc:481
+#: ../pan/gui/actions.cc:510
 msgid "Read _More"
 msgstr "Läs _mer"
 
-#: ../pan/gui/actions.cc:482
+#: ../pan/gui/actions.cc:511
 msgid "Read More"
 msgstr "Läs mer"
 
-#: ../pan/gui/actions.cc:486
+#: ../pan/gui/actions.cc:515
 msgid "Read _Back"
 msgstr "Läs _tillbaka"
 
-#: ../pan/gui/actions.cc:487
+#: ../pan/gui/actions.cc:516
 msgid "Read Back"
 msgstr "Läs tillbaka"
 
-#: ../pan/gui/actions.cc:491
+#: ../pan/gui/actions.cc:520
 msgid "Next _Unread Group"
 msgstr "Nästa _olästa grupp"
 
-#: ../pan/gui/actions.cc:496
+#: ../pan/gui/actions.cc:525
 msgid "Next _Group"
 msgstr "Nästa _grupp"
 
-#: ../pan/gui/actions.cc:501
+#: ../pan/gui/actions.cc:530
 msgid "Next _Unread Article"
 msgstr "Nästa _olästa artikel"
 
-#: ../pan/gui/actions.cc:502
+#: ../pan/gui/actions.cc:531
 msgid "Next Unread Article"
 msgstr "Nästa olästa artikel"
 
-#: ../pan/gui/actions.cc:506
+#: ../pan/gui/actions.cc:535
 msgid "Next _Article"
 msgstr "Nästa _artikel"
 
-#: ../pan/gui/actions.cc:507
+#: ../pan/gui/actions.cc:536
 msgid "Next Article"
 msgstr "Nästa artikel"
 
-#: ../pan/gui/actions.cc:511
+#: ../pan/gui/actions.cc:540
 msgid "Next _Watched Article"
 msgstr "Nästa _bevakade artikel"
 
-#: ../pan/gui/actions.cc:516
+#: ../pan/gui/actions.cc:545
 msgid "Next Unread _Thread"
 msgstr "Nästa olästa _tråd"
 
-#: ../pan/gui/actions.cc:517
+#: ../pan/gui/actions.cc:546
 msgid "Next Unread Thread"
 msgstr "Nästa olästa tråd"
 
-#: ../pan/gui/actions.cc:521
+#: ../pan/gui/actions.cc:550
 msgid "Next Threa_d"
 msgstr "Nästa trå_d"
 
-#: ../pan/gui/actions.cc:526
+#: ../pan/gui/actions.cc:555
 msgid "Pre_vious Article"
 msgstr "Fö_regående artikel"
 
-#: ../pan/gui/actions.cc:531
+#: ../pan/gui/actions.cc:560
 msgid "Previous _Thread"
 msgstr "Föregående _tråd"
 
-#: ../pan/gui/actions.cc:536
+#: ../pan/gui/actions.cc:565
 msgid "_Parent Article"
 msgstr "_Förälderartikel"
 
-#: ../pan/gui/actions.cc:541
+#: ../pan/gui/actions.cc:570
 msgid "Ignore _Author"
 msgstr "Ignorera _författare"
 
-#: ../pan/gui/actions.cc:545
+#: ../pan/gui/actions.cc:574
 msgid "_Watch Thread"
 msgstr "_Bevaka tråd"
 
-#: ../pan/gui/actions.cc:550
+#: ../pan/gui/actions.cc:579
 msgid "_Ignore Thread"
 msgstr "_Ignorera tråd"
 
-#: ../pan/gui/actions.cc:555 ../pan/gui/actions.cc:556
+#: ../pan/gui/actions.cc:584 ../pan/gui/actions.cc:585
 #, fuzzy
 msgid "_Toggle Flag On/Off for Thread"
 msgstr "_Bevaka tråd"
 
-#: ../pan/gui/actions.cc:560 ../pan/gui/actions.cc:561
+#: ../pan/gui/actions.cc:589 ../pan/gui/actions.cc:590
 #, fuzzy
 msgid "_Turn Flag Off for Thread"
 msgstr "_Bevaka tråd"
 
-#: ../pan/gui/actions.cc:565 ../pan/gui/actions.cc:566
+#: ../pan/gui/actions.cc:594 ../pan/gui/actions.cc:595
 #, fuzzy
 msgid "_Select All Flagged Threads"
 msgstr "Nästa olästa tråd"
 
-#: ../pan/gui/actions.cc:570 ../pan/gui/actions.cc:571
+#: ../pan/gui/actions.cc:599 ../pan/gui/actions.cc:600
 #, fuzzy
 msgid "_Go to Next Flagged Thread"
 msgstr "Nästa olästa tråd"
 
-#: ../pan/gui/actions.cc:575 ../pan/gui/actions.cc:576
+#: ../pan/gui/actions.cc:604 ../pan/gui/actions.cc:605
 #, fuzzy
 msgid "_Go to Last Flagged Thread"
 msgstr "Nästa olästa tråd"
 
-#: ../pan/gui/actions.cc:580 ../pan/gui/actions.cc:581
+#: ../pan/gui/actions.cc:609 ../pan/gui/actions.cc:610
 #, fuzzy
 msgid "_Invert Selection"
 msgstr "Invertera den markerade raden"
 
-#: ../pan/gui/actions.cc:585
+#: ../pan/gui/actions.cc:614
 msgid "Edit Article's Watch/Ignore/Score..."
 msgstr "Redigera artikelns bevaka/ignorera/poäng..."
 
-#: ../pan/gui/actions.cc:590
+#: ../pan/gui/actions.cc:619
 msgid "Add a _Scoring Rule..."
 msgstr "Lägg till en _poängregel..."
 
-#: ../pan/gui/actions.cc:595
+#: ../pan/gui/actions.cc:624
 msgid "Cance_l Article..."
 msgstr "Avbry_t artikel..."
 
-#: ../pan/gui/actions.cc:600
+#: ../pan/gui/actions.cc:629
 msgid "_Supersede Article..."
 msgstr "_Ersätt artikel..."
 
-#: ../pan/gui/actions.cc:605
+#: ../pan/gui/actions.cc:634
 msgid "_Delete Article"
 msgstr "_Ta bort artikel"
 
-#: ../pan/gui/actions.cc:610
+#: ../pan/gui/actions.cc:639
 msgid "Clear Article Cache"
 msgstr "Töm artikelcache"
 
-#: ../pan/gui/actions.cc:615
+#: ../pan/gui/actions.cc:644
 msgid "_Mark Article as Read"
 msgstr "_Markera artikel som läst"
 
-#: ../pan/gui/actions.cc:620
+#: ../pan/gui/actions.cc:649
 msgid "Mark Article as _Unread"
 msgstr "Markera artikel som _oläst"
 
-#: ../pan/gui/actions.cc:626
+#: ../pan/gui/actions.cc:655
 #, fuzzy
 msgid "_Mark Thread as Read"
 msgstr "_Markera artikel som läst"
 
-#: ../pan/gui/actions.cc:631
+#: ../pan/gui/actions.cc:660
 #, fuzzy
 msgid "Mark Thread as _Unread"
 msgstr "Markera artikel som _oläst"
 
-#: ../pan/gui/actions.cc:636
+#: ../pan/gui/actions.cc:665
 msgid "_Post to Newsgroup"
 msgstr "_Posta till diskussionsgrupp"
 
-#: ../pan/gui/actions.cc:637
+#: ../pan/gui/actions.cc:666
 msgid "Post to Newsgroup"
 msgstr "Posta till diskussionsgrupp"
 
-#: ../pan/gui/actions.cc:641
+#: ../pan/gui/actions.cc:670
 msgid "_Followup to Newsgroup"
 msgstr "_Uppföljning till diskussionsgrupp"
 
-#: ../pan/gui/actions.cc:642
+#: ../pan/gui/actions.cc:671
 msgid "Followup to Newsgroup"
 msgstr "Uppföljning till diskussionsgrupp"
 
-#: ../pan/gui/actions.cc:646
+#: ../pan/gui/actions.cc:675
 msgid "_Reply to Author in Mail"
 msgstr "_Svara till författare via e-post"
 
-#: ../pan/gui/actions.cc:651
+#: ../pan/gui/actions.cc:680
 msgid "_Pan Home Page"
 msgstr "Pans _hemsida"
 
-#: ../pan/gui/actions.cc:656
+#: ../pan/gui/actions.cc:685
 msgid "Give _Feedback or Report a Bug..."
 msgstr "Återkoppling eller rapportera ett _fel..."
 
-#: ../pan/gui/actions.cc:661
+#: ../pan/gui/actions.cc:690
 msgid "_Tip Jar..."
 msgstr "_Tips..."
 
-#: ../pan/gui/actions.cc:666
+#: ../pan/gui/actions.cc:695
 msgid "_About"
 msgstr "_Om"
 
-#: ../pan/gui/actions.cc:671
+#: ../pan/gui/actions.cc:700
 msgid "Edit _SSL Certificates"
 msgstr ""
 
-#: ../pan/gui/actions.cc:685
+#: ../pan/gui/actions.cc:715
 msgid "_Thread Headers"
 msgstr "_Tråda rubriker"
 
-#: ../pan/gui/actions.cc:686
-msgid "_Wrap Article Body"
+#: ../pan/gui/actions.cc:716
+#, fuzzy
+#| msgid "_Wrap Article Body"
+msgid "Wrap Article Body"
 msgstr "Rad_bryt artikeltexten"
 
-#: ../pan/gui/actions.cc:687
+#: ../pan/gui/actions.cc:717
+#, fuzzy
+#| msgid "Show Article Information"
+msgid "Show Article Signature"
+msgstr "Visa artikelinformation"
+
+#: ../pan/gui/actions.cc:718
 msgid "Mute _Quoted Text"
 msgstr "Tysta _citerad text"
 
-#: ../pan/gui/actions.cc:688
+#: ../pan/gui/actions.cc:719
 msgid "Show All _Headers in Body Pane"
 msgstr "Visa alla _rubriker i artikelpanelen"
 
-#: ../pan/gui/actions.cc:689
+#: ../pan/gui/actions.cc:720
 msgid "Show _Smilies as Graphics"
 msgstr "Visa _smilisar som grafik"
 
-#: ../pan/gui/actions.cc:690
+#: ../pan/gui/actions.cc:721
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr "Visa *Fet*, __Understruken__, och /Kursiv/"
 
-#: ../pan/gui/actions.cc:691
+#: ../pan/gui/actions.cc:722
 msgid "Size Pictures to _Fit"
 msgstr "Anpassa _bildstorlek"
 
-#: ../pan/gui/actions.cc:692
+#: ../pan/gui/actions.cc:723
 msgid "Use _Monospace Font"
 msgstr "Använd typsnitt med fast _breddsteg"
 
-#: ../pan/gui/actions.cc:693
+#: ../pan/gui/actions.cc:724
 msgid "Set Focus to Images"
 msgstr "Ställ in fokus på bilder"
 
-#: ../pan/gui/actions.cc:694
+#: ../pan/gui/actions.cc:725
 msgid "Highlight _URLs"
 msgstr ""
 
-#: ../pan/gui/actions.cc:697
+#: ../pan/gui/actions.cc:728
 msgid "_Work Online"
 msgstr "Anslu_tet läge"
 
-#: ../pan/gui/actions.cc:698
+#: ../pan/gui/actions.cc:729
 msgid "_Tabbed Layout"
 msgstr "_Fliklayout"
 
-#: ../pan/gui/actions.cc:699
+#: ../pan/gui/actions.cc:730
 msgid "Show Group _Pane"
 msgstr "Visa grup_panel"
 
-#: ../pan/gui/actions.cc:700
+#: ../pan/gui/actions.cc:731
 msgid "Show Hea_der Pane"
 msgstr "Visa rubr_ikpanel"
 
-#: ../pan/gui/actions.cc:701
+#: ../pan/gui/actions.cc:732
 msgid "Show Bod_y Pane"
 msgstr "Visa artikelte_xtpanel"
 
-#: ../pan/gui/actions.cc:702
+#: ../pan/gui/actions.cc:733
 msgid "Show _Toolbar"
-msgstr "Visa _verktygrad"
+msgstr "Visa _verktygsfält"
 
-#: ../pan/gui/actions.cc:703
+#: ../pan/gui/actions.cc:734
 msgid "Abbreviate Group Names"
 msgstr "Förkorta gruppnamn"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:736
+#, fuzzy
+#| msgid "Match Only _Unread Articles"
+msgid "Match Only _Read Articles"
+msgstr "Matcha endast _olästa artiklar"
+
+#: ../pan/gui/actions.cc:736
+#, fuzzy
+#| msgid "Match Only Unread Articles"
+msgid "Match Only Read Articles"
+msgstr "Matcha endast olästa artiklar"
+
+#: ../pan/gui/actions.cc:737
 msgid "Match Only _Unread Articles"
 msgstr "Matcha endast _olästa artiklar"
 
-#: ../pan/gui/actions.cc:705
+#: ../pan/gui/actions.cc:737
 msgid "Match Only Unread Articles"
 msgstr "Matcha endast olästa artiklar"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:738
 msgid "Match Only _Cached Articles"
 msgstr "Matcha endast _cachade artiklar"
 
-#: ../pan/gui/actions.cc:706
+#: ../pan/gui/actions.cc:738
 msgid "Match Only Cached Articles"
 msgstr "Matcha endast cachade artiklar"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:739
 msgid "Match Only _Complete Articles"
 msgstr "Matcha endast _fullständiga artiklar"
 
-#: ../pan/gui/actions.cc:707
+#: ../pan/gui/actions.cc:739
 msgid "Match Only Complete Articles"
 msgstr "Matcha endast fullständiga artiklar"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:740
 msgid "Match Only _My Articles"
 msgstr "Matcha endast _mina artiklar"
 
-#: ../pan/gui/actions.cc:708
+#: ../pan/gui/actions.cc:740
 msgid "Match Only My Articles"
 msgstr "Matcha endast mina artiklar"
 
-#: ../pan/gui/actions.cc:709
+#: ../pan/gui/actions.cc:741
 msgid "Match Only _Watched Articles"
 msgstr "Matcha endast _bevakade artiklar"
 
-#: ../pan/gui/actions.cc:709
+#: ../pan/gui/actions.cc:741
 msgid "Match Only Watched Articles"
 msgstr "Matcha endast bevakade artiklar"
 
-#: ../pan/gui/actions.cc:711
+#: ../pan/gui/actions.cc:743
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "Matcha poäng som är 9999 (_bevakad)"
 
-#: ../pan/gui/actions.cc:712
+#: ../pan/gui/actions.cc:744
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr "Matcha poäng i intervallet 5000...9998 (_högt)"
 
-#: ../pan/gui/actions.cc:713
+#: ../pan/gui/actions.cc:745
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "Matcha poäng i intervallet 1...4999 (m_ellan)"
 
-#: ../pan/gui/actions.cc:714
+#: ../pan/gui/actions.cc:746
 msgid "Match Scores of 0 (_Normal)"
 msgstr "Matcha poäng som är 0 (_normalt)"
 
-#: ../pan/gui/actions.cc:715
+#: ../pan/gui/actions.cc:747
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "Matcha poäng i intervallet -9998...-1 (_lågt)"
 
-#: ../pan/gui/actions.cc:716
+#: ../pan/gui/actions.cc:748
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "Matcha poäng som är -9999 (_ignorerade)"
 
-#: ../pan/gui/actions.cc:718
+#: ../pan/gui/actions.cc:750
 msgid "Enable/Disable All _Rules"
 msgstr ""
 
-#: ../pan/gui/actions.cc:744
+#: ../pan/gui/actions.cc:778
 msgid "Show Matching _Articles"
 msgstr "Visa matchande _artiklar"
 
-#: ../pan/gui/actions.cc:745
+#: ../pan/gui/actions.cc:779
 msgid "Show Matching Articles' _Threads"
 msgstr "Visa matchande artiklars _trådar"
 
-#: ../pan/gui/actions.cc:746
+#: ../pan/gui/actions.cc:780
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Visa matchande artiklars _undertrådar"
 
-#: ../pan/gui/body-pane.cc:1011
+#: ../pan/gui/body-pane.cc:1056
 #, fuzzy, c-format
 msgid "Unnamed File"
 msgstr "Signaturfil"
 
-#: ../pan/gui/body-pane.cc:1092 ../pan/gui/gui.cc:1864
-#: ../pan/gui/header-pane.cc:1188 ../pan/gui/header-pane.cc:1617
-#: ../pan/gui/post-ui.cc:2496 ../pan/gui/prefs-ui.cc:833
-#: ../pan/gui/score-add-ui.cc:139
+#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1980
+#: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1748
+#: ../pan/gui/post-ui.cc:2588 ../pan/gui/prefs-ui.cc:855
+#: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Ämne"
 
-#: ../pan/gui/body-pane.cc:1094 ../pan/gui/gui.cc:1864
+#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1980
 msgid "From"
 msgstr "Från"
 
-#: ../pan/gui/body-pane.cc:1096 ../pan/gui/gui.cc:1865
-#: ../pan/gui/header-pane.cc:1695 ../pan/gui/log-ui.cc:305
-#: ../pan/gui/prefs-ui.cc:829
+#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1981
+#: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:307
+#: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
 msgstr "Datum"
 
-#: ../pan/gui/body-pane.cc:1103
+#: ../pan/gui/body-pane.cc:1148
 msgid "Newsgroups"
 msgstr "Diskussionsgrupper"
 
-#: ../pan/gui/body-pane.cc:1108
+#: ../pan/gui/body-pane.cc:1155 ../pan/gui/body-pane.cc:1163
+#: ../pan/gui/body-pane.cc:1170
+msgid "User-Agent"
+msgstr ""
+
+#: ../pan/gui/body-pane.cc:1176
 msgid "Followup-To"
 msgstr "Uppföljning-till"
 
-#: ../pan/gui/body-pane.cc:1118
+#: ../pan/gui/body-pane.cc:1186
 msgid "Reply-To"
 msgstr "Svara-till"
 
-#: ../pan/gui/body-pane.cc:1160
+#: ../pan/gui/body-pane.cc:1229
 msgid " from "
 msgstr " från "
 
-#: ../pan/gui/body-pane.cc:1162
+#: ../pan/gui/body-pane.cc:1231
 msgid " at "
 msgstr " den "
 
-#: ../pan/gui/body-pane.cc:1264
+#: ../pan/gui/body-pane.cc:1318
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
 "\n"
-"<b>Signer</b> : %s ('%s')\n"
-"<b>Valid until</b> : %s\n"
-"<b>Created on</b> : %s"
+"<b>Signer:</b> %s ('%s')\n"
+"<b>Valid until:</b> %s\n"
+"<b>Created on:</b> %s"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1269
+#: ../pan/gui/body-pane.cc:1323
 msgid "always"
 msgstr ""
 
-#: ../pan/gui/body-pane.cc:1485
+#: ../pan/gui/body-pane.cc:1543
 msgid "Copy _URL"
 msgstr "Kopiera _url"
 
-#: ../pan/gui/body-pane.cc:1680
+#: ../pan/gui/body-pane.cc:1748
 #, fuzzy
-msgid "Save attachment as ...."
+msgid "Save Attachment As..."
 msgstr "_Spara bilagor..."
 
-#: ../pan/gui/body-pane.cc:1683
+#: ../pan/gui/body-pane.cc:1751
 #, fuzzy
-msgid "Save all attachments"
+msgid "Save All Attachments"
 msgstr "Spara bilagor"
 
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1753
+#: ../pan/gui/body-pane.cc:1821
 #, fuzzy
 msgid "Attachments"
 msgstr "Spara bilagor"
 
-#. update the titlebar
-#: ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:973
-#: ../pan/gui/gui.cc:1592 ../pan/gui/gui.cc:1893
-#: ../pan/gui/score-add-ui.cc:602
-msgid "Pan"
-msgstr "Pan"
+#: ../pan/gui/body-pane.cc:1836
+#, fuzzy
+#| msgid "Text File"
+msgid "Text View"
+msgstr "Textfil"
+
+#: ../pan/gui/body-pane.cc:1845
+msgid "HTML View"
+msgstr ""
 
 #: ../pan/gui/dl-headers-ui.cc:112
 #, fuzzy, c-format
@@ -856,15 +920,15 @@ msgstr "Hämta _alla rubriker"
 msgid "Get the _latest N headers: "
 msgstr "Hämta _senaste rubriker: "
 
-#: ../pan/gui/e-action-combo-box.c:388 ../pan/gui/prefs-ui.cc:826
+#: ../pan/gui/e-action-combo-box.c:386 ../pan/gui/prefs-ui.cc:848
 msgid "Action"
 msgstr "Åtgärd"
 
-#: ../pan/gui/e-action-combo-box.c:389
+#: ../pan/gui/e-action-combo-box.c:387
 msgid "A GtkRadioAction"
 msgstr "En GtkRadioAction"
 
-#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:518
+#: ../pan/gui/e-charset.c:51 ../pan/gui/task-pane.cc:558
 msgid "Unknown"
 msgstr "Okänd"
 
@@ -942,8 +1006,8 @@ msgstr "Ukrainska"
 msgid "Visual"
 msgstr "Visuell"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2058
-#: ../pan/gui/post-ui.cc:519 ../pan/gui/prefs-ui.cc:737
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2178
+#: ../pan/gui/post-ui.cc:548 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Teckenkodning"
 
@@ -955,173 +1019,184 @@ msgstr "Ange teckenuppsättning att använda"
 msgid "Other..."
 msgstr "Annan..."
 
+#: ../pan/gui/e-cte-dialog.c:76
+#, fuzzy
+msgid "Default Encoding"
+msgstr "Avkodar"
+
 #: ../pan/gui/e-cte-dialog.c:78
 #, fuzzy
-msgid "Default encoding"
+msgid "7-Bit Encoding"
 msgstr "Avkodar"
 
 #: ../pan/gui/e-cte-dialog.c:80
 #, fuzzy
-msgid "7Bit Encoding"
+msgid "8-Bit Encoding"
 msgstr "Avkodar"
 
 #: ../pan/gui/e-cte-dialog.c:82
 #, fuzzy
-msgid "8Bit Encoding"
+msgid "Base64 Encoding"
 msgstr "Avkodar"
 
 #: ../pan/gui/e-cte-dialog.c:84
 #, fuzzy
-msgid "BASE64 Encoding"
-msgstr "Avkodar"
-
-#: ../pan/gui/e-cte-dialog.c:86
-#, fuzzy
 msgid "Quoted-Printable Encoding"
 msgstr "Kodning för artikelpanel"
 
-#: ../pan/gui/group-pane.cc:500
+#: ../pan/gui/group-pane.cc:330
+msgid "Sent"
+msgstr ""
+
+#: ../pan/gui/group-pane.cc:331
+msgid "Drafts"
+msgstr ""
+
+#: ../pan/gui/group-pane.cc:537
 msgid "Group"
 msgstr "Grupp"
 
-#: ../pan/gui/group-pane.cc:501
+#: ../pan/gui/group-pane.cc:538
 msgid "Group (regex)"
 msgstr "Grupp (regex)"
 
-#: ../pan/gui/group-pane.cc:913
+#: ../pan/gui/group-pane.cc:1010
+msgid "Local Folders"
+msgstr ""
+
+#: ../pan/gui/group-pane.cc:1011
 msgid "Subscribed Groups"
 msgstr "Prenumererade grupper"
 
-#: ../pan/gui/group-pane.cc:914
+#: ../pan/gui/group-pane.cc:1012
 msgid "Other Groups"
 msgstr "Övriga grupper"
 
-#: ../pan/gui/group-pane.cc:954 ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/group-pane.cc:1052 ../pan/gui/score-view-ui.cc:157
 msgid "Name"
 msgstr "Namn"
 
-#: ../pan/gui/group-prefs-dialog.cc:156
+#: ../pan/gui/group-prefs-dialog.cc:162
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "Inga profiler har definierats i Redigera|Postandeprofiler."
 
-#: ../pan/gui/group-prefs-dialog.cc:231
+#: ../pan/gui/group-prefs-dialog.cc:273
 msgid "Pan: Group Preferences"
 msgstr "Pan: Gruppinställningar"
 
-#: ../pan/gui/group-prefs-dialog.cc:247
+#: ../pan/gui/group-prefs-dialog.cc:288
 #, fuzzy, c-format
 msgid "Properties for Groups"
 msgstr "Egenskaper för %s"
 
-#: ../pan/gui/group-prefs-dialog.cc:249
+#: ../pan/gui/group-prefs-dialog.cc:290
 #, c-format
 msgid "Properties for %s"
 msgstr "Egenskaper för %s"
 
-#: ../pan/gui/group-prefs-dialog.cc:257
+#: ../pan/gui/group-prefs-dialog.cc:298
 msgid "Character _encoding:"
 msgstr "Tecken_kodning:"
 
-#: ../pan/gui/group-prefs-dialog.cc:259
+#: ../pan/gui/group-prefs-dialog.cc:300
 msgid "Directory for Saving Attachments"
 msgstr "Katalog för att spara bilagor"
 
-#: ../pan/gui/group-prefs-dialog.cc:269
+#: ../pan/gui/group-prefs-dialog.cc:308
 msgid "Directory for _saving attachments:"
 msgstr "Katalog för att spa_ra bilagor:"
 
-#: ../pan/gui/group-prefs-dialog.cc:271
+#: ../pan/gui/group-prefs-dialog.cc:310
 msgid "Posting _profile:"
 msgstr "Postande_profil:"
 
-#: ../pan/gui/group-prefs-dialog.cc:277
+#: ../pan/gui/group-prefs-dialog.cc:315
 msgid "Spellchecker _language:"
 msgstr ""
 
-#: ../pan/gui/gui.cc:273
+#: ../pan/gui/group-prefs-dialog.cc:318
+msgid "Group color:"
+msgstr ""
+
+#: ../pan/gui/gui.cc:312
 msgid "Open the Task Manager"
 msgstr "Öppna uppgiftshanteraren"
 
-#: ../pan/gui/gui.cc:301
+#: ../pan/gui/gui.cc:335
 msgid "Open the Event Log"
 msgstr "Öppna händelseloggen"
 
-#: ../pan/gui/gui.cc:561
+#: ../pan/gui/gui.cc:611
 msgid "Save NZB's Files"
 msgstr "Spara filer i NZB"
 
-#: ../pan/gui/gui.cc:588
+#: ../pan/gui/gui.cc:638
 msgid "Untitled.nzb"
 msgstr ""
 
-#: ../pan/gui/gui.cc:590
+#: ../pan/gui/gui.cc:640
 #, fuzzy
 msgid "Save NZB File as..."
 msgstr "Spara filer i NZB"
 
-#: ../pan/gui/gui.cc:757
+#: ../pan/gui/gui.cc:809
 msgid "Import NZB Files"
 msgstr "Importera NZB-filer"
 
-#: ../pan/gui/gui.cc:765 ../pan/gui/post-ui.cc:3197
+#: ../pan/gui/gui.cc:817 ../pan/gui/post-ui.cc:3287
 msgid "NZB Files"
 msgstr "NZB-filer"
 
-#: ../pan/gui/gui.cc:770
+#: ../pan/gui/gui.cc:822
 msgid "All Files"
 msgstr "Alla filer"
 
-#: ../pan/gui/gui.cc:1258
+#: ../pan/gui/gui.cc:1334
 msgid "Unable to supersede article."
 msgstr "Kunde inte ersätta artikel."
 
-#: ../pan/gui/gui.cc:1259 ../pan/gui/gui.cc:1333
+#: ../pan/gui/gui.cc:1335 ../pan/gui/gui.cc:1409
 msgid "The article doesn't match any of your posting profiles."
 msgstr "Artikeln matchar inte någon av dina postandeprofiler."
 
-#: ../pan/gui/gui.cc:1306
+#: ../pan/gui/gui.cc:1382
 msgid "Revise and send this article to replace the old one."
 msgstr "Granska och skicka den här artikeln för att ersätta den gamla."
 
-#: ../pan/gui/gui.cc:1307 ../pan/gui/gui.cc:1370
+#: ../pan/gui/gui.cc:1383 ../pan/gui/gui.cc:1446
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr "Var god vänta!  Det kan ta lite tid innan dina ändringar blir aktiva."
 
-#: ../pan/gui/gui.cc:1332
+#: ../pan/gui/gui.cc:1408
 msgid "Unable to cancel article."
 msgstr "Kunde inte avbryta artikel."
 
-#: ../pan/gui/gui.cc:1369
+#: ../pan/gui/gui.cc:1445
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
 "Skicka den här artikeln för att fråga din server att avbryta den andra "
 "artikeln."
 
-#: ../pan/gui/gui.cc:1387
+#: ../pan/gui/gui.cc:1463
 #, fuzzy
-msgid "You marked some articles for deletion"
+msgid "You have marked some articles for deletion."
 msgstr "Lägg till _liknande artiklar till markering"
 
-#: ../pan/gui/gui.cc:1388
+#: ../pan/gui/gui.cc:1464
 #, fuzzy
 msgid "Are you sure you want to delete them?"
 msgstr "Är du säker på att du vill stänga det här fönstret?"
 
-#: ../pan/gui/gui.cc:1413
-#, fuzzy
-msgid "Always trust"
-msgstr "Kör alltid redigerare"
-
-#: ../pan/gui/gui.cc:1416
-msgid "Do you want to accept it permanently (deletable afterwards) ?"
+#: ../pan/gui/gui.cc:1490
+msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1595
+#: ../pan/gui/gui.cc:1670
 #, fuzzy
-msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
+msgid "Copyright © 2002-2015 Charles Kerr and others"
 msgstr "Copyright © 2002-2007 Charles Kerr"
 
-#: ../pan/gui/gui.cc:1600
+#: ../pan/gui/gui.cc:1675
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander <po@danielnylander.se>\n"
@@ -1131,123 +1206,136 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
 
-#: ../pan/gui/gui.cc:1709
+#: ../pan/gui/gui.cc:1808
+#, fuzzy
+#| msgid "_2. Header Pane"
+msgid "_1. Header Pane"
+msgstr "_2. Rubrikpanel"
+
+#: ../pan/gui/gui.cc:1809
+#, fuzzy
+#| msgid "_2. Header Pane"
+msgid "_2. Search Pane"
+msgstr "_2. Rubrikpanel"
+
+#: ../pan/gui/gui.cc:1815
 msgid "_1. Group Pane"
 msgstr "_1. Gruppanel"
 
-#: ../pan/gui/gui.cc:1710
+#: ../pan/gui/gui.cc:1817 ../pan/gui/gui.cc:1819
 msgid "_2. Header Pane"
 msgstr "_2. Rubrikpanel"
 
-#: ../pan/gui/gui.cc:1711
+#: ../pan/gui/gui.cc:1821
 msgid "_3. Body Pane"
 msgstr "_3. Artikelpanel"
 
-#: ../pan/gui/gui.cc:1800 ../pan/gui/gui.cc:1815
+#: ../pan/gui/gui.cc:1917 ../pan/gui/gui.cc:1932
 #, fuzzy
 msgid " Bytes"
 msgstr "Byte"
 
-#: ../pan/gui/gui.cc:1803
+#: ../pan/gui/gui.cc:1920
 msgid " KB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1806
+#: ../pan/gui/gui.cc:1923
 msgid " MB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1809
+#: ../pan/gui/gui.cc:1926
 msgid " GB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1812
+#: ../pan/gui/gui.cc:1929
 msgid " TB"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1844
+#: ../pan/gui/gui.cc:1961
 #, fuzzy, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
 msgstr[0] "Den här artikeln har alla %d delar."
 msgstr[1] "Den här artikeln har alla %d delar."
 
-#: ../pan/gui/gui.cc:1846
+#: ../pan/gui/gui.cc:1963
 #, fuzzy, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Den här artikeln saknar %d av dess %d delar:"
 msgstr[1] "Den här artikeln saknar %d av dess %d delar:"
 
-#: ../pan/gui/gui.cc:1865 ../pan/gui/header-pane.cc:1190
+#: ../pan/gui/gui.cc:1981 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "Meddelande-id"
 
-#: ../pan/gui/gui.cc:1866 ../pan/gui/header-pane.cc:1665
-#: ../pan/gui/prefs-ui.cc:830
+#: ../pan/gui/gui.cc:1982 ../pan/gui/header-pane.cc:1796
+#: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Rader"
 
-#: ../pan/gui/gui.cc:1866
+#: ../pan/gui/gui.cc:1982
 msgid "Size"
 msgstr ""
 
-#: ../pan/gui/gui.cc:1867 ../pan/gui/header-pane.cc:1680
-#: ../pan/gui/prefs-ui.cc:828
+#: ../pan/gui/gui.cc:1983 ../pan/gui/header-pane.cc:1812
+#: ../pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr "Byte"
 
-#: ../pan/gui/gui.cc:1917
+#: ../pan/gui/gui.cc:2033
 msgid ""
-"Error loading iconv library. Some Charsets in the GUI will not be able to be "
-"encoded."
+"Error loading iconv library. Encoding certain character sets will not work "
+"in GUI."
 msgstr ""
 
-#: ../pan/gui/gui.cc:2059
+#: ../pan/gui/gui.cc:2179
 msgid "Body Pane Encoding"
 msgstr "Kodning för artikelpanel"
 
-#: ../pan/gui/gui.cc:2090 ../pan/gui/task-pane.cc:569
+#: ../pan/gui/gui.cc:2210 ../pan/gui/task-pane.cc:609
 #, c-format
 msgid "Offline"
 msgstr "Frånkopplad"
 
-#: ../pan/gui/gui.cc:2094
+#: ../pan/gui/gui.cc:2214
 #, fuzzy, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
 msgstr[0] "Stänger %d anslutningar"
 msgstr[1] "Stänger %d anslutningar"
 
-#: ../pan/gui/gui.cc:2096 ../pan/gui/gui.cc:2126
+#: ../pan/gui/gui.cc:2216 ../pan/gui/gui.cc:2246
 #, c-format
 msgid "No Connections"
 msgstr "Inga anslutningar"
 
-#: ../pan/gui/gui.cc:2100
+#: ../pan/gui/gui.cc:2220
 #, c-format
 msgid "Connecting"
 msgstr "Ansluter"
 
-#: ../pan/gui/gui.cc:2113
+#: ../pan/gui/gui.cc:2233
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d overksamma, %d aktiva @ %.1f KiBps"
 
-#: ../pan/gui/gui.cc:2169
+#: ../pan/gui/gui.cc:2289
 #, c-format
 msgid "No Tasks"
 msgstr "Inga uppgifter"
 
-#: ../pan/gui/gui.cc:2171 ../pan/gui/prefs-ui.cc:1047
+#: ../pan/gui/gui.cc:2291 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Uppgifter"
 
-#: ../pan/gui/gui.cc:2182 ../pan/gui/task-pane.cc:435
+#: ../pan/gui/gui.cc:2308 ../pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
-msgstr "%lu uppgifter, %s, %.1f KiBps, Klar om %d.%02d.%02d"
+msgstr "%lu uppgifter, %s, %.1f KiBps, Klar om %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2234
+#: ../pan/gui/gui.cc:2360
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1255,59 +1343,60 @@ msgstr ""
 "Pan är nu i frånkopplat läge. Se \"Arkiv|Händelselogg\" och rätta till "
 "problemet, använd sedan \"Arkiv|Anslutet läge\" för att fortsätta."
 
-#: ../pan/gui/header-pane.cc:1186
+#: ../pan/gui/header-pane.cc:1311 ../pan/gui/task-pane.cc:795
 msgid "Subject or Author"
 msgstr "Ämne eller författare"
 
-#: ../pan/gui/header-pane.cc:1187
+#: ../pan/gui/header-pane.cc:1312 ../pan/gui/task-pane.cc:796
 msgid "Sub or Auth (regex)"
 msgstr "Ämne eller författare (regex)"
 
-#: ../pan/gui/header-pane.cc:1189 ../pan/gui/header-pane.cc:1649
-#: ../pan/gui/prefs-ui.cc:827 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/header-pane.cc:1314 ../pan/gui/header-pane.cc:1780
+#: ../pan/gui/prefs-ui.cc:849 ../pan/gui/score-add-ui.cc:140
+#: ../pan/gui/task-pane.cc:798
 msgid "Author"
 msgstr "Författare"
 
-#: ../pan/gui/header-pane.cc:1634 ../pan/gui/prefs-ui.cc:831
+#: ../pan/gui/header-pane.cc:1765 ../pan/gui/prefs-ui.cc:853
 msgid "Score"
 msgstr "Poäng"
 
-#: ../pan/gui/log-ui.cc:103
+#: ../pan/gui/log-ui.cc:104
 msgid "Save Event List"
 msgstr "Spara händelselista"
 
-#: ../pan/gui/log-ui.cc:256
+#: ../pan/gui/log-ui.cc:258
 msgid "Pan: Events"
 msgstr "Pan: Händelser"
 
-#: ../pan/gui/log-ui.cc:315
+#: ../pan/gui/log-ui.cc:317
 msgid "Message"
 msgstr "Meddelande"
 
-#: ../pan/gui/pan.cc:330
+#: ../pan/gui/pan.cc:359
 msgid "Maximize"
 msgstr ""
 
-#: ../pan/gui/pan.cc:383
-msgid "An Error has occurred!"
+#: ../pan/gui/pan.cc:412
+msgid "An error has occurred!"
 msgstr ""
 
-#: ../pan/gui/pan.cc:397
+#: ../pan/gui/pan.cc:426
 #, fuzzy
 msgid "New Articles!"
 msgstr "Nästa artikel"
 
-#: ../pan/gui/pan.cc:398
+#: ../pan/gui/pan.cc:427
 msgid ""
 "There are new\n"
 "articles available."
 msgstr ""
 
-#: ../pan/gui/pan.cc:465
+#: ../pan/gui/pan.cc:494
 msgid "Toggle on/offline"
 msgstr ""
 
-#: ../pan/gui/pan.cc:513
+#: ../pan/gui/pan.cc:542
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1318,7 +1407,7 @@ msgstr ""
 "Börja med att lägga till en server\n"
 "för att läsa diskussionsgrupper."
 
-#: ../pan/gui/pan.cc:595
+#: ../pan/gui/pan.cc:624
 #, fuzzy
 msgid ""
 "General Options\n"
@@ -1326,6 +1415,8 @@ msgid ""
 "  --verbose                Be verbose (in non-GUI mode).\n"
 "\n"
 "URL Options\n"
+"  headers:group.name       Download new headers for the specified "
+"newsgroup.\n"
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
@@ -1349,218 +1440,227 @@ msgstr ""
 "  --nzb fil1 fil2 ...      Behandla nzb-filer utan att starta hela Pan.\n"
 "  -o sökväg, --output=sökväg Sökväg för att spara bilagor lisad i nzb-"
 "filerna.\n"
-"  --no-gui                 Visa endast konsollutdata, inte hämtningskön.\n"
+"  --no-gui                 Visa endast konsolutdata, inte hämtningskön.\n"
 
-#: ../pan/gui/pan.cc:867
+#: ../pan/gui/pan.cc:958
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Fel: --no-gui används utan nzb-filer eller news:meddelande-id."
 
-#: ../pan/gui/pan.cc:871
+#: ../pan/gui/pan.cc:962
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s startade"
 
-#: ../pan/gui/pan.cc:890
+#: ../pan/gui/pan.cc:982
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Konfigurera Pans diskussionsgruppservrar innan den används som en nzb-klient."
 
-#: ../pan/gui/pan.cc:1009
+#: ../pan/gui/pan.cc:1100
 msgid "Pan notification"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:186
+#: ../pan/gui/post-ui.cc:163
 #, c-format
-msgid "Upload Queue : %ld Tasks, %ld KB (~ %.2f MB) total ."
+msgid "Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:286
+#: ../pan/gui/post-ui.cc:266 ../pan/gui/post-ui.cc:297
 #, fuzzy, c-format
 msgid "Error setting custom spellchecker: %s"
 msgstr "Fel vid inställning av stavningskontroll: %s"
 
-#: ../pan/gui/post-ui.cc:291 ../pan/gui/post-ui.cc:300
+#: ../pan/gui/post-ui.cc:270 ../pan/gui/post-ui.cc:278
+#: ../pan/gui/post-ui.cc:301 ../pan/gui/post-ui.cc:309
 #, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "Fel vid inställning av stavningskontroll: %s"
 
-#: ../pan/gui/post-ui.cc:419
+#: ../pan/gui/post-ui.cc:448
 msgid "_Profile"
 msgstr "_Profil"
 
-#: ../pan/gui/post-ui.cc:420
+#: ../pan/gui/post-ui.cc:449
 msgid "Set Editor"
 msgstr "Ställ in redigerare"
 
-#: ../pan/gui/post-ui.cc:422
+#: ../pan/gui/post-ui.cc:451
 msgid "_Send Article"
 msgstr "_Skicka artikel"
 
-#: ../pan/gui/post-ui.cc:422
+#: ../pan/gui/post-ui.cc:451
 msgid "Send Article Now"
 msgstr "Skicka artikel nu"
 
-#: ../pan/gui/post-ui.cc:423
+#: ../pan/gui/post-ui.cc:452
 #, fuzzy
 msgid "_Send and Save Articles to NZB"
 msgstr "Spara artiklar från denna NZB"
 
-#: ../pan/gui/post-ui.cc:423
+#: ../pan/gui/post-ui.cc:452
 #, fuzzy
 msgid "Send and Save Articles to NZB"
 msgstr "Pan: Spara artiklar"
 
-#: ../pan/gui/post-ui.cc:424
+#: ../pan/gui/post-ui.cc:453
 msgid "Set Character _Encoding..."
 msgstr "Ställ in tecken_kodning..."
 
-#: ../pan/gui/post-ui.cc:425
+#: ../pan/gui/post-ui.cc:454
 #, fuzzy
 msgid "Set Content _Transfer Encoding..."
 msgstr "Ställ in teckenkodning..."
 
-#: ../pan/gui/post-ui.cc:426
+#: ../pan/gui/post-ui.cc:455
 msgid "Sa_ve Draft"
 msgstr "Spa_ra utdrag"
 
-#: ../pan/gui/post-ui.cc:426
+#: ../pan/gui/post-ui.cc:455
 msgid "Save as a Draft for Future Posting"
 msgstr "Spara som ett utdrag för framtida postning"
 
-#: ../pan/gui/post-ui.cc:427
+#: ../pan/gui/post-ui.cc:456
 msgid "_Open Draft..."
 msgstr "_Öppna utdrag..."
 
-#: ../pan/gui/post-ui.cc:427
+#: ../pan/gui/post-ui.cc:456
 msgid "Open an Article Draft"
 msgstr "Öppna ett artikelutdrag"
 
-#: ../pan/gui/post-ui.cc:432
+#: ../pan/gui/post-ui.cc:461
 msgid "_Rot13"
 msgstr "_Rotera 13 tecken"
 
-#: ../pan/gui/post-ui.cc:432
+#: ../pan/gui/post-ui.cc:461
 msgid "Rot13 Selected Text"
 msgstr "Rotera markerad text 13 tecken"
 
-#: ../pan/gui/post-ui.cc:433
+#: ../pan/gui/post-ui.cc:462
 msgid "Run _Editor"
 msgstr "Kör r_edigerare"
 
-#: ../pan/gui/post-ui.cc:433
+#: ../pan/gui/post-ui.cc:462
 msgid "Run Editor"
 msgstr "Kör redigerare"
 
-#: ../pan/gui/post-ui.cc:435
+#: ../pan/gui/post-ui.cc:464
 msgid "Add _Files to Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:435
+#: ../pan/gui/post-ui.cc:464
 msgid "Add Files to Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:450 ../pan/gui/post-ui.cc:451
+#: ../pan/gui/post-ui.cc:479 ../pan/gui/post-ui.cc:480
 #, fuzzy
 msgid "Remove from Queue"
 msgstr "Ta bort en server"
 
-#: ../pan/gui/post-ui.cc:455 ../pan/gui/post-ui.cc:456
+#: ../pan/gui/post-ui.cc:484 ../pan/gui/post-ui.cc:485
 #, fuzzy
 msgid "Clear List"
 msgstr "Töm filtret"
 
-#: ../pan/gui/post-ui.cc:460 ../pan/gui/post-ui.cc:461
+#: ../pan/gui/post-ui.cc:489 ../pan/gui/post-ui.cc:490
 #, fuzzy
 msgid "Select Needed Parts"
 msgstr "Markera alla _artiklar"
 
-#: ../pan/gui/post-ui.cc:465 ../pan/gui/post-ui.cc:466
-#: ../pan/gui/task-pane.cc:636 ../pan/gui/task-pane.cc:637
+#: ../pan/gui/post-ui.cc:494 ../pan/gui/post-ui.cc:495
+#: ../pan/gui/task-pane.cc:677 ../pan/gui/task-pane.cc:678
 msgid "Move Up"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:470 ../pan/gui/post-ui.cc:471
-#: ../pan/gui/task-pane.cc:641 ../pan/gui/task-pane.cc:642
+#: ../pan/gui/post-ui.cc:499 ../pan/gui/post-ui.cc:500
+#: ../pan/gui/task-pane.cc:682 ../pan/gui/task-pane.cc:683
 msgid "Move Down"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:475 ../pan/gui/post-ui.cc:476
+#: ../pan/gui/post-ui.cc:504 ../pan/gui/post-ui.cc:505
 msgid "Move to Top"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:480 ../pan/gui/post-ui.cc:481
+#: ../pan/gui/post-ui.cc:509 ../pan/gui/post-ui.cc:510
 msgid "Move to Bottom"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:488
+#: ../pan/gui/post-ui.cc:517
 msgid "_Wrap Text"
 msgstr "Radbr_yt text"
 
-#: ../pan/gui/post-ui.cc:488
+#: ../pan/gui/post-ui.cc:517
 msgid "Wrap Text"
 msgstr "Radbryt text"
 
-#: ../pan/gui/post-ui.cc:489
+#: ../pan/gui/post-ui.cc:518
 msgid "Always Run Editor"
 msgstr "Kör alltid redigerare"
 
-#: ../pan/gui/post-ui.cc:490
-msgid "Remember Character Encoding for this Group"
+#: ../pan/gui/post-ui.cc:519
+#, fuzzy
+#| msgid "Remember Character Encoding for this Group"
+msgid "Remember Character Encoding for This Group"
 msgstr "Kom ihåg teckenkodning för den här gruppen"
 
-#: ../pan/gui/post-ui.cc:491
+#: ../pan/gui/post-ui.cc:520
 msgid "Thread Attached Replies"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:492
-msgid "PGP-Encrypt the Message"
-msgstr ""
+#: ../pan/gui/post-ui.cc:521
+#, fuzzy
+#| msgid "Post New Article"
+msgid "PGP-Encrypt the Article"
+msgstr "Posta ny artikel"
 
-#: ../pan/gui/post-ui.cc:493
-msgid "PGP-Sign the Message"
-msgstr ""
+#: ../pan/gui/post-ui.cc:522
+#, fuzzy
+#| msgid "And the article's"
+msgid "PGP-Sign the Article"
+msgstr "Och artikelns"
 
-#: ../pan/gui/post-ui.cc:494
+#: ../pan/gui/post-ui.cc:523
 msgid "Check _Spelling"
 msgstr "Kontrollera _stavning"
 
-#: ../pan/gui/post-ui.cc:520
+#: ../pan/gui/post-ui.cc:549
 msgid "New Article's Encoding:"
 msgstr "Kodning för ny artikel:"
 
-#: ../pan/gui/post-ui.cc:530
+#: ../pan/gui/post-ui.cc:559
 #, fuzzy
 msgid "Content Transfer Encoding"
 msgstr "Teckenkodning"
 
-#: ../pan/gui/post-ui.cc:531
+#: ../pan/gui/post-ui.cc:560
 #, fuzzy
 msgid "New Article's Content Transfer Encoding:"
 msgstr "Kodning för ny artikel:"
 
-#: ../pan/gui/post-ui.cc:711
+#: ../pan/gui/post-ui.cc:740
 msgid "Your changes will be lost!"
 msgstr "Dina ändringar kommer att förloras!"
 
-#: ../pan/gui/post-ui.cc:712
+#: ../pan/gui/post-ui.cc:741
 msgid "Close this window and lose your changes?"
 msgstr "Stäng det här fönstret och förlora dina ändringar?"
 
-#: ../pan/gui/post-ui.cc:757 ../pan/gui/post-ui.cc:796
+#: ../pan/gui/post-ui.cc:786 ../pan/gui/post-ui.cc:825
 msgid "There were problems with this post."
 msgstr "Det inträffade problem med den här posten."
 
-#: ../pan/gui/post-ui.cc:759 ../pan/gui/post-ui.cc:798
-#: ../pan/gui/post-ui.cc:861
+#: ../pan/gui/post-ui.cc:788 ../pan/gui/post-ui.cc:827
+#: ../pan/gui/post-ui.cc:892
 msgid "Go Back"
 msgstr "Gå tillbaka"
 
-#: ../pan/gui/post-ui.cc:761
-msgid "Post Anyway"
+#: ../pan/gui/post-ui.cc:790
+#, fuzzy
+#| msgid "Post Anyway"
+msgid "Continue Anyway"
 msgstr "Posta ändå"
 
 #. Prompt the user
-#: ../pan/gui/post-ui.cc:790
+#: ../pan/gui/post-ui.cc:819
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
@@ -1568,15 +1668,34 @@ msgstr ""
 "Meddelandet använder tecken som inte angivits i teckenuppsättningen \"%s\" - "
 "använder möjligen \"%s\""
 
-#: ../pan/gui/post-ui.cc:813
+#: ../pan/gui/post-ui.cc:842
 msgid "Go _Online"
 msgstr "Ansl_ut"
 
-#: ../pan/gui/post-ui.cc:860
+#: ../pan/gui/post-ui.cc:891
 msgid "The file queue is empty, so no files can be saved."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1019
+#: ../pan/gui/post-ui.cc:1070
+#, fuzzy
+msgid "IO Error"
+msgstr "Fel: %s"
+
+#: ../pan/gui/post-ui.cc:1070
+msgid "No space left on device"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1071
+#, c-format
+msgid "Error copying message to %s folder. Reason: %s"
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1077
+#, c-format
+msgid "Error creating message in %s mail folder: Invalid article."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1099
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1584,119 +1703,125 @@ msgstr ""
 "Ingen postningsserver är inställd för den här postandeprofilen.\n"
 "Redigera profilen via Redigera|Hantera postandeprofiler."
 
-#: ../pan/gui/post-ui.cc:1054
+#: ../pan/gui/post-ui.cc:1104
+msgid ""
+"The selected posting server is currently disabled. Please choose an "
+"appropriate alternative."
+msgstr ""
+
+#: ../pan/gui/post-ui.cc:1146
 msgid "Pan is Offline."
 msgstr "Pan är frånkopplad."
 
-#: ../pan/gui/post-ui.cc:1055
+#: ../pan/gui/post-ui.cc:1147
 msgid "Go online to post the article?"
 msgstr "Anslut för att posta artikeln?"
 
-#: ../pan/gui/post-ui.cc:1102
+#: ../pan/gui/post-ui.cc:1196
 #, c-format
 msgid ""
-"Error signing/encrypting your message. Perhaps you misspelled your email-"
-"address (%s) ?"
+"Error signing/encrypting your message. Perhaps you misspelled your email "
+"address (%s)?"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:1267
+#: ../pan/gui/post-ui.cc:1344
 msgid "Error opening temporary file"
 msgstr "Fel vid öppnande av temporär fil"
 
-#: ../pan/gui/post-ui.cc:1279
+#: ../pan/gui/post-ui.cc:1356
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Fel vid skrivande av artikel till temporär fil: %s"
 
-#: ../pan/gui/post-ui.cc:1298
+#: ../pan/gui/post-ui.cc:1375
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr ""
 "Fel vid tolkning av \"external editor\"-kommandorad: %s (Kommandot var: %s)"
 
-#: ../pan/gui/post-ui.cc:1339
+#: ../pan/gui/post-ui.cc:1416
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Fel vid start av den externa redigeraren: %s"
 
-#: ../pan/gui/post-ui.cc:1395
+#: ../pan/gui/post-ui.cc:1479
 msgid "Open Draft Article"
 msgstr "Öppna utdragsartikel"
 
-#: ../pan/gui/post-ui.cc:1606
+#: ../pan/gui/post-ui.cc:1691
 msgid "Save Draft Article"
 msgstr "Spara utdragsartikel"
 
-#: ../pan/gui/post-ui.cc:1803
+#: ../pan/gui/post-ui.cc:1889
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Kunde inte tolka signaturkommandot \"%s\": %s"
 
-#: ../pan/gui/post-ui.cc:1839
+#: ../pan/gui/post-ui.cc:1925
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Kunde inte konvertera signaturen till UTF-8."
 
-#: ../pan/gui/post-ui.cc:2334
+#: ../pan/gui/post-ui.cc:2427
 msgid "F_rom"
 msgstr "F_rån"
 
-#: ../pan/gui/post-ui.cc:2352
+#: ../pan/gui/post-ui.cc:2444
 msgid "_Subject"
 msgstr "_Ämne"
 
-#: ../pan/gui/post-ui.cc:2365
+#: ../pan/gui/post-ui.cc:2457
 msgid "_Newsgroups"
 msgstr "_Diskussionsgrupper"
 
-#: ../pan/gui/post-ui.cc:2379
+#: ../pan/gui/post-ui.cc:2471
 msgid "Mail _To"
 msgstr "E-post _till"
 
-#: ../pan/gui/post-ui.cc:2481
+#: ../pan/gui/post-ui.cc:2573
 msgid "Delete from Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2494
+#: ../pan/gui/post-ui.cc:2586
 msgid "No."
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2498 ../pan/gui/post-ui.cc:2592
-#: ../pan/gui/post-ui.cc:2633
+#: ../pan/gui/post-ui.cc:2590 ../pan/gui/post-ui.cc:2682
+#: ../pan/gui/post-ui.cc:2723
 #, fuzzy
 msgid "Filename"
 msgstr "Filternamn: "
 
-#: ../pan/gui/post-ui.cc:2500
-msgid "Size (kB)"
+#: ../pan/gui/post-ui.cc:2592
+msgid "Size (KB)"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2600
+#: ../pan/gui/post-ui.cc:2690
 msgid "The current filename"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2604
+#: ../pan/gui/post-ui.cc:2694
 #, fuzzy
 msgid "Subject Line"
 msgstr "Ämne"
 
-#: ../pan/gui/post-ui.cc:2612
-msgid "The current Subject Line"
+#: ../pan/gui/post-ui.cc:2702
+msgid "The current subject line"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2626
+#: ../pan/gui/post-ui.cc:2716
 msgid "No. "
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2630
+#: ../pan/gui/post-ui.cc:2720
 msgid "Enable/Disable"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:2664
+#: ../pan/gui/post-ui.cc:2754
 msgid "Follo_wup-To"
 msgstr "_Uppföljning-till"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: ../pan/gui/post-ui.cc:2673
+#: ../pan/gui/post-ui.cc:2763
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1709,559 +1834,662 @@ msgstr ""
 "För att dirigera alla svar till din e-postadress, använd \"Uppföljning-till: "
 "avsändare\""
 
-#: ../pan/gui/post-ui.cc:2679
+#: ../pan/gui/post-ui.cc:2770
 msgid "_Reply-To"
 msgstr "_Svara-till"
 
-#: ../pan/gui/post-ui.cc:2687
+#: ../pan/gui/post-ui.cc:2778
+#, fuzzy
+#| msgid ""
+#| "The email account where mail replies to your posted message should go.  "
+#| "This is only needed if it differs from the \"From\" header."
 msgid ""
-"The email account where mail replies to your posted message should go.  This "
+"The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
 msgstr ""
 "E-postkontot där svar på ditt postade meddelande ska gå.  Det här behövs "
 "endast om det skiljer sig från \"Från\"-rubriken."
 
-#: ../pan/gui/post-ui.cc:2693
+#: ../pan/gui/post-ui.cc:2785
 msgid "_Custom Headers"
 msgstr "_Anpassade rubriker"
 
-#: ../pan/gui/post-ui.cc:2717
+#: ../pan/gui/post-ui.cc:2809
 msgid "Add \"_User-Agent\" header"
 msgstr "Lägg till \"_User-Agent\"-rubrik"
 
-#: ../pan/gui/post-ui.cc:2724
+#: ../pan/gui/post-ui.cc:2816
 #, fuzzy
-msgid "Add \"Message-_Id\" header"
+msgid "Add \"Message-_ID\" header"
 msgstr "Lägg till \"Meddelande-_id\"-rubrik"
 
-#: ../pan/gui/post-ui.cc:2855
+#: ../pan/gui/post-ui.cc:2947
 #, fuzzy
 msgid "Select Parts"
 msgstr "Markera alla _artiklar"
 
-#: ../pan/gui/post-ui.cc:2866
+#: ../pan/gui/post-ui.cc:2960
 msgid "_Parts"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3022
+#: ../pan/gui/post-ui.cc:3114
 msgid "Post Article"
 msgstr "Posta artikel"
 
-#: ../pan/gui/post-ui.cc:3043
+#: ../pan/gui/post-ui.cc:3135
 msgid "_Message"
 msgstr "_Meddelande"
 
-#: ../pan/gui/post-ui.cc:3044
+#: ../pan/gui/post-ui.cc:3136
 msgid "More _Headers"
 msgstr "_Fler rubriker"
 
-#: ../pan/gui/post-ui.cc:3045
+#: ../pan/gui/post-ui.cc:3137
 msgid "File _Queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3077 ../pan/gui/profiles-dialog.cc:478
+#: ../pan/gui/post-ui.cc:3169 ../pan/gui/profiles-dialog.cc:481
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "Den %d skrev %n:"
 
-#: ../pan/gui/post-ui.cc:3106
+#: ../pan/gui/post-ui.cc:3198
 msgid "Add files to queue"
 msgstr ""
 
-#: ../pan/gui/post-ui.cc:3184
+#: ../pan/gui/post-ui.cc:3274
 msgid "Save Upload Queue as NZB File"
 msgstr ""
 
-#: ../pan/gui/prefs.cc:343
+#: ../pan/gui/prefs.cc:364
 #, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "Kunde inte tolka %s färg \"%s\""
 
-#: ../pan/gui/prefs-ui.cc:120
+#: ../pan/gui/prefs-ui.cc:123
 msgid "Grab Key"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:126
+#: ../pan/gui/prefs-ui.cc:129
 #, c-format
 msgid ""
 "Press the combination of the keys\n"
 "you want to use for \"%s\"."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:166
-msgid "Edit Hotkey"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:228
-msgid "Error: Shortkey is invalid!"
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:244
+#: ../pan/gui/prefs-ui.cc:169
 #, fuzzy
-msgid "Error: Shortkey already exists!"
+#| msgid "Editors"
+msgid "Edit Shortcut"
+msgstr "Redigerare"
+
+#: ../pan/gui/prefs-ui.cc:231
+#, fuzzy
+msgid "Error: Shortcut key is invalid!"
 msgstr "En server med det namnet finns redan."
 
-#: ../pan/gui/prefs-ui.cc:535
+#: ../pan/gui/prefs-ui.cc:247
+#, fuzzy
+msgid "Error: Shortcut key already exists!"
+msgstr "En server med det namnet finns redan."
+
+#: ../pan/gui/prefs-ui.cc:561
 #, fuzzy
 msgid "Show only icons"
 msgstr "Visa artikelinformation"
 
-#: ../pan/gui/prefs-ui.cc:536
+#: ../pan/gui/prefs-ui.cc:562
 #, fuzzy
 msgid "Show only text"
 msgstr "Visa artikelte_xtpanel"
 
-#: ../pan/gui/prefs-ui.cc:537
+#: ../pan/gui/prefs-ui.cc:563
 #, fuzzy
 msgid "Show icons and text"
 msgstr "Spara bilagor och text"
 
-#: ../pan/gui/prefs-ui.cc:576
+#: ../pan/gui/prefs-ui.cc:602
 msgid "Use GNOME Preferences"
 msgstr "Använd inställningar från GNOME"
 
-#: ../pan/gui/prefs-ui.cc:577
+#: ../pan/gui/prefs-ui.cc:603
 msgid "Use KDE Preferences"
 msgstr "Använd inställningar från KDE"
 
-#: ../pan/gui/prefs-ui.cc:578
+#: ../pan/gui/prefs-ui.cc:604
 msgid "Use OS X Preferences"
 msgstr "Använd inställningar från OS X"
 
-#: ../pan/gui/prefs-ui.cc:579
+#: ../pan/gui/prefs-ui.cc:605
 msgid "Use Windows Preferences"
 msgstr "Använd inställningar från Windows"
 
-#: ../pan/gui/prefs-ui.cc:580
+#: ../pan/gui/prefs-ui.cc:606
 msgid "Custom Command:"
 msgstr "Anpassat kommando:"
 
-#: ../pan/gui/prefs-ui.cc:632
+#: ../pan/gui/prefs-ui.cc:658
 #, fuzzy
 msgid "Disabled"
 msgstr "Aktiverad"
 
-#: ../pan/gui/prefs-ui.cc:633
-msgid "Only new (Score == 0)"
+#: ../pan/gui/prefs-ui.cc:659
+msgid "Only new (score == 0)"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:634
+#: ../pan/gui/prefs-ui.cc:660
 #, fuzzy
 msgid "9999 or more"
 msgstr "Poäng som är 9999 eller högre:"
 
-#: ../pan/gui/prefs-ui.cc:635
+#: ../pan/gui/prefs-ui.cc:661
 #, fuzzy
 msgid "5000 to 9998"
 msgstr "Poäng från 5000 till 9998:"
 
-#: ../pan/gui/prefs-ui.cc:636
+#: ../pan/gui/prefs-ui.cc:662
 msgid "1 to 4999"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:637
+#: ../pan/gui/prefs-ui.cc:663
 #, fuzzy
 msgid "-9998 to -1"
 msgstr "Poäng från -9998 till -1:"
 
-#: ../pan/gui/prefs-ui.cc:638
+#: ../pan/gui/prefs-ui.cc:664
 #, fuzzy
 msgid "-9999 or less"
 msgstr "Poäng som är -9999 eller lägre:"
 
-#: ../pan/gui/prefs-ui.cc:702
+#: ../pan/gui/prefs-ui.cc:728
 #, c-format
-msgid "Select default <u>global</u> charset. Current setting : <b>%s</b> ."
+msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:738
-msgid "Global Charset Settings"
+#: ../pan/gui/prefs-ui.cc:760
+msgid "Global Character Set Settings"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:832 ../pan/gui/task-pane.cc:770
+#: ../pan/gui/prefs-ui.cc:854 ../pan/gui/task-pane.cc:1076
 msgid "State"
 msgstr "Tillstånd"
 
-#: ../pan/gui/prefs-ui.cc:866
+#: ../pan/gui/prefs-ui.cc:888
 msgid "Enabled"
 msgstr "Aktiverad"
 
-#: ../pan/gui/prefs-ui.cc:870
+#: ../pan/gui/prefs-ui.cc:892
 msgid "Column Name"
 msgstr "Kolumnnamn"
 
-#: ../pan/gui/prefs-ui.cc:908
+#: ../pan/gui/prefs-ui.cc:930
 msgid "Pan: Preferences"
 msgstr "Pan: Inställningar"
 
-#: ../pan/gui/prefs-ui.cc:923
+#: ../pan/gui/prefs-ui.cc:945
 msgid "Mouse"
 msgstr "Mus"
 
-#: ../pan/gui/prefs-ui.cc:925
+#: ../pan/gui/prefs-ui.cc:947
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Enkelklick aktiverar _grupper istället för välja dem"
 
-#: ../pan/gui/prefs-ui.cc:927
+#: ../pan/gui/prefs-ui.cc:949
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Enkelklick aktiverar _artiklar istället för välja dem"
 
-#: ../pan/gui/prefs-ui.cc:930
+#: ../pan/gui/prefs-ui.cc:952
 msgid "Groups"
 msgstr "Grupper"
 
-#: ../pan/gui/prefs-ui.cc:932
+#: ../pan/gui/prefs-ui.cc:954
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Hämta nya rubriker i prenumererade grupper vid _uppstart"
 
-#: ../pan/gui/prefs-ui.cc:934
+#: ../pan/gui/prefs-ui.cc:956
 msgid "Get new headers when _entering group"
 msgstr "Hämta nya rubriker när en _grupp gås in i"
 
-#: ../pan/gui/prefs-ui.cc:936
+#: ../pan/gui/prefs-ui.cc:958
 msgid "Mark entire group _read when leaving group"
 msgstr "Markera hela gruppen som _läst då en grupp lämnas"
 
-#: ../pan/gui/prefs-ui.cc:938
+#: ../pan/gui/prefs-ui.cc:960
 msgid "Mark entire group read before getting _new headers"
 msgstr "Markera hela gruppen som läst innan _nya rubriker hämtas"
 
-#: ../pan/gui/prefs-ui.cc:940
+#: ../pan/gui/prefs-ui.cc:962
 msgid "E_xpand all threads when entering group"
 msgstr "F_äll ut alla trådar när en grupp gås in i"
 
-#: ../pan/gui/prefs-ui.cc:945
+#: ../pan/gui/prefs-ui.cc:967
 msgid "Articles"
 msgstr "Artiklar"
 
-#: ../pan/gui/prefs-ui.cc:947
+#: ../pan/gui/prefs-ui.cc:969
+#, fuzzy
+#| msgid "Mark Article as Unread"
+msgid "Mark downloaded articles read"
+msgstr "Markera artikel som oläst"
+
+#: ../pan/gui/prefs-ui.cc:971
 msgid "Space selects next article rather than next unread"
 msgstr "Blanksteg väljer nästa artikel istället för nästa olästa"
 
-#: ../pan/gui/prefs-ui.cc:949
+#: ../pan/gui/prefs-ui.cc:973
 #, fuzzy
 msgid "Expand threads upon selection"
 msgstr "Lägg till _trådar till markeringen"
 
-#: ../pan/gui/prefs-ui.cc:951
-msgid "Always show article deletion confirmation dialog"
+#: ../pan/gui/prefs-ui.cc:975
+msgid "Always ask before deleting an article"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:953
+#: ../pan/gui/prefs-ui.cc:977
 msgid "Smooth scrolling"
 msgstr "Mjuk rullning"
 
-#: ../pan/gui/prefs-ui.cc:958
+#: ../pan/gui/prefs-ui.cc:982
 #, fuzzy
 msgid "Article Cache"
 msgstr "Töm artikelcache"
 
-#: ../pan/gui/prefs-ui.cc:959
+#: ../pan/gui/prefs-ui.cc:983
 msgid "Clear article cache on shutdown"
 msgstr "Töm artikelcache vid nerstängning"
 
-#: ../pan/gui/prefs-ui.cc:962
-msgid "Size of article cache (in MiB) :"
+#: ../pan/gui/prefs-ui.cc:986
+msgid "Size of article cache (in MiB):"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:967
+#: ../pan/gui/prefs-ui.cc:991
 #, fuzzy
-msgid "File extension for Cached Articles: "
+msgid "File extension for cached articles: "
 msgstr "Nästa bevakade artikel"
 
-#: ../pan/gui/prefs-ui.cc:972
+#: ../pan/gui/prefs-ui.cc:996
 msgid "Tabs"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:977
+#: ../pan/gui/prefs-ui.cc:1001
 msgid "_Behavior"
 msgstr "_Beteende"
 
-#: ../pan/gui/prefs-ui.cc:977
+#: ../pan/gui/prefs-ui.cc:1001
 #, fuzzy
 msgid "Behavior"
 msgstr "_Beteende"
 
-#: ../pan/gui/prefs-ui.cc:983
+#: ../pan/gui/prefs-ui.cc:1007
+#, fuzzy
+#| msgid "_Task Manager"
+msgid "Task Pane"
+msgstr "_Uppgiftshanterare"
+
+#: ../pan/gui/prefs-ui.cc:1008
+msgid "Show task pane popups"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1010
+#, fuzzy
+msgid "Show Download Meter"
+msgstr "Visa artikelte_xtpanel"
+
+#: ../pan/gui/prefs-ui.cc:1014
+#, fuzzy
+#| msgid "_Body Pane"
+msgid "_Panes"
+msgstr "Ar_tikelpanel"
+
+#: ../pan/gui/prefs-ui.cc:1014
+#, fuzzy
+#| msgid "Japanese"
+msgid "Panes"
+msgstr "Japanska"
+
+#: ../pan/gui/prefs-ui.cc:1020
 #, fuzzy
 msgid "Language Settings"
 msgstr "Inställningar"
 
 #. systray and notify popup
-#: ../pan/gui/prefs-ui.cc:992
+#: ../pan/gui/prefs-ui.cc:1029
 #, fuzzy
 msgid "System Tray Behavior"
 msgstr "_Beteende"
 
-#: ../pan/gui/prefs-ui.cc:994
-msgid "Hide to system tray"
+#: ../pan/gui/prefs-ui.cc:1031
+msgid "Minimize to tray"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:996
+#: ../pan/gui/prefs-ui.cc:1033
 msgid "Start Pan minimized"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:999
+#: ../pan/gui/prefs-ui.cc:1036
 #, fuzzy
 msgid "Show notifications"
 msgstr "Visa artikelinformation"
 
 #. allow multiple instances (seperate, not communicating with dbus)
-#: ../pan/gui/prefs-ui.cc:1004
+#: ../pan/gui/prefs-ui.cc:1041
 #, fuzzy
 msgid "Startup Behavior"
 msgstr "_Beteende"
 
-#: ../pan/gui/prefs-ui.cc:1006
+#: ../pan/gui/prefs-ui.cc:1043
 msgid "Allow multiple instances of Pan"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1011
+#: ../pan/gui/prefs-ui.cc:1048
 #, fuzzy
 msgid "Autosave Article Draft"
 msgstr "Öppna ett artikelutdrag"
 
-#: ../pan/gui/prefs-ui.cc:1013
+#: ../pan/gui/prefs-ui.cc:1050
 #, fuzzy
 msgid "Minutes to autosave the current Article Draft: "
 msgstr "Öppna ett artikelutdrag"
 
-#: ../pan/gui/prefs-ui.cc:1018
+#: ../pan/gui/prefs-ui.cc:1055
 #, fuzzy
 msgid "Autosave Articles"
 msgstr "Spara artiklar"
 
-#: ../pan/gui/prefs-ui.cc:1020
+#: ../pan/gui/prefs-ui.cc:1057
 msgid "Minutes to autosave newsrc files: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1026
+#: ../pan/gui/prefs-ui.cc:1064
+msgid "GNOME Keyring"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1065
+msgid "Store passwords in GNOME Keyring"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1069
 msgid "_Miscellaneous"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1026
+#: ../pan/gui/prefs-ui.cc:1069
 msgid "Miscellaneous"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1031
+#: ../pan/gui/prefs-ui.cc:1074
 msgid "Pane Layout"
 msgstr "Panellayout"
 
-#: ../pan/gui/prefs-ui.cc:1050
+#: ../pan/gui/prefs-ui.cc:1093
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=Grupper, 2=Rubriker, 3=Artikeltext"
 
-#: ../pan/gui/prefs-ui.cc:1052
+#: ../pan/gui/prefs-ui.cc:1095
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=Grupper, 2=Artikeltext, 3=Rubriker"
 
-#: ../pan/gui/prefs-ui.cc:1054
+#: ../pan/gui/prefs-ui.cc:1097
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=Rubriker, 2=Grupper, 3=Artikeltext"
 
-#: ../pan/gui/prefs-ui.cc:1056
+#: ../pan/gui/prefs-ui.cc:1099
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=Rubriker, 2=Artikeltext, 3=Grupper"
 
-#: ../pan/gui/prefs-ui.cc:1058
+#: ../pan/gui/prefs-ui.cc:1101
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=Artikeltext, 2=Grupper, 3=Rubriker"
 
-#: ../pan/gui/prefs-ui.cc:1060
+#: ../pan/gui/prefs-ui.cc:1103
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=Artikeltext, 2=Rubriker, 3=Grupper"
 
-#: ../pan/gui/prefs-ui.cc:1064
+#: ../pan/gui/prefs-ui.cc:1107
 #, fuzzy
 msgid "Layout"
 msgstr "_Layout"
 
-#: ../pan/gui/prefs-ui.cc:1069
+#: ../pan/gui/prefs-ui.cc:1112
 msgid "Header Pane Columns"
 msgstr "Kolumner för rubrikpanelen"
 
-#: ../pan/gui/prefs-ui.cc:1073
+#: ../pan/gui/prefs-ui.cc:1116
 msgid "_Headers"
 msgstr "_Rubriker"
 
-#: ../pan/gui/prefs-ui.cc:1073
+#: ../pan/gui/prefs-ui.cc:1116
 #, fuzzy
 msgid "Headers"
 msgstr "_Rubriker"
 
-#: ../pan/gui/prefs-ui.cc:1079
+#: ../pan/gui/prefs-ui.cc:1122
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
-"automatically, based on a post's score."
+"automatically, based on an article's score."
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1082
-msgid "_Delete posts scoring at: "
+#: ../pan/gui/prefs-ui.cc:1127
+#, fuzzy
+#| msgid "Mark Article as Unread"
+msgid "Mark affected articles read"
+msgstr "Markera artikel som oläst"
+
+#: ../pan/gui/prefs-ui.cc:1136
+#, fuzzy
+#| msgid "set the article's score to"
+msgid "_Delete articles scoring at: "
+msgstr "ställ in artikelns poäng till"
+
+#: ../pan/gui/prefs-ui.cc:1142
+#, fuzzy
+#| msgid "Mark Article as Unread"
+msgid "Mark articles read scoring at: "
+msgstr "Markera artikel som oläst"
+
+#: ../pan/gui/prefs-ui.cc:1148
+#, fuzzy
+#| msgid "set the article's score to"
+msgid "_Cache articles scoring at: "
+msgstr "ställ in artikelns poäng till"
+
+#: ../pan/gui/prefs-ui.cc:1154
+msgid "Download attachments of articles scoring at: "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1084
-msgid "Mark posts _read scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1086
-msgid "_Cache posts scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1088
-msgid "Download _attachments of posts scoring at: "
-msgstr ""
-
-#: ../pan/gui/prefs-ui.cc:1091
+#: ../pan/gui/prefs-ui.cc:1157
 #, fuzzy
 msgid "Actions"
 msgstr "_Åtgärder"
 
-#: ../pan/gui/prefs-ui.cc:1096 ../pan/gui/prefs-ui.cc:1117
+#: ../pan/gui/prefs-ui.cc:1162 ../pan/gui/prefs-ui.cc:1183
 msgid "Fonts"
 msgstr "Typsnitt"
 
-#: ../pan/gui/prefs-ui.cc:1098
+#: ../pan/gui/prefs-ui.cc:1164
 msgid "Use custom font in Group Pane:"
 msgstr "Använd anpassat typsnitt i gruppanelen:"
 
-#: ../pan/gui/prefs-ui.cc:1103
+#: ../pan/gui/prefs-ui.cc:1169
 msgid "Use custom font in Header Pane:"
 msgstr "Använd anpassat typsnitt i rubrikpanelen:"
 
-#: ../pan/gui/prefs-ui.cc:1108
+#: ../pan/gui/prefs-ui.cc:1174
 msgid "Use custom font in Body Pane:"
 msgstr "Använd anpassat typsnitt i artikelpanelen:"
 
-#: ../pan/gui/prefs-ui.cc:1113
+#: ../pan/gui/prefs-ui.cc:1179
 msgid "Monospace font:"
 msgstr "Typsnitt med fast breddsteg:"
 
-#: ../pan/gui/prefs-ui.cc:1117
+#: ../pan/gui/prefs-ui.cc:1183
 msgid "_Fonts"
 msgstr "_Typsnitt"
 
-#: ../pan/gui/prefs-ui.cc:1122
+#: ../pan/gui/prefs-ui.cc:1192
 msgid "Header Pane"
 msgstr "Rubrikpanel"
 
-#: ../pan/gui/prefs-ui.cc:1125 ../pan/gui/prefs-ui.cc:1131
-#: ../pan/gui/prefs-ui.cc:1137 ../pan/gui/prefs-ui.cc:1143
-#: ../pan/gui/prefs-ui.cc:1149 ../pan/gui/prefs-ui.cc:1155
+#: ../pan/gui/prefs-ui.cc:1195 ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1207 ../pan/gui/prefs-ui.cc:1213
+#: ../pan/gui/prefs-ui.cc:1219 ../pan/gui/prefs-ui.cc:1225
+#: ../pan/gui/prefs-ui.cc:1234 ../pan/gui/prefs-ui.cc:1240
+#: ../pan/gui/prefs-ui.cc:1246 ../pan/gui/prefs-ui.cc:1252
+#: ../pan/gui/prefs-ui.cc:1258 ../pan/gui/prefs-ui.cc:1268
+#: ../pan/gui/prefs-ui.cc:1278
 msgid "Text:"
 msgstr "Text:"
 
-#: ../pan/gui/prefs-ui.cc:1127 ../pan/gui/prefs-ui.cc:1133
-#: ../pan/gui/prefs-ui.cc:1139 ../pan/gui/prefs-ui.cc:1145
-#: ../pan/gui/prefs-ui.cc:1151 ../pan/gui/prefs-ui.cc:1157
+#: ../pan/gui/prefs-ui.cc:1197 ../pan/gui/prefs-ui.cc:1203
+#: ../pan/gui/prefs-ui.cc:1209 ../pan/gui/prefs-ui.cc:1215
+#: ../pan/gui/prefs-ui.cc:1221 ../pan/gui/prefs-ui.cc:1227
+#: ../pan/gui/prefs-ui.cc:1236 ../pan/gui/prefs-ui.cc:1242
+#: ../pan/gui/prefs-ui.cc:1248 ../pan/gui/prefs-ui.cc:1254
+#: ../pan/gui/prefs-ui.cc:1260 ../pan/gui/prefs-ui.cc:1270
+#: ../pan/gui/prefs-ui.cc:1280
 msgid "Background:"
 msgstr "Bakgrund:"
 
-#: ../pan/gui/prefs-ui.cc:1129
+#: ../pan/gui/prefs-ui.cc:1199
 msgid "Scores of 9999 or more:"
 msgstr "Poäng som är 9999 eller högre:"
 
-#: ../pan/gui/prefs-ui.cc:1135
+#: ../pan/gui/prefs-ui.cc:1205
 msgid "Scores from 5000 to 9998:"
 msgstr "Poäng från 5000 till 9998:"
 
-#: ../pan/gui/prefs-ui.cc:1141
+#: ../pan/gui/prefs-ui.cc:1211
 msgid "Scores from 1 to 4999:"
 msgstr "Poäng från 1 till 4999:"
 
-#: ../pan/gui/prefs-ui.cc:1147
+#: ../pan/gui/prefs-ui.cc:1217
 msgid "Scores from -9998 to -1:"
 msgstr "Poäng från -9998 till -1:"
 
-#: ../pan/gui/prefs-ui.cc:1153
+#: ../pan/gui/prefs-ui.cc:1223
 msgid "Scores of -9999 or less:"
 msgstr "Poäng som är -9999 eller lägre:"
 
-#: ../pan/gui/prefs-ui.cc:1159
-msgid "Read collapsed thread:"
+#: ../pan/gui/prefs-ui.cc:1229
+msgid "Collapsed thread with unread articles:"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1161
+#: ../pan/gui/prefs-ui.cc:1231
 msgid "Body Pane"
 msgstr "Artikelpanel"
 
-#: ../pan/gui/prefs-ui.cc:1167
-#, fuzzy
-msgid "Quoted text:"
-msgstr "Citerad text:"
+#: ../pan/gui/prefs-ui.cc:1238
+msgid "First level of quoted text:"
+msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1168
+#: ../pan/gui/prefs-ui.cc:1244
+msgid "Second level of quoted text:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1250
+msgid "Third level of quoted text:"
+msgstr ""
+
+#.
+#: ../pan/gui/prefs-ui.cc:1256
 msgid "URL:"
 msgstr "Url:"
 
-#: ../pan/gui/prefs-ui.cc:1169
+#.
+#: ../pan/gui/prefs-ui.cc:1262
 msgid "Signature:"
 msgstr "Signatur:"
 
-#: ../pan/gui/prefs-ui.cc:1171
+#: ../pan/gui/prefs-ui.cc:1265
+#, fuzzy
+#| msgid "_Group Pane"
+msgid "Group Pane"
+msgstr "_Gruppanel"
+
+#.
+#: ../pan/gui/prefs-ui.cc:1272
+msgid "Group Color:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1276
+#, fuzzy
+#| msgid "Paste Text"
+msgid "Other Text"
+msgstr "Klistra in text"
+
+#: ../pan/gui/prefs-ui.cc:1282
+#, fuzzy
+msgid "Text Color:"
+msgstr "_Textredigerare:"
+
+#: ../pan/gui/prefs-ui.cc:1285
 msgid "_Colors"
 msgstr "_Färger"
 
-#: ../pan/gui/prefs-ui.cc:1171
+#: ../pan/gui/prefs-ui.cc:1285
 msgid "Colors"
 msgstr "Färger"
 
-#: ../pan/gui/prefs-ui.cc:1176
+#: ../pan/gui/prefs-ui.cc:1290
 msgid "Preferred Applications"
 msgstr "Föredragna program"
 
-#: ../pan/gui/prefs-ui.cc:1180
+#: ../pan/gui/prefs-ui.cc:1294
 #, fuzzy
 msgid "_Web browser:"
 msgstr "_Webbläsare:"
 
-#: ../pan/gui/prefs-ui.cc:1183
+#: ../pan/gui/prefs-ui.cc:1297
 #, fuzzy
 msgid "_Mail reader:"
 msgstr "_E-postläsare:"
 
-#: ../pan/gui/prefs-ui.cc:1185
+#: ../pan/gui/prefs-ui.cc:1299
 #, fuzzy
 msgid "_Text editor:"
 msgstr "_Textredigerare:"
 
-#: ../pan/gui/prefs-ui.cc:1187
+#: ../pan/gui/prefs-ui.cc:1301
+msgid "_HTML previewer:"
+msgstr ""
+
+#: ../pan/gui/prefs-ui.cc:1303
 #, fuzzy
 msgid "_Applications"
 msgstr "_Program"
 
-#: ../pan/gui/prefs-ui.cc:1187
+#: ../pan/gui/prefs-ui.cc:1303
 #, fuzzy
 msgid "Applications"
 msgstr "_Program"
 
-#: ../pan/gui/prefs-ui.cc:1192 ../pan/gui/task-pane.cc:512
+#: ../pan/gui/prefs-ui.cc:1308 ../pan/gui/task-pane.cc:552
 #, fuzzy
 msgid "Encoding"
 msgstr "Avkodar"
 
-#: ../pan/gui/prefs-ui.cc:1196
+#: ../pan/gui/prefs-ui.cc:1312
 msgid "Default bytes per file (for encoder): "
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1317
 #, fuzzy
 msgid "_Upload"
 msgstr "_Program"
 
-#: ../pan/gui/prefs-ui.cc:1201
+#: ../pan/gui/prefs-ui.cc:1317
 msgid "Upload"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1219
-msgid "_Hotkeys"
+#: ../pan/gui/prefs-ui.cc:1326
+msgid "_Shortcuts"
 msgstr ""
 
-#: ../pan/gui/prefs-ui.cc:1219
-msgid "Hotkeys"
+#: ../pan/gui/prefs-ui.cc:1326
+msgid "Shortcuts"
 msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:83
-msgid "Please choose your Email Address according to your PGP key's user id."
+msgid "Please choose your email address according to your PGP key's user id."
 msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:131
@@ -2286,9 +2514,9 @@ msgstr "_Fullständigt namn:"
 
 #: ../pan/gui/profiles-dialog.cc:158
 msgid ""
-"Your Email Address.\n"
-"Note that this has to match your PGP Signature's Address\n"
-"if you want to PGP-Sign or Encrypt your messages correctly."
+"Your email address.\n"
+"Note that this has to match your PGP signature's address\n"
+"if you want your messages to be PGP-signed or encrypted correctly."
 msgstr ""
 
 #: ../pan/gui/profiles-dialog.cc:162
@@ -2330,33 +2558,33 @@ msgstr "Signatur"
 
 #: ../pan/gui/profiles-dialog.cc:196
 #, fuzzy
-msgid "Signature Type : "
+msgid "Signature Type: "
 msgstr "Signatur_typ:"
 
-#: ../pan/gui/profiles-dialog.cc:223
+#: ../pan/gui/profiles-dialog.cc:226
 msgid "X-Face (Avatar)"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:226
+#: ../pan/gui/profiles-dialog.cc:229
 msgid ""
-"You can add an avatar icon to your articles with a unique X-Face code. \n"
+"You can add an avatar icon to your articles with a unique X-Face code.\n"
 "Add the code without the trailing <b>\"X-Face:\"</b> \n"
 " if it was generated by a helper program (for example http://www.dairiki.org/"
 "xface/xface.php)."
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:229
+#: ../pan/gui/profiles-dialog.cc:232
 msgid "_X-Face:"
 msgstr ""
 
-#: ../pan/gui/profiles-dialog.cc:231
+#: ../pan/gui/profiles-dialog.cc:234
 msgid "Optional Information"
 msgstr "Valfri information"
 
-#: ../pan/gui/profiles-dialog.cc:236
+#: ../pan/gui/profiles-dialog.cc:239
 #, fuzzy
 msgid ""
-"When posting to Usenet, your article's Message-ID contains a domain name.  \n"
+"When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
 "domain name from your email address."
 msgstr ""
@@ -2364,11 +2592,11 @@ msgstr ""
 "ett domännamn.  Du kan ställa in ett anpassat domännamn här eller lämna det "
 "blankt för att låta Pan använd domännamnet från din e-postadress."
 
-#: ../pan/gui/profiles-dialog.cc:239
+#: ../pan/gui/profiles-dialog.cc:242
 msgid "Message-ID _Domain Name:"
 msgstr "_Domännamn för meddelande-id:"
 
-#: ../pan/gui/profiles-dialog.cc:243
+#: ../pan/gui/profiles-dialog.cc:246
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2381,14 +2609,14 @@ msgstr ""
 "%n för författarnamn\n"
 "%d för datum"
 
-#: ../pan/gui/profiles-dialog.cc:244
+#: ../pan/gui/profiles-dialog.cc:247
 msgid "_Attribution:"
 msgstr "_Tillskrivning:"
 
-#: ../pan/gui/profiles-dialog.cc:268
+#: ../pan/gui/profiles-dialog.cc:271
 #, fuzzy
 msgid ""
-"Extra headers to be included in your posts, such as\n"
+"Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
 "Organization: Your Organization\n"
 msgstr ""
@@ -2396,37 +2624,99 @@ msgstr ""
 "Reply-To: \"Ditt namn\" <ditt_namn@någonstans.se>\n"
 "Organization: Din organisation"
 
-#: ../pan/gui/profiles-dialog.cc:278
+#: ../pan/gui/profiles-dialog.cc:281
 msgid "E_xtra Headers:"
 msgstr "E_xtra rubriker:"
 
-#: ../pan/gui/profiles-dialog.cc:323
+#: ../pan/gui/profiles-dialog.cc:326
 msgid "Invalid email address."
 msgstr "Ogiltig e-postadress."
 
-#: ../pan/gui/profiles-dialog.cc:324
+#: ../pan/gui/profiles-dialog.cc:327
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Använd en adress i formatet evert@någonstans.se"
 
-#: ../pan/gui/profiles-dialog.cc:479
+#: ../pan/gui/profiles-dialog.cc:482
 msgid "New Profile"
 msgstr "Ny profil"
 
-#: ../pan/gui/profiles-dialog.cc:525
+#: ../pan/gui/profiles-dialog.cc:528
 msgid "Posting Profiles"
 msgstr "Postandeprofiler"
 
-#: ../pan/gui/profiles-dialog.cc:541
+#: ../pan/gui/profiles-dialog.cc:544
 msgid "Profiles"
 msgstr "Profiler"
 
-#: ../pan/gui/save-attach-ui.cc:77 ../pan/gui/save-ui.cc:77
+#: ../pan/gui/save-attach-ui.cc:46
+#, fuzzy, c-format
+msgid ""
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - Subject line excerpt\n"
+"%S - Subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+msgstr ""
+"%g - grupp som en katalog (alt.binaries.pictures.trains)\n"
+"%G - grupp som nästlad katalog (/alt/binaries/pictures/trains)\n"
+"%s - utdrag från ämnesrad\n"
+"\n"
+"\"/home/användare/News/Pan/%g\" blir\n"
+"\"/home/användare/News/Pan/alt.binaries.pictures.trains\", och\n"
+"\"/home/användare/News/Pan/%G\" blir\n"
+"\"/home/användare/News/Pan/alt/binaries/pictures/trains\","
+
+#: ../pan/gui/save-attach-ui.cc:197 ../pan/gui/save-ui.cc:217
+msgid "Add to the queue sorted by date posted"
+msgstr "Lägg till i kön sorterade efter postdatum"
+
+#: ../pan/gui/save-attach-ui.cc:198 ../pan/gui/save-ui.cc:218
+msgid "Add to the front of the queue"
+msgstr "Lägg till främst i kön"
+
+#: ../pan/gui/save-attach-ui.cc:199 ../pan/gui/save-ui.cc:219
+msgid "Add to the back of the queue"
+msgstr "Lägg till bakerst i kön"
+
+#: ../pan/gui/save-attach-ui.cc:231
+#, fuzzy
+msgid "Pan: Save Attachments"
+msgstr "Spara bilagor"
+
+#: ../pan/gui/save-attach-ui.cc:256 ../pan/gui/save-attach-ui.cc:274
+#: ../pan/gui/save-ui.cc:271 ../pan/gui/save-ui.cc:289
+msgid "_Location:"
+msgstr "_Plats:"
+
+#: ../pan/gui/save-attach-ui.cc:260 ../pan/gui/save-ui.cc:275
+msgid "Save Articles"
+msgstr "Spara artiklar"
+
+#: ../pan/gui/save-attach-ui.cc:277 ../pan/gui/save-ui.cc:292
+#, c-format
+msgid "_Group's path: %s"
+msgstr "_Gruppens sökväg: %s"
+
+#: ../pan/gui/save-attach-ui.cc:288 ../pan/gui/save-ui.cc:307
+msgid "_Priority:"
+msgstr "_Prioritet:"
+
+#: ../pan/gui/save-ui.cc:46
 #, fuzzy, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
 "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
 "%s - subject line excerpt\n"
 "%S - subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
 " \n"
 "\"/home/user/News/Pan/%g\" becomes\n"
 "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
@@ -2442,58 +2732,23 @@ msgstr ""
 "\"/home/användare/News/Pan/%G\" blir\n"
 "\"/home/användare/News/Pan/alt/binaries/pictures/trains\","
 
-#: ../pan/gui/save-attach-ui.cc:223 ../pan/gui/save-ui.cc:242
-msgid "Add to the queue sorted by date posted"
-msgstr "Lägg till i kön sorterade efter postdatum"
-
-#: ../pan/gui/save-attach-ui.cc:224 ../pan/gui/save-ui.cc:243
-msgid "Add to the front of the queue"
-msgstr "Lägg till främst i kön"
-
-#: ../pan/gui/save-attach-ui.cc:225 ../pan/gui/save-ui.cc:244
-msgid "Add to the back of the queue"
-msgstr "Lägg till bakerst i kön"
-
-#: ../pan/gui/save-attach-ui.cc:257
-#, fuzzy
-msgid "Pan: Save Attachments"
-msgstr "Spara bilagor"
-
-#: ../pan/gui/save-attach-ui.cc:282 ../pan/gui/save-attach-ui.cc:300
-#: ../pan/gui/save-ui.cc:296 ../pan/gui/save-ui.cc:314
-msgid "_Location:"
-msgstr "_Plats:"
-
-#: ../pan/gui/save-attach-ui.cc:286 ../pan/gui/save-ui.cc:300
-msgid "Save Articles"
-msgstr "Spara artiklar"
-
-#: ../pan/gui/save-attach-ui.cc:303 ../pan/gui/save-ui.cc:317
-#, c-format
-msgid "_Group's path: %s"
-msgstr "_Gruppens sökväg: %s"
-
-#: ../pan/gui/save-attach-ui.cc:314 ../pan/gui/save-ui.cc:332
-msgid "_Priority:"
-msgstr "_Prioritet:"
-
-#: ../pan/gui/save-ui.cc:233
+#: ../pan/gui/save-ui.cc:208
 msgid "Save attachments"
 msgstr "Spara bilagor"
 
-#: ../pan/gui/save-ui.cc:234
+#: ../pan/gui/save-ui.cc:209
 msgid "Save text"
 msgstr "Spara text"
 
-#: ../pan/gui/save-ui.cc:235
+#: ../pan/gui/save-ui.cc:210
 msgid "Save attachments and text"
 msgstr "Spara bilagor och text"
 
-#: ../pan/gui/save-ui.cc:271
+#: ../pan/gui/save-ui.cc:246
 msgid "Pan: Save Articles"
 msgstr "Pan: Spara artiklar"
 
-#: ../pan/gui/save-ui.cc:328
+#: ../pan/gui/save-ui.cc:303
 msgid "_Action:"
 msgstr "_Åtgärd:"
 
@@ -2583,11 +2838,11 @@ msgstr "slutar med"
 
 #: ../pan/gui/score-add-ui.cc:200
 msgid "matches regex"
-msgstr "matchar det reguljära utrycket"
+msgstr "matchar det reguljära uttrycket"
 
 #: ../pan/gui/score-add-ui.cc:481
 msgid "Another rule already sets this article's score."
-msgstr "En ennan regel ställer redan in den här artikelns poäng."
+msgstr "En annan regel ställer redan in den här artikelns poäng."
 
 #: ../pan/gui/score-add-ui.cc:482
 msgid "You may want to go back or delete the old rule."
@@ -2602,12 +2857,16 @@ msgid "New Scoring Rule"
 msgstr "Ny poängregel"
 
 #: ../pan/gui/score-add-ui.cc:635
-msgid "If the group name"
-msgstr "om gruppnamnet"
+#, fuzzy
+#| msgid "Group Name"
+msgid "Group name"
+msgstr "Gruppnamn"
 
 #: ../pan/gui/score-add-ui.cc:642
-msgid "And the article's"
-msgstr "Och artikelns"
+#, fuzzy
+#| msgid "Pan"
+msgid "and"
+msgstr "Pan"
 
 #: ../pan/gui/score-view-ui.cc:56
 msgid "Close and Re_score"
@@ -2642,53 +2901,57 @@ msgstr "Lägg till en ny poängregel"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Ta bort den markerade poängregeln"
 
-#: ../pan/gui/server-ui.cc:221
+#: ../pan/gui/server-ui.cc:259
 msgid "Please specify the server's address."
 msgstr "Ange serverns adress."
 
-#: ../pan/gui/server-ui.cc:264
-msgid "Import SSL certificate (PEM format) from File"
+#: ../pan/gui/server-ui.cc:305
+msgid "Import SSL Certificate (PEM Format) From File"
 msgstr ""
 
 #. create the dialog
-#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:869
+#: ../pan/gui/server-ui.cc:342 ../pan/gui/server-ui.cc:948
 msgid "Add a Server"
 msgstr "Lägg till en server"
 
-#: ../pan/gui/server-ui.cc:290 ../pan/gui/server-ui.cc:875
+#: ../pan/gui/server-ui.cc:342 ../pan/gui/server-ui.cc:954
 msgid "Edit a Server's Settings"
 msgstr "Redigera inställningarna för en server"
 
-#: ../pan/gui/server-ui.cc:310
+#: ../pan/gui/server-ui.cc:362
 msgid "Location"
 msgstr "Plats"
 
-#: ../pan/gui/server-ui.cc:314
+#: ../pan/gui/server-ui.cc:366
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr ""
 "Diskussionsgruppsserverns verkliga adress, t.ex. \"news.minnewsserver.se\""
 
-#: ../pan/gui/server-ui.cc:315
+#: ../pan/gui/server-ui.cc:367
 msgid "_Address:"
 msgstr "_Adress:"
 
-#: ../pan/gui/server-ui.cc:319
-msgid "The news server's port number.  Typically 119."
+#: ../pan/gui/server-ui.cc:372
+#, fuzzy
+#| msgid "The news server's port number.  Typically 119."
+msgid ""
+"The news server's port number.  Typically 119 for unencrypted and 563 for "
+"encrypted connections (SSL/TLS)."
 msgstr "Diskussionsgruppsserverns portnummer. Detta är vanligtvis 119."
 
-#: ../pan/gui/server-ui.cc:320
+#: ../pan/gui/server-ui.cc:373
 msgid "Por_t:"
 msgstr "Por_t:"
 
-#: ../pan/gui/server-ui.cc:323
+#: ../pan/gui/server-ui.cc:376
 msgid "Login (if Required)"
 msgstr "Inloggning (om det krävs)"
 
-#: ../pan/gui/server-ui.cc:327
+#: ../pan/gui/server-ui.cc:380
 msgid "_Username:"
 msgstr "_Användarnamn:"
 
-#: ../pan/gui/server-ui.cc:328
+#: ../pan/gui/server-ui.cc:381
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2696,11 +2959,11 @@ msgstr ""
 "Användarnamnet att ge till servern när den frågar.  Om din server inte "
 "kräver autentisering kan du lämna det här fältet tomt."
 
-#: ../pan/gui/server-ui.cc:332
+#: ../pan/gui/server-ui.cc:385
 msgid "_Password:"
 msgstr "_Lösenord:"
 
-#: ../pan/gui/server-ui.cc:333
+#: ../pan/gui/server-ui.cc:386
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2708,55 +2971,55 @@ msgstr ""
 "Lösenordet att ge till servern när den frågar.  Om din server inte kräver "
 "autentisering kan du lämna det här fältet tomt."
 
-#: ../pan/gui/server-ui.cc:336
+#: ../pan/gui/server-ui.cc:389
 msgid "Settings"
 msgstr "Inställningar"
 
-#: ../pan/gui/server-ui.cc:343
+#: ../pan/gui/server-ui.cc:396
 msgid "Connection _Limit:"
 msgstr "Anslutnings_begränsning:"
 
-#: ../pan/gui/server-ui.cc:347
+#: ../pan/gui/server-ui.cc:400
 msgid "After Two Weeks"
 msgstr "Efter två veckor"
 
-#: ../pan/gui/server-ui.cc:348
+#: ../pan/gui/server-ui.cc:401
 msgid "After One Month"
 msgstr "Efter en månad"
 
-#: ../pan/gui/server-ui.cc:349
+#: ../pan/gui/server-ui.cc:402
 msgid "After Two Months"
 msgstr "Efter två månader"
 
-#: ../pan/gui/server-ui.cc:350
+#: ../pan/gui/server-ui.cc:403
 msgid "After Three Months"
 msgstr "Efter tre månader"
 
-#: ../pan/gui/server-ui.cc:351
+#: ../pan/gui/server-ui.cc:404
 msgid "After Six Months"
 msgstr "Efter sex månader"
 
-#: ../pan/gui/server-ui.cc:352
+#: ../pan/gui/server-ui.cc:405
 msgid "Never Expire Old Articles"
 msgstr "Ta aldrig bort gamla artiklar"
 
-#: ../pan/gui/server-ui.cc:366
+#: ../pan/gui/server-ui.cc:419
 msgid "E_xpire Old Articles:"
 msgstr "Ta bort ga_mla artiklar:"
 
-#: ../pan/gui/server-ui.cc:370
+#: ../pan/gui/server-ui.cc:423
 msgid "Primary"
 msgstr "Primär"
 
-#: ../pan/gui/server-ui.cc:371
+#: ../pan/gui/server-ui.cc:424
 msgid "Fallback"
 msgstr "Reserv"
 
-#: ../pan/gui/server-ui.cc:385
+#: ../pan/gui/server-ui.cc:438
 msgid "Server Rank:"
 msgstr "Serverrankning:"
 
-#: ../pan/gui/server-ui.cc:389
+#: ../pan/gui/server-ui.cc:442
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -2766,86 +3029,103 @@ msgstr ""
 "vanligt sätt är att använda fria servrar som primära och "
 "prenumerationsservrar som reserver."
 
-#: ../pan/gui/server-ui.cc:396
+#: ../pan/gui/server-ui.cc:447
+msgid "Disable Compression (N/A)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:448
+msgid "XZVER Compression (Astraweb)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:449
+msgid "GZIP Compression (Giganews etc.)"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:463
+msgid "Header Compression:"
+msgstr ""
+
+#: ../pan/gui/server-ui.cc:469
 msgid "Security"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:401
-msgid "Use Plaintext (Unsecured) Connections"
-msgstr ""
+#: ../pan/gui/server-ui.cc:474
+#, fuzzy
+msgid "Use Unsecure (Plaintext) Connections"
+msgstr "Inga anslutningar"
 
-#: ../pan/gui/server-ui.cc:402
+#: ../pan/gui/server-ui.cc:475
 #, fuzzy
 msgid "Use Secure SSL Connections"
 msgstr "Inga anslutningar"
 
-#: ../pan/gui/server-ui.cc:418
-msgid "TLS (SSL) Options:"
+#: ../pan/gui/server-ui.cc:490
+msgid "TLS (SSL) Settings:"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:423
+#: ../pan/gui/server-ui.cc:495
 msgid ""
-"You can set the option for using/disabling secure SSL/TLS connections here. "
-"If you enable SSL/TLS, your data is encrypted and secure. It is encouraged "
-"to use this option for privacy reasons."
+"You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
+"TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
+"for privacy reasons."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:428
+#: ../pan/gui/server-ui.cc:500
 msgid "Always trust this server's certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:602
+#: ../pan/gui/server-ui.cc:676
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "Verkligen ta bort \"%s\"?"
 
-#: ../pan/gui/server-ui.cc:691
+#: ../pan/gui/server-ui.cc:765
 msgid "No information available."
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:697
+#: ../pan/gui/server-ui.cc:775
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:795
+#: ../pan/gui/server-ui.cc:874
 #, fuzzy, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr "Verkligen ta bort \"%s\"?"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:822 ../pan/gui/server-ui.cc:843
-#: ../pan/gui/server-ui.cc:941
+#: ../pan/gui/server-ui.cc:901 ../pan/gui/server-ui.cc:922
+#: ../pan/gui/server-ui.cc:1020
 msgid "Servers"
 msgstr "Servrar"
 
-#: ../pan/gui/server-ui.cc:882
+#: ../pan/gui/server-ui.cc:961
 msgid "Remove a Server"
 msgstr "Ta bort en server"
 
 #. dialog
-#: ../pan/gui/server-ui.cc:915
+#: ../pan/gui/server-ui.cc:994
 msgid "SSL Certificates"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:936
+#: ../pan/gui/server-ui.cc:1015
 msgid "Certificates"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:967
+#: ../pan/gui/server-ui.cc:1046
 msgid "Import Certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:973
+#: ../pan/gui/server-ui.cc:1052
 msgid "Inspect Certificate"
 msgstr ""
 
-#: ../pan/gui/server-ui.cc:980
+#: ../pan/gui/server-ui.cc:1059
 #, fuzzy
 msgid "Remove Certificate"
 msgstr "Ta bort en server"
 
-#: ../pan/gui/task-pane.cc:143
+#: ../pan/gui/task-pane.cc:121
 #, c-format
 msgid ""
 "\n"
@@ -2857,7 +3137,7 @@ msgid ""
 "<i>Sourcefile:</i> <b>%s</b>\n"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:155
+#: ../pan/gui/task-pane.cc:133
 #, c-format
 msgid ""
 "\n"
@@ -2870,143 +3150,153 @@ msgid ""
 "<i>Save Path:</i> <b>%s</b>\n"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:157
+#: ../pan/gui/task-pane.cc:135
 #, fuzzy
 msgid "unknown"
 msgstr "Okänd"
 
-#: ../pan/gui/task-pane.cc:263
-msgid "Choose new destination for selected Tasks"
+#: ../pan/gui/task-pane.cc:303
+msgid "Choose New Destination for Selected Tasks"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:417
+#: ../pan/gui/task-pane.cc:457
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan: Uppgifter (%d kölagda, %d kör, %d stoppade)"
 
-#: ../pan/gui/task-pane.cc:419
+#: ../pan/gui/task-pane.cc:459
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan: Uppgifter (%d kölagda, %d kör)"
 
-#: ../pan/gui/task-pane.cc:421
+#: ../pan/gui/task-pane.cc:461
 #, c-format
 msgid "Pan: Tasks"
 msgstr "Pan: Uppgifter"
 
-#: ../pan/gui/task-pane.cc:446
+#: ../pan/gui/task-pane.cc:486
 #, c-format
 msgid "%lu selected, %s"
 msgstr "%lu markerade, %s"
 
-#: ../pan/gui/task-pane.cc:510
+#: ../pan/gui/task-pane.cc:550
 msgid "Running"
 msgstr "Kör"
 
-#: ../pan/gui/task-pane.cc:511
+#: ../pan/gui/task-pane.cc:551
 msgid "Decoding"
 msgstr "Avkodar"
 
-#: ../pan/gui/task-pane.cc:513
+#: ../pan/gui/task-pane.cc:553
 msgid "Queued for Decode"
 msgstr "Kölagd för avkodning"
 
-#: ../pan/gui/task-pane.cc:514
+#: ../pan/gui/task-pane.cc:554
 #, fuzzy
 msgid "Queued for Encode"
 msgstr "Kölagd för avkodning"
 
-#: ../pan/gui/task-pane.cc:515
+#: ../pan/gui/task-pane.cc:555
 msgid "Queued"
 msgstr "Kölagd"
 
-#: ../pan/gui/task-pane.cc:516
+#: ../pan/gui/task-pane.cc:556
 msgid "Stopped"
 msgstr "Stoppad"
 
-#: ../pan/gui/task-pane.cc:517
+#: ../pan/gui/task-pane.cc:557
 msgid "Removing"
 msgstr "Tar bort"
 
-#: ../pan/gui/task-pane.cc:546
+#: ../pan/gui/task-pane.cc:586
 #, c-format
 msgid "%d%% Done"
 msgstr "%d%% färdig"
 
-#: ../pan/gui/task-pane.cc:552
+#: ../pan/gui/task-pane.cc:592
 #, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%d.%02d.%02d återstår (%d @ %lu KiB/s)"
 
-#: ../pan/gui/task-pane.cc:646 ../pan/gui/task-pane.cc:647
+#: ../pan/gui/task-pane.cc:687 ../pan/gui/task-pane.cc:688
 msgid "Move To Top"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:651 ../pan/gui/task-pane.cc:652
+#: ../pan/gui/task-pane.cc:692 ../pan/gui/task-pane.cc:693
 msgid "Move To Bottom"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:656 ../pan/gui/task-pane.cc:657
+#: ../pan/gui/task-pane.cc:697 ../pan/gui/task-pane.cc:698
+#, fuzzy
+#| msgid "Show Article Information"
+msgid "Show Task Information"
+msgstr "Visa artikelinformation"
+
+#: ../pan/gui/task-pane.cc:702 ../pan/gui/task-pane.cc:703
 #, fuzzy
 msgid "Stop Task"
 msgstr "Stoppa uppgifter"
 
-#: ../pan/gui/task-pane.cc:661 ../pan/gui/task-pane.cc:662
+#: ../pan/gui/task-pane.cc:707 ../pan/gui/task-pane.cc:708
 #, fuzzy
 msgid "Delete Task"
 msgstr "Ta bort uppgifter"
 
-#: ../pan/gui/task-pane.cc:666 ../pan/gui/task-pane.cc:667
+#: ../pan/gui/task-pane.cc:712 ../pan/gui/task-pane.cc:713
 #, fuzzy
 msgid "Restart Task"
 msgstr "Starta om uppgifter"
 
-#: ../pan/gui/task-pane.cc:671 ../pan/gui/task-pane.cc:672
+#: ../pan/gui/task-pane.cc:717 ../pan/gui/task-pane.cc:718
 msgid "Change Download Destination"
 msgstr ""
 
-#: ../pan/gui/task-pane.cc:729
+#: ../pan/gui/task-pane.cc:1028
 msgid "_Online"
 msgstr "_Ansluten"
 
-#: ../pan/gui/task-pane.cc:746
+#: ../pan/gui/task-pane.cc:1045
 msgid "Restart Tasks"
 msgstr "Starta om uppgifter"
 
-#: ../pan/gui/task-pane.cc:748
+#: ../pan/gui/task-pane.cc:1047
 msgid "Stop Tasks"
 msgstr "Stoppa uppgifter"
 
-#: ../pan/gui/task-pane.cc:750
+#: ../pan/gui/task-pane.cc:1049
 msgid "Delete Tasks"
 msgstr "Ta bort uppgifter"
+
+#: ../pan/gui/task-pane.cc:1055
+msgid "Show popups"
+msgstr ""
 
 #: ../pan/gui/url.cc:123
 #, c-format
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr "Fel vid start av url: %s (Kommandot var: %s)"
 
-#: ../pan/tasks/decoder.cc:115
+#: ../pan/tasks/decoder.cc:117
 #, c-format
 msgid "Couldn't save file \"%s\": %s"
 msgstr "Kunde inte spara filen \"%s\": %s"
 
-#: ../pan/tasks/decoder.cc:137 ../pan/tasks/encoder.cc:136
+#: ../pan/tasks/decoder.cc:139 ../pan/tasks/encoder.cc:136
 msgid "Error initializing uulib"
 msgstr "Fel vid initiering av uulib"
 
-#: ../pan/tasks/decoder.cc:152 ../pan/tasks/socket-impl-gio.cc:352
-#: ../pan/tasks/socket-impl-openssl.cc:634
+#: ../pan/tasks/decoder.cc:154 ../pan/tasks/socket-impl-gio.cc:360
+#: ../pan/tasks/socket-impl-openssl.cc:642
 #, c-format
 msgid "Error reading from %s: %s"
 msgstr "Fel vid läsning från %s: %s"
 
-#: ../pan/tasks/decoder.cc:192
+#: ../pan/tasks/decoder.cc:194
 #, c-format
 msgid "Saved \"%s\""
 msgstr "Sparade \"%s\""
 
-#: ../pan/tasks/decoder.cc:199
+#: ../pan/tasks/decoder.cc:201
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -3015,50 +3305,55 @@ msgstr ""
 "Fel när \"%s\" sparades:\n"
 "%s"
 
-#: ../pan/tasks/decoder.cc:314 ../pan/tasks/task-article.cc:350
+#: ../pan/tasks/decoder.cc:314 ../pan/tasks/task-article.cc:354
 #, c-format
 msgid "Decoding %s"
 msgstr "Avkodar %s"
 
-#: ../pan/tasks/encoder.cc:102 ../pan/tasks/encoder.cc:155
+#: ../pan/tasks/encoder.cc:103 ../pan/tasks/encoder.cc:154
 #, fuzzy, c-format
 msgid "Error loading %s from cache."
 msgstr "Fel vid läsning från %s: %s"
 
-#: ../pan/tasks/encoder.cc:177
+#: ../pan/tasks/encoder.cc:176
 #, fuzzy, c-format
 msgid "Error encoding %s: %s"
 msgstr "Fel vid avkodning av \"%s\": %s"
 
-#: ../pan/tasks/encoder.cc:269
+#: ../pan/tasks/encoder.cc:266
 #, fuzzy, c-format
 msgid "Encoding %s"
 msgstr "Avkodar"
 
-#: ../pan/tasks/nntp.cc:126
+#: ../pan/tasks/nntp.cc:148
 #, c-format
 msgid "%s requires a username, but none is set."
 msgstr "%s kräver ett användarnamn men inget är inställt."
 
-#: ../pan/tasks/nntp.cc:139
+#: ../pan/tasks/nntp.cc:161
 #, c-format
 msgid "%s requires a password, but none is set."
 msgstr "%s kräver ett lösenord men inget är inställt."
 
-#: ../pan/tasks/nntp.cc:205
+#: ../pan/tasks/nntp.cc:239
 #, c-format
 msgid "Sending \"%s\" to %s returned an error: %s"
 msgstr "Sändning av \"%s\" till %s returnerade ett fel: %s"
 
-#: ../pan/tasks/nntp.cc:228
+#: ../pan/tasks/nntp.cc:262
 #, c-format
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr "Sändning av \"%s\" till %s returnerade ett okänt svar: \"%s\""
 
-#: ../pan/tasks/nntp-pool.cc:222
+#: ../pan/tasks/nntp-pool.cc:235
 #, c-format
 msgid "Unable to connect to \"%s\""
 msgstr "Kunde inte ansluta till \"%s\""
+
+#: ../pan/tasks/queue.cc:772 ../pan/tasks/queue.cc:800
+#: ../pan/tasks/queue.cc:827
+msgid "No space left on device."
+msgstr ""
 
 #: ../pan/tasks/socket-impl-gio.cc:173 ../pan/tasks/socket-impl-gio.cc:211
 #: ../pan/tasks/socket-impl-openssl.cc:214
@@ -3067,32 +3362,31 @@ msgstr "Kunde inte ansluta till \"%s\""
 msgid "Error connecting to \"%s\""
 msgstr "Fel vid anslutning till \"%s\""
 
-#: ../pan/tasks/socket-impl-gio.cc:351 ../pan/tasks/socket-impl-openssl.cc:633
+#: ../pan/tasks/socket-impl-gio.cc:359 ../pan/tasks/socket-impl-openssl.cc:641
 msgid "Unknown Error"
 msgstr "Okänt fel"
 
-#: ../pan/tasks/task-article.cc:61 ../pan/tasks/task-article.cc:156
-#: ../pan/tasks/task-article.cc:159
+#: ../pan/tasks/task-article.cc:62 ../pan/tasks/task-article.cc:160
 #, c-format
 msgid "Saving %s"
 msgstr "Sparar %s"
 
-#: ../pan/tasks/task-article.cc:63
+#: ../pan/tasks/task-article.cc:64
 #, c-format
 msgid "Reading %s"
 msgstr "Läser %s"
 
-#: ../pan/tasks/task-article.cc:322
+#: ../pan/tasks/task-article.cc:326
 #, c-format
 msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
 msgstr "Artikeln \"%s\" är ofullständig -- nyhetsservern hade inte delen %s"
 
-#: ../pan/tasks/task-groups.cc:40
+#: ../pan/tasks/task-groups.cc:41
 #, c-format
 msgid "Getting group list from \"%s\""
 msgstr "Hämtar grupplista från \"%s\""
 
-#: ../pan/tasks/task-groups.cc:122
+#: ../pan/tasks/task-groups.cc:134
 #, c-format
 msgid "Fetched %lu Groups"
 msgstr "Hämtade %lu grupper"
@@ -3108,238 +3402,244 @@ msgid "Posting of \"%s\" failed: %s"
 msgstr "Postandeprofiler"
 
 #: ../pan/tasks/task-post.cc:81
-#, c-format
-msgid "Posting of \"%s\" succesful: %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Posting of \"%s\" successful: %s"
+msgstr "Postandeprofiler"
 
 #: ../pan/tasks/task-upload.cc:51
 #, fuzzy, c-format
 msgid "Uploading %s"
 msgstr "Läser %s"
 
-#: ../pan/tasks/task-upload.cc:249
+#: ../pan/tasks/task-upload.cc:244
 #, c-format
 msgid "Uploading %s - Part %d of %d"
 msgstr ""
 
-#: ../pan/tasks/task-upload.cc:251
+#: ../pan/tasks/task-upload.cc:246
 #, c-format
-msgid "Uploading Message body with Subject \"%s\""
+msgid "Uploading message body with subject \"%s\""
 msgstr ""
 
-#: ../pan/tasks/task-upload.cc:308
-#, c-format
-msgid "Posting of File %s (Part %d of %d) failed: No Posts allowed by server."
-msgstr ""
-
-#: ../pan/tasks/task-upload.cc:316
+#: ../pan/tasks/task-upload.cc:303
 #, fuzzy, c-format
-msgid "Posting of File %s (Part %d of %d) failed: %s"
+msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
 msgstr "Postandeprofiler"
 
-#: ../pan/tasks/task-upload.cc:326 ../pan/tasks/task-upload.cc:333
-#, c-format
-msgid "Posting of file %s (Part %d of %d) succesful: %s"
-msgstr ""
-
-#: ../pan/tasks/task-upload.cc:343
+#: ../pan/tasks/task-upload.cc:311
 #, fuzzy, c-format
-msgid "Posting of file %s succesful: %s"
+msgid "Posting of file %s (part %d of %d) failed: %s"
 msgstr "Postandeprofiler"
 
-#: ../pan/tasks/task-upload.cc:347
+#: ../pan/tasks/task-upload.cc:321 ../pan/tasks/task-upload.cc:328
+#, fuzzy, c-format
+msgid "Posting of file %s (part %d of %d) successful: %s"
+msgstr "Postandeprofiler"
+
+#: ../pan/tasks/task-upload.cc:338
+#, fuzzy, c-format
+msgid "Posting of file %s successful: %s"
+msgstr "Postandeprofiler"
+
+#: ../pan/tasks/task-upload.cc:342
 #, c-format
 msgid ""
-"Posting of file %s not completely successful: Check the log (right-click on "
-"list item) !"
+"Posting of file %s not completely successful: Check the log (right-click "
+"list item)."
 msgstr ""
 
-#: ../pan/tasks/task-upload.cc:364
+#: ../pan/tasks/task-upload.cc:358
 #, c-format
 msgid ""
-"Posting of file %s not successful: Check the log (right-click on list item) !"
+"Posting of file %s not successful: Check the log (right-click list item)."
 msgstr ""
 
-#: ../pan/tasks/task-xover.cc:79
+#: ../pan/tasks/task-xover.cc:83
 #, c-format
 msgid "Getting all headers for \"%s\""
 msgstr "Hämtar alla rubriker för \"%s\""
 
-#: ../pan/tasks/task-xover.cc:81
+#: ../pan/tasks/task-xover.cc:86
 #, c-format
 msgid "Getting new headers for \"%s\""
 msgstr "Hämtar nya rubriker för \"%s\""
 
 #. SAMPLE
-#: ../pan/tasks/task-xover.cc:83
+#: ../pan/tasks/task-xover.cc:90
 #, c-format
 msgid "Sampling headers for \"%s\""
 msgstr "Provar rubriker för \"%s\""
 
-#: ../pan/tasks/task-xover.cc:369
+#: ../pan/tasks/task-xover.cc:426
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu delar, %lu artiklar)"
+
+#: ../pan/tasks/task-xover.cc:500
+#, fuzzy, c-format
+#| msgid "Getting new headers for \"%s\""
+msgid "Getting new headers for \"%s\" done."
+msgstr "Hämtar nya rubriker för \"%s\""
 
 #: ../pan/tasks/task-xoverinfo.cc:78
 #, fuzzy, c-format
 msgid "Getting header counts for \"%s\""
 msgstr "Hämtar alla rubriker för \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:163
+#: ../pan/usenet-utils/filter-info.cc:168
 msgid "article doesn't have attachments"
 msgstr "artikeln har inte fullständiga bilagor"
 
-#: ../pan/usenet-utils/filter-info.cc:167
+#: ../pan/usenet-utils/filter-info.cc:172
 msgid "the article has attachments"
 msgstr "artikeln har bilagor"
 
-#: ../pan/usenet-utils/filter-info.cc:171
+#: ../pan/usenet-utils/filter-info.cc:176
 msgid "the article isn't cached locally"
 msgstr "artikeln är inte cachad lokalt"
 
-#: ../pan/usenet-utils/filter-info.cc:175
+#: ../pan/usenet-utils/filter-info.cc:180
 msgid "the article is cached locally"
 msgstr "artikeln är cachad lokalt"
 
-#: ../pan/usenet-utils/filter-info.cc:179
+#: ../pan/usenet-utils/filter-info.cc:184
 msgid "the article wasn't posted by you"
 msgstr "artikeln postades inte av mig"
 
-#: ../pan/usenet-utils/filter-info.cc:183
+#: ../pan/usenet-utils/filter-info.cc:188
 msgid "the article was posted by you"
 msgstr "artikeln postades av mig"
 
-#: ../pan/usenet-utils/filter-info.cc:187
+#: ../pan/usenet-utils/filter-info.cc:192
 msgid "the article has been read"
 msgstr "artikeln har blivit läst"
 
-#: ../pan/usenet-utils/filter-info.cc:191
+#: ../pan/usenet-utils/filter-info.cc:196
 msgid "the article hasn't been read"
 msgstr "artikeln har inte blivit läst"
 
-#: ../pan/usenet-utils/filter-info.cc:195
+#: ../pan/usenet-utils/filter-info.cc:200
 #, c-format
 msgid "the article is less than %ld bytes long"
 msgstr "artikeln är mindre än %ld byte lång"
 
-#: ../pan/usenet-utils/filter-info.cc:200
+#: ../pan/usenet-utils/filter-info.cc:205
 #, c-format
 msgid "the article is at least %ld bytes long"
 msgstr "artikeln är åtminstone %ld byte lång"
 
-#: ../pan/usenet-utils/filter-info.cc:205
+#: ../pan/usenet-utils/filter-info.cc:210
 #, c-format
 msgid "the article is less than %ld lines long"
 msgstr "artikeln är mindre än %ld rader lång"
 
-#: ../pan/usenet-utils/filter-info.cc:210
+#: ../pan/usenet-utils/filter-info.cc:215
 #, c-format
 msgid "the article is at least %ld lines long"
 msgstr "artikeln är åtminstone %ld rader lång"
 
-#: ../pan/usenet-utils/filter-info.cc:215
+#: ../pan/usenet-utils/filter-info.cc:220
 #, c-format
 msgid "the article is less than %ld days old"
 msgstr "artikeln är yngre än %ld dagar gammal"
 
-#: ../pan/usenet-utils/filter-info.cc:220
+#: ../pan/usenet-utils/filter-info.cc:225
 #, c-format
 msgid "the article is at least %ld days old"
 msgstr "artikeln är åtminstone %ld dagar gammal"
 
-#: ../pan/usenet-utils/filter-info.cc:225
+#: ../pan/usenet-utils/filter-info.cc:230
 #, c-format
 msgid "the article was posted to less than %ld groups"
 msgstr "artikeln blev postad till mindre än %ld grupper"
 
-#: ../pan/usenet-utils/filter-info.cc:230
+#: ../pan/usenet-utils/filter-info.cc:235
 #, c-format
 msgid "the article was posted to at least %ld groups"
 msgstr "artikeln blev postad till åtminstone %ld grupper"
 
-#: ../pan/usenet-utils/filter-info.cc:235
+#: ../pan/usenet-utils/filter-info.cc:240
 #, c-format
 msgid "the article's score is less than %ld"
 msgstr "artikelns poäng är mindre än %ld"
 
-#: ../pan/usenet-utils/filter-info.cc:240
+#: ../pan/usenet-utils/filter-info.cc:245
 #, c-format
 msgid "the article's score is %ld or higher"
 msgstr "artikelns poäng är %ld eller högre"
 
-#: ../pan/usenet-utils/filter-info.cc:249
-#: ../pan/usenet-utils/filter-info.cc:259
+#: ../pan/usenet-utils/filter-info.cc:254
+#: ../pan/usenet-utils/filter-info.cc:264
 #, c-format
 msgid "%s doesn't contain \"%s\""
 msgstr "%s innehåller inte \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:250
-#: ../pan/usenet-utils/filter-info.cc:260
+#: ../pan/usenet-utils/filter-info.cc:255
+#: ../pan/usenet-utils/filter-info.cc:265
 #, c-format
 msgid "%s isn't \"%s\""
 msgstr "%s är inte \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:251
-#: ../pan/usenet-utils/filter-info.cc:261
+#: ../pan/usenet-utils/filter-info.cc:256
+#: ../pan/usenet-utils/filter-info.cc:266
 #, c-format
 msgid "%s doesn't begin with \"%s\""
 msgstr "%s börjar inte med \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:252
-#: ../pan/usenet-utils/filter-info.cc:262
+#: ../pan/usenet-utils/filter-info.cc:257
+#: ../pan/usenet-utils/filter-info.cc:267
 #, c-format
 msgid "%s doesn't end with \"%s\""
 msgstr "%s slutar inte med \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:253
-#: ../pan/usenet-utils/filter-info.cc:263
+#: ../pan/usenet-utils/filter-info.cc:258
+#: ../pan/usenet-utils/filter-info.cc:268
 #, c-format
 msgid "%s doesn't match the regex \"%s\""
 msgstr "%s matchar inte det reguljära uttrycket \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:275
+#: ../pan/usenet-utils/filter-info.cc:280
 #, c-format
 msgid "%s contains \"%s\""
 msgstr "%s innehåller \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:276
+#: ../pan/usenet-utils/filter-info.cc:281
 #, c-format
 msgid "%s is \"%s\""
 msgstr "%s är \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:277
+#: ../pan/usenet-utils/filter-info.cc:282
 #, c-format
 msgid "%s begins with \"%s\""
 msgstr "%s börjar med \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:278
+#: ../pan/usenet-utils/filter-info.cc:283
 #, c-format
 msgid "%s ends with \"%s\""
 msgstr "%s slutar med \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:279
+#: ../pan/usenet-utils/filter-info.cc:284
 #, c-format
 msgid "%s matches the regex \"%s\""
 msgstr "%s matchar det reguljära uttrycket \"%s\""
 
-#: ../pan/usenet-utils/filter-info.cc:285
+#: ../pan/usenet-utils/filter-info.cc:290
 msgid "Any of these tests fail:"
 msgstr "Något av dessa tester misslyckas:"
 
-#: ../pan/usenet-utils/filter-info.cc:292
+#: ../pan/usenet-utils/filter-info.cc:297
 msgid "All of these tests pass:"
 msgstr "Alla av dessa tester lyckas:"
 
-#: ../pan/usenet-utils/filter-info.cc:299
+#: ../pan/usenet-utils/filter-info.cc:304
 msgid "None of these tests pass:"
 msgstr "Inget av dessa tester lyckas:"
 
-#: ../pan/usenet-utils/filter-info.cc:306
+#: ../pan/usenet-utils/filter-info.cc:311
 msgid "Any of these tests pass:"
 msgstr "Något av dessa tester lyckas:"
 
-#: ../pan/usenet-utils/gnksa.cc:878
+#: ../pan/usenet-utils/gnksa.cc:880
 #, c-format
 msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr "Ingen e-postadress angiven; genererar meddelande-id med domänen \"%s\""
@@ -3462,39 +3762,58 @@ msgstr "Fel vid läsning av poäng i %*.*s, rad %d: oväntad rad."
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr "Läste %lu poängregler i %lu sektioner från \"%s\""
 
-#: ../pan/usenet-utils/ssl-utils.h:199
+#: ../pan/usenet-utils/ssl-utils.h:189
 #, fuzzy, c-format
 msgid "Error printing the server certificate for '%s'"
 msgstr "Fel vid inläsning av diskussionsgruppinformation: %s"
 
-#: ../pan/usenet-utils/ssl-utils.h:216
+#: ../pan/usenet-utils/ssl-utils.h:205
 #, c-format
 msgid ""
-"The current server <b>'%s'</b> sent this security certificate :\n"
+"The current server <b>'%s'</b> sent this security certificate:\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:217
+#: ../pan/usenet-utils/ssl-utils.h:206
 #, c-format
 msgid ""
-"Certificate information for server <b>'%s'</b> :\n"
+"Certificate information for server <b>'%s'</b>:\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/ssl-utils.h:219
+#: ../pan/usenet-utils/ssl-utils.h:208
 #, c-format
 msgid ""
 "%s<b>Issuer information:</b>\n"
 "%s\n"
-"<b>Valid until : </b>%s\n"
+"<b>Valid until:</b> %s\n"
 "\n"
-"<b>Not valid before : </b>%s\n"
+"<b>Not valid before:</b> %s\n"
 "\n"
 msgstr ""
 
-#: ../pan/usenet-utils/text-massager.cc:397
+#: ../pan/usenet-utils/text-massager.cc:399
 msgid "> [quoted text muted]"
 msgstr "> [citerad text tystad]"
+
+#: ../pan/usenet-utils/text-massager.cc:579
+msgid "no_name"
+msgstr ""
+
+#: ../pan/usenet-utils/text-massager.cc:580
+msgid "no_mail"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Always trust"
+#~ msgstr "Kör alltid redigerare"
+
+#, fuzzy
+#~ msgid "Quoted text:"
+#~ msgstr "Citerad text:"
+
+#~ msgid "If the group name"
+#~ msgstr "om gruppnamnet"
 
 #~ msgid "Read News from Usenet"
 #~ msgstr "Läs diskussionsgrupper från Usenet"
@@ -3508,10 +3827,6 @@ msgstr "> [citerad text tystad]"
 
 #~ msgid "Attachment not shown: MIME type %s/%s\n"
 #~ msgstr "Bilagan visas inte: Mime-typ %s/%s\n"
-
-#, fuzzy
-#~ msgid "Error!"
-#~ msgstr "Fel: %s"
 
 #~ msgid ""
 #~ "<b>Spellchecker not found!</b>\n"
@@ -3534,9 +3849,6 @@ msgstr "> [citerad text tystad]"
 
 #~ msgid "Posting..."
 #~ msgstr "Postar..."
-
-#~ msgid "Group Name"
-#~ msgstr "Gruppnamn"
 
 #~ msgid "Creating directory \"%s\""
 #~ msgstr "Skapar katalogen \"%s\""
@@ -3612,13 +3924,10 @@ msgstr "> [citerad text tystad]"
 #~ msgstr "Föregående tråd"
 
 #~ msgid "Parent Article"
-#~ msgstr "Förälderartikel"
+#~ msgstr "Föräldraartikel"
 
 #~ msgid "Mark Article as Read"
 #~ msgstr "Markera artikel som läst"
-
-#~ msgid "Mark Article as Unread"
-#~ msgstr "Markera artikel som oläst"
 
 #~ msgid "Reply to Author in Mail"
 #~ msgstr "Svara till författare via e-post"
@@ -3707,9 +4016,6 @@ msgstr "> [citerad text tystad]"
 
 #~ msgid "Manage Editor List"
 #~ msgstr "Hantera lista över redigerare"
-
-#~ msgid "Editors"
-#~ msgstr "Redigerare"
 
 #~ msgid "Couldn't read signature file \"%s\": %s"
 #~ msgstr "Kunde inte läsa signaturfilen \"%s\": %s"
@@ -3801,9 +4107,6 @@ msgstr "> [citerad text tystad]"
 
 #~ msgid "_Paste"
 #~ msgstr "_Klistra in"
-
-#~ msgid "Paste Text"
-#~ msgstr "Klistra in text"
 
 #~ msgid "Error loading post.ui: \"%s\""
 #~ msgstr "Fel vid inläsning av post.ui: \"%s\""
@@ -3897,9 +4200,6 @@ msgstr "> [citerad text tystad]"
 
 #~ msgid "Save Selected Articles' Attachments..."
 #~ msgstr "Spara bilagor i markerade artikeln..."
-
-#~ msgid "Post New Article"
-#~ msgstr "Posta ny artikel"
 
 #~ msgid "_Follow-up"
 #~ msgstr "_Följ upp"
