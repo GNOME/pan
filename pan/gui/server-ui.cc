@@ -975,7 +975,7 @@ pan :: render_cert_flag (GtkTreeViewColumn * ,
                          GtkTreeIter       * iter,
                          gpointer            )
 {
-  bool index (false);
+  int index (0);
   gtk_tree_model_get (model, iter, COL_FLAG, &index, -1);
   g_object_set (renderer, "pixbuf", _icons[index].pixbuf, NULL);
 }
