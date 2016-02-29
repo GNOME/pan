@@ -99,7 +99,7 @@ int verify_callback(gnutls_session_t session) {
 
 	if (status & GNUTLS_CERT_SIGNER_NOT_FOUND) {
 		if (!mydata->always_trust) {
-			g_warning("The certificate hasn't got a known issuer.\n");
+			g_warning("The certificate has not got a known issuer.\n");
 			fail = true;
 		}
 	}
@@ -359,7 +359,7 @@ bool CertStore::add(gnutls_x509_crt_t cert, const Quark& server) {
 	rc2 = gnutls_x509_crt_export(cert, GNUTLS_X509_FMT_PEM, out, &outsize);
 
 	if (rc2 != 0) {
-	Log::add_err_va (_("Couldn't export certificate for server: %s"), addr.c_str());
+	Log::add_err_va (_("Could not export certificate for server: %s"), addr.c_str());
 	} else {
 	fputs((const char*) out, fp);
 	}
