@@ -435,7 +435,7 @@ namespace
   void do_open     (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->open_draft (); }
   void do_charset  (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->prompt_for_charset (); }
   void do_cte      (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->prompt_for_cte (); }
-  void do_close    (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->close_window (); }
+  void do_close    (GtkAction*, gpointer p) { static_cast<PostUI*>(p)->close_window (false); }
   void do_wrap     (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_wrap_mode (gtk_toggle_action_get_active (w)); }
   void do_edit2    (GtkToggleAction * w, gpointer p) { static_cast<PostUI*>(p)->set_always_run_editor (gtk_toggle_action_get_active (w)); }
   void do_wrap_selected(GtkAction*, gpointer p) { static_cast<PostUI*>(p)->wrap_selection(); }
@@ -712,7 +712,7 @@ namespace
 {
   gboolean delete_event_cb (GtkWidget*, GdkEvent*, gpointer user_data)
   {
-    static_cast<PostUI*>(user_data)->close_window (true);
+    static_cast<PostUI*>(user_data)->close_window (false);
     return true; // don't invoke the default handler that destroys the widget
   }
 
