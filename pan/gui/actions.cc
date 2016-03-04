@@ -747,7 +747,7 @@ namespace pan
     { "match-low-scoring-articles", NULL, N_("Match Scores of -9998...-1 (_Low)"), NULL, NULL, G_CALLBACK(do_match_low_scoring_articles), true },
     { "match-ignored-articles", NULL, N_("Match Scores of -9999 (_Ignored)"), NULL, NULL, G_CALLBACK(do_match_ignored_articles), false },
 
-    { "enable-rules", NULL, N_("Enable/Disable All _Rules"), "R", NULL, G_CALLBACK(do_toggle_rules), true }
+    { "enable-rules", NULL, N_("Enable/Disable All _Rules"), "<shift>R", NULL, G_CALLBACK(do_toggle_rules), true }
 
     //{"toggle-expand-thread", NULL, N_("Toggle expansion of selected thread"), NULL, NULL, G_CALLBACK(do_toggle_expand_thread), true }
   };
