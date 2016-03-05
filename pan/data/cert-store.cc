@@ -338,8 +338,8 @@ bool CertStore::add(gnutls_x509_crt_t cert, const Quark& server) {
 
 	std::stringstream buffer;
 	buffer << addr << ".pem";
-	cert_file_name = buffer.str().c_str();
-	cert_file_name_wp = file::absolute_fn("ssl_certs", cert_file_name.c_str()).c_str();
+	cert_file_name = buffer.str();
+	cert_file_name_wp = file::absolute_fn("ssl_certs", cert_file_name);
 
 	FILE * fp = fopen(cert_file_name_wp.c_str(), "wb"); 
 	if (!fp)
