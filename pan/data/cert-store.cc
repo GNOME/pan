@@ -99,7 +99,7 @@ int verify_callback(gnutls_session_t session) {
 
 	if (status & GNUTLS_CERT_SIGNER_NOT_FOUND) {
 		if (!mydata->always_trust) {
-			g_warning("The certificate has not got a known issuer.\n");
+			g_warning("The certificate does not have a known issuer.\n");
 			fail = true;
 		}
 	}

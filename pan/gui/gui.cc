@@ -1667,7 +1667,7 @@ void GUI :: do_about_pan ()
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
-  gtk_about_dialog_set_copyright (w, _("Copyright \u00A9 2002-2015 Charles Kerr and others")); // \u00A9 is unicode for (c)
+  gtk_about_dialog_set_copyright (w, _("Copyright \u00A9 2002-2016 Charles Kerr and others")); // \u00A9 is unicode for (c)
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
   gtk_about_dialog_set_license (w, LICENSE);
