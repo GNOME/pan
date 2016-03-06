@@ -62,10 +62,10 @@ ArticleFilter :: test_article (const Data        & data,
   {
     case FilterInfo::AGGREGATE_AND:
       pass = true;
-      foreach_const (FilterInfo::aggregates_t, criteria._aggregates, it) {
+      foreach_const (FilterInfo::aggregatesp_t, criteria._aggregates, it) {
         // assume test passes if test needs body but article not cached
-        if (!it->_needs_body || cache.contains(article.message_id) )
-          if (!test_article (data, *it, group, article)) {
+        if (!(*it)->_needs_body || cache.contains(article.message_id) )
+          if (!test_article (data, **it, group, article)) {
             pass = false;
             break;
           }
@@ -77,10 +77,10 @@ ArticleFilter :: test_article (const Data        & data,
         pass = true;
       else {
         pass = false;
-        foreach_const (FilterInfo::aggregates_t, criteria._aggregates, it) {
+        foreach_const (FilterInfo::aggregatesp_t, criteria._aggregates, it) {
           // assume test fails if test needs body but article not cached
-          if (!it->_needs_body || cache.contains(article.message_id) )
-            if (test_article (data, *it, group, article)) {
+          if (!(*it)->_needs_body || cache.contains(article.message_id) )
+            if (test_article (data, **it, group, article)) {
               pass = true;
               break;
             }

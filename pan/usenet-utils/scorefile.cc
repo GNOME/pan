@@ -103,7 +103,7 @@ struct pan::Scorefile::ParseContext
       test = &item->test;
     if (test)
       foreach_const (std::vector<int>, test_offsets, it)
-        test = &test->_aggregates[*it];
+        test = test->_aggregates[*it];
     return test;
   }
 
@@ -258,11 +258,11 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
 
       line.eat_chars (1); // skip past the '{'
       const bool only_one_test_must_pass (line.len>=2 && !memcmp(line.str,"::",2));
-      FilterInfo test;
+      FilterInfo *test = new FilterInfo;
       if (only_one_test_must_pass)
-        test.set_type_aggregate_or ();
+        test->set_type_aggregate_or ();
       else
-        test.set_type_aggregate_and ();
+        test->set_type_aggregate_and ();
 
       FilterInfo * parent (context.get_current_test ());
       context.test_offsets.push_back (parent->_aggregates.size());
@@ -331,9 +331,9 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
       StringView val (line.substr (delimiter+1, 0));
       val.trim ();
 
-      FilterInfo::aggregates_t& aggregates (context.get_current_test()->_aggregates);
-      aggregates.resize (aggregates.size() + 1);
-      FilterInfo& test (aggregates.back());
+      FilterInfo::aggregatesp_t& aggregates (context.get_current_test()->_aggregates);
+      aggregates.push_back (new FilterInfo);
+      FilterInfo& test (*aggregates.back());
  
       if (!key.strncasecmp ("Lines", 5))
       {
@@ -390,14 +390,14 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
 
 namespace
 {
-  void normalize_test (FilterInfo& test)
+  void normalize_test (FilterInfo *test)
   {
-    if ((test._type!=test.AGGREGATE_AND) && (test._type!=test.AGGREGATE_OR))
+    if ((test->_type!=test->AGGREGATE_AND) && (test->_type!=test->AGGREGATE_OR))
       return;
 
-    if (test._aggregates.size() == 1)
-      test = test._aggregates[0];
-    else foreach (FilterInfo::aggregates_t, test._aggregates, it)
+    if (test->_aggregates.size() == 1) {
+      *test = *test->_aggregates[0];
+    } else foreach (FilterInfo::aggregatesp_t, test->_aggregates, it)
       normalize_test (*it);
   }
 }
@@ -418,7 +418,7 @@ Scorefile :: parse_file (const StringView& filename)
 
   foreach (sections_t, _sections, sit)
     foreach (items_t, sit->items, it)
-      normalize_test (it->test);
+      normalize_test (&it->test);
 
   size_t item_count (0);
   foreach (sections_t, _sections, sit)
