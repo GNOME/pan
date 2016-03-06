@@ -5,29 +5,41 @@ AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
 AC_DEFINE(VERSION_TITLE,["Chocolate Salty Balls"],[Release Name])
 AC_PREREQ([2.64])
 
-dnl Expanded by export-archive
+dnl Get git info for pan_git_rev
 GIT_HASH='$Format:%h$'
-if test '0' \< $GIT_HASH ;then
-	GIT_BRANCH=`echo '$Format:%d$' | awk -F , '{print gensub("[[\(\)]]","","g",$NF)}' 2>/dev/null`
+if test '0' \< $GIT_HASH ; then
+  GIT_REMOTE=`echo '$Format:%d$' | awk -F , '{print gensub("[[\(\)]]","","g",$NF)}' 2> /dev/null`
 else
-dnl git-dir is used for building outside the src tree
-	GIT_HASH=`git --git-dir=$srcdir/.git log -1 --pretty=format:%h 2> /dev/null`
-	if test ! -z $GIT_HASH; then
-dnl		GIT_BRANCH=`git --git-dir=$srcdir/.git symbolic-ref HEAD 2> /dev/null | awk -F/ '{print $NF}'`
-      GIT_BRANCH=`git config --get remote.origin.url 2> /dev/null `
-	fi
+  dnl git-dir is used for building outside the src tree
+  GIT_HASH=`git --git-dir=$srcdir/.git log -1 --pretty=format:%h 2> /dev/null`
+  if test ! -z $GIT_HASH; then
+    GIT_REMOTE=`git config --get remote.origin.url 2> /dev/null`
+    dnl Do not include protocol & user name in GIT_REMOTE
+    case "$GIT_REMOTE" in
+      *ssh://* )
+      case "$GIT_REMOTE" in
+        *@* )
+        GIT_REMOTE=`echo $GIT_REMOTE | sed -e 's/ssh:\/\/.*@//g'`;;
+      esac
+      GIT_REMOTE=`echo $GIT_REMOTE | sed 's/ssh:\/\///g'`;;
+    esac
+    case "$GIT_REMOTE" in
+      *git://* )
+       GIT_REMOTE=`echo $GIT_REMOTE | sed 's/git:\/\///g'`;;
+    esac
+  fi
 fi
 if test ! -z $GIT_HASH; then
-	if test -z $GIT_BRANCH; then
-		GIT_REV="GIT $GIT_HASH"
-	else
-		GIT_REV="GIT $GIT_HASH $GIT_BRANCH"
-	fi
-	echo $GIT_REV > pan_git_rev
-elif test -f pan_git_rev; then
-	GIT_REV=`cat pan_git_rev`
-else
-	GIT_REV="Unknown"
+  if test -z $GIT_REMOTE; then
+    GIT_REV="GIT $GIT_HASH"
+  else
+    GIT_REV="GIT $GIT_HASH $GIT_REMOTE"
+  fi
+    echo $GIT_REV > pan_git_rev
+  elif test -f pan_git_rev; then
+    GIT_REV=`cat pan_git_rev`
+  else
+    GIT_REV="Unknown"
 fi
 
 AC_DEFINE_UNQUOTED([GIT_REV],["$GIT_REV"],[Git branch and hash])
