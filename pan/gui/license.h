@@ -3,7 +3,7 @@
 Version 2, June 1991\n\
 \n\
 Copyright (C) 1989, 1991 Free Software Foundation, Inc.\n\
-59 Temple Place, Suite 330, Boston, MA  02111-1307  USA\n\
+51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA\n\
 Everyone is permitted to copy and distribute verbatim copies\n\
 of this license document, but changing it is not allowed.\n\
 \n\
@@ -16,7 +16,7 @@ software--to make sure the software is free for all its users.  This\n\
 General Public License applies to most of the Free Software\n\
 Foundation's software and to any other program whose authors commit to\n\
 using it.  (Some other Free Software Foundation software is covered by\n\
-the GNU Library General Public License instead.)  You can apply it to\n\
+the GNU Lesser General Public License instead.)  You can apply it to\n\
 your programs, too.\n\
 \n\
 When we speak of free software, we are referring to freedom, not\n\
