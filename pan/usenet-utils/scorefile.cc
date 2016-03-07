@@ -397,6 +397,7 @@ namespace
 
     if (test->_aggregates.size() == 1) {
       *test = *test->_aggregates[0];
+      normalize_test (test);
     } else foreach (FilterInfo::aggregatesp_t, test->_aggregates, it)
       normalize_test (*it);
   }
