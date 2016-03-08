@@ -140,9 +140,9 @@ EncodeCache :: add (const Quark& message_id)
 void EncodeCache :: finalize (std::string message_id)
 {
   struct stat sb;
-	char out_path[4096];
-	
-	get_filename(out_path, Quark(message_id));
+  char out_path[4096];
+  
+  get_filename(out_path, Quark(message_id));
   stat (out_path, &sb);
   _mid_to_info[message_id]._size = sb.st_size;
   fire_added (message_id);
@@ -190,7 +190,12 @@ EncodeCache :: get_data(std::string& data, const Quark& where)
 {
   char buf[4096];
   get_filename(buf, where);
+#ifdef G_OS_WIN32
+  // Prevent Windows EOF character from stopping the stream
+  std::ifstream in(buf, std::ios::binary);
+#else
   std::ifstream in(buf, std::ios::in);
+#endif
   std::stringstream out;
 
   while (in.getline(buf,sizeof(buf)))
