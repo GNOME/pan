@@ -2042,6 +2042,7 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _root = scroll;
 
   search_activate (this); // calls rebuild_filter
+  _prefs._rules_enabled = prefs.get_flag("enable-rules", true);
   rules(_prefs._rules_enabled);
 
   _data.add_listener (this);
