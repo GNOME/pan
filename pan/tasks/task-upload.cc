@@ -347,6 +347,7 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
         Log::add_entry_list (tmp, _logfile);
         _logfile.clear();
       }
+      break;
     case TOO_MANY_CONNECTIONS:
       // lockout for 120 secs, but try
       it->second.reset();
