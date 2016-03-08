@@ -22,10 +22,10 @@ else
         GIT_REMOTE=`echo $GIT_REMOTE | sed -e 's/ssh:\/\/.*@//g'`;;
       esac
       GIT_REMOTE=`echo $GIT_REMOTE | sed 's/ssh:\/\///g'`;;
-    esac
-    case "$GIT_REMOTE" in
       *git://* )
-       GIT_REMOTE=`echo $GIT_REMOTE | sed 's/git:\/\///g'`;;
+      GIT_REMOTE=`echo $GIT_REMOTE | sed 's/git:\/\///g'`;;
+      *https://* )
+      GIT_REMOTE=`echo $GIT_REMOTE | sed 's/https:\/\///g'`;;
     esac
   fi
 fi
