@@ -35,10 +35,57 @@ using namespace pan;
 ****
 ***/
 
+/*
+ * Copy-and-swap idiom according to
+ * http://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
+ */
+
+RulesInfo :: RulesInfo (const RulesInfo &that)
+  : _type(that._type)
+  , _negate(that._negate)
+  , _ge(that._ge)
+  , _lb(that._lb)
+  , _hb(that._hb)
+{
+  foreach_const (aggregatesp_t, that._aggregates, it) {
+    _aggregates.push_back (new RulesInfo(**it));
+  }
+}
+
+void
+swap (RulesInfo &first, RulesInfo &second)
+{
+  using std::swap;
+
+  swap (first._type,       second._type);
+  swap (first._aggregates, second._aggregates);
+  swap (first._negate,     second._negate);
+  swap (first._ge,         second._ge);
+  swap (first._lb,         second._lb);
+  swap (first._hb,         second._hb);
+}
+
+RulesInfo &RulesInfo::operator = (RulesInfo other)
+{
+  swap (*this, other);
+
+  return *this;
+}
+
+RulesInfo :: ~RulesInfo ()
+{
+  foreach (aggregatesp_t, _aggregates, it) {
+    delete *it;
+  }
+}
+
 void
 RulesInfo :: clear ()
 {
   _type = RulesInfo::TYPE__ERR;
+  foreach (aggregatesp_t, _aggregates, it) {
+    delete *it;
+  }
   _aggregates.clear ();
   _lb = _hb = 0;
   _ge = 0;

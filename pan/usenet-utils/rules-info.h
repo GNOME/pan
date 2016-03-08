@@ -25,6 +25,16 @@
 #include <pan/general/string-view.h>
 #include <pan/general/text-match.h>
 
+/**
+ * Pre-declaring swap(...) is a bit involved, given the use
+ * of the namespace pan and it needs to be outside.
+ */
+namespace pan {
+  class RulesInfo;
+};
+
+void swap(pan::RulesInfo &first, pan::RulesInfo &second);
+
 namespace pan
 {
   /**
@@ -51,14 +61,17 @@ namespace pan
 
       bool empty() const { return _type == TYPE__ERR; }
       RulesInfo () { clear(); }
-      virtual ~RulesInfo () { }
+      RulesInfo (const RulesInfo &that);
+      friend void ::swap (RulesInfo &first, RulesInfo &second);
+      RulesInfo &operator = (RulesInfo other);
+      virtual ~RulesInfo ();
 
       /** Convenience typedef. */
-      typedef std::deque<RulesInfo> aggregates_t;
+      typedef std::deque<RulesInfo *> aggregatesp_t;
 
       /** When `_type' is AGGREGATE_OR or AGGREGATE_AND,
           these are the filters being or'ed or and'ed together. */
-      aggregates_t _aggregates;
+      aggregatesp_t _aggregates;
 
       /** When this is true, the results of the test should be negated. */
       bool _negate;

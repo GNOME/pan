@@ -1353,25 +1353,29 @@ HeaderPane :: rebuild_rules (bool enable)
 
   RulesInfo &r (_rules);
   r.set_type_aggregate_and ();
-  RulesInfo tmp;
+  RulesInfo *tmp;
 
   std::pair<int,int> res;
 
   res = get_int_from_rules_str(_prefs.get_string("rules-delete-value", "never"));
-  tmp.set_type_delete_b (res.first, res.second);
+  tmp = new RulesInfo;
+  tmp->set_type_delete_b (res.first, res.second);
   r._aggregates.push_back (tmp);
 
   res = get_int_from_rules_str(_prefs.get_string("rules-mark-read-value", "never"));
-  tmp.set_type_mark_read_b (res.first, res.second);
+  tmp = new RulesInfo;
+  tmp->set_type_mark_read_b (res.first, res.second);
   r._aggregates.push_back (tmp);
 
   res = get_int_from_rules_str(_prefs.get_string("rules-autocache-value", "never"));
-  tmp.set_type_autocache_b (res.first, res.second);
+  tmp = new RulesInfo;
+  tmp->set_type_autocache_b (res.first, res.second);
   r._aggregates.push_back (tmp);
 
   res = get_int_from_rules_str(_prefs.get_string("rules-auto-dl-value", "never"));
-  tmp.set_type_dl_b (res.first, res.second);
-   r._aggregates.push_back (tmp);
+  tmp = new RulesInfo;
+  tmp->set_type_dl_b (res.first, res.second);
+  r._aggregates.push_back (tmp);
 
 }
 

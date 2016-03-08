@@ -61,8 +61,8 @@ RulesFilter :: test_article ( Data        & data,
   {
     case RulesInfo::AGGREGATE__AND:
       pass = true;
-      foreach (RulesInfo::aggregates_t, rules._aggregates, it)
-        test_article (data, *it, group, article);
+      foreach (RulesInfo::aggregatesp_t, rules._aggregates, it)
+        test_article (data, **it, group, article);
       break;
 
     case RulesInfo::AGGREGATE__OR:
@@ -70,8 +70,8 @@ RulesFilter :: test_article ( Data        & data,
         pass = true;
       else {
         pass = false;
-        foreach (RulesInfo::aggregates_t, rules._aggregates, it) {
-          if (test_article (data, *it, group, article)) {
+        foreach (RulesInfo::aggregatesp_t, rules._aggregates, it) {
+          if (test_article (data, **it, group, article)) {
             pass = true;
             break;
           }
