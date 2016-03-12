@@ -1,45 +1,37 @@
 
     This is Pan, a powerful and user-friendly Usenet newsreader for GTK+.
-    The latest info and versions of Pan can always be found at
+    The latest information and versions of Pan can always be found at
     <http://pan.rebelbase.com/>.
 
 
 RELEASE NOTES
 
-        * Keep in mind that if you have been using the localhost server with an
-          stunnel setup and you change Pan to connect directly to the server
-          using the actual server address, you should edit the existing server
-          instead of creating a new entry. If you create a new entry, Pan will
-          see this as a new server entirely even though you may be connecting to
-          the same account as before.
-          Your subscribed groups will be lost!
-          By editing the existing 'localhost:119' server entry, your
-          subscriptions will be preserved.
+        * You are advised to back up your PAN_HOME folder ('~/.pan2' by default)
+          before updating Pan.
 
-        * To get SSL support in Pan, remember to run the following command:
+        * If you have previously been using a localhost server with stunnel and
+          you now want to connect directly to a news server using the actual
+          server address, do not create a new configuration entry for the
+          server. Pan treats a new entry as a new server and does not preserve
+          existing data on your subscribed groups, even though you are
+          connecting to the very same server as before. Always edit the existing
+          server configuration to preserve your subscriptions.
 
-          ./configure --with-gnutls
-
-          If you are building Pan from the Git code repository, run the following
-          command:
-
-          sh autogen.sh --with-gnutls
-
-        * Directories to search for SSL certificates can be defined with the
-          environment variable 'SSL_CERT_DIR' or 'SSL_DIR'.
+        * Directories to search for SSL certificates can be defined with
+          environment variables 'SSL_CERT_DIR' or 'SSL_DIR'.
 
         * Even if support for GNOME Keyring has been enabled at configure time
-          and compiled in, you can now specifically disable or enable support
-          for GNOME Keyring in Pan's GUI. To enable support, go to Edit ->
-          Preferences -> Miscellaneous and check "Store passwords in GNOME
-          Keyring".
+          and compiled in, you can explicitly configure GNOME Keyring support
+          in the Pan Preferences. To enable support, go to Edit -> Preferences
+          -> Miscellaneous and check 'Store passwords in GNOME Keyring'.
+
 
 REQUIREMENTS
 
     Pan requires these libraries:
 
         * GLib 2.17.6 or higher <http://developer.gnome.org/glib/>
-          (optionally Glib 2.26.0 or higher for multiple Pan instances)
+          (optionally GLib 2.26.0 or higher to support multiple Pan instances)
 
         * GTK+ 2.16.0 or higher (optionally GTK+ 3.0.0 or higher)
           <http://www.gtk.org/>
@@ -47,13 +39,13 @@ REQUIREMENTS
         * GMime 2.4.0 or higher <http://spruce.sourceforge.net/gmime/>
           (optionally GMime 2.5.5 or higher for PGP cryptography support)
 
-    The following libraries, which enhance Pan's functionality, are optional:
+    The following libraries add extra features but are optional:
 
-        * GtkSpell 2.0.7 or higher for spellchecking
+        * GtkSpell 2.0.7 or higher for spellchecker support
           <http://gtkspell.sourceforge.net>
-          (optionally GtkSpell 2.0.16 for spellchecking with GTK+ 3)
+          (optionally GtkSpell 2.0.16 for spellchecker support with GTK+ 3)
 
-        * Enchant 1.6.0 or higher for spellchecking
+        * Enchant 1.6.0 or higher for spellchecker support
           <http://www.abisource.com/projects/enchant/>
 
         * libnotify 0.4.1 or higher for notifications
@@ -62,44 +54,16 @@ REQUIREMENTS
         * GNOME Keyring 3.2.0 or higher for password storage
           <https://live.gnome.org/GnomeKeyring>
 
-        * D-Bus for multiple Pan instances
+        * D-Bus to support running multiple Pan instances
           <http://www.freedesktop.org/wiki/Software/dbus>
 
         * GnuTLS 3.0.0 or higher for encrypted connections (TLS 1.0)
           <http://www.gnu.org/software/gnutls/>
-          
-        * libgrss 0.5.0 or higher for meta-search of NZBIndex's RSS channel (experimental, seems to be shutting down now and then)
-          <http://live.gnome.org/Libgrss>
-          (at the moment, the live git version must be compiled and installed)
-          (also needed: LibSoup 2.36.1 or higher, <https://live.gnome.org/LibSoup>)
 
     Run the following command to get a list of available options that you can
     enable or disable at configure time:
 
     ./configure --help
-
-
-OBTAINING THE REQUIREMENTS
-
-    Most Linux distributions make the libraries available as packages; you can
-    also download the libraries directly from their home pages.
-
-    On Debian-based systems (for example: Ubuntu), install the requirements
-    with the following command:
-
-    sudo apt-get install <REQUIREMENT>
-
-    Alternatively, there is a PPA maintained by Klaus Vormweg that can be found at
-    https://launchpad.net/~klaus-vormweg/+archive/pan
-
-    On Fedora-based systems, run the following command to install the
-    requirements:
-
-    sudo yum install -y <REQUIREMENT>
-
-    On Arch Linux, run the following command to invoke the package manager Pacman:
-
-    sudo pacman -S <REQUIREMENT>
 
 
 THE SALES PITCH
@@ -128,28 +92,29 @@ THE SALES PITCH
         * Groups can be filtered by regular expression matching
           subscribed/new/all, etc.
 
-    Pan is good for Downloading Binaries.
+    Pan is good at Binaries.
 
         * Attached images can be shown inline.
         * Pan can download and thread articles as quickly as bandwidth allows.
-        * uuencoded, mime, and yEnc attachments are all supported.
+        * uuencode, MIME, and yEnc attachments are all supported.
         * A task manager lets you reorder, cancel, and resubmit download tasks.
         * Multiple connections are supported, so many binaries can
           be downloaded simultaneously.
         * Multipart articles are automatically grouped together.
         * Non-binary, incomplete multipart, and saved messages can be filtered
           out of the article list.
-
-    Pan is good for Uploading Content to Usenet.
-
         * Files can be attached to a Usenet article and are
-          automatically yEnc-encrypted, threaded and referenced by Pan.
-        * Articles can be encrypted and/or signed with a public/private PGP key,
-          so your privacy and security are ensured.
-        * Connections can be encrypted with the TLS 1.0 protocol (the successor
-          to SSL 3.0).
+          automatically encrypted with yEnc, threaded and referenced by Pan.
+        * Articles can be encrypted or signed with a public or private PGP key
+          for enhanced privacy and security.
+        * Connections can be encrypted with the TLS 1.0 protocol.
 
     The rest of the sales pitch is at <http://pan.rebelbase.com/features/>.
+
+
+INSTALLATION
+
+    See the file 'INSTALL' for instructions.
 
 
 UPGRADING
@@ -158,21 +123,16 @@ UPGRADING
     in the 'INSTALL' file.
 
 
-INSTALLATION
-
-    See the file 'INSTALL' for instructions.
-
-
 HOW TO REPORT BUGS
 
-    See http://pan.rebelbase.com/bugs/ to report bugs.
+    For details on how to report bugs, see <http://pan.rebelbase.com/bugs/>.
 
 
 CONTACT
 
-    To get in touch with Pan authors, contributors, and other community members,
-    subscribe to one of the Pan mailing lists.
-    See http://pan.rebelbase.com/mailing_lists/ for more information.
+    To get in touch with Pan contributors and community members, subscribe to
+    one of the Pan mailing lists. For more information, see
+    <http://pan.rebelbase.com/mailing_lists/>.
 
     You can also chat with other community members on irc.freenode.net, channel
     #pan.
