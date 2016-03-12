@@ -1782,16 +1782,10 @@ void GUI :: do_layout (bool tabbed)
   GtkWidget * group_w (_group_pane->root());
   GtkWidget * header_w (_header_pane->root());
   GtkWidget * search_w;
-#ifdef HAVE_RSS
-  search_w = _search_pane->root();
-#endif
   GtkWidget * body_w (_body_pane->root());
 
   remove_from_parent (group_w);
   remove_from_parent (header_w);
-#ifdef HAVE_RSS
-  remove_from_parent (search_w);
-#endif
   remove_from_parent (body_w);
 
   // remove workarea's current child
@@ -1802,22 +1796,12 @@ void GUI :: do_layout (bool tabbed)
   }
 
   GtkWidget * w (0);
-#ifdef HAVE_RSS
-  GtkWidget* notebook = gtk_notebook_new ();
-  GtkNotebook * n (GTK_NOTEBOOK (notebook));
-  gtk_notebook_append_page (n, header_w, gtk_label_new_with_mnemonic (_("_1. Header Pane")));
-  gtk_notebook_append_page (n, search_w, gtk_label_new_with_mnemonic (_("_2. Search Pane")));
-#endif
   if (tabbed)
   {
     w = gtk_notebook_new ();
     GtkNotebook * n (GTK_NOTEBOOK (w));
     gtk_notebook_append_page (n, group_w, gtk_label_new_with_mnemonic (_("_1. Group Pane")));
-#ifdef HAVE_RSS
-    gtk_notebook_append_page (n, notebook, gtk_label_new_with_mnemonic (_("_2. Header Pane")));
-#else
     gtk_notebook_append_page (n, header_w, gtk_label_new_with_mnemonic (_("_2. Header Pane")));
-#endif
     gtk_notebook_append_page (n, body_w, gtk_label_new_with_mnemonic (_("_3. Body Pane")));
     g_signal_connect (n, "switch-page", G_CALLBACK(notebook_page_switched_cb), this);
   }
@@ -1828,15 +1812,9 @@ void GUI :: do_layout (bool tabbed)
     const std::string orient (_prefs.get_string ("pane-orient", "groups,headers,body"));
 
     StringView tok, v(orient);
-#ifdef HAVE_RSS
-    v.pop_token(tok,','); if (*tok.str=='g') p[0]=group_w; else if (*tok.str=='h') p[0]=notebook; else p[0]=body_w;
-    v.pop_token(tok,','); if (*tok.str=='g') p[1]=group_w; else if (*tok.str=='h') p[1]=notebook; else p[1]=body_w;
-    v.pop_token(tok,','); if (*tok.str=='g') p[2]=group_w; else if (*tok.str=='h') p[2]=notebook; else p[2]=body_w;
-#else
     v.pop_token(tok,','); if (*tok.str=='g') p[0]=group_w; else if (*tok.str=='h') p[0]=header_w; else p[0]=body_w;
     v.pop_token(tok,','); if (*tok.str=='g') p[1]=group_w; else if (*tok.str=='h') p[1]=header_w; else p[1]=body_w;
     v.pop_token(tok,','); if (*tok.str=='g') p[2]=group_w; else if (*tok.str=='h') p[2]=header_w; else p[2]=body_w;
-#endif
 
     if (layout == "stacked-top") {
       w = pack_widgets (_prefs, p[0], p[1], HORIZONTAL, 1);
