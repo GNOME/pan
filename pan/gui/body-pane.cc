@@ -1637,7 +1637,7 @@ BodyPane :: clear_attachments()
 
   {
     gtk_container_remove (GTK_CONTAINER (_att_frame), _att_toolbar);
-    if (G_IS_OBJECT(_att_toolbar)) g_object_unref(_att_toolbar);
+    _att_toolbar = NULL;
     (void)create_attachments_toolbar(_att_frame);
   }
 
