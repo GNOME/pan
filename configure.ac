@@ -291,7 +291,6 @@ AM_CONDITIONAL([HAVE_WIN32],[test "$win32" = "yes"])
 dnl Build the output files
 AC_SUBST(panlocaledir)
 AC_CONFIG_FILES([Makefile
-                 pan.iss
                  README.windows
                  po/Makefile.in
                  uulib/Makefile
