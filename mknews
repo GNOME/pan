@@ -1,0 +1,23 @@
+#!/bin/bash
+# Based on shaunm's simple NEWS entry generator:
+# https://git.gnome.org/browse/gnome-user-docs/plain/mknews
+
+if [ "$#" != "1" ]; then
+    echo "Usage: mknews PREVTAG" 1>&2
+    exit 1
+fi
+
+commits=`git log ${1}.. --pretty="format:  %h %s (%an)" -- . ":!po"`
+echo "$commits"
+
+echo '* Contributors to this release:'
+contrib=`git log ${1}.. --pretty=format:%an, -- . ":!po" | sort | uniq -c | sort -rn | sed -e 's/^ *[0-9]\+ \+//'`
+echo '  '$contrib'' | grep -v '()$' | sed -e 's/,$//'
+
+spc='          '
+echo '* Updated translations:'
+find . -name '*.po' -exec basename {} .po \; | sort -u | while read lc; do
+    contrib=`git log ${1}.. --pretty=format:%an, po/${lc}.po | sort | uniq -c | sort -rn | sed -e 's/^ *[0-9]\+ \+//'`
+    echo "  $lc${spc:0:((10-${#lc}))}("$contrib")"
+done | grep -v '()$' | sed -e 's/,)$/)/'
+
