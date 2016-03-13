@@ -4,14 +4,14 @@
 # This file is distributed under the same license as the pan package.
 # Michal Bukovjan <bukm@centrum.cz>, 2002, 2003.
 # Miloslav Trmac <mitr@volny.cz>, 2003, 2005.
-# Petr Kovar <pknbe@volny.cz>, 2007, 2008, 2009, 2011, 2012, 2013, 2015.
+# Petr Kovar <pknbe@volny.cz>, 2007, 2008, 2009, 2011, 2012, 2013, 2015, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=Pan&ke"
 "ywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-23 20:19+0000\n"
-"PO-Revision-Date: 2015-12-23 21:26+0200\n"
+"POT-Creation-Date: 2016-03-12 23:25+0000\n"
+"PO-Revision-Date: 2016-03-14 00:36+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -31,15 +31,18 @@ msgid "Read and post Usenet articles"
 msgstr "Čtení a vystavování příspěvků na síti Usenet"
 
 #: ../pan.appdata.xml.in.h:3
+#| msgid ""
+#| "Pan is a Usenet newsreader that is good at both text and binaries. It "
+#| "supports offline reading, scoring and killfiles, yEnc, NZB, binary "
+#| "uploading, PGP handling, multiserver, and secure connections."
 msgid ""
 "Pan is a Usenet newsreader that is good at both text and binaries. It "
-"supports offline reading, scoring and killfiles, yEnc, NZB, binary "
-"uploading, PGP handling, multiserver, and secure connections."
+"supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
+"multiple servers, and secure connections."
 msgstr ""
 "Pan je diskusní klient, který si umí poradit s textovými i binárními "
 "příspěvky. Podporuje práci v režimu offline, hodnocení, killfiles, yEnc, "
-"NZB, nahrávání binárních souborů, práci s PGP a více servery a zabezpečené "
-"připojení."
+"NZB, práci s PGP a více servery a zabezpečené připojení."
 
 #: ../pan.appdata.xml.in.h:4
 msgid ""
@@ -51,7 +54,7 @@ msgstr ""
 
 #. update the titlebar
 #: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:1040
-#: ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:2009 ../pan/gui/score-add-ui.cc:602
+#: ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:1987 ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
 
@@ -61,8 +64,9 @@ msgstr "Diskusní klient"
 
 #. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
 #: ../pan.desktop.in.h:5
-msgid "usenet;newsreader;newsgroup;usenet article;yenc,nzb;"
-msgstr "usenet;diskusní klient;diskusní skupina;příspěvek;yenc,nzb;"
+#| msgid "usenet;newsreader;newsgroup;usenet article;yenc,nzb;"
+msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
+msgstr "usenet;news;diskusní klient;diskusní skupina;příspěvek;yenc;nzb;"
 
 #: ../pan/data/article-cache.cc:144 ../pan/data/encode-cache.cc:62
 #, c-format
@@ -106,6 +110,11 @@ msgstr ""
 "Chyba při spouštění Úložiště certifikátů. Zkontrolujte, že jsou práva ke "
 "složkám ~/.pan2 a ~/.pan2/ssl_certs nastavena správně. Kritická chyba, "
 "ukončuje se."
+
+#: ../pan/data/cert-store.cc:362
+#, c-format
+msgid "Could not export certificate for server: %s"
+msgstr "Export certifikátu serveru se nezdařil: %s"
 
 #. load_group_descriptions (*_data_io);
 #: ../pan/data-impl/data-impl.cc:113
@@ -798,18 +807,18 @@ msgstr "Zobrazovat podřazená vlákna vyhovují_cích příspěvků"
 msgid "Unnamed File"
 msgstr "Soubor bez názvu"
 
-#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1980
+#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1958
 #: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1748
 #: ../pan/gui/post-ui.cc:2588 ../pan/gui/prefs-ui.cc:855
 #: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Předmět"
 
-#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1980
+#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1958
 msgid "From"
 msgstr "Odesílatel"
 
-#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1981
+#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1959
 #: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:307
 #: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
@@ -994,7 +1003,7 @@ msgstr "ukrajinská"
 msgid "Visual"
 msgstr "vizuální"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2178
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2156
 #: ../pan/gui/post-ui.cc:548 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Znaková sada"
@@ -1174,9 +1183,9 @@ msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr "Chcete jej přijmout natrvalo? (Později lze provést změnu.)"
 
 #: ../pan/gui/gui.cc:1670
-#| msgid "Copyright © 2002-2012 Charles Kerr and others"
-msgid "Copyright © 2002-2015 Charles Kerr and others"
-msgstr "Copyright © 2002-2015 Charles Kerr a další"
+#| msgid "Copyright © 2002-2015 Charles Kerr and others"
+msgid "Copyright © 2002-2016 Charles Kerr and others"
+msgstr "Copyright © 2002-2016 Charles Kerr a další"
 
 #: ../pan/gui/gui.cc:1675
 msgid "translator-credits"
@@ -1185,47 +1194,39 @@ msgstr ""
 "Miloslav Trmač <mitr@volny.cz>\n"
 "Petr Kovář <pknbe@volny.cz>"
 
-#: ../pan/gui/gui.cc:1808
-msgid "_1. Header Pane"
-msgstr "_1. Panel záhlaví"
-
-#: ../pan/gui/gui.cc:1809
-msgid "_2. Search Pane"
-msgstr "_2. Panel hledání"
-
-#: ../pan/gui/gui.cc:1815
+#: ../pan/gui/gui.cc:1803
 msgid "_1. Group Pane"
 msgstr "_1. Panel skupin"
 
-#: ../pan/gui/gui.cc:1817 ../pan/gui/gui.cc:1819
+#: ../pan/gui/gui.cc:1804
 msgid "_2. Header Pane"
 msgstr "_2. Panel záhlaví"
 
-#: ../pan/gui/gui.cc:1821
+#: ../pan/gui/gui.cc:1805
 msgid "_3. Body Pane"
 msgstr "_3. Panel těla příspěvku"
 
-#: ../pan/gui/gui.cc:1917 ../pan/gui/gui.cc:1932
+#: ../pan/gui/gui.cc:1895 ../pan/gui/gui.cc:1910
 msgid " Bytes"
 msgstr " bajtů"
 
-#: ../pan/gui/gui.cc:1920
+#: ../pan/gui/gui.cc:1898
 msgid " KB"
 msgstr " KB"
 
-#: ../pan/gui/gui.cc:1923
+#: ../pan/gui/gui.cc:1901
 msgid " MB"
 msgstr " MB"
 
-#: ../pan/gui/gui.cc:1926
+#: ../pan/gui/gui.cc:1904
 msgid " GB"
 msgstr " GB"
 
-#: ../pan/gui/gui.cc:1929
+#: ../pan/gui/gui.cc:1907
 msgid " TB"
 msgstr " TB"
 
-#: ../pan/gui/gui.cc:1961
+#: ../pan/gui/gui.cc:1939
 #, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
@@ -1233,7 +1234,7 @@ msgstr[0] "Tento příspěvek je kompletní s %d částí."
 msgstr[1] "Tento příspěvek je kompletní se %d částmi."
 msgstr[2] "Tento příspěvek má všech %d částí."
 
-#: ../pan/gui/gui.cc:1963
+#: ../pan/gui/gui.cc:1941
 #, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
@@ -1241,26 +1242,26 @@ msgstr[0] "Tomuto příspěvku schází %d část."
 msgstr[1] "Tomuto příspěvku schází %d z celkových %d částí:"
 msgstr[2] "Tomuto příspěvku schází %d z celkových %d částí:"
 
-#: ../pan/gui/gui.cc:1981 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/gui.cc:1959 ../pan/gui/header-pane.cc:1315
 #: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "ID zprávy"
 
-#: ../pan/gui/gui.cc:1982 ../pan/gui/header-pane.cc:1796
+#: ../pan/gui/gui.cc:1960 ../pan/gui/header-pane.cc:1796
 #: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Řádků"
 
-#: ../pan/gui/gui.cc:1982
+#: ../pan/gui/gui.cc:1960
 msgid "Size"
 msgstr "Velikost"
 
-#: ../pan/gui/gui.cc:1983 ../pan/gui/header-pane.cc:1812
+#: ../pan/gui/gui.cc:1961 ../pan/gui/header-pane.cc:1812
 #: ../pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr "Bajtů"
 
-#: ../pan/gui/gui.cc:2033
+#: ../pan/gui/gui.cc:2011
 msgid ""
 "Error loading iconv library. Encoding certain character sets will not work "
 "in GUI."
@@ -1268,16 +1269,16 @@ msgstr ""
 "Chyba při nahrávání knihovny iconv. Kódování některých znakových sad nebude "
 "v GUI fungovat."
 
-#: ../pan/gui/gui.cc:2179
+#: ../pan/gui/gui.cc:2157
 msgid "Body Pane Encoding"
 msgstr "Znaková sada panelu těla příspěvku"
 
-#: ../pan/gui/gui.cc:2210 ../pan/gui/task-pane.cc:609
+#: ../pan/gui/gui.cc:2188 ../pan/gui/task-pane.cc:609
 #, c-format
 msgid "Offline"
 msgstr "Offline"
 
-#: ../pan/gui/gui.cc:2214
+#: ../pan/gui/gui.cc:2192
 #, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
@@ -1285,36 +1286,36 @@ msgstr[0] "Uzavírání %d spojení"
 msgstr[1] "Uzavírání %d spojení"
 msgstr[2] "Uzavírání %d spojení"
 
-#: ../pan/gui/gui.cc:2216 ../pan/gui/gui.cc:2246
+#: ../pan/gui/gui.cc:2194 ../pan/gui/gui.cc:2224
 #, c-format
 msgid "No Connections"
 msgstr "Bez spojení"
 
-#: ../pan/gui/gui.cc:2220
+#: ../pan/gui/gui.cc:2198
 #, c-format
 msgid "Connecting"
 msgstr "Připojování"
 
-#: ../pan/gui/gui.cc:2233
+#: ../pan/gui/gui.cc:2211
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: nečinných %d, aktivních %d při %.1f KiB/s"
 
-#: ../pan/gui/gui.cc:2289
+#: ../pan/gui/gui.cc:2267
 #, c-format
 msgid "No Tasks"
 msgstr "Žádné úlohy"
 
-#: ../pan/gui/gui.cc:2291 ../pan/gui/prefs-ui.cc:1090
+#: ../pan/gui/gui.cc:2269 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Úlohy"
 
-#: ../pan/gui/gui.cc:2308 ../pan/gui/task-pane.cc:475
+#: ../pan/gui/gui.cc:2286 ../pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "Úloh %lu, %s, %.1f KiB/s, zbývá cca %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2360
+#: ../pan/gui/gui.cc:2338
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1862,7 +1863,7 @@ msgstr "Přidat soubory do fronty"
 msgid "Save Upload Queue as NZB File"
 msgstr "Uložit frontu nahrávaného jako soubor NZB"
 
-#: ../pan/gui/prefs.cc:364
+#: ../pan/gui/prefs.cc:366
 #, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "Nelze zanalyzovat barvu %s \"%s\""
@@ -2072,7 +2073,6 @@ msgid "Task Pane"
 msgstr "Panel úloh"
 
 #: ../pan/gui/prefs-ui.cc:1008
-#| msgid "Show Task Pane info popups"
 msgid "Show task pane popups"
 msgstr "Zobrazovat oznámení panelu úloh"
 
@@ -3196,7 +3196,6 @@ msgid "Delete Tasks"
 msgstr "Smaže úlohy"
 
 #: ../pan/gui/task-pane.cc:1055
-#| msgid "Show info popups"
 msgid "Show popups"
 msgstr "Zobrazovat oznámení"
 
@@ -3382,7 +3381,7 @@ msgstr ""
 "Vystavování souboru %s nebylo zcela úspěšné: Zkontrolujte záznamy (pravým "
 "kliknutím na položku v seznamu)."
 
-#: ../pan/tasks/task-upload.cc:358
+#: ../pan/tasks/task-upload.cc:359
 #, c-format
 msgid ""
 "Posting of file %s not successful: Check the log (right-click list item)."
@@ -3753,6 +3752,12 @@ msgstr "bez_názvu"
 #: ../pan/usenet-utils/text-massager.cc:580
 msgid "no_mail"
 msgstr "bez_e-mailu"
+
+#~ msgid "_1. Header Pane"
+#~ msgstr "_1. Panel záhlaví"
+
+#~ msgid "_2. Search Pane"
+#~ msgstr "_2. Panel hledání"
 
 #~ msgid "DL Initialization..."
 #~ msgstr "Spouštění DL..."
