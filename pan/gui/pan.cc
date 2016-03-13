@@ -268,10 +268,10 @@ namespace
       prefs.add_listener(this);
       queue.add_listener(this);
       data.add_listener(this);
+      is_online = q.is_online();
+
       update_status_tooltip();
       status_icon_timeout_tag = g_timeout_add (500, status_icon_periodic_refresh, this);
-
-      is_online = q.is_online();
 
       update_status_icon(ICON_STATUS_IDLE);
 
