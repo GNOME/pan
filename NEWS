@@ -1,5 +1,133 @@
 1.0 "Asieoniezi"
 
+0.140 "Chocolate Salty Balls"
+  f9e0a50 Replace RulesInfo.deque<RulesInfo> with deque<RulesInfo *>.
+  (Olaf Seibert)
+  4323223 Fix missing recursion (this is a pre-existing bug) (Olaf Seibert)
+  0b399ec Changed a deque<FilterInfo> into a deque<FilterInfo *> (Olaf Seibert)
+  2024f05 Deleted object is touched again (Olaf Seibert)
+  9b31c87 Remove leftover code (Petr Kovar)
+  80566c8 Do not include https:// in GIT_REMOTE (Petr Kovar)
+  f55cebc Rules Enabled preference flag wasn't loaded (Andrew Nile)
+  b74bcc9 Prevent EOF char from stopping binary upload in Win (Andrew Nile)
+  73863fc Missing break (Andrew Nile)
+  81ec291 Update license.h (Petr Kovar)
+  5186a2a Do not include protocol & user name in GIT_REMOTE (Petr Kovar)
+  4228421 Fix accel key 'R' (used twice) (Detlef Graef)
+  9471b22 fix: close posting window (Detlef Graef)
+  46f97aa Unneeded detour via C-type strings (Olaf Seibert)
+  6b1b345 Fix saving of SSL certificate (Detlef Graef)
+  055fe95 Fix Edit SSL Certificates crash (walt)
+  a52b404 Fix localedir (Petr Kovar)
+  94d5b7c Update FSF address (Petr Kovar)
+  3663720 Fix crash at PanTreeStore::get_iter() (Detlef Graef)
+  2ce62c7 Update desktop file (Petr Kovar)
+  0806805 Add appdata support for Pan (Petr Kovar)
+  34e1bb5 file::get_pan_home() : fix for g++-5 non-CoW std::string semantics
+  (Alexandre Rostovtsev)
+  c186c9f Rename configure.in -> configure.ac (Petr Kovar)
+  af87825 When "Show Matching Articles' Threads", messages with dangling
+  References not shown (Lionel Elie Mamane)
+  81929d0 Fixes in encode-cache.cc, task-upload.h, uuencode.c (Andrew Nile)
+  2ae6aff Applied refresh patch for body-pane (Heinrich Müller)
+  8bd7184 Fixes in pan/gui/prefs-ui.cc (Andrew Nile)
+  0a57a01 Various UI fixes (Heinrich Müller)
+  7ca9c6c Updated FSF's address (Daniel Mustieles)
+  4820c84 Remove outdated pan.spec.in (Petr Kovar)
+  6daf184 Fix xzver, append \r\n (Heinrich Müller)
+  b1af29b Fix for iso c++ and struct deque (Heinrich Müller)
+  6200d57 Fix xfeature for xover task (Heinrich Müller)
+  8325c88 Fix xfeature for groups task (Heinrich Müller)
+  29edfc3 Added aSYNC behavior; disabled treeview on search (Heinrich Müller)
+  b00f96e Added support for gtkspell3 (Yclept Nemo)
+  099bd57 next-unread-group etc. broken (Heinrich Müller, #690789)
+  42b9292 Improve verbose output in non-gui mode (Heinrich Müller)
+  c251367 Segmentation fault when using external editor to compose newsgroup
+  postings (Heinrich Müller)
+  db8adcf Let the user deactivate task pane pop-ups from task pane (Heinrich
+  Müller)
+  f509257 Posting - Error 441 is not a successful post (Heinrich Müller,
+  #693786)
+  f6c7a64 Use zlib crc32 for compression.cc; fix non-gui header xover (Heinrich
+  Müller)
+  cb7b50a Use zlib crc32 (Heinrich Müller)
+  9c148a3 Use crc32 8-slice algorithm by Intel (Heinrich Müller)
+  5133e23 Improve speed of uudecode (Heinrich Müller)
+  5eef4fc Fix IP lockout on ISP IP change; fix SIGSEGV in socket impl (Heinrich
+  Müller)
+  4922045 Fixes for xfeature; patch for 'match only read' (Heinrich Müller,
+  Cal Peake)
+  acb4362 Avoid NPE on early init of server edit dialog; fix xfeature (Heinrich
+  Müller)
+  2d053c4 Let the user choose compression type with combobox; hint which server
+  supports which compression scheme (Heinrich Müller)
+  88fe336 Activate action 'get-new-headers-when-entering-group' only for
+  non-virtual groups (Heinrich Müller)
+  9e301fb Fix for line-wrapped x-face header (Heinrich Müller)
+  3f81af1 Properly escape < and > chars in subject (Heinrich Müller)
+  d454a36 Fix for group enter (Heinrich Müller)
+  e2ca6d2 Fix NPE (Heinrich Müller)
+  4f681cd Added support for diablo and xfeature (Heinrich Müller)
+  00fe4a3 Added xzver functionality (Heinrich Müller)
+  6a8de8b Patch for user agent in ui (Miroslav Sabljic)
+  dcc2556 Refactoring; added virtual folders for sent and drafts (Heinrich
+  Müller)
+  f7ba647 Make <cert> filename.pem become related to the current $PAN_HOME dir
+  (Heinrich Müller, #680295)
+  a823ae8 Patch for NetBSD & iconv (Heinrich Müller)
+  4ad8971 Fix segfault in task-pane.cc:148 (Heinrich Müller)
+  c860200 Disconnect only if set in prefs (Heinrich Müller)
+  9cd77f9 Added HTML parser (Heinrich Müller)
+  6a2a9df HTML preview (Heinrich Müller)
+  52ccea5 Fix for systray behavior (Heinrich Müller)
+  884e4c1 Removed dbg output (Heinrich Müller)
+  9faef90 Improved gtkstyle handling for progressview (Heinrich Müller)
+  29120fa Change show sig icon (Heinrich Müller)
+  8b934ce Adapt to any screen size in prefs-ui, show scrollbars if needed
+  (Heinrich Müller)
+  cf68577 "Complete" the Colors tab; pan 0.136 fails to build on 64-bit OS X
+  (Heinrich Müller, #681037, #673813)
+  07e4614 Fix NPE in action_combo (Steve Davies)
+  4162e82 Shortcuts tab is always drawn first (Heinrich Müller, #681036)
+  1dba05f Update desktop file (Heinrich Müller, #680468)
+  a3bbefc Add an option to turn-off 'tool-tips' on the Task Manager panel
+  (Heinrich Müller, #680298)
+  b5aeade Added save option for inline yEnc images (Heinrich Müller)
+  87c6bda Fixed singletons, moved color init to pan.cc (Heinrich Müller)
+  56d4463 Add Background and foreground text color selection; gtk3 compiler
+  cleanup; cleanups in various files (Heinrich Müller, #651306)
+  f21f939 Fixed behavior of mark_read in taskarticle according to action-implied
+  post-action or simple GUI interaction (Heinrich Müller)
+  03d24a9 Fix for http://lists.nongnu.org/archive/html/pan-users/2012-07/msg00033.html
+  (Heinrich Müller)
+  014d082 Fixed memory leak with new regex (Heinrich Müller)
+  29da552 Feature Request: Filtering within task list (Heinrich Müller, #679274)
+  55733b8 Fixed memory leak in shortcut dialog (Heinrich Müller)
+  c249f58 Fix for display of shortcut literals (Heinrich Müller)
+  395f288 Added info about gkr to README (Heinrich Müller)
+* Contributors to this release:
+  Heinrich Müller, Petr Kovar, Steve Davies, Miroslav Sabljic, Cal Peake, Yclept
+  Nemo, Lionel Elie Mamane, Detlef Graef, Olaf Seibert, Andrew Nile, walt,
+  Daniel Mustieles, Alexandre Rostovtsev
+* Updated translations:
+  bs        (Samir Ribic)
+  ca        (Jordi Mas, Gil Forcada)
+  cs        (Petr Kovar, Marek Černocký)
+  de        (Mario Blättermann, Heinrich Müller, Christian Kirbach)
+  el        (Maria Mavridou, Dimitris Spingos)
+  es        (Daniel Mustieles)
+  fi        (Lasse Liehu)
+  fr        (Bruno Brouard)
+  hu        (Balázs Úr)
+  ja        (Jiro Matsuzawa)
+  pt        (Pedro Albuquerque, Duarte Loreto)
+  pt_BR     (Rafael Ferreira, Júnior Pires)
+  sl        (Matej Urbančič, Martin Srebotnjak)
+  sr        (Мирослав Николић)
+  sr@latin  (Мирослав Николић)
+  sv        (Anders Jonsson)
+  tr        (Muhammet Kara)
+
 0.139 "Sexual Chocolate"
 * std::logic_error thrown ("basic_string::_S_construct null not valid") 
   (Heinrich Müller, #678445) 
