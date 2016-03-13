@@ -132,6 +132,7 @@ namespace pan
           Task * _decoding;
           Task * _encoding;
         public:
+          task_states_t ();
           tasks_t tasks;
           TaskState get_state (Task* task) const {
             if (_decoding && (task==_decoding)) return DECODING;

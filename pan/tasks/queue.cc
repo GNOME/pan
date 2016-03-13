@@ -33,6 +33,12 @@
 
 using namespace pan;
 
+Queue :: task_states_t :: task_states_t ()
+  : _decoding (NULL)
+  , _encoding (NULL)
+{
+}
+
 Queue :: Queue (ServerInfo         & server_info,
                 TaskArchive        & archive,
                 Data               & data,
