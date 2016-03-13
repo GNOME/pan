@@ -38,14 +38,12 @@ MAINTAINERCLEANFILES = \
 EXTRA_DIST = \
  README \
  README.windows \
- README.mingw \
- ChangeLog \
  Pan.ico \
  pan.png \
  $(appdata_in_files) \
  $(desktop_in_files) \
  intltool-extract.in intltool-merge.in intltool-update.in \
- pan_git_rev
+ pan-git.version
 
 icon_DATA = pan.png
 icondir = $(datadir)/pixmaps

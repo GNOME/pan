@@ -5,7 +5,7 @@ AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
 AC_DEFINE(VERSION_TITLE,["Chocolate Salty Balls"],[Release Name])
 AC_PREREQ([2.64])
 
-dnl Get git info for pan_git_rev
+dnl Get git info for pan-git.version
 GIT_HASH='$Format:%h$'
 if test '0' \< $GIT_HASH ; then
   GIT_REMOTE=`echo '$Format:%d$' | awk -F , '{print gensub("[[\(\)]]","","g",$NF)}' 2> /dev/null`
@@ -35,19 +35,19 @@ if test ! -z $GIT_HASH; then
   else
     GIT_REV="GIT $GIT_HASH $GIT_REMOTE"
   fi
-    echo $GIT_REV > pan_git_rev
-  elif test -f pan_git_rev; then
-    GIT_REV=`cat pan_git_rev`
+    echo $GIT_REV > pan-git.version
+  elif test -f pan-git.version ; then
+    GIT_REV=`cat pan-git.version`
   else
     GIT_REV="Unknown"
 fi
 
-AC_DEFINE_UNQUOTED([GIT_REV],["$GIT_REV"],[Git branch and hash])
+AC_DEFINE_UNQUOTED([GIT_REV],["$GIT_REV"],[Git hash and remote])
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR(pan/general/quark.cc)
 
-AM_INIT_AUTOMAKE([1.11.1 tar-ustar dist-bzip2])
+AM_INIT_AUTOMAKE([1.11.1 check-news tar-ustar dist-bzip2 foreign])
 AM_MAINTAINER_MODE([enable])
 
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
@@ -127,11 +127,9 @@ if test "x$have_gmime26" = "xyes" ; then
   fi
 fi
 
-
 dnl GtkSpell support
 gtkspell_msg=no
 AC_ARG_WITH(gtkspell, AS_HELP_STRING([--with-gtkspell],[enable GtkSpell support (normally: yes)]), [want_gtkspell=$withval], [want_gtkspell=yes])
-
 
 dnl GTK+ 3, GtkSpell 3, and Enchant support
 gtk_msg=no
@@ -172,6 +170,9 @@ else
 
 fi
 
+AC_SUBST(ENCHANT_CFLAGS)
+AC_SUBST(ENCHANT_LIBS)
+
 dnl WebKitGTK+ support
 AC_ARG_WITH(webkit, AS_HELP_STRING([--with-webkit],[enable WebKitGTK+ support (normally: no)]), [want_webkit=$withval], [want_webkit=no])
 
@@ -196,9 +197,6 @@ else
     ])
   fi
 fi
-
-AC_SUBST(ENCHANT_CFLAGS)
-AC_SUBST(ENCHANT_LIBS)
 
 dnl GnuTLS support
 gnutls_msg=no
@@ -305,7 +303,6 @@ AC_CONFIG_FILES([Makefile
                  pan/icons/Makefile
                  pan/data-impl/Makefile
                  pan/gui/Makefile])
-dnl              pan/data/decode-test-cache/Makefile
 
 AC_OUTPUT
 
