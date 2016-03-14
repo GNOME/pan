@@ -63,10 +63,12 @@ pan :: url_find (const StringView& text, StringView& setme_url)
   if (text.empty())
     return false;
 
-  GMatchInfo *match;
+  GMatchInfo *match = NULL;
 
-  if (!g_regex_match(regex, text.str, (GRegexMatchFlags)0, &match))
+  if (!g_regex_match(regex, text.str, (GRegexMatchFlags)0, &match)) {
+    g_match_info_free(match);
     return false;
+  }
 
   int start,end;
 
