@@ -125,8 +125,8 @@ namespace pan
       GtkWidget* create_attachments_toolbar(GtkWidget*);
 
     private:
-      void set_html_text (const char* text);
 #ifdef HAVE_WEBKIT
+      void set_html_text (const char* text);
       GtkWidget* _web_view;
 #endif
     private:

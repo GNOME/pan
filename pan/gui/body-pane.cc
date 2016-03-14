@@ -1270,8 +1270,10 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   GtkTextBuffer* buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW(_text));
   GtkTextIter _start, _end;
   gtk_text_buffer_get_bounds (buffer, &_start, &_end);
+#ifdef HAVE_WEBKIT
   char* buf (gtk_text_buffer_get_text (buffer, &_start, &_end, false));
   if (buf) set_html_text(buf);
+#endif
 
   // if there was a picture, scroll to it.
   // otherwise scroll to the top of the body.
@@ -1681,13 +1683,13 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
   gtk_widget_show_all(_att_toolbar);
 }
 
+#ifdef HAVE_WEBKIT
 void
 BodyPane :: set_html_text (const char* text)
 {
-#ifdef HAVE_WEBKIT
   webkit_web_view_load_string (WEBKIT_WEB_VIEW (_web_view), text, NULL, NULL, "");
-#endif
 }
+#endif
 
 GtkWidget*
 BodyPane :: create_attachments_toolbar (GtkWidget* frame)
