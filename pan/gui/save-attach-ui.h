@@ -18,7 +18,7 @@
  */
 
 #ifndef __SaveAttachUI_h__
-#define __SaveattachUI_h__
+#define __SaveAttachUI_h__
 
 #include <string>
 #include <vector>
