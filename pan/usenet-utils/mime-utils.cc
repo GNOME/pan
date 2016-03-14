@@ -1209,7 +1209,7 @@ mime :: construct_message (GMimeStream    ** istreams,
   {
     GMimeMultipart * mp = g_mime_multipart_new ();
 
-    for (int i=0; i<qty; ++i)
+    for (int i=0; i<qty; ++i) // should this 0 be 1?
     {
       g_mime_multipart_add(mp,g_mime_message_get_mime_part(messages[i]) );
     }
