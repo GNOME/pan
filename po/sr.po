@@ -1,6 +1,8 @@
 # Serbian translation of pan
 # Courtesy of Prevod.org team (http://prevod.org/) -- 2003—2016.
 # This file is distributed under the same license as the pan package.
+#
+# Translators: 
 # Александар Урошевић <urke@gmx.net>, 2003—2004
 # Мирослав Николић <miroslavnikolic@rocketmail.com>, 2012—2016.
 msgid ""
@@ -8,16 +10,17 @@ msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=Pan&key"
 "words=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-05 23:35+0000\n"
-"PO-Revision-Date: 2016-03-06 11:15+0200\n"
+"POT-Creation-Date: 2016-03-12 23:25+0000\n"
+"PO-Revision-Date: 2016-03-14 20:25+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
-"Language-Team: Serbian <gnom@prevod.org>\n"
+"Language-Team: Serbian <(nothing)>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
 "n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Project-Style: gnome\n"
 
 #: ../pan.appdata.xml.in.h:1
 msgid "Pan Newsreader"
@@ -30,12 +33,12 @@ msgstr "Читајте и објављујте чланке на Јузнету"
 #: ../pan.appdata.xml.in.h:3
 msgid ""
 "Pan is a Usenet newsreader that is good at both text and binaries. It "
-"supports offline reading, scoring and killfiles, yEnc, NZB, binary "
-"uploading, PGP handling, multiserver, and secure connections."
+"supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
+"multiple servers, and secure connections."
 msgstr ""
 "Пан је Јузнетов читач вести који је добар како са текстом тако и са "
 "извршнима. Подржава читање ван мреже, бодовање и убијање датотека, уЕнц, "
-"НЗБ, слање извршних, ПГП руковање, више сервера и безбедне везе."
+"НЗБ, ПГП руковање, више сервера и безбедне везе."
 
 #: ../pan.appdata.xml.in.h:4
 msgid ""
@@ -47,7 +50,7 @@ msgstr ""
 
 #. update the titlebar
 #: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:1040
-#: ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:2009 ../pan/gui/score-add-ui.cc:602
+#: ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:1987 ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Пан"
 
@@ -57,8 +60,8 @@ msgstr "Читач вести"
 
 #. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
 #: ../pan.desktop.in.h:5
-msgid "usenet;newsreader;newsgroup;usenet article;yenc,nzb;"
-msgstr "вести;читач;јузнет;читач вести;групе вести;чланак јузнета;уенц;нзб;"
+msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
+msgstr "вести;читач;јузнет;читач вести;групе вести;чланак;уенц;нзб;"
 
 #: ../pan/data/article-cache.cc:144 ../pan/data/encode-cache.cc:62
 #, c-format
@@ -180,11 +183,11 @@ msgstr "Данас у %l:%M"
 
 #: ../pan/general/e-util.cc:213
 msgid "%a %l:%M %p"
-msgstr "%a, %l:%M"
+msgstr "%a, у %l:%M"
 
 #: ../pan/general/e-util.cc:214
 msgid "%b %d %l:%M %p"
-msgstr "%d. %b. у %d %l:%M"
+msgstr "%d. %B у %l:%M"
 
 #: ../pan/general/e-util.cc:215
 msgid "%b %d %Y"
@@ -234,7 +237,7 @@ msgstr "_Преглед"
 
 #: ../pan/gui/actions.cc:310
 msgid "Filte_r"
-msgstr "П_ропусник"
+msgstr "Филте_р"
 
 #: ../pan/gui/actions.cc:311
 msgid "_Go"
@@ -802,18 +805,18 @@ msgstr "Прикажи _подтеме чланка које испуњавај�
 msgid "Unnamed File"
 msgstr "Неименована датотека"
 
-#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1980
+#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1958
 #: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1748
 #: ../pan/gui/post-ui.cc:2588 ../pan/gui/prefs-ui.cc:855
 #: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Тема"
 
-#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1980
+#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1958
 msgid "From"
 msgstr "Шаље"
 
-#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1981
+#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1959
 #: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:307
 #: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
@@ -999,7 +1002,7 @@ msgstr "Украјински"
 msgid "Visual"
 msgstr "Визуелни"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2178
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2156
 #: ../pan/gui/post-ui.cc:548 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Кодна страна"
@@ -1177,7 +1180,6 @@ msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr "Да ли желите да га прихватите трајно? (Касније можете изменити ово.)"
 
 #: ../pan/gui/gui.cc:1670
-#| msgid "Copyright © 2002-2015 Charles Kerr and others"
 msgid "Copyright © 2002-2016 Charles Kerr and others"
 msgstr "Ауторска права © 2002-2016 Чарлс Кер и остали"
 
@@ -1189,47 +1191,39 @@ msgstr ""
 "\n"
 "http://prevod.org — превод на српски језик"
 
-#: ../pan/gui/gui.cc:1808
-msgid "_1. Header Pane"
-msgstr "_1. Површ заглавља"
-
-#: ../pan/gui/gui.cc:1809
-msgid "_2. Search Pane"
-msgstr "_2. Површ претраге"
-
-#: ../pan/gui/gui.cc:1815
+#: ../pan/gui/gui.cc:1803
 msgid "_1. Group Pane"
 msgstr "_1. Површ групе"
 
-#: ../pan/gui/gui.cc:1817 ../pan/gui/gui.cc:1819
+#: ../pan/gui/gui.cc:1804
 msgid "_2. Header Pane"
 msgstr "_2. Површ заглавља"
 
-#: ../pan/gui/gui.cc:1821
+#: ../pan/gui/gui.cc:1805
 msgid "_3. Body Pane"
 msgstr "_3. Површ разраде"
 
-#: ../pan/gui/gui.cc:1917 ../pan/gui/gui.cc:1932
+#: ../pan/gui/gui.cc:1895 ../pan/gui/gui.cc:1910
 msgid " Bytes"
 msgstr " Бајта"
 
-#: ../pan/gui/gui.cc:1920
+#: ../pan/gui/gui.cc:1898
 msgid " KB"
 msgstr " KB"
 
-#: ../pan/gui/gui.cc:1923
+#: ../pan/gui/gui.cc:1901
 msgid " MB"
 msgstr " MB"
 
-#: ../pan/gui/gui.cc:1926
+#: ../pan/gui/gui.cc:1904
 msgid " GB"
 msgstr " GB"
 
-#: ../pan/gui/gui.cc:1929
+#: ../pan/gui/gui.cc:1907
 msgid " TB"
 msgstr " TB"
 
-#: ../pan/gui/gui.cc:1961
+#: ../pan/gui/gui.cc:1939
 #, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
@@ -1238,7 +1232,7 @@ msgstr[1] "Овај чланак садржи сва %d дела."
 msgstr[2] "Овај чланак садржи свих %d делова."
 msgstr[3] "Овај чланак садржи један део."
 
-#: ../pan/gui/gui.cc:1963
+#: ../pan/gui/gui.cc:1941
 #, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
@@ -1247,26 +1241,26 @@ msgstr[1] "Овом чланку недостају %d од његова %d де
 msgstr[2] "Овом чланку недостају %d од његових %d делова:"
 msgstr[3] "Овом чланку недостаје један део."
 
-#: ../pan/gui/gui.cc:1981 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/gui.cc:1959 ../pan/gui/header-pane.cc:1315
 #: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "ИБ поруке"
 
-#: ../pan/gui/gui.cc:1982 ../pan/gui/header-pane.cc:1796
+#: ../pan/gui/gui.cc:1960 ../pan/gui/header-pane.cc:1796
 #: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Редови"
 
-#: ../pan/gui/gui.cc:1982
+#: ../pan/gui/gui.cc:1960
 msgid "Size"
 msgstr "Величина"
 
-#: ../pan/gui/gui.cc:1983 ../pan/gui/header-pane.cc:1812
+#: ../pan/gui/gui.cc:1961 ../pan/gui/header-pane.cc:1812
 #: ../pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr "Бајтова"
 
-#: ../pan/gui/gui.cc:2033
+#: ../pan/gui/gui.cc:2011
 msgid ""
 "Error loading iconv library. Encoding certain character sets will not work "
 "in GUI."
@@ -1274,16 +1268,16 @@ msgstr ""
 "Грешка учитавања библиотеке иконв-а. Кодирање неких скупова знакова неће "
 "радити у ГКС-у."
 
-#: ../pan/gui/gui.cc:2179
+#: ../pan/gui/gui.cc:2157
 msgid "Body Pane Encoding"
 msgstr "Кодирање површи разраде"
 
-#: ../pan/gui/gui.cc:2210 ../pan/gui/task-pane.cc:609
+#: ../pan/gui/gui.cc:2188 ../pan/gui/task-pane.cc:609
 #, c-format
 msgid "Offline"
 msgstr "Ван мреже"
 
-#: ../pan/gui/gui.cc:2214
+#: ../pan/gui/gui.cc:2192
 #, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
@@ -1292,36 +1286,36 @@ msgstr[1] "Затварам %d везе"
 msgstr[2] "Затварам %d веза"
 msgstr[3] "Затварам једну везу"
 
-#: ../pan/gui/gui.cc:2216 ../pan/gui/gui.cc:2246
+#: ../pan/gui/gui.cc:2194 ../pan/gui/gui.cc:2224
 #, c-format
 msgid "No Connections"
 msgstr "Нема веза"
 
-#: ../pan/gui/gui.cc:2220
+#: ../pan/gui/gui.cc:2198
 #, c-format
 msgid "Connecting"
 msgstr "Повезујем се"
 
-#: ../pan/gui/gui.cc:2233
+#: ../pan/gui/gui.cc:2211
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d мирује, %d ради @ %.1f KiB/s"
 
-#: ../pan/gui/gui.cc:2289
+#: ../pan/gui/gui.cc:2267
 #, c-format
 msgid "No Tasks"
 msgstr "Нема задатака"
 
-#: ../pan/gui/gui.cc:2291 ../pan/gui/prefs-ui.cc:1090
+#: ../pan/gui/gui.cc:2269 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Задаци"
 
-#: ../pan/gui/gui.cc:2308 ../pan/gui/task-pane.cc:475
+#: ../pan/gui/gui.cc:2286 ../pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "Укупно задатака: %lu, %s, %.1f KiB/s, ЕТА %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2360
+#: ../pan/gui/gui.cc:2338
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -3388,7 +3382,7 @@ msgstr ""
 "Објављивање датотеке „%s“ није у потпуности успело: Проверите дневник "
 "(десним тастером миша на ставку списка)."
 
-#: ../pan/tasks/task-upload.cc:358
+#: ../pan/tasks/task-upload.cc:359
 #, c-format
 msgid ""
 "Posting of file %s not successful: Check the log (right-click list item)."
@@ -3757,6 +3751,12 @@ msgstr "без_имена"
 #: ../pan/usenet-utils/text-massager.cc:580
 msgid "no_mail"
 msgstr "нема_поште"
+
+#~ msgid "_1. Header Pane"
+#~ msgstr "_1. Површ заглавља"
+
+#~ msgid "_2. Search Pane"
+#~ msgstr "_2. Површ претраге"
 
 #~ msgid ""
 #~ "Your copy of libpcre doesn't support UTF-8.  UTF-8 regular expressions "
