@@ -75,6 +75,7 @@ namespace pan
     **/
 
     public:
+      /* The ProfilesImpl will own and destruct the DataIO object */
       DataImpl (const StringView& cache_ext, Prefs& prefs, bool unit_test=false, int cache_megs=10, DataIO * source=new DataIO());
       virtual ~DataImpl ();
       virtual void save_state ();

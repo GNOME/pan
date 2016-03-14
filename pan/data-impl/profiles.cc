@@ -317,4 +317,5 @@ ProfilesImpl :: save () const
 ProfilesImpl :: ~ProfilesImpl ()
 {
   save ();
+  delete &_data_io;     // we own the DataIO
 }
