@@ -1201,6 +1201,7 @@ mime :: construct_message (GMimeStream    ** istreams,
       }
     }
 
+    g_object_unref (part);
   }
   g_object_unref (parser);
 
