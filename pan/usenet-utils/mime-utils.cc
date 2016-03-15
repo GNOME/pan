@@ -1134,16 +1134,17 @@ mime :: construct_message (GMimeStream    ** istreams,
     pan_return_val_if_fail (GMIME_IS_STREAM(istreams[i]), NULL);
 
   // build the GMimeMessages
-  GMimeParser * parser;// = g_mime_parser_new ();
   GMimeMessage ** messages = g_new (GMimeMessage*, qty);
 
   for (int i=0; i<qty; ++i) {
-    parser = g_mime_parser_new_with_stream (istreams[i]);
+    GMimeParser* parser = g_mime_parser_new_with_stream (istreams[i]);
     messages[i] = g_mime_parser_construct_message(parser);
     g_object_unref(parser);
     g_mime_stream_reset(istreams[i]);
     parser = g_mime_parser_new_with_stream (istreams[i]);
     GMimeObject* part = g_mime_parser_construct_part(parser);
+    g_object_unref (parser);
+    parser = NULL;
     GMimeContentType * type = g_mime_object_get_content_type (part);
     const bool multipart (GMIME_IS_MULTIPART_SIGNED(part) || GMIME_IS_MULTIPART_ENCRYPTED(part));
 #ifdef HAVE_GMIME_CRYPTO
@@ -1203,7 +1204,6 @@ mime :: construct_message (GMimeStream    ** istreams,
 
     g_object_unref (part);
   }
-  g_object_unref (parser);
 
   if (qty > 1) // fold multiparts together
   {
