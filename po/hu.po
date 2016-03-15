@@ -1,16 +1,17 @@
 # Hungarian translation for PAN Newsreader.
-# Copyright (C) 2001, 2014 Free Software Foundation, Inc.
+# Copyright (C) 2001-2016 Free Software Foundation, Inc.
 # This file is distributed under the same license as the pan2 package.
 #
 # András Tímár <timar@gnome.hu>, 2001.
-# Balázs Úr <urbalazs@gmail.com>, 2014.
+# Balázs Úr <urbalazs@gmail.com>, 2014, 2016.
+# Balázs Meskó <meskobalazs@gmail.com>, 2016.
 msgid ""
 msgstr ""
 "Project-Id-Version: pan2\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-12-30 21:21+0000\n"
-"PO-Revision-Date: 2014-12-31 00:47+0100\n"
+"POT-Creation-Date: 2016-03-14 02:16+0000\n"
+"PO-Revision-Date: 2016-03-15 08:32+0100\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope@googlegroups.com>\n"
 "Language: hu\n"
@@ -20,10 +21,36 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.2\n"
 
+#: ../pan.appdata.xml.in.h:1
+msgid "Pan Newsreader"
+msgstr "Pan hírolvasó"
+
+#: ../pan.appdata.xml.in.h:2 ../pan.desktop.in.h:3
+msgid "Read and post Usenet articles"
+msgstr "Usenet cikkek olvasása és közzététele"
+
+#: ../pan.appdata.xml.in.h:3
+msgid ""
+"Pan is a Usenet newsreader that is good at both text and binaries. It "
+"supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
+"multiple servers, and secure connections."
+msgstr ""
+"A Pan egy Usenet hírolvasó, amely jó mind szöveges, mind bináris adatok "
+"esetén. Támogatja a kapcsolat nélküli olvasást, értékelést és a "
+"killfájlokat, kezeli az yEnc-t, NZB-t és a PGP-t, több kiszolgálót támogat "
+"és támogatja a biztonságos kapcsolatokat is."
+
+#: ../pan.appdata.xml.in.h:4
+msgid ""
+"It is also the only Unix newsreader to get a perfect score on the Good Net-"
+"Keeping Seal of Approval evaluations."
+msgstr ""
+"Ez az egyetlen Unix hírolvasó, amely tökéletes pontszámot kapott a Good Net-"
+"Keeping Seal of Approval értékeléseken."
+
 #. update the titlebar
-#: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106
-#: ../pan/gui/gui.cc:1040 ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:2009
-#: ../pan/gui/score-add-ui.cc:602
+#: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:1040
+#: ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:1987 ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
 
@@ -31,9 +58,10 @@ msgstr "Pan"
 msgid "Newsreader"
 msgstr "Hírolvasó"
 
-#: ../pan.desktop.in.h:3
-msgid "Read and Post Usenet Articles"
-msgstr "Usenet cikkek olvasása és küldése"
+#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
+#: ../pan.desktop.in.h:5
+msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
+msgstr "usenet;hírek;hírolvasó;hírcsoport;cikk;yenc;nzb;"
 
 #: ../pan/data/article-cache.cc:144 ../pan/data/encode-cache.cc:62
 #, c-format
@@ -76,6 +104,11 @@ msgid ""
 msgstr ""
 "Hiba a tanúsítványtároló előkészítésekor. Ellenőrizze, hogy a ~/.pan2 és ~/."
 "pan2/ssl_certs mappák jogosultsága helyes-e. Végzetes, kilépés."
+
+#: ../pan/data/cert-store.cc:362
+#, c-format
+msgid "Could not export certificate for server: %s"
+msgstr "Nem sikerült exportálni a tanúsítványt a kiszolgálóhoz: %s"
 
 #. load_group_descriptions (*_data_io);
 #: ../pan/data-impl/data-impl.cc:113
@@ -770,19 +803,19 @@ msgstr "Megfelelő cikkek _alszálainak megjelenítése"
 msgid "Unnamed File"
 msgstr "Névtelen fájl"
 
-#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1980
-#: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1748
+#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1958
+#: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1753
 #: ../pan/gui/post-ui.cc:2588 ../pan/gui/prefs-ui.cc:855
 #: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Tárgy"
 
-#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1980
+#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1958
 msgid "From"
 msgstr "Feladó"
 
-#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1981
-#: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:307
+#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1959
+#: ../pan/gui/header-pane.cc:1832 ../pan/gui/log-ui.cc:307
 #: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
 msgstr "Dátum"
@@ -965,7 +998,7 @@ msgstr "Ukrán"
 msgid "Visual"
 msgstr "Vizuális"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2178
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2156
 #: ../pan/gui/post-ui.cc:548 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Karakterkódolás"
@@ -1143,87 +1176,81 @@ msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr "Szeretné véglegesen elfogadni? (Ezt később is megváltoztathatja.)"
 
 #: ../pan/gui/gui.cc:1670
-msgid "Copyright \\u00A9 2002-2012 Charles Kerr and others"
-msgstr "Copyright © 2002-2012 Charles Kerr és mások"
+msgid "Copyright © 2002-2016 Charles Kerr and others"
+msgstr "Copyright © 2002-2016 Charles Kerr és mások"
 
 #: ../pan/gui/gui.cc:1675
 msgid "translator-credits"
-msgstr "Úr Balázs <urbalazs@gmail.com>, 2014."
+msgstr ""
+"Úr Balázs <urbalazs@gmail.com>, 2014.\n"
+"Meskó Balázs <meskobalazs@gmail.com>, 2016."
 
-#: ../pan/gui/gui.cc:1808
-msgid "_1. Header Pane"
-msgstr "_1. Fejléc ablaktábla"
-
-#: ../pan/gui/gui.cc:1809
-msgid "_2. Search Pane"
-msgstr "_2. Keresés ablaktábla"
-
-#: ../pan/gui/gui.cc:1815
+#: ../pan/gui/gui.cc:1803
 msgid "_1. Group Pane"
 msgstr "_1. Csoport ablaktábla"
 
-#: ../pan/gui/gui.cc:1817 ../pan/gui/gui.cc:1819
+#: ../pan/gui/gui.cc:1804
 msgid "_2. Header Pane"
 msgstr "_2. Fejléc ablaktábla"
 
-#: ../pan/gui/gui.cc:1821
+#: ../pan/gui/gui.cc:1805
 msgid "_3. Body Pane"
 msgstr "_3. Törzs ablaktábla"
 
-#: ../pan/gui/gui.cc:1917 ../pan/gui/gui.cc:1932
+#: ../pan/gui/gui.cc:1895 ../pan/gui/gui.cc:1910
 msgid " Bytes"
 msgstr " bájt"
 
-#: ../pan/gui/gui.cc:1920
+#: ../pan/gui/gui.cc:1898
 msgid " KB"
 msgstr " KB"
 
-#: ../pan/gui/gui.cc:1923
+#: ../pan/gui/gui.cc:1901
 msgid " MB"
 msgstr " MB"
 
-#: ../pan/gui/gui.cc:1926
+#: ../pan/gui/gui.cc:1904
 msgid " GB"
 msgstr " GB"
 
-#: ../pan/gui/gui.cc:1929
+#: ../pan/gui/gui.cc:1907
 msgid " TB"
 msgstr " TB"
 
-#: ../pan/gui/gui.cc:1961
+#: ../pan/gui/gui.cc:1939
 #, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
 msgstr[0] "Ez a cikk teljes %d résszel."
 msgstr[1] "Ennek a cikknek megvan mind a(z) %d része."
 
-#: ../pan/gui/gui.cc:1963
+#: ../pan/gui/gui.cc:1941
 #, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Ebből a cikkből hiányzik %d rész."
 msgstr[1] "Ebből a cikkből hiányzik %d / %d rész:"
 
-#: ../pan/gui/gui.cc:1981 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/gui.cc:1959 ../pan/gui/header-pane.cc:1315
 #: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "Üzenetazonosító"
 
-#: ../pan/gui/gui.cc:1982 ../pan/gui/header-pane.cc:1796
+#: ../pan/gui/gui.cc:1960 ../pan/gui/header-pane.cc:1801
 #: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Sor"
 
-#: ../pan/gui/gui.cc:1982
+#: ../pan/gui/gui.cc:1960
 msgid "Size"
 msgstr "Méret"
 
-#: ../pan/gui/gui.cc:1983 ../pan/gui/header-pane.cc:1812
+#: ../pan/gui/gui.cc:1961 ../pan/gui/header-pane.cc:1817
 #: ../pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr "Bájt"
 
-#: ../pan/gui/gui.cc:2033
+#: ../pan/gui/gui.cc:2011
 msgid ""
 "Error loading iconv library. Encoding certain character sets will not work "
 "in GUI."
@@ -1231,52 +1258,52 @@ msgstr ""
 "Hiba az iconv programkönyvtár betöltésekor. Bizonyos karakterkészletek "
 "kódolása nem fog működni a grafikus felületen."
 
-#: ../pan/gui/gui.cc:2179
+#: ../pan/gui/gui.cc:2157
 msgid "Body Pane Encoding"
 msgstr "Törzs ablaktábla kódolás"
 
-#: ../pan/gui/gui.cc:2210 ../pan/gui/task-pane.cc:609
+#: ../pan/gui/gui.cc:2188 ../pan/gui/task-pane.cc:609
 #, c-format
 msgid "Offline"
 msgstr "Offline"
 
-#: ../pan/gui/gui.cc:2214
+#: ../pan/gui/gui.cc:2192
 #, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
 msgstr[0] "%d kapcsolat lezárása"
 msgstr[1] "%d kapcsolat lezárása"
 
-#: ../pan/gui/gui.cc:2216 ../pan/gui/gui.cc:2246
+#: ../pan/gui/gui.cc:2194 ../pan/gui/gui.cc:2224
 #, c-format
 msgid "No Connections"
 msgstr "Nincs kapcsolat"
 
-#: ../pan/gui/gui.cc:2220
+#: ../pan/gui/gui.cc:2198
 #, c-format
 msgid "Connecting"
 msgstr "Kapcsolódás"
 
-#: ../pan/gui/gui.cc:2233
+#: ../pan/gui/gui.cc:2211
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d üresjárat, %d aktív @ %.1f KiBps"
 
-#: ../pan/gui/gui.cc:2289
+#: ../pan/gui/gui.cc:2267
 #, c-format
 msgid "No Tasks"
 msgstr "Nincs feladat"
 
-#: ../pan/gui/gui.cc:2291 ../pan/gui/prefs-ui.cc:1090
+#: ../pan/gui/gui.cc:2269 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Feladatok"
 
-#: ../pan/gui/gui.cc:2308 ../pan/gui/task-pane.cc:475
+#: ../pan/gui/gui.cc:2286 ../pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu feladat, %s, %.1f KiBps, ETA %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2360
+#: ../pan/gui/gui.cc:2338
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1293,13 +1320,13 @@ msgstr "Tárgy vagy szerző"
 msgid "Sub or Auth (regex)"
 msgstr "Tár vagy szer (regex)"
 
-#: ../pan/gui/header-pane.cc:1314 ../pan/gui/header-pane.cc:1780
+#: ../pan/gui/header-pane.cc:1314 ../pan/gui/header-pane.cc:1785
 #: ../pan/gui/prefs-ui.cc:849 ../pan/gui/score-add-ui.cc:140
 #: ../pan/gui/task-pane.cc:798
 msgid "Author"
 msgstr "Szerző"
 
-#: ../pan/gui/header-pane.cc:1765 ../pan/gui/prefs-ui.cc:853
+#: ../pan/gui/header-pane.cc:1770 ../pan/gui/prefs-ui.cc:853
 msgid "Score"
 msgstr "Pontszám"
 
@@ -1823,7 +1850,7 @@ msgstr "Fájlok hozzáadása a sorhoz"
 msgid "Save Upload Queue as NZB File"
 msgstr "Feltöltési sor mentése NZB-fájlként"
 
-#: ../pan/gui/prefs.cc:364
+#: ../pan/gui/prefs.cc:366
 #, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "Nem sikerült a(z) %s szín („%s”) feldolgozása"
@@ -2034,8 +2061,8 @@ msgid "Task Pane"
 msgstr "Feladat ablaktábla"
 
 #: ../pan/gui/prefs-ui.cc:1008
-msgid "Show Task Pane info popups"
-msgstr "Feladat ablaktábla felugró információk megjelenítése"
+msgid "Show task pane popups"
+msgstr "Feladat ablaktábla felugró ablakainak megjelenítése"
 
 #: ../pan/gui/prefs-ui.cc:1010
 msgid "Show Download Meter"
@@ -3156,8 +3183,8 @@ msgid "Delete Tasks"
 msgstr "Feladatok törlése"
 
 #: ../pan/gui/task-pane.cc:1055
-msgid "Show info popups"
-msgstr "Felugró információk megjelenítése"
+msgid "Show popups"
+msgstr "Felugró ablakok megjelenítése"
 
 #: ../pan/gui/url.cc:123
 #, c-format
@@ -3340,7 +3367,7 @@ msgstr ""
 "A(z) %s fájl küldése nem teljesen sikeres: Ellenőrizze a naplót (jobb "
 "kattintás a listaelemre)."
 
-#: ../pan/tasks/task-upload.cc:358
+#: ../pan/tasks/task-upload.cc:359
 #, c-format
 msgid ""
 "Posting of file %s not successful: Check the log (right-click list item)."
@@ -3379,156 +3406,156 @@ msgstr "Új fejlécek letöltése a következőhöz: „%s” kész."
 msgid "Getting header counts for \"%s\""
 msgstr "Fejlécszám letöltése a következőhöz: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:168
+#: ../pan/usenet-utils/filter-info.cc:217
 msgid "article doesn't have attachments"
 msgstr "a cikknek nincsenek mellékletei"
 
-#: ../pan/usenet-utils/filter-info.cc:172
+#: ../pan/usenet-utils/filter-info.cc:221
 msgid "the article has attachments"
 msgstr "a cikknek mellékletei vannak"
 
-#: ../pan/usenet-utils/filter-info.cc:176
+#: ../pan/usenet-utils/filter-info.cc:225
 msgid "the article isn't cached locally"
 msgstr "a cikk nincs helyileg gyorstárazva"
 
-#: ../pan/usenet-utils/filter-info.cc:180
+#: ../pan/usenet-utils/filter-info.cc:229
 msgid "the article is cached locally"
 msgstr "a cikk helyileg gyorstárazott"
 
-#: ../pan/usenet-utils/filter-info.cc:184
+#: ../pan/usenet-utils/filter-info.cc:233
 msgid "the article wasn't posted by you"
 msgstr "a cikket nem Ön küldte el"
 
-#: ../pan/usenet-utils/filter-info.cc:188
+#: ../pan/usenet-utils/filter-info.cc:237
 msgid "the article was posted by you"
 msgstr "a cikket Ön küldte el"
 
-#: ../pan/usenet-utils/filter-info.cc:192
+#: ../pan/usenet-utils/filter-info.cc:241
 msgid "the article has been read"
 msgstr "a cikk el lett olvasva"
 
-#: ../pan/usenet-utils/filter-info.cc:196
+#: ../pan/usenet-utils/filter-info.cc:245
 msgid "the article hasn't been read"
 msgstr "a cikk nem lett elolvasva"
 
-#: ../pan/usenet-utils/filter-info.cc:200
+#: ../pan/usenet-utils/filter-info.cc:249
 #, c-format
 msgid "the article is less than %ld bytes long"
 msgstr "a cikk kevesebb mint %ld bájt hosszú"
 
-#: ../pan/usenet-utils/filter-info.cc:205
+#: ../pan/usenet-utils/filter-info.cc:254
 #, c-format
 msgid "the article is at least %ld bytes long"
 msgstr "a cikk legalább %ld bájt hosszú"
 
-#: ../pan/usenet-utils/filter-info.cc:210
+#: ../pan/usenet-utils/filter-info.cc:259
 #, c-format
 msgid "the article is less than %ld lines long"
 msgstr "a cikk kevesebb mint %ld sor hosszú"
 
-#: ../pan/usenet-utils/filter-info.cc:215
+#: ../pan/usenet-utils/filter-info.cc:264
 #, c-format
 msgid "the article is at least %ld lines long"
 msgstr "a cikk legalább %ld sor hosszú"
 
-#: ../pan/usenet-utils/filter-info.cc:220
+#: ../pan/usenet-utils/filter-info.cc:269
 #, c-format
 msgid "the article is less than %ld days old"
 msgstr "a cikk kevesebb mint %ld napos"
 
-#: ../pan/usenet-utils/filter-info.cc:225
+#: ../pan/usenet-utils/filter-info.cc:274
 #, c-format
 msgid "the article is at least %ld days old"
 msgstr "a cikk legalább %ld napos"
 
-#: ../pan/usenet-utils/filter-info.cc:230
+#: ../pan/usenet-utils/filter-info.cc:279
 #, c-format
 msgid "the article was posted to less than %ld groups"
 msgstr "a cikk kevesebb mint %ld csoportba lett elküldve"
 
-#: ../pan/usenet-utils/filter-info.cc:235
+#: ../pan/usenet-utils/filter-info.cc:284
 #, c-format
 msgid "the article was posted to at least %ld groups"
 msgstr "a cikk legalább %ld csoportba lett elküldve"
 
-#: ../pan/usenet-utils/filter-info.cc:240
+#: ../pan/usenet-utils/filter-info.cc:289
 #, c-format
 msgid "the article's score is less than %ld"
 msgstr "a cikk pontszáma kevesebb mint %ld"
 
-#: ../pan/usenet-utils/filter-info.cc:245
+#: ../pan/usenet-utils/filter-info.cc:294
 #, c-format
 msgid "the article's score is %ld or higher"
 msgstr "a cikk pontszáma %ld vagy magasabb"
 
-#: ../pan/usenet-utils/filter-info.cc:254
-#: ../pan/usenet-utils/filter-info.cc:264
+#: ../pan/usenet-utils/filter-info.cc:303
+#: ../pan/usenet-utils/filter-info.cc:313
 #, c-format
 msgid "%s doesn't contain \"%s\""
 msgstr "%s nem tartalmazza a következőt: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:255
-#: ../pan/usenet-utils/filter-info.cc:265
+#: ../pan/usenet-utils/filter-info.cc:304
+#: ../pan/usenet-utils/filter-info.cc:314
 #, c-format
 msgid "%s isn't \"%s\""
 msgstr "%s nem „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:256
-#: ../pan/usenet-utils/filter-info.cc:266
+#: ../pan/usenet-utils/filter-info.cc:305
+#: ../pan/usenet-utils/filter-info.cc:315
 #, c-format
 msgid "%s doesn't begin with \"%s\""
 msgstr "%s nem ezzel kezdődik: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:257
-#: ../pan/usenet-utils/filter-info.cc:267
+#: ../pan/usenet-utils/filter-info.cc:306
+#: ../pan/usenet-utils/filter-info.cc:316
 #, c-format
 msgid "%s doesn't end with \"%s\""
 msgstr "%s nem ezzel végződik: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:258
-#: ../pan/usenet-utils/filter-info.cc:268
+#: ../pan/usenet-utils/filter-info.cc:307
+#: ../pan/usenet-utils/filter-info.cc:317
 #, c-format
 msgid "%s doesn't match the regex \"%s\""
 msgstr "%s nem illeszkedik a következő reguláris kifejezésre: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:280
+#: ../pan/usenet-utils/filter-info.cc:329
 #, c-format
 msgid "%s contains \"%s\""
 msgstr "%s tartalmazza: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:281
+#: ../pan/usenet-utils/filter-info.cc:330
 #, c-format
 msgid "%s is \"%s\""
 msgstr "%s ez: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:282
+#: ../pan/usenet-utils/filter-info.cc:331
 #, c-format
 msgid "%s begins with \"%s\""
 msgstr "%s ezzel kezdődik: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:283
+#: ../pan/usenet-utils/filter-info.cc:332
 #, c-format
 msgid "%s ends with \"%s\""
 msgstr "%s ezzel végződik: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:284
+#: ../pan/usenet-utils/filter-info.cc:333
 #, c-format
 msgid "%s matches the regex \"%s\""
 msgstr "%s illeszkedik a következő reguláris kifejezésre: „%s”"
 
-#: ../pan/usenet-utils/filter-info.cc:290
+#: ../pan/usenet-utils/filter-info.cc:339
 msgid "Any of these tests fail:"
 msgstr "A következő tesztek egyike sikertelen:"
 
-#: ../pan/usenet-utils/filter-info.cc:297
+#: ../pan/usenet-utils/filter-info.cc:346
 msgid "All of these tests pass:"
 msgstr "A következő tesztek mindegyike sikeres:"
 
-#: ../pan/usenet-utils/filter-info.cc:304
+#: ../pan/usenet-utils/filter-info.cc:353
 msgid "None of these tests pass:"
 msgstr "A következő tesztek egyike sem sikeres:"
 
-#: ../pan/usenet-utils/filter-info.cc:311
+#: ../pan/usenet-utils/filter-info.cc:360
 msgid "Any of these tests pass:"
 msgstr "A következő tesztek egyike sikeres:"
 
@@ -3653,7 +3680,7 @@ msgid "Error reading score in %*.*s, line %d: unexpected line."
 msgstr ""
 "Hiba a pontszám olvasásakor ennek: %*.*s, a(z) %d. sorában: váratlan sor."
 
-#: ../pan/usenet-utils/scorefile.cc:428
+#: ../pan/usenet-utils/scorefile.cc:429
 #, c-format
 msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr "%lu pontozási szabály olvasása %lu szakaszban a következőből: „%s”"
@@ -3710,9 +3737,11 @@ msgstr "nincs_nev"
 msgid "no_mail"
 msgstr "nincs_level"
 
-#, fuzzy
-#~ msgid "Pan Newsreader"
-#~ msgstr "Pan, a hírolvasó"
+#~ msgid "_1. Header Pane"
+#~ msgstr "_1. Fejléc ablaktábla"
+
+#~ msgid "_2. Search Pane"
+#~ msgstr "_2. Keresés ablaktábla"
 
 #, fuzzy
 #~ msgid "Always trust"
