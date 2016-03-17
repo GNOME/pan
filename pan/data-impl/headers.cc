@@ -873,9 +873,8 @@ namespace
   gboolean nrc_as_cb(gpointer ptr)
   {
     DataImpl *data = static_cast<DataImpl*>(ptr);
-    data->in_newsrc_cb = true;
     data->save_newsrc_files();
-    data->in_newsrc_cb = false;
+
     return FALSE;
   }
 }

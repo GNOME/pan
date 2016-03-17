@@ -685,16 +685,17 @@ namespace pan
             RulesFilter   _rules_filter;
 
     private:
-      guint newsrc_autosave_id;
+      mutable guint newsrc_autosave_id;
       guint newsrc_autosave_timeout;
     public:
-      bool in_newsrc_cb;
       void set_newsrc_autosave_timeout(guint seconds)
         {newsrc_autosave_timeout = seconds;}
       void save_newsrc_files()
-      {
-        save_newsrc_files(*_data_io);
+      { // Called from  rc_as_cb(...).
+        // The newsrc_autosave_id is now (soon) invalid since the timeout will be
+        // cancelled when our caller returns FALSE. So forget about it already.
         newsrc_autosave_id = 0;
+        save_newsrc_files(*_data_io);
       }
   };
 }
