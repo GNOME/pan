@@ -81,7 +81,15 @@ namespace
   }
 }
 
+// detect std::lib
+#include <ciso646>
+#ifdef _LIBCPP_VERSION
+// using libc++
+#include <algorithm>
+#else
+// using libstdc++
 #include <ext/algorithm>
+#endif
 
 void
 DataImpl :: load_newsrc (const Quark       & server,
