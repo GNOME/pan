@@ -338,6 +338,7 @@ HeaderPane :: render_date  (GtkTreeViewColumn * ,
                 "background", self->_bg.c_str(),
                 "foreground", self->_fg.c_str(),
                 NULL);
+  g_free (date);
 }
 
 struct HeaderPane::CountUnread: public PanTreeStore::WalkFunctor
