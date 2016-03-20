@@ -41,8 +41,8 @@ msgstr ""
 "Project-Id-Version: pan2 master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-12-23 20:19+0000\n"
-"PO-Revision-Date: 2016-01-07 20:44+0100\n"
+"POT-Creation-Date: 2016-03-12 23:25+0000\n"
+"PO-Revision-Date: 2016-03-20 20:31+0100\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -50,7 +50,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 # D'accord, und so bleibt's jetzt, das Hinundhergehüpfe im Menü macht wahnsinnig. -bg
 #: ../pan.appdata.xml.in.h:1
@@ -64,12 +64,12 @@ msgstr "Usenet-Artikel lesen und senden"
 #: ../pan.appdata.xml.in.h:3
 msgid ""
 "Pan is a Usenet newsreader that is good at both text and binaries. It "
-"supports offline reading, scoring and killfiles, yEnc, NZB, binary "
-"uploading, PGP handling, multiserver, and secure connections."
+"supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
+"multiple servers, and secure connections."
 msgstr ""
 "Pan ist ein Newsreader für das Usenet, der sowohl mit Text als auch binären "
 "Inhalten umgehen kann. Unterstützt werden Offline-Lesen, Bewertungen und "
-"Killfiles, yEnc, NZB, Hochladen binärer Inhalt, Umgang mit PGP, Multiserver "
+"Killfiles, yEnc, NZB, Hochladen binärer Inhalte, Umgang mit PGP, Multiserver "
 "und sichere Verbindungen."
 
 #: ../pan.appdata.xml.in.h:4
@@ -82,7 +82,7 @@ msgstr ""
 
 #. update the titlebar
 #: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:1040
-#: ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:2009 ../pan/gui/score-add-ui.cc:602
+#: ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:1987 ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
 
@@ -93,8 +93,9 @@ msgstr "Newsreader"
 
 #. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
 #: ../pan.desktop.in.h:5
-msgid "usenet;newsreader;newsgroup;usenet article;yenc,nzb;"
-msgstr "usenet;newsreader;newsgroup;usenet article;yenc,nzb;"
+#| msgid "usenet;newsreader;newsgroup;usenet article;yenc,nzb;"
+msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
+msgstr "usenet;news;newsreader;newsgruppe;artikel;yenc;nzb;"
 
 #: ../pan/data/article-cache.cc:144 ../pan/data/encode-cache.cc:62
 #, c-format
@@ -140,6 +141,11 @@ msgstr ""
 "Fehler beim Initialisieren des Zertifikatspeichers. Überprüfen Sie, ob die "
 "Zugriffsrechte für ~/.pan2 und ~/.pan2/ssl_certs korrekt gesetzt sind. "
 "Schwerwiegender Fehler, Abbruch."
+
+#: ../pan/data/cert-store.cc:362
+#, c-format
+msgid "Could not export certificate for server: %s"
+msgstr "Zertifikat für Server konnte nicht exportiert werden: %s"
 
 #. load_group_descriptions (*_data_io);
 #: ../pan/data-impl/data-impl.cc:113
@@ -838,18 +844,18 @@ msgstr "_Unterstränge zutreffender Artikel anzeigen"
 msgid "Unnamed File"
 msgstr "Unbenannte Datei"
 
-#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1980
+#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1958
 #: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1748
 #: ../pan/gui/post-ui.cc:2588 ../pan/gui/prefs-ui.cc:855
 #: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Betreff"
 
-#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1980
+#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1958
 msgid "From"
 msgstr "Von"
 
-#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1981
+#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1959
 #: ../pan/gui/header-pane.cc:1827 ../pan/gui/log-ui.cc:307
 #: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
@@ -1033,7 +1039,7 @@ msgstr "Ukrainisch"
 msgid "Visual"
 msgstr "Visuell"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2178
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2156
 #: ../pan/gui/post-ui.cc:548 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Zeichensatz"
@@ -1215,8 +1221,8 @@ msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr "Wollen Sie dies dauerhaft akzeptieren (nachträglich änderbar)?"
 
 #: ../pan/gui/gui.cc:1670
-msgid "Copyright © 2002-2015 Charles Kerr and others"
-msgstr "Copyright © 2002-2015 Charles Kerr und andere"
+msgid "Copyright © 2002-2016 Charles Kerr and others"
+msgstr "Copyright © 2002-2016 Charles Kerr und andere"
 
 #: ../pan/gui/gui.cc:1675
 msgid "translator-credits"
@@ -1230,80 +1236,72 @@ msgstr ""
 "Karsten Weiss <knweiss@gmx.de>\n"
 "Mario Blättermann <mario.blaettermann@gmail.com>"
 
-#: ../pan/gui/gui.cc:1808
-msgid "_1. Header Pane"
-msgstr "_1. Kopfzeilenleiste"
-
-#: ../pan/gui/gui.cc:1809
-msgid "_2. Search Pane"
-msgstr "_2. Suchleiste"
-
-#: ../pan/gui/gui.cc:1815
+#: ../pan/gui/gui.cc:1803
 msgid "_1. Group Pane"
 msgstr "_1. Gruppenliste"
 
-#: ../pan/gui/gui.cc:1817 ../pan/gui/gui.cc:1819
+#: ../pan/gui/gui.cc:1804
 msgid "_2. Header Pane"
 msgstr "_2. Kopfzeilenliste"
 
-#: ../pan/gui/gui.cc:1821
+#: ../pan/gui/gui.cc:1805
 msgid "_3. Body Pane"
 msgstr "_3. Artikeltext"
 
-#: ../pan/gui/gui.cc:1917 ../pan/gui/gui.cc:1932
+#: ../pan/gui/gui.cc:1895 ../pan/gui/gui.cc:1910
 msgid " Bytes"
 msgstr "Bytes"
 
-#: ../pan/gui/gui.cc:1920
+#: ../pan/gui/gui.cc:1898
 msgid " KB"
 msgstr "kB"
 
-#: ../pan/gui/gui.cc:1923
+#: ../pan/gui/gui.cc:1901
 msgid " MB"
 msgstr " MB"
 
-#: ../pan/gui/gui.cc:1926
+#: ../pan/gui/gui.cc:1904
 msgid " GB"
 msgstr "GB"
 
-#: ../pan/gui/gui.cc:1929
+#: ../pan/gui/gui.cc:1907
 msgid " TB"
 msgstr "TB"
 
-#: ../pan/gui/gui.cc:1961
+#: ../pan/gui/gui.cc:1939
 #, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
 msgstr[0] "Artikel ist vollständig mit %d Anlage."
 msgstr[1] "Artikel besitzt alle %d Anlagen."
 
-#: ../pan/gui/gui.cc:1963
+#: ../pan/gui/gui.cc:1941
 #, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Diesem Artikel fehlt %d Teil."
 msgstr[1] "Diesem Artikel fehlen %d seiner %d Teile:"
 
-#: ../pan/gui/gui.cc:1981 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/gui.cc:1959 ../pan/gui/header-pane.cc:1315
 #: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "Nachrichtenkennung"
 
-#: ../pan/gui/gui.cc:1982 ../pan/gui/header-pane.cc:1796
+#: ../pan/gui/gui.cc:1960 ../pan/gui/header-pane.cc:1796
 #: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Zeilen"
 
-#: ../pan/gui/gui.cc:1982
+#: ../pan/gui/gui.cc:1960
 msgid "Size"
 msgstr "Größe"
 
-#: ../pan/gui/gui.cc:1983 ../pan/gui/header-pane.cc:1812
+#: ../pan/gui/gui.cc:1961 ../pan/gui/header-pane.cc:1812
 #: ../pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr "Bytes"
 
-#: ../pan/gui/gui.cc:2033
+#: ../pan/gui/gui.cc:2011
 msgid ""
 "Error loading iconv library. Encoding certain character sets will not work "
 "in GUI."
@@ -1311,52 +1309,52 @@ msgstr ""
 "Fehler beim Laden der iconv-Bibliothek. Einige Zeichensätze in der "
 "Benutzeroberfläche werden nicht enkodiert."
 
-#: ../pan/gui/gui.cc:2179
+#: ../pan/gui/gui.cc:2157
 msgid "Body Pane Encoding"
 msgstr "Kodierung des Artikeltexts"
 
-#: ../pan/gui/gui.cc:2210 ../pan/gui/task-pane.cc:609
+#: ../pan/gui/gui.cc:2188 ../pan/gui/task-pane.cc:609
 #, c-format
 msgid "Offline"
 msgstr "Offline"
 
-#: ../pan/gui/gui.cc:2214
+#: ../pan/gui/gui.cc:2192
 #, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
 msgstr[0] "%d Verbindung werden getrennt"
 msgstr[1] "%d Verbindungen werden getrennt"
 
-#: ../pan/gui/gui.cc:2216 ../pan/gui/gui.cc:2246
+#: ../pan/gui/gui.cc:2194 ../pan/gui/gui.cc:2224
 #, c-format
 msgid "No Connections"
 msgstr "Keine Verbindungen"
 
-#: ../pan/gui/gui.cc:2220
+#: ../pan/gui/gui.cc:2198
 #, c-format
 msgid "Connecting"
 msgstr "Es wird verbunden"
 
-#: ../pan/gui/gui.cc:2233
+#: ../pan/gui/gui.cc:2211
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d untätig, %d aktiv @ %.1f KiBps"
 
-#: ../pan/gui/gui.cc:2289
+#: ../pan/gui/gui.cc:2267
 #, c-format
 msgid "No Tasks"
 msgstr "Keine Aufgaben"
 
-#: ../pan/gui/gui.cc:2291 ../pan/gui/prefs-ui.cc:1090
+#: ../pan/gui/gui.cc:2269 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: ../pan/gui/gui.cc:2308 ../pan/gui/task-pane.cc:475
+#: ../pan/gui/gui.cc:2286 ../pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu Aufgaben, %s, %.1f KiBps, ETA %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2360
+#: ../pan/gui/gui.cc:2338
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1906,7 +1904,7 @@ msgstr "Dateien zur Warteschlange hinzufügen"
 msgid "Save Upload Queue as NZB File"
 msgstr "Übertragungswarteschlange in eine NZB-Datei speichern"
 
-#: ../pan/gui/prefs.cc:364
+#: ../pan/gui/prefs.cc:366
 #, c-format
 msgid "Couldn't parse %s color \"%s\""
 msgstr "%s-Farbe »%s« konnte nicht verarbeitet werden"
@@ -3432,7 +3430,7 @@ msgstr ""
 "Veröffentlichung der Datei %s ist teilweise gescheitert: Überprüfen Sie das "
 "Protokoll (Rechtsklick auf den Listeneintrag)."
 
-#: ../pan/tasks/task-upload.cc:358
+#: ../pan/tasks/task-upload.cc:359
 #, c-format
 msgid ""
 "Posting of file %s not successful: Check the log (right-click list item)."
@@ -3804,6 +3802,12 @@ msgstr "no_name"
 #: ../pan/usenet-utils/text-massager.cc:580
 msgid "no_mail"
 msgstr "no_mail"
+
+#~ msgid "_1. Header Pane"
+#~ msgstr "_1. Kopfzeilenleiste"
+
+#~ msgid "_2. Search Pane"
+#~ msgstr "_2. Suchleiste"
 
 #, fuzzy
 #~ msgid "Open Download Meter Preferences"
