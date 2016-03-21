@@ -79,9 +79,11 @@ pan :: url_find (const StringView& text, StringView& setme_url)
   // for urls at the end of a sentence.
   if (!setme_url.empty() && strchr("?!.,", setme_url.back()))
     --setme_url.len;
-  const char c = text.str[ start - 1 ];
-  if (c == '\'' && c == setme_url.back() )
-    --setme_url.len;
+  if (start > 0) {
+    const char c = text.str[ start - 1 ];
+    if (c == '\'' && c == setme_url.back() )
+      --setme_url.len;
+  }
   return true;
 }
 
