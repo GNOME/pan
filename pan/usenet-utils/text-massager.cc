@@ -574,7 +574,9 @@ pan :: expand_attachment_headers(const Quark& path, const Article& article)
   std::string author_email (author.second);
 
   EvolutionDateMaker ed;
-  std::string now (ed.get_date_string (article.time_posted));
+  char *date = ed.get_date_string (article.time_posted);
+  std::string now (date);
+  g_free (date);
 
   if (author_name.empty())  author_name  = _("no_name");
   if (author_email.empty()) author_email = _("no_mail");
