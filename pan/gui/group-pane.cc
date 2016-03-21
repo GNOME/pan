@@ -849,7 +849,9 @@ GroupPane :: read_group (const StringView& groupname)
       return;
     }
     iter = tree->get_iter (row);
-    read_group(gtk_tree_model_get_path(gtk_tree_view_get_model(view), &iter));
+    GtkTreePath *path = gtk_tree_model_get_path(gtk_tree_view_get_model(view), &iter);
+    read_group (path);
+    gtk_tree_path_free (path);
 }
 
 void
