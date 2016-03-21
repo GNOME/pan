@@ -866,7 +866,9 @@ namespace
     fg_col = GroupPrefs::color_to_string(def_fg);
     bg_col = GroupPrefs::color_to_string(def_bg);
 
+    g_object_ref_sink (r);
     gtk_widget_destroy (r);
+    g_object_unref (r);
 
     PanColors& c (PanColors::get());
     c.def_fg = fg_col;
