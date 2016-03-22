@@ -86,8 +86,8 @@ namespace pan
     {
       if (err) g_error_free(err);
       err = NULL;
-//        if (decrypted) g_object_unref(decrypted) ;
-//      if (result) g_object_unref(result);
+      if (decrypted) g_object_unref(decrypted) ;
+      if (result) g_object_unref(result);
     }
 
     GPGDecErr() : err(NULL), no_sigs(true), type(GPG_DECODE), decrypted(NULL), result(g_mime_decrypt_result_new()) {}
