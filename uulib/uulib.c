@@ -1193,7 +1193,7 @@ UUCleanUp (void)
   itbd *iter=ftodel, *ptr;
   uulist *liter;
   uufile *fiter;
-  //allomap *aiter;
+  allomap *aiter;
 
   /*
    * delete temporary input files (such as the copy of stdin)
@@ -1262,10 +1262,10 @@ UUCleanUp (void)
    * clean up the malloc'ed stuff
    */
 
-//  for (aiter=toallocate; aiter->ptr; aiter++) {
-//    _FP_free (*(aiter->ptr));
-//    *(aiter->ptr) = NULL;
-//   }
+  for (aiter=toallocate; aiter->ptr; aiter++) {
+    _FP_free (*(aiter->ptr));
+    *(aiter->ptr) = NULL;
+  }
 
   return UURET_OK;
 }
