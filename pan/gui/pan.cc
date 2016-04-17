@@ -1132,6 +1132,8 @@ main (int argc, char *argv[])
 #endif
 
 #ifdef HAVE_GKR
+  if (!data.get_servers().empty())
+  {
     // free secure passwords
     foreach(quarks_t, data.get_servers(), it)
     {
@@ -1141,6 +1143,7 @@ main (int argc, char *argv[])
         gnome_keyring_memory_free(s->gkr_pw);
       }
     }
+  }
 #endif
   }
 
