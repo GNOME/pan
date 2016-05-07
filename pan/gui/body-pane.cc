@@ -57,8 +57,6 @@ using namespace pan;
 ****
 ***/
 
-/// TODO : replace g_atexit (deprecated)!!!
-
 namespace
 {
 
@@ -194,21 +192,19 @@ namespace
     CURSOR_QTY
   };
 
-  GdkCursor * cursors[CURSOR_QTY];
-  GdkCursor * cursor_current (0);
+  GdkCursor ** cursors(0);
+  GdkCursor * cursor_current(0);
 
-  void free_cursors (void)
-  {
-    for (int i=0; i<CURSOR_QTY; ++i)
-      cursor_unref (cursors[i]);
+  void free_cursors (void) {
+    delete cursors;
   }
 
-  void ensure_cursors_created (GtkWidget * w)
+  void create_cursors() {
+    cursors = new GdkCursor*[CURSOR_QTY];
+  }
+
+  void init_cursors (GtkWidget * w)
   {
-    static bool created (false);
-    if (!created)
-    {
-      created = true;
       GdkDisplay * display (gtk_widget_get_display (w));
 
       int width, height;
@@ -243,17 +239,16 @@ namespace
 
       cursors[CURSOR_IBEAM] = gdk_cursor_new (GDK_XTERM);
       cursors[CURSOR_HREF] = gdk_cursor_new (GDK_HAND2);
-
-      g_atexit (free_cursors);
-    }
   }
 
   void set_cursor (GdkWindow *window, GtkWidget *w, int mode)
   {
-    ensure_cursors_created (w);
+    init_cursors(w);
     GdkCursor * cursor_new = cursors[mode];
-    if (cursor_new != cursor_current)
-      gdk_window_set_cursor (window, cursor_current=cursor_new);
+    if (cursor_new != cursor_current) {
+       gdk_window_set_cursor (window, cursor_current=cursor_new);
+       cursor_unref (cursor_current);
+    }
   }
 
   void set_cursor_from_iter (GdkWindow *window, GtkWidget *w, GtkTextIter *it)
@@ -641,7 +636,7 @@ namespace
   // don't use this directly -- use get_emoticons()
   pixbufs_t emoticon_pixbufs;
 
-  void clear_emoticon_pixbufs ()
+  void free_emoticons ()
   {
     foreach_const (pixbufs_t, emoticon_pixbufs, it)
       g_object_unref (it->second);
@@ -649,18 +644,17 @@ namespace
 
   pixbufs_t& get_emoticons ()
   {
-    static bool inited (false);
-    if (!inited) {
-      inited = true;
-      emoticon_pixbufs[":)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_smile, false, 0);
-      emoticon_pixbufs[":-)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_smile, false, 0);
-      emoticon_pixbufs[";)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_wink, false, 0);
-      emoticon_pixbufs[":("] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_frown, false, 0);
-      emoticon_pixbufs[":P"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_tongueout, false, 0);
-      emoticon_pixbufs[":O"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_surprised, false, 0);
-      g_atexit (clear_emoticon_pixbufs);
-    }
-    return emoticon_pixbufs;
+     return emoticon_pixbufs;
+  }
+
+ void create_emoticons()
+  {
+    emoticon_pixbufs[":)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_smile, false, 0);
+    emoticon_pixbufs[":-)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_smile, false, 0);
+    emoticon_pixbufs[";)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_wink, false, 0);
+    emoticon_pixbufs[":("] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_frown, false, 0);
+    emoticon_pixbufs[":P"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_tongueout, false, 0);
+    emoticon_pixbufs[":O"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_surprised, false, 0);
   }
 
   enum TagMode { ADD, REPLACE };
@@ -1745,6 +1739,9 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   for (guint i=0; i<NUM_ICONS; ++i)
     icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, icons[i].pixbuf_txt, FALSE, 0);
 
+  create_cursors();
+  create_emoticons();
+
   // menu for popup menu for attachments
   _menu = gtk_menu_new ();
   l = gtk_menu_item_new_with_label(_("Save Attachment As..."));
@@ -1880,6 +1877,8 @@ BodyPane :: ~BodyPane ()
 
   // store last opened message in prefs
   _prefs.set_string("last-opened-msg", get_cleared() ? "" : get_message_id().to_view());
+  free_emoticons();
+  free_cursors();
 }
 
 
