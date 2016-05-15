@@ -139,6 +139,12 @@ namespace
     // not found
     return -1;
   }
+  
+  bool is_file_exist(const char *fileName)
+      {
+       std::ifstream infile(fileName);
+       return infile.good();
+      }
 }
 
 /***
@@ -1694,45 +1700,91 @@ PostUI :: save_draft ()
     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
     GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
     NULL);
-  gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_ACCEPT);
 
-  std::string& draft_filename (get_draft_filename ());
+   std::string draft_filename;
+   char* filename;
+   GMimeMessage* msg;
+   bool no_overwrite = true;
+   bool select_ok = false;
+
+   gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_ACCEPT);
+   draft_filename = get_draft_filename ();
+   
   if (g_file_test (draft_filename.c_str(), G_FILE_TEST_IS_DIR))
     gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER(d), draft_filename.c_str());
   else
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER(d), draft_filename.c_str());
 
-  if (gtk_dialog_run(GTK_DIALOG(d)) == GTK_RESPONSE_ACCEPT)
-  {
-    GMimeMessage * msg = new_message_from_ui (UPLOADING);
-    char * filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER(d));
-    draft_filename = filename;
+  do {
+      if (gtk_dialog_run(GTK_DIALOG(d)) == GTK_RESPONSE_ACCEPT)
+        {
+          msg = new_message_from_ui (UPLOADING);
+          filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER(d));
+          draft_filename = filename;
+          select_ok = true;
 
-    errno = 0;
-    std::ofstream o (filename);
-    char * pch = g_mime_object_to_string ((GMimeObject *) msg);
-    o << pch;
-    o.close ();
+           if (is_file_exist(draft_filename.c_str()))
+             {
+               no_overwrite = true;   
+               GtkWidget * dialog_w = gtk_message_dialog_new (
+               GTK_WINDOW(_root),
+               GTK_DIALOG_DESTROY_WITH_PARENT,
+               GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, NULL);
+               HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(dialog_w),
+               _("File already exist!"),
+               _("Overwrite it?"));
+               gtk_dialog_add_buttons (GTK_DIALOG(dialog_w),
+                         GTK_STOCK_GO_BACK, GTK_RESPONSE_NO,
+                         GTK_STOCK_YES, GTK_RESPONSE_OK,
+                         NULL);
+               gtk_dialog_set_default_response (GTK_DIALOG(dialog_w), GTK_RESPONSE_NO);
+                switch(gtk_dialog_run(GTK_DIALOG(dialog_w)))
+                    {
+		         	  case GTK_RESPONSE_OK:
+			            no_overwrite = false;
+        			    break;
+		        	  case GTK_RESPONSE_NO:
+        			    no_overwrite = true;
+   			            break;
+                      default:
+                        no_overwrite = true;
+                        break;
+	                }
+               gtk_widget_destroy (dialog_w);
+	         }
+        } else
+        {
+			select_ok = false;
+		}
 
-    if (o.fail()) {
-      GtkWidget * e = gtk_message_dialog_new (
+     } while (!(no_overwrite || select_ok));
+   
+   if (!no_overwrite && select_ok) 
+    {
+      errno = 0;
+      std::ofstream o (filename);
+      char * pch = g_mime_object_to_string ((GMimeObject *) msg);
+      o << pch;
+      o.close ();
+
+    if (o.fail())
+      {
+        GtkWidget * e = gtk_message_dialog_new (
         GTK_WINDOW(d),
         GTK_DIALOG_DESTROY_WITH_PARENT,
         GTK_MESSAGE_ERROR,
         GTK_BUTTONS_CLOSE,
         _("Unable to save \"%s\" %s"), filename, file::pan_strerror(errno));
-      gtk_dialog_run (GTK_DIALOG(e));
-      gtk_widget_destroy (e);
+        gtk_dialog_run (GTK_DIALOG(e));
+        gtk_widget_destroy (e);
+      }			  
+
+      g_free (pch);
+      g_free (filename);
+      g_object_unref (msg);
+      save_message_in_local_folder(DRAFTING, "Drafts");
+      _unchanged_body = get_body ();
     }
-
-    g_free (pch);
-    g_free (filename);
-    g_object_unref (msg);
-
-    save_message_in_local_folder(DRAFTING, "Drafts");
-
-    _unchanged_body = get_body ();
-  }
 
   gtk_widget_destroy (d);
 }
