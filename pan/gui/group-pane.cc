@@ -844,6 +844,10 @@ GroupPane :: read_group (const StringView& groupname)
     PanTreeStore * tree (PAN_TREE_STORE(gtk_tree_view_get_model(view)));
     GtkTreeIter iter;
     const MyRow* row = find_row (groupname);
+    if(!row)
+    {
+      return;
+    }
     iter = tree->get_iter (row);
     read_group(gtk_tree_model_get_path(gtk_tree_view_get_model(view), &iter));
 }
