@@ -194,6 +194,7 @@ namespace
       gtk_list_store_set (store, &iter, 0, key_str, 1, gui_str, -1);
       if (active_str == key_str) active = i;
     }
+    va_end(args);
     GtkWidget * w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
     GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);

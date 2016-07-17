@@ -183,7 +183,7 @@ namespace
   create_spellcheck_combo_box ( const Quark      & group,
                                 const GroupPrefs & group_prefs)
   {
-    GtkWidget * w;
+    GtkWidget * w(NULL);
 
 #ifdef HAVE_GTKSPELL
     init_spell();

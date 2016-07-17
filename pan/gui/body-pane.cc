@@ -1214,7 +1214,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     GdkPixbuf *pixbuf = gdk_pixbuf_loader_get_pixbuf(pl);
     gtk_image_set_from_pixbuf (GTK_IMAGE(_face), pixbuf);
     g_object_unref(pl);
-    delete buf;
+    delete[] buf;
   }
 
   // set the terse headers...

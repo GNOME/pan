@@ -206,6 +206,7 @@ bool CertStore::import_from_file(const Quark& server, const char* fn) {
 	fseek(fp, 0, SEEK_SET);
 	char * buf = new char[filelen];
 	size_t dummy(fread(buf, sizeof(char), filelen, fp)); // silence compiler
+	fclose(fp);
 
 	gnutls_datum_t in;
 	in.data = (unsigned char*) buf;
@@ -214,7 +215,7 @@ bool CertStore::import_from_file(const Quark& server, const char* fn) {
 	gnutls_x509_crt_init(&cert);
 	gnutls_x509_crt_import(cert, &in, GNUTLS_X509_FMT_PEM);
 
-	delete buf;
+	delete[] buf;
 
 	int ret = gnutls_certificate_set_x509_trust(_creds, &cert, 1);
 
@@ -368,7 +369,7 @@ bool CertStore::add(gnutls_x509_crt_t cert, const Quark& server) {
 	debug_SSL_verbatim(out);
 	debug_SSL_verbatim("\n===========================================");
 
-	delete out;
+	delete[] out;
 	fclose(fp);
 	chmod(cert_file_name_wp.c_str(), 0600);
 

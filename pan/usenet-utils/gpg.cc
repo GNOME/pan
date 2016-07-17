@@ -76,6 +76,7 @@ namespace pan
         break;
       case GMIME_CERTIFICATE_TRUST_NEVER:
         signer.trust = "Never";
+        break;
       case GMIME_CERTIFICATE_TRUST_UNDEFINED:
         signer.trust = "Undefined";
         break;

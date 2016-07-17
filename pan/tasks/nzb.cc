@@ -47,7 +47,7 @@ namespace
   GMimeMessage * import_msg(const StringView filename)
   {
     std::string txt;
-    GMimeMessage * msg;
+    GMimeMessage * msg(NULL);
     if (file :: get_text_file_contents (filename, txt))
     {
       GMimeStream * stream = g_mime_stream_mem_new_with_buffer (txt.c_str(), txt.size());
