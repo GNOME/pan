@@ -10,16 +10,16 @@ msgstr ""
 "Project-Id-Version: pan2\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-03-14 02:16+0000\n"
-"PO-Revision-Date: 2016-03-15 08:32+0100\n"
-"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"POT-Creation-Date: 2016-05-23 17:45+0000\n"
+"PO-Revision-Date: 2016-07-31 16:41+0200\n"
+"Last-Translator: Meskó Balázs <meskobalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope@googlegroups.com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #: ../pan.appdata.xml.in.h:1
 msgid "Pan Newsreader"
@@ -70,7 +70,7 @@ msgstr "Hiba a(z) „%s” könyvtár megnyitásakor: %s"
 
 #: ../pan/data/article-cache.cc:235 ../pan/data/article-cache.cc:244
 #: ../pan/data-impl/data-io.cc:199 ../pan/data-impl/data-io.cc:231
-#: ../pan/gui/post-ui.cc:1723
+#: ../pan/gui/post-ui.cc:1777
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Nem sikerült a(z) „%s” mentése: %s"
@@ -82,7 +82,7 @@ msgstr "Hiba a(z) „%s” fájl megnyitásakor: %s"
 
 #: ../pan/data/article-cache.cc:393 ../pan/data-impl/profiles.cc:174
 #: ../pan/data-impl/server.cc:500 ../pan/general/file-util.cc:311
-#: ../pan/gui/post-ui.cc:638 ../pan/gui/task-pane.cc:737
+#: ../pan/gui/post-ui.cc:644 ../pan/gui/task-pane.cc:737
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Hiba a(z) „%s” fájl olvasásakor: %s"
@@ -120,7 +120,7 @@ msgstr "Adat háttérprogram betöltve %.1f másodperc alatt"
 msgid "Pan Newsreader's server passwords"
 msgstr "Pan hírolvasó kiszolgáló jelszavak"
 
-#: ../pan/data-impl/groups.cc:94
+#: ../pan/data-impl/groups.cc:102
 #, c-format
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "A newsrc fájl kihagyása a(z) „%s” kiszolgálónál"
@@ -151,7 +151,7 @@ msgid ""
 msgstr ""
 "%lu rész, %lu cikk elmentve ide: „%s” %.1f másodperc alatt (%.0f cikk/mp)"
 
-#: ../pan/data-impl/headers.cc:1191
+#: ../pan/data-impl/headers.cc:1190
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "%lu cikk hozzáadva ehhez: %s."
@@ -206,11 +206,11 @@ msgstr ""
 "Nem sikerült megállapítani a cikk kódolását. A nem UTF-8 karakterek "
 "eltávolításra kerültek."
 
-#: ../pan/gui/actions.cc:303 ../pan/gui/post-ui.cc:446
+#: ../pan/gui/actions.cc:303 ../pan/gui/post-ui.cc:452
 msgid "_File"
 msgstr "_Fájl"
 
-#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:447
+#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:453
 msgid "_Edit"
 msgstr "S_zerkesztés"
 
@@ -410,7 +410,7 @@ msgstr "_Beállítások szerkesztése"
 msgid "Edit Selected _Group's Preferences"
 msgstr "A kijelölt _csoport beállításainak szerkesztése"
 
-#: ../pan/gui/actions.cc:455 ../pan/gui/post-ui.cc:463
+#: ../pan/gui/actions.cc:455 ../pan/gui/post-ui.cc:469
 msgid "Edit P_osting Profiles"
 msgstr "_Küldő profilok szerkesztése"
 
@@ -798,54 +798,54 @@ msgstr "Megfelelő cikkek _szálainak megjelenítése"
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Megfelelő cikkek _alszálainak megjelenítése"
 
-#: ../pan/gui/body-pane.cc:1056
+#: ../pan/gui/body-pane.cc:1050
 #, c-format
 msgid "Unnamed File"
 msgstr "Névtelen fájl"
 
-#: ../pan/gui/body-pane.cc:1137 ../pan/gui/gui.cc:1958
-#: ../pan/gui/header-pane.cc:1313 ../pan/gui/header-pane.cc:1753
-#: ../pan/gui/post-ui.cc:2588 ../pan/gui/prefs-ui.cc:855
+#: ../pan/gui/body-pane.cc:1131 ../pan/gui/gui.cc:1958
+#: ../pan/gui/header-pane.cc:1314 ../pan/gui/header-pane.cc:1754
+#: ../pan/gui/post-ui.cc:2640 ../pan/gui/prefs-ui.cc:855
 #: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Tárgy"
 
-#: ../pan/gui/body-pane.cc:1139 ../pan/gui/gui.cc:1958
+#: ../pan/gui/body-pane.cc:1133 ../pan/gui/gui.cc:1958
 msgid "From"
 msgstr "Feladó"
 
-#: ../pan/gui/body-pane.cc:1141 ../pan/gui/gui.cc:1959
-#: ../pan/gui/header-pane.cc:1832 ../pan/gui/log-ui.cc:307
+#: ../pan/gui/body-pane.cc:1135 ../pan/gui/gui.cc:1959
+#: ../pan/gui/header-pane.cc:1833 ../pan/gui/log-ui.cc:307
 #: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
 msgstr "Dátum"
 
-#: ../pan/gui/body-pane.cc:1148
+#: ../pan/gui/body-pane.cc:1142
 msgid "Newsgroups"
 msgstr "Hírcsoportok"
 
-#: ../pan/gui/body-pane.cc:1155 ../pan/gui/body-pane.cc:1163
-#: ../pan/gui/body-pane.cc:1170
+#: ../pan/gui/body-pane.cc:1149 ../pan/gui/body-pane.cc:1157
+#: ../pan/gui/body-pane.cc:1164
 msgid "User-Agent"
 msgstr "User-Agent"
 
-#: ../pan/gui/body-pane.cc:1176
+#: ../pan/gui/body-pane.cc:1170
 msgid "Followup-To"
 msgstr "Követőcím"
 
-#: ../pan/gui/body-pane.cc:1186
+#: ../pan/gui/body-pane.cc:1180
 msgid "Reply-To"
 msgstr "Válaszcím"
 
-#: ../pan/gui/body-pane.cc:1229
+#: ../pan/gui/body-pane.cc:1223
 msgid " from "
 msgstr " tőle: "
 
-#: ../pan/gui/body-pane.cc:1231
+#: ../pan/gui/body-pane.cc:1225
 msgid " at "
 msgstr " ekkor: "
 
-#: ../pan/gui/body-pane.cc:1318
+#: ../pan/gui/body-pane.cc:1314
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
@@ -860,32 +860,32 @@ msgstr ""
 "<b>Érvényesség:</b> %s\n"
 "<b>Létrehozva:</b> %s"
 
-#: ../pan/gui/body-pane.cc:1323
+#: ../pan/gui/body-pane.cc:1319
 msgid "always"
 msgstr "mindig"
 
-#: ../pan/gui/body-pane.cc:1543
+#: ../pan/gui/body-pane.cc:1539
 msgid "Copy _URL"
 msgstr "_URL másolása"
 
-#: ../pan/gui/body-pane.cc:1748
+#: ../pan/gui/body-pane.cc:1747
 msgid "Save Attachment As..."
 msgstr "Melléklet mentése másként…"
 
-#: ../pan/gui/body-pane.cc:1751
+#: ../pan/gui/body-pane.cc:1750
 msgid "Save All Attachments"
 msgstr "Minden melléklet mentése"
 
 #. add a toolbar for attachments
-#: ../pan/gui/body-pane.cc:1821
+#: ../pan/gui/body-pane.cc:1820
 msgid "Attachments"
 msgstr "Mellékletek"
 
-#: ../pan/gui/body-pane.cc:1836
+#: ../pan/gui/body-pane.cc:1835
 msgid "Text View"
 msgstr "Szövegnézet"
 
-#: ../pan/gui/body-pane.cc:1845
+#: ../pan/gui/body-pane.cc:1844
 msgid "HTML View"
 msgstr "HTML nézet"
 
@@ -999,7 +999,7 @@ msgid "Visual"
 msgstr "Vizuális"
 
 #: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2156
-#: ../pan/gui/post-ui.cc:548 ../pan/gui/prefs-ui.cc:759
+#: ../pan/gui/post-ui.cc:554 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Karakterkódolás"
 
@@ -1129,7 +1129,7 @@ msgstr "NZB-fájl mentése másként…"
 msgid "Import NZB Files"
 msgstr "NZB-fájlok importálása…"
 
-#: ../pan/gui/gui.cc:817 ../pan/gui/post-ui.cc:3287
+#: ../pan/gui/gui.cc:817 ../pan/gui/post-ui.cc:3339
 msgid "NZB Files"
 msgstr "NZB-fájlok"
 
@@ -1231,12 +1231,12 @@ msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Ebből a cikkből hiányzik %d rész."
 msgstr[1] "Ebből a cikkből hiányzik %d / %d rész:"
 
-#: ../pan/gui/gui.cc:1959 ../pan/gui/header-pane.cc:1315
+#: ../pan/gui/gui.cc:1959 ../pan/gui/header-pane.cc:1316
 #: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "Üzenetazonosító"
 
-#: ../pan/gui/gui.cc:1960 ../pan/gui/header-pane.cc:1801
+#: ../pan/gui/gui.cc:1960 ../pan/gui/header-pane.cc:1802
 #: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Sor"
@@ -1245,7 +1245,7 @@ msgstr "Sor"
 msgid "Size"
 msgstr "Méret"
 
-#: ../pan/gui/gui.cc:1961 ../pan/gui/header-pane.cc:1817
+#: ../pan/gui/gui.cc:1961 ../pan/gui/header-pane.cc:1818
 #: ../pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr "Bájt"
@@ -1312,21 +1312,21 @@ msgstr ""
 "javítsa a hibát, majd használja a „Fájl|Munka a hálózaton” menüpontot a "
 "folytatáshoz."
 
-#: ../pan/gui/header-pane.cc:1311 ../pan/gui/task-pane.cc:795
+#: ../pan/gui/header-pane.cc:1312 ../pan/gui/task-pane.cc:795
 msgid "Subject or Author"
 msgstr "Tárgy vagy szerző"
 
-#: ../pan/gui/header-pane.cc:1312 ../pan/gui/task-pane.cc:796
+#: ../pan/gui/header-pane.cc:1313 ../pan/gui/task-pane.cc:796
 msgid "Sub or Auth (regex)"
 msgstr "Tár vagy szer (regex)"
 
-#: ../pan/gui/header-pane.cc:1314 ../pan/gui/header-pane.cc:1785
+#: ../pan/gui/header-pane.cc:1315 ../pan/gui/header-pane.cc:1786
 #: ../pan/gui/prefs-ui.cc:849 ../pan/gui/score-add-ui.cc:140
 #: ../pan/gui/task-pane.cc:798
 msgid "Author"
 msgstr "Szerző"
 
-#: ../pan/gui/header-pane.cc:1770 ../pan/gui/prefs-ui.cc:853
+#: ../pan/gui/header-pane.cc:1771 ../pan/gui/prefs-ui.cc:853
 msgid "Score"
 msgstr "Pontszám"
 
@@ -1410,209 +1410,209 @@ msgstr ""
 "  --no-gui                 Csak konzolos kimenet megjelenítése, nem a\n"
 "                             letöltési soré.\n"
 
-#: ../pan/gui/pan.cc:958
+#: ../pan/gui/pan.cc:961
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Hiba: a --no-gui NZB-fájlok vagy news:message-id nélkül van használva."
 
-#: ../pan/gui/pan.cc:962
+#: ../pan/gui/pan.cc:965
 #, c-format
 msgid "Pan %s started"
 msgstr "A Pan %s elindult"
 
-#: ../pan/gui/pan.cc:982
+#: ../pan/gui/pan.cc:985
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Állítsa be a Pan hírkiszolgálóit, mielőtt NZB-kliensként használná azt."
 
-#: ../pan/gui/pan.cc:1100
+#: ../pan/gui/pan.cc:1103
 msgid "Pan notification"
 msgstr "Pan értesítés"
 
-#: ../pan/gui/post-ui.cc:163
+#: ../pan/gui/post-ui.cc:169
 #, c-format
 msgid "Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."
 msgstr "Feltöltési sor: %lu feladat, %ld KB (~ %.2f MB) összesen."
 
-#: ../pan/gui/post-ui.cc:266 ../pan/gui/post-ui.cc:297
+#: ../pan/gui/post-ui.cc:272 ../pan/gui/post-ui.cc:303
 #, c-format
 msgid "Error setting custom spellchecker: %s"
 msgstr "Hiba az egyéni helyesírás-ellenőrző beállításakor: %s"
 
-#: ../pan/gui/post-ui.cc:270 ../pan/gui/post-ui.cc:278
-#: ../pan/gui/post-ui.cc:301 ../pan/gui/post-ui.cc:309
+#: ../pan/gui/post-ui.cc:276 ../pan/gui/post-ui.cc:284
+#: ../pan/gui/post-ui.cc:307 ../pan/gui/post-ui.cc:315
 #, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "Hiba a helyesírás-ellenőrző beállításakor: %s"
 
-#: ../pan/gui/post-ui.cc:448
+#: ../pan/gui/post-ui.cc:454
 msgid "_Profile"
 msgstr "_Profil"
 
-#: ../pan/gui/post-ui.cc:449
+#: ../pan/gui/post-ui.cc:455
 msgid "Set Editor"
 msgstr "Szerkesztő beállítása"
 
-#: ../pan/gui/post-ui.cc:451
+#: ../pan/gui/post-ui.cc:457
 msgid "_Send Article"
 msgstr "Cikk _küldése"
 
-#: ../pan/gui/post-ui.cc:451
+#: ../pan/gui/post-ui.cc:457
 msgid "Send Article Now"
 msgstr "Cikk küldése most"
 
-#: ../pan/gui/post-ui.cc:452
+#: ../pan/gui/post-ui.cc:458
 msgid "_Send and Save Articles to NZB"
 msgstr "_Küldés és cikkek mentése NZB-be"
 
-#: ../pan/gui/post-ui.cc:452
+#: ../pan/gui/post-ui.cc:458
 msgid "Send and Save Articles to NZB"
 msgstr "Küldés és cikkek mentése NZB-be"
 
-#: ../pan/gui/post-ui.cc:453
+#: ../pan/gui/post-ui.cc:459
 msgid "Set Character _Encoding..."
 msgstr "_Karakterkódolás beállítása…"
 
-#: ../pan/gui/post-ui.cc:454
+#: ../pan/gui/post-ui.cc:460
 msgid "Set Content _Transfer Encoding..."
 msgstr "_Tartalomátvitel kódolásának beállítása…"
 
-#: ../pan/gui/post-ui.cc:455
+#: ../pan/gui/post-ui.cc:461
 msgid "Sa_ve Draft"
 msgstr "Piszkozat _mentése"
 
-#: ../pan/gui/post-ui.cc:455
+#: ../pan/gui/post-ui.cc:461
 msgid "Save as a Draft for Future Posting"
 msgstr "Mentés piszkozatként egy későbbi küldéshez"
 
-#: ../pan/gui/post-ui.cc:456
+#: ../pan/gui/post-ui.cc:462
 msgid "_Open Draft..."
 msgstr "Piszkozat meg_nyitása…"
 
-#: ../pan/gui/post-ui.cc:456
+#: ../pan/gui/post-ui.cc:462
 msgid "Open an Article Draft"
 msgstr "Egy piszkozatcikk megnyitása"
 
-#: ../pan/gui/post-ui.cc:461
+#: ../pan/gui/post-ui.cc:467
 msgid "_Rot13"
 msgstr "_Rot13"
 
-#: ../pan/gui/post-ui.cc:461
+#: ../pan/gui/post-ui.cc:467
 msgid "Rot13 Selected Text"
 msgstr "A kijelölt szöveg rot13 kódolása"
 
-#: ../pan/gui/post-ui.cc:462
+#: ../pan/gui/post-ui.cc:468
 msgid "Run _Editor"
 msgstr "_Szerkesztő futtatása"
 
-#: ../pan/gui/post-ui.cc:462
+#: ../pan/gui/post-ui.cc:468
 msgid "Run Editor"
 msgstr "Szerkesztő futtatása"
 
-#: ../pan/gui/post-ui.cc:464
+#: ../pan/gui/post-ui.cc:470
 msgid "Add _Files to Queue"
 msgstr "_Fájlok hozzáadása a sorhoz"
 
-#: ../pan/gui/post-ui.cc:464
+#: ../pan/gui/post-ui.cc:470
 msgid "Add Files to Queue"
 msgstr "Fájlok hozzáadása a sorhoz"
 
-#: ../pan/gui/post-ui.cc:479 ../pan/gui/post-ui.cc:480
+#: ../pan/gui/post-ui.cc:485 ../pan/gui/post-ui.cc:486
 msgid "Remove from Queue"
 msgstr "Eltávolítás a sorból"
 
-#: ../pan/gui/post-ui.cc:484 ../pan/gui/post-ui.cc:485
+#: ../pan/gui/post-ui.cc:490 ../pan/gui/post-ui.cc:491
 msgid "Clear List"
 msgstr "Lista törlése"
 
-#: ../pan/gui/post-ui.cc:489 ../pan/gui/post-ui.cc:490
+#: ../pan/gui/post-ui.cc:495 ../pan/gui/post-ui.cc:496
 msgid "Select Needed Parts"
 msgstr "Szükséges részek kijelölése"
 
-#: ../pan/gui/post-ui.cc:494 ../pan/gui/post-ui.cc:495
+#: ../pan/gui/post-ui.cc:500 ../pan/gui/post-ui.cc:501
 #: ../pan/gui/task-pane.cc:677 ../pan/gui/task-pane.cc:678
 msgid "Move Up"
 msgstr "Mozgatás fel"
 
-#: ../pan/gui/post-ui.cc:499 ../pan/gui/post-ui.cc:500
+#: ../pan/gui/post-ui.cc:505 ../pan/gui/post-ui.cc:506
 #: ../pan/gui/task-pane.cc:682 ../pan/gui/task-pane.cc:683
 msgid "Move Down"
 msgstr "Mozgatás le"
 
-#: ../pan/gui/post-ui.cc:504 ../pan/gui/post-ui.cc:505
+#: ../pan/gui/post-ui.cc:510 ../pan/gui/post-ui.cc:511
 msgid "Move to Top"
 msgstr "Mozgatás a tetejére"
 
-#: ../pan/gui/post-ui.cc:509 ../pan/gui/post-ui.cc:510
+#: ../pan/gui/post-ui.cc:515 ../pan/gui/post-ui.cc:516
 msgid "Move to Bottom"
 msgstr "Mozgatás az aljára"
 
-#: ../pan/gui/post-ui.cc:517
+#: ../pan/gui/post-ui.cc:523
 msgid "_Wrap Text"
 msgstr "_Szöveg tördelése"
 
-#: ../pan/gui/post-ui.cc:517
+#: ../pan/gui/post-ui.cc:523
 msgid "Wrap Text"
 msgstr "Szöveg tördelése"
 
-#: ../pan/gui/post-ui.cc:518
+#: ../pan/gui/post-ui.cc:524
 msgid "Always Run Editor"
 msgstr "Mindig futtassa a szerkesztőt"
 
-#: ../pan/gui/post-ui.cc:519
+#: ../pan/gui/post-ui.cc:525
 msgid "Remember Character Encoding for This Group"
 msgstr "Emlékezzen a karakterkódolásra ennél a csoportnál"
 
-#: ../pan/gui/post-ui.cc:520
+#: ../pan/gui/post-ui.cc:526
 msgid "Thread Attached Replies"
 msgstr "Csatolt válaszok szálba rendezése"
 
-#: ../pan/gui/post-ui.cc:521
+#: ../pan/gui/post-ui.cc:527
 msgid "PGP-Encrypt the Article"
 msgstr "A cikk titkosítása PGP-vel"
 
-#: ../pan/gui/post-ui.cc:522
+#: ../pan/gui/post-ui.cc:528
 msgid "PGP-Sign the Article"
 msgstr "A cikk aláírása PGP-vel"
 
-#: ../pan/gui/post-ui.cc:523
+#: ../pan/gui/post-ui.cc:529
 msgid "Check _Spelling"
 msgstr "_Helyesírás-ellenőrzés"
 
-#: ../pan/gui/post-ui.cc:549
+#: ../pan/gui/post-ui.cc:555
 msgid "New Article's Encoding:"
 msgstr "Új cikk kódolása:"
 
-#: ../pan/gui/post-ui.cc:559
+#: ../pan/gui/post-ui.cc:565
 msgid "Content Transfer Encoding"
 msgstr "Tartalomátvitel kódolása"
 
-#: ../pan/gui/post-ui.cc:560
+#: ../pan/gui/post-ui.cc:566
 msgid "New Article's Content Transfer Encoding:"
 msgstr "Új cikk tartalomátvitelének kódolása:"
 
-#: ../pan/gui/post-ui.cc:740
+#: ../pan/gui/post-ui.cc:746
 msgid "Your changes will be lost!"
 msgstr "A módosítások el fognak veszni!"
 
-#: ../pan/gui/post-ui.cc:741
+#: ../pan/gui/post-ui.cc:747
 msgid "Close this window and lose your changes?"
 msgstr "Bezárja ezt az ablakot és elveszíti a módosításokat?"
 
-#: ../pan/gui/post-ui.cc:786 ../pan/gui/post-ui.cc:825
+#: ../pan/gui/post-ui.cc:792 ../pan/gui/post-ui.cc:831
 msgid "There were problems with this post."
 msgstr "Problémák voltak ezzel a küldéssel."
 
-#: ../pan/gui/post-ui.cc:788 ../pan/gui/post-ui.cc:827
-#: ../pan/gui/post-ui.cc:892
+#: ../pan/gui/post-ui.cc:794 ../pan/gui/post-ui.cc:833
+#: ../pan/gui/post-ui.cc:898
 msgid "Go Back"
 msgstr "Vissza"
 
-#: ../pan/gui/post-ui.cc:790
+#: ../pan/gui/post-ui.cc:796
 msgid "Continue Anyway"
 msgstr "Folytatás mindenképp"
 
 #. Prompt the user
-#: ../pan/gui/post-ui.cc:819
+#: ../pan/gui/post-ui.cc:825
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
@@ -1620,34 +1620,34 @@ msgstr ""
 "Az üzenet olyan karaktereket használ, amelyek nincsenek megadva a(z) „%s” "
 "karakterkészletben - talán használja ezt: „%s” "
 
-#: ../pan/gui/post-ui.cc:842
+#: ../pan/gui/post-ui.cc:848
 msgid "Go _Online"
 msgstr "_Kapcsolódás"
 
-#: ../pan/gui/post-ui.cc:891
+#: ../pan/gui/post-ui.cc:897
 msgid "The file queue is empty, so no files can be saved."
 msgstr "A fájl sor üres, így nem lehet fájlokat menteni."
 
-#: ../pan/gui/post-ui.cc:1070
+#: ../pan/gui/post-ui.cc:1076
 msgid "IO Error"
 msgstr "IO-hiba"
 
-#: ../pan/gui/post-ui.cc:1070
+#: ../pan/gui/post-ui.cc:1076
 msgid "No space left on device"
 msgstr "Nincs hely az eszközön"
 
-#: ../pan/gui/post-ui.cc:1071
+#: ../pan/gui/post-ui.cc:1077
 #, c-format
 msgid "Error copying message to %s folder. Reason: %s"
 msgstr "Hiba az üzenet másolásakor a következő mappába: %s. Ok: %s"
 
-#: ../pan/gui/post-ui.cc:1077
+#: ../pan/gui/post-ui.cc:1083
 #, c-format
 msgid "Error creating message in %s mail folder: Invalid article."
 msgstr ""
 "Hiba az üzenet létrehozásakor a követező levélmappába: %s: érvénytelen cikk."
 
-#: ../pan/gui/post-ui.cc:1099
+#: ../pan/gui/post-ui.cc:1105
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1655,7 +1655,7 @@ msgstr ""
 "Nincs küldő kiszolgáló beállítva ehhez a küldő profilhoz.\n"
 "Szerkessze a profilt a Szerkesztés|Küldő profilok kezelése menüpontban."
 
-#: ../pan/gui/post-ui.cc:1104
+#: ../pan/gui/post-ui.cc:1110
 msgid ""
 "The selected posting server is currently disabled. Please choose an "
 "appropriate alternative."
@@ -1663,15 +1663,15 @@ msgstr ""
 "A kijelölt küldő kiszolgáló jelenleg le van tiltva. Válasszon egy megfelelő "
 "alternatívát."
 
-#: ../pan/gui/post-ui.cc:1146
+#: ../pan/gui/post-ui.cc:1152
 msgid "Pan is Offline."
 msgstr "A Pan kapcsolat nélküli."
 
-#: ../pan/gui/post-ui.cc:1147
+#: ../pan/gui/post-ui.cc:1153
 msgid "Go online to post the article?"
 msgstr "Kapcsolódjon a cikk elküldéséhez?"
 
-#: ../pan/gui/post-ui.cc:1196
+#: ../pan/gui/post-ui.cc:1202
 #, c-format
 msgid ""
 "Error signing/encrypting your message. Perhaps you misspelled your email "
@@ -1680,103 +1680,111 @@ msgstr ""
 "Hiba az üzenet aláírásakor vagy titkosításakor. Talán elírta az e-mail címét "
 "(%s)?"
 
-#: ../pan/gui/post-ui.cc:1344
+#: ../pan/gui/post-ui.cc:1350
 msgid "Error opening temporary file"
 msgstr "Hiba az átmeneti fájl megnyitásakor"
 
-#: ../pan/gui/post-ui.cc:1356
+#: ../pan/gui/post-ui.cc:1362
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Hiba a cikk átmeneti fájlba írásakor: %s"
 
-#: ../pan/gui/post-ui.cc:1375
+#: ../pan/gui/post-ui.cc:1381
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr ""
 "Hiba az „külső szerkesztő” parancssor feldolgozásakor: %s (A parancs ez "
 "volt: %s)"
 
-#: ../pan/gui/post-ui.cc:1416
+#: ../pan/gui/post-ui.cc:1422
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Hiba a külső szerkesztő elindításakor: %s"
 
-#: ../pan/gui/post-ui.cc:1479
+#: ../pan/gui/post-ui.cc:1485
 msgid "Open Draft Article"
 msgstr "Piszkozatcikk megnyitása"
 
-#: ../pan/gui/post-ui.cc:1691
+#: ../pan/gui/post-ui.cc:1697
 msgid "Save Draft Article"
 msgstr "Piszkozatcikk mentése"
 
-#: ../pan/gui/post-ui.cc:1889
+#: ../pan/gui/post-ui.cc:1734
+msgid "File already exists."
+msgstr "A fájl már létezik."
+
+#: ../pan/gui/post-ui.cc:1735
+msgid "Overwrite it?"
+msgstr "Felülírja?"
+
+#: ../pan/gui/post-ui.cc:1941
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Nem sikerült feldolgozni a(z) „%s” aláírás parancsot: %s"
 
-#: ../pan/gui/post-ui.cc:1925
+#: ../pan/gui/post-ui.cc:1977
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Nem sikerült átalakítani az aláírást UTF-8 formátumra."
 
-#: ../pan/gui/post-ui.cc:2427
+#: ../pan/gui/post-ui.cc:2479
 msgid "F_rom"
 msgstr "_Feladó"
 
-#: ../pan/gui/post-ui.cc:2444
+#: ../pan/gui/post-ui.cc:2496
 msgid "_Subject"
 msgstr "_Tárgy"
 
-#: ../pan/gui/post-ui.cc:2457
+#: ../pan/gui/post-ui.cc:2509
 msgid "_Newsgroups"
 msgstr "_Hírcsoportok"
 
-#: ../pan/gui/post-ui.cc:2471
+#: ../pan/gui/post-ui.cc:2523
 msgid "Mail _To"
 msgstr "Levél _címzettje"
 
-#: ../pan/gui/post-ui.cc:2573
+#: ../pan/gui/post-ui.cc:2625
 msgid "Delete from Queue"
 msgstr "Törlés a sorból"
 
-#: ../pan/gui/post-ui.cc:2586
+#: ../pan/gui/post-ui.cc:2638
 msgid "No."
 msgstr "Sz."
 
-#: ../pan/gui/post-ui.cc:2590 ../pan/gui/post-ui.cc:2682
-#: ../pan/gui/post-ui.cc:2723
+#: ../pan/gui/post-ui.cc:2642 ../pan/gui/post-ui.cc:2734
+#: ../pan/gui/post-ui.cc:2775
 msgid "Filename"
 msgstr "Fájlnév"
 
-#: ../pan/gui/post-ui.cc:2592
+#: ../pan/gui/post-ui.cc:2644
 msgid "Size (KB)"
 msgstr "Méret (KB)"
 
-#: ../pan/gui/post-ui.cc:2690
+#: ../pan/gui/post-ui.cc:2742
 msgid "The current filename"
 msgstr "A jelenlegi fájlnév"
 
-#: ../pan/gui/post-ui.cc:2694
+#: ../pan/gui/post-ui.cc:2746
 msgid "Subject Line"
 msgstr "Tárgysor"
 
-#: ../pan/gui/post-ui.cc:2702
+#: ../pan/gui/post-ui.cc:2754
 msgid "The current subject line"
 msgstr "A jelenlegi tárgy sora"
 
-#: ../pan/gui/post-ui.cc:2716
+#: ../pan/gui/post-ui.cc:2768
 msgid "No. "
 msgstr "Sz. "
 
-#: ../pan/gui/post-ui.cc:2720
+#: ../pan/gui/post-ui.cc:2772
 msgid "Enable/Disable"
 msgstr "Engedélyezés/letiltás"
 
-#: ../pan/gui/post-ui.cc:2754
+#: ../pan/gui/post-ui.cc:2806
 msgid "Follo_wup-To"
 msgstr "_Követőcím"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: ../pan/gui/post-ui.cc:2763
+#: ../pan/gui/post-ui.cc:2815
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1789,11 +1797,11 @@ msgstr ""
 "Az összes válasznak közvetlenül az e-mail címére küldéséhez használja a "
 "„Követőcím: küldő” lehetőséget."
 
-#: ../pan/gui/post-ui.cc:2770
+#: ../pan/gui/post-ui.cc:2822
 msgid "_Reply-To"
 msgstr "_Válaszcím"
 
-#: ../pan/gui/post-ui.cc:2778
+#: ../pan/gui/post-ui.cc:2830
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
@@ -1801,52 +1809,52 @@ msgstr ""
 "Az az e-mail fiók, ahova az elküldött üzenetre adott válaszok mennek. Ez "
 "csak akkor szükséges, ha eltér a „Feladó” fejléctől."
 
-#: ../pan/gui/post-ui.cc:2785
+#: ../pan/gui/post-ui.cc:2837
 msgid "_Custom Headers"
 msgstr "_Egyéni fejlécek"
 
-#: ../pan/gui/post-ui.cc:2809
+#: ../pan/gui/post-ui.cc:2861
 msgid "Add \"_User-Agent\" header"
 msgstr "„_User-Agent” fejléc hozzáadása"
 
-#: ../pan/gui/post-ui.cc:2816
+#: ../pan/gui/post-ui.cc:2868
 msgid "Add \"Message-_ID\" header"
 msgstr "„Message-_ID” fejléc hozzáadása"
 
-#: ../pan/gui/post-ui.cc:2947
+#: ../pan/gui/post-ui.cc:2999
 msgid "Select Parts"
 msgstr "Részek kijelölése"
 
-#: ../pan/gui/post-ui.cc:2960
+#: ../pan/gui/post-ui.cc:3012
 msgid "_Parts"
 msgstr "_Részek"
 
-#: ../pan/gui/post-ui.cc:3114
+#: ../pan/gui/post-ui.cc:3166
 msgid "Post Article"
 msgstr "Cikk küldése"
 
-#: ../pan/gui/post-ui.cc:3135
+#: ../pan/gui/post-ui.cc:3187
 msgid "_Message"
 msgstr "Üz_enet"
 
-#: ../pan/gui/post-ui.cc:3136
+#: ../pan/gui/post-ui.cc:3188
 msgid "More _Headers"
 msgstr "Több _fejléc"
 
-#: ../pan/gui/post-ui.cc:3137
+#: ../pan/gui/post-ui.cc:3189
 msgid "File _Queue"
 msgstr "Fájl _sor"
 
-#: ../pan/gui/post-ui.cc:3169 ../pan/gui/profiles-dialog.cc:481
+#: ../pan/gui/post-ui.cc:3221 ../pan/gui/profiles-dialog.cc:481
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "%d keltezéssel %n ezt írta:"
 
-#: ../pan/gui/post-ui.cc:3198
+#: ../pan/gui/post-ui.cc:3250
 msgid "Add files to queue"
 msgstr "Fájlok hozzáadása a sorhoz"
 
-#: ../pan/gui/post-ui.cc:3274
+#: ../pan/gui/post-ui.cc:3326
 msgid "Save Upload Queue as NZB File"
 msgstr "Feltöltési sor mentése NZB-fájlként"
 
@@ -3265,8 +3273,8 @@ msgstr "A(z) „%s” küldése ide: %s, azonosítatlan válasszal tért vissza:
 msgid "Unable to connect to \"%s\""
 msgstr "Nem lehet kapcsolódni a következőhöz: „%s”"
 
-#: ../pan/tasks/queue.cc:772 ../pan/tasks/queue.cc:800
-#: ../pan/tasks/queue.cc:827
+#: ../pan/tasks/queue.cc:778 ../pan/tasks/queue.cc:806
+#: ../pan/tasks/queue.cc:833
 msgid "No space left on device."
 msgstr "Nincs hely az eszközön."
 
