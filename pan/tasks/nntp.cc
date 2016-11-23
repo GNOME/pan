@@ -119,11 +119,13 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
    }
    else
    {
+     int code;
      //check for compression, enable once, disable at end
      if (!_compression)
        _compression = strcasestr (line_in.str, COMPRESS_GZIP);
 
-     switch (atoi (line.str))
+     code = atoi (line.str);
+     switch (code)
      {
         case SERVER_READY:
         case SERVER_READY_NO_POSTING:
@@ -234,6 +236,12 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
            std::string cmd (_previous_command);
            if (cmd.size()>=2 && cmd[cmd.size()-1]=='\n' && cmd[cmd.size()-2]=='\r')
              cmd.resize (cmd.size()-2);
+           if (code == ERROR_CMD_NOT_UNDERSTOOD &&
+               !strcmp (cmd.c_str(), "MODE READER")) {
+             // server clearly doesn't need MODE READER, ignore the error
+             state = CMD_DONE;
+             break;
+           }
            std::string host;
            _socket->get_host (host);
            Log::add_err_va (_("Sending \"%s\" to %s returned an error: %s"),
