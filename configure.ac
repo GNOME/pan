@@ -14,21 +14,18 @@ else
   GIT_HASH=`git --git-dir=$srcdir/.git log -1 --pretty=format:%h 2> /dev/null`
   if test ! -z $GIT_HASH; then
     GIT_REMOTE=`git config --get remote.origin.url 2> /dev/null`
-    dnl Do not include protocol & user name in GIT_REMOTE
-    case "$GIT_REMOTE" in
-      *ssh://* )
-      case "$GIT_REMOTE" in
-        *@* )
-        GIT_REMOTE=`echo $GIT_REMOTE | sed -e 's/ssh:\/\/.*@//g'`;;
-      esac
-      GIT_REMOTE=`echo $GIT_REMOTE | sed 's/ssh:\/\///g'`;;
-      *git://* )
-      GIT_REMOTE=`echo $GIT_REMOTE | sed 's/git:\/\///g'`;;
-      *https://* )
-      GIT_REMOTE=`echo $GIT_REMOTE | sed 's/https:\/\///g'`;;
-    esac
   fi
 fi
+dnl Do not include protocol & user name in GIT_REMOTE
+case $GIT_REMOTE in
+  *://* )
+  GIT_REMOTE=`echo $GIT_REMOTE | cut -d '/' -f3- 2> /dev/null`
+  case $GIT_REMOTE in
+    *@* )
+    GIT_REMOTE=`echo $GIT_REMOTE | cut -d '@' -f2- | sed 's/\/git\//\//g' 2> /dev/null` ;;
+  esac
+  ;;
+esac
 if test ! -z $GIT_HASH; then
   if test -z $GIT_REMOTE; then
     GIT_REV="GIT $GIT_HASH"
