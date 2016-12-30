@@ -28,9 +28,9 @@ case $GIT_REMOTE in
 esac
 if test ! -z $GIT_HASH; then
   if test -z $GIT_REMOTE; then
-    GIT_REV="GIT $GIT_HASH"
+    GIT_REV="$GIT_HASH"
   else
-    GIT_REV="GIT $GIT_HASH $GIT_REMOTE"
+    GIT_REV="$GIT_HASH $GIT_REMOTE"
   fi
     echo $GIT_REV > pan-git.version
   elif test -f pan-git.version ; then
