@@ -115,6 +115,7 @@ PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED],[have_gmime26=yes],
   ]
   )
 
+dnl Check for GMime cryptography support
 AC_ARG_WITH(gmime-crypto, AS_HELP_STRING([--with-gmime-crypto],[enable GMime cryptography support (overrides auto-on if GMime 2.6 is found) (normally: yes)]),
     [want_gmime_crypto=$withval], [want_gmime_crypto=yes])
 
@@ -311,6 +312,7 @@ Configuration:
         Compiler:               ${CXX}
         With D-Bus:             ${want_dbus}
         With GMime 2.6+:        ${have_gmime26}
+        With GMime crypto:      ${want_gmime_crypto}
         With GtkSpell:          ${gtkspell_msg}
         With GTK+ 3:            ${gtk_msg}
         With WebKitGTK+:        ${want_webkit}
