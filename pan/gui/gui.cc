@@ -952,6 +952,7 @@ void GUI :: do_show_preferences_dialog ()
 {
   PrefsDialog * dialog = new PrefsDialog (_prefs, get_window(_root));
   g_signal_connect (dialog->root(), "destroy", G_CALLBACK(prefs_dialog_destroyed_cb), this);
+  gtk_widget_set_size_request(dialog->root(), 800, 600);
   gtk_widget_show (dialog->root());
 }
 void GUI :: do_show_group_preferences_dialog ()
