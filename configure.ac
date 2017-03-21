@@ -88,10 +88,11 @@ dnl for libuu
 AC_CHECK_HEADERS([errno.h fcntl.h])
 
 dnl I18n support
-IT_PROG_INTLTOOL([0.40.6])
 GETTEXT_PACKAGE=pan
 AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[gettext package name])
+AM_GNU_GETTEXT_VERSION([0.19.7])
+AM_GNU_GETTEXT([external])
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Gettext Package])
 panlocaledir=[${datadir}/locale]
 
 dnl libz for xzver

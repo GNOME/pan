@@ -1,32 +1,29 @@
-SUBDIRS = uulib pan po
+SUBDIRS = . uulib pan po
 
-DIST_SUBDIRS = uulib pan po help
+DIST_SUBDIRS = . uulib pan po help
 
 if ENABLE_MANUAL
-
 SUBDIRS += help
-
 endif
 
+pan.desktop: pan.desktop.in
+	$(AM_V_GEN)$(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 desktopdir = $(datadir)/applications
-desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
-desktop_in_files = pan.desktop.in
-@INTLTOOL_DESKTOP_RULE@
+desktop_DATA = pan.desktop
 
-@INTLTOOL_XML_RULE@
+pan.appdata.xml: pan.appdata.xml.in
+	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
 appdatadir = $(datadir)/appdata
-appdata_DATA = $(appdata_in_files:.xml.in=.xml)
-appdata_in_files = pan.appdata.xml.in
+appdata_DATA = pan.appdata.xml
 
 CLEANFILES = \
- $(srcdir)/pan.appdata.xml \
+ pan.appdata.xml \
+ pan.desktop \
  $(appdata_DATA)
 
 DISTCLEANFILES = \
- $(srcdir)/intltool-extract \
- $(srcdir)/intltool-merge \
- $(srcdir)/intltool-update \
- $(desktop_DATA)
+ pan.appdata.xml \
+ pan.desktop
 
 MAINTAINERCLEANFILES = \
  $(srcdir)/INSTALL \
@@ -39,7 +36,6 @@ MAINTAINERCLEANFILES = \
  $(srcdir)/install-sh \
  $(srcdir)/missing \
  $(srcdir)/mkinstalldirs \
- $(srcdir)/po/Makefile.in.in \
  `find "$(srcdir)" -type f -name Makefile.in -print` \
  $(NULL)
 
@@ -48,11 +44,11 @@ EXTRA_DIST = \
  README \
  README.windows \
  Pan.ico \
+ pan.appdata.xml.in \
+ pan.desktop.in \
  pan.png \
- $(appdata_in_files) \
- $(desktop_in_files) \
- intltool-extract.in intltool-merge.in intltool-update.in \
- pan-git.version
+ pan-git.version \
+ $(NULL)
 
 icon_DATA = pan.png
 icondir = $(datadir)/pixmaps
