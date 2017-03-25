@@ -1,9 +1,15 @@
-include $(top_srcdir)/gnome-doc-utils.make
+@YELP_HELP_RULES@
 
-dist-hook: doc-dist-hook
+# Translators: Add new translations here.
+HELP_LINGUAS = de es
 
-DOC_MODULE = pan
-DOC_ENTITIES = legal.xml
-DOC_INCLUDES =
-DOC_FIGURES = figures/pan_window.png
-DOC_LINGUAS = de es
+HELP_ID = pan
+
+HELP_FILES = \
+	index.docbook
+
+HELP_EXTRA = \
+	legal.xml
+
+HELP_MEDIA = \
+	figures/pan_window.png

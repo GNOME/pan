@@ -1,4 +1,12 @@
-SUBDIRS = po uulib pan
+SUBDIRS = uulib pan po
+
+DIST_SUBDIRS = uulib pan po help
+
+if ENABLE_MANUAL
+
+SUBDIRS += help
+
+endif
 
 desktopdir = $(datadir)/applications
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)

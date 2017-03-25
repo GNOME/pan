@@ -100,7 +100,8 @@ AC_SUBST(ZLIB_CFLAGS)
 AC_SUBST(ZLIB_LIBS)
 
 dnl D-Bus support
-AC_ARG_WITH(dbus, AS_HELP_STRING([--with-dbus],[enable D-Bus support (normally: no)]), [want_dbus=$withval], [want_dbus=no])
+AC_ARG_WITH([dbus],
+  AS_HELP_STRING([--with-dbus],[enable D-Bus support (normally: no)]),[want_dbus=$withval], [want_dbus=no])
 if test "x$want_dbus" = "xyes" ; then
   AM_PATH_GLIB_2_0($GLIB_REQUIRED_FOR_DBUS,AC_DEFINE(HAVE_DBUS,[1],[D-Bus support for multiple Pan instances],exit 1,gobject gmodule gthread))
 else
@@ -116,8 +117,9 @@ PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED],[have_gmime26=yes],
   )
 
 dnl Check for GMime cryptography support
-AC_ARG_WITH(gmime-crypto, AS_HELP_STRING([--with-gmime-crypto],[enable GMime cryptography support (overrides auto-on if GMime 2.6 is found) (normally: yes)]),
-    [want_gmime_crypto=$withval], [want_gmime_crypto=yes])
+AC_ARG_WITH([gmime-crypto],
+  AS_HELP_STRING([--with-gmime-crypto],[enable GMime cryptography support (overrides auto-on if GMime 2.6 is found) (normally: yes)]),
+  [want_gmime_crypto=$withval], [want_gmime_crypto=yes])
 
 if test "x$want_gmime_crypto" = "xyes" ; then
 if test "x$have_gmime26" = "xyes" ; then
@@ -127,16 +129,18 @@ fi
 
 dnl GtkSpell support
 gtkspell_msg=no
-AC_ARG_WITH(gtkspell, AS_HELP_STRING([--with-gtkspell],[enable GtkSpell support (normally: yes)]), [want_gtkspell=$withval], [want_gtkspell=yes])
+AC_ARG_WITH([gtkspell],
+  AS_HELP_STRING([--with-gtkspell],[enable GtkSpell support (normally: yes)]), [want_gtkspell=$withval], [want_gtkspell=yes])
 
 dnl GTK+ 3, GtkSpell 3, and Enchant support
 gtk_msg=no
-AC_ARG_WITH(gtk3, AS_HELP_STRING([--with-gtk3],[enable GTK+ 3 support (normally: no)]), [want_gtk3=$withval], [want_gtk3=no])
+AC_ARG_WITH([gtk3],
+  AS_HELP_STRING([--with-gtk3],[enable GTK+ 3 support (normally: no)]), [want_gtk3=$withval], [want_gtk3=no])
 if test "x$want_gtk3" = "xyes" ; then
-	PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= $GTK3_REQUIRED],
-	                  [gtk_msg="yes >= $GTK3_REQUIRED"
-	                  AC_DEFINE(HAVE_GTK,[1],[GTK+ 3 support])]
-	                  )
+  PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= $GTK3_REQUIRED],
+                    [gtk_msg="yes >= $GTK3_REQUIRED"
+                    AC_DEFINE(HAVE_GTK,[1],[GTK+ 3 support])]
+                    )
   if test "x$want_gtkspell" = "xyes" ; then
     PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 >= $GTKSPELL3_REQUIRED enchant >= $ENCHANT_REQUIRED],
                       [
@@ -149,10 +153,9 @@ if test "x$want_gtk3" = "xyes" ; then
                       AC_MSG_RESULT(no)
                       ])
   fi
-
 else
-    if test "x$want_gtkspell" = "xyes" ; then
-    PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
+   if test "x$want_gtkspell" = "xyes" ; then
+   PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
                       [
                       gtkspell_msg=yes
                       AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
@@ -162,18 +165,16 @@ else
                       gtkspell_msg=no
                       AC_MSG_RESULT(no)
                       ])
-    fi
-
-    AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
-
+   fi
+   AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
 fi
 
 AC_SUBST(ENCHANT_CFLAGS)
 AC_SUBST(ENCHANT_LIBS)
 
 dnl WebKitGTK+ support
-AC_ARG_WITH(webkit, AS_HELP_STRING([--with-webkit],[enable WebKitGTK+ support (normally: no)]), [want_webkit=$withval], [want_webkit=no])
-
+AC_ARG_WITH([webkit],
+  AS_HELP_STRING([--with-webkit],[enable WebKitGTK+ support (normally: no)]), [want_webkit=$withval], [want_webkit=no])
 if test "x$want_gtk3" = "xyes" ; then
   if test "x$want_webkit" = "xyes" ; then
     PKG_CHECK_MODULES([WEBKITGTK],[webkitgtk-3.0 >= $WEBKIT_REQUIRED],
@@ -198,9 +199,9 @@ fi
 
 dnl GnuTLS support
 gnutls_msg=no
-AC_ARG_WITH(gnutls, AS_HELP_STRING([--with-gnutls],[enable GnuTLS support (normally: no)]), [want_gnutls=$withval], [want_gnutls=no])
+AC_ARG_WITH([gnutls],
+  AS_HELP_STRING([--with-gnutls],[enable GnuTLS support (normally: no)]), [want_gnutls=$withval], [want_gnutls=no])
 if test "x$want_gnutls" = "xyes" ; then
-
   PKG_CHECK_MODULES([GNUTLS],[gnutls >= $GNUTLS_REQUIRED],
   [
   GNUTLS_VER=`pkg-config --modversion gnutls`
@@ -214,7 +215,7 @@ fi
 
 dnl Check for libnotify if user-enabled for popup notifications
 AC_ARG_ENABLE([libnotify],
-AS_HELP_STRING([--enable-libnotify],[enable libnotify support (normally: no)]),[enable_libnotify=$enableval],[enable_libnotify=no])
+  AS_HELP_STRING([--enable-libnotify],[enable libnotify support (normally: no)]),[enable_libnotify=$enableval],[enable_libnotify=no])
 if test "x$enable_libnotify" = "xyes" ; then
   PKG_CHECK_MODULES([LIBNOTIFY],[libnotify >= $LIBNOTIFY_REQUIRED],[HAVE_LIBNOTIFY="yes"],[HAVE_LIBNOTIFY="no"])
   AC_SUBST([LIBNOTIFY_CFLAGS])
@@ -226,7 +227,7 @@ fi
 
 dnl Check for GNOME Keyring if user-enabled for password storage
 AC_ARG_ENABLE([gkr],
-AS_HELP_STRING([--enable-gkr],[enable GNOME Keyring support (normally: no)]),[enable_gkr=$enableval],[enable_gkr=no])
+  AS_HELP_STRING([--enable-gkr],[enable GNOME Keyring support (normally: no)]),[enable_gkr=$enableval],[enable_gkr=no])
 if test "x$enable_gkr" = "xyes" ; then
   PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[gnome-keyring-1 >= $LIBGKR_REQUIRED],[HAVE_GKR="yes"],[HAVE_GKR="no"])
   AC_SUBST([LIBGNOME_KEYRING_1_CFLAGS])
@@ -234,6 +235,25 @@ if test "x$enable_gkr" = "xyes" ; then
   if test "x$HAVE_GKR" = "xyes"; then
     AC_DEFINE([HAVE_GKR],[1],[GNOME Keyring support for password storage])
   fi
+fi
+
+dnl User manual infrastructure
+AC_ARG_WITH([yelp-tools],
+  AS_HELP_STRING([--with-yelp-tools],[enable yelp-tools support for documentation (normally: yes)]),
+  [want_yelp_tools=$withval],[want_yelp_tools=yes])
+AC_ARG_ENABLE([manual],
+  AS_HELP_STRING([--enable-manual],[build in user manual (normally: no)]),
+  [enable_manual=$enableval], [enable_manual=no])
+if test "x$want_yelp_tools" = "xyes" ; then
+  YELP_HELP_INIT
+  if test "x$enable_manual" = "xyes" ; then
+    AC_DEFINE(HAVE_MANUAL,[1], [user manual for Pan])
+    AM_CONDITIONAL(ENABLE_MANUAL, true)
+  else
+    AM_CONDITIONAL(ENABLE_MANUAL, false)
+  fi
+else
+  AM_CONDITIONAL(ENABLE_MANUAL, false)
 fi
 
 dnl Check to see if strftime supports the use of %l and %k
@@ -290,7 +310,6 @@ dnl Build the output files
 AC_SUBST(panlocaledir)
 AC_CONFIG_FILES([Makefile
                  README.windows
-                 po/Makefile.in
                  uulib/Makefile
                  pan/Makefile
                  pan/general/Makefile
@@ -299,7 +318,9 @@ AC_CONFIG_FILES([Makefile
                  pan/tasks/Makefile
                  pan/icons/Makefile
                  pan/data-impl/Makefile
-                 pan/gui/Makefile])
+                 pan/gui/Makefile
+                 po/Makefile.in
+                 help/Makefile])
 
 AC_OUTPUT
 
@@ -319,4 +340,6 @@ Configuration:
         With GnuTLS:            ${gnutls_msg}
         With libnotify:         ${enable_libnotify}
         With GNOME Keyring:     ${enable_gkr}
+        With yelp-tools:        ${want_yelp_tools}
+        With user manual:       ${enable_manual}
 "
