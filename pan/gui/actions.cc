@@ -181,6 +181,9 @@ namespace pan
   void do_post                         (GtkAction*) { pan_ui->do_post(); }
   void do_followup_to                  (GtkAction*) { pan_ui->do_followup_to(); }
   void do_reply_to                     (GtkAction*) { pan_ui->do_reply_to(); }
+#ifdef HAVE_MANUAL
+  void do_pan_manual                   (GtkAction*) { pan_ui->do_pan_manual(); }
+#endif
   void do_pan_web                      (GtkAction*) { pan_ui->do_pan_web(); }
   void do_bug_report                   (GtkAction*) { pan_ui->do_bug_report(); }
   void do_tip_jar                      (GtkAction*) { pan_ui->do_tip_jar(); }
@@ -675,6 +678,13 @@ namespace pan
         N_("_Reply to Author in Mail"), "R",
         NULL,
         G_CALLBACK(do_reply_to) },
+
+#ifdef HAVE_MANUAL
+      { "pan-manual", NULL,
+        N_("_Contents"), "F1",
+        NULL,
+        G_CALLBACK(do_pan_manual) },
+#endif
 
       { "pan-web-page", NULL,
         N_("_Pan Home Page"), NULL,

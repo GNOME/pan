@@ -1624,24 +1624,22 @@ void GUI :: do_reply_to ()
     g_object_unref (message);
   }
 }
-
-//void GUI :: do_pan_manual ()
-//{
-//#ifdef HAVE_HELP
-//  GError * error (NULL);
-//  gtk_show_uri (NULL, "ghelp:pan", gtk_get_current_event_time (), &error);
-//    if (error) {
-//      GtkWidget * w = gtk_message_dialog_new (get_window(_root),
-//                                              GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
-//                                              GTK_MESSAGE_ERROR,
-//                                              GTK_BUTTONS_CLOSE,
-//                                              _("Unable to open help file"));
-//      g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
-//      gtk_widget_show_all (w);
-//  }
-//#endif
-//}
-
+#ifdef HAVE_MANUAL
+void GUI :: do_pan_manual ()
+{
+  GError * error (NULL);
+  gtk_show_uri (NULL, "help:pan", gtk_get_current_event_time (), &error);
+    if (error) {
+      GtkWidget * w = gtk_message_dialog_new (get_window(_root),
+                                              GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
+                                              GTK_MESSAGE_ERROR,
+                                              GTK_BUTTONS_CLOSE,
+                                              _("Unable to open help file."));
+      g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
+      gtk_widget_show_all (w);
+  }
+}
+#endif
 void GUI :: do_pan_web ()
 {
   URL :: open (_prefs, "http://pan.rebelbase.com/");
@@ -1668,7 +1666,7 @@ void GUI :: do_about_pan ()
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
-  gtk_about_dialog_set_copyright (w, _("Copyright \u00A9 2002-2016 Charles Kerr and others")); // \u00A9 is unicode for (c)
+  gtk_about_dialog_set_copyright (w, _("Copyright \u00A9 2002-2017 Charles Kerr and others")); // \u00A9 is unicode for (c)
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
   gtk_about_dialog_set_license (w, LICENSE);

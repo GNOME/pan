@@ -84,6 +84,9 @@ namespace pan
     virtual void do_post () = 0;
     virtual void do_followup_to () = 0;
     virtual void do_reply_to () = 0;
+#ifdef HAVE_MANUAL
+    virtual void do_pan_manual () = 0;
+#endif
     virtual void do_pan_web () = 0;
     virtual void do_bug_report () = 0;
     virtual void do_tip_jar () = 0;
