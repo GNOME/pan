@@ -44,6 +44,7 @@ MAINTAINERCLEANFILES = \
  $(NULL)
 
 EXTRA_DIST = \
+ COPYING-DOCS \
  README \
  README.windows \
  Pan.ico \
