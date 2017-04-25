@@ -4,14 +4,14 @@
 # This file is distributed under the same license as the pan package.
 # Michal Bukovjan <bukm@centrum.cz>, 2002, 2003.
 # Miloslav Trmac <mitr@volny.cz>, 2003, 2005.
-# Petr Kovar <pknbe@volny.cz>, 2007, 2008, 2009, 2011, 2012, 2013, 2015, 2016.
+# Petr Kovar <pknbe@volny.cz>, 2007, 2008, 2009, 2011, 2012, 2013, 2015, 2016, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=Pan&ke"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=Pan&ke"
 "ywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2016-05-23 17:45+0000\n"
-"PO-Revision-Date: 2016-07-19 15:47+0200\n"
+"POT-Creation-Date: 2017-04-25 23:05+0000\n"
+"PO-Revision-Date: 2017-04-26 01:08+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -49,8 +49,8 @@ msgstr ""
 "rámci Good Net-Keeping Seal of Approval."
 
 #. update the titlebar
-#: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:1040
-#: ../pan/gui/gui.cc:1667 ../pan/gui/gui.cc:1987 ../pan/gui/score-add-ui.cc:602
+#: ../pan.desktop.in.h:1 ../pan/gui/dl-headers-ui.cc:106 ../pan/gui/gui.cc:1041
+#: ../pan/gui/gui.cc:1666 ../pan/gui/gui.cc:1986 ../pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
 
@@ -87,17 +87,17 @@ msgstr "Chyba při otevírání souboru \"%s\" %s"
 msgid "Error reading file \"%s\": %s"
 msgstr "Chyba při čtení souboru \"%s\": %s"
 
-#: ../pan/data/cert-store.cc:262
+#: ../pan/data/cert-store.cc:263
 #, c-format
 msgid "Error opening SSL certificate directory: \"%s\": %s"
 msgstr "Chyba při otevírání adresáře s certifikátem SSL: \"%s\": %s"
 
-#: ../pan/data/cert-store.cc:293
+#: ../pan/data/cert-store.cc:294
 #, c-format
 msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
 msgstr "Úspěšně přidaných certifikátů SSL PEM do Úložiště certifikátů: %d."
 
-#: ../pan/data/cert-store.cc:313
+#: ../pan/data/cert-store.cc:314
 msgid ""
 "Error initializing Certificate Store. Check that the permissions for the "
 "folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
@@ -106,7 +106,7 @@ msgstr ""
 "složkám ~/.pan2 a ~/.pan2/ssl_certs nastavena správně. Kritická chyba, "
 "ukončuje se."
 
-#: ../pan/data/cert-store.cc:362
+#: ../pan/data/cert-store.cc:363
 #, c-format
 msgid "Could not export certificate for server: %s"
 msgstr "Export certifikátu serveru se nezdařil: %s"
@@ -205,595 +205,599 @@ msgstr "Nelze použít regulární výraz \"%s\": %s"
 msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr "Nelze určit kódování příspěvku. Znaky mimo UTF-8 byly odstraněny."
 
-#: ../pan/gui/actions.cc:303 ../pan/gui/post-ui.cc:452
+#: ../pan/gui/actions.cc:306 ../pan/gui/post-ui.cc:452
 msgid "_File"
 msgstr "_Soubor"
 
-#: ../pan/gui/actions.cc:304 ../pan/gui/post-ui.cc:453
+#: ../pan/gui/actions.cc:307 ../pan/gui/post-ui.cc:453
 msgid "_Edit"
 msgstr "_Upravit"
 
-#: ../pan/gui/actions.cc:305 ../pan/gui/prefs-ui.cc:1107
+#: ../pan/gui/actions.cc:308 ../pan/gui/prefs-ui.cc:1107
 msgid "_Layout"
 msgstr "Rozvržení pane_lů"
 
-#: ../pan/gui/actions.cc:306
+#: ../pan/gui/actions.cc:309
 msgid "_Group Pane"
 msgstr "Panel _skupin"
 
-#: ../pan/gui/actions.cc:307
+#: ../pan/gui/actions.cc:310
 msgid "_Header Pane"
 msgstr "Panel _záhlaví"
 
-#: ../pan/gui/actions.cc:308
+#: ../pan/gui/actions.cc:311
 msgid "_Body Pane"
 msgstr "Panel _těla příspěvku"
 
-#: ../pan/gui/actions.cc:309
+#: ../pan/gui/actions.cc:312
 msgid "_View"
 msgstr "_Zobrazit"
 
-#: ../pan/gui/actions.cc:310
+#: ../pan/gui/actions.cc:313
 msgid "Filte_r"
 msgstr "Filt_r"
 
-#: ../pan/gui/actions.cc:311
+#: ../pan/gui/actions.cc:314
 msgid "_Go"
 msgstr "_Přejít"
 
-#: ../pan/gui/actions.cc:312 ../pan/gui/prefs-ui.cc:1157
+#: ../pan/gui/actions.cc:315 ../pan/gui/prefs-ui.cc:1157
 msgid "_Actions"
 msgstr "_Akce"
 
-#: ../pan/gui/actions.cc:313
+#: ../pan/gui/actions.cc:316
 msgid "_Articles"
 msgstr "Příspě_vky"
 
-#: ../pan/gui/actions.cc:314
+#: ../pan/gui/actions.cc:317
 msgid "G_roups"
 msgstr "S_kupiny"
 
-#: ../pan/gui/actions.cc:315 ../pan/gui/actions.cc:316
+#: ../pan/gui/actions.cc:318 ../pan/gui/actions.cc:319
 msgid "_Post"
 msgstr "V_ystavit"
 
-#: ../pan/gui/actions.cc:317
+#: ../pan/gui/actions.cc:320
 msgid "_Help"
 msgstr "_Nápověda"
 
-#: ../pan/gui/actions.cc:320
+#: ../pan/gui/actions.cc:323
 msgid "_Read Group"
 msgstr "_Přečíst skupinu"
 
-#: ../pan/gui/actions.cc:321
+#: ../pan/gui/actions.cc:324
 msgid "Read Group"
 msgstr "Přečíst skupinu"
 
-#: ../pan/gui/actions.cc:325
+#: ../pan/gui/actions.cc:328
 msgid "_Mark Selected Groups Read"
 msgstr "_Označit vybrané skupiny jako přečtené"
 
-#: ../pan/gui/actions.cc:326
+#: ../pan/gui/actions.cc:329
 msgid "Mark Selected Groups Read"
 msgstr "Označit vybrané skupiny jako přečtené"
 
-#: ../pan/gui/actions.cc:330
+#: ../pan/gui/actions.cc:333
 msgid "_Delete Selected Groups' Articles"
 msgstr "_Smazat příspěvky z vybraných skupin"
 
-#: ../pan/gui/actions.cc:331
+#: ../pan/gui/actions.cc:334
 msgid "Delete Selected Groups' Articles"
 msgstr "Smazat příspěvky z vybraných skupin"
 
-#: ../pan/gui/actions.cc:335
+#: ../pan/gui/actions.cc:338
 msgid "Get New _Headers in Selected Groups"
 msgstr "S_táhnout nová záhlaví ve vybraných skupinách"
 
-#: ../pan/gui/actions.cc:336
+#: ../pan/gui/actions.cc:339
 msgid "Get New Headers in Selected Groups"
 msgstr "Stáhne nová záhlaví ve vybraných skupinách"
 
-#: ../pan/gui/actions.cc:340 ../pan/gui/actions.cc:345
+#: ../pan/gui/actions.cc:343 ../pan/gui/actions.cc:348
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "Stá_hnout nová záhlaví v odebíraných skupinách"
 
-#: ../pan/gui/actions.cc:341 ../pan/gui/actions.cc:346
+#: ../pan/gui/actions.cc:344 ../pan/gui/actions.cc:349
 msgid "Get New Headers in Subscribed Groups"
 msgstr "Stáhne nová záhlaví v odebíraných skupinách"
 
-#: ../pan/gui/actions.cc:350
+#: ../pan/gui/actions.cc:353
 msgid "Get _Headers..."
 msgstr "Stáh_nout nová záhlaví..."
 
-#: ../pan/gui/actions.cc:351
+#: ../pan/gui/actions.cc:354
 msgid "Get Headers..."
 msgstr "Stáhne nová záhlaví..."
 
-#: ../pan/gui/actions.cc:355 ../pan/gui/actions.cc:356
+#: ../pan/gui/actions.cc:358 ../pan/gui/actions.cc:359
 msgid "Refresh Group List"
 msgstr "Obnovit seznam skupin"
 
-#: ../pan/gui/actions.cc:360
+#: ../pan/gui/actions.cc:363
 msgid "_Subscribe"
 msgstr "O_debírat"
 
-#: ../pan/gui/actions.cc:361
+#: ../pan/gui/actions.cc:364
 msgid "Subscribe"
 msgstr "Odebírat"
 
-#: ../pan/gui/actions.cc:365
+#: ../pan/gui/actions.cc:368
 msgid "_Unsubscribe"
 msgstr "Zr_ušit odebírání"
 
-#: ../pan/gui/actions.cc:366
+#: ../pan/gui/actions.cc:369
 msgid "Unsubscribe"
 msgstr "Zrušit odebírání"
 
-#: ../pan/gui/actions.cc:370
+#: ../pan/gui/actions.cc:373
 msgid "_Save Articles..."
 msgstr "_Uložit příspěvky..."
 
-#: ../pan/gui/actions.cc:371
+#: ../pan/gui/actions.cc:374
 msgid "Save Articles..."
 msgstr "Uloží příspěvky..."
 
-#: ../pan/gui/actions.cc:375
+#: ../pan/gui/actions.cc:378
 msgid "Save Articles from Selected _NZB..."
 msgstr "Uložit _příspěvky z vybraného souboru NZB..."
 
-#: ../pan/gui/actions.cc:376
+#: ../pan/gui/actions.cc:379
 msgid "Save Articles from Selected NZB"
 msgstr "Uložit příspěvky z vybraného souboru NZB"
 
-#: ../pan/gui/actions.cc:380
+#: ../pan/gui/actions.cc:383
 msgid "Save Articles to an NZB _File..."
 msgstr "U_ložit příspěvky do souboru NZB..."
 
-#: ../pan/gui/actions.cc:381
+#: ../pan/gui/actions.cc:384
 msgid "Save Articles to an NZB File"
 msgstr "Uložit příspěvky do souboru NZB"
 
-#: ../pan/gui/actions.cc:385 ../pan/gui/actions.cc:386
+#: ../pan/gui/actions.cc:388 ../pan/gui/actions.cc:389
 msgid "Print"
 msgstr "Tisk"
 
-#: ../pan/gui/actions.cc:390
+#: ../pan/gui/actions.cc:393
 msgid "_Import NZB Files..."
 msgstr "_Importovat soubory NZB..."
 
-#: ../pan/gui/actions.cc:395
+#: ../pan/gui/actions.cc:398
 msgid "_Cancel Last Task"
 msgstr "Z_rušit poslední úlohu"
 
-#: ../pan/gui/actions.cc:400
+#: ../pan/gui/actions.cc:403
 msgid "_Task Manager"
 msgstr "Sprá_vce úloh"
 
-#: ../pan/gui/actions.cc:405
+#: ../pan/gui/actions.cc:408
 msgid "_Event Log"
 msgstr "Záz_nam událostí"
 
-#: ../pan/gui/actions.cc:410
+#: ../pan/gui/actions.cc:413
 msgid "_Quit"
 msgstr "U_končit"
 
-#: ../pan/gui/actions.cc:415
+#: ../pan/gui/actions.cc:418
 msgid "Select _All Articles"
 msgstr "Vy_brat všechny příspěvky"
 
-#: ../pan/gui/actions.cc:420
+#: ../pan/gui/actions.cc:423
 msgid "_Deselect All Articles"
 msgstr "Zrušit výběr vše_ch příspěvků"
 
-#: ../pan/gui/actions.cc:425
+#: ../pan/gui/actions.cc:428
 msgid "Add Su_bthreads to Selection"
 msgstr "Přidat do výběru podřazená v_lákna"
 
-#: ../pan/gui/actions.cc:430
+#: ../pan/gui/actions.cc:433
 msgid "Add _Threads to Selection"
 msgstr "Přidat do výběru _vlákna"
 
-#: ../pan/gui/actions.cc:435
+#: ../pan/gui/actions.cc:438
 msgid "Add _Similar Articles to Selection"
 msgstr "Přidat do výběru podobné příspěv_ky"
 
-#: ../pan/gui/actions.cc:440
+#: ../pan/gui/actions.cc:443
 msgid "Select Article _Body"
 msgstr "Vybr_at tělo příspěvku"
 
-#: ../pan/gui/actions.cc:445
+#: ../pan/gui/actions.cc:448
 msgid "Edit _Preferences"
 msgstr "Upravit nas_tavení"
 
-#: ../pan/gui/actions.cc:450
+#: ../pan/gui/actions.cc:453
 msgid "Edit Selected _Group's Preferences"
 msgstr "Upravit _nastavení vybrané skupiny"
 
-#: ../pan/gui/actions.cc:455 ../pan/gui/post-ui.cc:469
+#: ../pan/gui/actions.cc:458 ../pan/gui/post-ui.cc:469
 msgid "Edit P_osting Profiles"
 msgstr "Upravit _profily"
 
-#: ../pan/gui/actions.cc:460
+#: ../pan/gui/actions.cc:463
 msgid "Edit _News Servers"
 msgstr "Upravit servery _diskusních skupin"
 
-#: ../pan/gui/actions.cc:465
+#: ../pan/gui/actions.cc:468
 msgid "Jump to _Group Tab"
 msgstr "Přejít na kartu _skupin"
 
-#: ../pan/gui/actions.cc:470
+#: ../pan/gui/actions.cc:473
 msgid "Jump to _Header Tab"
 msgstr "Přejít na kartu zá_hlaví"
 
-#: ../pan/gui/actions.cc:475
+#: ../pan/gui/actions.cc:478
 msgid "Jump to _Body Tab"
 msgstr "Přejít na kartu _těla příspěvku"
 
-#: ../pan/gui/actions.cc:480
+#: ../pan/gui/actions.cc:483
 msgid "_Rot13 Selected Text"
 msgstr "Ši_frovat označený text pomocí ROT13"
 
-#: ../pan/gui/actions.cc:485
+#: ../pan/gui/actions.cc:488
 msgid "Clear _Header Pane"
 msgstr "V_ymazat panel záhlaví"
 
-#: ../pan/gui/actions.cc:490
+#: ../pan/gui/actions.cc:493
 msgid "Clear _Body Pane"
 msgstr "Vy_mazat panel těla příspěvku"
 
-#: ../pan/gui/actions.cc:495
+#: ../pan/gui/actions.cc:498
 msgid "Cache Article"
 msgstr "Uložit příspěvek do mezipaměti"
 
-#: ../pan/gui/actions.cc:500
+#: ../pan/gui/actions.cc:503
 msgid "Read Article"
 msgstr "Přečíst příspěvek"
 
-#: ../pan/gui/actions.cc:505
+#: ../pan/gui/actions.cc:508
 msgid "Show Article Information"
 msgstr "Zobrazit informace o příspěvku"
 
-#: ../pan/gui/actions.cc:510
+#: ../pan/gui/actions.cc:513
 msgid "Read _More"
 msgstr "Pok_račovat ve čtení"
 
-#: ../pan/gui/actions.cc:511
+#: ../pan/gui/actions.cc:514
 msgid "Read More"
 msgstr "Pokračuje ve čtení"
 
-#: ../pan/gui/actions.cc:515
+#: ../pan/gui/actions.cc:518
 msgid "Read _Back"
 msgstr "Vrátit s_e ve čtení"
 
-#: ../pan/gui/actions.cc:516
+#: ../pan/gui/actions.cc:519
 msgid "Read Back"
 msgstr "Vrátit se ve čtení"
 
-#: ../pan/gui/actions.cc:520
+#: ../pan/gui/actions.cc:523
 msgid "Next _Unread Group"
 msgstr "Následující nepřečtená skupin_a"
 
-#: ../pan/gui/actions.cc:525
+#: ../pan/gui/actions.cc:528
 msgid "Next _Group"
 msgstr "Násled_ující skupina"
 
-#: ../pan/gui/actions.cc:530
+#: ../pan/gui/actions.cc:533
 msgid "Next _Unread Article"
 msgstr "_Následující nepřečtený příspěvek"
 
-#: ../pan/gui/actions.cc:531
+#: ../pan/gui/actions.cc:534
 msgid "Next Unread Article"
 msgstr "Následující nepřečtený příspěvek"
 
-#: ../pan/gui/actions.cc:535
+#: ../pan/gui/actions.cc:538
 msgid "Next _Article"
 msgstr "Následující příspěve_k"
 
-#: ../pan/gui/actions.cc:536
+#: ../pan/gui/actions.cc:539
 msgid "Next Article"
 msgstr "Následující příspěvek"
 
-#: ../pan/gui/actions.cc:540
+#: ../pan/gui/actions.cc:543
 msgid "Next _Watched Article"
 msgstr "Následující sledo_vaný příspěvek"
 
-#: ../pan/gui/actions.cc:545
+#: ../pan/gui/actions.cc:548
 msgid "Next Unread _Thread"
 msgstr "Následující nepřeč_tené vlákno"
 
-#: ../pan/gui/actions.cc:546
+#: ../pan/gui/actions.cc:549
 msgid "Next Unread Thread"
 msgstr "Následující nepřečtené vlákno"
 
-#: ../pan/gui/actions.cc:550
+#: ../pan/gui/actions.cc:553
 msgid "Next Threa_d"
 msgstr "Násle_dující vlákno"
 
-#: ../pan/gui/actions.cc:555
+#: ../pan/gui/actions.cc:558
 msgid "Pre_vious Article"
 msgstr "Před_cházející příspěvek"
 
-#: ../pan/gui/actions.cc:560
+#: ../pan/gui/actions.cc:563
 msgid "Previous _Thread"
 msgstr "Předcháze_jící vlákno"
 
-#: ../pan/gui/actions.cc:565
+#: ../pan/gui/actions.cc:568
 msgid "_Parent Article"
 msgstr "Nadřazený _příspěvek"
 
-#: ../pan/gui/actions.cc:570
+#: ../pan/gui/actions.cc:573
 msgid "Ignore _Author"
 msgstr "_Ignorovat autora"
 
-#: ../pan/gui/actions.cc:574
+#: ../pan/gui/actions.cc:577
 msgid "_Watch Thread"
 msgstr "Sledovat _vlákno"
 
-#: ../pan/gui/actions.cc:579
+#: ../pan/gui/actions.cc:582
 msgid "_Ignore Thread"
 msgstr "I_gnorovat vlákno"
 
-#: ../pan/gui/actions.cc:584 ../pan/gui/actions.cc:585
+#: ../pan/gui/actions.cc:587 ../pan/gui/actions.cc:588
 msgid "_Toggle Flag On/Off for Thread"
 msgstr "Označi_t/zrušit označení vlákna"
 
-#: ../pan/gui/actions.cc:589 ../pan/gui/actions.cc:590
+#: ../pan/gui/actions.cc:592 ../pan/gui/actions.cc:593
 msgid "_Turn Flag Off for Thread"
 msgstr "Zruši_t označení vlákna"
 
-#: ../pan/gui/actions.cc:594 ../pan/gui/actions.cc:595
+#: ../pan/gui/actions.cc:597 ../pan/gui/actions.cc:598
 msgid "_Select All Flagged Threads"
 msgstr "V_ybrat všechna označená vlákna"
 
-#: ../pan/gui/actions.cc:599 ../pan/gui/actions.cc:600
+#: ../pan/gui/actions.cc:602 ../pan/gui/actions.cc:603
 msgid "_Go to Next Flagged Thread"
 msgstr "_Přejít na následující označené vlákno"
 
-#: ../pan/gui/actions.cc:604 ../pan/gui/actions.cc:605
+#: ../pan/gui/actions.cc:607 ../pan/gui/actions.cc:608
 msgid "_Go to Last Flagged Thread"
 msgstr "_Přejít na poslední označené vlákno"
 
-#: ../pan/gui/actions.cc:609 ../pan/gui/actions.cc:610
+#: ../pan/gui/actions.cc:612 ../pan/gui/actions.cc:613
 msgid "_Invert Selection"
 msgstr "Obrát_it výběr"
 
-#: ../pan/gui/actions.cc:614
+#: ../pan/gui/actions.cc:617
 msgid "Edit Article's Watch/Ignore/Score..."
 msgstr "Upravit sledování/ignorování/hodnocení příspěvku..."
 
-#: ../pan/gui/actions.cc:619
+#: ../pan/gui/actions.cc:622
 msgid "Add a _Scoring Rule..."
 msgstr "Přidat _nové pravidlo..."
 
-#: ../pan/gui/actions.cc:624
+#: ../pan/gui/actions.cc:627
 msgid "Cance_l Article..."
 msgstr "_Zrušit příspěvek..."
 
-#: ../pan/gui/actions.cc:629
+#: ../pan/gui/actions.cc:632
 msgid "_Supersede Article..."
 msgstr "_Nahradit příspěvek..."
 
-#: ../pan/gui/actions.cc:634
+#: ../pan/gui/actions.cc:637
 msgid "_Delete Article"
 msgstr "S_mazat příspěvek"
 
-#: ../pan/gui/actions.cc:639
+#: ../pan/gui/actions.cc:642
 msgid "Clear Article Cache"
 msgstr "Vymazat mezipaměť příspěvků"
 
-#: ../pan/gui/actions.cc:644
+#: ../pan/gui/actions.cc:647
 msgid "_Mark Article as Read"
 msgstr "_Označit příspěvek jako přečtený"
 
-#: ../pan/gui/actions.cc:649
+#: ../pan/gui/actions.cc:652
 msgid "Mark Article as _Unread"
 msgstr "O_značit příspěvek jako nepřečtený"
 
-#: ../pan/gui/actions.cc:655
+#: ../pan/gui/actions.cc:658
 msgid "_Mark Thread as Read"
 msgstr "_Označit vlákno jako přečtené"
 
-#: ../pan/gui/actions.cc:660
+#: ../pan/gui/actions.cc:663
 msgid "Mark Thread as _Unread"
 msgstr "O_značit vlákno jako nepřečtené"
 
-#: ../pan/gui/actions.cc:665
+#: ../pan/gui/actions.cc:668
 msgid "_Post to Newsgroup"
 msgstr "Vystav_it v diskusní skupině"
 
-#: ../pan/gui/actions.cc:666
+#: ../pan/gui/actions.cc:669
 msgid "Post to Newsgroup"
 msgstr "Vystaví v diskusní skupině"
 
-#: ../pan/gui/actions.cc:670
+#: ../pan/gui/actions.cc:673
 msgid "_Followup to Newsgroup"
 msgstr "O_dpovědět v diskusní skupině"
 
-#: ../pan/gui/actions.cc:671
+#: ../pan/gui/actions.cc:674
 msgid "Followup to Newsgroup"
 msgstr "Odpoví v diskusní skupině"
 
-#: ../pan/gui/actions.cc:675
+#: ../pan/gui/actions.cc:678
 msgid "_Reply to Author in Mail"
 msgstr "Odpovědět _autorovi e-mailem"
 
-#: ../pan/gui/actions.cc:680
+#: ../pan/gui/actions.cc:684
+msgid "_Contents"
+msgstr "Ob_sah"
+
+#: ../pan/gui/actions.cc:690
 msgid "_Pan Home Page"
 msgstr "Domo_vská stránka aplikace Pan"
 
-#: ../pan/gui/actions.cc:685
+#: ../pan/gui/actions.cc:695
 msgid "Give _Feedback or Report a Bug..."
 msgstr "Sdělit názor nebo oznámit chy_bu..."
 
-#: ../pan/gui/actions.cc:690
+#: ../pan/gui/actions.cc:700
 msgid "_Tip Jar..."
 msgstr "Podpoři_t..."
 
-#: ../pan/gui/actions.cc:695
+#: ../pan/gui/actions.cc:705
 msgid "_About"
 msgstr "_O aplikaci"
 
-#: ../pan/gui/actions.cc:700
+#: ../pan/gui/actions.cc:710
 msgid "Edit _SSL Certificates"
 msgstr "Upravit certifikáty _SSL"
 
-#: ../pan/gui/actions.cc:715
+#: ../pan/gui/actions.cc:725
 msgid "_Thread Headers"
 msgstr "_Třídit záhlaví do vláken"
 
-#: ../pan/gui/actions.cc:716
+#: ../pan/gui/actions.cc:726
 msgid "Wrap Article Body"
 msgstr "Zalamovat tělo příspěvku"
 
-#: ../pan/gui/actions.cc:717
+#: ../pan/gui/actions.cc:727
 msgid "Show Article Signature"
 msgstr "Zobrazit podpis příspěvku"
 
-#: ../pan/gui/actions.cc:718
+#: ../pan/gui/actions.cc:728
 msgid "Mute _Quoted Text"
 msgstr "Nezobrazovat _citovaný text"
 
-#: ../pan/gui/actions.cc:719
+#: ../pan/gui/actions.cc:729
 msgid "Show All _Headers in Body Pane"
 msgstr "Zobrazovat v panelu těla příspěvku všechna zá_hlaví"
 
-#: ../pan/gui/actions.cc:720
+#: ../pan/gui/actions.cc:730
 msgid "Show _Smilies as Graphics"
 msgstr "Zobrazovat _emotikony jako grafiku"
 
-#: ../pan/gui/actions.cc:721
+#: ../pan/gui/actions.cc:731
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr "Zobrazovat *tučný*, __podtržený__ text a /kurzívu/"
 
-#: ../pan/gui/actions.cc:722
+#: ../pan/gui/actions.cc:732
 msgid "Size Pictures to _Fit"
 msgstr "Zob_razovat obrázky tak, aby se vešly do okna"
 
-#: ../pan/gui/actions.cc:723
+#: ../pan/gui/actions.cc:733
 msgid "Use _Monospace Font"
 msgstr "Používat _neproporcionální písmo"
 
-#: ../pan/gui/actions.cc:724
+#: ../pan/gui/actions.cc:734
 msgid "Set Focus to Images"
 msgstr "Zaměřovat na obrázky"
 
-#: ../pan/gui/actions.cc:725
+#: ../pan/gui/actions.cc:735
 msgid "Highlight _URLs"
 msgstr "Zvýrazňovat _URL"
 
-#: ../pan/gui/actions.cc:728
+#: ../pan/gui/actions.cc:738
 msgid "_Work Online"
 msgstr "_Pracovat online"
 
-#: ../pan/gui/actions.cc:729
+#: ../pan/gui/actions.cc:739
 msgid "_Tabbed Layout"
 msgstr "Roz_vržení s kartami"
 
-#: ../pan/gui/actions.cc:730
+#: ../pan/gui/actions.cc:740
 msgid "Show Group _Pane"
 msgstr "Zobrazovat _panel skupin"
 
-#: ../pan/gui/actions.cc:731
+#: ../pan/gui/actions.cc:741
 msgid "Show Hea_der Pane"
 msgstr "Zobrazovat pane_l záhlaví"
 
-#: ../pan/gui/actions.cc:732
+#: ../pan/gui/actions.cc:742
 msgid "Show Bod_y Pane"
 msgstr "Zobr_azovat panel těla příspěvku"
 
-#: ../pan/gui/actions.cc:733
+#: ../pan/gui/actions.cc:743
 msgid "Show _Toolbar"
 msgstr "Zobrazovat _nástrojovou lištu"
 
-#: ../pan/gui/actions.cc:734
+#: ../pan/gui/actions.cc:744
 msgid "Abbreviate Group Names"
 msgstr "Zkracovat názvy diskusních skupin"
 
-#: ../pan/gui/actions.cc:736
+#: ../pan/gui/actions.cc:746
 msgid "Match Only _Read Articles"
 msgstr "Vyhovují pouze _přečtené příspěvky"
 
-#: ../pan/gui/actions.cc:736
+#: ../pan/gui/actions.cc:746
 msgid "Match Only Read Articles"
 msgstr "Vyhovují pouze přečtené příspěvky"
 
-#: ../pan/gui/actions.cc:737
+#: ../pan/gui/actions.cc:747
 msgid "Match Only _Unread Articles"
 msgstr "Vyhovují pouze _nepřečtené příspěvky"
 
-#: ../pan/gui/actions.cc:737
+#: ../pan/gui/actions.cc:747
 msgid "Match Only Unread Articles"
 msgstr "Vyhovují pouze nepřečtené příspěvky"
 
-#: ../pan/gui/actions.cc:738
+#: ../pan/gui/actions.cc:748
 msgid "Match Only _Cached Articles"
 msgstr "Vyhov_ují pouze příspěvky v mezipaměti"
 
-#: ../pan/gui/actions.cc:738
+#: ../pan/gui/actions.cc:748
 msgid "Match Only Cached Articles"
 msgstr "Vyhovují pouze příspěvky v mezipaměti"
 
-#: ../pan/gui/actions.cc:739
+#: ../pan/gui/actions.cc:749
 msgid "Match Only _Complete Articles"
 msgstr "Vyhovují pouze _kompletní příspěvky"
 
-#: ../pan/gui/actions.cc:739
+#: ../pan/gui/actions.cc:749
 msgid "Match Only Complete Articles"
 msgstr "Vyhovují pouze kompletní příspěvky"
 
-#: ../pan/gui/actions.cc:740
+#: ../pan/gui/actions.cc:750
 msgid "Match Only _My Articles"
 msgstr "Vyhovují pouze _mé příspěvky"
 
-#: ../pan/gui/actions.cc:740
+#: ../pan/gui/actions.cc:750
 msgid "Match Only My Articles"
 msgstr "Vyhovují pouze mé příspěvky"
 
-#: ../pan/gui/actions.cc:741
+#: ../pan/gui/actions.cc:751
 msgid "Match Only _Watched Articles"
 msgstr "Vyhovují pouze _sledované příspěvky"
 
-#: ../pan/gui/actions.cc:741
+#: ../pan/gui/actions.cc:751
 msgid "Match Only Watched Articles"
 msgstr "Vyhovují pouze sledované příspěvky"
 
-#: ../pan/gui/actions.cc:743
+#: ../pan/gui/actions.cc:753
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "Vyhovují příspěvky s hodnocením 9999 (s_ledované)"
 
-#: ../pan/gui/actions.cc:744
+#: ../pan/gui/actions.cc:754
 msgid "Match Scores of 5000...9998 (_High)"
 msgstr "Vyhovují _příspěvky s hodnocením 5000 ... 9998 (vysoké)"
 
-#: ../pan/gui/actions.cc:745
+#: ../pan/gui/actions.cc:755
 msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "Vy_hovují příspěvky s hodnocením 1 ... 4999 (střední)"
 
-#: ../pan/gui/actions.cc:746
+#: ../pan/gui/actions.cc:756
 msgid "Match Scores of 0 (_Normal)"
 msgstr "Vyh_ovují příspěvky s hodnocením 0 (běžné)"
 
-#: ../pan/gui/actions.cc:747
+#: ../pan/gui/actions.cc:757
 msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "Vyhovují příspěvky s hodnocením -9998 ... -1 (ní_zké)"
 
-#: ../pan/gui/actions.cc:748
+#: ../pan/gui/actions.cc:758
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "Vyhovují příspěvky s hodnocením -9999 (i_gnorované)"
 
-#: ../pan/gui/actions.cc:750
+#: ../pan/gui/actions.cc:760
 msgid "Enable/Disable All _Rules"
 msgstr "Zapnout/vypnout všechna p_ravidla"
 
-#: ../pan/gui/actions.cc:778
+#: ../pan/gui/actions.cc:788
 msgid "Show Matching _Articles"
 msgstr "Zobr_azovat vyhovující příspěvky"
 
-#: ../pan/gui/actions.cc:779
+#: ../pan/gui/actions.cc:789
 msgid "Show Matching Articles' _Threads"
 msgstr "Zobrazo_vat vlákna vyhovujících příspěvků"
 
-#: ../pan/gui/actions.cc:780
+#: ../pan/gui/actions.cc:790
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Zobrazovat podřazená vlákna vyhovují_cích příspěvků"
 
@@ -802,18 +806,18 @@ msgstr "Zobrazovat podřazená vlákna vyhovují_cích příspěvků"
 msgid "Unnamed File"
 msgstr "Soubor bez názvu"
 
-#: ../pan/gui/body-pane.cc:1131 ../pan/gui/gui.cc:1958
+#: ../pan/gui/body-pane.cc:1131 ../pan/gui/gui.cc:1957
 #: ../pan/gui/header-pane.cc:1314 ../pan/gui/header-pane.cc:1754
 #: ../pan/gui/post-ui.cc:2640 ../pan/gui/prefs-ui.cc:855
 #: ../pan/gui/score-add-ui.cc:139 ../pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Předmět"
 
-#: ../pan/gui/body-pane.cc:1133 ../pan/gui/gui.cc:1958
+#: ../pan/gui/body-pane.cc:1133 ../pan/gui/gui.cc:1957
 msgid "From"
 msgstr "Odesílatel"
 
-#: ../pan/gui/body-pane.cc:1135 ../pan/gui/gui.cc:1959
+#: ../pan/gui/body-pane.cc:1135 ../pan/gui/gui.cc:1958
 #: ../pan/gui/header-pane.cc:1833 ../pan/gui/log-ui.cc:307
 #: ../pan/gui/prefs-ui.cc:851
 msgid "Date"
@@ -998,7 +1002,7 @@ msgstr "ukrajinská"
 msgid "Visual"
 msgstr "vizuální"
 
-#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2156
+#: ../pan/gui/e-charset-combo-box.c:93 ../pan/gui/gui.cc:2155
 #: ../pan/gui/post-ui.cc:554 ../pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Znaková sada"
@@ -1047,19 +1051,19 @@ msgstr "Skupina"
 msgid "Group (regex)"
 msgstr "Skupina (reg. výraz)"
 
-#: ../pan/gui/group-pane.cc:1010
+#: ../pan/gui/group-pane.cc:1016
 msgid "Local Folders"
 msgstr "Místní složky"
 
-#: ../pan/gui/group-pane.cc:1011
+#: ../pan/gui/group-pane.cc:1017
 msgid "Subscribed Groups"
 msgstr "Odebírané skupiny"
 
-#: ../pan/gui/group-pane.cc:1012
+#: ../pan/gui/group-pane.cc:1018
 msgid "Other Groups"
 msgstr "Ostatní skupiny"
 
-#: ../pan/gui/group-pane.cc:1052 ../pan/gui/score-view-ui.cc:157
+#: ../pan/gui/group-pane.cc:1058 ../pan/gui/score-view-ui.cc:157
 msgid "Name"
 msgstr "Název"
 
@@ -1138,89 +1142,95 @@ msgstr "Soubory NZB"
 msgid "All Files"
 msgstr "Všechny soubory"
 
-#: ../pan/gui/gui.cc:1334
+#: ../pan/gui/gui.cc:1335
 msgid "Unable to supersede article."
 msgstr "Nelze nahradit příspěvek."
 
-#: ../pan/gui/gui.cc:1335 ../pan/gui/gui.cc:1409
+#: ../pan/gui/gui.cc:1336 ../pan/gui/gui.cc:1410
 msgid "The article doesn't match any of your posting profiles."
 msgstr "Příspěvek neodpovídá žádnému z vašich profilů."
 
-#: ../pan/gui/gui.cc:1382
+#: ../pan/gui/gui.cc:1383
 msgid "Revise and send this article to replace the old one."
 msgstr ""
 "Upravte a odešlete prosím tento příspěvek, chcete-li jím nahradit ten starý."
 
-#: ../pan/gui/gui.cc:1383 ../pan/gui/gui.cc:1446
+#: ../pan/gui/gui.cc:1384 ../pan/gui/gui.cc:1447
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr "Buďte prosím trpěliví. Změny se neprojeví ihned."
 
-#: ../pan/gui/gui.cc:1408
+#: ../pan/gui/gui.cc:1409
 msgid "Unable to cancel article."
 msgstr "Nelze zrušit příspěvek."
 
-#: ../pan/gui/gui.cc:1445
+#: ../pan/gui/gui.cc:1446
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
 "Odešlete prosím tento příspěvek, aby mohl být server požádán o zrušení "
 "druhého příspěvku."
 
-#: ../pan/gui/gui.cc:1463
+#: ../pan/gui/gui.cc:1464
 msgid "You have marked some articles for deletion."
 msgstr "Některé příspěvky jste označili ke smazání."
 
-#: ../pan/gui/gui.cc:1464
+#: ../pan/gui/gui.cc:1465
 msgid "Are you sure you want to delete them?"
 msgstr "Opravdu je chcete smazat?"
 
-#: ../pan/gui/gui.cc:1490
+#: ../pan/gui/gui.cc:1491
 msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr "Chcete jej přijmout natrvalo? (Později lze provést změnu.)"
 
-#: ../pan/gui/gui.cc:1670
-msgid "Copyright © 2002-2016 Charles Kerr and others"
-msgstr "Copyright © 2002-2016 Charles Kerr a další"
+#: ../pan/gui/gui.cc:1637
+#| msgid "Unable to cancel article."
+msgid "Unable to open help file."
+msgstr "Nelze otevřít soubor s nápovědou."
 
-#: ../pan/gui/gui.cc:1675
+#: ../pan/gui/gui.cc:1669
+#| msgid "Copyright © 2002-2016 Charles Kerr and others"
+msgid "Copyright © 2002-2017 Charles Kerr and others"
+msgstr "Copyright © 2002-2017 Charles Kerr a další"
+
+#: ../pan/gui/gui.cc:1674
 msgid "translator-credits"
 msgstr ""
 "Michal Bukovjan <bukm@centrum.cz>\n"
 "Miloslav Trmač <mitr@volny.cz>\n"
 "Petr Kovář <pknbe@volny.cz>"
 
-#: ../pan/gui/gui.cc:1803
+#: ../pan/gui/gui.cc:1802
 msgid "_1. Group Pane"
 msgstr "_1. Panel skupin"
 
-#: ../pan/gui/gui.cc:1804
+#: ../pan/gui/gui.cc:1803
 msgid "_2. Header Pane"
 msgstr "_2. Panel záhlaví"
 
-#: ../pan/gui/gui.cc:1805
+#: ../pan/gui/gui.cc:1804
 msgid "_3. Body Pane"
 msgstr "_3. Panel těla příspěvku"
 
-#: ../pan/gui/gui.cc:1895 ../pan/gui/gui.cc:1910
+#: ../pan/gui/gui.cc:1894 ../pan/gui/gui.cc:1909
 msgid " Bytes"
 msgstr " bajtů"
 
-#: ../pan/gui/gui.cc:1898
+#: ../pan/gui/gui.cc:1897
 msgid " KB"
 msgstr " KB"
 
-#: ../pan/gui/gui.cc:1901
+#: ../pan/gui/gui.cc:1900
 msgid " MB"
 msgstr " MB"
 
-#: ../pan/gui/gui.cc:1904
+#: ../pan/gui/gui.cc:1903
 msgid " GB"
 msgstr " GB"
 
-#: ../pan/gui/gui.cc:1907
+#: ../pan/gui/gui.cc:1906
 msgid " TB"
 msgstr " TB"
 
-#: ../pan/gui/gui.cc:1939
+#: ../pan/gui/gui.cc:1938
 #, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
@@ -1228,7 +1238,7 @@ msgstr[0] "Tento příspěvek je kompletní s %d částí."
 msgstr[1] "Tento příspěvek je kompletní se %d částmi."
 msgstr[2] "Tento příspěvek má všech %d částí."
 
-#: ../pan/gui/gui.cc:1941
+#: ../pan/gui/gui.cc:1940
 #, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
@@ -1236,26 +1246,26 @@ msgstr[0] "Tomuto příspěvku schází %d část."
 msgstr[1] "Tomuto příspěvku schází %d z celkových %d částí:"
 msgstr[2] "Tomuto příspěvku schází %d z celkových %d částí:"
 
-#: ../pan/gui/gui.cc:1959 ../pan/gui/header-pane.cc:1316
+#: ../pan/gui/gui.cc:1958 ../pan/gui/header-pane.cc:1316
 #: ../pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "ID zprávy"
 
-#: ../pan/gui/gui.cc:1960 ../pan/gui/header-pane.cc:1802
+#: ../pan/gui/gui.cc:1959 ../pan/gui/header-pane.cc:1802
 #: ../pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Řádků"
 
-#: ../pan/gui/gui.cc:1960
+#: ../pan/gui/gui.cc:1959
 msgid "Size"
 msgstr "Velikost"
 
-#: ../pan/gui/gui.cc:1961 ../pan/gui/header-pane.cc:1818
+#: ../pan/gui/gui.cc:1960 ../pan/gui/header-pane.cc:1818
 #: ../pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr "Bajtů"
 
-#: ../pan/gui/gui.cc:2011
+#: ../pan/gui/gui.cc:2010
 msgid ""
 "Error loading iconv library. Encoding certain character sets will not work "
 "in GUI."
@@ -1263,16 +1273,16 @@ msgstr ""
 "Chyba při nahrávání knihovny iconv. Kódování některých znakových sad nebude "
 "v GUI fungovat."
 
-#: ../pan/gui/gui.cc:2157
+#: ../pan/gui/gui.cc:2156
 msgid "Body Pane Encoding"
 msgstr "Znaková sada panelu těla příspěvku"
 
-#: ../pan/gui/gui.cc:2188 ../pan/gui/task-pane.cc:609
+#: ../pan/gui/gui.cc:2187 ../pan/gui/task-pane.cc:609
 #, c-format
 msgid "Offline"
 msgstr "Offline"
 
-#: ../pan/gui/gui.cc:2192
+#: ../pan/gui/gui.cc:2191
 #, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
@@ -1280,36 +1290,36 @@ msgstr[0] "Uzavírání %d spojení"
 msgstr[1] "Uzavírání %d spojení"
 msgstr[2] "Uzavírání %d spojení"
 
-#: ../pan/gui/gui.cc:2194 ../pan/gui/gui.cc:2224
+#: ../pan/gui/gui.cc:2193 ../pan/gui/gui.cc:2223
 #, c-format
 msgid "No Connections"
 msgstr "Bez spojení"
 
-#: ../pan/gui/gui.cc:2198
+#: ../pan/gui/gui.cc:2197
 #, c-format
 msgid "Connecting"
 msgstr "Připojování"
 
-#: ../pan/gui/gui.cc:2211
+#: ../pan/gui/gui.cc:2210
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: nečinných %d, aktivních %d při %.1f KiB/s"
 
-#: ../pan/gui/gui.cc:2267
+#: ../pan/gui/gui.cc:2266
 #, c-format
 msgid "No Tasks"
 msgstr "Žádné úlohy"
 
-#: ../pan/gui/gui.cc:2269 ../pan/gui/prefs-ui.cc:1090
+#: ../pan/gui/gui.cc:2268 ../pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Úlohy"
 
-#: ../pan/gui/gui.cc:2286 ../pan/gui/task-pane.cc:475
+#: ../pan/gui/gui.cc:2285 ../pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "Úloh %lu, %s, %.1f KiB/s, zbývá cca %d:%02d:%02d"
 
-#: ../pan/gui/gui.cc:2338
+#: ../pan/gui/gui.cc:2337
 msgid ""
 "Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
 "then use \"File|Work Online\" to continue."
@@ -1417,22 +1427,22 @@ msgstr ""
 "  --no-gui                 Zobrazí pouze textový výstup, nikoliv pozdržená "
 "stahování.\n"
 
-#: ../pan/gui/pan.cc:961
+#: ../pan/gui/pan.cc:963
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Chyba: --no-gui použito bez souborů nzb nebo news:message-id."
 
-#: ../pan/gui/pan.cc:965
+#: ../pan/gui/pan.cc:967
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s spuštěn"
 
-#: ../pan/gui/pan.cc:985
+#: ../pan/gui/pan.cc:987
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Před použitím aplikace Pan jako klienta NZB je nutné nastavit servery "
 "diskusních skupin."
 
-#: ../pan/gui/pan.cc:1103
+#: ../pan/gui/pan.cc:1105
 msgid "Pan notification"
 msgstr "Oznámení aplikace Pan"
 
@@ -2595,37 +2605,37 @@ msgstr ""
 "\"/home/uzivatel/News/Pan/%G\" bude\n"
 "\"/home/uzivatel/News/Pan/cz/net/abuse/misc\"."
 
-#: ../pan/gui/save-attach-ui.cc:197 ../pan/gui/save-ui.cc:217
+#: ../pan/gui/save-attach-ui.cc:198 ../pan/gui/save-ui.cc:218
 msgid "Add to the queue sorted by date posted"
 msgstr "Přidat mezi pozdržené s tříděním dle data vystavení"
 
-#: ../pan/gui/save-attach-ui.cc:198 ../pan/gui/save-ui.cc:218
+#: ../pan/gui/save-attach-ui.cc:199 ../pan/gui/save-ui.cc:219
 msgid "Add to the front of the queue"
 msgstr "Přidat na začátek pozdržených"
 
-#: ../pan/gui/save-attach-ui.cc:199 ../pan/gui/save-ui.cc:219
+#: ../pan/gui/save-attach-ui.cc:200 ../pan/gui/save-ui.cc:220
 msgid "Add to the back of the queue"
 msgstr "Přidat na konec pozdržených"
 
-#: ../pan/gui/save-attach-ui.cc:231
+#: ../pan/gui/save-attach-ui.cc:232
 msgid "Pan: Save Attachments"
 msgstr "Pan: Uložit přílohy"
 
-#: ../pan/gui/save-attach-ui.cc:256 ../pan/gui/save-attach-ui.cc:274
-#: ../pan/gui/save-ui.cc:271 ../pan/gui/save-ui.cc:289
+#: ../pan/gui/save-attach-ui.cc:257 ../pan/gui/save-attach-ui.cc:275
+#: ../pan/gui/save-ui.cc:272 ../pan/gui/save-ui.cc:290
 msgid "_Location:"
 msgstr "U_místění:"
 
-#: ../pan/gui/save-attach-ui.cc:260 ../pan/gui/save-ui.cc:275
+#: ../pan/gui/save-attach-ui.cc:261 ../pan/gui/save-ui.cc:276
 msgid "Save Articles"
 msgstr "Uložit příspěvky"
 
-#: ../pan/gui/save-attach-ui.cc:277 ../pan/gui/save-ui.cc:292
+#: ../pan/gui/save-attach-ui.cc:278 ../pan/gui/save-ui.cc:293
 #, c-format
 msgid "_Group's path: %s"
 msgstr "_Cesta ke skupině: %s"
 
-#: ../pan/gui/save-attach-ui.cc:288 ../pan/gui/save-ui.cc:307
+#: ../pan/gui/save-attach-ui.cc:289 ../pan/gui/save-ui.cc:308
 msgid "_Priority:"
 msgstr "_Priorita:"
 
@@ -2658,23 +2668,23 @@ msgstr ""
 "\"/home/uzivatel/News/Pan/%G\" bude\n"
 "\"/home/uzivatel/News/Pan/cz/net/abuse/misc\"."
 
-#: ../pan/gui/save-ui.cc:208
+#: ../pan/gui/save-ui.cc:209
 msgid "Save attachments"
 msgstr "Uložit přílohy"
 
-#: ../pan/gui/save-ui.cc:209
+#: ../pan/gui/save-ui.cc:210
 msgid "Save text"
 msgstr "Uložit text"
 
-#: ../pan/gui/save-ui.cc:210
+#: ../pan/gui/save-ui.cc:211
 msgid "Save attachments and text"
 msgstr "Uložit přílohy a text"
 
-#: ../pan/gui/save-ui.cc:246
+#: ../pan/gui/save-ui.cc:247
 msgid "Pan: Save Articles"
 msgstr "Pan: Uložit příspěvky"
 
-#: ../pan/gui/save-ui.cc:303
+#: ../pan/gui/save-ui.cc:304
 msgid "_Action:"
 msgstr "A_kce:"
 
@@ -3255,22 +3265,22 @@ msgstr "Chyba při kódování %s: %s"
 msgid "Encoding %s"
 msgstr "Kódování %s"
 
-#: ../pan/tasks/nntp.cc:148
+#: ../pan/tasks/nntp.cc:150
 #, c-format
 msgid "%s requires a username, but none is set."
 msgstr "%s vyžaduje přihlašovací jméno, ale žádné není zadáno."
 
-#: ../pan/tasks/nntp.cc:161
+#: ../pan/tasks/nntp.cc:163
 #, c-format
 msgid "%s requires a password, but none is set."
 msgstr "%s vyžaduje heslo, ale žádné není zadáno."
 
-#: ../pan/tasks/nntp.cc:239
+#: ../pan/tasks/nntp.cc:247
 #, c-format
 msgid "Sending \"%s\" to %s returned an error: %s"
 msgstr "Při odesílání \"%s\" na %s se vyskytla chyba: %s"
 
-#: ../pan/tasks/nntp.cc:262
+#: ../pan/tasks/nntp.cc:270
 #, c-format
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr "Při odesílání \"%s\" na %s se vyskytla neznámá odpověď: \"%s\""
@@ -3747,11 +3757,11 @@ msgstr ""
 msgid "> [quoted text muted]"
 msgstr "> [citovaný text nezobrazen]"
 
-#: ../pan/usenet-utils/text-massager.cc:579
+#: ../pan/usenet-utils/text-massager.cc:581
 msgid "no_name"
 msgstr "bez_názvu"
 
-#: ../pan/usenet-utils/text-massager.cc:580
+#: ../pan/usenet-utils/text-massager.cc:582
 msgid "no_mail"
 msgstr "bez_e-mailu"
 
