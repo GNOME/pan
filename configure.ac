@@ -260,13 +260,14 @@ dnl Check to see if strftime supports the use of %l and %k
 AC_MSG_CHECKING(for %l and %k support in strftime)
 AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <string.h>
+#include <stdlib.h>
 #include <time.h>
 int main(int argc, char **argv) {
   char buf[10];
   time_t rawtime = time(0);
   struct tm *timeinfo = localtime (&rawtime);
   strftime(buf, 10, "%l %k", timeinfo);
-  exit (strstr(buf, "l") || strstr(buf, "k") || !strcmp(buf," "));
+  exit (strstr(buf, "l") || strstr(buf, "k") || !strcmp(buf," ") || !strlen(buf));
 }]])],[
 AC_DEFINE(HAVE_LKSTRFTIME, 1, [strftime supports use of l and k])
 ac_cv_lkstrftime=yes
