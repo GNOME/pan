@@ -1,7 +1,7 @@
 @YELP_HELP_RULES@
 
 # Translators: Add new translations here.
-HELP_LINGUAS = de es
+HELP_LINGUAS = cs de es
 
 HELP_ID = pan
 
