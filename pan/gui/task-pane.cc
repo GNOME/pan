@@ -118,7 +118,7 @@ namespace
       const Article& a(tu->get_article());
       date = date_maker.get_date_string (tu->get_article().time_posted);
       g_snprintf(buffer,size,
-                 _("\n<u>Upload</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n"
+                 _("\n<u>Upload</u>\n\n<i>Subject:</i> <b>“%s”</b>\n<i>From:</i> <b>%s</b>\n"
                    "<i>Groups:</i> <b>%s</b>\n<i>Sourcefile:</i> <b>%s</b>\n"),
                  escaped(a.subject.to_string()).c_str(), escaped(a.author.to_string()).c_str(),
                  tu->get_groups().c_str(), tu->get_filename().c_str());
@@ -130,7 +130,7 @@ namespace
       const Article& a(ta->get_article());
       date = date_maker.get_date_string (ta->get_article().time_posted);
       g_snprintf(buffer, size,
-                 _("\n<u>Download</u>\n\n<i>Subject:</i> <b>\"%s\"</b>\n<i>From:</i> <b>%s</b>\n<i>Date:</i> <b>%s</b>\n"
+                 _("\n<u>Download</u>\n\n<i>Subject:</i> <b>“%s”</b>\n<i>From:</i> <b>%s</b>\n<i>Date:</i> <b>%s</b>\n"
                    "<i>Groups:</i> <b>%s</b>\n<i>Save Path:</i> <b>%s</b>\n"),
                  escaped(a.subject.to_string()).c_str(), escaped(a.author.to_string()).c_str(), date ? date : _("unknown"),
                  ta->get_groups().c_str(), ta->get_save_path().to_string().c_str());
@@ -472,7 +472,7 @@ TaskPane :: update_status (const task_states_t& tasks)
     minutes = tmp % 60ul; tmp /= 60ul;
     hours   = tmp;
   }
-  g_snprintf (buf, sizeof(buf), _("%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"),
+  g_snprintf (buf, sizeof(buf), _("%lu tasks, %s, %.1f KiBps, ETA %d∶%02d∶%02d"),
               task_count, render_bytes(bytes), KiBps, hours, minutes, seconds);
   std::string line (buf);
 
@@ -589,7 +589,7 @@ namespace
     }
     if (state == Queue::RUNNING) {
       char buf[128];
-      g_snprintf (buf, sizeof(buf), _("%d:%02d:%02d Remaining (%d @ %lu KiB/s)"), h, m, s, connections, (unsigned long)speed);
+      g_snprintf (buf, sizeof(buf), _("%d∶%02d∶%02d Remaining (%d @ %lu KiB/s)"), h, m, s, connections, (unsigned long)speed);
       status += " - ";
       status += buf;
     }
@@ -734,7 +734,7 @@ TaskPane :: add_actions (GtkWidget * box)
     gtk_ui_manager_add_ui_from_string (_uim, fallback_taskpane_ui, -1, &err);
   }
   if (err) {
-    Log::add_err_va (_("Error reading file \"%s\": %s"), filename, err->message);
+    Log::add_err_va (_("Error reading file “%s”: %s"), filename, err->message);
     g_clear_error (&err);
 
   }

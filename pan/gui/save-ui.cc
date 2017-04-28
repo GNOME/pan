@@ -43,18 +43,18 @@ namespace
   void
   show_group_substitution_help_dialog (gpointer window)
   {
-    const char * str = _("%g - group as one directory (alt.binaries.pictures.trains)\n"
-                         "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
-                         "%s - subject line excerpt\n"
-                         "%S - subject line\n"
-                         "%n - Poster display name\n"
-                         "%e - Poster email address\n"
-                         "%d - Article timestamp\n"
+    const char * str = _("%g — group as one directory (alt.binaries.pictures.trains)\n"
+                         "%G — group as nested directory (/alt/binaries/pictures/trains)\n"
+                         "%s — subject line excerpt\n"
+                         "%S — subject line\n"
+                         "%n — Poster display name\n"
+                         "%e — Poster email address\n"
+                         "%d — Article timestamp\n"
                          " \n"
-                         "\"/home/user/News/Pan/%g\" becomes\n"
-                         "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
-                         "\"/home/user/News/Pan/%G\" becomes\n"
-                         "\"/home/user/News/Pan/alt/binaries/pictures/trains\",");
+                         "“/home/user/News/Pan/%g” becomes\n"
+                         "“/home/user/News/Pan/alt.binaries.pictures.trains”, and\n"
+                         "“/home/user/News/Pan/%G” becomes\n"
+                         "“/home/user/News/Pan/alt/binaries/pictures/trains”,");
     GtkWidget * w = gtk_message_dialog_new (GTK_WINDOW(window),
                                             GTK_DIALOG_DESTROY_WITH_PARENT,
                                             GTK_MESSAGE_INFO,
@@ -290,7 +290,7 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
     HIG :: workarea_add_row (t, &row, _("_Location:"), h, file_entry_gtk_entry(_save_path_entry));
 
   if (have_group_default) {
-    char * pch = g_strdup_printf (_("_Group's path: %s"), group_path.c_str());
+    char * pch = g_strdup_printf (_("_Group’s path: %s"), group_path.c_str());
     w = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON(_save_custom_path_radio), pch);
     _save_group_path_radio = w;
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), path_mode==PATH_GROUP);

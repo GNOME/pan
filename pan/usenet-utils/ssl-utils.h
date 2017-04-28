@@ -186,7 +186,7 @@ namespace pan
 
     if (!c)
     {
-      g_snprintf(buf,size, _("Error printing the server certificate for '%s'"), server.c_str());
+      g_snprintf(buf,size, _("Error printing the server certificate for “%s”"), server.c_str());
       return;
     }
 
@@ -202,8 +202,8 @@ namespace pan
     char * before = date_maker.get_date_string (t2);
 
     char tmp1[2048], tmp2[2048];
-    g_snprintf(tmp1,sizeof(tmp1), _("The current server <b>'%s'</b> sent this security certificate:\n\n"), server.c_str());
-    g_snprintf(tmp2,sizeof(tmp2), _("Certificate information for server <b>'%s'</b>:\n\n"), server.c_str());
+    g_snprintf(tmp1,sizeof(tmp1), _("The current server <b>“%s”</b> sent this security certificate:\n\n"), server.c_str());
+    g_snprintf(tmp2,sizeof(tmp2), _("Certificate information for server <b>“%s”</b>:\n\n"), server.c_str());
 
     g_snprintf(buf,size, _("%s"
                            "<b>Issuer information:</b>\n"

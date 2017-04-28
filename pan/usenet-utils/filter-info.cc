@@ -214,7 +214,7 @@ FilterInfo :: describe () const
 
   if (_type==IS_BINARY && _negate)
   {
-    ret = _("article doesn't have attachments");
+    ret = _("article doesn’t have attachments");
   }
   else if (_type==IS_BINARY)
   {
@@ -222,7 +222,7 @@ FilterInfo :: describe () const
   }
   else if (_type==IS_CACHED && _negate)
   {
-    ret = _("the article isn't cached locally");
+    ret = _("the article isn’t cached locally");
   }
   else if (_type==IS_CACHED)
   {
@@ -230,7 +230,7 @@ FilterInfo :: describe () const
   }
   else if (_type==IS_POSTED_BY_ME && _negate)
   {
-    ret = _("the article wasn't posted by you");
+    ret = _("the article wasn’t posted by you");
   }
   else if (_type==IS_POSTED_BY_ME)
   {
@@ -242,7 +242,7 @@ FilterInfo :: describe () const
   }
   else if (_type==IS_UNREAD)
   {
-    ret = _("the article hasn't been read");
+    ret = _("the article hasn’t been read");
   }
   else if (_type==BYTE_COUNT_GE && _negate)
   {
@@ -286,12 +286,12 @@ FilterInfo :: describe () const
   }
   else if (_type==SCORE_GE && _negate)
   {
-    g_snprintf (buf, sizeof(buf), _("the article's score is less than %ld"), _ge);
+    g_snprintf (buf, sizeof(buf), _("the article’s score is less than %ld"), _ge);
     ret = buf;
   }
   else if (_type==SCORE_GE)
   {
-    g_snprintf (buf, sizeof(buf), _("the article's score is %ld or higher"), _ge);
+    g_snprintf (buf, sizeof(buf), _("the article’s score is %ld or higher"), _ge);
     ret = buf;
   }
   else if (_type==TEXT && _negate)
@@ -300,21 +300,21 @@ FilterInfo :: describe () const
     const char * h (_header.c_str());
     const char * t (_text.get_state().text.c_str());
     switch (_text.get_state().type) {
-      case TextMatch::CONTAINS:    g_snprintf (buf, sizeof(buf), _("%s doesn't contain \"%s\""), h, t); break;
-      case TextMatch::IS:          g_snprintf (buf, sizeof(buf), _("%s isn't \"%s\""), h, t); break;
-      case TextMatch::BEGINS_WITH: g_snprintf (buf, sizeof(buf), _("%s doesn't begin with \"%s\""), h, t); break;
-      case TextMatch::ENDS_WITH:   g_snprintf (buf, sizeof(buf), _("%s doesn't end with \"%s\""), h, t); break;
-      case TextMatch::REGEX:       g_snprintf (buf, sizeof(buf), _("%s doesn't match the regex \"%s\""), h, t); break;
+      case TextMatch::CONTAINS:    g_snprintf (buf, sizeof(buf), _("%s doesn’t contain “%s”"), h, t); break;
+      case TextMatch::IS:          g_snprintf (buf, sizeof(buf), _("%s isn’t “%s”"), h, t); break;
+      case TextMatch::BEGINS_WITH: g_snprintf (buf, sizeof(buf), _("%s doesn’t begin with “%s”"), h, t); break;
+      case TextMatch::ENDS_WITH:   g_snprintf (buf, sizeof(buf), _("%s doesn’t end with “%s”"), h, t); break;
+      case TextMatch::REGEX:       g_snprintf (buf, sizeof(buf), _("%s doesn’t match the regex “%s”"), h, t); break;
     }
 #else
     const char * h (_header.c_str());
     const char * t (_text._impl_text.c_str());
     switch (_text._impl_type) {
-      case TextMatch::CONTAINS:    g_snprintf (buf, sizeof(buf), _("%s doesn't contain \"%s\""), h, t); break;
-      case TextMatch::IS:          g_snprintf (buf, sizeof(buf), _("%s isn't \"%s\""), h, t); break;
-      case TextMatch::BEGINS_WITH: g_snprintf (buf, sizeof(buf), _("%s doesn't begin with \"%s\""), h, t); break;
-      case TextMatch::ENDS_WITH:   g_snprintf (buf, sizeof(buf), _("%s doesn't end with \"%s\""), h, t); break;
-      case TextMatch::REGEX:       g_snprintf (buf, sizeof(buf), _("%s doesn't match the regex \"%s\""), h, t); break;
+      case TextMatch::CONTAINS:    g_snprintf (buf, sizeof(buf), _("%s doesn’t contain “%s”"), h, t); break;
+      case TextMatch::IS:          g_snprintf (buf, sizeof(buf), _("%s isn’t “%s”"), h, t); break;
+      case TextMatch::BEGINS_WITH: g_snprintf (buf, sizeof(buf), _("%s doesn’t begin with “%s”"), h, t); break;
+      case TextMatch::ENDS_WITH:   g_snprintf (buf, sizeof(buf), _("%s doesn’t end with “%s”"), h, t); break;
+      case TextMatch::REGEX:       g_snprintf (buf, sizeof(buf), _("%s doesn’t match the regex “%s”"), h, t); break;
     }
 #endif
     ret = buf;
@@ -326,11 +326,11 @@ FilterInfo :: describe () const
     //switch (_text.get_state().type) {
     const char * t (_text._impl_text.c_str());
     switch (_text._impl_type) {
-      case TextMatch::CONTAINS:    g_snprintf (buf, sizeof(buf), _("%s contains \"%s\""), h, t); break;
-      case TextMatch::IS:          g_snprintf (buf, sizeof(buf), _("%s is \"%s\""), h, t); break;
-      case TextMatch::BEGINS_WITH: g_snprintf (buf, sizeof(buf), _("%s begins with \"%s\""), h, t); break;
-      case TextMatch::ENDS_WITH:   g_snprintf (buf, sizeof(buf), _("%s ends with \"%s\""), h, t); break;
-      case TextMatch::REGEX:       g_snprintf (buf, sizeof(buf), _("%s matches the regex \"%s\""), h, t); break;
+      case TextMatch::CONTAINS:    g_snprintf (buf, sizeof(buf), _("%s contains “%s”"), h, t); break;
+      case TextMatch::IS:          g_snprintf (buf, sizeof(buf), _("%s is “%s”"), h, t); break;
+      case TextMatch::BEGINS_WITH: g_snprintf (buf, sizeof(buf), _("%s begins with “%s”"), h, t); break;
+      case TextMatch::ENDS_WITH:   g_snprintf (buf, sizeof(buf), _("%s ends with “%s”"), h, t); break;
+      case TextMatch::REGEX:       g_snprintf (buf, sizeof(buf), _("%s matches the regex “%s”"), h, t); break;
    }
     ret = buf;
   }

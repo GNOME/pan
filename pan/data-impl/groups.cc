@@ -99,7 +99,7 @@ DataImpl :: load_newsrc (const Quark       & server,
 {
   Server * s = find_server (server);
   if (!s) {
-    Log::add_err_va (_("Skipping newsrc file for server \"%s\""), server.c_str());
+    Log::add_err_va (_("Skipping newsrc file for server “%s”"), server.c_str());
     return;
   }
 

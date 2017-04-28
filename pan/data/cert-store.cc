@@ -260,7 +260,7 @@ int CertStore::get_all_certs_from_disk() {
 	GDir * dir = g_dir_open(ssldir, 0, &err);
 	if (err != NULL) {
 		Log::add_err_va(
-				_("Error opening SSL certificate directory: \"%s\": %s"),
+				_("Error opening SSL certificate directory: “%s”: %s"),
 				ssldir, err->message);
 		g_error_free(err);
 	} else {

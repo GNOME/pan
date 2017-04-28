@@ -114,7 +114,7 @@ Decoder :: do_work()
         mut.unlock();
 
         if (!fp) {
-          g_snprintf(buf, bufsz, _("Couldn't save file \"%s\": %s"), filename, file::pan_strerror(errno));
+          g_snprintf(buf, bufsz, _("Couldn’t save file “%s”: %s"), filename, file::pan_strerror(errno));
           log_errors.push_back (buf); // log error
         } else {
           fwrite (contents, 1, (size_t)length, fp);
@@ -191,14 +191,14 @@ Decoder :: do_work()
 
         // decode the file...
         if ((res = UUDecodeFile (item, fname)) == UURET_OK) {
-          g_snprintf(buf, bufsz,_("Saved \"%s\""), fname);
+          g_snprintf(buf, bufsz,_("Saved “%s”"), fname);
           log_infos.push_back(buf); // log info
         } else if (res == UURET_NODATA) {
           // silently let this error by... user probably tried to
           // save attachements on a text-only post
         } else {
           const int the_errno (UUGetOption (UUOPT_ERRNO, NULL, NULL, 0));
-          g_snprintf (buf, bufsz,_("Error saving \"%s\":\n%s."),
+          g_snprintf (buf, bufsz,_("Error saving “%s”:\n%s."),
                       fname,
                       res==UURET_IOERR ? file::pan_strerror(the_errno) : UUstrerror(res));
           log_errors.push_back(buf); // log error

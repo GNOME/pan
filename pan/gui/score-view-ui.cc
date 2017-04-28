@@ -151,7 +151,7 @@ ScoreView :: tree_view_refresh ()
 
     // build the criteria column: file & line numbers, optional name, criteria
     GString * criteria = g_string_new (0);
-    g_string_printf (criteria, _("File %s, Lines %d - %d"), item.filename.c_str(), (int)item.begin_line, (int)item.end_line);
+    g_string_printf (criteria, _("File %s, Lines %d-%d"), item.filename.c_str(), (int)item.begin_line, (int)item.end_line);
     g_string_append_c (criteria, '\n');
     if (!item.name.empty())
       g_string_append_printf (criteria, "%s: \"%s\"\n", _("Name"), item.name.c_str());
@@ -179,7 +179,7 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
   _article (article),
   _root (0)
 {
-  GtkWidget * w = _root = gtk_dialog_new_with_buttons (_("Pan: Article's Scores"),
+  GtkWidget * w = _root = gtk_dialog_new_with_buttons (_("Pan: Article’s Scores"),
 	                                               parent,
 	                                               GTK_DIALOG_DESTROY_WITH_PARENT,
 	                                               GTK_STOCK_CLOSE, GTK_RESPONSE_OK,

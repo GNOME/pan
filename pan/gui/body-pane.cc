@@ -1312,7 +1312,7 @@ BodyPane :: on_verbose_tooltip_cb(GtkWidget  *widget,
   std::pair<std::string,std::string> name_and_email = get_email_address(info.signers[0].name);
   g_snprintf(buf, sizeof(buf),
              _("<u>This is a <b>PGP-Signed</b> message.</u>\n\n"
-             "<b>Signer:</b> %s ('%s')\n"
+             "<b>Signer:</b> %s (“%s”)\n"
              "<b>Valid until:</b> %s\n"
              "<b>Created on:</b> %s"),
              name_and_email.first.c_str(), name_and_email.second.c_str(),
@@ -1744,7 +1744,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
 
   // menu for popup menu for attachments
   _menu = gtk_menu_new ();
-  l = gtk_menu_item_new_with_label(_("Save Attachment As..."));
+  l = gtk_menu_item_new_with_label(_("Save Attachment As…"));
   g_signal_connect (l, "activate", G_CALLBACK(menu_clicked_as_cb), this);
   gtk_menu_shell_append (GTK_MENU_SHELL(_menu), l);
   l =  gtk_menu_item_new_with_label(_("Save All Attachments"));

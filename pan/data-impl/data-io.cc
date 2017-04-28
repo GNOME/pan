@@ -196,7 +196,7 @@ namespace
       tmp.c_str(), std::ios_base::out|std::ios_base::binary));
 
     if (!o->good())
-      Log::add_err_va (_("Unable to save \"%s\" %s"), filename.c_str(), "");
+      Log::add_err_va (_("Unable to save “%s” %s"), filename.c_str(), "");
     ostream_to_filename[o] = filename;
     return o;
   }
@@ -228,7 +228,7 @@ namespace
       }
 //      std::cerr<<"dbg "<<ret<<"\n";
     } else {
-      Log::add_err_va (_("Unable to save \"%s\" %s"), filename.c_str(), file::pan_strerror(my_errno));
+      Log::add_err_va (_("Unable to save “%s” %s"), filename.c_str(), file::pan_strerror(my_errno));
     }
   }
 }

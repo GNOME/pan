@@ -643,7 +643,7 @@ _("General Options\n"
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
-"  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
+"  --nzb file1 file2 …      Process nzb files without launching all of Pan.\n"
 "  -o path, --output=path   Path to save attachments listed in the nzb files.\n"
 "  --no-gui                 Only show console output, not the download queue.\n") << std::endl;
   }
@@ -993,7 +993,7 @@ main (int argc, char *argv[])
     CertStore& certstore (data.get_certstore());
 
     if (nzb && data.get_servers().empty()) {
-      std::cerr << _("Please configure Pan's news servers before using it as an nzb client.") << std::endl;
+      std::cerr << _("Please configure Pan’s news servers before using it as an nzb client.") << std::endl;
        return EXIT_FAILURE;
     }
     data.set_newsrc_autosave_timeout( prefs.get_int("newsrc-autosave-timeout-min", 10 ));

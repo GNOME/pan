@@ -190,7 +190,7 @@ class pan::TextMatch::PcreInfo
           GError * err = 0;
           re = g_regex_new (pattern.c_str(), options, (GRegexMatchFlags)0, &err);
           if (err) {
-            Log::add_err_va (_("Can't use regular expression \"%s\": %s"), pattern.c_str(), err->message);
+            Log::add_err_va (_("Can’t use regular expression “%s”: %s"), pattern.c_str(), err->message);
             g_error_free (err);
             return false;
           }

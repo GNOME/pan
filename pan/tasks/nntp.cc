@@ -244,7 +244,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
            }
            std::string host;
            _socket->get_host (host);
-           Log::add_err_va (_("Sending \"%s\" to %s returned an error: %s"),
+           Log::add_err_va (_("Sending “%s” to %s returned an error: %s"),
                             cmd.c_str(),
                             host.c_str(),
                             line.to_string().c_str());
@@ -267,7 +267,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
              cmd.resize (cmd.size()-2);
            std::string host;
            _socket->get_host (host);
-           Log::add_err_va (_("Sending \"%s\" to %s returned an unrecognized response: \"%s\""),
+           Log::add_err_va (_("Sending “%s” to %s returned an unrecognized response: “%s”"),
                             _previous_command.c_str(),
                             host.c_str(),
                             line.to_string().c_str());

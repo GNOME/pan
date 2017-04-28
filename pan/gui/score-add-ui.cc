@@ -109,9 +109,9 @@ namespace
   GtkTreeModel * score_tree_model_new ()
   {
     struct { int type; const char * str; } items[] = {
-      { _ADD,      N_("increase the article's score by") },
-      { _SUBTRACT, N_("decrease the article's score by") },
-      { _ASSIGN,   N_("set the article's score to") },
+      { _ADD,      N_("increase the article’s score by") },
+      { _SUBTRACT, N_("decrease the article’s score by") },
+      { _ASSIGN,   N_("set the article’s score to") },
       { _WATCH,    N_("watch the article (set its score to 9999)") },
       { _IGNORE,   N_("ignore the article (set its score to -9999)") }
     };
@@ -192,9 +192,9 @@ namespace
   {
     struct { int type; bool negate; const char * str; } items[] = {
       { TextMatch::CONTAINS,    false, N_("contains")},
-      { TextMatch::CONTAINS,    true,  N_("doesn't contain")},
+      { TextMatch::CONTAINS,    true,  N_("doesn’t contain")},
       { TextMatch::IS,          false, N_("is")},
-      { TextMatch::IS,          true,  N_("isn't")},
+      { TextMatch::IS,          true,  N_("isn’t")},
       { TextMatch::BEGINS_WITH, false, N_("starts with")},
       { TextMatch::ENDS_WITH,   false, N_("ends with")},
       { TextMatch::REGEX,       false, N_("matches regex")},
@@ -478,7 +478,7 @@ ScoreAddDialog :: response_cb (GtkDialog * w, int response, gpointer dialog_gpoi
         GTK_DIALOG_DESTROY_WITH_PARENT,
         GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, NULL));
       HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
-        _("Another rule already sets this article's score."),
+        _("Another rule already sets this article’s score."),
         _("You may want to go back or delete the old rule."));
       gtk_dialog_add_buttons (GTK_DIALOG(d),
         GTK_STOCK_GO_BACK, -20,

@@ -170,7 +170,7 @@ namespace
       err = ::getaddrinfo (host.c_str(), portbuf, &hints, &ans);
       if (err != 0) {
         char buf[512];
-        snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
+        snprintf (buf, sizeof(buf), _("Error connecting to “%s”"), hpbuf);
         setme_err = buf;
         if (errno) {
           setme_err += " (";
@@ -208,7 +208,7 @@ namespace
     // create the giochannel...
     if (sockfd < 0) {
       char buf[512];
-      snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
+      snprintf (buf, sizeof(buf), _("Error connecting to “%s”"), hpbuf);
       setme_err = buf;
       if (errno) {
         setme_err += " (";

@@ -241,9 +241,9 @@ TaskUpload :: use_nntp (NNTP * nntp)
     needed->nntp = nntp;
 
     if (_queue_pos != -1)
-      set_status_va (_("Uploading %s - Part %d of %d"), _basename.c_str(), needed->partno, _total_parts);
+      set_status_va (_("Uploading %s — Part %d of %d"), _basename.c_str(), needed->partno, _total_parts);
     else
-      set_status_va (_("Uploading message body with subject \"%s\""), _subject.c_str());
+      set_status_va (_("Uploading message body with subject “%s”"), _subject.c_str());
 
     std::string data;
     if (_queue_pos != -1) _cache.get_data(data,needed->message_id.c_str());

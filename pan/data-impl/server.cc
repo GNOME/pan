@@ -524,7 +524,7 @@ DataImpl :: load_server_properties (const DataIO& source)
   if (!txt.empty())
     g_markup_parse_context_parse (c, txt.c_str(), txt.size(), &gerr);
   if (gerr) {
-    Log::add_err_va (_("Error reading file \"%s\": %s"), filename.c_str(), gerr->message);
+    Log::add_err_va (_("Error reading file “%s”: %s"), filename.c_str(), gerr->message);
     g_clear_error (&gerr);
   }
   g_markup_parse_context_free (c);

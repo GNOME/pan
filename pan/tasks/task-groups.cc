@@ -38,7 +38,7 @@ namespace
   {
     char buf[1024];
     std::string host (data.get_server_address (server));
-    snprintf (buf, sizeof(buf), _("Getting group list from \"%s\""), host.c_str());
+    snprintf (buf, sizeof(buf), _("Getting group list from “%s”"), host.c_str());
     return std::string (buf);
   }
 }
