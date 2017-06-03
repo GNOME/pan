@@ -39,11 +39,6 @@
 #include <pan/gui/prefs.h>
 #include <pan/gui/progress-view.h>
 
-#ifdef HAVE_GKR
-  #include <gnome-keyring-1/gnome-keyring.h>
-  #include <gnome-keyring-1/gnome-keyring-memory.h>
-#endif
-
 namespace pan
 {
   class FilterInfo;
@@ -229,8 +224,8 @@ namespace pan
 
     public:
 #ifdef HAVE_GKR
-      virtual GnomeKeyringResult password_encrypt (const PasswordData&) = 0;
-      virtual GnomeKeyringResult password_decrypt (PasswordData&) const = 0;
+      virtual gboolean password_encrypt (const PasswordData&) = 0;
+      virtual gchar* password_decrypt (PasswordData&) const = 0;
 #endif
       /** Gets a quark to the provided hostname */
       virtual bool find_server_by_hn (const std::string& server, Quark& setme) const = 0;

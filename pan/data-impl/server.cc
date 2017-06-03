@@ -255,24 +255,15 @@ DataImpl :: get_server_auth (const Quark   & server,
       PasswordData pw;
       pw.server = s->host;
       pw.user = s->username;
-      switch (password_decrypt(pw))
+
+      if (password_decrypt(pw) == NULL)
       {
-        case GNOME_KEYRING_RESULT_NO_MATCH:
-          Log::add_info_va(_("There seems to be no password set for server %s."), s->host.c_str());
-          break;
-
-        case GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON:
-          Log::add_urgent_va (_("GNOME Keyring denied access to the passwords."), s->host.c_str());
-          break;
-
-        case GNOME_KEYRING_RESULT_OK:
-//          setme_password.assign(pw.pw.str, pw.pw.len);
+		  Log::add_urgent_va (_("Got no password from libsecret API-Call secret_password_lookup_sync() for server %s."), s->host.c_str());
+      }
+      else
+      {
           setme_password = pw.pw;
           s->gkr_pw = pw.pw;
-          break;
-
-        default:
-          break;
       }
     }
 #endif

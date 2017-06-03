@@ -34,8 +34,10 @@ extern "C" {
 #include "data-impl.h"
 
 #ifdef HAVE_GKR
-  #include <gnome-keyring-1/gnome-keyring.h>
-  #include <gnome-keyring-1/gnome-keyring-memory.h>
+  #define GCR_API_SUBJECT_TO_CHANGE
+  #include <libsecret/secret.h>
+  #include <gcr/gcr.h>
+  #undef GCR_API_SUBJECT_TO_CHANGE
 #endif
 
 using namespace pan;
@@ -131,17 +133,19 @@ DataImpl :: save_state ()
 }
 
 #ifdef HAVE_GKR
-GnomeKeyringResult
+gboolean
 DataImpl :: password_encrypt (const PasswordData& pw)
 {
 //  g_return_val_if_fail (pw, GNOME_KEYRING_RESULT_NO_KEYRING_DAEMON);
+GError *error_c = NULL;
 
   return (
-    gnome_keyring_store_password_sync (
-      GNOME_KEYRING_NETWORK_PASSWORD,
-      GNOME_KEYRING_DEFAULT,
+    secret_password_store_sync (
+      SECRET_SCHEMA_COMPAT_NETWORK,
+      SECRET_COLLECTION_DEFAULT,
       _("Pan Newsreader's server passwords"),
       pw.pw,
+      NULL, &error_c,
       "user", pw.user.str,
       "server", pw.server.c_str(),
       NULL)
@@ -149,31 +153,31 @@ DataImpl :: password_encrypt (const PasswordData& pw)
 
 }
 
-// TODO use gnome_keyring_memory_new etc
-GnomeKeyringResult
+gchar*
 DataImpl :: password_decrypt (PasswordData& pw) const
 {
-
+  GError *error_c = NULL;
   gchar* pwd = NULL;
 
-  GnomeKeyringResult ret =
-    gnome_keyring_find_password_sync (
-    GNOME_KEYRING_NETWORK_PASSWORD,
-    &pwd,
+  pwd =
+    secret_password_lookup_sync (
+    SECRET_SCHEMA_COMPAT_NETWORK,
+    NULL,
+    &error_c,
     "user", pw.user.str,
     "server", pw.server.c_str(),
     NULL);
 
   if (pwd)
   {
-    pw.pw = gnome_keyring_memory_strdup(pwd);
-    gnome_keyring_free_password(pwd);
+    pw.pw = gcr_secure_memory_strdup(pwd);
+    secret_password_free(pwd);
   }
   else
   {
     pw.pw = const_cast<gchar*>("");
   }
 
-  return (pw.pw ? GNOME_KEYRING_RESULT_OK : GNOME_KEYRING_RESULT_DENIED) ;
+  return pwd;
 }
 #endif

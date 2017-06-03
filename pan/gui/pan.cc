@@ -48,6 +48,13 @@ extern "C" {
   #include <pan/tasks/socket-impl-openssl.h>
 #endif
 
+#ifdef HAVE_GKR
+  #define GCR_API_SUBJECT_TO_CHANGE
+  #include <libsecret/secret.h>
+  #include <gcr/gcr.h>
+  #undef GCR_API_SUBJECT_TO_CHANGE
+#endif
+
 #include <config.h>
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
@@ -1142,7 +1149,7 @@ main (int argc, char *argv[])
       Data::Server* s(data.find_server(*it));
       if (s && s->gkr_pw)
       {
-        gnome_keyring_memory_free(s->gkr_pw);
+        gcr_secure_memory_free(s->gkr_pw);
       }
     }
   }
