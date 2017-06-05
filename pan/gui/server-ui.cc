@@ -44,10 +44,12 @@ extern "C" {
 #endif
 
 #ifdef HAVE_GKR
+#if GTK_CHECK_VERSION(3,0,0)
   #define GCR_API_SUBJECT_TO_CHANGE
   #include <libsecret/secret.h>
   #include <gcr/gcr.h>
   #undef GCR_API_SUBJECT_TO_CHANGE
+#endif /* GTK_CHECK_VERSION(3,0,0) */
 #endif
 
 using namespace pan;
@@ -231,7 +233,11 @@ namespace
       const int max_conn (gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(d->connection_limit_spin)));
       StringView user (pan_entry_get_text (d->auth_username_entry));
 #ifdef HAVE_GKR
+#if GTK_CHECK_VERSION(3,0,0)
       gchar* pass = gcr_secure_memory_strdup(gtk_entry_get_text(GTK_ENTRY(d->auth_password_entry)));
+#else
+      gchar* pass = gnome_keyring_memory_strdup(gtk_entry_get_text(GTK_ENTRY(d->auth_password_entry))); 
+#endif /* GTK_CHECK_VERSION(3,0,0) */
 #else
       gchar* pass = (gchar*)gtk_entry_get_text(GTK_ENTRY(d->auth_password_entry));
 #endif

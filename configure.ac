@@ -61,6 +61,7 @@ GTKSPELL3_REQUIRED=2.0.16
 ENCHANT_REQUIRED=1.6.0
 GNUTLS_REQUIRED=3.0.0
 LIBNOTIFY_REQUIRED=0.4.1
+LIBGKR_REQUIRED=3.2.0
 LIBSECRET_REQUIRED=0.16
 GCR_REQUIRED=3.20
 WEBKIT_REQUIRED=1.8.1
@@ -229,16 +230,20 @@ if test "x$enable_libnotify" = "xyes" ; then
   fi
 fi
 
-dnl Check for GNOME Keyring if user-enabled for password storage
+dnl Check for libsecret (GTK+ 3 only) or GNOME Keyring if user-enabled for password storage
 AC_ARG_ENABLE([gkr],
-  AS_HELP_STRING([--enable-gkr],[enable GNOME Keyring support (normally: no)]),[enable_gkr=$enableval],[enable_gkr=no])
+  AS_HELP_STRING([--enable-gkr],[enable GNOME Keyring or libsecret support (normally: no)]),[enable_gkr=$enableval],[enable_gkr=no])
 if test "x$enable_gkr" = "xyes" ; then
-  PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[libsecret-1 >= $LIBSECRET_REQUIRED gcr-3 >= $GCR_REQUIRED],
-  [HAVE_GKR="yes"],[HAVE_GKR="no"])
+  if test "x$want_gtk3" = "xyes" ; then
+    PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[libsecret-1 >= $LIBSECRET_REQUIRED gcr-3 >= $GCR_REQUIRED],
+    [HAVE_GKR="yes"],[HAVE_GKR="no"])
+  else
+    PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[gnome-keyring-1 >= $LIBGKR_REQUIRED],[HAVE_GKR="yes"],[HAVE_GKR="no"])
+  fi
   AC_SUBST([LIBGNOME_KEYRING_1_CFLAGS])
   AC_SUBST([LIBGNOME_KEYRING_1_LIBS])
   if test "x$HAVE_GKR" = "xyes"; then
-    AC_DEFINE([HAVE_GKR],[1],[GNOME Keyring support for password storage])
+    AC_DEFINE([HAVE_GKR],[1],[GNOME Keyring or libsecret support for password storage])
   fi
 fi
 
@@ -345,7 +350,7 @@ Configuration:
         With WebKitGTK+:        ${want_webkit}
         With GnuTLS:            ${gnutls_msg}
         With libnotify:         ${enable_libnotify}
-        With GNOME Keyring:     ${enable_gkr}
+        With password storage:  ${enable_gkr}
         With yelp-tools:        ${want_yelp_tools}
         With user manual:       ${enable_manual}
 "

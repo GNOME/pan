@@ -49,10 +49,12 @@ extern "C" {
 #endif
 
 #ifdef HAVE_GKR
+#if GTK_CHECK_VERSION(3,0,0)
   #define GCR_API_SUBJECT_TO_CHANGE
   #include <libsecret/secret.h>
   #include <gcr/gcr.h>
   #undef GCR_API_SUBJECT_TO_CHANGE
+#endif /* GTK_CHECK_VERSION(3,0,0) */
 #endif
 
 #include <config.h>
@@ -1149,7 +1151,11 @@ main (int argc, char *argv[])
       Data::Server* s(data.find_server(*it));
       if (s && s->gkr_pw)
       {
+#if GTK_CHECK_VERSION(3,0,0)
         gcr_secure_memory_free(s->gkr_pw);
+#else
+        gnome_keyring_memory_free(s->gkr_pw);
+#endif /* GTK_CHECK_VERSION(3,0,0) */
       }
     }
   }

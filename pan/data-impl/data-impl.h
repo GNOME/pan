@@ -106,8 +106,13 @@ namespace pan
 
     public:
 #ifdef HAVE_GKR
+#if GTK_CHECK_VERSION(3,0,0)
       gboolean password_encrypt (const PasswordData&);
       gchar* password_decrypt (PasswordData&) const;
+#else
+      GnomeKeyringResult password_encrypt (const PasswordData&);
+      GnomeKeyringResult password_decrypt (PasswordData&) const;
+#endif /* GTK_CHECK_VERSION(3,0,0) */
 #endif
     private:
 
