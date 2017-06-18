@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=Pan&ke"
 "ywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-05-10 20:31+0000\n"
-"PO-Revision-Date: 2017-05-10 22:36+0200\n"
+"POT-Creation-Date: 2017-06-18 19:17+0000\n"
+"PO-Revision-Date: 2017-06-18 21:19+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -66,7 +66,6 @@ msgstr "usenet;news;diskusní klient;diskusní skupina;příspěvek;yenc;nzb;"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: pan.desktop.in:10
-#| msgid "Pan"
 msgid "pan"
 msgstr "pan"
 
@@ -88,7 +87,7 @@ msgid "Error opening file \"%s\" %s"
 msgstr "Chyba při otevírání souboru \"%s\" %s"
 
 #: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
-#: pan/data-impl/server.cc:500 pan/general/file-util.cc:311
+#: pan/data-impl/server.cc:527 pan/general/file-util.cc:311
 #: pan/gui/post-ui.cc:644 pan/gui/task-pane.cc:737
 #, c-format
 msgid "Error reading file \"%s\": %s"
@@ -119,12 +118,12 @@ msgid "Could not export certificate for server: %s"
 msgstr "Export certifikátu serveru se nezdařil: %s"
 
 #. load_group_descriptions (*_data_io);
-#: pan/data-impl/data-impl.cc:113
+#: pan/data-impl/data-impl.cc:120
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "Data nahrána během %.1f sekund"
 
-#: pan/data-impl/data-impl.cc:143
+#: pan/data-impl/data-impl.cc:151 pan/data-impl/data-impl.cc:198
 msgid "Pan Newsreader's server passwords"
 msgstr "Hesla serverů čtečky Pan"
 
@@ -164,12 +163,18 @@ msgstr ""
 msgid "Added %lu articles to %s."
 msgstr "Přidáno %lu příspěvků do %s."
 
-#: pan/data-impl/server.cc:261
+#: pan/data-impl/server.cc:262
+#, c-format
+#| msgid "There seems to be no password set for server %s."
+msgid "Received no password from libsecret for server %s."
+msgstr "Pro server %s nebylo od libsecret získáno žádné heslo."
+
+#: pan/data-impl/server.cc:287
 #, c-format
 msgid "There seems to be no password set for server %s."
 msgstr "Pro server %s patrně není nastaveno žádné heslo."
 
-#: pan/data-impl/server.cc:265
+#: pan/data-impl/server.cc:291
 msgid "GNOME Keyring denied access to the passwords."
 msgstr "GNOME Keyring zakázal přístup k heslům."
 
@@ -1350,19 +1355,19 @@ msgstr "Pan: Události"
 msgid "Message"
 msgstr "Zpráva"
 
-#: pan/gui/pan.cc:359
+#: pan/gui/pan.cc:368
 msgid "Maximize"
 msgstr "Maximalizovat"
 
-#: pan/gui/pan.cc:412
+#: pan/gui/pan.cc:421
 msgid "An error has occurred!"
 msgstr "Došlo k chybě!"
 
-#: pan/gui/pan.cc:426
+#: pan/gui/pan.cc:435
 msgid "New Articles!"
 msgstr "Nové příspěvky!"
 
-#: pan/gui/pan.cc:427
+#: pan/gui/pan.cc:436
 msgid ""
 "There are new\n"
 "articles available."
@@ -1370,11 +1375,11 @@ msgstr ""
 "Jsou dostupné\n"
 "nové příspěvky."
 
-#: pan/gui/pan.cc:494
+#: pan/gui/pan.cc:503
 msgid "Toggle on/offline"
 msgstr "Přepnout online/offline"
 
-#: pan/gui/pan.cc:542
+#: pan/gui/pan.cc:551
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1384,7 +1389,7 @@ msgstr ""
 " \n"
 "Chcete-li začít se čtením diskusí, je nutné nejprve přidat server."
 
-#: pan/gui/pan.cc:624
+#: pan/gui/pan.cc:633
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -1419,22 +1424,22 @@ msgstr ""
 "  --no-gui                 Zobrazí pouze textový výstup, nikoliv pozdržená "
 "stahování.\n"
 
-#: pan/gui/pan.cc:963
+#: pan/gui/pan.cc:972
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Chyba: --no-gui použito bez souborů nzb nebo news:message-id."
 
-#: pan/gui/pan.cc:967
+#: pan/gui/pan.cc:976
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s spuštěn"
 
-#: pan/gui/pan.cc:987
+#: pan/gui/pan.cc:996
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Před použitím aplikace Pan jako klienta NZB je nutné nastavit servery "
 "diskusních skupin."
 
-#: pan/gui/pan.cc:1105
+#: pan/gui/pan.cc:1114
 msgid "Pan notification"
 msgstr "Oznámení aplikace Pan"
 
@@ -2137,12 +2142,13 @@ msgid "Minutes to autosave newsrc files: "
 msgstr "Minut do automatického uložení souborů newsrc:"
 
 #: pan/gui/prefs-ui.cc:1064
-msgid "GNOME Keyring"
-msgstr "GNOME Keyring"
+#| msgid "_Password:"
+msgid "Password Storage"
+msgstr "Úložiště hesel"
 
 #: pan/gui/prefs-ui.cc:1065
-msgid "Store passwords in GNOME Keyring"
-msgstr "Ukládat hesla v aplikaci GNOME Keyring"
+msgid "Save passwords in password storage"
+msgstr "Ukládat hesla v úložišti hesel"
 
 #: pan/gui/prefs-ui.cc:1069
 msgid "_Miscellaneous"
@@ -2819,37 +2825,37 @@ msgstr "Přidat nové pravidlo"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Odstranit vybrané pravidlo"
 
-#: pan/gui/server-ui.cc:259
+#: pan/gui/server-ui.cc:272
 msgid "Please specify the server's address."
 msgstr "Určete prosím adresu serveru."
 
-#: pan/gui/server-ui.cc:305
+#: pan/gui/server-ui.cc:318
 msgid "Import SSL Certificate (PEM Format) From File"
 msgstr "Importovat certifikát SSL (formát PEM) ze souboru"
 
 #. create the dialog
-#: pan/gui/server-ui.cc:342 pan/gui/server-ui.cc:948
+#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:961
 msgid "Add a Server"
 msgstr "Přidat nový server"
 
-#: pan/gui/server-ui.cc:342 pan/gui/server-ui.cc:954
+#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:967
 msgid "Edit a Server's Settings"
 msgstr "Upravit nastavení serveru"
 
-#: pan/gui/server-ui.cc:362
+#: pan/gui/server-ui.cc:375
 msgid "Location"
 msgstr "Umístění"
 
-#: pan/gui/server-ui.cc:366
+#: pan/gui/server-ui.cc:379
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr ""
 "Skutečná adresa serveru diskusních skupin, např. \"news.diskusniserver.cz\"."
 
-#: pan/gui/server-ui.cc:367
+#: pan/gui/server-ui.cc:380
 msgid "_Address:"
 msgstr "_Adresa:"
 
-#: pan/gui/server-ui.cc:372
+#: pan/gui/server-ui.cc:385
 msgid ""
 "The news server's port number.  Typically 119 for unencrypted and 563 for "
 "encrypted connections (SSL/TLS)."
@@ -2857,19 +2863,19 @@ msgstr ""
 "Port serveru diskusních skupin. Téměř vždy 119 v případě nešifrovaného a 563 "
 "v případě šifrovaného spojení (SSL/TLS)."
 
-#: pan/gui/server-ui.cc:373
+#: pan/gui/server-ui.cc:386
 msgid "Por_t:"
 msgstr "Por_t:"
 
-#: pan/gui/server-ui.cc:376
+#: pan/gui/server-ui.cc:389
 msgid "Login (if Required)"
 msgstr "Přihlášení (je-li vyžadováno)"
 
-#: pan/gui/server-ui.cc:380
+#: pan/gui/server-ui.cc:393
 msgid "_Username:"
 msgstr "Přihlašovací _jméno:"
 
-#: pan/gui/server-ui.cc:381
+#: pan/gui/server-ui.cc:394
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2877,11 +2883,11 @@ msgstr ""
 "Přihlašovací jméno, které bude v případě dotazu poskytnuto serveru. Není "
 "nutné zadávat, pokud server autentizaci nevyžaduje."
 
-#: pan/gui/server-ui.cc:385
+#: pan/gui/server-ui.cc:398
 msgid "_Password:"
 msgstr "_Heslo:"
 
-#: pan/gui/server-ui.cc:386
+#: pan/gui/server-ui.cc:399
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2889,55 +2895,55 @@ msgstr ""
 "Heslo, které bude v případě dotazu poskytnuto serveru. Není nutné zadávat, "
 "pokud server autentizaci nevyžaduje."
 
-#: pan/gui/server-ui.cc:389
+#: pan/gui/server-ui.cc:402
 msgid "Settings"
 msgstr "Nastavení"
 
-#: pan/gui/server-ui.cc:396
+#: pan/gui/server-ui.cc:409
 msgid "Connection _Limit:"
 msgstr "_Maximum spojení:"
 
-#: pan/gui/server-ui.cc:400
+#: pan/gui/server-ui.cc:413
 msgid "After Two Weeks"
 msgstr "Po dvou týdnech"
 
-#: pan/gui/server-ui.cc:401
+#: pan/gui/server-ui.cc:414
 msgid "After One Month"
 msgstr "Po měsíci"
 
-#: pan/gui/server-ui.cc:402
+#: pan/gui/server-ui.cc:415
 msgid "After Two Months"
 msgstr "Po dvou měsících"
 
-#: pan/gui/server-ui.cc:403
+#: pan/gui/server-ui.cc:416
 msgid "After Three Months"
 msgstr "Po třech měsících"
 
-#: pan/gui/server-ui.cc:404
+#: pan/gui/server-ui.cc:417
 msgid "After Six Months"
 msgstr "Po šesti měsících"
 
-#: pan/gui/server-ui.cc:405
+#: pan/gui/server-ui.cc:418
 msgid "Never Expire Old Articles"
 msgstr "Staré příspěvky nikdy nevyprší"
 
-#: pan/gui/server-ui.cc:419
+#: pan/gui/server-ui.cc:432
 msgid "E_xpire Old Articles:"
 msgstr "Sta_ré příspěvky vyprší:"
 
-#: pan/gui/server-ui.cc:423
+#: pan/gui/server-ui.cc:436
 msgid "Primary"
 msgstr "Primární"
 
-#: pan/gui/server-ui.cc:424
+#: pan/gui/server-ui.cc:437
 msgid "Fallback"
 msgstr "Záložní"
 
-#: pan/gui/server-ui.cc:438
+#: pan/gui/server-ui.cc:451
 msgid "Server Rank:"
 msgstr "Pořadí serveru:"
 
-#: pan/gui/server-ui.cc:442
+#: pan/gui/server-ui.cc:455
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -2947,39 +2953,39 @@ msgstr ""
 "primárních. Jeden z běžných postupů je použít veřejné servery jako primární "
 "a předplacené servery jako záložní."
 
-#: pan/gui/server-ui.cc:447
+#: pan/gui/server-ui.cc:460
 msgid "Disable Compression (N/A)"
 msgstr "Zakázat kompresi (žádná)"
 
-#: pan/gui/server-ui.cc:448
+#: pan/gui/server-ui.cc:461
 msgid "XZVER Compression (Astraweb)"
 msgstr "Komprese XZVER (Astraweb)"
 
-#: pan/gui/server-ui.cc:449
+#: pan/gui/server-ui.cc:462
 msgid "GZIP Compression (Giganews etc.)"
 msgstr "Komprese GZIP (Giganews aj.)"
 
-#: pan/gui/server-ui.cc:463
+#: pan/gui/server-ui.cc:476
 msgid "Header Compression:"
 msgstr "Komprese záhlaví"
 
-#: pan/gui/server-ui.cc:469
+#: pan/gui/server-ui.cc:482
 msgid "Security"
 msgstr "Bezpečnost"
 
-#: pan/gui/server-ui.cc:474
+#: pan/gui/server-ui.cc:487
 msgid "Use Unsecure (Plaintext) Connections"
 msgstr "Používat nezabezpečené připojení (plaintext)"
 
-#: pan/gui/server-ui.cc:475
+#: pan/gui/server-ui.cc:488
 msgid "Use Secure SSL Connections"
 msgstr "Používat zabezpečené připojení SSL"
 
-#: pan/gui/server-ui.cc:490
+#: pan/gui/server-ui.cc:503
 msgid "TLS (SSL) Settings:"
 msgstr "Nastavení TLS (SSL):"
 
-#: pan/gui/server-ui.cc:495
+#: pan/gui/server-ui.cc:508
 msgid ""
 "You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
 "TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
@@ -2989,56 +2995,56 @@ msgstr ""
 "vaše data budou šifrovaná a zabezpečená. Z bezpečnostních důvodů se "
 "doporučuje SSL/TLS zapnout."
 
-#: pan/gui/server-ui.cc:500
+#: pan/gui/server-ui.cc:513
 msgid "Always trust this server's certificate"
 msgstr "Vždy důvěřovat certifikátu tohoto serveru"
 
-#: pan/gui/server-ui.cc:676
+#: pan/gui/server-ui.cc:689
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "Opravdu smazat \"%s\"?"
 
-#: pan/gui/server-ui.cc:765
+#: pan/gui/server-ui.cc:778
 msgid "No information available."
 msgstr "Nejsou dostupné žádné informace."
 
-#: pan/gui/server-ui.cc:775
+#: pan/gui/server-ui.cc:788
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr "Certifikát serveru \"%s\""
 
-#: pan/gui/server-ui.cc:874
+#: pan/gui/server-ui.cc:887
 #, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr "Opravdu chcete smazat certifikát \"%s\"?"
 
 #. dialog
-#: pan/gui/server-ui.cc:901 pan/gui/server-ui.cc:922 pan/gui/server-ui.cc:1020
+#: pan/gui/server-ui.cc:914 pan/gui/server-ui.cc:935 pan/gui/server-ui.cc:1033
 msgid "Servers"
 msgstr "Servery"
 
-#: pan/gui/server-ui.cc:961
+#: pan/gui/server-ui.cc:974
 msgid "Remove a Server"
 msgstr "Odstranit server"
 
 #. dialog
-#: pan/gui/server-ui.cc:994
+#: pan/gui/server-ui.cc:1007
 msgid "SSL Certificates"
 msgstr "Certifikáty SSL"
 
-#: pan/gui/server-ui.cc:1015
+#: pan/gui/server-ui.cc:1028
 msgid "Certificates"
 msgstr "Certifikáty"
 
-#: pan/gui/server-ui.cc:1046
+#: pan/gui/server-ui.cc:1059
 msgid "Import Certificate"
 msgstr "Importovat certifikát"
 
-#: pan/gui/server-ui.cc:1052
+#: pan/gui/server-ui.cc:1065
 msgid "Inspect Certificate"
 msgstr "Zkontrolovat certifikát"
 
-#: pan/gui/server-ui.cc:1059
+#: pan/gui/server-ui.cc:1072
 msgid "Remove Certificate"
 msgstr "Odstranit certifikát"
 
@@ -3740,6 +3746,12 @@ msgstr "bez_názvu"
 #: pan/usenet-utils/text-massager.cc:582
 msgid "no_mail"
 msgstr "bez_e-mailu"
+
+#~ msgid "GNOME Keyring"
+#~ msgstr "GNOME Keyring"
+
+#~ msgid "Store passwords in GNOME Keyring"
+#~ msgstr "Ukládat hesla v aplikaci GNOME Keyring"
 
 #~ msgid "_1. Header Pane"
 #~ msgstr "_1. Panel záhlaví"
