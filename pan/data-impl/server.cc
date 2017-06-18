@@ -539,7 +539,7 @@ DataImpl :: load_server_properties (const DataIO& source)
 #ifndef HAVE_GKR
     s.password = kv["password"];
 #else
-    if (!_prefs.get_flag("use-gnome-keyring", false))
+    if (!_prefs.get_flag("use-password-storage", false))
       s.password = kv["password"];
 #endif
     s.port = to_int (kv["port"], STD_NNTP_PORT);
@@ -597,14 +597,14 @@ DataImpl :: save_server_properties (DataIO& data_io, Prefs& prefs)
     const Server* s (find_server (*it));
     std::string user;
     gchar* pass(NULL);
-    get_server_auth(*it, user, pass, prefs.get_flag("use-gnome-keyring",false));
+    get_server_auth(*it, user, pass, prefs.get_flag("use-password-storage",false));
     *out << indent(depth++) << "<server id=\"" << escaped(it->to_string()) << "\">\n";
     *out << indent(depth) << "<host>" << escaped(s->host) << "</host>\n"
          << indent(depth) << "<port>" << s->port << "</port>\n"
          << indent(depth) << "<username>" << escaped(user) << "</username>\n";
 #ifdef HAVE_GKR
-if (prefs.get_flag("use-gnome-keyring", false))
-    *out << indent(depth) << "<password>" << "HANDLED_BY_GNOME_KEYRING" << "</password>\n";
+if (prefs.get_flag("use-password-storage", false))
+    *out << indent(depth) << "<password>" << "HANDLED_BY_PASSWORD_STORAGE" << "</password>\n";
 else
     *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";
 #else

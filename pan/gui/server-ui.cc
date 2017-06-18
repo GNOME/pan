@@ -142,7 +142,7 @@ namespace
     gchar* pass(NULL);
     if (!server.empty()) {
       d->data.get_server_addr (server, addr, port);
-      d->data.get_server_auth (server, user, pass, prefs.get_flag("use-gnome-keyring",false));
+      d->data.get_server_auth (server, user, pass, prefs.get_flag("use-password-storage",false));
       age = d->data.get_server_article_expiration_age (server);
       rank = d->data.get_server_rank (server);
       max_conn = d->data.get_server_limits (server);
@@ -236,7 +236,7 @@ namespace
 #if GTK_CHECK_VERSION(3,0,0)
       gchar* pass = gcr_secure_memory_strdup(gtk_entry_get_text(GTK_ENTRY(d->auth_password_entry)));
 #else
-      gchar* pass = gnome_keyring_memory_strdup(gtk_entry_get_text(GTK_ENTRY(d->auth_password_entry))); 
+      gchar* pass = gnome_keyring_memory_strdup(gtk_entry_get_text(GTK_ENTRY(d->auth_password_entry)));
 #endif /* GTK_CHECK_VERSION(3,0,0) */
 #else
       gchar* pass = (gchar*)gtk_entry_get_text(GTK_ENTRY(d->auth_password_entry));
@@ -284,7 +284,7 @@ namespace
         if (d->server.empty())
           d->server = d->data.add_new_server ();
         d->data.set_server_addr (d->server, addr, port);
-        d->data.set_server_auth (d->server, user, pass, d->prefs.get_flag("use-gnome-keyring",false));
+        d->data.set_server_auth (d->server, user, pass, d->prefs.get_flag("use-password-storage",false));
         d->data.set_server_limits (d->server, max_conn);
         d->data.set_server_article_expiration_age (d->server, age);
         d->data.set_server_rank (d->server, rank);

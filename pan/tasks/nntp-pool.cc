@@ -175,7 +175,7 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
 {
   std::string user;
   gchar* pass(NULL);
-  ok = ok && _server_info.get_server_auth (_server, user, pass, _prefs.get_flag("use-gnome-keyring", false));
+  ok = ok && _server_info.get_server_auth (_server, user, pass, _prefs.get_flag("use-password-storage", false));
   debug("on socket created "<<host<<" "<<ok<<" "<<socket);
   if (!ok)
   {
@@ -184,10 +184,10 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
   }
   else
   {
-    // okay, we at least we established a connection.
+    // okay, we at least established a connection.
     // now try to handshake and pass the buck to on_nntp_done().
     NNTP * nntp;
-    if (!_prefs.get_flag("use-gnome-keyring", false))
+    if (!_prefs.get_flag("use-password-storage", false))
     {
       std::string pw (pass ? pass : "");
       if (pass) g_free(pass);
