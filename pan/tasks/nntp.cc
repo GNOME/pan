@@ -363,7 +363,7 @@ NNTP :: xover (const Quark   & group,
    _listener = l;
 
    enter_group(group);
-   _commands.push_back (build_command ("XOVER %"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT"\r\n", low, high));
+   _commands.push_back (build_command ("XOVER %" G_GUINT64_FORMAT"-%" G_GUINT64_FORMAT"\r\n", low, high));
    write_next_command ();
 }
 
@@ -376,7 +376,7 @@ NNTP :: xzver (const Quark   & group,
    _listener = l;
 
    enter_group(group);
-   _commands.push_back (build_command ("XZVER %"G_GUINT64_FORMAT"-%"G_GUINT64_FORMAT"\r\n", low, high));
+   _commands.push_back (build_command ("XZVER %" G_GUINT64_FORMAT"-%" G_GUINT64_FORMAT"\r\n", low, high));
    write_next_command ();
 }
 
@@ -417,7 +417,7 @@ NNTP :: article (const Quark     & group,
 
    enter_group(group);
 
-   _commands.push_back (build_command ("ARTICLE %"G_GUINT64_FORMAT"\r\n", article_number));
+   _commands.push_back (build_command ("ARTICLE %" G_GUINT64_FORMAT"\r\n", article_number));
 
    write_next_command ();
 }
@@ -459,7 +459,7 @@ NNTP :: get_headers (const Quark     & group,
 
    enter_group(group);
 
-   _commands.push_back (build_command ("HEAD %"G_GUINT64_FORMAT"\r\n", article_number));
+   _commands.push_back (build_command ("HEAD %" G_GUINT64_FORMAT"\r\n", article_number));
 
    write_next_command ();
 }
@@ -487,7 +487,7 @@ NNTP :: get_body (const Quark     & group,
 
    enter_group(group);
 
-   _commands.push_back (build_command ("BODY %"G_GUINT64_FORMAT"\r\n", article_number));
+   _commands.push_back (build_command ("BODY %" G_GUINT64_FORMAT"\r\n", article_number));
 
    write_next_command ();
 }
