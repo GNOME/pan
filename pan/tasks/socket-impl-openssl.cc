@@ -808,9 +808,9 @@ GIOChannelSocketGnuTLS :: gnutls_get_iochannel(GIOChannel* channel, const char* 
 
   gnutls_priority_set_direct (
   session,
-  // prefer tls 1.0 for now....
   // "NONE:+VERS-SSL3.0:+CIPHER-ALL:+COMP-ALL:+RSA:+DHE-RSA:+DHE-DSS:+MAC-ALL"
-  "NONE:+VERS-TLS1.0:+CIPHER-ALL:+COMP-ALL:+RSA:+DHE-RSA:+DHE-DSS:+MAC-ALL", NULL);
+  // "NONE:+VERS-TLS1.0:+CIPHER-ALL:+COMP-ALL:+RSA:+DHE-RSA:+DHE-DSS:+MAC-ALL", NULL); // prefer tls 1.0 for now....
+  "NONE:+VERS-TLS-ALL:+CIPHER-ALL:+COMP-ALL:+KX-ALL:SIGN-ALL:+CURVE-ALL:+CTYPE-ALL:+MAC-ALL", NULL); // enable all TLS versions
 
   gnutls_certificate_credentials_t creds = _certstore.get_creds();
   gnutls_credentials_set (session, GNUTLS_CRD_CERTIFICATE, creds);
