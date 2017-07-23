@@ -20,10 +20,9 @@ RELEASE NOTES
         * Directories to search for SSL certificates can be defined with
           environment variables 'SSL_CERT_DIR' or 'SSL_DIR'.
 
-        * Even if support for GNOME Keyring has been enabled at configure time
-          and compiled in, you can explicitly configure GNOME Keyring support
-          in the Pan Preferences. To enable support, go to Edit -> Preferences
-          -> Miscellaneous and check 'Store passwords in GNOME Keyring'.
+        * To use password storage provided by GNOME Keyring or libsecret, build
+          Pan with support for that feature, and then enable it in Edit ->
+          Preferences -> Miscellaneous -> 'Save passwords in password storage'.
 
 
 REQUIREMENTS
@@ -43,7 +42,7 @@ REQUIREMENTS
 
         * GtkSpell 2.0.7 or higher for spellchecker support
           <http://gtkspell.sourceforge.net>
-          (optionally GtkSpell 2.0.16 for spellchecker support with GTK+ 3)
+          (GtkSpell 2.0.16 or higher when using GTK+ 3)
 
         * Enchant 1.6.0 or higher for spellchecker support
           <http://www.abisource.com/projects/enchant/>
@@ -53,11 +52,14 @@ REQUIREMENTS
 
         * GNOME Keyring 3.2.0 or higher for password storage
           <https://live.gnome.org/GnomeKeyring>
+          (libsecret 0.16 or higher and gcr 3.20 or higher when using GTK+ 3
+          <https://developer.gnome.org/libsecret/>
+          <https://developer.gnome.org/gcr/>)
 
         * D-Bus to support running multiple Pan instances
           <http://www.freedesktop.org/wiki/Software/dbus>
 
-        * GnuTLS 3.0.0 or higher for encrypted connections (TLS 1.0)
+        * GnuTLS 3.0.0 or higher for encrypted connections (TLS 1.x)
           <http://www.gnu.org/software/gnutls/>
 
     Run the following command to get a list of available options that you can

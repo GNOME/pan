@@ -230,7 +230,7 @@ if test "x$enable_libnotify" = "xyes" ; then
   fi
 fi
 
-dnl Check for libsecret (GTK+ 3 only) or GNOME Keyring if user-enabled for password storage
+dnl Check for libsecret and gcr (GTK+ 3 only) or GNOME Keyring if user-enabled for password storage
 AC_ARG_ENABLE([gkr],
   AS_HELP_STRING([--enable-gkr],[enable GNOME Keyring or libsecret support (normally: no)]),[enable_gkr=$enableval],[enable_gkr=no])
 if test "x$enable_gkr" = "xyes" ; then
