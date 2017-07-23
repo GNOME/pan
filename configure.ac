@@ -1,8 +1,8 @@
-AC_INIT([Pan],[0.142],[https://bugzilla.gnome.org/enter_bug.cgi?product=Pan],[pan],[http://pan.rebelbase.com/])
+AC_INIT([Pan],[0.143],[https://bugzilla.gnome.org/enter_bug.cgi?product=Pan],[pan],[http://pan.rebelbase.com/])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
-AC_DEFINE(VERSION_MINOR,142,[Minor part of version number])
+AC_DEFINE(VERSION_MINOR,143,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
-AC_DEFINE(VERSION_TITLE,["He slipped to Sam a double gin"],[Release Name])
+AC_DEFINE(VERSION_TITLE,["Quaint little villages here and there"],[Release Name])
 AC_PREREQ([2.64])
 
 dnl Get git info for pan-git.version
