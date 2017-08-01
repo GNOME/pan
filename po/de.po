@@ -41,8 +41,8 @@ msgstr ""
 "Project-Id-Version: pan2 master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-05-10 20:31+0000\n"
-"PO-Revision-Date: 2017-05-14 21:17+0200\n"
+"POT-Creation-Date: 2017-06-18 19:17+0000\n"
+"PO-Revision-Date: 2017-08-01 23:53+0200\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -50,7 +50,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.0.3\n"
 
 # D'accord, und so bleibt's jetzt, das Hinundhergehüpfe im Menü macht wahnsinnig. -bg
 #: pan.appdata.xml.in:5
@@ -99,7 +99,6 @@ msgstr "usenet;news;newsreader;newsgruppe;artikel;yenc;nzb;"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: pan.desktop.in:10
-#| msgid "Pan"
 msgid "pan"
 msgstr "pan"
 
@@ -121,7 +120,7 @@ msgid "Error opening file \"%s\" %s"
 msgstr "Fehler beim Öffnen der Datei »%s« %s"
 
 #: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
-#: pan/data-impl/server.cc:500 pan/general/file-util.cc:311
+#: pan/data-impl/server.cc:527 pan/general/file-util.cc:311
 #: pan/gui/post-ui.cc:644 pan/gui/task-pane.cc:737
 #, c-format
 msgid "Error reading file \"%s\": %s"
@@ -154,12 +153,12 @@ msgid "Could not export certificate for server: %s"
 msgstr "Zertifikat für Server konnte nicht exportiert werden: %s"
 
 #. load_group_descriptions (*_data_io);
-#: pan/data-impl/data-impl.cc:113
+#: pan/data-impl/data-impl.cc:120
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "Daten-Backend wurde in %.1f Sekunden geladen"
 
-#: pan/data-impl/data-impl.cc:143
+#: pan/data-impl/data-impl.cc:151 pan/data-impl/data-impl.cc:198
 msgid "Pan Newsreader's server passwords"
 msgstr "Server-Passwörter für Pan Newsreader"
 
@@ -201,12 +200,17 @@ msgstr ""
 msgid "Added %lu articles to %s."
 msgstr "%lu Artikel zu »%s« hinzugefügt."
 
-#: pan/data-impl/server.cc:261
+#: pan/data-impl/server.cc:262
+#, c-format
+msgid "Received no password from libsecret for server %s."
+msgstr "Für Server %s wurde kein Passwort von libsecret empfangen."
+
+#: pan/data-impl/server.cc:287
 #, c-format
 msgid "There seems to be no password set for server %s."
 msgstr "Für den Server %s scheint kein Passwort festgelegt worden zu sein."
 
-#: pan/data-impl/server.cc:265
+#: pan/data-impl/server.cc:291
 msgid "GNOME Keyring denied access to the passwords."
 msgstr "Der GNOME-Schlüsselbund hat den Zugriff auf die Passwörter verweigert."
 
@@ -1393,19 +1397,19 @@ msgstr "Pan: Aufgaben"
 msgid "Message"
 msgstr "Nachricht"
 
-#: pan/gui/pan.cc:359
+#: pan/gui/pan.cc:368
 msgid "Maximize"
 msgstr "Maximieren"
 
-#: pan/gui/pan.cc:412
+#: pan/gui/pan.cc:421
 msgid "An error has occurred!"
 msgstr "Ein Fehler ist aufgetreten!"
 
-#: pan/gui/pan.cc:426
+#: pan/gui/pan.cc:435
 msgid "New Articles!"
 msgstr "Neue Artikel!"
 
-#: pan/gui/pan.cc:427
+#: pan/gui/pan.cc:436
 msgid ""
 "There are new\n"
 "articles available."
@@ -1413,11 +1417,11 @@ msgstr ""
 "Es sind neue\n"
 "Artikel verfügbar."
 
-#: pan/gui/pan.cc:494
+#: pan/gui/pan.cc:503
 msgid "Toggle on/offline"
 msgstr "Anwesend/Abwesend umschalten"
 
-#: pan/gui/pan.cc:542
+#: pan/gui/pan.cc:551
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1428,7 +1432,7 @@ msgstr ""
 "Um mit dem Lesen von Diskussionsgruppen zu beginnen, fügen Sie zunächst "
 "einen Server hinzu."
 
-#: pan/gui/pan.cc:624
+#: pan/gui/pan.cc:633
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -1462,22 +1466,22 @@ msgstr ""
 "  --no-gui                 Nur Konsolenausgabe anzeigen, nicht die Download-"
 "Warteschlange.\n"
 
-#: pan/gui/pan.cc:963
+#: pan/gui/pan.cc:972
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Fehler: --no-gui wird ohne nzb-Dateien oder news:message-id benutzt."
 
-#: pan/gui/pan.cc:967
+#: pan/gui/pan.cc:976
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s gestartet"
 
-#: pan/gui/pan.cc:987
+#: pan/gui/pan.cc:996
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Bitte konfigurieren Sie die News-Server für Pan, bevor Sie es als NZB-Client "
 "verwenden."
 
-#: pan/gui/pan.cc:1105
+#: pan/gui/pan.cc:1114
 msgid "Pan notification"
 msgstr "Pan-Benachrichtigungsdienst"
 
@@ -2105,7 +2109,7 @@ msgstr "Größe des Artikel-Zwischenspeichers (in MiB):"
 
 #: pan/gui/prefs-ui.cc:991
 msgid "File extension for cached articles: "
-msgstr "Dateierweiterung für zwischengespeicherte Artikel:"
+msgstr "Dateierweiterung für zwischengespeicherte Artikel: "
 
 #: pan/gui/prefs-ui.cc:996
 msgid "Tabs"
@@ -2175,7 +2179,7 @@ msgstr "Artikelentwurf automatisch speichern"
 
 #: pan/gui/prefs-ui.cc:1050
 msgid "Minutes to autosave the current Article Draft: "
-msgstr "Minuten zum automatischen Speichern des aktuellen Artikelentwurfs:"
+msgstr "Minuten zum automatischen Speichern des aktuellen Artikelentwurfs: "
 
 #: pan/gui/prefs-ui.cc:1055
 msgid "Autosave Articles"
@@ -2183,15 +2187,15 @@ msgstr "Artikel automatisch speichern"
 
 #: pan/gui/prefs-ui.cc:1057
 msgid "Minutes to autosave newsrc files: "
-msgstr "Minuten zum automatischen Speichern von newsrc-Dateien:"
+msgstr "Minuten zum automatischen Speichern von newsrc-Dateien: "
 
 #: pan/gui/prefs-ui.cc:1064
-msgid "GNOME Keyring"
-msgstr "GNOME Schlüsselbund"
+msgid "Password Storage"
+msgstr "Passwortspeicher"
 
 #: pan/gui/prefs-ui.cc:1065
-msgid "Store passwords in GNOME Keyring"
-msgstr "Passwörter im GNOME Schlüsselbund speichern"
+msgid "Save passwords in password storage"
+msgstr "Passwörter im Passwortspeicher ablegen"
 
 #: pan/gui/prefs-ui.cc:1069
 msgid "_Miscellaneous"
@@ -2379,7 +2383,7 @@ msgstr "Gruppenliste"
 #.
 #: pan/gui/prefs-ui.cc:1272
 msgid "Group Color:"
-msgstr "gruppenfarbe:"
+msgstr "Gruppenfarbe:"
 
 #: pan/gui/prefs-ui.cc:1276
 msgid "Other Text"
@@ -2431,7 +2435,7 @@ msgstr "Zeichenkodierung"
 
 #: pan/gui/prefs-ui.cc:1312
 msgid "Default bytes per file (for encoder): "
-msgstr "Vorgegebene Bytes pro Datei (für den Enkoder):"
+msgstr "Vorgegebene Bytes pro Datei (für den Enkoder): "
 
 #: pan/gui/prefs-ui.cc:1317
 msgid "_Upload"
@@ -2523,7 +2527,7 @@ msgstr "PGP-Signatur"
 
 #: pan/gui/profiles-dialog.cc:196
 msgid "Signature Type: "
-msgstr "Signaturtyp:"
+msgstr "Signaturtyp: "
 
 #: pan/gui/profiles-dialog.cc:226
 msgid "X-Face (Avatar)"
@@ -2874,36 +2878,36 @@ msgstr "Eine neue Wertung hinzufügen"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Die ausgewählte Wertung entfernen"
 
-#: pan/gui/server-ui.cc:259
+#: pan/gui/server-ui.cc:272
 msgid "Please specify the server's address."
 msgstr "Bitte geben Sie die Serveradresse an."
 
-#: pan/gui/server-ui.cc:305
+#: pan/gui/server-ui.cc:318
 msgid "Import SSL Certificate (PEM Format) From File"
 msgstr "SSL-Zertifikat aus Datei importieren (PEM-Format)"
 
 #. create the dialog
-#: pan/gui/server-ui.cc:342 pan/gui/server-ui.cc:948
+#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:961
 msgid "Add a Server"
 msgstr "Einen Server hinzufügen"
 
-#: pan/gui/server-ui.cc:342 pan/gui/server-ui.cc:954
+#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:967
 msgid "Edit a Server's Settings"
 msgstr "Servereinstellungen bearbeiten"
 
-#: pan/gui/server-ui.cc:362
+#: pan/gui/server-ui.cc:375
 msgid "Location"
 msgstr "Ort"
 
-#: pan/gui/server-ui.cc:366
+#: pan/gui/server-ui.cc:379
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr "Die Adresse des Servers, z.B. »news.meinserver.de«"
 
-#: pan/gui/server-ui.cc:367
+#: pan/gui/server-ui.cc:380
 msgid "_Address:"
 msgstr "_Adresse:"
 
-#: pan/gui/server-ui.cc:372
+#: pan/gui/server-ui.cc:385
 msgid ""
 "The news server's port number.  Typically 119 for unencrypted and 563 for "
 "encrypted connections (SSL/TLS)."
@@ -2911,19 +2915,19 @@ msgstr ""
 "Der Port (Anschlussnummer) des neuen Servers. Typischerweise 119 für "
 "unverschlüsselte und 563 für verschlüsselte Verbindungen (SSL/TLS)."
 
-#: pan/gui/server-ui.cc:373
+#: pan/gui/server-ui.cc:386
 msgid "Por_t:"
 msgstr "Por_t:"
 
-#: pan/gui/server-ui.cc:376
+#: pan/gui/server-ui.cc:389
 msgid "Login (if Required)"
 msgstr "Anmelden (falls erforderlich)"
 
-#: pan/gui/server-ui.cc:380
+#: pan/gui/server-ui.cc:393
 msgid "_Username:"
 msgstr "_Benutzername:"
 
-#: pan/gui/server-ui.cc:381
+#: pan/gui/server-ui.cc:394
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2931,11 +2935,11 @@ msgstr ""
 "Der beim Server angegebene Benutzername, falls erforderlich. Sie können dies "
 "leer lassen, falls keine Legitimierung erforderlich ist."
 
-#: pan/gui/server-ui.cc:385
+#: pan/gui/server-ui.cc:398
 msgid "_Password:"
-msgstr "_Paßwort:"
+msgstr "_Passwort:"
 
-#: pan/gui/server-ui.cc:386
+#: pan/gui/server-ui.cc:399
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2943,55 +2947,55 @@ msgstr ""
 "Das beim Server angegebene Passwort, falls erforderlich. Sie können dies "
 "leer lassen, falls keine Legitimierung erforderlich ist."
 
-#: pan/gui/server-ui.cc:389
+#: pan/gui/server-ui.cc:402
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: pan/gui/server-ui.cc:396
+#: pan/gui/server-ui.cc:409
 msgid "Connection _Limit:"
 msgstr "Verbindungs_limit:"
 
-#: pan/gui/server-ui.cc:400
+#: pan/gui/server-ui.cc:413
 msgid "After Two Weeks"
 msgstr "nach zwei Wochen"
 
-#: pan/gui/server-ui.cc:401
+#: pan/gui/server-ui.cc:414
 msgid "After One Month"
 msgstr "nach einem Monat"
 
-#: pan/gui/server-ui.cc:402
+#: pan/gui/server-ui.cc:415
 msgid "After Two Months"
 msgstr "nach zwei Monaten"
 
-#: pan/gui/server-ui.cc:403
+#: pan/gui/server-ui.cc:416
 msgid "After Three Months"
 msgstr "nach drei Monaten"
 
-#: pan/gui/server-ui.cc:404
+#: pan/gui/server-ui.cc:417
 msgid "After Six Months"
 msgstr "nach sechs Monaten"
 
-#: pan/gui/server-ui.cc:405
+#: pan/gui/server-ui.cc:418
 msgid "Never Expire Old Articles"
 msgstr "Immer gültig"
 
-#: pan/gui/server-ui.cc:419
+#: pan/gui/server-ui.cc:432
 msgid "E_xpire Old Articles:"
 msgstr "Alte Artikel _ablaufen lassen:"
 
-#: pan/gui/server-ui.cc:423
+#: pan/gui/server-ui.cc:436
 msgid "Primary"
 msgstr "Primär"
 
-#: pan/gui/server-ui.cc:424
+#: pan/gui/server-ui.cc:437
 msgid "Fallback"
 msgstr "Ausweichserver"
 
-#: pan/gui/server-ui.cc:438
+#: pan/gui/server-ui.cc:451
 msgid "Server Rank:"
 msgstr "Server-Wertung:"
 
-#: pan/gui/server-ui.cc:442
+#: pan/gui/server-ui.cc:455
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -3001,39 +3005,39 @@ msgstr ""
 "gefunden werden. Häufig werden freie Server als Primärserver und "
 "Anmeldeserver als Ausweichserver eingesetzt."
 
-#: pan/gui/server-ui.cc:447
+#: pan/gui/server-ui.cc:460
 msgid "Disable Compression (N/A)"
 msgstr "Kompression abschalten (N/V)"
 
-#: pan/gui/server-ui.cc:448
+#: pan/gui/server-ui.cc:461
 msgid "XZVER Compression (Astraweb)"
 msgstr "XZVER-Kompression (Astraweb)"
 
-#: pan/gui/server-ui.cc:449
+#: pan/gui/server-ui.cc:462
 msgid "GZIP Compression (Giganews etc.)"
 msgstr "GZIP-Kompression (Giganews etc.)"
 
-#: pan/gui/server-ui.cc:463
+#: pan/gui/server-ui.cc:476
 msgid "Header Compression:"
 msgstr "Kopfzeilen-Kompression:"
 
-#: pan/gui/server-ui.cc:469
+#: pan/gui/server-ui.cc:482
 msgid "Security"
 msgstr "Sicherheit"
 
-#: pan/gui/server-ui.cc:474
+#: pan/gui/server-ui.cc:487
 msgid "Use Unsecure (Plaintext) Connections"
 msgstr "(Unsichere) Klartextverbindungen verwenden"
 
-#: pan/gui/server-ui.cc:475
+#: pan/gui/server-ui.cc:488
 msgid "Use Secure SSL Connections"
 msgstr "Sichere Verbindung (SSL) benutzen"
 
-#: pan/gui/server-ui.cc:490
+#: pan/gui/server-ui.cc:503
 msgid "TLS (SSL) Settings:"
 msgstr "TLS-(SSL-) Einstellungen:"
 
-#: pan/gui/server-ui.cc:495
+#: pan/gui/server-ui.cc:508
 msgid ""
 "You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
 "TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
@@ -3044,56 +3048,56 @@ msgstr ""
 "und sicher. Es ist empfehlenswert, SSL/TLS aus Datenschutzgründen zu "
 "aktivieren."
 
-#: pan/gui/server-ui.cc:500
+#: pan/gui/server-ui.cc:513
 msgid "Always trust this server's certificate"
 msgstr "Diesem Serverzertifikat immer vertrauen"
 
-#: pan/gui/server-ui.cc:676
+#: pan/gui/server-ui.cc:689
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "Wollen Sie »%s« wirklich löschen?"
 
-#: pan/gui/server-ui.cc:765
+#: pan/gui/server-ui.cc:778
 msgid "No information available."
 msgstr "Keine Informationen verfügbar."
 
-#: pan/gui/server-ui.cc:775
+#: pan/gui/server-ui.cc:788
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr "Serverzertifikat für »%s«"
 
-#: pan/gui/server-ui.cc:874
+#: pan/gui/server-ui.cc:887
 #, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr "Möchten Sie wirklich das Zertifikat für %s löschen?"
 
 #. dialog
-#: pan/gui/server-ui.cc:901 pan/gui/server-ui.cc:922 pan/gui/server-ui.cc:1020
+#: pan/gui/server-ui.cc:914 pan/gui/server-ui.cc:935 pan/gui/server-ui.cc:1033
 msgid "Servers"
 msgstr "Server"
 
-#: pan/gui/server-ui.cc:961
+#: pan/gui/server-ui.cc:974
 msgid "Remove a Server"
 msgstr "Einen Server entfernen"
 
 #. dialog
-#: pan/gui/server-ui.cc:994
+#: pan/gui/server-ui.cc:1007
 msgid "SSL Certificates"
 msgstr "SSL-Zertifikate"
 
-#: pan/gui/server-ui.cc:1015
+#: pan/gui/server-ui.cc:1028
 msgid "Certificates"
 msgstr "Zertifikate"
 
-#: pan/gui/server-ui.cc:1046
+#: pan/gui/server-ui.cc:1059
 msgid "Import Certificate"
 msgstr "Zertifikat importieren"
 
-#: pan/gui/server-ui.cc:1052
+#: pan/gui/server-ui.cc:1065
 msgid "Inspect Certificate"
 msgstr "Zertifikat inspizieren"
 
-#: pan/gui/server-ui.cc:1059
+#: pan/gui/server-ui.cc:1072
 msgid "Remove Certificate"
 msgstr "Zertifikat entfernen"
 
