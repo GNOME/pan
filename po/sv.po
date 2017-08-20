@@ -11,16 +11,16 @@ msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-05-10 20:31+0000\n"
-"PO-Revision-Date: 2017-05-29 00:10+0200\n"
-"Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"POT-Creation-Date: 2017-06-18 19:17+0000\n"
+"PO-Revision-Date: 2017-08-18 21:19+0200\n"
+"Last-Translator: Josef Andersson <josef.andersson@fripost.org>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.1\n"
 "X-Project-Style: gnome\n"
 
 #: pan.appdata.xml.in:5
@@ -68,7 +68,6 @@ msgstr ""
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: pan.desktop.in:10
-#| msgid "Pan"
 msgid "pan"
 msgstr "pan"
 
@@ -90,7 +89,7 @@ msgid "Error opening file \"%s\" %s"
 msgstr "Fel vid öppnande av filen ”%s” %s"
 
 #: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
-#: pan/data-impl/server.cc:500 pan/general/file-util.cc:311
+#: pan/data-impl/server.cc:527 pan/general/file-util.cc:311
 #: pan/gui/post-ui.cc:644 pan/gui/task-pane.cc:737
 #, c-format
 msgid "Error reading file \"%s\": %s"
@@ -121,12 +120,12 @@ msgid "Could not export certificate for server: %s"
 msgstr "Kunde inte exportera certifikaten för servern: %s"
 
 #. load_group_descriptions (*_data_io);
-#: pan/data-impl/data-impl.cc:113
+#: pan/data-impl/data-impl.cc:120
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "Läste in databakände på %.1f sekunder"
 
-#: pan/data-impl/data-impl.cc:143
+#: pan/data-impl/data-impl.cc:151 pan/data-impl/data-impl.cc:198
 msgid "Pan Newsreader's server passwords"
 msgstr "Pan nyhetsläsarens serverlösenord"
 
@@ -167,12 +166,17 @@ msgstr ""
 msgid "Added %lu articles to %s."
 msgstr "Lade till %lu artiklar till %s."
 
-#: pan/data-impl/server.cc:261
+#: pan/data-impl/server.cc:262
+#, c-format
+msgid "Received no password from libsecret for server %s."
+msgstr "Erhöll inte något lösenord från libsecret för servern %s."
+
+#: pan/data-impl/server.cc:287
 #, c-format
 msgid "There seems to be no password set for server %s."
 msgstr "Det verkar inte finnas något lösenord angivet för servern %s."
 
-#: pan/data-impl/server.cc:265
+#: pan/data-impl/server.cc:291
 msgid "GNOME Keyring denied access to the passwords."
 msgstr "GNOME-nyckelringen nekade åtkomst till lösenorden."
 
@@ -1350,19 +1354,19 @@ msgstr "Pan: Händelser"
 msgid "Message"
 msgstr "Meddelande"
 
-#: pan/gui/pan.cc:359
+#: pan/gui/pan.cc:368
 msgid "Maximize"
 msgstr "Maximera"
 
-#: pan/gui/pan.cc:412
+#: pan/gui/pan.cc:421
 msgid "An error has occurred!"
 msgstr "Ett fel har uppstått!"
 
-#: pan/gui/pan.cc:426
+#: pan/gui/pan.cc:435
 msgid "New Articles!"
 msgstr "Nya artiklar!"
 
-#: pan/gui/pan.cc:427
+#: pan/gui/pan.cc:436
 msgid ""
 "There are new\n"
 "articles available."
@@ -1370,11 +1374,11 @@ msgstr ""
 "Nya artiklar\n"
 "finns tillgängliga."
 
-#: pan/gui/pan.cc:494
+#: pan/gui/pan.cc:503
 msgid "Toggle on/offline"
 msgstr "Växla upp-/frånkopplad"
 
-#: pan/gui/pan.cc:542
+#: pan/gui/pan.cc:551
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1385,7 +1389,7 @@ msgstr ""
 "Börja med att lägga till en server\n"
 "för att läsa diskussionsgrupper."
 
-#: pan/gui/pan.cc:624
+#: pan/gui/pan.cc:633
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage page.\n"
@@ -1418,21 +1422,21 @@ msgstr ""
 "filerna.\n"
 "  --no-gui                 Visa endast konsolutdata, inte hämtningskön.\n"
 
-#: pan/gui/pan.cc:963
+#: pan/gui/pan.cc:972
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Fel: --no-gui används utan nzb-filer eller news:meddelande-id."
 
-#: pan/gui/pan.cc:967
+#: pan/gui/pan.cc:976
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s startade"
 
-#: pan/gui/pan.cc:987
+#: pan/gui/pan.cc:996
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Konfigurera Pans diskussionsgruppservrar innan den används som en nzb-klient."
 
-#: pan/gui/pan.cc:1105
+#: pan/gui/pan.cc:1114
 msgid "Pan notification"
 msgstr "Pan-avisering"
 
@@ -2131,12 +2135,12 @@ msgid "Minutes to autosave newsrc files: "
 msgstr "Minuter att autospara newsrc-filer: "
 
 #: pan/gui/prefs-ui.cc:1064
-msgid "GNOME Keyring"
-msgstr "GNOME-nyckelring"
+msgid "Password Storage"
+msgstr "Lösenordsförvaring"
 
 #: pan/gui/prefs-ui.cc:1065
-msgid "Store passwords in GNOME Keyring"
-msgstr "Lagra lösenord i GNOME-nyckelring"
+msgid "Save passwords in password storage"
+msgstr "Spara lösenord i lösenordsförvaring"
 
 #: pan/gui/prefs-ui.cc:1069
 msgid "_Miscellaneous"
@@ -2813,38 +2817,38 @@ msgstr "Lägg till en ny poängregel"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Ta bort den markerade poängregeln"
 
-#: pan/gui/server-ui.cc:259
+#: pan/gui/server-ui.cc:272
 msgid "Please specify the server's address."
 msgstr "Ange serverns adress."
 
-#: pan/gui/server-ui.cc:305
+#: pan/gui/server-ui.cc:318
 msgid "Import SSL Certificate (PEM Format) From File"
 msgstr "Importera SSL-certifikat (PEM-format) från fil"
 
 #. create the dialog
-#: pan/gui/server-ui.cc:342 pan/gui/server-ui.cc:948
+#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:961
 msgid "Add a Server"
 msgstr "Lägg till en server"
 
-#: pan/gui/server-ui.cc:342 pan/gui/server-ui.cc:954
+#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:967
 msgid "Edit a Server's Settings"
 msgstr "Redigera inställningarna för en server"
 
-#: pan/gui/server-ui.cc:362
+#: pan/gui/server-ui.cc:375
 msgid "Location"
 msgstr "Plats"
 
-#: pan/gui/server-ui.cc:366
+#: pan/gui/server-ui.cc:379
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
 msgstr ""
 "Diskussionsgruppsserverns verkliga adress, t.ex. ”news."
 "mindiskussionsgruppsserver.se”"
 
-#: pan/gui/server-ui.cc:367
+#: pan/gui/server-ui.cc:380
 msgid "_Address:"
 msgstr "_Adress:"
 
-#: pan/gui/server-ui.cc:372
+#: pan/gui/server-ui.cc:385
 msgid ""
 "The news server's port number.  Typically 119 for unencrypted and 563 for "
 "encrypted connections (SSL/TLS)."
@@ -2852,19 +2856,19 @@ msgstr ""
 "Diskussionsgruppsserverns portnummer.  Detta är vanligtvis 119 för "
 "okrypterade anslutningar och 563 för krypterade anslutningar (SSL/TLS)."
 
-#: pan/gui/server-ui.cc:373
+#: pan/gui/server-ui.cc:386
 msgid "Por_t:"
 msgstr "Por_t:"
 
-#: pan/gui/server-ui.cc:376
+#: pan/gui/server-ui.cc:389
 msgid "Login (if Required)"
 msgstr "Inloggning (om det krävs)"
 
-#: pan/gui/server-ui.cc:380
+#: pan/gui/server-ui.cc:393
 msgid "_Username:"
 msgstr "_Användarnamn:"
 
-#: pan/gui/server-ui.cc:381
+#: pan/gui/server-ui.cc:394
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2872,11 +2876,11 @@ msgstr ""
 "Användarnamnet att ge till servern när den frågar.  Om din server inte "
 "kräver autentisering kan du lämna det här fältet tomt."
 
-#: pan/gui/server-ui.cc:385
+#: pan/gui/server-ui.cc:398
 msgid "_Password:"
 msgstr "_Lösenord:"
 
-#: pan/gui/server-ui.cc:386
+#: pan/gui/server-ui.cc:399
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2884,55 +2888,55 @@ msgstr ""
 "Lösenordet att ge till servern när den frågar.  Om din server inte kräver "
 "autentisering kan du lämna det här fältet tomt."
 
-#: pan/gui/server-ui.cc:389
+#: pan/gui/server-ui.cc:402
 msgid "Settings"
 msgstr "Inställningar"
 
-#: pan/gui/server-ui.cc:396
+#: pan/gui/server-ui.cc:409
 msgid "Connection _Limit:"
 msgstr "Anslutnings_begränsning:"
 
-#: pan/gui/server-ui.cc:400
+#: pan/gui/server-ui.cc:413
 msgid "After Two Weeks"
 msgstr "Efter två veckor"
 
-#: pan/gui/server-ui.cc:401
+#: pan/gui/server-ui.cc:414
 msgid "After One Month"
 msgstr "Efter en månad"
 
-#: pan/gui/server-ui.cc:402
+#: pan/gui/server-ui.cc:415
 msgid "After Two Months"
 msgstr "Efter två månader"
 
-#: pan/gui/server-ui.cc:403
+#: pan/gui/server-ui.cc:416
 msgid "After Three Months"
 msgstr "Efter tre månader"
 
-#: pan/gui/server-ui.cc:404
+#: pan/gui/server-ui.cc:417
 msgid "After Six Months"
 msgstr "Efter sex månader"
 
-#: pan/gui/server-ui.cc:405
+#: pan/gui/server-ui.cc:418
 msgid "Never Expire Old Articles"
 msgstr "Ta aldrig bort gamla artiklar"
 
-#: pan/gui/server-ui.cc:419
+#: pan/gui/server-ui.cc:432
 msgid "E_xpire Old Articles:"
 msgstr "Ta bort ga_mla artiklar:"
 
-#: pan/gui/server-ui.cc:423
+#: pan/gui/server-ui.cc:436
 msgid "Primary"
 msgstr "Primär"
 
-#: pan/gui/server-ui.cc:424
+#: pan/gui/server-ui.cc:437
 msgid "Fallback"
 msgstr "Reserv"
 
-#: pan/gui/server-ui.cc:438
+#: pan/gui/server-ui.cc:451
 msgid "Server Rank:"
 msgstr "Serverrankning:"
 
-#: pan/gui/server-ui.cc:442
+#: pan/gui/server-ui.cc:455
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -2942,39 +2946,39 @@ msgstr ""
 "vanligt sätt är att använda fria servrar som primära och "
 "prenumerationsservrar som reserver."
 
-#: pan/gui/server-ui.cc:447
+#: pan/gui/server-ui.cc:460
 msgid "Disable Compression (N/A)"
 msgstr "Inaktivera komprimering (N/A)"
 
-#: pan/gui/server-ui.cc:448
+#: pan/gui/server-ui.cc:461
 msgid "XZVER Compression (Astraweb)"
 msgstr "XZVER-komprimering (Astraweb)"
 
-#: pan/gui/server-ui.cc:449
+#: pan/gui/server-ui.cc:462
 msgid "GZIP Compression (Giganews etc.)"
 msgstr "GZIP-komprimering (Giganews etc.)"
 
-#: pan/gui/server-ui.cc:463
+#: pan/gui/server-ui.cc:476
 msgid "Header Compression:"
 msgstr "Huvudkomprimering:"
 
-#: pan/gui/server-ui.cc:469
+#: pan/gui/server-ui.cc:482
 msgid "Security"
 msgstr "Säkerhet"
 
-#: pan/gui/server-ui.cc:474
+#: pan/gui/server-ui.cc:487
 msgid "Use Unsecure (Plaintext) Connections"
 msgstr "Använd osäkra (klartext) anslutningar"
 
-#: pan/gui/server-ui.cc:475
+#: pan/gui/server-ui.cc:488
 msgid "Use Secure SSL Connections"
 msgstr "Använda säkra SSL-anslutningar"
 
-#: pan/gui/server-ui.cc:490
+#: pan/gui/server-ui.cc:503
 msgid "TLS (SSL) Settings:"
 msgstr "TLS (SSL)-inställningar:"
 
-#: pan/gui/server-ui.cc:495
+#: pan/gui/server-ui.cc:508
 msgid ""
 "You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
 "TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
@@ -2984,56 +2988,56 @@ msgstr ""
 "SSL/TLS är din data krypterad och säker. Av sekretesskäl uppmuntras du till "
 "att aktivera SSL/TLS."
 
-#: pan/gui/server-ui.cc:500
+#: pan/gui/server-ui.cc:513
 msgid "Always trust this server's certificate"
 msgstr "Lita alltid på denna servers certifikat"
 
-#: pan/gui/server-ui.cc:676
+#: pan/gui/server-ui.cc:689
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "Verkligen ta bort ”%s”?"
 
-#: pan/gui/server-ui.cc:765
+#: pan/gui/server-ui.cc:778
 msgid "No information available."
 msgstr "Ingen information tillgänglig."
 
-#: pan/gui/server-ui.cc:775
+#: pan/gui/server-ui.cc:788
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr "Servercertifikat för ”%s”"
 
-#: pan/gui/server-ui.cc:874
+#: pan/gui/server-ui.cc:887
 #, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr "Verkligen ta bort certifikatet för ”%s”?"
 
 #. dialog
-#: pan/gui/server-ui.cc:901 pan/gui/server-ui.cc:922 pan/gui/server-ui.cc:1020
+#: pan/gui/server-ui.cc:914 pan/gui/server-ui.cc:935 pan/gui/server-ui.cc:1033
 msgid "Servers"
 msgstr "Servrar"
 
-#: pan/gui/server-ui.cc:961
+#: pan/gui/server-ui.cc:974
 msgid "Remove a Server"
 msgstr "Ta bort en server"
 
 #. dialog
-#: pan/gui/server-ui.cc:994
+#: pan/gui/server-ui.cc:1007
 msgid "SSL Certificates"
 msgstr "SSL-certifikat"
 
-#: pan/gui/server-ui.cc:1015
+#: pan/gui/server-ui.cc:1028
 msgid "Certificates"
 msgstr "Certifikat"
 
-#: pan/gui/server-ui.cc:1046
+#: pan/gui/server-ui.cc:1059
 msgid "Import Certificate"
 msgstr "Importera certifikat"
 
-#: pan/gui/server-ui.cc:1052
+#: pan/gui/server-ui.cc:1065
 msgid "Inspect Certificate"
 msgstr "Inspektera certifikat"
 
-#: pan/gui/server-ui.cc:1059
+#: pan/gui/server-ui.cc:1072
 msgid "Remove Certificate"
 msgstr "Ta bort certifikat"
 
@@ -3729,6 +3733,12 @@ msgstr "inget_namn"
 #: pan/usenet-utils/text-massager.cc:582
 msgid "no_mail"
 msgstr "ingen_e-post"
+
+#~ msgid "GNOME Keyring"
+#~ msgstr "GNOME-nyckelring"
+
+#~ msgid "Store passwords in GNOME Keyring"
+#~ msgstr "Lagra lösenord i GNOME-nyckelring"
 
 #~ msgid "_1. Header Pane"
 #~ msgstr "_1. Rubrikpanel"
