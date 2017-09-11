@@ -570,7 +570,7 @@ namespace pan
     for (size_t i=0; i<G_N_ELEMENTS(strings); ++i) {
       GtkTreeIter iter;
       gtk_list_store_append (store, &iter);
-      gtk_list_store_set (store, &iter, 0, strings[i][0], 1, strings[i][1], -1);
+      gtk_list_store_set (store, &iter, 0, gettext(strings[i][0]), 1, strings[i][1], -1);
       if (mode == strings[i][1])
         sel_index = i;
     }
