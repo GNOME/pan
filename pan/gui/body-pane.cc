@@ -51,6 +51,8 @@ extern "C" {
 
 #define FIRST_PICTURE "first-picture"
 
+#define FACE_SIZE 48
+
 using namespace pan;
 
 /***
@@ -1186,24 +1188,31 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   s.resize (std::max((size_t)0,s.size()-1)); // remove trailing linefeed
   gtk_label_set_markup (GTK_LABEL(_headers), s.c_str());
 
+#if !GTK_CHECK_VERSION(3,0,0)
   // ellipsize mode is useless w/o this in expander...
   gtk_label_set_width_chars (GTK_LABEL(_headers), (int)w);
+#endif
 
   // set the x-face...
   gtk_image_clear(GTK_IMAGE(_xface));
   const char * pch = message ? g_mime_object_get_header ((GMimeObject *) message, "X-Face") : 0;
   if (pch && gtk_widget_get_window(_xface) )
   {
+    gtk_widget_set_size_request (_xface, FACE_SIZE, FACE_SIZE);
     GdkPixbuf *pixbuf = NULL;
     pixbuf = pan_gdk_pixbuf_create_from_x_face (pch);
     gtk_image_set_from_pixbuf (GTK_IMAGE(_xface), pixbuf);
     g_object_unref (pixbuf);
+  } else {
+    gtk_widget_set_size_request(_xface, 0, FACE_SIZE);
   }
+
   // set the face
   gtk_image_clear(GTK_IMAGE(_face));
   pch = message ? g_mime_object_get_header ((GMimeObject *) message, "Face") : 0;
   if (pch && gtk_widget_get_window(_face))
   {
+    gtk_widget_set_size_request (_face, FACE_SIZE, FACE_SIZE);
     GMimeEncoding dec;
     g_mime_encoding_init_decode(&dec, GMIME_CONTENT_ENCODING_BASE64);
     guchar* buf = new guchar[strlen(pch)];
@@ -1215,6 +1224,8 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     gtk_image_set_from_pixbuf (GTK_IMAGE(_face), pixbuf);
     g_object_unref(pl);
     delete[] buf;
+  } else {
+    gtk_widget_set_size_request(_face, 0, FACE_SIZE);
   }
 
   // set the terse headers...
@@ -1788,10 +1799,10 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_box_pack_start (GTK_BOX(hbox), w, true, true, PAD_SMALL);
 
   w = _xface = gtk_image_new();
-  gtk_widget_set_size_request (w, 48, 48);
+  gtk_widget_set_size_request (w, 0, FACE_SIZE);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
   w = _face = gtk_image_new ();
-  gtk_widget_set_size_request (w, 48, 48);
+  gtk_widget_set_size_request (w, 0, FACE_SIZE);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
   gtk_widget_show_all (_verbose);
   g_signal_connect (_verbose, "button-press-event", G_CALLBACK(verbose_clicked_cb), this);
