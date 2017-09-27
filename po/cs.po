@@ -8,10 +8,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=Pan&ke"
-"ywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-06-18 19:17+0000\n"
-"PO-Revision-Date: 2017-06-18 21:19+0200\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
+"product=Pan&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-09-27 20:25+0000\n"
+"PO-Revision-Date: 2017-09-27 23:26+0200\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Poedit 2.0.3\n"
 "X-Project-Style: gnome\n"
 
 #: pan.appdata.xml.in:5
@@ -71,31 +71,31 @@ msgstr "pan"
 
 #: pan/data/article-cache.cc:144 pan/data/encode-cache.cc:62
 #, c-format
-msgid "Error opening directory: \"%s\": %s"
-msgstr "Chyba při otevírání složky: „%s“: %s"
+msgid "Error opening directory: “%s”: %s"
+msgstr "Chyba při otevírání adresáře: „%s“: %s"
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
 #: pan/gui/post-ui.cc:1777
 #, c-format
-msgid "Unable to save \"%s\" %s"
+msgid "Unable to save “%s” %s"
 msgstr "Nelze uložit „%s“ %s"
 
 #: pan/data/article-cache.cc:362
 #, c-format
-msgid "Error opening file \"%s\" %s"
+msgid "Error opening file “%s” %s"
 msgstr "Chyba při otevírání souboru „%s“ %s"
 
 #: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
 #: pan/data-impl/server.cc:527 pan/general/file-util.cc:311
 #: pan/gui/post-ui.cc:644 pan/gui/task-pane.cc:737
 #, c-format
-msgid "Error reading file \"%s\": %s"
+msgid "Error reading file “%s”: %s"
 msgstr "Chyba při čtení souboru „%s“: %s"
 
 #: pan/data/cert-store.cc:263
 #, c-format
-msgid "Error opening SSL certificate directory: \"%s\": %s"
+msgid "Error opening SSL certificate directory: “%s”: %s"
 msgstr "Chyba při otevírání adresáře s certifikátem SSL: „%s“: %s"
 
 #: pan/data/cert-store.cc:294
@@ -123,19 +123,23 @@ msgstr "Export certifikátu serveru se nezdařil: %s"
 msgid "Loaded data backend in %.1f seconds"
 msgstr "Data nahrána během %.1f sekund"
 
-#: pan/data-impl/data-impl.cc:151 pan/data-impl/data-impl.cc:198
+#: pan/data-impl/data-impl.cc:151
 msgid "Pan Newsreader's server passwords"
+msgstr "Hesla serverů čtečky Pan"
+
+#: pan/data-impl/data-impl.cc:198
+msgid "Pan Newsreader’s server passwords"
 msgstr "Hesla serverů čtečky Pan"
 
 #: pan/data-impl/groups.cc:102
 #, c-format
-msgid "Skipping newsrc file for server \"%s\""
-msgstr "Přeskakuje se soubor newsrc serveru \"%s\""
+msgid "Skipping newsrc file for server “%s”"
+msgstr "Přeskakuje se soubor newsrc serveru „%s“"
 
 #: pan/data-impl/headers.cc:606
 #, c-format
-msgid "Expired %lu old articles from \"%s\""
-msgstr "%lu starých příspěvků vypršelo v \"%s\""
+msgid "Expired %lu old articles from “%s”"
+msgstr "%lu starých příspěvků vypršelo v „%s“"
 
 #: pan/data-impl/headers.cc:613
 #, c-format
@@ -148,15 +152,14 @@ msgstr ""
 
 #: pan/data-impl/headers.cc:628
 #, c-format
-msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
-msgstr "Načteno %lu příspěvků v \"%s\" za %.1f sekund (%.0f za sekundu)"
+msgid "Loaded %lu articles for “%s” in %.1f seconds (%.0f per second)"
+msgstr "Načteno %lu příspěvků v „%s“ za %.1f sekund (%.0f za sekundu)"
 
 #: pan/data-impl/headers.cc:857
 #, c-format
 msgid ""
-"Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
-msgstr ""
-"Uloženo %lu částí, %lu příspěvků v \"%s\" za %.1f sekund (%.0f přísp./s)"
+"Saved %lu parts, %lu articles in “%s” in %.1f seconds (%.0f articles/sec)"
+msgstr "Uloženo %lu částí, %lu příspěvků v „%s“ za %.1f sekund (%.0f přísp./s)"
 
 #: pan/data-impl/headers.cc:1190
 #, c-format
@@ -165,7 +168,6 @@ msgstr "Přidáno %lu příspěvků do %s."
 
 #: pan/data-impl/server.cc:262
 #, c-format
-#| msgid "There seems to be no password set for server %s."
 msgid "Received no password from libsecret for server %s."
 msgstr "Pro server %s nebylo od libsecret získáno žádné heslo."
 
@@ -180,24 +182,24 @@ msgstr "GNOME Keyring zakázal přístup k heslům."
 
 #: pan/data-impl/xover.cc:243
 #, c-format
-msgid "Error reading from %s: unknown group \"%s\""
-msgstr "Chyba při čtení z %s: neznámá skupina \"%s\""
+msgid "Error reading from %s: unknown group “%s”"
+msgstr "Chyba při čtení z %s: neznámá skupina „%s“"
 
 #. build the locale strings
 #: pan/general/e-util.cc:211
-msgid "%l:%M %p"
+msgid "%l∶%M %p"
 msgstr "%H:%M"
 
 #: pan/general/e-util.cc:212
-msgid "Today %l:%M %p"
+msgid "Today %l∶%M %p"
 msgstr "Dnes, %H:%M"
 
 #: pan/general/e-util.cc:213
-msgid "%a %l:%M %p"
+msgid "%a %l∶%M %p"
 msgstr "%a, %H:%M"
 
 #: pan/general/e-util.cc:214
-msgid "%b %d %l:%M %p"
+msgid "%b %d %l∶%M %p"
 msgstr "%e. %b %H:%M"
 
 #: pan/general/e-util.cc:215
@@ -210,11 +212,11 @@ msgstr "?"
 
 #: pan/general/text-match.cc:193
 #, c-format
-msgid "Can't use regular expression \"%s\": %s"
-msgstr "Nelze použít regulární výraz \"%s\": %s"
+msgid "Can’t use regular expression “%s”: %s"
+msgstr "Nelze použít regulární výraz „%s“: %s"
 
 #: pan/general/utf8-utils.cc:213
-msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgid "Couldn’t determine article encoding.  Non-UTF8 characters were removed."
 msgstr "Nelze určit kódování příspěvku. Znaky mimo UTF-8 byly odstraněny."
 
 #: pan/gui/actions.cc:306 pan/gui/post-ui.cc:452
@@ -290,11 +292,11 @@ msgid "Mark Selected Groups Read"
 msgstr "Označit vybrané skupiny jako přečtené"
 
 #: pan/gui/actions.cc:333
-msgid "_Delete Selected Groups' Articles"
+msgid "_Delete Selected Groups’ Articles"
 msgstr "_Smazat příspěvky z vybraných skupin"
 
 #: pan/gui/actions.cc:334
-msgid "Delete Selected Groups' Articles"
+msgid "Delete Selected Groups’ Articles"
 msgstr "Smazat příspěvky z vybraných skupin"
 
 #: pan/gui/actions.cc:338
@@ -314,11 +316,11 @@ msgid "Get New Headers in Subscribed Groups"
 msgstr "Stáhne nová záhlaví v odebíraných skupinách"
 
 #: pan/gui/actions.cc:353
-msgid "Get _Headers..."
+msgid "Get _Headers…"
 msgstr "Stáh_nout nová záhlaví…"
 
 #: pan/gui/actions.cc:354
-msgid "Get Headers..."
+msgid "Get Headers…"
 msgstr "Stáhne nová záhlaví…"
 
 #: pan/gui/actions.cc:358 pan/gui/actions.cc:359
@@ -342,24 +344,24 @@ msgid "Unsubscribe"
 msgstr "Zrušit odebírání"
 
 #: pan/gui/actions.cc:373
-msgid "_Save Articles..."
-msgstr "_Uložit příspěvky…"
+msgid "_Save Articles…"
+msgstr "Uložit pří_spěvky…"
 
 #: pan/gui/actions.cc:374
-msgid "Save Articles..."
-msgstr "Uloží příspěvky…"
+msgid "Save Articles…"
+msgstr "Uložit příspěvky…"
 
 #: pan/gui/actions.cc:378
-msgid "Save Articles from Selected _NZB..."
-msgstr "Uložit _příspěvky z vybraného souboru NZB…"
+msgid "Save Articles from Selected _NZB…"
+msgstr "Uložit příspěvky z vybraného souboru _NZB…"
 
 #: pan/gui/actions.cc:379
 msgid "Save Articles from Selected NZB"
 msgstr "Uložit příspěvky z vybraného souboru NZB"
 
 #: pan/gui/actions.cc:383
-msgid "Save Articles to an NZB _File..."
-msgstr "U_ložit příspěvky do souboru NZB…"
+msgid "Save Articles to an NZB _File…"
+msgstr "Uložit příspěvky do souboru NZ_B…"
 
 #: pan/gui/actions.cc:384
 msgid "Save Articles to an NZB File"
@@ -370,7 +372,7 @@ msgid "Print"
 msgstr "Tisk"
 
 #: pan/gui/actions.cc:393
-msgid "_Import NZB Files..."
+msgid "_Import NZB Files…"
 msgstr "_Importovat soubory NZB…"
 
 #: pan/gui/actions.cc:398
@@ -418,7 +420,7 @@ msgid "Edit _Preferences"
 msgstr "Upravit _předvolby"
 
 #: pan/gui/actions.cc:453
-msgid "Edit Selected _Group's Preferences"
+msgid "Edit Selected _Group’s Preferences"
 msgstr "Upravit _nastavení vybrané skupiny"
 
 #: pan/gui/actions.cc:458 pan/gui/post-ui.cc:469
@@ -570,19 +572,19 @@ msgid "_Invert Selection"
 msgstr "Obrát_it výběr"
 
 #: pan/gui/actions.cc:617
-msgid "Edit Article's Watch/Ignore/Score..."
+msgid "Edit Article’s Watch/Ignore/Score…"
 msgstr "Upravit sledování/ignorování/hodnocení příspěvku…"
 
 #: pan/gui/actions.cc:622
-msgid "Add a _Scoring Rule..."
+msgid "Add a _Scoring Rule…"
 msgstr "Přidat _nové pravidlo…"
 
 #: pan/gui/actions.cc:627
-msgid "Cance_l Article..."
+msgid "Cance_l Article…"
 msgstr "_Zrušit příspěvek…"
 
 #: pan/gui/actions.cc:632
-msgid "_Supersede Article..."
+msgid "_Supersede Article…"
 msgstr "_Nahradit příspěvek..."
 
 #: pan/gui/actions.cc:637
@@ -638,11 +640,11 @@ msgid "_Pan Home Page"
 msgstr "Domo_vská stránka aplikace Pan"
 
 #: pan/gui/actions.cc:695
-msgid "Give _Feedback or Report a Bug..."
+msgid "Give _Feedback or Report a Bug…"
 msgstr "Sdělit názor nebo oznámit chy_bu…"
 
 #: pan/gui/actions.cc:700
-msgid "_Tip Jar..."
+msgid "_Tip Jar…"
 msgstr "Podpoři_t…"
 
 #: pan/gui/actions.cc:705
@@ -778,11 +780,11 @@ msgid "Match Scores of 9999 (_Watched)"
 msgstr "Vyhovují příspěvky s hodnocením 9999 (s_ledované)"
 
 #: pan/gui/actions.cc:754
-msgid "Match Scores of 5000...9998 (_High)"
+msgid "Match Scores of 5000…9998 (_High)"
 msgstr "Vyhovují _příspěvky s hodnocením 5000 ‥ 9998 (vysoké)"
 
 #: pan/gui/actions.cc:755
-msgid "Match Scores of 1...4999 (Me_dium)"
+msgid "Match Scores of 1…4999 (Me_dium)"
 msgstr "Vy_hovují příspěvky s hodnocením 1 ‥ 4999 (střední)"
 
 #: pan/gui/actions.cc:756
@@ -790,7 +792,7 @@ msgid "Match Scores of 0 (_Normal)"
 msgstr "Vyh_ovují příspěvky s hodnocením 0 (běžné)"
 
 #: pan/gui/actions.cc:757
-msgid "Match Scores of -9998...-1 (_Low)"
+msgid "Match Scores of -9998…-1 (_Low)"
 msgstr "Vyhovují příspěvky s hodnocením -9998 ‥ -1 (ní_zké)"
 
 #: pan/gui/actions.cc:758
@@ -806,98 +808,97 @@ msgid "Show Matching _Articles"
 msgstr "Zobr_azovat vyhovující příspěvky"
 
 #: pan/gui/actions.cc:789
-msgid "Show Matching Articles' _Threads"
+msgid "Show Matching Articles’ _Threads"
 msgstr "Zobrazo_vat vlákna vyhovujících příspěvků"
 
 #: pan/gui/actions.cc:790
-msgid "Show Matching Articles' _Subthreads"
+msgid "Show Matching Articles’ _Subthreads"
 msgstr "Zobrazovat podřazená vlákna vyhovují_cích příspěvků"
 
-#: pan/gui/body-pane.cc:1050
+#: pan/gui/body-pane.cc:1052
 msgid "Unnamed File"
 msgstr "Soubor bez názvu"
 
-#: pan/gui/body-pane.cc:1131 pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1314
+#: pan/gui/body-pane.cc:1133 pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1314
 #: pan/gui/header-pane.cc:1754 pan/gui/post-ui.cc:2640 pan/gui/prefs-ui.cc:855
 #: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Předmět"
 
-#: pan/gui/body-pane.cc:1133 pan/gui/gui.cc:1957
+#: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:1957
 msgid "From"
 msgstr "Odesílatel"
 
-#: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1833
+#: pan/gui/body-pane.cc:1137 pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1833
 #: pan/gui/log-ui.cc:307 pan/gui/prefs-ui.cc:851
 msgid "Date"
 msgstr "Datum"
 
-#: pan/gui/body-pane.cc:1142
+#: pan/gui/body-pane.cc:1144
 msgid "Newsgroups"
 msgstr "Diskusní skupiny"
 
-#: pan/gui/body-pane.cc:1149 pan/gui/body-pane.cc:1157
-#: pan/gui/body-pane.cc:1164
+#: pan/gui/body-pane.cc:1151 pan/gui/body-pane.cc:1159
+#: pan/gui/body-pane.cc:1166
 msgid "User-Agent"
 msgstr "User-Agent"
 
-#: pan/gui/body-pane.cc:1170
+#: pan/gui/body-pane.cc:1172
 msgid "Followup-To"
 msgstr "Odpovědi vystavit na"
 
-#: pan/gui/body-pane.cc:1180
+#: pan/gui/body-pane.cc:1182
 msgid "Reply-To"
 msgstr "Odpovědi zaslat na"
 
-#: pan/gui/body-pane.cc:1223
+#: pan/gui/body-pane.cc:1234
 msgid " from "
 msgstr " od "
 
-#: pan/gui/body-pane.cc:1225
+#: pan/gui/body-pane.cc:1236
 msgid " at "
 msgstr " v "
 
-#: pan/gui/body-pane.cc:1314
+#: pan/gui/body-pane.cc:1325
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
 "\n"
-"<b>Signer:</b> %s ('%s')\n"
+"<b>Signer:</b> %s (“%s”)\n"
 "<b>Valid until:</b> %s\n"
 "<b>Created on:</b> %s"
 msgstr ""
 "<u>Toto je zpráva <b>podepsaná s PGP</b>.</u>\n"
 "\n"
-"<b>Podepsaný:</b> %s (\"%s\")\n"
+"<b>Podepsaný:</b> %s („%s“)\n"
 "<b>Platnost do:</b> %s\n"
 "<b>Vytvořeno:</b> %s"
 
-#: pan/gui/body-pane.cc:1319
+#: pan/gui/body-pane.cc:1330
 msgid "always"
 msgstr "vždy"
 
-#: pan/gui/body-pane.cc:1539
+#: pan/gui/body-pane.cc:1550
 msgid "Copy _URL"
 msgstr "Kopírovat _URL"
 
-#: pan/gui/body-pane.cc:1747
-msgid "Save Attachment As..."
+#: pan/gui/body-pane.cc:1760
+msgid "Save Attachment As…"
 msgstr "Uložit přílohu jako…"
 
-#: pan/gui/body-pane.cc:1750
+#: pan/gui/body-pane.cc:1763
 msgid "Save All Attachments"
 msgstr "Uložit všechny přílohy"
 
-#. add a toolbar for attachments
-#: pan/gui/body-pane.cc:1820
-msgid "Attachments"
-msgstr "Přílohy"
+#: pan/gui/body-pane.cc:1838
+msgid "Attachments:"
+msgstr "Přílohy:"
 
-#: pan/gui/body-pane.cc:1835
+#: pan/gui/body-pane.cc:1866
 msgid "Text View"
 msgstr "Zobrazení textu"
 
-#: pan/gui/body-pane.cc:1844
+#: pan/gui/body-pane.cc:1875
 msgid "HTML View"
 msgstr "Zobrazení HTML"
 
@@ -910,7 +911,7 @@ msgstr[1] "%d skupiny"
 msgstr[2] "%d skupin"
 
 #: pan/gui/dl-headers-ui.cc:135
-msgid "Get the last N _days' headers: "
+msgid "Get the last N _days’ headers: "
 msgstr "Stá_hnout záhlaví za posledních N dnů: "
 
 #: pan/gui/dl-headers-ui.cc:143
@@ -1020,7 +1021,7 @@ msgid "Enter the character set to use"
 msgstr "Zadejte prosím znakovou sadu, která má být použita"
 
 #: pan/gui/e-charset-combo-box.c:336
-msgid "Other..."
+msgid "Other…"
 msgstr "Jiná…"
 
 #: pan/gui/e-cte-dialog.c:76
@@ -1076,9 +1077,8 @@ msgid "Name"
 msgstr "Název"
 
 #: pan/gui/group-prefs-dialog.cc:162
-msgid "No Profiles defined in Edit|Posting Profiles."
-msgstr ""
-"Pod volbou \"Profily\" v nabídce \"Upravit\" nebyly zadány žádné profily."
+msgid "No Profiles defined in Edit → Posting Profiles."
+msgstr "V nabídce Upravit → Profily nebyly zadány žádné profily."
 
 #: pan/gui/group-prefs-dialog.cc:273
 msgid "Pan: Group Preferences"
@@ -1126,7 +1126,7 @@ msgid "Open the Event Log"
 msgstr "Otevřít Záznam událostí"
 
 #: pan/gui/gui.cc:611
-msgid "Save NZB's Files"
+msgid "Save NZB’s Files"
 msgstr "Uložit soubory NZB"
 
 #: pan/gui/gui.cc:638
@@ -1134,7 +1134,7 @@ msgid "Untitled.nzb"
 msgstr "Bez názvu.nzb"
 
 #: pan/gui/gui.cc:640
-msgid "Save NZB File as..."
+msgid "Save NZB File as…"
 msgstr "Uložit soubor NZB jako…"
 
 #: pan/gui/gui.cc:809
@@ -1154,7 +1154,7 @@ msgid "Unable to supersede article."
 msgstr "Nelze nahradit příspěvek."
 
 #: pan/gui/gui.cc:1336 pan/gui/gui.cc:1410
-msgid "The article doesn't match any of your posting profiles."
+msgid "The article doesn’t match any of your posting profiles."
 msgstr "Příspěvek neodpovídá žádnému z vašich profilů."
 
 #: pan/gui/gui.cc:1383
@@ -1314,17 +1314,17 @@ msgstr "Úlohy"
 
 #: pan/gui/gui.cc:2285 pan/gui/task-pane.cc:475
 #, c-format
-msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d∶%02d∶%02d"
 msgstr "Úloh %lu, %s, %.1f KiB/s, zbývá cca %d:%02d:%02d"
 
 #: pan/gui/gui.cc:2337
 msgid ""
-"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
-"then use \"File|Work Online\" to continue."
+"Pan is now offline. Please see “File → Event Log” and correct the problem, "
+"then use “File → Work Online” to continue."
 msgstr ""
-"Pan je nyní v režimu offline. Vyberte prosím \"Záznam událostí\" v nabídce "
-"\"Soubor\" a pokuste se opravit problém, k pokračování je následně nutné "
-"vybrat \"Pracovat online\"."
+"Pan je nyní v režimu offline. Vyberte prosím „Soubor → Záznam událostí“ a "
+"pokuste se opravit problém, k pokračování je následně nutné vybrat „Soubor → "
+"Pracovat online“."
 
 #: pan/gui/header-pane.cc:1312 pan/gui/task-pane.cc:795
 msgid "Subject or Author"
@@ -1401,7 +1401,7 @@ msgid ""
 "  --no-gui                 On news:message-id, dump the article to stdout.\n"
 "\n"
 "NZB Batch Options\n"
-"  --nzb file1 file2 ...    Process nzb files without launching all of Pan.\n"
+"  --nzb file1 file2 …      Process nzb files without launching all of Pan.\n"
 "  -o path, --output=path   Path to save attachments listed in the nzb "
 "files.\n"
 "  --no-gui                 Only show console output, not the download "
@@ -1412,7 +1412,8 @@ msgstr ""
 "  --verbose                  Podrobný výpis (mimo režim GUI).\n"
 "\n"
 "Volby URL\n"
-"  headers:diskusní.skupina   Stáhnout nová záhlaví v zadané diskusní skupině.\n"
+"  headers:diskusní.skupina   Stáhnout nová záhlaví v zadané diskusní "
+"skupině.\n"
 "  --no-gui                   S news:message-id vypíše příspěvek do "
 "standardního výstupu.\n"
 "\n"
@@ -1434,7 +1435,7 @@ msgid "Pan %s started"
 msgstr "Pan %s spuštěn"
 
 #: pan/gui/pan.cc:996
-msgid "Please configure Pan's news servers before using it as an nzb client."
+msgid "Please configure Pan’s news servers before using it as an nzb client."
 msgstr ""
 "Před použitím aplikace Pan jako klienta NZB je nutné nastavit servery "
 "diskusních skupin."
@@ -1484,11 +1485,11 @@ msgid "Send and Save Articles to NZB"
 msgstr "Odeslat a uložit příspěvky do souboru NZB"
 
 #: pan/gui/post-ui.cc:459
-msgid "Set Character _Encoding..."
+msgid "Set Character _Encoding…"
 msgstr "Určit _znakovou sadu…"
 
 #: pan/gui/post-ui.cc:460
-msgid "Set Content _Transfer Encoding..."
+msgid "Set Content _Transfer Encoding…"
 msgstr "Nas_tavit záhlaví obsah-přenos-kódování…"
 
 #: pan/gui/post-ui.cc:461
@@ -1500,7 +1501,7 @@ msgid "Save as a Draft for Future Posting"
 msgstr "Uloží jako koncept s možností pozdějšího vystavení"
 
 #: pan/gui/post-ui.cc:462
-msgid "_Open Draft..."
+msgid "_Open Draft…"
 msgstr "O_tevřít koncept…"
 
 #: pan/gui/post-ui.cc:462
@@ -1594,7 +1595,7 @@ msgid "Check _Spelling"
 msgstr "K_ontrolovat pravopis"
 
 #: pan/gui/post-ui.cc:555
-msgid "New Article's Encoding:"
+msgid "New Article’s Encoding:"
 msgstr "Znaková sada nového příspěvku:"
 
 #: pan/gui/post-ui.cc:565
@@ -1602,7 +1603,7 @@ msgid "Content Transfer Encoding"
 msgstr "Záhlaví obsah-přenos-kódování"
 
 #: pan/gui/post-ui.cc:566
-msgid "New Article's Content Transfer Encoding:"
+msgid "New Article’s Content Transfer Encoding:"
 msgstr "Záhlaví obsah-přenos-kódování nového příspěvku:"
 
 #: pan/gui/post-ui.cc:746
@@ -1629,10 +1630,10 @@ msgstr "Přesto pokračovat"
 #: pan/gui/post-ui.cc:825
 #, c-format
 msgid ""
-"Message uses characters not specified in charset '%s' - possibly use '%s' "
+"Message uses characters not specified in charset “%s” — possibly use “%s” "
 msgstr ""
-"Ve zprávě jsou použité znaky, které nejsou uvedené ve znakové sadě \"%s\" - "
-"možná by bylo vhodné použít \"%s\" "
+"Ve zprávě jsou použité znaky, které nejsou uvedené ve znakové sadě „%s“ – "
+"možná by bylo vhodné použít „%s“ "
 
 #: pan/gui/post-ui.cc:848
 msgid "Go _Online"
@@ -1663,10 +1664,10 @@ msgstr "Chyba při vytváření zprávy v poštovní složce %s: Neplatný pří
 #: pan/gui/post-ui.cc:1105
 msgid ""
 "No posting server is set for this posting profile.\n"
-"Please edit the profile via Edit|Manage Posting Profiles."
+"Please edit the profile via Edit → Manage Posting Profiles."
 msgstr ""
 "K tomuto profilu není přiřazen žádný server.\n"
-"Upravte prosím profil zvolením \"Spravovat profily\" v nabídce \"Upravit\"."
+"Upravte prosím profil zvolením Upravit → Spravovat profily."
 
 #: pan/gui/post-ui.cc:1110
 msgid ""
@@ -1703,7 +1704,7 @@ msgstr "Chyba při zápisu příspěvku do dočasného souboru: %s"
 
 #: pan/gui/post-ui.cc:1381
 #, c-format
-msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
+msgid "Error parsing “external editor” command line: %s (Command was: %s)"
 msgstr ""
 "Chyba při analýze příkazu k použití externího editoru: %s (příkaz zněl: %s)"
 
@@ -1730,11 +1731,11 @@ msgstr "Chcete ho přepsat?"
 
 #: pan/gui/post-ui.cc:1941
 #, c-format
-msgid "Couldn't parse signature command \"%s\": %s"
-msgstr "Nelze zanalyzovat příkaz k podpisu \"%s\": %s"
+msgid "Couldn’t parse signature command “%s”: %s"
+msgstr "Nelze analyzovat příkaz k podpisu „%s“: %s"
 
 #: pan/gui/post-ui.cc:1977
-msgid "Couldn't convert signature to UTF-8."
+msgid "Couldn’t convert signature to UTF-8."
 msgstr "Podpis nelze konvertovat do UTF-8."
 
 #: pan/gui/post-ui.cc:2479
@@ -1797,16 +1798,16 @@ msgstr "Odpovědi vyst_avit na"
 #: pan/gui/post-ui.cc:2815
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
-"if it differs from the \"Newsgroups\" header.\n"
+"if it differs from the “Newsgroups” header.\n"
 "\n"
-"To direct all replies to your email address, use \"Followup-To: poster\""
+"To direct all replies to your email address, use “Followup-To: poster”"
 msgstr ""
 "Diskusní skupiny, do kterých by měly být zasílány odpovědi na vaše zprávy. "
-"Potřebné pouze tehdy, jsou-li skupiny odlišné od záhlaví \"Diskusní skupiny"
-"\".\n"
+"Potřebné pouze tehdy, jsou-li skupiny odlišné od záhlaví „Diskusní "
+"skupiny“.\n"
 "\n"
 "Chcete-li nasměrovat všechny odpovědi na váš e-mail, je nutné zadat "
-"\"Odpovědi zaslat na: poster\"."
+"„Odpovědi zaslat na: poster“."
 
 #: pan/gui/post-ui.cc:2822
 msgid "_Reply-To"
@@ -1815,23 +1816,23 @@ msgstr "Odpověd_i zaslat na"
 #: pan/gui/post-ui.cc:2830
 msgid ""
 "The email account where mail replies to your posted message should go. This "
-"is only needed if it differs from the \"From\" header."
+"is only needed if it differs from the “From” header."
 msgstr ""
 "E-mailová adresa, na kterou by měly být zasílány poštovní odpovědi na vámi "
-"vystavené zprávy. Potřebné pouze tehdy, pokud se liší od záhlaví \"Odesílatel"
-"\"."
+"vystavené zprávy. Potřebné pouze tehdy, pokud se liší od záhlaví "
+"„Odesílatel“."
 
 #: pan/gui/post-ui.cc:2837
 msgid "_Custom Headers"
 msgstr "Uživatelsky de_finovaná záhlaví"
 
 #: pan/gui/post-ui.cc:2861
-msgid "Add \"_User-Agent\" header"
-msgstr "Přidat záhlaví \"User-A_gent\""
+msgid "Add “_User-Agent” header"
+msgstr "Přidat záhlaví „User-A_gent“"
 
 #: pan/gui/post-ui.cc:2868
-msgid "Add \"Message-_ID\" header"
-msgstr "Přidat záhlaví \"_Message-ID\""
+msgid "Add “Message-_ID” header"
+msgstr "Přidat záhlaví „_Message-ID“"
 
 #: pan/gui/post-ui.cc:2999
 msgid "Select Parts"
@@ -1872,8 +1873,8 @@ msgstr "Uložit frontu nahrávaného jako soubor NZB"
 
 #: pan/gui/prefs.cc:366
 #, c-format
-msgid "Couldn't parse %s color \"%s\""
-msgstr "Nelze zanalyzovat barvu %s \"%s\""
+msgid "Couldn’t parse %s color “%s”"
+msgstr "Nelze analyzovat barvu %s „%s“"
 
 #: pan/gui/prefs-ui.cc:123
 msgid "Grab Key"
@@ -1883,10 +1884,10 @@ msgstr "Zachytit klávesu"
 #, c-format
 msgid ""
 "Press the combination of the keys\n"
-"you want to use for \"%s\"."
+"you want to use for “%s”."
 msgstr ""
 "Stiskněte kombinaci kláves, které\n"
-"chcete přiřadit k \"%s\"."
+"chcete přiřadit k „%s“."
 
 #: pan/gui/prefs-ui.cc:169
 msgid "Edit Shortcut"
@@ -2142,7 +2143,6 @@ msgid "Minutes to autosave newsrc files: "
 msgstr "Minut do automatického uložení souborů newsrc:"
 
 #: pan/gui/prefs-ui.cc:1064
-#| msgid "_Password:"
 msgid "Password Storage"
 msgstr "Úložiště hesel"
 
@@ -2205,7 +2205,7 @@ msgstr "Záhlaví"
 #: pan/gui/prefs-ui.cc:1122
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
-"automatically, based on an article's score."
+"automatically, based on an article’s score."
 msgstr ""
 "Tato nabídka vám umožní nastavit Pan tak, aby mohly být některé akce za vás "
 "prováděny automaticky na základě hodnocení příspěvku."
@@ -2406,7 +2406,7 @@ msgid "Shortcuts"
 msgstr "Klávesové zkratky"
 
 #: pan/gui/profiles-dialog.cc:83
-msgid "Please choose your email address according to your PGP key's user id."
+msgid "Please choose your email address according to your PGP key’s user id."
 msgstr ""
 "Vyberte prosím e-mailovou adresu, která odpovídá user id vašeho klíče PGP."
 
@@ -2433,7 +2433,7 @@ msgstr "_Celé jméno:"
 #: pan/gui/profiles-dialog.cc:158
 msgid ""
 "Your email address.\n"
-"Note that this has to match your PGP signature's address\n"
+"Note that this has to match your PGP signature’s address\n"
 "if you want your messages to be PGP-signed or encrypted correctly."
 msgstr ""
 "Vaše e-mailová adresa.\n"
@@ -2487,12 +2487,12 @@ msgstr "X-Face (avatar)"
 #: pan/gui/profiles-dialog.cc:229
 msgid ""
 "You can add an avatar icon to your articles with a unique X-Face code.\n"
-"Add the code without the trailing <b>\"X-Face:\"</b> \n"
+"Add the code without the trailing <b>“X-Face:”</b> \n"
 " if it was generated by a helper program (for example http://www.dairiki.org/"
 "xface/xface.php)."
 msgstr ""
 "Do svých příspěvků můžete jedinečným kódem X-Face vložit ikonu avatar.\n"
-"Vložte kód bez koncového <b>\"X-Face:\"</b>,\n"
+"Vložte kód bez koncového <b>„X-Face:“</b>,\n"
 "byl-li kód vygenerován zvláštním programem (například http://www.dairiki.org/"
 "xface/xface.php)."
 
@@ -2506,7 +2506,7 @@ msgstr "Volitelné informace"
 
 #: pan/gui/profiles-dialog.cc:239
 msgid ""
-"When posting to Usenet, your article's Message-ID contains a domain name.\n"
+"When posting to Usenet, your article’s Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
 "domain name from your email address."
 msgstr ""
@@ -2539,7 +2539,7 @@ msgstr "Nadep_sání citace:"
 #: pan/gui/profiles-dialog.cc:271
 msgid ""
 "Extra headers to be included in your articles, such as\n"
-"Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
+"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
 "Organization: Your Organization\n"
 msgstr ""
 "Další záhlaví, která by měla být zahrnuta v příspěvcích, např.\n"
@@ -2573,29 +2573,29 @@ msgstr "Profily"
 #: pan/gui/save-attach-ui.cc:46
 #, c-format
 msgid ""
-"%g - group as one directory (alt.binaries.pictures.trains)\n"
-"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
-"%s - Subject line excerpt\n"
-"%S - Subject line\n"
-"%n - Poster display name\n"
-"%e - Poster email address\n"
-"%d - Article timestamp\n"
-"\"/home/user/News/Pan/%g\" becomes\n"
-"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
-"\"/home/user/News/Pan/%G\" becomes\n"
-"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+"%g — group as one directory (alt.binaries.pictures.trains)\n"
+"%G — group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s — Subject line excerpt\n"
+"%S — Subject line\n"
+"%n — Poster display name\n"
+"%e — Poster email address\n"
+"%d — Article timestamp\n"
+"“/home/user/News/Pan/%g” becomes\n"
+"“/home/user/News/Pan/alt.binaries.pictures.trains”, and\n"
+"“/home/user/News/Pan/%G” becomes\n"
+"“/home/user/News/Pan/alt/binaries/pictures/trains”,"
 msgstr ""
-"%g - skupina jako jeden adresář (např. cz.net.abuse.misc)\n"
-"%G - skupina jako vnořené adresáře (např. /cz/net/abuse/misc)\n"
-"%s - výňatek z řádku s předmětem\n"
-"%S - řádek s předmětem\n"
-"%n - zobrazované jméno odesílatele\n"
-"%e - e-mailová adresa odesílatele\n"
-"%d - časové razítko příspěvku\n"
-"Tedy p\"/home/uzivatel/News/Pan/%g\" bude\n"
-"\"/home/uzivatel/News/Pan/cz.net.abuse.misc\" a\n"
-"\"/home/uzivatel/News/Pan/%G\" bude\n"
-"\"/home/uzivatel/News/Pan/cz/net/abuse/misc\"."
+"%g – skupina jako jeden adresář (např. cz.net.abuse.misc)\n"
+"%G – skupina jako vnořené adresáře (např. /cz/net/abuse/misc)\n"
+"%s – výňatek z řádku s předmětem\n"
+"%S – řádek s předmětem\n"
+"%n – zobrazované jméno odesílatele\n"
+"%e – e-mailová adresa odesílatele\n"
+"%d – časové razítko příspěvku\n"
+"Tedy „/home/uzivatel/News/Pan/%g“ bude\n"
+"„/home/uzivatel/News/Pan/cz.net.abuse.misc“ a\n"
+"„/home/uzivatel/News/Pan/%G“ bude\n"
+"„/home/uzivatel/News/Pan/cz/net/abuse/misc“."
 
 #: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
 msgid "Add to the queue sorted by date posted"
@@ -2624,7 +2624,7 @@ msgstr "Uložit příspěvky"
 
 #: pan/gui/save-attach-ui.cc:278 pan/gui/save-ui.cc:293
 #, c-format
-msgid "_Group's path: %s"
+msgid "_Group’s path: %s"
 msgstr "_Cesta ke skupině: %s"
 
 #: pan/gui/save-attach-ui.cc:289 pan/gui/save-ui.cc:308
@@ -2634,31 +2634,31 @@ msgstr "_Priorita:"
 #: pan/gui/save-ui.cc:46
 #, c-format
 msgid ""
-"%g - group as one directory (alt.binaries.pictures.trains)\n"
-"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
-"%s - subject line excerpt\n"
-"%S - subject line\n"
-"%n - Poster display name\n"
-"%e - Poster email address\n"
-"%d - Article timestamp\n"
+"%g — group as one directory (alt.binaries.pictures.trains)\n"
+"%G — group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s — subject line excerpt\n"
+"%S — subject line\n"
+"%n — Poster display name\n"
+"%e — Poster email address\n"
+"%d — Article timestamp\n"
 " \n"
-"\"/home/user/News/Pan/%g\" becomes\n"
-"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
-"\"/home/user/News/Pan/%G\" becomes\n"
-"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+"“/home/user/News/Pan/%g” becomes\n"
+"“/home/user/News/Pan/alt.binaries.pictures.trains”, and\n"
+"“/home/user/News/Pan/%G” becomes\n"
+"“/home/user/News/Pan/alt/binaries/pictures/trains”,"
 msgstr ""
-"%g - skupina jako jeden adresář (např. cz.net.abuse.misc)\n"
-"%G - skupina jako vnořené adresáře (např. /cz/net/abuse/misc)\n"
-"%s - výňatek z řádku s předmětem\n"
-"%S - řádek s předmětem\n"
-"%n - zobrazované jméno odesílatele\n"
-"%e - e-mailová adresa odesílatele\n"
-"%d - časové razítko příspěvku\n"
+"%g – skupina jako jeden adresář (např. cz.net.abuse.misc)\n"
+"%G – skupina jako vnořené adresáře (např. /cz/net/abuse/misc)\n"
+"%s – výňatek z řádku s předmětem\n"
+"%S – řádek s předmětem\n"
+"%n – zobrazované jméno odesílatele\n"
+"%e – e-mailová adresa odesílatele\n"
+"%d – časové razítko příspěvku\n"
 " \n"
-"Tedy \"/home/uzivatel/News/Pan/%g\" bude\n"
-"\"/home/uzivatel/News/Pan/cz.net.abuse.misc\" a\n"
-"\"/home/uzivatel/News/Pan/%G\" bude\n"
-"\"/home/uzivatel/News/Pan/cz/net/abuse/misc\"."
+"Tedy „/home/uzivatel/News/Pan/%g“ bude\n"
+"„/home/uzivatel/News/Pan/cz.net.abuse.misc“ a\n"
+"„/home/uzivatel/News/Pan/%G“ bude\n"
+"„/home/uzivatel/News/Pan/cz/net/abuse/misc“."
 
 #: pan/gui/save-ui.cc:209
 msgid "Save attachments"
@@ -2689,15 +2689,15 @@ msgid "is at most"
 msgstr "je nejvýše"
 
 #: pan/gui/score-add-ui.cc:112
-msgid "increase the article's score by"
+msgid "increase the article’s score by"
 msgstr "zvýšit hodnocení příspěvku o"
 
 #: pan/gui/score-add-ui.cc:113
-msgid "decrease the article's score by"
+msgid "decrease the article’s score by"
 msgstr "snížit hodnocení příspěvku o"
 
 #: pan/gui/score-add-ui.cc:114
-msgid "set the article's score to"
+msgid "set the article’s score to"
 msgstr "nastavit hodnocení příspěvku na"
 
 #: pan/gui/score-add-ui.cc:115
@@ -2745,7 +2745,7 @@ msgid "contains"
 msgstr "obsahuje"
 
 #: pan/gui/score-add-ui.cc:195
-msgid "doesn't contain"
+msgid "doesn’t contain"
 msgstr "neobsahuje"
 
 #: pan/gui/score-add-ui.cc:196
@@ -2753,7 +2753,7 @@ msgid "is"
 msgstr "je"
 
 #: pan/gui/score-add-ui.cc:197
-msgid "isn't"
+msgid "isn’t"
 msgstr "není"
 
 #: pan/gui/score-add-ui.cc:198
@@ -2769,7 +2769,7 @@ msgid "matches regex"
 msgstr "vyhovuje regulárnímu výrazu"
 
 #: pan/gui/score-add-ui.cc:481
-msgid "Another rule already sets this article's score."
+msgid "Another rule already sets this article’s score."
 msgstr "Hodnocení tohoto příspěvku již bylo nastaveno jiným pravidlem."
 
 #: pan/gui/score-add-ui.cc:482
@@ -2798,11 +2798,11 @@ msgstr "Z_avřít a znovu ohodnotit"
 
 #: pan/gui/score-view-ui.cc:154
 #, c-format
-msgid "File %s, Lines %d - %d"
-msgstr "Soubor %s, řádky %d - %d"
+msgid "File %s, Lines %d-%d"
+msgstr "Soubor %s, řádky %d–%d"
 
 #: pan/gui/score-view-ui.cc:182
-msgid "Pan: Article's Scores"
+msgid "Pan: Article’s Scores"
 msgstr "Pan: Hodnocení příspěvku"
 
 #: pan/gui/score-view-ui.cc:208
@@ -2826,7 +2826,7 @@ msgid "Remove the Selected Scoring Rule"
 msgstr "Odstranit vybrané pravidlo"
 
 #: pan/gui/server-ui.cc:272
-msgid "Please specify the server's address."
+msgid "Please specify the server’s address."
 msgstr "Určete prosím adresu serveru."
 
 #: pan/gui/server-ui.cc:318
@@ -2839,7 +2839,7 @@ msgid "Add a Server"
 msgstr "Přidat nový server"
 
 #: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:967
-msgid "Edit a Server's Settings"
+msgid "Edit a Server’s Settings"
 msgstr "Upravit nastavení serveru"
 
 #: pan/gui/server-ui.cc:375
@@ -2847,9 +2847,9 @@ msgid "Location"
 msgstr "Umístění"
 
 #: pan/gui/server-ui.cc:379
-msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
+msgid "The news server’s actual address, e.g. “news.mynewsserver.com”."
 msgstr ""
-"Skutečná adresa serveru diskusních skupin, např. \"news.diskusniserver.cz\"."
+"Skutečná adresa serveru diskusních skupin, např. „news.diskusniserver.cz“."
 
 #: pan/gui/server-ui.cc:380
 msgid "_Address:"
@@ -2857,7 +2857,7 @@ msgstr "_Adresa:"
 
 #: pan/gui/server-ui.cc:385
 msgid ""
-"The news server's port number.  Typically 119 for unencrypted and 563 for "
+"The news server’s port number.  Typically 119 for unencrypted and 563 for "
 "encrypted connections (SSL/TLS)."
 msgstr ""
 "Port serveru diskusních skupin. Téměř vždy 119 v případě nešifrovaného a 563 "
@@ -2877,7 +2877,7 @@ msgstr "Přihlašovací _jméno:"
 
 #: pan/gui/server-ui.cc:394
 msgid ""
-"The username to give the server when asked.  If your server doesn't require "
+"The username to give the server when asked.  If your server doesn’t require "
 "authentication, you can leave this blank."
 msgstr ""
 "Přihlašovací jméno, které bude v případě dotazu poskytnuto serveru. Není "
@@ -2889,7 +2889,7 @@ msgstr "_Heslo:"
 
 #: pan/gui/server-ui.cc:399
 msgid ""
-"The password to give the server when asked.  If your server doesn't require "
+"The password to give the server when asked.  If your server doesn’t require "
 "authentication, you can leave this blank."
 msgstr ""
 "Heslo, které bude v případě dotazu poskytnuto serveru. Není nutné zadávat, "
@@ -2945,7 +2945,7 @@ msgstr "Pořadí serveru:"
 
 #: pan/gui/server-ui.cc:455
 msgid ""
-"Fallback servers are used for articles that can't be found on the "
+"Fallback servers are used for articles that can’t be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
 "subscription servers as fallbacks."
 msgstr ""
@@ -2996,13 +2996,13 @@ msgstr ""
 "doporučuje SSL/TLS zapnout."
 
 #: pan/gui/server-ui.cc:513
-msgid "Always trust this server's certificate"
+msgid "Always trust this server’s certificate"
 msgstr "Vždy důvěřovat certifikátu tohoto serveru"
 
 #: pan/gui/server-ui.cc:689
 #, c-format
-msgid "Really delete \"%s\"?"
-msgstr "Opravdu smazat \"%s\"?"
+msgid "Really delete “%s”?"
+msgstr "Opravdu smazat „%s“?"
 
 #: pan/gui/server-ui.cc:778
 msgid "No information available."
@@ -3010,13 +3010,13 @@ msgstr "Nejsou dostupné žádné informace."
 
 #: pan/gui/server-ui.cc:788
 #, c-format
-msgid "Server Certificate for '%s'"
-msgstr "Certifikát serveru \"%s\""
+msgid "Server Certificate for “%s”"
+msgstr "Certifikát serveru „%s“"
 
 #: pan/gui/server-ui.cc:887
 #, c-format
-msgid "Really delete certificate for \"%s\"?"
-msgstr "Opravdu chcete smazat certifikát \"%s\"?"
+msgid "Really delete certificate for “%s”?"
+msgstr "Opravdu chcete smazat certifikát „%s“?"
 
 #. dialog
 #: pan/gui/server-ui.cc:914 pan/gui/server-ui.cc:935 pan/gui/server-ui.cc:1033
@@ -3054,7 +3054,7 @@ msgid ""
 "\n"
 "<u>Upload</u>\n"
 "\n"
-"<i>Subject:</i> <b>\"%s\"</b>\n"
+"<i>Subject:</i> <b>“%s”</b>\n"
 "<i>From:</i> <b>%s</b>\n"
 "<i>Groups:</i> <b>%s</b>\n"
 "<i>Sourcefile:</i> <b>%s</b>\n"
@@ -3062,7 +3062,7 @@ msgstr ""
 "\n"
 "<u>Nahrané</u>\n"
 "\n"
-"<i>Předmět:</i> <b>\"%s\"</b>\n"
+"<i>Předmět:</i> <b>„%s“</b>\n"
 "<i>Odesílatel:</i> <b>%s</b>\n"
 "<i>Skupiny:</i> <b>%s</b>\n"
 "<i>Zdrojový soubor:</i> <b>%s</b>\n"
@@ -3073,7 +3073,7 @@ msgid ""
 "\n"
 "<u>Download</u>\n"
 "\n"
-"<i>Subject:</i> <b>\"%s\"</b>\n"
+"<i>Subject:</i> <b>“%s”</b>\n"
 "<i>From:</i> <b>%s</b>\n"
 "<i>Date:</i> <b>%s</b>\n"
 "<i>Groups:</i> <b>%s</b>\n"
@@ -3082,7 +3082,7 @@ msgstr ""
 "\n"
 "<u>Stažené</u>\n"
 "\n"
-"<i>Předmět:</i> <b>\"%s\"</b>\n"
+"<i>Předmět:</i> <b>„%s“</b>\n"
 "<i>Odesílatel:</i> <b>%s</b>\n"
 "<i>Datum:</i> <b>%s</b>\n"
 "<i>Skupiny:</i> <b>%s</b>\n"
@@ -3150,7 +3150,7 @@ msgstr "Hotovo %d%%"
 
 #: pan/gui/task-pane.cc:592
 #, c-format
-msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
+msgid "%d∶%02d∶%02d Remaining (%d @ %lu KiB/s)"
 msgstr "Zbývá %d:%02d:%02d (%d při %lu KiB/s)"
 
 #: pan/gui/task-pane.cc:687 pan/gui/task-pane.cc:688
@@ -3208,8 +3208,8 @@ msgstr "Chyba během spouštění URL: %s (příkaz zněl: %s)"
 
 #: pan/tasks/decoder.cc:117
 #, c-format
-msgid "Couldn't save file \"%s\": %s"
-msgstr "Nelze uložit soubor \"%s\": %s"
+msgid "Couldn’t save file “%s”: %s"
+msgstr "Nelze uložit soubor „%s“: %s"
 
 #: pan/tasks/decoder.cc:139 pan/tasks/encoder.cc:136
 msgid "Error initializing uulib"
@@ -3223,16 +3223,16 @@ msgstr "Chyba při čtení z %s: %s"
 
 #: pan/tasks/decoder.cc:194
 #, c-format
-msgid "Saved \"%s\""
-msgstr "Uloženo \"%s\""
+msgid "Saved “%s”"
+msgstr "Uloženo „%s“"
 
 #: pan/tasks/decoder.cc:201
 #, c-format
 msgid ""
-"Error saving \"%s\":\n"
+"Error saving “%s”:\n"
 "%s."
 msgstr ""
-"Chyba během ukládání \"%s\":\n"
+"Chyba během ukládání „%s“:\n"
 "%s."
 
 #: pan/tasks/decoder.cc:314 pan/tasks/task-article.cc:354
@@ -3267,18 +3267,18 @@ msgstr "%s vyžaduje heslo, ale žádné není zadáno."
 
 #: pan/tasks/nntp.cc:247
 #, c-format
-msgid "Sending \"%s\" to %s returned an error: %s"
-msgstr "Při odesílání \"%s\" na %s se vyskytla chyba: %s"
+msgid "Sending “%s” to %s returned an error: %s"
+msgstr "Při odesílání „%s“ na %s se vyskytla chyba: %s"
 
 #: pan/tasks/nntp.cc:270
 #, c-format
-msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
-msgstr "Při odesílání \"%s\" na %s se vyskytla neznámá odpověď: \"%s\""
+msgid "Sending “%s” to %s returned an unrecognized response: “%s”"
+msgstr "Při odesílání „%s“ na %s se vyskytla neznámá odpověď: „%s“"
 
 #: pan/tasks/nntp-pool.cc:235
 #, c-format
-msgid "Unable to connect to \"%s\""
-msgstr "Nelze se spojit s \"%s\""
+msgid "Unable to connect to “%s”"
+msgstr "Nelze se spojit s „%s“"
 
 #: pan/tasks/queue.cc:778 pan/tasks/queue.cc:806 pan/tasks/queue.cc:833
 msgid "No space left on device."
@@ -3287,8 +3287,8 @@ msgstr "Na zařízení nezbývá místo."
 #: pan/tasks/socket-impl-gio.cc:173 pan/tasks/socket-impl-gio.cc:211
 #: pan/tasks/socket-impl-openssl.cc:214 pan/tasks/socket-impl-openssl.cc:252
 #, c-format
-msgid "Error connecting to \"%s\""
-msgstr "Chyba během připojování k \"%s\""
+msgid "Error connecting to “%s”"
+msgstr "Chyba během připojování k „%s“"
 
 #: pan/tasks/socket-impl-gio.cc:359 pan/tasks/socket-impl-openssl.cc:641
 msgid "Unknown Error"
@@ -3306,15 +3306,15 @@ msgstr "Čtení %s"
 
 #: pan/tasks/task-article.cc:326
 #, c-format
-msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
+msgid "Article “%s” is incomplete — the news server(s) don’t have part %s"
 msgstr ""
-"Příspěvek \"%s\" není kompletní - server diskusních skupin nemá k dipozici "
+"Příspěvek „%s“ není kompletní – server diskusních skupin nemá k dipozici "
 "část %s"
 
 #: pan/tasks/task-groups.cc:41
 #, c-format
-msgid "Getting group list from \"%s\""
-msgstr "Získávání seznamu skupin ze serveru \"%s\""
+msgid "Getting group list from “%s”"
+msgstr "Získávání seznamu skupin ze serveru „%s“"
 
 #: pan/tasks/task-groups.cc:134
 #, c-format
@@ -3323,18 +3323,18 @@ msgstr "Získaných skupin %lu"
 
 #: pan/tasks/task-post.cc:35
 #, c-format
-msgid "Posting \"%s\""
-msgstr "Vystavování \"%s\""
+msgid "Posting “%s”"
+msgstr "Vystavování „%s“"
 
 #: pan/tasks/task-post.cc:76
 #, c-format
-msgid "Posting of \"%s\" failed: %s"
-msgstr "Vystavování \"%s\" selhalo: %s"
+msgid "Posting of “%s” failed: %s"
+msgstr "Vystavování „%s“ selhalo: %s"
 
 #: pan/tasks/task-post.cc:81
 #, c-format
-msgid "Posting of \"%s\" successful: %s"
-msgstr "Vystavování \"%s\" bylo úspěšné: %s"
+msgid "Posting of “%s” successful: %s"
+msgstr "Vystavování „%s“ bylo úspěšné: %s"
 
 #: pan/tasks/task-upload.cc:51
 #, c-format
@@ -3343,13 +3343,13 @@ msgstr "Nahrávání %s"
 
 #: pan/tasks/task-upload.cc:244
 #, c-format
-msgid "Uploading %s - Part %d of %d"
-msgstr "Nahrávání %s - část %d z %d"
+msgid "Uploading %s — Part %d of %d"
+msgstr "Nahrávání %s – část %d z %d"
 
 #: pan/tasks/task-upload.cc:246
 #, c-format
-msgid "Uploading message body with subject \"%s\""
-msgstr "Nahrávání těla zprávy s předmětem \"%s\""
+msgid "Uploading message body with subject “%s”"
+msgstr "Nahrávání těla zprávy s předmětem „%s“"
 
 #: pan/tasks/task-upload.cc:303
 #, c-format
@@ -3391,19 +3391,19 @@ msgstr ""
 
 #: pan/tasks/task-xover.cc:83
 #, c-format
-msgid "Getting all headers for \"%s\""
-msgstr "Získávání všech záhlaví u \"%s\""
+msgid "Getting all headers for “%s”"
+msgstr "Získávání všech záhlaví u „%s“"
 
 #: pan/tasks/task-xover.cc:86
 #, c-format
-msgid "Getting new headers for \"%s\""
-msgstr "Získávání nových záhlaví u \"%s\""
+msgid "Getting new headers for “%s”"
+msgstr "Získávání nových záhlaví u „%s“"
 
 #. SAMPLE
 #: pan/tasks/task-xover.cc:90
 #, c-format
-msgid "Sampling headers for \"%s\""
-msgstr "Sestavování záhlaví u \"%s\""
+msgid "Sampling headers for “%s”"
+msgstr "Sestavování záhlaví u „%s“"
 
 #: pan/tasks/task-xover.cc:426
 #, c-format
@@ -3412,16 +3412,16 @@ msgstr "%s (částí %lu, příspěvků %lu)"
 
 #: pan/tasks/task-xover.cc:500
 #, c-format
-msgid "Getting new headers for \"%s\" done."
-msgstr "Získávání nových záhlaví u \"%s\" dokončeno."
+msgid "Getting new headers for “%s” done."
+msgstr "Získávání nových záhlaví u „%s“ dokončeno."
 
 #: pan/tasks/task-xoverinfo.cc:78
 #, c-format
-msgid "Getting header counts for \"%s\""
-msgstr "Získávání počtu záhlaví u \"%s\""
+msgid "Getting header counts for “%s”"
+msgstr "Získávání počtu záhlaví u „%s“"
 
 #: pan/usenet-utils/filter-info.cc:217
-msgid "article doesn't have attachments"
+msgid "article doesn’t have attachments"
 msgstr "příspěvek nemá přílohy"
 
 #: pan/usenet-utils/filter-info.cc:221
@@ -3429,7 +3429,7 @@ msgid "the article has attachments"
 msgstr "příspěvek má přílohy"
 
 #: pan/usenet-utils/filter-info.cc:225
-msgid "the article isn't cached locally"
+msgid "the article isn’t cached locally"
 msgstr "příspěvek není dočasně uložen lokálně"
 
 #: pan/usenet-utils/filter-info.cc:229
@@ -3437,7 +3437,7 @@ msgid "the article is cached locally"
 msgstr "příspěvek je dočasně uložen lokálně"
 
 #: pan/usenet-utils/filter-info.cc:233
-msgid "the article wasn't posted by you"
+msgid "the article wasn’t posted by you"
 msgstr "příspěvek nebyl vystaven vámi"
 
 #: pan/usenet-utils/filter-info.cc:237
@@ -3449,7 +3449,7 @@ msgid "the article has been read"
 msgstr "příspěvek je přečtený"
 
 #: pan/usenet-utils/filter-info.cc:245
-msgid "the article hasn't been read"
+msgid "the article hasn’t been read"
 msgstr "příspěvek je nepřečtený"
 
 #: pan/usenet-utils/filter-info.cc:249
@@ -3494,63 +3494,63 @@ msgstr "příspěvek byl vystaven alespoň v %ld skupinách"
 
 #: pan/usenet-utils/filter-info.cc:289
 #, c-format
-msgid "the article's score is less than %ld"
+msgid "the article’s score is less than %ld"
 msgstr "hodnocení příspěvku je menší než %ld"
 
 #: pan/usenet-utils/filter-info.cc:294
 #, c-format
-msgid "the article's score is %ld or higher"
+msgid "the article’s score is %ld or higher"
 msgstr "hodnocení příspěvku je %ld nebo vyšší"
 
 #: pan/usenet-utils/filter-info.cc:303 pan/usenet-utils/filter-info.cc:313
 #, c-format
-msgid "%s doesn't contain \"%s\""
-msgstr "%s neobsahuje \"%s\""
+msgid "%s doesn’t contain “%s”"
+msgstr "%s neobsahuje „%s“"
 
 #: pan/usenet-utils/filter-info.cc:304 pan/usenet-utils/filter-info.cc:314
 #, c-format
-msgid "%s isn't \"%s\""
-msgstr "%s neodpovídá \"%s\""
+msgid "%s isn’t “%s”"
+msgstr "%s neodpovídá „%s“"
 
 #: pan/usenet-utils/filter-info.cc:305 pan/usenet-utils/filter-info.cc:315
 #, c-format
-msgid "%s doesn't begin with \"%s\""
-msgstr "%s nezačíná na \"%s\""
+msgid "%s doesn’t begin with “%s”"
+msgstr "%s nezačíná na „%s“"
 
 #: pan/usenet-utils/filter-info.cc:306 pan/usenet-utils/filter-info.cc:316
 #, c-format
-msgid "%s doesn't end with \"%s\""
-msgstr "%s nekončí na \"%s\""
+msgid "%s doesn’t end with “%s”"
+msgstr "%s nekončí na „%s“"
 
 #: pan/usenet-utils/filter-info.cc:307 pan/usenet-utils/filter-info.cc:317
 #, c-format
-msgid "%s doesn't match the regex \"%s\""
-msgstr "%s nevyhovuje regulárnímu výrazu \"%s\""
+msgid "%s doesn’t match the regex “%s”"
+msgstr "%s nevyhovuje regulárnímu výrazu „%s“"
 
 #: pan/usenet-utils/filter-info.cc:329
 #, c-format
-msgid "%s contains \"%s\""
-msgstr "%s obsahuje \"%s\""
+msgid "%s contains “%s”"
+msgstr "%s obsahuje „%s“"
 
 #: pan/usenet-utils/filter-info.cc:330
 #, c-format
-msgid "%s is \"%s\""
-msgstr "%s odpovídá \"%s\""
+msgid "%s is “%s”"
+msgstr "%s odpovídá „%s“"
 
 #: pan/usenet-utils/filter-info.cc:331
 #, c-format
-msgid "%s begins with \"%s\""
-msgstr "%s začíná na \"%s\""
+msgid "%s begins with “%s”"
+msgstr "%s začíná na „%s“"
 
 #: pan/usenet-utils/filter-info.cc:332
 #, c-format
-msgid "%s ends with \"%s\""
-msgstr "%s končí na \"%s\""
+msgid "%s ends with “%s”"
+msgstr "%s končí na „%s“"
 
 #: pan/usenet-utils/filter-info.cc:333
 #, c-format
-msgid "%s matches the regex \"%s\""
-msgstr "%s vyhovuje regulárnímu výrazu \"%s\""
+msgid "%s matches the regex “%s”"
+msgstr "%s vyhovuje regulárnímu výrazu „%s“"
 
 #: pan/usenet-utils/filter-info.cc:339
 msgid "Any of these tests fail:"
@@ -3570,17 +3570,17 @@ msgstr "Některé z následujících testů byly úspěšné:"
 
 #: pan/usenet-utils/gnksa.cc:880
 #, c-format
-msgid "No email address provided; generating message-id with domain \"%s\""
+msgid "No email address provided; generating message-id with domain “%s”"
 msgstr ""
-"Nebyla poskytnuta e-mailová adresa; generování Message-ID s doménou \"%s\"."
+"Nebyla poskytnuta e-mailová adresa; generování Message-ID s doménou „%s“."
 
 #: pan/usenet-utils/message-check.cc:124
 msgid "Warning: Reply seems to be top-posted."
 msgstr "Upozornění: Odpověď je zřejmě na začátku zprávy."
 
 #: pan/usenet-utils/message-check.cc:145
-msgid "Warning: The signature marker should be \"-- \", not \"--\"."
-msgstr "Upozornění: Oddělovač podpisu by měl být \"-- \", nikoliv \"--\"."
+msgid "Warning: The signature marker should be “-- ”, not “--”."
+msgstr "Upozornění: Oddělovač podpisu by měl být „-- “, nikoliv „--“."
 
 #: pan/usenet-utils/message-check.cc:162
 msgid "Warning: Signature prefix with no signature."
@@ -3621,15 +3621,15 @@ msgstr "Chyba: Zdá se, že zpráva nemá žádný nový obsah."
 #: pan/usenet-utils/message-check.cc:344 pan/usenet-utils/message-check.cc:383
 #, c-format
 msgid ""
-"Warning: The posting profile's server doesn't carry newsgroup\n"
-"\t\"%s\".\n"
-"\tIf the group name is correct, switch profiles in the \"From:\"\n"
-"\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
+"Warning: The posting profile’s server doesn’t carry newsgroup\n"
+"\t“%s”.\n"
+"\tIf the group name is correct, switch profiles in the “From:”\n"
+"\tline or edit the profile with “Edit → Manage Posting Profiles”."
 msgstr ""
 "Upozornění: server daného profilu neposkytuje diskusní skupinu\n"
-"\t\"%s\".\n"
-"\tJe-li název skupiny v pořádku, přepněte profily na řádce \"Odesílatel\",\n"
-"\tnebo upravte profil pomocí \"Spravovat profily\" v nabídce \"Upravit\"."
+"\t„%s“.\n"
+"\tJe-li název skupiny v pořádku, přepněte profily na řádce „Odesílatel“,\n"
+"\tnebo upravte profil pomocí „Upravit → Spravovat profily“."
 
 #: pan/usenet-utils/message-check.cc:355
 msgid "Warning: Following-Up to too many groups."
@@ -3642,8 +3642,8 @@ msgstr "Chyba: Není vyplněn předmět."
 
 #: pan/usenet-utils/message-check.cc:395
 #, c-format
-msgid "Warning: Group \"%s\" is read-only."
-msgstr "Upozornění: Skupina \"%s\" je jen na čtení."
+msgid "Warning: Group “%s” is read-only."
+msgstr "Upozornění: Skupina „%s“ je jen na čtení."
 
 #: pan/usenet-utils/message-check.cc:404
 msgid "Error: Posting to a very large number of groups."
@@ -3674,11 +3674,11 @@ msgstr "Chyba: Není vyplněn příjemce."
 #: pan/usenet-utils/scorefile.cc:304
 #, c-format
 msgid ""
-"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
-"'Expires: DD-MM-YYYY'."
+"Error reading score in %*.*s, line %d: expected “Expires: MM/DD/YYYY” or "
+"“Expires: DD-MM-YYYY”."
 msgstr ""
-"Chyba při čtení hodnocení v %*.*s, řádek %d: očekáváno \"Expires: MM/DD/YYYY"
-"\" nebo \"Expires: DD-MM-YYYY\"."
+"Chyba při čtení hodnocení v %*.*s, řádek %d: očekáváno „Expires: MM/DD/YYYY“ "
+"nebo „Expires: DD-MM-YYYY“."
 
 #: pan/usenet-utils/scorefile.cc:307
 #, c-format
@@ -3692,30 +3692,30 @@ msgstr "Chyba při čtení hodnocení v %*.*s, řádek %d: neočekávaný řáde
 
 #: pan/usenet-utils/scorefile.cc:429
 #, c-format
-msgid "Read %lu scoring rules in %lu sections from \"%s\""
-msgstr "Přečteno %lu pravidel v %lu částech z \"%s\""
+msgid "Read %lu scoring rules in %lu sections from “%s”"
+msgstr "Přečteno %lu pravidel v %lu částech z „%s“"
 
 #: pan/usenet-utils/ssl-utils.h:189
 #, c-format
-msgid "Error printing the server certificate for '%s'"
-msgstr "Chyba při výpisu certifikátu serveru \"%s\""
+msgid "Error printing the server certificate for “%s”"
+msgstr "Chyba při výpisu certifikátu serveru „%s“"
 
 #: pan/usenet-utils/ssl-utils.h:205
 #, c-format
 msgid ""
-"The current server <b>'%s'</b> sent this security certificate:\n"
+"The current server <b>“%s”</b> sent this security certificate:\n"
 "\n"
 msgstr ""
-"Aktuální server <b>\"%s\"</b> odeslal tento bezpečnostní certifikát:\n"
+"Aktuální server <b>„%s“</b> odeslal tento bezpečnostní certifikát:\n"
 "\n"
 
 #: pan/usenet-utils/ssl-utils.h:206
 #, c-format
 msgid ""
-"Certificate information for server <b>'%s'</b>:\n"
+"Certificate information for server <b>“%s”</b>:\n"
 "\n"
 msgstr ""
-"Informace o certifikátu serveru <b>\"%s\"</b>:\n"
+"Informace o certifikátu serveru <b>„%s“</b>:\n"
 "\n"
 
 #: pan/usenet-utils/ssl-utils.h:208
@@ -3746,6 +3746,24 @@ msgstr "bez_názvu"
 #: pan/usenet-utils/text-massager.cc:582
 msgid "no_mail"
 msgstr "bez_e-mailu"
+
+#~ msgid "_Save Articles..."
+#~ msgstr "_Uložit příspěvky…"
+
+#~ msgid "Save Articles..."
+#~ msgstr "Uloží příspěvky…"
+
+#~ msgid "Save Articles from Selected _NZB..."
+#~ msgstr "Uložit _příspěvky z vybraného souboru NZB…"
+
+#~ msgid "Save Articles to an NZB _File..."
+#~ msgstr "U_ložit příspěvky do souboru NZB…"
+
+#~ msgid "_Import NZB Files..."
+#~ msgstr "_Importovat soubory NZB…"
+
+#~ msgid "isn't"
+#~ msgstr "není"
 
 #~ msgid "GNOME Keyring"
 #~ msgstr "GNOME Keyring"
