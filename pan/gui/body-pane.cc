@@ -1643,9 +1643,11 @@ BodyPane :: clear_attachments()
   _current_attachment = 0;
 
   {
-    gtk_container_remove (GTK_CONTAINER (_att_frame), _att_toolbar);
+    gtk_widget_set_no_show_all (_att_box, TRUE);
+    gtk_widget_hide (_att_box);
+    gtk_container_remove (GTK_CONTAINER (_att_box), _att_toolbar);
     _att_toolbar = NULL;
-    (void)create_attachments_toolbar(_att_frame);
+    (void)create_attachments_toolbar(_att_box);
   }
 
 }
@@ -1685,7 +1687,8 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
   gtk_grid_attach (GTK_GRID(_att_toolbar), w, _cur_col++, _cur_row, 1, 1);
 #endif  // 3.0.0
 
-  gtk_widget_show_all(_att_toolbar);
+  gtk_widget_set_no_show_all (_att_box, FALSE);
+  gtk_widget_show_all (_att_box);
 }
 
 #ifdef HAVE_WEBKIT
@@ -1697,7 +1700,7 @@ BodyPane :: set_html_text (const char* text)
 #endif
 
 GtkWidget*
-BodyPane :: create_attachments_toolbar (GtkWidget* frame)
+BodyPane :: create_attachments_toolbar (GtkWidget* box)
 {
 
   _cur_col = 0;
@@ -1714,10 +1717,9 @@ BodyPane :: create_attachments_toolbar (GtkWidget* frame)
   gtk_grid_set_column_spacing (GTK_GRID(w), 3);
   gtk_grid_set_row_spacing (GTK_GRID (w), 4);
 #endif
-  gtk_container_add (GTK_CONTAINER (frame), w);
-  gtk_widget_show_all (frame);
+  gtk_container_add (GTK_CONTAINER (box), w);
 
-  return frame;
+  return box;
 }
 
 /***
@@ -1764,7 +1766,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_menu_shell_append (GTK_MENU_SHELL(_menu),l);
   gtk_widget_show_all(_menu);
 
-  GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, PAD);
+  GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
   gtk_container_set_resize_mode (GTK_CONTAINER(vbox), GTK_RESIZE_QUEUE);
 
   // about this expander... getting the ellipsis to work is a strange process.
@@ -1779,6 +1781,11 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_widget_set_size_request (w, 50, -1);
   g_signal_connect (w, "activate", G_CALLBACK(expander_activated_cb), this);
   gtk_box_pack_start (GTK_BOX(vbox), w, false, false, 0);
+#if !GTK_CHECK_VERSION(3,0,0)
+  gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
+#else
+  gtk_box_pack_start (GTK_BOX(vbox), gtk_separator_new(GTK_ORIENTATION_HORIZONTAL), false, false, 0);
+#endif
 
   _terse = gtk_label_new ("Expander");
   g_object_ref_sink (G_OBJECT(_terse));
@@ -1819,7 +1826,6 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_text_view_set_editable (GTK_TEXT_VIEW(_text), false);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW(_text), false);
   _scroll = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(_scroll), GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (_scroll),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
@@ -1828,8 +1834,22 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_box_pack_start (GTK_BOX(vbox), _scroll, true, true, 0);
 
   // add a toolbar for attachments
-  GtkWidget * frame = _att_frame = gtk_frame_new (_("Attachments"));
-  gtk_box_pack_start (GTK_BOX(vbox), create_attachments_toolbar(frame), false, false, 0);
+  _att_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  GtkWidget * att_label = gtk_label_new (_("Attachments:"));
+  gtk_misc_set_padding (GTK_MISC(att_label), PAD_SMALL, 0);
+  gtk_misc_set_alignment (GTK_MISC(att_label), 0, 0);
+#if !GTK_CHECK_VERSION(3,0,0)
+  gtk_box_pack_start (GTK_BOX(_att_box), gtk_hseparator_new(), false, false, 0);
+#else
+  gtk_box_pack_start (GTK_BOX(_att_box), gtk_separator_new(GTK_ORIENTATION_HORIZONTAL), false, false, 0);
+#endif
+  gtk_box_pack_start (GTK_BOX(_att_box), att_label, false, false, 0);
+  gtk_box_pack_start (GTK_BOX(vbox), create_attachments_toolbar (_att_box), false, false, 0);
+#if !GTK_CHECK_VERSION(3,0,0)
+  gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
+#else
+  gtk_box_pack_start (GTK_BOX(vbox), gtk_separator_new(GTK_ORIENTATION_HORIZONTAL), false, false, 0);
+#endif
 
   // set up the buffer tags
   _buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW(_text));

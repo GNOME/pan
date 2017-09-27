@@ -153,7 +153,7 @@ namespace pan
       GtkWidget * _text;
       GtkWidget * _scroll;
       GtkWidget * _att_toolbar;
-      GtkWidget * _att_frame;
+      GtkWidget * _att_box;
       bool _hscroll_visible;
       bool _vscroll_visible;
       Article _article;
