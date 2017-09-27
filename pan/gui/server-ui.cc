@@ -376,7 +376,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
     HIG::workarea_add_section_spacer (t, row, 2);
 
     GtkWidget * w = d->address_entry = gtk_entry_new ();
-    gtk_widget_set_tooltip_text( w, _("The news server’s actual address, e.g. “news.mynewsserver.com”"));
+    gtk_widget_set_tooltip_text( w, _("The news server’s actual address, e.g. “news.mynewsserver.com”."));
     HIG::workarea_add_row (t, &row, _("_Address:"), w, NULL);
     //g_signal_connect (w, "changed", G_CALLBACK(address_entry_changed_cb), d);
 

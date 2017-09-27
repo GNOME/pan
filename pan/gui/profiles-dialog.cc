@@ -268,7 +268,8 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     if (!s.empty())
       gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW(w)), s.c_str(), s.size());
     GtkWidget * eventbox = gtk_event_box_new ();
-    gtk_widget_set_tooltip_text (eventbox, _("Extra headers to be included in your articles, such as\nReply-To: “Your Name”"
+    /* Translators: Do not localize Reply-To and the quote marks in \"Your Name\". */
+    gtk_widget_set_tooltip_text (eventbox, _("Extra headers to be included in your articles, such as\nReply-To: \"Your Name\" "
                                              "<yourname@somewhere.com>\nOrganization: Your Organization\n"));
     GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),
