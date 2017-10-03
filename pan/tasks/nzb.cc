@@ -52,7 +52,11 @@ namespace
     {
       GMimeStream * stream = g_mime_stream_mem_new_with_buffer (txt.c_str(), txt.size());
       GMimeParser * parser = g_mime_parser_new_with_stream (stream);
+#ifdef HAVE_GMIME_30
+      msg   = g_mime_parser_construct_message (parser, NULL);
+#else      
       msg   = g_mime_parser_construct_message (parser);
+#endif      
       g_object_unref (G_OBJECT(parser));
       g_object_unref (G_OBJECT(stream));
     }

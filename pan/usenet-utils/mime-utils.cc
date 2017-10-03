@@ -915,7 +915,12 @@ namespace
       return;
 
     // get this part's content
+#ifdef HAVE_GMIME_30
+    GMimeDataWrapper * content = g_mime_part_get_content (GMIME_PART (part));
+#else    
     GMimeDataWrapper * content = g_mime_part_get_content_object (GMIME_PART (part));
+#endif
+
     if (!content)
       return;
 
@@ -968,7 +973,11 @@ namespace
 
           subpart_stream = tmp_part->stream;
           content = g_mime_data_wrapper_new_with_stream (subpart_stream, GMIME_CONTENT_ENCODING_DEFAULT);
+#ifdef HAVE_GMIME_30          
+          g_mime_part_set_content (subpart, content);
+#else          
           g_mime_part_set_content_object (subpart, content);
+#endif                    
           g_mime_multipart_add (GMIME_MULTIPART (multipart), GMIME_OBJECT (subpart));
 
           g_object_unref (content);
@@ -1138,11 +1147,19 @@ mime :: construct_message (GMimeStream    ** istreams,
 
   for (int i=0; i<qty; ++i) {
     GMimeParser* parser = g_mime_parser_new_with_stream (istreams[i]);
+#ifdef HAVE_GMIME_30
+    messages[i] = g_mime_parser_construct_message(parser, NULL);
+#else    
     messages[i] = g_mime_parser_construct_message(parser);
+#endif    
     g_object_unref(parser);
     g_mime_stream_reset(istreams[i]);
     parser = g_mime_parser_new_with_stream (istreams[i]);
+#ifdef HAVE_GMIME_30    
+    GMimeObject* part = g_mime_parser_construct_part(parser, NULL);
+#else        
     GMimeObject* part = g_mime_parser_construct_part(parser);
+#endif        
     g_object_unref (parser);
     parser = NULL;
     GMimeContentType * type = g_mime_object_get_content_type (part);
@@ -1485,7 +1502,11 @@ namespace
       return NULL;
     }
 
+#ifdef HAVE_GMIME_30
+    GMimeDataWrapper *wrapper = g_mime_part_get_content(mime_part);
+#else    
     GMimeDataWrapper *wrapper = g_mime_part_get_content_object(mime_part);
+#endif    
     GMimeStream *stream = g_mime_stream_mem_new();
     g_mime_data_wrapper_write_to_stream (wrapper, stream);
     GByteArray *bytes = g_mime_stream_mem_get_byte_array((GMimeStreamMem*)stream);
@@ -1535,6 +1556,20 @@ char *pan::pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html
   return body;
 }
 
+#ifdef HAVE_GMIME_30
+void pan::pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, GMimeAddressType type, const char *string)
+{
+  InternetAddressList *addrlist;
+  if ((addrlist = internet_address_list_parse (NULL, string))) {
+    for (int i = 0; i < internet_address_list_length (addrlist); ++i) {
+      InternetAddress *ia = internet_address_list_get_address (addrlist, i);
+      if (INTERNET_ADDRESS_IS_MAILBOX(ia))
+        g_mime_message_add_mailbox (message, type, internet_address_get_name(ia), internet_address_mailbox_get_addr(INTERNET_ADDRESS_MAILBOX(ia)));
+    }
+  }
+}
+#else
+
 void pan::pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, GMimeRecipientType type, const char *string)
 {
   InternetAddressList *addrlist;
@@ -1546,10 +1581,24 @@ void pan::pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, 
     }
   }
 }
+#endif
 
 /**
 * Works around a GMime bug that uses `Message-Id' rather than `Message-ID'
 */
+#ifdef HAVE_GMIME_30
+std::string pan::pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
+{
+	const char * charset = NULL; // "ISO-8859-1";  // fixme
+    g_mime_object_append_header ((GMimeObject *) msg, "Message-ID", mid, charset);
+    char * bracketed = g_strdup_printf ("<%s>", mid);
+    g_mime_header_list_set (GMIME_OBJECT(msg)->headers, "Message-ID", bracketed, charset);
+    std::string ret (bracketed);
+    g_free (bracketed);
+    return ret;
+}
+#else
+
 std::string pan::pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
 {
     g_mime_object_append_header ((GMimeObject *) msg, "Message-ID", mid);
@@ -1559,6 +1608,7 @@ std::string pan::pan_g_mime_message_set_message_id (GMimeMessage *msg, const cha
     g_free (bracketed);
     return ret;
 }
+#endif
 
 namespace pan
 {
@@ -1573,7 +1623,11 @@ namespace pan
     content = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
     g_object_unref (stream);
 
+#ifdef HAVE_GMIME_30
+    g_mime_part_set_content (part, content);
+#else    
     g_mime_part_set_content_object (part, content);
+#endif    
     g_object_unref (content);
   }
 #ifdef HAVE_GMIME_CRYPTO

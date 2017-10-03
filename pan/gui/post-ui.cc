@@ -957,7 +957,11 @@ PostUI :: maybe_mail_message (GMimeMessage * message)
 {
   std::string url, to, groups;
   gboolean unused;
+#ifdef HAVE_GMIME_30
+  char * headers (g_mime_object_get_headers ((GMimeObject *) message, NULL));
+#else  
   char * headers (g_mime_object_get_headers ((GMimeObject *) message));
+#endif  
   char * body (pan_g_mime_message_get_body (message, &unused));
   StringView key, val, v(headers);
   v.trim ();
@@ -1055,7 +1059,11 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
 	  p.get_from_header(author);
 	  std::string subject(utf8ize (g_mime_message_get_subject (msg)));
 	  const char * refs = g_mime_object_get_header(GMIME_OBJECT(msg), "References");
+#ifdef HAVE_GMIME_30
+	  g_mime_object_set_header((GMimeObject *) msg, "Newsgroups", folder.c_str(), NULL);
+#else	  
 	  g_mime_object_set_header((GMimeObject *) msg, "Newsgroups", folder.c_str());
+#endif	  
 
 	  // pseudo mid to get data from cache
 	  std::string message_id = pan_g_mime_message_set_message_id(msg, mid.c_str());
@@ -1065,9 +1073,18 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
 	  const Article* article = _data.xover_add (p.posting_server, folder, subject, author, posted, message_id, refs, sizeof(*msg), 3, xref.str(), true);
 	  if (article)
 	  {
+#ifdef HAVE_GMIME_30
+          GDateTime * postedGDT = g_date_time_new_from_unix_utc(posted);  
+		  g_mime_message_set_date(msg, postedGDT);
+#else		  
 		  g_mime_message_set_date(msg, posted, 0);
+#endif		  
 		  ArticleCache& cache(_data.get_cache());
+#ifdef HAVE_GMIME_30  
+		  ArticleCache :: CacheResponse response = cache.add(mid, g_mime_object_to_string(GMIME_OBJECT(msg), NULL), true);
+#else		  
 		  ArticleCache :: CacheResponse response = cache.add(mid, g_mime_object_to_string(GMIME_OBJECT(msg)), true);
+#endif		  
 		  g_object_unref(msg);
 
 		  if (response.type != ArticleCache::CACHE_OK)
@@ -1506,7 +1523,11 @@ PostUI :: open_draft ()
     {
       GMimeStream * stream = g_mime_stream_mem_new_with_buffer (txt.c_str(), txt.size());
       GMimeParser * parser = g_mime_parser_new_with_stream (stream);
+#ifdef HAVE_GMIME_30
+      GMimeMessage * message = g_mime_parser_construct_message (parser, NULL);
+#else      
       GMimeMessage * message = g_mime_parser_construct_message (parser);
+#endif      
       if (message) {
         set_message (message);
         g_object_unref (G_OBJECT(message));
@@ -1585,46 +1606,78 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   const Profile profile (get_current_profile ());
   std::string s;
   profile.get_from_header (s);
+#ifdef HAVE_GMIME_30
+  g_mime_message_add_mailbox (msg, GMIME_ADDRESS_TYPE_SENDER, NULL, s.c_str());
+#else  
   g_mime_message_set_sender (msg, s.c_str());
+#endif  
 
   // headers from the ui: Subject
   const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
   if (cpch) {
+#ifdef HAVE_GMIME_30
+    g_mime_message_set_subject (msg, cpch, NULL);
+#else    
     g_mime_message_set_subject (msg, cpch);
+#endif
   }
 
   // headers from the ui: To
   const StringView to (gtk_entry_get_text (GTK_ENTRY(_to_entry)));
   if (!to.empty())
+#ifdef HAVE_GMIME_30
+    pan_g_mime_message_add_recipients_from_string (msg, GMIME_ADDRESS_TYPE_TO, to.str);
+#else    
     pan_g_mime_message_add_recipients_from_string (msg, GMIME_RECIPIENT_TYPE_TO, to.str);
+#endif    
 
   // headers from the ui: Newsgroups
   const StringView groups (gtk_entry_get_text (GTK_ENTRY(_groups_entry)));
   if (!groups.empty())
+#ifdef HAVE_GMIME_30
+    g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", groups.str, NULL);
+#else    
     g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", groups.str);
+#endif    
 
   // headers from the ui: Followup-To
   const StringView followupto (gtk_entry_get_text (GTK_ENTRY(_followupto_entry)));
   if (!followupto.empty())
+#ifdef HAVE_GMIME_30
+    g_mime_object_set_header ((GMimeObject *) msg, "Followup-To", followupto.str, NULL);
+#else    
     g_mime_object_set_header ((GMimeObject *) msg, "Followup-To", followupto.str);
+#endif    
 
   // headers from the ui: Reply-To
   const StringView replyto (gtk_entry_get_text (GTK_ENTRY(_replyto_entry)));
   if (!replyto.empty())
+#ifdef HAVE_GMIME_30
+    g_mime_object_set_header ((GMimeObject *) msg, "Reply-To", replyto.str, NULL);
+#else    
     g_mime_object_set_header ((GMimeObject *) msg, "Reply-To", replyto.str);
+#endif    
 
   // headers from posting profile(via prefs): X-Face
   if (!profile.xface.empty())
   {
     std::string f;
     f += " " + profile.xface;
+#ifdef HAVE_GMIME_30
+    g_mime_object_set_header ((GMimeObject *) msg, "X-Face", f.c_str(), NULL);
+#else    
     g_mime_object_set_header ((GMimeObject *) msg, "X-Face", f.c_str());
+#endif    
   }
 
   // add the 'hidden headers'
   foreach_const (str2str_t, _hidden_headers, it)
     if ((mode==DRAFTING) || (it->first.find ("X-Draft-")!=0))
+#ifdef HAVE_GMIME_30
+      g_mime_object_set_header ((GMimeObject *) msg, it->first.c_str(), it->second.c_str(), NULL);
+#else      
       g_mime_object_set_header ((GMimeObject *) msg, it->first.c_str(), it->second.c_str());
+#endif      
 
   // build headers from the 'more headers' entry field
   std::map<std::string,std::string> headers;
@@ -1640,14 +1693,23 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
     val.trim ();
     std::string key_str (key.to_string());
     if (extra_header_is_editable (key, val))
+#ifdef HAVE_GMIME_30
       g_mime_object_set_header ((GMimeObject *) msg, key.to_string().c_str(),
-                                val.to_string().c_str());
+                                val.to_string().c_str(), NULL);
+#else                                
+      g_mime_object_set_header ((GMimeObject *) msg, key.to_string().c_str(),
+                                val.to_string().c_str());                                
+#endif                                
   }
   g_free (pch);
 
   // User-Agent
   if ((mode==POSTING || mode == UPLOADING) && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
+#ifdef HAVE_GMIME_30
+    g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent(), NULL);
+#else    
     g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent());
+#endif    
 
   // Message-ID for single text-only posts
   if (mode==DRAFTING || ((mode==POSTING || mode==UPLOADING) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false))) {
@@ -1677,10 +1739,18 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
     GMimePart * part = g_mime_part_new ();
     pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
 
+#ifdef HAVE_GMIME_30
+    GMimeContentType * type = g_mime_content_type_parse (NULL, pch);
+#else    
     GMimeContentType * type = g_mime_content_type_new_from_string (pch);
+#endif    
     g_free (pch);
     g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
+#ifdef HAVE_GMIME_30
+    g_mime_part_set_content(part, content_object);
+#else    
     g_mime_part_set_content_object (part, content_object);
+#endif    
     if (mode != UPLOADING) g_mime_part_set_content_encoding (part, _enc);
     g_object_unref (content_object);
     g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
@@ -1763,7 +1833,11 @@ PostUI :: save_draft ()
     {
       errno = 0;
       std::ofstream o (filename);
+#ifdef HAVE_GMIME_30
+      char * pch = g_mime_object_to_string ((GMimeObject *) msg, NULL);
+#else      
       char * pch = g_mime_object_to_string ((GMimeObject *) msg);
+#endif      
       o << pch;
       o.close ();
 
@@ -2260,8 +2334,13 @@ PostUI :: set_message (GMimeMessage * message)
   s = utf8ize (g_mime_object_get_header ((GMimeObject *) message, "Reply-To"));
   gtk_entry_set_text (GTK_ENTRY(_replyto_entry), s.c_str());
 
+#ifdef HAVE_GMIME_30
+  InternetAddressList * addresses = g_mime_message_get_addresses (message, GMIME_ADDRESS_TYPE_TO);
+  char * pch  = internet_address_list_to_string (addresses, NULL, true);
+#else  
   InternetAddressList * addresses = g_mime_message_get_recipients (message, GMIME_RECIPIENT_TYPE_TO);
   char * pch  = internet_address_list_to_string (addresses, true);
+#endif  
   s = utf8ize (pch);
   gtk_entry_set_text (GTK_ENTRY(_to_entry), s.c_str());
   g_free (pch);
@@ -2269,8 +2348,15 @@ PostUI :: set_message (GMimeMessage * message)
   // update 'other headers'
   SetMessageForeachHeaderData data;
   const char *name, *value;
+#ifdef HAVE_GMIME_30
+  GMimeHeaderList HList;
+#else  
   GMimeHeaderIter iter;
+#endif  
 
+#ifdef HAVE_GMIME_30
+     // GMime 3.0 not yet implemented
+#else
   if (message->mime_part && g_mime_header_list_get_stream (message->mime_part->headers)) {
     if (g_mime_header_list_get_iter (message->mime_part->headers, &iter)) {
       do {
@@ -2288,6 +2374,7 @@ PostUI :: set_message (GMimeMessage * message)
       set_message_foreach_header_func (name, value, &data);
     } while (g_mime_header_iter_next (&iter));
   }
+#endif
 
   s = utf8ize (data.visible_headers);
   if (!s.empty())
@@ -3055,7 +3142,11 @@ PostUI::draft_save_cb(gpointer ptr)
     char * filename = g_build_filename (draft_filename.c_str(), "autosave", NULL);
 
     std::ofstream o (filename);
+#ifdef HAVE_GMIME_30
+    char * headers (g_mime_object_get_headers ((GMimeObject *) msg, NULL));
+#else    
     char * headers (g_mime_object_get_headers ((GMimeObject *) msg));
+#endif    
     o << headers;
     const std::string body (data->get_body ());
     o << body;

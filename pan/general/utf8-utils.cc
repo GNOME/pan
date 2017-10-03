@@ -129,6 +129,22 @@ pan :: clean_utf8 (const StringView& in_arg)
   return out;
 }
 
+#ifdef HAVE_GMIME_30
+std::string
+pan :: header_to_utf8 (const StringView  & header,
+                       const char        * fallback_charset1,
+                       const char        * fallback_charset2)
+{
+  std::string s = content_to_utf8 (header, fallback_charset1, fallback_charset2);
+  if (header.strstr ("=?")) {
+    char * decoded (g_mime_utils_header_decode_text (NULL, s.c_str()));
+    s = clean_utf8 (decoded);
+    g_free (decoded);
+  }
+  return s;
+}
+
+#else
 std::string
 pan :: header_to_utf8 (const StringView  & header,
                        const char        * fallback_charset1,
@@ -142,6 +158,7 @@ pan :: header_to_utf8 (const StringView  & header,
   }
   return s;
 }
+#endif
 
 std::string
 pan :: mime_part_to_utf8 (GMimePart     * part,
@@ -152,7 +169,11 @@ pan :: mime_part_to_utf8 (GMimePart     * part,
   g_return_val_if_fail (GMIME_IS_PART(part), ret);
   const char * charset =
     g_mime_object_get_content_type_parameter (GMIME_OBJECT (part), "charset");
+#ifdef HAVE_GMIME_30
+  GMimeDataWrapper * content = g_mime_part_get_content (part);
+#else
   GMimeDataWrapper * content = g_mime_part_get_content_object (part);
+#endif
   GMimeStream *stream = g_mime_stream_mem_new ();
 
   g_mime_data_wrapper_write_to_stream (content, stream);

@@ -52,8 +52,8 @@ m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 dnl glib, gmime, and gtk are mandatory prerequisites.
 GLIB_REQUIRED=2.17.6
 GLIB_REQUIRED_FOR_DBUS=2.26.0
-GMIME24_REQUIRED=2.4.0
-GMIME26_REQUIRED=2.5.5
+GMIME26_REQUIRED=2.6.20
+GMIME30_REQUIRED=3.0.0
 GTK_REQUIRED=2.16.0
 GTK3_REQUIRED=3.0.0
 GTKSPELL_REQUIRED=2.0.7
@@ -114,12 +114,16 @@ else
 fi
 
 dnl Check for GMime
-PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED],[have_gmime26=yes],
+PKG_CHECK_MODULES([GMIME], [gmime-3.0 >= $GMIME30_REQUIRED],[have_gmime30=yes],
   [
-    PKG_CHECK_MODULES([GMIME], [gmime-2.4 >= $GMIME24_REQUIRED])
-    have_gmime26=no
+    PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED])
+    have_gmime26=yes
   ]
   )
+
+if test "x$have_gmime30" = "xyes"; then
+   AC_DEFINE(HAVE_GMIME_30,[1],[Gmime 3.0 available])
+fi
 
 dnl Check for GMime cryptography support
 AC_ARG_WITH([gmime-crypto],

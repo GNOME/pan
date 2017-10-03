@@ -480,7 +480,11 @@ MessageCheck :: message_check (const GMimeMessage * message_const,
   }
 
   // one last error check
+#ifdef  HAVE_GMIME_30
+  InternetAddressList * list (g_mime_message_get_addresses (message, GMIME_ADDRESS_TYPE_TO));
+#else  
   InternetAddressList * list (g_mime_message_get_recipients (message, GMIME_RECIPIENT_TYPE_TO));
+#endif  
   const int n_to (internet_address_list_length (list));
   if (!group_qty && !n_to) {
     errors.insert (_("Error: No Recipients."));
