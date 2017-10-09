@@ -114,6 +114,7 @@ else
 fi
 
 dnl Check for GMime
+have_gmime30=no
 PKG_CHECK_MODULES([GMIME], [gmime-3.0 >= $GMIME30_REQUIRED],[have_gmime30=yes],
   [
     PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED])
@@ -122,7 +123,7 @@ PKG_CHECK_MODULES([GMIME], [gmime-3.0 >= $GMIME30_REQUIRED],[have_gmime30=yes],
   )
 
 if test "x$have_gmime30" = "xyes"; then
-   AC_DEFINE(HAVE_GMIME_30,[1],[Gmime 3.0 available])
+   AC_DEFINE(HAVE_GMIME_30,[1],[GMime 3.0 available])
 fi
 
 dnl Check for GMime cryptography support
@@ -131,7 +132,7 @@ AC_ARG_WITH([gmime-crypto],
   [want_gmime_crypto=$withval], [want_gmime_crypto=yes])
 
 if test "x$want_gmime_crypto" = "xyes" ; then
-if test "x$have_gmime26" = "xyes" ; then
+  if test "x$have_gmime26" = "xyes" ; then
     AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[cryptography (PGP) support with GMime 2.6])
   fi
 fi
@@ -347,7 +348,7 @@ Configuration:
         Source code location:   ${srcdir}
         Compiler:               ${CXX}
         With D-Bus:             ${want_dbus}
-        With GMime 2.6+:        ${have_gmime26}
+        With GMime 3.0:         ${have_gmime30}
         With GMime crypto:      ${want_gmime_crypto}
         With GtkSpell:          ${gtkspell_msg}
         With GTK+ 3:            ${gtk_msg}

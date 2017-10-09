@@ -2072,16 +2072,16 @@ BodyPane :: create_followup_or_reply (bool is_reply)
       const std::string& to (reply_to.empty() ? from : reply_to);
 #ifdef HAVE_GMIME_30
       pan_g_mime_message_add_recipients_from_string (msg, GMIME_ADDRESS_TYPE_TO, to.c_str());
-#else      
+#else
       pan_g_mime_message_add_recipients_from_string (msg, GMIME_RECIPIENT_TYPE_TO, to.c_str());
-#endif      
+#endif
     } else {
       const std::string& groups (fup_to.empty() ? newsgroups : fup_to);
 #ifdef HAVE_GMIME_30
       g_mime_object_append_header ((GMimeObject *) msg, "Newsgroups", groups.c_str(), NULL);
-#else      
+#else
       g_mime_object_append_header ((GMimeObject *) msg, "Newsgroups", groups.c_str());
-#endif      
+#endif
     }
 
     // Subject:
@@ -2092,18 +2092,18 @@ BodyPane :: create_followup_or_reply (bool is_reply)
       val.insert (0, "Re: ");
 #ifdef HAVE_GMIME_30
     g_mime_message_set_subject (msg, val.c_str(), NULL);
-#else    
+#else
     g_mime_message_set_subject (msg, val.c_str());
-#endif    
+#endif
 
     // attribution lines
     const char * cpch = g_mime_object_get_header (_message_obj, "From");
     h = header_to_utf8 (cpch, message_charset, group_charset);
 #ifdef HAVE_GMIME_30
     g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Author", h.c_str(), NULL);
-#else    
+#else
     g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Author", h.c_str());
-#endif    
+#endif
 
     cpch = g_mime_message_get_message_id (_message);
     h = header_to_utf8 (cpch, message_charset, group_charset);
@@ -2116,17 +2116,17 @@ BodyPane :: create_followup_or_reply (bool is_reply)
 #ifdef HAVE_GMIME_30
     const char * header_t = "Date";
     const char * tmp_s = g_mime_object_get_header (_message_obj, header_t);
-    const char * tmp = tmp_s;  // fixme: convert time to string
-#else    
+    const char * tmp = tmp_s;  // FIXME: convert time to string
+#else
     char * tmp = g_mime_message_get_date_as_string (_message);
-#endif    
+#endif
     h = header_to_utf8 (tmp, message_charset, group_charset);
 #ifdef HAVE_GMIME_30
     g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Date", h.c_str(), NULL);
-#else    
+#else
     g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Date", h.c_str());
     g_free (tmp);
-#endif    
+#endif
 
     // references
     const char * header = "References";
