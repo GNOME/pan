@@ -109,7 +109,7 @@ URL :: open (const Prefs& prefs, const char * url, Mode mode)
   const char * custom_fallback = mode==WEB ? "firefox" : "thunderbird";
   std::string cmd;
   const std::string env (prefs.get_string (mode_key, get_environment()));
-       if (env == "gnome")   cmd = "gnome-open";
+       if (env == "gnome")   cmd = "xdg-open";
   else if (env == "kde")     cmd = "kfmclient exec";
   else if (env == "mac")     cmd = "open";
   else if (env == "windows") cmd = "rundll32 url.dll,FileProtocolHandler";
