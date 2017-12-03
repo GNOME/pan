@@ -26,7 +26,6 @@ DISTCLEANFILES = \
  pan.desktop
 
 MAINTAINERCLEANFILES = \
- $(srcdir)/INSTALL \
  $(srcdir)/aclocal.m4 \
  $(srcdir)/config.guess \
  $(srcdir)/config.h.in \
