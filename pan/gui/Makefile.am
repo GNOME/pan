@@ -95,7 +95,7 @@ bin_PROGRAMS = \
 if HAVE_WIN32
 WINRC = panrc.rc
 WINRCOBJ = $(WINRC:.rc=.o)
-.rc.o: ../../config.h $(srcdir)/Pan.ico
+.rc.o: ../../config.h $(srcdir)/pan/icons/Pan.ico
 	$(WINDRES) -I . -I $(srcdir) -o $@ -i $<
 else
 WINRC =

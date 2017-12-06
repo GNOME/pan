@@ -42,13 +42,8 @@ EXTRA_DIST = \
  COPYING-DOCS \
  README \
  README.windows \
- Pan.ico \
  pan.appdata.xml.in \
  pan.desktop.in \
- pan.png \
  pan-git.version \
  $(NULL)
-
-icon_DATA = pan.png
-icondir = $(datadir)/pixmaps
 

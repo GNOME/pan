@@ -55,7 +55,7 @@ Root: HKLM; Subkey: "Software\Microsoft\Windows\CurrentVersion\App Paths\Pan.exe
 [Files]
 
 Source: "c:\msys\1.0\home\shk\pan\pan\Pan.exe"; DestDir: "{app}"; Components: component_app; Flags: ignoreversion
-Source: "c:\msys\1.0\home\shk\pan\Pan.ico"; DestDir: "{app}"; Components: component_app; Flags: ignoreversion
+Source: "c:\msys\1.0\home\shk\pan\pan\icons\Pan.ico"; DestDir: "{app}"; Components: component_app; Flags: ignoreversion
 Source: "c:\msys\1.0\home\shk\pan\Changelog"; DestDir: "{app}"; Components: component_app; Flags: ignoreversion
 Source: "c:\msys\1.0\home\shk\pan\COPYING"; DestDir: "{app}"; Components: component_app; Flags: ignoreversion
 Source: "c:\msys\1.0\home\shk\pan\CREDITS"; DestDir: "{app}"; Components: component_app; Flags: ignoreversion
@@ -95,9 +95,9 @@ Source: "c:\msys\1.0\home\shk\pan\po\zh_CN.mo"; DestDir: "{reg:HKLM\SOFTWARE\GTK
 
 [Icons]
 
-Name: "{group}\pan"; Filename: "{app}\Pan.exe"; WorkingDir: "{app}"; IconFilename: "{app}\Pan.ico"
+Name: "{group}\pan"; Filename: "{app}\Pan.exe"; WorkingDir: "{app}"; IconFilename: "{app}\pan\icons\Pan.ico"
 Name: "{group}\Uninstall Pan"; Filename: "{uninstallexe}"
-Name: "{userdesktop}\Pan"; Filename: "{app}\Pan.exe"; WorkingDir: "{app}"; IconFilename: "{app}\Pan.ico"; Tasks: desktopicon
+Name: "{userdesktop}\Pan"; Filename: "{app}\Pan.exe"; WorkingDir: "{app}"; IconFilename: "{app}\pan\icons\Pan.ico"; Tasks: desktopicon
 Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Pan"; Filename: "{app}\Pan.exe"; WorkingDir: "{app}"; Tasks: quicklaunchicon
 
 

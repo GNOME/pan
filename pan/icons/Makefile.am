@@ -1,3 +1,16 @@
+NULL =
+
+public_icons_themes = \
+	hicolor \
+	$(NULL)
+
+public_icons = \
+	hicolor_apps_16x16_pan.png \
+	hicolor_apps_24x24_pan.png \
+	hicolor_apps_32x32_pan.png \
+	hicolor_apps_48x48_pan.png \
+	hicolor_apps_256x256_pan.png \
+	$(NULL)
 
 stock_images = \
 	icon_article_read.png \
@@ -30,7 +43,6 @@ stock_images = \
 	icon_layout_3.png \
 	icon_layout_4.png \
 	icon_layout_5.png \
-	icon_pan_logo.png \
 	icon_pan_about_logo.png \
 	icon_pan.png \
 	icon_read_group.png \
@@ -70,21 +82,69 @@ stock_images = \
   icon_prefs_actions.png \
   icon_prefs_panes.png \
   icon_expand_thread.png \
-  icon_collapse_thread.png
+  icon_collapse_thread.png \
+  $(NULL)
+
+noinst_DATA = \
+	Pan.ico \
+	$(NULL)
 
 EXTRA_DIST = \
-	pan-template.xcf \
-	$(stock_images)
+	$(public_icons) \
+	$(stock_images) \
+	$(noinst_DATA) \
+	$(NULL)
 
 noinst_HEADERS = \
 	pan-pixbufs-internal.h \
-	pan-pixbufs.h
+	pan-pixbufs.h \
+	$(NULL)
+
+gtk_update_icon_cache = gtk-update-icon-cache -f -t
+
+update-icon-cache:
+	@-if test -z "$(DESTDIR)"; then \
+		echo "Updating Gtk icon cache."; \
+		for theme in $(public_icons_themes); do \
+			$(gtk_update_icon_cache) $(datadir)/icons/$$theme; \
+		done; \
+	else \
+		echo "*** Icon cache not updated.  After (un)install, run this:"; \
+		for theme in $(public_icons_themes); do \
+			echo "***   $(gtk_update_icon_cache) $(datadir)/icons/$$theme"; \
+		done; \
+	fi
+
+install-icons:
+	for icon in $(public_icons); do \
+		THEME=`echo $$icon | cut -d_ -f1`; \
+		CONTEXT=`echo $$icon | cut -d_ -f2`; \
+		SIZE=`echo $$icon | cut -d_ -f3`; \
+		ICONFILE=`echo $$icon | cut -d_ -f4`; \
+		mkdir -p $(DESTDIR)$(datadir)/icons/$$THEME/$$SIZE/$$CONTEXT; \
+		$(INSTALL_DATA) $(srcdir)/$$icon $(DESTDIR)$(datadir)/icons/$$THEME/$$SIZE/$$CONTEXT/$$ICONFILE; \
+	done
+
+uninstall-icons:
+	-for icon in $(public_icons); do \
+		THEME=`echo $$icon | cut -d_ -f1`; \
+		CONTEXT=`echo $$icon | cut -d_ -f2`; \
+		SIZE=`echo $$icon | cut -d_ -f3`; \
+		ICONFILE=`echo $$icon | cut -d_ -f4`; \
+		rm -f $(DESTDIR)$(datadir)/icons/$$THEME/$$SIZE/$$CONTEXT/$$ICONFILE; \
+	done
+
+install-data-local: install-icons
+install-data-hook: update-icon-cache
+
+uninstall-local: uninstall-icons
+uninstall-hook: update-icon-cache
 
 pan-pixbufs-internal.h: $(stock_images)
 		-rm -f pan-pixbufs-internal.h
 		var=`echo "$(stock_images)" | sed -e 's,icon_\([^\.]*\)\.png,icon_\1 $(srcdir)/icon_\1.png,g'` ; \
-		   echo $$var; \
-		   gdk-pixbuf-csource --extern --raw --build-list $$var > pan-pixbufs-internal.h
+		echo $$var; \
+		gdk-pixbuf-csource --extern --raw --build-list $$var > pan-pixbufs-internal.h
 
 pan-pixbufs.h: pan-pixbufs-internal.h
 		-rm -f pan-pixbufs.h
