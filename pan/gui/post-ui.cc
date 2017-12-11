@@ -2355,7 +2355,32 @@ PostUI :: set_message (GMimeMessage * message)
 #endif
 
 #ifdef HAVE_GMIME_30
-     // FIXME: GMime 3.0 not yet implemented
+//  FIXME: GMime 3.0
+  int index_v = 0;   
+  int message_count = g_mime_header_list_get_count (message->mime_part->headers);
+  
+  if (message->mime_part && message_count) {
+	do {  
+	  GMimeHeader *GMHeader = g_mime_header_list_get_header_at(message->mime_part->headers, index_v);
+	  value = g_mime_header_get_value(GMHeader);
+	  name = g_mime_header_get_name(GMHeader);
+      set_message_foreach_header_func (name, value, &data);
+      index_v++;
+    } while ( index_v < message_count);
+  }
+
+  index_v = 0;
+  message_count = g_mime_header_list_get_count (GMIME_OBJECT (message)->headers);
+  
+  if (message_count > 0) {
+	do {
+      GMimeHeader *GMHeader = g_mime_header_list_get_header_at(GMIME_OBJECT (message)->headers, index_v);
+	  value = g_mime_header_get_value(GMHeader);
+	  name = g_mime_header_get_name(GMHeader);
+      set_message_foreach_header_func (name, value, &data);
+      index_v++;
+     } while ( index_v < message_count);
+  }    
 #else
   if (message->mime_part && g_mime_header_list_get_stream (message->mime_part->headers)) {
     if (g_mime_header_list_get_iter (message->mime_part->headers, &iter)) {
