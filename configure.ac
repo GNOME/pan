@@ -106,7 +106,7 @@ AC_SUBST(ZLIB_LIBS)
 
 dnl D-Bus support
 AC_ARG_WITH([dbus],
-  AS_HELP_STRING([--with-dbus],[enable D-Bus support (normally: no)]),[want_dbus=$withval], [want_dbus=no])
+  AS_HELP_STRING([--with-dbus],[enable D-Bus support (normally: no)]), [want_dbus=$withval], [want_dbus=no])
 if test "x$want_dbus" = "xyes" ; then
   AM_PATH_GLIB_2_0($GLIB_REQUIRED_FOR_DBUS,AC_DEFINE(HAVE_DBUS,[1],[D-Bus support for multiple Pan instances],exit 1,gobject gmodule gthread))
 else
@@ -114,16 +114,15 @@ else
 fi
 
 dnl Check for GMime
-have_gmime30=no
-PKG_CHECK_MODULES([GMIME], [gmime-3.0 >= $GMIME30_REQUIRED],[have_gmime30=yes],
+AC_ARG_WITH([gmime30],
+  AS_HELP_STRING([--with-gmime30],[enable GMime 3.0 support (experimental, normally: no)]), [want_gmime30=$withval], [want_gmime30=no])
+if test "x$want_gmime30" = "xyes" ; then
+  PKG_CHECK_MODULES([GMIME], [gmime-3.0 >= $GMIME30_REQUIRED],
   [
-    PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED])
-    have_gmime26=yes
-  ]
-  )
-
-if test "x$have_gmime30" = "xyes"; then
-   AC_DEFINE(HAVE_GMIME_30,[1],[GMime 3.0 available])
+  AC_DEFINE(HAVE_GMIME_30,[1],[GMime 3.0 available])
+  ])
+else
+  PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED])
 fi
 
 dnl Check for GMime cryptography support
@@ -132,9 +131,7 @@ AC_ARG_WITH([gmime-crypto],
   [want_gmime_crypto=$withval], [want_gmime_crypto=yes])
 
 if test "x$want_gmime_crypto" = "xyes" ; then
-  if test "x$have_gmime26" = "xyes" ; then
-    AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[cryptography (PGP) support with GMime 2.6])
-  fi
+  AC_DEFINE(HAVE_GMIME_CRYPTO,[1],[cryptography (PGP) support with GMime])
 fi
 
 dnl GtkSpell support
@@ -184,7 +181,7 @@ AC_SUBST(ENCHANT_LIBS)
 
 dnl WebKitGTK+ support
 AC_ARG_WITH([webkit],
-  AS_HELP_STRING([--with-webkit],[enable WebKitGTK+ support (normally: no)]), [want_webkit=$withval], [want_webkit=no])
+  AS_HELP_STRING([--with-webkit],[enable WebKitGTK+ support (experimental, normally: no)]), [want_webkit=$withval], [want_webkit=no])
 if test "x$want_gtk3" = "xyes" ; then
   if test "x$want_webkit" = "xyes" ; then
     PKG_CHECK_MODULES([WEBKITGTK],[webkitgtk-3.0 >= $WEBKIT_REQUIRED],
@@ -231,7 +228,7 @@ if test "x$enable_libnotify" = "xyes" ; then
   AC_SUBST([LIBNOTIFY_CFLAGS])
   AC_SUBST([LIBNOTIFY_LIBS])
   if test "x$HAVE_LIBNOTIFY" = "xyes"; then
-    AC_DEFINE([HAVE_LIBNOTIFY],[1],[libnotify support for popup notifications (experimental)])
+    AC_DEFINE([HAVE_LIBNOTIFY],[1],[libnotify support for popup notifications])
   fi
 fi
 
@@ -348,7 +345,7 @@ Configuration:
         Source code location:   ${srcdir}
         Compiler:               ${CXX}
         With D-Bus:             ${want_dbus}
-        With GMime 3.0:         ${have_gmime30}
+        With GMime 3.0:         ${want_gmime30}
         With GMime crypto:      ${want_gmime_crypto}
         With GtkSpell:          ${gtkspell_msg}
         With GTK+ 3:            ${gtk_msg}
