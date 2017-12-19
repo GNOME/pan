@@ -1,0 +1,55 @@
+.TH PAN 1
+.SH NAME
+Pan \- read and post Usenet articles
+.SH SYNOPSIS
+.B pan
+[\fIOPTIONS...\fR]
+[\fBheaders\fR:\fIGROUP-NAME\fR | \fBnews\fR:\fIMESSAGE-ID\fR]
+.SH DESCRIPTION
+\fBPan\fR is a Usenet newsreader that is good at both text and binaries.
+It supports offline reading, scoring and killfiles, yEnc, NZB, PGP
+handling, multiple servers, and secure connections.
+.SH USAGE
+\fBpan\fR is a program that can be run headless in non-GUI mode, allowing
+for batch processing of NZB files, downloading headers, and more.
+.SH OPTIONS
+.SS "General Options"
+.TP
+.B \-h, \-\-help
+Print usage information and exit.
+.TP
+.B \-v, \-\-version
+Print release version and exit.
+.TP
+.B \-\-verbose
+Be verbose (in non-GUI mode).
+.TP
+.B \-\-debug
+Run in debug mode.
+.SS "URL Options"
+.TP
+.BR headers:\fIGROUP-NAME\fR
+Download new headers for the \fIGROUP-NAME\fR newsgroup.
+.TP
+.B news:\fIMESSAGE-ID\fR
+When specified together with \fB\-\-no-gui\fR, dump the \fIMESSAGE-ID\fR
+article to standard output.
+.SS "NZB Batch Options"
+.TP
+.B \-\-nzb \fIFILE-1 FILE-2 ...\fR
+Process NZB files in non-GUI mode.
+.TP
+.B \-o, \-\-output=\fIPATH\fR
+Path to save attachments listed in the NZB file(s).
+.TP
+.B \-\-no-gui
+Only show console output, not the download queue.
+.SH ENVIRONMENT
+.TP
+.B PAN_HOME
+User data directory to use. Defaults to \fI$HOME/.pan2\fR.
+.TP
+.B SSL_CERT_DIR, SSL_DIR
+Directories to search for SSL certificates.
+.SH BUGS
+To report a bug, visit: \fIhttp://pan.rebelbase.com/bugs/\fR

@@ -16,6 +16,8 @@ pan.appdata.xml: pan.appdata.xml.in
 appdatadir = $(datadir)/appdata
 appdata_DATA = pan.appdata.xml
 
+man_MANS = pan.1
+
 CLEANFILES = \
  pan.appdata.xml \
  pan.desktop \
@@ -45,5 +47,6 @@ EXTRA_DIST = \
  pan.appdata.xml.in \
  pan.desktop.in \
  pan-git.version \
+ $(man_MANS) \
  $(NULL)
 

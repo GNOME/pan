@@ -631,20 +631,23 @@ namespace
     console();
     std::cerr << "Pan " << VERSION << "\n\n" <<
 _("General Options\n"
-"  -h, --help               Show this usage page.\n"
+"  -h, --help               Show this usage information and exit.\n"
+"  -v, --version            Print release version and exit.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
+"  --debug                  Run in debug mode.\n"
 "\n"
 "URL Options\n"
-
-// NOT IMPLEMENTED
-//"  news:message-id          Show the specified article.\n"
-//"  news:group.name          Show the specified newsgroup.\n"
+/** NOT IMPLEMENTED
+"  news:message-id          Show the specified article.\n"
+"  news:group.name          Show the specified newsgroup.\n"
+*/
 "  headers:group.name       Download new headers for the specified newsgroup.\n"
-"  --no-gui                 On news:message-id, dump the article to stdout.\n"
+"  news:message-id          When specified together with --no-gui, dump\n"
+"                           the message-id article to standard output.\n"
 "\n"
 "NZB Batch Options\n"
-"  --nzb file1 file2 …      Process nzb files without launching all of Pan.\n"
-"  -o path, --output=path   Path to save attachments listed in the nzb files.\n"
+"  --nzb file1 file2 …      Process NZB files in non-GUI mode.\n"
+"  -o path, --output=path   Path to save attachments listed in the NZB file(s).\n"
 "  --no-gui                 Only show console output, not the download queue.\n") << std::endl;
   }
 
