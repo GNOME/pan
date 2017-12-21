@@ -127,7 +127,7 @@ fi
 
 dnl Check for GMime cryptography support
 AC_ARG_WITH([gmime-crypto],
-  AS_HELP_STRING([--with-gmime-crypto],[enable GMime cryptography support (overrides auto-on if GMime 2.6 is found) (normally: yes)]),
+  AS_HELP_STRING([--with-gmime-crypto],[enable GMime cryptography support (normally: yes)]),
   [want_gmime_crypto=$withval], [want_gmime_crypto=yes])
 
 if test "x$want_gmime_crypto" = "xyes" ; then

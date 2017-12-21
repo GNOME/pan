@@ -4,6 +4,52 @@
     <http://pan.rebelbase.com/>.
 
 
+THE SALES PITCH
+
+    Pan is good for Reading News.
+
+        * Pan is the only Unix newsreader to score 100% on the
+          Good Net-Keeping Seal of Approval newsreader evaluations.
+        * Pan has keyboard bindings for mouse-free newsreading.
+        * Basic newsreader features, such as reading and writing news,
+          threading articles, and replying via email, are supported.
+        * Articles can be sorted by author, date, subject, or the number
+          of unread children in the thread.
+        * Multiple connections are supported, so articles can be read
+          while binaries are downloading.
+        * Articles can be filtered by regular expression matching,
+          read/unread state, binary/text, etc.
+        * Works well as an offline reader.
+        * Articles can be queued until you want to go online, and can be
+          re-edited at any point before they're posted.
+        * A flexible rules system allows you to delete, hide, download,
+          or notify you of, etc. articles that match a subject, or are
+          posted by a particular user, and so on.
+        * The same system can be used to define automatic actions on behalf
+          of the user: auto-download, auto-cache, auto-delete etc.
+        * Groups can be filtered by regular expression matching
+          subscribed/new/all, etc.
+
+    Pan is good at Binaries.
+
+        * Attached images can be shown inline.
+        * Pan can download and thread articles as quickly as bandwidth allows.
+        * uuencode, MIME, and yEnc attachments are all supported.
+        * A task manager lets you reorder, cancel, and resubmit download tasks.
+        * Multiple connections are supported, so many binaries can
+          be downloaded simultaneously.
+        * Multipart articles are automatically grouped together.
+        * Non-binary, incomplete multipart, and saved messages can be filtered
+          out of the article list.
+        * Files can be attached to a Usenet article and are
+          automatically encrypted with yEnc, threaded and referenced by Pan.
+        * Articles can be encrypted or signed with a public or private PGP key
+          for enhanced privacy and security.
+        * Connections can be encrypted with the TLS protocol.
+
+    The rest of the sales pitch is at <http://pan.rebelbase.com/features/>.
+
+
 RELEASE NOTES
 
         * You are advised to back up your $PAN_HOME directory (by default,
@@ -51,10 +97,11 @@ REQUIREMENTS
           <http://www.galago-project.org/news/index.php>
 
         * GNOME Keyring 3.2.0 or higher for password storage
-          <https://live.gnome.org/GnomeKeyring>
-          (libsecret 0.16 or higher and gcr 3.20 or higher when using GTK+ 3
-          <https://developer.gnome.org/libsecret/>
-          <https://developer.gnome.org/gcr/>)
+          <https://wiki.gnome.org/Projects/GnomeKeyring>
+
+        * libsecret 0.16 or higher and gcr 3.20 or higher for password storage
+          when using GTK+ 3 <https://developer.gnome.org/libsecret/>
+          <https://developer.gnome.org/gcr/>
 
         * D-Bus to support running multiple Pan instances
           <http://www.freedesktop.org/wiki/Software/dbus>
@@ -62,69 +109,40 @@ REQUIREMENTS
         * GnuTLS 3.0.0 or higher for encrypted connections (TLS 1.x)
           <http://www.gnu.org/software/gnutls/>
 
-    Run the following command to get a list of available options that you can
-    enable or disable at configure time:
+        * Yelp Tools for built-in user manual
+          <https://wiki.gnome.org/Apps/Yelp/Tools>
+
+    The following libraries are experimental and not suitable for any use other
+    than testing. Use at your own risk:
+
+        * GMime 3.0.0 or higher <http://spruce.sourceforge.net/gmime/>
+          (optionally with PGP cryptography support)
+
+        * WebKitGTK+ 1.8.1 or higher for embedded HTML
+          <https://webkitgtk.org/>
+
+    Run the following command to get a list of all options that you can enable
+    or disable at configure time:
 
     ./configure --help
 
 
-THE SALES PITCH
-
-    Pan is good for Reading News.
-
-        * Pan is the only Unix newsreader to score 100% on the
-          Good Net-Keeping Seal of Approval newsreader evaluations.
-        * Pan has keyboard bindings for mouse-free newsreading.
-        * Basic newsreader features, such as reading and writing news,
-          threading articles, and replying via email, are supported.
-        * Articles can be sorted by author, date, subject, or the number
-          of unread children in the thread.
-        * Multiple connections are supported, so articles can be read
-          while binaries are downloading.
-        * Articles can be filtered by regular expression matching,
-          read/unread state, binary/text, etc.
-        * Works well as an offline reader.
-        * Articles can be queued until you want to go online, and can be
-          re-edited at any point before they're posted.
-        * A flexible rules system allows you to delete, hide, download,
-          or notify you of, etc. articles that match a subject, or are
-          posted by a particular user, and so on.
-        * The same system can be used to define automatic actions on behalf
-          of the user: auto-download, auto-cache, auto-delete etc.
-        * Groups can be filtered by regular expression matching
-          subscribed/new/all, etc.
-
-    Pan is good at Binaries.
-
-        * Attached images can be shown inline.
-        * Pan can download and thread articles as quickly as bandwidth allows.
-        * uuencode, MIME, and yEnc attachments are all supported.
-        * A task manager lets you reorder, cancel, and resubmit download tasks.
-        * Multiple connections are supported, so many binaries can
-          be downloaded simultaneously.
-        * Multipart articles are automatically grouped together.
-        * Non-binary, incomplete multipart, and saved messages can be filtered
-          out of the article list.
-        * Files can be attached to a Usenet article and are
-          automatically encrypted with yEnc, threaded and referenced by Pan.
-        * Articles can be encrypted or signed with a public or private PGP key
-          for enhanced privacy and security.
-        * Connections can be encrypted with the TLS 1.0 protocol.
-
-    The rest of the sales pitch is at <http://pan.rebelbase.com/features/>.
-
-
 INSTALLATION
 
-    Run the following command to build and install Pan configured with the
-    default options:
+    Run the following command to build Pan configured with the default options:
 
-    ./configure && make && sudo make install
+    ./configure && make
 
-    When building and installing from the Git repository, run the following
-    command instead:
+    This will result in the executable ./pan/gui/pan.
 
-    ./autogen.sh && make && sudo make install
+    When building Pan from the Git repository, run the following command
+    instead:
+
+    ./autogen.sh && make
+
+    Finally, run the following command as root to install Pan:
+
+    make install
 
 
 UPGRADING
