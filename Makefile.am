@@ -16,11 +16,21 @@ pan.appdata.xml: pan.appdata.xml.in
 appdatadir = $(datadir)/appdata
 appdata_DATA = pan.appdata.xml
 
+dbusservicedir = $(datadir)/dbus-1/services
+dbusservice_DATA = news.pan.NZB.service
+
+news.pan.NZB.service: Makefile
+	$(AM_V_GEN) (echo '[D-BUS Service]'; \
+		echo 'Name=news.pan.NZB'; \
+		echo 'Exec=${bindir}/pan') > $@.tmp && \
+		mv $@.tmp $@
+
 man_MANS = pan.1
 
 CLEANFILES = \
  $(appdata_DATA) \
- $(desktop_DATA)
+ $(desktop_DATA) \
+ $(dbusservice_DATA)
 
 DISTCLEANFILES = \
  README.windows \
@@ -43,6 +53,7 @@ EXTRA_DIST = \
  COPYING-DOCS \
  README \
  README.windows \
+ news.pan.NZB.service \
  pan.appdata.xml.in \
  pan.desktop.in \
  pan-git.version \
