@@ -19,13 +19,12 @@ appdata_DATA = pan.appdata.xml
 man_MANS = pan.1
 
 CLEANFILES = \
- pan.appdata.xml \
- pan.desktop \
- $(appdata_DATA)
+ $(appdata_DATA) \
+ $(desktop_DATA)
 
 DISTCLEANFILES = \
- pan.appdata.xml \
- pan.desktop
+ README.windows \
+ pan-git.version
 
 MAINTAINERCLEANFILES = \
  $(srcdir)/aclocal.m4 \
