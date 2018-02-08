@@ -1152,7 +1152,8 @@ main (int argc, char *argv[])
   if (!data.get_servers().empty())
   {
     // free secure passwords
-    foreach(quarks_t, data.get_servers(), it)
+    quarks_t srv_list = data.get_servers();
+    foreach(quarks_t, srv_list, it)
     {
       Data::Server* s(data.find_server(*it));
       if (s && s->gkr_pw)
