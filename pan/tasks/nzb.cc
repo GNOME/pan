@@ -113,6 +113,8 @@ namespace
                       gpointer             user_data,
                       GError             **error           UNUSED)
   {
+    static Quark null_mid;
+
     MyContext& mc (*static_cast<MyContext*>(user_data));
 
     if (!strcmp (element_name, "file")) {
@@ -123,7 +125,9 @@ namespace
         else if (!strcmp (*k,"date"))    mc.a.time_posted = strtoul(*v,0,10);
       }
     }
-
+    else if (!strcmp (element_name, "segments")) {
+        mc.parts.init (null_mid);
+    }
     else if (!strcmp (element_name, "segment")) {
       mc.bytes = 0;
       mc.number = 0;
