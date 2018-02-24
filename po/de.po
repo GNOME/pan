@@ -5,7 +5,7 @@
 # Christian Meyer <chrisime@gnome.org>, 2000, 2001, 2003.
 # Christian Neumair <chris@gnome-de.org>, 2002, 2003.
 # Matthias Warkus <mawarkus@gnome.org>, 2000.
-# Mario Blättermann <mario.blaettermann@gmail.com>, 2009, 2012, 2016-2017.
+# Mario Blättermann <mario.blaettermann@gmail.com>, 2009, 2012, 2016-2018.
 #
 # Artikelkopfzeile hört sich echt beknackt an, hat irgendjemand einen
 # besseren Plan?
@@ -41,8 +41,8 @@ msgstr ""
 "Project-Id-Version: pan2 master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-09-28 13:50+0000\n"
-"PO-Revision-Date: 2017-10-01 20:17+0200\n"
+"POT-Creation-Date: 2017-12-19 21:34+0000\n"
+"PO-Revision-Date: 2018-02-24 13:30+0100\n"
 "Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -50,7 +50,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.6\n"
 
 # D'accord, und so bleibt's jetzt, das Hinundhergehüpfe im Menü macht wahnsinnig. -bg
 #: pan.appdata.xml.in:5
@@ -72,7 +72,7 @@ msgstr ""
 "Killfiles, yEnc, NZB, Hochladen binärer Inhalte, Umgang mit PGP, Multiserver "
 "und sichere Verbindungen."
 
-#: pan.appdata.xml.in:13
+#: pan.appdata.xml.in:11
 msgid ""
 "It is also the only Unix newsreader to get a perfect score on the Good Net-"
 "Keeping Seal of Approval evaluations."
@@ -81,8 +81,8 @@ msgstr ""
 "»Good NetKeeping Seal of Approval« hat."
 
 #. update the titlebar
-#: pan.appdata.xml.in:27 pan.desktop.in:3 pan/gui/dl-headers-ui.cc:106
-#: pan/gui/gui.cc:1041 pan/gui/gui.cc:1666 pan/gui/gui.cc:1986
+#: pan.appdata.xml.in:22 pan.desktop.in:3 pan/gui/dl-headers-ui.cc:106
+#: pan/gui/gui.cc:1045 pan/gui/gui.cc:1718 pan/gui/gui.cc:2038
 #: pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
@@ -98,7 +98,7 @@ msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
 msgstr "usenet;news;newsreader;newsgruppe;artikel;yenc;nzb;"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: pan.desktop.in:10
+#: pan.desktop.in:11
 msgid "pan"
 msgstr "pan"
 
@@ -109,7 +109,7 @@ msgstr "Fehler beim Öffnen des Ordners »%s«: %s"
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
-#: pan/gui/post-ui.cc:1777
+#: pan/gui/post-ui.cc:1851
 #, c-format
 msgid "Unable to save “%s” %s"
 msgstr "»%s« konnte nicht gespeichert werden: %s"
@@ -249,7 +249,7 @@ msgstr "?"
 msgid "Can’t use regular expression “%s”: %s"
 msgstr "Regulärer Ausdruck »%s« kann nicht angewendet werden: %s"
 
-#: pan/general/utf8-utils.cc:213
+#: pan/general/utf8-utils.cc:234
 msgid "Couldn’t determine article encoding.  Non-UTF8 characters were removed."
 msgstr ""
 "Zeichenkodierung des Artikels konnte nicht erkannt werden. Nicht-UTF8-"
@@ -853,51 +853,51 @@ msgstr "S_tränge zutreffender Artikel anzeigen"
 msgid "Show Matching Articles’ _Subthreads"
 msgstr "_Unterstränge zutreffender Artikel anzeigen"
 
-#: pan/gui/body-pane.cc:1052
+#: pan/gui/body-pane.cc:1056
 msgid "Unnamed File"
 msgstr "Unbenannte Datei"
 
-#: pan/gui/body-pane.cc:1133 pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1314
-#: pan/gui/header-pane.cc:1754 pan/gui/post-ui.cc:2640 pan/gui/prefs-ui.cc:855
+#: pan/gui/body-pane.cc:1137 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1314
+#: pan/gui/header-pane.cc:1754 pan/gui/post-ui.cc:2752 pan/gui/prefs-ui.cc:855
 #: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Betreff"
 
-#: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:1957
+#: pan/gui/body-pane.cc:1139 pan/gui/gui.cc:2009
 msgid "From"
 msgstr "Von"
 
-#: pan/gui/body-pane.cc:1137 pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1833
+#: pan/gui/body-pane.cc:1141 pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1833
 #: pan/gui/log-ui.cc:307 pan/gui/prefs-ui.cc:851
 msgid "Date"
 msgstr "Datum"
 
-#: pan/gui/body-pane.cc:1144
+#: pan/gui/body-pane.cc:1148
 msgid "Newsgroups"
 msgstr "Gruppen"
 
-#: pan/gui/body-pane.cc:1151 pan/gui/body-pane.cc:1159
-#: pan/gui/body-pane.cc:1166
+#: pan/gui/body-pane.cc:1155 pan/gui/body-pane.cc:1163
+#: pan/gui/body-pane.cc:1170
 msgid "User-Agent"
 msgstr "User-Agent"
 
-#: pan/gui/body-pane.cc:1172
+#: pan/gui/body-pane.cc:1176
 msgid "Followup-To"
 msgstr "Fortschrift in"
 
-#: pan/gui/body-pane.cc:1182
+#: pan/gui/body-pane.cc:1186
 msgid "Reply-To"
 msgstr "Mailantwort an"
 
-#: pan/gui/body-pane.cc:1234
+#: pan/gui/body-pane.cc:1238
 msgid " from "
 msgstr " von "
 
-#: pan/gui/body-pane.cc:1236
+#: pan/gui/body-pane.cc:1240
 msgid " at "
 msgstr " an "
 
-#: pan/gui/body-pane.cc:1325
+#: pan/gui/body-pane.cc:1333
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
@@ -912,31 +912,31 @@ msgstr ""
 "<b>Gültig bis</b> : %s\n"
 "<b>Erstellungsdatum</b> : %s"
 
-#: pan/gui/body-pane.cc:1330
+#: pan/gui/body-pane.cc:1338
 msgid "always"
 msgstr "Immer"
 
-#: pan/gui/body-pane.cc:1550
+#: pan/gui/body-pane.cc:1558
 msgid "Copy _URL"
 msgstr "_Adresse kopieren"
 
-#: pan/gui/body-pane.cc:1760
+#: pan/gui/body-pane.cc:1768
 msgid "Save Attachment As…"
 msgstr "Anhang speichern unter …"
 
-#: pan/gui/body-pane.cc:1763
+#: pan/gui/body-pane.cc:1771
 msgid "Save All Attachments"
 msgstr "Alle Anhänge speichern"
 
-#: pan/gui/body-pane.cc:1838
+#: pan/gui/body-pane.cc:1846
 msgid "Attachments:"
 msgstr "Anlagen:"
 
-#: pan/gui/body-pane.cc:1866
+#: pan/gui/body-pane.cc:1874
 msgid "Text View"
 msgstr "Textansicht"
 
-#: pan/gui/body-pane.cc:1875
+#: pan/gui/body-pane.cc:1883
 msgid "HTML View"
 msgstr "HTML-Ansicht"
 
@@ -1048,7 +1048,7 @@ msgstr "Ukrainisch"
 msgid "Visual"
 msgstr "Visuell"
 
-#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2155 pan/gui/post-ui.cc:554
+#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:554
 #: pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Zeichensatz"
@@ -1128,7 +1128,7 @@ msgstr "Eigenschaften für Gruppen"
 #: pan/gui/group-prefs-dialog.cc:290
 #, c-format
 msgid "Properties for %s"
-msgstr "Eigenschaften von »%s«"
+msgstr "Eigenschaften von %s"
 
 #: pan/gui/group-prefs-dialog.cc:298
 msgid "Character _encoding:"
@@ -1174,69 +1174,69 @@ msgstr "Unbenannt.nzb"
 msgid "Save NZB File as…"
 msgstr "NZB-Datei speichern unter …"
 
-#: pan/gui/gui.cc:809
+#: pan/gui/gui.cc:813
 msgid "Import NZB Files"
 msgstr "NZB-Dateien importieren"
 
-#: pan/gui/gui.cc:817 pan/gui/post-ui.cc:3339
+#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3455
 msgid "NZB Files"
 msgstr "NZB-Dateien"
 
-#: pan/gui/gui.cc:822
+#: pan/gui/gui.cc:826
 msgid "All Files"
 msgstr "Alle Dateien"
 
-#: pan/gui/gui.cc:1335
+#: pan/gui/gui.cc:1344
 msgid "Unable to supersede article."
 msgstr "Artikel konnte nicht ersetzt werden."
 
-#: pan/gui/gui.cc:1336 pan/gui/gui.cc:1410
+#: pan/gui/gui.cc:1345 pan/gui/gui.cc:1441
 msgid "The article doesn’t match any of your posting profiles."
 msgstr "Dieser Artikel trifft auf keines Ihrer Posting-Profile zu."
 
-#: pan/gui/gui.cc:1383
+#: pan/gui/gui.cc:1410
 msgid "Revise and send this article to replace the old one."
 msgstr ""
 "Diesen Artikel revidieren und versenden, um die vorherige Version zu "
 "ersetzen."
 
-#: pan/gui/gui.cc:1384 pan/gui/gui.cc:1447
+#: pan/gui/gui.cc:1411 pan/gui/gui.cc:1491
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr ""
 "Etwas Geduld bitte! Es dauert einige Zeit, bis Ihre Änderungen wirksam "
 "werden."
 
-#: pan/gui/gui.cc:1409
+#: pan/gui/gui.cc:1440
 msgid "Unable to cancel article."
 msgstr "Artikel konnte nicht widerrufen werden."
 
-#: pan/gui/gui.cc:1446
+#: pan/gui/gui.cc:1490
 msgid "Send this article to ask your server to cancel your other one."
 msgstr ""
 "Diesen Artikel versenden, um den Server um den Widerruf der anderen Version "
 "zu bitten."
 
-#: pan/gui/gui.cc:1464
+#: pan/gui/gui.cc:1508
 msgid "You have marked some articles for deletion."
 msgstr "Sie haben einige Artikel zum Löschen markiert."
 
-#: pan/gui/gui.cc:1465
+#: pan/gui/gui.cc:1509
 msgid "Are you sure you want to delete them?"
 msgstr "Wollen Sie diese wirklich löschen?"
 
-#: pan/gui/gui.cc:1491
+#: pan/gui/gui.cc:1535
 msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr "Wollen Sie dies dauerhaft akzeptieren (nachträglich änderbar)?"
 
-#: pan/gui/gui.cc:1637
+#: pan/gui/gui.cc:1689
 msgid "Unable to open help file."
 msgstr "Die Hilfedatei konnte nicht geöffnet werden."
 
-#: pan/gui/gui.cc:1669
+#: pan/gui/gui.cc:1721
 msgid "Copyright © 2002-2017 Charles Kerr and others"
 msgstr "Copyright © 2002-2017 Charles Kerr und andere"
 
-#: pan/gui/gui.cc:1674
+#: pan/gui/gui.cc:1726
 msgid "translator-credits"
 msgstr ""
 "Manuel Borchers <manuel.borchers@berlin.de>\n"
@@ -1248,69 +1248,69 @@ msgstr ""
 "Karsten Weiss <knweiss@gmx.de>\n"
 "Mario Blättermann <mario.blaettermann@gmail.com>"
 
-#: pan/gui/gui.cc:1802
+#: pan/gui/gui.cc:1854
 msgid "_1. Group Pane"
 msgstr "_1. Gruppenliste"
 
-#: pan/gui/gui.cc:1803
+#: pan/gui/gui.cc:1855
 msgid "_2. Header Pane"
 msgstr "_2. Kopfzeilenliste"
 
-#: pan/gui/gui.cc:1804
+#: pan/gui/gui.cc:1856
 msgid "_3. Body Pane"
 msgstr "_3. Artikeltext"
 
-#: pan/gui/gui.cc:1894 pan/gui/gui.cc:1909
+#: pan/gui/gui.cc:1946 pan/gui/gui.cc:1961
 msgid " Bytes"
 msgstr " Bytes"
 
-#: pan/gui/gui.cc:1897
+#: pan/gui/gui.cc:1949
 msgid " KB"
 msgstr " kB"
 
-#: pan/gui/gui.cc:1900
+#: pan/gui/gui.cc:1952
 msgid " MB"
 msgstr " MB"
 
-#: pan/gui/gui.cc:1903
+#: pan/gui/gui.cc:1955
 msgid " GB"
 msgstr " GB"
 
-#: pan/gui/gui.cc:1906
+#: pan/gui/gui.cc:1958
 msgid " TB"
 msgstr " TB"
 
-#: pan/gui/gui.cc:1938
+#: pan/gui/gui.cc:1990
 #, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
 msgstr[0] "Artikel ist vollständig mit %d Anlage."
 msgstr[1] "Artikel besitzt alle %d Anlagen."
 
-#: pan/gui/gui.cc:1940
+#: pan/gui/gui.cc:1992
 #, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Diesem Artikel fehlt %d Teil."
 msgstr[1] "Diesem Artikel fehlen %d seiner %d Teile:"
 
-#: pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1316 pan/gui/task-pane.cc:799
+#: pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1316 pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "Nachrichtenkennung"
 
-#: pan/gui/gui.cc:1959 pan/gui/header-pane.cc:1802 pan/gui/prefs-ui.cc:852
+#: pan/gui/gui.cc:2011 pan/gui/header-pane.cc:1802 pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Zeilen"
 
-#: pan/gui/gui.cc:1959
+#: pan/gui/gui.cc:2011
 msgid "Size"
 msgstr "Größe"
 
-#: pan/gui/gui.cc:1960 pan/gui/header-pane.cc:1818 pan/gui/prefs-ui.cc:850
+#: pan/gui/gui.cc:2012 pan/gui/header-pane.cc:1818 pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr "Bytes"
 
-#: pan/gui/gui.cc:2010
+#: pan/gui/gui.cc:2062
 msgid ""
 "Error loading iconv library. Encoding certain character sets will not work "
 "in GUI."
@@ -1318,48 +1318,48 @@ msgstr ""
 "Fehler beim Laden der iconv-Bibliothek. Einige Zeichensätze in der "
 "Benutzeroberfläche werden nicht enkodiert."
 
-#: pan/gui/gui.cc:2156
+#: pan/gui/gui.cc:2208
 msgid "Body Pane Encoding"
 msgstr "Kodierung des Artikeltexts"
 
-#: pan/gui/gui.cc:2187 pan/gui/task-pane.cc:609
+#: pan/gui/gui.cc:2239 pan/gui/task-pane.cc:609
 msgid "Offline"
 msgstr "Offline"
 
-#: pan/gui/gui.cc:2191
+#: pan/gui/gui.cc:2243
 #, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
 msgstr[0] "%d Verbindung werden getrennt"
 msgstr[1] "%d Verbindungen werden getrennt"
 
-#: pan/gui/gui.cc:2193 pan/gui/gui.cc:2223
+#: pan/gui/gui.cc:2245 pan/gui/gui.cc:2275
 msgid "No Connections"
 msgstr "Keine Verbindungen"
 
-#: pan/gui/gui.cc:2197
+#: pan/gui/gui.cc:2249
 msgid "Connecting"
 msgstr "Es wird verbunden"
 
-#: pan/gui/gui.cc:2210
+#: pan/gui/gui.cc:2262
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d untätig, %d aktiv @ %.1f KiBps"
 
-#: pan/gui/gui.cc:2266
+#: pan/gui/gui.cc:2318
 msgid "No Tasks"
 msgstr "Keine Aufgaben"
 
-#: pan/gui/gui.cc:2268 pan/gui/prefs-ui.cc:1090
+#: pan/gui/gui.cc:2320 pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: pan/gui/gui.cc:2285 pan/gui/task-pane.cc:475
+#: pan/gui/gui.cc:2337 pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d∶%02d∶%02d"
 msgstr "%lu Aufgaben, %s, %.1f KiBps, ETA %d:%02d:%02d"
 
-#: pan/gui/gui.cc:2337
+#: pan/gui/gui.cc:2389
 msgid ""
 "Pan is now offline. Please see “File → Event Log” and correct the problem, "
 "then use “File → Work Online” to continue."
@@ -1435,53 +1435,63 @@ msgstr ""
 #: pan/gui/pan.cc:633
 msgid ""
 "General Options\n"
-"  -h, --help               Show this usage page.\n"
+"  -h, --help               Show this usage information and exit.\n"
+"  -v, --version            Print release version and exit.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
+"  --debug                  Run in debug mode.\n"
 "\n"
 "URL Options\n"
 "  headers:group.name       Download new headers for the specified "
 "newsgroup.\n"
-"  --no-gui                 On news:message-id, dump the article to stdout.\n"
+"  news:message-id          When specified together with --no-gui, dump\n"
+"                           the message-id article to standard output.\n"
 "\n"
 "NZB Batch Options\n"
-"  --nzb file1 file2 …      Process nzb files without launching all of Pan.\n"
-"  -o path, --output=path   Path to save attachments listed in the nzb "
-"files.\n"
+"  --nzb file1 file2 …      Process NZB files in non-GUI mode.\n"
+"  -o path, --output=path   Path to save attachments listed in the NZB "
+"file(s).\n"
 "  --no-gui                 Only show console output, not the download "
 "queue.\n"
 msgstr ""
 "Allgemeine Optionen\n"
 "  -h, --help               Diese Hilfeseite anzeigen.\n"
+"  -v, --version            Version ausgeben und beenden.\n"
 "  --verbose                Ausführliche Ausgabe (im Textmodus).\n"
+"  --debug                  Im Fehlerdiagnosemodus ausführen.\n"
 "\n"
 "URL-Optionen\n"
-"  --no-gui                 Mit news:message-id, den Artikel an stdout "
-"senden.\n"
+"  Kopfzeile:Gruppe.Name    Kopfzeilen neuer Artikel für die angegebene\n"
+"                             Newsgruppe herunterladen.\n"
+"  News:Nachrichten-ID      Wenn zusammen mit --no-gui angegeben, den "
+"Artikel\n"
+"                             mit der Nachrichten-ID in die Standardausgabe\n"
+"                             ausgeben.\n"
+"\n"
 "\n"
 "NZB Batch-Optionen\n"
-"  --nzb Datei1 Datei2 …    nzb-Dateien verarbeiten, ohne Pan vollständig zu "
-"starten.\n"
+"  --nzb Datei1 Datei2 …    nzb-Dateien verarbeiten im Nicht-GUI-Modus "
+"verarbeiten.\n"
 "  -o Pfad, --output=Pfad   Pfad zum Speichern von Anhängen in den nzb-"
 "Dateien.\n"
 "  --no-gui                 Nur Konsolenausgabe anzeigen, nicht die Download-"
 "Warteschlange.\n"
 
-#: pan/gui/pan.cc:972
+#: pan/gui/pan.cc:978
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Fehler: --no-gui wird ohne nzb-Dateien oder news:message-id benutzt."
 
-#: pan/gui/pan.cc:976
+#: pan/gui/pan.cc:982
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s gestartet"
 
-#: pan/gui/pan.cc:996
+#: pan/gui/pan.cc:1002
 msgid "Please configure Pan’s news servers before using it as an nzb client."
 msgstr ""
 "Bitte konfigurieren Sie die News-Server für Pan, bevor Sie es als NZB-Client "
 "verwenden."
 
-#: pan/gui/pan.cc:1114
+#: pan/gui/pan.cc:1120
 msgid "Pan notification"
 msgstr "Pan-Benachrichtigungsdienst"
 
@@ -1686,26 +1696,26 @@ msgstr ""
 "Die Dateiwarteschlange ist leer, daher können keine Dateien gespeichert "
 "werden."
 
-#: pan/gui/post-ui.cc:1076
+#: pan/gui/post-ui.cc:1093
 msgid "IO Error"
 msgstr "E/A-Fehler"
 
-#: pan/gui/post-ui.cc:1076
+#: pan/gui/post-ui.cc:1093
 msgid "No space left on device"
 msgstr "Kein Speicherplatz auf dem Gerät übrig"
 
-#: pan/gui/post-ui.cc:1077
+#: pan/gui/post-ui.cc:1094
 #, c-format
 msgid "Error copying message to %s folder. Reason: %s"
 msgstr "Fehler beim Kopieren der Nachricht in den Ordner %s. Ursache: %s"
 
-#: pan/gui/post-ui.cc:1083
+#: pan/gui/post-ui.cc:1100
 #, c-format
 msgid "Error creating message in %s mail folder: Invalid article."
 msgstr ""
 "Fehler beim Erstellen der Nachricht im Mail-Ordner %s: Ungültiger Artikel."
 
-#: pan/gui/post-ui.cc:1105
+#: pan/gui/post-ui.cc:1122
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit → Manage Posting Profiles."
@@ -1713,7 +1723,7 @@ msgstr ""
 "Für dieses Profil wurde kein Server angegeben.\n"
 "Bitte bearbeiten Sie das Profil in »Bearbeiten → Profile verwalten«."
 
-#: pan/gui/post-ui.cc:1110
+#: pan/gui/post-ui.cc:1127
 msgid ""
 "The selected posting server is currently disabled. Please choose an "
 "appropriate alternative."
@@ -1721,15 +1731,15 @@ msgstr ""
 "Der gewählte Posting-Server ist momentan deaktiviert. Bitte wählen Sie eine "
 "entsprechende Alternative."
 
-#: pan/gui/post-ui.cc:1152
+#: pan/gui/post-ui.cc:1169
 msgid "Pan is Offline."
 msgstr "Pan ist offline."
 
-#: pan/gui/post-ui.cc:1153
+#: pan/gui/post-ui.cc:1170
 msgid "Go online to post the article?"
 msgstr "Online gehen, um den Artikel zu versenden?"
 
-#: pan/gui/post-ui.cc:1202
+#: pan/gui/post-ui.cc:1219
 #, c-format
 msgid ""
 "Error signing/encrypting your message. Perhaps you misspelled your email "
@@ -1738,110 +1748,110 @@ msgstr ""
 "Fehler beim Signieren oder Verschlüsseln Ihrer Nachricht. Vielleicht haben "
 "Sie Ihre E-Mail-Adresse (%s) falsch geschrieben?"
 
-#: pan/gui/post-ui.cc:1350
+#: pan/gui/post-ui.cc:1367
 msgid "Error opening temporary file"
 msgstr "Fehler beim Öffnen der temporären Datei"
 
-#: pan/gui/post-ui.cc:1362
+#: pan/gui/post-ui.cc:1379
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Fehler beim Schreiben des Artikels in temporäre Datei: %s"
 
-#: pan/gui/post-ui.cc:1381
+#: pan/gui/post-ui.cc:1398
 #, c-format
 msgid "Error parsing “external editor” command line: %s (Command was: %s)"
 msgstr ""
 "Fehler beim Verarbeiten der Befehlszeile des externen Editors: %s (Befehl "
 "war: %s)"
 
-#: pan/gui/post-ui.cc:1422
+#: pan/gui/post-ui.cc:1439
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Fehler beim Aufruf des externen Editors: %s"
 
-#: pan/gui/post-ui.cc:1485
+#: pan/gui/post-ui.cc:1502
 msgid "Open Draft Article"
 msgstr "Artikelentwurf öffnen"
 
-#: pan/gui/post-ui.cc:1697
+#: pan/gui/post-ui.cc:1767
 msgid "Save Draft Article"
 msgstr "Artikelentwurf speichern"
 
-#: pan/gui/post-ui.cc:1734
+#: pan/gui/post-ui.cc:1804
 msgid "File already exists."
 msgstr "Datei existiert bereits."
 
-#: pan/gui/post-ui.cc:1735
+#: pan/gui/post-ui.cc:1805
 msgid "Overwrite it?"
 msgstr "Überschreiben?"
 
-#: pan/gui/post-ui.cc:1941
+#: pan/gui/post-ui.cc:2015
 #, c-format
 msgid "Couldn’t parse signature command “%s”: %s"
 msgstr "Signaturbefehl »%s« konnte nicht gelesen werden: %s"
 
-#: pan/gui/post-ui.cc:1977
+#: pan/gui/post-ui.cc:2051
 msgid "Couldn’t convert signature to UTF-8."
 msgstr "Signatur konnte nicht nach UTF-8 konvertiert werden."
 
-#: pan/gui/post-ui.cc:2479
+#: pan/gui/post-ui.cc:2591
 msgid "F_rom"
 msgstr "_Von"
 
-#: pan/gui/post-ui.cc:2496
+#: pan/gui/post-ui.cc:2608
 msgid "_Subject"
 msgstr "_Betreff"
 
-#: pan/gui/post-ui.cc:2509
+#: pan/gui/post-ui.cc:2621
 msgid "_Newsgroups"
 msgstr "_Gruppen"
 
-#: pan/gui/post-ui.cc:2523
+#: pan/gui/post-ui.cc:2635
 msgid "Mail _To"
 msgstr "Nachricht _an"
 
-#: pan/gui/post-ui.cc:2625
+#: pan/gui/post-ui.cc:2737
 msgid "Delete from Queue"
 msgstr "Aus der Warteschlange löschen"
 
-#: pan/gui/post-ui.cc:2638
+#: pan/gui/post-ui.cc:2750
 msgid "No."
 msgstr "Nr."
 
-#: pan/gui/post-ui.cc:2642 pan/gui/post-ui.cc:2734 pan/gui/post-ui.cc:2775
+#: pan/gui/post-ui.cc:2754 pan/gui/post-ui.cc:2846 pan/gui/post-ui.cc:2887
 msgid "Filename"
 msgstr "Dateiname"
 
-#: pan/gui/post-ui.cc:2644
+#: pan/gui/post-ui.cc:2756
 msgid "Size (KB)"
 msgstr "Größe (kB)"
 
-#: pan/gui/post-ui.cc:2742
+#: pan/gui/post-ui.cc:2854
 msgid "The current filename"
 msgstr "Der aktuelle Dateiname"
 
-#: pan/gui/post-ui.cc:2746
+#: pan/gui/post-ui.cc:2858
 msgid "Subject Line"
 msgstr "Betreffzeile"
 
-#: pan/gui/post-ui.cc:2754
+#: pan/gui/post-ui.cc:2866
 msgid "The current subject line"
 msgstr "Die aktuelle Betreffzeile"
 
-#: pan/gui/post-ui.cc:2768
+#: pan/gui/post-ui.cc:2880
 msgid "No. "
 msgstr "Nr. "
 
-#: pan/gui/post-ui.cc:2772
+#: pan/gui/post-ui.cc:2884
 msgid "Enable/Disable"
 msgstr "Aktivieren/Deaktivieren"
 
-#: pan/gui/post-ui.cc:2806
+#: pan/gui/post-ui.cc:2918
 msgid "Follo_wup-To"
 msgstr "Forts_chrift in"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:2815
+#: pan/gui/post-ui.cc:2927
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the “Newsgroups” header.\n"
@@ -1853,11 +1863,11 @@ msgstr ""
 "Um alle Antworten per E-Mail geschickt zu bekommen, verwenden Sie hier "
 "»Fortschreiben in: poster«."
 
-#: pan/gui/post-ui.cc:2822
+#: pan/gui/post-ui.cc:2934
 msgid "_Reply-To"
 msgstr "_Antwort an"
 
-#: pan/gui/post-ui.cc:2830
+#: pan/gui/post-ui.cc:2942
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the “From” header."
@@ -1866,52 +1876,52 @@ msgstr ""
 "sollen. Sie wird nur gebraucht, falls sie sich vom Teil »Von« des "
 "Artikelkopfes unterscheidet."
 
-#: pan/gui/post-ui.cc:2837
+#: pan/gui/post-ui.cc:2949
 msgid "_Custom Headers"
 msgstr "Ben_utzerdefinierte Kopfzeilen"
 
-#: pan/gui/post-ui.cc:2861
+#: pan/gui/post-ui.cc:2973
 msgid "Add “_User-Agent” header"
 msgstr "»_User-Agent«-Identifikationskopf anfügen"
 
-#: pan/gui/post-ui.cc:2868
+#: pan/gui/post-ui.cc:2980
 msgid "Add “Message-_ID” header"
 msgstr "»Message-_ID«-Kopfzeile hinzufügen"
 
-#: pan/gui/post-ui.cc:2999
+#: pan/gui/post-ui.cc:3111
 msgid "Select Parts"
 msgstr "Teile auswählen"
 
-#: pan/gui/post-ui.cc:3012
+#: pan/gui/post-ui.cc:3124
 msgid "_Parts"
 msgstr "_Teile"
 
-#: pan/gui/post-ui.cc:3166
+#: pan/gui/post-ui.cc:3282
 msgid "Post Article"
 msgstr "Artikel veröffentlichen"
 
-#: pan/gui/post-ui.cc:3187
+#: pan/gui/post-ui.cc:3303
 msgid "_Message"
 msgstr "_Nachricht"
 
-#: pan/gui/post-ui.cc:3188
+#: pan/gui/post-ui.cc:3304
 msgid "More _Headers"
 msgstr "Weitere _Kopfzeilen"
 
-#: pan/gui/post-ui.cc:3189
+#: pan/gui/post-ui.cc:3305
 msgid "File _Queue"
 msgstr "Datei_warteschlange"
 
-#: pan/gui/post-ui.cc:3221 pan/gui/profiles-dialog.cc:482
+#: pan/gui/post-ui.cc:3337 pan/gui/profiles-dialog.cc:482
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "Am %d schrieb %n:"
 
-#: pan/gui/post-ui.cc:3250
+#: pan/gui/post-ui.cc:3366
 msgid "Add files to queue"
 msgstr "Dateien zur Warteschlange hinzufügen"
 
-#: pan/gui/post-ui.cc:3326
+#: pan/gui/post-ui.cc:3442
 msgid "Save Upload Queue as NZB File"
 msgstr "Übertragungswarteschlange in eine NZB-Datei speichern"
 
@@ -2958,23 +2968,23 @@ msgstr "Verbindungs_limit:"
 
 #: pan/gui/server-ui.cc:413
 msgid "After Two Weeks"
-msgstr "nach zwei Wochen"
+msgstr "Nach zwei Wochen"
 
 #: pan/gui/server-ui.cc:414
 msgid "After One Month"
-msgstr "nach einem Monat"
+msgstr "Nach einem Monat"
 
 #: pan/gui/server-ui.cc:415
 msgid "After Two Months"
-msgstr "nach zwei Monaten"
+msgstr "Nach zwei Monaten"
 
 #: pan/gui/server-ui.cc:416
 msgid "After Three Months"
-msgstr "nach drei Monaten"
+msgstr "Nach drei Monaten"
 
 #: pan/gui/server-ui.cc:417
 msgid "After Six Months"
-msgstr "nach sechs Monaten"
+msgstr "Nach sechs Monaten"
 
 #: pan/gui/server-ui.cc:418
 msgid "Never Expire Old Articles"
@@ -3378,12 +3388,12 @@ msgstr "%lu Gruppen erhalten"
 msgid "Posting “%s”"
 msgstr "»%s« wird veröffentlicht"
 
-#: pan/tasks/task-post.cc:76
+#: pan/tasks/task-post.cc:80
 #, c-format
 msgid "Posting of “%s” failed: %s"
 msgstr "Veröffentlichung von »%s« ist gescheitert: %s"
 
-#: pan/tasks/task-post.cc:81
+#: pan/tasks/task-post.cc:85
 #, c-format
 msgid "Posting of “%s” successful: %s"
 msgstr "Veröffentlichung von »%s« war erfolgreich: %s"
@@ -3393,39 +3403,39 @@ msgstr "Veröffentlichung von »%s« war erfolgreich: %s"
 msgid "Uploading %s"
 msgstr "%s wird hochgeladen"
 
-#: pan/tasks/task-upload.cc:244
+#: pan/tasks/task-upload.cc:265
 #, c-format
 msgid "Uploading %s — Part %d of %d"
 msgstr "%s wird hochgeladen – Teil %d von %d"
 
-#: pan/tasks/task-upload.cc:246
+#: pan/tasks/task-upload.cc:267
 #, c-format
 msgid "Uploading message body with subject “%s”"
 msgstr "Nachrichtenrumpf mit Betreff »%s« wird hochgeladen"
 
-#: pan/tasks/task-upload.cc:303
+#: pan/tasks/task-upload.cc:324
 #, c-format
 msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
 msgstr ""
 "SenVeröffentlichung den der Datei %s (Teil %d von %d) ist gescheitert: Der "
 "Server erlaubt keine Veröffentlichungen."
 
-#: pan/tasks/task-upload.cc:311
+#: pan/tasks/task-upload.cc:332
 #, c-format
 msgid "Posting of file %s (part %d of %d) failed: %s"
 msgstr "Veröffentlichung der Datei »%s« (Teil %d von %d) ist gescheitert: %s"
 
-#: pan/tasks/task-upload.cc:321 pan/tasks/task-upload.cc:328
+#: pan/tasks/task-upload.cc:342 pan/tasks/task-upload.cc:349
 #, c-format
 msgid "Posting of file %s (part %d of %d) successful: %s"
 msgstr "Veröffentlichung der Datei »%s« (Teil %d von %d) war erfolgreich: %s"
 
-#: pan/tasks/task-upload.cc:338
+#: pan/tasks/task-upload.cc:359
 #, c-format
 msgid "Posting of file %s successful: %s"
 msgstr "Veröffentlichung der Datei »%s« war erfolgreich: %s"
 
-#: pan/tasks/task-upload.cc:342
+#: pan/tasks/task-upload.cc:363
 #, c-format
 msgid ""
 "Posting of file %s not completely successful: Check the log (right-click "
@@ -3434,7 +3444,7 @@ msgstr ""
 "Veröffentlichung der Datei %s ist teilweise gescheitert: Überprüfen Sie das "
 "Protokoll (Rechtsklick auf den Listeneintrag)."
 
-#: pan/tasks/task-upload.cc:359
+#: pan/tasks/task-upload.cc:380
 #, c-format
 msgid ""
 "Posting of file %s not successful: Check the log (right-click list item)."
@@ -3458,12 +3468,12 @@ msgstr "Neue Kopfzeilen für »%s« werden abgerufen"
 msgid "Sampling headers for “%s”"
 msgstr "Kopfzeilen für »%s« werden probeweise abgerufen"
 
-#: pan/tasks/task-xover.cc:426
+#: pan/tasks/task-xover.cc:431
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu Teile, %lu Artikel)"
 
-#: pan/tasks/task-xover.cc:500
+#: pan/tasks/task-xover.cc:505
 #, c-format
 msgid "Getting new headers for “%s” done."
 msgstr "Abruf neuer Kopfzeilen für »%s« ist abgeschlossen."
@@ -3720,7 +3730,7 @@ msgstr "Fehlerhafte E-Mail-Adresse."
 msgid "Warning: Most newsgroups frown upon HTML posts."
 msgstr "Warnung: Die meisten Gruppen missbilligen HTML-Artikel."
 
-#: pan/usenet-utils/message-check.cc:486
+#: pan/usenet-utils/message-check.cc:490
 msgid "Error: No Recipients."
 msgstr "FEHLER: Keine Empfänger angegeben."
 
