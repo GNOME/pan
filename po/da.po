@@ -1,5 +1,5 @@
 # Danish translation of Pan2.
-# Copyright (c) 2017 Pan2 og nedenstående oversættere.
+# Copyright (c) 2018 Pan2 og nedenstående oversættere.
 # This file is distributed under the same license as the Pan2 package.
 # Kenneth Christiansen <kenneth@diku.dk>, 2000.
 # Birger Langkjer <birger.langkjer@image.dk>, 1999, 2000.
@@ -7,7 +7,7 @@
 # Gitte Wange <gitte@babytutux.dk>, 2001.
 # Søren Wedel Nielsen, 2004.
 # Peter N Andreasen <peter.n.andreasen@gmail.com>, 2007.
-# Joe Hansen (joedalton2@yahoo.dk), 2010, 2011, 2017.
+# Joe Hansen (joedalton2@yahoo.dk), 2010, 2011, 2017, 2018.
 #
 # bodby -> brødtekst
 # header -> brevhoved
@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: pan2\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?"
 "product=Pan&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-09-28 13:50+0000\n"
-"PO-Revision-Date: 2017-11-11 17:31+0100\n"
+"POT-Creation-Date: 2017-12-19 21:34+0000\n"
+"PO-Revision-Date: 2018-03-06 17:31+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -46,7 +46,7 @@ msgstr ""
 "og kill-filer, yEnc, NZB, PGP-håndtering, flere servere og sikre "
 "forbindelser."
 
-#: pan.appdata.xml.in:13
+#: pan.appdata.xml.in:11
 msgid ""
 "It is also the only Unix newsreader to get a perfect score on the Good Net-"
 "Keeping Seal of Approval evaluations."
@@ -55,8 +55,8 @@ msgstr ""
 "bedømmelse på Good Net-Keeping Seal of Approval-evalueringerne."
 
 #. update the titlebar
-#: pan.appdata.xml.in:27 pan.desktop.in:3 pan/gui/dl-headers-ui.cc:106
-#: pan/gui/gui.cc:1041 pan/gui/gui.cc:1666 pan/gui/gui.cc:1986
+#: pan.appdata.xml.in:22 pan.desktop.in:3 pan/gui/dl-headers-ui.cc:106
+#: pan/gui/gui.cc:1045 pan/gui/gui.cc:1718 pan/gui/gui.cc:2038
 #: pan/gui/score-add-ui.cc:602
 msgid "Pan"
 msgstr "Pan"
@@ -73,9 +73,9 @@ msgstr ""
 "nyhedsgruppelæser;nyhedsgruppe;"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: pan.desktop.in:10
+#: pan.desktop.in:11
 msgid "pan"
-msgstr "Pan"
+msgstr "pan"
 
 #: pan/data/article-cache.cc:144 pan/data/encode-cache.cc:62
 #, c-format
@@ -84,7 +84,7 @@ msgstr "Fejl ved åbning af kataloget “%s”: %s"
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
-#: pan/gui/post-ui.cc:1777
+#: pan/gui/post-ui.cc:1851
 #, c-format
 msgid "Unable to save “%s” %s"
 msgstr "Kan ikke gemme “%s” %s"
@@ -173,9 +173,9 @@ msgid "Added %lu articles to %s."
 msgstr "Tilføjede %lu artikler til %s."
 
 #: pan/data-impl/server.cc:262
-#, fuzzy, c-format
+#, c-format
 msgid "Received no password from libsecret for server %s."
-msgstr "Der ser ikke ud til, at være angivet en adgangskode for serveren %s."
+msgstr "Modtog ingen adgangskode fra libsecret for serveren %s."
 
 #: pan/data-impl/server.cc:287
 #, c-format
@@ -221,10 +221,10 @@ msgstr "?"
 msgid "Can’t use regular expression “%s”: %s"
 msgstr "Kan ikke bruge det regulære udtryk “%s”: %s"
 
-#: pan/general/utf8-utils.cc:213
-#, fuzzy
+#: pan/general/utf8-utils.cc:234
 msgid "Couldn’t determine article encoding.  Non-UTF8 characters were removed."
-msgstr "Kunne ikke afgøre artiklens tegnsæt. Ikke-UTF8 tegn blev fjernet."
+msgstr ""
+"Kunne ikke afgøre artiklens tegnsæt. Tegn, som ikke er UTF8-tegn, blev fjernet."
 
 #: pan/gui/actions.cc:306 pan/gui/post-ui.cc:452
 msgid "_File"
@@ -299,12 +299,10 @@ msgid "Mark Selected Groups Read"
 msgstr "Marker valgte grupper som læst"
 
 #: pan/gui/actions.cc:333
-#, fuzzy
 msgid "_Delete Selected Groups’ Articles"
-msgstr "_Fjern gruppens artikler"
+msgstr "_Slet valgte gruppers artikler"
 
 #: pan/gui/actions.cc:334
-#, fuzzy
 msgid "Delete Selected Groups’ Articles"
 msgstr "Slet valgte gruppers artikler"
 
@@ -353,28 +351,24 @@ msgid "Unsubscribe"
 msgstr "Opsig abonnement"
 
 #: pan/gui/actions.cc:373
-#, fuzzy
 msgid "_Save Articles…"
-msgstr "Gem artikler"
+msgstr "_Gem artikler …"
 
 #: pan/gui/actions.cc:374
-#, fuzzy
 msgid "Save Articles…"
-msgstr "Gem artikler"
+msgstr "Gem artikler …"
 
 #: pan/gui/actions.cc:378
-#, fuzzy
 msgid "Save Articles from Selected _NZB…"
-msgstr "Gem artikler fra valgte NZB"
+msgstr "Gem artikler fra den valgte _NZB …"
 
 #: pan/gui/actions.cc:379
 msgid "Save Articles from Selected NZB"
-msgstr "Gem artikler fra valgte NZB"
+msgstr "Gem artikler fra den valgte NZB"
 
 #: pan/gui/actions.cc:383
-#, fuzzy
 msgid "Save Articles to an NZB _File…"
-msgstr "Gem artikler til en NZB-fil"
+msgstr "Gem artikler til en NZB-_fil …"
 
 #: pan/gui/actions.cc:384
 msgid "Save Articles to an NZB File"
@@ -385,9 +379,8 @@ msgid "Print"
 msgstr "Udskriv"
 
 #: pan/gui/actions.cc:393
-#, fuzzy
 msgid "_Import NZB Files…"
-msgstr "Importér NZB-filer"
+msgstr "_Importér NZB-filer …"
 
 #: pan/gui/actions.cc:398
 msgid "_Cancel Last Task"
@@ -586,9 +579,8 @@ msgid "_Invert Selection"
 msgstr "_Vend markering om"
 
 #: pan/gui/actions.cc:617
-#, fuzzy
 msgid "Edit Article’s Watch/Ignore/Score…"
-msgstr "Rediger overvågning/ignorering/bedømmelse for artiklen …"
+msgstr "Rediger artiklens overvågning/ignorering/bedømmelse …"
 
 #: pan/gui/actions.cc:622
 msgid "Add a _Scoring Rule…"
@@ -648,7 +640,7 @@ msgstr "Sk_riv svar til forfatter"
 
 #: pan/gui/actions.cc:684
 msgid "_Contents"
-msgstr ""
+msgstr "_Indhold"
 
 #: pan/gui/actions.cc:690
 msgid "_Pan Home Page"
@@ -830,51 +822,51 @@ msgstr "Vis udvalgte artiklers _tråde"
 msgid "Show Matching Articles’ _Subthreads"
 msgstr "Vis udvalgte artiklers _undertråde"
 
-#: pan/gui/body-pane.cc:1052
+#: pan/gui/body-pane.cc:1056
 msgid "Unnamed File"
 msgstr "Unavngivet fil"
 
-#: pan/gui/body-pane.cc:1133 pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1314
-#: pan/gui/header-pane.cc:1754 pan/gui/post-ui.cc:2640 pan/gui/prefs-ui.cc:855
+#: pan/gui/body-pane.cc:1137 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1314
+#: pan/gui/header-pane.cc:1754 pan/gui/post-ui.cc:2752 pan/gui/prefs-ui.cc:855
 #: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:797
 msgid "Subject"
 msgstr "Emne"
 
-#: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:1957
+#: pan/gui/body-pane.cc:1139 pan/gui/gui.cc:2009
 msgid "From"
 msgstr "Afsender"
 
-#: pan/gui/body-pane.cc:1137 pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1833
+#: pan/gui/body-pane.cc:1141 pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1833
 #: pan/gui/log-ui.cc:307 pan/gui/prefs-ui.cc:851
 msgid "Date"
 msgstr "Dato"
 
-#: pan/gui/body-pane.cc:1144
+#: pan/gui/body-pane.cc:1148
 msgid "Newsgroups"
 msgstr "Nyhedsgrupper"
 
-#: pan/gui/body-pane.cc:1151 pan/gui/body-pane.cc:1159
-#: pan/gui/body-pane.cc:1166
+#: pan/gui/body-pane.cc:1155 pan/gui/body-pane.cc:1163
+#: pan/gui/body-pane.cc:1170
 msgid "User-Agent"
 msgstr "Brugeragent"
 
-#: pan/gui/body-pane.cc:1172
+#: pan/gui/body-pane.cc:1176
 msgid "Followup-To"
 msgstr "Opfølgning til"
 
-#: pan/gui/body-pane.cc:1182
+#: pan/gui/body-pane.cc:1186
 msgid "Reply-To"
 msgstr "Svar til"
 
-#: pan/gui/body-pane.cc:1234
+#: pan/gui/body-pane.cc:1238
 msgid " from "
 msgstr " fra "
 
-#: pan/gui/body-pane.cc:1236
+#: pan/gui/body-pane.cc:1240
 msgid " at "
 msgstr " på "
 
-#: pan/gui/body-pane.cc:1325
+#: pan/gui/body-pane.cc:1333
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
@@ -889,32 +881,31 @@ msgstr ""
 "<b>Gyldig indtil:</b> %s\n"
 "<b>Oprettet den:</b> %s"
 
-#: pan/gui/body-pane.cc:1330
+#: pan/gui/body-pane.cc:1338
 msgid "always"
 msgstr "altid"
 
-#: pan/gui/body-pane.cc:1550
+#: pan/gui/body-pane.cc:1558
 msgid "Copy _URL"
 msgstr "Kopier _URL"
 
-#: pan/gui/body-pane.cc:1760
+#: pan/gui/body-pane.cc:1768
 msgid "Save Attachment As…"
 msgstr "Gem bilag som …"
 
-#: pan/gui/body-pane.cc:1763
+#: pan/gui/body-pane.cc:1771
 msgid "Save All Attachments"
 msgstr "Gem alle bilag"
 
-#: pan/gui/body-pane.cc:1838
-#, fuzzy
+#: pan/gui/body-pane.cc:1846
 msgid "Attachments:"
-msgstr "Bilag"
+msgstr "Bilag:"
 
-#: pan/gui/body-pane.cc:1866
+#: pan/gui/body-pane.cc:1874
 msgid "Text View"
 msgstr "Tekstvisning"
 
-#: pan/gui/body-pane.cc:1875
+#: pan/gui/body-pane.cc:1883
 msgid "HTML View"
 msgstr "HTML-visning"
 
@@ -926,7 +917,6 @@ msgstr[0] "%d Gruppe"
 msgstr[1] "%d Grupper"
 
 #: pan/gui/dl-headers-ui.cc:135
-#, fuzzy
 msgid "Get the last N _days’ headers: "
 msgstr "Hent seneste N _dages brevhoveder: "
 
@@ -1027,7 +1017,7 @@ msgstr "Ukrainsk"
 msgid "Visual"
 msgstr "Visuel"
 
-#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2155 pan/gui/post-ui.cc:554
+#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:554
 #: pan/gui/prefs-ui.cc:759
 msgid "Character Encoding"
 msgstr "Tegn-indkodning"
@@ -1154,64 +1144,63 @@ msgstr "Uden_titel.nzb"
 msgid "Save NZB File as…"
 msgstr "Gem NZB-fil som …"
 
-#: pan/gui/gui.cc:809
+#: pan/gui/gui.cc:813
 msgid "Import NZB Files"
 msgstr "Importér NZB-filer"
 
-#: pan/gui/gui.cc:817 pan/gui/post-ui.cc:3339
+#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3455
 msgid "NZB Files"
 msgstr "NZB-filer"
 
-#: pan/gui/gui.cc:822
+#: pan/gui/gui.cc:826
 msgid "All Files"
 msgstr "Alle filer"
 
-#: pan/gui/gui.cc:1335
+#: pan/gui/gui.cc:1344
 msgid "Unable to supersede article."
 msgstr "Kunne ikke afløse artikel."
 
-#: pan/gui/gui.cc:1336 pan/gui/gui.cc:1410
+#: pan/gui/gui.cc:1345 pan/gui/gui.cc:1441
 msgid "The article doesn’t match any of your posting profiles."
 msgstr "Artiklen matcher ikke nogen af dine profiler."
 
-#: pan/gui/gui.cc:1383
+#: pan/gui/gui.cc:1410
 msgid "Revise and send this article to replace the old one."
 msgstr "Revidér og send denne artikel for at erstatte den gamle."
 
-#: pan/gui/gui.cc:1384 pan/gui/gui.cc:1447
+#: pan/gui/gui.cc:1411 pan/gui/gui.cc:1491
 msgid "Be patient!  It will take time for your changes to take effect."
 msgstr "Vær tålmodig! Det vil tage tid før dine ændringer slår igennem."
 
-#: pan/gui/gui.cc:1409
+#: pan/gui/gui.cc:1440
 msgid "Unable to cancel article."
 msgstr "Kunne ikke annullere artikel."
 
-#: pan/gui/gui.cc:1446
+#: pan/gui/gui.cc:1490
 msgid "Send this article to ask your server to cancel your other one."
 msgstr "Send denne artikel for at bede din server annullere den anden."
 
-#: pan/gui/gui.cc:1464
+#: pan/gui/gui.cc:1508
 msgid "You have marked some articles for deletion."
 msgstr "Du har markeret nogle artikler til sletning."
 
-#: pan/gui/gui.cc:1465
+#: pan/gui/gui.cc:1509
 msgid "Are you sure you want to delete them?"
 msgstr "Er du sikker på, at du ønsker at slette dem?"
 
-#: pan/gui/gui.cc:1491
+#: pan/gui/gui.cc:1535
 msgid "Do you want to accept it permanently? (You can change this later.)"
 msgstr "Ønsker du at acceptere det permanent? (Du kan ændre dette senere)."
 
-#: pan/gui/gui.cc:1637
-#, fuzzy
+#: pan/gui/gui.cc:1689
 msgid "Unable to open help file."
-msgstr "Kunne ikke annullere artikel."
+msgstr "Kan ikke åbne hjælpefil."
 
-#: pan/gui/gui.cc:1669
+#: pan/gui/gui.cc:1721
 msgid "Copyright © 2002-2017 Charles Kerr and others"
-msgstr "Ophavsret © 2003–2016 Charles Kerr med flere"
+msgstr "Ophavsret © 2002–2017 Charles Kerr med flere"
 
-#: pan/gui/gui.cc:1674
+#: pan/gui/gui.cc:1726
 msgid "translator-credits"
 msgstr ""
 "Kenneth Christiansen\n"
@@ -1220,74 +1209,74 @@ msgstr ""
 "Gitte Wange\n"
 "Søren Wedel Nielsen\n"
 "Peter N Andreasen\n"
-"Joe Hansen, 2010, 2011, 2017\n"
+"Joe Hansen, 2010, 2011, 2017, 2018\n"
 "\n"
 "Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
 "Mere info: http://www.dansk-gruppen.dk"
 
-#: pan/gui/gui.cc:1802
+#: pan/gui/gui.cc:1854
 msgid "_1. Group Pane"
 msgstr "_1. Gruppepanel"
 
-#: pan/gui/gui.cc:1803
+#: pan/gui/gui.cc:1855
 msgid "_2. Header Pane"
 msgstr "_2. Brevhovedpanel"
 
-#: pan/gui/gui.cc:1804
+#: pan/gui/gui.cc:1856
 msgid "_3. Body Pane"
 msgstr "_3. Brødtekstpanel"
 
-#: pan/gui/gui.cc:1894 pan/gui/gui.cc:1909
+#: pan/gui/gui.cc:1946 pan/gui/gui.cc:1961
 msgid " Bytes"
 msgstr " Byte"
 
-#: pan/gui/gui.cc:1897
+#: pan/gui/gui.cc:1949
 msgid " KB"
 msgstr " KB"
 
-#: pan/gui/gui.cc:1900
+#: pan/gui/gui.cc:1952
 msgid " MB"
 msgstr " MB"
 
-#: pan/gui/gui.cc:1903
+#: pan/gui/gui.cc:1955
 msgid " GB"
 msgstr " GB"
 
-#: pan/gui/gui.cc:1906
+#: pan/gui/gui.cc:1958
 msgid " TB"
 msgstr " TB"
 
-#: pan/gui/gui.cc:1938
+#: pan/gui/gui.cc:1990
 #, c-format
 msgid "This article is complete with %d part."
 msgid_plural "This article has all %d parts."
 msgstr[0] "Denne artikel er fuldstændig med %d del."
 msgstr[1] "Denne artikel har alle %d dele."
 
-#: pan/gui/gui.cc:1940
+#: pan/gui/gui.cc:1992
 #, c-format
 msgid "This article is missing %d part."
 msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Denne artikel mangler %d del."
 msgstr[1] "Denne artikel mangler %d af sine %d dele:"
 
-#: pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1316 pan/gui/task-pane.cc:799
+#: pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1316 pan/gui/task-pane.cc:799
 msgid "Message-ID"
 msgstr "Meddelelses-ID"
 
-#: pan/gui/gui.cc:1959 pan/gui/header-pane.cc:1802 pan/gui/prefs-ui.cc:852
+#: pan/gui/gui.cc:2011 pan/gui/header-pane.cc:1802 pan/gui/prefs-ui.cc:852
 msgid "Lines"
 msgstr "Linjer"
 
-#: pan/gui/gui.cc:1959
+#: pan/gui/gui.cc:2011
 msgid "Size"
 msgstr "Størrelse"
 
-#: pan/gui/gui.cc:1960 pan/gui/header-pane.cc:1818 pan/gui/prefs-ui.cc:850
+#: pan/gui/gui.cc:2012 pan/gui/header-pane.cc:1818 pan/gui/prefs-ui.cc:850
 msgid "Bytes"
 msgstr "Byte"
 
-#: pan/gui/gui.cc:2010
+#: pan/gui/gui.cc:2062
 msgid ""
 "Error loading iconv library. Encoding certain character sets will not work "
 "in GUI."
@@ -1295,52 +1284,54 @@ msgstr ""
 "Der opstod en fejl under indlæsning af iconv-biblioteket. Kodning af "
 "bestemte tegnsæt vil ikke fungere i den grafiske brugerflade."
 
-#: pan/gui/gui.cc:2156
+#: pan/gui/gui.cc:2208
 msgid "Body Pane Encoding"
 msgstr "Kodning i brødtekstpanel"
 
-#: pan/gui/gui.cc:2187 pan/gui/task-pane.cc:609
+#: pan/gui/gui.cc:2239 pan/gui/task-pane.cc:609
 msgid "Offline"
 msgstr "Frakoblet"
 
-#: pan/gui/gui.cc:2191
+#: pan/gui/gui.cc:2243
 #, c-format
 msgid "Closing %d connection"
 msgid_plural "Closing %d connections"
 msgstr[0] "Lukker %d forbindelse"
 msgstr[1] "Lukker %d forbindelser"
 
-#: pan/gui/gui.cc:2193 pan/gui/gui.cc:2223
+#: pan/gui/gui.cc:2245 pan/gui/gui.cc:2275
 msgid "No Connections"
 msgstr "Ingen forbindelser"
 
-#: pan/gui/gui.cc:2197
+#: pan/gui/gui.cc:2249
 msgid "Connecting"
 msgstr "Forbinder"
 
-#: pan/gui/gui.cc:2210
+#: pan/gui/gui.cc:2262
 #, c-format
 msgid "%s: %d idle, %d active @ %.1f KiBps"
 msgstr "%s: %d venter, %d aktiv @ %.1f KiB/sek"
 
-#: pan/gui/gui.cc:2266
+#: pan/gui/gui.cc:2318
 msgid "No Tasks"
 msgstr "Ingen opgaver"
 
-#: pan/gui/gui.cc:2268 pan/gui/prefs-ui.cc:1090
+#: pan/gui/gui.cc:2320 pan/gui/prefs-ui.cc:1090
 msgid "Tasks"
 msgstr "Opgaver"
 
-#: pan/gui/gui.cc:2285 pan/gui/task-pane.cc:475
+#: pan/gui/gui.cc:2337 pan/gui/task-pane.cc:475
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d∶%02d∶%02d"
 msgstr "%lu opgaver, %s, %.1f KiB/sek, forventet: %d∶%02d∶%02d"
 
-#: pan/gui/gui.cc:2337
+#: pan/gui/gui.cc:2389
 msgid ""
 "Pan is now offline. Please see “File → Event Log” and correct the problem, "
 "then use “File → Work Online” to continue."
-msgstr "Pan er nu afkoblet. Se i “Fil → Statusloggen” og korriger problemet, vælg derefter “Fil → Arbejd tilkoblet” for at fortsætte."
+msgstr ""
+"Pan er nu afkoblet. Se i “Fil → Statusloggen” og korriger problemet, vælg "
+"derefter “Fil → Arbejd tilkoblet” for at fortsætte."
 
 #: pan/gui/header-pane.cc:1312 pan/gui/task-pane.cc:795
 msgid "Subject or Author"
@@ -1408,50 +1399,52 @@ msgstr ""
 #: pan/gui/pan.cc:633
 msgid ""
 "General Options\n"
-"  -h, --help               Show this usage page.\n"
+"  -h, --help               Show this usage information and exit.\n"
+"  -v, --version            Print release version and exit.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
+"  --debug                  Run in debug mode.\n"
 "\n"
 "URL Options\n"
 "  headers:group.name       Download new headers for the specified "
 "newsgroup.\n"
-"  --no-gui                 On news:message-id, dump the article to stdout.\n"
+"  news:message-id          When specified together with --no-gui, dump\n"
+"                           the message-id article to standard output.\n"
 "\n"
 "NZB Batch Options\n"
-"  --nzb file1 file2 …      Process nzb files without launching all of Pan.\n"
-"  -o path, --output=path   Path to save attachments listed in the nzb "
-"files.\n"
+"  --nzb file1 file2 …      Process NZB files in non-GUI mode.\n"
+"  -o path, --output=path   Path to save attachments listed in the NZB "
+"file(s).\n"
 "  --no-gui                 Only show console output, not the download "
 "queue.\n"
 msgstr ""
 "Generelle tilvalg\n"
-"  -h, --help               Vis denne hjælpetekst.\n"
+"  -h, --help               Vis denne hjælpetekst og afslut.\n"
+"  -v, --version            Vis udgivelsesversion og afslut.\n"
 "  --verbose                Vær uddybende (i ikke-GUI-tilstand).\n"
+" --debug                   Afvikl i fejlsøgningstilstand.\n"
 "\n"
 "URL-tilvalg\n"
 "  headers:group.name       Hent nye brevhoveder fra den angivne "
 "nyhedsgruppe.\n"
-"  --no-gui                 Med news:message-id, send artiklen til "
-"konsollen.\n"
-"\n"
 "NZB-batchtilvalg\n"
-"  --nzb fil1 fil2 …      Behandl nzb-filer uden at starte hele Pan.\n"
+"  --nzb fil1 fil2 …        Behandl nzb-filer i ikke-GUI-tilstand.\n"
 "  -o sti, --output=sti     Sti til at gemme bilag angivet i nzb-filer.\n"
 "  --no-gui                 Vis kun konsoludskrift, ikke overførselskøen.\n"
 
-#: pan/gui/pan.cc:972
+#: pan/gui/pan.cc:978
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Fejl: --no-gui tilvalg brugt uden NZB-filer eller news:message-id."
 
-#: pan/gui/pan.cc:976
+#: pan/gui/pan.cc:982
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s er startet"
 
-#: pan/gui/pan.cc:996
+#: pan/gui/pan.cc:1002
 msgid "Please configure Pan’s news servers before using it as an nzb client."
 msgstr "Konfigurer Pans nyhedsgruppeservere før den bruges som NZB klient."
 
-#: pan/gui/pan.cc:1114
+#: pan/gui/pan.cc:1120
 msgid "Pan notification"
 msgstr "Panpåmindelse"
 
@@ -1642,7 +1635,9 @@ msgstr "Fortsæt alligevel"
 #, c-format
 msgid ""
 "Message uses characters not specified in charset “%s” — possibly use “%s” "
-msgstr "Beskeden bruger tegn, som ikke er angivet i tegnsættet “%s” – brug eventuelt “%s” "
+msgstr ""
+"Beskeden bruger tegn, som ikke er angivet i tegnsættet “%s” – brug eventuelt "
+"“%s” "
 
 #: pan/gui/post-ui.cc:848
 msgid "Go _Online"
@@ -1652,28 +1647,28 @@ msgstr "_Tilslut"
 msgid "The file queue is empty, so no files can be saved."
 msgstr "Filkøen er tom, så ingen filer kan gemmes."
 
-#: pan/gui/post-ui.cc:1076
+#: pan/gui/post-ui.cc:1093
 msgid "IO Error"
 msgstr "IO-fejl"
 
-#: pan/gui/post-ui.cc:1076
+#: pan/gui/post-ui.cc:1093
 msgid "No space left on device"
 msgstr "Ingen plads tilbage på enheden"
 
-#: pan/gui/post-ui.cc:1077
+#: pan/gui/post-ui.cc:1094
 #, c-format
 msgid "Error copying message to %s folder. Reason: %s"
 msgstr ""
 "Der opstod en fejl under kopiering af beskeden til mappen %s. Årsag: %s"
 
-#: pan/gui/post-ui.cc:1083
+#: pan/gui/post-ui.cc:1100
 #, c-format
 msgid "Error creating message in %s mail folder: Invalid article."
 msgstr ""
 "Der opstod en fejl under oprettelse af beskeden i postmappen %s: Ugyldig "
 "artikel."
 
-#: pan/gui/post-ui.cc:1105
+#: pan/gui/post-ui.cc:1122
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit → Manage Posting Profiles."
@@ -1681,7 +1676,7 @@ msgstr ""
 "Ingen afsendelsesserver er indstillet for denne profil.\n"
 "Rediger profilen via Rediger → Afsenderprofiler."
 
-#: pan/gui/post-ui.cc:1110
+#: pan/gui/post-ui.cc:1127
 msgid ""
 "The selected posting server is currently disabled. Please choose an "
 "appropriate alternative."
@@ -1689,15 +1684,15 @@ msgstr ""
 "Den valgte postserver er i øjeblikket deaktiveret. Vælg venligst et passende "
 "alternativ."
 
-#: pan/gui/post-ui.cc:1152
+#: pan/gui/post-ui.cc:1169
 msgid "Pan is Offline."
 msgstr "Pan er frakoblet."
 
-#: pan/gui/post-ui.cc:1153
+#: pan/gui/post-ui.cc:1170
 msgid "Go online to post the article?"
 msgstr "Tilkoble for at sende artiklen?"
 
-#: pan/gui/post-ui.cc:1202
+#: pan/gui/post-ui.cc:1219
 #, c-format
 msgid ""
 "Error signing/encrypting your message. Perhaps you misspelled your email "
@@ -1706,110 +1701,110 @@ msgstr ""
 "Der opstod en fejl under underskrivning/kryptering af din besked. Måske "
 "lavede du en stavefejl i din e-postadresse (%s)?"
 
-#: pan/gui/post-ui.cc:1350
+#: pan/gui/post-ui.cc:1367
 msgid "Error opening temporary file"
 msgstr "Fejl ved åbningen af midlertidig fil"
 
-#: pan/gui/post-ui.cc:1362
+#: pan/gui/post-ui.cc:1379
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Fejl ved skrivning af artikel til temporær fil: %s"
 
-#: pan/gui/post-ui.cc:1381
+#: pan/gui/post-ui.cc:1398
 #, c-format
 msgid "Error parsing “external editor” command line: %s (Command was: %s)"
 msgstr ""
 "Fejl ved tolkning af “eksternt redigeringsprogram”-kommandolinje: %s "
 "(Kommandoen var: %s)"
 
-#: pan/gui/post-ui.cc:1422
+#: pan/gui/post-ui.cc:1439
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Fejl ved start af den eksterne redigerering: %s"
 
-#: pan/gui/post-ui.cc:1485
+#: pan/gui/post-ui.cc:1502
 msgid "Open Draft Article"
 msgstr "Åbn kladde"
 
-#: pan/gui/post-ui.cc:1697
+#: pan/gui/post-ui.cc:1767
 msgid "Save Draft Article"
 msgstr "Gem kladde"
 
-#: pan/gui/post-ui.cc:1734
+#: pan/gui/post-ui.cc:1804
 msgid "File already exists."
 msgstr "Filen findes allerede."
 
-#: pan/gui/post-ui.cc:1735
+#: pan/gui/post-ui.cc:1805
 msgid "Overwrite it?"
 msgstr "Overskriv den?"
 
-#: pan/gui/post-ui.cc:1941
+#: pan/gui/post-ui.cc:2015
 #, c-format
 msgid "Couldn’t parse signature command “%s”: %s"
 msgstr "Kunne ikke fortolke signaturkommando “%s”: %s"
 
-#: pan/gui/post-ui.cc:1977
+#: pan/gui/post-ui.cc:2051
 msgid "Couldn’t convert signature to UTF-8."
 msgstr "Kunne ikke konvertere signaturfilen til UTF-8."
 
-#: pan/gui/post-ui.cc:2479
+#: pan/gui/post-ui.cc:2591
 msgid "F_rom"
 msgstr "_Fra"
 
-#: pan/gui/post-ui.cc:2496
+#: pan/gui/post-ui.cc:2608
 msgid "_Subject"
 msgstr "_Emne"
 
-#: pan/gui/post-ui.cc:2509
+#: pan/gui/post-ui.cc:2621
 msgid "_Newsgroups"
 msgstr "_Nyhedsgrupper"
 
-#: pan/gui/post-ui.cc:2523
+#: pan/gui/post-ui.cc:2635
 msgid "Mail _To"
 msgstr "E-post _til"
 
-#: pan/gui/post-ui.cc:2625
+#: pan/gui/post-ui.cc:2737
 msgid "Delete from Queue"
 msgstr "Slet fra kø"
 
-#: pan/gui/post-ui.cc:2638
+#: pan/gui/post-ui.cc:2750
 msgid "No."
 msgstr "Nej."
 
-#: pan/gui/post-ui.cc:2642 pan/gui/post-ui.cc:2734 pan/gui/post-ui.cc:2775
+#: pan/gui/post-ui.cc:2754 pan/gui/post-ui.cc:2846 pan/gui/post-ui.cc:2887
 msgid "Filename"
 msgstr "Filnavn"
 
-#: pan/gui/post-ui.cc:2644
+#: pan/gui/post-ui.cc:2756
 msgid "Size (KB)"
 msgstr "Størrelse (KB)"
 
-#: pan/gui/post-ui.cc:2742
+#: pan/gui/post-ui.cc:2854
 msgid "The current filename"
 msgstr "Det nuværende filnavn"
 
-#: pan/gui/post-ui.cc:2746
+#: pan/gui/post-ui.cc:2858
 msgid "Subject Line"
 msgstr "Emnelinje"
 
-#: pan/gui/post-ui.cc:2754
+#: pan/gui/post-ui.cc:2866
 msgid "The current subject line"
 msgstr "Den nuværende emnelinje"
 
-#: pan/gui/post-ui.cc:2768
+#: pan/gui/post-ui.cc:2880
 msgid "No. "
 msgstr "Nr. "
 
-#: pan/gui/post-ui.cc:2772
+#: pan/gui/post-ui.cc:2884
 msgid "Enable/Disable"
 msgstr "Aktiver/deaktiver"
 
-#: pan/gui/post-ui.cc:2806
+#: pan/gui/post-ui.cc:2918
 msgid "Follo_wup-To"
 msgstr "Opf_ølgning-til"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:2815
+#: pan/gui/post-ui.cc:2927
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the “Newsgroups” header.\n"
@@ -1822,11 +1817,11 @@ msgstr ""
 "For at lade alle svar gå til din e-postadresse kan du bruge “Opfølgning-til: "
 "afsender”"
 
-#: pan/gui/post-ui.cc:2822
+#: pan/gui/post-ui.cc:2934
 msgid "_Reply-To"
 msgstr "_Svar-til"
 
-#: pan/gui/post-ui.cc:2830
+#: pan/gui/post-ui.cc:2942
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the “From” header."
@@ -1834,52 +1829,52 @@ msgstr ""
 "Den e-postkonto hvortil e-postsvar til din publicerede besked skal gå. Dette "
 "behøves kun, hvis det adskiller sig fra “Fra”-brevhovedet."
 
-#: pan/gui/post-ui.cc:2837
+#: pan/gui/post-ui.cc:2949
 msgid "_Custom Headers"
 msgstr "_Brugerdefinerede brevhoveder"
 
-#: pan/gui/post-ui.cc:2861
+#: pan/gui/post-ui.cc:2973
 msgid "Add “_User-Agent” header"
 msgstr "Tilføj “_User-Agent”-brevhovedet"
 
-#: pan/gui/post-ui.cc:2868
+#: pan/gui/post-ui.cc:2980
 msgid "Add “Message-_ID” header"
 msgstr "T_ilføj “Besked-id”-brevhovedet"
 
-#: pan/gui/post-ui.cc:2999
+#: pan/gui/post-ui.cc:3111
 msgid "Select Parts"
 msgstr "Marker dele"
 
-#: pan/gui/post-ui.cc:3012
+#: pan/gui/post-ui.cc:3124
 msgid "_Parts"
 msgstr "_Dele"
 
-#: pan/gui/post-ui.cc:3166
+#: pan/gui/post-ui.cc:3282
 msgid "Post Article"
 msgstr "Send artikel"
 
-#: pan/gui/post-ui.cc:3187
+#: pan/gui/post-ui.cc:3303
 msgid "_Message"
 msgstr "_Artikel"
 
-#: pan/gui/post-ui.cc:3188
+#: pan/gui/post-ui.cc:3304
 msgid "More _Headers"
 msgstr "Flere brev_hoveder"
 
-#: pan/gui/post-ui.cc:3189
+#: pan/gui/post-ui.cc:3305
 msgid "File _Queue"
 msgstr "Fil_kø"
 
-#: pan/gui/post-ui.cc:3221 pan/gui/profiles-dialog.cc:482
+#: pan/gui/post-ui.cc:3337 pan/gui/profiles-dialog.cc:482
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "Den %d skrev %n:"
 
-#: pan/gui/post-ui.cc:3250
+#: pan/gui/post-ui.cc:3366
 msgid "Add files to queue"
 msgstr "Tilføj filer til kø"
 
-#: pan/gui/post-ui.cc:3326
+#: pan/gui/post-ui.cc:3442
 msgid "Save Upload Queue as NZB File"
 msgstr "Gem overførselskø som en NZB-fil"
 
@@ -2153,13 +2148,12 @@ msgid "Minutes to autosave newsrc files: "
 msgstr "Minutinterval hvor newsrc-filer gemmes automatisk: "
 
 #: pan/gui/prefs-ui.cc:1064
-#, fuzzy
 msgid "Password Storage"
-msgstr "_Adgangskode:"
+msgstr "Adgangskodelager"
 
 #: pan/gui/prefs-ui.cc:1065
 msgid "Save passwords in password storage"
-msgstr ""
+msgstr "Gem adgangskoder i adgangskodelageret"
 
 #: pan/gui/prefs-ui.cc:1069
 msgid "_Miscellaneous"
@@ -2506,7 +2500,8 @@ msgid ""
 msgstr ""
 "Du kan tilføje et avatarikon til dine artikler med en unik X-Face-kode.\n"
 "Tilføj koden uden efterstillet <b>“X-Face:”</b> \n"
-" hvis ikonet blev oprettet af et hjælpeprogram (f.eks. http://www.dairiki.org/xface/xface.php)."
+" hvis ikonet blev oprettet af et hjælpeprogram (f.eks. http://www.dairiki."
+"org/xface/xface.php)."
 
 #: pan/gui/profiles-dialog.cc:232
 msgid "_X-Face:"
@@ -2766,7 +2761,7 @@ msgstr "er"
 
 #: pan/gui/score-add-ui.cc:197
 msgid "isn’t"
-msgstr ""
+msgstr "er ikke"
 
 #: pan/gui/score-add-ui.cc:198
 msgid "starts with"
@@ -2851,9 +2846,8 @@ msgid "Add a Server"
 msgstr "Tilføj en server"
 
 #: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:967
-#, fuzzy
 msgid "Edit a Server’s Settings"
-msgstr "Rediger serverindstillinger"
+msgstr "Rediger en servers indstillinger"
 
 #: pan/gui/server-ui.cc:375
 msgid "Location"
@@ -3322,9 +3316,9 @@ msgid "Article “%s” is incomplete — the news server(s) don’t have part %
 msgstr "Artiklen “%s” er ufuldstændig — nyhedsgruppeservere har ikke delen %s"
 
 #: pan/tasks/task-groups.cc:41
-#, fuzzy, c-format
+#, c-format
 msgid "Getting group list from “%s”"
-msgstr "Henter nye grupper fra “%s”"
+msgstr "Henter gruppeliste fra “%s”"
 
 #: pan/tasks/task-groups.cc:134
 #, c-format
@@ -3336,12 +3330,12 @@ msgstr "Hentede %lu grupper"
 msgid "Posting “%s”"
 msgstr "Sender “%s”"
 
-#: pan/tasks/task-post.cc:76
+#: pan/tasks/task-post.cc:80
 #, c-format
 msgid "Posting of “%s” failed: %s"
 msgstr "Indsendelse af “%s” mislykkedes: %s"
 
-#: pan/tasks/task-post.cc:81
+#: pan/tasks/task-post.cc:85
 #, c-format
 msgid "Posting of “%s” successful: %s"
 msgstr "Indsendelse af “%s” lykkedes: %s"
@@ -3351,40 +3345,40 @@ msgstr "Indsendelse af “%s” lykkedes: %s"
 msgid "Uploading %s"
 msgstr "Overfører %s"
 
-#: pan/tasks/task-upload.cc:244
+#: pan/tasks/task-upload.cc:265
 #, c-format
 msgid "Uploading %s — Part %d of %d"
 msgstr "Overfører %s – del %d af %d"
 
-#: pan/tasks/task-upload.cc:246
+#: pan/tasks/task-upload.cc:267
 #, c-format
 msgid "Uploading message body with subject “%s”"
 msgstr "Overfører beskedbrødtekst med emnet “%s”"
 
-#: pan/tasks/task-upload.cc:303
+#: pan/tasks/task-upload.cc:324
 #, c-format
 msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
 msgstr ""
 "Indsendelse af filen %s (del %d af %d) mislykkedes: Ingen post tilladt af "
 "serveren."
 
-#: pan/tasks/task-upload.cc:311
+#: pan/tasks/task-upload.cc:332
 #, c-format
 msgid "Posting of file %s (part %d of %d) failed: %s"
 msgstr "Indsendelse af filen %s (del %d af %d) mislykkedes: %s"
 
-#: pan/tasks/task-upload.cc:321 pan/tasks/task-upload.cc:328
+#: pan/tasks/task-upload.cc:342 pan/tasks/task-upload.cc:349
 #, c-format
 msgid "Posting of file %s (part %d of %d) successful: %s"
 msgstr "Indsendelse af filen %s (del %d af %d) lykkedes: %s"
 
-#: pan/tasks/task-upload.cc:338
+#: pan/tasks/task-upload.cc:359
 #, c-format
 msgid "Posting of file %s successful: %s"
 msgstr "Indsendelse af filen %s lykkedes: %s"
 
 # hmm, "vis element"?  Kan ikke gennemskue denne
-#: pan/tasks/task-upload.cc:342
+#: pan/tasks/task-upload.cc:363
 #, c-format
 msgid ""
 "Posting of file %s not completely successful: Check the log (right-click "
@@ -3393,7 +3387,7 @@ msgstr ""
 "Indsendelse af filen %s lykkedes ikke fuldstændigt: Kontroller loggen "
 "(højreklik på vis element)."
 
-#: pan/tasks/task-upload.cc:359
+#: pan/tasks/task-upload.cc:380
 #, c-format
 msgid ""
 "Posting of file %s not successful: Check the log (right-click list item)."
@@ -3417,12 +3411,12 @@ msgstr "Henter nye brevhoveder for “%s”"
 msgid "Sampling headers for “%s”"
 msgstr "Udtrækker brevhoveder for “%s”"
 
-#: pan/tasks/task-xover.cc:426
+#: pan/tasks/task-xover.cc:431
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu dele, %lu artikler)"
 
-#: pan/tasks/task-xover.cc:500
+#: pan/tasks/task-xover.cc:505
 #, c-format
 msgid "Getting new headers for “%s” done."
 msgstr "Hentede nye brevhoveder for “%s”."
@@ -3676,7 +3670,7 @@ msgstr "Fejl: Ugyldig e-postadresse."
 msgid "Warning: Most newsgroups frown upon HTML posts."
 msgstr "Advarsel: I de fleste nyhedgrupper er HTML uønsket."
 
-#: pan/usenet-utils/message-check.cc:486
+#: pan/usenet-utils/message-check.cc:490
 msgid "Error: No Recipients."
 msgstr "Fejl: Ingen modtagere."
 
@@ -3685,7 +3679,9 @@ msgstr "Fejl: Ingen modtagere."
 msgid ""
 "Error reading score in %*.*s, line %d: expected “Expires: MM/DD/YYYY” or "
 "“Expires: DD-MM-YYYY”."
-msgstr "Fejl ved læsning af bedømmelse i %*.*s, linje %d: Forventer “Expires: MM/DD/YYYY” eller “Expires: DD-MM-YYYY”."
+msgstr ""
+"Fejl ved læsning af bedømmelse i %*.*s, linje %d: Forventer “Expires: MM/DD/"
+"YYYY” eller “Expires: DD-MM-YYYY”."
 
 #: pan/usenet-utils/scorefile.cc:307
 #, c-format
@@ -3712,14 +3708,18 @@ msgstr "Der opstod en fejl under udskrivning af servercertifikat for “%s”"
 msgid ""
 "The current server <b>“%s”</b> sent this security certificate:\n"
 "\n"
-msgstr "Den nuværende server <b>“%s”</b> sendte dette sikkerhedscertifikat:\n\n"
+msgstr ""
+"Den nuværende server <b>“%s”</b> sendte dette sikkerhedscertifikat:\n"
+"\n"
 
 #: pan/usenet-utils/ssl-utils.h:206
 #, c-format
 msgid ""
 "Certificate information for server <b>“%s”</b>:\n"
 "\n"
-msgstr "Certifikatinformation for serveren <b>“%s”</b>:\n\n"
+msgstr ""
+"Certifikatinformation for serveren <b>“%s”</b>:\n"
+"\n"
 
 #: pan/usenet-utils/ssl-utils.h:208
 #, c-format
