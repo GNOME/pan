@@ -36,7 +36,9 @@ RulesFilter :: finalize (Data& data)
   _delete.clear();
 
   const std::vector<const Article*> tmp (_mark_read.begin(), _mark_read.end());
-  data.mark_read ((const Article**)&tmp.front(), tmp.size());
+  if (!tmp.empty()) {
+    data.mark_read ((const Article**)&tmp.front(), tmp.size());
+  }
   _mark_read.clear();
 
   const std::vector<const Article*> tmp2 ( _cached.begin(),  _cached.end());
