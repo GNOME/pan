@@ -1,8 +1,8 @@
-AC_INIT([Pan],[0.145],[https://bugzilla.gnome.org/enter_bug.cgi?product=Pan],[pan],[http://pan.rebelbase.com/])
+AC_INIT([Pan],[0.146],[https://bugzilla.gnome.org/enter_bug.cgi?product=Pan],[pan],[http://pan.rebelbase.com/])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
-AC_DEFINE(VERSION_MINOR,145,[Minor part of version number])
+AC_DEFINE(VERSION_MINOR,146,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
-AC_DEFINE(VERSION_TITLE,["Duplicitous mercenary valetism"],[Release Name])
+AC_DEFINE(VERSION_TITLE,["Hic habitat felicitas"],[Release Name])
 AC_PREREQ([2.64])
 
 dnl Get git info for pan-git.version
