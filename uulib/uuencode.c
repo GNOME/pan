@@ -1740,7 +1740,7 @@ UUEncodePartial_byFSize (FILE *outfile, FILE *infile,
             }
 
           fprintf (outfile, "=ypart begin=%ld end=%ld%s",
-                   (partno-1)*bpf,
+                   (partno-1)*bpf+1,
                    (partno*bpf) < progress.totsize ?
                    (partno*bpf) : progress.totsize,
                    eolstring);
