@@ -1,0 +1,8 @@
+build-fedora-gtk2:
+  image: fedora:latest
+  before_script:
+    - dnf install -y git gcc desktop-file-utils gettext-devel glib2-devel gmime-devel gtk2-devel gtkspell-devel enchant-devel libappstream-glib libnotify-devel libgnome-keyring-devel itstool yelp-tools gnutls-devel
+  script:
+    - ./autogen.sh --without-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
+    - make
+    - make check
