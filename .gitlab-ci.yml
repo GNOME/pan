@@ -1,0 +1,20 @@
+build-ubuntu-gtk2:
+  image: ubuntu:rolling
+  before_script:
+    - apt-get update -qq
+    - apt-get install -qq --fix-missing
+        build-essential
+        autoconf
+        libglib2.0-dev
+        libgtk2.0-dev
+        libgmime-2.6-dev
+        libgtkspell-dev
+        libenchant-dev
+        libnotify-dev
+        libgnome-keyring-dev
+        libgnutls28-dev
+        yelp-tools
+  script:
+    - ./autogen.sh --without-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
+    - make
+    - make check
