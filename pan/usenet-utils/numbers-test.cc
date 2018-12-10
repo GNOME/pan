@@ -191,7 +191,7 @@ std::cerr << "n.to_string() == " << n.to_string() << std::endl;
 	check (n.to_string() == "0-1000")
 #endif
 
-	// http://bugzilla.gnome.org/show_bug.cgi?id=77878
+	// https://bugzilla.gnome.org/show_bug.cgi?id=77878
 	n.clear ();
 	n.mark_range (1, 4);
 	n.mark_range (7, 9);

@@ -1698,7 +1698,7 @@ void GUI :: do_pan_web ()
 }
 void GUI :: do_bug_report ()
 {
-  URL :: open (_prefs, "http://bugzilla.gnome.org/enter_bug.cgi?product=Pan");
+  URL :: open (_prefs, "https://gitlab.gnome.org/GNOME/pan/issues");
 }
 void GUI :: do_tip_jar ()
 {

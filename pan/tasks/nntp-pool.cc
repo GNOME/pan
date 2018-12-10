@@ -219,7 +219,7 @@ NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response
      if (   (s.find ("502") != s.npos)
          || (s.find ("400") != s.npos)
          || (s.find ("451") != s.npos)
-         || (s.find ("480") != s.npos) // http://bugzilla.gnome.org/show_bug.cgi?id=409085
+         || (s.find ("480") != s.npos) // https://bugzilla.gnome.org/show_bug.cgi?id=409085
          || (s.find ("too many") != s.npos)
          || (s.find ("limit reached") != s.npos)
          || (s.find ("maximum number of connections") != s.npos)
