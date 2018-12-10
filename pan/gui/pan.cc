@@ -569,7 +569,7 @@ namespace
 
   /** Queue:::Listener that quits Pan via mainloop_exit()
       when on_queue_size_changed() say the queue is empty.
-      See bugzilla bug #424248. */
+      See https://bugzilla.gnome.org/show_bug.cgi?id=424248. */
   struct PanKiller : public Queue::Listener
   {
     PanKiller(Queue & q) : q(q) { q.add_listener(this); }

@@ -45,7 +45,7 @@ ArticleFilter :: get_header (const Article& a, const Quark& header_name) const
   if (header_name == message_ID) return a.message_id.to_view ();
 
   std::cerr << LINE_ID << ' ' << PACKAGE_STRING << " is misparsing \"" << header_name << "\".\n"
-            << "Please file a bug report to http://bugzilla.gnome.org/enter_bug.cgi?product=Pan\n";
+            << "Please file a bug report to https://gitlab.gnome.org/GNOME/pan/issues\n";
   return empty;
 }
 

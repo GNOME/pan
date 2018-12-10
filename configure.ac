@@ -1,4 +1,4 @@
-AC_INIT([Pan],[0.146],[https://bugzilla.gnome.org/enter_bug.cgi?product=Pan],[pan],[http://pan.rebelbase.com/])
+AC_INIT([Pan],[0.146],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[http://pan.rebelbase.com/])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
 AC_DEFINE(VERSION_MINOR,146,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
