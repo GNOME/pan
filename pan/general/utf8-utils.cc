@@ -135,13 +135,16 @@ pan :: header_to_utf8 (const StringView  & header,
                        const char        * fallback_charset1,
                        const char        * fallback_charset2)
 {
+
+  GMimeParserOptions *gmpo  = g_mime_parser_options_new();
   std::string s = content_to_utf8 (header, fallback_charset1, fallback_charset2);
   if (header.strstr ("=?")) {
-    char * decoded (g_mime_utils_header_decode_text (NULL, s.c_str()));
+    char * decoded (g_mime_utils_header_decode_text (gmpo, s.c_str()));
     s = clean_utf8 (decoded);
     g_free (decoded);
   }
   return s;
+  g_mime_parser_options_free (gmpo);
 }
 
 #else
