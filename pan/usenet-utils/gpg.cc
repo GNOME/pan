@@ -70,6 +70,45 @@ namespace pan
       signer.key_id = sig->cert->keyid ? sig->cert->keyid : "(null)";
       signer.fpr = sig->cert->fingerprint ? sig->cert->fingerprint : "(null)";
 
+#ifdef HAVE_GMIME_30
+      switch (sig->cert->trust) {
+      case GMIME_TRUST_UNKNOWN:
+        signer.trust = "None";
+        break;
+      case GMIME_TRUST_NEVER:
+        signer.trust = "Never";
+        break;
+      case GMIME_TRUST_UNDEFINED:
+        signer.trust = "Undefined";
+        break;
+      case GMIME_TRUST_MARGINAL:
+        signer.trust = "Marginal";
+        break;
+      case GMIME_TRUST_FULL:
+        signer.trust = "Fully";
+        break;
+      case GMIME_TRUST_ULTIMATE:
+        signer.trust = "Ultimate";
+        break;
+      }
+
+      switch (sig->status) {
+      case GMIME_SIGNATURE_STATUS_GREEN:
+        signer.status = "GOOD";
+        break;
+      case GMIME_SIGNATURE_STATUS_RED:
+        signer.status = "BAD";
+        break;
+      case GMIME_SIGNATURE_STATUS_SYS_ERROR:
+        signer.status = "ERROR";
+        break;
+      }
+
+      signer.created = sig->created;
+      signer.expires = sig->expires;
+      if (sig->expires == (time_t) 0)
+        signer.never_expires = true;
+#else
       switch (sig->cert->trust) {
       case GMIME_CERTIFICATE_TRUST_NONE:
         signer.trust = "None";
@@ -102,25 +141,28 @@ namespace pan
         signer.status = "ERROR";
         break;
       }
+#endif
 
       signer.created = sig->created;
       signer.expires = sig->expires;
       if (sig->expires == (time_t) 0)
         signer.never_expires = true;
 
-      if (sig->errors) {
+// https://developer.gnome.org/gmime/stable/gmime-changes-3-0.html
+// GMimeSignatureStatus and GMimeSignatureErrors have been merged into a single bitfield (GMimeSignatureStatus) ...
+//      if (sig->errors) {
 
-        if (sig->errors & GMIME_SIGNATURE_ERROR_EXPSIG)
-          signer.error = "Expired";
-        if (sig->errors & GMIME_SIGNATURE_ERROR_NO_PUBKEY)
-          signer.error = "No Pub Key";
-        if (sig->errors & GMIME_SIGNATURE_ERROR_EXPKEYSIG)
-          signer.error = "Key Expired";
-        if (sig->errors & GMIME_SIGNATURE_ERROR_REVKEYSIG)
-          signer.error = "Key Revoked";
-      } else {
-          signer.error = "No errors for this signer";
-      }
+//        if (sig->errors & GMIME_SIGNATURE_ERROR_EXPSIG)
+//          signer.error = "Expired";
+//        if (sig->errors & GMIME_SIGNATURE_ERROR_NO_PUBKEY)
+//          signer.error = "No Pub Key";
+//        if (sig->errors & GMIME_SIGNATURE_ERROR_EXPKEYSIG)
+//          signer.error = "Key Expired";
+//        if (sig->errors & GMIME_SIGNATURE_ERROR_REVKEYSIG)
+//          signer.error = "Key Revoked";
+//      } else {
+//          signer.error = "No errors for this signer";
+//      }
 
       info.signers.push_back(signer);
     }
@@ -128,11 +170,11 @@ namespace pan
 
   void init_gpg()
   {
-    gpg_ctx = g_mime_gpg_context_new (request_passwd, "gpg2");
+//    gpg_ctx = g_mime_gpg_context_new (request_passwd, "gpg2");
     if (!gpg_ctx) gpg_inited = false; else gpg_inited = true;
-    g_mime_gpg_context_set_auto_key_retrieve(GMIME_GPG_CONTEXT(gpg_ctx),true);
-    g_mime_gpg_context_set_always_trust(GMIME_GPG_CONTEXT(gpg_ctx),false);
-    g_mime_gpg_context_set_use_agent(GMIME_GPG_CONTEXT(gpg_ctx), false);
+//    g_mime_gpg_context_set_auto_key_retrieve(GMIME_GPG_CONTEXT(gpg_ctx),true);
+//    g_mime_gpg_context_set_always_trust(GMIME_GPG_CONTEXT(gpg_ctx),false);
+//    g_mime_gpg_context_set_use_agent(GMIME_GPG_CONTEXT(gpg_ctx), false);
   }
 
 
