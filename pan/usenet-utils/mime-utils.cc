@@ -1634,12 +1634,20 @@ namespace pan
   GMimeSignatureStatus
   get_sig_status (GMimeSignatureList *signatures)
   {
+#ifdef HAVE_GMIME_30
+	GMimeSignatureStatus status = GMIME_SIGNATURE_STATUS_VALID;
+#else
     GMimeSignatureStatus status = GMIME_SIGNATURE_STATUS_GOOD;
+#endif
     GMimeSignature *sig;
     int i;
 
     if (!signatures || signatures->array->len == 0)
+#ifdef HAVE_GMIME_30
+      return GMIME_SIGNATURE_STATUS_SYS_ERROR;
+#else
       return GMIME_SIGNATURE_STATUS_ERROR;
+#endif
 
     for (i = 0; i < g_mime_signature_list_length (signatures); i++) {
       sig = g_mime_signature_list_get_signature (signatures, i);
@@ -1673,18 +1681,30 @@ namespace pan
 
     if (info.type == GPG_VERIFY)
     {
+#ifdef HAVE_GMIME_30
+      GMimeSignatureList * sigs = g_mime_multipart_signed_verify (mps, GMIME_VERIFY_NONE, &info.err);
+#else
       GMimeSignatureList * sigs = g_mime_multipart_signed_verify (mps, gpg_ctx, &info.err);
+#endif
       if (info.err || !sigs) return false;
       if (sigs) info.no_sigs = false;
       fill_signer_info(info.signers, sigs);
+#ifdef HAVE_GMIME_30
+      bool status = get_sig_status(sigs) == GMIME_SIGNATURE_STATUS_VALID;
+#else
       bool status = get_sig_status(sigs) == GMIME_SIGNATURE_STATUS_GOOD;
+#endif
       g_object_unref(sigs);
       return status;
     }
 
     if (info.type == GPG_DECODE)
     {
+#ifdef HAVE_GMIME_30
+      info.decrypted = g_mime_multipart_encrypted_decrypt (mpe, GMIME_DECRYPT_NONE, NULL, &info.result, &info.err);
+#else
       info.decrypted = g_mime_multipart_encrypted_decrypt (mpe, gpg_ctx, &info.result, &info.err);
+#endif
       if (!info.decrypted)
         if (info.err) return false;
 
@@ -1693,7 +1713,11 @@ namespace pan
       {
         info.no_sigs = false;
         fill_signer_info(info.signers, sigs);
+#ifdef HAVE_GMIME_30
+        bool status = get_sig_status(info.result->signatures) == GMIME_SIGNATURE_STATUS_VALID;
+#else
         bool status = get_sig_status(info.result->signatures) == GMIME_SIGNATURE_STATUS_GOOD;
+#endif
         g_object_unref(sigs);
         return status;
       }
@@ -1722,7 +1746,13 @@ namespace pan
     mps = g_mime_multipart_signed_new ();
 
     /* sign the part */
+#ifdef HAVE_GMIME_30
+    GMimeObject *gmo;
+    gmo = g_mime_message_get_mime_part (body);
+    if (g_mime_multipart_signed_sign (gpg_ctx, gmo, uid.c_str(), &err) <0)
+#else
     if (g_mime_multipart_signed_sign (mps, GMIME_OBJECT (part), gpg_ctx, uid.c_str(), GMIME_DIGEST_ALGO_SHA1, &err) <0)
+#endif
     {
       g_object_unref(mps);
       g_object_unref(G_OBJECT(part));
@@ -1752,8 +1782,13 @@ namespace pan
 
     GMimeMultipartEncrypted * mpe = g_mime_multipart_encrypted_new();
 
+#ifdef HAVE_GMIME_30
+    if (g_mime_multipart_encrypted_encrypt(gpg_ctx, GMIME_OBJECT (part), sign, uid.c_str(),
+                                           GMIME_ENCRYPT_NONE, rcp, &err) < 0)
+#else
     if (g_mime_multipart_encrypted_encrypt(mpe, GMIME_OBJECT (part), gpg_ctx, sign,
                                            uid.c_str(), GMIME_DIGEST_ALGO_SHA1, rcp, &err) < 0)
+#endif
     {
       g_object_unref(mpe);
       g_object_unref(G_OBJECT(part));
