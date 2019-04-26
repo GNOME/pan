@@ -906,6 +906,7 @@ main (int argc, char *argv[])
   g_thread_init (0);
 #endif
 #ifdef HAVE_GMIME_30
+  g_mime_init ();
 #else
   g_mime_init (GMIME_ENABLE_RFC2047_WORKAROUNDS);
 #endif  
