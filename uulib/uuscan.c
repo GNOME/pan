@@ -202,7 +202,7 @@ ScanHeaderLine (FILE *datei, char *initial)
   }
 
   while (!feof (datei)) {
-    char c = fgetc (datei);
+    int c = fgetc (datei);
     if (feof (datei))
       break;
 
