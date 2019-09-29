@@ -1,11 +1,14 @@
 build-ubuntu-gtk2:
   image: ubuntu:rolling
   before_script:
-    - apt-get update -qq
-    - apt-get install -qq --fix-missing
+    - apt-get update
+    - apt-get install -q -y --no-install-recommends
         build-essential
         autoconf
-        libglib2.0-dev
+        autopoint
+        automake
+        gettext
+        gcc
         libgtk2.0-dev
         libgmime-2.6-dev
         libgtkspell-dev
@@ -16,5 +19,33 @@ build-ubuntu-gtk2:
         yelp-tools
   script:
     - ./autogen.sh --without-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
+    - make
+    - make check
+
+build-ubuntu-gtk3:
+  image: ubuntu:rolling
+  before_script:
+    - apt-get update
+    - apt-get install -q -y --no-install-recommends
+        build-essential
+        autoconf
+        autopoint
+        automake
+        gettext
+        gcc
+        libglib2.0-dev-bin
+        libdbus-1-dev
+        libgcr-3-dev
+        libgmime-2.6-dev
+        libgnutls28-dev
+        libgtk-3-dev
+        libgtkspell-dev
+        libnotify-dev
+        libsecret-1-dev
+        libgtkspell3-3-dev
+        yelp-tools
+
+  script:
+    - ./autogen.sh --with-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
     - make check
