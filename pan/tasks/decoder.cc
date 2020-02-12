@@ -59,7 +59,8 @@ Decoder :: enqueue (TaskArticle                     * task,
                     const strings_t                 & input_files,
                     const TaskArticle::SaveMode     & save_mode,
                     const TaskArticle::SaveOptions  & options,
-                    const StringView                & filename)
+                    const StringView                & filename,
+                    const Article                   & article)
 {
   disable_progress_update ();
 
@@ -69,6 +70,7 @@ Decoder :: enqueue (TaskArticle                     * task,
   this->save_mode = save_mode;
   this->options = options;
   this->attachment_filename = filename;
+  this->article_subject = article.subject;
 
   mark_read = false;
 
@@ -147,7 +149,12 @@ Decoder :: do_work()
       {
 
         if (was_cancelled()) break;
-        if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), 0, 0, ++i)) != UURET_OK) {
+        const char *global_subject = NULL;
+        // In SAVE_ALL mode, article_subject is the subject from the NZB file, if known
+        if (options == TaskArticle::SAVE_ALL && !article_subject.empty()) {
+          global_subject = article_subject.c_str();
+        }
+        if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), 0, 0, ++i, global_subject)) != UURET_OK) {
           g_snprintf(buf, bufsz,
                      _("Error reading from %s: %s"),
                      it->c_str(),
@@ -169,8 +176,8 @@ Decoder :: do_work()
       {
         // skip all other attachments in SAVE_AS mode (single attachment download)
         /// DBG why is this failing if article isn't cached????
-        if (!attachment_filename.empty())
-          if(strcmp(item->filename, attachment_filename.str) != 0 && options == TaskArticle::SAVE_AS) continue;
+        if (options == TaskArticle::SAVE_AS && !attachment_filename.empty())
+          if(strcmp(item->filename, attachment_filename.str) != 0) continue;
 
         file_errors.clear ();
 

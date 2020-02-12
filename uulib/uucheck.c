@@ -87,6 +87,12 @@ static char *nofname = "UNKNOWN";
 static char *fnchars = "._-~!";
 
 /*
+ * special characters we forbid a quoted filename to have
+ */
+
+static char *fnqchars = "/:\\\"";
+
+/*
  * Policy for extracting a part number from the subject line.
  * usually, look for part numbers in () brackets first, then in []
  */
@@ -148,23 +154,27 @@ UUGetFileName (char *subject, char *ptonum, char *ptonend)
   }
 
   /*
-   * If the file was encoded by uuenview, then the filename is enclosed
-   * in [brackets]. But check what's inside these bracket's, try not to
-   * fall for something other than a filename
+   * Try try to find a file name between quotes.
+   * With yEnc this format is compulsory.
    */
 
   ptr = subject;
-  while ((iter = strchr (ptr, '[')) != NULL) {
-    if (strchr (iter, ']') == NULL) {
+  while ((iter = strchr (ptr, '"')) != NULL) {
+    /* Don't overlap the sequence number */
+    if (ptonum && ptonend && iter >= ptonum && iter <= ptonend) {
       ptr = iter + 1;
       continue;
     }
     iter++;
+    if (strchr (iter, '"') == NULL) {
+      ptr = iter + 1;
+      continue;
+    }
     while (isspace (*iter))
       iter++;
     count = length = alflag = 0;
     while (iter[count] && 
-	   (isalnum (iter[count]) || strchr (fnchars, iter[count])!=NULL)) {
+	   (strchr (fnqchars, iter[count])==NULL)) {
       if (isalpha (iter[count]))
 	alflag++;
       count++;
@@ -173,15 +183,60 @@ UUGetFileName (char *subject, char *ptonum, char *ptonend)
       ptr = iter + 1;
       continue;
     }
+    /* Don't overlap the sequence number */
+    if (ptonum && ptonend && iter+count >= ptonum && iter+count <= ptonend) {
+      ptr = iter + 1;
+      continue;
+    }
     length = count;
     while (isspace (iter[count]))
       count++;
-    if (iter[count] == ']') {
+    if (iter[count] == '"') {
       ptr = iter;
       break;
     }
     length = 0;
     ptr = iter + 1;
+  }
+
+
+  /*
+   * If the file was encoded by uuenview, then the filename is enclosed
+   * in [brackets]. But check what's inside these bracket's, try not to
+   * fall for something other than a filename
+   */
+
+  if (length == 0) {
+    ptr = subject;
+    while ((iter = strchr (ptr, '[')) != NULL) {
+      if (strchr (iter, ']') == NULL) {
+        ptr = iter + 1;
+        continue;
+      }
+      iter++;
+      while (isspace (*iter))
+        iter++;
+      count = length = alflag = 0;
+      while (iter[count] &&
+             (isalnum (iter[count]) || iter[count] == ' ' || strchr (fnchars, iter[count])!=NULL)) {
+        if (isalpha (iter[count]))
+          alflag++;
+        count++;
+      }
+      if (count<4 || alflag==0) {
+        ptr = iter + 1;
+        continue;
+      }
+      length = count;
+      while (isspace (iter[count]))
+        count++;
+      if (iter[count] == ']') {
+        ptr = iter;
+        break;
+      }
+      length = 0;
+      ptr = iter + 1;
+    }
   }
 
   /*

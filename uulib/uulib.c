@@ -655,11 +655,11 @@ UUFNameFilter (char *fname)
 int UUEXPORT
 UULoadFile (char *filename, char *fileid, int delflag)
 {
-  return UULoadFileWithPartNo(filename, fileid, delflag, -1);
+  return UULoadFileWithPartNo(filename, fileid, delflag, -1, NULL);
 }
 
 int UUEXPORT
-UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno)
+UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno, const char *global_subject)
 {
   int res, sr, count=0;
   struct stat finfo;
@@ -779,6 +779,14 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno)
       continue;
     }
 
+    if (partno != -1 && global_subject /*&& loaded->uudet == YENC_ENCODED*/) {
+      /*
+       * Sometimes articles derived from an NZB file have corrupt Subject: lines.
+       * That also makes that UUInsertPartToList() fails to combine files properly.
+       */
+      loaded->subject = _FP_strdup(global_subject);
+    }
+
     if ((fload = UUPreProcessPart (loaded, &res)) == NULL) {
       /*
        * no useful data found
@@ -791,6 +799,16 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno)
       UUkillfread (loaded);
       if (uu_fast_scanning && sr != UURET_CONT) break;
       continue;
+    }
+
+    if (partno != -1 && global_subject /*&& loaded->uudet == YENC_ENCODED*/) {
+      /*
+       * If the yEnc file gives a different file name than the subject,
+       * this is a security risk.
+       *
+       * Override the part file name with the one derived from the global subject.
+       */
+      fload->filename = _FP_strdup(fload->subfname);
     }
 
     if ((loaded->subject && *(loaded->subject)) ||

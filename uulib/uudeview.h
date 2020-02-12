@@ -206,7 +206,7 @@ int	UUEXPORT UUSetFNameFilter	_ANSI_ARGS_((void *,
 								 char *)));
 char *	UUEXPORT UUFNameFilter		_ANSI_ARGS_((char *));
 int	UUEXPORT UULoadFile		_ANSI_ARGS_((char *, char *, int));
-int	UUEXPORT UULoadFileWithPartNo	_ANSI_ARGS_((char *, char *, int, int));
+int	UUEXPORT UULoadFileWithPartNo	_ANSI_ARGS_((char *, char *, int, int, const char *));
 uulist *UUEXPORT UUGetFileListItem	_ANSI_ARGS_((int));
 int	UUEXPORT UURenameFile		_ANSI_ARGS_((uulist *, char *));
 int	UUEXPORT UUDecodeToTemp		_ANSI_ARGS_((uulist *));
@@ -227,7 +227,7 @@ int	UUEXPORT UUEncodeMulti		_ANSI_ARGS_((FILE *, FILE *,
 int	UUEXPORT UUEncodePartial	_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, char *,
-						     int, int, long, unsigned long*));
+						     int, int, long, uint32_t*));
 int	UUEXPORT UUEncodePartial_byFSize	_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, char *,

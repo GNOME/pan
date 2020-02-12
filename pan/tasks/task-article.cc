@@ -347,7 +347,7 @@ TaskArticle :: use_decoder (Decoder* decoder)
   _state.set_working();
   const Article::mid_sequence_t mids (_article.get_part_mids());
   ArticleCache :: strings_t filenames (_cache.get_filenames (mids));
-  _decoder->enqueue (this, _save_path, filenames, _save_mode, _options, _attachment);
+  _decoder->enqueue (this, _save_path, filenames, _save_mode, _options, _attachment, _article);
   set_status_va (_("Decoding %s"), _article.subject.c_str());
   debug ("decoder thread was free, enqueued work");
 }
