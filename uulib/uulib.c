@@ -784,7 +784,7 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno, con
        * Sometimes articles derived from an NZB file have corrupt Subject: lines.
        * That also makes that UUInsertPartToList() fails to combine files properly.
        */
-      loaded->subject = _FP_strdup(global_subject);
+      loaded->subject = _FP_strdup((char *)global_subject);
     }
 
     if ((fload = UUPreProcessPart (loaded, &res)) == NULL) {

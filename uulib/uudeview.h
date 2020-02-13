@@ -227,7 +227,7 @@ int	UUEXPORT UUEncodeMulti		_ANSI_ARGS_((FILE *, FILE *,
 int	UUEXPORT UUEncodePartial	_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, char *,
-						     int, int, long, uint32_t*));
+						     int, int, long, unsigned long*));
 int	UUEXPORT UUEncodePartial_byFSize	_ANSI_ARGS_((FILE *, FILE *,
 						     char *, int,
 						     char *, char *,
