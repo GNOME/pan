@@ -667,6 +667,7 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno, con
   uufile *fload;
   itbd *killem;
   FILE *datei;
+  int overridden_subject;
 
   if ((datei = fopen (filename, "rb")) == NULL) {
     UUMessage (uulib_id, __LINE__, UUMSG_ERROR,
@@ -779,12 +780,21 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno, con
       continue;
     }
 
-    if (partno != -1 && global_subject /*&& loaded->uudet == YENC_ENCODED*/) {
+    if (partno != -1 && global_subject &&
+        loaded->uudet == YENC_ENCODED && /* only yEnc has a filename in each part */
+        (loaded->subject && loaded->filename &&
+         strstr(loaded->subject, loaded->filename) == NULL)) {
       /*
        * Sometimes articles derived from an NZB file have corrupt Subject: lines.
        * That also makes that UUInsertPartToList() fails to combine files properly.
+       * We detect this situation by checking if the filename from the
+       * part can be found in the Subject: header.
        */
+      _FP_free(loaded->subject);
       loaded->subject = _FP_strdup((char *)global_subject);
+      overridden_subject = 1;
+    } else {
+      overridden_subject = 0;
     }
 
     if ((fload = UUPreProcessPart (loaded, &res)) == NULL) {
@@ -801,13 +811,14 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno, con
       continue;
     }
 
-    if (partno != -1 && global_subject /*&& loaded->uudet == YENC_ENCODED*/) {
+    if (overridden_subject) {
       /*
        * If the yEnc file gives a different file name than the subject,
        * this is a security risk.
        *
        * Override the part file name with the one derived from the global subject.
        */
+      _FP_free(fload->filename);
       fload->filename = _FP_strdup(fload->subfname);
     }
 
