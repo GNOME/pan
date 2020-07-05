@@ -240,7 +240,7 @@ ProfilesImpl :: serialize (std::ostream& out) const
     }
     out << indent(--depth) << "</profile>\n";
   }
-  out << indent(--depth) << "</profiles>\n\n";
+  out << indent(--depth) << "</profiles>\n";
   out << indent(--depth) << "</posting>\n";
 }
 
