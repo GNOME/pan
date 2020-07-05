@@ -1598,86 +1598,63 @@ namespace
 GMimeMessage*
 PostUI :: new_message_from_ui (Mode mode, bool copy_body)
 {
+#ifdef HAVE_GMIME_30
 
   GMimeMessage * msg(0);
-  msg = g_mime_message_new (false);
+  msg = g_mime_message_new (true);
+  const char * charset_cstr = _charset.c_str();
 
   // headers from the ui: From
   const Profile profile (get_current_profile ());
   std::string s;
   profile.get_from_header (s);
-#ifdef HAVE_GMIME_30
-  g_mime_message_add_mailbox (msg, GMIME_ADDRESS_TYPE_SENDER, NULL, s.c_str());
-#else
-  g_mime_message_set_sender (msg, s.c_str());
-#endif
+  g_mime_message_add_mailbox (msg, GMIME_ADDRESS_TYPE_FROM, profile.username.c_str(), profile.address.c_str());
 
   // headers from the ui: Subject
   const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
   if (cpch) {
-#ifdef HAVE_GMIME_30
-    g_mime_message_set_subject (msg, cpch, NULL);
-#else
-    g_mime_message_set_subject (msg, cpch);
-#endif
+    g_mime_message_set_subject (msg, cpch, charset_cstr);
   }
 
   // headers from the ui: To
   const StringView to (gtk_entry_get_text (GTK_ENTRY(_to_entry)));
   if (!to.empty())
-#ifdef HAVE_GMIME_30
     pan_g_mime_message_add_recipients_from_string (msg, GMIME_ADDRESS_TYPE_TO, to.str);
-#else
-    pan_g_mime_message_add_recipients_from_string (msg, GMIME_RECIPIENT_TYPE_TO, to.str);
-#endif
 
   // headers from the ui: Newsgroups
   const StringView groups (gtk_entry_get_text (GTK_ENTRY(_groups_entry)));
   if (!groups.empty())
-#ifdef HAVE_GMIME_30
-    g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", groups.str, NULL);
-#else
-    g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", groups.str);
-#endif
+    g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", groups.str, charset_cstr);
 
   // headers from the ui: Followup-To
   const StringView followupto (gtk_entry_get_text (GTK_ENTRY(_followupto_entry)));
   if (!followupto.empty())
-#ifdef HAVE_GMIME_30
-    g_mime_object_set_header ((GMimeObject *) msg, "Followup-To", followupto.str, NULL);
-#else
-    g_mime_object_set_header ((GMimeObject *) msg, "Followup-To", followupto.str);
-#endif
+    g_mime_object_set_header ((GMimeObject *) msg, "Followup-To", followupto.str, charset_cstr);
 
   // headers from the ui: Reply-To
   const StringView replyto (gtk_entry_get_text (GTK_ENTRY(_replyto_entry)));
   if (!replyto.empty())
-#ifdef HAVE_GMIME_30
-    g_mime_object_set_header ((GMimeObject *) msg, "Reply-To", replyto.str, NULL);
-#else
-    g_mime_object_set_header ((GMimeObject *) msg, "Reply-To", replyto.str);
-#endif
+    g_mime_object_set_header ((GMimeObject *) msg, "Reply-To", replyto.str, charset_cstr);
 
   // headers from posting profile(via prefs): X-Face
   if (!profile.xface.empty())
   {
     std::string f;
     f += " " + profile.xface;
-#ifdef HAVE_GMIME_30
-    g_mime_object_set_header ((GMimeObject *) msg, "X-Face", f.c_str(), NULL);
-#else
-    g_mime_object_set_header ((GMimeObject *) msg, "X-Face", f.c_str());
-#endif
+    g_mime_object_set_header ((GMimeObject *) msg, "X-Face", f.c_str(), charset_cstr);
   }
 
-  // add the 'hidden headers'
+  // add the 'hidden headers' (references)
+  const gchar * h_key_str;
   foreach_const (str2str_t, _hidden_headers, it)
     if ((mode==DRAFTING) || (it->first.find ("X-Draft-")!=0))
-#ifdef HAVE_GMIME_30
-      g_mime_object_set_header ((GMimeObject *) msg, it->first.c_str(), it->second.c_str(), NULL);
-#else
-      g_mime_object_set_header ((GMimeObject *) msg, it->first.c_str(), it->second.c_str());
-#endif
+    {
+      h_key_str = it->first.c_str();
+      if ( g_ascii_strncasecmp (h_key_str, "Content", 7) )
+      {
+        g_mime_object_set_header ((GMimeObject *) msg, it->first.c_str(), it->second.c_str(), charset_cstr);
+      }
+    }  
 
   // build headers from the 'more headers' entry field
   std::map<std::string,std::string> headers;
@@ -1693,23 +1670,129 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
     val.trim ();
     std::string key_str (key.to_string());
     if (extra_header_is_editable (key, val))
-#ifdef HAVE_GMIME_30
       g_mime_object_set_header ((GMimeObject *) msg, key.to_string().c_str(),
-                                val.to_string().c_str(), NULL);
-#else
-      g_mime_object_set_header ((GMimeObject *) msg, key.to_string().c_str(),
-                                val.to_string().c_str());
-#endif
+                                val.to_string().c_str(), charset_cstr);
   }
   g_free (pch);
 
   // User-Agent
   if ((mode==POSTING || mode == UPLOADING) && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
-#ifdef HAVE_GMIME_30
-    g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent(), NULL);
+    g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent(), charset_cstr);
+
+  // Message-ID for single text-only posts
+  if (mode==DRAFTING || ((mode==POSTING || mode==UPLOADING) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false))) {
+    const std::string message_id = generate_message_id(profile);
+    pan_g_mime_message_set_message_id (msg, message_id.c_str());
+  }
+
+  // body & charset
+  {
+    std::string body;
+    if (copy_body) body = get_body();
+
+    GMimeStream *  stream =  g_mime_stream_mem_new_with_buffer (body.c_str(), body.size());
+
+    const std::string charset ((mode==POSTING && !_charset.empty()) ? _charset : "UTF-8");
+    if (charset != "UTF-8") {
+      // add a wrapper to convert from UTF-8 to $charset
+      GMimeStream * tmp = g_mime_stream_filter_new (stream);
+      g_object_unref (stream);
+      GMimeFilter * filter = g_mime_filter_charset_new ("UTF-8", charset.c_str());
+      g_mime_stream_filter_add (GMIME_STREAM_FILTER(tmp), filter);
+      g_object_unref (filter);
+      stream = tmp;
+    }
+    GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
+    g_object_unref (stream);
+    GMimePart * part = g_mime_part_new ();
+    g_mime_part_set_content (part, content_object);
+
+    pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
+    GMimeContentType * type = g_mime_content_type_parse (NULL, pch);
+    g_free (pch);
+    g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
+
+    if (mode != UPLOADING) g_mime_part_set_content_encoding (part, _enc);
+
+    g_object_unref (content_object);
+    g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
+    g_object_unref (part);
+  }
+
+  return msg;
+
 #else
+
+  GMimeMessage * msg(0);
+  msg = g_mime_message_new (false);
+
+  // headers from the ui: From
+  const Profile profile (get_current_profile ());
+  std::string s;
+  profile.get_from_header (s);
+  g_mime_message_set_sender (msg, s.c_str());
+
+  // headers from the ui: Subject
+  const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
+  if (cpch) {
+    g_mime_message_set_subject (msg, cpch);
+  }
+
+  // headers from the ui: To
+  const StringView to (gtk_entry_get_text (GTK_ENTRY(_to_entry)));
+  if (!to.empty())
+    pan_g_mime_message_add_recipients_from_string (msg, GMIME_RECIPIENT_TYPE_TO, to.str);
+
+  // headers from the ui: Newsgroups
+  const StringView groups (gtk_entry_get_text (GTK_ENTRY(_groups_entry)));
+  if (!groups.empty())
+    g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", groups.str);
+
+  // headers from the ui: Followup-To
+  const StringView followupto (gtk_entry_get_text (GTK_ENTRY(_followupto_entry)));
+  if (!followupto.empty())
+    g_mime_object_set_header ((GMimeObject *) msg, "Followup-To", followupto.str);
+
+  // headers from the ui: Reply-To
+  const StringView replyto (gtk_entry_get_text (GTK_ENTRY(_replyto_entry)));
+  if (!replyto.empty())
+    g_mime_object_set_header ((GMimeObject *) msg, "Reply-To", replyto.str);
+
+  // headers from posting profile(via prefs): X-Face
+  if (!profile.xface.empty())
+  {
+    std::string f;
+    f += " " + profile.xface;
+    g_mime_object_set_header ((GMimeObject *) msg, "X-Face", f.c_str());
+  }
+
+  // add the 'hidden headers'
+  foreach_const (str2str_t, _hidden_headers, it)
+    if ((mode==DRAFTING) || (it->first.find ("X-Draft-")!=0))
+      g_mime_object_set_header ((GMimeObject *) msg, it->first.c_str(), it->second.c_str());
+
+  // build headers from the 'more headers' entry field
+  std::map<std::string,std::string> headers;
+  GtkTextBuffer * buf (_headers_buf);
+  GtkTextIter start, end;
+  gtk_text_buffer_get_bounds (buf, &start, &end);
+  char * pch = gtk_text_buffer_get_text (buf, &start, &end, false);
+  StringView key, val, v(pch);
+  v.trim ();
+  while (v.pop_token (val, '\n') && val.pop_token(key,':')) {
+    key.trim ();
+    val.eat_chars (1);
+    val.trim ();
+    std::string key_str (key.to_string());
+    if (extra_header_is_editable (key, val))
+      g_mime_object_set_header ((GMimeObject *) msg, key.to_string().c_str(),
+                                val.to_string().c_str());
+  }
+  g_free (pch);
+
+  // User-Agent
+  if ((mode==POSTING || mode == UPLOADING) && _prefs.get_flag (USER_AGENT_PREFS_KEY, true))
     g_mime_object_set_header ((GMimeObject *) msg, "User-Agent", get_user_agent());
-#endif
 
   // Message-ID for single text-only posts
   if (mode==DRAFTING || ((mode==POSTING || mode==UPLOADING) && _prefs.get_flag (MESSAGE_ID_PREFS_KEY, false))) {
@@ -1738,19 +1821,10 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
     g_object_unref (stream);
     GMimePart * part = g_mime_part_new ();
     pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
-
-#ifdef HAVE_GMIME_30
-    GMimeContentType * type = g_mime_content_type_parse (NULL, pch);
-#else
     GMimeContentType * type = g_mime_content_type_new_from_string (pch);
-#endif
     g_free (pch);
     g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
-#ifdef HAVE_GMIME_30
-    g_mime_part_set_content(part, content_object);
-#else
     g_mime_part_set_content_object (part, content_object);
-#endif
     if (mode != UPLOADING) g_mime_part_set_content_encoding (part, _enc);
     g_object_unref (content_object);
     g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
@@ -1758,6 +1832,8 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   }
 
   return msg;
+  
+#endif
 }
 
 void
