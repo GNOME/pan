@@ -1,0 +1,4360 @@
+# Indonesian translation for pan.
+# Copyright (C) 2020 pan's COPYRIGHT HOLDER
+# This file is distributed under the same license as the pan package.
+# Andika Triwidada <atriwidada@gnome.org>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pan master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
+"POT-Creation-Date: 2020-07-05 06:55+0000\n"
+"PO-Revision-Date: 2020-10-17 18:15+0700\n"
+"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural= n!=1;\n"
+"X-Generator: Poedit 2.4.1\n"
+
+#: pan.appdata.xml.in:5
+#, fuzzy
+msgid "Pan Newsreader"
+msgstr "Pembaca Berita Pan"
+
+#: pan.appdata.xml.in:6 pan.desktop.in:5
+#, fuzzy
+msgid "Read and post Usenet articles"
+msgstr "Baca dan pos artikel Usenet"
+
+#: pan.appdata.xml.in:8
+#, fuzzy
+msgid ""
+"Pan is a Usenet newsreader that is good at both text and binaries. It "
+"supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
+"multiple servers, and secure connections."
+msgstr ""
+"Pan adalah pembaca berita Usenet yang baik pada teks dan biner. Ini "
+"mendukung membaca offline, mencetak dan killfiles, yEnc, NZB, penanganan "
+"PGP, beberapa server, dan koneksi aman."
+
+#: pan.appdata.xml.in:11
+#, fuzzy
+msgid ""
+"It is also the only Unix newsreader to get a perfect score on the Good Net-"
+"Keeping Seal of Approval evaluations."
+msgstr ""
+"Ini juga satu-satunya pembaca berita Unix untuk mendapatkan skor sempurna "
+"pada Good Net-Keeping Seal evaluasi Persetujuan."
+
+#. update the titlebar
+#: pan.appdata.xml.in:22 pan.desktop.in:3 pan/gui/dl-headers-ui.cc:106
+#: pan/gui/gui.cc:1045 pan/gui/gui.cc:1718 pan/gui/gui.cc:2038
+#: pan/gui/score-add-ui.cc:602
+msgid "Pan"
+msgstr "Pan"
+
+#: pan.desktop.in:4
+#, fuzzy
+msgid "Newsreader"
+msgstr "Pembaca berita"
+
+#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
+#: pan.desktop.in:7
+#, fuzzy
+msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
+msgstr "usenet;berita;pembaca berita;grup berita;artikel;yenc;nzb;"
+
+#: pan/data/article-cache.cc:144 pan/data/encode-cache.cc:62
+#, fuzzy, c-format
+msgid "Error opening directory: “%s”: %s"
+msgstr "Galat saat membuka direktori '%s': (%s)"
+
+#: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
+#: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
+#: pan/gui/post-ui.cc:1851
+#, fuzzy, c-format
+msgid "Unable to save “%s” %s"
+msgstr "Tidak dapat menyimpan \"%s\" %s"
+
+#: pan/data/article-cache.cc:362
+#, c-format
+msgid "Error opening file “%s” %s"
+msgstr "Galat saat membuka berkas \"%s\": %s"
+
+#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
+#: pan/data-impl/server.cc:527 pan/general/file-util.cc:311
+#: pan/gui/post-ui.cc:644 pan/gui/task-pane.cc:737
+#, c-format
+msgid "Error reading file “%s”: %s"
+msgstr "Galat ketika membaca berkas \"%s\": %s"
+
+#: pan/data/cert-store.cc:263
+#, fuzzy, c-format
+msgid "Error opening SSL certificate directory: “%s”: %s"
+msgstr "Galat saat membuka direktori sertifikat SSL: \"%s\": %s"
+
+#: pan/data/cert-store.cc:294
+#, fuzzy, c-format
+msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
+msgstr "Berhasil menambahkan sertifikat %d SSL PEM ke Certificate Store."
+
+#: pan/data/cert-store.cc:314
+#, fuzzy
+msgid ""
+"Error initializing Certificate Store. Check that the permissions for the "
+"folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
+msgstr ""
+"Galat inisialisasi penyimpanan sertifikat. Periksa apakah izin untuk folder "
+"~/.pan2 dan ~/.pan2/ssl_certs ditetapkan dengan benar. Fatal, keluar."
+
+#: pan/data/cert-store.cc:363
+#, fuzzy, c-format
+msgid "Could not export certificate for server: %s"
+msgstr "Tidak dapat mengekspor sertifikat untuk server: %s"
+
+#. load_group_descriptions (*_data_io);
+#: pan/data-impl/data-impl.cc:120
+#, fuzzy, c-format
+msgid "Loaded data backend in %.1f seconds"
+msgstr "Backend data yang dimuat dalam %.1f detik"
+
+#: pan/data-impl/data-impl.cc:151 pan/data-impl/data-impl.cc:198
+#, fuzzy
+msgid "Pan Newsreader’s server passwords"
+msgstr "Kata sandi server Pan Newsreader"
+
+#: pan/data-impl/groups.cc:102
+#, fuzzy, c-format
+msgid "Skipping newsrc file for server “%s”"
+msgstr "Melewatkan berkas newsrc untuk server \"%s\""
+
+#: pan/data-impl/headers.cc:606
+#, fuzzy, c-format
+msgid "Expired %lu old articles from “%s”"
+msgstr "Kedaluwarsa %lu artikel lama dari \"%s\""
+
+#: pan/data-impl/headers.cc:613
+#, fuzzy, c-format
+msgid ""
+"Unsupported data version for %s headers: %d.\n"
+"Are you running an old version of Pan by accident?"
+msgstr ""
+"Versi data yang tidak didukung untuk header %s: %d.\n"
+"Apakah Anda menjalankan versi lama Pan secara tidak sengaja?"
+
+#: pan/data-impl/headers.cc:628
+#, fuzzy, c-format
+msgid "Loaded %lu articles for “%s” in %.1f seconds (%.0f per second)"
+msgstr "Dimuat %lu artikel untuk \"%s\" dalam %.1f detik (%.0f per detik)"
+
+#: pan/data-impl/headers.cc:857
+#, fuzzy, c-format
+msgid ""
+"Saved %lu parts, %lu articles in “%s” in %.1f seconds (%.0f articles/sec)"
+msgstr ""
+"Disimpan %lu parts, %lu artikel dalam \"%s\" dalam %.1f detik (%.0f artikel/"
+"sec)"
+
+#: pan/data-impl/headers.cc:1190
+#, fuzzy, c-format
+msgid "Added %lu articles to %s."
+msgstr "Menambahkan %lu artikel ke %s."
+
+#: pan/data-impl/server.cc:262
+#, fuzzy, c-format
+msgid "Received no password from libsecret for server %s."
+msgstr "Tidak menerima kata sandi dari libsecret untuk server %s."
+
+#: pan/data-impl/server.cc:287
+#, fuzzy, c-format
+msgid "There seems to be no password set for server %s."
+msgstr "Tampaknya tidak ada password yang ditetapkan untuk server %s."
+
+#: pan/data-impl/server.cc:291
+#, fuzzy
+msgid "GNOME Keyring denied access to the passwords."
+msgstr "Gnome Keyring menolak akses ke kata sandi."
+
+#: pan/data-impl/xover.cc:243
+#, fuzzy, c-format
+msgid "Error reading from %s: unknown group “%s”"
+msgstr "Galat saat membaca dari %s: grup \"%s\" tidak dikenal"
+
+#. build the locale strings
+#: pan/general/e-util.cc:211
+msgid "%l∶%M %p"
+msgstr "%H∶%M"
+
+#: pan/general/e-util.cc:212
+msgid "Today %l∶%M %p"
+msgstr "Hari ini %H:%M"
+
+#: pan/general/e-util.cc:213
+msgid "%a %l∶%M %p"
+msgstr "%a %H:%M"
+
+#: pan/general/e-util.cc:214
+msgid "%b %d %l∶%M %p"
+msgstr "%d %b %H:%M"
+
+#: pan/general/e-util.cc:215
+msgid "%b %d %Y"
+msgstr "%d %b %Y"
+
+#: pan/general/e-util.cc:240
+msgid "?"
+msgstr "?"
+
+#: pan/general/text-match.cc:193
+#, fuzzy, c-format
+msgid "Can’t use regular expression “%s”: %s"
+msgstr "Tidak dapat menggunakan ekspresi reguler \"%s\": %s"
+
+#: pan/general/utf8-utils.cc:234
+#, fuzzy
+msgid "Couldn’t determine article encoding.  Non-UTF8 characters were removed."
+msgstr "Tidak dapat menentukan pengkodean artikel.  Karakter non-UTF8 dihapus."
+
+#: pan/gui/actions.cc:306 pan/gui/post-ui.cc:452
+msgid "_File"
+msgstr "_Berkas"
+
+#: pan/gui/actions.cc:307 pan/gui/post-ui.cc:453
+msgid "_Edit"
+msgstr "S_unting"
+
+#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1107
+msgid "_Layout"
+msgstr "Tata _Letak"
+
+#: pan/gui/actions.cc:309
+#, fuzzy
+msgid "_Group Pane"
+msgstr "_Group Panel"
+
+#: pan/gui/actions.cc:310
+#, fuzzy
+msgid "_Header Pane"
+msgstr "_Header Panel"
+
+#: pan/gui/actions.cc:311
+#, fuzzy
+msgid "_Body Pane"
+msgstr "_Body Panel"
+
+#: pan/gui/actions.cc:312
+#, fuzzy
+msgid "_View"
+msgstr "_Lihat"
+
+#: pan/gui/actions.cc:313
+#, fuzzy
+msgid "Filte_r"
+msgstr "Filte_r"
+
+#: pan/gui/actions.cc:314
+#, fuzzy
+msgid "_Go"
+msgstr "_Go"
+
+#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1157
+msgid "_Actions"
+msgstr "_Aksi"
+
+#: pan/gui/actions.cc:316
+#, fuzzy
+msgid "_Articles"
+msgstr "Semua artikel"
+
+#: pan/gui/actions.cc:317
+#, fuzzy
+msgid "G_roups"
+msgstr "G_roups"
+
+#: pan/gui/actions.cc:318 pan/gui/actions.cc:319
+#, fuzzy
+msgid "_Post"
+msgstr "_Kirim"
+
+#: pan/gui/actions.cc:320
+msgid "_Help"
+msgstr "_Bantuan"
+
+#: pan/gui/actions.cc:323
+#, fuzzy
+msgid "_Read Group"
+msgstr "_Read Grup"
+
+#: pan/gui/actions.cc:324
+#, fuzzy
+msgid "Read Group"
+msgstr "Baca Grup"
+
+#: pan/gui/actions.cc:328
+#, fuzzy
+msgid "_Mark Selected Groups Read"
+msgstr "_Mark Grup Terpilih Dibaca"
+
+#: pan/gui/actions.cc:329
+#, fuzzy
+msgid "Mark Selected Groups Read"
+msgstr "Tandai Grup yang Dipilih Dibaca"
+
+#: pan/gui/actions.cc:333
+#, fuzzy
+msgid "_Delete Selected Groups’ Articles"
+msgstr "_Delete Grup Terpilih"
+
+#: pan/gui/actions.cc:334
+#, fuzzy
+msgid "Delete Selected Groups’ Articles"
+msgstr "Hapus Artikel Grup Terpilih"
+
+#: pan/gui/actions.cc:338
+#, fuzzy
+msgid "Get New _Headers in Selected Groups"
+msgstr "Mendapatkan Tampilan _Headers di Grup Terpilih"
+
+#: pan/gui/actions.cc:339
+#, fuzzy
+msgid "Get New Headers in Selected Groups"
+msgstr "Mendapatkan Header Baru di Grup yang Dipilih"
+
+#: pan/gui/actions.cc:343 pan/gui/actions.cc:348
+#, fuzzy
+msgid "Get New _Headers in Subscribed Groups"
+msgstr "Dapatkan _Headers Baru di Grup Langganan"
+
+#: pan/gui/actions.cc:344 pan/gui/actions.cc:349
+#, fuzzy
+msgid "Get New Headers in Subscribed Groups"
+msgstr "Dapatkan Header Baru di Grup Langganan"
+
+#: pan/gui/actions.cc:353
+#, fuzzy
+msgid "Get _Headers…"
+msgstr "Dapatkan _Headers ..."
+
+#: pan/gui/actions.cc:354
+#, fuzzy
+msgid "Get Headers…"
+msgstr "Dapatkan Header..."
+
+#: pan/gui/actions.cc:358 pan/gui/actions.cc:359
+#, fuzzy
+msgid "Refresh Group List"
+msgstr "Segarkan Daftar Grup"
+
+#: pan/gui/actions.cc:363
+#, fuzzy
+msgid "_Subscribe"
+msgstr "Ber_langganan"
+
+#: pan/gui/actions.cc:364
+#, fuzzy
+msgid "Subscribe"
+msgstr "Berlangganan"
+
+#: pan/gui/actions.cc:368
+#, fuzzy
+msgid "_Unsubscribe"
+msgstr "_Berhenti Langganan"
+
+#: pan/gui/actions.cc:369
+#, fuzzy
+msgid "Unsubscribe"
+msgstr "Berhenti berlangganan"
+
+#: pan/gui/actions.cc:373
+#, fuzzy
+msgid "_Save Articles…"
+msgstr "_Save Artikel..."
+
+#: pan/gui/actions.cc:374
+#, fuzzy
+msgid "Save Articles…"
+msgstr "Simpan Artikel..."
+
+#: pan/gui/actions.cc:378
+#, fuzzy
+msgid "Save Articles from Selected _NZB…"
+msgstr "Simpan Artikel dari Dipilih _NZB ..."
+
+#: pan/gui/actions.cc:379
+#, fuzzy
+msgid "Save Articles from Selected NZB"
+msgstr "Simpan Artikel dari NZB Terpilih"
+
+#: pan/gui/actions.cc:383
+#, fuzzy
+msgid "Save Articles to an NZB _File…"
+msgstr "Simpan Artikel ke nzb _File ..."
+
+#: pan/gui/actions.cc:384
+#, fuzzy
+msgid "Save Articles to an NZB File"
+msgstr "Simpan Artikel ke File NZB"
+
+#: pan/gui/actions.cc:388 pan/gui/actions.cc:389
+#, fuzzy
+msgid "Print"
+msgstr "Print"
+
+#: pan/gui/actions.cc:393
+#, fuzzy
+msgid "_Import NZB Files…"
+msgstr "_Import NZB File..."
+
+#: pan/gui/actions.cc:398
+#, fuzzy
+msgid "_Cancel Last Task"
+msgstr "_Cancel Tugas Terakhir"
+
+#: pan/gui/actions.cc:403
+#, fuzzy
+msgid "_Task Manager"
+msgstr "manajer _Task"
+
+#: pan/gui/actions.cc:408
+#, fuzzy
+msgid "_Event Log"
+msgstr "_Log kejadian"
+
+#: pan/gui/actions.cc:413
+#, fuzzy
+msgid "_Quit"
+msgstr "_Keluar"
+
+#: pan/gui/actions.cc:418
+#, fuzzy
+msgid "Select _All Articles"
+msgstr "Pilih _All Artikel"
+
+#: pan/gui/actions.cc:423
+#, fuzzy
+msgid "_Deselect All Articles"
+msgstr "_Deselect Semua Artikel"
+
+#: pan/gui/actions.cc:428
+#, fuzzy
+msgid "Add Su_bthreads to Selection"
+msgstr "Menambahkan Su_bthreads ke Pilihan"
+
+#: pan/gui/actions.cc:433
+#, fuzzy
+msgid "Add _Threads to Selection"
+msgstr "Tambahkan _Threads ke Pilihan"
+
+#: pan/gui/actions.cc:438
+#, fuzzy
+msgid "Add _Similar Articles to Selection"
+msgstr "Tambahkan _Similar Artikel ke Seleksi"
+
+#: pan/gui/actions.cc:443
+#, fuzzy
+msgid "Select Article _Body"
+msgstr "Pilih Artikel _Body"
+
+#: pan/gui/actions.cc:448
+#, fuzzy
+msgid "Edit _Preferences"
+msgstr "Sunting preferensi Glade"
+
+#: pan/gui/actions.cc:453
+#, fuzzy
+msgid "Edit Selected _Group’s Preferences"
+msgstr "Mengedit preferensi _Group dipilih"
+
+#: pan/gui/actions.cc:458 pan/gui/post-ui.cc:469
+#, fuzzy
+msgid "Edit P_osting Profiles"
+msgstr "Mengedit P_osting Profil"
+
+#: pan/gui/actions.cc:463
+#, fuzzy
+msgid "Edit _News Servers"
+msgstr "Mengedit _News Server"
+
+#: pan/gui/actions.cc:468
+#, fuzzy
+msgid "Jump to _Group Tab"
+msgstr "Langsung ke _Group Tab"
+
+#: pan/gui/actions.cc:473
+#, fuzzy
+msgid "Jump to _Header Tab"
+msgstr "Langsung ke _Header Tab"
+
+#: pan/gui/actions.cc:478
+#, fuzzy
+msgid "Jump to _Body Tab"
+msgstr "Langsung ke _Body Tab"
+
+#: pan/gui/actions.cc:483
+#, fuzzy
+msgid "_Rot13 Selected Text"
+msgstr "_Rot13 Teks yang Dipilih"
+
+#: pan/gui/actions.cc:488
+#, fuzzy
+msgid "Clear _Header Pane"
+msgstr "Hapus _Header Panel"
+
+#: pan/gui/actions.cc:493
+#, fuzzy
+msgid "Clear _Body Pane"
+msgstr "Hapus _Body Panel"
+
+#: pan/gui/actions.cc:498
+#, fuzzy
+msgid "Cache Article"
+msgstr "Cache Pasal"
+
+#: pan/gui/actions.cc:503
+#, fuzzy
+msgid "Read Article"
+msgstr "Baca Artikel"
+
+#: pan/gui/actions.cc:508
+#, fuzzy
+msgid "Show Article Information"
+msgstr "Tampilkan Informasi Artikel"
+
+#: pan/gui/actions.cc:513
+#, fuzzy
+msgid "Read _More"
+msgstr "Baca _More"
+
+#: pan/gui/actions.cc:514
+#, fuzzy
+msgid "Read More"
+msgstr "Selengkapnya"
+
+#: pan/gui/actions.cc:518
+#, fuzzy
+msgid "Read _Back"
+msgstr "Baca _Back"
+
+#: pan/gui/actions.cc:519
+#, fuzzy
+msgid "Read Back"
+msgstr "Baca Kembali"
+
+#: pan/gui/actions.cc:523
+#, fuzzy
+msgid "Next _Unread Group"
+msgstr "Grup _Unread Berikutnya"
+
+#: pan/gui/actions.cc:528
+#, fuzzy
+msgid "Next _Group"
+msgstr "Hotel Di _Group"
+
+#: pan/gui/actions.cc:533
+#, fuzzy
+msgid "Next _Unread Article"
+msgstr "Artikel _Unread Berikutnya"
+
+#: pan/gui/actions.cc:534
+#, fuzzy
+msgid "Next Unread Article"
+msgstr "Artikel Berikutnya Belum Dibaca"
+
+#: pan/gui/actions.cc:538
+#, fuzzy
+msgid "Next _Article"
+msgstr "Hotel Di _Article"
+
+#: pan/gui/actions.cc:539
+#, fuzzy
+msgid "Next Article"
+msgstr "Artikel Terdahulu"
+
+#: pan/gui/actions.cc:543
+#, fuzzy
+msgid "Next _Watched Article"
+msgstr "Artikel _Watched Berikutnya"
+
+#: pan/gui/actions.cc:548
+#, fuzzy
+msgid "Next Unread _Thread"
+msgstr "Berikutnya Belum dibaca _Thread"
+
+#: pan/gui/actions.cc:549
+#, fuzzy
+msgid "Next Unread Thread"
+msgstr "Thread Berikutnya Belum Dibaca"
+
+#: pan/gui/actions.cc:553
+#, fuzzy
+msgid "Next Threa_d"
+msgstr "Hotel Di Threa_d"
+
+#: pan/gui/actions.cc:558
+#, fuzzy
+msgid "Pre_vious Article"
+msgstr "Pre_vious Pasal"
+
+#: pan/gui/actions.cc:563
+#, fuzzy
+msgid "Previous _Thread"
+msgstr "Hasil _Thread"
+
+#: pan/gui/actions.cc:568
+#, fuzzy
+msgid "_Parent Article"
+msgstr "_Parent Pasal"
+
+#: pan/gui/actions.cc:573
+#, fuzzy
+msgid "Ignore _Author"
+msgstr "Abaikan _Author"
+
+#: pan/gui/actions.cc:577
+#, fuzzy
+msgid "_Watch Thread"
+msgstr "_Watch Thread"
+
+#: pan/gui/actions.cc:582
+#, fuzzy
+msgid "_Ignore Thread"
+msgstr "Aba_ikan Ulir"
+
+#: pan/gui/actions.cc:587 pan/gui/actions.cc:588
+#, fuzzy
+msgid "_Toggle Flag On/Off for Thread"
+msgstr "_Toggle Bendera On/Off untuk Thread"
+
+#: pan/gui/actions.cc:592 pan/gui/actions.cc:593
+#, fuzzy
+msgid "_Turn Flag Off for Thread"
+msgstr "_Turn Bendera Mati untuk Thread"
+
+#: pan/gui/actions.cc:597 pan/gui/actions.cc:598
+#, fuzzy
+msgid "_Select All Flagged Threads"
+msgstr "_Select Semua Thread yang Ditandai"
+
+#: pan/gui/actions.cc:602 pan/gui/actions.cc:603
+#, fuzzy
+msgid "_Go to Next Flagged Thread"
+msgstr "_Go ke Thread Ditandai Berikutnya"
+
+#: pan/gui/actions.cc:607 pan/gui/actions.cc:608
+#, fuzzy
+msgid "_Go to Last Flagged Thread"
+msgstr "_Go untuk Terakhir Ditandai Thread"
+
+#: pan/gui/actions.cc:612 pan/gui/actions.cc:613
+#, fuzzy
+msgid "_Invert Selection"
+msgstr "Bal_ik Seleksi"
+
+#: pan/gui/actions.cc:617
+#, fuzzy
+msgid "Edit Article’s Watch/Ignore/Score…"
+msgstr "Edit Artikel Watch / Abaikan / Skor ..."
+
+#: pan/gui/actions.cc:622
+#, fuzzy
+msgid "Add a _Scoring Rule…"
+msgstr "Tambahkan _Scoring Aturan..."
+
+#: pan/gui/actions.cc:627
+#, fuzzy
+msgid "Cance_l Article…"
+msgstr "Cance_l Pasal..."
+
+#: pan/gui/actions.cc:632
+#, fuzzy
+msgid "_Supersede Article…"
+msgstr "_Supersede Pasal..."
+
+#: pan/gui/actions.cc:637
+#, fuzzy
+msgid "_Delete Article"
+msgstr "_Delete Pasal"
+
+#: pan/gui/actions.cc:642
+#, fuzzy
+msgid "Clear Article Cache"
+msgstr "Hapus Cache Artikel"
+
+#: pan/gui/actions.cc:647
+#, fuzzy
+msgid "_Mark Article as Read"
+msgstr "_Mark Pasal sebagai Telah Dibaca"
+
+#: pan/gui/actions.cc:652
+#, fuzzy
+msgid "Mark Article as _Unread"
+msgstr "Tandai Pasal sebagai _Unread"
+
+#: pan/gui/actions.cc:658
+#, fuzzy
+msgid "_Mark Thread as Read"
+msgstr "_Mark Thread sebagai Telah Dibaca"
+
+#: pan/gui/actions.cc:663
+#, fuzzy
+msgid "Mark Thread as _Unread"
+msgstr "Tandai Thread sebagai _Unread"
+
+#: pan/gui/actions.cc:668
+#, fuzzy
+msgid "_Post to Newsgroup"
+msgstr "_Post ke Newsgroup"
+
+#: pan/gui/actions.cc:669
+#, fuzzy
+msgid "Post to Newsgroup"
+msgstr "Posting ke Newsgroup"
+
+#: pan/gui/actions.cc:673
+#, fuzzy
+msgid "_Followup to Newsgroup"
+msgstr "_Followup ke Newsgroup"
+
+#: pan/gui/actions.cc:674
+#, fuzzy
+msgid "Followup to Newsgroup"
+msgstr "Tindak lanjut newsgroup"
+
+#: pan/gui/actions.cc:678
+#, fuzzy
+msgid "_Reply to Author in Mail"
+msgstr "_Reply ke Penulis di Mail"
+
+#: pan/gui/actions.cc:684
+#, fuzzy
+msgid "_Contents"
+msgstr "_Isi"
+
+#: pan/gui/actions.cc:690
+#, fuzzy
+msgid "_Pan Home Page"
+msgstr "_Pan Halaman Utama"
+
+#: pan/gui/actions.cc:695
+#, fuzzy
+msgid "Give _Feedback or Report a Bug…"
+msgstr "Berikan _Feedback atau Laporkan Bug ..."
+
+#: pan/gui/actions.cc:700
+#, fuzzy
+msgid "_Tip Jar…"
+msgstr "_Tip Jar..."
+
+#: pan/gui/actions.cc:705
+#, fuzzy
+msgid "_About"
+msgstr "Tent_ang"
+
+#: pan/gui/actions.cc:710
+#, fuzzy
+msgid "Edit _SSL Certificates"
+msgstr "Mengedit _SSL Sertifikat"
+
+#: pan/gui/actions.cc:725
+#, fuzzy
+msgid "_Thread Headers"
+msgstr "_Thread Header"
+
+#: pan/gui/actions.cc:726
+#, fuzzy
+msgid "Wrap Article Body"
+msgstr "Wrap Pasal Tubuh"
+
+#: pan/gui/actions.cc:727
+#, fuzzy
+msgid "Show Article Signature"
+msgstr "Tampilkan Pasal Signature"
+
+#: pan/gui/actions.cc:728
+#, fuzzy
+msgid "Mute _Quoted Text"
+msgstr "Membisukan _Quoted Teks"
+
+#: pan/gui/actions.cc:729
+#, fuzzy
+msgid "Show All _Headers in Body Pane"
+msgstr "Tampilkan semua _Headers di Panel Badan"
+
+#: pan/gui/actions.cc:730
+#, fuzzy
+msgid "Show _Smilies as Graphics"
+msgstr "Tampilkan _Smilies sebagai Grafis"
+
+#: pan/gui/actions.cc:731
+#, fuzzy
+msgid "Show *Bold*, __Underlined__, and /Italic/"
+msgstr "Tampilkan *Tebal*, __Underlined__, dan /Miring/"
+
+#: pan/gui/actions.cc:732
+#, fuzzy
+msgid "Size Pictures to _Fit"
+msgstr "Ukuran Gambar untuk _Fit"
+
+#: pan/gui/actions.cc:733
+#, fuzzy
+msgid "Use _Monospace Font"
+msgstr "Menggunakan _Monospace Font"
+
+#: pan/gui/actions.cc:734
+#, fuzzy
+msgid "Set Focus to Images"
+msgstr "Atur Fokus ke Gambar"
+
+#: pan/gui/actions.cc:735
+#, fuzzy
+msgid "Highlight _URLs"
+msgstr "Sorot _URLs"
+
+#: pan/gui/actions.cc:738
+#, fuzzy
+msgid "_Work Online"
+msgstr "Bekerja _Daring"
+
+#: pan/gui/actions.cc:739
+#, fuzzy
+msgid "_Tabbed Layout"
+msgstr "_Tabbed Letak"
+
+#: pan/gui/actions.cc:740
+#, fuzzy
+msgid "Show Group _Pane"
+msgstr "Tampilkan Grup _Pane"
+
+#: pan/gui/actions.cc:741
+#, fuzzy
+msgid "Show Hea_der Pane"
+msgstr "Tampilkan Hea_der Pane"
+
+#: pan/gui/actions.cc:742
+#, fuzzy
+msgid "Show Bod_y Pane"
+msgstr "Tampilkan Bod_y Pane"
+
+#: pan/gui/actions.cc:743
+#, fuzzy
+msgid "Show _Toolbar"
+msgstr "Tampilkan bilah alat"
+
+#: pan/gui/actions.cc:744
+#, fuzzy
+msgid "Abbreviate Group Names"
+msgstr "Disingkat Nama Grup"
+
+#: pan/gui/actions.cc:746
+#, fuzzy
+msgid "Match Only _Read Articles"
+msgstr "Cocokkan Hanya _Read Artikel"
+
+#: pan/gui/actions.cc:746
+#, fuzzy
+msgid "Match Only Read Articles"
+msgstr "Cocokkan Hanya Baca Artikel"
+
+#: pan/gui/actions.cc:747
+#, fuzzy
+msgid "Match Only _Unread Articles"
+msgstr "Cocokkan Hanya _Unread Artikel"
+
+#: pan/gui/actions.cc:747
+#, fuzzy
+msgid "Match Only Unread Articles"
+msgstr "Cocokkan Hanya Artikel yang Belum Dibaca"
+
+#: pan/gui/actions.cc:748
+#, fuzzy
+msgid "Match Only _Cached Articles"
+msgstr "Cocokkan Hanya _Cached Artikel"
+
+#: pan/gui/actions.cc:748
+#, fuzzy
+msgid "Match Only Cached Articles"
+msgstr "Cocokkan Hanya Cached Artikel"
+
+#: pan/gui/actions.cc:749
+#, fuzzy
+msgid "Match Only _Complete Articles"
+msgstr "Cocokkan Hanya _Complete Artikel"
+
+#: pan/gui/actions.cc:749
+#, fuzzy
+msgid "Match Only Complete Articles"
+msgstr "Cocokkan Hanya Artikel Lengkap"
+
+#: pan/gui/actions.cc:750
+#, fuzzy
+msgid "Match Only _My Articles"
+msgstr "Cocokkan Hanya _My Artikel"
+
+#: pan/gui/actions.cc:750
+#, fuzzy
+msgid "Match Only My Articles"
+msgstr "Cocokkan Hanya Artikel Saya"
+
+#: pan/gui/actions.cc:751
+#, fuzzy
+msgid "Match Only _Watched Articles"
+msgstr "Cocokkan Hanya _Watched Artikel"
+
+#: pan/gui/actions.cc:751
+#, fuzzy
+msgid "Match Only Watched Articles"
+msgstr "Cocokkan Hanya Artikel Yang Ditonton"
+
+#: pan/gui/actions.cc:753
+#, fuzzy
+msgid "Match Scores of 9999 (_Watched)"
+msgstr "Skor Pertandingan 9999 (_Watched)"
+
+#: pan/gui/actions.cc:754
+#, fuzzy
+msgid "Match Scores of 5000…9998 (_High)"
+msgstr "Skor Pertandingan 5000... 9998 (_High)"
+
+#: pan/gui/actions.cc:755
+#, fuzzy
+msgid "Match Scores of 1…4999 (Me_dium)"
+msgstr "Skor Pertandingan 1... 4999 (Me_dium)"
+
+#: pan/gui/actions.cc:756
+#, fuzzy
+msgid "Match Scores of 0 (_Normal)"
+msgstr "Skor Pertandingan 0 (_Normal)"
+
+#: pan/gui/actions.cc:757
+#, fuzzy
+msgid "Match Scores of -9998…-1 (_Low)"
+msgstr "Skor Pertandingan -9998...-1 (_Low)"
+
+#: pan/gui/actions.cc:758
+#, fuzzy
+msgid "Match Scores of -9999 (_Ignored)"
+msgstr "Skor Pertandingan -9999 (_Ignored)"
+
+#: pan/gui/actions.cc:760
+#, fuzzy
+msgid "Enable/Disable All _Rules"
+msgstr "Aktifkan/Nonaktifkan Semua _Rules"
+
+#: pan/gui/actions.cc:788
+#, fuzzy
+msgid "Show Matching _Articles"
+msgstr "Tampilkan Pencocokan _Articles"
+
+#: pan/gui/actions.cc:789
+#, fuzzy
+msgid "Show Matching Articles’ _Threads"
+msgstr "Tampilkan Pencocokan Artikel '_Threads"
+
+#: pan/gui/actions.cc:790
+#, fuzzy
+msgid "Show Matching Articles’ _Subthreads"
+msgstr "Tampilkan Pencocokan Artikel '_Subthreads"
+
+#: pan/gui/body-pane.cc:1056
+#, fuzzy
+msgid "Unnamed File"
+msgstr "File Tanpa Nama"
+
+#: pan/gui/body-pane.cc:1137 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1314
+#: pan/gui/header-pane.cc:1754 pan/gui/post-ui.cc:2752 pan/gui/prefs-ui.cc:855
+#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:797
+#, fuzzy
+msgid "Subject"
+msgstr "Perihal"
+
+#: pan/gui/body-pane.cc:1139 pan/gui/gui.cc:2009
+#, fuzzy
+msgid "From"
+msgstr "Dari"
+
+#: pan/gui/body-pane.cc:1141 pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1833
+#: pan/gui/log-ui.cc:307 pan/gui/prefs-ui.cc:851
+#, fuzzy
+msgid "Date"
+msgstr "Tanggal"
+
+#: pan/gui/body-pane.cc:1148
+#, fuzzy
+msgid "Newsgroups"
+msgstr "Newsgroups"
+
+#: pan/gui/body-pane.cc:1155 pan/gui/body-pane.cc:1163
+#: pan/gui/body-pane.cc:1170
+#, fuzzy
+msgid "User-Agent"
+msgstr "User agent"
+
+#: pan/gui/body-pane.cc:1176
+#, fuzzy
+msgid "Followup-To"
+msgstr "Tindak lanjut"
+
+#: pan/gui/body-pane.cc:1186
+#, fuzzy
+msgid "Reply-To"
+msgstr "Balas-Ke"
+
+#: pan/gui/body-pane.cc:1238
+#, fuzzy
+msgid " from "
+msgstr " dari "
+
+#: pan/gui/body-pane.cc:1240
+#, fuzzy
+msgid " at "
+msgstr "Di"
+
+#: pan/gui/body-pane.cc:1333
+#, fuzzy, c-format
+msgid ""
+"<u>This is a <b>PGP-Signed</b> message.</u>\n"
+"\n"
+"<b>Signer:</b> %s (“%s”)\n"
+"<b>Valid until:</b> %s\n"
+"<b>Created on:</b> %s"
+msgstr ""
+"<u>Ini adalah pesan <b>PGP-Signed.</b> </u> <b>Penanda:</b> %s (\"%s\")\n"
+"<b>Berlaku hingga:</b> %s\n"
+"<b>Dibuat pada:</b> %s"
+
+#: pan/gui/body-pane.cc:1338
+#, fuzzy
+msgid "always"
+msgstr "selalu"
+
+#: pan/gui/body-pane.cc:1558
+#, fuzzy
+msgid "Copy _URL"
+msgstr "_Salin URL"
+
+#: pan/gui/body-pane.cc:1768
+#, fuzzy
+msgid "Save Attachment As…"
+msgstr "_Simpan Lampiran Sebagai…"
+
+#: pan/gui/body-pane.cc:1771
+#, fuzzy
+msgid "Save All Attachments"
+msgstr "Simpan Semua Lampiran"
+
+#: pan/gui/body-pane.cc:1846
+#, fuzzy
+msgid "Attachments:"
+msgstr "L_ampiran"
+
+#: pan/gui/body-pane.cc:1874
+#, fuzzy
+msgid "Text View"
+msgstr "Tampilan teks"
+
+#: pan/gui/body-pane.cc:1883
+#, fuzzy
+msgid "HTML View"
+msgstr "Tampilan HTML"
+
+#: pan/gui/dl-headers-ui.cc:112
+#, fuzzy, c-format
+msgid "%d Group"
+msgid_plural "%d Groups"
+msgstr[0] "%d Grup"
+msgstr[1] ""
+
+#: pan/gui/dl-headers-ui.cc:135
+#, fuzzy
+msgid "Get the last N _days’ headers: "
+msgstr "Dapatkan header N _days terakhir:"
+
+#: pan/gui/dl-headers-ui.cc:143
+#, fuzzy
+msgid "Get _new headers"
+msgstr "Dapatkan _new header"
+
+#: pan/gui/dl-headers-ui.cc:147
+#, fuzzy
+msgid "Get _all headers"
+msgstr "Dapatkan _all header"
+
+#: pan/gui/dl-headers-ui.cc:151
+#, fuzzy
+msgid "Get the _latest N headers: "
+msgstr "Dapatkan _latest header N:"
+
+#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:848
+#, fuzzy
+msgid "Action"
+msgstr "Aksi"
+
+#: pan/gui/e-action-combo-box.c:387
+#, fuzzy
+msgid "A GtkRadioAction"
+msgstr "Sebuah GtkRadioAction"
+
+#: pan/gui/e-charset.c:51 pan/gui/task-pane.cc:558
+#, fuzzy
+msgid "Unknown"
+msgstr "Tak Diketahui"
+
+#: pan/gui/e-charset.c:52
+#, fuzzy
+msgid "Arabic"
+msgstr "Arab"
+
+#: pan/gui/e-charset.c:53
+#, fuzzy
+msgid "Baltic"
+msgstr "Baltik"
+
+#: pan/gui/e-charset.c:54
+#, fuzzy
+msgid "Central European"
+msgstr "Eropa Tengah"
+
+#: pan/gui/e-charset.c:55
+#, fuzzy
+msgid "Chinese"
+msgstr "Bahasa Mandarin"
+
+#: pan/gui/e-charset.c:56
+#, fuzzy
+msgid "Cyrillic"
+msgstr "Sirilik"
+
+#: pan/gui/e-charset.c:57
+#, fuzzy
+msgid "Greek"
+msgstr "Yunani"
+
+#: pan/gui/e-charset.c:58
+#, fuzzy
+msgid "Hebrew"
+msgstr "Ibrani"
+
+#: pan/gui/e-charset.c:59
+#, fuzzy
+msgid "Japanese"
+msgstr "Jepang"
+
+#: pan/gui/e-charset.c:60
+#, fuzzy
+msgid "Korean"
+msgstr "Korea"
+
+#: pan/gui/e-charset.c:61
+#, fuzzy
+msgid "Thai"
+msgstr "Thailand"
+
+#: pan/gui/e-charset.c:62
+#, fuzzy
+msgid "Turkish"
+msgstr "Turki"
+
+#: pan/gui/e-charset.c:63
+#, fuzzy
+msgid "Unicode"
+msgstr "Unikode"
+
+#: pan/gui/e-charset.c:64
+#, fuzzy
+msgid "Western European"
+msgstr "Eropa Barat"
+
+#: pan/gui/e-charset.c:65
+#, fuzzy
+msgid "Western European, New"
+msgstr "Eropa Barat, Gaya Baru"
+
+#: pan/gui/e-charset.c:84 pan/gui/e-charset.c:85 pan/gui/e-charset.c:86
+#, fuzzy
+msgid "Traditional"
+msgstr "Tradisional"
+
+#: pan/gui/e-charset.c:87 pan/gui/e-charset.c:88 pan/gui/e-charset.c:89
+#: pan/gui/e-charset.c:90
+#, fuzzy
+msgid "Simplified"
+msgstr "Sederhana"
+
+#: pan/gui/e-charset.c:93
+#, fuzzy
+msgid "Ukrainian"
+msgstr "Ukrania"
+
+#: pan/gui/e-charset.c:96
+#, fuzzy
+msgid "Visual"
+msgstr "Visual"
+
+#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:554
+#: pan/gui/prefs-ui.cc:759
+#, fuzzy
+msgid "Character Encoding"
+msgstr "Enkode Karakter"
+
+#: pan/gui/e-charset-combo-box.c:117
+#, fuzzy
+msgid "Enter the character set to use"
+msgstr "Masukkan karakter yang hendak digunakan"
+
+#: pan/gui/e-charset-combo-box.c:336
+#, fuzzy
+msgid "Other…"
+msgstr "Lainnya…"
+
+#: pan/gui/e-cte-dialog.c:76
+#, fuzzy
+msgid "Default Encoding"
+msgstr "Pengkodean bawaan"
+
+#: pan/gui/e-cte-dialog.c:78
+#, fuzzy
+msgid "7-Bit Encoding"
+msgstr "Pengkodean 7-Bit"
+
+#: pan/gui/e-cte-dialog.c:80
+#, fuzzy
+msgid "8-Bit Encoding"
+msgstr "Pengkodean 8-Bit"
+
+#: pan/gui/e-cte-dialog.c:82
+#, fuzzy
+msgid "Base64 Encoding"
+msgstr "kunci '%s.%s' bukan kunci 256 bit dalam pengkodean base64 yang valid"
+
+#: pan/gui/e-cte-dialog.c:84
+#, fuzzy
+msgid "Quoted-Printable Encoding"
+msgstr "Pengkodean yang Dapat Dicetak dengan Terkutip"
+
+#: pan/gui/group-pane.cc:330
+#, fuzzy
+msgid "Sent"
+msgstr "Terkirim"
+
+#: pan/gui/group-pane.cc:331
+#, fuzzy
+msgid "Drafts"
+msgstr "Rancangan"
+
+#: pan/gui/group-pane.cc:537
+#, fuzzy
+msgid "Group"
+msgstr "Grup"
+
+#: pan/gui/group-pane.cc:538
+#, fuzzy
+msgid "Group (regex)"
+msgstr "Grup (regex)"
+
+#: pan/gui/group-pane.cc:1016
+#, fuzzy
+msgid "Local Folders"
+msgstr "Folder Lokal"
+
+#: pan/gui/group-pane.cc:1017
+#, fuzzy
+msgid "Subscribed Groups"
+msgstr "Grup Berlangganan"
+
+#: pan/gui/group-pane.cc:1018
+#, fuzzy
+msgid "Other Groups"
+msgstr "Grup Lain"
+
+#: pan/gui/group-pane.cc:1058 pan/gui/score-view-ui.cc:157
+#, fuzzy
+msgid "Name"
+msgstr "Nama"
+
+#: pan/gui/group-prefs-dialog.cc:162
+#, fuzzy
+msgid "No Profiles defined in Edit → Posting Profiles."
+msgstr "Tidak ada Profil yang didefinisikan dalam Edit → Posting Profil."
+
+#: pan/gui/group-prefs-dialog.cc:273
+#, fuzzy
+msgid "Pan: Group Preferences"
+msgstr "Pan: Preferensi Grup"
+
+#: pan/gui/group-prefs-dialog.cc:288
+#, fuzzy
+msgid "Properties for Groups"
+msgstr "Properti untuk Grup"
+
+#: pan/gui/group-prefs-dialog.cc:290
+#, fuzzy, c-format
+msgid "Properties for %s"
+msgstr "Properti untuk %s"
+
+#: pan/gui/group-prefs-dialog.cc:298
+#, fuzzy
+msgid "Character _encoding:"
+msgstr "P_engkodean karakter:"
+
+#: pan/gui/group-prefs-dialog.cc:300
+#, fuzzy
+msgid "Directory for Saving Attachments"
+msgstr "Direktori untuk Menyimpan Lampiran"
+
+#: pan/gui/group-prefs-dialog.cc:308
+#, fuzzy
+msgid "Directory for _saving attachments:"
+msgstr "Direktori untuk _saving lampiran:"
+
+#: pan/gui/group-prefs-dialog.cc:310
+#, fuzzy
+msgid "Posting _profile:"
+msgstr "Posting _profile:"
+
+#: pan/gui/group-prefs-dialog.cc:315
+#, fuzzy
+msgid "Spellchecker _language:"
+msgstr "Pemeriksa ejaan _language:"
+
+#: pan/gui/group-prefs-dialog.cc:318
+#, fuzzy
+msgid "Group color:"
+msgstr "Warna grup:"
+
+#: pan/gui/gui.cc:312
+#, fuzzy
+msgid "Open the Task Manager"
+msgstr "Buka Pengelola Tugas"
+
+#: pan/gui/gui.cc:335
+#, fuzzy
+msgid "Open the Event Log"
+msgstr "Buka Log Peristiwa"
+
+#: pan/gui/gui.cc:611
+#, fuzzy
+msgid "Save NZB’s Files"
+msgstr "Simpan File NZB"
+
+#: pan/gui/gui.cc:638
+#, fuzzy
+msgid "Untitled.nzb"
+msgstr "Untitled.nzb (bahasa Indonesia)"
+
+#: pan/gui/gui.cc:640
+#, fuzzy
+msgid "Save NZB File as…"
+msgstr "Simpan File NZB sebagai..."
+
+#: pan/gui/gui.cc:813
+#, fuzzy
+msgid "Import NZB Files"
+msgstr "Impor File NZB"
+
+#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3455
+#, fuzzy
+msgid "NZB Files"
+msgstr "Nzb File"
+
+#: pan/gui/gui.cc:826
+#, fuzzy
+msgid "All Files"
+msgstr "Semua Berkas"
+
+#: pan/gui/gui.cc:1344
+#, fuzzy
+msgid "Unable to supersede article."
+msgstr "Tidak dapat menggantikan artikel."
+
+#: pan/gui/gui.cc:1345 pan/gui/gui.cc:1441
+#, fuzzy
+msgid "The article doesn’t match any of your posting profiles."
+msgstr "Artikel ini tidak cocok dengan profil posting Anda."
+
+#: pan/gui/gui.cc:1410
+#, fuzzy
+msgid "Revise and send this article to replace the old one."
+msgstr "Merevisi dan mengirim artikel ini untuk menggantikan yang lama."
+
+#: pan/gui/gui.cc:1411 pan/gui/gui.cc:1491
+#, fuzzy
+msgid "Be patient!  It will take time for your changes to take effect."
+msgstr "Bersabarlah!  Ini akan memakan waktu untuk perubahan Anda berlaku."
+
+#: pan/gui/gui.cc:1440
+#, fuzzy
+msgid "Unable to cancel article."
+msgstr "Tidak dapat membatalkan artikel."
+
+#: pan/gui/gui.cc:1490
+#, fuzzy
+msgid "Send this article to ask your server to cancel your other one."
+msgstr ""
+"Kirim artikel ini untuk meminta server Anda untuk membatalkan yang lain."
+
+#: pan/gui/gui.cc:1508
+#, fuzzy
+msgid "You have marked some articles for deletion."
+msgstr "Anda telah menandai beberapa artikel untuk dihapus."
+
+#: pan/gui/gui.cc:1509
+#, fuzzy
+msgid "Are you sure you want to delete them?"
+msgstr "Anda yakin ingin menghapusnya?"
+
+#: pan/gui/gui.cc:1535
+#, fuzzy
+msgid "Do you want to accept it permanently? (You can change this later.)"
+msgstr ""
+"Apakah Anda ingin menerimanya secara permanen? (Anda dapat mengubah ini "
+"nanti.)"
+
+#: pan/gui/gui.cc:1689
+#, fuzzy
+msgid "Unable to open help file."
+msgstr "Tidak dapat membuka berkas bantuan."
+
+#: pan/gui/gui.cc:1721
+#, fuzzy
+msgid "Copyright © 2002-2017 Charles Kerr and others"
+msgstr "Hak © 2002-2017 Charles Kerr dan lain-lain"
+
+#: pan/gui/gui.cc:1726
+#, fuzzy
+msgid "translator-credits"
+msgstr "Andika Triwidada <andika@gmail.com>, 2012, 2014"
+
+#: pan/gui/gui.cc:1854
+#, fuzzy
+msgid "_1. Group Pane"
+msgstr "_1. Panel Grup"
+
+#: pan/gui/gui.cc:1855
+#, fuzzy
+msgid "_2. Header Pane"
+msgstr "_2. Panel Header"
+
+#: pan/gui/gui.cc:1856
+#, fuzzy
+msgid "_3. Body Pane"
+msgstr "_3. Panel Badan"
+
+#: pan/gui/gui.cc:1946 pan/gui/gui.cc:1961
+#, fuzzy
+msgid " Bytes"
+msgstr "Byte"
+
+#: pan/gui/gui.cc:1949
+#, fuzzy
+msgid " KB"
+msgstr " KB"
+
+#: pan/gui/gui.cc:1952
+#, fuzzy
+msgid " MB"
+msgstr " MB"
+
+#: pan/gui/gui.cc:1955
+#, fuzzy
+msgid " GB"
+msgstr "GB"
+
+#: pan/gui/gui.cc:1958
+#, fuzzy
+msgid " TB"
+msgstr "TB"
+
+#: pan/gui/gui.cc:1990
+#, fuzzy, c-format
+msgid "This article is complete with %d part."
+msgid_plural "This article has all %d parts."
+msgstr[0] "Artikel ini lengkap dengan %d bagian."
+msgstr[1] ""
+
+#: pan/gui/gui.cc:1992
+#, fuzzy, c-format
+msgid "This article is missing %d part."
+msgid_plural "This article is missing %d of its %d parts:"
+msgstr[0] "Artikel ini hilang %d bagian."
+msgstr[1] ""
+
+#: pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1316 pan/gui/task-pane.cc:799
+#, fuzzy
+msgid "Message-ID"
+msgstr "Message-ID: %s\n"
+
+#: pan/gui/gui.cc:2011 pan/gui/header-pane.cc:1802 pan/gui/prefs-ui.cc:852
+#, fuzzy
+msgid "Lines"
+msgstr "Baris"
+
+#: pan/gui/gui.cc:2011
+#, fuzzy
+msgid "Size"
+msgstr "Ukuran"
+
+#: pan/gui/gui.cc:2012 pan/gui/header-pane.cc:1818 pan/gui/prefs-ui.cc:850
+#, fuzzy
+msgid "Bytes"
+msgstr "Byte"
+
+#: pan/gui/gui.cc:2062
+#, fuzzy
+msgid ""
+"Error loading iconv library. Encoding certain character sets will not work "
+"in GUI."
+msgstr ""
+"Galat saat memuat pustaka iconv. Pengkodean set karakter tertentu tidak akan "
+"bekerja di GUI."
+
+#: pan/gui/gui.cc:2208
+#, fuzzy
+msgid "Body Pane Encoding"
+msgstr "Pengkodean Panel Bodi"
+
+#: pan/gui/gui.cc:2239 pan/gui/task-pane.cc:609
+#, fuzzy
+msgid "Offline"
+msgstr "Luring"
+
+#: pan/gui/gui.cc:2243
+#, fuzzy, c-format
+msgid "Closing %d connection"
+msgid_plural "Closing %d connections"
+msgstr[0] "Menutup koneksi %d"
+msgstr[1] ""
+
+#: pan/gui/gui.cc:2245 pan/gui/gui.cc:2275
+#, fuzzy
+msgid "No Connections"
+msgstr "Koneksi"
+
+#: pan/gui/gui.cc:2249
+#, fuzzy
+msgid "Connecting"
+msgstr "Menyambung"
+
+#: pan/gui/gui.cc:2262
+#, fuzzy, c-format
+msgid "%s: %d idle, %d active @ %.1f KiBps"
+msgstr "%s: %d siaga, %d aktif @ %.1f KiBps"
+
+#: pan/gui/gui.cc:2318
+#, fuzzy
+msgid "No Tasks"
+msgstr "Tidak ada tugas"
+
+#: pan/gui/gui.cc:2320 pan/gui/prefs-ui.cc:1090
+#, fuzzy
+msgid "Tasks"
+msgstr "Tugas"
+
+#: pan/gui/gui.cc:2337 pan/gui/task-pane.cc:475
+#, fuzzy, c-format
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d∶%02d∶%02d"
+msgstr "%lu tugas, %s, %.1f KiBps, ETA %d∶%02d∶%02d"
+
+#: pan/gui/gui.cc:2389
+#, fuzzy
+msgid ""
+"Pan is now offline. Please see “File → Event Log” and correct the problem, "
+"then use “File → Work Online” to continue."
+msgstr ""
+"Pan sekarang offline. Silakan lihat \"File → Event Log\" dan perbaiki "
+"masalahnya, lalu gunakan \"File → Work Online\" untuk melanjutkan."
+
+#: pan/gui/header-pane.cc:1312 pan/gui/task-pane.cc:795
+#, fuzzy
+msgid "Subject or Author"
+msgstr "Subjek atau Penulis"
+
+#: pan/gui/header-pane.cc:1313 pan/gui/task-pane.cc:796
+#, fuzzy
+msgid "Sub or Auth (regex)"
+msgstr "Sub atau Auth (regex)"
+
+#: pan/gui/header-pane.cc:1315 pan/gui/header-pane.cc:1786
+#: pan/gui/prefs-ui.cc:849 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:798
+#, fuzzy
+msgid "Author"
+msgstr "Penulis"
+
+#: pan/gui/header-pane.cc:1771 pan/gui/prefs-ui.cc:853
+#, fuzzy
+msgid "Score"
+msgstr "Nilai"
+
+#: pan/gui/log-ui.cc:104
+#, fuzzy
+msgid "Save Event List"
+msgstr "Simpan Daftar Acara"
+
+#: pan/gui/log-ui.cc:258
+#, fuzzy
+msgid "Pan: Events"
+msgstr "Pan: Acara"
+
+#: pan/gui/log-ui.cc:317
+#, fuzzy
+msgid "Message"
+msgstr "Pesan"
+
+#: pan/gui/pan.cc:368
+#, fuzzy
+msgid "Maximize"
+msgstr "Maksimalkan"
+
+#: pan/gui/pan.cc:421
+#, fuzzy
+msgid "An error has occurred!"
+msgstr "Terjadi suatu kesalahan"
+
+#: pan/gui/pan.cc:435
+#, fuzzy
+msgid "New Articles!"
+msgstr "Artikel Baru!"
+
+#: pan/gui/pan.cc:436
+#, fuzzy
+msgid ""
+"There are new\n"
+"articles available."
+msgstr ""
+"Ada yang baru\n"
+"artikel yang tersedia."
+
+#: pan/gui/pan.cc:503
+#, fuzzy
+msgid "Toggle on/offline"
+msgstr "Mengaktifkan/offline"
+
+#: pan/gui/pan.cc:551
+#, fuzzy
+msgid ""
+"Thank you for trying Pan!\n"
+" \n"
+"To start newsreading, first Add a Server."
+msgstr ""
+"Terima kasih telah mencoba Pan!\n"
+" \n"
+"Untuk memulai pembacaan berita, pertama Tambahkan Server."
+
+#: pan/gui/pan.cc:633
+#, fuzzy
+msgid ""
+"General Options\n"
+"  -h, --help               Show this usage information and exit.\n"
+"  -v, --version            Print release version and exit.\n"
+"  --verbose                Be verbose (in non-GUI mode).\n"
+"  --debug                  Run in debug mode.\n"
+"\n"
+"URL Options\n"
+"  headers:group.name       Download new headers for the specified "
+"newsgroup.\n"
+"  news:message-id          When specified together with --no-gui, dump\n"
+"                           the message-id article to standard output.\n"
+"\n"
+"NZB Batch Options\n"
+"  --nzb file1 file2 …      Process NZB files in non-GUI mode.\n"
+"  -o path, --output=path   Path to save attachments listed in the NZB "
+"file(s).\n"
+"  --no-gui                 Only show console output, not the download "
+"queue.\n"
+msgstr ""
+"Opsi Umum\n"
+"  -h, --help Tampilkan informasi penggunaan ini dan keluar.\n"
+"  -v, --version Versi rilis cetak dan keluar.\n"
+"  --verbose Jadilah verbose (dalam mode non-GUI).\n"
+"  --debug Jalankan dalam mode debug.\n"
+"\n"
+"Opsi URL\n"
+"  headers:group.name Unduh header baru untuk newsgroup yang ditentukan.\n"
+"  news:message-id Bila ditentukan bersama dengan --no-gui, dump\n"
+"                           artikel id-pesan untuk output standar.\n"
+"\n"
+"Opsi Batch NZB\n"
+"  --nzb file1 file2 ...      Proses nzb file dalam mode non-GUI.\n"
+"  -o path, --output=path Path untuk menyimpan lampiran yang tercantum dalam "
+"file NZB.\n"
+"  --no-gui Hanya menampilkan output konsol, bukan antrian unduhan."
+
+#: pan/gui/pan.cc:979
+#, fuzzy
+msgid "Error: --no-gui used without nzb files or news:message-id."
+msgstr "Galat: --no-gui digunakan tanpa file nzb atau news:message-id."
+
+#: pan/gui/pan.cc:983
+#, fuzzy, c-format
+msgid "Pan %s started"
+msgstr "Pan %s dimulai"
+
+#: pan/gui/pan.cc:1003
+#, fuzzy
+msgid "Please configure Pan’s news servers before using it as an nzb client."
+msgstr ""
+"Konfigurasikan server berita Pan sebelum menggunakannya sebagai klien nzb."
+
+#: pan/gui/pan.cc:1121
+#, fuzzy
+msgid "Pan notification"
+msgstr "Pemberitahuan pan"
+
+#: pan/gui/post-ui.cc:169
+#, fuzzy, c-format
+msgid "Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."
+msgstr "Unggah antrian: %lu tugas, %ld KB (~ %.2f MB) total."
+
+#: pan/gui/post-ui.cc:272 pan/gui/post-ui.cc:303
+#, fuzzy, c-format
+msgid "Error setting custom spellchecker: %s"
+msgstr "Galat saat mengatur pemeriksa ejaan kustom: %s"
+
+#: pan/gui/post-ui.cc:276 pan/gui/post-ui.cc:284 pan/gui/post-ui.cc:307
+#: pan/gui/post-ui.cc:315
+#, fuzzy, c-format
+msgid "Error setting spellchecker: %s"
+msgstr "Galat saat mengatur pemeriksa ejaan: %s"
+
+#: pan/gui/post-ui.cc:454
+#, fuzzy
+msgid "_Profile"
+msgstr "Profil:"
+
+#: pan/gui/post-ui.cc:455
+#, fuzzy
+msgid "Set Editor"
+msgstr "Atur Editor"
+
+#: pan/gui/post-ui.cc:457
+#, fuzzy
+msgid "_Send Article"
+msgstr "_Send Pasal"
+
+#: pan/gui/post-ui.cc:457
+#, fuzzy
+msgid "Send Article Now"
+msgstr "Kirim Artikel Sekarang"
+
+#: pan/gui/post-ui.cc:458
+#, fuzzy
+msgid "_Send and Save Articles to NZB"
+msgstr "_Send dan Simpan Artikel ke NZB"
+
+#: pan/gui/post-ui.cc:458
+#, fuzzy
+msgid "Send and Save Articles to NZB"
+msgstr "Kirim dan Simpan Artikel ke NZB"
+
+#: pan/gui/post-ui.cc:459
+#, fuzzy
+msgid "Set Character _Encoding…"
+msgstr "Atur _Enkoding Karakter"
+
+#: pan/gui/post-ui.cc:460
+#, fuzzy
+msgid "Set Content _Transfer Encoding…"
+msgstr "Atur Konten _Transfer Encoding..."
+
+#: pan/gui/post-ui.cc:461
+#, fuzzy
+msgid "Sa_ve Draft"
+msgstr "Sa_ve Draft"
+
+#: pan/gui/post-ui.cc:461
+#, fuzzy
+msgid "Save as a Draft for Future Posting"
+msgstr "Simpan sebagai Draf untuk Posting Mendatang"
+
+#: pan/gui/post-ui.cc:462
+#, fuzzy
+msgid "_Open Draft…"
+msgstr "_Open Draft..."
+
+#: pan/gui/post-ui.cc:462
+#, fuzzy
+msgid "Open an Article Draft"
+msgstr "Membuka Draf Artikel"
+
+#: pan/gui/post-ui.cc:467
+#, fuzzy
+msgid "_Rot13"
+msgstr "_Rot13"
+
+#: pan/gui/post-ui.cc:467
+#, fuzzy
+msgid "Rot13 Selected Text"
+msgstr "Rot13 Teks yang Dipilih"
+
+#: pan/gui/post-ui.cc:468
+#, fuzzy
+msgid "Run _Editor"
+msgstr "Jalankan Editor"
+
+#: pan/gui/post-ui.cc:468
+#, fuzzy
+msgid "Run Editor"
+msgstr "Jalankan Editor"
+
+#: pan/gui/post-ui.cc:470
+#, fuzzy
+msgid "Add _Files to Queue"
+msgstr "Menambahkan _Files ke Antrian"
+
+#: pan/gui/post-ui.cc:470
+#, fuzzy
+msgid "Add Files to Queue"
+msgstr "Menambahkan File ke Antrean"
+
+#: pan/gui/post-ui.cc:485 pan/gui/post-ui.cc:486
+#, fuzzy
+msgid "Remove from Queue"
+msgstr "Hapus dari Antrean"
+
+#: pan/gui/post-ui.cc:490 pan/gui/post-ui.cc:491
+#, fuzzy
+msgid "Clear List"
+msgstr "Bersihkan daftar"
+
+#: pan/gui/post-ui.cc:495 pan/gui/post-ui.cc:496
+#, fuzzy
+msgid "Select Needed Parts"
+msgstr "Pilih Komponen yang Diperlukan"
+
+#: pan/gui/post-ui.cc:500 pan/gui/post-ui.cc:501 pan/gui/task-pane.cc:677
+#: pan/gui/task-pane.cc:678
+#, fuzzy
+msgid "Move Up"
+msgstr "Naik"
+
+#: pan/gui/post-ui.cc:505 pan/gui/post-ui.cc:506 pan/gui/task-pane.cc:682
+#: pan/gui/task-pane.cc:683
+#, fuzzy
+msgid "Move Down"
+msgstr "Turun"
+
+#: pan/gui/post-ui.cc:510 pan/gui/post-ui.cc:511
+#, fuzzy
+msgid "Move to Top"
+msgstr "Pindahkan  ke Atas"
+
+#: pan/gui/post-ui.cc:515 pan/gui/post-ui.cc:516
+#, fuzzy
+msgid "Move to Bottom"
+msgstr "Pindahkan ke _dasar"
+
+#: pan/gui/post-ui.cc:523
+#, fuzzy
+msgid "_Wrap Text"
+msgstr "_Lipat Teks"
+
+#: pan/gui/post-ui.cc:523
+#, fuzzy
+msgid "Wrap Text"
+msgstr "Lipat Teks"
+
+#: pan/gui/post-ui.cc:524
+#, fuzzy
+msgid "Always Run Editor"
+msgstr "Selalu Jalankan Editor"
+
+#: pan/gui/post-ui.cc:525
+#, fuzzy
+msgid "Remember Character Encoding for This Group"
+msgstr "Ingat Pengkodean Karakter untuk Grup Ini"
+
+#: pan/gui/post-ui.cc:526
+#, fuzzy
+msgid "Thread Attached Replies"
+msgstr "Thread Terlampir Balasan"
+
+#: pan/gui/post-ui.cc:527
+#, fuzzy
+msgid "PGP-Encrypt the Article"
+msgstr "PGP-Mengenkripsi Artikel"
+
+#: pan/gui/post-ui.cc:528
+#, fuzzy
+msgid "PGP-Sign the Article"
+msgstr "PGP-Tanda Tangani Artikel"
+
+#: pan/gui/post-ui.cc:529
+#, fuzzy
+msgid "Check _Spelling"
+msgstr "Periksa ejaan"
+
+#: pan/gui/post-ui.cc:555
+#, fuzzy
+msgid "New Article’s Encoding:"
+msgstr "Pengkodean Artikel Baru:"
+
+#: pan/gui/post-ui.cc:565
+#, fuzzy
+msgid "Content Transfer Encoding"
+msgstr "Pengkodean Transfer Konten"
+
+#: pan/gui/post-ui.cc:566
+#, fuzzy
+msgid "New Article’s Content Transfer Encoding:"
+msgstr "Pengkodean Transfer Konten Artikel Baru:"
+
+#: pan/gui/post-ui.cc:746
+#, fuzzy
+msgid "Your changes will be lost!"
+msgstr "Perubahan yang Anda buat akan hilang bila tidak Anda simpan."
+
+#: pan/gui/post-ui.cc:747
+#, fuzzy
+msgid "Close this window and lose your changes?"
+msgstr "Tutup jendela ini dan kehilangan perubahan?"
+
+#: pan/gui/post-ui.cc:792 pan/gui/post-ui.cc:831
+#, fuzzy
+msgid "There were problems with this post."
+msgstr "Ada masalah dengan posting ini."
+
+#: pan/gui/post-ui.cc:794 pan/gui/post-ui.cc:833 pan/gui/post-ui.cc:898
+#, fuzzy
+msgid "Go Back"
+msgstr "Kembali"
+
+#: pan/gui/post-ui.cc:796
+#, fuzzy
+msgid "Continue Anyway"
+msgstr "Lanjutkan Saja"
+
+#. Prompt the user
+#: pan/gui/post-ui.cc:825
+#, fuzzy, c-format
+msgid ""
+"Message uses characters not specified in charset “%s” — possibly use “%s” "
+msgstr ""
+"Pesan menggunakan karakter yang tidak ditentukan dalam charset \"%s\" — "
+"mungkin gunakan \"%s\""
+
+#: pan/gui/post-ui.cc:848
+#, fuzzy
+msgid "Go _Online"
+msgstr "Pergi _Online"
+
+#: pan/gui/post-ui.cc:897
+#, fuzzy
+msgid "The file queue is empty, so no files can be saved."
+msgstr "Antrian file kosong, sehingga tidak ada file yang dapat disimpan."
+
+#: pan/gui/post-ui.cc:1093
+#, fuzzy
+msgid "IO Error"
+msgstr "Kesalahan IO"
+
+#: pan/gui/post-ui.cc:1093
+#, fuzzy
+msgid "No space left on device"
+msgstr "Tidak ada ruang yang tersisa pada perangkat MTP"
+
+#: pan/gui/post-ui.cc:1094
+#, fuzzy, c-format
+msgid "Error copying message to %s folder. Reason: %s"
+msgstr "Galat saat menyalin pesan ke folder %s. Alasan: %s"
+
+#: pan/gui/post-ui.cc:1100
+#, fuzzy, c-format
+msgid "Error creating message in %s mail folder: Invalid article."
+msgstr "Galat saat membuat pesan di folder surat %s: Artikel tidak valid."
+
+#: pan/gui/post-ui.cc:1122
+#, fuzzy
+msgid ""
+"No posting server is set for this posting profile.\n"
+"Please edit the profile via Edit → Manage Posting Profiles."
+msgstr ""
+"Tidak ada posting server diatur untuk profil posting ini.\n"
+"Silakan edit profil melalui Edit → Manage Posting Profiles."
+
+#: pan/gui/post-ui.cc:1127
+#, fuzzy
+msgid ""
+"The selected posting server is currently disabled. Please choose an "
+"appropriate alternative."
+msgstr ""
+"Server posting yang dipilih saat ini dinonaktifkan. Silakan pilih alternatif "
+"yang sesuai."
+
+#: pan/gui/post-ui.cc:1169
+#, fuzzy
+msgid "Pan is Offline."
+msgstr "Pan adalah Offline."
+
+#: pan/gui/post-ui.cc:1170
+#, fuzzy
+msgid "Go online to post the article?"
+msgstr "Online untuk memposting artikel?"
+
+#: pan/gui/post-ui.cc:1219
+#, fuzzy, c-format
+msgid ""
+"Error signing/encrypting your message. Perhaps you misspelled your email "
+"address (%s)?"
+msgstr ""
+"Galat saat menandatangani/mengenkripsi pesan Anda. Mungkin Anda salah "
+"mengeja alamat email Anda (%s)?"
+
+#: pan/gui/post-ui.cc:1367
+#, fuzzy
+msgid "Error opening temporary file"
+msgstr "Galat saat membuka berkas sementara"
+
+#: pan/gui/post-ui.cc:1379
+#, fuzzy, c-format
+msgid "Error writing article to temporary file: %s"
+msgstr "Galat saat menulis artikel ke berkas sementara: %s"
+
+#: pan/gui/post-ui.cc:1398
+#, fuzzy, c-format
+msgid "Error parsing “external editor” command line: %s (Command was: %s)"
+msgstr ""
+"Galat saat mengurai baris perintah \"editor eksternal\": %s (Perintah "
+"adalah: %s)"
+
+#: pan/gui/post-ui.cc:1439
+#, fuzzy, c-format
+msgid "Error starting external editor: %s"
+msgstr "Galat saat memulai editor eksternal: %s"
+
+#: pan/gui/post-ui.cc:1502
+#, fuzzy
+msgid "Open Draft Article"
+msgstr "Artikel Draf Terbuka"
+
+#: pan/gui/post-ui.cc:1767
+#, fuzzy
+msgid "Save Draft Article"
+msgstr "Simpan Draft Pasal"
+
+#: pan/gui/post-ui.cc:1804
+#, fuzzy
+msgid "File already exists."
+msgstr "Berkas sudah ada"
+
+#: pan/gui/post-ui.cc:1805
+#, fuzzy
+msgid "Overwrite it?"
+msgstr "_Timpa"
+
+#: pan/gui/post-ui.cc:2015
+#, fuzzy, c-format
+msgid "Couldn’t parse signature command “%s”: %s"
+msgstr "Tidak dapat mengurai perintah tanda tangan \"%s\": %s"
+
+#: pan/gui/post-ui.cc:2051
+#, fuzzy
+msgid "Couldn’t convert signature to UTF-8."
+msgstr "Tidak bisa mengkonversi tanda tangan ke UTF-8."
+
+#: pan/gui/post-ui.cc:2591
+#, fuzzy
+msgid "F_rom"
+msgstr "Da_ri"
+
+#: pan/gui/post-ui.cc:2608
+#, fuzzy
+msgid "_Subject"
+msgstr "_Perihal"
+
+#: pan/gui/post-ui.cc:2621
+#, fuzzy
+msgid "_Newsgroups"
+msgstr "Newsgroups"
+
+#: pan/gui/post-ui.cc:2635
+#, fuzzy
+msgid "Mail _To"
+msgstr "_Surat"
+
+#: pan/gui/post-ui.cc:2737
+#, fuzzy
+msgid "Delete from Queue"
+msgstr "Hapus dari Antrean"
+
+#: pan/gui/post-ui.cc:2750
+#, fuzzy
+msgid "No."
+msgstr "No."
+
+#: pan/gui/post-ui.cc:2754 pan/gui/post-ui.cc:2846 pan/gui/post-ui.cc:2887
+#, fuzzy
+msgid "Filename"
+msgstr "Namaberkas"
+
+#: pan/gui/post-ui.cc:2756
+#, fuzzy
+msgid "Size (KB)"
+msgstr "Ukuran (kB)"
+
+#: pan/gui/post-ui.cc:2854
+#, fuzzy
+msgid "The current filename"
+msgstr "Nama file saat ini"
+
+#: pan/gui/post-ui.cc:2858
+#, fuzzy
+msgid "Subject Line"
+msgstr "Baris Subjek"
+
+#: pan/gui/post-ui.cc:2866
+#, fuzzy
+msgid "The current subject line"
+msgstr "Baris subjek saat ini"
+
+#: pan/gui/post-ui.cc:2880
+#, fuzzy
+msgid "No. "
+msgstr "Tidak."
+
+#: pan/gui/post-ui.cc:2884
+#, fuzzy
+msgid "Enable/Disable"
+msgstr "Aktifkan/Nonaktifkan"
+
+#: pan/gui/post-ui.cc:2918
+#, fuzzy
+msgid "Follo_wup-To"
+msgstr "Follo_wup-Untuk"
+
+#. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
+#: pan/gui/post-ui.cc:2927
+#, fuzzy
+msgid ""
+"The newsgroups where replies to your message should go.  This is only needed "
+"if it differs from the “Newsgroups” header.\n"
+"\n"
+"To direct all replies to your email address, use “Followup-To: poster”"
+msgstr ""
+"Newsgroup di mana balasan pesan Anda harus pergi.  Ini hanya diperlukan jika "
+"berbeda dari header \"Newsgroups\".\n"
+"\n"
+"Untuk mengarahkan semua balasan ke alamat email Anda, gunakan poster "
+"\"Tindak Lanjut:Untuk:\""
+
+#: pan/gui/post-ui.cc:2934
+#, fuzzy
+msgid "_Reply-To"
+msgstr "Balas Ke:"
+
+#: pan/gui/post-ui.cc:2942
+#, fuzzy
+msgid ""
+"The email account where mail replies to your posted message should go. This "
+"is only needed if it differs from the “From” header."
+msgstr ""
+"Akun email tempat email membalas pesan yang Anda kirim harus pergi. Ini "
+"hanya diperlukan jika berbeda dari header \"Dari\"."
+
+#: pan/gui/post-ui.cc:2949
+#, fuzzy
+msgid "_Custom Headers"
+msgstr "Daftar Tajuk Ubahan"
+
+#: pan/gui/post-ui.cc:2973
+#, fuzzy
+msgid "Add “_User-Agent” header"
+msgstr "Menambahkan header \"_User-Agent\""
+
+#: pan/gui/post-ui.cc:2980
+#, fuzzy
+msgid "Add “Message-_ID” header"
+msgstr "Menambahkan header \"Pesan-_ID\""
+
+#: pan/gui/post-ui.cc:3111
+#, fuzzy
+msgid "Select Parts"
+msgstr "Pilih Suku Cadang"
+
+#: pan/gui/post-ui.cc:3124
+#, fuzzy
+msgid "_Parts"
+msgstr "paksa inline untuk semua bagian"
+
+#: pan/gui/post-ui.cc:3282
+#, fuzzy
+msgid "Post Article"
+msgstr "Posting Pasal"
+
+#: pan/gui/post-ui.cc:3303
+#, fuzzy
+msgid "_Message"
+msgstr "_Pesan"
+
+#: pan/gui/post-ui.cc:3304
+#, fuzzy
+msgid "More _Headers"
+msgstr "Informasi _Headers"
+
+#: pan/gui/post-ui.cc:3305
+#, fuzzy
+msgid "File _Queue"
+msgstr "Berkas _Queue"
+
+#: pan/gui/post-ui.cc:3337 pan/gui/profiles-dialog.cc:482
+#, fuzzy, no-c-format
+msgid "On %d, %n wrote:"
+msgstr "Pada %d, %n menulis:"
+
+#: pan/gui/post-ui.cc:3366
+#, fuzzy
+msgid "Add files to queue"
+msgstr "Menambahkan file ke antrean"
+
+#: pan/gui/post-ui.cc:3442
+#, fuzzy
+msgid "Save Upload Queue as NZB File"
+msgstr "Simpan Antrean Unggah sebagai File NZB"
+
+#: pan/gui/prefs.cc:366
+#, fuzzy, c-format
+msgid "Couldn’t parse %s color “%s”"
+msgstr "Tidak dapat mengurai warna %s \"%s\""
+
+#: pan/gui/prefs-ui.cc:123
+#, fuzzy
+msgid "Grab Key"
+msgstr "Ambil Kunci"
+
+#: pan/gui/prefs-ui.cc:129
+#, fuzzy, c-format
+msgid ""
+"Press the combination of the keys\n"
+"you want to use for “%s”."
+msgstr ""
+"Tekan kombinasi tombol\n"
+"yang ingin Anda gunakan untuk \"%s\"."
+
+#: pan/gui/prefs-ui.cc:169
+#, fuzzy
+msgid "Edit Shortcut"
+msgstr "Mengedit Pintasan"
+
+#: pan/gui/prefs-ui.cc:231
+#, fuzzy
+msgid "Error: Shortcut key is invalid!"
+msgstr "Kesalahan: Tombol pintasan tidak valid!"
+
+#: pan/gui/prefs-ui.cc:247
+#, fuzzy
+msgid "Error: Shortcut key already exists!"
+msgstr "Kesalahan: Tombol pintasan sudah ada!"
+
+#: pan/gui/prefs-ui.cc:561
+#, fuzzy
+msgid "Show only icons"
+msgstr "Tampilkan hanya ikon"
+
+#: pan/gui/prefs-ui.cc:562
+#, fuzzy
+msgid "Show only text"
+msgstr "Hanya menampilkan teks"
+
+#: pan/gui/prefs-ui.cc:563
+#, fuzzy
+msgid "Show icons and text"
+msgstr "Menampilkan ikon dan teks"
+
+#: pan/gui/prefs-ui.cc:602
+#, fuzzy
+msgid "Use GNOME Preferences"
+msgstr "Menggunakan Preferensi GNOME"
+
+#: pan/gui/prefs-ui.cc:603
+#, fuzzy
+msgid "Use KDE Preferences"
+msgstr "Menggunakan Preferensi KDE"
+
+#: pan/gui/prefs-ui.cc:604
+#, fuzzy
+msgid "Use OS X Preferences"
+msgstr "Menggunakan Preferensi OS X"
+
+#: pan/gui/prefs-ui.cc:605
+#, fuzzy
+msgid "Use Windows Preferences"
+msgstr "Menggunakan Preferensi Windows"
+
+#: pan/gui/prefs-ui.cc:606
+#, fuzzy
+msgid "Custom Command:"
+msgstr "Perintah ubahan"
+
+#: pan/gui/prefs-ui.cc:658
+#, fuzzy
+msgid "Disabled"
+msgstr "Dinonaktifkan"
+
+#: pan/gui/prefs-ui.cc:659
+#, fuzzy
+msgid "Only new (score == 0)"
+msgstr "Hanya baru (skor == 0)"
+
+#: pan/gui/prefs-ui.cc:660
+#, fuzzy
+msgid "9999 or more"
+msgstr "9999 atau lebih"
+
+#: pan/gui/prefs-ui.cc:661
+#, fuzzy
+msgid "5000 to 9998"
+msgstr "5000 hingga 9998"
+
+#: pan/gui/prefs-ui.cc:662
+#, fuzzy
+msgid "1 to 4999"
+msgstr "1 hingga 4999"
+
+#: pan/gui/prefs-ui.cc:663
+#, fuzzy
+msgid "-9998 to -1"
+msgstr "-9998 hingga -1"
+
+#: pan/gui/prefs-ui.cc:664
+#, fuzzy
+msgid "-9999 or less"
+msgstr "-9999 atau kurang"
+
+#: pan/gui/prefs-ui.cc:728
+#, fuzzy, c-format
+msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
+msgstr ""
+"Pilih set <u>karakter global</u> default. Pengaturan saat ini: <b>%s</b>."
+
+#: pan/gui/prefs-ui.cc:760
+#, fuzzy
+msgid "Global Character Set Settings"
+msgstr "Pengaturan Set Karakter Global"
+
+#: pan/gui/prefs-ui.cc:854 pan/gui/task-pane.cc:1076
+#, fuzzy
+msgid "State"
+msgstr "Kondisi"
+
+#: pan/gui/prefs-ui.cc:888
+#, fuzzy
+msgid "Enabled"
+msgstr "Difungsikan"
+
+#: pan/gui/prefs-ui.cc:892
+#, fuzzy
+msgid "Column Name"
+msgstr "Nama Kolom"
+
+#: pan/gui/prefs-ui.cc:930
+#, fuzzy
+msgid "Pan: Preferences"
+msgstr "Pan: Preferensi"
+
+#: pan/gui/prefs-ui.cc:945
+#, fuzzy
+msgid "Mouse"
+msgstr "Tetikus"
+
+#: pan/gui/prefs-ui.cc:947
+#, fuzzy
+msgid "Single-click activates, rather than selects, _groups"
+msgstr "Klik sekali mengaktifkan, bukan memilih, _groups"
+
+#: pan/gui/prefs-ui.cc:949
+#, fuzzy
+msgid "Single-click activates, rather than selects, _articles"
+msgstr "Klik sekali mengaktifkan, bukan memilih, _articles"
+
+#: pan/gui/prefs-ui.cc:952
+#, fuzzy
+msgid "Groups"
+msgstr "Grup"
+
+#: pan/gui/prefs-ui.cc:954
+#, fuzzy
+msgid "Get new headers in subscribed groups on _startup"
+msgstr "Dapatkan header baru di grup langganan di _startup"
+
+#: pan/gui/prefs-ui.cc:956
+#, fuzzy
+msgid "Get new headers when _entering group"
+msgstr "Mendapatkan header baru saat _entering grup"
+
+#: pan/gui/prefs-ui.cc:958
+#, fuzzy
+msgid "Mark entire group _read when leaving group"
+msgstr "Menandai seluruh grup _read saat meninggalkan grup"
+
+#: pan/gui/prefs-ui.cc:960
+#, fuzzy
+msgid "Mark entire group read before getting _new headers"
+msgstr "Tandai seluruh grup dibaca sebelum mendapatkan _new header"
+
+#: pan/gui/prefs-ui.cc:962
+#, fuzzy
+msgid "E_xpand all threads when entering group"
+msgstr "E_xpand semua thread saat masuk ke grup"
+
+#: pan/gui/prefs-ui.cc:967
+#, fuzzy
+msgid "Articles"
+msgstr "Artikel"
+
+#: pan/gui/prefs-ui.cc:969
+#, fuzzy
+msgid "Mark downloaded articles read"
+msgstr "Tandai artikel yang diunduh dibaca"
+
+#: pan/gui/prefs-ui.cc:971
+#, fuzzy
+msgid "Space selects next article rather than next unread"
+msgstr "Ruang memilih artikel berikutnya daripada berikutnya belum dibaca"
+
+#: pan/gui/prefs-ui.cc:973
+#, fuzzy
+msgid "Expand threads upon selection"
+msgstr "Memperluas thread saat dipilih"
+
+#: pan/gui/prefs-ui.cc:975
+#, fuzzy
+msgid "Always ask before deleting an article"
+msgstr "Selalu bertanya sebelum menghapus artikel"
+
+#: pan/gui/prefs-ui.cc:977
+#, fuzzy
+msgid "Smooth scrolling"
+msgstr "Bergulir halus"
+
+#: pan/gui/prefs-ui.cc:982
+#, fuzzy
+msgid "Article Cache"
+msgstr "Pasal Cache"
+
+#: pan/gui/prefs-ui.cc:983
+#, fuzzy
+msgid "Clear article cache on shutdown"
+msgstr "Hapus cache artikel pada shutdown"
+
+#: pan/gui/prefs-ui.cc:986
+#, fuzzy
+msgid "Size of article cache (in MiB):"
+msgstr "Ukuran cache artikel (dalam MiB):"
+
+#: pan/gui/prefs-ui.cc:991
+#, fuzzy
+msgid "File extension for cached articles: "
+msgstr "Ekstensi file untuk artikel cache:"
+
+#: pan/gui/prefs-ui.cc:996
+#, fuzzy
+msgid "Tabs"
+msgstr "Tab"
+
+#: pan/gui/prefs-ui.cc:1001
+#, fuzzy
+msgid "_Behavior"
+msgstr "Perilaku"
+
+#: pan/gui/prefs-ui.cc:1001
+#, fuzzy
+msgid "Behavior"
+msgstr "Perilaku"
+
+#: pan/gui/prefs-ui.cc:1007
+#, fuzzy
+msgid "Task Pane"
+msgstr "Panel Tugas"
+
+#: pan/gui/prefs-ui.cc:1008
+#, fuzzy
+msgid "Show task pane popups"
+msgstr "Menampilkan popup panel tugas"
+
+#: pan/gui/prefs-ui.cc:1010
+#, fuzzy
+msgid "Show Download Meter"
+msgstr "Tampilkan Download Meter"
+
+#: pan/gui/prefs-ui.cc:1014
+#, fuzzy
+msgid "_Panes"
+msgstr "Panel Horizontal"
+
+#: pan/gui/prefs-ui.cc:1014
+#, fuzzy
+msgid "Panes"
+msgstr "Panel"
+
+#: pan/gui/prefs-ui.cc:1020
+#, fuzzy
+msgid "Language Settings"
+msgstr "Pengaturan Bahasa"
+
+#. systray and notify popup
+#: pan/gui/prefs-ui.cc:1029
+#, fuzzy
+msgid "System Tray Behavior"
+msgstr "Perilaku Baki Sistem"
+
+#: pan/gui/prefs-ui.cc:1031
+#, fuzzy
+msgid "Minimize to tray"
+msgstr "Minimalkan ke baki"
+
+#: pan/gui/prefs-ui.cc:1033
+#, fuzzy
+msgid "Start Pan minimized"
+msgstr "Mulai Pan diminimalkan"
+
+#: pan/gui/prefs-ui.cc:1036
+#, fuzzy
+msgid "Show notifications"
+msgstr "Tampilka_n Pemberitahuan"
+
+#. allow multiple instances (seperate, not communicating with dbus)
+#: pan/gui/prefs-ui.cc:1041
+#, fuzzy
+msgid "Startup Behavior"
+msgstr "Perilaku Startup"
+
+#: pan/gui/prefs-ui.cc:1043
+#, fuzzy
+msgid "Allow multiple instances of Pan"
+msgstr "Izinkan beberapa contoh Pan"
+
+#: pan/gui/prefs-ui.cc:1048
+#, fuzzy
+msgid "Autosave Article Draft"
+msgstr "Simpan Otomatis Pasal Draft"
+
+#: pan/gui/prefs-ui.cc:1050
+#, fuzzy
+msgid "Minutes to autosave the current Article Draft: "
+msgstr "Menit untuk autosave Draft Pasal saat ini:"
+
+#: pan/gui/prefs-ui.cc:1055
+#, fuzzy
+msgid "Autosave Articles"
+msgstr "Autosave Artikel"
+
+#: pan/gui/prefs-ui.cc:1057
+#, fuzzy
+msgid "Minutes to autosave newsrc files: "
+msgstr "Menit untuk menyimpan file newsrc secara otomatis:"
+
+#: pan/gui/prefs-ui.cc:1064
+#, fuzzy
+msgid "Password Storage"
+msgstr "Penyimpanan Kata Sandi"
+
+#: pan/gui/prefs-ui.cc:1065
+#, fuzzy
+msgid "Save passwords in password storage"
+msgstr "Menyimpan kata sandi dalam penyimpanan kata sandi"
+
+#: pan/gui/prefs-ui.cc:1069
+#, fuzzy
+msgid "_Miscellaneous"
+msgstr "_Rupa-rupa"
+
+#: pan/gui/prefs-ui.cc:1069
+#, fuzzy
+msgid "Miscellaneous"
+msgstr "Rupa-rupa"
+
+#: pan/gui/prefs-ui.cc:1074
+#, fuzzy
+msgid "Pane Layout"
+msgstr "Tata Letak Panel"
+
+#: pan/gui/prefs-ui.cc:1093
+#, fuzzy
+msgid "1=Groups, 2=Headers, 3=Body"
+msgstr "1=Grup, 2=Header, 3=Badan"
+
+#: pan/gui/prefs-ui.cc:1095
+#, fuzzy
+msgid "1=Groups, 2=Body, 3=Headers"
+msgstr "1=Grup, 2=Badan, 3=Header"
+
+#: pan/gui/prefs-ui.cc:1097
+#, fuzzy
+msgid "1=Headers, 2=Groups, 3=Body"
+msgstr "1=Header, 2=Grup, 3=Badan"
+
+#: pan/gui/prefs-ui.cc:1099
+#, fuzzy
+msgid "1=Headers, 2=Body, 3=Groups"
+msgstr "1=Header, 2=Badan, 3=Grup"
+
+#: pan/gui/prefs-ui.cc:1101
+#, fuzzy
+msgid "1=Body, 2=Groups, 3=Headers"
+msgstr "1=Badan, 2=Grup, 3=Header"
+
+#: pan/gui/prefs-ui.cc:1103
+#, fuzzy
+msgid "1=Body, 2=Headers, 3=Groups"
+msgstr "1=Badan, 2=Header, 3=Grup"
+
+#: pan/gui/prefs-ui.cc:1107
+#, fuzzy
+msgid "Layout"
+msgstr "Tata letak"
+
+#: pan/gui/prefs-ui.cc:1112
+#, fuzzy
+msgid "Header Pane Columns"
+msgstr "Kolom Panel Header"
+
+#: pan/gui/prefs-ui.cc:1116
+#, fuzzy
+msgid "_Headers"
+msgstr "_Header"
+
+#: pan/gui/prefs-ui.cc:1116
+#, fuzzy
+msgid "Headers"
+msgstr "Tajuk"
+
+#: pan/gui/prefs-ui.cc:1122
+#, fuzzy
+msgid ""
+"This menu lets you configure Pan to take certain actions on your behalf "
+"automatically, based on an article’s score."
+msgstr ""
+"Dengan menu ini Anda dapat mengonfigurasi Pan untuk mengambil tindakan "
+"tertentu atas nama Anda secara otomatis, berdasarkan skor artikel."
+
+#: pan/gui/prefs-ui.cc:1127
+#, fuzzy
+msgid "Mark affected articles read"
+msgstr "Tandai artikel yang terpengaruh dibaca"
+
+#: pan/gui/prefs-ui.cc:1136
+#, fuzzy
+msgid "_Delete articles scoring at: "
+msgstr "_Delete artikel mencetak skor di:"
+
+#: pan/gui/prefs-ui.cc:1142
+#, fuzzy
+msgid "Mark articles read scoring at: "
+msgstr "Tandai artikel membaca skor di:"
+
+#: pan/gui/prefs-ui.cc:1148
+#, fuzzy
+msgid "_Cache articles scoring at: "
+msgstr "_Cache-artikel yang mencetak gol di:"
+
+#: pan/gui/prefs-ui.cc:1154
+#, fuzzy
+msgid "Download attachments of articles scoring at: "
+msgstr "Unduh lampiran artikel yang mencetak skor di:"
+
+#: pan/gui/prefs-ui.cc:1157
+#, fuzzy
+msgid "Actions"
+msgstr "Aksi"
+
+#: pan/gui/prefs-ui.cc:1162 pan/gui/prefs-ui.cc:1183
+#, fuzzy
+msgid "Fonts"
+msgstr "Fonta"
+
+#: pan/gui/prefs-ui.cc:1164
+#, fuzzy
+msgid "Use custom font in Group Pane:"
+msgstr "Gunakan font kustom di Panel Grup:"
+
+#: pan/gui/prefs-ui.cc:1169
+#, fuzzy
+msgid "Use custom font in Header Pane:"
+msgstr "Gunakan font kustom di Panel Header:"
+
+#: pan/gui/prefs-ui.cc:1174
+#, fuzzy
+msgid "Use custom font in Body Pane:"
+msgstr "Gunakan font kustom di Panel Badan:"
+
+#: pan/gui/prefs-ui.cc:1179
+#, fuzzy
+msgid "Monospace font:"
+msgstr "Fonta lebar seragam (monospace):"
+
+#: pan/gui/prefs-ui.cc:1183
+#, fuzzy
+msgid "_Fonts"
+msgstr "_Fonta"
+
+#: pan/gui/prefs-ui.cc:1192
+#, fuzzy
+msgid "Header Pane"
+msgstr "Panel Header"
+
+#: pan/gui/prefs-ui.cc:1195 pan/gui/prefs-ui.cc:1201 pan/gui/prefs-ui.cc:1207
+#: pan/gui/prefs-ui.cc:1213 pan/gui/prefs-ui.cc:1219 pan/gui/prefs-ui.cc:1225
+#: pan/gui/prefs-ui.cc:1234 pan/gui/prefs-ui.cc:1240 pan/gui/prefs-ui.cc:1246
+#: pan/gui/prefs-ui.cc:1252 pan/gui/prefs-ui.cc:1258 pan/gui/prefs-ui.cc:1268
+#: pan/gui/prefs-ui.cc:1278
+#, fuzzy
+msgid "Text:"
+msgstr "Teks:"
+
+#: pan/gui/prefs-ui.cc:1197 pan/gui/prefs-ui.cc:1203 pan/gui/prefs-ui.cc:1209
+#: pan/gui/prefs-ui.cc:1215 pan/gui/prefs-ui.cc:1221 pan/gui/prefs-ui.cc:1227
+#: pan/gui/prefs-ui.cc:1236 pan/gui/prefs-ui.cc:1242 pan/gui/prefs-ui.cc:1248
+#: pan/gui/prefs-ui.cc:1254 pan/gui/prefs-ui.cc:1260 pan/gui/prefs-ui.cc:1270
+#: pan/gui/prefs-ui.cc:1280
+#, fuzzy
+msgid "Background:"
+msgstr "Latar Belakang:"
+
+#: pan/gui/prefs-ui.cc:1199
+#, fuzzy
+msgid "Scores of 9999 or more:"
+msgstr "Skor 9999 atau lebih:"
+
+#: pan/gui/prefs-ui.cc:1205
+#, fuzzy
+msgid "Scores from 5000 to 9998:"
+msgstr "Skor dari 5000 hingga 9998:"
+
+#: pan/gui/prefs-ui.cc:1211
+#, fuzzy
+msgid "Scores from 1 to 4999:"
+msgstr "Skor dari 1 sampai 4999:"
+
+#: pan/gui/prefs-ui.cc:1217
+#, fuzzy
+msgid "Scores from -9998 to -1:"
+msgstr "Skor dari -9998 ke -1:"
+
+#: pan/gui/prefs-ui.cc:1223
+#, fuzzy
+msgid "Scores of -9999 or less:"
+msgstr "Skor -9999 atau kurang:"
+
+#: pan/gui/prefs-ui.cc:1229
+#, fuzzy
+msgid "Collapsed thread with unread articles:"
+msgstr "Thread yang diciutkan dengan artikel yang belum dibaca:"
+
+#: pan/gui/prefs-ui.cc:1231
+#, fuzzy
+msgid "Body Pane"
+msgstr "Panel Badan"
+
+#: pan/gui/prefs-ui.cc:1238
+#, fuzzy
+msgid "First level of quoted text:"
+msgstr "Tingkat pertama teks yang dikutip:"
+
+#: pan/gui/prefs-ui.cc:1244
+#, fuzzy
+msgid "Second level of quoted text:"
+msgstr "Tingkat kedua teks yang dikutip:"
+
+#: pan/gui/prefs-ui.cc:1250
+#, fuzzy
+msgid "Third level of quoted text:"
+msgstr "Tingkat ketiga teks yang dikutip:"
+
+#.
+#: pan/gui/prefs-ui.cc:1256
+#, fuzzy
+msgid "URL:"
+msgstr "URL:"
+
+#.
+#: pan/gui/prefs-ui.cc:1262
+#, fuzzy
+msgid "Signature:"
+msgstr "Tanda Tangan"
+
+#: pan/gui/prefs-ui.cc:1265
+#, fuzzy
+msgid "Group Pane"
+msgstr "Panel Grup"
+
+#.
+#: pan/gui/prefs-ui.cc:1272
+#, fuzzy
+msgid "Group Color:"
+msgstr "Warna Grup:"
+
+#: pan/gui/prefs-ui.cc:1276
+#, fuzzy
+msgid "Other Text"
+msgstr "Teks Lainnya"
+
+#: pan/gui/prefs-ui.cc:1282
+#, fuzzy
+msgid "Text Color:"
+msgstr "Warna teks:"
+
+#: pan/gui/prefs-ui.cc:1285
+#, fuzzy
+msgid "_Colors"
+msgstr "_Warna"
+
+#: pan/gui/prefs-ui.cc:1285
+#, fuzzy
+msgid "Colors"
+msgstr "Warna"
+
+#: pan/gui/prefs-ui.cc:1290
+#, fuzzy
+msgid "Preferred Applications"
+msgstr "Aplikasi Pilihan"
+
+#: pan/gui/prefs-ui.cc:1294
+#, fuzzy
+msgid "_Web browser:"
+msgstr "Bowser Web"
+
+#: pan/gui/prefs-ui.cc:1297
+#, fuzzy
+msgid "_Mail reader:"
+msgstr "Pembaca E-mail Balsa"
+
+#: pan/gui/prefs-ui.cc:1299
+#, fuzzy
+msgid "_Text editor:"
+msgstr "Teks;Penyunting;"
+
+#: pan/gui/prefs-ui.cc:1301
+#, fuzzy
+msgid "_HTML previewer:"
+msgstr "_HTML previewer:"
+
+#: pan/gui/prefs-ui.cc:1303
+#, fuzzy
+msgid "_Applications"
+msgstr "Aplikasi"
+
+#: pan/gui/prefs-ui.cc:1303
+#, fuzzy
+msgid "Applications"
+msgstr "Aplikasi"
+
+#: pan/gui/prefs-ui.cc:1308 pan/gui/task-pane.cc:552
+#, fuzzy
+msgid "Encoding"
+msgstr "Pengkodean"
+
+#: pan/gui/prefs-ui.cc:1312
+#, fuzzy
+msgid "Default bytes per file (for encoder): "
+msgstr "Byte default per file (untuk encoder):"
+
+#: pan/gui/prefs-ui.cc:1317
+#, fuzzy
+msgid "_Upload"
+msgstr "_Unggah"
+
+#: pan/gui/prefs-ui.cc:1317
+#, fuzzy
+msgid "Upload"
+msgstr "Unggah"
+
+#: pan/gui/prefs-ui.cc:1326
+#, fuzzy
+msgid "_Shortcuts"
+msgstr "Pintasan:"
+
+#: pan/gui/prefs-ui.cc:1326
+#, fuzzy
+msgid "Shortcuts"
+msgstr "Pintasan"
+
+#: pan/gui/profiles-dialog.cc:83
+#, fuzzy
+msgid "Please choose your email address according to your PGP key’s user id."
+msgstr ""
+"Silakan pilih alamat email Anda sesuai dengan id pengguna kunci PGP Anda."
+
+#: pan/gui/profiles-dialog.cc:131
+#, fuzzy
+msgid "Posting Profile"
+msgstr "Profil Posting"
+
+#: pan/gui/profiles-dialog.cc:143
+#, fuzzy
+msgid "Profile Information"
+msgstr "Informasi Profil"
+
+#: pan/gui/profiles-dialog.cc:147
+#, fuzzy
+msgid "_Profile Name:"
+msgstr "Nama _Profil:"
+
+#: pan/gui/profiles-dialog.cc:150
+#, fuzzy
+msgid "Required Information"
+msgstr "Memerlukan Informasi"
+
+#: pan/gui/profiles-dialog.cc:154
+#, fuzzy
+msgid "_Full Name:"
+msgstr "Nama lengkap"
+
+#: pan/gui/profiles-dialog.cc:158
+#, fuzzy
+msgid ""
+"Your email address.\n"
+"Note that this has to match your PGP signature’s address\n"
+"if you want your messages to be PGP-signed or encrypted correctly."
+msgstr ""
+"Alamat email Anda.\n"
+"Perhatikan bahwa ini harus sesuai dengan alamat tanda tangan PGP Anda\n"
+"jika Anda ingin pesan Anda ditandatangani atau dienkripsi dengan benar."
+
+#: pan/gui/profiles-dialog.cc:162
+#, fuzzy
+msgid "_Email Address:"
+msgstr "Alamat _Email:"
+
+#: pan/gui/profiles-dialog.cc:164
+#, fuzzy
+msgid "_Post Articles via:"
+msgstr "_Post Artikel melalui:"
+
+#: pan/gui/profiles-dialog.cc:167
+#, fuzzy
+msgid "Signature"
+msgstr "Tanda tangan"
+
+#: pan/gui/profiles-dialog.cc:170
+#, fuzzy
+msgid "_Use a Signature"
+msgstr "_Use Tanda Tangan"
+
+#: pan/gui/profiles-dialog.cc:174
+#, fuzzy
+msgid "Signature File"
+msgstr "Tidak dapat membaca berkas tanda tangan &quot;{0}&quot;."
+
+#: pan/gui/profiles-dialog.cc:184
+#, fuzzy
+msgid "Text File"
+msgstr "Berkas Teks"
+
+#: pan/gui/profiles-dialog.cc:186
+#, fuzzy
+msgid "Text"
+msgstr "Teks"
+
+#: pan/gui/profiles-dialog.cc:188
+#, fuzzy
+msgid "Command"
+msgstr "Perintah"
+
+#: pan/gui/profiles-dialog.cc:191
+#, fuzzy
+msgid "PGP Signature"
+msgstr "tandatangan PGP: "
+
+#: pan/gui/profiles-dialog.cc:196
+#, fuzzy
+msgid "Signature Type: "
+msgstr "Jenis Tanda Tangan:"
+
+#: pan/gui/profiles-dialog.cc:226
+#, fuzzy
+msgid "X-Face (Avatar)"
+msgstr "X-Face (Avatar)"
+
+#: pan/gui/profiles-dialog.cc:229
+#, fuzzy
+msgid ""
+"You can add an avatar icon to your articles with a unique X-Face code.\n"
+"Add the code without the trailing <b>“X-Face:”</b> \n"
+" if it was generated by a helper program (for example http://www.dairiki.org/"
+"xface/xface.php)."
+msgstr ""
+"Anda dapat menambahkan ikon avatar ke artikel dengan kode X-Face yang unik.\n"
+"Tambahkan kode tanpa trailing <b>\"X-Face:\"</b> \n"
+" jika dihasilkan oleh program pembantu (misalnya http://www.dairiki.org/"
+"xface/xface.php)."
+
+#: pan/gui/profiles-dialog.cc:232
+#, fuzzy
+msgid "_X-Face:"
+msgstr "Path _X-Face"
+
+#: pan/gui/profiles-dialog.cc:234
+#, fuzzy
+msgid "Optional Information"
+msgstr "Informasi Opsional"
+
+#: pan/gui/profiles-dialog.cc:239
+#, fuzzy
+msgid ""
+"When posting to Usenet, your article’s Message-ID contains a domain name.\n"
+"You can set a custom domain name here, or leave it blank to let Pan use the "
+"domain name from your email address."
+msgstr ""
+"Saat memposting ke Usenet, ID Pesan artikel Anda berisi nama domain.\n"
+"Anda dapat mengatur nama domain kustom di sini, atau membiarkannya kosong "
+"untuk mengizinkan Pan menggunakan nama domain dari alamat email Anda."
+
+#: pan/gui/profiles-dialog.cc:242
+#, fuzzy
+msgid "Message-ID _Domain Name:"
+msgstr "Nama _Domain ID Pesan:"
+
+#: pan/gui/profiles-dialog.cc:246
+#, fuzzy, c-format
+msgid ""
+"%i for Message-ID\n"
+"%a for Author and Address\n"
+"%n for Author name\n"
+"%d for Date"
+msgstr ""
+"%i untuk ID Pesan\n"
+"%a untuk Penulis dan Alamat\n"
+"%n untuk nama penulis\n"
+"%d untuk Tanggal"
+
+#: pan/gui/profiles-dialog.cc:247
+#, fuzzy
+msgid "_Attribution:"
+msgstr "CC Attribution"
+
+#. Translators: Do not localize Reply-To and the quote marks in \"Your Name\".
+#: pan/gui/profiles-dialog.cc:272
+#, fuzzy
+msgid ""
+"Extra headers to be included in your articles, such as\n"
+"Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
+"Organization: Your Organization\n"
+msgstr ""
+"Header tambahan untuk disertakan dalam artikel Anda, seperti\n"
+"Balas-Untuk: \"Nama Anda\" <yourname@somewhere.com>\n"
+"Organisasi: Organisasi Anda"
+
+#: pan/gui/profiles-dialog.cc:282
+#, fuzzy
+msgid "E_xtra Headers:"
+msgstr "E_xtra Header:"
+
+#: pan/gui/profiles-dialog.cc:327
+#, fuzzy
+msgid "Invalid email address."
+msgstr "Alamat email salah."
+
+#: pan/gui/profiles-dialog.cc:328
+#, fuzzy
+msgid "Please use an address of the form joe@somewhere.org"
+msgstr "Silakan gunakan alamat formulir joe@somewhere.org"
+
+#: pan/gui/profiles-dialog.cc:483
+#, fuzzy
+msgid "New Profile"
+msgstr "Profil Baru"
+
+#: pan/gui/profiles-dialog.cc:529
+#, fuzzy
+msgid "Posting Profiles"
+msgstr "Profil Posting"
+
+#: pan/gui/profiles-dialog.cc:545
+#, fuzzy
+msgid "Profiles"
+msgstr "Profil"
+
+#: pan/gui/save-attach-ui.cc:46
+#, fuzzy, c-format
+msgid ""
+"%g — group as one directory (alt.binaries.pictures.trains)\n"
+"%G — group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s — Subject line excerpt\n"
+"%S — Subject line\n"
+"%n — Poster display name\n"
+"%e — Poster email address\n"
+"%d — Article timestamp\n"
+"“/home/user/News/Pan/%g” becomes\n"
+"“/home/user/News/Pan/alt.binaries.pictures.trains”, and\n"
+"“/home/user/News/Pan/%G” becomes\n"
+"“/home/user/News/Pan/alt/binaries/pictures/trains”,"
+msgstr ""
+"%g — grup sebagai satu direktori (alt.binaries.pictures.trains)\n"
+"%G — grup sebagai direktori bersarang (/alt/binries/pictures/trains)\n"
+"%s — Kutipan baris subjek\n"
+" %s — Baris subjek\n"
+"%n — Nama tampilan poster\n"
+"%e — Alamat email poster\n"
+"%d — Stempel waktu Artikel\n"
+"\"/home/user/News/Pan/%g\" menjadi\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", dan\n"
+"\"/home/user/News/Pan/%G\" menjadi\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+
+#: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
+#, fuzzy
+msgid "Add to the queue sorted by date posted"
+msgstr "Tambahkan ke antrean yang diurutkan berdasarkan tanggal diposting"
+
+#: pan/gui/save-attach-ui.cc:199 pan/gui/save-ui.cc:219
+#, fuzzy
+msgid "Add to the front of the queue"
+msgstr "Tambahkan ke bagian depan antrean"
+
+#: pan/gui/save-attach-ui.cc:200 pan/gui/save-ui.cc:220
+#, fuzzy
+msgid "Add to the back of the queue"
+msgstr "Tambahkan ke bagian belakang antrean"
+
+#: pan/gui/save-attach-ui.cc:232
+#, fuzzy
+msgid "Pan: Save Attachments"
+msgstr "Pan: Simpan Lampiran"
+
+#: pan/gui/save-attach-ui.cc:257 pan/gui/save-attach-ui.cc:275
+#: pan/gui/save-ui.cc:272 pan/gui/save-ui.cc:290
+#, fuzzy
+msgid "_Location:"
+msgstr "_Lokasi:"
+
+#: pan/gui/save-attach-ui.cc:261 pan/gui/save-ui.cc:276
+#, fuzzy
+msgid "Save Articles"
+msgstr "Simpan Artikel"
+
+#: pan/gui/save-attach-ui.cc:278 pan/gui/save-ui.cc:293
+#, fuzzy, c-format
+msgid "_Group’s path: %s"
+msgstr "_Group: %s"
+
+#: pan/gui/save-attach-ui.cc:289 pan/gui/save-ui.cc:308
+#, fuzzy
+msgid "_Priority:"
+msgstr "_Prioritas:"
+
+#: pan/gui/save-ui.cc:46
+#, fuzzy, c-format
+msgid ""
+"%g — group as one directory (alt.binaries.pictures.trains)\n"
+"%G — group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s — subject line excerpt\n"
+"%S — subject line\n"
+"%n — Poster display name\n"
+"%e — Poster email address\n"
+"%d — Article timestamp\n"
+" \n"
+"“/home/user/News/Pan/%g” becomes\n"
+"“/home/user/News/Pan/alt.binaries.pictures.trains”, and\n"
+"“/home/user/News/Pan/%G” becomes\n"
+"“/home/user/News/Pan/alt/binaries/pictures/trains”,"
+msgstr ""
+"%g — grup sebagai satu direktori (alt.binaries.pictures.trains)\n"
+"%G — grup sebagai direktori bersarang (/alt/binries/pictures/trains)\n"
+"%s — kutipan baris subjek\n"
+" %s — baris subjek\n"
+"%n — Nama tampilan poster\n"
+"%e — Alamat email poster\n"
+"%d — Stempel waktu Artikel\n"
+" \n"
+"\"/home/user/News/Pan/%g\" menjadi\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", dan\n"
+"\"/home/user/News/Pan/%G\" menjadi\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+
+#: pan/gui/save-ui.cc:209
+#, fuzzy
+msgid "Save attachments"
+msgstr "Simpan Lampiran"
+
+#: pan/gui/save-ui.cc:210
+#, fuzzy
+msgid "Save text"
+msgstr "Menyimpan teks"
+
+#: pan/gui/save-ui.cc:211
+#, fuzzy
+msgid "Save attachments and text"
+msgstr "Menyimpan lampiran dan teks"
+
+#: pan/gui/save-ui.cc:247
+#, fuzzy
+msgid "Pan: Save Articles"
+msgstr "Pan: Simpan Artikel"
+
+#: pan/gui/save-ui.cc:304
+#, fuzzy
+msgid "_Action:"
+msgstr "_Aksi:"
+
+#: pan/gui/score-add-ui.cc:89
+#, fuzzy
+msgid "is more than"
+msgstr "Lebih Dari"
+
+#: pan/gui/score-add-ui.cc:90
+#, fuzzy
+msgid "is at most"
+msgstr "paling banyak"
+
+#: pan/gui/score-add-ui.cc:112
+#, fuzzy
+msgid "increase the article’s score by"
+msgstr "meningkatkan skor artikel dengan"
+
+#: pan/gui/score-add-ui.cc:113
+#, fuzzy
+msgid "decrease the article’s score by"
+msgstr "mengurangi skor artikel dengan"
+
+#: pan/gui/score-add-ui.cc:114
+#, fuzzy
+msgid "set the article’s score to"
+msgstr "mengatur skor artikel ke"
+
+#: pan/gui/score-add-ui.cc:115
+#, fuzzy
+msgid "watch the article (set its score to 9999)"
+msgstr "menonton artikel (mengatur skor untuk 9999)"
+
+#: pan/gui/score-add-ui.cc:116
+#, fuzzy
+msgid "ignore the article (set its score to -9999)"
+msgstr "mengabaikan artikel (mengatur skor untuk -9999)"
+
+#: pan/gui/score-add-ui.cc:141
+#, fuzzy
+msgid "References"
+msgstr "Rujukan"
+
+#: pan/gui/score-add-ui.cc:142
+#, fuzzy
+msgid "Line Count"
+msgstr "Cacah Baris"
+
+#: pan/gui/score-add-ui.cc:143
+#, fuzzy
+msgid "Byte Count"
+msgstr "Cacah Byte"
+
+#: pan/gui/score-add-ui.cc:144
+#, fuzzy
+msgid "Crosspost Group Count"
+msgstr "Jumlah Grup Posting Silang"
+
+#: pan/gui/score-add-ui.cc:145
+#, fuzzy
+msgid "Age (in days)"
+msgstr "Usia (dalam hari)"
+
+#: pan/gui/score-add-ui.cc:167
+#, fuzzy
+msgid "for the next month"
+msgstr "untuk bulan berikutnya"
+
+#: pan/gui/score-add-ui.cc:168
+#, fuzzy
+msgid "for the next six months"
+msgstr "selama enam bulan ke depan"
+
+#: pan/gui/score-add-ui.cc:169
+#, fuzzy
+msgid "forever"
+msgstr "selamanya"
+
+#: pan/gui/score-add-ui.cc:194
+#, fuzzy
+msgid "contains"
+msgstr "berisi"
+
+#: pan/gui/score-add-ui.cc:195
+#, fuzzy
+msgid "doesn’t contain"
+msgstr "Galat: berkas tak memuat konfigurasi JSON yang valid"
+
+#: pan/gui/score-add-ui.cc:196
+#, fuzzy
+msgid "is"
+msgstr "adalah"
+
+#: pan/gui/score-add-ui.cc:197
+#, fuzzy
+msgid "isn’t"
+msgstr "Permainan ini tidak terintegrasi dengan Permainan GNOME."
+
+#: pan/gui/score-add-ui.cc:198
+#, fuzzy
+msgid "starts with"
+msgstr "diawali dengan"
+
+#: pan/gui/score-add-ui.cc:199
+#, fuzzy
+msgid "ends with"
+msgstr "diakhiri dengan"
+
+#: pan/gui/score-add-ui.cc:200
+#, fuzzy
+msgid "matches regex"
+msgstr "Path cocok regex:"
+
+#: pan/gui/score-add-ui.cc:481
+#, fuzzy
+msgid "Another rule already sets this article’s score."
+msgstr "Aturan lain sudah menetapkan skor artikel ini."
+
+#: pan/gui/score-add-ui.cc:482
+#, fuzzy
+msgid "You may want to go back or delete the old rule."
+msgstr "Anda mungkin ingin kembali atau menghapus aturan lama."
+
+#: pan/gui/score-add-ui.cc:553
+#, fuzzy
+msgid "Add and Re_score"
+msgstr "Tambahkan dan Re_score"
+
+#: pan/gui/score-add-ui.cc:604 pan/gui/score-add-ui.cc:624
+#, fuzzy
+msgid "New Scoring Rule"
+msgstr "Aturan Penilaian Baru"
+
+#: pan/gui/score-add-ui.cc:635
+#, fuzzy
+msgid "Group name"
+msgstr "Nama grup"
+
+#: pan/gui/score-add-ui.cc:642
+#, fuzzy
+msgid "and"
+msgstr "dan"
+
+#: pan/gui/score-view-ui.cc:56
+#, fuzzy
+msgid "Close and Re_score"
+msgstr "Tutup dan Re_score"
+
+#: pan/gui/score-view-ui.cc:154
+#, fuzzy, c-format
+msgid "File %s, Lines %d-%d"
+msgstr "Berkas %s, Baris %d-%d"
+
+#: pan/gui/score-view-ui.cc:182
+#, fuzzy
+msgid "Pan: Article’s Scores"
+msgstr "Pan: Skor Artikel"
+
+#: pan/gui/score-view-ui.cc:208
+#, fuzzy
+msgid "Add"
+msgstr "Tambah"
+
+#: pan/gui/score-view-ui.cc:213
+#, fuzzy
+msgid "New Score"
+msgstr "Skor Baru"
+
+#: pan/gui/score-view-ui.cc:218
+#, fuzzy
+msgid "Criteria"
+msgstr "Kriteria"
+
+#: pan/gui/score-view-ui.cc:241
+#, fuzzy
+msgid "Add a New Scoring Rule"
+msgstr "Menambahkan Aturan Penilaian Baru"
+
+#: pan/gui/score-view-ui.cc:248
+#, fuzzy
+msgid "Remove the Selected Scoring Rule"
+msgstr "Menghapus Aturan Penilaian yang Dipilih"
+
+#: pan/gui/server-ui.cc:272
+#, fuzzy
+msgid "Please specify the server’s address."
+msgstr "Harap tentukan alamat server."
+
+#: pan/gui/server-ui.cc:318
+#, fuzzy
+msgid "Import SSL Certificate (PEM Format) From File"
+msgstr "Impor Sertifikat SSL (FORMAT PEM) Dari File"
+
+#. create the dialog
+#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:961
+#, fuzzy
+msgid "Add a Server"
+msgstr "Tambah Server Kunci"
+
+#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:967
+#, fuzzy
+msgid "Edit a Server’s Settings"
+msgstr "Mengedit Pengaturan Server"
+
+#: pan/gui/server-ui.cc:375
+#, fuzzy
+msgid "Location"
+msgstr "Lokasi"
+
+#: pan/gui/server-ui.cc:379
+#, fuzzy
+msgid "The news server’s actual address, e.g. “news.mynewsserver.com”."
+msgstr "Alamat sebenarnya server berita, misalnya \"news.mynewsserver.com\"."
+
+#: pan/gui/server-ui.cc:380
+#, fuzzy
+msgid "_Address:"
+msgstr "_Alamat:"
+
+#: pan/gui/server-ui.cc:385
+#, fuzzy
+msgid ""
+"The news server’s port number.  Typically 119 for unencrypted and 563 for "
+"encrypted connections (SSL/TLS)."
+msgstr ""
+"Nomor port server berita.  Biasanya 119 untuk tidak terenkripsi dan 563 "
+"untuk koneksi terenkripsi (SSL/TLS)."
+
+#: pan/gui/server-ui.cc:386
+#, fuzzy
+msgid "Por_t:"
+msgstr "Por_t"
+
+#: pan/gui/server-ui.cc:389
+#, fuzzy
+msgid "Login (if Required)"
+msgstr "Login (jika Diperlukan)"
+
+#: pan/gui/server-ui.cc:393
+#, fuzzy
+msgid "_Username:"
+msgstr "Pengg_una:"
+
+#: pan/gui/server-ui.cc:394
+#, fuzzy
+msgid ""
+"The username to give the server when asked.  If your server doesn’t require "
+"authentication, you can leave this blank."
+msgstr ""
+"Nama pengguna untuk memberikan server ketika ditanya.  Jika server Anda "
+"tidak memerlukan otentikasi, Anda dapat membiarkan ini kosong."
+
+#: pan/gui/server-ui.cc:398
+#, fuzzy
+msgid "_Password:"
+msgstr "_Sandi"
+
+#: pan/gui/server-ui.cc:399
+#, fuzzy
+msgid ""
+"The password to give the server when asked.  If your server doesn’t require "
+"authentication, you can leave this blank."
+msgstr ""
+"Sandi untuk memberikan server ketika ditanya.  Jika server Anda tidak "
+"memerlukan otentikasi, Anda dapat membiarkan ini kosong."
+
+#: pan/gui/server-ui.cc:402
+#, fuzzy
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: pan/gui/server-ui.cc:409
+#, fuzzy
+msgid "Connection _Limit:"
+msgstr "Koneksi _Limit:"
+
+#: pan/gui/server-ui.cc:413
+msgid "After Two Weeks"
+msgstr "Setelah Dua Minggu"
+
+#: pan/gui/server-ui.cc:414
+msgid "After One Month"
+msgstr "Setelah Satu Bulan"
+
+#: pan/gui/server-ui.cc:415
+#, fuzzy
+msgid "After Two Months"
+msgstr "Setelah Dua Bulan"
+
+#: pan/gui/server-ui.cc:416
+#, fuzzy
+msgid "After Three Months"
+msgstr "Setelah Tiga Bulan"
+
+#: pan/gui/server-ui.cc:417
+#, fuzzy
+msgid "After Six Months"
+msgstr "Setelah Enam Bulan"
+
+#: pan/gui/server-ui.cc:418
+#, fuzzy
+msgid "Never Expire Old Articles"
+msgstr "Tidak pernah berakhir artikel lama"
+
+#: pan/gui/server-ui.cc:432
+#, fuzzy
+msgid "E_xpire Old Articles:"
+msgstr "E_xpire Lama:"
+
+#: pan/gui/server-ui.cc:436
+msgid "Primary"
+msgstr "Primer"
+
+#: pan/gui/server-ui.cc:437
+#, fuzzy
+msgid "Fallback"
+msgstr "Cadangan"
+
+#: pan/gui/server-ui.cc:451
+#, fuzzy
+msgid "Server Rank:"
+msgstr "Peringkat Server:"
+
+#: pan/gui/server-ui.cc:455
+#, fuzzy
+msgid ""
+"Fallback servers are used for articles that can’t be found on the "
+"primaries.  One common approach is to use free servers as primaries and "
+"subscription servers as fallbacks."
+msgstr ""
+"Server fallback digunakan untuk artikel yang tidak dapat ditemukan pada "
+"pendahuluan.  Salah satu pendekatan umum adalah dengan menggunakan server "
+"gratis sebagai pendahuluan dan server berlangganan sebagai fallback."
+
+#: pan/gui/server-ui.cc:460
+#, fuzzy
+msgid "Disable Compression (N/A)"
+msgstr "Nonaktifkan Kompresi (N/A)"
+
+#: pan/gui/server-ui.cc:461
+#, fuzzy
+msgid "XZVER Compression (Astraweb)"
+msgstr "Kompresi XZVER (Astraweb)"
+
+#: pan/gui/server-ui.cc:462
+#, fuzzy
+msgid "GZIP Compression (Giganews etc.)"
+msgstr "Kompresi GZIP (Giganews dll.)"
+
+#: pan/gui/server-ui.cc:476
+#, fuzzy
+msgid "Header Compression:"
+msgstr "Gunakan pemampatan header TCP"
+
+#: pan/gui/server-ui.cc:482
+msgid "Security"
+msgstr "Keamanan"
+
+#: pan/gui/server-ui.cc:487
+#, fuzzy
+msgid "Use Unsecure (Plaintext) Connections"
+msgstr "Menggunakan Koneksi Tidak Aman (Plaintext)"
+
+#: pan/gui/server-ui.cc:488
+#, fuzzy
+msgid "Use Secure SSL Connections"
+msgstr "Menggunakan Koneksi SSL Aman"
+
+#: pan/gui/server-ui.cc:503
+msgid "TLS (SSL) Settings:"
+msgstr "Pengaturan TLS (SSL):"
+
+#: pan/gui/server-ui.cc:508
+#, fuzzy
+msgid ""
+"You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
+"TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
+"for privacy reasons."
+msgstr ""
+"Anda dapat mengaktifkan/menonaktifkan koneksi SSL/TLS aman di sini. Jika "
+"Anda mengaktifkan SSL/TLS, data Anda dienkripsi dan aman. Hal ini dianjurkan "
+"untuk mengaktifkan SSL / TLS untuk alasan privasi."
+
+#: pan/gui/server-ui.cc:513
+#, fuzzy
+msgid "Always trust this server’s certificate"
+msgstr "Selalu percaya sertifikat server ini"
+
+#: pan/gui/server-ui.cc:689
+#, fuzzy, c-format
+msgid "Really delete “%s”?"
+msgstr "Benar-benar menghapus \"%s\"?"
+
+#: pan/gui/server-ui.cc:778
+#, fuzzy
+msgid "No information available."
+msgstr "Informasi tak tersedia"
+
+#: pan/gui/server-ui.cc:788
+#, fuzzy, c-format
+msgid "Server Certificate for “%s”"
+msgstr "Sertifikat Server untuk \"%s\""
+
+#: pan/gui/server-ui.cc:887
+#, fuzzy, c-format
+msgid "Really delete certificate for “%s”?"
+msgstr "Benar-benar menghapus sertifikat untuk \"%s\"?"
+
+#. dialog
+#: pan/gui/server-ui.cc:914 pan/gui/server-ui.cc:935 pan/gui/server-ui.cc:1033
+msgid "Servers"
+msgstr "Server"
+
+#: pan/gui/server-ui.cc:974
+#, fuzzy
+msgid "Remove a Server"
+msgstr "_Hapus dari server"
+
+#. dialog
+#: pan/gui/server-ui.cc:1007
+msgid "SSL Certificates"
+msgstr "Sertifikat SSL"
+
+#: pan/gui/server-ui.cc:1028
+msgid "Certificates"
+msgstr "Sertifikat"
+
+#: pan/gui/server-ui.cc:1059
+msgid "Import Certificate"
+msgstr "Impor Sertifikat"
+
+#: pan/gui/server-ui.cc:1065
+msgid "Inspect Certificate"
+msgstr "Periksa Sertifikat"
+
+#: pan/gui/server-ui.cc:1072
+msgid "Remove Certificate"
+msgstr "Hapus Sertifikat"
+
+#: pan/gui/task-pane.cc:121
+#, fuzzy, c-format
+msgid ""
+"\n"
+"<u>Upload</u>\n"
+"\n"
+"<i>Subject:</i> <b>“%s”</b>\n"
+"<i>From:</i> <b>%s</b>\n"
+"<i>Groups:</i> <b>%s</b>\n"
+"<i>Sourcefile:</i> <b>%s</b>\n"
+msgstr ""
+"<u>Unggah</u>\n"
+"\n"
+"<i>Subjek:</i> <b>\"%s\"</b>\n"
+"<i>Dari:</i> <b>%s</b>\n"
+"<i>Grup:</i> <b>%s</b>\n"
+"<i>Sourcefile:</i> <b>%s</b>"
+
+#: pan/gui/task-pane.cc:133
+#, fuzzy, c-format
+msgid ""
+"\n"
+"<u>Download</u>\n"
+"\n"
+"<i>Subject:</i> <b>“%s”</b>\n"
+"<i>From:</i> <b>%s</b>\n"
+"<i>Date:</i> <b>%s</b>\n"
+"<i>Groups:</i> <b>%s</b>\n"
+"<i>Save Path:</i> <b>%s</b>\n"
+msgstr ""
+"<u>Download</u><i>Subject:</i> <b>\"%s\"</b><i>Dari:</i> <b>%s</b><i>Tanggal:"
+"</i> <b>%s</b><i>Grup:</i> <b>%s</b>Simpan<i>Jalur:</i> <b>%s</b>"
+
+#: pan/gui/task-pane.cc:135
+#, fuzzy
+msgid "unknown"
+msgstr "tak diketahui"
+
+#: pan/gui/task-pane.cc:303
+#, fuzzy
+msgid "Choose New Destination for Selected Tasks"
+msgstr "Pilih Tujuan Baru untuk Tugas yang Dipilih"
+
+#: pan/gui/task-pane.cc:457
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
+msgstr "Pan: Tugas (%d Antri, %d Berjalan, %d Berhenti)"
+
+#: pan/gui/task-pane.cc:459
+#, fuzzy, c-format
+msgid "Pan: Tasks (%d Queued, %d Running)"
+msgstr "Pan: Tugas (%d Antri, %d Berjalan)"
+
+#: pan/gui/task-pane.cc:461
+#, fuzzy
+msgid "Pan: Tasks"
+msgstr "Pan: Tugas"
+
+#: pan/gui/task-pane.cc:486
+#, fuzzy, c-format
+msgid "%lu selected, %s"
+msgstr "%lu dipilih, %s"
+
+#: pan/gui/task-pane.cc:550
+#, fuzzy
+msgid "Running"
+msgstr "Berjalan"
+
+#: pan/gui/task-pane.cc:551
+#, fuzzy
+msgid "Decoding"
+msgstr "Decoding"
+
+#: pan/gui/task-pane.cc:553
+#, fuzzy
+msgid "Queued for Decode"
+msgstr "Antri untuk Decode"
+
+#: pan/gui/task-pane.cc:554
+#, fuzzy
+msgid "Queued for Encode"
+msgstr "Mengantri untuk Encode"
+
+#: pan/gui/task-pane.cc:555
+#, fuzzy
+msgid "Queued"
+msgstr "antri"
+
+#: pan/gui/task-pane.cc:556
+#, fuzzy
+msgid "Stopped"
+msgstr "Terhenti"
+
+#: pan/gui/task-pane.cc:557
+#, fuzzy
+msgid "Removing"
+msgstr "Menghapus"
+
+#: pan/gui/task-pane.cc:586
+#, fuzzy, c-format
+msgid "%d%% Done"
+msgstr "%d% %selesai"
+
+#: pan/gui/task-pane.cc:592
+#, fuzzy, c-format
+msgid "%d∶%02d∶%02d Remaining (%d @ %lu KiB/s)"
+msgstr "%d∶%02d∶%02d Tersisa (%d @ %lu KiB/s)"
+
+#: pan/gui/task-pane.cc:687 pan/gui/task-pane.cc:688
+#, fuzzy
+msgid "Move To Top"
+msgstr "Pindahkan ke _puncak"
+
+#: pan/gui/task-pane.cc:692 pan/gui/task-pane.cc:693
+#, fuzzy
+msgid "Move To Bottom"
+msgstr "Pindahkan ke _dasar"
+
+#: pan/gui/task-pane.cc:697 pan/gui/task-pane.cc:698
+#, fuzzy
+msgid "Show Task Information"
+msgstr "Tampilkan Informasi Tugas"
+
+#: pan/gui/task-pane.cc:702 pan/gui/task-pane.cc:703
+#, fuzzy
+msgid "Stop Task"
+msgstr "Menghentikan Tugas"
+
+#: pan/gui/task-pane.cc:707 pan/gui/task-pane.cc:708
+#, fuzzy
+msgid "Delete Task"
+msgstr "Hapus Tugas"
+
+#: pan/gui/task-pane.cc:712 pan/gui/task-pane.cc:713
+#, fuzzy
+msgid "Restart Task"
+msgstr "Mulai Ulang Tugas"
+
+#: pan/gui/task-pane.cc:717 pan/gui/task-pane.cc:718
+#, fuzzy
+msgid "Change Download Destination"
+msgstr "Ubah Tujuan Unduhan"
+
+#: pan/gui/task-pane.cc:1028
+#, fuzzy
+msgid "_Online"
+msgstr "Daring"
+
+#: pan/gui/task-pane.cc:1045
+#, fuzzy
+msgid "Restart Tasks"
+msgstr "Mulai Ulang Tugas"
+
+#: pan/gui/task-pane.cc:1047
+#, fuzzy
+msgid "Stop Tasks"
+msgstr "Menghentikan Tugas"
+
+#: pan/gui/task-pane.cc:1049
+#, fuzzy
+msgid "Delete Tasks"
+msgstr "Hapus Tugas"
+
+#: pan/gui/task-pane.cc:1055
+#, fuzzy
+msgid "Show popups"
+msgstr "Menampilkan popup"
+
+#: pan/gui/url.cc:123
+#, fuzzy, c-format
+msgid "Error starting URL: %s (Command was: %s)"
+msgstr "Galat saat memulai URL: %s (Perintah adalah: %s)"
+
+#: pan/tasks/decoder.cc:117
+#, fuzzy, c-format
+msgid "Couldn’t save file “%s”: %s"
+msgstr "Tidak dapat menyimpan berkas \"%s\": %s"
+
+#: pan/tasks/decoder.cc:139 pan/tasks/encoder.cc:136
+#, fuzzy
+msgid "Error initializing uulib"
+msgstr "Galat inisialisasi uulib"
+
+#: pan/tasks/decoder.cc:154 pan/tasks/socket-impl-gio.cc:360
+#: pan/tasks/socket-impl-openssl.cc:642
+#, fuzzy, c-format
+msgid "Error reading from %s: %s"
+msgstr "Galat saat membaca dari %s: %s"
+
+#: pan/tasks/decoder.cc:194
+#, fuzzy, c-format
+msgid "Saved “%s”"
+msgstr "Disimpan \"%s\""
+
+#: pan/tasks/decoder.cc:201
+#, fuzzy, c-format
+msgid ""
+"Error saving “%s”:\n"
+"%s."
+msgstr ""
+"Galat saat menyimpan \"%s\":\n"
+"%s."
+
+#: pan/tasks/decoder.cc:314 pan/tasks/task-article.cc:354
+#, fuzzy, c-format
+msgid "Decoding %s"
+msgstr "Decoding %s (Decoding %s)"
+
+#: pan/tasks/encoder.cc:103 pan/tasks/encoder.cc:154
+#, fuzzy, c-format
+msgid "Error loading %s from cache."
+msgstr "Galat saat memuat %s dari cache."
+
+#: pan/tasks/encoder.cc:176
+#, fuzzy, c-format
+msgid "Error encoding %s: %s"
+msgstr "Galat pengkodean %s: %s"
+
+#: pan/tasks/encoder.cc:266
+#, fuzzy, c-format
+msgid "Encoding %s"
+msgstr "DTLS-Content-Encoding %s tak dikenal\n"
+
+#: pan/tasks/nntp.cc:150
+#, fuzzy, c-format
+msgid "%s requires a username, but none is set."
+msgstr "%s membutuhkan nama pengguna, tetapi tidak ada yang diatur."
+
+#: pan/tasks/nntp.cc:163
+#, fuzzy, c-format
+msgid "%s requires a password, but none is set."
+msgstr "%s membutuhkan kata sandi, tetapi tidak ada yang diatur."
+
+#: pan/tasks/nntp.cc:247
+#, fuzzy, c-format
+msgid "Sending “%s” to %s returned an error: %s"
+msgstr "Mengirim \"%s\" ke %s mengembalikan sebuah kesalahan: %s"
+
+#: pan/tasks/nntp.cc:270
+#, fuzzy, c-format
+msgid "Sending “%s” to %s returned an unrecognized response: “%s”"
+msgstr "Mengirim \"%s\" ke %s mengembalikan respons yang tidak dikenal: \"%s\""
+
+#: pan/tasks/nntp-pool.cc:235
+#, fuzzy, c-format
+msgid "Unable to connect to “%s”"
+msgstr "Tak bisa menyambung ke '%s': "
+
+#: pan/tasks/queue.cc:778 pan/tasks/queue.cc:806 pan/tasks/queue.cc:833
+#, fuzzy
+msgid "No space left on device."
+msgstr "Tidak ada ruang yang tersisa pada perangkat MTP"
+
+#: pan/tasks/socket-impl-gio.cc:173 pan/tasks/socket-impl-gio.cc:211
+#: pan/tasks/socket-impl-openssl.cc:214 pan/tasks/socket-impl-openssl.cc:252
+#, fuzzy, c-format
+msgid "Error connecting to “%s”"
+msgstr "Galat saat menyambung: %s\n"
+
+#: pan/tasks/socket-impl-gio.cc:359 pan/tasks/socket-impl-openssl.cc:641
+#, fuzzy
+msgid "Unknown Error"
+msgstr "Kesalahan Tidak Dikenal"
+
+#: pan/tasks/task-article.cc:62 pan/tasks/task-article.cc:160
+#, fuzzy, c-format
+msgid "Saving %s"
+msgstr "Menyimpan %s"
+
+#: pan/tasks/task-article.cc:64
+#, fuzzy, c-format
+msgid "Reading %s"
+msgstr "Membaca <ph id=\"mtc_1\" equiv-text=\"base64:JXM=\"/>"
+
+#: pan/tasks/task-article.cc:326
+#, fuzzy, c-format
+msgid "Article “%s” is incomplete — the news server(s) don’t have part %s"
+msgstr "Pasal \"%s\" tidak lengkap — server berita tidak memiliki bagian %s"
+
+#: pan/tasks/task-groups.cc:41
+#, fuzzy, c-format
+msgid "Getting group list from “%s”"
+msgstr "Mendapatkan daftar grup dari \"%s\""
+
+#: pan/tasks/task-groups.cc:134
+#, fuzzy, c-format
+msgid "Fetched %lu Groups"
+msgstr "Mengambil %lu Grup"
+
+#: pan/tasks/task-post.cc:35
+#, fuzzy, c-format
+msgid "Posting “%s”"
+msgstr "Memposting \"%s\""
+
+#: pan/tasks/task-post.cc:80
+#, fuzzy, c-format
+msgid "Posting of “%s” failed: %s"
+msgstr "Posting dari \"%s\" gagal: %s"
+
+#: pan/tasks/task-post.cc:85
+#, fuzzy, c-format
+msgid "Posting of “%s” successful: %s"
+msgstr "Posting dari \"%s\" berhasil: %s"
+
+#: pan/tasks/task-upload.cc:51
+#, fuzzy, c-format
+msgid "Uploading %s"
+msgstr "Mengunggah \"%s\""
+
+#: pan/tasks/task-upload.cc:265
+#, fuzzy, c-format
+msgid "Uploading %s — Part %d of %d"
+msgstr "Mengunggah %s — Bagian %d dari %d"
+
+#: pan/tasks/task-upload.cc:267
+#, fuzzy, c-format
+msgid "Uploading message body with subject “%s”"
+msgstr "Mengunggah badan pesan dengan subjek \"%s\""
+
+#: pan/tasks/task-upload.cc:324
+#, fuzzy, c-format
+msgid "Posting of file %s (part %d of %d) failed: No posts allowed by server."
+msgstr ""
+"Posting berkas %s (bagian %d dari %d) gagal: Tidak ada posting yang "
+"diizinkan oleh server."
+
+#: pan/tasks/task-upload.cc:332
+#, fuzzy, c-format
+msgid "Posting of file %s (part %d of %d) failed: %s"
+msgstr "Posting dari berkas %s (bagian %d dari %d) gagal: %s"
+
+#: pan/tasks/task-upload.cc:342 pan/tasks/task-upload.cc:349
+#, fuzzy, c-format
+msgid "Posting of file %s (part %d of %d) successful: %s"
+msgstr "Posting berkas %s (bagian %d dari %d) berhasil: %s"
+
+#: pan/tasks/task-upload.cc:359
+#, fuzzy, c-format
+msgid "Posting of file %s successful: %s"
+msgstr "Posting berkas %s berhasil: %s"
+
+#: pan/tasks/task-upload.cc:363
+#, fuzzy, c-format
+msgid ""
+"Posting of file %s not completely successful: Check the log (right-click "
+"list item)."
+msgstr ""
+"Posting berkas %s tidak sepenuhnya berhasil: Periksa log (klik kanan daftar "
+"item)."
+
+#: pan/tasks/task-upload.cc:380
+#, fuzzy, c-format
+msgid ""
+"Posting of file %s not successful: Check the log (right-click list item)."
+msgstr ""
+"Posting berkas %s tidak berhasil: Periksa log (klik kanan daftar item)."
+
+#: pan/tasks/task-xover.cc:83
+#, fuzzy, c-format
+msgid "Getting all headers for “%s”"
+msgstr "Mendapatkan semua header untuk \"%s\""
+
+#: pan/tasks/task-xover.cc:86
+#, fuzzy, c-format
+msgid "Getting new headers for “%s”"
+msgstr "Mendapatkan header baru untuk \"%s\""
+
+#. SAMPLE
+#: pan/tasks/task-xover.cc:90
+#, fuzzy, c-format
+msgid "Sampling headers for “%s”"
+msgstr "Mengambil sampel header untuk \"%s\""
+
+#: pan/tasks/task-xover.cc:431
+#, fuzzy, c-format
+msgid "%s (%lu parts, %lu articles)"
+msgstr "%s (%lu bagian, %lu artikel)"
+
+#: pan/tasks/task-xover.cc:505
+#, fuzzy, c-format
+msgid "Getting new headers for “%s” done."
+msgstr "Mendapatkan header baru untuk \"%s\" dilakukan."
+
+#: pan/tasks/task-xoverinfo.cc:78
+#, fuzzy, c-format
+msgid "Getting header counts for “%s”"
+msgstr "Mendapatkan jumlah header untuk \"%s\""
+
+#: pan/usenet-utils/filter-info.cc:217
+#, fuzzy
+msgid "article doesn’t have attachments"
+msgstr "artikel tidak memiliki lampiran"
+
+#: pan/usenet-utils/filter-info.cc:221
+msgid "the article has attachments"
+msgstr "artikel ini memiliki lampiran"
+
+#: pan/usenet-utils/filter-info.cc:225
+#, fuzzy
+msgid "the article isn’t cached locally"
+msgstr "artikel tidak di-cache secara lokal"
+
+#: pan/usenet-utils/filter-info.cc:229
+#, fuzzy
+msgid "the article is cached locally"
+msgstr "artikel ini di-cache secara lokal"
+
+#: pan/usenet-utils/filter-info.cc:233
+#, fuzzy
+msgid "the article wasn’t posted by you"
+msgstr "artikel tidak diposting oleh Anda"
+
+#: pan/usenet-utils/filter-info.cc:237
+#, fuzzy
+msgid "the article was posted by you"
+msgstr "artikel telah diposting oleh Anda"
+
+#: pan/usenet-utils/filter-info.cc:241
+msgid "the article has been read"
+msgstr "artikel telah dibaca"
+
+#: pan/usenet-utils/filter-info.cc:245
+msgid "the article hasn’t been read"
+msgstr "artikel belum dibaca"
+
+#: pan/usenet-utils/filter-info.cc:249
+#, fuzzy, c-format
+msgid "the article is less than %ld bytes long"
+msgstr "artikel ini kurang dari %ld bytes panjang"
+
+#: pan/usenet-utils/filter-info.cc:254
+#, fuzzy, c-format
+msgid "the article is at least %ld bytes long"
+msgstr "artikel ini setidaknya %ld bytes panjang"
+
+#: pan/usenet-utils/filter-info.cc:259
+#, fuzzy, c-format
+msgid "the article is less than %ld lines long"
+msgstr "artikel ini kurang dari %ld baris panjang"
+
+#: pan/usenet-utils/filter-info.cc:264
+#, fuzzy, c-format
+msgid "the article is at least %ld lines long"
+msgstr "artikel ini setidaknya %ld baris panjang"
+
+#: pan/usenet-utils/filter-info.cc:269
+#, fuzzy, c-format
+msgid "the article is less than %ld days old"
+msgstr "artikel ini kurang dari %ld days old"
+
+#: pan/usenet-utils/filter-info.cc:274
+#, fuzzy, c-format
+msgid "the article is at least %ld days old"
+msgstr "artikel ini setidaknya %ld hari tua"
+
+#: pan/usenet-utils/filter-info.cc:279
+#, fuzzy, c-format
+msgid "the article was posted to less than %ld groups"
+msgstr "artikel telah diposting ke kurang dari %ld kelompok"
+
+#: pan/usenet-utils/filter-info.cc:284
+#, fuzzy, c-format
+msgid "the article was posted to at least %ld groups"
+msgstr "artikel telah diposting ke setidaknya %ld kelompok"
+
+#: pan/usenet-utils/filter-info.cc:289
+#, fuzzy, c-format
+msgid "the article’s score is less than %ld"
+msgstr "skor artikel kurang dari %ld"
+
+#: pan/usenet-utils/filter-info.cc:294
+#, fuzzy, c-format
+msgid "the article’s score is %ld or higher"
+msgstr "skor artikel adalah %ld atau lebih tinggi"
+
+#: pan/usenet-utils/filter-info.cc:303 pan/usenet-utils/filter-info.cc:313
+#, fuzzy, c-format
+msgid "%s doesn’t contain “%s”"
+msgstr "%s tidak mengandung \"%s\""
+
+#: pan/usenet-utils/filter-info.cc:304 pan/usenet-utils/filter-info.cc:314
+#, c-format
+msgid "%s isn’t “%s”"
+msgstr "%s bukan \"%s\""
+
+#: pan/usenet-utils/filter-info.cc:305 pan/usenet-utils/filter-info.cc:315
+#, fuzzy, c-format
+msgid "%s doesn’t begin with “%s”"
+msgstr "%s tidak dimulai dengan \"%s\""
+
+#: pan/usenet-utils/filter-info.cc:306 pan/usenet-utils/filter-info.cc:316
+#, fuzzy, c-format
+msgid "%s doesn’t end with “%s”"
+msgstr "%s tidak di berakhir dengan \"%s\""
+
+#: pan/usenet-utils/filter-info.cc:307 pan/usenet-utils/filter-info.cc:317
+#, fuzzy, c-format
+msgid "%s doesn’t match the regex “%s”"
+msgstr "%s tidak cocok dengan regex \"%s\""
+
+#: pan/usenet-utils/filter-info.cc:329
+#, c-format
+msgid "%s contains “%s”"
+msgstr "%s berisi \"%s\""
+
+#: pan/usenet-utils/filter-info.cc:330
+#, fuzzy, c-format
+msgid "%s is “%s”"
+msgstr "ruas tidak valid '%s%s%s%s%s'; %s%s%s"
+
+#: pan/usenet-utils/filter-info.cc:331
+#, fuzzy, c-format
+msgid "%s begins with “%s”"
+msgstr "%s dimulai dengan \"%s\""
+
+#: pan/usenet-utils/filter-info.cc:332
+#, fuzzy, c-format
+msgid "%s ends with “%s”"
+msgstr "%s berakhir dengan \"%s\""
+
+#: pan/usenet-utils/filter-info.cc:333
+#, fuzzy, c-format
+msgid "%s matches the regex “%s”"
+msgstr "%s cocok dengan regex \"%s\""
+
+#: pan/usenet-utils/filter-info.cc:339
+#, fuzzy
+msgid "Any of these tests fail:"
+msgstr "Salah satu tes ini gagal:"
+
+#: pan/usenet-utils/filter-info.cc:346
+#, fuzzy
+msgid "All of these tests pass:"
+msgstr "Semua tes ini lulus:"
+
+#: pan/usenet-utils/filter-info.cc:353
+#, fuzzy
+msgid "None of these tests pass:"
+msgstr "Tak satu pun dari tes ini lulus:"
+
+#: pan/usenet-utils/filter-info.cc:360
+#, fuzzy
+msgid "Any of these tests pass:"
+msgstr "Salah satu tes ini lulus:"
+
+#: pan/usenet-utils/gnksa.cc:880
+#, fuzzy, c-format
+msgid "No email address provided; generating message-id with domain “%s”"
+msgstr ""
+"Tidak ada alamat email yang disediakan; menghasilkan message-id dengan "
+"domain \"%s\""
+
+#: pan/usenet-utils/message-check.cc:124
+#, fuzzy
+msgid "Warning: Reply seems to be top-posted."
+msgstr "Peringatan: Balas tampaknya diposting teratas."
+
+#: pan/usenet-utils/message-check.cc:145
+#, fuzzy
+msgid "Warning: The signature marker should be “-- ”, not “--”."
+msgstr "Peringatan: Penanda tanda tangan harus \"-- \", bukan \"--\"."
+
+#: pan/usenet-utils/message-check.cc:162
+#, fuzzy
+msgid "Warning: Signature prefix with no signature."
+msgstr "Peringatan: Awalan tanda tangan tanpa tanda tangan."
+
+#: pan/usenet-utils/message-check.cc:167
+#, fuzzy
+msgid "Warning: Signature is more than 4 lines long."
+msgstr "Peringatan: Tanda tangan lebih dari 4 baris panjang."
+
+#: pan/usenet-utils/message-check.cc:172
+#, fuzzy
+msgid "Warning: Signature is more than 80 characters wide."
+msgstr "Peringatan: Tanda tangan lebih dari 80 karakter lebar."
+
+#: pan/usenet-utils/message-check.cc:198
+#, fuzzy, c-format
+msgid "Warning: %d line is more than 80 characters wide."
+msgid_plural "Warning: %d lines are more than 80 characters wide."
+msgstr[0] "Peringatan: %d baris lebih dari 80 karakter lebar."
+msgstr[1] ""
+
+#: pan/usenet-utils/message-check.cc:223
+#, fuzzy
+msgid "Error: Message is empty."
+msgstr "Galat: Pesan kosong."
+
+#: pan/usenet-utils/message-check.cc:258
+#, fuzzy
+msgid "Warning: The message is entirely quoted text!"
+msgstr "Peringatan: Pesan sepenuhnya dikutip teks!"
+
+#: pan/usenet-utils/message-check.cc:259
+#, fuzzy
+msgid "Warning: The message is mostly quoted text."
+msgstr "Peringatan: Pesan sebagian besar dikutip teks."
+
+#: pan/usenet-utils/message-check.cc:309
+#, fuzzy
+msgid "Error: Message appears to have no new content."
+msgstr "Kesalahan: Pesan tampaknya tidak memiliki konten baru."
+
+#: pan/usenet-utils/message-check.cc:344 pan/usenet-utils/message-check.cc:383
+#, fuzzy, c-format
+msgid ""
+"Warning: The posting profile’s server doesn’t carry newsgroup\n"
+"\t“%s”.\n"
+"\tIf the group name is correct, switch profiles in the “From:”\n"
+"\tline or edit the profile with “Edit → Manage Posting Profiles”."
+msgstr ""
+"Peringatan: Server profil posting tidak membawa newsgroup\n"
+"\t\"%s\".\n"
+"\tJika nama grup sudah benar, alihkan profil di \"Dari:\"\n"
+"\tbaris atau mengedit profil dengan \"Edit → Manage Posting Profil\"."
+
+#: pan/usenet-utils/message-check.cc:355
+#, fuzzy
+msgid "Warning: Following-Up to too many groups."
+msgstr "Peringatan: Menindaklanjuti terlalu banyak kelompok."
+
+#: pan/usenet-utils/message-check.cc:366
+#, fuzzy
+msgid "Error: No Subject specified."
+msgstr "Galat: Tidak ada subjek yang ditentukan."
+
+#: pan/usenet-utils/message-check.cc:395
+#, fuzzy, c-format
+msgid "Warning: Group “%s” is read-only."
+msgstr "Peringatan: Grup \"%s\" hanya-baca."
+
+#: pan/usenet-utils/message-check.cc:404
+#, fuzzy
+msgid "Error: Posting to a very large number of groups."
+msgstr "Galat: Posting ke sejumlah besar grup."
+
+#: pan/usenet-utils/message-check.cc:409
+#, fuzzy
+msgid "Warning: Posting to a large number of groups."
+msgstr "Peringatan: Memposting ke sejumlah besar grup."
+
+#: pan/usenet-utils/message-check.cc:416
+#, fuzzy
+msgid "Warning: Crossposting without setting Followup-To header."
+msgstr "Peringatan: Posting silang tanpa mengatur header Tindak Lanjut."
+
+#: pan/usenet-utils/message-check.cc:441
+#, fuzzy
+msgid "Error: Bad email address."
+msgstr "Galat: Alamat email yang buruk."
+
+#: pan/usenet-utils/message-check.cc:450
+#, fuzzy
+msgid "Warning: Most newsgroups frown upon HTML posts."
+msgstr ""
+"Peringatan: Sebagian besar newsgroup mengerutkan kening pada posting HTML."
+
+#: pan/usenet-utils/message-check.cc:490
+#, fuzzy
+msgid "Error: No Recipients."
+msgstr "Galat: Tidak ada penerima."
+
+#: pan/usenet-utils/scorefile.cc:304
+#, fuzzy, c-format
+msgid ""
+"Error reading score in %*.*s, line %d: expected “Expires: MM/DD/YYYY” or "
+"“Expires: DD-MM-YYYY”."
+msgstr ""
+"Galat saat membaca skor di %*.*s, baris %d: diduga \"Berakhir: MM/DD/YYYY\" "
+"atau \"Berakhir: DD-MM-YYYY\"."
+
+#: pan/usenet-utils/scorefile.cc:307
+#, fuzzy, c-format
+msgid "Expired old score from %*.*s, line %d"
+msgstr "Skor lama kadaluarsa dari %*.*s, baris %d"
+
+#: pan/usenet-utils/scorefile.cc:380
+#, fuzzy, c-format
+msgid "Error reading score in %*.*s, line %d: unexpected line."
+msgstr "Galat saat membaca skor dalam %*.*s, baris %d: baris tak terduga."
+
+#: pan/usenet-utils/scorefile.cc:429
+#, fuzzy, c-format
+msgid "Read %lu scoring rules in %lu sections from “%s”"
+msgstr "Baca %lu mencetak aturan di daerah %lu dari \"%s\""
+
+#: pan/usenet-utils/ssl-utils.h:189
+#, fuzzy, c-format
+msgid "Error printing the server certificate for “%s”"
+msgstr "Galat saat mencetak sertifikat server untuk \"%s\""
+
+#: pan/usenet-utils/ssl-utils.h:205
+#, fuzzy, c-format
+msgid ""
+"The current server <b>“%s”</b> sent this security certificate:\n"
+"\n"
+msgstr "Server saat ini <b>\"%s\"</b> mengirim sertifikat keamanan ini:"
+
+#: pan/usenet-utils/ssl-utils.h:206
+#, fuzzy, c-format
+msgid ""
+"Certificate information for server <b>“%s”</b>:\n"
+"\n"
+msgstr "Informasi sertifikat untuk server <b>\"%s\":</b>"
+
+#: pan/usenet-utils/ssl-utils.h:208
+#, fuzzy, c-format
+msgid ""
+"%s<b>Issuer information:</b>\n"
+"%s\n"
+"<b>Valid until:</b> %s\n"
+"\n"
+"<b>Not valid before:</b> %s\n"
+"\n"
+msgstr ""
+"Informasi<b>penerbit %s:</b>\n"
+"%s\n"
+"<b>Berlaku hingga:</b> %s\n"
+"\n"
+"<b>Tidak valid sebelumnya:</b> %s"
+
+#: pan/usenet-utils/text-massager.cc:399
+#, fuzzy
+msgid "> [quoted text muted]"
+msgstr "• [teks dikutip dibisukan]"
+
+#: pan/usenet-utils/text-massager.cc:581
+#, fuzzy
+msgid "no_name"
+msgstr "Tak ada nama"
+
+#: pan/usenet-utils/text-massager.cc:582
+#, fuzzy
+msgid "no_mail"
+msgstr "_Surat"
