@@ -29,9 +29,9 @@
 #include <vector>
 
 #include <glib.h>
+#include <glib/gi18n.h>
 extern "C" {
   #include <unistd.h>
-  #include <glib/gi18n.h>
 }
 
 #include <pan/general/debug.h>

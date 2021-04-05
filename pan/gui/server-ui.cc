@@ -21,9 +21,9 @@
 #include <cstdlib>
 #include <cstring>
 #include <climits>
+#include <glib.h>
+#include <glib/gi18n.h>
 extern "C" {
-  #include <glib.h>
-  #include <glib/gi18n.h>
   #include "gtk-compat.h"
 }
 

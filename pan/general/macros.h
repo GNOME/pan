@@ -63,9 +63,6 @@
 ***  g_assert
 **/
 
-extern "C"
-{
-  #include <glib.h>
-}
+#include <glib.h>
 
 #endif

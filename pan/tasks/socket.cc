@@ -21,9 +21,7 @@
 #include <cstdarg>
 #include <ctime>
 #include <cmath>
-extern "C" {
-  #include <glib.h>
-}
+#include <glib.h>
 #include <pan/general/debug.h>
 #include <pan/general/string-view.h>
 #include "socket.h"

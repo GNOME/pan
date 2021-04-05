@@ -24,9 +24,7 @@
 #include <sstream>
 #include <string>
 #include <map>
-extern "C" {
-  #include <glib.h>
-}
+#include <glib.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>

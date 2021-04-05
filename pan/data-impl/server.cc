@@ -25,10 +25,8 @@
 #include <map>
 #include <set>
 #include <vector>
-extern "C" {
-  #include <glib.h> // for GMarkup
-  #include <glib/gi18n.h>
-}
+#include <glib.h> // for GMarkup
+#include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>

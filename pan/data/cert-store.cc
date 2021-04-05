@@ -34,10 +34,8 @@
 #include <iostream>
 #include <string>
 
-extern "C" {
 #include <glib/gi18n.h>
 #include <glib.h>
-}
 
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
