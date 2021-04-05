@@ -20,10 +20,8 @@
 #include <config.h>
 #include <iostream>
 #include <string>
-extern "C" {
-  #include <glib.h>
-  #include <glib/gi18n.h>
-};
+#include <glib.h>
+#include <glib/gi18n.h>
 #include <pan/general/log.h>
 #include "url.h"
 

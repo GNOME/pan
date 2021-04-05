@@ -27,9 +27,9 @@ extern "C" {
   #include <sys/types.h> // for chmod
   #include <sys/stat.h> // for chmod
   #include <unistd.h>
-  #include <glib.h>
-  #include <glib/gi18n.h>
 }
+#include <glib.h>
+#include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/line-reader.h>

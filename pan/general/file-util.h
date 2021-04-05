@@ -25,9 +25,9 @@
 extern "C" {
   #include <stddef.h>
   #include <stdio.h>
-  #include <glib.h>
-  #include <glib/gstdio.h>
 }
+#include <glib.h>
+#include <glib/gstdio.h>
 #include <pan/general/string-view.h>
 
 #define g_freopen freopen

@@ -23,10 +23,8 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-extern "C" {
-  #include <glib.h>
-  #include <glib/gi18n.h>
-}
+#include <glib.h>
+#include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>

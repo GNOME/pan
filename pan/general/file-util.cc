@@ -27,12 +27,12 @@ extern "C"
   #include <unistd.h>
   #include <sys/stat.h>
   #include <sys/types.h>
-  #include <glib.h>
-  #include <glib/gi18n.h>
   #ifndef G_OS_WIN32
     #include <pwd.h>
   #endif
 }
+#include <glib.h>
+#include <glib/gi18n.h>
 
 #include "debug.h"
 #include "log.h"

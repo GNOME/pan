@@ -21,8 +21,8 @@ extern "C" {
   #include <config.h>
   #include <sys/types.h> // chmod
   #include <sys/stat.h> // chmod
-  #include <glib.h>
 }
+#include <glib.h>
 #include <iostream>
 #include <fstream>
 #include <pan/general/file-util.h>

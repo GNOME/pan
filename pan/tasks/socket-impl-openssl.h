@@ -27,10 +27,7 @@
 #include <string>
 //#include <glib/giochannel.h>
 //#include <glib/gstring.h>
-extern "C"
-{
-  #include <glib.h>
-}
+#include <glib.h>
 
 #include <pan/general/debug.h>
 #include <pan/general/quark.h>

@@ -22,9 +22,7 @@
 #include <map>
 #include <cstring>
 #include <glib.h>
-extern "C" {
 #include <glib/gi18n.h>
-}
 #include "text-massager.h"
 #include <pan/general/log.h>
 #include <pan/general/e-util.h>
