@@ -24,8 +24,8 @@
 extern "C" {
   #include <sys/types.h> // for chmod
   #include <sys/stat.h> // for chmod
-  #include <glib.h>
 }
+#include <glib.h>
 #include <pan/general/file-util.h>
 #include "prefs-file.h"
 

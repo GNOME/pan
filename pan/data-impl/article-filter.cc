@@ -25,10 +25,7 @@
 #include <gmime/gmime.h>
 
 //#include <glib/gprintf.h>
-extern "C"
-{
-  #include <glib.h>
-}
+#include <glib.h>
 
 #include "article-filter.h"
 

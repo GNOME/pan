@@ -22,10 +22,8 @@
 
 
 #include <config.h>
-extern "C" {
-  #include <glib.h>
-  #include <glib/gi18n.h>
-}
+#include <glib.h>
+#include <glib/gi18n.h>
 #include <pan/general/macros.h>
 #include "rules-info.h"
 

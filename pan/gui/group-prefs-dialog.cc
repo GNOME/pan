@@ -18,9 +18,9 @@
  */
 
 #include <config.h>
+#include <glib/gi18n.h>
+#include <glib.h>
 extern "C" {
-  #include <glib/gi18n.h>
-  #include <glib.h>
   #include "gtk-compat.h"
 #ifdef HAVE_GTKSPELL
   #include <enchant/enchant.h>
