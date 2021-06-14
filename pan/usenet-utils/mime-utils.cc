@@ -1749,7 +1749,7 @@ namespace pan
 #ifdef HAVE_GMIME_30
     GMimeObject *gmo;
     gmo = g_mime_message_get_mime_part (body);
-    if (g_mime_multipart_signed_sign (gpg_ctx, gmo, uid.c_str(), &err) <0)
+    if (g_mime_multipart_signed_sign (gpg_ctx, gmo, uid.c_str(), &err) != NULL)
 #else
     if (g_mime_multipart_signed_sign (mps, GMIME_OBJECT (part), gpg_ctx, uid.c_str(), GMIME_DIGEST_ALGO_SHA1, &err) <0)
 #endif
@@ -1784,7 +1784,7 @@ namespace pan
 
 #ifdef HAVE_GMIME_30
     if (g_mime_multipart_encrypted_encrypt(gpg_ctx, GMIME_OBJECT (part), sign, uid.c_str(),
-                                           GMIME_ENCRYPT_NONE, rcp, &err) < 0)
+                                           GMIME_ENCRYPT_NONE, rcp, &err) != NULL)
 #else
     if (g_mime_multipart_encrypted_encrypt(mpe, GMIME_OBJECT (part), gpg_ctx, sign,
                                            uid.c_str(), GMIME_DIGEST_ALGO_SHA1, rcp, &err) < 0)
