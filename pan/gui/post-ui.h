@@ -178,7 +178,7 @@ namespace pan
 
     private:
       /* GMIME: X-Face interval between spaces for proper folding. */
-      enum { GMIME_FOLD_INTERVAL = 72 };
+      enum { GMIME_FOLD_INTERVAL = 72, GMIME_FOLD_BASE64_INTERVAL = 64 };
 
       void add_actions (GtkWidget* box);
       void apply_profile_to_body ();
