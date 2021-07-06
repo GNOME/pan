@@ -22,9 +22,9 @@
 #include <fstream>
 #include <config.h>
 #include <signal.h>
+#include <glib/gi18n.h>
 
 extern "C" {
-  #include <glib/gi18n.h>
   #include "gtk-compat.h"
   #include <gmime/gmime.h>
   #include <gio/gio.h>

@@ -18,9 +18,7 @@
  */
 
 #include <config.h>
-extern "C" {
-  #include <glib/gi18n.h>
-}
+#include <glib/gi18n.h>
 #include "task-post.h"
 #include <pan/general/debug.h>
 #include <pan/general/log.h>

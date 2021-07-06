@@ -20,12 +20,13 @@
 #include <config.h>
 #include <cassert>
 #include <cerrno>
+#include <glib/gi18n.h>
+#include <gmime/gmime-utils.h>
+
 extern "C" {
   #define PROTOTYPES
   #include <stdio.h>
   #include <uulib/uudeview.h>
-  #include <glib/gi18n.h>
-  #include <gmime/gmime-utils.h>
   #include <zlib.h>
 }
 #include <fstream>

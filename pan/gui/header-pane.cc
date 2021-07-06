@@ -17,9 +17,9 @@
  *
  */
 
+#include <glib/gi18n.h>
 extern "C" {
   #include <config.h>
-  #include <glib/gi18n.h>
   #include "gtk-compat.h"
   #include "gtk-compat.h"
 }

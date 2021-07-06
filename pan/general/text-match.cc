@@ -18,10 +18,13 @@
  */
 
 #include <config.h>
+#include <glib.h>
+#include <glib/gi18n.h>
+
 extern "C" {
   #include <ctype.h>
-  #include <glib.h>
-  #include <glib/gi18n.h>
+//  #include <glib.h>
+//  #include <glib/gi18n.h>
 }
 #include "debug.h"
 #include "log.h"

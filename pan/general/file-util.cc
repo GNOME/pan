@@ -21,14 +21,14 @@
 #include <cassert>
 #include <cerrno>
 #include <cctype>
+#include <glib.h>
+#include <glib/gi18n.h>
 
 extern "C"
 {
   #include <unistd.h>
   #include <sys/stat.h>
   #include <sys/types.h>
-  #include <glib.h>
-  #include <glib/gi18n.h>
   #ifndef G_OS_WIN32
     #include <pwd.h>
   #endif

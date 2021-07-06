@@ -19,8 +19,8 @@
 
 #include <config.h>
 #include <string>
+#include <glib/gi18n.h>
 extern "C" {
-  #include <glib/gi18n.h>
   #include "gtk-compat.h"
 }
 #include <pan/general/file-util.h>

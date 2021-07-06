@@ -18,8 +18,8 @@
  */
 
 #include <config.h>
+#include <glib/gi18n.h>
 extern "C" {
-  #include <glib/gi18n.h>
   #include "gtk-compat.h"
 }
 #include <pan/general/debug.h>

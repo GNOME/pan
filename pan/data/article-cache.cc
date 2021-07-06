@@ -18,6 +18,8 @@
  */
 
 #include <config.h>
+#include <glib.h>
+#include <glib/gi18n.h>
 
 extern "C"
 {
@@ -27,8 +29,6 @@ extern "C"
   #include <unistd.h>
   #include <dirent.h>
 
-  #include <glib.h>
-  #include <glib/gi18n.h>
   #include <gmime/gmime.h>
 }
 
