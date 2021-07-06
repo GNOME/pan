@@ -177,6 +177,9 @@ namespace pan
       virtual void on_queue_task_moved (UploadQueue&, Task&, int new_index, int old_index);
 
     private:
+      /* GMIME: X-Face interval between spaces for proper folding. */
+      enum { GMIME_FOLD_INTERVAL = 72 };
+
       void add_actions (GtkWidget* box);
       void apply_profile_to_body ();
       void apply_profile_to_headers ();

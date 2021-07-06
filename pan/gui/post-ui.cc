@@ -1662,7 +1662,13 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
   if (!profile.xface.empty())
   {
     std::string f;
-    f += " " + profile.xface;
+    f += profile.xface;
+
+    // GMIME_FOLD_INTERVAL - 8: Accounting for 'X-Face: ' beginning of header
+    for(int i = GMIME_FOLD_INTERVAL - 8; i < f.length(); i += GMIME_FOLD_INTERVAL)
+    {
+      f.insert(i, " ");
+    }
 #ifdef HAVE_GMIME_30
     g_mime_object_set_header ((GMimeObject *) msg, "X-Face", f.c_str(), NULL);
 #else
