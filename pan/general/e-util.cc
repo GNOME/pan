@@ -24,6 +24,9 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include <glib.h>
+#include <glib/gi18n.h>
+
 extern "C" {
   #include <ctype.h>
 }

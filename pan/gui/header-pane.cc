@@ -17,6 +17,7 @@
  *
  */
 
+#include <glib/gi18n.h>
 extern "C" {
   #include <config.h>
 }

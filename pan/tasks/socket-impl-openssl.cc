@@ -31,10 +31,10 @@
 #include <string>
 #include <cerrno>
 #include <cstring>
+#include <glib/gi18n.h>
 
 extern "C" {
   #include <unistd.h>
-  #include <glib/gi18n.h>
   #include <errno.h>
   #include <fcntl.h>
   #include <sys/time.h>

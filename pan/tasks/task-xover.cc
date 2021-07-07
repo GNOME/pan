@@ -21,6 +21,7 @@
 #include <cassert>
 #include <cerrno>
 
+#include <glib/gi18n.h>
 extern "C"
 {
 #define PROTOTYPES

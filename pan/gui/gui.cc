@@ -22,10 +22,10 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <glib/gi18n.h>
 extern "C" {
   #include <sys/types.h> // for chmod
   #include <sys/stat.h> // for chmod
-  #include <glib/gi18n.h>
   #include <dirent.h>
 }
 #include <pan/general/debug.h>

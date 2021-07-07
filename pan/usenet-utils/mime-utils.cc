@@ -23,10 +23,10 @@
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
+#include <gmime/gmime.h>
 extern "C"
 {
   #include <unistd.h>
-  #include <gmime/gmime.h>
 }
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
@@ -1749,7 +1749,11 @@ namespace pan
 #ifdef HAVE_GMIME_30
     GMimeObject *gmo;
     gmo = g_mime_message_get_mime_part (body);
+<<<<<<< HEAD
     if (g_mime_multipart_signed_sign (gpg_ctx, gmo, uid.c_str(), &err) != NULL)
+=======
+    if (g_mime_multipart_signed_sign (gpg_ctx, gmo, uid.c_str(), &err) == NULL)
+>>>>>>> face-support
 #else
     if (g_mime_multipart_signed_sign (mps, GMIME_OBJECT (part), gpg_ctx, uid.c_str(), GMIME_DIGEST_ALGO_SHA1, &err) <0)
 #endif

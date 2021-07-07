@@ -20,7 +20,6 @@
 #include <config.h>
 #include <cassert>
 #include <glib/gi18n.h>
-
 extern "C" {
   #include <stdlib.h>
 }

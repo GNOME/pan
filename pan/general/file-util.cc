@@ -21,6 +21,8 @@
 #include <cassert>
 #include <cerrno>
 #include <cctype>
+#include <glib.h>
+#include <glib/gi18n.h>
 
 extern "C"
 {
