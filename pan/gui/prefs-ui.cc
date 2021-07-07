@@ -18,15 +18,8 @@
  */
 
 #include <config.h>
-<<<<<<< HEAD
 #include "gtk-compat.h"
 #include <glib/gi18n.h>
-=======
-#include <glib/gi18n.h>
-extern "C" {
-  #include "gtk-compat.h"
-}
->>>>>>> face-support
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/file-util.h>
