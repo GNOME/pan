@@ -20,10 +20,8 @@
 #include <config.h>
 #include <cmath>
 #include <fstream>
-extern "C" {
-  #include <glib/gi18n.h>
-  #include <gmime/gmime.h>
-}
+#include <glib/gi18n.h>
+#include <gmime/gmime.h>
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>

@@ -31,9 +31,9 @@
 
 extern "C" {
   #include <unistd.h>
-  #include <glib/gi18n.h>
 }
 
+#include <glib/gi18n.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>

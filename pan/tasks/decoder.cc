@@ -25,11 +25,9 @@
 #include <cerrno>
 #include <ostream>
 #include <fstream>
-extern "C" {
-#  define PROTOTYPES
-#  include <uulib/uudeview.h>
-#  include <glib/gi18n.h>
-};
+#define PROTOTYPES
+#include <uulib/uudeview.h>
+#include <glib/gi18n.h>
 #include <pan/general/worker-pool.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>

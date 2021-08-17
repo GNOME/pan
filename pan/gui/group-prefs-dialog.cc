@@ -20,12 +20,10 @@
 #include <config.h>
 #include <glib/gi18n.h>
 #include <glib.h>
-extern "C" {
-  #include "gtk-compat.h"
+#include "gtk-compat.h"
 #ifdef HAVE_GTKSPELL
-  #include <enchant/enchant.h>
+#include <enchant/enchant.h>
 #endif
-}
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/data/data.h>

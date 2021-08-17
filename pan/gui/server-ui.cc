@@ -23,9 +23,7 @@
 #include <climits>
 #include <glib.h>
 #include <glib/gi18n.h>
-extern "C" {
-  #include "gtk-compat.h"
-}
+#include "gtk-compat.h"
 
 #include <pan/icons/pan-pixbufs.h>
 #include <pan/general/file-util.h>

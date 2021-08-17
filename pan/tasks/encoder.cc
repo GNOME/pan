@@ -28,10 +28,10 @@
 #include <fstream>
 #include <sstream>
 
-extern "C" {
 #define PROTOTYPES
 #include <uulib/uudeview.h>
 #include <glib/gi18n.h>
+extern "C" {
 #include <sys/time.h>
 };
 

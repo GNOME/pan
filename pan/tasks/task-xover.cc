@@ -21,14 +21,13 @@
 #include <cassert>
 #include <cerrno>
 
-extern "C"
-{
-#define PROTOTYPES
+extern "C" {
 #include <stdio.h>
+}
+#define PROTOTYPES
 #include <uulib/uudeview.h>
 #include <glib/gi18n.h>
 #include <gmime/gmime-utils.h>
-}
 
 #include <fstream>
 #include <iostream>

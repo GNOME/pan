@@ -22,9 +22,7 @@
 **************/
 
 #include <config.h>
-extern "C" {
-  #include <glib/gi18n.h>
-}
+#include <glib/gi18n.h>
 #include <glib.h> // for g_build_filename
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>

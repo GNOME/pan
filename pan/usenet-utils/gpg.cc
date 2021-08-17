@@ -28,9 +28,10 @@ extern "C" {
   #include <stdlib.h>
   #include <unistd.h>
   #include <string.h>
-  #include <glib/gi18n.h>
-  #include <gmime/gmime.h>
 }
+
+#include <glib/gi18n.h>
+#include <gmime/gmime.h>
 
 #ifdef HAVE_GMIME_CRYPTO
 

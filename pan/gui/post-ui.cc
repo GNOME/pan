@@ -22,15 +22,15 @@
 #include <iostream>
 #include <sstream>
 #include <unistd.h>
+#include <gmime/gmime.h>
+#include <glib/gi18n.h>
+#include "gtk-compat.h"
 extern "C" {
-  #include <gmime/gmime.h>
-  #include <glib/gi18n.h>
-  #include "gtk-compat.h"
   #include <sys/time.h>
+}
 #ifdef HAVE_GTKSPELL
   #include <gtkspell/gtkspell.h>
 #endif
-}
 #include <pan/data/data.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>

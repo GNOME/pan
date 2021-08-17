@@ -43,9 +43,7 @@
 #include <map>
 #include <sstream>
 #include <iostream>
-extern "C" {
-  #include <glib/gi18n.h>
-}
+#include <glib/gi18n.h>
 
 namespace pan
 {

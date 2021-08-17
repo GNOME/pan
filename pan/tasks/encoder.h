@@ -32,11 +32,9 @@
 #include <pan/general/worker-pool.h>
 #include <pan/tasks/task-upload.h>
 
-extern "C" {
-#  define PROTOTYPES
-#  include <uulib/uudeview.h>
-#  include <uulib/crc32.h>
-};
+#define PROTOTYPES
+#include <uulib/uudeview.h>
+#include <uulib/crc32.h>
 
 namespace pan
 {

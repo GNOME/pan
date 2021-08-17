@@ -34,13 +34,13 @@
 
 extern "C" {
   #include <unistd.h>
-  #include <glib/gi18n.h>
   #include <errno.h>
   #include <fcntl.h>
   #include <sys/time.h>
   #include <sys/types.h>
 }
 
+#include <glib/gi18n.h>
 #include <pan/usenet-utils/ssl-utils.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>

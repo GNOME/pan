@@ -20,9 +20,7 @@
 #include <config.h>
 #include <glib.h>
 #include <glib/gi18n.h>
-extern "C" {
-  #include "gtk-compat.h"
-}
+#include "gtk-compat.h"
 #include <pan/general/e-util.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>

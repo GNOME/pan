@@ -19,8 +19,8 @@
 
 #include <config.h>
 #include <cassert>
+#include <glib/gi18n.h>
 extern "C" {
-  #include <glib/gi18n.h>
   #include <stdlib.h>
 }
 #include <pan/general/debug.h>

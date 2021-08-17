@@ -17,12 +17,9 @@
  *
  */
 
-extern "C" {
-  #include <config.h>
-  #include <glib/gi18n.h>
-  #include "gtk-compat.h"
-  #include "gtk-compat.h"
-}
+#include <config.h>
+#include <glib/gi18n.h>
+#include "gtk-compat.h"
 #include <cctype>
 #include <cmath>
 #include <algorithm>

@@ -26,8 +26,8 @@
 extern "C"
 {
   #include <unistd.h>
-  #include <gmime/gmime.h>
 }
+#include <gmime/gmime.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>

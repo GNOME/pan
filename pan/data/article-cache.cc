@@ -26,9 +26,9 @@ extern "C"
   #include <sys/stat.h>
   #include <unistd.h>
   #include <dirent.h>
-
-  #include <gmime/gmime.h>
 }
+
+#include <gmime/gmime.h>
 #include <glib.h>
 #include <glib/gi18n.h>
 

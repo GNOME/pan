@@ -21,9 +21,7 @@
 #include <string>
 #include <vector>
 #include <string.h>
-extern "C" {
 #include <glib/gi18n.h>
-}
 #include <locale.h>
 #include <gmime/gmime.h>
 #include <pan/general/debug.h>

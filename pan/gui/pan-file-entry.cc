@@ -19,10 +19,8 @@
 
 #include <config.h>
 #include <string>
-extern "C" {
-  #include <glib/gi18n.h>
-  #include "gtk-compat.h"
-}
+#include <glib/gi18n.h>
+#include "gtk-compat.h"
 #include <pan/general/file-util.h>
 #include "pad.h"
 #include "pan-file-entry.h"

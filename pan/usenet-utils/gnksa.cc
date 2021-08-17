@@ -37,10 +37,10 @@ extern "C"
 {
   #include <ctype.h>
   #include <unistd.h>
-  #include <glib/gi18n.h>
   #include <sys/time.h>
 }
 
+#include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/log.h>

@@ -20,9 +20,7 @@
 #include <config.h>
 #include <glib.h>
 #include <glib/gi18n.h>
-extern "C" {
-  #include "gtk-compat.h"
-}
+#include "gtk-compat.h"
 #include <pan/general/macros.h>
 #include <pan/tasks/queue.h>
 #include <pan/tasks/task-xover.h>

@@ -22,17 +22,18 @@
 #include <fstream>
 #include <config.h>
 #include <signal.h>
+#include <glib/gi18n.h>
+#include "gtk-compat.h"
+#include <gmime/gmime.h>
+#include <gio/gio.h>
 
 extern "C" {
-  #include <glib/gi18n.h>
-  #include "gtk-compat.h"
-  #include <gmime/gmime.h>
-  #include <gio/gio.h>
   #include <sys/types.h>
   #include <sys/stat.h>
   #include <unistd.h>
-  #include <uulib/crc32.h>
 }
+
+#include <uulib/crc32.h>
 
 #ifdef G_OS_WIN32
   #undef _WIN32_WINNT

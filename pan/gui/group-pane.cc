@@ -20,10 +20,8 @@
 #include <config.h>
 #include <cassert>
 #include <deque>
-extern "C" {
-  #include <glib/gi18n.h>
-  #include "gtk-compat.h"
-}
+#include <glib/gi18n.h>
+#include "gtk-compat.h"
 #include <pan/general/debug.h>
 //#include <pan/general/gdk-threads.h>
 #include <pan/general/log.h>

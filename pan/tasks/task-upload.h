@@ -34,12 +34,10 @@
 #include <pan/tasks/nntp.h>
 #include <pan/tasks/task.h>
 
-extern "C" {
-  #define PROTOTYPES
-  #include <uulib/uudeview.h>
-  #include <gmime/gmime.h>
-  #include <glib/gi18n.h>
-};
+#define PROTOTYPES
+#include <uulib/uudeview.h>
+#include <gmime/gmime.h>
+#include <glib/gi18n.h>
 
 #include <set>
 

@@ -21,10 +21,8 @@
 #include <ostream>
 #include <fstream>
 #include <iostream>
-extern "C" {
-  #include <glib/gi18n.h>
-  #include "gtk-compat.h"
-}
+#include <glib/gi18n.h>
+#include "gtk-compat.h"
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/string-view.h>

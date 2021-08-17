@@ -23,10 +23,8 @@
 
 #include <config.h>
 #include <iostream>
-extern "C" {
-  #include <glib/gi18n.h>
-  #include "gtk-compat.h"
-}
+#include <glib/gi18n.h>
+#include "gtk-compat.h"
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/gnksa.h>

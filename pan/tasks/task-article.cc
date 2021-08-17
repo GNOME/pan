@@ -24,10 +24,7 @@
 #include <config.h>
 #include <algorithm>
 #include <cassert>
-extern "C"
-{
-  #include <glib/gi18n.h>
-}
+#include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/utf8-utils.h>

@@ -22,11 +22,9 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
-extern "C" {
-  #include <glib/gi18n.h>
-  #include "gtk-compat.h"
-  #include <gmime/gmime.h>
-}
+#include <glib/gi18n.h>
+#include "gtk-compat.h"
+#include <gmime/gmime.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
