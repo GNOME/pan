@@ -112,6 +112,16 @@ if test "x$want_dbus" = "xyes" ; then
 else
   AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
 fi
+dnl Silence deprecation warnings for things deprecated before 2.26,
+dnl and generally set the target behaviour to be like GLib 2.26.
+dnl In principle this should match $GLIB_REQUIRED, but 2.26 is the oldest
+dnl version for which the macros exist (and has been unsupported since
+dnl around 2011 in any case).
+GLIB_CFLAGS="$GLIB_CFLAGS -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26"
+dnl Highest version number from which new features are allowed to be used,
+dnl even within a GLIB_CHECK_VERSION check. GLib will produce compile-time
+dnl warnings when features of a newer GLib version are used.
+GLIB_CFLAGS="$GLIB_CFLAGS -DGLIB_VERSION_MAX_ALLOWED=G_ENCODE_VERSION\\(2,36\\)"
 
 dnl Check for GMime
 AC_ARG_WITH([gmime30],
