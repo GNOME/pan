@@ -94,7 +94,7 @@ AC_CHECK_HEADERS([errno.h fcntl.h])
 dnl I18n support
 GETTEXT_PACKAGE=pan
 AC_SUBST(GETTEXT_PACKAGE)
-AM_GNU_GETTEXT_VERSION([0.19.7])
+AM_GNU_GETTEXT_VERSION([0.21])
 AM_GNU_GETTEXT([external])
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Gettext Package])
 panlocaledir=[${datadir}/locale]
