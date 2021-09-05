@@ -232,7 +232,7 @@ NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response
        const std::string addr (_server_info.get_server_address (_server));
        std::string s;
        char buf[4096];
-       snprintf (buf, sizeof(buf), _("Unable to connect to “%s”"), addr.c_str());
+       snprintf (buf, sizeof(buf), _("Unable to connect to \"%s\""), addr.c_str());
        s = buf;
        if (!response.empty()) {
          s += ":\n";

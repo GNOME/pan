@@ -877,7 +877,7 @@ GNKSA :: generate_message_id_from_email_address (const StringView& addr)
 
    // fallback to default domain
    if (domain.empty()) {
-      Log::add_info_va (_("No email address provided; generating message-id with domain “%s”"), default_domain);
+      Log::add_info_va (_("No email address provided; generating message-id with domain \"%s\""), default_domain);
       domain = default_domain;
    }
 

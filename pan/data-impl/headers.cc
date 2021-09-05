@@ -603,7 +603,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
       }
 
       if (expire_count)
-        Log::add_info_va (_("Expired %lu old articles from “%s”"), expire_count, group.c_str());
+        Log::add_info_va (_("Expired %lu old articles from \"%s\""), expire_count, group.c_str());
 
       success = !in->fail();
     }
@@ -625,7 +625,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
   if (success) {
     const double seconds = timer.get_seconds_elapsed ();
     Log::add_info_va (
-      _("Loaded %lu articles for “%s” in %.1f seconds (%.0f per second)"),
+      _("Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"),
       article_count, group.c_str(), seconds,
       article_count/(fabs(seconds)<0.001?0.001:seconds));
   }
@@ -854,7 +854,7 @@ DataImpl :: save_headers (DataIO& data_io, const Quark& group) const
    const double time_elapsed (timer.get_seconds_elapsed());
    if (success)
       Log::add_info_va (
-   _("Saved %lu parts, %lu articles in “%s” in %.1f seconds (%.0f articles/sec)"),
+   _("Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"),
          part_count,
          article_count,
          group.c_str(),

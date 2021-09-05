@@ -75,7 +75,7 @@ namespace
   std::string get_description (const Quark& group)
   {
     char buf[1024];
-    snprintf (buf, sizeof(buf), _("Getting header counts for “%s”"), group.c_str());
+    snprintf (buf, sizeof(buf), _("Getting header counts for \"%s\""), group.c_str());
     return std::string (buf);
   }
 }

@@ -299,7 +299,7 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
       line.trim ();
       const int has_expired (has_score_expired (line, context.today));
       if (has_expired < 0)
-        Log::add_err_va (_("Error reading score in %*.*s, line %d: expected “Expires: MM/DD/YYYY” or “Expires: DD-MM-YYYY”."),
+        Log::add_err_va (_("Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or 'Expires: DD-MM-YYYY'."),
           filename.len, filename.len, filename.str, line_number);
       else if (has_expired) {
         Log::add_info_va (_("Expired old score from %*.*s, line %d"),
@@ -424,7 +424,7 @@ Scorefile :: parse_file (const StringView& filename)
     item_count += sit->items.size ();
 
   if (!_sections.empty())
-    Log::add_info_va (_("Read %lu scoring rules in %lu sections from “%s”"),
+    Log::add_info_va (_("Read %lu scoring rules in %lu sections from \"%s\""),
       item_count, _sections.size(), filename.to_string().c_str());
   return 0;
 }
