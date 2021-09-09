@@ -1749,11 +1749,15 @@ namespace pan
 #ifdef HAVE_GMIME_30
     GMimeObject *gmo;
     gmo = g_mime_message_get_mime_part (body);
-    if (g_mime_multipart_signed_sign (gpg_ctx, gmo, uid.c_str(), &err) <0)
+    mps = g_mime_multipart_signed_sign (gpg_ctx, gmo, uid.c_str(), &err);
+    if (mps == NULL)
 #else
     if (g_mime_multipart_signed_sign (mps, GMIME_OBJECT (part), gpg_ctx, uid.c_str(), GMIME_DIGEST_ALGO_SHA1, &err) <0)
 #endif
     {
+#ifdef HAVE_GMIME_30
+      g_object_unref(gmo);
+#endif
       g_object_unref(mps);
       g_object_unref(G_OBJECT(part));
       return 0;
@@ -1767,7 +1771,9 @@ namespace pan
     g_mime_message_set_mime_part(body,GMIME_OBJECT(mps));
     g_object_unref(G_OBJECT(part));
     g_object_unref(mps);
-
+#ifdef HAVE_GMIME_30
+    g_object_unref(gmo);
+#endif
     return body;
   }
 
@@ -1783,8 +1789,10 @@ namespace pan
     GMimeMultipartEncrypted * mpe = g_mime_multipart_encrypted_new();
 
 #ifdef HAVE_GMIME_30
-    if (g_mime_multipart_encrypted_encrypt(gpg_ctx, GMIME_OBJECT (part), sign, uid.c_str(),
-                                           GMIME_ENCRYPT_NONE, rcp, &err) < 0)
+	GMimeMultipartEncrypted *gmme;
+	gmme = g_mime_multipart_encrypted_encrypt(gpg_ctx, GMIME_OBJECT (part), sign, uid.c_str(),
+                                           GMIME_ENCRYPT_NONE, rcp, &err);
+    if (gmme == NULL)
 #else
     if (g_mime_multipart_encrypted_encrypt(mpe, GMIME_OBJECT (part), gpg_ctx, sign,
                                            uid.c_str(), GMIME_DIGEST_ALGO_SHA1, rcp, &err) < 0)
@@ -1792,12 +1800,18 @@ namespace pan
     {
       g_object_unref(mpe);
       g_object_unref(G_OBJECT(part));
+#ifdef HAVE_GMIME_30
+      g_object_unref(gmme);
+#endif      
       return false;
     }
 
     g_mime_message_set_mime_part(body,GMIME_OBJECT(mpe));
     g_object_unref(G_OBJECT(part));
     g_object_unref(mpe);
+#ifdef HAVE_GMIME_30
+    g_object_unref(gmme);
+#endif    
 
     return true;
   }
