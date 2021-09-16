@@ -1,4 +1,45 @@
-1.0 "Asieoniezi"
+0.147 "Sweet Solitude"
+
+This release contains mostly bug fixes so pan can be compiled on major
+Linux distributions.
+
+In the next releases, we'll try to get rid of gmime2 code. Please reach out to
+pan-devel [at] nongnu.org if this may cause issues.
+
+* Detailed changes:
+  4840346 Fix for GMime3 bug in: message_add_signed_part() (Detlef Graef)
+  50ea85a Try an autodetection strategy: (Olaf Seibert)
+  0c1b7bd Fix compiler warning (Olaf Seibert)
+  d0cbb97 Work around corrupt/inconsistent file names. (Olaf Seibert)
+  637745c Replace totally unnecessary UTF-8 colons by real ones. (Olaf Seibert)
+  e6aaea8 Remove empty line from file posting.xml (Detlef Graef)
+  65a71e1 Fix for GMime3 build (Posting error). Issues #103 and #114 (Detlef Graef)
+  0ebef22 build: Target a specific GLib API version (Simon McVittie)
+  6afcdb8 fix (configure.ac): update GETTEXT version (Dominique Dumont)
+  3d6f401 fix (gitlab ci): use libenchant-2-dev (Dominique Dumont)
+  b2e36e6 fix (gitlab ci): set DEBIAN_FRONTEND noninteractive (Dominique Dumont)
+  3e2cc1b Adjust packages to install in CI. (Olaf Seibert)
+  7e10591 Move more header inclusions outside extern "C" (Simon McVittie)
+  52b299e Take <glib.h> out of extern "C" (Olaf Seibert)
+  77d1c18 add me to doap files and remove Charles and Petr (Dominique Dumont)
+  ade0e36 Add Swedish help translation (Anders Jonsson)
+  0049344 Replace cgit with gitlab URL in mknews (Andre Klapper)
+  8b972b1 Updated Spanish translation (Daniel Mustieles)
+  83c9561 Updated Spanish translation (Daniel Mustieles)
+  ceadf9e Post-release bump (Petr Kovar)
+* Contributors to this release:
+  Olaf Seibert, Dominique Dumont, Detlef Graef, Simon McVittie,
+  Daniel Mustieles, Petr Kovar, Andre Klapper, Anders Jonsson
+* Updated translations:
+  ca        (Jordi Mas)
+  eu        (Asier Sarasua Garmendia)
+  hu        (Balázs Úr)
+  id        (Andika Triwidada)
+  pl        (Piotr Drąg)
+  pt_BR     (Rafael Fontenelle)
+  sv        (Anders Jonsson)
+  tr        (Sabri Ünal)
+  uk        (Yuri Chornoivan)
 
 0.146 "Hic habitat felicitas"
   26eea78 Update .gitlab-ci.yml with GTK 3 (Petr Kovar)
