@@ -183,7 +183,7 @@ else
                       AC_MSG_RESULT(no)
                       ])
    fi
-   AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
+   PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= $GTK_REQUIRED, gthread-2.0])
 fi
 
 AC_SUBST(ENCHANT_CFLAGS)
