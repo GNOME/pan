@@ -456,10 +456,10 @@ namespace
     { "post-toolbar", 0, "post", 0, 0, 0 },
     { "post-article", GTK_STOCK_EXECUTE, N_("_Send Article"), "<control>Return", N_("Send Article Now"), G_CALLBACK(do_send) },
     { "post-and-save-articles", GTK_STOCK_FLOPPY, N_("_Send and Save Articles to NZB"), 0, N_("Send and Save Articles to NZB"), G_CALLBACK(do_send_and_save) },
-    { "set-charset", 0, N_("Set Character _Encoding…"), 0, 0, G_CALLBACK(do_charset) },
-    { "set-encoding", 0, N_("Set Content _Transfer Encoding…"), 0, 0, G_CALLBACK(do_cte) },
+    { "set-charset", 0, N_("Set Character _Encoding..."), 0, 0, G_CALLBACK(do_charset) },
+    { "set-encoding", 0, N_("Set Content _Transfer Encoding..."), 0, 0, G_CALLBACK(do_cte) },
     { "save-draft", GTK_STOCK_SAVE, N_("Sa_ve Draft"), "<control>s", N_("Save as a Draft for Future Posting"), G_CALLBACK(do_save) },
-    { "open-draft", GTK_STOCK_OPEN, N_("_Open Draft…"), "<control>o", N_("Open an Article Draft"), G_CALLBACK(do_open) },
+    { "open-draft", GTK_STOCK_OPEN, N_("_Open Draft..."), "<control>o", N_("Open an Article Draft"), G_CALLBACK(do_open) },
     { "close", GTK_STOCK_CLOSE, 0, 0, 0, G_CALLBACK(do_close) },
     { "cut", GTK_STOCK_CUT, 0, 0, 0, G_CALLBACK(do_cut) },
     { "copy", GTK_STOCK_COPY, 0, 0, 0, G_CALLBACK(do_copy) },
@@ -552,7 +552,7 @@ PostUI :: prompt_for_charset ()
       _charset = DEFAULT_CHARSET;
 
   char * tmp = e_charset_dialog (_("Character Encoding"),
-                                 _("New Article’s Encoding:"),
+                                 _("New Article's Encoding:"),
                                  _charset.c_str(),
                                  GTK_WINDOW(root()));
   set_charset (tmp);
@@ -563,7 +563,7 @@ void
 PostUI :: prompt_for_cte ()
 {
   GMimeContentEncoding enc = e_cte_dialog (_("Content Transfer Encoding"),
-                                 _("New Article’s Content Transfer Encoding:"),
+                                 _("New Article's Content Transfer Encoding:"),
                                  _enc, GTK_WINDOW(root()));
   _enc = enc;
 }
@@ -641,7 +641,7 @@ PostUI :: add_actions (GtkWidget * box)
     gtk_ui_manager_add_ui_from_string (_uim, fallback_post_ui, -1, &err);
   }
   if (err) {
-    Log::add_err_va (_("Error reading file “%s”: %s"), filename, err->message);
+    Log::add_err_va (_("Error reading file \"%s\": %s"), filename, err->message);
     g_clear_error (&err);
 
   }
@@ -822,7 +822,7 @@ PostUI :: check_charset ()
   tmp = g_ascii_strup (best_charset, -1);
 
   // Prompt the user
-  char * msg = g_strdup_printf (_("Message uses characters not specified in charset “%s” — possibly use “%s” "), charset.c_str(), tmp);
+  char * msg = g_strdup_printf (_("Message uses characters not specified in charset '%s' - possibly use '%s' "), charset.c_str(), tmp);
   GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
                                           GTK_DIALOG_DESTROY_WITH_PARENT,
                                           GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
@@ -1119,7 +1119,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
   std::string error_msg;
   bool error = false;
   if (server.empty() || !_data.get_servers().count(server))
-    error_msg = _("No posting server is set for this posting profile.\nPlease edit the profile via Edit → Manage Posting Profiles.");
+    error_msg = _("No posting server is set for this posting profile.\nPlease edit the profile via Edit|Manage Posting Profiles.");
 
   //invalid connection count, can't post
   Data::Server* s = _data.find_server(server);
@@ -1395,7 +1395,7 @@ PostUI :: spawn_editor ()
     GError * err (0);
     g_shell_parse_argv (editor.c_str(), &argc, &argv, &err);
     if (err != NULL) {
-      Log::add_err_va (_("Error parsing “external editor” command line: %s (Command was: %s)"), err->message, editor.c_str());
+      Log::add_err_va (_("Error parsing \"external editor\" command line: %s (Command was: %s)"), err->message, editor.c_str());
       g_clear_error (&err);
       ok = false;
     }
@@ -1924,7 +1924,7 @@ PostUI :: save_draft ()
         GTK_DIALOG_DESTROY_WITH_PARENT,
         GTK_MESSAGE_ERROR,
         GTK_BUTTONS_CLOSE,
-        _("Unable to save “%s” %s"), filename, file::pan_strerror(errno));
+        _("Unable to save \"%s\" %s"), filename, file::pan_strerror(errno));
         gtk_dialog_run (GTK_DIALOG(e));
         gtk_widget_destroy (e);
       }
@@ -2088,7 +2088,7 @@ namespace
         GError * err = NULL;
         if (!g_shell_parse_argv (pch, &argc, &argv, &err))
         {
-          Log::add_err_va (_("Couldn’t parse signature command “%s”: %s"), pch, err->message);
+          Log::add_err_va (_("Couldn't parse signature command \"%s\": %s"), pch, err->message);
           g_error_free (err);
         }
       }
@@ -2124,7 +2124,7 @@ namespace
     if (!sig.empty())
       sig = content_to_utf8 (sig);
     else
-      Log::add_err (_("Couldn’t convert signature to UTF-8."));
+      Log::add_err (_("Couldn't convert signature to UTF-8."));
 
     if (!sig.empty())
       setme = sig;
@@ -3001,7 +3001,7 @@ PostUI :: create_extras_tab ()
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
   /* i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english. */
   gtk_widget_set_tooltip_text (w, _("The newsgroups where replies to your message should go.  This is only needed if it differs from "
-      "the “Newsgroups” header.\n\nTo direct all replies to your email address, use “Followup-To: poster”"));
+      "the \"Newsgroups\" header.\n\nTo direct all replies to your email address, use \"Followup-To: poster\""));
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
 
   //  Reply-To
@@ -3016,7 +3016,7 @@ PostUI :: create_extras_tab ()
   w = _replyto_entry = gtk_entry_new ();
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
   gtk_widget_set_tooltip_text (w, _("The email account where mail replies to your posted message should go. "
-    "This is only needed if it differs from the “From” header."));
+    "This is only needed if it differs from the \"From\" header."));
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fe, fill, 0, 0);
 
   //  Extra Headers
@@ -3046,14 +3046,14 @@ PostUI :: create_extras_tab ()
   //  User-Agent
 
   ++row;
-  w = _user_agent_check = gtk_check_button_new_with_mnemonic (_("Add “_User-Agent” header"));
+  w = _user_agent_check = gtk_check_button_new_with_mnemonic (_("Add \"_User-Agent\" header"));
   bool b = _prefs.get_flag (USER_AGENT_PREFS_KEY, true);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
   g_signal_connect (w, "toggled", G_CALLBACK(user_agent_toggled_cb), &_prefs);
   gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, GTK_FILL, GTK_FILL, 0, 0);
 
   ++row;
-  w = _message_id_check = gtk_check_button_new_with_mnemonic (_("Add “Message-_ID” header"));
+  w = _message_id_check = gtk_check_button_new_with_mnemonic (_("Add \"Message-_ID\" header"));
   b = _prefs.get_flag(MESSAGE_ID_PREFS_KEY,false);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), b);
   g_signal_connect (w, "toggled", G_CALLBACK(message_id_toggled_cb), this);

@@ -124,7 +124,7 @@ PrefsDialog :: edit_shortkey (gpointer user_data)
       GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 
   str = g_strdup_printf(
-      _("Press the combination of the keys\nyou want to use for “%s”."), data->value.c_str());
+      _("Press the combination of the keys\nyou want to use for \"%s\"."), data->value.c_str());
   label = gtk_label_new(str);
   gtk_misc_set_padding(GTK_MISC(label), 5, 10);
 
@@ -1118,7 +1118,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   t = HIG :: workarea_create ();
 
     gtk_widget_set_tooltip_text (t, _("This menu lets you configure Pan to take certain actions on your behalf automatically, "
-                                      "based on an article’s score."));
+                                      "based on an article's score."));
 
     int i(0);
     GtkWidget** action_combo = new GtkWidget*[2];

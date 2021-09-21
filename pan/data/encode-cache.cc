@@ -59,7 +59,7 @@ EncodeCache :: EncodeCache (const StringView& path, size_t max_megs):
    GDir * dir = g_dir_open (_path.c_str(), 0, &err);
    if (err != NULL)
    {
-      Log::add_err_va (_("Error opening directory: “%s”: %s"), _path.c_str(), err->message);
+      Log::add_err_va (_("Error opening directory: \"%s\": %s"), _path.c_str(), err->message);
       g_clear_error (&err);
    }
    else

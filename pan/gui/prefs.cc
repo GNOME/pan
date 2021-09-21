@@ -361,7 +361,7 @@ Prefs :: set_color (const StringView& key, const StringView& value)
   if (gdk_color_parse (value.to_string().c_str(), &c))
     set_color (key, c);
   else
-    Log::add_err_va (_("Couldn’t parse %s color “%s”"), key.to_string().c_str(), value.to_string().c_str());
+    Log::add_err_va (_("Couldn't parse %s color \"%s\""), key.to_string().c_str(), value.to_string().c_str());
 }
 
 GdkColor

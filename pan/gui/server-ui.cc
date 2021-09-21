@@ -267,7 +267,7 @@ namespace
 
       const char * err_msg (0);
       if (addr.empty())
-        err_msg = _("Please specify the server’s address.");
+        err_msg = _("Please specify the server's address.");
 
       if (err_msg) {
         GtkWidget * dialog (gtk_message_dialog_new (GTK_WINDOW(d->dialog),
@@ -350,7 +350,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
   ServerEditDialog * d (new ServerEditDialog (data, queue, prefs));
 
   // create the dialog
-  char * title = g_strdup_printf ("Pan: %s", server.empty() ? _("Add a Server") : _("Edit a Server’s Settings"));
+  char * title = g_strdup_printf ("Pan: %s", server.empty() ? _("Add a Server") : _("Edit a Server's Settings"));
   GtkWidget * dialog = gtk_dialog_new_with_buttons (title,
                                                     GTK_WINDOW(window),
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -374,13 +374,13 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
     HIG::workarea_add_section_spacer (t, row, 2);
 
     GtkWidget * w = d->address_entry = gtk_entry_new ();
-    gtk_widget_set_tooltip_text( w, _("The news server’s actual address, e.g. “news.mynewsserver.com”."));
+    gtk_widget_set_tooltip_text( w, _("The news server's actual address, e.g. \"news.mynewsserver.com\"."));
     HIG::workarea_add_row (t, &row, _("_Address:"), w, NULL);
     //g_signal_connect (w, "changed", G_CALLBACK(address_entry_changed_cb), d);
 
     GtkAdjustment * a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 1.0, ULONG_MAX, 1.0, 1.0, 0.0));
     w = d->port_spin = gtk_spin_button_new (GTK_ADJUSTMENT(a), 1.0, 0u);
-    gtk_widget_set_tooltip_text( w, _("The news server’s port number.  Typically 119 for unencrypted and 563 for encrypted connections (SSL/TLS)."));
+    gtk_widget_set_tooltip_text( w, _("The news server's port number.  Typically 119 for unencrypted and 563 for encrypted connections (SSL/TLS)."));
     HIG::workarea_add_row (t, &row, _("Por_t:"), w, NULL);
 
     HIG::workarea_add_section_divider (t, &row);
@@ -389,12 +389,12 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
 
     w = d->auth_username_entry = gtk_entry_new ();
     HIG::workarea_add_row (t, &row, _("_Username:"), w, NULL);
-    gtk_widget_set_tooltip_text( w, _("The username to give the server when asked.  If your server doesn’t require authentication, you can leave this blank."));
+    gtk_widget_set_tooltip_text( w, _("The username to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
 
     w = d->auth_password_entry = gtk_entry_new ();
     gtk_entry_set_visibility (GTK_ENTRY(w), FALSE);
     HIG::workarea_add_row (t, &row, _("_Password:"), w, NULL);
-    gtk_widget_set_tooltip_text( w, _("The password to give the server when asked.  If your server doesn’t require authentication, you can leave this blank."));
+    gtk_widget_set_tooltip_text( w, _("The password to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
 
     HIG::workarea_add_section_divider (t, &row);
     HIG::workarea_add_section_title (t, &row, _("Settings"));
@@ -450,7 +450,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
     GtkWidget * e = gtk_event_box_new ();
     gtk_container_add (GTK_CONTAINER(e), l);
     gtk_misc_set_alignment (GTK_MISC(l), 0.0f, 0.5f);
-    gtk_widget_set_tooltip_text( e, _("Fallback servers are used for articles that can’t be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."));
+    gtk_widget_set_tooltip_text( e, _("Fallback servers are used for articles that can't be found on the primaries.  One common approach is to use free servers as primaries and subscription servers as fallbacks."));
     HIG::workarea_add_row (t, &row, e, w);
 
     // header compression list options
@@ -508,7 +508,7 @@ pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
             "It is encouraged to enable SSL/TLS for privacy reasons."));
     HIG::workarea_add_row (t, &row, e, w);
 
-    d->always_trust_checkbox = w = gtk_check_button_new_with_label (_("Always trust this server’s certificate"));
+    d->always_trust_checkbox = w = gtk_check_button_new_with_label (_("Always trust this server's certificate"));
     HIG::workarea_add_row (t, &row, NULL, w, NULL);
     g_signal_connect (d->dialog, "realize", G_CALLBACK(server_edit_dialog_realized_cb), d);
 #endif
@@ -684,7 +684,7 @@ namespace
                                               GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
                                               GTK_MESSAGE_QUESTION,
                                               GTK_BUTTONS_NONE,
-                                              _("Really delete “%s”?"),
+                                              _("Really delete \"%s\"?"),
                                               addr.c_str());
       gtk_dialog_add_buttons (GTK_DIALOG(w),
                               GTK_STOCK_NO, GTK_RESPONSE_NO,
@@ -783,7 +783,7 @@ namespace
 
         HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(w), buf, NULL);
 
-        g_snprintf(buf,sizeof(buf), _("Server Certificate for “%s”"), addr.c_str());
+        g_snprintf(buf,sizeof(buf), _("Server Certificate for '%s'"), addr.c_str());
         gtk_window_set_title(GTK_WINDOW(w), buf);
 
         gtk_widget_show_all (w);
@@ -882,7 +882,7 @@ namespace
                                               GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
                                               GTK_MESSAGE_QUESTION,
                                               GTK_BUTTONS_NONE,
-                                              _("Really delete certificate for “%s”?"),
+                                              _("Really delete certificate for \"%s\"?"),
                                               addr.c_str());
       gtk_dialog_add_buttons (GTK_DIALOG(w),
                               GTK_STOCK_NO, GTK_RESPONSE_NO,
@@ -962,7 +962,7 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
   // edit button
   w = gtk_button_new_from_stock (GTK_STOCK_EDIT);
   gtk_box_pack_start (GTK_BOX (bbox), w, FALSE, FALSE, 0);
-  gtk_widget_set_tooltip_text(w, _("Edit a Server’s Settings"));
+  gtk_widget_set_tooltip_text(w, _("Edit a Server's Settings"));
   g_signal_connect (w, "clicked", G_CALLBACK(edit_button_clicked_cb), d->dialog);
   d->edit_button = w;
 

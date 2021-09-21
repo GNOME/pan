@@ -130,7 +130,7 @@ pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
     GtkWidget *w, *x;
     GtkAdjustment * adj;
     int row = 0;
-    state->n_days_rb = w = gtk_radio_button_new_with_mnemonic (NULL, _("Get the last N _days’ headers: "));
+    state->n_days_rb = w = gtk_radio_button_new_with_mnemonic (NULL, _("Get the last N _days' headers: "));
     gtk_button_set_alignment (GTK_BUTTON(w), 0.5, 0.0);
     gtk_table_attach_defaults (GTK_TABLE(t), w, 0, 1, row, row+1);
     adj = GTK_ADJUSTMENT(gtk_adjustment_new (n_days, 1, INT_MAX, 1, 1, 0));

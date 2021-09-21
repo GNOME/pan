@@ -320,7 +320,7 @@ TaskArticle :: on_nntp_done  (NNTP             * nntp,
       else { // if none of our servers have this part, but keep going --
              // an incomplete file gives us more PAR2 blocks than a missing one.
         Log :: add_err_va (
-          _("Article “%s” is incomplete — the news server(s) don’t have part %s"),
+          _("Article \"%s\" is incomplete -- the news server(s) don't have part %s"),
           _article.subject.c_str(),
           it->message_id.c_str());
         _needed.erase (it);

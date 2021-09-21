@@ -229,7 +229,7 @@ pan :: content_to_utf8 (const StringView  & content,
       ret.assign (content.str, content.len);
     if (!g_utf8_validate (ret.c_str(), ret.size(), NULL)) {
       ret = clean_utf8 (ret);
-      Log::add_err (_("Couldn’t determine article encoding.  Non-UTF8 characters were removed."));
+      Log::add_err (_("Couldn't determine article encoding.  Non-UTF8 characters were removed."));
     }
   }
 

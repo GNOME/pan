@@ -157,7 +157,7 @@ namespace
 
     if (profiles.empty())
     {
-      gtk_combo_box_text_append_text (combo, _("No Profiles defined in Edit → Posting Profiles."));
+      gtk_combo_box_text_append_text (combo, _("No Profiles defined in Edit|Posting Profiles."));
       gtk_combo_box_set_active (GTK_COMBO_BOX(combo), 0);
       gtk_widget_set_sensitive (w, false);
     }
