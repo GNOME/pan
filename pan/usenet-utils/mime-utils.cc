@@ -85,8 +85,8 @@ namespace pan
 
       if (converted != (size_t) -1 && errno == 0) {
         /*
-         * EINVAL  An  incomplete  multibyte sequence has been encoun�
-         *         tered in the input.
+         * EINVAL An incomplete multibyte sequence has been
+         *        encountered in the input.
          *
          * We'll just have to ignore it...
          */

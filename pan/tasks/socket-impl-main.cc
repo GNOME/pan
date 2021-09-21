@@ -5,7 +5,7 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich M�ller <henmull@src.gnome.org>
+ * Copyright (C) 2011 Heinrich Müller <henmull@src.gnome.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
