@@ -531,13 +531,6 @@ namespace
 
   void add_widget (GtkUIManager*, GtkWidget* widget, gpointer vbox)
   {
-    if (GTK_IS_TOOLBAR (widget)) {
-      GtkWidget * handle_box = gtk_handle_box_new ();
-      gtk_widget_show (handle_box);
-      gtk_container_add (GTK_CONTAINER (handle_box), widget);
-      g_signal_connect_swapped (widget, "destroy", G_CALLBACK (gtk_widget_destroy), handle_box);
-      widget = handle_box;
-    }
     gtk_box_pack_start (GTK_BOX(vbox), widget, false, false, 0);
   }
 }
