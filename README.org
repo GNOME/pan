@@ -1,0 +1,156 @@
+* Pan - Gnome newsreader
+
+This is Pan, a powerful and user-friendly Usenet newsreader for GTK+.
+The latest information and versions of Pan can always be found at
+[[http://pan.rebelbase.com/][Pan website]].
+
+** THE SALES PITCH
+
+Pan is good for Reading News.
+
+- Pan is the only Unix newsreader to score 100% on the Good
+  Net-Keeping Seal of Approval newsreader evaluations.
+- Pan has keyboard bindings for mouse-free newsreading.
+- Basic newsreader features, such as reading and writing news,
+  threading articles, and replying via email, are supported.
+- Articles can be sorted by author, date, subject, or the number of
+  unread children in the thread.
+- Multiple connections are supported, so articles can be read while
+  binaries are downloading.
+- Articles can be filtered by regular expression matching, read/unread
+  state, binary/text, etc.
+- Works well as an offline reader.
+- Articles can be queued until you want to go online, and can be
+  re-edited at any point before they're posted.
+- A flexible rules system allows you to delete, hide, download, or
+  notify you of, etc. articles that match a subject, or are posted by
+  a particular user, and so on.
+- The same system can be used to define automatic actions on behalf of
+  the user: auto-download, auto-cache, auto-delete etc.
+- Groups can be filtered by regular expression matching
+  subscribed/new/all, etc.
+
+Pan is good at Binaries.
+
+- Attached images can be shown inline.
+- Pan can download and thread articles as quickly as bandwidth allows.
+- uuencode, MIME, and yEnc attachments are all supported.
+- A task manager lets you reorder, cancel, and resubmit download tasks.
+- Multiple connections are supported, so many binaries can
+  be downloaded simultaneously.
+- Multipart articles are automatically grouped together.
+- Non-binary, incomplete multipart, and saved messages can be filtered
+  out of the article list.
+- Files can be attached to a Usenet article and are
+  automatically encrypted with yEnc, threaded and referenced by Pan.
+- Articles can be encrypted or signed with a public or private PGP key
+  for enhanced privacy and security.
+- Connections can be encrypted with the TLS protocol.
+
+The rest of the sales pitch is at [[http://pan.rebelbase.com/features/][Pan features page]].
+
+** RELEASE NOTES
+
+- You are advised to back up your $PAN_HOME directory (by default,
+  =$HOME/.pan2=) before upgrading Pan.
+- If you have previously been using a localhost server with stunnel and
+  you now want to connect directly to a news server using the actual
+  server address, do not create a new configuration entry for the
+  server. Pan treats a new entry as a new server and does not preserve
+  existing data on your subscribed groups, even though you are
+  connecting to the very same server as before. Always edit the existing
+  server configuration to preserve your subscriptions.
+- Directories to search for SSL certificates can be defined with
+  environment variables 'SSL_CERT_DIR' or 'SSL_DIR'.
+- To use password storage provided by GNOME Keyring or libsecret, build
+  Pan with support for that feature, and then enable it in Edit ->
+  Preferences -> Miscellaneous -> 'Save passwords in password storage'.
+
+** REQUIREMENTS
+
+Pan requires these libraries:
+
+- [[http://developer.gnome.org/glib/][GLib]] 2.17.6 or higher
+  (optionally GLib 2.26.0 or higher to support multiple Pan instances)
+- [[http://www.gtk.org/][GTK+]] 2.16.0 or higher (optionally GTK+ 3.0.0 or higher)
+- [[https://gitlab.gnome.org/GNOME/gmime][GMime]] 2.6.20 or higher (optionally with PGP cryptography support)
+
+The following libraries add extra features but are optional:
+
+- [[http://gtkspell.sourceforge.net][GtlSpell]] 2.0.7 or higher for spellchecker support
+  (GtkSpell 2.0.16 or higher when using GTK+ 3)
+- [[http://www.abisource.com/projects/enchant/][Enchant]] 1.6.0 or higher for spellchecker support
+- [[http://www.galago-project.org/news/index.php][libnotify]] 0.4.1 or higher for notifications
+- [[https://wiki.gnome.org/Projects/GnomeKeyring][GNOME Keyring]] 3.2.0 or higher for password storage
+- [[https://developer.gnome.org/libsecret/][libsecret]] 0.16 or higher and [[https://developer.gnome.org/gcr/][gcr]] 3.20 or higher for password storage
+  when using GTK+ 3 
+- [[http://www.freedesktop.org/wiki/Software/dbus][D-Bus]] to support running multiple Pan instances
+- [[http://www.gnu.org/software/gnutls/][GnuTLS]] 3.0.0 or higher for encrypted connections (TLS 1.x)
+- [[https://wiki.gnome.org/Apps/Yelp/Tools][Yelp Tools]] for built-in user manual
+  
+The following libraries are experimental and not suitable for any use
+other than testing. Use at your own risk:
+
+- [[http://spruce.sourceforge.net/gmime/][GMime]] 3.0.0 or higher (optionally with PGP cryptography support)
+- [[https://webkitgtk.org/][WebKitGTK+]] 1.8.1 or higher for embedded HTML
+
+Run the following command to get a list of all options that you can
+enable or disable at configure (or autogen) time:
+
+#+begin_src shell
+  ./configure --help
+#+end_src
+
+* INSTALLATION
+
+Run the following command to build Pan configured with the default options:
+
+#+begin_src  shell
+  ./configure && make
+#+end_src
+
+This will result in the executable =./pan/gui/pan=
+
+When building Pan from the Git repository, run the following command
+instead:
+
+#+begin_src shell
+./autogen.sh && make
+#+end_src
+
+You can find examples of =autogen= commands in [[file:.gitlab-ci.yml][gitlab ci file]].
+
+Finally, run the following command as root to install Pan:
+
+#+begin_src shell
+make install
+#+end_src
+
+* UPGRADING
+
+Upgrading typically requires that you do the exact same procedure as when
+installing Pan.
+
+
+* HOW TO REPORT BUGS
+
+For details on how to report bugs, see http://pan.rebelbase.com/bugs/.
+
+* CONTACT
+
+    To get in touch with Pan contributors and community members, subscribe to
+    one of the Pan mailing lists. For more information, see
+    <http://pan.rebelbase.com/mailing_lists/>.
+
+    You can also chat with other community members on irc.freenode.net, channel
+    #pan.
+
+
+LINKS
+
+    Pan     : http://pan.rebelbase.com/
+    GTK+    : http://www.gtk.org/
+    GNOME   : http://www.gnome.org/
+    GNU     : http://www.gnu.org/
+
+
