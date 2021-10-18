@@ -21,7 +21,7 @@ build-ubuntu-gtk2:
         libgnutls28-dev
         yelp-tools
   script:
-    - ./autogen.sh --without-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual --with-gmime30
+    - ./autogen.sh --without-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
     - make check
 
@@ -49,6 +49,6 @@ build-ubuntu-gtk3:
         yelp-tools
 
   script:
-    - ./autogen.sh --with-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual --with-gmime30
+    - ./autogen.sh --with-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
     - make check
