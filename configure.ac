@@ -124,15 +124,15 @@ dnl warnings when features of a newer GLib version are used.
 GLIB_CFLAGS="$GLIB_CFLAGS -DGLIB_VERSION_MAX_ALLOWED=G_ENCODE_VERSION\\(2,36\\)"
 
 dnl Check for GMime
-AC_ARG_WITH([gmime30],
-  AS_HELP_STRING([--with-gmime30],[enable GMime 3.0 support (experimental, normally: no)]), [want_gmime30=$withval], [want_gmime30=no])
-if test "x$want_gmime30" = "xyes" ; then
+AC_ARG_WITH([gmime2],
+  AS_HELP_STRING([--with-gmime2],[enable GMime 2 support (deprecated, normally: no)]), [want_gmime2=$withval], [want_gmime2=no])
+if test "x$want_gmime2" = "xyes" ; then
+  PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED])
+else
   PKG_CHECK_MODULES([GMIME], [gmime-3.0 >= $GMIME30_REQUIRED],
   [
   AC_DEFINE(HAVE_GMIME_30,[1],[GMime 3.0 available])
   ])
-else
-  PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED])
 fi
 
 dnl Check for GMime cryptography support
@@ -355,7 +355,7 @@ Configuration:
         Source code location:   ${srcdir}
         Compiler:               ${CXX}
         With D-Bus:             ${want_dbus}
-        With GMime 3.0:         ${want_gmime30}
+        With GMime 2:           ${want_gmime2}
         With GMime crypto:      ${want_gmime_crypto}
         With GtkSpell:          ${gtkspell_msg}
         With GTK+ 3:            ${gtk_msg}
