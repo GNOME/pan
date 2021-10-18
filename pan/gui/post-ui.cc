@@ -1631,11 +1631,7 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
 
   // headers from posting profile(via prefs): X-Face
   if (!profile.xface.empty())
-  {
-    std::string f;
-    f += " " + profile.xface;
-    g_mime_object_set_header ((GMimeObject *) msg, "X-Face", f.c_str(), charset_cstr);
-  }
+    g_mime_object_set_header ((GMimeObject *) msg, "X-Face",  profile.xface.c_str(), charset_cstr);
 
   // add the 'hidden headers' (references)
   const gchar * h_key_str;
