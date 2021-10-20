@@ -76,8 +76,8 @@ namespace
                    const StringView  & mid,
                    const Quark       & key_mid)
   {
-    register uint8_t b=0, e=0;
-    register const char *k, *m;
+    uint8_t b=0, e=0;
+    const char *k, *m;
     const StringView& key (key_mid.to_view());
     const int shorter = (int) std::min (key.len, mid.len);
 

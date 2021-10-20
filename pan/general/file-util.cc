@@ -210,7 +210,7 @@ file :: sanitize (const StringView& fname)
 char*
 file :: normalize_inplace (char * filename)
 {
-  register char *in, *out;
+  char *in, *out;
   pan_return_val_if_fail (filename && *filename, filename);
 
   for (in=out=filename; *in; )
