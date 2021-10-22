@@ -1,3 +1,41 @@
+0.148 "Chamechaude"
+
+The main points of this release are:
+- gmime3 is used by default and gmime2 is deprecated
+- release tag format is changed. This release is tagged v0.148
+- some UI bugs are fixed
+- README was converted from ASCII to org-mode format
+
+Detailed changes:
+
+  c77fd22 set release name (Dominique Dumont)
+  3e7fb82 fix preferences window size (close #99) (Dominique Dumont)
+  79677ce remove register storage class from cc code (Dominique Dumont)
+  ea76dba CI: remove --with-gmime30 obsolete option (Dominique Dumont)
+  e42d3ff README.org: prefer gmime3 over deprecated gmime2 (Dominique Dumont)
+  6abf0cf configure.ac: use gmime3 by default, gmime2 is deprecated (Dominique Dumont)
+  c85950d post-ui: remove space inserted before x-face (gmime3) (Dominique Dumont)
+  a8fda6d README.org: fix links at end of page (Dominique Dumont)
+  9a7bb19 README.org: convert more links (Dominique Dumont)
+  099ccf0 README.org: convert links (Dominique Dumont)
+  896cfc5 Convert README to README.org (Dominique Dumont)
+  d92dc16 fix (post-ui): rm handle_box to fix missing widgets (Dominique Dumont)
+  6260911 fix other non-utf8 char in comments (Dominique Dumont)
+  e88d74a converted ISO-8859 comments to UTF-8 (Dominique Dumont)
+  25f130c Merge branch 'back-to-ascii-msgids' (Dominique Dumont)
+  d5f41ee bump release number (Dominique Dumont)
+  b7e7826 fix (appdata): change appstream id (Dominique Dumont)
+  d2990c7 fix: can compile gtk3 without gtk2 libs (Dominique Dumont)
+  e2f001c Use only ascii for translatable messages. (Dominique Dumont)
+  86acf0a Revert "One more Unicode apostrophe" (Dominique Dumont)
+* Contributors to this release:
+  Dominique Dumont
+* Updated translations:
+  pl        (Piotr Drąg)
+  pt_BR     (Enrico Nicoletto)
+  sv        (Anders Jonsson)
+  uk        (Yuri Chornoivan)
+
 0.147 "Sweet Solitude"
 
 This release contains mostly bug fixes so pan can be compiled on major
