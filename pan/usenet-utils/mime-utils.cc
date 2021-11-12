@@ -1024,12 +1024,12 @@ namespace
 #ifdef HAVE_GMIME_CRYPTO
 GMimeMessage*
 mime :: construct_message (GMimeStream    ** istreams,
-                           int               qty,
+                           unsigned int      qty,
                            GPGDecErr      &  err)
 #else
 GMimeMessage*
 mime :: construct_message (GMimeStream    ** istreams,
-                           int               qty)
+                           unsigned int      qty)
 #endif
 {
   const char * message_id = "Foo <bar@mum>";

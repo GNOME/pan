@@ -81,12 +81,12 @@ namespace pan
 #ifdef HAVE_GMIME_CRYPTO
     static GMimeMessage *
     construct_message (GMimeStream      ** istreams,
-                       int                 qty,
+                       unsigned int        qty,
                        GPGDecErr         &);
 #else
     static GMimeMessage *
     construct_message (GMimeStream      ** istreams,
-                       int                 qty);
+                       unsigned int        qty);
 #endif
     static const char *
     get_charset (GMimeMessage * message);
