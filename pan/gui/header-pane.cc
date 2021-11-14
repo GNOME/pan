@@ -369,10 +369,7 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
 
   const Article * a (self->get_article (model, iter));
 
-  char* ret = __g_mime_iconv_strdup(conv, a->subject.c_str());
-  std::string res;
-  if (ret) res = ret;
-  g_free(ret);
+  std::string res = a->subject.c_str();
 
   char buf[512];
 
