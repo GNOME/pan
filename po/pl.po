@@ -1,15 +1,15 @@
 # Polish translation for pan2.
-# Copyright © 2016-2017 the pan2 authors.
+# Copyright © 2016-2021 the pan2 authors.
 # This file is distributed under the same license as the pan2 package.
-# Piotr Drąg <piotrdrag@gmail.com>, 2016-2017.
-# Aviary.pl <community-poland@mozilla.org>, 2016-2017.
+# Piotr Drąg <piotrdrag@gmail.com>, 2016-2021.
+# Aviary.pl <community-poland@mozilla.org>, 2016-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pan2\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2021-09-21 16:59+0000\n"
-"PO-Revision-Date: 2017-12-24 17:01+0100\n"
+"POT-Creation-Date: 2021-11-07 15:06+0000\n"
+"PO-Revision-Date: 2021-11-14 14:35+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -68,7 +68,7 @@ msgstr "Błąd podczas otwierania katalogu: „%s”: %s"
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
-#: pan/gui/post-ui.cc:1927
+#: pan/gui/post-ui.cc:1916
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Nie można zapisać „%s” %s"
@@ -80,7 +80,7 @@ msgstr "Błąd podczas otwierania pliku „%s” %s"
 
 #: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
 #: pan/data-impl/server.cc:525 pan/general/file-util.cc:311
-#: pan/gui/post-ui.cc:644 pan/gui/task-pane.cc:735
+#: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:735
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Błąd podczas odczytywania pliku „%s”: %s"
@@ -812,7 +812,7 @@ msgid "Unnamed File"
 msgstr "Plik bez nazwy"
 
 #: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1311
-#: pan/gui/header-pane.cc:1751 pan/gui/post-ui.cc:2828 pan/gui/prefs-ui.cc:853
+#: pan/gui/header-pane.cc:1751 pan/gui/post-ui.cc:2817 pan/gui/prefs-ui.cc:853
 #: pan/gui/score-add-ui.cc:137 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "Temat"
@@ -1003,7 +1003,7 @@ msgstr "ukraińskie"
 msgid "Visual"
 msgstr "wizualne"
 
-#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:554
+#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:547
 #: pan/gui/prefs-ui.cc:757
 msgid "Character Encoding"
 msgstr "Kodowanie znaków"
@@ -1133,7 +1133,7 @@ msgstr "Zapisz plik NZB jako…"
 msgid "Import NZB Files"
 msgstr "Zaimportuj pliki NZB"
 
-#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3531
+#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3520
 msgid "NZB Files"
 msgstr "Pliki NZB"
 
@@ -1188,8 +1188,8 @@ msgstr "Copyright © 2002-2017 Charles Kerr i inni"
 #: pan/gui/gui.cc:1726
 msgid "translator-credits"
 msgstr ""
-"Piotr Drąg <piotrdrag@gmail.com>, 2016-2017\n"
-"Aviary.pl <community-poland@mozilla.org>, 2016-2017"
+"Piotr Drąg <piotrdrag@gmail.com>, 2016-2021\n"
+"Aviary.pl <community-poland@mozilla.org>, 2016-2021"
 
 #: pan/gui/gui.cc:1854
 msgid "_1. Group Pane"
@@ -1383,7 +1383,9 @@ msgid ""
 "  -h, --help               Show this usage information and exit.\n"
 "  -v, --version            Print release version and exit.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
-"  --debug                  Run in debug mode.\n"
+"  --debug                  Run in debug mode. (use --debug twice for verbose "
+"debug)\n"
+"  --debug-ssl              Run with TLS (aka ssl) debug mode.\n"
 "\n"
 "URL Options\n"
 "  headers:group.name       Download new headers for the specified "
@@ -1402,7 +1404,11 @@ msgstr ""
 "  -h, --help               Wyświetla tę stronę pomocy i kończy działanie.\n"
 "  -v, --version            Wyświetla wersję i kończy działanie.\n"
 "  --verbose                Więcej informacji (w trybie tekstowym).\n"
-"  --debug                  Uruchamia w trybie debugowania.\n"
+"  --debug                  Uruchamia w trybie debugowania (użycie --debug\n"
+"                           dwa razy wyświetla więcej informacji "
+"debugowania).\n"
+"  --debug-ssl              Uruchamia w trybie debugowania TLS (znanym także\n"
+"                           jako SSL).\n"
 "\n"
 "Opcje adresów URL\n"
 "  headers:nazwa.grupy      Pobiera nowe nagłówki dla podanej\n"
@@ -1414,26 +1420,26 @@ msgstr ""
 "Opcje plików NZB\n"
 "  --nzb plik1 plik2 …      Przetwarza pliki NZB w trybie tekstowym.\n"
 "  -o ścieżka, --output=ścieżka  Ścieżka do zapisania załączników zawartych\n"
-"                           w plikach NZB.\n"
+"                                w plikach NZB.\n"
 "  --no-gui                 Tylko wyjście konsoli, bez kolejki pobierania.\n"
 
-#: pan/gui/pan.cc:980
+#: pan/gui/pan.cc:981
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr ""
 "Błąd: opcja --no-gui została użyta bez plików NZB lub news:id-wiadomości."
 
-#: pan/gui/pan.cc:984
+#: pan/gui/pan.cc:985
 #, c-format
 msgid "Pan %s started"
 msgstr "Uruchomiono program Pan %s"
 
-#: pan/gui/pan.cc:1004
+#: pan/gui/pan.cc:1005
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Proszę skonfigurować serwery grup dyskusyjnych programu Pan przed użyciem go "
 "jako klient NZB."
 
-#: pan/gui/pan.cc:1122
+#: pan/gui/pan.cc:1123
 msgid "Pan notification"
 msgstr "Powiadomienie programu Pan"
 
@@ -1587,75 +1593,75 @@ msgstr "Podpisz wiadomość za pomocą PGP"
 msgid "Check _Spelling"
 msgstr "_Sprawdź pisownię"
 
-#: pan/gui/post-ui.cc:555
+#: pan/gui/post-ui.cc:548
 msgid "New Article's Encoding:"
 msgstr "Kodowanie nowej wiadomości:"
 
-#: pan/gui/post-ui.cc:565
+#: pan/gui/post-ui.cc:558
 msgid "Content Transfer Encoding"
 msgstr "Kodowanie przesyłania treści"
 
-#: pan/gui/post-ui.cc:566
+#: pan/gui/post-ui.cc:559
 msgid "New Article's Content Transfer Encoding:"
 msgstr "Kodowanie przesyłania treści nowej wiadomości:"
 
-#: pan/gui/post-ui.cc:746
+#: pan/gui/post-ui.cc:739
 msgid "Your changes will be lost!"
 msgstr "Zmiany zostaną utracone."
 
-#: pan/gui/post-ui.cc:747
+#: pan/gui/post-ui.cc:740
 msgid "Close this window and lose your changes?"
 msgstr "Zamknąć to okno i utracić zmiany?"
 
-#: pan/gui/post-ui.cc:792 pan/gui/post-ui.cc:831
+#: pan/gui/post-ui.cc:785 pan/gui/post-ui.cc:824
 msgid "There were problems with this post."
 msgstr "Wystąpiły problemy z tą wiadomością."
 
-#: pan/gui/post-ui.cc:794 pan/gui/post-ui.cc:833 pan/gui/post-ui.cc:898
+#: pan/gui/post-ui.cc:787 pan/gui/post-ui.cc:826 pan/gui/post-ui.cc:891
 msgid "Go Back"
 msgstr "Wstecz"
 
-#: pan/gui/post-ui.cc:796
+#: pan/gui/post-ui.cc:789
 msgid "Continue Anyway"
 msgstr "Kontynuuj mimo to"
 
 #. Prompt the user
-#: pan/gui/post-ui.cc:825
+#: pan/gui/post-ui.cc:818
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr ""
 "Wiadomość używa znaków nieokreślonych w kodowaniu „%s” — może używa „%s” "
 
-#: pan/gui/post-ui.cc:848
+#: pan/gui/post-ui.cc:841
 msgid "Go _Online"
 msgstr "Przejdź do trybu _online"
 
-#: pan/gui/post-ui.cc:897
+#: pan/gui/post-ui.cc:890
 msgid "The file queue is empty, so no files can be saved."
 msgstr "Kolejka plików jest pusta, więc nie można zapisać żadnych plików."
 
-#: pan/gui/post-ui.cc:1093
+#: pan/gui/post-ui.cc:1086
 msgid "IO Error"
 msgstr "Błąd wejścia/wyjścia"
 
-#: pan/gui/post-ui.cc:1093
+#: pan/gui/post-ui.cc:1086
 msgid "No space left on device"
 msgstr "Nie ma miejsca na urządzeniu"
 
-#: pan/gui/post-ui.cc:1094
+#: pan/gui/post-ui.cc:1087
 #, c-format
 msgid "Error copying message to %s folder. Reason: %s"
 msgstr "Błąd podczas kopiowania wiadomości do katalogu %s. Przyczyna: %s"
 
-#: pan/gui/post-ui.cc:1100
+#: pan/gui/post-ui.cc:1093
 #, c-format
 msgid "Error creating message in %s mail folder: Invalid article."
 msgstr ""
 "Błąd podczas tworzenia wiadomości w katalogu poczty %s: nieprawidłowa "
 "wiadomość."
 
-#: pan/gui/post-ui.cc:1122
+#: pan/gui/post-ui.cc:1115
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1663,7 +1669,7 @@ msgstr ""
 "Dla tego profilu wysyłania nie ustawiono żadnego serwera wysyłania.\n"
 "Proszę zmodyfikować profil przez Edycja → Zarządzaj profilami wysyłania."
 
-#: pan/gui/post-ui.cc:1127
+#: pan/gui/post-ui.cc:1120
 msgid ""
 "The selected posting server is currently disabled. Please choose an "
 "appropriate alternative."
@@ -1671,15 +1677,15 @@ msgstr ""
 "Wybrany serwer wysyłania jest obecnie wyłączony. Proszę wybrać odpowiedni "
 "alternatywny serwer."
 
-#: pan/gui/post-ui.cc:1169
+#: pan/gui/post-ui.cc:1162
 msgid "Pan is Offline."
 msgstr "Program Pan jest w trybie offline."
 
-#: pan/gui/post-ui.cc:1170
+#: pan/gui/post-ui.cc:1163
 msgid "Go online to post the article?"
 msgstr "Przejść do trybu online, aby wysłać wiadomość?"
 
-#: pan/gui/post-ui.cc:1219
+#: pan/gui/post-ui.cc:1212
 #, c-format
 msgid ""
 "Error signing/encrypting your message. Perhaps you misspelled your email "
@@ -1688,110 +1694,110 @@ msgstr ""
 "Błąd podczas podpisywania/szyfrowania wiadomości. Być może błędnie wpisano "
 "adres e-mail (%s)?"
 
-#: pan/gui/post-ui.cc:1367
+#: pan/gui/post-ui.cc:1360
 msgid "Error opening temporary file"
 msgstr "Błąd podczas otwierania pliku tymczasowego"
 
-#: pan/gui/post-ui.cc:1379
+#: pan/gui/post-ui.cc:1372
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Błąd podczas zapisywania wiadomości do pliku tymczasowego: %s"
 
-#: pan/gui/post-ui.cc:1398
+#: pan/gui/post-ui.cc:1391
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr ""
 "Błąd podczas przetwarzania wiersza poleceń „zewnętrznego edytora”: %s "
 "(polecenie: %s)"
 
-#: pan/gui/post-ui.cc:1439
+#: pan/gui/post-ui.cc:1432
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Błąd podczas uruchamiania zewnętrznego edytora: %s"
 
-#: pan/gui/post-ui.cc:1502
+#: pan/gui/post-ui.cc:1495
 msgid "Open Draft Article"
 msgstr "Otwórz szkic wiadomości"
 
-#: pan/gui/post-ui.cc:1843
+#: pan/gui/post-ui.cc:1832
 msgid "Save Draft Article"
 msgstr "Zapisz szkic wiadomości"
 
-#: pan/gui/post-ui.cc:1880
+#: pan/gui/post-ui.cc:1869
 msgid "File already exists."
 msgstr "Plik już istnieje."
 
-#: pan/gui/post-ui.cc:1881
+#: pan/gui/post-ui.cc:1870
 msgid "Overwrite it?"
 msgstr "Zastąpić go?"
 
-#: pan/gui/post-ui.cc:2091
+#: pan/gui/post-ui.cc:2080
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Nie można przetworzyć polecenia podpisu „%s”: %s"
 
-#: pan/gui/post-ui.cc:2127
+#: pan/gui/post-ui.cc:2116
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Nie można skonwertować podpisu do kodowania UTF-8."
 
-#: pan/gui/post-ui.cc:2667
+#: pan/gui/post-ui.cc:2656
 msgid "F_rom"
 msgstr "_Od"
 
-#: pan/gui/post-ui.cc:2684
+#: pan/gui/post-ui.cc:2673
 msgid "_Subject"
 msgstr "_Temat"
 
-#: pan/gui/post-ui.cc:2697
+#: pan/gui/post-ui.cc:2686
 msgid "_Newsgroups"
 msgstr "_Grupa dyskusyjna"
 
-#: pan/gui/post-ui.cc:2711
+#: pan/gui/post-ui.cc:2700
 msgid "Mail _To"
 msgstr "Wiadomość _do"
 
-#: pan/gui/post-ui.cc:2813
+#: pan/gui/post-ui.cc:2802
 msgid "Delete from Queue"
 msgstr "Usuń z kolejki"
 
-#: pan/gui/post-ui.cc:2826
+#: pan/gui/post-ui.cc:2815
 msgid "No."
 msgstr "Nr"
 
-#: pan/gui/post-ui.cc:2830 pan/gui/post-ui.cc:2922 pan/gui/post-ui.cc:2963
+#: pan/gui/post-ui.cc:2819 pan/gui/post-ui.cc:2911 pan/gui/post-ui.cc:2952
 msgid "Filename"
 msgstr "Nazwa pliku"
 
-#: pan/gui/post-ui.cc:2832
+#: pan/gui/post-ui.cc:2821
 msgid "Size (KB)"
 msgstr "Rozmiar (KB)"
 
-#: pan/gui/post-ui.cc:2930
+#: pan/gui/post-ui.cc:2919
 msgid "The current filename"
 msgstr "Obecna nazwa pliku"
 
-#: pan/gui/post-ui.cc:2934
+#: pan/gui/post-ui.cc:2923
 msgid "Subject Line"
 msgstr "Wiersz tematu"
 
-#: pan/gui/post-ui.cc:2942
+#: pan/gui/post-ui.cc:2931
 msgid "The current subject line"
 msgstr "Obecny wiersz tematu"
 
-#: pan/gui/post-ui.cc:2956
+#: pan/gui/post-ui.cc:2945
 msgid "No. "
 msgstr "Nr "
 
-#: pan/gui/post-ui.cc:2960
+#: pan/gui/post-ui.cc:2949
 msgid "Enable/Disable"
 msgstr "Włącz/wyłącz"
 
-#: pan/gui/post-ui.cc:2994
+#: pan/gui/post-ui.cc:2983
 msgid "Follo_wup-To"
 msgstr "_Odpowiedź grupie do"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:3003
+#: pan/gui/post-ui.cc:2992
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1805,11 +1811,11 @@ msgstr ""
 "Aby przekazywać wszystkie odpowiedzi na adres e-mail, należy użyć „Odpowiedź "
 "grupie do: poster”"
 
-#: pan/gui/post-ui.cc:3010
+#: pan/gui/post-ui.cc:2999
 msgid "_Reply-To"
 msgstr "O_dpowiedź do"
 
-#: pan/gui/post-ui.cc:3018
+#: pan/gui/post-ui.cc:3007
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
@@ -1817,52 +1823,52 @@ msgstr ""
 "Konto e-mail, do którego mają trafiać odpowiedzi na wysłane wiadomości. Jest "
 "to wymagane tylko, jeśli różni się od nagłówka „Od”."
 
-#: pan/gui/post-ui.cc:3025
+#: pan/gui/post-ui.cc:3014
 msgid "_Custom Headers"
 msgstr "_Niestandardowe nagłówki"
 
-#: pan/gui/post-ui.cc:3049
+#: pan/gui/post-ui.cc:3038
 msgid "Add \"_User-Agent\" header"
 msgstr "Dodaj nagłówek „_Identyfikator programu”"
 
-#: pan/gui/post-ui.cc:3056
+#: pan/gui/post-ui.cc:3045
 msgid "Add \"Message-_ID\" header"
 msgstr "_Dodaj nagłówek „Identyfikator wiadomości”"
 
-#: pan/gui/post-ui.cc:3187
+#: pan/gui/post-ui.cc:3176
 msgid "Select Parts"
 msgstr "Wybierz części"
 
-#: pan/gui/post-ui.cc:3200
+#: pan/gui/post-ui.cc:3189
 msgid "_Parts"
 msgstr "_Części"
 
-#: pan/gui/post-ui.cc:3358
+#: pan/gui/post-ui.cc:3347
 msgid "Post Article"
 msgstr "Wyślij wiadomość"
 
-#: pan/gui/post-ui.cc:3379
+#: pan/gui/post-ui.cc:3368
 msgid "_Message"
 msgstr "_Wiadomość"
 
-#: pan/gui/post-ui.cc:3380
+#: pan/gui/post-ui.cc:3369
 msgid "More _Headers"
 msgstr "Więcej _nagłówków"
 
-#: pan/gui/post-ui.cc:3381
+#: pan/gui/post-ui.cc:3370
 msgid "File _Queue"
 msgstr "_Kolejka plików"
 
-#: pan/gui/post-ui.cc:3413 pan/gui/profiles-dialog.cc:480
+#: pan/gui/post-ui.cc:3402 pan/gui/profiles-dialog.cc:480
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "W dniu %d, użytkownik %n napisał:"
 
-#: pan/gui/post-ui.cc:3442
+#: pan/gui/post-ui.cc:3431
 msgid "Add files to queue"
 msgstr "Dodaj pliki do kolejki"
 
-#: pan/gui/post-ui.cc:3518
+#: pan/gui/post-ui.cc:3507
 msgid "Save Upload Queue as NZB File"
 msgstr "Zapisz kolejkę wysyłania jako plik NZB"
 
