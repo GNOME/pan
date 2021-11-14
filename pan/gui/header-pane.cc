@@ -271,12 +271,10 @@ HeaderPane :: render_author (GtkTreeViewColumn * ,
 
   const Article * a (self->get_article (model, iter));
 
-  char* ret = __g_mime_iconv_strdup(conv, a->author.c_str());
-  if (ret) g_object_set (renderer, "text", ret,
+  g_object_set (renderer, "text", a->author.c_str() ,
                          "background", self->_bg.c_str(),
                          "foreground", self->_fg.c_str(),
                          NULL);
-  g_free(ret);
 }
 
 void
