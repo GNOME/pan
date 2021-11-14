@@ -265,10 +265,7 @@ HeaderPane :: render_author (GtkTreeViewColumn * ,
                             GtkTreeIter       * iter,
                             gpointer            user_data)
 {
-
   const HeaderPane * self (static_cast<HeaderPane*>(user_data));
-  const Row * row (dynamic_cast<Row*>(self->_tree_store->get_row (iter)));
-
   const Article * a (self->get_article (model, iter));
 
   g_object_set (renderer, "text", a->author.c_str() ,
