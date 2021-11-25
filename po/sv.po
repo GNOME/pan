@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2021-09-21 16:59+0000\n"
-"PO-Revision-Date: 2021-09-21 21:16+0200\n"
+"POT-Creation-Date: 2021-11-07 15:06+0000\n"
+"PO-Revision-Date: 2021-11-25 15:41+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -72,7 +72,7 @@ msgstr "Fel vid öppnande av katalogen: ”%s”: %s"
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
-#: pan/gui/post-ui.cc:1927
+#: pan/gui/post-ui.cc:1916
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Kunde inte spara ”%s” %s"
@@ -84,7 +84,7 @@ msgstr "Fel vid öppnande av filen ”%s” %s"
 
 #: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
 #: pan/data-impl/server.cc:525 pan/general/file-util.cc:311
-#: pan/gui/post-ui.cc:644 pan/gui/task-pane.cc:735
+#: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:735
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Fel vid läsning av filen ”%s”: %s"
@@ -814,7 +814,7 @@ msgid "Unnamed File"
 msgstr "Ej namngiven fil"
 
 #: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1311
-#: pan/gui/header-pane.cc:1751 pan/gui/post-ui.cc:2828 pan/gui/prefs-ui.cc:853
+#: pan/gui/header-pane.cc:1751 pan/gui/post-ui.cc:2817 pan/gui/prefs-ui.cc:853
 #: pan/gui/score-add-ui.cc:137 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "Ämne"
@@ -1004,7 +1004,7 @@ msgstr "Ukrainsk"
 msgid "Visual"
 msgstr "Visuell"
 
-#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:554
+#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:547
 #: pan/gui/prefs-ui.cc:757
 msgid "Character Encoding"
 msgstr "Teckenkodning"
@@ -1134,7 +1134,7 @@ msgstr "Spara NZB-fil som…"
 msgid "Import NZB Files"
 msgstr "Importera NZB-filer"
 
-#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3531
+#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3520
 msgid "NZB Files"
 msgstr "NZB-filer"
 
@@ -1389,7 +1389,9 @@ msgid ""
 "  -h, --help               Show this usage information and exit.\n"
 "  -v, --version            Print release version and exit.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
-"  --debug                  Run in debug mode.\n"
+"  --debug                  Run in debug mode. (use --debug twice for verbose "
+"debug)\n"
+"  --debug-ssl              Run with TLS (aka ssl) debug mode.\n"
 "\n"
 "URL Options\n"
 "  headers:group.name       Download new headers for the specified "
@@ -1408,11 +1410,15 @@ msgstr ""
 "  -h, --help               Visa den här användningssidan och avsluta.\n"
 "  -v, --version            Skriv ut version och avsluta.\n"
 "  --verbose                Var utförlig (i icke-GUI-läge).\n"
-"  --debug                  Kör i felsökningsläge.\n"
+"  --debug                  Kör i felsökningsläge. (använd --debug två "
+"gånger\n"
+"                           för utförlig felsökning)\n"
+"  --debug-ssl              Kör med felsökningsläge för TLS (även kallat "
+"ssl).\n"
 "\n"
 "Url-flaggor\n"
 "  headers:grupp.namn       Hämta nya rubriker för angiven diskussionsgrupp.\n"
-"  news:meddelande-id           När angivet med flaggan --no-gui, dumpa\n"
+"  news:meddelande-id       När angivet med flaggan --no-gui, dumpa\n"
 "                           meddelande-id-artikeln till standard ut.\n"
 "\n"
 "NZB-satsflaggor\n"
@@ -1421,21 +1427,21 @@ msgstr ""
 "filerna.\n"
 "  --no-gui                 Visa endast konsolutdata, inte hämtningskön.\n"
 
-#: pan/gui/pan.cc:980
+#: pan/gui/pan.cc:981
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Fel: --no-gui används utan nzb-filer eller news:meddelande-id."
 
-#: pan/gui/pan.cc:984
+#: pan/gui/pan.cc:985
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s startade"
 
-#: pan/gui/pan.cc:1004
+#: pan/gui/pan.cc:1005
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Konfigurera Pans diskussionsgruppservrar innan den används som en nzb-klient."
 
-#: pan/gui/pan.cc:1122
+#: pan/gui/pan.cc:1123
 msgid "Pan notification"
 msgstr "Pan-avisering"
 
@@ -1589,40 +1595,40 @@ msgstr "PGP-signera artikeln"
 msgid "Check _Spelling"
 msgstr "Kontrollera _stavning"
 
-#: pan/gui/post-ui.cc:555
+#: pan/gui/post-ui.cc:548
 msgid "New Article's Encoding:"
 msgstr "Kodning för ny artikel:"
 
-#: pan/gui/post-ui.cc:565
+#: pan/gui/post-ui.cc:558
 msgid "Content Transfer Encoding"
 msgstr "Överföringskodning för innehåll"
 
-#: pan/gui/post-ui.cc:566
+#: pan/gui/post-ui.cc:559
 msgid "New Article's Content Transfer Encoding:"
 msgstr "Överföringskodning för ny artikel:"
 
-#: pan/gui/post-ui.cc:746
+#: pan/gui/post-ui.cc:739
 msgid "Your changes will be lost!"
 msgstr "Dina ändringar kommer att förloras!"
 
-#: pan/gui/post-ui.cc:747
+#: pan/gui/post-ui.cc:740
 msgid "Close this window and lose your changes?"
 msgstr "Stäng det här fönstret och förlora dina ändringar?"
 
-#: pan/gui/post-ui.cc:792 pan/gui/post-ui.cc:831
+#: pan/gui/post-ui.cc:785 pan/gui/post-ui.cc:824
 msgid "There were problems with this post."
 msgstr "Det inträffade problem med den här posten."
 
-#: pan/gui/post-ui.cc:794 pan/gui/post-ui.cc:833 pan/gui/post-ui.cc:898
+#: pan/gui/post-ui.cc:787 pan/gui/post-ui.cc:826 pan/gui/post-ui.cc:891
 msgid "Go Back"
 msgstr "Gå tillbaka"
 
-#: pan/gui/post-ui.cc:796
+#: pan/gui/post-ui.cc:789
 msgid "Continue Anyway"
 msgstr "Fortsätt ändå"
 
 #. Prompt the user
-#: pan/gui/post-ui.cc:825
+#: pan/gui/post-ui.cc:818
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
@@ -1630,33 +1636,33 @@ msgstr ""
 "Meddelandet använder tecken som inte angivits i teckenuppsättningen ”%s” — "
 "använd möjligen ”%s” "
 
-#: pan/gui/post-ui.cc:848
+#: pan/gui/post-ui.cc:841
 msgid "Go _Online"
 msgstr "Ansl_ut"
 
-#: pan/gui/post-ui.cc:897
+#: pan/gui/post-ui.cc:890
 msgid "The file queue is empty, so no files can be saved."
 msgstr "Filkön är tom, så inga filer kan sparas."
 
-#: pan/gui/post-ui.cc:1093
+#: pan/gui/post-ui.cc:1086
 msgid "IO Error"
 msgstr "IO-fel"
 
-#: pan/gui/post-ui.cc:1093
+#: pan/gui/post-ui.cc:1086
 msgid "No space left on device"
 msgstr "Inget utrymme kvar på enheten"
 
-#: pan/gui/post-ui.cc:1094
+#: pan/gui/post-ui.cc:1087
 #, c-format
 msgid "Error copying message to %s folder. Reason: %s"
 msgstr "Fel vid kopiering av meddelande till %s-mappen. Orsak: %s"
 
-#: pan/gui/post-ui.cc:1100
+#: pan/gui/post-ui.cc:1093
 #, c-format
 msgid "Error creating message in %s mail folder: Invalid article."
 msgstr "Fel vid skapande av meddelande i postmapp %s: ogiltig artikel."
 
-#: pan/gui/post-ui.cc:1122
+#: pan/gui/post-ui.cc:1115
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1664,21 +1670,21 @@ msgstr ""
 "Ingen postningsserver är inställd för den här postandeprofilen.\n"
 "Redigera profilen via Redigera|Hantera postandeprofiler."
 
-#: pan/gui/post-ui.cc:1127
+#: pan/gui/post-ui.cc:1120
 msgid ""
 "The selected posting server is currently disabled. Please choose an "
 "appropriate alternative."
 msgstr "Vald sändserver är inaktiverad. Välj ett passande alternativ."
 
-#: pan/gui/post-ui.cc:1169
+#: pan/gui/post-ui.cc:1162
 msgid "Pan is Offline."
 msgstr "Pan är frånkopplad."
 
-#: pan/gui/post-ui.cc:1170
+#: pan/gui/post-ui.cc:1163
 msgid "Go online to post the article?"
 msgstr "Anslut för att posta artikeln?"
 
-#: pan/gui/post-ui.cc:1219
+#: pan/gui/post-ui.cc:1212
 #, c-format
 msgid ""
 "Error signing/encrypting your message. Perhaps you misspelled your email "
@@ -1687,109 +1693,109 @@ msgstr ""
 "Fel vid kryptering/signering av ditt meddelande. Kanske du felstavade din e-"
 "postadress (%s)?"
 
-#: pan/gui/post-ui.cc:1367
+#: pan/gui/post-ui.cc:1360
 msgid "Error opening temporary file"
 msgstr "Fel vid öppnande av temporär fil"
 
-#: pan/gui/post-ui.cc:1379
+#: pan/gui/post-ui.cc:1372
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Fel vid skrivande av artikel till temporär fil: %s"
 
-#: pan/gui/post-ui.cc:1398
+#: pan/gui/post-ui.cc:1391
 #, c-format
 msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr ""
 "Fel vid tolkning av ”external editor”-kommandorad: %s (Kommandot var: %s)"
 
-#: pan/gui/post-ui.cc:1439
+#: pan/gui/post-ui.cc:1432
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Fel vid start av den externa redigeraren: %s"
 
-#: pan/gui/post-ui.cc:1502
+#: pan/gui/post-ui.cc:1495
 msgid "Open Draft Article"
 msgstr "Öppna artikelutkast"
 
-#: pan/gui/post-ui.cc:1843
+#: pan/gui/post-ui.cc:1832
 msgid "Save Draft Article"
 msgstr "Spara artikelutkast"
 
-#: pan/gui/post-ui.cc:1880
+#: pan/gui/post-ui.cc:1869
 msgid "File already exists."
 msgstr "Filen finns redan."
 
-#: pan/gui/post-ui.cc:1881
+#: pan/gui/post-ui.cc:1870
 msgid "Overwrite it?"
 msgstr "Skriv över den?"
 
-#: pan/gui/post-ui.cc:2091
+#: pan/gui/post-ui.cc:2080
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Kunde inte tolka signaturkommandot ”%s”: %s"
 
-#: pan/gui/post-ui.cc:2127
+#: pan/gui/post-ui.cc:2116
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Kunde inte konvertera signaturen till UTF-8."
 
-#: pan/gui/post-ui.cc:2667
+#: pan/gui/post-ui.cc:2656
 msgid "F_rom"
 msgstr "F_rån"
 
-#: pan/gui/post-ui.cc:2684
+#: pan/gui/post-ui.cc:2673
 msgid "_Subject"
 msgstr "_Ämne"
 
-#: pan/gui/post-ui.cc:2697
+#: pan/gui/post-ui.cc:2686
 msgid "_Newsgroups"
 msgstr "_Diskussionsgrupper"
 
-#: pan/gui/post-ui.cc:2711
+#: pan/gui/post-ui.cc:2700
 msgid "Mail _To"
 msgstr "E-post _till"
 
-#: pan/gui/post-ui.cc:2813
+#: pan/gui/post-ui.cc:2802
 msgid "Delete from Queue"
 msgstr "Ta bort från kö"
 
-#: pan/gui/post-ui.cc:2826
+#: pan/gui/post-ui.cc:2815
 msgid "No."
 msgstr "Nr."
 
-#: pan/gui/post-ui.cc:2830 pan/gui/post-ui.cc:2922 pan/gui/post-ui.cc:2963
+#: pan/gui/post-ui.cc:2819 pan/gui/post-ui.cc:2911 pan/gui/post-ui.cc:2952
 msgid "Filename"
 msgstr "Filnamn"
 
-#: pan/gui/post-ui.cc:2832
+#: pan/gui/post-ui.cc:2821
 msgid "Size (KB)"
 msgstr "Storlek (KB)"
 
-#: pan/gui/post-ui.cc:2930
+#: pan/gui/post-ui.cc:2919
 msgid "The current filename"
 msgstr "Det aktuella filnamnet"
 
-#: pan/gui/post-ui.cc:2934
+#: pan/gui/post-ui.cc:2923
 msgid "Subject Line"
 msgstr "Ämnesrad"
 
-#: pan/gui/post-ui.cc:2942
+#: pan/gui/post-ui.cc:2931
 msgid "The current subject line"
 msgstr "Den aktuella ämnesraden"
 
-#: pan/gui/post-ui.cc:2956
+#: pan/gui/post-ui.cc:2945
 msgid "No. "
 msgstr "Nr. "
 
-#: pan/gui/post-ui.cc:2960
+#: pan/gui/post-ui.cc:2949
 msgid "Enable/Disable"
 msgstr "Aktivera/inaktivera"
 
-#: pan/gui/post-ui.cc:2994
+#: pan/gui/post-ui.cc:2983
 msgid "Follo_wup-To"
 msgstr "_Uppföljning-till"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:3003
+#: pan/gui/post-ui.cc:2992
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1802,11 +1808,11 @@ msgstr ""
 "För att dirigera alla svar till din e-postadress, använd ”Uppföljning-till: "
 "poster”"
 
-#: pan/gui/post-ui.cc:3010
+#: pan/gui/post-ui.cc:2999
 msgid "_Reply-To"
 msgstr "_Svara-till"
 
-#: pan/gui/post-ui.cc:3018
+#: pan/gui/post-ui.cc:3007
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
@@ -1814,52 +1820,52 @@ msgstr ""
 "E-postkontot dit svar på ditt postade meddelande ska gå. Det här behövs "
 "endast om det skiljer sig från ”Från”-rubriken."
 
-#: pan/gui/post-ui.cc:3025
+#: pan/gui/post-ui.cc:3014
 msgid "_Custom Headers"
 msgstr "_Anpassade rubriker"
 
-#: pan/gui/post-ui.cc:3049
+#: pan/gui/post-ui.cc:3038
 msgid "Add \"_User-Agent\" header"
 msgstr "Lägg till ”_User-Agent”-rubrik"
 
-#: pan/gui/post-ui.cc:3056
+#: pan/gui/post-ui.cc:3045
 msgid "Add \"Message-_ID\" header"
 msgstr "Lägg till ”Meddelande-_ID”-rubrik"
 
-#: pan/gui/post-ui.cc:3187
+#: pan/gui/post-ui.cc:3176
 msgid "Select Parts"
 msgstr "Markera delar"
 
-#: pan/gui/post-ui.cc:3200
+#: pan/gui/post-ui.cc:3189
 msgid "_Parts"
 msgstr "_Delar"
 
-#: pan/gui/post-ui.cc:3358
+#: pan/gui/post-ui.cc:3347
 msgid "Post Article"
 msgstr "Posta artikel"
 
-#: pan/gui/post-ui.cc:3379
+#: pan/gui/post-ui.cc:3368
 msgid "_Message"
 msgstr "_Meddelande"
 
-#: pan/gui/post-ui.cc:3380
+#: pan/gui/post-ui.cc:3369
 msgid "More _Headers"
 msgstr "_Fler rubriker"
 
-#: pan/gui/post-ui.cc:3381
+#: pan/gui/post-ui.cc:3370
 msgid "File _Queue"
 msgstr "Fil_kö"
 
-#: pan/gui/post-ui.cc:3413 pan/gui/profiles-dialog.cc:480
+#: pan/gui/post-ui.cc:3402 pan/gui/profiles-dialog.cc:480
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "Den %d skrev %n:"
 
-#: pan/gui/post-ui.cc:3442
+#: pan/gui/post-ui.cc:3431
 msgid "Add files to queue"
 msgstr "Lägg till filer i kön"
 
-#: pan/gui/post-ui.cc:3518
+#: pan/gui/post-ui.cc:3507
 msgid "Save Upload Queue as NZB File"
 msgstr "Spara sändfilkö som en NZB-fil"
 
@@ -3734,32 +3740,3 @@ msgstr "inget_namn"
 msgid "no_mail"
 msgstr "ingen_e-post"
 
-#~ msgid "_Save Articles…"
-#~ msgstr "_Spara artiklar…"
-
-#~ msgid "Save Articles…"
-#~ msgstr "Spara artiklar…"
-
-#~ msgid "Save Articles from Selected _NZB…"
-#~ msgstr "Spara artiklar från vald _NZB…"
-
-#~ msgid "Save Articles to an NZB _File…"
-#~ msgstr "Spara artiklar till en NZB-_fil…"
-
-#~ msgid "_Import NZB Files…"
-#~ msgstr "_Importera NZB-filer…"
-
-#~ msgid "isn’t"
-#~ msgstr "är inte"
-
-#~ msgid "Posting of “%s” successful: %s"
-#~ msgstr "Postande av ”%s” lyckades: %s"
-
-#~ msgid "the article isn’t cached locally"
-#~ msgstr "artikeln är inte cachad lokalt"
-
-#~ msgid "the article wasn’t posted by you"
-#~ msgstr "artikeln postades inte av dig"
-
-#~ msgid "the article hasn’t been read"
-#~ msgstr "artikeln har inte blivit läst"
