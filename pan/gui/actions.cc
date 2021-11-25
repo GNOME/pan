@@ -388,7 +388,7 @@ namespace pan
         G_CALLBACK(do_print) },
 
       { "import-tasks", GTK_STOCK_OPEN,
-        N_("_Import NZB Files..."), "<constrol>O",
+        N_("_Import NZB Files..."), "<control>O",
         NULL,
         G_CALLBACK(do_import_tasks) },
 
