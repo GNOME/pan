@@ -636,7 +636,7 @@ _("General Options\n"
 "  -v, --version            Print release version and exit.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
 "  --debug                  Run in debug mode. Use --debug twice for verbose debug.\n"
-"  --debug-ssl              Run with TLS (aka SSL) debug mode.\n"
+"  --debug-ssl              Run in TLS (aka SSL) debug mode.\n"
 "\n"
 "URL Options\n"
 /** NOT IMPLEMENTED
