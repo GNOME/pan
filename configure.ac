@@ -33,7 +33,7 @@ if test ! -z $GIT_HASH; then
     GIT_REV="$GIT_HASH $GIT_REMOTE"
   fi
     echo $GIT_REV > pan-git.version
-  elif test -f pan-git.version ; then
+  elif test -s pan-git.version ; then
     GIT_REV=`cat pan-git.version`
   else
     GIT_REV="Unknown"
