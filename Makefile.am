@@ -11,10 +11,10 @@ org.gnome.pan.desktop: org.gnome.pan.desktop.in
 desktopdir = $(datadir)/applications
 desktop_DATA = org.gnome.pan.desktop
 
-pan.appdata.xml: pan.appdata.xml.in
+org.gnome.pan.metainfo.xml: org.gnome.pan.metainfo.xml.in
 	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
-appdatadir = $(datadir)/appdata
-appdata_DATA = pan.appdata.xml
+appdatadir = $(datadir)/metainfo
+appdata_DATA = org.gnome.pan.metainfo.xml
 
 man_MANS = pan.1
 
@@ -44,7 +44,7 @@ EXTRA_DIST = \
  README.org \
  README.windows \
  org.gnome.pan.desktop.in \
- pan.appdata.xml.in \
+ org.gnome.pan.metainfo.xml.in \
  pan-git.version \
  $(man_MANS) \
  $(NULL)
