@@ -1,8 +1,14 @@
+stages:
+  - build
+
 variables:
   DEBIAN_FRONTEND: noninteractive
 
 build-ubuntu-gtk2:
   image: ubuntu:rolling
+  stage: build
+  except:
+    - tags
   before_script:
     - apt-get update
     - apt-get install -q -y --no-install-recommends
@@ -21,12 +27,16 @@ build-ubuntu-gtk2:
         libgnutls28-dev
         yelp-tools
   script:
-    - ./autogen.sh --without-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
-    - make
-    - make check
+    - mkdir _build
+    - cd _build
+    - ../autogen.sh --without-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
+    - make && make distcheck
 
 build-ubuntu-gtk3:
   image: ubuntu:rolling
+  stage: build
+  except:
+    - tags
   before_script:
     - apt-get update
     - apt-get install -q -y --no-install-recommends
@@ -47,8 +57,9 @@ build-ubuntu-gtk3:
         libsecret-1-dev
         libgtkspell3-3-dev
         yelp-tools
-
   script:
-    - ./autogen.sh --with-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
+    - mkdir _build
+    - cd _build
+    - ../autogen.sh --with-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
-    - make check
+    - make distcheck
