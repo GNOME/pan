@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2021-11-07 15:06+0000\n"
-"PO-Revision-Date: 2021-11-25 15:41+0100\n"
+"POT-Creation-Date: 2021-12-06 19:16+0000\n"
+"PO-Revision-Date: 2021-12-06 21:35+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,15 +22,32 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 "X-Project-Style: gnome\n"
 
-#: pan.appdata.xml.in:5
-msgid "Pan Newsreader"
-msgstr "Pan diskussionsgruppsläsare"
+#. update the titlebar
+#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:22
+#: pan/gui/dl-headers-ui.cc:104 pan/gui/gui.cc:1045 pan/gui/gui.cc:1718
+#: pan/gui/gui.cc:2038 pan/gui/score-add-ui.cc:600
+msgid "Pan"
+msgstr "Pan"
 
-#: pan.appdata.xml.in:6 pan.desktop.in:5
+#: org.gnome.pan.desktop.in:4
+msgid "Newsreader"
+msgstr "Diskussionsgruppsläsare"
+
+#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:6
 msgid "Read and post Usenet articles"
 msgstr "Läs och posta Usenet-artiklar"
 
-#: pan.appdata.xml.in:8
+#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
+#: org.gnome.pan.desktop.in:7
+msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
+msgstr ""
+"usenet;newsreader;diskussionsgruppläsare;diskussionsgrupp;artikel;yenc,nzb;"
+
+#: org.gnome.pan.metainfo.xml.in:5
+msgid "Pan Newsreader"
+msgstr "Pan diskussionsgruppsläsare"
+
+#: org.gnome.pan.metainfo.xml.in:8
 msgid ""
 "Pan is a Usenet newsreader that is good at both text and binaries. It "
 "supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
@@ -40,30 +57,13 @@ msgstr ""
 "binärer. Det stöder frånkopplad läsning, poängsättning och ignorerafiler, "
 "yEnc, NZB, PGP-hantering, multipla servrar och säkra anslutningar."
 
-#: pan.appdata.xml.in:11
+#: org.gnome.pan.metainfo.xml.in:11
 msgid ""
 "It is also the only Unix newsreader to get a perfect score on the Good Net-"
 "Keeping Seal of Approval evaluations."
 msgstr ""
 "Det är också den enda diskussionsgruppläsaren för Unix att få full poäng hos "
 "utvärderingarna hos Good Net-Keeping Seal of Approval."
-
-#. update the titlebar
-#: pan.appdata.xml.in:22 pan.desktop.in:3 pan/gui/dl-headers-ui.cc:104
-#: pan/gui/gui.cc:1045 pan/gui/gui.cc:1718 pan/gui/gui.cc:2038
-#: pan/gui/score-add-ui.cc:600
-msgid "Pan"
-msgstr "Pan"
-
-#: pan.desktop.in:4
-msgid "Newsreader"
-msgstr "Diskussionsgruppsläsare"
-
-#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
-#: pan.desktop.in:7
-msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
-msgstr ""
-"usenet;newsreader;diskussionsgruppläsare;diskussionsgrupp;artikel;yenc,nzb;"
 
 #: pan/data/article-cache.cc:144 pan/data/encode-cache.cc:62
 #, c-format
@@ -813,8 +813,8 @@ msgstr "Visa matchande artiklars _undertrådar"
 msgid "Unnamed File"
 msgstr "Ej namngiven fil"
 
-#: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1311
-#: pan/gui/header-pane.cc:1751 pan/gui/post-ui.cc:2817 pan/gui/prefs-ui.cc:853
+#: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1303
+#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2817 pan/gui/prefs-ui.cc:853
 #: pan/gui/score-add-ui.cc:137 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "Ämne"
@@ -823,7 +823,7 @@ msgstr "Ämne"
 msgid "From"
 msgstr "Från"
 
-#: pan/gui/body-pane.cc:1139 pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1830
+#: pan/gui/body-pane.cc:1139 pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1822
 #: pan/gui/log-ui.cc:305 pan/gui/prefs-ui.cc:849
 msgid "Date"
 msgstr "Datum"
@@ -1185,8 +1185,8 @@ msgid "Unable to open help file."
 msgstr "Kunde inte öppna hjälpfil."
 
 #: pan/gui/gui.cc:1721
-msgid "Copyright © 2002-2017 Charles Kerr and others"
-msgstr "Copyright © 2002-2017 Charles Kerr och andra"
+msgid "Copyright © 2002-2021 Charles Kerr and others"
+msgstr "Copyright © 2002-2021 Charles Kerr och andra"
 
 #: pan/gui/gui.cc:1726
 msgid "translator-credits"
@@ -1246,11 +1246,11 @@ msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Den här artikeln saknar %d del."
 msgstr[1] "Den här artikeln saknar %d av dess %d delar:"
 
-#: pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1313 pan/gui/task-pane.cc:797
+#: pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1305 pan/gui/task-pane.cc:797
 msgid "Message-ID"
 msgstr "Meddelande-ID"
 
-#: pan/gui/gui.cc:2011 pan/gui/header-pane.cc:1799 pan/gui/prefs-ui.cc:850
+#: pan/gui/gui.cc:2011 pan/gui/header-pane.cc:1791 pan/gui/prefs-ui.cc:850
 msgid "Lines"
 msgstr "Rader"
 
@@ -1258,7 +1258,7 @@ msgstr "Rader"
 msgid "Size"
 msgstr "Storlek"
 
-#: pan/gui/gui.cc:2012 pan/gui/header-pane.cc:1815 pan/gui/prefs-ui.cc:848
+#: pan/gui/gui.cc:2012 pan/gui/header-pane.cc:1807 pan/gui/prefs-ui.cc:848
 msgid "Bytes"
 msgstr "Byte"
 
@@ -1319,20 +1319,20 @@ msgstr ""
 "Pan är nu i frånkopplat läge. Se ”Arkiv|Händelselogg” och rätta till "
 "problemet, använd sedan ”Arkiv|Anslutet läge” för att fortsätta."
 
-#: pan/gui/header-pane.cc:1309 pan/gui/task-pane.cc:793
+#: pan/gui/header-pane.cc:1301 pan/gui/task-pane.cc:793
 msgid "Subject or Author"
 msgstr "Ämne eller författare"
 
-#: pan/gui/header-pane.cc:1310 pan/gui/task-pane.cc:794
+#: pan/gui/header-pane.cc:1302 pan/gui/task-pane.cc:794
 msgid "Sub or Auth (regex)"
 msgstr "Ämne eller författare (regex)"
 
-#: pan/gui/header-pane.cc:1312 pan/gui/header-pane.cc:1783
+#: pan/gui/header-pane.cc:1304 pan/gui/header-pane.cc:1775
 #: pan/gui/prefs-ui.cc:847 pan/gui/score-add-ui.cc:138 pan/gui/task-pane.cc:796
 msgid "Author"
 msgstr "Författare"
 
-#: pan/gui/header-pane.cc:1768 pan/gui/prefs-ui.cc:851
+#: pan/gui/header-pane.cc:1760 pan/gui/prefs-ui.cc:851
 msgid "Score"
 msgstr "Poäng"
 
@@ -1389,9 +1389,9 @@ msgid ""
 "  -h, --help               Show this usage information and exit.\n"
 "  -v, --version            Print release version and exit.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
-"  --debug                  Run in debug mode. (use --debug twice for verbose "
-"debug)\n"
-"  --debug-ssl              Run with TLS (aka ssl) debug mode.\n"
+"  --debug                  Run in debug mode. Use --debug twice for verbose "
+"debug.\n"
+"  --debug-ssl              Run in TLS (aka SSL) debug mode.\n"
 "\n"
 "URL Options\n"
 "  headers:group.name       Download new headers for the specified "
@@ -1400,7 +1400,7 @@ msgid ""
 "                           the message-id article to standard output.\n"
 "\n"
 "NZB Batch Options\n"
-"  --nzb file1 file2 ...      Process NZB files in non-GUI mode.\n"
+"  --nzb file1 file2 ...    Process NZB files in non-GUI mode.\n"
 "  -o path, --output=path   Path to save attachments listed in the NZB "
 "file(s).\n"
 "  --no-gui                 Only show console output, not the download "
@@ -1413,8 +1413,7 @@ msgstr ""
 "  --debug                  Kör i felsökningsläge. (använd --debug två "
 "gånger\n"
 "                           för utförlig felsökning)\n"
-"  --debug-ssl              Kör med felsökningsläge för TLS (även kallat "
-"ssl).\n"
+"  --debug-ssl              Kör i felsökningsläge för TLS (även kallat ssl).\n"
 "\n"
 "Url-flaggor\n"
 "  headers:grupp.namn       Hämta nya rubriker för angiven diskussionsgrupp.\n"
@@ -3739,4 +3738,3 @@ msgstr "inget_namn"
 #: pan/usenet-utils/text-massager.cc:580
 msgid "no_mail"
 msgstr "ingen_e-post"
-
