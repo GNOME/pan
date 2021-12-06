@@ -41,7 +41,7 @@ MAINTAINERCLEANFILES = \
 
 EXTRA_DIST = \
  COPYING-DOCS \
- README \
+ README.org \
  README.windows \
  pan.appdata.xml.in \
  pan.desktop.in \
