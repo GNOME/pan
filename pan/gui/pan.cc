@@ -648,7 +648,7 @@ _("General Options\n"
 "                           the message-id article to standard output.\n"
 "\n"
 "NZB Batch Options\n"
-"  --nzb file1 file2 ...      Process NZB files in non-GUI mode.\n"
+"  --nzb file1 file2 ...    Process NZB files in non-GUI mode.\n"
 "  -o path, --output=path   Path to save attachments listed in the NZB file(s).\n"
 "  --no-gui                 Only show console output, not the download queue.\n") << std::endl;
   }
