@@ -6,10 +6,10 @@ if ENABLE_MANUAL
 SUBDIRS += help
 endif
 
-pan.desktop: pan.desktop.in
+org.gnome.pan.desktop: org.gnome.pan.desktop.in
 	$(AM_V_GEN)$(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 desktopdir = $(datadir)/applications
-desktop_DATA = pan.desktop
+desktop_DATA = org.gnome.pan.desktop
 
 pan.appdata.xml: pan.appdata.xml.in
 	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
@@ -43,8 +43,8 @@ EXTRA_DIST = \
  COPYING-DOCS \
  README.org \
  README.windows \
+ org.gnome.pan.desktop.in \
  pan.appdata.xml.in \
- pan.desktop.in \
  pan-git.version \
  $(man_MANS) \
  $(NULL)
