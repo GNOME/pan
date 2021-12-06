@@ -20,8 +20,6 @@ build-ubuntu-gtk2:
         gcc
         libgtk2.0-dev
         libgmime-3.0-dev
-        libgtkspell-dev
-        libenchant-2-dev
         libnotify-dev
         gnome-keyring
         libgnutls28-dev
@@ -29,8 +27,9 @@ build-ubuntu-gtk2:
   script:
     - mkdir _build
     - cd _build
-    - ../autogen.sh --without-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
-    - make && make distcheck
+    - ../autogen.sh --without-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --without-gtkspell --enable-libnotify --enable-gkr --enable-manual
+    - make
+    - make distcheck
 
 build-ubuntu-gtk3:
   image: ubuntu:rolling
@@ -52,14 +51,14 @@ build-ubuntu-gtk3:
         libgmime-3.0-dev
         libgnutls28-dev
         libgtk-3-dev
-        libgtkspell-dev
         libnotify-dev
         libsecret-1-dev
         libgtkspell3-3-dev
+        libenchant-2-dev
         yelp-tools
   script:
     - mkdir _build
     - cd _build
     - ../autogen.sh --with-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
-    - make distcheck
+    - make dist

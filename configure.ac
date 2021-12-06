@@ -59,6 +59,7 @@ GTK3_REQUIRED=3.0.0
 GTKSPELL_REQUIRED=2.0.7
 GTKSPELL3_REQUIRED=2.0.16
 ENCHANT_REQUIRED=1.6.0
+ENCHANT2_REQUIRED=2.2.3
 GNUTLS_REQUIRED=3.0.0
 LIBNOTIFY_REQUIRED=0.4.1
 LIBGKR_REQUIRED=3.2.0
@@ -159,7 +160,7 @@ if test "x$want_gtk3" = "xyes" ; then
                     AC_DEFINE(HAVE_GTK,[1],[GTK+ 3 support])]
                     )
   if test "x$want_gtkspell" = "xyes" ; then
-    PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 >= $GTKSPELL3_REQUIRED enchant >= $ENCHANT_REQUIRED],
+    PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 >= $GTKSPELL3_REQUIRED enchant-2 >= $ENCHANT2_REQUIRED],
                       [
                       gtkspell_msg=yes
                       AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
