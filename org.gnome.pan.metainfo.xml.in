@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop">
-  <id>org.gnome.pan.desktop</id>
+<!-- Copyright 2015 Petr Kovar <pknbe@volny.cz> -->
+<component type="desktop-application">
+  <id>org.gnome.pan</id>
   <metadata_license>CC0-1.0</metadata_license>
   <name>Pan Newsreader</name>
   <summary>Read and post Usenet articles</summary>
@@ -11,6 +12,7 @@
     <p>It is also the only Unix newsreader to get a perfect score on the Good
     Net-Keeping Seal of Approval evaluations.</p>
   </description>
+  <launchable type="desktop-id">org.gnome.pan.desktop</launchable>
   <screenshots>
     <screenshot type="default" height="1127" width="637">
       <image>http://pan.rebelbase.com/screenshots/pan-140.png</image>
@@ -25,4 +27,9 @@
   <url type="help">http://pan.rebelbase.com/manual/html/</url>
   <url type="translate">https://l10n.gnome.org/module/pan/</url>
   <translation type="gettext">pan</translation>
+  <content_rating type="oars-1.0">
+    <content_attribute id="language-humor">mild</content_attribute>
+    <content_attribute id="social-chat">intense</content_attribute>
+    <content_attribute id="social-contacts">intense</content_attribute>
+  </content_rating>
 </component>
