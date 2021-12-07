@@ -20,6 +20,7 @@
 #include <config.h>
 #include <glib/gi18n.h>
 #include "gtk-compat.h"
+
 #include <pan/general/macros.h>
 #include <pan/general/debug.h>
 #include <pan/data-impl/data-impl.h>
@@ -327,8 +328,8 @@ namespace pan
         G_CALLBACK(do_mark_selected_groups_read) },
 
       { "delete-groups-articles", GTK_STOCK_DELETE,
-        N_("_Delete Selected Groups’ Articles"), "<control><shift>Delete",
-        N_("Delete Selected Groups’ Articles"),
+        N_("_Delete Selected Groups' Articles"), "<control><shift>Delete",
+        N_("Delete Selected Groups' Articles"),
         G_CALLBACK(do_clear_selected_groups) },
 
       { "get-new-headers-in-selected-groups", "ICON_GET_SELECTED",
@@ -347,8 +348,8 @@ namespace pan
         G_CALLBACK(do_xover_subscribed_groups) },
 
       { "download-headers", "ICON_GET_DIALOG",
-        N_("Get _Headers…"), "",
-        N_("Get Headers…"),
+        N_("Get _Headers..."), "",
+        N_("Get Headers..."),
         G_CALLBACK(do_download_headers) },
 
       { "refresh-group-list", NULL,
@@ -367,17 +368,17 @@ namespace pan
         G_CALLBACK(do_unsubscribe_selected_groups) },
 
       { "save-articles", GTK_STOCK_SAVE,
-        N_("_Save Articles…"), "<shift>S",
-        N_("Save Articles…"),
+        N_("_Save Articles..."), "<shift>S",
+        N_("Save Articles..."),
         G_CALLBACK(do_save_articles) },
 
       { "save-articles-from-nzb", GTK_STOCK_SAVE,
-        N_("Save Articles from Selected _NZB…"), "<control><shift>S",
+        N_("Save Articles from Selected _NZB..."), "<control><shift>S",
         N_("Save Articles from Selected NZB"),
         G_CALLBACK(do_save_articles_from_nzb) },
 
       { "save-articles-to-nzb", GTK_STOCK_SAVE,
-        N_("Save Articles to an NZB _File…"), "<control><shift>F",
+        N_("Save Articles to an NZB _File..."), "<control><shift>F",
         N_("Save Articles to an NZB File"),
         G_CALLBACK(do_save_articles_to_nzb) },
 
@@ -387,7 +388,7 @@ namespace pan
         G_CALLBACK(do_print) },
 
       { "import-tasks", GTK_STOCK_OPEN,
-        N_("_Import NZB Files…"), "<constrol>O",
+        N_("_Import NZB Files..."), "<control>O",
         NULL,
         G_CALLBACK(do_import_tasks) },
 
@@ -447,7 +448,7 @@ namespace pan
         G_CALLBACK(do_show_preferences_dialog) },
 
       { "show-group-preferences-dialog", GTK_STOCK_PREFERENCES,
-        N_("Edit Selected _Group’s Preferences"), NULL,
+        N_("Edit Selected _Group's Preferences"), NULL,
         NULL,
         G_CALLBACK(do_show_group_preferences_dialog) },
 
@@ -611,22 +612,22 @@ namespace pan
         G_CALLBACK(do_invert_selection) },
 
       { "view-article-score", "ICON_SCORE",
-        N_("Edit Article’s Watch/Ignore/Score…"), "<control><shift>C",
+        N_("Edit Article's Watch/Ignore/Score..."), "<control><shift>C",
         NULL,
         G_CALLBACK(do_show_score_dialog) },
 
       { "add-article-score", "ICON_SCORE",
-        N_("Add a _Scoring Rule…"), "S",
+        N_("Add a _Scoring Rule..."), "S",
         NULL,
         G_CALLBACK(do_show_new_score_dialog) },
 
       { "cancel-article", NULL,
-        N_("Cance_l Article…"), NULL,
+        N_("Cance_l Article..."), NULL,
         NULL,
         G_CALLBACK(do_cancel_article) },
 
       { "supersede-article", NULL,
-        N_("_Supersede Article…"), NULL,
+        N_("_Supersede Article..."), NULL,
         NULL,
         G_CALLBACK(do_supersede_article) },
 
@@ -689,12 +690,12 @@ namespace pan
         G_CALLBACK(do_pan_web) },
 
       { "bug-report", NULL,
-        N_("Give _Feedback or Report a Bug…"), NULL,
+        N_("Give _Feedback or Report a Bug..."), NULL,
         NULL,
         G_CALLBACK(do_bug_report) },
 
       { "tip-jar", NULL,
-        N_("_Tip Jar…"), NULL,
+        N_("_Tip Jar..."), NULL,
         NULL,
         G_CALLBACK(do_tip_jar) },
 
@@ -748,10 +749,10 @@ namespace pan
     { "match-only-watched-articles", "ICON_ONLY_WATCHED", N_("Match Only _Watched Articles"), NULL, N_("Match Only Watched Articles"), G_CALLBACK(do_match_only_watched_articles), false },
 
     { "match-watched-articles", NULL, N_("Match Scores of 9999 (_Watched)"), NULL, NULL, G_CALLBACK(do_match_watched_articles), true },
-    { "match-high-scoring-articles", NULL, N_("Match Scores of 5000…9998 (_High)"), NULL, NULL, G_CALLBACK(do_match_high_scoring_articles), true },
-    { "match-medium-scoring-articles", NULL, N_("Match Scores of 1…4999 (Me_dium)"), NULL, NULL, G_CALLBACK(do_match_medium_scoring_articles), true },
+    { "match-high-scoring-articles", NULL, N_("Match Scores of 5000...9998 (_High)"), NULL, NULL, G_CALLBACK(do_match_high_scoring_articles), true },
+    { "match-medium-scoring-articles", NULL, N_("Match Scores of 1...4999 (Me_dium)"), NULL, NULL, G_CALLBACK(do_match_medium_scoring_articles), true },
     { "match-normal-scoring-articles", NULL, N_("Match Scores of 0 (_Normal)"), NULL, NULL, G_CALLBACK(do_match_normal_scoring_articles), true },
-    { "match-low-scoring-articles", NULL, N_("Match Scores of -9998…-1 (_Low)"), NULL, NULL, G_CALLBACK(do_match_low_scoring_articles), true },
+    { "match-low-scoring-articles", NULL, N_("Match Scores of -9998...-1 (_Low)"), NULL, NULL, G_CALLBACK(do_match_low_scoring_articles), true },
     { "match-ignored-articles", NULL, N_("Match Scores of -9999 (_Ignored)"), NULL, NULL, G_CALLBACK(do_match_ignored_articles), false },
 
     { "enable-rules", NULL, N_("Enable/Disable All _Rules"), "<shift>R", NULL, G_CALLBACK(do_toggle_rules), true }
@@ -783,8 +784,8 @@ namespace pan
   GtkRadioActionEntry match_toggle_entries[] =
   {
     { "show-matching-articles", NULL, N_("Show Matching _Articles"), NULL, NULL, Data::SHOW_ARTICLES },
-    { "show-matching-threads", NULL, N_("Show Matching Articles’ _Threads"), NULL, NULL, Data::SHOW_THREADS },
-    { "show-matching-subthreads", NULL, N_("Show Matching Articles’ _Subthreads"), NULL, NULL, Data::SHOW_SUBTHREADS }
+    { "show-matching-threads", NULL, N_("Show Matching Articles' _Threads"), NULL, NULL, Data::SHOW_THREADS },
+    { "show-matching-subthreads", NULL, N_("Show Matching Articles' _Subthreads"), NULL, NULL, Data::SHOW_SUBTHREADS }
   };
 
   std::map<std::string,GCallback> real_toggle_callbacks;

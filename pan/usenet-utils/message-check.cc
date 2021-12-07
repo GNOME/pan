@@ -140,7 +140,7 @@ namespace
     if (sig_type == GNKSA::SIG_NONSTANDARD)
     {
       goodness.raise_to_warn ();
-      errors.insert (_("Warning: The signature marker should be “-- ”, not “--”."));
+      errors.insert (_("Warning: The signature marker should be \"-- \", not \"--\"."));
     }
 
     // how wide and long is the signature?
@@ -339,10 +339,10 @@ namespace
       else if (!groups_our_server_has.count (*it)) {
         goodness.raise_to_warn ();
         char * tmp = g_strdup_printf (
-          _("Warning: The posting profile’s server doesn’t carry newsgroup\n"
-            "\t“%s”.\n"
-            "\tIf the group name is correct, switch profiles in the “From:”\n"
-            "\tline or edit the profile with “Edit → Manage Posting Profiles”."), it->c_str());
+          _("Warning: The posting profile's server doesn't carry newsgroup\n"
+            "\t\"%s\".\n"
+            "\tIf the group name is correct, switch profiles in the \"From:\"\n"
+            "\tline or edit the profile with \"Edit|Manage Posting Profiles\"."), it->c_str());
         errors.insert (tmp);
         g_free (tmp);
       }
@@ -378,10 +378,10 @@ namespace
       {
         goodness.raise_to_warn ();
         char * tmp = g_strdup_printf (
-          _("Warning: The posting profile’s server doesn’t carry newsgroup\n"
-            "\t“%s”.\n"
-            "\tIf the group name is correct, switch profiles in the “From:”\n"
-            "\tline or edit the profile with “Edit → Manage Posting Profiles”."), it->c_str());
+          _("Warning: The posting profile's server doesn't carry newsgroup\n"
+            "\t\"%s\".\n"
+            "\tIf the group name is correct, switch profiles in the \"From:\"\n"
+            "\tline or edit the profile with \"Edit|Manage Posting Profiles\"."), it->c_str());
         errors.insert (tmp);
         g_free (tmp);
       }
@@ -390,7 +390,7 @@ namespace
       {
         goodness.raise_to_warn ();
         char buf[1024];
-        g_snprintf (buf, sizeof(buf), _("Warning: Group “%s” is read-only."), it->c_str());
+        g_snprintf (buf, sizeof(buf), _("Warning: Group \"%s\" is read-only."), it->c_str());
         errors.insert (buf);
       }
 #endif

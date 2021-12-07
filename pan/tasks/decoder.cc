@@ -25,11 +25,9 @@
 #include <cerrno>
 #include <ostream>
 #include <fstream>
+#define PROTOTYPES
+#include <uulib/uudeview.h>
 #include <glib/gi18n.h>
-extern "C" {
-#  define PROTOTYPES
-#  include <uulib/uudeview.h>
-};
 #include <pan/general/worker-pool.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
@@ -61,7 +59,8 @@ Decoder :: enqueue (TaskArticle                     * task,
                     const strings_t                 & input_files,
                     const TaskArticle::SaveMode     & save_mode,
                     const TaskArticle::SaveOptions  & options,
-                    const StringView                & filename)
+                    const StringView                & filename,
+                    const Article                   & article)
 {
   disable_progress_update ();
 
@@ -71,6 +70,7 @@ Decoder :: enqueue (TaskArticle                     * task,
   this->save_mode = save_mode;
   this->options = options;
   this->attachment_filename = filename;
+  this->article_subject = article.subject;
 
   mark_read = false;
 
@@ -114,7 +114,7 @@ Decoder :: do_work()
         mut.unlock();
 
         if (!fp) {
-          g_snprintf(buf, bufsz, _("Couldn’t save file “%s”: %s"), filename, file::pan_strerror(errno));
+          g_snprintf(buf, bufsz, _("Couldn't save file \"%s\": %s"), filename, file::pan_strerror(errno));
           log_errors.push_back (buf); // log error
         } else {
           fwrite (contents, 1, (size_t)length, fp);
@@ -149,7 +149,12 @@ Decoder :: do_work()
       {
 
         if (was_cancelled()) break;
-        if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), 0, 0, ++i)) != UURET_OK) {
+        const char *global_subject = NULL;
+        // In SAVE_ALL mode, article_subject is the subject from the NZB file, if known
+        if (options == TaskArticle::SAVE_ALL && !article_subject.empty()) {
+          global_subject = article_subject.c_str();
+        }
+        if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), 0, 0, ++i, global_subject)) != UURET_OK) {
           g_snprintf(buf, bufsz,
                      _("Error reading from %s: %s"),
                      it->c_str(),
@@ -171,8 +176,8 @@ Decoder :: do_work()
       {
         // skip all other attachments in SAVE_AS mode (single attachment download)
         /// DBG why is this failing if article isn't cached????
-        if (!attachment_filename.empty())
-          if(strcmp(item->filename, attachment_filename.str) != 0 && options == TaskArticle::SAVE_AS) continue;
+        if (options == TaskArticle::SAVE_AS && !attachment_filename.empty())
+          if(strcmp(item->filename, attachment_filename.str) != 0) continue;
 
         file_errors.clear ();
 
@@ -191,14 +196,14 @@ Decoder :: do_work()
 
         // decode the file...
         if ((res = UUDecodeFile (item, fname)) == UURET_OK) {
-          g_snprintf(buf, bufsz,_("Saved “%s”"), fname);
+          g_snprintf(buf, bufsz,_("Saved \"%s\""), fname);
           log_infos.push_back(buf); // log info
         } else if (res == UURET_NODATA) {
           // silently let this error by... user probably tried to
           // save attachements on a text-only post
         } else {
           const int the_errno (UUGetOption (UUOPT_ERRNO, NULL, NULL, 0));
-          g_snprintf (buf, bufsz,_("Error saving “%s”:\n%s."),
+          g_snprintf (buf, bufsz,_("Error saving \"%s\":\n%s."),
                       fname,
                       res==UURET_IOERR ? file::pan_strerror(the_errno) : UUstrerror(res));
           log_errors.push_back(buf); // log error

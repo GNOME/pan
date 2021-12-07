@@ -21,9 +21,7 @@
 #include <cmath>
 #include <fstream>
 #include <glib/gi18n.h>
-extern "C" {
-  #include <gmime/gmime.h>
-}
+#include <gmime/gmime.h>
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
@@ -240,7 +238,7 @@ DataImpl :: xover_add (const Quark         & server,
 
   GroupHeaders * h (get_group_headers (group));
   if (!h && !is_virtual) {
-    Log::add_err_va (_("Error reading from %s: unknown group “%s”"),
+    Log::add_err_va (_("Error reading from %s: unknown group \"%s\""),
                      get_server_address(server).c_str(),
                      group.c_str());
     return 0;

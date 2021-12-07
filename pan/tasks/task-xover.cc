@@ -21,13 +21,13 @@
 #include <cassert>
 #include <cerrno>
 
-#include <glib/gi18n.h>
-extern "C"
-{
-#define PROTOTYPES
+extern "C" {
 #include <stdio.h>
-#include <uulib/uudeview.h>
 }
+#define PROTOTYPES
+#include <uulib/uudeview.h>
+#include <glib/gi18n.h>
+#include <gmime/gmime-utils.h>
 
 #include <glib/gi18n.h>
 #include <gmime/gmime-utils.h>
@@ -81,14 +81,14 @@ namespace
   {
     char buf[1024];
     if (mode == TaskXOver::ALL)
-      snprintf(buf, sizeof(buf), _("Getting all headers for “%s”"),
+      snprintf(buf, sizeof(buf), _("Getting all headers for \"%s\""),
           group.c_str());
     else if (mode == TaskXOver::NEW)
-      snprintf(buf, sizeof(buf), _("Getting new headers for “%s”"),
+      snprintf(buf, sizeof(buf), _("Getting new headers for \"%s\""),
           group.c_str());
     else
       // SAMPLE
-      snprintf(buf, sizeof(buf), _("Sampling headers for “%s”"),
+      snprintf(buf, sizeof(buf), _("Sampling headers for \"%s\""),
           group.c_str());
     return std::string(buf);
   }
@@ -503,7 +503,7 @@ TaskXOver::update_work(bool subtract_one_from_nntp_count)
       _state.set_completed();
       set_finished(OK);
       char str[4096];
-      g_snprintf(str, sizeof(str), _("Getting new headers for “%s” done."), _group.c_str());
+      g_snprintf(str, sizeof(str), _("Getting new headers for \"%s\" done."), _group.c_str());
       verbose (str);
     }
 }

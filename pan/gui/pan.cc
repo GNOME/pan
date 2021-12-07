@@ -23,16 +23,17 @@
 #include <config.h>
 #include <signal.h>
 #include <glib/gi18n.h>
+#include "gtk-compat.h"
+#include <gmime/gmime.h>
+#include <gio/gio.h>
 
 extern "C" {
-  #include "gtk-compat.h"
-  #include <gmime/gmime.h>
-  #include <gio/gio.h>
   #include <sys/types.h>
   #include <sys/stat.h>
   #include <unistd.h>
-  #include <uulib/crc32.h>
 }
+
+#include <uulib/crc32.h>
 
 #ifdef G_OS_WIN32
   #undef _WIN32_WINNT
@@ -634,7 +635,8 @@ _("General Options\n"
 "  -h, --help               Show this usage information and exit.\n"
 "  -v, --version            Print release version and exit.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
-"  --debug                  Run in debug mode.\n"
+"  --debug                  Run in debug mode. Use --debug twice for verbose debug.\n"
+"  --debug-ssl              Run in TLS (aka SSL) debug mode.\n"
 "\n"
 "URL Options\n"
 /** NOT IMPLEMENTED
@@ -646,7 +648,7 @@ _("General Options\n"
 "                           the message-id article to standard output.\n"
 "\n"
 "NZB Batch Options\n"
-"  --nzb file1 file2 …      Process NZB files in non-GUI mode.\n"
+"  --nzb file1 file2 ...    Process NZB files in non-GUI mode.\n"
 "  -o path, --output=path   Path to save attachments listed in the NZB file(s).\n"
 "  --no-gui                 Only show console output, not the download queue.\n") << std::endl;
   }
@@ -1000,7 +1002,7 @@ main (int argc, char *argv[])
     CertStore& certstore (data.get_certstore());
 
     if (nzb && data.get_servers().empty()) {
-      std::cerr << _("Please configure Pan’s news servers before using it as an nzb client.") << std::endl;
+      std::cerr << _("Please configure Pan's news servers before using it as an nzb client.") << std::endl;
        return EXIT_FAILURE;
     }
     data.set_newsrc_autosave_timeout( prefs.get_int("newsrc-autosave-timeout-min", 10 ));

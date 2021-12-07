@@ -17,12 +17,9 @@
  *
  */
 
+#include <config.h>
 #include <glib/gi18n.h>
-extern "C" {
-  #include <config.h>
-}
 #include "gtk-compat.h"
-#include <glib/gi18n.h>
 #include <cctype>
 #include <cmath>
 #include <algorithm>
@@ -268,18 +265,13 @@ HeaderPane :: render_author (GtkTreeViewColumn * ,
                             GtkTreeIter       * iter,
                             gpointer            user_data)
 {
-
   const HeaderPane * self (static_cast<HeaderPane*>(user_data));
-  const Row * row (dynamic_cast<Row*>(self->_tree_store->get_row (iter)));
-
   const Article * a (self->get_article (model, iter));
 
-  char* ret = __g_mime_iconv_strdup(conv, a->author.c_str());
-  if (ret) g_object_set (renderer, "text", ret,
+  g_object_set (renderer, "text", a->author.c_str() ,
                          "background", self->_bg.c_str(),
                          "foreground", self->_fg.c_str(),
                          NULL);
-  g_free(ret);
 }
 
 void
@@ -377,10 +369,7 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
 
   const Article * a (self->get_article (model, iter));
 
-  char* ret = __g_mime_iconv_strdup(conv, a->subject.c_str());
-  std::string res;
-  if (ret) res = ret;
-  g_free(ret);
+  std::string res = a->subject.c_str();
 
   char buf[512];
 

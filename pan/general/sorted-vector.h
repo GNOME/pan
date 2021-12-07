@@ -3,8 +3,8 @@
  * (C) 2002 Martin Holzherr (holzherr@infobrain.com). All rights reserved.
  *
  * Permission is granted to use, distribute and modify this code provided that:
- *   · this copyright notice appears,
- *   ·
+ *   Â· this copyright notice appears,
+ *   Â·
  * The author welcomes any suggestions on the code or reportings of actual
  * use of the code. Please send your comments to holzherr@infobrain.com.
  *

@@ -655,11 +655,11 @@ UUFNameFilter (char *fname)
 int UUEXPORT
 UULoadFile (char *filename, char *fileid, int delflag)
 {
-  return UULoadFileWithPartNo(filename, fileid, delflag, -1);
+  return UULoadFileWithPartNo(filename, fileid, delflag, -1, NULL);
 }
 
 int UUEXPORT
-UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno)
+UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno, const char *global_subject)
 {
   int res, sr, count=0;
   struct stat finfo;
@@ -667,6 +667,7 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno)
   uufile *fload;
   itbd *killem;
   FILE *datei;
+  int overridden_subject;
 
   if ((datei = fopen (filename, "rb")) == NULL) {
     UUMessage (uulib_id, __LINE__, UUMSG_ERROR,
@@ -779,6 +780,23 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno)
       continue;
     }
 
+    if (partno != -1 && global_subject &&
+        loaded->uudet == YENC_ENCODED && /* only yEnc has a filename in each part */
+        (loaded->subject && loaded->filename &&
+         strstr(loaded->subject, loaded->filename) == NULL)) {
+      /*
+       * Sometimes articles derived from an NZB file have corrupt Subject: lines.
+       * That also makes that UUInsertPartToList() fails to combine files properly.
+       * We detect this situation by checking if the filename from the
+       * part can be found in the Subject: header.
+       */
+      _FP_free(loaded->subject);
+      loaded->subject = _FP_strdup((char *)global_subject);
+      overridden_subject = 1;
+    } else {
+      overridden_subject = 0;
+    }
+
     if ((fload = UUPreProcessPart (loaded, &res)) == NULL) {
       /*
        * no useful data found
@@ -791,6 +809,17 @@ UULoadFileWithPartNo (char *filename, char *fileid, int delflag, int partno)
       UUkillfread (loaded);
       if (uu_fast_scanning && sr != UURET_CONT) break;
       continue;
+    }
+
+    if (overridden_subject) {
+      /*
+       * If the yEnc file gives a different file name than the subject,
+       * this is a security risk.
+       *
+       * Override the part file name with the one derived from the global subject.
+       */
+      _FP_free(fload->filename);
+      fload->filename = _FP_strdup(fload->subfname);
     }
 
     if ((loaded->subject && *(loaded->subject)) ||

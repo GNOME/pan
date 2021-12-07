@@ -5,11 +5,11 @@ public_icons_themes = \
 	$(NULL)
 
 public_icons = \
-	hicolor_apps_16x16_pan.png \
-	hicolor_apps_24x24_pan.png \
-	hicolor_apps_32x32_pan.png \
-	hicolor_apps_48x48_pan.png \
-	hicolor_apps_256x256_pan.png \
+	hicolor_apps_16x16_org.gnome.pan.png \
+	hicolor_apps_24x24_org.gnome.pan.png \
+	hicolor_apps_32x32_org.gnome.pan.png \
+	hicolor_apps_48x48_org.gnome.pan.png \
+	hicolor_apps_256x256_org.gnome.pan.png \
 	$(NULL)
 
 stock_images = \

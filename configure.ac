@@ -1,8 +1,8 @@
-AC_INIT([Pan],[0.147],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[http://pan.rebelbase.com/])
+AC_INIT([Pan],[0.148],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[http://pan.rebelbase.com/])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
-AC_DEFINE(VERSION_MINOR,147,[Minor part of version number])
+AC_DEFINE(VERSION_MINOR,148,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
-AC_DEFINE(VERSION_TITLE,["Sweet Solitude"],[Release Name])
+AC_DEFINE(VERSION_TITLE,["Chamechaude"],[Release Name])
 AC_PREREQ([2.64])
 
 dnl Get git info for pan-git.version
@@ -33,7 +33,7 @@ if test ! -z $GIT_HASH; then
     GIT_REV="$GIT_HASH $GIT_REMOTE"
   fi
     echo $GIT_REV > pan-git.version
-  elif test -f pan-git.version ; then
+  elif test -s pan-git.version ; then
     GIT_REV=`cat pan-git.version`
   else
     GIT_REV="Unknown"
@@ -59,6 +59,7 @@ GTK3_REQUIRED=3.0.0
 GTKSPELL_REQUIRED=2.0.7
 GTKSPELL3_REQUIRED=2.0.16
 ENCHANT_REQUIRED=1.6.0
+ENCHANT2_REQUIRED=2.2.3
 GNUTLS_REQUIRED=3.0.0
 LIBNOTIFY_REQUIRED=0.4.1
 LIBGKR_REQUIRED=3.2.0
@@ -94,7 +95,7 @@ AC_CHECK_HEADERS([errno.h fcntl.h])
 dnl I18n support
 GETTEXT_PACKAGE=pan
 AC_SUBST(GETTEXT_PACKAGE)
-AM_GNU_GETTEXT_VERSION([0.19.7])
+AM_GNU_GETTEXT_VERSION([0.21])
 AM_GNU_GETTEXT([external])
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Gettext Package])
 panlocaledir=[${datadir}/locale]
@@ -112,17 +113,27 @@ if test "x$want_dbus" = "xyes" ; then
 else
   AM_PATH_GLIB_2_0($GLIB_REQUIRED,,exit 1,gobject gmodule gthread)
 fi
+dnl Silence deprecation warnings for things deprecated before 2.26,
+dnl and generally set the target behaviour to be like GLib 2.26.
+dnl In principle this should match $GLIB_REQUIRED, but 2.26 is the oldest
+dnl version for which the macros exist (and has been unsupported since
+dnl around 2011 in any case).
+GLIB_CFLAGS="$GLIB_CFLAGS -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26"
+dnl Highest version number from which new features are allowed to be used,
+dnl even within a GLIB_CHECK_VERSION check. GLib will produce compile-time
+dnl warnings when features of a newer GLib version are used.
+GLIB_CFLAGS="$GLIB_CFLAGS -DGLIB_VERSION_MAX_ALLOWED=G_ENCODE_VERSION\\(2,36\\)"
 
 dnl Check for GMime
-AC_ARG_WITH([gmime30],
-  AS_HELP_STRING([--with-gmime30],[enable GMime 3.0 support (experimental, normally: no)]), [want_gmime30=$withval], [want_gmime30=no])
-if test "x$want_gmime30" = "xyes" ; then
+AC_ARG_WITH([gmime2],
+  AS_HELP_STRING([--with-gmime2],[enable GMime 2 support (deprecated, normally: no)]), [want_gmime2=$withval], [want_gmime2=no])
+if test "x$want_gmime2" = "xyes" ; then
+  PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED])
+else
   PKG_CHECK_MODULES([GMIME], [gmime-3.0 >= $GMIME30_REQUIRED],
   [
   AC_DEFINE(HAVE_GMIME_30,[1],[GMime 3.0 available])
   ])
-else
-  PKG_CHECK_MODULES([GMIME], [gmime-2.6 >= $GMIME26_REQUIRED])
 fi
 
 dnl Check for GMime cryptography support
@@ -149,7 +160,7 @@ if test "x$want_gtk3" = "xyes" ; then
                     AC_DEFINE(HAVE_GTK,[1],[GTK+ 3 support])]
                     )
   if test "x$want_gtkspell" = "xyes" ; then
-    PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 >= $GTKSPELL3_REQUIRED enchant >= $ENCHANT_REQUIRED],
+    PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 >= $GTKSPELL3_REQUIRED enchant-2 >= $ENCHANT2_REQUIRED],
                       [
                       gtkspell_msg=yes
                       AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
@@ -173,7 +184,7 @@ else
                       AC_MSG_RESULT(no)
                       ])
    fi
-   AM_PATH_GTK_2_0($GTK_REQUIRED,,exit 1,gthread)
+   PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= $GTK_REQUIRED, gthread-2.0])
 fi
 
 AC_SUBST(ENCHANT_CFLAGS)
@@ -345,7 +356,7 @@ Configuration:
         Source code location:   ${srcdir}
         Compiler:               ${CXX}
         With D-Bus:             ${want_dbus}
-        With GMime 3.0:         ${want_gmime30}
+        With GMime 2:           ${want_gmime2}
         With GMime crypto:      ${want_gmime_crypto}
         With GtkSpell:          ${gtkspell_msg}
         With GTK+ 3:            ${gtk_msg}

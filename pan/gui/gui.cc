@@ -28,6 +28,7 @@ extern "C" {
   #include <sys/stat.h> // for chmod
   #include <dirent.h>
 }
+#include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
 #include <pan/general/file-util.h>
@@ -608,7 +609,7 @@ GUI :: prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs)
   if (!file :: file_exists (prev_path.c_str()))
     prev_path = g_get_home_dir ();
 
-  GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB’s Files"), parent,
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB's Files"), parent,
                                                GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                                GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                                GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
@@ -637,7 +638,7 @@ GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
   prev_path = g_get_home_dir ();
     prev_file = std::string(_("Untitled.nzb"));
 
-  GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB File as…"),
+  GtkWidget * w = gtk_file_chooser_dialog_new (_("Save NZB File as..."),
 				      parent,
 				      GTK_FILE_CHOOSER_ACTION_SAVE,
 				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -1342,7 +1343,7 @@ void GUI :: do_supersede_article ()
       GTK_BUTTONS_CLOSE, NULL);
     HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(w),
       _("Unable to supersede article."),
-      _("The article doesn’t match any of your posting profiles."));
+      _("The article doesn't match any of your posting profiles."));
     g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
     gtk_widget_show (w);
     g_object_unref (message);
@@ -1438,7 +1439,7 @@ void GUI :: do_cancel_article ()
       GTK_BUTTONS_CLOSE, NULL);
     HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(w),
       _("Unable to cancel article."),
-      _("The article doesn’t match any of your posting profiles."));
+      _("The article doesn't match any of your posting profiles."));
     g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
     gtk_widget_show (w);
     g_object_unref (message);
@@ -1718,7 +1719,7 @@ void GUI :: do_about_pan ()
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
   gtk_about_dialog_set_comments (w, VERSION_TITLE " (" GIT_REV "; " PLATFORM_INFO ")");
-  gtk_about_dialog_set_copyright (w, _("Copyright \u00A9 2002-2017 Charles Kerr and others")); // \u00A9 is unicode for (c)
+  gtk_about_dialog_set_copyright (w, _("Copyright \u00A9 2002-2021 Charles Kerr and others")); // \u00A9 is unicode for (c)
   gtk_about_dialog_set_website (w, "http://pan.rebelbase.com/");
   gtk_about_dialog_set_logo (w, logo);
   gtk_about_dialog_set_license (w, LICENSE);
@@ -2334,7 +2335,7 @@ GUI :: set_queue_size_label (unsigned int running,
                     KiB_remain, KiBps,
                     hr, min, sec);
 
-  g_snprintf (tip, sizeof(tip), _("%lu tasks, %s, %.1f KiBps, ETA %d∶%02d∶%02d"),
+  g_snprintf (tip, sizeof(tip), _("%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"),
               (running+queued), render_bytes(KiB_remain), KiBps, hr, min, sec);
 
   // update the gui
@@ -2386,7 +2387,7 @@ GUI :: on_queue_error (Queue&, const StringView& message)
       s.assign (message.str, message.len);
       s += "\n \n";
     }
-    s += _("Pan is now offline. Please see “File → Event Log” and correct the problem, then use “File → Work Online” to continue.");
+    s += _("Pan is now offline. Please see \"File|Event Log\" and correct the problem, then use \"File|Work Online\" to continue.");
     Log::add_urgent_va ("%s", s.c_str());
 
     toggle_action ("work-online", false);

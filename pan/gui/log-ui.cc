@@ -22,9 +22,7 @@
 #include <fstream>
 #include <iostream>
 #include <glib/gi18n.h>
-extern "C" {
-  #include "gtk-compat.h"
-}
+#include "gtk-compat.h"
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/string-view.h>

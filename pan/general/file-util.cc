@@ -212,7 +212,7 @@ file :: sanitize (const StringView& fname)
 char*
 file :: normalize_inplace (char * filename)
 {
-  register char *in, *out;
+  char *in, *out;
   pan_return_val_if_fail (filename && *filename, filename);
 
   for (in=out=filename; *in; )
@@ -310,7 +310,7 @@ file :: get_text_file_contents (const StringView  & filename,
   const std::string fname (filename.str, filename.len);
   g_file_get_contents (fname.c_str(), &body, &body_len, &err);
   if (err) {
-    Log::add_err_va (_("Error reading file “%s”: %s"), err->message, g_strerror(errno));
+    Log::add_err_va (_("Error reading file \"%s\": %s"), err->message, g_strerror(errno));
     g_clear_error (&err);
     return false;
   }

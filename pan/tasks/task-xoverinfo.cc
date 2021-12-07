@@ -24,13 +24,13 @@
 #include <gmime/gmime-utils.h>
 
 extern "C" {
-  #define PROTOTYPES
   #include <stdio.h>
-  #include <uulib/uudeview.h>
-  #include <zlib.h>
 }
+#define PROTOTYPES
+#include <uulib/uudeview.h>
 #include <glib/gi18n.h>
 #include <gmime/gmime-utils.h>
+#include <zlib.h>
 #include <fstream>
 #include <iostream>
 #include <pan/general/debug.h>
@@ -78,7 +78,7 @@ namespace
   std::string get_description (const Quark& group)
   {
     char buf[1024];
-    snprintf (buf, sizeof(buf), _("Getting header counts for “%s”"), group.c_str());
+    snprintf (buf, sizeof(buf), _("Getting header counts for \"%s\""), group.c_str());
     return std::string (buf);
   }
 }

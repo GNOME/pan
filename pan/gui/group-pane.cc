@@ -21,9 +21,7 @@
 #include <cassert>
 #include <deque>
 #include <glib/gi18n.h>
-extern "C" {
-  #include "gtk-compat.h"
-}
+#include "gtk-compat.h"
 #include <pan/general/debug.h>
 //#include <pan/general/gdk-threads.h>
 #include <pan/general/log.h>

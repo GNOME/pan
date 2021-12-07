@@ -20,12 +20,14 @@
 #include <config.h>
 #include <glib/gi18n.h>
 #include <glib.h>
-extern "C" {
-  #include "gtk-compat.h"
+#include "gtk-compat.h"
 #ifdef HAVE_GTKSPELL
-  #include <enchant/enchant.h>
+#if GTKSPELL_VERSION == 3
+#include <enchant-2/enchant.h>
+#else
+#include <enchant/enchant.h>
 #endif
-}
+#endif
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/data/data.h>
@@ -159,7 +161,7 @@ namespace
 
     if (profiles.empty())
     {
-      gtk_combo_box_text_append_text (combo, _("No Profiles defined in Edit → Posting Profiles."));
+      gtk_combo_box_text_append_text (combo, _("No Profiles defined in Edit|Posting Profiles."));
       gtk_combo_box_set_active (GTK_COMBO_BOX(combo), 0);
       gtk_widget_set_sensitive (w, false);
     }

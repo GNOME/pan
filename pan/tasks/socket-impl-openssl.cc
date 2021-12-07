@@ -41,6 +41,7 @@ extern "C" {
   #include <sys/types.h>
 }
 
+#include <glib/gi18n.h>
 #include <pan/usenet-utils/ssl-utils.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
@@ -211,7 +212,7 @@ GIOChannelSocketGnuTLS :: create_channel (const StringView& host_in, int port, s
     err = ::getaddrinfo (host.c_str(), portbuf, &hints, &ans);
     if (err != 0) {
       char buf[512];
-      snprintf (buf, sizeof(buf), _("Error connecting to “%s”"), hpbuf);
+      snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
       setme_err = buf;
       if (errno) {
         setme_err += " (";
@@ -249,7 +250,7 @@ GIOChannelSocketGnuTLS :: create_channel (const StringView& host_in, int port, s
   // create the giochannel...
   if (sockfd <= 0) {
     char buf[512];
-    snprintf (buf, sizeof(buf), _("Error connecting to “%s”"), hpbuf);
+    snprintf (buf, sizeof(buf), _("Error connecting to \"%s\""), hpbuf);
     setme_err = buf;
     if (errno) {
       setme_err += " (";

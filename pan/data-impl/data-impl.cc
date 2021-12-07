@@ -146,7 +146,7 @@ GError *error_c = NULL;
     secret_password_store_sync (
       SECRET_SCHEMA_COMPAT_NETWORK,
       SECRET_COLLECTION_DEFAULT,
-      _("Pan Newsreader’s server passwords"),
+      _("Pan Newsreader's server passwords"),
       pw.pw,
       NULL, &error_c,
       "user", pw.user.str,
@@ -193,7 +193,7 @@ DataImpl :: password_encrypt (const PasswordData& pw)
     gnome_keyring_store_password_sync (
       GNOME_KEYRING_NETWORK_PASSWORD,
       GNOME_KEYRING_DEFAULT,
-      _("Pan Newsreader’s server passwords"),
+      _("Pan Newsreader's server passwords"),
       pw.pw,
       "user", pw.user.str,
       "server", pw.server.c_str(),

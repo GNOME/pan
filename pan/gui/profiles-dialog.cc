@@ -24,9 +24,7 @@
 #include <config.h>
 #include <iostream>
 #include <glib/gi18n.h>
-extern "C" {
-  #include "gtk-compat.h"
-}
+#include "gtk-compat.h"
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/gnksa.h>
@@ -80,7 +78,7 @@ namespace
     if (row == ROW_GPGSIG)
     {
       gtk_widget_set_tooltip_text(d->_signature_file_combo_box,
-            _("Please choose your email address according to your PGP key’s user id."));
+            _("Please choose your email address according to your PGP key's user id."));
       gtk_widget_hide (d->_signature_file);
 
     }
@@ -156,7 +154,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     set_entry (w, profile.address);
 #ifdef HAVE_GMIME_CRYPTO
     gtk_widget_set_tooltip_text(w, _("Your email address.\n"
-                                     "Note that this has to match your PGP signature’s address\n"
+                                     "Note that this has to match your PGP signature's address\n"
                                      "if you want your messages to be PGP-signed or encrypted correctly."));
 #endif
     HIG :: workarea_add_row (t, &row, _("_Email Address:"), w);
@@ -234,7 +232,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     w = _xface_entry = gtk_entry_new ();
     set_entry (w, profile.xface);
     gtk_widget_set_tooltip_markup (w, _("You can add an avatar icon to your articles with a unique X-Face code.\n"
-                                        "Add the code without the trailing <b>“X-Face:”</b> \n if it was generated "
+                                        "Add the code without the trailing <b>\"X-Face:\"</b> \n if it was generated "
                                         "by a helper program (for example http://www.dairiki.org/xface/xface.php)."));
     HIG :: workarea_add_row (t, &row, _("_X-Face:"), w, NULL);
   HIG :: workarea_add_section_divider (t, &row);
@@ -243,7 +241,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
 
     w = _msgid_fqdn_entry = gtk_entry_new ();
     set_entry (w, profile.fqdn);
-    gtk_widget_set_tooltip_text (w, _("When posting to Usenet, your article’s Message-ID contains a domain name.\n"
+    gtk_widget_set_tooltip_text (w, _("When posting to Usenet, your article's Message-ID contains a domain name.\n"
                                       "You can set a custom domain name here, or leave it blank to let Pan use the "
                                       "domain name from your email address."));
     HIG :: workarea_add_row (t, &row, _("Message-ID _Domain Name:"), w, NULL);

@@ -143,7 +143,7 @@ ArticleCache :: ArticleCache (const StringView& path, const StringView& extensio
    GDir * dir = g_dir_open (_path.c_str(), 0, &err);
    if (err != NULL)
    {
-      Log::add_err_va (_("Error opening directory: “%s”: %s"), _path.c_str(), err->message);
+      Log::add_err_va (_("Error opening directory: \"%s\": %s"), _path.c_str(), err->message);
       g_clear_error (&err);
    }
    else
@@ -234,7 +234,7 @@ ArticleCache :: add (const Quark& message_id, const StringView& article, const b
 
   if (!fp)
   {
-      Log::add_err_va (_("Unable to save “%s” %s"),
+      Log::add_err_va (_("Unable to save \"%s\" %s"),
                        filename, file::pan_strerror(errno));
       res.type = CACHE_IO_ERR;
   }
@@ -243,7 +243,7 @@ ArticleCache :: add (const Quark& message_id, const StringView& article, const b
     const size_t bytes_written (fwrite (article.str, sizeof(char), article.len, fp));
     if (bytes_written < article.len)
     {
-      Log::add_err_va (_("Unable to save “%s” %s"),
+      Log::add_err_va (_("Unable to save \"%s\" %s"),
                        filename, file::pan_strerror(errno));
       if (errno ==  ENOSPC || errno == ENOMEM)
       {
@@ -361,7 +361,7 @@ ArticleCache :: get_message_file_stream (const Quark& mid) const
       errno = 0;
       FILE * fp = fopen (filename, "rb");
       if (!fp)
-         Log::add_err_va (_("Error opening file “%s” %s"), filename, file::pan_strerror(errno));
+         Log::add_err_va (_("Error opening file \"%s\" %s"), filename, file::pan_strerror(errno));
       else {
          GMimeStream * file_stream = g_mime_stream_file_new (fp);
          retval = g_mime_stream_buffer_new (file_stream, GMIME_STREAM_BUFFER_BLOCK_READ);
@@ -392,7 +392,7 @@ ArticleCache :: get_message_mem_stream (const Quark& mid) const
          retval = g_mime_stream_mem_new_with_buffer (buf, len);
          g_free (buf);
       } else {
-         Log::add_err_va (_("Error reading file “%s”: %s"), filename, err->message);
+         Log::add_err_va (_("Error reading file \"%s\": %s"), filename, err->message);
          g_clear_error (&err);
       }
    }

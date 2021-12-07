@@ -4,7 +4,7 @@
  * Copyright (C) 2002-2006  Charles Kerr <charles@rebelbase.com>
  *
  * This file
- * Copyright (C) 2011 Heinrich M�ller <henmull@src.gnome.org>
+ * Copyright (C) 2011 Heinrich Müller <henmull@src.gnome.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -258,7 +258,7 @@ int CertStore::get_all_certs_from_disk() {
 	GDir * dir = g_dir_open(ssldir, 0, &err);
 	if (err != NULL) {
 		Log::add_err_va(
-				_("Error opening SSL certificate directory: “%s”: %s"),
+				_("Error opening SSL certificate directory: \"%s\": %s"),
 				ssldir, err->message);
 		g_error_free(err);
 	} else {

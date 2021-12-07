@@ -28,6 +28,7 @@ extern "C"
 {
   #include <unistd.h>
 }
+#include <gmime/gmime.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
@@ -46,106 +47,6 @@ namespace pan
   iconv_t conv(0);
   bool iconv_inited(false);
 
-  char *
-  __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n, const char* charset)
-  {
-    iconv_t ic(0), backup(0);
-    if (charset)
-    {
-      ic = iconv_open ("UTF-8", charset);
-      backup = conv;
-      conv = ic;
-    }
-
-    size_t inleft, outleft, converted = 0;
-    char *out, *outbuf;
-    const char *inbuf;
-    size_t outlen;
-    int errnosav;
-
-    if (cd == (iconv_t) -1 || !iconv_inited)
-      return g_strndup (str, n);
-
-    outlen = n * 2 + 16;
-    out = (char*)g_malloc (outlen + 4);
-
-    inbuf = str;
-    inleft = n;
-
-    do {
-      errno = 0;
-      outbuf = out + converted;
-      outleft = outlen - converted;
-
-#if defined(__NetBSD__)
-      converted = iconv (cd, &inbuf, &inleft, &outbuf, &outleft);
-#else
-      converted = iconv (cd, (char **) &inbuf, &inleft, &outbuf, &outleft);
-#endif
-
-      if (converted != (size_t) -1 && errno == 0) {
-        /*
-         * EINVAL  An  incomplete  multibyte sequence has been encoun�
-         *         tered in the input.
-         *
-         * We'll just have to ignore it...
-         */
-        break;
-      }
-
-      if (errno != E2BIG && errno != EILSEQ) {
-        errnosav = errno;
-        g_free (out);
-
-        /* reset the cd */
-        iconv (cd, NULL, NULL, NULL, NULL);
-
-        errno = errnosav;
-
-        return NULL;
-      }
-
-      /*
-		 * E2BIG   There is not sufficient room at *outbuf.
-		 *
-		 * We just need to grow our outbuffer and try again.
-		 */
-      {
-        converted = outbuf - out;
-        outlen += inleft * 2 + 16;
-        out = (char*)g_realloc (out, outlen + 4);
-        outbuf = out + converted;
-      }
-
-    } while (TRUE);
-
-    /* flush the iconv conversion */
-    while (iconv (cd, NULL, NULL, &outbuf, &outleft) == (size_t) -1) {
-      if (errno != E2BIG)
-        break;
-
-      outlen += 16;
-      converted = outbuf - out;
-      out = (char*)g_realloc (out, outlen + 4);
-      outleft = outlen - converted;
-      outbuf = out + converted;
-    }
-
-    /* Note: not all charsets can be nul-terminated with a single
-             nul byte. UCS2, for example, needs 2 nul bytes and UCS4
-             needs 4. I hope that 4 nul bytes is enough to terminate all
-             multibyte charsets? */
-
-    /* nul-terminate the string */
-    memset (outbuf, 0, 4);
-
-    /* reset the cd */
-    iconv (cd, NULL, NULL, NULL, NULL);
-
-    if (backup) conv = backup;
-
-    return out;
-  }
 }
 
 namespace
@@ -1124,12 +1025,12 @@ namespace
 #ifdef HAVE_GMIME_CRYPTO
 GMimeMessage*
 mime :: construct_message (GMimeStream    ** istreams,
-                           int               qty,
+                           unsigned int      qty,
                            GPGDecErr      &  err)
 #else
 GMimeMessage*
 mime :: construct_message (GMimeStream    ** istreams,
-                           int               qty)
+                           unsigned int      qty)
 #endif
 {
   const char * message_id = "Foo <bar@mum>";
@@ -1749,11 +1650,15 @@ namespace pan
 #ifdef HAVE_GMIME_30
     GMimeObject *gmo;
     gmo = g_mime_message_get_mime_part (body);
-    if (g_mime_multipart_signed_sign (gpg_ctx, gmo, uid.c_str(), &err) != NULL)
+    mps = g_mime_multipart_signed_sign (gpg_ctx, gmo, uid.c_str(), &err);
+    if (mps == NULL)
 #else
     if (g_mime_multipart_signed_sign (mps, GMIME_OBJECT (part), gpg_ctx, uid.c_str(), GMIME_DIGEST_ALGO_SHA1, &err) <0)
 #endif
     {
+#ifdef HAVE_GMIME_30
+      g_object_unref(gmo);
+#endif
       g_object_unref(mps);
       g_object_unref(G_OBJECT(part));
       return 0;
@@ -1767,7 +1672,9 @@ namespace pan
     g_mime_message_set_mime_part(body,GMIME_OBJECT(mps));
     g_object_unref(G_OBJECT(part));
     g_object_unref(mps);
-
+#ifdef HAVE_GMIME_30
+    g_object_unref(gmo);
+#endif
     return body;
   }
 
@@ -1783,8 +1690,10 @@ namespace pan
     GMimeMultipartEncrypted * mpe = g_mime_multipart_encrypted_new();
 
 #ifdef HAVE_GMIME_30
-    if (g_mime_multipart_encrypted_encrypt(gpg_ctx, GMIME_OBJECT (part), sign, uid.c_str(),
-                                           GMIME_ENCRYPT_NONE, rcp, &err) != NULL)
+	GMimeMultipartEncrypted *gmme;
+	gmme = g_mime_multipart_encrypted_encrypt(gpg_ctx, GMIME_OBJECT (part), sign, uid.c_str(),
+                                           GMIME_ENCRYPT_NONE, rcp, &err);
+    if (gmme == NULL)
 #else
     if (g_mime_multipart_encrypted_encrypt(mpe, GMIME_OBJECT (part), gpg_ctx, sign,
                                            uid.c_str(), GMIME_DIGEST_ALGO_SHA1, rcp, &err) < 0)
@@ -1792,12 +1701,18 @@ namespace pan
     {
       g_object_unref(mpe);
       g_object_unref(G_OBJECT(part));
+#ifdef HAVE_GMIME_30
+      g_object_unref(gmme);
+#endif      
       return false;
     }
 
     g_mime_message_set_mime_part(body,GMIME_OBJECT(mpe));
     g_object_unref(G_OBJECT(part));
     g_object_unref(mpe);
+#ifdef HAVE_GMIME_30
+    g_object_unref(gmme);
+#endif    
 
     return true;
   }

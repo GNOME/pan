@@ -81,12 +81,12 @@ namespace pan
 #ifdef HAVE_GMIME_CRYPTO
     static GMimeMessage *
     construct_message (GMimeStream      ** istreams,
-                       int                 qty,
+                       unsigned int        qty,
                        GPGDecErr         &);
 #else
     static GMimeMessage *
     construct_message (GMimeStream      ** istreams,
-                       int                 qty);
+                       unsigned int        qty);
 #endif
     static const char *
     get_charset (GMimeMessage * message);
@@ -117,11 +117,9 @@ namespace pan
   extern iconv_t conv;
   extern bool iconv_inited;
 
-  char * __g_mime_iconv_strndup (iconv_t cd, const char *str, size_t n, const char* charset=0);
-
   static char * __g_mime_iconv_strdup (iconv_t cd, const char *str, const char* charset=0)
   {
-    return __g_mime_iconv_strndup(cd, str, strlen(str), charset);
+    return g_mime_iconv_strndup(cd, str, strlen(str));
   }
 
 }
