@@ -25,6 +25,7 @@ build-ubuntu-gtk2:
         libgnutls28-dev
         yelp-tools
   script:
+    - head -15 configure.ac
     - mkdir _build
     - cd _build
     - ../autogen.sh --without-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --without-gtkspell --enable-libnotify --enable-gkr --enable-manual
