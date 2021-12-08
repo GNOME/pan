@@ -29,8 +29,6 @@ extern "C" {
 #include <glib/gi18n.h>
 #include <gmime/gmime-utils.h>
 
-#include <glib/gi18n.h>
-#include <gmime/gmime-utils.h>
 #include <fstream>
 #include <iostream>
 #include <pan/general/debug.h>

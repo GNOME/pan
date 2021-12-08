@@ -31,7 +31,6 @@
 #include <string>
 #include <cerrno>
 #include <cstring>
-#include <glib/gi18n.h>
 
 extern "C" {
   #include <unistd.h>

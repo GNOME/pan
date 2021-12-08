@@ -27,7 +27,6 @@
 #include <ostream>
 #include <fstream>
 #include <sstream>
-#include <glib/gi18n.h>
 
 #define PROTOTYPES
 #include <uulib/uudeview.h>

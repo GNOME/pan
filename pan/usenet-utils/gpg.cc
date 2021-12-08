@@ -23,7 +23,6 @@
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include "gpg.h"
-#include <glib/gi18n.h>
 
 extern "C" {
   #include <stdlib.h>

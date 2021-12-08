@@ -20,9 +20,6 @@
 #include <config.h>
 #include <cassert>
 #include <cerrno>
-#include <glib/gi18n.h>
-#include <gmime/gmime-utils.h>
-
 extern "C" {
   #include <stdio.h>
 }

@@ -23,7 +23,6 @@
 #include <cstdlib>
 #include <iostream>
 #include <sstream>
-#include <gmime/gmime.h>
 extern "C"
 {
   #include <unistd.h>

@@ -23,7 +23,6 @@
 extern "C" {
   #include <stdlib.h>
 }
-
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
