@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan2\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2021-11-07 15:06+0000\n"
+"POT-Creation-Date: 2021-12-06 19:16+0000\n"
 "PO-Revision-Date: 2021-11-14 14:35+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
@@ -19,15 +19,31 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: pan.appdata.xml.in:5
-msgid "Pan Newsreader"
-msgstr "Czytnik grup dyskusyjnych Pan"
+#. update the titlebar
+#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:22
+#: pan/gui/dl-headers-ui.cc:104 pan/gui/gui.cc:1045 pan/gui/gui.cc:1718
+#: pan/gui/gui.cc:2038 pan/gui/score-add-ui.cc:600
+msgid "Pan"
+msgstr "Pan"
 
-#: pan.appdata.xml.in:6 pan.desktop.in:5
+#: org.gnome.pan.desktop.in:4
+msgid "Newsreader"
+msgstr "Czytnik grup dyskusyjnych"
+
+#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:6
 msgid "Read and post Usenet articles"
 msgstr "Czytanie i wysyłanie wiadomości w sieci Usenet"
 
-#: pan.appdata.xml.in:8
+#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
+#: org.gnome.pan.desktop.in:7
+msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
+msgstr "usenet;grupy;dyskusyjne;czytnik;wiadomość;artykuł;post;yenc;nzb;"
+
+#: org.gnome.pan.metainfo.xml.in:5
+msgid "Pan Newsreader"
+msgstr "Czytnik grup dyskusyjnych Pan"
+
+#: org.gnome.pan.metainfo.xml.in:8
 msgid ""
 "Pan is a Usenet newsreader that is good at both text and binaries. It "
 "supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
@@ -37,29 +53,13 @@ msgstr ""
 "Obsługuje czytanie w trybie offline, punktację i listy blokowania, yEnc, "
 "NZB, PGP, wiele serwerów i bezpieczne połączenia."
 
-#: pan.appdata.xml.in:11
+#: org.gnome.pan.metainfo.xml.in:11
 msgid ""
 "It is also the only Unix newsreader to get a perfect score on the Good Net-"
 "Keeping Seal of Approval evaluations."
 msgstr ""
 "Jest także jedynym czytnikiem grup dyskusyjnych dla systemu UNIX, który "
 "uzyskał idealny wynik w badaniach „Good Net-Keeping Seal of Approval”."
-
-#. update the titlebar
-#: pan.appdata.xml.in:22 pan.desktop.in:3 pan/gui/dl-headers-ui.cc:104
-#: pan/gui/gui.cc:1045 pan/gui/gui.cc:1718 pan/gui/gui.cc:2038
-#: pan/gui/score-add-ui.cc:600
-msgid "Pan"
-msgstr "Pan"
-
-#: pan.desktop.in:4
-msgid "Newsreader"
-msgstr "Czytnik grup dyskusyjnych"
-
-#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
-#: pan.desktop.in:7
-msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
-msgstr "usenet;grupy;dyskusyjne;czytnik;wiadomość;artykuł;post;yenc;nzb;"
 
 #: pan/data/article-cache.cc:144 pan/data/encode-cache.cc:62
 #, c-format
@@ -811,8 +811,8 @@ msgstr "Wyświetl po_dwątki pasujących wiadomości"
 msgid "Unnamed File"
 msgstr "Plik bez nazwy"
 
-#: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1311
-#: pan/gui/header-pane.cc:1751 pan/gui/post-ui.cc:2817 pan/gui/prefs-ui.cc:853
+#: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1303
+#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2817 pan/gui/prefs-ui.cc:853
 #: pan/gui/score-add-ui.cc:137 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "Temat"
@@ -821,7 +821,7 @@ msgstr "Temat"
 msgid "From"
 msgstr "Od"
 
-#: pan/gui/body-pane.cc:1139 pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1830
+#: pan/gui/body-pane.cc:1139 pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1822
 #: pan/gui/log-ui.cc:305 pan/gui/prefs-ui.cc:849
 msgid "Date"
 msgstr "Data"
@@ -1182,8 +1182,8 @@ msgid "Unable to open help file."
 msgstr "Nie można otworzyć pliku pomocy."
 
 #: pan/gui/gui.cc:1721
-msgid "Copyright © 2002-2017 Charles Kerr and others"
-msgstr "Copyright © 2002-2017 Charles Kerr i inni"
+msgid "Copyright © 2002-2021 Charles Kerr and others"
+msgstr "Copyright © 2002-2021 Charles Kerr i inni"
 
 #: pan/gui/gui.cc:1726
 msgid "translator-credits"
@@ -1239,11 +1239,11 @@ msgstr[0] "Tej wiadomości brakuje %d części."
 msgstr[1] "Tej wiadomości brakuje %d części z %d:"
 msgstr[2] "Tej wiadomości brakuje %d części z %d:"
 
-#: pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1313 pan/gui/task-pane.cc:797
+#: pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1305 pan/gui/task-pane.cc:797
 msgid "Message-ID"
 msgstr "Identyfikator wiadomości"
 
-#: pan/gui/gui.cc:2011 pan/gui/header-pane.cc:1799 pan/gui/prefs-ui.cc:850
+#: pan/gui/gui.cc:2011 pan/gui/header-pane.cc:1791 pan/gui/prefs-ui.cc:850
 msgid "Lines"
 msgstr "Wiersze"
 
@@ -1251,7 +1251,7 @@ msgstr "Wiersze"
 msgid "Size"
 msgstr "Rozmiar"
 
-#: pan/gui/gui.cc:2012 pan/gui/header-pane.cc:1815 pan/gui/prefs-ui.cc:848
+#: pan/gui/gui.cc:2012 pan/gui/header-pane.cc:1807 pan/gui/prefs-ui.cc:848
 msgid "Bytes"
 msgstr "B"
 
@@ -1314,20 +1314,20 @@ msgstr ""
 "zdarzeń” i naprawić problem, a następnie użyć „Plik → Działanie w trybie "
 "online”, aby kontynuować."
 
-#: pan/gui/header-pane.cc:1309 pan/gui/task-pane.cc:793
+#: pan/gui/header-pane.cc:1301 pan/gui/task-pane.cc:793
 msgid "Subject or Author"
 msgstr "Temat lub autor"
 
-#: pan/gui/header-pane.cc:1310 pan/gui/task-pane.cc:794
+#: pan/gui/header-pane.cc:1302 pan/gui/task-pane.cc:794
 msgid "Sub or Auth (regex)"
 msgstr "Subskrypcja lub uwierzytelnienie (wyrażenie regularne)"
 
-#: pan/gui/header-pane.cc:1312 pan/gui/header-pane.cc:1783
+#: pan/gui/header-pane.cc:1304 pan/gui/header-pane.cc:1775
 #: pan/gui/prefs-ui.cc:847 pan/gui/score-add-ui.cc:138 pan/gui/task-pane.cc:796
 msgid "Author"
 msgstr "Autor"
 
-#: pan/gui/header-pane.cc:1768 pan/gui/prefs-ui.cc:851
+#: pan/gui/header-pane.cc:1760 pan/gui/prefs-ui.cc:851
 msgid "Score"
 msgstr "Punkty"
 
@@ -1383,9 +1383,9 @@ msgid ""
 "  -h, --help               Show this usage information and exit.\n"
 "  -v, --version            Print release version and exit.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
-"  --debug                  Run in debug mode. (use --debug twice for verbose "
-"debug)\n"
-"  --debug-ssl              Run with TLS (aka ssl) debug mode.\n"
+"  --debug                  Run in debug mode. Use --debug twice for verbose "
+"debug.\n"
+"  --debug-ssl              Run in TLS (aka SSL) debug mode.\n"
 "\n"
 "URL Options\n"
 "  headers:group.name       Download new headers for the specified "
@@ -1394,7 +1394,7 @@ msgid ""
 "                           the message-id article to standard output.\n"
 "\n"
 "NZB Batch Options\n"
-"  --nzb file1 file2 ...      Process NZB files in non-GUI mode.\n"
+"  --nzb file1 file2 ...    Process NZB files in non-GUI mode.\n"
 "  -o path, --output=path   Path to save attachments listed in the NZB "
 "file(s).\n"
 "  --no-gui                 Only show console output, not the download "
@@ -1404,9 +1404,9 @@ msgstr ""
 "  -h, --help               Wyświetla tę stronę pomocy i kończy działanie.\n"
 "  -v, --version            Wyświetla wersję i kończy działanie.\n"
 "  --verbose                Więcej informacji (w trybie tekstowym).\n"
-"  --debug                  Uruchamia w trybie debugowania (użycie --debug\n"
+"  --debug                  Uruchamia w trybie debugowania. Użycie --debug\n"
 "                           dwa razy wyświetla więcej informacji "
-"debugowania).\n"
+"debugowania.\n"
 "  --debug-ssl              Uruchamia w trybie debugowania TLS (znanym także\n"
 "                           jako SSL).\n"
 "\n"
