@@ -126,6 +126,7 @@ namespace
       else if (element_name == "gpg-signature") p.gpg_sig_uid.assign (t.str, t.len);
       else if (element_name == "attribution") p.attribution.assign (t.str, t.len);
       else if (element_name == "fqdn") p.fqdn.assign (t.str, t.len);
+      else if (element_name == "face") p.face.assign (t.str, t.len);
       else if (element_name == "xface") p.xface.assign (t.str, t.len);
       else if (element_name == "username") p.username.assign (t.str, t.len);
       else if (element_name == "address") p.address.assign (t.str, t.len);
@@ -209,6 +210,7 @@ ProfilesImpl :: serialize (std::ostream& out) const
     out << indent(depth) << "<username>" << escaped(it->second.username) << "</username>\n";
     out << indent(depth) << "<address>" << escaped(it->second.address) << "</address>\n";
     out << indent(depth) << "<server>" << escaped(it->second.posting_server.to_view()) << "</server>\n";
+    out << indent(depth) << "<face>" << escaped(it->second.face) << "</face>\n";
     out << indent(depth) << "<xface>" << escaped(it->second.xface) << "</xface>\n";
     if (!it->second.signature_file.empty() && it->second.sig_type != Profile::GPGSIG) {
       const char * type;

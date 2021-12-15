@@ -109,6 +109,7 @@ namespace pan
     std::string signature_file;
     std::string attribution;
     std::string fqdn;
+    std::string face;
     std::string xface;
     Quark posting_server;
 

@@ -43,6 +43,7 @@ namespace pan
       GtkWidget * _username_entry;
       GtkWidget * _address_entry;
       GtkWidget * _msgid_fqdn_entry;
+      GtkWidget * _face_entry;
       GtkWidget * _xface_entry;
       GtkWidget * _attribution_entry;
       GtkWidget * _signature_file_check;

@@ -18,6 +18,7 @@
  */
 
 #include <config.h>
+
 extern "C" {
   #include <ctype.h>
 }

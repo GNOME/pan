@@ -221,7 +221,14 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     HIG :: workarea_add_row (t, &row, "",vbox);
 
   HIG :: workarea_add_section_divider (t, &row);
-  HIG :: workarea_add_section_title (t, &row, _("X-Face (Avatar)"));
+
+  HIG :: workarea_add_section_title (t, &row, _("Avatars"));
+    w = _face_entry = gtk_entry_new ();
+    set_entry (w, profile.face);
+    gtk_widget_set_tooltip_markup (w, _("You can add an avatar icon to your articles with a Base64-encoded PNG.\n"
+                                        "Add the Base64-encoded picture without the trailing <b>“Face:”</b>."));
+    HIG :: workarea_add_row (t, &row, _("_Face:"), w, NULL);
+
     w = _xface_entry = gtk_entry_new ();
     set_entry (w, profile.xface);
     gtk_widget_set_tooltip_markup (w, _("You can add an avatar icon to your articles with a unique X-Face code.\n"
@@ -339,6 +346,7 @@ ProfileDialog :: get_profile (std::string& profile_name, Profile& profile)
   from_entry (_username_entry, profile.username);
   from_entry (_address_entry, profile.address);
   from_entry (_msgid_fqdn_entry, profile.fqdn);
+  from_entry (_face_entry, profile.face);
   from_entry (_xface_entry, profile.xface);
   from_entry (_attribution_entry, profile.attribution);
 
