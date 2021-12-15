@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2021-12-06 19:16+0000\n"
-"PO-Revision-Date: 2021-12-06 23:37+0200\n"
+"POT-Creation-Date: 2021-12-15 18:20+0000\n"
+"PO-Revision-Date: 2021-12-15 21:09+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Lokalize 20.12.0\n"
 
 #. update the titlebar
-#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:22
+#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:27
 #: pan/gui/dl-headers-ui.cc:104 pan/gui/gui.cc:1045 pan/gui/gui.cc:1718
 #: pan/gui/gui.cc:2038 pan/gui/score-add-ui.cc:600
 msgid "Pan"
@@ -29,7 +29,7 @@ msgstr "Pan"
 msgid "Newsreader"
 msgstr "Перегляд новин"
 
-#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:6
+#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:7
 msgid "Read and post Usenet articles"
 msgstr "Читання і створення статей Usenet"
 
@@ -40,11 +40,11 @@ msgstr ""
 "usenet;news;newsreader;newsgroup;article;yenc;nzb;юзнет;новини;читання;читач;"
 "група;стаття;єнц;ензетбі;"
 
-#: org.gnome.pan.metainfo.xml.in:5
+#: org.gnome.pan.metainfo.xml.in:6
 msgid "Pan Newsreader"
 msgstr "Переглядач новин «Pan»"
 
-#: org.gnome.pan.metainfo.xml.in:8
+#: org.gnome.pan.metainfo.xml.in:9
 msgid ""
 "Pan is a Usenet newsreader that is good at both text and binaries. It "
 "supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
@@ -56,7 +56,7 @@ msgstr ""
 "новин, обробки yEnc, NZB, PGP, роботи з декількома серверами та забезпечення "
 "захисту з'єднань."
 
-#: org.gnome.pan.metainfo.xml.in:11
+#: org.gnome.pan.metainfo.xml.in:12
 msgid ""
 "It is also the only Unix newsreader to get a perfect score on the Good Net-"
 "Keeping Seal of Approval evaluations."
@@ -71,7 +71,7 @@ msgstr "Помилка під час відкривання каталогу «%
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
-#: pan/gui/post-ui.cc:1916
+#: pan/gui/post-ui.cc:1958
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Не вдалося зберегти «%s» %s"
@@ -81,7 +81,7 @@ msgstr "Не вдалося зберегти «%s» %s"
 msgid "Error opening file \"%s\" %s"
 msgstr "Помилка при відкритті файла «%s» %s"
 
-#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
+#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
 #: pan/data-impl/server.cc:525 pan/general/file-util.cc:311
 #: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:735
 #, c-format
@@ -201,7 +201,7 @@ msgstr "%d.%B.%Y"
 msgid "?"
 msgstr "?"
 
-#: pan/general/text-match.cc:193
+#: pan/general/text-match.cc:194
 #, c-format
 msgid "Can't use regular expression \"%s\": %s"
 msgstr "Неможливо використати формальний вираз «%s»: %s"
@@ -813,7 +813,7 @@ msgid "Unnamed File"
 msgstr "Файл без назви"
 
 #: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1303
-#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2817 pan/gui/prefs-ui.cc:853
+#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2859 pan/gui/prefs-ui.cc:853
 #: pan/gui/score-add-ui.cc:137 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "Тема"
@@ -1070,45 +1070,45 @@ msgstr "Інші групи"
 msgid "Name"
 msgstr "Назва"
 
-#: pan/gui/group-prefs-dialog.cc:160
+#: pan/gui/group-prefs-dialog.cc:164
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr ""
 "Не визначено жодного профілю, скористайтеся «Зміни → Профілі публікації»."
 
-#: pan/gui/group-prefs-dialog.cc:271
+#: pan/gui/group-prefs-dialog.cc:275
 msgid "Pan: Group Preferences"
 msgstr "Pan: налаштування груп"
 
-#: pan/gui/group-prefs-dialog.cc:286
+#: pan/gui/group-prefs-dialog.cc:290
 msgid "Properties for Groups"
 msgstr "Властивості групи"
 
-#: pan/gui/group-prefs-dialog.cc:288
+#: pan/gui/group-prefs-dialog.cc:292
 #, c-format
 msgid "Properties for %s"
 msgstr "Властивості %s"
 
-#: pan/gui/group-prefs-dialog.cc:296
+#: pan/gui/group-prefs-dialog.cc:300
 msgid "Character _encoding:"
 msgstr "_Кодування символів:"
 
-#: pan/gui/group-prefs-dialog.cc:298
+#: pan/gui/group-prefs-dialog.cc:302
 msgid "Directory for Saving Attachments"
 msgstr "Каталог для збереження долучень"
 
-#: pan/gui/group-prefs-dialog.cc:306
+#: pan/gui/group-prefs-dialog.cc:310
 msgid "Directory for _saving attachments:"
 msgstr "Каталог для з_береження долучень:"
 
-#: pan/gui/group-prefs-dialog.cc:308
+#: pan/gui/group-prefs-dialog.cc:312
 msgid "Posting _profile:"
 msgstr "Про_філь публікації:"
 
-#: pan/gui/group-prefs-dialog.cc:313
+#: pan/gui/group-prefs-dialog.cc:317
 msgid "Spellchecker _language:"
 msgstr "_Мова перевірки правопису:"
 
-#: pan/gui/group-prefs-dialog.cc:316
+#: pan/gui/group-prefs-dialog.cc:320
 msgid "Group color:"
 msgstr "Колір групи:"
 
@@ -1136,7 +1136,7 @@ msgstr "Зберегти файл NZB як…"
 msgid "Import NZB Files"
 msgstr "Імпорт файлів NZB"
 
-#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3520
+#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3562
 msgid "NZB Files"
 msgstr "файли NZB"
 
@@ -1187,7 +1187,6 @@ msgid "Unable to open help file."
 msgstr "Не можу відкрити файл довідки."
 
 #: pan/gui/gui.cc:1721
-#| msgid "Copyright © 2002-2017 Charles Kerr and others"
 msgid "Copyright © 2002-2021 Charles Kerr and others"
 msgstr "© Charles Kerr та інші, 2002–2021"
 
@@ -1388,27 +1387,6 @@ msgstr ""
 "Щоб почати читання новин, додайте сервер."
 
 #: pan/gui/pan.cc:634
-#| msgid ""
-#| "General Options\n"
-#| "  -h, --help               Show this usage information and exit.\n"
-#| "  -v, --version            Print release version and exit.\n"
-#| "  --verbose                Be verbose (in non-GUI mode).\n"
-#| "  --debug                  Run in debug mode. (use --debug twice for "
-#| "verbose debug)\n"
-#| "  --debug-ssl              Run with TLS (aka ssl) debug mode.\n"
-#| "\n"
-#| "URL Options\n"
-#| "  headers:group.name       Download new headers for the specified "
-#| "newsgroup.\n"
-#| "  news:message-id          When specified together with --no-gui, dump\n"
-#| "                           the message-id article to standard output.\n"
-#| "\n"
-#| "NZB Batch Options\n"
-#| "  --nzb file1 file2 ...      Process NZB files in non-GUI mode.\n"
-#| "  -o path, --output=path   Path to save attachments listed in the NZB "
-#| "file(s).\n"
-#| "  --no-gui                 Only show console output, not the download "
-#| "queue.\n"
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage information and exit.\n"
@@ -1754,85 +1732,85 @@ msgstr "Помилка запуску зовнішнього редактора:
 msgid "Open Draft Article"
 msgstr "Відкриття чернетки статті"
 
-#: pan/gui/post-ui.cc:1832
+#: pan/gui/post-ui.cc:1874
 msgid "Save Draft Article"
 msgstr "Збереження чернетки статті"
 
-#: pan/gui/post-ui.cc:1869
+#: pan/gui/post-ui.cc:1911
 msgid "File already exists."
 msgstr "Файл вже існує."
 
-#: pan/gui/post-ui.cc:1870
+#: pan/gui/post-ui.cc:1912
 msgid "Overwrite it?"
 msgstr "Перезаписати її?"
 
-#: pan/gui/post-ui.cc:2080
+#: pan/gui/post-ui.cc:2122
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Не вдалося обробити команду підписування «%s»: %s"
 
-#: pan/gui/post-ui.cc:2116
+#: pan/gui/post-ui.cc:2158
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Не вдалося перетворити підпис до UTF-8."
 
-#: pan/gui/post-ui.cc:2656
+#: pan/gui/post-ui.cc:2698
 msgid "F_rom"
 msgstr "_Від"
 
-#: pan/gui/post-ui.cc:2673
+#: pan/gui/post-ui.cc:2715
 msgid "_Subject"
 msgstr "_Тема"
 
-#: pan/gui/post-ui.cc:2686
+#: pan/gui/post-ui.cc:2728
 msgid "_Newsgroups"
 msgstr "_Групи новин"
 
-#: pan/gui/post-ui.cc:2700
+#: pan/gui/post-ui.cc:2742
 msgid "Mail _To"
 msgstr "Надіслати _до"
 
-#: pan/gui/post-ui.cc:2802
+#: pan/gui/post-ui.cc:2844
 msgid "Delete from Queue"
 msgstr "Вилучити з черги"
 
-#: pan/gui/post-ui.cc:2815
+#: pan/gui/post-ui.cc:2857
 msgid "No."
 msgstr "№"
 
-#: pan/gui/post-ui.cc:2819 pan/gui/post-ui.cc:2911 pan/gui/post-ui.cc:2952
+#: pan/gui/post-ui.cc:2861 pan/gui/post-ui.cc:2953 pan/gui/post-ui.cc:2994
 msgid "Filename"
 msgstr "Назва файла"
 
-#: pan/gui/post-ui.cc:2821
+#: pan/gui/post-ui.cc:2863
 msgid "Size (KB)"
 msgstr "Розмір (кБ)"
 
-#: pan/gui/post-ui.cc:2919
+#: pan/gui/post-ui.cc:2961
 msgid "The current filename"
 msgstr "Поточна назва файла"
 
-#: pan/gui/post-ui.cc:2923
+#: pan/gui/post-ui.cc:2965
 msgid "Subject Line"
 msgstr "Рядок теми"
 
-#: pan/gui/post-ui.cc:2931
+#: pan/gui/post-ui.cc:2973
 msgid "The current subject line"
 msgstr "Поточний рядок теми"
 
-#: pan/gui/post-ui.cc:2945
+#: pan/gui/post-ui.cc:2987
 msgid "No. "
 msgstr "№ "
 
-#: pan/gui/post-ui.cc:2949
+#: pan/gui/post-ui.cc:2991
 msgid "Enable/Disable"
 msgstr "Увімкнути/Вимкнути"
 
-#: pan/gui/post-ui.cc:2983
+#: pan/gui/post-ui.cc:3025
 msgid "Follo_wup-To"
 msgstr "Відп_овідь до"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:2992
+#: pan/gui/post-ui.cc:3034
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1846,11 +1824,11 @@ msgstr ""
 "Щоб спрямувати усі відповіді на вашу адресу електронної пошти, скористайтеся "
 "заголовком «Followup-To: poster»."
 
-#: pan/gui/post-ui.cc:2999
+#: pan/gui/post-ui.cc:3041
 msgid "_Reply-To"
 msgstr "_Відповідати"
 
-#: pan/gui/post-ui.cc:3007
+#: pan/gui/post-ui.cc:3049
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
@@ -1858,52 +1836,52 @@ msgstr ""
 "Поштова адреса, куди мають приходити відповіді на ваше повідомлення.  Має "
 "бути вказано, лише якщо адреса відрізняється від поля заголовку «Від»."
 
-#: pan/gui/post-ui.cc:3014
+#: pan/gui/post-ui.cc:3056
 msgid "_Custom Headers"
 msgstr "_Нетипові заголовки"
 
-#: pan/gui/post-ui.cc:3038
+#: pan/gui/post-ui.cc:3080
 msgid "Add \"_User-Agent\" header"
 msgstr "Додавати за_головок «User-Agent»"
 
-#: pan/gui/post-ui.cc:3045
+#: pan/gui/post-ui.cc:3087
 msgid "Add \"Message-_ID\" header"
 msgstr "Д_одавати заголовок «Message-ID»"
 
-#: pan/gui/post-ui.cc:3176
+#: pan/gui/post-ui.cc:3218
 msgid "Select Parts"
 msgstr "Вибір частин"
 
-#: pan/gui/post-ui.cc:3189
+#: pan/gui/post-ui.cc:3231
 msgid "_Parts"
 msgstr "_Частини"
 
-#: pan/gui/post-ui.cc:3347
+#: pan/gui/post-ui.cc:3389
 msgid "Post Article"
 msgstr "Надіслати статтю"
 
-#: pan/gui/post-ui.cc:3368
+#: pan/gui/post-ui.cc:3410
 msgid "_Message"
 msgstr "П_овідомлення"
 
-#: pan/gui/post-ui.cc:3369
+#: pan/gui/post-ui.cc:3411
 msgid "More _Headers"
 msgstr "Більше за_головків"
 
-#: pan/gui/post-ui.cc:3370
+#: pan/gui/post-ui.cc:3412
 msgid "File _Queue"
 msgstr "_Черга файлів"
 
-#: pan/gui/post-ui.cc:3402 pan/gui/profiles-dialog.cc:480
+#: pan/gui/post-ui.cc:3444 pan/gui/profiles-dialog.cc:488
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "У %d, %n написав:"
 
-#: pan/gui/post-ui.cc:3431
+#: pan/gui/post-ui.cc:3473
 msgid "Add files to queue"
 msgstr "Додати файли до черги"
 
-#: pan/gui/post-ui.cc:3507
+#: pan/gui/post-ui.cc:3549
 msgid "Save Upload Queue as NZB File"
 msgstr "Збереження черги вивантажень як файла NZB"
 
@@ -2518,11 +2496,25 @@ msgstr "Підпис PGP"
 msgid "Signature Type: "
 msgstr "Тип підпису: "
 
-#: pan/gui/profiles-dialog.cc:224
-msgid "X-Face (Avatar)"
-msgstr "X-Face (аватар)"
+#: pan/gui/profiles-dialog.cc:225
+msgid "Avatars"
+msgstr ""
+"Аватари"
 
-#: pan/gui/profiles-dialog.cc:227
+#: pan/gui/profiles-dialog.cc:228
+msgid ""
+"You can add an avatar icon to your articles with a Base64-encoded PNG.\n"
+"Add the Base64-encoded picture without the trailing <b>“Face:”</b>."
+msgstr ""
+"Ви можете додати до ваших статей піктограму аватара, скориставшись PNG у кодуванні Base64.\n"
+"Додайте малюнок у кодуванні Base64 без <b>«Face:»</b>."
+
+#: pan/gui/profiles-dialog.cc:230
+#| msgid "_X-Face:"
+msgid "_Face:"
+msgstr "_Обличчя:"
+
+#: pan/gui/profiles-dialog.cc:234
 msgid ""
 "You can add an avatar icon to your articles with a unique X-Face code.\n"
 "Add the code without the trailing <b>\"X-Face:\"</b> \n"
@@ -2535,15 +2527,15 @@ msgstr ""
 "якщо його було створено у допоміжній програмі (наприклад http://www.dairiki."
 "org/xface/xface.php)."
 
-#: pan/gui/profiles-dialog.cc:230
+#: pan/gui/profiles-dialog.cc:237
 msgid "_X-Face:"
 msgstr "_X-Face:"
 
-#: pan/gui/profiles-dialog.cc:232
+#: pan/gui/profiles-dialog.cc:239
 msgid "Optional Information"
 msgstr "Додаткова інформація"
 
-#: pan/gui/profiles-dialog.cc:237
+#: pan/gui/profiles-dialog.cc:244
 msgid ""
 "When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
@@ -2554,11 +2546,11 @@ msgstr ""
 "Ви можете вказати тут нетипову назву домену або лишити це поле порожнім, щоб "
 "«Pan» використала назву домену з вашої електронної адреси."
 
-#: pan/gui/profiles-dialog.cc:240
+#: pan/gui/profiles-dialog.cc:247
 msgid "Message-ID _Domain Name:"
 msgstr "Домен для ідентифікатора повідомлення:"
 
-#: pan/gui/profiles-dialog.cc:244
+#: pan/gui/profiles-dialog.cc:251
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2571,12 +2563,12 @@ msgstr ""
 "%n для імені Адреси\n"
 "%d для дати"
 
-#: pan/gui/profiles-dialog.cc:245
+#: pan/gui/profiles-dialog.cc:252
 msgid "_Attribution:"
 msgstr "Пі_дпис:"
 
 #. Translators: Do not localize Reply-To and the quote marks in \"Your Name\".
-#: pan/gui/profiles-dialog.cc:270
+#: pan/gui/profiles-dialog.cc:277
 msgid ""
 "Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
@@ -2586,27 +2578,27 @@ msgstr ""
 "Reply-To: \"Ваше ім'я\" <vasheimya@des.com>\n"
 "Organization: Ваша організація\n"
 
-#: pan/gui/profiles-dialog.cc:280
+#: pan/gui/profiles-dialog.cc:287
 msgid "E_xtra Headers:"
 msgstr "Д_одаткові заголовки:"
 
-#: pan/gui/profiles-dialog.cc:325
+#: pan/gui/profiles-dialog.cc:332
 msgid "Invalid email address."
 msgstr "Некоректна адреса електронної пошти."
 
-#: pan/gui/profiles-dialog.cc:326
+#: pan/gui/profiles-dialog.cc:333
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Будь ласка, скористайтеся адресою у форматі ivan@ivanenko.org"
 
-#: pan/gui/profiles-dialog.cc:481
+#: pan/gui/profiles-dialog.cc:489
 msgid "New Profile"
 msgstr "Новий профіль"
 
-#: pan/gui/profiles-dialog.cc:527
+#: pan/gui/profiles-dialog.cc:535
 msgid "Posting Profiles"
 msgstr "Профілі публікації"
 
-#: pan/gui/profiles-dialog.cc:543
+#: pan/gui/profiles-dialog.cc:551
 msgid "Profiles"
 msgstr "Профілі"
 
@@ -3789,6 +3781,9 @@ msgstr "без_назви"
 #: pan/usenet-utils/text-massager.cc:580
 msgid "no_mail"
 msgstr "без_пошти"
+
+#~ msgid "X-Face (Avatar)"
+#~ msgstr "X-Face (аватар)"
 
 #~ msgid "_Save Articles…"
 #~ msgstr "З_берегти статті…"
