@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan2\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2021-12-06 19:16+0000\n"
-"PO-Revision-Date: 2021-11-14 14:35+0100\n"
+"POT-Creation-Date: 2021-12-15 18:20+0000\n"
+"PO-Revision-Date: 2021-12-19 13:05+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 
 #. update the titlebar
-#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:22
+#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:27
 #: pan/gui/dl-headers-ui.cc:104 pan/gui/gui.cc:1045 pan/gui/gui.cc:1718
 #: pan/gui/gui.cc:2038 pan/gui/score-add-ui.cc:600
 msgid "Pan"
@@ -30,7 +30,7 @@ msgstr "Pan"
 msgid "Newsreader"
 msgstr "Czytnik grup dyskusyjnych"
 
-#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:6
+#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:7
 msgid "Read and post Usenet articles"
 msgstr "Czytanie i wysyłanie wiadomości w sieci Usenet"
 
@@ -39,11 +39,11 @@ msgstr "Czytanie i wysyłanie wiadomości w sieci Usenet"
 msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
 msgstr "usenet;grupy;dyskusyjne;czytnik;wiadomość;artykuł;post;yenc;nzb;"
 
-#: org.gnome.pan.metainfo.xml.in:5
+#: org.gnome.pan.metainfo.xml.in:6
 msgid "Pan Newsreader"
 msgstr "Czytnik grup dyskusyjnych Pan"
 
-#: org.gnome.pan.metainfo.xml.in:8
+#: org.gnome.pan.metainfo.xml.in:9
 msgid ""
 "Pan is a Usenet newsreader that is good at both text and binaries. It "
 "supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
@@ -53,7 +53,7 @@ msgstr ""
 "Obsługuje czytanie w trybie offline, punktację i listy blokowania, yEnc, "
 "NZB, PGP, wiele serwerów i bezpieczne połączenia."
 
-#: org.gnome.pan.metainfo.xml.in:11
+#: org.gnome.pan.metainfo.xml.in:12
 msgid ""
 "It is also the only Unix newsreader to get a perfect score on the Good Net-"
 "Keeping Seal of Approval evaluations."
@@ -68,7 +68,7 @@ msgstr "Błąd podczas otwierania katalogu: „%s”: %s"
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
-#: pan/gui/post-ui.cc:1916
+#: pan/gui/post-ui.cc:1958
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Nie można zapisać „%s” %s"
@@ -78,7 +78,7 @@ msgstr "Nie można zapisać „%s” %s"
 msgid "Error opening file \"%s\" %s"
 msgstr "Błąd podczas otwierania pliku „%s” %s"
 
-#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
+#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
 #: pan/data-impl/server.cc:525 pan/general/file-util.cc:311
 #: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:735
 #, c-format
@@ -200,7 +200,7 @@ msgstr "%-d %b %Y"
 msgid "?"
 msgstr "?"
 
-#: pan/general/text-match.cc:193
+#: pan/general/text-match.cc:194
 #, c-format
 msgid "Can't use regular expression \"%s\": %s"
 msgstr "Nie można użyć wyrażenia regularnego „%s”: %s"
@@ -812,7 +812,7 @@ msgid "Unnamed File"
 msgstr "Plik bez nazwy"
 
 #: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1303
-#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2817 pan/gui/prefs-ui.cc:853
+#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2859 pan/gui/prefs-ui.cc:853
 #: pan/gui/score-add-ui.cc:137 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "Temat"
@@ -1030,11 +1030,11 @@ msgstr "Kodowanie 8-bitowe"
 
 #: pan/gui/e-cte-dialog.c:82
 msgid "Base64 Encoding"
-msgstr "Kodowanie base64"
+msgstr "Kodowanie Base64"
 
 #: pan/gui/e-cte-dialog.c:84
 msgid "Quoted-Printable Encoding"
-msgstr "Kodowanie „quoted printable”"
+msgstr "Kodowanie Quoted-Printable"
 
 #: pan/gui/group-pane.cc:328
 msgid "Sent"
@@ -1068,44 +1068,44 @@ msgstr "Inne grupy"
 msgid "Name"
 msgstr "Nazwa"
 
-#: pan/gui/group-prefs-dialog.cc:160
+#: pan/gui/group-prefs-dialog.cc:164
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "Nie określono żadnych profili w Modyfikuj → Profile wysyłania."
 
-#: pan/gui/group-prefs-dialog.cc:271
+#: pan/gui/group-prefs-dialog.cc:275
 msgid "Pan: Group Preferences"
 msgstr "Pan: preferencje grupy"
 
-#: pan/gui/group-prefs-dialog.cc:286
+#: pan/gui/group-prefs-dialog.cc:290
 msgid "Properties for Groups"
 msgstr "Właściwości dla grup"
 
-#: pan/gui/group-prefs-dialog.cc:288
+#: pan/gui/group-prefs-dialog.cc:292
 #, c-format
 msgid "Properties for %s"
 msgstr "Właściwości dla „%s”"
 
-#: pan/gui/group-prefs-dialog.cc:296
+#: pan/gui/group-prefs-dialog.cc:300
 msgid "Character _encoding:"
 msgstr "_Kodowanie znaków:"
 
-#: pan/gui/group-prefs-dialog.cc:298
+#: pan/gui/group-prefs-dialog.cc:302
 msgid "Directory for Saving Attachments"
 msgstr "Katalog do zapisywania załączników"
 
-#: pan/gui/group-prefs-dialog.cc:306
+#: pan/gui/group-prefs-dialog.cc:310
 msgid "Directory for _saving attachments:"
 msgstr "Katalog do _zapisywania załączników:"
 
-#: pan/gui/group-prefs-dialog.cc:308
+#: pan/gui/group-prefs-dialog.cc:312
 msgid "Posting _profile:"
 msgstr "_Profil wysyłania:"
 
-#: pan/gui/group-prefs-dialog.cc:313
+#: pan/gui/group-prefs-dialog.cc:317
 msgid "Spellchecker _language:"
 msgstr "_Język sprawdzania pisowni:"
 
-#: pan/gui/group-prefs-dialog.cc:316
+#: pan/gui/group-prefs-dialog.cc:320
 msgid "Group color:"
 msgstr "Kolor grupy:"
 
@@ -1133,7 +1133,7 @@ msgstr "Zapisz plik NZB jako…"
 msgid "Import NZB Files"
 msgstr "Zaimportuj pliki NZB"
 
-#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3520
+#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3562
 msgid "NZB Files"
 msgstr "Pliki NZB"
 
@@ -1719,85 +1719,85 @@ msgstr "Błąd podczas uruchamiania zewnętrznego edytora: %s"
 msgid "Open Draft Article"
 msgstr "Otwórz szkic wiadomości"
 
-#: pan/gui/post-ui.cc:1832
+#: pan/gui/post-ui.cc:1874
 msgid "Save Draft Article"
 msgstr "Zapisz szkic wiadomości"
 
-#: pan/gui/post-ui.cc:1869
+#: pan/gui/post-ui.cc:1911
 msgid "File already exists."
 msgstr "Plik już istnieje."
 
-#: pan/gui/post-ui.cc:1870
+#: pan/gui/post-ui.cc:1912
 msgid "Overwrite it?"
 msgstr "Zastąpić go?"
 
-#: pan/gui/post-ui.cc:2080
+#: pan/gui/post-ui.cc:2122
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Nie można przetworzyć polecenia podpisu „%s”: %s"
 
-#: pan/gui/post-ui.cc:2116
+#: pan/gui/post-ui.cc:2158
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Nie można skonwertować podpisu do kodowania UTF-8."
 
-#: pan/gui/post-ui.cc:2656
+#: pan/gui/post-ui.cc:2698
 msgid "F_rom"
 msgstr "_Od"
 
-#: pan/gui/post-ui.cc:2673
+#: pan/gui/post-ui.cc:2715
 msgid "_Subject"
 msgstr "_Temat"
 
-#: pan/gui/post-ui.cc:2686
+#: pan/gui/post-ui.cc:2728
 msgid "_Newsgroups"
 msgstr "_Grupa dyskusyjna"
 
-#: pan/gui/post-ui.cc:2700
+#: pan/gui/post-ui.cc:2742
 msgid "Mail _To"
 msgstr "Wiadomość _do"
 
-#: pan/gui/post-ui.cc:2802
+#: pan/gui/post-ui.cc:2844
 msgid "Delete from Queue"
 msgstr "Usuń z kolejki"
 
-#: pan/gui/post-ui.cc:2815
+#: pan/gui/post-ui.cc:2857
 msgid "No."
 msgstr "Nr"
 
-#: pan/gui/post-ui.cc:2819 pan/gui/post-ui.cc:2911 pan/gui/post-ui.cc:2952
+#: pan/gui/post-ui.cc:2861 pan/gui/post-ui.cc:2953 pan/gui/post-ui.cc:2994
 msgid "Filename"
 msgstr "Nazwa pliku"
 
-#: pan/gui/post-ui.cc:2821
+#: pan/gui/post-ui.cc:2863
 msgid "Size (KB)"
 msgstr "Rozmiar (KB)"
 
-#: pan/gui/post-ui.cc:2919
+#: pan/gui/post-ui.cc:2961
 msgid "The current filename"
 msgstr "Obecna nazwa pliku"
 
-#: pan/gui/post-ui.cc:2923
+#: pan/gui/post-ui.cc:2965
 msgid "Subject Line"
 msgstr "Wiersz tematu"
 
-#: pan/gui/post-ui.cc:2931
+#: pan/gui/post-ui.cc:2973
 msgid "The current subject line"
 msgstr "Obecny wiersz tematu"
 
-#: pan/gui/post-ui.cc:2945
+#: pan/gui/post-ui.cc:2987
 msgid "No. "
 msgstr "Nr "
 
-#: pan/gui/post-ui.cc:2949
+#: pan/gui/post-ui.cc:2991
 msgid "Enable/Disable"
 msgstr "Włącz/wyłącz"
 
-#: pan/gui/post-ui.cc:2983
+#: pan/gui/post-ui.cc:3025
 msgid "Follo_wup-To"
 msgstr "_Odpowiedź grupie do"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:2992
+#: pan/gui/post-ui.cc:3034
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1811,11 +1811,11 @@ msgstr ""
 "Aby przekazywać wszystkie odpowiedzi na adres e-mail, należy użyć „Odpowiedź "
 "grupie do: poster”"
 
-#: pan/gui/post-ui.cc:2999
+#: pan/gui/post-ui.cc:3041
 msgid "_Reply-To"
 msgstr "O_dpowiedź do"
 
-#: pan/gui/post-ui.cc:3007
+#: pan/gui/post-ui.cc:3049
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
@@ -1823,52 +1823,52 @@ msgstr ""
 "Konto e-mail, do którego mają trafiać odpowiedzi na wysłane wiadomości. Jest "
 "to wymagane tylko, jeśli różni się od nagłówka „Od”."
 
-#: pan/gui/post-ui.cc:3014
+#: pan/gui/post-ui.cc:3056
 msgid "_Custom Headers"
 msgstr "_Niestandardowe nagłówki"
 
-#: pan/gui/post-ui.cc:3038
+#: pan/gui/post-ui.cc:3080
 msgid "Add \"_User-Agent\" header"
 msgstr "Dodaj nagłówek „_Identyfikator programu”"
 
-#: pan/gui/post-ui.cc:3045
+#: pan/gui/post-ui.cc:3087
 msgid "Add \"Message-_ID\" header"
 msgstr "_Dodaj nagłówek „Identyfikator wiadomości”"
 
-#: pan/gui/post-ui.cc:3176
+#: pan/gui/post-ui.cc:3218
 msgid "Select Parts"
 msgstr "Wybierz części"
 
-#: pan/gui/post-ui.cc:3189
+#: pan/gui/post-ui.cc:3231
 msgid "_Parts"
 msgstr "_Części"
 
-#: pan/gui/post-ui.cc:3347
+#: pan/gui/post-ui.cc:3389
 msgid "Post Article"
 msgstr "Wyślij wiadomość"
 
-#: pan/gui/post-ui.cc:3368
+#: pan/gui/post-ui.cc:3410
 msgid "_Message"
 msgstr "_Wiadomość"
 
-#: pan/gui/post-ui.cc:3369
+#: pan/gui/post-ui.cc:3411
 msgid "More _Headers"
 msgstr "Więcej _nagłówków"
 
-#: pan/gui/post-ui.cc:3370
+#: pan/gui/post-ui.cc:3412
 msgid "File _Queue"
 msgstr "_Kolejka plików"
 
-#: pan/gui/post-ui.cc:3402 pan/gui/profiles-dialog.cc:480
+#: pan/gui/post-ui.cc:3444 pan/gui/profiles-dialog.cc:488
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "W dniu %d, użytkownik %n napisał:"
 
-#: pan/gui/post-ui.cc:3431
+#: pan/gui/post-ui.cc:3473
 msgid "Add files to queue"
 msgstr "Dodaj pliki do kolejki"
 
-#: pan/gui/post-ui.cc:3507
+#: pan/gui/post-ui.cc:3549
 msgid "Save Upload Queue as NZB File"
 msgstr "Zapisz kolejkę wysyłania jako plik NZB"
 
@@ -2482,11 +2482,24 @@ msgstr "Podpis PGP"
 msgid "Signature Type: "
 msgstr "Typ podpisu: "
 
-#: pan/gui/profiles-dialog.cc:224
-msgid "X-Face (Avatar)"
-msgstr "X-Face (awatar)"
+#: pan/gui/profiles-dialog.cc:225
+msgid "Avatars"
+msgstr "Awatary"
 
-#: pan/gui/profiles-dialog.cc:227
+#: pan/gui/profiles-dialog.cc:228
+msgid ""
+"You can add an avatar icon to your articles with a Base64-encoded PNG.\n"
+"Add the Base64-encoded picture without the trailing <b>“Face:”</b>."
+msgstr ""
+"Można dodać ikonę awatara do wiadomości za pomocą pliku PNG zakodowanego "
+"przez Base64.\n"
+"Należy dodać obraz zakodowany przez Base64 bez <b>„Face:”</b> na końcu."
+
+#: pan/gui/profiles-dialog.cc:230
+msgid "_Face:"
+msgstr "_Obraz:"
+
+#: pan/gui/profiles-dialog.cc:234
 msgid ""
 "You can add an avatar icon to your articles with a unique X-Face code.\n"
 "Add the code without the trailing <b>\"X-Face:\"</b> \n"
@@ -2498,15 +2511,15 @@ msgstr ""
 "jeśli został utworzony przez program pomocniczy (na przykład http://www."
 "dairiki.org/xface/xface.php)."
 
-#: pan/gui/profiles-dialog.cc:230
+#: pan/gui/profiles-dialog.cc:237
 msgid "_X-Face:"
 msgstr "_X-Face:"
 
-#: pan/gui/profiles-dialog.cc:232
+#: pan/gui/profiles-dialog.cc:239
 msgid "Optional Information"
 msgstr "Opcjonalne informacje"
 
-#: pan/gui/profiles-dialog.cc:237
+#: pan/gui/profiles-dialog.cc:244
 msgid ""
 "When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
@@ -2517,11 +2530,11 @@ msgstr ""
 "Tutaj można ustawić niestandardową nazwę domeny lub zostawić puste pole, aby "
 "program Pan użył nazwy domeny z adresu e-mail."
 
-#: pan/gui/profiles-dialog.cc:240
+#: pan/gui/profiles-dialog.cc:247
 msgid "Message-ID _Domain Name:"
 msgstr "Nazwa _domeny identyfikatora wiadomości:"
 
-#: pan/gui/profiles-dialog.cc:244
+#: pan/gui/profiles-dialog.cc:251
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2534,12 +2547,12 @@ msgstr ""
 "%n oznacza imię i nazwisko autora\n"
 "%d oznacza datę"
 
-#: pan/gui/profiles-dialog.cc:245
+#: pan/gui/profiles-dialog.cc:252
 msgid "_Attribution:"
 msgstr "_Autorstwo:"
 
 #. Translators: Do not localize Reply-To and the quote marks in \"Your Name\".
-#: pan/gui/profiles-dialog.cc:270
+#: pan/gui/profiles-dialog.cc:277
 msgid ""
 "Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
@@ -2549,27 +2562,27 @@ msgstr ""
 "Reply-To: \"Imię i nazwisko\" <imię-i-nazwisko@example.com>\n"
 "Organizacja: organizacja użytkownika\n"
 
-#: pan/gui/profiles-dialog.cc:280
+#: pan/gui/profiles-dialog.cc:287
 msgid "E_xtra Headers:"
 msgstr "_Dodatkowe nagłówki:"
 
-#: pan/gui/profiles-dialog.cc:325
+#: pan/gui/profiles-dialog.cc:332
 msgid "Invalid email address."
 msgstr "Nieprawidłowy adres e-mail."
 
-#: pan/gui/profiles-dialog.cc:326
+#: pan/gui/profiles-dialog.cc:333
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Proszę użyć adresu w formie jan@example.com"
 
-#: pan/gui/profiles-dialog.cc:481
+#: pan/gui/profiles-dialog.cc:489
 msgid "New Profile"
 msgstr "Nowy profil"
 
-#: pan/gui/profiles-dialog.cc:527
+#: pan/gui/profiles-dialog.cc:535
 msgid "Posting Profiles"
 msgstr "Profile wysyłania"
 
-#: pan/gui/profiles-dialog.cc:543
+#: pan/gui/profiles-dialog.cc:551
 msgid "Profiles"
 msgstr "Profile"
 
