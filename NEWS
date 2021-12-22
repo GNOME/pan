@@ -1,3 +1,63 @@
+0.149 "Bellevue"
+
+The main points of this release are:
+- Fix freeze when loading group with non-ascii characters in subject
+- Avoid mojibake in Subject and Headers
+- Fix x-face folding (FoxMcCloud45)
+- Add Base64-encoded Face header. (FoxMcCloud45)
+
+Detailed changes:
+
+  fa5f1f6 Removed #include duplicates. (FoxMcCloud45)
+  425cc58 Merge commit '4dbec01e' into 'master' (FoxMcCloud45)
+  4dbec01 try to figure out what's going on in the CI (Dominique Dumont)
+  04f2bf5 Updated source code to latest upstream commit. (FoxMcCloud45)
+  e5a7442 Add <provides> to org.gnome.pan.metainfo.xml.in (Petr Kovar)
+  1f2b4d5 Update org.gnome.pan.metainfo.xml.in per AppStream 0.15 (Petr Kovar)
+  5308fa0 Re-add myself to DOAP (Petr Kovar)
+  80cc2da Actually build with enchant-2 for GTK 3 (Petr Kovar)
+  d20d27d Run make dist to avoid missing out on renamed files in EXTRA_DIST (Petr Kovar)
+  97ff896 Update man page (Petr Kovar)
+  fd35c45 Rename pan.appdata.xml to be consistent (Petr Kovar)
+  63e13c7 More small edits (Petr Kovar)
+  81349f2 Rename desktop file and theme icons (Petr Kovar)
+  43a6bb6 Some edits (Petr Kovar)
+  e7cff2a Fix make dist (Petr Kovar)
+  f0b9949 remove dead code (Dominique Dumont)
+  84ecae8 Fix typo in actions.cc (Ryan Schmidt)
+  7357c50 header-pane.cc: avoid mojibake in Subject (Dominique Dumont)
+  3843f30 header-pane.cc: remove unused variable (Dominique Dumont)
+  bf18447 header-pane.cc: avoid mojibake in headers (Dominique Dumont)
+  ffd48ba Fix warning in mime-utils.cc (Dominique Dumont)
+  ee1e15b improve pan usage message (Dominique Dumont)
+  c7c217e fix stuck pan when loading gmane.linux.gentoo.server (Dominique Dumont)
+  a04993b Compile fix: gtk_handle_box_new() to gtk_box_new() (FoxMcCloud45)
+  682888d Supposed fix for posting icons. (FoxMcCloud45)
+  3fc114e Applied Face/X-Face patches to GMIME3 code. (FoxMcCloud45)
+  a91de9d Another forgotten conflict fix... (FoxMcCloud45)
+  493de9d Fic forgotten conflict. (FoxMcCloud45)
+  0f36c31 Fix merge conflict. (FoxMcCloud45)
+  a5c8e42 Added experimental support for sending Face header. (FoxMcCloud45)
+  5f5b07c Merge xface-fix with compile-fix (FoxMcCloud45)
+  ad830b0 Header fix for Arch Linux compilation. (FoxMcCloud45)
+  552d383 X-Face: manual folding for length >72. (FoxMcCloud45)
+  3b35d8b Fix two compile errors when build with GMime3 (Detlef Graef)
+  af7c6df Additional fixes for issue #128 when Pan is build with some options (Detlef Graef)
+  e7f5802 Merge branch 'fix-mess-from-glib-update' of https://gitlab.gnome.org/Rhialto/pan (Detlef Graef)
+  8cf0cff Merge https://gitlab.gnome.org/GNOME/pan (Detlef Graef)
+  39ba1ad Take <glib.h> out of extern "C" (Olaf Seibert)
+  0d77554 Remove empty line from file posting.xml (Detlef Graef)
+  495bfb2 Fix for GMime3 build (Posting error). Issues #103 and #114 (Detlef Graef)
+* Contributors to this release:
+  FoxMcCloud45, Petr Kovar, Dominique Dumont, Detlef Graef, Ryan Schmidt, Olaf Seibert
+* Updated translations:
+  cs        (Petr Kovar)
+  es        (Miguel Ángel Nieto)
+  pl        (Piotr Drąg)
+  pt_BR     (Enrico Nicoletto)
+  sv        (Anders Jonsson)
+  uk        (Yuri Chornoivan)
+
 0.148 "Chamechaude"
 
 The main points of this release are:

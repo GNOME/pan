@@ -1,8 +1,8 @@
-AC_INIT([Pan],[0.148],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[http://pan.rebelbase.com/])
+AC_INIT([Pan],[0.149],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[http://pan.rebelbase.com/])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
-AC_DEFINE(VERSION_MINOR,148,[Minor part of version number])
+AC_DEFINE(VERSION_MINOR,149,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
-AC_DEFINE(VERSION_TITLE,["Chamechaude"],[Release Name])
+AC_DEFINE(VERSION_TITLE,["Bellevue"],[Release Name])
 AC_PREREQ([2.64])
 
 dnl Get git info for pan-git.version
