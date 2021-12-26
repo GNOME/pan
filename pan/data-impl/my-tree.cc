@@ -316,10 +316,11 @@ DataImpl :: MyTree :: apply_filter (const const_nodes_v& candidates)
   //  maybe include threads or subthreads...
   if (_show_type == Data::SHOW_THREADS)
   {
-    foreach (const_nodes_v, pass, it) {
-      const ArticleNode *& n (*it);
-      while (n->_parent)
-        n = n->_parent;
+    const_nodes_v passcopy=pass;
+    foreach (const_nodes_v, passcopy, it) {
+      const ArticleNode *n (*it);
+      while ((n = n->_parent))
+        pass.push_back(n);
     }
     std::sort (pass.begin(), pass.end(), compare);
     pass.erase (std::unique (pass.begin(), pass.end()), pass.end());
