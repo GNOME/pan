@@ -95,7 +95,7 @@ namespace pan
          std::string to_string () const {return empty()
                                          ? std::string()
                                          : std::string(str,str+len); }
-         operator const std::string () const { return to_string(); }
+         operator std::string () const { return to_string(); }
 
          StringView substr (const char * start, const char * end) const;
          void substr (const char * start, const char * end, StringView& setme) const;
