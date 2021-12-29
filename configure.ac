@@ -7,32 +7,30 @@ AC_PREREQ([2.64])
 
 dnl Get git info for pan-git.version
 GIT_HASH='$Format:%h$'
-if test '0' \< $GIT_HASH ; then
-  GIT_REMOTE=`echo '$Format:%d$' | awk -F , '{print gensub("[[\(\)]]","","g",$NF)}' 2> /dev/null`
-else
+if test ! '0' \< $GIT_HASH ; then
   dnl git-dir is used for building outside the src tree
   GIT_HASH=`git --git-dir=$srcdir/.git log -1 --pretty=format:%h 2> /dev/null`
-  if test ! -z $GIT_HASH; then
+  if test -n $GIT_HASH; then
     GIT_REMOTE=`git config --get remote.origin.url 2> /dev/null`
   fi
 fi
-dnl Do not include protocol & user name in GIT_REMOTE
-case $GIT_REMOTE in
-  *://* )
-  GIT_REMOTE=`echo $GIT_REMOTE | cut -d '/' -f3- 2> /dev/null`
-  case $GIT_REMOTE in
-    *@* )
-    GIT_REMOTE=`echo $GIT_REMOTE | cut -d '@' -f2- | sed 's/\/git\//\//g' 2> /dev/null` ;;
-  esac
-  ;;
-esac
-if test ! -z $GIT_HASH; then
+if test -n $GIT_HASH; then
   if test -z $GIT_REMOTE; then
     GIT_REV="$GIT_HASH"
   else
+    dnl Do not include protocol & user name in GIT_REMOTE
+    case $GIT_REMOTE in
+      *://* )
+      GIT_REMOTE=`echo $GIT_REMOTE | cut -d '/' -f3- 2> /dev/null`
+      case $GIT_REMOTE in
+        *@* )
+        GIT_REMOTE=`echo $GIT_REMOTE | cut -d '@' -f2- | sed 's/\/git\//\//g' 2> /dev/null` ;;
+      esac
+      ;;
+    esac
     GIT_REV="$GIT_HASH $GIT_REMOTE"
   fi
-    echo $GIT_REV > pan-git.version
+  echo $GIT_REV > pan-git.version
   elif test -s pan-git.version ; then
     GIT_REV=`cat pan-git.version`
   else
