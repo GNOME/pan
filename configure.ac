@@ -156,33 +156,28 @@ AC_ARG_WITH([gtk3],
   AS_HELP_STRING([--with-gtk3],[enable GTK+ 3 support (normally: no)]), [want_gtk3=$withval], [want_gtk3=no])
 if test "x$want_gtk3" = "xyes" ; then
   PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= $GTK3_REQUIRED],
-                    [gtk_msg="yes >= $GTK3_REQUIRED"
+                    [GTK_VER=`pkg-config --modversion gtk+-3.0`
+                    gtk_msg="yes ($GTK_VER)"
                     AC_DEFINE(HAVE_GTK,[1],[GTK+ 3 support])]
                     )
   if test "x$want_gtkspell" = "xyes" ; then
     PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 >= $GTKSPELL3_REQUIRED enchant-2 >= $ENCHANT2_REQUIRED],
-                      [
-                      gtkspell_msg=yes
+                      [GTKSPELL_VER=`pkg-config --modversion gtkspell3-3.0 enchant-2 | xargs`
+                      gtkspell_msg="yes ($GTKSPELL_VER)"
                       AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
-                      AC_DEFINE(GTKSPELL_VERSION,[3],[GtkSpell API version])
-                      ],
-                      [
-                      gtkspell_msg=no
-                      AC_MSG_RESULT(no)
-                      ])
+                      AC_DEFINE(GTKSPELL_VERSION,[3],[GtkSpell API version])],
+                      [gtkspell_msg=no
+                      AC_MSG_RESULT(no)])
   fi
 else
    if test "x$want_gtkspell" = "xyes" ; then
-   PKG_CHECK_MODULES([GTKSPELL], [gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
-                      [
-                      gtkspell_msg=yes
+   PKG_CHECK_MODULES([GTKSPELL],[gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
+                      [GTKSPELL_VER=`pkg-config --modversion gtkspell-2.0 enchant | xargs`
+                      gtkspell_msg="yes ($GTKSPELL_VER)"
                       AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
-                      AC_DEFINE(GTKSPELL_VERSION,[2],[GtkSpell API version])
-                      ],
-                      [
-                      gtkspell_msg=no
-                      AC_MSG_RESULT(no)
-                      ])
+                      AC_DEFINE(GTKSPELL_VERSION,[2],[GtkSpell API version])],
+                      [gtkspell_msg=no
+                      AC_MSG_RESULT(no)])
    fi
    PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= $GTK_REQUIRED, gthread-2.0])
 fi
@@ -221,8 +216,7 @@ AC_ARG_WITH([gnutls],
   AS_HELP_STRING([--with-gnutls],[enable GnuTLS support (normally: no)]), [want_gnutls=$withval], [want_gnutls=no])
 if test "x$want_gnutls" = "xyes" ; then
   PKG_CHECK_MODULES([GNUTLS],[gnutls >= $GNUTLS_REQUIRED],
-  [
-  GNUTLS_VER=`pkg-config --modversion gnutls`
+  [GNUTLS_VER=`pkg-config --modversion gnutls`
   gnutls_msg="yes ($GNUTLS_VER)"
   AC_DEFINE(HAVE_GNUTLS,[1],[GnuTLS support])],
   [gnutls_msg=no
@@ -235,12 +229,14 @@ dnl Check for libnotify if user-enabled for popup notifications
 AC_ARG_ENABLE([libnotify],
   AS_HELP_STRING([--enable-libnotify],[enable libnotify support (normally: no)]),[enable_libnotify=$enableval],[enable_libnotify=no])
 if test "x$enable_libnotify" = "xyes" ; then
-  PKG_CHECK_MODULES([LIBNOTIFY],[libnotify >= $LIBNOTIFY_REQUIRED],[HAVE_LIBNOTIFY="yes"],[HAVE_LIBNOTIFY="no"])
+  PKG_CHECK_MODULES([LIBNOTIFY],[libnotify >= $LIBNOTIFY_REQUIRED],
+  [LIBNOTIFY_VER=`pkg-config --modversion libnotify`
+  libnotify_msg="yes ($LIBNOTIFY_VER)"
+  AC_DEFINE([HAVE_LIBNOTIFY],[1],[libnotify support for popup notifications])],
+  [libnotify_msg=no
+  AC_MSG_RESULT(no)])
   AC_SUBST([LIBNOTIFY_CFLAGS])
   AC_SUBST([LIBNOTIFY_LIBS])
-  if test "x$HAVE_LIBNOTIFY" = "xyes"; then
-    AC_DEFINE([HAVE_LIBNOTIFY],[1],[libnotify support for popup notifications])
-  fi
 fi
 
 dnl Check for libsecret and gcr (GTK+ 3 only) or GNOME Keyring if user-enabled for password storage
@@ -249,15 +245,21 @@ AC_ARG_ENABLE([gkr],
 if test "x$enable_gkr" = "xyes" ; then
   if test "x$want_gtk3" = "xyes" ; then
     PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[libsecret-1 >= $LIBSECRET_REQUIRED gcr-3 >= $GCR_REQUIRED],
-    [HAVE_GKR="yes"],[HAVE_GKR="no"])
+    [LIBSECRET_VER=`pkg-config --modversion libsecret-1 gcr-3 | xargs`
+    gkr_msg="yes ($LIBSECRET_VER)"
+    AC_DEFINE(HAVE_GKR,[1],[GNOME Keyring or libsecret support for password storage])],
+    [gkr_msg=no
+    AC_MSG_RESULT(no)])
   else
-    PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[gnome-keyring-1 >= $LIBGKR_REQUIRED],[HAVE_GKR="yes"],[HAVE_GKR="no"])
+    PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[gnome-keyring-1 >= $LIBGKR_REQUIRED],
+    [LIBSECRET_VER=`pkg-config --modversion gnome-keyring-1`
+    gkr_msg="yes ($LIBSECRET_VER)"
+    AC_DEFINE(HAVE_GKR,[1],[GNOME Keyring or libsecret support for password storage])],
+    [gkr_msg=no
+    AC_MSG_RESULT(no)])
   fi
   AC_SUBST([LIBGNOME_KEYRING_1_CFLAGS])
   AC_SUBST([LIBGNOME_KEYRING_1_LIBS])
-  if test "x$HAVE_GKR" = "xyes"; then
-    AC_DEFINE([HAVE_GKR],[1],[GNOME Keyring or libsecret support for password storage])
-  fi
 fi
 
 dnl User manual infrastructure
@@ -362,8 +364,8 @@ Configuration:
         With GTK+ 3:            ${gtk_msg}
         With WebKitGTK+:        ${want_webkit}
         With GnuTLS:            ${gnutls_msg}
-        With libnotify:         ${enable_libnotify}
-        With password storage:  ${enable_gkr}
+        With libnotify:         ${libnotify_msg}
+        With password storage:  ${gkr_msg}
         With yelp-tools:        ${want_yelp_tools}
         With user manual:       ${enable_manual}
 "
