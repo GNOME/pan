@@ -1,17 +1,18 @@
 # Swedish messages for Pan.
-# Copyright © 2000-2021 Free Software Foundation, Inc.
+# Copyright © 2000-2022 Free Software Foundation, Inc.
 # Andreas Hyden <a.hyden@cyberpoint.se>, 2000.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003, 2004.
 # Daniel Nylander <po@danielnylander.se>, 2006, 2007, 2008, 2009, 2011.
 # Josef Andersson <josef.andersson@fripost.org>, 2016, 2018.
 # Anders Jonsson <anders.jonsson@norsjovallen.se>, 2017, 2021.
+# Luna Jernberg <droidbittin@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2021-12-06 19:16+0000\n"
-"PO-Revision-Date: 2021-12-06 21:35+0100\n"
+"POT-Creation-Date: 2021-12-29 03:32+0000\n"
+"PO-Revision-Date: 2022-01-03 22:06+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -19,11 +20,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Project-Style: gnome\n"
 
 #. update the titlebar
-#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:22
+#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:27
 #: pan/gui/dl-headers-ui.cc:104 pan/gui/gui.cc:1045 pan/gui/gui.cc:1718
 #: pan/gui/gui.cc:2038 pan/gui/score-add-ui.cc:600
 msgid "Pan"
@@ -33,7 +34,7 @@ msgstr "Pan"
 msgid "Newsreader"
 msgstr "Diskussionsgruppsläsare"
 
-#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:6
+#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:7
 msgid "Read and post Usenet articles"
 msgstr "Läs och posta Usenet-artiklar"
 
@@ -43,11 +44,11 @@ msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
 msgstr ""
 "usenet;newsreader;diskussionsgruppläsare;diskussionsgrupp;artikel;yenc,nzb;"
 
-#: org.gnome.pan.metainfo.xml.in:5
+#: org.gnome.pan.metainfo.xml.in:6
 msgid "Pan Newsreader"
 msgstr "Pan diskussionsgruppsläsare"
 
-#: org.gnome.pan.metainfo.xml.in:8
+#: org.gnome.pan.metainfo.xml.in:9
 msgid ""
 "Pan is a Usenet newsreader that is good at both text and binaries. It "
 "supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
@@ -57,7 +58,7 @@ msgstr ""
 "binärer. Det stöder frånkopplad läsning, poängsättning och ignorerafiler, "
 "yEnc, NZB, PGP-hantering, multipla servrar och säkra anslutningar."
 
-#: org.gnome.pan.metainfo.xml.in:11
+#: org.gnome.pan.metainfo.xml.in:12
 msgid ""
 "It is also the only Unix newsreader to get a perfect score on the Good Net-"
 "Keeping Seal of Approval evaluations."
@@ -72,7 +73,7 @@ msgstr "Fel vid öppnande av katalogen: ”%s”: %s"
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
-#: pan/gui/post-ui.cc:1916
+#: pan/gui/post-ui.cc:1958
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Kunde inte spara ”%s” %s"
@@ -82,7 +83,7 @@ msgstr "Kunde inte spara ”%s” %s"
 msgid "Error opening file \"%s\" %s"
 msgstr "Fel vid öppnande av filen ”%s” %s"
 
-#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
+#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
 #: pan/data-impl/server.cc:525 pan/general/file-util.cc:311
 #: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:735
 #, c-format
@@ -204,7 +205,7 @@ msgstr "%d %b %Y"
 msgid "?"
 msgstr "?"
 
-#: pan/general/text-match.cc:193
+#: pan/general/text-match.cc:194
 #, c-format
 msgid "Can't use regular expression \"%s\": %s"
 msgstr "Kan inte använda det reguljära uttrycket ”%s”: %s"
@@ -814,7 +815,7 @@ msgid "Unnamed File"
 msgstr "Ej namngiven fil"
 
 #: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1303
-#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2817 pan/gui/prefs-ui.cc:853
+#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2859 pan/gui/prefs-ui.cc:853
 #: pan/gui/score-add-ui.cc:137 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "Ämne"
@@ -1069,44 +1070,44 @@ msgstr "Övriga grupper"
 msgid "Name"
 msgstr "Namn"
 
-#: pan/gui/group-prefs-dialog.cc:160
+#: pan/gui/group-prefs-dialog.cc:164
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "Inga profiler har definierats i Redigera|Postandeprofiler."
 
-#: pan/gui/group-prefs-dialog.cc:271
+#: pan/gui/group-prefs-dialog.cc:275
 msgid "Pan: Group Preferences"
 msgstr "Pan: Gruppinställningar"
 
-#: pan/gui/group-prefs-dialog.cc:286
+#: pan/gui/group-prefs-dialog.cc:290
 msgid "Properties for Groups"
 msgstr "Egenskaper för grupper"
 
-#: pan/gui/group-prefs-dialog.cc:288
+#: pan/gui/group-prefs-dialog.cc:292
 #, c-format
 msgid "Properties for %s"
 msgstr "Egenskaper för %s"
 
-#: pan/gui/group-prefs-dialog.cc:296
+#: pan/gui/group-prefs-dialog.cc:300
 msgid "Character _encoding:"
 msgstr "Tecken_kodning:"
 
-#: pan/gui/group-prefs-dialog.cc:298
+#: pan/gui/group-prefs-dialog.cc:302
 msgid "Directory for Saving Attachments"
 msgstr "Katalog för att spara bilagor"
 
-#: pan/gui/group-prefs-dialog.cc:306
+#: pan/gui/group-prefs-dialog.cc:310
 msgid "Directory for _saving attachments:"
 msgstr "Katalog för att spa_ra bilagor:"
 
-#: pan/gui/group-prefs-dialog.cc:308
+#: pan/gui/group-prefs-dialog.cc:312
 msgid "Posting _profile:"
 msgstr "Postande_profil:"
 
-#: pan/gui/group-prefs-dialog.cc:313
+#: pan/gui/group-prefs-dialog.cc:317
 msgid "Spellchecker _language:"
 msgstr "Språk för stavningskontrol_l:"
 
-#: pan/gui/group-prefs-dialog.cc:316
+#: pan/gui/group-prefs-dialog.cc:320
 msgid "Group color:"
 msgstr "Gruppfärg:"
 
@@ -1134,7 +1135,7 @@ msgstr "Spara NZB-fil som…"
 msgid "Import NZB Files"
 msgstr "Importera NZB-filer"
 
-#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3520
+#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3562
 msgid "NZB Files"
 msgstr "NZB-filer"
 
@@ -1196,6 +1197,7 @@ msgstr ""
 "Christian Rose\n"
 "Andreas Hyden\n"
 "Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
+"Luna Jernberg <droidbittin@gmail.com>\n"
 "\n"
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>."
@@ -1716,85 +1718,85 @@ msgstr "Fel vid start av den externa redigeraren: %s"
 msgid "Open Draft Article"
 msgstr "Öppna artikelutkast"
 
-#: pan/gui/post-ui.cc:1832
+#: pan/gui/post-ui.cc:1874
 msgid "Save Draft Article"
 msgstr "Spara artikelutkast"
 
-#: pan/gui/post-ui.cc:1869
+#: pan/gui/post-ui.cc:1911
 msgid "File already exists."
 msgstr "Filen finns redan."
 
-#: pan/gui/post-ui.cc:1870
+#: pan/gui/post-ui.cc:1912
 msgid "Overwrite it?"
 msgstr "Skriv över den?"
 
-#: pan/gui/post-ui.cc:2080
+#: pan/gui/post-ui.cc:2122
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Kunde inte tolka signaturkommandot ”%s”: %s"
 
-#: pan/gui/post-ui.cc:2116
+#: pan/gui/post-ui.cc:2158
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Kunde inte konvertera signaturen till UTF-8."
 
-#: pan/gui/post-ui.cc:2656
+#: pan/gui/post-ui.cc:2698
 msgid "F_rom"
 msgstr "F_rån"
 
-#: pan/gui/post-ui.cc:2673
+#: pan/gui/post-ui.cc:2715
 msgid "_Subject"
 msgstr "_Ämne"
 
-#: pan/gui/post-ui.cc:2686
+#: pan/gui/post-ui.cc:2728
 msgid "_Newsgroups"
 msgstr "_Diskussionsgrupper"
 
-#: pan/gui/post-ui.cc:2700
+#: pan/gui/post-ui.cc:2742
 msgid "Mail _To"
 msgstr "E-post _till"
 
-#: pan/gui/post-ui.cc:2802
+#: pan/gui/post-ui.cc:2844
 msgid "Delete from Queue"
 msgstr "Ta bort från kö"
 
-#: pan/gui/post-ui.cc:2815
+#: pan/gui/post-ui.cc:2857
 msgid "No."
 msgstr "Nr."
 
-#: pan/gui/post-ui.cc:2819 pan/gui/post-ui.cc:2911 pan/gui/post-ui.cc:2952
+#: pan/gui/post-ui.cc:2861 pan/gui/post-ui.cc:2953 pan/gui/post-ui.cc:2994
 msgid "Filename"
 msgstr "Filnamn"
 
-#: pan/gui/post-ui.cc:2821
+#: pan/gui/post-ui.cc:2863
 msgid "Size (KB)"
 msgstr "Storlek (KB)"
 
-#: pan/gui/post-ui.cc:2919
+#: pan/gui/post-ui.cc:2961
 msgid "The current filename"
 msgstr "Det aktuella filnamnet"
 
-#: pan/gui/post-ui.cc:2923
+#: pan/gui/post-ui.cc:2965
 msgid "Subject Line"
 msgstr "Ämnesrad"
 
-#: pan/gui/post-ui.cc:2931
+#: pan/gui/post-ui.cc:2973
 msgid "The current subject line"
 msgstr "Den aktuella ämnesraden"
 
-#: pan/gui/post-ui.cc:2945
+#: pan/gui/post-ui.cc:2987
 msgid "No. "
 msgstr "Nr. "
 
-#: pan/gui/post-ui.cc:2949
+#: pan/gui/post-ui.cc:2991
 msgid "Enable/Disable"
 msgstr "Aktivera/inaktivera"
 
-#: pan/gui/post-ui.cc:2983
+#: pan/gui/post-ui.cc:3025
 msgid "Follo_wup-To"
 msgstr "_Uppföljning-till"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:2992
+#: pan/gui/post-ui.cc:3034
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1807,11 +1809,11 @@ msgstr ""
 "För att dirigera alla svar till din e-postadress, använd ”Uppföljning-till: "
 "poster”"
 
-#: pan/gui/post-ui.cc:2999
+#: pan/gui/post-ui.cc:3041
 msgid "_Reply-To"
 msgstr "_Svara-till"
 
-#: pan/gui/post-ui.cc:3007
+#: pan/gui/post-ui.cc:3049
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
@@ -1819,52 +1821,52 @@ msgstr ""
 "E-postkontot dit svar på ditt postade meddelande ska gå. Det här behövs "
 "endast om det skiljer sig från ”Från”-rubriken."
 
-#: pan/gui/post-ui.cc:3014
+#: pan/gui/post-ui.cc:3056
 msgid "_Custom Headers"
 msgstr "_Anpassade rubriker"
 
-#: pan/gui/post-ui.cc:3038
+#: pan/gui/post-ui.cc:3080
 msgid "Add \"_User-Agent\" header"
 msgstr "Lägg till ”_User-Agent”-rubrik"
 
-#: pan/gui/post-ui.cc:3045
+#: pan/gui/post-ui.cc:3087
 msgid "Add \"Message-_ID\" header"
 msgstr "Lägg till ”Meddelande-_ID”-rubrik"
 
-#: pan/gui/post-ui.cc:3176
+#: pan/gui/post-ui.cc:3218
 msgid "Select Parts"
 msgstr "Markera delar"
 
-#: pan/gui/post-ui.cc:3189
+#: pan/gui/post-ui.cc:3231
 msgid "_Parts"
 msgstr "_Delar"
 
-#: pan/gui/post-ui.cc:3347
+#: pan/gui/post-ui.cc:3389
 msgid "Post Article"
 msgstr "Posta artikel"
 
-#: pan/gui/post-ui.cc:3368
+#: pan/gui/post-ui.cc:3410
 msgid "_Message"
 msgstr "_Meddelande"
 
-#: pan/gui/post-ui.cc:3369
+#: pan/gui/post-ui.cc:3411
 msgid "More _Headers"
 msgstr "_Fler rubriker"
 
-#: pan/gui/post-ui.cc:3370
+#: pan/gui/post-ui.cc:3412
 msgid "File _Queue"
 msgstr "Fil_kö"
 
-#: pan/gui/post-ui.cc:3402 pan/gui/profiles-dialog.cc:480
+#: pan/gui/post-ui.cc:3444 pan/gui/profiles-dialog.cc:488
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "Den %d skrev %n:"
 
-#: pan/gui/post-ui.cc:3431
+#: pan/gui/post-ui.cc:3473
 msgid "Add files to queue"
 msgstr "Lägg till filer i kön"
 
-#: pan/gui/post-ui.cc:3507
+#: pan/gui/post-ui.cc:3549
 msgid "Save Upload Queue as NZB File"
 msgstr "Spara sändfilkö som en NZB-fil"
 
@@ -2475,32 +2477,44 @@ msgstr "PGP-signatur"
 msgid "Signature Type: "
 msgstr "Signaturtyp: "
 
-#: pan/gui/profiles-dialog.cc:224
-msgid "X-Face (Avatar)"
-msgstr "X-Face (Avatar)"
+#: pan/gui/profiles-dialog.cc:225
+msgid "Avatars"
+msgstr "Profilbilder"
 
-#: pan/gui/profiles-dialog.cc:227
+#: pan/gui/profiles-dialog.cc:228
+msgid ""
+"You can add an avatar icon to your articles with a Base64-encoded PNG.\n"
+"Add the Base64-encoded picture without the trailing <b>“Face:”</b>."
+msgstr ""
+"Du kan lägga till en profilbild till dina artiklar med en Base64-kodad PNG.\n"
+"Lägg till den Base64-kodade bilden utan eftersläpande <b>”Face:”</b>."
+
+#: pan/gui/profiles-dialog.cc:230
+msgid "_Face:"
+msgstr "_Face:"
+
+#: pan/gui/profiles-dialog.cc:234
 msgid ""
 "You can add an avatar icon to your articles with a unique X-Face code.\n"
 "Add the code without the trailing <b>\"X-Face:\"</b> \n"
 " if it was generated by a helper program (for example http://www.dairiki.org/"
 "xface/xface.php)."
 msgstr ""
-"Du kan lägga till en avatarikon till dina artiklar med en unik X-"
+"Du kan lägga till en profilbild till dina artiklar med en unik X-"
 "ansikteskod.\n"
 "Lägg till koden utan eftersläpande <b>”X-Face:”</b> \n"
 " om den generades av ett hjälpprogram (till exempel http://www.dairiki.org/"
 "xface/xface.php)."
 
-#: pan/gui/profiles-dialog.cc:230
+#: pan/gui/profiles-dialog.cc:237
 msgid "_X-Face:"
 msgstr "_X-Face:"
 
-#: pan/gui/profiles-dialog.cc:232
+#: pan/gui/profiles-dialog.cc:239
 msgid "Optional Information"
 msgstr "Valfri information"
 
-#: pan/gui/profiles-dialog.cc:237
+#: pan/gui/profiles-dialog.cc:244
 msgid ""
 "When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
@@ -2511,11 +2525,11 @@ msgstr ""
 "Du kan ställa in ett anpassat domännamn här eller lämna det blankt för att "
 "låta Pan använda domännamnet från din e-postadress."
 
-#: pan/gui/profiles-dialog.cc:240
+#: pan/gui/profiles-dialog.cc:247
 msgid "Message-ID _Domain Name:"
 msgstr "_Domännamn för meddelande-ID:"
 
-#: pan/gui/profiles-dialog.cc:244
+#: pan/gui/profiles-dialog.cc:251
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2528,12 +2542,12 @@ msgstr ""
 "%n för författarnamn\n"
 "%d för datum"
 
-#: pan/gui/profiles-dialog.cc:245
+#: pan/gui/profiles-dialog.cc:252
 msgid "_Attribution:"
 msgstr "_Tillskrivning:"
 
 #. Translators: Do not localize Reply-To and the quote marks in \"Your Name\".
-#: pan/gui/profiles-dialog.cc:270
+#: pan/gui/profiles-dialog.cc:277
 msgid ""
 "Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
@@ -2543,27 +2557,27 @@ msgstr ""
 "Reply-To: ”Ditt namn” <ditt_namn@någonstans.se>\n"
 "Organization: Din organisation\n"
 
-#: pan/gui/profiles-dialog.cc:280
+#: pan/gui/profiles-dialog.cc:287
 msgid "E_xtra Headers:"
 msgstr "E_xtra rubriker:"
 
-#: pan/gui/profiles-dialog.cc:325
+#: pan/gui/profiles-dialog.cc:332
 msgid "Invalid email address."
 msgstr "Ogiltig e-postadress."
 
-#: pan/gui/profiles-dialog.cc:326
+#: pan/gui/profiles-dialog.cc:333
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Använd en adress i formatet evert@någonstans.se"
 
-#: pan/gui/profiles-dialog.cc:481
+#: pan/gui/profiles-dialog.cc:489
 msgid "New Profile"
 msgstr "Ny profil"
 
-#: pan/gui/profiles-dialog.cc:527
+#: pan/gui/profiles-dialog.cc:535
 msgid "Posting Profiles"
 msgstr "Postandeprofiler"
 
-#: pan/gui/profiles-dialog.cc:543
+#: pan/gui/profiles-dialog.cc:551
 msgid "Profiles"
 msgstr "Profiler"
 
