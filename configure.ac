@@ -150,9 +150,20 @@ AC_ARG_WITH([gtkspell],
 
 dnl GTK+ 3, GtkSpell 3, and Enchant support
 gtk_msg=no
-AC_ARG_WITH([gtk3],
-  AS_HELP_STRING([--with-gtk3],[enable GTK+ 3 support (normally: no)]), [want_gtk3=$withval], [want_gtk3=no])
-if test "x$want_gtk3" = "xyes" ; then
+AC_ARG_WITH([gtk2],
+  AS_HELP_STRING([--with-gtk2],[enable GTK 2 support (deprecated, normally: no)]), [want_gtk2=$withval], [want_gtk2=no])
+if test "x$want_gtk2" = "xyes" ; then
+   if test "x$want_gtkspell" = "xyes" ; then
+   PKG_CHECK_MODULES([GTKSPELL],[gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
+                      [GTKSPELL_VER=`pkg-config --modversion gtkspell-2.0 enchant | xargs`
+                      gtkspell_msg="yes ($GTKSPELL_VER)"
+                      AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
+                      AC_DEFINE(GTKSPELL_VERSION,[2],[GtkSpell API version])],
+                      [gtkspell_msg=no
+                      AC_MSG_RESULT(no)])
+   fi
+   PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= $GTK_REQUIRED, gthread-2.0])
+else
   PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= $GTK3_REQUIRED],
                     [GTK_VER=`pkg-config --modversion gtk+-3.0`
                     gtk_msg="yes ($GTK_VER)"
@@ -167,17 +178,6 @@ if test "x$want_gtk3" = "xyes" ; then
                       [gtkspell_msg=no
                       AC_MSG_RESULT(no)])
   fi
-else
-   if test "x$want_gtkspell" = "xyes" ; then
-   PKG_CHECK_MODULES([GTKSPELL],[gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
-                      [GTKSPELL_VER=`pkg-config --modversion gtkspell-2.0 enchant | xargs`
-                      gtkspell_msg="yes ($GTKSPELL_VER)"
-                      AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
-                      AC_DEFINE(GTKSPELL_VERSION,[2],[GtkSpell API version])],
-                      [gtkspell_msg=no
-                      AC_MSG_RESULT(no)])
-   fi
-   PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= $GTK_REQUIRED, gthread-2.0])
 fi
 
 AC_SUBST(ENCHANT_CFLAGS)
@@ -186,11 +186,11 @@ AC_SUBST(ENCHANT_LIBS)
 dnl WebKitGTK+ support
 AC_ARG_WITH([webkit],
   AS_HELP_STRING([--with-webkit],[enable WebKitGTK+ support (experimental, normally: no)]), [want_webkit=$withval], [want_webkit=no])
-if test "x$want_gtk3" = "xyes" ; then
+if test "x$want_gtk2" = "xyes" ; then
   if test "x$want_webkit" = "xyes" ; then
-    PKG_CHECK_MODULES([WEBKITGTK],[webkitgtk-3.0 >= $WEBKIT_REQUIRED],
+    PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-1.0 >= $WEBKIT_REQUIRED],
     [
-    AC_DEFINE(HAVE_WEBKIT,[1],[WebKit support (3.0) for embedded HTML])
+    AC_DEFINE(HAVE_WEBKIT,[1],[WebKit support (1.0) for embedded HTML])
     ],
     [
     AC_MSG_RESULT(no)
@@ -198,9 +198,9 @@ if test "x$want_gtk3" = "xyes" ; then
   fi
 else
   if test "x$want_webkit" = "xyes" ; then
-    PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-1.0 >= $WEBKIT_REQUIRED],
+    PKG_CHECK_MODULES([WEBKITGTK],[webkitgtk-3.0 >= $WEBKIT_REQUIRED],
     [
-    AC_DEFINE(HAVE_WEBKIT,[1],[WebKit support (1.0) for embedded HTML])
+    AC_DEFINE(HAVE_WEBKIT,[1],[WebKit support (3.0) for embedded HTML])
     ],
     [
     AC_MSG_RESULT(no)
@@ -241,16 +241,16 @@ dnl Check for libsecret and gcr (GTK+ 3 only) or GNOME Keyring if user-enabled f
 AC_ARG_ENABLE([gkr],
   AS_HELP_STRING([--enable-gkr],[enable GNOME Keyring or libsecret support (normally: no)]),[enable_gkr=$enableval],[enable_gkr=no])
 if test "x$enable_gkr" = "xyes" ; then
-  if test "x$want_gtk3" = "xyes" ; then
-    PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[libsecret-1 >= $LIBSECRET_REQUIRED gcr-3 >= $GCR_REQUIRED],
-    [LIBSECRET_VER=`pkg-config --modversion libsecret-1 gcr-3 | xargs`
+  if test "x$want_gtk2" = "xyes" ; then
+    PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[gnome-keyring-1 >= $LIBGKR_REQUIRED],
+    [LIBSECRET_VER=`pkg-config --modversion gnome-keyring-1`
     gkr_msg="yes ($LIBSECRET_VER)"
     AC_DEFINE(HAVE_GKR,[1],[GNOME Keyring or libsecret support for password storage])],
     [gkr_msg=no
     AC_MSG_RESULT(no)])
   else
-    PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[gnome-keyring-1 >= $LIBGKR_REQUIRED],
-    [LIBSECRET_VER=`pkg-config --modversion gnome-keyring-1`
+    PKG_CHECK_MODULES([LIBGNOME_KEYRING_1],[libsecret-1 >= $LIBSECRET_REQUIRED gcr-3 >= $GCR_REQUIRED],
+    [LIBSECRET_VER=`pkg-config --modversion libsecret-1 gcr-3 | xargs`
     gkr_msg="yes ($LIBSECRET_VER)"
     AC_DEFINE(HAVE_GKR,[1],[GNOME Keyring or libsecret support for password storage])],
     [gkr_msg=no

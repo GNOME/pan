@@ -28,7 +28,7 @@ build-ubuntu-gtk2:
     - head -15 configure.ac
     - mkdir _build
     - cd _build
-    - ../autogen.sh --without-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --without-gtkspell --enable-libnotify --enable-gkr --enable-manual
+    - ../autogen.sh --with-gtk2 --with-gnutls --with-dbus --with-gmime-crypto --without-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
     - make distcheck
 
@@ -60,6 +60,6 @@ build-ubuntu-gtk3:
   script:
     - mkdir _build
     - cd _build
-    - ../autogen.sh --with-gtk3 --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
+    - ../autogen.sh --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
     - make dist
