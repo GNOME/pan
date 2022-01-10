@@ -11,6 +11,7 @@ build-ubuntu-gtk2:
     - tags
   before_script:
     - apt-get update
+     # libgtk-3-dev is required by make distcheck step
     - apt-get install -q -y --no-install-recommends
         build-essential
         autoconf
@@ -19,7 +20,7 @@ build-ubuntu-gtk2:
         gettext
         gcc
         libgtk2.0-dev
-        libgtk-3-dev # required by make distcheck
+        libgtk-3-dev
         libgmime-3.0-dev
         libnotify-dev
         gnome-keyring
