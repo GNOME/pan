@@ -11,7 +11,6 @@ build-ubuntu-gtk2:
     - tags
   before_script:
     - apt-get update
-     # libgtk-3-dev is required by make distcheck step
     - apt-get install -q -y --no-install-recommends
         build-essential
         autoconf
@@ -20,7 +19,6 @@ build-ubuntu-gtk2:
         gettext
         gcc
         libgtk2.0-dev
-        libgtk-3-dev
         libgmime-3.0-dev
         libnotify-dev
         gnome-keyring
@@ -32,7 +30,7 @@ build-ubuntu-gtk2:
     - cd _build
     - ../autogen.sh --with-gtk2 --with-gnutls --with-dbus --with-gmime-crypto --without-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
-    - make distcheck
+    - make dist
 
 build-ubuntu-gtk3:
   image: ubuntu:rolling
@@ -64,4 +62,4 @@ build-ubuntu-gtk3:
     - cd _build
     - ../autogen.sh --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
-    - make dist
+    - make distcheck
