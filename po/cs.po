@@ -4,13 +4,13 @@
 # This file is distributed under the same license as the pan package.
 # Michal Bukovjan <bukm@centrum.cz>, 2002, 2003.
 # Miloslav Trmac <mitr@volny.cz>, 2003, 2005.
-# Petr Kovar <pknbe@volny.cz>, 2007, 2008, 2009, 2011, 2012, 2013, 2015, 2016, 2017, 2021.
+# Petr Kovar <pknbe@volny.cz>, 2007, 2008, 2009, 2011, 2012, 2013, 2015, 2016, 2017, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2021-12-06 19:16+0000\n"
-"PO-Revision-Date: 2021-12-07 00:47+0100\n"
+"POT-Creation-Date: 2021-12-15 18:20+0000\n"
+"PO-Revision-Date: 2022-01-12 16:15+0100\n"
 "Last-Translator: Petr Kovar <pknbe@volny.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Project-Style: gnome\n"
 
 #. update the titlebar
-#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:22
+#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:27
 #: pan/gui/dl-headers-ui.cc:104 pan/gui/gui.cc:1045 pan/gui/gui.cc:1718
 #: pan/gui/gui.cc:2038 pan/gui/score-add-ui.cc:600
 msgid "Pan"
@@ -32,7 +32,7 @@ msgstr "Pan"
 msgid "Newsreader"
 msgstr "Diskusní klient"
 
-#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:6
+#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:7
 msgid "Read and post Usenet articles"
 msgstr "Čtení a vystavování příspěvků na síti Usenet"
 
@@ -41,11 +41,11 @@ msgstr "Čtení a vystavování příspěvků na síti Usenet"
 msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
 msgstr "usenet;news;diskusní klient;diskusní skupina;příspěvek;yenc;nzb;"
 
-#: org.gnome.pan.metainfo.xml.in:5
+#: org.gnome.pan.metainfo.xml.in:6
 msgid "Pan Newsreader"
 msgstr "Diskusní klient"
 
-#: org.gnome.pan.metainfo.xml.in:8
+#: org.gnome.pan.metainfo.xml.in:9
 msgid ""
 "Pan is a Usenet newsreader that is good at both text and binaries. It "
 "supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
@@ -55,7 +55,7 @@ msgstr ""
 "příspěvky. Podporuje práci v režimu offline, hodnocení, killfiles, yEnc, "
 "NZB, práci s PGP a více servery a zabezpečené připojení."
 
-#: org.gnome.pan.metainfo.xml.in:11
+#: org.gnome.pan.metainfo.xml.in:12
 msgid ""
 "It is also the only Unix newsreader to get a perfect score on the Good Net-"
 "Keeping Seal of Approval evaluations."
@@ -70,7 +70,7 @@ msgstr "Chyba při otevírání adresáře: „%s“: %s"
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
-#: pan/gui/post-ui.cc:1916
+#: pan/gui/post-ui.cc:1958
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Nelze uložit „%s“ %s"
@@ -80,7 +80,7 @@ msgstr "Nelze uložit „%s“ %s"
 msgid "Error opening file \"%s\" %s"
 msgstr "Chyba při otevírání souboru „%s“ %s"
 
-#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
+#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
 #: pan/data-impl/server.cc:525 pan/general/file-util.cc:311
 #: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:735
 #, c-format
@@ -200,7 +200,7 @@ msgstr "%e. %b %Y"
 msgid "?"
 msgstr "?"
 
-#: pan/general/text-match.cc:193
+#: pan/general/text-match.cc:194
 #, c-format
 msgid "Can't use regular expression \"%s\": %s"
 msgstr "Nelze použít regulární výraz „%s“: %s"
@@ -810,7 +810,7 @@ msgid "Unnamed File"
 msgstr "Soubor bez názvu"
 
 #: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1303
-#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2817 pan/gui/prefs-ui.cc:853
+#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2859 pan/gui/prefs-ui.cc:853
 #: pan/gui/score-add-ui.cc:137 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "Předmět"
@@ -986,20 +986,20 @@ msgstr "Západoevropská, nová"
 
 #: pan/gui/e-charset.c:84 pan/gui/e-charset.c:85 pan/gui/e-charset.c:86
 msgid "Traditional"
-msgstr "tradiční"
+msgstr "Tradiční"
 
 #: pan/gui/e-charset.c:87 pan/gui/e-charset.c:88 pan/gui/e-charset.c:89
 #: pan/gui/e-charset.c:90
 msgid "Simplified"
-msgstr "zjednodušená"
+msgstr "Zjednodušená"
 
 #: pan/gui/e-charset.c:93
 msgid "Ukrainian"
-msgstr "ukrajinská"
+msgstr "Ukrajinská"
 
 #: pan/gui/e-charset.c:96
 msgid "Visual"
-msgstr "vizuální"
+msgstr "Vizuální"
 
 #: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:547
 #: pan/gui/prefs-ui.cc:757
@@ -1066,44 +1066,44 @@ msgstr "Ostatní skupiny"
 msgid "Name"
 msgstr "Název"
 
-#: pan/gui/group-prefs-dialog.cc:160
+#: pan/gui/group-prefs-dialog.cc:164
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "V nabídce Upravit → Profily nebyly zadány žádné profily."
 
-#: pan/gui/group-prefs-dialog.cc:271
+#: pan/gui/group-prefs-dialog.cc:275
 msgid "Pan: Group Preferences"
 msgstr "Pan: Nastavení skupin"
 
-#: pan/gui/group-prefs-dialog.cc:286
+#: pan/gui/group-prefs-dialog.cc:290
 msgid "Properties for Groups"
 msgstr "Vlastnosti skupin"
 
-#: pan/gui/group-prefs-dialog.cc:288
+#: pan/gui/group-prefs-dialog.cc:292
 #, c-format
 msgid "Properties for %s"
 msgstr "Vlastnosti %s"
 
-#: pan/gui/group-prefs-dialog.cc:296
+#: pan/gui/group-prefs-dialog.cc:300
 msgid "Character _encoding:"
 msgstr "Zn_aková sada:"
 
-#: pan/gui/group-prefs-dialog.cc:298
+#: pan/gui/group-prefs-dialog.cc:302
 msgid "Directory for Saving Attachments"
 msgstr "Adresář na ukládání příloh"
 
-#: pan/gui/group-prefs-dialog.cc:306
+#: pan/gui/group-prefs-dialog.cc:310
 msgid "Directory for _saving attachments:"
 msgstr "Adresář _na ukládání příloh:"
 
-#: pan/gui/group-prefs-dialog.cc:308
+#: pan/gui/group-prefs-dialog.cc:312
 msgid "Posting _profile:"
 msgstr "_Profil:"
 
-#: pan/gui/group-prefs-dialog.cc:313
+#: pan/gui/group-prefs-dialog.cc:317
 msgid "Spellchecker _language:"
 msgstr "Jazyk kontro_ly pravopisu:"
 
-#: pan/gui/group-prefs-dialog.cc:316
+#: pan/gui/group-prefs-dialog.cc:320
 msgid "Group color:"
 msgstr "Barva skupiny:"
 
@@ -1131,7 +1131,7 @@ msgstr "Uložit soubor NZB jako…"
 msgid "Import NZB Files"
 msgstr "Importovat soubory NZB"
 
-#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3520
+#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3562
 msgid "NZB Files"
 msgstr "Soubory NZB"
 
@@ -1715,85 +1715,85 @@ msgstr "Chyba při spouštění externího editoru: %s"
 msgid "Open Draft Article"
 msgstr "Otevřít koncept příspěvku"
 
-#: pan/gui/post-ui.cc:1832
+#: pan/gui/post-ui.cc:1874
 msgid "Save Draft Article"
 msgstr "Uložit koncept příspěvku"
 
-#: pan/gui/post-ui.cc:1869
+#: pan/gui/post-ui.cc:1911
 msgid "File already exists."
 msgstr "Soubor již existuje."
 
-#: pan/gui/post-ui.cc:1870
+#: pan/gui/post-ui.cc:1912
 msgid "Overwrite it?"
 msgstr "Chcete ho přepsat?"
 
-#: pan/gui/post-ui.cc:2080
+#: pan/gui/post-ui.cc:2122
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Nelze analyzovat příkaz k podpisu „%s“: %s"
 
-#: pan/gui/post-ui.cc:2116
+#: pan/gui/post-ui.cc:2158
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Podpis nelze konvertovat do UTF-8."
 
-#: pan/gui/post-ui.cc:2656
+#: pan/gui/post-ui.cc:2698
 msgid "F_rom"
 msgstr "Od_esílatel"
 
-#: pan/gui/post-ui.cc:2673
+#: pan/gui/post-ui.cc:2715
 msgid "_Subject"
 msgstr "_Předmět"
 
-#: pan/gui/post-ui.cc:2686
+#: pan/gui/post-ui.cc:2728
 msgid "_Newsgroups"
 msgstr "Dis_kusní skupiny"
 
-#: pan/gui/post-ui.cc:2700
+#: pan/gui/post-ui.cc:2742
 msgid "Mail _To"
 msgstr "Zasla_t na e-mail"
 
-#: pan/gui/post-ui.cc:2802
+#: pan/gui/post-ui.cc:2844
 msgid "Delete from Queue"
 msgstr "Smazat z fronty"
 
-#: pan/gui/post-ui.cc:2815
+#: pan/gui/post-ui.cc:2857
 msgid "No."
 msgstr "Č."
 
-#: pan/gui/post-ui.cc:2819 pan/gui/post-ui.cc:2911 pan/gui/post-ui.cc:2952
+#: pan/gui/post-ui.cc:2861 pan/gui/post-ui.cc:2953 pan/gui/post-ui.cc:2994
 msgid "Filename"
 msgstr "Název souboru"
 
-#: pan/gui/post-ui.cc:2821
+#: pan/gui/post-ui.cc:2863
 msgid "Size (KB)"
 msgstr "Velikost (KB)"
 
-#: pan/gui/post-ui.cc:2919
+#: pan/gui/post-ui.cc:2961
 msgid "The current filename"
 msgstr "Aktuální název souboru"
 
-#: pan/gui/post-ui.cc:2923
+#: pan/gui/post-ui.cc:2965
 msgid "Subject Line"
 msgstr "Řádek s předmětem"
 
-#: pan/gui/post-ui.cc:2931
+#: pan/gui/post-ui.cc:2973
 msgid "The current subject line"
 msgstr "Aktuální řádek s předmětem"
 
-#: pan/gui/post-ui.cc:2945
+#: pan/gui/post-ui.cc:2987
 msgid "No. "
 msgstr "Č. "
 
-#: pan/gui/post-ui.cc:2949
+#: pan/gui/post-ui.cc:2991
 msgid "Enable/Disable"
 msgstr "Zapnout/vypnout"
 
-#: pan/gui/post-ui.cc:2983
+#: pan/gui/post-ui.cc:3025
 msgid "Follo_wup-To"
 msgstr "Odpovědi vyst_avit na"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:2992
+#: pan/gui/post-ui.cc:3034
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1806,11 +1806,11 @@ msgstr ""
 "Chcete-li nasměrovat všechny odpovědi na váš e-mail, je nutné zadat "
 "„Followup-To: poster“."
 
-#: pan/gui/post-ui.cc:2999
+#: pan/gui/post-ui.cc:3041
 msgid "_Reply-To"
 msgstr "Odpověd_i zaslat na"
 
-#: pan/gui/post-ui.cc:3007
+#: pan/gui/post-ui.cc:3049
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
@@ -1819,52 +1819,52 @@ msgstr ""
 "vystavené zprávy. Potřebné pouze tehdy, pokud se liší od záhlaví "
 "„Odesílatel“."
 
-#: pan/gui/post-ui.cc:3014
+#: pan/gui/post-ui.cc:3056
 msgid "_Custom Headers"
 msgstr "Uživatelsky de_finovaná záhlaví"
 
-#: pan/gui/post-ui.cc:3038
+#: pan/gui/post-ui.cc:3080
 msgid "Add \"_User-Agent\" header"
 msgstr "Přidat záhlaví „User-A_gent“"
 
-#: pan/gui/post-ui.cc:3045
+#: pan/gui/post-ui.cc:3087
 msgid "Add \"Message-_ID\" header"
 msgstr "Přidat záhlaví „_Message-ID“"
 
-#: pan/gui/post-ui.cc:3176
+#: pan/gui/post-ui.cc:3218
 msgid "Select Parts"
 msgstr "Vybrat části"
 
-#: pan/gui/post-ui.cc:3189
+#: pan/gui/post-ui.cc:3231
 msgid "_Parts"
 msgstr "Čá_sti"
 
-#: pan/gui/post-ui.cc:3347
+#: pan/gui/post-ui.cc:3389
 msgid "Post Article"
 msgstr "Vystavit příspěvek"
 
-#: pan/gui/post-ui.cc:3368
+#: pan/gui/post-ui.cc:3410
 msgid "_Message"
 msgstr "_Zpráva"
 
-#: pan/gui/post-ui.cc:3369
+#: pan/gui/post-ui.cc:3411
 msgid "More _Headers"
 msgstr "_Další záhlaví"
 
-#: pan/gui/post-ui.cc:3370
+#: pan/gui/post-ui.cc:3412
 msgid "File _Queue"
 msgstr "Fronta sou_borů"
 
-#: pan/gui/post-ui.cc:3402 pan/gui/profiles-dialog.cc:480
+#: pan/gui/post-ui.cc:3444 pan/gui/profiles-dialog.cc:488
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "%n, %d:"
 
-#: pan/gui/post-ui.cc:3431
+#: pan/gui/post-ui.cc:3473
 msgid "Add files to queue"
 msgstr "Přidat soubory do fronty"
 
-#: pan/gui/post-ui.cc:3507
+#: pan/gui/post-ui.cc:3549
 msgid "Save Upload Queue as NZB File"
 msgstr "Uložit frontu nahrávaného jako soubor NZB"
 
@@ -2477,31 +2477,43 @@ msgstr "Podpis PGP"
 msgid "Signature Type: "
 msgstr "Typ podpisu: "
 
-#: pan/gui/profiles-dialog.cc:224
-msgid "X-Face (Avatar)"
-msgstr "X-Face (avatar)"
+#: pan/gui/profiles-dialog.cc:225
+msgid "Avatars"
+msgstr "Avataři"
 
-#: pan/gui/profiles-dialog.cc:227
+#: pan/gui/profiles-dialog.cc:228
+msgid ""
+"You can add an avatar icon to your articles with a Base64-encoded PNG.\n"
+"Add the Base64-encoded picture without the trailing <b>“Face:”</b>."
+msgstr ""
+"K příspěvkům lze přidat ikonu avatara obrázkem PNG kódovaným s Base64.\n"
+"Obrázek PNG kódovaný s Base64 přidejte bez koncového <b>“Face:”</b>."
+
+#: pan/gui/profiles-dialog.cc:230
+msgid "_Face:"
+msgstr "_Face:"
+
+#: pan/gui/profiles-dialog.cc:234
 msgid ""
 "You can add an avatar icon to your articles with a unique X-Face code.\n"
 "Add the code without the trailing <b>\"X-Face:\"</b> \n"
 " if it was generated by a helper program (for example http://www.dairiki.org/"
 "xface/xface.php)."
 msgstr ""
-"Do svých příspěvků můžete jedinečným kódem X-Face vložit ikonu avatar.\n"
+"Do svých příspěvků můžete jedinečným kódem X-Face vložit ikonu avatara.\n"
 "Vložte kód bez koncového <b>„X-Face:“</b>,\n"
 "byl-li kód vygenerován zvláštním programem (například http://www.dairiki.org/"
 "xface/xface.php)."
 
-#: pan/gui/profiles-dialog.cc:230
+#: pan/gui/profiles-dialog.cc:237
 msgid "_X-Face:"
 msgstr "_X-Face:"
 
-#: pan/gui/profiles-dialog.cc:232
+#: pan/gui/profiles-dialog.cc:239
 msgid "Optional Information"
 msgstr "Volitelné informace"
 
-#: pan/gui/profiles-dialog.cc:237
+#: pan/gui/profiles-dialog.cc:244
 msgid ""
 "When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
@@ -2512,11 +2524,11 @@ msgstr ""
 "Zde je možné nastavit vlastní název domény, nebo nechat pole prázdné, aby "
 "mohl Pan použít název domény z vaší e-mailové adresy."
 
-#: pan/gui/profiles-dialog.cc:240
+#: pan/gui/profiles-dialog.cc:247
 msgid "Message-ID _Domain Name:"
 msgstr "Název domény v ID _zprávy:"
 
-#: pan/gui/profiles-dialog.cc:244
+#: pan/gui/profiles-dialog.cc:251
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2529,12 +2541,12 @@ msgstr ""
 "%n značí jméno autora\n"
 "%d značí datum"
 
-#: pan/gui/profiles-dialog.cc:245
+#: pan/gui/profiles-dialog.cc:252
 msgid "_Attribution:"
 msgstr "Nadep_sání citace:"
 
 #. Translators: Do not localize Reply-To and the quote marks in \"Your Name\".
-#: pan/gui/profiles-dialog.cc:270
+#: pan/gui/profiles-dialog.cc:277
 msgid ""
 "Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
@@ -2544,27 +2556,27 @@ msgstr ""
 "Reply-To: \"Vaše jméno\" <vasejmeno@neco.cz>\n"
 "Organization: Vaše organizace\n"
 
-#: pan/gui/profiles-dialog.cc:280
+#: pan/gui/profiles-dialog.cc:287
 msgid "E_xtra Headers:"
 msgstr "Další zá_hlaví:"
 
-#: pan/gui/profiles-dialog.cc:325
+#: pan/gui/profiles-dialog.cc:332
 msgid "Invalid email address."
 msgstr "Neplatná e-mailová adresa."
 
-#: pan/gui/profiles-dialog.cc:326
+#: pan/gui/profiles-dialog.cc:333
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Použijte prosím adresu ve formátu franta@neco.cz"
 
-#: pan/gui/profiles-dialog.cc:481
+#: pan/gui/profiles-dialog.cc:489
 msgid "New Profile"
 msgstr "Nový profil"
 
-#: pan/gui/profiles-dialog.cc:527
+#: pan/gui/profiles-dialog.cc:535
 msgid "Posting Profiles"
 msgstr "Profily"
 
-#: pan/gui/profiles-dialog.cc:543
+#: pan/gui/profiles-dialog.cc:551
 msgid "Profiles"
 msgstr "Profily"
 
@@ -3745,95 +3757,3 @@ msgstr "bez_názvu"
 msgid "no_mail"
 msgstr "bez_e-mailu"
 
-#~ msgid "pan"
-#~ msgstr "pan"
-
-#~ msgid "Pan Newsreader’s server passwords"
-#~ msgstr "Hesla serverů čtečky Pan"
-
-#~ msgid "_Save Articles…"
-#~ msgstr "Uložit pří_spěvky…"
-
-#~ msgid "Save Articles…"
-#~ msgstr "Uložit příspěvky…"
-
-#~ msgid "Save Articles from Selected _NZB…"
-#~ msgstr "Uložit příspěvky z vybraného souboru _NZB…"
-
-#~ msgid "Save Articles to an NZB _File…"
-#~ msgstr "Uložit příspěvky do souboru NZ_B…"
-
-#~ msgid "_Import NZB Files…"
-#~ msgstr "_Importovat soubory NZB…"
-
-#~ msgid "isn’t"
-#~ msgstr "není"
-
-#~ msgid "Posting of “%s” successful: %s"
-#~ msgstr "Vystavování „%s“ bylo úspěšné: %s"
-
-#~ msgid "the article isn’t cached locally"
-#~ msgstr "příspěvek není dočasně uložen lokálně"
-
-#~ msgid "the article wasn’t posted by you"
-#~ msgstr "příspěvek nebyl vystaven vámi"
-
-#~ msgid "the article hasn’t been read"
-#~ msgstr "příspěvek je nepřečtený"
-
-#~ msgid "GNOME Keyring"
-#~ msgstr "GNOME Keyring"
-
-#~ msgid "Store passwords in GNOME Keyring"
-#~ msgstr "Ukládat hesla v aplikaci GNOME Keyring"
-
-#~ msgid "_1. Header Pane"
-#~ msgstr "_1. Panel záhlaví"
-
-#~ msgid "_2. Search Pane"
-#~ msgstr "_2. Panel hledání"
-
-#~ msgid "DL Initialization..."
-#~ msgstr "Spouštění DL..."
-
-#~ msgid "Open Download Meter Preferences"
-#~ msgstr "Otevřít předvolby měření stahování"
-
-#~ msgid "KB"
-#~ msgstr "KB"
-
-#~ msgid "MB"
-#~ msgstr "MB"
-
-#~ msgid "GB"
-#~ msgstr "GB"
-
-#~ msgid "TB"
-#~ msgstr "TB"
-
-#~ msgid "DL %s"
-#~ msgstr "DL %s"
-
-#~ msgid "_Download Meter Preferences"
-#~ msgstr "Pře_dvolby měření stahování"
-
-#~ msgid "Pan: Download Meter Preferences"
-#~ msgstr "Pan: Předvolby měření stahování"
-
-#~ msgid "When Download Limit Is Reached:"
-#~ msgstr "Při dosažení omezení stahování:"
-
-#~ msgid "Warn"
-#~ msgstr "Upozornit"
-
-#~ msgid "Disconnect from server"
-#~ msgstr "Odpojit se od serveru"
-
-#~ msgid "Download Limit"
-#~ msgstr "Omezení stahování"
-
-#~ msgid "Reset"
-#~ msgstr "Resetovat"
-
-#~ msgid "Quoted text:"
-#~ msgstr "Citovaný text:"
