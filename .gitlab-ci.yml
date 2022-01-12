@@ -25,12 +25,11 @@ build-ubuntu-gtk2:
         libgnutls28-dev
         yelp-tools
   script:
-    - head -15 configure.ac
     - mkdir _build
     - cd _build
     - ../autogen.sh --with-gtk2 --with-gnutls --with-dbus --with-gmime-crypto --without-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
-    - make dist
+    - DISTCHECK_CONFIGURE_FLAGS=--with-gtk2 make distcheck
 
 build-ubuntu-gtk3:
   image: ubuntu:rolling

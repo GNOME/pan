@@ -148,7 +148,7 @@ gtkspell_msg=no
 AC_ARG_WITH([gtkspell],
   AS_HELP_STRING([--with-gtkspell],[enable GtkSpell support (normally: yes)]), [want_gtkspell=$withval], [want_gtkspell=yes])
 
-dnl GTK+ 3, GtkSpell 3, and Enchant support
+dnl GTK 3, GtkSpell 3, and Enchant support
 gtk_msg=no
 AC_ARG_WITH([gtk2],
   AS_HELP_STRING([--with-gtk2],[enable GTK 2 support (deprecated, normally: no)]), [want_gtk2=$withval], [want_gtk2=no])
@@ -167,7 +167,7 @@ else
   PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= $GTK3_REQUIRED],
                     [GTK_VER=`pkg-config --modversion gtk+-3.0`
                     gtk_msg="yes ($GTK_VER)"
-                    AC_DEFINE(HAVE_GTK,[1],[GTK+ 3 support])]
+                    AC_DEFINE(HAVE_GTK,[1],[GTK 3 support])]
                     )
   if test "x$want_gtkspell" = "xyes" ; then
     PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 >= $GTKSPELL3_REQUIRED enchant-2 >= $ENCHANT2_REQUIRED],
@@ -183,9 +183,9 @@ fi
 AC_SUBST(ENCHANT_CFLAGS)
 AC_SUBST(ENCHANT_LIBS)
 
-dnl WebKitGTK+ support
+dnl WebKitGTK support
 AC_ARG_WITH([webkit],
-  AS_HELP_STRING([--with-webkit],[enable WebKitGTK+ support (experimental, normally: no)]), [want_webkit=$withval], [want_webkit=no])
+  AS_HELP_STRING([--with-webkit],[enable WebKitGTK support (experimental, normally: no)]), [want_webkit=$withval], [want_webkit=no])
 if test "x$want_gtk2" = "xyes" ; then
   if test "x$want_webkit" = "xyes" ; then
     PKG_CHECK_MODULES([WEBKITGTK], [webkitgtk-1.0 >= $WEBKIT_REQUIRED],
@@ -237,7 +237,7 @@ if test "x$enable_libnotify" = "xyes" ; then
   AC_SUBST([LIBNOTIFY_LIBS])
 fi
 
-dnl Check for libsecret and gcr (GTK+ 3 only) or GNOME Keyring if user-enabled for password storage
+dnl Check for libsecret and gcr (GTK 3 only) or GNOME Keyring if user-enabled for password storage
 AC_ARG_ENABLE([gkr],
   AS_HELP_STRING([--enable-gkr],[enable GNOME Keyring or libsecret support (normally: no)]),[enable_gkr=$enableval],[enable_gkr=no])
 if test "x$enable_gkr" = "xyes" ; then
@@ -359,8 +359,8 @@ Configuration:
         With GMime 2:           ${want_gmime2}
         With GMime crypto:      ${want_gmime_crypto}
         With GtkSpell:          ${gtkspell_msg}
-        With GTK+ 3:            ${gtk_msg}
-        With WebKitGTK+:        ${want_webkit}
+        With GTK 3:             ${gtk_msg}
+        With WebKitGTK:         ${want_webkit}
         With GnuTLS:            ${gnutls_msg}
         With libnotify:         ${libnotify_msg}
         With password storage:  ${gkr_msg}
