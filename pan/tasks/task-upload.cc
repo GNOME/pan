@@ -194,40 +194,20 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
     //modify subject
     char buf[4096];
     if (_queue_pos != -1)
-#ifdef HAVE_GMIME_30    
       g_mime_message_set_subject (msg, build_subject_line (buf, 4096, _subject, _basename, n->partno, _total_parts), NULL);
-#else      
-      g_mime_message_set_subject (msg, build_subject_line (buf, 4096, _subject, _basename, n->partno, _total_parts));
-#endif      
 
     //modify references header
     std::string mids(_references);
     if (!_first_mid.empty()) mids += " <" + _first_mid + ">";
     if (_first_mid != n->last_mid && !_first && !n->last_mid.empty())  mids += " <" + n->last_mid + ">";
-#ifdef HAVE_GMIME_30
     if (!mids.empty()) g_mime_object_set_header ((GMimeObject *) msg, "References", mids.c_str(), NULL);
-#else    
-    if (!mids.empty()) g_mime_object_set_header ((GMimeObject *) msg, "References", mids.c_str());
-#endif
 
-#ifdef HAVE_GMIME_30
     char * all(g_mime_object_get_headers ((GMimeObject *) msg, NULL));
-#else    
-    char * all(g_mime_object_get_headers ((GMimeObject *) msg));
-#endif
     
     if (_first && _queue_pos==-1)
-#ifdef HAVE_GMIME_30
       all = g_mime_object_to_string ((GMimeObject *) msg, NULL);
-#else      
-      all = g_mime_object_to_string ((GMimeObject *) msg);
-#endif      
     else if (_first && _queue_pos == 0)
-#ifdef HAVE_GMIME_30
       all = g_mime_object_get_headers ((GMimeObject *) msg, NULL);
-#else      
-      all = g_mime_object_get_headers ((GMimeObject *) msg);
-#endif      
 
     out << all << "\n";
     if (_first && _queue_pos == -1) g_free(all);

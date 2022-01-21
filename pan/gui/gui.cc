@@ -745,11 +745,7 @@ namespace
       if (GMIME_IS_PART(o))
       {
         GMimePart * part (GMIME_PART (o));
-#ifdef HAVE_GMIME_30
         GMimeDataWrapper * wrapper (g_mime_part_get_content (part));
-#else        
-        GMimeDataWrapper * wrapper (g_mime_part_get_content_object (part));
-#endif        
         GMimeStream * mem_stream (g_mime_stream_mem_new ());
         g_mime_data_wrapper_write_to_stream (wrapper, mem_stream);
         const GByteArray * buffer (GMIME_STREAM_MEM(mem_stream)->buffer);
@@ -1326,12 +1322,8 @@ void GUI :: do_supersede_article ()
     return;
 
   // did this user post the message?
-#ifdef HAVE_GMIME_30
   InternetAddressList * Lsender (g_mime_message_get_sender (message));
   char * sender = internet_address_list_to_string(Lsender, NULL,  TRUE);
-#else  
-  const char * sender (g_mime_message_get_sender (message));
-#endif  
   const bool user_posted_this (_data.has_from_header (sender));
 
   if (!user_posted_this) {
@@ -1357,7 +1349,6 @@ void GUI :: do_supersede_article ()
   GMimeMessage * new_message (g_mime_message_new (false));
   GMimeObject * new_message_obj = (GMimeObject*)new_message;
 
-#ifdef HAVE_GMIME_30
   g_mime_object_set_header (new_message_obj, "Supersedes", old_mid, NULL);
   const char * addr = internet_address_list_to_string (g_mime_message_get_sender (message), NULL, TRUE);
   g_mime_message_add_mailbox (new_message, GMIME_ADDRESS_TYPE_SENDER, NULL, addr);
@@ -1369,28 +1360,13 @@ void GUI :: do_supersede_article ()
               g_mime_message_add_mailbox (new_message, GMIME_ADDRESS_TYPE_REPLY_TO, NULL, cpch);
   if ((cpch = g_mime_object_get_header ((GMimeObject *)message,     "Followup-To")))
               g_mime_object_set_header (new_message_obj, "Followup-To", cpch, NULL);
-#else  
-  g_mime_object_set_header (new_message_obj, "Supersedes", old_mid);
-  g_mime_message_set_sender (new_message, g_mime_message_get_sender (message));
-  g_mime_message_set_subject (new_message, g_mime_message_get_subject (message));
-  g_mime_object_set_header (new_message_obj, "Newsgroups", g_mime_object_get_header ((GMimeObject *)message, "Newsgroups"));
-  g_mime_object_set_header (new_message_obj, "References", g_mime_object_get_header ((GMimeObject *)message, "References"));
-  if ((cpch = g_mime_message_get_reply_to (message)))
-              g_mime_message_set_reply_to (new_message, cpch);
-  if ((cpch = g_mime_object_get_header ((GMimeObject *)message,     "Followup-To")))
-              g_mime_object_set_header (new_message_obj, "Followup-To", cpch);
-#endif  
   gboolean  unused (false);
   char * body (pan_g_mime_message_get_body (message, &unused));
   GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body, strlen(body));
   g_free (body);
   GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   GMimePart * part = g_mime_part_new ();
-#ifdef HAVE_GMIME_30
    g_mime_part_set_content(part, content_object);
-#else  
-  g_mime_part_set_content_object (part, content_object);
-#endif  
   g_mime_message_set_mime_part (new_message, GMIME_OBJECT(part));
   g_object_unref (part);
   g_object_unref (content_object);
@@ -1424,11 +1400,7 @@ void GUI :: do_cancel_article ()
     return;
 
   // did this user post the message?
-#ifdef HAVE_GMIME_30
   const char * sender = internet_address_list_to_string(g_mime_message_get_sender (message), NULL, TRUE);
-#else  
-  const char * sender (g_mime_message_get_sender (message));
-#endif  
   const bool user_posted_this (_data.has_from_header (sender));
   if (!user_posted_this) {
     GtkWidget * w = gtk_message_dialog_new (
@@ -1448,28 +1420,16 @@ void GUI :: do_cancel_article ()
   // okay then...
   GMimeMessage * cancel = g_mime_message_new (false);
   char * cancel_message = g_strdup_printf ("cancel <%s>", g_mime_message_get_message_id(message));
-#ifdef HAVE_GMIME_30
   const char * s_addr = internet_address_list_to_string(g_mime_message_get_sender (message), NULL, TRUE);
   g_mime_message_add_mailbox (cancel, GMIME_ADDRESS_TYPE_SENDER, NULL, s_addr);
   g_mime_message_set_subject (cancel, "Cancel", NULL);
   g_mime_object_set_header ((GMimeObject *)cancel, "Newsgroups", g_mime_object_get_header ((GMimeObject *)message, "Newsgroups"), NULL);
   g_mime_object_set_header ((GMimeObject *)cancel, "Control", cancel_message, NULL);
-#else  
-  g_mime_message_set_sender (cancel, g_mime_message_get_sender (message));
-  g_mime_message_set_subject (cancel, "Cancel");
-  g_mime_object_set_header ((GMimeObject *)cancel, "Newsgroups", g_mime_object_get_header ((GMimeObject *)message, "Newsgroups"));
-  g_mime_object_set_header ((GMimeObject *)cancel, "Control", cancel_message);
-
-#endif  
   const char * body ("Ignore\r\nArticle canceled by author using " PACKAGE_STRING "\r\n");
   GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body, strlen(body));
   GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
   GMimePart * part = g_mime_part_new ();
-#ifdef HAVE_GMIME_30
   g_mime_part_set_content (part, content_object);
-#else  
-  g_mime_part_set_content_object (part, content_object);
-#endif  
   g_mime_message_set_mime_part (cancel, GMIME_OBJECT(part));
   g_object_unref (part);
   g_object_unref (content_object);
@@ -1631,19 +1591,11 @@ GUI :: do_post ()
       newsgroups = group;
   }
   if (!newsgroups.empty())
-#ifdef HAVE_GMIME_30
     g_mime_object_append_header ((GMimeObject *) message, "Newsgroups", newsgroups.c_str(), NULL);
-#else    
-    g_mime_object_append_header ((GMimeObject *) message, "Newsgroups", newsgroups.c_str());
-#endif    
 
   // content type
   GMimePart * part = g_mime_part_new ();
-#ifdef HAVE_GMIME_30
   GMimeContentType *type = g_mime_content_type_parse (NULL, "text/plain; charset=UTF-8");
-#else  
-  GMimeContentType *type = g_mime_content_type_new_from_string ("text/plain; charset=UTF-8");
-#endif  
   g_mime_object_set_content_type ((GMimeObject *) part, type);
   g_object_unref (type);
   g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);

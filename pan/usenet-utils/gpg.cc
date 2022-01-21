@@ -71,7 +71,6 @@ namespace pan
       signer.key_id = sig->cert->keyid ? sig->cert->keyid : "(null)";
       signer.fpr = sig->cert->fingerprint ? sig->cert->fingerprint : "(null)";
 
-#ifdef HAVE_GMIME_30
       switch (sig->cert->trust) {
       case GMIME_TRUST_UNKNOWN:
         signer.trust = "None";
@@ -109,40 +108,6 @@ namespace pan
       signer.expires = sig->expires;
       if (sig->expires == (time_t) 0)
         signer.never_expires = true;
-#else
-      switch (sig->cert->trust) {
-      case GMIME_CERTIFICATE_TRUST_NONE:
-        signer.trust = "None";
-        break;
-      case GMIME_CERTIFICATE_TRUST_NEVER:
-        signer.trust = "Never";
-        break;
-      case GMIME_CERTIFICATE_TRUST_UNDEFINED:
-        signer.trust = "Undefined";
-        break;
-      case GMIME_CERTIFICATE_TRUST_MARGINAL:
-        signer.trust = "Marginal";
-        break;
-      case GMIME_CERTIFICATE_TRUST_FULLY:
-        signer.trust = "Fully";
-        break;
-      case GMIME_CERTIFICATE_TRUST_ULTIMATE:
-        signer.trust = "Ultimate";
-        break;
-      }
-
-      switch (sig->status) {
-      case GMIME_SIGNATURE_STATUS_GOOD:
-        signer.status = "GOOD";
-        break;
-      case GMIME_SIGNATURE_STATUS_BAD:
-        signer.status = "BAD";
-        break;
-      case GMIME_SIGNATURE_STATUS_ERROR:
-        signer.status = "ERROR";
-        break;
-      }
-#endif
 
       signer.created = sig->created;
       signer.expires = sig->expires;

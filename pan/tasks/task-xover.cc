@@ -399,12 +399,8 @@ TaskXOver::on_nntp_line_process(NNTP * nntp, const StringView & line)
 	const char * fallback_charset = NULL; // FIXME
 
 	// are we done?
-#ifdef HAVE_GMIME_30
 	GDateTime * time_posted_gd = g_mime_utils_header_decode_date(date.str);
 	const time_t time_posted = g_date_time_to_unix(time_posted_gd);
-#else	
-	const time_t time_posted = g_mime_utils_header_decode_date(date.str, NULL);
-#endif	
 	if (_mode == DAYS && time_posted < _days_cutoff) {
 		_server_to_minitasks[nntp->_server].clear();
 		return;

@@ -815,11 +815,7 @@ namespace
       return;
 
     // get this part's content
-#ifdef HAVE_GMIME_30
     GMimeDataWrapper * content = g_mime_part_get_content (GMIME_PART (part));
-#else    
-    GMimeDataWrapper * content = g_mime_part_get_content_object (GMIME_PART (part));
-#endif
 
     if (!content)
       return;
@@ -873,11 +869,7 @@ namespace
 
           subpart_stream = tmp_part->stream;
           content = g_mime_data_wrapper_new_with_stream (subpart_stream, GMIME_CONTENT_ENCODING_DEFAULT);
-#ifdef HAVE_GMIME_30          
           g_mime_part_set_content (subpart, content);
-#else          
-          g_mime_part_set_content_object (subpart, content);
-#endif                    
           g_mime_multipart_add (GMIME_MULTIPART (multipart), GMIME_OBJECT (subpart));
 
           g_object_unref (content);
@@ -1047,19 +1039,11 @@ mime :: construct_message (GMimeStream    ** istreams,
 
   for (int i=0; i<qty; ++i) {
     GMimeParser* parser = g_mime_parser_new_with_stream (istreams[i]);
-#ifdef HAVE_GMIME_30
     messages[i] = g_mime_parser_construct_message(parser, NULL);
-#else    
-    messages[i] = g_mime_parser_construct_message(parser);
-#endif    
     g_object_unref(parser);
     g_mime_stream_reset(istreams[i]);
     parser = g_mime_parser_new_with_stream (istreams[i]);
-#ifdef HAVE_GMIME_30    
     GMimeObject* part = g_mime_parser_construct_part(parser, NULL);
-#else        
-    GMimeObject* part = g_mime_parser_construct_part(parser);
-#endif        
     g_object_unref (parser);
     parser = NULL;
     GMimeContentType * type = g_mime_object_get_content_type (part);
@@ -1402,11 +1386,7 @@ namespace
       return NULL;
     }
 
-#ifdef HAVE_GMIME_30
     GMimeDataWrapper *wrapper = g_mime_part_get_content(mime_part);
-#else    
-    GMimeDataWrapper *wrapper = g_mime_part_get_content_object(mime_part);
-#endif    
     GMimeStream *stream = g_mime_stream_mem_new();
     g_mime_data_wrapper_write_to_stream (wrapper, stream);
     GByteArray *bytes = g_mime_stream_mem_get_byte_array((GMimeStreamMem*)stream);
@@ -1456,7 +1436,6 @@ char *pan::pan_g_mime_message_get_body (GMimeMessage *message, gboolean *is_html
   return body;
 }
 
-#ifdef HAVE_GMIME_30
 void pan::pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, GMimeAddressType type, const char *string)
 {
   InternetAddressList *addrlist;
@@ -1468,26 +1447,11 @@ void pan::pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, 
     }
   }
 }
-#else
-
-void pan::pan_g_mime_message_add_recipients_from_string (GMimeMessage *message, GMimeRecipientType type, const char *string)
-{
-  InternetAddressList *addrlist;
-  if ((addrlist = internet_address_list_parse_string (string))) {
-    for (int i = 0; i < internet_address_list_length (addrlist); ++i) {
-      InternetAddress *ia = internet_address_list_get_address (addrlist, i);
-      if (INTERNET_ADDRESS_IS_MAILBOX(ia))
-        g_mime_message_add_recipient (message, type, internet_address_get_name(ia), internet_address_mailbox_get_addr(INTERNET_ADDRESS_MAILBOX(ia)));
-    }
-  }
-}
-#endif
 
 /**
 * Works around a GMime bug that uses `Message-Id' rather than `Message-ID'
 */
 
-#ifdef HAVE_GMIME_30
 std::string pan::pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
 {
     const char * charset = NULL; // "ISO-8859-1";  // FIXME
@@ -1498,17 +1462,6 @@ std::string pan::pan_g_mime_message_set_message_id (GMimeMessage *msg, const cha
     g_free (bracketed);
     return ret;
 }
-#else
-std::string pan::pan_g_mime_message_set_message_id (GMimeMessage *msg, const char *mid)
-{
-    g_mime_object_append_header ((GMimeObject *) msg, "Message-ID", mid);
-    char * bracketed = g_strdup_printf ("<%s>", mid);
-    g_mime_header_list_set (GMIME_OBJECT(msg)->headers, "Message-ID", bracketed);
-    std::string ret (bracketed);
-    g_free (bracketed);
-    return ret;
-}
-#endif
 
 namespace pan
 {
@@ -1523,31 +1476,19 @@ namespace pan
     content = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
     g_object_unref (stream);
 
-#ifdef HAVE_GMIME_30
     g_mime_part_set_content (part, content);
-#else    
-    g_mime_part_set_content_object (part, content);
-#endif    
     g_object_unref (content);
   }
 #ifdef HAVE_GMIME_CRYPTO
   GMimeSignatureStatus
   get_sig_status (GMimeSignatureList *signatures)
   {
-#ifdef HAVE_GMIME_30
 	GMimeSignatureStatus status = GMIME_SIGNATURE_STATUS_VALID;
-#else
-    GMimeSignatureStatus status = GMIME_SIGNATURE_STATUS_GOOD;
-#endif
     GMimeSignature *sig;
     int i;
 
     if (!signatures || signatures->array->len == 0)
-#ifdef HAVE_GMIME_30
       return GMIME_SIGNATURE_STATUS_SYS_ERROR;
-#else
-      return GMIME_SIGNATURE_STATUS_ERROR;
-#endif
 
     for (i = 0; i < g_mime_signature_list_length (signatures); i++) {
       sig = g_mime_signature_list_get_signature (signatures, i);
@@ -1581,30 +1522,18 @@ namespace pan
 
     if (info.type == GPG_VERIFY)
     {
-#ifdef HAVE_GMIME_30
       GMimeSignatureList * sigs = g_mime_multipart_signed_verify (mps, GMIME_VERIFY_NONE, &info.err);
-#else
-      GMimeSignatureList * sigs = g_mime_multipart_signed_verify (mps, gpg_ctx, &info.err);
-#endif
       if (info.err || !sigs) return false;
       if (sigs) info.no_sigs = false;
       fill_signer_info(info.signers, sigs);
-#ifdef HAVE_GMIME_30
       bool status = get_sig_status(sigs) == GMIME_SIGNATURE_STATUS_VALID;
-#else
-      bool status = get_sig_status(sigs) == GMIME_SIGNATURE_STATUS_GOOD;
-#endif
       g_object_unref(sigs);
       return status;
     }
 
     if (info.type == GPG_DECODE)
     {
-#ifdef HAVE_GMIME_30
       info.decrypted = g_mime_multipart_encrypted_decrypt (mpe, GMIME_DECRYPT_NONE, NULL, &info.result, &info.err);
-#else
-      info.decrypted = g_mime_multipart_encrypted_decrypt (mpe, gpg_ctx, &info.result, &info.err);
-#endif
       if (!info.decrypted)
         if (info.err) return false;
 
@@ -1613,11 +1542,7 @@ namespace pan
       {
         info.no_sigs = false;
         fill_signer_info(info.signers, sigs);
-#ifdef HAVE_GMIME_30
         bool status = get_sig_status(info.result->signatures) == GMIME_SIGNATURE_STATUS_VALID;
-#else
-        bool status = get_sig_status(info.result->signatures) == GMIME_SIGNATURE_STATUS_GOOD;
-#endif
         g_object_unref(sigs);
         return status;
       }
@@ -1646,18 +1571,12 @@ namespace pan
     mps = g_mime_multipart_signed_new ();
 
     /* sign the part */
-#ifdef HAVE_GMIME_30
     GMimeObject *gmo;
     gmo = g_mime_message_get_mime_part (body);
     mps = g_mime_multipart_signed_sign (gpg_ctx, gmo, uid.c_str(), &err);
     if (mps == NULL)
-#else
-    if (g_mime_multipart_signed_sign (mps, GMIME_OBJECT (part), gpg_ctx, uid.c_str(), GMIME_DIGEST_ALGO_SHA1, &err) <0)
-#endif
     {
-#ifdef HAVE_GMIME_30
       g_object_unref(gmo);
-#endif
       g_object_unref(mps);
       g_object_unref(G_OBJECT(part));
       return 0;
@@ -1671,9 +1590,7 @@ namespace pan
     g_mime_message_set_mime_part(body,GMIME_OBJECT(mps));
     g_object_unref(G_OBJECT(part));
     g_object_unref(mps);
-#ifdef HAVE_GMIME_30
     g_object_unref(gmo);
-#endif
     return body;
   }
 
@@ -1688,30 +1605,21 @@ namespace pan
 
     GMimeMultipartEncrypted * mpe = g_mime_multipart_encrypted_new();
 
-#ifdef HAVE_GMIME_30
 	GMimeMultipartEncrypted *gmme;
 	gmme = g_mime_multipart_encrypted_encrypt(gpg_ctx, GMIME_OBJECT (part), sign, uid.c_str(),
                                            GMIME_ENCRYPT_NONE, rcp, &err);
     if (gmme == NULL)
-#else
-    if (g_mime_multipart_encrypted_encrypt(mpe, GMIME_OBJECT (part), gpg_ctx, sign,
-                                           uid.c_str(), GMIME_DIGEST_ALGO_SHA1, rcp, &err) < 0)
-#endif
     {
       g_object_unref(mpe);
       g_object_unref(G_OBJECT(part));
-#ifdef HAVE_GMIME_30
       g_object_unref(gmme);
-#endif      
       return false;
     }
 
     g_mime_message_set_mime_part(body,GMIME_OBJECT(mpe));
     g_object_unref(G_OBJECT(part));
     g_object_unref(mpe);
-#ifdef HAVE_GMIME_30
     g_object_unref(gmme);
-#endif    
 
     return true;
   }

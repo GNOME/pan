@@ -903,11 +903,7 @@ namespace
     GError * err (0);
 
     // populate the loader
-#ifdef HAVE_GMIME_30
     GMimeDataWrapper * wrapper (g_mime_part_get_content (part));
-#else    
-    GMimeDataWrapper * wrapper (g_mime_part_get_content_object (part));
-#endif    
     if (wrapper)
     {
       GMimeStream * mem_stream (g_mime_stream_mem_new ());
@@ -1252,11 +1248,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   // maybe add the headers
   const bool do_show_headers (_prefs.get_flag ("show-all-headers", false));
   if (message && do_show_headers) {
-#ifdef HAVE_GMIME_30
     char * headers (g_mime_object_get_headers ((GMimeObject *) message, NULL));
-#else    
-    char * headers (g_mime_object_get_headers ((GMimeObject *) message));
-#endif    
     GtkTextIter end;
     gtk_text_buffer_get_end_iter (_buffer, &end);
     StringView line, v(headers);
@@ -2068,18 +2060,10 @@ BodyPane :: create_followup_or_reply (bool is_reply)
 
     if (is_reply || fup_to=="poster") {
       const std::string& to (reply_to.empty() ? from : reply_to);
-#ifdef HAVE_GMIME_30
       pan_g_mime_message_add_recipients_from_string (msg, GMIME_ADDRESS_TYPE_TO, to.c_str());
-#else
-      pan_g_mime_message_add_recipients_from_string (msg, GMIME_RECIPIENT_TYPE_TO, to.c_str());
-#endif
     } else {
       const std::string& groups (fup_to.empty() ? newsgroups : fup_to);
-#ifdef HAVE_GMIME_30
       g_mime_object_append_header ((GMimeObject *) msg, "Newsgroups", groups.c_str(), NULL);
-#else
-      g_mime_object_append_header ((GMimeObject *) msg, "Newsgroups", groups.c_str());
-#endif
     }
 
     // Subject:
@@ -2088,43 +2072,22 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     std::string val (normalize_subject_re (h));
     if (val.find ("Re:") != 0) // add "Re: " if we don't have one
       val.insert (0, "Re: ");
-#ifdef HAVE_GMIME_30
     g_mime_message_set_subject (msg, val.c_str(), NULL);
-#else
-    g_mime_message_set_subject (msg, val.c_str());
-#endif
 
     // attribution lines
     const char * cpch = g_mime_object_get_header (_message_obj, "From");
     h = header_to_utf8 (cpch, message_charset, group_charset);
-#ifdef HAVE_GMIME_30
     g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Author", h.c_str(), NULL);
-#else
-    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Author", h.c_str());
-#endif
 
     cpch = g_mime_message_get_message_id (_message);
     h = header_to_utf8 (cpch, message_charset, group_charset);
-#ifdef HAVE_GMIME_30
     g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Id", h.c_str(), NULL);
-#else    
-    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Id", h.c_str());
-#endif    
 
-#ifdef HAVE_GMIME_30
     const char * header_t = "Date";
     const char * tmp_s = g_mime_object_get_header (_message_obj, header_t);
     const char * tmp = tmp_s;  // FIXME: convert time to string
-#else
-    char * tmp = g_mime_message_get_date_as_string (_message);
-#endif
     h = header_to_utf8 (tmp, message_charset, group_charset);
-#ifdef HAVE_GMIME_30
     g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Date", h.c_str(), NULL);
-#else
-    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Date", h.c_str());
-    g_free (tmp);
-#endif
 
     // references
     const char * header = "References";
@@ -2136,11 +2099,7 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     val += g_mime_message_get_message_id (_message);
     val += ">";
     val = GNKSA :: trim_references (val);
-#ifdef HAVE_GMIME_30
     g_mime_object_append_header (msg_obj, header, val.c_str(), NULL);
-#else    
-    g_mime_object_append_header (msg_obj, header, val.c_str());
-#endif    
 
     ///
     ///  BODY
@@ -2178,17 +2137,9 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     g_mime_stream_write_string (stream, s.c_str());
     GMimeDataWrapper * wrapper = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_8BIT);
     GMimePart * part = g_mime_part_new ();
-#ifdef HAVE_GMIME_30
     GMimeContentType * new_type = g_mime_content_type_parse (NULL, "text/plain; charset=UTF-8");
-#else    
-    GMimeContentType * new_type = g_mime_content_type_new_from_string ("text/plain; charset=UTF-8");
-#endif    
     g_mime_object_set_content_type ((GMimeObject *) part, new_type);
-#ifdef HAVE_GMIME_30
     g_mime_part_set_content (part, wrapper);
-#else    
-    g_mime_part_set_content_object (part, wrapper);
-#endif    
     g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
     g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
     g_object_unref (new_type);

@@ -55,11 +55,7 @@ TaskPost :: use_nntp (NNTP * nntp)
 {
   _state.set_working ();
 
-#ifdef HAVE_GMIME_30
   char * text = g_mime_object_to_string (GMIME_OBJECT(_message), NULL);
-#else  
-  char * text = g_mime_object_to_string (GMIME_OBJECT(_message));
-#endif  
   nntp->post (text, this);
   g_free (text);
 }
