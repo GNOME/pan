@@ -1,3 +1,28 @@
+0.150 "Moucherotte"
+
+The main points of this release are:
+- Dropped support for GMime2. Only Gmime3 is supported
+- Gtk3 is now default build, Gtk2 is deprecated
+
+  15fcc65 set maximum number of serveur connections to 20 (Dominique Dumont)
+  62e3c58 remove support for GMime2 (Dominique Dumont)
+  ba7a42b Enable make distcheck for both GTK builds (Petr Kovar)
+  db473c4 run distcheck with gtk3 (Dominique Dumont)
+  1b96a80 fix YAML syntax in .gitlab-ci.yml (Dominique Dumont)
+  9bb4d18 fix make distcheck for gtk2 (Dominique Dumont)
+  0ff10e7 Gtk3 is now default build, Gtk2 is deprecated (Dominique Dumont)
+  431f56f Nuke $GIT_REMOTE if not obtained by git config (Petr Kovar)
+  7847651 Fix pkg check msgs in configure.ac and print more library versions (Petr Kovar)
+  ccd1197 fix (string-view): compilation with clang on Mac (Dominique Dumont)
+  2478eb6 fix missing articles with dangling reference (Dominique Dumont)
+  ce3600c fix typo in README.org (Dominique Dumont)
+* Contributors to this release:
+  Dominique Dumont, Petr Kovar
+* Updated translations:
+  cs        (Petr Kovar)
+  es        (Miguel Ángel Nieto)
+  sv        (Luna Jernberg)
+
 0.149 "Bellevue"
 
 The main points of this release are:
