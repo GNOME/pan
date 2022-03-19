@@ -1,34 +1,50 @@
 # Serbian translation of pan
-# Courtesy of Prevod.org team (http://prevod.org/) -- 2003—2018.
+# Courtesy of Prevod.org team (http://prevod.org/) -- 2003–2022.
 # This file is distributed under the same license as the pan package.
 # Translators:
-# Александар Урошевић <urke@gmx.net>, 2003—2004
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2012—2018.
+# Александар Урошевић <urke@gmx.net>, 2003–2004
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2012–2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2017-12-19 21:34+0000\n"
-"PO-Revision-Date: 2018-02-24 09:50+0200\n"
+"POT-Creation-Date: 2021-12-15 18:20+0000\n"
+"PO-Revision-Date: 2022-03-19 07:00+0200\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
-"Language-Team: српски <gnome-sr@googlegroups.org>\n"
+"Language-Team: Serbian <gnome-sr@googlegroups.org>\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
-"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
 
-#: pan.appdata.xml.in:5
-msgid "Pan Newsreader"
-msgstr "Читач вести Пан"
+#. update the titlebar
+#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:27
+#: pan/gui/dl-headers-ui.cc:104 pan/gui/gui.cc:1045 pan/gui/gui.cc:1718
+#: pan/gui/gui.cc:2038 pan/gui/score-add-ui.cc:600
+msgid "Pan"
+msgstr "Пан"
 
-#: pan.appdata.xml.in:6 pan.desktop.in:5
+#: org.gnome.pan.desktop.in:4
+msgid "Newsreader"
+msgstr "Читач вести"
+
+#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:7
 msgid "Read and post Usenet articles"
 msgstr "Читајте и објављујте чланке на Јузнету"
 
-#: pan.appdata.xml.in:8
+#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
+#: org.gnome.pan.desktop.in:7
+msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
+msgstr "вести;читач;јузнет;читач вести;групе вести;чланак;уенц;нзб;"
+
+#: org.gnome.pan.metainfo.xml.in:6
+msgid "Pan Newsreader"
+msgstr "Читач вести Пан"
+
+#: org.gnome.pan.metainfo.xml.in:9
 msgid ""
 "Pan is a Usenet newsreader that is good at both text and binaries. It "
 "supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
@@ -38,7 +54,7 @@ msgstr ""
 "извршнима. Подржава читање ван мреже, бодовање и убијање датотека, уЕнц, "
 "НЗБ, ПГП руковање, више сервера и безбедне везе."
 
-#: pan.appdata.xml.in:11
+#: org.gnome.pan.metainfo.xml.in:12
 msgid ""
 "It is also the only Unix newsreader to get a perfect score on the Good Net-"
 "Keeping Seal of Approval evaluations."
@@ -46,67 +62,46 @@ msgstr ""
 "Такође је једини Јуниксов читач вести који је добио одличну оцену на "
 "вредновањима печата одобравања доброг одржавања мреже (GNKSA)."
 
-#. update the titlebar
-#: pan.appdata.xml.in:22 pan.desktop.in:3 pan/gui/dl-headers-ui.cc:106
-#: pan/gui/gui.cc:1045 pan/gui/gui.cc:1718 pan/gui/gui.cc:2038
-#: pan/gui/score-add-ui.cc:602
-msgid "Pan"
-msgstr "Пан"
-
-#: pan.desktop.in:4
-msgid "Newsreader"
-msgstr "Читач вести"
-
-#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
-#: pan.desktop.in:7
-msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
-msgstr "вести;читач;јузнет;читач вести;групе вести;чланак;уенц;нзб;"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: pan.desktop.in:11
-msgid "pan"
-msgstr "pan"
-
 #: pan/data/article-cache.cc:144 pan/data/encode-cache.cc:62
 #, c-format
-#| msgid "Error opening directory: \"%s\": %s"
-msgid "Error opening directory: “%s”: %s"
-msgstr "Грешка отварања директоријума „%s“: %s"
+#| msgid "Error opening directory: “%s”: %s"
+msgid "Error opening directory: \"%s\": %s"
+msgstr "Грешка отварања директоријума: „%s“: %s"
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
-#: pan/gui/post-ui.cc:1851
+#: pan/gui/post-ui.cc:1958
 #, c-format
-#| msgid "Unable to save \"%s\" %s"
-msgid "Unable to save “%s” %s"
+#| msgid "Unable to save “%s” %s"
+msgid "Unable to save \"%s\" %s"
 msgstr "Не могу да сачувам „%s“ %s"
 
 #: pan/data/article-cache.cc:362
 #, c-format
-#| msgid "Error opening file \"%s\" %s"
-msgid "Error opening file “%s” %s"
+#| msgid "Error opening file “%s” %s"
+msgid "Error opening file \"%s\" %s"
 msgstr "Грешка отварања датотеке „%s“ %s"
 
-#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
-#: pan/data-impl/server.cc:527 pan/general/file-util.cc:311
-#: pan/gui/post-ui.cc:644 pan/gui/task-pane.cc:737
+#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
+#: pan/data-impl/server.cc:525 pan/general/file-util.cc:311
+#: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:735
 #, c-format
-#| msgid "Error reading file \"%s\": %s"
-msgid "Error reading file “%s”: %s"
+#| msgid "Error reading file “%s”: %s"
+msgid "Error reading file \"%s\": %s"
 msgstr "Грешка читања датотеке „%s“: %s"
 
-#: pan/data/cert-store.cc:263
+#: pan/data/cert-store.cc:261
 #, c-format
-#| msgid "Error opening SSL certificate directory: \"%s\": %s"
-msgid "Error opening SSL certificate directory: “%s”: %s"
+#| msgid "Error opening SSL certificate directory: “%s”: %s"
+msgid "Error opening SSL certificate directory: \"%s\": %s"
 msgstr "Грешка отварања директоријума ССЛ уверења: „%s“: %s"
 
-#: pan/data/cert-store.cc:294
+#: pan/data/cert-store.cc:292
 #, c-format
 msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
 msgstr "Успешно сам додао %d ССЛ ПЕМ уверење у складиште уверења."
 
-#: pan/data/cert-store.cc:314
+#: pan/data/cert-store.cc:312
 msgid ""
 "Error initializing Certificate Store. Check that the permissions for the "
 "folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
@@ -114,34 +109,34 @@ msgstr ""
 "Грешка покретања складишта уверења. Проверите да ли су исправно подешена "
 "овлашћења за фасцикле „~/.pan2“ и „~/.pan2/ssl_certs“. Кобно, излазим."
 
-#: pan/data/cert-store.cc:363
+#: pan/data/cert-store.cc:361
 #, c-format
 msgid "Could not export certificate for server: %s"
 msgstr "Не могу да извезем уверење за сервер: %s"
 
 # bug: plural-forms
 #. load_group_descriptions (*_data_io);
-#: pan/data-impl/data-impl.cc:120
+#: pan/data-impl/data-impl.cc:118
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "Учитан је позадинац података за %.1f секунде"
 
-#: pan/data-impl/data-impl.cc:151 pan/data-impl/data-impl.cc:198
-#| msgid "Pan Newsreader's server passwords"
-msgid "Pan Newsreader’s server passwords"
+#: pan/data-impl/data-impl.cc:149 pan/data-impl/data-impl.cc:196
+#| msgid "Pan Newsreader’s server passwords"
+msgid "Pan Newsreader's server passwords"
 msgstr "Лозинке сервера Пана читача вести"
 
 #: pan/data-impl/groups.cc:102
 #, c-format
-#| msgid "Skipping newsrc file for server \"%s\""
-msgid "Skipping newsrc file for server “%s”"
+#| msgid "Skipping newsrc file for server “%s”"
+msgid "Skipping newsrc file for server \"%s\""
 msgstr "Прескачем датотеку „newsrc“ за сервер „%s“"
 
 #: pan/data-impl/headers.cc:606
 #, c-format
-#| msgid "Expired %lu old articles from \"%s\""
-msgid "Expired %lu old articles from “%s”"
-msgstr "Истекла %lu стара чланка са „%s“"
+#| msgid "Expired %lu old articles from “%s”"
+msgid "Expired %lu old articles from \"%s\""
+msgstr "Истекла су %lu стара чланка са „%s“"
 
 #: pan/data-impl/headers.cc:613
 #, c-format
@@ -154,18 +149,17 @@ msgstr ""
 
 #: pan/data-impl/headers.cc:628
 #, c-format
-#| msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
-msgid "Loaded %lu articles for “%s” in %.1f seconds (%.0f per second)"
+#| msgid "Loaded %lu articles for “%s” in %.1f seconds (%.0f per second)"
+msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr ""
 "Учитах %lu поруке за групу „%s“ за %.1f секунде (%.0f порука по секунди)"
 
 #: pan/data-impl/headers.cc:857
 #, c-format
 #| msgid ""
-#| "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/"
-#| "sec)"
+#| "Saved %lu parts, %lu articles in “%s” in %.1f seconds (%.0f articles/sec)"
 msgid ""
-"Saved %lu parts, %lu articles in “%s” in %.1f seconds (%.0f articles/sec)"
+"Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
 msgstr ""
 "Сачувах %lu дела, %lu чланка у „%s“ за %.1f секунде (%.0f чланка по секунди)"
 
@@ -174,46 +168,46 @@ msgstr ""
 msgid "Added %lu articles to %s."
 msgstr "Додах %lu чланка у %s."
 
-#: pan/data-impl/server.cc:262
+#: pan/data-impl/server.cc:260
 #, c-format
 msgid "Received no password from libsecret for server %s."
 msgstr "Нисам примио лозинку са „libsecret“-а за сервер „%s“."
 
-#: pan/data-impl/server.cc:287
+#: pan/data-impl/server.cc:285
 #, c-format
 msgid "There seems to be no password set for server %s."
 msgstr "Изгледа да лозинка није подешена за сервер „%s“."
 
-#: pan/data-impl/server.cc:291
+#: pan/data-impl/server.cc:289
 msgid "GNOME Keyring denied access to the passwords."
 msgstr "Гномов привезак кључева одија приступ лозинкама."
 
-#: pan/data-impl/xover.cc:243
+#: pan/data-impl/xover.cc:241
 #, c-format
-#| msgid "Error reading from %s: unknown group \"%s\""
-msgid "Error reading from %s: unknown group “%s”"
+#| msgid "Error reading from %s: unknown group “%s”"
+msgid "Error reading from %s: unknown group \"%s\""
 msgstr "Грешка читања из „%s“: непозната група „%s“"
 
 #. build the locale strings
 #: pan/general/e-util.cc:211
-#| msgid "%l:%M %p"
-msgid "%l∶%M %p"
-msgstr "%l:%M"
+#| msgid "%l∶%M %p"
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
 
 #: pan/general/e-util.cc:212
-#| msgid "Today %l:%M %p"
-msgid "Today %l∶%M %p"
-msgstr "Данас у %l:%M"
+#| msgid "Today %l∶%M %p"
+msgid "Today %l:%M %p"
+msgstr "Данас у %l:%M %p"
 
 #: pan/general/e-util.cc:213
-#| msgid "%a %l:%M %p"
-msgid "%a %l∶%M %p"
-msgstr "%a, у %l:%M"
+#| msgid "%a %l∶%M %p"
+msgid "%a %l:%M %p"
+msgstr "%a, у %l:%M %p"
 
 #: pan/general/e-util.cc:214
-#| msgid "%b %d %l:%M %p"
-msgid "%b %d %l∶%M %p"
-msgstr "%d. %B у %l:%M"
+#| msgid "%b %d %l∶%M %p"
+msgid "%b %d %l:%M %p"
+msgstr "%d. %B у %l:%M %p"
 
 #: pan/general/e-util.cc:215
 msgid "%b %d %Y"
@@ -223,692 +217,687 @@ msgstr "%d. %b. %Y."
 msgid "?"
 msgstr "?"
 
-#: pan/general/text-match.cc:193
+#: pan/general/text-match.cc:194
 #, c-format
-#| msgid "Can't use regular expression \"%s\": %s"
-msgid "Can’t use regular expression “%s”: %s"
+#| msgid "Can’t use regular expression “%s”: %s"
+msgid "Can't use regular expression \"%s\": %s"
 msgstr "Не могу да користим регуларни израз „%s“: %s"
 
-#: pan/general/utf8-utils.cc:234
+#: pan/general/utf8-utils.cc:232
 #| msgid ""
-#| "Couldn't determine article encoding.  Non-UTF8 characters were removed."
-msgid "Couldn’t determine article encoding.  Non-UTF8 characters were removed."
+#| "Couldn’t determine article encoding.  Non-UTF8 characters were removed."
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr "Не могу да одредим кодирање чланка.  Уклоњени су знаци који нису УТФ-8."
 
-#: pan/gui/actions.cc:306 pan/gui/post-ui.cc:452
+#: pan/gui/actions.cc:304 pan/gui/post-ui.cc:452
 msgid "_File"
 msgstr "_Датотека"
 
-#: pan/gui/actions.cc:307 pan/gui/post-ui.cc:453
+#: pan/gui/actions.cc:305 pan/gui/post-ui.cc:453
 msgid "_Edit"
 msgstr "_Уреди"
 
-#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1107
+#: pan/gui/actions.cc:306 pan/gui/prefs-ui.cc:1105
 msgid "_Layout"
 msgstr "Ра_според"
 
-#: pan/gui/actions.cc:309
+#: pan/gui/actions.cc:307
 msgid "_Group Pane"
 msgstr "Површ _групе"
 
-#: pan/gui/actions.cc:310
+#: pan/gui/actions.cc:308
 msgid "_Header Pane"
 msgstr "Површ _заглавља"
 
-#: pan/gui/actions.cc:311
+#: pan/gui/actions.cc:309
 msgid "_Body Pane"
 msgstr "Површ _разраде"
 
-#: pan/gui/actions.cc:312
+#: pan/gui/actions.cc:310
 msgid "_View"
 msgstr "_Преглед"
 
-#: pan/gui/actions.cc:313
+#: pan/gui/actions.cc:311
 msgid "Filte_r"
 msgstr "Филте_р"
 
-#: pan/gui/actions.cc:314
+#: pan/gui/actions.cc:312
 msgid "_Go"
 msgstr "_Иди"
 
-#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1157
+#: pan/gui/actions.cc:313 pan/gui/prefs-ui.cc:1155
 msgid "_Actions"
 msgstr "Ра_дње"
 
-#: pan/gui/actions.cc:316
+#: pan/gui/actions.cc:314
 msgid "_Articles"
 msgstr "_Чланци"
 
-#: pan/gui/actions.cc:317
+#: pan/gui/actions.cc:315
 msgid "G_roups"
 msgstr "_Групе"
 
-#: pan/gui/actions.cc:318 pan/gui/actions.cc:319
+#: pan/gui/actions.cc:316 pan/gui/actions.cc:317
 msgid "_Post"
 msgstr "_Објави"
 
-#: pan/gui/actions.cc:320
+#: pan/gui/actions.cc:318
 msgid "_Help"
 msgstr "По_моћ"
 
-#: pan/gui/actions.cc:323
+#: pan/gui/actions.cc:321
 msgid "_Read Group"
 msgstr "_Читај групу"
 
-#: pan/gui/actions.cc:324
+#: pan/gui/actions.cc:322
 msgid "Read Group"
 msgstr "Читајте групу"
 
-#: pan/gui/actions.cc:328
+#: pan/gui/actions.cc:326
 msgid "_Mark Selected Groups Read"
 msgstr "Означи изабране групе _прочитаним"
 
-#: pan/gui/actions.cc:329
+#: pan/gui/actions.cc:327
 msgid "Mark Selected Groups Read"
 msgstr "Означите изабране групе прочитаним"
 
-#: pan/gui/actions.cc:333
-#| msgid "_Delete Selected Groups' Articles"
-msgid "_Delete Selected Groups’ Articles"
+#: pan/gui/actions.cc:331
+#| msgid "_Delete Selected Groups’ Articles"
+msgid "_Delete Selected Groups' Articles"
 msgstr "Обриши чланке изабраних _група"
 
-#: pan/gui/actions.cc:334
-#| msgid "Delete Selected Groups' Articles"
-msgid "Delete Selected Groups’ Articles"
+#: pan/gui/actions.cc:332
+#| msgid "Delete Selected Groups’ Articles"
+msgid "Delete Selected Groups' Articles"
 msgstr "Обришите чланке изабраних група"
 
-#: pan/gui/actions.cc:338
+#: pan/gui/actions.cc:336
 msgid "Get New _Headers in Selected Groups"
 msgstr "Добави нова _заглавља у изабраним групама"
 
-#: pan/gui/actions.cc:339
+#: pan/gui/actions.cc:337
 msgid "Get New Headers in Selected Groups"
 msgstr "Добавите нова заглавља у изабраним групама"
 
-#: pan/gui/actions.cc:343 pan/gui/actions.cc:348
+#: pan/gui/actions.cc:341 pan/gui/actions.cc:346
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "Добави нова _заглавља у праћеним групама"
 
-#: pan/gui/actions.cc:344 pan/gui/actions.cc:349
+#: pan/gui/actions.cc:342 pan/gui/actions.cc:347
 msgid "Get New Headers in Subscribed Groups"
 msgstr "Добавите нова заглавља у праћеним групама"
 
-#: pan/gui/actions.cc:353
-#| msgid "Get _Headers..."
-msgid "Get _Headers…"
-msgstr "Добави _заглавља…"
+#: pan/gui/actions.cc:351
+#| msgid "Get _Headers…"
+msgid "Get _Headers..."
+msgstr "Добави _заглавља..."
 
-#: pan/gui/actions.cc:354
-#| msgid "Get Headers..."
-msgid "Get Headers…"
-msgstr "Добавите заглавља…"
+#: pan/gui/actions.cc:352
+#| msgid "Get Headers…"
+msgid "Get Headers..."
+msgstr "Добавите заглавља..."
 
-#: pan/gui/actions.cc:358 pan/gui/actions.cc:359
+#: pan/gui/actions.cc:356 pan/gui/actions.cc:357
 msgid "Refresh Group List"
 msgstr "Освежи списак група"
 
-#: pan/gui/actions.cc:363
+#: pan/gui/actions.cc:361
 msgid "_Subscribe"
 msgstr "_Прати"
 
-#: pan/gui/actions.cc:364
+#: pan/gui/actions.cc:362
 msgid "Subscribe"
 msgstr "Пратите групу"
 
-#: pan/gui/actions.cc:368
+#: pan/gui/actions.cc:366
 msgid "_Unsubscribe"
 msgstr "_Прекини праћење"
 
-#: pan/gui/actions.cc:369
+#: pan/gui/actions.cc:367
 msgid "Unsubscribe"
 msgstr "Прекините праћење групе"
 
-#: pan/gui/actions.cc:373
-#| msgid "Save Articles"
-msgid "_Save Articles…"
-msgstr "_Сачувајте чланке…"
+#: pan/gui/actions.cc:371
+msgid "_Save Articles..."
+msgstr "_Сачувај чланке..."
 
-#: pan/gui/actions.cc:374
-#| msgid "Save Articles"
-msgid "Save Articles…"
-msgstr "Сачувајте чланке…"
+#: pan/gui/actions.cc:372
+msgid "Save Articles..."
+msgstr "Сачувајте чланке..."
 
-#: pan/gui/actions.cc:378
-#| msgid "Save Articles from Selected NZB"
-msgid "Save Articles from Selected _NZB…"
-msgstr "Сачувајте чланке из изабраних _НЗБ-а…"
+#: pan/gui/actions.cc:376
+msgid "Save Articles from Selected _NZB..."
+msgstr "Сачувај чланке из изабраних _НЗБ-а..."
 
-#: pan/gui/actions.cc:379
+#: pan/gui/actions.cc:377
 msgid "Save Articles from Selected NZB"
 msgstr "Сачувајте чланке из изабраних НЗБ-а"
 
-#: pan/gui/actions.cc:383
-#| msgid "Save Articles to an NZB File"
-msgid "Save Articles to an NZB _File…"
-msgstr "Сачувајте чланке у НЗБ _датотеку…"
+#: pan/gui/actions.cc:381
+msgid "Save Articles to an NZB _File..."
+msgstr "Сачувај чланке у НЗБ _датотеку..."
 
-#: pan/gui/actions.cc:384
+#: pan/gui/actions.cc:382
 msgid "Save Articles to an NZB File"
 msgstr "Сачувајте чланке у НЗБ датотеку"
 
-#: pan/gui/actions.cc:388 pan/gui/actions.cc:389
+#: pan/gui/actions.cc:386 pan/gui/actions.cc:387
 msgid "Print"
 msgstr "Штампај"
 
-#: pan/gui/actions.cc:393
-#| msgid "Import NZB Files"
-msgid "_Import NZB Files…"
-msgstr "_Увезите НЗБ датотеке…"
+#: pan/gui/actions.cc:391
+msgid "_Import NZB Files..."
+msgstr "_Увези НЗБ датотеке..."
 
-#: pan/gui/actions.cc:398
+#: pan/gui/actions.cc:396
 msgid "_Cancel Last Task"
 msgstr "_Откажи последњи задатак"
 
-#: pan/gui/actions.cc:403
+#: pan/gui/actions.cc:401
 msgid "_Task Manager"
 msgstr "_Управник задатака"
 
-#: pan/gui/actions.cc:408
+#: pan/gui/actions.cc:406
 msgid "_Event Log"
 msgstr "_Дневник догађаја"
 
-#: pan/gui/actions.cc:413
+#: pan/gui/actions.cc:411
 msgid "_Quit"
 msgstr "_Изађи"
 
-#: pan/gui/actions.cc:418
+#: pan/gui/actions.cc:416
 msgid "Select _All Articles"
 msgstr "Изабери _све чланке"
 
-#: pan/gui/actions.cc:423
+#: pan/gui/actions.cc:421
 msgid "_Deselect All Articles"
 msgstr "_Поништи избор свих чланака"
 
-#: pan/gui/actions.cc:428
+#: pan/gui/actions.cc:426
 msgid "Add Su_bthreads to Selection"
 msgstr "Додај по_драсправе у избор"
 
-#: pan/gui/actions.cc:433
+#: pan/gui/actions.cc:431
 msgid "Add _Threads to Selection"
 msgstr "Додај _расправе у избор"
 
-#: pan/gui/actions.cc:438
+#: pan/gui/actions.cc:436
 msgid "Add _Similar Articles to Selection"
 msgstr "Додај _сличне чланке у избор"
 
-#: pan/gui/actions.cc:443
+#: pan/gui/actions.cc:441
 msgid "Select Article _Body"
 msgstr "Изабери разраду _чланка"
 
-#: pan/gui/actions.cc:448
+#: pan/gui/actions.cc:446
 msgid "Edit _Preferences"
 msgstr "Уреди _поставке"
 
-#: pan/gui/actions.cc:453
-#| msgid "Edit Selected _Group's Preferences"
-msgid "Edit Selected _Group’s Preferences"
+#: pan/gui/actions.cc:451
+#| msgid "Edit Selected _Group’s Preferences"
+msgid "Edit Selected _Group's Preferences"
 msgstr "Уреди поставке изабраних _група"
 
-#: pan/gui/actions.cc:458 pan/gui/post-ui.cc:469
+#: pan/gui/actions.cc:456 pan/gui/post-ui.cc:469
 msgid "Edit P_osting Profiles"
 msgstr "Уреди профиле _објављивања"
 
 #  table header
-#: pan/gui/actions.cc:463
+#: pan/gui/actions.cc:461
 msgid "Edit _News Servers"
 msgstr "Уреди _сервере вести"
 
-#: pan/gui/actions.cc:468
+#: pan/gui/actions.cc:466
 msgid "Jump to _Group Tab"
 msgstr "Иди на језичак _групе"
 
-#: pan/gui/actions.cc:473
+#: pan/gui/actions.cc:471
 msgid "Jump to _Header Tab"
 msgstr "Иди на језичак _заглавља"
 
-#: pan/gui/actions.cc:478
+#: pan/gui/actions.cc:476
 msgid "Jump to _Body Tab"
 msgstr "Иди на језичак _разраде"
 
-#: pan/gui/actions.cc:483
+#: pan/gui/actions.cc:481
 msgid "_Rot13 Selected Text"
 msgstr "Примени _РОТ13 на изабраном тексту"
 
-#: pan/gui/actions.cc:488
+#: pan/gui/actions.cc:486
 msgid "Clear _Header Pane"
 msgstr "Очисти површ _заглавља"
 
-#: pan/gui/actions.cc:493
+#: pan/gui/actions.cc:491
 msgid "Clear _Body Pane"
 msgstr "Очисти површ _разраде"
 
-#: pan/gui/actions.cc:498
+#: pan/gui/actions.cc:496
 msgid "Cache Article"
 msgstr "Причувајте чланак"
 
-#: pan/gui/actions.cc:503
+#: pan/gui/actions.cc:501
 msgid "Read Article"
 msgstr "Прочитајте чланак"
 
-#: pan/gui/actions.cc:508
+#: pan/gui/actions.cc:506
 msgid "Show Article Information"
 msgstr "Прикажи податке о чланку"
 
-#: pan/gui/actions.cc:513
+#: pan/gui/actions.cc:511
 msgid "Read _More"
 msgstr "Читај _следеће"
 
-#: pan/gui/actions.cc:514
+#: pan/gui/actions.cc:512
 msgid "Read More"
 msgstr "Прочитајте следеће"
 
-#: pan/gui/actions.cc:518
+#: pan/gui/actions.cc:516
 msgid "Read _Back"
 msgstr "Читај _претходно"
 
-#: pan/gui/actions.cc:519
+#: pan/gui/actions.cc:517
 msgid "Read Back"
 msgstr "Прочитајте претходно"
 
-#: pan/gui/actions.cc:523
+#: pan/gui/actions.cc:521
 msgid "Next _Unread Group"
 msgstr "Следећа _непрочитана група"
 
-#: pan/gui/actions.cc:528
+#: pan/gui/actions.cc:526
 msgid "Next _Group"
 msgstr "Нова _група"
 
-#: pan/gui/actions.cc:533
+#: pan/gui/actions.cc:531
 msgid "Next _Unread Article"
 msgstr "Следећи _непрочитани чланак"
 
-#: pan/gui/actions.cc:534
+#: pan/gui/actions.cc:532
 msgid "Next Unread Article"
 msgstr "Следећи непрочитани чланак"
 
-#: pan/gui/actions.cc:538
+#: pan/gui/actions.cc:536
 msgid "Next _Article"
 msgstr "Следећи _чланак"
 
-#: pan/gui/actions.cc:539
+#: pan/gui/actions.cc:537
 msgid "Next Article"
 msgstr "Следећи чланак"
 
-#: pan/gui/actions.cc:543
+#: pan/gui/actions.cc:541
 msgid "Next _Watched Article"
 msgstr "Следећи _праћени чланак"
 
-#: pan/gui/actions.cc:548
+#: pan/gui/actions.cc:546
 msgid "Next Unread _Thread"
 msgstr "Следећа непрочитана _расправа"
 
-#: pan/gui/actions.cc:549
+#: pan/gui/actions.cc:547
 msgid "Next Unread Thread"
 msgstr "Следећа непрочитана расправа"
 
-#: pan/gui/actions.cc:553
+#: pan/gui/actions.cc:551
 msgid "Next Threa_d"
 msgstr "_Следећа расправа"
 
-#: pan/gui/actions.cc:558
+#: pan/gui/actions.cc:556
 msgid "Pre_vious Article"
 msgstr "_Претходни чланак"
 
-#: pan/gui/actions.cc:563
+#: pan/gui/actions.cc:561
 msgid "Previous _Thread"
 msgstr "_Претходна расправа"
 
-#: pan/gui/actions.cc:568
+#: pan/gui/actions.cc:566
 msgid "_Parent Article"
 msgstr "_Главни чланак"
 
-#: pan/gui/actions.cc:573
+#: pan/gui/actions.cc:571
 msgid "Ignore _Author"
 msgstr "Занемари _аутора"
 
-#: pan/gui/actions.cc:577
+#: pan/gui/actions.cc:575
 msgid "_Watch Thread"
 msgstr "_Прати расправу"
 
-#: pan/gui/actions.cc:582
+#: pan/gui/actions.cc:580
 msgid "_Ignore Thread"
 msgstr "_Занемари расправу"
 
-#: pan/gui/actions.cc:587 pan/gui/actions.cc:588
+#: pan/gui/actions.cc:585 pan/gui/actions.cc:586
 msgid "_Toggle Flag On/Off for Thread"
 msgstr "_Укључи/искључи обележје за расправу"
 
-#: pan/gui/actions.cc:592 pan/gui/actions.cc:593
+#: pan/gui/actions.cc:590 pan/gui/actions.cc:591
 msgid "_Turn Flag Off for Thread"
 msgstr "_Искључи обележје за расправу"
 
-#: pan/gui/actions.cc:597 pan/gui/actions.cc:598
+#: pan/gui/actions.cc:595 pan/gui/actions.cc:596
 msgid "_Select All Flagged Threads"
 msgstr "Изабери _све обележене расправе"
 
-#: pan/gui/actions.cc:602 pan/gui/actions.cc:603
+#: pan/gui/actions.cc:600 pan/gui/actions.cc:601
 msgid "_Go to Next Flagged Thread"
 msgstr "Иди на _следећу обележену расправу"
 
-#: pan/gui/actions.cc:607 pan/gui/actions.cc:608
+#: pan/gui/actions.cc:605 pan/gui/actions.cc:606
 msgid "_Go to Last Flagged Thread"
 msgstr "Иди на _последњу обележену расправу"
 
-#: pan/gui/actions.cc:612 pan/gui/actions.cc:613
+#: pan/gui/actions.cc:610 pan/gui/actions.cc:611
 msgid "_Invert Selection"
 msgstr "_Преокрени избор"
 
-#: pan/gui/actions.cc:617
-#| msgid "Edit Article's Watch/Ignore/Score..."
-msgid "Edit Article’s Watch/Ignore/Score…"
-msgstr "Уреди праћење/занемаривање/бодовање чланка…"
+#: pan/gui/actions.cc:615
+#| msgid "Edit Article’s Watch/Ignore/Score…"
+msgid "Edit Article's Watch/Ignore/Score..."
+msgstr "Уреди праћење/занемаривање/бодовање чланка..."
 
-#: pan/gui/actions.cc:622
-#| msgid "Add a _Scoring Rule..."
-msgid "Add a _Scoring Rule…"
-msgstr "Додај правило _бодовања…"
+#: pan/gui/actions.cc:620
+#| msgid "Add a _Scoring Rule…"
+msgid "Add a _Scoring Rule..."
+msgstr "Додај правило _бодовања..."
 
-#: pan/gui/actions.cc:627
-#| msgid "Cance_l Article..."
-msgid "Cance_l Article…"
-msgstr "_Обриши чланак…"
+#: pan/gui/actions.cc:625
+#| msgid "Cance_l Article…"
+msgid "Cance_l Article..."
+msgstr "_Обриши чланак..."
 
-#: pan/gui/actions.cc:632
-#| msgid "_Supersede Article..."
-msgid "_Supersede Article…"
-msgstr "_Надомести чланак…"
+#: pan/gui/actions.cc:630
+#| msgid "_Supersede Article…"
+msgid "_Supersede Article..."
+msgstr "_Надомести чланак..."
 
-#: pan/gui/actions.cc:637
+#: pan/gui/actions.cc:635
 msgid "_Delete Article"
 msgstr "_Обриши чланак"
 
-#: pan/gui/actions.cc:642
+#: pan/gui/actions.cc:640
 msgid "Clear Article Cache"
 msgstr "Очисти оставу чланка"
 
-#: pan/gui/actions.cc:647
+#: pan/gui/actions.cc:645
 msgid "_Mark Article as Read"
 msgstr "Означи чланак _прочитаним"
 
-#: pan/gui/actions.cc:652
+#: pan/gui/actions.cc:650
 msgid "Mark Article as _Unread"
 msgstr "Означи чланак _непрочитаним"
 
-#: pan/gui/actions.cc:658
+#: pan/gui/actions.cc:656
 msgid "_Mark Thread as Read"
 msgstr "Означи расправу _прочитаном"
 
-#: pan/gui/actions.cc:663
+#: pan/gui/actions.cc:661
 msgid "Mark Thread as _Unread"
 msgstr "Означи расправу _непрочитаном"
 
-#: pan/gui/actions.cc:668
+#: pan/gui/actions.cc:666
 msgid "_Post to Newsgroup"
 msgstr "_Објави у причаоници"
 
-#: pan/gui/actions.cc:669
+#: pan/gui/actions.cc:667
 msgid "Post to Newsgroup"
 msgstr "Објавите у причаоници"
 
-#: pan/gui/actions.cc:673
+#: pan/gui/actions.cc:671
 msgid "_Followup to Newsgroup"
 msgstr "_Испрати у причаоници"
 
-#: pan/gui/actions.cc:674
+#: pan/gui/actions.cc:672
 msgid "Followup to Newsgroup"
 msgstr "Испратите у причаоници"
 
-#: pan/gui/actions.cc:678
+#: pan/gui/actions.cc:676
 msgid "_Reply to Author in Mail"
 msgstr "_Одговори аутору поштом"
 
-#: pan/gui/actions.cc:684
+#: pan/gui/actions.cc:682
 msgid "_Contents"
 msgstr "_Садржај"
 
-#: pan/gui/actions.cc:690
+#: pan/gui/actions.cc:688
 msgid "_Pan Home Page"
 msgstr "_Матична страница Пана"
 
-#: pan/gui/actions.cc:695
-#| msgid "Give _Feedback or Report a Bug..."
-msgid "Give _Feedback or Report a Bug…"
-msgstr "Дајте _мишљење или пријавите грешку…"
+#: pan/gui/actions.cc:693
+#| msgid "Give _Feedback or Report a Bug…"
+msgid "Give _Feedback or Report a Bug..."
+msgstr "Дајте _мишљење или пријавите грешку..."
 
-#: pan/gui/actions.cc:700
-#| msgid "_Tip Jar..."
-msgid "_Tip Jar…"
-msgstr "_Добровољан прилог…"
+#: pan/gui/actions.cc:698
+#| msgid "_Tip Jar…"
+msgid "_Tip Jar..."
+msgstr "_Добровољан прилог..."
 
-#: pan/gui/actions.cc:705
+#: pan/gui/actions.cc:703
 msgid "_About"
 msgstr "_О програму"
 
-#: pan/gui/actions.cc:710
+#: pan/gui/actions.cc:708
 msgid "Edit _SSL Certificates"
 msgstr "Уреди _ССЛ уверења"
 
-#: pan/gui/actions.cc:725
+#: pan/gui/actions.cc:723
 msgid "_Thread Headers"
 msgstr "Заглавља _теме"
 
-#: pan/gui/actions.cc:726
+#: pan/gui/actions.cc:724
 msgid "Wrap Article Body"
 msgstr "Преломи редове у поруци"
 
-#: pan/gui/actions.cc:727
+#: pan/gui/actions.cc:725
 msgid "Show Article Signature"
 msgstr "Прикажи потпис чланка"
 
-#: pan/gui/actions.cc:728
+#: pan/gui/actions.cc:726
 msgid "Mute _Quoted Text"
 msgstr "Одзначи _цитирани текст"
 
-#: pan/gui/actions.cc:729
+#: pan/gui/actions.cc:727
 msgid "Show All _Headers in Body Pane"
 msgstr "Прикажи сва _заглавља у површи разраде"
 
-#: pan/gui/actions.cc:730
+#: pan/gui/actions.cc:728
 msgid "Show _Smilies as Graphics"
 msgstr "Прикажи слике _смешака"
 
-#: pan/gui/actions.cc:731
+#: pan/gui/actions.cc:729
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr "Прикажи *Подебљано*, __Подвучено__, и /Искошено/"
 
-#: pan/gui/actions.cc:732
+#: pan/gui/actions.cc:730
 msgid "Size Pictures to _Fit"
 msgstr "Подеси слике да _стану"
 
-#: pan/gui/actions.cc:733
+#: pan/gui/actions.cc:731
 msgid "Use _Monospace Font"
 msgstr "Користи словни лик _утврђене ширине"
 
-#: pan/gui/actions.cc:734
+#: pan/gui/actions.cc:732
 msgid "Set Focus to Images"
 msgstr "Постави први план на слике"
 
-#: pan/gui/actions.cc:735
+#: pan/gui/actions.cc:733
 msgid "Highlight _URLs"
 msgstr "Истакни _адресе"
 
-#: pan/gui/actions.cc:738
+#: pan/gui/actions.cc:736
 msgid "_Work Online"
 msgstr "_Ради на мрежи"
 
-#: pan/gui/actions.cc:739
+#: pan/gui/actions.cc:737
 msgid "_Tabbed Layout"
 msgstr "Распоред _језичцима"
 
-#: pan/gui/actions.cc:740
+#: pan/gui/actions.cc:738
 msgid "Show Group _Pane"
 msgstr "Прикажи површ _групе"
 
-#: pan/gui/actions.cc:741
+#: pan/gui/actions.cc:739
 msgid "Show Hea_der Pane"
 msgstr "Прикажи површ _заглавља"
 
-#: pan/gui/actions.cc:742
+#: pan/gui/actions.cc:740
 msgid "Show Bod_y Pane"
 msgstr "Прикажи површ _разраде"
 
-#: pan/gui/actions.cc:743
+#: pan/gui/actions.cc:741
 msgid "Show _Toolbar"
 msgstr "Прикажи траку _алата"
 
-#: pan/gui/actions.cc:744
+#: pan/gui/actions.cc:742
 msgid "Abbreviate Group Names"
 msgstr "Скрати називе група"
 
-#: pan/gui/actions.cc:746
+#: pan/gui/actions.cc:744
 msgid "Match Only _Read Articles"
 msgstr "Издвој само _прочитане чланке"
 
-#: pan/gui/actions.cc:746
+#: pan/gui/actions.cc:744
 msgid "Match Only Read Articles"
 msgstr "Издвојте само прочитане чланке"
 
-#: pan/gui/actions.cc:747
+#: pan/gui/actions.cc:745
 msgid "Match Only _Unread Articles"
 msgstr "Издвој само _непрочитане чланке"
 
-#: pan/gui/actions.cc:747
+#: pan/gui/actions.cc:745
 msgid "Match Only Unread Articles"
 msgstr "Издвојте само непрочитане чланке"
 
-#: pan/gui/actions.cc:748
+#: pan/gui/actions.cc:746
 msgid "Match Only _Cached Articles"
 msgstr "Издвој само _причуване чланке"
 
-#: pan/gui/actions.cc:748
+#: pan/gui/actions.cc:746
 msgid "Match Only Cached Articles"
 msgstr "Издвојте само причуване чланке"
 
-#: pan/gui/actions.cc:749
+#: pan/gui/actions.cc:747
 msgid "Match Only _Complete Articles"
 msgstr "Издвој само _завршене чланке"
 
-#: pan/gui/actions.cc:749
+#: pan/gui/actions.cc:747
 msgid "Match Only Complete Articles"
 msgstr "Издвојте само завршене чланке"
 
-#: pan/gui/actions.cc:750
+#: pan/gui/actions.cc:748
 msgid "Match Only _My Articles"
 msgstr "Издвој само _моје чланке"
 
-#: pan/gui/actions.cc:750
+#: pan/gui/actions.cc:748
 msgid "Match Only My Articles"
 msgstr "Издвојте само своје чланке"
 
-#: pan/gui/actions.cc:751
+#: pan/gui/actions.cc:749
 msgid "Match Only _Watched Articles"
 msgstr "Издвој само _праћене чланке"
 
-#: pan/gui/actions.cc:751
+#: pan/gui/actions.cc:749
 msgid "Match Only Watched Articles"
 msgstr "Издвојте само праћене чланке"
 
-#: pan/gui/actions.cc:753
+#: pan/gui/actions.cc:751
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "Издвој поруке са 9999 бодова (_Праћене)"
 
-#: pan/gui/actions.cc:754
-#| msgid "Match Scores of 5000...9998 (_High)"
-msgid "Match Scores of 5000…9998 (_High)"
+#: pan/gui/actions.cc:752
+#| msgid "Match Scores of 5000…9998 (_High)"
+msgid "Match Scores of 5000...9998 (_High)"
 msgstr "Издвој поруке од 5000 до 9998 бодова (_Врло важне)"
 
-#: pan/gui/actions.cc:755
-#| msgid "Match Scores of 1...4999 (Me_dium)"
-msgid "Match Scores of 1…4999 (Me_dium)"
+#: pan/gui/actions.cc:753
+#| msgid "Match Scores of 1…4999 (Me_dium)"
+msgid "Match Scores of 1...4999 (Me_dium)"
 msgstr "Издвој поруке од 1 до 4999 бода (_Средње важне)"
 
-#: pan/gui/actions.cc:756
+#: pan/gui/actions.cc:754
 msgid "Match Scores of 0 (_Normal)"
 msgstr "Издвој поруке са 0 бодова (_Обичне)"
 
-#: pan/gui/actions.cc:757
-#| msgid "Match Scores of -9998...-1 (_Low)"
-msgid "Match Scores of -9998…-1 (_Low)"
+#: pan/gui/actions.cc:755
+#| msgid "Match Scores of -9998…-1 (_Low)"
+msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "Издвој поруке од -9999 до -1 бода (_Слабо важне)"
 
-#: pan/gui/actions.cc:758
+#: pan/gui/actions.cc:756
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "Издвој поруке од -9999 бодова (_Занемарене)"
 
-#: pan/gui/actions.cc:760
+#: pan/gui/actions.cc:758
 msgid "Enable/Disable All _Rules"
 msgstr "Укључи/искључи сва _правила"
 
-#: pan/gui/actions.cc:788
+#: pan/gui/actions.cc:786
 msgid "Show Matching _Articles"
 msgstr "Прикажи одговарајуће _чланке"
 
-#: pan/gui/actions.cc:789
-#| msgid "Show Matching Articles' _Threads"
-msgid "Show Matching Articles’ _Threads"
+#: pan/gui/actions.cc:787
+#| msgid "Show Matching Articles’ _Threads"
+msgid "Show Matching Articles' _Threads"
 msgstr "Прикажи _теме чланка које испуњавају услов"
 
-#: pan/gui/actions.cc:790
-#| msgid "Show Matching Articles' _Subthreads"
-msgid "Show Matching Articles’ _Subthreads"
+#: pan/gui/actions.cc:788
+#| msgid "Show Matching Articles’ _Subthreads"
+msgid "Show Matching Articles' _Subthreads"
 msgstr "Прикажи _подтеме чланка које испуњавају услов"
 
-#: pan/gui/body-pane.cc:1056
+#: pan/gui/body-pane.cc:1054
 msgid "Unnamed File"
 msgstr "Неименована датотека"
 
-#: pan/gui/body-pane.cc:1137 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1314
-#: pan/gui/header-pane.cc:1754 pan/gui/post-ui.cc:2752 pan/gui/prefs-ui.cc:855
-#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:797
+#: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1303
+#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2859 pan/gui/prefs-ui.cc:853
+#: pan/gui/score-add-ui.cc:137 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "Тема"
 
-#: pan/gui/body-pane.cc:1139 pan/gui/gui.cc:2009
+#: pan/gui/body-pane.cc:1137 pan/gui/gui.cc:2009
 msgid "From"
 msgstr "Шаље"
 
-#: pan/gui/body-pane.cc:1141 pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1833
-#: pan/gui/log-ui.cc:307 pan/gui/prefs-ui.cc:851
+#: pan/gui/body-pane.cc:1139 pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1822
+#: pan/gui/log-ui.cc:305 pan/gui/prefs-ui.cc:849
 msgid "Date"
 msgstr "Датум"
 
-#: pan/gui/body-pane.cc:1148
+#: pan/gui/body-pane.cc:1146
 msgid "Newsgroups"
 msgstr "Причаонице"
 
-#: pan/gui/body-pane.cc:1155 pan/gui/body-pane.cc:1163
-#: pan/gui/body-pane.cc:1170
+#: pan/gui/body-pane.cc:1153 pan/gui/body-pane.cc:1161
+#: pan/gui/body-pane.cc:1168
 msgid "User-Agent"
 msgstr "Читач"
 
-#: pan/gui/body-pane.cc:1176
+#: pan/gui/body-pane.cc:1174
 msgid "Followup-To"
 msgstr "Испрати-до"
 
-#: pan/gui/body-pane.cc:1186
+#: pan/gui/body-pane.cc:1184
 msgid "Reply-To"
 msgstr "Одговори"
 
-#: pan/gui/body-pane.cc:1238
+#: pan/gui/body-pane.cc:1236
 msgid " from "
 msgstr " шаље "
 
-#: pan/gui/body-pane.cc:1240
+#: pan/gui/body-pane.cc:1238
 msgid " at "
 msgstr " на "
 
-#: pan/gui/body-pane.cc:1333
+#: pan/gui/body-pane.cc:1331
 #, c-format
 #| msgid ""
 #| "<u>This is a <b>PGP-Signed</b> message.</u>\n"
 #| "\n"
-#| "<b>Signer:</b> %s ('%s')\n"
+#| "<b>Signer:</b> %s (“%s”)\n"
 #| "<b>Valid until:</b> %s\n"
 #| "<b>Created on:</b> %s"
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
 "\n"
-"<b>Signer:</b> %s (“%s”)\n"
+"<b>Signer:</b> %s ('%s')\n"
 "<b>Valid until:</b> %s\n"
 "<b>Created on:</b> %s"
 msgstr ""
@@ -918,37 +907,36 @@ msgstr ""
 "<b>Важи до:</b> %s\n"
 "<b>Направљена:</b> %s"
 
-#: pan/gui/body-pane.cc:1338
+#: pan/gui/body-pane.cc:1336
 msgid "always"
 msgstr "увек"
 
-#: pan/gui/body-pane.cc:1558
+#: pan/gui/body-pane.cc:1556
 msgid "Copy _URL"
 msgstr "Умножи _адресу"
 
-#: pan/gui/body-pane.cc:1768
-#| msgid "Save Attachment As..."
-msgid "Save Attachment As…"
-msgstr "Сачувај прилог као…"
+#: pan/gui/body-pane.cc:1766
+#| msgid "Save Attachment As…"
+msgid "Save Attachment As..."
+msgstr "Сачувај прилог као..."
 
-#: pan/gui/body-pane.cc:1771
+#: pan/gui/body-pane.cc:1769
 msgid "Save All Attachments"
 msgstr "Сачувај све прилоге"
 
-#: pan/gui/body-pane.cc:1846
-#| msgid "Attachments"
+#: pan/gui/body-pane.cc:1844
 msgid "Attachments:"
 msgstr "Прилози:"
 
-#: pan/gui/body-pane.cc:1874
+#: pan/gui/body-pane.cc:1872
 msgid "Text View"
 msgstr "Приказ текста"
 
-#: pan/gui/body-pane.cc:1883
+#: pan/gui/body-pane.cc:1881
 msgid "HTML View"
 msgstr "ХТМЛ приказ"
 
-#: pan/gui/dl-headers-ui.cc:112
+#: pan/gui/dl-headers-ui.cc:110
 #, c-format
 msgid "%d Group"
 msgid_plural "%d Groups"
@@ -957,24 +945,24 @@ msgstr[1] "%d групе"
 msgstr[2] "%d група"
 msgstr[3] "%d група"
 
-#: pan/gui/dl-headers-ui.cc:135
-#| msgid "Get the last N _days' headers: "
-msgid "Get the last N _days’ headers: "
+#: pan/gui/dl-headers-ui.cc:133
+#| msgid "Get the last N _days’ headers: "
+msgid "Get the last N _days' headers: "
 msgstr "Добави заглавља последња N _дана: "
 
-#: pan/gui/dl-headers-ui.cc:143
+#: pan/gui/dl-headers-ui.cc:141
 msgid "Get _new headers"
 msgstr "Добави _нова заглавља"
 
-#: pan/gui/dl-headers-ui.cc:147
+#: pan/gui/dl-headers-ui.cc:145
 msgid "Get _all headers"
 msgstr "Добави _сва заглавља"
 
-#: pan/gui/dl-headers-ui.cc:151
+#: pan/gui/dl-headers-ui.cc:149
 msgid "Get the _latest N headers: "
 msgstr "Добави _последња N заглавља: "
 
-#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:848
+#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:846
 msgid "Action"
 msgstr "Радња"
 
@@ -982,7 +970,7 @@ msgstr "Радња"
 msgid "A GtkRadioAction"
 msgstr "Радња ГТК једноизборника"
 
-#: pan/gui/e-charset.c:51 pan/gui/task-pane.cc:558
+#: pan/gui/e-charset.c:51 pan/gui/task-pane.cc:556
 msgid "Unknown"
 msgstr "Непознато"
 
@@ -1059,8 +1047,8 @@ msgstr "Украјински"
 msgid "Visual"
 msgstr "Визуелни"
 
-#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:554
-#: pan/gui/prefs-ui.cc:759
+#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:547
+#: pan/gui/prefs-ui.cc:757
 msgid "Character Encoding"
 msgstr "Кодна страна"
 
@@ -1069,9 +1057,9 @@ msgid "Enter the character set to use"
 msgstr "Изаберите кодну страну за коришћење"
 
 #: pan/gui/e-charset-combo-box.c:336
-#| msgid "Other..."
-msgid "Other…"
-msgstr "Друго…"
+#| msgid "Other…"
+msgid "Other..."
+msgstr "Друго..."
 
 #: pan/gui/e-cte-dialog.c:76
 msgid "Default Encoding"
@@ -1093,77 +1081,77 @@ msgstr "Кодирање у основи 64"
 msgid "Quoted-Printable Encoding"
 msgstr "Кодирање цитирано-за_штампање"
 
-#: pan/gui/group-pane.cc:330
+#: pan/gui/group-pane.cc:328
 msgid "Sent"
 msgstr "Послато"
 
-#: pan/gui/group-pane.cc:331
+#: pan/gui/group-pane.cc:329
 msgid "Drafts"
 msgstr "Нацрти"
 
-#: pan/gui/group-pane.cc:537
+#: pan/gui/group-pane.cc:535
 msgid "Group"
 msgstr "Група"
 
-#: pan/gui/group-pane.cc:538
+#: pan/gui/group-pane.cc:536
 msgid "Group (regex)"
 msgstr "Група (регуларни израз)"
 
-#: pan/gui/group-pane.cc:1016
+#: pan/gui/group-pane.cc:1014
 msgid "Local Folders"
 msgstr "Месне фасцикле"
 
-#: pan/gui/group-pane.cc:1017
+#: pan/gui/group-pane.cc:1015
 msgid "Subscribed Groups"
 msgstr "Праћене групе"
 
-#: pan/gui/group-pane.cc:1018
+#: pan/gui/group-pane.cc:1016
 msgid "Other Groups"
 msgstr "Друге групе"
 
-#: pan/gui/group-pane.cc:1058 pan/gui/score-view-ui.cc:157
+#: pan/gui/group-pane.cc:1056 pan/gui/score-view-ui.cc:155
 msgid "Name"
 msgstr "Назив"
 
-#: pan/gui/group-prefs-dialog.cc:162
-#| msgid "No Profiles defined in Edit|Posting Profiles."
-msgid "No Profiles defined in Edit → Posting Profiles."
-msgstr "Профили нису одређени у Уреди → Профили објављивања."
+#: pan/gui/group-prefs-dialog.cc:164
+#| msgid "No Profiles defined in Edit → Posting Profiles."
+msgid "No Profiles defined in Edit|Posting Profiles."
+msgstr "Профили нису одређени у „Уреди|Профили објављивања“."
 
-#: pan/gui/group-prefs-dialog.cc:273
+#: pan/gui/group-prefs-dialog.cc:275
 msgid "Pan: Group Preferences"
 msgstr "Пан: Поставке групе"
 
-#: pan/gui/group-prefs-dialog.cc:288
+#: pan/gui/group-prefs-dialog.cc:290
 msgid "Properties for Groups"
 msgstr "Својства за групе"
 
-#: pan/gui/group-prefs-dialog.cc:290
+#: pan/gui/group-prefs-dialog.cc:292
 #, c-format
 msgid "Properties for %s"
 msgstr "Својства за „%s“"
 
-#: pan/gui/group-prefs-dialog.cc:298
+#: pan/gui/group-prefs-dialog.cc:300
 msgid "Character _encoding:"
 msgstr "Кодирање _знакова:"
 
-#: pan/gui/group-prefs-dialog.cc:300
+#: pan/gui/group-prefs-dialog.cc:302
 msgid "Directory for Saving Attachments"
 msgstr "Директоријум за чување прилога"
 
-#: pan/gui/group-prefs-dialog.cc:308
+#: pan/gui/group-prefs-dialog.cc:310
 msgid "Directory for _saving attachments:"
 msgstr "Директоријум за _чување прилога:"
 
-#: pan/gui/group-prefs-dialog.cc:310
+#: pan/gui/group-prefs-dialog.cc:312
 msgid "Posting _profile:"
 msgstr "Профил _објављивања:"
 
-#: pan/gui/group-prefs-dialog.cc:315
+#: pan/gui/group-prefs-dialog.cc:317
 msgid "Spellchecker _language:"
 msgstr "Језик за _проверу писања:"
 
-#: pan/gui/group-prefs-dialog.cc:318
+#: pan/gui/group-prefs-dialog.cc:320
 msgid "Group color:"
 msgstr "Боја групе:"
 
@@ -1176,8 +1164,8 @@ msgid "Open the Event Log"
 msgstr "Отворите дневник догађаја"
 
 #: pan/gui/gui.cc:611
-#| msgid "Save NZB's Files"
-msgid "Save NZB’s Files"
+#| msgid "Save NZB’s Files"
+msgid "Save NZB's Files"
 msgstr "Сачувајте НЗБ датотеке"
 
 #: pan/gui/gui.cc:638
@@ -1185,15 +1173,15 @@ msgid "Untitled.nzb"
 msgstr "Неименована.nzb"
 
 #: pan/gui/gui.cc:640
-#| msgid "Save NZB File as..."
-msgid "Save NZB File as…"
-msgstr "Сачувај НЗБ датотеку као…"
+#| msgid "Save NZB File as…"
+msgid "Save NZB File as..."
+msgstr "Сачувај НЗБ датотеку као..."
 
 #: pan/gui/gui.cc:813
 msgid "Import NZB Files"
 msgstr "Увезите НЗБ датотеке"
 
-#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3455
+#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3562
 msgid "NZB Files"
 msgstr "НЗБ датотеке"
 
@@ -1206,8 +1194,8 @@ msgid "Unable to supersede article."
 msgstr "Не могу да надоместим чланак."
 
 #: pan/gui/gui.cc:1345 pan/gui/gui.cc:1441
-#| msgid "The article doesn't match any of your posting profiles."
-msgid "The article doesn’t match any of your posting profiles."
+#| msgid "The article doesn’t match any of your posting profiles."
+msgid "The article doesn't match any of your posting profiles."
 msgstr "Чланак не одговара ниједном од ваших профила објављивања."
 
 #: pan/gui/gui.cc:1410
@@ -1245,8 +1233,9 @@ msgid "Unable to open help file."
 msgstr "Не могу да отворим датотеку помоћи."
 
 #: pan/gui/gui.cc:1721
-msgid "Copyright © 2002-2017 Charles Kerr and others"
-msgstr "Ауторска права © 2002-2017 Чарлс Кер и остали"
+#| msgid "Copyright © 2002-2017 Charles Kerr and others"
+msgid "Copyright © 2002-2021 Charles Kerr and others"
+msgstr "Ауторска права © 2002-2021 Чарлс Кер и остали"
 
 #: pan/gui/gui.cc:1726
 msgid "translator-credits"
@@ -1306,11 +1295,11 @@ msgstr[1] "Овом чланку недостају %d од његова %d де
 msgstr[2] "Овом чланку недостају %d од његових %d делова:"
 msgstr[3] "Овом чланку недостаје један део."
 
-#: pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1316 pan/gui/task-pane.cc:799
+#: pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1305 pan/gui/task-pane.cc:797
 msgid "Message-ID"
 msgstr "ИБ поруке"
 
-#: pan/gui/gui.cc:2011 pan/gui/header-pane.cc:1802 pan/gui/prefs-ui.cc:852
+#: pan/gui/gui.cc:2011 pan/gui/header-pane.cc:1791 pan/gui/prefs-ui.cc:850
 msgid "Lines"
 msgstr "Редови"
 
@@ -1318,7 +1307,7 @@ msgstr "Редови"
 msgid "Size"
 msgstr "Величина"
 
-#: pan/gui/gui.cc:2012 pan/gui/header-pane.cc:1818 pan/gui/prefs-ui.cc:850
+#: pan/gui/gui.cc:2012 pan/gui/header-pane.cc:1807 pan/gui/prefs-ui.cc:848
 msgid "Bytes"
 msgstr "Бајтова"
 
@@ -1334,7 +1323,7 @@ msgstr ""
 msgid "Body Pane Encoding"
 msgstr "Кодирање површи разраде"
 
-#: pan/gui/gui.cc:2239 pan/gui/task-pane.cc:609
+#: pan/gui/gui.cc:2239 pan/gui/task-pane.cc:607
 msgid "Offline"
 msgstr "Ван мреже"
 
@@ -1364,69 +1353,69 @@ msgstr "%s: %d мирује, %d ради @ %.1f KiB/s"
 msgid "No Tasks"
 msgstr "Нема задатака"
 
-#: pan/gui/gui.cc:2320 pan/gui/prefs-ui.cc:1090
+#: pan/gui/gui.cc:2320 pan/gui/prefs-ui.cc:1088
 msgid "Tasks"
 msgstr "Задаци"
 
-#: pan/gui/gui.cc:2337 pan/gui/task-pane.cc:475
+#: pan/gui/gui.cc:2337 pan/gui/task-pane.cc:473
 #, c-format
-#| msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
-msgid "%lu tasks, %s, %.1f KiBps, ETA %d∶%02d∶%02d"
+#| msgid "%lu tasks, %s, %.1f KiBps, ETA %d∶%02d∶%02d"
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "Укупно задатака: %lu, %s, %.1f KiB/s, ЕТА %d:%02d:%02d"
 
 #: pan/gui/gui.cc:2389
 #| msgid ""
-#| "Pan is now offline. Please see \"File|Event Log\" and correct the "
-#| "problem, then use \"File|Work Online\" to continue."
+#| "Pan is now offline. Please see “File → Event Log” and correct the "
+#| "problem, then use “File → Work Online” to continue."
 msgid ""
-"Pan is now offline. Please see “File → Event Log” and correct the problem, "
-"then use “File → Work Online” to continue."
+"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
+"then use \"File|Work Online\" to continue."
 msgstr ""
-"Пан је сада ван мреже. Погледајте „Датотека → Дневник догађаја“ и исправите "
-"проблем, затим користите „Датотека → Ради на мрежи“ да наставите."
+"Пан је сада ван мреже. Погледајте „Датотека|Дневник догађаја“ и исправите "
+"проблем, затим користите „Датотека|Ради на мрежи“ да наставите."
 
-#: pan/gui/header-pane.cc:1312 pan/gui/task-pane.cc:795
+#: pan/gui/header-pane.cc:1301 pan/gui/task-pane.cc:793
 msgid "Subject or Author"
 msgstr "Тема или аутор"
 
-#: pan/gui/header-pane.cc:1313 pan/gui/task-pane.cc:796
+#: pan/gui/header-pane.cc:1302 pan/gui/task-pane.cc:794
 msgid "Sub or Auth (regex)"
 msgstr "Тема или аутор (регизр)"
 
-#: pan/gui/header-pane.cc:1315 pan/gui/header-pane.cc:1786
-#: pan/gui/prefs-ui.cc:849 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:798
+#: pan/gui/header-pane.cc:1304 pan/gui/header-pane.cc:1775
+#: pan/gui/prefs-ui.cc:847 pan/gui/score-add-ui.cc:138 pan/gui/task-pane.cc:796
 msgid "Author"
 msgstr "Аутор"
 
-#: pan/gui/header-pane.cc:1771 pan/gui/prefs-ui.cc:853
+#: pan/gui/header-pane.cc:1760 pan/gui/prefs-ui.cc:851
 msgid "Score"
 msgstr "Бодовање"
 
-#: pan/gui/log-ui.cc:104
+#: pan/gui/log-ui.cc:102
 msgid "Save Event List"
 msgstr "Сачувајте списак догађаја"
 
-#: pan/gui/log-ui.cc:258
+#: pan/gui/log-ui.cc:256
 msgid "Pan: Events"
 msgstr "Пан: Догађаји"
 
-#: pan/gui/log-ui.cc:317
+#: pan/gui/log-ui.cc:315
 msgid "Message"
 msgstr "Порука"
 
-#: pan/gui/pan.cc:368
+#: pan/gui/pan.cc:369
 msgid "Maximize"
 msgstr "Увећај"
 
-#: pan/gui/pan.cc:421
+#: pan/gui/pan.cc:422
 msgid "An error has occurred!"
 msgstr "Дошло је до грешке!"
 
-#: pan/gui/pan.cc:435
+#: pan/gui/pan.cc:436
 msgid "New Articles!"
 msgstr "Нови чланак!"
 
-#: pan/gui/pan.cc:436
+#: pan/gui/pan.cc:437
 msgid ""
 "There are new\n"
 "articles available."
@@ -1434,11 +1423,11 @@ msgstr ""
 "Доступни су\n"
 "нови чланци."
 
-#: pan/gui/pan.cc:503
+#: pan/gui/pan.cc:504
 msgid "Toggle on/offline"
 msgstr "На мрежи/ван мреже"
 
-#: pan/gui/pan.cc:551
+#: pan/gui/pan.cc:552
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1448,23 +1437,24 @@ msgstr ""
 " \n"
 "Да започнете читање вести, прво додајте сервер."
 
-#: pan/gui/pan.cc:633
+#: pan/gui/pan.cc:634
 #| msgid ""
 #| "General Options\n"
-#| "  -h, --help               Show this usage page.\n"
+#| "  -h, --help               Show this usage information and exit.\n"
+#| "  -v, --version            Print release version and exit.\n"
 #| "  --verbose                Be verbose (in non-GUI mode).\n"
+#| "  --debug                  Run in debug mode.\n"
 #| "\n"
 #| "URL Options\n"
 #| "  headers:group.name       Download new headers for the specified "
 #| "newsgroup.\n"
-#| "  --no-gui                 On news:message-id, dump the article to "
-#| "stdout.\n"
+#| "  news:message-id          When specified together with --no-gui, dump\n"
+#| "                           the message-id article to standard output.\n"
 #| "\n"
 #| "NZB Batch Options\n"
-#| "  --nzb file1 file2 ...    Process nzb files without launching all of "
-#| "Pan.\n"
-#| "  -o path, --output=path   Path to save attachments listed in the nzb "
-#| "files.\n"
+#| "  --nzb file1 file2 …      Process NZB files in non-GUI mode.\n"
+#| "  -o path, --output=path   Path to save attachments listed in the NZB "
+#| "file(s).\n"
 #| "  --no-gui                 Only show console output, not the download "
 #| "queue.\n"
 msgid ""
@@ -1472,7 +1462,9 @@ msgid ""
 "  -h, --help               Show this usage information and exit.\n"
 "  -v, --version            Print release version and exit.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
-"  --debug                  Run in debug mode.\n"
+"  --debug                  Run in debug mode. Use --debug twice for verbose "
+"debug.\n"
+"  --debug-ssl              Run in TLS (aka SSL) debug mode.\n"
 "\n"
 "URL Options\n"
 "  headers:group.name       Download new headers for the specified "
@@ -1481,7 +1473,7 @@ msgid ""
 "                           the message-id article to standard output.\n"
 "\n"
 "NZB Batch Options\n"
-"  --nzb file1 file2 …      Process NZB files in non-GUI mode.\n"
+"  --nzb file1 file2 ...    Process NZB files in non-GUI mode.\n"
 "  -o path, --output=path   Path to save attachments listed in the NZB "
 "file(s).\n"
 "  --no-gui                 Only show console output, not the download "
@@ -1492,7 +1484,9 @@ msgstr ""
 "  -v, --version                  Исписује број издања и излази.\n"
 "  --verbose                      Бива опширан (у режиму без графичког "
 "сучеља).\n"
-"  --debug                        Ради у режиму прочишћавања.\n"
+"  --debug                        Ради у режиму прочишћавања. Користите "
+"„--debug“ два пута за опширно прочишћавање\n"
+"  --debug-ssl                    Ради у ТЛС (тј. ССЛ) режиму прочишћавања.\n"
 "\n"
 "Опције адресе\n"
 "  headers:group.name             Преузима нова заглавља за наведене "
@@ -1502,30 +1496,30 @@ msgstr ""
 "                                 члан иб-а поруке на стандардни излаз.\n"
 "\n"
 "Опције групних НЗБ-а\n"
-"  --nzb датотека1 датотека2 …    Обрађује НЗБ датотеке у режиму без "
+"  --nzb датотека1 датотека2 ...  Обрађује НЗБ датотеке у режиму без "
 "графичког сучеља.\n"
 "  -o путања, --output=путања     Путања за чување прилога исписаних у НЗБ "
 "датотекама.\n"
 "  --no-gui                       Приказује само излаз конзоле, а не заказано "
 "преузимања.\n"
 
-#: pan/gui/pan.cc:978
+#: pan/gui/pan.cc:981
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Грешка: „--no-gui“ се користи без нзб датотека или „вести:иб-поруке“."
 
-#: pan/gui/pan.cc:982
+#: pan/gui/pan.cc:985
 #, c-format
 msgid "Pan %s started"
 msgstr "Пан %s је покренут"
 
-#: pan/gui/pan.cc:1002
+#: pan/gui/pan.cc:1005
 #| msgid ""
-#| "Please configure Pan's news servers before using it as an nzb client."
-msgid "Please configure Pan’s news servers before using it as an nzb client."
+#| "Please configure Pan’s news servers before using it as an nzb client."
+msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Подесите Панове сервере вести пре него ли га користите као нзб клијента."
 
-#: pan/gui/pan.cc:1120
+#: pan/gui/pan.cc:1123
 msgid "Pan notification"
 msgstr "Панова обавештења"
 
@@ -1570,14 +1564,14 @@ msgid "Send and Save Articles to NZB"
 msgstr "Пошаљите и сачувајте чланке у НЗБ-у"
 
 #: pan/gui/post-ui.cc:459
-#| msgid "Set Character _Encoding..."
-msgid "Set Character _Encoding…"
-msgstr "Подеси _кодирање знакова…"
+#| msgid "Set Character _Encoding…"
+msgid "Set Character _Encoding..."
+msgstr "Подеси _кодирање знакова..."
 
 #: pan/gui/post-ui.cc:460
-#| msgid "Set Content _Transfer Encoding..."
-msgid "Set Content _Transfer Encoding…"
-msgstr "Подеси кодирање _преноса садржаја…"
+#| msgid "Set Content _Transfer Encoding…"
+msgid "Set Content _Transfer Encoding..."
+msgstr "Подеси кодирање _преноса садржаја..."
 
 #: pan/gui/post-ui.cc:461
 msgid "Sa_ve Draft"
@@ -1588,9 +1582,9 @@ msgid "Save as a Draft for Future Posting"
 msgstr "Сачувајте као нацрт за будућа објављивања"
 
 #: pan/gui/post-ui.cc:462
-#| msgid "_Open Draft..."
-msgid "_Open Draft…"
-msgstr "_Отвори нацрт…"
+#| msgid "_Open Draft…"
+msgid "_Open Draft..."
+msgstr "_Отвори нацрт..."
 
 #: pan/gui/post-ui.cc:462
 msgid "Open an Article Draft"
@@ -1632,13 +1626,13 @@ msgstr "Очисти списак"
 msgid "Select Needed Parts"
 msgstr "Изабери потребне делове"
 
-#: pan/gui/post-ui.cc:500 pan/gui/post-ui.cc:501 pan/gui/task-pane.cc:677
-#: pan/gui/task-pane.cc:678
+#: pan/gui/post-ui.cc:500 pan/gui/post-ui.cc:501 pan/gui/task-pane.cc:675
+#: pan/gui/task-pane.cc:676
 msgid "Move Up"
 msgstr "Помери горе"
 
-#: pan/gui/post-ui.cc:505 pan/gui/post-ui.cc:506 pan/gui/task-pane.cc:682
-#: pan/gui/task-pane.cc:683
+#: pan/gui/post-ui.cc:505 pan/gui/post-ui.cc:506 pan/gui/task-pane.cc:680
+#: pan/gui/task-pane.cc:681
 msgid "Move Down"
 msgstr "Помери доле"
 
@@ -1682,90 +1676,90 @@ msgstr "Потпиши ПГП-ом чланак"
 msgid "Check _Spelling"
 msgstr "Провери _писање"
 
-#: pan/gui/post-ui.cc:555
-#| msgid "New Article's Encoding:"
-msgid "New Article’s Encoding:"
+#: pan/gui/post-ui.cc:548
+#| msgid "New Article’s Encoding:"
+msgid "New Article's Encoding:"
 msgstr "Кодирање новог чланка:"
 
-#: pan/gui/post-ui.cc:565
+#: pan/gui/post-ui.cc:558
 msgid "Content Transfer Encoding"
 msgstr "Кодирање преноса садржаја"
 
-#: pan/gui/post-ui.cc:566
-#| msgid "New Article's Content Transfer Encoding:"
-msgid "New Article’s Content Transfer Encoding:"
+#: pan/gui/post-ui.cc:559
+#| msgid "New Article’s Content Transfer Encoding:"
+msgid "New Article's Content Transfer Encoding:"
 msgstr "Кодирање преноса садржаја новог чланка:"
 
-#: pan/gui/post-ui.cc:746
+#: pan/gui/post-ui.cc:739
 msgid "Your changes will be lost!"
 msgstr "Ваше измене ће бити изгубљене!"
 
-#: pan/gui/post-ui.cc:747
+#: pan/gui/post-ui.cc:740
 msgid "Close this window and lose your changes?"
 msgstr "Да затворим прозор и одбацим ваше измене?"
 
-#: pan/gui/post-ui.cc:792 pan/gui/post-ui.cc:831
+#: pan/gui/post-ui.cc:785 pan/gui/post-ui.cc:824
 msgid "There were problems with this post."
 msgstr "Дошло је до проблема са овом објавом."
 
-#: pan/gui/post-ui.cc:794 pan/gui/post-ui.cc:833 pan/gui/post-ui.cc:898
+#: pan/gui/post-ui.cc:787 pan/gui/post-ui.cc:826 pan/gui/post-ui.cc:891
 msgid "Go Back"
 msgstr "Иди назад"
 
-#: pan/gui/post-ui.cc:796
+#: pan/gui/post-ui.cc:789
 msgid "Continue Anyway"
 msgstr "Ипак настави"
 
 #. Prompt the user
-#: pan/gui/post-ui.cc:825
+#: pan/gui/post-ui.cc:818
 #, c-format
 #| msgid ""
-#| "Message uses characters not specified in charset '%s' - possibly use '%s' "
+#| "Message uses characters not specified in charset “%s” — possibly use “%s” "
 msgid ""
-"Message uses characters not specified in charset “%s” — possibly use “%s” "
+"Message uses characters not specified in charset '%s' - possibly use '%s' "
 msgstr ""
 "Порука садржи знаке који нису наведени у скупу знакова „%s“ — вероватно "
 "користи „%s“ "
 
-#: pan/gui/post-ui.cc:848
+#: pan/gui/post-ui.cc:841
 msgid "Go _Online"
 msgstr "Иди _на мрежу"
 
-#: pan/gui/post-ui.cc:897
+#: pan/gui/post-ui.cc:890
 msgid "The file queue is empty, so no files can be saved."
 msgstr ""
 "Нема датотека на чекању, тако да никакве датотеке не могу бити сачуване."
 
-#: pan/gui/post-ui.cc:1093
+#: pan/gui/post-ui.cc:1086
 msgid "IO Error"
 msgstr "УИ грешка"
 
-#: pan/gui/post-ui.cc:1093
+#: pan/gui/post-ui.cc:1086
 msgid "No space left on device"
 msgstr "Нема више места на уређају"
 
-#: pan/gui/post-ui.cc:1094
+#: pan/gui/post-ui.cc:1087
 #, c-format
 msgid "Error copying message to %s folder. Reason: %s"
 msgstr "Грешка умножавања поруке у фасциклу „%s“. Разлог: %s"
 
-#: pan/gui/post-ui.cc:1100
+#: pan/gui/post-ui.cc:1093
 #, c-format
 msgid "Error creating message in %s mail folder: Invalid article."
 msgstr "Грешка стварања поруке у фасцикли поште „%s“: Неисправан чланак."
 
-#: pan/gui/post-ui.cc:1122
+#: pan/gui/post-ui.cc:1115
 #| msgid ""
 #| "No posting server is set for this posting profile.\n"
-#| "Please edit the profile via Edit|Manage Posting Profiles."
+#| "Please edit the profile via Edit → Manage Posting Profiles."
 msgid ""
 "No posting server is set for this posting profile.\n"
-"Please edit the profile via Edit → Manage Posting Profiles."
+"Please edit the profile via Edit|Manage Posting Profiles."
 msgstr ""
 "Није подешен сервер објављивања за овај профил објављивања.\n"
-"Уредите профил у изборнику „Уреди → Управљај профилима објављивања“."
+"Уредите профил у изборнику „Уреди|Управљај профилима објављивања“."
 
-#: pan/gui/post-ui.cc:1127
+#: pan/gui/post-ui.cc:1120
 msgid ""
 "The selected posting server is currently disabled. Please choose an "
 "appropriate alternative."
@@ -1773,15 +1767,15 @@ msgstr ""
 "Изабрани сервер објављивања је тренутно искључен. Изаберите одговарајућу "
 "замену."
 
-#: pan/gui/post-ui.cc:1169
+#: pan/gui/post-ui.cc:1162
 msgid "Pan is Offline."
 msgstr "Пан је ван мреже."
 
-#: pan/gui/post-ui.cc:1170
+#: pan/gui/post-ui.cc:1163
 msgid "Go online to post the article?"
 msgstr "Да идем на мрежу да објавим чланак?"
 
-#: pan/gui/post-ui.cc:1219
+#: pan/gui/post-ui.cc:1212
 #, c-format
 msgid ""
 "Error signing/encrypting your message. Perhaps you misspelled your email "
@@ -1790,121 +1784,121 @@ msgstr ""
 "Грешка потписивања/шифровања ваше поруке. Можда сте погрешно написали адресу "
 "ваше ел. поште (%s)?"
 
-#: pan/gui/post-ui.cc:1367
+#: pan/gui/post-ui.cc:1360
 msgid "Error opening temporary file"
 msgstr "Грешка отварања привремене датотеке"
 
-#: pan/gui/post-ui.cc:1379
+#: pan/gui/post-ui.cc:1372
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Грешка писања чланка у привремену датотеку: %s"
 
-#: pan/gui/post-ui.cc:1398
+#: pan/gui/post-ui.cc:1391
 #, c-format
-#| msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
-msgid "Error parsing “external editor” command line: %s (Command was: %s)"
+#| msgid "Error parsing “external editor” command line: %s (Command was: %s)"
+msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
 msgstr "Грешка обраде линије наредбе „external editor“: %s (Наредба беше: %s)"
 
-#: pan/gui/post-ui.cc:1439
+#: pan/gui/post-ui.cc:1432
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Грешка покретања спољног уређивача: %s"
 
-#: pan/gui/post-ui.cc:1502
+#: pan/gui/post-ui.cc:1495
 msgid "Open Draft Article"
 msgstr "Отвори нацрт чланка"
 
-#: pan/gui/post-ui.cc:1767
+#: pan/gui/post-ui.cc:1874
 msgid "Save Draft Article"
 msgstr "Сачувај нацрт чланка"
 
-#: pan/gui/post-ui.cc:1804
+#: pan/gui/post-ui.cc:1911
 msgid "File already exists."
 msgstr "Датотека већ постоји."
 
-#: pan/gui/post-ui.cc:1805
+#: pan/gui/post-ui.cc:1912
 msgid "Overwrite it?"
 msgstr "Да препишем преко ње?"
 
-#: pan/gui/post-ui.cc:2015
+#: pan/gui/post-ui.cc:2122
 #, c-format
-#| msgid "Couldn't parse signature command \"%s\": %s"
-msgid "Couldn’t parse signature command “%s”: %s"
+#| msgid "Couldn’t parse signature command “%s”: %s"
+msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Не могу да обрадим наредбу потписа „%s“: %s"
 
-#: pan/gui/post-ui.cc:2051
-#| msgid "Couldn't convert signature to UTF-8."
-msgid "Couldn’t convert signature to UTF-8."
+#: pan/gui/post-ui.cc:2158
+#| msgid "Couldn’t convert signature to UTF-8."
+msgid "Couldn't convert signature to UTF-8."
 msgstr "Не могу да претворим потпис у УТФ-8."
 
-#: pan/gui/post-ui.cc:2591
+#: pan/gui/post-ui.cc:2698
 msgid "F_rom"
 msgstr "_Шаље"
 
-#: pan/gui/post-ui.cc:2608
+#: pan/gui/post-ui.cc:2715
 msgid "_Subject"
 msgstr "_Тема"
 
-#: pan/gui/post-ui.cc:2621
+#: pan/gui/post-ui.cc:2728
 msgid "_Newsgroups"
 msgstr "_Причаонице"
 
-#: pan/gui/post-ui.cc:2635
+#: pan/gui/post-ui.cc:2742
 msgid "Mail _To"
 msgstr "_Прима"
 
-#: pan/gui/post-ui.cc:2737
+#: pan/gui/post-ui.cc:2844
 msgid "Delete from Queue"
 msgstr "Обриши из заказаних"
 
-#: pan/gui/post-ui.cc:2750
+#: pan/gui/post-ui.cc:2857
 msgid "No."
 msgstr "Бр."
 
-#: pan/gui/post-ui.cc:2754 pan/gui/post-ui.cc:2846 pan/gui/post-ui.cc:2887
+#: pan/gui/post-ui.cc:2861 pan/gui/post-ui.cc:2953 pan/gui/post-ui.cc:2994
 msgid "Filename"
 msgstr "Датотека"
 
-#: pan/gui/post-ui.cc:2756
+#: pan/gui/post-ui.cc:2863
 msgid "Size (KB)"
 msgstr "Величина (kB)"
 
-#: pan/gui/post-ui.cc:2854
+#: pan/gui/post-ui.cc:2961
 msgid "The current filename"
 msgstr "Тренутна датотека"
 
-#: pan/gui/post-ui.cc:2858
+#: pan/gui/post-ui.cc:2965
 msgid "Subject Line"
 msgstr "Ред теме"
 
-#: pan/gui/post-ui.cc:2866
+#: pan/gui/post-ui.cc:2973
 msgid "The current subject line"
 msgstr "Ред тренутне теме"
 
-#: pan/gui/post-ui.cc:2880
+#: pan/gui/post-ui.cc:2987
 msgid "No. "
 msgstr "Бр. "
 
-#: pan/gui/post-ui.cc:2884
+#: pan/gui/post-ui.cc:2991
 msgid "Enable/Disable"
 msgstr "Укључи/Искључи"
 
-#: pan/gui/post-ui.cc:2918
+#: pan/gui/post-ui.cc:3025
 msgid "Follo_wup-To"
 msgstr "_Испрати-до"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:2927
+#: pan/gui/post-ui.cc:3034
 #| msgid ""
 #| "The newsgroups where replies to your message should go.  This is only "
-#| "needed if it differs from the \"Newsgroups\" header.\n"
+#| "needed if it differs from the “Newsgroups” header.\n"
 #| "\n"
-#| "To direct all replies to your email address, use \"Followup-To: poster\""
+#| "To direct all replies to your email address, use “Followup-To: poster”"
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
-"if it differs from the “Newsgroups” header.\n"
+"if it differs from the \"Newsgroups\" header.\n"
 "\n"
-"To direct all replies to your email address, use “Followup-To: poster”"
+"To direct all replies to your email address, use \"Followup-To: poster\""
 msgstr ""
 "Причаонице на које ће се слати одговори на вашу поруку.  Потребно је само у "
 "случају да се разликује од заглавља „Причаонице“.\n"
@@ -1916,707 +1910,726 @@ msgstr ""
 # * Create this before we call create_from_optionmenu,
 # * because that causes from_changed to be called, which
 # * expects the reply_to fields to be initialized.
-#: pan/gui/post-ui.cc:2934
+#: pan/gui/post-ui.cc:3041
 msgid "_Reply-To"
 msgstr "_Одговори"
 
-#: pan/gui/post-ui.cc:2942
+#: pan/gui/post-ui.cc:3049
 #| msgid ""
 #| "The email account where mail replies to your posted message should go. "
-#| "This is only needed if it differs from the \"From\" header."
+#| "This is only needed if it differs from the “From” header."
 msgid ""
 "The email account where mail replies to your posted message should go. This "
-"is only needed if it differs from the “From” header."
+"is only needed if it differs from the \"From\" header."
 msgstr ""
 "Налог ел. поште на који ће се слати одговори на ваше поруке. Потребно је "
 "само у случају да се разликује од заглавља „Шаље“."
 
-#: pan/gui/post-ui.cc:2949
+#: pan/gui/post-ui.cc:3056
 msgid "_Custom Headers"
 msgstr "_Произвољно заглавље"
 
-#: pan/gui/post-ui.cc:2973
-#| msgid "Add \"_User-Agent\" header"
-msgid "Add “_User-Agent” header"
+#: pan/gui/post-ui.cc:3080
+#| msgid "Add “_User-Agent” header"
+msgid "Add \"_User-Agent\" header"
 msgstr "Додај заглавље „_Читач“"
 
-#: pan/gui/post-ui.cc:2980
-#| msgid "Add \"Message-_ID\" header"
-msgid "Add “Message-_ID” header"
+#: pan/gui/post-ui.cc:3087
+#| msgid "Add “Message-_ID” header"
+msgid "Add \"Message-_ID\" header"
 msgstr "Додај заглавље „_ИБ-Поруке“"
 
-#: pan/gui/post-ui.cc:3111
+#: pan/gui/post-ui.cc:3218
 msgid "Select Parts"
 msgstr "Изаберите делове"
 
-#: pan/gui/post-ui.cc:3124
+#: pan/gui/post-ui.cc:3231
 msgid "_Parts"
 msgstr "_Делови"
 
-#: pan/gui/post-ui.cc:3282
+#: pan/gui/post-ui.cc:3389
 msgid "Post Article"
 msgstr "Објавите чланак"
 
-#: pan/gui/post-ui.cc:3303
+#: pan/gui/post-ui.cc:3410
 msgid "_Message"
 msgstr "_Порука"
 
-#: pan/gui/post-ui.cc:3304
+#: pan/gui/post-ui.cc:3411
 msgid "More _Headers"
 msgstr "Још _заглавља"
 
-#: pan/gui/post-ui.cc:3305
+#: pan/gui/post-ui.cc:3412
 msgid "File _Queue"
 msgstr "_Заказане датотеке"
 
-#: pan/gui/post-ui.cc:3337 pan/gui/profiles-dialog.cc:482
+#: pan/gui/post-ui.cc:3444 pan/gui/profiles-dialog.cc:488
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "%d, %n пише:"
 
-#: pan/gui/post-ui.cc:3366
+#: pan/gui/post-ui.cc:3473
 msgid "Add files to queue"
 msgstr "Додај датотеке у заказано"
 
-#: pan/gui/post-ui.cc:3442
+#: pan/gui/post-ui.cc:3549
 msgid "Save Upload Queue as NZB File"
 msgstr "Сачувај ред слања као НЗБ датотеку"
 
-#: pan/gui/prefs.cc:366
+#: pan/gui/prefs.cc:364
 #, c-format
-#| msgid "Couldn't parse %s color \"%s\""
-msgid "Couldn’t parse %s color “%s”"
+#| msgid "Couldn’t parse %s color “%s”"
+msgid "Couldn't parse %s color \"%s\""
 msgstr "Не могу да обрадим %s боју „%s“"
 
-#: pan/gui/prefs-ui.cc:123
+#: pan/gui/prefs-ui.cc:121
 msgid "Grab Key"
 msgstr "Притисни тастер"
 
-#: pan/gui/prefs-ui.cc:129
+#: pan/gui/prefs-ui.cc:127
 #, c-format
 #| msgid ""
 #| "Press the combination of the keys\n"
-#| "you want to use for \"%s\"."
+#| "you want to use for “%s”."
 msgid ""
 "Press the combination of the keys\n"
-"you want to use for “%s”."
+"you want to use for \"%s\"."
 msgstr ""
 "Притисните комбинацију тастера које\n"
 "желите да користите за „%s“."
 
-#: pan/gui/prefs-ui.cc:169
+#: pan/gui/prefs-ui.cc:167
 msgid "Edit Shortcut"
 msgstr "Уредие пречицу"
 
-#: pan/gui/prefs-ui.cc:231
+#: pan/gui/prefs-ui.cc:229
 msgid "Error: Shortcut key is invalid!"
 msgstr "Грешка: Тастер пречице је неисправан!"
 
-#: pan/gui/prefs-ui.cc:247
+#: pan/gui/prefs-ui.cc:245
 msgid "Error: Shortcut key already exists!"
 msgstr "Грешка: Тастер пречице већ постоји!"
 
-#: pan/gui/prefs-ui.cc:561
+#: pan/gui/prefs-ui.cc:559
 msgid "Show only icons"
 msgstr "Прикажи само иконице"
 
-#: pan/gui/prefs-ui.cc:562
+#: pan/gui/prefs-ui.cc:560
 msgid "Show only text"
 msgstr "Прикажи само текст"
 
-#: pan/gui/prefs-ui.cc:563
+#: pan/gui/prefs-ui.cc:561
 msgid "Show icons and text"
 msgstr "Прикажи иконице и текст"
 
-#: pan/gui/prefs-ui.cc:602
+#: pan/gui/prefs-ui.cc:600
 msgid "Use GNOME Preferences"
 msgstr "Користи поставке Гнома"
 
-#: pan/gui/prefs-ui.cc:603
+#: pan/gui/prefs-ui.cc:601
 msgid "Use KDE Preferences"
 msgstr "Користи поставке КДЕ-а"
 
-#: pan/gui/prefs-ui.cc:604
+#: pan/gui/prefs-ui.cc:602
 msgid "Use OS X Preferences"
 msgstr "Користи поставке ОС Х-а"
 
-#: pan/gui/prefs-ui.cc:605
+#: pan/gui/prefs-ui.cc:603
 msgid "Use Windows Preferences"
 msgstr "Користи поставке Виндоуза"
 
-#: pan/gui/prefs-ui.cc:606
+#: pan/gui/prefs-ui.cc:604
 msgid "Custom Command:"
 msgstr "Произвољна наредба:"
 
-#: pan/gui/prefs-ui.cc:658
+#: pan/gui/prefs-ui.cc:656
 msgid "Disabled"
 msgstr "Искључено"
 
-#: pan/gui/prefs-ui.cc:659
+#: pan/gui/prefs-ui.cc:657
 msgid "Only new (score == 0)"
 msgstr "Само нове (учинак == 0)"
 
-#: pan/gui/prefs-ui.cc:660
+#: pan/gui/prefs-ui.cc:658
 msgid "9999 or more"
 msgstr "од 9999 или више"
 
-#: pan/gui/prefs-ui.cc:661
+#: pan/gui/prefs-ui.cc:659
 msgid "5000 to 9998"
 msgstr "од 5000 до 9998"
 
-#: pan/gui/prefs-ui.cc:662
+#: pan/gui/prefs-ui.cc:660
 msgid "1 to 4999"
 msgstr "од 1 до 4999"
 
-#: pan/gui/prefs-ui.cc:663
+#: pan/gui/prefs-ui.cc:661
 msgid "-9998 to -1"
 msgstr "од -9998 до -1"
 
-#: pan/gui/prefs-ui.cc:664
+#: pan/gui/prefs-ui.cc:662
 msgid "-9999 or less"
 msgstr "од -9999 или мање"
 
-#: pan/gui/prefs-ui.cc:728
+#: pan/gui/prefs-ui.cc:726
 #, c-format
 msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
 "Изаберите основни <u>општи</u> скуп знакова. Текуће подешавање: <b>%s</b>."
 
-#: pan/gui/prefs-ui.cc:760
+#: pan/gui/prefs-ui.cc:758
 msgid "Global Character Set Settings"
 msgstr "Општа подешавања скупа знакова"
 
-#: pan/gui/prefs-ui.cc:854 pan/gui/task-pane.cc:1076
+#: pan/gui/prefs-ui.cc:852 pan/gui/task-pane.cc:1074
 msgid "State"
 msgstr "Стање"
 
-#: pan/gui/prefs-ui.cc:888
+#: pan/gui/prefs-ui.cc:886
 msgid "Enabled"
 msgstr "Укључено"
 
-#: pan/gui/prefs-ui.cc:892
+#: pan/gui/prefs-ui.cc:890
 msgid "Column Name"
 msgstr "Назив колоне"
 
-#: pan/gui/prefs-ui.cc:930
+#: pan/gui/prefs-ui.cc:928
 msgid "Pan: Preferences"
 msgstr "Пан: Поставке"
 
-#: pan/gui/prefs-ui.cc:945
+#: pan/gui/prefs-ui.cc:943
 msgid "Mouse"
 msgstr "Миш"
 
-#: pan/gui/prefs-ui.cc:947
+#: pan/gui/prefs-ui.cc:945
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Један притисак покреће _групе, уместо да их бира"
 
-#: pan/gui/prefs-ui.cc:949
+#: pan/gui/prefs-ui.cc:947
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Један притисак покреће _чланке, уместо да их бира"
 
-#: pan/gui/prefs-ui.cc:952
+#: pan/gui/prefs-ui.cc:950
 msgid "Groups"
 msgstr "Групе"
 
-#: pan/gui/prefs-ui.cc:954
+#: pan/gui/prefs-ui.cc:952
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Преузми нова заглавља у праћеним групама по _покретању"
 
-#: pan/gui/prefs-ui.cc:956
+#: pan/gui/prefs-ui.cc:954
 msgid "Get new headers when _entering group"
 msgstr "Преузми нова заглавља при учитавању _групе"
 
-#: pan/gui/prefs-ui.cc:958
+#: pan/gui/prefs-ui.cc:956
 msgid "Mark entire group _read when leaving group"
 msgstr "Означи читаву групу прочитаном приликом _напуштања"
 
-#: pan/gui/prefs-ui.cc:960
+#: pan/gui/prefs-ui.cc:958
 msgid "Mark entire group read before getting _new headers"
 msgstr "Означи читаву групу прочитаном пре _добављања нових заглавља"
 
-#: pan/gui/prefs-ui.cc:962
+#: pan/gui/prefs-ui.cc:960
 msgid "E_xpand all threads when entering group"
 msgstr "_Рашири све теме приликом уласка у групу"
 
-#: pan/gui/prefs-ui.cc:967
+#: pan/gui/prefs-ui.cc:965
 msgid "Articles"
 msgstr "Чланци"
 
-#: pan/gui/prefs-ui.cc:969
+#: pan/gui/prefs-ui.cc:967
 msgid "Mark downloaded articles read"
 msgstr "Означи преузете чланке прочитаним"
 
-#: pan/gui/prefs-ui.cc:971
+#: pan/gui/prefs-ui.cc:969
 msgid "Space selects next article rather than next unread"
 msgstr "Размак бира нови чланак уместо следећег непрочитаног"
 
-#: pan/gui/prefs-ui.cc:973
+#: pan/gui/prefs-ui.cc:971
 msgid "Expand threads upon selection"
 msgstr "Рашири теме изнад избора"
 
-#: pan/gui/prefs-ui.cc:975
+#: pan/gui/prefs-ui.cc:973
 msgid "Always ask before deleting an article"
 msgstr "Увек питај пре брисања чланка"
 
-#: pan/gui/prefs-ui.cc:977
+#: pan/gui/prefs-ui.cc:975
 msgid "Smooth scrolling"
 msgstr "Глатко клизање"
 
-#: pan/gui/prefs-ui.cc:982
+#: pan/gui/prefs-ui.cc:980
 msgid "Article Cache"
 msgstr "Остава чланка"
 
-#: pan/gui/prefs-ui.cc:983
+#: pan/gui/prefs-ui.cc:981
 msgid "Clear article cache on shutdown"
 msgstr "Очисти оставу приликом искључивања"
 
-#: pan/gui/prefs-ui.cc:986
+#: pan/gui/prefs-ui.cc:984
 msgid "Size of article cache (in MiB):"
 msgstr "Величина оставе (у MiB):"
 
-#: pan/gui/prefs-ui.cc:991
+#: pan/gui/prefs-ui.cc:989
 msgid "File extension for cached articles: "
 msgstr "Проширење датотеке за причуване чланке: "
 
-#: pan/gui/prefs-ui.cc:996
+#: pan/gui/prefs-ui.cc:994
 msgid "Tabs"
 msgstr "Језичци"
 
-#: pan/gui/prefs-ui.cc:1001
+#: pan/gui/prefs-ui.cc:999
 msgid "_Behavior"
 msgstr "По_нашање"
 
-#: pan/gui/prefs-ui.cc:1001
+#: pan/gui/prefs-ui.cc:999
 msgid "Behavior"
 msgstr "Подешавања понашања"
 
-#: pan/gui/prefs-ui.cc:1007
+#: pan/gui/prefs-ui.cc:1005
 msgid "Task Pane"
 msgstr "Површ задатка"
 
-#: pan/gui/prefs-ui.cc:1008
+#: pan/gui/prefs-ui.cc:1006
 msgid "Show task pane popups"
 msgstr "Прикажи облачиће површи задатака"
 
-#: pan/gui/prefs-ui.cc:1010
+#: pan/gui/prefs-ui.cc:1008
 msgid "Show Download Meter"
 msgstr "Прикажи мерач преузимања"
 
-#: pan/gui/prefs-ui.cc:1014
+#: pan/gui/prefs-ui.cc:1012
 msgid "_Panes"
 msgstr "_Површи"
 
-#: pan/gui/prefs-ui.cc:1014
+#: pan/gui/prefs-ui.cc:1012
 msgid "Panes"
 msgstr "Површи"
 
-#: pan/gui/prefs-ui.cc:1020
+#: pan/gui/prefs-ui.cc:1018
 msgid "Language Settings"
 msgstr "Подешавање језика"
 
 #. systray and notify popup
-#: pan/gui/prefs-ui.cc:1029
+#: pan/gui/prefs-ui.cc:1027
 msgid "System Tray Behavior"
 msgstr "Понашање системске касете"
 
-#: pan/gui/prefs-ui.cc:1031
+#: pan/gui/prefs-ui.cc:1029
 msgid "Minimize to tray"
 msgstr "Спусти у системску касету"
 
-#: pan/gui/prefs-ui.cc:1033
+#: pan/gui/prefs-ui.cc:1031
 msgid "Start Pan minimized"
 msgstr "Покрени Пана умањеним"
 
-#: pan/gui/prefs-ui.cc:1036
+#: pan/gui/prefs-ui.cc:1034
 msgid "Show notifications"
 msgstr "Прикажи обавештења"
 
 #. allow multiple instances (seperate, not communicating with dbus)
-#: pan/gui/prefs-ui.cc:1041
+#: pan/gui/prefs-ui.cc:1039
 msgid "Startup Behavior"
 msgstr "Понашање при покретању"
 
-#: pan/gui/prefs-ui.cc:1043
+#: pan/gui/prefs-ui.cc:1041
 msgid "Allow multiple instances of Pan"
 msgstr "Допусти више примерака Пана"
 
-#: pan/gui/prefs-ui.cc:1048
+#: pan/gui/prefs-ui.cc:1046
 msgid "Autosave Article Draft"
 msgstr "Самостално чување нацрта чланка"
 
-#: pan/gui/prefs-ui.cc:1050
+#: pan/gui/prefs-ui.cc:1048
 msgid "Minutes to autosave the current Article Draft: "
 msgstr "Време за самостално чување текућег нацрта чланка: "
 
-#: pan/gui/prefs-ui.cc:1055
+#: pan/gui/prefs-ui.cc:1053
 msgid "Autosave Articles"
 msgstr "Самостално чување чланка"
 
-#: pan/gui/prefs-ui.cc:1057
+#: pan/gui/prefs-ui.cc:1055
 msgid "Minutes to autosave newsrc files: "
 msgstr "Време за самостално чување датотека „newsrc“: "
 
-#: pan/gui/prefs-ui.cc:1064
+#: pan/gui/prefs-ui.cc:1062
 msgid "Password Storage"
 msgstr "Смештање лозинке"
 
-#: pan/gui/prefs-ui.cc:1065
+#: pan/gui/prefs-ui.cc:1063
 msgid "Save passwords in password storage"
 msgstr "Сачувај лозинке у смештај за лозинке"
 
-#: pan/gui/prefs-ui.cc:1069
+#: pan/gui/prefs-ui.cc:1067
 msgid "_Miscellaneous"
 msgstr "Ра_зно"
 
-#: pan/gui/prefs-ui.cc:1069
+#: pan/gui/prefs-ui.cc:1067
 msgid "Miscellaneous"
 msgstr "Разна подешавања"
 
-#: pan/gui/prefs-ui.cc:1074
+#: pan/gui/prefs-ui.cc:1072
 msgid "Pane Layout"
 msgstr "Распоред површи"
 
-#: pan/gui/prefs-ui.cc:1093
+#: pan/gui/prefs-ui.cc:1091
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=Групе, 2=Заглавља, 3=Разрада"
 
-#: pan/gui/prefs-ui.cc:1095
+#: pan/gui/prefs-ui.cc:1093
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=Групе, 2=Разрада, 3=Заглавља"
 
-#: pan/gui/prefs-ui.cc:1097
+#: pan/gui/prefs-ui.cc:1095
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=Заглавља, 2=Групе, 3=Разрада"
 
-#: pan/gui/prefs-ui.cc:1099
+#: pan/gui/prefs-ui.cc:1097
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=Заглавља, 2=Разрада, 3=Групе"
 
-#: pan/gui/prefs-ui.cc:1101
+#: pan/gui/prefs-ui.cc:1099
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=Разрада, 2=Групе, 3=Заглавља"
 
-#: pan/gui/prefs-ui.cc:1103
+#: pan/gui/prefs-ui.cc:1101
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=Разрада, 2=Заглавља, 3=Групе"
 
-#: pan/gui/prefs-ui.cc:1107
+#: pan/gui/prefs-ui.cc:1105
 msgid "Layout"
 msgstr "Подешавања распореда"
 
-#: pan/gui/prefs-ui.cc:1112
+#: pan/gui/prefs-ui.cc:1110
 msgid "Header Pane Columns"
 msgstr "Колоне површи заглавља"
 
-#: pan/gui/prefs-ui.cc:1116
+#: pan/gui/prefs-ui.cc:1114
 msgid "_Headers"
 msgstr "За_главља"
 
-#: pan/gui/prefs-ui.cc:1116
+#: pan/gui/prefs-ui.cc:1114
 msgid "Headers"
 msgstr "Подешавања заглавља"
 
-#: pan/gui/prefs-ui.cc:1122
+#: pan/gui/prefs-ui.cc:1120
 #| msgid ""
 #| "This menu lets you configure Pan to take certain actions on your behalf "
-#| "automatically, based on an article's score."
+#| "automatically, based on an article’s score."
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
-"automatically, based on an article’s score."
+"automatically, based on an article's score."
 msgstr ""
 "Помоћу овог изборника можете да подесите да Пан сам обави одређене радње по "
 "вашој жељи, на основу бодовања чланка."
 
-#: pan/gui/prefs-ui.cc:1127
+#: pan/gui/prefs-ui.cc:1125
 msgid "Mark affected articles read"
 msgstr "Означи дотицајне чланке прочитаним"
 
-#: pan/gui/prefs-ui.cc:1136
+#: pan/gui/prefs-ui.cc:1134
 msgid "_Delete articles scoring at: "
 msgstr "_Обриши чланке са учинком: "
 
-#: pan/gui/prefs-ui.cc:1142
+#: pan/gui/prefs-ui.cc:1140
 msgid "Mark articles read scoring at: "
 msgstr "Означи чланке прочитаним са учинком од: "
 
-#: pan/gui/prefs-ui.cc:1148
+#: pan/gui/prefs-ui.cc:1146
 msgid "_Cache articles scoring at: "
 msgstr "_Причувај чланке са учинком: "
 
-#: pan/gui/prefs-ui.cc:1154
+#: pan/gui/prefs-ui.cc:1152
 msgid "Download attachments of articles scoring at: "
 msgstr "Преузми прилоге чланака са учинком од: "
 
-#: pan/gui/prefs-ui.cc:1157
+#: pan/gui/prefs-ui.cc:1155
 msgid "Actions"
 msgstr "Подешавања радњи"
 
-#: pan/gui/prefs-ui.cc:1162 pan/gui/prefs-ui.cc:1183
+#: pan/gui/prefs-ui.cc:1160 pan/gui/prefs-ui.cc:1181
 msgid "Fonts"
 msgstr "Облик слова"
 
-#: pan/gui/prefs-ui.cc:1164
+#: pan/gui/prefs-ui.cc:1162
 msgid "Use custom font in Group Pane:"
 msgstr "Користи произвољна слова у површи групе:"
 
-#: pan/gui/prefs-ui.cc:1169
+#: pan/gui/prefs-ui.cc:1167
 msgid "Use custom font in Header Pane:"
 msgstr "Користи произвољна слова у површи заглавља:"
 
-#: pan/gui/prefs-ui.cc:1174
+#: pan/gui/prefs-ui.cc:1172
 msgid "Use custom font in Body Pane:"
 msgstr "Користи произвољна слова у површи разраде:"
 
-#: pan/gui/prefs-ui.cc:1179
+#: pan/gui/prefs-ui.cc:1177
 msgid "Monospace font:"
 msgstr "Слова утврђене ширине:"
 
-#: pan/gui/prefs-ui.cc:1183
+#: pan/gui/prefs-ui.cc:1181
 msgid "_Fonts"
 msgstr "_Слова"
 
-#: pan/gui/prefs-ui.cc:1192
+#: pan/gui/prefs-ui.cc:1190
 msgid "Header Pane"
 msgstr "Површ заглавља"
+
+#: pan/gui/prefs-ui.cc:1193 pan/gui/prefs-ui.cc:1199 pan/gui/prefs-ui.cc:1205
+#: pan/gui/prefs-ui.cc:1211 pan/gui/prefs-ui.cc:1217 pan/gui/prefs-ui.cc:1223
+#: pan/gui/prefs-ui.cc:1232 pan/gui/prefs-ui.cc:1238 pan/gui/prefs-ui.cc:1244
+#: pan/gui/prefs-ui.cc:1250 pan/gui/prefs-ui.cc:1256 pan/gui/prefs-ui.cc:1266
+#: pan/gui/prefs-ui.cc:1276
+msgid "Text:"
+msgstr "Текст:"
 
 #: pan/gui/prefs-ui.cc:1195 pan/gui/prefs-ui.cc:1201 pan/gui/prefs-ui.cc:1207
 #: pan/gui/prefs-ui.cc:1213 pan/gui/prefs-ui.cc:1219 pan/gui/prefs-ui.cc:1225
 #: pan/gui/prefs-ui.cc:1234 pan/gui/prefs-ui.cc:1240 pan/gui/prefs-ui.cc:1246
 #: pan/gui/prefs-ui.cc:1252 pan/gui/prefs-ui.cc:1258 pan/gui/prefs-ui.cc:1268
 #: pan/gui/prefs-ui.cc:1278
-msgid "Text:"
-msgstr "Текст:"
-
-#: pan/gui/prefs-ui.cc:1197 pan/gui/prefs-ui.cc:1203 pan/gui/prefs-ui.cc:1209
-#: pan/gui/prefs-ui.cc:1215 pan/gui/prefs-ui.cc:1221 pan/gui/prefs-ui.cc:1227
-#: pan/gui/prefs-ui.cc:1236 pan/gui/prefs-ui.cc:1242 pan/gui/prefs-ui.cc:1248
-#: pan/gui/prefs-ui.cc:1254 pan/gui/prefs-ui.cc:1260 pan/gui/prefs-ui.cc:1270
-#: pan/gui/prefs-ui.cc:1280
 msgid "Background:"
 msgstr "Позадина:"
 
-#: pan/gui/prefs-ui.cc:1199
+#: pan/gui/prefs-ui.cc:1197
 msgid "Scores of 9999 or more:"
 msgstr "Учинци од 9999 или више:"
 
-#: pan/gui/prefs-ui.cc:1205
+#: pan/gui/prefs-ui.cc:1203
 msgid "Scores from 5000 to 9998:"
 msgstr "Учинци од 5000 до 9998:"
 
-#: pan/gui/prefs-ui.cc:1211
+#: pan/gui/prefs-ui.cc:1209
 msgid "Scores from 1 to 4999:"
 msgstr "Учинци од 1 до 4999:"
 
-#: pan/gui/prefs-ui.cc:1217
+#: pan/gui/prefs-ui.cc:1215
 msgid "Scores from -9998 to -1:"
 msgstr "Учинци од -9998 до -1:"
 
-#: pan/gui/prefs-ui.cc:1223
+#: pan/gui/prefs-ui.cc:1221
 msgid "Scores of -9999 or less:"
 msgstr "Учинци од -9999 или мање:"
 
-#: pan/gui/prefs-ui.cc:1229
+#: pan/gui/prefs-ui.cc:1227
 msgid "Collapsed thread with unread articles:"
 msgstr "Скупљена тема са непрочитаним чланцима:"
 
-#: pan/gui/prefs-ui.cc:1231
+#: pan/gui/prefs-ui.cc:1229
 msgid "Body Pane"
 msgstr "Површ разраде"
 
-#: pan/gui/prefs-ui.cc:1238
+#: pan/gui/prefs-ui.cc:1236
 msgid "First level of quoted text:"
 msgstr "Први ниво цитираног текста:"
 
-#: pan/gui/prefs-ui.cc:1244
+#: pan/gui/prefs-ui.cc:1242
 msgid "Second level of quoted text:"
 msgstr "Други ниво цитираног текста:"
 
-#: pan/gui/prefs-ui.cc:1250
+#: pan/gui/prefs-ui.cc:1248
 msgid "Third level of quoted text:"
 msgstr "Трећи ниво цитираног текста:"
 
 #.
-#: pan/gui/prefs-ui.cc:1256
+#: pan/gui/prefs-ui.cc:1254
 msgid "URL:"
 msgstr "Адреса:"
 
 #.
-#: pan/gui/prefs-ui.cc:1262
+#: pan/gui/prefs-ui.cc:1260
 msgid "Signature:"
 msgstr "Потпис:"
 
-#: pan/gui/prefs-ui.cc:1265
+#: pan/gui/prefs-ui.cc:1263
 msgid "Group Pane"
 msgstr "Површ групе"
 
 #.
-#: pan/gui/prefs-ui.cc:1272
+#: pan/gui/prefs-ui.cc:1270
 msgid "Group Color:"
 msgstr "Боја групе:"
 
-#: pan/gui/prefs-ui.cc:1276
+#: pan/gui/prefs-ui.cc:1274
 msgid "Other Text"
 msgstr "Други текст"
 
-#: pan/gui/prefs-ui.cc:1282
+#: pan/gui/prefs-ui.cc:1280
 msgid "Text Color:"
 msgstr "Боја текста:"
 
-#: pan/gui/prefs-ui.cc:1285
+#: pan/gui/prefs-ui.cc:1283
 msgid "_Colors"
 msgstr "_Боје"
 
-#: pan/gui/prefs-ui.cc:1285
+#: pan/gui/prefs-ui.cc:1283
 msgid "Colors"
 msgstr "Подешавања боја"
 
-#: pan/gui/prefs-ui.cc:1290
+#: pan/gui/prefs-ui.cc:1288
 msgid "Preferred Applications"
 msgstr "Омиљени програми"
 
-#: pan/gui/prefs-ui.cc:1294
+#: pan/gui/prefs-ui.cc:1292
 msgid "_Web browser:"
 msgstr "_Веб прегледник:"
 
-#: pan/gui/prefs-ui.cc:1297
+#: pan/gui/prefs-ui.cc:1295
 msgid "_Mail reader:"
 msgstr "_Читач поште:"
 
-#: pan/gui/prefs-ui.cc:1299
+#: pan/gui/prefs-ui.cc:1297
 msgid "_Text editor:"
 msgstr "_Уређивач текста:"
 
-#: pan/gui/prefs-ui.cc:1301
+#: pan/gui/prefs-ui.cc:1299
 msgid "_HTML previewer:"
 msgstr "_ХТМЛ претпрегледач:"
 
-#: pan/gui/prefs-ui.cc:1303
+#: pan/gui/prefs-ui.cc:1301
 msgid "_Applications"
 msgstr "Про_грами"
 
-#: pan/gui/prefs-ui.cc:1303
+#: pan/gui/prefs-ui.cc:1301
 msgid "Applications"
 msgstr "Подешавања програма"
 
-#: pan/gui/prefs-ui.cc:1308 pan/gui/task-pane.cc:552
+#: pan/gui/prefs-ui.cc:1306 pan/gui/task-pane.cc:550
 msgid "Encoding"
 msgstr "Кодирање"
 
-#: pan/gui/prefs-ui.cc:1312
+#: pan/gui/prefs-ui.cc:1310
 msgid "Default bytes per file (for encoder): "
 msgstr "Основних бајтова по датотеци (за кодера): "
 
-#: pan/gui/prefs-ui.cc:1317
+#: pan/gui/prefs-ui.cc:1315
 msgid "_Upload"
 msgstr "_Отпремање"
 
-#: pan/gui/prefs-ui.cc:1317
+#: pan/gui/prefs-ui.cc:1315
 msgid "Upload"
 msgstr "Подешавања отпремања"
 
-#: pan/gui/prefs-ui.cc:1326
+#: pan/gui/prefs-ui.cc:1324
 msgid "_Shortcuts"
 msgstr "Пре_чице"
 
-#: pan/gui/prefs-ui.cc:1326
+#: pan/gui/prefs-ui.cc:1324
 msgid "Shortcuts"
 msgstr "Подешавања пречица"
 
-#: pan/gui/profiles-dialog.cc:83
+#: pan/gui/profiles-dialog.cc:81
 #| msgid ""
-#| "Please choose your email address according to your PGP key's user id."
-msgid "Please choose your email address according to your PGP key’s user id."
+#| "Please choose your email address according to your PGP key’s user id."
+msgid "Please choose your email address according to your PGP key's user id."
 msgstr ""
 "Изаберите адресу ваше ел. поште у складу са вашим корисничким иб-ом ПГП "
 "кључа."
 
-#: pan/gui/profiles-dialog.cc:131
+#: pan/gui/profiles-dialog.cc:129
 msgid "Posting Profile"
 msgstr "Профил објављивања"
 
-#: pan/gui/profiles-dialog.cc:143
+#: pan/gui/profiles-dialog.cc:141
 msgid "Profile Information"
 msgstr "Подаци о профилу"
 
-#: pan/gui/profiles-dialog.cc:147
+#: pan/gui/profiles-dialog.cc:145
 msgid "_Profile Name:"
 msgstr "Назив _профила:"
 
-#: pan/gui/profiles-dialog.cc:150
+#: pan/gui/profiles-dialog.cc:148
 msgid "Required Information"
 msgstr "Обавезни подаци"
 
-#: pan/gui/profiles-dialog.cc:154
+#: pan/gui/profiles-dialog.cc:152
 msgid "_Full Name:"
 msgstr "_Име и презиме:"
 
-#: pan/gui/profiles-dialog.cc:158
+#: pan/gui/profiles-dialog.cc:156
 #| msgid ""
 #| "Your email address.\n"
-#| "Note that this has to match your PGP signature's address\n"
+#| "Note that this has to match your PGP signature’s address\n"
 #| "if you want your messages to be PGP-signed or encrypted correctly."
 msgid ""
 "Your email address.\n"
-"Note that this has to match your PGP signature’s address\n"
+"Note that this has to match your PGP signature's address\n"
 "if you want your messages to be PGP-signed or encrypted correctly."
 msgstr ""
 "Адреса ваше ел. поште.\n"
 "Ово треба да одговара адреси вашег ПГП\n"
 "потписа ако желите да ваше поруке буду ПГП-потписане или исправно шифроване."
 
-#: pan/gui/profiles-dialog.cc:162
+#: pan/gui/profiles-dialog.cc:160
 msgid "_Email Address:"
 msgstr "Адреса _ел. поште:"
 
-#: pan/gui/profiles-dialog.cc:164
+#: pan/gui/profiles-dialog.cc:162
 msgid "_Post Articles via:"
 msgstr "_Објави чланке путем:"
 
-#: pan/gui/profiles-dialog.cc:167
+#: pan/gui/profiles-dialog.cc:165
 msgid "Signature"
 msgstr "Потпис"
 
-#: pan/gui/profiles-dialog.cc:170
+#: pan/gui/profiles-dialog.cc:168
 msgid "_Use a Signature"
 msgstr "_Користи потпис"
 
-#: pan/gui/profiles-dialog.cc:174
+#: pan/gui/profiles-dialog.cc:172
 msgid "Signature File"
 msgstr "Датотека потписа"
 
-#: pan/gui/profiles-dialog.cc:184
+#: pan/gui/profiles-dialog.cc:182
 msgid "Text File"
 msgstr "Текстуална датотека"
 
-#: pan/gui/profiles-dialog.cc:186
+#: pan/gui/profiles-dialog.cc:184
 msgid "Text"
 msgstr "Текст"
 
-#: pan/gui/profiles-dialog.cc:188
+#: pan/gui/profiles-dialog.cc:186
 msgid "Command"
 msgstr "Наредба"
 
-#: pan/gui/profiles-dialog.cc:191
+#: pan/gui/profiles-dialog.cc:189
 msgid "PGP Signature"
 msgstr "ПГП потпис"
 
-#: pan/gui/profiles-dialog.cc:196
+#: pan/gui/profiles-dialog.cc:194
 msgid "Signature Type: "
 msgstr "Врста потписа: "
 
-#: pan/gui/profiles-dialog.cc:226
-msgid "X-Face (Avatar)"
-msgstr "Х-лице (Аватар)"
+#: pan/gui/profiles-dialog.cc:225
+msgid "Avatars"
+msgstr "Аватари"
 
-#: pan/gui/profiles-dialog.cc:229
+#: pan/gui/profiles-dialog.cc:228
 #| msgid ""
 #| "You can add an avatar icon to your articles with a unique X-Face code.\n"
-#| "Add the code without the trailing <b>\"X-Face:\"</b> \n"
+#| "Add the code without the trailing <b>“X-Face:”</b> \n"
+#| " if it was generated by a helper program (for example http://www.dairiki."
+#| "org/xface/xface.php)."
+msgid ""
+"You can add an avatar icon to your articles with a Base64-encoded PNG.\n"
+"Add the Base64-encoded picture without the trailing <b>“Face:”</b>."
+msgstr ""
+"Можете да додате иконицу аватара вашим чланцима са ПНГ кодираној у Основи64."
+"\n"
+"Додајте слику кодирану у Основи64 без пратећег <b>„Лице:“</b>."
+
+#: pan/gui/profiles-dialog.cc:230
+#| msgid "_X-Face:"
+msgid "_Face:"
+msgstr "_Лице:"
+
+#: pan/gui/profiles-dialog.cc:234
+#| msgid ""
+#| "You can add an avatar icon to your articles with a unique X-Face code.\n"
+#| "Add the code without the trailing <b>“X-Face:”</b> \n"
 #| " if it was generated by a helper program (for example http://www.dairiki."
 #| "org/xface/xface.php)."
 msgid ""
 "You can add an avatar icon to your articles with a unique X-Face code.\n"
-"Add the code without the trailing <b>“X-Face:”</b> \n"
+"Add the code without the trailing <b>\"X-Face:\"</b> \n"
 " if it was generated by a helper program (for example http://www.dairiki.org/"
 "xface/xface.php)."
 msgstr ""
@@ -2625,22 +2638,22 @@ msgstr ""
 " ако је створен помоћничким програмом (на пример "
 "„http://www.dairiki.org/xface/xface.php“)."
 
-#: pan/gui/profiles-dialog.cc:232
+#: pan/gui/profiles-dialog.cc:237
 msgid "_X-Face:"
 msgstr "_Х-лице:"
 
-#: pan/gui/profiles-dialog.cc:234
+#: pan/gui/profiles-dialog.cc:239
 msgid "Optional Information"
 msgstr "Изборни подаци"
 
-#: pan/gui/profiles-dialog.cc:239
+#: pan/gui/profiles-dialog.cc:244
 #| msgid ""
-#| "When posting to Usenet, your article's Message-ID contains a domain "
+#| "When posting to Usenet, your article’s Message-ID contains a domain "
 #| "name.\n"
 #| "You can set a custom domain name here, or leave it blank to let Pan use "
 #| "the domain name from your email address."
 msgid ""
-"When posting to Usenet, your article’s Message-ID contains a domain name.\n"
+"When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
 "domain name from your email address."
 msgstr ""
@@ -2648,11 +2661,11 @@ msgstr ""
 "Овде можете да подесите прилагођени назив домена, или да оставите празним "
 "како би Пан користио назив домена из адресе ваше ел. поште."
 
-#: pan/gui/profiles-dialog.cc:242
+#: pan/gui/profiles-dialog.cc:247
 msgid "Message-ID _Domain Name:"
 msgstr "Назив _домена ИБ-а поруке:"
 
-#: pan/gui/profiles-dialog.cc:246
+#: pan/gui/profiles-dialog.cc:251
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2665,16 +2678,12 @@ msgstr ""
 "%n за име аутора\n"
 "%d за датум"
 
-#: pan/gui/profiles-dialog.cc:247
+#: pan/gui/profiles-dialog.cc:252
 msgid "_Attribution:"
 msgstr "_Уводни текст:"
 
 #. Translators: Do not localize Reply-To and the quote marks in \"Your Name\".
-#: pan/gui/profiles-dialog.cc:272
-#| msgid ""
-#| "Extra headers to be included in your articles, such as\n"
-#| "Reply-To: \"Your Name\"<yourname@somewhere.com>\n"
-#| "Organization: Your Organization\n"
+#: pan/gui/profiles-dialog.cc:277
 msgid ""
 "Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
@@ -2684,56 +2693,56 @@ msgstr ""
 "Одговори: „Ваше име“<vašeime@nešto.com>\n"
 "Удружење: Ваше удружење\n"
 
-#: pan/gui/profiles-dialog.cc:282
+#: pan/gui/profiles-dialog.cc:287
 msgid "E_xtra Headers:"
 msgstr "_Додатна заглавља:"
 
-#: pan/gui/profiles-dialog.cc:327
+#: pan/gui/profiles-dialog.cc:332
 msgid "Invalid email address."
 msgstr "Неисправна адреса ел. поште."
 
-#: pan/gui/profiles-dialog.cc:328
+#: pan/gui/profiles-dialog.cc:333
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Користите адресу у облику „pera@nešto.org“"
 
-#: pan/gui/profiles-dialog.cc:483
+#: pan/gui/profiles-dialog.cc:489
 msgid "New Profile"
 msgstr "Нови профил"
 
-#: pan/gui/profiles-dialog.cc:529
+#: pan/gui/profiles-dialog.cc:535
 msgid "Posting Profiles"
 msgstr "Профили објављивања"
 
-#: pan/gui/profiles-dialog.cc:545
+#: pan/gui/profiles-dialog.cc:551
 msgid "Profiles"
 msgstr "Профили"
 
-#: pan/gui/save-attach-ui.cc:46
+#: pan/gui/save-attach-ui.cc:44
 #, c-format
 #| msgid ""
-#| "%g - group as one directory (alt.binaries.pictures.trains)\n"
-#| "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
-#| "%s - Subject line excerpt\n"
-#| "%S - Subject line\n"
-#| "%n - Poster display name\n"
-#| "%e - Poster email address\n"
-#| "%d - Article timestamp\n"
-#| "\"/home/user/News/Pan/%g\" becomes\n"
-#| "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
-#| "\"/home/user/News/Pan/%G\" becomes\n"
-#| "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+#| "%g — group as one directory (alt.binaries.pictures.trains)\n"
+#| "%G — group as nested directory (/alt/binaries/pictures/trains)\n"
+#| "%s — Subject line excerpt\n"
+#| "%S — Subject line\n"
+#| "%n — Poster display name\n"
+#| "%e — Poster email address\n"
+#| "%d — Article timestamp\n"
+#| "“/home/user/News/Pan/%g” becomes\n"
+#| "“/home/user/News/Pan/alt.binaries.pictures.trains”, and\n"
+#| "“/home/user/News/Pan/%G” becomes\n"
+#| "“/home/user/News/Pan/alt/binaries/pictures/trains”,"
 msgid ""
-"%g — group as one directory (alt.binaries.pictures.trains)\n"
-"%G — group as nested directory (/alt/binaries/pictures/trains)\n"
-"%s — Subject line excerpt\n"
-"%S — Subject line\n"
-"%n — Poster display name\n"
-"%e — Poster email address\n"
-"%d — Article timestamp\n"
-"“/home/user/News/Pan/%g” becomes\n"
-"“/home/user/News/Pan/alt.binaries.pictures.trains”, and\n"
-"“/home/user/News/Pan/%G” becomes\n"
-"“/home/user/News/Pan/alt/binaries/pictures/trains”,"
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - Subject line excerpt\n"
+"%S - Subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgstr ""
 "%g — група као један директоријум (alt.binaries.pictures.trains)\n"
 "%G — група као угнеждени директоријум (/alt/binaries/pictures/trains)\n"
@@ -2747,76 +2756,76 @@ msgstr ""
 "„/home/user/News/Pan/%G“ постаје\n"
 "„/home/user/News/Pan/alt/binaries/pictures/trains“,"
 
-#: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
+#: pan/gui/save-attach-ui.cc:196 pan/gui/save-ui.cc:216
 msgid "Add to the queue sorted by date posted"
 msgstr "Дода у заказано према датуму објављивања"
 
-#: pan/gui/save-attach-ui.cc:199 pan/gui/save-ui.cc:219
+#: pan/gui/save-attach-ui.cc:197 pan/gui/save-ui.cc:217
 msgid "Add to the front of the queue"
 msgstr "Додај прочеље заказаног"
 
-#: pan/gui/save-attach-ui.cc:200 pan/gui/save-ui.cc:220
+#: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
 msgid "Add to the back of the queue"
 msgstr "Додај зачеље заказаног"
 
-#: pan/gui/save-attach-ui.cc:232
+#: pan/gui/save-attach-ui.cc:230
 msgid "Pan: Save Attachments"
 msgstr "Пан: Сачувај прилоге"
 
-#: pan/gui/save-attach-ui.cc:257 pan/gui/save-attach-ui.cc:275
-#: pan/gui/save-ui.cc:272 pan/gui/save-ui.cc:290
+#: pan/gui/save-attach-ui.cc:255 pan/gui/save-attach-ui.cc:273
+#: pan/gui/save-ui.cc:270 pan/gui/save-ui.cc:288
 msgid "_Location:"
 msgstr "_Место:"
 
-#: pan/gui/save-attach-ui.cc:261 pan/gui/save-ui.cc:276
+#: pan/gui/save-attach-ui.cc:259 pan/gui/save-ui.cc:274
 msgid "Save Articles"
 msgstr "Сачувајте чланке"
 
-#: pan/gui/save-attach-ui.cc:278 pan/gui/save-ui.cc:293
+#: pan/gui/save-attach-ui.cc:276 pan/gui/save-ui.cc:291
 #, c-format
-#| msgid "_Group's path: %s"
-msgid "_Group’s path: %s"
+#| msgid "_Group’s path: %s"
+msgid "_Group's path: %s"
 msgstr "_Путања групе: %s"
 
-#: pan/gui/save-attach-ui.cc:289 pan/gui/save-ui.cc:308
+#: pan/gui/save-attach-ui.cc:287 pan/gui/save-ui.cc:306
 msgid "_Priority:"
 msgstr "_Важност:"
 
-#: pan/gui/save-ui.cc:46
+#: pan/gui/save-ui.cc:44
 #, c-format
 #| msgid ""
-#| "%g - group as one directory (alt.binaries.pictures.trains)\n"
-#| "%G - group as nested directory (/alt/binaries/pictures/trains)\n"
-#| "%s - subject line excerpt\n"
-#| "%S - subject line\n"
-#| "%n - Poster display name\n"
-#| "%e - Poster email address\n"
-#| "%d - Article timestamp\n"
+#| "%g — group as one directory (alt.binaries.pictures.trains)\n"
+#| "%G — group as nested directory (/alt/binaries/pictures/trains)\n"
+#| "%s — subject line excerpt\n"
+#| "%S — subject line\n"
+#| "%n — Poster display name\n"
+#| "%e — Poster email address\n"
+#| "%d — Article timestamp\n"
 #| " \n"
-#| "\"/home/user/News/Pan/%g\" becomes\n"
-#| "\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
-#| "\"/home/user/News/Pan/%G\" becomes\n"
-#| "\"/home/user/News/Pan/alt/binaries/pictures/trains\","
+#| "“/home/user/News/Pan/%g” becomes\n"
+#| "“/home/user/News/Pan/alt.binaries.pictures.trains”, and\n"
+#| "“/home/user/News/Pan/%G” becomes\n"
+#| "“/home/user/News/Pan/alt/binaries/pictures/trains”,"
 msgid ""
-"%g — group as one directory (alt.binaries.pictures.trains)\n"
-"%G — group as nested directory (/alt/binaries/pictures/trains)\n"
-"%s — subject line excerpt\n"
-"%S — subject line\n"
-"%n — Poster display name\n"
-"%e — Poster email address\n"
-"%d — Article timestamp\n"
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - subject line excerpt\n"
+"%S - subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
 " \n"
-"“/home/user/News/Pan/%g” becomes\n"
-"“/home/user/News/Pan/alt.binaries.pictures.trains”, and\n"
-"“/home/user/News/Pan/%G” becomes\n"
-"“/home/user/News/Pan/alt/binaries/pictures/trains”,"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgstr ""
 "%g — група као један директоријум (alt.binaries.pictures.trains)\n"
 "%G — група као угнеждени директоријум (/alt/binaries/pictures/trains)\n"
 "%s — извадак реда за тему\n"
 "%S — ред за тему\n"
 "%n — Приказано име објављивача\n"
-"%e — Адреса ел. поште објављивача\n"
+"%e — Адреса е-поште објављивача\n"
 "%d — Временска ознака чланка\n"
 " \n"
 "„/home/user/News/Pan/%g“ постаје\n"
@@ -2824,315 +2833,315 @@ msgstr ""
 "„/home/user/News/Pan/%G“ постаје\n"
 "„/home/user/News/Pan/alt/binaries/pictures/trains“,"
 
-#: pan/gui/save-ui.cc:209
+#: pan/gui/save-ui.cc:207
 msgid "Save attachments"
 msgstr "Сачувај прилоге"
 
-#: pan/gui/save-ui.cc:210
+#: pan/gui/save-ui.cc:208
 msgid "Save text"
 msgstr "Сачувај текст"
 
-#: pan/gui/save-ui.cc:211
+#: pan/gui/save-ui.cc:209
 msgid "Save attachments and text"
 msgstr "Сачувај прилоге и текст"
 
-#: pan/gui/save-ui.cc:247
+#: pan/gui/save-ui.cc:245
 msgid "Pan: Save Articles"
 msgstr "Пан: Сачувај чланке"
 
-#: pan/gui/save-ui.cc:304
+#: pan/gui/save-ui.cc:302
 msgid "_Action:"
 msgstr "_Радња:"
 
-#: pan/gui/score-add-ui.cc:89
+#: pan/gui/score-add-ui.cc:87
 msgid "is more than"
 msgstr "је више од"
 
-#: pan/gui/score-add-ui.cc:90
+#: pan/gui/score-add-ui.cc:88
 msgid "is at most"
 msgstr "је барем"
 
-#: pan/gui/score-add-ui.cc:112
-#| msgid "increase the article's score by"
-msgid "increase the article’s score by"
+#: pan/gui/score-add-ui.cc:110
+#| msgid "increase the article’s score by"
+msgid "increase the article's score by"
 msgstr "увећај учинак чланка за"
 
-#: pan/gui/score-add-ui.cc:113
-#| msgid "decrease the article's score by"
-msgid "decrease the article’s score by"
+#: pan/gui/score-add-ui.cc:111
+#| msgid "decrease the article’s score by"
+msgid "decrease the article's score by"
 msgstr "умањи учинак чланка за"
 
-#: pan/gui/score-add-ui.cc:114
-#| msgid "set the article's score to"
-msgid "set the article’s score to"
+#: pan/gui/score-add-ui.cc:112
+#| msgid "set the article’s score to"
+msgid "set the article's score to"
 msgstr "подеси учинак чланка на"
 
-#: pan/gui/score-add-ui.cc:115
+#: pan/gui/score-add-ui.cc:113
 msgid "watch the article (set its score to 9999)"
 msgstr "прати чланак (постави му учинак на 9999)"
 
-#: pan/gui/score-add-ui.cc:116
+#: pan/gui/score-add-ui.cc:114
 msgid "ignore the article (set its score to -9999)"
 msgstr "занемари чланак (постави му учинак на -9999)"
 
-#: pan/gui/score-add-ui.cc:141
+#: pan/gui/score-add-ui.cc:139
 msgid "References"
 msgstr "Упуте"
 
-#: pan/gui/score-add-ui.cc:142
+#: pan/gui/score-add-ui.cc:140
 msgid "Line Count"
 msgstr "Број редова"
 
-#: pan/gui/score-add-ui.cc:143
+#: pan/gui/score-add-ui.cc:141
 msgid "Byte Count"
 msgstr "Број бајта"
 
-#: pan/gui/score-add-ui.cc:144
+#: pan/gui/score-add-ui.cc:142
 msgid "Crosspost Group Count"
 msgstr "Број група унакрсног објављивања"
 
-#: pan/gui/score-add-ui.cc:145
+#: pan/gui/score-add-ui.cc:143
 msgid "Age (in days)"
 msgstr "Старост (у данима)"
 
-#: pan/gui/score-add-ui.cc:167
+#: pan/gui/score-add-ui.cc:165
 msgid "for the next month"
 msgstr "за следећи месец"
 
-#: pan/gui/score-add-ui.cc:168
+#: pan/gui/score-add-ui.cc:166
 msgid "for the next six months"
 msgstr "за следећих шест месеци"
 
-#: pan/gui/score-add-ui.cc:169
+#: pan/gui/score-add-ui.cc:167
 msgid "forever"
 msgstr "заувек"
 
-#: pan/gui/score-add-ui.cc:194
+#: pan/gui/score-add-ui.cc:192
 msgid "contains"
 msgstr "садржи"
 
-#: pan/gui/score-add-ui.cc:195
-#| msgid "doesn't contain"
-msgid "doesn’t contain"
+#: pan/gui/score-add-ui.cc:193
+#| msgid "doesn’t contain"
+msgid "doesn't contain"
 msgstr "не садржи"
 
-#: pan/gui/score-add-ui.cc:196
+#: pan/gui/score-add-ui.cc:194
 msgid "is"
 msgstr "је"
 
-#: pan/gui/score-add-ui.cc:197
-msgid "isn’t"
+#: pan/gui/score-add-ui.cc:195
+msgid "isn't"
 msgstr "није"
 
-#: pan/gui/score-add-ui.cc:198
+#: pan/gui/score-add-ui.cc:196
 msgid "starts with"
 msgstr "почиње са"
 
-#: pan/gui/score-add-ui.cc:199
+#: pan/gui/score-add-ui.cc:197
 msgid "ends with"
 msgstr "завршава се са"
 
-#: pan/gui/score-add-ui.cc:200
+#: pan/gui/score-add-ui.cc:198
 msgid "matches regex"
 msgstr "одговара регуларном изразу"
 
-#: pan/gui/score-add-ui.cc:481
-#| msgid "Another rule already sets this article's score."
-msgid "Another rule already sets this article’s score."
+#: pan/gui/score-add-ui.cc:479
+#| msgid "Another rule already sets this article’s score."
+msgid "Another rule already sets this article's score."
 msgstr "Друго правило већ подешава учинак овог чланка."
 
-#: pan/gui/score-add-ui.cc:482
+#: pan/gui/score-add-ui.cc:480
 msgid "You may want to go back or delete the old rule."
 msgstr "Можда желите да се вратите или да обришете старо правило."
 
-#: pan/gui/score-add-ui.cc:553
+#: pan/gui/score-add-ui.cc:551
 msgid "Add and Re_score"
 msgstr "Додај и поново израчунај _учинак"
 
-#: pan/gui/score-add-ui.cc:604 pan/gui/score-add-ui.cc:624
+#: pan/gui/score-add-ui.cc:602 pan/gui/score-add-ui.cc:622
 msgid "New Scoring Rule"
 msgstr "Ново правило бодовања"
 
-#: pan/gui/score-add-ui.cc:635
+#: pan/gui/score-add-ui.cc:633
 msgid "Group name"
 msgstr "Назив групе"
 
-#: pan/gui/score-add-ui.cc:642
+#: pan/gui/score-add-ui.cc:640
 msgid "and"
 msgstr "и"
 
 # shell:noshell-reason title
-#: pan/gui/score-view-ui.cc:56
+#: pan/gui/score-view-ui.cc:54
 msgid "Close and Re_score"
 msgstr "Затвори и поново израчунај _учинак"
 
-#: pan/gui/score-view-ui.cc:154
+#: pan/gui/score-view-ui.cc:152
 #, c-format
-#| msgid "File %s, Lines %d - %d"
-msgid "File %s, Lines %d-%d"
+#| msgid "File %s, Lines %d-%d"
+msgid "File %s, Lines %d - %d"
 msgstr "Датотека „%s“, редова %d — %d"
 
-#: pan/gui/score-view-ui.cc:182
-#| msgid "Pan: Article's Scores"
-msgid "Pan: Article’s Scores"
+#: pan/gui/score-view-ui.cc:180
+#| msgid "Pan: Article’s Scores"
+msgid "Pan: Article's Scores"
 msgstr "Пан: Учинци чланка"
 
-#: pan/gui/score-view-ui.cc:208
+#: pan/gui/score-view-ui.cc:206
 msgid "Add"
 msgstr "Додај"
 
-#: pan/gui/score-view-ui.cc:213
+#: pan/gui/score-view-ui.cc:211
 msgid "New Score"
 msgstr "Нови учинак"
 
-#: pan/gui/score-view-ui.cc:218
+#: pan/gui/score-view-ui.cc:216
 msgid "Criteria"
 msgstr "Мерило"
 
-#: pan/gui/score-view-ui.cc:241
+#: pan/gui/score-view-ui.cc:239
 msgid "Add a New Scoring Rule"
 msgstr "Додајте ново правило бодовања"
 
-#: pan/gui/score-view-ui.cc:248
+#: pan/gui/score-view-ui.cc:246
 msgid "Remove the Selected Scoring Rule"
 msgstr "Уклоните изабрано правило бодовања"
 
-#: pan/gui/server-ui.cc:272
-#| msgid "Please specify the server's address."
-msgid "Please specify the server’s address."
+#: pan/gui/server-ui.cc:270
+#| msgid "Please specify the server’s address."
+msgid "Please specify the server's address."
 msgstr "Наведите адресу сервера."
 
-#: pan/gui/server-ui.cc:318
+#: pan/gui/server-ui.cc:316
 msgid "Import SSL Certificate (PEM Format) From File"
 msgstr "Увезите ССЛ уверење (у ПЕМ облику) из датотеке"
 
 #. create the dialog
-#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:961
+#: pan/gui/server-ui.cc:353 pan/gui/server-ui.cc:959
 msgid "Add a Server"
 msgstr "Додајте сервер"
 
-#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:967
-#| msgid "Edit a Server's Settings"
-msgid "Edit a Server’s Settings"
+#: pan/gui/server-ui.cc:353 pan/gui/server-ui.cc:965
+#| msgid "Edit a Server’s Settings"
+msgid "Edit a Server's Settings"
 msgstr "Уредите подешавања сервера"
 
-#: pan/gui/server-ui.cc:375
+#: pan/gui/server-ui.cc:373
 msgid "Location"
 msgstr "Место"
 
-#: pan/gui/server-ui.cc:379
-#| msgid "The news server's actual address, e.g. \"news.mynewsserver.com\""
-msgid "The news server’s actual address, e.g. “news.mynewsserver.com”."
+#: pan/gui/server-ui.cc:377
+#| msgid "The news server’s actual address, e.g. “news.mynewsserver.com”."
+msgid "The news server's actual address, e.g. \"news.mynewsserver.com\"."
 msgstr "Адреса сервера дискусионих група, нпр. „news.mojserver.cs“."
 
-#: pan/gui/server-ui.cc:380
+#: pan/gui/server-ui.cc:378
 msgid "_Address:"
 msgstr "_Адреса:"
 
-#: pan/gui/server-ui.cc:385
+#: pan/gui/server-ui.cc:383
 #| msgid ""
-#| "The news server's port number.  Typically 119 for unencrypted and 563 for "
+#| "The news server’s port number.  Typically 119 for unencrypted and 563 for "
 #| "encrypted connections (SSL/TLS)."
 msgid ""
-"The news server’s port number.  Typically 119 for unencrypted and 563 for "
+"The news server's port number.  Typically 119 for unencrypted and 563 for "
 "encrypted connections (SSL/TLS)."
 msgstr ""
 "Прикључник сервера дискусионих група.  Обично је 119 за нешифроване и 563 за "
 "шифроване везе(ССЛ/ТЛС)."
 
-#: pan/gui/server-ui.cc:386
+#: pan/gui/server-ui.cc:384
 msgid "Por_t:"
 msgstr "_Прикључник:"
 
-#: pan/gui/server-ui.cc:389
+#: pan/gui/server-ui.cc:387
 msgid "Login (if Required)"
 msgstr "Пријава (ако је потребна)"
 
-#: pan/gui/server-ui.cc:393
+#: pan/gui/server-ui.cc:391
 msgid "_Username:"
 msgstr "_Корисник:"
 
-#: pan/gui/server-ui.cc:394
+#: pan/gui/server-ui.cc:392
 #| msgid ""
-#| "The username to give the server when asked.  If your server doesn't "
+#| "The username to give the server when asked.  If your server doesn’t "
 #| "require authentication, you can leave this blank."
 msgid ""
-"The username to give the server when asked.  If your server doesn’t require "
+"The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
 "Корисничко име које се даје серверу када затражи.  Ако ваш сервер не захтева "
 "потврђивање идентитета можете оставити празним."
 
-#: pan/gui/server-ui.cc:398
+#: pan/gui/server-ui.cc:396
 msgid "_Password:"
 msgstr "_Лозинка:"
 
-#: pan/gui/server-ui.cc:399
+#: pan/gui/server-ui.cc:397
 #| msgid ""
-#| "The password to give the server when asked.  If your server doesn't "
+#| "The password to give the server when asked.  If your server doesn’t "
 #| "require authentication, you can leave this blank."
 msgid ""
-"The password to give the server when asked.  If your server doesn’t require "
+"The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
 msgstr ""
 "Лозинка која се даје серверу када затражи.  Ако ваш сервер не захтева "
 "потврђивање идентитета можете оставити празним."
 
-#: pan/gui/server-ui.cc:402
+#: pan/gui/server-ui.cc:400
 msgid "Settings"
 msgstr "Подешавања"
 
-#: pan/gui/server-ui.cc:409
+#: pan/gui/server-ui.cc:407
 msgid "Connection _Limit:"
 msgstr "Ограничење _везе:"
 
-#: pan/gui/server-ui.cc:413
+#: pan/gui/server-ui.cc:411
 msgid "After Two Weeks"
 msgstr "Након две недеље"
 
-#: pan/gui/server-ui.cc:414
+#: pan/gui/server-ui.cc:412
 msgid "After One Month"
 msgstr "Након једног месеца"
 
-#: pan/gui/server-ui.cc:415
+#: pan/gui/server-ui.cc:413
 msgid "After Two Months"
 msgstr "Након два месеца"
 
-#: pan/gui/server-ui.cc:416
+#: pan/gui/server-ui.cc:414
 msgid "After Three Months"
 msgstr "Након три месеца"
 
-#: pan/gui/server-ui.cc:417
+#: pan/gui/server-ui.cc:415
 msgid "After Six Months"
 msgstr "Након шест месеци"
 
-#: pan/gui/server-ui.cc:418
+#: pan/gui/server-ui.cc:416
 msgid "Never Expire Old Articles"
 msgstr "Никада"
 
-#: pan/gui/server-ui.cc:432
+#: pan/gui/server-ui.cc:430
 msgid "E_xpire Old Articles:"
 msgstr "Стари чланци _застаревају:"
 
-#: pan/gui/server-ui.cc:436
+#: pan/gui/server-ui.cc:434
 msgid "Primary"
 msgstr "Главни"
 
-#: pan/gui/server-ui.cc:437
+#: pan/gui/server-ui.cc:435
 msgid "Fallback"
 msgstr "Резервни"
 
-#: pan/gui/server-ui.cc:451
+#: pan/gui/server-ui.cc:449
 msgid "Server Rank:"
 msgstr "Ранг сервера:"
 
-#: pan/gui/server-ui.cc:455
+#: pan/gui/server-ui.cc:453
 #| msgid ""
-#| "Fallback servers are used for articles that can't be found on the "
+#| "Fallback servers are used for articles that can’t be found on the "
 #| "primaries.  One common approach is to use free servers as primaries and "
 #| "subscription servers as fallbacks."
 msgid ""
-"Fallback servers are used for articles that can’t be found on the "
+"Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
 "subscription servers as fallbacks."
 msgstr ""
@@ -3140,39 +3149,39 @@ msgstr ""
 "главнима.  Уобичајен приступ је да се као главни користе слободни сервери а "
 "сервери са претплатама као резервни."
 
-#: pan/gui/server-ui.cc:460
+#: pan/gui/server-ui.cc:458
 msgid "Disable Compression (N/A)"
 msgstr "Искључи сажимање (Н/Д)"
 
-#: pan/gui/server-ui.cc:461
+#: pan/gui/server-ui.cc:459
 msgid "XZVER Compression (Astraweb)"
 msgstr "ХЗВЕР сажимање (Astraweb)"
 
-#: pan/gui/server-ui.cc:462
+#: pan/gui/server-ui.cc:460
 msgid "GZIP Compression (Giganews etc.)"
 msgstr "ГЗИП сажимање (Гигањуз итд.)"
 
-#: pan/gui/server-ui.cc:476
+#: pan/gui/server-ui.cc:474
 msgid "Header Compression:"
 msgstr "Сажимање заглавља:"
 
-#: pan/gui/server-ui.cc:482
+#: pan/gui/server-ui.cc:480
 msgid "Security"
 msgstr "Безбедност"
 
-#: pan/gui/server-ui.cc:487
+#: pan/gui/server-ui.cc:485
 msgid "Use Unsecure (Plaintext) Connections"
 msgstr "Користи несигурне везе (обичан текст)"
 
-#: pan/gui/server-ui.cc:488
+#: pan/gui/server-ui.cc:486
 msgid "Use Secure SSL Connections"
 msgstr "Користи безбедне ССЛ везе"
 
-#: pan/gui/server-ui.cc:503
+#: pan/gui/server-ui.cc:501
 msgid "TLS (SSL) Settings:"
 msgstr "Подешавања ТЛС-а (ССЛ):"
 
-#: pan/gui/server-ui.cc:508
+#: pan/gui/server-ui.cc:506
 msgid ""
 "You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
 "TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
@@ -3182,70 +3191,70 @@ msgstr ""
 "ТЛС, ваши подаци су шифровани и безбедни. Саветује вам се да укључите ССЛ/"
 "ТЛС из личних разлога."
 
-#: pan/gui/server-ui.cc:513
-#| msgid "Always trust this server's certificate"
-msgid "Always trust this server’s certificate"
+#: pan/gui/server-ui.cc:511
+#| msgid "Always trust this server’s certificate"
+msgid "Always trust this server's certificate"
 msgstr "Увек веруј уверењу са овог сервера"
 
-#: pan/gui/server-ui.cc:689
+#: pan/gui/server-ui.cc:687
 #, c-format
-#| msgid "Really delete \"%s\"?"
-msgid "Really delete “%s”?"
+#| msgid "Really delete “%s”?"
+msgid "Really delete \"%s\"?"
 msgstr "Да обришем „%s“?"
 
-#: pan/gui/server-ui.cc:778
+#: pan/gui/server-ui.cc:776
 msgid "No information available."
 msgstr "Нема доступних података."
 
-#: pan/gui/server-ui.cc:788
+#: pan/gui/server-ui.cc:786
 #, c-format
-#| msgid "Server Certificate for '%s'"
-msgid "Server Certificate for “%s”"
+#| msgid "Server Certificate for “%s”"
+msgid "Server Certificate for '%s'"
 msgstr "Уверење сервера за „%s“"
 
-#: pan/gui/server-ui.cc:887
+#: pan/gui/server-ui.cc:885
 #, c-format
-#| msgid "Really delete certificate for \"%s\"?"
-msgid "Really delete certificate for “%s”?"
+#| msgid "Really delete certificate for “%s”?"
+msgid "Really delete certificate for \"%s\"?"
 msgstr "Да обришем уверење за „%s“?"
 
 #. dialog
-#: pan/gui/server-ui.cc:914 pan/gui/server-ui.cc:935 pan/gui/server-ui.cc:1033
+#: pan/gui/server-ui.cc:912 pan/gui/server-ui.cc:933 pan/gui/server-ui.cc:1031
 msgid "Servers"
 msgstr "Сервери"
 
-#: pan/gui/server-ui.cc:974
+#: pan/gui/server-ui.cc:972
 msgid "Remove a Server"
 msgstr "Уклони сервер"
 
 #. dialog
-#: pan/gui/server-ui.cc:1007
+#: pan/gui/server-ui.cc:1005
 msgid "SSL Certificates"
 msgstr "ССЛ уверења"
 
-#: pan/gui/server-ui.cc:1028
+#: pan/gui/server-ui.cc:1026
 msgid "Certificates"
 msgstr "Уверења"
 
-#: pan/gui/server-ui.cc:1059
+#: pan/gui/server-ui.cc:1057
 msgid "Import Certificate"
 msgstr "Увези уверење"
 
-#: pan/gui/server-ui.cc:1065
+#: pan/gui/server-ui.cc:1063
 msgid "Inspect Certificate"
 msgstr "Испитај уверење"
 
-#: pan/gui/server-ui.cc:1072
+#: pan/gui/server-ui.cc:1070
 msgid "Remove Certificate"
 msgstr "Уклони уверење"
 
-#: pan/gui/task-pane.cc:121
+#: pan/gui/task-pane.cc:119
 #, c-format
 #| msgid ""
 #| "\n"
 #| "<u>Upload</u>\n"
 #| "\n"
-#| "<i>Subject:</i> <b>\"%s\"</b>\n"
+#| "<i>Subject:</i> <b>“%s”</b>\n"
 #| "<i>From:</i> <b>%s</b>\n"
 #| "<i>Groups:</i> <b>%s</b>\n"
 #| "<i>Sourcefile:</i> <b>%s</b>\n"
@@ -3253,7 +3262,7 @@ msgid ""
 "\n"
 "<u>Upload</u>\n"
 "\n"
-"<i>Subject:</i> <b>“%s”</b>\n"
+"<i>Subject:</i> <b>\"%s\"</b>\n"
 "<i>From:</i> <b>%s</b>\n"
 "<i>Groups:</i> <b>%s</b>\n"
 "<i>Sourcefile:</i> <b>%s</b>\n"
@@ -3266,13 +3275,13 @@ msgstr ""
 "<i>Групе:</i> <b>%s</b>\n"
 "<i>Извор:</i> <b>%s</b>\n"
 
-#: pan/gui/task-pane.cc:133
+#: pan/gui/task-pane.cc:131
 #, c-format
 #| msgid ""
 #| "\n"
 #| "<u>Download</u>\n"
 #| "\n"
-#| "<i>Subject:</i> <b>\"%s\"</b>\n"
+#| "<i>Subject:</i> <b>“%s”</b>\n"
 #| "<i>From:</i> <b>%s</b>\n"
 #| "<i>Date:</i> <b>%s</b>\n"
 #| "<i>Groups:</i> <b>%s</b>\n"
@@ -3281,7 +3290,7 @@ msgid ""
 "\n"
 "<u>Download</u>\n"
 "\n"
-"<i>Subject:</i> <b>“%s”</b>\n"
+"<i>Subject:</i> <b>\"%s\"</b>\n"
 "<i>From:</i> <b>%s</b>\n"
 "<i>Date:</i> <b>%s</b>\n"
 "<i>Groups:</i> <b>%s</b>\n"
@@ -3296,160 +3305,160 @@ msgstr ""
 "<i>Групе:</i> <b>%s</b>\n"
 "<i>Путања чувања:</i> <b>%s</b>\n"
 
-#: pan/gui/task-pane.cc:135
+#: pan/gui/task-pane.cc:133
 msgid "unknown"
 msgstr "непознато"
 
-#: pan/gui/task-pane.cc:303
+#: pan/gui/task-pane.cc:301
 msgid "Choose New Destination for Selected Tasks"
 msgstr "Изаберите ново одредиште за изабране задатке"
 
-#: pan/gui/task-pane.cc:457
+#: pan/gui/task-pane.cc:455
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Пан: Задаци (заказаних: %d, покретнутих: %d, заустављених: %d)"
 
-#: pan/gui/task-pane.cc:459
+#: pan/gui/task-pane.cc:457
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Пан: Задаци (заказаних: %d, покретнутих: %d)"
 
-#: pan/gui/task-pane.cc:461
+#: pan/gui/task-pane.cc:459
 msgid "Pan: Tasks"
 msgstr "Пан: Задаци"
 
-#: pan/gui/task-pane.cc:486
+#: pan/gui/task-pane.cc:484
 #, c-format
 msgid "%lu selected, %s"
 msgstr "изабраних: %lu, %s"
 
-#: pan/gui/task-pane.cc:550
+#: pan/gui/task-pane.cc:548
 msgid "Running"
 msgstr "Радим"
 
-#: pan/gui/task-pane.cc:551
+#: pan/gui/task-pane.cc:549
 msgid "Decoding"
 msgstr "Декодирам"
 
-#: pan/gui/task-pane.cc:553
+#: pan/gui/task-pane.cc:551
 msgid "Queued for Decode"
 msgstr "Заказано за декодирање"
 
-#: pan/gui/task-pane.cc:554
+#: pan/gui/task-pane.cc:552
 msgid "Queued for Encode"
 msgstr "Заказано за кодирање"
 
-#: pan/gui/task-pane.cc:555
+#: pan/gui/task-pane.cc:553
 msgid "Queued"
 msgstr "Заказано"
 
-#: pan/gui/task-pane.cc:556
+#: pan/gui/task-pane.cc:554
 msgid "Stopped"
 msgstr "Заустављено"
 
-#: pan/gui/task-pane.cc:557
+#: pan/gui/task-pane.cc:555
 msgid "Removing"
 msgstr "Уклањам"
 
-#: pan/gui/task-pane.cc:586
+#: pan/gui/task-pane.cc:584
 #, c-format
 msgid "%d%% Done"
 msgstr "Урађено је %d%%"
 
-#: pan/gui/task-pane.cc:592
+#: pan/gui/task-pane.cc:590
 #, c-format
-#| msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
-msgid "%d∶%02d∶%02d Remaining (%d @ %lu KiB/s)"
+#| msgid "%d∶%02d∶%02d Remaining (%d @ %lu KiB/s)"
+msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%d∶%02d∶%02d Преостаје (%d @ %lu KiB/s)"
 
-#: pan/gui/task-pane.cc:687 pan/gui/task-pane.cc:688
+#: pan/gui/task-pane.cc:685 pan/gui/task-pane.cc:686
 msgid "Move To Top"
 msgstr "Преместите на врх"
 
-#: pan/gui/task-pane.cc:692 pan/gui/task-pane.cc:693
+#: pan/gui/task-pane.cc:690 pan/gui/task-pane.cc:691
 msgid "Move To Bottom"
 msgstr "Преместите на дно"
 
-#: pan/gui/task-pane.cc:697 pan/gui/task-pane.cc:698
+#: pan/gui/task-pane.cc:695 pan/gui/task-pane.cc:696
 msgid "Show Task Information"
 msgstr "Прикажите податке о задатку"
 
-#: pan/gui/task-pane.cc:702 pan/gui/task-pane.cc:703
+#: pan/gui/task-pane.cc:700 pan/gui/task-pane.cc:701
 msgid "Stop Task"
 msgstr "Зауставите задатак"
 
-#: pan/gui/task-pane.cc:707 pan/gui/task-pane.cc:708
+#: pan/gui/task-pane.cc:705 pan/gui/task-pane.cc:706
 msgid "Delete Task"
 msgstr "Обришите задатак"
 
-#: pan/gui/task-pane.cc:712 pan/gui/task-pane.cc:713
+#: pan/gui/task-pane.cc:710 pan/gui/task-pane.cc:711
 msgid "Restart Task"
 msgstr "Поново покрените задатак"
 
-#: pan/gui/task-pane.cc:717 pan/gui/task-pane.cc:718
+#: pan/gui/task-pane.cc:715 pan/gui/task-pane.cc:716
 msgid "Change Download Destination"
 msgstr "Промени одредиште преузимања"
 
-#: pan/gui/task-pane.cc:1028
+#: pan/gui/task-pane.cc:1026
 msgid "_Online"
 msgstr "_Повежи се"
 
-#: pan/gui/task-pane.cc:1045
+#: pan/gui/task-pane.cc:1043
 msgid "Restart Tasks"
 msgstr "Поново покрените задатке"
 
-#: pan/gui/task-pane.cc:1047
+#: pan/gui/task-pane.cc:1045
 msgid "Stop Tasks"
 msgstr "Зауставите задатке"
 
-#: pan/gui/task-pane.cc:1049
+#: pan/gui/task-pane.cc:1047
 msgid "Delete Tasks"
 msgstr "Обришите задатке"
 
-#: pan/gui/task-pane.cc:1055
+#: pan/gui/task-pane.cc:1053
 msgid "Show popups"
 msgstr "Прикажи облачиће"
 
-#: pan/gui/url.cc:123
+#: pan/gui/url.cc:121
 #, c-format
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr "Грешка покретања адресе: %s (Наредба беше: %s)"
 
 #: pan/tasks/decoder.cc:117
 #, c-format
-#| msgid "Couldn't save file \"%s\": %s"
-msgid "Couldn’t save file “%s”: %s"
+#| msgid "Couldn’t save file “%s”: %s"
+msgid "Couldn't save file \"%s\": %s"
 msgstr "Не могу да сачувам датотеку „%s“: %s"
 
 #: pan/tasks/decoder.cc:139 pan/tasks/encoder.cc:136
 msgid "Error initializing uulib"
 msgstr "Грешка покретања „uulib“-а"
 
-#: pan/tasks/decoder.cc:154 pan/tasks/socket-impl-gio.cc:360
+#: pan/tasks/decoder.cc:159 pan/tasks/socket-impl-gio.cc:360
 #: pan/tasks/socket-impl-openssl.cc:642
 #, c-format
 msgid "Error reading from %s: %s"
 msgstr "Грешка читања из „%s“: %s"
 
-#: pan/tasks/decoder.cc:194
+#: pan/tasks/decoder.cc:199
 #, c-format
-#| msgid "Saved \"%s\""
-msgid "Saved “%s”"
+#| msgid "Saved “%s”"
+msgid "Saved \"%s\""
 msgstr "Сачувао сам „%s“"
 
-#: pan/tasks/decoder.cc:201
+#: pan/tasks/decoder.cc:206
 #, c-format
 #| msgid ""
-#| "Error saving \"%s\":\n"
+#| "Error saving “%s”:\n"
 #| "%s."
 msgid ""
-"Error saving “%s”:\n"
+"Error saving \"%s\":\n"
 "%s."
 msgstr ""
 "Грешка чувања „%s“:\n"
 "%s."
 
-#: pan/tasks/decoder.cc:314 pan/tasks/task-article.cc:354
+#: pan/tasks/decoder.cc:319 pan/tasks/task-article.cc:351
 #, c-format
 msgid "Decoding %s"
 msgstr "Декодирам „%s“"
@@ -3469,32 +3478,32 @@ msgstr "Грешка кодирања „%s“: %s"
 msgid "Encoding %s"
 msgstr "Кодирам „%s“"
 
-#: pan/tasks/nntp.cc:150
+#: pan/tasks/nntp.cc:148
 #, c-format
 msgid "%s requires a username, but none is set."
 msgstr "„%s“ захтева корисничко име, али оно није подешено."
 
-#: pan/tasks/nntp.cc:163
+#: pan/tasks/nntp.cc:161
 #, c-format
 msgid "%s requires a password, but none is set."
 msgstr "„%s“ захтева лозинку, али она није подешена."
 
-#: pan/tasks/nntp.cc:247
+#: pan/tasks/nntp.cc:245
 #, c-format
-#| msgid "Sending \"%s\" to %s returned an error: %s"
-msgid "Sending “%s” to %s returned an error: %s"
+#| msgid "Sending “%s” to %s returned an error: %s"
+msgid "Sending \"%s\" to %s returned an error: %s"
 msgstr "Слање „%s“ на %s је дало грешку: %s"
 
-#: pan/tasks/nntp.cc:270
+#: pan/tasks/nntp.cc:268
 #, c-format
-#| msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
-msgid "Sending “%s” to %s returned an unrecognized response: “%s”"
+#| msgid "Sending “%s” to %s returned an unrecognized response: “%s”"
+msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr "Слање „%s“ на %s је дало непознат одговор: \"%s\""
 
 #: pan/tasks/nntp-pool.cc:235
 #, c-format
-#| msgid "Unable to connect to \"%s\""
-msgid "Unable to connect to “%s”"
+#| msgid "Unable to connect to “%s”"
+msgid "Unable to connect to \"%s\""
 msgstr "Не могу да се повежем са „%s“"
 
 #: pan/tasks/queue.cc:778 pan/tasks/queue.cc:806 pan/tasks/queue.cc:833
@@ -3504,35 +3513,34 @@ msgstr "Нема више места на уређају."
 #: pan/tasks/socket-impl-gio.cc:173 pan/tasks/socket-impl-gio.cc:211
 #: pan/tasks/socket-impl-openssl.cc:214 pan/tasks/socket-impl-openssl.cc:252
 #, c-format
-#| msgid "Error connecting to \"%s\""
-msgid "Error connecting to “%s”"
+#| msgid "Error connecting to “%s”"
+msgid "Error connecting to \"%s\""
 msgstr "Грешка повезивања са „%s“"
 
 #: pan/tasks/socket-impl-gio.cc:359 pan/tasks/socket-impl-openssl.cc:641
 msgid "Unknown Error"
 msgstr "Непозната грешка"
 
-#: pan/tasks/task-article.cc:62 pan/tasks/task-article.cc:160
+#: pan/tasks/task-article.cc:59 pan/tasks/task-article.cc:157
 #, c-format
 msgid "Saving %s"
 msgstr "Чувам „%s“"
 
-#: pan/tasks/task-article.cc:64
+#: pan/tasks/task-article.cc:61
 #, c-format
 msgid "Reading %s"
 msgstr "Читам „%s“"
 
-#: pan/tasks/task-article.cc:326
+#: pan/tasks/task-article.cc:323
 #, c-format
-#| msgid ""
-#| "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
-msgid "Article “%s” is incomplete — the news server(s) don’t have part %s"
+#| msgid "Article “%s” is incomplete — the news server(s) don’t have part %s"
+msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
 msgstr "Чланак „%s“ није потпун — сервер нема део „%s“"
 
 #: pan/tasks/task-groups.cc:41
 #, c-format
-#| msgid "Getting group list from \"%s\""
-msgid "Getting group list from “%s”"
+#| msgid "Getting group list from “%s”"
+msgid "Getting group list from \"%s\""
 msgstr "Добављам списак групе са „%s“"
 
 #: pan/tasks/task-groups.cc:134
@@ -3540,23 +3548,23 @@ msgstr "Добављам списак групе са „%s“"
 msgid "Fetched %lu Groups"
 msgstr "Довукао сам %lu групе"
 
-#: pan/tasks/task-post.cc:35
+#: pan/tasks/task-post.cc:33
 #, c-format
-#| msgid "Posting \"%s\""
-msgid "Posting “%s”"
+#| msgid "Posting “%s”"
+msgid "Posting \"%s\""
 msgstr "Објављујем „%s“"
 
-#: pan/tasks/task-post.cc:80
+#: pan/tasks/task-post.cc:78
 #, c-format
-#| msgid "Posting of \"%s\" failed: %s"
-msgid "Posting of “%s” failed: %s"
+#| msgid "Posting of “%s” failed: %s"
+msgid "Posting of \"%s\" failed: %s"
 msgstr "Није успело објављивање „%s“: %s"
 
-#: pan/tasks/task-post.cc:85
+#: pan/tasks/task-post.cc:83
 #, c-format
-#| msgid "Posting of \"%s\" successful: %s"
-msgid "Posting of “%s” successful: %s"
-msgstr "Објављивање „%s“ је успело: %s"
+#| msgid "Posting of file %s successful: %s"
+msgid "Posting of \"%s\" successful: %s"
+msgstr "Објављивање датотеке „%s“ је успело: %s"
 
 #: pan/tasks/task-upload.cc:51
 #, c-format
@@ -3565,14 +3573,14 @@ msgstr "Отпремам „%s“"
 
 #: pan/tasks/task-upload.cc:265
 #, c-format
-#| msgid "Uploading %s - Part %d of %d"
-msgid "Uploading %s — Part %d of %d"
+#| msgid "Uploading %s — Part %d of %d"
+msgid "Uploading %s - Part %d of %d"
 msgstr "Отпремам „%s“ — %d. део од %d"
 
 #: pan/tasks/task-upload.cc:267
 #, c-format
-#| msgid "Uploading message body with subject \"%s\""
-msgid "Uploading message body with subject “%s”"
+#| msgid "Uploading message body with subject “%s”"
+msgid "Uploading message body with subject \"%s\""
 msgstr "Отпремам разраду поруке са темом „%s“"
 
 #: pan/tasks/task-upload.cc:324
@@ -3614,234 +3622,234 @@ msgstr ""
 "Објављивање датотеке „%s“ није успешно: Проверите дневник (десним тастером "
 "миша на ставку списка)."
 
-#: pan/tasks/task-xover.cc:83
+#: pan/tasks/task-xover.cc:82
 #, c-format
-#| msgid "Getting all headers for \"%s\""
-msgid "Getting all headers for “%s”"
+#| msgid "Getting all headers for “%s”"
+msgid "Getting all headers for \"%s\""
 msgstr "Добављам сва заглавља за „%s“"
 
-#: pan/tasks/task-xover.cc:86
+#: pan/tasks/task-xover.cc:85
 #, c-format
-#| msgid "Getting new headers for \"%s\""
-msgid "Getting new headers for “%s”"
+#| msgid "Getting new headers for “%s”"
+msgid "Getting new headers for \"%s\""
 msgstr "Добављам нова заглавља за „%s“"
 
 #. SAMPLE
-#: pan/tasks/task-xover.cc:90
+#: pan/tasks/task-xover.cc:89
 #, c-format
-#| msgid "Sampling headers for \"%s\""
-msgid "Sampling headers for “%s”"
+#| msgid "Sampling headers for “%s”"
+msgid "Sampling headers for \"%s\""
 msgstr "Узоркујем заглавља за „%s“"
 
-#: pan/tasks/task-xover.cc:431
+#: pan/tasks/task-xover.cc:430
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (бр. делова: %lu, бр. чланака: %lu)"
 
-#: pan/tasks/task-xover.cc:505
+#: pan/tasks/task-xover.cc:504
 #, c-format
-#| msgid "Getting new headers for \"%s\" done."
-msgid "Getting new headers for “%s” done."
+#| msgid "Getting new headers for “%s” done."
+msgid "Getting new headers for \"%s\" done."
 msgstr "Добављање нових заглавља за „%s“ је обављено."
 
 #: pan/tasks/task-xoverinfo.cc:78
 #, c-format
-#| msgid "Getting header counts for \"%s\""
-msgid "Getting header counts for “%s”"
+#| msgid "Getting header counts for “%s”"
+msgid "Getting header counts for \"%s\""
 msgstr "Добављам број заглавља за „%s“"
 
-#: pan/usenet-utils/filter-info.cc:217
-#| msgid "article doesn't have attachments"
-msgid "article doesn’t have attachments"
+#: pan/usenet-utils/filter-info.cc:215
+#| msgid "article doesn’t have attachments"
+msgid "article doesn't have attachments"
 msgstr "чланак нема прилоге"
 
-#: pan/usenet-utils/filter-info.cc:221
+#: pan/usenet-utils/filter-info.cc:219
 msgid "the article has attachments"
 msgstr "чланак има прилоге"
 
-#: pan/usenet-utils/filter-info.cc:225
-#| msgid "the article isn't cached locally"
-msgid "the article isn’t cached locally"
-msgstr "чланак није причуван локално"
+#: pan/usenet-utils/filter-info.cc:223
+#| msgid "the article is cached locally"
+msgid "the article isn't cached locally"
+msgstr "чланак је причуван локално"
 
-#: pan/usenet-utils/filter-info.cc:229
+#: pan/usenet-utils/filter-info.cc:227
 msgid "the article is cached locally"
 msgstr "чланак је причуван локално"
 
-#: pan/usenet-utils/filter-info.cc:233
-#| msgid "the article wasn't posted by you"
-msgid "the article wasn’t posted by you"
-msgstr "чланак нисте ви објавили"
+#: pan/usenet-utils/filter-info.cc:231
+#| msgid "the article was posted by you"
+msgid "the article wasn't posted by you"
+msgstr "чланак сте ви објавили"
 
-#: pan/usenet-utils/filter-info.cc:237
+#: pan/usenet-utils/filter-info.cc:235
 msgid "the article was posted by you"
 msgstr "чланак сте ви објавили"
 
-#: pan/usenet-utils/filter-info.cc:241
+#: pan/usenet-utils/filter-info.cc:239
 msgid "the article has been read"
 msgstr "чланак је прочитан"
 
-#: pan/usenet-utils/filter-info.cc:245
-#| msgid "the article hasn't been read"
-msgid "the article hasn’t been read"
-msgstr "чланак није прочитан"
+#: pan/usenet-utils/filter-info.cc:243
+#| msgid "the article has been read"
+msgid "the article hasn't been read"
+msgstr "чланак је прочитан"
 
-#: pan/usenet-utils/filter-info.cc:249
+#: pan/usenet-utils/filter-info.cc:247
 #, c-format
 msgid "the article is less than %ld bytes long"
 msgstr "дужина чланка је мања од %ld бајта"
 
-#: pan/usenet-utils/filter-info.cc:254
+#: pan/usenet-utils/filter-info.cc:252
 #, c-format
 msgid "the article is at least %ld bytes long"
 msgstr "дужина чланка је барем %ld бајта"
 
-#: pan/usenet-utils/filter-info.cc:259
+#: pan/usenet-utils/filter-info.cc:257
 #, c-format
 msgid "the article is less than %ld lines long"
 msgstr "дужина чланка је мања од %ld реда"
 
-#: pan/usenet-utils/filter-info.cc:264
+#: pan/usenet-utils/filter-info.cc:262
 #, c-format
 msgid "the article is at least %ld lines long"
 msgstr "дужина чланка је барем %ld реда"
 
-#: pan/usenet-utils/filter-info.cc:269
+#: pan/usenet-utils/filter-info.cc:267
 #, c-format
 msgid "the article is less than %ld days old"
 msgstr "чланак је млађи од %ld дана"
 
-#: pan/usenet-utils/filter-info.cc:274
+#: pan/usenet-utils/filter-info.cc:272
 #, c-format
 msgid "the article is at least %ld days old"
 msgstr "чланак је стар барем %ld дана"
 
-#: pan/usenet-utils/filter-info.cc:279
+#: pan/usenet-utils/filter-info.cc:277
 #, c-format
 msgid "the article was posted to less than %ld groups"
 msgstr "чланак је објављен на мање од %ld групе"
 
-#: pan/usenet-utils/filter-info.cc:284
+#: pan/usenet-utils/filter-info.cc:282
 #, c-format
 msgid "the article was posted to at least %ld groups"
 msgstr "чланак је објављен барем на %ld групе"
 
-#: pan/usenet-utils/filter-info.cc:289
+#: pan/usenet-utils/filter-info.cc:287
 #, c-format
-#| msgid "the article's score is less than %ld"
-msgid "the article’s score is less than %ld"
+#| msgid "the article’s score is less than %ld"
+msgid "the article's score is less than %ld"
 msgstr "учинак чланка је мањи од %ld"
 
-#: pan/usenet-utils/filter-info.cc:294
+#: pan/usenet-utils/filter-info.cc:292
 #, c-format
-#| msgid "the article's score is %ld or higher"
-msgid "the article’s score is %ld or higher"
+#| msgid "the article’s score is %ld or higher"
+msgid "the article's score is %ld or higher"
 msgstr "учинак чланка је %ld или већи"
+
+#: pan/usenet-utils/filter-info.cc:301 pan/usenet-utils/filter-info.cc:311
+#, c-format
+#| msgid "%s doesn’t contain “%s”"
+msgid "%s doesn't contain \"%s\""
+msgstr "„%s“ не садржи „%s“"
+
+#: pan/usenet-utils/filter-info.cc:302 pan/usenet-utils/filter-info.cc:312
+#, c-format
+#| msgid "%s isn’t “%s”"
+msgid "%s isn't \"%s\""
+msgstr "„%s“ није „%s“"
 
 #: pan/usenet-utils/filter-info.cc:303 pan/usenet-utils/filter-info.cc:313
 #, c-format
-#| msgid "%s doesn't contain \"%s\""
-msgid "%s doesn’t contain “%s”"
-msgstr "„%s“ не садржи „%s“"
+#| msgid "%s doesn’t begin with “%s”"
+msgid "%s doesn't begin with \"%s\""
+msgstr "„%s“ не почиње са „%s“"
 
 #: pan/usenet-utils/filter-info.cc:304 pan/usenet-utils/filter-info.cc:314
 #, c-format
-#| msgid "%s isn't \"%s\""
-msgid "%s isn’t “%s”"
-msgstr "„%s“ није „%s“"
+#| msgid "%s doesn’t end with “%s”"
+msgid "%s doesn't end with \"%s\""
+msgstr "„%s“ се не завршава са „%s“"
 
 #: pan/usenet-utils/filter-info.cc:305 pan/usenet-utils/filter-info.cc:315
 #, c-format
-#| msgid "%s doesn't begin with \"%s\""
-msgid "%s doesn’t begin with “%s”"
-msgstr "„%s“ не почиње са „%s“"
-
-#: pan/usenet-utils/filter-info.cc:306 pan/usenet-utils/filter-info.cc:316
-#, c-format
-#| msgid "%s doesn't end with \"%s\""
-msgid "%s doesn’t end with “%s”"
-msgstr "„%s“ се не завршава са „%s“"
-
-#: pan/usenet-utils/filter-info.cc:307 pan/usenet-utils/filter-info.cc:317
-#, c-format
-#| msgid "%s doesn't match the regex \"%s\""
-msgid "%s doesn’t match the regex “%s”"
+#| msgid "%s doesn’t match the regex “%s”"
+msgid "%s doesn't match the regex \"%s\""
 msgstr "„%s“ не одговара регуларном изразу „%s“"
+
+#: pan/usenet-utils/filter-info.cc:327
+#, c-format
+#| msgid "%s contains “%s”"
+msgid "%s contains \"%s\""
+msgstr "„%s“ садржи „%s“"
+
+#: pan/usenet-utils/filter-info.cc:328
+#, c-format
+#| msgid "%s is “%s”"
+msgid "%s is \"%s\""
+msgstr "„%s“ јесте „%s“"
 
 #: pan/usenet-utils/filter-info.cc:329
 #, c-format
-#| msgid "%s contains \"%s\""
-msgid "%s contains “%s”"
-msgstr "„%s“ садржи „%s“"
+#| msgid "%s begins with “%s”"
+msgid "%s begins with \"%s\""
+msgstr "„%s“ почиње са „%s“"
 
 #: pan/usenet-utils/filter-info.cc:330
 #, c-format
-#| msgid "%s is \"%s\""
-msgid "%s is “%s”"
-msgstr "„%s“ јесте „%s“"
+#| msgid "%s ends with “%s”"
+msgid "%s ends with \"%s\""
+msgstr "„%s“ се завршава са „%s“"
 
 #: pan/usenet-utils/filter-info.cc:331
 #, c-format
-#| msgid "%s begins with \"%s\""
-msgid "%s begins with “%s”"
-msgstr "„%s“ почиње са „%s“"
-
-#: pan/usenet-utils/filter-info.cc:332
-#, c-format
-#| msgid "%s ends with \"%s\""
-msgid "%s ends with “%s”"
-msgstr "„%s“ се завршава са „%s“"
-
-#: pan/usenet-utils/filter-info.cc:333
-#, c-format
-#| msgid "%s matches the regex \"%s\""
-msgid "%s matches the regex “%s”"
+#| msgid "%s matches the regex “%s”"
+msgid "%s matches the regex \"%s\""
 msgstr "„%s“ одговара регуларном изразу „%s“"
 
-#: pan/usenet-utils/filter-info.cc:339
+#: pan/usenet-utils/filter-info.cc:337
 msgid "Any of these tests fail:"
 msgstr "Нека од ових проба није успела:"
 
-#: pan/usenet-utils/filter-info.cc:346
+#: pan/usenet-utils/filter-info.cc:344
 msgid "All of these tests pass:"
 msgstr "Све ове пробе су прошле:"
 
-#: pan/usenet-utils/filter-info.cc:353
+#: pan/usenet-utils/filter-info.cc:351
 msgid "None of these tests pass:"
 msgstr "Ниједна од ових проба није прошла:"
 
-#: pan/usenet-utils/filter-info.cc:360
+#: pan/usenet-utils/filter-info.cc:358
 msgid "Any of these tests pass:"
 msgstr "Нека од ових проба је прошла:"
 
 #: pan/usenet-utils/gnksa.cc:880
 #, c-format
-#| msgid "No email address provided; generating message-id with domain \"%s\""
-msgid "No email address provided; generating message-id with domain “%s”"
+#| msgid "No email address provided; generating message-id with domain “%s”"
+msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr "Нисте доставили адресу ел. поште; стварам иб поруке са доменом „%s“"
 
-#: pan/usenet-utils/message-check.cc:124
+#: pan/usenet-utils/message-check.cc:122
 msgid "Warning: Reply seems to be top-posted."
 msgstr "Упозорење: Изгледа да је одговор објављен поруке."
 
-#: pan/usenet-utils/message-check.cc:145
-#| msgid "Warning: The signature marker should be \"-- \", not \"--\"."
-msgid "Warning: The signature marker should be “-- ”, not “--”."
+#: pan/usenet-utils/message-check.cc:143
+#| msgid "Warning: The signature marker should be “-- ”, not “--”."
+msgid "Warning: The signature marker should be \"-- \", not \"--\"."
 msgstr "Упозорење: Раздвајач потписа треба да буде „-- “ а не „--“."
 
-#: pan/usenet-utils/message-check.cc:162
+#: pan/usenet-utils/message-check.cc:160
 msgid "Warning: Signature prefix with no signature."
 msgstr "Упозорење: Префикс потписа нема потпис."
 
-#: pan/usenet-utils/message-check.cc:167
+#: pan/usenet-utils/message-check.cc:165
 msgid "Warning: Signature is more than 4 lines long."
 msgstr "Упозорење: Потпис је дужи од 4 реда."
 
-#: pan/usenet-utils/message-check.cc:172
+#: pan/usenet-utils/message-check.cc:170
 msgid "Warning: Signature is more than 80 characters wide."
 msgstr "Упозорење: Потпис је дужи од 80 знакова."
 
-#: pan/usenet-utils/message-check.cc:198
+#: pan/usenet-utils/message-check.cc:196
 #, c-format
 msgid "Warning: %d line is more than 80 characters wide."
 msgid_plural "Warning: %d lines are more than 80 characters wide."
@@ -3850,138 +3858,138 @@ msgstr[1] "Упозорење: %d реда су дужа од 80 знакова.
 msgstr[2] "Упозорење: %d редова је дуже од 80 знакова."
 msgstr[3] "Упозорење: Један ред је дужи од 80 знакова."
 
-#: pan/usenet-utils/message-check.cc:223
+#: pan/usenet-utils/message-check.cc:221
 msgid "Error: Message is empty."
 msgstr "Грешка: Порука је празна."
 
-#: pan/usenet-utils/message-check.cc:258
+#: pan/usenet-utils/message-check.cc:256
 msgid "Warning: The message is entirely quoted text!"
 msgstr "Упозорење: Порука је у потпуности цитирани текст!"
 
-#: pan/usenet-utils/message-check.cc:259
+#: pan/usenet-utils/message-check.cc:257
 msgid "Warning: The message is mostly quoted text."
 msgstr "Упозорење: Порука је већим делом цитирани текст."
 
-#: pan/usenet-utils/message-check.cc:309
+#: pan/usenet-utils/message-check.cc:307
 msgid "Error: Message appears to have no new content."
 msgstr "Грешка: Порука изгледа као да не садржи нови садржај."
 
-#: pan/usenet-utils/message-check.cc:344 pan/usenet-utils/message-check.cc:383
+#: pan/usenet-utils/message-check.cc:342 pan/usenet-utils/message-check.cc:381
 #, c-format
 #| msgid ""
-#| "Warning: The posting profile's server doesn't carry newsgroup\n"
-#| "\t\"%s\".\n"
-#| "\tIf the group name is correct, switch profiles in the \"From:\"\n"
-#| "\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
+#| "Warning: The posting profile’s server doesn’t carry newsgroup\n"
+#| "\t“%s”.\n"
+#| "\tIf the group name is correct, switch profiles in the “From:”\n"
+#| "\tline or edit the profile with “Edit → Manage Posting Profiles”."
 msgid ""
-"Warning: The posting profile’s server doesn’t carry newsgroup\n"
-"\t“%s”.\n"
-"\tIf the group name is correct, switch profiles in the “From:”\n"
-"\tline or edit the profile with “Edit → Manage Posting Profiles”."
+"Warning: The posting profile's server doesn't carry newsgroup\n"
+"\t\"%s\".\n"
+"\tIf the group name is correct, switch profiles in the \"From:\"\n"
+"\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
 msgstr ""
 "Упозорење: Сервер профила објављивања не преноси причаоницу\n"
 "\t„%s“.\n"
 "\tАко је назив групе исправан, промените профиле у реду „Шаље:“\n"
-"\tили уредите профил у изборнику „Уреди → Уреди профиле објављивања“."
+"\tили уредите профил у изборнику „Уреди|Уреди профиле објављивања“."
 
-#: pan/usenet-utils/message-check.cc:355
+#: pan/usenet-utils/message-check.cc:353
 msgid "Warning: Following-Up to too many groups."
 msgstr "Упозорење: Превише група за праћење."
 
-#: pan/usenet-utils/message-check.cc:366
+#: pan/usenet-utils/message-check.cc:364
 msgid "Error: No Subject specified."
 msgstr "Грешка: Није наведена тема."
 
-#: pan/usenet-utils/message-check.cc:395
+#: pan/usenet-utils/message-check.cc:393
 #, c-format
-#| msgid "Warning: Group \"%s\" is read-only."
-msgid "Warning: Group “%s” is read-only."
+#| msgid "Warning: Group “%s” is read-only."
+msgid "Warning: Group \"%s\" is read-only."
 msgstr "Упозорење: Група „%s“ је само за читање."
 
-#: pan/usenet-utils/message-check.cc:404
+#: pan/usenet-utils/message-check.cc:402
 msgid "Error: Posting to a very large number of groups."
 msgstr "Грешка: Објављујем на врло велики број група."
 
 # bug(slobo): вероватно извештај о достави
-#: pan/usenet-utils/message-check.cc:409
+#: pan/usenet-utils/message-check.cc:407
 msgid "Warning: Posting to a large number of groups."
 msgstr "Упозорење: Објављујем на велики број група."
 
-#: pan/usenet-utils/message-check.cc:416
+#: pan/usenet-utils/message-check.cc:414
 msgid "Warning: Crossposting without setting Followup-To header."
 msgstr "Упозорење: Унакрсно објављивање без подешавања заглавља „Прати“."
 
-#: pan/usenet-utils/message-check.cc:441
+#: pan/usenet-utils/message-check.cc:439
 msgid "Error: Bad email address."
 msgstr "Грешка: Лоша адреса ел. поште."
 
-#: pan/usenet-utils/message-check.cc:450
+#: pan/usenet-utils/message-check.cc:448
 msgid "Warning: Most newsgroups frown upon HTML posts."
 msgstr "Упозорење: Већина причаоница из ХТМЛ објава."
 
-#: pan/usenet-utils/message-check.cc:490
+#: pan/usenet-utils/message-check.cc:488
 msgid "Error: No Recipients."
 msgstr "Грешка: Нема прималаца."
 
-#: pan/usenet-utils/scorefile.cc:304
+#: pan/usenet-utils/scorefile.cc:302
 #, c-format
 #| msgid ""
-#| "Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
-#| "'Expires: DD-MM-YYYY'."
+#| "Error reading score in %*.*s, line %d: expected “Expires: MM/DD/YYYY” or "
+#| "“Expires: DD-MM-YYYY”."
 msgid ""
-"Error reading score in %*.*s, line %d: expected “Expires: MM/DD/YYYY” or "
-"“Expires: DD-MM-YYYY”."
+"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
+"'Expires: DD-MM-YYYY'."
 msgstr ""
 "Грешка читања учинка у %*.*s, %d. ред: очекивах „Истиче: ММ/ДД/ГГГГ“ или "
 "„Истиче: ДД-ММ-ГГГГ“."
 
-#: pan/usenet-utils/scorefile.cc:307
+#: pan/usenet-utils/scorefile.cc:305
 #, c-format
 msgid "Expired old score from %*.*s, line %d"
 msgstr "Стари учинак је истекао од %*.*s, %d. ред"
 
-#: pan/usenet-utils/scorefile.cc:380
+#: pan/usenet-utils/scorefile.cc:378
 #, c-format
 msgid "Error reading score in %*.*s, line %d: unexpected line."
 msgstr "Грешка читања учинка у %*.*s, %d. ред: неочекивани ред."
 
-#: pan/usenet-utils/scorefile.cc:429
+#: pan/usenet-utils/scorefile.cc:427
 #, c-format
-#| msgid "Read %lu scoring rules in %lu sections from \"%s\""
-msgid "Read %lu scoring rules in %lu sections from “%s”"
+#| msgid "Read %lu scoring rules in %lu sections from “%s”"
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr "Читам %lu правила оцењивања у %lu одељка из „%s“"
 
-#: pan/usenet-utils/ssl-utils.h:189
+#: pan/usenet-utils/ssl-utils.h:187
 #, c-format
-#| msgid "Error printing the server certificate for '%s'"
-msgid "Error printing the server certificate for “%s”"
+#| msgid "Error printing the server certificate for “%s”"
+msgid "Error printing the server certificate for '%s'"
 msgstr "Грешка исписивања уверења сервера за „%s“"
 
-#: pan/usenet-utils/ssl-utils.h:205
+#: pan/usenet-utils/ssl-utils.h:203
 #, c-format
 #| msgid ""
-#| "The current server <b>'%s'</b> sent this security certificate:\n"
+#| "The current server <b>“%s”</b> sent this security certificate:\n"
 #| "\n"
 msgid ""
-"The current server <b>“%s”</b> sent this security certificate:\n"
+"The current server <b>'%s'</b> sent this security certificate:\n"
 "\n"
 msgstr ""
 "Текући сервер <b>„%s“</b> је послао ово безбедносно уверење:\n"
 "\n"
 
-#: pan/usenet-utils/ssl-utils.h:206
+#: pan/usenet-utils/ssl-utils.h:204
 #, c-format
 #| msgid ""
-#| "Certificate information for server <b>'%s'</b>:\n"
+#| "Certificate information for server <b>“%s”</b>:\n"
 #| "\n"
 msgid ""
-"Certificate information for server <b>“%s”</b>:\n"
+"Certificate information for server <b>'%s'</b>:\n"
 "\n"
 msgstr ""
 "Подаци уверења за сервер <b>„%s“</b>:\n"
 "\n"
 
-#: pan/usenet-utils/ssl-utils.h:208
+#: pan/usenet-utils/ssl-utils.h:206
 #, c-format
 msgid ""
 "%s<b>Issuer information:</b>\n"
@@ -3998,35 +4006,62 @@ msgstr ""
 "<b>Не важи пре:</b> %s\n"
 "\n"
 
-#: pan/usenet-utils/text-massager.cc:399
+#: pan/usenet-utils/text-massager.cc:397
 msgid "> [quoted text muted]"
 msgstr "> [цитирани текст утишан]"
 
-#: pan/usenet-utils/text-massager.cc:581
+#: pan/usenet-utils/text-massager.cc:579
 msgid "no_name"
 msgstr "без_имена"
 
-#: pan/usenet-utils/text-massager.cc:582
+#: pan/usenet-utils/text-massager.cc:580
 msgid "no_mail"
 msgstr "нема_поште"
 
-#~ msgid "_Save Articles..."
-#~ msgstr "_Сачувај чланке..."
+#~ msgid "pan"
+#~ msgstr "pan"
 
-#~ msgid "Save Articles..."
-#~ msgstr "Сачувајте чланке..."
+#~| msgid "Save Articles"
+#~ msgid "_Save Articles…"
+#~ msgstr "_Сачувајте чланке…"
 
-#~ msgid "Save Articles from Selected _NZB..."
-#~ msgstr "Сачувај чланке из изабраних _НЗБ-а..."
+#~| msgid "Save Articles"
+#~ msgid "Save Articles…"
+#~ msgstr "Сачувајте чланке…"
 
-#~ msgid "Save Articles to an NZB _File..."
-#~ msgstr "Сачувај чланке у НЗБ _датотеку..."
+#~| msgid "Save Articles from Selected NZB"
+#~ msgid "Save Articles from Selected _NZB…"
+#~ msgstr "Сачувајте чланке из изабраних _НЗБ-а…"
 
-#~ msgid "_Import NZB Files..."
-#~ msgstr "_Увези НЗБ датотеке..."
+#~| msgid "Save Articles to an NZB File"
+#~ msgid "Save Articles to an NZB _File…"
+#~ msgstr "Сачувајте чланке у НЗБ _датотеку…"
 
-#~ msgid "isn't"
+#~| msgid "Import NZB Files"
+#~ msgid "_Import NZB Files…"
+#~ msgstr "_Увезите НЗБ датотеке…"
+
+#~ msgid "X-Face (Avatar)"
+#~ msgstr "Х-лице (Аватар)"
+
+#~ msgid "isn’t"
 #~ msgstr "није"
+
+#~| msgid "Posting of \"%s\" successful: %s"
+#~ msgid "Posting of “%s” successful: %s"
+#~ msgstr "Објављивање „%s“ је успело: %s"
+
+#~| msgid "the article isn't cached locally"
+#~ msgid "the article isn’t cached locally"
+#~ msgstr "чланак није причуван локално"
+
+#~| msgid "the article wasn't posted by you"
+#~ msgid "the article wasn’t posted by you"
+#~ msgstr "чланак нисте ви објавили"
+
+#~| msgid "the article hasn't been read"
+#~ msgid "the article hasn’t been read"
+#~ msgstr "чланак није прочитан"
 
 #~ msgid "GNOME Keyring"
 #~ msgstr "Гномов привезак кључева"
