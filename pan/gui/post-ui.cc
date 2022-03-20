@@ -1747,39 +1747,39 @@ PostUI :: save_draft ()
           draft_filename = filename;
           select_ok = true;
 
-           if (is_file_exist(draft_filename.c_str()))
-             {
-               no_overwrite = true;
-               GtkWidget * dialog_w = gtk_message_dialog_new (
+          if (is_file_exist(draft_filename.c_str()))
+          {
+              no_overwrite = true;
+              GtkWidget * dialog_w = gtk_message_dialog_new (
                GTK_WINDOW(_root),
                GTK_DIALOG_DESTROY_WITH_PARENT,
                GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, NULL);
-               HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(dialog_w),
+              HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(dialog_w),
                _("File already exists."),
                _("Overwrite it?"));
-               gtk_dialog_add_buttons (GTK_DIALOG(dialog_w),
+              gtk_dialog_add_buttons (GTK_DIALOG(dialog_w),
                          GTK_STOCK_GO_BACK, GTK_RESPONSE_NO,
                          GTK_STOCK_YES, GTK_RESPONSE_OK,
                          NULL);
-               gtk_dialog_set_default_response (GTK_DIALOG(dialog_w), GTK_RESPONSE_NO);
-                switch(gtk_dialog_run(GTK_DIALOG(dialog_w)))
-                    {
-                case GTK_RESPONSE_OK:
+              gtk_dialog_set_default_response (GTK_DIALOG(dialog_w), GTK_RESPONSE_NO);
+              switch(gtk_dialog_run(GTK_DIALOG(dialog_w)))
+              {
+              case GTK_RESPONSE_OK:
                   no_overwrite = false;
                   break;
-                  case GTK_RESPONSE_NO:
+              case GTK_RESPONSE_NO:
                   no_overwrite = true;
                   break;
-                    default:
-                      no_overwrite = true;
-                      break;
-                  }
-               gtk_widget_destroy (dialog_w);
-           }
+              default:
+                  no_overwrite = true;
+                  break;
+              }
+              gtk_widget_destroy (dialog_w);
+          }
         } else
-        {
-      select_ok = false;
-    }
+      {
+          select_ok = false;
+      }
 
      } while (!(no_overwrite || select_ok));
 
@@ -1791,16 +1791,16 @@ PostUI :: save_draft ()
       o << pch;
       o.close ();
 
-    if (o.fail())
+      if (o.fail())
       {
-        GtkWidget * e = gtk_message_dialog_new (
-        GTK_WINDOW(d),
-        GTK_DIALOG_DESTROY_WITH_PARENT,
-        GTK_MESSAGE_ERROR,
-        GTK_BUTTONS_CLOSE,
-        _("Unable to save \"%s\" %s"), filename, file::pan_strerror(errno));
-        gtk_dialog_run (GTK_DIALOG(e));
-        gtk_widget_destroy (e);
+          GtkWidget * e = gtk_message_dialog_new (
+              GTK_WINDOW(d),
+              GTK_DIALOG_DESTROY_WITH_PARENT,
+              GTK_MESSAGE_ERROR,
+              GTK_BUTTONS_CLOSE,
+              _("Unable to save \"%s\" %s"), filename, file::pan_strerror(errno));
+          gtk_dialog_run (GTK_DIALOG(e));
+          gtk_widget_destroy (e);
       }
 
       g_free (pch);
