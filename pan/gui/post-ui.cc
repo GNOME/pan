@@ -1728,7 +1728,8 @@ PostUI :: save_draft ()
    std::string draft_filename;
    char* filename;
    GMimeMessage* msg;
-   bool no_overwrite = true;
+   bool do_overwrite = false;
+   bool need_overwrite = false;
    bool select_ok = false;
 
    gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_ACCEPT);
@@ -1749,7 +1750,7 @@ PostUI :: save_draft ()
 
           if (is_file_exist(draft_filename.c_str()))
           {
-              no_overwrite = true;
+              need_overwrite = true;
               GtkWidget * dialog_w = gtk_message_dialog_new (
                GTK_WINDOW(_root),
                GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -1765,25 +1766,28 @@ PostUI :: save_draft ()
               switch(gtk_dialog_run(GTK_DIALOG(dialog_w)))
               {
               case GTK_RESPONSE_OK:
-                  no_overwrite = false;
+                  do_overwrite = true;
                   break;
               case GTK_RESPONSE_NO:
-                  no_overwrite = true;
+                  do_overwrite = false;
                   break;
               default:
-                  no_overwrite = true;
+                  do_overwrite = false;
                   break;
               }
               gtk_widget_destroy (dialog_w);
+          }
+          else {
+              need_overwrite = false;
           }
         } else
       {
           select_ok = false;
       }
 
-     } while (!(no_overwrite || select_ok));
+     } while ( do_overwrite != need_overwrite );
 
-   if (!no_overwrite && select_ok)
+   if (do_overwrite == need_overwrite && select_ok)
     {
       errno = 0;
       std::ofstream o (filename);
