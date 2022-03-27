@@ -1420,8 +1420,8 @@ void GUI :: do_cancel_article ()
   // okay then...
   GMimeMessage * cancel = g_mime_message_new (false);
   char * cancel_message = g_strdup_printf ("cancel <%s>", g_mime_message_get_message_id(message));
-  const char * s_addr = internet_address_list_to_string(g_mime_message_get_sender (message), NULL, TRUE);
-  g_mime_message_add_mailbox (cancel, GMIME_ADDRESS_TYPE_SENDER, NULL, s_addr);
+  const char * sk_addr = internet_address_list_to_string(g_mime_message_get_sender (message), NULL, TRUE);
+  g_mime_message_add_mailbox (cancel, GMIME_ADDRESS_TYPE_SENDER, NULL, sk_addr);
   g_mime_message_set_subject (cancel, "Cancel", NULL);
   g_mime_object_set_header ((GMimeObject *)cancel, "Newsgroups", g_mime_object_get_header ((GMimeObject *)message, "Newsgroups"), NULL);
   g_mime_object_set_header ((GMimeObject *)cancel, "Control", cancel_message, NULL);

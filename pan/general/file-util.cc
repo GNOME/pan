@@ -22,6 +22,8 @@
 #include <cerrno>
 #include <cctype>
 
+#include <glib.h>
+
 extern "C"
 {
   #include <unistd.h>
@@ -31,7 +33,6 @@ extern "C"
     #include <pwd.h>
   #endif
 }
-#include <glib.h>
 #include <glib/gi18n.h>
 
 #include "debug.h"
