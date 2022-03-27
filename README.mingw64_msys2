@@ -1,0 +1,29 @@
+Instructions for msys2/mingw64
+
+
+See https://www.mingw-w64.org/
+    https://www.msys2.org/
+
+Install msys2 as per instructions. You will also need to install
+* pcre
+* gtk3
+* gmime
+
+$ pacman -S pcre mingw-w64-x86_64-gtk3 mingw-w64-x86_64-gmime
+
+Then you can create an msys2 x64 window and run autogen and make.
+
+If you want to make a standalone pan, you will need to do the following:
+
+1. Copy pan into directory of your choice
+1. cd <target dir>
+1. Run `ldd pan.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" .`
+1. Copy GdkPixbuf Loaders
+1.1. `cp -r /mingw64/lib/gdk-pixbuf-2.0 ./lib/gdk-pixbuf-2.0
+1. Copy Icon themes
+1.1. `cp -r /mingw64/share/icons/* ./share/icons/
+1. Copy settins schemas
+1.1. `cp /mingw64/share/glib-2.0/schemas/* ./share/glib-2.0/schemas/`
+1.1. `glib-compile-schemas.exe ./share/glib-2.0/schemas/`
+
+This version of pan will run, but so far not been able to see images
