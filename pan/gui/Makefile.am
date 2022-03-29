@@ -97,14 +97,16 @@ WINRC = panrc.rc
 WINRCOBJ = $(WINRC:.rc=.o)
 .rc.o: ../../config.h $(srcdir)/pan/icons/Pan.ico
 	$(WINDRES) -I . -I $(srcdir) -o $@ -i $<
+WINLIBS = -liconv
 else
 WINRC =
 WINRCOBJ =
+WINLIBS =
 endif
 
 pan_SOURCES = gui.cc pan.cc $(WINRC)
 pan_LDADD = ./libpangui.a $(WINRCOBJ) ../data-impl/libpandata.a ../tasks/libtasks.a ../data/libdata.a ../usenet-utils/libusenetutils.a ../general/libgeneralutils.a ../../uulib/libuu.a \
-		@GTKSPELL_LIBS@ @ENCHANT_LIBS@ @GTK_LIBS@ @GMIME_LIBS@ @GLIB_LIBS@ @GNUTLS_LIBS@ @LIBNOTIFY_LIBS@ @LIBGNOME_KEYRING_1_LIBS@ @WEBKITGTK_LIBS@ @ZLIB_LIBS@ @LIBICONV@
+		@GTKSPELL_LIBS@ @ENCHANT_LIBS@ @GTK_LIBS@ @GMIME_LIBS@ @GLIB_LIBS@ @GNUTLS_LIBS@ @LIBNOTIFY_LIBS@ @LIBGNOME_KEYRING_1_LIBS@ @WEBKITGTK_LIBS@ @ZLIB_LIBS@ ${WINLIBS}
 if HAVE_WIN32
 pan_LDFLAGS = -mwindows
 endif
