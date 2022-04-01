@@ -9,21 +9,70 @@ Install msys2 as per instructions. You will also need to install
 * gtk3
 * gmime
 
+$ pacman -S mingw-w64-x86_64-gtk2
+$ pacman -S mingw-w64-x86_64-gtk3
 $ pacman -S pcre mingw-w64-x86_64-gtk3 mingw-w64-x86_64-gmime
 
-Then you can create an msys2 x64 window and run autogen and make.
+Then you can create an msys2 x64 window and run
+
+`autogen` or `autogen --with-gtk2`
+
+and `make`.
+
+Personally I think the gtk2 version looks a *lot* better
 
 If you want to make a standalone pan, you will need to do the following:
+
+(I should probably make a script to do this)
 
 1. Copy pan into directory of your choice
 1. cd <target dir>
 1. Run `ldd pan.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" .`
 1. Copy GdkPixbuf Loaders
 1.1. `cp -r /mingw64/lib/gdk-pixbuf-2.0 ./lib/gdk-pixbuf-2.0
+
+These aren't necessary if you want a windows theme
+
 1. Copy Icon themes
 1.1. `cp -r /mingw64/share/icons/* ./share/icons/
+1. Copy default themes
+1.1. `cp -r /mingw64/share/themes/* ./share/themes/
 1. Copy settins schemas
 1.1. `cp /mingw64/share/glib-2.0/schemas/* ./share/glib-2.0/schemas/`
 1.1. `glib-compile-schemas.exe ./share/glib-2.0/schemas/`
 
+If you want a windows theme, run
+```
+mkdir ./etc/gtk-3.0
+cat > ./etc/gtk-3.0/settings.ini
+[Settings]
+gtk-theme-name=win32
+<ctrl-d>
+
+If you want other themes, you can install them in share/themes in the target directory.
+
 This version of pan will run, but so far not been able to see images
+
+need to copy libjpeg-8.dll. How would I know that??? (ldd on all the dll files)
+do I need the .a files from gfk-pixbuf? (old pan suggests not)
+
+To add:
+* [[http://gtkspell.sourceforge.net][GtkSpell 3]] 2.0.16 or higher for spellchecker support
+  (GtkSpell 2.0.7 or higher when using GTK 2)
+  *  mingw-w64-gtkspell(3) which?
+
+* [[http://www.abisource.com/projects/enchant/][Enchant]] 2.2.3 or higher for spellchecker support
+  (Enchant 1.6.0 or higher when using GTK 2)
+  * mingw-w64-enchant
+
+- [[http://www.galago-project.org/news/index.php][libnotify]] 0.4.1 or higher for notifications
+
+- [[https://developer.gnome.org/libsecret/][libsecret]] 0.16 or higher and [[https://developer.gnome.org/gcr/][gcr]] 3.20 or higher for password storage
+
+  ([[https://wiki.gnome.org/Projects/GnomeKeyring][GNOME Keyring]] 3.2.0 or higher when using GTK 2)
+
+- [[http://www.freedesktop.org/wiki/Software/dbus][D-Bus]] to support running multiple Pan instances
+
+- [[http://www.gnu.org/software/gnutls/][GnuTLS]] 3.0.0 or higher for encrypted connections (TLS 1.x)
+
+- [[https://wiki.gnome.org/Apps/Yelp/Tools][Yelp Tools]] for built-in user manual
