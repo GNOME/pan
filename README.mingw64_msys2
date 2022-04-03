@@ -11,15 +11,56 @@ Install msys2 as per instructions. You will also need to install
 
 $ pacman -S mingw-w64-x86_64-gtk2
 $ pacman -S mingw-w64-x86_64-gtk3
-$ pacman -S pcre mingw-w64-x86_64-gtk3 mingw-w64-x86_64-gmime
+$ pacman -S pcre mingw-w64-x86_64-gmime
+
+For spellcheck
+$ pacman -S mingw-w64-x86_64-gtkspell mingw-w64-x86_64-enchant
+
 
 Then you can create an msys2 x64 window and run
 
 `autogen` or `autogen --with-gtk2`
 
+--with-gtkspell for spellcheck
+
+--with-yelp-tools for user manual
+
+--with-gmime-crypto for cryptography
+--enable-libnotify for notifications
+--enable-gkr for gnome keyring
+
 and `make`.
 
 Personally I think the gtk2 version looks a *lot* better
+
+
+
+
+
+
+
+
+-----------------------------------
+oddly, when running autogen.sh --with-gtk2 --with-gtkspell I get
+
+
+Configuration:
+
+        Prefix:                 /mingw64
+        Source code location:   .
+        Compiler:               g++
+        With D-Bus:             no
+        With GMime crypto:      yes
+        With GtkSpell:          no
+        With GTK 3:             no
+        With WebKitGTK:         no
+        With GnuTLS:            no
+        With libnotify:
+        With password storage:
+        With yelp-tools:        yes
+        With user manual:       no
+
+------------------------------------------------------------
 
 If you want to make a standalone pan, you will need to do the following:
 
@@ -51,19 +92,14 @@ gtk-theme-name=win32
 
 If you want other themes, you can install them in share/themes in the target directory.
 
-This version of pan will run, but so far not been able to see images
-
-need to copy libjpeg-8.dll. How would I know that??? (ldd on all the dll files)
-do I need the .a files from gfk-pixbuf? (old pan suggests not)
-
 To add:
 * [[http://gtkspell.sourceforge.net][GtkSpell 3]] 2.0.16 or higher for spellchecker support
   (GtkSpell 2.0.7 or higher when using GTK 2)
-  *  mingw-w64-gtkspell(3) which?
+  * [check install]
 
 * [[http://www.abisource.com/projects/enchant/][Enchant]] 2.2.3 or higher for spellchecker support
   (Enchant 1.6.0 or higher when using GTK 2)
-  * mingw-w64-enchant
+  * [check install]
 
 - [[http://www.galago-project.org/news/index.php][libnotify]] 0.4.1 or higher for notifications
 
