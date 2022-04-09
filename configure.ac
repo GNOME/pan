@@ -152,11 +152,14 @@ if test "x$want_gtk2" = "xyes" ; then
                       [gtkspell_msg=no
                       AC_MSG_RESULT(no)])
    fi
-   PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= $GTK_REQUIRED, gthread-2.0])
+   PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= $GTK_REQUIRED, gthread-2.0],
+                            [ GTK_VER=`pkg-config --modversion gtk+-2.0`
+                            gtk_msg="yes, GTK2 ($GTK_VER)" ]
+                            )
 else
   PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= $GTK3_REQUIRED],
                     [GTK_VER=`pkg-config --modversion gtk+-3.0`
-                    gtk_msg="yes ($GTK_VER)"
+                    gtk_msg="yes, GTK3 ($GTK_VER)"
                     AC_DEFINE(HAVE_GTK,[1],[GTK 3 support])]
                     )
   if test "x$want_gtkspell" = "xyes" ; then
@@ -348,7 +351,7 @@ Configuration:
         With D-Bus:             ${want_dbus}
         With GMime crypto:      ${want_gmime_crypto}
         With GtkSpell:          ${gtkspell_msg}
-        With GTK 3:             ${gtk_msg}
+        With GTK:               ${gtk_msg}
         With WebKitGTK:         ${want_webkit}
         With GnuTLS:            ${gnutls_msg}
         With libnotify:         ${libnotify_msg}
