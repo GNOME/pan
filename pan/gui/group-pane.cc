@@ -439,7 +439,7 @@ namespace
         expandme.push_back (store->get_iter (row));
     }
 
-    setme_rows.sort ();
+    std::stable_sort (setme_rows.begin(), setme_rows.end());
     return store;
   }
 }
