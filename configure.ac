@@ -145,12 +145,12 @@ AC_ARG_WITH([gtk2],
 if test "x$want_gtk2" = "xyes" ; then
    if test "x$want_gtkspell" = "xyes" ; then
    PKG_CHECK_MODULES([GTKSPELL],[gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
-                      [GTKSPELL_VER=`pkg-config --modversion gtkspell-2.0 enchant | xargs`
-                      gtkspell_msg="yes ($GTKSPELL_VER)"
+                      [GTKSPELL_VER=`pkg-config --modversion gtkspell-2.0`
+                      ENCHANT_VER=`pkg-config --modversion enchant`
+                      gtkspell_msg="yes (gtkspell: $GTKSPELL_VER, enchant: $ENCHANT_VER)"
                       AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
-                      AC_DEFINE(GTKSPELL_VERSION,[2],[GtkSpell API version])],
-                      [gtkspell_msg=no
-                      AC_MSG_RESULT(no)])
+                      AC_DEFINE(GTKSPELL_VERSION,[2],[GtkSpell API version])]
+                      )
    fi
    PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= $GTK_REQUIRED, gthread-2.0],
                             [ GTK_VER=`pkg-config --modversion gtk+-2.0`
@@ -164,12 +164,12 @@ else
                     )
   if test "x$want_gtkspell" = "xyes" ; then
     PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 >= $GTKSPELL3_REQUIRED enchant-2 >= $ENCHANT2_REQUIRED],
-                      [GTKSPELL_VER=`pkg-config --modversion gtkspell3-3.0 enchant-2 | xargs`
-                      gtkspell_msg="yes ($GTKSPELL_VER)"
+                      [GTKSPELL_VER=`pkg-config --modversion gtkspell3-3.0`
+                      ENCHANT_VER=`pkg-config --modversion enchant-2`
+                      gtkspell_msg="yes (gtkspell: $GTKSPELL_VER, enchant: $ENCHANT_VER)"
                       AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
-                      AC_DEFINE(GTKSPELL_VERSION,[3],[GtkSpell API version])],
-                      [gtkspell_msg=no
-                      AC_MSG_RESULT(no)])
+                      AC_DEFINE(GTKSPELL_VERSION,[3],[GtkSpell API version])]
+                      )
   fi
 fi
 
