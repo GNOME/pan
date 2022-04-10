@@ -5,26 +5,37 @@ See https://www.mingw-w64.org/
     https://www.msys2.org/
 
 Install msys2 as per instructions. You will also need to install
-* pcre
-* gtk3
-* gmime
+$ pacman -S mingw-w64-x86_64-pcre mingw-w64-x86_64-gmime
 
-$ pacman -S mingw-w64-x86_64-gtk2
-$ pacman -S mingw-w64-x86_64-gtk3
-$ pacman -S pcre mingw-w64-x86_64-gmime
+Also for the sake of your own sanity, add 'export MSYS=winsymlinks:native' to your .bash_profile
 
-For spellcheck
-$ pacman -S mingw-w64-x86_64-gtkspell mingw-w64-x86_64-enchant
+Note that the installed glib at the time of writing is slightly broken, and you should download version 2.70.4-1 or 2.72.0-2 from https://repo.msys2.org/mingw/mingw64/ or clicking links in news articles won't work.
 
+For gtk2 builds,
+$ pacman -S mingw-w64-x86_64-gtkspell
+
+For gtk3 builds,
+$ pacman -S mingw-w64-x86_64-gtkspell3
+
+# You also need some dictionaries to spell check against!
+$ pacman -S mingw-w64-x86_64-hunspell-en
+
+# and this (possibly optional, but...)
+$ pacman -S mingw-w64-x86_64-iso-codes (possibly: /mingw64/share/xml, /mingw64/share/locale)
 
 Then you can create an msys2 x64 window and run
 
-`autogen` or `autogen --with-gtk2`
+`autogen`
 
---with-gtkspell for spellcheck
+or
+
+`autogen --with-gtk2`
+
+NOTE: enchant is somewhat broken under mingw64 and cannot find the appropriate libraries as it appears to expect to find at least 'lib/enchant=2' in the the same directory as the executable. You might want to create a soft link or copy.
+
+Haven't tried these yet:
 
 --with-yelp-tools for user manual
-
 --with-gmime-crypto for cryptography
 --enable-libnotify for notifications
 --enable-gkr for gnome keyring
@@ -33,56 +44,7 @@ and `make`.
 
 Personally I think the gtk2 version looks a *lot* better
 
-
-
-
-
-
-
-
------------------------------------
-oddly, when running autogen.sh --with-gtk2 --with-gtkspell I get
-
-
-Configuration:
-
-        Prefix:                 /mingw64
-        Source code location:   .
-        Compiler:               g++
-        With D-Bus:             no
-        With GMime crypto:      yes
-        With GtkSpell:          no
-        With GTK 3:             no
-        With WebKitGTK:         no
-        With GnuTLS:            no
-        With libnotify:
-        With password storage:
-        With yelp-tools:        yes
-        With user manual:       no
-
-------------------------------------------------------------
-
-If you want to make a standalone pan, you will need to do the following:
-
-(I should probably make a script to do this)
-
-1. Copy pan into directory of your choice
-1. cd <target dir>
-1. Run `ldd pan.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" .`
-1. Copy GdkPixbuf Loaders
-1.1. `cp -r /mingw64/lib/gdk-pixbuf-2.0 ./lib/gdk-pixbuf-2.0
-
-These aren't necessary if you want a windows theme
-
-1. Copy Icon themes
-1.1. `cp -r /mingw64/share/icons/* ./share/icons/
-1. Copy default themes
-1.1. `cp -r /mingw64/share/themes/* ./share/themes/
-1. Copy settins schemas
-1.1. `cp /mingw64/share/glib-2.0/schemas/* ./share/glib-2.0/schemas/`
-1.1. `glib-compile-schemas.exe ./share/glib-2.0/schemas/`
-
-If you want a windows theme, run
+If you want a windows theme in gtk3, run
 ```
 mkdir ./etc/gtk-3.0
 cat > ./etc/gtk-3.0/settings.ini
@@ -93,13 +55,6 @@ gtk-theme-name=win32
 If you want other themes, you can install them in share/themes in the target directory.
 
 To add:
-* [[http://gtkspell.sourceforge.net][GtkSpell 3]] 2.0.16 or higher for spellchecker support
-  (GtkSpell 2.0.7 or higher when using GTK 2)
-  * [check install]
-
-* [[http://www.abisource.com/projects/enchant/][Enchant]] 2.2.3 or higher for spellchecker support
-  (Enchant 1.6.0 or higher when using GTK 2)
-  * [check install]
 
 - [[http://www.galago-project.org/news/index.php][libnotify]] 0.4.1 or higher for notifications
 

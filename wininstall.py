@@ -1,20 +1,6 @@
 #!python3
 
-"""
-These aren't necessary if you want a windows theme
-
-1. Copy Icon themes
-1.1. `cp -r /mingw64/share/icons/* ./share/icons/
-1. Copy default themes
-1.1. `cp -r /mingw64/share/themes/* ./share/themes/
-1. Copy settins schemas
-1.1. `cp /mingw64/share/glib-2.0/schemas/* ./share/glib-2.0/schemas/`
-1.1. `glib-compile-schemas.exe ./share/glib-2.0/schemas/`
-
-See https://www.gtk.org/docs/installations/windows/ also
-
-"""
-
+import glob
 import os
 import re
 import shutil
@@ -66,6 +52,71 @@ def copy_wrapper(source: str, target: str, *, follow_symlinks: bool = True):
     dlls |= got_dlls
     return target
 
+def copy_tree(*, target_dir: str, tree: str):
+    """Wrapper to copy an entire tree from a magic place to target folder
+
+    Args:
+        target_dir - Directory containing standalone executable
+        tree - folder in /mingw to copy to executable directory
+    """
+    shutil.copytree(os.path.join(os.environ["MSYSTEM_PREFIX"], tree),
+                    os.path.join(target_dir, tree),
+                    copy_function=copy_wrapper,
+                    ignore=shutil.ignore_patterns("*.a"),
+                    dirs_exist_ok=True)
+
+def read_configure():
+    dbus = False
+    have_gkr = False
+    gmime_crypto = False
+    gnu_tls = False
+    gtk_version = 2
+    spellcheck = False
+    popups = False
+    manual = False
+
+    # Check these
+    with open("config.h") as config:
+        for line in config.readlines():
+            line = line.rstrip()
+            words = line.split()
+            if (len(words) != 3 or words[0] != '#define'
+                or words[2] != '1'):
+                continue
+            if words[1] == 'HAVE_DBUS':
+                dbus = True # better to say multiple pans?
+            elif words[1] == 'HAVE_GKR': # What is this? gnome keyring?
+                have_gkr = True # What effect?
+            elif words[1] == 'HAVE_GMIME_CRYPTO':
+                gmime_crypto = True # What effect?
+            elif words[1] == 'HAVE_GNUTLS':
+                gnu_tls = True # What effect?
+            elif words[1] == 'HAVE_GTK':
+                gtk_version = 3
+            elif words[1] == 'HAVE_GTKSPELL':
+                spellcheck = True
+            elif words[1] == 'HAVE_LIBNOTIFY':
+                popups = True
+            elif words[1] == 'HAVE_MANUAL':
+                manual = True
+
+#        With WebKitGTK:         no Which param?
+#        With password storage: which param?
+#        With yelp-tools:        yes doubt it affects distro
+#        With user manual:       no can we do anything anyway?
+
+    return {
+        "dbus": dbus,
+        "have_gkr": have_gkr,
+        "gmime_crypto": gmime_crypto,
+        "gnu_tls": gnu_tls,
+        "gtk_version": gtk_version,
+        "spellcheck": spellcheck,
+        "popups": popups,
+        "manual": manual
+    }
+
+
 def main():
     if len(sys.argv) != 2 or sys.argv[1] == "--help":
         usage()
@@ -74,39 +125,40 @@ def main():
         raise RuntimeError(f"{target_dir} is not a directory")
     os.makedirs(target_dir, exist_ok=True)
 
+    config = read_configure()
+    print(config)
+    # TODO Copy appropriate readmes
+#EXTRA_DIST = \
+# COPYING-DOCS \
+# README.org \
+# README.windows \
+# org.gnome.pan.desktop.in \
+# org.gnome.pan.metainfo.xml.in \
+# pan-git.version \
+# $(man_MANS) \
+# $(NULL)
+
+# NEWS
+
     # Copy executable to target dir
     executable = "pan/gui/pan.exe"
     global dlls
     dlls = copy_executable(executable, target_dir)
 
-    gdk_pixbuf = "lib/gdk-pixbuf-2.0"
-    shutil.copytree(os.path.join(os.environ["MSYSTEM_PREFIX"], gdk_pixbuf),
-                    os.path.join(target_dir, gdk_pixbuf),
-                    copy_function=copy_wrapper,
-                    ignore=shutil.ignore_patterns("*.a"),
-                    dirs_exist_ok=True)
+    copy_tree(target_dir=target_dir, tree="lib/gdk-pixbuf-2.0")
 
     # Deal with magically autoloaded stuff
-
-    # gtk2 def, gtk3 poss.
     #------------------------------------------------------------------------
-    # We (apparently) need this to run shells (and its not enough)
+
+    # We need this to run shells
     dlls |= copy_executable(
         os.path.join(os.environ["MSYSTEM_PREFIX"], "bin/gspawn-win64-helper.exe"),
         target_dir
     )
 
-    # gtk2
-    #------------------------------------------------------------------------
-    gtk2_libs="lib/gtk-2.0/2.10.0/engines"
-    shutil.copytree(os.path.join(os.environ["MSYSTEM_PREFIX"], gtk2_libs),
-                    os.path.join(target_dir, gtk2_libs),
-                    copy_function=copy_wrapper,
-                    ignore=shutil.ignore_patterns("*.a"),
-                    dirs_exist_ok=True)
-
-    # At this point we have a version of pan which runs but looks like it is
-    # on windows 95
+    # ------------ gtk2
+    if config["gtk_version"] == 2:
+        copy_tree(target_dir=target_dir, tree="lib/gtk-2.0/2.10.0/engines")
 
     # None of these appear to be necessary so why do we have them?
     # However, the release pan version has very slightly nicer fonts, so need
@@ -116,18 +168,54 @@ def main():
     # add etc/pango
 
     # for enchant:
-    # lib/enchant
-    # share/enchant
-    # share/myspell
+    # share/xml/iso-codes (seems a bit optional)
+    # locale
 
-    # all gtk versions
+    # what about contents of 'po' directory?
+
+    # ------------ gtk3
+    #if config["gtk_version"] == 3:
+
+    #These aren't necessary if you want a windows theme
+    #really? they don't seem gtk specific either
+    #
+    # Copy Icon themes
+    # `cp -r /mingw64/share/icons/* ./share/icons/
+    # Copy settins schemas
+    # `cp /mingw64/share/glib-2.0/schemas/* ./share/glib-2.0/schemas/`
+    # `glib-compile-schemas.exe ./share/glib-2.0/schemas/`
+
+    # See https://www.gtk.org/docs/installations/windows/ also
+
+
+    # ------------ all gtk versions
+    copy_tree(target_dir=target_dir, tree="share/themes")
+
+    if config["spellcheck"]:
+        copy_tree(target_dir=target_dir, tree="lib/enchant-2")
+        copy_tree(target_dir=target_dir, tree="share/enchant")
+        copy_tree(target_dir=target_dir, tree="share/hunspell")
+        # also share/iso-codes ?
+        # maybe I should use pacman directly for some of this?
+        copy_tree(target_dir=target_dir, tree="share/xml/iso-codes")
+        # Also possibly share/iso-codes and the whole of share/locale
+        # Maybe we should extract the pacman file directly?
+        # tar -xvf /var/cache/pacman/pkg/mingw-w64-x86_64-iso-codes-4.9.0-3-any.pkg.tar.zst
+        #   -C <target_dir> --strip-components 1
+        # note that there are a bunch of other .mo files like gtk20.mo, .....
+        # in share/locale
+
     #------------------------------------------------------------------------
-    themes="share/themes"
-    shutil.copytree(os.path.join(os.environ["MSYSTEM_PREFIX"], themes),
-                    os.path.join(target_dir, themes),
-                    copy_function=copy_wrapper,
-                    ignore=shutil.ignore_patterns("*.a"),
-                    dirs_exist_ok=True)
+
+    # Now we copy all the pan <lang>.gmo files in the po directory to the right place in
+    # <target>/locale/<dir>/LC_MESSAGES/pan.mo. This may or may not be correct for windows
+    locale_dir = os.path.join(target_dir, 'share', 'locale')
+    for gmo in glob.glob("po/*.gmo"):
+        name = os.path.basename(gmo)
+        lang = os.path.splitext(name)[0]
+        dest_dir = os.path.join(locale_dir, lang, "LC_MESSAGES")
+        os.makedirs(dest_dir, exist_ok=True)
+        shutil.copy2(gmo, os.path.join(dest_dir, 'pan.mo'))
 
 
     # Now we copy all the dlls we depend on. Unfortunately, they all have
