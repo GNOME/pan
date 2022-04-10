@@ -29,7 +29,7 @@ build-ubuntu-gtk2:
     - cd _build
     - ../autogen.sh --with-gtk2 --with-gnutls --with-dbus --with-gmime-crypto --without-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
-    - DISTCHECK_CONFIGURE_FLAGS=--with-gtk2 make distcheck
+    - DISTCHECK_CONFIGURE_FLAGS="--with-gtk2 --without-gtkspell" make distcheck
 
 build-ubuntu-gtk3:
   image: ubuntu:rolling

@@ -196,7 +196,7 @@ namespace
   GdkCursor * cursor_current(0);
 
   void free_cursors (void) {
-    delete cursors;
+    delete[] cursors;
   }
 
   void create_cursors() {

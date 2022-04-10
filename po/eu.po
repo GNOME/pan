@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008, 2009, 2010.
-# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2021.
+# Asier Sarasua Garmendia <asiersarasua@ni.eus>, 2021, 2022.
 #
 msgid ""
 msgstr "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2020-06-27 14:51+0000\n"
-"PO-Revision-Date: 2021-05-01 10:00+0100\n"
+"POT-Creation-Date: 2021-12-15 18:20+0000\n"
+"PO-Revision-Date: 2022-04-05 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -18,107 +18,107 @@ msgstr "Project-Id-Version: eu\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pan.appdata.xml.in:5
-msgid "Pan Newsreader"
-msgstr "Pan berri-irakurlea"
+#. update the titlebar
+#: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:27
+#: pan/gui/dl-headers-ui.cc:104 pan/gui/gui.cc:1045 pan/gui/gui.cc:1718
+#: pan/gui/gui.cc:2038 pan/gui/score-add-ui.cc:600
+msgid "Pan"
+msgstr "Pan"
 
-#: pan.appdata.xml.in:6 pan.desktop.in:5
+#: org.gnome.pan.desktop.in:4
+msgid "Newsreader"
+msgstr "Berri-irakurlea"
+
+#: org.gnome.pan.desktop.in:5 org.gnome.pan.metainfo.xml.in:7
 msgid "Read and post Usenet articles"
 msgstr "Irakurri eta bidali Usenet artikuluak"
 
-#: pan.appdata.xml.in:8
+#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
+#: org.gnome.pan.desktop.in:7
+msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
+msgstr "usenet;albisteak;berri-irakurlea;berri-taldea;artikulua;ywnc;nzb;"
+
+#: org.gnome.pan.metainfo.xml.in:6
+msgid "Pan Newsreader"
+msgstr "Pan berri-irakurlea"
+
+#: org.gnome.pan.metainfo.xml.in:9
 msgid ""
 "Pan is a Usenet newsreader that is good at both text and binaries. It "
 "supports offline reading, scoring and killfiles, yEnc, NZB, PGP handling, "
 "multiple servers, and secure connections."
-msgstr ""
+msgstr "Pan Usenet-eko berrien irakurlea da, testuak zein bitarrak erakusteko egokia dena. Lineaz kanpoko irakurketa, puntuazioak eta killfileak, yEnc, NZB, PGP maneiua, zerbitzari anitz eta konexio seguruak onartzen ditu."
 
-#: pan.appdata.xml.in:11
+#: org.gnome.pan.metainfo.xml.in:12
 msgid ""
 "It is also the only Unix newsreader to get a perfect score on the Good Net-"
 "Keeping Seal of Approval evaluations."
-msgstr ""
-
-#. update the titlebar
-#: pan.appdata.xml.in:22 pan.desktop.in:3 pan/gui/dl-headers-ui.cc:106
-#: pan/gui/gui.cc:1045 pan/gui/gui.cc:1718 pan/gui/gui.cc:2038
-#: pan/gui/score-add-ui.cc:602
-msgid "Pan"
-msgstr "Pan"
-
-#: pan.desktop.in:4
-msgid "Newsreader"
-msgstr "Berri-irakurlea"
-
-#. Translators: Search terms to find this application. Do NOT translate or localise the semicolons! The list MUST also end with a semicolon!
-#: pan.desktop.in:7
-msgid "usenet;news;newsreader;newsgroup;article;yenc;nzb;"
-msgstr "usenet;albisteak;berri-irakurlea;berri-taldea;artikulua;ywnc;nzb;"
+msgstr "Good Net-Keeping Seal of Approval ebaluazioetan puntuazio perfektua eskuratzen duen Unix berri-irakurle bakarra ere bada."
 
 #: pan/data/article-cache.cc:144 pan/data/encode-cache.cc:62
 #, c-format
-msgid "Error opening directory: “%s”: %s"
-msgstr "Errorea “%s” direktorioa irekitzean: %s"
+msgid "Error opening directory: \"%s\": %s"
+msgstr "Errorea direktorioa irakurtzean: \"%s\": %s"
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
-#: pan/gui/post-ui.cc:1851
+#: pan/gui/post-ui.cc:1958
 #, c-format
-msgid "Unable to save “%s” %s"
-msgstr "Ezin izan da “%s” gorde: %s"
+msgid "Unable to save \"%s\" %s"
+msgstr "Ezin izan da \"%s\" gorde:  %s"
 
 #: pan/data/article-cache.cc:362
 #, c-format
-msgid "Error opening file “%s” %s"
-msgstr "Errorea “%s” fitxategia irekitzean: %s"
+msgid "Error opening file \"%s\" %s"
+msgstr "Errorea \"%s\" fitxategia irekitzean: %s "
 
-#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:174
-#: pan/data-impl/server.cc:527 pan/general/file-util.cc:311
-#: pan/gui/post-ui.cc:644 pan/gui/task-pane.cc:737
+#: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
+#: pan/data-impl/server.cc:525 pan/general/file-util.cc:311
+#: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:735
 #, c-format
-msgid "Error reading file “%s”: %s"
-msgstr "Errorea “%s“ fitxategia irakurtzean: %s"
+msgid "Error reading file \"%s\": %s"
+msgstr "Errorea \"%s\" fitxategia irakurtzean: %s"
 
-#: pan/data/cert-store.cc:263
+#: pan/data/cert-store.cc:261
 #, c-format
-msgid "Error opening SSL certificate directory: “%s”: %s"
-msgstr "Errorea SSL ziurtagiriaren “%s” direktorioa irekitzean: %s"
+msgid "Error opening SSL certificate directory: \"%s\": %s"
+msgstr "Errorea SSL ziurtagiri-direktorioa irekitzean: \"%s\": %s"
 
-#: pan/data/cert-store.cc:294
+#: pan/data/cert-store.cc:292
 #, c-format
 msgid "Successfully added %d SSL PEM certificate(s) to Certificate Store."
-msgstr ""
+msgstr "%d SSL PEM ziurtagiriak ongi gehitu dira ziurtagirien biltegian."
 
-#: pan/data/cert-store.cc:314
+#: pan/data/cert-store.cc:312
 msgid ""
 "Error initializing Certificate Store. Check that the permissions for the "
 "folders ~/.pan2 and ~/.pan2/ssl_certs are set correctly. Fatal, exiting."
-msgstr ""
+msgstr "Errorea ziurtagirien biltegia hasieratzean. Egiaztatu ~/.pan2 eta ~/.pan2/ssl_certs karpeten baimenak ongi ezarri direla. Berreskuraezina, irteten."
 
-#: pan/data/cert-store.cc:363
+#: pan/data/cert-store.cc:361
 #, c-format
 msgid "Could not export certificate for server: %s"
 msgstr "Ezin da zerbitzariaren ziurtagiria esportatu: %s"
 
 #. load_group_descriptions (*_data_io);
-#: pan/data-impl/data-impl.cc:120
+#: pan/data-impl/data-impl.cc:118
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "Atzeko planoko modulua %.1f segundotan kargatu da"
 
-#: pan/data-impl/data-impl.cc:151 pan/data-impl/data-impl.cc:198
-msgid "Pan Newsreader’s server passwords"
+#: pan/data-impl/data-impl.cc:149 pan/data-impl/data-impl.cc:196
+msgid "Pan Newsreader's server passwords"
 msgstr "Pan berri-irakurlearen zerbitzari-pasahitzak"
 
 #: pan/data-impl/groups.cc:102
 #, c-format
-msgid "Skipping newsrc file for server “%s”"
-msgstr ""
+msgid "Skipping newsrc file for server \"%s\""
+msgstr "newsrc fitxategia saltatzen \"%s\" zerbitzarirako"
 
 #: pan/data-impl/headers.cc:606
 #, c-format
-msgid "Expired %lu old articles from “%s”"
-msgstr ""
+msgid "Expired %lu old articles from \"%s\""
+msgstr "%lu artikulu zahar iraungi dira \"%s\"(e)tik"
 
 #: pan/data-impl/headers.cc:613
 #, c-format
@@ -130,13 +130,13 @@ msgstr "Datu-bertsio hauek ez dira onartzen %s goiburuentzat: %d.\n"
 
 #: pan/data-impl/headers.cc:628
 #, c-format
-msgid "Loaded %lu articles for “%s” in %.1f seconds (%.0f per second)"
+msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr ""
 
 #: pan/data-impl/headers.cc:857
 #, c-format
 msgid ""
-"Saved %lu parts, %lu articles in “%s” in %.1f seconds (%.0f articles/sec)"
+"Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
 msgstr ""
 
 #: pan/data-impl/headers.cc:1190
@@ -144,41 +144,41 @@ msgstr ""
 msgid "Added %lu articles to %s."
 msgstr "%lu artikulu gorde dira %s(e)n."
 
-#: pan/data-impl/server.cc:262
+#: pan/data-impl/server.cc:260
 #, c-format
 msgid "Received no password from libsecret for server %s."
 msgstr "Ez da pasahitzik jaso libsecret-etik %s zerbitzarirako."
 
-#: pan/data-impl/server.cc:287
+#: pan/data-impl/server.cc:285
 #, c-format
 msgid "There seems to be no password set for server %s."
 msgstr "Badirudi ez dagoela pasahitzik ezarrita %s zerbitzarirako."
 
-#: pan/data-impl/server.cc:291
+#: pan/data-impl/server.cc:289
 msgid "GNOME Keyring denied access to the passwords."
 msgstr "GNOMEren gako-sortak pasahitzak jasotzeko sarbidea ukatu du."
 
-#: pan/data-impl/xover.cc:243
+#: pan/data-impl/xover.cc:241
 #, c-format
-msgid "Error reading from %s: unknown group “%s”"
-msgstr ""
+msgid "Error reading from %s: unknown group \"%s\""
+msgstr "Errorea %s(e)tik irakurtzean: \"%s\" talde ezezaguna"
 
 #. build the locale strings
 #: pan/general/e-util.cc:211
-msgid "%l∶%M %p"
-msgstr "%l∶%M %p"
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
 
 #: pan/general/e-util.cc:212
-msgid "Today %l∶%M %p"
-msgstr "Gaur %l∶%M %p"
+msgid "Today %l:%M %p"
+msgstr "Gaur %l:%M %p"
 
 #: pan/general/e-util.cc:213
-msgid "%a %l∶%M %p"
-msgstr "%a %l∶%M %p"
+msgid "%a %l:%M %p"
+msgstr "%a %l:%M %p"
 
 #: pan/general/e-util.cc:214
-msgid "%b %d %l∶%M %p"
-msgstr "%b %d %l∶%M %p"
+msgid "%b %d %l:%M %p"
+msgstr "%b %d %l:%M %p"
 
 #: pan/general/e-util.cc:215
 msgid "%b %d %Y"
@@ -188,721 +188,721 @@ msgstr "%Y %b %d"
 msgid "?"
 msgstr "?"
 
-#: pan/general/text-match.cc:193
+#: pan/general/text-match.cc:194
 #, c-format
-msgid "Can’t use regular expression “%s”: %s"
-msgstr "Ezin da “%s” adierazpen erregularra erabili: %s"
+msgid "Can't use regular expression \"%s\": %s"
+msgstr "Ezin da \"%s\" adierazpen erregularra erabili: %s"
 
-#: pan/general/utf8-utils.cc:234
-msgid "Couldn’t determine article encoding.  Non-UTF8 characters were removed."
-msgstr "Ezin izan da zehaztu artikulu-kodeketa. UTF8 kodeketakoak ez diren karaktereak kendu egin dira."
+#: pan/general/utf8-utils.cc:232
+msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgstr "Ezin da zehaztu artikuluaren kodeketa. UTF8 ez diren karaktereak kendu dira."
 
-#: pan/gui/actions.cc:306 pan/gui/post-ui.cc:452
+#: pan/gui/actions.cc:304 pan/gui/post-ui.cc:452
 msgid "_File"
 msgstr "_Fitxategia"
 
-#: pan/gui/actions.cc:307 pan/gui/post-ui.cc:453
+#: pan/gui/actions.cc:305 pan/gui/post-ui.cc:453
 msgid "_Edit"
 msgstr "_Editatu"
 
-#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1107
+#: pan/gui/actions.cc:306 pan/gui/prefs-ui.cc:1105
 msgid "_Layout"
 msgstr "_Diseinua"
 
-#: pan/gui/actions.cc:309
+#: pan/gui/actions.cc:307
 msgid "_Group Pane"
 msgstr "_Taldearen panela"
 
-#: pan/gui/actions.cc:310
+#: pan/gui/actions.cc:308
 msgid "_Header Pane"
 msgstr "_Goiburuen panela"
 
-#: pan/gui/actions.cc:311
+#: pan/gui/actions.cc:309
 msgid "_Body Pane"
 msgstr "G_orputzaren panela"
 
-#: pan/gui/actions.cc:312
+#: pan/gui/actions.cc:310
 msgid "_View"
 msgstr "_Ikusi"
 
-#: pan/gui/actions.cc:313
+#: pan/gui/actions.cc:311
 msgid "Filte_r"
 msgstr "I_ragazkia"
 
-#: pan/gui/actions.cc:314
+#: pan/gui/actions.cc:312
 msgid "_Go"
 msgstr "_Joan"
 
-#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1157
+#: pan/gui/actions.cc:313 pan/gui/prefs-ui.cc:1155
 msgid "_Actions"
 msgstr "_Ekintzak"
 
-#: pan/gui/actions.cc:316
+#: pan/gui/actions.cc:314
 msgid "_Articles"
 msgstr "_Artikuluak"
 
-#: pan/gui/actions.cc:317
+#: pan/gui/actions.cc:315
 msgid "G_roups"
 msgstr "_Taldeak"
 
-#: pan/gui/actions.cc:318 pan/gui/actions.cc:319
+#: pan/gui/actions.cc:316 pan/gui/actions.cc:317
 msgid "_Post"
 msgstr "_Bidali"
 
-#: pan/gui/actions.cc:320
+#: pan/gui/actions.cc:318
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: pan/gui/actions.cc:323
+#: pan/gui/actions.cc:321
 msgid "_Read Group"
 msgstr "_Irakurri taldea"
 
-#: pan/gui/actions.cc:324
+#: pan/gui/actions.cc:322
 msgid "Read Group"
 msgstr "Irakurri taldea"
 
-#: pan/gui/actions.cc:328
+#: pan/gui/actions.cc:326
 msgid "_Mark Selected Groups Read"
 msgstr "_Markatu hautatutako taldeak irakurritako gisa"
 
-#: pan/gui/actions.cc:329
+#: pan/gui/actions.cc:327
 msgid "Mark Selected Groups Read"
 msgstr "Markatu hautatutako taldeak irakurritako gisa"
 
-#: pan/gui/actions.cc:333
-msgid "_Delete Selected Groups’ Articles"
-msgstr "_Ezabatu hautatutako taldeetako artikuluak"
+#: pan/gui/actions.cc:331
+msgid "_Delete Selected Groups' Articles"
+msgstr "E_zabatu hautatutako taldeen artikuluak"
 
-#: pan/gui/actions.cc:334
-msgid "Delete Selected Groups’ Articles"
-msgstr "Ezabatu hautatutako taldeetako artikuluak"
+#: pan/gui/actions.cc:332
+msgid "Delete Selected Groups' Articles"
+msgstr "Ezabatu hautatutako taldeen artikuluak"
 
-#: pan/gui/actions.cc:338
+#: pan/gui/actions.cc:336
 msgid "Get New _Headers in Selected Groups"
 msgstr "Eskuratu _hautatutako taldeetako goiburu berriak"
 
-#: pan/gui/actions.cc:339
+#: pan/gui/actions.cc:337
 msgid "Get New Headers in Selected Groups"
 msgstr "Eskuratu hautatutako taldeetako goiburu berriak"
 
-#: pan/gui/actions.cc:343 pan/gui/actions.cc:348
+#: pan/gui/actions.cc:341 pan/gui/actions.cc:346
 msgid "Get New _Headers in Subscribed Groups"
 msgstr "Eskuratu har_pidetutako taldeetako goiburu berriak"
 
-#: pan/gui/actions.cc:344 pan/gui/actions.cc:349
+#: pan/gui/actions.cc:342 pan/gui/actions.cc:347
 msgid "Get New Headers in Subscribed Groups"
 msgstr "Eskuratu harpidetutako taldeetako goiburu berriak"
 
-#: pan/gui/actions.cc:353
-msgid "Get _Headers…"
+#: pan/gui/actions.cc:351
+msgid "Get _Headers..."
 msgstr "Eskuratu _goiburuak…"
 
-#: pan/gui/actions.cc:354
-msgid "Get Headers…"
+#: pan/gui/actions.cc:352
+msgid "Get Headers..."
 msgstr "Eskuratu goiburuak…"
 
-#: pan/gui/actions.cc:358 pan/gui/actions.cc:359
+#: pan/gui/actions.cc:356 pan/gui/actions.cc:357
 msgid "Refresh Group List"
 msgstr "Freskatu talde-zerrenda"
 
-#: pan/gui/actions.cc:363
+#: pan/gui/actions.cc:361
 msgid "_Subscribe"
 msgstr "_Harpidetu"
 
-#: pan/gui/actions.cc:364
+#: pan/gui/actions.cc:362
 msgid "Subscribe"
 msgstr "Harpidetu"
 
-#: pan/gui/actions.cc:368
+#: pan/gui/actions.cc:366
 msgid "_Unsubscribe"
 msgstr "Harpidetza _kendu"
 
-#: pan/gui/actions.cc:369
+#: pan/gui/actions.cc:367
 msgid "Unsubscribe"
 msgstr "Harpidetza kendu"
 
-#: pan/gui/actions.cc:373
-msgid "_Save Articles…"
-msgstr "_Gorde artikuluak…"
+#: pan/gui/actions.cc:371
+msgid "_Save Articles..."
+msgstr "_Gorde artikuluak..."
 
-#: pan/gui/actions.cc:374
-msgid "Save Articles…"
-msgstr "Gorde artikuluak…"
+#: pan/gui/actions.cc:372
+msgid "Save Articles..."
+msgstr "Gorde artikuluak..."
 
-#: pan/gui/actions.cc:378
-msgid "Save Articles from Selected _NZB…"
-msgstr "Gorde _NZB honetako artikuluak…"
+#: pan/gui/actions.cc:376
+msgid "Save Articles from Selected _NZB..."
+msgstr "_Gorde NZB honetako artikuluak..."
 
-#: pan/gui/actions.cc:379
+#: pan/gui/actions.cc:377
 msgid "Save Articles from Selected NZB"
 msgstr "Gorde NZB honetako artikuluak"
 
-#: pan/gui/actions.cc:383
-msgid "Save Articles to an NZB _File…"
-msgstr "Gorde artikuluak NZB _fitxategi batean…"
+#: pan/gui/actions.cc:381
+msgid "Save Articles to an NZB _File..."
+msgstr "_Gorde NZB honetako artikuluak..."
 
-#: pan/gui/actions.cc:384
+#: pan/gui/actions.cc:382
 msgid "Save Articles to an NZB File"
 msgstr "Gorde artikuluak NZB fitxategi batean"
 
-#: pan/gui/actions.cc:388 pan/gui/actions.cc:389
+#: pan/gui/actions.cc:386 pan/gui/actions.cc:387
 msgid "Print"
 msgstr "Inprimatu"
 
-#: pan/gui/actions.cc:393
-msgid "_Import NZB Files…"
-msgstr "_Inportatu NZB fitxategiak…"
+#: pan/gui/actions.cc:391
+msgid "_Import NZB Files..."
+msgstr "_Inportatu NZB fitxategiak..."
 
-#: pan/gui/actions.cc:398
+#: pan/gui/actions.cc:396
 msgid "_Cancel Last Task"
 msgstr "_Bertan behera utzi azken ataza"
 
-#: pan/gui/actions.cc:403
+#: pan/gui/actions.cc:401
 msgid "_Task Manager"
 msgstr "_Ataza-kudeatzailea"
 
-#: pan/gui/actions.cc:408
+#: pan/gui/actions.cc:406
 msgid "_Event Log"
 msgstr "Ger_taera-egunkaria"
 
-#: pan/gui/actions.cc:413
+#: pan/gui/actions.cc:411
 msgid "_Quit"
 msgstr "I_rten"
 
-#: pan/gui/actions.cc:418
+#: pan/gui/actions.cc:416
 msgid "Select _All Articles"
 msgstr "Ha_utatu artikulu guztiak"
 
-#: pan/gui/actions.cc:423
+#: pan/gui/actions.cc:421
 msgid "_Deselect All Articles"
 msgstr "_Desautatu artikulu guztiak"
 
-#: pan/gui/actions.cc:428
+#: pan/gui/actions.cc:426
 msgid "Add Su_bthreads to Selection"
 msgstr "Gehitu az_pihariak hautapenari"
 
-#: pan/gui/actions.cc:433
+#: pan/gui/actions.cc:431
 msgid "Add _Threads to Selection"
 msgstr "Gehitu _hariak hautapenari"
 
-#: pan/gui/actions.cc:438
+#: pan/gui/actions.cc:436
 msgid "Add _Similar Articles to Selection"
 msgstr "Gehitu a_ntzeko artikuluak hautapenari"
 
-#: pan/gui/actions.cc:443
+#: pan/gui/actions.cc:441
 msgid "Select Article _Body"
 msgstr "Hautatu arti_kulu-gorputza"
 
-#: pan/gui/actions.cc:448
+#: pan/gui/actions.cc:446
 msgid "Edit _Preferences"
 msgstr "Editatu _hobespenak"
 
-#: pan/gui/actions.cc:453
-msgid "Edit Selected _Group’s Preferences"
+#: pan/gui/actions.cc:451
+msgid "Edit Selected _Group's Preferences"
 msgstr "Editatu hautatutako taldearen hobes_penak"
 
-#: pan/gui/actions.cc:458 pan/gui/post-ui.cc:469
+#: pan/gui/actions.cc:456 pan/gui/post-ui.cc:469
 msgid "Edit P_osting Profiles"
 msgstr "Editatu bida_lketa-profilak"
 
-#: pan/gui/actions.cc:463
+#: pan/gui/actions.cc:461
 msgid "Edit _News Servers"
 msgstr "Editatu _berri-zerbitzariak"
 
-#: pan/gui/actions.cc:468
+#: pan/gui/actions.cc:466
 msgid "Jump to _Group Tab"
 msgstr "Joan _Taldea fitxara"
 
-#: pan/gui/actions.cc:473
+#: pan/gui/actions.cc:471
 msgid "Jump to _Header Tab"
 msgstr "Joan _Goiburua fitxara"
 
-#: pan/gui/actions.cc:478
+#: pan/gui/actions.cc:476
 msgid "Jump to _Body Tab"
 msgstr "Joan _Gorputza fitxara"
 
-#: pan/gui/actions.cc:483
+#: pan/gui/actions.cc:481
 msgid "_Rot13 Selected Text"
 msgstr "_Rot13rekin zifratu hautatutako testua"
 
-#: pan/gui/actions.cc:488
+#: pan/gui/actions.cc:486
 msgid "Clear _Header Pane"
 msgstr "Ga_rbitu goiburuen panela"
 
-#: pan/gui/actions.cc:493
+#: pan/gui/actions.cc:491
 msgid "Clear _Body Pane"
 msgstr "Garbitu _gorputzaren panela"
 
-#: pan/gui/actions.cc:498
+#: pan/gui/actions.cc:496
 msgid "Cache Article"
 msgstr "Gorde cachean artikulua"
 
-#: pan/gui/actions.cc:503
+#: pan/gui/actions.cc:501
 msgid "Read Article"
 msgstr "Irakurri artikulua"
 
-#: pan/gui/actions.cc:508
+#: pan/gui/actions.cc:506
 msgid "Show Article Information"
 msgstr "Erakutsi artikulu-informazioa"
 
-#: pan/gui/actions.cc:513
+#: pan/gui/actions.cc:511
 msgid "Read _More"
 msgstr "Irakurri ge_hiago"
 
-#: pan/gui/actions.cc:514
+#: pan/gui/actions.cc:512
 msgid "Read More"
 msgstr "Irakurri gehiago"
 
-#: pan/gui/actions.cc:518
+#: pan/gui/actions.cc:516
 msgid "Read _Back"
 msgstr "Irakurri b_erriro"
 
-#: pan/gui/actions.cc:519
+#: pan/gui/actions.cc:517
 msgid "Read Back"
 msgstr "Irakurri berriro"
 
-#: pan/gui/actions.cc:523
+#: pan/gui/actions.cc:521
 msgid "Next _Unread Group"
 msgstr "Hurrengo _irakurri gabeko taldea"
 
-#: pan/gui/actions.cc:528
+#: pan/gui/actions.cc:526
 msgid "Next _Group"
 msgstr "Hurrengo tal_dea"
 
-#: pan/gui/actions.cc:533
+#: pan/gui/actions.cc:531
 msgid "Next _Unread Article"
 msgstr "Hurrengo _irakurri gabeko artikulua"
 
-#: pan/gui/actions.cc:534
+#: pan/gui/actions.cc:532
 msgid "Next Unread Article"
 msgstr "Hurrengo irakurri gabeko artikulua"
 
-#: pan/gui/actions.cc:538
+#: pan/gui/actions.cc:536
 msgid "Next _Article"
 msgstr "Hurre_ngo artikulua"
 
-#: pan/gui/actions.cc:539
+#: pan/gui/actions.cc:537
 msgid "Next Article"
 msgstr "Hurrengo artikulua"
 
-#: pan/gui/actions.cc:543
+#: pan/gui/actions.cc:541
 msgid "Next _Watched Article"
 msgstr "Behatutako hu_rrengo artikulua"
 
-#: pan/gui/actions.cc:548
+#: pan/gui/actions.cc:546
 msgid "Next Unread _Thread"
 msgstr "Irakurri _gabeko hurrengo haria"
 
-#: pan/gui/actions.cc:549
+#: pan/gui/actions.cc:547
 msgid "Next Unread Thread"
 msgstr "Irakurri gabeko hurrengo haria"
 
-#: pan/gui/actions.cc:553
+#: pan/gui/actions.cc:551
 msgid "Next Threa_d"
 msgstr "_Hurrengo haria"
 
-#: pan/gui/actions.cc:558
+#: pan/gui/actions.cc:556
 msgid "Pre_vious Article"
 msgstr "Aurre_ko artikulua"
 
-#: pan/gui/actions.cc:563
+#: pan/gui/actions.cc:561
 msgid "Previous _Thread"
 msgstr "Aurreko ha_ria"
 
-#: pan/gui/actions.cc:568
+#: pan/gui/actions.cc:566
 msgid "_Parent Article"
 msgstr "Artiku_lu gurasoa"
 
-#: pan/gui/actions.cc:573
+#: pan/gui/actions.cc:571
 msgid "Ignore _Author"
 msgstr "Ez ikusi egin e_gileari"
 
-#: pan/gui/actions.cc:577
+#: pan/gui/actions.cc:575
 msgid "_Watch Thread"
 msgstr "_Behatu haria"
 
-#: pan/gui/actions.cc:582
+#: pan/gui/actions.cc:580
 msgid "_Ignore Thread"
 msgstr "_Ez ikusi egin hariari"
 
-#: pan/gui/actions.cc:587 pan/gui/actions.cc:588
+#: pan/gui/actions.cc:585 pan/gui/actions.cc:586
 msgid "_Toggle Flag On/Off for Thread"
 msgstr "Aktibatu/desaktibatu _bandera harirako"
 
-#: pan/gui/actions.cc:592 pan/gui/actions.cc:593
+#: pan/gui/actions.cc:590 pan/gui/actions.cc:591
 msgid "_Turn Flag Off for Thread"
 msgstr "_Desaktibatu bandera harirako"
 
-#: pan/gui/actions.cc:597 pan/gui/actions.cc:598
+#: pan/gui/actions.cc:595 pan/gui/actions.cc:596
 msgid "_Select All Flagged Threads"
 msgstr "_Hautatu banderadun hari guztiak"
 
-#: pan/gui/actions.cc:602 pan/gui/actions.cc:603
+#: pan/gui/actions.cc:600 pan/gui/actions.cc:601
 msgid "_Go to Next Flagged Thread"
 msgstr "Joan banderadun h_urrengo harira"
 
-#: pan/gui/actions.cc:607 pan/gui/actions.cc:608
+#: pan/gui/actions.cc:605 pan/gui/actions.cc:606
 msgid "_Go to Last Flagged Thread"
 msgstr "Joan banderadun a_zken harira"
 
-#: pan/gui/actions.cc:612 pan/gui/actions.cc:613
+#: pan/gui/actions.cc:610 pan/gui/actions.cc:611
 msgid "_Invert Selection"
 msgstr "_Alderantzikatu hautapena"
 
-#: pan/gui/actions.cc:617
-msgid "Edit Article’s Watch/Ignore/Score…"
+#: pan/gui/actions.cc:615
+msgid "Edit Article's Watch/Ignore/Score..."
 msgstr "Editatu artikuluaren Behaketa/Ez ikusi egin/Puntuazioa…"
 
-#: pan/gui/actions.cc:622
-msgid "Add a _Scoring Rule…"
+#: pan/gui/actions.cc:620
+msgid "Add a _Scoring Rule..."
 msgstr "_Gehitu puntuazio-araua…"
 
-#: pan/gui/actions.cc:627
-msgid "Cance_l Article…"
+#: pan/gui/actions.cc:625
+msgid "Cance_l Article..."
 msgstr "Bertan _behera utzi artikulua…"
 
-#: pan/gui/actions.cc:632
-msgid "_Supersede Article…"
+#: pan/gui/actions.cc:630
+msgid "_Supersede Article..."
 msgstr "_Ordeztu artikulua…"
 
-#: pan/gui/actions.cc:637
+#: pan/gui/actions.cc:635
 msgid "_Delete Article"
 msgstr "_Ezabatu artikulua"
 
-#: pan/gui/actions.cc:642
+#: pan/gui/actions.cc:640
 msgid "Clear Article Cache"
 msgstr "Garbitu artikulu-cachea"
 
-#: pan/gui/actions.cc:647
+#: pan/gui/actions.cc:645
 msgid "_Mark Article as Read"
 msgstr "_Markatu irakurrita gisa"
 
-#: pan/gui/actions.cc:652
+#: pan/gui/actions.cc:650
 msgid "Mark Article as _Unread"
 msgstr "Markatu i_rakurri gabe gisa"
 
-#: pan/gui/actions.cc:658
+#: pan/gui/actions.cc:656
 msgid "_Mark Thread as Read"
 msgstr "_Markatu haria irakurrita gisa"
 
-#: pan/gui/actions.cc:663
+#: pan/gui/actions.cc:661
 msgid "Mark Thread as _Unread"
 msgstr "Markatu haria i_rakurri gabe gisa"
 
-#: pan/gui/actions.cc:668
+#: pan/gui/actions.cc:666
 msgid "_Post to Newsgroup"
 msgstr "_Bidali berri-taldera"
 
-#: pan/gui/actions.cc:669
+#: pan/gui/actions.cc:667
 msgid "Post to Newsgroup"
 msgstr "Bidali berri-taldera"
 
-#: pan/gui/actions.cc:673
+#: pan/gui/actions.cc:671
 msgid "_Followup to Newsgroup"
 msgstr "_Segimendua berri-taldeari"
 
-#: pan/gui/actions.cc:674
+#: pan/gui/actions.cc:672
 msgid "Followup to Newsgroup"
 msgstr "Segimendua berri-taldeari"
 
-#: pan/gui/actions.cc:678
+#: pan/gui/actions.cc:676
 msgid "_Reply to Author in Mail"
 msgstr "_Erantzun egileari mezu elektroniko bidez"
 
-#: pan/gui/actions.cc:684
+#: pan/gui/actions.cc:682
 msgid "_Contents"
 msgstr "E_dukiak"
 
-#: pan/gui/actions.cc:690
+#: pan/gui/actions.cc:688
 msgid "_Pan Home Page"
 msgstr "_Pan aplikazioaren webgune nagusia"
 
-#: pan/gui/actions.cc:695
-msgid "Give _Feedback or Report a Bug…"
-msgstr "Egin iruzkinak edo eman err_ore baten berri…"
+#: pan/gui/actions.cc:693
+msgid "Give _Feedback or Report a Bug..."
+msgstr "Egin iruzkina edo jakinarazi err_orea…"
 
-#: pan/gui/actions.cc:700
-msgid "_Tip Jar…"
-msgstr "_Iradokizunak…"
+#: pan/gui/actions.cc:698
+msgid "_Tip Jar..."
+msgstr ""
 
-#: pan/gui/actions.cc:705
+#: pan/gui/actions.cc:703
 msgid "_About"
 msgstr "Honi _buruz"
 
-#: pan/gui/actions.cc:710
+#: pan/gui/actions.cc:708
 msgid "Edit _SSL Certificates"
 msgstr "Editatu _SSL ziurtagiriak"
 
-#: pan/gui/actions.cc:725
+#: pan/gui/actions.cc:723
 msgid "_Thread Headers"
 msgstr "_Goiburuak harika"
 
-#: pan/gui/actions.cc:726
+#: pan/gui/actions.cc:724
 msgid "Wrap Article Body"
 msgstr "Egokitu artikuluaren gorputza"
 
-#: pan/gui/actions.cc:727
+#: pan/gui/actions.cc:725
 msgid "Show Article Signature"
 msgstr "Erakutsi artikuluaren sinadura"
 
-#: pan/gui/actions.cc:728
+#: pan/gui/actions.cc:726
 msgid "Mute _Quoted Text"
 msgstr "Mututu _komatxo arteko testua"
 
-#: pan/gui/actions.cc:729
+#: pan/gui/actions.cc:727
 msgid "Show All _Headers in Body Pane"
 msgstr "Er_akutsi gorputzaren paneleko goiburu guztiak"
 
-#: pan/gui/actions.cc:730
+#: pan/gui/actions.cc:728
 msgid "Show _Smilies as Graphics"
 msgstr "Erakutsi a_urpegierak grafiko gisa"
 
-#: pan/gui/actions.cc:731
+#: pan/gui/actions.cc:729
 msgid "Show *Bold*, __Underlined__, and /Italic/"
 msgstr "Bistaratu *Lodia*, __Azpimarratua__ eta /Etzana/"
 
-#: pan/gui/actions.cc:732
+#: pan/gui/actions.cc:730
 msgid "Size Pictures to _Fit"
 msgstr "Egokitu irudien tamaina _sartzeko"
 
-#: pan/gui/actions.cc:733
+#: pan/gui/actions.cc:731
 msgid "Use _Monospace Font"
 msgstr "Erabili _tarte bakarreko letra-tipoa"
 
-#: pan/gui/actions.cc:734
+#: pan/gui/actions.cc:732
 msgid "Set Focus to Images"
 msgstr "Ezarri fokua irudiei"
 
-#: pan/gui/actions.cc:735
+#: pan/gui/actions.cc:733
 msgid "Highlight _URLs"
 msgstr "Nabarmendu _URLak"
 
-#: pan/gui/actions.cc:738
+#: pan/gui/actions.cc:736
 msgid "_Work Online"
 msgstr "_Lan egin linean"
 
-#: pan/gui/actions.cc:739
+#: pan/gui/actions.cc:737
 msgid "_Tabbed Layout"
 msgstr "_Diseinua fitxekin"
 
-#: pan/gui/actions.cc:740
+#: pan/gui/actions.cc:738
 msgid "Show Group _Pane"
 msgstr "Erakutsi taldearen _panela"
 
-#: pan/gui/actions.cc:741
+#: pan/gui/actions.cc:739
 msgid "Show Hea_der Pane"
 msgstr "Erakutsi _goiburuen panela"
 
-#: pan/gui/actions.cc:742
+#: pan/gui/actions.cc:740
 msgid "Show Bod_y Pane"
 msgstr "Erakutsi go_rputz-panela"
 
-#: pan/gui/actions.cc:743
+#: pan/gui/actions.cc:741
 msgid "Show _Toolbar"
 msgstr "Erakutsi _tresna-barra"
 
-#: pan/gui/actions.cc:744
+#: pan/gui/actions.cc:742
 msgid "Abbreviate Group Names"
 msgstr "Laburtu talde-izenak"
 
-#: pan/gui/actions.cc:746
+#: pan/gui/actions.cc:744
 msgid "Match Only _Read Articles"
 msgstr "Bilatu _irakurritako artikuluak soilik"
 
-#: pan/gui/actions.cc:746
+#: pan/gui/actions.cc:744
 msgid "Match Only Read Articles"
 msgstr "Bilatu irakurritako artikuluak soilik"
 
-#: pan/gui/actions.cc:747
+#: pan/gui/actions.cc:745
 msgid "Match Only _Unread Articles"
 msgstr "Bilatu _irakurri gabeko artikuluak soilik"
 
-#: pan/gui/actions.cc:747
+#: pan/gui/actions.cc:745
 msgid "Match Only Unread Articles"
 msgstr "Bilatu irakurri gabeko artikuluak soilik"
 
-#: pan/gui/actions.cc:748
+#: pan/gui/actions.cc:746
 msgid "Match Only _Cached Articles"
 msgstr "Bilatu _cachean gordetako artikuluak soilik"
 
-#: pan/gui/actions.cc:748
+#: pan/gui/actions.cc:746
 msgid "Match Only Cached Articles"
 msgstr "Bilatu cachean gordetako artikuluak soilik"
 
-#: pan/gui/actions.cc:749
+#: pan/gui/actions.cc:747
 msgid "Match Only _Complete Articles"
 msgstr "Bi_latu artikulu osoak soilik"
 
-#: pan/gui/actions.cc:749
+#: pan/gui/actions.cc:747
 msgid "Match Only Complete Articles"
 msgstr "Bilatu artikulu osoak soilik"
 
-#: pan/gui/actions.cc:750
+#: pan/gui/actions.cc:748
 msgid "Match Only _My Articles"
 msgstr "Bilatu _nire artikuluak soilik"
 
-#: pan/gui/actions.cc:750
+#: pan/gui/actions.cc:748
 msgid "Match Only My Articles"
 msgstr "Bilatu nire artikuluak soilik"
 
-#: pan/gui/actions.cc:751
+#: pan/gui/actions.cc:749
 msgid "Match Only _Watched Articles"
 msgstr "Bilatu _behatutako artikuluak soilik"
 
-#: pan/gui/actions.cc:751
+#: pan/gui/actions.cc:749
 msgid "Match Only Watched Articles"
 msgstr "Bilatu behatutako artikuluak soilik"
 
-#: pan/gui/actions.cc:753
+#: pan/gui/actions.cc:751
 msgid "Match Scores of 9999 (_Watched)"
 msgstr "Bilatu 9999 puntuazioak (_behatuak)"
 
-#: pan/gui/actions.cc:754
-msgid "Match Scores of 5000…9998 (_High)"
+#: pan/gui/actions.cc:752
+msgid "Match Scores of 5000...9998 (_High)"
 msgstr "Bilatu 5000 eta 9998 bitarteko puntuazioak (_altuak)"
 
-#: pan/gui/actions.cc:755
-msgid "Match Scores of 1…4999 (Me_dium)"
-msgstr "Bilatu 1 eta 4999 bitarteko puntuazioak (_ertainak)"
+#: pan/gui/actions.cc:753
+msgid "Match Scores of 1...4999 (Me_dium)"
+msgstr "Bilatu 1 eta 4999 bitarteko puntuazioak (_tartekoak)"
 
-#: pan/gui/actions.cc:756
+#: pan/gui/actions.cc:754
 msgid "Match Scores of 0 (_Normal)"
 msgstr "Bilatu 0 puntuazioak (_normalak)"
 
-#: pan/gui/actions.cc:757
-msgid "Match Scores of -9998…-1 (_Low)"
+#: pan/gui/actions.cc:755
+msgid "Match Scores of -9998...-1 (_Low)"
 msgstr "Bilatu -9998 eta -1 bitarteko puntuazioak (_baxuak)"
 
-#: pan/gui/actions.cc:758
+#: pan/gui/actions.cc:756
 msgid "Match Scores of -9999 (_Ignored)"
 msgstr "Bilatu -9999 puntuazioak (ez _ikusiak)"
 
-#: pan/gui/actions.cc:760
+#: pan/gui/actions.cc:758
 msgid "Enable/Disable All _Rules"
 msgstr "Gaitu/desgaitu e_rregela guztiak"
 
-#: pan/gui/actions.cc:788
+#: pan/gui/actions.cc:786
 msgid "Show Matching _Articles"
 msgstr "Erakutsi _bat datozen artikuluak"
 
-#: pan/gui/actions.cc:789
-msgid "Show Matching Articles’ _Threads"
+#: pan/gui/actions.cc:787
+msgid "Show Matching Articles' _Threads"
 msgstr "Erakutsi bat _datozen artikuluen hariak"
 
-#: pan/gui/actions.cc:790
-msgid "Show Matching Articles’ _Subthreads"
+#: pan/gui/actions.cc:788
+msgid "Show Matching Articles' _Subthreads"
 msgstr "Erakutsi bat da_tozen artikuluen azpihariak"
 
-#: pan/gui/body-pane.cc:1056
+#: pan/gui/body-pane.cc:1054
 msgid "Unnamed File"
 msgstr "Izenik gabeko fitxategia"
 
-#: pan/gui/body-pane.cc:1137 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1314
-#: pan/gui/header-pane.cc:1754 pan/gui/post-ui.cc:2752 pan/gui/prefs-ui.cc:855
-#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:797
+#: pan/gui/body-pane.cc:1135 pan/gui/gui.cc:2009 pan/gui/header-pane.cc:1303
+#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2859 pan/gui/prefs-ui.cc:853
+#: pan/gui/score-add-ui.cc:137 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "Gaia"
 
-#: pan/gui/body-pane.cc:1139 pan/gui/gui.cc:2009
+#: pan/gui/body-pane.cc:1137 pan/gui/gui.cc:2009
 msgid "From"
 msgstr "Nondik"
 
-#: pan/gui/body-pane.cc:1141 pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1833
-#: pan/gui/log-ui.cc:307 pan/gui/prefs-ui.cc:851
+#: pan/gui/body-pane.cc:1139 pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1822
+#: pan/gui/log-ui.cc:305 pan/gui/prefs-ui.cc:849
 msgid "Date"
 msgstr "Data"
 
-#: pan/gui/body-pane.cc:1148
+#: pan/gui/body-pane.cc:1146
 msgid "Newsgroups"
 msgstr "Berri-taldeak"
 
-#: pan/gui/body-pane.cc:1155 pan/gui/body-pane.cc:1163
-#: pan/gui/body-pane.cc:1170
+#: pan/gui/body-pane.cc:1153 pan/gui/body-pane.cc:1161
+#: pan/gui/body-pane.cc:1168
 msgid "User-Agent"
 msgstr "Erabiltzaile-agentea"
 
-#: pan/gui/body-pane.cc:1176
+#: pan/gui/body-pane.cc:1174
 msgid "Followup-To"
 msgstr "Segimendua honi"
 
-#: pan/gui/body-pane.cc:1186
+#: pan/gui/body-pane.cc:1184
 msgid "Reply-To"
 msgstr "Erantzun honi"
 
-#: pan/gui/body-pane.cc:1238
+#: pan/gui/body-pane.cc:1236
 msgid " from "
 msgstr " - "
 
-#: pan/gui/body-pane.cc:1240
+#: pan/gui/body-pane.cc:1238
 msgid " at "
 msgstr " / "
 
-#: pan/gui/body-pane.cc:1333
+#: pan/gui/body-pane.cc:1331
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
 "\n"
-"<b>Signer:</b> %s (“%s”)\n"
+"<b>Signer:</b> %s ('%s')\n"
 "<b>Valid until:</b> %s\n"
 "<b>Created on:</b> %s"
-msgstr "<u>hau <b>PGP bidez sinatutako</b> mezua da.</u>\n"
+msgstr "<u>Hau <b>PGP bidez sinatutako</b> mezua da.</u>\n"
 "\n"
-"<b>Sinatzailea:</b> %s (“%s”)\n"
+"<b>Sinatzailea:</b> %s ('%s')\n"
 "<b>Baliozkoa data honetara arte:</b> %s\n"
 "<b>Sortze-data:</b> %s"
 
-#: pan/gui/body-pane.cc:1338
+#: pan/gui/body-pane.cc:1336
 msgid "always"
 msgstr "beti"
 
-#: pan/gui/body-pane.cc:1558
+#: pan/gui/body-pane.cc:1556
 msgid "Copy _URL"
 msgstr "Kopiatu URLa"
 
-#: pan/gui/body-pane.cc:1768
-msgid "Save Attachment As…"
-msgstr "Gorde eranskina honela…"
+#: pan/gui/body-pane.cc:1766
+msgid "Save Attachment As..."
+msgstr "Gorde eranskina honela..."
 
-#: pan/gui/body-pane.cc:1771
+#: pan/gui/body-pane.cc:1769
 msgid "Save All Attachments"
 msgstr "Gorde eranskin guztiak"
 
-#: pan/gui/body-pane.cc:1846
+#: pan/gui/body-pane.cc:1844
 msgid "Attachments:"
 msgstr "Eranskinak:"
 
-#: pan/gui/body-pane.cc:1874
+#: pan/gui/body-pane.cc:1872
 msgid "Text View"
 msgstr "Testu-ikuspegia"
 
-#: pan/gui/body-pane.cc:1883
+#: pan/gui/body-pane.cc:1881
 msgid "HTML View"
 msgstr "HTML ikuspegia"
 
-#: pan/gui/dl-headers-ui.cc:112
+#: pan/gui/dl-headers-ui.cc:110
 #, c-format
 msgid "%d Group"
 msgid_plural "%d Groups"
 msgstr[0] "Talde %d"
 msgstr[1] "%d talde"
 
-#: pan/gui/dl-headers-ui.cc:135
-msgid "Get the last N _days’ headers: "
+#: pan/gui/dl-headers-ui.cc:133
+msgid "Get the last N _days' headers: "
 msgstr "Eskuratu azken _N egunetako goiburuak: "
 
-#: pan/gui/dl-headers-ui.cc:143
+#: pan/gui/dl-headers-ui.cc:141
 msgid "Get _new headers"
 msgstr "Eskuratu goiburu _berriak"
 
-#: pan/gui/dl-headers-ui.cc:147
+#: pan/gui/dl-headers-ui.cc:145
 msgid "Get _all headers"
 msgstr "Eskuratu _goiburu guztiak"
 
-#: pan/gui/dl-headers-ui.cc:151
+#: pan/gui/dl-headers-ui.cc:149
 msgid "Get the _latest N headers: "
 msgstr "Eskuratu az_ken N goiburuak: "
 
-#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:848
+#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:846
 msgid "Action"
 msgstr "Ekintza"
 
@@ -910,7 +910,7 @@ msgstr "Ekintza"
 msgid "A GtkRadioAction"
 msgstr "GtkRadioAction bat"
 
-#: pan/gui/e-charset.c:51 pan/gui/task-pane.cc:558
+#: pan/gui/e-charset.c:51 pan/gui/task-pane.cc:556
 msgid "Unknown"
 msgstr "Ezezaguna"
 
@@ -987,8 +987,8 @@ msgstr "Ukrainarra"
 msgid "Visual"
 msgstr "Bisuala"
 
-#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:554
-#: pan/gui/prefs-ui.cc:759
+#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2207 pan/gui/post-ui.cc:547
+#: pan/gui/prefs-ui.cc:757
 msgid "Character Encoding"
 msgstr "Karaktere-kodeketa"
 
@@ -997,8 +997,8 @@ msgid "Enter the character set to use"
 msgstr "Adierazi erabili behar den karaktere-jokoa"
 
 #: pan/gui/e-charset-combo-box.c:336
-msgid "Other…"
-msgstr "Bestelakoa…"
+msgid "Other..."
+msgstr "Bestelakoa..."
 
 #: pan/gui/e-cte-dialog.c:76
 msgid "Default Encoding"
@@ -1018,78 +1018,78 @@ msgstr "Base64 kodeketa"
 
 #: pan/gui/e-cte-dialog.c:84
 msgid "Quoted-Printable Encoding"
-msgstr ""
+msgstr "Quoted-Printable kodeketa"
 
-#: pan/gui/group-pane.cc:330
+#: pan/gui/group-pane.cc:328
 msgid "Sent"
 msgstr "Bidalitakoak"
 
-#: pan/gui/group-pane.cc:331
+#: pan/gui/group-pane.cc:329
 msgid "Drafts"
 msgstr "Zirriborroak"
 
-#: pan/gui/group-pane.cc:537
+#: pan/gui/group-pane.cc:535
 msgid "Group"
 msgstr "Taldea"
 
-#: pan/gui/group-pane.cc:538
+#: pan/gui/group-pane.cc:536
 msgid "Group (regex)"
 msgstr "Taldea (adierazpen erregularra)"
 
-#: pan/gui/group-pane.cc:1016
+#: pan/gui/group-pane.cc:1014
 msgid "Local Folders"
 msgstr "Karpeta lokalak"
 
-#: pan/gui/group-pane.cc:1017
+#: pan/gui/group-pane.cc:1015
 msgid "Subscribed Groups"
 msgstr "Harpidetutako taldeak"
 
-#: pan/gui/group-pane.cc:1018
+#: pan/gui/group-pane.cc:1016
 msgid "Other Groups"
 msgstr "Beste talde batzuk"
 
-#: pan/gui/group-pane.cc:1058 pan/gui/score-view-ui.cc:157
+#: pan/gui/group-pane.cc:1056 pan/gui/score-view-ui.cc:155
 msgid "Name"
 msgstr "Izena"
 
-#: pan/gui/group-prefs-dialog.cc:162
-msgid "No Profiles defined in Edit → Posting Profiles."
-msgstr "Ez da profilik definitu Editatu → Bidalketa profiletan."
+#: pan/gui/group-prefs-dialog.cc:164
+msgid "No Profiles defined in Edit|Posting Profiles."
+msgstr "Ez da profilik definitu 'Editatu → Bidalketa-profilak' atalean."
 
-#: pan/gui/group-prefs-dialog.cc:273
+#: pan/gui/group-prefs-dialog.cc:275
 msgid "Pan: Group Preferences"
 msgstr "Pan: Talde-hobespenak"
 
-#: pan/gui/group-prefs-dialog.cc:288
+#: pan/gui/group-prefs-dialog.cc:290
 msgid "Properties for Groups"
 msgstr "Taldeen propietateak"
 
-#: pan/gui/group-prefs-dialog.cc:290
+#: pan/gui/group-prefs-dialog.cc:292
 #, c-format
 msgid "Properties for %s"
 msgstr "%s - propietateak"
 
-#: pan/gui/group-prefs-dialog.cc:298
+#: pan/gui/group-prefs-dialog.cc:300
 msgid "Character _encoding:"
 msgstr "Karak_tere-kodeketa:"
 
-#: pan/gui/group-prefs-dialog.cc:300
+#: pan/gui/group-prefs-dialog.cc:302
 msgid "Directory for Saving Attachments"
 msgstr "Eranskinak gordetzeko direktorioa"
 
-#: pan/gui/group-prefs-dialog.cc:308
+#: pan/gui/group-prefs-dialog.cc:310
 msgid "Directory for _saving attachments:"
 msgstr "_Eranskinak gordetzeko direktorioa:"
 
-#: pan/gui/group-prefs-dialog.cc:310
+#: pan/gui/group-prefs-dialog.cc:312
 msgid "Posting _profile:"
 msgstr "Bidalketetarako _profila:"
 
-#: pan/gui/group-prefs-dialog.cc:315
+#: pan/gui/group-prefs-dialog.cc:317
 msgid "Spellchecker _language:"
 msgstr "Ortografia-egiaztatzailearen _hizkuntza:"
 
-#: pan/gui/group-prefs-dialog.cc:318
+#: pan/gui/group-prefs-dialog.cc:320
 msgid "Group color:"
 msgstr "Taldearen kolorea:"
 
@@ -1102,7 +1102,7 @@ msgid "Open the Event Log"
 msgstr "Ireki gertaera-egunkaria"
 
 #: pan/gui/gui.cc:611
-msgid "Save NZB’s Files"
+msgid "Save NZB's Files"
 msgstr "Gorde NZB fitxategiak"
 
 #: pan/gui/gui.cc:638
@@ -1110,14 +1110,14 @@ msgid "Untitled.nzb"
 msgstr "Izenik gabe.nzb"
 
 #: pan/gui/gui.cc:640
-msgid "Save NZB File as…"
+msgid "Save NZB File as..."
 msgstr "Gorde NZB fitxategia honela…"
 
 #: pan/gui/gui.cc:813
 msgid "Import NZB Files"
 msgstr "Inportatu NZB fitxategiak"
 
-#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3455
+#: pan/gui/gui.cc:821 pan/gui/post-ui.cc:3562
 msgid "NZB Files"
 msgstr "NZB fitxategiak"
 
@@ -1130,7 +1130,7 @@ msgid "Unable to supersede article."
 msgstr "Ezin izan da fitxategia ordeztu."
 
 #: pan/gui/gui.cc:1345 pan/gui/gui.cc:1441
-msgid "The article doesn’t match any of your posting profiles."
+msgid "The article doesn't match any of your posting profiles."
 msgstr "Artikulua ez dator bat zure bidalketa-profiletako batekin ere."
 
 #: pan/gui/gui.cc:1410
@@ -1166,8 +1166,8 @@ msgid "Unable to open help file."
 msgstr "Ezin da laguntzako fitxategia ireki."
 
 #: pan/gui/gui.cc:1721
-msgid "Copyright © 2002-2017 Charles Kerr and others"
-msgstr "Copyright © 2002-2017 Charles Kerr eta beste batzuk"
+msgid "Copyright © 2002-2021 Charles Kerr and others"
+msgstr "Copyright © 2002-2021 Charles Kerr eta beste batzuk"
 
 #: pan/gui/gui.cc:1726
 msgid "translator-credits"
@@ -1219,11 +1219,11 @@ msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Artilulu honi %d zati falta zaio."
 msgstr[1] "Artikulu honi %d zati falta zaizkio %d zatitik:"
 
-#: pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1316 pan/gui/task-pane.cc:799
+#: pan/gui/gui.cc:2010 pan/gui/header-pane.cc:1305 pan/gui/task-pane.cc:797
 msgid "Message-ID"
 msgstr "Mezuaren IDa"
 
-#: pan/gui/gui.cc:2011 pan/gui/header-pane.cc:1802 pan/gui/prefs-ui.cc:852
+#: pan/gui/gui.cc:2011 pan/gui/header-pane.cc:1791 pan/gui/prefs-ui.cc:850
 msgid "Lines"
 msgstr "Lerroak"
 
@@ -1231,7 +1231,7 @@ msgstr "Lerroak"
 msgid "Size"
 msgstr "Tamaina"
 
-#: pan/gui/gui.cc:2012 pan/gui/header-pane.cc:1818 pan/gui/prefs-ui.cc:850
+#: pan/gui/gui.cc:2012 pan/gui/header-pane.cc:1807 pan/gui/prefs-ui.cc:848
 msgid "Bytes"
 msgstr "Byte"
 
@@ -1245,7 +1245,7 @@ msgstr "Errorea iconv liburutegia kargatzean. Zenbait karaktere-jokoren kodeketa
 msgid "Body Pane Encoding"
 msgstr "Gorputzaren panelaren kodeketa"
 
-#: pan/gui/gui.cc:2239 pan/gui/task-pane.cc:609
+#: pan/gui/gui.cc:2239 pan/gui/task-pane.cc:607
 msgid "Offline"
 msgstr "Lineaz kanpo"
 
@@ -1273,74 +1273,74 @@ msgstr "%s: %d inaktibo, %d aktibo @ %.1f KiBps"
 msgid "No Tasks"
 msgstr "Atazarik ez"
 
-#: pan/gui/gui.cc:2320 pan/gui/prefs-ui.cc:1090
+#: pan/gui/gui.cc:2320 pan/gui/prefs-ui.cc:1088
 msgid "Tasks"
 msgstr "Atazak"
 
-#: pan/gui/gui.cc:2337 pan/gui/task-pane.cc:475
+#: pan/gui/gui.cc:2337 pan/gui/task-pane.cc:473
 #, c-format
-msgid "%lu tasks, %s, %.1f KiBps, ETA %d∶%02d∶%02d"
-msgstr "%lu ataza, %s, %.1f KiBps, ETA %d∶%02d∶%02d"
+msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
+msgstr "%lu ataza, %s, %.1f KiBps, ETA %d:%02d:%02d"
 
 #: pan/gui/gui.cc:2389
 msgid ""
-"Pan is now offline. Please see “File → Event Log” and correct the problem, "
-"then use “File → Work Online” to continue."
-msgstr "Pan lineaz kanpo dago orain. Ikusi \"Fitxategia → Gertaera-egunkaria\" eta konpondu arazoa; ondoren, hautatu \"Fitxategia → Lan egin linean\" aurrera jarraitzeko."
+"Pan is now offline. Please see \"File|Event Log\" and correct the problem, "
+"then use \"File|Work Online\" to continue."
+msgstr "Pan lineaz kanpo dago orain. Begiratu 'Fitxategia → Gertaera-egunkaria' eta konpondu arazoa; ondoren, hautatu 'Fitxategia → Lan egin linean' aurrera jarraitzeko."
 
-#: pan/gui/header-pane.cc:1312 pan/gui/task-pane.cc:795
+#: pan/gui/header-pane.cc:1301 pan/gui/task-pane.cc:793
 msgid "Subject or Author"
 msgstr "Gaia edo egilea"
 
-#: pan/gui/header-pane.cc:1313 pan/gui/task-pane.cc:796
+#: pan/gui/header-pane.cc:1302 pan/gui/task-pane.cc:794
 msgid "Sub or Auth (regex)"
 msgstr "Gaia edo egilea (adierazpen erregularra)"
 
-#: pan/gui/header-pane.cc:1315 pan/gui/header-pane.cc:1786
-#: pan/gui/prefs-ui.cc:849 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:798
+#: pan/gui/header-pane.cc:1304 pan/gui/header-pane.cc:1775
+#: pan/gui/prefs-ui.cc:847 pan/gui/score-add-ui.cc:138 pan/gui/task-pane.cc:796
 msgid "Author"
 msgstr "Egilea"
 
-#: pan/gui/header-pane.cc:1771 pan/gui/prefs-ui.cc:853
+#: pan/gui/header-pane.cc:1760 pan/gui/prefs-ui.cc:851
 msgid "Score"
 msgstr "Puntuazioa"
 
-#: pan/gui/log-ui.cc:104
+#: pan/gui/log-ui.cc:102
 msgid "Save Event List"
 msgstr "Gorde gertaera-zerrenda"
 
-#: pan/gui/log-ui.cc:258
+#: pan/gui/log-ui.cc:256
 msgid "Pan: Events"
 msgstr "Pan: Gertaerak"
 
-#: pan/gui/log-ui.cc:317
+#: pan/gui/log-ui.cc:315
 msgid "Message"
 msgstr "Mezua"
 
-#: pan/gui/pan.cc:368
+#: pan/gui/pan.cc:369
 msgid "Maximize"
 msgstr "Maximizatu"
 
-#: pan/gui/pan.cc:421
+#: pan/gui/pan.cc:422
 msgid "An error has occurred!"
 msgstr "Errorea gertatu da!"
 
-#: pan/gui/pan.cc:435
+#: pan/gui/pan.cc:436
 msgid "New Articles!"
 msgstr "Artikulu berriak!"
 
-#: pan/gui/pan.cc:436
+#: pan/gui/pan.cc:437
 msgid ""
 "There are new\n"
 "articles available."
 msgstr "Artikulu berriak\n"
 "daude eskuragarri."
 
-#: pan/gui/pan.cc:503
+#: pan/gui/pan.cc:504
 msgid "Toggle on/offline"
 msgstr "Txandakatu linean/lineaz kanpo"
 
-#: pan/gui/pan.cc:551
+#: pan/gui/pan.cc:552
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1349,13 +1349,15 @@ msgstr "Eskerrik asko Pan probatzeagatik!\n"
 " \n"
 "Berri-taldeetako mezuak irakurtzen hasteko, zerbitzari bat hautatu behar duzu."
 
-#: pan/gui/pan.cc:633
+#: pan/gui/pan.cc:634
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage information and exit.\n"
 "  -v, --version            Print release version and exit.\n"
 "  --verbose                Be verbose (in non-GUI mode).\n"
-"  --debug                  Run in debug mode.\n"
+"  --debug                  Run in debug mode. Use --debug twice for verbose "
+"debug.\n"
+"  --debug-ssl              Run in TLS (aka SSL) debug mode.\n"
 "\n"
 "URL Options\n"
 "  headers:group.name       Download new headers for the specified "
@@ -1364,27 +1366,27 @@ msgid ""
 "                           the message-id article to standard output.\n"
 "\n"
 "NZB Batch Options\n"
-"  --nzb file1 file2 …      Process NZB files in non-GUI mode.\n"
+"  --nzb file1 file2 ...    Process NZB files in non-GUI mode.\n"
 "  -o path, --output=path   Path to save attachments listed in the NZB "
 "file(s).\n"
 "  --no-gui                 Only show console output, not the download "
 "queue.\n"
 msgstr ""
 
-#: pan/gui/pan.cc:979
+#: pan/gui/pan.cc:981
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Errorea: --no-gui nzb fitxategirik edo news:message-id gabe erabiltzen da."
 
-#: pan/gui/pan.cc:983
+#: pan/gui/pan.cc:985
 #, c-format
 msgid "Pan %s started"
 msgstr "Pan %s abiarazi da"
 
-#: pan/gui/pan.cc:1003
-msgid "Please configure Pan’s news servers before using it as an nzb client."
+#: pan/gui/pan.cc:1005
+msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr "Konfiguratu Pan aplikazioaren berri-zerbitzariak nzb bezero gisa erabili aurretik."
 
-#: pan/gui/pan.cc:1121
+#: pan/gui/pan.cc:1123
 msgid "Pan notification"
 msgstr "Pan jakinarazpena"
 
@@ -1429,12 +1431,12 @@ msgid "Send and Save Articles to NZB"
 msgstr "Bidali eta gorde artikuluak NZBn"
 
 #: pan/gui/post-ui.cc:459
-msgid "Set Character _Encoding…"
+msgid "Set Character _Encoding..."
 msgstr "Ezarri _karaktere-kodeketa…"
 
 #: pan/gui/post-ui.cc:460
-msgid "Set Content _Transfer Encoding…"
-msgstr ""
+msgid "Set Content _Transfer Encoding..."
+msgstr "Ezarri eduki-_transferentziaren kodeketa…"
 
 #: pan/gui/post-ui.cc:461
 msgid "Sa_ve Draft"
@@ -1445,8 +1447,8 @@ msgid "Save as a Draft for Future Posting"
 msgstr "Gorde zirriborro gisa beste une batean bidaltzeko"
 
 #: pan/gui/post-ui.cc:462
-msgid "_Open Draft…"
-msgstr "_Ireki zirriborroa…"
+msgid "_Open Draft..."
+msgstr "_Ireki zirriborroa..."
 
 #: pan/gui/post-ui.cc:462
 msgid "Open an Article Draft"
@@ -1488,13 +1490,13 @@ msgstr "Garbitu zerrenda"
 msgid "Select Needed Parts"
 msgstr "Hautatu beharrezkoak diren zatiak"
 
-#: pan/gui/post-ui.cc:500 pan/gui/post-ui.cc:501 pan/gui/task-pane.cc:677
-#: pan/gui/task-pane.cc:678
+#: pan/gui/post-ui.cc:500 pan/gui/post-ui.cc:501 pan/gui/task-pane.cc:675
+#: pan/gui/task-pane.cc:676
 msgid "Move Up"
 msgstr "Eraman gora"
 
-#: pan/gui/post-ui.cc:505 pan/gui/post-ui.cc:506 pan/gui/task-pane.cc:682
-#: pan/gui/task-pane.cc:683
+#: pan/gui/post-ui.cc:505 pan/gui/post-ui.cc:506 pan/gui/task-pane.cc:680
+#: pan/gui/task-pane.cc:681
 msgid "Move Down"
 msgstr "Eraman behera"
 
@@ -1524,7 +1526,7 @@ msgstr "Gogoratu talde honen karaktere-kodeketa"
 
 #: pan/gui/post-ui.cc:526
 msgid "Thread Attached Replies"
-msgstr ""
+msgstr "Harilkatu erantsitako erantzuka"
 
 #: pan/gui/post-ui.cc:527
 msgid "PGP-Encrypt the Article"
@@ -1538,897 +1540,910 @@ msgstr "Sinatu artikulua PGPrekin"
 msgid "Check _Spelling"
 msgstr "Egiaztatu _ortografia"
 
-#: pan/gui/post-ui.cc:555
-msgid "New Article’s Encoding:"
+#: pan/gui/post-ui.cc:548
+msgid "New Article's Encoding:"
 msgstr "Artikulu berriaren kodeketa:"
 
-#: pan/gui/post-ui.cc:565
+#: pan/gui/post-ui.cc:558
 msgid "Content Transfer Encoding"
 msgstr "Eduki-transferentziaren kodeketa"
 
-#: pan/gui/post-ui.cc:566
-msgid "New Article’s Content Transfer Encoding:"
-msgstr ""
+#: pan/gui/post-ui.cc:559
+msgid "New Article's Content Transfer Encoding:"
+msgstr "Artikulu berriaren eduki-transferentziaren kodeketa:"
 
-#: pan/gui/post-ui.cc:746
+#: pan/gui/post-ui.cc:739
 msgid "Your changes will be lost!"
 msgstr "Aldaketak galdu egingo dira."
 
-#: pan/gui/post-ui.cc:747
+#: pan/gui/post-ui.cc:740
 msgid "Close this window and lose your changes?"
 msgstr "Leiho hau itxi eta aldaketak galdu nahi dituzu?"
 
-#: pan/gui/post-ui.cc:792 pan/gui/post-ui.cc:831
+#: pan/gui/post-ui.cc:785 pan/gui/post-ui.cc:824
 msgid "There were problems with this post."
 msgstr "Arazoak egon dira bidalketa honekin."
 
-#: pan/gui/post-ui.cc:794 pan/gui/post-ui.cc:833 pan/gui/post-ui.cc:898
+#: pan/gui/post-ui.cc:787 pan/gui/post-ui.cc:826 pan/gui/post-ui.cc:891
 msgid "Go Back"
 msgstr "Joan atzera"
 
-#: pan/gui/post-ui.cc:796
+#: pan/gui/post-ui.cc:789
 msgid "Continue Anyway"
 msgstr "Jarraitu dena den"
 
 #. Prompt the user
-#: pan/gui/post-ui.cc:825
+#: pan/gui/post-ui.cc:818
 #, c-format
 msgid ""
-"Message uses characters not specified in charset “%s” — possibly use “%s” "
-msgstr "Mezuak “%s” karaktere-jokoan zehaztu ez diren karaktereak ditu – Ziur aski “%s” erabiliko da "
+"Message uses characters not specified in charset '%s' - possibly use '%s' "
+msgstr "Mezuak '%s' karaktere-jokoan zehaztu ez diren karaktereak ditu – Ziur aski '%s' erabiliko da "
 
-#: pan/gui/post-ui.cc:848
+#: pan/gui/post-ui.cc:841
 msgid "Go _Online"
 msgstr "_Konektatu"
 
-#: pan/gui/post-ui.cc:897
+#: pan/gui/post-ui.cc:890
 msgid "The file queue is empty, so no files can be saved."
 msgstr "Ezin da fitxategirik gorde, fitxategi-ilara hutsik baitago."
 
-#: pan/gui/post-ui.cc:1093
+#: pan/gui/post-ui.cc:1086
 msgid "IO Error"
 msgstr "S/I errorea"
 
-#: pan/gui/post-ui.cc:1093
+#: pan/gui/post-ui.cc:1086
 msgid "No space left on device"
 msgstr "Ez dago leku librerik gailuan"
 
-#: pan/gui/post-ui.cc:1094
+#: pan/gui/post-ui.cc:1087
 #, c-format
 msgid "Error copying message to %s folder. Reason: %s"
 msgstr "Errorea mezua %s karpetan kopiatzean. Arrazoia: %s"
 
-#: pan/gui/post-ui.cc:1100
+#: pan/gui/post-ui.cc:1093
 #, c-format
 msgid "Error creating message in %s mail folder: Invalid article."
 msgstr "Errorea mezua %s posta-karpetan sortzean: Artikulu baliogabea."
 
-#: pan/gui/post-ui.cc:1122
+#: pan/gui/post-ui.cc:1115
 msgid ""
 "No posting server is set for this posting profile.\n"
-"Please edit the profile via Edit → Manage Posting Profiles."
-msgstr ""
+"Please edit the profile via Edit|Manage Posting Profiles."
+msgstr "Ez da bidalketa-zerbitzaririk ezarri profil honetarako.\n"
+"Editatu profila 'Editatu → Kudeatu bidalketa-profilak' aukeraren bidez."
 
-#: pan/gui/post-ui.cc:1127
+#: pan/gui/post-ui.cc:1120
 msgid ""
 "The selected posting server is currently disabled. Please choose an "
 "appropriate alternative."
 msgstr "Hautatutako bidalketa-zerbitzaria desgaituta dago. Aukeratu ordezko egoki bat."
 
-#: pan/gui/post-ui.cc:1169
+#: pan/gui/post-ui.cc:1162
 msgid "Pan is Offline."
 msgstr "Pan lineaz kanpo dago."
 
-#: pan/gui/post-ui.cc:1170
+#: pan/gui/post-ui.cc:1163
 msgid "Go online to post the article?"
 msgstr "Konektatu artikulua bidaltzeko?"
 
-#: pan/gui/post-ui.cc:1219
+#: pan/gui/post-ui.cc:1212
 #, c-format
 msgid ""
 "Error signing/encrypting your message. Perhaps you misspelled your email "
 "address (%s)?"
 msgstr "Errorea mezua sinatzean/zifratzean. Beharbada gaizki idatzi duzu posta-helbidea (%s)?"
 
-#: pan/gui/post-ui.cc:1367
+#: pan/gui/post-ui.cc:1360
 msgid "Error opening temporary file"
 msgstr "Errorea aldi baterako fitxategia irekitzean"
 
-#: pan/gui/post-ui.cc:1379
+#: pan/gui/post-ui.cc:1372
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Errorea aldi baterako fitxategian artikulua idaztean: %s"
 
-#: pan/gui/post-ui.cc:1398
+#: pan/gui/post-ui.cc:1391
 #, c-format
-msgid "Error parsing “external editor” command line: %s (Command was: %s)"
-msgstr ""
+msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
+msgstr "Errorea \"external editor\" komando-lerroa analizatzean: %s (Komandoa honakoa zen: %s)"
 
-#: pan/gui/post-ui.cc:1439
+#: pan/gui/post-ui.cc:1432
 #, c-format
 msgid "Error starting external editor: %s"
 msgstr "Errorea kanpoko editorea abiaraztean: %s"
 
-#: pan/gui/post-ui.cc:1502
+#: pan/gui/post-ui.cc:1495
 msgid "Open Draft Article"
 msgstr "Ireki zirriborro-artikulua"
 
-#: pan/gui/post-ui.cc:1767
+#: pan/gui/post-ui.cc:1874
 msgid "Save Draft Article"
 msgstr "Gorde zirriborro-artikulua"
 
-#: pan/gui/post-ui.cc:1804
+#: pan/gui/post-ui.cc:1911
 msgid "File already exists."
 msgstr "Fitxategia badago lehendik ere."
 
-#: pan/gui/post-ui.cc:1805
+#: pan/gui/post-ui.cc:1912
 msgid "Overwrite it?"
 msgstr "Gainidatzi?"
 
-#: pan/gui/post-ui.cc:2015
+#: pan/gui/post-ui.cc:2122
 #, c-format
-msgid "Couldn’t parse signature command “%s”: %s"
-msgstr ""
+msgid "Couldn't parse signature command \"%s\": %s"
+msgstr "Ezin izan da \"%s\" sinadura-komandoa analizatu: %s"
 
-#: pan/gui/post-ui.cc:2051
-msgid "Couldn’t convert signature to UTF-8."
-msgstr ""
+#: pan/gui/post-ui.cc:2158
+msgid "Couldn't convert signature to UTF-8."
+msgstr "Ezin izan da sinadura UTF-8 kodeketara bihurtu."
 
-#: pan/gui/post-ui.cc:2591
+#: pan/gui/post-ui.cc:2698
 msgid "F_rom"
 msgstr "_Nork"
 
-#: pan/gui/post-ui.cc:2608
+#: pan/gui/post-ui.cc:2715
 msgid "_Subject"
 msgstr "_Gaia"
 
-#: pan/gui/post-ui.cc:2621
+#: pan/gui/post-ui.cc:2728
 msgid "_Newsgroups"
 msgstr "_Berri-taldeak"
 
-#: pan/gui/post-ui.cc:2635
+#: pan/gui/post-ui.cc:2742
 msgid "Mail _To"
 msgstr "Bi_dali mezua honi"
 
-#: pan/gui/post-ui.cc:2737
+#: pan/gui/post-ui.cc:2844
 msgid "Delete from Queue"
 msgstr "Ezabatu ilaratik"
 
-#: pan/gui/post-ui.cc:2750
+#: pan/gui/post-ui.cc:2857
 msgid "No."
 msgstr "Ez."
 
-#: pan/gui/post-ui.cc:2754 pan/gui/post-ui.cc:2846 pan/gui/post-ui.cc:2887
+#: pan/gui/post-ui.cc:2861 pan/gui/post-ui.cc:2953 pan/gui/post-ui.cc:2994
 msgid "Filename"
 msgstr "Fitxategi-izena"
 
-#: pan/gui/post-ui.cc:2756
+#: pan/gui/post-ui.cc:2863
 msgid "Size (KB)"
 msgstr "Tamaina (kB)"
 
-#: pan/gui/post-ui.cc:2854
+#: pan/gui/post-ui.cc:2961
 msgid "The current filename"
 msgstr "Uneko fitxategi-izena"
 
-#: pan/gui/post-ui.cc:2858
+#: pan/gui/post-ui.cc:2965
 msgid "Subject Line"
 msgstr "Gaia"
 
-#: pan/gui/post-ui.cc:2866
+#: pan/gui/post-ui.cc:2973
 msgid "The current subject line"
 msgstr "Uneko gaia"
 
-#: pan/gui/post-ui.cc:2880
+#: pan/gui/post-ui.cc:2987
 msgid "No. "
 msgstr "Ez. "
 
-#: pan/gui/post-ui.cc:2884
+#: pan/gui/post-ui.cc:2991
 msgid "Enable/Disable"
 msgstr "Gaitu/Desgaitu"
 
-#: pan/gui/post-ui.cc:2918
+#: pan/gui/post-ui.cc:3025
 msgid "Follo_wup-To"
 msgstr "Egin _segimendua honi"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:2927
+#: pan/gui/post-ui.cc:3034
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
-"if it differs from the “Newsgroups” header.\n"
+"if it differs from the \"Newsgroups\" header.\n"
 "\n"
-"To direct all replies to your email address, use “Followup-To: poster”"
+"To direct all replies to your email address, use \"Followup-To: poster\""
 msgstr ""
 
-#: pan/gui/post-ui.cc:2934
+#: pan/gui/post-ui.cc:3041
 msgid "_Reply-To"
 msgstr "_Erantzun honi"
 
-#: pan/gui/post-ui.cc:2942
+#: pan/gui/post-ui.cc:3049
 msgid ""
 "The email account where mail replies to your posted message should go. This "
-"is only needed if it differs from the “From” header."
-msgstr ""
+"is only needed if it differs from the \"From\" header."
+msgstr "Zuk bidalitako mezuen posta bidezko erantzunak posta elektronikoko zein kontura joango diren.Hau beharrezkoa da \"Nork\" goiburuaren desberdina bada soilik."
 
-#: pan/gui/post-ui.cc:2949
+#: pan/gui/post-ui.cc:3056
 msgid "_Custom Headers"
 msgstr "_Goiburu pertsonalizatuak"
 
-#: pan/gui/post-ui.cc:2973
-msgid "Add “_User-Agent” header"
-msgstr "Gehitu “_User-Agent” goiburua"
+#: pan/gui/post-ui.cc:3080
+msgid "Add \"_User-Agent\" header"
+msgstr "Gehitu \"_User-Agent\" goiburua"
 
-#: pan/gui/post-ui.cc:2980
-msgid "Add “Message-_ID” header"
-msgstr "Gehitu “Message-_ID” goiburua"
+#: pan/gui/post-ui.cc:3087
+msgid "Add \"Message-_ID\" header"
+msgstr "Gehitu \"Message-_ID\" goiburua"
 
-#: pan/gui/post-ui.cc:3111
+#: pan/gui/post-ui.cc:3218
 msgid "Select Parts"
 msgstr "Hautatu zatiak"
 
-#: pan/gui/post-ui.cc:3124
+#: pan/gui/post-ui.cc:3231
 msgid "_Parts"
 msgstr "_Zatiak"
 
-#: pan/gui/post-ui.cc:3282
+#: pan/gui/post-ui.cc:3389
 msgid "Post Article"
 msgstr "Bidali artikulua"
 
-#: pan/gui/post-ui.cc:3303
+#: pan/gui/post-ui.cc:3410
 msgid "_Message"
 msgstr "_Mezua"
 
-#: pan/gui/post-ui.cc:3304
+#: pan/gui/post-ui.cc:3411
 msgid "More _Headers"
 msgstr "Goi_buru gehiago"
 
-#: pan/gui/post-ui.cc:3305
+#: pan/gui/post-ui.cc:3412
 msgid "File _Queue"
 msgstr "Fitxategi-i_lara"
 
-#: pan/gui/post-ui.cc:3337 pan/gui/profiles-dialog.cc:482
+#: pan/gui/post-ui.cc:3444 pan/gui/profiles-dialog.cc:488
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "%d egunean, %n(e)k idatzi du:"
 
-#: pan/gui/post-ui.cc:3366
+#: pan/gui/post-ui.cc:3473
 msgid "Add files to queue"
 msgstr "Gehitu fitxategiak ilarari"
 
-#: pan/gui/post-ui.cc:3442
+#: pan/gui/post-ui.cc:3549
 msgid "Save Upload Queue as NZB File"
 msgstr "Gorde kargatze-ilara NZB fitxategi gisa"
 
-#: pan/gui/prefs.cc:366
+#: pan/gui/prefs.cc:364
 #, c-format
-msgid "Couldn’t parse %s color “%s”"
+msgid "Couldn't parse %s color \"%s\""
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:123
+#: pan/gui/prefs-ui.cc:121
 msgid "Grab Key"
 msgstr "Atzitu gakoa"
 
-#: pan/gui/prefs-ui.cc:129
+#: pan/gui/prefs-ui.cc:127
 #, c-format
 msgid ""
 "Press the combination of the keys\n"
-"you want to use for “%s”."
+"you want to use for \"%s\"."
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:169
+#: pan/gui/prefs-ui.cc:167
 msgid "Edit Shortcut"
 msgstr "Editatu lasterbidea"
 
-#: pan/gui/prefs-ui.cc:231
+#: pan/gui/prefs-ui.cc:229
 msgid "Error: Shortcut key is invalid!"
 msgstr "Errorea: Lasterbide-gakoa baliogabea da!"
 
-#: pan/gui/prefs-ui.cc:247
+#: pan/gui/prefs-ui.cc:245
 msgid "Error: Shortcut key already exists!"
 msgstr "Errorea: Lasterbide-gakoa badago lehendik!"
 
-#: pan/gui/prefs-ui.cc:561
+#: pan/gui/prefs-ui.cc:559
 msgid "Show only icons"
 msgstr "Erakutsi ikonoak soilik"
 
-#: pan/gui/prefs-ui.cc:562
+#: pan/gui/prefs-ui.cc:560
 msgid "Show only text"
 msgstr "Erakutsi testua soilik"
 
-#: pan/gui/prefs-ui.cc:563
+#: pan/gui/prefs-ui.cc:561
 msgid "Show icons and text"
 msgstr "Erakutsi ikonoak eta testua"
 
-#: pan/gui/prefs-ui.cc:602
+#: pan/gui/prefs-ui.cc:600
 msgid "Use GNOME Preferences"
 msgstr "Erabili GNOMEren hobespenak"
 
-#: pan/gui/prefs-ui.cc:603
+#: pan/gui/prefs-ui.cc:601
 msgid "Use KDE Preferences"
 msgstr "Erabili KDEren hobespenak"
 
-#: pan/gui/prefs-ui.cc:604
+#: pan/gui/prefs-ui.cc:602
 msgid "Use OS X Preferences"
 msgstr "Erabili OS Xren hobespenak"
 
-#: pan/gui/prefs-ui.cc:605
+#: pan/gui/prefs-ui.cc:603
 msgid "Use Windows Preferences"
 msgstr "Erabili Windows-en hobespenak"
 
-#: pan/gui/prefs-ui.cc:606
+#: pan/gui/prefs-ui.cc:604
 msgid "Custom Command:"
 msgstr "Komando pertsonalizatua:"
 
-#: pan/gui/prefs-ui.cc:658
+#: pan/gui/prefs-ui.cc:656
 msgid "Disabled"
 msgstr "Desgaituta"
 
-#: pan/gui/prefs-ui.cc:659
+#: pan/gui/prefs-ui.cc:657
 msgid "Only new (score == 0)"
 msgstr "Berria soilik (puntuazioa == 0)"
 
-#: pan/gui/prefs-ui.cc:660
+#: pan/gui/prefs-ui.cc:658
 msgid "9999 or more"
 msgstr "9999 edo gehiago"
 
-#: pan/gui/prefs-ui.cc:661
+#: pan/gui/prefs-ui.cc:659
 msgid "5000 to 9998"
 msgstr "5000 eta 9998 artean"
 
-#: pan/gui/prefs-ui.cc:662
+#: pan/gui/prefs-ui.cc:660
 msgid "1 to 4999"
 msgstr "1 eta 4999 artean"
 
-#: pan/gui/prefs-ui.cc:663
+#: pan/gui/prefs-ui.cc:661
 msgid "-9998 to -1"
 msgstr "-9998 eta -1 artean"
 
-#: pan/gui/prefs-ui.cc:664
+#: pan/gui/prefs-ui.cc:662
 msgid "-9999 or less"
 msgstr "-9999 edo gutxiago"
 
-#: pan/gui/prefs-ui.cc:728
+#: pan/gui/prefs-ui.cc:726
 #, c-format
 msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
-msgstr ""
+msgstr "Hautatu karaktere-joko <u>globala</u>. Uneko ezarpena: <b>%s</b>."
 
-#: pan/gui/prefs-ui.cc:760
+#: pan/gui/prefs-ui.cc:758
 msgid "Global Character Set Settings"
-msgstr ""
+msgstr "Karaktere-joko globalaren ezarpenak"
 
-#: pan/gui/prefs-ui.cc:854 pan/gui/task-pane.cc:1076
+#: pan/gui/prefs-ui.cc:852 pan/gui/task-pane.cc:1074
 msgid "State"
 msgstr "Egoera"
 
-#: pan/gui/prefs-ui.cc:888
+#: pan/gui/prefs-ui.cc:886
 msgid "Enabled"
 msgstr "Gaituta"
 
-#: pan/gui/prefs-ui.cc:892
+#: pan/gui/prefs-ui.cc:890
 msgid "Column Name"
 msgstr "Zutabe-izena"
 
-#: pan/gui/prefs-ui.cc:930
+#: pan/gui/prefs-ui.cc:928
 msgid "Pan: Preferences"
 msgstr "Pan: Hobespenak"
 
-#: pan/gui/prefs-ui.cc:945
+#: pan/gui/prefs-ui.cc:943
 msgid "Mouse"
 msgstr "Sagua"
 
-#: pan/gui/prefs-ui.cc:947
+#: pan/gui/prefs-ui.cc:945
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Klik bakarrarekin _taldeak aktibatu egiten dira, ez hautatu"
 
-#: pan/gui/prefs-ui.cc:949
+#: pan/gui/prefs-ui.cc:947
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Klik bakarrarekin _artikuluak aktibatu egiten dira, ez hautatu"
 
-#: pan/gui/prefs-ui.cc:952
+#: pan/gui/prefs-ui.cc:950
 msgid "Groups"
 msgstr "Taldeak"
 
-#: pan/gui/prefs-ui.cc:954
+#: pan/gui/prefs-ui.cc:952
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Eskuratu harpidetutako taldeetako goiburu berriak abioan"
 
-#: pan/gui/prefs-ui.cc:956
+#: pan/gui/prefs-ui.cc:954
 msgid "Get new headers when _entering group"
 msgstr "Eskuratu goiburu berriak tal_dean sartzean"
 
-#: pan/gui/prefs-ui.cc:958
+#: pan/gui/prefs-ui.cc:956
 msgid "Mark entire group _read when leaving group"
 msgstr "Markatu talde osoa _irakurritako gisa taldetik irtetean"
 
-#: pan/gui/prefs-ui.cc:960
+#: pan/gui/prefs-ui.cc:958
 msgid "Mark entire group read before getting _new headers"
 msgstr "Markatu talde osoa irakurritako gisa _goiburu berriak eskuratu aurretik"
 
-#: pan/gui/prefs-ui.cc:962
+#: pan/gui/prefs-ui.cc:960
 msgid "E_xpand all threads when entering group"
 msgstr "_Zabaldu hari guztiak taldean sartzean"
 
-#: pan/gui/prefs-ui.cc:967
+#: pan/gui/prefs-ui.cc:965
 msgid "Articles"
 msgstr "Artikuluak"
 
-#: pan/gui/prefs-ui.cc:969
+#: pan/gui/prefs-ui.cc:967
 msgid "Mark downloaded articles read"
 msgstr "Markatu deskargatutako artikuluak irakurritako gisa"
 
-#: pan/gui/prefs-ui.cc:971
+#: pan/gui/prefs-ui.cc:969
 msgid "Space selects next article rather than next unread"
 msgstr "Zuriune-barrak hurrengo artikulua hautatzen du, eta ez irakurri gabeko hurrengoa"
 
-#: pan/gui/prefs-ui.cc:973
+#: pan/gui/prefs-ui.cc:971
 msgid "Expand threads upon selection"
 msgstr "Hedatu hariak haiek hautatzean"
 
-#: pan/gui/prefs-ui.cc:975
+#: pan/gui/prefs-ui.cc:973
 msgid "Always ask before deleting an article"
 msgstr "Galdetu beti artikulu bat ezabatu baino lehen"
 
-#: pan/gui/prefs-ui.cc:977
+#: pan/gui/prefs-ui.cc:975
 msgid "Smooth scrolling"
 msgstr "Korritze leuna"
 
-#: pan/gui/prefs-ui.cc:982
+#: pan/gui/prefs-ui.cc:980
 msgid "Article Cache"
 msgstr "Artikulu-cachea"
 
-#: pan/gui/prefs-ui.cc:983
+#: pan/gui/prefs-ui.cc:981
 msgid "Clear article cache on shutdown"
 msgstr "Garbitu artikulua cachetik itzaltzean"
 
-#: pan/gui/prefs-ui.cc:986
+#: pan/gui/prefs-ui.cc:984
 msgid "Size of article cache (in MiB):"
 msgstr "Artikulu-cachearen tamaina (MiBetan):"
 
-#: pan/gui/prefs-ui.cc:991
+#: pan/gui/prefs-ui.cc:989
 msgid "File extension for cached articles: "
 msgstr "Cacheko artikuluetarako fitxategi-luzapena: "
 
-#: pan/gui/prefs-ui.cc:996
+#: pan/gui/prefs-ui.cc:994
 msgid "Tabs"
 msgstr "Fitxak"
 
-#: pan/gui/prefs-ui.cc:1001
+#: pan/gui/prefs-ui.cc:999
 msgid "_Behavior"
 msgstr "_Portaera"
 
-#: pan/gui/prefs-ui.cc:1001
+#: pan/gui/prefs-ui.cc:999
 msgid "Behavior"
 msgstr "Portaera"
 
-#: pan/gui/prefs-ui.cc:1007
+#: pan/gui/prefs-ui.cc:1005
 msgid "Task Pane"
 msgstr "Zereginen panela"
 
-#: pan/gui/prefs-ui.cc:1008
+#: pan/gui/prefs-ui.cc:1006
 msgid "Show task pane popups"
 msgstr "Erakutsi zereginen paneleko laster-menuak"
 
-#: pan/gui/prefs-ui.cc:1010
+#: pan/gui/prefs-ui.cc:1008
 msgid "Show Download Meter"
 msgstr "Erakutsi deskargen neurketa"
 
-#: pan/gui/prefs-ui.cc:1014
+#: pan/gui/prefs-ui.cc:1012
 msgid "_Panes"
 msgstr "_Panelak"
 
-#: pan/gui/prefs-ui.cc:1014
+#: pan/gui/prefs-ui.cc:1012
 msgid "Panes"
 msgstr "Panelak"
 
-#: pan/gui/prefs-ui.cc:1020
+#: pan/gui/prefs-ui.cc:1018
 msgid "Language Settings"
 msgstr "Hizkuntzaren ezarpenak"
 
 #. systray and notify popup
-#: pan/gui/prefs-ui.cc:1029
+#: pan/gui/prefs-ui.cc:1027
 msgid "System Tray Behavior"
 msgstr "Sistemaren erretiluaren portaera"
 
-#: pan/gui/prefs-ui.cc:1031
+#: pan/gui/prefs-ui.cc:1029
 msgid "Minimize to tray"
 msgstr "Minimizatu erretilura"
 
-#: pan/gui/prefs-ui.cc:1033
+#: pan/gui/prefs-ui.cc:1031
 msgid "Start Pan minimized"
 msgstr "Abiarazi Pan minimizatuta"
 
-#: pan/gui/prefs-ui.cc:1036
+#: pan/gui/prefs-ui.cc:1034
 msgid "Show notifications"
 msgstr "Erakutsi jakinarazpenak"
 
 #. allow multiple instances (seperate, not communicating with dbus)
-#: pan/gui/prefs-ui.cc:1041
+#: pan/gui/prefs-ui.cc:1039
 msgid "Startup Behavior"
 msgstr "Abioko portaera"
 
-#: pan/gui/prefs-ui.cc:1043
+#: pan/gui/prefs-ui.cc:1041
 msgid "Allow multiple instances of Pan"
 msgstr "Onartu Pan aplikazioaren instantzia anitz"
 
-#: pan/gui/prefs-ui.cc:1048
+#: pan/gui/prefs-ui.cc:1046
 msgid "Autosave Article Draft"
 msgstr "Gorde automatikoki artikuluen zirriborroa"
 
-#: pan/gui/prefs-ui.cc:1050
+#: pan/gui/prefs-ui.cc:1048
 msgid "Minutes to autosave the current Article Draft: "
-msgstr ""
+msgstr "Uneko artikulu-zirriborroa automatikoki gordetzeko minutuak: "
 
-#: pan/gui/prefs-ui.cc:1055
+#: pan/gui/prefs-ui.cc:1053
 msgid "Autosave Articles"
 msgstr "Gorde automatikoki artikuluak"
 
-#: pan/gui/prefs-ui.cc:1057
+#: pan/gui/prefs-ui.cc:1055
 msgid "Minutes to autosave newsrc files: "
-msgstr ""
+msgstr "newsrc fitxategiak automatikoki gordetzeko minutuak: "
 
-#: pan/gui/prefs-ui.cc:1064
+#: pan/gui/prefs-ui.cc:1062
 msgid "Password Storage"
 msgstr "Pasahitz-biltegia"
 
-#: pan/gui/prefs-ui.cc:1065
+#: pan/gui/prefs-ui.cc:1063
 msgid "Save passwords in password storage"
 msgstr "Gorde pasahitzak pasahitz-biltegian"
 
-#: pan/gui/prefs-ui.cc:1069
+#: pan/gui/prefs-ui.cc:1067
 msgid "_Miscellaneous"
 msgstr "_Bestelakoak"
 
-#: pan/gui/prefs-ui.cc:1069
+#: pan/gui/prefs-ui.cc:1067
 msgid "Miscellaneous"
 msgstr "Bestelakoak"
 
-#: pan/gui/prefs-ui.cc:1074
+#: pan/gui/prefs-ui.cc:1072
 msgid "Pane Layout"
 msgstr "Panelaren diseinua"
 
-#: pan/gui/prefs-ui.cc:1093
+#: pan/gui/prefs-ui.cc:1091
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=Taldeak, 2=Goiburuak, 3=Gorputza"
 
-#: pan/gui/prefs-ui.cc:1095
+#: pan/gui/prefs-ui.cc:1093
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=Taldeak, 2=Gorputza, 3=Goiburuak"
 
-#: pan/gui/prefs-ui.cc:1097
+#: pan/gui/prefs-ui.cc:1095
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=Goiburuak, 2=Taldeak, 3=Gorputza"
 
-#: pan/gui/prefs-ui.cc:1099
+#: pan/gui/prefs-ui.cc:1097
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=Goiburuak, 2=Gorputza, 3=Taldeak"
 
-#: pan/gui/prefs-ui.cc:1101
+#: pan/gui/prefs-ui.cc:1099
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=Gorputza, 2=Taldeak, 3=Goiburuak"
 
-#: pan/gui/prefs-ui.cc:1103
+#: pan/gui/prefs-ui.cc:1101
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=Gorputza, 2=Goiburuak, 3=Taldeak"
 
-#: pan/gui/prefs-ui.cc:1107
+#: pan/gui/prefs-ui.cc:1105
 msgid "Layout"
 msgstr "Diseinua"
 
-#: pan/gui/prefs-ui.cc:1112
+#: pan/gui/prefs-ui.cc:1110
 msgid "Header Pane Columns"
 msgstr "Goiburuen panelaren zutabeak"
 
-#: pan/gui/prefs-ui.cc:1116
+#: pan/gui/prefs-ui.cc:1114
 msgid "_Headers"
 msgstr "_Goiburuak"
 
-#: pan/gui/prefs-ui.cc:1116
+#: pan/gui/prefs-ui.cc:1114
 msgid "Headers"
 msgstr "Goiburuak"
 
-#: pan/gui/prefs-ui.cc:1122
+#: pan/gui/prefs-ui.cc:1120
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
-"automatically, based on an article’s score."
-msgstr ""
+"automatically, based on an article's score."
+msgstr "Menu honen bidez, Pan konfiguratu daiteke zure izenean zenbait ekintza automatikoki exekutatu ditzan, artikuluen puntuazioan oinarrituta."
 
-#: pan/gui/prefs-ui.cc:1127
+#: pan/gui/prefs-ui.cc:1125
 msgid "Mark affected articles read"
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1136
+#: pan/gui/prefs-ui.cc:1134
 msgid "_Delete articles scoring at: "
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1142
+#: pan/gui/prefs-ui.cc:1140
 msgid "Mark articles read scoring at: "
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1148
+#: pan/gui/prefs-ui.cc:1146
 msgid "_Cache articles scoring at: "
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1154
+#: pan/gui/prefs-ui.cc:1152
 msgid "Download attachments of articles scoring at: "
 msgstr ""
 
-#: pan/gui/prefs-ui.cc:1157
+#: pan/gui/prefs-ui.cc:1155
 msgid "Actions"
 msgstr "Ekintzak"
 
-#: pan/gui/prefs-ui.cc:1162 pan/gui/prefs-ui.cc:1183
+#: pan/gui/prefs-ui.cc:1160 pan/gui/prefs-ui.cc:1181
 msgid "Fonts"
 msgstr "Letra-tipoak"
 
-#: pan/gui/prefs-ui.cc:1164
+#: pan/gui/prefs-ui.cc:1162
 msgid "Use custom font in Group Pane:"
 msgstr "Erabili letra-tipo pertsonalizatua taldearen panelean:"
 
-#: pan/gui/prefs-ui.cc:1169
+#: pan/gui/prefs-ui.cc:1167
 msgid "Use custom font in Header Pane:"
 msgstr "Erabili letra-tipo pertsonalizatua goiburuen panelean:"
 
-#: pan/gui/prefs-ui.cc:1174
+#: pan/gui/prefs-ui.cc:1172
 msgid "Use custom font in Body Pane:"
 msgstr "Erabili letra-tipo pertsonalizatua Gorputzaren panelean:"
 
-#: pan/gui/prefs-ui.cc:1179
+#: pan/gui/prefs-ui.cc:1177
 msgid "Monospace font:"
 msgstr "Tarte bakarreko letra-tipoa:"
 
-#: pan/gui/prefs-ui.cc:1183
+#: pan/gui/prefs-ui.cc:1181
 msgid "_Fonts"
 msgstr "_Letra-tipoak"
 
-#: pan/gui/prefs-ui.cc:1192
+#: pan/gui/prefs-ui.cc:1190
 msgid "Header Pane"
 msgstr "Goiburuen panela"
+
+#: pan/gui/prefs-ui.cc:1193 pan/gui/prefs-ui.cc:1199 pan/gui/prefs-ui.cc:1205
+#: pan/gui/prefs-ui.cc:1211 pan/gui/prefs-ui.cc:1217 pan/gui/prefs-ui.cc:1223
+#: pan/gui/prefs-ui.cc:1232 pan/gui/prefs-ui.cc:1238 pan/gui/prefs-ui.cc:1244
+#: pan/gui/prefs-ui.cc:1250 pan/gui/prefs-ui.cc:1256 pan/gui/prefs-ui.cc:1266
+#: pan/gui/prefs-ui.cc:1276
+msgid "Text:"
+msgstr "Testua:"
 
 #: pan/gui/prefs-ui.cc:1195 pan/gui/prefs-ui.cc:1201 pan/gui/prefs-ui.cc:1207
 #: pan/gui/prefs-ui.cc:1213 pan/gui/prefs-ui.cc:1219 pan/gui/prefs-ui.cc:1225
 #: pan/gui/prefs-ui.cc:1234 pan/gui/prefs-ui.cc:1240 pan/gui/prefs-ui.cc:1246
 #: pan/gui/prefs-ui.cc:1252 pan/gui/prefs-ui.cc:1258 pan/gui/prefs-ui.cc:1268
 #: pan/gui/prefs-ui.cc:1278
-msgid "Text:"
-msgstr "Testua:"
-
-#: pan/gui/prefs-ui.cc:1197 pan/gui/prefs-ui.cc:1203 pan/gui/prefs-ui.cc:1209
-#: pan/gui/prefs-ui.cc:1215 pan/gui/prefs-ui.cc:1221 pan/gui/prefs-ui.cc:1227
-#: pan/gui/prefs-ui.cc:1236 pan/gui/prefs-ui.cc:1242 pan/gui/prefs-ui.cc:1248
-#: pan/gui/prefs-ui.cc:1254 pan/gui/prefs-ui.cc:1260 pan/gui/prefs-ui.cc:1270
-#: pan/gui/prefs-ui.cc:1280
 msgid "Background:"
 msgstr "Atzeko planoa:"
 
-#: pan/gui/prefs-ui.cc:1199
+#: pan/gui/prefs-ui.cc:1197
 msgid "Scores of 9999 or more:"
 msgstr "9999 edo gehiagoko puntuazioak:"
 
-#: pan/gui/prefs-ui.cc:1205
+#: pan/gui/prefs-ui.cc:1203
 msgid "Scores from 5000 to 9998:"
 msgstr "5000 eta 9998 bitarteko puntuazioak:"
 
-#: pan/gui/prefs-ui.cc:1211
+#: pan/gui/prefs-ui.cc:1209
 msgid "Scores from 1 to 4999:"
 msgstr "1 eta 4999 bitarteko puntuazioak:"
 
-#: pan/gui/prefs-ui.cc:1217
+#: pan/gui/prefs-ui.cc:1215
 msgid "Scores from -9998 to -1:"
 msgstr "-9998 eta -1 bitarteko puntuazioak:"
 
-#: pan/gui/prefs-ui.cc:1223
+#: pan/gui/prefs-ui.cc:1221
 msgid "Scores of -9999 or less:"
 msgstr "-9999 edo txikiagoak diren puntuazioak:"
 
-#: pan/gui/prefs-ui.cc:1229
+#: pan/gui/prefs-ui.cc:1227
 msgid "Collapsed thread with unread articles:"
 msgstr "Hari tolestua irakurri gabeko artikuluekin:"
 
-#: pan/gui/prefs-ui.cc:1231
+#: pan/gui/prefs-ui.cc:1229
 msgid "Body Pane"
 msgstr "Gorputzaren panela"
 
-#: pan/gui/prefs-ui.cc:1238
+#: pan/gui/prefs-ui.cc:1236
 msgid "First level of quoted text:"
 msgstr "Aipuaren testuen lehen maila:"
 
-#: pan/gui/prefs-ui.cc:1244
+#: pan/gui/prefs-ui.cc:1242
 msgid "Second level of quoted text:"
 msgstr "Aipuaren testuaren bigarren maila:"
 
-#: pan/gui/prefs-ui.cc:1250
+#: pan/gui/prefs-ui.cc:1248
 msgid "Third level of quoted text:"
 msgstr "Aipuaren testuen hirugarren maila:"
 
 #.
-#: pan/gui/prefs-ui.cc:1256
+#: pan/gui/prefs-ui.cc:1254
 msgid "URL:"
 msgstr "URLa:"
 
 #.
-#: pan/gui/prefs-ui.cc:1262
+#: pan/gui/prefs-ui.cc:1260
 msgid "Signature:"
 msgstr "Sinadura:"
 
-#: pan/gui/prefs-ui.cc:1265
+#: pan/gui/prefs-ui.cc:1263
 msgid "Group Pane"
 msgstr "Taldearen panela"
 
 #.
-#: pan/gui/prefs-ui.cc:1272
+#: pan/gui/prefs-ui.cc:1270
 msgid "Group Color:"
 msgstr "Taldearen kolorea:"
 
-#: pan/gui/prefs-ui.cc:1276
+#: pan/gui/prefs-ui.cc:1274
 msgid "Other Text"
 msgstr "Beste testu bat"
 
-#: pan/gui/prefs-ui.cc:1282
+#: pan/gui/prefs-ui.cc:1280
 msgid "Text Color:"
 msgstr "Testu-kolorea:"
 
-#: pan/gui/prefs-ui.cc:1285
+#: pan/gui/prefs-ui.cc:1283
 msgid "_Colors"
 msgstr "_Koloreak"
 
-#: pan/gui/prefs-ui.cc:1285
+#: pan/gui/prefs-ui.cc:1283
 msgid "Colors"
 msgstr "Koloreak"
 
-#: pan/gui/prefs-ui.cc:1290
+#: pan/gui/prefs-ui.cc:1288
 msgid "Preferred Applications"
 msgstr "Hobetsitako aplikazioak"
 
-#: pan/gui/prefs-ui.cc:1294
+#: pan/gui/prefs-ui.cc:1292
 msgid "_Web browser:"
 msgstr "_Web arakatzailea:"
 
-#: pan/gui/prefs-ui.cc:1297
+#: pan/gui/prefs-ui.cc:1295
 msgid "_Mail reader:"
 msgstr "_Posta-irakurlea:"
 
-#: pan/gui/prefs-ui.cc:1299
+#: pan/gui/prefs-ui.cc:1297
 msgid "_Text editor:"
 msgstr "_Testu-editorea:"
 
-#: pan/gui/prefs-ui.cc:1301
+#: pan/gui/prefs-ui.cc:1299
 msgid "_HTML previewer:"
 msgstr "_HTML aurrebista:"
 
-#: pan/gui/prefs-ui.cc:1303
+#: pan/gui/prefs-ui.cc:1301
 msgid "_Applications"
 msgstr "_Aplikagazioak"
 
-#: pan/gui/prefs-ui.cc:1303
+#: pan/gui/prefs-ui.cc:1301
 msgid "Applications"
 msgstr "Aplikazioak"
 
-#: pan/gui/prefs-ui.cc:1308 pan/gui/task-pane.cc:552
+#: pan/gui/prefs-ui.cc:1306 pan/gui/task-pane.cc:550
 msgid "Encoding"
 msgstr "Kodeketa"
 
-#: pan/gui/prefs-ui.cc:1312
+#: pan/gui/prefs-ui.cc:1310
 msgid "Default bytes per file (for encoder): "
 msgstr "Byte kopuru lehenetsia fitxategiko (kodetzailerako): "
 
-#: pan/gui/prefs-ui.cc:1317
+#: pan/gui/prefs-ui.cc:1315
 msgid "_Upload"
 msgstr "_Igo"
 
-#: pan/gui/prefs-ui.cc:1317
+#: pan/gui/prefs-ui.cc:1315
 msgid "Upload"
 msgstr "Igo"
 
-#: pan/gui/prefs-ui.cc:1326
+#: pan/gui/prefs-ui.cc:1324
 msgid "_Shortcuts"
 msgstr "Laster_bideak"
 
-#: pan/gui/prefs-ui.cc:1326
+#: pan/gui/prefs-ui.cc:1324
 msgid "Shortcuts"
 msgstr "Lasterbideak"
 
-#: pan/gui/profiles-dialog.cc:83
-msgid "Please choose your email address according to your PGP key’s user id."
-msgstr ""
+#: pan/gui/profiles-dialog.cc:81
+msgid "Please choose your email address according to your PGP key's user id."
+msgstr "Aukeratu zure posta-helbidea zure PGP gakoaren erabiltzaile-IDaren arabera."
 
-#: pan/gui/profiles-dialog.cc:131
+#: pan/gui/profiles-dialog.cc:129
 msgid "Posting Profile"
 msgstr "Bidalketa-profila"
 
-#: pan/gui/profiles-dialog.cc:143
+#: pan/gui/profiles-dialog.cc:141
 msgid "Profile Information"
 msgstr "Profil-informazioa"
 
-#: pan/gui/profiles-dialog.cc:147
+#: pan/gui/profiles-dialog.cc:145
 msgid "_Profile Name:"
 msgstr "_Profil-izena:"
 
-#: pan/gui/profiles-dialog.cc:150
+#: pan/gui/profiles-dialog.cc:148
 msgid "Required Information"
 msgstr "Beharrezko informazioa"
 
-#: pan/gui/profiles-dialog.cc:154
+#: pan/gui/profiles-dialog.cc:152
 msgid "_Full Name:"
 msgstr "_Izen-abizenak:"
 
-#: pan/gui/profiles-dialog.cc:158
+#: pan/gui/profiles-dialog.cc:156
 msgid ""
 "Your email address.\n"
-"Note that this has to match your PGP signature’s address\n"
+"Note that this has to match your PGP signature's address\n"
 "if you want your messages to be PGP-signed or encrypted correctly."
-msgstr ""
+msgstr "Zure posta-helbidea.\n"
+"Kontuan izan zure PGP sinaduraren helbidearekin bat egin behar duela\n"
+"zure mezuek PGP sinadura edo zifratze zuzena eduki dezaten."
 
-#: pan/gui/profiles-dialog.cc:162
+#: pan/gui/profiles-dialog.cc:160
 msgid "_Email Address:"
 msgstr "_Helbide elektronikoa:"
 
-#: pan/gui/profiles-dialog.cc:164
+#: pan/gui/profiles-dialog.cc:162
 msgid "_Post Articles via:"
 msgstr "_Bidali artikuluak honen bidez:"
 
-#: pan/gui/profiles-dialog.cc:167
+#: pan/gui/profiles-dialog.cc:165
 msgid "Signature"
 msgstr "Sinadura"
 
-#: pan/gui/profiles-dialog.cc:170
+#: pan/gui/profiles-dialog.cc:168
 msgid "_Use a Signature"
 msgstr "_Erabili sinadura"
 
-#: pan/gui/profiles-dialog.cc:174
+#: pan/gui/profiles-dialog.cc:172
 msgid "Signature File"
 msgstr "Sinadura-fitxategia"
 
-#: pan/gui/profiles-dialog.cc:184
+#: pan/gui/profiles-dialog.cc:182
 msgid "Text File"
 msgstr "Testu-fitxategia"
 
-#: pan/gui/profiles-dialog.cc:186
+#: pan/gui/profiles-dialog.cc:184
 msgid "Text"
 msgstr "Testua"
 
-#: pan/gui/profiles-dialog.cc:188
+#: pan/gui/profiles-dialog.cc:186
 msgid "Command"
 msgstr "Komandoa"
 
-#: pan/gui/profiles-dialog.cc:191
+#: pan/gui/profiles-dialog.cc:189
 msgid "PGP Signature"
 msgstr "PGP sinadura"
 
-#: pan/gui/profiles-dialog.cc:196
+#: pan/gui/profiles-dialog.cc:194
 msgid "Signature Type: "
 msgstr "Sinadura mota: "
 
-#: pan/gui/profiles-dialog.cc:226
-msgid "X-Face (Avatar)"
-msgstr "X-Face (avatarra)"
+#: pan/gui/profiles-dialog.cc:225
+msgid "Avatars"
+msgstr "Avatarrak"
 
-#: pan/gui/profiles-dialog.cc:229
+#: pan/gui/profiles-dialog.cc:228
+msgid ""
+"You can add an avatar icon to your articles with a Base64-encoded PNG.\n"
+"Add the Base64-encoded picture without the trailing <b>“Face:”</b>."
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:230
+msgid "_Face:"
+msgstr ""
+
+#: pan/gui/profiles-dialog.cc:234
 msgid ""
 "You can add an avatar icon to your articles with a unique X-Face code.\n"
-"Add the code without the trailing <b>“X-Face:”</b> \n"
+"Add the code without the trailing <b>\"X-Face:\"</b> \n"
 " if it was generated by a helper program (for example http://www.dairiki.org/"
 "xface/xface.php)."
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:232
+#: pan/gui/profiles-dialog.cc:237
 msgid "_X-Face:"
 msgstr "_X-Face:"
 
-#: pan/gui/profiles-dialog.cc:234
+#: pan/gui/profiles-dialog.cc:239
 msgid "Optional Information"
 msgstr "Aukerako informazioa"
 
-#: pan/gui/profiles-dialog.cc:239
+#: pan/gui/profiles-dialog.cc:244
 msgid ""
-"When posting to Usenet, your article’s Message-ID contains a domain name.\n"
+"When posting to Usenet, your article's Message-ID contains a domain name.\n"
 "You can set a custom domain name here, or leave it blank to let Pan use the "
 "domain name from your email address."
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:242
+#: pan/gui/profiles-dialog.cc:247
 msgid "Message-ID _Domain Name:"
 msgstr "_Mezuaren IDaren domeinu-izena:"
 
-#: pan/gui/profiles-dialog.cc:246
+#: pan/gui/profiles-dialog.cc:251
 #, c-format
 msgid ""
 "%i for Message-ID\n"
@@ -2440,515 +2455,515 @@ msgstr "%i mezuaren IDa da\n"
 "%n egilearen izena da\n"
 "%d data da"
 
-#: pan/gui/profiles-dialog.cc:247
+#: pan/gui/profiles-dialog.cc:252
 msgid "_Attribution:"
 msgstr "_Atribuzioa:"
 
 #. Translators: Do not localize Reply-To and the quote marks in \"Your Name\".
-#: pan/gui/profiles-dialog.cc:272
+#: pan/gui/profiles-dialog.cc:277
 msgid ""
 "Extra headers to be included in your articles, such as\n"
 "Reply-To: \"Your Name\" <yourname@somewhere.com>\n"
 "Organization: Your Organization\n"
 msgstr ""
 
-#: pan/gui/profiles-dialog.cc:282
+#: pan/gui/profiles-dialog.cc:287
 msgid "E_xtra Headers:"
 msgstr "A_parteko goiburuak:"
 
-#: pan/gui/profiles-dialog.cc:327
+#: pan/gui/profiles-dialog.cc:332
 msgid "Invalid email address."
 msgstr "Helbide elektronikoa ez da baliozkoa."
 
-#: pan/gui/profiles-dialog.cc:328
+#: pan/gui/profiles-dialog.cc:333
 msgid "Please use an address of the form joe@somewhere.org"
 msgstr "Erabili formatu honetako helbidea: izena@adibidea.org"
 
-#: pan/gui/profiles-dialog.cc:483
+#: pan/gui/profiles-dialog.cc:489
 msgid "New Profile"
 msgstr "Profil berria"
 
-#: pan/gui/profiles-dialog.cc:529
+#: pan/gui/profiles-dialog.cc:535
 msgid "Posting Profiles"
 msgstr "Bidalketa-profilak"
 
-#: pan/gui/profiles-dialog.cc:545
+#: pan/gui/profiles-dialog.cc:551
 msgid "Profiles"
 msgstr "Profilak"
 
-#: pan/gui/save-attach-ui.cc:46
+#: pan/gui/save-attach-ui.cc:44
 #, c-format
 msgid ""
-"%g — group as one directory (alt.binaries.pictures.trains)\n"
-"%G — group as nested directory (/alt/binaries/pictures/trains)\n"
-"%s — Subject line excerpt\n"
-"%S — Subject line\n"
-"%n — Poster display name\n"
-"%e — Poster email address\n"
-"%d — Article timestamp\n"
-"“/home/user/News/Pan/%g” becomes\n"
-"“/home/user/News/Pan/alt.binaries.pictures.trains”, and\n"
-"“/home/user/News/Pan/%G” becomes\n"
-"“/home/user/News/Pan/alt/binaries/pictures/trains”,"
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - Subject line excerpt\n"
+"%S - Subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgstr ""
 
-#: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
+#: pan/gui/save-attach-ui.cc:196 pan/gui/save-ui.cc:216
 msgid "Add to the queue sorted by date posted"
 msgstr "Gehitu ilaran, bidalketa-dataren arabera ordenatuta"
 
-#: pan/gui/save-attach-ui.cc:199 pan/gui/save-ui.cc:219
+#: pan/gui/save-attach-ui.cc:197 pan/gui/save-ui.cc:217
 msgid "Add to the front of the queue"
 msgstr "Gehitu ilararen aurrealdean"
 
-#: pan/gui/save-attach-ui.cc:200 pan/gui/save-ui.cc:220
+#: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
 msgid "Add to the back of the queue"
 msgstr "Gehitu ilararen atzealdean"
 
-#: pan/gui/save-attach-ui.cc:232
+#: pan/gui/save-attach-ui.cc:230
 msgid "Pan: Save Attachments"
 msgstr "Pan: Gorde eranskinak"
 
-#: pan/gui/save-attach-ui.cc:257 pan/gui/save-attach-ui.cc:275
-#: pan/gui/save-ui.cc:272 pan/gui/save-ui.cc:290
+#: pan/gui/save-attach-ui.cc:255 pan/gui/save-attach-ui.cc:273
+#: pan/gui/save-ui.cc:270 pan/gui/save-ui.cc:288
 msgid "_Location:"
 msgstr "_Helbidea:"
 
-#: pan/gui/save-attach-ui.cc:261 pan/gui/save-ui.cc:276
+#: pan/gui/save-attach-ui.cc:259 pan/gui/save-ui.cc:274
 msgid "Save Articles"
 msgstr "Gorde artikuluak"
 
-#: pan/gui/save-attach-ui.cc:278 pan/gui/save-ui.cc:293
+#: pan/gui/save-attach-ui.cc:276 pan/gui/save-ui.cc:291
 #, c-format
-msgid "_Group’s path: %s"
+msgid "_Group's path: %s"
 msgstr "_Taldearen bide-izena: %s"
 
-#: pan/gui/save-attach-ui.cc:289 pan/gui/save-ui.cc:308
+#: pan/gui/save-attach-ui.cc:287 pan/gui/save-ui.cc:306
 msgid "_Priority:"
 msgstr "_Lehentasuna:"
 
-#: pan/gui/save-ui.cc:46
+#: pan/gui/save-ui.cc:44
 #, c-format
 msgid ""
-"%g — group as one directory (alt.binaries.pictures.trains)\n"
-"%G — group as nested directory (/alt/binaries/pictures/trains)\n"
-"%s — subject line excerpt\n"
-"%S — subject line\n"
-"%n — Poster display name\n"
-"%e — Poster email address\n"
-"%d — Article timestamp\n"
+"%g - group as one directory (alt.binaries.pictures.trains)\n"
+"%G - group as nested directory (/alt/binaries/pictures/trains)\n"
+"%s - subject line excerpt\n"
+"%S - subject line\n"
+"%n - Poster display name\n"
+"%e - Poster email address\n"
+"%d - Article timestamp\n"
 " \n"
-"“/home/user/News/Pan/%g” becomes\n"
-"“/home/user/News/Pan/alt.binaries.pictures.trains”, and\n"
-"“/home/user/News/Pan/%G” becomes\n"
-"“/home/user/News/Pan/alt/binaries/pictures/trains”,"
+"\"/home/user/News/Pan/%g\" becomes\n"
+"\"/home/user/News/Pan/alt.binaries.pictures.trains\", and\n"
+"\"/home/user/News/Pan/%G\" becomes\n"
+"\"/home/user/News/Pan/alt/binaries/pictures/trains\","
 msgstr ""
 
-#: pan/gui/save-ui.cc:209
+#: pan/gui/save-ui.cc:207
 msgid "Save attachments"
 msgstr "Gorde eranskinak"
 
-#: pan/gui/save-ui.cc:210
+#: pan/gui/save-ui.cc:208
 msgid "Save text"
 msgstr "Gorde testua"
 
-#: pan/gui/save-ui.cc:211
+#: pan/gui/save-ui.cc:209
 msgid "Save attachments and text"
 msgstr "Gorde eranskinak eta testua"
 
-#: pan/gui/save-ui.cc:247
+#: pan/gui/save-ui.cc:245
 msgid "Pan: Save Articles"
 msgstr "Pan: Gorde artikuluak"
 
-#: pan/gui/save-ui.cc:304
+#: pan/gui/save-ui.cc:302
 msgid "_Action:"
 msgstr "_Ekintza:"
 
-#: pan/gui/score-add-ui.cc:89
+#: pan/gui/score-add-ui.cc:87
 msgid "is more than"
 msgstr "hau baino handiagoa da:"
 
-#: pan/gui/score-add-ui.cc:90
+#: pan/gui/score-add-ui.cc:88
 msgid "is at most"
 msgstr "gehienez hau da:"
 
+#: pan/gui/score-add-ui.cc:110
+msgid "increase the article's score by"
+msgstr "handitu artikuluaren puntuazioa honenbeste:"
+
+#: pan/gui/score-add-ui.cc:111
+msgid "decrease the article's score by"
+msgstr "txikitu artikuluaren puntuazioa honenbeste:"
+
 #: pan/gui/score-add-ui.cc:112
-msgid "increase the article’s score by"
-msgstr "handitu artikuluaren puntuazioa"
-
-#: pan/gui/score-add-ui.cc:113
-msgid "decrease the article’s score by"
-msgstr "txikitu artikuluaren puntuazioa"
-
-#: pan/gui/score-add-ui.cc:114
-msgid "set the article’s score to"
+msgid "set the article's score to"
 msgstr "ezarri artikuluaren puntuazioa honela:"
 
-#: pan/gui/score-add-ui.cc:115
+#: pan/gui/score-add-ui.cc:113
 msgid "watch the article (set its score to 9999)"
 msgstr "behatu artikulua (ezarri 9999 puntuazioa)"
 
-#: pan/gui/score-add-ui.cc:116
+#: pan/gui/score-add-ui.cc:114
 msgid "ignore the article (set its score to -9999)"
 msgstr "ez ikusi egin artikuluari (ezarri -9999 puntuazioa)"
 
-#: pan/gui/score-add-ui.cc:141
+#: pan/gui/score-add-ui.cc:139
 msgid "References"
 msgstr "Erreferentziak"
 
-#: pan/gui/score-add-ui.cc:142
+#: pan/gui/score-add-ui.cc:140
 msgid "Line Count"
 msgstr "Lerro kopurua"
 
-#: pan/gui/score-add-ui.cc:143
+#: pan/gui/score-add-ui.cc:141
 msgid "Byte Count"
 msgstr "Byte kopurua"
 
-#: pan/gui/score-add-ui.cc:144
+#: pan/gui/score-add-ui.cc:142
 msgid "Crosspost Group Count"
 msgstr "Crosspost taldeen kopurua"
 
-#: pan/gui/score-add-ui.cc:145
+#: pan/gui/score-add-ui.cc:143
 msgid "Age (in days)"
 msgstr "Adina (egunetan)"
 
-#: pan/gui/score-add-ui.cc:167
+#: pan/gui/score-add-ui.cc:165
 msgid "for the next month"
 msgstr "hurrengo hilabeterako"
 
-#: pan/gui/score-add-ui.cc:168
+#: pan/gui/score-add-ui.cc:166
 msgid "for the next six months"
 msgstr "hurrengo sei hilabeteetarako"
 
-#: pan/gui/score-add-ui.cc:169
+#: pan/gui/score-add-ui.cc:167
 msgid "forever"
 msgstr "betiko"
 
-#: pan/gui/score-add-ui.cc:194
+#: pan/gui/score-add-ui.cc:192
 msgid "contains"
 msgstr "hau dauka"
 
-#: pan/gui/score-add-ui.cc:195
-msgid "doesn’t contain"
+#: pan/gui/score-add-ui.cc:193
+msgid "doesn't contain"
 msgstr "ez dauka"
 
-#: pan/gui/score-add-ui.cc:196
+#: pan/gui/score-add-ui.cc:194
 msgid "is"
 msgstr "da"
 
-#: pan/gui/score-add-ui.cc:197
-msgid "isn’t"
+#: pan/gui/score-add-ui.cc:195
+msgid "isn't"
 msgstr "ez da"
 
-#: pan/gui/score-add-ui.cc:198
+#: pan/gui/score-add-ui.cc:196
 msgid "starts with"
 msgstr "honela hasten da"
 
-#: pan/gui/score-add-ui.cc:199
+#: pan/gui/score-add-ui.cc:197
 msgid "ends with"
 msgstr "honela amaitzen da"
 
-#: pan/gui/score-add-ui.cc:200
+#: pan/gui/score-add-ui.cc:198
 msgid "matches regex"
 msgstr "bat dator adierazpen erregularrarekin"
 
-#: pan/gui/score-add-ui.cc:481
-msgid "Another rule already sets this article’s score."
-msgstr "Beste arau batek jada zehazten du artikuluaren puntuazioa."
+#: pan/gui/score-add-ui.cc:479
+msgid "Another rule already sets this article's score."
+msgstr "Beste arau batek dagoeneko artikulu honen puntuazioa ezarri du."
 
-#: pan/gui/score-add-ui.cc:482
+#: pan/gui/score-add-ui.cc:480
 msgid "You may want to go back or delete the old rule."
 msgstr "Beharbada atzera joan nahiko duzu, edo arau zaharra ezabatu."
 
-#: pan/gui/score-add-ui.cc:553
+#: pan/gui/score-add-ui.cc:551
 msgid "Add and Re_score"
 msgstr "_Gehitu eta puntuatu berriro"
 
-#: pan/gui/score-add-ui.cc:604 pan/gui/score-add-ui.cc:624
+#: pan/gui/score-add-ui.cc:602 pan/gui/score-add-ui.cc:622
 msgid "New Scoring Rule"
 msgstr "Puntuatzeko arau berria"
 
-#: pan/gui/score-add-ui.cc:635
+#: pan/gui/score-add-ui.cc:633
 msgid "Group name"
 msgstr "Taldearen izena"
 
-#: pan/gui/score-add-ui.cc:642
+#: pan/gui/score-add-ui.cc:640
 msgid "and"
 msgstr "eta"
 
-#: pan/gui/score-view-ui.cc:56
+#: pan/gui/score-view-ui.cc:54
 msgid "Close and Re_score"
 msgstr "_Itxi eta puntuatu berriro"
 
-#: pan/gui/score-view-ui.cc:154
+#: pan/gui/score-view-ui.cc:152
 #, c-format
-msgid "File %s, Lines %d-%d"
+msgid "File %s, Lines %d - %d"
 msgstr "%s fitxategia, %d - %d lerroak"
 
-#: pan/gui/score-view-ui.cc:182
-msgid "Pan: Article’s Scores"
+#: pan/gui/score-view-ui.cc:180
+msgid "Pan: Article's Scores"
 msgstr "Pan: Artikuluen puntuazioak"
 
-#: pan/gui/score-view-ui.cc:208
+#: pan/gui/score-view-ui.cc:206
 msgid "Add"
 msgstr "Gehitu"
 
-#: pan/gui/score-view-ui.cc:213
+#: pan/gui/score-view-ui.cc:211
 msgid "New Score"
 msgstr "Puntuazio berria"
 
-#: pan/gui/score-view-ui.cc:218
+#: pan/gui/score-view-ui.cc:216
 msgid "Criteria"
 msgstr "Irizpideak"
 
-#: pan/gui/score-view-ui.cc:241
+#: pan/gui/score-view-ui.cc:239
 msgid "Add a New Scoring Rule"
 msgstr "Gehitu puntuatzeko arau berria"
 
-#: pan/gui/score-view-ui.cc:248
+#: pan/gui/score-view-ui.cc:246
 msgid "Remove the Selected Scoring Rule"
 msgstr "Kendu hautatutako puntuatzeko araua"
 
-#: pan/gui/server-ui.cc:272
-msgid "Please specify the server’s address."
+#: pan/gui/server-ui.cc:270
+msgid "Please specify the server's address."
 msgstr "Zehaztu zerbitzariaren helbidea."
 
-#: pan/gui/server-ui.cc:318
+#: pan/gui/server-ui.cc:316
 msgid "Import SSL Certificate (PEM Format) From File"
 msgstr "Inportatu SSL ziurtagiria (PEM formatua) fitxategitik"
 
 #. create the dialog
-#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:961
+#: pan/gui/server-ui.cc:353 pan/gui/server-ui.cc:959
 msgid "Add a Server"
 msgstr "Gehitu zerbitzaria"
 
-#: pan/gui/server-ui.cc:355 pan/gui/server-ui.cc:967
-msgid "Edit a Server’s Settings"
-msgstr "Editatu zerbitzari baten ezarpenak"
+#: pan/gui/server-ui.cc:353 pan/gui/server-ui.cc:965
+msgid "Edit a Server's Settings"
+msgstr "Editatu zerbitzariaren ezarpenak"
 
-#: pan/gui/server-ui.cc:375
+#: pan/gui/server-ui.cc:373
 msgid "Location"
 msgstr "Kokalekua"
 
-#: pan/gui/server-ui.cc:379
-msgid "The news server’s actual address, e.g. “news.mynewsserver.com”."
-msgstr "Berri-zerbitzariaren uneko helbidea, adibidez “berriak.nirezerbitzaria.com”."
+#: pan/gui/server-ui.cc:377
+msgid "The news server's actual address, e.g. \"news.mynewsserver.com\"."
+msgstr "Berri-zerbitzariaren uneko helbidea, adib. \"berriak.nirezerbitzaria.com\"."
 
-#: pan/gui/server-ui.cc:380
+#: pan/gui/server-ui.cc:378
 msgid "_Address:"
 msgstr "Helbi_dea:"
 
-#: pan/gui/server-ui.cc:385
+#: pan/gui/server-ui.cc:383
 msgid ""
-"The news server’s port number.  Typically 119 for unencrypted and 563 for "
+"The news server's port number.  Typically 119 for unencrypted and 563 for "
 "encrypted connections (SSL/TLS)."
-msgstr ""
+msgstr "Zerbitzari berriaren ataka-zenbakia. Normalean 119 izaten da zifratu gabeko konexioetan eta 563 zifratuetan (SSL/TLS)."
 
-#: pan/gui/server-ui.cc:386
+#: pan/gui/server-ui.cc:384
 msgid "Por_t:"
 msgstr "_Ataka:"
 
-#: pan/gui/server-ui.cc:389
+#: pan/gui/server-ui.cc:387
 msgid "Login (if Required)"
 msgstr "Saio-hasiera (beharrezkoa bada)"
 
-#: pan/gui/server-ui.cc:393
+#: pan/gui/server-ui.cc:391
 msgid "_Username:"
 msgstr "_Erabiltzaile-izena:"
 
-#: pan/gui/server-ui.cc:394
+#: pan/gui/server-ui.cc:392
 msgid ""
-"The username to give the server when asked.  If your server doesn’t require "
+"The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
-msgstr ""
+msgstr "Zerbitzariari emango zaion erabiltzaile-izena, eskatzen duenean. Zure zerbitzariak ez badu autentifikaziorik behar, hau hutsik utzi daiteke."
 
-#: pan/gui/server-ui.cc:398
+#: pan/gui/server-ui.cc:396
 msgid "_Password:"
 msgstr "_Pasahitza:"
 
-#: pan/gui/server-ui.cc:399
+#: pan/gui/server-ui.cc:397
 msgid ""
-"The password to give the server when asked.  If your server doesn’t require "
+"The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
-msgstr ""
+msgstr "Zerbitzariari emango zaion pasahitza, eskatzen duenean. Zure zerbitzariak ez badu autentifikaziorik behar, hau hutsik utzi daiteke."
 
-#: pan/gui/server-ui.cc:402
+#: pan/gui/server-ui.cc:400
 msgid "Settings"
 msgstr "Ezarpenak"
 
-#: pan/gui/server-ui.cc:409
+#: pan/gui/server-ui.cc:407
 msgid "Connection _Limit:"
 msgstr "Ko_nexio-muga:"
 
-#: pan/gui/server-ui.cc:413
+#: pan/gui/server-ui.cc:411
 msgid "After Two Weeks"
 msgstr "Bi asteren ondoren"
 
-#: pan/gui/server-ui.cc:414
+#: pan/gui/server-ui.cc:412
 msgid "After One Month"
 msgstr "Hilabeteren ondoren"
 
-#: pan/gui/server-ui.cc:415
+#: pan/gui/server-ui.cc:413
 msgid "After Two Months"
 msgstr "Bi hilabeteren ondoren"
 
-#: pan/gui/server-ui.cc:416
+#: pan/gui/server-ui.cc:414
 msgid "After Three Months"
 msgstr "Hiru hilabeteren ondoren"
 
-#: pan/gui/server-ui.cc:417
+#: pan/gui/server-ui.cc:415
 msgid "After Six Months"
 msgstr "Sei hilabeteren ondoren"
 
-#: pan/gui/server-ui.cc:418
+#: pan/gui/server-ui.cc:416
 msgid "Never Expire Old Articles"
 msgstr "Inoiz ez iraungi artikulu zaharrak"
 
-#: pan/gui/server-ui.cc:432
+#: pan/gui/server-ui.cc:430
 msgid "E_xpire Old Articles:"
 msgstr "I_raungi artikulu zaharrak:"
 
-#: pan/gui/server-ui.cc:436
+#: pan/gui/server-ui.cc:434
 msgid "Primary"
 msgstr "Nagusia"
 
-#: pan/gui/server-ui.cc:437
+#: pan/gui/server-ui.cc:435
 msgid "Fallback"
 msgstr "Erreserba"
 
-#: pan/gui/server-ui.cc:451
+#: pan/gui/server-ui.cc:449
 msgid "Server Rank:"
 msgstr "Zerbitzari-heina:"
 
-#: pan/gui/server-ui.cc:455
+#: pan/gui/server-ui.cc:453
 msgid ""
-"Fallback servers are used for articles that can’t be found on the "
+"Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
 "subscription servers as fallbacks."
-msgstr ""
+msgstr "Ordezko zerbitzariak zerbitzari nagusietan aurkitu ez diren artikuluetarako erabiltzen dira. Normalean, erabili zerbitzari libreak nagusi gisa eta harpidetza bidezkoak ordezko gisa."
 
-#: pan/gui/server-ui.cc:460
+#: pan/gui/server-ui.cc:458
 msgid "Disable Compression (N/A)"
 msgstr "Desgaitu konpresioa (E/E)"
 
-#: pan/gui/server-ui.cc:461
+#: pan/gui/server-ui.cc:459
 msgid "XZVER Compression (Astraweb)"
 msgstr "XZVER konprezioa (Astraweb)"
 
-#: pan/gui/server-ui.cc:462
+#: pan/gui/server-ui.cc:460
 msgid "GZIP Compression (Giganews etc.)"
 msgstr "GZIP konpresioa (Giganews etab.)"
 
-#: pan/gui/server-ui.cc:476
+#: pan/gui/server-ui.cc:474
 msgid "Header Compression:"
 msgstr "Goiburu-konpresioa:"
 
-#: pan/gui/server-ui.cc:482
+#: pan/gui/server-ui.cc:480
 msgid "Security"
 msgstr "Segurtasuna"
 
-#: pan/gui/server-ui.cc:487
+#: pan/gui/server-ui.cc:485
 msgid "Use Unsecure (Plaintext) Connections"
 msgstr "Erabili seguruak ez diren konexioak (testu soilekoak)"
 
-#: pan/gui/server-ui.cc:488
+#: pan/gui/server-ui.cc:486
 msgid "Use Secure SSL Connections"
 msgstr "Erabili SSL konexio seguruak"
 
-#: pan/gui/server-ui.cc:503
+#: pan/gui/server-ui.cc:501
 msgid "TLS (SSL) Settings:"
 msgstr "TLS (SSL) ezarpenak:"
 
-#: pan/gui/server-ui.cc:508
+#: pan/gui/server-ui.cc:506
 msgid ""
 "You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
 "TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
 "for privacy reasons."
 msgstr ""
 
-#: pan/gui/server-ui.cc:513
-msgid "Always trust this server’s certificate"
+#: pan/gui/server-ui.cc:511
+msgid "Always trust this server's certificate"
 msgstr "Fidatu beti zerbitzari honen ziurtagiriez"
 
-#: pan/gui/server-ui.cc:689
+#: pan/gui/server-ui.cc:687
 #, c-format
-msgid "Really delete “%s”?"
-msgstr "Benetan ezabatu “%s”?"
+msgid "Really delete \"%s\"?"
+msgstr "\"%s\" ezabatu nahi duzu?"
 
-#: pan/gui/server-ui.cc:778
+#: pan/gui/server-ui.cc:776
 msgid "No information available."
 msgstr "Ez dago informaziorik eskuragarri."
 
-#: pan/gui/server-ui.cc:788
+#: pan/gui/server-ui.cc:786
 #, c-format
-msgid "Server Certificate for “%s”"
+msgid "Server Certificate for '%s'"
 msgstr ""
 
-#: pan/gui/server-ui.cc:887
+#: pan/gui/server-ui.cc:885
 #, c-format
-msgid "Really delete certificate for “%s”?"
+msgid "Really delete certificate for \"%s\"?"
 msgstr ""
 
 #. dialog
-#: pan/gui/server-ui.cc:914 pan/gui/server-ui.cc:935 pan/gui/server-ui.cc:1033
+#: pan/gui/server-ui.cc:912 pan/gui/server-ui.cc:933 pan/gui/server-ui.cc:1031
 msgid "Servers"
 msgstr "Zerbitzariak"
 
-#: pan/gui/server-ui.cc:974
+#: pan/gui/server-ui.cc:972
 msgid "Remove a Server"
 msgstr "Kendu zerbitzaria"
 
 #. dialog
-#: pan/gui/server-ui.cc:1007
+#: pan/gui/server-ui.cc:1005
 msgid "SSL Certificates"
 msgstr "SSL ziurtagiriak"
 
-#: pan/gui/server-ui.cc:1028
+#: pan/gui/server-ui.cc:1026
 msgid "Certificates"
 msgstr "Ziurtagiriak"
 
-#: pan/gui/server-ui.cc:1059
+#: pan/gui/server-ui.cc:1057
 msgid "Import Certificate"
 msgstr "Inportatu ziurtagiria"
 
-#: pan/gui/server-ui.cc:1065
+#: pan/gui/server-ui.cc:1063
 msgid "Inspect Certificate"
 msgstr "Ikuskatu ziurtagiria"
 
-#: pan/gui/server-ui.cc:1072
+#: pan/gui/server-ui.cc:1070
 msgid "Remove Certificate"
 msgstr "Kendu ziurtagiria"
 
-#: pan/gui/task-pane.cc:121
+#: pan/gui/task-pane.cc:119
 #, c-format
 msgid ""
 "\n"
 "<u>Upload</u>\n"
 "\n"
-"<i>Subject:</i> <b>“%s”</b>\n"
+"<i>Subject:</i> <b>\"%s\"</b>\n"
 "<i>From:</i> <b>%s</b>\n"
 "<i>Groups:</i> <b>%s</b>\n"
 "<i>Sourcefile:</i> <b>%s</b>\n"
 msgstr "\n"
-"<u>Igo</u>\n"
+"<u>Kargatu</u>\n"
 "\n"
 "<i>Gaia:</i> <b>“%s”</b>\n"
 "<i>Nork:</i> <b>%s</b>\n"
 "<i>Taldeak:</i> <b>%s</b>\n"
 "<i>Iturburu-fitxategia:</i> <b>%s</b>\n"
 
-#: pan/gui/task-pane.cc:133
+#: pan/gui/task-pane.cc:131
 #, c-format
 msgid ""
 "\n"
 "<u>Download</u>\n"
 "\n"
-"<i>Subject:</i> <b>“%s”</b>\n"
+"<i>Subject:</i> <b>\"%s\"</b>\n"
 "<i>From:</i> <b>%s</b>\n"
 "<i>Date:</i> <b>%s</b>\n"
 "<i>Groups:</i> <b>%s</b>\n"
 "<i>Save Path:</i> <b>%s</b>\n"
 msgstr "\n"
-"<u>Jaitsi</u>\n"
+"<u>Deskargatu</u>\n"
 "\n"
 "<i>Gaia:</i> <b>“%s”</b>\n"
 "<i>Nork:</i> <b>%s</b>\n"
@@ -2956,153 +2971,153 @@ msgstr "\n"
 "<i>Taldeak:</i> <b>%s</b>\n"
 "<i>Gordetzeko bide-izena:</i> <b>%s</b>\n"
 
-#: pan/gui/task-pane.cc:135
+#: pan/gui/task-pane.cc:133
 msgid "unknown"
 msgstr "ezezaguna"
 
-#: pan/gui/task-pane.cc:303
+#: pan/gui/task-pane.cc:301
 msgid "Choose New Destination for Selected Tasks"
 msgstr "Aukeratu helburu berria hautatutako zereginetarako"
 
-#: pan/gui/task-pane.cc:457
+#: pan/gui/task-pane.cc:455
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan: atazak (%d ilaran, %d exekutatzen, %d geldiarazita)"
 
-#: pan/gui/task-pane.cc:459
+#: pan/gui/task-pane.cc:457
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan: atazak (%d ilaran, %d exekutatzen)"
 
-#: pan/gui/task-pane.cc:461
+#: pan/gui/task-pane.cc:459
 msgid "Pan: Tasks"
 msgstr "Pan: atazak"
 
-#: pan/gui/task-pane.cc:486
+#: pan/gui/task-pane.cc:484
 #, c-format
 msgid "%lu selected, %s"
 msgstr "%lu hautatuta, %s"
 
-#: pan/gui/task-pane.cc:550
+#: pan/gui/task-pane.cc:548
 msgid "Running"
 msgstr "Exekutatzen"
 
-#: pan/gui/task-pane.cc:551
+#: pan/gui/task-pane.cc:549
 msgid "Decoding"
 msgstr "Deskodetzen"
 
-#: pan/gui/task-pane.cc:553
+#: pan/gui/task-pane.cc:551
 msgid "Queued for Decode"
 msgstr "Ilaran deskodetzeko"
 
-#: pan/gui/task-pane.cc:554
+#: pan/gui/task-pane.cc:552
 msgid "Queued for Encode"
 msgstr "Ilaran kodetzeko"
 
-#: pan/gui/task-pane.cc:555
+#: pan/gui/task-pane.cc:553
 msgid "Queued"
 msgstr "Ilaran"
 
-#: pan/gui/task-pane.cc:556
+#: pan/gui/task-pane.cc:554
 msgid "Stopped"
 msgstr "Geldituta"
 
-#: pan/gui/task-pane.cc:557
+#: pan/gui/task-pane.cc:555
 msgid "Removing"
 msgstr "Kentzen"
 
-#: pan/gui/task-pane.cc:586
+#: pan/gui/task-pane.cc:584
 #, c-format
 msgid "%d%% Done"
 msgstr "%% %d eginda"
 
-#: pan/gui/task-pane.cc:592
+#: pan/gui/task-pane.cc:590
 #, c-format
-msgid "%d∶%02d∶%02d Remaining (%d @ %lu KiB/s)"
+msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%d:%02d:%02d falta (%d @ %lu KiB/s)"
 
-#: pan/gui/task-pane.cc:687 pan/gui/task-pane.cc:688
+#: pan/gui/task-pane.cc:685 pan/gui/task-pane.cc:686
 msgid "Move To Top"
 msgstr "Eraman goraino"
 
-#: pan/gui/task-pane.cc:692 pan/gui/task-pane.cc:693
+#: pan/gui/task-pane.cc:690 pan/gui/task-pane.cc:691
 msgid "Move To Bottom"
 msgstr "Eraman beheraino"
 
-#: pan/gui/task-pane.cc:697 pan/gui/task-pane.cc:698
+#: pan/gui/task-pane.cc:695 pan/gui/task-pane.cc:696
 msgid "Show Task Information"
 msgstr "Erakutsi zereginaren informazioa"
 
-#: pan/gui/task-pane.cc:702 pan/gui/task-pane.cc:703
+#: pan/gui/task-pane.cc:700 pan/gui/task-pane.cc:701
 msgid "Stop Task"
 msgstr "Gelditu zeregina"
 
-#: pan/gui/task-pane.cc:707 pan/gui/task-pane.cc:708
+#: pan/gui/task-pane.cc:705 pan/gui/task-pane.cc:706
 msgid "Delete Task"
 msgstr "Ezabatu zeregina"
 
-#: pan/gui/task-pane.cc:712 pan/gui/task-pane.cc:713
+#: pan/gui/task-pane.cc:710 pan/gui/task-pane.cc:711
 msgid "Restart Task"
 msgstr "Berrabiarazi zeregina"
 
-#: pan/gui/task-pane.cc:717 pan/gui/task-pane.cc:718
+#: pan/gui/task-pane.cc:715 pan/gui/task-pane.cc:716
 msgid "Change Download Destination"
 msgstr "Aldatu deskargaren helmuga"
 
-#: pan/gui/task-pane.cc:1028
+#: pan/gui/task-pane.cc:1026
 msgid "_Online"
 msgstr "_Linean"
 
-#: pan/gui/task-pane.cc:1045
+#: pan/gui/task-pane.cc:1043
 msgid "Restart Tasks"
 msgstr "Berrabiarazi atazak"
 
-#: pan/gui/task-pane.cc:1047
+#: pan/gui/task-pane.cc:1045
 msgid "Stop Tasks"
 msgstr "Gelditu atazak"
 
-#: pan/gui/task-pane.cc:1049
+#: pan/gui/task-pane.cc:1047
 msgid "Delete Tasks"
 msgstr "Ezabatu atazak"
 
-#: pan/gui/task-pane.cc:1055
+#: pan/gui/task-pane.cc:1053
 msgid "Show popups"
 msgstr "Erakutsi laster-menuak"
 
-#: pan/gui/url.cc:123
+#: pan/gui/url.cc:121
 #, c-format
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr "Errorea URLa abiaraztean: %s (komandoa: %s)"
 
 #: pan/tasks/decoder.cc:117
 #, c-format
-msgid "Couldn’t save file “%s”: %s"
-msgstr "Ezin izan da “%s” fitxategia gorde: %s"
+msgid "Couldn't save file \"%s\": %s"
+msgstr "Ezin da \"%s\" fitxategia gorde: %s"
 
 #: pan/tasks/decoder.cc:139 pan/tasks/encoder.cc:136
 msgid "Error initializing uulib"
 msgstr "Errorea uulib hasieratzean"
 
-#: pan/tasks/decoder.cc:154 pan/tasks/socket-impl-gio.cc:360
+#: pan/tasks/decoder.cc:159 pan/tasks/socket-impl-gio.cc:360
 #: pan/tasks/socket-impl-openssl.cc:642
 #, c-format
 msgid "Error reading from %s: %s"
 msgstr "Errorea %s(e)tik irakurtzean: %s"
 
-#: pan/tasks/decoder.cc:194
+#: pan/tasks/decoder.cc:199
 #, c-format
-msgid "Saved “%s”"
-msgstr "“%s” gorde da"
+msgid "Saved \"%s\""
+msgstr "\"%s\" gorde da"
 
-#: pan/tasks/decoder.cc:201
+#: pan/tasks/decoder.cc:206
 #, c-format
 msgid ""
-"Error saving “%s”:\n"
+"Error saving \"%s\":\n"
 "%s."
-msgstr "Errorea “%s” gordetzean:\n"
-"%s"
+msgstr "Errorea \"%s\" gordetzean:\n"
+"%s."
 
-#: pan/tasks/decoder.cc:314 pan/tasks/task-article.cc:354
+#: pan/tasks/decoder.cc:319 pan/tasks/task-article.cc:351
 #, c-format
 msgid "Decoding %s"
 msgstr "%s deskodetzen"
@@ -3122,30 +3137,30 @@ msgstr "Errorea %s kodetzean: %s"
 msgid "Encoding %s"
 msgstr "%s kodetzen"
 
-#: pan/tasks/nntp.cc:150
+#: pan/tasks/nntp.cc:148
 #, c-format
 msgid "%s requires a username, but none is set."
 msgstr "%s(e)k erabiltzaile-izena behar du, baina ez dago ezarrita."
 
-#: pan/tasks/nntp.cc:163
+#: pan/tasks/nntp.cc:161
 #, c-format
 msgid "%s requires a password, but none is set."
 msgstr "%s(e)k pasahitza behar du, baina ez dago ezarrita."
 
-#: pan/tasks/nntp.cc:247
+#: pan/tasks/nntp.cc:245
 #, c-format
-msgid "Sending “%s” to %s returned an error: %s"
+msgid "Sending \"%s\" to %s returned an error: %s"
 msgstr ""
 
-#: pan/tasks/nntp.cc:270
+#: pan/tasks/nntp.cc:268
 #, c-format
-msgid "Sending “%s” to %s returned an unrecognized response: “%s”"
+msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr ""
 
 #: pan/tasks/nntp-pool.cc:235
 #, c-format
-msgid "Unable to connect to “%s”"
-msgstr ""
+msgid "Unable to connect to \"%s\""
+msgstr "Ezin da \"%s\"(r)ekin konektatu:"
 
 #: pan/tasks/queue.cc:778 pan/tasks/queue.cc:806 pan/tasks/queue.cc:833
 msgid "No space left on device."
@@ -3154,31 +3169,31 @@ msgstr "Ez dago leku librerik gailuan."
 #: pan/tasks/socket-impl-gio.cc:173 pan/tasks/socket-impl-gio.cc:211
 #: pan/tasks/socket-impl-openssl.cc:214 pan/tasks/socket-impl-openssl.cc:252
 #, c-format
-msgid "Error connecting to “%s”"
-msgstr ""
+msgid "Error connecting to \"%s\""
+msgstr "Errorea %s(r)ekin konektatzean"
 
 #: pan/tasks/socket-impl-gio.cc:359 pan/tasks/socket-impl-openssl.cc:641
 msgid "Unknown Error"
 msgstr "Errore ezezaguna"
 
-#: pan/tasks/task-article.cc:62 pan/tasks/task-article.cc:160
+#: pan/tasks/task-article.cc:59 pan/tasks/task-article.cc:157
 #, c-format
 msgid "Saving %s"
 msgstr "%s gordetzen"
 
-#: pan/tasks/task-article.cc:64
+#: pan/tasks/task-article.cc:61
 #, c-format
 msgid "Reading %s"
 msgstr "%s irakurtzen"
 
-#: pan/tasks/task-article.cc:326
+#: pan/tasks/task-article.cc:323
 #, c-format
-msgid "Article “%s” is incomplete — the news server(s) don’t have part %s"
+msgid "Article \"%s\" is incomplete -- the news server(s) don't have part %s"
 msgstr ""
 
 #: pan/tasks/task-groups.cc:41
 #, c-format
-msgid "Getting group list from “%s”"
+msgid "Getting group list from \"%s\""
 msgstr ""
 
 #: pan/tasks/task-groups.cc:134
@@ -3186,34 +3201,34 @@ msgstr ""
 msgid "Fetched %lu Groups"
 msgstr "%lu talde lortu dira"
 
-#: pan/tasks/task-post.cc:35
+#: pan/tasks/task-post.cc:33
 #, c-format
-msgid "Posting “%s”"
-msgstr "“%s” bidaltzen"
+msgid "Posting \"%s\""
+msgstr "\"%s\" bidaltzen"
 
-#: pan/tasks/task-post.cc:80
+#: pan/tasks/task-post.cc:78
 #, c-format
-msgid "Posting of “%s” failed: %s"
-msgstr "“%s” bidaltzeak huts egin du: %s"
+msgid "Posting of \"%s\" failed: %s"
+msgstr "\"%s\" bidaltzeak huts egin du: %s"
 
-#: pan/tasks/task-post.cc:85
+#: pan/tasks/task-post.cc:83
 #, c-format
-msgid "Posting of “%s” successful: %s"
-msgstr "“%s” ongi bidali da: %s"
+msgid "Posting of \"%s\" successful: %s"
+msgstr "\"%s\" bidaltzea ongi osatu da: %s"
 
 #: pan/tasks/task-upload.cc:51
 #, c-format
 msgid "Uploading %s"
-msgstr "%s igotzen"
+msgstr "%s kargatzen"
 
 #: pan/tasks/task-upload.cc:265
 #, c-format
-msgid "Uploading %s — Part %d of %d"
-msgstr ""
+msgid "Uploading %s - Part %d of %d"
+msgstr "%s kargatzen - %d / %d"
 
 #: pan/tasks/task-upload.cc:267
 #, c-format
-msgid "Uploading message body with subject “%s”"
+msgid "Uploading message body with subject \"%s\""
 msgstr ""
 
 #: pan/tasks/task-upload.cc:324
@@ -3249,321 +3264,321 @@ msgid ""
 "Posting of file %s not successful: Check the log (right-click list item)."
 msgstr ""
 
-#: pan/tasks/task-xover.cc:83
+#: pan/tasks/task-xover.cc:82
 #, c-format
-msgid "Getting all headers for “%s”"
+msgid "Getting all headers for \"%s\""
 msgstr ""
 
-#: pan/tasks/task-xover.cc:86
+#: pan/tasks/task-xover.cc:85
 #, c-format
-msgid "Getting new headers for “%s”"
+msgid "Getting new headers for \"%s\""
 msgstr ""
 
 #. SAMPLE
-#: pan/tasks/task-xover.cc:90
+#: pan/tasks/task-xover.cc:89
 #, c-format
-msgid "Sampling headers for “%s”"
+msgid "Sampling headers for \"%s\""
 msgstr ""
 
-#: pan/tasks/task-xover.cc:431
+#: pan/tasks/task-xover.cc:430
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu zati, %lu artikulu)"
 
-#: pan/tasks/task-xover.cc:505
+#: pan/tasks/task-xover.cc:504
 #, c-format
-msgid "Getting new headers for “%s” done."
+msgid "Getting new headers for \"%s\" done."
 msgstr ""
 
 #: pan/tasks/task-xoverinfo.cc:78
 #, c-format
-msgid "Getting header counts for “%s”"
+msgid "Getting header counts for \"%s\""
 msgstr ""
 
-#: pan/usenet-utils/filter-info.cc:217
-msgid "article doesn’t have attachments"
+#: pan/usenet-utils/filter-info.cc:215
+msgid "article doesn't have attachments"
 msgstr ""
 
-#: pan/usenet-utils/filter-info.cc:221
+#: pan/usenet-utils/filter-info.cc:219
 msgid "the article has attachments"
 msgstr "artikuluak eranskinak ditu"
 
-#: pan/usenet-utils/filter-info.cc:225
-msgid "the article isn’t cached locally"
-msgstr ""
+#: pan/usenet-utils/filter-info.cc:223
+msgid "the article isn't cached locally"
+msgstr "artikulua ez dago cache lokalean"
 
-#: pan/usenet-utils/filter-info.cc:229
+#: pan/usenet-utils/filter-info.cc:227
 msgid "the article is cached locally"
-msgstr "artikuluaren gorputza lokalki gordeta dago cachean"
+msgstr "artikulua cache lokalean dago"
 
-#: pan/usenet-utils/filter-info.cc:233
-msgid "the article wasn’t posted by you"
-msgstr ""
+#: pan/usenet-utils/filter-info.cc:231
+msgid "the article wasn't posted by you"
+msgstr "artikulua ez duzu zuk bidali"
 
-#: pan/usenet-utils/filter-info.cc:237
+#: pan/usenet-utils/filter-info.cc:235
 msgid "the article was posted by you"
 msgstr "artikulua zuk bidalitakoa da"
 
-#: pan/usenet-utils/filter-info.cc:241
+#: pan/usenet-utils/filter-info.cc:239
 msgid "the article has been read"
 msgstr "artikulua irakurrita dago"
 
-#: pan/usenet-utils/filter-info.cc:245
-msgid "the article hasn’t been read"
-msgstr ""
+#: pan/usenet-utils/filter-info.cc:243
+msgid "the article hasn't been read"
+msgstr "artikulua ez da irakurri"
 
-#: pan/usenet-utils/filter-info.cc:249
+#: pan/usenet-utils/filter-info.cc:247
 #, c-format
 msgid "the article is less than %ld bytes long"
 msgstr "artikuluak %ld byte baino gutxiago ditu"
 
-#: pan/usenet-utils/filter-info.cc:254
+#: pan/usenet-utils/filter-info.cc:252
 #, c-format
 msgid "the article is at least %ld bytes long"
 msgstr "artikuluak %ld byte ditu gutxienez"
 
-#: pan/usenet-utils/filter-info.cc:259
+#: pan/usenet-utils/filter-info.cc:257
 #, c-format
 msgid "the article is less than %ld lines long"
 msgstr "artikuluak %ld lerro baino gutxiago ditu"
 
-#: pan/usenet-utils/filter-info.cc:264
+#: pan/usenet-utils/filter-info.cc:262
 #, c-format
 msgid "the article is at least %ld lines long"
 msgstr "artikuluak %ld lerro ditu gutxienez"
 
-#: pan/usenet-utils/filter-info.cc:269
+#: pan/usenet-utils/filter-info.cc:267
 #, c-format
 msgid "the article is less than %ld days old"
 msgstr "artikuluak %ld egun baino gutxiago ditu"
 
-#: pan/usenet-utils/filter-info.cc:274
+#: pan/usenet-utils/filter-info.cc:272
 #, c-format
 msgid "the article is at least %ld days old"
 msgstr "artikuluak %ld egun ditu gutxienez"
 
-#: pan/usenet-utils/filter-info.cc:279
+#: pan/usenet-utils/filter-info.cc:277
 #, c-format
 msgid "the article was posted to less than %ld groups"
 msgstr "artikulua %ld talderi baino gutxiagori bidali zaie"
 
-#: pan/usenet-utils/filter-info.cc:284
+#: pan/usenet-utils/filter-info.cc:282
 #, c-format
 msgid "the article was posted to at least %ld groups"
 msgstr "artikulua %ld talderi bidali zaie gutxienez"
 
-#: pan/usenet-utils/filter-info.cc:289
+#: pan/usenet-utils/filter-info.cc:287
 #, c-format
-msgid "the article’s score is less than %ld"
+msgid "the article's score is less than %ld"
+msgstr "artikuluaren puntuazioa %ld baino baxuagoa da"
+
+#: pan/usenet-utils/filter-info.cc:292
+#, c-format
+msgid "the article's score is %ld or higher"
+msgstr "artikuluaren puntuazioa %ld baino altuagoa da"
+
+#: pan/usenet-utils/filter-info.cc:301 pan/usenet-utils/filter-info.cc:311
+#, c-format
+msgid "%s doesn't contain \"%s\""
 msgstr ""
 
-#: pan/usenet-utils/filter-info.cc:294
+#: pan/usenet-utils/filter-info.cc:302 pan/usenet-utils/filter-info.cc:312
 #, c-format
-msgid "the article’s score is %ld or higher"
-msgstr ""
+msgid "%s isn't \"%s\""
+msgstr "%s ez da \"%s\""
 
 #: pan/usenet-utils/filter-info.cc:303 pan/usenet-utils/filter-info.cc:313
 #, c-format
-msgid "%s doesn’t contain “%s”"
+msgid "%s doesn't begin with \"%s\""
 msgstr ""
 
 #: pan/usenet-utils/filter-info.cc:304 pan/usenet-utils/filter-info.cc:314
 #, c-format
-msgid "%s isn’t “%s”"
+msgid "%s doesn't end with \"%s\""
 msgstr ""
 
 #: pan/usenet-utils/filter-info.cc:305 pan/usenet-utils/filter-info.cc:315
 #, c-format
-msgid "%s doesn’t begin with “%s”"
+msgid "%s doesn't match the regex \"%s\""
 msgstr ""
 
-#: pan/usenet-utils/filter-info.cc:306 pan/usenet-utils/filter-info.cc:316
+#: pan/usenet-utils/filter-info.cc:327
 #, c-format
-msgid "%s doesn’t end with “%s”"
+msgid "%s contains \"%s\""
 msgstr ""
 
-#: pan/usenet-utils/filter-info.cc:307 pan/usenet-utils/filter-info.cc:317
+#: pan/usenet-utils/filter-info.cc:328
 #, c-format
-msgid "%s doesn’t match the regex “%s”"
-msgstr ""
+msgid "%s is \"%s\""
+msgstr "%s \"%s\" da"
 
 #: pan/usenet-utils/filter-info.cc:329
 #, c-format
-msgid "%s contains “%s”"
-msgstr ""
+msgid "%s begins with \"%s\""
+msgstr "%s honekin hasten da: \"%s\""
 
 #: pan/usenet-utils/filter-info.cc:330
 #, c-format
-msgid "%s is “%s”"
-msgstr ""
+msgid "%s ends with \"%s\""
+msgstr "%s honekin amaitzen da: \"%s\""
 
 #: pan/usenet-utils/filter-info.cc:331
 #, c-format
-msgid "%s begins with “%s”"
+msgid "%s matches the regex \"%s\""
 msgstr ""
 
-#: pan/usenet-utils/filter-info.cc:332
-#, c-format
-msgid "%s ends with “%s”"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:333
-#, c-format
-msgid "%s matches the regex “%s”"
-msgstr ""
-
-#: pan/usenet-utils/filter-info.cc:339
+#: pan/usenet-utils/filter-info.cc:337
 msgid "Any of these tests fail:"
 msgstr "Proba hauetako edozeinek huts egiten du:"
 
-#: pan/usenet-utils/filter-info.cc:346
+#: pan/usenet-utils/filter-info.cc:344
 msgid "All of these tests pass:"
 msgstr "Proba hauek guztiek pasatzen dute:"
 
-#: pan/usenet-utils/filter-info.cc:353
+#: pan/usenet-utils/filter-info.cc:351
 msgid "None of these tests pass:"
 msgstr "Proba hauetako batek ere ez du pasatzen:"
 
-#: pan/usenet-utils/filter-info.cc:360
+#: pan/usenet-utils/filter-info.cc:358
 msgid "Any of these tests pass:"
 msgstr "Proba hauetako edozeinek pasatzen du:"
 
 #: pan/usenet-utils/gnksa.cc:880
 #, c-format
-msgid "No email address provided; generating message-id with domain “%s”"
+msgid "No email address provided; generating message-id with domain \"%s\""
 msgstr ""
 
-#: pan/usenet-utils/message-check.cc:124
+#: pan/usenet-utils/message-check.cc:122
 msgid "Warning: Reply seems to be top-posted."
 msgstr "Abisua: badirudi erantzuna bidalita dagoela lehendik."
 
-#: pan/usenet-utils/message-check.cc:145
-msgid "Warning: The signature marker should be “-- ”, not “--”."
-msgstr ""
+#: pan/usenet-utils/message-check.cc:143
+msgid "Warning: The signature marker should be \"-- \", not \"--\"."
+msgstr "Abisua: Sinadura-markatzaileak \"-- \" izan behar du, ez \"--\"."
 
-#: pan/usenet-utils/message-check.cc:162
+#: pan/usenet-utils/message-check.cc:160
 msgid "Warning: Signature prefix with no signature."
 msgstr "Abisua: sinadura-aurrizkiak ez du sinadurarik."
 
-#: pan/usenet-utils/message-check.cc:167
+#: pan/usenet-utils/message-check.cc:165
 msgid "Warning: Signature is more than 4 lines long."
 msgstr "Abisua: sinadurak 4 lerro baino gehiago ditu."
 
-#: pan/usenet-utils/message-check.cc:172
+#: pan/usenet-utils/message-check.cc:170
 msgid "Warning: Signature is more than 80 characters wide."
 msgstr "Abisua: sinadurak 80 karaktere baino gehiago ditu."
 
-#: pan/usenet-utils/message-check.cc:198
+#: pan/usenet-utils/message-check.cc:196
 #, c-format
 msgid "Warning: %d line is more than 80 characters wide."
 msgid_plural "Warning: %d lines are more than 80 characters wide."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Abisua: lerro %dek 80 karaktere baino gehiago ditu."
+msgstr[1] "Abisua %d lerrok 80 karaktere baino gehiago ditu."
 
-#: pan/usenet-utils/message-check.cc:223
+#: pan/usenet-utils/message-check.cc:221
 msgid "Error: Message is empty."
 msgstr "Errorea: mezua hutsik dago."
 
-#: pan/usenet-utils/message-check.cc:258
+#: pan/usenet-utils/message-check.cc:256
 msgid "Warning: The message is entirely quoted text!"
 msgstr "Abisua: mezu osoa komatxo artean dago"
 
-#: pan/usenet-utils/message-check.cc:259
+#: pan/usenet-utils/message-check.cc:257
 msgid "Warning: The message is mostly quoted text."
 msgstr "Abisua: mezuaren testurik gehiena komatxo artean dago."
 
-#: pan/usenet-utils/message-check.cc:309
+#: pan/usenet-utils/message-check.cc:307
 msgid "Error: Message appears to have no new content."
 msgstr "Errorea: badirudi mezuak ez duela eduki berririk."
 
-#: pan/usenet-utils/message-check.cc:344 pan/usenet-utils/message-check.cc:383
+#: pan/usenet-utils/message-check.cc:342 pan/usenet-utils/message-check.cc:381
 #, c-format
 msgid ""
-"Warning: The posting profile’s server doesn’t carry newsgroup\n"
-"\t“%s”.\n"
-"\tIf the group name is correct, switch profiles in the “From:”\n"
-"\tline or edit the profile with “Edit → Manage Posting Profiles”."
+"Warning: The posting profile's server doesn't carry newsgroup\n"
+"\t\"%s\".\n"
+"\tIf the group name is correct, switch profiles in the \"From:\"\n"
+"\tline or edit the profile with \"Edit|Manage Posting Profiles\"."
 msgstr ""
 
-#: pan/usenet-utils/message-check.cc:355
+#: pan/usenet-utils/message-check.cc:353
 msgid "Warning: Following-Up to too many groups."
 msgstr "Abisua: segimendua talde gehiegiri."
 
-#: pan/usenet-utils/message-check.cc:366
+#: pan/usenet-utils/message-check.cc:364
 msgid "Error: No Subject specified."
 msgstr "Errorea: ez da gairik zehaztu."
 
-#: pan/usenet-utils/message-check.cc:395
+#: pan/usenet-utils/message-check.cc:393
 #, c-format
-msgid "Warning: Group “%s” is read-only."
-msgstr ""
+msgid "Warning: Group \"%s\" is read-only."
+msgstr "Abisua: \"%s\" taldea irakurtzeko soilik da."
 
-#: pan/usenet-utils/message-check.cc:404
+#: pan/usenet-utils/message-check.cc:402
 msgid "Error: Posting to a very large number of groups."
 msgstr "Errorea: talde gehiegitara bidaltzen ari zara."
 
-#: pan/usenet-utils/message-check.cc:409
+#: pan/usenet-utils/message-check.cc:407
 msgid "Warning: Posting to a large number of groups."
 msgstr "Abisua: talde askotara bidaltzen ari zara."
 
-#: pan/usenet-utils/message-check.cc:416
+#: pan/usenet-utils/message-check.cc:414
 msgid "Warning: Crossposting without setting Followup-To header."
 msgstr "Abisua: ’Segimendua honi’ goiburua ezarri gabe hainbat taldetara bidaltzen."
 
-#: pan/usenet-utils/message-check.cc:441
+#: pan/usenet-utils/message-check.cc:439
 msgid "Error: Bad email address."
 msgstr "Errorea: helbide elektronikoa ez da baliozkoa."
 
-#: pan/usenet-utils/message-check.cc:450
+#: pan/usenet-utils/message-check.cc:448
 msgid "Warning: Most newsgroups frown upon HTML posts."
 msgstr "Abisua: berri-talde gehienek ez dute onartzen HTML bidalketarik."
 
-#: pan/usenet-utils/message-check.cc:490
+#: pan/usenet-utils/message-check.cc:488
 msgid "Error: No Recipients."
 msgstr "Errorea: ez dago hartzailerik."
 
-#: pan/usenet-utils/scorefile.cc:304
+#: pan/usenet-utils/scorefile.cc:302
 #, c-format
 msgid ""
-"Error reading score in %*.*s, line %d: expected “Expires: MM/DD/YYYY” or "
-"“Expires: DD-MM-YYYY”."
+"Error reading score in %*.*s, line %d: expected 'Expires: MM/DD/YYYY' or "
+"'Expires: DD-MM-YYYY'."
 msgstr ""
 
-#: pan/usenet-utils/scorefile.cc:307
+#: pan/usenet-utils/scorefile.cc:305
 #, c-format
 msgid "Expired old score from %*.*s, line %d"
 msgstr "Iraungita dago hemengo puntuazio zaharra: %*.*s, %d. lerroa"
 
-#: pan/usenet-utils/scorefile.cc:380
+#: pan/usenet-utils/scorefile.cc:378
 #, c-format
 msgid "Error reading score in %*.*s, line %d: unexpected line."
 msgstr "Errorea hemengo puntuazioa irakurtzean: %*.*s, %d. lerroa. Ustekabeko lerroa."
 
-#: pan/usenet-utils/scorefile.cc:429
+#: pan/usenet-utils/scorefile.cc:427
 #, c-format
-msgid "Read %lu scoring rules in %lu sections from “%s”"
+msgid "Read %lu scoring rules in %lu sections from \"%s\""
 msgstr ""
 
-#: pan/usenet-utils/ssl-utils.h:189
+#: pan/usenet-utils/ssl-utils.h:187
 #, c-format
-msgid "Error printing the server certificate for “%s”"
+msgid "Error printing the server certificate for '%s'"
 msgstr ""
 
-#: pan/usenet-utils/ssl-utils.h:205
+#: pan/usenet-utils/ssl-utils.h:203
 #, c-format
 msgid ""
-"The current server <b>“%s”</b> sent this security certificate:\n"
+"The current server <b>'%s'</b> sent this security certificate:\n"
+"\n"
+msgstr ""
+
+#: pan/usenet-utils/ssl-utils.h:204
+#, c-format
+msgid ""
+"Certificate information for server <b>'%s'</b>:\n"
 "\n"
 msgstr ""
 
 #: pan/usenet-utils/ssl-utils.h:206
-#, c-format
-msgid ""
-"Certificate information for server <b>“%s”</b>:\n"
-"\n"
-msgstr ""
-
-#: pan/usenet-utils/ssl-utils.h:208
 #, c-format
 msgid ""
 "%s<b>Issuer information:</b>\n"
@@ -3574,35 +3589,41 @@ msgid ""
 "\n"
 msgstr ""
 
-#: pan/usenet-utils/text-massager.cc:399
+#: pan/usenet-utils/text-massager.cc:397
 msgid "> [quoted text muted]"
 msgstr "> [komatxo arteko testua mutututa]"
 
-#: pan/usenet-utils/text-massager.cc:581
+#: pan/usenet-utils/text-massager.cc:579
 msgid "no_name"
 msgstr ""
 
-#: pan/usenet-utils/text-massager.cc:582
+#: pan/usenet-utils/text-massager.cc:580
 msgid "no_mail"
 msgstr ""
 
-#~ msgid "_Save Articles..."
-#~ msgstr "_Gorde artikuluak..."
+#~ msgid "_Save Articles…"
+#~ msgstr "_Gorde artikuluak…"
 
-#~ msgid "Save Articles..."
-#~ msgstr "Gorde artikuluak..."
+#~ msgid "Save Articles…"
+#~ msgstr "Gorde artikuluak…"
 
-#~ msgid "Save Articles from Selected _NZB..."
-#~ msgstr "_Gorde NZB honetako artikuluak..."
+#~ msgid "Save Articles from Selected _NZB…"
+#~ msgstr "Gorde _NZB honetako artikuluak…"
 
-#~ msgid "Save Articles to an NZB _File..."
-#~ msgstr "_Gorde NZB honetako artikuluak..."
+#~ msgid "Save Articles to an NZB _File…"
+#~ msgstr "Gorde artikuluak NZB _fitxategi batean…"
 
-#~ msgid "_Import NZB Files..."
-#~ msgstr "_Inportatu NZB fitxategiak..."
+#~ msgid "_Import NZB Files…"
+#~ msgstr "_Inportatu NZB fitxategiak…"
 
-#~ msgid "Save attachment as ...."
-#~ msgstr "Gorde eranskinak"
+#~ msgid "Save Attachment As…"
+#~ msgstr "Gorde eranskina honela…"
+
+#~ msgid "X-Face (Avatar)"
+#~ msgstr "X-Face (avatarra)"
+
+#~ msgid "isn’t"
+#~ msgstr "ez da"
 
 #~ msgid "Always trust"
 #~ msgstr "Exekutatu beti editorea"
@@ -3610,14 +3631,8 @@ msgstr ""
 #~ msgid "Quoted text:"
 #~ msgstr "Komatxo arteko testua:"
 
-#~ msgid "isn't"
-#~ msgstr "ez da"
-
 #~ msgid "If the group name"
 #~ msgstr "Baldintza: taldearen izena"
-
-#~ msgid "The news server's port number.  Typically 119."
-#~ msgstr "Zerbitzari berriaren ataka-zenbakia. Normalean 119 izaten da."
 
 #~ msgid "Read News from Usenet"
 #~ msgstr "Usenet-eko berriak irakurtzen ditu"
