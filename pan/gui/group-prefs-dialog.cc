@@ -22,11 +22,7 @@
 #include <glib.h>
 #include "gtk-compat.h"
 #ifdef HAVE_GTKSPELL
-#if GTKSPELL_VERSION == 3
 #include <enchant-2/enchant.h>
-#else
-#include <enchant/enchant.h>
-#endif
 #endif
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>

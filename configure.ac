@@ -55,7 +55,6 @@ GTK_REQUIRED=2.16.0
 GTK3_REQUIRED=3.0.0
 GTKSPELL_REQUIRED=2.0.7
 GTKSPELL3_REQUIRED=2.0.16
-ENCHANT_REQUIRED=1.6.0
 ENCHANT2_REQUIRED=2.2.3
 GNUTLS_REQUIRED=3.0.0
 LIBNOTIFY_REQUIRED=0.4.1
@@ -144,8 +143,8 @@ AC_ARG_WITH([gtk2],
   AS_HELP_STRING([--with-gtk2],[enable GTK 2 support (deprecated, normally: no)]), [want_gtk2=$withval], [want_gtk2=no])
 if test "x$want_gtk2" = "xyes" ; then
    if test "x$want_gtkspell" = "xyes" ; then
-   PKG_CHECK_MODULES([GTKSPELL],[gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant >= $ENCHANT_REQUIRED],
-                      [GTKSPELL_VER=`pkg-config --modversion gtkspell-2.0 enchant | xargs`
+   PKG_CHECK_MODULES([GTKSPELL],[gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant-2 >= $ENCHANT2_REQUIRED],
+                      [GTKSPELL_VER=`pkg-config --modversion gtkspell-2.0 enchant-2 | xargs`
                       gtkspell_msg="yes ($GTKSPELL_VER)"
                       AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
                       AC_DEFINE(GTKSPELL_VERSION,[2],[GtkSpell API version])],
