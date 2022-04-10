@@ -145,8 +145,8 @@ if test "x$want_gtk2" = "xyes" ; then
    if test "x$want_gtkspell" = "xyes" ; then
    PKG_CHECK_MODULES([GTKSPELL],[gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant-2 >= $ENCHANT2_REQUIRED],
                       [GTKSPELL_VER=`pkg-config --modversion gtkspell-2.0`
-                      ENCHANT_VER=`pkg-config --modversion enchant`
-                      gtkspell_msg="yes (gtkspell: $GTKSPELL_VER, enchant: $ENCHANT2_VER)"
+                      ENCHANT_VER=`pkg-config --modversion enchant-2`
+                      gtkspell_msg="yes (gtkspell: $GTKSPELL_VER, enchant: $ENCHANT_VER)"
                       AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
                       AC_DEFINE(GTKSPELL_VERSION,[2],[GtkSpell API version])]
                       )
