@@ -17,10 +17,10 @@ $ pacman -S mingw-w64-x86_64-gtkspell
 For gtk3 builds,
 $ pacman -S mingw-w64-x86_64-gtkspell3
 
-# You also need some dictionaries to spell check against!
+You also need some dictionaries to spell check against!
 $ pacman -S mingw-w64-x86_64-hunspell-en
 
-# and this (possibly optional, but...)
+and this (possibly optional, but...)
 $ pacman -S mingw-w64-x86_64-iso-codes (possibly: /mingw64/share/xml, /mingw64/share/locale)
 
 Then you can create an msys2 x64 window and run
@@ -31,18 +31,26 @@ or
 
 `autogen --with-gtk2`
 
-NOTE: enchant is somewhat broken under mingw64 and cannot find the appropriate libraries as it appears to expect to find at least 'lib/enchant=2' in the the same directory as the executable. You might want to create a soft link or copy.
+Personally I think the gtk2 version looks a *lot* better
+
+NOTE: enchant is somewhat broken under mingw64 and cannot find the appropriate libraries as it appears to expect to find at least 'lib/enchant-2' in the the same directory as the executable. You might want to create a soft link or copy. If you run wininstall, it copies the appropriate directories to the same place as the executable, and works fine. Go figure.
 
 Haven't tried these yet:
 
---with-yelp-tools for user manual
---with-gmime-crypto for cryptography
---enable-libnotify for notifications
---enable-gkr for gnome keyring
+1. --with-dbus
+
+2. libnotify: autogen with --enable-libnotify
+$ pacman -S mingw-w64-x86_64-libnotify
+
+3. --enable-manual for user manual
+
+4. --enable-gkr for gnome keyring (gtk2 and 3 different for this)
+
+5. --with-gnutls
+
+5. --with-webkit
 
 and `make`.
-
-Personally I think the gtk2 version looks a *lot* better
 
 If you want a windows theme in gtk3, run
 ```
@@ -54,9 +62,11 @@ gtk-theme-name=win32
 
 If you want other themes, you can install them in share/themes in the target directory.
 
+Issues:
+1. bold state on group doesn't get cleared when you do 'mark all as read'
+
 To add:
 
-- [[http://www.galago-project.org/news/index.php][libnotify]] 0.4.1 or higher for notifications
 
 - [[https://developer.gnome.org/libsecret/][libsecret]] 0.16 or higher and [[https://developer.gnome.org/gcr/][gcr]] 3.20 or higher for password storage
 

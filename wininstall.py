@@ -67,15 +67,17 @@ def copy_tree(*, target_dir: str, tree: str):
 
 def read_configure():
     dbus = False
-    have_gkr = False
     gmime_crypto = False
-    gnu_tls = False
-    gtk_version = 2
     spellcheck = False
-    popups = False
+    gtk_version = 2
+# webkit?
+    tls_support = False
+    popup_notifications = False
+    password_storage = False
+# yelp-tools ?
     manual = False
 
-    # Check these
+    # These are in the order output by configure
     with open("config.h") as config:
         for line in config.readlines():
             line = line.rstrip()
@@ -85,34 +87,31 @@ def read_configure():
                 continue
             if words[1] == 'HAVE_DBUS':
                 dbus = True # better to say multiple pans?
-            elif words[1] == 'HAVE_GKR': # What is this? gnome keyring?
-                have_gkr = True # What effect?
             elif words[1] == 'HAVE_GMIME_CRYPTO':
-                gmime_crypto = True # What effect?
-            elif words[1] == 'HAVE_GNUTLS':
-                gnu_tls = True # What effect?
-            elif words[1] == 'HAVE_GTK':
-                gtk_version = 3
+                gmime_crypto = True
             elif words[1] == 'HAVE_GTKSPELL':
                 spellcheck = True
+            elif words[1] == 'HAVE_GTK':
+                gtk_version = 3
+            # webkit?
+            elif words[1] == 'HAVE_GNUTLS':
+                tls_support = True
             elif words[1] == 'HAVE_LIBNOTIFY':
-                popups = True
+                popup_notifications = True
+            elif words[1] == 'HAVE_GKR':
+                password_storage = True
             elif words[1] == 'HAVE_MANUAL':
                 manual = True
 
-#        With WebKitGTK:         no Which param?
-#        With password storage: which param?
-#        With yelp-tools:        yes doubt it affects distro
-#        With user manual:       no can we do anything anyway?
-
     return {
         "dbus": dbus,
-        "have_gkr": have_gkr,
         "gmime_crypto": gmime_crypto,
-        "gnu_tls": gnu_tls,
-        "gtk_version": gtk_version,
         "spellcheck": spellcheck,
-        "popups": popups,
+        "gtk_version": gtk_version,
+        # webkit?
+        "tls_support": tls_support,
+        "popup_notifications": popup_notifications,
+        "password_storage": password_storage,
         "manual": manual
     }
 
@@ -146,6 +145,7 @@ def main():
     dlls = copy_executable(executable, target_dir)
 
     copy_tree(target_dir=target_dir, tree="lib/gdk-pixbuf-2.0")
+    # + share/locale/en_GB/LC_MESSAGES/gdk-pixbuf.mo?
 
     # Deal with magically autoloaded stuff
     #------------------------------------------------------------------------
@@ -159,6 +159,7 @@ def main():
     # ------------ gtk2
     if config["gtk_version"] == 2:
         copy_tree(target_dir=target_dir, tree="lib/gtk-2.0/2.10.0/engines")
+        # + share/locale/en_GB/LC_MESSAGES/gtk20*?
 
     # None of these appear to be necessary so why do we have them?
     # However, the release pan version has very slightly nicer fonts, so need
@@ -166,12 +167,6 @@ def main():
     # add etc/fonts?
     # add etc/gtk-2.0
     # add etc/pango
-
-    # for enchant:
-    # share/xml/iso-codes (seems a bit optional)
-    # locale
-
-    # what about contents of 'po' directory?
 
     # ------------ gtk3
     #if config["gtk_version"] == 3:
@@ -202,13 +197,16 @@ def main():
         # Maybe we should extract the pacman file directly?
         # tar -xvf /var/cache/pacman/pkg/mingw-w64-x86_64-iso-codes-4.9.0-3-any.pkg.tar.zst
         #   -C <target_dir> --strip-components 1
-        # note that there are a bunch of other .mo files like gtk20.mo, .....
-        # in share/locale
 
     #------------------------------------------------------------------------
 
+    # Possibly copy the whole of /mingw64share/locale?
+    # May be worth while installing the packages installed to build this with the tar
+    # command above?
+
     # Now we copy all the pan <lang>.gmo files in the po directory to the right place in
-    # <target>/locale/<dir>/LC_MESSAGES/pan.mo. This may or may not be correct for windows
+    # <target>/locale/<dir>/LC_MESSAGES/pan.mo. This may or may not be correct for windows,
+    # as the existing install appears to set up registry keys.
     locale_dir = os.path.join(target_dir, 'share', 'locale')
     for gmo in glob.glob("po/*.gmo"):
         name = os.path.basename(gmo)
