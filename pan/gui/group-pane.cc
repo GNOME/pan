@@ -441,7 +441,7 @@ namespace
 
     //Use a stable sort to ensure that if there are newsgroups called Sent
     //or Drafts on the server (yes, it does happen!) and you have the local
-    //version selected on exit, it reslects the local one on restart.
+    //version selected on exit, it reselects the local one on restart.
     //With normal sort, a random one of the two is picked, which is seriously
     //disconcerting.
     setme_rows.stable_sort ();
