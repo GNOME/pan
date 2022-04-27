@@ -1,5 +1,6 @@
 // Wormux resource for win32 target
 
+#include <winuser.h>
 #include <winver.h>
 #include "../../config.h"
 #if ENABLE_NLS
@@ -44,3 +45,5 @@ FILETYPE VFT_APP
 }
 
 IDI_ICON1 ICON DISCARDABLE "../icons/Pan.ico"
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "pan.manifest.xml"
