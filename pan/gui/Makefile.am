@@ -94,7 +94,8 @@ bin_PROGRAMS = \
 
 if HAVE_WIN32
 WINRC = panrc.rc
-#WINRCOBJ = $(WINRC:.rc=.o)
+WINRCOBJ = $(WINRC:.rc=.o)
+$(WINRCOBJ): pan.manifest.xml
 .rc.o: ../../config.h $(srcdir)/pan/icons/Pan.ico
 	$(WINDRES) -I . -I $(srcdir) -o $@ -i $<
 WINLIBS = -liconv
