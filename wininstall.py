@@ -459,6 +459,13 @@ def main():
             elif package == "gtk3":
                 copier.copy_package(package, library="gtk-3.0")
                 copier.copy_package("adwaita-icon-theme")
+
+                with open(
+                    os.path.join(target_dir, 'etc', 'gtk-3.0', 'settings.ini'),
+                    'w'
+                ) as settings:
+                    print("[Settings]\ngtk-theme-name=win32\n", file=settings)
+
             elif package == "graphite2":
                 copier.copy_package(package, exclude=f"share/{package}")
             elif package == "icu":
