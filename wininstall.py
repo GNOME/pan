@@ -464,7 +464,13 @@ def main():
                     os.path.join(target_dir, 'etc', 'gtk-3.0', 'settings.ini'),
                     'w'
                 ) as settings:
-                    print("[Settings]\ngtk-theme-name=win32\n", file=settings)
+                    print("""
+[Settings]
+gtk-theme-name=win32
+
+gtk-menu-images = true
+gtk-overlay-scrolling = false
+""", file=settings)
 
             elif package == "graphite2":
                 copier.copy_package(package, exclude=f"share/{package}")
