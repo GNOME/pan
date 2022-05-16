@@ -101,7 +101,6 @@ $(WINRCOBJ): pan.manifest.xml
 WINLIBS = -liconv
 else
 WINRC =
-#WINRCOBJ =
 WINLIBS =
 endif
 
