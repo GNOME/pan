@@ -92,14 +92,19 @@ namespace
   }
 }
 
-TaskXOver::TaskXOver(Data & data, const Quark & group, Mode mode,
-    unsigned long sample_size) :
-    Task("XOVER", get_description(group, mode)), _data(data), _group(group), _short_group_name(
-        get_short_name(StringView(group.c_str()))), _mode(mode), _sample_size(
-        sample_size), _days_cutoff(
-        mode == DAYS ? (time(0) - (sample_size * 24 * 60 * 60)) : 0), _group_xover_is_reffed(
-        false), _bytes_so_far(0), _parts_so_far(0ul), _articles_so_far(0ul), _total_minitasks(
-        0)
+TaskXOver::TaskXOver(Data & data, const Quark & group, Mode mode, unsigned long sample_size) :
+  Task("XOVER", get_description(group, mode)),
+  _data(data),
+  _group(group),
+  _short_group_name(get_short_name(StringView(group.c_str()))),
+  _mode(mode),
+  _sample_size(sample_size),
+  _days_cutoff(mode == DAYS ? (time(0) - (sample_size * 24 * 60 * 60)) : 0),
+  _group_xover_is_reffed(false),
+  _bytes_so_far(0),
+  _parts_so_far(0ul),
+  _articles_so_far(0ul),
+  _total_minitasks(0)
 {
 
   debug("ctor for " << group);
@@ -127,7 +132,10 @@ TaskXOver::~TaskXOver()
 {
   if (_group_xover_is_reffed)
     {
-      foreach (server_to_high_t, _high, it)_data.set_xover_high (_group, it->first, it->second);
+      foreach (server_to_high_t, _high, it)
+        {
+          _data.set_xover_high (_group, it->first, it->second);
+        }
       _data.xover_unref (_group);
     }
   _data.fire_group_entered(_group, 1, 0);
@@ -230,11 +238,28 @@ TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, unsigned long qty,
       add_steps(h - l);
       const int INCREMENT(compression_enabled ? 10000 : 1000);
       MiniTasks_t& minitasks(_server_to_minitasks[servername]);
+      //Unfortunately we need to push everything to the front of the list, so
+      //that we process all the xovers before we process the next group.
+      //But we want to fetch all the articles in order so if someone exits,
+      //on resumption we can resume from where we left off. Therefore, we build
+      //a list of things to do in reverse order
+      std::vector<MiniTask> tasks;
+      tasks.reserve(h - l);
       for (uint64_t m = l; m <= h; m += INCREMENT)
         {
-          const MiniTask mt(MiniTask::XOVER, m, m + INCREMENT);
+          //A note: It may not be necessary to cap the high here, the spec isn't
+          //terribly clear about what happens if new articles come into
+          //existence on the server while it is working out the response to the
+          //xover. So be safe.
+          const MiniTask mt(MiniTask::XOVER, m, std::min(h, m + INCREMENT));
           debug(
               "adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << "]");
+          tasks.insert(tasks.begin(), mt);
+        }
+
+      //And this reverse them again, so we're back in the right order.
+      for (auto const & mt : tasks)
+        {
           minitasks.push_front(mt);
           ++_total_minitasks;
         }
@@ -377,11 +402,11 @@ TaskXOver::on_nntp_line_process(NNTP * nntp, const StringView & line)
 
   // is this header corrupt?
   if (!number // missing number
-  || subj.empty() // missing subject
+      || subj.empty() // missing subject
       || author.empty() // missing author
       || date.empty() // missing date
       || mid.empty() // missing mid
-			|| mid.front() != '<') // corrupt mid
+      || mid.front() != '<') // corrupt mid
 	/// Concerning bug : https://bugzilla.gnome.org/show_bug.cgi?id=650042
 	/// Even if we didn't get a proper reference here, continue.
 	//|| (!ref.empty() && ref.front()!='<'))
