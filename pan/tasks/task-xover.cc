@@ -257,7 +257,7 @@ TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, unsigned long qty,
           tasks.insert(tasks.begin(), mt);
         }
 
-      //And this reverse them again, so we're back in the right order.
+      //And this reverses them again, so we're back in the right order.
       for (auto const & mt : tasks)
         {
           minitasks.push_front(mt);
