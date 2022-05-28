@@ -63,7 +63,6 @@ noinst_HEADERS = \
  pan-tree.h \
  pan-ui.h \
  pan.ui.h \
- pan.ui.ssl.h \
  prefs.h \
  prefs-file.h \
  prefs-ui.h \

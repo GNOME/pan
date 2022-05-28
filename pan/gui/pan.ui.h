@@ -20,6 +20,9 @@ const char * fallback_ui_file =
 "      <menuitem action='select-article-body' />\n"
 "      <separator />\n"
 "      <menuitem action='show-servers-dialog' />\n"
+#ifdef HAVE_GNUTLS
+"      <menuitem action='show-sec-dialog' />\n"
+#endif
 "      <menuitem action='show-profiles-dialog' />\n"
 "      <menuitem action='show-preferences-dialog' />\n"
 "      <menuitem action='show-group-preferences-dialog' />\n"

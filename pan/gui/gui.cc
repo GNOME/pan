@@ -54,11 +54,7 @@ extern "C" {
 #include "gui.h"
 #include "pad.h"
 
-#ifdef HAVE_GNUTLS
-  #include "pan.ui.ssl.h"
-#else
-  #include "pan.ui.h"
-#endif
+#include "pan.ui.h"
 
 #include "prefs-ui.h"
 #include "progress-view.h"
