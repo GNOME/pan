@@ -29,8 +29,11 @@
 #include <pan/data/encode-cache.h>
 #include "group-prefs.h"
 
+#include <memory>
+
 namespace pan
 {
+  class EditorSpawner;
   class Profiles;
   class TaskPost;
   class UploadQueue;
@@ -158,8 +161,6 @@ namespace pan
 
       GMimeContentEncoding _enc;
 
-      guint _child_id;
-
       /* binpost */
       bool _file_queue_empty;
       TaskUpload* _upload_ptr;
@@ -229,7 +230,6 @@ namespace pan
 
     public:
       void set_spellcheck_enabled (bool);
-      void spawn_editor_dead(int, char *);
 
     public:
       tasks_t  get_selected_files () const;
@@ -246,6 +246,9 @@ namespace pan
       static void on_parts_box_clicked_cb (GtkCellRendererToggle *cell, gchar *path_str, gpointer user_data);
 
     private:
+      GtkAction * _spawner_action;
+      std::unique_ptr<EditorSpawner> _spawner;
+      void spawn_editor_dead(int, char *);
       TaskUpload* upload_ptr() { return _upload_ptr; }
       UploadQueue _upload_queue;
       Mutex mut;

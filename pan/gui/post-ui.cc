@@ -661,6 +661,10 @@ PostUI :: add_actions (GtkWidget * box)
 
   gtk_action_group_set_sensitive(_agroup, true);
 
+  //Remember the spawn button
+  _spawner_action = gtk_action_group_get_action(_agroup, "run-editor");
+
+
 }
 
 void
@@ -1306,7 +1310,6 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 /***
 ****
 ***/
-EditorSpawner *spawner;
 
 class Destroyer {
   public:
@@ -1333,7 +1336,11 @@ void
 PostUI :: spawn_editor ()
 {
 
-  // log error if this is already running or disable the button
+  //Protect against bouncy keypresses
+  if (not gtk_action_get_sensitive(_spawner_action)) {
+    return;
+  }
+
   // open a new tmp file
   char * fname (0);
 
@@ -1364,11 +1371,20 @@ PostUI :: spawn_editor ()
 
   fclose(fp);
 
-  using namespace std::placeholders;
-  spawner = new EditorSpawner(fname,
-                              std::bind(&spawn_editor_dead, this, _1, _2),
-                              _prefs);
-  d.retain();
+  try
+  {
+    using namespace std::placeholders;
+    _spawner.reset(
+      new EditorSpawner(fname,
+                        std::bind(&spawn_editor_dead, this, _1, _2),
+                        _prefs));
+    d.retain();
+    gtk_action_set_sensitive(_spawner_action, false);
+  }
+  catch (EditorSpawnerError const &)
+  {
+    //Do nothing. There should be a big red exclamation on the status line
+  }
 }
 
 void
@@ -1395,8 +1411,9 @@ PostUI::spawn_editor_dead(int status, char *fname)
   ::remove(fname);
   g_free(fname);
 
+  gtk_action_set_sensitive(_spawner_action, true);
+  _spawner.reset();
   gtk_window_present(GTK_WINDOW(root()));
-
 }
 
 namespace
@@ -2333,8 +2350,9 @@ PostUI :: body_view_realized_cb (GtkWidget*, gpointer self_gpointer)
   self->set_message (self->_message);
   self->_unchanged_body = self->get_body ();
 
-  if (self->_prefs.get_flag ("always-run-editor", false))
+  if (self->_prefs.get_flag ("always-run-editor", false)) {
     self->spawn_editor ();
+  }
 
   g_signal_handler_disconnect (self->_body_view, self->body_view_realized_handler);
 
@@ -2956,9 +2974,6 @@ PostUI :: ~PostUI ()
   if (_draft_autosave_idle_tag)
     g_source_remove (_draft_autosave_idle_tag);
 
-  if (_child_id != 0)
-    g_source_remove(_child_id);
-
   g_object_unref (G_OBJECT(_message));
 
   _upload_queue.remove_listener (this);
@@ -3105,7 +3120,6 @@ PostUI :: PostUI (GtkWindow    * parent,
   _draft_autosave_idle_tag(0),
   _body_changed_id(0),
   _body_changed_idle_tag(0),
-  _child_id(0),
   _filequeue_eventbox (0),
   _filequeue_label (0),
   _realized(false),
