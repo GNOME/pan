@@ -30,11 +30,7 @@ extern "C" {
 #include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
-/**/
-#include <memory>
 #include <pan/general/editor-spawner.h>
-#include <pan/general/file-util.h>
-/**/
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/scorefile.h>
@@ -77,7 +73,6 @@ extern "C" {
 #include "profiles-dialog.h"
 
 #include <pan/usenet-utils/gpg.h>
-
 
 namespace
 {
@@ -2422,7 +2417,6 @@ GUI :: edit_scores_cleanup(int status, char *filename)
   gtk_window_present(get_window(_root));
 }
 
-
 #ifdef HAVE_GNUTLS
 
 void
@@ -2474,5 +2468,6 @@ GUI :: on_valid_cert_added (gnutls_x509_crt_t cert, std::string server)
   _certstore.whitelist(server);
   debug_SSL("whitelist ("<<server<<") ("<<cert<<")");
 }
+
 
 #endif

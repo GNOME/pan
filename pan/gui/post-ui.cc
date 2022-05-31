@@ -1389,10 +1389,10 @@ PostUI::spawn_editor_dead(int status, char *fname)
       gtk_text_buffer_insert(buf, &start, txt.c_str(), txt.size());
     }
 
-    // cleanup
-    ::remove(fname);
   }
 
+  // cleanup
+  ::remove(fname);
   g_free(fname);
 
   gtk_window_present(GTK_WINDOW(root()));
