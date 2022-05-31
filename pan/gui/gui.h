@@ -198,6 +198,8 @@ namespace pan
       virtual void do_refresh_groups ();
       virtual void do_subscribe_selected_groups ();
       virtual void do_unsubscribe_selected_groups ();
+      virtual void do_edit_scores(GtkAction *);
+
 #ifdef HAVE_GNUTLS
       void do_show_cert_failed_dialog(VerifyData* data);
       bool confirm_accept_new_cert_dialog(GtkWindow*, gnutls_x509_crt_t, const Quark&);
@@ -305,6 +307,7 @@ namespace pan
       static void prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self);
       void prefs_dialog_destroyed (GtkWidget* w);
       int score_int_from_string(std::string val, const char* rules[]);
+      void edit_scores_cleanup(int, char *);
 #ifdef HAVE_GNUTLS
       static gboolean show_cert_failed_cb(gpointer gp);
 #endif

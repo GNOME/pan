@@ -26,6 +26,7 @@
 #include <pan/data-impl/data-impl.h>
 #include <pan/tasks/task-xover.h>
 #include <pan/icons/pan-pixbufs.h>
+
 #include "actions.h"
 #include "pad.h"
 #include "gui.h"
@@ -186,6 +187,8 @@ namespace pan
   void do_bug_report                   (GtkAction*) { pan_ui->do_bug_report(); }
   void do_tip_jar                      (GtkAction*) { pan_ui->do_tip_jar(); }
   void do_about_pan                    (GtkAction*) { pan_ui->do_about_pan(); }
+
+  void do_edit_scores(GtkAction * a) { pan_ui->do_edit_scores(a); }
 
   void do_work_online         (GtkToggleAction * a) { pan_ui->do_work_online         (gtk_toggle_action_get_active(a)); }
   void do_layout              (GtkToggleAction * a) { pan_ui->do_layout              (gtk_toggle_action_get_active(a)); }
@@ -451,6 +454,11 @@ namespace pan
         N_("Edit Selected _Group's Preferences"), NULL,
         NULL,
         G_CALLBACK(do_show_group_preferences_dialog) },
+
+      { "launch-scores-editor", GTK_STOCK_PREFERENCES,
+        N_("Edit S_core File"), NULL,
+        NULL,
+        G_CALLBACK(do_edit_scores) },
 
       { "show-profiles-dialog", GTK_STOCK_EDIT,
         N_("Edit P_osting Profiles"), NULL,

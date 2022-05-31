@@ -30,6 +30,11 @@ extern "C" {
 #include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
+/**/
+#include <memory>
+#include <pan/general/editor-spawner.h>
+#include <pan/general/file-util.h>
+/**/
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/scorefile.h>
@@ -72,6 +77,7 @@ extern "C" {
 #include "profiles-dialog.h"
 
 #include <pan/usenet-utils/gpg.h>
+
 
 namespace
 {
@@ -2371,6 +2377,52 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
   }
 }
 
+namespace {
+
+EditorSpawner *spawner;
+GtkAction *spawner_action;
+
+}
+
+void
+GUI :: do_edit_scores (GtkAction *a)
+{
+  //Protect against bouncy keypresses
+  if (not gtk_action_get_sensitive(a)) {
+    return;
+  }
+
+  gtk_action_set_sensitive(a, false);
+  spawner_action = a;
+
+  //This is wrong because this might not be the filename
+  char *filename = g_build_filename(file::get_pan_home().c_str(), "Score", NULL);
+  if (not file::file_exists(filename)) {
+    GError *err{nullptr};
+    g_close(g_creat(filename, 0700), &err);
+    if (err != nullptr) {
+      //log error
+      return;
+    }
+  }
+
+  using namespace std::placeholders;
+  spawner = new EditorSpawner(filename,
+                              std::bind(edit_scores_cleanup, this, _1, _2),
+                              _prefs);
+}
+
+void
+GUI :: edit_scores_cleanup(int status, char *filename)
+{
+  //rescore articles
+  g_free(filename);
+  gtk_action_set_sensitive(spawner_action, true);
+  delete spawner;
+  gtk_window_present(get_window(_root));
+}
+
+
 #ifdef HAVE_GNUTLS
 
 void
@@ -2422,6 +2474,5 @@ GUI :: on_valid_cert_added (gnutls_x509_crt_t cert, std::string server)
   _certstore.whitelist(server);
   debug_SSL("whitelist ("<<server<<") ("<<cert<<")");
 }
-
 
 #endif

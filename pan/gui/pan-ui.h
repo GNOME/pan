@@ -142,6 +142,8 @@ namespace pan
 #define MATCH_HIGH_SCORING    (1<<4)
 #define MATCH_WATCHED         (1<<5)
     virtual void do_match_on_score_state (int) = 0;
+
+    virtual void do_edit_scores(GtkAction *) = 0;
   };
 }
 

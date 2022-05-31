@@ -26,6 +26,7 @@ const char * fallback_ui_file =
 "      <menuitem action='show-profiles-dialog' />\n"
 "      <menuitem action='show-preferences-dialog' />\n"
 "      <menuitem action='show-group-preferences-dialog' />\n"
+"      <menuitem action='launch-scores-editor' />\n"
 "    </menu>\n"
 "    <menu action='view-menu'>\n"
 "      <menuitem action='show-toolbar' />\n"
