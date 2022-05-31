@@ -229,7 +229,7 @@ namespace pan
 
     public:
       void set_spellcheck_enabled (bool);
-      void spawn_editor_dead(char *);
+      void spawn_editor_dead(int, char *);
 
     public:
       tasks_t  get_selected_files () const;

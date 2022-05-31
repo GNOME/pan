@@ -33,6 +33,7 @@ extern "C" {
 #endif
 #include <pan/data/data.h>
 #include <pan/general/debug.h>
+#include <pan/general/editor-spawner.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
@@ -1058,7 +1059,7 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
 	  const Article* article = _data.xover_add (p.posting_server, folder, subject, author, posted, message_id, refs, sizeof(*msg), 3, xref.str(), true);
 	  if (article)
 	  {
-          GDateTime * postedGDT = g_date_time_new_from_unix_utc(posted);  
+          GDateTime * postedGDT = g_date_time_new_from_unix_utc(posted);
 		  g_mime_message_set_date(msg, postedGDT);
 		  ArticleCache& cache(_data.get_cache());
 		  ArticleCache :: CacheResponse response = cache.add(mid, g_mime_object_to_string(GMIME_OBJECT(msg), NULL), true);
@@ -1305,130 +1306,73 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 /***
 ****
 ***/
+EditorSpawner *spawner;
 
-namespace
-{
-	typedef struct
-	{
-		GPid pid;
-		char *fname;
-		PostUI *pui;
-		gint watch;
-	} se_data;
+class Destroyer {
+  public:
+    Destroyer(char *f) :
+      _fname(f)
+    {
+    }
 
-	void child_watch_cb(GPid pid, gint status, gpointer data)
-	{
-		se_data *d=static_cast<se_data*>(data);
-		g_spawn_close_pid(pid);
-		static_cast<PostUI*>(d->pui)->spawn_editor_dead(static_cast<char*>(d->fname));
-		delete d;
-	}
-}
+    ~Destroyer()
+    {
+      g_free(_fname);
+    }
+
+    void retain()
+    {
+      _fname = nullptr;
+    }
+
+  private:
+    char *_fname;
+};
 
 void
 PostUI :: spawn_editor ()
 {
-  bool ok (true);
 
+  // log error if this is already running or disable the button
   // open a new tmp file
   char * fname (0);
-  FILE * fp (0);
-  if (ok) {
+
+  {
     GError * err = NULL;
     const int fd (g_file_open_tmp ("pan_edit_XXXXXX", &fname, &err));
-    if (fd != -1)
-    {
-      close(fd);
-      fp = g_fopen (fname, "w");
-    } else {
+    if (fd == -1) {
       Log::add_err (err && err->message ? err->message : _("Error opening temporary file"));
-      if (err)
-        g_clear_error (&err);
-      ok = false;
+      g_clear_error (&err);
+      return;
     }
+    close(fd);
+  }
+
+  Destroyer d(fname);
+
+  FILE *fp = g_fopen (fname, "w");
+  if (fp == NULL) {
+    return;
   }
 
   const std::string body (get_body ());
 
-  if (ok) {
-    if (fwrite (body.c_str(), sizeof(char), body.size(), fp) != body.size()) {
-      ok = false;
-      Log::add_err_va (_("Error writing article to temporary file: %s"), g_strerror(errno));
-    }
+  if (fwrite (body.c_str(), sizeof(char), body.size(), fp) != body.size()) {
+    Log::add_err_va (_("Error writing article to temporary file: %s"), g_strerror(errno));
+    return;
   }
 
-  if (fp != NULL) {
-    fclose (fp);
-    fp = NULL;
-  }
+  fclose(fp);
 
-  // parse the command line
-  int argc (0);
-  char ** argv (0);
-  if (ok) {
-    std::set<std::string> editors;
-    URL :: get_default_editors (editors);
-    const std::string editor (_prefs.get_string ("editor", *editors.begin()));
-    GError * err (0);
-    g_shell_parse_argv (editor.c_str(), &argc, &argv, &err);
-    if (err != NULL) {
-      Log::add_err_va (_("Error parsing \"external editor\" command line: %s (Command was: %s)"), err->message, editor.c_str());
-      g_clear_error (&err);
-      ok = false;
-    }
-  }
-
-  // put temp file's name into the substitution
-  bool filename_added (false);
-  for (int i=0; i<argc; ++i) {
-    char * token (argv[i]);
-    char * sub (strstr (token, "%t"));
-    if (sub) {
-      GString * gstr  = g_string_new (0);
-      g_string_append_len (gstr, token, sub-token);
-      g_string_append (gstr, fname);
-      g_string_append (gstr, sub+2);
-      g_free (token);
-      argv[i] = g_string_free (gstr, false);
-      filename_added = true;
-    }
-  }
-
-  // no substitution field -- add the filename at the end
-  if (!filename_added) {
-    char ** v = g_new (char*, argc+2);
-    for (int i=0; i<argc; ++i)
-      v[i] = argv[i];
-    v[argc++] = g_strdup (fname);
-    v[argc] = NULL;
-    g_free (argv);
-    argv = v;
-  }
-
-  // spawn off the external editor
-  if (ok) {
-    GError * err (0);
-    se_data *data=new se_data;
-    data->fname=fname;
-    data->pui=this;
-    g_spawn_async (0, argv, 0, (GSpawnFlags)(G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD), 0, 0, &data->pid, &err);
-    if (err != NULL) {
-      Log::add_err_va (_("Error starting external editor: %s"), err->message);
-      g_clear_error (&err);
-      ok = false;
-      delete data;
-    } else {
-        _child_id = g_child_watch_add(data->pid,child_watch_cb,static_cast<gpointer>(data));
-    }
-  } else {
-	  g_free(fname);
-  }
-
-  g_strfreev (argv);
+  using namespace std::placeholders;
+  spawner = new EditorSpawner(fname,
+                              std::bind(&spawn_editor_dead, this, _1, _2),
+                              _prefs);
+  d.retain();
 }
 
 void
-PostUI::spawn_editor_dead(char *fname)
+PostUI::spawn_editor_dead(int status, char *fname)
 {
   GtkTextBuffer * buf(_body_buf);
 
@@ -1447,10 +1391,11 @@ PostUI::spawn_editor_dead(char *fname)
 
     // cleanup
     ::remove(fname);
-    g_free(fname);
   }
 
-  gtk_window_present(GTK_WINDOW(root()) );
+  g_free(fname);
+
+  gtk_window_present(GTK_WINDOW(root()));
 
 }
 
@@ -1645,7 +1590,7 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
       {
         g_mime_object_set_header ((GMimeObject *) msg, it->first.c_str(), it->second.c_str(), charset_cstr);
       }
-    }  
+    }
 
   // build headers from the 'more headers' entry field
   std::map<std::string,std::string> headers;
@@ -2300,11 +2245,11 @@ PostUI :: set_message (GMimeMessage * message)
   GMimeHeaderList HList;
 
 //  FIXME: GMime 3.0
-  int index_v = 0;   
+  int index_v = 0;
   int message_count = g_mime_header_list_get_count (message->mime_part->headers);
-  
+
   if (message->mime_part && message_count) {
-	do {  
+	do {
 	  GMimeHeader *GMHeader = g_mime_header_list_get_header_at(message->mime_part->headers, index_v);
 	  value = g_mime_header_get_value(GMHeader);
 	  name = g_mime_header_get_name(GMHeader);
@@ -2315,7 +2260,7 @@ PostUI :: set_message (GMimeMessage * message)
 
   index_v = 0;
   message_count = g_mime_header_list_get_count (GMIME_OBJECT (message)->headers);
-  
+
   if (message_count > 0) {
 	do {
       GMimeHeader *GMHeader = g_mime_header_list_get_header_at(GMIME_OBJECT (message)->headers, index_v);
@@ -2324,7 +2269,7 @@ PostUI :: set_message (GMimeMessage * message)
       set_message_foreach_header_func (name, value, &data);
       index_v++;
      } while ( index_v < message_count);
-  }    
+  }
 
   s = utf8ize (data.visible_headers);
   if (!s.empty())
