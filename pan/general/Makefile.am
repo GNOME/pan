@@ -6,6 +6,7 @@ noinst_LIBRARIES = libgeneralutils.a
 libgeneralutils_a_SOURCES = \
  debug.cc \
  e-util.cc \
+ editor-spawner.cc \
  file-util.cc \
  log.cc \
  line-reader.cc \
@@ -22,6 +23,7 @@ noinst_HEADERS = \
  debug.h \
  defgroup.h \
  e-util.h \
+ editor-spawner.h \
  file-util.h \
  line-reader.h \
  locking.h \
