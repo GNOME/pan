@@ -2403,7 +2403,7 @@ GUI :: do_edit_scores (GtkAction *a)
 
   using namespace std::placeholders;
   spawner = new EditorSpawner(filename,
-                              std::bind(edit_scores_cleanup, this, _1, _2),
+                                std::bind(&GUI::edit_scores_cleanup, this, _1, _2),
                               _prefs);
 }
 

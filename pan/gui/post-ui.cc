@@ -1376,7 +1376,7 @@ PostUI :: spawn_editor ()
     using namespace std::placeholders;
     _spawner.reset(
       new EditorSpawner(fname,
-                        std::bind(&spawn_editor_dead, this, _1, _2),
+                        std::bind(&PostUI::spawn_editor_dead, this, _1, _2),
                         _prefs));
     d.retain();
     gtk_action_set_sensitive(_spawner_action, false);
