@@ -26,6 +26,7 @@
 #include <glib/gi18n.h>
 #include "gtk-compat.h"
 extern "C" {
+  #include <sys/stat.h>
   #include <sys/time.h>
 }
 #ifdef HAVE_GTKSPELL
@@ -1357,7 +1358,7 @@ PostUI :: spawn_editor ()
 
   Destroyer d(fname);
 
-  FILE *fp = g_fopen (fname, "w");
+  FILE *fp = fopen (fname, "w");
   if (fp == NULL) {
     return;
   }

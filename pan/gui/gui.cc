@@ -16,10 +16,6 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
-#if defined(G_OS_UNIX) && !defined(G_STDIO_WRAP_ON_UNIX)
-#include <fcntl.h> //Because you need to >.<
-#endif
-#include <glib-2.0/glib/gstdio.h>
 
 #include <config.h>
 #include <map>
@@ -2397,12 +2393,13 @@ GUI :: do_edit_scores (GtkAction *a)
   //This is wrong because this might not be the filename
   char *filename = g_build_filename(file::get_pan_home().c_str(), "Score", NULL);
   if (not file::file_exists(filename)) {
-    GError *err{nullptr};
-    g_close(g_creat(filename, 0700), &err);
-    if (err != nullptr) {
-      //log error
+    FILE *f = fopen(filename, "a+");
+    if (f == nullptr) {
+      Log::add_err_va("Error creating file '%s'", filename);
+      g_free(filename);
       return;
     }
+    fclose(f);
   }
 
   using namespace std::placeholders;

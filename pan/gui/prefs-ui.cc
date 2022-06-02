@@ -34,6 +34,10 @@
 #include "e-charset-dialog.h"
 #include "actions-extern.h"
 
+extern "C" {
+  #include <sys/stat.h>
+}
+
 #include <algorithm>
 
 using namespace pan;
@@ -1279,7 +1283,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     pan_box_pack_start_defaults (GTK_BOX(h), new_color_button ("text-color-bg", def_color_str, prefs));
     HIG :: workarea_add_row (t, &row, _("Text Color:"), h);
   HIG :: workarea_finish (t, &row);
-	
+
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Colors"), _("Colors"), icon_prefs_colors, prefs));
 
   // Applications

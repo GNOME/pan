@@ -27,18 +27,8 @@ extern "C" {
   #include <stdio.h>
 }
 #include <glib.h>
-#include <glib/gstdio.h>
 #include <pan/general/string-view.h>
 
-#define g_freopen freopen
-#define g_fopen fopen
-#define g_rmdir rmdir
-#define g_remove remove
-#define g_unlink unlink
-#define g_lstat lstat
-#define g_stat stat
-#define g_rename rename
-#define g_open open
 
 namespace pan
 {

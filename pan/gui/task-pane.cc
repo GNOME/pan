@@ -34,6 +34,10 @@
 #include "task-pane.h"
 #include "taskpane.ui.h"
 
+extern "C" {
+  #include <sys/stat.h>
+}
+
 enum
 {
   COL_TASK_POINTER,
@@ -144,8 +148,8 @@ namespace
 void
 TaskPane :: show_task_info(const tasks_t& tasks)
 {
-  
-  if (tasks.size() == 0) return;  
+
+  if (tasks.size() == 0) return;
   Task* task (tasks.front());
   if (!task) return;
 

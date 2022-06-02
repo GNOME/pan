@@ -29,6 +29,10 @@
 #include <fstream>
 #include <cstdio>
 
+extern "C" {
+#include <sys/stat.h>
+}
+
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
@@ -203,7 +207,7 @@ TaskUpload :: prepend_headers(GMimeMessage* msg, TaskUpload::Needed * n, std::st
     if (!mids.empty()) g_mime_object_set_header ((GMimeObject *) msg, "References", mids.c_str(), NULL);
 
     char * all(g_mime_object_get_headers ((GMimeObject *) msg, NULL));
-    
+
     if (_first && _queue_pos==-1)
       all = g_mime_object_to_string ((GMimeObject *) msg, NULL);
     else if (_first && _queue_pos == 0)

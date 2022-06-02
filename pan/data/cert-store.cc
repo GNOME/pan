@@ -22,8 +22,9 @@
 
 #include <string>
 
-//#include <glib/giochannel.h>
-//#include <glib/gstring.h>
+extern "C" {
+  #include <sys/stat.h>
+}
 
 #include <pan/tasks/socket.h>
 #include <config.h>
@@ -340,7 +341,7 @@ bool CertStore::add(gnutls_x509_crt_t cert, const Quark& server) {
 	cert_file_name = buffer.str();
 	cert_file_name_wp = file::absolute_fn("ssl_certs", cert_file_name);
 
-	FILE * fp = fopen(cert_file_name_wp.c_str(), "wb"); 
+	FILE * fp = fopen(cert_file_name_wp.c_str(), "wb");
 	if (!fp)
 		return false;
 
@@ -362,7 +363,7 @@ bool CertStore::add(gnutls_x509_crt_t cert, const Quark& server) {
 	} else {
 	fputs((const char*) out, fp);
 	}
-  
+
 	debug_SSL_verbatim("\n===========================================");
 	debug_SSL_verbatim(out);
 	debug_SSL_verbatim("\n===========================================");
