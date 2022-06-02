@@ -16,6 +16,10 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
+#if defined(G_OS_UNIX) && !defined(G_STDIO_WRAP_ON_UNIX)
+#include <fcntl.h> //Because you need to >.<
+#endif
+#include <glib-2.0/glib/gstdio.h>
 
 #include <config.h>
 #include <map>
