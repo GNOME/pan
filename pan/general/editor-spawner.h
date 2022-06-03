@@ -23,8 +23,6 @@
 #include <functional>
 #include <stdexcept>
 
-#include <glib.h>
-
 namespace pan {
 
   class Prefs;
@@ -50,7 +48,7 @@ namespace pan {
       ~EditorSpawner();
 
     private:
-      guint _child_id;
+      unsigned int _child_id;
   };
 
   class EditorSpawnerError : public std::runtime_error

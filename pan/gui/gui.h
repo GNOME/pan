@@ -33,12 +33,14 @@
 #include <pan/gui/group-prefs.h>
 #include <pan/gui/wait.h>
 
+#include <memory>
 #include <stdint.h>
 
 #include "gtk-compat.h"
 
 namespace pan
 {
+  class EditorSpawner;
   class GroupPane;
   class HeaderPane;
   class BodyPane;
@@ -306,7 +308,10 @@ namespace pan
       static void prefs_dialog_destroyed_cb (GtkWidget * w, gpointer self);
       void prefs_dialog_destroyed (GtkWidget* w);
       int score_int_from_string(std::string val, const char* rules[]);
-      void edit_scores_cleanup(int, char *);
+
+      void edit_scores_cleanup(int, char *, GtkAction *);
+      std::unique_ptr<EditorSpawner> _spawner;
+
 #ifdef HAVE_GNUTLS
       static gboolean show_cert_failed_cb(gpointer gp);
 #endif

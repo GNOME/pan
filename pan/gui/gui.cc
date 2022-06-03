@@ -2372,25 +2372,15 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
   }
 }
 
-namespace {
-
-EditorSpawner *spawner;
-GtkAction *spawner_action;
-
-}
-
 void
-GUI :: do_edit_scores (GtkAction *a)
+GUI :: do_edit_scores (GtkAction *act)
 {
   //Protect against bouncy keypresses
-  if (not gtk_action_get_sensitive(a)) {
+  if (not gtk_action_get_sensitive(act)) {
     return;
   }
 
-  gtk_action_set_sensitive(a, false);
-  spawner_action = a;
-
-  //This is wrong because this might not be the filename
+  //FIXME This is wrong because this might not be the filename
   char *filename = g_build_filename(file::get_pan_home().c_str(), "Score", NULL);
   if (not file::file_exists(filename)) {
     FILE *f = fopen(filename, "a+");
@@ -2402,19 +2392,29 @@ GUI :: do_edit_scores (GtkAction *a)
     fclose(f);
   }
 
-  using namespace std::placeholders;
-  spawner = new EditorSpawner(filename,
-                                std::bind(&GUI::edit_scores_cleanup, this, _1, _2),
-                              _prefs);
+  try
+  {
+    using namespace std::placeholders;
+    _spawner.reset(
+      new EditorSpawner(filename,
+                        std::bind(&GUI::edit_scores_cleanup, this, _1, _2, act),
+                        _prefs));
+    gtk_action_set_sensitive(act, false);
+  }
+  catch (EditorSpawnerError const &)
+  {
+    //There should be a big red exclamation on the status line
+    g_free(filename);
+  }
 }
 
 void
-GUI :: edit_scores_cleanup(int status, char *filename)
+GUI :: edit_scores_cleanup(int status, char *filename, GtkAction *act)
 {
-  //rescore articles
+  //FIXME rescore articles
   g_free(filename);
-  gtk_action_set_sensitive(spawner_action, true);
-  delete spawner;
+  gtk_action_set_sensitive(act, true);
+  _spawner.reset();
   gtk_window_present(get_window(_root));
 }
 

@@ -24,7 +24,6 @@
 #include <pan/gui/url.h> //For get_default_editors
 
 #include <glib/gi18n.h> // for _
-#include <gtk/gtk.h>
 
 #include <set>
 
@@ -32,13 +31,13 @@ namespace pan {
 
 namespace
 {
-	typedef struct
+	struct se_data
 	{
 		char *fname;
 		EditorSpawner::Callback callback;
-	} se_data;
+	};
 
-	void child_watch_cb(GPid pid, gint status, gpointer data)
+	void child_watch_callback(GPid pid, int status, void * data)
 	{
 		se_data * d{static_cast<se_data *>(data)};
 		g_spawn_close_pid(pid);
@@ -61,7 +60,7 @@ EditorSpawner::EditorSpawner(
   int argc{0};
   char ** argv{nullptr};
   GError * err{nullptr};
-  g_shell_parse_argv (editor.c_str(), &argc, &argv, &err);
+  g_shell_parse_argv(editor.c_str(), &argc, &argv, &err);
   if (err != nullptr) {
     Log::add_err_va(
       _("Error parsing \"external editor\" command line: %s (Command was: %s)"),
@@ -117,7 +116,7 @@ EditorSpawner::EditorSpawner(
   data->fname = fname;
   data->callback = callback;
 
-  _child_id = g_child_watch_add(pid, child_watch_cb, static_cast<gpointer>(data));
+  _child_id = g_child_watch_add(pid, child_watch_callback, data);
 }
 
 EditorSpawner::~EditorSpawner()
