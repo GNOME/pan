@@ -1702,10 +1702,20 @@
 	  <sect2 id="pan-scoring-advanced">
 		  <title>Advanced Scoring</title>
 
-		  <para>The scoring file is located at <filename>$HOME/.pan2/Scoring</filename>.  Advanced users might want to edit this
-			  file directly with a text editor to create advanced scoring rules that are difficult or impossible to
-			  construct from the <interface>New Scoring Rule</interface> dialog.  The format of the scoring rules is
-			  similar to the application <application>slrn</application>, but be aware that not all
+		  <para>The scoring file is located at <filename>$HOME/.pan2/Score</filename>.
+        Advanced users might want to edit this file directly with a text editor
+        to create advanced scoring rules that are difficult or impossible to
+			  construct from the <interface>New Scoring Rule</interface> dialog.</para>
+
+      <para>This is probably easiest via the
+        <menuchoice>
+				<guimenu>Edit</guimenu>
+				<guisubmenu>Edit Score File</guisubmenu>
+			  </menuchoice>
+        menu as that will automatically rescore articles when you exit the edit window.</para>
+
+      <para>The format of the scoring rules is similar to the application
+        <application>slrn</application>, but be aware that not all
 			  <application>slrn</application> scoring functions will work in &app;.</para>
 			  <para>The slrn scoring functions are described in the document
 			  <ulink url="http://www.slrn.org/docs/score.html">slrn - Scoring</ulink>.</para>
