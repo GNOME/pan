@@ -2380,13 +2380,12 @@ GUI :: do_edit_scores (GtkAction *act)
     return;
   }
 
-  //FIXME This is wrong because this might not be the filename
-  char *filename = g_build_filename(file::get_pan_home().c_str(), "Score", NULL);
+  //This isn't lovely. But I know I don't free filename in the callback
+  char *filename = const_cast<char *>(_data.get_scorefile_name().c_str());
   if (not file::file_exists(filename)) {
     FILE *f = fopen(filename, "a+");
     if (f == nullptr) {
       Log::add_err_va("Error creating file '%s'", filename);
-      g_free(filename);
       return;
     }
     fclose(f);
@@ -2404,15 +2403,13 @@ GUI :: do_edit_scores (GtkAction *act)
   catch (EditorSpawnerError const &)
   {
     //There should be a big red exclamation on the status line
-    g_free(filename);
   }
 }
 
 void
 GUI :: edit_scores_cleanup(int status, char *filename, GtkAction *act)
 {
-  //FIXME rescore articles
-  g_free(filename);
+  _data.rescore();
   gtk_action_set_sensitive(act, true);
   _spawner.reset();
   gtk_window_present(get_window(_root));

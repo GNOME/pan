@@ -577,6 +577,8 @@ namespace pan
 
       virtual void rescore ();
 
+      virtual std::string get_scorefile_name() const;
+
     private:
 
       Scorefile _scorefile;

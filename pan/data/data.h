@@ -607,6 +607,14 @@ namespace pan
 
        virtual void rescore () = 0;
 
+       /* Get the scorefile name.
+        *
+        * This is a little bit unclean but it allows people to find and edit
+        * the scorefile until such point as a proper editor is written for
+        * it
+        */
+       virtual std::string get_scorefile_name() const = 0;
+
     /*****************************************************************
     ***
     ***  HEADERS - XOVER

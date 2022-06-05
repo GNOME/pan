@@ -135,6 +135,12 @@ DataImpl :: save_state ()
   }
 }
 
+std::string
+DataImpl :: get_scorefile_name() const
+{
+  return _data_io->get_scorefile_name();
+}
+
 #ifdef HAVE_GKR
 #if GTK_CHECK_VERSION(3,0,0)
 gboolean
