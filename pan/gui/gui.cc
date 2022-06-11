@@ -2372,6 +2372,29 @@ GUI :: on_prefs_string_changed (const StringView& key, const StringView& value)
   }
 }
 
+namespace {
+class Destroyer {
+  public:
+    Destroyer(char *f) :
+      _fname(f)
+    {
+    }
+
+    ~Destroyer()
+    {
+      g_free(_fname);
+    }
+
+    void retain()
+    {
+      _fname = nullptr;
+    }
+
+  private:
+    char *_fname;
+};
+}
+
 void
 GUI :: do_edit_scores (GtkAction *act)
 {
@@ -2380,8 +2403,8 @@ GUI :: do_edit_scores (GtkAction *act)
     return;
   }
 
-  //This isn't lovely. But I know I don't free filename in the callback
-  char *filename = const_cast<char *>(_data.get_scorefile_name().c_str());
+  char *filename{g_strdup(_data.get_scorefile_name().c_str())};
+  Destroyer d{filename};
   if (not file::file_exists(filename)) {
     FILE *f = fopen(filename, "a+");
     if (f == nullptr) {
@@ -2398,6 +2421,7 @@ GUI :: do_edit_scores (GtkAction *act)
       new EditorSpawner(filename,
                         std::bind(&GUI::edit_scores_cleanup, this, _1, _2, act),
                         _prefs));
+    d.retain();
     gtk_action_set_sensitive(act, false);
   }
   catch (EditorSpawnerError const &)
@@ -2409,6 +2433,7 @@ GUI :: do_edit_scores (GtkAction *act)
 void
 GUI :: edit_scores_cleanup(int status, char *filename, GtkAction *act)
 {
+  g_free(filename);
   _data.rescore();
   gtk_action_set_sensitive(act, true);
   _spawner.reset();

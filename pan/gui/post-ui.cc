@@ -1312,6 +1312,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
 ****
 ***/
 
+namespace {
 class Destroyer {
   public:
     Destroyer(char *f) :
@@ -1332,6 +1333,7 @@ class Destroyer {
   private:
     char *_fname;
 };
+}
 
 void
 PostUI :: spawn_editor ()
