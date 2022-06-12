@@ -68,7 +68,6 @@ noinst_HEADERS = \
  prefs-ui.h \
  post-ui.h \
  post.ui.h \
- post.ui.pgp.h \
  profiles-dialog.h \
  progress-view.h \
  render-bytes.h \

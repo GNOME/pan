@@ -52,11 +52,7 @@ extern "C" {
 #include "pad.h"
 #include "hig.h"
 #include "post-ui.h"
-#ifdef HAVE_GMIME_CRYPTO
-  #include "post.ui.pgp.h"
-#else
-  #include "post.ui.h"
-#endif
+#include "post.ui.h"
 #include "profiles-dialog.h"
 #include "url.h"
 #include "gtk-compat.h"
