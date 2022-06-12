@@ -82,15 +82,16 @@ class Copier:
             self._dlls.remove(source)
             return
 
-        if os.path.splitext(source)[1] not in ( ".dll", ".exe" ):
+        if os.path.splitext(source)[1] not in (".dll", ".exe"):
             return
 
         # Get all the dlls we need in the root
         output = subprocess.run(
             [ "ldd", source ], capture_output=True, text=True, check=True
         )
+        prefix = os.environ['MSYSTEM'].lower()
         for line in output.stdout.splitlines():
-            dll = re.search(r'(/mingw64.*\.dll)', line)
+            dll = re.search(r'(/' + prefix + '/.*\.dll)', line)
             if dll:
                 dll = self.convert_name_to_windows(dll.group())
                 if dll not in self._copied_files:
