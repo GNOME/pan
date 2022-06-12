@@ -17,22 +17,17 @@
  *
  */
 
+#include "quark.h"
+
 #include <config.h>
 
 #include <iostream>
 #include <string>
 #include "string-view.h"
-#include "quark.h"
 
-using namespace pan;
+namespace pan {
 
-#if defined(HAVE_EXT_HASH_SET)
-// preallocate buckets.
-// this might not be portable?
-Quark::lookup_t Quark::_lookup (300000);
-#else
 Quark::lookup_t Quark::_lookup;
-#endif
 
 /***
 ****
@@ -51,9 +46,11 @@ Quark :: dump (std::ostream& o)
 }
 
 std::ostream&
-pan::operator<< (std::ostream& os, const pan::Quark& s)
+operator<< (std::ostream& os, const Quark& s)
 {
   const StringView& v (s.to_view());
   os.write (v.str, v.len);
   return os;
+}
+
 }

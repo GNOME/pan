@@ -17,6 +17,8 @@
  *
  */
 
+#include "post-ui.h"
+
 #include <config.h>
 #include <fstream>
 #include <iostream>
@@ -51,7 +53,6 @@ extern "C" {
 #include "e-cte-dialog.h"
 #include "pad.h"
 #include "hig.h"
-#include "post-ui.h"
 #include "post.ui.h"
 #include "profiles-dialog.h"
 #include "url.h"
@@ -170,7 +171,7 @@ PostUI:: update_filequeue_label (GtkTreeSelection *selection)
     g_snprintf(
       str,
       sizeof(str),
-      _("Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."),
+      _("Upload queue: %llu tasks, %ld KB (~ %.2f MB) total."),
       tasks.size(),
       kb,
       kb / 1024.0f);

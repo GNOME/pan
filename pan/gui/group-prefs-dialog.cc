@@ -17,6 +17,8 @@
  *
  */
 
+#include "group-prefs-dialog.h"
+
 #include <config.h>
 #include <glib/gi18n.h>
 #include <glib.h>
@@ -28,7 +30,6 @@
 #include <pan/general/macros.h>
 #include <pan/data/data.h>
 #include "e-charset-combo-box.h"
-#include "group-prefs-dialog.h"
 #include "hig.h"
 #include "pad.h"
 #include "pan-file-entry.h"
@@ -37,8 +38,7 @@
 
 #include <iostream>
 
-using namespace pan;
-
+namespace pan {
 
 namespace
 {
@@ -280,35 +280,40 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
     g_snprintf (buf, sizeof(buf), _("Properties for %s"), groups[0].c_str());
 
   HIG::workarea_add_section_title (t, &row, buf);
-    HIG :: workarea_add_section_spacer (t, row, 4);
-    w = _charset = e_charset_combo_box_new( );
-    const char* cs = _group_prefs.get_string (groups[0], "character-encoding", "UTF-8").c_str();
-    e_charset_combo_box_set_charset( E_CHARSET_COMBO_BOX(w), cs ? cs : "");
+  HIG :: workarea_add_section_spacer (t, row, 4);
+  w = _charset = e_charset_combo_box_new( );
 
-    HIG :: workarea_add_row (t, &row, _("Character _encoding:"), w);
+  e_charset_combo_box_set_charset(
+    E_CHARSET_COMBO_BOX(w),
+    _group_prefs.get_string (groups[0], "character-encoding", "UTF-8").c_str()
+  );
 
-    w = _save_path = file_entry_new (_("Directory for Saving Attachments"));
-    char * pch = g_build_filename (g_get_home_dir(), "News", NULL);
-    std::string dir (_prefs.get_string ("default-save-attachments-path", pch));
-    if (groups.size() == 1)
-      dir = _group_prefs.get_string (groups[0], "default-group-save-path", dir);
-    g_free (pch);
-    file_entry_set (w, dir.c_str());
+  HIG :: workarea_add_row (t, &row, _("Character _encoding:"), w);
 
-    HIG :: workarea_add_row (t, &row, _("Directory for _saving attachments:"), w);
-    w = _profile = create_profiles_combo_box (data, groups, group_prefs);
-    l = HIG :: workarea_add_row (t, &row, _("Posting _profile:"), w);
+  w = _save_path = file_entry_new (_("Directory for Saving Attachments"));
+  char * pch = g_build_filename (g_get_home_dir(), "News", NULL);
+  std::string dir (_prefs.get_string ("default-save-attachments-path", pch));
+  if (groups.size() == 1)
+    dir = _group_prefs.get_string (groups[0], "default-group-save-path", dir);
+  g_free (pch);
+  file_entry_set (w, dir.c_str());
 
-    gtk_widget_set_sensitive (l, gtk_widget_get_sensitive(w));
+  HIG :: workarea_add_row (t, &row, _("Directory for _saving attachments:"), w);
+  w = _profile = create_profiles_combo_box (data, groups, group_prefs);
+  l = HIG :: workarea_add_row (t, &row, _("Posting _profile:"), w);
+
+  gtk_widget_set_sensitive (l, gtk_widget_get_sensitive(w));
 #ifdef HAVE_GTKSPELL
-    w = _spellchecker_language = create_spellcheck_combo_box ( groups[0], group_prefs);
-    HIG :: workarea_add_row (t, &row, _("Spellchecker _language:"), w);
+  w = _spellchecker_language = create_spellcheck_combo_box ( groups[0], group_prefs);
+  HIG :: workarea_add_row (t, &row, _("Spellchecker _language:"), w);
 #endif
-    w = _group_color = new_color_button (groups[0], _prefs, _group_prefs, this, dialog);
-    HIG :: workarea_add_row(t, &row, _("Group color:"), w);
+  w = _group_color = new_color_button (groups[0], _prefs, _group_prefs, this, dialog);
+  HIG :: workarea_add_row(t, &row, _("Group color:"), w);
 
   gtk_box_pack_start ( GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG( dialog))), t, true, true, 0);
   _root = dialog;
   gtk_widget_show_all (t);
 
 }
+
+} //namespace pan

@@ -27,15 +27,8 @@
 #include <string>
 #include <climits>
 #include <string>
+#include <unordered_set>
 #include <vector>
-
-#if defined(HAVE_TR1_UNORDERED_SET)
-# include <tr1/unordered_set>
-#elif defined(HAVE_EXT_HASH_SET)
-# include <ext/hash_set>
-#else
-# include <set>
-#endif
 
 #include <pan/general/string-view.h>
 
@@ -60,7 +53,7 @@ namespace pan
    * There is, obviously, a tradeoff involved: hashing strings can be
    * expensive, and the refcounted hashtable of strings has its own
    * memory overhead.  So while strings that are likely to be duplicated
-   * or used as keys -- message-ids, author names, and group names 
+   * or used as keys -- message-ids, author names, and group names
    * spring to mind -- they're less appropriate for temporary, unique data.
    *
    * @ingroup general
@@ -89,7 +82,7 @@ namespace pan
       {
         static uint16_t get16bits( const char * in )
         {
-          return (in[0]<<8) | in[1];
+          return (static_cast<uint16_t>(in[0])<<8) | in[1];
         }
 
         /**
@@ -110,32 +103,32 @@ namespace pan
 
           /* Main loop */
           for (;len > 0; len--) {
-              hash  += get16bits (data);
-              uint32_t tmp  = (get16bits (data + 2) << 11) ^ hash;
-              hash   = (hash << 16) ^ tmp;
-              data  += 2*sizeof (uint16_t);
-              hash  += hash >> 11;
+              hash += get16bits (data);
+              uint32_t tmp = (static_cast<uint32_t>(get16bits(data + 2)) << 11) ^ hash;
+              hash = (hash << 16) ^ tmp;
+              data += 2*sizeof (uint16_t);
+              hash += hash >> 11;
           }
 
           /* Handle end cases */
           switch (rem) {
               case 3:
                 hash += get16bits (data);
-                      hash ^= hash << 16;
-                      hash ^= data[sizeof (uint16_t)] << 18;
-                      hash += hash >> 11;
-                      break;
+                hash ^= hash << 16;
+                hash ^= static_cast<uint32_t>(data[sizeof (uint16_t)]) << 18;
+                hash += hash >> 11;
+                break;
 
               case 2:
                 hash += get16bits (data);
-                      hash ^= hash << 11;
-                      hash += hash >> 17;
-                      break;
+                hash ^= hash << 11;
+                hash += hash >> 17;
+                break;
 
               case 1:
                 hash += *data;
-                      hash ^= hash << 10;
-                      hash += hash >> 1;
+                hash ^= hash << 10;
+                hash += hash >> 1;
           }
 
           /* Force "avalanching" of final 127 bits */
@@ -151,13 +144,8 @@ namespace pan
       };
 
 
-#if defined(HAVE_TR1_UNORDERED_SET)
-      typedef std::tr1::unordered_set<Impl, StringViewHash> lookup_t;
-#elif defined(HAVE_EXT_HASH_SET)
-      typedef __gnu_cxx::hash_set<Impl, StringViewHash> lookup_t;
-#else
-      typedef std::set<Impl> lookup_t;
-#endif
+      typedef std::unordered_set<Impl, StringViewHash> lookup_t;
+
       static lookup_t _lookup;
 
       static Impl* init (const StringView& s)
