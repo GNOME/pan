@@ -1362,6 +1362,7 @@ PostUI :: spawn_editor ()
 
   FILE *fp = fopen (fname, "w");
   if (fp == NULL) {
+    Log::add_err_va (_("Error creating temporary file: %s"), g_strerror(errno));
     return;
   }
 
