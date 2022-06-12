@@ -42,10 +42,11 @@ void
 Quark :: dump (std::ostream& o)
 {
   if (size()) {
-    o << "Existing Quarks: " << size() << ':' << std::endl;
-    for (lookup_t::const_iterator it(_lookup.begin()), e(_lookup.end()); it!=e; ++it)
-        o << "  [" << it->to_view() << "] (refcount " << it->refcount << ')' << std::endl;
-    o << std::endl;
+    o << "Existing Quarks: " << size() << ':' << "\n";
+    for (lookup_t::const_iterator it(_lookup.begin()), e(_lookup.end()); it!=e; ++it) {
+        o << "  [" << it->to_view() << "] (refcount " << it->refcount << ')' << "\n";
+    }
+    o << "\n";
   }
 }
 

@@ -154,17 +154,26 @@ PostUI:: update_filequeue_label (GtkTreeSelection *selection)
 {
     tasks_t tasks(get_selected_files());
 
-    if (tasks.empty())
+    if (tasks.empty()) {
       _upload_queue.get_all_tasks(tasks);
+    }
 
     char str[512];
     long kb(0);
     foreach (PostUI::tasks_t, tasks, it)
     {
-      TaskUpload * task (dynamic_cast<TaskUpload*>(*it));
-      if (task) kb += task->_bytes/1024;
+      TaskUpload * task(dynamic_cast<TaskUpload*>(*it));
+      if (task) {
+        kb += task->_bytes / 1024;
+      }
     }
-    g_snprintf(str,sizeof(str), _("Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."), tasks.size(), kb, kb/1024.0f);
+    g_snprintf(
+      str,
+      sizeof(str),
+      _("Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."),
+      tasks.size(),
+      kb,
+      kb / 1024.0f);
     gtk_label_set_text (GTK_LABEL(_filequeue_label), str);
 }
 
@@ -315,16 +324,6 @@ PostUI :: set_spellcheck_enabled (bool enabled)
       }
     }
 #endif // GTKSPELL_VERSION
-#else // HAVE_GTKSPELL
-    // disable this for now, it is annoying
-//    GtkWidget * w = gtk_message_dialog_new_with_markup (
-//      GTK_WINDOW(_root),
-//      GTK_DIALOG_DESTROY_WITH_PARENT,
-//      GTK_MESSAGE_ERROR,
-//      GTK_BUTTONS_CLOSE,
-//      _("<b>Spellchecker not found!</b>\n \nWas this copy of Pan compiled with GtkSpell enabled?"));
-//    g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
-//    gtk_widget_show_all (w);
 #endif // HAVE_GTKSPELL
   }
   else // disable

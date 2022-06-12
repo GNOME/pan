@@ -221,14 +221,6 @@ namespace
     return w;
   }
 
-//  void color_set_cb (GtkColorButton* b, gpointer p)
-//  {
-//    GroupPrefsDialog* dialog = static_cast<GroupPrefsDialog*>(p);
-//	  GdkColor col;
-//	  gtk_color_button_get_color (b, &col);
-//	  dialog->_color = col;
-//  }
-
   void color_set_cb (GtkColorButton* b, gpointer p)
   {
     GroupPrefsDialog* dialog = static_cast<GroupPrefsDialog*>(p);

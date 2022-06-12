@@ -77,8 +77,12 @@ namespace pan
         Impl (const StringView& v): refcount(0), len(v.len), str(const_cast<char*>(v.str)) {}
         StringView to_view () const { return StringView(str,len); }
         //wtf? bool operator() (const Impl& a, const Impl& b) const { return StringView(str,len) == StringView(b.str,b.len); }
-        bool operator== (const Impl& b) const { return StringView(str,len) == StringView(b.str,b.len); }
-        bool operator< (const Impl& b) const { return StringView(str,len) < StringView(b.str,b.len); }
+        bool operator== (const Impl& b) const {
+          return StringView(str,len) == StringView(b.str,b.len);
+        }
+        bool operator< (const Impl& b) const {
+          return StringView(str,len) < StringView(b.str,b.len);
+        }
       };
 
       struct StringViewHash
@@ -97,8 +101,9 @@ namespace pan
           const char * data (s.str);
           int len (s.len);
 
-          uint32_t tmp, hash=len;
           if (len <= 0 || data == NULL) return 0;
+
+          uint32_t hash = len;
 
           int rem = len & 3;
           len >>= 2;
@@ -106,7 +111,7 @@ namespace pan
           /* Main loop */
           for (;len > 0; len--) {
               hash  += get16bits (data);
-              tmp    = (get16bits (data+2) << 11) ^ hash;
+              uint32_t tmp  = (get16bits (data + 2) << 11) ^ hash;
               hash   = (hash << 16) ^ tmp;
               data  += 2*sizeof (uint16_t);
               hash  += hash >> 11;
@@ -114,16 +119,21 @@ namespace pan
 
           /* Handle end cases */
           switch (rem) {
-              case 3: hash += get16bits (data);
+              case 3:
+                hash += get16bits (data);
                       hash ^= hash << 16;
                       hash ^= data[sizeof (uint16_t)] << 18;
                       hash += hash >> 11;
                       break;
-              case 2: hash += get16bits (data);
+
+              case 2:
+                hash += get16bits (data);
                       hash ^= hash << 11;
                       hash += hash >> 17;
                       break;
-              case 1: hash += *data;
+
+              case 1:
+                hash += *data;
                       hash ^= hash << 10;
                       hash += hash >> 1;
           }
