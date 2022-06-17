@@ -35,10 +35,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#ifdef STDC_HEADERS
 #include <stdlib.h>
 #include <string.h>
-#endif
 #ifdef HAVE_MALLOC_H
 #include <malloc.h>
 #endif

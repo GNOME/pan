@@ -32,10 +32,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#ifdef STDC_HEADERS
 #include <stdlib.h>
 #include <string.h>
-#endif
 #ifdef HAVE_MALLOC_H
 #include <malloc.h>
 #endif
@@ -102,7 +100,7 @@ static stringmap messages[] = {
   { S_BINHEX_SIZES,     "BinHex file: data/resource fork sizes %ld/%ld" },
   { S_BINHEX_BOTH,      "BinHex file: both forks non-empty, decoding data fork" },
   { S_SMERGE_MERGED,    "Parts of '%s' merged with parts of '%s' (%d)" },
-  
+
   /* MIME-related messages */
   { S_MIME_NO_BOUNDARY, "Multipart message without boundary ignored" },
   { S_MIME_B_NOT_FOUND, "Boundary expected on Multipart message but found EOF" },

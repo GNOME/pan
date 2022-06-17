@@ -34,10 +34,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#ifdef STDC_HEADERS
 #include <stdlib.h>
 #include <string.h>
-#endif
 #ifdef HAVE_MALLOC_H
 #include <malloc.h>
 #endif
@@ -103,7 +101,7 @@ static char *brackchr[] = {
 
 /*
  * Extract a filename from the subject line. We need anything to identify
- * the name of the program for sorting. If a nice filename cannot be found, 
+ * the name of the program for sorting. If a nice filename cannot be found,
  * the subject line itself is used
  * ptonum is, if not NULL, a pointer to the part number in the subject line,
  * so that it won't be used as filename.
@@ -173,7 +171,7 @@ UUGetFileName (char *subject, char *ptonum, char *ptonend)
     while (isspace (*iter))
       iter++;
     count = length = alflag = 0;
-    while (iter[count] && 
+    while (iter[count] &&
 	   (strchr (fnqchars, iter[count])==NULL)) {
       if (isalpha (iter[count]))
 	alflag++;
@@ -276,19 +274,19 @@ UUGetFileName (char *subject, char *ptonum, char *ptonend)
     while (*ptr && *ptr != 0x0a && *ptr != 0x0d && ptr != part) {
       iter  = ptr;
       count = length = alflag = 0;
-      
+
       if (_FP_strnicmp (ptr, "ftp", 3) == 0) {
 	/* hey, that's an ftp address */
 	while (isalpha (*ptr) || isdigit (*ptr) || *ptr == '.')
 	  ptr++;
 	continue;
       }
-      
+
       while ((isalnum(*iter)||strchr(fnchars, *iter)!=NULL||
 	      *iter=='/') && *iter && iter != ptonum && *iter != '.') {
 	if (isalpha (*iter))
 	  alflag = 1;
-	
+
 	count++; iter++;
       }
       if (*iter == '\0' || iter == ptonum) {
@@ -305,7 +303,7 @@ UUGetFileName (char *subject, char *ptonum, char *ptonend)
 	length = 0;
 	continue;
       }
-      if (_FP_strnicmp (iter, "edu", 3) == 0 || 
+      if (_FP_strnicmp (iter, "edu", 3) == 0 ||
 	  _FP_strnicmp (iter, "gov", 3) == 0) {
 	/* hey, that's an ftp address */
 	while (isalpha (*iter) || isdigit (*iter) || *iter == '.')
@@ -314,21 +312,21 @@ UUGetFileName (char *subject, char *ptonum, char *ptonend)
 	length = 0;
 	continue;
       }
-      
+
       length += count + 1;
       count   = 0;
-      
+
       while ((isalnum(iter[count])||strchr(fnchars, iter[count])!=NULL||
 	      iter[count]=='/') && iter[count] && iter[count] != '.')
 	count++;
-      
+
       if (iter[count]==':' && iter[count+1]=='/') {
 	/* looks like stuff from a mail server */
 	ptr = iter + 1;
 	length = 0;
 	continue;
       }
-      
+
       if (count > 8 || iter == ptonum) {
 	ptr    = iter;
 	length = 0;
@@ -339,19 +337,19 @@ UUGetFileName (char *subject, char *ptonum, char *ptonend)
 	length += count;
 	break;
       }
-      
+
       while (iter[count] &&
 	     (isalnum(iter[count])||strchr(fnchars, iter[count])!=NULL||
 	      iter[count]=='/'))
 	count++;
-      
+
       if (iter[count]==':' && iter[count+1]=='/') {
 	/* looks like stuff from a mail server */
 	ptr = iter + 1;
 	length = 0;
 	continue;
       }
-      
+
       if (count < 12 && iter != ptonum) {
 	length += count;
 	break;
@@ -369,7 +367,7 @@ UUGetFileName (char *subject, char *ptonum, char *ptonend)
       ptr++;
 
     while ((isalnum(ptr[length])||strchr(fnchars,ptr[length])!=NULL||
-	    ptr[length] == '/') && 
+	    ptr[length] == '/') &&
 	   ptr[length] && ptr+length!=part && ptr+length!=ptonum)
       length++;
 
@@ -406,10 +404,10 @@ UUGetFileName (char *subject, char *ptonum, char *ptonend)
 	       uustring (S_OUT_OF_MEMORY), length+1);
     return NULL;
   }
-    
+
   memcpy (result, ptr, length);
   result[length] = '\0';
-    
+
   return result;
 }
 
@@ -466,7 +464,7 @@ UUGetPartNo (char *subject, char **where, char **whend)
       while (isdigit (iter[count]))
 	count++;
       length = count;
-      
+
       if (iter[count] == '\0' || iter[count+1] == '\0') {
 	iter  += count;
 	length = 0;
@@ -478,24 +476,24 @@ UUGetPartNo (char *subject, char **where, char **whend)
 	delim   = bdel;
 	break;
       }
-      
+
       while (iter[count] == ' ' || iter[count] == '#' ||
 	     iter[count] == '/' || iter[count] == '\\')  count++;
-      
+
       if (_FP_strnicmp (iter + count, "of", 2) == 0)
 	count += 2;
-      
+
       while (iter[count] == ' ')    count++;
       while (isdigit (iter[count])) count++;
       while (iter[count] == ' ')    count++;
-      
+
       if (iter[count] == brackchr[uu_bracket_policy][bpc+1]) {
 	*where  = iter;
 	bdel[0] = brackchr[uu_bracket_policy][bpc+1];
 	delim   = bdel;
 	break;
       }
-      
+
       length = 0;
       ptr    = iter;
     }
@@ -646,7 +644,7 @@ UUGetPartNo (char *subject, char **where, char **whend)
   if (length == 0) {
     count = strlen(subject) - 1;
     ptr   = subject;
- 
+
     while (count > 0) {
       if (!isdigit(ptr[count])||isalpha(ptr[count+1])||ptr[count+1] == '.') {
 	count--;
@@ -657,10 +655,10 @@ UUGetPartNo (char *subject, char **where, char **whend)
       while (count >= 0 && isdigit (ptr[count])) {
 	count--; length++;
       }
-      if (count>=0 && ((isalpha (ptr[count]) && 
+      if (count>=0 && ((isalpha (ptr[count]) &&
 			(ptr[count] != 's' || ptr[count+1] != 't') &&
-			(ptr[count] != 'n' || ptr[count+1] != 'd')) || 
-		       ptr[count] == '/' || ptr[count] == '.' || 
+			(ptr[count] != 'n' || ptr[count+1] != 'd')) ||
+		       ptr[count] == '/' || ptr[count] == '.' ||
 		       ptr[count] == '-' || ptr[count] == '_')) {
         length = 0;
         continue;
@@ -791,7 +789,7 @@ UUPreProcessPart (fileread *data, int *ret)
   result->mimeid   = _FP_strdup (data->mimeid);
   result->mimetype = _FP_strdup (data->mimetype);
 
-  if (result->partno == -1 && 
+  if (result->partno == -1 &&
       (data->uudet == PT_ENCODED || data->uudet == QP_ENCODED))
     result->partno = 1;
 
@@ -806,7 +804,7 @@ UUPreProcessPart (fileread *data, int *ret)
     if (result->subfname == NULL)
       result->subfname = _FP_strdup (result->filename);
 
-    if (result->filename == NULL || 
+    if (result->filename == NULL ||
 	result->subfname == NULL) {
       UUMessage (uucheck_id, __LINE__, UUMSG_ERROR,
 		 uustring (S_OUT_OF_MEMORY),
@@ -820,8 +818,8 @@ UUPreProcessPart (fileread *data, int *ret)
       result->partno = 1;
   }
   else if (result->subfname == NULL && data->uudet &&
-      (data->begin || result->partno == 1 || 
-       (!uu_dumbness && result->partno == -1 && 
+      (data->begin || result->partno == 1 ||
+       (!uu_dumbness && result->partno == -1 &&
 	(data->subject != NULL || result->filename != NULL)))) {
     /*
      * If it's the first part of something and has some valid data, but
@@ -914,8 +912,8 @@ UUPreProcessPart (fileread *data, int *ret)
     else if (data->partno != -1 && result->filename) {
       result->subfname = _FP_strdup (result->filename);
     }
-    else { 
-      /* 
+    else {
+      /*
        * it's got no info, it's got no begin, and we don't know anything
        * about this part. Let's forget all about it.
        */
@@ -951,7 +949,7 @@ UUPreProcessPart (fileread *data, int *ret)
 
   if (result->partno == -1 && data->begin) {
     /*
-     * hmm, this is reason enough to initialize lastvalid, at least 
+     * hmm, this is reason enough to initialize lastvalid, at least
      * if we have no end
      */
     if (!data->end) {
@@ -1087,7 +1085,7 @@ UUInsertPartToList (uufile *data)
        * file was really XX
        */
 
-      if (data->data->uudet == B64ENCODED && 
+      if (data->data->uudet == B64ENCODED &&
 	  iter->uudet == XX_ENCODED && iter->begin) {
 	data->data->uudet = XX_ENCODED;
       }
@@ -1179,7 +1177,7 @@ UUInsertPartToList (uufile *data)
 	 * if at the end of the part list, add it
 	 */
 
-	if (fiter->NEXT == NULL || 
+	if (fiter->NEXT == NULL ||
 	    (data->partno != -1 && data->partno < fiter->NEXT->partno)) {
 	  data->NEXT  = fiter->NEXT;
 	  fiter->NEXT = data;
@@ -1192,14 +1190,14 @@ UUInsertPartToList (uufile *data)
         last  = fiter;
 	fiter = fiter->NEXT;
       }
-      
+
       return UURET_OK; /* Shouldn't get here */
     }
   goahead:
     /*
      * we need iter below
      */
-    if (iter->NEXT == NULL) 
+    if (iter->NEXT == NULL)
       break;
 
     iter = iter->NEXT;
@@ -1306,7 +1304,7 @@ UUCheckGlobalList (void)
       continue;
     }
     else if ((liter->uudet == QP_ENCODED ||
-	      liter->uudet == PT_ENCODED) && 
+	      liter->uudet == PT_ENCODED) &&
 	     (liter->flags & FL_SINGLE)) {
       if ((liter->flags&FL_PROPER)==0)
 	liter->size = -1;
@@ -1378,7 +1376,7 @@ UUCheckGlobalList (void)
 
     if (fiter->data->begin) flag |= 1;
     if (fiter->data->end)   flag |= 2;
-    if (fiter->data->uudet) flag |= 4; 
+    if (fiter->data->uudet) flag |= 4;
 
     /*
      * guess size of part
@@ -1399,7 +1397,7 @@ UUCheckGlobalList (void)
       thesize += fiter->data->length;
       break;
     }
-      
+
     fiter = fiter->NEXT;
 
     while (fiter != NULL) {
@@ -1407,7 +1405,7 @@ UUCheckGlobalList (void)
 	misparts[miscount++] = count;
 
       part = fiter->partno;
-      
+
       if (havecount<MAXPLIST)
 	haveparts[havecount++]=part;
 
@@ -1433,7 +1431,7 @@ UUCheckGlobalList (void)
 
       if (fiter->data->end)
 	break;
-	
+
       fiter = fiter->NEXT;
     }
 
@@ -1442,7 +1440,7 @@ UUCheckGlobalList (void)
      * encoded, there's a begin line and encoded data, assume it's
      * there.
      */
-    
+
     if (uu_fast_scanning && (flag & 0x01) && (flag & 0x04) &&
 	(liter->uudet == UU_ENCODED || liter->uudet == XX_ENCODED))
       flag |= 2;
@@ -1456,14 +1454,14 @@ UUCheckGlobalList (void)
 
     liter->haveparts = NULL;
     liter->misparts  = NULL;
-    
+
     if (havecount) {
       if ((liter->haveparts=(int*)malloc((havecount+1)*sizeof(int)))!=NULL) {
 	memcpy (liter->haveparts, haveparts, havecount*sizeof(int));
 	liter->haveparts[havecount] = 0;
       }
     }
-    
+
     if (miscount) {
       if ((liter->misparts=(int*)malloc((miscount+1)*sizeof(int)))!=NULL) {
 	memcpy (liter->misparts, misparts, miscount*sizeof(int));
@@ -1479,7 +1477,7 @@ UUCheckGlobalList (void)
     if ((flag & 4) == 0) liter->state |= UUFILE_NODATA;
     if ((flag & 1) == 0) liter->state |= UUFILE_NOBEGIN;
     if ((flag & 2) == 0) liter->state |= UUFILE_NOEND;
-    
+
     if ((flag & 7) == 7 && miscount==0) {
       liter->state = UUFILE_OK;
     }
@@ -1489,7 +1487,7 @@ UUCheckGlobalList (void)
     else
       liter->size = thesize;
 
-    if (liter->state==UUFILE_OK && 
+    if (liter->state==UUFILE_OK &&
         (liter->filename==NULL || liter->filename[0]=='\0')) {
       /*
        * Emergency backup if the file does not have a filename

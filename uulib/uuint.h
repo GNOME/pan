@@ -77,7 +77,7 @@
 
 #define UUPERCENT(a,b)	((int) ((unsigned long)(a) / \
 				(((unsigned long)(b)/100)+1)))
-     
+
 /*
  * Make the Busy Callback easier. The macro returns true if the BusyCallback
  * wants us to terminate.
@@ -277,13 +277,8 @@ extern char * (*uu_FNameFilter)  _ANSI_ARGS_((void *, char *));
  * Be careful about the definition with variable arguments.
  */
 
-#if defined(STDC_HEADERS) || defined(HAVE_STDARG_H)
-int		UUMessage		_ANSI_ARGS_((char *, int,
-						     int, char *, ...));
-#else
-int		UUMessage		();
-#endif
-int		UUBusyPoll		_ANSI_ARGS_((void));
+int		UUMessage		_ANSI_ARGS_((char *, int, int, char *, ...));
+int		UUBusyPoll  _ANSI_ARGS_((void));
 
 /*
  * Functions from uucheck.c
@@ -306,7 +301,7 @@ fileread *	ScanPart 		_ANSI_ARGS_((FILE *, char *, int *));
 
 int		UUbhdecomp		_ANSI_ARGS_((char *, char *,
 						     char *, int *,
-						     size_t, size_t, 
+						     size_t, size_t,
 						     size_t *));
 size_t		UUbhwrite		_ANSI_ARGS_((char *, size_t, size_t,
 						     FILE *));

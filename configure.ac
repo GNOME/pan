@@ -3,7 +3,7 @@ AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
 AC_DEFINE(VERSION_MINOR,150,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
 AC_DEFINE(VERSION_TITLE,["Moucherotte"],[Release Name])
-AC_PREREQ([2.64])
+AC_PREREQ([2.71])
 
 dnl Get git info for pan-git.version
 GIT_HASH='$Format:%h$'
@@ -75,8 +75,7 @@ AC_SUBST(GCR_REQUIRED)
 AC_SUBST(WEBKIT_REQUIRED)
 
 AC_PROG_CXX
-AC_HEADER_STDC
-AC_HEADER_TIME
+
 AC_CHECK_FUNCS([localtime_r close])
 AC_CXX_HEADER_TR1_UNORDERED_SET
 AC_CXX_HAVE_EXT_HASH_SET

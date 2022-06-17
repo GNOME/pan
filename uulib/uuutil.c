@@ -32,10 +32,8 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#ifdef STDC_HEADERS
 #include <stdlib.h>
 #include <string.h>
-#endif
 #ifdef HAVE_MALLOC_H
 #include <malloc.h>
 #endif
@@ -215,7 +213,7 @@ UUSMPKnownExt (char *filename)
  */
 
 int
-UUbhdecomp (char *in, char *out, char *last, int *rpc, 
+UUbhdecomp (char *in, char *out, char *last, int *rpc,
 	    size_t inc, size_t max, size_t *opc)
 {
   size_t count, used=0, dummy;
@@ -446,7 +444,7 @@ UUSmerge (int pass)
 		 uustring (S_SMERGE_MERGED),
 		 (iter->subfname) ? iter->subfname : "",
 		 (res->subfname)  ? res->subfname  : "", pass);
- 
+
       temp       = iter->NEXT;
       iter->NEXT = NULL;
       UUkilllist (iter);
