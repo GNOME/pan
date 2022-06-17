@@ -302,7 +302,7 @@ case $host_os in
 	;;
 
 	*cygwin|*mingw32*)
-	CXXFLAGS="$CXXFLAGS -mms-bitfields -mwin32"
+	CXXFLAGS="$CXXFLAGS -mms-bitfields"
 	CPPFLAGS="$CPPFLAGS -DWIN32_LEAN_AND_MEAN"
 	LIBS="$LIBS -lshell32 -lws2_32 -lpthread"
 	panlocaledir="locale"
