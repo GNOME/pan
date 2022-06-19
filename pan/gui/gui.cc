@@ -1752,7 +1752,7 @@ namespace
 }
 
 void
-GUI :: notebook_page_switched_cb (GtkNotebook *, GtkNotebookPage *, gint page_num, gpointer user_data)
+GUI :: notebook_page_switched_cb (GtkNotebook *, void *, gint page_num, gpointer user_data)
 {
   GUI * gui = static_cast<GUI*>(user_data);
   GtkWidget * w;

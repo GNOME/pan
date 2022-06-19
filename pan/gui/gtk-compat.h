@@ -79,12 +79,6 @@ static inline GdkWindow * gdk_window_get_device_position (GdkWindow *window,
 #endif
   }
 
-#if defined(GTK_DISABLE_DEPRECATED) || GTK_CHECK_VERSION(3,0,0)
-#if GTK_CHECK_VERSION(2,22,0)
-#define GtkNotebookPage void
-#endif
-#endif
-
 #if !GTK_CHECK_VERSION(3, 0, 0)
   #include <gdk/gdkkeysyms.h>
 #endif
