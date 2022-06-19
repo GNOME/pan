@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2022-06-12 09:12+0000\n"
-"PO-Revision-Date: 2022-06-12 13:43+0300\n"
+"POT-Creation-Date: 2022-06-19 10:30+0000\n"
+"PO-Revision-Date: 2022-06-19 21:01+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -72,7 +72,7 @@ msgstr "Помилка під час відкривання каталогу «%
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
 #: pan/data-impl/data-io.cc:199 pan/data-impl/data-io.cc:231
-#: pan/gui/post-ui.cc:1771
+#: pan/gui/post-ui.cc:1767
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Не вдалося зберегти «%s» %s"
@@ -84,7 +84,7 @@ msgstr "Помилка при відкритті файла «%s» %s"
 
 #: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
 #: pan/data-impl/server.cc:525 pan/general/file-util.cc:312
-#: pan/gui/post-ui.cc:639 pan/gui/task-pane.cc:739
+#: pan/gui/post-ui.cc:635 pan/gui/task-pane.cc:739
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Помилка при читанні файла «%s»: %s"
@@ -177,6 +177,18 @@ msgstr "Зв'язка ключів GNOME заборонила доступ до 
 msgid "Error reading from %s: unknown group \"%s\""
 msgstr "Помилка під час читання з %s: невідома група «%s»"
 
+#: pan/general/editor-spawner.cc:66
+#, c-format
+msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
+msgstr ""
+"Помилка під час обробки командного рядка «зовнішнього редактора»: %s "
+"(команда: %s)"
+
+#: pan/general/editor-spawner.cc:110
+#, c-format
+msgid "Error starting external editor: %s"
+msgstr "Помилка запуску зовнішнього редактора: %s"
+
 #. build the locale strings
 #: pan/general/e-util.cc:211
 msgid "%l:%M %p"
@@ -213,11 +225,11 @@ msgstr ""
 "Не вдалося визначити кодування статті. Символи, які не належать до UTF8, "
 "було вилучено."
 
-#: pan/gui/actions.cc:307 pan/gui/post-ui.cc:454
+#: pan/gui/actions.cc:307 pan/gui/post-ui.cc:450
 msgid "_File"
 msgstr "_Файл"
 
-#: pan/gui/actions.cc:308 pan/gui/post-ui.cc:455
+#: pan/gui/actions.cc:308 pan/gui/post-ui.cc:451
 msgid "_Edit"
 msgstr "З_міни"
 
@@ -418,11 +430,10 @@ msgid "Edit Selected _Group's Preferences"
 msgstr "Редагувати налаштування вибраної _групи"
 
 #: pan/gui/actions.cc:459
-#| msgid "Signature File"
 msgid "Edit S_core File"
 msgstr "Редагувати файл о_цінок"
 
-#: pan/gui/actions.cc:464 pan/gui/post-ui.cc:471
+#: pan/gui/actions.cc:464 pan/gui/post-ui.cc:467
 msgid "Edit P_osting Profiles"
 msgstr "Редагувати про_філі публікації"
 
@@ -819,7 +830,7 @@ msgid "Unnamed File"
 msgstr "Файл без назви"
 
 #: pan/gui/body-pane.cc:1131 pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1303
-#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2644 pan/gui/prefs-ui.cc:857
+#: pan/gui/header-pane.cc:1743 pan/gui/post-ui.cc:2640 pan/gui/prefs-ui.cc:857
 #: pan/gui/score-add-ui.cc:137 pan/gui/task-pane.cc:799
 msgid "Subject"
 msgstr "Тема"
@@ -1011,7 +1022,7 @@ msgstr "Українське"
 msgid "Visual"
 msgstr "Візуальне"
 
-#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2156 pan/gui/post-ui.cc:549
+#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2156 pan/gui/post-ui.cc:545
 #: pan/gui/prefs-ui.cc:761
 msgid "Character Encoding"
 msgstr "Кодування символів"
@@ -1081,40 +1092,40 @@ msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr ""
 "Не визначено жодного профілю, скористайтеся «Зміни → Профілі публікації»."
 
-#: pan/gui/group-prefs-dialog.cc:271
+#: pan/gui/group-prefs-dialog.cc:263
 msgid "Pan: Group Preferences"
 msgstr "Pan: налаштування груп"
 
-#: pan/gui/group-prefs-dialog.cc:286
+#: pan/gui/group-prefs-dialog.cc:278
 msgid "Properties for Groups"
 msgstr "Властивості групи"
 
-#: pan/gui/group-prefs-dialog.cc:288
+#: pan/gui/group-prefs-dialog.cc:280
 #, c-format
 msgid "Properties for %s"
 msgstr "Властивості %s"
 
-#: pan/gui/group-prefs-dialog.cc:296
+#: pan/gui/group-prefs-dialog.cc:291
 msgid "Character _encoding:"
 msgstr "_Кодування символів:"
 
-#: pan/gui/group-prefs-dialog.cc:298
+#: pan/gui/group-prefs-dialog.cc:293
 msgid "Directory for Saving Attachments"
 msgstr "Каталог для збереження долучень"
 
-#: pan/gui/group-prefs-dialog.cc:306
+#: pan/gui/group-prefs-dialog.cc:301
 msgid "Directory for _saving attachments:"
 msgstr "Каталог для з_береження долучень:"
 
-#: pan/gui/group-prefs-dialog.cc:308
+#: pan/gui/group-prefs-dialog.cc:303
 msgid "Posting _profile:"
 msgstr "Про_філь публікації:"
 
-#: pan/gui/group-prefs-dialog.cc:313
+#: pan/gui/group-prefs-dialog.cc:308
 msgid "Spellchecker _language:"
 msgstr "_Мова перевірки правопису:"
 
-#: pan/gui/group-prefs-dialog.cc:316
+#: pan/gui/group-prefs-dialog.cc:311
 msgid "Group color:"
 msgstr "Колір групи:"
 
@@ -1142,7 +1153,7 @@ msgstr "Зберегти файл NZB як…"
 msgid "Import NZB Files"
 msgstr "Імпорт файлів NZB"
 
-#: pan/gui/gui.cc:814 pan/gui/post-ui.cc:3339
+#: pan/gui/gui.cc:814 pan/gui/post-ui.cc:3335
 msgid "NZB Files"
 msgstr "файли NZB"
 
@@ -1460,190 +1471,191 @@ msgstr ""
 msgid "Pan notification"
 msgstr "Сповіщення «Pan»"
 
-#: pan/gui/post-ui.cc:171
+#: pan/gui/post-ui.cc:174
 #, c-format
-msgid "Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."
-msgstr "Черга вивантаження: %lu завдання, загалом %ld кБ (~ %.2f МБ)."
+#| msgid "Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."
+msgid "Upload queue: %llu tasks, %ld KB (~ %.2f MB) total."
+msgstr "Черга вивантаження: %llu завдання, загалом %ld кБ (~ %.2f МБ)."
 
-#: pan/gui/post-ui.cc:274 pan/gui/post-ui.cc:305
+#: pan/gui/post-ui.cc:280 pan/gui/post-ui.cc:311
 #, c-format
 msgid "Error setting custom spellchecker: %s"
 msgstr "Помилка встановлення нетипового засобу перевірки правопису: %s"
 
-#: pan/gui/post-ui.cc:278 pan/gui/post-ui.cc:286 pan/gui/post-ui.cc:309
-#: pan/gui/post-ui.cc:317
+#: pan/gui/post-ui.cc:284 pan/gui/post-ui.cc:292 pan/gui/post-ui.cc:315
+#: pan/gui/post-ui.cc:323
 #, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "Помилка при встановленні засобу перевірки правопису: %s"
 
-#: pan/gui/post-ui.cc:456
+#: pan/gui/post-ui.cc:452
 msgid "_Profile"
 msgstr "_Профіль"
 
-#: pan/gui/post-ui.cc:457
+#: pan/gui/post-ui.cc:453
 msgid "Set Editor"
 msgstr "Встановити редактор"
 
-#: pan/gui/post-ui.cc:459
+#: pan/gui/post-ui.cc:455
 msgid "_Send Article"
 msgstr "_Надіслати статтю"
 
-#: pan/gui/post-ui.cc:459
+#: pan/gui/post-ui.cc:455
 msgid "Send Article Now"
 msgstr "Надіслати статтю зараз"
 
-#: pan/gui/post-ui.cc:460
+#: pan/gui/post-ui.cc:456
 msgid "_Send and Save Articles to NZB"
 msgstr "_Надіслати і зберегти статті до NZB"
 
-#: pan/gui/post-ui.cc:460
+#: pan/gui/post-ui.cc:456
 msgid "Send and Save Articles to NZB"
 msgstr "Надіслати і зберегти статті до NZB"
 
-#: pan/gui/post-ui.cc:461
+#: pan/gui/post-ui.cc:457
 msgid "Set Character _Encoding..."
 msgstr "Встановити _кодування символів…"
 
-#: pan/gui/post-ui.cc:462
+#: pan/gui/post-ui.cc:458
 msgid "Set Content _Transfer Encoding..."
 msgstr "Встановити кодування си_мволів для передавання…"
 
-#: pan/gui/post-ui.cc:463
+#: pan/gui/post-ui.cc:459
 msgid "Sa_ve Draft"
 msgstr "З_берегти чернетку"
 
-#: pan/gui/post-ui.cc:463
+#: pan/gui/post-ui.cc:459
 msgid "Save as a Draft for Future Posting"
 msgstr "Зберегти як чернетку для наступного надсилання"
 
-#: pan/gui/post-ui.cc:464
+#: pan/gui/post-ui.cc:460
 msgid "_Open Draft..."
 msgstr "_Відкрити чернетку…"
 
-#: pan/gui/post-ui.cc:464
+#: pan/gui/post-ui.cc:460
 msgid "Open an Article Draft"
 msgstr "Відкрити чернетку статті"
 
-#: pan/gui/post-ui.cc:469
+#: pan/gui/post-ui.cc:465
 msgid "_Rot13"
 msgstr "_Rot13"
 
-#: pan/gui/post-ui.cc:469
+#: pan/gui/post-ui.cc:465
 msgid "Rot13 Selected Text"
 msgstr "Зашифрувати вибраний текст за допомогою ROT13"
 
-#: pan/gui/post-ui.cc:470
+#: pan/gui/post-ui.cc:466
 msgid "Run _Editor"
 msgstr "Запустити _редактор"
 
-#: pan/gui/post-ui.cc:470
+#: pan/gui/post-ui.cc:466
 msgid "Run Editor"
 msgstr "Запустити редактор"
 
-#: pan/gui/post-ui.cc:472
+#: pan/gui/post-ui.cc:468
 msgid "Add _Files to Queue"
 msgstr "Додати _файли до черги"
 
-#: pan/gui/post-ui.cc:472
+#: pan/gui/post-ui.cc:468
 msgid "Add Files to Queue"
 msgstr "Додати файли до черги"
 
-#: pan/gui/post-ui.cc:487 pan/gui/post-ui.cc:488
+#: pan/gui/post-ui.cc:483 pan/gui/post-ui.cc:484
 msgid "Remove from Queue"
 msgstr "Вилучити з черги"
 
-#: pan/gui/post-ui.cc:492 pan/gui/post-ui.cc:493
+#: pan/gui/post-ui.cc:488 pan/gui/post-ui.cc:489
 msgid "Clear List"
 msgstr "Спорожнити список"
 
-#: pan/gui/post-ui.cc:497 pan/gui/post-ui.cc:498
+#: pan/gui/post-ui.cc:493 pan/gui/post-ui.cc:494
 msgid "Select Needed Parts"
 msgstr "Виберіть потрібні частини"
 
-#: pan/gui/post-ui.cc:502 pan/gui/post-ui.cc:503 pan/gui/task-pane.cc:679
+#: pan/gui/post-ui.cc:498 pan/gui/post-ui.cc:499 pan/gui/task-pane.cc:679
 #: pan/gui/task-pane.cc:680
 msgid "Move Up"
 msgstr "Пересунути вище"
 
-#: pan/gui/post-ui.cc:507 pan/gui/post-ui.cc:508 pan/gui/task-pane.cc:684
+#: pan/gui/post-ui.cc:503 pan/gui/post-ui.cc:504 pan/gui/task-pane.cc:684
 #: pan/gui/task-pane.cc:685
 msgid "Move Down"
 msgstr "Пересунути нижче"
 
-#: pan/gui/post-ui.cc:512 pan/gui/post-ui.cc:513
+#: pan/gui/post-ui.cc:508 pan/gui/post-ui.cc:509
 msgid "Move to Top"
 msgstr "Пересунути на початок"
 
-#: pan/gui/post-ui.cc:517 pan/gui/post-ui.cc:518
+#: pan/gui/post-ui.cc:513 pan/gui/post-ui.cc:514
 msgid "Move to Bottom"
 msgstr "Пересунути у кінець"
 
-#: pan/gui/post-ui.cc:525
+#: pan/gui/post-ui.cc:521
 msgid "_Wrap Text"
 msgstr "_Переносити текст"
 
-#: pan/gui/post-ui.cc:525
+#: pan/gui/post-ui.cc:521
 msgid "Wrap Text"
 msgstr "Переносити рядки тексту"
 
-#: pan/gui/post-ui.cc:526
+#: pan/gui/post-ui.cc:522
 msgid "Always Run Editor"
 msgstr "Завжди запускати редактор"
 
-#: pan/gui/post-ui.cc:527
+#: pan/gui/post-ui.cc:523
 msgid "Remember Character Encoding for This Group"
 msgstr "Запам'ятати кодування символів для цієї групи"
 
-#: pan/gui/post-ui.cc:528
+#: pan/gui/post-ui.cc:524
 msgid "Thread Attached Replies"
 msgstr "Долучені до гілки відповіді"
 
-#: pan/gui/post-ui.cc:529
+#: pan/gui/post-ui.cc:525
 msgid "PGP-Encrypt the Article"
 msgstr "Зашифрувати статтю PGP"
 
-#: pan/gui/post-ui.cc:530
+#: pan/gui/post-ui.cc:526
 msgid "PGP-Sign the Article"
 msgstr "Підписати статтю PGP"
 
-#: pan/gui/post-ui.cc:531
+#: pan/gui/post-ui.cc:527
 msgid "Check _Spelling"
 msgstr "Перевірка _правопису"
 
-#: pan/gui/post-ui.cc:550
+#: pan/gui/post-ui.cc:546
 msgid "New Article's Encoding:"
 msgstr "Кодування нової статті:"
 
-#: pan/gui/post-ui.cc:560
+#: pan/gui/post-ui.cc:556
 msgid "Content Transfer Encoding"
 msgstr "Кодування при передаванні даних"
 
-#: pan/gui/post-ui.cc:561
+#: pan/gui/post-ui.cc:557
 msgid "New Article's Content Transfer Encoding:"
 msgstr "Кодування при передаванні даних нової статті:"
 
-#: pan/gui/post-ui.cc:745
+#: pan/gui/post-ui.cc:741
 msgid "Your changes will be lost!"
 msgstr "Внесені вами зміни буде втрачено!"
 
-#: pan/gui/post-ui.cc:746
+#: pan/gui/post-ui.cc:742
 msgid "Close this window and lose your changes?"
 msgstr "Закрити це вікно і відкинути внесені зміни?"
 
-#: pan/gui/post-ui.cc:791 pan/gui/post-ui.cc:830
+#: pan/gui/post-ui.cc:787 pan/gui/post-ui.cc:826
 msgid "There were problems with this post."
 msgstr "Із цією публікацією виникли проблеми."
 
-#: pan/gui/post-ui.cc:793 pan/gui/post-ui.cc:832 pan/gui/post-ui.cc:897
+#: pan/gui/post-ui.cc:789 pan/gui/post-ui.cc:828 pan/gui/post-ui.cc:893
 msgid "Go Back"
 msgstr "Назад"
 
-#: pan/gui/post-ui.cc:795
+#: pan/gui/post-ui.cc:791
 msgid "Continue Anyway"
 msgstr "Однаково продовжити"
 
 #. Prompt the user
-#: pan/gui/post-ui.cc:824
+#: pan/gui/post-ui.cc:820
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
@@ -1651,35 +1663,35 @@ msgstr ""
 "У повідомленні використано символи, яких немає у кодуванні «%s» — ймовірно, "
 "слід скористатися «%s» "
 
-#: pan/gui/post-ui.cc:847
+#: pan/gui/post-ui.cc:843
 msgid "Go _Online"
 msgstr "Увійти до _мережі"
 
-#: pan/gui/post-ui.cc:896
+#: pan/gui/post-ui.cc:892
 msgid "The file queue is empty, so no files can be saved."
 msgstr "Черга файлів порожня, тому жодного файла не може бути збережено."
 
-#: pan/gui/post-ui.cc:1076
+#: pan/gui/post-ui.cc:1072
 msgid "IO Error"
 msgstr "Помилка введення-виведення"
 
-#: pan/gui/post-ui.cc:1076
+#: pan/gui/post-ui.cc:1072
 msgid "No space left on device"
 msgstr "На пристрої не лишилося вільного місця"
 
-#: pan/gui/post-ui.cc:1077
+#: pan/gui/post-ui.cc:1073
 #, c-format
 msgid "Error copying message to %s folder. Reason: %s"
 msgstr "Помилка під час копіювання повідомлення до теки %s. Причина: %s"
 
-#: pan/gui/post-ui.cc:1083
+#: pan/gui/post-ui.cc:1079
 #, c-format
 msgid "Error creating message in %s mail folder: Invalid article."
 msgstr ""
 "Помилка під час спроби створити повідомлення у поштовій теці %s: некоректна "
 "стаття."
 
-#: pan/gui/post-ui.cc:1105
+#: pan/gui/post-ui.cc:1101
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1688,7 +1700,7 @@ msgstr ""
 "Будь ласка, виконайте редагування профілю за допомогою пункту меню «Зміни → "
 "Профілі публікації»."
 
-#: pan/gui/post-ui.cc:1110
+#: pan/gui/post-ui.cc:1106
 msgid ""
 "The selected posting server is currently disabled. Please choose an "
 "appropriate alternative."
@@ -1696,15 +1708,15 @@ msgstr ""
 "Вибраний сервер публікації зараз вимкнено. Будь ласка, виберіть відповідну "
 "альтернативу."
 
-#: pan/gui/post-ui.cc:1152
+#: pan/gui/post-ui.cc:1148
 msgid "Pan is Offline."
 msgstr "«Pan» не в мережі."
 
-#: pan/gui/post-ui.cc:1153
+#: pan/gui/post-ui.cc:1149
 msgid "Go online to post the article?"
 msgstr "Вийти до мережі для публікації статті?"
 
-#: pan/gui/post-ui.cc:1202
+#: pan/gui/post-ui.cc:1198
 #, c-format
 msgid ""
 "Error signing/encrypting your message. Perhaps you misspelled your email "
@@ -1713,104 +1725,103 @@ msgstr ""
 "Помилка під час підписування або шифрування вашого повідомлення. Можливо, ви "
 "неправильно вписали вашу адресу електронної пошти (%s)?"
 
-#: pan/gui/post-ui.cc:1354
+#: pan/gui/post-ui.cc:1350
 msgid "Error opening temporary file"
 msgstr "Помилка під час спроби відкрити тимчасовий файл"
 
-#: pan/gui/post-ui.cc:1365
+#: pan/gui/post-ui.cc:1361
 #, c-format
-#| msgid "Error opening temporary file"
 msgid "Error creating temporary file: %s"
 msgstr "Помилка під час створення тимчасового файла: %s"
 
-#: pan/gui/post-ui.cc:1372
+#: pan/gui/post-ui.cc:1368
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Збій запису статті у тимчасовий файл: %s"
 
-#: pan/gui/post-ui.cc:1445
+#: pan/gui/post-ui.cc:1441
 msgid "Open Draft Article"
 msgstr "Відкриття чернетки статті"
 
-#: pan/gui/post-ui.cc:1687
+#: pan/gui/post-ui.cc:1683
 msgid "Save Draft Article"
 msgstr "Збереження чернетки статті"
 
-#: pan/gui/post-ui.cc:1725
+#: pan/gui/post-ui.cc:1721
 msgid "File already exists."
 msgstr "Файл вже існує."
 
-#: pan/gui/post-ui.cc:1726
+#: pan/gui/post-ui.cc:1722
 msgid "Overwrite it?"
 msgstr "Перезаписати її?"
 
-#: pan/gui/post-ui.cc:1935
+#: pan/gui/post-ui.cc:1931
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Не вдалося обробити команду підписування «%s»: %s"
 
-#: pan/gui/post-ui.cc:1971
+#: pan/gui/post-ui.cc:1967
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Не вдалося перетворити підпис до UTF-8."
 
-#: pan/gui/post-ui.cc:2483
+#: pan/gui/post-ui.cc:2479
 msgid "F_rom"
 msgstr "_Від"
 
-#: pan/gui/post-ui.cc:2500
+#: pan/gui/post-ui.cc:2496
 msgid "_Subject"
 msgstr "_Тема"
 
-#: pan/gui/post-ui.cc:2513
+#: pan/gui/post-ui.cc:2509
 msgid "_Newsgroups"
 msgstr "_Групи новин"
 
-#: pan/gui/post-ui.cc:2527
+#: pan/gui/post-ui.cc:2523
 msgid "Mail _To"
 msgstr "Надіслати _до"
 
-#: pan/gui/post-ui.cc:2629
+#: pan/gui/post-ui.cc:2625
 msgid "Delete from Queue"
 msgstr "Вилучити з черги"
 
-#: pan/gui/post-ui.cc:2642
+#: pan/gui/post-ui.cc:2638
 msgid "No."
 msgstr "№"
 
-#: pan/gui/post-ui.cc:2646 pan/gui/post-ui.cc:2738 pan/gui/post-ui.cc:2779
+#: pan/gui/post-ui.cc:2642 pan/gui/post-ui.cc:2734 pan/gui/post-ui.cc:2775
 msgid "Filename"
 msgstr "Назва файла"
 
-#: pan/gui/post-ui.cc:2648
+#: pan/gui/post-ui.cc:2644
 msgid "Size (KB)"
 msgstr "Розмір (кБ)"
 
-#: pan/gui/post-ui.cc:2746
+#: pan/gui/post-ui.cc:2742
 msgid "The current filename"
 msgstr "Поточна назва файла"
 
-#: pan/gui/post-ui.cc:2750
+#: pan/gui/post-ui.cc:2746
 msgid "Subject Line"
 msgstr "Рядок теми"
 
-#: pan/gui/post-ui.cc:2758
+#: pan/gui/post-ui.cc:2754
 msgid "The current subject line"
 msgstr "Поточний рядок теми"
 
-#: pan/gui/post-ui.cc:2772
+#: pan/gui/post-ui.cc:2768
 msgid "No. "
 msgstr "№ "
 
-#: pan/gui/post-ui.cc:2776
+#: pan/gui/post-ui.cc:2772
 msgid "Enable/Disable"
 msgstr "Увімкнути/Вимкнути"
 
-#: pan/gui/post-ui.cc:2810
+#: pan/gui/post-ui.cc:2806
 msgid "Follo_wup-To"
 msgstr "Відп_овідь до"
 
 #. i18n: "poster" is a key used by many newsreaders.  probably safest to keep this key in english.
-#: pan/gui/post-ui.cc:2819
+#: pan/gui/post-ui.cc:2815
 msgid ""
 "The newsgroups where replies to your message should go.  This is only needed "
 "if it differs from the \"Newsgroups\" header.\n"
@@ -1824,11 +1835,11 @@ msgstr ""
 "Щоб спрямувати усі відповіді на вашу адресу електронної пошти, скористайтеся "
 "заголовком «Followup-To: poster»."
 
-#: pan/gui/post-ui.cc:2826
+#: pan/gui/post-ui.cc:2822
 msgid "_Reply-To"
 msgstr "_Відповідати"
 
-#: pan/gui/post-ui.cc:2834
+#: pan/gui/post-ui.cc:2830
 msgid ""
 "The email account where mail replies to your posted message should go. This "
 "is only needed if it differs from the \"From\" header."
@@ -1836,52 +1847,52 @@ msgstr ""
 "Поштова адреса, куди мають приходити відповіді на ваше повідомлення.  Має "
 "бути вказано, лише якщо адреса відрізняється від поля заголовку «Від»."
 
-#: pan/gui/post-ui.cc:2841
+#: pan/gui/post-ui.cc:2837
 msgid "_Custom Headers"
 msgstr "_Нетипові заголовки"
 
-#: pan/gui/post-ui.cc:2865
+#: pan/gui/post-ui.cc:2861
 msgid "Add \"_User-Agent\" header"
 msgstr "Додавати за_головок «User-Agent»"
 
-#: pan/gui/post-ui.cc:2872
+#: pan/gui/post-ui.cc:2868
 msgid "Add \"Message-_ID\" header"
 msgstr "Д_одавати заголовок «Message-ID»"
 
-#: pan/gui/post-ui.cc:3000
+#: pan/gui/post-ui.cc:2996
 msgid "Select Parts"
 msgstr "Вибір частин"
 
-#: pan/gui/post-ui.cc:3013
+#: pan/gui/post-ui.cc:3009
 msgid "_Parts"
 msgstr "_Частини"
 
-#: pan/gui/post-ui.cc:3166
+#: pan/gui/post-ui.cc:3162
 msgid "Post Article"
 msgstr "Надіслати статтю"
 
-#: pan/gui/post-ui.cc:3187
+#: pan/gui/post-ui.cc:3183
 msgid "_Message"
 msgstr "П_овідомлення"
 
-#: pan/gui/post-ui.cc:3188
+#: pan/gui/post-ui.cc:3184
 msgid "More _Headers"
 msgstr "Більше за_головків"
 
-#: pan/gui/post-ui.cc:3189
+#: pan/gui/post-ui.cc:3185
 msgid "File _Queue"
 msgstr "_Черга файлів"
 
-#: pan/gui/post-ui.cc:3221 pan/gui/profiles-dialog.cc:488
+#: pan/gui/post-ui.cc:3217 pan/gui/profiles-dialog.cc:488
 #, no-c-format
 msgid "On %d, %n wrote:"
 msgstr "У %d, %n написав:"
 
-#: pan/gui/post-ui.cc:3250
+#: pan/gui/post-ui.cc:3246
 msgid "Add files to queue"
 msgstr "Додати файли до черги"
 
-#: pan/gui/post-ui.cc:3326
+#: pan/gui/post-ui.cc:3322
 msgid "Save Upload Queue as NZB File"
 msgstr "Збереження черги вивантажень як файла NZB"
 
@@ -3780,16 +3791,6 @@ msgstr "без_назви"
 #: pan/usenet-utils/text-massager.cc:580
 msgid "no_mail"
 msgstr "без_пошти"
-
-#, c-format
-#~ msgid "Error parsing \"external editor\" command line: %s (Command was: %s)"
-#~ msgstr ""
-#~ "Помилка під час обробки командного рядка «зовнішнього редактора»: %s "
-#~ "(команда: %s)"
-
-#, c-format
-#~ msgid "Error starting external editor: %s"
-#~ msgstr "Помилка запуску зовнішнього редактора: %s"
 
 #~ msgid "X-Face (Avatar)"
 #~ msgstr "X-Face (аватар)"
