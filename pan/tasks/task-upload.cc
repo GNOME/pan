@@ -304,12 +304,13 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
 
   switch (atoi(response.str))
   {
-    case NO_POSTING:
+    case NNTP::NO_POSTING:
       Log :: add_err_va (_("Posting of file %s (part %d of %d) failed: No posts allowed by server."),
                  _basename.c_str(), it->second.partno,  _total_parts);
       this->stop();
       break;
-    case POSTING_FAILED:
+
+    case NNTP::POSTING_FAILED:
       if (health != OK)     // if we got a dupe, the health is OK, so skip that
       {
         tmp.severity = Log :: PAN_SEVERITY_ERROR;
@@ -319,7 +320,8 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
         _logfile.push_front(tmp);
       }
       break;
-    case ARTICLE_POSTED_OK:
+
+    case NNTP::ARTICLE_POSTED_OK:
       tmp.severity = Log :: PAN_SEVERITY_INFO;
       if (post_ok && !_needed.empty())
       {
@@ -353,10 +355,12 @@ TaskUpload :: on_nntp_done (NNTP * nntp,
         _logfile.clear();
       }
       break;
-    case TOO_MANY_CONNECTIONS:
+
+    case NNTP::TOO_MANY_CONNECTIONS:
       // lockout for 120 secs, but try
       it->second.reset();
       break;
+
     default:
       _needed.erase (it);
       Log::add_entry_list (tmp, _logfile);

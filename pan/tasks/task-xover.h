@@ -45,15 +45,15 @@ namespace pan
       virtual ~TaskXOver ();
 
     public: // task subclass
-      virtual unsigned long get_bytes_remaining () const;
+      virtual unsigned long get_bytes_remaining () const override;
 
     protected: // task subclass
-      virtual void use_nntp (NNTP * nntp);
+      virtual void use_nntp (NNTP * nntp) override;
 
     private: // NNTP::Listener
-      virtual void on_nntp_line (NNTP*, const StringView&);
-      virtual void on_nntp_done (NNTP*, Health, const StringView&);
-      virtual void on_nntp_group (NNTP*, const Quark&, unsigned long, uint64_t, uint64_t);
+      virtual void on_nntp_line (NNTP*, const StringView&) override;
+      virtual void on_nntp_done (NNTP*, Health, const StringView&) override;
+      virtual void on_nntp_group (NNTP*, const Quark&, Article_Count, Article_Number, Article_Number) override;
 
       void on_nntp_line_process (NNTP*, const StringView&);
 
@@ -61,8 +61,8 @@ namespace pan
       struct MiniTask {
         enum Type { GROUP, XOVER };
         Type _type;
-        uint64_t _low, _high;
-        MiniTask (Type type, uint64_t low=0ul, uint64_t high=0ul):
+        Article_Number _low, _high;
+        MiniTask (Type type, Article_Number low=static_cast<Article_Number>(0ul), Article_Number high=static_cast<Article_Number>(0ul)):
           _type(type), _low(low), _high(high) {}
       };
       typedef std::deque<MiniTask> MiniTasks_t;
@@ -77,11 +77,11 @@ namespace pan
       uint64_t _sample_size;
       time_t _days_cutoff;
       bool _group_xover_is_reffed;
-      typedef std::map<Quark,uint64_t> server_to_high_t;
+      typedef std::map<Quark,Article_Number> server_to_high_t;
       server_to_high_t _high;
       void update_work (bool subtract_one_from_nntp_count=false);
       std::set<Quark> _servers_that_got_xover_minitasks;
-      std::map<NNTP*,uint64_t> _last_xover_number;
+      std::map<NNTP*, Article_Number> _last_xover_number;
       unsigned long _bytes_so_far;
       unsigned long _parts_so_far;
       unsigned long _articles_so_far;

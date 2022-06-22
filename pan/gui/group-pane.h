@@ -37,12 +37,12 @@ namespace pan
   class GroupPane: private Data::Listener, private Prefs::Listener
   {
     protected: // Data::Listener
-      virtual void on_grouplist_rebuilt ();
-      virtual void on_group_read (const Quark& group);
-      virtual void on_group_subscribe (const Quark& group, bool sub);
+      virtual void on_grouplist_rebuilt () override;
+      virtual void on_group_read (const Quark& group) override;
+      virtual void on_group_subscribe (const Quark& group, bool sub) override;
       virtual void on_group_counts (const Quark& group,
-                                    unsigned long unread,
-                                    unsigned long total);
+                                    Article_Count unread,
+                                    Article_Count total) override;
 
     public:
       GroupPane (ActionManager&, Data&, Prefs&, GroupPrefs&);

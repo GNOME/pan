@@ -58,13 +58,13 @@ namespace
 };
 
 /**
- * @return the number of articles newly-marked as read 
+ * @return the number of articles newly-marked as read
  */
-uint64_t
+Article_Count
 Numbers :: mark_range (const Range& rr)
 {
    ranges_t::size_type i;
-   uint64_t retval = 0;
+   Article_Count retval{0};
    bool range_found = false;
    ranges_t::size_type low_index (std::lower_bound (_marked.begin(), _marked.end(), rr.low)
                   - _marked.begin());
@@ -86,7 +86,7 @@ Numbers :: mark_range (const Range& rr)
       }
       else if (r.contains (rr)) /* no-op */
       {
-         retval = 0;
+         retval = static_cast<Article_Count>(0);
          range_found = true;
       }
       else if (r.contains (rr.high)) /* change low */
@@ -123,10 +123,10 @@ Numbers :: mark_range (const Range& rr)
    return retval;
 }
 
-uint64_t
+Article_Count
 Numbers :: unmark_range (const Range& ur)
 {
-   uint64_t retval = 0;
+   Article_Count retval{0};
    ranges_t::size_type i;
    ranges_t::size_type low_index (std::lower_bound (_marked.begin(), _marked.end(), ur.low)
                   - _marked.begin());
@@ -173,22 +173,22 @@ Numbers :: unmark_range (const Range& ur)
 ******  MARK (PUBLIC)
 *****/
 
-uint64_t
-Numbers :: mark_range (uint64_t low, uint64_t high, bool add)
+Article_Count
+Numbers :: mark_range (Article_Number low, Article_Number high, bool add)
 {
    const Range r (low, high);
    return add ? mark_range(r) : unmark_range(r);
 }
 
 bool
-Numbers :: mark_one (uint64_t number, bool add)
+Numbers :: mark_one (Article_Number number, bool add)
 {
-   const uint64_t changed_qty (mark_range (number, number, add));
+   const Article_Count changed_qty (mark_range (number, number, add));
 
    if (add)
-      return changed_qty==0;
+      return static_cast<uint64_t>(changed_qty)==0;
    else /* remove */
-      return changed_qty!=0;
+      return static_cast<uint64_t>(changed_qty)!=0;
 }
 
 void
@@ -202,8 +202,8 @@ Numbers :: mark_str (const StringView& str, bool add)
       phigh.pop_token (plow, '-');
       plow.trim ();
       phigh.trim ();
-      const uint64_t low (plow.empty() ? 0 : g_ascii_strtoull (plow.str, NULL, 10));
-      const uint64_t high (phigh.empty() ? low : g_ascii_strtoull (phigh.str, NULL, 10));
+      const Article_Number low{plow};
+      const Article_Number high = phigh.empty() ? low : Article_Number(phigh);
       mark_range (low, high, add);
    }
 }
@@ -219,7 +219,7 @@ Numbers :: clear ()
 *****/
 
 void
-Numbers :: clip (uint64_t low, uint64_t high)
+Numbers :: clip (Article_Number low, Article_Number high)
 {
    r_it it = std::lower_bound (_marked.begin(), _marked.end(), low);
    _marked.erase (_marked.begin(), it);
@@ -238,7 +238,7 @@ Numbers :: clip (uint64_t low, uint64_t high)
 *****/
 
 bool
-Numbers :: is_marked (uint64_t number) const
+Numbers :: is_marked (Article_Number number) const
 {
    r_cit it = std::lower_bound (_marked.begin(), _marked.end(), number);
 
@@ -267,9 +267,9 @@ Numbers :: to_string (std::string & str) const
       Range r (*it);
 
       if (r.low == r.high)
-        bytes = g_snprintf (buf, sizeof(buf), "%" G_GUINT64_FORMAT",", r.low);
+        bytes = g_snprintf (buf, sizeof(buf), "%" G_GUINT64_FORMAT",", static_cast<uint64_t>(r.low));
       else
-         bytes = g_snprintf (buf, sizeof(buf), "%" G_GUINT64_FORMAT"-%" G_GUINT64_FORMAT",", r.low, r.high);
+         bytes = g_snprintf (buf, sizeof(buf), "%" G_GUINT64_FORMAT"-%" G_GUINT64_FORMAT",", static_cast<uint64_t>(r.low), static_cast<uint64_t>(r.high));
       temp.append(buf, bytes);
    }
 

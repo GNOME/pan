@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <pan/general/quark.h>
 #include <pan/general/sorted-vector.h>
+#include <pan/general/article_number.h>
 
 namespace pan
 {
@@ -48,7 +49,7 @@ namespace pan
       {
         Quark server;
         Quark group;
-        uint64_t number;
+        Article_Number number;
 
         Target (): number(0ul) { }
         bool operator== (const Target& t) const
@@ -58,7 +59,7 @@ namespace pan
           if (group != t.group) return group < t.group;
           return false;
         }
-        Target (const Quark& sq, const Quark& gq, uint64_t n):
+        Target (const Quark& sq, const Quark& gq, Article_Number n):
           server (sq), group (gq), number (n) { }
       };
 
@@ -71,15 +72,15 @@ namespace pan
     public:
       unsigned long size () const { return targets.size(); }
       bool empty () const { return targets.empty(); }
-      uint64_t find_number (const Quark& server, const Quark& group) const;
-      bool find (const Quark& server, Quark& setme_group, uint64_t& setme_number) const;
+      Article_Number find_number (const Quark& server, const Quark& group) const;
+      bool find (const Quark& server, Quark& setme_group, Article_Number& setme_number) const;
       bool has_server (const Quark& server) const;
       void get_servers (quarks_t& addme) const;
 
     public:
       void clear () { targets.clear(); }
       void remove_server (const Quark& server);
-      void remove_targets_less_than (const Quark& s, const Quark& g, uint64_t less_than_this);
+      void remove_targets_less_than (const Quark& s, const Quark& g, Article_Number less_than_this);
 
     public:
 
@@ -87,7 +88,7 @@ namespace pan
         targets.insert (a, b);
       }
       void insert (const Target& target) { targets.insert (target); }
-      void insert (const Quark& s, const Quark& g, uint64_t n) {targets.insert (Target(s,g,n));} 
+      void insert (const Quark& s, const Quark& g, Article_Number n) {targets.insert (Target(s,g,n));}
       void insert (const Xref& xref) { insert (xref.begin(), xref.end()); }
 
       template<typename ForwardIterator> void assign (ForwardIterator a, ForwardIterator b) {

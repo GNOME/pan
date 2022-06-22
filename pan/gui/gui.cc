@@ -2041,14 +2041,14 @@ void GUI :: do_read_selected_group ()
 
   // if it's the first time in this group, pop up a download-headers dialog.
   // otherwise if get-new-headers is turned on, queue an xover-new task.
-  unsigned long unread(0), total(0);
+  Article_Count unread(0), total(0);
 
   if (changed && !group.empty()){
     _data.get_group_counts (group, unread, total);
     const bool virtual_group (GroupPane::is_virtual_group(group));
     if (!virtual_group)
     {
-      if (!total)
+      if (static_cast<uint64_t>(total) == 0)
         activate_action ("download-headers");
       else if (_prefs.get_flag("get-new-headers-when-entering-group", true)) {
         if (_prefs.get_flag ("mark-group-read-before-xover", false))

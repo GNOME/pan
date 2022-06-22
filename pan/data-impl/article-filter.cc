@@ -159,7 +159,7 @@ ArticleFilter :: test_article (const Data        & data,
             s += xit->group;
             s += ':';
             char buf[32];
-            g_snprintf (buf, sizeof(buf), "%" G_GUINT64_FORMAT, xit->number);
+            g_snprintf (buf, sizeof(buf), "%" G_GUINT64_FORMAT, static_cast<uint64_t>(xit->number));
             s += buf;
             s += ' ';
           }

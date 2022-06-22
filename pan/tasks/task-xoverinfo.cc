@@ -94,7 +94,7 @@ TaskXOverInfo :: TaskXOverInfo (Data         & data,
 
   // add a ``GROUP'' MiniTask for each server that has this group
   // initialize the _high lookup table to boundaries
-  const MiniTask group_minitask (MiniTask::GROUP);
+  const MiniTask group_minitask (MiniTask::GROUP, static_cast<Article_Number>(0ul), static_cast<Article_Number>(0ul));
   quarks_t servers;
   _data.group_get_servers (group, servers);
 
@@ -103,7 +103,7 @@ TaskXOverInfo :: TaskXOverInfo (Data         & data,
     if (_data.get_server_limits(*it))
     {
       _server_to_minitasks[*it].push_front (group_minitask);
-      std::pair<uint64_t,uint64_t>& p (xovers[*it]);
+      std::pair<Article_Number,Article_Number>& p (xovers[*it]);
       p.first = data.get_xover_high (group, *it);
     }
   }
@@ -127,43 +127,6 @@ TaskXOverInfo :: use_nntp (NNTP* nntp)
 /***
 ****
 ***/
-
-namespace
-{
-  unsigned long view_to_ul (const StringView& view)
-  {
-    unsigned long ul = 0ul;
-
-    if (!view.empty()) {
-      errno = 0;
-      ul = strtoul (view.str, 0, 10);
-      if (errno)
-        ul = 0ul;
-    }
-
-    return ul;
-  }
-  uint64_t view_to_ull (const StringView& view)
-  {
-    uint64_t ul = 0ul;
-
-    if (!view.empty()) {
-      errno = 0;
-      ul = g_ascii_strtoull (view.str, 0, 10);
-      if (errno)
-        ul = 0ul;
-    }
-
-    return ul;
-  }
-
-  bool header_is_nonencoded_utf8 (const StringView& in)
-  {
-    const bool is_nonencoded (!in.strstr("=?"));
-    const bool is_utf8 (g_utf8_validate (in.str, in.len, 0));
-    return is_nonencoded && is_utf8;
-  }
-}
 
 void
 TaskXOverInfo :: on_nntp_line         (NNTP               * nntp,

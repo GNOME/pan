@@ -50,10 +50,11 @@ Data :: fire_grouplist_rebuilt ()
 }
 
 void
-Data :: fire_group_counts (const Quark& group, unsigned long unread, unsigned long total)
+Data :: fire_group_counts (const Quark& group, Article_Count unread, Article_Count total)
 {
-  for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
+  for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; ) {
     (*it++)->on_group_counts (group, unread, total);
+  }
 }
 
 void
@@ -78,7 +79,7 @@ Data :: fire_article_flag_changed (articles_t& a, const Quark& group)
 }
 
 void
-Data :: fire_group_entered (const Quark& group, unsigned long unread, unsigned long total)
+Data :: fire_group_entered (const Quark& group, Article_Count unread, Article_Count total)
 {
   for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
     (*it++)->on_group_entered (group, unread, total);

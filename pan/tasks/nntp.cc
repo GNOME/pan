@@ -214,11 +214,11 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
           StringView myline(line);
           myline.pop_token(tok, ' ');
           myline.pop_token(tok, ' ');
-          uint64_t const aqty{strtoull(tok.str, NULL, 10)};
+          Article_Count const aqty{tok};
           myline.pop_token(tok, ' ');
-          uint64_t const alo{strtoull(tok.str, NULL, 10)};
+          Article_Number const alo{tok};
           myline.pop_token(tok, ' ');
-          uint64_t const ahi{strtoull(tok.str, NULL, 10)};
+          Article_Number const ahi{tok};
           myline.pop_token(tok, ' ');
           Quark const group{tok};
           if (_listener) {
@@ -384,8 +384,8 @@ NNTP :: enter_group (const Quark& group)
 
 void
 NNTP :: xover (const Quark   & group,
-               uint64_t        low,
-               uint64_t        high,
+               Article_Number  low,
+               Article_Number  high,
                Listener      * l)
 {
    _listener = l;
@@ -397,8 +397,8 @@ NNTP :: xover (const Quark   & group,
 
 void
 NNTP :: xzver (const Quark   & group,
-               uint64_t        low,
-               uint64_t        high,
+               Article_Number  low,
+               Article_Number  high,
                Listener      * l)
 {
    _listener = l;
@@ -438,7 +438,7 @@ NNTP :: list (Listener * l)
 
 void
 NNTP :: article (const Quark     & group,
-                 uint64_t          article_number,
+                 Article_Number  article_number,
                  Listener        * l)
 {
    _listener = l;
@@ -480,7 +480,7 @@ NNTP :: get_headers (const Quark     & group,
 
 void
 NNTP :: get_headers (const Quark     & group,
-                     uint64_t          article_number,
+                     Article_Number    article_number,
                      Listener        * l)
 {
    _listener = l;
@@ -508,7 +508,7 @@ NNTP :: get_body (const Quark     & group,
 
 void
 NNTP :: get_body (const Quark     & group,
-                  uint64_t          article_number,
+                  Article_Number  article_number,
                   Listener        * l)
 {
    _listener = l;

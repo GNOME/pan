@@ -213,11 +213,11 @@ DataImpl :: xover_unref (const Quark& group)
 void
 DataImpl :: set_xover_low (const Quark   & group,
                            const Quark   & server,
-                           const uint64_t   low)
+                           const Article_Number   low)
 {
   ReadGroup::Server * rgs (find_read_group_server (group, server));
   if (rgs != 0)
-    rgs->_read.mark_range (0, low, true);
+    rgs->_read.mark_range (static_cast<Article_Number>(0), low, true);
 }
 
 const Article*
