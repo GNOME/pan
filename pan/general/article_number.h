@@ -118,7 +118,7 @@ class Article_Number {
     explicit Article_Number(type x) : val_(x) {}
     explicit Article_Number(StringView const &);
 
-    explicit operator unsigned long long () const { return val_; }
+    explicit operator type () const { return val_; }
 
     Article_Number &operator=(Article_Number const &val)
     {
