@@ -217,7 +217,6 @@ TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, Article_Count qty,
   _data.set_xover_low(group, nntp->_server, low);
   //std::cerr << LINE_ID << " This group's range is [" << low << "..." << high << ']' << std::endl;
 
-  //Is this right for N days? There is a request to fetch last N days.
   if (_mode == ALL || _mode == DAYS)
     l = low;
   else if (_mode == SAMPLE)
@@ -245,7 +244,10 @@ TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, Article_Count qty,
       //on resumption we can resume from where we left off. Therefore, we build
       //a list of things to do in reverse order
       std::vector<MiniTask> tasks;
-      tasks.reserve(static_cast<uint64_t>(h - l));
+      if (_mode != DAYS)
+      {
+        tasks.reserve(static_cast<uint64_t>(h - l));
+      }
       for (Article_Number m = l; m <= h; m += INCREMENT)
         {
           //A note: It may not be necessary to cap the high here, the spec isn't
@@ -255,15 +257,30 @@ TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, Article_Count qty,
           const MiniTask mt(MiniTask::XOVER, m, std::min(h, m + INCREMENT));
           debug(
               "adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << "]");
-          tasks.insert(tasks.begin(), mt);
+          if (_mode == DAYS)
+          {
+            minitasks.push_front(mt);
+            ++_total_minitasks;
+          }
+          else
+          {
+            tasks.insert(tasks.begin(), mt);
+          }
         }
 
-      //And this reverses them again, so we're back in the right order.
-      for (auto const & mt : tasks)
+      //And this reverses them again, so we're back in the right order. We don't
+      //do it for days as there's a cutoff in the receiving code that stops us
+      //as soon as we get older than the specified number of days. However, for
+      //fetching anything else, we go forward so that it's possible to carry on
+      //fetching new articles without leaving a gap after exit or crash.
+      if (_mode != DAYS)
+      {
+        for (auto const & mt : tasks)
         {
           minitasks.push_front(mt);
           ++_total_minitasks;
         }
+      }
     }
   else
     {

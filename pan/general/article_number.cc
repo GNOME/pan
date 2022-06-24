@@ -50,5 +50,4 @@ std::ostream &operator<<(std::ostream &os, Article_Number a)
   return os << static_cast<Article_Number::type>(a);
 }
 
-
 }
