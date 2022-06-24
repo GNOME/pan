@@ -8,7 +8,9 @@ namespace pan {
 
 struct StringView;
 
-//This one is a count of articles, and hence not the same as an article number at all
+/** This is a count of articles. It isn't the same thing as an article number,
+ * even if the underlying type is the same.
+ */
 class Article_Count
 {
   public:
@@ -20,7 +22,7 @@ class Article_Count
 
     explicit Article_Count(StringView const &);
 
-    explicit operator unsigned long long () const { return val_; }
+    explicit operator type () const { return val_; }
 
     Article_Count &operator=(Article_Count const &val)
     {
@@ -110,7 +112,6 @@ std::ostream &operator<<(std::ostream &os, Article_Count a);
 /** An article number needs a specific size.
  * Some groups can have way over 4 billion articles.
  */
-//typedef uint64_t Article_Number;
 class Article_Number {
   public:
     typedef uint64_t type;
