@@ -1,8 +1,8 @@
-AC_INIT([Pan],[0.150],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[http://pan.rebelbase.com/])
+AC_INIT([Pan],[0.151],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[http://pan.rebelbase.com/])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
-AC_DEFINE(VERSION_MINOR,150,[Minor part of version number])
+AC_DEFINE(VERSION_MINOR,151,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
-AC_DEFINE(VERSION_TITLE,["Moucherotte"],[Release Name])
+AC_DEFINE(VERSION_TITLE,["Butcha"],[Release Name])
 AC_PREREQ([2.71])
 
 dnl Get git info for pan-git.version
@@ -51,7 +51,7 @@ dnl glib, gmime, and gtk are mandatory prerequisites.
 GLIB_REQUIRED=2.17.6
 GLIB_REQUIRED_FOR_DBUS=2.26.0
 GMIME30_REQUIRED=3.0.0
-GTK_REQUIRED=2.16.0
+GTK_REQUIRED=2.24.0
 GTK3_REQUIRED=3.0.0
 GTKSPELL_REQUIRED=2.0.7
 GTKSPELL3_REQUIRED=2.0.16

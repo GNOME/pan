@@ -290,7 +290,7 @@ namespace pan
 
       void score_add (int);
 
-      static void notebook_page_switched_cb (GtkNotebook*, GtkNotebookPage*, gint, gpointer);
+      static void notebook_page_switched_cb (GtkNotebook*, void *, gint, gpointer);
 
       static void root_realized_cb (GtkWidget*, gpointer self_gpointer);
 

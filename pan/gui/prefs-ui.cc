@@ -67,7 +67,7 @@ namespace pan
 
     state = event->state & gtk_accelerator_get_default_mod_mask();
 
-    if (event->keyval == GDK_Escape)
+    if (event->keyval == GDK_KEY_Escape)
       return FALSE;	/* close the dialog, don't allow escape when detecting keybindings. */
 
     str = gtk_accelerator_name(event->keyval, GdkModifierType(state));
