@@ -44,13 +44,13 @@ NNTP_Pool :: NNTP_Pool (const Quark        & server,
                         CertStore          & store):
 
   _server_info (server_info),
-  _prefs (prefs),
   _server (server),
   _socket_creator (creator),
   _pending_connections (0),
+  _certstore(store),
+  _prefs (prefs),
   _active_count (0),
-  _time_to_allow_new_connections (0),
-  _certstore(store)
+  _time_to_allow_new_connections (0)
 {
 }
 
