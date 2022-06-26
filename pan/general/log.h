@@ -54,7 +54,7 @@ namespace pan
         std::deque<Entry*> messages;
         std::string message;
         bool is_child;
-        Entry() : is_child(false), severity(PAN_SEVERITY_INFO), date(0) { }
+        Entry() : date(0), severity(PAN_SEVERITY_INFO), is_child(false) { }
         virtual ~Entry () { foreach (std::deque<Entry*>, messages, it) delete *it; }
       };
 

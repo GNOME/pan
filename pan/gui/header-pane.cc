@@ -1985,11 +1985,11 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   _tree_view (0),
   _tree_store (0),
   _selection_changed_idle_tag (0),
+  _fg(prefs.get_color_str_wo_fallback ("text-color-fg")),
+  _bg(prefs.get_color_str_wo_fallback ("text-color-bg")),
   _cache (cache),
   _gui (gui),
-  _cleared (true),
-  _fg(prefs.get_color_str_wo_fallback ("text-color-fg")),
-  _bg(prefs.get_color_str_wo_fallback ("text-color-bg"))
+  _cleared (true)
 {
 
   // init the icons

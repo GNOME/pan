@@ -207,7 +207,7 @@ namespace pan
          gchar* gkr_pw;
 
          Server(): port(STD_NNTP_PORT), article_expiration_age(31), max_connections(2),
-                    rank(1), ssl_support(0), trust(0), gkr_pw(NULL), compression_type(0) /* NONE */ {}
+                    rank(1), ssl_support(0), trust(0), compression_type(0) /* NONE */, gkr_pw(NULL) {}
       };
 
     protected:

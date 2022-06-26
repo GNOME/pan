@@ -30,8 +30,8 @@ ProgressView :: ProgressView ():
   _progress_status_idle_tag (0),
   _root (gtk_event_box_new ()),
   _progressbar (gtk_progress_bar_new ()),
-  _progress (0),
-  _style (gtk_widget_get_style (_progressbar))
+  _style (gtk_widget_get_style (_progressbar)),
+  _progress (0)
 {
   gtk_progress_bar_set_ellipsize (GTK_PROGRESS_BAR(_progressbar), PANGO_ELLIPSIZE_MIDDLE);
   gtk_container_add (GTK_CONTAINER(_root), _progressbar);
