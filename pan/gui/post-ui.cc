@@ -3097,34 +3097,48 @@ PostUI :: PostUI (GtkWindow    * parent,
   _profiles (profiles),
   _prefs (prefs),
   _group_prefs (group_prefs),
-  _cache (cache),
-  _root (0),
+  _root (),
+  _part_select(nullptr),
   _from_combo (0),
   _subject_entry (0),
   _groups_entry (0),
+  _filequeue_store(nullptr),
+  _parts_store(nullptr),
   _to_entry (0),
   _followupto_entry (0),
   _replyto_entry (0),
   _body_view (0),
+  _user_agent_check(nullptr),
+  _message_id_check(nullptr),
   _body_buf (0),
-  _message (0),
+  _headers_buf(nullptr),
+  _message (message),
   _charset (DEFAULT_CHARSET),
-  _group_entry_changed_id (0),
-  _group_entry_changed_idle_tag (0),
+  _uim(nullptr),
+  _post_task(nullptr),
+  _wrap_pixels(0),
+  _enc(GMIME_CONTENT_ENCODING_8BIT),
   _file_queue_empty(true),
   _upload_ptr(0),
   _total_parts(0),
+  _uploads(0),
+  _realized(false),
+  _agroup(0),
+  //body_view_realized_handler is set up in the code below
+  _filequeue_eventbox (0),
+  _filequeue_label (0),
+  _body_changed_id(0),
+  _body_changed_idle_tag(0),
+  _group_entry_changed_idle_tag (0),
+  _group_entry_changed_id (0),
+  _cache (cache),
+  _spawner_action(nullptr),
   _running_uploads(0),
   _draft_autosave_id(0),
   _draft_autosave_timeout(0),
   _draft_autosave_idle_tag(0),
-  _body_changed_id(0),
-  _body_changed_idle_tag(0),
-  _filequeue_eventbox (0),
-  _filequeue_label (0),
-  _realized(false),
-  _uploads(0),
-  _enc(GMIME_CONTENT_ENCODING_8BIT)
+  _notebook(nullptr),
+  delete_override(0)
 {
 
   _upload_queue.add_listener (this);
@@ -3191,7 +3205,6 @@ PostUI :: PostUI (GtkWindow    * parent,
   // remember this message, but don't put it in the text view yet.
   // we have to wait for it to be realized first so that wrapping
   // will work correctly.
-  _message = message;
   g_object_ref (G_OBJECT(_message));
   body_view_realized_handler = g_signal_connect (_body_view, "realize", G_CALLBACK(body_view_realized_cb), this);
 
