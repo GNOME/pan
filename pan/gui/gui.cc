@@ -212,10 +212,11 @@ GUI :: root_realized_cb (GtkWidget*, gpointer self_gpointer)
 GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _data (data),
   _queue (queue),
-  _prefs (prefs),
-  _group_prefs (group_prefs),
   _cache (data.get_cache()),
   _encode_cache (data.get_encode_cache()),
+  _prefs (prefs),
+  _group_prefs (group_prefs),
+  _certstore(data.get_certstore()),
   _root (gtk_box_new (GTK_ORIENTATION_VERTICAL, 0)),
   _menu_vbox (gtk_box_new (GTK_ORIENTATION_VERTICAL, 0)),
   _group_pane (0),
@@ -228,8 +229,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _connection_size_label (0),
   _queue_size_label (0),
   _queue_size_button (0),
-  _taskbar (0),
-  _certstore(data.get_certstore())
+  _taskbar (0)
 {
 
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);

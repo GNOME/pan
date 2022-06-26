@@ -38,9 +38,9 @@
 using namespace pan;
 
 Decoder :: Decoder (WorkerPool& pool):
+  health(OK),
   _worker_pool (pool),
-  _gsourceid (-1),
-  health(OK)
+  _gsourceid (-1)
 {
 }
 
