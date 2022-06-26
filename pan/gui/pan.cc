@@ -1078,7 +1078,7 @@ main (int argc, char *argv[])
       }
 
       // if in non-gui mode, contains a PanKiller ptr to quit pan on queue empty
-      std::auto_ptr<PanKiller> killer;
+      std::unique_ptr<PanKiller> killer;
 
       // don't open the full-blown Pan, just act as a nzb client,
       // with a gui or without.
