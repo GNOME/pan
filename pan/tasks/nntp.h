@@ -29,59 +29,9 @@
 #include <pan/tasks/socket.h>
 #include <pan/data/data.h>
 
-namespace
-{
-   enum
-   {
-      AUTH_REQUIRED              = 480,
-      AUTH_NEED_MORE             = 381,
-      AUTH_ACCEPTED              = 281,
-      AUTH_REJECTED              = 482,
+namespace pan {
 
-      SERVER_READY               = 200,
-      SERVER_READY_NO_POSTING    = 201,
-      SERVER_READY_STREAMING_OK  = 203,
 
-      GOODBYE                    = 205,
-
-      GROUP_RESPONSE             = 211,
-      GROUP_NONEXISTENT          = 411,
-
-      INFORMATION_FOLLOWS        = 215,
-
-      XOVER_FOLLOWS              = 224,
-      XOVER_NO_ARTICLES          = 420,
-
-      ARTICLE_FOLLOWS            = 220,
-
-      NEWGROUPS_FOLLOWS          = 231,
-
-      ARTICLE_POSTED_OK          = 240,
-
-      FEATURE_ENABLED            = 290,
-
-      SEND_ARTICLE_NOW           = 340,
-      NO_POSTING                 = 440,
-      POSTING_FAILED             = 441,
-      DUPE_ARTICLE               = 435,  // sent additionally to 441
-
-      TOO_MANY_CONNECTIONS       = 400,
-
-      NO_GROUP_SELECTED          = 412,
-      NO_SUCH_ARTICLE_NUMBER     = 423,
-      NO_SUCH_ARTICLE            = 430,
-
-      ERROR_CMD_NOT_UNDERSTOOD   = 500,
-      ERROR_CMD_NOT_SUPPORTED    = 501,
-      NO_PERMISSION              = 502,
-      FEATURE_NOT_SUPPORTED      = 503
-   };
-
-   const char* EOL = ".";
-}
-
-namespace pan
-{
   /**
    * Asynchronously processes NNTP protocol commands.
    *
@@ -90,6 +40,51 @@ namespace pan
   class NNTP: private Socket::Listener
   {
     public:
+
+      enum {
+        AUTH_REQUIRED              = 480,
+        AUTH_NEED_MORE             = 381,
+        AUTH_ACCEPTED              = 281,
+        AUTH_REJECTED              = 482,
+
+        SERVER_READY               = 200,
+        SERVER_READY_NO_POSTING    = 201,
+        SERVER_READY_STREAMING_OK  = 203,
+
+        GOODBYE                    = 205,
+
+        GROUP_RESPONSE             = 211,
+        GROUP_NONEXISTENT          = 411,
+
+        INFORMATION_FOLLOWS        = 215,
+
+        XOVER_FOLLOWS              = 224,
+        XOVER_NO_ARTICLES          = 420,
+
+        ARTICLE_FOLLOWS            = 220,
+
+        NEWGROUPS_FOLLOWS          = 231,
+
+        ARTICLE_POSTED_OK          = 240,
+
+        FEATURE_ENABLED            = 290,
+
+        SEND_ARTICLE_NOW           = 340,
+        NO_POSTING                 = 440,
+        POSTING_FAILED             = 441,
+        DUPE_ARTICLE               = 435,  // sent additionally to 441
+
+        TOO_MANY_CONNECTIONS       = 400,
+
+        NO_GROUP_SELECTED          = 412,
+        NO_SUCH_ARTICLE_NUMBER     = 423,
+        NO_SUCH_ARTICLE            = 430,
+
+        ERROR_CMD_NOT_UNDERSTOOD   = 500,
+        ERROR_CMD_NOT_SUPPORTED    = 501,
+        NO_PERMISSION              = 502,
+        FEATURE_NOT_SUPPORTED      = 503
+      };
 
       /**
        * Base class for objects that listen for NNTP events.
@@ -141,9 +136,9 @@ namespace pan
          */
         virtual void on_nntp_group (NNTP               * nntp          UNUSED,
                                     const Quark        & group         UNUSED,
-                                    unsigned long        estimated_qty UNUSED,
-                                    uint64_t             low           UNUSED,
-                                    uint64_t             high
+                                    Article_Count        estimated_qty UNUSED,
+                                    Article_Number       low           UNUSED,
+                                    Article_Number       high
                                            UNUSED) {}
 
        };
@@ -174,9 +169,9 @@ namespace pan
       /* Internal only */
       void enter_group (const Quark& group);
       void get_headers (const Quark & group, const char * message_id, Listener  * l);
-      void get_headers (const Quark & group, uint64_t article_number, Listener * l);
+      void get_headers (const Quark & group, Article_Number article_number, Listener * l);
       void get_body (const Quark & group, const char * message_id, Listener  * l);
-      void get_body (const Quark & group, uint64_t article_number, Listener * l);
+      void get_body (const Quark & group, Article_Number article_number, Listener * l);
       /**
        * Lists all available commands.
        */
@@ -200,13 +195,13 @@ namespace pan
        * command is successful or not.
        */
       void xover            (const Quark        & group,
-                             uint64_t             low,
-                             uint64_t             high,
+                             Article_Number       low,
+                             Article_Number       high,
                              Listener           * l);
 
       void xzver            (const Quark        & group,
-                             uint64_t             low,
-                             uint64_t             high,
+                             Article_Number       low,
+                             Article_Number       high,
                              Listener           * l);
 
       /**
@@ -259,7 +254,7 @@ namespace pan
        * to change groups.
        */
       void article          (const Quark        & group,
-                             uint64_t             article_number,
+                             Article_Number     article_number,
                              Listener           * l);
 
       /**

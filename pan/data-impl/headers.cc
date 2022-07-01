@@ -426,8 +426,8 @@ DataImpl :: load_headers (const DataIO   & data_io,
   GroupHeaders * h (get_group_headers (group));
   assert (h != 0);
 
-  unsigned long article_count (0);
-  unsigned long unread_count (0);
+  Article_Count article_count (0);
+  Article_Count unread_count (0);
   StringView line;
   bool success (false);
   quarks_t servers;
@@ -535,7 +535,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
           if (tok.pop_token(server_tok,':') && tok.pop_token(group_tok,':')) {
             target_it->server = server_tok;
             target_it->group = group_tok.len==1 ? xref_lookup[(int)*group_tok.str] : Quark(group_tok);
-            target_it->number = g_ascii_strtoull (tok.str, NULL, 10);
+            target_it->number = Article_Number(tok);
             const Server * server (find_server (target_it->server));
             if (server && ((!server->article_expiration_age) || (days_old <= server->article_expiration_age)))
               ++target_it;
@@ -625,9 +625,9 @@ DataImpl :: load_headers (const DataIO   & data_io,
   if (success) {
     const double seconds = timer.get_seconds_elapsed ();
     Log::add_info_va (
-      _("Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"),
-      article_count, group.c_str(), seconds,
-      article_count/(fabs(seconds)<0.001?0.001:seconds));
+      _("Loaded %llu articles for \"%s\" in %.1f seconds (%.0f per second)"),
+      static_cast<uint64_t>(article_count), group.c_str(), seconds,
+      static_cast<uint64_t>(article_count)/(fabs(seconds)<0.001?0.001:seconds));
   }
 }
 
@@ -908,7 +908,7 @@ DataImpl :: mark_read (const Article  ** articles,
   foreach_const (group_to_changed_mids_t, group_to_changed_mids, it) {
     const Quark& group (it->first);
     ReadGroup& g (_read_groups[group]);
-    const size_t n (it->second.size());
+    const Article_Count n{it->second.size()};
     if (read)
       g.decrement_unread (n);
     else
@@ -1085,8 +1085,8 @@ namespace
   /** used by delete_articles */
   struct PerGroup {
     quarks_t mids;
-    int unread;
-    int count;
+    Article_Count unread;
+    Article_Count count;
     PerGroup(): unread(0), count(0) {}
   };
 }
@@ -1114,8 +1114,8 @@ DataImpl :: group_clear_articles (const Quark& group)
 
   // fire a 'count changed' event.
   ReadGroup& g (_read_groups[group]);
-  g._article_count = 0;
-  g._unread_count = 0;
+  g._article_count = static_cast<Article_Count>(0);
+  g._unread_count = static_cast<Article_Count>(0);
   fire_group_counts (group, g._unread_count, g._article_count);
 }
 

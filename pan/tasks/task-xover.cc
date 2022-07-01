@@ -138,7 +138,7 @@ TaskXOver::~TaskXOver()
         }
       _data.xover_unref (_group);
     }
-  _data.fire_group_entered(_group, 1, 0);
+  _data.fire_group_entered(_group, static_cast<Article_Count>(1), static_cast<Article_Count>(0));
 }
 
 void
@@ -196,8 +196,8 @@ TaskXOver::use_nntp(NNTP* nntp)
  ***/
 
 void
-TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, unsigned long qty,
-    uint64_t low, uint64_t high)
+TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, Article_Count qty,
+    Article_Number low, Article_Number high)
 {
   const Quark& servername(nntp->_server);
   CompressionType comp;
@@ -213,7 +213,7 @@ TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, unsigned long qty,
   debug(
       "got GROUP result from " << nntp->_server << " (" << nntp << "): " << " qty " << qty << " low " << low << " high " << high);
 
-  uint64_t l(low), h(high);
+  Article_Number l(low), h(high);
   _data.set_xover_low(group, nntp->_server, low);
   //std::cerr << LINE_ID << " This group's range is [" << low << "..." << high << ']' << std::endl;
 
@@ -221,13 +221,13 @@ TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, unsigned long qty,
     l = low;
   else if (_mode == SAMPLE)
     {
-      _sample_size = std::min(_sample_size, high - low);
+      _sample_size = std::min(_sample_size, static_cast<uint64_t>(high - low));
       //std::cerr << LINE_ID << " and I want to sample " <<  _sample_size << " messages..." << std::endl;
       l = std::max(low, high + 1 - _sample_size);
     }
   else
     { // NEW
-      uint64_t xh(_data.get_xover_high(group, nntp->_server));
+      Article_Number xh(_data.get_xover_high(group, nntp->_server));
       //std::cerr << LINE_ID << " current xover high is " << xh << std::endl;
       l = std::max(xh + 1, low);
     }
@@ -235,7 +235,7 @@ TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, unsigned long qty,
   if (l <= high)
     {
       //std::cerr << LINE_ID << " okay, I'll try to get articles in [" << l << "..." << h << ']' << std::endl;
-      add_steps(h - l);
+      add_steps(static_cast<uint64_t>(h - l));
       const int INCREMENT(compression_enabled ? 10000 : 1000);
       MiniTasks_t& minitasks(_server_to_minitasks[servername]);
       //Unfortunately we need to push everything to the front of the list, so
@@ -244,8 +244,11 @@ TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, unsigned long qty,
       //on resumption we can resume from where we left off. Therefore, we build
       //a list of things to do in reverse order
       std::vector<MiniTask> tasks;
-      tasks.reserve(h - l);
-      for (uint64_t m = l; m <= h; m += INCREMENT)
+      if (_mode != DAYS)
+      {
+        tasks.reserve(static_cast<uint64_t>(h - l));
+      }
+      for (Article_Number m = l; m <= h; m += INCREMENT)
         {
           //A note: It may not be necessary to cap the high here, the spec isn't
           //terribly clear about what happens if new articles come into
@@ -254,15 +257,30 @@ TaskXOver::on_nntp_group(NNTP * nntp, const Quark & group, unsigned long qty,
           const MiniTask mt(MiniTask::XOVER, m, std::min(h, m + INCREMENT));
           debug(
               "adding MiniTask for " << servername << ": xover [" << mt._low << '-' << mt._high << "]");
-          tasks.insert(tasks.begin(), mt);
+          if (_mode == DAYS)
+          {
+            minitasks.push_front(mt);
+            ++_total_minitasks;
+          }
+          else
+          {
+            tasks.insert(tasks.begin(), mt);
+          }
         }
 
-      //And this reverses them again, so we're back in the right order.
-      for (auto const & mt : tasks)
+      //And this reverses them again, so we're back in the right order. We don't
+      //do it for days as there's a cutoff in the receiving code that stops us
+      //as soon as we get older than the specified number of days. However, for
+      //fetching anything else, we go forward so that it's possible to carry on
+      //fetching new articles without leaving a gap after exit or crash.
+      if (_mode != DAYS)
+      {
+        for (auto const & mt : tasks)
         {
           minitasks.push_front(mt);
           ++_total_minitasks;
         }
+      }
     }
   else
     {
@@ -282,21 +300,6 @@ namespace
       {
         errno = 0;
         ul = strtoul(view.str, 0, 10);
-        if (errno)
-          ul = 0ul;
-      }
-
-    return ul;
-  }
-  uint64_t
-  view_to_ull(const StringView& view)
-  {
-    uint64_t ul = 0ul;
-
-    if (!view.empty())
-      {
-        errno = 0;
-        ul = g_ascii_strtoull(view.str, 0, 10);
         if (errno)
           ul = 0ul;
       }
@@ -346,13 +349,13 @@ TaskXOver::on_nntp_line_process(NNTP * nntp, const StringView & line)
 
   unsigned int lines = 0u;
   unsigned long bytes = 0ul;
-  uint64_t number = 0;
+  Article_Number number(0);
   StringView subj, author, date, mid, tmp, xref, l(line);
   std::string ref;
   bool ok = !l.empty();
   ok = ok && l.pop_token(tmp, '\t');
   if (ok)
-    number = view_to_ull(tmp);
+    number = Article_Number(tmp);
   tmp.clear();
   ok = ok && l.pop_token(subj, '\t');
   if (ok)
@@ -401,7 +404,7 @@ TaskXOver::on_nntp_line_process(NNTP * nntp, const StringView & line)
     }
 
   // is this header corrupt?
-  if (!number // missing number
+  if (static_cast<uint64_t>(number) == 0 // missing number
       || subj.empty() // missing subject
       || author.empty() // missing author
       || date.empty() // missing date
@@ -416,9 +419,9 @@ TaskXOver::on_nntp_line_process(NNTP * nntp, const StringView & line)
 	char * buf(0);
 	if (xref.empty())
 		xref = buf = g_strdup_printf("%s %s:%" G_GUINT64_FORMAT,
-				nntp->_server.c_str(), nntp->_group.c_str(), number);
+				nntp->_server.c_str(), nntp->_group.c_str(), static_cast<uint64_t>(number));
 
-	uint64_t& h(_high[nntp->_server]);
+	Article_Number& h(_high[nntp->_server]);
 	h = std::max(h, number);
 
 	const char * fallback_charset = NULL; // FIXME
@@ -444,8 +447,8 @@ TaskXOver::on_nntp_line_process(NNTP * nntp, const StringView & line)
 		++_articles_so_far;
 
 	// emit a status update
-	uint64_t& prev = _last_xover_number[nntp];
-	increment_step(number - prev);
+	Article_Number& prev = _last_xover_number[nntp];
+	increment_step(static_cast<uint64_t>(number) - static_cast<uint64_t>(prev));
 	prev = number;
 	if (!(_parts_so_far % 500))
 		set_status_va(_("%s (%lu parts, %lu articles)"),

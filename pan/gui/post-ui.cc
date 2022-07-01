@@ -3299,7 +3299,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
       a.subject = subject;
       a.author = author;
       foreach_const (quarks_t, groups, git)
-         a.xref.insert (profile.posting_server, *git,0);
+         a.xref.insert (profile.posting_server, *git, static_cast<Article_Number>(0));
       ui.total = get_total_parts((const char*)cur->data);
       tmp = new TaskUpload((const char*)cur->data,
                         profile.posting_server, _cache, a, ui, msg);

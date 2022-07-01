@@ -5,7 +5,7 @@ See https://www.mingw-w64.org/
     https://www.msys2.org/
 
 Install msys2 as per instructions. You will also need to install
-$ pacman -S mingw-w64-x86_64-pcre mingw-w64-x86_64-gmime
+$ pacman -S mingw-w64-x86_64-pcre mingw-w64-x86_64-gmime autoconf-archive
 
 Also for the sake of your own sanity, add 'export MSYS=winsymlinks:native' to your .bash_profile
 
@@ -21,7 +21,7 @@ You also need some dictionaries to spell check against!
 $ pacman -S mingw-w64-x86_64-hunspell-en
 
 and this (possibly optional, but...)
-$ pacman -S mingw-w64-x86_64-iso-codes (possibly: /mingw64/share/xml, /mingw64/share/locale)
+$ pacman -S mingw-w64-x86_64-iso-codes
 
 Then you can create an msys2 x64 window and run
 

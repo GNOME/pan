@@ -308,12 +308,12 @@ namespace pan
         virtual void on_group_subscribe (const Quark & group UNUSED,
                                          bool          sub   UNUSED) {}
         virtual void on_group_counts (const Quark& group   UNUSED,
-                                      unsigned long unread UNUSED,
-                                      unsigned long total  UNUSED) {}
+                                      Article_Count unread UNUSED,
+                                      Article_Count total  UNUSED) {}
 
         virtual void on_group_entered (const Quark& group   UNUSED,
-                                      unsigned long unread UNUSED,
-                                      unsigned long total  UNUSED) {}
+                                      Article_Count unread UNUSED,
+                                      Article_Count total  UNUSED) {}
 
         /* listener for article flag, don't call too often */
         virtual void on_article_flag_changed (articles_t& a UNUSED, const Quark& group UNUSED) {}
@@ -330,8 +330,8 @@ namespace pan
       void fire_group_read (const Quark&);
 
       void fire_group_counts (const Quark&,
-                              unsigned long unread,
-                              unsigned long total);
+                              Article_Count unread,
+                              Article_Count total);
 
       void fire_group_subscribe (const Quark&, bool);
 
@@ -343,7 +343,7 @@ namespace pan
     public:
 
       virtual void fire_article_flag_changed (articles_t& a, const Quark& group);
-      virtual void fire_group_entered (const Quark& group, unsigned long unread, unsigned long total);
+      virtual void fire_group_entered (const Quark& group, Article_Count unread, Article_Count total);
 
     /*****************************************************************
     ***
@@ -401,8 +401,8 @@ namespace pan
        * from previous xover sessions.
        */
       virtual void get_group_counts (const Quark   & group,
-                                     unsigned long & setme_unread,
-                                     unsigned long & setme_total) const=0;
+                                     Article_Count & setme_unread,
+                                     Article_Count & setme_total) const=0;
 
       virtual char get_group_permission (const Quark & group) const=0;
 
@@ -670,7 +670,7 @@ namespace pan
        * run on the specified {server,group}, or 0 if it's never
        * been run there.
        */
-      virtual uint64_t get_xover_high (const Quark  & group,
+      virtual Article_Number get_xover_high (const Quark  & group,
                                        const Quark  & server) const = 0;
 
        /**
@@ -681,7 +681,7 @@ namespace pan
         */
        virtual void set_xover_high (const Quark         & group,
                                     const Quark         & server,
-                                    const uint64_t    high) = 0;
+                                    const Article_Number    high) = 0;
 
        /**
         * Used to fold the Newsrc ranges together:
@@ -690,7 +690,7 @@ namespace pan
         */
        virtual void set_xover_low (const Quark         & group,
                                    const Quark         & server,
-                                   const uint64_t   low) = 0;
+                                   const Article_Number   low) = 0;
 
       /** Sets the queue interface */
       virtual void set_queue (Queue* q) = 0;

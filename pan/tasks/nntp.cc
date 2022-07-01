@@ -17,6 +17,8 @@
  *
  */
 
+#include "nntp.h"
+
 #include <config.h>
 #include <cassert>
 #include <cstdarg>
@@ -27,9 +29,8 @@
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/messages.h>
-#include "nntp.h"
 
-using namespace pan;
+namespace pan {
 
 namespace
 {
@@ -208,22 +209,24 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
            break;
 
         case GROUP_RESPONSE: {
-           // response is of form "211 qty low high group_name"
-           StringView tok, myline (line);
-           myline.pop_token (tok, ' ');
-           myline.pop_token (tok, ' ');
-           const unsigned long aqty (strtoul (tok.str, NULL, 10));
-           myline.pop_token (tok, ' ');
-           const unsigned long alo (strtoul (tok.str, NULL, 10));
-           myline.pop_token (tok, ' ');
-           const unsigned long ahi (strtoul (tok.str, NULL, 10));
-           myline.pop_token (tok, ' ');
-           const pan::Quark group (tok);
-           if (_listener)
-              _listener->on_nntp_group (this, group, aqty, alo, ahi);
-           _group = group;
-            state = CMD_DONE;
-           break;
+          // response is of form "211 qty low high group_name"
+          StringView tok;
+          StringView myline(line);
+          myline.pop_token(tok, ' ');
+          myline.pop_token(tok, ' ');
+          Article_Count const aqty{tok};
+          myline.pop_token(tok, ' ');
+          Article_Number const alo{tok};
+          myline.pop_token(tok, ' ');
+          Article_Number const ahi{tok};
+          myline.pop_token(tok, ' ');
+          Quark const group{tok};
+          if (_listener) {
+            _listener->on_nntp_group(this, group, aqty, alo, ahi);
+          }
+          _group = group;
+          state = CMD_DONE;
+          break;
         }
 
         case SEND_ARTICLE_NOW:
@@ -381,8 +384,8 @@ NNTP :: enter_group (const Quark& group)
 
 void
 NNTP :: xover (const Quark   & group,
-               uint64_t        low,
-               uint64_t        high,
+               Article_Number  low,
+               Article_Number  high,
                Listener      * l)
 {
    _listener = l;
@@ -394,8 +397,8 @@ NNTP :: xover (const Quark   & group,
 
 void
 NNTP :: xzver (const Quark   & group,
-               uint64_t        low,
-               uint64_t        high,
+               Article_Number  low,
+               Article_Number  high,
                Listener      * l)
 {
    _listener = l;
@@ -435,7 +438,7 @@ NNTP :: list (Listener * l)
 
 void
 NNTP :: article (const Quark     & group,
-                 uint64_t          article_number,
+                 Article_Number  article_number,
                  Listener        * l)
 {
    _listener = l;
@@ -477,7 +480,7 @@ NNTP :: get_headers (const Quark     & group,
 
 void
 NNTP :: get_headers (const Quark     & group,
-                     uint64_t          article_number,
+                     Article_Number    article_number,
                      Listener        * l)
 {
    _listener = l;
@@ -505,7 +508,7 @@ NNTP :: get_body (const Quark     & group,
 
 void
 NNTP :: get_body (const Quark     & group,
-                  uint64_t          article_number,
+                  Article_Number  article_number,
                   Listener        * l)
 {
    _listener = l;
@@ -607,4 +610,6 @@ NNTP :: post (const StringView  & msg,
     _commands.push_back ("POST\r\n");
     write_next_command ();
   }
+}
+
 }

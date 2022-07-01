@@ -370,12 +370,12 @@ DataImpl :: load_group_xovers (const DataIO& data_io)
       if (line.pop_token(groupname) && line.pop_token(total) && line.pop_token(unread))
       {
         ReadGroup& g (_read_groups[groupname]);
-        g._article_count = strtoul (total.str, NULL, 10);
-        g._unread_count = strtoul (unread.str, NULL, 10);
+        g._article_count = Article_Count(total);
+        g._unread_count = Article_Count(unread);
 
         while (line.pop_token (xover))
           if (xover.pop_token(servername,':'))
-            g[servername]._xover_high = g_ascii_strtoull (xover.str, NULL, 10);
+            g[servername]._xover_high = Article_Number(xover);
       }
     }
   }
@@ -433,10 +433,10 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
   xgroups_t xgroups;
   foreach_const (read_groups_t, _read_groups, git) {
     const ReadGroup& group (git->second);
-    bool is_xgroup (group._article_count || group._unread_count);
+    bool is_xgroup (static_cast<uint64_t>(group._article_count) != 0 || static_cast<uint64_t>(group._unread_count) != 0);
     if (!is_xgroup)
       foreach_const (ReadGroup::servers_t, group._servers, sit)
-        if ((is_xgroup = (sit->second._xover_high!=0)))
+        if ((is_xgroup = (static_cast<uint64_t>(sit->second._xover_high)!=0)))
           break;
     if (is_xgroup)
       xgroups.insert (git->first);
@@ -455,7 +455,7 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
     out.put (' ');
     out << g._unread_count;
     foreach_const (ReadGroup::servers_t, g._servers, i) {
-      if (i->second._xover_high) {
+      if (static_cast<uint64_t>(i->second._xover_high) != 0) {
         out.put (' ');
         out << i->first;
         out.put (':');
@@ -472,11 +472,11 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
 *****
 ****/
 
-uint64_t
+Article_Number
 DataImpl :: get_xover_high (const Quark  & groupname,
                             const Quark  & servername) const
 {
-  uint64_t high (0ul);
+  Article_Number high (0ul);
   const ReadGroup::Server * rgs (find_read_group_server (groupname, servername));
   if (rgs)
     high = rgs->_xover_high;
@@ -486,7 +486,7 @@ DataImpl :: get_xover_high (const Quark  & groupname,
 void
 DataImpl :: set_xover_high (const Quark & group,
                             const Quark & server,
-                            const uint64_t high)
+                            const Article_Number high)
 {
   //std::cerr << LINE_ID << "setting " << get_server_address(server) << ':' << group << " xover high to " << high << std::endl;
   ReadGroup::Server& rgs (_read_groups[group][server]);
@@ -587,9 +587,9 @@ DataImpl :: mark_group_read (const Quark& groupname)
   if (rg != 0) {
     foreach (ReadGroup::servers_t, rg->_servers, it) {
       //std::cerr << LINE_ID << " marking read range [0..." << it->second._xover_high << "] in " << get_server_address(it->first) << ']' << std::endl;
-      it->second._read.mark_range (0, it->second._xover_high, true);
+      it->second._read.mark_range (static_cast<Article_Number>(0), it->second._xover_high, true);
     }
-    rg->_unread_count = 0;
+    rg->_unread_count = static_cast<Article_Count>(0);
     save_group_xovers (*_data_io);
     fire_group_read (groupname);
   }
@@ -620,12 +620,12 @@ DataImpl :: get_group_description (const Quark& group) const
 
 void
 DataImpl :: get_group_counts (const Quark   & groupname,
-                              unsigned long & unread_count,
-                              unsigned long & article_count) const
+                              Article_Count & unread_count,
+                              Article_Count & article_count) const
 {
   const ReadGroup * g (find_read_group (groupname));
   if (!g)
-    unread_count = article_count = 0ul;
+    unread_count = article_count = static_cast<Article_Count>(0ul);
   else {
     unread_count = g->_unread_count;
     article_count = g->_article_count;

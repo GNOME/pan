@@ -422,13 +422,13 @@ namespace
       notify_of(ICON_STATUS_ERROR, message.str, _("An error has occurred!"));
     }
 
-    virtual void on_queue_size_changed (Queue&, unsigned long, unsigned long) {}
+    //virtual void on_queue_size_changed (Queue&, unsigned long, unsigned long) {}
 
     /* data::listener */
-    virtual void on_group_entered (const Quark& group, unsigned long unread, unsigned long total)
+    virtual void on_group_entered (const Quark& group, Article_Count unread, Article_Count total) override
     {
 
-      if (unread)
+      if (static_cast<uint64_t>(unread) != 0)
       {
         update_status_icon(ICON_STATUS_NEW_ARTICLES);
         if (n()) return;
@@ -1078,7 +1078,7 @@ main (int argc, char *argv[])
       }
 
       // if in non-gui mode, contains a PanKiller ptr to quit pan on queue empty
-      std::auto_ptr<PanKiller> killer;
+      std::unique_ptr<PanKiller> killer;
 
       // don't open the full-blown Pan, just act as a nzb client,
       // with a gui or without.

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2022-06-19 10:30+0000\n"
-"PO-Revision-Date: 2022-06-19 21:01+0300\n"
+"POT-Creation-Date: 2022-06-27 17:35+0000\n"
+"PO-Revision-Date: 2022-06-27 23:05+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -144,8 +144,9 @@ msgstr ""
 
 #: pan/data-impl/headers.cc:628
 #, c-format
-msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
-msgstr "Завантажено %lu статей для «%s» за %.1f секунд (%.0f за секунду)"
+#| msgid "Loaded %lu articles for \"%s\" in %.1f seconds (%.0f per second)"
+msgid "Loaded %llu articles for \"%s\" in %.1f seconds (%.0f per second)"
+msgstr "Завантажено %llu статей для «%s» за %.1f секунд (%.0f за секунду)"
 
 #: pan/data-impl/headers.cc:857
 #, c-format
@@ -220,7 +221,8 @@ msgid "Can't use regular expression \"%s\": %s"
 msgstr "Неможливо використати формальний вираз «%s»: %s"
 
 #: pan/general/utf8-utils.cc:212
-msgid "Couldn't determine article encoding.  Non-UTF8 characters were removed."
+msgid ""
+"Couldn't determine article encoding.  Non-UTF8 characters were removed."
 msgstr ""
 "Не вдалося визначити кодування статті. Символи, які не належать до UTF8, "
 "було вилучено."
@@ -1055,35 +1057,35 @@ msgstr "Кодування Base64"
 msgid "Quoted-Printable Encoding"
 msgstr "Кодування із друкованими у лапках"
 
-#: pan/gui/group-pane.cc:328
+#: pan/gui/group-pane.cc:331
 msgid "Sent"
 msgstr "Надіслані"
 
-#: pan/gui/group-pane.cc:329
+#: pan/gui/group-pane.cc:332
 msgid "Drafts"
 msgstr "Чернетки"
 
-#: pan/gui/group-pane.cc:540
+#: pan/gui/group-pane.cc:543
 msgid "Group"
 msgstr "Групи"
 
-#: pan/gui/group-pane.cc:541
+#: pan/gui/group-pane.cc:544
 msgid "Group (regex)"
 msgstr "Група (форм. вираз)"
 
-#: pan/gui/group-pane.cc:1019
+#: pan/gui/group-pane.cc:1022
 msgid "Local Folders"
 msgstr "Локальні теки"
 
-#: pan/gui/group-pane.cc:1020
+#: pan/gui/group-pane.cc:1023
 msgid "Subscribed Groups"
 msgstr "Підписані групи"
 
-#: pan/gui/group-pane.cc:1021
+#: pan/gui/group-pane.cc:1024
 msgid "Other Groups"
 msgstr "Інші групи"
 
-#: pan/gui/group-pane.cc:1061 pan/gui/score-view-ui.cc:155
+#: pan/gui/group-pane.cc:1064 pan/gui/score-view-ui.cc:155
 msgid "Name"
 msgstr "Назва"
 
@@ -1473,7 +1475,6 @@ msgstr "Сповіщення «Pan»"
 
 #: pan/gui/post-ui.cc:174
 #, c-format
-#| msgid "Upload queue: %lu tasks, %ld KB (~ %.2f MB) total."
 msgid "Upload queue: %llu tasks, %ld KB (~ %.2f MB) total."
 msgstr "Черга вивантаження: %llu завдання, загалом %ld кБ (~ %.2f МБ)."
 
@@ -1988,7 +1989,8 @@ msgstr "-9999 або менше"
 
 #: pan/gui/prefs-ui.cc:730
 #, c-format
-msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
+msgid ""
+"Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
 "Виберіть типове <u>загальне</u> кодування символів. Поточне кодування: <b>"
 "%s</b>."
@@ -3297,23 +3299,23 @@ msgstr "Помилка кодування %s: %s"
 msgid "Encoding %s"
 msgstr "Кодування %s"
 
-#: pan/tasks/nntp.cc:175
+#: pan/tasks/nntp.cc:176
 #, c-format
 msgid "%s requires a username, but none is set."
 msgstr "%s потребує імені користувача, але таке не встановлено."
 
-#: pan/tasks/nntp.cc:188
+#: pan/tasks/nntp.cc:189
 #, c-format
 msgid "%s requires a password, but none is set."
 msgstr "%s потребує пароля, але такий не встановлено."
 
-#: pan/tasks/nntp.cc:272
+#: pan/tasks/nntp.cc:275
 #, c-format
 msgid "Sending \"%s\" to %s returned an error: %s"
 msgstr ""
 "У результаті надсилання «%s» до %s повернуто повідомлення про помилку: %s"
 
-#: pan/tasks/nntp.cc:295
+#: pan/tasks/nntp.cc:298
 #, c-format
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr ""
@@ -3400,22 +3402,22 @@ msgstr ""
 "Не вдалося опублікувати файл %s (частина %d з %d): публікації заборонено "
 "сервером."
 
-#: pan/tasks/task-upload.cc:316
+#: pan/tasks/task-upload.cc:317
 #, c-format
 msgid "Posting of file %s (part %d of %d) failed: %s"
 msgstr "Не вдалося опублікувати файл %s (частина %d з %d): %s"
 
-#: pan/tasks/task-upload.cc:326 pan/tasks/task-upload.cc:333
+#: pan/tasks/task-upload.cc:328 pan/tasks/task-upload.cc:335
 #, c-format
 msgid "Posting of file %s (part %d of %d) successful: %s"
 msgstr "Успішне опублікування файла %s (частина %d з %d): %s"
 
-#: pan/tasks/task-upload.cc:343
+#: pan/tasks/task-upload.cc:345
 #, c-format
 msgid "Posting of file %s successful: %s"
 msgstr "Успішне опублікування файла %s: %s"
 
-#: pan/tasks/task-upload.cc:347
+#: pan/tasks/task-upload.cc:349
 #, c-format
 msgid ""
 "Posting of file %s not completely successful: Check the log (right-click "
@@ -3424,7 +3426,7 @@ msgstr ""
 "Надсилання файла %s не є повністю успішним: ознайомтеся із журналом "
 "(клацніть правою кнопкою на пункті у списку)."
 
-#: pan/tasks/task-upload.cc:364
+#: pan/tasks/task-upload.cc:368
 #, c-format
 msgid ""
 "Posting of file %s not successful: Check the log (right-click list item)."
@@ -3448,12 +3450,12 @@ msgstr "Отримання нових заголовків для «%s»"
 msgid "Sampling headers for \"%s\""
 msgstr "Дискретизація заголовків для «%s»"
 
-#: pan/tasks/task-xover.cc:451
+#: pan/tasks/task-xover.cc:454
 #, c-format
 msgid "%s (%lu parts, %lu articles)"
 msgstr "%s (%lu частин, %lu статей)"
 
-#: pan/tasks/task-xover.cc:525
+#: pan/tasks/task-xover.cc:528
 #, c-format
 msgid "Getting new headers for \"%s\" done."
 msgstr "Отримання нових заголовків для «%s» завершено."

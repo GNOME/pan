@@ -4,6 +4,7 @@ AM_LDFLAGS = @GTK_LIBS@
 noinst_LIBRARIES = libgeneralutils.a
 
 libgeneralutils_a_SOURCES = \
+ article_number.cc \
  debug.cc \
  e-util.cc \
  editor-spawner.cc \
@@ -19,6 +20,7 @@ libgeneralutils_a_SOURCES = \
  compression.cc
 
 noinst_HEADERS = \
+ article_number.h \
  compression.h \
  debug.h \
  defgroup.h \

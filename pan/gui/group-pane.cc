@@ -48,12 +48,15 @@ namespace
   {
     public:
       Quark groupname;
-      unsigned long unread;
+      Article_Count unread;
 
     public:
       virtual void get_value (int column, GValue* setme) {
         switch (column) {
-          case COL_UNREAD: set_value_ulong (setme, unread); break;
+          //
+          //FIXME Really?
+          //
+          case COL_UNREAD: set_value_ulong (setme, static_cast<uint64_t>(unread)); break;
         }
       }
   };
@@ -370,7 +373,7 @@ namespace
 		MyRow *rows(new MyRow [n]), *r(rows);
 		g_object_weak_ref (G_OBJECT(store), delete_rows, rows);
 
-		unsigned long unused;
+		Article_Count unused;
 		for (size_t i(0); i!=n; ++i, ++r)
 		{
 			r->groupname = folders_groupnames[i];
@@ -395,7 +398,7 @@ namespace
       MyRow *rows(new MyRow [n]), *r(rows);
       g_object_weak_ref (G_OBJECT(store), delete_rows, rows);
 
-      unsigned long unused;
+      Article_Count unused;
       for (size_t i(0); i!=n; ++i, ++r) {
         r->groupname = sub[i];
         data.get_group_counts (r->groupname, r->unread, unused);
@@ -420,7 +423,7 @@ namespace
       MyRow *rows(new MyRow[n]), *r(rows);
       g_object_weak_ref (G_OBJECT(store), delete_rows, rows);
 
-      unsigned long unused;
+      Article_Count unused;
       for (size_t i(0); i!=n; ++i, ++r) {
         r->groupname = unsub[i];
         data.get_group_counts (r->groupname, r->unread, unused);
@@ -489,7 +492,7 @@ GroupPane :: refresh_dirty_groups ()
     MyRow * row (find_row (*it));
     if (row)
     {
-      unsigned long unused;
+      Article_Count unused;
       _data.get_group_counts (row->groupname, row->unread, unused);
       _tree_store->row_changed (row);
     }
@@ -514,7 +517,7 @@ GroupPane :: on_group_read (const Quark& groupname)
        _dirty_groups_idle_tag = g_timeout_add (333, dirty_groups_idle, this);
 }
 void
-GroupPane :: on_group_counts (const Quark& groupname, unsigned long, unsigned long)
+GroupPane :: on_group_counts (const Quark& groupname, Article_Count, Article_Count)
 {
   on_group_read (groupname);
 }
@@ -739,16 +742,16 @@ namespace
     GroupPane* pane (static_cast<GroupPane*>(gp));
     PanTreeStore * tree (PAN_TREE_STORE(model));
     MyRow * row (dynamic_cast<MyRow*>(tree->get_row (iter)));
-    const unsigned long& unread (row->unread);
+    const Article_Count & unread (row->unread);
     //const unsigned long& total (row->total);
     const Quark& name (row->groupname);
 
     const bool is_g (is_group(name));
     const bool do_shorten (shorten && is_g);
     std::string group_name (do_shorten ? get_short_name(StringView(name)) : name.to_string());
-    if (is_g && unread) {
+    if (is_g && static_cast<uint64_t>(unread) != 0) {
       char buf[64];
-      g_snprintf (buf, sizeof(buf), " (%lu)", unread);
+      g_snprintf (buf, sizeof(buf), " (%llu)", static_cast<uint64_t>(unread));
       group_name += buf;
     }
 
@@ -765,7 +768,7 @@ namespace
         bg_col = def_bg;
 
     g_object_set (renderer, "text", group_name.c_str(),
-                            "weight", (!is_g || unread ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
+                            "weight", (!is_g || static_cast<uint64_t>(unread) != 0 ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
                             "foreground", fg_col.empty() ? NULL : fg_col.c_str(),
                             "background", bg_col.empty() ? NULL : bg_col.c_str(),
                             NULL);
@@ -834,7 +837,7 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
     gtk_tree_model_iter_nth_child (model, &group_iter, &sub_iter, n);
     const MyRow * row (dynamic_cast<MyRow*>(_tree_store->get_row (&group_iter)));
     const bool is_virtual (is_virtual_group(row->groupname));
-    if (!is_virtual && (row->unread || !unread_only))
+    if (!is_virtual && (static_cast<uint64_t>(row->unread) != 0 || !unread_only))
       return gtk_tree_model_get_path (model, &group_iter);
   }
 

@@ -143,7 +143,7 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
     // `ARTICLE message-id' instead when talking to the server.
     foreach_const (quarks_t, servers, sit)
       foreach_const (quarks_t, groups, git)
-        n.xref.insert (*sit, *git, mid==article.message_id.to_string() ? article.xref.find_number(*sit,*git) : 0);
+        n.xref.insert (*sit, *git, mid==article.message_id.to_string() ? article.xref.find_number(*sit,*git) : static_cast<Article_Number>(0));
     _needed.push_back (n);
   }
 
@@ -239,9 +239,9 @@ TaskArticle :: use_nntp (NNTP * nntp)
     needed->buf.clear ();
 
     Quark group;
-    uint64_t number (0ul);
+    Article_Number number (0ul);
     needed->xref.find (nntp->_server, group, number);
-    if (number)
+    if (static_cast<uint64_t>(number) != 0)
       nntp->article (group, number, this);
     else
       nntp->article (group, needed->message_id.c_str(), this);

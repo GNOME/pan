@@ -41,7 +41,7 @@ Xref :: insert (const Quark             & server,
     xref.trim ();
   }
 
-  // walk through the xrefs, of format "group1:number group2:number" 
+  // walk through the xrefs, of format "group1:number group2:number"
   targets.reserve (targets.size() + std::count(xref.begin(), xref.end(), ':'));
   StringView s;
   while (xref.pop_token (s)) {
@@ -51,7 +51,7 @@ Xref :: insert (const Quark             & server,
         Target t;
         t.server = server;
         t.group = group_name;
-        t.number = g_ascii_strtoull (s.str, NULL, 10);
+        t.number = Article_Number(s);
         targets.get_container().push_back (t);
       }
     }
@@ -74,7 +74,7 @@ Xref :: remove_server (const Quark& server)
 void
 Xref :: remove_targets_less_than (const Quark    & server,
                                   const Quark    & group,
-                                  uint64_t         n)
+                                  Article_Number   n)
 {
   std::vector<Target> t;
   t.reserve (targets.size());
@@ -106,7 +106,7 @@ Xref :: has_server (const Quark  & server) const
 bool
 Xref :: find (const Quark    & server,
               Quark          & setme_group,
-              uint64_t       & setme_number) const
+              Article_Number & setme_number) const
 {
   Target tmp;
   tmp.server = server;
@@ -119,7 +119,7 @@ Xref :: find (const Quark    & server,
   return found;
 }
 
-uint64_t
+Article_Number
 Xref :: find_number (const Quark    & server,
                      const Quark    & group) const
 {
@@ -127,7 +127,7 @@ Xref :: find_number (const Quark    & server,
   tmp.server = server;
   tmp.group = group;
   const_iterator it (targets.lower_bound (tmp));
-  return it!=targets.end() && it->server==server && it->group==group ? it->number : 0ul;
+  return it!=targets.end() && it->server==server && it->group==group ? it->number : static_cast<Article_Number>(0ull);
 }
 
 void

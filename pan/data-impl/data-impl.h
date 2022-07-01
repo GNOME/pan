@@ -248,22 +248,22 @@ namespace pan
          */
         struct Server {
           Numbers _read;
-          uint64_t _xover_high;
+          Article_Number _xover_high;
           Server(): _xover_high(0) {}
         };
         typedef Loki::AssocVector<Quark,Server> servers_t;
         servers_t _servers;
 
-        unsigned long _article_count;
-        unsigned long _unread_count;
+        Article_Count _article_count;
+        Article_Count _unread_count;
 
         ReadGroup(): _article_count(0), _unread_count(0) {}
 
         Server& operator[](const Quark& s) { return _servers[s]; }
 
-        static void decrement_safe (unsigned long& lhs, unsigned long dec) { lhs = (lhs>dec) ? lhs-dec : 0; }
-        void decrement_unread (unsigned long dec) { decrement_safe (_unread_count, dec); }
-        void decrement_count (unsigned long dec) { decrement_safe (_article_count, dec); }
+        static void decrement_safe (Article_Count &lhs, Article_Count dec) { lhs = lhs>dec ? lhs-dec : static_cast<Article_Count>(0); }
+        void decrement_unread (Article_Count dec) { decrement_safe (_unread_count, dec); }
+        void decrement_count (Article_Count dec) { decrement_safe (_article_count, dec); }
 
         Server* find_server (const Quark& s) {
           servers_t::iterator it (_servers.find (s));
@@ -328,8 +328,8 @@ namespace pan
       virtual void get_subscribed_groups (std::vector<Quark>&) const;
       virtual void get_other_groups (std::vector<Quark>&) const;
       virtual void get_group_counts (const Quark    & group,
-                                     unsigned long  & setme_unread,
-                                     unsigned long  & setme_total) const;
+                                     Article_Count  & setme_unread,
+                                     Article_Count  & setme_total) const override;
       virtual char get_group_permission (const Quark & group) const;
       virtual void group_get_servers (const Quark& group, quarks_t&) const;
       virtual void server_get_groups (const Quark& server, quarks_t&) const;
@@ -662,16 +662,16 @@ namespace pan
 
       virtual void xover_unref   (const Quark           & group);
 
-      virtual uint64_t get_xover_high (const Quark & group,
-                                       const Quark & server) const;
+      virtual Article_Number get_xover_high (const Quark & group,
+                                       const Quark & server) const override;
 
       virtual void set_xover_high (const Quark          & group,
                                    const Quark          & server,
-                                   const uint64_t         high);
+                                   const Article_Number   high) override;
 
        virtual void set_xover_low (const Quark          & group,
                                    const Quark          & server,
-                                   const uint64_t         low);
+                                   const Article_Number   low) override;
 
 
     /**

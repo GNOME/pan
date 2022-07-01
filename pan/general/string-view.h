@@ -28,7 +28,7 @@
 namespace pan
 {
    /**
-    * A shallow copy a C string, plus utilities to let us 
+    * A shallow copy a C string, plus utilities to let us
     * substring, tokenize, walk, search, or otherwise
     * manipulate it without having to modify the original or
     * allocate new strings.
@@ -43,12 +43,12 @@ namespace pan
                             size_t       str_a_len,
                             const char * str_b,
                             size_t       str_b_len);
-                                                                                                                        
+
          static char* strchr (const char * haystack,
                               size_t       haystack_len,
                               char         needle)
            { return (char*) memchr (haystack, needle, haystack_len); }
-                                                                                                                        
+
          static char* strrchr (const char * haystack,
                                size_t       haystack_len,
                                char         needle);
@@ -86,6 +86,7 @@ namespace pan
          StringView (const char * s, size_t l) { assign(s,l); }
          StringView (const char * s, const char * e) { assign(s,e-s); }
          StringView (const StringView& p): str(p.str), len(p.len) {}
+         constexpr StringView& operator=(StringView const &) = default;
          ~StringView () { str = (char*)0xDEADBEEF; len = (size_t)~0; }
 
       public:

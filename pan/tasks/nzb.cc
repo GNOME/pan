@@ -169,7 +169,7 @@ namespace
         quarks_t servers;
         mc.gs.group_get_servers (*git, servers);
         foreach_const (quarks_t, servers, sit)
-          mc.a.xref.insert (*sit, *git, 0);
+          mc.a.xref.insert (*sit, *git, static_cast<Article_Number>(0));
       }
       const StringView p (mc.path.empty() ? mc.fallback_path : StringView(mc.path));
       /// TODO get action mark read from prefs (?)
