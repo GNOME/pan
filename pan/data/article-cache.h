@@ -22,6 +22,7 @@
 
 #include <map>
 #include <vector>
+#include <config.h>
 #include <glib.h> // for guint64
 #include <pan/general/string-view.h>
 #include <pan/general/quark.h>
