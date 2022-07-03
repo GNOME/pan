@@ -124,6 +124,7 @@ namespace
 #ifdef HAVE_GNUTLS // without gnutls this class is just a stub....
 
 GIOChannelSocketGnuTLS :: GIOChannelSocketGnuTLS (ServerInfo& data, const Quark& server, CertStore& cs):
+   _data(data),
    _channel (0),
    _tag_watch (0),
    _tag_timeout (0),
@@ -133,8 +134,7 @@ GIOChannelSocketGnuTLS :: GIOChannelSocketGnuTLS (ServerInfo& data, const Quark&
    _io_performed (false),
    _certstore(cs),
    _server(server),
-   _done(false),
-   _data(data)
+   _done(false)
 {
 
   debug ("GIOChannelSocketGnuTLS ctor " << (void*)this);

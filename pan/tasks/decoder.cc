@@ -39,15 +39,9 @@
 namespace pan {
 
 Decoder :: Decoder (WorkerPool& pool):
-  mark_read(false),
-  task(nullptr),
-  save_mode(TaskArticle::NONE),
-  options(TaskArticle::SAVE_AS),
-  percent(0.0),
-  num_scanned_files(0),
+  health(OK),
   _worker_pool (pool),
-  _gsourceid (-1),
-  health(OK)
+  _gsourceid (-1)
 {
 }
 

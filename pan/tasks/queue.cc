@@ -49,7 +49,6 @@ Queue :: Queue (ServerInfo         & server_info,
                 bool                 online,
                 int                  save_delay_secs):
   _server_info (server_info),
-  _prefs (prefs),
   _is_online (online),
   _socket_creator (socket_creator),
   _worker_pool (pool),
@@ -61,9 +60,10 @@ Queue :: Queue (ServerInfo         & server_info,
   _needs_saving (false),
   _last_time_saved (0),
   _archive (archive),
-  _certstore(certstore),
   _uploads_total(0),
-  _downloads_total(0)
+  _downloads_total(0),
+  _certstore(certstore),
+  _prefs (prefs)
 {
 
   data.set_queue(this);

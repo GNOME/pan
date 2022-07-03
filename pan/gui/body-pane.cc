@@ -1733,6 +1733,9 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   _header_pane(hp),
   _data (data),
   _cache (cache),
+#ifdef HAVE_WEBKIT
+  _web_view (webkit_web_view_new ()),
+#endif
   _hscroll_visible (false),
   _vscroll_visible (false),
   _message (0),
@@ -1740,11 +1743,8 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
 //  _gpgerr(GPG_DECODE),
 #endif
   _attachments(0),
-  _current_attachment(0),
-  _cleared (true)
-#ifdef HAVE_WEBKIT
-  ,_web_view (webkit_web_view_new ())
-#endif
+  _cleared (true),
+  _current_attachment(0)
 {
 
   GtkWidget * w, * l, * hbox;

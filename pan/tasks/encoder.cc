@@ -46,41 +46,17 @@ extern "C" {
 
 namespace pan {
 
-/*
-           ^
-pan\tasks\encoder.cc:49:12: warning: Member variable 'Encoder::parts' is not initialized in the constructor. [uninitMemberVar]
+
 Encoder :: Encoder (WorkerPool& pool):
-           ^
-pan\tasks\encoder.cc:49:12: warning: Member variable 'Encoder::task' is not initialized in the constructor. [uninitMemberVar]
-Encoder :: Encoder (WorkerPool& pool):
-           ^
-pan\tasks\encoder.cc:49:12: warning: Member variable 'Encoder::bpf' is not initialized in the constructor. [uninitMemberVar]
-Encoder :: Encoder (WorkerPool& pool):
-           ^
-pan\tasks\encoder.cc:49:12: warning: Member variable 'Encoder::cache' is not initialized in the constructor. [uninitMemberVar]
-Encoder :: Encoder (WorkerPool& pool):
-           ^
-pan\tasks\encoder.cc:49:12: warning: Member variable 'Encoder::needed' is not initialized in the constructor. [uninitMemberVar]
-Encoder :: Encoder (WorkerPool& pool):
-           ^
-pan\tasks\encoder.cc:49:12: warning: Member variable 'Encoder::article' is not initialized in the constructor. [uninitMemberVar]
-Encoder :: Encoder (WorkerPool& pool):
-           ^
-pan\tasks\encoder.cc:49:12: warning: Member variable 'Encoder::percent' is not initialized in the constructor. [uninitMemberVar]
-Encoder :: Encoder (WorkerPool& pool):
-           ^
-*/
-Encoder :: Encoder (WorkerPool& pool):
+  health(OK),
   parts(0),
   task(nullptr),
   bpf(0),
   cache(nullptr),
   needed(nullptr),
   article(nullptr),
-  percent(0.0),
-  _worker_pool (pool),
-  _gsourceid (-1),
-  health(OK)
+  percent(0.0),  _worker_pool (pool),
+  _gsourceid (-1)
 {}
 
 

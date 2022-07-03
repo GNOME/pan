@@ -75,18 +75,19 @@ namespace
 DataImpl :: DataImpl (const StringView& cache_ext, Prefs& prefs, bool unit_test, int cache_megs, DataIO * io):
   ProfilesImpl (*io),
   _cache (get_cache_path(), cache_ext, cache_megs),
-  _prefs(prefs),
   _encode_cache (get_encode_cache_path(), cache_megs),
   _certstore(*this),
+  _queue(nullptr),
   _unit_test (unit_test),
   _data_io (io),
+  _prefs(prefs),
   _descriptions_loaded (false),
-  newsrc_autosave_id (0),
-  newsrc_autosave_timeout (0),
+  _cached_xover_entry(nullptr),
   _rules_filter (prefs.get_flag("rules-autocache-mark-read", false),
                  prefs.get_flag("rules-auto-dl-mark-read", false),
-                 prefs.get_flag("rules-autocache-mark-read", false))
-
+                 prefs.get_flag("rules-autocache-mark-read", false)),
+  newsrc_autosave_id (0),
+  newsrc_autosave_timeout (0)
 {
   rebuild_backend ();
 }

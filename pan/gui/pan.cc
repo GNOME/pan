@@ -272,8 +272,8 @@ namespace
     bool n() { return notif_shown; }
 
     StatusIconListener(GtkStatusIcon * i, GtkWidget* r, Prefs& p, Queue& q, Data& d, bool v) :
-      icon(i), root(r), prefs(p), queue(q), data(d), minimized(v),
-      tasks_active(0), tasks_total(0), notif_shown(false)
+      queue(q), data(d), tasks_active(0), tasks_total(0),
+      minimized(v), notif_shown(false), prefs(p), icon(i), root(r)
     {
       prefs.add_listener(this);
       queue.add_listener(this);
