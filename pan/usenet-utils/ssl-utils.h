@@ -73,18 +73,24 @@ namespace pan
   {
     std::map<Quark, Quark> tags;
     std::string iss, sub;
-    char buf[2048];
     char * dn_buf;
     gnutls_x509_crt_t cert;
     const char delim;
     size_t len;
     gnutls_datum_t d;
-    int pos1, pos2, tmp_pos1, idx;
+    int pos1, pos2, idx;
     int num_tags;
     gnutls_x509_dn_t dn;
     size_t size;
 
-    CertParser(gnutls_x509_crt_t c) : cert(c), delim(','), pos1(0), pos2(0), idx(0), num_tags(G_N_ELEMENTS(tags_idx))
+    CertParser(gnutls_x509_crt_t c) :
+      cert(c),
+      delim(','),
+      len(0),
+      pos1(0),
+      pos2(0),
+      idx(0),
+      num_tags(G_N_ELEMENTS(tags_idx))
     {
 
       gnutls_x509_crt_get_issuer_dn(cert, NULL, &size);
@@ -113,8 +119,12 @@ namespace pan
       tags.insert(quarks_p(cleaned_tags[i],  "serialNumber"));
     }
 
+    CertParser(CertParser const &) = delete;
+    CertParser &operator=(CertParser const &) = delete;
+
     void parse(std::vector<quarks_p>& i, std::vector<quarks_p>& s)
     {
+      char buf[2048];
       while(idx < num_tags)
       {
         std::string::size_type index = iss.find(tags_idx[idx]);

@@ -20,11 +20,13 @@
 #ifndef _HAVE_GPGDEFS_H
 #define _HAVE_GPGDEFS_H
 
+#include <config.h>
+
+#ifdef HAVE_GMIME_CRYPTO
+
 #include <gmime/gmime.h>
 #include <map>
 #include <vector>
-
-#ifdef HAVE_GMIME_CRYPTO
 
 namespace pan
 {
@@ -99,8 +101,6 @@ namespace pan
       if (result) g_object_unref(result);
     }
 
-    GPGDecErr() : err(NULL), no_sigs(true), type(GPG_DECODE), decrypted(NULL), result(g_mime_decrypt_result_new()) {}
-
     void clear()
     {
       if (err) g_error_free(err);
@@ -124,7 +124,14 @@ namespace pan
     GPGEncType type;
     GPGSignersInfo signers;
 
-    GPGEncErr(GPGEncType t) : err(NULL), no_sigs(true), type(t)   {}
+    explicit GPGEncErr(GPGEncType t) :
+      err(NULL),
+      enc_ok(false),
+      sign_ok(false),
+      no_sigs(true),
+      type(t)
+    {}
+
     ~GPGEncErr()
     {
       if (err) g_error_free(err);

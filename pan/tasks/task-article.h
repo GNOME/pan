@@ -135,7 +135,12 @@ namespace pan
         typedef std::vector<char> buf_t;
         buf_t buf;
         int rank;
-        Needed (): nntp(0), rank(1) {}
+        Needed ():
+          bytes(0),
+          nntp(nullptr),
+          rank(1)
+        {}
+
         void reset() {
           buf_t tmp;
           buf.swap (tmp); // deallocates space

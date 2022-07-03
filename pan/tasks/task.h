@@ -106,7 +106,15 @@ namespace pan
 
             public:
 
-               State(): _health(OK) {}
+               //Note: The _work member used to be uninitialised, so depending
+               //on pretty much anything, it could start in ANY of the states,
+               //or none. For now I'm going to assume it starts in completed
+               //state, but it's possible that if the value isn't immediately
+               //set, the task could be reaped early in Queue::process_task
+               State():
+                _work(COMPLETED), //? guesswork
+                _health(OK)
+               {}
          };
 
       public:

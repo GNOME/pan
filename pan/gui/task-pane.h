@@ -34,7 +34,7 @@ namespace pan
    * Dialog for showing and manipulating Tasks in a Queue.
    * @ingroup GUI
    */
-  class TaskPane: private Queue::Listener
+  class TaskPane final: private Queue::Listener
   {
     public:
       TaskPane (Queue&, Prefs&);
@@ -49,7 +49,7 @@ namespace pan
       virtual void on_queue_task_moved (Queue&, Task&, int new_index, int old_index);
       virtual void on_queue_connection_count_changed (Queue&, int count);
       virtual void on_queue_size_changed (Queue&, int active, int total);
-      virtual void on_queue_online_changed (Queue&, bool online);
+      void on_queue_online_changed (Queue&, bool online) override final;
       virtual void on_queue_error (Queue&, const StringView&) { }
 
     private:

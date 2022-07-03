@@ -50,7 +50,7 @@ namespace pan
    * The main GUI object for Pan's GTK frontend
    * @ingroup GUI
    */
-  struct GUI:
+  struct GUI final:
     public virtual PanUI,
     public ActionManager,
     public WaitUI,
@@ -68,6 +68,10 @@ namespace pan
 
       GUI (Data& data, Queue&, Prefs&, GroupPrefs&);
       virtual ~GUI ();
+
+      GUI(GUI const &) = delete;
+      GUI &operator=(GUI const &) = delete;
+
       GtkWidget* root () { return _root; }
       typedef std::vector<std::string> strings_t;
 
@@ -176,8 +180,8 @@ namespace pan
       virtual void do_bug_report ();
       virtual void do_tip_jar ();
       virtual void do_about_pan ();
-      virtual void do_work_online (bool);
-      virtual void do_layout (bool);
+      void do_work_online (bool) override final;
+      void do_layout (bool) override final;
       virtual void do_show_toolbar (bool);
       virtual void do_show_group_pane (bool);
       virtual void do_show_header_pane (bool);
@@ -214,7 +218,7 @@ namespace pan
 
     private: // Queue::Listener
       friend class Queue;
-      virtual void on_queue_task_active_changed (Queue&, Task&, bool active);
+      void on_queue_task_active_changed (Queue&, Task&, bool active) override final;
       virtual void on_queue_tasks_added (Queue&, int index UNUSED, int count UNUSED) { }
       virtual void on_queue_task_removed (Queue&, Task&, int pos UNUSED) { }
       virtual void on_queue_task_moved (Queue&, Task&, int new_pos UNUSED, int old_pos UNUSED) { }

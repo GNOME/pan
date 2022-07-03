@@ -1365,6 +1365,7 @@ PostUI :: spawn_editor ()
   const std::string body (get_body ());
 
   if (fwrite (body.c_str(), sizeof(char), body.size(), fp) != body.size()) {
+    fclose(fp);
     Log::add_err_va (_("Error writing article to temporary file: %s"), g_strerror(errno));
     return;
   }

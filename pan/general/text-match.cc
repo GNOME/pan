@@ -165,7 +165,7 @@ class pan::TextMatch::PcreInfo
 
    public:
 
-      PcreInfo (): re(0) { } 
+      PcreInfo (): re(0) { }
 
 
 
@@ -250,7 +250,7 @@ namespace
       const guchar first_lc = tolower(*pat);
       const guchar * t = text;
       const guchar * text_end = text + text_len - pat_len + 1;
-      const guchar * pat_end = pat + pat_len; 
+      const guchar * pat_end = pat + pat_len;
       const guchar * p;
       const guchar * q;
 
@@ -294,7 +294,7 @@ namespace
       const guchar first = *pat;
       const guchar * t = text;
       const guchar * text_end = text + text_len - pat_len + 1;
-      const guchar * pat_end  = pat + pat_len; 
+      const guchar * pat_end  = pat + pat_len;
       const guchar * p;
       const guchar * q;
 
@@ -324,7 +324,7 @@ namespace
 
 /*****
 ******
-******  
+******
 ******
 *****/
 
@@ -383,7 +383,7 @@ TextMatch :: test (const StringView& text_in) const
 
 /*****
 ******
-******  
+******
 ******
 *****/
 
@@ -503,6 +503,9 @@ TextMatch :: TextMatch (const TextMatch& that):
   set (that.state);
 }
 
+//FIXME this is clearly doing something odd, but the solution of deleting the
+//assignment and writing defaulted move constructors/assignments won't work
+//till C++20
 TextMatch&
 TextMatch :: operator= (const TextMatch& that)
 {
