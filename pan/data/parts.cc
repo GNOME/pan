@@ -191,7 +191,7 @@ Parts :: unpack_message_id (std::string  & setme,
   StringView v;
   v.str = part_mid_buf + part->mid_offset;
   v.len = 2 + strlen (v.str+2);
-  pan::unpack_message_id (setme, v, reference_mid);
+  ::pan::unpack_message_id (setme, v, reference_mid);
 }
 
 bool
