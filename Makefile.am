@@ -49,8 +49,8 @@ EXTRA_DIST = \
  $(man_MANS) \
  $(NULL)
 
+# A note: -j doesn't work reliably on mingw otherwise would be -j 4
 CPPCHECK_CMD = cppcheck \
-    -j 4 \
     --force \
     --inline-suppr \
     --error-exitcode=1 \

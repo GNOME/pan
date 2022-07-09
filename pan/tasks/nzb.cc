@@ -86,7 +86,15 @@ namespace
 
     MyContext (ArticleCache& ac, EncodeCache& ec, ArticleRead& r,
                const ServerRank& rank, const GroupServer& g, const StringView& p):
-      cache(ac), encode_cache(ec), read(r), ranks(rank), gs(g), fallback_path(p) { }
+      cache(ac),
+      encode_cache(ec),
+      read(r),
+      ranks(rank),
+      gs(g),
+      fallback_path(p),
+      bytes(0),
+      number(0)
+    { }
 
     void file_clear () {
       groups.clear ();
