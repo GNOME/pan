@@ -1018,7 +1018,7 @@ PostUI :: on_progress_finished (Progress&, int status) // posting finished
         if (ptr) NZB :: upload_list_to_xml_file (_out, ptr->_upload_list);
         if (_running_uploads==0 )
         {
-          _out << "</nzb>\n";
+          NZB::print_footer(_out);
           _out.close();
         }
       mut.unlock();
@@ -1204,9 +1204,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     if (!_save_file.empty())
     {
       _out.open(_save_file.c_str(), std::fstream::out | std::fstream::app);
-      _out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
-      << "<!DOCTYPE nzb PUBLIC \"-//newzBin//DTD NZB 1.0//EN\" \"http://www.newzbin.com/DTD/nzb/nzb-1.0.dtd\">\n"
-      << "<nzb xmlns=\"http://www.newzbin.com/DTD/2003/nzb\">\n";
+      NZB::print_header(_out);
     }
 
     std::vector<Task*> tasks;
