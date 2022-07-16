@@ -25,6 +25,8 @@
 #include "pad.h"
 #include "pan-file-entry.h"
 
+#include <pan/general/null.h>
+
 namespace
 {
   void

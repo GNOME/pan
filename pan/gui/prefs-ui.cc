@@ -40,6 +40,8 @@ extern "C" {
 
 #include <algorithm>
 
+#include <pan/general/null.h>
+
 using namespace pan;
 
 namespace pan

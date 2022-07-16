@@ -47,6 +47,8 @@
   #include <webkit/webkit.h>
 #endif
 
+#include <pan/general/null.h>
+
 #define FIRST_PICTURE "first-picture"
 
 #define FACE_SIZE 48

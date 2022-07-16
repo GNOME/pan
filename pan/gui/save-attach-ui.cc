@@ -33,6 +33,8 @@
 #include "save-attach-ui.h"
 #include "gtk-compat.h"
 
+#include <pan/general/null.h>
+
 using namespace pan;
 
 namespace

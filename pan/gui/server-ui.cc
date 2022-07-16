@@ -50,6 +50,8 @@
 #endif /* GTK_CHECK_VERSION(3,0,0) */
 #endif
 
+#include <pan/general/null.h>
+
 using namespace pan;
 
 /************

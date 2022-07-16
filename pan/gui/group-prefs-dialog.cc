@@ -38,6 +38,8 @@
 
 #include <iostream>
 
+#include <pan/general/null.h>
+
 namespace pan {
 
 namespace

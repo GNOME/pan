@@ -40,6 +40,8 @@
 #include "tango-colors.h"
 #include "gtk-compat.h"
 
+#include <pan/general/null.h>
+
 using namespace pan;
 
 /****

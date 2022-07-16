@@ -27,6 +27,8 @@
 #include "dl-headers-ui.h"
 #include "pad.h"
 
+#include <pan/general/null.h>
+
 using namespace pan;
 
 namespace

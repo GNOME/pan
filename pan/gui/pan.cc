@@ -83,6 +83,8 @@ extern "C" {
 //#define DEBUG_LOCALE 1
 //#define DEBUG_PARALLEL 1
 
+#include <pan/general/null.h>
+
 using namespace pan;
 
 namespace
