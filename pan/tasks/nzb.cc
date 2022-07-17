@@ -18,12 +18,18 @@
  *
  */
 
+#include "nzb.h"
+#include "task-article.h"
+#include "task-upload.h"
+
 #include <config.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <map>
+#include <regex>
+
 #include <glib.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
@@ -34,11 +40,8 @@
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/data-impl/rules-filter.h>
-#include "nzb.h"
-#include "task-article.h"
-#include "task-upload.h"
 
-using namespace pan;
+namespace pan {
 
 namespace
 {
@@ -259,17 +262,102 @@ namespace
   }
 }
 
+namespace {
+
+std::ostream &print_article(
+  std::ostream &out,
+  Article const &a,
+  bool task_dump = false,
+  bool paused = false,
+  Quark const *path = nullptr)
+{
+  int depth = 1;
+  out << indent(depth++) << "<file" << " poster=\"";
+  escaped (out, a.author.to_view());
+  out  << "\" date=\"" << a.time_posted << "\" subject=\"";
+  //This is nasty. pan munges the article title of a multipart article to
+  //xxxxxxxxx (/<parts>), but nzb wants (1/<parts>)
+  std::string subject(a.subject);
+  //Not doing this for task dump as I'm not entirely sure what task dump expects
+  //to load
+  if (not task_dump)
+  {
+      subject = std::regex_replace(subject,
+                                   std::regex("\\((/[0-9]*\\))$"),
+                                   "(1$1");
+  }
+  escaped (out, subject) << "\">\n";
+
+  if (task_dump)
+  {
+    // path to save this to.
+    // This isn't part of the nzb spec.
+    if (!path->empty()) {
+      out << indent(depth) << "<path>";
+      escaped (out, path->to_view());
+      out << "</path>\n";
+    }
+
+    out << indent(depth) <<"<paused>";
+    out << paused << "</paused>\n";
+  }
+
+  // what groups was this crossposted in?
+  quarks_t groups;
+  foreach_const (Xref, a.xref, xit)
+    groups.insert (xit->group);
+  out << indent(depth++) << "<groups>\n";
+  foreach_const (quarks_t, groups, git)
+    out << indent(depth) << "<group>" << *git << "</group>\n";
+  out << indent(--depth) << "</groups>\n";
+
+  // now for the parts...
+  out << indent(depth++) << "<segments>\n";
+  for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
+  {
+    std::string mid = it.mid ();
+
+    // remove the surrounding < > as per nzb spec
+    if (mid.size()>=2 && mid[0]=='<') {
+      mid.erase (0, 1);
+      mid.resize (mid.size()-1);
+    }
+
+    // serialize this part
+    out << indent(depth)
+        << "<segment" << " bytes=\"" << it.bytes() << '"'
+        << " number=\"" << it.number() << '"'
+        << ">";
+    escaped(out, mid);
+    out  << "</segment>\n";
+  }
+  out << indent(--depth) << "</segments>\n";
+  out << indent(--depth) << "</file>\n";
+  return out;
+}
+
+}
+
+std::ostream &NZB::print_header(std::ostream &out)
+{
+  out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
+      << "<!DOCTYPE nzb PUBLIC \"-//newzBin//DTD NZB 1.0//EN\" "
+      << "\"http://www.newzbin.com/DTD/nzb/nzb-1.0.dtd\">\n"
+      << "<nzb xmlns=\"http://www.newzbin.com/DTD/2003/nzb\">\n";
+  return out;
+}
+
+std::ostream &NZB::print_footer(std::ostream &out)
+{
+  return out << "</nzb>\n";
+}
+
 /* Saves all current tasks to ~/.$PAN_HOME/tasks.nzb */
 std::ostream&
 NZB :: nzb_to_xml (std::ostream             & out,
                    const std::vector<Task*> & tasks)
 {
-  int depth (0);
-
-  out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
-      << "<!DOCTYPE nzb PUBLIC \"-//newzBin//DTD NZB 1.0//EN\" \"http://www.newzbin.com/DTD/nzb/nzb-1.0.dtd\">\n"
-      << indent(depth++)
-      << "<nzb xmlns=\"http://www.newzbin.com/DTD/2003/nzb\">\n";
+  print_header(out);
 
   foreach_const (tasks_t, tasks, it)
   {
@@ -277,62 +365,20 @@ NZB :: nzb_to_xml (std::ostream             & out,
     if (task)
     {
 
-      if (task->get_save_path().empty()) // this task is for reading, not saving...
-        continue;
-
-      const Article& a (task->get_article());
-      out << indent(depth++)
-          << "<file" << " poster=\"";
-      escaped (out, a.author.to_view());
-      out  << "\" date=\"" << a.time_posted << "\" subject=\"";
-      escaped (out, a.subject.to_view()) << "\">\n";
-
-      // path to save this to.
-      // This isn't part of the nzb spec.
-      const Quark& path (task->get_save_path());
-      if (!path.empty()) {
-        out << indent(depth) << "<path>";
-        escaped (out, path.to_view());
-        out << "</path>\n";
-      }
-      out << indent(depth) <<"<paused>";
-      out << (task->start_paused()) << "</paused>\n";
-
-      // what groups was this crossposted in?
-      quarks_t groups;
-      foreach_const (Xref, a.xref, xit)
-        groups.insert (xit->group);
-      out << indent(depth++) << "<groups>\n";
-      foreach_const (quarks_t, groups, git)
-        out << indent(depth) << "<group>" << *git << "</group>\n";
-      out << indent(--depth) << "</groups>\n";
-
-      // now for the parts...
-      out << indent(depth++) << "<segments>\n";
-      for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
+      if (task->get_save_path().empty())
       {
-        std::string mid = it.mid ();
-
-        // remove the surrounding < > as per nzb spec
-        if (mid.size()>=2 && mid[0]=='<') {
-          mid.erase (0, 1);
-          mid.resize (mid.size()-1);
-        }
-
-        // serialize this part
-        out << indent(depth)
-            << "<segment" << " bytes=\"" << it.bytes() << '"'
-            << " number=\"" << it.number() << '"'
-            << ">";
-        escaped(out, mid);
-        out  << "</segment>\n";
+        // this task is for reading, not saving...
+        continue;
       }
-      out << indent(--depth) << "</segments>\n";
-      out << indent(--depth) << "</file>\n";
+
+      print_article(out,
+                    task->get_article(),
+                    true,
+                    task->start_paused(),
+                    &task->get_save_path());
     }
   }
-  out << indent(--depth) << "</nzb>\n";
-  return out;
+  return print_footer(out);
 }
 
 /* Saves upload_list to XML file for distribution */
@@ -340,51 +386,12 @@ std::ostream&
 NZB :: upload_list_to_xml_file (std::ostream   & out,
                    const std::vector<Article*> & tasks)
 {
-int depth (0);
 
   foreach_const (std::vector<Article*>, tasks, it)
   {
-    Article * task (*it);
-    const Article& a (*task);
-
-    out << indent(depth++)
-        << "<file" << " poster=\"";
-    escaped (out, a.author.to_view());
-    out  << "\" date=\"" << a.time_posted << "\" subject=\"";
-    escaped (out, a.subject.to_view()) << "\">\n";
-
-    // what groups was this crossposted in?
-    quarks_t groups;
-    foreach_const (Xref, a.xref, xit)
-      groups.insert (xit->group);
-    out << indent(depth++) << "<groups>\n";
-    foreach_const (quarks_t, groups, git)
-      out << indent(depth) << "<group>" << *git << "</group>\n";
-    out << indent(--depth) << "</groups>\n";
-
-    // now for the parts...
-    out << indent(depth++) << "<segments>\n";
-    for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
-    {
-      std::string mid  = it.mid ();
-
-      // remove the surrounding < > as per nzb spec
-      if (mid.size()>=2 && mid[0]=='<') {
-        mid.erase (0, 1);
-        mid.resize (mid.size()-1);
-      }
-
-      // serialize this part
-      out << indent(depth)
-          << "<segment" << " bytes=\"" << it.bytes() << '"'
-                        << " number=\"" << it.number() << '"'
-                        << ">";
-      escaped(out, mid);
-      out  << "</segment>\n";
-    }
-    out << indent(--depth) << "</segments>\n";
-    out << indent(--depth) << "</file>\n";
+    print_article(out, **it);
   }
+
   return out;
 }
 
@@ -393,60 +400,22 @@ std::ostream&
 NZB :: nzb_to_xml_file (std::ostream        & out,
                    const std::vector<Task*> & tasks)
 {
-  int depth (0);
-
-  out << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
-      << "<!DOCTYPE nzb PUBLIC \"-//newzBin//DTD NZB 1.0//EN\" \"http://www.newzbin.com/DTD/nzb/nzb-1.0.dtd\">\n"
-      << indent(depth++)
-      << "<nzb xmlns=\"http://www.newzbin.com/DTD/2003/nzb\">\n";
+  print_header(out);
 
   foreach_const (tasks_t, tasks, it)
   {
     TaskArticle * task (dynamic_cast<TaskArticle*>(*it));
-    if (!task) // not a download task, for example an upload task...
-      continue;
 
-    const Article& a (task->get_article());
-    out << indent(depth++)
-        << "<file" << " poster=\"";
-    escaped (out, a.author.to_view());
-    out  << "\" date=\"" << a.time_posted << "\" subject=\"";
-    escaped (out, a.subject.to_view()) << "\">\n";
-
-    // what groups was this crossposted in?
-    quarks_t groups;
-    foreach_const (Xref, a.xref, xit)
-      groups.insert (xit->group);
-    out << indent(depth++) << "<groups>\n";
-    foreach_const (quarks_t, groups, git)
-      out << indent(depth) << "<group>" << *git << "</group>\n";
-    out << indent(--depth) << "</groups>\n";
-
-    // now for the parts...
-    out << indent(depth++) << "<segments>\n";
-    for (Article::part_iterator it(a.pbegin()), end(a.pend()); it!=end; ++it)
+    if (!task)
     {
-      std::string mid = it.mid ();
-
-      // remove the surrounding < > as per nzb spec
-      if (mid.size()>=2 && mid[0]=='<') {
-        mid.erase (0, 1);
-        mid.resize (mid.size()-1);
-      }
-
-      // serialize this part
-      out << indent(depth)
-          << "<segment" << " bytes=\""  << it.bytes() << '"'
-                        << " number=\"" << it.number() << '"'
-                        << ">";
-      escaped(out, mid);
-      out  << "</segment>\n";
+      // not a download task, for example an upload task...
+      continue;
     }
-    out << indent(--depth) << "</segments>\n";
-    out << indent(--depth) << "</file>\n";
+
+    print_article(out, task->get_article());
   }
 
-  out << indent(--depth) << "</nzb>\n";
-  return out;
+  return print_footer(out);
 }
 
+}
