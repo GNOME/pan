@@ -35,6 +35,8 @@
 
 #include <pan/usenet-utils/gpg.h>
 
+#include <pan/general/null.h>
+
 using namespace pan;
 
 /***

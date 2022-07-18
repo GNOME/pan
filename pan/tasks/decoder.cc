@@ -36,6 +36,8 @@
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
 
+#include <pan/general/null.h>
+
 namespace pan {
 
 Decoder :: Decoder (WorkerPool& pool):

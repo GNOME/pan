@@ -33,6 +33,7 @@ noinst_HEADERS = \
  macros.h \
  map-vector.h \
  messages.h \
+ null.h \
  progress.h \
  quark.h \
  sorted-vector.h \

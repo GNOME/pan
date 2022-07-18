@@ -36,6 +36,8 @@ extern "C" {
 #include <pan/general/log.h>
 #include "data-io.h"
 
+#include <pan/general/null.h>
+
 using namespace pan;
 
 namespace

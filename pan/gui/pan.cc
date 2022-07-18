@@ -83,6 +83,8 @@ extern "C" {
 //#define DEBUG_LOCALE 1
 //#define DEBUG_PARALLEL 1
 
+#include <pan/general/null.h>
+
 using namespace pan;
 
 namespace
@@ -303,15 +305,15 @@ namespace
     }
 
     /* prefs::listener */
-    virtual void on_prefs_flag_changed (const StringView &key, bool value)
+    void on_prefs_flag_changed (const StringView &key, bool value) override
     {
        if(key == "status-icon")
          gtk_status_icon_set_visible(icon, value);
     }
 
-    virtual void on_prefs_int_changed (const StringView& key, int color) {}
-    virtual void on_prefs_string_changed (const StringView& key, const StringView& value) {}
-    virtual void on_prefs_color_changed (const StringView& key, const GdkColor& color) {}
+    void on_prefs_int_changed (const StringView& key, int color) override {}
+    void on_prefs_string_changed (const StringView& key, const StringView& value) override {}
+    void on_prefs_color_changed (const StringView& key, const GdkColor& color) override {}
 
     void update_status_tooltip()
     {
@@ -381,20 +383,20 @@ namespace
     }
 
     /* queue::listener */
-    virtual void on_queue_task_active_changed (Queue&, Task&, bool active) {}
-    virtual void on_queue_tasks_added (Queue&, int index UNUSED, int count)
+    void on_queue_task_active_changed (Queue&, Task&, bool active) override {}
+    void on_queue_tasks_added (Queue&, int index UNUSED, int count) override
     {
       tasks_total += count;
       update_status_tooltip();
       update_status_icon(ICON_STATUS_ACTIVE);
     }
-    virtual void on_queue_task_removed (Queue&, Task&, int pos UNUSED)
+    void on_queue_task_removed (Queue&, Task&, int pos UNUSED) override
     {
       update_status_icon(ICON_STATUS_ACTIVE);
     }
-    virtual void on_queue_task_moved (Queue&, Task&, int new_pos UNUSED, int old_pos UNUSED) {}
-    virtual void on_queue_connection_count_changed (Queue&, int count) {}
-    virtual void on_queue_size_changed (Queue&, int active, int total)
+    void on_queue_task_moved (Queue&, Task&, int new_pos UNUSED, int old_pos UNUSED) override {}
+    void on_queue_connection_count_changed (Queue&, int count) override {}
+    void on_queue_size_changed (Queue&, int active, int total) override
     {
       tasks_total = total;
       tasks_active = active;
@@ -403,7 +405,7 @@ namespace
       update_status_tooltip();
     }
 
-    virtual void on_queue_online_changed (Queue&, bool online)
+    void on_queue_online_changed (Queue&, bool online) override
     {
       is_online = online;
       if (tasks_total)
@@ -414,7 +416,7 @@ namespace
       update_status_tooltip();
     }
 
-    virtual void on_queue_error (Queue&, const StringView& message)
+    void on_queue_error (Queue&, const StringView& message) override
     {
       update_status_icon(ICON_STATUS_ERROR);
       if (n()) return;
@@ -422,10 +424,8 @@ namespace
       notify_of(ICON_STATUS_ERROR, message.str, _("An error has occurred!"));
     }
 
-    //virtual void on_queue_size_changed (Queue&, unsigned long, unsigned long) {}
-
     /* data::listener */
-    virtual void on_group_entered (const Quark& group, Article_Count unread, Article_Count total) override
+    void on_group_entered (const Quark& group, Article_Count unread, Article_Count total) override
     {
 
       if (static_cast<uint64_t>(unread) != 0)

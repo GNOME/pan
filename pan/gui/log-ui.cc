@@ -30,6 +30,8 @@
 #include <pan/general/string-view.h>
 #include "pad.h"
 
+#include <pan/general/null.h>
+
 namespace pan {
 
 namespace

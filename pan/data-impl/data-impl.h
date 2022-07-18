@@ -81,14 +81,14 @@ namespace pan
       void save_state() override final;
 
     public:
-      virtual ArticleCache& get_cache () { return _cache; }
-      virtual const ArticleCache& get_cache () const { return _cache; }
+      ArticleCache& get_cache () override { return _cache; }
+      const ArticleCache& get_cache () const override { return _cache; }
 
-      virtual EncodeCache& get_encode_cache () { return _encode_cache; }
-      virtual const EncodeCache& get_encode_cache () const { return _encode_cache; }
+      EncodeCache& get_encode_cache () override { return _encode_cache; }
+      const EncodeCache& get_encode_cache () const override { return _encode_cache; }
 
-      virtual CertStore& get_certstore () { return _certstore; }
-      virtual const CertStore& get_certstore () const { return _certstore; }
+      CertStore& get_certstore () override { return _certstore; }
+      const CertStore& get_certstore () const override { return _certstore; }
 
       virtual Prefs& get_prefs () { return _prefs; }
       virtual const Prefs& get_prefs () const { return _prefs; }
@@ -96,7 +96,7 @@ namespace pan
       virtual Queue* get_queue () { return _queue; }
       virtual const Queue* get_queue () const { return _queue; }
 
-      virtual void set_queue (Queue* q) { _queue = q; }
+      void set_queue (Queue* q) override { _queue = q; }
 
     private:
       ArticleCache _cache;
@@ -136,79 +136,79 @@ namespace pan
       servers_t _servers;
 
     public:
-      virtual const Server* find_server (const Quark& server) const;
-      virtual Server* find_server (const Quark& server);
-      virtual bool find_server_by_hn (const std::string& server, Quark& setme) const;
+      const Server* find_server (const Quark& server) const override;
+      Server* find_server (const Quark& server) override;
+      bool find_server_by_hn (const std::string& server, Quark& setme) const override;
 
     public: // mutators
 
-      virtual void delete_server (const Quark& server);
+      void delete_server (const Quark& server) override;
 
-      virtual Quark add_new_server ();
+      Quark add_new_server () override;
 
 
-      virtual void set_server_auth (const Quark       & server,
-                                    const StringView  & username,
-                                    gchar             *&password,
-                                    bool                use_gkr);
+      void set_server_auth (const Quark       & server,
+                            const StringView  & username,
+                            gchar             *&password,
+                            bool                use_gkr) override;
 
-      virtual void set_server_trust (const Quark      & servername,
-                                     int                setme);
+      void set_server_trust (const Quark      & servername,
+                             int                setme) override;
 
-      virtual void set_server_addr (const Quark       & server,
-                                    const StringView  & host,
-                                    const int           port);
+      void set_server_addr (const Quark       & server,
+                            const StringView  & host,
+                            const int           port) override;
 
-      virtual void set_server_limits (const Quark     & server,
-                                      int               max_connections);
+      void set_server_limits (const Quark     & server,
+                              int               max_connections) override;
 
-      virtual void set_server_rank (const Quark& server, int rank);
+      void set_server_rank (const Quark& server, int rank) override;
 
-      virtual void set_server_ssl_support (const Quark& server, int ssl);
+      void set_server_ssl_support (const Quark& server, int ssl) override;
 
-      virtual void set_server_cert (const Quark & server, const StringView & cert);
+      void set_server_cert (const Quark & server, const StringView & cert) override;
 
-      virtual void set_server_article_expiration_age  (const Quark  & server,
-                                                       int            days);
+      void set_server_article_expiration_age  (const Quark  & server,
+                                               int            days) override;
 
-      virtual void set_server_compression_type  (const Quark   & server,
-                                                 const int       setme);
+      void set_server_compression_type  (const Quark   & server,
+                                         const int       setme) override;
 
-      virtual void save_server_info (const Quark& server);
+      void save_server_info (const Quark& server) override;
 
     public: // accessors
 
-      virtual quarks_t get_servers () const {
+      quarks_t get_servers () const override {
         quarks_t servers;
         foreach_const (servers_t, _servers, it)
           servers.insert (it->first);
         return servers;
       }
 
-      virtual bool get_server_auth (const Quark   & server,
-                                    std::string   & setme_username,
-                                    gchar         *&setme_password,
-                                    bool            use_gkr);
+      bool get_server_auth (const Quark   & server,
+                            std::string   & setme_username,
+                            gchar         *&setme_password,
+                            bool            use_gkr) override;
 
-      virtual bool get_server_trust (const Quark  & servername, int&) const;
+      bool get_server_trust (const Quark  & servername, int&) const override;
 
-      virtual bool get_server_compression_type (const Quark  & servername, CompressionType&) const;
+      bool get_server_compression_type (const Quark  & servername, CompressionType&) const override;
 
-      virtual bool get_server_addr (const Quark   & server,
-                                    std::string   & setme_host,
-                                    int           & setme_port) const;
+      bool get_server_addr (const Quark   & server,
+                            std::string   & setme_host,
+                            int           & setme_port) const override;
 
-      virtual std::string get_server_address (const Quark& servername) const;
+      std::string get_server_address (const Quark& servername) const override;
 
-      virtual bool get_server_ssl_support (const Quark & server) const;
+      bool get_server_ssl_support (const Quark & server) const override;
 
-      virtual std::string get_server_cert (const Quark & server) const;
+      std::string get_server_cert (const Quark & server) const override;
 
-      virtual int get_server_rank (const Quark& server) const;
+      int get_server_rank (const Quark& server) const override;
 
-      virtual int get_server_limits (const Quark & server) const;
+      int get_server_limits (const Quark & server) const override;
 
-      virtual int get_server_article_expiration_age  (const Quark  & server) const;
+      int get_server_article_expiration_age  (const Quark  & server) const override;
 
     /**
     *** GROUPS
@@ -313,26 +313,26 @@ namespace pan
 
     public: // mutators
 
-      virtual void add_groups                 (const Quark       & server,
+      void add_groups                 (const Quark       & server,
                                                const NewGroup    * new_groups,
-                                               size_t              group_count);
+                                               size_t              group_count) override;
 
-      virtual void mark_group_read            (const Quark       & group);
+      void mark_group_read            (const Quark       & group) override;
 
-      virtual void set_group_subscribed       (const Quark       & group,
-                                               bool                sub);
+      void set_group_subscribed       (const Quark       & group,
+                                               bool                sub) override;
 
     public: // accessors
 
-      virtual const std::string& get_group_description (const Quark& group) const;
-      virtual void get_subscribed_groups (std::vector<Quark>&) const;
-      virtual void get_other_groups (std::vector<Quark>&) const;
+      const std::string& get_group_description (const Quark& group) const override;
+      void get_subscribed_groups (std::vector<Quark>&) const override;
+      void get_other_groups (std::vector<Quark>&) const override;
       virtual void get_group_counts (const Quark    & group,
                                      Article_Count  & setme_unread,
                                      Article_Count  & setme_total) const override;
-      virtual char get_group_permission (const Quark & group) const;
-      virtual void group_get_servers (const Quark& group, quarks_t&) const;
-      virtual void server_get_groups (const Quark& server, quarks_t&) const;
+      char get_group_permission (const Quark & group) const override;
+      void group_get_servers (const Quark& group, quarks_t&) const override;
+      void server_get_groups (const Quark& server, quarks_t&) const override;
 
     /**
     ***  HEADERS
@@ -405,7 +405,7 @@ namespace pan
       /***
        **
       ***/
-      virtual void fire_article_flag_changed (articles_t& a, const Quark& group);
+      void fire_article_flag_changed (articles_t& a, const Quark& group) override;
 
       struct GroupHeaders
       {
@@ -443,7 +443,7 @@ namespace pan
                               const nodes_t            & nodes,
                               const_nodes_v            & setme);
 
-      virtual void get_article_references (const Quark& group, const Article*, std::string& setme) const;
+      void get_article_references (const Quark& group, const Article*, std::string& setme) const override;
 
       /**
        * For a given ArticleNode, returns the first ancestor whose mid is in mid_pool.
@@ -484,10 +484,10 @@ namespace pan
           virtual ~MyTree ();
 
         public: // from ArticleTree
-          virtual void get_children (const Quark& mid, articles_t& setme) const;
-          virtual const Article* get_parent (const Quark& mid) const;
-          virtual const Article* get_article (const Quark& mid) const;
-          virtual size_t size () const;
+          void get_children (const Quark& mid, articles_t& setme) const override;
+          const Article* get_parent (const Quark& mid) const override;
+          const Article* get_article (const Quark& mid) const override;
+          size_t size () const override;
           void set_filter (const ShowType      show_type = SHOW_ARTICLES,
                            const FilterInfo  * criteria  = 0) final override;
           void set_rules  (const ShowType      show_type = SHOW_ARTICLES,
@@ -534,50 +534,50 @@ namespace pan
 
     public:  // Data interface
 
-      virtual void delete_articles             (const unique_articles_t&);
+      void delete_articles             (const unique_articles_t&) override;
 
-      virtual ArticleTree* group_get_articles  (const Quark        & group,
-                                                const Quark        & save_path,
-                                                const ShowType      show_type = SHOW_ARTICLES,
-                                                const FilterInfo   * criteria=0,
-                                                const RulesInfo    * rules=0) const;
+      ArticleTree* group_get_articles  (const Quark        & group,
+                                        const Quark        & save_path,
+                                        const ShowType      show_type = SHOW_ARTICLES,
+                                        const FilterInfo   * criteria=0,
+                                        const RulesInfo    * rules=0) const override;
 
-      virtual void group_clear_articles        (const Quark        & group);
+      void group_clear_articles        (const Quark        & group) override;
 
-      virtual bool is_read                     (const Article      *) const;
+      bool is_read                     (const Article      *) const override;
 
-      virtual void mark_read                   (const Article      & article,
-                                                bool                 mark_read);
+      void mark_read                   (const Article      & article,
+                                        bool                 mark_read) override;
 
-      virtual void mark_read                   (const Article     ** articles,
-                                                unsigned long        article_count,
-                                                bool                 mark_read=true);
+      void mark_read                   (const Article     ** articles,
+                                        unsigned long        article_count,
+                                        bool                 mark_read=true) override;
 
-      virtual void get_article_scores          (const Quark        & newsgroup,
-                                                const Article      & article,
-                                                Scorefile::items_t & setme) const;
+      void get_article_scores          (const Quark        & newsgroup,
+                                        const Article      & article,
+                                        Scorefile::items_t & setme) const override;
 
-      virtual void add_score (const StringView           & section_wildmat,
-                              int                          score_value,
-                              bool                         score_assign_flag,
-                              int                          lifespan_days,
-                              bool                         all_items_must_be_true,
-                              const Scorefile::AddItem   * items,
-                              size_t                       item_count,
-                              bool                         do_rescore);
+      void add_score (const StringView           & section_wildmat,
+                      int                          score_value,
+                      bool                         score_assign_flag,
+                      int                          lifespan_days,
+                      bool                         all_items_must_be_true,
+                      const Scorefile::AddItem   * items,
+                      size_t                       item_count,
+                      bool                         do_rescore) override;
 
-      virtual void comment_out_scorefile_line (const StringView    & filename,
-                                               size_t                begin_line,
-                                               size_t                end_line,
-                                               bool                  do_rescore);
+      void comment_out_scorefile_line (const StringView    & filename,
+                                       size_t                begin_line,
+                                       size_t                end_line,
+                                       bool                  do_rescore) override;
 
-      virtual void rescore_articles (const Quark& group, const quarks_t mids);
+      void rescore_articles (const Quark& group, const quarks_t mids) override;
 
-      virtual void rescore_group_articles (const Quark& group);
+      void rescore_group_articles (const Quark& group) override;
 
-      virtual void rescore ();
+      void rescore () override;
 
-      virtual std::string get_scorefile_name() const;
+      std::string get_scorefile_name() const override;
 
     private:
 
@@ -643,27 +643,27 @@ namespace pan
 
     public: // Data interface
 
-      virtual void xover_ref     (const Quark          & group);
+      void xover_ref     (const Quark          & group) override;
 
-      virtual const Article* xover_add  (const Quark          & server,
-                                         const Quark          & group,
-                                         const StringView     & subject,
-                                         const StringView     & author,
-                                         const time_t           date,
-                                         const StringView     & message_id,
-                                         const StringView     & references,
-                                         const unsigned long    byte_count,
-                                         const unsigned long    line_count,
-                                         const StringView     & xref,
-                                         const bool             is_virtual=false);
+      const Article* xover_add  (const Quark          & server,
+                                 const Quark          & group,
+                                 const StringView     & subject,
+                                 const StringView     & author,
+                                 const time_t           date,
+                                 const StringView     & message_id,
+                                 const StringView     & references,
+                                 const unsigned long    byte_count,
+                                 const unsigned long    line_count,
+                                 const StringView     & xref,
+                                 const bool             is_virtual=false) override;
 
       /** useful for xover unit testing */
       virtual void xover_flush   (const Quark           & group);
 
-      virtual void xover_unref   (const Quark           & group);
+      virtual void xover_unref   (const Quark           & group) override;
 
       virtual Article_Number get_xover_high (const Quark & group,
-                                       const Quark & server) const override;
+                                             const Quark & server) const override;
 
       virtual void set_xover_high (const Quark          & group,
                                    const Quark          & server,
@@ -680,9 +680,9 @@ namespace pan
 
     public:
 
-      virtual void save_tasks (const std::vector<Task*>& saveme);
+      void save_tasks (const std::vector<Task*>& saveme) override;
 
-      virtual void load_tasks (std::vector<Task*>& setme);
+      void load_tasks (std::vector<Task*>& setme) override;
 
 
 

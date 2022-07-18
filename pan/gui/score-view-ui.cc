@@ -26,6 +26,8 @@
 #include "score-view-ui.h"
 #include "gtk-compat.h"
 
+#include <pan/general/null.h>
+
 using namespace pan;
 
 namespace

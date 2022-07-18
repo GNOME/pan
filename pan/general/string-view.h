@@ -86,7 +86,7 @@ namespace pan
          StringView (const char * s, size_t l) { assign(s,l); }
          StringView (const char * s, const char * e) { assign(s,e-s); }
          StringView (const StringView& p): str(p.str), len(p.len) {}
-         constexpr StringView& operator=(StringView const &) = default;
+         StringView& operator=(StringView const &) = default;
          ~StringView () { str = (char*)0xDEADBEEF; len = (size_t)~0; }
 
       public:

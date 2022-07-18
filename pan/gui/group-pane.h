@@ -91,10 +91,10 @@ namespace pan
       const ActionManager& _action_manager;
 
     private:
-      virtual void on_prefs_flag_changed (const StringView& key, bool value);
-      virtual void on_prefs_int_changed (const StringView&, int) { }
-      virtual void on_prefs_string_changed (const StringView& key, const StringView& value);
-      virtual void on_prefs_color_changed (const StringView&, const GdkColor&);
+      void on_prefs_flag_changed (const StringView& key, bool value) override;
+      void on_prefs_int_changed (const StringView&, int) override { }
+      void on_prefs_string_changed (const StringView& key, const StringView& value) override;
+      void on_prefs_color_changed (const StringView&, const GdkColor&) override;
 
     private:
       quarks_t _dirty_groups;

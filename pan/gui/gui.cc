@@ -74,6 +74,8 @@ extern "C" {
 
 #include <pan/usenet-utils/gpg.h>
 
+#include <pan/general/null.h>
+
 namespace
 {
   std::string get_accel_filename () {
