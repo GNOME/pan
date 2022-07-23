@@ -49,6 +49,7 @@ namespace pan {
 
 
 Encoder :: Encoder (WorkerPool& pool):
+  health(OK),
   parts(0),
   task(nullptr),
   bpf(0),
@@ -57,8 +58,7 @@ Encoder :: Encoder (WorkerPool& pool):
   article(nullptr),
   percent(0.0),
   _worker_pool (pool),
-  _gsourceid (-1),
-  health(OK)
+  _gsourceid (-1)
 {}
 
 
