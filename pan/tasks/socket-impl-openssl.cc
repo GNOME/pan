@@ -65,10 +65,10 @@ extern "C" {
 //  }
 
 
-  const char*
-  get_last_error (int err)
+  static std::string
+  get_last_error (int err, char const *hpbuf)
   {
-    const char * msg = 0;
+    std::string msg;
     switch(err) {
       case WSANOTINITIALISED: msg = "No successful WSAStartup call yet."; break;
       case WSAENETDOWN: msg = "The network subsystem has failed."; break;
@@ -82,7 +82,7 @@ extern "C" {
       case 11001: msg = "Host not found"; break;
       default: msg = "Connect failed";
     }
-    return msg;
+    return msg + " (" + hpbuf + ")";
   }
 
 #else
@@ -167,7 +167,7 @@ GIOChannelSocketGnuTLS :: create_channel (const StringView& host_in, int port, s
 
     err = WSAGetLastError();
     if (err || !ans) {
-      setme_err = get_last_error (err);
+      setme_err = get_last_error (err, hpbuf);
       return 0;
     }
 
@@ -194,7 +194,7 @@ GIOChannelSocketGnuTLS :: create_channel (const StringView& host_in, int port, s
 
     if (err) {
       closesocket (sockfd);
-      setme_err = get_last_error (err);
+      setme_err = get_last_error (err, hpbuf);
       return 0;
     }
   }
