@@ -145,6 +145,11 @@ namespace
                                std::regex::extended | std::regex::icase);
 
     encoded_group = std::regex_replace(encoded_group, reserved, "$1%2E");
+
+    //Sigh - and finally we can't deal with a trailing '.' either
+    encoded_group = std::regex_replace(encoded_group,
+                                       std::regex("\\.$", std::regex::extended),
+                                       "%2E");
 #endif
 
     char * filename (g_build_filename (home.c_str(), "groups", encoded_group.c_str(), NULL));
