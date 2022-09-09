@@ -405,13 +405,13 @@ DataImpl :: load_part (const Quark          & group,
 
 namespace
 {
-  unsigned long view_to_ul (const StringView& view)
+  unsigned long long view_to_ull (const StringView& view)
   {
-    unsigned long val (0);
+    unsigned long long val (0ull);
     if (!view.empty()) {
       errno = 0;
-      val = strtoul (view.str, 0, 10);
-      if (errno) val = 0ul;
+      val = strtoull (view.str, 0, 10);
+      if (errno) val = 0ull;
     }
     return val;
   }
@@ -522,7 +522,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
         }
 
         // date-posted line
-        a.time_posted = view_to_ul (s);
+        a.time_posted = view_to_ull (s);
         const int days_old ((now - a.time_posted) / (24*60*60));
 
         // xref line
@@ -581,7 +581,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
             s.pop_token (part_mid);
             if (part_mid.len==1 && *part_mid.str=='"')
               part_mid = a.message_id.to_view ();
-            s.pop_token(tok); part_bytes = view_to_ul (tok);
+            s.pop_token(tok); part_bytes = view_to_ull (tok);
             part_batch.add_part (number, part_mid, part_bytes);
 
             if (s.pop_token(tok)) a.lines += atoi (tok.str); // this field was removed in 0.115
