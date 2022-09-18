@@ -1455,7 +1455,7 @@ void GUI :: do_cancel_article ()
   g_object_unref (message);
 }
 
-bool GUI::deletion_confirmation_dialog()
+bool GUI::deletion_confirmation_dialog() const
 {
   bool ret(false);
   GtkWidget * d = gtk_message_dialog_new (

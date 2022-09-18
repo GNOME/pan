@@ -50,7 +50,7 @@ namespace pan
    * The main GUI object for Pan's GTK frontend
    * @ingroup GUI
    */
-  struct GUI:
+  struct GUI final:
     public virtual PanUI,
     public ActionManager,
     public WaitUI,
@@ -68,6 +68,10 @@ namespace pan
 
       GUI (Data& data, Queue&, Prefs&, GroupPrefs&);
       virtual ~GUI ();
+
+      GUI(GUI const &) = delete;
+      GUI &operator=(GUI const &) = delete;
+
       GtkWidget* root () { return _root; }
       typedef std::vector<std::string> strings_t;
 
@@ -86,121 +90,120 @@ namespace pan
       };
 
     public: // ActionManager
-      virtual bool is_action_active (const char * action_name) const;
-      virtual void activate_action (const char * action_name) const;
-      virtual void toggle_action (const char * action_name, bool) const;
-      virtual void sensitize_action (const char * action_name, bool) const;
-      virtual void hide_action (const char * key, bool b) const;
-      virtual GtkWidget* get_action_widget (const char * key) const;
-      virtual void disable_accelerators_when_focused (GtkWidget * entry) const;
+      bool is_action_active (const char * action_name) const override;
+      void activate_action (const char * action_name) const override;
+      void toggle_action (const char * action_name, bool) const override;
+      void sensitize_action (const char * action_name, bool) const override;
+      void hide_action (const char * key, bool b) const override;
+      GtkWidget* get_action_widget (const char * key) const override;
+      void disable_accelerators_when_focused (GtkWidget * entry) const override;
 
     public: // Prefs::Listener
-      virtual void on_prefs_flag_changed   (const StringView& key, bool value);
-      virtual void on_prefs_int_changed    (const StringView&,     int) { }
-      virtual void on_prefs_string_changed (const StringView& key, const StringView& value);
-      virtual void on_prefs_color_changed  (const StringView&,     const GdkColor&) { }
+      void on_prefs_flag_changed   (const StringView& key, bool value) override;
+      void on_prefs_int_changed    (const StringView&,     int) override { }
+      void on_prefs_string_changed (const StringView& key, const StringView& value) override;
+      void on_prefs_color_changed  (const StringView&,     const GdkColor&) override { }
 
     public: // PanUI
-      virtual void do_prompt_for_charset ();
-      virtual void do_save_articles ();
-      virtual void do_save_articles_from_nzb ();
-      virtual void do_save_articles_to_nzb ();
-      virtual void do_print ();
-      virtual void do_quit ();
-      virtual void do_import_tasks ();
-      virtual void do_import_tasks_from_nzb_stream (const char*);
-      virtual void do_cancel_latest_task ();
-      virtual void do_show_task_window ();
-      virtual void do_show_log_window ();
-      virtual void do_select_all_articles ();
-      virtual void do_unselect_all_articles ();
-      virtual void do_add_similar_to_selection ();
-      virtual void do_add_threads_to_selection ();
-      virtual void do_add_subthreads_to_selection ();
-      virtual void do_select_article_body ();
-      virtual void do_show_preferences_dialog ();
-      virtual void do_show_group_preferences_dialog ();
-      virtual void do_show_profiles_dialog ();
-      virtual void do_jump_to_group_tab ();
-      virtual void do_jump_to_header_tab ();
-      virtual void do_jump_to_body_tab ();
-      virtual void do_rot13_selected_text ();
-      virtual void do_download_selected_article ();
-      virtual void do_clear_header_pane ();
-      virtual void do_clear_body_pane ();
-      virtual void do_read_selected_article ();
-      virtual void do_read_more ();
-      virtual void do_read_less ();
-      virtual void do_read_next_unread_group ();
-      virtual void do_read_next_group ();
-      virtual void do_read_next_unread_article ();
-      virtual void do_read_next_article ();
-      virtual void do_read_next_watched_article ();
-      virtual void do_read_next_unread_thread ();
-      virtual void do_read_next_thread ();
-      virtual void do_read_previous_article ();
-      virtual void do_read_previous_thread ();
-      virtual void do_read_parent_article ();
-      virtual void do_show_servers_dialog ();
-      virtual void do_show_sec_dialog ();
-      virtual void do_collapse_thread ();
-      virtual void do_expand_thread ();
-      virtual void do_show_selected_article_info ();
-      virtual void do_plonk ();
-      virtual void do_watch ();
-      virtual void do_ignore ();
-      virtual void do_flag ();
-      virtual void do_flag_off ();
-      virtual void do_next_flag ();
-      virtual void do_last_flag ();
-      virtual void do_mark_all_flagged ();
-      virtual void do_invert_selection ();
-      virtual void do_show_score_dialog ();
-      virtual void do_show_new_score_dialog ();
-      virtual void do_cancel_article ();
-      virtual void do_supersede_article ();
-      virtual void do_delete_article ();
-      virtual bool deletion_confirmation_dialog();
-      virtual void do_clear_article_cache ();
-      virtual void do_mark_article_read ();
-      virtual void do_mark_article_unread ();
-      virtual void do_mark_thread_read ();
-      virtual void do_mark_thread_unread ();
-      virtual void do_post ();
-      virtual void do_followup_to ();
-      virtual void do_reply_to ();
+      void do_prompt_for_charset () override;
+      void do_save_articles () override;
+      void do_save_articles_from_nzb () override;
+      void do_save_articles_to_nzb () override;
+      void do_print () override;
+      void do_quit () override;
+      void do_import_tasks () override;
+      void do_import_tasks_from_nzb_stream (const char*) override;
+      void do_cancel_latest_task () override;
+      void do_show_task_window () override;
+      void do_show_log_window () override;
+      void do_select_all_articles () override;
+      void do_unselect_all_articles () override;
+      void do_add_similar_to_selection () override;
+      void do_add_threads_to_selection () override;
+      void do_add_subthreads_to_selection () override;
+      void do_select_article_body () override;
+      void do_show_preferences_dialog () override;
+      void do_show_group_preferences_dialog () override;
+      void do_show_profiles_dialog () override;
+      void do_jump_to_group_tab () override;
+      void do_jump_to_header_tab () override;
+      void do_jump_to_body_tab () override;
+      void do_rot13_selected_text () override;
+      void do_download_selected_article () override;
+      void do_clear_header_pane () override;
+      void do_clear_body_pane () override;
+      void do_read_selected_article () override;
+      void do_read_more () override;
+      void do_read_less () override;
+      void do_read_next_unread_group () override;
+      void do_read_next_group () override;
+      void do_read_next_unread_article () override;
+      void do_read_next_article () override;
+      void do_read_next_watched_article () override;
+      void do_read_next_unread_thread () override;
+      void do_read_next_thread () override;
+      void do_read_previous_article () override;
+      void do_read_previous_thread () override;
+      void do_read_parent_article () override;
+      void do_show_servers_dialog () override;
+      void do_show_sec_dialog () override;
+      void do_collapse_thread () override;
+      void do_expand_thread () override;
+      void do_show_selected_article_info () override;
+      void do_plonk () override;
+      void do_watch () override;
+      void do_ignore () override;
+      void do_flag () override;
+      void do_flag_off () override;
+      void do_next_flag () override;
+      void do_last_flag () override;
+      void do_mark_all_flagged () override;
+      void do_invert_selection () override;
+      void do_show_score_dialog () override;
+      void do_show_new_score_dialog () override;
+      void do_cancel_article () override;
+      void do_supersede_article () override;
+      void do_delete_article () override;
+      void do_clear_article_cache () override;
+      void do_mark_article_read () override;
+      void do_mark_article_unread () override;
+      void do_mark_thread_read () override;
+      void do_mark_thread_unread () override;
+      void do_post () override;
+      void do_followup_to () override;
+      void do_reply_to () override;
 #ifdef HAVE_MANUAL
-      virtual void do_pan_manual ();
+      void do_pan_manual () override;
 #endif
-      virtual void do_pan_web ();
-      virtual void do_bug_report ();
-      virtual void do_tip_jar ();
-      virtual void do_about_pan ();
-      virtual void do_work_online (bool);
-      virtual void do_layout (bool);
-      virtual void do_show_toolbar (bool);
-      virtual void do_show_group_pane (bool);
-      virtual void do_show_header_pane (bool);
-      virtual void do_show_body_pane (bool);
-      virtual void do_shorten_group_names (bool);
-      virtual void do_match_only_cached_articles (bool);
-      virtual void do_match_only_binary_articles (bool);
-      virtual void do_match_only_my_articles (bool);
-      virtual void do_match_only_unread_articles (bool);
-      virtual void do_match_only_read_articles (bool);
-      virtual void do_enable_toggle_rules (bool enable);
-      virtual void do_match_on_score_state (int);
-      virtual void do_show_matches (const Data::ShowType);
-      virtual void do_read_selected_group ();
-      virtual void do_mark_selected_groups_read ();
-      virtual void do_clear_selected_groups ();
-      virtual void do_xover_selected_groups ();
-      virtual void do_xover_subscribed_groups ();
-      virtual void do_download_headers ();
-      virtual void do_refresh_groups ();
-      virtual void do_subscribe_selected_groups ();
-      virtual void do_unsubscribe_selected_groups ();
-      virtual void do_edit_scores(GtkAction *);
+      void do_pan_web () override;
+      void do_bug_report () override;
+      void do_tip_jar () override;
+      void do_about_pan () override;
+      void do_work_online (bool) override final;
+      void do_layout (bool) override final;
+      void do_show_toolbar (bool) override;
+      void do_show_group_pane (bool) override;
+      void do_show_header_pane (bool) override;
+      void do_show_body_pane (bool) override;
+      void do_shorten_group_names (bool) override;
+      void do_match_only_cached_articles (bool) override;
+      void do_match_only_binary_articles (bool) override;
+      void do_match_only_my_articles (bool) override;
+      void do_match_only_unread_articles (bool) override;
+      void do_match_only_read_articles (bool) override;
+      void do_enable_toggle_rules (bool enable) override;
+      void do_match_on_score_state (int) override;
+      void do_show_matches (const Data::ShowType) override;
+      void do_read_selected_group () override;
+      void do_mark_selected_groups_read () override;
+      void do_clear_selected_groups () override;
+      void do_xover_selected_groups () override;
+      void do_xover_subscribed_groups () override;
+      void do_download_headers () override;
+      void do_refresh_groups () override;
+      void do_subscribe_selected_groups () override;
+      void do_unsubscribe_selected_groups () override;
+      void do_edit_scores(GtkAction *) override;
 #ifdef HAVE_GNUTLS
       void do_show_cert_failed_dialog(VerifyData* data);
       bool confirm_accept_new_cert_dialog(GtkWindow*, gnutls_x509_crt_t, const Quark&);
@@ -214,32 +217,33 @@ namespace pan
 
     private: // Queue::Listener
       friend class Queue;
-      virtual void on_queue_task_active_changed (Queue&, Task&, bool active);
-      virtual void on_queue_tasks_added (Queue&, int index UNUSED, int count UNUSED) { }
-      virtual void on_queue_task_removed (Queue&, Task&, int pos UNUSED) { }
-      virtual void on_queue_task_moved (Queue&, Task&, int new_pos UNUSED, int old_pos UNUSED) { }
-      virtual void on_queue_connection_count_changed (Queue&, int count);
-      virtual void on_queue_size_changed (Queue&, int active, int total);
-      virtual void on_queue_online_changed (Queue&, bool online);
-      virtual void on_queue_error (Queue&, const StringView& message);
+      void on_queue_task_active_changed (Queue&, Task&, bool active) override final;
+      void on_queue_tasks_added (Queue&, int index UNUSED, int count UNUSED) override { }
+      void on_queue_task_removed (Queue&, Task&, int pos UNUSED) override { }
+      void on_queue_task_moved (Queue&, Task&, int new_pos UNUSED, int old_pos UNUSED) override { }
+      void on_queue_connection_count_changed (Queue&, int count) override;
+      void on_queue_size_changed (Queue&, int active, int total) override;
+      void on_queue_online_changed (Queue&, bool online) override;
+      void on_queue_error (Queue&, const StringView& message) override;
 #ifdef HAVE_GNUTLS
     private:  // CertStore::Listener
-      virtual void on_verify_cert_failed(gnutls_x509_crt_t, std::string, int);
-      virtual void on_valid_cert_added (gnutls_x509_crt_t, std::string);
+      void on_verify_cert_failed(gnutls_x509_crt_t, std::string, int) override;
+      void on_valid_cert_added (gnutls_x509_crt_t, std::string) override;
 #endif
     private: // Log::Listener
-      virtual void on_log_entry_added (const Log::Entry& e);
-      virtual void on_log_cleared () {}
+      void on_log_entry_added (const Log::Entry& e) override;
+      void on_log_cleared () override {}
 
     private: // Progress::Listener
-      virtual void on_progress_finished (Progress&, int status);
+      void on_progress_finished (Progress&, int status) override;
 
     public: // WaitUI
-      virtual void watch_cursor_on ();
-      virtual void watch_cursor_off ();
+      void watch_cursor_on () override;
+      void watch_cursor_off () override;
 
     private:
       void set_selected_thread_score (int score);
+      bool deletion_confirmation_dialog() const;
 
     private:
       Data& _data;

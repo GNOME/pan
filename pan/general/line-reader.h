@@ -12,7 +12,7 @@ namespace pan
   /**
    * Interface for objects that read data line-by-line.
    *
-   * These hold live data when running Pan and test data 
+   * These hold live data when running Pan and test data
    * when we're running unit tests.
    *
    * Maybe this should be replaced with good ol' std::getline(istream).
@@ -31,13 +31,16 @@ namespace pan
    * A LineReader that reads from a local file.
    * @ingroup general
    */
-  class FileLineReader: public LineReader
+  class FileLineReader final: public LineReader
   {
     public:
       FileLineReader (const StringView& filename);
       virtual ~FileLineReader ();
       virtual bool getline (StringView& setme);
       virtual bool fail () const { return !_fp || ferror(_fp); }
+
+      FileLineReader(FileLineReader const &) = delete;
+      FileLineReader operator=(FileLineReader const &) = delete;
 
     private:
       char * _buf;
@@ -53,7 +56,7 @@ namespace pan
    *
    * @ingroup general
    */
-  class ScriptedLineReader: public LineReader
+  class ScriptedLineReader final: public LineReader
   {
     public:
       ScriptedLineReader () {}

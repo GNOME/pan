@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-/* 
+/*
  * e-util.c
  * Copyright 2000, 2001, Ximian, Inc.
  *
@@ -19,6 +19,8 @@
  * License along with this library; if not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "e-util.h"
+
 #include <config.h>
 #include <iostream>
 #include <cstdlib>
@@ -30,7 +32,10 @@ extern "C" {
 #include <glib.h>
 #include <glib/gi18n.h>
 #include "debug.h"
-#include "e-util.h"
+
+namespace pan {
+
+namespace {
 
 static char *
 e_strdup_strip(const char *string)
@@ -77,44 +82,7 @@ e_strftime(char *s, size_t max, const char *fmt, const struct tm *tm)
 #endif
 }
 
-#if 0
-static size_t 
-e_utf8_strftime(char *s, size_t max, const char *fmt, const struct tm *tm)
-{
-	size_t sz, ret;
-	char *locale_fmt, *buf;
-
-	locale_fmt = g_locale_from_utf8(fmt, -1, NULL, &sz, NULL);
-	if (!locale_fmt)
-		return 0;
-
-	ret = e_strftime(s, max, locale_fmt, tm);
-	if (!ret) {
-		g_free (locale_fmt);
-		return 0;
-	}
-
-	buf = g_locale_to_utf8(s, ret, NULL, &sz, NULL);
-	if (!buf) {
-		g_free (locale_fmt);
-		return 0;
-	}
-
-	if (sz >= max) {
-		char *tmp = buf + max - 1;
-		tmp = g_utf8_find_prev_char(buf, tmp);
-		if (tmp)
-			sz = tmp - buf;
-		else
-			sz = 0;
-	}
-	memcpy(s, buf, sz);
-	s[sz] = '\0';
-	g_free(locale_fmt);
-	g_free(buf);
-	return sz;
 }
-#endif
 
 /**
  * Function to do a last minute fixup of the AM/PM stuff if the locale
@@ -161,7 +129,7 @@ EvolutionDateMaker :: e_strftime_fix_am_pm (char *s,
   return ret;
 }
 
-size_t 
+size_t
 EvolutionDateMaker :: e_utf8_strftime_fix_am_pm (char *s,
                                                  size_t max,
                                                  const char *locale_fmt,
@@ -192,10 +160,15 @@ EvolutionDateMaker :: e_utf8_strftime_fix_am_pm (char *s,
 #define localtime_r(a,b) *(b) = *localtime(a)
 #endif
 
-void
-EvolutionDateMaker :: set_current_time (time_t now)
+EvolutionDateMaker :: EvolutionDateMaker (time_t now) :
+    locale_recent(g_locale_from_utf8 (_("%l:%M %p"), -1, NULL, NULL, NULL)),
+    locale_today(g_locale_from_utf8 (_("Today %l:%M %p"), -1, NULL, NULL, NULL)),
+    locale_this_week(g_locale_from_utf8 (_("%a %l:%M %p"), -1, NULL, NULL, NULL)),
+    locale_this_year(g_locale_from_utf8 (_("%b %d %l:%M %p"), -1, NULL, NULL, NULL)),
+    locale_old(g_locale_from_utf8 (_("%b %d %Y"), -1, NULL, NULL, NULL)),
+    now_time(now)
 {
-  now_time = now;
+  // set the current time
   localtime_r (&now_time, &now_tm);
   time_t tmp_time = now_time;
   const size_t secs_in_day = 60 * 60 * 24;
@@ -203,19 +176,6 @@ EvolutionDateMaker :: set_current_time (time_t now)
     tmp_time -= secs_in_day;
     localtime_r (&tmp_time, &last_seven_days[i]);
   }
-}
-
-EvolutionDateMaker :: EvolutionDateMaker (time_t now)
-{
-  // build the locale strings
-  locale_recent = g_locale_from_utf8 (_("%l:%M %p"), -1, NULL, NULL, NULL);
-  locale_today = g_locale_from_utf8 (_("Today %l:%M %p"), -1, NULL, NULL, NULL);
-  locale_this_week = g_locale_from_utf8 (_("%a %l:%M %p"), -1, NULL, NULL, NULL);
-  locale_this_year = g_locale_from_utf8 (_("%b %d %l:%M %p"), -1, NULL, NULL, NULL);
-  locale_old = g_locale_from_utf8 (_("%b %d %Y"), -1, NULL, NULL, NULL);
-
-  // set the current time
-  set_current_time (now);
 
   // test to see if am/pm symbols are defined in this locale
   char buf[10];
@@ -288,4 +248,6 @@ EvolutionDateMaker :: get_date_string (time_t then_time) const
   }
 
   return e_strdup_strip (buf);
+}
+
 }

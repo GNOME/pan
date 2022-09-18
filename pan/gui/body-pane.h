@@ -20,9 +20,11 @@
 #ifndef _BodyPane_h_
 #define _BodyPane_h_
 
+#include <config.h>
 #include "gtk-compat.h"
 #include <gmime/gmime.h>
 #include <pan/general/quark.h>
+#include <pan/usenet-utils/gpg.h>
 #include <pan/usenet-utils/text-massager.h>
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>

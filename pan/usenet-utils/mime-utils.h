@@ -20,6 +20,7 @@
 #ifndef _UtilMime_h_
 #define _UtilMime_h_
 
+#include <config.h>
 #include <vector>
 #include <glib.h>
 #include <gmime/gmime-filter.h>

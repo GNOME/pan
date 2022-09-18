@@ -17,17 +17,18 @@
  *
  */
 
+#include "parts.h"
+
 #include <config.h>
 #include <cassert>
 #include <algorithm>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
-#include "article.h"
-
-using namespace pan;
+#include <pan/general/string-view.h>
 
 #undef DEBUG
 
+namespace pan {
 /***
 ****
 ***/
@@ -62,7 +63,7 @@ namespace
     uint8_t b, e;
     const char * mid;
     size_t midlen;
-    Packer(): b(0), e(0), mid(0), midlen(0) {}
+    Packer(): b(0), e(0), mid(nullptr), midlen(0) {}
     void pack (char* buf) const {
       *buf++ = b;
       *buf++ = e;
@@ -87,7 +88,7 @@ namespace
     for (; b!=bmax; ++b)
       if (*k++ != *m++)
         break;
-    
+
     const int emax = std::min (shorter-b, (int)UCHAR_MAX);
     k = &key.back();
     m = &mid.back();
@@ -129,7 +130,6 @@ namespace
 /***
 ****
 ***/
-
 Parts :: Parts ():
   n_parts_total (0),
   part_mid_buf_len (0),
@@ -163,15 +163,18 @@ Parts :: Parts (const Parts& that):
 Parts&
 Parts :: operator= (const Parts& that)
 {
-  clear ();
+  if (this != &that)
+  {
+    clear ();
 
-  n_parts_total = that.n_parts_total;
-  part_mid_buf_len = that.part_mid_buf_len;
-  parts.reserve( n_parts_total );
-  parts = that.parts;
-  assert( parts.capacity() == n_parts_total );
-  part_mid_buf = new char [part_mid_buf_len];
-  memcpy (part_mid_buf, that.part_mid_buf, part_mid_buf_len);
+    n_parts_total = that.n_parts_total;
+    part_mid_buf_len = that.part_mid_buf_len;
+    parts.reserve( n_parts_total );
+    parts = that.parts;
+    assert( parts.capacity() == n_parts_total );
+    part_mid_buf = new char [part_mid_buf_len];
+    memcpy (part_mid_buf, that.part_mid_buf, part_mid_buf_len);
+  }
 
   return *this;
 }
@@ -188,7 +191,7 @@ Parts :: unpack_message_id (std::string  & setme,
   StringView v;
   v.str = part_mid_buf + part->mid_offset;
   v.len = 2 + strlen (v.str+2);
-  ::unpack_message_id (setme, v, reference_mid);
+  ::pan::unpack_message_id (setme, v, reference_mid);
 }
 
 bool
@@ -319,12 +322,15 @@ PartBatch :: add_part (number_t            number,
 PartBatch :: Part&
 PartBatch :: Part :: operator= (const PartBatch :: Part& that)
 {
-  number =  that.number;
-  bytes =  that.bytes;
-  len_used = that.len_used;
-  delete [] packed_mid;
-  packed_mid = new char [len_used];
-  memcpy (packed_mid, that.packed_mid, len_used);
+  if (this != &that)
+  {
+    number =  that.number;
+    bytes =  that.bytes;
+    len_used = that.len_used;
+    delete [] packed_mid;
+    packed_mid = new char [len_used];
+    memcpy (packed_mid, that.packed_mid, len_used);
+  }
   return *this;
 }
 
@@ -336,6 +342,7 @@ PartBatch :: Part :: Part (const PartBatch::Part& that):
 {
   memcpy (packed_mid, that.packed_mid, len_used);
 }
+
 PartBatch :: Part :: Part (number_t n, bytes_t b, size_t l):
     number(n),
     bytes(b),
@@ -350,3 +357,4 @@ PartBatch :: sort (void)
   std::sort (parts.begin (), parts.end ());
 }
 
+}

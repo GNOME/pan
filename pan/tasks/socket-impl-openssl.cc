@@ -537,7 +537,7 @@ GIOChannelSocketGnuTLS :: gnutls_read_line(GString* g, gsize *ret, GError **gerr
   if (_channel->read_buf->len == 0)
   {
     err = gnutls_record_recv (chan->session, tmp, tmp_size);
-    if (ret) *ret = err < 0 ? 0 : err;
+    *ret = err < 0 ? 0 : err;
     if(err < 0)
     {
       if ((err == GNUTLS_E_INTERRUPTED) ||

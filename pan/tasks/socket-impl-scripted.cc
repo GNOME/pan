@@ -17,15 +17,16 @@
  *
  */
 
+#include "socket-impl-scripted.h"
+
 #include <config.h>
 #include <cassert>
 #include <cstdlib>
 #include <pan/general/debug.h>
 #include <pan/general/messages.h>
 #include <pan/general/string-view.h>
-#include "socket-impl-scripted.h"
 
-using namespace pan;
+namespace pan {
 
 const std::string ScriptedSocket::ABORT ("[[[ABORT]]]");
 const std::string ScriptedSocket::NETWORK_ERROR ("[[[NETWORK ERROR]]]");
@@ -48,8 +49,8 @@ ScriptedSocket :: open (const StringView& address UNUSED, int port UNUSED)
 void ScriptedSocket :: write_command (const StringView& chars, Listener * l)
 {
    if (_script.empty()) {
-      debug ("UNEXPECTED [" << chars << ']');
-      assert (!_script.empty());
+      std::cerr << "UNEXPECTED [" << chars << "]\n";
+      abort();
    }
 
    command_and_responses_t cat (_script.front());
@@ -108,4 +109,6 @@ void
 ScriptedSocket :: clear ()
 {
    _script.clear ();
+}
+
 }

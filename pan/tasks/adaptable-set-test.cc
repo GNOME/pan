@@ -40,7 +40,7 @@ class MyListener:
     void clear () {
       index_of_added = index_of_removed = old_index_of_moved = new_index_of_moved = -1;
     }
-    MyListener () {
+    MyListener () : value() {
       clear ();
     }
     bool empty () const {
@@ -317,6 +317,6 @@ int main ()
   check (m[12] == 20)
   check (m[13] == 25)
   check (m[14] == 30)
- 
+
   return 0;
 }

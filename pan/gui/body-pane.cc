@@ -17,6 +17,8 @@
  *
  */
 
+#include "body-pane.h"
+
 #include <config.h>
 #include <cctype>
 #include <cmath>
@@ -35,7 +37,6 @@
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/usenet-utils/url-find.h>
 #include <pan/icons/pan-pixbufs.h>
-#include "body-pane.h"
 #include "pad.h"
 #include "tango-colors.h"
 #include "xface.h"
@@ -53,7 +54,7 @@
 
 #define FACE_SIZE 48
 
-using namespace pan;
+namespace pan {
 
 /***
 ****
@@ -599,11 +600,11 @@ namespace
                               int                      utf8_byte_len)
   {
     const char * str = utf8_line;
-    const char * line_end = utf8_line + utf8_byte_len;
     const char * retval = "quote_0";
 
     if (0<utf8_byte_len && str && *str)
     {
+      const char * line_end = utf8_line + utf8_byte_len;
       int depth = 0;
 
       // walk past leading spaces
@@ -621,12 +622,13 @@ namespace
         str = g_utf8_next_char (str);
       }
 
-      if (!depth)
-        retval = "quote_0";
-      else switch (depth % 3) {
-        case 1: retval = "quote_1"; break;
-        case 2: retval = "quote_2"; break;
-        case 0: retval = "quote_3"; break;
+      if (depth != 0)
+      {
+        switch (depth % 3) {
+          case 1: retval = "quote_1"; break;
+          case 2: retval = "quote_2"; break;
+          case 0: retval = "quote_3"; break;
+        }
       }
     }
 
@@ -1522,13 +1524,13 @@ BodyPane :: copy_url_cb (GtkMenuItem *mi G_GNUC_UNUSED, gpointer pane)
 {
   static_cast<BodyPane*>(pane)->copy_url ();
 }
+
 void
 BodyPane :: copy_url ()
 {
   gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD),
                           _hover_url.c_str(), _hover_url.size());
 }
-
 
 void
 BodyPane :: populate_popup_cb (GtkTextView *v, GtkMenu *m, gpointer pane)
@@ -1570,8 +1572,8 @@ namespace
     {
       gtk_menu_popup
       (GTK_MENU(bp->_menu), NULL, NULL, NULL, NULL,
-      (event ? event->button : 0),
-      (event ? event->time : 0));
+      event->button,
+      event->time);
     }
 
     return TRUE;
@@ -2232,4 +2234,6 @@ BodyPane :: set_character_encoding (const char * charset)
     _charset.clear ();
 
   refresh ();
+}
+
 }

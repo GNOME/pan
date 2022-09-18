@@ -17,6 +17,8 @@
  *
  */
 
+#include "prefs.h"
+
 #include <config.h>
 #include <cstdlib>
 #include <fstream>
@@ -28,13 +30,13 @@
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
-#include "prefs.h"
 #include "group-prefs.h"
 
-using namespace pan;
+namespace pan {
 
 Prefs :: Prefs() :
-  _rules_changed(false)
+  _rules_changed(false),
+  _rules_enabled(false)
 {}
 
 Prefs :: ~Prefs()
@@ -402,4 +404,4 @@ Prefs :: get_color_str_wo_fallback (const StringView& key) const
   return color_to_string (col);
 }
 
-
+}
