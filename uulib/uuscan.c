@@ -495,7 +495,7 @@ ParseHeader (headers *theheaders, char *line)
 	theheaders->fname = _FP_strdup (thenew);
       }
     }
-    variable = NULL;
+    return theheaders;
   }
   else {
     /*

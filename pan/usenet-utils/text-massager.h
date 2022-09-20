@@ -43,6 +43,10 @@ namespace pan
     public:
       TextMassager ();
       ~TextMassager ();
+
+      TextMassager(TextMassager const &) = delete;
+      TextMassager &operator=(TextMassager const &) = delete;
+
     public:
       static char* rot13_inplace (char * text);
       std::string mute_quotes (const StringView& text) const;

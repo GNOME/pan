@@ -17,6 +17,8 @@
  *
  */
 
+#include "log-ui.h"
+
 #include <config.h>
 #include <ostream>
 #include <fstream>
@@ -26,12 +28,11 @@
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/string-view.h>
-#include "log-ui.h"
 #include "pad.h"
 
 #include <pan/general/null.h>
 
-using namespace pan;
+namespace pan {
 
 namespace
 {
@@ -215,7 +216,7 @@ namespace
     gtk_tree_model_get (model, iter, COL_MESSAGE, &log_entry, -1);
     bool bold (log_entry->is_child);
     g_object_set (renderer,
-                  "text", log_entry ? log_entry->message.c_str() : "",
+                  "text", log_entry->message.c_str(),
                   "weight", bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL,
                   NULL);
   }
@@ -224,7 +225,7 @@ namespace
 }
 
 gboolean
-pan :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
+on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointer userdata)
 {
   // single click with the right mouse button?
   if (event->type == GDK_BUTTON_PRESS && event->button == 3)
@@ -253,7 +254,7 @@ pan :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointer u
 }
 
 GtkWidget*
-pan :: log_dialog_new (Prefs& prefs, GtkWindow* window)
+log_dialog_new (Prefs& prefs, GtkWindow* window)
 {
   GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Pan: Events"),
                                                     window,
@@ -333,4 +334,6 @@ pan :: log_dialog_new (Prefs& prefs, GtkWindow* window)
   g_signal_connect (view, "button-press-event", G_CALLBACK(on_button_pressed), view);
 
   return dialog;
+}
+
 }

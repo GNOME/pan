@@ -319,6 +319,9 @@ case $host_os in
 esac
 AM_CONDITIONAL([HAVE_WIN32],[test "$win32" = "yes"])
 
+dnl Sanity checking
+CXXFLAGS="$CXXFLAGS -Wreorder"
+
 dnl Build the output files
 AC_SUBST(panlocaledir)
 AC_CONFIG_FILES([Makefile

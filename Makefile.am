@@ -49,3 +49,42 @@ EXTRA_DIST = \
  $(man_MANS) \
  $(NULL)
 
+# A note: -j doesn't work reliably on mingw otherwise would be -j 4
+CPPCHECK_CMD = cppcheck \
+    --force \
+    --inline-suppr \
+    --error-exitcode=1 \
+    -I .
+
+CPPCHECK_DIRS = \
+    .
+
+CPPCHECK_OUT_PREFIX = $(top_builddir)/cppcheck-
+
+CPPCHECK_OUT_EXT = log.txt
+
+cppcheck:
+	echo $(CPPCHECK_CMD) --enable=all $(CPPCHECK_DIRS)
+	$(CPPCHECK_CMD) --enable=all $(CPPCHECK_DIRS) --output-file=$(CPPCHECK_OUT_PREFIX)all.$(CPPCHECK_OUT_EXT)
+
+cppcheck-information:
+	$(CPPCHECK_CMD) --enable=information $(CPPCHECK_DIRS) --output-file=$(CPPCHECK_OUT_PREFIX)information.$(CPPCHECK_OUT_EXT)
+
+cppcheck-performance:
+	$(CPPCHECK_CMD) --enable=performance $(CPPCHECK_DIRS) --output-file=$(CPPCHECK_OUT_PREFIX)performance.$(CPPCHECK_OUT_EXT)
+
+cppcheck-portability:
+	$(CPPCHECK_CMD) --enable=portability $(CPPCHECK_DIRS) --output-file=$(CPPCHECK_OUT_PREFIX)portability.$(CPPCHECK_OUT_EXT)
+
+cppcheck-style:
+	$(CPPCHECK_CMD) --enable=style $(CPPCHECK_DIRS) --output-file=$(CPPCHECK_OUT_PREFIX)style.$(CPPCHECK_OUT_EXT)
+
+cppcheck-warning:
+	$(CPPCHECK_CMD) --enable=warning $(CPPCHECK_DIRS) --output-file=$(CPPCHECK_OUT_PREFIX)warning.$(CPPCHECK_OUT_EXT)
+
+# Separate because unusedFunction is disabled with -j
+cppcheck-unusedFunction:
+	$(CPPCHECK_CMD) --enable=unusedFunction $(CPPCHECK_DIRS) --output-file=$(CPPCHECK_OUT_PREFIX)unusedFunction.$(CPPCHECK_OUT_EXT)
+
+cppcheck-missingInclude:
+	$(CPPCHECK_CMD) --enable=missingInclude $(CPPCHECK_DIRS) --output-file=$(CPPCHECK_OUT_PREFIX)missingInclude.$(CPPCHECK_OUT_EXT)

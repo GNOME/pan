@@ -617,8 +617,8 @@ namespace
     cerr.ios::rdbuf( t2 );
     err.ios::rdbuf( tmp );
 
-    freopen( "CONOUT$", "w", stdout );
-    freopen( "CONOUT$", "w", stderr );
+    (void)freopen( "CONOUT$", "w", stdout );
+    (void)freopen( "CONOUT$", "w", stderr );
   }
 #else
   void console()

@@ -1,5 +1,5 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
-/* 
+/*
  * e-util.h
  * Copyright 2000, 2001, Ximian, Inc.
  *
@@ -25,6 +25,8 @@
 #include <stddef.h>
 #include <time.h>
 
+namespace pan {
+
 class EvolutionDateMaker
 {
   private:
@@ -49,8 +51,9 @@ class EvolutionDateMaker
   public:
     EvolutionDateMaker (time_t n=time(0));
     ~EvolutionDateMaker ();
-    void set_current_time (time_t n);
     char* get_date_string (time_t date) const;
 };
+
+}
 
 #endif /* _E_UTIL_H_ */

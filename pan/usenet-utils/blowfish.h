@@ -26,8 +26,12 @@ private:
 	void 		Blowfish_decipher (DWORD *xl, DWORD *xr) ;
 
 public:
-			CBlowFish () ;
-			~CBlowFish () ;
+  CBlowFish () ;
+  ~CBlowFish () ;
+
+  CBlowFish(CBlowFish const &) = delete;
+  CBlowFish &operator=(CBlowFish const &) = delete;
+
 	void 		Initialize (BYTE key[], int keybytes) ;
 	DWORD		GetOutputLength (DWORD lInputLong) ;
 	DWORD		Encode (BYTE * pInput, BYTE * pOutput, DWORD lSize) ;

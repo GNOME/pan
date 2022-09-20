@@ -64,7 +64,7 @@ namespace pan
    *
    * @ingroup data_impl
    */
-  class DataImpl:
+  class DataImpl final:
     public Data,
     public TaskArchive,
     public ProfilesImpl
@@ -78,7 +78,7 @@ namespace pan
       /* The ProfilesImpl will own and destruct the DataIO object */
       DataImpl (const StringView& cache_ext, Prefs& prefs, bool unit_test=false, int cache_megs=10, DataIO * source=new DataIO());
       virtual ~DataImpl ();
-      void save_state () override;
+      void save_state() override final;
 
     public:
       ArticleCache& get_cache () override { return _cache; }
@@ -470,7 +470,7 @@ namespace pan
 
     private:
 
-      class MyTree: public Data::ArticleTree
+      class MyTree final: public Data::ArticleTree
       {
         friend class DataImpl;
 
@@ -489,9 +489,9 @@ namespace pan
           const Article* get_article (const Quark& mid) const override;
           size_t size () const override;
           void set_filter (const ShowType      show_type = SHOW_ARTICLES,
-                                   const FilterInfo  * criteria  = 0) override;
+                           const FilterInfo  * criteria  = 0) final override;
           void set_rules  (const ShowType      show_type = SHOW_ARTICLES,
-                                   const RulesInfo   * rules  = 0) override;
+                           const RulesInfo   * rules  = 0) final override;
 
         public:
           void articles_changed (const quarks_t& mids, bool do_refilter);

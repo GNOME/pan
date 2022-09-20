@@ -17,6 +17,8 @@
  *
  */
 
+#include "server-ui.h"
+
 #include <config.h>
 #include <cstdlib>
 #include <cstring>
@@ -31,7 +33,6 @@
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
 #include <pan/usenet-utils/ssl-utils.h>
-#include "server-ui.h"
 #include "pad.h"
 #include "hig.h"
 #include "gtk-compat.h"
@@ -52,7 +53,7 @@
 
 #include <pan/general/null.h>
 
-using namespace pan;
+namespace pan {
 
 /************
 *************  EDIT DIALOG
@@ -79,8 +80,25 @@ namespace
     GtkWidget * compression_combo;
     GtkWidget * ssl_combo;
     GtkWidget * always_trust_checkbox;
-    ServerEditDialog (Data& d, Queue& q, Prefs& p): data(d), queue(q), prefs(p) {}
     CompressionType compressiontype;
+
+    ServerEditDialog (Data& d, Queue& q, Prefs& p):
+      data(d),
+      queue(q),
+      prefs(p),
+      dialog(nullptr),
+      address_entry(nullptr),
+      port_spin(nullptr),
+      auth_username_entry(nullptr),
+      auth_password_entry(nullptr),
+      connection_limit_spin(nullptr),
+      expiration_age_combo(nullptr),
+      rank_combo(nullptr),
+      compression_combo(nullptr),
+      ssl_combo(nullptr),
+      always_trust_checkbox(nullptr),
+      compressiontype(HEADER_COMPRESS_NONE)
+    {}
 
   };
 
@@ -310,7 +328,7 @@ namespace
 }
 
 std::string
-pan :: import_sec_from_disk_dialog_new (Data& data, Queue& queue, GtkWindow * window)
+import_sec_from_disk_dialog_new (Data& data, Queue& queue, GtkWindow * window)
 {
   std::string prev_path = g_get_home_dir ();
   std::string res;
@@ -347,7 +365,7 @@ namespace
 }
 
 GtkWidget*
-pan :: server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * window, const Quark& server)
+server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * window, const Quark& server)
 {
   ServerEditDialog * d (new ServerEditDialog (data, queue, prefs));
 
@@ -565,7 +583,16 @@ namespace
     GtkListStore * servers_store;
     GtkWidget * remove_button;
     GtkWidget * edit_button;
-    ServerListDialog (Data& d, Queue& q, Prefs& p): data(d), queue(q), prefs(p) {}
+    ServerListDialog (Data& d, Queue& q, Prefs& p):
+      data(d),
+      queue(q),
+      prefs(p),
+      server_tree_view(nullptr),
+      dialog(nullptr),
+      servers_store(nullptr),
+      remove_button(nullptr),
+      edit_button(nullptr)
+    {}
   };
 
 
@@ -906,7 +933,7 @@ namespace
 #endif
 
 GtkWidget*
-pan :: server_list_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
+server_list_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
 {
   ServerListDialog * d = new ServerListDialog (data, queue, prefs);
 
@@ -982,7 +1009,7 @@ pan :: server_list_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow
 
 
 void
-pan :: render_cert_flag (GtkTreeViewColumn * ,
+render_cert_flag (GtkTreeViewColumn * ,
                          GtkCellRenderer   * renderer,
                          GtkTreeModel      * model,
                          GtkTreeIter       * iter,
@@ -995,7 +1022,7 @@ pan :: render_cert_flag (GtkTreeViewColumn * ,
 
 
 GtkWidget*
-pan :: sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
+sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
 {
 #ifdef HAVE_GNUTLS
   ServerListDialog * d = new ServerListDialog (data, queue, prefs);
@@ -1079,4 +1106,6 @@ pan :: sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent
 #else
   return 0;
 #endif
+}
+
 }

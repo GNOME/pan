@@ -34,7 +34,7 @@ namespace pan
    * Dialog for showing and manipulating Tasks in a Queue.
    * @ingroup GUI
    */
-  class TaskPane: private Queue::Listener
+  class TaskPane final: private Queue::Listener
   {
     public:
       TaskPane (Queue&, Prefs&);
@@ -43,14 +43,14 @@ namespace pan
       //void rebuild ();
 
     private: // inherited from Queue::Listener
-      virtual void on_queue_task_active_changed (Queue&, Task&, bool active);
-      virtual void on_queue_tasks_added (Queue&, int index, int count);
-      virtual void on_queue_task_removed (Queue&, Task&, int index);
-      virtual void on_queue_task_moved (Queue&, Task&, int new_index, int old_index);
-      virtual void on_queue_connection_count_changed (Queue&, int count);
-      virtual void on_queue_size_changed (Queue&, int active, int total);
-      virtual void on_queue_online_changed (Queue&, bool online);
-      virtual void on_queue_error (Queue&, const StringView&) { }
+      void on_queue_task_active_changed (Queue&, Task&, bool active) override;
+      void on_queue_tasks_added (Queue&, int index, int count) override;
+      void on_queue_task_removed (Queue&, Task&, int index) override;
+      void on_queue_task_moved (Queue&, Task&, int new_index, int old_index) override;
+      void on_queue_connection_count_changed (Queue&, int count) override;
+      void on_queue_size_changed (Queue&, int active, int total) override;
+      void on_queue_online_changed (Queue&, bool online) override final;
+      void on_queue_error (Queue&, const StringView&) override { }
 
     private:
       static gboolean on_tooltip_query(GtkWidget  *widget,

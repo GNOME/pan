@@ -21,6 +21,8 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  */
+#include "decoder.h"
+
 #include <config.h>
 #include <cerrno>
 #include <ostream>
@@ -33,14 +35,19 @@
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
-#include "decoder.h"
 
 #include <pan/general/null.h>
 
-using namespace pan;
+namespace pan {
 
 Decoder :: Decoder (WorkerPool& pool):
+  mark_read(false),
   health(OK),
+  task(nullptr),
+  save_mode(TaskArticle::NONE),
+  options(TaskArticle::SAVE_AS),
+  percent(0.0),
+  num_scanned_files(0),
   _worker_pool (pool),
   _gsourceid (-1)
 {
@@ -341,4 +348,6 @@ Decoder :: disable_progress_update ()
     g_source_remove (_gsourceid);
     _gsourceid = -1;
   }
+}
+
 }

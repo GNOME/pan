@@ -17,6 +17,8 @@
  *
  */
 
+#include "dl-headers-ui.h"
+
 #include <config.h>
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -24,12 +26,11 @@
 #include <pan/general/macros.h>
 #include <pan/tasks/queue.h>
 #include <pan/tasks/task-xover.h>
-#include "dl-headers-ui.h"
 #include "pad.h"
 
 #include <pan/general/null.h>
 
-using namespace pan;
+namespace pan {
 
 namespace
 {
@@ -46,7 +47,20 @@ namespace
     GtkWidget * n_headers_spinbutton;
     GtkWidget * n_days_rb;
     GtkWidget * n_days_spinbutton;
-    State (Data& d, Prefs& p, Queue& q): data(d), prefs(p), queue(q) {}
+
+    State (Data& d, Prefs& p, Queue& q):
+      data(d),
+      prefs(p),
+      queue(q),
+      dialog(nullptr),
+      all_headers_rb(nullptr),
+      new_headers_rb(nullptr),
+      n_headers_rb(nullptr),
+      n_headers_spinbutton(nullptr),
+      n_days_rb(nullptr),
+      n_days_spinbutton(nullptr)
+
+   {}
   };
 
   void delete_state (gpointer state_gpointer)
@@ -96,8 +110,7 @@ namespace
   }
 }
 
-void
-pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
+void headers_dialog (Data& data, Prefs& prefs, Queue& queue,
                        const quarks_t& groups,
                        GtkWindow * parent)
 {
@@ -161,4 +174,6 @@ pan :: headers_dialog (Data& data, Prefs& prefs, Queue& queue,
     g_object_set_data_full (G_OBJECT(state->dialog), "state", state, delete_state);
     gtk_widget_show_all (state->dialog);
   }
+}
+
 }

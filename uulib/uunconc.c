@@ -910,7 +910,9 @@ UUDecodePT (FILE *datain, FILE *dataout, int *state,
 int
 UUDecodeField (char *s, char *d, int method)
 {
-  int z1, z2, z3, z4;
+  //Intialise z2 - z4 to something, just in case the 1st character in s
+  //causes us to break out of the loop below.
+  int z1, z2 = -1, z3 = -1, z4 = -1;
   int count=0;
 
   if (method == B64ENCODED) {
