@@ -23,6 +23,7 @@
 #include <config.h>
 #include <vector>
 #include <glib.h>
+#include <gmime/gmime.h>
 #include <gmime/gmime-filter.h>
 #include <gmime/gmime-stream.h>
 #include <gmime/gmime-message.h>
