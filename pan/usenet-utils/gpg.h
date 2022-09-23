@@ -24,6 +24,7 @@
 
 #ifdef HAVE_GMIME_CRYPTO
 
+#include <gmime/gmime.h>
 #include <map>
 #include <vector>
 
