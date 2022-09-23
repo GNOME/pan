@@ -62,3 +62,27 @@ build-ubuntu-gtk3:
     - ../autogen.sh --with-gnutls --with-dbus --with-gmime-crypto --with-gtkspell --enable-libnotify --enable-gkr --enable-manual
     - make
     - make distcheck
+
+build-ubuntu-gtk3-bare-bones:
+  image: ubuntu:rolling
+  stage: build
+  except:
+    - tags
+  before_script:
+    - apt-get update
+    - apt-get install -q -y --no-install-recommends
+        build-essential
+        autoconf
+        autopoint
+        automake
+        gettext
+        gcc
+        libglib2.0-dev-bin
+        libgtk-3-dev
+        libsecret-1-dev
+        yelp-tools
+  script:
+    - mkdir _build
+    - cd _build
+    - ../autogen.sh
+    - make
