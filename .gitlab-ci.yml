@@ -85,5 +85,5 @@ build-ubuntu-gtk3-bare-bones:
   script:
     - mkdir _build
     - cd _build
-    - ../autogen.sh
+    - ../autogen.sh--without --without-gtkspell
     - make
