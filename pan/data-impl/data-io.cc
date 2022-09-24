@@ -17,28 +17,33 @@
  *
  */
 
+#include "data-io.h"
+
 #include <config.h>
 #include <cerrno>
 #include <cstdio>
-#include <map>
-#include <iostream>
 #include <fstream>
+#include <istream>
+#include <map>
+#include <ostream>
+#include <regex>
+
 extern "C" {
   #include <sys/types.h> // for chmod
   #include <sys/stat.h> // for chmod
   #include <unistd.h>
 }
+
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/line-reader.h>
 #include <pan/general/log.h>
-#include "data-io.h"
 
 #include <pan/general/null.h>
 
-using namespace pan;
+namespace pan {
 
 namespace
 {
@@ -71,10 +76,83 @@ namespace
     return get_pan_home_file ("newsgroups.xov");
   }
 
+  bool is_reserved_char(char c)
+  {
+#ifdef G_OS_WIN32
+    //Windows filing systems aren't case sensitive. But there are groups out
+    //there with upper case names... I can't help thinking some system should
+    //validate group names for sanity but apparently no such thing.
+    //You could get rid of this if you ensured people ran
+    //Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+    //fsutil.exe file SetCaseSensitiveInfo <path to groups> enable
+    //which for now I think is unlikely.
+    if ('A' <= c && c <= 'Z')
+    {
+      return true;
+    }
+#endif
+    switch (c)
+    {
+      case '%': //Reserve % as we use it to escape things.
+      case '/':
+#ifdef G_OS_WIN32
+      case '<':
+      case '>':
+      case ':':
+      case '"':
+      case '\\':
+      case '|':
+      case '?':
+      case '*':
+#endif
+        return true;
+
+      default:
+        return false;
+    }
+  }
+
+  char to_hex_char(char c)
+  {
+    return c < 10 ? c + '0' : c + 'A' - 10;
+  }
+
   std::string get_group_headers_filename (const Quark& group)
   {
     const std::string home (file::get_pan_home());
-    char * filename (g_build_filename (home.c_str(), "groups", group.c_str(), NULL));
+    //A note. We do a lot of work encoding the names here, because
+    //1) Windows is case-insensitive, and there are groups whose names differ
+    //   only in case (uk.legaL, uk.Legal, uk.legal)
+    //2) There are certain names you can't use on windows and there is a group
+    //   called con.politics
+    //3) There are groups with '/' in the group name...
+    std::string encoded_group;
+    for (auto c : group.to_string())
+    {
+      if (is_reserved_char(c))
+      {
+        encoded_group += "%";
+        encoded_group += to_hex_char((c >> 4) & 0xf);
+        encoded_group += to_hex_char(c & 0xf);
+      }
+      else
+      {
+        encoded_group += c;
+      }
+    }
+#ifdef G_OS_WIN32
+    static std::regex reserved("^(CON|PRN|AUX|NUL|COM[0-9]|LPT[0-9])\\.",
+                               std::regex::extended | std::regex::icase);
+
+    encoded_group = std::regex_replace(encoded_group, reserved, "$1%2E");
+
+    //Sigh - and finally we can't deal with a trailing '.' either
+    encoded_group = std::regex_replace(encoded_group,
+                                       std::regex("\\.$", std::regex::extended),
+                                       "%2E");
+#endif
+
+    char * filename (g_build_filename (home.c_str(), "groups", encoded_group.c_str(), NULL));
     char * dirname (g_path_get_dirname (filename));
     file :: ensure_dir_exists (dirname);
     std::string retval (filename);
@@ -287,4 +365,6 @@ void
 DataIO :: write_done (std::ostream* out)
 {
   finalize_ostream (dynamic_cast<std::ofstream*>(out));
+}
+
 }
