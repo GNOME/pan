@@ -559,7 +559,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
         s.ltrim(); if (s.pop_token (tok)) a.lines = atoi (tok.str); // this field was added in 0.115
 
         // found parts...
-        part_batch.init (a.message_id, total_part_count, found_part_count);
+        part_batch.init (a.message_id, total_part_count);
 //        std::cerr<<"article "<<a.message_id<<" "<<total_part_count<<" "<<found_part_count<<std::endl;
         for (int i(0), count(found_part_count); i<count; ++i)
         {

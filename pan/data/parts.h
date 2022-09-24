@@ -158,7 +158,11 @@ namespace pan
       size_t packed_mids_len;
 
     public:
-      void init (const Quark& mid, number_t n_parts=0, number_t n_found=0);
+
+      PartBatch();
+      explicit PartBatch(Quark const &mid, number_t n_parts = 0);
+
+      void init (const Quark& mid, number_t n_parts=0);
       void add_part (number_t num, const StringView& mid, bytes_t bytes);
       void sort ();
   };
