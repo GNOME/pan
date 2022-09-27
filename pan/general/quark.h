@@ -66,7 +66,7 @@ namespace pan
         uint32_t refcount;
         uint32_t len;
         char * str;
-        Impl (): refcount(0), len(0), str(0) {}
+        Impl (): refcount(0), len(0), str(nullptr) {}
         Impl (const StringView& v): refcount(0), len(v.len), str(const_cast<char*>(v.str)) {}
         StringView to_view () const { return StringView(str,len); }
         //wtf? bool operator() (const Impl& a, const Impl& b) const { return StringView(str,len) == StringView(b.str,b.len); }
@@ -166,12 +166,12 @@ namespace pan
       }
 
       void unref () {
-        if (impl!=0) {
+        if (impl!=nullptr) {
           assert (impl->refcount);
           if (!--impl->refcount) {
             const Impl tmp (*impl);
             _lookup.erase (tmp);
-            impl = 0;
+            impl = nullptr;
             delete [] (char*)tmp.str;
           }
         }
@@ -181,25 +181,25 @@ namespace pan
       Impl * impl;
 
     public:
-      Quark (): impl(0) {}
+      Quark (): impl(nullptr) {}
       Quark (const std::string & s): impl (init (StringView (s))) { }
       Quark (const char * s): impl (init (StringView (s))) { }
       Quark (const StringView &  p): impl (init (p)) { }
       Quark (const Quark& q) {
-        if (q.impl != 0) ++q.impl->refcount;
+        if (q.impl != nullptr) ++q.impl->refcount;
         impl = q.impl;
       }
 
       Quark& operator= (const Quark& q) {
-        if (q.impl != 0) ++q.impl->refcount;
+        if (q.impl != nullptr) ++q.impl->refcount;
         unref ();
         impl = q.impl;
         return *this;
       }
 
       ~Quark () { clear(); }
-      void clear () { unref(); impl=0; }
-      bool empty() const { return impl == 0; }
+      void clear () { unref(); impl=nullptr; }
+      bool empty() const { return impl == nullptr; }
       bool operator== (const char * that) const {
         const char * pch = c_str ();
         if (!pch && !that) return true;

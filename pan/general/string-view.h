@@ -80,7 +80,7 @@ namespace pan
 
       public:
 
-         StringView (): str(0), len(0) {}
+         StringView (): str(nullptr), len(0) {}
          StringView (const std::string& s) { assign(s); }
          StringView (const char * s) { assign(s); }
          StringView (const char * s, size_t l) { assign(s,l); }
@@ -129,7 +129,7 @@ namespace pan
             return strcmp (str, len, s, l); }
 
          char* strchr (char needle, size_t p=0) const {
-            return p<len ? strchr (str+p, len-p, needle) : 0; }
+            return p<len ? strchr (str+p, len-p, needle) : nullptr; }
 
          char* strrchr (char needle) const {
             return strrchr (str, len, needle); }
@@ -152,7 +152,7 @@ namespace pan
          StringView& operator= (const char * s) { str=s; len=s?strlen(s):0; return *this; }
          void assign (const char * s, size_t l) { str=s; len=l; }
 
-         void clear () { str=0; len=0; }
+         void clear () { str=nullptr; len=0; }
 
          void trim ();
          void ltrim ();

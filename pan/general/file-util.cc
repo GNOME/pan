@@ -303,9 +303,9 @@ file :: get_text_file_contents (const StringView  & filename,
                                 const char        * fallback_charset_2)
 {
   // read in the file...
-  char * body (0);
+  char * body (nullptr);
   gsize body_len (0);
-  GError * err (0);
+  GError * err (nullptr);
   const std::string fname (filename.str, filename.len);
   g_file_get_contents (fname.c_str(), &body, &body_len, &err);
   if (err) {

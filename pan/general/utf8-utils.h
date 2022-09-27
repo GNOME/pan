@@ -27,15 +27,15 @@
 namespace pan
 {
   std::string header_to_utf8    (const StringView  & in,
-                                 const char        * fallback_charset_1=0,
-                                 const char        * fallback_charset_2=0);
+                                 const char        * fallback_charset_1=nullptr,
+                                 const char        * fallback_charset_2=nullptr);
 
   std::string mime_part_to_utf8 (GMimePart         * part,
-                                 const char        * fallback_charset=0);
+                                 const char        * fallback_charset=nullptr);
 
   std::string content_to_utf8   (const StringView  & in,
-                                 const char        * fallback_charset_1=0,
-                                 const char        * fallback_charset_2=0);
+                                 const char        * fallback_charset_1=nullptr,
+                                 const char        * fallback_charset_2=nullptr);
 
   std::string clean_utf8        (const StringView  & in);
 }

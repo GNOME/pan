@@ -320,7 +320,7 @@ esac
 AM_CONDITIONAL([HAVE_WIN32],[test "$win32" = "yes"])
 
 dnl Sanity checking
-CXXFLAGS="$CXXFLAGS -Wreorder"
+CXXFLAGS="$CXXFLAGS -Wreorder -Wzero-as-null-pointer-constant"
 
 dnl Build the output files
 AC_SUBST(panlocaledir)

@@ -32,7 +32,7 @@ bool
 FileLineReader :: getline (StringView& setme)
 {
   const char * eoln ((const char*) memchr ((const void*)_pos, '\n', _end-_pos));
-  if (eoln != 0) // found an end of line... easy case.
+  if (eoln != nullptr) // found an end of line... easy case.
   {
     setme.assign (_pos, eoln-_pos);
     _pos = eoln + 1;
@@ -55,7 +55,7 @@ FileLineReader :: getline (StringView& setme)
       _bufend = _buf + _alloc_size;
       free (oldbuf);
     }
-    const int readval (_fp!=0 ? fread ((char*)_end, 1, _bufend-_end, _fp) : 0);
+    const int readval (_fp!=nullptr ? fread ((char*)_end, 1, _bufend-_end, _fp) : 0);
     _end += readval;
     if (readval > 0) // new content to try
       return getline (setme);

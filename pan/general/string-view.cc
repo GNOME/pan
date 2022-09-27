@@ -51,7 +51,7 @@ StringView :: strrchr (const char * haystack,
                        size_t       haystack_len,
                        char         needle)
 {
-   const char * pch (0);
+   const char * pch (nullptr);
 
    pan_return_val_if_fail (haystack!=NULL || haystack_len==0, NULL);
 
@@ -67,7 +67,7 @@ StringView :: strrchr (const char * haystack,
 
    return (char*) pch;
 }
-                                                                                                                     
+
 int
 StringView :: strncpy (char        * target,
                        size_t        target_size,
@@ -94,10 +94,10 @@ StringView :: strstr (const char * haystack,
     return NULL;
 
   assert (needle != NULL);
-                            
+
   if (needle_len == 0)
     return (char*) haystack;
-                            
+
   if (haystack_len < needle_len)
     return NULL;
 
@@ -109,7 +109,7 @@ StringView :: strstr (const char * haystack,
     ++s;
   }
 
-  return 0;
+  return nullptr;
 }
 
 char*
@@ -118,14 +118,14 @@ StringView :: strpbrk (const char * haystack,
                        const char * needles)
 {
    if (!haystack || !needles)
-      return 0;
+      return nullptr;
 
    for ( ; haystack_len && *haystack; ++haystack, --haystack_len )
       for (const char *p=needles; *p; ++p)
          if (*haystack == *p)
             return (char *) haystack;
 
-   return 0;
+   return nullptr;
 }
 
 
@@ -183,7 +183,7 @@ StringView :: pop_token (StringView& token, char delimiter)
    } else {
      token.str = str;
      token.len = len;
-     str = 0;
+     str = nullptr;
      len = 0;
    }
    return got_token;
@@ -201,7 +201,7 @@ StringView :: pop_last_token (StringView& token, char delimiter)
   } else {
     token.str = str;
     token.len = len;
-    str = 0;
+    str = nullptr;
     len = 0;
   }
 
@@ -236,7 +236,7 @@ StringView :: eat_chars (size_t n)
 {
   n = std::min (n, len);
   len -= n;
-  str = len ? str+n : 0;
+  str = len ? str+n : nullptr;
 }
 
 void

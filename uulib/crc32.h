@@ -14,7 +14,8 @@ extern "C" {
 #endif
 
 typedef unsigned long crc32_t;
-#define Z_NULL  0
+#undef Z_NULL
+#define Z_NULL nullptr
 
 #ifdef __cplusplus
 }

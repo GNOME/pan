@@ -101,8 +101,8 @@ namespace pan
       */
      bool get_text_file_contents (const StringView  & filename,
                                   std::string       & setme,
-                                  const char        * fallback_charset_1=0,
-                                  const char        * fallback_charset_2=0);
+                                  const char        * fallback_charset_1=nullptr,
+                                  const char        * fallback_charset_2=nullptr);
 
   };
 }

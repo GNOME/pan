@@ -49,7 +49,7 @@ class EvolutionDateMaker
     struct tm last_seven_days[7]; // [0=yesterday ... 6=one week ago]
 
   public:
-    EvolutionDateMaker (time_t n=time(0));
+    EvolutionDateMaker (time_t n=time(nullptr));
     ~EvolutionDateMaker ();
     char* get_date_string (time_t date) const;
 };
