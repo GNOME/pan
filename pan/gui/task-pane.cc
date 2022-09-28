@@ -55,7 +55,7 @@ void
 TaskPane :: get_selected_tasks_foreach (GtkTreeModel *model, GtkTreePath *, GtkTreeIter *iter, gpointer list_g)
 {
 
-  Task * task (0);
+  Task * task (nullptr);
   gtk_tree_model_get (model, iter, COL_TASK_POINTER, &task, -1);
   static_cast<tasks_t*>(list_g)->push_back (task);
 }
@@ -114,7 +114,7 @@ namespace
   {
 
     EvolutionDateMaker date_maker;
-    char * date(0);
+    char * date(nullptr);
     TaskUpload * tu (dynamic_cast<TaskUpload*>(task));
 
     if (tu)
@@ -186,12 +186,12 @@ TaskPane:: on_tooltip_query(GtkWidget  *widget,
   GtkTreeIter iter;
   GtkTreeView *tree_view = GTK_TREE_VIEW (widget);
   GtkTreeModel *model = gtk_tree_view_get_model (tree_view);
-  GtkTreePath *path(0);
+  GtkTreePath *path(nullptr);
 
   if (!gtk_tree_view_get_tooltip_context (tree_view, &x, &y, keyboard_tip, &model, &path, &iter))
     return false;
 
-  Task * task(0);
+  Task * task(nullptr);
   gtk_tree_model_get (model, &iter, COL_TASK_POINTER, &task, -1);
 
   char buffer[4096];
@@ -540,7 +540,7 @@ namespace
                 GtkTreeIter *iter,
                 Queue * queue)
   {
-    Task * task (0);
+    Task * task (nullptr);
     int state;
     gtk_tree_model_get (model, iter, COL_TASK_POINTER, &task,
                                      COL_TASK_STATE,  &state,
@@ -549,7 +549,7 @@ namespace
     if (!task) return;
 
     // build the state string
-    const char * state_str (0);
+    const char * state_str (nullptr);
     switch (state) {
       case Queue::RUNNING:  state_str = _("Running"); break;
       case Queue::DECODING: state_str = _("Decoding"); break;
@@ -614,7 +614,7 @@ namespace
       status.insert (0, buf);
     }
 
-    char * str (0);
+    char * str (nullptr);
     if (state == Queue::RUNNING || state == Queue::DECODING
         || state == Queue::ENCODING)
       str = g_markup_printf_escaped ("<b>%s</b>\n<small>%s</small>", descr, status.c_str());
@@ -664,15 +664,15 @@ namespace
 namespace
 {
 
-  void do_move_up        (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->up_clicked_cb(0, static_cast<TaskPane*>(p)); }
-  void do_move_down      (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->down_clicked_cb(0, static_cast<TaskPane*>(p)); }
-  void do_move_top       (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->top_clicked_cb(0, static_cast<TaskPane*>(p)); }
-  void do_move_bottom    (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->bottom_clicked_cb(0, static_cast<TaskPane*>(p)); }
-  void do_show_info      (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->show_info_clicked_cb(0, static_cast<TaskPane*>(p)); }
-  void do_stop           (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->stop_clicked_cb(0, static_cast<TaskPane*>(p)); }
-  void do_delete         (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->delete_clicked_cb(0, static_cast<TaskPane*>(p)); }
-  void do_restart        (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->restart_clicked_cb(0, static_cast<TaskPane*>(p)); }
-  void do_change_dest    (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->change_dest_clicked_cb(0, static_cast<TaskPane*>(p)); }
+  void do_move_up        (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->up_clicked_cb(nullptr, static_cast<TaskPane*>(p)); }
+  void do_move_down      (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->down_clicked_cb(nullptr, static_cast<TaskPane*>(p)); }
+  void do_move_top       (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->top_clicked_cb(nullptr, static_cast<TaskPane*>(p)); }
+  void do_move_bottom    (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->bottom_clicked_cb(nullptr, static_cast<TaskPane*>(p)); }
+  void do_show_info      (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->show_info_clicked_cb(nullptr, static_cast<TaskPane*>(p)); }
+  void do_stop           (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->stop_clicked_cb(nullptr, static_cast<TaskPane*>(p)); }
+  void do_delete         (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->delete_clicked_cb(nullptr, static_cast<TaskPane*>(p)); }
+  void do_restart        (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->restart_clicked_cb(nullptr, static_cast<TaskPane*>(p)); }
+  void do_change_dest    (GtkAction*, gpointer p)  { static_cast<TaskPane*>(p)->change_dest_clicked_cb(nullptr, static_cast<TaskPane*>(p)); }
 
   GtkActionEntry taskpane_popup_entries[] =
   {
@@ -732,7 +732,7 @@ TaskPane :: add_actions (GtkWidget * box)
   _uim = gtk_ui_manager_new ();
   // read the file...
   char * filename = g_build_filename (file::get_pan_home().c_str(), "taskpane.ui", NULL);
-  GError * err (0);
+  GError * err (nullptr);
   if (!gtk_ui_manager_add_ui_from_file (_uim, filename, &err)) {
     g_clear_error (&err);
     gtk_ui_manager_add_ui_from_string (_uim, fallback_taskpane_ui, -1, &err);
@@ -899,7 +899,7 @@ namespace
   void entry_icon_release (GtkEntry*, GtkEntryIconPosition icon_pos, GdkEventButton*, gpointer menu)
   {
     if (icon_pos == GTK_ENTRY_ICON_PRIMARY)
-      gtk_menu_popup (GTK_MENU(menu), 0, 0, 0, 0, 0, gtk_get_current_event_time());
+      gtk_menu_popup (GTK_MENU(menu), nullptr, nullptr, nullptr, nullptr, 0, gtk_get_current_event_time());
   }
 
   void entry_icon_release_2 (GtkEntry *entry, GtkEntryIconPosition icon_pos, GdkEventButton*, gpointer pane_gpointer)
@@ -917,7 +917,7 @@ namespace
 
      if (search_text.empty()) return true;
 
-     Task *task(0);
+     Task *task(nullptr);
      /* Get value from column */
      gtk_tree_model_get( GTK_TREE_MODEL(model), iter, COL_TASK_POINTER, &task, -1 );
 
@@ -997,7 +997,7 @@ TaskPane :: create_filter_entry ()
     search_mode = 1;
   else
     search_mode = 0;
-  GSList * l = 0;
+  GSList * l = nullptr;
   for (int i=0, qty=G_N_ELEMENTS(mode_strings); i<qty; ++i) {
     GtkWidget * w = gtk_radio_menu_item_new_with_label (l, _(mode_strings[i]));
     l = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM(w));
@@ -1052,7 +1052,7 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
     w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
     gtk_widget_set_tooltip_text( w, _("Delete Tasks"));
     gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
-    w = add_button (buttons, GTK_STOCK_CLOSE, 0, 0);
+    w = add_button (buttons, GTK_STOCK_CLOSE, nullptr, nullptr);
     g_signal_connect_swapped (w, "clicked", G_CALLBACK(gtk_widget_destroy), _root);
     w = _popup_toggle = gtk_check_button_new ();
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), _prefs.get_flag("show-taskpane-popups", true));
@@ -1069,7 +1069,7 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
 
   // statusbar
   GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
-  w = _status_label = gtk_label_new (0);
+  w = _status_label = gtk_label_new (nullptr);
   gtk_box_pack_start (GTK_BOX(hbox), w, false, false, PAD_SMALL);
 
   _store = gtk_list_store_new (NUM_COLS, G_TYPE_POINTER, G_TYPE_INT);
@@ -1078,7 +1078,7 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
   gtk_tree_view_set_rules_hint (GTK_TREE_VIEW(_view), true);
   GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
   GtkTreeViewColumn * col = gtk_tree_view_column_new_with_attributes (_("State"), renderer, NULL);
-  gtk_tree_view_column_set_cell_data_func (col, renderer, (GtkTreeCellDataFunc)render_state, &_queue, 0);
+  gtk_tree_view_column_set_cell_data_func (col, renderer, (GtkTreeCellDataFunc)render_state, &_queue, nullptr);
   gtk_tree_view_append_column (GTK_TREE_VIEW(_view), col);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);

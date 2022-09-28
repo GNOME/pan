@@ -80,8 +80,8 @@ namespace pan
         std::string mid; // for rng
         std::string cachename;
         Xref xref;
-        Needed (): nntp(0), bytes(0) , partno(1) {}
-        void reset() { nntp = 0; }
+        Needed (): nntp(nullptr), bytes(0) , partno(1) {}
+        void reset() { nntp = nullptr; }
       };
 
       typedef std::map<int, Needed> needed_t;
@@ -92,8 +92,8 @@ namespace pan
                    EncodeCache               & cache,
                    Article                     article,
                    UploadInfo                  format,
-                   GMimeMessage *              msg=0,
-                   Progress::Listener        * listener= 0);
+                   GMimeMessage *              msg=nullptr,
+                   Progress::Listener        * listener= nullptr);
 
       virtual ~TaskUpload ();
 
@@ -156,7 +156,7 @@ namespace pan
       bool _first;
       std::string _groups;
 
-      void update_work (NNTP * checkin_pending = 0);
+      void update_work (NNTP * checkin_pending = nullptr);
 
     public:
       void set_encoder_done (bool setme) { _encoder_has_run = setme; }

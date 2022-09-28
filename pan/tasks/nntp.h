@@ -154,7 +154,7 @@ namespace pan {
           _server_info(info),
           _socket(socket),
           _socket_error(false),
-          _listener(0),
+          _listener(nullptr),
           _username(username),
           _password(password),
           _nntp_response_text(false),

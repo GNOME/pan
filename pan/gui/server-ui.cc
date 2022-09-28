@@ -149,7 +149,7 @@ namespace
   edit_dialog_populate (Data&, Prefs& prefs, const Quark& server, ServerEditDialog * d)
   {
     // sanity clause
-    g_return_if_fail (d!=0);
+    g_return_if_fail (d!=nullptr );
     g_return_if_fail (GTK_IS_WIDGET(d->dialog));
 
     d->server = server;
@@ -285,7 +285,7 @@ namespace
       if (gtk_combo_box_get_active_iter (combo, &iter))
         gtk_tree_model_get (gtk_combo_box_get_model(combo), &iter, 1, &header_comp, -1);
 
-      const char * err_msg (0);
+      const char * err_msg (nullptr);
       if (addr.empty())
         err_msg = _("Please specify the server's address.");
 
@@ -553,8 +553,8 @@ namespace
     const guint8 * pixbuf_txt;
     GdkPixbuf * pixbuf;
   } _icons[ICON_QTY] = {
-    { icon_plain,  0 },
-    { icon_cert,   0 }
+    { icon_plain,  nullptr },
+    { icon_cert,   nullptr }
   };
 }
 
@@ -599,7 +599,7 @@ namespace
   Quark
   get_selected_server (ServerListDialog * d)
   {
-    g_assert (d != 0);
+    g_assert (d != nullptr);
 
     Quark server;
 
@@ -607,7 +607,7 @@ namespace
     GtkTreeModel * model;
     GtkTreeIter iter;
     if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
-      char * host (0);
+      char * host (nullptr);
       gtk_tree_model_get (model, &iter, COL_DATA, &host, -1);
       if (host) {
         server = host;
@@ -622,7 +622,7 @@ namespace
   Quark
   get_selected_server_name (ServerListDialog * d)
   {
-    g_assert (d != 0);
+    g_assert (d != nullptr);
 
     Quark server;
 
@@ -630,7 +630,7 @@ namespace
     GtkTreeModel * model;
     GtkTreeIter iter;
     if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
-      char * host (0);
+      char * host (nullptr);
       gtk_tree_model_get (model, &iter, COL_HOST, &host, -1);
       if (host) {
         server = host;
@@ -805,7 +805,7 @@ namespace
         if (!buf) g_snprintf(buf,sizeof(buf), "%s", _("No information available.")) ;
 
         GtkWidget * w = gtk_message_dialog_new (
-        0,
+        nullptr,
         GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
         GTK_MESSAGE_INFO,
         GTK_BUTTONS_CLOSE, NULL);
@@ -1028,7 +1028,7 @@ sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
   ServerListDialog * d = new ServerListDialog (data, queue, prefs);
 
   for (guint i=0; i<ICON_QTY; ++i)
-    _icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, _icons[i].pixbuf_txt, FALSE, 0);
+    _icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, _icons[i].pixbuf_txt, FALSE, nullptr);
 
   // dialog
   char * title = g_strdup_printf ("Pan: %s", _("SSL Certificates"));
@@ -1053,7 +1053,7 @@ sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
 
   GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF, "xpad", 2,"ypad", 0,NULL));
   GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Certificates"), r, NULL);
-  gtk_tree_view_column_set_cell_data_func (column, r, render_cert_flag, 0, 0);
+  gtk_tree_view_column_set_cell_data_func (column, r, render_cert_flag, nullptr, nullptr);
   gtk_tree_view_append_column (GTK_TREE_VIEW(w), column);
 
   r = gtk_cell_renderer_text_new ();

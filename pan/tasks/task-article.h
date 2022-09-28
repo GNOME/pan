@@ -71,10 +71,10 @@ namespace pan
                    ArticleCache       & cache,
                    ArticleRead        & read,
                    const ArticleActionType&  mark_read_action,
-                   Progress::Listener* l=0,
+                   Progress::Listener* l=nullptr,
                    SaveMode             save_mode = NONE,
                    const Quark        & save_path = Quark(),
-                   const char         * filename=0,
+                   const char         * filename=nullptr,
                    const SaveOptions  & options=SAVE_ALL);
       virtual ~TaskArticle ();
       time_t get_time_posted () const { return _time_posted; }
@@ -144,13 +144,13 @@ namespace pan
         void reset() {
           buf_t tmp;
           buf.swap (tmp); // deallocates space
-          nntp = 0;
+          nntp = nullptr;
         }
       };
       typedef std::vector<Needed> needed_t;
       needed_t _needed;
 
-      void update_work (NNTP* checkin_pending=0);
+      void update_work (NNTP* checkin_pending=nullptr);
   };
 }
 

@@ -89,9 +89,9 @@ URL :: open (const Prefs& prefs, const char * url, Mode mode)
     else if (strstr(url,"http") || strstr(url,"://"))
       mode = WEB;
     else // ...
-      mode = WEB; 
+      mode = WEB;
   }
-  
+
   if ((mode==AUTO || mode==WEB) && !strstr (url, "://") && strstr (url, "www")) {
     mode = WEB;
     tmp = std::string("http://") + url;
@@ -115,7 +115,7 @@ URL :: open (const Prefs& prefs, const char * url, Mode mode)
 
   cmd += std::string(" \"") + tmp + '"';
   // std::cerr << __FILE__ << ':' << __LINE__ << " cmd [" << cmd << ']' << std::endl;
-  GError * err (0);
+  GError * err (nullptr);
   g_spawn_command_line_async (cmd.c_str(), &err);
   if (err != NULL) {
     Log::add_err_va (_("Error starting URL: %s (Command was: %s)"), err->message, cmd.c_str());

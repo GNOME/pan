@@ -56,8 +56,8 @@ namespace
 namespace
 {
 
-  static t_getaddrinfo p_getaddrinfo (0);
-  static t_freeaddrinfo p_freeaddrinfo (0);
+  static t_getaddrinfo p_getaddrinfo (nullptr);
+  static t_freeaddrinfo p_freeaddrinfo (nullptr);
 
   static void ensure_module_init (void)
   {

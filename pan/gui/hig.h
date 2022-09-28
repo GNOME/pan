@@ -70,7 +70,7 @@ namespace pan
                                          int         * row,
                                          const char  * mnemonic_string,
                                          GtkWidget   * control,
-                                         GtkWidget   * mnemonic_or_null_if_control_is_mnemonic=0);
+                                         GtkWidget   * mnemonic_or_null_if_control_is_mnemonic= nullptr);
 
     static void message_dialog_set_text (GtkMessageDialog * dialog,
                                          const char * primary,

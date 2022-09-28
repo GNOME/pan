@@ -64,7 +64,7 @@ namespace pan
     public:
 
       int get_all_certs_from_disk();
-      bool import_from_file (const Quark& server, const char* fn = 0);
+      bool import_from_file (const Quark& server, const char* fn = nullptr);
 
       bool in_blacklist (const Quark& s)
       {
@@ -85,7 +85,7 @@ namespace pan
       {
         if (_cert_to_server.count(s) > 0)
           return _cert_to_server[s];
-        return 0;
+        return nullptr;
       }
 
     private:

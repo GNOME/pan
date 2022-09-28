@@ -88,7 +88,7 @@ namespace pan
         size_t _size;
         time_t _date;
         FILE * _fp;
-        MsgInfo(): _size(0), _date(0), _fp(0) {}
+        MsgInfo(): _size(0), _date(0), _fp(nullptr) {}
       };
 
       typedef std::map<Quark,MsgInfo> mid_to_info_t;

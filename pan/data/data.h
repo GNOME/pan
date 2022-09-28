@@ -564,10 +564,10 @@ namespace pan
           virtual const Article* get_article (const Quark& mid) const=0;
 
           virtual void set_filter (const ShowType     show_type = SHOW_ARTICLES,
-                                   const FilterInfo * filter_or_null_to_reset = 0) = 0;
+                                   const FilterInfo * filter_or_null_to_reset = nullptr) = 0;
 
           virtual void set_rules (const ShowType     show_type = SHOW_ARTICLES,
-                                   const RulesInfo * filter_or_null_to_reset = 0) = 0;
+                                   const RulesInfo * filter_or_null_to_reset = nullptr) = 0;
       };
 
        /**
@@ -576,8 +576,8 @@ namespace pan
        virtual ArticleTree* group_get_articles (const Quark       & group,
                                                 const Quark       & save_path,  // for auto-download
                                                 const ShowType      show_type = SHOW_ARTICLES,
-                                                const FilterInfo  * criteria = 0,
-                                                const RulesInfo   * rules    = 0) const=0;
+                                                const FilterInfo  * criteria = nullptr,
+                                                const RulesInfo   * rules    = nullptr) const=0;
 
        virtual void group_clear_articles (const Quark& group) = 0;
 

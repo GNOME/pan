@@ -60,7 +60,7 @@ namespace pan
       {
         public:
 
-          Worker(): pool(0), listener(0),
+          Worker(): pool(nullptr), listener(nullptr),
                     cancelled(false), silent(false),
                     delete_worker(false) {}
 
