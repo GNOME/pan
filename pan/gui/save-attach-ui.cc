@@ -121,7 +121,7 @@ SaveAttachmentsDialog :: response_cb (GtkDialog * dialog,
                                         self->_cache,
                                         self->_read,
                                         always ? TaskArticle::ALWAYS_MARK : TaskArticle::NEVER_MARK,
-                                        0,
+                                        nullptr,
                                         TaskArticle::DECODE,
                                         path,
                                         self->_filename,
@@ -156,7 +156,7 @@ namespace
     GtkTreeIter iter;
     gtk_combo_box_get_active_iter (combo, &iter);
     GtkTreeModel * model (gtk_combo_box_get_model (combo));
-    char * s (0);
+    char * s (nullptr);
     gtk_tree_model_get (model, &iter, 0, &s, -1);
     static_cast<Prefs*>(prefs)->set_string (key, s);
     g_free (s);
@@ -222,9 +222,9 @@ SaveAttachmentsDialog :: SaveAttachmentsDialog
   _read (read),
   _queue (queue),
   _group (group),
-  _root (0),
-  _save_custom_path_radio (0),
-  _save_group_path_radio (0),
+  _root (nullptr),
+  _save_custom_path_radio (nullptr),
+  _save_group_path_radio (nullptr),
   _articles (articles),
   _options (options),
   _filename (filename)

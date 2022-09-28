@@ -48,7 +48,7 @@ namespace pan
                   const Quark                 & group,
                   const std::vector<Article>  & articles,
                   const TaskArticle::SaveOptions & options,
-                  const char                  * filename=0
+                  const char                  * filename=nullptr
                   );
 
 

@@ -129,7 +129,7 @@ SaveDialog :: response_cb (GtkDialog * dialog,
                                         self->_cache,
                                         self->_read,
                                         always ? TaskArticle::ALWAYS_MARK : TaskArticle::NEVER_MARK,
-                                        0,
+                                        nullptr,
                                         TaskArticle::SaveMode(save_mode),
                                         path));
     }
@@ -162,7 +162,7 @@ namespace
     GtkTreeIter iter;
     gtk_combo_box_get_active_iter (combo, &iter);
     GtkTreeModel * model (gtk_combo_box_get_model (combo));
-    char * s (0);
+    char * s (nullptr);
     gtk_tree_model_get (model, &iter, 0, &s, -1);
     static_cast<Prefs*>(prefs)->set_string (key, s);
     g_free (s);
@@ -239,9 +239,9 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
   _read (read),
   _queue (queue),
   _group (group),
-  _root (0),
-  _save_custom_path_radio (0),
-  _save_group_path_radio (0),
+  _root (nullptr),
+  _save_custom_path_radio (nullptr),
+  _save_group_path_radio (nullptr),
   _articles (articles)
 {
   GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Pan: Save Articles"),

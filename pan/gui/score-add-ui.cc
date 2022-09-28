@@ -40,7 +40,7 @@ namespace
 {
   enum { VALUE_STR, VALUE_TYPE, VALUE_COLS };
 
-  GtkWidget * value_combo_new (GtkTreeModel * model=0)
+  GtkWidget * value_combo_new (GtkTreeModel * model=nullptr)
   {
     GtkWidget *  w = model
       ? gtk_combo_box_new_with_model (model)
@@ -597,7 +597,7 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
   _data (data),
   _article (article),
   _group (group),
-  _root (0)
+  _root (nullptr)
 {
   std::string s (_("Pan"));
   s += ": ";
