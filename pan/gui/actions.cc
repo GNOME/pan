@@ -41,8 +41,8 @@ using pan::PanUI;
 namespace pan
 {
 
-  PanUI * pan_ui (0);
-  Prefs * prefs (0);
+  PanUI * pan_ui (nullptr);
+  Prefs * prefs (nullptr);
 
   struct BuiltinIconInfo
   {
@@ -89,7 +89,7 @@ namespace pan
 
     for (int i(0), qty(G_N_ELEMENTS(my_builtin_icons)); i<qty; ++i)
     {
-      GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, my_builtin_icons[i].raw, false, 0);
+      GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, my_builtin_icons[i].raw, false, nullptr);
 
       const int width (gdk_pixbuf_get_width (pixbuf));
       gtk_icon_theme_add_builtin_icon (my_builtin_icons[i].name, width, pixbuf);
@@ -103,7 +103,7 @@ namespace pan
     g_object_unref (G_OBJECT (factory));
   }
 
-  GtkActionGroup * _group (0);
+  GtkActionGroup * _group (nullptr);
 
   void do_prompt_for_charset           (GtkAction*) { pan_ui->do_prompt_for_charset(); }
   void do_read_selected_group          (GtkAction*) { pan_ui->do_read_selected_group(); }

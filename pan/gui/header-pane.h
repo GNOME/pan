@@ -250,8 +250,8 @@ namespace pan
             action (action_in),
             state (state_in),
             is_read (data.is_read (a)),
-            collated_subject(0),
-            collated_author(0) {}
+            collated_subject(nullptr),
+            collated_author(nullptr) {}
 
           virtual ~Row () {
             g_free (collated_subject);

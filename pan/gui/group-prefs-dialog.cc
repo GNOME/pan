@@ -119,7 +119,7 @@ GroupPrefsDialog :: save_from_gui ()
   if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX(_spellchecker_language), &iter))
 		return;
 
-  gchar* name(0);
+  gchar* name(nullptr);
 	GtkTreeModel* model = gtk_combo_box_get_model (GTK_COMBO_BOX(_spellchecker_language));
 	gtk_tree_model_get (model, &iter, 0, &name, -1);
 

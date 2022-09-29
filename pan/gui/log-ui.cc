@@ -151,7 +151,7 @@ namespace
     const Log::entries_t& entries (Log::get().get_entries());
     foreach_const (Log::entries_t, entries, it) {
       GtkTreeIter   top, child, tmp;
-      gtk_tree_store_prepend (store, &top, 0);
+      gtk_tree_store_prepend (store, &top, nullptr);
       gtk_tree_store_set (store, &top,
                           COL_HIDDEN, "",
                           COL_SEVERITY, (it->severity & Log::PAN_SEVERITY_ERROR),
@@ -212,7 +212,7 @@ namespace
                   GtkTreeIter       * iter,
                   gpointer            )
   {
-    Log::Entry* log_entry(0);
+    Log::Entry* log_entry(nullptr);
     gtk_tree_model_get (model, iter, COL_MESSAGE, &log_entry, -1);
     bool bold (log_entry->is_child);
     g_object_set (renderer,
@@ -277,7 +277,7 @@ log_dialog_new (Prefs& prefs, GtkWindow* window)
   gtk_tree_view_set_show_expanders(GTK_TREE_VIEW(view),false);
 
   g_object_set_data_full (G_OBJECT(view), "listener", new MyLogListener(store), delete_my_log_listener);
-  GtkWidget * scroll = gtk_scrolled_window_new (0, 0);
+  GtkWidget * scroll = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_container_set_border_width (GTK_CONTAINER(scroll), PAD_BIG);
   gtk_container_add (GTK_CONTAINER(scroll), view);
 
@@ -297,7 +297,7 @@ log_dialog_new (Prefs& prefs, GtkWindow* window)
   gtk_tree_view_column_set_fixed_width (col, 35);
   gtk_tree_view_column_set_resizable (col, false);
   gtk_tree_view_column_pack_start (col, pixbuf_renderer, false);
-  gtk_tree_view_column_set_cell_data_func (col, pixbuf_renderer, render_severity, dialog, 0);
+  gtk_tree_view_column_set_cell_data_func (col, pixbuf_renderer, render_severity, dialog, nullptr);
   gtk_tree_view_column_set_sort_column_id (col, COL_SEVERITY);
   gtk_tree_view_append_column (GTK_TREE_VIEW(view), col);
 
@@ -307,7 +307,7 @@ log_dialog_new (Prefs& prefs, GtkWindow* window)
   gtk_tree_view_column_set_sort_column_id (col, COL_DATE);
   gtk_tree_view_column_set_title (col, _("Date"));
   gtk_tree_view_column_pack_start (col, text_renderer, false);
-  gtk_tree_view_column_set_cell_data_func (col, text_renderer, render_date, 0, 0);
+  gtk_tree_view_column_set_cell_data_func (col, text_renderer, render_date, nullptr, nullptr);
   gtk_tree_view_append_column (GTK_TREE_VIEW(view), col);
 
   // message
@@ -317,7 +317,7 @@ log_dialog_new (Prefs& prefs, GtkWindow* window)
   gtk_tree_view_column_set_sort_column_id (col, COL_MESSAGE);
   gtk_tree_view_column_set_title (col, _("Message"));
   gtk_tree_view_column_pack_start (col, text_renderer, true);
-  gtk_tree_view_column_set_cell_data_func (col, text_renderer, render_message, 0, 0);
+  gtk_tree_view_column_set_cell_data_func (col, text_renderer, render_message, nullptr, nullptr);
   gtk_tree_view_append_column (GTK_TREE_VIEW(view), col);
   gtk_tree_view_set_expander_column(GTK_TREE_VIEW(view), col);
 
@@ -328,7 +328,7 @@ log_dialog_new (Prefs& prefs, GtkWindow* window)
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-events-dialog");
   prefs.set_window ("events-window", GTK_WINDOW(dialog), 150, 150, 600, 300);
   gtk_window_set_resizable (GTK_WINDOW(dialog), true);
-  if (window != 0)
+  if (window != nullptr)
     gtk_window_set_transient_for (GTK_WINDOW(dialog), window);
 
   g_signal_connect (view, "button-press-event", G_CALLBACK(on_button_pressed), view);

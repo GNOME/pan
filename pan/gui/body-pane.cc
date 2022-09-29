@@ -79,8 +79,8 @@ namespace
   const guint8 * pixbuf_txt;
   GdkPixbuf * pixbuf;
   } icons[NUM_ICONS] = {
-    { icon_sig_ok,          0 },
-    { icon_sig_fail,        0 }
+    { icon_sig_ok,          nullptr },
+    { icon_sig_fail,        nullptr }
   };
 }
 
@@ -173,7 +173,7 @@ namespace
     g_object_set_data (G_OBJECT(o), FULLSIZE, GINT_TO_POINTER(b));
   }
   bool get_fullsize_flag (gpointer o) {
-    return g_object_get_data (G_OBJECT(o), FULLSIZE) != 0;
+    return g_object_get_data (G_OBJECT(o), FULLSIZE) != nullptr;
   }
   bool toggle_fullsize_flag (gpointer o) {
     const bool b (!get_fullsize_flag (o));
@@ -195,8 +195,8 @@ namespace
     CURSOR_QTY
   };
 
-  GdkCursor ** cursors(0);
-  GdkCursor * cursor_current(0);
+  GdkCursor ** cursors(nullptr);
+  GdkCursor * cursor_current(nullptr);
 
   void free_cursors (void) {
     delete[] cursors;
@@ -345,7 +345,7 @@ namespace
     const int nw (size ? size->width : 0);
     const int nh (size ? size->height : 0);
 
-    GdkPixbuf * out (0);
+    GdkPixbuf * out (nullptr);
     if (nw>=100 && nh>=100)
     {
       const int ow (gdk_pixbuf_get_width (pixbuf));
@@ -377,12 +377,12 @@ namespace
 
     const int begin_offset (gtk_text_iter_get_offset (iter));
 
-    GdkPixbuf * original (0);
-    GdkPixbuf * old_scaled (0);
+    GdkPixbuf * original (nullptr);
+    GdkPixbuf * old_scaled (nullptr);
     if (!get_pixbuf_at_offset (buf, begin_offset, original, old_scaled))
       return;
 
-    GdkPixbuf * new_scaled (size_to_fit (original, (fullsize ? 0 : size)));
+    GdkPixbuf * new_scaled (size_to_fit (original, (fullsize ? nullptr : size)));
     const int old_w (gdk_pixbuf_get_width (old_scaled));
     const int new_w (gdk_pixbuf_get_width (new_scaled));
     const int old_h (gdk_pixbuf_get_height (old_scaled));
@@ -426,7 +426,7 @@ BodyPane :: mouse_button_pressed (GtkWidget *w, GdkEventButton *event)
       /* this is a crude way of making sure that double-click
        * doesn't open two or three browser windows. */
       static time_t last_url_time (0);
-      const time_t this_url_time (time (0));
+      const time_t this_url_time (time (nullptr));
       if (this_url_time != last_url_time) {
         last_url_time = this_url_time;
         URL :: open (_prefs, url.c_str());
@@ -653,12 +653,12 @@ namespace
 
  void create_emoticons()
   {
-    emoticon_pixbufs[":)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_smile, false, 0);
-    emoticon_pixbufs[":-)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_smile, false, 0);
-    emoticon_pixbufs[";)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_wink, false, 0);
-    emoticon_pixbufs[":("] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_frown, false, 0);
-    emoticon_pixbufs[":P"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_tongueout, false, 0);
-    emoticon_pixbufs[":O"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_surprised, false, 0);
+    emoticon_pixbufs[":)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_smile, false, nullptr);
+    emoticon_pixbufs[":-)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_smile, false, nullptr);
+    emoticon_pixbufs[";)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_wink, false, nullptr);
+    emoticon_pixbufs[":("] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_frown, false, nullptr);
+    emoticon_pixbufs[":P"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_tongueout, false, nullptr);
+    emoticon_pixbufs[":O"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_surprised, false, nullptr);
   }
 
   enum TagMode { ADD, REPLACE };
@@ -712,7 +712,7 @@ namespace
                                      GdkPixbuf          * pixbuf)
   {
     g_assert (!text.empty());
-    g_assert (pixbuf != 0);
+    g_assert (pixbuf != nullptr);
 
     GtkTextTagTable * tags (gtk_text_buffer_get_tag_table (buffer));
     GtkTextTag * url_tag (gtk_text_tag_table_lookup (tags, "url"));
@@ -754,7 +754,7 @@ namespace
                              bool                  do_urls)
   {
 
-    g_return_if_fail (buffer!=0);
+    g_return_if_fail (buffer!=nullptr);
     g_return_if_fail (GTK_IS_TEXT_BUFFER(buffer));
 
     // mute the quoted text, if desired
@@ -779,7 +779,7 @@ namespace
     gtk_text_buffer_apply_tag_by_name (buffer, "text", &mark_start, &end);
 
     // find where the signature begins...
-    const char * sig_point (0);
+    const char * sig_point (nullptr);
     int offset (0);
     if (GNKSA::find_signature_delimiter (v, offset) != GNKSA::SIG_NONE)
       sig_point = v.str + offset;
@@ -861,7 +861,7 @@ namespace
 
           if (e) {
             already_processed.insert (e);
-            const char * type (0);
+            const char * type (nullptr);
             switch (*b) {
               case '*': type = "bold"; break;
               case '_': type = "underline"; break;
@@ -881,7 +881,7 @@ namespace
       StringView march (v_all);
       while ((url_find (march, area))) {
         set_section_tag (buffer, &start, v_all, area, "url", REPLACE);
-        march = march.substr (area.str + area.len, 0);
+        march = march.substr (area.str + area.len, nullptr);
       }
     }
 
@@ -904,7 +904,7 @@ namespace
   GdkPixbuf* get_pixbuf_from_gmime_part (GMimePart * part)
   {
     GdkPixbufLoader * l (gdk_pixbuf_loader_new ());
-    GError * err (0);
+    GError * err (nullptr);
 
     // populate the loader
     GMimeDataWrapper * wrapper (g_mime_part_get_content (part));
@@ -945,7 +945,7 @@ namespace
     }
 
     // create the pixbuf
-    GdkPixbuf * pixbuf (0);
+    GdkPixbuf * pixbuf (nullptr);
     if (!err)
       pixbuf = gdk_pixbuf_loader_get_pixbuf (l);
     else {
@@ -987,9 +987,9 @@ BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation 
   {
     GdkPixbuf * original (get_pixbuf_from_gmime_part (part));
     const bool fullsize (!_prefs.get_flag ("size-pictures-to-fit", true));
-    GdkPixbuf * scaled (size_to_fit (original, fullsize ? 0 : widget_size));
+    GdkPixbuf * scaled (size_to_fit (original, fullsize ? nullptr : widget_size));
 
-    if (scaled != 0)
+    if (scaled != nullptr)
     {
       GtkTextIter iter;
 
@@ -1082,7 +1082,7 @@ namespace
   {
     const char * val (message ? g_mime_object_get_header ((GMimeObject *)message, key) : "");
     const std::string utf8_val (header_to_utf8 (val, fallback_charset));
-    char * e (0);
+    char * e (nullptr);
     if (strcmp (key, "From"))
       e = g_markup_printf_escaped ("<span weight=\"bold\">%s</span>", utf8_val.c_str());
     else {
@@ -1127,7 +1127,7 @@ namespace
 void
 BodyPane :: set_text_from_message (GMimeMessage * message)
 {
-  const char * fallback_charset (_charset.empty() ? 0 : _charset.c_str());
+  const char * fallback_charset (_charset.empty() ? nullptr : _charset.c_str());
 
   // mandatory headers...
   std::string s;
@@ -1197,7 +1197,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
 
   // set the x-face...
   gtk_image_clear(GTK_IMAGE(_xface));
-  const char * pch = message ? g_mime_object_get_header ((GMimeObject *) message, "X-Face") : 0;
+  const char * pch = message ? g_mime_object_get_header ((GMimeObject *) message, "X-Face") : nullptr;
   if (pch && gtk_widget_get_window(_xface) )
   {
     gtk_widget_set_size_request (_xface, FACE_SIZE, FACE_SIZE);
@@ -1211,7 +1211,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
 
   // set the face
   gtk_image_clear(GTK_IMAGE(_face));
-  pch = message ? g_mime_object_get_header ((GMimeObject *) message, "Face") : 0;
+  pch = message ? g_mime_object_get_header ((GMimeObject *) message, "Face") : nullptr;
   if (pch && gtk_widget_get_window(_face))
   {
     gtk_widget_set_size_request (_face, FACE_SIZE, FACE_SIZE);
@@ -1365,7 +1365,7 @@ BodyPane :: clear ()
 {
   if (_message)
     g_object_unref (_message);
-  _message = 0;
+  _message = nullptr;
 
   set_cleared(true);
 
@@ -1615,7 +1615,7 @@ BodyPane :: menu_clicked_all_cb (GtkWidget* w, gpointer ptr)
 GtkWidget*
 BodyPane :: new_attachment (const char* filename)
 {
-  if (!filename) return 0;
+  if (!filename) return nullptr;
 
   GtkWidget* w = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   GtkWidget* attachment = gtk_label_new(filename);
@@ -1642,7 +1642,7 @@ BodyPane :: clear_attachments()
   _cur_col = 0;
   _cur_row = 0;
   _attachments = 0;
-  _current_attachment = 0;
+  _current_attachment = nullptr;
 
   {
     gtk_widget_set_no_show_all (_att_box, TRUE);
@@ -1740,19 +1740,19 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
 #endif
   _hscroll_visible (false),
   _vscroll_visible (false),
-  _message (0),
+  _message (nullptr),
 #ifdef HAVE_GMIME_CRYPTO
 //  _gpgerr(GPG_DECODE),
 #endif
   _attachments(0),
   _cleared (true),
-  _current_attachment(0)
+  _current_attachment(nullptr)
 {
 
   GtkWidget * w, * l, * hbox;
 
   for (guint i=0; i<NUM_ICONS; ++i)
-    icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, icons[i].pixbuf_txt, FALSE, 0);
+    icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, icons[i].pixbuf_txt, FALSE, nullptr);
 
   create_cursors();
   create_emoticons();
@@ -1857,7 +1857,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   _buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW(_text));
   set_text_buffer_tags (_buffer, _prefs);
 
-  set_text_from_message (0);
+  set_text_from_message (nullptr);
   const bool expanded (_prefs.get_flag ("body-pane-headers-expanded", true));
   gtk_expander_set_expanded (GTK_EXPANDER(_expander), expanded);
   expander_activated_idle (this);
@@ -2039,7 +2039,7 @@ namespace
 GMimeMessage*
 BodyPane :: create_followup_or_reply (bool is_reply)
 {
-  GMimeMessage * msg (0);
+  GMimeMessage * msg (nullptr);
 
   if (_message)
   {
@@ -2050,7 +2050,7 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     // fallback character encodings
     const char * group_charset (_charset.c_str());
     GMimeContentType * type (g_mime_object_get_content_type (GMIME_OBJECT(_message)));
-    const char * message_charset (type ? g_mime_content_type_get_parameter (type, "charset") : 0);
+    const char * message_charset (type ? g_mime_content_type_get_parameter (type, "charset") : nullptr);
 
     ///
     ///  HEADERS
@@ -2169,7 +2169,7 @@ BodyPane :: refresh_fonts ()
   const bool monospace_font_enabled = _prefs.get_flag ("monospace-font-enabled", false);
 
   if (!body_pane_font_enabled && !monospace_font_enabled)
-    gtk_widget_override_font (_text, 0);
+    gtk_widget_override_font (_text, nullptr);
   else {
     const std::string str (monospace_font_enabled
       ? _prefs.get_string ("monospace-font", "Monospace 10")

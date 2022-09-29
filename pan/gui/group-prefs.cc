@@ -150,7 +150,7 @@ GroupPrefs :: start_element (GMarkupParseContext *context,
 
   if (s == "group")
   {
-    const char * name(0);
+    const char * name(nullptr);
     for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
       if (!strcmp (*k,"name"))  name = *v;
     if (name && *name)
@@ -185,12 +185,12 @@ GroupPrefs :: from_string (const StringView& xml)
   GMarkupParser p;
   p.start_element = start_element;
   p.end_element = end_element;
-  p.text = 0;
-  p.passthrough = 0;
-  p.error = 0;
+  p.text = nullptr;
+  p.passthrough = nullptr;
+  p.error = nullptr;
   GMarkupParseContext* c (
-    g_markup_parse_context_new (&p, (GMarkupParseFlags)0, this, 0));
-  GError * gerr (0);
+    g_markup_parse_context_new (&p, (GMarkupParseFlags)0, this, nullptr));
+  GError * gerr (nullptr);
   if (g_markup_parse_context_parse (c, xml.str, xml.len, &gerr)) {
     // FIXME
   }

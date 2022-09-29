@@ -63,9 +63,9 @@ namespace
       }
   };
 
-  Quark * virtual_title_quark (0);
-  Quark * sub_title_quark (0);
-  Quark * other_title_quark (0);
+  Quark * virtual_title_quark (nullptr);
+  Quark * sub_title_quark (nullptr);
+  Quark * other_title_quark (nullptr);
 
   bool is_group (const Quark& name) {
     return !name.empty() &&
@@ -136,7 +136,7 @@ GroupPane :: get_full_selection () const
   quarks_v groups;
 
   // get a list of paths
-  GtkTreeModel * model (0);
+  GtkTreeModel * model (nullptr);
   GtkTreeSelection * selection (gtk_tree_view_get_selection (GTK_TREE_VIEW(_tree_view)));
   GList * list (gtk_tree_selection_get_selected_rows (selection, &model));
 
@@ -307,7 +307,7 @@ namespace
     MyRow tmp;
     tmp.groupname = groupname;
     rows_t::iterator it = _group_rows.find (&tmp);
-    return it==_group_rows.end() ? 0 : *it;
+    return it==_group_rows.end() ? nullptr : *it;
   }
 
   void
@@ -439,7 +439,7 @@ namespace
       // or if there's no criteria and no subscribed groups (first-time usrs).
       // otherwise it's a flood of thousands of groups.
       // they can click the expander themselves to get that,
-      const bool user_did_search (match != 0);
+      const bool user_did_search (match != nullptr);
       if (!unsub.empty() && (user_did_search || sub.empty()))
         expandme.push_back (store->get_iter (row));
     }
@@ -564,7 +564,7 @@ GroupPane :: set_filter (const std::string& search_text, int mode)
   // pmatch will point to a local TextMatch matching on the filter-phrase,
   // or be a NULL pointer if the filter-phrase is empty
   TextMatch match;
-  TextMatch * pmatch (0);
+  TextMatch * pmatch (nullptr);
   if (!search_text.empty()) {
     if (mode == _GROUP)
       match.set (search_text, TextMatch::CONTAINS, false);
@@ -671,7 +671,7 @@ namespace
   void entry_icon_released (GtkEntry*, GtkEntryIconPosition icon_pos, GdkEventButton *, gpointer menu)
   {
     if (icon_pos == GTK_ENTRY_ICON_PRIMARY)
-      gtk_menu_popup (GTK_MENU(menu), 0, 0, 0, 0, 0, gtk_get_current_event_time());
+      gtk_menu_popup (GTK_MENU(menu), nullptr, nullptr, nullptr, nullptr, 0, gtk_get_current_event_time());
   }
 
   void clear_button_clicked_cb (GtkEntry * e, GtkEntryIconPosition icon_pos, GdkEventButton *, gpointer pane_gpointer)
@@ -801,10 +801,10 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
 
   // find how many subscribed groups the tree's got
   GtkTreeIter sub_iter, virtual_iter;
-  gtk_tree_model_iter_nth_child (model, &sub_iter, 0, 1); // 'sub' node
+  gtk_tree_model_iter_nth_child (model, &sub_iter, nullptr, 1); // 'sub' node
   int n_groups = gtk_tree_model_iter_n_children (model, &sub_iter);
   if (n_groups < 1)
-    return 0;
+    return nullptr;
 
   // find the index of the current selection
   // (or -1 if no subscribed groups are selected)
@@ -829,11 +829,11 @@ GroupPane :: find_next_subscribed_group (bool unread_only)
   {
     if (++n == n_groups) {
       if (start_pos == -1)
-        return 0;
+        return nullptr;
       n = 0;
     }
     if (n == start_pos)
-      return 0;
+      return nullptr;
 
     GtkTreeIter group_iter;
     gtk_tree_model_iter_nth_child (model, &group_iter, &sub_iter, n);
@@ -947,7 +947,7 @@ GroupPane :: create_filter_entry ()
     mode = 1;
   else
     mode = 0;
-  GSList * l = 0;
+  GSList * l = nullptr;
   for (int i=0, qty=G_N_ELEMENTS(mode_strings); i<qty; ++i)
   {
     GtkWidget * w = gtk_radio_menu_item_new_with_label (l, _(mode_strings[i]));
@@ -1011,7 +1011,7 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs,
   _prefs (prefs),
   _group_prefs(group_prefs),
   _data (data),
-  _tree_view (0),
+  _tree_view (nullptr),
   _action_manager (action_manager),
   _dirty_groups_idle_tag (0)
 {
@@ -1038,13 +1038,13 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs,
 
   GtkTreeSelection * selection (gtk_tree_view_get_selection (GTK_TREE_VIEW(_tree_view)));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_MULTIPLE);
-  gtk_tree_selection_set_select_function (selection, select_func, 0, 0);
+  gtk_tree_selection_set_select_function (selection, select_func, nullptr, nullptr);
   g_signal_connect (selection, "changed", G_CALLBACK(on_selection_changed), this);
   on_selection_changed (selection, this);
 
 
-  g_signal_connect (_tree_view, "row_collapsed", G_CALLBACK(row_collapsed_or_expanded_cb), 0);
-  g_signal_connect (_tree_view, "row_expanded", G_CALLBACK(row_collapsed_or_expanded_cb), 0);
+  g_signal_connect (_tree_view, "row_collapsed", G_CALLBACK(row_collapsed_or_expanded_cb), nullptr);
+  g_signal_connect (_tree_view, "row_expanded", G_CALLBACK(row_collapsed_or_expanded_cb), nullptr);
   g_signal_connect (_tree_view, "button-press-event", G_CALLBACK(on_button_pressed), this);
   g_signal_connect (_tree_view, "button-release-event", G_CALLBACK(on_button_pressed), this);
   g_signal_connect (_tree_view, "popup-menu", G_CALLBACK(on_popup_menu), this);
@@ -1067,7 +1067,7 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs,
    gtk_tree_view_append_column (GTK_TREE_VIEW(_tree_view), col);
    gtk_tree_view_set_expander_column (GTK_TREE_VIEW(_tree_view), col);
    gtk_tree_view_column_pack_start (col, text_renderer, true);
-   gtk_tree_view_column_set_cell_data_func (col, text_renderer, render_group_name, this, 0);
+   gtk_tree_view_column_set_cell_data_func (col, text_renderer, render_group_name, this, nullptr);
 
   _root = scroll;
   _data.add_listener (this);
@@ -1094,7 +1094,7 @@ void
 GroupPane :: refresh_font ()
 {
   if (!_prefs.get_flag ("group-pane-font-enabled", false))
-    gtk_widget_override_font (_tree_view, 0);
+    gtk_widget_override_font (_tree_view, nullptr);
   else {
     const std::string str (_prefs.get_string ("group-pane-font", "Sans 10"));
     PangoFontDescription * pfd (pango_font_description_from_string (str.c_str()));

@@ -267,12 +267,12 @@ namespace pan
 
         Server* find_server (const Quark& s) {
           servers_t::iterator it (_servers.find (s));
-          return it == _servers.end() ? 0 : &it->second;
+          return it == _servers.end() ? nullptr : &it->second;
         }
 
         const Server* find_server (const Quark& s) const {
           servers_t::const_iterator it (_servers.find (s));
-          return it == _servers.end() ? 0 : &it->second;
+          return it == _servers.end() ? nullptr : &it->second;
         }
       };
 
@@ -281,19 +281,19 @@ namespace pan
 
       ReadGroup* find_read_group (const Quark& g) {
         read_groups_t::iterator it (_read_groups.find (g));
-        return it == _read_groups.end() ? 0 : &it->second;
+        return it == _read_groups.end() ? nullptr : &it->second;
       }
       const ReadGroup* find_read_group (const Quark& g) const {
         read_groups_t::const_iterator it (_read_groups.find (g));
-        return it == _read_groups.end() ? 0 : &it->second;
+        return it == _read_groups.end() ? nullptr : &it->second;
       }
       ReadGroup::Server* find_read_group_server (const Quark& g, const Quark& s) {
         ReadGroup * read_group = find_read_group (g);
-        return read_group ? read_group->find_server (s) : 0;
+        return read_group ? read_group->find_server (s) : nullptr;
       }
       const ReadGroup::Server* find_read_group_server (const Quark& g, const Quark& s) const {
         const ReadGroup * read_group = find_read_group (g);
-        return read_group ? read_group->find_server (s) : 0;
+        return read_group ? read_group->find_server (s) : nullptr;
       }
 
       void ensure_descriptions_are_loaded () const;
@@ -383,7 +383,7 @@ namespace pan
         typedef std::list<ArticleNode*> children_t;
         children_t _children;
 
-        ArticleNode(): _article(0), _parent(0) {}
+        ArticleNode(): _article(nullptr), _parent(nullptr) {}
       };
 
       typedef std::map<Quark,ArticleNode*> nodes_t;
@@ -479,8 +479,8 @@ namespace pan
                   const Quark           & group,
                   const Quark           & save_path,  // for auto-download
                   const Data::ShowType    show_type,
-                  const FilterInfo      * filter_info=0,
-                  const RulesInfo       * rules=0);
+                  const FilterInfo      * filter_info=nullptr,
+                  const RulesInfo       * rules=nullptr);
           virtual ~MyTree ();
 
         public: // from ArticleTree
@@ -489,9 +489,9 @@ namespace pan
           const Article* get_article (const Quark& mid) const override;
           size_t size () const override;
           void set_filter (const ShowType      show_type = SHOW_ARTICLES,
-                           const FilterInfo  * criteria  = 0) final override;
+                           const FilterInfo  * criteria  = nullptr) final override;
           void set_rules  (const ShowType      show_type = SHOW_ARTICLES,
-                           const RulesInfo   * rules  = 0) final override;
+                           const RulesInfo   * rules  = nullptr) final override;
 
         public:
           void articles_changed (const quarks_t& mids, bool do_refilter);
@@ -539,8 +539,8 @@ namespace pan
       ArticleTree* group_get_articles  (const Quark        & group,
                                         const Quark        & save_path,
                                         const ShowType      show_type = SHOW_ARTICLES,
-                                        const FilterInfo   * criteria=0,
-                                        const RulesInfo    * rules=0) const override;
+                                        const FilterInfo   * criteria=nullptr,
+                                        const RulesInfo    * rules=nullptr) const override;
 
       void group_clear_articles        (const Quark        & group) override;
 

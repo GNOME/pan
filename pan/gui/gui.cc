@@ -97,7 +97,7 @@ namespace pan
   void remove_from_parent (GtkWidget * w)
   {
     GtkWidget *parent = gtk_widget_get_parent(w);
-    if (parent != 0)
+    if (parent != nullptr)
       gtk_container_remove (GTK_CONTAINER(parent), w);
   }
 }
@@ -221,17 +221,17 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _certstore(data.get_certstore()),
   _root (gtk_box_new (GTK_ORIENTATION_VERTICAL, 0)),
   _menu_vbox (gtk_box_new (GTK_ORIENTATION_VERTICAL, 0)),
-  _group_pane (0),
-  _header_pane (0),
-  _body_pane (0),
+  _group_pane (nullptr),
+  _header_pane (nullptr),
+  _body_pane (nullptr),
   _ui_manager (gtk_ui_manager_new ()),
   _info_image (gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_MENU)),
   _error_image (gtk_image_new_from_stock (GTK_STOCK_DIALOG_ERROR, GTK_ICON_SIZE_MENU)),
-  _connection_size_eventbox (0),
-  _connection_size_label (0),
-  _queue_size_label (0),
-  _queue_size_button (0),
-  _taskbar (0)
+  _connection_size_eventbox (nullptr),
+  _connection_size_label (nullptr),
+  _queue_size_label (nullptr),
+  _queue_size_button (nullptr),
+  _taskbar (nullptr)
 {
 
   char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
@@ -393,9 +393,9 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
 
 namespace
 {
-  GtkWidget * hpane (0);
-  GtkWidget * vpane (0);
-  GtkWidget * sep_vpane (0);
+  GtkWidget * hpane (nullptr);
+  GtkWidget * vpane (nullptr);
+  GtkWidget * sep_vpane (nullptr);
 }
 
 GUI :: ~GUI ()
@@ -494,7 +494,7 @@ namespace
     if (!key_to_action.empty())
       return;
 
-    for (GList * l=gtk_ui_manager_get_action_groups(uim); l!=0; l=l->next)
+    for (GList * l=gtk_ui_manager_get_action_groups(uim); l!=nullptr; l=l->next)
     {
       GtkActionGroup * action_group = GTK_ACTION_GROUP(l->data);
       GList * actions = gtk_action_group_list_actions (action_group);
@@ -703,7 +703,7 @@ void GUI :: do_save_articles_to_nzb ()
       Queue::tasks_t tasks;
       std::string emptystring;
       foreach_const (std::vector<Article>, copies, it)
-        tasks.push_back (new TaskArticle (_data, _data, *it, _cache, _data, always ? TaskArticle::ALWAYS_MARK : TaskArticle::NEVER_MARK, 0, TaskArticle::RAW,emptystring));
+        tasks.push_back (new TaskArticle (_data, _data, *it, _cache, _data, always ? TaskArticle::ALWAYS_MARK : TaskArticle::NEVER_MARK, nullptr, TaskArticle::RAW,emptystring));
 
       // write them to a file
       std::ofstream tmp(file.c_str());
@@ -826,7 +826,7 @@ void GUI :: do_import_tasks ()
   strings_t filenames;
   if (gtk_dialog_run (GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
     GSList * tmp = gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER(dialog));
-    for (GSList * l(tmp); l!=0; l=l->next) {
+    for (GSList * l(tmp); l!=nullptr; l=l->next) {
       filenames.push_back ((char*) l->data);
       g_free (l->data);
     }
@@ -864,13 +864,13 @@ namespace
   void task_pane_destroyed_cb (GtkWidget *, gpointer p)
   {
     TaskPane ** task_pane (static_cast<TaskPane**>(p));
-    *task_pane = 0;
+    *task_pane = nullptr;
   }
 }
 
 void GUI :: do_show_task_window ()
 {
-  static TaskPane * task_pane (0);
+  static TaskPane * task_pane (nullptr);
 
   if (!task_pane) {
     task_pane = new TaskPane (_queue, _prefs);
@@ -915,7 +915,7 @@ void GUI :: do_show_log_window ()
 {
   set_bin_child (_event_log_button, _info_image);
 
-  static GtkWidget * w (0);
+  static GtkWidget * w (nullptr);
   if (!w) {
     w = log_dialog_new (_prefs, get_window (_root));
     g_signal_connect (w, "destroy", G_CALLBACK(gtk_widget_destroyed), &w);
@@ -1182,7 +1182,7 @@ void GUI :: do_expand_thread ()
 void GUI :: do_show_score_dialog ()
 {
   const Quark& group (_header_pane->get_group());
-  const Article * article (0);
+  const Article * article (nullptr);
   if (!group.empty())
     article = _header_pane->get_first_selected_article ();
   if (article) {
@@ -1307,7 +1307,7 @@ GUI :: score_add (int mode)
 
   Article a;
   const Article* article (_header_pane->get_first_selected_article ());
-  if (article != 0)
+  if (article != nullptr)
     a = *article;
 
   ScoreAddDialog * d = new ScoreAddDialog (_data, _root, group, a, (ScoreAddDialog::Mode)mode);
@@ -1371,7 +1371,7 @@ void GUI :: do_supersede_article ()
   g_object_unref (content_object);
   g_object_unref (stream);
 
-  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, new_message, _prefs, _group_prefs, _encode_cache);
+  PostUI * post = PostUI :: create_window (nullptr, _data, _queue, _data, _data, new_message, _prefs, _group_prefs, _encode_cache);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -1435,7 +1435,7 @@ void GUI :: do_cancel_article ()
   g_object_unref (stream);
   g_free (cancel_message);
 
-  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, cancel, _prefs, _group_prefs, _encode_cache);
+  PostUI * post = PostUI :: create_window (nullptr, _data, _queue, _data, _data, cancel, _prefs, _group_prefs, _encode_cache);
   if (post)
   {
     gtk_widget_show_all (post->root());
@@ -1601,7 +1601,7 @@ GUI :: do_post ()
   g_mime_message_set_mime_part (message, GMIME_OBJECT(part));
   g_object_unref (part);
 
-  PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
+  PostUI * post = PostUI :: create_window (nullptr, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
   if (post)
     gtk_widget_show_all (post->root());
   g_object_unref (message);
@@ -1611,7 +1611,7 @@ void GUI :: do_followup_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (false);
   if (message) {
-    PostUI * post = PostUI :: create_window(0, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
+    PostUI * post = PostUI :: create_window(nullptr, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);
@@ -1621,7 +1621,7 @@ void GUI :: do_reply_to ()
 {
   GMimeMessage * message = _body_pane->create_followup_or_reply (true);
   if (message) {
-    PostUI * post = PostUI :: create_window (0, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
+    PostUI * post = PostUI :: create_window (nullptr, _data, _queue, _data, _data, message, _prefs, _group_prefs, _encode_cache);
     if (post)
       gtk_widget_show_all (post->root());
     g_object_unref (message);
@@ -1663,8 +1663,8 @@ void GUI :: do_about_pan ()
                                "Petr Kovar <pknbe@volny.cz> - Contributor",
                                "Calin Culianu <calin@ajvar.org> - Threaded Decoding",
                                "Christophe Lambin <chris@rebelbase.com> - Original Developer",
-                               "Matt Eagleson <matt@rebelbase.com> - Original Developer", 0 };
-  GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, 0);
+                               "Matt Eagleson <matt@rebelbase.com> - Original Developer", nullptr };
+  GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, nullptr);
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);
@@ -1772,11 +1772,11 @@ void GUI :: do_layout (bool tabbed)
 {
   if (hpane) {
     _prefs.set_int ("main-window-hpane-position", gtk_paned_get_position(GTK_PANED(hpane)));
-    hpane = 0;
+    hpane = nullptr;
   }
   if (vpane) {
     _prefs.set_int ("main-window-vpane-position", gtk_paned_get_position(GTK_PANED(vpane)));
-    vpane = 0;
+    vpane = nullptr;
   }
 
   gtk_widget_hide (_workarea_bin);
@@ -1797,7 +1797,7 @@ void GUI :: do_layout (bool tabbed)
     g_list_free (children);
   }
 
-  GtkWidget * w (0);
+  GtkWidget * w (nullptr);
   if (tabbed)
   {
     w = gtk_notebook_new ();
@@ -1920,7 +1920,7 @@ void GUI :: do_show_selected_article_info ()
 {
   const Article* a = _header_pane->get_first_selected_article ();
 
-  if (a != 0)
+  if (a != nullptr)
   {
     // date
     EvolutionDateMaker date_maker;
@@ -2309,7 +2309,7 @@ GUI :: on_queue_task_active_changed (Queue&, Task& t, bool is_active)
   for (; it!=_active_tasks.end() && i<VIEW_QTY; ++it, ++i)
     _views[i]->set_progress (*it);
   for (; i<VIEW_QTY; ++i)
-    _views[i]->set_progress (0);
+    _views[i]->set_progress (nullptr);
 }
 void
 GUI :: on_queue_connection_count_changed (Queue&, int)

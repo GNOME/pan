@@ -94,7 +94,7 @@ namespace
 
 namespace
 {
-  GMainLoop * nongui_gmainloop (0);
+  GMainLoop * nongui_gmainloop (nullptr);
 
   void mainloop ()
   {
@@ -198,13 +198,13 @@ namespace
   const guint8 * pixbuf_txt;
   GdkPixbuf * pixbuf;
   } status_icons[NUM_STATUS_ICONS] = {
-    { icon_status_online,          0 },
-    { icon_status_offline,         0 },
-    { icon_status_active,          0 },
-    { icon_status_queue_empty,     0 },
-    { icon_status_error,           0 },
-    { icon_status_idle,            0 },
-    { icon_status_new_articles,    0 }
+    { icon_status_online,          nullptr },
+    { icon_status_offline,         nullptr },
+    { icon_status_active,          nullptr },
+    { icon_status_queue_empty,     nullptr },
+    { icon_status_error,           nullptr },
+    { icon_status_idle,            nullptr },
+    { icon_status_new_articles,    nullptr }
   };
 
 
@@ -480,7 +480,7 @@ namespace
     gtk_menu_popup(menu, NULL, NULL, NULL, NULL, button, activation_time);
   }
 
-  static QueueAndGui* queue_and_gui(0);
+  static QueueAndGui* queue_and_gui(nullptr);
 
   void run_pan_with_status_icon (GtkWindow * window, GdkPixbuf * pixbuf, Queue& queue, Prefs & prefs, Data& data, GUI* _gui)
   {
@@ -488,7 +488,7 @@ namespace
     GUI& gui (*_gui);
 
     for (guint i=0; i<NUM_STATUS_ICONS; ++i)
-      status_icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, status_icons[i].pixbuf_txt, FALSE, 0);
+      status_icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, status_icons[i].pixbuf_txt, FALSE, nullptr);
 
     GtkStatusIcon * icon = gtk_status_icon_new_from_pixbuf (status_icons[ICON_STATUS_IDLE].pixbuf);
     GtkWidget * menu = gtk_menu_new ();
@@ -834,7 +834,7 @@ _("General Options\n"
 
 namespace
 {
-  GUI * gui_ptr (0);
+  GUI * gui_ptr (nullptr);
 }
 
 namespace
@@ -1085,11 +1085,11 @@ main (int argc, char *argv[])
       if (gui) {
         TaskPane * pane = new TaskPane (queue, prefs);
         GtkWidget * w (pane->root());
-        GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, icon_pan, FALSE, 0);
+        GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, icon_pan, FALSE, nullptr);
         gtk_window_set_default_icon (pixbuf);
         gtk_widget_show_all (w);
-        g_signal_connect (w, "destroy", G_CALLBACK(destroy_cb), 0);
-        g_signal_connect (G_OBJECT(w), "delete-event", G_CALLBACK(delete_event_cb), 0);
+        g_signal_connect (w, "destroy", G_CALLBACK(destroy_cb), nullptr);
+        g_signal_connect (G_OBJECT(w), "delete-event", G_CALLBACK(delete_event_cb), nullptr);
       } else {
         nongui_gmainloop = g_main_loop_new (NULL, false);
         // create a PanKiller object -- which quits pan when the queue is done
@@ -1100,7 +1100,7 @@ main (int argc, char *argv[])
     }
     else
     {
-      GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, icon_pan, FALSE, 0);
+      GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, icon_pan, FALSE, nullptr);
       GtkWidget * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
       if (prefs.get_flag ("main-window-is-maximized", false))
         gtk_window_maximize (GTK_WINDOW (window));
