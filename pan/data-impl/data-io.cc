@@ -221,7 +221,7 @@ LineReader*
 DataIO :: read_tasks () const
 {
   const std::string filename (get_tasks_filename ());
-  return file::file_exists(filename.c_str()) ? read_file(filename) : 0;
+  return file::file_exists(filename.c_str()) ? read_file(filename) : nullptr;
 }
 
 LineReader*
@@ -252,7 +252,7 @@ LineReader*
 DataIO :: read_group_headers (const Quark& group) const
 {
   const std::string filename (get_group_headers_filename (group));
-  return file::file_exists(filename.c_str()) ? read_file(filename) : 0;
+  return file::file_exists(filename.c_str()) ? read_file(filename) : nullptr;
 }
 
 LineReader*

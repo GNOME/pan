@@ -166,10 +166,10 @@ ProfilesImpl :: load (const StringView& filename)
     p.start_element = start_element;
     p.end_element = end_element;
     p.text = text;
-    p.passthrough = 0;
-    p.error = 0;
-    GError * gerr (0);
-    GMarkupParseContext* c (g_markup_parse_context_new (&p, (GMarkupParseFlags)0, &mc, 0));
+    p.passthrough = nullptr;
+    p.error = nullptr;
+    GError * gerr (nullptr);
+    GMarkupParseContext* c (g_markup_parse_context_new (&p, (GMarkupParseFlags)0, &mc, nullptr));
     g_markup_parse_context_parse (c, txt.c_str(), txt.size(), &gerr);
     if (gerr) {
       Log::add_err_va (_("Error reading file \"%s\": %s"), filename.to_string().c_str(), gerr->message);

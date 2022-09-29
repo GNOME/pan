@@ -41,8 +41,8 @@ namespace
                                 int                & parts,
                                 std::string        & no_part)
   {
-    const char * numerator = 0;
-    const char * denominator = 0;
+    const char * numerator = nullptr;
+    const char * denominator = nullptr;
 
     const char * s (subj.begin());
     const char * pch (subj.end());
@@ -67,19 +67,19 @@ namespace
       while (s!=pch && isdigit(*pch))
         --pch;
       if (s==pch || (*pch!='(' && *pch!='[')) {
-        denominator = 0;
+        denominator = nullptr;
         continue;
       }
 
       // N -> part
       numerator = pch+1;
-      char * numerator_end (0);
+      char * numerator_end (nullptr);
       part = (int) strtol (numerator, &numerator_end, 10);
       parts = atoi (denominator);
 
       if (part > parts) {
         // false positive...
-        numerator = denominator = 0;
+        numerator = denominator = nullptr;
         part = parts = 0;
         continue;
       }
@@ -144,14 +144,14 @@ DataImpl :: xover_clear_workarea (const Quark& group)
    _xovers.erase (group);
    if (group == _cached_xover_group) {
       _cached_xover_group.clear ();
-      _cached_xover_entry = 0;
+      _cached_xover_entry = nullptr;
    }
 }
 
 DataImpl :: XOverEntry&
 DataImpl :: xover_get_workarea (const Quark& group)
 {
-   XOverEntry * entry (0);
+   XOverEntry * entry (nullptr);
    if (group == _cached_xover_group)
       entry = _cached_xover_entry;
    else {
@@ -179,7 +179,7 @@ DataImpl :: xover_ref (const Quark& group)
   foreach_const (nodes_t, h->_nodes, it) {
     const Quark& mid (it->first);
     const Article * a (it->second->_article);
-    if (a != 0)
+    if (a != nullptr)
       workarea._subject_lookup.insert (std::pair<Quark,Quark>(a->subject,mid));
   }
 }
@@ -193,7 +193,7 @@ DataImpl :: xover_flush (const Quark& group)
   workarea._added_batch.clear();
   on_articles_changed (group, workarea._changed_batch, true);
   workarea._changed_batch.clear();
-  workarea._last_flush_time = time(0);
+  workarea._last_flush_time = time(nullptr);
 }
 
 void
@@ -216,7 +216,7 @@ DataImpl :: set_xover_low (const Quark   & group,
                            const Article_Number   low)
 {
   ReadGroup::Server * rgs (find_read_group_server (group, server));
-  if (rgs != 0)
+  if (rgs != nullptr)
     rgs->_read.mark_range (static_cast<Article_Number>(0), low, true);
 }
 
@@ -241,13 +241,13 @@ DataImpl :: xover_add (const Quark         & server,
     Log::add_err_va (_("Error reading from %s: unknown group \"%s\""),
                      get_server_address(server).c_str(),
                      group.c_str());
-    return 0;
+    return nullptr;
   }
 
 
 //  std::cerr<<"xover add : "<<subject<<" "<<author<<" "<<message_id<<" lines "<<line_count<<" bytes "<<byte_count<<std::endl;
 
-  const Article* new_article (0);
+  const Article* new_article (nullptr);
 
   XOverEntry& workarea (xover_get_workarea (group));
   const std::string references (
@@ -325,7 +325,7 @@ DataImpl :: xover_add (const Quark         & server,
     workarea._changed_batch.insert(art_mid);
 
   // maybe flush the batched changes
-  if ((time(0) - workarea._last_flush_time) >= 10)
+  if ((time(nullptr) - workarea._last_flush_time) >= 10)
     xover_flush (group);
 
   if (is_virtual)

@@ -58,7 +58,7 @@ DataImpl :: GroupHeaders :: ~GroupHeaders ()
 DataImpl :: ArticleNode*
 DataImpl :: GroupHeaders :: find_node (const Quark& mid)
 {
-  ArticleNode * node (0);
+  ArticleNode * node (nullptr);
   nodes_t::iterator it (_nodes.find (mid));
   if (it != _nodes.end())
     node = it->second;
@@ -68,7 +68,7 @@ DataImpl :: GroupHeaders :: find_node (const Quark& mid)
 const DataImpl :: ArticleNode*
 DataImpl :: GroupHeaders :: find_node (const Quark& mid) const
 {
-  const ArticleNode * node (0);
+  const ArticleNode * node (nullptr);
   nodes_t::const_iterator it (_nodes.find (mid));
   if (it != _nodes.end())
     node = it->second;
@@ -89,7 +89,7 @@ DataImpl :: GroupHeaders :: find_parent_message_id (const Quark& mid) const
 const Article*
 DataImpl :: GroupHeaders :: find_article (const Quark& message_id) const
 {
-  Article *a (0);
+  Article *a (nullptr);
 
   const ArticleNode * node (find_node (message_id));
   if (node)
@@ -101,7 +101,7 @@ DataImpl :: GroupHeaders :: find_article (const Quark& message_id) const
 Article*
 DataImpl :: GroupHeaders :: find_article (const Quark& message_id)
 {
-  Article *a(0);
+  Article *a(nullptr);
 
   const ArticleNode * node (find_node (message_id));
   if (node)
@@ -116,7 +116,7 @@ DataImpl :: GroupHeaders :: remove_articles (const quarks_t& mids)
   nodes_v nodes;
   find_nodes (mids, _nodes, nodes);
   foreach (nodes_v, nodes, it)
-    (*it)->_article = 0;
+    (*it)->_article = nullptr;
   _dirty = true;
 }
 
@@ -124,14 +124,14 @@ const DataImpl :: GroupHeaders*
 DataImpl :: get_group_headers (const Quark& group) const
 {
    group_to_headers_t::const_iterator it (_group_to_headers.find(group));
-   return it==_group_to_headers.end() ? 0 : it->second;
+   return it==_group_to_headers.end() ? nullptr : it->second;
 }
 
 DataImpl :: GroupHeaders*
 DataImpl :: get_group_headers (const Quark& group)
 {
    group_to_headers_t::iterator it (_group_to_headers.find(group));
-   return it==_group_to_headers.end() ? 0 : it->second;
+   return it==_group_to_headers.end() ? nullptr : it->second;
 }
 
 void
@@ -186,7 +186,7 @@ void
 DataImpl :: unref_group   (const Quark& group)
 {
   GroupHeaders * h (get_group_headers (group));
-  pan_return_if_fail (h != 0);
+  pan_return_if_fail (h != nullptr);
 
   --h->_ref;
 //  std::cerr << LINE_ID << " group " << group << " refcount down to " << h->_ref << std::endl;
@@ -260,7 +260,7 @@ DataImpl :: load_article (const Quark       & group,
 #endif
 
   GroupHeaders * h (get_group_headers (group));
-  pan_return_if_fail (h!=0);
+  pan_return_if_fail (h!=nullptr);
 
   // populate the current node
   const Quark& mid (article->message_id);
@@ -301,7 +301,7 @@ DataImpl :: load_article (const Quark       & group,
     {
       //std::cerr << LINE_ID << " haven't mapped " << new_parent_mid << " before..." << std::endl;
       ArticleNode * new_parent_node (h->_nodes[new_parent_mid]);
-      const bool found (new_parent_node != 0);
+      const bool found (new_parent_node != nullptr);
       if (!found) {
         //std::cerr << LINE_ID << " didn't find it; adding new node for " << new_parent_mid << std::endl;
         static const ArticleNode blank_node;
@@ -311,7 +311,7 @@ DataImpl :: load_article (const Quark       & group,
       }
       node->_parent = new_parent_node;
       if (find_ancestor (new_parent_node, new_parent_mid)) {
-        node->_parent = 0;
+        node->_parent = nullptr;
         //std::cerr << LINE_ID << " someone's been munging References headers to cause trouble!" << std::endl;
         break;
       }
@@ -335,11 +335,11 @@ DataImpl :: load_article (const Quark       & group,
 
       // unlink from old parent
       old_parent_node->_children.remove (node);
-      node->_parent = 0;
+      node->_parent = nullptr;
 
       // link to new parent
       ArticleNode * new_parent_node (h->_nodes[new_parent_mid]);
-      const bool found (new_parent_node != 0);
+      const bool found (new_parent_node != nullptr);
       if (!found) {
         //std::cerr << LINE_ID << " didn't find it; adding new node for " << new_parent_mid << std::endl;
         static const ArticleNode blank_node;
@@ -348,8 +348,8 @@ DataImpl :: load_article (const Quark       & group,
         new_parent_node->_mid = new_parent_mid;
       }
       node->_parent = new_parent_node;
-      if (find_ancestor (new_parent_node, new_parent_mid) != 0) {
-        node->_parent = 0;
+      if (find_ancestor (new_parent_node, new_parent_mid) != nullptr) {
+        node->_parent = nullptr;
         //std::cerr << LINE_ID << " someone's been munging References headers to cause trouble!" << std::endl;
         break;
       }
@@ -360,7 +360,7 @@ DataImpl :: load_article (const Quark       & group,
   }
 
   // recursion?
-  assert (find_ancestor(article_node, article->message_id) == 0);
+  assert (find_ancestor(article_node, article->message_id) == nullptr);
 }
 
 #if 0
@@ -397,7 +397,7 @@ DataImpl :: load_part (const Quark          & group,
 {
    GroupHeaders * h = get_group_headers (group);
    Article * a (h->find_article (mid));
-   pan_return_if_fail (a != 0);
+   pan_return_if_fail (a != nullptr);
 
    if (a->add_part (number, part_mid, bytes))
      a->lines += lines;
@@ -410,7 +410,7 @@ namespace
     unsigned long long val (0ull);
     if (!view.empty()) {
       errno = 0;
-      val = strtoull (view.str, 0, 10);
+      val = strtoull (view.str, nullptr, 10);
       if (errno) val = 0ull;
     }
     return val;
@@ -424,7 +424,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
   TimeElapsed timer;
 
   GroupHeaders * h (get_group_headers (group));
-  assert (h != 0);
+  assert (h != nullptr);
 
   Article_Count article_count (0);
   Article_Count unread_count (0);
@@ -479,7 +479,7 @@ DataImpl :: load_headers (const DataIO   & data_io,
       unsigned int expire_count (0);
       in->getline (line);
       //const unsigned long article_qty = view_to_ul (line); /* unused */
-      const time_t now (time (0));
+      const time_t now (time (nullptr));
       PartBatch part_batch;
       for (;;)
       {
@@ -700,7 +700,7 @@ DataImpl :: save_headers (DataIO                       & data_io,
 {
   const char endl ('\n');
   const GroupHeaders * h (get_group_headers (group));
-  assert (h != 0);
+  assert (h != nullptr);
 
   part_count = 0;
   article_count = 0;
@@ -926,7 +926,7 @@ bool
 DataImpl :: is_read (const Article* a) const
 {
   // if it's read on any server, the whole thing is read.
-  if (a != 0)  {
+  if (a != nullptr)  {
     foreach_const (Xref, a->xref, xit) {
       const ReadGroup::Server * rgs (find_read_group_server (xit->group, xit->server));
       if (rgs && rgs->_read.is_marked (xit->number))

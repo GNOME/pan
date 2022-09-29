@@ -59,8 +59,8 @@ DataImpl :: MyTree :: get_children (const Quark& mid, articles_t & setme) const
 const Article*
 DataImpl :: MyTree :: get_parent (const Quark& mid) const
 {
-  const Article * parent (0);
-  const ArticleNode * parent_node (0);
+  const Article * parent (nullptr);
+  const ArticleNode * parent_node (nullptr);
 
   nodes_t::const_iterator child_it (_nodes.find (mid));
   if (child_it != _nodes.end())
@@ -75,7 +75,7 @@ const Article*
 DataImpl :: MyTree :: get_article (const Quark& mid) const
 {
   nodes_t::const_iterator it (_nodes.find (mid));
-  return it==_nodes.end() ? 0 : it->second->_article;
+  return it==_nodes.end() ? nullptr : it->second->_article;
 }
 
 size_t
@@ -102,7 +102,7 @@ DataImpl :: MyTree :: set_rules (const Data::ShowType    show_type,
   _show_type = show_type;
 
   const GroupHeaders * h (_data.get_group_headers (_group));
-  g_assert (h != 0);
+  g_assert (h != nullptr);
   const_nodes_v candidates;
   candidates.reserve (h->_nodes.size());
   foreach_const (nodes_t, h->_nodes, it) {
@@ -127,7 +127,7 @@ DataImpl :: MyTree :: set_filter (const Data::ShowType    show_type,
 
   // refilter all the articles in the group...
   const GroupHeaders * h (_data.get_group_headers (_group));
-  g_assert (h != 0);
+  g_assert (h != nullptr);
   const_nodes_v candidates;
   candidates.reserve (h->_nodes.size());
   foreach_const (nodes_t, h->_nodes, it) {
@@ -281,7 +281,7 @@ DataImpl :: MyTree :: download_articles (std::set<const Article*> s)
     if (!_data.is_read(*it))
       tasks.push_back (new TaskArticle (_data, _data, **it, cache, _data,
                                         always ? TaskArticle::ALWAYS_MARK : action ? TaskArticle::ACTION_TRUE : TaskArticle::ACTION_FALSE,
-                                        0, TaskArticle::DECODE, _save_path));
+                                        nullptr, TaskArticle::DECODE, _save_path));
   if (!tasks.empty())
     queue->add_tasks (tasks, Queue::BOTTOM);
 }
@@ -390,7 +390,7 @@ DataImpl :: MyTree :: remove_articles (const quarks_t& mids)
     const Quark& mid (node->_mid);
 
     if (node->_article) {
-        node->_article = 0;
+        node->_article = nullptr;
         diffs.removed.insert (diffs.removed.end(), mid);
     }
 
@@ -560,7 +560,7 @@ DataImpl :: MyTree :: add_articles (const const_nodes_v& nodes_in)
     added.message_id = tree_node->_mid;
 
     // find the first ancestor that's present in our tree
-    ArticleNode * parent (0);
+    ArticleNode * parent (nullptr);
     const nodes_t::const_iterator nend (_nodes.end());
     for (const ArticleNode *it(node->_parent); it && !parent; it=it->_parent) {
       nodes_t::iterator nit (_nodes.find (it->_mid));
@@ -635,7 +635,7 @@ DataImpl :: MyTree :: add_articles (const const_nodes_v& nodes_in)
 
     //std::cerr << LINE_ID << " looking for a new parent for "
     //          << tree_node->_mid << std::endl;
-    ArticleNode * new_parent (0);
+    ArticleNode * new_parent (nullptr);
     node = node->_parent;
     while (node && !new_parent) {
       //std::cerr << LINE_ID << " maybe " << node->_mid

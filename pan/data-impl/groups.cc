@@ -241,7 +241,7 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
 
       // if the group's been read, save its read number ranges...
       const ReadGroup::Server * rgs (find_read_group_server (group, server));
-      if (rgs != 0) {
+      if (rgs != nullptr) {
         newsrc_string.clear ();
         rgs->_read.to_string (newsrc_string);
         if (!newsrc_string.empty()) {
@@ -501,7 +501,7 @@ DataImpl :: add_groups (const Quark       & server,
   ensure_descriptions_are_loaded ();
 
   Server * s (find_server (server));
-  assert (s != 0);
+  assert (s != nullptr);
 
   {
     AlphabeticalQuarkOrdering o;
@@ -584,7 +584,7 @@ void
 DataImpl :: mark_group_read (const Quark& groupname)
 {
   ReadGroup * rg (find_read_group (groupname));
-  if (rg != 0) {
+  if (rg != nullptr) {
     foreach (ReadGroup::servers_t, rg->_servers, it) {
       //std::cerr << LINE_ID << " marking read range [0..." << it->second._xover_high << "] in " << get_server_address(it->first) << ']' << std::endl;
       it->second._read.mark_range (static_cast<Article_Number>(0), it->second._xover_high, true);

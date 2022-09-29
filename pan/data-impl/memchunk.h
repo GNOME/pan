@@ -45,7 +45,7 @@ namespace pan {
         return phead;
       }
 
-      MemChunk():chunks(0),phead(0),head(0),nelem(Chunk::size/sizeof(T)),count(0)
+      MemChunk():chunks(nullptr),phead(nullptr),head(nullptr),nelem(Chunk::size/sizeof(T)),count(0)
       {grow();}
 
       ~MemChunk()
@@ -63,7 +63,7 @@ namespace pan {
         chunks=chunks->next;
         delete p;
 
-        while(chunks!=0)
+        while(chunks!=nullptr)
         {
           t=reinterpret_cast<T*>(chunks->mem);
           for (i=0;i<nelem;i++)
