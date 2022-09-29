@@ -269,7 +269,7 @@ PostUI :: set_spellcheck_enabled (bool enabled)
   {
 #ifdef HAVE_GTKSPELL
     GtkTextView * view = GTK_TEXT_VIEW(_body_view);
-    GError * err (0);
+    GError * err (nullptr);
 
 #if GTKSPELL_VERSION == 3
     gboolean spell_attach = TRUE;
@@ -449,24 +449,24 @@ namespace
 
   GtkActionEntry entries[] =
   {
-    { "file-menu", 0, N_("_File"), 0, 0, 0 },
-    { "edit-menu", 0, N_("_Edit"), 0, 0, 0 },
-    { "profile-menu", 0, N_("_Profile"), 0, 0, 0 },
-    { "editors-menu", 0, N_("Set Editor"), 0, 0, 0 },
-    { "post-toolbar", 0, "post", 0, 0, 0 },
+    { "file-menu", nullptr, N_("_File"), nullptr, nullptr, nullptr },
+    { "edit-menu", nullptr, N_("_Edit"), nullptr, nullptr, nullptr },
+    { "profile-menu", nullptr, N_("_Profile"), nullptr, nullptr, nullptr },
+    { "editors-menu", nullptr, N_("Set Editor"), nullptr, nullptr, nullptr },
+    { "post-toolbar", nullptr, "post", nullptr, nullptr, nullptr },
     { "post-article", GTK_STOCK_EXECUTE, N_("_Send Article"), "<control>Return", N_("Send Article Now"), G_CALLBACK(do_send) },
-    { "post-and-save-articles", GTK_STOCK_FLOPPY, N_("_Send and Save Articles to NZB"), 0, N_("Send and Save Articles to NZB"), G_CALLBACK(do_send_and_save) },
-    { "set-charset", 0, N_("Set Character _Encoding..."), 0, 0, G_CALLBACK(do_charset) },
-    { "set-encoding", 0, N_("Set Content _Transfer Encoding..."), 0, 0, G_CALLBACK(do_cte) },
+    { "post-and-save-articles", GTK_STOCK_FLOPPY, N_("_Send and Save Articles to NZB"), nullptr, N_("Send and Save Articles to NZB"), G_CALLBACK(do_send_and_save) },
+    { "set-charset", nullptr, N_("Set Character _Encoding..."), nullptr, nullptr, G_CALLBACK(do_charset) },
+    { "set-encoding", nullptr, N_("Set Content _Transfer Encoding..."), nullptr, nullptr, G_CALLBACK(do_cte) },
     { "save-draft", GTK_STOCK_SAVE, N_("Sa_ve Draft"), "<control>s", N_("Save as a Draft for Future Posting"), G_CALLBACK(do_save) },
     { "open-draft", GTK_STOCK_OPEN, N_("_Open Draft..."), "<control>o", N_("Open an Article Draft"), G_CALLBACK(do_open) },
-    { "close", GTK_STOCK_CLOSE, 0, 0, 0, G_CALLBACK(do_close) },
-    { "cut", GTK_STOCK_CUT, 0, 0, 0, G_CALLBACK(do_cut) },
-    { "copy", GTK_STOCK_COPY, 0, 0, 0, G_CALLBACK(do_copy) },
-    { "paste", GTK_STOCK_PASTE, 0, 0, 0, G_CALLBACK(do_paste) },
+    { "close", GTK_STOCK_CLOSE, nullptr, nullptr, nullptr, G_CALLBACK(do_close) },
+    { "cut", GTK_STOCK_CUT, nullptr, nullptr, nullptr, G_CALLBACK(do_cut) },
+    { "copy", GTK_STOCK_COPY, nullptr, nullptr, nullptr, G_CALLBACK(do_copy) },
+    { "paste", GTK_STOCK_PASTE, nullptr, nullptr, nullptr, G_CALLBACK(do_paste) },
     { "rot13", GTK_STOCK_REFRESH, N_("_Rot13"), "<control>r", N_("Rot13 Selected Text"), G_CALLBACK(do_rot13) },
     { "run-editor", GTK_STOCK_JUMP_TO, N_("Run _Editor"), "<control>e", N_("Run Editor"), G_CALLBACK(do_edit) },
-    { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), 0, 0, G_CALLBACK(do_profiles) },
+    { "manage-profiles", GTK_STOCK_EDIT, N_("Edit P_osting Profiles"), nullptr, nullptr, G_CALLBACK(do_profiles) },
     { "add-files", GTK_STOCK_ADD, N_("Add _Files to Queue"), "<control>O", N_("Add Files to Queue"), G_CALLBACK(do_add_files) },
   };
 
@@ -520,13 +520,13 @@ namespace
 
   const GtkToggleActionEntry toggle_entries[] =
   {
-    { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), 0, N_("Wrap Text"), G_CALLBACK(do_wrap), true },
-    { "always-run-editor", 0, N_("Always Run Editor"), 0, 0, G_CALLBACK(do_edit2), false },
-    { "remember-charset", 0, N_("Remember Character Encoding for This Group"), 0, 0, G_CALLBACK(on_remember_charset_toggled), true },
-    { "master-reply", 0, N_("Thread Attached Replies"), 0, 0, G_CALLBACK(on_mr_toggled), true },
-    { "gpg-encrypt", 0, N_("PGP-Encrypt the Article"), 0, 0, G_CALLBACK(on_enc_toggled), false },
-    { "gpg-sign", 0, N_("PGP-Sign the Article"), 0, 0, G_CALLBACK(on_sign_toggled), false },
-    { "spellcheck", 0, N_("Check _Spelling"), 0, 0, G_CALLBACK(on_spellcheck_toggled), true }
+    { "wrap", GTK_STOCK_JUSTIFY_FILL, N_("_Wrap Text"), nullptr, N_("Wrap Text"), G_CALLBACK(do_wrap), true },
+    { "always-run-editor", nullptr, N_("Always Run Editor"), nullptr, nullptr, G_CALLBACK(do_edit2), false },
+    { "remember-charset", nullptr, N_("Remember Character Encoding for This Group"), nullptr, nullptr, G_CALLBACK(on_remember_charset_toggled), true },
+    { "master-reply", nullptr, N_("Thread Attached Replies"), nullptr, nullptr, G_CALLBACK(on_mr_toggled), true },
+    { "gpg-encrypt", nullptr, N_("PGP-Encrypt the Article"), nullptr, nullptr, G_CALLBACK(on_enc_toggled), false },
+    { "gpg-sign", nullptr, N_("PGP-Sign the Article"), nullptr, nullptr, G_CALLBACK(on_sign_toggled), false },
+    { "spellcheck", nullptr, N_("Check _Spelling"), nullptr, nullptr, G_CALLBACK(on_spellcheck_toggled), true }
   };
 
   void add_widget (GtkUIManager*, GtkWidget* widget, gpointer vbox)
@@ -628,7 +628,7 @@ PostUI :: add_actions (GtkWidget * box)
 
   // read the file...
   char * filename = g_build_filename (file::get_pan_home().c_str(), "post.ui", NULL);
-  GError * err (0);
+  GError * err (nullptr);
   if (!gtk_ui_manager_add_ui_from_file (_uim, filename, &err)) {
     g_clear_error (&err);
     gtk_ui_manager_add_ui_from_string (_uim, fallback_post_ui, -1, &err);
@@ -1057,7 +1057,7 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
 	  // pseudo mid to get data from cache
 	  std::string message_id = pan_g_mime_message_set_message_id(msg, mid.c_str());
 	  std::stringstream xref;
-	  time_t posted = time(0); // use posted as article number, this is unique anyway
+	  time_t posted = time(nullptr); // use posted as article number, this is unique anyway
 	  xref << folder << ":"<<posted;
 	  const Article* article = _data.xover_add (p.posting_server, folder, subject, author, posted, message_id, refs, sizeof(*msg), 3, xref.str(), true);
 	  if (article)
@@ -1341,7 +1341,7 @@ PostUI :: spawn_editor ()
   }
 
   // open a new tmp file
-  char * fname (0);
+  char * fname (nullptr);
 
   {
     GError * err = NULL;
@@ -1535,7 +1535,7 @@ GMimeMessage*
 PostUI :: new_message_from_ui (Mode mode, bool copy_body)
 {
 
-  GMimeMessage * msg(0);
+  GMimeMessage * msg(nullptr);
   msg = g_mime_message_new (true);
   const char * charset_cstr = _charset.c_str();
 
@@ -1811,13 +1811,13 @@ PostUI :: create_body_widget (GtkTextBuffer*& buf, GtkWidget*& view, const Prefs
   std::string s (WRAP_COLS, 'A');
   pango_layout_set_text (layout, s.c_str(), s.size());
   PangoRectangle r;
-  pango_layout_get_extents (layout, &r, 0);
+  pango_layout_get_extents (layout, &r, nullptr);
   _wrap_pixels = PANGO_PIXELS(r.width);
 
   // figure out how wide we want to make the window
   s.assign (VIEW_COLS, 'A');
   pango_layout_set_text (layout, s.c_str(), s.size());
-  pango_layout_get_extents (layout, &r, 0);
+  pango_layout_get_extents (layout, &r, nullptr);
   gtk_widget_set_size_request (view, PANGO_PIXELS(r.width), -1 );
 
   // set the rest of the text view's policy
@@ -1865,7 +1865,7 @@ PostUI :: update_profile_combobox ()
 
   // tear out the old entries
   GtkTreeModel * model (gtk_combo_box_get_model (GTK_COMBO_BOX(combo)));
-  for (int i(0), qty(gtk_tree_model_iter_n_children(model,0)); i<qty; ++i)
+  for (int i(0), qty(gtk_tree_model_iter_n_children(model,nullptr)); i<qty; ++i)
     gtk_combo_box_text_remove (combo, 0);
 
   // add the new entries
@@ -1915,7 +1915,7 @@ namespace
     else if (type == Profile::COMMAND)
     {
       int argc = 0;
-      char ** argv = 0;
+      char ** argv = nullptr;
 
       if (g_file_test (pch, G_FILE_TEST_EXISTS))
       {
@@ -2210,7 +2210,7 @@ namespace
 std::string
 PostUI :: utf8ize (const StringView& in) const
 {
-  const char * local_charset = 0;
+  const char * local_charset = nullptr;
   g_get_charset (&local_charset);
   return content_to_utf8 (in, _charset.c_str(), local_charset);
 }
@@ -2313,7 +2313,7 @@ PostUI :: set_message (GMimeMessage * message)
   apply_profile ();
 
   // set focus to the first non-populated widget
-  GtkWidget * grab (0);
+  GtkWidget * grab (nullptr);
   if (!grab) {
     const char * cpch (gtk_entry_get_text (GTK_ENTRY(_subject_entry)));
     if (!cpch || !*cpch)
@@ -2444,7 +2444,7 @@ namespace
     std::string from;
     std::string name;
 
-    char * key (0);
+    char * key (nullptr);
     gtk_tree_model_get (model, iter, 0, &key, -1);
     if (key) {
       name = key;
@@ -2487,7 +2487,7 @@ PostUI :: create_main_tab ()
   gtk_cell_layout_clear (GTK_CELL_LAYOUT(w));
   GtkCellRenderer * r =  gtk_cell_renderer_text_new();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT(w), r, true);
-  gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT(w), r, render_from, &_profiles, 0);
+  gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT(w), r, render_from, &_profiles, nullptr);
   gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
   gtk_table_attach (GTK_TABLE(t), w, 1, 2, row, row+1, fill, fill, 0, 0);
 
@@ -2582,7 +2582,7 @@ namespace
                    gpointer)
   {
 
-    TaskUpload* fd(0);
+    TaskUpload* fd(nullptr);
     gtk_tree_model_get (model, iter, 2, &fd, -1);
     if (fd)
       g_object_set (renderer, "text", fd->get_basename().c_str(), NULL);
@@ -2636,11 +2636,11 @@ PostUI :: create_filequeue_tab ()
   // add columns
   renderer = gtk_cell_renderer_text_new ();
   GtkTreeView * t = GTK_TREE_VIEW(w);
-  gtk_tree_view_insert_column_with_data_func(t, 0, (_("No.")), renderer, render_row_number, 0, 0);
+  gtk_tree_view_insert_column_with_data_func(t, 0, (_("No.")), renderer, render_row_number, nullptr, nullptr);
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_insert_column_with_attributes (t, 1,(_("Subject")),renderer,"text", 1,NULL);
   renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_insert_column_with_data_func(t, 2, (_("Filename")), renderer, render_filename, 0, 0);
+  gtk_tree_view_insert_column_with_data_func(t, 2, (_("Filename")), renderer, render_filename, nullptr, nullptr);
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_insert_column_with_attributes (t, 3, (_("Size (KB)")),renderer,"text", 3,NULL);
 
@@ -2882,7 +2882,7 @@ PostUI :: create_extras_tab ()
 void
 PostUI :: get_selected_files_foreach (GtkTreeModel *model, GtkTreePath *, GtkTreeIter *iter, gpointer list_g)
 {
-  TaskUpload* file(0);
+  TaskUpload* file(nullptr);
   gtk_tree_model_get (model, iter, 2, &file, -1);
   static_cast<PostUI::tasks_t*>(list_g)->push_back (file);
 }
@@ -3100,18 +3100,18 @@ PostUI :: PostUI (GtkWindow    * parent,
   _group_prefs (group_prefs),
   _root (),
   _part_select(nullptr),
-  _from_combo (0),
-  _subject_entry (0),
-  _groups_entry (0),
+  _from_combo (nullptr),
+  _subject_entry (nullptr),
+  _groups_entry (nullptr),
   _filequeue_store(nullptr),
   _parts_store(nullptr),
-  _to_entry (0),
-  _followupto_entry (0),
-  _replyto_entry (0),
-  _body_view (0),
+  _to_entry (nullptr),
+  _followupto_entry (nullptr),
+  _replyto_entry (nullptr),
+  _body_view (nullptr),
   _user_agent_check(nullptr),
   _message_id_check(nullptr),
-  _body_buf (0),
+  _body_buf (nullptr),
   _headers_buf(nullptr),
   _message (message),
   _charset (DEFAULT_CHARSET),
@@ -3120,14 +3120,14 @@ PostUI :: PostUI (GtkWindow    * parent,
   _wrap_pixels(0),
   _enc(GMIME_CONTENT_ENCODING_8BIT),
   _file_queue_empty(true),
-  _upload_ptr(0),
+  _upload_ptr(nullptr),
   _total_parts(0),
   _uploads(0),
   _realized(false),
-  _agroup(0),
+  _agroup(nullptr),
   //body_view_realized_handler is set up in the code below
-  _filequeue_eventbox (0),
-  _filequeue_label (0),
+  _filequeue_eventbox (nullptr),
+  _filequeue_label (nullptr),
   _body_changed_id(0),
   _body_changed_idle_tag(0),
   _group_entry_changed_idle_tag (0),
@@ -3149,7 +3149,7 @@ PostUI :: PostUI (GtkWindow    * parent,
 //  _draft_autosave_id = g_timeout_add_seconds( _draft_autosave_timeout * 60, draft_save_cb, this);
 
   g_assert (profiles.has_profiles());
-  g_return_if_fail (message != 0);
+  g_return_if_fail (message != nullptr);
 
   ua_extra = prefs.get_flag(USER_AGENT_EXTRA_PREFS_KEY, false);
 
@@ -3238,10 +3238,10 @@ PostUI :: create_window (GtkWindow    * parent,
     }
     gtk_widget_destroy (d.root());
     if (!got_profile)
-      return 0;
+      return nullptr;
   }
 
-  return new PostUI (0, data, queue, gs, profiles, message, prefs, group_prefs, cache);
+  return new PostUI (nullptr, data, queue, gs, profiles, message, prefs, group_prefs, cache);
 }
 
 void

@@ -200,7 +200,7 @@ namespace pan
       GtkWidget* create_filequeue_status_bar ();
       GtkWidget * _filequeue_eventbox;
       GtkWidget * _filequeue_label;
-      void update_filequeue_label (GtkTreeSelection *selection=0);
+      void update_filequeue_label (GtkTreeSelection *selection=nullptr);
 
       GtkWidget* create_parts_tab ();
 

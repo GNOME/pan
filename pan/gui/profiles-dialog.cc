@@ -136,7 +136,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
   gtk_dialog_set_default_response (GTK_DIALOG(_root), GTK_RESPONSE_OK);
   gtk_window_set_role (GTK_WINDOW(_root), "pan-edit-profile-dialog");
 
-  GtkWidget* hbox(0), * l(0);
+  GtkWidget* hbox(nullptr), * l(nullptr);
 
   int row (0);
   GtkWidget *t = HIG :: workarea_create ();
@@ -264,7 +264,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     PangoLayout * layout = pango_layout_new (context);
     pango_layout_set_text (layout, line.c_str(), line.size());
     PangoRectangle r;
-    pango_layout_get_extents (layout, &r, 0);
+    pango_layout_get_extents (layout, &r, nullptr);
     g_object_unref (layout);
     g_object_unref (context);
     pango_font_description_free (pfd);
@@ -294,7 +294,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
   gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(_root))), t, true, true, 0);
   gtk_widget_show_all (t);
 
-  if (parent != 0) {
+  if (parent != nullptr) {
     gtk_window_set_transient_for (GTK_WINDOW(_root), parent);
     gtk_window_set_position (GTK_WINDOW(_root), GTK_WIN_POS_CENTER_ON_PARENT);
   }
@@ -424,7 +424,7 @@ namespace
     GtkTreeModel * model;
     GtkTreeIter iter;
     if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
-      char * pch (0);
+      char * pch (nullptr);
       gtk_tree_model_get (model, &iter, COL_NAME, &pch, -1);
       if (pch) {
         name = pch;
@@ -591,7 +591,7 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
 
   gtk_widget_show_all (hbox);
 
-  if (parent != 0) {
+  if (parent != nullptr) {
     gtk_window_set_transient_for (GTK_WINDOW(_root), parent);
     gtk_window_set_position (GTK_WINDOW(_root), GTK_WIN_POS_CENTER_ON_PARENT);
   }

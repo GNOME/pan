@@ -140,7 +140,7 @@ struct PanTreeStore
         void set_value_static_string (GValue * setme, const char *);
 
       protected:
-        Row (): parent(0), child_index(-1) {}
+        Row (): parent(nullptr), child_index(-1) {}
 
       private:
         friend class PanTreeStore;
@@ -162,7 +162,7 @@ struct PanTreeStore
           return (int) children.size();
         }
         Row * nth_child (int n) {
-          Row * ret (0);
+          Row * ret (nullptr);
           if (0<=n && n<(int)children.size())
             ret = children[n];
           return ret;
@@ -256,14 +256,14 @@ struct PanTreeStore
      *
      * For more flexibility, use prefix_walk() or postfix_walk().
      */
-    void walk (WalkFunctor& walk, bool need_path=false) { prefix_walk (walk, 0, need_path); }
+    void walk (WalkFunctor& walk, bool need_path=false) { prefix_walk (walk, nullptr, need_path); }
 
     void prefix_walk (WalkFunctor   & walk_functor,
-                      GtkTreeIter   * top = 0,
+                      GtkTreeIter   * top = nullptr,
                       bool            need_path = false);
 
     void postfix_walk (WalkFunctor   & walk_functor,
-                       GtkTreeIter   * top = 0,
+                       GtkTreeIter   * top = nullptr,
                        bool            need_path = false);
 
   public:
@@ -307,14 +307,14 @@ struct PanTreeStore
       gpointer user_data;
       GDestroyNotify destroy_notify;
 
-      SortInfo(): sort_func(0), user_data(0), destroy_notify(0) {}
+      SortInfo(): sort_func(nullptr), user_data(nullptr), destroy_notify(nullptr) {}
       ~SortInfo() { clear(); }
 
       void clear () {
         if (destroy_notify) destroy_notify (user_data);
-        sort_func = 0;
-        user_data = 0;
-        destroy_notify = 0;
+        sort_func = nullptr;
+        user_data = nullptr;
+        destroy_notify = nullptr;
       }
 
       void assign (GtkTreeIterCompareFunc sort_func,

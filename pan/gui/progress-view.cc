@@ -31,7 +31,7 @@ ProgressView :: ProgressView ():
   _root (gtk_event_box_new ()),
   _progressbar (gtk_progress_bar_new ()),
   _style (gtk_widget_get_style (_progressbar)),
-  _progress (0)
+  _progress (nullptr)
 {
   gtk_progress_bar_set_ellipsize (GTK_PROGRESS_BAR(_progressbar), PANGO_ELLIPSIZE_MIDDLE);
   gtk_container_add (GTK_CONTAINER(_root), _progressbar);
@@ -43,7 +43,7 @@ ProgressView :: ProgressView ():
 
 ProgressView :: ~ProgressView ()
 {
-   set_progress(0);
+   set_progress(nullptr);
    g_object_unref (_style);
 }
 
@@ -55,7 +55,7 @@ ProgressView :: set_progress (Progress * progress)
     if (_progress)
     {
       _progress->remove_listener (this);
-      _progress = 0;
+      _progress = nullptr;
     }
 
     if (progress)
@@ -113,7 +113,7 @@ ProgressView :: on_progress_status_idle (gpointer self_gpointer)
   else
     gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR(self->_progressbar), false);
 #endif
-  const char* tmp = iconv_inited ? __g_mime_iconv_strdup(conv,status.c_str()) : 0;
+  const char* tmp = iconv_inited ? __g_mime_iconv_strdup(conv,status.c_str()) : nullptr;
   if (tmp) { status = tmp; g_free((char*)tmp); }
 
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR(self->_progressbar), status.c_str());

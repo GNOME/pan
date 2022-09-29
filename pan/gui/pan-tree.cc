@@ -118,8 +118,8 @@ PanTreeStore :: set_iter (GtkTreeIter * iter,
 {
   iter->stamp = stamp;
   iter->user_data = (gpointer)row;
-  iter->user_data2 = 0;
-  iter->user_data3 = 0;
+  iter->user_data2 = nullptr;
+  iter->user_data3 = nullptr;
 }
 
 void
@@ -138,7 +138,7 @@ PanTreeStore :: set_or_invalidate (GtkTreeIter * iter, const Row * row)
     set_iter (iter, row);
   else
     invalidate_iter (iter);
-  return row != 0;
+  return row != nullptr;
 }
 
 
@@ -202,7 +202,7 @@ PanTreeStore :: model_get_path (GtkTreeModel * model,
                                 GtkTreeIter  * iter)
 {
   PanTreeStore * store (PAN_TREE_STORE(model));
-  g_return_val_if_fail (store, 0);
+  g_return_val_if_fail (store, nullptr);
   return store->get_path (iter);
 }
 
@@ -329,7 +329,7 @@ PanTreeStore :: get_parent (GtkTreeIter * iter,
   g_return_val_if_fail (child->stamp == stamp, false);
 
   const Row * row (get_row (child));
-  return set_or_invalidate (iter, row->parent!=root ? row->parent : 0);
+  return set_or_invalidate (iter, row->parent!=root ? row->parent : nullptr);
 }
 
 bool
@@ -391,7 +391,7 @@ PanTreeStore :: sortable_has_sort_func (GtkTreeSortable *sortable, gint col)
   PanTreeStore * store (PAN_TREE_STORE (sortable));
   g_return_val_if_fail (store, false);
   column_sort_info_t::const_iterator it (store->sort_info->find (col));
-  return (it!=store->sort_info->end()) && (it->second.sort_func!=0);
+  return (it!=store->sort_info->end()) && (it->second.sort_func!=nullptr);
 }
 
 // SORTING
@@ -487,7 +487,7 @@ PanTreeStore :: sort_children (SortInfo  & sort_info,
     if (parent == root)
     {
       GtkTreePath * path (gtk_tree_path_new ());
-      gtk_tree_model_rows_reordered (model, path, 0, new_order);
+      gtk_tree_model_rows_reordered (model, path, nullptr, new_order);
       gtk_tree_path_free (path);
     }
     else
@@ -532,7 +532,7 @@ PanTreeStore :: sortable_set_sort_column_id (GtkTreeSortable * sortable,
   // sanity checks...
   if (sort_column_id != GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID) {
     g_return_if_fail (tree->sort_info->count(sort_column_id) != 0);
-    g_return_if_fail (tree->sort_info->find(sort_column_id)->second.sort_func != 0);
+    g_return_if_fail (tree->sort_info->find(sort_column_id)->second.sort_func != nullptr);
   }
 
   const bool flip (sort_column_id == tree->sort_column_id);
@@ -576,7 +576,7 @@ PanTreeStore :: sortable_set_default_sort_func (GtkTreeSortable        * s,
 
 namespace
 {
-  GObjectClass *parent_class (0);
+  GObjectClass *parent_class (nullptr);
 
   typedef std::vector<GValue> values_t;
 }
@@ -617,9 +617,9 @@ PanTreeStore :: pan_tree_finalize (GObject *object)
   delete store->root;
   delete store->column_types;
   delete store->sort_info;
-  store->root = 0;
-  store->column_types = 0;
-  store->sort_info = 0;
+  store->root = nullptr;
+  store->column_types = nullptr;
+  store->sort_info = nullptr;
 
   (*parent_class->finalize) (object);
 }
@@ -676,7 +676,7 @@ PanTreeStore :: pan_tree_init (PanTreeStore * tree)
   tree->stamp = g_random_int();
   tree->n_columns = 0;
   tree->root = new RootRow ();
-  tree->row_dispose = 0;
+  tree->row_dispose = nullptr;
   tree->column_types = new std::vector<GType>();
   tree->sort_paused = 0;
   tree->sort_info = new column_sort_info_t;
@@ -705,17 +705,17 @@ PanTreeStore :: get_type ()
     sizeof (PanTreeStore),
     0, // n_preallocs
     (GInstanceInitFunc) pan_tree_init,
-    0 // value_table
+    nullptr // value_table
   };
 
   pan_tree_type = g_type_register_static (
     G_TYPE_OBJECT, "PanTreeStore", &pan_tree_info, (GTypeFlags)0);
   static const GInterfaceInfo tree_model_info =
-    { (GInterfaceInitFunc)pan_tree_model_init, 0, 0 };
+    { (GInterfaceInitFunc)pan_tree_model_init, nullptr, nullptr };
   g_type_add_interface_static (
     pan_tree_type, GTK_TYPE_TREE_MODEL, &tree_model_info);
   static const GInterfaceInfo sortable_info =
-    { (GInterfaceInitFunc)pan_tree_sortable_init, 0, 0 };
+    { (GInterfaceInitFunc)pan_tree_sortable_init, nullptr, nullptr };
   g_type_add_interface_static (
     pan_tree_type, GTK_TYPE_TREE_SORTABLE, &sortable_info);
   return pan_tree_type;
@@ -724,7 +724,7 @@ PanTreeStore :: get_type ()
 PanTreeStore*
 PanTreeStore :: new_tree (int n_columns, ...)
 {
-  g_return_val_if_fail (n_columns>0, 0);
+  g_return_val_if_fail (n_columns>0, nullptr);
   PanTreeStore* tree = (PanTreeStore*) g_object_new (PAN_TREE_STORE_TYPE, NULL);
 
   va_list args;
@@ -823,7 +823,7 @@ PanTreeStore :: insert_sorted (const parent_to_children_t& new_parents)
       // add the children to this parent...
       // caller passes in NULL for the parent of top-level articles...
       Row * parent (*it);
-      Row * key (parent==root ? 0 : parent);
+      Row * key (parent==root ? nullptr : parent);
       const rows_t& children (new_parents.find(key)->second);
       insert_sorted (parent, children);
       pool.erase (parent);
@@ -934,7 +934,7 @@ PanTreeStore :: insert_sorted (Row           * parent,
                          n_it  (children.begin()),
                          n_end (children.end());
   for (size_t i=0; o_it!=o_end || n_it!=n_end; ++i) {
-    Row * addme (0);
+    Row * addme (nullptr);
     if ((n_it==n_end)) {
       //std::cerr << LINE_ID << " n is empty ... adding another o at " << tmp.size() << std::endl;
       addme = *o_it++;
@@ -1061,7 +1061,7 @@ PanTreeStore :: reparent (Row  * new_parent,
                           Row  * row,
                           int    position)
 {
-  g_return_if_fail (row != 0);
+  g_return_if_fail (row != nullptr);
 
   GtkTreeModel * model (GTK_TREE_MODEL(this));
 
@@ -1194,7 +1194,7 @@ PanTreeStore :: remove_siblings (const rows_t& siblings,
   foreach_const (rows_t, siblings, nit) {
     Row * row (*nit);
     removed_indices.insert (row->child_index);
-    row->parent = 0;
+    row->parent = nullptr;
     row->child_index = -1;
   }
 
@@ -1288,7 +1288,7 @@ PanTreeStore :: walk (int             walk_mode,
                       GtkTreeIter   * top,
                       bool            need_path)
 {
-  GtkTreePath * path (0);
+  GtkTreePath * path (nullptr);
   if (need_path)
     path = top ? get_path(top) : gtk_tree_path_new();
 
@@ -1321,9 +1321,9 @@ PanTreeStore :: Row*
 PanTreeStore :: get_prev (Row * row)
 {
   if (!row || row==root)
-    return 0;
+    return nullptr;
   if (row->child_index==0)
-    return row->parent==root ? 0 : row->parent;
+    return row->parent==root ? nullptr : row->parent;
   Row * sibling = row->parent->nth_child (row->child_index-1);
   return sibling->get_last_descendant ();
 }

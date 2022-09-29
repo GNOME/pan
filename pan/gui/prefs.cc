@@ -55,7 +55,7 @@ Prefs :: start_element (GMarkupParseContext *,
   Prefs& prefs (*static_cast<Prefs*>(prefs_gpointer));
 
   if (s == "geometry") {
-    const char * name(0);
+    const char * name(nullptr);
     int x(0), y(0), w(0), h(0);
     for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
       if (!strcmp (*k,"name"))  name = *v;
@@ -68,7 +68,7 @@ Prefs :: start_element (GMarkupParseContext *,
   }
 
   if (s == "flag") {
-    const char * name (0);
+    const char * name (nullptr);
     bool b (false);
     for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
       if (!strcmp (*k,"name"))  name = *v;
@@ -78,8 +78,8 @@ Prefs :: start_element (GMarkupParseContext *,
   }
 
   if (s == "string") {
-    const char * name (0);
-    const char * value (0);
+    const char * name (nullptr);
+    const char * value (nullptr);
     for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
       if (!strcmp (*k,"name"))  name = *v;
       else if (!strcmp(*k,"value")) value = *v;
@@ -88,8 +88,8 @@ Prefs :: start_element (GMarkupParseContext *,
   }
 
   if (s == "int") {
-    const char * name (0);
-    const char * value (0);
+    const char * name (nullptr);
+    const char * value (nullptr);
     for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
       if (!strcmp (*k,"name"))  name = *v;
       else if (!strcmp(*k,"value")) value = *v;
@@ -98,8 +98,8 @@ Prefs :: start_element (GMarkupParseContext *,
   }
 
   if (s == "color") {
-    const char * name (0);
-    const char * value (0);
+    const char * name (nullptr);
+    const char * value (nullptr);
     for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
       if (!strcmp (*k,"name"))  name = *v;
       else if (!strcmp(*k,"value")) value = *v;
@@ -113,13 +113,13 @@ Prefs :: from_string (const StringView& xml)
 {
   GMarkupParser p;
   p.start_element = start_element;
-  p.end_element = 0;
-  p.text = 0;
-  p.passthrough = 0;
-  p.error = 0;
+  p.end_element = nullptr;
+  p.text = nullptr;
+  p.passthrough = nullptr;
+  p.error = nullptr;
   GMarkupParseContext* c (
-    g_markup_parse_context_new (&p, (GMarkupParseFlags)0, this, 0));
-  GError * gerr (0);
+    g_markup_parse_context_new (&p, (GMarkupParseFlags)0, this, nullptr));
+  GError * gerr (nullptr);
   if (g_markup_parse_context_parse (c, xml.str, xml.len, &gerr)) {
     // FIXME
   }

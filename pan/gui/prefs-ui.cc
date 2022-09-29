@@ -203,14 +203,14 @@ namespace pan
     const char * value = gtk_entry_get_text(e);
 
     gtk_entry_set_icon_activatable(e, GTK_ENTRY_ICON_PRIMARY, false);
-    gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, 0);
-    gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, 0);
+    // gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, nullptr);
+    gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, nullptr);
 
     // empty text
     if (!value || !*value)
     {
-      gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, 0);
-      gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, 0);
+      gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, nullptr);
+      gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, nullptr);
       // reset in map and remove accelerator
       GtkAccelKey tmp;
       guint tmpkey;
@@ -366,10 +366,10 @@ namespace pan
 
   GtkWidget* new_layout_radio (GtkWidget* prev, const guint8* line, const char* value, std::string& cur, Prefs& prefs)
   {
-    GtkWidget * r = prev==0
+    GtkWidget * r = prev==nullptr
       ? gtk_radio_button_new (NULL)
       : gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON(prev));
-    GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, line, false, 0);
+    GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, line, false, nullptr);
     GtkWidget * image = gtk_image_new_from_pixbuf (pixbuf);
     g_object_unref (pixbuf);
     gtk_container_add (GTK_CONTAINER(r), image);
@@ -399,8 +399,8 @@ namespace pan
 
   GtkWidget* new_orient_radio (GtkWidget* prev, const char* label, const char* value, std::string& cur, Prefs& prefs)
   {
-    GtkWidget * r = prev==0
-      ? gtk_radio_button_new_with_label (0, label)
+    GtkWidget * r = prev==nullptr
+      ? gtk_radio_button_new_with_label (nullptr, label)
       : gtk_radio_button_new_with_label_from_widget (GTK_RADIO_BUTTON(prev), label);
     g_object_set_data_full (G_OBJECT(r), PREFS_KEY, g_strdup("pane-orient"), g_free);
     g_object_set_data_full (G_OBJECT(r), PREFS_VAL, g_strdup(value), g_free);
@@ -417,7 +417,7 @@ namespace pan
     const bool both  = "both"  == what;
 
     GtkWidget* hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-    GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, line, false, 0);
+    GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, line, false, nullptr);
     GtkWidget * image = gtk_image_new_from_pixbuf (pixbuf);
     g_object_unref (pixbuf);
     if (line && (icons || both)) gtk_box_pack_start (GTK_BOX(hbox), image, true, true, 0);
@@ -548,8 +548,8 @@ namespace pan
     const int row (gtk_combo_box_get_active (c));
     GtkTreeModel * m = gtk_combo_box_get_model (c);
     GtkTreeIter i;
-    if (gtk_tree_model_iter_nth_child (m, &i, 0, row)) {
-      char * val (0);
+    if (gtk_tree_model_iter_nth_child (m, &i, nullptr, row)) {
+      char * val (nullptr);
       gtk_tree_model_get (m, &i, column, &val, -1);
       prefs->set_string (key, val);
       g_free (val);
@@ -786,7 +786,7 @@ namespace
     GtkTreeIter iter;
     if (gtk_tree_model_get_iter_first (model, &iter)) do {
       gboolean enabled;
-      char * key (0);
+      char * key (nullptr);
       gtk_tree_model_get (model, &iter, 0, &enabled, 1, &key, -1);
       if (enabled)
         s += std::string(key) + ",";
@@ -801,7 +801,7 @@ namespace
   {
     HeaderColInfo& info (*static_cast<HeaderColInfo*>(user_data));
     GtkTreeIter sel_iter;
-    gtk_tree_selection_get_selected (info.sel, 0, &sel_iter);
+    gtk_tree_selection_get_selected (info.sel, nullptr, &sel_iter);
     GtkTreePath * path = gtk_tree_model_get_path (GTK_TREE_MODEL(info.store), &sel_iter);
     if (gtk_tree_path_prev (path)) {
       GtkTreeIter prev_iter;
@@ -816,7 +816,7 @@ namespace
   {
     HeaderColInfo& info (*static_cast<HeaderColInfo*>(user_data));
     GtkTreeIter sel_iter;
-    gtk_tree_selection_get_selected (info.sel, 0, &sel_iter);
+    gtk_tree_selection_get_selected (info.sel, nullptr, &sel_iter);
     GtkTreeIter next_iter = sel_iter;
     if (gtk_tree_model_iter_next (GTK_TREE_MODEL(info.store), &next_iter)) {
       gtk_list_store_move_after (info.store, &sel_iter, &next_iter);
@@ -1079,7 +1079,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     std::string cur = _prefs.get_string ("pane-layout", "stacked-right");
     HIG :: workarea_add_section_spacer (t, row, 1);
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
-    w = new_layout_radio (0, icon_layout_1, "stacked-top", cur, prefs);
+    w = new_layout_radio (nullptr, icon_layout_1, "stacked-top", cur, prefs);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
     w = new_layout_radio (w, icon_layout_2, "stacked-bottom", cur, prefs);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
@@ -1094,7 +1094,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG :: workarea_add_section_title (t, &row, _("Tasks"));
     HIG :: workarea_add_section_spacer (t, row, 6);
     cur = _prefs.get_string ("pane-orient", "groups,headers,body");
-    w = new_orient_radio (0, _("1=Groups, 2=Headers, 3=Body"), "groups,headers,body", cur, prefs);
+    w = new_orient_radio (nullptr, _("1=Groups, 2=Headers, 3=Body"), "groups,headers,body", cur, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_orient_radio (w, _("1=Groups, 2=Body, 3=Headers"), "groups,body,headers", cur, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
