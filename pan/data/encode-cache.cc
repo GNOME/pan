@@ -129,7 +129,7 @@ EncodeCache :: add (const Quark& message_id)
   MsgInfo info;
   info._message_id = message_id;
   info._size = 0;
-  info._date = time(0);
+  info._date = time(nullptr);
   _mid_to_info.insert (mid_to_info_t::value_type (info._message_id, info));
 }
 
@@ -141,7 +141,7 @@ void EncodeCache :: finalize (std::string message_id)
 {
   struct stat sb;
   char out_path[4096];
-  
+
   get_filename(out_path, Quark(message_id));
   stat (out_path, &sb);
   _mid_to_info[message_id]._size = sb.st_size;

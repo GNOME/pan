@@ -135,7 +135,7 @@ Parts :: Parts ():
   n_parts_total (0),
   part_mid_buf_len (0),
   parts (0),
-  part_mid_buf (0)
+  part_mid_buf (nullptr)
 {
 }
 
@@ -146,7 +146,7 @@ Parts :: clear ()
   parts.swap(tmp);
 
   delete [] part_mid_buf;
-  part_mid_buf = 0;
+  part_mid_buf = nullptr;
 
   part_mid_buf_len = 0;
   n_parts_total = 0;
@@ -156,7 +156,7 @@ Parts :: Parts (const Parts& that):
   n_parts_total (0),
   part_mid_buf_len (0),
   parts (0),
-  part_mid_buf (0)
+  part_mid_buf (nullptr)
 {
   *this = that;
 }

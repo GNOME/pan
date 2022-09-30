@@ -45,7 +45,7 @@ Xref :: insert (const Quark             & server,
   targets.reserve (targets.size() + std::count(xref.begin(), xref.end(), ':'));
   StringView s;
   while (xref.pop_token (s)) {
-    if (s.strchr (':') != 0) {
+    if (s.strchr (':') != nullptr) {
       StringView group_name;
       if (s.pop_token(group_name, ':')) {
         Target t;

@@ -100,8 +100,8 @@ char*
 ArticleCache :: message_id_to_filename (char * buf, int len, const StringView& mid) const
 {
   // sanity clause
-  pan_return_val_if_fail (!mid.empty(), 0);
-  pan_return_val_if_fail (buf!=0, NULL);
+  pan_return_val_if_fail (!mid.empty(), nullptr);
+  pan_return_val_if_fail (buf!=nullptr, NULL);
   pan_return_val_if_fail (len>0, NULL);
 
   // some characters in message-ids are illegal on older Windows boxes,
@@ -211,7 +211,7 @@ ArticleCache :: get_filename (char * buf, int buflen, const Quark& mid) const
    *buf = '\0';
    message_id_to_filename (basename, sizeof(basename), mid.to_view());
    g_snprintf (buf, buflen, "%s%c%s", _path.c_str(), G_DIR_SEPARATOR, basename);
-   return buf && *buf ? buf : 0;
+   return buf && *buf ? buf : nullptr;
 };
 
 ArticleCache :: CacheResponse
@@ -225,7 +225,7 @@ ArticleCache :: add (const Quark& message_id, const StringView& article, const b
   pan_return_val_if_fail (!message_id.empty(), res);
   pan_return_val_if_fail (!article.empty(), res);
 
-  FILE * fp = 0;
+  FILE * fp = nullptr;
   char filename[PATH_MAX];
   if (get_filename (filename, sizeof(filename), message_id))
     fp = fopen (filename, "wb+");
@@ -253,7 +253,7 @@ ArticleCache :: add (const Quark& message_id, const StringView& article, const b
       MsgInfo info;
       info._message_id = message_id;
       info._size = article.len;
-      info._date = time(0);
+      info._date = time(nullptr);
       _mid_to_info.insert (mid_to_info_t::value_type (info._message_id, info));
       fire_added (message_id);
 
@@ -375,15 +375,15 @@ ArticleCache :: get_message_file_stream (const Quark& mid) const
 ArticleCache :: get_message_mem_stream (const Quark& mid) const
 {
    debug ("mem stream got quark " << mid);
-   GMimeStream * retval (0);
+   GMimeStream * retval (nullptr);
 
    char filename[PATH_MAX];
    if (get_filename (filename, sizeof(filename), mid))
    {
       debug ("mem stream loading filename " << filename);
       gsize len (0);
-      char * buf (0);
-      GError * err (0);
+      char * buf (nullptr);
+      GError * err (nullptr);
 
       if (g_file_get_contents (filename, &buf, &len, &err)) {
          debug ("got the contents, calling mem_new_with_buffer");
@@ -417,7 +417,7 @@ ArticleCache :: get_message (const mid_sequence_t& mids) const
    const bool in_memory (true); // workaround for bug #439841
    foreach_const (mid_sequence_t, mids, it) {
       const Quark mid (*it);
-      GMimeStream * stream (0);
+      GMimeStream * stream (nullptr);
       if (this->contains (*it))
         stream = in_memory
           ? get_message_mem_stream (mid)

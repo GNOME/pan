@@ -249,7 +249,7 @@ int CertStore::get_all_certs_from_disk() {
 }
 
 // get certs from ssl certs directory
-	char * ssldir(0);
+	char * ssldir(nullptr);
 	ssldir = getenv("SSL_CERT_DIR");
 	if (!ssldir)
 		ssldir = getenv("SSL_DIR");
