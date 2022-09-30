@@ -88,7 +88,7 @@ NNTP :: fire_done_func (Health health, const StringView& response)
       Listener * l = _listener;
       debug ("I (" << (void*)this << ") am setting my _listener to 0");
       _compression = false;
-      _listener = 0;
+      _listener = nullptr;
       l->on_nntp_done (this, health, response);
    }
 }
@@ -123,7 +123,7 @@ NNTP :: on_socket_response (Socket * sock UNUSED, const StringView& line_in)
          if (line.len>=2 && line.str[0]=='.' && line.str[1]=='.') // rfc 977: 2.4.1
             line.rtruncate (line.len-1);
 
-         assert (_listener != 0);
+         assert (_listener != nullptr);
          if (_listener)
             _listener->on_nntp_line (this, line);
       }

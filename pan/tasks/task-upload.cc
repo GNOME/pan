@@ -94,7 +94,7 @@ TaskUpload :: TaskUpload (const std::string         & filename,
                           Progress::Listener        * listener):
   Task ("UPLOAD", get_description(filename.c_str())),
   _server(server),
-  _encoder(0),
+  _encoder(nullptr),
   _encoder_has_run (false),
   _filename(filename),
   _basename (g_get_basename(filename.c_str())),
@@ -226,10 +226,10 @@ void
 TaskUpload :: use_nntp (NNTP * nntp)
 {
 
-  Needed * needed (0);
+  Needed * needed (nullptr);
   foreach (needed_t, _needed, nit)
   {
-      if (nit->second.nntp==0)
+      if (nit->second.nntp==nullptr)
       {
         needed = &nit->second;
         break;
@@ -449,7 +449,7 @@ TaskUpload :: on_worker_done (bool cancelled)
   }
 
   Encoder * d (_encoder);
-  _encoder = 0;
+  _encoder = nullptr;
   update_work ();
   check_in (d);
 

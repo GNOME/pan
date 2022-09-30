@@ -30,7 +30,7 @@ using namespace pan;
 
 Socket :: Socket ():
   _bytes_since_last_check (0),
-  _time_of_last_check (time(0)),
+  _time_of_last_check (time(nullptr)),
   _speed_KiBps (0.0),
   _abort_flag (false),
   _id(0)
@@ -55,7 +55,7 @@ Socket :: is_abort_set () const
 double
 Socket :: get_speed_KiBps () const
 {
-  const time_t now (time(0));
+  const time_t now (time(nullptr));
 
   if (now > _time_of_last_check)
   {
@@ -75,7 +75,7 @@ Socket :: get_speed_KiBps () const
 void
 Socket :: reset_speed_counter ()
 {
-  _time_of_last_check = time(0);
+  _time_of_last_check = time(nullptr);
   _bytes_since_last_check = 0;
 }
 

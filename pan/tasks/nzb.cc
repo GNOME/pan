@@ -127,7 +127,7 @@ namespace
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
              if (!strcmp (*k,"poster"))  mc.a.author = *v;
         else if (!strcmp (*k,"subject")) mc.a.subject = *v;
-        else if (!strcmp (*k,"date"))    mc.a.time_posted = strtoul(*v,0,10);
+        else if (!strcmp (*k,"date"))    mc.a.time_posted = strtoul(*v,nullptr,10);
       }
     }
     else if (!strcmp (element_name, "segments")) {
@@ -137,7 +137,7 @@ namespace
       mc.bytes = 0;
       mc.number = 0;
       for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v) {
-             if (!strcmp (*k,"bytes"))  mc.bytes  = strtoul (*v,0,10);
+             if (!strcmp (*k,"bytes"))  mc.bytes  = strtoul (*v,nullptr,10);
         else if (!strcmp (*k,"number")) mc.number = atoi (*v);
       }
     }
@@ -184,7 +184,7 @@ namespace
       }
       const StringView p (mc.path.empty() ? mc.fallback_path : StringView(mc.path));
       /// TODO get action mark read from prefs (?)
-      TaskArticle* a = new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, TaskArticle::NO_ACTION, 0, TaskArticle::DECODE, p);
+      TaskArticle* a = new TaskArticle (mc.ranks, mc.gs, mc.a, mc.cache, mc.read, TaskArticle::NO_ACTION, nullptr, TaskArticle::DECODE, p);
       if (mc.paused == "1")
         a->set_start_paused(true);
       mc.tasks.push_back (a);
@@ -218,11 +218,11 @@ NZB :: tasks_from_nzb_string (const StringView      & nzb_in,
   p.start_element = start_element;
   p.end_element = end_element;
   p.text = text;
-  p.passthrough = 0;
-  p.error = 0;
+  p.passthrough = nullptr;
+  p.error = nullptr;
   GMarkupParseContext* c (
-    g_markup_parse_context_new (&p, (GMarkupParseFlags)0, &mc, 0));
-  GError * gerr (0);
+    g_markup_parse_context_new (&p, (GMarkupParseFlags)0, &mc, nullptr));
+  GError * gerr (nullptr);
   g_markup_parse_context_parse (c, nzb.c_str(), nzb.size(), &gerr);
   if (gerr) {
     Log::add_urgent (gerr->message);

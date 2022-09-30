@@ -125,12 +125,12 @@ namespace
 
 GIOChannelSocketGnuTLS :: GIOChannelSocketGnuTLS (ServerInfo& data, const Quark& server, CertStore& cs):
    _data(data),
-   _channel (0),
+   _channel (nullptr),
    _tag_watch (0),
    _tag_timeout (0),
-   _listener (0),
-   _out_buf (g_string_new (0)),
-   _in_buf (g_string_new (0)),
+   _listener (nullptr),
+   _out_buf (g_string_new (nullptr)),
+   _in_buf (g_string_new (nullptr)),
    _io_performed (false),
    _certstore(cs),
    _server(server),
@@ -168,13 +168,13 @@ GIOChannelSocketGnuTLS :: create_channel (const StringView& host_in, int port, s
     err = WSAGetLastError();
     if (err || !ans) {
       setme_err = get_last_error (err, hpbuf);
-      return 0;
+      return nullptr;
     }
 
     // try opening the socket
     sockfd = socket (AF_INET, SOCK_STREAM, 0 /*IPPROTO_TCP*/);
     if (sockfd < 0)
-      return 0;
+      return nullptr;
 
     // Try connecting
     int i = 0;
@@ -195,7 +195,7 @@ GIOChannelSocketGnuTLS :: create_channel (const StringView& host_in, int port, s
     if (err) {
       closesocket (sockfd);
       setme_err = get_last_error (err, hpbuf);
-      return 0;
+      return nullptr;
     }
   }
   else
@@ -218,7 +218,7 @@ GIOChannelSocketGnuTLS :: create_channel (const StringView& host_in, int port, s
         setme_err += file :: pan_strerror (errno);
         setme_err += ")";
       }
-      return 0;
+      return nullptr;
     }
 
     // try to open a socket on any ipv4 or ipv6 addresses we found
@@ -256,18 +256,18 @@ GIOChannelSocketGnuTLS :: create_channel (const StringView& host_in, int port, s
       setme_err += file :: pan_strerror (errno);
       setme_err += ")";
     }
-    return 0;
+    return nullptr;
   }
 
-  GIOChannel * channel (0);
+  GIOChannel * channel (nullptr);
 #ifndef G_OS_WIN32
   channel = g_io_channel_unix_new (sockfd);
   g_io_channel_set_flags (channel, G_IO_FLAG_NONBLOCK, 0);
 #else
   channel = g_io_channel_win32_new_socket (sockfd);
 #endif
-  if (g_io_channel_get_encoding (channel) != 0)
-    g_io_channel_set_encoding (channel, 0, 0);
+  if (g_io_channel_get_encoding (channel) != nullptr)
+    g_io_channel_set_encoding (channel, nullptr, nullptr);
   g_io_channel_set_buffered (channel,true);
   g_io_channel_set_line_term (channel, "\n", 1);
   GIOChannel* ret (gnutls_get_iochannel(channel, host_in.str));
@@ -325,17 +325,17 @@ GIOChannelSocketGnuTLS :: ~GIOChannelSocketGnuTLS ()
 
   if (_channel)
   {
-    g_io_channel_shutdown (_channel, true, 0);
+    g_io_channel_shutdown (_channel, true, nullptr);
     g_string_free(_channel->read_buf,true);
     _gnutls_free(_channel);
-    _channel = 0;
+    _channel = nullptr;
   }
 
   g_string_free (_out_buf, true);
-  _out_buf = 0;
+  _out_buf = nullptr;
 
   g_string_free (_in_buf, true);
-  _in_buf = 0;
+  _in_buf = nullptr;
 }
 
 bool
@@ -351,7 +351,7 @@ GIOChannelSocketGnuTLS :: open  (const StringView& address, int port, std::strin
       _id = g_io_channel_unix_get_fd(_channel);
 #endif // G_OS_WIN32
   }
-  return _channel != 0;
+  return _channel != nullptr;
 }
 
 void
@@ -603,7 +603,7 @@ GIOChannelSocketGnuTLS :: do_read ()
 {
   g_assert (!_out_buf->len);
 
-  GError * err (0);
+  GError * err (nullptr);
   GString * g (_in_buf);
 
   bool more (true);
@@ -640,7 +640,7 @@ GIOChannelSocketGnuTLS :: do_read ()
     {
       const char * msg (err ? err->message : _("Unknown Error"));
       Log::add_err_va (_("Error reading from %s: %s"), _host.c_str(), msg);
-      if (err != 0)
+      if (err != nullptr)
         g_clear_error (&err);
       return IO_ERR;
     }
@@ -665,7 +665,7 @@ GIOChannelSocketGnuTLS :: do_write ()
 #endif
 
   _io_performed = true;
-  GError * err = 0;
+  GError * err = nullptr;
   gsize out = 0;
   GIOStatus status = g->len
     ? gnutls_write_line(_channel, g->str, g->len, &out, &err)
@@ -790,21 +790,21 @@ GIOChannel *
 GIOChannelSocketGnuTLS :: gnutls_get_iochannel(GIOChannel* channel, const char* host, gboolean verify)
 {
 
-  g_return_val_if_fail(channel, 0);
+  g_return_val_if_fail(channel, nullptr);
 
-	GIOGnuTLSChannel *chan(0);
-	GIOChannel *gchan(0);
+	GIOGnuTLSChannel *chan(nullptr);
+	GIOChannel *gchan(nullptr);
 	int fd(0);
 
 	chan = g_new0(GIOGnuTLSChannel, 1);
-	g_return_val_if_fail(chan, 0);
+	g_return_val_if_fail(chan, nullptr);
 
   gnutls_session_t session(NULL);
 
-	if(!(fd = g_io_channel_unix_get_fd(channel))) return 0;
+	if(!(fd = g_io_channel_unix_get_fd(channel))) return nullptr;
 
-  if (gnutls_init (&session, GNUTLS_CLIENT) != 0) return 0;
-  if (gnutls_set_default_priority (session) != 0) return 0;
+  if (gnutls_init (&session, GNUTLS_CLIENT) != 0) return nullptr;
+  if (gnutls_set_default_priority (session) != 0) return nullptr;
 
   gnutls_priority_set_direct (
   session,
@@ -837,7 +837,7 @@ GIOChannelSocketGnuTLS :: gnutls_get_iochannel(GIOChannel* channel, const char* 
 
   set_blocking(session, false);
 
-  return 0;
+  return nullptr;
 }
 
 void

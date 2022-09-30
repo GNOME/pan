@@ -101,7 +101,7 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
   _attachment(filename),
   _mark_read_action (mark_read_action),
   _save_mode (save_mode),
-  _decoder(0),
+  _decoder(nullptr),
   _decoder_has_run (false),
   _groups(get_groups_str(article)),
   _options(options),
@@ -110,7 +110,7 @@ TaskArticle :: TaskArticle (const ServerRank          & server_rank,
 
   cache.reserve (article.get_part_mids());
 
-  if (listener != 0)
+  if (listener != nullptr)
     add_listener (listener);
 
   // build a list of all the parts we need to download.
@@ -221,9 +221,9 @@ void
 TaskArticle :: use_nntp (NNTP * nntp)
 {
   // find which part, if any, can use this nntp
-  Needed * needed (0);
+  Needed * needed (nullptr);
   for (needed_t::iterator it(_needed.begin()), end(_needed.end()); !needed && it!=end; ++it)
-    if (it->nntp==0 && it->xref.has_server(nntp->_server) && (it->rank <= _server_rank.get_server_rank (nntp->_server)))
+    if (it->nntp==nullptr && it->xref.has_server(nntp->_server) && (it->rank <= _server_rank.get_server_rank (nntp->_server)))
       needed = &*it;
 
   if (!needed)
@@ -258,7 +258,7 @@ TaskArticle :: on_nntp_line  (NNTP               * nntp,
                               const StringView   & line_in)
 {
   // FIXME: ugh, this is called for _every line_...
-  Needed * needed (0);
+  Needed * needed (nullptr);
   foreach (needed_t, _needed, it) {
     if (it->nntp == nntp) {
       needed = &*it;
@@ -414,7 +414,7 @@ TaskArticle :: on_worker_done (bool cancelled)
   }
 
   Decoder * d (_decoder);
-  _decoder = 0;
+  _decoder = nullptr;
   update_work ();
   check_in (d);
 }

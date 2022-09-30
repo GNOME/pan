@@ -109,7 +109,7 @@ Decoder :: do_work()
     {
       if (was_cancelled()) break; // poll WorkerPool::Worker stop flag
 
-      gchar * contents (0);
+      gchar * contents (nullptr);
       gsize length (0);
       if (g_file_get_contents (it->c_str(), &contents, &length, NULL) && length>0)
       {
@@ -163,7 +163,7 @@ Decoder :: do_work()
         if (options == TaskArticle::SAVE_ALL && !article_subject.empty()) {
           global_subject = article_subject.c_str();
         }
-        if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), 0, 0, ++i, global_subject)) != UURET_OK) {
+        if ((res = UULoadFileWithPartNo (const_cast<char*>(it->c_str()), nullptr, 0, ++i, global_subject)) != UURET_OK) {
           g_snprintf(buf, bufsz,
                      _("Error reading from %s: %s"),
                      it->c_str(),
@@ -248,7 +248,7 @@ void
 Decoder :: uu_log (void* data, char* message, int severity)
 {
   Decoder *self = static_cast<Decoder *>(data);
-  char * pch (g_locale_to_utf8 (message, -1, 0, 0, 0));
+  char * pch (g_locale_to_utf8 (message, -1, nullptr, nullptr, nullptr));
 
   if (severity >= UUMSG_WARNING)
     self->file_errors.push_back (pch ? pch : message);

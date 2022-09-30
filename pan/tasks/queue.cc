@@ -54,8 +54,8 @@ Queue :: Queue (ServerInfo         & server_info,
   _worker_pool (pool),
   _decoder (pool),
   _encoder (pool),
-  _decoder_task (0),
-  _encoder_task (0),
+  _decoder_task (nullptr),
+  _encoder_task (nullptr),
   _save_delay_secs (save_delay_secs),
   _needs_saving (false),
   _last_time_saved (0),
@@ -93,7 +93,7 @@ void
 Queue :: on_pool_has_nntp_available (const Quark& server)
 {
   Task * task = find_first_task_needing_server (server);
-  if (task != 0)
+  if (task != nullptr)
     process_task (task);
 }
 
@@ -106,7 +106,7 @@ Queue :: on_pool_error (const Quark& server UNUSED, const StringView& message)
 NNTP_Pool&
 Queue :: get_pool (const Quark& servername)
 {
-  NNTP_Pool * pool (0);
+  NNTP_Pool * pool (nullptr);
 
   pools_t::iterator it (_pools.find (servername));
   if (it != _pools.end())
@@ -141,11 +141,11 @@ Queue :: clean_n_save ()
 
   // maybe save the task list.
   // only do it once in awhile to prevent thrashing.
-  const time_t now (time(0));
+  const time_t now (time(nullptr));
   if (_needs_saving && _last_time_saved<(now-_save_delay_secs)) {
     _archive.save_tasks (tmp);
     _needs_saving = false;
-    _last_time_saved = time(0);
+    _last_time_saved = time(nullptr);
   }
 }
 
@@ -287,7 +287,7 @@ Queue :: give_task_a_download_slot (TaskArticle* task)
 void
 Queue :: process_task (Task * task)
 {
-  pan_return_if_fail (task != 0);
+  pan_return_if_fail (task != nullptr);
 
   debug ("in process_task with a task of type " << task->get_type());
 
@@ -387,7 +387,7 @@ Queue :: find_first_task_needing_decoder ()
       return *it;
   }
 
-  return 0;
+  return nullptr;
 }
 
 Task*
@@ -401,7 +401,7 @@ Queue :: find_first_task_needing_encoder ()
       return *it;
   }
 
-  return 0;
+  return nullptr;
 }
 
 Task*
@@ -418,7 +418,7 @@ Queue :: find_first_task_needing_server (const Quark& server)
       return *it;
   }
 
-  return 0;
+  return nullptr;
 }
 
 bool
@@ -791,7 +791,7 @@ void
 Queue :: check_in (Decoder* decoder UNUSED, Task* task)
 {
   // take care of our decoder counting...
-  _decoder_task = 0;
+  _decoder_task = nullptr;
 
   // notify the listeners if the task isn't active anymore...
   if (!task_is_active (task))
@@ -818,7 +818,7 @@ void
 Queue :: check_in (Encoder* encoder UNUSED, Task* task)
 {
   // take care of our decoder counting...
-  _encoder_task = 0;
+  _encoder_task = nullptr;
 
   // notify the listeners if the task isn't active anymore...
   if (!task_is_active (task))

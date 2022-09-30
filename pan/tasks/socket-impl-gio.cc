@@ -128,13 +128,13 @@ namespace
       err = WSAGetLastError();
       if (err || !ans) {
         setme_err = get_last_error (err, hpbuf);
-        return 0;
+        return nullptr;
       }
 
       // try opening the socket
       sockfd = socket (AF_INET, SOCK_STREAM, 0 /*IPPROTO_TCP*/);
       if (sockfd < 0)
-        return 0;
+        return nullptr;
 
       // Try connecting
       int i = 0;
@@ -154,7 +154,7 @@ namespace
       if (err) {
         closesocket (sockfd);
         setme_err = get_last_error (err, hpbuf);
-        return 0;
+        return nullptr;
       }
     }
     else
@@ -177,7 +177,7 @@ namespace
           setme_err += file :: pan_strerror (errno);
           setme_err += ")";
         }
-        return 0;
+        return nullptr;
       }
 
       // try to open a socket on any ipv4 or ipv6 addresses we found
@@ -215,10 +215,10 @@ namespace
         setme_err += file :: pan_strerror (errno);
         setme_err += ")";
       }
-      return 0;
+      return nullptr;
     }
 
-    GIOChannel * channel (0);
+    GIOChannel * channel (nullptr);
 #ifndef G_OS_WIN32
     channel = g_io_channel_unix_new (sockfd);
     g_io_channel_set_flags (channel, G_IO_FLAG_NONBLOCK, NULL);
@@ -239,10 +239,10 @@ namespace
 ****/
 
 GIOChannelSocket :: GIOChannelSocket ():
-   _channel (0),
+   _channel (nullptr),
    _tag_watch (0),
    _tag_timeout (0),
-   _listener (0),
+   _listener (nullptr),
    _out_buf (g_string_new (NULL)),
    _in_buf (g_string_new (NULL)),
    _io_performed (false)
@@ -271,14 +271,14 @@ GIOChannelSocket :: ~GIOChannelSocket ()
   {
     g_io_channel_shutdown (_channel, TRUE, NULL);
     g_io_channel_unref (_channel);
-    _channel = 0;
+    _channel = nullptr;
   }
 
   g_string_free (_out_buf, TRUE);
-  _out_buf = 0;
+  _out_buf = nullptr;
 
   g_string_free (_in_buf, TRUE);
-  _in_buf = 0;
+  _in_buf = nullptr;
 }
 
 bool
@@ -294,7 +294,7 @@ GIOChannelSocket :: open (const StringView& address, int port, std::string& setm
    _id = g_io_channel_unix_get_fd(_channel);
 #endif // G_OS_WIN32
   }
-  return _channel != 0;
+  return _channel != nullptr;
 }
 
 void
@@ -325,7 +325,7 @@ GIOChannelSocket :: do_read ()
 {
   g_assert (!_out_buf->len);
 
-  GError * err (0);
+  GError * err (nullptr);
   GString * g (_in_buf);
 
   bool more (true);
@@ -383,7 +383,7 @@ GIOChannelSocket :: do_write ()
 #endif
 
   _io_performed = true;
-  GError * err = 0;
+  GError * err = nullptr;
   gsize out = 0;
   GIOStatus status = g->len
     ? g_io_channel_write_chars (_channel, g->str, g->len, &out, &err)

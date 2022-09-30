@@ -166,7 +166,7 @@ Encoder :: do_work()
         continue;
       }
 
-      res = UUEncodePartial_byFSize (fp, NULL, (char*)filename.c_str(), YENC_ENCODED , (char*)basename.c_str(), 0, 0, cnt, bpf ,&crc);
+      res = UUEncodePartial_byFSize (fp, NULL, (char*)filename.c_str(), YENC_ENCODED , (char*)basename.c_str(), nullptr, 0, cnt, bpf ,&crc);
 
       if (fp) fclose(fp);
       if (res != UURET_CONT && res != UURET_OK) break;
@@ -206,7 +206,7 @@ Encoder :: uu_log (void* data, char* message, int severity)
 {
   Encoder *self = static_cast<Encoder *>(data);
   if (self->was_cancelled()) return;
-  char * pch (g_locale_to_utf8 (message, -1, 0, 0, 0));
+  char * pch (g_locale_to_utf8 (message, -1, nullptr, nullptr, nullptr));
 
   if (severity >= UUMSG_WARNING)
     self->file_errors.push_back (pch ? pch : message);

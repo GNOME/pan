@@ -81,7 +81,7 @@ namespace
 
     ThreadWorker (ServerInfo& d, const Quark& s, const StringView& h, int p, Socket::Creator::Listener *l,
                   bool ssl, CertStore& cs):
-      data(d), server(s), host(h), port(p), listener(l), ok(false), socket(0), use_ssl(ssl), store(cs) {}
+      data(d), server(s), host(h), port(p), listener(l), ok(false), socket(nullptr), use_ssl(ssl), store(cs) {}
 
     void do_work ()
     {

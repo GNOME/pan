@@ -99,7 +99,7 @@ TaskXOver::TaskXOver(Data & data, const Quark & group, Mode mode, unsigned long 
   _short_group_name(get_short_name(StringView(group.c_str()))),
   _mode(mode),
   _sample_size(sample_size),
-  _days_cutoff(mode == DAYS ? (time(0) - (sample_size * 24 * 60 * 60)) : 0),
+  _days_cutoff(mode == DAYS ? (time(nullptr) - (sample_size * 24 * 60 * 60)) : 0),
   _group_xover_is_reffed(false),
   _bytes_so_far(0),
   _parts_so_far(0ul),
@@ -299,7 +299,7 @@ namespace
     if (!view.empty())
       {
         errno = 0;
-        ul = strtoul(view.str, 0, 10);
+        ul = strtoul(view.str, nullptr, 10);
         if (errno)
           ul = 0ul;
       }
@@ -311,7 +311,7 @@ namespace
   header_is_nonencoded_utf8(const StringView& in)
   {
     const bool is_nonencoded(!in.strstr("=?"));
-    const bool is_utf8(g_utf8_validate(in.str, in.len, 0));
+    const bool is_utf8(g_utf8_validate(in.str, in.len, nullptr));
     return is_nonencoded && is_utf8;
   }
 }
@@ -341,7 +341,7 @@ void
 TaskXOver::on_nntp_line_process(NNTP * nntp, const StringView & line)
 {
 
-  pan_return_if_fail(nntp != 0);
+  pan_return_if_fail(nntp != nullptr);
   pan_return_if_fail(!nntp->_server.empty());
   pan_return_if_fail(!nntp->_group.empty());
 
@@ -399,7 +399,7 @@ TaskXOver::on_nntp_line_process(NNTP * nntp, const StringView & line)
 
   if (xref.len > 6 && !strncmp(xref.str, "Xref: ", 6))
     {
-      xref = xref.substr(xref.str + 6, 0);
+      xref = xref.substr(xref.str + 6, nullptr);
       xref.trim();
     }
 
@@ -416,7 +416,7 @@ TaskXOver::on_nntp_line_process(NNTP * nntp, const StringView & line)
 		return;
 
 	// if news server doesn't provide an xref, fake one
-	char * buf(0);
+	char * buf(nullptr);
 	if (xref.empty())
 		xref = buf = g_strdup_printf("%s %s:%" G_GUINT64_FORMAT,
 				nntp->_server.c_str(), nntp->_group.c_str(), static_cast<uint64_t>(number));
@@ -470,7 +470,7 @@ TaskXOver::on_nntp_done(NNTP * nntp, Health health, const StringView & response)
 
   if (compression_enabled && atoi(response.str) == 0)
   {
-    std::stringstream* buffer(0);
+    std::stringstream* buffer(nullptr);
     std::stringstream out, out2;
     if (comp == HEADER_COMPRESS_XZVER || comp == HEADER_COMPRESS_DIABLO)
     {

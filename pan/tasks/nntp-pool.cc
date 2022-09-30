@@ -69,13 +69,13 @@ NNTP_Pool :: ~NNTP_Pool ()
 bool
 NNTP_Pool :: new_connections_are_allowed () const
 {
-  return _time_to_allow_new_connections <= time(0);
+  return _time_to_allow_new_connections <= time(nullptr);
 }
 
 void
 NNTP_Pool :: disallow_new_connections_for_n_seconds (int n)
 {
-  _time_to_allow_new_connections = time(0) + n;
+  _time_to_allow_new_connections = time(nullptr) + n;
 }
 
 void
@@ -107,7 +107,7 @@ NNTP_Pool :: kill_tasks ()
 NNTP*
 NNTP_Pool :: check_out ()
 {
-  NNTP * nntp (0);
+  NNTP * nntp (nullptr);
 
   foreach (pool_items_t, _pool_items, it) {
     debug("pool item "<<it->is_checked_in<<" "<<it->nntp);
@@ -246,20 +246,20 @@ NNTP_Pool :: on_nntp_done (NNTP* nntp, Health health, const StringView& response
    {
       delete nntp->_socket;
       delete nntp;
-      nntp = 0;
+      nntp = nullptr;
    }
 
    --_pending_connections;
 
    // if success...
-   if (nntp != 0)
+   if (nntp != nullptr)
    {
       debug ("success with handshake to " << _server << ", nntp " << nntp);
 
       PoolItem i;
       i.nntp = nntp;
       i.is_checked_in = true;
-      i.last_active_time = time (0);
+      i.last_active_time = time (nullptr);
       _pool_items.push_back (i);
 
       fire_pool_has_nntp_available ();
@@ -335,9 +335,9 @@ NNTP_Pool :: idle_upkeep ()
 {
   for (;;)
   {
-    PoolItem * item (0);
+    PoolItem * item (nullptr);
 
-    const time_t now (time (0));
+    const time_t now (time (nullptr));
     foreach (pool_items_t, _pool_items, it) {
       if (it->is_checked_in && ((now - it->last_active_time) > MAX_IDLE_SECS)) {
         item = &*it;
@@ -359,7 +359,7 @@ NNTP_Pool :: idle_upkeep ()
       item->nntp->goodbye (new NoopListener (this, true));
     else
       item->nntp->noop (new NoopListener (this, false));
-    item = 0;
+    item = nullptr;
   }
 }
 
