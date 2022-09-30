@@ -61,7 +61,7 @@ namespace pan
 
     int l = g_mime_signature_list_length(sig_list);
     info.signers.reserve(l);
-    GMimeSignature * sig(0);
+    GMimeSignature * sig(nullptr);
     Signer signer;
     for (int i=0;i<l;++i)
     {

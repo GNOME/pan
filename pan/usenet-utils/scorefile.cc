@@ -39,7 +39,7 @@ namespace
 {
   unsigned long get_today ()
   {
-    const time_t now (time (0));
+    const time_t now (time (nullptr));
     struct tm t (*localtime (&now));
     return (t.tm_year*10000) + (t.tm_mon*100) + t.tm_mday;
   }
@@ -88,14 +88,14 @@ struct pan::Scorefile::ParseContext
   std::vector<int> test_offsets;
 
   Scorefile::Item * get_current_item () {
-    Scorefile::Item * ret (0);
-    if (current_section!=0 && !current_section->items.empty())
+    Scorefile::Item * ret (nullptr);
+    if (current_section!=nullptr && !current_section->items.empty())
       ret = &current_section->items.back();
     return ret;
   }
 
   FilterInfo * get_current_test () {
-    FilterInfo * test (0);
+    FilterInfo * test (nullptr);
     Scorefile::Item * item (get_current_item());
     if (item)
       test = &item->test;
@@ -113,7 +113,7 @@ struct pan::Scorefile::ParseContext
 
   unsigned long today;
 
-  ParseContext (): current_section(0), today(get_today()) {}
+  ParseContext (): current_section(nullptr), today(get_today()) {}
 };
 
 
@@ -141,7 +141,7 @@ Scorefile :: Section*
 Scorefile :: get_section (const StringView& name)
 {
   if (name.empty())
-    return 0;
+    return nullptr;
 
   // look for a section that already matches the name
   foreach (sections_t, _sections, it)
@@ -217,7 +217,7 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
     }
 
     // new Item
-    else if (context.current_section!=0 && !line.strncasecmp("Score:",6))
+    else if (context.current_section!=nullptr && !line.strncasecmp("Score:",6))
     {
       line.eat_chars (6);
       const bool all_tests_must_pass (line.len>=2 && !memcmp(line.str,"::",2));
@@ -230,14 +230,14 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
       StringView name;
       const char * hash = line.strchr ('#');
       if (hash)
-        name = line.substr (hash+1, 0);
-      name = name.substr (0, name.strchr('%')); // skip trailing comments
+        name = line.substr (hash+1, nullptr);
+      name = name.substr (nullptr, name.strchr('%')); // skip trailing comments
       name.trim ();
 
       std::deque<Item>& items (context.current_section->items);
       items.resize (items.size() + 1);
       Item& item (items.back());
-       
+
       item.name.assign (name.str, name.len);
       item.filename = filename;
       item.begin_line = line_number;
@@ -250,7 +250,7 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
     }
 
     // begin nested condition
-    else if (line.len>=2 && line.str[0]=='{' && line.str[1]==':' && context.get_current_test()!=0)
+    else if (line.len>=2 && line.str[0]=='{' && line.str[1]==':' && context.get_current_test()!=nullptr)
     {
       context.update_item_end_line (line_number);
 
@@ -268,7 +268,7 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
     }
 
     // end nested conditions
-    else if (line.len>=1 && *line.str=='}' && context.get_current_test()!=0)
+    else if (line.len>=1 && *line.str=='}' && context.get_current_test()!=nullptr)
     {
       context.update_item_end_line (line_number);
       context.test_offsets.resize (context.test_offsets.size()-1);
@@ -290,7 +290,7 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
     }
 
     // include another file
-    else if (!line.strncasecmp("Expires:", 6) && context.get_current_test()!=0)
+    else if (!line.strncasecmp("Expires:", 6) && context.get_current_test()!=nullptr)
     {
       context.update_item_end_line (line_number);
 
@@ -311,12 +311,12 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
     }
 
     // new filter
-    else if (line.strpbrk (":=") && context.get_current_item()!=0)
+    else if (line.strpbrk (":=") && context.get_current_item()!=nullptr)
     {
       context.update_item_end_line (line_number);
-      
+
       // follow XNews' idiom for specifying case sensitivity:
-      // '=' as the delimiter instead of ':' 
+      // '=' as the delimiter instead of ':'
       const char * delimiter = line.strpbrk (":=");
       const bool case_sensitive (*delimiter=='=');
 
@@ -324,15 +324,15 @@ Scorefile :: parse_file (ParseContext& context, const StringView& filename)
       bool negate (*line.str=='~');
       if (negate) line.eat_chars (1);
 
-      StringView key (line.substr (0, delimiter));
+      StringView key (line.substr (nullptr, delimiter));
       key.trim ();
-      StringView val (line.substr (delimiter+1, 0));
+      StringView val (line.substr (delimiter+1, nullptr));
       val.trim ();
 
       FilterInfo::aggregatesp_t& aggregates (context.get_current_test()->_aggregates);
       aggregates.push_back (new FilterInfo);
       FilterInfo& test (*aggregates.back());
- 
+
       if (!key.strncasecmp ("Lines", 5))
       {
         // "Lines: 5"  matches articles with > 5 lines.
@@ -454,7 +454,7 @@ Scorefile :: build_score_string (const StringView    & section_wildmat,
                                  const AddItem       * items,
                                  size_t                item_count)
 {
-  const time_t now (time (0));
+  const time_t now (time (nullptr));
   std::ostringstream out;
   out << "%BOS" << std::endl
       << "%Score created by Pan on " << ctime(&now)

@@ -556,7 +556,7 @@ namespace
          addrtype = ADDRTYPE_OLDSTYLE;
 
          // address part
-         StringView myaddr (myfrom.substr (0, lparen));
+         StringView myaddr (myfrom.substr (nullptr, lparen));
          myaddr.trim ();
          addr = myaddr;
          if (strict) {
@@ -566,13 +566,13 @@ namespace
          }
 
          // real name part
-         StringView myname (myfrom.substr (lparen+1, 0));
+         StringView myname (myfrom.substr (lparen+1, nullptr));
          myname.trim ();
          if (myname.back() != ')')
             return GNKSA::RPAREN_MISSING;
 
          myname = myname.substr (NULL, myname.end()-1);
-         const char * end = 0;
+         const char * end = nullptr;
          if (strict && (!read_paren_phrase(myname.str,&end) || end==NULL))
             return GNKSA::ILLEGAL_PAREN_PHRASE;
 
@@ -781,13 +781,13 @@ GNKSA :: remove_broken_message_ids_from_references (const StringView& references
       break;
 
     // find the end of the message-id
-    v = v.substr (begin+1, 0);
+    v = v.substr (begin+1, nullptr);
     const char * end = v.strpbrk ("<> ");
     if (!end)
       end = v.end();
     else if (*end == '>')
       ++end;
-    v = v.substr (end, 0);
+    v = v.substr (end, nullptr);
 
     // check the message-id for validity
     if (check_message_id (StringView(begin, end-begin)) == GNKSA::OK) {
@@ -982,6 +982,6 @@ GNKSA :: remove_signature (StringView& body)
    int sig_point (-1);
    const bool has_signature (find_signature_delimiter (body, sig_point) != SIG_NONE);
    if (has_signature)
-      body = body.substr (0, body.str+sig_point);
+      body = body.substr (nullptr, body.str+sig_point);
    return has_signature;
 }

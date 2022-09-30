@@ -100,7 +100,7 @@ pan :: url_findx (const StringView& text, StringView& setme_url)
     return false;
 
   char bracket (0);
-  const char * start (0);
+  const char * start (nullptr);
   for (const char *pch (text.begin()), *end(text.end()); pch!=end; ++pch)
   {
     if (*pch=='h' && (end-pch>7) && !memcmp(pch,"http://",7)) {

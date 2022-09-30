@@ -43,7 +43,7 @@ using namespace pan;
 namespace pan
 {
 
-  iconv_t conv(0);
+  iconv_t conv(nullptr);
   bool iconv_inited(false);
 
 }
@@ -114,7 +114,7 @@ namespace
       // part is optional
       int _part = __yenc_extract_tag_val_int (b, YENC_TAG_PART);
       guint _pcrc = __yenc_extract_tag_val_hex_int (b, YENC_TAG_PCRC32);
-      if (part != 0)
+      if (part != nullptr)
          pan_return_val_if_fail( _pcrc != 0, -1 );
 
       guint _crc = __yenc_extract_tag_val_hex_int( b, YENC_TAG_CRC32);
@@ -291,7 +291,7 @@ namespace
    bool
    uu_is_ending_line (const char * line)
    {
-      return line!=0
+      return line!=nullptr
           && (line[0]=='e' || line[0]=='E')
           && (line[1]=='n' || line[1]=='N')
           && (line[2]=='d' || line[2]=='D')
@@ -395,8 +395,8 @@ namespace pan
     guint y_pcrc;
     size_t y_size;
 
-    TempPart (EncType intype=ENC_UU, char *infilename=0): stream(0), filter(0),
-      filter_stream(0), filename(infilename), valid_lines(0), type(intype),
+    TempPart (EncType intype=ENC_UU, char *infilename=nullptr): stream(nullptr), filter(nullptr),
+      filter_stream(nullptr), filename(infilename), valid_lines(0), type(intype),
       y_line_len(0), y_attach_size(0), y_part(0),
       y_offset_begin(0), y_offset_end(0),
       y_crc(0), y_pcrc(0), y_size(0)
@@ -423,7 +423,7 @@ namespace pan
           return part;
       }
     }
-    return 0;
+    return nullptr;
   }
 
   bool append_if_not_present (temp_parts_t& parts, TempPart * part)
@@ -926,7 +926,7 @@ namespace pan
     GPGDecType type;
     std::string algo;
 
-    QueryMPType() : obj(0), type(GPG_DECODE) {}
+    QueryMPType() : obj(nullptr), type(GPG_DECODE) {}
   };
 #else
    struct QueryMPType
@@ -934,7 +934,7 @@ namespace pan
     GMimeObject* obj;
     std::string algo;
 
-    QueryMPType() : obj(0) {}
+    QueryMPType() : obj(nullptr) {}
   };
 #endif
 }
@@ -1025,7 +1025,7 @@ mime :: construct_message (GMimeStream    ** istreams,
 #endif
 {
   const char * message_id = "Foo <bar@mum>";
-  GMimeMessage * retval = 0;
+  GMimeMessage * retval = nullptr;
 
   // sanity clause
   pan_return_val_if_fail (is_nonempty_string(message_id), NULL);
@@ -1066,7 +1066,7 @@ mime :: construct_message (GMimeStream    ** istreams,
       {
         QueryMPType qtype;
         g_mime_multipart_foreach (GMIME_MULTIPART(part), mixed_mp_find_gpg_params_cb, &qtype);
-        GMimeObject* o(0);
+        GMimeObject* o(nullptr);
 #ifdef HAVE_GMIME_CRYPTO
         if (qtype.type == GPG_VERIFY)
         {
@@ -1504,8 +1504,8 @@ namespace pan
 
     if (!gpg_inited) return false;
 
-    GMimeMultipartSigned * mps(0);
-    GMimeMultipartEncrypted * mpe(0);
+    GMimeMultipartSigned * mps(nullptr);
+    GMimeMultipartEncrypted * mpe(nullptr);
 
     switch (info.type)
     {
@@ -1561,7 +1561,7 @@ namespace pan
   GMimeMessage*
   message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body)
   {
-    if (uid.empty()) return 0;
+    if (uid.empty()) return nullptr;
 
     GMimeMultipartSigned *mps;
     GError* err(NULL);
@@ -1579,7 +1579,7 @@ namespace pan
       g_object_unref(gmo);
       g_object_unref(mps);
       g_object_unref(G_OBJECT(part));
-      return 0;
+      return nullptr;
     }
 
     /* GMIME _dirty_ hack : set filename for signature attachment */
@@ -1599,7 +1599,7 @@ namespace pan
                GMimeMessage* body, GPtrArray* rcp, bool sign)
   {
 
-    GError* err(0);
+    GError* err(nullptr);
     GMimePart* part = g_mime_part_new_with_type("text", "plain");
     mime_part_set_content (part, body_str.c_str());
 
