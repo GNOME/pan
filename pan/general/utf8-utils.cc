@@ -195,7 +195,7 @@ pan :: content_to_utf8 (const StringView  & content,
 
       // try each charset in turn
       for (size_t i=0; i!=n; ++i) {
-        char * tmp = g_convert (content.str, content.len, "UTF-8", encodings[i], 0, 0, NULL);
+        char * tmp = g_convert (content.str, content.len, "UTF-8", encodings[i], nullptr, nullptr, NULL);
         if (tmp) {
           ret = tmp;
           g_free (tmp);

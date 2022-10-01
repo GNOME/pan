@@ -165,7 +165,7 @@ class pan::TextMatch::PcreInfo
 
    public:
 
-      PcreInfo (): re(0) { }
+      PcreInfo (): re(nullptr) { }
 
 
 
@@ -188,7 +188,7 @@ class pan::TextMatch::PcreInfo
           else
             options = (GRegexCompileFlags)G_REGEX_CASELESS;
 
-          GError * err = 0;
+          GError * err = nullptr;
           re = g_regex_new (pattern.c_str(), options, (GRegexMatchFlags)0, &err);
           if (err) {
             Log::add_err_va (_("Can't use regular expression \"%s\": %s"), pattern.c_str(), err->message);
@@ -390,7 +390,7 @@ TextMatch :: test (const StringView& text_in) const
 TextMatch :: TextMatch ():
    _impl_text (),
    _skip (new char [UCHAR_MAX+1]),
-   _pcre_info (0),
+   _pcre_info (nullptr),
    _pcre_state (NEED_COMPILE)
 {
 }
@@ -410,7 +410,7 @@ TextMatch :: clear ()
   if (_pcre_state == COMPILED)
   {
     delete _pcre_info;
-    _pcre_info = 0;
+    _pcre_info = nullptr;
     _pcre_state = NEED_COMPILE;
   }
 }
@@ -497,7 +497,7 @@ TextMatch :: validate_regex (const char * text)
 
 TextMatch :: TextMatch (const TextMatch& that):
   _skip (new char [UCHAR_MAX+1]),
-  _pcre_info (0),
+  _pcre_info (nullptr),
   _pcre_state (NEED_COMPILE)
 {
   set (that.state);

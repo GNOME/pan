@@ -32,7 +32,7 @@ using namespace pan;
 WorkerPool::WorkerPool(int n, bool exclusive)
 {
   assert((!exclusive || n>0) && "can't have unlimited exclusive threads!");
-  tpool = g_thread_pool_new(Worker::worker_thread_func, this, n, exclusive, 0);
+  tpool = g_thread_pool_new(Worker::worker_thread_func, this, n, exclusive, nullptr);
 }
 
 void
@@ -44,7 +44,7 @@ WorkerPool::cancel_all_silently()
 WorkerPool::~WorkerPool()
 {
   foreach (WorkerSet, my_workers, it){
-    (*it)->pool = 0;
+    (*it)->pool = nullptr;
     (*it)->cancel ();
   }
 
@@ -65,7 +65,7 @@ WorkerPool::push_work(Worker *w, Worker::Listener *l, bool delete_worker)
   w->listener = l;
   w->delete_worker = delete_worker;
   my_workers.insert(w);
-  g_thread_pool_push(tpool, w, 0); // jump to worker_thread_func
+  g_thread_pool_push(tpool, w, nullptr); // jump to worker_thread_func
 }
 
 void
