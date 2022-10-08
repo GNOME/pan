@@ -23,7 +23,6 @@ noinst_HEADERS = \
  article_number.h \
  compression.h \
  debug.h \
- defgroup.h \
  e-util.h \
  editor-spawner.h \
  file-util.h \

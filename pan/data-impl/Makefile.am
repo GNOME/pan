@@ -16,7 +16,7 @@ libpandata_a_SOURCES = \
  server.cc \
  my-tree.cc \
  task-archive.cc \
- xover.cc 
+ xover.cc
 
 
 noinst_HEADERS = \
@@ -24,9 +24,8 @@ noinst_HEADERS = \
  rules-filter.h \
  data-impl.h \
  data-io.h \
- defgroup.h \
  profiles.h \
- memchunk.h 
+ memchunk.h
 
 #noinst_PROGRAMS = \
 # add-server \

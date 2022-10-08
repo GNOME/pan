@@ -29,7 +29,6 @@ noinst_HEADERS = \
   adaptable-set.h \
   decoder.h \
   encoder.h \
-  defgroup.h \
   health.h \
   task.h \
   task-article.h \

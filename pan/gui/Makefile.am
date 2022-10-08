@@ -42,7 +42,6 @@ noinst_HEADERS = \
  actions.h \
  actions-extern.h \
  body-pane.h \
- defgroup.h \
  dl-headers-ui.h \
  e-action-combo-box.h \
  e-charset.h \

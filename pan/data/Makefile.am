@@ -22,7 +22,6 @@ noinst_HEADERS = \
  encode-cache.h \
  cert-store.h \
  data.h \
- defgroup.h \
  parts.h \
  server-info.h \
  xref.h
