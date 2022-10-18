@@ -433,6 +433,8 @@ namespace pan
         void remove_articles (const quarks_t& mids);
         void build_references_header (const Article* article, std::string& setme) const;
 
+        void reserve(Article_Count);
+
       };
 
       static void find_nodes (const quarks_t           & mids,

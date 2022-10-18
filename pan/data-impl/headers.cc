@@ -149,6 +149,15 @@ DataImpl :: GroupHeaders :: build_references_header (const Article* article, std
   }
 }
 
+void DataImpl::GroupHeaders::reserve(Article_Count articles)
+{
+  _art_chunk.reserve(static_cast<Article_Count::type>(articles));
+  //A note - the number of nodes is very rarely the same as the number of
+  //articles, but it is generally not far out, so at worse you'll end up with
+  //two allocations
+  _node_chunk.reserve(static_cast<Article_Count::type>(articles));
+}
+
 void
 DataImpl :: get_article_references (const Quark& group, const Article* article, std::string& setme) const
 {
@@ -478,7 +487,9 @@ DataImpl :: load_headers (const DataIO   & data_io,
       // each article in this group...
       unsigned int expire_count (0);
       in->getline (line);
-      //const unsigned long article_qty = view_to_ul (line); /* unused */
+      Article_Count const article_qty{line};
+      h->reserve(article_qty);
+
       const time_t now (time (nullptr));
       PartBatch part_batch;
       for (;;)
