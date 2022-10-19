@@ -29,7 +29,7 @@ namespace pan
     public:
       PrefsFile (const StringView& filename);
       ~PrefsFile ();
-      virtual void save () const;
+      void save () const override;
 
     private:
       std::string _filename;

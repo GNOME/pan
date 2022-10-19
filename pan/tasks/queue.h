@@ -177,11 +177,11 @@ namespace pan
       void remove_listener (Listener *l) { _listeners.erase(l); }
 
     public: // inherited from NNTP::Source
-      virtual void check_in (NNTP*, Health);
+      void check_in (NNTP*, Health) override;
 
     public: // inherited from Task::De/EncoderSource
-      virtual void check_in (Decoder*, Task*);
-      virtual void check_in (Encoder*, Task*);
+      void check_in (Decoder*, Task*) override;
+      void check_in (Encoder*, Task*) override;
 
     private: // inherited from NNTP_Pool::Listener
       virtual void on_pool_has_nntp_available (const Quark& server);
@@ -262,8 +262,8 @@ namespace pan
       typedef AdaptableSet<Task*, TaskWeakOrdering> TaskSet;
       TaskSet _tasks;
       virtual void on_set_items_added  (TaskSet&, TaskSet::items_t&, int index);
-      virtual void on_set_item_removed (TaskSet&, Task*&, int index);
-      virtual void on_set_item_moved   (TaskSet&, Task*&, int index, int old_index);
+      void on_set_item_removed (TaskSet&, Task*&, int index) override;
+      void on_set_item_moved   (TaskSet&, Task*&, int index, int old_index) override;
 
     public:
 

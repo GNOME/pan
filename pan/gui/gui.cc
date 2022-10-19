@@ -759,7 +759,7 @@ namespace
 
     virtual ~SaveArticlesFromNZB() {}
 
-    virtual void on_progress_finished (Progress&, int status)
+    void on_progress_finished (Progress&, int status) override
     {
       if (status == OK) {
 #ifdef HAVE_GMIME_CRYPTO

@@ -721,7 +721,7 @@ namespace
     const quarks_t& mids;
     ArticleIsNotInSet (const quarks_t& m): mids(m) {}
     virtual ~ArticleIsNotInSet () {}
-    virtual bool operator()(const Article& a) const {
+    virtual bool operator()(const Article& a) const override {
       return !mids.count(a.message_id);
     }
   };
@@ -731,7 +731,8 @@ namespace
     quarks_t& mids;
     RememberMessageId (quarks_t& m): mids(m) {}
     virtual ~RememberMessageId() {}
-    virtual void operator() (GtkTreeModel*, GtkTreeIter*, const Article& article) {
+    void operator() (GtkTreeModel*, GtkTreeIter*, const Article& article) override
+    {
       mids.insert (article.message_id);
     }
   };
@@ -2153,20 +2154,20 @@ namespace
 
   struct TreeIteratorNext: public TreeIterFunctor {
     virtual ~TreeIteratorNext () {}
-    virtual bool operator ()(GtkTreeModel * model, GtkTreeIter * iter) const {
+    bool operator ()(GtkTreeModel * model, GtkTreeIter * iter) const override {
       return model && PAN_TREE_STORE(model)->get_next (iter);
     }
-    virtual bool front (GtkTreeModel* model, GtkTreeIter* setme) const {
+    bool front (GtkTreeModel* model, GtkTreeIter* setme) const override {
       return model && PAN_TREE_STORE(model)->front (setme);
     }
   };
 
   struct TreeIteratorPrev: public TreeIterFunctor {
     virtual ~TreeIteratorPrev () {}
-    bool operator()(GtkTreeModel * model, GtkTreeIter * iter) const {
+    bool operator()(GtkTreeModel * model, GtkTreeIter * iter) const override {
       return model && PAN_TREE_STORE(model)->get_prev (iter);
     }
-    virtual bool front (GtkTreeModel* model, GtkTreeIter* setme) const {
+    bool front (GtkTreeModel* model, GtkTreeIter* setme) const override {
       return model && PAN_TREE_STORE(model)->back (setme);
     }
   };
@@ -2178,14 +2179,14 @@ namespace
   struct ArticleExists: public ArticleTester {
     virtual ~ArticleExists() {}
     ArticleExists () {}
-    virtual bool operator()(const Article&) const { return true; }
+    bool operator()(const Article&) const override { return true; }
   };
 
   struct ArticleIsFlagged: public ArticleTester {
     virtual ~ArticleIsFlagged () {}
     const Article* article;
     ArticleIsFlagged (const Article* a) : article(a) {}
-    virtual bool operator()(const Article& a) const
+    bool operator()(const Article& a) const override
       { return a.get_flag() && a.message_id != article->message_id; }
   };
 
@@ -2196,14 +2197,20 @@ namespace
       _mid = parent ? parent->message_id : "";
     }
     Quark _mid;
-    virtual bool operator()(const Article& a) const { return _mid==a.message_id; }
+    bool operator()(const Article& a) const override
+    {
+      return _mid==a.message_id;
+    }
   };
 
   struct ArticleIsUnread: public ArticleTester {
     virtual ~ArticleIsUnread () {}
     ArticleIsUnread (const Data& data): _data(data) {}
     const Data& _data;
-    virtual bool operator()(const Article& a) const { return !_data.is_read(&a); }
+    bool operator()(const Article& a) const override
+    {
+      return !_data.is_read(&a);
+    }
   };
 
   struct ArticleIsNotInThread: public ArticleTester {
@@ -2222,7 +2229,7 @@ namespace
         a = parent;
       }
     }
-    virtual bool operator()(const Article& a) const {
+    bool operator()(const Article& a) const override {
       return _root != get_root_mid(&a);
     }
   };
@@ -2232,7 +2239,7 @@ namespace
     ArticleIsUnreadAndNotInThread (const Data& data, const Data::ArticleTree& tree, const Article* a): _aiu (data), _ainit(tree, a) {}
     const ArticleIsUnread _aiu;
     const ArticleIsNotInThread _ainit;
-    virtual bool operator()(const Article& a) const {
+    bool operator()(const Article& a) const override {
       return _aiu(a) && _ainit(a);
     }
   };
@@ -2245,7 +2252,8 @@ namespace
     virtual ~SelectFunctor () {}
     SelectFunctor (GtkTreeView * view): _view(view) {}
     GtkTreeView * _view;
-    virtual void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article&) {
+void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article&) override
+    {
       GtkTreeSelection * sel (gtk_tree_view_get_selection (_view));
       gtk_tree_selection_unselect_all (sel);
       GtkTreePath * path = gtk_tree_model_get_path (model, iter);
@@ -2261,7 +2269,8 @@ namespace
     virtual ~ReadFunctor() {}
     ReadFunctor (GtkTreeView * view, ActionManager& am): SelectFunctor(view), _am(am) {}
     ActionManager& _am;
-    virtual void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article& a) {
+    void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article& a) override
+    {
       SelectFunctor::operator() (model, iter, a);
       maybe_activate_on_idle (_view, gtk_tree_model_get_path(model,iter), nullptr);
     }

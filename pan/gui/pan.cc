@@ -577,17 +577,17 @@ namespace
     ~PanKiller() { q.remove_listener(this); }
 
     /** Method from Queue::Listener interface: quits program on zero sized Q*/
-    void on_queue_size_changed (Queue&, int active, int total)
+    void on_queue_size_changed (Queue&, int active, int total) override
       {  if (!active && !total) mainloop_quit();  }
 
     // all below methods from Queue::Listener interface are noops
-    void on_queue_task_active_changed (Queue&, Task&, bool) {}
-    void on_queue_tasks_added (Queue&, int , int ) {}
-    void on_queue_task_removed (Queue&, Task&, int) {}
-    void on_queue_task_moved (Queue&, Task&, int, int) {}
-    void on_queue_connection_count_changed (Queue&, int) {}
-    void on_queue_online_changed (Queue&, bool) {}
-    void on_queue_error (Queue&, const StringView&) {}
+    void on_queue_task_active_changed (Queue&, Task&, bool) override {}
+    void on_queue_tasks_added (Queue&, int , int ) override {}
+    void on_queue_task_removed (Queue&, Task&, int) override {}
+    void on_queue_task_moved (Queue&, Task&, int, int) override {}
+    void on_queue_connection_count_changed (Queue&, int) override {}
+    void on_queue_online_changed (Queue&, bool) override {}
+    void on_queue_error (Queue&, const StringView&) override {}
 
   private:
     Queue & q;

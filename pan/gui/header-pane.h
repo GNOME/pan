@@ -142,33 +142,38 @@ namespace pan
       void rebuild_all_article_states ();
 
     private:
-      virtual void on_group_read (const Quark& group);
+      void on_group_read (const Quark& group) override;
 
     private:
       virtual void on_tree_change (const Data::ArticleTree::Diffs&);
 
     private:
-      virtual void on_prefs_flag_changed   (const StringView&, bool);
-      virtual void on_prefs_int_changed    (const StringView&, int) { }
-      virtual void on_prefs_string_changed (const StringView&, const StringView&);
-      virtual void on_prefs_color_changed  (const StringView&, const GdkColor&);
+      void on_prefs_flag_changed   (const StringView&, bool) override;
+      void on_prefs_int_changed    (const StringView&, int) override { }
+      void on_prefs_string_changed (const StringView&, const StringView&) override;
+      void on_prefs_color_changed  (const StringView&, const GdkColor&) override;
 
     public:
-      virtual void on_article_flag_changed (articles_t& a, const Quark& group);
+      void on_article_flag_changed (articles_t& a, const Quark& group) override;
 
     private:
-      virtual void on_queue_task_active_changed (Queue&, Task&, bool active UNUSED) { }
-      virtual void on_queue_tasks_added (Queue&, int index, int count);
-      virtual void on_queue_task_removed (Queue&, Task&, int index);
-      virtual void on_queue_task_moved (Queue&, Task&, int new_index UNUSED, int old_index UNUSED) { }
-      virtual void on_queue_connection_count_changed (Queue&, int count UNUSED) { }
-      virtual void on_queue_size_changed (Queue&, int active UNUSED, int total UNUSED) { }
-      virtual void on_queue_online_changed (Queue&, bool online UNUSED) { }
-      virtual void on_queue_error (Queue&, const StringView& message UNUSED) { }
+      void on_queue_task_active_changed (Queue&, Task&, bool active UNUSED) override
+      { }
+      void on_queue_tasks_added (Queue&, int index, int count) override;
+      void on_queue_task_removed (Queue&, Task&, int index) override;
+      void on_queue_task_moved (Queue&, Task&, int new_index UNUSED, int old_index UNUSED) override
+      { }
+      void on_queue_connection_count_changed (Queue&, int count UNUSED) override
+      { }
+      void on_queue_size_changed (Queue&, int active UNUSED, int total UNUSED) override
+      { }
+      void on_queue_online_changed (Queue&, bool online UNUSED) override { }
+      void on_queue_error (Queue&, const StringView& message UNUSED) override
+      { }
 
     private:
-      virtual void on_cache_added (const Quark& mid);
-      virtual void on_cache_removed (const quarks_t& mids);
+      void on_cache_added (const Quark& mid) override;
+      void on_cache_removed (const quarks_t& mids) override;
 
 
     public: // pretend it's private
@@ -253,14 +258,14 @@ namespace pan
             collated_subject(nullptr),
             collated_author(nullptr) {}
 
-          virtual ~Row () {
+          virtual ~Row () override {
             g_free (collated_subject);
             g_free (collated_author);
             g_free (date_str);
           }
 
         public:
-          virtual void get_value (int column, GValue* setme) {
+          virtual void get_value (int column, GValue* setme) override {
             switch (column) {
               case COL_DATE_STR:         set_value_static_string (setme, date_str); break;
               case COL_STATE:            set_value_int (setme, state); break;

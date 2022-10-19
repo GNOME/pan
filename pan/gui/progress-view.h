@@ -47,10 +47,10 @@ namespace pan
       void reset_color ();
 
     private: // inherited from progress listener
-      virtual void on_progress_step (Progress&, int percentage);
-      virtual void on_progress_status (Progress&, const StringView&);
-      virtual void on_progress_error (Progress&, const StringView&);
-      virtual void on_progress_finished (Progress&, int) { }
+      void on_progress_step (Progress&, int percentage) override;
+      void on_progress_status (Progress&, const StringView&) override;
+      void on_progress_error (Progress&, const StringView&) override;
+      void on_progress_finished (Progress&, int) override { }
 
     private:
       void update_text_soon ();

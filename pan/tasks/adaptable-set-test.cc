@@ -24,15 +24,17 @@ class MyListener:
     int new_index_of_moved;
 
   public:
-    virtual void on_set_items_added (AdaptableSet<X, MyLessThan<X> >&, std::vector<X>& i, int index) {
+    void on_set_items_added (AdaptableSet<X, MyLessThan<X> >&, std::vector<X>& i, int index) override
+    {
       index_of_added = index;
       value = i[0];
     }
-    virtual void on_set_item_removed (AdaptableSet<X, MyLessThan<X> >&, X& i, int index) {
+    void on_set_item_removed (AdaptableSet<X, MyLessThan<X> >&, X& i, int index) override {
       index_of_removed = index;
       value = i;
     }
-    virtual void on_set_item_moved (AdaptableSet<X, MyLessThan<X> >&, X& i, int index, int old_index) {
+    void on_set_item_moved (AdaptableSet<X, MyLessThan<X> >&, X& i, int index, int old_index) override
+    {
       old_index_of_moved = old_index;
       new_index_of_moved = index;
       value = i;

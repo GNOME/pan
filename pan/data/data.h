@@ -241,7 +241,8 @@ namespace pan
 #endif /* GTK_CHECK_VERSION(3,0,0) */
 #endif
       /** Gets a quark to the provided hostname */
-      virtual bool find_server_by_hn (const std::string& server, Quark& setme) const = 0;
+      bool find_server_by_hn (const std::string& server,
+                              Quark& setme) const override = 0;
 
       virtual const Server* find_server (const Quark& server) const = 0;
 
@@ -253,37 +254,38 @@ namespace pan
 
       virtual Quark add_new_server () = 0;
 
-      virtual void set_server_auth (const Quark       & server,
-                                    const StringView  & username,
-                                    gchar             *&password,
-                                    bool                use_gkr) = 0;
+      void set_server_auth (const Quark       & server,
+                            const StringView  & username,
+                            gchar             *&password,
+                            bool                use_gkr) override = 0;
 
-      virtual void set_server_trust (const Quark      & servername,
-                                     const int          setme) = 0;
+      void set_server_trust (const Quark      & servername,
+                             const int          setme) override = 0;
 
-      virtual void set_server_addr (const Quark       & server,
-                                    const StringView  & address,
-                                    const int           port) = 0;
+      void set_server_addr (const Quark       & server,
+                            const StringView  & address,
+                            const int           port) override = 0;
 
-      virtual void set_server_limits (const Quark     & server,
-                                      int               max_connections) = 0;
+      void set_server_limits (const Quark     & server,
+                              int               max_connections) override = 0;
 
-      virtual bool get_server_addr (const Quark   & server,
-                                    std::string   & setme_address,
-                                    int           & setme_port) const = 0;
+      bool get_server_addr (const Quark   & server,
+                            std::string   & setme_address,
+                            int           & setme_port) const override = 0;
 
-      virtual bool get_server_auth (const Quark   & server,
-                                    std::string   & setme_username,
-                                    gchar         *& setme_password,
-                                    bool            use_gkr) = 0;
+      bool get_server_auth (const Quark   & server,
+                            std::string   & setme_username,
+                            gchar         *& setme_password,
+                            bool            use_gkr) override = 0;
 
-      virtual bool get_server_trust (const Quark  & servername, int&) const = 0;
+      bool get_server_trust (const Quark  & servername, int&) const override = 0;
 
-      virtual bool get_server_compression_type (const Quark  & servername, CompressionType&) const = 0;
+      bool get_server_compression_type (const Quark  & servername,
+                                        CompressionType&) const override = 0;
 
-      virtual std::string get_server_cert (const Quark & server) const = 0;
+      std::string get_server_cert (const Quark & server) const override = 0;
 
-      virtual int get_server_limits (const Quark & server) const = 0;
+      int get_server_limits (const Quark & server) const override = 0;
 
     /*****************************************************************
     ***

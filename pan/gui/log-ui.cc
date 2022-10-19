@@ -75,7 +75,7 @@ namespace
       }
     }
 
-    virtual void on_log_cleared () {
+    void on_log_cleared () override {
       gtk_tree_store_clear (myStore);
     }
   };

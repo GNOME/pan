@@ -57,9 +57,9 @@ namespace pan
       virtual ~GIOChannelSocketGnuTLS ();
       GIOChannelSocketGnuTLS (ServerInfo&, const Quark&, CertStore& cs);
 
-      virtual bool open (const StringView& address, int port, std::string& setme_err);
-      virtual void write_command (const StringView& chars, Socket::Listener *);
-      virtual void get_host (std::string& setme) const;
+      bool open (const StringView& address, int port, std::string& setme_err) override;
+      void write_command (const StringView& chars, Socket::Listener *) override;
+      void get_host (std::string& setme) const override ;
 
     private:
       ServerInfo& _data;
@@ -88,8 +88,8 @@ namespace pan
       DoResult do_write ();
 
       // CertStore::Listener
-      virtual void on_verify_cert_failed (gnutls_x509_crt_t, std::string, int) ;
-      virtual void on_valid_cert_added (gnutls_x509_crt_t, std::string );
+      void on_verify_cert_failed (gnutls_x509_crt_t, std::string, int) override;
+      void on_valid_cert_added (gnutls_x509_crt_t, std::string ) override;
 
       GIOChannel * create_channel (const StringView& host_in, int port, std::string& setme_err);
       void gio_lock(int mode, int type, const char *file, int line);

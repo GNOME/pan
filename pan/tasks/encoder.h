@@ -74,7 +74,7 @@ namespace pan
 
     protected: // inherited from WorkerPool::Worker
 
-      void do_work();
+      void do_work() override;
 
     private:
 
