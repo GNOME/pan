@@ -39,14 +39,14 @@ namespace pan
       virtual ~TaskPost ();
 
     public: // Task's virtual functions
-      unsigned long get_bytes_remaining () const { return 0; }
+      unsigned long get_bytes_remaining () const override { return 0; }
       GMimeMessage* get_message () { return _message; }
 
     protected: // Task's virtual functions
-      virtual void use_nntp (NNTP * nntp);
+      void use_nntp (NNTP * nntp) override;
 
     private: // NNTP::Listener's virtual functions
-      virtual void on_nntp_done (NNTP*, Health, const StringView&);
+      void on_nntp_done (NNTP*, Health, const StringView&) override;
 
     private: // implementation
       Quark _server;

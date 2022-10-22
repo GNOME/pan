@@ -83,7 +83,7 @@ namespace
                   bool ssl, CertStore& cs):
       data(d), server(s), host(h), port(p), listener(l), ok(false), socket(nullptr), use_ssl(ssl), store(cs) {}
 
-    void do_work ()
+    void do_work () override
     {
 #ifdef HAVE_GNUTLS
         if (use_ssl)
@@ -97,7 +97,7 @@ namespace
     }
 
     /** called in main thread after do_work() is done */
-    void on_worker_done (bool cancelled UNUSED)
+    void on_worker_done (bool cancelled UNUSED) override
     {
       // pass results to main thread...
       if (!err.empty())   Log :: add_err (err.c_str());

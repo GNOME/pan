@@ -41,15 +41,15 @@ namespace pan
       virtual ~TaskGroups ();
 
     public: // Task's virtual functions
-      unsigned long get_bytes_remaining () const { return 0; }
+      unsigned long get_bytes_remaining () const override { return 0; }
 
     protected: // Task's virtual functions
-      virtual void use_nntp (NNTP * nntp);
+      virtual void use_nntp (NNTP * nntp) override;
 
     private: // NNTP::Listener's virtual functions
-      virtual void on_nntp_line (NNTP*, const StringView&);
+      void on_nntp_line (NNTP*, const StringView&) override;
       void on_nntp_line_process (NNTP*, const StringView&);
-      virtual void on_nntp_done (NNTP*, Health, const StringView&);
+      void on_nntp_done (NNTP*, Health, const StringView&) override;
 
     private: // implementation
       Data& _data;

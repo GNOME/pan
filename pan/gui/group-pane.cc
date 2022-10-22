@@ -53,7 +53,7 @@ namespace
       Article_Count unread;
 
     public:
-      virtual void get_value (int column, GValue* setme) {
+      void get_value (int column, GValue* setme) override {
         switch (column) {
           //
           //FIXME Really?

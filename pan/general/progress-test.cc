@@ -13,16 +13,16 @@ class MyListener : public Progress::Listener
       std::string error;
       int percentage;
       int finished;
-      virtual void on_progress_step (Progress&, int p) {
+      void on_progress_step (Progress&, int p) override {
          percentage = p;
       }
-      virtual void on_progress_status (Progress&, const StringView& s) {
+      void on_progress_status (Progress&, const StringView& s) override {
          status = s.to_string ();
       }
-      virtual void on_progress_error (Progress&, const StringView& s) {
+      void on_progress_error (Progress&, const StringView& s) override {
          error = s.to_string ();
       }
-      virtual void on_progress_finished (Progress&, int s) {
+      void on_progress_finished (Progress&, int s) override {
          finished = s;
       }
 };

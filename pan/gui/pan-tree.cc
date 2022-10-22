@@ -587,7 +587,8 @@ PanTreeStore :: FreeRowWalker: public PanTreeStore::WalkFunctor
   PanTreeStore * store;
   FreeRowWalker (PanTreeStore *t): store(t) {}
   virtual ~FreeRowWalker () {}
-  virtual bool operator()(PanTreeStore *s, Row *r, GtkTreeIter*, GtkTreePath*) {
+  bool operator()(PanTreeStore *s, Row *r, GtkTreeIter*, GtkTreePath*) override
+  {
     if (store->row_dispose)
         store->row_dispose->row_dispose (s, r);
     else
@@ -666,7 +667,7 @@ PanTreeStore :: pan_tree_sortable_init (GtkTreeSortableIface *iface)
 namespace
 {
   class RootRow: public PanTreeStore::Row {
-    virtual void get_value (int, GValue *) { /* unused */ }
+    void get_value (int, GValue *) override { /* unused */ }
   };
 }
 
@@ -871,8 +872,8 @@ struct PanTreeStore::ReparentWalker: public PanTreeStore::WalkFunctor
 
   virtual ~ReparentWalker () {}
 
-  virtual bool operator()(PanTreeStore *store, Row* row,
-                          GtkTreeIter *iter, GtkTreePath *path)
+  bool operator()(PanTreeStore *store, Row* row,
+                          GtkTreeIter *iter, GtkTreePath *path) override
   {
     const int n_children (row->n_children());
 

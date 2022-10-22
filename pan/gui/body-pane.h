@@ -64,10 +64,11 @@ namespace pan
       GtkWidget* get_default_focus_widget() { return _text; }
 
     private:
-      virtual void on_prefs_flag_changed (const StringView& key, bool value);
-      virtual void on_prefs_int_changed (const StringView& key G_GNUC_UNUSED, int value G_GNUC_UNUSED) { }
-      virtual void on_prefs_string_changed (const StringView& key, const StringView& value);
-      virtual void on_prefs_color_changed (const StringView& key, const GdkColor& color);
+      void on_prefs_flag_changed (const StringView& key, bool value) override;
+      void on_prefs_int_changed (const StringView& key G_GNUC_UNUSED, int value G_GNUC_UNUSED) override
+      { }
+      void on_prefs_string_changed (const StringView& key, const StringView& value) override;
+      void on_prefs_color_changed (const StringView& key, const GdkColor& color) override;
 
     public:
       void set_article (const Article&);

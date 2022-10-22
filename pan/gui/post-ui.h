@@ -117,10 +117,10 @@ namespace pan
 
     private:
       virtual void on_progress_finished (Progress&, int status=OK);
-      virtual void on_progress_error (Progress&, const StringView&) {}
+      void on_progress_error (Progress&, const StringView&) override {}
 
-      virtual void on_progress_step (Progress&, int p) {}
-      virtual void on_progress_status (Progress&, const StringView& s) {}
+      void on_progress_step (Progress&, int p) override {}
+      void on_progress_status (Progress&, const StringView& s) override {}
 
     private:
       Data& _data;
@@ -173,9 +173,9 @@ namespace pan
 
     private:
       friend class UploadQueue;
-      virtual void on_queue_tasks_added (UploadQueue&, int index, int count);
-      virtual void on_queue_task_removed (UploadQueue&, Task&, int index);
-      virtual void on_queue_task_moved (UploadQueue&, Task&, int new_index, int old_index);
+      void on_queue_tasks_added (UploadQueue&, int index, int count) override;
+      void on_queue_task_removed (UploadQueue&, Task&, int index) override;
+      void on_queue_task_moved (UploadQueue&, Task&, int new_index, int old_index) override;
 
     private:
       /* GMIME: X-Face interval between spaces for proper folding. */

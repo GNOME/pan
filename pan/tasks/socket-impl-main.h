@@ -129,13 +129,15 @@ namespace pan
 
     private:
       //socket::creator::Listener
-      virtual void on_socket_created (const StringView& host, int port, bool ok, Socket*) {}
-      virtual void on_socket_shutdown (const StringView& host, int port, Socket*) {}
+      void on_socket_created (const StringView& host, int port, bool ok, Socket*) override
+      {}
+      void on_socket_shutdown (const StringView& host, int port, Socket*) override
+      {}
 
 #ifdef HAVE_GNUTLS
       // CertStore::Listener
-      virtual void on_verify_cert_failed(gnutls_x509_crt_t, std::string, int);
-      virtual void on_valid_cert_added (gnutls_x509_crt_t, std::string );
+      void on_verify_cert_failed(gnutls_x509_crt_t, std::string, int) override;
+      void on_valid_cert_added (gnutls_x509_crt_t, std::string ) override;
 #endif
       Data& data;
       CertStore & store;

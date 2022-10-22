@@ -36,8 +36,8 @@ namespace pan
     public:
       FileLineReader (const StringView& filename);
       virtual ~FileLineReader ();
-      virtual bool getline (StringView& setme);
-      virtual bool fail () const { return !_fp || ferror(_fp); }
+      bool getline (StringView& setme) override;
+      bool fail () const override { return !_fp || ferror(_fp); }
 
       FileLineReader(FileLineReader const &) = delete;
       FileLineReader operator=(FileLineReader const &) = delete;
@@ -62,8 +62,8 @@ namespace pan
       ScriptedLineReader () {}
       ScriptedLineReader (const StringView& in) { _buf.assign (in.str, in.len); }
       virtual ~ScriptedLineReader () {}
-      virtual bool fail () const { return false; }
-      virtual bool getline (StringView& setme) {
+      bool fail () const override { return false; }
+      bool getline (StringView& setme) override {
         if (_buf.empty())
           return false;
         std::string::size_type pos = _buf.find ('\n');

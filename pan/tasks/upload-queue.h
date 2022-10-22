@@ -101,8 +101,8 @@ namespace pan
     private:
       TaskSet _tasks;
       virtual void on_set_items_added  (TaskSet&, TaskSet::items_t&, int index);
-      virtual void on_set_item_removed (TaskSet&, Task*&, int index);
-      virtual void on_set_item_moved   (TaskSet&, Task*&, int index, int old_index);
+      void on_set_item_removed (TaskSet&, Task*&, int index) override;
+      void on_set_item_moved   (TaskSet&, Task*&, int index, int old_index) override;
   };
 }
 

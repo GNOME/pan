@@ -16,7 +16,8 @@ struct MyFilenameToReader: public Scorefile::FilenameToReader
   typedef std::map<std::string,std::string> files_t;
   files_t files;
 
-  virtual LineReader* operator()(const StringView& filename) const {
+  LineReader* operator()(const StringView& filename) const override
+  {
     files_t::const_iterator it (files.find (filename));
     assert (it != files.end() && "wrong filename!");
     return new ScriptedLineReader (it->second);
@@ -232,7 +233,7 @@ main( )
   check(item.test._needs_body == true)
 
 #if 0
-  Scorefile::Item = sectionscheck 
+  Scorefile::Item = sectionscheck
     public:
       struct Item {
         std::string filename;

@@ -44,15 +44,15 @@ namespace pan
       virtual ~ProfilesImpl ();
 
     public:
-      virtual std::set<std::string> get_profile_names () const;
-      virtual bool has_profiles () const;
-      virtual bool has_from_header (const StringView& from) const;
-      virtual bool get_profile (const std::string& profile_name, Profile& setme) const;
+      std::set<std::string> get_profile_names () const override;
+      bool has_profiles () const override;
+      bool has_from_header (const StringView& from) const override;
+      bool get_profile (const std::string& profile_name, Profile& setme) const override;
 
     public:
-      virtual void delete_profile (const std::string& profile_name);
-      virtual void add_profile (const std::string& profile_name, const Profile& profile);
-      
+      void delete_profile (const std::string& profile_name) override;
+      void add_profile (const std::string& profile_name, const Profile& profile) override;
+
     private:
       void clear ();
       void load (const StringView& filename);

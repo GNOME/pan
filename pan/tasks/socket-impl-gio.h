@@ -36,8 +36,8 @@ namespace pan
     public:
       GIOChannelSocket ();
       virtual ~GIOChannelSocket ();
-      virtual bool open (const StringView& address, int port, std::string& setme_err);
-      virtual void get_host (std::string& setme) const;
+      bool open (const StringView& address, int port, std::string& setme_err) override;
+      void get_host (std::string& setme) const override;
 
     private:
       GIOChannel * _channel;
@@ -54,7 +54,7 @@ namespace pan
       friend class GIOChannelSocketSSL;
       enum WatchMode { READ_NOW, WRITE_NOW, IGNORE_NOW };
       void set_watch_mode (WatchMode mode);
-      virtual void write_command (const StringView& chars, Listener *);
+      void write_command (const StringView& chars, Listener *) override;
       static gboolean gio_func (GIOChannel*, GIOCondition, gpointer);
       gboolean gio_func (GIOChannel*, GIOCondition);
       static gboolean timeout_func (gpointer);

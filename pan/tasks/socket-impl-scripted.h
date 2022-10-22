@@ -39,7 +39,7 @@ namespace pan
          ScriptedSocket ();
          virtual ~ScriptedSocket ();
          virtual bool open (const StringView& address, int port);
-         virtual void write_command (const StringView& chars, Listener *);
+         void write_command (const StringView& chars, Listener *) override;
 
          typedef std::deque<std::string> strings_t;
          static const std::string NETWORK_ERROR;
