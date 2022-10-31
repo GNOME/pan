@@ -4,33 +4,6 @@ stages:
 variables:
   DEBIAN_FRONTEND: noninteractive
 
-build-ubuntu-gtk2:
-  image: ubuntu:rolling
-  stage: build
-  except:
-    - tags
-  before_script:
-    - apt-get update
-    - apt-get install -q -y --no-install-recommends
-        build-essential
-        autoconf
-        autopoint
-        automake
-        gettext
-        gcc
-        libgtk2.0-dev
-        libgmime-3.0-dev
-        libnotify-dev
-        gnome-keyring
-        libgnutls28-dev
-        yelp-tools
-  script:
-    - mkdir _build
-    - cd _build
-    - ../autogen.sh --with-gtk2 --with-gnutls --with-dbus --with-gmime-crypto --without-gtkspell --enable-libnotify --enable-gkr --enable-manual
-    - make
-    - DISTCHECK_CONFIGURE_FLAGS="--with-gtk2 --without-gtkspell" make distcheck
-
 build-ubuntu-gtk3:
   image: ubuntu:rolling
   stage: build

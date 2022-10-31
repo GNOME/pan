@@ -1569,11 +1569,7 @@ namespace
                                      GdkEventFocus * ,
                                      gpointer        )
   {
-#if !GTK_CHECK_VERSION(3,0,0)
-    gtk_widget_modify_text (w, GTK_STATE_NORMAL, NULL); // resets
-#else
     gtk_widget_override_color (w, GTK_STATE_FLAG_NORMAL, NULL);
-#endif
     set_search_entry (w, search_text.c_str());
     return false;
   }
@@ -1582,16 +1578,9 @@ namespace
   {
     if (search_text.empty() && !gtk_widget_has_focus(w))
     {
-#if !GTK_CHECK_VERSION(3,0,0)
-      GdkColor c;
-      c.pixel = 0;
-      c.red = c.green = c.blue = 0xAAAA;
-      gtk_widget_modify_text (w, GTK_STATE_NORMAL, &c);
-#else
       GdkRGBA c;
       gdk_rgba_parse (&c, "0xAAA");
       gtk_widget_override_color(w, GTK_STATE_FLAG_NORMAL, &c);
-#endif
       set_search_entry (w, _(mode_strings[mode]));
     }
   }

@@ -50,12 +50,10 @@ extern "C" {
 #endif
 
 #ifdef HAVE_GKR
-#if GTK_CHECK_VERSION(3,0,0)
   #define GCR_API_SUBJECT_TO_CHANGE
   #include <libsecret/secret.h>
   #include <gcr/gcr.h>
   #undef GCR_API_SUBJECT_TO_CHANGE
-#endif /* GTK_CHECK_VERSION(3,0,0) */
 #endif
 
 #include <config.h>
@@ -848,7 +846,6 @@ namespace
     std::string fg_col, bg_col;
 
     // init colors of PanColors
-#if GTK_CHECK_VERSION(3,0,0)
     GdkRGBA fg_color, bg_color;
     GtkStyleContext* ctx = gtk_widget_get_style_context(r);
     if(!ctx || !gtk_style_context_lookup_color(ctx, "color", &fg_color))
@@ -867,14 +864,6 @@ namespace
       def_bg.green = bg_color.red;
       def_bg.blue = bg_color.blue;
     }
-#else
-    GtkStyle *style = gtk_rc_get_style(r);
-    if(!style || !gtk_style_lookup_color(style, "text_color", &def_fg))
-      gdk_color_parse("black", &def_fg);
-    if(!style || !gtk_style_lookup_color(style, "bg_color", &def_bg))
-      gdk_color_parse("white", &def_bg);
-
-#endif
 
     //todo move to pancolors
     fg_col = GroupPrefs::color_to_string(def_fg);
@@ -1157,11 +1146,7 @@ main (int argc, char *argv[])
       Data::Server* s(data.find_server(*it));
       if (s && s->gkr_pw)
       {
-#if GTK_CHECK_VERSION(3,0,0)
         gcr_secure_memory_free(s->gkr_pw);
-#else
-        gnome_keyring_memory_free(s->gkr_pw);
-#endif /* GTK_CHECK_VERSION(3,0,0) */
       }
     }
   }

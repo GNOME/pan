@@ -136,37 +136,20 @@ AC_ARG_WITH([gtkspell],
 
 dnl GTK 3, GtkSpell 3, and Enchant support
 gtk_msg=no
-AC_ARG_WITH([gtk2],
-  AS_HELP_STRING([--with-gtk2],[enable GTK 2 support (deprecated, normally: no)]), [want_gtk2=$withval], [want_gtk2=no])
-if test "x$want_gtk2" = "xyes" ; then
-   if test "x$want_gtkspell" = "xyes" ; then
-   PKG_CHECK_MODULES([GTKSPELL],[gtkspell-2.0 >= $GTKSPELL_REQUIRED enchant-2 >= $ENCHANT2_REQUIRED],
-                      [GTKSPELL_VER=`pkg-config --modversion gtkspell-2.0`
-                      ENCHANT_VER=`pkg-config --modversion enchant-2`
-                      gtkspell_msg="yes (gtkspell: $GTKSPELL_VER, enchant: $ENCHANT_VER)"
-                      AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
-                      AC_DEFINE(GTKSPELL_VERSION,[2],[GtkSpell API version])]
-                      )
-   fi
-   PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= $GTK_REQUIRED, gthread-2.0],
-                            [ GTK_VER=`pkg-config --modversion gtk+-2.0`
-                            gtk_msg="yes, GTK2 ($GTK_VER)" ]
-                            )
-else
-  PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= $GTK3_REQUIRED],
+PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= $GTK3_REQUIRED],
                     [GTK_VER=`pkg-config --modversion gtk+-3.0`
                     gtk_msg="yes, GTK3 ($GTK_VER)"
                     AC_DEFINE(HAVE_GTK,[1],[GTK 3 support])]
                     )
-  if test "x$want_gtkspell" = "xyes" ; then
-    PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 >= $GTKSPELL3_REQUIRED enchant-2 >= $ENCHANT2_REQUIRED],
+
+if test "x$want_gtkspell" = "xyes" ; then
+  PKG_CHECK_MODULES([GTKSPELL], [gtkspell3-3.0 >= $GTKSPELL3_REQUIRED enchant-2 >= $ENCHANT2_REQUIRED],
                       [GTKSPELL_VER=`pkg-config --modversion gtkspell3-3.0`
                       ENCHANT_VER=`pkg-config --modversion enchant-2`
                       gtkspell_msg="yes (gtkspell: $GTKSPELL_VER, enchant: $ENCHANT_VER)"
                       AC_DEFINE(HAVE_GTKSPELL,[1],[GtkSpell support for spellchecking])
                       AC_DEFINE(GTKSPELL_VERSION,[3],[GtkSpell API version])]
                       )
-  fi
 fi
 
 AC_SUBST(ENCHANT_CFLAGS)

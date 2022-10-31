@@ -40,10 +40,6 @@
 #include <pan/gui/progress-view.h>
 
 #ifdef HAVE_GKR
-#if !GTK_CHECK_VERSION(3,0,0)
-  #include <gnome-keyring-1/gnome-keyring.h>
-  #include <gnome-keyring-1/gnome-keyring-memory.h>
-#endif /* !GTK_CHECK_VERSION(3,0,0) */
 #endif
 
 namespace pan
@@ -232,13 +228,8 @@ namespace pan
 
     public:
 #ifdef HAVE_GKR
-#if GTK_CHECK_VERSION(3,0,0)
       virtual gboolean password_encrypt (const PasswordData&) = 0;
       virtual gchar* password_decrypt (PasswordData&) const = 0;
-#else
-      virtual GnomeKeyringResult password_encrypt (const PasswordData&) = 0;
-      virtual GnomeKeyringResult password_decrypt (PasswordData&) const = 0;
-#endif /* GTK_CHECK_VERSION(3,0,0) */
 #endif
       /** Gets a quark to the provided hostname */
       bool find_server_by_hn (const std::string& server,

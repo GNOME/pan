@@ -212,23 +212,6 @@ namespace
 
       int width, height;
       const GtkIconSize size (GTK_ICON_SIZE_LARGE_TOOLBAR);
-#if !GTK_CHECK_VERSION(3,0,0)
-      GtkStyle * style (gtk_widget_get_style (w));
-      const GtkTextDirection dir (GTK_TEXT_DIR_NONE);
-      const GtkStateType state (GTK_STATE_PRELIGHT);
-
-      GtkIconSet * icon_set = gtk_style_lookup_icon_set (style, GTK_STOCK_ZOOM_IN);
-      GdkPixbuf * pixbuf = gtk_icon_set_render_icon (icon_set, style, dir, state, size, w, NULL);
-      g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, NULL);
-      cursors[CURSOR_ZOOM_IN] = gdk_cursor_new_from_pixbuf (display, pixbuf, width/2, height/2);
-      g_object_unref (G_OBJECT(pixbuf));
-
-      icon_set = gtk_style_lookup_icon_set (style, GTK_STOCK_ZOOM_OUT);
-      pixbuf = gtk_icon_set_render_icon (icon_set, style, dir, state, size, w, NULL);
-      g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, NULL);
-      cursors[CURSOR_ZOOM_OUT] = gdk_cursor_new_from_pixbuf (display, pixbuf, width/2, height/2);
-      g_object_unref (G_OBJECT(pixbuf));
-#else
       GdkPixbuf * pixbuf = gtk_widget_render_icon_pixbuf (w, GTK_STOCK_ZOOM_IN, size);
       g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, NULL);
       cursors[CURSOR_ZOOM_IN] = gdk_cursor_new_from_pixbuf (display, pixbuf, width/2, height/2);
@@ -238,7 +221,6 @@ namespace
       g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, NULL);
       cursors[CURSOR_ZOOM_OUT] = gdk_cursor_new_from_pixbuf (display, pixbuf, width/2, height/2);
       g_object_unref (G_OBJECT(pixbuf));
-#endif
 
       cursors[CURSOR_IBEAM] = gdk_cursor_new (GDK_XTERM);
       cursors[CURSOR_HREF] = gdk_cursor_new (GDK_HAND2);
@@ -1190,10 +1172,6 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   s.resize (std::max((size_t)0,s.size()-1)); // remove trailing linefeed
   gtk_label_set_markup (GTK_LABEL(_headers), s.c_str());
 
-#if !GTK_CHECK_VERSION(3,0,0)
-  // ellipsize mode is useless w/o this in expander...
-  gtk_label_set_width_chars (GTK_LABEL(_headers), (int)w);
-#endif
 
   // set the x-face...
   gtk_image_clear(GTK_IMAGE(_xface));
@@ -1665,21 +1643,6 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
 //  gtk_widget_set_size_request(w, -1, 32);
 
   ++_attachments;
-#if !GTK_CHECK_VERSION(3,0,0)
-
-  const guint cols(4);
-
-  if (_attachments % 4 == 0 && _attachments != 0)
-  {
-    ++_cur_row;
-    gtk_table_resize (GTK_TABLE(_att_toolbar), _cur_row, cols);
-    _cur_col = 0;
-  }
-
-  gtk_table_attach_defaults (GTK_TABLE(_att_toolbar), w, _cur_col, _cur_col+1, _cur_row,_cur_row+1);
-
-  ++_cur_col;
-#else
   if (_attachments % 4 == 0 && _attachments != 0)
   {
     gtk_grid_insert_row (GTK_GRID(_att_toolbar), ++_cur_row);
@@ -1687,7 +1650,6 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
   }
 
   gtk_grid_attach (GTK_GRID(_att_toolbar), w, _cur_col++, _cur_row, 1, 1);
-#endif  // 3.0.0
 
   gtk_widget_set_no_show_all (_att_box, FALSE);
   gtk_widget_show_all (_att_box);
@@ -1709,16 +1671,10 @@ BodyPane :: create_attachments_toolbar (GtkWidget* box)
   _cur_row = 0;
 
   GtkWidget * w;
-#if !GTK_CHECK_VERSION(3,0,0)
-  w = _att_toolbar = gtk_table_new(1,4,TRUE);
-  gtk_table_set_col_spacings (GTK_TABLE(w), PAD);
-  gtk_table_set_row_spacings (GTK_TABLE(w), PAD);
-#else
   w = _att_toolbar = gtk_grid_new();
   gtk_grid_insert_row (GTK_GRID(w), 0);
   gtk_grid_set_column_spacing (GTK_GRID(w), 3);
   gtk_grid_set_row_spacing (GTK_GRID (w), 4);
-#endif
   gtk_container_add (GTK_CONTAINER (box), w);
 
   return box;
@@ -1783,11 +1739,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_widget_set_size_request (w, 50, -1);
   g_signal_connect (w, "activate", G_CALLBACK(expander_activated_cb), this);
   gtk_box_pack_start (GTK_BOX(vbox), w, false, false, 0);
-#if !GTK_CHECK_VERSION(3,0,0)
-  gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
-#else
   gtk_box_pack_start (GTK_BOX(vbox), gtk_separator_new(GTK_ORIENTATION_HORIZONTAL), false, false, 0);
-#endif
 
   _terse = gtk_label_new ("Expander");
   g_object_ref_sink (G_OBJECT(_terse));
@@ -1840,18 +1792,10 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   GtkWidget * att_label = gtk_label_new (_("Attachments:"));
   gtk_misc_set_padding (GTK_MISC(att_label), PAD_SMALL, 0);
   gtk_misc_set_alignment (GTK_MISC(att_label), 0, 0);
-#if !GTK_CHECK_VERSION(3,0,0)
-  gtk_box_pack_start (GTK_BOX(_att_box), gtk_hseparator_new(), false, false, 0);
-#else
   gtk_box_pack_start (GTK_BOX(_att_box), gtk_separator_new(GTK_ORIENTATION_HORIZONTAL), false, false, 0);
-#endif
   gtk_box_pack_start (GTK_BOX(_att_box), att_label, false, false, 0);
   gtk_box_pack_start (GTK_BOX(vbox), create_attachments_toolbar (_att_box), false, false, 0);
-#if !GTK_CHECK_VERSION(3,0,0)
-  gtk_box_pack_start (GTK_BOX(vbox), gtk_hseparator_new(), false, false, 0);
-#else
   gtk_box_pack_start (GTK_BOX(vbox), gtk_separator_new(GTK_ORIENTATION_HORIZONTAL), false, false, 0);
-#endif
 
   // set up the buffer tags
   _buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW(_text));

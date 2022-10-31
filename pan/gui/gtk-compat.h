@@ -83,42 +83,16 @@ static inline GdkWindow * gdk_window_get_device_position (GdkWindow *window,
   #include <gdk/gdkkeysyms.h>
 #endif
 
-#if !GTK_CHECK_VERSION(3,0,0)
 
-  typedef GtkStyle GtkStyleContext;
-
-  static inline GtkStyleContext* gtk_widget_get_style_context(GtkWidget *w)
-  {
-    return gtk_widget_get_style(w);
-  }
-
-  static inline GtkIconSet* gtk_style_context_lookup_icon_set(GtkStyleContext *s,
-      const char *id)
-  {
-    return gtk_style_lookup_icon_set(s,id);
-  }
-
-  static inline void gtk_widget_override_font(GtkWidget *w, PangoFontDescription *f)
-  {
-    gtk_widget_modify_font(w,f);
-  }
-#endif
-
-#if GTK_CHECK_VERSION(3,0,0)
 // include this for conversion of old key names to new
   #include <gdk/gdkkeysyms-compat.h>
 
   #define GTK_OBJECT(w) w
   typedef GtkWidget GtkObject;
-#endif
 
   static inline void cursor_unref(GdkCursor *p)
   {
-#if GTK_CHECK_VERSION(3,0,0)
     g_object_unref(p);
-#else
-    gdk_cursor_unref(p);
-#endif
   }
 
 #ifdef __cplusplus
