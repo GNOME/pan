@@ -248,8 +248,8 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
                                                     parent_window,
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                                     NULL, NULL);
-  gtk_dialog_add_button (GTK_DIALOG(dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
-  GtkWidget * focus = gtk_dialog_add_button (GTK_DIALOG(dialog), GTK_STOCK_SAVE, GTK_RESPONSE_OK);
+  gtk_dialog_add_button (GTK_DIALOG(dialog), "_Cancel", GTK_RESPONSE_CANCEL);
+  GtkWidget * focus = gtk_dialog_add_button (GTK_DIALOG(dialog), "_Save", GTK_RESPONSE_OK);
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-save-articles-dialog");
   gtk_dialog_set_default_response (GTK_DIALOG(dialog), GTK_RESPONSE_OK);
   g_signal_connect (dialog, "response", G_CALLBACK(response_cb), this);
@@ -276,14 +276,17 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
   w = _save_path_entry = file_entry_new (_("Save Articles"));
   gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
   std::string path (_prefs.get_string ("default-save-attachments-path", ""));
+
   if (path.empty())
     path = g_get_home_dir ();
+
   file_entry_set (w, path.c_str());
   g_signal_connect (file_entry_gtk_entry(w), "changed", G_CALLBACK(entry_changed_cb), _save_custom_path_radio);
   gtk_widget_set_size_request (GTK_WIDGET(w), 400, 0);
-  w = gtk_button_new_from_stock (GTK_STOCK_HELP);
+  w = gtk_button_new_with_label ("Help");
   gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
   g_signal_connect_swapped (w, "clicked", G_CALLBACK (show_group_substitution_help_dialog), dialog);
+
   if (have_group_default)
     HIG :: workarea_add_wide_control (t, &row, h);
   else
