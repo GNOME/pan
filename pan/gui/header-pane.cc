@@ -1881,12 +1881,12 @@ HeaderPane :: create_filter_entry ()
   g_signal_connect (entry, "activate", G_CALLBACK(search_entry_activated), this);
   entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed), this);
 
-  gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
-                                 GTK_ENTRY_ICON_PRIMARY,
-                                 GTK_STOCK_FIND);
-  gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
-                                 GTK_ENTRY_ICON_SECONDARY,
-                                 GTK_STOCK_CLEAR );
+  gtk_entry_set_icon_from_icon_name ( GTK_ENTRY( entry ),
+                                      GTK_ENTRY_ICON_PRIMARY,
+                                      "edit-find");
+  gtk_entry_set_icon_from_icon_name ( GTK_ENTRY( entry ),
+                                      GTK_ENTRY_ICON_SECONDARY,
+                                      "edit-clear" );
 
   bool regex = _prefs.get_flag ("use-regex", false);
   GtkWidget * menu = gtk_menu_new ();
