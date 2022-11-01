@@ -12,6 +12,7 @@ libusenetutils_a_SOURCES = \
  mime-utils.cc \
  numbers.cc \
  scorefile.cc \
+ ssl-utils.cc \
  text-massager.cc \
  url-find.cc \
  blowfish.cc \
