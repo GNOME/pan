@@ -40,12 +40,12 @@ namespace pan {
 
 class Quark;
 
-void pretty_print_x509(char* buf,
+void pretty_print_x509(char *buf,
                        size_t size,
-                       const Quark& server,
+                       Quark const &server,
                        gnutls_x509_crt_t c,
                        bool on_connect);
-}
+} // namespace pan
 
 #endif
 

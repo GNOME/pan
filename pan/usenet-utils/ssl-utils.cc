@@ -46,29 +46,23 @@
 namespace pan {
 namespace {
 
-typedef std::pair<Quark,Quark> quarks_p;
-typedef std::map<Quark,Quark>::iterator tags_it;
+typedef std::pair<Quark, Quark> quarks_p;
+typedef std::map<Quark, Quark>::iterator tags_it;
 
-const static char* tags_idx[] =
-{
-  ",L=",
-  ",CN=",
-  ",C=",
-  ",OU=",
-  ",O=",
-  ",ST=",
-  ",EMAIL=",
-  ",emailAddress=",
-  ",serialNumber="
-};
+const static char *tags_idx[] = {",L=",
+                                 ",CN=",
+                                 ",C=",
+                                 ",OU=",
+                                 ",O=",
+                                 ",ST=",
+                                 ",EMAIL=",
+                                 ",emailAddress=",
+                                 ",serialNumber="};
 
-const static char* cleaned_tags[] =
-{
-  "L", "CN", "C", "OU", "O", "ST", "EMAIL", "emailAdress", "serialNumber"
-};
+const static char *cleaned_tags[] = {
+  "L", "CN", "C", "OU", "O", "ST", "EMAIL", "emailAdress", "serialNumber"};
 
-static char const * const tags[] =
-{
+static char const *const tags[] = {
   "Locality",
   "Common Name",
   "Company",
@@ -76,92 +70,106 @@ static char const * const tags[] =
   "Organization",
   "State",
   "Email Address",
-  "serialNumber" //Really???
+  "serialNumber" // Really???
 };
 
 class CertParser
 {
   public:
-  CertParser(gnutls_x509_crt_t cert) :
-    delim_(','),
-    num_tags_(G_N_ELEMENTS(tags_idx))
-  {
-
+    CertParser(gnutls_x509_crt_t cert) :
+      delim_(','),
+      num_tags_(G_N_ELEMENTS(tags_idx))
     {
-      size_t size;
-      gnutls_x509_crt_get_issuer_dn(cert, NULL, &size);
-      char *dn_buf = new char[size];
-      gnutls_x509_crt_get_issuer_dn(cert,dn_buf, &size);
-      iss_ = dn_buf;
-      delete [] dn_buf;
-    }
 
-    for (std::size_t i = 0; i < num_tags_; i += 1)
-    {
-      tags_.insert(quarks_p(cleaned_tags[i], tags[i]));
-    }
-  }
-
-  CertParser(CertParser const &) = delete;
-  CertParser &operator=(CertParser const &) = delete;
-
-  ~CertParser ()
-  {
-  }
-
-  void parse(std::vector<quarks_p>& issuer)
-  {
-    char buf[2048];
-    for (int idx = 0; idx < num_tags_; idx += 1)
-    {
-      std::string::size_type index = iss_.find(tags_idx[idx]);
-      if (index == std::string::npos)
       {
-        continue;
+        size_t size;
+        gnutls_x509_crt_get_issuer_dn(cert, NULL, &size);
+        char *dn_buf = new char[size];
+        gnutls_x509_crt_get_issuer_dn(cert, dn_buf, &size);
+        iss_ = dn_buf;
+        delete[] dn_buf;
       }
+
+      for (std::size_t i = 0; i < num_tags_; i += 1)
+      {
+        tags_.insert(quarks_p(cleaned_tags[i], tags[i]));
+      }
+    }
+
+    CertParser(CertParser const &) = delete;
+    CertParser &operator=(CertParser const &) = delete;
+
+    ~CertParser()
+    {
+    }
+
+    void parse(std::vector<quarks_p> &issuer)
+    {
+      char buf[2048];
+      for (int idx = 0; idx < num_tags_; idx += 1)
+      {
+        std::string::size_type index = iss_.find(tags_idx[idx]);
+        if (index == std::string::npos)
+        {
+          continue;
+        }
         std::string::size_type pos1 = index + strlen(tags_idx[idx]);
         std::string::size_type pos2 = iss_.find(delim_, pos1);
-        if (pos2 == std::string::npos) continue;
-        // seperate handling for CN tag
-        if (strcmp(cleaned_tags[idx],"CN") == 0)
+        if (pos2 == std::string::npos)
         {
-          std::string::size_type tmp_pos = (int)iss_.find("://",pos2-1);
-          if (tmp_pos == pos2-1)
-            pos2 = iss_.find(delim_, pos2+2);
+          continue;
         }
-        std::string tmp = iss_.substr(pos1,pos2-pos1);
-        g_snprintf(buf, sizeof(buf), "%s (%s)", cleaned_tags[idx], tags_[cleaned_tags[idx]].c_str() );
+        // seperate handling for CN tag
+        if (strcmp(cleaned_tags[idx], "CN") == 0)
+        {
+          std::string::size_type tmp_pos = (int)iss_.find("://", pos2 - 1);
+          if (tmp_pos == pos2 - 1)
+          {
+            pos2 = iss_.find(delim_, pos2 + 2);
+          }
+        }
+        std::string tmp = iss_.substr(pos1, pos2 - pos1);
+        g_snprintf(buf,
+                   sizeof(buf),
+                   "%s (%s)",
+                   cleaned_tags[idx],
+                   tags_[cleaned_tags[idx]].c_str());
         issuer.push_back(quarks_p(buf, tmp));
+      }
     }
-  }
 
-  std::string build_complete (std::vector<quarks_p>& v)
-  {
-    std::stringstream s;
-    for (size_t i=0; i< v.size(); ++i)
+    std::string build_complete(std::vector<quarks_p> &v)
     {
-      s << "\t<b>"<<v[i].first<<"</b> : "<<v[i].second<<"\n";
+      std::stringstream s;
+      for (size_t i = 0; i < v.size(); ++i)
+      {
+        s << "\t<b>" << v[i].first << "</b> : " << v[i].second << "\n";
+      }
+      return s.str();
     }
-    return s.str();
-  }
 
   private:
-  std::map<Quark, Quark> tags_;
-  std::string iss_;
-  const char delim_;
-  int const num_tags_;
-
+    std::map<Quark, Quark> tags_;
+    std::string iss_;
+    char const delim_;
+    int const num_tags_;
 };
 
-}
+} // namespace
 
-void
-pretty_print_x509 (char* buf, size_t size, const Quark& server, gnutls_x509_crt_t c, bool on_connect)
+void pretty_print_x509(char *buf,
+                       size_t size,
+                       Quark const &server,
+                       gnutls_x509_crt_t c,
+                       bool on_connect)
 {
 
   if (c == nullptr)
   {
-    g_snprintf(buf,size, _("Error printing the server certificate for '%s'"), server.c_str());
+    g_snprintf(buf,
+               size,
+               _("Error printing the server certificate for '%s'"),
+               server.c_str());
     return;
   }
 
@@ -169,35 +177,41 @@ pretty_print_x509 (char* buf, size_t size, const Quark& server, gnutls_x509_crt_
   std::vector<quarks_p> p_issuer;
   cp.parse(p_issuer);
 
-
-  time_t t  = gnutls_x509_crt_get_expiration_time(c);
+  time_t t = gnutls_x509_crt_get_expiration_time(c);
   time_t t2 = gnutls_x509_crt_get_activation_time(c);
   EvolutionDateMaker date_maker;
-  char * until = date_maker.get_date_string (t);
-  char * before = date_maker.get_date_string (t2);
+  char *until = date_maker.get_date_string(t);
+  char *before = date_maker.get_date_string(t2);
 
   char tmp1[2048];
-  g_snprintf(tmp1,sizeof(tmp1), _("The current server <b>'%s'</b> sent this security certificate:\n\n"), server.c_str());
+  g_snprintf(
+    tmp1,
+    sizeof(tmp1),
+    _("The current server <b>'%s'</b> sent this security certificate:\n\n"),
+    server.c_str());
 
   char tmp2[2048];
-  g_snprintf(tmp2,sizeof(tmp2), _("Certificate information for server <b>'%s'</b>:\n\n"), server.c_str());
+  g_snprintf(tmp2,
+             sizeof(tmp2),
+             _("Certificate information for server <b>'%s'</b>:\n\n"),
+             server.c_str());
 
-  g_snprintf(buf,size, _("%s"
-                         "<b>Issuer information:</b>\n"
-                         "%s\n"
-                         "<b>Valid until:</b> %s\n\n"
-                         "<b>Not valid before:</b> %s\n\n"),
-                         on_connect ? tmp1 : tmp2,
-                         cp.build_complete(p_issuer).c_str(),
-                         until,
-                         before);
+  g_snprintf(buf,
+             size,
+             _("%s"
+               "<b>Issuer information:</b>\n"
+               "%s\n"
+               "<b>Valid until:</b> %s\n\n"
+               "<b>Not valid before:</b> %s\n\n"),
+             on_connect ? tmp1 : tmp2,
+             cp.build_complete(p_issuer).c_str(),
+             until,
+             before);
 
-  g_free (before);
-  g_free (until);
-
+  g_free(before);
+  g_free(until);
 }
 
-}
+} // namespace pan
 
 #endif
-
