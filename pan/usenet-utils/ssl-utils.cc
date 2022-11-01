@@ -70,6 +70,7 @@ static char const *const tags[] = {
   "Organization",
   "State",
   "Email Address",
+  "Email Address", //Yes. there are TWO names for email.
   "serialNumber" // Really???
 };
 
