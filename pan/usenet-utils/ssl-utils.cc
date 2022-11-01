@@ -76,7 +76,7 @@ static char const *const tags[] = {
 class CertParser
 {
   public:
-    CertParser(gnutls_x509_crt_t cert) :
+    explicit CertParser(gnutls_x509_crt_t cert) :
       delim_(','),
       num_tags_(G_N_ELEMENTS(tags_idx))
     {
@@ -138,7 +138,7 @@ class CertParser
       }
     }
 
-    std::string build_complete(std::vector<quarks_p> &v)
+    std::string build_complete(std::vector<quarks_p> const &v)
     {
       std::stringstream s;
       for (size_t i = 0; i < v.size(); ++i)
