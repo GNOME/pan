@@ -325,12 +325,12 @@ namespace pan
         N_("Read Group"),
         G_CALLBACK(do_read_selected_group) },
 
-      { "mark-groups-read", GTK_STOCK_CLEAR,
+      { "mark-groups-read", "edit-clear",
         N_("_Mark Selected Groups Read"), "<control><shift>M",
         N_("Mark Selected Groups Read"),
         G_CALLBACK(do_mark_selected_groups_read) },
 
-      { "delete-groups-articles", GTK_STOCK_DELETE,
+      { "delete-groups-articles", "edit-delete",
         N_("_Delete Selected Groups' Articles"), "<control><shift>Delete",
         N_("Delete Selected Groups' Articles"),
         G_CALLBACK(do_clear_selected_groups) },
@@ -370,32 +370,32 @@ namespace pan
         N_("Unsubscribe"),
         G_CALLBACK(do_unsubscribe_selected_groups) },
 
-      { "save-articles", GTK_STOCK_SAVE,
+      { "save-articles", "document-save",
         N_("_Save Articles..."), "<shift>S",
         N_("Save Articles..."),
         G_CALLBACK(do_save_articles) },
 
-      { "save-articles-from-nzb", GTK_STOCK_SAVE,
+      { "save-articles-from-nzb", "document-save",
         N_("Save Articles from Selected _NZB..."), "<control><shift>S",
         N_("Save Articles from Selected NZB"),
         G_CALLBACK(do_save_articles_from_nzb) },
 
-      { "save-articles-to-nzb", GTK_STOCK_SAVE,
+      { "save-articles-to-nzb", "document-save",
         N_("Save Articles to an NZB _File..."), "<control><shift>F",
         N_("Save Articles to an NZB File"),
         G_CALLBACK(do_save_articles_to_nzb) },
 
-      { "print", GTK_STOCK_PRINT,
+      { "print", "document-print",
         N_("Print"), "<control>P",
         N_("Print"),
         G_CALLBACK(do_print) },
 
-      { "import-tasks", GTK_STOCK_OPEN,
+      { "import-tasks", "document-open",
         N_("_Import NZB Files..."), "<control>O",
         NULL,
         G_CALLBACK(do_import_tasks) },
 
-      { "cancel-last-task", GTK_STOCK_CANCEL,
+      { "cancel-last-task", "_Cancel",
         N_("_Cancel Last Task"), "<control>Delete",
         NULL,
         G_CALLBACK(do_cancel_latest_task) },
@@ -405,7 +405,7 @@ namespace pan
         NULL,
         G_CALLBACK(do_show_task_window) },
 
-      { "show-log-dialog", GTK_STOCK_DIALOG_INFO,
+      { "show-log-dialog", "dialog-information",
         N_("_Event Log"), NULL,
         NULL,
         G_CALLBACK(do_show_log_window) },
@@ -445,42 +445,42 @@ namespace pan
         NULL,
         G_CALLBACK(do_select_article_body) },
 
-      { "show-preferences-dialog", GTK_STOCK_PREFERENCES,
+      { "show-preferences-dialog", "preferences-system",
         N_("Edit _Preferences"), NULL,
         NULL,
         G_CALLBACK(do_show_preferences_dialog) },
 
-      { "show-group-preferences-dialog", GTK_STOCK_PREFERENCES,
+      { "show-group-preferences-dialog", "preferences-system",
         N_("Edit Selected _Group's Preferences"), NULL,
         NULL,
         G_CALLBACK(do_show_group_preferences_dialog) },
 
-      { "launch-scores-editor", GTK_STOCK_PREFERENCES,
+      { "launch-scores-editor", "preferences-system",
         N_("Edit S_core File"), NULL,
         NULL,
         G_CALLBACK(do_edit_scores) },
 
-      { "show-profiles-dialog", GTK_STOCK_EDIT,
+      { "show-profiles-dialog", "accessories-text-editor",
         N_("Edit P_osting Profiles"), NULL,
         NULL,
         G_CALLBACK(do_show_profiles_dialog) },
 
-      { "show-servers-dialog", GTK_STOCK_NETWORK,
+      { "show-servers-dialog", "network-workgroup",
         N_("Edit _News Servers"), NULL,
         NULL,
         G_CALLBACK(do_show_servers_dialog) },
 
-      { "jump-to-group-tab", GTK_STOCK_JUMP_TO,
+      { "jump-to-group-tab", "go-jump",
         N_("Jump to _Group Tab"), "1",
         NULL,
         G_CALLBACK(do_jump_to_group_tab) },
 
-      { "jump-to-header-tab", GTK_STOCK_JUMP_TO,
+      { "jump-to-header-tab", "go-jump",
         N_("Jump to _Header Tab"), "2",
         NULL,
         G_CALLBACK(do_jump_to_header_tab) },
 
-      { "jump-to-body-tab", GTK_STOCK_JUMP_TO,
+      { "jump-to-body-tab", "go-jump",
         N_("Jump to _Body Tab"), "3",
         NULL,
         G_CALLBACK(do_jump_to_body_tab) },
@@ -639,7 +639,7 @@ namespace pan
         NULL,
         G_CALLBACK(do_supersede_article) },
 
-      { "delete-article", GTK_STOCK_DELETE,
+      { "delete-article", "edit-delete",
         N_("_Delete Article"), "Delete",
         NULL,
         G_CALLBACK(do_delete_article) },
@@ -707,12 +707,12 @@ namespace pan
         NULL,
         G_CALLBACK(do_tip_jar) },
 
-      { "about-pan", GTK_STOCK_ABOUT,
+      { "about-pan", "help-about",
         N_("_About"), NULL,
         NULL,
         G_CALLBACK(do_about_pan) },
 
-      { "show-sec-dialog", GTK_STOCK_DIALOG_AUTHENTICATION,
+      { "show-sec-dialog", "dialog-password",
         N_("Edit _SSL Certificates"), NULL,
         NULL,
         G_CALLBACK(do_show_sec_dialog) }
@@ -729,7 +729,7 @@ namespace pan
   GtkToggleActionEntry toggle_entries[] =
   {
     { "thread-headers",           NULL, N_("_Thread Headers"),                NULL, NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
-    { "wrap-article-body",GTK_STOCK_JUSTIFY_FILL, N_("Wrap Article Body"),    "W", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
+    { "wrap-article-body","format-justify-fill", N_("Wrap Article Body" ),    "W", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "show-article-sig", "ICON_SHOW_SIGNATURE", N_("Show Article Signature"),"I", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
     { "mute-quoted-text",         NULL, N_("Mute _Quoted Text"),              "Q", NULL, G_CALLBACK(prefs_toggle_callback_impl), true },
     { "show-all-headers",         NULL, N_("Show All _Headers in Body Pane"), "H", NULL, G_CALLBACK(prefs_toggle_callback_impl), false },
@@ -742,12 +742,12 @@ namespace pan
 
 
     { "work-online", "ICON_ONLINE", N_("_Work Online"), "L", NULL, G_CALLBACK(do_work_online), true },
-    { "tabbed-layout", GTK_STOCK_JUMP_TO, N_("_Tabbed Layout"), "Z", NULL, G_CALLBACK(do_layout), false },
+    { "tabbed-layout", "go-jump", N_("_Tabbed Layout"), "Z", NULL, G_CALLBACK(do_layout), false },
     { "show-group-pane", NULL, N_("Show Group _Pane"), "<control>1", NULL, G_CALLBACK(do_show_group_pane), true },
     { "show-header-pane", NULL, N_("Show Hea_der Pane"), "<control>2", NULL, G_CALLBACK(do_show_header_pane), true },
     { "show-body-pane", NULL, N_("Show Bod_y Pane"), "<control>3", NULL, G_CALLBACK(do_show_body_pane), true },
     { "show-toolbar", NULL, N_("Show _Toolbar"), NULL, NULL, G_CALLBACK(do_show_toolbar), true },
-    { "shorten-group-names", GTK_STOCK_ZOOM_OUT, N_("Abbreviate Group Names"), "B", NULL, G_CALLBACK(do_shorten_group_names), false },
+    { "shorten-group-names", "zoom-out", N_("Abbreviate Group Names"), "B", NULL, G_CALLBACK(do_shorten_group_names), false },
 
     { "match-only-read-articles", "ICON_ONLY_READ", N_("Match Only _Read Articles"), NULL, N_("Match Only Read Articles"), G_CALLBACK(do_match_only_read_articles), false },
     { "match-only-unread-articles", "ICON_ONLY_UNREAD", N_("Match Only _Unread Articles"), NULL, N_("Match Only Unread Articles"), G_CALLBACK(do_match_only_unread_articles), false },
