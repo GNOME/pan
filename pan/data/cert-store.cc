@@ -41,7 +41,6 @@ extern "C" {
 #include <pan/general/debug.h>
 #include <pan/general/e-util.h>
 #include <pan/general/macros.h>
-#include <pan/usenet-utils/ssl-utils.h>
 #include <pan/general/file-util.h>
 #include <pan/general/messages.h>
 #include <pan/general/log.h>

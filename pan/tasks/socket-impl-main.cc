@@ -40,10 +40,6 @@
 #include <cerrno>
 #include <cstring>
 
-#ifdef HAVE_GNUTLS
-  #include <pan/usenet-utils/ssl-utils.h>
-#endif
-
 #include <pan/general/debug.h>
 #include <pan/general/log.h>
 #include <pan/general/locking.h>
