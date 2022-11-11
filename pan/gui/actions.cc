@@ -185,7 +185,6 @@ namespace pan
 #endif
   void do_pan_web                      (GtkAction*) { pan_ui->do_pan_web(); }
   void do_bug_report                   (GtkAction*) { pan_ui->do_bug_report(); }
-  void do_tip_jar                      (GtkAction*) { pan_ui->do_tip_jar(); }
   void do_about_pan                    (GtkAction*) { pan_ui->do_about_pan(); }
 
   void do_edit_scores(GtkAction * a) { pan_ui->do_edit_scores(a); }
@@ -701,11 +700,6 @@ namespace pan
         N_("Give _Feedback or Report a Bug..."), NULL,
         NULL,
         G_CALLBACK(do_bug_report) },
-
-      { "tip-jar", NULL,
-        N_("_Tip Jar..."), NULL,
-        NULL,
-        G_CALLBACK(do_tip_jar) },
 
       { "about-pan", "help-about",
         N_("_About"), NULL,

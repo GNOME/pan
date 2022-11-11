@@ -177,7 +177,6 @@ namespace pan
 #endif
       void do_pan_web () override;
       void do_bug_report () override;
-      void do_tip_jar () override;
       void do_about_pan () override;
       void do_work_online (bool) override final;
       void do_layout (bool) override final;

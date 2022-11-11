@@ -1651,10 +1651,6 @@ void GUI :: do_bug_report ()
 {
   URL :: open (_prefs, "https://gitlab.gnome.org/GNOME/pan/issues");
 }
-void GUI :: do_tip_jar ()
-{
-  URL :: open (_prefs, "http://pan.rebelbase.com/tipjar/");
-}
 void GUI :: do_about_pan ()
 {
   const gchar * authors [] = { "Charles Kerr <charles@rebelbase.com> - Pan Author",

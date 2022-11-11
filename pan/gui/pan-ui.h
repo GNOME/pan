@@ -89,7 +89,6 @@ namespace pan
 #endif
     virtual void do_pan_web () = 0;
     virtual void do_bug_report () = 0;
-    virtual void do_tip_jar () = 0;
     virtual void do_about_pan () = 0;
     virtual void do_quit () = 0;
 
