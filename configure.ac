@@ -1,8 +1,8 @@
-AC_INIT([Pan],[0.151],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[http://pan.rebelbase.com/])
+AC_INIT([Pan],[0.153],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[http://pan.rebelbase.com/])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
-AC_DEFINE(VERSION_MINOR,151,[Minor part of version number])
+AC_DEFINE(VERSION_MINOR,153,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
-AC_DEFINE(VERSION_TITLE,["Butcha"],[Release Name])
+AC_DEFINE(VERSION_TITLE,["Mariupol"],[Release Name])
 AC_PREREQ([2.71])
 
 dnl Get git info for pan-git.version
