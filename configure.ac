@@ -1,4 +1,4 @@
-AC_INIT([Pan],[0.153],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[http://pan.rebelbase.com/])
+AC_INIT([Pan],[0.153],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[https://gitlab.gnome.org/GNOME/pan])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
 AC_DEFINE(VERSION_MINOR,153,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
