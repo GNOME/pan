@@ -159,9 +159,7 @@ GroupPane ::  do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g)
 {
   GroupPane * self (static_cast<GroupPane*>(pane_g));
   GtkWidget * menu (self->_action_manager.get_action_widget ("/group-pane-popup"));
-  gtk_menu_popup (GTK_MENU(menu), NULL, NULL, NULL, NULL,
-                  (event ? event->button : 0),
-                  (event ? event->time : 0));
+  gtk_menu_popup_at_pointer (GTK_MENU(menu),(GdkEvent*) event);
 }
 
 namespace
