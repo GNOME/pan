@@ -615,13 +615,6 @@ namespace
     return false;
   }
 
-  gboolean search_entry_focus_out_cb (GtkWidget     * w,
-                                      GdkEventFocus * ,
-                                      gpointer        )
-  {
-    return false;
-  }
-
   void search_activate (GroupPane * pane)
   {
     pane->set_filter (search_text, mode);
@@ -908,7 +901,6 @@ GroupPane :: create_filter_entry ()
 //  gtk_widget_set_size_request (entry, 133, -1);
   _action_manager.disable_accelerators_when_focused (entry);
   g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), NULL);
-  g_signal_connect (entry, "focus-out-event", G_CALLBACK(search_entry_focus_out_cb), NULL);
   g_signal_connect (entry, "activate", G_CALLBACK(search_entry_activated), this);
   g_signal_connect (entry, "icon-release", G_CALLBACK(clear_button_clicked_cb), this);
   entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed_by_user), this);
