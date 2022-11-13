@@ -635,10 +635,10 @@ namespace
     remove_activate_soon_tag ();
   }
 
-  void entry_icon_released (GtkEntry*, GtkEntryIconPosition icon_pos, GdkEventButton *, gpointer menu)
+  void entry_icon_released (GtkEntry*, GtkEntryIconPosition icon_pos, GdkEventButton* event, gpointer menu)
   {
     if (icon_pos == GTK_ENTRY_ICON_PRIMARY)
-      gtk_menu_popup (GTK_MENU(menu), nullptr, nullptr, nullptr, nullptr, 0, gtk_get_current_event_time());
+      gtk_menu_popup_at_pointer (GTK_MENU(menu), (GdkEvent*) event);
   }
 
   void clear_button_clicked_cb (GtkEntry * e, GtkEntryIconPosition icon_pos, GdkEventButton *, gpointer pane_gpointer)
