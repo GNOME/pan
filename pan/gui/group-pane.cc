@@ -1056,6 +1056,9 @@ GroupPane :: ~GroupPane ()
 void
 GroupPane :: refresh_font ()
 {
+  // TODO: cleanup calls to gtk_widget_override_font. This requires
+  // changing font with CSS. This impact how to set preferences->Font
+  // item
   if (!_prefs.get_flag ("group-pane-font-enabled", false))
     gtk_widget_override_font (_tree_view, nullptr);
   else {
