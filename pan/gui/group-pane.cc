@@ -916,12 +916,12 @@ GroupPane :: create_filter_entry ()
 {
   GtkWidget * entry = gtk_entry_new ();
   g_object_set_data (G_OBJECT(entry), "group-pane", this);
-  gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
-                                 GTK_ENTRY_ICON_SECONDARY,
-                                 GTK_STOCK_CLEAR );
-  gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
-                                 GTK_ENTRY_ICON_PRIMARY,
-                                 GTK_STOCK_FIND );
+  gtk_entry_set_icon_from_icon_name( GTK_ENTRY( entry ),
+                                     GTK_ENTRY_ICON_SECONDARY,
+                                     "edit-clear" );
+  gtk_entry_set_icon_from_icon_name( GTK_ENTRY( entry ),
+                                     GTK_ENTRY_ICON_PRIMARY,
+                                     "edit-find" );
 //  gtk_widget_set_size_request (entry, 133, -1);
   _action_manager.disable_accelerators_when_focused (entry);
   g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), NULL);
