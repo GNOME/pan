@@ -611,27 +611,14 @@ namespace
                                      GdkEventFocus * ,
                                      gpointer        )
   {
-    gtk_widget_override_color(w, GTK_STATE_FLAG_NORMAL, NULL);
     set_search_entry (w, search_text.c_str());
     return false;
-  }
-
-  void refresh_search_entry (GtkWidget * w)
-  {
-    if (search_text.empty() && !gtk_widget_has_focus(w))
-    {
-      GdkRGBA c;
-      gdk_rgba_parse (&c, "0xAAA");
-      gtk_widget_override_color(w, GTK_STATE_FLAG_NORMAL, &c);
-      set_search_entry (w, _(mode_strings[mode]));
-    }
   }
 
   gboolean search_entry_focus_out_cb (GtkWidget     * w,
                                       GdkEventFocus * ,
                                       gpointer        )
   {
-    refresh_search_entry (w);
     return false;
   }
 
@@ -666,7 +653,6 @@ namespace
     if (icon_pos == GTK_ENTRY_ICON_SECONDARY)
     {
       set_search_entry (GTK_WIDGET(e), "");
-      refresh_search_entry (GTK_WIDGET(e));
       search_text.clear ();
       search_entry_activated (NULL, pane_gpointer);
     }
@@ -699,7 +685,6 @@ namespace
     if (gtk_check_menu_item_get_active  (menu_item))
     {
       mode = GPOINTER_TO_INT (g_object_get_data (G_OBJECT(menu_item), "MODE"));
-      refresh_search_entry (GTK_WIDGET(entry_g));
       GroupPane * h = (GroupPane*) g_object_get_data (
                                              G_OBJECT(entry_g), "group-pane");
       bump_activate_soon_tag (h);
@@ -948,7 +933,6 @@ GroupPane :: create_filter_entry ()
   }
   g_signal_connect (entry, "icon-release", G_CALLBACK(entry_icon_released), menu);
 
-  refresh_search_entry (entry);
   return entry;
 }
 
