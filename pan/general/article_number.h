@@ -46,9 +46,10 @@ class Article_Count
       return res;
     }
 
-    Article_Count operator-=(Article_Count const &sub) const
+    Article_Count & operator-=(Article_Count const &rhs)
     {
-      return static_cast<Article_Count>(val_ - sub.val_);
+        val_ -= rhs.val_;
+        return *this;
     }
 
     Article_Count & operator+=(Article_Count const &rhs)
