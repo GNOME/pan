@@ -243,35 +243,5 @@ int main()
   item = s3.items[0];
   check(item.test._needs_body == true)
 
-#if 0
-  Scorefile::Item = sectionscheck
-    public:
-      struct Item {
-        std::string filename;
-        size_t begin_line;
-        size_t end_line;
-        std::string name; // optional
-        FilterInfo test;
-        int value;
-        bool value_assign_flag;
-        bool expired;
-        Item(): begin_line(0), end_line(0), value(0), value_assign_flag(false), expired(false) {}
-      };
-      typedef std::vector<Item> items_t;
-      struct Section {
-        std::string name;
-        bool negate;
-        std::vector<TextMatch> groups;
-        std::vector<Item> items;
-      };
-      typedef std::vector<Section> sections_t;
-    public:
-      const sections_t& getSections () const { return _sections; }
-    protected:
-      sections_t _sections;
-    private:
-      Section* get_section (const StringView& name);
-#endif
-
   return 0;
 }

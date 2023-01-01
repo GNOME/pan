@@ -19,23 +19,26 @@
 
 #include "scorefile.h"
 #include "filter-info.h"
-#include <algorithm> // std::replace
-#include <config.h>
-#include <cstdlib> // atoi, strtoul
-#include <glib/gi18n.h>
-#include <iostream>
-#include <pan/general/debug.h>
+
+#include <pan/general/line-reader.h>
 #include <pan/general/log.h>
-#include <pan/general/macros.h>
+
+#include <glib/gi18n.h>
+
+#include <algorithm> // std::replace
+#include <cstdlib>   // atoi, strtoul
+#include <memory>
 #include <sstream>
 #include <string>
 
-using namespace pan;
+
+namespace pan {
 
 /**
 ***  Age
 **/
 namespace {
+
 unsigned long get_today()
 {
   const time_t now(time(nullptr));
@@ -68,6 +71,7 @@ int has_score_expired(StringView const &v, unsigned long today)
   unsigned long score_time = (yyyy - 1900) * 10000 + (mm - 1) * 100 + dd;
   return score_time <= today ? 1 : 0;
 }
+
 } // namespace
 
 /****
@@ -158,9 +162,29 @@ std::string slrn_fix_regexp(StringView const &in)
   }
   return s;
 }
+
 } // namespace
 
-Scorefile ::Section *Scorefile ::get_section(StringView const &name)
+Scorefile::FilenameToReader::~FilenameToReader()
+{
+}
+
+LineReader *Scorefile::FilenameToReader::operator()(
+  StringView const &filename) const
+{
+  return new FileLineReader(filename);
+}
+
+Scorefile::Scorefile(FilenameToReader *ftr) :
+  _filename_to_reader(ftr)
+{
+}
+
+Scorefile::~Scorefile()
+{
+}
+
+Scorefile::Section *Scorefile::get_section(StringView const &name)
 {
   if (name.empty())
   {
@@ -190,9 +214,10 @@ Scorefile ::Section *Scorefile ::get_section(StringView const &name)
   StringView n(tmp);
   if (s.negate)
   {
+    // walk past the negate tilde
     ++n.str;
     --n.len;
-  } // walk past the negate tilde
+  }
   for (char const *pch(n.begin()), *e(n.end()); pch != e; ++pch)
   {
     while (pch != e && ::isspace(*pch))
@@ -233,11 +258,11 @@ Scorefile ::Section *Scorefile ::get_section(StringView const &name)
   return &s;
 }
 
-int Scorefile ::parse_file(ParseContext &context, StringView const &filename)
+int Scorefile::parse_file(ParseContext &context, StringView const &filename)
 {
   int retval(0);
 
-  LineReader *in((*_filename_to_reader)(filename));
+  std::unique_ptr<LineReader> in((*_filename_to_reader)(filename));
   if (! in)
   {
     return -1;
@@ -247,9 +272,7 @@ int Scorefile ::parse_file(ParseContext &context, StringView const &filename)
   StringView line;
   while (in->getline(line))
   {
-    ++line_number;
-    // std::cerr << LINE_ID << " line " << line_number << " [" << line << ']' <<
-    // std::endl;
+    line_number += 1;
 
     line.trim();
 
@@ -516,27 +539,27 @@ void normalize_test(FilterInfo *test)
 
 } // namespace
 
-void Scorefile ::clear()
+void Scorefile::clear()
 {
   _sections.clear();
 }
 
-int Scorefile ::parse_file(StringView const &filename)
+int Scorefile::parse_file(StringView const &filename)
 {
   ParseContext context;
   {
-  int const err(parse_file(context, filename));
-  if (err)
-  {
-    return err;
-  }
+    int const err(parse_file(context, filename));
+    if (err)
+    {
+      return err;
+    }
   }
 
   size_t item_count(0);
   for (auto &section : _sections)
   {
     for (auto &item : section.items)
-  {
+    {
       normalize_test(&item.test);
     }
     item_count += section.items.size();
@@ -573,13 +596,13 @@ void Scorefile::get_matching_sections(StringView const &groupname,
   }
 }
 
-std::string Scorefile ::build_score_string(StringView const &section_wildmat,
-                                           int score_value,
-                                           bool score_assign_flag,
-                                           int lifespan_days,
-                                           bool all_items_must_be_true,
-                                           AddItem const *items,
-                                           size_t item_count)
+std::string Scorefile::build_score_string(StringView const &section_wildmat,
+                                          int score_value,
+                                          bool score_assign_flag,
+                                          int lifespan_days,
+                                          bool all_items_must_be_true,
+                                          AddItem const *items,
+                                          size_t item_count)
 {
   const time_t now(time(nullptr));
   std::ostringstream out;

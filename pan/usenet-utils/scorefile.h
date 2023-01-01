@@ -17,15 +17,23 @@
  *
  */
 
-#ifndef __SCORE_H__
-#define __SCORE_H__
+#ifndef pan_usenet_utils_scorefile_h_
+#define pan_usenet_utils_scorefile_h_
 
-#include <deque>
-#include <pan/general/line-reader.h>
-#include <pan/general/text-match.h>
 #include <pan/usenet-utils/filter-info.h>
 
+#include <deque>
+#include <memory>
+#include <string>
+#include <vector>
+
 namespace pan {
+
+class FileLineReader;
+class LineReader;
+class StringView;
+class TextMatch;
+
 /**
  * Handles slrn-style Score files.
  *
@@ -43,14 +51,9 @@ struct Scorefile
      */
     struct FilenameToReader
     {
-        virtual ~FilenameToReader()
-        {
-        }
+        virtual ~FilenameToReader();
 
-        virtual LineReader *operator()(StringView const &filename) const
-        {
-          return new FileLineReader(filename);
-        }
+        virtual LineReader *operator()(StringView const &filename) const;
     };
 
     /**
@@ -58,16 +61,13 @@ struct Scorefile
      *
      * Different file readers can be passed into the constructor by unit tests
      * that want to auto-generate the entries that the scorefile will parse.
+     *
+     * @warning This owns the instance you pass to it and deletes it on
+     * destruction
      */
-    Scorefile(FilenameToReader *ftr = new FilenameToReader()) :
-      _filename_to_reader(ftr)
-    {
-    }
+    Scorefile(FilenameToReader *ftr = new FilenameToReader());
 
-    virtual ~Scorefile()
-    {
-      delete _filename_to_reader;
-    }
+    virtual ~Scorefile();
 
     int parse_file(StringView const &filename);
 
@@ -167,7 +167,7 @@ struct Scorefile
 
   private:
     // owned by Scorefile
-    FilenameToReader *_filename_to_reader;
+    std::unique_ptr<FilenameToReader> _filename_to_reader;
 
     struct ParseContext;
     int parse_file(ParseContext &context, StringView const &filename);
