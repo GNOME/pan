@@ -583,11 +583,11 @@ std::string Scorefile ::build_score_string(StringView const &section_wildmat,
 {
   const time_t now(time(nullptr));
   std::ostringstream out;
-  out << "%BOS" << std::endl
-      << "%Score created by Pan on " << ctime(&now) << "["
-      << (section_wildmat.empty() ? "*" : section_wildmat) << ']' << std::endl
-      << "Score" << (all_items_must_be_true ? ":" : "::") << " "
-      << (score_assign_flag ? "=" : "") << score_value << std::endl;
+  out << "%BOS\n"
+      << "%Score created by Pan on " << ctime(&now) << '['
+      << (section_wildmat.empty() ? "*" : section_wildmat) << "]\n"
+      << "Score" << (all_items_must_be_true ? ":" : "::") << ' '
+      << (score_assign_flag ? "=" : "") << score_value << '\n';
   if (lifespan_days > 0)
   {
     time_t expire_time_t = now + lifespan_days * 24 * 3600;
@@ -595,7 +595,7 @@ std::string Scorefile ::build_score_string(StringView const &section_wildmat,
     int dd = expire_tm.tm_mday;
     int mm = expire_tm.tm_mon + 1;
     int yyyy = expire_tm.tm_year + 1900;
-    out << "Expires: " << mm << '/' << dd << '/' << yyyy << std::endl;
+    out << "Expires: " << mm << '/' << dd << '/' << yyyy << '\n';
   }
   for (size_t i(0); i != item_count; ++i)
   {
@@ -603,9 +603,11 @@ std::string Scorefile ::build_score_string(StringView const &section_wildmat,
     if (! item.value.empty())
     {
       out << (item.on ? "" : "%") << (item.negate ? "~" : "") << item.key
-          << ": " << item.value << std::endl;
+          << ": " << item.value << '\n';
     }
   }
   out << "%EOS";
   return out.str();
 }
+
+} // namespace pan
