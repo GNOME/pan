@@ -134,22 +134,23 @@ struct pan::Scorefile::ParseContext
 };
 
 namespace {
+
 std::string slrn_fix_regexp(StringView const &in)
 {
   std::string s;
   s.reserve(in.len + 10); // 10 is a guess on how many extra chars we need
   s += '^';
-  for (char const *pch(in.begin()), *end(in.end()); pch != end; ++pch)
+  for (auto const &pch : in)
   {
-    if (*pch == '.' || *pch == '+')
+    if (pch == '.' || pch == '+')
     {
       s += '\\';
     }
-    else if (*pch == '*')
+    else if (pch == '*')
     {
       s += '.';
     }
-    s += *pch;
+    s += pch;
   }
   if (s[s.size() - 1] != '$')
   {
@@ -167,11 +168,11 @@ Scorefile ::Section *Scorefile ::get_section(StringView const &name)
   }
 
   // look for a section that already matches the name
-  foreach (sections_t, _sections, it)
+  for (auto &section : _sections)
   {
-    if (name == it->name)
+    if (name == section.name)
     {
-      return &*it;
+      return &section;
     }
   }
 
@@ -217,9 +218,9 @@ Scorefile ::Section *Scorefile ::get_section(StringView const &name)
     }
   }
 
-  foreach_const (tokens_t, tokens, it)
+  for (auto const &token : tokens)
   {
-    const std::string groupname(slrn_fix_regexp(*it));
+    const std::string groupname(slrn_fix_regexp(token));
     if (! TextMatch::validate_regex(groupname.c_str()))
     {
       continue;
@@ -486,15 +487,15 @@ int Scorefile ::parse_file(ParseContext &context, StringView const &filename)
     }
   }
 
-  delete in;
   return retval;
 }
 
 namespace {
+
 void normalize_test(FilterInfo *test)
 {
-  if ((test->_type != test->AGGREGATE_AND)
-      && (test->_type != test->AGGREGATE_OR))
+  if (test->_type != FilterInfo::AGGREGATE_AND
+      && test->_type != FilterInfo::AGGREGATE_OR)
   {
     return;
   }
@@ -506,12 +507,13 @@ void normalize_test(FilterInfo *test)
   }
   else
   {
-    foreach (FilterInfo::aggregatesp_t, test->_aggregates, it)
+    for (auto &item : test->_aggregates)
     {
-      normalize_test(*it);
+      normalize_test(item);
     }
   }
 }
+
 } // namespace
 
 void Scorefile ::clear()
@@ -522,24 +524,22 @@ void Scorefile ::clear()
 int Scorefile ::parse_file(StringView const &filename)
 {
   ParseContext context;
+  {
   int const err(parse_file(context, filename));
   if (err)
   {
     return err;
   }
-
-  foreach (sections_t, _sections, sit)
-  {
-    foreach (items_t, sit->items, it)
-    {
-      normalize_test(&it->test);
-    }
   }
 
   size_t item_count(0);
-  foreach (sections_t, _sections, sit)
+  for (auto &section : _sections)
   {
-    item_count += sit->items.size();
+    for (auto &item : section.items)
+  {
+      normalize_test(&item.test);
+    }
+    item_count += section.items.size();
   }
 
   if (! _sections.empty())
@@ -552,27 +552,23 @@ int Scorefile ::parse_file(StringView const &filename)
   return 0;
 }
 
-void Scorefile ::get_matching_sections(
-  StringView const &groupname, std::vector<Section const *> &setme) const
+void Scorefile::get_matching_sections(StringView const &groupname,
+                                      std::vector<Section const *> &setme) const
 {
-  foreach_const (sections_t, _sections, sit)
+  for (auto const & section : _sections)
   {
-    bool match(false);
-    foreach_const (std::deque<TextMatch>, sit->groups, git)
+    for (auto const &group : section.groups)
     {
-      match = git->test(groupname);
-      if (sit->negate)
+      bool match = group.test(groupname);
+      if (section.negate)
       {
         match = ! match;
       }
       if (match)
       {
+        setme.push_back(&section);
         break;
       }
-    }
-    if (match)
-    {
-      setme.push_back(&*sit);
     }
   }
 }
