@@ -65,11 +65,15 @@ struct Scorefile
      * @warning This owns the instance you pass to it and deletes it on
      * destruction
      */
-    Scorefile(FilenameToReader *ftr = new FilenameToReader());
+    explicit Scorefile(FilenameToReader *ftr = new FilenameToReader());
 
     virtual ~Scorefile();
 
-    int parse_file(StringView const &filename);
+    /** Parse the score file
+     *
+     * @returns true if file could be parsed, false otherwise
+     */
+    bool parse_file(StringView const &filename);
 
     void clear();
 
@@ -169,8 +173,12 @@ struct Scorefile
     // owned by Scorefile
     std::unique_ptr<FilenameToReader> _filename_to_reader;
 
-    struct ParseContext;
-    int parse_file(ParseContext &context, StringView const &filename);
+    class ParseContext;
+    bool parse_file(ParseContext &context, StringView const &filename);
+    bool parse_line(StringView line,
+                    StringView const &filename,
+                    int line_number,
+                    ParseContext &context);
 };
 } // namespace pan
 
