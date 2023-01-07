@@ -114,7 +114,7 @@ namespace pan
          int strcmp (const StringView& p) const {
             return strcmp (str, len, p.str, p.len); }
 
-         int strncasecmp (const char * p, unsigned int l) {
+         int strncasecmp (const char * p, unsigned int l) const {
            if (len >= l)
              return g_ascii_strncasecmp (str, p, l);
            else {
