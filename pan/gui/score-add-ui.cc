@@ -481,9 +481,9 @@ ScoreAddDialog :: response_cb (GtkDialog * w, int response, gpointer dialog_gpoi
         _("Another rule already sets this article's score."),
         _("You may want to go back or delete the old rule."));
       gtk_dialog_add_buttons (GTK_DIALOG(d),
-        GTK_STOCK_GO_BACK, -20,
-        GTK_STOCK_DELETE, -21,
-        GTK_STOCK_ADD, -22,
+                              _("Back"), -20,
+                              _("Delete"), -21,
+                              _("Add"), -22,
         NULL);
       const int conflict_response (gtk_dialog_run (GTK_DIALOG(d)));
       gtk_widget_destroy (d);
@@ -553,18 +553,16 @@ namespace
     GtkWidget * label = gtk_label_new_with_mnemonic (_("Add and Re_score"));
     gtk_label_set_mnemonic_widget (GTK_LABEL (label), GTK_WIDGET (button));
 
-    GtkWidget * image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_BUTTON);
-    GtkWidget * image2 = gtk_image_new_from_stock (GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
+    GtkWidget * image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_BUTTON);
+    GtkWidget * image2 = gtk_image_new_from_icon_name ("view-refresh", GTK_ICON_SIZE_BUTTON);
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-    GtkWidget * align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 
     gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (hbox), image2, FALSE, FALSE, 0);
     gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
-    gtk_container_add (GTK_CONTAINER (align), hbox);
-    gtk_container_add (GTK_CONTAINER (button), align);
-    gtk_widget_show_all (align);
+    gtk_container_add (GTK_CONTAINER (button), hbox);
+    gtk_widget_show_all (hbox);
 
     return button;
   }
@@ -605,8 +603,8 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
   GtkWidget * w = _root = gtk_dialog_new_with_buttons (s.c_str(),
     GTK_WINDOW(gtk_widget_get_toplevel(parent)),
     GTK_DIALOG_DESTROY_WITH_PARENT,
-    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-    GTK_STOCK_ADD, GTK_RESPONSE_OK,
+    _("Cancel"), GTK_RESPONSE_CANCEL,
+    _("Add"), GTK_RESPONSE_OK,
     NULL);
   g_object_set_data_full (G_OBJECT(w), "dialog", this, delete_score_add_dialog);
   GtkWidget * button = create_rescore_button ();
