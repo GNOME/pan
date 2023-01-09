@@ -1086,7 +1086,6 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
 
   // actions
   add_actions(_view);
-  gtk_window_add_accel_group (GTK_WINDOW(_root), gtk_ui_manager_get_accel_group (_uim));
 
   // search filter
   gtk_box_pack_start (GTK_BOX(hbox), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
