@@ -181,7 +181,7 @@ TaskPane:: on_tooltip_query(GtkWidget  *widget,
 
   if (!tp->_prefs.get_flag("show-taskpane-popups", true)) return false;
 
-  gtk_tooltip_set_icon_from_stock (tooltip, GTK_STOCK_DIALOG_INFO, GTK_ICON_SIZE_DIALOG);
+  gtk_tooltip_set_icon_from_icon_name (tooltip, "dialog-information", GTK_ICON_SIZE_DIALOG);
 
   GtkTreeIter iter;
   GtkTreeView *tree_view = GTK_TREE_VIEW (widget);
@@ -307,8 +307,8 @@ TaskPane :: prompt_user_for_new_dest (GtkWindow * parent, const Quark& current_p
   GtkWidget * w = gtk_file_chooser_dialog_new (_("Choose New Destination for Selected Tasks"),
                                                 GTK_WINDOW(parent),
                                                 GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-                                                GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                                GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+                                               _("Cancel"), GTK_RESPONSE_CANCEL,
+                                               _("Save"), GTK_RESPONSE_ACCEPT,
                                                 NULL);
   gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_ACCEPT);
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (w), TRUE);
@@ -426,9 +426,9 @@ void TaskPane :: on_queue_online_changed (Queue&, bool online)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(_online_toggle), online);
   g_signal_handler_unblock (_online_toggle, _online_toggle_handler);
 
-  gtk_image_set_from_stock (GTK_IMAGE(_online_image),
-                            online ? GTK_STOCK_CONNECT : GTK_STOCK_DISCONNECT,
-                            GTK_ICON_SIZE_BUTTON);
+  gtk_image_set_from_icon_name (GTK_IMAGE(_online_image),
+                                online ? "connect_established" : "connect_no",
+                                GTK_ICON_SIZE_BUTTON);
 }
 
 void
@@ -648,11 +648,11 @@ TaskPane :: ~TaskPane ()
 namespace
 {
   GtkWidget * add_button (GtkWidget   * box,
-                                      const gchar * stock_id,
+                                      const gchar * label,
                                       GCallback     callback,
                                       gpointer      user_data)
   {
-    GtkWidget * w = gtk_button_new_from_stock (stock_id);
+    GtkWidget * w = gtk_button_new_with_label (label);
     gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
     if (callback)
       g_signal_connect (w, "clicked", callback, user_data);
@@ -973,12 +973,12 @@ TaskPane :: create_filter_entry ()
   g_signal_connect (entry, "activate", G_CALLBACK(search_entry_activated), this);
   entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed), this);
 
-  gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
-                                 GTK_ENTRY_ICON_PRIMARY,
-                                 GTK_STOCK_FIND);
-  gtk_entry_set_icon_from_stock( GTK_ENTRY( entry ),
-                                 GTK_ENTRY_ICON_SECONDARY,
-                                 GTK_STOCK_CLEAR );
+  gtk_entry_set_icon_from_icon_name( GTK_ENTRY( entry ),
+                                     GTK_ENTRY_ICON_PRIMARY,
+                                     "find");
+  gtk_entry_set_icon_from_icon_name( GTK_ENTRY( entry ),
+                                     GTK_ENTRY_ICON_SECONDARY,
+                                     "edit-clear" );
 
   bool regex = _prefs.get_flag ("use-regex", false);
   GtkWidget * menu = gtk_menu_new ();
@@ -1013,45 +1013,49 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
 
   GtkWidget * vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
-    GtkWidget * buttons = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+  GtkWidget * buttons = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
 
-    w = _online_toggle = gtk_check_button_new ();
-    _online_toggle_handler = g_signal_connect (w, "clicked", G_CALLBACK(online_toggled_cb), &queue);
-    GtkWidget * i = _online_image = gtk_image_new ();
-    GtkWidget * l = gtk_label_new_with_mnemonic (_("_Online"));
-    GtkWidget * v = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
-    gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
-    on_queue_online_changed (queue, queue.is_online());
-    gtk_box_pack_start (GTK_BOX(v), i, 0, 0, 0);
-    gtk_box_pack_start (GTK_BOX(v), l, 0, 0, 0);
-    gtk_container_add (GTK_CONTAINER(w), v);
-    gtk_box_pack_start (GTK_BOX(buttons), w, false, false, 0);
-    gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
+  w = _online_toggle = gtk_check_button_new ();
+  _online_toggle_handler = g_signal_connect (w, "clicked", G_CALLBACK(online_toggled_cb), &queue);
+  GtkWidget * i = _online_image = gtk_image_new ();
+  GtkWidget * l = gtk_label_new_with_mnemonic (_("_Online"));
+  GtkWidget * v = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
+  gtk_label_set_mnemonic_widget (GTK_LABEL(l), w);
+  on_queue_online_changed (queue, queue.is_online());
+  gtk_box_pack_start (GTK_BOX(v), i, 0, 0, 0);
+  gtk_box_pack_start (GTK_BOX(v), l, 0, 0, 0);
+  gtk_container_add (GTK_CONTAINER(w), v);
+  gtk_box_pack_start (GTK_BOX(buttons), w, false, false, 0);
+  gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
 
-    add_button (buttons, GTK_STOCK_GO_UP, G_CALLBACK(up_clicked_cb), this);
-    add_button (buttons, GTK_STOCK_GOTO_TOP, G_CALLBACK(top_clicked_cb), this);
-    gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
-    add_button (buttons, GTK_STOCK_GO_DOWN, G_CALLBACK(down_clicked_cb), this);
-    add_button (buttons, GTK_STOCK_GOTO_BOTTOM, G_CALLBACK(bottom_clicked_cb), this);
-    gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
-    w = add_button (buttons, GTK_STOCK_REDO, G_CALLBACK(restart_clicked_cb), this);
-    gtk_widget_set_tooltip_text( w, _("Restart Tasks"));
-    w = add_button (buttons, GTK_STOCK_STOP, G_CALLBACK(stop_clicked_cb), this);
-    gtk_widget_set_tooltip_text( w, _("Stop Tasks"));
-    w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
-    gtk_widget_set_tooltip_text( w, _("Delete Tasks"));
-    gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
-    w = add_button (buttons, GTK_STOCK_CLOSE, nullptr, nullptr);
-    g_signal_connect_swapped (w, "clicked", G_CALLBACK(gtk_widget_destroy), _root);
-    w = _popup_toggle = gtk_check_button_new ();
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), _prefs.get_flag("show-taskpane-popups", true));
-    l = gtk_label_new_with_mnemonic (_("Show popups"));
-    v = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
-    gtk_box_pack_start (GTK_BOX(v), l, 0, 0, 0);
-    gtk_container_add (GTK_CONTAINER(w), v);
-    g_signal_connect (w, "clicked", G_CALLBACK(popup_toggled_cb), this);
-    gtk_box_pack_start (GTK_BOX(buttons), w, false, false, 0);
-    pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new()); // eat horizontal space
+  w = add_button (buttons, _("Move up"), G_CALLBACK(up_clicked_cb), this);
+  gtk_widget_set_tooltip_text( w, _("Move task up"));
+  w = add_button (buttons, _("Move to top"), G_CALLBACK(top_clicked_cb), this);
+  gtk_widget_set_tooltip_text( w, _("Move task to top of the download queue"));
+  gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
+  w = add_button (buttons, _("Move down"), G_CALLBACK(down_clicked_cb), this);
+  gtk_widget_set_tooltip_text( w, _("Move task down"));
+  w = add_button (buttons, _("Move to bottom"), G_CALLBACK(bottom_clicked_cb), this);
+  gtk_widget_set_tooltip_text( w, _("Move task to the bottom of the download queue"));
+  gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
+  w = add_button (buttons, _("Restart"), G_CALLBACK(restart_clicked_cb), this);
+  gtk_widget_set_tooltip_text( w, _("Restart Tasks"));
+  w = add_button (buttons, _("Stop"), G_CALLBACK(stop_clicked_cb), this);
+  gtk_widget_set_tooltip_text( w, _("Stop Tasks"));
+  w = add_button (buttons, _("Delete"), G_CALLBACK(delete_clicked_cb), this);
+  gtk_widget_set_tooltip_text( w, _("Delete Tasks"));
+  gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
+  w = add_button (buttons, _("Close"), nullptr, nullptr);
+  g_signal_connect_swapped (w, "clicked", G_CALLBACK(gtk_widget_destroy), _root);
+  w = _popup_toggle = gtk_check_button_new ();
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), _prefs.get_flag("show-taskpane-popups", true));
+  l = gtk_label_new_with_mnemonic (_("Show popups"));
+  v = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
+  gtk_box_pack_start (GTK_BOX(v), l, 0, 0, 0);
+  gtk_container_add (GTK_CONTAINER(w), v);
+  g_signal_connect (w, "clicked", G_CALLBACK(popup_toggled_cb), this);
+  gtk_box_pack_start (GTK_BOX(buttons), w, false, false, 0);
+  pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new()); // eat horizontal space
 
   gtk_box_pack_start (GTK_BOX(vbox), buttons, false, false, 0);
   gtk_box_pack_start (GTK_BOX(vbox), gtk_separator_new(GTK_ORIENTATION_HORIZONTAL), false, false, 0);
