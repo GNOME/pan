@@ -1068,7 +1068,6 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
   _store = gtk_list_store_new (NUM_COLS, G_TYPE_POINTER, G_TYPE_INT);
   _view = gtk_tree_view_new_with_model (GTK_TREE_MODEL(_store));
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(_view), false);
-  gtk_tree_view_set_rules_hint (GTK_TREE_VIEW(_view), true);
   GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
   GtkTreeViewColumn * col = gtk_tree_view_column_new_with_attributes (_("State"), renderer, NULL);
   gtk_tree_view_column_set_cell_data_func (col, renderer, (GtkTreeCellDataFunc)render_state, &_queue, nullptr);
