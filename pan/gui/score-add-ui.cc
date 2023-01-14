@@ -620,45 +620,45 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
   GtkWidget * t = HIG :: workarea_create ();
   gtk_box_pack_start (GTK_BOX( gtk_dialog_get_content_area( GTK_DIALOG(_root))), t, true, true, 0);
   HIG::workarea_add_section_title (t, &row, _("New Scoring Rule"));
-    HIG::workarea_add_section_spacer (t, row, 4);
+  HIG::workarea_add_section_spacer (t, row, 4);
 
-    // section
-    GtkWidget * h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
-    GtkTreeModel * model = text_tree_model_new (false);
-    w = _section_menu = value_combo_new (model);
-    g_object_unref (G_OBJECT(model));
-    gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
-    w = _section_entry = gtk_entry_new ();
-    gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
-    HIG::workarea_add_row (t, &row, _("Group name"), h);
-    gtk_widget_show_all (h);
+  // section
+  GtkWidget * h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
+  GtkTreeModel * model = text_tree_model_new (false);
+  w = _section_menu = value_combo_new (model);
+  g_object_unref (G_OBJECT(model));
+  gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
+  w = _section_entry = gtk_entry_new ();
+  gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
+  HIG::workarea_add_row (t, &row, _("Group name"), h);
+  gtk_widget_show_all (h);
 
-    // criteria
-    w = criteria_line_new (_field_menu, _criteria_menu,
-                           _text_criteria_entry, _numeric_criteria_spin,
-                           &_article);
-    HIG::workarea_add_row (t, &row, _("and"), w);
-    gtk_widget_show (w);
+  // criteria
+  w = criteria_line_new (_field_menu, _criteria_menu,
+                         _text_criteria_entry, _numeric_criteria_spin,
+                         &_article);
+  HIG::workarea_add_row (t, &row, _("and"), w);
+  gtk_widget_show (w);
 
-    // score
-    h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
-    model = score_tree_model_new ();
-    w = _score_menu = value_combo_new (model);
-    g_object_unref (model);
-    gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
-    GtkAdjustment * a = (GtkAdjustment*)gtk_adjustment_new (100, INT_MIN, INT_MAX, 1.0, 1.0, 0.0);
-    w = _score_spin = gtk_spin_button_new (a, 100.0, 0u);
-    gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
-    HIG::workarea_add_wide_control (t, &row, h);
-    gtk_widget_show_all (h);
-    g_signal_connect (_score_menu, "changed", G_CALLBACK(score_combo_changed_cb), w);
+  // score
+  h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
+  model = score_tree_model_new ();
+  w = _score_menu = value_combo_new (model);
+  g_object_unref (model);
+  gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
+  GtkAdjustment * a = (GtkAdjustment*)gtk_adjustment_new (100, INT_MIN, INT_MAX, 1.0, 1.0, 0.0);
+  w = _score_spin = gtk_spin_button_new (a, 100.0, 0u);
+  gtk_box_pack_start (GTK_BOX(h), w, true, true, 0);
+  HIG::workarea_add_wide_control (t, &row, h);
+  gtk_widget_show_all (h);
+  g_signal_connect (_score_menu, "changed", G_CALLBACK(score_combo_changed_cb), w);
 
-    // duration
-    model = time_tree_model_new ();
-    w = _duration_menu = value_combo_new (model);
-    g_object_unref (model);
-    HIG::workarea_add_wide_control (t, &row, w);
-    gtk_widget_show (w);
+  // duration
+  model = time_tree_model_new ();
+  w = _duration_menu = value_combo_new (model);
+  g_object_unref (model);
+  HIG::workarea_add_wide_control (t, &row, w);
+  gtk_widget_show (w);
 
   populate (group, article, mode);
   gtk_widget_show (t);
