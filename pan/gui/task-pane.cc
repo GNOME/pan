@@ -888,7 +888,7 @@ namespace
   void entry_icon_release (GtkEntry*, GtkEntryIconPosition icon_pos, GdkEventButton*, gpointer menu)
   {
     if (icon_pos == GTK_ENTRY_ICON_PRIMARY)
-      gtk_menu_popup (GTK_MENU(menu), nullptr, nullptr, nullptr, nullptr, 0, gtk_get_current_event_time());
+      gtk_menu_popup_at_pointer (GTK_MENU(menu), nullptr);
   }
 
   void entry_icon_release_2 (GtkEntry *entry, GtkEntryIconPosition icon_pos, GdkEventButton*, gpointer pane_gpointer)
