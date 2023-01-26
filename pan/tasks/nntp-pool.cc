@@ -187,16 +187,10 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
     // okay, we at least established a connection.
     // now try to handshake and pass the buck to on_nntp_done().
     NNTP * nntp;
-    if (!_prefs.get_flag("use-password-storage", false))
-    {
-      std::string pw (pass ? pass : "");
-      if (pass) g_free(pass);
-      nntp = new NNTP (_server, user, pw, _server_info, socket);
-    }
-    else
-    {
-      nntp = new NNTP ( _server, user, pass, _server_info, socket);
-    }
+    std::string pw (pass ? pass : "");
+    nntp = new NNTP (_server, user, pw, _server_info, socket);
+    if (!_prefs.get_flag("use-password-storage", false) && pass)
+      g_free(pass);
     nntp->handshake (this);
   }
 }
