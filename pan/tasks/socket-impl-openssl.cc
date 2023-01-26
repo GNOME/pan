@@ -261,7 +261,7 @@ GIOChannelSocketGnuTLS :: create_channel (const StringView& host_in, int port, s
   GIOChannel * channel (nullptr);
 #ifndef G_OS_WIN32
   channel = g_io_channel_unix_new (sockfd);
-  g_io_channel_set_flags (channel, G_IO_FLAG_NONBLOCK, 0);
+  g_io_channel_set_flags (channel, G_IO_FLAG_NONBLOCK, nullptr);
 #else
   channel = g_io_channel_win32_new_socket (sockfd);
 #endif
