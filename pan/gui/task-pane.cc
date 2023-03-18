@@ -785,7 +785,6 @@ namespace
                                      GdkEventFocus * ,
                                      gpointer        )
   {
-    gtk_widget_override_color (w, GTK_STATE_FLAG_NORMAL, NULL);
     set_search_entry (w, search_text.c_str());
     return false;
   }
@@ -812,9 +811,6 @@ namespace
   {
     if (search_text.empty() && !gtk_widget_has_focus(w))
     {
-      GdkRGBA c;
-      gdk_rgba_parse (&c, "0xAAA");
-      gtk_widget_override_color(w, GTK_STATE_FLAG_NORMAL, &c);
       set_search_entry (w, _(mode_strings[search_mode]));
     }
   }
