@@ -114,7 +114,7 @@ namespace pan
       if (sig->expires == (time_t) 0)
         signer.never_expires = true;
 
-// https://developer.gnome.org/gmime/stable/gmime-changes-3-0.html
+// https://developer-old.gnome.org/gmime/stable/gmime-changes-3-0.html
 // GMimeSignatureStatus and GMimeSignatureErrors have been merged into a single bitfield (GMimeSignatureStatus) ...
 //      if (sig->errors) {
 
