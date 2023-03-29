@@ -136,7 +136,7 @@ namespace pan
 
   void init_gpg()
   {
-//    gpg_ctx = g_mime_gpg_context_new (request_passwd, "gpg2");
+    gpg_ctx = g_mime_gpg_context_new();
     if (!gpg_ctx) gpg_inited = false; else gpg_inited = true;
 //    g_mime_gpg_context_set_auto_key_retrieve(GMIME_GPG_CONTEXT(gpg_ctx),true);
 //    g_mime_gpg_context_set_always_trust(GMIME_GPG_CONTEXT(gpg_ctx),false);
