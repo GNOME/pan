@@ -1066,7 +1066,11 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     // Gnome Keyring Option
     HIG :: workarea_add_section_spacer (t, row, 2);
     HIG :: workarea_add_section_title (t, &row, _("Password Storage"));
+#ifdef HAVE_GKR
+    w = new_check_button (_("Save passwords in password storage"), "use-password-storage", true, prefs);
+#else
     w = new_check_button (_("Save passwords in password storage"), "use-password-storage", false, prefs);
+#endif
     HIG :: workarea_add_wide_control (t, &row, w);
 
   HIG :: workarea_finish (t, &row);

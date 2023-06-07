@@ -158,7 +158,11 @@ namespace
     gchar* pass(NULL);
     if (!server.empty()) {
       d->data.get_server_addr (server, addr, port);
+#ifdef HAVE_GKR
+      d->data.get_server_auth (server, user, pass, prefs.get_flag("use-password-storage",true));
+#else
       d->data.get_server_auth (server, user, pass, prefs.get_flag("use-password-storage",false));
+#endif
       age = d->data.get_server_article_expiration_age (server);
       rank = d->data.get_server_rank (server);
       max_conn = d->data.get_server_limits (server);
@@ -296,7 +300,11 @@ namespace
         if (d->server.empty())
           d->server = d->data.add_new_server ();
         d->data.set_server_addr (d->server, addr, port);
+#ifdef HAVE_GKR
+        d->data.set_server_auth (d->server, user, pass, d->prefs.get_flag("use-password-storage",true));
+#else
         d->data.set_server_auth (d->server, user, pass, d->prefs.get_flag("use-password-storage",false));
+#endif
         d->data.set_server_limits (d->server, max_conn);
         d->data.set_server_article_expiration_age (d->server, age);
         d->data.set_server_rank (d->server, rank);
