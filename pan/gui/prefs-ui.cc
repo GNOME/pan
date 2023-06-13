@@ -34,6 +34,12 @@
 #include "e-charset-dialog.h"
 #include "actions-extern.h"
 
+#ifdef HAVE_GKR
+  #define USE_LIBSECRET_DEFAULT true
+#else
+  #define USE_LIBSECRET_DEFAULT false
+#endif
+
 extern "C" {
   #include <sys/stat.h>
 }
@@ -1066,11 +1072,11 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     // Gnome Keyring Option
     HIG :: workarea_add_section_spacer (t, row, 2);
     HIG :: workarea_add_section_title (t, &row, _("Password Storage"));
-#ifdef HAVE_GKR
-    w = new_check_button (_("Save passwords in password storage"), "use-password-storage", true, prefs);
-#else
-    w = new_check_button (_("Save passwords in password storage"), "use-password-storage", false, prefs);
-#endif
+    w = new_check_button (
+            _( "Save passwords in password storage"),
+            "use-password-storage",
+            USE_LIBSECRET_DEFAULT,
+            prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
 
   HIG :: workarea_finish (t, &row);

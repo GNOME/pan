@@ -34,6 +34,12 @@
 #include <pan/general/messages.h>
 #include "data-impl.h"
 
+#ifdef HAVE_GKR
+  #define USE_LIBSECRET_DEFAULT true
+#else
+  #define USE_LIBSECRET_DEFAULT false
+#endif
+
 using namespace pan;
 
 /**
@@ -254,7 +260,7 @@ DataImpl :: get_server_auth (const Quark   & server,
 
       if (password_decrypt(pw) == NULL)
       {
-      Log::add_urgent_va (_("Received no password from libsecret for server %s."), s->host.c_str());
+        Log::add_urgent_va (_("Received no password from libsecret for server %s."), s->host.c_str());
       }
       else
       {
@@ -499,7 +505,7 @@ DataImpl :: load_server_properties (const DataIO& source)
     s.host = kv["host"];
     s.username = kv["username"];
 #ifdef HAVE_GKR
-    if (!_prefs.get_flag("use-password-storage", true))
+    if (!_prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT))
       s.password = kv["password"];
 #else
     s.password = kv["password"];
@@ -559,17 +565,13 @@ DataImpl :: save_server_properties (DataIO& data_io, Prefs& prefs)
     const Server* s (find_server (*it));
     std::string user;
     gchar* pass(NULL);
-#ifdef HAVE_GKR
-    get_server_auth(*it, user, pass, prefs.get_flag("use-password-storage",true));
-#else
-    get_server_auth(*it, user, pass, prefs.get_flag("use-password-storage",false));
-#endif
+    get_server_auth(*it, user, pass, prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT));
     *out << indent(depth++) << "<server id=\"" << escaped(it->to_string()) << "\">\n";
     *out << indent(depth) << "<host>" << escaped(s->host) << "</host>\n"
          << indent(depth) << "<port>" << s->port << "</port>\n"
          << indent(depth) << "<username>" << escaped(user) << "</username>\n";
 #ifdef HAVE_GKR
-if (prefs.get_flag("use-password-storage", true))
+if (prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT))
     *out << indent(depth) << "<password>" << "HANDLED_BY_PASSWORD_STORAGE" << "</password>\n";
 else
     *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";
