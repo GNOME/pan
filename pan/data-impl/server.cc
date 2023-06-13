@@ -126,9 +126,7 @@ DataImpl :: set_server_auth (const Quark       & server,
   assert (s);
 
   s->username = username;
-#ifndef HAVE_GKR
-  s->password = password;
-#else
+#ifdef HAVE_GKR
   if (use_gkr)
   {
     PasswordData pw;
@@ -141,6 +139,8 @@ DataImpl :: set_server_auth (const Quark       & server,
   {
     s->password = password;
   }
+#else
+  s->password = password;
 #endif
 
 }
@@ -237,9 +237,7 @@ DataImpl :: get_server_auth (const Quark   & server,
   bool found (s);
   if (found) {
     setme_username = s->username;
-#ifndef HAVE_GKR
-    setme_password = g_strdup(s->password.c_str());
-#else
+#ifdef HAVE_GKR
     if (!use_gkr)
     {
       setme_password = g_strdup(s->password.c_str());
@@ -264,6 +262,8 @@ DataImpl :: get_server_auth (const Quark   & server,
           s->gkr_pw = pw.pw;
       }
     }
+#else
+    setme_password = g_strdup(s->password.c_str());
 #endif
   }
 
@@ -498,11 +498,11 @@ DataImpl :: load_server_properties (const DataIO& source)
     keyvals_t kv (it->second);
     s.host = kv["host"];
     s.username = kv["username"];
-#ifndef HAVE_GKR
-    s.password = kv["password"];
-#else
+#ifdef HAVE_GKR
     if (!_prefs.get_flag("use-password-storage", true))
       s.password = kv["password"];
+#else
+    s.password = kv["password"];
 #endif
     s.port = to_int (kv["port"], STD_NNTP_PORT);
     s.max_connections = to_int (kv["connection-limit"], 2);
