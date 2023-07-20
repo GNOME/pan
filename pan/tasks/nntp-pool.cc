@@ -26,6 +26,12 @@
 #include <pan/general/macros.h>
 #include "nntp-pool.h"
 
+#ifdef HAVE_GKR
+  #define USE_LIBSECRET_DEFAULT true
+#else
+  #define USE_LIBSECRET_DEFAULT false
+#endif
+
 using namespace pan;
 
 namespace
@@ -175,7 +181,13 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
 {
   std::string user;
   gchar* pass(NULL);
-  ok = ok && _server_info.get_server_auth (_server, user, pass, _prefs.get_flag("use-password-storage", false));
+  ok = ok && _server_info.get_server_auth (
+          _server,
+          user,
+          pass,
+          _prefs.get_flag(
+              "use-password-storage",
+              USE_LIBSECRET_DEFAULT));
   debug("on socket created "<<host<<" "<<ok<<" "<<socket);
   if (!ok)
   {
@@ -189,7 +201,7 @@ NNTP_Pool :: on_socket_created (const StringView  & host,
     NNTP * nntp;
     std::string pw (pass ? pass : "");
     nntp = new NNTP (_server, user, pw, _server_info, socket);
-    if (!_prefs.get_flag("use-password-storage", false) && pass)
+    if (!_prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT) && pass)
       g_free(pass);
     nntp->handshake (this);
   }

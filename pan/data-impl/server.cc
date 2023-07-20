@@ -34,6 +34,12 @@
 #include <pan/general/messages.h>
 #include "data-impl.h"
 
+#ifdef HAVE_GKR
+  #define USE_LIBSECRET_DEFAULT true
+#else
+  #define USE_LIBSECRET_DEFAULT false
+#endif
+
 using namespace pan;
 
 /**
@@ -126,9 +132,7 @@ DataImpl :: set_server_auth (const Quark       & server,
   assert (s);
 
   s->username = username;
-#ifndef HAVE_GKR
-  s->password = password;
-#else
+#ifdef HAVE_GKR
   if (use_gkr)
   {
     PasswordData pw;
@@ -141,6 +145,8 @@ DataImpl :: set_server_auth (const Quark       & server,
   {
     s->password = password;
   }
+#else
+  s->password = password;
 #endif
 
 }
@@ -237,9 +243,7 @@ DataImpl :: get_server_auth (const Quark   & server,
   bool found (s);
   if (found) {
     setme_username = s->username;
-#ifndef HAVE_GKR
-    setme_password = g_strdup(s->password.c_str());
-#else
+#ifdef HAVE_GKR
     if (!use_gkr)
     {
       setme_password = g_strdup(s->password.c_str());
@@ -256,7 +260,7 @@ DataImpl :: get_server_auth (const Quark   & server,
 
       if (password_decrypt(pw) == NULL)
       {
-      Log::add_urgent_va (_("Received no password from libsecret for server %s."), s->host.c_str());
+        Log::add_urgent_va (_("Received no password from libsecret for server %s."), s->host.c_str());
       }
       else
       {
@@ -264,6 +268,8 @@ DataImpl :: get_server_auth (const Quark   & server,
           s->gkr_pw = pw.pw;
       }
     }
+#else
+    setme_password = g_strdup(s->password.c_str());
 #endif
   }
 
@@ -498,11 +504,11 @@ DataImpl :: load_server_properties (const DataIO& source)
     keyvals_t kv (it->second);
     s.host = kv["host"];
     s.username = kv["username"];
-#ifndef HAVE_GKR
-    s.password = kv["password"];
-#else
-    if (!_prefs.get_flag("use-password-storage", false))
+#ifdef HAVE_GKR
+    if (!_prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT))
       s.password = kv["password"];
+#else
+    s.password = kv["password"];
 #endif
     s.port = to_int (kv["port"], STD_NNTP_PORT);
     s.max_connections = to_int (kv["connection-limit"], 2);
@@ -559,13 +565,13 @@ DataImpl :: save_server_properties (DataIO& data_io, Prefs& prefs)
     const Server* s (find_server (*it));
     std::string user;
     gchar* pass(NULL);
-    get_server_auth(*it, user, pass, prefs.get_flag("use-password-storage",false));
+    get_server_auth(*it, user, pass, prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT));
     *out << indent(depth++) << "<server id=\"" << escaped(it->to_string()) << "\">\n";
     *out << indent(depth) << "<host>" << escaped(s->host) << "</host>\n"
          << indent(depth) << "<port>" << s->port << "</port>\n"
          << indent(depth) << "<username>" << escaped(user) << "</username>\n";
 #ifdef HAVE_GKR
-if (prefs.get_flag("use-password-storage", false))
+if (prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT))
     *out << indent(depth) << "<password>" << "HANDLED_BY_PASSWORD_STORAGE" << "</password>\n";
 else
     *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";

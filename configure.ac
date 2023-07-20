@@ -184,6 +184,7 @@ if test "x$want_gnutls" = "xyes" ; then
 fi
 
 dnl Check for libnotify if user-enabled for popup notifications
+libnotify_msg=no
 AC_ARG_ENABLE([libnotify],
   AS_HELP_STRING([--enable-libnotify],[enable libnotify support (normally: no)]),[enable_libnotify=$enableval],[enable_libnotify=no])
 if test "x$enable_libnotify" = "xyes" ; then
@@ -198,6 +199,7 @@ if test "x$enable_libnotify" = "xyes" ; then
 fi
 
 dnl Check for libsecret and gcr if user-enabled for password storage
+gkr_msg=no
 AC_ARG_ENABLE([gkr],
   AS_HELP_STRING([--enable-gkr],[enable GNOME Keyring or libsecret support (normally: no)]),[enable_gkr=$enableval],[enable_gkr=no])
 if test "x$enable_gkr" = "xyes" ; then
