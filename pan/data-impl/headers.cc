@@ -581,6 +581,11 @@ DataImpl :: load_headers (const DataIO   & data_io,
             StringView tok;
             s.ltrim ();
             s.pop_token (tok);
+            if (tok.str == nullptr) {
+              expired = true;
+              break;
+            }
+
             const int number (atoi (tok.str));
             if (number > total_part_count) { // corrupted entry
               expired = true;
