@@ -426,6 +426,7 @@ namespace
   }
 }
 
+// load headers from internal file in ~/.pan2/groups
 void
 DataImpl :: load_headers (const DataIO   & data_io,
                           const Quark    & group)
