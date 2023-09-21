@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan2 master\n"
-"POT-Creation-Date: 2022-05-28 09:22+0000\n"
+"POT-Creation-Date: 2022-07-09 10:13+0000\n"
 "PO-Revision-Date: 2022-06-06 10:14+0200\n"
 "Last-Translator: Miguel Ángel Nieto <correo@miguelangelnieto.net>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
@@ -1831,12 +1831,12 @@ msgstr ""
 #. (itstool) path: listitem/para
 #: C/index.docbook:1129
 msgid "<guilabel>Show Smilies as Graphics</guilabel>"
-msgstr "<guilabel>Mostrar emoticonos como gráficos</guilabel>"
+msgstr "<guilabel>Mostrar emojis como gráficos</guilabel>"
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1130
 msgid "Change ASCII emoticons like :) into graphical versions."
-msgstr "Cambiar emoticonos ASCII como :) a sus versiones gráficas."
+msgstr "Cambiar emojis ASCII como :) a sus versiones gráficas."
 
 #. (itstool) path: listitem/para
 #: C/index.docbook:1133
@@ -2799,29 +2799,43 @@ msgstr "Puntuación avanzada"
 #. (itstool) path: sect2/para
 #: C/index.docbook:1705
 msgid ""
-"The scoring file is located at <filename>$HOME/.pan2/Scoring</filename>. "
+"The scoring file is located at <filename>$HOME/.pan2/Score</filename>. "
 "Advanced users might want to edit this file directly with a text editor to "
 "create advanced scoring rules that are difficult or impossible to construct "
-"from the <interface>New Scoring Rule</interface> dialog. The format of the "
-"scoring rules is similar to the application <application>slrn</application>, "
-"but be aware that not all <application>slrn</application> scoring functions "
-"will work in <application>Pan</application>."
+"from the <interface>New Scoring Rule</interface> dialog."
 msgstr ""
 
 #. (itstool) path: sect2/para
 #: C/index.docbook:1710
+msgid ""
+"This is probably easiest via the <menuchoice> <guimenu>Edit</guimenu> "
+"<guisubmenu>Edit Score File</guisubmenu> </menuchoice> menu as that will "
+"automatically rescore articles when you exit the edit window."
+msgstr ""
+
+#. (itstool) path: sect2/para
+#: C/index.docbook:1717
+msgid ""
+"The format of the scoring rules is similar to the application "
+"<application>slrn</application>, but be aware that not all "
+"<application>slrn</application> scoring functions will work in "
+"<application>Pan</application>."
+msgstr ""
+
+#. (itstool) path: sect2/para
+#: C/index.docbook:1720
 msgid ""
 "The slrn scoring functions are described in the document <ulink url=\"http://"
 "www.slrn.org/docs/score.html\">slrn - Scoring</ulink>."
 msgstr ""
 
 #. (itstool) path: sect1/title
-#: C/index.docbook:1717
+#: C/index.docbook:1727
 msgid "Customization"
 msgstr "Personalizar"
 
 #. (itstool) path: sect1/para
-#: C/index.docbook:1718
+#: C/index.docbook:1728
 msgid ""
 "This section describes how certain features or actions in <application>Pan</"
 "application> can be customized."
@@ -2830,12 +2844,12 @@ msgstr ""
 "<application>Pan</application>."
 
 #. (itstool) path: sect2/title
-#: C/index.docbook:1722
+#: C/index.docbook:1732
 msgid "Behavior"
 msgstr "Comportamiento"
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1723
+#: C/index.docbook:1733
 msgid ""
 "Many of the default actions of <application>Pan</application>, such as mouse "
 "clicks, actions when entering or leaving a group and the action of "
@@ -2843,7 +2857,7 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:1727
+#: C/index.docbook:1737
 msgid ""
 "In <menuchoice> <guimenu>Edit</guimenu> <guisubmenu>Preferences</guisubmenu> "
 "<guimenuitem>Behavior</guimenuitem> </menuchoice>"
@@ -2852,12 +2866,12 @@ msgstr ""
 "guisubmenu><guimenuitem>Comportamiento</guimenuitem></menuchoice>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1737
+#: C/index.docbook:1747
 msgid "<guilabel>Mouse</guilabel>"
 msgstr "<guilabel>Ratón</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1738
+#: C/index.docbook:1748
 msgid ""
 "The two boxes of the mouse section change the default action of the left "
 "mouse button. If unselected, you would have to double click on a group or "
@@ -2865,19 +2879,19 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1742
+#: C/index.docbook:1752
 msgid "<guilabel>Groups</guilabel>"
 msgstr "<guilabel>Grupos</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1743
+#: C/index.docbook:1753
 msgid ""
 "The selections in the group section control what commands <application>Pan</"
 "application> will automatically run when manipulating groups."
 msgstr ""
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1747
+#: C/index.docbook:1757
 msgid ""
 "The first box, when activated, will automatically get new headers for all "
 "subscribed groups whenever Pan is started. This is the equivalent of using "
@@ -2886,7 +2900,7 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1757
+#: C/index.docbook:1767
 msgid ""
 "The next box, when activated, will automatically get new headers when "
 "entering a group. This is the equivalent of using <menuchoice> "
@@ -2895,7 +2909,7 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1767
+#: C/index.docbook:1777
 msgid ""
 "The next box, when activated, will mark the entire group read when leaving a "
 "group. This is the equivalent of using <menuchoice> <guimenu>Groups</"
@@ -2904,19 +2918,19 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1777
+#: C/index.docbook:1787
 msgid ""
 "The last box in the Groups section, when activated, will expand all threads "
 "in the Header Pane when entering a group."
 msgstr ""
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1783
+#: C/index.docbook:1793
 msgid "<guilabel>Articles</guilabel>"
 msgstr "<guilabel>Artículos</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1784
+#: C/index.docbook:1794
 msgid ""
 "The first option, when activated, makes <keycap>Space</keycap> select the "
 "next article rather than the next unread article. This is handy if you are "
@@ -2924,18 +2938,18 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1787
+#: C/index.docbook:1797
 msgid "The next option activates smooth scrolling in the Article Pane."
 msgstr ""
 "La siguiente opción activa el desplazamiento suave en el panel de artículo."
 
 #. (itstool) path: sect2/title
-#: C/index.docbook:1796
+#: C/index.docbook:1806
 msgid "GUI Composition"
 msgstr "Composición de la IGU"
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1797
+#: C/index.docbook:1807
 msgid ""
 "The layout and view of the Group, Header and Body Panes in <application>Pan</"
 "application> can be customized in several ways."
@@ -2944,12 +2958,12 @@ msgstr ""
 "<application>Pan</application> se pueden personalizar de varias maneras."
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:1801
+#: C/index.docbook:1811
 msgid "<guilabel>Pane Layout</guilabel>"
 msgstr "<guilabel>Distribución de los paneles</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1803
+#: C/index.docbook:1813
 msgid ""
 "In <menuchoice> <guimenu>Edit</guimenu> <guisubmenu>Preferences</guisubmenu> "
 "<guimenuitem>Layout</guimenuitem> </menuchoice> the orientation of the "
@@ -2960,12 +2974,12 @@ msgstr ""
 "orientación de los grupos, paneles de cabeceras y cuerpo pueden manipularse."
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:1813
+#: C/index.docbook:1823
 msgid "<guilabel>Tabbed Layout</guilabel>"
 msgstr "<guilabel>Distribución en pestañas</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1815
+#: C/index.docbook:1825
 msgid ""
 "Instead of having all three panes share the <application>Pan</application> "
 "main window at one time, another view, called Tabbed Layout, can be "
@@ -2978,12 +2992,12 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:1828
+#: C/index.docbook:1838
 msgid "<guilabel>Show/Hide Panes</guilabel>"
 msgstr "<guilabel>Mostrar/ocultar paneles</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1830
+#: C/index.docbook:1840
 msgid ""
 "You can hide a specific Pane by choosing from <menuchoice> <guimenu>View</"
 "guimenu> <guisubmenu>Layout</guisubmenu> </menuchoice> and using the "
@@ -2991,12 +3005,12 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:1839
+#: C/index.docbook:1849
 msgid "<guilabel>Fonts</guilabel>"
 msgstr "<guilabel>Tipografías</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1841
+#: C/index.docbook:1851
 msgid ""
 "Choose <menuchoice> <guimenu>Edit</guimenu> <guisubmenu>Preferences</"
 "guisubmenu> <guimenuitem>Fonts</guimenuitem> </menuchoice> to select a font."
@@ -3006,7 +3020,7 @@ msgstr ""
 "seleccionar una tipografía."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1848
+#: C/index.docbook:1858
 msgid ""
 "<application>Pan</application> can use the monospace font in the article "
 "Pane, if activated."
@@ -3015,12 +3029,12 @@ msgstr ""
 "monoespaciada en el panel del artículo."
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:1852
+#: C/index.docbook:1862
 msgid "<guilabel>Colors</guilabel>"
 msgstr "<guilabel>Colores</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1854
+#: C/index.docbook:1864
 msgid ""
 "Choose <menuchoice> <guimenu>Edit</guimenu> <guisubmenu>Preferences</"
 "guisubmenu> <guimenuitem>Colors</guimenuitem> </menuchoice> to customize the "
@@ -3031,7 +3045,7 @@ msgstr ""
 "personalizar los colores usados en <application>Pan</application>."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1861
+#: C/index.docbook:1871
 msgid ""
 "The first section allows you to customize the colors used by scoring in the "
 "Header Pane. See <xref linkend=\"pan-scoring\"/> for more information on how "
@@ -3039,7 +3053,7 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1863
+#: C/index.docbook:1873
 msgid ""
 "The second section allows you to customize the colors used in the Body Pane."
 msgstr ""
@@ -3047,12 +3061,12 @@ msgstr ""
 "cuerpo."
 
 #. (itstool) path: sect2/title
-#: C/index.docbook:1870
+#: C/index.docbook:1880
 msgid "External Applications"
 msgstr "Aplicaciones externas"
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1871
+#: C/index.docbook:1881
 msgid ""
 "In this section you set up external applications that <application>Pan</"
 "application> can use."
@@ -3061,7 +3075,7 @@ msgstr ""
 "<application>Pan</application>."
 
 #. (itstool) path: varlistentry/term
-#: C/index.docbook:1874
+#: C/index.docbook:1884
 msgid ""
 "In <menuchoice> <guimenu>Edit</guimenu> <guisubmenu>Preferences</guisubmenu> "
 "<guimenuitem>Applications</guimenuitem> </menuchoice>:"
@@ -3070,12 +3084,12 @@ msgstr ""
 "guisubmenu><guimenuitem>Aplicaciones</guimenuitem></menuchoice>:"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1884
+#: C/index.docbook:1894
 msgid "<guilabel>Web Browser</guilabel>"
 msgstr "<guilabel>Navegador web</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1885
+#: C/index.docbook:1895
 msgid ""
 "Click the Web Button to choose which external application to launch when "
 "clicking on an HTML link."
@@ -3084,19 +3098,19 @@ msgstr ""
 "en un enlace HTML."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1889
+#: C/index.docbook:1899
 msgid "<guilabel>Mail Reader</guilabel>"
 msgstr "<guilabel>Lector de correo</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1890
+#: C/index.docbook:1900
 msgid ""
 "Choose which external application to launch when clicking on an email "
 "address or when sending a post via email."
 msgstr ""
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1897
+#: C/index.docbook:1907
 msgid ""
 "To set up an external text editor, choose <menuchoice> <guimenu>Post</"
 "guimenu> <guisubmenu>Post to Newsgroup</guisubmenu> </menuchoice> . From the "
@@ -3105,12 +3119,12 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: sect2/title
-#: C/index.docbook:1912
+#: C/index.docbook:1922
 msgid "Article Cache Size"
 msgstr "Tamaño de la caché de artículos"
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1913
+#: C/index.docbook:1923
 msgid ""
 "The article cache is a fixed-size disk buffer where <application>Pan</"
 "application> stores articles when they are downloaded from a news server. If "
@@ -3119,7 +3133,7 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1916
+#: C/index.docbook:1926
 msgid ""
 "The article cache size can be changed in <menuchoice> <guimenu>Edit</"
 "guimenu> <guisubmenu>Preferences</guisubmenu> <guimenuitem>Behavior</"
@@ -3131,12 +3145,12 @@ msgstr ""
 "guilabel> </menuchoice>"
 
 #. (itstool) path: sect2/title
-#: C/index.docbook:1929
+#: C/index.docbook:1939
 msgid "News Servers"
 msgstr "Servidores de noticias"
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1930
+#: C/index.docbook:1940
 msgid ""
 "<application>Pan</application> must connect to a special computer called a "
 "news server. The news server is the gateway used to access Usenet."
@@ -3146,7 +3160,7 @@ msgstr ""
 "utilizada para acceder a Usenet."
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1932
+#: C/index.docbook:1942
 msgid ""
 "Choose <menuchoice> <guimenu>Edit</guimenu> <guisubmenu>Edit News Servers</"
 "guisubmenu> </menuchoice> and the <interface>Servers</interface> dialog will "
@@ -3155,7 +3169,7 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1940
+#: C/index.docbook:1950
 msgid ""
 "When you add or edit an existing server, the <interface>Edit a Server's "
 "Settings</interface> dialog will appear."
@@ -3164,27 +3178,27 @@ msgstr ""
 "configuración del servidor</interface> aparecerá."
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1942
+#: C/index.docbook:1952
 msgid "In the location section:"
 msgstr ""
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1946
+#: C/index.docbook:1956
 msgid "<guilabel>Address</guilabel>"
 msgstr "<guilabel>Dirección</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1947
+#: C/index.docbook:1957
 msgid "The internet address of the server."
 msgstr "La dirección de internet de este servidor."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1950
+#: C/index.docbook:1960
 msgid "<guilabel>Port</guilabel>"
 msgstr "<guilabel>Puerto</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1951
+#: C/index.docbook:1961
 msgid ""
 "The port of the server. Port 119 is the standard port number for unsecured "
 "NNTP connections, port 563 is for TLS/SSL connections."
@@ -3193,7 +3207,7 @@ msgstr ""
 "119, y el 563 es para conexiones TLS/SSL."
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1954
+#: C/index.docbook:1964
 msgid ""
 "The next section is the login information for the server. If you server "
 "requires a username and password, enter them here. If the server allows "
@@ -3202,27 +3216,27 @@ msgid ""
 msgstr ""
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1959
+#: C/index.docbook:1969
 msgid "<guilabel>Username</guilabel>"
 msgstr "<guilabel>Nombre de usuario</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1960
+#: C/index.docbook:1970
 msgid "Enter the login name if required."
 msgstr "Introduzca el nombre de inicio de sesión si es necesario."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1963
+#: C/index.docbook:1973
 msgid "<guilabel>Password</guilabel>"
 msgstr "<guilabel>Contraseña</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1964
+#: C/index.docbook:1974
 msgid "Enter the password if required."
 msgstr "Introduzca la contraseña si es necesario."
 
 #. (itstool) path: note/para
-#: C/index.docbook:1966
+#: C/index.docbook:1976
 msgid ""
 "<application>Pan</application> can store saved passwords in a password "
 "storage service provided by <systemitem>GNOME Keyring</systemitem> or "
@@ -3244,7 +3258,7 @@ msgstr ""
 "versión de <application>Pan</application>."
 
 #. (itstool) path: sect2/para
-#: C/index.docbook:1974
+#: C/index.docbook:1984
 msgid ""
 "The next section allows you to enter certain <application>Pan</application> "
 "settings that are server specific."
@@ -3253,12 +3267,12 @@ msgstr ""
 "<application>Pan</application> que son específicas del servidor."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1977
+#: C/index.docbook:1987
 msgid "<guilabel>Connection Limit</guilabel>"
 msgstr "<guilabel>Límite de conexiones</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1978
+#: C/index.docbook:1988
 msgid ""
 "<application>Pan</application> can open multiple connections to a server so "
 "the user can perform simultaneous actions like download a binary attachment "
@@ -3269,7 +3283,7 @@ msgstr ""
 "descargar un archivo adjunto binario y leer artículos en un grupo de texto."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1980
+#: C/index.docbook:1990
 msgid ""
 "In order to follow the <ulink url=\"https://js.home.xs4all.nl/gnksa/"
 "\">GNKSA</ulink> rules, the maximum number of connections <application>Pan</"
@@ -3280,24 +3294,24 @@ msgstr ""
 "application> puede tener abiertas con un servidor es cuatro."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1984
+#: C/index.docbook:1994
 msgid "<guilabel>Expire Old Articles</guilabel>"
 msgstr "<guilabel>Caducar los artículos antiguos</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1985
+#: C/index.docbook:1995
 msgid ""
 "From this toggle box, you can pick a time when <application>Pan</"
 "application> will expire old articles and remove them from its article index."
 msgstr ""
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1989
+#: C/index.docbook:1999
 msgid "<guilabel>Server Rank</guilabel>"
 msgstr "<guilabel>Puntuación del servidor</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1990
+#: C/index.docbook:2000
 msgid ""
 "When you have more than 1 server configured, <application>Pan</application> "
 "uses server rank to decide from which server to download the article. Only "
@@ -3311,7 +3325,7 @@ msgstr ""
 "servidores alternativos."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1993
+#: C/index.docbook:2003
 msgid ""
 "The reason for this feature is that a user might have access to a free "
 "server and also have access to a byte-limited premium server. Server ranking "
@@ -3324,12 +3338,12 @@ msgstr ""
 "application> use el servidor de respaldo lo menos posible."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1998
+#: C/index.docbook:2008
 msgid "<guilabel>TLS (SSL) Options</guilabel>"
 msgstr "<guilabel>Opciones de TLS (SSL)</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:1999
+#: C/index.docbook:2009
 msgid ""
 "If security and privacy are of concern, choose secured connections if the "
 "server supports it."
@@ -3338,7 +3352,7 @@ msgstr ""
 "conexiones seguras si el servidor lo soporta."
 
 #. (itstool) path: note/para
-#: C/index.docbook:2001
+#: C/index.docbook:2011
 msgid ""
 "TLS (SSL) support is an optional feature and may not be available in your "
 "<application>Pan</application> build."
@@ -3347,13 +3361,13 @@ msgstr ""
 "disponible en su compilación de <application>Pan</application>."
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:2005
+#: C/index.docbook:2015
 msgid "<guilabel>Always trust this server's certificate</guilabel>"
 msgstr ""
 "<guilabel>Confiar siempre en el certificado de este servidor</guilabel>"
 
 #. (itstool) path: listitem/para
-#: C/index.docbook:2006
+#: C/index.docbook:2016
 msgid ""
 "If you want to trust the server regardless of the authenticity of its "
 "certificate, you can enable this option. Use with caution!"
