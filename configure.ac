@@ -93,6 +93,9 @@ AM_GNU_GETTEXT([external])
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Gettext Package])
 panlocaledir=[${datadir}/locale]
 
+dnl check if libiconv library needs to be linked
+AM_ICONV
+
 dnl libz for xzver
 PKG_CHECK_MODULES([ZLIB], [zlib >= 1.2.0],AC_DEFINE(HAVE_ZLIB,[1],[Zlib for xzver support]),[])
 AC_SUBST(ZLIB_CFLAGS)
