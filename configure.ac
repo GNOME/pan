@@ -1,8 +1,8 @@
-AC_INIT([Pan],[0.154],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[https://gitlab.gnome.org/GNOME/pan])
+AC_INIT([Pan],[0.155],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[https://gitlab.gnome.org/GNOME/pan])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
-AC_DEFINE(VERSION_MINOR,154,[Minor part of version number])
+AC_DEFINE(VERSION_MINOR,155,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
-AC_DEFINE(VERSION_TITLE,["Izium"],[Release Name])
+AC_DEFINE(VERSION_TITLE,["Kherson"],[Release Name])
 AC_PREREQ([2.71])
 
 dnl Get git info for pan-git.version
