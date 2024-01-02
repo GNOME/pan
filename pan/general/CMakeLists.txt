@@ -1,0 +1,16 @@
+add_library(generalutils
+ article_number.cc
+ debug.cc
+ e-util.cc
+ editor-spawner.cc
+ file-util.cc
+ log.cc
+ line-reader.cc
+ progress.cc
+ quark.cc
+ string-view.cc
+ text-match.cc
+ utf8-utils.cc
+ worker-pool.cc
+ compression.cc
+)

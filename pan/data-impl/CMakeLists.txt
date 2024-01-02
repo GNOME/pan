@@ -1,0 +1,13 @@
+set_library(dataimpl
+ article-filter.cc
+ rules-filter.cc
+ data-io.cc
+ data-impl.cc
+ groups.cc
+ headers.cc
+ profiles.cc
+ server.cc
+ my-tree.cc
+ task-archive.cc
+ xover.cc
+)

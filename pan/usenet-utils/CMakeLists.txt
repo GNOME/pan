@@ -1,0 +1,14 @@
+add_library(usenetutils
+ filter-info.cc
+ rules-info.cc
+ gnksa.cc
+ message-check.cc
+ mime-utils.cc
+ numbers.cc
+ scorefile.cc
+ ssl-utils.cc
+ text-massager.cc
+ url-find.cc
+ blowfish.cc
+ gpg.cc
+)
