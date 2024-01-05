@@ -1,5 +1,4 @@
-file(GLOB SRC_C_FILES "*.c")
-set(SRC_CC_FILES 
+set(SRC_FILES 
  actions.cc
  body-pane.cc
  dl-headers-ui.cc
@@ -34,5 +33,5 @@ set(SRC_CC_FILES
  url.cc
 )
 
-add_library(pangui STATIC ${SRC_C_FILES} ${SRC_CC_FILES})
+add_library(pangui STATIC ${SRC_FILES})
 

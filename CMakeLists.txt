@@ -1,9 +1,111 @@
-cmake_minimum_required(VERSION 3.20)
-project(Pan)
+cmake_minimum_required(VERSION 3.25)
+
+include(CheckIncludeFile)
+
+# https://cmake.org/cmake/help/latest/command/project.html
+project(Pan
+  VERSION 0.156
+  DESCRIPTION "Pan usenet reader"
+  HOMEPAGE_URL "https://gitlab.gnome.org/GNOME/pan"
+)
+
+set(PACKAGE "pan")
+set(VERSION_TITLE "Mariinka")
+set(PACKAGE_BUGREPORT "https://gitlab.gnome.org/GNOME/pan/issues")
+
+# backward compat. There's a lot of ifdef #HAVE_CONFIG_H, #include config.h
+# Don't know why...
+# https://cmake.org/cmake/help/latest/command/add_compile_definitions.html
+add_compile_definitions(HAVE_CONFIG_H)
+
+include_directories(".")
+
+# Sanity checking
+# https://cmake.org/cmake/help/latest/command/add_compile_options.html
+add_compile_options("-Wreorder" "-Wzero-as-null-pointer-constant")
+
+# https://cmake.org/cmake/help/latest/command/add_executable.html#add-executable
+add_executable(pan pan/gui/pan.cc)
+
+# Get the latest abbreviated commit hash of the working branch
+# see https://jonathanhamberg.com/post/cmake-embedding-git-hash/
+# drawback: commited changed are not taken into account until "cmake ." is run
+execute_process(
+  COMMAND git log -1 --format=%h
+  WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+  OUTPUT_VARIABLE GIT_REV
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+CHECK_INCLUDE_FILE(errno.h HAVE_ERRNO_H)
+CHECK_INCLUDE_FILE(fcntl.h HAVE_FCNTL_H)
+CHECK_INCLUDE_FILE(inttypes.h HAVE_INTTYPES_H)
+
+# https://cmake.org/cmake/help/latest/module/CheckSymbolExists.html
+include(CheckSymbolExists)
+check_symbol_exists(close "unistd.h" HAVE_CLOSE)
+check_symbol_exists(localtime_r "time.h" HAVE_LOCALTIME_R)
+
+# see https://cmake.org/cmake/help/latest/module/FindGettext.html
+find_package(Gettext)
+file(GLOB PO_FILES "po/*.po")
+GETTEXT_CREATE_TRANSLATIONS(po/pan.pot ALL PO_FILES)
+set(GETTEXT_PACKAGE pan)
+
+function(AddSystemLib libname)
+  # https://cmake.org/cmake/help/latest/command/include_directories.html
+  include_directories(${${libname}_INCLUDE_DIRS})
+  link_directories(${${libname}_LIBRARIES})
+endfunction()
+
+# https://cmake.org/cmake/help/latest/command/find_package.html
+# https://cmake.org/cmake/help/latest/module/FindIconv.html
+find_package(Iconv)
+AddSystemLib(Iconv)
+if(Iconv_FOUND)
+  set(HAVE_ICONV true)
+endif()
+
+find_package(PkgConfig REQUIRED)
+
+# https://cmake.org/cmake/help/latest/module/FindZLIB.html
+find_package(ZLIB 1.2.0 REQUIRED)
+AddSystemLib(ZLIB)
+set(HAVE_ZLIB ${ZLIB_FOUND})
+
+# D-Bus support
+# https://cmake.org/cmake/help/latest/command/option.html
+option(WANT_DBUS "enable D-Bus support (default: no)")
+if(WANT_DBUS)
+  set(HAVE_DBUS TRUE)
+endif()
+
+# https://cmake.org/cmake/help/latest/module/FindPkgConfig.html#command:pkg_check_modules
+pkg_check_modules(GLIB REQUIRED glib-2.0>=2.26.0)
+AddSystemLib(GLIB)
+
+pkg_check_modules(GMIME REQUIRED gmime-3.0)
+AddSystemLib(GMIME)
+
+# Check for GMime cryptography support
+option(WANT_GMIME_CRYPTO "enable GMime cryptography support (default: on)" ON)
+if(WANT_GMIME_CRYPTO)
+  set(HAVE_GMIME_CRYPTO TRUE)
+endif()
+
+# GtkSpell support
+option(WANT_GTKSPELL "enable GtkSpell support (default: on)" ON)
+if(WANT_GTKSPELL)
+  pkg_check_modules(GTKSPELL REQUIRED gtkspell3-3.0)
+  AddSystemLib(GTKSPELL)
+  set(GTKSPELL_VERSION 3)
+  pkg_check_modules(ENCHANT REQUIRED enchant-2>=2.2.3)
+  AddSystemLib(ENCHANT)
+  set(HAVE_GTKSPELL true)
+endif()
 
 # see https://github.com/shlomif/gtk3-cmake-examples/blob/master/CMakeLists.txt
 # Use the package PkgConfig to detect GTK+ headers/library files
-find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 # Setup CMake to use GTK+, tell the compiler where to look for headers
 # and to the linker where to look for libraries
@@ -12,10 +114,85 @@ link_directories(${GTK3_LIBRARY_DIRS})
 # Add other flags to the compiler
 add_definitions(${GTK3_CFLAGS_OTHER})
 
+option(WANT_WEBKIT "enable WebKitGTK support (experimental, default: off)")
+if(WANT_WEBKIT)
+  pkg_check_modules(WEBKITGTK REQUIRED webkitgtk-3.0>=1.8.1)
+  AddSystemLib(WEBKITGTK)
+  set(HAVE_WEBKIT true)
+endif()
+
+option(WANT_GNUTLS "enable GnuTLS support (default: off)")
+if(WANT_GNUTLS)
+  pkg_check_modules(GNUTLS REQUIRED gnutls>=3.0.0)
+  AddSystemLib(GNUTLS)
+  set(HAVE_GNUTLS true)
+endif()
+
+option(WANT_NOTIFY "enable libnotify support (default: off)")
+if(WANT_NOTIFY)
+  pkg_check_modules(LIBNOTIFY REQUIRED libnotify>=0.4.1)
+  AddSystemLib(LIBNOTIFY)
+  set(HAVE_LIBNOTIFY true)
+endif()
+
+option(WANT_GKR "enable GNOME Keyring or libsecret support (default: off)")
+if(WANT_GKR)
+  pkg_check_modules(LIBSECRET REQUIRED libsecret-1>=0.16)
+  AddSystemLib(LIBSECRET)
+  pkg_check_modules(GCR3 REQUIRED gcr-3>=3.20)
+  AddSystemLib(GCR3)
+  set(HAVE_GKR TRUE)
+endif()
+
+# not sure that yelp is working right now
+option(WANT_YELP_TOOLS "enable yelp-tools support for documentation (default: off)")
+option(ENABLE_MANUAL "built in user manual (default: off)")
+if(WANT_YELP-TOOLS)
+  if (ENABLE_MANUAL)
+    set(HAVE_MANUAL 1)
+  endif()
+endif()
+
+# Check to see if strftime supports the use of %l and %k
+# https://cmake.org/cmake/help/latest/command/try_run.html
+try_run(HAVE_LKSTRFTIME COMPILED_LKSTRFTIME_TEST
+  SOURCE_FROM_CONTENT test-strftime.c "
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+int main(int argc, char **argv) {
+  char buf[10];
+  time_t rawtime = time(0);
+  struct tm *timeinfo = localtime (&rawtime);
+  strftime(buf, 10, \"%l %k\", timeinfo);
+  exit (strstr(buf, \"l\") || strstr(buf, \"k\") || !strcmp(buf,\" \") || !strlen(buf));
+}
+")
+
+if(NOT COMPILED_LKSTRFTIME_TEST)
+  message("Warning: failed to compile test-strftime.c")
+endif()
+
+set(PLATFORM_INFO ${CMAKE_LIBRARY_ARCHITECTURE})
+message("CMAKE platform: ${PLATFORM_INFO}")
+
+# https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
+if(APPLE)
+  set(G_OS_DARWIN TRUE)
+elseif(WIN32)
+  # https://cmake.org/cmake/help/latest/command/target_compile_options.html
+  add_compile_options(mms-bitfields)
+  add_compile_definitions(WIN32_LEAN_AND_MEAN)
+  add_link_libraries(shell32 ws2_32 pthread)
+endif()
+
+# https://cmake.org/cmake/help/latest/command/add_subdirectory.html
 add_subdirectory(uulib)
 add_subdirectory(pan)
 
-add_executable(pan pan/gui/pan.cc)
+# https://cmake.org/cmake/help/latest/command/configure_file.html
+configure_file(config-cmake.h.in config.h)
 
+# https://cmake.org/cmake/help/latest/command/target_link_libraries.html
 target_link_libraries(pan data pangui generalutils tasks uulib ${GTK_LIBRARIES})
 

@@ -1,4 +1,4 @@
-set_library(dataimpl
+add_library(dataimpl
  article-filter.cc
  rules-filter.cc
  data-io.cc
