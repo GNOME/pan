@@ -51,8 +51,14 @@ check_symbol_exists(localtime_r "time.h" HAVE_LOCALTIME_R)
 
 # see https://cmake.org/cmake/help/latest/module/FindGettext.html
 find_package(Gettext)
-file(GLOB PO_FILES "po/*.po")
-GETTEXT_CREATE_TRANSLATIONS(po/pan.pot ALL PO_FILES)
+file(STRINGS "po/LINGUAS" lang_list REGEX "^[a-z]")
+foreach(lang IN LISTS lang_list)
+  message("lang ${lang}")
+  # this creates the gmo file in build directory instead of po/*.gmo. Although this is
+  # a change from previous build system, it may not be a problem
+  GETTEXT_PROCESS_PO_FILES(${lang} ALL PO_FILES "${CMAKE_SOURCE_DIR}/po/${lang}.po")
+endforeach()
+add_dependencies(pan pofiles)
 set(GETTEXT_PACKAGE pan)
 
 find_package(PkgConfig REQUIRED)
