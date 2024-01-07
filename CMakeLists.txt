@@ -18,14 +18,15 @@ set(PACKAGE_BUGREPORT "https://gitlab.gnome.org/GNOME/pan/issues")
 # https://cmake.org/cmake/help/latest/command/add_compile_definitions.html
 add_compile_definitions(HAVE_CONFIG_H)
 
-include_directories(".")
+include_directories("${CMAKE_SOURCE_DIR}")
 
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
 add_compile_options("-Wreorder" "-Wzero-as-null-pointer-constant")
 
-# https://cmake.org/cmake/help/latest/command/add_executable.html#add-executable
-add_executable(pan pan/gui/pan.cc)
+# https://cmake.org/cmake/help/latest/command/add_executable.html
+add_executable(pan pan/gui/pan.cc pan/gui/gui.cc)
+set_target_properties(pan PROPERTIES RUNTIME_OUTPUT_DIRECTORY "pan/gui")
 
 # Get the latest abbreviated commit hash of the working branch
 # see https://jonathanhamberg.com/post/cmake-embedding-git-hash/
@@ -52,6 +53,20 @@ file(GLOB PO_FILES "po/*.po")
 GETTEXT_CREATE_TRANSLATIONS(po/pan.pot ALL PO_FILES)
 set(GETTEXT_PACKAGE pan)
 
+find_package(PkgConfig REQUIRED)
+
+# see https://github.com/shlomif/gtk3-cmake-examples/blob/master/CMakeLists.txt
+# Use the package PkgConfig to detect GTK+ headers/library files
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+# Setup CMake to use GTK+, tell the compiler where to look for headers
+# and to the linker where to look for libraries
+include_directories(${GTK3_INCLUDE_DIRS})
+link_directories(${GTK3_LIBRARY_DIRS})
+# Add other flags to the compiler
+add_definitions(${GTK3_CFLAGS_OTHER})
+
+list(APPEND libraries_for_pan ${GTK3_LIBRARIES})
+
 function(AddSystemLib libname)
   # https://cmake.org/cmake/help/latest/command/include_directories.html
   include_directories(${${libname}_INCLUDE_DIRS})
@@ -64,14 +79,14 @@ find_package(Iconv)
 AddSystemLib(Iconv)
 if(Iconv_FOUND)
   set(HAVE_ICONV true)
+  list(APPEND libraries_for_pan ${Iconv_LIBRARIES})
 endif()
-
-find_package(PkgConfig REQUIRED)
 
 # https://cmake.org/cmake/help/latest/module/FindZLIB.html
 find_package(ZLIB 1.2.0 REQUIRED)
 AddSystemLib(ZLIB)
 set(HAVE_ZLIB ${ZLIB_FOUND})
+list(APPEND libraries_for_pan ${ZLIB_LIBRARIES})
 
 # D-Bus support
 # https://cmake.org/cmake/help/latest/command/option.html
@@ -81,11 +96,13 @@ if(WANT_DBUS)
 endif()
 
 # https://cmake.org/cmake/help/latest/module/FindPkgConfig.html#command:pkg_check_modules
-pkg_check_modules(GLIB REQUIRED glib-2.0>=2.26.0)
-AddSystemLib(GLIB)
-
 pkg_check_modules(GMIME REQUIRED gmime-3.0)
 AddSystemLib(GMIME)
+list(APPEND libraries_for_pan ${GMIME_LIBRARIES})
+
+pkg_check_modules(GLIB REQUIRED glib-2.0>=2.26.0)
+AddSystemLib(GLIB)
+list(APPEND libraries_for_pan ${GLIB_LIBRARIES})
 
 # Check for GMime cryptography support
 option(WANT_GMIME_CRYPTO "enable GMime cryptography support (default: on)" ON)
@@ -102,23 +119,15 @@ if(WANT_GTKSPELL)
   pkg_check_modules(ENCHANT REQUIRED enchant-2>=2.2.3)
   AddSystemLib(ENCHANT)
   set(HAVE_GTKSPELL true)
+  list(APPEND libraries_for_pan ${GTKSPELL_LIBRARIES} ${ENCHANT_LIBRARIES})
 endif()
-
-# see https://github.com/shlomif/gtk3-cmake-examples/blob/master/CMakeLists.txt
-# Use the package PkgConfig to detect GTK+ headers/library files
-pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
-# Setup CMake to use GTK+, tell the compiler where to look for headers
-# and to the linker where to look for libraries
-include_directories(${GTK3_INCLUDE_DIRS})
-link_directories(${GTK3_LIBRARY_DIRS})
-# Add other flags to the compiler
-add_definitions(${GTK3_CFLAGS_OTHER})
 
 option(WANT_WEBKIT "enable WebKitGTK support (experimental, default: off)")
 if(WANT_WEBKIT)
   pkg_check_modules(WEBKITGTK REQUIRED webkitgtk-3.0>=1.8.1)
   AddSystemLib(WEBKITGTK)
   set(HAVE_WEBKIT true)
+  list(APPEND libraries_for_pan ${WEBKITGTK_LIBRARIES})
 endif()
 
 option(WANT_GNUTLS "enable GnuTLS support (default: off)")
@@ -126,6 +135,7 @@ if(WANT_GNUTLS)
   pkg_check_modules(GNUTLS REQUIRED gnutls>=3.0.0)
   AddSystemLib(GNUTLS)
   set(HAVE_GNUTLS true)
+  list(APPEND libraries_for_pan ${GNUTLS_LIBRARIES})
 endif()
 
 option(WANT_NOTIFY "enable libnotify support (default: off)")
@@ -133,6 +143,7 @@ if(WANT_NOTIFY)
   pkg_check_modules(LIBNOTIFY REQUIRED libnotify>=0.4.1)
   AddSystemLib(LIBNOTIFY)
   set(HAVE_LIBNOTIFY true)
+  list(APPEND libraries_for_pan ${LIBNOTIFY_LIBRARIES})
 endif()
 
 option(WANT_GKR "enable GNOME Keyring or libsecret support (default: off)")
@@ -142,6 +153,7 @@ if(WANT_GKR)
   pkg_check_modules(GCR3 REQUIRED gcr-3>=3.20)
   AddSystemLib(GCR3)
   set(HAVE_GKR TRUE)
+  list(APPEND libraries_for_pan ${LIBSECRET_LIBRARIES} ${GCR3_LIBRARIES})
 endif()
 
 # not sure that yelp is working right now
@@ -179,11 +191,15 @@ message("CMAKE platform: ${PLATFORM_INFO}")
 # https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
 if(APPLE)
   set(G_OS_DARWIN TRUE)
+  # TODO: set LOCALEDIR 
 elseif(WIN32)
   # https://cmake.org/cmake/help/latest/command/target_compile_options.html
   add_compile_options(mms-bitfields)
   add_compile_definitions(WIN32_LEAN_AND_MEAN)
   add_link_libraries(shell32 ws2_32 pthread)
+  # TODO: set LOCALEDIR 
+else()
+  set(LOCALEDIR "/usr/share/locale")
 endif()
 
 # https://cmake.org/cmake/help/latest/command/add_subdirectory.html
@@ -193,6 +209,25 @@ add_subdirectory(pan)
 # https://cmake.org/cmake/help/latest/command/configure_file.html
 configure_file(config-cmake.h.in config.h)
 
+target_include_directories(uulib PRIVATE "uulib")
+target_compile_definitions(uulib PUBLIC "PROTOTYPES")
+
+target_include_directories(pangui INTERFACE icons_h)
+
+message("localedir is ${LOCALEDIR}")
+target_compile_definitions(pan PRIVATE "PANLOCALEDIR=\"${LOCALEDIR}\"")
+
+message("libs ${libraries_for_pan}")
 # https://cmake.org/cmake/help/latest/command/target_link_libraries.html
-target_link_libraries(pan data pangui generalutils tasks uulib ${GTK_LIBRARIES})
+target_link_libraries(pan
+  pangui
+  data-impl
+  tasks
+  data
+  usenet-utils
+  generalutils
+  uulib
+  general
+  ${libraries_for_pan}
+)
 

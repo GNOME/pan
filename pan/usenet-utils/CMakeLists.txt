@@ -1,4 +1,4 @@
-add_library(usenetutils
+add_library(usenet-utils
  filter-info.cc
  rules-info.cc
  gnksa.cc

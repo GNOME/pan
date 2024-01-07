@@ -80,7 +80,7 @@ list(APPEND stock_images
 foreach(image_file IN LISTS stock_images)
   string(REPLACE "\.png" "" image "${image_file}")
   list(APPEND pixbuf_list "extern const guint8 ${image}[]")
-  list(APPEND stock_image_list "${image}" "${CMAKE_CURRENT_BINARY_DIR}/${image_file}")
+  list(APPEND stock_image_list "${image}" "${CMAKE_CURRENT_SOURCE_DIR}/${image_file}")
 endforeach()
 
 set(noinst_DATA Pan.ico)
@@ -93,7 +93,7 @@ set(EXTRA_DIST
 
 set(noinst_HEADERS pan-pixbufs-internal.h pan-pixbufs.h)
 
-set(gtk_update_icon_cache "gtk-update-icon-cache -f -t")
+# set(gtk_update_icon_cache "gtk-update-icon-cache -f -t")
 
 # update-icon-cache:
 # 	@-if test -z "$(DESTDIR)"; then
@@ -142,12 +142,8 @@ add_custom_command(
   VERBATIM
 )
 
-message(${pixbuf_list})
 list(JOIN pixbuf_list ";\n" pixbuf_content)
-message(${pixbuf_content})
 file(WRITE "pan-pixbufs.h" "${pixbuf_content};\n")
 
-add_custom_target(PIXBUF_H ALL DEPENDS "pan-pixbufs-internal.h" "pan-pixbufs.h")
+add_custom_target(icons_h ALL DEPENDS "pan-pixbufs-internal.h" "pan-pixbufs.h")
 
-add_library(icons INTERFACE)
-target_include_directories(icons INTERFACE .)
