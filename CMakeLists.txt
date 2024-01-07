@@ -19,6 +19,8 @@ set(PACKAGE_BUGREPORT "https://gitlab.gnome.org/GNOME/pan/issues")
 add_compile_definitions(HAVE_CONFIG_H)
 
 include_directories("${CMAKE_SOURCE_DIR}")
+# this is where config.h is generated
+include_directories(${CMAKE_BINARY_DIR})
 
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
@@ -207,7 +209,7 @@ add_subdirectory(uulib)
 add_subdirectory(pan)
 
 # https://cmake.org/cmake/help/latest/command/configure_file.html
-configure_file(config-cmake.h.in config.h)
+configure_file(${CMAKE_SOURCE_DIR}/config-cmake.h.in ${CMAKE_BINARY_DIR}/config.h)
 
 target_include_directories(uulib PRIVATE "uulib")
 target_compile_definitions(uulib PUBLIC "PROTOTYPES")
