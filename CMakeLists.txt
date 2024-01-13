@@ -63,7 +63,6 @@ check_symbol_exists(localtime_r "time.h" HAVE_LOCALTIME_R)
 find_package(Gettext)
 file(STRINGS "po/LINGUAS" lang_list REGEX "^[a-z]")
 foreach(lang IN LISTS lang_list)
-  message("lang ${lang}")
   # this creates the gmo file in build directory instead of po/*.gmo. Although this is
   # a change from previous build system, it may not be a problem
   GETTEXT_PROCESS_PO_FILES(
@@ -236,10 +235,8 @@ target_compile_definitions(uulib PUBLIC "PROTOTYPES")
 
 target_include_directories(pangui INTERFACE icons_h)
 
-message("localedir is ${LOCALEDIR}")
 target_compile_definitions(pan PRIVATE "PANLOCALEDIR=\"${LOCALEDIR}\"")
 
-message("libs ${libraries_for_pan}")
 # https://cmake.org/cmake/help/latest/command/target_link_libraries.html
 target_link_libraries(pan
   pangui
