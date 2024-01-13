@@ -32,13 +32,11 @@ include_directories("${CMAKE_SOURCE_DIR}")
 # this is where config.h is generated
 include_directories(${CMAKE_BINARY_DIR})
 
-# Sanity checking
-# https://cmake.org/cmake/help/latest/command/add_compile_options.html
-add_compile_options("-Wreorder" "-Wzero-as-null-pointer-constant")
-
 # https://cmake.org/cmake/help/latest/command/add_executable.html
 add_executable(pan pan/gui/pan.cc pan/gui/gui.cc)
 set_target_properties(pan PROPERTIES RUNTIME_OUTPUT_DIRECTORY "pan/gui")
+target_compile_options(pan PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")
+
 
 # Get the latest abbreviated commit hash of the working branch
 # see https://jonathanhamberg.com/post/cmake-embedding-git-hash/
@@ -233,13 +231,16 @@ configure_file(${CMAKE_SOURCE_DIR}/config-cmake.h.in ${CMAKE_BINARY_DIR}/config.
 target_include_directories(uulib PRIVATE "uulib")
 target_compile_definitions(uulib PUBLIC "PROTOTYPES")
 
-target_include_directories(pangui INTERFACE icons_h)
+# make sure that pan-pixbufs*.h files are generated
+target_include_directories(pan-c-gui INTERFACE icons_h)
+add_dependencies(pan-c-gui icons_h)
 
 target_compile_definitions(pan PRIVATE "PANLOCALEDIR=\"${LOCALEDIR}\"")
 
 # https://cmake.org/cmake/help/latest/command/target_link_libraries.html
 target_link_libraries(pan
-  pangui
+  pan-cc-gui
+  pan-c-gui
   data-impl
   tasks
   data

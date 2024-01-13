@@ -18,3 +18,7 @@ add_library(tasks
   socket-impl-scripted.cc
   nntp-pool.cc
 )
+
+# Sanity checking
+# https://cmake.org/cmake/help/latest/command/add_compile_options.html
+target_compile_options(tasks PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")

@@ -9,3 +9,7 @@ set(SOURCES
 )
 
 add_library(data ${SOURCES})
+
+# Sanity checking
+# https://cmake.org/cmake/help/latest/command/add_compile_options.html
+target_compile_options(data PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")

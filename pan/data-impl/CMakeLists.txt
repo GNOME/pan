@@ -11,3 +11,7 @@ add_library(data-impl
  task-archive.cc
  xover.cc
 )
+
+# Sanity checking
+# https://cmake.org/cmake/help/latest/command/add_compile_options.html
+target_compile_options(data-impl PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")

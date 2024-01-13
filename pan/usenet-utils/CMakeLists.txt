@@ -12,3 +12,7 @@ add_library(usenet-utils
  blowfish.cc
  gpg.cc
 )
+
+# Sanity checking
+# https://cmake.org/cmake/help/latest/command/add_compile_options.html
+target_compile_options(usenet-utils PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")

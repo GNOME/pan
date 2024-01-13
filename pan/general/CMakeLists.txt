@@ -14,3 +14,7 @@ add_library(generalutils
  worker-pool.cc
  compression.cc
 )
+
+# Sanity checking
+# https://cmake.org/cmake/help/latest/command/add_compile_options.html
+target_compile_options(generalutils PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")

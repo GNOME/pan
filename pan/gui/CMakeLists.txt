@@ -1,12 +1,7 @@
-set(SRC_FILES 
+set(SRC_CC_FILES 
  actions.cc
  body-pane.cc
  dl-headers-ui.cc
- e-action-combo-box.c
- e-charset-combo-box.c
- e-charset-dialog.c
- e-charset.c
- e-cte-dialog.c
  group-pane.cc
  group-prefs-dialog.cc
  group-prefs.cc
@@ -14,7 +9,6 @@ set(SRC_FILES
  hig.cc
  log-ui.cc
  pan-file-entry.cc
- pan-pixbufs.c
  pan-tree.cc
  post-ui.cc
  prefs-file.cc
@@ -30,9 +24,24 @@ set(SRC_FILES
  server-ui.cc
  task-pane.cc
  url.cc
+)
+
+set(SRC_C_FILES 
+ e-action-combo-box.c
+ e-charset-combo-box.c
+ e-charset-dialog.c
+ e-charset.c
+ e-cte-dialog.c
+ pan-pixbufs.c
  xface.c
 )
 
 # https://cmake.org/cmake/help/latest/command/add_library.html
-add_library(pangui STATIC ${SRC_FILES})
-add_dependencies(pangui icons_h)
+add_library(pan-cc-gui STATIC ${SRC_CC_FILES})
+add_dependencies(pan-cc-gui icons_h)
+
+add_library(pan-c-gui STATIC ${SRC_C_FILES})
+
+# Sanity checking
+# https://cmake.org/cmake/help/latest/command/add_compile_options.html
+target_compile_options(pan-cc-gui PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")
