@@ -145,7 +145,7 @@ add_custom_command(
 )
 
 list(JOIN pixbuf_list ";\n" pixbuf_content)
-file(WRITE "pan-pixbufs.h" "${pixbuf_content};\n")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/pan-pixbufs.h" "${pixbuf_content};\n")
 
 add_custom_target(icons_h ALL DEPENDS "pan-pixbufs-internal.h" "pan-pixbufs.h")
 
