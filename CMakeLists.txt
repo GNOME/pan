@@ -1,6 +1,16 @@
 cmake_minimum_required(VERSION 3.25)
 
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+  message(FATAL_ERROR "Do not build in-source. Please remove CMakeCache.txt and the CMakeFiles/ directory. Then build out-of-source.")
+endif()
+
+# Standard CMake modules
+
+# https://cmake.org/cmake/help/latest/module/CheckIncludeFile.html
 include(CheckIncludeFile)
+# This will define the default values for installation directories (all platforms even if named GNU)
+# https://cmake.org/cmake/help/latest/module/GNUInstallDirs.html
+include(GNUInstallDirs)
 
 # https://cmake.org/cmake/help/latest/command/project.html
 project(Pan
@@ -56,7 +66,11 @@ foreach(lang IN LISTS lang_list)
   message("lang ${lang}")
   # this creates the gmo file in build directory instead of po/*.gmo. Although this is
   # a change from previous build system, it may not be a problem
-  GETTEXT_PROCESS_PO_FILES(${lang} ALL PO_FILES "${CMAKE_SOURCE_DIR}/po/${lang}.po")
+  GETTEXT_PROCESS_PO_FILES(
+    ${lang} ALL
+    INSTALL_DESTINATION "share/locale"
+    PO_FILES "${CMAKE_SOURCE_DIR}/po/${lang}.po"
+  )
 endforeach()
 add_dependencies(pan pofiles)
 set(GETTEXT_PACKAGE pan)
@@ -239,3 +253,8 @@ target_link_libraries(pan
   ${libraries_for_pan}
 )
 
+
+# Installation
+# https://cmake.org/cmake/help/book/mastering-cmake/chapter/Install.html
+# https://cmake.org/cmake/help/latest/command/install.html
+install(TARGETS pan DESTINATION ${CMAKE_INSTALL_BINDIR})
