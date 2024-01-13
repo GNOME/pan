@@ -108,15 +108,17 @@ set(noinst_HEADERS pan-pixbufs-internal.h pan-pixbufs.h)
 # 		done;
 # 	fi
 
-# install-icons:
-# 	for icon in $(public_icons); do
-# 		THEME=`echo $$icon | cut -d_ -f1`;
-# 		CONTEXT=`echo $$icon | cut -d_ -f2`;
-# 		SIZE=`echo $$icon | cut -d_ -f3`;
-# 		ICONFILE=`echo $$icon | cut -d_ -f4`;
-# 		mkdir -p $(DESTDIR)$(datadir)/icons/$$THEME/$$SIZE/$$CONTEXT;
-# 		$(INSTALL_DATA) $(srcdir)/$$icon $(DESTDIR)$(datadir)/icons/$$THEME/$$SIZE/$$CONTEXT/$$ICONFILE;
-# 	done
+# install hicolor icons
+foreach (icon_path ${public_icons})
+  cmake_path(GET icon_path FILENAME icon_file)
+  string(REPLACE "_" ";" words ${icon_file})
+  list(GET words 0 theme)
+  list(GET words 1 context)
+  list(GET words 2 size)
+  list(GET words 3 target)
+  set(destdir "${CMAKE_INSTALL_DATAROOTDIR}/icons/${theme}/${size}/${context}/")
+  install(FILES ${icon_file} DESTINATION ${destdir} RENAME ${target})
+endforeach()
 
 # uninstall-icons:
 # 	-for icon in $(public_icons); do
