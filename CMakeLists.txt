@@ -4,14 +4,6 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
   message(FATAL_ERROR "Do not build in-source. Please remove CMakeCache.txt and the CMakeFiles/ directory. Then build out-of-source.")
 endif()
 
-# Standard CMake modules
-
-# https://cmake.org/cmake/help/latest/module/CheckIncludeFile.html
-include(CheckIncludeFile)
-# This will define the default values for installation directories (all platforms even if named GNU)
-# https://cmake.org/cmake/help/latest/module/GNUInstallDirs.html
-include(GNUInstallDirs)
-
 # https://cmake.org/cmake/help/latest/command/project.html
 project(Pan
   VERSION 0.156
@@ -19,7 +11,15 @@ project(Pan
   HOMEPAGE_URL "https://gitlab.gnome.org/GNOME/pan"
 )
 
+# Standard CMake modules
+
+# https://cmake.org/cmake/help/latest/module/CheckIncludeFile.html
+include(CheckIncludeFile)
+# This will define the default values for installation directories (all platforms even if named GNU)
+# https://cmake.org/cmake/help/latest/module/GNUInstallDirs.html
+include(GNUInstallDirs)
 set(PACKAGE "pan")
+
 set(VERSION_TITLE "Mariinka")
 set(PACKAGE_BUGREPORT "https://gitlab.gnome.org/GNOME/pan/issues")
 
