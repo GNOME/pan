@@ -258,3 +258,17 @@ target_link_libraries(pan
 # https://cmake.org/cmake/help/book/mastering-cmake/chapter/Install.html
 # https://cmake.org/cmake/help/latest/command/install.html
 install(TARGETS pan DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+set(meta "org.gnome.pan.metainfo.xml")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/${meta}.in" "${CMAKE_CURRENT_BINARY_DIR}/${meta}")
+install(
+  FILES "${CMAKE_CURRENT_BINARY_DIR}/${meta}"
+  DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/metainfo"
+)
+
+set(desktop "org.gnome.pan.desktop")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/${desktop}.in" "${CMAKE_CURRENT_BINARY_DIR}/${desktop}")
+install(
+  FILES "${CMAKE_CURRENT_BINARY_DIR}/${desktop}"
+  DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications"
+)
