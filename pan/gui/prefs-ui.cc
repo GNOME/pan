@@ -1306,6 +1306,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     w = url_handler_new (prefs, "browser-mode", URL::get_environment(),
                                 "custom-browser", "firefox", b);
     HIG :: workarea_add_row (t, &row, _("_Web browser:"), w);
+    w = url_handler_new (prefs, "gemini-mode", URL::get_environment(),
+                                "custom-gemini", "lagrange", b);
+    HIG :: workarea_add_row (t, &row, _("_Gemini client:"), w);
     w = url_handler_new (prefs, "mailer-mode", URL::get_environment(),
                                 "custom-mailer", "thunderbird", b);
     HIG :: workarea_add_row (t, &row, _("_Mail reader:"), w);

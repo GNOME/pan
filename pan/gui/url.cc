@@ -86,6 +86,8 @@ URL :: open (const Prefs& prefs, const char * url, Mode mode)
   if (mode==AUTO) {
     if (strstr(url,"mailto"))
       mode = MAIL;
+    else if (strstr(url, "gemini://"))
+      mode = GEMINI;
     else if (strstr(url,"http") || strstr(url,"://"))
       mode = WEB;
     else // ...
@@ -102,9 +104,29 @@ URL :: open (const Prefs& prefs, const char * url, Mode mode)
     tmp = url;
   }
 
-  const char * mode_key = mode==WEB ? "browser-mode" : "mailer-mode";
-  const char * custom_key = mode==WEB ? "custom-browser" : "custom-mailer";
-  const char * custom_fallback = mode==WEB ? "firefox" : "thunderbird";
+  const char * mode_key;
+  const char * custom_key;
+  const char * custom_fallback;
+
+  switch (mode) {
+      case MAIL:
+          mode_key = "mailer-mode";
+          custom_key = "custom-mailer";
+          custom_fallback = "thunderbird";
+          break;
+      case GEMINI:
+          mode_key = "gemini-mode";
+          custom_key = "custom-gemini";
+          custom_fallback = "lagrange";
+          break;
+      case WEB:
+      default:
+          mode_key = "browser-mode";
+          custom_key = "custom-browser";
+          custom_fallback = "firefox";
+          break;
+  }
+
   std::string cmd;
   const std::string env (prefs.get_string (mode_key, get_environment()));
        if (env == "gnome")   cmd = "xdg-open";

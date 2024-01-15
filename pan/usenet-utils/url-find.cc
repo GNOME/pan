@@ -38,6 +38,7 @@ namespace {
         regex = g_regex_new("(?:"
             "https?://|"
             "ftps?(?:://|\\.)|" //ftp:// ftp.
+            "gemini://|" // gemini
             "news:|nntp:|"
             "www\\.|"
             "[[:alnum:]][[:alnum:]_+-\\.]*@" //email
@@ -112,6 +113,10 @@ pan :: url_findx (const StringView& text, StringView& setme_url)
       break;
     }
     else if (*pch=='f' && (end-pch>6) && !memcmp(pch,"ftp://", 6)) {
+      start = pch;
+      break;
+    }
+    if (*pch=='g' && (end-pch>9) && !memcmp(pch,"gemini://",9)) {
       start = pch;
       break;
     }
