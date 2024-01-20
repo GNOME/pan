@@ -28,6 +28,18 @@ set(PACKAGE_BUGREPORT "https://gitlab.gnome.org/GNOME/pan/issues")
 # https://cmake.org/cmake/help/latest/command/add_compile_definitions.html
 add_compile_definitions(HAVE_CONFIG_H)
 
+# Silence deprecation warnings for things deprecated before 2.26,
+# and generally set the target behaviour to be like GLib 2.26.
+# In principle this should match $GLIB_REQUIRED, but 2.26 is the oldest
+# version for which the macros exist (and has been unsupported since
+# around 2011 in any case).
+add_compile_definitions(GLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)
+
+# Highest version number from which new features are allowed to be used,
+# even within a GLIB_CHECK_VERSION check. GLib will produce compile-time
+# warnings when features of a newer GLib version are used.
+add_compile_definitions("GLIB_VERSION_MAX_ALLOWED=G_ENCODE_VERSION(2,36)")
+
 include_directories("${CMAKE_SOURCE_DIR}")
 # this is where config.h is generated
 include_directories(${CMAKE_BINARY_DIR})
