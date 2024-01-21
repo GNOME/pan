@@ -12,6 +12,7 @@ project(Pan
 )
 
 # Standard CMake modules
+include(CTest)
 
 # https://cmake.org/cmake/help/latest/module/CheckIncludeFile.html
 include(CheckIncludeFile)
