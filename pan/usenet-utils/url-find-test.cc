@@ -78,6 +78,22 @@ main (void)
   check (url_find (in, out))
   check (out == "http://www.www.com")
 
+  in = "Sample gemini link: gemini://example.com";
+  check (url_find (in, out))
+  check (out == "gemini://example.com")
+
+  in = "Second gemini link: gemini://example.com/test/foo";
+  check (url_find (in, out))
+  check (out == "gemini://example.com/test/foo")
+
+  in = "Third gemini link: gemini://example.com/test/foo.gmi";
+  check (url_find (in, out))
+  check (out == "gemini://example.com/test/foo.gmi")
+
+  in = "Fourth gemini link: gemini://example.com/test/foo.gmi and the last one";
+  check (url_find (in, out))
+  check (out == "gemini://example.com/test/foo.gmi")
+
   // success
   return 0;
 }

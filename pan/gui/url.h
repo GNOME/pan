@@ -31,7 +31,7 @@ namespace pan
 
     static void get_default_editors (std::set<std::string>& setme);
 
-    enum Mode { WEB, MAIL, AUTO };
+    enum Mode { WEB, MAIL, GEMINI, AUTO };
 
     static void open (const Prefs&, const char * url, Mode mode=AUTO);
   };
