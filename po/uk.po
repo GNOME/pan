@@ -2,13 +2,13 @@
 #
 # Yuri Syrota <rasta@renome.rovno.ua>, 2002.
 # Maxim Dzumanenko <mvd@mylinux.com.ua>, 2003.
-# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021, 2022, 2023.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021, 2022, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: pan\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2023-01-25 21:43+0000\n"
-"PO-Revision-Date: 2023-01-27 19:25+0200\n"
+"POT-Creation-Date: 2024-01-21 17:07+0000\n"
+"PO-Revision-Date: 2024-01-21 21:32+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 23.04.1\n"
 
 #. update the titlebar
 #: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:27
@@ -83,7 +83,7 @@ msgid "Error opening file \"%s\" %s"
 msgstr "Помилка при відкритті файла «%s» %s"
 
 #: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
-#: pan/data-impl/server.cc:489 pan/general/file-util.cc:312
+#: pan/data-impl/server.cc:495 pan/general/file-util.cc:312
 #: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:741
 #, c-format
 msgid "Error reading file \"%s\": %s"
@@ -128,12 +128,12 @@ msgstr "Паролі до серверів переглядача новин «P
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "Пропускаємо файл newsrc для сервера «%s»"
 
-#: pan/data-impl/headers.cc:617
+#: pan/data-impl/headers.cc:618
 #, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr "Застаріло %lu статей з «%s»"
 
-#: pan/data-impl/headers.cc:624
+#: pan/data-impl/headers.cc:625
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
@@ -142,23 +142,23 @@ msgstr ""
 "Не підтримувана версія даних для %s заголовків: %d.\n"
 "Чи не запустили ви випадково стару версію Pan?"
 
-#: pan/data-impl/headers.cc:639
+#: pan/data-impl/headers.cc:640
 #, c-format
 msgid "Loaded %llu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr "Завантажено %llu статей для «%s» за %.1f секунд (%.0f за секунду)"
 
-#: pan/data-impl/headers.cc:868
+#: pan/data-impl/headers.cc:869
 #, c-format
 msgid ""
 "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
 msgstr "Збережено %lu частин, %lu статей у «%s» у %.1f секунд (%.0f статей/с)"
 
-#: pan/data-impl/headers.cc:1201
+#: pan/data-impl/headers.cc:1202
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "Додано %lu статей до %s."
 
-#: pan/data-impl/server.cc:259
+#: pan/data-impl/server.cc:263
 #, c-format
 msgid "Received no password from libsecret for server %s."
 msgstr "Від libsecret не отримано жодного пароля для сервера %s."
@@ -224,7 +224,7 @@ msgstr "_Файл"
 msgid "_Edit"
 msgstr "З_міни"
 
-#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1111
+#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1121
 msgid "_Layout"
 msgstr "_Компонування"
 
@@ -252,7 +252,7 @@ msgstr "Фі_льтр"
 msgid "_Go"
 msgstr "Пере_хід"
 
-#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1161
+#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1171
 msgid "_Actions"
 msgstr "Ді_ї"
 
@@ -817,8 +817,8 @@ msgid "Unnamed File"
 msgstr "Файл без назви"
 
 #: pan/gui/body-pane.cc:1117 pan/gui/gui.cc:1956 pan/gui/header-pane.cc:1306
-#: pan/gui/header-pane.cc:1735 pan/gui/post-ui.cc:2641 pan/gui/prefs-ui.cc:859
-#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:797
+#: pan/gui/header-pane.cc:1735 pan/gui/post-ui.cc:2641 pan/gui/prefs-ui.cc:865
+#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:796
 msgid "Subject"
 msgstr "Тема"
 
@@ -827,7 +827,7 @@ msgid "From"
 msgstr "Від"
 
 #: pan/gui/body-pane.cc:1121 pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1814
-#: pan/gui/log-ui.cc:308 pan/gui/prefs-ui.cc:855
+#: pan/gui/log-ui.cc:308 pan/gui/prefs-ui.cc:861
 msgid "Date"
 msgstr "Дата"
 
@@ -924,7 +924,7 @@ msgstr "Отримувати _всі заголовки"
 msgid "Get the _latest N headers: "
 msgstr "Отримувати _останні N заголовків: "
 
-#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:852
+#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:858
 msgid "Action"
 msgstr "Дія"
 
@@ -1010,7 +1010,7 @@ msgid "Visual"
 msgstr "Візуальне"
 
 #: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2154 pan/gui/post-ui.cc:547
-#: pan/gui/prefs-ui.cc:763
+#: pan/gui/prefs-ui.cc:769
 msgid "Character Encoding"
 msgstr "Кодування символів"
 
@@ -1251,11 +1251,11 @@ msgstr[1] "У цій статті не вистачає %d з її %d части
 msgstr[2] "У цій статті не вистачає %d з її %d частин."
 msgstr[3] "У цій статті не вистачає %d з її %d частини."
 
-#: pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1308 pan/gui/task-pane.cc:799
+#: pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1308 pan/gui/task-pane.cc:798
 msgid "Message-ID"
 msgstr "Ід. повідомлення"
 
-#: pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1783 pan/gui/prefs-ui.cc:856
+#: pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1783 pan/gui/prefs-ui.cc:862
 msgid "Lines"
 msgstr "Рядки"
 
@@ -1263,7 +1263,7 @@ msgstr "Рядки"
 msgid "Size"
 msgstr "Розмір"
 
-#: pan/gui/gui.cc:1959 pan/gui/header-pane.cc:1799 pan/gui/prefs-ui.cc:854
+#: pan/gui/gui.cc:1959 pan/gui/header-pane.cc:1799 pan/gui/prefs-ui.cc:860
 msgid "Bytes"
 msgstr "Байтів"
 
@@ -1309,7 +1309,7 @@ msgstr "%s: %d бездіяльних, %d активних на %.1f КіБ/с"
 msgid "No Tasks"
 msgstr "Немає завдань"
 
-#: pan/gui/gui.cc:2267 pan/gui/prefs-ui.cc:1094
+#: pan/gui/gui.cc:2267 pan/gui/prefs-ui.cc:1104
 msgid "Tasks"
 msgstr "Завдання"
 
@@ -1327,20 +1327,20 @@ msgstr ""
 "«File → Журнал подій» і виправте проблему, потім скористайтеся пунктом меню "
 "«Файл → Працювати автономно», щоб продовжити."
 
-#: pan/gui/header-pane.cc:1304 pan/gui/task-pane.cc:795
+#: pan/gui/header-pane.cc:1304 pan/gui/task-pane.cc:794
 msgid "Subject or Author"
 msgstr "Тема або автор"
 
-#: pan/gui/header-pane.cc:1305 pan/gui/task-pane.cc:796
+#: pan/gui/header-pane.cc:1305 pan/gui/task-pane.cc:795
 msgid "Sub or Auth (regex)"
 msgstr "Тема або автор (форм.вираз)"
 
 #: pan/gui/header-pane.cc:1307 pan/gui/header-pane.cc:1767
-#: pan/gui/prefs-ui.cc:853 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:798
+#: pan/gui/prefs-ui.cc:859 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:797
 msgid "Author"
 msgstr "Автор"
 
-#: pan/gui/header-pane.cc:1752 pan/gui/prefs-ui.cc:857
+#: pan/gui/header-pane.cc:1752 pan/gui/prefs-ui.cc:863
 msgid "Score"
 msgstr "Оцінка"
 
@@ -1887,11 +1887,11 @@ msgstr "Збереження черги вивантажень як файла N
 msgid "Couldn't parse %s color \"%s\""
 msgstr "Не вдалося обробити колір %s «%s»"
 
-#: pan/gui/prefs-ui.cc:127
+#: pan/gui/prefs-ui.cc:133
 msgid "Grab Key"
 msgstr "Захоплення комбінації"
 
-#: pan/gui/prefs-ui.cc:133
+#: pan/gui/prefs-ui.cc:139
 #, c-format
 msgid ""
 "Press the combination of the keys\n"
@@ -1900,321 +1900,321 @@ msgstr ""
 "Натисніть комбінацію клавіш,\n"
 "якою ви хочете скористатися для дії «%s»."
 
-#: pan/gui/prefs-ui.cc:173
+#: pan/gui/prefs-ui.cc:179
 msgid "Edit Shortcut"
 msgstr "Редагування скорочення"
 
-#: pan/gui/prefs-ui.cc:235
+#: pan/gui/prefs-ui.cc:241
 msgid "Error: Shortcut key is invalid!"
 msgstr "Помилка: комбінація клавіш скорочення є некоректною!"
 
-#: pan/gui/prefs-ui.cc:251
+#: pan/gui/prefs-ui.cc:257
 msgid "Error: Shortcut key already exists!"
 msgstr "Помилка: таке скорочення вже існує!"
 
-#: pan/gui/prefs-ui.cc:565
+#: pan/gui/prefs-ui.cc:571
 msgid "Show only icons"
 msgstr "Показати лише піктограми"
 
-#: pan/gui/prefs-ui.cc:566
+#: pan/gui/prefs-ui.cc:572
 msgid "Show only text"
 msgstr "Показувати лише текст"
 
-#: pan/gui/prefs-ui.cc:567
+#: pan/gui/prefs-ui.cc:573
 msgid "Show icons and text"
 msgstr "Показувати піктограми і текст"
 
-#: pan/gui/prefs-ui.cc:606
+#: pan/gui/prefs-ui.cc:612
 msgid "Use GNOME Preferences"
 msgstr "Скористатися налаштуваннями GNOME"
 
-#: pan/gui/prefs-ui.cc:607
+#: pan/gui/prefs-ui.cc:613
 msgid "Use KDE Preferences"
 msgstr "Скористатися налаштуваннями KDE"
 
-#: pan/gui/prefs-ui.cc:608
+#: pan/gui/prefs-ui.cc:614
 msgid "Use OS X Preferences"
 msgstr "Скористатися налаштуваннями OS X"
 
-#: pan/gui/prefs-ui.cc:609
+#: pan/gui/prefs-ui.cc:615
 msgid "Use Windows Preferences"
 msgstr "Скористатися налаштуваннями Windows"
 
-#: pan/gui/prefs-ui.cc:610
+#: pan/gui/prefs-ui.cc:616
 msgid "Custom Command:"
 msgstr "Нетипова команда:"
 
-#: pan/gui/prefs-ui.cc:662
+#: pan/gui/prefs-ui.cc:668
 msgid "Disabled"
 msgstr "Вимкнено"
 
-#: pan/gui/prefs-ui.cc:663
+#: pan/gui/prefs-ui.cc:669
 msgid "Only new (score == 0)"
 msgstr "Лише нові (рейтинг == 0)"
 
-#: pan/gui/prefs-ui.cc:664
+#: pan/gui/prefs-ui.cc:670
 msgid "9999 or more"
 msgstr "9999 або більше"
 
-#: pan/gui/prefs-ui.cc:665
+#: pan/gui/prefs-ui.cc:671
 msgid "5000 to 9998"
 msgstr "від 5000 до 9998"
 
-#: pan/gui/prefs-ui.cc:666
+#: pan/gui/prefs-ui.cc:672
 msgid "1 to 4999"
 msgstr "від 1 до 4999"
 
-#: pan/gui/prefs-ui.cc:667
+#: pan/gui/prefs-ui.cc:673
 msgid "-9998 to -1"
 msgstr "від -9998 до -1"
 
-#: pan/gui/prefs-ui.cc:668
+#: pan/gui/prefs-ui.cc:674
 msgid "-9999 or less"
 msgstr "-9999 або менше"
 
-#: pan/gui/prefs-ui.cc:732
+#: pan/gui/prefs-ui.cc:738
 #, c-format
 msgid ""
 "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
-"Виберіть типове <u>загальне</u> кодування символів. Поточне кодування: <b>"
-"%s</b>."
+"Виберіть типове <u>загальне</u> кодування символів. Поточне кодування: "
+"<b>%s</b>."
 
-#: pan/gui/prefs-ui.cc:764
+#: pan/gui/prefs-ui.cc:770
 msgid "Global Character Set Settings"
 msgstr "Загальні параметри кодування символів"
 
-#: pan/gui/prefs-ui.cc:858 pan/gui/task-pane.cc:1072
+#: pan/gui/prefs-ui.cc:864 pan/gui/task-pane.cc:1068
 msgid "State"
 msgstr "Стан"
 
-#: pan/gui/prefs-ui.cc:892
+#: pan/gui/prefs-ui.cc:898
 msgid "Enabled"
 msgstr "Увімкнено"
 
-#: pan/gui/prefs-ui.cc:896
+#: pan/gui/prefs-ui.cc:902
 msgid "Column Name"
 msgstr "Назва стовпчика"
 
-#: pan/gui/prefs-ui.cc:934
+#: pan/gui/prefs-ui.cc:940
 msgid "Pan: Preferences"
 msgstr "Pan: налаштування"
 
-#: pan/gui/prefs-ui.cc:949
+#: pan/gui/prefs-ui.cc:955
 msgid "Mouse"
 msgstr "Миша"
 
-#: pan/gui/prefs-ui.cc:951
+#: pan/gui/prefs-ui.cc:957
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Одинарне клацання активує, а не позначає _групи"
 
-#: pan/gui/prefs-ui.cc:953
+#: pan/gui/prefs-ui.cc:959
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Одинарне клацання активує, а не позначає с_татті"
 
-#: pan/gui/prefs-ui.cc:956
+#: pan/gui/prefs-ui.cc:962
 msgid "Groups"
 msgstr "Групи"
 
-#: pan/gui/prefs-ui.cc:958
+#: pan/gui/prefs-ui.cc:964
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Отримувати нові заголовки у підписаних групах при _запуску"
 
-#: pan/gui/prefs-ui.cc:960
+#: pan/gui/prefs-ui.cc:966
 msgid "Get new headers when _entering group"
 msgstr "Отримувати нові заголовки при в_ході до групи"
 
-#: pan/gui/prefs-ui.cc:962
+#: pan/gui/prefs-ui.cc:968
 msgid "Mark entire group _read when leaving group"
 msgstr "Позначати усю групу п_рочитаною при полишенні групи"
 
-#: pan/gui/prefs-ui.cc:964
+#: pan/gui/prefs-ui.cc:970
 msgid "Mark entire group read before getting _new headers"
 msgstr "Позначати усю групу прочитаною до _отримання нових заголовків"
 
-#: pan/gui/prefs-ui.cc:966
+#: pan/gui/prefs-ui.cc:972
 msgid "E_xpand all threads when entering group"
 msgstr "Роз_гортати усі гілки при вході до групи"
 
-#: pan/gui/prefs-ui.cc:971
+#: pan/gui/prefs-ui.cc:977
 msgid "Articles"
 msgstr "Статті"
 
-#: pan/gui/prefs-ui.cc:973
+#: pan/gui/prefs-ui.cc:979
 msgid "Mark downloaded articles read"
 msgstr "Позначати отримані статті як прочитані"
 
-#: pan/gui/prefs-ui.cc:975
+#: pan/gui/prefs-ui.cc:981
 msgid "Space selects next article rather than next unread"
 msgstr "Пробіл вибирає наступну статтю, а не наступну непрочитану статтю"
 
-#: pan/gui/prefs-ui.cc:977
+#: pan/gui/prefs-ui.cc:983
 msgid "Expand threads upon selection"
 msgstr "Розгортати гілки при позначенні"
 
-#: pan/gui/prefs-ui.cc:979
+#: pan/gui/prefs-ui.cc:985
 msgid "Always ask before deleting an article"
 msgstr "Завжди питати перед вилученням статті"
 
-#: pan/gui/prefs-ui.cc:981
+#: pan/gui/prefs-ui.cc:987
 msgid "Smooth scrolling"
 msgstr "Плавне гортання"
 
-#: pan/gui/prefs-ui.cc:986
+#: pan/gui/prefs-ui.cc:992
 msgid "Article Cache"
 msgstr "Кеш статей"
 
-#: pan/gui/prefs-ui.cc:987
+#: pan/gui/prefs-ui.cc:993
 msgid "Clear article cache on shutdown"
 msgstr "Спорожняти кеш статей при вимиканні"
 
-#: pan/gui/prefs-ui.cc:990
+#: pan/gui/prefs-ui.cc:996
 msgid "Size of article cache (in MiB):"
 msgstr "Розмір кешу статей (у МіБ):"
 
-#: pan/gui/prefs-ui.cc:995
+#: pan/gui/prefs-ui.cc:1001
 msgid "File extension for cached articles: "
 msgstr "Суфікс назв файлів кешованих статей: "
 
-#: pan/gui/prefs-ui.cc:1000
+#: pan/gui/prefs-ui.cc:1006
 msgid "Tabs"
 msgstr "Вкладки"
 
-#: pan/gui/prefs-ui.cc:1005
+#: pan/gui/prefs-ui.cc:1011
 msgid "_Behavior"
 msgstr "По_ведінка"
 
-#: pan/gui/prefs-ui.cc:1005
+#: pan/gui/prefs-ui.cc:1011
 msgid "Behavior"
 msgstr "Поведінка"
 
-#: pan/gui/prefs-ui.cc:1011
+#: pan/gui/prefs-ui.cc:1017
 msgid "Task Pane"
 msgstr "Панель завдань"
 
-#: pan/gui/prefs-ui.cc:1012
+#: pan/gui/prefs-ui.cc:1018
 msgid "Show task pane popups"
 msgstr "Показувати контекстні панелі панелі завдань"
 
-#: pan/gui/prefs-ui.cc:1014
+#: pan/gui/prefs-ui.cc:1020
 msgid "Show Download Meter"
 msgstr "Показувати лічильник отримання даних"
 
-#: pan/gui/prefs-ui.cc:1018
+#: pan/gui/prefs-ui.cc:1024
 msgid "_Panes"
 msgstr "П_анелі"
 
-#: pan/gui/prefs-ui.cc:1018
+#: pan/gui/prefs-ui.cc:1024
 msgid "Panes"
 msgstr "Панелі"
 
-#: pan/gui/prefs-ui.cc:1024
+#: pan/gui/prefs-ui.cc:1030
 msgid "Language Settings"
 msgstr "Параметри мови"
 
 #. systray and notify popup
-#: pan/gui/prefs-ui.cc:1033
+#: pan/gui/prefs-ui.cc:1039
 msgid "System Tray Behavior"
 msgstr "Поведінка у системному лотку"
 
-#: pan/gui/prefs-ui.cc:1035
+#: pan/gui/prefs-ui.cc:1041
 msgid "Minimize to tray"
 msgstr "Мінімізувати до лотка"
 
-#: pan/gui/prefs-ui.cc:1037
+#: pan/gui/prefs-ui.cc:1043
 msgid "Start Pan minimized"
 msgstr "Запускати «Pan» мінімізованим"
 
-#: pan/gui/prefs-ui.cc:1040
+#: pan/gui/prefs-ui.cc:1046
 msgid "Show notifications"
 msgstr "Показувати сповіщення"
 
 #. allow multiple instances (seperate, not communicating with dbus)
-#: pan/gui/prefs-ui.cc:1045
+#: pan/gui/prefs-ui.cc:1051
 msgid "Startup Behavior"
 msgstr "Поведінка при запуску"
 
-#: pan/gui/prefs-ui.cc:1047
+#: pan/gui/prefs-ui.cc:1053
 msgid "Allow multiple instances of Pan"
 msgstr "Дозволити запуск декількох екземплярів «Pan»"
 
-#: pan/gui/prefs-ui.cc:1052
+#: pan/gui/prefs-ui.cc:1058
 msgid "Autosave Article Draft"
 msgstr "Автозбереження чернетки статті"
 
-#: pan/gui/prefs-ui.cc:1054
+#: pan/gui/prefs-ui.cc:1060
 msgid "Minutes to autosave the current Article Draft: "
 msgstr "Інтервал автозбереження поточної чернетки статті: "
 
-#: pan/gui/prefs-ui.cc:1059
+#: pan/gui/prefs-ui.cc:1065
 msgid "Autosave Articles"
 msgstr "Автозбереження статей"
 
-#: pan/gui/prefs-ui.cc:1061
+#: pan/gui/prefs-ui.cc:1067
 msgid "Minutes to autosave newsrc files: "
 msgstr "Інтервал автозбереження newsrc у хвилинах: "
 
-#: pan/gui/prefs-ui.cc:1068
+#: pan/gui/prefs-ui.cc:1074
 msgid "Password Storage"
 msgstr "Сховище паролів"
 
-#: pan/gui/prefs-ui.cc:1069
+#: pan/gui/prefs-ui.cc:1076
 msgid "Save passwords in password storage"
 msgstr "Зберігати паролі у сховищі паролів"
 
-#: pan/gui/prefs-ui.cc:1073
+#: pan/gui/prefs-ui.cc:1083
 msgid "_Miscellaneous"
 msgstr "_Інше"
 
-#: pan/gui/prefs-ui.cc:1073
+#: pan/gui/prefs-ui.cc:1083
 msgid "Miscellaneous"
 msgstr "Інше"
 
-#: pan/gui/prefs-ui.cc:1078
+#: pan/gui/prefs-ui.cc:1088
 msgid "Pane Layout"
 msgstr "Розташування панелей"
 
-#: pan/gui/prefs-ui.cc:1097
+#: pan/gui/prefs-ui.cc:1107
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=Групи, 2=Заголовки, 3=Вміст"
 
-#: pan/gui/prefs-ui.cc:1099
+#: pan/gui/prefs-ui.cc:1109
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=Групи, 2=Вміст, 3=Заголовки"
 
-#: pan/gui/prefs-ui.cc:1101
+#: pan/gui/prefs-ui.cc:1111
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=Заголовки, 2=Групи, 3=Вміст"
 
-#: pan/gui/prefs-ui.cc:1103
+#: pan/gui/prefs-ui.cc:1113
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=Заголовки, 2=Вміст, 3=Групи"
 
-#: pan/gui/prefs-ui.cc:1105
+#: pan/gui/prefs-ui.cc:1115
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=Вміст, 2=Групи, 3=Заголовки"
 
-#: pan/gui/prefs-ui.cc:1107
+#: pan/gui/prefs-ui.cc:1117
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=Вміст, 2=Заголовки, 3=Групи"
 
-#: pan/gui/prefs-ui.cc:1111
+#: pan/gui/prefs-ui.cc:1121
 msgid "Layout"
 msgstr "Компонування"
 
-#: pan/gui/prefs-ui.cc:1116
+#: pan/gui/prefs-ui.cc:1126
 msgid "Header Pane Columns"
 msgstr "Стовпчики панелі заголовків"
 
-#: pan/gui/prefs-ui.cc:1120
+#: pan/gui/prefs-ui.cc:1130
 msgid "_Headers"
 msgstr "За_головки"
 
-#: pan/gui/prefs-ui.cc:1120
+#: pan/gui/prefs-ui.cc:1130
 msgid "Headers"
 msgstr "Заголовки"
 
-#: pan/gui/prefs-ui.cc:1126
+#: pan/gui/prefs-ui.cc:1136
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
 "automatically, based on an article's score."
@@ -2222,198 +2222,202 @@ msgstr ""
 "За допомогою цього меню ви можете налаштувати «Pan» на виконання певних дій "
 "від вашого імені автоматично, на основі рейтингу статті."
 
-#: pan/gui/prefs-ui.cc:1131
+#: pan/gui/prefs-ui.cc:1141
 msgid "Mark affected articles read"
 msgstr "Позначити відповідні статті як прочитані"
 
-#: pan/gui/prefs-ui.cc:1140
+#: pan/gui/prefs-ui.cc:1150
 msgid "_Delete articles scoring at: "
 msgstr "Ви_лучати статті з рейтингом: "
 
-#: pan/gui/prefs-ui.cc:1146
+#: pan/gui/prefs-ui.cc:1156
 msgid "Mark articles read scoring at: "
 msgstr "Позначати як прочитані статті з рейтингом:"
 
-#: pan/gui/prefs-ui.cc:1152
+#: pan/gui/prefs-ui.cc:1162
 msgid "_Cache articles scoring at: "
 msgstr "_Кешувати статті з рейтингом: "
 
-#: pan/gui/prefs-ui.cc:1158
+#: pan/gui/prefs-ui.cc:1168
 msgid "Download attachments of articles scoring at: "
 msgstr "Отримувати долучення до статей із рейтингами: "
 
-#: pan/gui/prefs-ui.cc:1161
+#: pan/gui/prefs-ui.cc:1171
 msgid "Actions"
 msgstr "Дії"
 
-#: pan/gui/prefs-ui.cc:1166 pan/gui/prefs-ui.cc:1187
+#: pan/gui/prefs-ui.cc:1176 pan/gui/prefs-ui.cc:1197
 msgid "Fonts"
 msgstr "Шрифти"
 
-#: pan/gui/prefs-ui.cc:1168
+#: pan/gui/prefs-ui.cc:1178
 msgid "Use custom font in Group Pane:"
 msgstr "Власний шрифт у панелі групи:"
 
-#: pan/gui/prefs-ui.cc:1173
+#: pan/gui/prefs-ui.cc:1183
 msgid "Use custom font in Header Pane:"
 msgstr "Власний шрифт у панелі заголовків:"
 
-#: pan/gui/prefs-ui.cc:1178
+#: pan/gui/prefs-ui.cc:1188
 msgid "Use custom font in Body Pane:"
 msgstr "Власний шрифт у панелі вмісту:"
 
-#: pan/gui/prefs-ui.cc:1183
+#: pan/gui/prefs-ui.cc:1193
 msgid "Monospace font:"
 msgstr "Моноширинний шрифт:"
 
-#: pan/gui/prefs-ui.cc:1187
+#: pan/gui/prefs-ui.cc:1197
 msgid "_Fonts"
 msgstr "Ш_рифти"
 
-#: pan/gui/prefs-ui.cc:1196
+#: pan/gui/prefs-ui.cc:1206
 msgid "Header Pane"
 msgstr "Панель заголовків"
 
-#: pan/gui/prefs-ui.cc:1199 pan/gui/prefs-ui.cc:1205 pan/gui/prefs-ui.cc:1211
-#: pan/gui/prefs-ui.cc:1217 pan/gui/prefs-ui.cc:1223 pan/gui/prefs-ui.cc:1229
-#: pan/gui/prefs-ui.cc:1238 pan/gui/prefs-ui.cc:1244 pan/gui/prefs-ui.cc:1250
-#: pan/gui/prefs-ui.cc:1256 pan/gui/prefs-ui.cc:1262 pan/gui/prefs-ui.cc:1272
-#: pan/gui/prefs-ui.cc:1282
+#: pan/gui/prefs-ui.cc:1209 pan/gui/prefs-ui.cc:1215 pan/gui/prefs-ui.cc:1221
+#: pan/gui/prefs-ui.cc:1227 pan/gui/prefs-ui.cc:1233 pan/gui/prefs-ui.cc:1239
+#: pan/gui/prefs-ui.cc:1248 pan/gui/prefs-ui.cc:1254 pan/gui/prefs-ui.cc:1260
+#: pan/gui/prefs-ui.cc:1266 pan/gui/prefs-ui.cc:1272 pan/gui/prefs-ui.cc:1282
+#: pan/gui/prefs-ui.cc:1292
 msgid "Text:"
 msgstr "Текст:"
 
-#: pan/gui/prefs-ui.cc:1201 pan/gui/prefs-ui.cc:1207 pan/gui/prefs-ui.cc:1213
-#: pan/gui/prefs-ui.cc:1219 pan/gui/prefs-ui.cc:1225 pan/gui/prefs-ui.cc:1231
-#: pan/gui/prefs-ui.cc:1240 pan/gui/prefs-ui.cc:1246 pan/gui/prefs-ui.cc:1252
-#: pan/gui/prefs-ui.cc:1258 pan/gui/prefs-ui.cc:1264 pan/gui/prefs-ui.cc:1274
-#: pan/gui/prefs-ui.cc:1284
+#: pan/gui/prefs-ui.cc:1211 pan/gui/prefs-ui.cc:1217 pan/gui/prefs-ui.cc:1223
+#: pan/gui/prefs-ui.cc:1229 pan/gui/prefs-ui.cc:1235 pan/gui/prefs-ui.cc:1241
+#: pan/gui/prefs-ui.cc:1250 pan/gui/prefs-ui.cc:1256 pan/gui/prefs-ui.cc:1262
+#: pan/gui/prefs-ui.cc:1268 pan/gui/prefs-ui.cc:1274 pan/gui/prefs-ui.cc:1284
+#: pan/gui/prefs-ui.cc:1294
 msgid "Background:"
 msgstr "Тло:"
 
-#: pan/gui/prefs-ui.cc:1203
+#: pan/gui/prefs-ui.cc:1213
 msgid "Scores of 9999 or more:"
 msgstr "Рейтинги 9999 і більше:"
 
-#: pan/gui/prefs-ui.cc:1209
+#: pan/gui/prefs-ui.cc:1219
 msgid "Scores from 5000 to 9998:"
 msgstr "Рейтинги від 5000 до 9998:"
 
-#: pan/gui/prefs-ui.cc:1215
+#: pan/gui/prefs-ui.cc:1225
 msgid "Scores from 1 to 4999:"
 msgstr "Рейтинги від 1 до 4999:"
 
-#: pan/gui/prefs-ui.cc:1221
+#: pan/gui/prefs-ui.cc:1231
 msgid "Scores from -9998 to -1:"
 msgstr "Рейтинги від -9998 до -1:"
 
-#: pan/gui/prefs-ui.cc:1227
+#: pan/gui/prefs-ui.cc:1237
 msgid "Scores of -9999 or less:"
 msgstr "Рейтинги -9999 і менше:"
 
-#: pan/gui/prefs-ui.cc:1233
+#: pan/gui/prefs-ui.cc:1243
 msgid "Collapsed thread with unread articles:"
 msgstr "Згорнута гілка із непрочитаними статтями:"
 
-#: pan/gui/prefs-ui.cc:1235
+#: pan/gui/prefs-ui.cc:1245
 msgid "Body Pane"
 msgstr "Панель вмісту"
 
-#: pan/gui/prefs-ui.cc:1242
+#: pan/gui/prefs-ui.cc:1252
 msgid "First level of quoted text:"
 msgstr "Перший рівень цитування тексту:"
 
-#: pan/gui/prefs-ui.cc:1248
+#: pan/gui/prefs-ui.cc:1258
 msgid "Second level of quoted text:"
 msgstr "Другий рівень цитування тексту:"
 
-#: pan/gui/prefs-ui.cc:1254
+#: pan/gui/prefs-ui.cc:1264
 msgid "Third level of quoted text:"
 msgstr "Третій рівень цитування тексту:"
 
 #.
-#: pan/gui/prefs-ui.cc:1260
+#: pan/gui/prefs-ui.cc:1270
 msgid "URL:"
 msgstr "Адреса:"
 
 #.
-#: pan/gui/prefs-ui.cc:1266
+#: pan/gui/prefs-ui.cc:1276
 msgid "Signature:"
 msgstr "Підпис:"
 
-#: pan/gui/prefs-ui.cc:1269
+#: pan/gui/prefs-ui.cc:1279
 msgid "Group Pane"
 msgstr "Панель груп"
 
 #.
-#: pan/gui/prefs-ui.cc:1276
+#: pan/gui/prefs-ui.cc:1286
 msgid "Group Color:"
 msgstr "Колір групи:"
 
-#: pan/gui/prefs-ui.cc:1280
+#: pan/gui/prefs-ui.cc:1290
 msgid "Other Text"
 msgstr "Інший текст"
 
-#: pan/gui/prefs-ui.cc:1286
+#: pan/gui/prefs-ui.cc:1296
 msgid "Text Color:"
 msgstr "Колір тексту:"
 
-#: pan/gui/prefs-ui.cc:1289
+#: pan/gui/prefs-ui.cc:1299
 msgid "_Colors"
 msgstr "_Колір"
 
-#: pan/gui/prefs-ui.cc:1289
+#: pan/gui/prefs-ui.cc:1299
 msgid "Colors"
 msgstr "Кольори"
 
-#: pan/gui/prefs-ui.cc:1294
+#: pan/gui/prefs-ui.cc:1304
 msgid "Preferred Applications"
 msgstr "Бажані програми"
 
-#: pan/gui/prefs-ui.cc:1298
+#: pan/gui/prefs-ui.cc:1308
 msgid "_Web browser:"
 msgstr "Переглядач _інтернету:"
 
-#: pan/gui/prefs-ui.cc:1301
+#: pan/gui/prefs-ui.cc:1311
+msgid "_Gemini client:"
+msgstr "_Клієнт Gemini:"
+
+#: pan/gui/prefs-ui.cc:1314
 msgid "_Mail reader:"
 msgstr "_Читання пошти:"
 
-#: pan/gui/prefs-ui.cc:1303
+#: pan/gui/prefs-ui.cc:1316
 msgid "_Text editor:"
 msgstr "Редактор _тексту:"
 
-#: pan/gui/prefs-ui.cc:1305
+#: pan/gui/prefs-ui.cc:1318
 msgid "_HTML previewer:"
 msgstr "П_опередній перегляд HTML:"
 
-#: pan/gui/prefs-ui.cc:1307
+#: pan/gui/prefs-ui.cc:1320
 msgid "_Applications"
 msgstr "_Програми"
 
-#: pan/gui/prefs-ui.cc:1307
+#: pan/gui/prefs-ui.cc:1320
 msgid "Applications"
 msgstr "Програми"
 
-#: pan/gui/prefs-ui.cc:1312 pan/gui/task-pane.cc:556
+#: pan/gui/prefs-ui.cc:1325 pan/gui/task-pane.cc:556
 msgid "Encoding"
 msgstr "Кодування"
 
-#: pan/gui/prefs-ui.cc:1316
+#: pan/gui/prefs-ui.cc:1329
 msgid "Default bytes per file (for encoder): "
 msgstr "Типова кількість байтів на файл (для кодувальника): "
 
-#: pan/gui/prefs-ui.cc:1321
+#: pan/gui/prefs-ui.cc:1334
 msgid "_Upload"
 msgstr "_Вивантажити"
 
-#: pan/gui/prefs-ui.cc:1321
+#: pan/gui/prefs-ui.cc:1334
 msgid "Upload"
 msgstr "Вивантажити"
 
-#: pan/gui/prefs-ui.cc:1330
+#: pan/gui/prefs-ui.cc:1343
 msgid "_Shortcuts"
 msgstr "С_корочення"
 
-#: pan/gui/prefs-ui.cc:1330
+#: pan/gui/prefs-ui.cc:1343
 msgid "Shortcuts"
 msgstr "Скорочення"
 
@@ -2806,12 +2810,10 @@ msgid "You may want to go back or delete the old rule."
 msgstr "Вам варто повернутися або вилучити старе правило."
 
 #: pan/gui/score-add-ui.cc:484
-#| msgid "Go Back"
 msgid "Back"
 msgstr "Назад"
 
-#: pan/gui/score-add-ui.cc:485 pan/gui/task-pane.cc:1045
-#| msgid "Delete Task"
+#: pan/gui/score-add-ui.cc:485 pan/gui/task-pane.cc:1041
 msgid "Delete"
 msgstr "Вилучити"
 
@@ -2869,36 +2871,36 @@ msgstr "Додати нове правило оцінки"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Вилучити позначене правило оцінки"
 
-#: pan/gui/server-ui.cc:284
+#: pan/gui/server-ui.cc:293
 msgid "Please specify the server's address."
 msgstr "Будь ласка, вкажіть адресу сервера."
 
-#: pan/gui/server-ui.cc:330
+#: pan/gui/server-ui.cc:345
 msgid "Import SSL Certificate (PEM Format) From File"
 msgstr "Імпортувати сертифікат SSL (у форматі PEM) з файла"
 
 #. create the dialog
-#: pan/gui/server-ui.cc:367 pan/gui/server-ui.cc:982
+#: pan/gui/server-ui.cc:382 pan/gui/server-ui.cc:997
 msgid "Add a Server"
 msgstr "Додати сервер"
 
-#: pan/gui/server-ui.cc:367 pan/gui/server-ui.cc:988
+#: pan/gui/server-ui.cc:382 pan/gui/server-ui.cc:1003
 msgid "Edit a Server's Settings"
 msgstr "Редагувати параметри сервера"
 
-#: pan/gui/server-ui.cc:387
+#: pan/gui/server-ui.cc:402
 msgid "Location"
 msgstr "Розташування"
 
-#: pan/gui/server-ui.cc:391
+#: pan/gui/server-ui.cc:406
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\"."
 msgstr "Фактична адреса сервера новин, наприклад «news.mynewsserver.com»."
 
-#: pan/gui/server-ui.cc:392
+#: pan/gui/server-ui.cc:407
 msgid "_Address:"
 msgstr "_Адреса:"
 
-#: pan/gui/server-ui.cc:397
+#: pan/gui/server-ui.cc:412
 msgid ""
 "The news server's port number.  Typically 119 for unencrypted and 563 for "
 "encrypted connections (SSL/TLS)."
@@ -2906,19 +2908,19 @@ msgstr ""
 "Номер порту сервера. Типовим є 119 для нешифрованих і 563 для шифрованих "
 "з'єднань (SSL/TLS)."
 
-#: pan/gui/server-ui.cc:398
+#: pan/gui/server-ui.cc:413
 msgid "Por_t:"
 msgstr "Пор_т:"
 
-#: pan/gui/server-ui.cc:401
+#: pan/gui/server-ui.cc:416
 msgid "Login (if Required)"
 msgstr "Вхід (якщо потрібен)"
 
-#: pan/gui/server-ui.cc:405
+#: pan/gui/server-ui.cc:420
 msgid "_Username:"
 msgstr "_Користувач:"
 
-#: pan/gui/server-ui.cc:406
+#: pan/gui/server-ui.cc:421
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2927,11 +2929,11 @@ msgstr ""
 "доступу до вашого сервера розпізнавання непотрібне, можете не заповнювати це "
 "поле."
 
-#: pan/gui/server-ui.cc:410
+#: pan/gui/server-ui.cc:425
 msgid "_Password:"
 msgstr "_Пароль:"
 
-#: pan/gui/server-ui.cc:411
+#: pan/gui/server-ui.cc:426
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2939,55 +2941,55 @@ msgstr ""
 "Пароль, який слід надати серверу, якщо надійде запит. Якщо для доступу до "
 "вашого сервера розпізнавання непотрібне, можете не заповнювати це поле."
 
-#: pan/gui/server-ui.cc:414
+#: pan/gui/server-ui.cc:429
 msgid "Settings"
 msgstr "Параметри"
 
-#: pan/gui/server-ui.cc:421
+#: pan/gui/server-ui.cc:436
 msgid "Connection _Limit:"
 msgstr "_Ліміт з'єднання:"
 
-#: pan/gui/server-ui.cc:425
+#: pan/gui/server-ui.cc:440
 msgid "After Two Weeks"
 msgstr "Після двох тижнів"
 
-#: pan/gui/server-ui.cc:426
+#: pan/gui/server-ui.cc:441
 msgid "After One Month"
 msgstr "Після одного місяця"
 
-#: pan/gui/server-ui.cc:427
+#: pan/gui/server-ui.cc:442
 msgid "After Two Months"
 msgstr "Після двох місяців"
 
-#: pan/gui/server-ui.cc:428
+#: pan/gui/server-ui.cc:443
 msgid "After Three Months"
 msgstr "Після трьох місяців"
 
-#: pan/gui/server-ui.cc:429
+#: pan/gui/server-ui.cc:444
 msgid "After Six Months"
 msgstr "Після шести місяців"
 
-#: pan/gui/server-ui.cc:430
+#: pan/gui/server-ui.cc:445
 msgid "Never Expire Old Articles"
 msgstr "Ніколи не вважати статті застарілими"
 
-#: pan/gui/server-ui.cc:444
+#: pan/gui/server-ui.cc:459
 msgid "E_xpire Old Articles:"
 msgstr "Зас_тарівання статей:"
 
-#: pan/gui/server-ui.cc:448
+#: pan/gui/server-ui.cc:463
 msgid "Primary"
 msgstr "Основний"
 
-#: pan/gui/server-ui.cc:449
+#: pan/gui/server-ui.cc:464
 msgid "Fallback"
 msgstr "Резервний"
 
-#: pan/gui/server-ui.cc:463
+#: pan/gui/server-ui.cc:478
 msgid "Server Rank:"
 msgstr "Ранг сервера:"
 
-#: pan/gui/server-ui.cc:467
+#: pan/gui/server-ui.cc:482
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -2997,39 +2999,39 @@ msgstr ""
 "основних серверах. Одним із типових підходів є використання вільних серверів "
 "як основних і серверів підписки як резервних."
 
-#: pan/gui/server-ui.cc:472
+#: pan/gui/server-ui.cc:487
 msgid "Disable Compression (N/A)"
 msgstr "Вимкнути стискання (н/д)"
 
-#: pan/gui/server-ui.cc:473
+#: pan/gui/server-ui.cc:488
 msgid "XZVER Compression (Astraweb)"
 msgstr "Стискання XZVER (Astraweb)"
 
-#: pan/gui/server-ui.cc:474
+#: pan/gui/server-ui.cc:489
 msgid "GZIP Compression (Giganews etc.)"
 msgstr "Стискання GZIP (Giganews тощо)"
 
-#: pan/gui/server-ui.cc:488
+#: pan/gui/server-ui.cc:503
 msgid "Header Compression:"
 msgstr "Стискання заголовків:"
 
-#: pan/gui/server-ui.cc:494
+#: pan/gui/server-ui.cc:509
 msgid "Security"
 msgstr "Безпека"
 
-#: pan/gui/server-ui.cc:499
+#: pan/gui/server-ui.cc:514
 msgid "Use Unsecure (Plaintext) Connections"
 msgstr "Використовувати незахищені (звичайні текстові) з'єднання"
 
-#: pan/gui/server-ui.cc:500
+#: pan/gui/server-ui.cc:515
 msgid "Use Secure SSL Connections"
 msgstr "Використовувати захищені з'єднання SSL"
 
-#: pan/gui/server-ui.cc:515
+#: pan/gui/server-ui.cc:530
 msgid "TLS (SSL) Settings:"
 msgstr "Параметри TLS (SSL):"
 
-#: pan/gui/server-ui.cc:520
+#: pan/gui/server-ui.cc:535
 msgid ""
 "You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
 "TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
@@ -3039,56 +3041,56 @@ msgstr ""
 "увімкнете SSL/TLS, ваші дані буде зашифровано і захищено. Вам варто "
 "увімкнути SSL/TLS з міркувань захисту конфіденційності."
 
-#: pan/gui/server-ui.cc:525
+#: pan/gui/server-ui.cc:540
 msgid "Always trust this server's certificate"
 msgstr "Завжди довіряти цьому сертифікату сервера"
 
-#: pan/gui/server-ui.cc:710
+#: pan/gui/server-ui.cc:725
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "Справді вилучити «%s»?"
 
-#: pan/gui/server-ui.cc:799
+#: pan/gui/server-ui.cc:814
 msgid "No information available."
 msgstr "Інформація недоступна."
 
-#: pan/gui/server-ui.cc:809
+#: pan/gui/server-ui.cc:824
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr "Сертифікат сервера для «%s»"
 
-#: pan/gui/server-ui.cc:908
+#: pan/gui/server-ui.cc:923
 #, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr "Справді вилучити сертифікат для «%s»?"
 
 #. dialog
-#: pan/gui/server-ui.cc:935 pan/gui/server-ui.cc:956 pan/gui/server-ui.cc:1054
+#: pan/gui/server-ui.cc:950 pan/gui/server-ui.cc:971 pan/gui/server-ui.cc:1069
 msgid "Servers"
 msgstr "Сервери"
 
-#: pan/gui/server-ui.cc:995
+#: pan/gui/server-ui.cc:1010
 msgid "Remove a Server"
 msgstr "Вилучити сервер"
 
 #. dialog
-#: pan/gui/server-ui.cc:1028
+#: pan/gui/server-ui.cc:1043
 msgid "SSL Certificates"
 msgstr "Сертифікати SSL"
 
-#: pan/gui/server-ui.cc:1049
+#: pan/gui/server-ui.cc:1064
 msgid "Certificates"
 msgstr "Сертифікати"
 
-#: pan/gui/server-ui.cc:1080
+#: pan/gui/server-ui.cc:1095
 msgid "Import Certificate"
 msgstr "Імпортувати сертифікат"
 
-#: pan/gui/server-ui.cc:1086
+#: pan/gui/server-ui.cc:1101
 msgid "Inspect Certificate"
 msgstr "Ревізія сертифіката"
 
-#: pan/gui/server-ui.cc:1093
+#: pan/gui/server-ui.cc:1108
 msgid "Remove Certificate"
 msgstr "Вилучити сертифікат"
 
@@ -3141,7 +3143,6 @@ msgid "Choose New Destination for Selected Tasks"
 msgstr "Виберіть нове призначення для вибраних завдань"
 
 #: pan/gui/task-pane.cc:311
-#| msgid "Save text"
 msgid "Save"
 msgstr "Зберегти"
 
@@ -3230,80 +3231,71 @@ msgstr "Перезапустити завдання"
 msgid "Change Download Destination"
 msgstr "Змінити теку призначення отримання даних"
 
-#: pan/gui/task-pane.cc:1021
+#: pan/gui/task-pane.cc:1017
 msgid "_Online"
 msgstr "_У мережі"
 
-#: pan/gui/task-pane.cc:1031
-#| msgid "Move Up"
+#: pan/gui/task-pane.cc:1027
 msgid "Move up"
 msgstr "Пересунути вище"
 
-#: pan/gui/task-pane.cc:1032
-#| msgid "Move to Top"
+#: pan/gui/task-pane.cc:1028
 msgid "Move task up"
 msgstr "Пересунути завдання вище"
 
-#: pan/gui/task-pane.cc:1033
-#| msgid "Move to Top"
+#: pan/gui/task-pane.cc:1029
 msgid "Move to top"
 msgstr "Пересунути вверх"
 
-#: pan/gui/task-pane.cc:1034
+#: pan/gui/task-pane.cc:1030
 msgid "Move task to top of the download queue"
 msgstr "Пересунути завдання на початок черги отримання"
 
-#: pan/gui/task-pane.cc:1036
-#| msgid "Move Down"
+#: pan/gui/task-pane.cc:1032
 msgid "Move down"
 msgstr "Пересунути нижче"
 
-#: pan/gui/task-pane.cc:1037
-#| msgid "Move Down"
+#: pan/gui/task-pane.cc:1033
 msgid "Move task down"
 msgstr "Пересунути завдання нижче"
 
-#: pan/gui/task-pane.cc:1038
-#| msgid "Move to Bottom"
+#: pan/gui/task-pane.cc:1034
 msgid "Move to bottom"
 msgstr "Пересунути вниз"
 
-#: pan/gui/task-pane.cc:1039
-#| msgid "Add to the front of the queue"
+#: pan/gui/task-pane.cc:1035
 msgid "Move task to the bottom of the download queue"
 msgstr "Пересунути завдання у кінець черги отримання"
 
-#: pan/gui/task-pane.cc:1041
-#| msgid "Restart Task"
+#: pan/gui/task-pane.cc:1037
 msgid "Restart"
 msgstr "Перезапустити"
 
-#: pan/gui/task-pane.cc:1042
+#: pan/gui/task-pane.cc:1038
 msgid "Restart Tasks"
 msgstr "Перезапустити завдання"
 
-#: pan/gui/task-pane.cc:1043
-#| msgid "Stopped"
+#: pan/gui/task-pane.cc:1039
 msgid "Stop"
 msgstr "Зупинити"
 
-#: pan/gui/task-pane.cc:1044
+#: pan/gui/task-pane.cc:1040
 msgid "Stop Tasks"
 msgstr "Зупинити завдання"
 
-#: pan/gui/task-pane.cc:1046
+#: pan/gui/task-pane.cc:1042
 msgid "Delete Tasks"
 msgstr "Вилучити завдання"
 
-#: pan/gui/task-pane.cc:1048
+#: pan/gui/task-pane.cc:1044
 msgid "Close"
 msgstr "Закрити"
 
-#: pan/gui/task-pane.cc:1052
+#: pan/gui/task-pane.cc:1048
 msgid "Show popups"
 msgstr "Показувати контекстні підказки"
 
-#: pan/gui/url.cc:121
+#: pan/gui/url.cc:143
 #, c-format
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr "Помилкова початкова адреса: %s (команда: %s)"
@@ -3379,7 +3371,7 @@ msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr ""
 "У результаті надсилання «%s» на %s повернуто нерозпізнану відповідь: «%s»"
 
-#: pan/tasks/nntp-pool.cc:235
+#: pan/tasks/nntp-pool.cc:241
 #, c-format
 msgid "Unable to connect to \"%s\""
 msgstr "Не вдалося встановити з'єднання із «%s»"
