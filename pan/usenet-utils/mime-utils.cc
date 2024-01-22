@@ -1576,7 +1576,6 @@ namespace pan
     mps = g_mime_multipart_signed_sign (gpg_ctx, gmo, uid.c_str(), &err);
     if (mps == NULL)
     {
-      g_object_unref(gmo);
       g_object_unref(mps);
       g_object_unref(G_OBJECT(part));
       return nullptr;
@@ -1590,7 +1589,6 @@ namespace pan
     g_mime_message_set_mime_part(body,GMIME_OBJECT(mps));
     g_object_unref(G_OBJECT(part));
     g_object_unref(mps);
-    g_object_unref(gmo);
     return body;
   }
 
