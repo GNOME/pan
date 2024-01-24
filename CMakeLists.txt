@@ -24,6 +24,9 @@ set(PACKAGE "pan")
 set(VERSION_TITLE "Mariinka")
 set(PACKAGE_BUGREPORT "https://gitlab.gnome.org/GNOME/pan/issues")
 
+# see https://gitlab.gnome.org/GNOME/pan/-/issues/175
+set(CXX_STD "-std=c++11")
+
 # backward compat. There's a lot of ifdef #HAVE_CONFIG_H, #include config.h
 # Don't know why...
 # https://cmake.org/cmake/help/latest/command/add_compile_definitions.html
@@ -48,7 +51,7 @@ include_directories(${CMAKE_BINARY_DIR})
 # https://cmake.org/cmake/help/latest/command/add_executable.html
 add_executable(pan pan/gui/pan.cc pan/gui/gui.cc)
 set_target_properties(pan PROPERTIES RUNTIME_OUTPUT_DIRECTORY "pan/gui")
-target_compile_options(pan PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")
+target_compile_options(pan PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
 
 
 # Get the latest abbreviated commit hash of the working branch

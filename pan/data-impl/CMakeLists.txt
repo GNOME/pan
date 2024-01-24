@@ -14,4 +14,4 @@ add_library(data-impl
 
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
-target_compile_options(data-impl PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")
+target_compile_options(data-impl PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")

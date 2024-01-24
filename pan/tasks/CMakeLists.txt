@@ -21,4 +21,4 @@ add_library(tasks
 
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
-target_compile_options(tasks PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")
+target_compile_options(tasks PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")

@@ -15,7 +15,7 @@ add_library(usenet-utils
 
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
-target_compile_options(usenet-utils PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")
+target_compile_options(usenet-utils PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
 
 # TODO: fix  message-check-test and add it to this list
 set(test-programs gnksa-test numbers-test scorefile-test text-massager-test url-find-test)

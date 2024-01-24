@@ -44,4 +44,4 @@ add_library(pan-c-gui STATIC ${SRC_C_FILES})
 
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
-target_compile_options(pan-cc-gui PRIVATE "-Wreorder" "-Wzero-as-null-pointer-constant")
+target_compile_options(pan-cc-gui PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
