@@ -220,7 +220,7 @@ if(NOT COMPILED_LKSTRFTIME_TEST)
   message("Warning: failed to compile test-strftime.c")
 endif()
 
-set(PLATFORM_INFO ${CMAKE_LIBRARY_ARCHITECTURE})
+set(PLATFORM_INFO ${CMAKE_HOST_SYSTEM})
 message("CMAKE platform: ${PLATFORM_INFO}")
 
 # https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
