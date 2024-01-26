@@ -67,6 +67,7 @@ execute_process(
 CHECK_INCLUDE_FILE(errno.h HAVE_ERRNO_H)
 CHECK_INCLUDE_FILE(fcntl.h HAVE_FCNTL_H)
 CHECK_INCLUDE_FILE(inttypes.h HAVE_INTTYPES_H)
+CHECK_INCLUDE_FILE(unistd.h HAVE_UNISTD_H)
 
 # https://cmake.org/cmake/help/latest/module/CheckSymbolExists.html
 include(CheckSymbolExists)
