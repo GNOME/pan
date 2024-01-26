@@ -221,7 +221,7 @@ if(NOT COMPILED_LKSTRFTIME_TEST)
 endif()
 
 set(PLATFORM_INFO ${CMAKE_HOST_SYSTEM})
-message("CMAKE platform: ${PLATFORM_INFO}")
+message(STATUS "platform: ${PLATFORM_INFO}")
 
 # https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
 if(APPLE)
