@@ -167,7 +167,7 @@ if(WANT_WEBKIT)
   list(APPEND libraries_for_pan ${WEBKITGTK_LIBRARIES})
 endif()
 
-option(WANT_GNUTLS "enable GnuTLS support (default: off)")
+option(WANT_GNUTLS "enable GnuTLS support (default: on)" ON)
 if(WANT_GNUTLS)
   pkg_check_modules(GNUTLS REQUIRED gnutls>=3.0.0)
   AddSystemLib(GNUTLS)
