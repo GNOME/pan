@@ -65,7 +65,7 @@ namespace pan
 {
 
 #ifdef HAVE_GMIME_CRYPTO
-  GMimeMessage* message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body);
+  bool message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body);
   bool gpg_encrypt (const std::string& uid, const std::string& body_str, GMimeMessage* body, GPtrArray* rcp, bool sign);
   bool gpg_verify_mps (GMimeObject*, GPGDecErr&);
 #endif

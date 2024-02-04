@@ -1558,10 +1558,10 @@ namespace pan
     GMIME_MULTIPART_SIGNED_SIGNATURE
   };
 
-  GMimeMessage*
-  message_add_signed_part (const std::string& uid, const std::string& body_str, GMimeMessage* body)
+  bool message_add_signed_part (const std::string& uid, const std::string& body_str,
+                                GMimeMessage* body)
   {
-    if (uid.empty()) return nullptr;
+    if (uid.empty()) return false;
 
     GMimeMultipartSigned *mps;
     GError* err(NULL);
@@ -1578,7 +1578,7 @@ namespace pan
     {
       g_object_unref(mps);
       g_object_unref(G_OBJECT(part));
-      return nullptr;
+      return false;
     }
 
     /* GMIME _dirty_ hack : set filename for signature attachment */
@@ -1589,7 +1589,7 @@ namespace pan
     g_mime_message_set_mime_part(body,GMIME_OBJECT(mps));
     g_object_unref(G_OBJECT(part));
     g_object_unref(mps);
-    return body;
+    return true;
   }
 
   bool
