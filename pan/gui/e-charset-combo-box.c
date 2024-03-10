@@ -66,6 +66,7 @@ charset_combo_box_entry_changed_cb (GtkEntry *entry,
 	gtk_dialog_set_response_sensitive (dialog, GTK_RESPONSE_OK, sensitive);
 }
 
+// Dialog used in Preferences -> Miscellaneous -> Font button -> Other...
 static void
 charset_combo_box_run_dialog (ECharsetComboBox *combo_box)
 {

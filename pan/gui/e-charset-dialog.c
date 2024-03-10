@@ -1,4 +1,4 @@
-/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 8; tab-width: 8 -*- */
+/* -*- Mode: C; indent-tabs-mode: t; c-basic-offset: 4; tab-width: 4 -*- */
 /*
  * Copyright (C) 2001 Ximian, Inc.
  *
@@ -38,6 +38,7 @@ char *
 e_charset_dialog (const char *title, const char *prompt,
 			 const char *default_charset, GtkWindow *parent)
 {
+	// Dialog used in Preferences -> Miscellaneous -> Font button
 	GtkDialog *dialog;
 	GtkWidget *label, *picker, *vbox, *hbox;
 	char *charset = NULL;
