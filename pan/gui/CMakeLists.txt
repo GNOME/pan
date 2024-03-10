@@ -1,4 +1,4 @@
-set(SRC_CC_FILES 
+set(SRC_CC_FILES
  actions.cc
  body-pane.cc
  dl-headers-ui.cc
@@ -26,7 +26,7 @@ set(SRC_CC_FILES
  url.cc
 )
 
-set(SRC_C_FILES 
+set(SRC_C_FILES
  e-action-combo-box.c
  e-charset-combo-box.c
  e-charset-dialog.c
@@ -45,3 +45,7 @@ add_library(pan-c-gui STATIC ${SRC_C_FILES})
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
 target_compile_options(pan-cc-gui PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
+
+if(WIN32)
+  target_sources(pan PRIVATE panrc.rc)
+endif()

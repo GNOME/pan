@@ -6,7 +6,7 @@ endif()
 
 # https://cmake.org/cmake/help/latest/command/project.html
 project(Pan
-  VERSION 0.156
+  VERSION 0.156.0
   DESCRIPTION "Pan usenet reader"
   HOMEPAGE_URL "https://gitlab.gnome.org/GNOME/pan"
 )
@@ -228,13 +228,14 @@ message(STATUS "platform: ${PLATFORM_INFO}")
 # https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
 if(APPLE)
   set(G_OS_DARWIN TRUE)
-  # TODO: set LOCALEDIR 
+  # TODO: set LOCALEDIR
 elseif(WIN32)
   # https://cmake.org/cmake/help/latest/command/target_compile_options.html
-  add_compile_options(mms-bitfields)
+  #add_compile_options(mms-bitfields)
   add_compile_definitions(WIN32_LEAN_AND_MEAN)
-  add_link_libraries(shell32 ws2_32 pthread)
-  # TODO: set LOCALEDIR 
+  list(APPEND libraries_for_pan shell32 ws2_32 pthread)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
+  # TODO: set LOCALEDIR
 else()
   set(LOCALEDIR "/usr/share/locale")
 endif()
