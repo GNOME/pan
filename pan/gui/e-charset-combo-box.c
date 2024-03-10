@@ -93,8 +93,8 @@ charset_combo_box_run_dialog (ECharsetComboBox *combo_box)
 	widget = gtk_dialog_new_with_buttons (
 		_("Character Encoding"), parent,
 		GTK_DIALOG_DESTROY_WITH_PARENT,
-		GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-		GTK_STOCK_OK, GTK_RESPONSE_OK, NULL);
+		_("Cancel"), GTK_RESPONSE_CANCEL,
+		_("OK"), GTK_RESPONSE_OK, NULL);
 
 	/* Load the broken border width defaults so we can override them. */
 	gtk_widget_ensure_style (widget);

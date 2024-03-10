@@ -17,6 +17,7 @@
  */
 
 #include "e-charset-combo-box.h"
+#include <glib/gi18n.h>
 #include "e-charset-dialog.h"
 #include "gtk-compat.h"
 
@@ -46,8 +47,8 @@ e_charset_dialog (const char *title, const char *prompt,
 	dialog = GTK_DIALOG (gtk_dialog_new_with_buttons (title,
 							  parent,
 							  GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-							  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-							  GTK_STOCK_OK, GTK_RESPONSE_OK,
+							  _("Cancel"), GTK_RESPONSE_CANCEL,
+							  _("OK"), GTK_RESPONSE_OK,
 							  NULL));
 
 	//gtk_dialog_set_has_separator (dialog, FALSE);
