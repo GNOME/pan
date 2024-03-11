@@ -1,0 +1,20 @@
+add_library(generalutils
+ article_number.cc
+ debug.cc
+ e-util.cc
+ editor-spawner.cc
+ file-util.cc
+ log.cc
+ line-reader.cc
+ progress.cc
+ quark.cc
+ string-view.cc
+ text-match.cc
+ utf8-utils.cc
+ worker-pool.cc
+ compression.cc
+)
+
+# Sanity checking
+# https://cmake.org/cmake/help/latest/command/add_compile_options.html
+target_compile_options(generalutils PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")

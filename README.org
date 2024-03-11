@@ -97,6 +97,55 @@ enable or disable at configure (or autogen) time:
 
 * Installation
 
+** With cmake
+
+*** Standard build
+
+Run the following command to setup Pan build with the default options:
+
+#+BEGIN_SRC shell :results verbatim
+  mkdir -p std-build
+  cmake -B std-build
+#+END_SRC
+
+To setup options, you can run:
+#+BEGIN_SRC shell :results verbatim
+  cmake-gui -B std-build
+#+END_SRC
+
+Then build pan:
+#+BEGIN_SRC shell :results verbatim
+ cmake --build std-build -j 8
+#+END_SRC
+
+*** Debug build
+
+You can also create a debug build:
+
+#+BEGIN_SRC shell :results verbatim
+  mkdir -p debug-build
+  cmake -DCMAKE_BUILD_TYPE=Debug -B debug-build
+  cmake --build debug-build -j 8
+#+END_SRC
+
+
+*** CC++ language server support
+
+To get language server support (e.g. [[https://github.com/MaskRay/ccls][ccls]]), run:
+#+BEGIN_SRC shell :results verbatim
+  mkdir -p debug-build
+  cmake -H. -B debug-build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
+  ln -s debug-build/compile_commands.json .
+#+END_SRC
+
+#+RESULTS:
+: -- platform: Linux-6.6.13-amd64
+: -- Configuring done (0.2s)
+: -- Generating done (0.1s)
+: -- Build files have been written to: /home/domi/private/debian-dev/pan-stuff/pan-upstream/debug-build
+
+** With Autotools
+
 Run the following command to build Pan configured with the default options:
 
 #+begin_src  shell

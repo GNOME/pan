@@ -1,7 +1,15 @@
 #!python3
-from __future__ import annotations
+""" wininstall
 
-""" This script provides a way of creating a standalone pan for windows.
+Usage:
+    wininstall [--build_dir <build_dir>] <install_dir>
+    wininstall (-h|--help)
+
+Options:
+    -h, --help                  Show help and exit
+    --build_dir=<build_dir>     Build directory [default: std-build]
+
+This script provides a way of creating a standalone pan for windows.
 
 Once you have built and tested pan, run this with a target folder, and all
 needed files and quite possibly some unneeded ones will be copied there, and
@@ -19,6 +27,7 @@ actually use the dependencies you can get from pacman as you'd end up installing
 way too much.
 
 """
+from __future__ import annotations
 
 import glob
 import os
@@ -26,13 +35,7 @@ import re
 import shutil
 import subprocess
 import sys
-
-def usage():
-    print("""wininstall.py [<target dir>|--help]
-
-Installs built pan to specified target directory
-""")
-    exit(1)
+from docopt import docopt
 
 class Copier:
     """A class that copies files and logs the results."""
@@ -315,11 +318,12 @@ class Copier:
                 exit(1)
         return packages
 
-def read_configure():
+
+def read_configure(build_dir: str) -> dict[str, str]:
     dbus = False
     gmime_crypto = False
     spellcheck = False
-    gtk_version = 2
+    gtk_version = 3
 # webkit?
     tls_support = False
     popup_notifications = False
@@ -328,7 +332,7 @@ def read_configure():
     manual = False
 
     # These are in the order output by configure
-    with open("config.h") as config:
+    with open(os.path.join(build_dir, "config.h")) as config:
         for line in config.readlines():
             line = line.rstrip()
             words = line.split()
@@ -367,14 +371,16 @@ def read_configure():
 
 
 def main():
-    if len(sys.argv) != 2 or sys.argv[1] == "--help":
-        usage()
-    target_dir = sys.argv[1]
+    args = docopt(__doc__, options_first=True)
+    print(args)
+
+    target_dir = args["<install_dir>"]
     if os.path.exists(target_dir) and not os.path.isdir(target_dir):
         raise RuntimeError(f"{target_dir} is not a directory")
     os.makedirs(target_dir, exist_ok=True)
 
-    config = read_configure()
+    build_dir = args["--build_dir"]
+    config = read_configure(build_dir)
     print(config)
     # TODO Copy appropriate readmes
 #EXTRA_DIST = \
@@ -392,7 +398,7 @@ def main():
     # Copy executable to target dir
     copier = Copier(target_dir)
 
-    copier.copy_and_check_dlls("pan/gui/pan.exe")
+    copier.copy_and_check_dlls(os.path.join(build_dir, "pan/gui/pan.exe"))
 
     # Now we copy all the pan <lang>.gmo files in the po directory to the right
     # place in <target>/locale/<lang>/LC_MESSAGES/pan.mo.

@@ -3,9 +3,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-extern "C" {
-  #include <gmime/gmime.h>
-}
+#include <gmime/gmime.h>
 #include <pan/general/debug.h>
 #include <pan/general/string-view.h>
 #include <pan/general/quark.h>
@@ -22,6 +20,8 @@ using namespace pan;
       std::cerr << LINE_ID << " [" << i << "][" << *it << ']' << std::endl; \
   }
 
+#define CHARSET "UTF-8"
+
 static void
 mime_part_set_content (GMimePart *part, const char *str)
 {
@@ -32,13 +32,13 @@ mime_part_set_content (GMimePart *part, const char *str)
 	content = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
 	g_object_unref (stream);
 	
-	g_mime_part_set_content_object (part, content);
+	g_mime_part_set_content (part, content);
 	g_object_unref (content);
 }
 
-int main (void)
+int main ()
 {
-  g_mime_init (0);
+  g_mime_init ();
 
   MessageCheck::unique_strings_t errors;
   MessageCheck::Goodness goodness;
@@ -51,18 +51,20 @@ int main (void)
   // populate a simple article
   std::string attribution ("Someone wrote");
   GMimeMessage * msg = g_mime_message_new (FALSE);
-  g_mime_message_set_sender (msg, "\"Charles Kerr\" <charles@rebelbase.com>");
+  //g_mime_message_set_sender (msg, "\"Charles Kerr\" <charles@rebelbase.com>");
+  g_mime_message_add_mailbox(msg,GMIME_ADDRESS_TYPE_SENDER, NULL, "\"Charles Kerr\" <charles@rebelbase.com>" );
   std::string message_id = GNKSA :: generate_message_id ("rebelbase.com");
   g_mime_message_set_message_id (msg, message_id.c_str());
-  g_mime_message_set_subject (msg, "MAKE MONEY FAST");
-  g_mime_object_set_header ((GMimeObject *) msg, "Organization", "Lazars Android Works");
-  g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", "alt.test");
+  g_mime_message_set_subject (msg, "MAKE MONEY FAST", CHARSET);
+  g_mime_object_set_header ((GMimeObject *) msg, "Organization", "Lazars Android Works", CHARSET);
+  g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", "alt.test", CHARSET);
   GMimePart * part = g_mime_part_new_with_type ("text", "plain");
   const char * cpch = "Hello World!";
   mime_part_set_content (part, cpch);
   g_mime_message_set_mime_part (msg, GMIME_OBJECT(part));
   // this should pass the tests
   MessageCheck :: message_check (msg, attribution, groups_our_server_has, errors, goodness);
+  printf("errors: «%s»", errors);
   check (errors.empty())
   check (goodness.is_ok())
 
@@ -180,25 +182,25 @@ int main (void)
   mime_part_set_content (part, cpch);
 
   // empty subject
-  g_mime_message_set_subject (msg, "");
+  g_mime_message_set_subject (msg, "", CHARSET);
   MessageCheck :: message_check (msg, attribution, groups_our_server_has, errors, goodness);
   e.assign (errors.begin(), errors.end());
   check (errors.size() == 1)
   check (goodness.is_refuse())
   check (e[0] == "Error: No Subject specified.");
-  g_mime_message_set_subject (msg, "Happy Lucky Feeling");
+  g_mime_message_set_subject (msg, "Happy Lucky Feeling", CHARSET);
 
   // newsgroups
-  g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", "alt.test,unknown.group");
+ g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", "alt.test,unknown.group", CHARSET);
   MessageCheck :: message_check (msg, attribution, groups_our_server_has, errors, goodness);
   e.assign (errors.begin(), errors.end());
   check (errors.size() == 1)
   check (goodness.is_warn())
   check (e[0] == "Warning: The posting profile's server doesn't carry newsgroup\n\t\"unknown.group\".\n\tIf the group name is correct, switch profiles in the \"From:\"\n\tline or edit the profile with \"Edit|Manage Posting Profiles\".")
-	  g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", "alt.test");
+	  g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", "alt.test", CHARSET);
 
   // newsgroups w/o followup
-  g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", "alt.test,alt.religion.kibology,alt.binaries.sounds.mp3.indie");
+  g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", "alt.test,alt.religion.kibology,alt.binaries.sounds.mp3.indie", CHARSET);
   g_mime_header_list_remove (GMIME_OBJECT(msg)->headers, "Followup-To");
   MessageCheck :: message_check (msg, attribution, groups_our_server_has, errors, goodness);
   e.assign (errors.begin(), errors.end());
@@ -207,8 +209,8 @@ int main (void)
   check (e[0] == "Warning: Crossposting without setting Followup-To header.")
 
   // unknown follow-up
-	  g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", "alt.test");
-  g_mime_object_set_header ((GMimeObject *) msg, "Followup-To", "alt.test,unknown.group");
+    g_mime_object_set_header ((GMimeObject *) msg, "Newsgroups", "alt.test", CHARSET);
+ g_mime_object_set_header ((GMimeObject *) msg, "Followup-To", "alt.test,unknown.group", CHARSET);
   MessageCheck :: message_check (msg, attribution, groups_our_server_has, errors, goodness);
   e.assign (errors.begin(), errors.end());
   check (errors.size() == 1)
@@ -217,7 +219,7 @@ int main (void)
   g_mime_object_remove_header (GMIME_OBJECT(msg), "Followup-To");
 
   // top posting
-  g_mime_object_set_header ((GMimeObject *) msg, "References", "<asdf@foo.com>");
+ g_mime_object_set_header ((GMimeObject *) msg, "References", "<asdf@foo.com>", CHARSET);
   cpch = "How Fascinating!\n"
          "\n"
          "> Blah blah blah.\n";
@@ -230,7 +232,7 @@ int main (void)
   g_mime_object_remove_header (GMIME_OBJECT(msg), "References");
 
   // top posting
-  g_mime_object_set_header ((GMimeObject *) msg, "References", "<asdf@foo.com>");
+ g_mime_object_set_header ((GMimeObject *) msg, "References", "<asdf@foo.com>", CHARSET);
   cpch = "How Fascinating!\n"
          "\n"
          "> Blah blah blah.\n"
