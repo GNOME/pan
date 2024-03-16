@@ -419,9 +419,9 @@ BodyPane :: mouse_button_pressed (GtkWidget *w, GdkEventButton *event)
       get_iter_from_event_coords (w, (int)event->x, (int)event->y, &iter);
       if (gtk_text_iter_has_tag (&iter, pix_tag))
       {
-        if (!gtk_text_iter_begins_tag (&iter, pix_tag))
+        if (!gtk_text_iter_starts_tag (&iter, pix_tag))
           gtk_text_iter_backward_to_tag_toggle (&iter, pix_tag);
-        g_assert (gtk_text_iter_begins_tag (&iter, pix_tag));
+        g_assert (gtk_text_iter_starts_tag (&iter, pix_tag));
 
         // percent_x,percent_y reflect where the user clicked in the picture
         GdkRectangle rec;
