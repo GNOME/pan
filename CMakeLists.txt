@@ -98,7 +98,7 @@ pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 # and to the linker where to look for libraries
 include_directories(${GTK3_INCLUDE_DIRS})
 link_directories(${GTK3_LIBRARY_DIRS})
-add_link_options(${GTK3_LD_FLAGS})
+list(APPEND libraries_for_pan ${GTK3_LDFLAGS})
 # Add other flags to the compiler
 add_definitions(${GTK3_CFLAGS_OTHER})
 
