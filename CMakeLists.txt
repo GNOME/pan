@@ -27,6 +27,9 @@ set(PACKAGE_BUGREPORT "https://gitlab.gnome.org/GNOME/pan/issues")
 # see https://gitlab.gnome.org/GNOME/pan/-/issues/175
 set(CXX_STD "-std=c++11")
 
+# see https://cmake.org/cmake/help/latest/module/FindThreads.html
+find_package(Threads REQUIRED)
+
 # backward compat. There's a lot of ifdef #HAVE_CONFIG_H, #include config.h
 # Don't know why...
 # https://cmake.org/cmake/help/latest/command/add_compile_definitions.html
@@ -268,8 +271,8 @@ target_link_libraries(pan
   uulib
   general
   ${libraries_for_pan}
+  ${CMAKE_THREAD_LIBS_INIT}
 )
-
 
 # Installation
 # https://cmake.org/cmake/help/book/mastering-cmake/chapter/Install.html
