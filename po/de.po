@@ -40,9 +40,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan2 master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2024-01-21 17:07+0000\n"
-"PO-Revision-Date: 2024-01-21 18:34+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues/\n"
+"POT-Creation-Date: 2024-03-11 18:35+0000\n"
+"PO-Revision-Date: 2024-03-18 17:43+0100\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -50,7 +50,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #. update the titlebar
 #: org.gnome.pan.desktop.in:3 org.gnome.pan.metainfo.xml.in:27
@@ -1045,16 +1045,26 @@ msgstr "Ukrainisch"
 msgid "Visual"
 msgstr "Visuell"
 
-#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2154 pan/gui/post-ui.cc:547
+#: pan/gui/e-charset-combo-box.c:94 pan/gui/gui.cc:2154 pan/gui/post-ui.cc:547
 #: pan/gui/prefs-ui.cc:769
 msgid "Character Encoding"
 msgstr "Zeichensatz"
 
-#: pan/gui/e-charset-combo-box.c:117
+# »Cancel« wird hier immer mit »widerrufen« übersetzt. Siehe Kommentar dazu im Header. - jb
+#: pan/gui/e-charset-combo-box.c:96 pan/gui/e-charset-dialog.c:50
+#: pan/gui/score-add-ui.cc:606 pan/gui/task-pane.cc:310
+msgid "Cancel"
+msgstr "Widerrufen"
+
+#: pan/gui/e-charset-combo-box.c:97 pan/gui/e-charset-dialog.c:51
+msgid "OK"
+msgstr "OK"
+
+#: pan/gui/e-charset-combo-box.c:118
 msgid "Enter the character set to use"
 msgstr "Geben Sie den zu verwendenden Zeichensatz an"
 
-#: pan/gui/e-charset-combo-box.c:336
+#: pan/gui/e-charset-combo-box.c:337
 msgid "Other..."
 msgstr "Andere …"
 
@@ -2870,11 +2880,6 @@ msgstr "Hinzufügen und neu be_werten"
 #: pan/gui/score-add-ui.cc:602 pan/gui/score-add-ui.cc:622
 msgid "New Scoring Rule"
 msgstr "Neue Wertung"
-
-# »Cancel« wird hier immer mit »widerrufen« übersetzt. Siehe Kommentar dazu im Header. - jb
-#: pan/gui/score-add-ui.cc:606 pan/gui/task-pane.cc:310
-msgid "Cancel"
-msgstr "Widerrufen"
 
 #: pan/gui/score-add-ui.cc:633
 msgid "Group name"
