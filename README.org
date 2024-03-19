@@ -118,6 +118,18 @@ Then build pan:
  cmake --build std-build -j 8
 #+END_SRC
 
+*** Installation
+
+To install pan:
+#+BEGIN_SRC shell :results verbatim
+  cmake --install build
+#+END_SRC
+
+Uninstall pan (see [[https://stackoverflow.com/questions/41471620/cmake-support-make-uninstall#44649542][Stack Overflow link]] for details):
+#+BEGIN_SRC shell :results verbatim
+ xargs rm < build/install_manifest.txt
+#+END_SRC
+
 *** Debug build
 
 You can also create a debug build:
