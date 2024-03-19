@@ -81,6 +81,8 @@ foreach(image_file IN LISTS stock_images)
   string(REPLACE "\.png" "" image "${image_file}")
   list(APPEND pixbuf_list "extern const guint8 ${image}[]")
   list(APPEND stock_image_list "${image}" "${CMAKE_CURRENT_SOURCE_DIR}/${image_file}")
+  # install png files
+  install(FILES ${image_file} DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/pan/icons/")
 endforeach()
 
 set(noinst_DATA Pan.ico)
@@ -147,5 +149,6 @@ add_custom_command(
 list(JOIN pixbuf_list ";\n" pixbuf_content)
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/pan-pixbufs.h" "${pixbuf_content};\n")
 
+# https://cmake.org/cmake/help/latest/command/add_custom_target.html
 add_custom_target(icons_h ALL DEPENDS "pan-pixbufs-internal.h" "pan-pixbufs.h")
 
