@@ -118,6 +118,11 @@ Then build pan:
  cmake --build std-build -j 8
 #+END_SRC
 
+Optionally, run tests (even if they are few of them):
+#+BEGIN_SRC shell :results verbatim
+ ctest --test-dir build
+#+END_SRC
+
 *** Installation
 
 To install pan:
