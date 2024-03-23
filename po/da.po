@@ -8,7 +8,7 @@
 # Søren Wedel Nielsen, 2004.
 # Peter N Andreasen <peter.n.andreasen@gmail.com>, 2007.
 # Joe Hansen (joedalton2@yahoo.dk), 2010, 2011, 2017, 2018.
-# Alan Mortensen <alanmortensen.am@gmail.com>, 2022-23.
+# Alan Mortensen <alanmortensen.am@gmail.com>, 2022-24.
 #
 # bodby -> brødtekst
 # header -> brevhoved
@@ -16,9 +16,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan2\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2023-01-25 21:43+0000\n"
-"PO-Revision-Date: 2023-10-12 08:03+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues/\n"
+"POT-Creation-Date: 2024-03-11 18:35+0000\n"
+"PO-Revision-Date: 2024-03-16 16:53+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -91,7 +91,7 @@ msgid "Error opening file \"%s\" %s"
 msgstr "Fejl ved åbning af filen “%s” %s"
 
 #: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
-#: pan/data-impl/server.cc:489 pan/general/file-util.cc:312
+#: pan/data-impl/server.cc:495 pan/general/file-util.cc:312
 #: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:741
 #, c-format
 msgid "Error reading file \"%s\": %s"
@@ -136,12 +136,12 @@ msgstr "Pan-nyhedsgruppelæserens serveradgangskoder"
 msgid "Skipping newsrc file for server \"%s\""
 msgstr "Springer over “newsrc”-filen for serveren “%s”"
 
-#: pan/data-impl/headers.cc:617
+#: pan/data-impl/headers.cc:618
 #, c-format
 msgid "Expired %lu old articles from \"%s\""
 msgstr "Lod %lu gamle artikler udløbe fra “%s”"
 
-#: pan/data-impl/headers.cc:624
+#: pan/data-impl/headers.cc:625
 #, c-format
 msgid ""
 "Unsupported data version for %s headers: %d.\n"
@@ -150,23 +150,23 @@ msgstr ""
 "Dataversionen for %s-brevhoveder understøttes ikke: %d.\n"
 "Kører du tilfældigvis en gammel udgave af Pan?"
 
-#: pan/data-impl/headers.cc:639
+#: pan/data-impl/headers.cc:640
 #, c-format
 msgid "Loaded %llu articles for \"%s\" in %.1f seconds (%.0f per second)"
 msgstr "Indlæste %llu artikler for “%s” på %.1f sekunder (%.0f pr. sekund)"
 
-#: pan/data-impl/headers.cc:868
+#: pan/data-impl/headers.cc:869
 #, c-format
 msgid ""
 "Saved %lu parts, %lu articles in \"%s\" in %.1f seconds (%.0f articles/sec)"
 msgstr "Gemte %lu dele, %lu artikler i “%s” på %.1f sekunder (%.0f art/sek)"
 
-#: pan/data-impl/headers.cc:1201
+#: pan/data-impl/headers.cc:1202
 #, c-format
 msgid "Added %lu articles to %s."
 msgstr "Tilføjede %lu artikler til %s."
 
-#: pan/data-impl/server.cc:259
+#: pan/data-impl/server.cc:263
 #, c-format
 msgid "Received no password from libsecret for server %s."
 msgstr "Modtog ingen adgangskode fra libsecret for serveren %s."
@@ -231,7 +231,7 @@ msgstr "_Fil"
 msgid "_Edit"
 msgstr "_Redigér"
 
-#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1111
+#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1121
 msgid "_Layout"
 msgstr "_Udseende"
 
@@ -259,7 +259,7 @@ msgstr "Filt_re"
 msgid "_Go"
 msgstr "_Gå til"
 
-#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1161
+#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1171
 msgid "_Actions"
 msgstr "_Handlinger"
 
@@ -824,8 +824,8 @@ msgid "Unnamed File"
 msgstr "Unavngivet fil"
 
 #: pan/gui/body-pane.cc:1117 pan/gui/gui.cc:1956 pan/gui/header-pane.cc:1306
-#: pan/gui/header-pane.cc:1735 pan/gui/post-ui.cc:2641 pan/gui/prefs-ui.cc:859
-#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:797
+#: pan/gui/header-pane.cc:1735 pan/gui/post-ui.cc:2641 pan/gui/prefs-ui.cc:865
+#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:796
 msgid "Subject"
 msgstr "Emne"
 
@@ -834,7 +834,7 @@ msgid "From"
 msgstr "Afsender"
 
 #: pan/gui/body-pane.cc:1121 pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1814
-#: pan/gui/log-ui.cc:308 pan/gui/prefs-ui.cc:855
+#: pan/gui/log-ui.cc:308 pan/gui/prefs-ui.cc:861
 msgid "Date"
 msgstr "Dato"
 
@@ -929,7 +929,7 @@ msgstr "Hent _alle brevhoveder"
 msgid "Get the _latest N headers: "
 msgstr "Hent _seneste N brevhoveder: "
 
-#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:852
+#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:858
 msgid "Action"
 msgstr "Handling"
 
@@ -1014,16 +1014,25 @@ msgstr "Ukrainsk"
 msgid "Visual"
 msgstr "Visuel"
 
-#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2154 pan/gui/post-ui.cc:547
-#: pan/gui/prefs-ui.cc:763
+#: pan/gui/e-charset-combo-box.c:94 pan/gui/gui.cc:2154 pan/gui/post-ui.cc:547
+#: pan/gui/prefs-ui.cc:769
 msgid "Character Encoding"
 msgstr "Tegn-indkodning"
 
-#: pan/gui/e-charset-combo-box.c:117
+#: pan/gui/e-charset-combo-box.c:96 pan/gui/e-charset-dialog.c:50
+#: pan/gui/score-add-ui.cc:606 pan/gui/task-pane.cc:310
+msgid "Cancel"
+msgstr "Annullér"
+
+#: pan/gui/e-charset-combo-box.c:97 pan/gui/e-charset-dialog.c:51
+msgid "OK"
+msgstr "OK"
+
+#: pan/gui/e-charset-combo-box.c:118
 msgid "Enter the character set to use"
 msgstr "Angiv tegnsættet som skal benyttes"
 
-#: pan/gui/e-charset-combo-box.c:336
+#: pan/gui/e-charset-combo-box.c:337
 msgid "Other..."
 msgstr "Anden …"
 
@@ -1258,11 +1267,11 @@ msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Denne artikel mangler %d del."
 msgstr[1] "Denne artikel mangler %d af sine %d dele:"
 
-#: pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1308 pan/gui/task-pane.cc:799
+#: pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1308 pan/gui/task-pane.cc:798
 msgid "Message-ID"
 msgstr "Meddelelses-ID"
 
-#: pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1783 pan/gui/prefs-ui.cc:856
+#: pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1783 pan/gui/prefs-ui.cc:862
 msgid "Lines"
 msgstr "Linjer"
 
@@ -1270,7 +1279,7 @@ msgstr "Linjer"
 msgid "Size"
 msgstr "Størrelse"
 
-#: pan/gui/gui.cc:1959 pan/gui/header-pane.cc:1799 pan/gui/prefs-ui.cc:854
+#: pan/gui/gui.cc:1959 pan/gui/header-pane.cc:1799 pan/gui/prefs-ui.cc:860
 msgid "Bytes"
 msgstr "Byte"
 
@@ -1314,7 +1323,7 @@ msgstr "%s: %d venter, %d aktiv @ %.1f KiB/sek"
 msgid "No Tasks"
 msgstr "Ingen opgaver"
 
-#: pan/gui/gui.cc:2267 pan/gui/prefs-ui.cc:1094
+#: pan/gui/gui.cc:2267 pan/gui/prefs-ui.cc:1104
 msgid "Tasks"
 msgstr "Opgaver"
 
@@ -1331,20 +1340,20 @@ msgstr ""
 "Pan er nu afkoblet. Se i “Fil|Statusloggen” og korriger problemet, vælg "
 "derefter “Fil|Arbejd tilkoblet” for at fortsætte."
 
-#: pan/gui/header-pane.cc:1304 pan/gui/task-pane.cc:795
+#: pan/gui/header-pane.cc:1304 pan/gui/task-pane.cc:794
 msgid "Subject or Author"
 msgstr "Emne eller forfatter"
 
-#: pan/gui/header-pane.cc:1305 pan/gui/task-pane.cc:796
+#: pan/gui/header-pane.cc:1305 pan/gui/task-pane.cc:795
 msgid "Sub or Auth (regex)"
 msgstr "Emne eller forfatter (regulært udtryk)"
 
 #: pan/gui/header-pane.cc:1307 pan/gui/header-pane.cc:1767
-#: pan/gui/prefs-ui.cc:853 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:798
+#: pan/gui/prefs-ui.cc:859 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:797
 msgid "Author"
 msgstr "Afsender"
 
-#: pan/gui/header-pane.cc:1752 pan/gui/prefs-ui.cc:857
+#: pan/gui/header-pane.cc:1752 pan/gui/prefs-ui.cc:863
 msgid "Score"
 msgstr "Bedømmelse"
 
@@ -1881,11 +1890,11 @@ msgstr "Gem overførselskø som en NZB-fil"
 msgid "Couldn't parse %s color \"%s\""
 msgstr "Kunne ikke fortolke %s farve “%s”"
 
-#: pan/gui/prefs-ui.cc:127
+#: pan/gui/prefs-ui.cc:133
 msgid "Grab Key"
 msgstr "Indfang tast"
 
-#: pan/gui/prefs-ui.cc:133
+#: pan/gui/prefs-ui.cc:139
 #, c-format
 msgid ""
 "Press the combination of the keys\n"
@@ -1894,318 +1903,318 @@ msgstr ""
 "Tryk på kombinationen af taster,\n"
 "du ønsker at bruge for “%s”."
 
-#: pan/gui/prefs-ui.cc:173
+#: pan/gui/prefs-ui.cc:179
 msgid "Edit Shortcut"
 msgstr "Rediger genvej"
 
-#: pan/gui/prefs-ui.cc:235
+#: pan/gui/prefs-ui.cc:241
 msgid "Error: Shortcut key is invalid!"
 msgstr "Fejl: Genvejstast er ugyldig!"
 
-#: pan/gui/prefs-ui.cc:251
+#: pan/gui/prefs-ui.cc:257
 msgid "Error: Shortcut key already exists!"
 msgstr "Fejl: Genvejstast findes allerede!"
 
-#: pan/gui/prefs-ui.cc:565
+#: pan/gui/prefs-ui.cc:571
 msgid "Show only icons"
 msgstr "Vis kun ikoner"
 
-#: pan/gui/prefs-ui.cc:566
+#: pan/gui/prefs-ui.cc:572
 msgid "Show only text"
 msgstr "Vis kun tekst"
 
-#: pan/gui/prefs-ui.cc:567
+#: pan/gui/prefs-ui.cc:573
 msgid "Show icons and text"
 msgstr "Vis ikoner og tekst"
 
-#: pan/gui/prefs-ui.cc:606
+#: pan/gui/prefs-ui.cc:612
 msgid "Use GNOME Preferences"
 msgstr "Brug indstillinger fra Gnome"
 
-#: pan/gui/prefs-ui.cc:607
+#: pan/gui/prefs-ui.cc:613
 msgid "Use KDE Preferences"
 msgstr "Brug indstillinger fra KDE"
 
-#: pan/gui/prefs-ui.cc:608
+#: pan/gui/prefs-ui.cc:614
 msgid "Use OS X Preferences"
 msgstr "Brug indstillinger fra OS X"
 
-#: pan/gui/prefs-ui.cc:609
+#: pan/gui/prefs-ui.cc:615
 msgid "Use Windows Preferences"
 msgstr "Brug indstillinger fra Windows"
 
-#: pan/gui/prefs-ui.cc:610
+#: pan/gui/prefs-ui.cc:616
 msgid "Custom Command:"
 msgstr "Brugerdefineret kommando:"
 
-#: pan/gui/prefs-ui.cc:662
+#: pan/gui/prefs-ui.cc:668
 msgid "Disabled"
 msgstr "Deaktiveret"
 
-#: pan/gui/prefs-ui.cc:663
+#: pan/gui/prefs-ui.cc:669
 msgid "Only new (score == 0)"
 msgstr "Kun ny (bedømmelse == 0)"
 
-#: pan/gui/prefs-ui.cc:664
+#: pan/gui/prefs-ui.cc:670
 msgid "9999 or more"
 msgstr "9999 eller over"
 
-#: pan/gui/prefs-ui.cc:665
+#: pan/gui/prefs-ui.cc:671
 msgid "5000 to 9998"
 msgstr "5000 til 9998"
 
-#: pan/gui/prefs-ui.cc:666
+#: pan/gui/prefs-ui.cc:672
 msgid "1 to 4999"
 msgstr "1 til 4999"
 
-#: pan/gui/prefs-ui.cc:667
+#: pan/gui/prefs-ui.cc:673
 msgid "-9998 to -1"
 msgstr "-9998 til -1"
 
-#: pan/gui/prefs-ui.cc:668
+#: pan/gui/prefs-ui.cc:674
 msgid "-9999 or less"
 msgstr "-9999 eller under"
 
-#: pan/gui/prefs-ui.cc:732
+#: pan/gui/prefs-ui.cc:738
 #, c-format
 msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr "Vælg <u>globalt</u> tegnsæt. Nuværende indstilling: <b>%s</b>."
 
-#: pan/gui/prefs-ui.cc:764
+#: pan/gui/prefs-ui.cc:770
 msgid "Global Character Set Settings"
 msgstr "Globale indstillinger for tegnsæt"
 
-#: pan/gui/prefs-ui.cc:858 pan/gui/task-pane.cc:1072
+#: pan/gui/prefs-ui.cc:864 pan/gui/task-pane.cc:1068
 msgid "State"
 msgstr "Tilstand"
 
-#: pan/gui/prefs-ui.cc:892
+#: pan/gui/prefs-ui.cc:898
 msgid "Enabled"
 msgstr "Tilladt"
 
-#: pan/gui/prefs-ui.cc:896
+#: pan/gui/prefs-ui.cc:902
 msgid "Column Name"
 msgstr "Kolonnenavn"
 
-#: pan/gui/prefs-ui.cc:934
+#: pan/gui/prefs-ui.cc:940
 msgid "Pan: Preferences"
 msgstr "Pan: indstillinger"
 
-#: pan/gui/prefs-ui.cc:949
+#: pan/gui/prefs-ui.cc:955
 msgid "Mouse"
 msgstr "Mus"
 
-#: pan/gui/prefs-ui.cc:951
+#: pan/gui/prefs-ui.cc:957
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Enkeltklik aktiverer _grupper i stedet for at vælge dem"
 
-#: pan/gui/prefs-ui.cc:953
+#: pan/gui/prefs-ui.cc:959
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Enkeltklik vælger _artikler i stedet for at aktivere dem"
 
-#: pan/gui/prefs-ui.cc:956
+#: pan/gui/prefs-ui.cc:962
 msgid "Groups"
 msgstr "Grupper"
 
-#: pan/gui/prefs-ui.cc:958
+#: pan/gui/prefs-ui.cc:964
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Hent nye brevhoveder i abonnerede grupper ved _start"
 
-#: pan/gui/prefs-ui.cc:960
+#: pan/gui/prefs-ui.cc:966
 msgid "Get new headers when _entering group"
 msgstr "_Hent nye brevhoveder når en gruppe åbnes"
 
-#: pan/gui/prefs-ui.cc:962
+#: pan/gui/prefs-ui.cc:968
 msgid "Mark entire group _read when leaving group"
 msgstr "Markér gruppens artikler som _læst når den forlades"
 
-#: pan/gui/prefs-ui.cc:964
+#: pan/gui/prefs-ui.cc:970
 msgid "Mark entire group read before getting _new headers"
 msgstr "_Markér gruppens artikler som læst, før der hentes nye brevhoveder"
 
-#: pan/gui/prefs-ui.cc:966
+#: pan/gui/prefs-ui.cc:972
 msgid "E_xpand all threads when entering group"
 msgstr "_Udvid alle tråde når en gruppe åbnes"
 
-#: pan/gui/prefs-ui.cc:971
+#: pan/gui/prefs-ui.cc:977
 msgid "Articles"
 msgstr "Artikler"
 
-#: pan/gui/prefs-ui.cc:973
+#: pan/gui/prefs-ui.cc:979
 msgid "Mark downloaded articles read"
 msgstr "Marker hentede artikler som læst"
 
-#: pan/gui/prefs-ui.cc:975
+#: pan/gui/prefs-ui.cc:981
 msgid "Space selects next article rather than next unread"
 msgstr "Mellemrum vælger næste artikel i stedet for næste ulæste"
 
-#: pan/gui/prefs-ui.cc:977
+#: pan/gui/prefs-ui.cc:983
 msgid "Expand threads upon selection"
 msgstr "Udfold tråde ved markering"
 
-#: pan/gui/prefs-ui.cc:979
+#: pan/gui/prefs-ui.cc:985
 msgid "Always ask before deleting an article"
 msgstr "Spørg altid før en artikel slettes"
 
-#: pan/gui/prefs-ui.cc:981
+#: pan/gui/prefs-ui.cc:987
 msgid "Smooth scrolling"
 msgstr "Blød rulning"
 
-#: pan/gui/prefs-ui.cc:986
+#: pan/gui/prefs-ui.cc:992
 msgid "Article Cache"
 msgstr "Artikelmellemlager"
 
-#: pan/gui/prefs-ui.cc:987
+#: pan/gui/prefs-ui.cc:993
 msgid "Clear article cache on shutdown"
 msgstr "Ryd mellemlager ved afslutning"
 
-#: pan/gui/prefs-ui.cc:990
+#: pan/gui/prefs-ui.cc:996
 msgid "Size of article cache (in MiB):"
 msgstr "Størrelse på artikelmellemlager (i MiB):"
 
-#: pan/gui/prefs-ui.cc:995
+#: pan/gui/prefs-ui.cc:1001
 msgid "File extension for cached articles: "
 msgstr "Filudvidelse for mellemlagrede artikler: "
 
-#: pan/gui/prefs-ui.cc:1000
+#: pan/gui/prefs-ui.cc:1006
 msgid "Tabs"
 msgstr "Faneblade"
 
-#: pan/gui/prefs-ui.cc:1005
+#: pan/gui/prefs-ui.cc:1011
 msgid "_Behavior"
 msgstr "_Brugerflade"
 
-#: pan/gui/prefs-ui.cc:1005
+#: pan/gui/prefs-ui.cc:1011
 msgid "Behavior"
 msgstr "Opførsel"
 
-#: pan/gui/prefs-ui.cc:1011
+#: pan/gui/prefs-ui.cc:1017
 msgid "Task Pane"
 msgstr "Opgavepanel"
 
-#: pan/gui/prefs-ui.cc:1012
+#: pan/gui/prefs-ui.cc:1018
 msgid "Show task pane popups"
 msgstr "Vis pop op'er for opgavepanel"
 
-#: pan/gui/prefs-ui.cc:1014
+#: pan/gui/prefs-ui.cc:1020
 msgid "Show Download Meter"
 msgstr "Vis måling af overførselshastighed"
 
-#: pan/gui/prefs-ui.cc:1018
+#: pan/gui/prefs-ui.cc:1024
 msgid "_Panes"
 msgstr "_Paneler"
 
-#: pan/gui/prefs-ui.cc:1018
+#: pan/gui/prefs-ui.cc:1024
 msgid "Panes"
 msgstr "Paneler"
 
-#: pan/gui/prefs-ui.cc:1024
+#: pan/gui/prefs-ui.cc:1030
 msgid "Language Settings"
 msgstr "Sprogindstillinger"
 
 #. systray and notify popup
-#: pan/gui/prefs-ui.cc:1033
+#: pan/gui/prefs-ui.cc:1039
 msgid "System Tray Behavior"
 msgstr "Opførsel for statusfelt"
 
-#: pan/gui/prefs-ui.cc:1035
+#: pan/gui/prefs-ui.cc:1041
 msgid "Minimize to tray"
 msgstr "Minimer til statusfelt"
 
-#: pan/gui/prefs-ui.cc:1037
+#: pan/gui/prefs-ui.cc:1043
 msgid "Start Pan minimized"
 msgstr "Start Pan minimeret"
 
-#: pan/gui/prefs-ui.cc:1040
+#: pan/gui/prefs-ui.cc:1046
 msgid "Show notifications"
 msgstr "Vis påmindelser"
 
 #. allow multiple instances (seperate, not communicating with dbus)
-#: pan/gui/prefs-ui.cc:1045
+#: pan/gui/prefs-ui.cc:1051
 msgid "Startup Behavior"
 msgstr "Opstartsopførsel"
 
-#: pan/gui/prefs-ui.cc:1047
+#: pan/gui/prefs-ui.cc:1053
 msgid "Allow multiple instances of Pan"
 msgstr "Tillad flere instanser af Pan"
 
-#: pan/gui/prefs-ui.cc:1052
+#: pan/gui/prefs-ui.cc:1058
 msgid "Autosave Article Draft"
 msgstr "Gem automatisk artikelkladde"
 
-#: pan/gui/prefs-ui.cc:1054
+#: pan/gui/prefs-ui.cc:1060
 msgid "Minutes to autosave the current Article Draft: "
 msgstr "Minutinterval hvor artikelkladde gemmes automatisk: "
 
-#: pan/gui/prefs-ui.cc:1059
+#: pan/gui/prefs-ui.cc:1065
 msgid "Autosave Articles"
 msgstr "Gem automatisk artikler"
 
-#: pan/gui/prefs-ui.cc:1061
+#: pan/gui/prefs-ui.cc:1067
 msgid "Minutes to autosave newsrc files: "
 msgstr "Minutinterval hvor newsrc-filer gemmes automatisk: "
 
-#: pan/gui/prefs-ui.cc:1068
+#: pan/gui/prefs-ui.cc:1074
 msgid "Password Storage"
 msgstr "Adgangskodelager"
 
-#: pan/gui/prefs-ui.cc:1069
+#: pan/gui/prefs-ui.cc:1076
 msgid "Save passwords in password storage"
 msgstr "Gem adgangskoder i adgangskodelageret"
 
-#: pan/gui/prefs-ui.cc:1073
+#: pan/gui/prefs-ui.cc:1083
 msgid "_Miscellaneous"
 msgstr "_Diverse"
 
-#: pan/gui/prefs-ui.cc:1073
+#: pan/gui/prefs-ui.cc:1083
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-#: pan/gui/prefs-ui.cc:1078
+#: pan/gui/prefs-ui.cc:1088
 msgid "Pane Layout"
 msgstr "Panellayout"
 
-#: pan/gui/prefs-ui.cc:1097
+#: pan/gui/prefs-ui.cc:1107
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=Grupper, 2=Brevhoveder, 3=Brødtekst"
 
-#: pan/gui/prefs-ui.cc:1099
+#: pan/gui/prefs-ui.cc:1109
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=Grupper, 2=Brødtekst, 3=Brevhoveder"
 
-#: pan/gui/prefs-ui.cc:1101
+#: pan/gui/prefs-ui.cc:1111
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=Brevhoveder, 2=Grupper, 3=Brødtekst"
 
-#: pan/gui/prefs-ui.cc:1103
+#: pan/gui/prefs-ui.cc:1113
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=Brevhoveder, 2=Brødtekst, 3=Grupper"
 
-#: pan/gui/prefs-ui.cc:1105
+#: pan/gui/prefs-ui.cc:1115
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=Brødtekst, 2=Grupper, 3=Brevhoveder"
 
-#: pan/gui/prefs-ui.cc:1107
+#: pan/gui/prefs-ui.cc:1117
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=Brødtekst, 2=brevhoveder, 3=Grupper"
 
-#: pan/gui/prefs-ui.cc:1111
+#: pan/gui/prefs-ui.cc:1121
 msgid "Layout"
 msgstr "Layout"
 
-#: pan/gui/prefs-ui.cc:1116
+#: pan/gui/prefs-ui.cc:1126
 msgid "Header Pane Columns"
 msgstr "Kolonner i brevhovedpanel"
 
-#: pan/gui/prefs-ui.cc:1120
+#: pan/gui/prefs-ui.cc:1130
 msgid "_Headers"
 msgstr "_Brevhoveder"
 
-#: pan/gui/prefs-ui.cc:1120
+#: pan/gui/prefs-ui.cc:1130
 msgid "Headers"
 msgstr "Brevhoveder"
 
-#: pan/gui/prefs-ui.cc:1126
+#: pan/gui/prefs-ui.cc:1136
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
 "automatically, based on an article's score."
@@ -2213,200 +2222,204 @@ msgstr ""
 "Denne menu lader dig konfigurere Pan til at udføre bestemte handlinger på "
 "dine vegne automatisk, baseret på en artikels bedømmelse."
 
-#: pan/gui/prefs-ui.cc:1131
+#: pan/gui/prefs-ui.cc:1141
 msgid "Mark affected articles read"
 msgstr "Marker påvirkede artikler læst"
 
 # dvs. "delete articles which score at: -9999 or below", f.eks.
 # (fandt den i programmet)
-#: pan/gui/prefs-ui.cc:1140
+#: pan/gui/prefs-ui.cc:1150
 msgid "_Delete articles scoring at: "
 msgstr "_Slet artikler med bedømmelsen: "
 
-#: pan/gui/prefs-ui.cc:1146
+#: pan/gui/prefs-ui.cc:1156
 msgid "Mark articles read scoring at: "
 msgstr "Marker artikler som læst, hvis bedømmelsen er: "
 
-#: pan/gui/prefs-ui.cc:1152
+#: pan/gui/prefs-ui.cc:1162
 msgid "_Cache articles scoring at: "
 msgstr "_Mellemlagr artikler med bedømmelsen: "
 
-#: pan/gui/prefs-ui.cc:1158
+#: pan/gui/prefs-ui.cc:1168
 msgid "Download attachments of articles scoring at: "
 msgstr "Hent bilag for artikler med bedømmelsen: "
 
-#: pan/gui/prefs-ui.cc:1161
+#: pan/gui/prefs-ui.cc:1171
 msgid "Actions"
 msgstr "Handlinger"
 
-#: pan/gui/prefs-ui.cc:1166 pan/gui/prefs-ui.cc:1187
+#: pan/gui/prefs-ui.cc:1176 pan/gui/prefs-ui.cc:1197
 msgid "Fonts"
 msgstr "Skrifttyper"
 
-#: pan/gui/prefs-ui.cc:1168
+#: pan/gui/prefs-ui.cc:1178
 msgid "Use custom font in Group Pane:"
 msgstr "Brug egne skrifttyper i gruppepanelet:"
 
-#: pan/gui/prefs-ui.cc:1173
+#: pan/gui/prefs-ui.cc:1183
 msgid "Use custom font in Header Pane:"
 msgstr "Brug egne skrifttyper i brevhovedpanelet:"
 
-#: pan/gui/prefs-ui.cc:1178
+#: pan/gui/prefs-ui.cc:1188
 msgid "Use custom font in Body Pane:"
 msgstr "Brug egne skrifttyper i brødtekstpanelet:"
 
-#: pan/gui/prefs-ui.cc:1183
+#: pan/gui/prefs-ui.cc:1193
 msgid "Monospace font:"
 msgstr "Skrifttype med fast bredde:"
 
-#: pan/gui/prefs-ui.cc:1187
+#: pan/gui/prefs-ui.cc:1197
 msgid "_Fonts"
 msgstr "_Skrifttyper"
 
-#: pan/gui/prefs-ui.cc:1196
+#: pan/gui/prefs-ui.cc:1206
 msgid "Header Pane"
 msgstr "Brevhovedpanel"
 
-#: pan/gui/prefs-ui.cc:1199 pan/gui/prefs-ui.cc:1205 pan/gui/prefs-ui.cc:1211
-#: pan/gui/prefs-ui.cc:1217 pan/gui/prefs-ui.cc:1223 pan/gui/prefs-ui.cc:1229
-#: pan/gui/prefs-ui.cc:1238 pan/gui/prefs-ui.cc:1244 pan/gui/prefs-ui.cc:1250
-#: pan/gui/prefs-ui.cc:1256 pan/gui/prefs-ui.cc:1262 pan/gui/prefs-ui.cc:1272
-#: pan/gui/prefs-ui.cc:1282
+#: pan/gui/prefs-ui.cc:1209 pan/gui/prefs-ui.cc:1215 pan/gui/prefs-ui.cc:1221
+#: pan/gui/prefs-ui.cc:1227 pan/gui/prefs-ui.cc:1233 pan/gui/prefs-ui.cc:1239
+#: pan/gui/prefs-ui.cc:1248 pan/gui/prefs-ui.cc:1254 pan/gui/prefs-ui.cc:1260
+#: pan/gui/prefs-ui.cc:1266 pan/gui/prefs-ui.cc:1272 pan/gui/prefs-ui.cc:1282
+#: pan/gui/prefs-ui.cc:1292
 msgid "Text:"
 msgstr "Tekst:"
 
-#: pan/gui/prefs-ui.cc:1201 pan/gui/prefs-ui.cc:1207 pan/gui/prefs-ui.cc:1213
-#: pan/gui/prefs-ui.cc:1219 pan/gui/prefs-ui.cc:1225 pan/gui/prefs-ui.cc:1231
-#: pan/gui/prefs-ui.cc:1240 pan/gui/prefs-ui.cc:1246 pan/gui/prefs-ui.cc:1252
-#: pan/gui/prefs-ui.cc:1258 pan/gui/prefs-ui.cc:1264 pan/gui/prefs-ui.cc:1274
-#: pan/gui/prefs-ui.cc:1284
+#: pan/gui/prefs-ui.cc:1211 pan/gui/prefs-ui.cc:1217 pan/gui/prefs-ui.cc:1223
+#: pan/gui/prefs-ui.cc:1229 pan/gui/prefs-ui.cc:1235 pan/gui/prefs-ui.cc:1241
+#: pan/gui/prefs-ui.cc:1250 pan/gui/prefs-ui.cc:1256 pan/gui/prefs-ui.cc:1262
+#: pan/gui/prefs-ui.cc:1268 pan/gui/prefs-ui.cc:1274 pan/gui/prefs-ui.cc:1284
+#: pan/gui/prefs-ui.cc:1294
 msgid "Background:"
 msgstr "Baggrund:"
 
-#: pan/gui/prefs-ui.cc:1203
+#: pan/gui/prefs-ui.cc:1213
 msgid "Scores of 9999 or more:"
 msgstr "Udvælg bedømmelser på 9999 eller over:"
 
-#: pan/gui/prefs-ui.cc:1209
+#: pan/gui/prefs-ui.cc:1219
 msgid "Scores from 5000 to 9998:"
 msgstr "Bedømmelser fra 5000 til 9998:"
 
-#: pan/gui/prefs-ui.cc:1215
+#: pan/gui/prefs-ui.cc:1225
 msgid "Scores from 1 to 4999:"
 msgstr "Bedømmelser fra 1 til 4999:"
 
-#: pan/gui/prefs-ui.cc:1221
+#: pan/gui/prefs-ui.cc:1231
 msgid "Scores from -9998 to -1:"
 msgstr "Bedømmelser fra -9998 til -1:"
 
-#: pan/gui/prefs-ui.cc:1227
+#: pan/gui/prefs-ui.cc:1237
 msgid "Scores of -9999 or less:"
 msgstr "Bedømmelser på -9999 eller under:"
 
-#: pan/gui/prefs-ui.cc:1233
+#: pan/gui/prefs-ui.cc:1243
 msgid "Collapsed thread with unread articles:"
 msgstr "Sammenfoldet tråd med ulæste artikler:"
 
-#: pan/gui/prefs-ui.cc:1235
+#: pan/gui/prefs-ui.cc:1245
 msgid "Body Pane"
 msgstr "Brødtekstpanel"
 
-#: pan/gui/prefs-ui.cc:1242
+#: pan/gui/prefs-ui.cc:1252
 msgid "First level of quoted text:"
 msgstr "Første niveau for citeret tekst:"
 
-#: pan/gui/prefs-ui.cc:1248
+#: pan/gui/prefs-ui.cc:1258
 msgid "Second level of quoted text:"
 msgstr "Andet niveau for citeret tekst:"
 
-#: pan/gui/prefs-ui.cc:1254
+#: pan/gui/prefs-ui.cc:1264
 msgid "Third level of quoted text:"
 msgstr "Tredje niveau for citeret tekst:"
 
 #.
-#: pan/gui/prefs-ui.cc:1260
+#: pan/gui/prefs-ui.cc:1270
 msgid "URL:"
 msgstr "URL:"
 
 #.
-#: pan/gui/prefs-ui.cc:1266
+#: pan/gui/prefs-ui.cc:1276
 msgid "Signature:"
 msgstr "Signatur:"
 
-#: pan/gui/prefs-ui.cc:1269
+#: pan/gui/prefs-ui.cc:1279
 msgid "Group Pane"
 msgstr "Gruppepanel"
 
 #.
-#: pan/gui/prefs-ui.cc:1276
+#: pan/gui/prefs-ui.cc:1286
 msgid "Group Color:"
 msgstr "Gruppefarve:"
 
-#: pan/gui/prefs-ui.cc:1280
+#: pan/gui/prefs-ui.cc:1290
 msgid "Other Text"
 msgstr "Anden tekst"
 
-#: pan/gui/prefs-ui.cc:1286
+#: pan/gui/prefs-ui.cc:1296
 msgid "Text Color:"
 msgstr "Tekstfarve:"
 
-#: pan/gui/prefs-ui.cc:1289
+#: pan/gui/prefs-ui.cc:1299
 msgid "_Colors"
 msgstr "_Farver"
 
-#: pan/gui/prefs-ui.cc:1289
+#: pan/gui/prefs-ui.cc:1299
 msgid "Colors"
 msgstr "Farver"
 
-#: pan/gui/prefs-ui.cc:1294
+#: pan/gui/prefs-ui.cc:1304
 msgid "Preferred Applications"
 msgstr "Foretrukne programmer"
 
-#: pan/gui/prefs-ui.cc:1298
+#: pan/gui/prefs-ui.cc:1308
 msgid "_Web browser:"
 msgstr "_Internetbrowser:"
 
-#: pan/gui/prefs-ui.cc:1301
+#: pan/gui/prefs-ui.cc:1311
+msgid "_Gemini client:"
+msgstr "_Gemini-klient:"
+
+#: pan/gui/prefs-ui.cc:1314
 msgid "_Mail reader:"
 msgstr "_Postlæser:"
 
-#: pan/gui/prefs-ui.cc:1303
+#: pan/gui/prefs-ui.cc:1316
 msgid "_Text editor:"
 msgstr "_Tekstredigering:"
 
-#: pan/gui/prefs-ui.cc:1305
+#: pan/gui/prefs-ui.cc:1318
 msgid "_HTML previewer:"
 msgstr "_HTML-forhåndsviser:"
 
-#: pan/gui/prefs-ui.cc:1307
+#: pan/gui/prefs-ui.cc:1320
 msgid "_Applications"
 msgstr "_Programmer"
 
-#: pan/gui/prefs-ui.cc:1307
+#: pan/gui/prefs-ui.cc:1320
 msgid "Applications"
 msgstr "Programmer"
 
-#: pan/gui/prefs-ui.cc:1312 pan/gui/task-pane.cc:556
+#: pan/gui/prefs-ui.cc:1325 pan/gui/task-pane.cc:556
 msgid "Encoding"
 msgstr "Kodning"
 
-#: pan/gui/prefs-ui.cc:1316
+#: pan/gui/prefs-ui.cc:1329
 msgid "Default bytes per file (for encoder): "
 msgstr "Antal byte per fil (for koder): "
 
-#: pan/gui/prefs-ui.cc:1321
+#: pan/gui/prefs-ui.cc:1334
 msgid "_Upload"
 msgstr "_Overfør"
 
-#: pan/gui/prefs-ui.cc:1321
+#: pan/gui/prefs-ui.cc:1334
 msgid "Upload"
 msgstr "Overfør"
 
-#: pan/gui/prefs-ui.cc:1330
+#: pan/gui/prefs-ui.cc:1343
 msgid "_Shortcuts"
 msgstr "_Genveje"
 
-#: pan/gui/prefs-ui.cc:1330
+#: pan/gui/prefs-ui.cc:1343
 msgid "Shortcuts"
 msgstr "Genveje"
 
@@ -2797,7 +2810,7 @@ msgstr "Gå eventuelt tilbage eller slet den gamle regel."
 msgid "Back"
 msgstr "Tilbage"
 
-#: pan/gui/score-add-ui.cc:485 pan/gui/task-pane.cc:1045
+#: pan/gui/score-add-ui.cc:485 pan/gui/task-pane.cc:1041
 msgid "Delete"
 msgstr "Slet"
 
@@ -2813,10 +2826,6 @@ msgstr "Tilfø_j og ombedøm"
 #: pan/gui/score-add-ui.cc:602 pan/gui/score-add-ui.cc:622
 msgid "New Scoring Rule"
 msgstr "Ny bedømmelsesregel"
-
-#: pan/gui/score-add-ui.cc:606 pan/gui/task-pane.cc:310
-msgid "Cancel"
-msgstr "Annullér"
 
 #: pan/gui/score-add-ui.cc:633
 msgid "Group name"
@@ -2855,36 +2864,36 @@ msgstr "Tilføj ny regel for bedømmelse"
 msgid "Remove the Selected Scoring Rule"
 msgstr "Fjern den markerede regel"
 
-#: pan/gui/server-ui.cc:284
+#: pan/gui/server-ui.cc:293
 msgid "Please specify the server's address."
 msgstr "Angiv serverens adresse."
 
-#: pan/gui/server-ui.cc:330
+#: pan/gui/server-ui.cc:345
 msgid "Import SSL Certificate (PEM Format) From File"
 msgstr "Importer SSL-certifikat (PEM-format) fra fil"
 
 #. create the dialog
-#: pan/gui/server-ui.cc:367 pan/gui/server-ui.cc:982
+#: pan/gui/server-ui.cc:382 pan/gui/server-ui.cc:997
 msgid "Add a Server"
 msgstr "Tilføj en server"
 
-#: pan/gui/server-ui.cc:367 pan/gui/server-ui.cc:988
+#: pan/gui/server-ui.cc:382 pan/gui/server-ui.cc:1003
 msgid "Edit a Server's Settings"
 msgstr "Rediger en servers indstillinger"
 
-#: pan/gui/server-ui.cc:387
+#: pan/gui/server-ui.cc:402
 msgid "Location"
 msgstr "Placering"
 
-#: pan/gui/server-ui.cc:391
+#: pan/gui/server-ui.cc:406
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\"."
 msgstr "Nyhedsserverens rigtige adresse, f.eks. “news.udbyder.dk”."
 
-#: pan/gui/server-ui.cc:392
+#: pan/gui/server-ui.cc:407
 msgid "_Address:"
 msgstr "_Adresse:"
 
-#: pan/gui/server-ui.cc:397
+#: pan/gui/server-ui.cc:412
 msgid ""
 "The news server's port number.  Typically 119 for unencrypted and 563 for "
 "encrypted connections (SSL/TLS)."
@@ -2892,19 +2901,19 @@ msgstr ""
 "Nyhedsgruppeserverens portnummer. Typisk 119 for uden kryptering og 563 for "
 "krypterede forbindelser (SSL/TLS)."
 
-#: pan/gui/server-ui.cc:398
+#: pan/gui/server-ui.cc:413
 msgid "Por_t:"
 msgstr "Por_tnummer:"
 
-#: pan/gui/server-ui.cc:401
+#: pan/gui/server-ui.cc:416
 msgid "Login (if Required)"
 msgstr "Login (hvis det kræves)"
 
-#: pan/gui/server-ui.cc:405
+#: pan/gui/server-ui.cc:420
 msgid "_Username:"
 msgstr "_Brugernavn:"
 
-#: pan/gui/server-ui.cc:406
+#: pan/gui/server-ui.cc:421
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2912,11 +2921,11 @@ msgstr ""
 "Brugernavn som angives til serveren ved anmodning. Hvis din server ikke "
 "kræver adgangskontrol så lad dette felt være tomt."
 
-#: pan/gui/server-ui.cc:410
+#: pan/gui/server-ui.cc:425
 msgid "_Password:"
 msgstr "_Adgangskode:"
 
-#: pan/gui/server-ui.cc:411
+#: pan/gui/server-ui.cc:426
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2924,55 +2933,55 @@ msgstr ""
 "Adgangskode som angives til serveren ved anmodning. Hvis din server ikke "
 "kræver adgangskontrol så lad dette felt være tomt."
 
-#: pan/gui/server-ui.cc:414
+#: pan/gui/server-ui.cc:429
 msgid "Settings"
 msgstr "Indstillinger"
 
-#: pan/gui/server-ui.cc:421
+#: pan/gui/server-ui.cc:436
 msgid "Connection _Limit:"
 msgstr "Tilslutnings_begrænsning:"
 
-#: pan/gui/server-ui.cc:425
+#: pan/gui/server-ui.cc:440
 msgid "After Two Weeks"
 msgstr "Efter To Uger"
 
-#: pan/gui/server-ui.cc:426
+#: pan/gui/server-ui.cc:441
 msgid "After One Month"
 msgstr "Efter En Måned"
 
-#: pan/gui/server-ui.cc:427
+#: pan/gui/server-ui.cc:442
 msgid "After Two Months"
 msgstr "Efter To Måneder"
 
-#: pan/gui/server-ui.cc:428
+#: pan/gui/server-ui.cc:443
 msgid "After Three Months"
 msgstr "Efter Tre Måneder"
 
-#: pan/gui/server-ui.cc:429
+#: pan/gui/server-ui.cc:444
 msgid "After Six Months"
 msgstr "Efter Seks Måneder"
 
-#: pan/gui/server-ui.cc:430
+#: pan/gui/server-ui.cc:445
 msgid "Never Expire Old Articles"
 msgstr "Udløber Aldrig"
 
-#: pan/gui/server-ui.cc:444
+#: pan/gui/server-ui.cc:459
 msgid "E_xpire Old Articles:"
 msgstr "Lad gamle artikler _udløbe:"
 
-#: pan/gui/server-ui.cc:448
+#: pan/gui/server-ui.cc:463
 msgid "Primary"
 msgstr "Primær"
 
-#: pan/gui/server-ui.cc:449
+#: pan/gui/server-ui.cc:464
 msgid "Fallback"
 msgstr "Støtte"
 
-#: pan/gui/server-ui.cc:463
+#: pan/gui/server-ui.cc:478
 msgid "Server Rank:"
 msgstr "Server rangorden:"
 
-#: pan/gui/server-ui.cc:467
+#: pan/gui/server-ui.cc:482
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -2982,39 +2991,39 @@ msgstr ""
 "almindelig metode er at benytte gratis servere som primære og "
 "betalingsservere som støtte."
 
-#: pan/gui/server-ui.cc:472
+#: pan/gui/server-ui.cc:487
 msgid "Disable Compression (N/A)"
 msgstr "Deaktiver komprimering (-)"
 
-#: pan/gui/server-ui.cc:473
+#: pan/gui/server-ui.cc:488
 msgid "XZVER Compression (Astraweb)"
 msgstr "XZVER-komprimering (Astraweb)"
 
-#: pan/gui/server-ui.cc:474
+#: pan/gui/server-ui.cc:489
 msgid "GZIP Compression (Giganews etc.)"
 msgstr "GZIP-komprimering (Giganews etc.)"
 
-#: pan/gui/server-ui.cc:488
+#: pan/gui/server-ui.cc:503
 msgid "Header Compression:"
 msgstr "Brevhovedkomprimering:"
 
-#: pan/gui/server-ui.cc:494
+#: pan/gui/server-ui.cc:509
 msgid "Security"
 msgstr "Sikkerhed"
 
-#: pan/gui/server-ui.cc:499
+#: pan/gui/server-ui.cc:514
 msgid "Use Unsecure (Plaintext) Connections"
 msgstr "Brug usikre forbindelser (klartekst)"
 
-#: pan/gui/server-ui.cc:500
+#: pan/gui/server-ui.cc:515
 msgid "Use Secure SSL Connections"
 msgstr "Brug sikre SSL-forbindelser"
 
-#: pan/gui/server-ui.cc:515
+#: pan/gui/server-ui.cc:530
 msgid "TLS (SSL) Settings:"
 msgstr "TLS-indstillinger (SSL):"
 
-#: pan/gui/server-ui.cc:520
+#: pan/gui/server-ui.cc:535
 msgid ""
 "You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
 "TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
@@ -3024,56 +3033,56 @@ msgstr ""
 "SSL/TLS, så bliver dine data kryperet og er sikre. Det anbefales, at "
 "aktivere SSL/TLS af hensyn til privatlivet."
 
-#: pan/gui/server-ui.cc:525
+#: pan/gui/server-ui.cc:540
 msgid "Always trust this server's certificate"
 msgstr "Stol altid på denne servers certifikat"
 
-#: pan/gui/server-ui.cc:710
+#: pan/gui/server-ui.cc:725
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "Vil du slette “%s”?"
 
-#: pan/gui/server-ui.cc:799
+#: pan/gui/server-ui.cc:814
 msgid "No information available."
 msgstr "Ingen information tilgængelig."
 
-#: pan/gui/server-ui.cc:809
+#: pan/gui/server-ui.cc:824
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr "Servercertifikat for “%s”"
 
-#: pan/gui/server-ui.cc:908
+#: pan/gui/server-ui.cc:923
 #, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr "Slet certifikat for “%s”?"
 
 #. dialog
-#: pan/gui/server-ui.cc:935 pan/gui/server-ui.cc:956 pan/gui/server-ui.cc:1054
+#: pan/gui/server-ui.cc:950 pan/gui/server-ui.cc:971 pan/gui/server-ui.cc:1069
 msgid "Servers"
 msgstr "Servere"
 
-#: pan/gui/server-ui.cc:995
+#: pan/gui/server-ui.cc:1010
 msgid "Remove a Server"
 msgstr "Fjern en server"
 
 #. dialog
-#: pan/gui/server-ui.cc:1028
+#: pan/gui/server-ui.cc:1043
 msgid "SSL Certificates"
 msgstr "SSL-certifikater"
 
-#: pan/gui/server-ui.cc:1049
+#: pan/gui/server-ui.cc:1064
 msgid "Certificates"
 msgstr "Certifikater"
 
-#: pan/gui/server-ui.cc:1080
+#: pan/gui/server-ui.cc:1095
 msgid "Import Certificate"
 msgstr "Importer certifikat"
 
-#: pan/gui/server-ui.cc:1086
+#: pan/gui/server-ui.cc:1101
 msgid "Inspect Certificate"
 msgstr "Inspicer certifikat"
 
-#: pan/gui/server-ui.cc:1093
+#: pan/gui/server-ui.cc:1108
 msgid "Remove Certificate"
 msgstr "Fjern certifikat"
 
@@ -3214,71 +3223,71 @@ msgstr "Genstart opgave"
 msgid "Change Download Destination"
 msgstr "Ændr destination for overførsler"
 
-#: pan/gui/task-pane.cc:1021
+#: pan/gui/task-pane.cc:1017
 msgid "_Online"
 msgstr "_Tilsluttet"
 
-#: pan/gui/task-pane.cc:1031
+#: pan/gui/task-pane.cc:1027
 msgid "Move up"
 msgstr "Flyt op"
 
-#: pan/gui/task-pane.cc:1032
+#: pan/gui/task-pane.cc:1028
 msgid "Move task up"
 msgstr "Flyt opgave op"
 
-#: pan/gui/task-pane.cc:1033
+#: pan/gui/task-pane.cc:1029
 msgid "Move to top"
 msgstr "Flyt øverst"
 
-#: pan/gui/task-pane.cc:1034
+#: pan/gui/task-pane.cc:1030
 msgid "Move task to top of the download queue"
 msgstr "Flyt opgaven til toppen af downloadkøen"
 
-#: pan/gui/task-pane.cc:1036
+#: pan/gui/task-pane.cc:1032
 msgid "Move down"
 msgstr "Flyt ned"
 
-#: pan/gui/task-pane.cc:1037
+#: pan/gui/task-pane.cc:1033
 msgid "Move task down"
 msgstr "Flyt opgave ned"
 
-#: pan/gui/task-pane.cc:1038
+#: pan/gui/task-pane.cc:1034
 msgid "Move to bottom"
 msgstr "Flyt nederst"
 
-#: pan/gui/task-pane.cc:1039
+#: pan/gui/task-pane.cc:1035
 msgid "Move task to the bottom of the download queue"
 msgstr "Flyt opgaven til bunden af downloadkøen"
 
-#: pan/gui/task-pane.cc:1041
+#: pan/gui/task-pane.cc:1037
 msgid "Restart"
 msgstr "Genstart"
 
-#: pan/gui/task-pane.cc:1042
+#: pan/gui/task-pane.cc:1038
 msgid "Restart Tasks"
 msgstr "Genstart opgaver"
 
-#: pan/gui/task-pane.cc:1043
+#: pan/gui/task-pane.cc:1039
 msgid "Stop"
 msgstr "Stop"
 
-#: pan/gui/task-pane.cc:1044
+#: pan/gui/task-pane.cc:1040
 msgid "Stop Tasks"
 msgstr "Stands opgaver"
 
-#: pan/gui/task-pane.cc:1046
+#: pan/gui/task-pane.cc:1042
 msgid "Delete Tasks"
 msgstr "Slet opgaver"
 
-#: pan/gui/task-pane.cc:1048
+#: pan/gui/task-pane.cc:1044
 msgid "Close"
 msgstr "Luk"
 
-#: pan/gui/task-pane.cc:1052
+#: pan/gui/task-pane.cc:1048
 msgid "Show popups"
 msgstr "Vis pop op'er"
 
-#: pan/gui/url.cc:121
+#: pan/gui/url.cc:143
 #, c-format
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr "Der opstod en fejl ved start af URL: %s (kommandoen var: %s)"
@@ -3352,7 +3361,7 @@ msgstr "Sendte “%s” til %s, men fik en fejl: %s"
 msgid "Sending \"%s\" to %s returned an unrecognized response: \"%s\""
 msgstr "Sendte “%s” til %s, men fik et ukendt svar: “%s”"
 
-#: pan/tasks/nntp-pool.cc:235
+#: pan/tasks/nntp-pool.cc:241
 #, c-format
 msgid "Unable to connect to \"%s\""
 msgstr "Kan ikke tilslutte til “%s”"
