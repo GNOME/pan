@@ -258,6 +258,9 @@ AC_CANONICAL_HOST
 
 AC_DEFINE_UNQUOTED([PLATFORM_INFO],["$host"],[uname cpu-vendor-platformbuild])
 
+# this may needs to be patched by Linux packagers
+AC_DEFINE([PAN_SYSTEM_ICON_PATH],["/usr/local/share/pan/icons"],[where Pan icons should be installed])
+
 dnl Windows-specific stuff
 win32="no"
 case $host_os in

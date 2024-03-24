@@ -17,6 +17,7 @@ libpangui_a_SOURCES = \
  group-prefs-dialog.cc \
  header-pane.cc \
  hig.cc \
+ load-icon.cc \
  log-ui.cc \
  pan-file-entry.cc \
  pan-pixbufs.c \
@@ -57,6 +58,7 @@ noinst_HEADERS = \
  hig.h \
  license.h \
  log-ui.h \
+ load-icon.h \
  pad.h \
  pan-file-entry.h \
  pan-tree.h \
