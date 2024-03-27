@@ -125,6 +125,18 @@ install-icons:
 		$(INSTALL_DATA) $(srcdir)/$$icon $(DESTDIR)$(datadir)/icons/$$THEME/$$SIZE/$$CONTEXT/$$ICONFILE; \
 	done
 
+install-stock-images:
+	for image in $(stock_images); do \
+	    mkdir -p $(DESTDIR)$(datadir)/pan/icons/ ; \
+		$(INSTALL_DATA) $(srcdir)/$$image $(DESTDIR)$(datadir)/pan/icons/$$image ; \
+	done
+
+uninstall-stock-images:
+	-for image in $(stock_images); do \
+	    mkdir -p $(DESTDIR)$(datadir)/pan/icons/ \
+		rm -f $(DESTDIR)$(datadir)/pan/icons/$$image \
+	done
+
 uninstall-icons:
 	-for icon in $(public_icons); do \
 		THEME=`echo $$icon | cut -d_ -f1`; \
@@ -134,10 +146,10 @@ uninstall-icons:
 		rm -f $(DESTDIR)$(datadir)/icons/$$THEME/$$SIZE/$$CONTEXT/$$ICONFILE; \
 	done
 
-install-data-local: install-icons
+install-data-local: install-icons install-stock-images
 install-data-hook: update-icon-cache
 
-uninstall-local: uninstall-icons
+uninstall-local: uninstall-icons uninstall-stock-images
 uninstall-hook: update-icon-cache
 
 pan-pixbufs-internal.h: $(stock_images)
