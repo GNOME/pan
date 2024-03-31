@@ -27,7 +27,6 @@
 #include <glib/gi18n.h>
 #include "gtk-compat.h"
 
-#include <pan/icons/pan-pixbufs.h>
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>

@@ -71,7 +71,6 @@ extern "C" {
 #include <pan/tasks/nzb.h>
 #include <pan/data-impl/data-impl.h>
 #include <pan/data-impl/data-io.h>
-#include <pan/icons/pan-pixbufs.h>
 #include "gui.h"
 #include "group-prefs.h"
 #include "prefs-file.h"

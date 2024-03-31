@@ -33,19 +33,13 @@ set(SRC_C_FILES
  e-charset-dialog.c
  e-charset.c
  e-cte-dialog.c
- pan-pixbufs.c
  xface.c
 )
 
 # https://cmake.org/cmake/help/latest/command/add_library.html
 add_library(pan-cc-gui STATIC ${SRC_CC_FILES})
-add_dependencies(pan-cc-gui icons_h)
 
 add_library(pan-c-gui STATIC ${SRC_C_FILES})
-
-# make sure that pan-pixbufs*.h files are generated
-target_include_directories(pan-c-gui INTERFACE icons_h)
-add_dependencies(pan-c-gui icons_h)
 
 message("gmime gui ${GMIME_INCLUDE_DIRS}")
 

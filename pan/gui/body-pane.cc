@@ -37,7 +37,6 @@
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/usenet-utils/url-find.h>
-#include <pan/icons/pan-pixbufs.h>
 #include "pad.h"
 #include "tango-colors.h"
 #include "xface.h"

@@ -22,7 +22,6 @@
 #include "gtk-compat.h"
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
-#include <pan/icons/pan-pixbufs.h>
 #include <pan/tasks/task-article.h>
 #include <pan/tasks/queue.h>
 #include <pan/usenet-utils/text-massager.h>

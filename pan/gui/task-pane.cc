@@ -28,7 +28,6 @@
 #include <pan/general/utf8-utils.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/tasks/queue.h>
-#include <pan/icons/pan-pixbufs.h>
 #include "pad.h"
 #include "render-bytes.h"
 #include "task-pane.h"

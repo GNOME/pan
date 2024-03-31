@@ -41,7 +41,6 @@ extern "C" {
 #include <pan/tasks/task-groups.h>
 #include <pan/tasks/task-xover.h>
 #include <pan/tasks/nzb.h>
-#include <pan/icons/pan-pixbufs.h>
 #include <pan/data-impl/rules-filter.h>
 #include "actions.h"
 #include "body-pane.h"

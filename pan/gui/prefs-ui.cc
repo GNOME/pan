@@ -23,7 +23,6 @@
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/file-util.h>
-#include <pan/icons/pan-pixbufs.h>
 #include "hig.h"
 #include "pad.h"
 #include "pan-file-entry.h"

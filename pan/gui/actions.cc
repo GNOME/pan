@@ -25,7 +25,6 @@
 #include <pan/general/debug.h>
 #include <pan/data-impl/data-impl.h>
 #include <pan/tasks/task-xover.h>
-#include <pan/icons/pan-pixbufs.h>
 
 #include "actions.h"
 #include "pad.h"

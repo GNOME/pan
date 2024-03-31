@@ -1,6 +1,4 @@
 
-set(public_icons_themes hicolor)
-
 file(GLOB public_icons hicolor_apps_*.pan.png)
 
 # keep .png otherwise dependency check fails
@@ -79,36 +77,9 @@ list(APPEND stock_images
 
 foreach(image_file IN LISTS stock_images)
   string(REPLACE "\.png" "" image "${image_file}")
-  list(APPEND pixbuf_list "extern const guint8 ${image}[]")
-  list(APPEND stock_image_list "${image}" "${CMAKE_CURRENT_SOURCE_DIR}/${image_file}")
   # install png files
   install(FILES ${image_file} DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/pan/icons/")
 endforeach()
-
-set(noinst_DATA Pan.ico)
-
-set(EXTRA_DIST
-	${public_icons}
-	${stock_images}
-	${noinst_DATA}
-)
-
-set(noinst_HEADERS pan-pixbufs-internal.h pan-pixbufs.h)
-
-# set(gtk_update_icon_cache "gtk-update-icon-cache -f -t")
-
-# update-icon-cache:
-# 	@-if test -z "$(DESTDIR)"; then
-# 		echo "Updating Gtk icon cache.";
-# 		for theme in $(public_icons_themes); do
-# 			$(gtk_update_icon_cache) $(datadir)/icons/$$theme;
-# 		done;
-# 	else
-# 		echo "*** Icon cache not updated.  After (un)install, run this:";
-# 		for theme in $(public_icons_themes); do
-# 			echo "***   $(gtk_update_icon_cache) $(datadir)/icons/$$theme";
-# 		done;
-# 	fi
 
 # install hicolor icons
 foreach (icon_path ${public_icons})
@@ -121,34 +92,3 @@ foreach (icon_path ${public_icons})
   set(destdir "${CMAKE_INSTALL_DATAROOTDIR}/icons/${theme}/${size}/${context}/")
   install(FILES ${icon_file} DESTINATION ${destdir} RENAME ${target})
 endforeach()
-
-# uninstall-icons:
-# 	-for icon in $(public_icons); do
-# 		THEME=`echo $$icon | cut -d_ -f1`;
-# 		CONTEXT=`echo $$icon | cut -d_ -f2`;
-# 		SIZE=`echo $$icon | cut -d_ -f3`;
-# 		ICONFILE=`echo $$icon | cut -d_ -f4`;
-# 		rm -f $(DESTDIR)$(datadir)/icons/$$THEME/$$SIZE/$$CONTEXT/$$ICONFILE;
-# 	done
-
-# install-data-local: install-icons
-# install-data-hook: update-icon-cache
-
-# uninstall-local: uninstall-icons
-# uninstall-hook: update-icon-cache
-
-# https://cmake.org/cmake/help/book/mastering-cmake/chapter/Custom%20Commands.html
-# https://cmake.org/cmake/help/latest/command/add_custom_command.html
-add_custom_command(
-  OUTPUT pan-pixbufs-internal.h
-  DEPENDS ${stock_images}
-  COMMAND gdk-pixbuf-csource --extern --raw --build-list ${stock_image_list} > pan-pixbufs-internal.h
-  VERBATIM
-)
-
-list(JOIN pixbuf_list ";\n" pixbuf_content)
-file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/pan-pixbufs.h" "${pixbuf_content};\n")
-
-# https://cmake.org/cmake/help/latest/command/add_custom_target.html
-add_custom_target(icons_h ALL DEPENDS "pan-pixbufs-internal.h" "pan-pixbufs.h")
-

@@ -34,7 +34,6 @@
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
-#include <pan/icons/pan-pixbufs.h>
 #include "header-pane.h"
 #include "pan/gui/load-icon.h"
 #include "render-bytes.h"
