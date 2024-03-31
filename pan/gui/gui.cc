@@ -17,6 +17,7 @@
  *
  */
 
+#include "pan/gui/load-icon.h"
 #include <config.h>
 #include <map>
 #include <string>
@@ -1660,7 +1661,7 @@ void GUI :: do_about_pan ()
                                "Calin Culianu <calin@ajvar.org> - Threaded Decoding",
                                "Christophe Lambin <chris@rebelbase.com> - Original Developer",
                                "Matt Eagleson <matt@rebelbase.com> - Original Developer", nullptr };
-  GdkPixbuf * logo = gdk_pixbuf_new_from_inline(-1, icon_pan_about_logo, 0, nullptr);
+  GdkPixbuf * logo = load_icon("icon_pan_about_logo.png");
   GtkAboutDialog * w (GTK_ABOUT_DIALOG (gtk_about_dialog_new ()));
   gtk_about_dialog_set_program_name (w, _("Pan"));
   gtk_about_dialog_set_version (w, PACKAGE_VERSION);

@@ -33,6 +33,7 @@
 #include <pan/general/macros.h>
 #include <pan/general/utf8-utils.h>
 #include <pan/general/e-util.h>
+#include "pan/gui/load-icon.h"
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/usenet-utils/url-find.h>
@@ -76,11 +77,11 @@ namespace
   };
 
   struct Icon {
-  const guint8 * pixbuf_txt;
+  const char * pixbuf_file;
   GdkPixbuf * pixbuf;
   } icons[NUM_ICONS] = {
-    { icon_sig_ok,          nullptr },
-    { icon_sig_fail,        nullptr }
+    { "icon_sig_ok.png",          nullptr },
+    { "icon_sig_fail.png",        nullptr }
   };
 }
 
@@ -635,12 +636,12 @@ namespace
 
  void create_emoticons()
   {
-    emoticon_pixbufs[":)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_smile, false, nullptr);
-    emoticon_pixbufs[":-)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_smile, false, nullptr);
-    emoticon_pixbufs[";)"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_wink, false, nullptr);
-    emoticon_pixbufs[":("] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_frown, false, nullptr);
-    emoticon_pixbufs[":P"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_tongueout, false, nullptr);
-    emoticon_pixbufs[":O"] = gdk_pixbuf_new_from_inline (-1, icon_mozilla_surprised, false, nullptr);
+    emoticon_pixbufs[":)"] = load_icon("icon_mozilla_smile.png");
+    emoticon_pixbufs[":-)"] = load_icon("icon_mozilla_smile.png");
+    emoticon_pixbufs[";)"] = load_icon("icon_mozilla_wink.png");
+    emoticon_pixbufs[":("] = load_icon("icon_mozilla_frown.png");
+    emoticon_pixbufs[":P"] = load_icon("icon_mozilla_tongueout.png");
+    emoticon_pixbufs[":O"] = load_icon("icon_mozilla_surprised.png");
   }
 
   enum TagMode { ADD, REPLACE };
@@ -1711,7 +1712,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   GtkWidget * w, * l, * hbox;
 
   for (guint i=0; i<NUM_ICONS; ++i)
-    icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, icons[i].pixbuf_txt, FALSE, nullptr);
+    icons[i].pixbuf = load_icon (icons[i].pixbuf_file);
 
   create_cursors();
   create_emoticons();

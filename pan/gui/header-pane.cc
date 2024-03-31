@@ -36,6 +36,7 @@
 #include <pan/data/data.h>
 #include <pan/icons/pan-pixbufs.h>
 #include "header-pane.h"
+#include "pan/gui/load-icon.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
 #include "gtk-compat.h"
@@ -103,24 +104,24 @@ namespace
    };
 
   struct Icon {
-    const guint8 * pixbuf_txt;
+    const char * icon_file;
     GdkPixbuf * pixbuf;
   } _icons[ICON_QTY] = {
-    { icon_article_read,           nullptr },
-    { icon_article_unread,         nullptr },
+    { "icon_article_read.png",           nullptr },
+    { "icon_article_unread.png",         nullptr },
 
-    { icon_binary_complete,        nullptr },
-    { icon_binary_complete_read,   nullptr },
+    { "icon_binary_complete.png",        nullptr },
+    { "icon_binary_complete_read.png",   nullptr },
 
-    { icon_binary_incomplete,      nullptr },
-    { icon_binary_incomplete_read, nullptr },
+    { "icon_binary_incomplete.png",      nullptr },
+    { "icon_binary_incomplete_read.png", nullptr },
 
-    { icon_disk,                   nullptr },
-    { icon_bluecheck,              nullptr },
-    { icon_x,                      nullptr },
-    { icon_empty,                  nullptr },
-    { icon_red_flag,               nullptr },
-    { icon_get_flagged,            nullptr }
+    { "icon_disk.png",                   nullptr },
+    { "icon_bluecheck.png",              nullptr },
+    { "icon_x.png",                      nullptr },
+    { "icon_empty.png",                  nullptr },
+    { "icon_red_flag.png",               nullptr },
+    { "icon_get_flagged.png",            nullptr }
   };
 
   int
@@ -1990,7 +1991,7 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
 
   // init the icons
   for (guint i=0; i<ICON_QTY; ++i)
-    _icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, _icons[i].pixbuf_txt, FALSE, nullptr);
+    _icons[i].pixbuf = load_icon (_icons[i].icon_file);
 
   // initialize the show type...
   const std::string show_type_str (prefs.get_string ("header-pane-show-matching", "articles"));

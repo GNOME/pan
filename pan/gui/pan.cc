@@ -194,16 +194,16 @@ namespace
   };
 
   struct Icon {
-  const guint8 * pixbuf_txt;
+  const char * pixbuf_file;
   GdkPixbuf * pixbuf;
   } status_icons[NUM_STATUS_ICONS] = {
-    { icon_status_online,          nullptr },
-    { icon_status_offline,         nullptr },
-    { icon_status_active,          nullptr },
-    { icon_status_queue_empty,     nullptr },
-    { icon_status_error,           nullptr },
-    { icon_status_idle,            nullptr },
-    { icon_status_new_articles,    nullptr }
+    { "icon_status_online.png",          nullptr },
+    { "icon_status_offline.png",         nullptr },
+    { "icon_status_active.png",          nullptr },
+    { "icon_status_queue_empty.png",     nullptr },
+    { "icon_status_error.png",           nullptr },
+    { "icon_status_idle.png",            nullptr },
+    { "icon_status_new_articles.png",    nullptr }
   };
 
 
@@ -487,7 +487,7 @@ namespace
     GUI& gui (*_gui);
 
     for (guint i=0; i<NUM_STATUS_ICONS; ++i)
-      status_icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, status_icons[i].pixbuf_txt, FALSE, nullptr);
+      status_icons[i].pixbuf = load_icon (status_icons[i].pixbuf_file);
 
     GtkStatusIcon * icon = gtk_status_icon_new_from_pixbuf (status_icons[ICON_STATUS_IDLE].pixbuf);
     GtkWidget * menu = gtk_menu_new ();
@@ -1075,7 +1075,7 @@ main (int argc, char *argv[])
       if (gui) {
         TaskPane * pane = new TaskPane (queue, prefs);
         GtkWidget * w (pane->root());
-        GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, icon_pan, FALSE, nullptr);
+        GdkPixbuf * pixbuf = load_icon("icon_pan.png");
         gtk_window_set_default_icon (pixbuf);
         gtk_widget_show_all (w);
         g_signal_connect (w, "destroy", G_CALLBACK(destroy_cb), nullptr);

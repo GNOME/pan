@@ -27,6 +27,7 @@
 #include "hig.h"
 #include "pad.h"
 #include "pan-file-entry.h"
+#include "pan/gui/load-icon.h"
 #include "prefs-ui.h"
 #include "tango-colors.h"
 #include "url.h"
@@ -370,12 +371,13 @@ namespace pan
     return t;
   }
 
-  GtkWidget* new_layout_radio (GtkWidget* prev, const guint8* line, const char* value, std::string& cur, Prefs& prefs)
+  GtkWidget*
+  new_layout_radio (GtkWidget* prev, const char* icon_file, const char* value, std::string& cur, Prefs& prefs)
   {
     GtkWidget * r = prev==nullptr
       ? gtk_radio_button_new (NULL)
       : gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON(prev));
-    GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, line, false, nullptr);
+    GdkPixbuf * pixbuf = load_icon (icon_file);
     GtkWidget * image = gtk_image_new_from_pixbuf (pixbuf);
     g_object_unref (pixbuf);
     gtk_container_add (GTK_CONTAINER(r), image);
@@ -415,7 +417,7 @@ namespace pan
     return r;
   }
 
-  GtkWidget* new_label_with_icon(const char* mnemonic, const char* label, const guint8* line, Prefs& prefs)
+  GtkWidget* new_label_with_icon(const char* mnemonic, const char* label, const char* icon_file, Prefs& prefs)
   {
     std::string what = prefs.get_string("elements-show-tabs", "text");
     const bool text  = "text"  == what;
@@ -423,10 +425,10 @@ namespace pan
     const bool both  = "both"  == what;
 
     GtkWidget* hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-    GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, line, false, nullptr);
+    GdkPixbuf * pixbuf = load_icon (icon_file);
     GtkWidget * image = gtk_image_new_from_pixbuf (pixbuf);
     g_object_unref (pixbuf);
-    if (line && (icons || both)) gtk_box_pack_start (GTK_BOX(hbox), image, true, true, 0);
+    if (icon_file && (icons || both)) gtk_box_pack_start (GTK_BOX(hbox), image, true, true, 0);
     if (text || both) gtk_box_pack_start (GTK_BOX(hbox), gtk_label_new_with_mnemonic(mnemonic), true, true, 0);
     gtk_widget_set_tooltip_text (hbox, label);
     gtk_widget_show_all(hbox);
@@ -1008,7 +1010,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
 
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Behavior"), _("Behavior"), icon_prefs_behavior, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Behavior"), _("Behavior"), "icon_prefs_behavior.png", prefs));
 
   // pane options
   row = 0;
@@ -1021,7 +1023,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
     HIG::workarea_add_section_divider (t, &row);
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Panes"), _("Panes"), icon_prefs_panes, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Panes"), _("Panes"), "icon_prefs_pane.png", prefs));
 
   //charset
   row = 0;
@@ -1080,7 +1082,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
 
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Miscellaneous"), _("Miscellaneous"), icon_prefs_extras, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Miscellaneous"), _("Miscellaneous"), "icon_prefs_extra.png", prefs));
 
   // Layout
   row = 0;
@@ -1089,15 +1091,15 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     std::string cur = _prefs.get_string ("pane-layout", "stacked-right");
     HIG :: workarea_add_section_spacer (t, row, 1);
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
-    w = new_layout_radio (nullptr, icon_layout_1, "stacked-top", cur, prefs);
+    w = new_layout_radio (nullptr, "icon_layout_1.png", "stacked-top", cur, prefs);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
-    w = new_layout_radio (w, icon_layout_2, "stacked-bottom", cur, prefs);
+    w = new_layout_radio (w, "icon_layout_2.png", "stacked-bottom", cur, prefs);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
-    w = new_layout_radio (w, icon_layout_3, "stacked-left", cur, prefs);
+    w = new_layout_radio (w, "icon_layout_3.png", "stacked-left", cur, prefs);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
-    w = new_layout_radio (w, icon_layout_4, "stacked-right", cur, prefs);
+    w = new_layout_radio (w, "icon_layout_4.png", "stacked-right", cur, prefs);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
-    w = new_layout_radio (w, icon_layout_5, "stacked-vertical", cur, prefs);
+    w = new_layout_radio (w, "icon_layout_5.png", "stacked-vertical", cur, prefs);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
     HIG::workarea_add_wide_control (t, &row, h);
   HIG :: workarea_add_section_divider (t, &row);
@@ -1118,7 +1120,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
 
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Layout"), _("Layout"), icon_prefs_layout, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Layout"), _("Layout"), "icon_prefs_layou.png", prefs));
 
   // Headers
   row = 0;
@@ -1127,7 +1129,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_section_spacer(t, row, 1);
     HIG :: workarea_add_wide_control (t, &row, header_columns_layout_new (prefs));
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Headers"), _("Headers"), icon_prefs_headers, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Headers"), _("Headers"), "icon_prefs_header.png", prefs));
 
   // customizable actions
   row = 0;
@@ -1168,7 +1170,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_row (t, &row, _("Download attachments of articles scoring at: "), h);
 
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Actions"), _("Actions"), icon_prefs_actions, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Actions"), _("Actions"), "icon_prefs_action.png", prefs));
 
   // Fonts
   row = 0;
@@ -1194,7 +1196,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     b = new_font_button ("monospace-font", "Monospace 10", prefs);
     HIG :: workarea_add_row (t, &row, l, b);
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Fonts"), _("Fonts"), icon_prefs_fonts, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Fonts"), _("Fonts"), "icon_prefs_font.png", prefs));
 
   // default color theme's Colors
   const PanColors& colors (PanColors::get());
@@ -1296,7 +1298,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_row (t, &row, _("Text Color:"), h);
   HIG :: workarea_finish (t, &row);
 
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Colors"), _("Colors"), icon_prefs_colors, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Colors"), _("Colors"), "icon_prefs_color.png", prefs));
 
   // Applications
   row = 0;
@@ -1317,7 +1319,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     w = html_previewer_new (prefs);
     HIG :: workarea_add_row (t, &row, _("_HTML previewer:"), w);
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Applications"), _("Applications"), icon_prefs_applications, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Applications"), _("Applications"), "icon_prefs_application.png", prefs));
 
   // Upload Options
   row = 0;
@@ -1331,7 +1333,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   HIG::workarea_add_row (t, &row, l, w);
 
   HIG :: workarea_finish (t, &row);
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Upload"), _("Upload"), icon_prefs_upload, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Upload"), _("Upload"), "icon_prefs_uploa.png", prefs));
 
   // Hotkeys
   row = 0;
@@ -1340,7 +1342,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
   HIG :: workarea_finish (t, &row);
 
-  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Shortcuts"), _("Shortcuts"), icon_prefs_hotkeys, prefs));
+  gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Shortcuts"), _("Shortcuts"), "icon_prefs_hotkey.png", prefs));
 
   GtkWidget* scroll = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),

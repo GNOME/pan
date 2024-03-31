@@ -30,6 +30,7 @@
 #include "actions.h"
 #include "pad.h"
 #include "gui.h"
+#include "pan/gui/load-icon.h"
 
 namespace pan
 {
@@ -46,39 +47,38 @@ namespace pan
 
   struct BuiltinIconInfo
   {
-    const guint8* raw;
+    const char * raw;
     const char * name;
   };
 
   const BuiltinIconInfo my_builtin_icons [] =
   {
-    { icon_article_read, "ICON_ARTICLE_READ" },
-    { icon_article_unread, "ICON_ARTICLE_UNREAD" },
-    { icon_compose_followup, "ICON_COMPOSE_FOLLOWUP" },
-    { icon_compose_post, "ICON_COMPOSE_POST" },
-    { icon_disk, "ICON_DISK" },
-    { icon_filter_only_attachments, "ICON_ONLY_ATTACHMENTS" },
-    { icon_filter_only_cached, "ICON_ONLY_CACHED" },
-    { icon_filter_only_me, "ICON_ONLY_ME" },
-    { icon_filter_only_read, "ICON_ONLY_READ" },
-    { icon_filter_only_unread, "ICON_ONLY_UNREAD" },
-    { icon_filter_only_watched, "ICON_ONLY_WATCHED" },
-    { icon_get_dialog, "ICON_GET_DIALOG" },
-    { icon_get_selected, "ICON_GET_SELECTED" },
-    { icon_get_subscribed, "ICON_GET_SUBSCRIBED" },
-    { icon_read_group, "ICON_READ_GROUP" },
-    { icon_read_more, "ICON_READ_MORE" },
-    { icon_read_less, "ICON_READ_LESS" },
-    { icon_read_unread_article, "ICON_READ_UNREAD_ARTICLE" },
-    { icon_read_unread_thread, "ICON_READ_UNREAD_THREAD" },
-    { icon_score, "ICON_SCORE" },
-    { icon_search_pulldown, "ICON_SEARCH_PULLDOWN" },
-    { icon_red_flag, "ICON_FLAGGED"},
-    { icon_get_flagged, "ICON_GET_FLAGGED" },
-    { icon_expand_thread, "ICON_EXPAND_THREAD" },
-    { icon_collapse_thread, "ICON_COLLAPSE_THREAD" },
-    { icon_show_signature, "ICON_SHOW_SIGNATURE" }
-
+    { "icon_article_read.png", "ICON_ARTICLE_READ" },
+    { "icon_article_unread.png", "ICON_ARTICLE_UNREAD" },
+    { "icon_compose_followup.png", "ICON_COMPOSE_FOLLOWUP" },
+    { "icon_compose_post.png", "ICON_COMPOSE_POST" },
+    { "icon_disk.png", "ICON_DISK" },
+    { "icon_filter_only_attachments.png", "ICON_ONLY_ATTACHMENTS" },
+    { "icon_filter_only_cached.png", "ICON_ONLY_CACHED" },
+    { "icon_filter_only_me.png", "ICON_ONLY_ME" },
+    { "icon_filter_only_read.png", "ICON_ONLY_READ" },
+    { "icon_filter_only_unread.png", "ICON_ONLY_UNREAD" },
+    { "icon_filter_only_watched.png", "ICON_ONLY_WATCHED" },
+    { "icon_get_dialog.png", "ICON_GET_DIALOG" },
+    { "icon_get_selected.png", "ICON_GET_SELECTED" },
+    { "icon_get_subscribed.png", "ICON_GET_SUBSCRIBED" },
+    { "icon_read_group.png", "ICON_READ_GROUP" },
+    { "icon_read_more.png", "ICON_READ_MORE" },
+    { "icon_read_less.png", "ICON_READ_LESS" },
+    { "icon_read_unread_article.png", "ICON_READ_UNREAD_ARTICLE" },
+    { "icon_read_unread_thread.png", "ICON_READ_UNREAD_THREAD" },
+    { "icon_score.png", "ICON_SCORE" },
+    { "icon_search_pulldown.png", "ICON_SEARCH_PULLDOWN" },
+    { "icon_red_flag.png", "ICON_FLAGGED"},
+    { "icon_get_flagged.png", "ICON_GET_FLAGGED" },
+    { "icon_expand_thread.png", "ICON_EXPAND_THREAD" },
+    { "icon_collapse_thread.png", "ICON_COLLAPSE_THREAD" },
+    { "icon_show_signature.png", "ICON_SHOW_SIGNATURE" }
   };
 
   void
@@ -89,7 +89,7 @@ namespace pan
 
     for (int i(0), qty(G_N_ELEMENTS(my_builtin_icons)); i<qty; ++i)
     {
-      GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, my_builtin_icons[i].raw, false, nullptr);
+      GdkPixbuf * pixbuf = load_icon (my_builtin_icons[i].raw);
 
       const int width (gdk_pixbuf_get_width (pixbuf));
       gtk_icon_theme_add_builtin_icon (my_builtin_icons[i].name, width, pixbuf);

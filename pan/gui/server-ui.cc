@@ -31,6 +31,7 @@
 #include <pan/general/file-util.h>
 #include <pan/general/macros.h>
 #include <pan/general/quark.h>
+#include "pan/gui/load-icon.h"
 #include <pan/data/data.h>
 #include <pan/usenet-utils/ssl-utils.h>
 #include "pad.h"
@@ -559,11 +560,11 @@ namespace
    };
 
   struct Icon {
-    const guint8 * pixbuf_txt;
+    const char * pixbuf_file;
     GdkPixbuf * pixbuf;
   } _icons[ICON_QTY] = {
-    { icon_plain,  nullptr },
-    { icon_cert,   nullptr }
+    { "icon_plain.png",  nullptr },
+    { "icon_cert.png",   nullptr }
   };
 }
 
@@ -1037,7 +1038,7 @@ sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
   ServerListDialog * d = new ServerListDialog (data, queue, prefs);
 
   for (guint i=0; i<ICON_QTY; ++i)
-    _icons[i].pixbuf = gdk_pixbuf_new_from_inline (-1, _icons[i].pixbuf_txt, FALSE, nullptr);
+    _icons[i].pixbuf = load_icon (_icons[i].pixbuf_file);
 
   // dialog
   char * title = g_strdup_printf ("Pan: %s", _("SSL Certificates"));
