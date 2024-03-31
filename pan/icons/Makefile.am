@@ -133,8 +133,7 @@ install-stock-images:
 
 uninstall-stock-images:
 	-for image in $(stock_images); do \
-	    mkdir -p $(DESTDIR)$(datadir)/pan/icons/ \
-		rm -f $(DESTDIR)$(datadir)/pan/icons/$$image \
+		rm -f $(DESTDIR)$(datadir)/pan/icons/$$image ; \
 	done
 
 uninstall-icons:
