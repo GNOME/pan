@@ -24,6 +24,7 @@
 #include <signal.h>
 #include <glib/gi18n.h>
 #include "gtk-compat.h"
+#include "pan/gui/load-icon.h"
 #include <gmime/gmime.h>
 #include <gio/gio.h>
 
@@ -1089,7 +1090,7 @@ main (int argc, char *argv[])
     }
     else
     {
-      GdkPixbuf * pixbuf = gdk_pixbuf_new_from_inline (-1, icon_pan, FALSE, nullptr);
+      GdkPixbuf* pixbuf = load_icon("icon_pan.png");
       GtkWidget * window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
       if (prefs.get_flag ("main-window-is-maximized", false))
         gtk_window_maximize (GTK_WINDOW (window));

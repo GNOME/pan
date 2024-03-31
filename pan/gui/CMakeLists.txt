@@ -7,6 +7,7 @@ set(SRC_CC_FILES
  group-prefs.cc
  header-pane.cc
  hig.cc
+ load-icon.cc
  log-ui.cc
  pan-file-entry.cc
  pan-tree.cc
