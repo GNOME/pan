@@ -496,7 +496,7 @@ HeaderPane :: column_compare_func (GtkTreeModel  * model,
     case COL_BYTES: {
       const unsigned long a_bytes (row_a.article->get_byte_count());
       const unsigned long b_bytes (row_b.article->get_byte_count());
-           if (a_bytes < b_bytes) ret = -1;
+      if      (a_bytes < b_bytes) ret = -1;
       else if (a_bytes > b_bytes) ret = 1;
       else                        ret = 0;
       break;
@@ -505,7 +505,7 @@ HeaderPane :: column_compare_func (GtkTreeModel  * model,
     case COL_LINES: {
       const unsigned long a_lines (row_a.article->get_line_count());
       const unsigned long b_lines (row_b.article->get_line_count());
-           if (a_lines < b_lines) ret = -1;
+      if      (a_lines < b_lines) ret = -1;
       else if (a_lines > b_lines) ret = 1;
       else                        ret = 0;
       break;
@@ -518,7 +518,7 @@ HeaderPane :: column_compare_func (GtkTreeModel  * model,
     default: { // COL_DATE
       const time_t a_time (row_a.article->time_posted);
       const time_t b_time (row_b.article->time_posted);
-           if (a_time < b_time) ret = -1;
+      if      (a_time < b_time) ret = -1;
       else if (a_time > b_time) ret = 1;
       else                      ret = 0;
       break;
@@ -2637,7 +2637,7 @@ struct HeaderPane::SimilarWalk: public PanTreeStore::WalkFunctor
 
         retval = (double)common_chars / a.len;
       }
-        else // more than one word, so count common words
+      else // more than one word, so count common words
       {
         StringView tok;
         int str1_words(0), common_words(0);
