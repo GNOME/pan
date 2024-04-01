@@ -10,6 +10,7 @@ project(Pan
   DESCRIPTION "Pan usenet reader"
   HOMEPAGE_URL "https://gitlab.gnome.org/GNOME/pan"
 )
+set(VERSION_TITLE "Mariinka")
 
 # Standard CMake modules
 include(CTest)
@@ -21,7 +22,6 @@ include(CheckIncludeFile)
 include(GNUInstallDirs)
 set(PACKAGE "pan")
 
-set(VERSION_TITLE "Mariinka")
 set(PACKAGE_BUGREPORT "https://gitlab.gnome.org/GNOME/pan/issues")
 
 # see https://gitlab.gnome.org/GNOME/pan/-/issues/175
