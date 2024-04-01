@@ -6,7 +6,7 @@ endif()
 
 # https://cmake.org/cmake/help/latest/command/project.html
 project(Pan
-  VERSION 0.156.0
+  VERSION 0.157
   DESCRIPTION "Pan usenet reader"
   HOMEPAGE_URL "https://gitlab.gnome.org/GNOME/pan"
 )
