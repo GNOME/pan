@@ -184,12 +184,9 @@ if(WANT_GKR)
 endif()
 
 # not sure that yelp is working right now
-option(WANT_YELP_TOOLS "enable yelp-tools support for documentation (default: off)")
 option(ENABLE_MANUAL "built in user manual (default: off)")
-if(WANT_YELP-TOOLS)
-  if (ENABLE_MANUAL)
-    set(HAVE_MANUAL 1)
-  endif()
+if (ENABLE_MANUAL)
+  set(HAVE_MANUAL 1)
 endif()
 
 # Check to see if strftime supports the use of %l and %k
@@ -234,6 +231,7 @@ endif()
 add_subdirectory(uulib)
 add_subdirectory(pan)
 add_subdirectory(po)
+add_subdirectory(help)
 
 # https://cmake.org/cmake/help/latest/command/configure_file.html
 configure_file(${CMAKE_SOURCE_DIR}/config-cmake.h.in ${CMAKE_BINARY_DIR}/config.h)
