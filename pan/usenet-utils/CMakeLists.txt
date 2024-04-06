@@ -13,15 +13,19 @@ add_library(usenet-utils
  gpg.cc
 )
 
-# Sanity checking
-# https://cmake.org/cmake/help/latest/command/add_compile_options.html
-target_compile_options(usenet-utils PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
 
 # TODO: fix  message-check-test and add it to this list
 set(test-programs gnksa-test numbers-test scorefile-test text-massager-test url-find-test)
 
 foreach(test ${test-programs})
   add_executable(${test} ${test}.cc)
-  target_link_libraries(${test} usenet-utils generalutils ${GMIME_LIBRARIES} ${GLIB_LIBRARIES})
+  # Sanity checking
+  # https://cmake.org/cmake/help/latest/command/add_compile_options.html
+  target_compile_options(${test} PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
+  if(HAVE_GNUTLS)
+    target_link_libraries(${test} usenet-utils generalutils pan-cc-gui ${GMIME_LIBRARIES} ${GLIB_LIBRARIES} ${GNUTLS_LIBRARIES})
+  else()
+    target_link_libraries(${test} usenet-utils generalutils pan-cc-gui ${GMIME_LIBRARIES} ${GLIB_LIBRARIES})
+  endif()
   add_test(NAME ${test}-test COMMAND ${test})
 endforeach()
