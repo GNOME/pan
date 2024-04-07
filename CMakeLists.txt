@@ -85,8 +85,11 @@ foreach(lang IN LISTS lang_list)
   # a change from previous build system, it may not be a problem
   GETTEXT_PROCESS_PO_FILES(
     ${lang} ALL
-    INSTALL_DESTINATION "share/locale"
     PO_FILES "${CMAKE_SOURCE_DIR}/po/${lang}.po"
+  )
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${lang}.gmo
+    DESTINATION "share/locale/${lang}/LC_MESSAGES/"
+    RENAME pan.mo
   )
 endforeach()
 add_dependencies(pan pofiles)
