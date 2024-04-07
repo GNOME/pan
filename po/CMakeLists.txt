@@ -9,7 +9,7 @@ foreach(lang IN LISTS lang_list)
     PO_FILES "${CMAKE_SOURCE_DIR}/po/${lang}.po"
   )
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${lang}.gmo
-    DESTINATION "share/locale/${lang}/LC_MESSAGES/"
+    DESTINATION "${CMAKE_INSTALL_LOCALEDIR}/${lang}/LC_MESSAGES/"
     RENAME pan.mo
   )
 endforeach()
