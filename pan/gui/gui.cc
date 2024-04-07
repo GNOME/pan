@@ -1631,7 +1631,7 @@ void GUI :: do_reply_to ()
 void GUI :: do_pan_manual ()
 {
   GError * error (NULL);
-  gtk_show_uri (NULL, "help:pan", gtk_get_current_event_time (), &error);
+  gtk_show_uri_on_window (NULL, "help:pan", gtk_get_current_event_time (), &error);
     if (error) {
       GtkWidget * w = gtk_message_dialog_new (get_window(_root),
                                               GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
