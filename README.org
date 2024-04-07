@@ -127,12 +127,12 @@ Optionally, run tests (even if they are few of them):
 
 To install pan:
 #+BEGIN_SRC shell :results verbatim
-  cmake --install build
+  cmake --install std-build
 #+END_SRC
 
 Uninstall pan (see [[https://stackoverflow.com/questions/41471620/cmake-support-make-uninstall#44649542][Stack Overflow link]] for details):
 #+BEGIN_SRC shell :results verbatim
- xargs rm < build/install_manifest.txt
+ xargs rm < std-build/install_manifest.txt
 #+END_SRC
 
 *** Debug build
