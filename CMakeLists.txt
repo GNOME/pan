@@ -77,22 +77,6 @@ include(CheckSymbolExists)
 check_symbol_exists(close "unistd.h" HAVE_CLOSE)
 check_symbol_exists(localtime_r "time.h" HAVE_LOCALTIME_R)
 
-# see https://cmake.org/cmake/help/latest/module/FindGettext.html
-find_package(Gettext)
-file(STRINGS "po/LINGUAS" lang_list REGEX "^[a-z]")
-foreach(lang IN LISTS lang_list)
-  # this creates the gmo file in build directory instead of po/*.gmo. Although this is
-  # a change from previous build system, it may not be a problem
-  GETTEXT_PROCESS_PO_FILES(
-    ${lang} ALL
-    PO_FILES "${CMAKE_SOURCE_DIR}/po/${lang}.po"
-  )
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${lang}.gmo
-    DESTINATION "share/locale/${lang}/LC_MESSAGES/"
-    RENAME pan.mo
-  )
-endforeach()
-add_dependencies(pan pofiles)
 set(GETTEXT_PACKAGE pan)
 
 find_package(PkgConfig REQUIRED)
@@ -249,6 +233,7 @@ endif()
 # https://cmake.org/cmake/help/latest/command/add_subdirectory.html
 add_subdirectory(uulib)
 add_subdirectory(pan)
+add_subdirectory(po)
 
 # https://cmake.org/cmake/help/latest/command/configure_file.html
 configure_file(${CMAKE_SOURCE_DIR}/config-cmake.h.in ${CMAKE_BINARY_DIR}/config.h)
