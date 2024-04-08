@@ -8,6 +8,7 @@ if (ENABLE_MANUAL)
   file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/C/figures")
   set(png_path "figures/pan_window.png")
   file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/C/${png_path}" "${CMAKE_CURRENT_BINARY_DIR}/C/${png_path}")
+  file(COPY_FILE "${CMAKE_CURRENT_SOURCE_DIR}/C/index.docbook" "${CMAKE_CURRENT_BINARY_DIR}/C/index.docbook")
 
   set(lang_list cs de es sv)
   foreach(lang IN LISTS lang_list)
@@ -20,10 +21,10 @@ if (ENABLE_MANUAL)
       COMMAND msgfmt -o "${lang}.mo" "${CMAKE_CURRENT_SOURCE_DIR}/${lang}/${lang}.po"
       COMMAND itstool -m "${lang}.mo" "${CMAKE_CURRENT_SOURCE_DIR}/C/index.docbook"
     )
-    file(CREATE_LINK "../../C/${png_path}" "${CMAKE_CURRENT_BINARY_DIR}/${lang}/${png_path}" SYMBOLIC)
+    file(CREATE_LINK "../../../C/pan/${png_path}" "${CMAKE_CURRENT_BINARY_DIR}/${lang}/${png_path}" SYMBOLIC)
   endforeach()
 
-  foreach(lang IN LISTS C lang_list)
+  foreach(lang IN LISTS lang_list ITEMS C)
     # https://cmake.org/cmake/help/latest/command/install.html#files
     install(
       FILES "${CMAKE_CURRENT_BINARY_DIR}/${lang}/index.docbook"
