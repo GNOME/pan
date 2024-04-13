@@ -1,8 +1,8 @@
-AC_INIT([Pan],[0.157],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[https://gitlab.gnome.org/GNOME/pan])
+AC_INIT([Pan],[0.158],[https://gitlab.gnome.org/GNOME/pan/issues],[pan],[https://gitlab.gnome.org/GNOME/pan])
 AC_DEFINE(VERSION_MAJOR,0,[Major part of version number])
-AC_DEFINE(VERSION_MINOR,157,[Minor part of version number])
+AC_DEFINE(VERSION_MINOR,158,[Minor part of version number])
 AC_DEFINE(VERSION_REVISION,0,[Revision part of version number])
-AC_DEFINE(VERSION_TITLE,["Mariinka"],[Release Name])
+AC_DEFINE(VERSION_TITLE,["Avdiivka"],[Release Name])
 AC_PREREQ([2.71])
 
 dnl Get git info for pan-git.version

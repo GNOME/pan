@@ -6,11 +6,11 @@ endif()
 
 # https://cmake.org/cmake/help/latest/command/project.html
 project(Pan
-  VERSION 0.157
+  VERSION 0.158
   DESCRIPTION "Pan usenet reader"
   HOMEPAGE_URL "https://gitlab.gnome.org/GNOME/pan"
 )
-set(VERSION_TITLE "Mariinka")
+set(VERSION_TITLE "Avdiivka")
 
 # Standard CMake modules
 include(CTest)
