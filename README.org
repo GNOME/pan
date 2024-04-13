@@ -135,6 +135,26 @@ Uninstall pan (see [[https://stackoverflow.com/questions/41471620/cmake-support-
  xargs rm < std-build/install_manifest.txt
 #+END_SRC
 
+*** Build options
+
+Pan can be build with several options:
+
+| option        | usage                                     | default |
+|---------------+-------------------------------------------+---------|
+| ENABLE_MANUAL | built in user manual                      | off     |
+| WANT_DBUS     | enable D-Bus support                      | off     |
+| WANT_GKR      | enable GNOME Keyring or libsecret support | off     |
+| WANT_GMIME    | enable GMime cryptography support         | off     |
+| WANT_GNUTLS   | enable GnuTLS support                     | on      |
+| WANT_GTKSPELL | enable GtkSpell support                   | on      |
+| WANT_NOTIFY   | enable libnotify support                  | off     |
+
+These options can be listed with the following command:
+
+#+BEGIN_SRC shell :results verbatim :eval no
+  cmake -B std-build -LH
+#+END_SRC
+
 *** Debug build
 
 You can also create a debug build:
