@@ -132,7 +132,7 @@ AddSystemLib(GLIB)
 list(APPEND libraries_for_pan ${GLIB_LIBRARIES})
 
 # Check for GMime cryptography support
-option(WANT_GMIME_CRYPTO "enable GMime cryptography support (default: on)" ON)
+option(WANT_GMIME_CRYPTO "enable GMime cryptography support (default: no)")
 if(WANT_GMIME_CRYPTO)
   set(HAVE_GMIME_CRYPTO TRUE)
 endif()
