@@ -2562,11 +2562,11 @@ namespace
 namespace
 {
   GtkWidget * add_button (GtkWidget   * box,
-                                      const gchar * stock_id,
+                                      const gchar * icon_name,
                                       GCallback     callback,
                                       gpointer      user_data)
   {
-    GtkWidget * w = gtk_button_new_from_stock (stock_id);
+    GtkWidget * w = gtk_button_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
     gtk_button_set_relief (GTK_BUTTON(w), GTK_RELIEF_NONE);
     if (callback)
       g_signal_connect (w, "clicked", callback, user_data);
@@ -2616,13 +2616,14 @@ PostUI :: create_filequeue_tab ()
   GtkWidget * buttons = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD_SMALL);
 
   // add button row
-  add_button (buttons, GTK_STOCK_GO_UP, G_CALLBACK(up_clicked_cb), this);
-  add_button (buttons, GTK_STOCK_GOTO_TOP, G_CALLBACK(top_clicked_cb), this);
+  // icon name list: https://commons.wikimedia.org/wiki/GNOME_Desktop_icons
+  add_button (buttons, "go-up", G_CALLBACK(up_clicked_cb), this);
+  add_button (buttons, "go-top", G_CALLBACK(top_clicked_cb), this);
   gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
-  add_button (buttons, GTK_STOCK_GO_DOWN, G_CALLBACK(down_clicked_cb), this);
-  add_button (buttons, GTK_STOCK_GOTO_BOTTOM, G_CALLBACK(bottom_clicked_cb), this);
+  add_button (buttons, "go-down", G_CALLBACK(down_clicked_cb), this);
+  add_button (buttons, "go-bottom", G_CALLBACK(bottom_clicked_cb), this);
   gtk_box_pack_start (GTK_BOX(buttons), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
-  w = add_button (buttons, GTK_STOCK_DELETE, G_CALLBACK(delete_clicked_cb), this);
+  w = add_button (buttons, "edit-cut", G_CALLBACK(delete_clicked_cb), this);
   gtk_widget_set_tooltip_text( w, _("Delete from Queue"));
   pan_box_pack_start_defaults (GTK_BOX(buttons), gtk_event_box_new());
 
