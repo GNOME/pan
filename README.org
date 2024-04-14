@@ -97,9 +97,7 @@ enable or disable at configure (or autogen) time:
 
 * Installation
 
-** With cmake
-
-*** Standard build
+** Standard build
 
 Run the following command to setup Pan build with the default options:
 
@@ -123,7 +121,7 @@ Optionally, run tests (even if they are few of them):
  ctest --test-dir std-build
 #+END_SRC
 
-*** Installation
+** Installation
 
 To install pan:
 #+BEGIN_SRC shell :results verbatim
@@ -135,7 +133,7 @@ Uninstall pan (see [[https://stackoverflow.com/questions/41471620/cmake-support-
  xargs rm < std-build/install_manifest.txt
 #+END_SRC
 
-*** Build options
+** Build options
 
 Pan can be build with several options:
 
@@ -155,7 +153,7 @@ These options can be listed with the following command:
   cmake -B std-build -LH
 #+END_SRC
 
-*** Debug build
+** Debug build
 
 You can also create a debug build:
 
@@ -166,7 +164,7 @@ You can also create a debug build:
 #+END_SRC
 
 
-*** CC++ language server support
+** CC++ language server support
 
 To get language server support (e.g. [[https://github.com/MaskRay/ccls][ccls]]), run:
 #+BEGIN_SRC shell :results verbatim
@@ -180,31 +178,6 @@ To get language server support (e.g. [[https://github.com/MaskRay/ccls][ccls]]),
 : -- Configuring done (0.2s)
 : -- Generating done (0.1s)
 : -- Build files have been written to: /home/domi/private/debian-dev/pan-stuff/pan-upstream/debug-build
-
-** With Autotools
-
-Run the following command to build Pan configured with the default options:
-
-#+begin_src  shell
-  ./configure && make
-#+end_src
-
-This will result in the executable =./pan/gui/pan=
-
-When building Pan from the Git repository, run the following command
-instead:
-
-#+begin_src shell
-./autogen.sh && make
-#+end_src
-
-You can find examples of =autogen= commands in [[file:.gitlab-ci.yml][gitlab ci file]].
-
-Finally, run the following command as root to install Pan:
-
-#+begin_src shell
-make install
-#+end_src
 
 * Upgrading
 
