@@ -862,6 +862,9 @@ namespace
       StringView area;
       StringView march (v_all);
       while ((url_find (march, area))) {
+        // Do no highlight URL in signature when not showing signature
+        if (area.str > sig_point && !show_sig)
+          break;
         set_section_tag (buffer, &start, v_all, area, "url", REPLACE);
         march = march.substr (area.str + area.len, nullptr);
       }
