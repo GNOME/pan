@@ -22,10 +22,9 @@ foreach(test ${test-programs})
   # Sanity checking
   # https://cmake.org/cmake/help/latest/command/add_compile_options.html
   target_compile_options(${test} PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
-  if(HAVE_GNUTLS)
-    target_link_libraries(${test} usenet-utils generalutils pan-cc-gui ${GMIME_LIBRARIES} ${GLIB_LIBRARIES} ${GNUTLS_LIBRARIES})
-  else()
     target_link_libraries(${test} usenet-utils generalutils pan-cc-gui ${GMIME_LIBRARIES} ${GLIB_LIBRARIES})
+  if(HAVE_GNUTLS)
+    target_link_libraries(${test} ${GNUTLS_LIBRARIES})
   endif()
   add_test(NAME ${test}-test COMMAND ${test})
 endforeach()
