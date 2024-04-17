@@ -160,9 +160,8 @@ endif()
 
 option(WANT_GNUTLS "enable GnuTLS support (default: on)" ON)
 if(WANT_GNUTLS)
-  pkg_check_modules(GNUTLS REQUIRED gnutls>=3.0.0)
+  pkg_check_modules(GNUTLS REQUIRED IMPORTED_TARGET gnutls>=3.0.0)
   AddSystemLib(GNUTLS)
-  set(HAVE_GNUTLS true)
   list(APPEND libraries_for_pan ${GNUTLS_LIBRARIES})
 endif()
 
