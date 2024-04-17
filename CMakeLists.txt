@@ -84,21 +84,16 @@ find_package(PkgConfig REQUIRED)
 
 # see https://github.com/shlomif/gtk3-cmake-examples/blob/master/CMakeLists.txt
 # Use the package PkgConfig to detect GTK+ headers/library files
-pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
-# Setup CMake to use GTK+, tell the compiler where to look for headers
-# and to the linker where to look for libraries
-include_directories(${GTK3_INCLUDE_DIRS})
-link_directories(${GTK3_LIBRARY_DIRS})
-list(APPEND libraries_for_pan ${GTK3_LDFLAGS})
-# Add other flags to the compiler
-add_definitions(${GTK3_CFLAGS_OTHER})
-
-list(APPEND libraries_for_pan ${GTK3_LIBRARIES})
+pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET  gtk+-3.0)
+# tell the compiler where to look for libraries
+target_link_directories(pan PUBLIC PkgConfig::GTK3)
+target_link_libraries(pan PkgConfig::GTK3)
 
 function(AddSystemLib libname)
   # https://cmake.org/cmake/help/latest/command/include_directories.html
   include_directories(${${libname}_INCLUDE_DIRS})
-  link_directories(${${libname}_LIBRARIES})
+  link_directories(pan ${${libname}_LIBRARIES})
+  target_link_libraries(pan ${${libname}_LIBRARIES})
 endfunction()
 
 # https://cmake.org/cmake/help/latest/command/find_package.html

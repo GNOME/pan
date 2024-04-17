@@ -43,6 +43,11 @@ add_dependencies(pan-cc-gui icons_h)
 
 add_library(pan-c-gui STATIC ${SRC_C_FILES})
 
+foreach (my_target ${pan-cc-gui} ${pan-c-gui})
+  target_include_directories(${my_target} PUBLIC PkgConfig::GTK3)
+  target_compile_options(${my_target} PUBLIC PkgConfig::GTK3})
+endforeach()
+
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
 target_compile_options(pan-cc-gui PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")

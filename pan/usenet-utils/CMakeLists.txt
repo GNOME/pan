@@ -16,13 +16,15 @@ add_library(usenet-utils
 
 # TODO: fix  message-check-test and add it to this list
 set(test-programs gnksa-test numbers-test scorefile-test text-massager-test url-find-test)
+set(public_libs PkgConfig::GTK3)
 
 foreach(test ${test-programs})
   add_executable(${test} ${test}.cc)
   # Sanity checking
   # https://cmake.org/cmake/help/latest/command/add_compile_options.html
   target_compile_options(${test} PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
-    target_link_libraries(${test} usenet-utils generalutils pan-cc-gui ${GMIME_LIBRARIES} ${GLIB_LIBRARIES})
+  target_link_libraries(${test} usenet-utils generalutils pan-cc-gui ${public_libs} ${GMIME_LIBRARIES} ${GLIB_LIBRARIES} )
+  target_link_directories(pan PUBLIC ${public_libs})
   if(WANT_GNUTLS)
     target_link_libraries(${test} PkgConfig::GNUTLS)
   endif()
