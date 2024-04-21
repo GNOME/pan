@@ -4,7 +4,7 @@ This is Pan, a powerful and user-friendly Usenet newsreader for GTK.
 The latest information and versions of Pan can always be found at
 [[https://gitlab.gnome.org/GNOME/pan][Pan website]].
 
-** THE SALES PITCH
+** The sales pitch
 
 Pan is good for Reading News.
 
@@ -81,19 +81,17 @@ The following libraries add extra features but are optional:
 - [[https://developer.gnome.org/libsecret/][libsecret]] 0.16 or higher and [[https://developer.gnome.org/gcr/][gcr]] 3.20 or higher for password storage
 - [[http://www.freedesktop.org/wiki/Software/dbus][D-Bus]] to support running multiple Pan instances
 - [[http://www.gnu.org/software/gnutls/][GnuTLS]] 3.0.0 or higher for encrypted connections (TLS 1.x)
-- [[https://wiki.gnome.org/Apps/Yelp/Tools][Yelp Tools]] for built-in user manual
+- [[http://itstool.org/][ITS Tool]] for built-in user manual
   
 The following libraries are experimental and not suitable for any use
 other than testing. Use at your own risk:
 
 - [[https://webkitgtk.org/][WebKitGTK]] 1.8.1 or higher for embedded HTML
 
-Run the following command to get a list of all options that you can
-enable or disable at configure (or autogen) time:
-
-#+begin_src shell
-  ./configure --help
-#+end_src
+On Debian and derivatives, required dependencies can added with:
+#+BEGIN_SRC shell :results verbatim
+  sudo apt-get build-dep pan
+#+END_SRC
 
 * Installation
 
