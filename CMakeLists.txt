@@ -178,6 +178,7 @@ endif()
 
 # Check to see if strftime supports the use of %l and %k
 # https://cmake.org/cmake/help/latest/command/try_run.html
+# this requires cmake 3.25
 try_run(HAVE_LKSTRFTIME COMPILED_LKSTRFTIME_TEST
   SOURCE_FROM_CONTENT test-strftime.c "
 #include <string.h>
