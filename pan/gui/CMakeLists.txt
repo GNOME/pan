@@ -46,6 +46,11 @@ add_library(pan-c-gui STATIC ${SRC_C_FILES})
 foreach (my_target ${pan-cc-gui} ${pan-c-gui})
   target_include_directories(${my_target} PUBLIC PkgConfig::GTK3)
   target_compile_options(${my_target} PUBLIC PkgConfig::GTK3})
+
+  if(WANT_GTKSPELL)
+    target_include_directories(${my_target} PUBLIC PkgConfig::GTKSPELL)
+    target_compile_options(${my_target} PUBLIC PkgConfig::GTKSPELL})
+  endif()
 endforeach()
 
 # Sanity checking

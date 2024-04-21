@@ -142,7 +142,6 @@ if(WANT_GTKSPELL)
   pkg_check_modules(ENCHANT REQUIRED enchant-2>=2.2.3)
   AddSystemLib(ENCHANT)
   set(HAVE_GTKSPELL true)
-  list(APPEND libraries_for_pan ${GTKSPELL_LIBRARIES} ${ENCHANT_LIBRARIES})
 endif()
 
 option(WANT_WEBKIT "enable WebKitGTK support (experimental, default: off)")
