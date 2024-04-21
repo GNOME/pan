@@ -43,6 +43,10 @@ add_dependencies(pan-cc-gui icons_h)
 
 add_library(pan-c-gui STATIC ${SRC_C_FILES})
 
+# make sure that pan-pixbufs*.h files are generated
+target_include_directories(pan-c-gui INTERFACE icons_h)
+add_dependencies(pan-c-gui icons_h)
+
 foreach (my_target ${pan-cc-gui} ${pan-c-gui})
   target_include_directories(${my_target} PUBLIC PkgConfig::GTK3)
   target_compile_options(${my_target} PUBLIC PkgConfig::GTK3})
@@ -50,6 +54,16 @@ foreach (my_target ${pan-cc-gui} ${pan-c-gui})
   if(WANT_GTKSPELL)
     target_include_directories(${my_target} PUBLIC PkgConfig::GTKSPELL)
     target_compile_options(${my_target} PUBLIC PkgConfig::GTKSPELL})
+  endif()
+
+  if(WANT_WEBKIT)
+    target_include_directories(${my_target} PUBLIC PkgConfig::WEBKITGTK)
+    target_compile_options(${my_target} PUBLIC PkgConfig::WEBKITGTK})
+  endif()
+
+  if(WANT_NOTIFY)
+    target_include_directories(${my_target} PUBLIC PkgConfig::LIBNOTIFY)
+    target_compile_options(${my_target} PUBLIC PkgConfig::LIBNOTIFY})
   endif()
 endforeach()
 

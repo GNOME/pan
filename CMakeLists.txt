@@ -99,17 +99,15 @@ endfunction()
 # https://cmake.org/cmake/help/latest/command/find_package.html
 # https://cmake.org/cmake/help/latest/module/FindIconv.html
 find_package(Iconv)
-AddSystemLib(Iconv)
 if(Iconv_FOUND)
+  AddSystemLib(Iconv)
   set(HAVE_ICONV true)
-  list(APPEND libraries_for_pan ${Iconv_LIBRARIES})
 endif()
 
 # https://cmake.org/cmake/help/latest/module/FindZLIB.html
 find_package(ZLIB 1.2.0 REQUIRED)
 AddSystemLib(ZLIB)
 set(HAVE_ZLIB ${ZLIB_FOUND})
-list(APPEND libraries_for_pan ${ZLIB_LIBRARIES})
 
 # D-Bus support
 # https://cmake.org/cmake/help/latest/command/option.html
@@ -121,11 +119,9 @@ endif()
 # https://cmake.org/cmake/help/latest/module/FindPkgConfig.html#command:pkg_check_modules
 pkg_check_modules(GMIME REQUIRED gmime-3.0)
 AddSystemLib(GMIME)
-list(APPEND libraries_for_pan ${GMIME_LIBRARIES})
 
 pkg_check_modules(GLIB REQUIRED glib-2.0>=2.26.0)
 AddSystemLib(GLIB)
-list(APPEND libraries_for_pan ${GLIB_LIBRARIES})
 
 # Check for GMime cryptography support
 option(WANT_GMIME_CRYPTO "enable GMime cryptography support (default: no)")
@@ -149,14 +145,12 @@ if(WANT_WEBKIT)
   pkg_check_modules(WEBKITGTK REQUIRED webkitgtk-3.0>=1.8.1)
   AddSystemLib(WEBKITGTK)
   set(HAVE_WEBKIT true)
-  list(APPEND libraries_for_pan ${WEBKITGTK_LIBRARIES})
 endif()
 
 option(WANT_GNUTLS "enable GnuTLS support (default: on)" ON)
 if(WANT_GNUTLS)
   pkg_check_modules(GNUTLS REQUIRED IMPORTED_TARGET gnutls>=3.0.0)
   AddSystemLib(GNUTLS)
-  list(APPEND libraries_for_pan ${GNUTLS_LIBRARIES})
 endif()
 
 option(WANT_NOTIFY "enable libnotify support (default: off)")
@@ -164,7 +158,6 @@ if(WANT_NOTIFY)
   pkg_check_modules(LIBNOTIFY REQUIRED libnotify>=0.4.1)
   AddSystemLib(LIBNOTIFY)
   set(HAVE_LIBNOTIFY true)
-  list(APPEND libraries_for_pan ${LIBNOTIFY_LIBRARIES})
 endif()
 
 option(WANT_GKR "enable GNOME Keyring or libsecret support (default: off)")
@@ -174,7 +167,6 @@ if(WANT_GKR)
   pkg_check_modules(GCR3 REQUIRED gcr-3>=3.20)
   AddSystemLib(GCR3)
   set(HAVE_GKR TRUE)
-  list(APPEND libraries_for_pan ${LIBSECRET_LIBRARIES} ${GCR3_LIBRARIES})
 endif()
 
 # not sure that yelp is working right now
@@ -214,7 +206,7 @@ elseif(WIN32)
   # https://cmake.org/cmake/help/latest/command/target_compile_options.html
   #add_compile_options(mms-bitfields)
   add_compile_definitions(WIN32_LEAN_AND_MEAN)
-  list(APPEND libraries_for_pan shell32 ws2_32 pthread)
+  target_link_libraries(pan shell32 ws2_32 pthread)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
   # TODO: set LOCALEDIR
 else()
@@ -230,13 +222,6 @@ add_subdirectory(help)
 # https://cmake.org/cmake/help/latest/command/configure_file.html
 configure_file(${CMAKE_SOURCE_DIR}/config-cmake.h.in ${CMAKE_BINARY_DIR}/config.h)
 
-target_include_directories(uulib PRIVATE "uulib")
-target_compile_definitions(uulib PUBLIC "PROTOTYPES")
-
-# make sure that pan-pixbufs*.h files are generated
-target_include_directories(pan-c-gui INTERFACE icons_h)
-add_dependencies(pan-c-gui icons_h)
-
 target_compile_definitions(pan PRIVATE "PANLOCALEDIR=\"${LOCALEDIR}\"")
 
 # https://cmake.org/cmake/help/latest/command/target_link_libraries.html
@@ -249,8 +234,6 @@ target_link_libraries(pan
   usenet-utils
   generalutils
   uulib
-  general
-  ${libraries_for_pan}
   ${CMAKE_THREAD_LIBS_INIT}
 )
 
