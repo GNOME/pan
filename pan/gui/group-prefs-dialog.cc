@@ -24,7 +24,7 @@
 #include <glib.h>
 #include "gtk-compat.h"
 #ifdef HAVE_GTKSPELL
-#include <enchant-2/enchant.h>
+#include <enchant.h>
 #endif
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
