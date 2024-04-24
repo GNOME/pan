@@ -222,6 +222,8 @@ target_link_libraries(pan
   generalutils
   uulib
   ${CMAKE_THREAD_LIBS_INIT}
+  PkgConfig::GTK3
+  PkgConfig::GMIME
 )
 
 # Installation
