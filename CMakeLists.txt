@@ -82,31 +82,25 @@ set(GETTEXT_PACKAGE pan)
 
 find_package(PkgConfig REQUIRED)
 
+function(my_target_system_lib target scope libname)
+  # https://cmake.org/cmake/help/latest/command/include_directories.html
+  target_include_directories(${target} ${scope} ${${libname}_INCLUDE_DIRS})
+  target_compile_options(${target} ${scope} ${${libname}_CFLAGS})
+  target_link_directories(${target} ${scope} ${${libname}_LIBRARY_DIRS})
+  target_link_libraries(${target} ${scope} ${${libname}_LIBRARIES})
+endfunction()
+
 # see https://github.com/shlomif/gtk3-cmake-examples/blob/master/CMakeLists.txt
 # Use the package PkgConfig to detect GTK+ headers/library files
 pkg_check_modules(GTK3 REQUIRED IMPORTED_TARGET  gtk+-3.0)
-# tell the compiler where to look for libraries
-target_link_directories(pan PUBLIC PkgConfig::GTK3)
-target_link_libraries(pan PkgConfig::GTK3)
-
-function(AddSystemLib libname)
-  # https://cmake.org/cmake/help/latest/command/include_directories.html
-  include_directories(${${libname}_INCLUDE_DIRS})
-  link_directories(pan ${${libname}_LIBRARIES})
-  target_link_libraries(pan ${${libname}_LIBRARIES})
-endfunction()
 
 # https://cmake.org/cmake/help/latest/command/find_package.html
 # https://cmake.org/cmake/help/latest/module/FindIconv.html
 find_package(Iconv)
-if(Iconv_FOUND)
-  AddSystemLib(Iconv)
-  set(HAVE_ICONV true)
-endif()
+set(HAVE_ICONV ${Iconv_FOUND})
 
 # https://cmake.org/cmake/help/latest/module/FindZLIB.html
 find_package(ZLIB 1.2.0 REQUIRED)
-AddSystemLib(ZLIB)
 set(HAVE_ZLIB ${ZLIB_FOUND})
 
 # D-Bus support
@@ -117,11 +111,9 @@ if(WANT_DBUS)
 endif()
 
 # https://cmake.org/cmake/help/latest/module/FindPkgConfig.html#command:pkg_check_modules
-pkg_check_modules(GMIME REQUIRED gmime-3.0)
-AddSystemLib(GMIME)
+pkg_check_modules(GMIME REQUIRED IMPORTED_TARGET gmime-3.0)
 
-pkg_check_modules(GLIB REQUIRED glib-2.0>=2.26.0)
-AddSystemLib(GLIB)
+pkg_check_modules(GLIB REQUIRED IMPORTED_TARGET glib-2.0>=2.26.0)
 
 # Check for GMime cryptography support
 option(WANT_GMIME_CRYPTO "enable GMime cryptography support (default: no)")
@@ -132,41 +124,34 @@ endif()
 # GtkSpell support
 option(WANT_GTKSPELL "enable GtkSpell support (default: on)" ON)
 if(WANT_GTKSPELL)
-  pkg_check_modules(GTKSPELL REQUIRED gtkspell3-3.0)
-  AddSystemLib(GTKSPELL)
+  pkg_check_modules(GTKSPELL REQUIRED IMPORTED_TARGET gtkspell3-3.0)
   set(GTKSPELL_VERSION 3)
-  pkg_check_modules(ENCHANT REQUIRED enchant-2>=2.2.3)
-  AddSystemLib(ENCHANT)
+  pkg_check_modules(ENCHANT REQUIRED IMPORTED_TARGET enchant-2>=2.2.3)
   set(HAVE_GTKSPELL true)
 endif()
 
 option(WANT_WEBKIT "enable WebKitGTK support (experimental, default: off)")
 if(WANT_WEBKIT)
-  pkg_check_modules(WEBKITGTK REQUIRED webkitgtk-3.0>=1.8.1)
-  AddSystemLib(WEBKITGTK)
+  pkg_check_modules(WEBKITGTK REQUIRED IMPORTED_TARGET webkitgtk-3.0>=1.8.1)
   set(HAVE_WEBKIT true)
 endif()
 
 option(WANT_GNUTLS "enable GnuTLS support (default: on)" ON)
 if(WANT_GNUTLS)
   pkg_check_modules(GNUTLS REQUIRED IMPORTED_TARGET gnutls>=3.0.0)
-  AddSystemLib(GNUTLS)
   set(HAVE_GNUTLS true)
 endif()
 
 option(WANT_NOTIFY "enable libnotify support (default: off)")
 if(WANT_NOTIFY)
-  pkg_check_modules(LIBNOTIFY REQUIRED libnotify>=0.4.1)
-  AddSystemLib(LIBNOTIFY)
+  pkg_check_modules(LIBNOTIFY REQUIRED IMPORTED_TARGET libnotify>=0.4.1)
   set(HAVE_LIBNOTIFY true)
 endif()
 
 option(WANT_GKR "enable GNOME Keyring or libsecret support (default: off)")
 if(WANT_GKR)
-  pkg_check_modules(LIBSECRET REQUIRED libsecret-1>=0.16)
-  AddSystemLib(LIBSECRET)
-  pkg_check_modules(GCR3 REQUIRED gcr-3>=3.20)
-  AddSystemLib(GCR3)
+  pkg_check_modules(LIBSECRET REQUIRED IMPORTED_TARGET libsecret-1>=0.16)
+  pkg_check_modules(GCR3 REQUIRED IMPORTED_TARGET gcr-3>=3.20)
   set(HAVE_GKR TRUE)
 endif()
 

@@ -22,3 +22,15 @@ add_library(tasks
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
 target_compile_options(tasks PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
+
+target_link_libraries(tasks PUBLIC PkgConfig::GTK3)
+
+target_link_libraries(tasks PUBLIC PkgConfig::GMIME)
+
+if(Iconv_FOUND)
+  my_target_system_lib(tasks PUBLIC Iconv)
+endif()
+
+if(WANT_GNUTLS)
+  target_link_libraries(tasks PUBLIC PkgConfig::GNUTLS)
+endif()
