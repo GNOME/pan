@@ -33,7 +33,6 @@
 #include <pan/data/article.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/encode-cache.h>
-#include <pan/data/cert-store.h>
 #include <pan/data/server-info.h>
 
 #include <pan/gui/prefs.h>
