@@ -24,11 +24,6 @@ namespace
 #endif
 
 
-  static inline void window_get_pointer (GdkEventMotion* event, int* x, int* y, GdkModifierType* t)
-  {
-    gdk_window_get_device_position (event->window, event->device, x, y, t);
-  }
-
   // include this for conversion of old key names to new
   #include <gdk/gdkkeysyms-compat.h>
 
