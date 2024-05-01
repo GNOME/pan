@@ -539,7 +539,7 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
                                        GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
                                        NULL);
   gtk_window_set_role (GTK_WINDOW(_root), "pan-profiles-dialog");
-  //g_signal_connect (GTK_OBJECT(_root), "response", G_CALLBACK(response_cb), this);
+  //g_signal_connect (_root, "response", G_CALLBACK(response_cb), this);
 
   // workarea
   GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);

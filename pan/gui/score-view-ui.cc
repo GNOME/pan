@@ -188,7 +188,7 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
   gtk_widget_show (button);
   gtk_dialog_add_action_widget (GTK_DIALOG(w), button, GTK_RESPONSE_APPLY);
   gtk_window_set_resizable (GTK_WINDOW(w), true);
-  g_signal_connect (GTK_OBJECT(w), "response", G_CALLBACK(response_cb), &data);
+  g_signal_connect (w, "response", G_CALLBACK(response_cb), &data);
   g_object_set_data_full (G_OBJECT(w), "score_view", this, delete_score_view);
 
   // workarea

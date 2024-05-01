@@ -58,8 +58,8 @@ namespace
                                             GTK_DIALOG_DESTROY_WITH_PARENT,
                                             GTK_MESSAGE_INFO,
                                             GTK_BUTTONS_CLOSE, "%s", str);
-    g_signal_connect_swapped (GTK_OBJECT(w), "response",
-                              G_CALLBACK(gtk_widget_destroy), GTK_OBJECT (w));
+    g_signal_connect_swapped (w, "response",
+                              G_CALLBACK(gtk_widget_destroy), w);
     gtk_widget_show_all (w);
   }
 

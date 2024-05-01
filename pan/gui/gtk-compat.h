@@ -23,8 +23,6 @@ namespace
 {
 #endif
 
-  #define GTK_OBJECT(w) w
-
 #ifdef __cplusplus
 }
 #endif

@@ -768,7 +768,7 @@ namespace
     Quark selected_server (get_selected_server (d));
     if (!selected_server.empty()) {
       GtkWidget * edit_dialog = server_edit_dialog_new (d->data, d->queue, d->prefs, GTK_WINDOW(list_dialog), selected_server);
-      g_signal_connect (GTK_OBJECT(edit_dialog), "destroy", G_CALLBACK(server_edit_dialog_destroy_cb), list_dialog);
+      g_signal_connect (edit_dialog, "destroy", G_CALLBACK(server_edit_dialog_destroy_cb), list_dialog);
       gtk_widget_show_all (edit_dialog);
     }
   }
@@ -955,7 +955,7 @@ server_list_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* paren
   g_free (title);
   gtk_window_set_role (GTK_WINDOW(w), "pan-servers-dialog");
   gtk_window_set_resizable (GTK_WINDOW(w), TRUE);
-  g_signal_connect (GTK_OBJECT(w), "response", G_CALLBACK(server_list_dialog_response_cb), d);
+  g_signal_connect (w, "response", G_CALLBACK(server_list_dialog_response_cb), d);
   g_object_set_data_full (G_OBJECT(w), "dialog", d, delete_server_list_dialog);
 
   // workarea
@@ -1048,7 +1048,7 @@ sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
   g_free (title);
   gtk_window_set_role (GTK_WINDOW(w), "pan-sec-dialog");
   gtk_window_set_resizable (GTK_WINDOW(w), TRUE);
-  g_signal_connect (GTK_OBJECT(w), "response", G_CALLBACK(server_list_dialog_response_cb), d);
+  g_signal_connect (w, "response", G_CALLBACK(server_list_dialog_response_cb), d);
   g_object_set_data_full (G_OBJECT(w), "dialog", d, delete_sec_dialog);
 
   // workarea
