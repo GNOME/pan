@@ -24,7 +24,6 @@ namespace
 #endif
 
   #define GTK_OBJECT(w) w
-  typedef GtkWidget GtkObject;
 
 #ifdef __cplusplus
 }
