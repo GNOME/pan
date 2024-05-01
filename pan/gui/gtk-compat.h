@@ -23,10 +23,6 @@ namespace
 {
 #endif
 
-
-  // include this for conversion of old key names to new
-  #include <gdk/gdkkeysyms-compat.h>
-
   #define GTK_OBJECT(w) w
   typedef GtkWidget GtkObject;
 
