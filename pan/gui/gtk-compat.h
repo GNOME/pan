@@ -23,68 +23,13 @@ namespace
 {
 #endif
 
-#if !GTK_CHECK_VERSION(3, 0, 0)
-  static inline GtkWidget* gtk_box_new (GtkOrientation orientation, int space)
-  {
-    GtkWidget* ret;
-    if (orientation == GTK_ORIENTATION_HORIZONTAL)
-      ret = gtk_hbox_new (FALSE, space);
-    else
-      ret = gtk_vbox_new (FALSE, space);
-    return ret;
-  }
-#endif
-
-#if !GTK_CHECK_VERSION(3, 0, 0)
-static inline GdkWindow * gdk_window_get_device_position (GdkWindow *window,
-                                                           GdkDevice *device,
-                                                           gint *x,
-                                                           gint *y,
-                                                           GdkModifierType *mask)
-{
-  return gdk_window_get_pointer (window, x, y, mask);
-}
-#endif
-
-#if !GTK_CHECK_VERSION(3, 0, 0)
-  static inline GtkWidget* gtk_paned_new(GtkOrientation orientation)
-  {
-    GtkWidget* ret;
-    if (orientation == GTK_ORIENTATION_HORIZONTAL)
-      ret = gtk_hpaned_new();
-    else
-      ret = gtk_vpaned_new();
-    return ret;
-  }
-#endif
-
-#if !GTK_CHECK_VERSION(3, 0, 0)
-  static inline GtkWidget* gtk_separator_new(GtkOrientation orientation)
-  {
-    GtkWidget* ret;
-    if (orientation == GTK_ORIENTATION_HORIZONTAL)
-      ret = gtk_hseparator_new();
-    else
-      ret = gtk_vseparator_new();
-    return ret;
-  }
-#endif
 
   static inline void window_get_pointer (GdkEventMotion* event, int* x, int* y, GdkModifierType* t)
   {
-#if !GTK_CHECK_VERSION(3, 0, 0)
-    gdk_window_get_pointer (event->window, x, y, t);
-#else
     gdk_window_get_device_position (event->window, event->device, x, y, t);
-#endif
   }
 
-#if !GTK_CHECK_VERSION(3, 0, 0)
-  #include <gdk/gdkkeysyms.h>
-#endif
-
-
-// include this for conversion of old key names to new
+  // include this for conversion of old key names to new
   #include <gdk/gdkkeysyms-compat.h>
 
   #define GTK_OBJECT(w) w
