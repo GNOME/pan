@@ -19,7 +19,8 @@
 #include "e-charset-combo-box.h"
 #include <glib/gi18n.h>
 #include "e-charset-dialog.h"
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 /**
  * e_charset_dialog:

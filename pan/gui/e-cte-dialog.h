@@ -3,7 +3,8 @@
 
 #include <config.h>
 #include <gmime/gmime.h>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <glib/gi18n.h>
 
 G_BEGIN_DECLS

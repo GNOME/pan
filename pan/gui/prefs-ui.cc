@@ -19,7 +19,8 @@
 
 #include <config.h>
 #include <glib/gi18n.h>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/general/file-util.h>
@@ -30,7 +31,8 @@
 #include "prefs-ui.h"
 #include "tango-colors.h"
 #include "url.h"
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include "e-charset-dialog.h"
 #include "actions-extern.h"
 

@@ -20,7 +20,8 @@
 #ifndef PREFS_UI_H
 #define PREFS_UI_H
 
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <pan/gui/prefs.h>
 #include <pan/gui/group-prefs.h>
 

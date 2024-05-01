@@ -20,7 +20,8 @@
 #ifndef TASK_MANAGER_H
 #define TASK_MANAGER_H
 
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <vector>
 #include <pan/tasks/task.h>
 #include <pan/tasks/queue.h>

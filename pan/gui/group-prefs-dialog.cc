@@ -22,7 +22,8 @@
 #include <config.h>
 #include <glib/gi18n.h>
 #include <glib.h>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #ifdef HAVE_GTKSPELL
 #include <enchant.h>
 #endif
@@ -33,7 +34,6 @@
 #include "hig.h"
 #include "pad.h"
 #include "pan-file-entry.h"
-#include "gtk-compat.h"
 #include "pan-colors.h"
 
 #include <iostream>

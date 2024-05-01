@@ -19,7 +19,8 @@
 
 #include <config.h>
 #include <glib/gi18n.h>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <cctype>
 #include <cmath>
 #include <algorithm>
@@ -38,7 +39,6 @@
 #include "pan/gui/load-icon.h"
 #include "render-bytes.h"
 #include "tango-colors.h"
-#include "gtk-compat.h"
 
 #include <pan/general/null.h>
 

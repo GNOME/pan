@@ -23,7 +23,8 @@
  * Just plug in a GtkRadioAction and the widget will handle the rest.
  * (Based on GtkhtmlComboBox.) */
 
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 /* Standard GObject macros */
 #define E_TYPE_ACTION_COMBO_BOX \

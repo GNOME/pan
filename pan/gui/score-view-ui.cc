@@ -19,12 +19,12 @@
 
 #include <config.h>
 #include <glib/gi18n.h>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <pan/general/debug.h>
 #include "pad.h"
 #include "score-add-ui.h"
 #include "score-view-ui.h"
-#include "gtk-compat.h"
 
 #include <pan/general/null.h>
 

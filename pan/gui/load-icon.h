@@ -1,7 +1,8 @@
 #ifndef E_LOAD_ICON_H
 #define E_LOAD_ICON_H
 
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 G_BEGIN_DECLS
 

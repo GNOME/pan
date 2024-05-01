@@ -19,7 +19,8 @@
 #ifndef DOWNLOAD_HEADERS_UI_H
 #define DOWNLOAD_HEADERS_UI_H
 
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <pan/general/quark.h>
 #include "prefs.h"
 

@@ -20,7 +20,8 @@
 #ifndef _HeaderPane_h_
 #define _HeaderPane_h_
 
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <pan/general/e-util.h>
 #include <pan/general/macros.h> // for UNUSED
 #include <pan/data/article-cache.h>

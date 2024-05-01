@@ -24,7 +24,8 @@
 #include <glib/gi18n.h>
 
 #include "e-charset.h"
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 #define E_CHARSET_COMBO_BOX_GET_PRIVATE(obj) \
 	(G_TYPE_INSTANCE_GET_PRIVATE \

@@ -22,7 +22,8 @@
 
 #include <map>
 #include <vector>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 #define PAN_TREE_STORE_TYPE (PanTreeStore::get_type())
 #define PAN_TREE_STORE(obj) \

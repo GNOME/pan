@@ -26,7 +26,8 @@
 #include <unistd.h>
 #include <gmime/gmime.h>
 #include <glib/gi18n.h>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 extern "C" {
   #include <sys/stat.h>
   #include <sys/time.h>
@@ -56,7 +57,6 @@ extern "C" {
 #include "post.ui.h"
 #include "profiles-dialog.h"
 #include "url.h"
-#include "gtk-compat.h"
 
 #include <pan/general/null.h>
 

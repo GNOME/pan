@@ -68,7 +68,8 @@ extern "C" {
 #include "server-ui.h"
 #include "task-pane.h"
 #include "url.h"
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 #include "profiles-dialog.h"
 

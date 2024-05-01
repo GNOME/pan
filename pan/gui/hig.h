@@ -20,7 +20,8 @@
 #ifndef _HIG_h_
 #define _HIG_h_
 
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 namespace pan
 {

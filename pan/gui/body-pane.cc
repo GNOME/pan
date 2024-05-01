@@ -25,7 +25,8 @@
 #include <iostream>
 #include <sstream>
 #include <glib/gi18n.h>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <gmime/gmime.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <pan/general/debug.h>
@@ -41,7 +42,6 @@
 #include "tango-colors.h"
 #include "xface.h"
 #include "url.h"
-#include "gtk-compat.h"
 #include "save-attach-ui.h"
 
 #ifdef HAVE_WEBKIT

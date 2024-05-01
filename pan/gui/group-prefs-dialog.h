@@ -22,7 +22,8 @@
 
 #include <pan/general/quark.h>
 #include <pan/data/data.h>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include "group-prefs.h"
 #include "prefs.h"
 

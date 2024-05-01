@@ -20,7 +20,8 @@
 #define _ScoreViewUI_h_
 
 #include <vector>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/scorefile.h>
 #include <pan/data/article.h>

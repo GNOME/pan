@@ -27,7 +27,8 @@
 #include <vector>
 #include <pan/general/string-view.h>
 #include <pan/gui/pan-colors.h>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 
 extern "C" {
   #include <stdint.h>

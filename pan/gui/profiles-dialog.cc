@@ -24,7 +24,8 @@
 #include <config.h>
 #include <iostream>
 #include <glib/gi18n.h>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/usenet-utils/gnksa.h>

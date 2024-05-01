@@ -1,7 +1,8 @@
 #ifndef __SCORE_ADD_UI_H__
 #define __SCORE_ADD_UI_H__
 
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>
 

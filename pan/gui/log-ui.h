@@ -19,7 +19,8 @@
 #ifndef LOG_UI_H
 #define LOG_UI_H
 
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include "prefs.h"
 
 namespace pan

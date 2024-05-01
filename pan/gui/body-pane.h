@@ -21,7 +21,8 @@
 #define _BodyPane_h_
 
 #include <config.h>
-#include "gtk-compat.h"
+#include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <gmime/gmime.h>
 #include <pan/general/quark.h>
 #include <pan/usenet-utils/gpg.h>
