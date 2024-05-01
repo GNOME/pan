@@ -30,11 +30,6 @@ namespace
   #define GTK_OBJECT(w) w
   typedef GtkWidget GtkObject;
 
-  static inline void cursor_unref(GdkCursor *p)
-  {
-    g_object_unref(p);
-  }
-
 #ifdef __cplusplus
 }
 #endif

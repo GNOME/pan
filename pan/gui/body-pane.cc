@@ -232,7 +232,7 @@ namespace
     GdkCursor * cursor_new = cursors[mode];
     if (cursor_new != cursor_current) {
        gdk_window_set_cursor (window, cursor_current=cursor_new);
-       cursor_unref (cursor_current);
+       g_object_unref(cursor_current);
     }
   }
 

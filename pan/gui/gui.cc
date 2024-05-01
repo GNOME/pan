@@ -470,7 +470,7 @@ GUI :: watch_cursor_on ()
 {
   GdkCursor * cursor = gdk_cursor_new (GDK_WATCH);
   gdk_window_set_cursor ( gtk_widget_get_window(_root), cursor);
-  cursor_unref (cursor);
+  g_object_unref (cursor);
 }
 
 void
