@@ -149,7 +149,7 @@ GroupPane :: get_full_selection () const
   }
 
   // cleanup
-  g_list_foreach (list, (GFunc)gtk_tree_path_free, NULL);
+  g_list_foreach (list, (GFunc)gtk_tree_path_free, nullptr);
   g_list_free (list);
 
   return groups;
@@ -238,7 +238,7 @@ GroupPane :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpoi
     GtkTreePath * path;
     if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW(treeview),
                                        (gint)event->x, (gint)event->y,
-                                       &path, NULL, NULL, NULL))
+                                       &path, nullptr, nullptr, nullptr))
     {
       if (!gtk_tree_selection_path_is_selected (selection, path))
       {
@@ -283,7 +283,7 @@ GroupPane :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpoi
 gboolean
 GroupPane :: on_popup_menu (GtkWidget *treeview, gpointer userdata)
 {
-  do_popup_menu (treeview, NULL, userdata);
+  do_popup_menu (treeview, nullptr, userdata);
   return true;
 }
 
@@ -366,7 +366,7 @@ namespace
     // local folders
     //
     MyRow * row = &headers[0];
-    store->append (NULL, row);
+    store->append (nullptr, row);
     {
 		const size_t n (G_N_ELEMENTS(folders_groupnames));
 		std::vector<PanTreeStore::Row*> appendme;
@@ -390,7 +390,7 @@ namespace
     //
 
     row = &headers[1];
-    store->append (NULL, row);
+    store->append (nullptr, row);
     if (!sub.empty())
     {
       const size_t n (sub.size());
@@ -415,7 +415,7 @@ namespace
     // unsubscribed
     //
     row = &headers[2];
-    store->append (NULL, row);
+    store->append (nullptr, row);
     if (!unsub.empty())
     {
       const size_t n (unsub.size());
@@ -465,7 +465,7 @@ GroupPane :: on_group_subscribe (const Quark& groupname, bool sub)
   // find out where it should be moved to
   int pos (0);
   GtkTreeIter section_iter, group_iter;
-  if (gtk_tree_model_iter_nth_child (model, &section_iter, NULL, (sub?1:2))) {
+  if (gtk_tree_model_iter_nth_child (model, &section_iter, nullptr, (sub?1:2))) {
     if (gtk_tree_model_iter_children (model, &group_iter, &section_iter)) do {
       MyRow * row (dynamic_cast<MyRow*>(_tree_store->get_row (&group_iter)));
       if (groupname.to_string() < row->groupname.c_str())
@@ -561,7 +561,7 @@ GroupPane :: set_filter (const std::string& search_text, int mode)
   const quarks_v selected_groups (get_full_selection ());
 
   // pmatch will point to a local TextMatch matching on the filter-phrase,
-  // or be a NULL pointer if the filter-phrase is empty
+  // or be a nullptr pointer if the filter-phrase is empty
   TextMatch match;
   TextMatch * pmatch (nullptr);
   if (!search_text.empty()) {
@@ -648,7 +648,7 @@ namespace
     {
       set_search_entry (GTK_WIDGET(e), "");
       search_text.clear ();
-      search_entry_activated (NULL, pane_gpointer);
+      search_entry_activated (nullptr, pane_gpointer);
     }
   }
 
@@ -737,9 +737,9 @@ namespace
 
     g_object_set (renderer, "text", group_name.c_str(),
                             "weight", (!is_g || static_cast<uint64_t>(unread) != 0 ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
-                            "foreground", fg_col.empty() ? NULL : fg_col.c_str(),
-                            "background", bg_col.empty() ? NULL : bg_col.c_str(),
-                            NULL);
+                            "foreground", fg_col.empty() ? nullptr : fg_col.c_str(),
+                            "background", bg_col.empty() ? nullptr : bg_col.c_str(),
+                            nullptr);
   }
 }
 
@@ -838,8 +838,8 @@ GroupPane :: read_group (GtkTreePath * path)
 
   gtk_tree_view_expand_row (view, path, true);
   gtk_tree_view_expand_to_path (view, path);
-  gtk_tree_view_set_cursor (view, path, NULL, false);
-  gtk_tree_view_scroll_to_cell (view, path, NULL, true, 0.5f, 0.0f);
+  gtk_tree_view_set_cursor (view, path, nullptr, false);
+  gtk_tree_view_scroll_to_cell (view, path, nullptr, true, 0.5f, 0.0f);
   gtk_tree_selection_unselect_all (sel);
   gtk_tree_selection_select_path (sel, path);
   _action_manager.activate_action ("read-selected-group");
@@ -901,7 +901,7 @@ GroupPane :: create_filter_entry ()
                                      "edit-find" );
 //  gtk_widget_set_size_request (entry, 133, -1);
   _action_manager.disable_accelerators_when_focused (entry);
-  g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), NULL);
+  g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), nullptr);
   g_signal_connect (entry, "activate", G_CALLBACK(search_entry_activated), this);
   g_signal_connect (entry, "icon-release", G_CALLBACK(clear_button_clicked_cb), this);
   entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed_by_user), this);
@@ -991,7 +991,7 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs,
 
   // build this first because _tree_view is needed for a callback...
   tree_iters_t iters;
-  _tree_store = build_model (_data, NULL, iters, _group_rows);
+  _tree_store = build_model (_data, nullptr, iters, _group_rows);
   _tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL(_tree_store));
   g_object_unref (G_OBJECT(_tree_store)); // will die with the view
   gtk_tree_view_set_enable_search (GTK_TREE_VIEW(_tree_view), false);
@@ -1013,7 +1013,7 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs,
   g_signal_connect (_tree_view, "button-release-event", G_CALLBACK(on_button_pressed), this);
   g_signal_connect (_tree_view, "popup-menu", G_CALLBACK(on_popup_menu), this);
   g_signal_connect (_tree_view, "row-activated", G_CALLBACK(on_row_activated), this);
-  GtkWidget * scroll = gtk_scrolled_window_new (NULL, NULL);
+  GtkWidget * scroll = gtk_scrolled_window_new (nullptr, nullptr);
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scroll), GTK_SHADOW_IN);
@@ -1021,7 +1021,7 @@ GroupPane :: GroupPane (ActionManager& action_manager, Data& data, Prefs& prefs,
   gtk_container_add (GTK_CONTAINER(scroll), _tree_view);
 
    const int xpad (prefs.get_int ("tree-view-row-margins", 1));
-   GtkCellRenderer * text_renderer = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT, "ypad", 0, "xpad", xpad, NULL));
+   GtkCellRenderer * text_renderer = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT, "ypad", 0, "xpad", xpad, nullptr));
 
    GtkTreeViewColumn * col = gtk_tree_view_column_new ();
    gtk_tree_view_column_set_sizing (col ,GTK_TREE_VIEW_COLUMN_FIXED);

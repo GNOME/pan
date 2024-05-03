@@ -88,7 +88,7 @@ file :: get_pan_home ()
     if (env_str && *env_str)
       pan_home = env_str;
     else {
-      char * pch = g_build_filename (g_get_home_dir(), ".pan2", NULL);
+      char * pch = g_build_filename (g_get_home_dir(), ".pan2", nullptr);
       pan_home = pch;
       g_free (pch);
     }
@@ -105,7 +105,7 @@ const char *fn = base.c_str();
 if (g_path_is_absolute(fn))
   return base;
 const char *ph = file::get_pan_home().c_str();
-char *temp = g_build_filename(ph, dir.empty() ? "" : dir.c_str(), fn, NULL);
+char *temp = g_build_filename(ph, dir.empty() ? "" : dir.c_str(), fn, nullptr);
 std::string out(temp);
 g_free(temp);
 return out;
@@ -232,7 +232,7 @@ char*
 file :: get_unique_fname ( const gchar *path, const gchar *fname)
 {
    // sanity checks
-   pan_return_val_if_fail (is_nonempty_string (fname), NULL);
+   pan_return_val_if_fail (is_nonempty_string (fname), nullptr);
 
    // sanitize filename
    std::string tmp = sanitize (fname);
@@ -243,7 +243,7 @@ file :: get_unique_fname ( const gchar *path, const gchar *fname)
    const char * lastdot = strrchr (front, '.');
    char * lead;
    char * tail;
-   if (lastdot == NULL) {
+   if (lastdot == nullptr) {
       lead = g_strdup (front);
       tail = g_strdup ("");
    } else {

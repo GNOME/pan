@@ -213,12 +213,12 @@ namespace
       int width, height;
       const GtkIconSize size (GTK_ICON_SIZE_LARGE_TOOLBAR);
       GdkPixbuf * pixbuf = gtk_widget_render_icon_pixbuf (w, GTK_STOCK_ZOOM_IN, size);
-      g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, NULL);
+      g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, nullptr);
       cursors[CURSOR_ZOOM_IN] = gdk_cursor_new_from_pixbuf (display, pixbuf, width/2, height/2);
       g_object_unref (G_OBJECT(pixbuf));
 
       pixbuf = gtk_widget_render_icon_pixbuf (w, GTK_STOCK_ZOOM_OUT, size);
-      g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, NULL);
+      g_object_get (G_OBJECT(pixbuf), "width", &width, "height", &height, nullptr);
       cursors[CURSOR_ZOOM_OUT] = gdk_cursor_new_from_pixbuf (display, pixbuf, width/2, height/2);
       g_object_unref (G_OBJECT(pixbuf));
 
@@ -286,8 +286,8 @@ namespace
     {
       GtkTextIter begin(*iter), end(*iter);
       if (!gtk_text_iter_begins_tag (&begin, url_tag))
-        gtk_text_iter_backward_to_tag_toggle (&begin, NULL);
-      gtk_text_iter_forward_to_tag_toggle (&end, NULL);
+        gtk_text_iter_backward_to_tag_toggle (&begin, nullptr);
+      gtk_text_iter_forward_to_tag_toggle (&end, nullptr);
       char * pch = gtk_text_iter_get_text (&begin, &end);
       if (pch) {
         ret = pch;
@@ -301,11 +301,11 @@ namespace
                                 GdkEventMotion  * event,
                                 gpointer          hover_url)
   {
-    if (event->window != NULL)
+    if (event->window != nullptr)
     {
       int x, y;
       if (event->is_hint)
-        gdk_window_get_device_position (event->window, event->device, &x, &y, NULL);
+        gdk_window_get_device_position (event->window, event->device, &x, &y, nullptr);
       else {
         x = (int) event->x;
         y = (int) event->y;
@@ -444,7 +444,7 @@ BodyPane :: mouse_button_pressed (GtkWidget *w, GdkEventButton *event)
         set_cursor_from_iter (event->window, w, &iter);
 
         // x2,y2 are to position percent_x,percent_y in the middle of the window.
-        GtkTextMark * mark = gtk_text_buffer_create_mark (buf, NULL, &iter, true);
+        GtkTextMark * mark = gtk_text_buffer_create_mark (buf, nullptr, &iter, true);
         const double x2 = CLAMP ((percent_x + (percent_x - 0.5)), 0.0, 1.0);
         const double y2 = CLAMP ((percent_y + (percent_y - 0.5)), 0.0, 1.0);
         gtk_text_view_scroll_to_mark (GTK_TEXT_VIEW(w), mark, 0.0, true, x2, y2);
@@ -490,37 +490,37 @@ namespace
     g_object_set (get_or_create_tag (table, "text"),
       "foreground", p.get_color_str ("text-color-fg", fg).c_str(),
       "background", p.get_color_str ("text-color-bg", bg).c_str(),
-      NULL);
+      nullptr);
     g_object_set (get_or_create_tag(table,"bold"),
       "weight", PANGO_WEIGHT_BOLD,
-      NULL);
+      nullptr);
     g_object_set (get_or_create_tag (table, "italic"),
       "style", PANGO_STYLE_ITALIC,
-      NULL);
+      nullptr);
     g_object_set (get_or_create_tag (table, "underline"),
       "underline", PANGO_UNDERLINE_SINGLE,
-      NULL);
+      nullptr);
     g_object_set (get_or_create_tag (table, "url"),
       "underline", PANGO_UNDERLINE_SINGLE,
       "foreground", p.get_color_str ("body-pane-color-url", TANGO_SKY_BLUE_DARK).c_str(),
       "background", p.get_color_str ("body-pane-color-url-bg", bg).c_str(),
-      NULL);
+      nullptr);
     g_object_set (get_or_create_tag (table, "quote_1"),
       "foreground", p.get_color_str ("body-pane-color-quote-1", TANGO_CHAMELEON_DARK).c_str(),
       "background", p.get_color_str ("body-pane-color-quote-1-bg", bg).c_str(),
-      NULL);
+      nullptr);
     g_object_set (get_or_create_tag (table, "quote_2"),
       "foreground", p.get_color_str ("body-pane-color-quote-2", TANGO_ORANGE_DARK).c_str(),
       "background", p.get_color_str ("body-pane-color-quote-2-bg", bg).c_str(),
-      NULL);
+      nullptr);
     g_object_set (get_or_create_tag (table, "quote_3"),
       "foreground", p.get_color_str ("body-pane-color-quote-3", TANGO_PLUM_DARK).c_str(),
       "background", p.get_color_str ("body-pane-color-quote-3-bg", bg).c_str(),
-      NULL);
+      nullptr);
     g_object_set (get_or_create_tag (table, "signature"),
       "foreground", p.get_color_str ("body-pane-color-signature", TANGO_SKY_BLUE_LIGHT).c_str(),
       "background", p.get_color_str ("body-pane-color-signature-bg", bg).c_str(),
-      NULL);
+      nullptr);
   }
 }
 
@@ -575,7 +575,7 @@ namespace
    *
    * @param utf8_line the line whose quote status we're checking
    * @param utf8_byte_len the byte length of utf8_line
-   * @return a const string for the line's quote tag.  Never NULL.
+   * @return a const string for the line's quote tag.  Never nullptr.
    */
   const char * get_quote_tag (const TextMassager     * text_massager,
                               const char             * utf8_line,
@@ -682,7 +682,7 @@ namespace
     {
       GtkTextTag * sig_tag (gtk_text_tag_table_lookup (tags, "signature"));
       if (sig_tag)
-        g_object_set (sig_tag, "invisible", !show, NULL);
+        g_object_set (sig_tag, "invisible", !show, nullptr);
     }
   }
 
@@ -984,7 +984,7 @@ BodyPane :: append_part (GMimeObject * parent, GMimeObject * obj, GtkAllocation 
         gtk_text_buffer_insert (_buffer, &iter, "\n", -1);
 
       // rembember the location of the first picture.
-      if (gtk_text_buffer_get_mark (_buffer, FIRST_PICTURE) == NULL)
+      if (gtk_text_buffer_get_mark (_buffer, FIRST_PICTURE) == nullptr)
         gtk_text_buffer_create_mark (_buffer, FIRST_PICTURE, &iter, true);
         gtk_text_buffer_create_mark (_buffer, FIRST_PICTURE, &iter, true);
 
@@ -1182,7 +1182,7 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   if (pch && gtk_widget_get_window(_xface) )
   {
     gtk_widget_set_size_request (_xface, FACE_SIZE, FACE_SIZE);
-    GdkPixbuf *pixbuf = NULL;
+    GdkPixbuf *pixbuf = nullptr;
     pixbuf = pan_gdk_pixbuf_create_from_x_face (pch);
     gtk_image_set_from_pixbuf (GTK_IMAGE(_xface), pixbuf);
     g_object_unref (pixbuf);
@@ -1200,9 +1200,9 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
     g_mime_encoding_init_decode(&dec, GMIME_CONTENT_ENCODING_BASE64);
     guchar* buf = new guchar[strlen(pch)];
     int len = g_mime_encoding_step(&dec, pch, strlen(pch), (char*)buf);
-    GdkPixbufLoader *pl = gdk_pixbuf_loader_new_with_type( "png", NULL);
-    gdk_pixbuf_loader_write(pl, buf, len, NULL);
-    gdk_pixbuf_loader_close(pl, NULL);
+    GdkPixbufLoader *pl = gdk_pixbuf_loader_new_with_type( "png", nullptr);
+    gdk_pixbuf_loader_write(pl, buf, len, nullptr);
+    gdk_pixbuf_loader_close(pl, nullptr);
     GdkPixbuf *pixbuf = gdk_pixbuf_loader_get_pixbuf(pl);
     gtk_image_set_from_pixbuf (GTK_IMAGE(_face), pixbuf);
     g_object_unref(pl);
@@ -1226,14 +1226,14 @@ BodyPane :: set_text_from_message (GMimeMessage * message)
   GtkTextIter start, end;
   gtk_text_buffer_get_bounds (_buffer, &start, &end);
   gtk_text_buffer_delete (_buffer, &start, &end);
-  if (gtk_text_buffer_get_mark (_buffer, FIRST_PICTURE) != NULL)
+  if (gtk_text_buffer_get_mark (_buffer, FIRST_PICTURE) != nullptr)
     gtk_text_buffer_delete_mark_by_name (_buffer, FIRST_PICTURE);
   clear_pixbuf_cache (_buffer);
 
   // maybe add the headers
   const bool do_show_headers (_prefs.get_flag ("show-all-headers", false));
   if (message && do_show_headers) {
-    char * headers (g_mime_object_get_headers ((GMimeObject *) message, NULL));
+    char * headers (g_mime_object_get_headers ((GMimeObject *) message, nullptr));
     GtkTextIter end;
     gtk_text_buffer_get_end_iter (_buffer, &end);
     StringView line, v(headers);
@@ -1552,7 +1552,7 @@ namespace
     if (event->type == GDK_BUTTON_PRESS && event->button == 3)
     {
       gtk_menu_popup
-      (GTK_MENU(bp->_menu), NULL, NULL, NULL, NULL,
+      (GTK_MENU(bp->_menu), nullptr, nullptr, nullptr, nullptr,
       event->button,
       event->time);
     }
@@ -1629,7 +1629,7 @@ BodyPane :: clear_attachments()
     gtk_widget_set_no_show_all (_att_box, TRUE);
     gtk_widget_hide (_att_box);
     gtk_container_remove (GTK_CONTAINER (_att_box), _att_toolbar);
-    _att_toolbar = NULL;
+    _att_toolbar = nullptr;
     (void)create_attachments_toolbar(_att_box);
   }
 
@@ -1662,7 +1662,7 @@ BodyPane :: add_attachment_to_toolbar (const char* fn)
 void
 BodyPane :: set_html_text (const char* text)
 {
-  webkit_web_view_load_string (WEBKIT_WEB_VIEW (_web_view), text, NULL, NULL, "");
+  webkit_web_view_load_string (WEBKIT_WEB_VIEW (_web_view), text, nullptr, nullptr, "");
 }
 #endif
 
@@ -1738,7 +1738,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   // tell the expander that it _wants_ to be very small, then it will still take
   // extra space given to it by its parent without asking for enough size to
   // fit the entire label.
-  w = _expander = gtk_expander_new (NULL);
+  w = _expander = gtk_expander_new (nullptr);
   gtk_widget_set_size_request (w, 50, -1);
   g_signal_connect (w, "activate", G_CALLBACK(expander_activated_cb), this);
   gtk_box_pack_start (GTK_BOX(vbox), w, false, false, 0);
@@ -1782,7 +1782,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_container_set_border_width (GTK_CONTAINER(_text), PAD_SMALL);
   gtk_text_view_set_editable (GTK_TEXT_VIEW(_text), false);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW(_text), false);
-  _scroll = gtk_scrolled_window_new (NULL, NULL);
+  _scroll = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (_scroll),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
@@ -1815,7 +1815,7 @@ BodyPane :: BodyPane (Data& data, ArticleCache& cache, Prefs& prefs, GroupPrefs 
   gtk_notebook_append_page (n, vbox, gtk_label_new (_("Text View")));
 
   // add scroll to html
-  GtkWidget* scroll = gtk_scrolled_window_new (NULL, NULL);
+  GtkWidget* scroll = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scroll), GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
                                   GTK_POLICY_AUTOMATIC,
@@ -2014,7 +2014,7 @@ BodyPane :: create_followup_or_reply (bool is_reply)
       pan_g_mime_message_add_recipients_from_string (msg, GMIME_ADDRESS_TYPE_TO, to.c_str());
     } else {
       const std::string& groups (fup_to.empty() ? newsgroups : fup_to);
-      g_mime_object_append_header ((GMimeObject *) msg, "Newsgroups", groups.c_str(), NULL);
+      g_mime_object_append_header ((GMimeObject *) msg, "Newsgroups", groups.c_str(), nullptr);
     }
 
     // Subject:
@@ -2023,22 +2023,22 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     std::string val (normalize_subject_re (h));
     if (val.find ("Re:") != 0) // add "Re: " if we don't have one
       val.insert (0, "Re: ");
-    g_mime_message_set_subject (msg, val.c_str(), NULL);
+    g_mime_message_set_subject (msg, val.c_str(), nullptr);
 
     // attribution lines
     const char * cpch = g_mime_object_get_header (_message_obj, "From");
     h = header_to_utf8 (cpch, message_charset, group_charset);
-    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Author", h.c_str(), NULL);
+    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Author", h.c_str(), nullptr);
 
     cpch = g_mime_message_get_message_id (_message);
     h = header_to_utf8 (cpch, message_charset, group_charset);
-    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Id", h.c_str(), NULL);
+    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Id", h.c_str(), nullptr);
 
     const char * header_t = "Date";
     const char * tmp_s = g_mime_object_get_header (_message_obj, header_t);
     const char * tmp = tmp_s;  // FIXME: convert time to string
     h = header_to_utf8 (tmp, message_charset, group_charset);
-    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Date", h.c_str(), NULL);
+    g_mime_object_append_header (msg_obj, "X-Draft-Attribution-Date", h.c_str(), nullptr);
 
     // references
     const char * header = "References";
@@ -2050,7 +2050,7 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     val += g_mime_message_get_message_id (_message);
     val += ">";
     val = GNKSA :: trim_references (val);
-    g_mime_object_append_header (msg_obj, header, val.c_str(), NULL);
+    g_mime_object_append_header (msg_obj, header, val.c_str(), nullptr);
 
     ///
     ///  BODY
@@ -2088,7 +2088,7 @@ BodyPane :: create_followup_or_reply (bool is_reply)
     g_mime_stream_write_string (stream, s.c_str());
     GMimeDataWrapper * wrapper = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_8BIT);
     GMimePart * part = g_mime_part_new ();
-    GMimeContentType * new_type = g_mime_content_type_parse (NULL, "text/plain; charset=UTF-8");
+    GMimeContentType * new_type = g_mime_content_type_parse (nullptr, "text/plain; charset=UTF-8");
     g_mime_object_set_content_type ((GMimeObject *) part, new_type);
     g_mime_part_set_content (part, wrapper);
     g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);

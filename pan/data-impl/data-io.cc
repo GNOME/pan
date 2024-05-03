@@ -50,7 +50,7 @@ namespace
   std::string get_pan_home_file (const char * fname)
   {
     const std::string home (file::get_pan_home());
-    char * filename (g_build_filename (home.c_str(), fname, NULL));
+    char * filename (g_build_filename (home.c_str(), fname, nullptr));
     std::string retval (filename);
     g_free (filename);
     return retval;
@@ -152,7 +152,7 @@ namespace
                                        "%2E");
 #endif
 
-    char * filename (g_build_filename (home.c_str(), "groups", encoded_group.c_str(), NULL));
+    char * filename (g_build_filename (home.c_str(), "groups", encoded_group.c_str(), nullptr));
     char * dirname (g_path_get_dirname (filename));
     file :: ensure_dir_exists (dirname);
     std::string retval (filename);
@@ -178,7 +178,7 @@ DataIO :: get_scorefile_name () const
     s = env_str;
 
   if (s.empty()) {
-    char * path (g_build_filename (g_get_home_dir(), "News", "Score", NULL));
+    char * path (g_build_filename (g_get_home_dir(), "News", "Score", nullptr));
     if (file :: file_exists (path))
       s = path;
     g_free (path);

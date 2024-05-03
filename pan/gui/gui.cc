@@ -80,7 +80,7 @@ extern "C" {
 namespace
 {
   std::string get_accel_filename () {
-    char * tmp = g_build_filename (file::get_pan_home().c_str(), "accels.txt", NULL);
+    char * tmp = g_build_filename (file::get_pan_home().c_str(), "accels.txt", nullptr);
     std::string ret (tmp);
     g_free (tmp);
     return ret;
@@ -235,9 +235,9 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   _taskbar (nullptr)
 {
 
-  char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", NULL);
-  if (!gtk_ui_manager_add_ui_from_file (_ui_manager, filename, NULL))
-    gtk_ui_manager_add_ui_from_string (_ui_manager, fallback_ui_file, -1, NULL);
+  char * filename = g_build_filename (file::get_pan_home().c_str(), "pan.ui", nullptr);
+  if (!gtk_ui_manager_add_ui_from_file (_ui_manager, filename, nullptr))
+    gtk_ui_manager_add_ui_from_string (_ui_manager, fallback_ui_file, -1, nullptr);
   g_free (filename);
   g_signal_connect (_ui_manager, "add_widget", G_CALLBACK (add_widget), this);
   add_actions (this, _ui_manager, &prefs, &data);
@@ -267,7 +267,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   gtk_toolbar_insert (GTK_TOOLBAR(toolbar), item, index+1);
 
 //  guint merge_id = gtk_ui_manager_new_merge_id (_ui_manager);
-//  gtk_ui_manager_add_ui (_ui_manager, merge_id, path, "group-pane-filter", NULL, GTK_UI_MANAGER_TOOLITEM, true);
+//  gtk_ui_manager_add_ui (_ui_manager, merge_id, path, "group-pane-filter", nullptr, GTK_UI_MANAGER_TOOLITEM, true);
 //  GtkWidget * item = gtk_ui_manager_get_widget (_ui_manager, path);
 //  gtk_container_add (GTK_CONTAINER(item), _group_pane->create_filter_entry());
 
@@ -289,12 +289,12 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   GtkWidget * status_bar (gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0));
 
   // connection status
-  w = _connection_size_label = gtk_label_new (NULL);
+  w = _connection_size_label = gtk_label_new (nullptr);
   gtk_misc_set_padding (GTK_MISC(w), PAD, 0);
   _connection_size_eventbox = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER(_connection_size_eventbox), w);
   w = _connection_size_eventbox;
-  GtkWidget * frame = gtk_frame_new (NULL);
+  GtkWidget * frame = gtk_frame_new (nullptr);
   gtk_container_set_border_width (GTK_CONTAINER(frame), 0);
   gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(frame), w);
@@ -306,7 +306,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   //  gtk_drag_dest_add_uri_targets(_workarea_bin);
 
   // queue
-  w = _queue_size_label = gtk_label_new (NULL);
+  w = _queue_size_label = gtk_label_new (nullptr);
   gtk_misc_set_padding (GTK_MISC(w), PAD, 0);
   w = _queue_size_button = gtk_button_new();
   gtk_widget_set_tooltip_text (w, _("Open the Task Manager"));
@@ -314,7 +314,7 @@ GUI :: GUI (Data& data, Queue& queue, Prefs& prefs, GroupPrefs& group_prefs):
   g_signal_connect (w, "clicked", G_CALLBACK(show_task_window_cb), this);
 
   gtk_container_add (GTK_CONTAINER(w), _queue_size_label);
-  frame = gtk_frame_new (NULL);
+  frame = gtk_frame_new (nullptr);
   gtk_container_set_border_width (GTK_CONTAINER(frame), 0);
   gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(frame), w);
@@ -477,7 +477,7 @@ GUI :: watch_cursor_on ()
 void
 GUI :: watch_cursor_off ()
 {
-  gdk_window_set_cursor ( gtk_widget_get_window(_root), NULL);
+  gdk_window_set_cursor ( gtk_widget_get_window(_root), nullptr);
 }
 
 /***
@@ -536,7 +536,7 @@ void
 GUI :: sensitize_action (const char * key, bool b) const
 {
   ensure_action_map_loaded (_ui_manager);
-  g_object_set (get_action(key), "sensitive", gboolean(b), NULL);
+  g_object_set (get_action(key), "sensitive", gboolean(b), nullptr);
   //gtk_action_set_sensitive (get_action(key), b);
 }
 
@@ -544,7 +544,7 @@ void
 GUI :: hide_action (const char * key, bool b) const
 {
   ensure_action_map_loaded (_ui_manager);
-  g_object_set (get_action(key), "visible", gboolean(!b), NULL);
+  g_object_set (get_action(key), "visible", gboolean(!b), nullptr);
   //gtk_action_set_sensitive (get_action(key), b);
 }
 
@@ -612,7 +612,7 @@ GUI :: prompt_user_for_save_path (GtkWindow * parent, const Prefs& prefs)
                                                GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                                GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                                GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-                                               NULL);
+                                               nullptr);
   gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_ACCEPT);
   gtk_file_chooser_select_filename (GTK_FILE_CHOOSER(w), prev_path.c_str());
   const int response (gtk_dialog_run (GTK_DIALOG(w)));
@@ -642,7 +642,7 @@ GUI :: prompt_user_for_filename (GtkWindow * parent, const Prefs& prefs)
 				      GTK_FILE_CHOOSER_ACTION_SAVE,
 				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				      GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-				      NULL);
+				      nullptr);
 	gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (w), TRUE);
 	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
 	gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (w), prev_file.c_str());
@@ -810,7 +810,7 @@ void GUI :: do_import_tasks ()
     GTK_FILE_CHOOSER_ACTION_OPEN,
     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
     GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-    NULL);
+    nullptr);
 
   GtkFileFilter * filter = gtk_file_filter_new ();
   gtk_file_filter_add_pattern (filter, "*.[Nn][Zz][Bb]");
@@ -1323,7 +1323,7 @@ void GUI :: do_supersede_article ()
 
   // did this user post the message?
   InternetAddressList * Lsender (g_mime_message_get_sender (message));
-  char * sender = internet_address_list_to_string(Lsender, NULL,  TRUE);
+  char * sender = internet_address_list_to_string(Lsender, nullptr,  TRUE);
   const bool user_posted_this (_data.has_from_header (sender));
 
   if (!user_posted_this) {
@@ -1331,7 +1331,7 @@ void GUI :: do_supersede_article ()
       get_window(_root),
       GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
       GTK_MESSAGE_ERROR,
-      GTK_BUTTONS_CLOSE, NULL);
+      GTK_BUTTONS_CLOSE, nullptr);
     HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(w),
       _("Unable to supersede article."),
       _("The article doesn't match any of your posting profiles."));
@@ -1349,17 +1349,17 @@ void GUI :: do_supersede_article ()
   GMimeMessage * new_message (g_mime_message_new (false));
   GMimeObject * new_message_obj = (GMimeObject*)new_message;
 
-  g_mime_object_set_header (new_message_obj, "Supersedes", old_mid, NULL);
-  const char * addr = internet_address_list_to_string (g_mime_message_get_sender (message), NULL, TRUE);
-  g_mime_message_add_mailbox (new_message, GMIME_ADDRESS_TYPE_SENDER, NULL, addr);
-  g_mime_message_set_subject (new_message, g_mime_message_get_subject (message), NULL);
-  g_mime_object_set_header (new_message_obj, "Newsgroups", g_mime_object_get_header ((GMimeObject *)message, "Newsgroups"), NULL);
-  g_mime_object_set_header (new_message_obj, "References", g_mime_object_get_header ((GMimeObject *)message, "References"), NULL);
-  const char * r_addr = internet_address_list_to_string(g_mime_message_get_reply_to (message), NULL, TRUE);
+  g_mime_object_set_header (new_message_obj, "Supersedes", old_mid, nullptr);
+  const char * addr = internet_address_list_to_string (g_mime_message_get_sender (message), nullptr, TRUE);
+  g_mime_message_add_mailbox (new_message, GMIME_ADDRESS_TYPE_SENDER, nullptr, addr);
+  g_mime_message_set_subject (new_message, g_mime_message_get_subject (message), nullptr);
+  g_mime_object_set_header (new_message_obj, "Newsgroups", g_mime_object_get_header ((GMimeObject *)message, "Newsgroups"), nullptr);
+  g_mime_object_set_header (new_message_obj, "References", g_mime_object_get_header ((GMimeObject *)message, "References"), nullptr);
+  const char * r_addr = internet_address_list_to_string(g_mime_message_get_reply_to (message), nullptr, TRUE);
   if ((cpch = r_addr))
-              g_mime_message_add_mailbox (new_message, GMIME_ADDRESS_TYPE_REPLY_TO, NULL, cpch);
+              g_mime_message_add_mailbox (new_message, GMIME_ADDRESS_TYPE_REPLY_TO, nullptr, cpch);
   if ((cpch = g_mime_object_get_header ((GMimeObject *)message,     "Followup-To")))
-              g_mime_object_set_header (new_message_obj, "Followup-To", cpch, NULL);
+              g_mime_object_set_header (new_message_obj, "Followup-To", cpch, nullptr);
   gboolean  unused (false);
   char * body (pan_g_mime_message_get_body (message, &unused));
   GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body, strlen(body));
@@ -1381,7 +1381,7 @@ void GUI :: do_supersede_article ()
       GTK_WINDOW(post->root()),
       GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
       GTK_MESSAGE_INFO,
-      GTK_BUTTONS_CLOSE, NULL);
+      GTK_BUTTONS_CLOSE, nullptr);
     HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(w),
       _("Revise and send this article to replace the old one."),
       _("Be patient!  It will take time for your changes to take effect."));
@@ -1400,14 +1400,14 @@ void GUI :: do_cancel_article ()
     return;
 
   // did this user post the message?
-  const char * sender = internet_address_list_to_string(g_mime_message_get_sender (message), NULL, TRUE);
+  const char * sender = internet_address_list_to_string(g_mime_message_get_sender (message), nullptr, TRUE);
   const bool user_posted_this (_data.has_from_header (sender));
   if (!user_posted_this) {
     GtkWidget * w = gtk_message_dialog_new (
       get_window(_root),
       GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
       GTK_MESSAGE_ERROR,
-      GTK_BUTTONS_CLOSE, NULL);
+      GTK_BUTTONS_CLOSE, nullptr);
     HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(w),
       _("Unable to cancel article."),
       _("The article doesn't match any of your posting profiles."));
@@ -1420,11 +1420,11 @@ void GUI :: do_cancel_article ()
   // okay then...
   GMimeMessage * cancel = g_mime_message_new (false);
   char * cancel_message = g_strdup_printf ("cancel <%s>", g_mime_message_get_message_id(message));
-  const char * sk_addr = internet_address_list_to_string(g_mime_message_get_sender (message), NULL, TRUE);
-  g_mime_message_add_mailbox (cancel, GMIME_ADDRESS_TYPE_SENDER, NULL, sk_addr);
-  g_mime_message_set_subject (cancel, "Cancel", NULL);
-  g_mime_object_set_header ((GMimeObject *)cancel, "Newsgroups", g_mime_object_get_header ((GMimeObject *)message, "Newsgroups"), NULL);
-  g_mime_object_set_header ((GMimeObject *)cancel, "Control", cancel_message, NULL);
+  const char * sk_addr = internet_address_list_to_string(g_mime_message_get_sender (message), nullptr, TRUE);
+  g_mime_message_add_mailbox (cancel, GMIME_ADDRESS_TYPE_SENDER, nullptr, sk_addr);
+  g_mime_message_set_subject (cancel, "Cancel", nullptr);
+  g_mime_object_set_header ((GMimeObject *)cancel, "Newsgroups", g_mime_object_get_header ((GMimeObject *)message, "Newsgroups"), nullptr);
+  g_mime_object_set_header ((GMimeObject *)cancel, "Control", cancel_message, nullptr);
   const char * body ("Ignore\r\nArticle canceled by author using " PACKAGE_STRING "\r\n");
   GMimeStream * stream = g_mime_stream_mem_new_with_buffer (body, strlen(body));
   GMimeDataWrapper * content_object = g_mime_data_wrapper_new_with_stream (stream, GMIME_CONTENT_ENCODING_DEFAULT);
@@ -1445,7 +1445,7 @@ void GUI :: do_cancel_article ()
       GTK_WINDOW(post->root()),
       GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
       GTK_MESSAGE_INFO,
-      GTK_BUTTONS_CLOSE, NULL);
+      GTK_BUTTONS_CLOSE, nullptr);
     HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(w),
       _("Send this article to ask your server to cancel your other one."),
       _("Be patient!  It will take time for your changes to take effect."));
@@ -1463,14 +1463,14 @@ bool GUI::deletion_confirmation_dialog() const
     get_window(_root),
     GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
     GTK_MESSAGE_WARNING,
-    GTK_BUTTONS_NONE, NULL);
+    GTK_BUTTONS_NONE, nullptr);
   HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
     _("You have marked some articles for deletion."),
     _("Are you sure you want to delete them?"));
   gtk_dialog_add_buttons (GTK_DIALOG(d),
                           GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
                           GTK_STOCK_APPLY, GTK_RESPONSE_YES,
-                          NULL);
+                          nullptr);
   gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
   ret = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_YES;
   gtk_widget_destroy(d);
@@ -1489,14 +1489,14 @@ bool GUI :: confirm_accept_new_cert_dialog(GtkWindow * parent, gnutls_x509_crt_t
     parent,
     GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
     GTK_MESSAGE_WARNING,
-    GTK_BUTTONS_NONE, NULL);
+    GTK_BUTTONS_NONE, nullptr);
 
   HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d), buf,
     _("Do you want to accept it permanently? (You can change this later.)"));
   gtk_dialog_add_buttons (GTK_DIALOG(d),
                           GTK_STOCK_CANCEL, GTK_RESPONSE_NO,
                           GTK_STOCK_APPLY, GTK_RESPONSE_YES,
-                          NULL);
+                          nullptr);
   gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
 
   gint ret_code = gtk_dialog_run (GTK_DIALOG(d));
@@ -1591,11 +1591,11 @@ GUI :: do_post ()
       newsgroups = group;
   }
   if (!newsgroups.empty())
-    g_mime_object_append_header ((GMimeObject *) message, "Newsgroups", newsgroups.c_str(), NULL);
+    g_mime_object_append_header ((GMimeObject *) message, "Newsgroups", newsgroups.c_str(), nullptr);
 
   // content type
   GMimePart * part = g_mime_part_new ();
-  GMimeContentType *type = g_mime_content_type_parse (NULL, "text/plain; charset=UTF-8");
+  GMimeContentType *type = g_mime_content_type_parse (nullptr, "text/plain; charset=UTF-8");
   g_mime_object_set_content_type ((GMimeObject *) part, type);
   g_object_unref (type);
   g_mime_part_set_content_encoding (part, GMIME_CONTENT_ENCODING_8BIT);
@@ -1631,8 +1631,8 @@ void GUI :: do_reply_to ()
 #ifdef HAVE_MANUAL
 void GUI :: do_pan_manual ()
 {
-  GError * error (NULL);
-  gtk_show_uri_on_window (NULL, "help:pan", gtk_get_current_event_time (), &error);
+  GError * error (nullptr);
+  gtk_show_uri_on_window (nullptr, "help:pan", gtk_get_current_event_time (), &error);
     if (error) {
       GtkWidget * w = gtk_message_dialog_new (get_window(_root),
                                               GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
@@ -1672,7 +1672,7 @@ void GUI :: do_about_pan ()
   gtk_about_dialog_set_license (w, LICENSE);
   gtk_about_dialog_set_authors (w, authors);
   gtk_about_dialog_set_translator_credits (w, _("translator-credits"));
-  g_signal_connect (G_OBJECT (w), "response", G_CALLBACK (gtk_widget_destroy), NULL);
+  g_signal_connect (G_OBJECT (w), "response", G_CALLBACK (gtk_widget_destroy), nullptr);
   gtk_widget_show_all (GTK_WIDGET(w));
   g_object_unref (logo);
 }
@@ -1700,7 +1700,7 @@ namespace
   {
 
     GtkWidget * w;
-    if (w1!=NULL && w2!=NULL) {
+    if (w1!=nullptr && w2!=nullptr) {
       int pos(0);
       if (uglyhack_idx==0)
       {
@@ -1734,12 +1734,12 @@ namespace
       gtk_paned_pack2 (GTK_PANED(w), w2, true, false);
       gtk_paned_set_position (GTK_PANED(w), pos);
     }
-    else if (w1!=NULL)
+    else if (w1!=nullptr)
       w = w1;
-    else if (w2!=NULL)
+    else if (w2!=nullptr)
       w = w2;
     else
-      w = NULL;
+      w = nullptr;
     return w;
   }
 

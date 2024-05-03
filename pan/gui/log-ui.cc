@@ -53,7 +53,7 @@ namespace
 
     virtual void on_log_entry_added (const Log::Entry& e) {
       GtkTreeIter iter;
-      gtk_tree_store_prepend (myStore, &iter, NULL);
+      gtk_tree_store_prepend (myStore, &iter, nullptr);
       gtk_tree_store_set (myStore, &iter,
                           COL_HIDDEN, "",
                           COL_SEVERITY, (e.severity & Log::PAN_SEVERITY_ERROR),
@@ -108,7 +108,7 @@ namespace
         GTK_FILE_CHOOSER_ACTION_SAVE,
         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
         GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-        NULL);
+        nullptr);
       if (GTK_RESPONSE_ACCEPT == gtk_dialog_run(GTK_DIALOG(d)))
       {
         char * fname = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (d));
@@ -188,7 +188,7 @@ namespace
     gboolean severe (false);
     gtk_tree_model_get (model, iter, COL_SEVERITY, &severe, -1);
     const char * key (severe ? "pixbuf-error" : "pixbuf-info");
-    g_object_set (renderer, "pixbuf", g_object_get_data(G_OBJECT(dialog),key), NULL);
+    g_object_set (renderer, "pixbuf", g_object_get_data(G_OBJECT(dialog),key), nullptr);
   }
 
   void
@@ -203,7 +203,7 @@ namespace
     time_t date_t (date_ul);
     std::string s = ctime (&date_t);
     s.resize (s.size()-1); // remove \n
-    g_object_set (renderer, "text", s.c_str(), NULL);
+    g_object_set (renderer, "text", s.c_str(), nullptr);
   }
 
     void
@@ -219,7 +219,7 @@ namespace
     g_object_set (renderer,
                   "text", log_entry->message.c_str(),
                   "weight", bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL,
-                  NULL);
+                  nullptr);
   }
 
 
@@ -235,7 +235,7 @@ on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointer userdata
     GtkTreePath * path;
     if (gtk_tree_view_get_path_at_pos (GTK_TREE_VIEW(treeview),
                                        (gint)event->x, (gint)event->y,
-                                       &path, NULL, NULL, NULL))
+                                       &path, nullptr, nullptr, nullptr))
     {
       if (!gtk_tree_selection_path_is_selected (selection, path))
       {
@@ -263,13 +263,13 @@ log_dialog_new (Prefs& prefs, GtkWindow* window)
                                                     GTK_STOCK_CLEAR, GTK_RESPONSE_NO,
                                                     GTK_STOCK_SAVE, GTK_RESPONSE_APPLY,
                                                     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                                                    NULL);
-  g_signal_connect (dialog, "response", G_CALLBACK(log_response_cb), NULL);
+                                                    nullptr);
+  g_signal_connect (dialog, "response", G_CALLBACK(log_response_cb), nullptr);
 
   GtkIconTheme * theme = gtk_icon_theme_get_default ();
-  GdkPixbuf * err_pixbuf = gtk_icon_theme_load_icon (theme, GTK_STOCK_DIALOG_ERROR, 20, (GtkIconLookupFlags)0, NULL);
+  GdkPixbuf * err_pixbuf = gtk_icon_theme_load_icon (theme, GTK_STOCK_DIALOG_ERROR, 20, (GtkIconLookupFlags)0, nullptr);
   g_object_set_data_full (G_OBJECT(dialog), "pixbuf-error", err_pixbuf, g_object_unref);
-  GdkPixbuf * info_pixbuf = gtk_icon_theme_load_icon (theme, GTK_STOCK_DIALOG_INFO, 20, (GtkIconLookupFlags)0, NULL);
+  GdkPixbuf * info_pixbuf = gtk_icon_theme_load_icon (theme, GTK_STOCK_DIALOG_INFO, 20, (GtkIconLookupFlags)0, nullptr);
   g_object_set_data_full (G_OBJECT(dialog), "pixbuf-info", info_pixbuf, g_object_unref);
 
   GtkTreeStore * store = create_model ();

@@ -62,9 +62,9 @@ namespace
   }
 
 #ifdef HAVE_GTKSPELL
-  static EnchantBroker *broker = NULL;
-  static GList *langs = NULL;
-  static GtkTextView* view = NULL;
+  static EnchantBroker *broker = nullptr;
+  static GList *langs = nullptr;
+  static GtkTextView* view = nullptr;
   Langs l;
 #endif
   void init_spell()
@@ -183,7 +183,7 @@ namespace
   create_spellcheck_combo_box ( const Quark      & group,
                                 const GroupPrefs & group_prefs)
   {
-    GtkWidget * w(NULL);
+    GtkWidget * w(nullptr);
 
 #ifdef HAVE_GTKSPELL
     init_spell();
@@ -214,7 +214,7 @@ namespace
 
     GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, TRUE);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, nullptr);
 
     if (valid) gtk_combo_box_set_active_iter (GTK_COMBO_BOX(w), &storeit);
 
@@ -266,7 +266,7 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
                                                     parent_window,
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                                     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                                                    NULL);
+                                                    nullptr);
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-group-dialog");
   g_signal_connect (dialog, "response", G_CALLBACK(response_cb), this);
   g_signal_connect_swapped (dialog, "destroy", G_CALLBACK(delete_dialog), this);
@@ -293,7 +293,7 @@ GroupPrefsDialog :: GroupPrefsDialog (Data            & data,
   HIG :: workarea_add_row (t, &row, _("Character _encoding:"), w);
 
   w = _save_path = file_entry_new (_("Directory for Saving Attachments"));
-  char * pch = g_build_filename (g_get_home_dir(), "News", NULL);
+  char * pch = g_build_filename (g_get_home_dir(), "News", nullptr);
   std::string dir (_prefs.get_string ("default-save-attachments-path", pch));
   if (groups.size() == 1)
     dir = _group_prefs.get_string (groups[0], "default-group-save-path", dir);

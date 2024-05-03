@@ -197,7 +197,7 @@ namespace
     GtkWidget * w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
     GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 1, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 1, nullptr);
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), active);
     return w;
   }
@@ -208,7 +208,7 @@ namespace
                              "save-attachments", _("Save attachments"),
                              "save-text", _("Save text"),
                              "save-attachments-and-text", _("Save attachments and text"),
-                             NULL);
+                             nullptr);
   }
 
   GtkWidget* create_priority_combo_box (Prefs& prefs)
@@ -217,7 +217,7 @@ namespace
                              "age", _("Add to the queue sorted by date posted"),
                              "top", _("Add to the front of the queue"),
                              "bottom", _("Add to the back of the queue"),
-                             NULL);
+                             nullptr);
   }
 }
 
@@ -246,7 +246,7 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
   GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Pan: Save Articles"),
                                                     parent_window,
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                    NULL, NULL);
+                                                    nullptr, nullptr);
   gtk_dialog_add_button (GTK_DIALOG(dialog), "_Cancel", GTK_RESPONSE_CANCEL);
   GtkWidget * focus = gtk_dialog_add_button (GTK_DIALOG(dialog), "_Save", GTK_RESPONSE_OK);
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-save-articles-dialog");
@@ -268,7 +268,7 @@ SaveDialog :: SaveDialog (Prefs                       & prefs,
 
   h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   if (have_group_default) {
-    w = _save_custom_path_radio = gtk_radio_button_new_with_mnemonic (NULL, _("_Location:"));
+    w = _save_custom_path_radio = gtk_radio_button_new_with_mnemonic (nullptr, _("_Location:"));
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(w), path_mode==PATH_ENTRY);
   }

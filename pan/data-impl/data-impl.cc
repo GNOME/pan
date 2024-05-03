@@ -51,7 +51,7 @@ namespace
 
   std::string get_cache_path ()
   {
-    char * pch (g_build_filename (file::get_pan_home().c_str(), "article-cache", NULL));
+    char * pch (g_build_filename (file::get_pan_home().c_str(), "article-cache", nullptr));
     file :: ensure_dir_exists (pch);
     std::string path (pch);
     g_free (pch);
@@ -60,7 +60,7 @@ namespace
 
   std::string get_encode_cache_path ()
   {
-    char * pch (g_build_filename (file::get_pan_home().c_str(), "encode-cache", NULL));
+    char * pch (g_build_filename (file::get_pan_home().c_str(), "encode-cache", nullptr));
     file :: ensure_dir_exists (pch);
     std::string path (pch);
     g_free (pch);
@@ -143,7 +143,7 @@ DataImpl :: get_scorefile_name() const
 gboolean
 DataImpl :: password_encrypt (const PasswordData& pw)
 {
-GError *error_c = NULL;
+GError *error_c = nullptr;
 
   return (
     secret_password_store_sync (
@@ -151,10 +151,10 @@ GError *error_c = NULL;
       SECRET_COLLECTION_DEFAULT,
       _("Pan Newsreader's server passwords"),
       pw.pw,
-      NULL, &error_c,
+      nullptr, &error_c,
       "user", pw.user.str,
       "server", pw.server.c_str(),
-      NULL)
+      nullptr)
     );
 
 }
@@ -162,17 +162,17 @@ GError *error_c = NULL;
 gchar*
 DataImpl :: password_decrypt (PasswordData& pw) const
 {
-  GError *error_c = NULL;
-  gchar* pwd = NULL;
+  GError *error_c = nullptr;
+  gchar* pwd = nullptr;
 
   pwd =
     secret_password_lookup_sync (
     SECRET_SCHEMA_COMPAT_NETWORK,
-    NULL,
+    nullptr,
     &error_c,
     "user", pw.user.str,
     "server", pw.server.c_str(),
-    NULL);
+    nullptr);
 
   if (pwd)
   {

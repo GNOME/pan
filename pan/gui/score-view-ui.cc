@@ -183,7 +183,7 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
 	                                               parent,
 	                                               GTK_DIALOG_DESTROY_WITH_PARENT,
 	                                               GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
-	                                               NULL);
+	                                               nullptr);
   GtkWidget * button = create_rescore_button ();
   gtk_widget_show (button);
   gtk_dialog_add_action_widget (GTK_DIALOG(w), button, GTK_RESPONSE_APPLY);
@@ -205,24 +205,24 @@ ScoreView :: ScoreView (Data& data, GtkWindow* parent,
 
   // add COLUMN_SCORE_DELTA
   GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
-  GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Add"), renderer, "text", COLUMN_SCORE_DELTA, NULL);
+  GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Add"), renderer, "text", COLUMN_SCORE_DELTA, nullptr);
   gtk_tree_view_append_column (GTK_TREE_VIEW(tree_view), column);
 
   // add COLUMN_SCORE_VALUE
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("New Score"), renderer, "text", COLUMN_SCORE_VALUE, NULL);
+  column = gtk_tree_view_column_new_with_attributes (_("New Score"), renderer, "text", COLUMN_SCORE_VALUE, nullptr);
   gtk_tree_view_append_column (GTK_TREE_VIEW(tree_view), column);
 
   // add COLUMN_CRITERIA
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Criteria"), renderer, "text", COLUMN_CRITERIA, NULL);
+  column = gtk_tree_view_column_new_with_attributes (_("Criteria"), renderer, "text", COLUMN_CRITERIA, nullptr);
   gtk_tree_view_append_column (GTK_TREE_VIEW(tree_view), column);
 
   // set the selection mode
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
-  w = gtk_scrolled_window_new (NULL, NULL);
+  w = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(w), tree_view);

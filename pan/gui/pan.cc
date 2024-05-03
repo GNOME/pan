@@ -252,7 +252,7 @@ namespace
                                char *action,
                                gpointer user_data)
     {
-      notify_notification_close (notification, NULL);
+      notify_notification_close (notification, nullptr);
 
       StatusIconListener* s = static_cast<StatusIconListener*>(user_data);
       gtk_widget_show (GTK_WIDGET(s->root));
@@ -297,7 +297,7 @@ namespace
 #ifdef HAVE_LIBNOTIFY
       foreach(std::set<GObject*>, _notifs, it)
       {
-        notify_notification_close(NOTIFY_NOTIFICATION(*it), NULL);
+        notify_notification_close(NOTIFY_NOTIFICATION(*it), nullptr);
         g_object_unref (*it);
       }
 #endif
@@ -354,12 +354,12 @@ namespace
 
 #ifdef NOTIFY_CHECK_VERSION
   #if NOTIFY_CHECK_VERSION (0, 7, 0)
-      notif=notify_notification_new(summary, body, NULL);
+      notif=notify_notification_new(summary, body, nullptr);
   #else
-      notif=notify_notification_new(summary, body, NULL,NULL);
+      notif=notify_notification_new(summary, body, nullptr,nullptr);
   #endif
 #else
-      notif=notify_notification_new(summary, body, NULL,NULL);
+      notif=notify_notification_new(summary, body, nullptr,nullptr);
 #endif
       if (!notif) return;
 
@@ -367,7 +367,7 @@ namespace
 
       notify_notification_set_icon_from_pixbuf(notif, status_icons[si].pixbuf);
       notify_notification_set_timeout (notif,5000);
-      notify_notification_add_action(notif,"close",_("Maximize"),NOTIFY_ACTION_CALLBACK(notif_maximize_cb),this,NULL);
+      notify_notification_add_action(notif,"close",_("Maximize"),NOTIFY_ACTION_CALLBACK(notif_maximize_cb),this,nullptr);
       g_signal_connect (G_OBJECT(notif), "closed", G_CALLBACK(notif_close_cb), this);
 
       notify_notification_show (notif, &error);
@@ -476,7 +476,7 @@ namespace
                                gpointer data)
   {
     GtkMenu * menu = GTK_MENU(data);
-    gtk_menu_popup(menu, NULL, NULL, NULL, NULL, button, activation_time);
+    gtk_menu_popup(menu, nullptr, nullptr, nullptr, nullptr, button, activation_time);
   }
 
   static QueueAndGui* queue_and_gui(nullptr);
@@ -492,8 +492,8 @@ namespace
     GtkStatusIcon * icon = gtk_status_icon_new_from_pixbuf (status_icons[ICON_STATUS_IDLE].pixbuf);
     GtkWidget * menu = gtk_menu_new ();
 
-    GtkWidget * menu_quit = gtk_image_menu_item_new_from_stock ( GTK_STOCK_QUIT, NULL);
-    g_signal_connect(menu_quit, "activate", G_CALLBACK(mainloop_quit), NULL);
+    GtkWidget * menu_quit = gtk_image_menu_item_new_from_stock ( GTK_STOCK_QUIT, nullptr);
+    g_signal_connect(menu_quit, "activate", G_CALLBACK(mainloop_quit), nullptr);
 
     gtk_status_icon_set_visible(icon, prefs.get_flag("status-icon", false));
     StatusIconListener* pl = _status_icon = new StatusIconListener(icon, GTK_WIDGET(window), prefs, queue, data, prefs.get_flag("start-minimized", false));
@@ -729,10 +729,10 @@ _("General Options\n"
       }
     }
 
-    g_dbus_method_invocation_return_value (invocation, NULL);
+    g_dbus_method_invocation_return_value (invocation, nullptr);
   }
 
-  static GDBusConnection *dbus_connection(NULL);
+  static GDBusConnection *dbus_connection(nullptr);
 
   static const gchar xml[]=
   "<node>"
@@ -755,13 +755,13 @@ _("General Options\n"
     Pan* pan (static_cast<Pan*>(user_data));
     g_return_if_fail (pan);
 
-    pan->busnodeinfo = g_dbus_node_info_new_for_xml (xml, NULL);
+    pan->busnodeinfo = g_dbus_node_info_new_for_xml (xml, nullptr);
 
    /* init iface table */
     GDBusInterfaceVTable tmp =
     {
       nzb_method_call ,
-      NULL, NULL
+      nullptr, nullptr
     };
     pan->ifacetable = tmp;
 
@@ -771,8 +771,8 @@ _("General Options\n"
       pan->busnodeinfo->interfaces[0],
       &pan->ifacetable,
       pan,
-      NULL,
-      NULL
+      nullptr,
+      nullptr
     );
 
   }
@@ -814,9 +814,9 @@ _("General Options\n"
         on_bus_acquired,
         on_name_acquired,
         on_name_lost,
-        pan,NULL);
+        pan,nullptr);
 
-    dbus_connection = g_bus_get_sync  (G_BUS_TYPE_SESSION , NULL, NULL);
+    dbus_connection = g_bus_get_sync  (G_BUS_TYPE_SESSION , nullptr, nullptr);
   }
 
   static void
@@ -973,10 +973,10 @@ main (int argc, char *argv[])
   if (gui)
   {
     // load the preferences...
-    char * filename = g_build_filename (file::get_pan_home().c_str(), "preferences.xml", NULL);
+    char * filename = g_build_filename (file::get_pan_home().c_str(), "preferences.xml", nullptr);
     PrefsFile prefs (filename); // dummy is used to get fg/bg colors from UI
     g_free (filename);
-    filename = g_build_filename (file::get_pan_home().c_str(), "group-preferences.xml", NULL);
+    filename = g_build_filename (file::get_pan_home().c_str(), "group-preferences.xml", nullptr);
     GroupPrefs group_prefs (filename);
     g_free (filename);
 
@@ -1006,7 +1006,7 @@ main (int argc, char *argv[])
 
       pan_dbus_init(&pan);
 
-      GError* error(NULL);
+      GError* error(nullptr);
       GVariant* var;
 
       if (!dbus_connection) goto _fail;
@@ -1018,10 +1018,10 @@ main (int argc, char *argv[])
                                "NZBEnqueue",
                                g_variant_new ("(sssb)",
                                   groups.c_str(), nzb_output_path.c_str(), nzb_str.c_str(),  gui, nzb),
-                               NULL,
+                               nullptr,
                                G_DBUS_CALL_FLAGS_NONE,
                                -1,
-                               NULL,
+                               nullptr,
                                &error);
 
         if (!error)
@@ -1056,7 +1056,7 @@ main (int argc, char *argv[])
         // if no save path was specified, either prompt for one or
         // use the user's home directory as a fallback.
         if (nzb_output_path.empty() && gui)
-          nzb_output_path = GUI::prompt_user_for_save_path (NULL, prefs);
+          nzb_output_path = GUI::prompt_user_for_save_path (nullptr, prefs);
         if (nzb_output_path.empty()) // user pressed `cancel' when prompted
           return EXIT_FAILURE;
 
@@ -1081,7 +1081,7 @@ main (int argc, char *argv[])
         g_signal_connect (w, "destroy", G_CALLBACK(destroy_cb), nullptr);
         g_signal_connect (G_OBJECT(w), "delete-event", G_CALLBACK(delete_event_cb), nullptr);
       } else {
-        nongui_gmainloop = g_main_loop_new (NULL, false);
+        nongui_gmainloop = g_main_loop_new (nullptr, false);
         // create a PanKiller object -- which quits pan when the queue is done
         killer.reset(new PanKiller(queue));
       }

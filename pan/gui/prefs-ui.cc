@@ -135,7 +135,7 @@ PrefsDialog :: edit_shortkey (gpointer user_data)
   dialog = gtk_dialog_new_with_buttons(_("Grab Key"), GTK_WINDOW(root()),
       GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-      GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+      GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, nullptr);
 
   str = g_strdup_printf(
       _("Press the combination of the keys\nyou want to use for \"%s\"."), data->value.c_str());
@@ -191,7 +191,7 @@ namespace pan
 {
 
   std::string get_accel_filename () {
-    char * tmp = g_build_filename (file::get_pan_home().c_str(), "accels.txt", NULL);
+    char * tmp = g_build_filename (file::get_pan_home().c_str(), "accels.txt", nullptr);
     std::string ret (tmp);
     g_free (tmp);
     return ret;
@@ -376,7 +376,7 @@ namespace pan
   new_layout_radio (GtkWidget* prev, const char* icon_file, const char* value, std::string& cur, Prefs& prefs)
   {
     GtkWidget * r = prev==nullptr
-      ? gtk_radio_button_new (NULL)
+      ? gtk_radio_button_new (nullptr)
       : gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON(prev));
     GdkPixbuf * pixbuf = load_icon (icon_file);
     GtkWidget * image = gtk_image_new_from_pixbuf (pixbuf);
@@ -486,7 +486,7 @@ namespace pan
     GtkWidget * c_parent (gtk_widget_get_parent (GTK_WIDGET(c)));
     GtkWidget * w_parent (gtk_widget_get_parent (GTK_WIDGET(w)));
     GtkTreeModel * model = gtk_combo_box_get_model (c);
-    const int n_rows (gtk_tree_model_iter_n_children (model, NULL));
+    const int n_rows (gtk_tree_model_iter_n_children (model, nullptr));
     const bool do_show (gtk_combo_box_get_active(c) == (n_rows-1));
 
     if (do_show && !w_parent && c_parent) // add it
@@ -591,7 +591,7 @@ namespace pan
     GtkWidget * c = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
     GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (c), renderer, true);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (c), renderer, "text", 0, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (c), renderer, "text", 0, nullptr);
     gtk_combo_box_set_active (GTK_COMBO_BOX(c), sel_index);
     g_object_set_data_full (G_OBJECT(c), PREFS_KEY, g_strdup(mode_key), g_free);
     g_object_set_data (G_OBJECT(c), "column", GINT_TO_POINTER(1));
@@ -629,7 +629,7 @@ namespace pan
     GtkWidget * c = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
     GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (c), renderer, true);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (c), renderer, "text", 0, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (c), renderer, "text", 0, nullptr);
     gtk_combo_box_set_active (GTK_COMBO_BOX(c), sel_index);
     g_object_set_data_full (G_OBJECT(c), PREFS_KEY, g_strdup(mode_key), g_free);
     g_object_set_data (G_OBJECT(c), "column", GINT_TO_POINTER(1));
@@ -687,7 +687,7 @@ namespace pan
     GtkWidget * c = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
     GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (c), renderer, true);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (c), renderer, "text", 0, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (c), renderer, "text", 0, nullptr);
     gtk_combo_box_set_active (GTK_COMBO_BOX(c), sel_index);
     g_object_set_data_full (G_OBJECT(c), PREFS_KEY, g_strdup(mode_key), g_free);
     g_object_set_data (G_OBJECT(c), "column", GINT_TO_POINTER(1));
@@ -897,19 +897,19 @@ namespace
     info->sel = sel;
     g_object_weak_ref (G_OBJECT(view), (GWeakNotify)g_free, info);
 
-    GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE, NULL));
-    GtkTreeViewColumn * col = gtk_tree_view_column_new_with_attributes (_("Enabled"), r, "active", 0, NULL);
+    GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TOGGLE, nullptr));
+    GtkTreeViewColumn * col = gtk_tree_view_column_new_with_attributes (_("Enabled"), r, "active", 0, nullptr);
     gtk_tree_view_append_column (GTK_TREE_VIEW(view), col);
     g_signal_connect (r, "toggled", G_CALLBACK(header_col_enabled_toggled_cb), info);
-    r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT, NULL));
-    col = gtk_tree_view_column_new_with_attributes (_("Column Name"), r, "text", 2, NULL);
+    r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT, nullptr));
+    col = gtk_tree_view_column_new_with_attributes (_("Column Name"), r, "text", 2, nullptr);
     gtk_tree_view_append_column (GTK_TREE_VIEW(view), col);
     gtk_tree_selection_set_mode (sel, GTK_SELECTION_BROWSE);
     GtkTreeIter iter;
     gtk_tree_model_get_iter_first (GTK_TREE_MODEL(store), &iter);
     gtk_tree_selection_select_iter (sel, &iter);
 
-    GtkWidget * f = gtk_frame_new (NULL);
+    GtkWidget * f = gtk_frame_new (nullptr);
     gtk_frame_set_shadow_type (GTK_FRAME(f), GTK_SHADOW_IN);
     gtk_container_add (GTK_CONTAINER(f), view);
     GtkWidget * hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
@@ -943,7 +943,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   GtkWidget * dialog = gtk_dialog_new_with_buttons (_("Pan: Preferences"), parent,
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                                     GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
-                                                    NULL);
+                                                    nullptr);
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-preferences-dialog");
   g_signal_connect (dialog, "response", G_CALLBACK(response_cb), this);
   g_signal_connect_swapped (dialog, "destroy", G_CALLBACK(delete_prefs_dialog), this);
@@ -1032,7 +1032,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_section_spacer (t, row, 1);
     HIG :: workarea_add_section_title (t, &row, _("Language Settings"));
     w = gtk_button_new_from_stock (GTK_STOCK_SELECT_FONT);
-    l = charset_label = gtk_label_new (NULL);
+    l = charset_label = gtk_label_new (nullptr);
     gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.0);
     update_default_charset_label(_prefs.get_string("default-charset","UTF-8"));
     g_signal_connect (w, "clicked", G_CALLBACK(select_prefs_charset_cb), this);
@@ -1149,13 +1149,13 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     w = score_handler_new (prefs, "rules-delete-value", "never", b);
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
-    gtk_box_pack_start (GTK_BOX(h), gtk_label_new(NULL), false, false, 0);
+    gtk_box_pack_start (GTK_BOX(h), gtk_label_new(nullptr), false, false, 0);
     HIG :: workarea_add_row (t, &row, _("_Delete articles scoring at: "), h);
 
     w = score_handler_new (prefs, "rules-mark-read-value", "never", b);
     h = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, PAD);
     gtk_box_pack_start (GTK_BOX(h), w, false, false, 0);
-    gtk_box_pack_start (GTK_BOX(h), gtk_label_new(NULL), false, false, 0);
+    gtk_box_pack_start (GTK_BOX(h), gtk_label_new(nullptr), false, false, 0);
     HIG :: workarea_add_row (t, &row, _("Mark articles read scoring at: "), h);
 
     w = score_handler_new (prefs, "rules-autocache-value", "never", b);
@@ -1345,7 +1345,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
 
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Shortcuts"), _("Shortcuts"), "icon_prefs_hotkey.png", prefs));
 
-  GtkWidget* scroll = gtk_scrolled_window_new (NULL, NULL);
+  GtkWidget* scroll = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
                                   GTK_POLICY_AUTOMATIC,
                                    GTK_POLICY_AUTOMATIC);

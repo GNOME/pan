@@ -48,7 +48,7 @@ namespace
       : gtk_combo_box_new ();
     GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, TRUE);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", VALUE_STR, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", VALUE_STR, nullptr);
     if (model)
       gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
     return w;
@@ -477,7 +477,7 @@ ScoreAddDialog :: response_cb (GtkDialog * w, int response, gpointer dialog_gpoi
       GtkWidget * d (gtk_message_dialog_new_with_markup (
         GTK_WINDOW(self->_root),
         GTK_DIALOG_DESTROY_WITH_PARENT,
-        GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, NULL));
+        GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE, nullptr));
       HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
         _("Another rule already sets this article's score."),
         _("You may want to go back or delete the old rule."));
@@ -485,7 +485,7 @@ ScoreAddDialog :: response_cb (GtkDialog * w, int response, gpointer dialog_gpoi
                               _("Back"), -20,
                               _("Delete"), -21,
                               _("Add"), -22,
-        NULL);
+        nullptr);
       const int conflict_response (gtk_dialog_run (GTK_DIALOG(d)));
       gtk_widget_destroy (d);
       if (conflict_response == -20) // go back
@@ -606,7 +606,7 @@ ScoreAddDialog :: ScoreAddDialog (Data           & data,
     GTK_DIALOG_DESTROY_WITH_PARENT,
     _("Cancel"), GTK_RESPONSE_CANCEL,
     _("Add"), GTK_RESPONSE_OK,
-    NULL);
+    nullptr);
   g_object_set_data_full (G_OBJECT(w), "dialog", this, delete_score_add_dialog);
   GtkWidget * button = create_rescore_button ();
   gtk_widget_show (button);

@@ -177,7 +177,7 @@ HeaderPane :: render_action (GtkTreeViewColumn * ,
 {
   int index (0);
   gtk_tree_model_get (model, iter, COL_ACTION, &index, -1);
-  g_object_set (renderer, "pixbuf", _icons[index].pixbuf, NULL);
+  g_object_set (renderer, "pixbuf", _icons[index].pixbuf, nullptr);
 }
 
 void
@@ -189,7 +189,7 @@ HeaderPane :: render_state (GtkTreeViewColumn * ,
 {
   int index (0);
   gtk_tree_model_get (model, iter, COL_STATE, &index, -1);
-  g_object_set (renderer, "pixbuf", _icons[index].pixbuf, NULL);
+  g_object_set (renderer, "pixbuf", _icons[index].pixbuf, nullptr);
 }
 
 int
@@ -255,9 +255,9 @@ HeaderPane :: render_score (GtkTreeViewColumn * ,
   }
 
   g_object_set (renderer, "text", buf,
-                          "background", (bg.empty() ? NULL : bg.c_str()),
-                          "foreground", (fg.empty() ? NULL : fg.c_str()),
-                          NULL);
+                          "background", (bg.empty() ? nullptr : bg.c_str()),
+                          "foreground", (fg.empty() ? nullptr : fg.c_str()),
+                          nullptr);
 }
 
 void
@@ -273,7 +273,7 @@ HeaderPane :: render_author (GtkTreeViewColumn * ,
   g_object_set (renderer, "text", a->author.c_str() ,
                          "background", self->_bg.c_str(),
                          "foreground", self->_fg.c_str(),
-                         NULL);
+                         nullptr);
 }
 
 void
@@ -295,7 +295,7 @@ HeaderPane :: render_lines (GtkTreeViewColumn * ,
   g_object_set (renderer, "text", str.str().c_str(),
                 "background", self->_bg.c_str(),
                 "foreground", self->_fg.c_str(),
-                NULL);
+                nullptr);
 }
 
 void
@@ -313,7 +313,7 @@ HeaderPane :: render_bytes (GtkTreeViewColumn * ,
                 "text", pan::render_bytes(bytes),
                 "background", self->_bg.c_str(),
                 "foreground", self->_fg.c_str(),
-                NULL);
+                nullptr);
 }
 
 void
@@ -331,7 +331,7 @@ HeaderPane :: render_date  (GtkTreeViewColumn * ,
                 "text", date,
                 "background", self->_bg.c_str(),
                 "foreground", self->_fg.c_str(),
-                NULL);
+                nullptr);
   g_free (date);
 }
 
@@ -400,7 +400,7 @@ HeaderPane :: render_subject (GtkTreeViewColumn * ,
     "text", res.c_str(),
     "weight", (bold ? PANGO_WEIGHT_BOLD : PANGO_WEIGHT_NORMAL),
     "foreground", unread ? (def_fg.empty() ? self->_fg.c_str() : def_fg.c_str()) : self->_fg.c_str(),
-    "background", unread ? (def_bg.empty() ? self->_bg.c_str() : def_bg.c_str()) : self->_bg.c_str(), NULL);
+    "background", unread ? (def_bg.empty() ? self->_bg.c_str() : def_bg.c_str()) : self->_bg.c_str(), nullptr);
 
 }
 
@@ -565,11 +565,11 @@ HeaderPane :: build_model (const Quark               & group,
 
   GtkTreeSortable * sort = GTK_TREE_SORTABLE(store);
   for (int i=0; i<N_COLUMNS; ++i)
-    gtk_tree_sortable_set_sort_func (sort, i, column_compare_func, GINT_TO_POINTER(i), NULL);
+    gtk_tree_sortable_set_sort_func (sort, i, column_compare_func, GINT_TO_POINTER(i), nullptr);
   if (!group.empty()) {
     const EvolutionDateMaker date_maker;
     const bool do_thread (_prefs.get_flag ("thread-headers", true));
-    add_children_to_model (store, NULL, Quark(), atree, date_maker, do_thread);
+    add_children_to_model (store, nullptr, Quark(), atree, date_maker, do_thread);
   }
 
   return store;
@@ -602,7 +602,7 @@ HeaderPane :: rebuild ()
   }
 
   _mid_to_row.clear ();
-  _tree_store = build_model (_group, _atree, NULL);
+  _tree_store = build_model (_group, _atree, nullptr);
 
   const bool sort_ascending = _group_prefs.get_flag (_group, "header-pane-sort-ascending", false);
   int sort_column = _group_prefs.get_int (_group, "header-pane-sort-column", COL_DATE);
@@ -649,7 +649,7 @@ HeaderPane :: set_group (const Quark& new_group)
       save_sort_order (get_group(), _group_prefs, _tree_store);
       _mid_to_row.clear ();
       _tree_store = nullptr;
-      gtk_tree_view_set_model (GTK_TREE_VIEW(_tree_view), NULL);
+      gtk_tree_view_set_model (GTK_TREE_VIEW(_tree_view), nullptr);
     }
 
     _group = new_group;
@@ -657,7 +657,7 @@ HeaderPane :: set_group (const Quark& new_group)
     delete _atree;
     _atree = nullptr;
 
-    char * pch = g_build_filename (g_get_home_dir(), "News", NULL);
+    char * pch = g_build_filename (g_get_home_dir(), "News", nullptr);
     Quark path(_group_prefs.get_string (_group, "default-group-save-path", pch));
     g_free(pch);
 
@@ -753,7 +753,7 @@ HeaderPane :: collapse_selected()
     gtk_tree_view_collapse_row (view, path);
 //    gtk_tree_view_expand_to_path (view, path);
   }
-  g_list_foreach (list, (GFunc)gtk_tree_path_free, NULL);
+  g_list_foreach (list, (GFunc)gtk_tree_path_free, nullptr);
   g_list_free (list);
 }
 }
@@ -770,8 +770,8 @@ HeaderPane :: select_message_id (const Quark& mid, bool do_scroll)
   GtkTreeSelection * sel (gtk_tree_view_get_selection (view));
   gtk_tree_selection_select_path (sel, path);
   if (do_scroll) {
-    gtk_tree_view_set_cursor (view, path, NULL, false);
-    gtk_tree_view_scroll_to_cell (view, path, NULL, true, 0.5f, 0.0f);
+    gtk_tree_view_set_cursor (view, path, nullptr, false);
+    gtk_tree_view_scroll_to_cell (view, path, nullptr, true, 0.5f, 0.0f);
   }
   gtk_tree_path_free (path);
 }
@@ -828,7 +828,7 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
     }
 
     g_object_ref(G_OBJECT (_tree_store));
-    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), NULL);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), nullptr);
     _tree_store->insert_sorted (tmp);
     gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), GTK_TREE_MODEL (_tree_store));
     g_object_unref(G_OBJECT(_tree_store));
@@ -859,7 +859,7 @@ HeaderPane :: on_tree_change (const Data::ArticleTree::Diffs& diffs)
     g_assert (keep.size() + kill.size() == _mid_to_row.size());
 
     g_object_ref(G_OBJECT (_tree_store));
-    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), NULL);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), nullptr);
     _tree_store->remove (kill);
     gtk_tree_view_set_model(GTK_TREE_VIEW(_tree_view), GTK_TREE_MODEL (_tree_store));
     g_object_unref(G_OBJECT(_tree_store));
@@ -1078,7 +1078,7 @@ HeaderPane ::  do_popup_menu (GtkWidget*, GdkEventButton *event, gpointer pane_g
 {
   HeaderPane * self (static_cast<HeaderPane*>(pane_g));
   GtkWidget * menu (self->_action_manager.get_action_widget ("/header-pane-popup"));
-  gtk_menu_popup (GTK_MENU(menu), NULL, NULL, NULL, NULL,
+  gtk_menu_popup (GTK_MENU(menu), nullptr, nullptr, nullptr, nullptr,
                   (event ? event->button : 0),
                   (event ? event->time : 0));
 }
@@ -1087,7 +1087,7 @@ namespace
 {
   gboolean on_popup_menu (GtkWidget * treeview, gpointer userdata)
   {
-    HeaderPane::do_popup_menu (treeview, NULL, userdata);
+    HeaderPane::do_popup_menu (treeview, nullptr, userdata);
     return true;
   }
 }
@@ -1210,7 +1210,7 @@ HeaderPane :: on_button_pressed (GtkWidget * treeview, GdkEventButton *event, gp
     if (gtk_tree_view_get_path_at_pos (tv,
                                        (gint) event->x,
                                        (gint) event->y,
-                                       &path, NULL, NULL, NULL))
+                                       &path, nullptr, nullptr, nullptr))
     {
       if (!gtk_tree_selection_path_is_selected (selection, path))
       {
@@ -1573,7 +1573,7 @@ namespace
                                      GdkEventFocus * ,
                                      gpointer        )
   {
-    gtk_widget_override_color (w, GTK_STATE_FLAG_NORMAL, NULL);
+    gtk_widget_override_color (w, GTK_STATE_FLAG_NORMAL, nullptr);
     set_search_entry (w, search_text.c_str());
     return false;
   }
@@ -1668,14 +1668,14 @@ namespace
       set_search_entry (GTK_WIDGET(entry), "");
       refresh_search_entry (GTK_WIDGET(entry));
       search_text.clear ();
-      search_entry_activated (NULL, pane_gpointer);
+      search_entry_activated (nullptr, pane_gpointer);
     }
   }
 
 
   void ellipsize_if_supported (GObject * o)
   {
-    g_object_set (o, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
+    g_object_set (o, "ellipsize", PANGO_ELLIPSIZE_END, nullptr);
   }
 }
 
@@ -1687,7 +1687,7 @@ HeaderPane :: build_tree_columns ()
 
   // out with the old columns, if any
   GList * old_columns = gtk_tree_view_get_columns (tree_view);
-  for (GList *l=old_columns; l!=NULL; l=l->next)
+  for (GList *l=old_columns; l!=nullptr; l=l->next)
     gtk_tree_view_remove_column (tree_view, GTK_TREE_VIEW_COLUMN(l->data));
   g_list_free (old_columns);
 
@@ -1705,7 +1705,7 @@ HeaderPane :: build_tree_columns ()
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF,
         "xpad", xpad,
         "ypad", 0,
-        NULL));
+        nullptr));
       col = gtk_tree_view_column_new ();
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 24));
@@ -1720,7 +1720,7 @@ HeaderPane :: build_tree_columns ()
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF,
         "xpad", xpad,
         "ypad", 0,
-        NULL));
+        nullptr));
       col = gtk_tree_view_column_new ();
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 24));
@@ -1734,9 +1734,9 @@ HeaderPane :: build_tree_columns ()
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
         "ypad", 0,
-        NULL));
+        nullptr));
       ellipsize_if_supported (G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes (_("Subject"), r, NULL);
+      col = gtk_tree_view_column_new_with_attributes (_("Subject"), r, nullptr);
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 400));
       gtk_tree_view_column_set_resizable (col, true);
@@ -1751,9 +1751,9 @@ HeaderPane :: build_tree_columns ()
         "xpad", xpad,
         "ypad", 0,
         "xalign", 1.0,
-        NULL));
+        nullptr));
       ellipsize_if_supported (G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes (_("Score"), r, NULL);
+      col = gtk_tree_view_column_new_with_attributes (_("Score"), r, nullptr);
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 50));
       gtk_tree_view_column_set_resizable (col, true);
@@ -1766,9 +1766,9 @@ HeaderPane :: build_tree_columns ()
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
         "ypad", 0,
-        NULL));
+        nullptr));
       ellipsize_if_supported (G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes (_("Author"), r, NULL);
+      col = gtk_tree_view_column_new_with_attributes (_("Author"), r, nullptr);
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 133));
       gtk_tree_view_column_set_resizable (col, true);
@@ -1782,9 +1782,9 @@ HeaderPane :: build_tree_columns ()
         "xpad", xpad,
         "ypad", 0,
         "xalign", 1.0,
-        NULL));
+        nullptr));
       ellipsize_if_supported (G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes (_("Lines"), r, NULL);
+      col = gtk_tree_view_column_new_with_attributes (_("Lines"), r, nullptr);
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 60));
       gtk_tree_view_column_set_resizable (col, true);
@@ -1798,9 +1798,9 @@ HeaderPane :: build_tree_columns ()
         "xpad", xpad,
         "ypad", 0,
         "xalign", 1.0,
-        NULL));
+        nullptr));
       ellipsize_if_supported (G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes (_("Bytes"), r, NULL);
+      col = gtk_tree_view_column_new_with_attributes (_("Bytes"), r, nullptr);
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 80));
       gtk_tree_view_column_set_resizable (col, true);
@@ -1813,9 +1813,9 @@ HeaderPane :: build_tree_columns ()
       GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_TEXT,
         "xpad", xpad,
         "ypad", 0,
-        NULL));
+        nullptr));
       ellipsize_if_supported (G_OBJECT(r));
-      col = gtk_tree_view_column_new_with_attributes (_("Date"), r, NULL);
+      col = gtk_tree_view_column_new_with_attributes (_("Date"), r, nullptr);
       gtk_tree_view_column_set_sizing (col, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width (col, _prefs.get_int (width_key, 120));
       gtk_tree_view_column_set_resizable (col, true);
@@ -1858,7 +1858,7 @@ HeaderPane :: ~HeaderPane ()
 
   // save the column widths
   GList * columns = gtk_tree_view_get_columns (GTK_TREE_VIEW(_tree_view));
-  for (GList *l=columns; l!=NULL; l=l->next) {
+  for (GList *l=columns; l!=nullptr; l=l->next) {
     GtkTreeViewColumn * col (GTK_TREE_VIEW_COLUMN(l->data));
     const int width = gtk_tree_view_column_get_width (col);
     const char * width_key = (const char*) g_object_get_data (G_OBJECT(col), "column-width-key");
@@ -1880,8 +1880,8 @@ HeaderPane :: create_filter_entry ()
   GtkWidget * entry = gtk_entry_new ();
   _action_manager.disable_accelerators_when_focused (entry);
   g_object_set_data (G_OBJECT(entry), "header-pane", this);
-  g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), NULL);
-  g_signal_connect (entry, "focus-out-event", G_CALLBACK(search_entry_focus_out_cb), NULL);
+  g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), nullptr);
+  g_signal_connect (entry, "focus-out-event", G_CALLBACK(search_entry_focus_out_cb), nullptr);
   g_signal_connect (entry, "activate", G_CALLBACK(search_entry_activated), this);
   entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed), this);
 
@@ -2018,8 +2018,8 @@ HeaderPane :: HeaderPane (ActionManager       & action_manager,
   /* intercept ENTER and left/right for article selection */
   g_signal_connect (w, "key-press-event", G_CALLBACK(on_keyboard_button_pressed), this);
 
-  g_signal_connect (w, "row-collapsed", G_CALLBACK(row_collapsed_cb), NULL);
-  g_signal_connect (w, "row-expanded", G_CALLBACK(row_expanded_cb), NULL);
+  g_signal_connect (w, "row-collapsed", G_CALLBACK(row_collapsed_cb), nullptr);
+  g_signal_connect (w, "row-expanded", G_CALLBACK(row_expanded_cb), nullptr);
   g_signal_connect (w, "popup-menu", G_CALLBACK(on_popup_menu), this);
   g_signal_connect (w, "row-activated", G_CALLBACK(on_row_activated), this);
   GtkWidget * scroll = gtk_scrolled_window_new (nullptr, nullptr);
@@ -2098,7 +2098,7 @@ namespace
       select_subpaths (view, model, sel, path);
     }
 
-    g_list_foreach (list, (GFunc)gtk_tree_path_free, NULL);
+    g_list_foreach (list, (GFunc)gtk_tree_path_free, nullptr);
     g_list_free (list);
   }
 }
@@ -2129,7 +2129,7 @@ HeaderPane :: expand_selected ()
     gtk_tree_view_expand_row (view, path, true);
     gtk_tree_view_expand_to_path (view, path);
   }
-  g_list_foreach (list, (GFunc)gtk_tree_path_free, NULL);
+  g_list_foreach (list, (GFunc)gtk_tree_path_free, nullptr);
   g_list_free (list);
 }
 
@@ -2252,8 +2252,8 @@ void operator() (GtkTreeModel* model, GtkTreeIter* iter, const Article&) overrid
       GtkTreePath * path = gtk_tree_model_get_path (model, iter);
       gtk_tree_view_expand_row (_view, path, true);
       gtk_tree_view_expand_to_path (_view, path);
-      gtk_tree_view_set_cursor (_view, path, NULL, FALSE);
-      gtk_tree_view_scroll_to_cell (_view, path, NULL, true, 0.5f, 0.0f);
+      gtk_tree_view_set_cursor (_view, path, nullptr, FALSE);
+      gtk_tree_view_scroll_to_cell (_view, path, nullptr, true, 0.5f, 0.0f);
       gtk_tree_path_free (path);
     }
   };
@@ -2312,7 +2312,7 @@ namespace
     GtkTreeModel * model (nullptr);
     GList * list (gtk_tree_selection_get_selected_rows (sel, &model));
     const bool found (list && gtk_tree_model_get_iter (model, setme, (GtkTreePath*)(list->data)));
-    g_list_foreach (list, (GFunc)gtk_tree_path_free, NULL);
+    g_list_foreach (list, (GFunc)gtk_tree_path_free, nullptr);
     g_list_free (list);
     return found;
   }

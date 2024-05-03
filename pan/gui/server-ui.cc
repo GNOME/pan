@@ -158,7 +158,7 @@ namespace
     int port(STD_NNTP_PORT), max_conn(4), age(31*3), rank(1), ssl(0), trust(0);
     CompressionType compression(HEADER_COMPRESS_NONE);
     std::string addr, user, cert;
-    gchar* pass(NULL);
+    gchar* pass(nullptr);
     if (!server.empty()) {
       d->data.get_server_addr (server, addr, port);
       d->data.get_server_auth (
@@ -247,7 +247,7 @@ namespace
     bool destroy (true);
 
     ServerEditDialog * d (static_cast<ServerEditDialog*>(user_data));
-    g_assert (d!=NULL);
+    g_assert (d!=nullptr);
     g_assert (GTK_IS_WIDGET(d->dialog));
 
     if (response == GTK_RESPONSE_OK)
@@ -347,7 +347,7 @@ import_sec_from_disk_dialog_new (Data& data, Queue& queue, GtkWindow * window)
 				      GTK_FILE_CHOOSER_ACTION_OPEN,
 				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-				      NULL);
+				      nullptr);
 	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
 	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (w), false);
 	gtk_file_chooser_set_show_hidden (GTK_FILE_CHOOSER (w), false);
@@ -385,7 +385,7 @@ server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * wind
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
                                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                                     GTK_STOCK_OK, GTK_RESPONSE_OK,
-                                                    NULL);
+                                                    nullptr);
   g_free (title);
   gtk_window_set_role (GTK_WINDOW(dialog), "pan-edit-server-dialog");
   d->dialog = dialog;
@@ -404,25 +404,25 @@ server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * wind
 
     GtkWidget * w = d->address_entry = gtk_entry_new ();
     gtk_widget_set_tooltip_text( w, _("The news server's actual address, e.g. \"news.mynewsserver.com\"."));
-    HIG::workarea_add_row (t, &row, _("_Address:"), w, NULL);
+    HIG::workarea_add_row (t, &row, _("_Address:"), w, nullptr);
     //g_signal_connect (w, "changed", G_CALLBACK(address_entry_changed_cb), d);
 
     GtkAdjustment * a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 1.0, ULONG_MAX, 1.0, 1.0, 0.0));
     w = d->port_spin = gtk_spin_button_new (GTK_ADJUSTMENT(a), 1.0, 0u);
     gtk_widget_set_tooltip_text( w, _("The news server's port number.  Typically 119 for unencrypted and 563 for encrypted connections (SSL/TLS)."));
-    HIG::workarea_add_row (t, &row, _("Por_t:"), w, NULL);
+    HIG::workarea_add_row (t, &row, _("Por_t:"), w, nullptr);
 
     HIG::workarea_add_section_divider (t, &row);
     HIG::workarea_add_section_title (t, &row, _("Login (if Required)"));
     HIG::workarea_add_section_spacer (t, row, 2);
 
     w = d->auth_username_entry = gtk_entry_new ();
-    HIG::workarea_add_row (t, &row, _("_Username:"), w, NULL);
+    HIG::workarea_add_row (t, &row, _("_Username:"), w, nullptr);
     gtk_widget_set_tooltip_text( w, _("The username to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
 
     w = d->auth_password_entry = gtk_entry_new ();
     gtk_entry_set_visibility (GTK_ENTRY(w), FALSE);
-    HIG::workarea_add_row (t, &row, _("_Password:"), w, NULL);
+    HIG::workarea_add_row (t, &row, _("_Password:"), w, nullptr);
     gtk_widget_set_tooltip_text( w, _("The password to give the server when asked.  If your server doesn't require authentication, you can leave this blank."));
 
     HIG::workarea_add_section_divider (t, &row);
@@ -433,7 +433,7 @@ server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * wind
     const int DEFAULT_MAX_PER_SERVER (20);
     a = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 0.0, DEFAULT_MAX_PER_SERVER, 1.0, 1.0, 0.0));
     d->connection_limit_spin = w = gtk_spin_button_new (GTK_ADJUSTMENT(a), 1.0, 0u);
-    HIG::workarea_add_row (t, &row, _("Connection _Limit:"), w, NULL);
+    HIG::workarea_add_row (t, &row, _("Connection _Limit:"), w, nullptr);
 
     // expiration
     struct { int type; const char * str; } items[] = {
@@ -454,9 +454,9 @@ server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * wind
     g_object_unref (G_OBJECT(store));
     GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, TRUE);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, nullptr);
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
-    HIG::workarea_add_row (t, &row, _("E_xpire Old Articles:"), w, NULL);
+    HIG::workarea_add_row (t, &row, _("E_xpire Old Articles:"), w, nullptr);
 
     //rank
     struct { int rank; const char * str; } rank_items[] = {
@@ -473,7 +473,7 @@ server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * wind
     d->rank_combo = w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
     g_object_unref (G_OBJECT(store));
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, nullptr);
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
     GtkWidget * l = gtk_label_new (_("Server Rank:"));
     GtkWidget * e = gtk_event_box_new ();
@@ -498,9 +498,9 @@ server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * wind
     g_object_unref (G_OBJECT(store));
     renderer =  gtk_cell_renderer_text_new ();
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, TRUE);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, nullptr);
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
-    HIG::workarea_add_row (t, &row, _("Header Compression:"), w, NULL);
+    HIG::workarea_add_row (t, &row, _("Header Compression:"), w, nullptr);
 
     // ssl 3.0 option
 #ifdef HAVE_GNUTLS
@@ -525,7 +525,7 @@ server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * wind
     d->ssl_combo = w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
     g_object_unref (G_OBJECT(store));
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, nullptr);
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), 0);
     l = gtk_label_new (_("TLS (SSL) Settings:"));
     e = gtk_event_box_new ();
@@ -538,7 +538,7 @@ server_edit_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow * wind
     HIG::workarea_add_row (t, &row, e, w);
 
     d->always_trust_checkbox = w = gtk_check_button_new_with_label (_("Always trust this server's certificate"));
-    HIG::workarea_add_row (t, &row, NULL, w, NULL);
+    HIG::workarea_add_row (t, &row, nullptr, w, nullptr);
     g_signal_connect (d->dialog, "realize", G_CALLBACK(server_edit_dialog_realized_cb), d);
 #endif
 
@@ -727,7 +727,7 @@ namespace
       gtk_dialog_add_buttons (GTK_DIALOG(w),
                               GTK_STOCK_NO, GTK_RESPONSE_NO,
                               GTK_STOCK_DELETE, GTK_RESPONSE_YES,
-                              NULL);
+                              nullptr);
       gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_NO);
       const int response (gtk_dialog_run (GTK_DIALOG (w)));
       gtk_widget_destroy (w);
@@ -776,7 +776,7 @@ namespace
   void
   server_tree_view_row_activated_cb (GtkTreeView*, GtkTreePath*, GtkTreeViewColumn*, gpointer user_data)
   {
-    edit_button_clicked_cb (NULL, user_data);
+    edit_button_clicked_cb (nullptr, user_data);
   }
 
   void
@@ -817,9 +817,9 @@ namespace
         nullptr,
         GtkDialogFlags(GTK_DIALOG_MODAL|GTK_DIALOG_DESTROY_WITH_PARENT),
         GTK_MESSAGE_INFO,
-        GTK_BUTTONS_CLOSE, NULL);
+        GTK_BUTTONS_CLOSE, nullptr);
 
-        HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(w), buf, NULL);
+        HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(w), buf, nullptr);
 
         g_snprintf(buf,sizeof(buf), _("Server Certificate for '%s'"), addr.c_str());
         gtk_window_set_title(GTK_WINDOW(w), buf);
@@ -925,7 +925,7 @@ namespace
       gtk_dialog_add_buttons (GTK_DIALOG(w),
                               GTK_STOCK_NO, GTK_RESPONSE_NO,
                               GTK_STOCK_DELETE, GTK_RESPONSE_YES,
-                              NULL);
+                              nullptr);
       gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_NO);
       const int response (gtk_dialog_run (GTK_DIALOG (w)));
       gtk_widget_destroy (w);
@@ -951,7 +951,7 @@ server_list_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* paren
   GtkWidget * w = d->dialog = gtk_dialog_new_with_buttons (title, parent,
                                                            GTK_DIALOG_DESTROY_WITH_PARENT,
                                                            GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
-                                                           NULL);
+                                                           nullptr);
   g_free (title);
   gtk_window_set_role (GTK_WINDOW(w), "pan-servers-dialog");
   gtk_window_set_resizable (GTK_WINDOW(w), TRUE);
@@ -968,7 +968,7 @@ server_list_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* paren
   d->servers_store = gtk_list_store_new (N_COLUMNS, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING);
   w = d->server_tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (d->servers_store));
   GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
-  GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Servers"), renderer, "text", COL_HOST, NULL);
+  GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Servers"), renderer, "text", COL_HOST, nullptr);
   gtk_tree_view_column_set_sort_column_id (column, COL_HOST);
   gtk_tree_view_append_column (GTK_TREE_VIEW (d->server_tree_view), column);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (d->server_tree_view));
@@ -980,7 +980,7 @@ server_list_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* paren
   g_signal_connect (G_OBJECT (selection), "changed",
                     G_CALLBACK (server_tree_view_selection_changed_cb), d);
 
-  w = gtk_scrolled_window_new (NULL, NULL);
+  w = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(w), d->server_tree_view);
@@ -1026,7 +1026,7 @@ render_cert_flag (GtkTreeViewColumn * ,
 {
   int index (0);
   gtk_tree_model_get (model, iter, COL_FLAG, &index, -1);
-  g_object_set (renderer, "pixbuf", _icons[index].pixbuf, NULL);
+  g_object_set (renderer, "pixbuf", _icons[index].pixbuf, nullptr);
 }
 
 
@@ -1044,7 +1044,7 @@ sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
   GtkWidget * w = d->dialog = gtk_dialog_new_with_buttons (title, parent,
                                                            GTK_DIALOG_DESTROY_WITH_PARENT,
                                                            GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
-                                                           NULL);
+                                                           nullptr);
   g_free (title);
   gtk_window_set_role (GTK_WINDOW(w), "pan-sec-dialog");
   gtk_window_set_resizable (GTK_WINDOW(w), TRUE);
@@ -1060,13 +1060,13 @@ sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
   d->servers_store = gtk_list_store_new (N_COLUMNS, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING);
   w = d->server_tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (d->servers_store));
 
-  GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF, "xpad", 2,"ypad", 0,NULL));
-  GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Certificates"), r, NULL);
+  GtkCellRenderer * r = GTK_CELL_RENDERER (g_object_new (GTK_TYPE_CELL_RENDERER_PIXBUF, "xpad", 2,"ypad", 0,nullptr));
+  GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Certificates"), r, nullptr);
   gtk_tree_view_column_set_cell_data_func (column, r, render_cert_flag, nullptr, nullptr);
   gtk_tree_view_append_column (GTK_TREE_VIEW(w), column);
 
   r = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Servers"), r, "text", COL_HOST, NULL);
+  column = gtk_tree_view_column_new_with_attributes (_("Servers"), r, "text", COL_HOST, nullptr);
   gtk_tree_view_column_set_sort_column_id (column, COL_HOST);
   gtk_tree_view_append_column (GTK_TREE_VIEW (w), column);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (w));
@@ -1078,7 +1078,7 @@ sec_dialog_new (Data& data, Queue& queue, Prefs& prefs, GtkWindow* parent)
   g_signal_connect (G_OBJECT (selection), "changed",
                     G_CALLBACK (server_tree_view_selection_changed_cb), d);
 
-  w = gtk_scrolled_window_new (NULL, NULL);
+  w = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(w), d->server_tree_view);

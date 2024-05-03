@@ -163,7 +163,7 @@ TaskPane :: show_task_info(const tasks_t& tasks)
       GTK_DIALOG_DESTROY_WITH_PARENT,
       GTK_MESSAGE_INFO,
       GTK_BUTTONS_CLOSE,
-        buffer, NULL);
+        buffer, nullptr);
   g_signal_connect_swapped (w, "response", G_CALLBACK (gtk_widget_destroy), w);
   gtk_widget_show_all (w);
 
@@ -213,7 +213,7 @@ TaskPane::  do_popup_menu (GtkWidget *treeview, GdkEventButton *event, gpointer 
 {
   TaskPane * self (static_cast<TaskPane*>(userdata));
   GtkWidget * menu (gtk_ui_manager_get_widget (self->_uim, "/taskpane-popup"));
-  gtk_menu_popup (GTK_MENU(menu), NULL, NULL, NULL, NULL,
+  gtk_menu_popup (GTK_MENU(menu), nullptr, nullptr, nullptr, nullptr,
                   (event ? event->button : 0),
                   (event ? event->time : 0));
 }
@@ -237,7 +237,7 @@ TaskPane :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpoin
          if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
                                            (gint) event->x,
                                            (gint) event->y,
-                                           &path, NULL, NULL, NULL))
+                                           &path, nullptr, nullptr, nullptr))
          {
            gtk_tree_selection_unselect_all(selection);
            gtk_tree_selection_select_path(selection, path);
@@ -309,7 +309,7 @@ TaskPane :: prompt_user_for_new_dest (GtkWindow * parent, const Quark& current_p
                                                 GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                                _("Cancel"), GTK_RESPONSE_CANCEL,
                                                _("Save"), GTK_RESPONSE_ACCEPT,
-                                                NULL);
+                                                nullptr);
   gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_ACCEPT);
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (w), TRUE);
   gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
@@ -372,7 +372,7 @@ TaskPane :: on_queue_tasks_added (Queue& queue, int index, int count)
 
   GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(_store));
   g_object_ref(model);
-  gtk_tree_view_set_model(GTK_TREE_VIEW(_store), NULL);
+  gtk_tree_view_set_model(GTK_TREE_VIEW(_store), nullptr);
 
   for (int i=0; i<count; ++i)
   {
@@ -396,14 +396,14 @@ TaskPane :: on_queue_task_removed (Queue&, Task& task, int index)
   const int list_index (find_task_index (_store, &task));
   assert (list_index == index);
   GtkTreeIter iter;
-  gtk_tree_model_iter_nth_child (GTK_TREE_MODEL(_store), &iter, NULL, index);
+  gtk_tree_model_iter_nth_child (GTK_TREE_MODEL(_store), &iter, nullptr, index);
   gtk_list_store_remove (_store, &iter);
 }
 
 void
 TaskPane :: on_queue_task_moved (Queue&, Task&, int new_index, int old_index)
 {
-  const int count (gtk_tree_model_iter_n_children (GTK_TREE_MODEL(_store), NULL));
+  const int count (gtk_tree_model_iter_n_children (GTK_TREE_MODEL(_store), nullptr));
   std::vector<int> v (count);
   for (int i=0; i<count; ++i) v[i] = i;
   if (new_index < old_index) {
@@ -621,7 +621,7 @@ namespace
     else
       str = g_markup_printf_escaped ("%s\n<small>%s</small>", descr, status.c_str());
     const std::string str_utf8 = clean_utf8 (str);
-    g_object_set(rend, "markup", str_utf8.c_str(), "xpad", 10, "ypad", 5, NULL);
+    g_object_set(rend, "markup", str_utf8.c_str(), "xpad", 10, "ypad", 5, nullptr);
     g_free (str);
     if (iconv_inited) g_free ((char*)descr);
   }
@@ -677,32 +677,32 @@ namespace
   GtkActionEntry taskpane_popup_entries[] =
   {
 
-    { "move-up", NULL,
+    { "move-up", nullptr,
       N_("Move Up"), "",
       N_("Move Up"),
       G_CALLBACK(do_move_up) },
 
-    { "move-down", NULL,
+    { "move-down", nullptr,
       N_("Move Down"), "",
       N_("Move Down"),
       G_CALLBACK(do_move_down) },
 
-    { "move-top", NULL,
+    { "move-top", nullptr,
       N_("Move To Top"), "",
       N_("Move To Top"),
       G_CALLBACK(do_move_top) },
 
-    { "move-bottom", NULL,
+    { "move-bottom", nullptr,
       N_("Move To Bottom"), "",
       N_("Move To Bottom"),
       G_CALLBACK(do_move_bottom) },
 
-    { "show-info", NULL,
+    { "show-info", nullptr,
       N_("Show Task Information"), "",
       N_("Show Task Information"),
       G_CALLBACK(do_show_info) },
 
-    { "stop", NULL,
+    { "stop", nullptr,
       N_("Stop Task"), "",
       N_("Stop Task"),
       G_CALLBACK(do_stop) },
@@ -712,12 +712,12 @@ namespace
       N_("Delete Task"),
       G_CALLBACK(do_delete) },
 
-    { "restart", NULL,
+    { "restart", nullptr,
       N_("Restart Task"), "",
       N_("Restart Task"),
       G_CALLBACK(do_restart) },
 
-    { "change-dest", NULL,
+    { "change-dest", nullptr,
       N_("Change Download Destination"), "",
       N_("Change Download Destination"),
       G_CALLBACK(do_change_dest) }
@@ -731,7 +731,7 @@ TaskPane :: add_actions (GtkWidget * box)
   // action manager for popup
   _uim = gtk_ui_manager_new ();
   // read the file...
-  char * filename = g_build_filename (file::get_pan_home().c_str(), "taskpane.ui", NULL);
+  char * filename = g_build_filename (file::get_pan_home().c_str(), "taskpane.ui", nullptr);
   GError * err (nullptr);
   if (!gtk_ui_manager_add_ui_from_file (_uim, filename, &err)) {
     g_clear_error (&err);
@@ -748,7 +748,7 @@ TaskPane :: add_actions (GtkWidget * box)
 
    //add popup actions
   _pgroup = gtk_action_group_new ("taskpane");
-  gtk_action_group_set_translation_domain (_pgroup, NULL);
+  gtk_action_group_set_translation_domain (_pgroup, nullptr);
   gtk_action_group_add_actions (_pgroup, taskpane_popup_entries, G_N_ELEMENTS(taskpane_popup_entries), this);
   gtk_ui_manager_insert_action_group (_uim, _pgroup, 0);
 
@@ -758,7 +758,7 @@ namespace
 {
   gboolean on_popup_menu (GtkWidget * treeview, gpointer userdata)
   {
-    TaskPane::do_popup_menu (treeview, NULL, userdata);
+    TaskPane::do_popup_menu (treeview, nullptr, userdata);
     return true;
   }
 }
@@ -893,7 +893,7 @@ namespace
       set_search_entry (GTK_WIDGET(entry), "");
       refresh_search_entry (GTK_WIDGET(entry));
       search_text.clear ();
-      search_entry_activated (NULL, pane_gpointer);
+      search_entry_activated (nullptr, pane_gpointer);
     }
   }
 
@@ -927,11 +927,11 @@ namespace
        {
           GRegexCompileFlags cf0((GRegexCompileFlags)0);
           GRegexMatchFlags mf0((GRegexMatchFlags)0);
-          GRegex* rex = g_regex_new (search_text.c_str(), cf0, mf0, NULL);
+          GRegex* rex = g_regex_new (search_text.c_str(), cf0, mf0, nullptr);
           if (!rex) return false;
           const bool match =
-            g_regex_match (rex, ta->get_article().subject.c_str(), G_REGEX_MATCH_NOTEMPTY, NULL) ||
-            g_regex_match (rex, ta->get_article().author.c_str(), G_REGEX_MATCH_NOTEMPTY, NULL);
+            g_regex_match (rex, ta->get_article().subject.c_str(), G_REGEX_MATCH_NOTEMPTY, nullptr) ||
+            g_regex_match (rex, ta->get_article().author.c_str(), G_REGEX_MATCH_NOTEMPTY, nullptr);
           g_regex_unref(rex);
           return match;
        }
@@ -964,8 +964,8 @@ TaskPane :: create_filter_entry ()
   GtkWidget * entry = gtk_entry_new ();
 //  _action_manager.disable_accelerators_when_focused (entry);
   g_object_set_data (G_OBJECT(entry), "pane", this);
-  g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), NULL);
-  g_signal_connect (entry, "focus-out-event", G_CALLBACK(search_entry_focus_out_cb), NULL);
+  g_signal_connect (entry, "focus-in-event", G_CALLBACK(search_entry_focus_in_cb), nullptr);
+  g_signal_connect (entry, "focus-out-event", G_CALLBACK(search_entry_focus_out_cb), nullptr);
   g_signal_connect (entry, "activate", G_CALLBACK(search_entry_activated), this);
   entry_changed_tag = g_signal_connect (entry, "changed", G_CALLBACK(search_entry_changed), this);
 
@@ -1065,7 +1065,7 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
   _view = gtk_tree_view_new_with_model (GTK_TREE_MODEL(_store));
   gtk_tree_view_set_headers_visible (GTK_TREE_VIEW(_view), false);
   GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
-  GtkTreeViewColumn * col = gtk_tree_view_column_new_with_attributes (_("State"), renderer, NULL);
+  GtkTreeViewColumn * col = gtk_tree_view_column_new_with_attributes (_("State"), renderer, nullptr);
   gtk_tree_view_column_set_cell_data_func (col, renderer, (GtkTreeCellDataFunc)render_state, &_queue, nullptr);
   gtk_tree_view_append_column (GTK_TREE_VIEW(_view), col);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_view));
@@ -1086,14 +1086,14 @@ TaskPane :: TaskPane (Queue& queue, Prefs& prefs): _queue(queue), _prefs(prefs)
   gtk_box_pack_start (GTK_BOX(hbox), gtk_separator_new(GTK_ORIENTATION_VERTICAL), 0, 0, 0);
   gtk_box_pack_start (GTK_BOX(hbox), create_filter_entry(), false, false, PAD);
   GtkTreeModel* initial_model= gtk_tree_view_get_model(GTK_TREE_VIEW( _view ));
-  GtkTreeModel* filter_model = gtk_tree_model_filter_new( initial_model, NULL );
-  gtk_tree_model_filter_set_visible_func (GTK_TREE_MODEL_FILTER ( filter_model ),(GtkTreeModelFilterVisibleFunc) filter_visible_func, NULL, NULL);
+  GtkTreeModel* filter_model = gtk_tree_model_filter_new( initial_model, nullptr );
+  gtk_tree_model_filter_set_visible_func (GTK_TREE_MODEL_FILTER ( filter_model ),(GtkTreeModelFilterVisibleFunc) filter_visible_func, nullptr, nullptr);
   gtk_tree_view_set_model( GTK_TREE_VIEW( _view ),filter_model);
   g_object_unref( filter_model );
 
   gtk_box_pack_start (GTK_BOX(vbox), hbox, false, false, PAD);
 
-  w = gtk_scrolled_window_new (NULL, NULL);
+  w = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(w), _view);

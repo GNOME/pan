@@ -41,7 +41,7 @@ namespace
                                                  GtkFileChooserAction(action),
                                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                                  GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-                                                 NULL);
+                                                 nullptr);
     gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_ACCEPT);
 
     std::string text (pan::file_entry_get (GTK_WIDGET(user_data)));

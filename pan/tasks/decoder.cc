@@ -111,11 +111,11 @@ Decoder :: do_work()
 
       gchar * contents (nullptr);
       gsize length (0);
-      if (g_file_get_contents (it->c_str(), &contents, &length, NULL) && length>0)
+      if (g_file_get_contents (it->c_str(), &contents, &length, nullptr) && length>0)
       {
         file :: ensure_dir_exists (save_path.c_str());
         gchar * basename (g_path_get_basename (it->c_str()));
-        gchar * filename (g_build_filename (save_path.c_str(), basename, NULL));
+        gchar * filename (g_build_filename (save_path.c_str(), basename, nullptr));
         FILE * fp = fopen (filename, "w+");
 
         mut.lock();
@@ -149,8 +149,8 @@ Decoder :: do_work()
     else
     {
       UUSetMsgCallback (this, uu_log);
-      UUSetOption (UUOPT_DESPERATE, 1, NULL); // keep incompletes; they're useful to par2
-      UUSetOption (UUOPT_IGNMODE, 1, NULL); // don't save file as executable
+      UUSetOption (UUOPT_DESPERATE, 1, nullptr); // keep incompletes; they're useful to par2
+      UUSetOption (UUOPT_IGNMODE, 1, nullptr); // don't save file as executable
       UUSetBusyCallback (this, uu_busy_poll, 500); // .5 secs busy poll?
 
       int i (0);
@@ -158,7 +158,7 @@ Decoder :: do_work()
       {
 
         if (was_cancelled()) break;
-        const char *global_subject = NULL;
+        const char *global_subject = nullptr;
         // In SAVE_ALL mode, article_subject is the subject from the NZB file, if known
         if (options == TaskArticle::SAVE_ALL && !article_subject.empty()) {
           global_subject = article_subject.c_str();
@@ -168,8 +168,8 @@ Decoder :: do_work()
                      _("Error reading from %s: %s"),
                      it->c_str(),
                      (res==UURET_IOERR)
-                     ?  file::pan_strerror (UUGetOption (UUOPT_ERRNO, NULL,
-                                                         NULL, 0))
+                     ?  file::pan_strerror (UUGetOption (UUOPT_ERRNO, nullptr,
+                                                         nullptr, 0))
                      : UUstrerror(res));
           log_errors.push_back(buf); // log error
         }
@@ -211,7 +211,7 @@ Decoder :: do_work()
           // silently let this error by... user probably tried to
           // save attachements on a text-only post
         } else {
-          const int the_errno (UUGetOption (UUOPT_ERRNO, NULL, NULL, 0));
+          const int the_errno (UUGetOption (UUOPT_ERRNO, nullptr, nullptr, 0));
           g_snprintf (buf, bufsz,_("Error saving \"%s\":\n%s."),
                       fname,
                       res==UURET_IOERR ? file::pan_strerror(the_errno) : UUstrerror(res));

@@ -117,7 +117,7 @@ namespace
     GtkWidget * w = gtk_combo_box_new_with_model (GTK_TREE_MODEL(store));
     GtkCellRenderer * renderer (gtk_cell_renderer_text_new ());
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, nullptr);
     gtk_combo_box_set_active (GTK_COMBO_BOX(w), sel_index);
     return w;
   }
@@ -133,7 +133,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
                                        GTK_DIALOG_DESTROY_WITH_PARENT,
                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                        GTK_STOCK_APPLY, GTK_RESPONSE_OK,
-                                       NULL);
+                                       nullptr);
   gtk_dialog_set_default_response (GTK_DIALOG(_root), GTK_RESPONSE_OK);
   gtk_window_set_role (GTK_WINDOW(_root), "pan-edit-profile-dialog");
 
@@ -205,7 +205,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
 #endif
     renderer = gtk_cell_renderer_text_new ();
     gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (w), renderer, true);
-    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, NULL);
+    gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (w), renderer, "text", 0, nullptr);
 
     int active = ROW_FILE;
     if (profile.sig_type == profile.TEXT) active = ROW_TEXT;
@@ -230,14 +230,14 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     set_entry (w, profile.face);
     gtk_widget_set_tooltip_markup (w, _("You can add an avatar icon to your articles with a Base64-encoded PNG.\n"
                                         "Add the Base64-encoded picture without the trailing <b>“Face:”</b>."));
-    HIG :: workarea_add_row (t, &row, _("_Face:"), w, NULL);
+    HIG :: workarea_add_row (t, &row, _("_Face:"), w, nullptr);
 
     w = _xface_entry = gtk_entry_new ();
     set_entry (w, profile.xface);
     gtk_widget_set_tooltip_markup (w, _("You can add an avatar icon to your articles with a unique X-Face code.\n"
                                         "Add the code without the trailing <b>\"X-Face:\"</b> \n if it was generated "
                                         "by a helper program (for example http://www.dairiki.org/xface/xface.php)."));
-    HIG :: workarea_add_row (t, &row, _("_X-Face:"), w, NULL);
+    HIG :: workarea_add_row (t, &row, _("_X-Face:"), w, nullptr);
   HIG :: workarea_add_section_divider (t, &row);
   HIG :: workarea_add_section_title (t, &row, _("Optional Information"));
     HIG :: workarea_add_section_spacer (t, row, 3);
@@ -247,12 +247,12 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     gtk_widget_set_tooltip_text (w, _("When posting to Usenet, your article's Message-ID contains a domain name.\n"
                                       "You can set a custom domain name here, or leave it blank to let Pan use the "
                                       "domain name from your email address."));
-    HIG :: workarea_add_row (t, &row, _("Message-ID _Domain Name:"), w, NULL);
+    HIG :: workarea_add_row (t, &row, _("Message-ID _Domain Name:"), w, nullptr);
 
     w = _attribution_entry = gtk_entry_new ();
     set_entry (w, profile.attribution);
     gtk_widget_set_tooltip_text (w, _("%i for Message-ID\n%a for Author and Address\n%n for Author name\n%d for Date"));
-    HIG :: workarea_add_row (t, &row, _("_Attribution:"), w, NULL);
+    HIG :: workarea_add_row (t, &row, _("_Attribution:"), w, nullptr);
 
 
     HIG :: workarea_add_section_spacer (t, row, 1);
@@ -279,7 +279,7 @@ ProfileDialog :: ProfileDialog (const Data         & data,
     /* Translators: Do not localize Reply-To and the quote marks in \"Your Name\". */
     gtk_widget_set_tooltip_text (eventbox, _("Extra headers to be included in your articles, such as\nReply-To: \"Your Name\" "
                                              "<yourname@somewhere.com>\nOrganization: Your Organization\n"));
-    GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+    GtkWidget * scrolled_window = gtk_scrolled_window_new (nullptr, nullptr);
     gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),
                                          GTK_SHADOW_IN);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -330,7 +330,7 @@ ProfileDialog :: run_until_valid_or_cancel (ProfileDialog& pd)
         GTK_DIALOG_DESTROY_WITH_PARENT,
         GTK_MESSAGE_ERROR,
         GTK_BUTTONS_CLOSE,
-        NULL);
+        nullptr);
       HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
                                       _("Invalid email address."),
                                       _("Please use an address of the form joe@somewhere.org"));
@@ -523,7 +523,7 @@ namespace
                                    GtkTreeViewColumn  * ,
                                    gpointer             user_data)
   {
-    on_edit_button (NULL, user_data);
+    on_edit_button (nullptr, user_data);
   }
 }
 
@@ -538,7 +538,7 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
   _root = gtk_dialog_new_with_buttons (_("Posting Profiles"), parent,
                                        GTK_DIALOG_DESTROY_WITH_PARENT,
                                        GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                                       NULL);
+                                       nullptr);
   gtk_window_set_role (GTK_WINDOW(_root), "pan-profiles-dialog");
   //g_signal_connect (_root, "response", G_CALLBACK(response_cb), this);
 
@@ -551,7 +551,7 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
   GtkWidget * w = _view = gtk_tree_view_new ();
   rebuild_store ();
   GtkCellRenderer * renderer = gtk_cell_renderer_text_new ();
-  GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Profiles"), renderer, "text", COL_NAME, NULL);
+  GtkTreeViewColumn * column = gtk_tree_view_column_new_with_attributes (_("Profiles"), renderer, "text", COL_NAME, nullptr);
   gtk_tree_view_column_set_sort_column_id (column, COL_NAME);
   gtk_tree_view_append_column (GTK_TREE_VIEW(w), column);
   GtkTreeSelection * selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (w));
@@ -560,7 +560,7 @@ ProfilesDialog :: ProfilesDialog (const Data& data, Profiles &profiles, GtkWindo
                     G_CALLBACK (profiles_tree_view_selection_changed_cb), this);
   g_signal_connect (GTK_TREE_VIEW(w), "row-activated",
                     G_CALLBACK (tree_view_row_activated_cb), this);
-  w = gtk_scrolled_window_new (NULL, NULL);
+  w = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(w), _view);

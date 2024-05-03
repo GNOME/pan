@@ -195,7 +195,7 @@ PostUI :: on_queue_tasks_added (UploadQueue& queue, int index, int count)
 
   GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store));
   g_object_ref(model);
-  gtk_tree_view_set_model(GTK_TREE_VIEW(_filequeue_store), NULL);
+  gtk_tree_view_set_model(GTK_TREE_VIEW(_filequeue_store), nullptr);
 
   for (int i=0; i<count; ++i)
   {
@@ -236,7 +236,7 @@ PostUI :: on_queue_task_removed (UploadQueue&, Task& task, int index)
   const int list_index (find_task_index (store, &task));
   assert (list_index == index);
   GtkTreeIter iter;
-  gtk_tree_model_iter_nth_child (GTK_TREE_MODEL(store), &iter, NULL, index);
+  gtk_tree_model_iter_nth_child (GTK_TREE_MODEL(store), &iter, nullptr, index);
   gtk_list_store_remove (store, &iter);
 
   update_filequeue_label();
@@ -247,7 +247,7 @@ PostUI :: on_queue_task_moved (UploadQueue&, Task&, int new_index, int old_index
 {
   GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(_filequeue_store));
   GtkListStore* store = GTK_LIST_STORE(model);
-  const int count (gtk_tree_model_iter_n_children (model, NULL));
+  const int count (gtk_tree_model_iter_n_children (model, nullptr));
   std::vector<int> v (count);
   for (int i=0; i<count; ++i) v[i] = i;
   if (new_index < old_index) {
@@ -282,7 +282,7 @@ PostUI :: set_spellcheck_enabled (bool enabled)
         Log::add_err_va (_("Error setting custom spellchecker: %s"), err->message);
         g_clear_error (&err);
         // selected language failed, fall back upon the default system locale
-        if (!gtk_spell_checker_set_language (spell, NULL, &err)) {
+        if (!gtk_spell_checker_set_language (spell, nullptr, &err)) {
           Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
           g_clear_error (&err);
           spell_attach = FALSE;
@@ -290,7 +290,7 @@ PostUI :: set_spellcheck_enabled (bool enabled)
       }
     }
     else {
-      if (!gtk_spell_checker_set_language (spell, NULL, &err)) {
+      if (!gtk_spell_checker_set_language (spell, nullptr, &err)) {
         Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
         g_clear_error (&err);
         spell_attach = FALSE;
@@ -312,7 +312,7 @@ PostUI :: set_spellcheck_enabled (bool enabled)
       if (err) {
         Log::add_err_va (_("Error setting custom spellchecker: %s"), err->message);
         g_clear_error (&err);
-        gtkspell_new_attach (view, NULL, &err);
+        gtkspell_new_attach (view, nullptr, &err);
         if (err) {
           Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
           g_clear_error (&err);
@@ -320,7 +320,7 @@ PostUI :: set_spellcheck_enabled (bool enabled)
       }
     }
     else {
-      gtkspell_new_attach (view, NULL, &err);
+      gtkspell_new_attach (view, nullptr, &err);
       if (err) {
         Log::add_err_va (_("Error setting spellchecker: %s"), err->message);
         g_clear_error (&err);
@@ -482,36 +482,36 @@ namespace
   {
 
     { "remove-files", "Delete",
-      N_("Remove from Queue"), NULL,
+      N_("Remove from Queue"), nullptr,
       N_("Remove from Queue"),
       G_CALLBACK(do_remove_files) },
 
-    { "clear-list", NULL,
+    { "clear-list", nullptr,
       N_("Clear List"), "",
       N_("Clear List"),
       G_CALLBACK(do_clear_list) },
 
-    { "select-parts", NULL,
+    { "select-parts", nullptr,
       N_("Select Needed Parts"), "",
       N_("Select Needed Parts"),
       G_CALLBACK(do_select_parts) },
 
-    { "move-up", NULL,
+    { "move-up", nullptr,
       N_("Move Up"), "",
       N_("Move Up"),
       G_CALLBACK(do_move_up) },
 
-    { "move-down", NULL,
+    { "move-down", nullptr,
       N_("Move Down"), "",
       N_("Move Down"),
       G_CALLBACK(do_move_down) },
 
-    { "move-top", NULL,
+    { "move-top", nullptr,
       N_("Move to Top"), "",
       N_("Move to Top"),
       G_CALLBACK(do_move_top) },
 
-    { "move-bottom", NULL,
+    { "move-bottom", nullptr,
       N_("Move to Bottom"), "",
       N_("Move to Bottom"),
       G_CALLBACK(do_move_bottom) }
@@ -566,7 +566,7 @@ PostUI::  do_popup_menu (GtkWidget *treeview, GdkEventButton *event, gpointer us
 {
   PostUI * self (static_cast<PostUI*>(userdata));
   GtkWidget * menu (gtk_ui_manager_get_widget (self->_uim, "/filequeue-popup"));
-  gtk_menu_popup (GTK_MENU(menu), NULL, NULL, NULL, NULL,
+  gtk_menu_popup (GTK_MENU(menu), nullptr, nullptr, nullptr, nullptr,
                   (event ? event->button : 0),
                   (event ? event->time : 0));
 }
@@ -575,7 +575,7 @@ namespace
 {
   gboolean on_popup_menu (GtkWidget * treeview, gpointer userdata)
   {
-    PostUI::do_popup_menu (treeview, NULL, userdata);
+    PostUI::do_popup_menu (treeview, nullptr, userdata);
     return true;
   }
 }
@@ -606,7 +606,7 @@ PostUI :: on_button_pressed (GtkWidget *treeview, GdkEventButton *event, gpointe
          if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
                                            (gint) event->x,
                                            (gint) event->y,
-                                           &path, NULL, NULL, NULL))
+                                           &path, nullptr, nullptr, nullptr))
          {
            gtk_tree_selection_unselect_all(selection);
            gtk_tree_selection_select_path(selection, path);
@@ -627,7 +627,7 @@ PostUI :: add_actions (GtkWidget * box)
   _uim = gtk_ui_manager_new ();
 
   // read the file...
-  char * filename = g_build_filename (file::get_pan_home().c_str(), "post.ui", NULL);
+  char * filename = g_build_filename (file::get_pan_home().c_str(), "post.ui", nullptr);
   GError * err (nullptr);
   if (!gtk_ui_manager_add_ui_from_file (_uim, filename, &err)) {
     g_clear_error (&err);
@@ -644,7 +644,7 @@ PostUI :: add_actions (GtkWidget * box)
 
   // add the actions...
   _agroup = gtk_action_group_new ("post");
-  gtk_action_group_set_translation_domain (_agroup, NULL);
+  gtk_action_group_set_translation_domain (_agroup, nullptr);
   gtk_action_group_add_actions (_agroup, entries, G_N_ELEMENTS(entries), this);
   gtk_action_group_add_toggle_actions (_agroup, toggle_entries, G_N_ELEMENTS(toggle_entries), this);
   gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (gtk_action_group_get_action (_agroup, "always-run-editor")),
@@ -738,14 +738,14 @@ PostUI :: close_window (bool flag)
     GtkWidget * d = gtk_message_dialog_new (
       GTK_WINDOW(_root),
       GTK_DIALOG_DESTROY_WITH_PARENT,
-      GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, NULL);
+      GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, nullptr);
     HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
       _("Your changes will be lost!"),
       _("Close this window and lose your changes?"));
     gtk_dialog_add_buttons (GTK_DIALOG(d),
                             GTK_STOCK_GO_BACK, GTK_RESPONSE_NO,
                             GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                            NULL);
+                            nullptr);
     gtk_dialog_set_default_response (GTK_DIALOG(d), GTK_RESPONSE_NO);
     destroy_flag = gtk_dialog_run (GTK_DIALOG(d)) == GTK_RESPONSE_CLOSE;
     gtk_widget_destroy (d);
@@ -784,7 +784,7 @@ PostUI :: check_message (const Quark& server, GMimeMessage * msg, bool binpost)
   const GtkMessageType type (goodness.is_refuse() ? GTK_MESSAGE_ERROR : GTK_MESSAGE_WARNING);
   GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
                                           GTK_DIALOG_DESTROY_WITH_PARENT,
-                                          type, GTK_BUTTONS_NONE, NULL);
+                                          type, GTK_BUTTONS_NONE, nullptr);
   HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
                            _("There were problems with this post."),
                            s.c_str());
@@ -806,7 +806,7 @@ PostUI :: check_charset ()
 
   // Check if body can be posted in the selected charset
   const std::string body (get_body ());
-  char *tmp = g_convert (body.c_str(), -1, charset.c_str(), "UTF-8", NULL, NULL, NULL);
+  char *tmp = g_convert (body.c_str(), -1, charset.c_str(), "UTF-8", nullptr, nullptr, nullptr);
   if (tmp) {
     g_free(tmp);
     return true;
@@ -814,7 +814,7 @@ PostUI :: check_charset ()
 
   // Wrong charset. Let GMime guess the best charset.
   const char * best_charset = g_mime_charset_best (body.c_str(), strlen (body.c_str()));
-  if (best_charset == NULL) best_charset = "ISO-8859-1";
+  if (best_charset == nullptr) best_charset = "ISO-8859-1";
   // GMime reports (some) charsets in lower case. Pan always uses uppercase.
   tmp = g_ascii_strup (best_charset, -1);
 
@@ -823,7 +823,7 @@ PostUI :: check_charset ()
   GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
                                           GTK_DIALOG_DESTROY_WITH_PARENT,
                                           GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE,
-										  NULL);
+										  nullptr);
   HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
                            _("There were problems with this post."),
                            msg);
@@ -889,7 +889,7 @@ PostUI :: send_and_save_now ()
   {
     GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
                                             GTK_DIALOG_DESTROY_WITH_PARENT,
-                                            GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE, NULL);
+                                            GTK_MESSAGE_ERROR, GTK_BUTTONS_NONE, nullptr);
       HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
       _("The file queue is empty, so no files can be saved."),"");
       gtk_dialog_add_button (GTK_DIALOG(d), _("Go Back"), GTK_RESPONSE_CANCEL);
@@ -954,7 +954,7 @@ PostUI :: maybe_mail_message (GMimeMessage * message)
 {
   std::string url, to, groups;
   gboolean unused;
-  char * headers (g_mime_object_get_headers ((GMimeObject *) message, NULL));
+  char * headers (g_mime_object_get_headers ((GMimeObject *) message, nullptr));
   char * body (pan_g_mime_message_get_body (message, &unused));
   StringView key, val, v(headers);
   v.trim ();
@@ -1052,7 +1052,7 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
 	  p.get_from_header(author);
 	  std::string subject(utf8ize (g_mime_message_get_subject (msg)));
 	  const char * refs = g_mime_object_get_header(GMIME_OBJECT(msg), "References");
-	  g_mime_object_set_header((GMimeObject *) msg, "Newsgroups", folder.c_str(), NULL);
+	  g_mime_object_set_header((GMimeObject *) msg, "Newsgroups", folder.c_str(), nullptr);
 
 	  // pseudo mid to get data from cache
 	  std::string message_id = pan_g_mime_message_set_message_id(msg, mid.c_str());
@@ -1065,7 +1065,7 @@ PostUI :: save_message_in_local_folder(const Mode& mode, const std::string& fold
           GDateTime * postedGDT = g_date_time_new_from_unix_utc(posted);
 		  g_mime_message_set_date(msg, postedGDT);
 		  ArticleCache& cache(_data.get_cache());
-		  ArticleCache :: CacheResponse response = cache.add(mid, g_mime_object_to_string(GMIME_OBJECT(msg), NULL), true);
+		  ArticleCache :: CacheResponse response = cache.add(mid, g_mime_object_to_string(GMIME_OBJECT(msg), nullptr), true);
 		  g_object_unref(msg);
 
 		  if (response.type != ArticleCache::CACHE_OK)
@@ -1145,7 +1145,7 @@ PostUI :: maybe_post_message (GMimeMessage * message)
     GtkWidget * d = gtk_message_dialog_new (GTK_WINDOW(_root),
                                             GTK_DIALOG_DESTROY_WITH_PARENT,
                                             GTK_MESSAGE_QUESTION,
-                                            GTK_BUTTONS_NONE, NULL);
+                                            GTK_BUTTONS_NONE, nullptr);
     HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(d),
                              _("Pan is Offline."),
                              _("Go online to post the article?"));
@@ -1344,7 +1344,7 @@ PostUI :: spawn_editor ()
   char * fname (nullptr);
 
   {
-    GError * err = NULL;
+    GError * err = nullptr;
     const int fd (g_file_open_tmp ("pan_edit_XXXXXX", &fname, &err));
     if (fd == -1) {
       Log::add_err (err && err->message ? err->message : _("Error opening temporary file"));
@@ -1357,7 +1357,7 @@ PostUI :: spawn_editor ()
   Destroyer d(fname);
 
   FILE *fp = fopen (fname, "w");
-  if (fp == NULL) {
+  if (fp == nullptr) {
     Log::add_err_va (_("Error creating temporary file: %s"), g_strerror(errno));
     return;
   }
@@ -1426,7 +1426,7 @@ namespace
     if (fname.empty())
     {
       fname = file::get_pan_home ();
-      char * pch = g_build_filename (fname.c_str(), "article-drafts", NULL);
+      char * pch = g_build_filename (fname.c_str(), "article-drafts", nullptr);
       file :: ensure_dir_exists (pch);
       fname = pch;
       g_free (pch);
@@ -1444,7 +1444,7 @@ PostUI :: open_draft ()
                                                GTK_FILE_CHOOSER_ACTION_OPEN,
                                                GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                                GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-                                               NULL);
+                                               nullptr);
 
   std::string& draft_filename (get_draft_filename ());
   if (g_file_test (draft_filename.c_str(), G_FILE_TEST_IS_DIR))
@@ -1463,7 +1463,7 @@ PostUI :: open_draft ()
     {
       GMimeStream * stream = g_mime_stream_mem_new_with_buffer (txt.c_str(), txt.size());
       GMimeParser * parser = g_mime_parser_new_with_stream (stream);
-      GMimeMessage * message = g_mime_parser_construct_message (parser, NULL);
+      GMimeMessage * message = g_mime_parser_construct_message (parser, nullptr);
       if (message) {
         set_message (message);
         g_object_unref (G_OBJECT(message));
@@ -1662,7 +1662,7 @@ PostUI :: new_message_from_ui (Mode mode, bool copy_body)
     g_mime_part_set_content (part, content_object);
 
     pch = g_strdup_printf ("text/plain; charset=%s", charset.c_str());
-    GMimeContentType * type = g_mime_content_type_parse (NULL, pch);
+    GMimeContentType * type = g_mime_content_type_parse (nullptr, pch);
     g_free (pch);
     g_mime_object_set_content_type ((GMimeObject *) part, type); // part owns type now. type isn't refcounted.
 
@@ -1686,7 +1686,7 @@ PostUI :: save_draft ()
     GTK_FILE_CHOOSER_ACTION_SAVE,
     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
     GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-    NULL);
+    nullptr);
 
    std::string draft_filename;
    char* filename;
@@ -1717,14 +1717,14 @@ PostUI :: save_draft ()
               GtkWidget * dialog_w = gtk_message_dialog_new (
                GTK_WINDOW(_root),
                GTK_DIALOG_DESTROY_WITH_PARENT,
-               GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, NULL);
+               GTK_MESSAGE_QUESTION, GTK_BUTTONS_NONE, nullptr);
               HIG :: message_dialog_set_text (GTK_MESSAGE_DIALOG(dialog_w),
                _("File already exists."),
                _("Overwrite it?"));
               gtk_dialog_add_buttons (GTK_DIALOG(dialog_w),
                          GTK_STOCK_GO_BACK, GTK_RESPONSE_NO,
                          GTK_STOCK_YES, GTK_RESPONSE_OK,
-                         NULL);
+                         nullptr);
               gtk_dialog_set_default_response (GTK_DIALOG(dialog_w), GTK_RESPONSE_NO);
               switch(gtk_dialog_run(GTK_DIALOG(dialog_w)))
               {
@@ -1754,7 +1754,7 @@ PostUI :: save_draft ()
     {
       errno = 0;
       std::ofstream o (filename);
-      char * pch = g_mime_object_to_string ((GMimeObject *) msg, NULL);
+      char * pch = g_mime_object_to_string ((GMimeObject *) msg, nullptr);
       o << pch;
       o.close ();
 
@@ -1823,7 +1823,7 @@ PostUI :: create_body_widget (GtkTextBuffer*& buf, GtkWidget*& view, const Prefs
   // set the rest of the text view's policy
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(view), GTK_WRAP_WORD);
   gtk_text_view_set_editable (GTK_TEXT_VIEW(view), true);
-  GtkWidget * scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  GtkWidget * scrolled_window = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_window),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -1922,11 +1922,11 @@ namespace
         argc = 1;
         argv = g_new (char*, 2);
         argv[0] = g_strdup (pch);
-        argv[1] = NULL; /* this is for g_strfreev() */
+        argv[1] = nullptr; /* this is for g_strfreev() */
       }
       else // parse it...
       {
-        GError * err = NULL;
+        GError * err = nullptr;
         if (!g_shell_parse_argv (pch, &argc, &argv, &err))
         {
           Log::add_err_va (_("Couldn't parse signature command \"%s\": %s"), pch, err->message);
@@ -1935,13 +1935,13 @@ namespace
       }
 
       /* try to execute the file... */
-      if (argc>0 && argv!=NULL && argv[0]!=NULL && g_file_test (argv[0], G_FILE_TEST_IS_EXECUTABLE))
+      if (argc>0 && argv!=nullptr && argv[0]!=nullptr && g_file_test (argv[0], G_FILE_TEST_IS_EXECUTABLE))
       {
-        char * spawn_stdout = NULL;
-        char * spawn_stderr = NULL;
+        char * spawn_stdout = nullptr;
+        char * spawn_stderr = nullptr;
         int exit_status = 0;
 
-        if (g_spawn_sync (NULL, argv, NULL, GSpawnFlags(0), NULL, NULL, &spawn_stdout, &spawn_stderr, &exit_status, NULL))
+        if (g_spawn_sync (nullptr, argv, nullptr, GSpawnFlags(0), nullptr, nullptr, &spawn_stdout, &spawn_stderr, &exit_status, nullptr))
           sig = spawn_stdout;
         if (spawn_stderr && *spawn_stderr)
           Log::add_err (spawn_stderr);
@@ -2252,7 +2252,7 @@ PostUI :: set_message (GMimeMessage * message)
   gtk_entry_set_text (GTK_ENTRY(_replyto_entry), s.c_str());
 
   InternetAddressList * addresses = g_mime_message_get_addresses (message, GMIME_ADDRESS_TYPE_TO);
-  char * pch  = internet_address_list_to_string (addresses, NULL, true);
+  char * pch  = internet_address_list_to_string (addresses, nullptr, true);
   s = utf8ize (pch);
   gtk_entry_set_text (GTK_ENTRY(_to_entry), s.c_str());
   g_free (pch);
@@ -2342,7 +2342,7 @@ PostUI :: body_view_realized_cb (GtkWidget*, gpointer self_gpointer)
 
   /* import old draft from autosave file */
 //  struct stat sb;
-//  char *buf = g_build_filename(get_draft_filename().c_str(), "autosave", NULL);
+//  char *buf = g_build_filename(get_draft_filename().c_str(), "autosave", nullptr);
 //  if (stat (buf, &sb)==0)
 //    self->import_draft(buf);
 //  g_free(buf);
@@ -2457,7 +2457,7 @@ namespace
     char * name_escaped = g_markup_escape_text (name.c_str(), name.size());
     char * from_escaped = g_markup_escape_text (from.c_str(), from.size());
     char * pch = g_strdup_printf ("%s - <i>%s</i>", from_escaped, name_escaped);
-    g_object_set (renderer, "markup", pch, NULL);
+    g_object_set (renderer, "markup", pch, nullptr);
     g_free (pch);
     g_free (from_escaped);
     g_free (name_escaped);
@@ -2585,7 +2585,7 @@ namespace
     TaskUpload* fd(nullptr);
     gtk_tree_model_get (model, iter, 2, &fd, -1);
     if (fd)
-      g_object_set (renderer, "text", fd->get_basename().c_str(), NULL);
+      g_object_set (renderer, "text", fd->get_basename().c_str(), nullptr);
   }
 
   void
@@ -2601,7 +2601,7 @@ namespace
     std::string tmp;
     char buf[256];
     g_snprintf(buf,sizeof(buf),"%d",cnt);
-    g_object_set (renderer, "text", buf, NULL);
+    g_object_set (renderer, "text", buf, nullptr);
   }
 
 }
@@ -2639,11 +2639,11 @@ PostUI :: create_filequeue_tab ()
   GtkTreeView * t = GTK_TREE_VIEW(w);
   gtk_tree_view_insert_column_with_data_func(t, 0, (_("No.")), renderer, render_row_number, nullptr, nullptr);
   renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_insert_column_with_attributes (t, 1,(_("Subject")),renderer,"text", 1,NULL);
+  gtk_tree_view_insert_column_with_attributes (t, 1,(_("Subject")),renderer,"text", 1,nullptr);
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_insert_column_with_data_func(t, 2, (_("Filename")), renderer, render_filename, nullptr, nullptr);
   renderer = gtk_cell_renderer_text_new ();
-  gtk_tree_view_insert_column_with_attributes (t, 3, (_("Size (KB)")),renderer,"text", 3,NULL);
+  gtk_tree_view_insert_column_with_attributes (t, 3, (_("Size (KB)")),renderer,"text", 3,nullptr);
 
   // connect signals for popup menu
   g_signal_connect (w, "popup-menu", G_CALLBACK(on_popup_menu), this);
@@ -2657,7 +2657,7 @@ PostUI :: create_filequeue_tab ()
   gtk_tree_view_columns_autosize(GTK_TREE_VIEW(w));
 
   //append scroll window
-  w = gtk_scrolled_window_new (NULL, NULL);
+  w = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(w), _filequeue_store);
@@ -2677,9 +2677,9 @@ PostUI:: create_filequeue_status_bar ()
   GtkWidget * status_bar (gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0));
 
   // connection status
-  w = _filequeue_label = gtk_label_new (NULL);
+  w = _filequeue_label = gtk_label_new (nullptr);
   gtk_misc_set_padding (GTK_MISC(w), PAD, 0);
-  GtkWidget * frame = gtk_frame_new (NULL);
+  GtkWidget * frame = gtk_frame_new (nullptr);
   gtk_container_set_border_width (GTK_CONTAINER(frame), 0);
   gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(frame), w);
@@ -2729,7 +2729,7 @@ PostUI :: create_parts_tab ()
   gtk_table_set_col_spacings (GTK_TABLE(t), PAD);
 
   ++row;
-  l = gtk_label_new (NULL);
+  l = gtk_label_new (nullptr);
   gtk_table_attach (GTK_TABLE(t), l, 0, 2, row, row+1, fe, fill, 0, 0);
 
   ++row;
@@ -2757,7 +2757,7 @@ PostUI :: create_parts_tab ()
   gtk_table_attach (GTK_TABLE(t), l, 1, 2, row, row+1, fe, fill, 0, 0);
 
   ++row;
-  l = gtk_label_new (NULL);
+  l = gtk_label_new (nullptr);
   gtk_table_attach (GTK_TABLE(t), l, 0, 2, row, row+1, fe, fill, 0, 0);
 
   //treeview for parts list
@@ -2767,14 +2767,14 @@ PostUI :: create_parts_tab ()
   // add columns
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), 0,
-                          (_("No. ")),renderer,"text", 0,NULL);
+                          (_("No. ")),renderer,"text", 0,nullptr);
   renderer = gtk_cell_renderer_toggle_new();
   g_signal_connect (G_OBJECT(renderer), "toggled", G_CALLBACK(on_parts_box_clicked_cb), this);
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), 1,
-                          (_("Enable/Disable")),renderer,"active", 1,NULL);
+                          (_("Enable/Disable")),renderer,"active", 1,nullptr);
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (w), 2,
-                          (_("Filename")),renderer,"text", 2,NULL);
+                          (_("Filename")),renderer,"text", 2,nullptr);
 
   //set hint and selection
   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(w),TRUE);
@@ -2783,7 +2783,7 @@ PostUI :: create_parts_tab ()
   gtk_table_attach (GTK_TABLE(t), w, 0, 2, row, row+1, fe, fill, 0, 0);
 
   //append scroll window
-  w = gtk_scrolled_window_new (NULL, NULL);
+  w = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(w), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(w), GTK_SHADOW_IN);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(w), t);
@@ -2848,10 +2848,10 @@ PostUI :: create_extras_tab ()
   _headers_buf = gtk_text_view_get_buffer (GTK_TEXT_VIEW(w));
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW(w), GTK_WRAP_NONE);
   gtk_text_view_set_editable (GTK_TEXT_VIEW(w), true);
-  GtkWidget * scroll = gtk_scrolled_window_new (NULL, NULL);
+  GtkWidget * scroll = gtk_scrolled_window_new (nullptr, nullptr);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER(scroll), w);
-  GtkWidget * frame = gtk_frame_new (NULL);
+  GtkWidget * frame = gtk_frame_new (nullptr);
   gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER(frame), scroll);
   gtk_table_attach_defaults (GTK_TABLE(t), frame, 0, 2, row, row+1);
@@ -3028,7 +3028,7 @@ PostUI :: update_parts_tab()
 
   GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(w));
   g_object_ref(model);
-  gtk_tree_view_set_model(GTK_TREE_VIEW(w), NULL);
+  gtk_tree_view_set_model(GTK_TREE_VIEW(w), nullptr);
 
   for (int i=1;i<=_upload_ptr->_total_parts;++i)
   {
@@ -3051,10 +3051,10 @@ PostUI::draft_save_cb(gpointer ptr)
     if (!data) return false;
     GMimeMessage * msg = data->new_message_from_ui (DRAFTING);
     std::string& draft_filename (get_draft_filename ());
-    char * filename = g_build_filename (draft_filename.c_str(), "autosave", NULL);
+    char * filename = g_build_filename (draft_filename.c_str(), "autosave", nullptr);
 
     std::ofstream o (filename);
-    char * headers (g_mime_object_get_headers ((GMimeObject *) msg, NULL));
+    char * headers (g_mime_object_get_headers ((GMimeObject *) msg, nullptr));
     o << headers;
     const std::string body (data->get_body ());
     o << body;
@@ -3263,7 +3263,7 @@ PostUI :: prompt_user_for_queueable_files (GtkWindow * parent, const Prefs& pref
 				      GTK_FILE_CHOOSER_ACTION_OPEN,
 				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				      GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-				      NULL);
+				      nullptr);
 	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
 	gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (w), true);
 	gtk_file_chooser_set_show_hidden (GTK_FILE_CHOOSER (w), false);
@@ -3339,7 +3339,7 @@ PostUI :: prompt_user_for_upload_nzb_dir (GtkWindow * parent, const Prefs& prefs
                                                 GTK_FILE_CHOOSER_ACTION_SAVE,
                                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                                 GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-                                                NULL);
+                                                nullptr);
   gtk_dialog_set_default_response (GTK_DIALOG(w), GTK_RESPONSE_ACCEPT);
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (w), TRUE);
   gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (w), prev_path.c_str());
