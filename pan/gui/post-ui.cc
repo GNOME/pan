@@ -58,7 +58,6 @@ extern "C" {
 #include "profiles-dialog.h"
 #include "url.h"
 
-#include <pan/general/null.h>
 
 #ifdef HAVE_GTKSPELL
 #define DEFAULT_SPELLCHECK_FLAG true

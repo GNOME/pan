@@ -41,7 +41,6 @@ extern "C" {
 #include <pan/general/line-reader.h>
 #include <pan/general/log.h>
 
-#include <pan/general/null.h>
 
 namespace pan {
 

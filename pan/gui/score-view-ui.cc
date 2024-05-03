@@ -26,7 +26,6 @@
 #include "score-add-ui.h"
 #include "score-view-ui.h"
 
-#include <pan/general/null.h>
 
 using namespace pan;
 

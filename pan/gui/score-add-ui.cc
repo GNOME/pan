@@ -30,7 +30,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 
-#include <pan/general/null.h>
 
 using namespace pan;
 

@@ -32,7 +32,6 @@
 #include "pan-file-entry.h"
 #include "save-attach-ui.h"
 
-#include <pan/general/null.h>
 
 using namespace pan;
 

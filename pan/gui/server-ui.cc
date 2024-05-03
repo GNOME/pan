@@ -52,7 +52,6 @@
   #define USE_LIBSECRET_DEFAULT false
 #endif
 
-#include <pan/general/null.h>
 
 namespace pan {
 

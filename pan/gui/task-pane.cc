@@ -34,7 +34,6 @@
 #include "task-pane.h"
 #include "taskpane.ui.h"
 
-#include <pan/general/null.h>
 
 extern "C" {
   #include <sys/stat.h>

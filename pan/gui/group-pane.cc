@@ -35,7 +35,6 @@
 #include "pad.h"
 #include "tango-colors.h"
 
-#include <pan/general/null.h>
 
 using namespace pan;
 

@@ -29,7 +29,6 @@
 #include <pan/tasks/task-xover.h>
 #include "pad.h"
 
-#include <pan/general/null.h>
 
 namespace pan {
 

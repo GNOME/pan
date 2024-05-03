@@ -38,7 +38,6 @@
   #undef GCR_API_SUBJECT_TO_CHANGE
 #endif
 
-#include <pan/general/null.h>
 
 using namespace pan;
 

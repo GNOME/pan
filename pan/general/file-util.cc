@@ -43,7 +43,6 @@ extern "C"
 #include "utf8-utils.h"
 #include <algorithm>
 
-#include <pan/general/null.h>
 
 using namespace pan;
 

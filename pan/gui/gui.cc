@@ -75,7 +75,6 @@ extern "C" {
 
 #include <pan/usenet-utils/gpg.h>
 
-#include <pan/general/null.h>
 
 namespace
 {
