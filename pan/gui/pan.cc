@@ -385,9 +385,6 @@ _("General Options\n"
    ** DBUS
    ***/
 
-  #define PAN_DBUS_SERVICE_NAME      "news.pan.NZB"
-  #define PAN_DBUS_SERVICE_PATH      "/news/pan/NZB"
-
   /** Struct for dbus handling */
   struct Pan
   {

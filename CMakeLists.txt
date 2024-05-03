@@ -12,6 +12,9 @@ project(Pan
 )
 set(VERSION_TITLE "Avdiivka")
 
+set(PAN_DBUS_SERVICE_NAME      "org.gnome.pan")
+set(PAN_DBUS_SERVICE_PATH      "/news/pan/NZB")
+
 # Standard CMake modules
 include(CTest)
 
@@ -236,6 +239,13 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/${desktop}.in" "${CMAKE_CURRENT_BINA
 install(
   FILES "${CMAKE_CURRENT_BINARY_DIR}/${desktop}"
   DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications"
+)
+
+set(dbus-file "org.gnome.pan.service")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/${dbus-file}.in" "${CMAKE_CURRENT_BINARY_DIR}/${dbus-file}")
+install(
+  FILES "${CMAKE_CURRENT_BINARY_DIR}/${dbus-file}"
+  DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/dbus-1/services"
 )
 
 # install pan man page
