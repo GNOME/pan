@@ -43,10 +43,6 @@ extern "C" {
   #include <windows.h>
 #endif
 
-#ifdef HAVE_LIBNOTIFY
-  #include <libnotify/notify.h>
-#endif
-
 #ifdef HAVE_GNUTLS
   #include <pan/tasks/socket-impl-openssl.h>
 #endif
@@ -835,11 +831,6 @@ main (int argc, char *argv[])
       gtk_window_set_default_icon (pixbuf);
 
       gui_ptr = new GUI (data, queue, prefs, group_prefs);
-
-#ifdef HAVE_LIBNOTIFY
-      if (!notify_is_initted ())
-        notify_init (_("Pan notification"));
-#endif
 
       g_object_unref (pixbuf);
 
