@@ -149,7 +149,6 @@ if(WANT_GKR)
   set(HAVE_GKR TRUE)
 endif()
 
-# not sure that yelp is working right now
 option(ENABLE_MANUAL "built in user manual (default: off)")
 if (ENABLE_MANUAL)
   set(HAVE_MANUAL 1)
