@@ -737,6 +737,8 @@ main (int argc, char *argv[])
       GVariant* var;
 
       if (!dbus_connection) goto _fail;
+
+      if (nzb)
       {
         g_dbus_connection_call_sync (dbus_connection,
                                PAN_DBUS_SERVICE_NAME,
