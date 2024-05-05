@@ -189,8 +189,8 @@ namespace
   };
 
   struct Icon {
-  const char * pixbuf_file;
-  GdkPixbuf * pixbuf;
+      char const *pixbuf_file;
+      GdkPixbuf *pixbuf;
   } status_icons[NUM_STATUS_ICONS] = {
     { "icon_status_online.png",          nullptr },
     { "icon_status_offline.png",         nullptr },
@@ -259,7 +259,7 @@ namespace
     const gulong delete_cb_id =  g_signal_connect (window, "delete-event", G_CALLBACK(delete_event_cb), &prefs);
 
     gtk_container_add (GTK_CONTAINER(window), gui.root());
-    const bool minimized(prefs.get_flag("start-minimized", false));
+    bool const minimized(prefs.get_flag("start-minimized", false));
 
     if (minimized)
       gtk_window_iconify (window);
@@ -402,21 +402,20 @@ _("General Options\n"
     GDBusInterfaceVTable ifacetable;
 
     Pan(Data& d, Queue& q, ArticleCache& c, EncodeCache& ec, Prefs& p, GroupPrefs& gp) :
-      dbus_id(-1), busnodeinfo(0),
-      data(d), queue(q), cache(c), encode_cache(ec), prefs(p), group_prefs(gp),
+      data(d), queue(q),
+      cache(c), encode_cache(ec), prefs(p), group_prefs(gp), busnodeinfo(nullptr), dbus_id(-1),
       lost_name(false), name_valid(false)
       {}
   };
 
-  static void
-  nzb_method_call  (GDBusConnection      *connection,
-                   const gchar           *sender,
-                   const gchar           *object_path,
-                   const gchar           *interface_name,
-                   const gchar           *method_name,
-                   GVariant              *parameters,
-                   GDBusMethodInvocation *invocation,
-                   gpointer               user_data)
+  static void nzb_method_call(GDBusConnection *connection,
+                              gchar const *sender,
+                              gchar const *object_path,
+                              gchar const *interface_name,
+                              gchar const *method_name,
+                              GVariant *parameters,
+                              GDBusMethodInvocation *invocation,
+                              gpointer user_data)
   {
 
     Pan* pan(static_cast<Pan*>(user_data));
@@ -459,23 +458,21 @@ _("General Options\n"
 
   static GDBusConnection *dbus_connection(nullptr);
 
-  static const gchar xml[]=
-  "<node>"
-  "  <interface name='news.pan.NZB'>"
-  "    <method name='NZBEnqueue'>"
-  "      <arg type='s' name='groups'    direction='in'/>"
-  "      <arg type='s' name='nzb_files' direction='in'/>"
-  "      <arg type='s' name='nzb_path'  direction='in'/>"
-  "      <arg type='b' name='nzb'       direction='in'/>"
-  "    </method>"
-  "  </interface>"
-  "</node>";
+  static const gchar xml[] =
+    "<node>"
+    "  <interface name='news.pan.NZB'>"
+    "    <method name='NZBEnqueue'>"
+    "      <arg type='s' name='groups'    direction='in'/>"
+    "      <arg type='s' name='nzb_files' direction='in'/>"
+    "      <arg type='s' name='nzb_path'  direction='in'/>"
+    "      <arg type='b' name='nzb'       direction='in'/>"
+    "    </method>"
+    "  </interface>"
+    "</node>";
 
-
-  static void
-  on_bus_acquired (GDBusConnection *connection,
-                   const gchar     *name,
-                   gpointer         user_data)
+  static void on_bus_acquired(GDBusConnection *connection,
+                              gchar const *name,
+                              gpointer user_data)
   {
     Pan* pan (static_cast<Pan*>(user_data));
     g_return_if_fail (pan);
@@ -502,10 +499,9 @@ _("General Options\n"
 
   }
 
-  static void
-  on_name_acquired (GDBusConnection *connection,
-                    const gchar     *name,
-                    gpointer         user_data)
+  static void on_name_acquired(GDBusConnection *connection,
+                               gchar const *name,
+                               gpointer user_data)
   {
 
     Pan* pan(static_cast<Pan*>(user_data));
@@ -515,10 +511,9 @@ _("General Options\n"
     pan->lost_name = false;
   }
 
-  static void
-  on_name_lost (GDBusConnection *connection,
-                const gchar     *name,
-                gpointer         user_data)
+  static void on_name_lost(GDBusConnection *connection,
+                           gchar const *name,
+                           gpointer user_data)
   {
     Pan* pan(static_cast<Pan*>(user_data));
     g_return_if_fail (pan);
@@ -635,26 +630,33 @@ main (int argc, char *argv[])
 
   for (int i=1; i<argc; ++i)
   {
-    const char * tok (argv[i]);
-    if (!memcmp(tok,"headers:", 8))
-      groups = tok+8;
-    else if (!memcmp(tok,"news:", 5))
+    char const *tok(argv[i]);
+    if (! memcmp(tok, "headers:", 8))
+      groups = tok + 8;
+    else if (! memcmp(tok, "news:", 5))
       url = tok;
-    else if (!strcmp(tok,"--no-gui") || !strcmp(tok,"--nogui"))
+    else if (! strcmp(tok, "--no-gui") || ! strcmp(tok, "--nogui"))
       gui = false;
-    else if (!strcmp (tok, "--debug")) { // use --debug --debug for verbose debug
-      if (!console_active) { console_active = true; console(); }
-      if (_debug_flag) _debug_verbose_flag = true;
-      else _debug_flag = true;
-    } else if (!strcmp (tok, "--nzb"))
+    else if (! strcmp(tok, "--debug"))
+      {
+        // use --debug --debug for verbose debug
+        if (! console_active)
+        {
+          console_active = true;
+          console();
+        }
+        if (_debug_flag)
+          _debug_verbose_flag = true;
+        else
+          _debug_flag = true;
+      }
+    else if (!strcmp (tok, "--nzb"))
       nzb = true;
-
-    // undocumented, internal(!) debug flag for ssl problems (after 0.136)
     else if (!strcmp (tok, "--debug-ssl")) {
+      // undocumented, internal(!) debug flag for ssl problems (after 0.136)
       _dbg_ssl = true;
       _dbg_file.open("ssl.debug");
     }
-
     else if (!strcmp (tok, "--version") || !strcmp (tok, "-v"))
       { std::cerr << "Pan " << VERSION << '\n'; return EXIT_SUCCESS; }
     else if (!strcmp (tok, "-o") && i<argc-1)
@@ -706,7 +708,7 @@ main (int argc, char *argv[])
     g_free (filename);
 
     // instantiate the backend...
-    const int cache_megs = prefs.get_int ("cache-size-megs", 10);
+    int const cache_megs = prefs.get_int("cache-size-megs", 10);
     DataImpl data (prefs.get_string("cache-file-extension","msg"), prefs, false, cache_megs);
     ArticleCache& cache (data.get_cache ());
     EncodeCache& encode_cache (data.get_encode_cache());
