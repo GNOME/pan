@@ -145,6 +145,12 @@ if(WANT_GNUTLS)
   set(HAVE_GNUTLS true)
 endif()
 
+option(WANT_NOTIFY "enable libnotify support (default: off)")
+if(WANT_NOTIFY)
+  pkg_check_modules(LIBNOTIFY REQUIRED IMPORTED_TARGET libnotify>=0.4.1)
+  set(HAVE_LIBNOTIFY true)
+endif()
+
 option(WANT_GKR "enable GNOME Keyring or libsecret support (default: off)")
 if(WANT_GKR)
   pkg_check_modules(LIBSECRET REQUIRED IMPORTED_TARGET libsecret-1>=0.16)

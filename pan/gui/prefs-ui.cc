@@ -1044,6 +1044,10 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_check_button (_("Start Pan minimized"), "start-minimized", false, prefs);
     HIG :: workarea_add_wide_control (t, &row, w);
+#ifdef HAVE_LIBNOTIFY
+    w = new_check_button (_("Show notifications"), "use-notify", false, prefs);
+    HIG :: workarea_add_wide_control (t, &row, w);
+#endif
 
     // allow multiple instances (seperate, not communicating with dbus)
     HIG :: workarea_add_section_title (t, &row, _("Startup Behavior"));

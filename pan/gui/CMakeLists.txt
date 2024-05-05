@@ -61,6 +61,10 @@ foreach (my_target "pan-cc-gui" "pan-c-gui")
     target_link_libraries(${my_target} PUBLIC PkgConfig::GNUTLS)
   endif()
 
+  if(WANT_NOTIFY)
+    target_link_libraries(${my_target} PUBLIC PkgConfig::LIBNOTIFY)
+  endif()
+
   if(Iconv_FOUND)
     my_target_system_lib(${my_target} PUBLIC Iconv)
   endif()
