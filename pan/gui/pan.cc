@@ -242,7 +242,6 @@ namespace
 
     static gboolean status_icon_periodic_refresh (gpointer p)
     {
-      static_cast<StatusIconListener*>(p)->update_status_tooltip();
       return true;
     }
 
@@ -271,20 +270,16 @@ namespace
 
     bool n() { return notif_shown; }
 
-    StatusIconListener(GtkStatusIcon * i, GtkWidget* r, Prefs& p, Queue& q, Data& d, bool v) :
+    StatusIconListener(GtkWidget* r, Prefs& p, Queue& q, Data& d, bool v) :
       queue(q), data(d), tasks_active(0), tasks_total(0),
-      minimized(v), notif_shown(false), prefs(p), icon(i), root(r)
+      minimized(v), notif_shown(false), prefs(p), root(r)
     {
       prefs.add_listener(this);
       queue.add_listener(this);
       data.add_listener(this);
       is_online = q.is_online();
 
-      update_status_tooltip();
       status_icon_timeout_tag = g_timeout_add (500, status_icon_periodic_refresh, this);
-
-      update_status_icon(ICON_STATUS_IDLE);
-
     }
 
     ~StatusIconListener()
@@ -305,42 +300,11 @@ namespace
     /* prefs::listener */
     void on_prefs_flag_changed (const StringView &key, bool value) override
     {
-       if(key == "status-icon")
-         gtk_status_icon_set_visible(icon, value);
     }
 
     void on_prefs_int_changed (const StringView& key, int color) override {}
     void on_prefs_string_changed (const StringView& key, const StringView& value) override {}
     void on_prefs_color_changed (const StringView& key, const GdkColor& color) override {}
-
-    void update_status_tooltip()
-    {
-      char buf[512];
-      g_snprintf(buf,sizeof(buf), "<i>Pan %s : %s</i> \n"
-                                  "<b>Tasks running:</b> %d\n"
-                                  "<b>Total queued:</b> %d\n"
-                                  "<b>Speed:</b> %.1f KiBps\n",
-                                  PACKAGE_VERSION,
-                                  is_online ? "online" : "offline",
-                                  tasks_active,
-                                  tasks_total,
-                                  queue.get_speed_KiBps());
-
-      gtk_status_icon_set_tooltip_markup(icon, buf);
-
-    }
-
-    void update_status_icon(StatusIcons si)
-    {
-      if (si==ICON_STATUS_IDLE)
-      {
-        if (is_online)
-          gtk_status_icon_set_from_pixbuf(icon, status_icons[ICON_STATUS_ONLINE].pixbuf);
-        else
-          gtk_status_icon_set_from_pixbuf(icon, status_icons[ICON_STATUS_OFFLINE].pixbuf);
-      } else
-        gtk_status_icon_set_from_pixbuf(icon, status_icons[si].pixbuf);
-    }
 
     void notify_of(StatusIcons si, const char* body, const char* summary)
     {
@@ -385,12 +349,9 @@ namespace
     void on_queue_tasks_added (Queue&, int index UNUSED, int count) override
     {
       tasks_total += count;
-      update_status_tooltip();
-      update_status_icon(ICON_STATUS_ACTIVE);
     }
     void on_queue_task_removed (Queue&, Task&, int pos UNUSED) override
     {
-      update_status_icon(ICON_STATUS_ACTIVE);
     }
     void on_queue_task_moved (Queue&, Task&, int new_pos UNUSED, int old_pos UNUSED) override {}
     void on_queue_connection_count_changed (Queue&, int count) override {}
@@ -398,25 +359,15 @@ namespace
     {
       tasks_total = total;
       tasks_active = active;
-      if (tasks_total == 0 || tasks_active == 0)
-        update_status_icon(ICON_STATUS_IDLE);
-      update_status_tooltip();
     }
 
     void on_queue_online_changed (Queue&, bool online) override
     {
       is_online = online;
-      if (tasks_total)
-        update_status_icon(ICON_STATUS_ACTIVE);
-      else
-        update_status_icon(ICON_STATUS_IDLE);
-
-      update_status_tooltip();
     }
 
     void on_queue_error (Queue&, const StringView& message) override
     {
-      update_status_icon(ICON_STATUS_ERROR);
       if (n()) return;
       notif_shown = true;
       notify_of(ICON_STATUS_ERROR, message.str, _("An error has occurred!"));
@@ -428,7 +379,6 @@ namespace
 
       if (static_cast<uint64_t>(unread) != 0)
       {
-        update_status_icon(ICON_STATUS_NEW_ARTICLES);
         if (n()) return;
         notif_shown = true;
         const char* summary = _("New Articles!");
@@ -469,15 +419,6 @@ namespace
     d->gui.do_work_online(!d->queue.is_online());
   }
 
-  void status_icon_popup_menu (GtkStatusIcon *icon,
-                               guint button,
-                               guint activation_time,
-                               gpointer data)
-  {
-    GtkMenu * menu = GTK_MENU(data);
-    gtk_menu_popup(menu, nullptr, nullptr, nullptr, nullptr, button, activation_time);
-  }
-
   static QueueAndGui* queue_and_gui(nullptr);
 
   void run_pan_with_status_icon (GtkWindow * window, GdkPixbuf * pixbuf, Queue& queue, Prefs & prefs, Data& data, GUI* _gui)
@@ -488,14 +429,12 @@ namespace
     for (guint i=0; i<NUM_STATUS_ICONS; ++i)
       status_icons[i].pixbuf = load_icon (status_icons[i].pixbuf_file);
 
-    GtkStatusIcon * icon = gtk_status_icon_new_from_pixbuf (status_icons[ICON_STATUS_IDLE].pixbuf);
     GtkWidget * menu = gtk_menu_new ();
 
     GtkWidget * menu_quit = gtk_image_menu_item_new_from_stock ( GTK_STOCK_QUIT, nullptr);
     g_signal_connect(menu_quit, "activate", G_CALLBACK(mainloop_quit), nullptr);
 
-    gtk_status_icon_set_visible(icon, prefs.get_flag("status-icon", false));
-    StatusIconListener* pl = _status_icon = new StatusIconListener(icon, GTK_WIDGET(window), prefs, queue, data, prefs.get_flag("start-minimized", false));
+    StatusIconListener* pl = _status_icon = new StatusIconListener(GTK_WIDGET(window), prefs, queue, data, prefs.get_flag("start-minimized", false));
 
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), menu_quit);
 
@@ -511,9 +450,6 @@ namespace
       gtk_menu_shell_append(GTK_MENU_SHELL(menu), labels[i]);
 
     gtk_widget_show_all(menu);
-    g_signal_connect(icon, "activate", G_CALLBACK(status_icon_activate), window);
-    g_signal_connect(icon, "popup-menu", G_CALLBACK(status_icon_popup_menu), menu);
-
   }
 
 
