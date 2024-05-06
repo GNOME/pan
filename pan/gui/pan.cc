@@ -298,15 +298,25 @@ namespace
     }
 
     /* prefs::listener */
-    void on_prefs_flag_changed (const StringView &key, bool value) override
+    void on_prefs_flag_changed(StringView const &key, bool value) override
     {
     }
 
-    void on_prefs_int_changed (const StringView& key, int color) override {}
-    void on_prefs_string_changed (const StringView& key, const StringView& value) override {}
-    void on_prefs_color_changed (const StringView& key, const GdkColor& color) override {}
+    void on_prefs_int_changed(StringView const &key, int color) override
+    {
+    }
 
-    void notify_of(StatusIcons si, const char* body, const char* summary)
+    void on_prefs_string_changed(StringView const &key,
+                                 StringView const &value) override
+    {
+    }
+
+    void on_prefs_color_changed(StringView const &key,
+                                GdkColor const &color) override
+    {
+    }
+
+    void notify_of(StatusIcons si, char const *body, char const *summary)
     {
 #ifdef HAVE_LIBNOTIFY
       if (!body || !summary) return;
@@ -366,7 +376,7 @@ namespace
       is_online = online;
     }
 
-    void on_queue_error (Queue&, const StringView& message) override
+    void on_queue_error(Queue &, StringView const &message) override
     {
       if (n()) return;
       notif_shown = true;
@@ -374,15 +384,17 @@ namespace
     }
 
     /* data::listener */
-    void on_group_entered (const Quark& group, Article_Count unread, Article_Count total) override
+    void on_group_entered(Quark const &group,
+                          Article_Count unread,
+                          Article_Count total) override
     {
 
       if (static_cast<uint64_t>(unread) != 0)
       {
         if (n()) return;
         notif_shown = true;
-        const char* summary = _("New Articles!");
-        const char* body = _("There are new\narticles available.");
+        char const *summary = _("New Articles!");
+        char const *body = _("There are new\narticles available.");
         notify_of(ICON_STATUS_NEW_ARTICLES, body, summary);
       }
     }
