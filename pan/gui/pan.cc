@@ -436,32 +436,11 @@ namespace
   void run_pan_with_status_icon (GtkWindow * window, GdkPixbuf * pixbuf, Queue& queue, Prefs & prefs, Data& data, GUI* _gui)
   {
 
-    GUI& gui (*_gui);
+    _status_icon = new StatusIconListener(GTK_WIDGET(window), prefs, queue, data, prefs.get_flag("start-minimized", false));
 
+    // required to show Pan icon in notification
     for (guint i=0; i<NUM_STATUS_ICONS; ++i)
       status_icons[i].pixbuf = load_icon (status_icons[i].pixbuf_file);
-
-    GtkWidget * menu = gtk_menu_new ();
-
-    GtkWidget * menu_quit = gtk_image_menu_item_new_from_stock ( GTK_STOCK_QUIT, nullptr);
-    g_signal_connect(menu_quit, "activate", G_CALLBACK(mainloop_quit), nullptr);
-
-    StatusIconListener* pl = _status_icon = new StatusIconListener(GTK_WIDGET(window), prefs, queue, data, prefs.get_flag("start-minimized", false));
-
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu), menu_quit);
-
-    const char* label_names[] = {_("Toggle on/offline")};
-
-    GtkWidget* labels[G_N_ELEMENTS(label_names)];
-
-    labels[0] = gtk_menu_item_new_with_label(label_names[0]);
-    queue_and_gui = new QueueAndGui(queue, gui);
-    g_signal_connect(labels[0], "activate", G_CALLBACK(work_online_cb), queue_and_gui);
-
-    for (int i=0; i < G_N_ELEMENTS(label_names); ++i)
-      gtk_menu_shell_append(GTK_MENU_SHELL(menu), labels[i]);
-
-    gtk_widget_show_all(menu);
   }
 
 
