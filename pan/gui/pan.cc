@@ -312,8 +312,8 @@ namespace
       if (!body || !summary) return;
       if (!prefs.get_flag("use-notify", false)) return;
 
-      NotifyNotification *notif(0);
-      GError* error(0);
+      NotifyNotification *notif(nullptr);
+      GError* error(nullptr);
 
 #ifdef NOTIFY_CHECK_VERSION
   #if NOTIFY_CHECK_VERSION (0, 7, 0)
