@@ -388,7 +388,8 @@ namespace pan
       : gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON(prev));
     GdkPixbuf * pixbuf = load_icon (icon_file);
     GtkWidget * image = gtk_image_new_from_pixbuf (pixbuf);
-    g_object_unref (pixbuf);
+    if (pixbuf != nullptr)
+      g_object_unref (pixbuf);
     gtk_container_add (GTK_CONTAINER(r), image);
     g_object_set_data_full (G_OBJECT(r), PREFS_KEY, g_strdup("pane-layout"), g_free);
     g_object_set_data_full (G_OBJECT(r), PREFS_VAL, g_strdup(value), g_free);
@@ -444,7 +445,8 @@ namespace pan
     GtkWidget* hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
     GdkPixbuf * pixbuf = load_icon (icon_file);
     GtkWidget * image = gtk_image_new_from_pixbuf (pixbuf);
-    g_object_unref (pixbuf);
+    if (pixbuf != nullptr)
+      g_object_unref(pixbuf);
     if (icon_file && (icons || both)) gtk_box_pack_start (GTK_BOX(hbox), image, true, true, 0);
     if (text || both) gtk_box_pack_start (GTK_BOX(hbox), gtk_label_new_with_mnemonic(mnemonic), true, true, 0);
     gtk_widget_set_tooltip_text (hbox, label);
