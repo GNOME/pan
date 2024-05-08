@@ -36,16 +36,13 @@ GdkPixbuf *load_icon_from_path(const gchar *file_name, const gchar *icon_dir)
 
   if (error != NULL)
   {
-    if (_debug_flag)
-    {
       fprintf(stderr,
-              "Unable to load icon %s from %s: %s\n",
-              file_name,
-              icon_dir,
-              error->message);
-    }
+           "Warning: Unable to load icon %s from %s: %s\n",
+           file_name,
+           icon_dir,
+           error->message);
 
-    g_error_free(error);
+      g_error_free(error);
   }
 
   g_free(icon_path);
