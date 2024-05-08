@@ -32,7 +32,9 @@
 #include <pan/general/worker-pool.h>
 #include <pan/tasks/task-upload.h>
 
+#ifndef PROTOTYPES
 #define PROTOTYPES
+#endif
 #include <uulib/uudeview.h>
 #include <uulib/crc32.h>
 

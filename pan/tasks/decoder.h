@@ -30,7 +30,9 @@
 #include <pan/general/locking.h>
 #include <pan/general/worker-pool.h>
 #include <pan/tasks/task-article.h>
+#ifndef PROTOTYPES
 #define PROTOTYPES
+#endif
 #include <uulib/uudeview.h>
 
 namespace pan

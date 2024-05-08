@@ -34,7 +34,9 @@
 #include <pan/tasks/nntp.h>
 #include <pan/tasks/task.h>
 
+#ifndef PROTOTYPES
 #define PROTOTYPES
+#endif
 #include <uulib/uudeview.h>
 #include <gmime/gmime.h>
 #include <glib/gi18n.h>
