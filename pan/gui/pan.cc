@@ -119,14 +119,7 @@ namespace
 
   gboolean delete_event_cb (GtkWidget * w, GdkEvent *, gpointer user_data)
   {
-    if (static_cast<Prefs*>(user_data)->get_flag("status-icon", false))
-    {
-      gtk_widget_hide(w);
-    }
-    else
-    {
-      mainloop_quit ();
-    }
+    mainloop_quit ();
     return true; // don't invoke the default handler that destroys the widget
   }
 
