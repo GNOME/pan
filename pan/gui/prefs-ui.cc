@@ -996,12 +996,10 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
     HIG :: workarea_add_wide_control (t, &row, w);
     w = new_spin_button ("cache-size-megs", 10, 1024*16, prefs);
     l = gtk_label_new(_("Size of article cache (in MiB):"));
-    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
     gtk_label_set_mnemonic_widget(GTK_LABEL(l), w);
     HIG::workarea_add_row (t, &row, l, w);
     w = new_entry ("cache-file-extension", "msg", prefs);
     l = gtk_label_new(_("File extension for cached articles: "));
-    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.5);
     HIG :: workarea_add_row (t, &row, l, w);
 
     HIG::workarea_add_section_divider (t, &row);
