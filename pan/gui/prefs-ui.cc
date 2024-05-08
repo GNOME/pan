@@ -179,12 +179,10 @@ PrefsDialog :: populate_popup (GtkEntry *e, GtkMenu *m)
   gtk_widget_show (mi);
   gtk_menu_shell_prepend (GTK_MENU_SHELL(m), mi);
 
-  GtkWidget * img = gtk_image_new_from_stock (GTK_STOCK_EDIT, GTK_ICON_SIZE_MENU);
-  mi = gtk_image_menu_item_new_with_mnemonic (_("Edit Shortcut"));
+  mi = gtk_menu_item_new_with_mnemonic (_("Edit Shortcut"));
 
   g_signal_connect (mi, "activate", G_CALLBACK(edit_shortkey_cb),
                     g_object_get_data(G_OBJECT(e), "data"));
-  gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
   gtk_widget_show_all (mi);
   gtk_menu_shell_prepend (GTK_MENU_SHELL(m), mi);
 }
