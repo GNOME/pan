@@ -1030,9 +1030,8 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   t = HIG :: workarea_create ();
     HIG :: workarea_add_section_spacer (t, row, 1);
     HIG :: workarea_add_section_title (t, &row, _("Language Settings"));
-    w = gtk_button_new_from_stock (GTK_STOCK_SELECT_FONT);
+    w = gtk_button_new_with_label (_("Font"));
     l = charset_label = gtk_label_new (nullptr);
-    gtk_misc_set_alignment (GTK_MISC(l), 0.0, 0.0);
     update_default_charset_label(_prefs.get_string("default-charset","UTF-8"));
     g_signal_connect (w, "clicked", G_CALLBACK(select_prefs_charset_cb), this);
     HIG::workarea_add_row (t, &row, w, l);
