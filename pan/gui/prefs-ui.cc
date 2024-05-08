@@ -96,7 +96,12 @@ namespace pan
       static_cast<CallBackData*>(user_data)->dialog->update_hotkey(user_data);
     }
     gtk_widget_destroy(dialog);
-    delete static_cast<CallBackData*>(user_data);
+
+    // user_data pointer must not be destroyed otherwise user cannot
+    // edit twice the same shortcut without getting a core dump. This
+    // may be flagged as a memory leak, but it's limited.
+
+    //delete static_cast<CallBackData*>(user_data);
   }
 }
 
