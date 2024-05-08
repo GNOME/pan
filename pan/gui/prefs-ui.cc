@@ -109,7 +109,7 @@ PrefsDialog :: update_hotkey (gpointer user_data)
   guint lkey;
   GdkModifierType lmods;
   GtkAccelKey acc_key;
-  const gchar* str = gtk_label_get_text(GTK_LABEL(data->label));
+  gchar const *str = gtk_label_get_text(GTK_LABEL(data->label));
   gtk_accelerator_parse(str, &lkey, &lmods);
 
   acc_key.accel_key = lkey;
@@ -207,7 +207,7 @@ namespace pan
   {
 
     char* name = static_cast<char*>(gpointer);
-    const char * value = gtk_entry_get_text(e);
+    char const *value = gtk_entry_get_text(e);
 
     gtk_entry_set_icon_activatable(e, GTK_ENTRY_ICON_PRIMARY, false);
     // gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, nullptr);
@@ -264,11 +264,11 @@ namespace pan
 
   }
 
-  void process_accels  (gpointer _data,
-                       const gchar *accel_path,
-                       guint accel_key,
-                       GdkModifierType accel_mods,
-                       gboolean changed)
+  void process_accels(gpointer _data,
+                      gchar const *accel_path,
+                      guint accel_key,
+                      GdkModifierType accel_mods,
+                      gboolean changed)
   {
     HotkeyData* data = static_cast<HotkeyData*>(_data);
     GtkAccelKey key;
@@ -320,28 +320,34 @@ namespace pan
 
   void toggled_cb (GtkToggleButton * toggle, gpointer prefs_gpointer)
   {
-    const char * key = (const char*) g_object_get_data (G_OBJECT(toggle), PREFS_KEY);
+    char const *key =
+      (char const *)g_object_get_data(G_OBJECT(toggle), PREFS_KEY);
     if (key)
       static_cast<Prefs*>(prefs_gpointer)->set_flag (key, gtk_toggle_button_get_active(toggle));
   }
 
   void entry_changed_cb (GtkEntry * e, gpointer prefs_gpointer)
   {
-    const char * key = (const char*) g_object_get_data (G_OBJECT(e), PREFS_KEY);
-    const char * val = gtk_entry_get_text (GTK_ENTRY(e));
+    char const *key = (char const *)g_object_get_data(G_OBJECT(e), PREFS_KEY);
+    char const *val = gtk_entry_get_text(GTK_ENTRY(e));
     if (key && val)
       static_cast<Prefs*>(prefs_gpointer)->set_string (key, val);
   }
 
   void set_string_from_radio_cb (GtkToggleButton * toggle, gpointer prefs_gpointer)
   {
-    const char * key = (const char*) g_object_get_data (G_OBJECT(toggle), PREFS_KEY);
-    const char * val = (const char*) g_object_get_data (G_OBJECT(toggle), PREFS_VAL);
+    char const *key =
+      (char const *)g_object_get_data(G_OBJECT(toggle), PREFS_KEY);
+    char const *val =
+      (char const *)g_object_get_data(G_OBJECT(toggle), PREFS_VAL);
     if (key && val && gtk_toggle_button_get_active(toggle))
       static_cast<Prefs*>(prefs_gpointer)->set_string (key, val);
   }
 
-  GtkWidget* new_check_button (const char* mnemonic, const char* key, bool fallback, Prefs& prefs)
+  GtkWidget *new_check_button(char const *mnemonic,
+                              char const *key,
+                              bool fallback,
+                              Prefs &prefs)
   {
     GtkWidget * t = gtk_check_button_new_with_mnemonic (mnemonic);
     g_object_set_data_full (G_OBJECT(t), PREFS_KEY, g_strdup(key), g_free);
@@ -350,7 +356,7 @@ namespace pan
     return t;
   }
 
-  GtkWidget* new_entry (const char* key, const char* fallback, Prefs& prefs)
+  GtkWidget *new_entry(char const *key, char const *fallback, Prefs &prefs)
   {
     GtkWidget * t = gtk_entry_new();
     g_object_set_data_full (G_OBJECT(t), PREFS_KEY, g_strdup(key), g_free);
@@ -359,7 +365,7 @@ namespace pan
     return t;
   }
 
-  GtkWidget* new_hotkey_entry (const char* value, const char* name, gpointer ptr)
+  GtkWidget *new_hotkey_entry(char const *value, char const *name, gpointer ptr)
   {
 
     GtkWidget * t = gtk_entry_new();
@@ -371,8 +377,11 @@ namespace pan
     return t;
   }
 
-  GtkWidget*
-  new_layout_radio (GtkWidget* prev, const char* icon_file, const char* value, std::string& cur, Prefs& prefs)
+  GtkWidget *new_layout_radio(GtkWidget *prev,
+                              char const *icon_file,
+                              char const *value,
+                              std::string &cur,
+                              Prefs &prefs)
   {
     GtkWidget * r = prev==nullptr
       ? gtk_radio_button_new (nullptr)
@@ -390,12 +399,13 @@ namespace pan
 
   void spin_value_changed_cb( GtkSpinButton *spin, gpointer data)
   {
-    const char * key = (const char*) g_object_get_data (G_OBJECT(spin), PREFS_KEY);
+    char const *key =
+      (char const *)g_object_get_data(G_OBJECT(spin), PREFS_KEY);
     Prefs *prefs = static_cast<Prefs*>(data);
     prefs->set_int(key, gtk_spin_button_get_value_as_int(spin));
   }
 
-  GtkWidget* new_spin_button (const char *key, int low, int high, Prefs &prefs)
+  GtkWidget *new_spin_button(char const *key, int low, int high, Prefs &prefs)
   {
     guint tm = prefs.get_int(key, low );
     GtkAdjustment *adj = (GtkAdjustment*) gtk_adjustment_new(tm, low, high, 1.0, 1.0, 0.0);
@@ -405,7 +415,11 @@ namespace pan
     return w;
   }
 
-  GtkWidget* new_orient_radio (GtkWidget* prev, const char* label, const char* value, std::string& cur, Prefs& prefs)
+  GtkWidget *new_orient_radio(GtkWidget *prev,
+                              char const *label,
+                              char const *value,
+                              std::string &cur,
+                              Prefs &prefs)
   {
     GtkWidget * r = prev==nullptr
       ? gtk_radio_button_new_with_label (nullptr, label)
@@ -417,12 +431,15 @@ namespace pan
     return r;
   }
 
-  GtkWidget* new_label_with_icon(const char* mnemonic, const char* label, const char* icon_file, Prefs& prefs)
+  GtkWidget *new_label_with_icon(char const *mnemonic,
+                                 char const *label,
+                                 char const *icon_file,
+                                 Prefs &prefs)
   {
     std::string what = prefs.get_string("elements-show-tabs", "text");
-    const bool text  = "text"  == what;
-    const bool icons = "icons" == what;
-    const bool both  = "both"  == what;
+    bool const text = "text" == what;
+    bool const icons = "icons" == what;
+    bool const both = "both" == what;
 
     GtkWidget* hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
     GdkPixbuf * pixbuf = load_icon (icon_file);
