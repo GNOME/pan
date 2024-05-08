@@ -144,20 +144,18 @@ PrefsDialog :: edit_shortkey (gpointer user_data)
   str = g_strdup_printf(
       _("Press the combination of the keys\nyou want to use for \"%s\"."), data->value.c_str());
   label = gtk_label_new(str);
-  gtk_misc_set_padding(GTK_MISC(label), 5, 10);
 
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
 		      label,
 		      FALSE, FALSE,
-		      2);
+		      5);
 
   data->label = gtk_label_new("");
-  gtk_misc_set_padding(GTK_MISC(data->label), 5, 10);
 
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
 		      data->label,
 		      FALSE, FALSE,
-		      2);
+		      5);
 
   g_signal_connect(dialog, "key-press-event",
             G_CALLBACK(hotkey_key_press_cb), user_data);
