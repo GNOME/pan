@@ -727,7 +727,7 @@ namespace pan
   void font_set_cb (GtkFontButton* b, gpointer prefs_gpointer)
   {
     char const *key = (char const *)g_object_get_data(G_OBJECT(b), PREFS_KEY);
-    char const *val = gtk_font_button_get_font_name(b);
+    char const *val = gtk_font_chooser_get_font((GtkFontChooser*)b);
     if (key && *key && val && *val)
       static_cast<Prefs*>(prefs_gpointer)->set_string (key, val);
   }
@@ -737,8 +737,7 @@ namespace pan
                              Prefs &prefs)
   {
     const std::string val (prefs.get_string (key, fallback));
-    GtkWidget * b = gtk_font_button_new ();
-    gtk_font_button_set_font_name (GTK_FONT_BUTTON(b), val.c_str());
+    GtkWidget * b = gtk_font_button_new_with_font (val.c_str());
     g_object_set_data_full (G_OBJECT(b), PREFS_KEY, g_strdup(key), g_free);
     g_signal_connect (b, "font-set", G_CALLBACK(font_set_cb), &prefs);
     return b;
