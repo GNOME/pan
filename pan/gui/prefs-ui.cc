@@ -25,6 +25,7 @@
 #include <pan/general/macros.h>
 #include <pan/general/file-util.h>
 #include "hig.h"
+#include <list>
 #include "pad.h"
 #include "pan-file-entry.h"
 #include "pan/gui/load-icon.h"
@@ -462,13 +463,14 @@ namespace pan
     return res;
   }
 
-  void fill_pref_hotkeys(GtkWidget* t, int& row, Prefs& prefs, gpointer dialog_ptr)
+  std::list<CallBackData*> fill_pref_hotkeys(GtkWidget* t, int& row, Prefs& prefs, gpointer dialog_ptr)
   {
 
     HIG::workarea_add_section_spacer (t, row, hotkey_data.keys.size());
 
     GtkWidget* w, *l;
     gchar* keyval;
+    std::list<CallBackData*> ptr_list;
 
     foreach (keymap_t, hotkey_data.keys, it)
     {
@@ -479,6 +481,9 @@ namespace pan
       stripped = f != std::string::npos ? stripped.substr(f+1,stripped.size()) : stripped;
 
       CallBackData* data = new CallBackData();
+      // store the pointer so it can be destroyed when preferences widget is destroyed
+      ptr_list.push_back(data);
+
       data->dialog = (PrefsDialog*)dialog_ptr;
       if (!it->first.empty()) data->name = it->first;
       data->value = stripped;
@@ -488,6 +493,8 @@ namespace pan
       l = gtk_label_new(label.c_str());
       HIG :: workarea_add_row (t, &row, w, l);
     }
+
+    return ptr_list;
   }
 
   void set_prefs_string_from_editable (GtkEditable * editable, gpointer prefs_gpointer)
@@ -954,6 +961,16 @@ namespace
   }
 }
 
+PrefsDialog :: ~PrefsDialog ()
+{
+  // free pointer created when constructing shortcut editor widget
+  while(!shortcut_ptr_list.empty()) {
+    free(shortcut_ptr_list.back());
+    shortcut_ptr_list.pop_back();
+  }
+}
+
+
 PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   _prefs (prefs)
 {
@@ -1355,7 +1372,7 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   // Hotkeys
   row = 0;
   t = HIG :: workarea_create ();
-  fill_pref_hotkeys(t, row, _prefs, this);
+  shortcut_ptr_list = fill_pref_hotkeys(t, row, _prefs, this);
 
   HIG :: workarea_finish (t, &row);
 

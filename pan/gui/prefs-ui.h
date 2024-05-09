@@ -20,6 +20,7 @@
 #ifndef PREFS_UI_H
 #define PREFS_UI_H
 
+#include <list>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <pan/gui/prefs.h>
@@ -45,7 +46,7 @@ namespace pan
 
     public:
       PrefsDialog (Prefs&, GtkWindow*) ;
-      ~PrefsDialog () { }
+      ~PrefsDialog ();
       Prefs& prefs () { return _prefs; }
       GtkWidget* notebook () { return _notebook; }
       GtkWidget* root() { return _root; }
@@ -61,6 +62,7 @@ namespace pan
       GtkWidget* _root;
       GtkWidget* charset_label;
       GtkWidget* _notebook;
+      std::list<CallBackData*> shortcut_ptr_list;
 
       void update_default_charset_label(const StringView&);
 
