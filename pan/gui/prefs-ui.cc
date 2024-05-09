@@ -218,7 +218,7 @@ namespace pan
     // empty text
     if (!value || !*value)
     {
-      gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, nullptr);
+      gtk_entry_set_icon_from_icon_name(e, GTK_ENTRY_ICON_PRIMARY, nullptr);
       gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, nullptr);
       // reset in map and remove accelerator
       GtkAccelKey tmp;
@@ -239,11 +239,11 @@ namespace pan
     acc_key.accel_mods = mod;
 
     if (!gtk_accelerator_valid(acc_key.accel_key, acc_key.accel_mods))
-    {
-      gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_DIALOG_WARNING);
-      gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, _("Error: Shortcut key is invalid!"));
-      return;
-    }
+      {
+        gtk_entry_set_icon_from_icon_name(e, GTK_ENTRY_ICON_PRIMARY, "dialog-warning");
+        gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, _("Error: Shortcut key is invalid!"));
+        return;
+      }
 
     bool found(false);
 
@@ -256,14 +256,15 @@ namespace pan
 
     if (found)
     {
-      gtk_entry_set_icon_from_stock(e, GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_DIALOG_WARNING);
-      gtk_entry_set_icon_tooltip_text (e, GTK_ENTRY_ICON_PRIMARY, _("Error: Shortcut key already exists!"));
+      gtk_entry_set_icon_from_icon_name(e, GTK_ENTRY_ICON_PRIMARY, "dialog-warning");
+      gtk_entry_set_icon_tooltip_text(e, GTK_ENTRY_ICON_PRIMARY, _("Error: Shortcut key already exists!"));
     }
     else
     {
+      gtk_entry_set_icon_from_icon_name(e, GTK_ENTRY_ICON_PRIMARY, nullptr);
+      gtk_entry_set_icon_tooltip_text(e, GTK_ENTRY_ICON_PRIMARY, nullptr);
       hotkey_data.keys[name] = acc_key;
     }
-
   }
 
   void process_accels(gpointer _data,
