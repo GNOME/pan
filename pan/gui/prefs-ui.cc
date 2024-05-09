@@ -493,7 +493,8 @@ namespace pan
   void set_prefs_string_from_editable (GtkEditable * editable, gpointer prefs_gpointer)
   {
     Prefs * prefs (static_cast<Prefs*>(prefs_gpointer));
-    const char * key = (const char*) g_object_get_data (G_OBJECT(editable), PREFS_KEY);
+    char const *key =
+      (char const *)g_object_get_data(G_OBJECT(editable), PREFS_KEY);
     char * val = gtk_editable_get_chars (editable, 0, -1);
     prefs->set_string (key, val);
     g_free (val);
@@ -505,8 +506,8 @@ namespace pan
     GtkWidget * c_parent (gtk_widget_get_parent (GTK_WIDGET(c)));
     GtkWidget * w_parent (gtk_widget_get_parent (GTK_WIDGET(w)));
     GtkTreeModel * model = gtk_combo_box_get_model (c);
-    const int n_rows (gtk_tree_model_iter_n_children (model, nullptr));
-    const bool do_show (gtk_combo_box_get_active(c) == (n_rows-1));
+    int const n_rows(gtk_tree_model_iter_n_children(model, nullptr));
+    bool const do_show(gtk_combo_box_get_active(c) == (n_rows - 1));
 
     if (do_show && !w_parent && c_parent) // add it
     {
@@ -527,7 +528,7 @@ namespace pan
 
   void set_prefs_string_from_combo_box_entry (GtkComboBoxText * c, gpointer user_data)
   {
-    const char * key = (const char*) g_object_get_data (G_OBJECT(c), PREFS_KEY);
+    char const *key = (char const *)g_object_get_data(G_OBJECT(c), PREFS_KEY);
     char * val = gtk_combo_box_text_get_active_text (c);
     static_cast<Prefs*>(user_data)->set_string (key, val);
     g_free (val);
@@ -535,9 +536,9 @@ namespace pan
 
   GtkWidget* html_previewer_new (Prefs& prefs)
   {
-    const char * key = "html-previewer";
-//    const std::string editor = prefs.get_string (key, "mutt");
-//    editors.insert (editor);
+    char const *key = "html-previewer";
+    //    const std::string editor = prefs.get_string (key, "mutt");
+    //    editors.insert (editor);
     GtkWidget * c = gtk_combo_box_text_new_with_entry ();
     g_object_set_data_full (G_OBJECT(c), PREFS_KEY, g_strdup(key), g_free);
 //    foreach_const (std::set<std::string>, editors, it)
@@ -552,7 +553,7 @@ namespace pan
   {
     std::set<std::string> editors;
     URL :: get_default_editors (editors);
-    const char * key = "editor";
+    char const *key = "editor";
     const std::string editor = prefs.get_string (key, *editors.begin());
     editors.insert (editor);
     GtkWidget * c = gtk_combo_box_text_new_with_entry ();
@@ -568,12 +569,13 @@ namespace pan
   void set_prefs_string_from_combobox (GtkComboBox * c, gpointer user_data)
   {
     Prefs * prefs (static_cast<Prefs*>(user_data));
-    const char * key = (const char*) g_object_get_data (G_OBJECT(c), PREFS_KEY);
+    char const *key = (char const *)g_object_get_data(G_OBJECT(c), PREFS_KEY);
 
     prefs->_rules_changed = strcmp(key,"rules-");
 
-    const int column = GPOINTER_TO_INT (g_object_get_data (G_OBJECT(c), "column"));
-    const int row (gtk_combo_box_get_active (c));
+    int const column =
+      GPOINTER_TO_INT(g_object_get_data(G_OBJECT(c), "column"));
+    int const row(gtk_combo_box_get_active(c));
     GtkTreeModel * m = gtk_combo_box_get_model (c);
     GtkTreeIter i;
     if (gtk_tree_model_iter_nth_child (m, &i, nullptr, row)) {
@@ -584,12 +586,10 @@ namespace pan
     }
   }
 
-  GtkWidget* new_tabs_combo_box (Prefs& prefs,
-                                 const char * mode_key)
+  GtkWidget *new_tabs_combo_box(Prefs &prefs, char const *mode_key)
   {
 
-    const char* strings[3][2] =
-    {
+    char const *strings[3][2] = {
       {N_("Show only icons"), "icons"},
       {N_("Show only text"), "text"},
       {N_("Show icons and text"), "both"},
@@ -621,21 +621,21 @@ namespace pan
     return c;
   }
 
-  GtkWidget* url_handler_new (Prefs& prefs,
-                              const char * mode_key,
-                              const char * mode_fallback,
-                              const char * custom_key,
-                              const char * custom_fallback,
-                              GtkWidget *& setme_mnemonic_target)
+  GtkWidget *url_handler_new(Prefs &prefs,
+                             char const *mode_key,
+                             char const *mode_fallback,
+                             char const *custom_key,
+                             char const *custom_fallback,
+                             GtkWidget *&setme_mnemonic_target)
   {
     // build the combo box...
     const std::string mode (prefs.get_string (mode_key, mode_fallback));
     GtkListStore * store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-    const char* strings[5][2] = { { N_("Use GNOME Preferences"), "gnome" },
-                                  { N_("Use KDE Preferences"), "kde" },
-                                  { N_("Use OS X Preferences"), "mac" },
-                                  { N_("Use Windows Preferences"), "windows" },
-                                  { N_("Custom Command:"), "custom" } };
+    char const *strings[5][2] = {{N_("Use GNOME Preferences"), "gnome"},
+                                 {N_("Use KDE Preferences"), "kde"},
+                                 {N_("Use OS X Preferences"), "mac"},
+                                 {N_("Use Windows Preferences"), "windows"},
+                                 {N_("Custom Command:"), "custom"}};
     int sel_index (0);
     for (size_t i=0; i<G_N_ELEMENTS(strings); ++i) {
       GtkTreeIter iter;
@@ -679,21 +679,21 @@ namespace pan
     "Scores from 1 to 4999:"
     "Scores from -9998 to -1:"
 */
-  GtkWidget* score_handler_new (Prefs& prefs,
-                              const char * mode_key,
-                              const char * mode_fallback,
-                              GtkWidget *& setme_mnemonic_target)
+  GtkWidget *score_handler_new(Prefs &prefs,
+                               char const *mode_key,
+                               char const *mode_fallback,
+                               GtkWidget *&setme_mnemonic_target)
   {
     // build the combo box...
     const std::string mode (prefs.get_string (mode_key, mode_fallback));
     GtkListStore * store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-    const char* strings[7][2] = { { N_("Disabled"),"never" },
-                                  { N_("Only new (score == 0)"),"new" },
-                                  { N_("9999 or more"), "watched" },
-                                  { N_("5000 to 9998"), "high" },
-                                  { N_("1 to 4999"),    "medium" },
-                                  { N_("-9998 to -1"),  "low" },
-                                  { N_("-9999 or less"),"ignored" }};
+    char const *strings[7][2] = {{N_("Disabled"), "never"},
+                                 {N_("Only new (score == 0)"), "new"},
+                                 {N_("9999 or more"), "watched"},
+                                 {N_("5000 to 9998"), "high"},
+                                 {N_("1 to 4999"), "medium"},
+                                 {N_("-9998 to -1"), "low"},
+                                 {N_("-9999 or less"), "ignored"}};
     int sel_index (0);
     for (size_t i=0; i<G_N_ELEMENTS(strings); ++i) {
       GtkTreeIter iter;
@@ -718,13 +718,15 @@ namespace pan
 
   void font_set_cb (GtkFontButton* b, gpointer prefs_gpointer)
   {
-    const char * key = (const char*) g_object_get_data (G_OBJECT(b), PREFS_KEY);
-    const char * val = gtk_font_button_get_font_name  (b);
+    char const *key = (char const *)g_object_get_data(G_OBJECT(b), PREFS_KEY);
+    char const *val = gtk_font_button_get_font_name(b);
     if (key && *key && val && *val)
       static_cast<Prefs*>(prefs_gpointer)->set_string (key, val);
   }
 
-  GtkWidget* new_font_button (const char* key, const char * fallback, Prefs& prefs)
+  GtkWidget *new_font_button(char const *key,
+                             char const *fallback,
+                             Prefs &prefs)
   {
     const std::string val (prefs.get_string (key, fallback));
     GtkWidget * b = gtk_font_button_new ();
@@ -736,14 +738,16 @@ namespace pan
 
   void color_set_cb (GtkColorButton* b, gpointer prefs_gpointer)
   {
-    const char * key = (const char*) g_object_get_data (G_OBJECT(b), PREFS_KEY);
+    char const *key = (char const *)g_object_get_data(G_OBJECT(b), PREFS_KEY);
     GdkColor val;
     gtk_color_button_get_color (b, &val);
     if (key && *key)
       static_cast<Prefs*>(prefs_gpointer)->set_color (key, val);
   }
 
-  GtkWidget* new_color_button (const char* key, const char * fallback, Prefs& prefs)
+  GtkWidget *new_color_button(char const *key,
+                              char const *fallback,
+                              Prefs &prefs)
   {
     const GdkColor val (prefs.get_color (key, fallback));
     GtkWidget * b = gtk_color_button_new_with_color (&val);
@@ -753,8 +757,7 @@ namespace pan
   }
 }
 
-void
-PrefsDialog :: update_default_charset_label(const StringView& value)
+void PrefsDialog ::update_default_charset_label(StringView const &value)
 {
   char buf[256];
   g_snprintf(buf, sizeof(buf),_("Select default <u>global</u> character set. Current setting: <b>%s</b>."),
@@ -763,8 +766,8 @@ PrefsDialog :: update_default_charset_label(const StringView& value)
   gtk_widget_show_all(charset_label);
 }
 
-void
-PrefsDialog :: on_prefs_string_changed (const StringView& key, const StringView& value)
+void PrefsDialog ::on_prefs_string_changed(StringView const &key,
+                                           StringView const &value)
 {
 
   if (key == "default-charset")
@@ -774,8 +777,7 @@ PrefsDialog :: on_prefs_string_changed (const StringView& key, const StringView&
   }
 }
 
-void
-PrefsDialog :: on_prefs_flag_changed (const StringView& key, bool value)
+void PrefsDialog ::on_prefs_flag_changed(StringView const &key, bool value)
 {
 
   if (key == "allow-multiple-instances")
@@ -947,7 +949,7 @@ namespace
 
   void font_toggled_cb (GtkToggleButton * tb, gpointer user_data)
   {
-    const bool active (gtk_toggle_button_get_active (tb));
+    bool const active(gtk_toggle_button_get_active(tb));
     gtk_widget_set_sensitive (GTK_WIDGET(user_data), active);
   }
 }
@@ -1214,9 +1216,9 @@ PrefsDialog :: PrefsDialog (Prefs& prefs, GtkWindow* parent):
   gtk_notebook_append_page (GTK_NOTEBOOK(notebook), t, new_label_with_icon(_("_Fonts"), _("Fonts"), "icon_prefs_fonts.png", prefs));
 
   // default color theme's Colors
-  const PanColors& colors (PanColors::get());
-  const char* def_color_str (colors.def_bg.c_str());
-  const char* def_color_fg_str (colors.def_fg.c_str());
+  PanColors const &colors(PanColors::get());
+  char const *def_color_str(colors.def_bg.c_str());
+  char const *def_color_fg_str(colors.def_fg.c_str());
 
   row = 0;
   t = HIG :: workarea_create ();
