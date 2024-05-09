@@ -95,6 +95,28 @@ On Debian and derivatives, required dependencies can added with:
 
 * Installation
 
+** Cleanup autotools remnants
+
+Some people has issues when using cmake to build Pan after using
+autotools. Unfortunately, autotools leaves a lot of files that may
+break build with cmake, so here are the instructions to clean all
+autotools remnants.
+
+This procedure is to be run once if you used to build pan with
+autotools in your repository.
+
+First, check the list the files to be deleted:
+#+BEGIN_SRC shell :results verbatim 
+git clean -dxn
+#+END_SRC
+
+Then, delete all extra files:
+#+BEGIN_SRC shell :results verbatim 
+git clean -dxn
+#+END_SRC
+
+Alternatively, you can clone Pan in another directory.
+
 ** Standard build
 
 Run the following command to setup Pan build with the default options:
