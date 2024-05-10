@@ -206,20 +206,12 @@ GroupPrefs :: set_from_file (const StringView& filename)
 }
 
 std::string
-GroupPrefs :: color_to_string (const GdkRGBA& c)
-{
-  char buf[8];
-  g_snprintf (buf, sizeof(buf), "#%02x%02x%02x", c.red/0x100, c.green/0x100, c.blue/0x100);
-  return buf;
-}
-
-std::string
 GroupPrefs :: get_group_color_str (const Quark& group) const
 {
   if (!_prefs[group].get_colors().count("group-color"))
     return "";
   const GdkRGBA& col (_prefs[group].get_colors()["group-color"]);
-  return color_to_string (col);
+  return gdk_rgba_to_string (&col);
 }
 
 GdkRGBA

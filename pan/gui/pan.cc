@@ -778,8 +778,8 @@ namespace
     }
 
     //todo move to pancolors
-    fg_col = GroupPrefs::color_to_string(def_fg);
-    bg_col = GroupPrefs::color_to_string(def_bg);
+    fg_col = gdk_rgba_to_string(&def_fg);
+    bg_col = gdk_rgba_to_string(&def_bg);
 
     g_object_ref_sink (r);
     gtk_widget_destroy (r);

@@ -57,7 +57,6 @@ namespace pan
       void set_group_color   (const Quark& group, const GdkRGBA& color);
 
       std::string get_group_color_str (const Quark& group) const;
-      static std::string color_to_string (const GdkRGBA& c);
       GdkRGBA get_group_color (const Quark& group, const StringView& fallback_str) const;
 
     protected:
