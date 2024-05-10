@@ -43,73 +43,81 @@ Prefs :: ~Prefs()
 {}
 
 // called for open tags <foo bar='baz'>
-void
-Prefs :: start_element (GMarkupParseContext *,
-                        const gchar         *element_name,
-                        const gchar        **attribute_names,
-                        const gchar        **attribute_vals,
-                        gpointer             prefs_gpointer,
-                        GError             **)
+void Prefs ::start_element(GMarkupParseContext *,
+                           gchar const *element_name,
+                           gchar const **attribute_names,
+                           gchar const **attribute_vals,
+                           gpointer prefs_gpointer,
+                           GError **)
 {
   const std::string s (element_name);
   Prefs& prefs (*static_cast<Prefs*>(prefs_gpointer));
 
   if (s == "geometry") {
-    const char * name(nullptr);
+    char const *name(nullptr);
     int x(0), y(0), w(0), h(0);
-    for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
-      if (!strcmp (*k,"name"))  name = *v;
+    for (char const **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
+    {
+      if (!strcmp (*k,"name")) name = *v;
       else if (!strcmp(*k,"x")) x = atoi (*v);
       else if (!strcmp(*k,"y")) y = atoi (*v);
       else if (!strcmp(*k,"w")) w = atoi (*v);
       else if (!strcmp(*k,"h")) h = atoi (*v);
+    }
     if (name && *name)
       prefs.set_geometry (name, x, y, w, h);
   }
 
   if (s == "flag") {
-    const char * name (nullptr);
+    char const *name(nullptr);
     bool b (false);
-    for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
-      if (!strcmp (*k,"name"))  name = *v;
+    for (char const **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
+    {
+      if (!strcmp (*k,"name")) name = *v;
       else if (!strcmp(*k,"value")) b = *v && **v && tolower(**v)=='t';
+    }
     if (name && *name)
       prefs.set_flag (name, b);
   }
 
   if (s == "string") {
-    const char * name (nullptr);
-    const char * value (nullptr);
-    for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
-      if (!strcmp (*k,"name"))  name = *v;
+    char const *name(nullptr);
+    char const *value(nullptr);
+    for (char const **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
+    {
+      if (!strcmp (*k,"name")) name = *v;
       else if (!strcmp(*k,"value")) value = *v;
+    }
     if (name && *name && value && *value)
       prefs.set_string (name, value);
   }
 
   if (s == "int") {
-    const char * name (nullptr);
-    const char * value (nullptr);
-    for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
-      if (!strcmp (*k,"name"))  name = *v;
+    char const *name(nullptr);
+    char const *value(nullptr);
+    for (char const **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
+    {
+      if (!strcmp (*k,"name")) name = *v;
       else if (!strcmp(*k,"value")) value = *v;
+    }
     if (name && *name && value && *value)
       prefs.set_int (name, atoi(value));
   }
 
   if (s == "color") {
-    const char * name (nullptr);
-    const char * value (nullptr);
-    for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
-      if (!strcmp (*k,"name"))  name = *v;
+    char const *name(nullptr);
+    char const *value(nullptr);
+    for (char const **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
+    {
+      if (!strcmp (*k,"name")) name = *v;
       else if (!strcmp(*k,"value")) value = *v;
+    }
     if (name && *name && value && *value)
       prefs.set_color (name, value);
   }
 }
 
-void
-Prefs :: from_string (const StringView& xml)
+void Prefs ::from_string(StringView const &xml)
 {
   GMarkupParser p;
   p.start_element = start_element;
@@ -128,19 +136,21 @@ Prefs :: from_string (const StringView& xml)
 
 namespace
 {
-  const int indent_char_len (2);
+int const indent_char_len(2);
 
-  std::string indent (int depth) { return std::string(depth*indent_char_len, ' '); }
+std::string indent(int depth)
+{
+  return std::string(depth * indent_char_len, ' '); }
 
-  std::string escaped (const std::string& s)
-  {
-    char * pch = g_markup_escape_text (s.c_str(), s.size());
-    const std::string ret (pch);
-    g_free (pch);
-    return ret;
+std::string escaped(std::string const &s)
+{
+  char *pch = g_markup_escape_text(s.c_str(), s.size());
+  const std::string ret(pch);
+  g_free(pch);
+  return ret;
   }
 
-  std::string escaped (const bool b)
+  std::string escaped(bool const b)
   {
     return b ? "true" : "false";
   }
@@ -191,12 +201,12 @@ Prefs :: to_string (int depth, std::string& setme) const
 ****  WINDOW GEOMETRY
 ***/
 
-bool
-Prefs :: get_geometry (const StringView& window_name, int& x, int& y, int& w, int& h) const
+bool Prefs ::get_geometry(
+  StringView const &window_name, int &x, int &y, int &w, int &h) const
 {
   window_to_geometry_t::const_iterator it (_window_to_geometry.find (window_name));
   if (it != _window_to_geometry.end()) {
-    const Geometry& g (it->second);
+    Geometry const &g(it->second);
     x = g.x;
     y = g.y;
     w = g.w;
@@ -205,8 +215,7 @@ Prefs :: get_geometry (const StringView& window_name, int& x, int& y, int& w, in
   return it != _window_to_geometry.end();
 }
 
-void
-Prefs :: set_geometry (const StringView& key, int x, int y, int w, int h)
+void Prefs ::set_geometry(StringView const &key, int x, int y, int w, int h)
 {
   if (x>=0 && y>=0) {
     Geometry& g (_window_to_geometry[key]);
@@ -217,8 +226,8 @@ Prefs :: set_geometry (const StringView& key, int x, int y, int w, int h)
   }
 }
 
-void
-Prefs :: set_default_geometry (const StringView& key, int x, int y, int w, int h)
+void Prefs ::set_default_geometry(
+  StringView const &key, int x, int y, int w, int h)
 {
   if (!_window_to_geometry.count (key))
     set_geometry (key, x, y, w, h);
@@ -231,10 +240,12 @@ Prefs :: window_size_allocated_cb (GtkWidget      * widget,
                                    GtkAllocation  * alloc,
                                    gpointer         pointer)
 {
-  const char * key ((const char*) g_object_get_data (G_OBJECT(widget), PREFS_WIDGET_KEY));
+  char const *key(
+    (char const *)g_object_get_data(G_OBJECT(widget), PREFS_WIDGET_KEY));
 
-  const bool maximized = gtk_widget_get_window(widget)
-                      && (gdk_window_get_state(gtk_widget_get_window(widget)) & GDK_WINDOW_STATE_MAXIMIZED);
+  bool const maximized = gtk_widget_get_window(widget)
+                         && (gdk_window_get_state(gtk_widget_get_window(widget))
+                             & GDK_WINDOW_STATE_MAXIMIZED);
   if (!maximized)
   {
     int x(0), y(0);
@@ -243,8 +254,8 @@ Prefs :: window_size_allocated_cb (GtkWidget      * widget,
   }
 }
 
-void
-Prefs :: set_window (const StringView& key, GtkWindow* window, int x, int y, int w, int h)
+void Prefs ::set_window(
+  StringView const &key, GtkWindow *window, int x, int y, int w, int h)
 {
   get_geometry (key, x, y, w, h);
   gtk_window_move (window, x, y);
@@ -257,16 +268,14 @@ Prefs :: set_window (const StringView& key, GtkWindow* window, int x, int y, int
 ****  FLAGS
 ***/
 
-bool
-Prefs :: get_flag (const StringView& key, bool fallback) const
+bool Prefs ::get_flag(StringView const &key, bool fallback) const
 {
   if (!_flags.count (key))
     _flags[key] = fallback;
   return _flags[key];
 }
 
-void
-Prefs :: set_flag (const StringView& key, bool value)
+void Prefs ::set_flag(StringView const &key, bool value)
 {
   _flags[key] = value;
   fire_flag_changed (key, value);
@@ -276,16 +285,14 @@ Prefs :: set_flag (const StringView& key, bool value)
 ****  INTS
 ***/
 
-int
-Prefs :: get_int (const StringView& key, int fallback) const
+int Prefs ::get_int(StringView const &key, int fallback) const
 {
   if (!_ints.count (key))
     _ints[key] = fallback;
   return _ints[key];
 }
 
-int
-Prefs :: get_int_min (const StringView& key, int fallback) const
+int Prefs ::get_int_min(StringView const &key, int fallback) const
 {
   if (!_ints.count (key))
     _ints[key] = fallback;
@@ -293,8 +300,7 @@ Prefs :: get_int_min (const StringView& key, int fallback) const
   return _ints[key];
 }
 
-void
-Prefs :: set_int (const StringView& key, int value)
+void Prefs ::set_int(StringView const &key, int value)
 {
   _ints[key] = value;
   fire_int_changed (key, value);
@@ -304,16 +310,14 @@ Prefs :: set_int (const StringView& key, int value)
 ****  LONG64
 ***/
 
-uint64_t
-Prefs :: get_long64 (const StringView& key, uint64_t fallback) const
+uint64_t Prefs ::get_long64(StringView const &key, uint64_t fallback) const
 {
   if (!_ints.count (key))
     _longs[key] = fallback;
   return _longs[key];
 }
 
-void
-Prefs :: set_long64 (const StringView& key, uint64_t value)
+void Prefs ::set_long64(StringView const &key, uint64_t value)
 {
   _longs[key] = value;
   fire_long64_changed (key, value);
@@ -324,8 +328,8 @@ Prefs :: set_long64 (const StringView& key, uint64_t value)
 ****  STRINGS
 ***/
 
-StringView
-Prefs :: get_string (const StringView& key, const StringView& fallback) const
+StringView Prefs ::get_string(StringView const &key,
+                              StringView const &fallback) const
 {
   StringView prefs_string;
   if (!_strings.count (key))
@@ -334,8 +338,7 @@ Prefs :: get_string (const StringView& key, const StringView& fallback) const
   return prefs_string;
 }
 
-void
-Prefs :: set_string (const StringView& key, const StringView& value)
+void Prefs ::set_string(StringView const &key, StringView const &value)
 {
   std::string& lvalue = _strings[key];
   const std::string old (lvalue);
@@ -356,8 +359,7 @@ Prefs :: set_color (const StringView& key, const GdkColor& value)
   fire_color_changed (key, value);
 }
 
-void
-Prefs :: set_color (const StringView& key, const StringView& value)
+void Prefs ::set_color(StringView const &key, StringView const &value)
 {
   GdkColor c;
   if (gdk_color_parse (value.to_string().c_str(), &c))
