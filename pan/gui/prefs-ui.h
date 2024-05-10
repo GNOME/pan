@@ -69,7 +69,7 @@ namespace pan
       void on_prefs_flag_changed (const StringView& key, bool value) override;
       void on_prefs_int_changed (const StringView& key, int color) override {}
       void on_prefs_string_changed (const StringView& key, const StringView& value) override;
-      void on_prefs_color_changed (const StringView& key, const GdkColor& color) override {}
+      void on_prefs_color_changed (const StringView& key, const GdkRGBA& color) override {}
 
       const char* _hotkey;
 

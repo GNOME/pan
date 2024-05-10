@@ -69,7 +69,7 @@ namespace pan
       void on_prefs_int_changed (const StringView& key G_GNUC_UNUSED, int value G_GNUC_UNUSED) override
       { }
       void on_prefs_string_changed (const StringView& key, const StringView& value) override;
-      void on_prefs_color_changed (const StringView& key, const GdkColor& color) override;
+      void on_prefs_color_changed (const StringView& key, const GdkRGBA& color) override;
 
     public:
       void set_article (const Article&);

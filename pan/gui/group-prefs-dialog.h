@@ -51,7 +51,7 @@ namespace pan
       GtkWidget    * _spellchecker_language;
       GtkWidget    * _group_color;
       GtkWidget    * _save_path;
-      GdkColor _color;
+      GdkRGBA _color;
 
     private:
       static void response_cb (GtkDialog*, int, gpointer);

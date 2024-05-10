@@ -305,7 +305,7 @@ namespace
     }
 
     void on_prefs_color_changed(StringView const &key,
-                                GdkColor const &color) override
+                                GdkRGBA const &color) override
     {
     }
 
@@ -754,14 +754,14 @@ namespace
 
     GtkWidget* r = gtk_label_new("bla");
 
-    GdkColor def_fg, def_bg;
+    GdkRGBA def_fg, def_bg;
     std::string fg_col, bg_col;
 
     // init colors of PanColors
     GdkRGBA fg_color, bg_color;
     GtkStyleContext* ctx = gtk_widget_get_style_context(r);
     if(!ctx || !gtk_style_context_lookup_color(ctx, "color", &fg_color))
-      gdk_color_parse("black", &def_fg);
+      gdk_rgba_parse(&def_fg, "black");
     else
     {
       def_fg.red = fg_color.red;
@@ -769,7 +769,7 @@ namespace
       def_fg.blue = fg_color.blue;
     }
     if(!ctx || !gtk_style_context_lookup_color(ctx, "background-color", &bg_color))
-      gdk_color_parse("white", &def_bg);
+      gdk_rgba_parse(&def_bg, "white");
     else
     {
       def_bg.red = bg_color.red;

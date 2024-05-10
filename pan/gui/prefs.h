@@ -48,7 +48,7 @@ namespace pan
         virtual void on_prefs_flag_changed (const StringView& key, bool value) = 0;
         virtual void on_prefs_int_changed (const StringView& key, int color) = 0;
         virtual void on_prefs_string_changed (const StringView& key, const StringView& value) = 0;
-        virtual void on_prefs_color_changed (const StringView& key, const GdkColor& color) = 0;
+        virtual void on_prefs_color_changed (const StringView& key, const GdkRGBA& color) = 0;
         virtual void on_prefs_hotkey_changed (const StringView& key, const StringView& value) {}
         virtual void on_prefs_long64_changed(const StringView& key, const uint64_t& value) {}
       };
@@ -76,7 +76,7 @@ namespace pan
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
           (*it++)->on_prefs_string_changed (key, value);
       }
-      void fire_color_changed (const StringView& key, const GdkColor& value) {
+      void fire_color_changed (const StringView& key, const GdkRGBA& value) {
         for (listeners_t::iterator it(_listeners.begin()), end(_listeners.end()); it!=end; )
           (*it++)->on_prefs_color_changed (key, value);
       }
@@ -107,13 +107,13 @@ namespace pan
       StringView get_string (const StringView& key, const StringView& fallback) const;
       void set_string (const StringView& key, const StringView&);
 
-      void set_color (const StringView& key, const GdkColor& color);
+      void set_color (const StringView& key, const GdkRGBA& color);
       void set_color (const StringView& key, const StringView& color_str);
-      std::string get_color_str (const StringView& key, const GdkColor& fallback) const;
+      std::string get_color_str (const StringView& key, const GdkRGBA& fallback) const;
       std::string get_color_str (const StringView& key, const StringView& fallback_str) const;
       std::string get_color_str_wo_fallback (const StringView& key) const;
-      GdkColor get_color (const StringView& key, const GdkColor& fallback) const;
-      GdkColor get_color (const StringView& key, const StringView& fallback_str) const;
+      GdkRGBA get_color (const StringView& key, const GdkRGBA& fallback) const;
+      GdkRGBA get_color (const StringView& key, const StringView& fallback_str) const;
 
       void set_window (const StringView& key, GtkWindow* window,
                        int default_x, int default_y,
@@ -147,7 +147,7 @@ namespace pan
       mutable flags_t _flags;
       typedef std::map<std::string,std::string> strings_t;
       mutable strings_t _strings;
-      typedef std::map<std::string,GdkColor> colors_t;
+      typedef std::map<std::string,GdkRGBA> colors_t;
       mutable colors_t _colors;
       typedef std::map<std::string,int> ints_t;
       mutable ints_t _ints;

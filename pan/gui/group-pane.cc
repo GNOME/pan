@@ -1084,7 +1084,7 @@ GroupPane :: on_prefs_string_changed (const StringView& key, const StringView&)
 }
 
 void
-GroupPane :: on_prefs_color_changed (const StringView& key, const GdkColor&)
+GroupPane :: on_prefs_color_changed (const StringView& key, const GdkRGBA&)
 {
   if (key == "group-color")
     refresh_dirty_groups ();

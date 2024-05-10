@@ -2477,7 +2477,7 @@ HeaderPane :: on_prefs_string_changed (const StringView& key, const StringView&)
 }
 
 void
-HeaderPane :: on_prefs_color_changed  (const StringView& key, const GdkColor&)
+HeaderPane :: on_prefs_color_changed  (const StringView& key, const GdkRGBA&)
 {
   if (key == "text-color-fg" || key == "text-color-bg")
   {

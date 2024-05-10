@@ -2151,7 +2151,7 @@ BodyPane :: on_prefs_string_changed (const StringView& key, const StringView& va
 }
 
 void
-BodyPane :: on_prefs_color_changed (const StringView& key, const GdkColor& color G_GNUC_UNUSED)
+BodyPane :: on_prefs_color_changed (const StringView& key, const GdkRGBA& color G_GNUC_UNUSED)
 {
   if ((key == "text-color-fg")              || (key == "text-color-bg")              ||
       (key == "body-pane-color-url")        || (key == "body-pane-color-url-bg")     ||

@@ -225,8 +225,8 @@ namespace
   void color_set_cb (GtkColorButton* b, gpointer p)
   {
     GroupPrefsDialog* dialog = static_cast<GroupPrefsDialog*>(p);
-    GdkColor val;
-    gtk_color_button_get_color (b, &val);
+    GdkRGBA val;
+    gtk_color_chooser_get_rgba ((GtkColorChooser*)b, &val);
     {
       foreach_const (quarks_v, dialog->get_groups(), it)
         dialog->get_prefs().set_group_color(*it, val);
@@ -240,9 +240,9 @@ namespace
     const PanColors& colors (PanColors::get());
     const std::string& def_fg (colors.def_fg);
     const std::string& fg (prefs.get_color_str("group-pane-color-fg", def_fg));
-    const GdkColor& val (gprefs.get_group_color (group, fg));
+    const GdkRGBA& val (gprefs.get_group_color (group, fg));
 
-    GtkWidget * b = gtk_color_button_new_with_color (&val);
+    GtkWidget * b = gtk_color_button_new_with_rgba(&val);
     g_signal_connect (b, "color-set", G_CALLBACK(color_set_cb), dialog);
 
     return b;

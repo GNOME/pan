@@ -155,11 +155,10 @@ std::string escaped(std::string const &s)
     return b ? "true" : "false";
   }
 
-  std::string color_to_string (const GdkColor& c)
+  std::string color_to_string(GdkRGBA const &c)
   {
-    char buf[8];
-    g_snprintf (buf, sizeof(buf), "#%02x%02x%02x", c.red/0x100, c.green/0x100, c.blue/0x100);
-    return buf;
+    gchar *str = gdk_rgba_to_string(&c);
+    return std::string(str);
   }
 }
 
@@ -352,8 +351,7 @@ void Prefs ::set_string(StringView const &key, StringView const &value)
 ****  COLOR
 ***/
 
-void
-Prefs :: set_color (const StringView& key, const GdkColor& value)
+void Prefs ::set_color(StringView const &key, GdkRGBA const &value)
 {
   _colors[key] = value;
   fire_color_changed (key, value);
@@ -361,23 +359,25 @@ Prefs :: set_color (const StringView& key, const GdkColor& value)
 
 void Prefs ::set_color(StringView const &key, StringView const &value)
 {
-  GdkColor c;
-  if (gdk_color_parse (value.to_string().c_str(), &c))
+  GdkRGBA c;
+  if (gdk_rgba_parse (&c, value.to_string().c_str()))
     set_color (key, c);
   else
     Log::add_err_va (_("Couldn't parse %s color \"%s\""), key.to_string().c_str(), value.to_string().c_str());
 }
 
-GdkColor
-Prefs :: get_color (const StringView& key, const StringView& fallback_str) const
+GdkRGBA Prefs ::get_color(StringView const &key,
+                          StringView const &fallback_str) const
 {
-  GdkColor fallback;
-  gdk_color_parse (fallback_str.to_string().c_str(), &fallback);
-  return get_color (key, fallback);
+  GdkRGBA result;
+  if (!gdk_rgba_parse (&result, key.to_string().c_str())) {
+    gdk_rgba_parse (&result, fallback_str.to_string().c_str());
+  }
+  return result;
 }
 
-GdkColor
-Prefs :: get_color (const StringView& key, const GdkColor& fallback) const
+GdkRGBA
+Prefs :: get_color (const StringView& key, const GdkRGBA& fallback) const
 {
   if (!_colors.count (key))
     _colors[key] = fallback;
@@ -385,7 +385,7 @@ Prefs :: get_color (const StringView& key, const GdkColor& fallback) const
 }
 
 std::string
-Prefs :: get_color_str (const StringView& key, const GdkColor& fallback) const
+Prefs :: get_color_str (const StringView& key, const GdkRGBA& fallback) const
 {
   return color_to_string (get_color (key, fallback));
 }
@@ -402,7 +402,7 @@ Prefs :: get_color_str_wo_fallback (const StringView& key) const
 {
   std::string res;
   if (!_colors.count(key)) return "";
-  const GdkColor& col(_colors[key]);
+  const GdkRGBA& col(_colors[key]);
   return color_to_string (col);
 }
 

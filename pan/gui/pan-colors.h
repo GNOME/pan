@@ -31,8 +31,8 @@ class PanColors : public PanSingleton< PanColors >
   public:
     std::string def_fg;
     std::string def_bg;
-    GdkColor def_fg_col;
-    GdkColor def_bg_col;
+    GdkRGBA def_fg_col;
+    GdkRGBA def_bg_col;
 
 };
 

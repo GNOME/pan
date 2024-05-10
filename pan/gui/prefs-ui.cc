@@ -746,8 +746,8 @@ namespace pan
   void color_set_cb (GtkColorButton* b, gpointer prefs_gpointer)
   {
     char const *key = (char const *)g_object_get_data(G_OBJECT(b), PREFS_KEY);
-    GdkColor val;
-    gtk_color_button_get_color (b, &val);
+    GdkRGBA val;
+    gtk_color_chooser_get_rgba((GtkColorChooser*)b, &val);
     if (key && *key)
       static_cast<Prefs*>(prefs_gpointer)->set_color (key, val);
   }
@@ -756,8 +756,8 @@ namespace pan
                               char const *fallback,
                               Prefs &prefs)
   {
-    const GdkColor val (prefs.get_color (key, fallback));
-    GtkWidget * b = gtk_color_button_new_with_color (&val);
+    GdkRGBA rgba_val (prefs.get_color (key, fallback));;
+    GtkWidget * b = gtk_color_button_new_with_rgba (&rgba_val);
     g_object_set_data_full (G_OBJECT(b), PREFS_KEY, g_strdup(key), g_free);
     g_signal_connect (b, "color-set", G_CALLBACK(color_set_cb), &prefs);
     return b;
