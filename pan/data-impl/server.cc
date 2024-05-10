@@ -252,6 +252,10 @@ DataImpl :: get_server_auth (const Quark   & server,
     {
       setme_password = s->gkr_pw;
     }
+    else if (s->username.empty()) {
+      // no username, no need for password
+      setme_password = (gchar*)"";
+    }
     else
     {
       PasswordData pw;
