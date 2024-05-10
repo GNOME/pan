@@ -548,7 +548,7 @@ namespace
   void usage ()
   {
     console();
-    std::cerr << "Pan " << VERSION << "\n\n" <<
+    std::cerr << "Pan " << PAN_VERSION << "\n\n" <<
 _("General Options\n"
 "  -h, --help               Show this usage information and exit.\n"
 "  -v, --version            Print release version and exit.\n"
@@ -849,7 +849,7 @@ main (int argc, char *argv[])
       _dbg_file.open("ssl.debug");
     }
     else if (!strcmp (tok, "--version") || !strcmp (tok, "-v"))
-      { std::cerr << "Pan " << VERSION << '\n'; return EXIT_SUCCESS; }
+      { std::cerr << "Pan " << PAN_VERSION << '\n'; return EXIT_SUCCESS; }
     else if (!strcmp (tok, "-o") && i<argc-1)
       nzb_output_path = argv[++i];
     else if (!memcmp (tok, "--output=", 9))
@@ -886,7 +886,7 @@ main (int argc, char *argv[])
     return EXIT_FAILURE;
   }
 
-  Log::add_info_va (_("Pan %s started"), VERSION);
+  Log::add_info_va (_("Pan %s started"), PAN_VERSION);
 
   if (gui)
   {
