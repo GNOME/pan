@@ -104,7 +104,7 @@ DataImpl :: find_server (const Quark& server) const
 }
 
 bool
-DataImpl :: find_server_by_hn (const std::string& server, Quark& setme) const
+DataImpl :: find_server_by_host_name (const std::string& server, Quark& setme) const
 {
   foreach_const(servers_t, _servers, it)
     if (it->second.host == server) { setme = it->first; return true; }

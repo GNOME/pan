@@ -580,7 +580,7 @@ GIOChannelSocketGnuTLS :: _gnutls_handshake (GIOChannel *channel)
 
   mydata->cs = &_certstore;
   Quark setme;
-  _data.find_server_by_hn(_host, setme);
+  _data.find_server_by_host_name(_host, setme);
   mydata->host = setme;
   mydata->hostname_full = _host;
   int res(0); // always trust server cert

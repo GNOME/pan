@@ -231,7 +231,7 @@ namespace pan
       virtual gchar* password_decrypt (PasswordData&) const = 0;
 #endif
       /** Gets a quark to the provided hostname */
-      bool find_server_by_hn (const std::string& server,
+      bool find_server_by_host_name (const std::string& server,
                               Quark& setme) const override = 0;
 
       virtual const Server* find_server (const Quark& server) const = 0;

@@ -133,7 +133,7 @@ namespace pan
     public:
       const Server* find_server (const Quark& server) const override;
       Server* find_server (const Quark& server) override;
-      bool find_server_by_hn (const std::string& server, Quark& setme) const override;
+      bool find_server_by_host_name (const std::string& server, Quark& setme) const override;
 
     public: // mutators
 

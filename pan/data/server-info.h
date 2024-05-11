@@ -105,7 +105,7 @@ namespace pan
 
       virtual int get_server_article_expiration_age  (const Quark  & server) const = 0;
 
-      virtual bool find_server_by_hn (const std::string& server, Quark& setme) const = 0;
+      virtual bool find_server_by_host_name (const std::string& server, Quark& setme) const = 0;
   };
 }
 
