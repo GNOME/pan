@@ -46,8 +46,7 @@ using namespace pan;
 ***
 **/
 
-void
-DataImpl :: delete_server (const Quark& server_in)
+void DataImpl ::delete_server(Quark const &server_in)
 {
   const Quark server (server_in);
 
@@ -81,8 +80,7 @@ DataImpl :: add_new_server ()
   return new_server;
 }
 
-Data :: Server*
-DataImpl :: find_server (const Quark& server)
+Data ::Server *DataImpl ::find_server(Quark const &server)
 {
   Server * retval (nullptr);
 
@@ -92,10 +90,9 @@ DataImpl :: find_server (const Quark& server)
   return retval;
 }
 
-const Data :: Server*
-DataImpl :: find_server (const Quark& server) const
+Data ::Server const *DataImpl ::find_server(Quark const &server) const
 {
-  const Server * retval (nullptr);
+  Server const *retval(nullptr);
 
   servers_t::const_iterator it (_servers.find (server));
   if (it != _servers.end())
@@ -103,17 +100,15 @@ DataImpl :: find_server (const Quark& server) const
   return retval;
 }
 
-bool
-DataImpl :: find_server_by_host_name (const std::string& server, Quark& setme) const
+bool DataImpl ::find_server_by_host_name(std::string const &server,
+                                         Quark &setme) const
 {
   foreach_const(servers_t, _servers, it)
     if (it->second.host == server) { setme = it->first; return true; }
   return false;
 }
 
-void
-DataImpl :: set_server_article_expiration_age  (const Quark  & server,
-                                                int            days)
+void DataImpl ::set_server_article_expiration_age(Quark const &server, int days)
 {
   Server * s (find_server (server));
   assert (s);
@@ -122,11 +117,10 @@ DataImpl :: set_server_article_expiration_age  (const Quark  & server,
 
 }
 
-void
-DataImpl :: set_server_auth (const Quark       & server,
-                             const StringView  & username,
-                             gchar             *&password,
-                             bool                use_gkr)
+void DataImpl ::set_server_auth(Quark const &server,
+                                StringView const &username,
+                                gchar *&password,
+                                bool use_gkr)
 {
   Server * s (find_server (server));
   assert (s);
@@ -151,40 +145,32 @@ DataImpl :: set_server_auth (const Quark       & server,
 
 }
 
-void
-DataImpl :: set_server_trust  (const Quark   & server,
-                               const int       setme)
+void DataImpl ::set_server_trust(Quark const &server, int const setme)
 {
   Server * s (find_server (server));
   assert (s);
   s->trust = setme;
 }
 
-void
-DataImpl :: set_server_compression_type  (const Quark   & server,
-                                          const int       setme)
+void DataImpl ::set_server_compression_type(Quark const &server,
+                                            int const setme)
 {
   Server * s (find_server (server));
   assert (s);
   s->compression_type = setme;
 }
 
-void
-DataImpl :: set_server_addr (const Quark       & server,
-                             const StringView  & host,
-                             int                 port)
+void DataImpl ::set_server_addr(Quark const &server,
+                                StringView const &host,
+                                int port)
 {
   Server * s (find_server (server));
   assert (s);
   s->host = host;
   s->port = port;
-
 }
 
-
-void
-DataImpl :: set_server_limits (const Quark   & server,
-                               int             max_connections)
+void DataImpl ::set_server_limits(Quark const &server, int max_connections)
 {
   Server * s (find_server (server));
   assert (s);
@@ -192,9 +178,7 @@ DataImpl :: set_server_limits (const Quark   & server,
 
 }
 
-void
-DataImpl :: set_server_rank (const Quark   & server,
-                             int             rank)
+void DataImpl ::set_server_rank(Quark const &server, int rank)
 {
   Server * s (find_server (server));
   assert (s);
@@ -202,9 +186,7 @@ DataImpl :: set_server_rank (const Quark   & server,
 
 }
 
-void
-DataImpl :: set_server_ssl_support (const Quark   & server,
-                                    int             ssl)
+void DataImpl ::set_server_ssl_support(Quark const &server, int ssl)
 {
   Server * s (find_server (server));
   assert (s);
@@ -212,9 +194,7 @@ DataImpl :: set_server_ssl_support (const Quark   & server,
 
 }
 
-void
-DataImpl :: set_server_cert  (const Quark   & server,
-                              const StringView & cert)
+void DataImpl ::set_server_cert(Quark const &server, StringView const &cert)
 {
 
   Server * s (find_server (server));
@@ -223,21 +203,17 @@ DataImpl :: set_server_cert  (const Quark   & server,
 
 }
 
-void
-DataImpl :: save_server_info (const Quark& server)
+void DataImpl ::save_server_info(Quark const &server)
 {
   Server * s (find_server (server));
   assert (s);
   save_server_properties (*_data_io, _prefs);
-
 }
 
-
-bool
-DataImpl :: get_server_auth (const Quark   & server,
-                             std::string   & setme_username,
-                             gchar         *&setme_password,
-                             bool            use_gkr)
+bool DataImpl ::get_server_auth(Quark const &server,
+                                std::string &setme_username,
+                                gchar *&setme_password,
+                                bool use_gkr)
 {
   Server * s (find_server (server));
   bool found (s);
@@ -281,11 +257,10 @@ DataImpl :: get_server_auth (const Quark   & server,
 
 }
 
-bool
-DataImpl :: get_server_trust (const Quark   & server, int& setme) const
+bool DataImpl ::get_server_trust(Quark const &server, int &setme) const
 {
-  const Server * s (find_server (server));
-  const bool found (s);
+  Server const *s(find_server(server));
+  bool const found(s);
   if (found) {
     setme = s->trust;
   }
@@ -316,38 +291,37 @@ namespace
   }
 }
 
-bool
-DataImpl :: get_server_compression_type (const Quark   & server, CompressionType& setme) const
+bool DataImpl ::get_server_compression_type(Quark const &server,
+                                            CompressionType &setme) const
 {
-  const Server * s (find_server (server));
-  const bool found (s);
-  if (found)
-    setme = get_compression_type(s->compression_type);
+    Server const *s(find_server(server));
+    bool const found(s);
+    if (found)
+      setme = get_compression_type(s->compression_type);
 
-  return found;
+    return found;
 }
 
-bool
-DataImpl :: get_server_addr (const Quark   & server,
-                             std::string   & setme_host,
-                             int           & setme_port) const
+bool DataImpl ::get_server_addr(Quark const &server,
+                                std::string &setme_host,
+                                int &setme_port) const
 {
-  const Server * s (find_server (server));
-  const bool found (s);
-  if (found) {
-    setme_host = s->host;
-    setme_port = s->port;
+    Server const *s(find_server(server));
+    bool const found(s);
+    if (found)
+    {
+      setme_host = s->host;
+      setme_port = s->port;
   }
 
   return found;
 
 }
 
-std::string
-DataImpl :: get_server_address (const Quark& server) const
+std::string DataImpl ::get_server_address(Quark const &server) const
 {
   std::string str;
-  const Server * s (find_server (server));
+  Server const *s(find_server(server));
   if (s) {
     std::ostringstream x(s->host,std::ios_base::ate);
     x << ":" << s->port;
@@ -358,11 +332,10 @@ DataImpl :: get_server_address (const Quark& server) const
 
 }
 
-bool
-DataImpl :: get_server_ssl_support (const Quark & server) const
+bool DataImpl ::get_server_ssl_support(Quark const &server) const
 {
   bool retval (false);
-  const Server * s (find_server (server));
+  Server const *s(find_server(server));
   if (s)
     retval = (s->ssl_support != 0);
 
@@ -370,11 +343,10 @@ DataImpl :: get_server_ssl_support (const Quark & server) const
 
 }
 
-std::string
-DataImpl :: get_server_cert (const Quark & server) const
+std::string DataImpl ::get_server_cert(Quark const &server) const
 {
   std::string str;
-  const Server * s (find_server (server));
+  Server const *s(find_server(server));
   if (s)
     str = s->cert;
 
@@ -382,11 +354,10 @@ DataImpl :: get_server_cert (const Quark & server) const
 
 }
 
-int
-DataImpl :: get_server_limits (const Quark & server) const
+int DataImpl ::get_server_limits(Quark const &server) const
 {
   int retval (2);
-  const Server * s (find_server (server));
+  Server const *s(find_server(server));
   if (s)
     retval = s->max_connections;
 
@@ -394,11 +365,10 @@ DataImpl :: get_server_limits (const Quark & server) const
 
 }
 
-int
-DataImpl :: get_server_rank (const Quark & server) const
+int DataImpl ::get_server_rank(Quark const &server) const
 {
   int retval (1);
-  const Server * s (find_server (server));
+  Server const *s(find_server(server));
   if (s)
     retval = s->rank;
 
@@ -406,11 +376,10 @@ DataImpl :: get_server_rank (const Quark & server) const
 
 }
 
-int
-DataImpl :: get_server_article_expiration_age  (const Quark  & server) const
+int DataImpl ::get_server_article_expiration_age(Quark const &server) const
 {
   int retval (31);
-  const Server * s (find_server (server));
+  Server const *s(find_server(server));
   if (s)
     retval = s->article_expiration_age;
 
@@ -435,113 +404,120 @@ namespace
     key_to_keyvals_t data;
   };
 
-  void start_element (GMarkupParseContext *context          UNUSED,
-                      const gchar         *element_name,
-                      const gchar        **attribute_names,
-                      const gchar        **attribute_vals,
-                      gpointer             user_data,
-                      GError             **error            UNUSED)
+  void start_element(GMarkupParseContext *context UNUSED,
+                     gchar const *element_name,
+                     gchar const **attribute_names,
+                     gchar const **attribute_vals,
+                     gpointer user_data,
+                     GError **error UNUSED)
   {
     ServerParseContext& mc (*static_cast<ServerParseContext*>(user_data));
 
     if (!strcmp (element_name, "server"))
-      for (const char **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
+    for (char const **k(attribute_names), **v(attribute_vals); *k; ++k, ++v)
+    {
         if (!strcmp (*k,"id"))
-           mc.key = *v;
+          mc.key = *v;
+    }
   }
 
-  void end_element (GMarkupParseContext *context        UNUSED,
-                    const gchar         *element_name,
-                    gpointer             user_data,
-                    GError             **error          UNUSED)
+  void end_element(GMarkupParseContext *context UNUSED,
+                   gchar const *element_name,
+                   gpointer user_data,
+                   GError **error UNUSED)
   {
     ServerParseContext& mc (*static_cast<ServerParseContext*>(user_data));
     if (!mc.key.empty())
       mc.data[mc.key][element_name] = mc.text;
   }
 
-  void text (GMarkupParseContext *context    UNUSED,
-             const gchar         *text,
-             gsize                text_len,
-             gpointer             user_data,
-             GError             **error      UNUSED)
+  void text(GMarkupParseContext *context UNUSED,
+            gchar const *text,
+            gsize text_len,
+            gpointer user_data,
+            GError **error UNUSED)
   {
     static_cast<ServerParseContext*>(user_data)->text.assign (text, text_len);
   }
 
-  int to_int (const std::string& s, int default_value=0)
+  int to_int(std::string const &s, int default_value = 0)
   {
     return s.empty() ? default_value : atoi(s.c_str());
   }
-}
-
-
-void
-DataImpl :: load_server_properties (const DataIO& source)
-{
-  const std::string filename (source.get_server_filename());
-
-  std::string txt;
-  file :: get_text_file_contents (filename, txt);
-
-  ServerParseContext spc;
-  GMarkupParser p;
-  p.start_element = start_element;
-  p.end_element = end_element;
-  p.text = text;
-  p.passthrough = nullptr;
-  p.error = nullptr;
-  GMarkupParseContext* c = g_markup_parse_context_new (&p, (GMarkupParseFlags)0, &spc, nullptr);
-  GError * gerr (nullptr);
-  if (!txt.empty())
-    g_markup_parse_context_parse (c, txt.c_str(), txt.size(), &gerr);
-  if (gerr) {
-    Log::add_err_va (_("Error reading file \"%s\": %s"), filename.c_str(), gerr->message);
-    g_clear_error (&gerr);
   }
-  g_markup_parse_context_free (c);
 
-  // populate the servers from the info we loaded...
-  _servers.clear ();
-  foreach_const (key_to_keyvals_t, spc.data, it) {
-    Server& s (_servers[it->first]);
-    keyvals_t kv (it->second);
-    s.host = kv["host"];
-    s.username = kv["username"];
-#ifdef HAVE_GKR
-    if (!_prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT))
-      s.password = kv["password"];
-#else
-    s.password = kv["password"];
-#endif
-    s.port = to_int (kv["port"], STD_NNTP_PORT);
-    s.max_connections = to_int (kv["connection-limit"], 2);
-    s.article_expiration_age = to_int(kv["expire-articles-n-days-old"], 31);
-    s.rank = to_int(kv["rank"], 1);
-    int ssl(to_int(kv["use-ssl"], 0));
-    s.ssl_support = ssl;
-    s.cert = kv["cert"];
-    int trust(to_int(kv["trust"], 0));
-    s.trust = trust;
-    s.compression_type = to_int(kv["compression-type"], 0); // NONE
-    s.newsrc_filename = kv["newsrc"];
-    if (s.newsrc_filename.empty()) { // set a default filename
-      std::ostringstream o;
-      o << file::get_pan_home() << G_DIR_SEPARATOR << "newsrc-" << it->first;
-      s.newsrc_filename = o.str ();
+  void DataImpl ::load_server_properties(DataIO const &source)
+  {
+    const std::string filename(source.get_server_filename());
+
+    std::string txt;
+    file ::get_text_file_contents(filename, txt);
+
+    ServerParseContext spc;
+    GMarkupParser p;
+    p.start_element = start_element;
+    p.end_element = end_element;
+    p.text = text;
+    p.passthrough = nullptr;
+    p.error = nullptr;
+    GMarkupParseContext *c =
+      g_markup_parse_context_new(&p, (GMarkupParseFlags)0, &spc, nullptr);
+    GError *gerr(nullptr);
+    if (! txt.empty())
+      g_markup_parse_context_parse(c, txt.c_str(), txt.size(), &gerr);
+    if (gerr)
+    {
+      Log::add_err_va(
+        _("Error reading file \"%s\": %s"), filename.c_str(), gerr->message);
+      g_clear_error(&gerr);
     }
-  }
+    g_markup_parse_context_free(c);
+
+    // populate the servers from the info we loaded...
+    _servers.clear();
+    foreach_const (key_to_keyvals_t, spc.data, it)
+    {
+      Server &s(_servers[it->first]);
+      keyvals_t kv(it->second);
+      s.host = kv["host"];
+      s.username = kv["username"];
+#ifdef HAVE_GKR
+      if (! _prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT))
+        s.password = kv["password"];
+#else
+      s.password = kv["password"];
+#endif
+      s.port = to_int(kv["port"], STD_NNTP_PORT);
+      s.max_connections = to_int(kv["connection-limit"], 2);
+      s.article_expiration_age = to_int(kv["expire-articles-n-days-old"], 31);
+      s.rank = to_int(kv["rank"], 1);
+      int ssl(to_int(kv["use-ssl"], 0));
+      s.ssl_support = ssl;
+      s.cert = kv["cert"];
+      int trust(to_int(kv["trust"], 0));
+      s.trust = trust;
+      s.compression_type = to_int(kv["compression-type"], 0); // NONE
+      s.newsrc_filename = kv["newsrc"];
+      if (s.newsrc_filename.empty())
+      { // set a default filename
+        std::ostringstream o;
+        o << file::get_pan_home() << G_DIR_SEPARATOR << "newsrc-" << it->first;
+        s.newsrc_filename = o.str();
+      }
+    }
 
 }
 
 namespace
 {
-  const int indent_char_len (2);
+int const indent_char_len(2);
 
-  std::string indent (int depth) { return std::string(depth*indent_char_len, ' '); }
+std::string indent(int depth)
+{
+    return std::string(depth * indent_char_len, ' '); }
 
-  std::string escaped (const std::string& s)
-  {
+std::string escaped(std::string const &s)
+{
     char * pch = g_markup_escape_text (s.c_str(), s.size());
     const std::string ret (pch);
     g_free (pch);
