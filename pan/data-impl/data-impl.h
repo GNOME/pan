@@ -56,19 +56,16 @@ namespace pan
   typedef std::vector<const Article*> articles_t;
   typedef Data::PasswordData PasswordData;
 
-  /**
-   * File-based implementation of the `Data' backend interface.
-   *
-   * Most of the files are stored in $PAN_HOME, which defaults to
-   * $HOME/.pan2 if the PAN_HOME environmental variable isn't set.
-   *
-   * @ingroup data_impl
-   */
-  class DataImpl final:
-    public Data,
-    public TaskArchive,
-    public ProfilesImpl
-  {
+/**
+ * File-based implementation of the `Data' backend interface.
+ *
+ * Most of the files are stored in $PAN_HOME, which defaults to
+ * $HOME/.pan2 if the PAN_HOME environmental variable isn't set.
+ *
+ * @ingroup data_impl
+ */
+class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
+{
 
     /**
     *** SERVERS
@@ -76,25 +73,54 @@ namespace pan
 
     public:
       /* The ProfilesImpl will own and destruct the DataIO object */
-      DataImpl (const StringView& cache_ext, Prefs& prefs, bool unit_test=false, int cache_megs=10, DataIO * source=new DataIO());
+      DataImpl(StringView const &cache_ext,
+               Prefs &prefs,
+               bool unit_test = false,
+               int cache_megs = 10,
+               DataIO *source = new DataIO());
       virtual ~DataImpl ();
       void save_state() override final;
 
     public:
-      ArticleCache& get_cache () override { return _cache; }
-      const ArticleCache& get_cache () const override { return _cache; }
+      ArticleCache& get_cache () override { return _cache;
+      }
 
-      EncodeCache& get_encode_cache () override { return _encode_cache; }
-      const EncodeCache& get_encode_cache () const override { return _encode_cache; }
+      ArticleCache const &get_cache() const override
+      {
+        return _cache;
+      }
 
-      CertStore& get_certstore () override { return _certstore; }
-      const CertStore& get_certstore () const override { return _certstore; }
+      EncodeCache& get_encode_cache () override { return _encode_cache;
+      }
 
-      virtual Prefs& get_prefs () { return _prefs; }
-      virtual const Prefs& get_prefs () const { return _prefs; }
+      EncodeCache const &get_encode_cache() const override
+      {
+        return _encode_cache;
+      }
 
-      virtual Queue* get_queue () { return _queue; }
-      virtual const Queue* get_queue () const { return _queue; }
+      CertStore& get_certstore () override { return _certstore;
+      }
+
+      CertStore const &get_certstore() const override
+      {
+        return _certstore;
+      }
+
+      virtual Prefs& get_prefs () { return _prefs;
+      }
+
+      virtual Prefs const &get_prefs() const
+      {
+        return _prefs;
+      }
+
+      virtual Queue* get_queue () { return _queue;
+      }
+
+      virtual Queue const *get_queue() const
+      {
+        return _queue;
+      }
 
       void set_queue (Queue* q) override { _queue = q; }
 
