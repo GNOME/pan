@@ -169,7 +169,6 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
   private: // implementation
     void load_server_properties(DataIO const &);
-
     void save_server_properties(DataIO &, Prefs &);
     void load_db_schema(char const *file);
 

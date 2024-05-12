@@ -98,9 +98,47 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   rebuild_backend ();
 }
 
+void DataImpl ::load_db_schema(char const *file) {
+  GError *error;
+  char* contents;
+  gsize length;
+
+  // try local path
+  gchar *sql_path = g_build_filename((gchar*) "pan/data-impl/sql", file, NULL);
+  GFile *sql_file = g_file_new_for_path((char*) sql_path);
+
+  // does local path exists
+  if (g_file_query_exists(sql_file, nullptr)) {
+    g_file_load_contents(sql_file, nullptr, &contents, &length, nullptr, &error);
+  } else {
+    // free local data
+    g_free(sql_path);
+    g_free(sql_file);
+    // try system path
+    sql_path = g_build_filename((gchar*) PAN_SYSTEM_SQL_PATH, file, NULL);
+    sql_file = g_file_new_for_path((char*) sql_path);
+  }
+
+  if (g_file_query_exists(sql_file, nullptr)) {
+    g_file_load_contents(sql_file, nullptr, &contents, &length, nullptr, &error);
+  } else {
+    std::cerr << "Fatal error: cannot find SQL schema file " << file << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  pan_db.exec(contents);
+
+  g_free(sql_path);
+  g_free(sql_file);
+  g_free(contents);
+}
+
 void
 DataImpl :: rebuild_backend ()
 {
+  std::string sql_file = "01-server.sql";
+  load_db_schema(sql_file.c_str());
+
   if (_unit_test)
   {
     pan_debug ("data-impl not loading anything because we're in unit test mode");
