@@ -551,10 +551,10 @@ DataImpl :: save_server_properties (DataIO& data_io, Prefs& prefs)
          << indent(depth) << "<port>" << s->port << "</port>\n"
          << indent(depth) << "<username>" << escaped(user) << "</username>\n";
 #ifdef HAVE_GKR
-if (prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT))
-    *out << indent(depth) << "<password>" << "HANDLED_BY_PASSWORD_STORAGE" << "</password>\n";
-else
-    *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";
+    if (prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT))
+      *out << indent(depth) << "<password>" << "HANDLED_BY_PASSWORD_STORAGE" << "</password>\n";
+    else
+      *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";
 #else
     *out << indent(depth) << "<password>" << escaped(pass) << "</password>\n";
 #endif
