@@ -105,6 +105,42 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   rebuild_backend ();
 }
 
+void DataImpl ::load_db_schema(char const *file) {
+  GError *error;
+  char* contents;
+  gsize length;
+
+  // try local path
+  gchar *sql_path = g_build_filename((gchar*) "pan/data-impl/sql", file, NULL);
+  GFile *sql_file = g_file_new_for_path((char*) sql_path);
+
+  // does local path exists
+  if (g_file_query_exists(sql_file, nullptr)) {
+    g_file_load_contents(sql_file, nullptr, &contents, &length, nullptr, &error);
+  } else {
+    // free local data
+    g_free(sql_path);
+    g_free(sql_file);
+    // try system path
+    sql_path = g_build_filename((gchar*) PAN_SYSTEM_SQL_PATH, file, NULL);
+    sql_file = g_file_new_for_path((char*) sql_path);
+
+    g_file_load_contents(sql_file, nullptr, &contents, &length, nullptr, &error);
+  }
+
+  try {
+    pan_db.exec(contents);
+  }
+  catch (std::exception& e) {
+    std::cout << "Schema load exception in file " << sql_path << ": " << e.what() << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  g_free(sql_path);
+  g_free(sql_file);
+  g_free(contents);
+}
+
 void
 DataImpl :: rebuild_backend ()
 {
@@ -119,6 +155,9 @@ DataImpl :: rebuild_backend ()
     const std::string score_filename (_data_io->get_scorefile_name());
     if (file :: file_exists (score_filename.c_str()))
       _scorefile.parse_file (score_filename);
+
+    std::string sql_file = "01-server.sql";
+    load_db_schema(sql_file.c_str());
 
     load_server_properties (*_data_io);
     load_newsrc_files (*_data_io);
