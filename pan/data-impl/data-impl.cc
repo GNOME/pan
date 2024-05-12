@@ -21,14 +21,20 @@
 ***************
 **************/
 
+#include <SQLiteCpp/Exception.h>
+#include <cassert>
 #include <config.h>
+#include <cstddef>
 #include <glib/gi18n.h>
 #include <glib.h> // for g_build_filename
+#include <gio/gio.h>
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/time-elapsed.h>
+#include <sstream>
+#include <string>
 #include "data-impl.h"
 
 #ifdef HAVE_GKR
@@ -65,11 +71,11 @@ namespace
     g_free (pch);
     return path;
   }
-
 }
 
 DataImpl ::DataImpl(StringView const &cache_ext,
                     Prefs &prefs,
+                    SQLiteDb &my_pan_db,
                     bool unit_test,
                     int cache_megs,
                     DataIO *io) :
@@ -78,6 +84,7 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   _encode_cache(get_encode_cache_path(), cache_megs),
   _certstore(*this),
   _queue(nullptr),
+  pan_db(my_pan_db),
   _unit_test(unit_test),
   _data_io(io),
   _prefs(prefs),
