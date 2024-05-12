@@ -20,12 +20,16 @@
 #ifndef __DataImpl_h__
 #define __DataImpl_h__
 
+#include <SQLiteCpp/Database.h>
 #include <deque>
 #include <iosfwd>
 #include <list>
 #include <map>
 #include <string>
 #include <vector>
+
+#include <SQLiteCpp/SQLiteCpp.h>
+#include <SQLiteCpp/VariadicBind.h>
 
 #include <pan/data-impl/article-filter.h>
 #include <pan/data-impl/data-io.h>
@@ -52,8 +56,9 @@
 #endif
 
 namespace pan {
-  typedef std::vector<const Article*> articles_t;
-  typedef Data::PasswordData PasswordData;
+typedef std::vector<Article const *> articles_t;
+typedef Data::PasswordData PasswordData;
+typedef SQLite::Database SQLiteDb;
 
 /**
  * File-based implementation of the `Data' backend interface.
@@ -74,6 +79,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     /* The ProfilesImpl will own and destruct the DataIO object */
     DataImpl(StringView const &cache_ext,
              Prefs &prefs,
+             SQLiteDb &pan_db,
              bool unit_test = false,
              int cache_megs = 10,
              DataIO *source = new DataIO());
@@ -141,6 +147,10 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     EncodeCache _encode_cache;
     CertStore _certstore;
     Queue *_queue;
+
+    // database
+  private:
+    SQLiteDb &pan_db;
 
   public:
 #ifdef HAVE_GKR
