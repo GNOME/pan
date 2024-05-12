@@ -177,6 +177,13 @@ namespace
     return true;
   }
 
+  SQLiteDb get_sqlite_db() {
+    std::ostringstream db_file;
+    db_file <<  file::get_pan_home() << G_DIR_SEPARATOR << "pan.db";
+    SQLiteDb my_db(db_file.str(), SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
+    return my_db;
+  }
+
 /* ****** Status Icon and Notification *******************************************/
 
   enum StatusIcons
@@ -795,6 +802,7 @@ main (int argc, char *argv[])
   std::string nzb_str;
   bool fatal_dbg(true);
   bool console_active(false);
+  SQLiteDb pan_db = get_sqlite_db();
 
   for (int i=1; i<argc; ++i)
   {
@@ -879,7 +887,7 @@ main (int argc, char *argv[])
 
     // instantiate the backend...
     int const cache_megs = prefs.get_int("cache-size-megs", 10);
-    DataImpl data (prefs.get_string("cache-file-extension","msg"), prefs, false, cache_megs);
+    DataImpl data (prefs.get_string("cache-file-extension","msg"), prefs, pan_db, false, cache_megs);
     ArticleCache& cache (data.get_cache ());
     EncodeCache& encode_cache (data.get_encode_cache());
     CertStore& certstore (data.get_certstore());
