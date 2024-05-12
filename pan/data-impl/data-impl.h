@@ -160,6 +160,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
       void load_server_properties (const DataIO&);
 
       void save_server_properties (DataIO&, Prefs&);
+      void load_db_schema (const char* file);
 
       typedef Loki::AssocVector<Quark,Server> servers_t;
 
