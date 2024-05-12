@@ -12,6 +12,9 @@ add_library(data-impl
  xover.cc
 )
 
+find_package(SQLiteCpp REQUIRED)
+target_link_libraries(data-impl PRIVATE SQLiteCpp)
+
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
 target_compile_options(data-impl PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")
