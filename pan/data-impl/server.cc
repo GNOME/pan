@@ -17,6 +17,7 @@
  *
  */
 
+#include <SQLiteCpp/Statement.h>
 #include <config.h>
 #include <unistd.h>
 #include <fstream>
@@ -27,6 +28,10 @@
 #include <vector>
 #include <glib.h> // for GMarkup
 #include <glib/gi18n.h>
+#include <SQLiteCpp/SQLiteCpp.h>
+#include <SQLiteCpp/VariadicBind.h>
+
+
 #include <pan/general/debug.h>
 #include <pan/general/file-util.h>
 #include <pan/general/log.h>
@@ -207,7 +212,8 @@ void DataImpl ::save_server_info(Quark const &server)
 {
   Server * s (find_server (server));
   assert (s);
-  save_server_properties (*_data_io, _prefs);
+  //save_server_properties (*_data_io, _prefs);
+  save_server_in_db(server.to_string(), s , _prefs);
 }
 
 bool DataImpl ::get_server_auth(Quark const &server,
@@ -218,6 +224,16 @@ bool DataImpl ::get_server_auth(Quark const &server,
   Server * s (find_server (server));
   bool found (s);
   if (found) {
+    get_server_auth(s,setme_username, setme_password, use_gkr);
+  }
+  return found;
+}
+
+void DataImpl ::get_server_auth(Server* s,
+                           std::string &setme_username,
+                           gchar *&setme_password,
+                           bool use_gkr)
+{
     setme_username = s->username;
 #ifdef HAVE_GKR
     if (!use_gkr)
@@ -251,9 +267,6 @@ bool DataImpl ::get_server_auth(Quark const &server,
 #else
     setme_password = g_strdup(s->password.c_str());
 #endif
-  }
-
-  return found;
 
 }
 
@@ -525,8 +538,89 @@ std::string escaped(std::string const &s)
   }
 }
 
-void
-DataImpl :: save_server_properties (DataIO& data_io, Prefs& prefs)
+void DataImpl :: save_server_in_db(std::string pan_id, Server* s, Prefs& prefs)
+{
+  std::stringstream create_st;
+
+  std::string user;
+  gchar* pass(NULL);
+  get_server_auth(s, user, pass, prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT));
+
+  create_st << "insert into server (pan_id, host) values (?,?) on conflict do nothing; ";
+  try {
+    SQLite::Statement query1(pan_db,create_st.str());
+    int i = 1;
+    query1.bind(i++, pan_id);
+    query1.bind(i++, s->host);
+    int nb = query1.exec();
+    if (nb > 0) {
+      std::cout << "created server " << s->host << " in DB\n";
+    }
+  }
+  catch (std::exception& e) {
+    std::cout << "SQLite exception while creating server " << s->host << ": " << e.what() << std::endl;
+  }
+
+  std::stringstream update_st;
+  update_st << "update server set port = ? , username = ? , password = ? , "
+            << "expiry_days = ? , connection_limit = ? , newsrc_filename = ? , "
+            << "rank = ? , use_ssl = ? , trust_certificate = ? , compression_type = ? , certificate = ? "
+            << "where pan_id = ?";
+
+  try {
+    SQLite::Statement query(pan_db,update_st.str());
+    int i = 1;
+    query.bind(i++, s->port);
+    query.bind(i++, user);
+
+#ifdef HAVE_GKR
+    if (prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT)) {
+      query.bind(i++, "HANDLED_BY_PASSWORD_STORAGE");
+    }
+    else {
+      query.bind(i++, pass);
+    }
+#else
+    query.bind(i++, pass);
+#endif
+    query.bind(i++, s->article_expiration_age);
+    query.bind(i++, s->max_connections);
+    query.bind(i++, s->newsrc_filename);
+    query.bind(i++, s->rank);
+    query.bind(i++, s->ssl_support);
+    query.bind(i++, s->trust);
+    query.bind(i++, s->compression_type);
+    query.bind(i++, s->cert);
+    query.bind(i++, pan_id);
+
+    int nb = query.exec();
+    std::cout << "saved entries for server " << s->host << "\n";
+  }
+  catch (std::exception& e) {
+    std::cout << "SQLite exception while saving server " << s->host << ": " << e.what()
+              << "\n" << update_st.str();
+  }
+}
+
+void DataImpl :: save_server_properties (Prefs& prefs)
+{
+  int depth (0);
+
+  // sort the servers by id
+  typedef std::set<Quark,AlphabeticalQuarkOrdering> alpha_quarks_t;
+  alpha_quarks_t servers;
+  foreach_const (servers_t, _servers, it)
+    servers.insert (it->first);
+
+  // write the servers to the ostream
+  foreach_const (alpha_quarks_t, servers, it) {
+    Server* s (find_server (*it));
+    save_server_in_db(it->to_string(), s, prefs);
+  }
+}
+
+
+void DataImpl :: save_server_properties (DataIO& data_io, Prefs& prefs)
 {
   int depth (0);
   std::ostream * out = data_io.write_server_properties ();
