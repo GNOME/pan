@@ -159,7 +159,10 @@ DataImpl :: rebuild_backend ()
     std::string sql_file = "01-server.sql";
     load_db_schema(sql_file.c_str());
 
+    // TODO: skip these 2 steps if DB already contains server info
     load_server_properties (*_data_io);
+    save_server_properties (_prefs);
+
     load_newsrc_files (*_data_io);
     load_group_xovers (*_data_io);
     load_group_permissions (*_data_io);

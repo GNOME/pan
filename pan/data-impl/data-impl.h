@@ -160,6 +160,8 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
       void load_server_properties (const DataIO&);
 
       void save_server_properties (DataIO&, Prefs&);
+      void save_server_properties (Prefs&);
+      void save_server_in_db(std::string pan_id, Server* s, Prefs& prefs);
       void load_db_schema (const char* file);
 
       typedef Loki::AssocVector<Quark,Server> servers_t;
@@ -220,6 +222,11 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
                             std::string   & setme_username,
                             gchar         *&setme_password,
                             bool            use_gkr) override;
+
+      void get_server_auth (Server*    server,
+                            std::string   & setme_username,
+                            gchar         *&setme_password,
+                            bool            use_gkr);
 
       bool get_server_trust (const Quark  & servername, int&) const override;
 
