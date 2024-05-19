@@ -20,39 +20,38 @@
 #ifndef __DataImpl_h__
 #define __DataImpl_h__
 
+#include <deque>
 #include <iosfwd>
 #include <list>
 #include <map>
 #include <string>
 #include <vector>
-#include <deque>
 
-#include <pan/tasks/queue.h>
-#include <pan/general/quark.h>
+#include <pan/data-impl/article-filter.h>
+#include <pan/data-impl/data-io.h>
+#include <pan/data-impl/memchunk.h>
+#include <pan/data-impl/profiles.h>
+#include <pan/data-impl/rules-filter.h>
+#include <pan/data/article-cache.h>
+#include <pan/data/article.h>
+#include <pan/data/data.h>
+#include <pan/data/encode-cache.h>
 #include <pan/general/macros.h>
 #include <pan/general/map-vector.h>
+#include <pan/general/quark.h>
 #include <pan/general/sorted-vector.h>
+#include <pan/gui/prefs.h>
+#include <pan/tasks/queue.h>
+#include <pan/usenet-utils/blowfish.h>
 #include <pan/usenet-utils/numbers.h>
 #include <pan/usenet-utils/scorefile.h>
-#include <pan/usenet-utils/blowfish.h>
-#include <pan/data/article.h>
-#include <pan/data/article-cache.h>
-#include <pan/data/encode-cache.h>
-#include <pan/data/data.h>
-#include <pan/data-impl/data-io.h>
-#include <pan/data-impl/article-filter.h>
-#include <pan/data-impl/rules-filter.h>
-#include <pan/data-impl/profiles.h>
-#include <pan/data-impl/memchunk.h>
-#include <pan/gui/prefs.h>
 
 #ifdef HAVE_GNUTLS
-  #include <pan/data/cert-store.h>
-  #include <gnutls/gnutls.h>
+#include <gnutls/gnutls.h>
+#include <pan/data/cert-store.h>
 #endif
 
-namespace pan
-{
+namespace pan {
   typedef std::vector<const Article*> articles_t;
   typedef Data::PasswordData PasswordData;
 
@@ -68,363 +67,423 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 {
 
     /**
-    *** SERVERS
-    **/
+     *** SERVERS
+     **/
 
-    public:
-      /* The ProfilesImpl will own and destruct the DataIO object */
-      DataImpl(StringView const &cache_ext,
-               Prefs &prefs,
-               bool unit_test = false,
-               int cache_megs = 10,
-               DataIO *source = new DataIO());
-      virtual ~DataImpl ();
-      void save_state() override final;
+  public:
+    /* The ProfilesImpl will own and destruct the DataIO object */
+    DataImpl(StringView const &cache_ext,
+             Prefs &prefs,
+             bool unit_test = false,
+             int cache_megs = 10,
+             DataIO *source = new DataIO());
+    virtual ~DataImpl();
+    void save_state() override final;
 
-    public:
-      ArticleCache& get_cache () override { return _cache;
-      }
+  public:
+    ArticleCache &get_cache() override
+    {
+      return _cache;
+    }
 
-      ArticleCache const &get_cache() const override
-      {
-        return _cache;
-      }
+    ArticleCache const &get_cache() const override
+    {
+      return _cache;
+    }
 
-      EncodeCache& get_encode_cache () override { return _encode_cache;
-      }
+    EncodeCache &get_encode_cache() override
+    {
+      return _encode_cache;
+    }
 
-      EncodeCache const &get_encode_cache() const override
-      {
-        return _encode_cache;
-      }
+    EncodeCache const &get_encode_cache() const override
+    {
+      return _encode_cache;
+    }
 
-      CertStore& get_certstore () override { return _certstore;
-      }
+    CertStore &get_certstore() override
+    {
+      return _certstore;
+    }
 
-      CertStore const &get_certstore() const override
-      {
-        return _certstore;
-      }
+    CertStore const &get_certstore() const override
+    {
+      return _certstore;
+    }
 
-      virtual Prefs& get_prefs () { return _prefs;
-      }
+    virtual Prefs &get_prefs()
+    {
+      return _prefs;
+    }
 
-      virtual Prefs const &get_prefs() const
-      {
-        return _prefs;
-      }
+    virtual Prefs const &get_prefs() const
+    {
+      return _prefs;
+    }
 
-      virtual Queue* get_queue () { return _queue;
-      }
+    virtual Queue *get_queue()
+    {
+      return _queue;
+    }
 
-      virtual Queue const *get_queue() const
-      {
-        return _queue;
-      }
+    virtual Queue const *get_queue() const
+    {
+      return _queue;
+    }
 
-      void set_queue (Queue* q) override { _queue = q; }
+    void set_queue(Queue *q) override
+    {
+      _queue = q;
+    }
 
-    private:
-      ArticleCache _cache;
-      EncodeCache _encode_cache;
-      CertStore _certstore;
-      Queue* _queue;
+  private:
+    ArticleCache _cache;
+    EncodeCache _encode_cache;
+    CertStore _certstore;
+    Queue *_queue;
 
-    public:
+  public:
 #ifdef HAVE_GKR
-      gboolean password_encrypt (const PasswordData&) override;
-      gchar* password_decrypt (PasswordData&) const override;
+    gboolean password_encrypt(PasswordData const &) override;
+    gchar *password_decrypt(PasswordData &) const override;
 #endif
-    private:
-
-      void rebuild_backend ();
-      const bool _unit_test;
-      DataIO * _data_io;
-      Prefs& _prefs;
+  private:
+    void rebuild_backend();
+    bool const _unit_test;
+    DataIO *_data_io;
+    Prefs &_prefs;
 
     /**
     *** SERVERS
     **/
 
-    private: // implementation
+  private: // implementation
+    void load_server_properties(DataIO const &);
 
-      void load_server_properties (const DataIO&);
+    void save_server_properties(DataIO &, Prefs &);
+    void load_db_schema(char const *file);
 
-      void save_server_properties (DataIO&, Prefs&);
+    typedef Loki::AssocVector<Quark, Server> servers_t;
 
-      typedef Loki::AssocVector<Quark,Server> servers_t;
+    servers_t _servers;
 
-      servers_t _servers;
+  public:
+    Server const *find_server(Quark const &server) const override;
+    Server *find_server(Quark const &server) override;
+    bool find_server_by_host_name(std::string const &server,
+                                  Quark &setme) const override;
 
-    public:
-      const Server* find_server (const Quark& server) const override;
-      Server* find_server (const Quark& server) override;
-      bool find_server_by_host_name (const std::string& server, Quark& setme) const override;
+  public: // mutators
+    void delete_server(Quark const &server) override;
 
-    public: // mutators
+    Quark add_new_server() override;
 
-      void delete_server (const Quark& server) override;
+    void set_server_auth(Quark const &server,
+                         StringView const &username,
+                         gchar *&password,
+                         bool use_gkr) override;
 
-      Quark add_new_server () override;
+    void set_server_trust(Quark const &servername, int setme) override;
 
+    void set_server_addr(Quark const &server,
+                         StringView const &host,
+                         int const port) override;
 
-      void set_server_auth (const Quark       & server,
-                            const StringView  & username,
-                            gchar             *&password,
-                            bool                use_gkr) override;
+    void set_server_limits(Quark const &server, int max_connections) override;
 
-      void set_server_trust (const Quark      & servername,
-                             int                setme) override;
+    void set_server_rank(Quark const &server, int rank) override;
 
-      void set_server_addr (const Quark       & server,
-                            const StringView  & host,
-                            const int           port) override;
+    void set_server_ssl_support(Quark const &server, int ssl) override;
 
-      void set_server_limits (const Quark     & server,
-                              int               max_connections) override;
+    void set_server_cert(Quark const &server, StringView const &cert) override;
 
-      void set_server_rank (const Quark& server, int rank) override;
+    void set_server_article_expiration_age(Quark const &server,
+                                           int days) override;
 
-      void set_server_ssl_support (const Quark& server, int ssl) override;
+    void set_server_compression_type(Quark const &server,
+                                     int const setme) override;
 
-      void set_server_cert (const Quark & server, const StringView & cert) override;
+    void save_server_info(Quark const &server) override;
 
-      void set_server_article_expiration_age  (const Quark  & server,
-                                               int            days) override;
+  public: // accessors
+    quarks_t get_servers() const override;
 
-      void set_server_compression_type  (const Quark   & server,
-                                         const int       setme) override;
+    bool get_server_auth(Quark const &server,
+                         std::string &setme_username,
+                         gchar *&setme_password,
+                         bool use_gkr) override;
+    void get_server_auth(Server *server,
+                         std::string &setme_username,
+                         gchar *&setme_password,
+                         bool use_gkr);
 
-      void save_server_info (const Quark& server) override;
+    bool get_server_trust(Quark const &servername, int &) const override;
 
-    public: // accessors
+    bool get_server_compression_type(Quark const &servername,
+                                     CompressionType &) const override;
 
-      quarks_t get_servers () const override;
+    bool get_server_addr(Quark const &server,
+                         std::string &setme_host,
+                         int &setme_port) const override;
 
-      bool get_server_auth (const Quark   & server,
-                            std::string   & setme_username,
-                            gchar         *&setme_password,
-                            bool            use_gkr) override;
+    std::string get_server_address(Quark const &servername) const override;
 
-      bool get_server_trust (const Quark  & servername, int&) const override;
+    bool get_server_ssl_support(Quark const &server) const override;
 
-      bool get_server_compression_type (const Quark  & servername, CompressionType&) const override;
+    std::string get_server_cert(Quark const &server) const override;
 
-      bool get_server_addr (const Quark   & server,
-                            std::string   & setme_host,
-                            int           & setme_port) const override;
+    int get_server_rank(Quark const &server) const override;
 
-      std::string get_server_address (const Quark& servername) const override;
+    int get_server_limits(Quark const &server) const override;
 
-      bool get_server_ssl_support (const Quark & server) const override;
-
-      std::string get_server_cert (const Quark & server) const override;
-
-      int get_server_rank (const Quark& server) const override;
-
-      int get_server_limits (const Quark & server) const override;
-
-      int get_server_article_expiration_age  (const Quark  & server) const override;
+    int get_server_article_expiration_age(Quark const &server) const override;
 
     /**
     *** GROUPS
     **/
 
-    private: // implementation
+  private: // implementation
+    typedef std::map<Quark, std::string> descriptions_t;
+    mutable descriptions_t _descriptions; // groupname -> description
+    mutable bool _descriptions_loaded;
 
-      typedef std::map<Quark,std::string> descriptions_t;
-      mutable descriptions_t _descriptions; // groupname -> description
-      mutable bool _descriptions_loaded;
+    typedef sorted_vector<Quark, true> unique_sorted_quarks_t;
+    typedef sorted_vector<Quark, true> groups_t;
+    groups_t _moderated; // groups which are moderated
+    groups_t _nopost;    // groups which do not allow posting
 
-      typedef sorted_vector<Quark,true> unique_sorted_quarks_t;
-      typedef sorted_vector<Quark,true> groups_t;
-      groups_t _moderated; // groups which are moderated
-      groups_t _nopost; // groups which do not allow posting
+    typedef sorted_vector<Quark, true, AlphabeticalQuarkOrdering>
+      alpha_groups_t;
+    alpha_groups_t _subscribed; // subscribed groups, sorted alphabetically
+    alpha_groups_t
+      _unsubscribed; // non-subscribed groups, sorted alphabetically
 
-      typedef sorted_vector<Quark,true,AlphabeticalQuarkOrdering> alpha_groups_t;
-      alpha_groups_t _subscribed; // subscribed groups, sorted alphabetically
-      alpha_groups_t _unsubscribed; // non-subscribed groups, sorted alphabetically
-
-      /**
-       * Represents a newsgroup that's been read.
-       *
-       * Since most groups are never read, the `read' fields are separated
-       * out into this structure, so that it can be instantiated on demand.
-       * Since most news servers have tens of thousands of newsgroups,
-       * this represents a big memory savings.
-       *
-       * This private class should only be used by code in the data-impl module.
-       */
-      struct ReadGroup
-      {
+    /**
+     * Represents a newsgroup that's been read.
+     *
+     * Since most groups are never read, the `read' fields are separated
+     * out into this structure, so that it can be instantiated on demand.
+     * Since most news servers have tens of thousands of newsgroups,
+     * this represents a big memory savings.
+     *
+     * This private class should only be used by code in the data-impl module.
+     */
+    struct ReadGroup
+    {
         /**
          * Per-server for a newsgroup that's been read.
          *
-         * This private class should only be used by code in the data-impl module.
+         * This private class should only be used by code in the data-impl
+         * module.
          */
-        struct Server {
-          Numbers _read;
-          Article_Number _xover_high;
-          Server(): _xover_high(0) {}
+        struct Server
+        {
+            Numbers _read;
+            Article_Number _xover_high;
+
+            Server() :
+              _xover_high(0)
+            {
+            }
         };
-        typedef Loki::AssocVector<Quark,Server> servers_t;
+
+        typedef Loki::AssocVector<Quark, Server> servers_t;
         servers_t _servers;
 
         Article_Count _article_count;
         Article_Count _unread_count;
 
-        ReadGroup(): _article_count(0), _unread_count(0) {}
+        ReadGroup() :
+          _article_count(0),
+          _unread_count(0)
+        {
+        }
 
-        Server& operator[](const Quark& s) { return _servers[s]; }
+        Server &operator[](Quark const &s)
+        {
+          return _servers[s];
+        }
 
-        static void decrement_safe (Article_Count &lhs, Article_Count dec) { lhs = lhs>dec ? lhs-dec : static_cast<Article_Count>(0); }
-        void decrement_unread (Article_Count dec) { decrement_safe (_unread_count, dec); }
-        void decrement_count (Article_Count dec) { decrement_safe (_article_count, dec); }
+        static void decrement_safe(Article_Count &lhs, Article_Count dec)
+        {
+          lhs = lhs > dec ? lhs - dec : static_cast<Article_Count>(0);
+        }
 
-        Server* find_server (const Quark& s) {
-          servers_t::iterator it (_servers.find (s));
+        void decrement_unread(Article_Count dec)
+        {
+          decrement_safe(_unread_count, dec);
+        }
+
+        void decrement_count(Article_Count dec)
+        {
+          decrement_safe(_article_count, dec);
+        }
+
+        Server *find_server(Quark const &s)
+        {
+          servers_t::iterator it(_servers.find(s));
           return it == _servers.end() ? nullptr : &it->second;
         }
 
-        const Server* find_server (const Quark& s) const {
-          servers_t::const_iterator it (_servers.find (s));
+        Server const *find_server(Quark const &s) const
+        {
+          servers_t::const_iterator it(_servers.find(s));
           return it == _servers.end() ? nullptr : &it->second;
         }
-      };
+    };
 
-      typedef Loki::AssocVector<Quark,ReadGroup> read_groups_t;
-      read_groups_t _read_groups;
+    typedef Loki::AssocVector<Quark, ReadGroup> read_groups_t;
+    read_groups_t _read_groups;
 
-      ReadGroup* find_read_group (const Quark& g) {
-        read_groups_t::iterator it (_read_groups.find (g));
-        return it == _read_groups.end() ? nullptr : &it->second;
-      }
-      const ReadGroup* find_read_group (const Quark& g) const {
-        read_groups_t::const_iterator it (_read_groups.find (g));
-        return it == _read_groups.end() ? nullptr : &it->second;
-      }
-      ReadGroup::Server* find_read_group_server (const Quark& g, const Quark& s) {
-        ReadGroup * read_group = find_read_group (g);
-        return read_group ? read_group->find_server (s) : nullptr;
-      }
-      const ReadGroup::Server* find_read_group_server (const Quark& g, const Quark& s) const {
-        const ReadGroup * read_group = find_read_group (g);
-        return read_group ? read_group->find_server (s) : nullptr;
-      }
+    ReadGroup *find_read_group(Quark const &g)
+    {
+      read_groups_t::iterator it(_read_groups.find(g));
+      return it == _read_groups.end() ? nullptr : &it->second;
+    }
 
-      void ensure_descriptions_are_loaded () const;
-      void load_group_descriptions (const DataIO&) const;
-      void save_group_descriptions (DataIO&) const;
+    ReadGroup const *find_read_group(Quark const &g) const
+    {
+      read_groups_t::const_iterator it(_read_groups.find(g));
+      return it == _read_groups.end() ? nullptr : &it->second;
+    }
 
-      void load_group_xovers (const DataIO&);
-      void save_group_xovers (DataIO&) const;
+    ReadGroup::Server *find_read_group_server(Quark const &g, Quark const &s)
+    {
+      ReadGroup *read_group = find_read_group(g);
+      return read_group ? read_group->find_server(s) : nullptr;
+    }
 
-      void load_group_permissions (const DataIO&);
-      void save_group_permissions (DataIO&) const;
+    ReadGroup::Server const *find_read_group_server(Quark const &g,
+                                                    Quark const &s) const
+    {
+      ReadGroup const *read_group = find_read_group(g);
+      return read_group ? read_group->find_server(s) : nullptr;
+    }
 
-      std::string get_newsrc_filename (const Quark& server) const;
-      void load_newsrc (const Quark& server, LineReader*, alpha_groups_t&, alpha_groups_t&);
-      void load_newsrc_files (const DataIO&);
-      void save_newsrc_files (DataIO&) const;
+    void ensure_descriptions_are_loaded() const;
+    void load_group_descriptions(DataIO const &) const;
+    void save_group_descriptions(DataIO &) const;
 
-    public: // mutators
+    void load_group_xovers(DataIO const &);
+    void save_group_xovers(DataIO &) const;
 
-      void add_groups                 (const Quark       & server,
-                                               const NewGroup    * new_groups,
-                                               size_t              group_count) override;
+    void load_group_permissions(DataIO const &);
+    void save_group_permissions(DataIO &) const;
 
-      void mark_group_read            (const Quark       & group) override;
+    std::string get_newsrc_filename(Quark const &server) const;
+    void load_newsrc(Quark const &server,
+                     LineReader *,
+                     alpha_groups_t &,
+                     alpha_groups_t &);
+    void load_newsrc_files(DataIO const &);
+    void save_newsrc_files(DataIO &) const;
 
-      void set_group_subscribed       (const Quark       & group,
-                                               bool                sub) override;
+  public: // mutators
+    void add_groups(Quark const &server,
+                    NewGroup const *new_groups,
+                    size_t group_count) override;
 
-    public: // accessors
+    void mark_group_read(Quark const &group) override;
 
-      const std::string& get_group_description (const Quark& group) const override;
-      void get_subscribed_groups (std::vector<Quark>&) const override;
-      void get_other_groups (std::vector<Quark>&) const override;
-      virtual void get_group_counts (const Quark    & group,
-                                     Article_Count  & setme_unread,
-                                     Article_Count  & setme_total) const override;
-      char get_group_permission (const Quark & group) const override;
-      void group_get_servers (const Quark& group, quarks_t&) const override;
-      void server_get_groups (const Quark& server, quarks_t&) const override;
+    void set_group_subscribed(Quark const &group, bool sub) override;
+
+  public: // accessors
+    std::string const &get_group_description(Quark const &group) const override;
+    void get_subscribed_groups(std::vector<Quark> &) const override;
+    void get_other_groups(std::vector<Quark> &) const override;
+    virtual void get_group_counts(Quark const &group,
+                                  Article_Count &setme_unread,
+                                  Article_Count &setme_total) const override;
+    char get_group_permission(Quark const &group) const override;
+    void group_get_servers(Quark const &group, quarks_t &) const override;
+    void server_get_groups(Quark const &server, quarks_t &) const override;
 
     /**
     ***  HEADERS
     **/
 
-    private: // implementation
+  private: // implementation
+    /** 'article' MUST have been allocated by
+     * GroupHeaders::alloc_new_article()!! */
+    void load_article(Quark const &g,
+                      Article *article,
+                      StringView const &references);
 
-      /** 'article' MUST have been allocated by GroupHeaders::alloc_new_article()!! */
-      void load_article (const Quark& g, Article * article, const StringView& references);
+    /** the contents of `part' are given up wholesale to our
+        local GroupHeaders.  As a side-effect, the value of `part'
+        after this call is undefined.  This is an ugly interface,
+        but it's fast and only called by one client. */
+    void load_part(Quark const &g,
+                   Quark const &mid,
+                   int number,
+                   StringView const &part_mid,
+                   unsigned long lines,
+                   unsigned long bytes);
 
-      /** the contents of `part' are given up wholesale to our
-          local GroupHeaders.  As a side-effect, the value of `part'
-          after this call is undefined.  This is an ugly interface,
-          but it's fast and only called by one client. */
-      void load_part (const Quark& g, const Quark& mid,
-                      int number,
-                      const StringView& part_mid,
-                      unsigned long lines,
-                      unsigned long bytes);
+    void load_headers(DataIO const &, Quark const &group);
+    void save_headers(DataIO &, Quark const &group) const;
+    bool save_headers(DataIO &,
+                      Quark const &group,
+                      std::vector<Article *> const &,
+                      unsigned long &,
+                      unsigned long &) const;
 
-      void load_headers (const DataIO&, const Quark& group);
-      void save_headers (DataIO&, const Quark& group) const;
-      bool save_headers (DataIO&, const Quark& group,
-                         const std::vector<Article*>&,
-                         unsigned long&, unsigned long&) const;
-
-
-      /**
-       * ArticleNode is a Tree node used for threading Article objects.
-       *
-       * GroupHeaders owns these, and also contains a lookup table from
-       * Message-ID to ArticleNode for finding a starting point in the tree.
-       *
-       * Note that _article can be NULL here; we instantiate nodes from
-       * Articles' References: header so that we can get the threading model
-       * right even during an xover where we get children in before the
-       * parent.  This way we never need to rethread; new articles just
-       * fill in the missing pieces as they come in.
-       *
-       * @see GroupHeaders
-       */
-      struct ArticleNode
-      {
+    /**
+     * ArticleNode is a Tree node used for threading Article objects.
+     *
+     * GroupHeaders owns these, and also contains a lookup table from
+     * Message-ID to ArticleNode for finding a starting point in the tree.
+     *
+     * Note that _article can be NULL here; we instantiate nodes from
+     * Articles' References: header so that we can get the threading model
+     * right even during an xover where we get children in before the
+     * parent.  This way we never need to rethread; new articles just
+     * fill in the missing pieces as they come in.
+     *
+     * @see GroupHeaders
+     */
+    struct ArticleNode
+    {
         Quark _mid;
-        Article * _article;
+        Article *_article;
 
-        ArticleNode * _parent;
-        typedef std::list<ArticleNode*> children_t;
+        ArticleNode *_parent;
+        typedef std::list<ArticleNode *> children_t;
         children_t _children;
 
-        ArticleNode(): _article(nullptr), _parent(nullptr) {}
-      };
+        ArticleNode() :
+          _article(nullptr),
+          _parent(nullptr)
+        {
+        }
+    };
 
-      typedef std::map<Quark,ArticleNode*> nodes_t;
-      typedef std::vector<ArticleNode*> nodes_v;
-      typedef std::vector<const ArticleNode*> const_nodes_v;
+    typedef std::map<Quark, ArticleNode *> nodes_t;
+    typedef std::vector<ArticleNode *> nodes_v;
+    typedef std::vector<ArticleNode const *> const_nodes_v;
 
-      struct NodeWeakOrdering
-      {
-        typedef std::pair<Quark,ArticleNode*> nodes_t_element;
+    struct NodeWeakOrdering
+    {
+        typedef std::pair<Quark, ArticleNode *> nodes_t_element;
 
-        bool operator () (const nodes_t_element& a, const Quark& b) const {
+        bool operator()(nodes_t_element const &a, Quark const &b) const
+        {
           return a.first < b;
         }
-        bool operator () (const Quark& a, const nodes_t_element& b) const {
+
+        bool operator()(Quark const &a, nodes_t_element const &b) const
+        {
           return a < b.first;
         }
-      };
+    };
 
-      /***
-       **
-      ***/
-      void fire_article_flag_changed (articles_t& a, const Quark& group) override;
+    /***
+     **
+     ***/
+    void fire_article_flag_changed(articles_t &a, Quark const &group) override;
 
-      struct GroupHeaders
-      {
+    struct GroupHeaders
+    {
         int _ref;
         bool _dirty;
         nodes_t _nodes;
@@ -432,186 +491,186 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
         MemChunk<ArticleNode> _node_chunk;
 
         GroupHeaders();
-        ~GroupHeaders ();
+        ~GroupHeaders();
 
-        Article& alloc_new_article () {
+        Article &alloc_new_article()
+        {
           static const Article blank_article;
-          _art_chunk.push_back (blank_article);
+          _art_chunk.push_back(blank_article);
           return _art_chunk.back();
         }
 
-        ArticleNode* find_node (const Quark& mid);
-        const ArticleNode* find_node (const Quark& mid) const;
+        ArticleNode *find_node(Quark const &mid);
+        ArticleNode const *find_node(Quark const &mid) const;
 
-        const Quark& find_parent_message_id (const Quark& mid) const;
-        Article* find_article (const Quark& mid);
-        const Article* find_article (const Quark& mid) const;
-        void remove_articles (const quarks_t& mids);
-        void build_references_header (const Article* article, std::string& setme) const;
+        Quark const &find_parent_message_id(Quark const &mid) const;
+        Article *find_article(Quark const &mid);
+        Article const *find_article(Quark const &mid) const;
+        void remove_articles(quarks_t const &mids);
+        void build_references_header(Article const *article,
+                                     std::string &setme) const;
 
         void reserve(Article_Count);
+    };
 
-      };
+    static void find_nodes(quarks_t const &mids,
+                           nodes_t &nodes,
+                           nodes_v &setme);
 
-      static void find_nodes (const quarks_t           & mids,
-                              nodes_t                  & nodes,
-                              nodes_v                  & setme);
+    static void find_nodes(quarks_t const &mids,
+                           nodes_t const &nodes,
+                           const_nodes_v &setme);
 
-      static void find_nodes (const quarks_t           & mids,
-                              const nodes_t            & nodes,
-                              const_nodes_v            & setme);
+    void get_article_references(Quark const &group,
+                                Article const *,
+                                std::string &setme) const override;
 
-      void get_article_references (const Quark& group, const Article*, std::string& setme) const override;
+    /**
+     * For a given ArticleNode, returns the first ancestor whose mid is in
+     * mid_pool.
+     * FIXME: these should be member functions of ArticleNode
+     */
+    static ArticleNode *find_closest_ancestor(
+      ArticleNode *node, unique_sorted_quarks_t const &mid_pool);
+    static ArticleNode const *find_closest_ancestor(
+      ArticleNode const *node, unique_sorted_quarks_t const &mid_pool);
 
-      /**
-       * For a given ArticleNode, returns the first ancestor whose mid is in mid_pool.
-       * FIXME: these should be member functions of ArticleNode
-       */
-      static ArticleNode* find_closest_ancestor (ArticleNode  * node,
-                                                 const unique_sorted_quarks_t & mid_pool);
-      static const ArticleNode* find_closest_ancestor (const ArticleNode  * node,
-                                                       const unique_sorted_quarks_t & mid_pool);
+    static ArticleNode *find_ancestor(ArticleNode *node,
+                                      Quark const &ancestor_mid);
 
-      static ArticleNode* find_ancestor (ArticleNode * node,
-                                         const Quark & ancestor_mid);
+    typedef Loki::AssocVector<Quark, GroupHeaders *> group_to_headers_t;
+    group_to_headers_t _group_to_headers;
 
-      typedef Loki::AssocVector<Quark,GroupHeaders*> group_to_headers_t;
-      group_to_headers_t _group_to_headers;
+    GroupHeaders *get_group_headers(Quark const &group);
+    GroupHeaders const *get_group_headers(Quark const &group) const;
+    void free_group_headers_memory(Quark const &group);
+    bool is_read(Xref const &) const;
 
-      GroupHeaders* get_group_headers (const Quark& group);
-      const GroupHeaders* get_group_headers (const Quark& group) const;
-      void free_group_headers_memory (const Quark& group);
-      bool is_read (const Xref&) const;
+    void ref_group(Quark const &group);
+    void unref_group(Quark const &group);
 
-      void ref_group (const Quark& group);
-      void unref_group (const Quark& group);
-
-    private:
-
-      class MyTree final: public Data::ArticleTree
-      {
+  private:
+    class MyTree final : public Data::ArticleTree
+    {
         friend class DataImpl;
 
-        public: // life cycle
-          MyTree (DataImpl              & data_impl,
-                  const Quark           & group,
-                  const Quark           & save_path,  // for auto-download
-                  const Data::ShowType    show_type,
-                  const FilterInfo      * filter_info=nullptr,
-                  const RulesInfo       * rules=nullptr);
-          virtual ~MyTree ();
+      public: // life cycle
+        MyTree(DataImpl &data_impl,
+               Quark const &group,
+               Quark const &save_path, // for auto-download
+               const Data::ShowType show_type,
+               FilterInfo const *filter_info = nullptr,
+               RulesInfo const *rules = nullptr);
+        virtual ~MyTree();
 
-        public: // from ArticleTree
-          void get_children (const Quark& mid, articles_t& setme) const override;
-          const Article* get_parent (const Quark& mid) const override;
-          const Article* get_article (const Quark& mid) const override;
-          size_t size () const override;
-          void set_filter (const ShowType      show_type = SHOW_ARTICLES,
-                           const FilterInfo  * criteria  = nullptr) final override;
-          void set_rules  (const ShowType      show_type = SHOW_ARTICLES,
-                           const RulesInfo   * rules  = nullptr) final override;
+      public: // from ArticleTree
+        void get_children(Quark const &mid, articles_t &setme) const override;
+        Article const *get_parent(Quark const &mid) const override;
+        Article const *get_article(Quark const &mid) const override;
+        size_t size() const override;
+        void set_filter(const ShowType show_type = SHOW_ARTICLES,
+                        FilterInfo const *criteria = nullptr) final override;
+        void set_rules(const ShowType show_type = SHOW_ARTICLES,
+                       RulesInfo const *rules = nullptr) final override;
 
-        public:
-          void articles_changed (const quarks_t& mids, bool do_refilter);
-          void add_articles     (const quarks_t& mids);
-          void remove_articles  (const quarks_t& mids);
+      public:
+        void articles_changed(quarks_t const &mids, bool do_refilter);
+        void add_articles(quarks_t const &mids);
+        void remove_articles(quarks_t const &mids);
 
-        private: // implementation fields
-          const Quark _group;
-          DataImpl & _data;
-          const Quark _save_path;  // for auto-download
-          nodes_t _nodes;
-          MemChunk<ArticleNode> _node_chunk;
-          FilterInfo _filter;
-          RulesInfo _rules;
-          Data::ShowType _show_type;
-          struct NodeMidCompare;
-          struct TwoNodes;
+      private: // implementation fields
+        const Quark _group;
+        DataImpl &_data;
+        const Quark _save_path; // for auto-download
+        nodes_t _nodes;
+        MemChunk<ArticleNode> _node_chunk;
+        FilterInfo _filter;
+        RulesInfo _rules;
+        Data::ShowType _show_type;
+        struct NodeMidCompare;
+        struct TwoNodes;
 
-        private:
-          typedef std::set<const ArticleNode*,NodeMidCompare> unique_nodes_t;
-          void accumulate_descendants (unique_nodes_t&, const ArticleNode*) const;
-          void add_articles (const const_nodes_v&);
-          void apply_filter (const const_nodes_v&);
-          void apply_rules  (const_nodes_v& candidates);
+      private:
+        typedef std::set<ArticleNode const *, NodeMidCompare> unique_nodes_t;
+        void accumulate_descendants(unique_nodes_t &,
+                                    ArticleNode const *) const;
+        void add_articles(const_nodes_v const &);
+        void apply_filter(const_nodes_v const &);
+        void apply_rules(const_nodes_v &candidates);
 
-        private:
-          void cache_articles (std::set<const Article*> s);
-          void download_articles (std::set<const Article*> s);
+      private:
+        void cache_articles(std::set<Article const *> s);
+        void download_articles(std::set<Article const *> s);
+    };
 
-      };
+    std::set<MyTree *> _trees;
+    void on_articles_removed(quarks_t const &mids) const;
+    void on_articles_added(Quark const &group, quarks_t const &mids);
+    void on_articles_changed(Quark const &group,
+                             quarks_t const &mids,
+                             bool do_refilter);
+    void remove_articles_from_tree(MyTree *, quarks_t const &mids) const;
+    void add_articles_to_tree(MyTree *, quarks_t const &mids);
 
+  public: // Data interface
+    void delete_articles(unique_articles_t const &) override;
 
+    ArticleTree *group_get_articles(
+      Quark const &group,
+      Quark const &save_path,
+      const ShowType show_type = SHOW_ARTICLES,
+      FilterInfo const *criteria = nullptr,
+      RulesInfo const *rules = nullptr) const override;
 
-      std::set<MyTree*> _trees;
-      void on_articles_removed (const quarks_t& mids) const;
-      void on_articles_added (const Quark& group, const quarks_t& mids);
-      void on_articles_changed (const Quark& group, const quarks_t& mids, bool do_refilter);
-      void remove_articles_from_tree (MyTree*, const quarks_t& mids) const;
-      void add_articles_to_tree (MyTree*, const quarks_t& mids);
+    void group_clear_articles(Quark const &group) override;
 
-    public:  // Data interface
+    bool is_read(Article const *) const override;
 
-      void delete_articles             (const unique_articles_t&) override;
+    void mark_read(Article const &article, bool mark_read) override;
 
-      ArticleTree* group_get_articles  (const Quark        & group,
-                                        const Quark        & save_path,
-                                        const ShowType      show_type = SHOW_ARTICLES,
-                                        const FilterInfo   * criteria=nullptr,
-                                        const RulesInfo    * rules=nullptr) const override;
+    void mark_read(Article const **articles,
+                   unsigned long article_count,
+                   bool mark_read = true) override;
 
-      void group_clear_articles        (const Quark        & group) override;
+    void get_article_scores(Quark const &newsgroup,
+                            Article const &article,
+                            Scorefile::items_t &setme) const override;
 
-      bool is_read                     (const Article      *) const override;
+    void add_score(StringView const &section_wildmat,
+                   int score_value,
+                   bool score_assign_flag,
+                   int lifespan_days,
+                   bool all_items_must_be_true,
+                   Scorefile::AddItem const *items,
+                   size_t item_count,
+                   bool do_rescore) override;
 
-      void mark_read                   (const Article      & article,
-                                        bool                 mark_read) override;
+    void comment_out_scorefile_line(StringView const &filename,
+                                    size_t begin_line,
+                                    size_t end_line,
+                                    bool do_rescore) override;
 
-      void mark_read                   (const Article     ** articles,
-                                        unsigned long        article_count,
-                                        bool                 mark_read=true) override;
+    void rescore_articles(Quark const &group, const quarks_t mids) override;
 
-      void get_article_scores          (const Quark        & newsgroup,
-                                        const Article      & article,
-                                        Scorefile::items_t & setme) const override;
+    void rescore_group_articles(Quark const &group) override;
 
-      void add_score (const StringView           & section_wildmat,
-                      int                          score_value,
-                      bool                         score_assign_flag,
-                      int                          lifespan_days,
-                      bool                         all_items_must_be_true,
-                      const Scorefile::AddItem   * items,
-                      size_t                       item_count,
-                      bool                         do_rescore) override;
+    void rescore() override;
 
-      void comment_out_scorefile_line (const StringView    & filename,
-                                       size_t                begin_line,
-                                       size_t                end_line,
-                                       bool                  do_rescore) override;
+    std::string get_scorefile_name() const override;
 
-      void rescore_articles (const Quark& group, const quarks_t mids) override;
-
-      void rescore_group_articles (const Quark& group) override;
-
-      void rescore () override;
-
-      std::string get_scorefile_name() const override;
-
-    private:
-
-      Scorefile _scorefile;
+  private:
+    Scorefile _scorefile;
 
     /**
     ***  XOVER
     **/
 
-    private: // implementation
-
-      /**
-       * This is a workarea used when we processing an XOVER command.
-       */
-      struct XOverEntry
-      {
+  private: // implementation
+    /**
+     * This is a workarea used when we processing an XOVER command.
+     */
+    struct XOverEntry
+    {
         time_t _last_flush_time;
 
         /** These are the articles which have been recently added.
@@ -622,7 +681,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
         /** Same as _added_batch, but for changed articles. */
         quarks_t _changed_batch;
 
-        typedef std::multimap<Quark,Quark> subject_to_mid_t;
+        typedef std::multimap<Quark, Quark> subject_to_mid_t;
 
         /** This is for multipart detection.  Pan folds multipart posts into
             a single Article holding all the parts.  This lookup helps decide,
@@ -636,93 +695,95 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
             be assigned to the same XOVER task. */
         int refcount;
 
-        XOverEntry(): _last_flush_time(0), refcount(0) { }
-      };
+        XOverEntry() :
+          _last_flush_time(0),
+          refcount(0)
+        {
+        }
+    };
 
-      typedef Loki::AssocVector<Quark,XOverEntry> xovers_t;
-      xovers_t _xovers;
+    typedef Loki::AssocVector<Quark, XOverEntry> xovers_t;
+    xovers_t _xovers;
 
-      XOverEntry * _cached_xover_entry;
-      Quark _cached_xover_group;
+    XOverEntry *_cached_xover_entry;
+    Quark _cached_xover_group;
 
-      /**
-       * Destroy the workarea.
-       * Don't call this directly -- xover_unref() do its job.
-       */
-      void xover_clear_workarea (const Quark& group);
+    /**
+     * Destroy the workarea.
+     * Don't call this directly -- xover_unref() do its job.
+     */
+    void xover_clear_workarea(Quark const &group);
 
-      /**
-       * Finds the XOverEntry workarea for the specified group.
-       * This must be called inside an xover_ref() / xover_unref() block,
-       * as the workarea is instantiated when the group's xover refcount
-       * increases to one and destroyed when it goes down to zero.
-       */
-      XOverEntry& xover_get_workarea (const Quark& group);
+    /**
+     * Finds the XOverEntry workarea for the specified group.
+     * This must be called inside an xover_ref() / xover_unref() block,
+     * as the workarea is instantiated when the group's xover refcount
+     * increases to one and destroyed when it goes down to zero.
+     */
+    XOverEntry &xover_get_workarea(Quark const &group);
 
-    public: // Data interface
+  public: // Data interface
+    void xover_ref(Quark const &group) override;
 
-      void xover_ref     (const Quark          & group) override;
+    Article const *xover_add(Quark const &server,
+                             Quark const &group,
+                             StringView const &subject,
+                             StringView const &author,
+                             const time_t date,
+                             StringView const &message_id,
+                             StringView const &references,
+                             unsigned long const byte_count,
+                             unsigned long const line_count,
+                             StringView const &xref,
+                             bool const is_virtual = false) override;
 
-      const Article* xover_add  (const Quark          & server,
-                                 const Quark          & group,
-                                 const StringView     & subject,
-                                 const StringView     & author,
-                                 const time_t           date,
-                                 const StringView     & message_id,
-                                 const StringView     & references,
-                                 const unsigned long    byte_count,
-                                 const unsigned long    line_count,
-                                 const StringView     & xref,
-                                 const bool             is_virtual=false) override;
+    /** useful for xover unit testing */
+    virtual void xover_flush(Quark const &group);
 
-      /** useful for xover unit testing */
-      virtual void xover_flush   (const Quark           & group);
+    virtual void xover_unref(Quark const &group) override;
 
-      virtual void xover_unref   (const Quark           & group) override;
+    virtual Article_Number get_xover_high(Quark const &group,
+                                          Quark const &server) const override;
 
-      virtual Article_Number get_xover_high (const Quark & group,
-                                             const Quark & server) const override;
+    virtual void set_xover_high(Quark const &group,
+                                Quark const &server,
+                                const Article_Number high) override;
 
-      virtual void set_xover_high (const Quark          & group,
-                                   const Quark          & server,
-                                   const Article_Number   high) override;
-
-       virtual void set_xover_low (const Quark          & group,
-                                   const Quark          & server,
-                                   const Article_Number   low) override;
-
+    virtual void set_xover_low(Quark const &group,
+                               Quark const &server,
+                               const Article_Number low) override;
 
     /**
     *** TaskArchive
     **/
 
-    public:
+  public:
+    void save_tasks(std::vector<Task *> const &saveme) override;
 
-      void save_tasks (const std::vector<Task*>& saveme) override;
+    void load_tasks(std::vector<Task *> &setme) override;
 
-      void load_tasks (std::vector<Task*>& setme) override;
+  public:
+    const ArticleFilter _article_filter;
+    RulesFilter _rules_filter;
 
+  private:
+    mutable guint newsrc_autosave_id;
+    guint newsrc_autosave_timeout;
 
+  public:
+    void set_newsrc_autosave_timeout(guint seconds)
+    {
+      newsrc_autosave_timeout = seconds;
+    }
 
-    public:
-
-      const ArticleFilter _article_filter;
-            RulesFilter   _rules_filter;
-
-    private:
-      mutable guint newsrc_autosave_id;
-      guint newsrc_autosave_timeout;
-    public:
-      void set_newsrc_autosave_timeout(guint seconds)
-        {newsrc_autosave_timeout = seconds;}
-      void save_newsrc_files()
-      { // Called from  rc_as_cb(...).
-        // The newsrc_autosave_id is now (soon) invalid since the timeout will be
-        // cancelled when our caller returns FALSE. So forget about it already.
-        newsrc_autosave_id = 0;
-        save_newsrc_files(*_data_io);
-      }
-  };
-}
+    void save_newsrc_files()
+    { // Called from  rc_as_cb(...).
+      // The newsrc_autosave_id is now (soon) invalid since the timeout will be
+      // cancelled when our caller returns FALSE. So forget about it already.
+      newsrc_autosave_id = 0;
+      save_newsrc_files(*_data_io);
+    }
+};
+} // namespace pan
 
 #endif
