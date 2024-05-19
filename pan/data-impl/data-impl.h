@@ -141,13 +141,13 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
     public:
 #ifdef HAVE_GKR
-      gboolean password_encrypt (const PasswordData&) override;
+      gboolean password_encrypt(PasswordData const &) override;
       gchar* password_decrypt (PasswordData&) const override;
 #endif
     private:
 
       void rebuild_backend ();
-      const bool _unit_test;
+      bool const _unit_test;
       DataIO * _data_io;
       Prefs& _prefs;
 
@@ -156,58 +156,56 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     **/
 
     private: // implementation
-
-      void load_server_properties (const DataIO&);
+      void load_server_properties(DataIO const &);
 
       void save_server_properties (DataIO&, Prefs&);
       void save_server_properties (Prefs&);
       void save_server_in_db(std::string pan_id, Server* s, Prefs& prefs);
-      void load_db_schema (const char* file);
+      void load_db_schema(char const *file);
 
       typedef Loki::AssocVector<Quark,Server> servers_t;
 
       servers_t _servers;
 
     public:
-      const Server* find_server (const Quark& server) const override;
-      Server* find_server (const Quark& server) override;
-      bool find_server_by_host_name (const std::string& server, Quark& setme) const override;
+      Server const *find_server(Quark const &server) const override;
+      Server *find_server(Quark const &server) override;
+      bool find_server_by_host_name(std::string const &server,
+                                    Quark &setme) const override;
 
     public: // mutators
-
-      void delete_server (const Quark& server) override;
+      void delete_server(Quark const &server) override;
 
       Quark add_new_server () override;
 
 
-      void set_server_auth (const Quark       & server,
-                            const StringView  & username,
-                            gchar             *&password,
-                            bool                use_gkr) override;
+      void set_server_auth(Quark const &server,
+                           StringView const &username,
+                           gchar *&password,
+                           bool use_gkr) override;
 
-      void set_server_trust (const Quark      & servername,
-                             int                setme) override;
+      void set_server_trust(Quark const &servername, int setme) override;
 
-      void set_server_addr (const Quark       & server,
-                            const StringView  & host,
-                            const int           port) override;
+      void set_server_addr(Quark const &server,
+                           StringView const &host,
+                           int const port) override;
 
-      void set_server_limits (const Quark     & server,
-                              int               max_connections) override;
+      void set_server_limits(Quark const &server, int max_connections) override;
 
-      void set_server_rank (const Quark& server, int rank) override;
+      void set_server_rank(Quark const &server, int rank) override;
 
-      void set_server_ssl_support (const Quark& server, int ssl) override;
+      void set_server_ssl_support(Quark const &server, int ssl) override;
 
-      void set_server_cert (const Quark & server, const StringView & cert) override;
+      void set_server_cert(Quark const &server,
+                           StringView const &cert) override;
 
-      void set_server_article_expiration_age  (const Quark  & server,
-                                               int            days) override;
+      void set_server_article_expiration_age(Quark const &server,
+                                             int days) override;
 
-      void set_server_compression_type  (const Quark   & server,
-                                         const int       setme) override;
+      void set_server_compression_type(Quark const &server,
+                                       int const setme) override;
 
-      void save_server_info (const Quark& server) override;
+      void save_server_info(Quark const &server) override;
 
     public: // accessors
 
