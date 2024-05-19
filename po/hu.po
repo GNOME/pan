@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pan master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues\n"
-"POT-Creation-Date: 2024-01-21 17:07+0000\n"
-"PO-Revision-Date: 2024-03-11 00:20+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/pan/issues/\n"
+"POT-Creation-Date: 2024-05-08 17:14+0000\n"
+"PO-Revision-Date: 2024-05-19 12:09+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -69,8 +69,8 @@ msgid "Error opening directory: \"%s\": %s"
 msgstr "Hiba a(z) „%s” könyvtár megnyitásakor: %s"
 
 #: pan/data/article-cache.cc:235 pan/data/article-cache.cc:244
-#: pan/data-impl/data-io.cc:279 pan/data-impl/data-io.cc:311
-#: pan/gui/post-ui.cc:1768
+#: pan/data-impl/data-io.cc:278 pan/data-impl/data-io.cc:310
+#: pan/gui/post-ui.cc:1767
 #, c-format
 msgid "Unable to save \"%s\" %s"
 msgstr "Nem sikerült a(z) „%s” mentése: %s"
@@ -81,8 +81,8 @@ msgid "Error opening file \"%s\" %s"
 msgstr "Hiba a(z) „%s” fájl megnyitásakor: %s"
 
 #: pan/data/article-cache.cc:393 pan/data-impl/profiles.cc:175
-#: pan/data-impl/server.cc:495 pan/general/file-util.cc:312
-#: pan/gui/post-ui.cc:637 pan/gui/task-pane.cc:741
+#: pan/data-impl/server.cc:495 pan/general/file-util.cc:311
+#: pan/gui/post-ui.cc:636 pan/gui/task-pane.cc:740
 #, c-format
 msgid "Error reading file \"%s\": %s"
 msgstr "Hiba a(z) „%s” fájl olvasásakor: %s"
@@ -111,12 +111,12 @@ msgid "Could not export certificate for server: %s"
 msgstr "Nem sikerült exportálni a tanúsítványt a kiszolgálóhoz: %s"
 
 #. load_group_descriptions (*_data_io);
-#: pan/data-impl/data-impl.cc:116
+#: pan/data-impl/data-impl.cc:115
 #, c-format
 msgid "Loaded data backend in %.1f seconds"
 msgstr "Adat háttérprogram betöltve %.1f másodperc alatt"
 
-#: pan/data-impl/data-impl.cc:152
+#: pan/data-impl/data-impl.cc:151
 msgid "Pan Newsreader's server passwords"
 msgstr "Pan hírolvasó kiszolgálójának jelszavai"
 
@@ -215,15 +215,15 @@ msgstr ""
 "Nem sikerült megállapítani a cikk kódolását. A nem UTF-8 karakterek "
 "eltávolításra kerültek."
 
-#: pan/gui/actions.cc:306 pan/gui/post-ui.cc:452
+#: pan/gui/actions.cc:306 pan/gui/post-ui.cc:451
 msgid "_File"
 msgstr "_Fájl"
 
-#: pan/gui/actions.cc:307 pan/gui/post-ui.cc:453
+#: pan/gui/actions.cc:307 pan/gui/post-ui.cc:452
 msgid "_Edit"
 msgstr "S_zerkesztés"
 
-#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1121
+#: pan/gui/actions.cc:308 pan/gui/prefs-ui.cc:1138
 msgid "_Layout"
 msgstr "_Elrendezés"
 
@@ -251,7 +251,7 @@ msgstr "Szű_rők"
 msgid "_Go"
 msgstr "_Ugrás"
 
-#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1171
+#: pan/gui/actions.cc:315 pan/gui/prefs-ui.cc:1188
 msgid "_Actions"
 msgstr "_Műveletek"
 
@@ -423,7 +423,7 @@ msgstr "A kijelölt _csoport beállításainak szerkesztése"
 msgid "Edit S_core File"
 msgstr "_Pontszámfájl szerkesztése"
 
-#: pan/gui/actions.cc:463 pan/gui/post-ui.cc:469
+#: pan/gui/actions.cc:463 pan/gui/post-ui.cc:468
 msgid "Edit P_osting Profiles"
 msgstr "_Küldő profilok szerkesztése"
 
@@ -811,51 +811,51 @@ msgstr "Megfelelő cikkek _szálainak megjelenítése"
 msgid "Show Matching Articles' _Subthreads"
 msgstr "Megfelelő cikkek _alszálainak megjelenítése"
 
-#: pan/gui/body-pane.cc:1036
+#: pan/gui/body-pane.cc:1038
 msgid "Unnamed File"
 msgstr "Névtelen fájl"
 
-#: pan/gui/body-pane.cc:1117 pan/gui/gui.cc:1956 pan/gui/header-pane.cc:1306
-#: pan/gui/header-pane.cc:1735 pan/gui/post-ui.cc:2641 pan/gui/prefs-ui.cc:865
-#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:796
+#: pan/gui/body-pane.cc:1119 pan/gui/gui.cc:1956 pan/gui/header-pane.cc:1309
+#: pan/gui/header-pane.cc:1738 pan/gui/post-ui.cc:2641 pan/gui/prefs-ui.cc:887
+#: pan/gui/score-add-ui.cc:139 pan/gui/task-pane.cc:795
 msgid "Subject"
 msgstr "Tárgy"
 
-#: pan/gui/body-pane.cc:1119 pan/gui/gui.cc:1956
+#: pan/gui/body-pane.cc:1121 pan/gui/gui.cc:1956
 msgid "From"
 msgstr "Feladó"
 
-#: pan/gui/body-pane.cc:1121 pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1814
-#: pan/gui/log-ui.cc:308 pan/gui/prefs-ui.cc:861
+#: pan/gui/body-pane.cc:1123 pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1817
+#: pan/gui/log-ui.cc:308 pan/gui/prefs-ui.cc:883
 msgid "Date"
 msgstr "Dátum"
 
-#: pan/gui/body-pane.cc:1128
+#: pan/gui/body-pane.cc:1130
 msgid "Newsgroups"
 msgstr "Hírcsoportok"
 
-#: pan/gui/body-pane.cc:1135 pan/gui/body-pane.cc:1143
-#: pan/gui/body-pane.cc:1150
+#: pan/gui/body-pane.cc:1137 pan/gui/body-pane.cc:1145
+#: pan/gui/body-pane.cc:1152
 msgid "User-Agent"
 msgstr "User-Agent"
 
-#: pan/gui/body-pane.cc:1156
+#: pan/gui/body-pane.cc:1158
 msgid "Followup-To"
 msgstr "Követőcím"
 
-#: pan/gui/body-pane.cc:1166
+#: pan/gui/body-pane.cc:1168
 msgid "Reply-To"
 msgstr "Válaszcím"
 
-#: pan/gui/body-pane.cc:1214
+#: pan/gui/body-pane.cc:1216
 msgid " from "
 msgstr " tőle: "
 
-#: pan/gui/body-pane.cc:1216
+#: pan/gui/body-pane.cc:1218
 msgid " at "
 msgstr " ekkor: "
 
-#: pan/gui/body-pane.cc:1305
+#: pan/gui/body-pane.cc:1307
 #, c-format
 msgid ""
 "<u>This is a <b>PGP-Signed</b> message.</u>\n"
@@ -870,31 +870,31 @@ msgstr ""
 "<b>Érvényesség:</b> %s\n"
 "<b>Létrehozva:</b> %s"
 
-#: pan/gui/body-pane.cc:1310
+#: pan/gui/body-pane.cc:1312
 msgid "always"
 msgstr "mindig"
 
-#: pan/gui/body-pane.cc:1530
+#: pan/gui/body-pane.cc:1532
 msgid "Copy _URL"
 msgstr "_URL másolása"
 
-#: pan/gui/body-pane.cc:1718
+#: pan/gui/body-pane.cc:1720
 msgid "Save Attachment As..."
 msgstr "Melléklet mentése másként…"
 
-#: pan/gui/body-pane.cc:1721
+#: pan/gui/body-pane.cc:1723
 msgid "Save All Attachments"
 msgstr "Minden melléklet mentése"
 
-#: pan/gui/body-pane.cc:1792
+#: pan/gui/body-pane.cc:1794
 msgid "Attachments:"
 msgstr "Mellékletek:"
 
-#: pan/gui/body-pane.cc:1812
+#: pan/gui/body-pane.cc:1814
 msgid "Text View"
 msgstr "Szövegnézet"
 
-#: pan/gui/body-pane.cc:1821
+#: pan/gui/body-pane.cc:1823
 msgid "HTML View"
 msgstr "HTML nézet"
 
@@ -921,7 +921,7 @@ msgstr "_Minden fejléc letöltése"
 msgid "Get the _latest N headers: "
 msgstr "A leg_utóbbi N fejléc letöltése: "
 
-#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:858
+#: pan/gui/e-action-combo-box.c:386 pan/gui/prefs-ui.cc:880
 msgid "Action"
 msgstr "Művelet"
 
@@ -929,7 +929,7 @@ msgstr "Művelet"
 msgid "A GtkRadioAction"
 msgstr "Egy GtkRadiAction objektum"
 
-#: pan/gui/e-charset.c:51 pan/gui/task-pane.cc:562
+#: pan/gui/e-charset.c:51 pan/gui/task-pane.cc:561
 msgid "Unknown"
 msgstr "Ismeretlen"
 
@@ -1006,16 +1006,25 @@ msgstr "Ukrán"
 msgid "Visual"
 msgstr "Vizuális"
 
-#: pan/gui/e-charset-combo-box.c:93 pan/gui/gui.cc:2154 pan/gui/post-ui.cc:547
-#: pan/gui/prefs-ui.cc:769
+#: pan/gui/e-charset-combo-box.c:95 pan/gui/gui.cc:2154 pan/gui/post-ui.cc:546
+#: pan/gui/prefs-ui.cc:791
 msgid "Character Encoding"
 msgstr "Karakterkódolás"
 
-#: pan/gui/e-charset-combo-box.c:117
+#: pan/gui/e-charset-combo-box.c:97 pan/gui/e-charset-dialog.c:51
+#: pan/gui/score-add-ui.cc:606 pan/gui/task-pane.cc:309
+msgid "Cancel"
+msgstr "Mégse"
+
+#: pan/gui/e-charset-combo-box.c:98 pan/gui/e-charset-dialog.c:52
+msgid "OK"
+msgstr "OK"
+
+#: pan/gui/e-charset-combo-box.c:119
 msgid "Enter the character set to use"
 msgstr "Adja meg a használandó karakterkészlet"
 
-#: pan/gui/e-charset-combo-box.c:336
+#: pan/gui/e-charset-combo-box.c:338
 msgid "Other..."
 msgstr "Egyéb…"
 
@@ -1067,48 +1076,48 @@ msgstr "Feliratkozott csoportok"
 msgid "Other Groups"
 msgstr "Egyéb csoportok"
 
-#: pan/gui/group-pane.cc:1029 pan/gui/score-view-ui.cc:157
+#: pan/gui/group-pane.cc:1029 pan/gui/score-view-ui.cc:156
 msgid "Name"
 msgstr "Név"
 
-#: pan/gui/group-prefs-dialog.cc:162
+#: pan/gui/group-prefs-dialog.cc:161
 msgid "No Profiles defined in Edit|Posting Profiles."
 msgstr "Nincs profil meghatározva a Szerkesztés|Küldő profilok menüpontban."
 
-#: pan/gui/group-prefs-dialog.cc:265
+#: pan/gui/group-prefs-dialog.cc:264
 msgid "Pan: Group Preferences"
 msgstr "Pan: Csoportbeállítások"
 
-#: pan/gui/group-prefs-dialog.cc:280
+#: pan/gui/group-prefs-dialog.cc:279
 msgid "Properties for Groups"
 msgstr "Csoportok tulajdonságai"
 
-#: pan/gui/group-prefs-dialog.cc:282
+#: pan/gui/group-prefs-dialog.cc:281
 #, c-format
 msgid "Properties for %s"
 msgstr "%s tulajdonságai"
 
-#: pan/gui/group-prefs-dialog.cc:293
+#: pan/gui/group-prefs-dialog.cc:292
 msgid "Character _encoding:"
 msgstr "_Karakterkódolás:"
 
-#: pan/gui/group-prefs-dialog.cc:295
+#: pan/gui/group-prefs-dialog.cc:294
 msgid "Directory for Saving Attachments"
 msgstr "Könyvtár az elmentett mellékletekhez"
 
-#: pan/gui/group-prefs-dialog.cc:303
+#: pan/gui/group-prefs-dialog.cc:302
 msgid "Directory for _saving attachments:"
 msgstr "Könyvtár az _elmentett mellékletekhez:"
 
-#: pan/gui/group-prefs-dialog.cc:305
+#: pan/gui/group-prefs-dialog.cc:304
 msgid "Posting _profile:"
 msgstr "Küldő _profil:"
 
-#: pan/gui/group-prefs-dialog.cc:310
+#: pan/gui/group-prefs-dialog.cc:309
 msgid "Spellchecker _language:"
 msgstr "Helyesírás-ellenőrző _nyelve:"
 
-#: pan/gui/group-prefs-dialog.cc:313
+#: pan/gui/group-prefs-dialog.cc:312
 msgid "Group color:"
 msgstr "Csoportszín:"
 
@@ -1242,11 +1251,11 @@ msgid_plural "This article is missing %d of its %d parts:"
 msgstr[0] "Ebből a cikkből hiányzik %d rész."
 msgstr[1] "Ebből a cikkből hiányzik %d / %d rész:"
 
-#: pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1308 pan/gui/task-pane.cc:798
+#: pan/gui/gui.cc:1957 pan/gui/header-pane.cc:1311 pan/gui/task-pane.cc:797
 msgid "Message-ID"
 msgstr "Üzenetazonosító"
 
-#: pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1783 pan/gui/prefs-ui.cc:862
+#: pan/gui/gui.cc:1958 pan/gui/header-pane.cc:1786 pan/gui/prefs-ui.cc:884
 msgid "Lines"
 msgstr "Sor"
 
@@ -1254,7 +1263,7 @@ msgstr "Sor"
 msgid "Size"
 msgstr "Méret"
 
-#: pan/gui/gui.cc:1959 pan/gui/header-pane.cc:1799 pan/gui/prefs-ui.cc:860
+#: pan/gui/gui.cc:1959 pan/gui/header-pane.cc:1802 pan/gui/prefs-ui.cc:882
 msgid "Bytes"
 msgstr "Bájt"
 
@@ -1270,7 +1279,7 @@ msgstr ""
 msgid "Body Pane Encoding"
 msgstr "Törzs ablaktábla kódolás"
 
-#: pan/gui/gui.cc:2186 pan/gui/task-pane.cc:613
+#: pan/gui/gui.cc:2186 pan/gui/task-pane.cc:612
 msgid "Offline"
 msgstr "Offline"
 
@@ -1298,11 +1307,11 @@ msgstr "%s: %d üresjárat, %d aktív @ %.1f KiBps"
 msgid "No Tasks"
 msgstr "Nincs feladat"
 
-#: pan/gui/gui.cc:2267 pan/gui/prefs-ui.cc:1104
+#: pan/gui/gui.cc:2267 pan/gui/prefs-ui.cc:1121
 msgid "Tasks"
 msgstr "Feladatok"
 
-#: pan/gui/gui.cc:2284 pan/gui/task-pane.cc:479
+#: pan/gui/gui.cc:2284 pan/gui/task-pane.cc:478
 #, c-format
 msgid "%lu tasks, %s, %.1f KiBps, ETA %d:%02d:%02d"
 msgstr "%lu feladat, %s, %.1f KiBps, ETA %d:%02d:%02d"
@@ -1316,20 +1325,20 @@ msgstr ""
 "javítsa a hibát, majd használja a „Fájl|Munka a hálózaton” menüpontot a "
 "folytatáshoz."
 
-#: pan/gui/header-pane.cc:1304 pan/gui/task-pane.cc:794
+#: pan/gui/header-pane.cc:1307 pan/gui/task-pane.cc:793
 msgid "Subject or Author"
 msgstr "Tárgy vagy szerző"
 
-#: pan/gui/header-pane.cc:1305 pan/gui/task-pane.cc:795
+#: pan/gui/header-pane.cc:1308 pan/gui/task-pane.cc:794
 msgid "Sub or Auth (regex)"
 msgstr "Tár vagy szer (regex)"
 
-#: pan/gui/header-pane.cc:1307 pan/gui/header-pane.cc:1767
-#: pan/gui/prefs-ui.cc:859 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:797
+#: pan/gui/header-pane.cc:1310 pan/gui/header-pane.cc:1770
+#: pan/gui/prefs-ui.cc:881 pan/gui/score-add-ui.cc:140 pan/gui/task-pane.cc:796
 msgid "Author"
 msgstr "Szerző"
 
-#: pan/gui/header-pane.cc:1752 pan/gui/prefs-ui.cc:863
+#: pan/gui/header-pane.cc:1755 pan/gui/prefs-ui.cc:885
 msgid "Score"
 msgstr "Pontszám"
 
@@ -1345,19 +1354,19 @@ msgstr "Pan: Események"
 msgid "Message"
 msgstr "Üzenet"
 
-#: pan/gui/pan.cc:369
+#: pan/gui/pan.cc:336
 msgid "Maximize"
 msgstr "Teljes méretre"
 
-#: pan/gui/pan.cc:422
+#: pan/gui/pan.cc:376
 msgid "An error has occurred!"
 msgstr "Hiba történt!"
 
-#: pan/gui/pan.cc:434
+#: pan/gui/pan.cc:389
 msgid "New Articles!"
 msgstr "Új cikkek!"
 
-#: pan/gui/pan.cc:435
+#: pan/gui/pan.cc:390
 msgid ""
 "There are new\n"
 "articles available."
@@ -1365,11 +1374,7 @@ msgstr ""
 "Új cikkek\n"
 "érhetők el."
 
-#: pan/gui/pan.cc:502
-msgid "Toggle on/offline"
-msgstr "Kapcsolatban/kapcsolat nélkül átváltása"
-
-#: pan/gui/pan.cc:550
+#: pan/gui/pan.cc:470
 msgid ""
 "Thank you for trying Pan!\n"
 " \n"
@@ -1379,7 +1384,7 @@ msgstr ""
 " \n"
 "A hírolvasáshoz először adjon hozzá egy kiszolgálót."
 
-#: pan/gui/pan.cc:632
+#: pan/gui/pan.cc:552
 msgid ""
 "General Options\n"
 "  -h, --help               Show this usage information and exit.\n"
@@ -1425,208 +1430,208 @@ msgstr ""
 "  --no-gui                 Csak konzolos kimenet megjelenítése, nem a\n"
 "                             letöltési soré.\n"
 
-#: pan/gui/pan.cc:966
+#: pan/gui/pan.cc:885
 msgid "Error: --no-gui used without nzb files or news:message-id."
 msgstr "Hiba: a --no-gui NZB-fájlok vagy news:message-id nélkül van használva."
 
-#: pan/gui/pan.cc:970
+#: pan/gui/pan.cc:889
 #, c-format
 msgid "Pan %s started"
 msgstr "A Pan %s elindult"
 
-#: pan/gui/pan.cc:990
+#: pan/gui/pan.cc:909
 msgid "Please configure Pan's news servers before using it as an nzb client."
 msgstr ""
 "Állítsa be a Pan hírkiszolgálóit, mielőtt NZB-kliensként használná azt."
 
-#: pan/gui/pan.cc:1108
+#: pan/gui/pan.cc:1029
 msgid "Pan notification"
 msgstr "Pan értesítés"
 
-#: pan/gui/post-ui.cc:176
+#: pan/gui/post-ui.cc:175
 #, c-format
 msgid "Upload queue: %llu tasks, %ld KB (~ %.2f MB) total."
 msgstr "Feltöltési sor: %llu feladat, %ld KB (~ %.2f MB) összesen."
 
-#: pan/gui/post-ui.cc:282 pan/gui/post-ui.cc:313
+#: pan/gui/post-ui.cc:281 pan/gui/post-ui.cc:312
 #, c-format
 msgid "Error setting custom spellchecker: %s"
 msgstr "Hiba az egyéni helyesírás-ellenőrző beállításakor: %s"
 
-#: pan/gui/post-ui.cc:286 pan/gui/post-ui.cc:294 pan/gui/post-ui.cc:317
-#: pan/gui/post-ui.cc:325
+#: pan/gui/post-ui.cc:285 pan/gui/post-ui.cc:293 pan/gui/post-ui.cc:316
+#: pan/gui/post-ui.cc:324
 #, c-format
 msgid "Error setting spellchecker: %s"
 msgstr "Hiba a helyesírás-ellenőrző beállításakor: %s"
 
-#: pan/gui/post-ui.cc:454
+#: pan/gui/post-ui.cc:453
 msgid "_Profile"
 msgstr "_Profil"
 
-#: pan/gui/post-ui.cc:455
+#: pan/gui/post-ui.cc:454
 msgid "Set Editor"
 msgstr "Szerkesztő beállítása"
 
-#: pan/gui/post-ui.cc:457
+#: pan/gui/post-ui.cc:456
 msgid "_Send Article"
 msgstr "Cikk _küldése"
 
-#: pan/gui/post-ui.cc:457
+#: pan/gui/post-ui.cc:456
 msgid "Send Article Now"
 msgstr "Cikk küldése most"
 
-#: pan/gui/post-ui.cc:458
+#: pan/gui/post-ui.cc:457
 msgid "_Send and Save Articles to NZB"
 msgstr "_Küldés és cikkek mentése NZB-be"
 
-#: pan/gui/post-ui.cc:458
+#: pan/gui/post-ui.cc:457
 msgid "Send and Save Articles to NZB"
 msgstr "Küldés és cikkek mentése NZB-be"
 
-#: pan/gui/post-ui.cc:459
+#: pan/gui/post-ui.cc:458
 msgid "Set Character _Encoding..."
 msgstr "_Karakterkódolás beállítása…"
 
-#: pan/gui/post-ui.cc:460
+#: pan/gui/post-ui.cc:459
 msgid "Set Content _Transfer Encoding..."
 msgstr "_Tartalomátvitel kódolásának beállítása…"
 
-#: pan/gui/post-ui.cc:461
+#: pan/gui/post-ui.cc:460
 msgid "Sa_ve Draft"
 msgstr "Piszkozat _mentése"
 
-#: pan/gui/post-ui.cc:461
+#: pan/gui/post-ui.cc:460
 msgid "Save as a Draft for Future Posting"
 msgstr "Mentés piszkozatként egy későbbi küldéshez"
 
-#: pan/gui/post-ui.cc:462
+#: pan/gui/post-ui.cc:461
 msgid "_Open Draft..."
 msgstr "Piszkozat meg_nyitása…"
 
-#: pan/gui/post-ui.cc:462
+#: pan/gui/post-ui.cc:461
 msgid "Open an Article Draft"
 msgstr "Egy piszkozatcikk megnyitása"
 
-#: pan/gui/post-ui.cc:467
+#: pan/gui/post-ui.cc:466
 msgid "_Rot13"
 msgstr "_Rot13"
 
-#: pan/gui/post-ui.cc:467
+#: pan/gui/post-ui.cc:466
 msgid "Rot13 Selected Text"
 msgstr "A kijelölt szöveg rot13 kódolása"
 
-#: pan/gui/post-ui.cc:468
+#: pan/gui/post-ui.cc:467
 msgid "Run _Editor"
 msgstr "_Szerkesztő futtatása"
 
-#: pan/gui/post-ui.cc:468
+#: pan/gui/post-ui.cc:467
 msgid "Run Editor"
 msgstr "Szerkesztő futtatása"
 
-#: pan/gui/post-ui.cc:470
+#: pan/gui/post-ui.cc:469
 msgid "Add _Files to Queue"
 msgstr "_Fájlok hozzáadása a sorhoz"
 
-#: pan/gui/post-ui.cc:470
+#: pan/gui/post-ui.cc:469
 msgid "Add Files to Queue"
 msgstr "Fájlok hozzáadása a sorhoz"
 
-#: pan/gui/post-ui.cc:485 pan/gui/post-ui.cc:486
+#: pan/gui/post-ui.cc:484 pan/gui/post-ui.cc:485
 msgid "Remove from Queue"
 msgstr "Eltávolítás a sorból"
 
-#: pan/gui/post-ui.cc:490 pan/gui/post-ui.cc:491
+#: pan/gui/post-ui.cc:489 pan/gui/post-ui.cc:490
 msgid "Clear List"
 msgstr "Lista törlése"
 
-#: pan/gui/post-ui.cc:495 pan/gui/post-ui.cc:496
+#: pan/gui/post-ui.cc:494 pan/gui/post-ui.cc:495
 msgid "Select Needed Parts"
 msgstr "Szükséges részek kijelölése"
 
-#: pan/gui/post-ui.cc:500 pan/gui/post-ui.cc:501 pan/gui/task-pane.cc:681
-#: pan/gui/task-pane.cc:682
+#: pan/gui/post-ui.cc:499 pan/gui/post-ui.cc:500 pan/gui/task-pane.cc:680
+#: pan/gui/task-pane.cc:681
 msgid "Move Up"
 msgstr "Mozgatás fel"
 
-#: pan/gui/post-ui.cc:505 pan/gui/post-ui.cc:506 pan/gui/task-pane.cc:686
-#: pan/gui/task-pane.cc:687
+#: pan/gui/post-ui.cc:504 pan/gui/post-ui.cc:505 pan/gui/task-pane.cc:685
+#: pan/gui/task-pane.cc:686
 msgid "Move Down"
 msgstr "Mozgatás le"
 
-#: pan/gui/post-ui.cc:510 pan/gui/post-ui.cc:511
+#: pan/gui/post-ui.cc:509 pan/gui/post-ui.cc:510
 msgid "Move to Top"
 msgstr "Mozgatás a tetejére"
 
-#: pan/gui/post-ui.cc:515 pan/gui/post-ui.cc:516
+#: pan/gui/post-ui.cc:514 pan/gui/post-ui.cc:515
 msgid "Move to Bottom"
 msgstr "Mozgatás az aljára"
 
-#: pan/gui/post-ui.cc:523
+#: pan/gui/post-ui.cc:522
 msgid "_Wrap Text"
 msgstr "_Szöveg tördelése"
 
-#: pan/gui/post-ui.cc:523
+#: pan/gui/post-ui.cc:522
 msgid "Wrap Text"
 msgstr "Szöveg tördelése"
 
-#: pan/gui/post-ui.cc:524
+#: pan/gui/post-ui.cc:523
 msgid "Always Run Editor"
 msgstr "Mindig futtassa a szerkesztőt"
 
-#: pan/gui/post-ui.cc:525
+#: pan/gui/post-ui.cc:524
 msgid "Remember Character Encoding for This Group"
 msgstr "Emlékezzen a karakterkódolásra ennél a csoportnál"
 
-#: pan/gui/post-ui.cc:526
+#: pan/gui/post-ui.cc:525
 msgid "Thread Attached Replies"
 msgstr "Csatolt válaszok szálba rendezése"
 
-#: pan/gui/post-ui.cc:527
+#: pan/gui/post-ui.cc:526
 msgid "PGP-Encrypt the Article"
 msgstr "A cikk titkosítása PGP-vel"
 
-#: pan/gui/post-ui.cc:528
+#: pan/gui/post-ui.cc:527
 msgid "PGP-Sign the Article"
 msgstr "A cikk aláírása PGP-vel"
 
-#: pan/gui/post-ui.cc:529
+#: pan/gui/post-ui.cc:528
 msgid "Check _Spelling"
 msgstr "_Helyesírás-ellenőrzés"
 
-#: pan/gui/post-ui.cc:548
+#: pan/gui/post-ui.cc:547
 msgid "New Article's Encoding:"
 msgstr "Új cikk kódolása:"
 
-#: pan/gui/post-ui.cc:558
+#: pan/gui/post-ui.cc:557
 msgid "Content Transfer Encoding"
 msgstr "Tartalomátvitel kódolása"
 
-#: pan/gui/post-ui.cc:559
+#: pan/gui/post-ui.cc:558
 msgid "New Article's Content Transfer Encoding:"
 msgstr "Új cikk tartalomátvitelének kódolása:"
 
-#: pan/gui/post-ui.cc:743
+#: pan/gui/post-ui.cc:742
 msgid "Your changes will be lost!"
 msgstr "A módosítások el fognak veszni!"
 
-#: pan/gui/post-ui.cc:744
+#: pan/gui/post-ui.cc:743
 msgid "Close this window and lose your changes?"
 msgstr "Bezárja ezt az ablakot és elveszíti a módosításokat?"
 
-#: pan/gui/post-ui.cc:789 pan/gui/post-ui.cc:828
+#: pan/gui/post-ui.cc:788 pan/gui/post-ui.cc:827
 msgid "There were problems with this post."
 msgstr "Problémák voltak ezzel a küldéssel."
 
-#: pan/gui/post-ui.cc:791 pan/gui/post-ui.cc:830 pan/gui/post-ui.cc:895
+#: pan/gui/post-ui.cc:790 pan/gui/post-ui.cc:829 pan/gui/post-ui.cc:894
 msgid "Go Back"
 msgstr "Vissza"
 
-#: pan/gui/post-ui.cc:793
+#: pan/gui/post-ui.cc:792
 msgid "Continue Anyway"
 msgstr "Folytatás mindenképp"
 
 #. Prompt the user
-#: pan/gui/post-ui.cc:822
+#: pan/gui/post-ui.cc:821
 #, c-format
 msgid ""
 "Message uses characters not specified in charset '%s' - possibly use '%s' "
@@ -1634,34 +1639,34 @@ msgstr ""
 "Az üzenet olyan karaktereket használ, amelyek nincsenek megadva a(z) „%s” "
 "karakterkészletben — talán használja ezt: „%s” "
 
-#: pan/gui/post-ui.cc:845
+#: pan/gui/post-ui.cc:844
 msgid "Go _Online"
 msgstr "_Kapcsolódás"
 
-#: pan/gui/post-ui.cc:894
+#: pan/gui/post-ui.cc:893
 msgid "The file queue is empty, so no files can be saved."
 msgstr "A fájl sor üres, így nem lehet fájlokat menteni."
 
-#: pan/gui/post-ui.cc:1074
+#: pan/gui/post-ui.cc:1073
 msgid "IO Error"
 msgstr "IO-hiba"
 
-#: pan/gui/post-ui.cc:1074
+#: pan/gui/post-ui.cc:1073
 msgid "No space left on device"
 msgstr "Nincs hely az eszközön"
 
-#: pan/gui/post-ui.cc:1075
+#: pan/gui/post-ui.cc:1074
 #, c-format
 msgid "Error copying message to %s folder. Reason: %s"
 msgstr "Hiba az üzenet másolásakor a következő mappába: %s. Ok: %s"
 
-#: pan/gui/post-ui.cc:1081
+#: pan/gui/post-ui.cc:1080
 #, c-format
 msgid "Error creating message in %s mail folder: Invalid article."
 msgstr ""
 "Hiba az üzenet létrehozásakor a követező levélmappába: %s: érvénytelen cikk."
 
-#: pan/gui/post-ui.cc:1103
+#: pan/gui/post-ui.cc:1102
 msgid ""
 "No posting server is set for this posting profile.\n"
 "Please edit the profile via Edit|Manage Posting Profiles."
@@ -1669,7 +1674,7 @@ msgstr ""
 "Nincs küldő kiszolgáló beállítva ehhez a küldő profilhoz.\n"
 "Szerkessze a profilt a Szerkesztés|Küldő profilok kezelése menüpontban."
 
-#: pan/gui/post-ui.cc:1108
+#: pan/gui/post-ui.cc:1107
 msgid ""
 "The selected posting server is currently disabled. Please choose an "
 "appropriate alternative."
@@ -1677,15 +1682,15 @@ msgstr ""
 "A kijelölt küldő kiszolgáló jelenleg le van tiltva. Válasszon egy megfelelő "
 "alternatívát."
 
-#: pan/gui/post-ui.cc:1150
+#: pan/gui/post-ui.cc:1149
 msgid "Pan is Offline."
 msgstr "A Pan kapcsolat nélküli."
 
-#: pan/gui/post-ui.cc:1151
+#: pan/gui/post-ui.cc:1150
 msgid "Go online to post the article?"
 msgstr "Kapcsolódjon a cikk elküldéséhez?"
 
-#: pan/gui/post-ui.cc:1200
+#: pan/gui/post-ui.cc:1199
 #, c-format
 msgid ""
 "Error signing/encrypting your message. Perhaps you misspelled your email "
@@ -1694,58 +1699,58 @@ msgstr ""
 "Hiba az üzenet aláírásakor vagy titkosításakor. Talán elírta az e-mail címét "
 "(%s)?"
 
-#: pan/gui/post-ui.cc:1350
+#: pan/gui/post-ui.cc:1349
 msgid "Error opening temporary file"
 msgstr "Hiba az átmeneti fájl megnyitásakor"
 
-#: pan/gui/post-ui.cc:1361
+#: pan/gui/post-ui.cc:1360
 #, c-format
 msgid "Error creating temporary file: %s"
 msgstr "Hiba az átmeneti fájl létrehozásakor: %s"
 
-#: pan/gui/post-ui.cc:1369
+#: pan/gui/post-ui.cc:1368
 #, c-format
 msgid "Error writing article to temporary file: %s"
 msgstr "Hiba a cikk átmeneti fájlba írásakor: %s"
 
-#: pan/gui/post-ui.cc:1442
+#: pan/gui/post-ui.cc:1441
 msgid "Open Draft Article"
 msgstr "Piszkozatcikk megnyitása"
 
-#: pan/gui/post-ui.cc:1684
+#: pan/gui/post-ui.cc:1683
 msgid "Save Draft Article"
 msgstr "Piszkozatcikk mentése"
 
-#: pan/gui/post-ui.cc:1722
+#: pan/gui/post-ui.cc:1721
 msgid "File already exists."
 msgstr "A fájl már létezik."
 
-#: pan/gui/post-ui.cc:1723
+#: pan/gui/post-ui.cc:1722
 msgid "Overwrite it?"
 msgstr "Felülírja?"
 
-#: pan/gui/post-ui.cc:1932
+#: pan/gui/post-ui.cc:1931
 #, c-format
 msgid "Couldn't parse signature command \"%s\": %s"
 msgstr "Nem sikerült feldolgozni a(z) „%s” aláírás parancsot: %s"
 
-#: pan/gui/post-ui.cc:1968
+#: pan/gui/post-ui.cc:1967
 msgid "Couldn't convert signature to UTF-8."
 msgstr "Nem sikerült átalakítani az aláírást UTF-8 formátumra."
 
-#: pan/gui/post-ui.cc:2480
+#: pan/gui/post-ui.cc:2479
 msgid "F_rom"
 msgstr "_Feladó"
 
-#: pan/gui/post-ui.cc:2497
+#: pan/gui/post-ui.cc:2496
 msgid "_Subject"
 msgstr "_Tárgy"
 
-#: pan/gui/post-ui.cc:2510
+#: pan/gui/post-ui.cc:2509
 msgid "_Newsgroups"
 msgstr "_Hírcsoportok"
 
-#: pan/gui/post-ui.cc:2524
+#: pan/gui/post-ui.cc:2523
 msgid "Mail _To"
 msgstr "Levél _címzettje"
 
@@ -1869,11 +1874,11 @@ msgstr "Feltöltési sor mentése NZB-fájlként"
 msgid "Couldn't parse %s color \"%s\""
 msgstr "Nem sikerült a(z) %s szín („%s”) feldolgozása"
 
-#: pan/gui/prefs-ui.cc:133
+#: pan/gui/prefs-ui.cc:139
 msgid "Grab Key"
 msgstr "Billentyű elkapása"
 
-#: pan/gui/prefs-ui.cc:139
+#: pan/gui/prefs-ui.cc:145
 #, c-format
 msgid ""
 "Press the combination of the keys\n"
@@ -1882,321 +1887,322 @@ msgstr ""
 "Nyomja meg azt a billentyűkombinációt,\n"
 "amelyet használni szeretne ehhez: „%s”."
 
-#: pan/gui/prefs-ui.cc:179
+#: pan/gui/prefs-ui.cc:182
 msgid "Edit Shortcut"
 msgstr "Gyorsbillentyű szerkesztése"
 
-#: pan/gui/prefs-ui.cc:241
+#: pan/gui/prefs-ui.cc:243
 msgid "Error: Shortcut key is invalid!"
 msgstr "Hiba: a gyorsbillentyű érvénytelen!"
 
-#: pan/gui/prefs-ui.cc:257
+#: pan/gui/prefs-ui.cc:259
 msgid "Error: Shortcut key already exists!"
 msgstr "Hiba: a gyorsbillentyű már létezik!"
 
-#: pan/gui/prefs-ui.cc:571
+#: pan/gui/prefs-ui.cc:593
 msgid "Show only icons"
 msgstr "Csak ikonok megjelenítése"
 
-#: pan/gui/prefs-ui.cc:572
+#: pan/gui/prefs-ui.cc:594
 msgid "Show only text"
 msgstr "Csak szöveg megjelenítése"
 
-#: pan/gui/prefs-ui.cc:573
+#: pan/gui/prefs-ui.cc:595
 msgid "Show icons and text"
 msgstr "Ikonok és szöveg megjelenítése"
 
-#: pan/gui/prefs-ui.cc:612
+#: pan/gui/prefs-ui.cc:634
 msgid "Use GNOME Preferences"
 msgstr "GNOME beállítások használata"
 
-#: pan/gui/prefs-ui.cc:613
+#: pan/gui/prefs-ui.cc:635
 msgid "Use KDE Preferences"
 msgstr "KDE beállítások használata"
 
-#: pan/gui/prefs-ui.cc:614
+#: pan/gui/prefs-ui.cc:636
 msgid "Use OS X Preferences"
 msgstr "OS X beállítások használata"
 
-#: pan/gui/prefs-ui.cc:615
+#: pan/gui/prefs-ui.cc:637
 msgid "Use Windows Preferences"
 msgstr "Windows beállítások használata"
 
-#: pan/gui/prefs-ui.cc:616
+#: pan/gui/prefs-ui.cc:638
 msgid "Custom Command:"
 msgstr "Egyéni parancs:"
 
-#: pan/gui/prefs-ui.cc:668
+#: pan/gui/prefs-ui.cc:690
 msgid "Disabled"
 msgstr "Letiltva"
 
-#: pan/gui/prefs-ui.cc:669
+#: pan/gui/prefs-ui.cc:691
 msgid "Only new (score == 0)"
 msgstr "Csak új (pontszám == 0)"
 
-#: pan/gui/prefs-ui.cc:670
+#: pan/gui/prefs-ui.cc:692
 msgid "9999 or more"
 msgstr "9999 vagy több"
 
-#: pan/gui/prefs-ui.cc:671
+#: pan/gui/prefs-ui.cc:693
 msgid "5000 to 9998"
 msgstr "5000 - 9998"
 
-#: pan/gui/prefs-ui.cc:672
+#: pan/gui/prefs-ui.cc:694
 msgid "1 to 4999"
 msgstr "1 - 4999"
 
-#: pan/gui/prefs-ui.cc:673
+#: pan/gui/prefs-ui.cc:695
 msgid "-9998 to -1"
 msgstr "-9998 és -1 között"
 
-#: pan/gui/prefs-ui.cc:674
+#: pan/gui/prefs-ui.cc:696
 msgid "-9999 or less"
 msgstr "-9999 vagy kevesebb"
 
-#: pan/gui/prefs-ui.cc:738
+#: pan/gui/prefs-ui.cc:760
 #, c-format
 msgid "Select default <u>global</u> character set. Current setting: <b>%s</b>."
 msgstr ""
 "Válassza ki a <u>globális</u> karakterkészletet. Jelenlegi beállítás: <b>%s</"
 "b>."
 
-#: pan/gui/prefs-ui.cc:770
+#: pan/gui/prefs-ui.cc:792
 msgid "Global Character Set Settings"
 msgstr "Globális karakterkészlet beállítások"
 
-#: pan/gui/prefs-ui.cc:864 pan/gui/task-pane.cc:1068
+#: pan/gui/prefs-ui.cc:886 pan/gui/task-pane.cc:1067
 msgid "State"
 msgstr "Állapot"
 
-#: pan/gui/prefs-ui.cc:898
+#: pan/gui/prefs-ui.cc:920
 msgid "Enabled"
 msgstr "Engedélyezve"
 
-#: pan/gui/prefs-ui.cc:902
+#: pan/gui/prefs-ui.cc:924
 msgid "Column Name"
 msgstr "Oszlopnév"
 
-#: pan/gui/prefs-ui.cc:940
+#: pan/gui/prefs-ui.cc:962
 msgid "Pan: Preferences"
 msgstr "Pan: Beállítások"
 
-#: pan/gui/prefs-ui.cc:955
+#: pan/gui/prefs-ui.cc:977
 msgid "Mouse"
 msgstr "Egér"
 
-#: pan/gui/prefs-ui.cc:957
+#: pan/gui/prefs-ui.cc:979
 msgid "Single-click activates, rather than selects, _groups"
 msgstr "Egyszeres kattintás aktivál a kijelölés helyett, cs_oportok"
 
-#: pan/gui/prefs-ui.cc:959
+#: pan/gui/prefs-ui.cc:981
 msgid "Single-click activates, rather than selects, _articles"
 msgstr "Egyszeres kattintás aktivál a kijelölés helyett, _cikkek"
 
-#: pan/gui/prefs-ui.cc:962
+#: pan/gui/prefs-ui.cc:984
 msgid "Groups"
 msgstr "Csoportok"
 
-#: pan/gui/prefs-ui.cc:964
+#: pan/gui/prefs-ui.cc:986
 msgid "Get new headers in subscribed groups on _startup"
 msgstr "Új fejlécek letöltése a feliratkozott csoportokban _induláskor"
 
-#: pan/gui/prefs-ui.cc:966
+#: pan/gui/prefs-ui.cc:988
 msgid "Get new headers when _entering group"
 msgstr "Új fejlécek letöltése, amikor _belép egy csoportba"
 
-#: pan/gui/prefs-ui.cc:968
+#: pan/gui/prefs-ui.cc:990
 msgid "Mark entire group _read when leaving group"
 msgstr "Az egész csoport megjelölése _olvasottként, ha elhagyja a csoportot"
 
-#: pan/gui/prefs-ui.cc:970
+#: pan/gui/prefs-ui.cc:992
 msgid "Mark entire group read before getting _new headers"
 msgstr ""
 "Az egész csoport megjelölése olvasottként az ú_j fejlécek letöltése előtt"
 
-#: pan/gui/prefs-ui.cc:972
+#: pan/gui/prefs-ui.cc:994
 msgid "E_xpand all threads when entering group"
 msgstr "Összes szál ki_bontása, amikor belép egy csoportba"
 
-#: pan/gui/prefs-ui.cc:977
+#: pan/gui/prefs-ui.cc:999
 msgid "Articles"
 msgstr "Cikkek"
 
-#: pan/gui/prefs-ui.cc:979
+#: pan/gui/prefs-ui.cc:1001
 msgid "Mark downloaded articles read"
 msgstr "Letöltött cikkek megjelölése olvasottként"
 
-#: pan/gui/prefs-ui.cc:981
+#: pan/gui/prefs-ui.cc:1003
 msgid "Space selects next article rather than next unread"
 msgstr "A szóköz a következő cikket jelöli ki a következő olvasatlan helyett"
 
-#: pan/gui/prefs-ui.cc:983
+#: pan/gui/prefs-ui.cc:1005
 msgid "Expand threads upon selection"
 msgstr "Szálak kibontása kijelöléskor"
 
-#: pan/gui/prefs-ui.cc:985
+#: pan/gui/prefs-ui.cc:1007
 msgid "Always ask before deleting an article"
 msgstr "Mindig kérdezzen egy cikk törlése előtt"
 
-#: pan/gui/prefs-ui.cc:987
+#: pan/gui/prefs-ui.cc:1009
 msgid "Smooth scrolling"
 msgstr "Finom görgetés"
 
-#: pan/gui/prefs-ui.cc:992
+#: pan/gui/prefs-ui.cc:1014
 msgid "Article Cache"
 msgstr "Cikk gyorsítótár"
 
-#: pan/gui/prefs-ui.cc:993
+#: pan/gui/prefs-ui.cc:1015
 msgid "Clear article cache on shutdown"
 msgstr "Cikk gyorsítótár törlése leállításkor"
 
-#: pan/gui/prefs-ui.cc:996
+#: pan/gui/prefs-ui.cc:1018
 msgid "Size of article cache (in MiB):"
 msgstr "Cikk gyorsítótár mérete (MiB):"
 
-#: pan/gui/prefs-ui.cc:1001
+#: pan/gui/prefs-ui.cc:1022
 msgid "File extension for cached articles: "
 msgstr "A gyorsítótárba tett cikkek fájlkiterjesztése: "
 
-#: pan/gui/prefs-ui.cc:1006
+#: pan/gui/prefs-ui.cc:1026
 msgid "Tabs"
 msgstr "Lapok"
 
-#: pan/gui/prefs-ui.cc:1011
+#: pan/gui/prefs-ui.cc:1031
 msgid "_Behavior"
 msgstr "_Viselkedés"
 
-#: pan/gui/prefs-ui.cc:1011
+#: pan/gui/prefs-ui.cc:1031
 msgid "Behavior"
 msgstr "Viselkedés"
 
-#: pan/gui/prefs-ui.cc:1017
+#: pan/gui/prefs-ui.cc:1037
 msgid "Task Pane"
 msgstr "Feladat ablaktábla"
 
-#: pan/gui/prefs-ui.cc:1018
+#: pan/gui/prefs-ui.cc:1038
 msgid "Show task pane popups"
 msgstr "Feladat ablaktábla felugró ablakainak megjelenítése"
 
-#: pan/gui/prefs-ui.cc:1020
+#: pan/gui/prefs-ui.cc:1040
 msgid "Show Download Meter"
 msgstr "Letöltésmérő megjelenítése"
 
-#: pan/gui/prefs-ui.cc:1024
+#: pan/gui/prefs-ui.cc:1044
 msgid "_Panes"
 msgstr "_Ablaktáblák"
 
-#: pan/gui/prefs-ui.cc:1024
+#: pan/gui/prefs-ui.cc:1044
 msgid "Panes"
 msgstr "Ablaktáblák"
 
-#: pan/gui/prefs-ui.cc:1030
+#: pan/gui/prefs-ui.cc:1050
 msgid "Language Settings"
 msgstr "Nyelvi beállítások"
 
+#: pan/gui/prefs-ui.cc:1051
+#| msgid "Fonts"
+msgid "Font"
+msgstr "Betűkészlet"
+
 #. systray and notify popup
-#: pan/gui/prefs-ui.cc:1039
+#: pan/gui/prefs-ui.cc:1058
 msgid "System Tray Behavior"
 msgstr "Rendszertálca viselkedése"
 
-#: pan/gui/prefs-ui.cc:1041
-msgid "Minimize to tray"
-msgstr "Kicsinyítés a tálcára"
-
-#: pan/gui/prefs-ui.cc:1043
+#: pan/gui/prefs-ui.cc:1060
 msgid "Start Pan minimized"
 msgstr "Pan indítása kicsinyített állapotban"
 
-#: pan/gui/prefs-ui.cc:1046
+#: pan/gui/prefs-ui.cc:1063
 msgid "Show notifications"
 msgstr "Értesítések megjelenítése"
 
 #. allow multiple instances (seperate, not communicating with dbus)
-#: pan/gui/prefs-ui.cc:1051
+#: pan/gui/prefs-ui.cc:1068
 msgid "Startup Behavior"
 msgstr "Indítási viselkedés"
 
-#: pan/gui/prefs-ui.cc:1053
+#: pan/gui/prefs-ui.cc:1070
 msgid "Allow multiple instances of Pan"
 msgstr "A Pan több példányának engedélyezése"
 
-#: pan/gui/prefs-ui.cc:1058
+#: pan/gui/prefs-ui.cc:1075
 msgid "Autosave Article Draft"
 msgstr "Piszkozatcikkek automatikus mentése"
 
-#: pan/gui/prefs-ui.cc:1060
+#: pan/gui/prefs-ui.cc:1077
 msgid "Minutes to autosave the current Article Draft: "
 msgstr "A jelenlegi piszkozatcikk automatikus mentése percben: "
 
-#: pan/gui/prefs-ui.cc:1065
+#: pan/gui/prefs-ui.cc:1082
 msgid "Autosave Articles"
 msgstr "Cikkek automatikus mentése"
 
-#: pan/gui/prefs-ui.cc:1067
+#: pan/gui/prefs-ui.cc:1084
 msgid "Minutes to autosave newsrc files: "
 msgstr "A newsrc fájlok automatikus mentése percben: "
 
-#: pan/gui/prefs-ui.cc:1074
+#: pan/gui/prefs-ui.cc:1091
 msgid "Password Storage"
 msgstr "Jelszótároló"
 
-#: pan/gui/prefs-ui.cc:1076
+#: pan/gui/prefs-ui.cc:1093
 msgid "Save passwords in password storage"
 msgstr "Jelszavak mentése a jelszótárolóba"
 
-#: pan/gui/prefs-ui.cc:1083
+#: pan/gui/prefs-ui.cc:1100
 msgid "_Miscellaneous"
 msgstr "_Egyebek"
 
-#: pan/gui/prefs-ui.cc:1083
+#: pan/gui/prefs-ui.cc:1100
 msgid "Miscellaneous"
 msgstr "Egyebek"
 
-#: pan/gui/prefs-ui.cc:1088
+#: pan/gui/prefs-ui.cc:1105
 msgid "Pane Layout"
 msgstr "Ablaktábla elrendezése"
 
-#: pan/gui/prefs-ui.cc:1107
+#: pan/gui/prefs-ui.cc:1124
 msgid "1=Groups, 2=Headers, 3=Body"
 msgstr "1=Csoportok, 2=Fejlécek, 3=Törzs"
 
-#: pan/gui/prefs-ui.cc:1109
+#: pan/gui/prefs-ui.cc:1126
 msgid "1=Groups, 2=Body, 3=Headers"
 msgstr "1=Csoportok, 2=Törzs, 3=Fejlécek"
 
-#: pan/gui/prefs-ui.cc:1111
+#: pan/gui/prefs-ui.cc:1128
 msgid "1=Headers, 2=Groups, 3=Body"
 msgstr "1=Fejlécek, 2=Csoportok, 3=Törzs"
 
-#: pan/gui/prefs-ui.cc:1113
+#: pan/gui/prefs-ui.cc:1130
 msgid "1=Headers, 2=Body, 3=Groups"
 msgstr "1=Fejlécek, 2=Törzs, 3=Csoportok"
 
-#: pan/gui/prefs-ui.cc:1115
+#: pan/gui/prefs-ui.cc:1132
 msgid "1=Body, 2=Groups, 3=Headers"
 msgstr "1=Törzs, 2=Csoportok, 3=Fejlécek"
 
-#: pan/gui/prefs-ui.cc:1117
+#: pan/gui/prefs-ui.cc:1134
 msgid "1=Body, 2=Headers, 3=Groups"
 msgstr "1=Törzs, 2=Fejlécek, 3=Csoportok"
 
-#: pan/gui/prefs-ui.cc:1121
+#: pan/gui/prefs-ui.cc:1138
 msgid "Layout"
 msgstr "Elrendezés"
 
-#: pan/gui/prefs-ui.cc:1126
+#: pan/gui/prefs-ui.cc:1143
 msgid "Header Pane Columns"
 msgstr "Fejléc ablaktábla oszlopok"
 
-#: pan/gui/prefs-ui.cc:1130
+#: pan/gui/prefs-ui.cc:1147
 msgid "_Headers"
 msgstr "_Fejlécek"
 
-#: pan/gui/prefs-ui.cc:1130
+#: pan/gui/prefs-ui.cc:1147
 msgid "Headers"
 msgstr "Fejlécek"
 
-#: pan/gui/prefs-ui.cc:1136
+#: pan/gui/prefs-ui.cc:1153
 msgid ""
 "This menu lets you configure Pan to take certain actions on your behalf "
 "automatically, based on an article's score."
@@ -2204,202 +2210,202 @@ msgstr ""
 "Ez a menü lehetővé teszi a Pan beállítását, hogy bizonyos műveleteket az Ön "
 "nevében automatikusan végrehajtson a cikk pontszáma alapján."
 
-#: pan/gui/prefs-ui.cc:1141
+#: pan/gui/prefs-ui.cc:1158
 msgid "Mark affected articles read"
 msgstr "Az érintett cikkek megjelölése olvasottként"
 
-#: pan/gui/prefs-ui.cc:1150
+#: pan/gui/prefs-ui.cc:1167
 msgid "_Delete articles scoring at: "
 msgstr "A következő pontszámú cikkek _törlése: "
 
-#: pan/gui/prefs-ui.cc:1156
+#: pan/gui/prefs-ui.cc:1173
 msgid "Mark articles read scoring at: "
 msgstr "A következő pontszámú cikkek megjelölése olvasottként: "
 
-#: pan/gui/prefs-ui.cc:1162
+#: pan/gui/prefs-ui.cc:1179
 msgid "_Cache articles scoring at: "
 msgstr "A következő pontszámú cikkek _gyorsítótárba helyezése: "
 
-#: pan/gui/prefs-ui.cc:1168
+#: pan/gui/prefs-ui.cc:1185
 msgid "Download attachments of articles scoring at: "
 msgstr "A következő pontszámú cikkek mellékleteinek letöltése: "
 
-#: pan/gui/prefs-ui.cc:1171
+#: pan/gui/prefs-ui.cc:1188
 msgid "Actions"
 msgstr "Műveletek"
 
-#: pan/gui/prefs-ui.cc:1176 pan/gui/prefs-ui.cc:1197
+#: pan/gui/prefs-ui.cc:1193 pan/gui/prefs-ui.cc:1214
 msgid "Fonts"
 msgstr "Betűkészletek"
 
-#: pan/gui/prefs-ui.cc:1178
+#: pan/gui/prefs-ui.cc:1195
 msgid "Use custom font in Group Pane:"
 msgstr "Egyéni betűkészlet használata a csoport ablaktáblán:"
 
-#: pan/gui/prefs-ui.cc:1183
+#: pan/gui/prefs-ui.cc:1200
 msgid "Use custom font in Header Pane:"
 msgstr "Egyéni betűkészlet használata a fejléc ablaktáblán:"
 
-#: pan/gui/prefs-ui.cc:1188
+#: pan/gui/prefs-ui.cc:1205
 msgid "Use custom font in Body Pane:"
 msgstr "Egyéni betűkészlet használata a törzs ablaktáblán:"
 
-#: pan/gui/prefs-ui.cc:1193
+#: pan/gui/prefs-ui.cc:1210
 msgid "Monospace font:"
 msgstr "Rögzített szélességű betűkészlet:"
 
-#: pan/gui/prefs-ui.cc:1197
+#: pan/gui/prefs-ui.cc:1214
 msgid "_Fonts"
 msgstr "_Betűkészletek"
 
-#: pan/gui/prefs-ui.cc:1206
+#: pan/gui/prefs-ui.cc:1223
 msgid "Header Pane"
 msgstr "Fejléc ablaktábla"
 
-#: pan/gui/prefs-ui.cc:1209 pan/gui/prefs-ui.cc:1215 pan/gui/prefs-ui.cc:1221
-#: pan/gui/prefs-ui.cc:1227 pan/gui/prefs-ui.cc:1233 pan/gui/prefs-ui.cc:1239
-#: pan/gui/prefs-ui.cc:1248 pan/gui/prefs-ui.cc:1254 pan/gui/prefs-ui.cc:1260
-#: pan/gui/prefs-ui.cc:1266 pan/gui/prefs-ui.cc:1272 pan/gui/prefs-ui.cc:1282
-#: pan/gui/prefs-ui.cc:1292
+#: pan/gui/prefs-ui.cc:1226 pan/gui/prefs-ui.cc:1232 pan/gui/prefs-ui.cc:1238
+#: pan/gui/prefs-ui.cc:1244 pan/gui/prefs-ui.cc:1250 pan/gui/prefs-ui.cc:1256
+#: pan/gui/prefs-ui.cc:1265 pan/gui/prefs-ui.cc:1271 pan/gui/prefs-ui.cc:1277
+#: pan/gui/prefs-ui.cc:1283 pan/gui/prefs-ui.cc:1289 pan/gui/prefs-ui.cc:1299
+#: pan/gui/prefs-ui.cc:1309
 msgid "Text:"
 msgstr "Szöveg:"
 
-#: pan/gui/prefs-ui.cc:1211 pan/gui/prefs-ui.cc:1217 pan/gui/prefs-ui.cc:1223
-#: pan/gui/prefs-ui.cc:1229 pan/gui/prefs-ui.cc:1235 pan/gui/prefs-ui.cc:1241
-#: pan/gui/prefs-ui.cc:1250 pan/gui/prefs-ui.cc:1256 pan/gui/prefs-ui.cc:1262
-#: pan/gui/prefs-ui.cc:1268 pan/gui/prefs-ui.cc:1274 pan/gui/prefs-ui.cc:1284
-#: pan/gui/prefs-ui.cc:1294
+#: pan/gui/prefs-ui.cc:1228 pan/gui/prefs-ui.cc:1234 pan/gui/prefs-ui.cc:1240
+#: pan/gui/prefs-ui.cc:1246 pan/gui/prefs-ui.cc:1252 pan/gui/prefs-ui.cc:1258
+#: pan/gui/prefs-ui.cc:1267 pan/gui/prefs-ui.cc:1273 pan/gui/prefs-ui.cc:1279
+#: pan/gui/prefs-ui.cc:1285 pan/gui/prefs-ui.cc:1291 pan/gui/prefs-ui.cc:1301
+#: pan/gui/prefs-ui.cc:1311
 msgid "Background:"
 msgstr "Háttér:"
 
-#: pan/gui/prefs-ui.cc:1213
+#: pan/gui/prefs-ui.cc:1230
 msgid "Scores of 9999 or more:"
 msgstr "9999 vagy több pontszám:"
 
-#: pan/gui/prefs-ui.cc:1219
+#: pan/gui/prefs-ui.cc:1236
 msgid "Scores from 5000 to 9998:"
 msgstr "5000 és 9998 közötti pontszám:"
 
-#: pan/gui/prefs-ui.cc:1225
+#: pan/gui/prefs-ui.cc:1242
 msgid "Scores from 1 to 4999:"
 msgstr "1 és 4999 közötti pontszám:"
 
-#: pan/gui/prefs-ui.cc:1231
+#: pan/gui/prefs-ui.cc:1248
 msgid "Scores from -9998 to -1:"
 msgstr "-9998 és -1 közötti pontszám:"
 
-#: pan/gui/prefs-ui.cc:1237
+#: pan/gui/prefs-ui.cc:1254
 msgid "Scores of -9999 or less:"
 msgstr "-9999 vagy kevesebb pontszám:"
 
-#: pan/gui/prefs-ui.cc:1243
+#: pan/gui/prefs-ui.cc:1260
 msgid "Collapsed thread with unread articles:"
 msgstr "Összecsukott szál olvasatlan cikkekkel:"
 
-#: pan/gui/prefs-ui.cc:1245
+#: pan/gui/prefs-ui.cc:1262
 msgid "Body Pane"
 msgstr "Törzs ablaktábla"
 
-#: pan/gui/prefs-ui.cc:1252
+#: pan/gui/prefs-ui.cc:1269
 msgid "First level of quoted text:"
 msgstr "Idézett szöveg első szintje:"
 
-#: pan/gui/prefs-ui.cc:1258
+#: pan/gui/prefs-ui.cc:1275
 msgid "Second level of quoted text:"
 msgstr "Idézett szöveg második szintje:"
 
-#: pan/gui/prefs-ui.cc:1264
+#: pan/gui/prefs-ui.cc:1281
 msgid "Third level of quoted text:"
 msgstr "Idézett szöveg harmadik szintje:"
 
 #.
-#: pan/gui/prefs-ui.cc:1270
+#: pan/gui/prefs-ui.cc:1287
 msgid "URL:"
 msgstr "URL:"
 
 #.
-#: pan/gui/prefs-ui.cc:1276
+#: pan/gui/prefs-ui.cc:1293
 msgid "Signature:"
 msgstr "Aláírás:"
 
-#: pan/gui/prefs-ui.cc:1279
+#: pan/gui/prefs-ui.cc:1296
 msgid "Group Pane"
 msgstr "Csoport ablaktábla"
 
 #.
-#: pan/gui/prefs-ui.cc:1286
+#: pan/gui/prefs-ui.cc:1303
 msgid "Group Color:"
 msgstr "Csoportszín:"
 
-#: pan/gui/prefs-ui.cc:1290
+#: pan/gui/prefs-ui.cc:1307
 msgid "Other Text"
 msgstr "Egyéb szöveg"
 
-#: pan/gui/prefs-ui.cc:1296
+#: pan/gui/prefs-ui.cc:1313
 msgid "Text Color:"
 msgstr "Szövegszín:"
 
-#: pan/gui/prefs-ui.cc:1299
+#: pan/gui/prefs-ui.cc:1316
 msgid "_Colors"
 msgstr "_Színek"
 
-#: pan/gui/prefs-ui.cc:1299
+#: pan/gui/prefs-ui.cc:1316
 msgid "Colors"
 msgstr "Színek"
 
-#: pan/gui/prefs-ui.cc:1304
+#: pan/gui/prefs-ui.cc:1321
 msgid "Preferred Applications"
 msgstr "Alapértelmezett alkalmazások"
 
-#: pan/gui/prefs-ui.cc:1308
+#: pan/gui/prefs-ui.cc:1325
 msgid "_Web browser:"
 msgstr "_Webböngésző:"
 
-#: pan/gui/prefs-ui.cc:1311
+#: pan/gui/prefs-ui.cc:1328
 msgid "_Gemini client:"
 msgstr "_Gemini-ügyfél:"
 
-#: pan/gui/prefs-ui.cc:1314
+#: pan/gui/prefs-ui.cc:1331
 msgid "_Mail reader:"
 msgstr "_Levélolvasó:"
 
-#: pan/gui/prefs-ui.cc:1316
+#: pan/gui/prefs-ui.cc:1333
 msgid "_Text editor:"
 msgstr "_Szövegszerkesztő:"
 
-#: pan/gui/prefs-ui.cc:1318
+#: pan/gui/prefs-ui.cc:1335
 msgid "_HTML previewer:"
 msgstr "_HTML megjelenítő:"
 
-#: pan/gui/prefs-ui.cc:1320
+#: pan/gui/prefs-ui.cc:1337
 msgid "_Applications"
 msgstr "_Alkalmazások"
 
-#: pan/gui/prefs-ui.cc:1320
+#: pan/gui/prefs-ui.cc:1337
 msgid "Applications"
 msgstr "Alkalmazások"
 
-#: pan/gui/prefs-ui.cc:1325 pan/gui/task-pane.cc:556
+#: pan/gui/prefs-ui.cc:1342 pan/gui/task-pane.cc:555
 msgid "Encoding"
 msgstr "Kódolás"
 
-#: pan/gui/prefs-ui.cc:1329
+#: pan/gui/prefs-ui.cc:1346
 msgid "Default bytes per file (for encoder): "
 msgstr "Alapértelmezett bájt fájlonként (a kódolónál): "
 
-#: pan/gui/prefs-ui.cc:1334
+#: pan/gui/prefs-ui.cc:1351
 msgid "_Upload"
 msgstr "_Feltöltés"
 
-#: pan/gui/prefs-ui.cc:1334
+#: pan/gui/prefs-ui.cc:1351
 msgid "Upload"
 msgstr "Feltöltés"
 
-#: pan/gui/prefs-ui.cc:1343
+#: pan/gui/prefs-ui.cc:1360
 msgid "_Shortcuts"
 msgstr "_Gyorsbillentyűk"
 
-#: pan/gui/prefs-ui.cc:1343
+#: pan/gui/prefs-ui.cc:1360
 msgid "Shortcuts"
 msgstr "Gyorsbillentyűk"
 
@@ -2580,7 +2586,7 @@ msgstr "Küldő profilok"
 msgid "Profiles"
 msgstr "Profilok"
 
-#: pan/gui/save-attach-ui.cc:46
+#: pan/gui/save-attach-ui.cc:44
 #, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
@@ -2607,41 +2613,41 @@ msgstr ""
 "„/home/user/News/Pan/%G” helyettesítése\n"
 "„/home/user/News/Pan/alt/binaries/pictures/trains”,"
 
-#: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
+#: pan/gui/save-attach-ui.cc:196 pan/gui/save-ui.cc:216
 msgid "Add to the queue sorted by date posted"
 msgstr "Hozzáadás a sorhoz a küldés dátuma szerint rendezve"
 
-#: pan/gui/save-attach-ui.cc:199 pan/gui/save-ui.cc:219
+#: pan/gui/save-attach-ui.cc:197 pan/gui/save-ui.cc:217
 msgid "Add to the front of the queue"
 msgstr "Hozzáadás a sor elejéhez"
 
-#: pan/gui/save-attach-ui.cc:200 pan/gui/save-ui.cc:220
+#: pan/gui/save-attach-ui.cc:198 pan/gui/save-ui.cc:218
 msgid "Add to the back of the queue"
 msgstr "Hozzáadás a sor végéhez"
 
-#: pan/gui/save-attach-ui.cc:232
+#: pan/gui/save-attach-ui.cc:230
 msgid "Pan: Save Attachments"
 msgstr "Pan: Mellékletek mentése"
 
-#: pan/gui/save-attach-ui.cc:257 pan/gui/save-attach-ui.cc:275
-#: pan/gui/save-ui.cc:272 pan/gui/save-ui.cc:293
+#: pan/gui/save-attach-ui.cc:255 pan/gui/save-attach-ui.cc:273
+#: pan/gui/save-ui.cc:270 pan/gui/save-ui.cc:291
 msgid "_Location:"
 msgstr "_Hely:"
 
-#: pan/gui/save-attach-ui.cc:261 pan/gui/save-ui.cc:276
+#: pan/gui/save-attach-ui.cc:259 pan/gui/save-ui.cc:274
 msgid "Save Articles"
 msgstr "Cikkek mentése"
 
-#: pan/gui/save-attach-ui.cc:278 pan/gui/save-ui.cc:296
+#: pan/gui/save-attach-ui.cc:276 pan/gui/save-ui.cc:294
 #, c-format
 msgid "_Group's path: %s"
 msgstr "_Csoport útvonala: %s"
 
-#: pan/gui/save-attach-ui.cc:289 pan/gui/save-ui.cc:311
+#: pan/gui/save-attach-ui.cc:287 pan/gui/save-ui.cc:309
 msgid "_Priority:"
 msgstr "_Prioritás:"
 
-#: pan/gui/save-ui.cc:46
+#: pan/gui/save-ui.cc:44
 #, c-format
 msgid ""
 "%g - group as one directory (alt.binaries.pictures.trains)\n"
@@ -2670,23 +2676,23 @@ msgstr ""
 "„/home/user/News/Pan/%G” helyettesítése\n"
 "„/home/user/News/Pan/alt/binaries/pictures/trains”,"
 
-#: pan/gui/save-ui.cc:209
+#: pan/gui/save-ui.cc:207
 msgid "Save attachments"
 msgstr "Mellékletek mentése"
 
-#: pan/gui/save-ui.cc:210
+#: pan/gui/save-ui.cc:208
 msgid "Save text"
 msgstr "Szöveg mentése"
 
-#: pan/gui/save-ui.cc:211
+#: pan/gui/save-ui.cc:209
 msgid "Save attachments and text"
 msgstr "Mellékletek és szöveg mentése"
 
-#: pan/gui/save-ui.cc:247
+#: pan/gui/save-ui.cc:245
 msgid "Pan: Save Articles"
 msgstr "Pan: Cikkek mentése"
 
-#: pan/gui/save-ui.cc:307
+#: pan/gui/save-ui.cc:305
 msgid "_Action:"
 msgstr "_Művelet:"
 
@@ -2790,12 +2796,12 @@ msgstr "Érdemes lehet visszamenni vagy törölje a régi szabályt."
 msgid "Back"
 msgstr "Vissza"
 
-#: pan/gui/score-add-ui.cc:485 pan/gui/task-pane.cc:1041
+#: pan/gui/score-add-ui.cc:485 pan/gui/task-pane.cc:1040
 msgid "Delete"
 msgstr "Törlés"
 
 #: pan/gui/score-add-ui.cc:486 pan/gui/score-add-ui.cc:607
-#: pan/gui/score-view-ui.cc:208
+#: pan/gui/score-view-ui.cc:207
 msgid "Add"
 msgstr "Hozzáadás"
 
@@ -2807,10 +2813,6 @@ msgstr "Hozzáadás és újra_pontozás"
 msgid "New Scoring Rule"
 msgstr "Új pontozási szabály"
 
-#: pan/gui/score-add-ui.cc:606 pan/gui/task-pane.cc:310
-msgid "Cancel"
-msgstr "Mégse"
-
 #: pan/gui/score-add-ui.cc:633
 msgid "Group name"
 msgstr "Csoportnév"
@@ -2819,65 +2821,65 @@ msgstr "Csoportnév"
 msgid "and"
 msgstr "és"
 
-#: pan/gui/score-view-ui.cc:56
+#: pan/gui/score-view-ui.cc:55
 msgid "Close and Re_score"
 msgstr "Bezárás és újra_pontozás"
 
-#: pan/gui/score-view-ui.cc:154
+#: pan/gui/score-view-ui.cc:153
 #, c-format
 msgid "File %s, Lines %d - %d"
 msgstr "Fájl: %s, sorok: %d-%d"
 
-#: pan/gui/score-view-ui.cc:182
+#: pan/gui/score-view-ui.cc:181
 msgid "Pan: Article's Scores"
 msgstr "Pan: Cikk pontszámai"
 
-#: pan/gui/score-view-ui.cc:213
+#: pan/gui/score-view-ui.cc:212
 msgid "New Score"
 msgstr "Új pontszám"
 
-#: pan/gui/score-view-ui.cc:218
+#: pan/gui/score-view-ui.cc:217
 msgid "Criteria"
 msgstr "Feltétel"
 
-#: pan/gui/score-view-ui.cc:241
+#: pan/gui/score-view-ui.cc:240
 msgid "Add a New Scoring Rule"
 msgstr "Új pontozási szabály hozzáadása"
 
-#: pan/gui/score-view-ui.cc:248
+#: pan/gui/score-view-ui.cc:247
 msgid "Remove the Selected Scoring Rule"
 msgstr "A kijelölt pontozási szabály törlése"
 
-#: pan/gui/server-ui.cc:293
+#: pan/gui/server-ui.cc:292
 msgid "Please specify the server's address."
 msgstr "Adja meg a kiszolgáló címét."
 
-#: pan/gui/server-ui.cc:345
+#: pan/gui/server-ui.cc:344
 msgid "Import SSL Certificate (PEM Format) From File"
 msgstr "SSL tanúsítvány (PEM formátum) importálása fájlból"
 
 #. create the dialog
-#: pan/gui/server-ui.cc:382 pan/gui/server-ui.cc:997
+#: pan/gui/server-ui.cc:381 pan/gui/server-ui.cc:996
 msgid "Add a Server"
 msgstr "Kiszolgáló hozzáadása"
 
-#: pan/gui/server-ui.cc:382 pan/gui/server-ui.cc:1003
+#: pan/gui/server-ui.cc:381 pan/gui/server-ui.cc:1002
 msgid "Edit a Server's Settings"
 msgstr "Kiszolgáló beállításainak szerkesztése"
 
-#: pan/gui/server-ui.cc:402
+#: pan/gui/server-ui.cc:401
 msgid "Location"
 msgstr "Hely"
 
-#: pan/gui/server-ui.cc:406
+#: pan/gui/server-ui.cc:405
 msgid "The news server's actual address, e.g. \"news.mynewsserver.com\"."
 msgstr "A hírkiszolgáló aktuális címe, például „news.mynewsserver.com”"
 
-#: pan/gui/server-ui.cc:407
+#: pan/gui/server-ui.cc:406
 msgid "_Address:"
 msgstr "_Cím:"
 
-#: pan/gui/server-ui.cc:412
+#: pan/gui/server-ui.cc:411
 msgid ""
 "The news server's port number.  Typically 119 for unencrypted and 563 for "
 "encrypted connections (SSL/TLS)."
@@ -2885,19 +2887,19 @@ msgstr ""
 "A hírkiszolgáló portszáma. Jellemzően 119 a titkosítatlan és 563 a "
 "titkosított kapcsolatokhoz (SSL/TLS)."
 
-#: pan/gui/server-ui.cc:413
+#: pan/gui/server-ui.cc:412
 msgid "Por_t:"
 msgstr "_Port:"
 
-#: pan/gui/server-ui.cc:416
+#: pan/gui/server-ui.cc:415
 msgid "Login (if Required)"
 msgstr "Bejelentkezés (ha szükséges)"
 
-#: pan/gui/server-ui.cc:420
+#: pan/gui/server-ui.cc:419
 msgid "_Username:"
 msgstr "_Felhasználónév:"
 
-#: pan/gui/server-ui.cc:421
+#: pan/gui/server-ui.cc:420
 msgid ""
 "The username to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2905,11 +2907,11 @@ msgstr ""
 "A kiszolgálónak átadott felhasználónév, ha kéri. Ha a kiszolgáló nem igényel "
 "hitelesítést, akkor hagyja ezt üresen."
 
-#: pan/gui/server-ui.cc:425
+#: pan/gui/server-ui.cc:424
 msgid "_Password:"
 msgstr "_Jelszó:"
 
-#: pan/gui/server-ui.cc:426
+#: pan/gui/server-ui.cc:425
 msgid ""
 "The password to give the server when asked.  If your server doesn't require "
 "authentication, you can leave this blank."
@@ -2917,55 +2919,55 @@ msgstr ""
 "A kiszolgálónak átadott jelszó, ha kéri. Ha a kiszolgáló nem igényel "
 "hitelesítést, akkor hagyja ezt üresen."
 
-#: pan/gui/server-ui.cc:429
+#: pan/gui/server-ui.cc:428
 msgid "Settings"
 msgstr "Beállítások"
 
-#: pan/gui/server-ui.cc:436
+#: pan/gui/server-ui.cc:435
 msgid "Connection _Limit:"
 msgstr "Kapcsolati _korlát:"
 
-#: pan/gui/server-ui.cc:440
+#: pan/gui/server-ui.cc:439
 msgid "After Two Weeks"
 msgstr "Két hét után"
 
-#: pan/gui/server-ui.cc:441
+#: pan/gui/server-ui.cc:440
 msgid "After One Month"
 msgstr "Egy hónap után"
 
-#: pan/gui/server-ui.cc:442
+#: pan/gui/server-ui.cc:441
 msgid "After Two Months"
 msgstr "Két hónap után"
 
-#: pan/gui/server-ui.cc:443
+#: pan/gui/server-ui.cc:442
 msgid "After Three Months"
 msgstr "Három hónap után"
 
-#: pan/gui/server-ui.cc:444
+#: pan/gui/server-ui.cc:443
 msgid "After Six Months"
 msgstr "Hat hónap után"
 
-#: pan/gui/server-ui.cc:445
+#: pan/gui/server-ui.cc:444
 msgid "Never Expire Old Articles"
 msgstr "Sose járnak le a régi cikkek"
 
-#: pan/gui/server-ui.cc:459
+#: pan/gui/server-ui.cc:458
 msgid "E_xpire Old Articles:"
 msgstr "Régi cikkek le_járata:"
 
-#: pan/gui/server-ui.cc:463
+#: pan/gui/server-ui.cc:462
 msgid "Primary"
 msgstr "Elsődleges"
 
-#: pan/gui/server-ui.cc:464
+#: pan/gui/server-ui.cc:463
 msgid "Fallback"
 msgstr "Tartalék"
 
-#: pan/gui/server-ui.cc:478
+#: pan/gui/server-ui.cc:477
 msgid "Server Rank:"
 msgstr "Kiszolgáló rang:"
 
-#: pan/gui/server-ui.cc:482
+#: pan/gui/server-ui.cc:481
 msgid ""
 "Fallback servers are used for articles that can't be found on the "
 "primaries.  One common approach is to use free servers as primaries and "
@@ -2976,39 +2978,39 @@ msgstr ""
 "kiszolgálókat elsődlegesként és a feliratkozási kiszolgálókat tartalékként "
 "használják."
 
-#: pan/gui/server-ui.cc:487
+#: pan/gui/server-ui.cc:486
 msgid "Disable Compression (N/A)"
 msgstr "Tömörítés letiltása (N/A)"
 
-#: pan/gui/server-ui.cc:488
+#: pan/gui/server-ui.cc:487
 msgid "XZVER Compression (Astraweb)"
 msgstr "XZVER tömörítés (Astraweb)"
 
-#: pan/gui/server-ui.cc:489
+#: pan/gui/server-ui.cc:488
 msgid "GZIP Compression (Giganews etc.)"
 msgstr "GZIP tömörítés (Giganews, stb.)"
 
-#: pan/gui/server-ui.cc:503
+#: pan/gui/server-ui.cc:502
 msgid "Header Compression:"
 msgstr "Fejléc tömörítés:"
 
-#: pan/gui/server-ui.cc:509
+#: pan/gui/server-ui.cc:508
 msgid "Security"
 msgstr "Biztonság"
 
-#: pan/gui/server-ui.cc:514
+#: pan/gui/server-ui.cc:513
 msgid "Use Unsecure (Plaintext) Connections"
 msgstr "Nem biztonságos (egyszerű szöveges) kapcsolatok használata"
 
-#: pan/gui/server-ui.cc:515
+#: pan/gui/server-ui.cc:514
 msgid "Use Secure SSL Connections"
 msgstr "Biztonságos SSL kapcsolatok használata"
 
-#: pan/gui/server-ui.cc:530
+#: pan/gui/server-ui.cc:529
 msgid "TLS (SSL) Settings:"
 msgstr "TLS (SSL) beállítások:"
 
-#: pan/gui/server-ui.cc:535
+#: pan/gui/server-ui.cc:534
 msgid ""
 "You can enable/disable secure SSL/TLS connections here. If you enable SSL/"
 "TLS, your data is encrypted and secure. It is encouraged to enable SSL/TLS "
@@ -3018,60 +3020,60 @@ msgstr ""
 "engedélyezi az SSL/TLS kapcsolatot, akkor az adatok titkosítva lesznek és "
 "biztonságosak. Javasoljuk az SSL/TLS engedélyezését adatvédelmi okokból."
 
-#: pan/gui/server-ui.cc:540
+#: pan/gui/server-ui.cc:539
 msgid "Always trust this server's certificate"
 msgstr "Mindig bízzon meg a kiszolgáló tanúsítványában"
 
-#: pan/gui/server-ui.cc:725
+#: pan/gui/server-ui.cc:724
 #, c-format
 msgid "Really delete \"%s\"?"
 msgstr "Valóban törli: „%s”?"
 
-#: pan/gui/server-ui.cc:814
+#: pan/gui/server-ui.cc:813
 msgid "No information available."
 msgstr "Nem érhetők el információk."
 
-#: pan/gui/server-ui.cc:824
+#: pan/gui/server-ui.cc:823
 #, c-format
 msgid "Server Certificate for '%s'"
 msgstr "Kiszolgáló tanúsítvány ehhez: „%s”"
 
-#: pan/gui/server-ui.cc:923
+#: pan/gui/server-ui.cc:922
 #, c-format
 msgid "Really delete certificate for \"%s\"?"
 msgstr "Valóban törli a tanúsítványt ehhez: „%s”?"
 
 #. dialog
-#: pan/gui/server-ui.cc:950 pan/gui/server-ui.cc:971 pan/gui/server-ui.cc:1069
+#: pan/gui/server-ui.cc:949 pan/gui/server-ui.cc:970 pan/gui/server-ui.cc:1068
 msgid "Servers"
 msgstr "Kiszolgálók"
 
-#: pan/gui/server-ui.cc:1010
+#: pan/gui/server-ui.cc:1009
 msgid "Remove a Server"
 msgstr "Kiszolgáló eltávolítása"
 
 #. dialog
-#: pan/gui/server-ui.cc:1043
+#: pan/gui/server-ui.cc:1042
 msgid "SSL Certificates"
 msgstr "SSL tanúsítványok"
 
-#: pan/gui/server-ui.cc:1064
+#: pan/gui/server-ui.cc:1063
 msgid "Certificates"
 msgstr "Tanúsítványok"
 
-#: pan/gui/server-ui.cc:1095
+#: pan/gui/server-ui.cc:1094
 msgid "Import Certificate"
 msgstr "Tanúsítvány importálása"
 
-#: pan/gui/server-ui.cc:1101
+#: pan/gui/server-ui.cc:1100
 msgid "Inspect Certificate"
 msgstr "Tanúsítvány vizsgálata"
 
-#: pan/gui/server-ui.cc:1108
+#: pan/gui/server-ui.cc:1107
 msgid "Remove Certificate"
 msgstr "Tanúsítvány eltávolítása"
 
-#: pan/gui/task-pane.cc:125
+#: pan/gui/task-pane.cc:124
 #, c-format
 msgid ""
 "\n"
@@ -3090,7 +3092,7 @@ msgstr ""
 "<i>Csoportok:</i> <b>%s</b>\n"
 "<i>Forrásfájl:</i> <b>%s</b>\n"
 
-#: pan/gui/task-pane.cc:137
+#: pan/gui/task-pane.cc:136
 #, c-format
 msgid ""
 "\n"
@@ -3111,164 +3113,164 @@ msgstr ""
 "<i>Csoportok:</i> <b>%s</b>\n"
 "<i>Mentési útvonal:</i> <b>%s</b>\n"
 
-#: pan/gui/task-pane.cc:139
+#: pan/gui/task-pane.cc:138
 msgid "unknown"
 msgstr "ismeretlen"
 
-#: pan/gui/task-pane.cc:307
+#: pan/gui/task-pane.cc:306
 msgid "Choose New Destination for Selected Tasks"
 msgstr "Válasszon új célt a kijelölt feladatokhoz"
 
-#: pan/gui/task-pane.cc:311
+#: pan/gui/task-pane.cc:310
 msgid "Save"
 msgstr "Mentés"
 
-#: pan/gui/task-pane.cc:461
+#: pan/gui/task-pane.cc:460
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running, %d Stopped)"
 msgstr "Pan: Feladatok (%d sorban áll, %d fut, %d leállítva)"
 
-#: pan/gui/task-pane.cc:463
+#: pan/gui/task-pane.cc:462
 #, c-format
 msgid "Pan: Tasks (%d Queued, %d Running)"
 msgstr "Pan: Feladatok (%d sorban áll, %d fut)"
 
-#: pan/gui/task-pane.cc:465
+#: pan/gui/task-pane.cc:464
 msgid "Pan: Tasks"
 msgstr "Pan: Feladatok"
 
-#: pan/gui/task-pane.cc:490
+#: pan/gui/task-pane.cc:489
 #, c-format
 msgid "%lu selected, %s"
 msgstr "%lu kiválasztva, %s"
 
-#: pan/gui/task-pane.cc:554
+#: pan/gui/task-pane.cc:553
 msgid "Running"
 msgstr "Fut"
 
-#: pan/gui/task-pane.cc:555
+#: pan/gui/task-pane.cc:554
 msgid "Decoding"
 msgstr "Visszafejtés"
 
-#: pan/gui/task-pane.cc:557
+#: pan/gui/task-pane.cc:556
 msgid "Queued for Decode"
 msgstr "Sorba állítva a visszafejtéshez"
 
-#: pan/gui/task-pane.cc:558
+#: pan/gui/task-pane.cc:557
 msgid "Queued for Encode"
 msgstr "Sorba állítva a kódoláshoz"
 
-#: pan/gui/task-pane.cc:559
+#: pan/gui/task-pane.cc:558
 msgid "Queued"
 msgstr "Sorban áll"
 
-#: pan/gui/task-pane.cc:560
+#: pan/gui/task-pane.cc:559
 msgid "Stopped"
 msgstr "Leállítva"
 
-#: pan/gui/task-pane.cc:561
+#: pan/gui/task-pane.cc:560
 msgid "Removing"
 msgstr "Eltávolítás"
 
-#: pan/gui/task-pane.cc:590
+#: pan/gui/task-pane.cc:589
 #, c-format
 msgid "%d%% Done"
 msgstr "%d%% kész"
 
-#: pan/gui/task-pane.cc:596
+#: pan/gui/task-pane.cc:595
 #, c-format
 msgid "%d:%02d:%02d Remaining (%d @ %lu KiB/s)"
 msgstr "%d∶%02d∶%02d Hátravan (%d @ %lu KiB/s)"
 
-#: pan/gui/task-pane.cc:691 pan/gui/task-pane.cc:692
+#: pan/gui/task-pane.cc:690 pan/gui/task-pane.cc:691
 msgid "Move To Top"
 msgstr "Mozgatás a tetejére"
 
-#: pan/gui/task-pane.cc:696 pan/gui/task-pane.cc:697
+#: pan/gui/task-pane.cc:695 pan/gui/task-pane.cc:696
 msgid "Move To Bottom"
 msgstr "Mozgatás az aljára"
 
-#: pan/gui/task-pane.cc:701 pan/gui/task-pane.cc:702
+#: pan/gui/task-pane.cc:700 pan/gui/task-pane.cc:701
 msgid "Show Task Information"
 msgstr "Feladatinformációk megjelenítése"
 
-#: pan/gui/task-pane.cc:706 pan/gui/task-pane.cc:707
+#: pan/gui/task-pane.cc:705 pan/gui/task-pane.cc:706
 msgid "Stop Task"
 msgstr "Feladat leállítása"
 
-#: pan/gui/task-pane.cc:711 pan/gui/task-pane.cc:712
+#: pan/gui/task-pane.cc:710 pan/gui/task-pane.cc:711
 msgid "Delete Task"
 msgstr "Feladat törlése"
 
-#: pan/gui/task-pane.cc:716 pan/gui/task-pane.cc:717
+#: pan/gui/task-pane.cc:715 pan/gui/task-pane.cc:716
 msgid "Restart Task"
 msgstr "Feladat újraindítása"
 
-#: pan/gui/task-pane.cc:721 pan/gui/task-pane.cc:722
+#: pan/gui/task-pane.cc:720 pan/gui/task-pane.cc:721
 msgid "Change Download Destination"
 msgstr "Letöltési cél módosítása"
 
-#: pan/gui/task-pane.cc:1017
+#: pan/gui/task-pane.cc:1016
 msgid "_Online"
 msgstr "_Kapcsolatban"
 
-#: pan/gui/task-pane.cc:1027
+#: pan/gui/task-pane.cc:1026
 msgid "Move up"
 msgstr "Mozgatás fel"
 
-#: pan/gui/task-pane.cc:1028
+#: pan/gui/task-pane.cc:1027
 msgid "Move task up"
 msgstr "Feladat mozgatása fel"
 
-#: pan/gui/task-pane.cc:1029
+#: pan/gui/task-pane.cc:1028
 msgid "Move to top"
 msgstr "Mozgatás a tetejére"
 
-#: pan/gui/task-pane.cc:1030
+#: pan/gui/task-pane.cc:1029
 msgid "Move task to top of the download queue"
 msgstr "Feladat mozgatása a letöltési sor elejére"
 
-#: pan/gui/task-pane.cc:1032
+#: pan/gui/task-pane.cc:1031
 msgid "Move down"
 msgstr "Mozgatás le"
 
-#: pan/gui/task-pane.cc:1033
+#: pan/gui/task-pane.cc:1032
 msgid "Move task down"
 msgstr "Feladat mozgatása le"
 
-#: pan/gui/task-pane.cc:1034
+#: pan/gui/task-pane.cc:1033
 msgid "Move to bottom"
 msgstr "Mozgatás az aljára"
 
-#: pan/gui/task-pane.cc:1035
+#: pan/gui/task-pane.cc:1034
 msgid "Move task to the bottom of the download queue"
 msgstr "Feladat mozgatása a letöltési sor végére"
 
-#: pan/gui/task-pane.cc:1037
+#: pan/gui/task-pane.cc:1036
 msgid "Restart"
 msgstr "Újraindítás"
 
-#: pan/gui/task-pane.cc:1038
+#: pan/gui/task-pane.cc:1037
 msgid "Restart Tasks"
 msgstr "Feladatok újraindítása"
 
-#: pan/gui/task-pane.cc:1039
+#: pan/gui/task-pane.cc:1038
 msgid "Stop"
 msgstr "Leállítás"
 
-#: pan/gui/task-pane.cc:1040
+#: pan/gui/task-pane.cc:1039
 msgid "Stop Tasks"
 msgstr "Feladatok leállítása"
 
-#: pan/gui/task-pane.cc:1042
+#: pan/gui/task-pane.cc:1041
 msgid "Delete Tasks"
 msgstr "Feladatok törlése"
 
-#: pan/gui/task-pane.cc:1044
+#: pan/gui/task-pane.cc:1043
 msgid "Close"
 msgstr "Bezárás"
 
-#: pan/gui/task-pane.cc:1048
+#: pan/gui/task-pane.cc:1047
 msgid "Show popups"
 msgstr "Felugró ablakok megjelenítése"
 
@@ -3277,27 +3279,27 @@ msgstr "Felugró ablakok megjelenítése"
 msgid "Error starting URL: %s (Command was: %s)"
 msgstr "Hiba az URL indításakor: %s (a parancs ez volt: %s)"
 
-#: pan/tasks/decoder.cc:126
+#: pan/tasks/decoder.cc:124
 #, c-format
 msgid "Couldn't save file \"%s\": %s"
 msgstr "Nem sikerült elmenteni a(z) „%s” fájlt: %s"
 
-#: pan/tasks/decoder.cc:148 pan/tasks/encoder.cc:146
+#: pan/tasks/decoder.cc:146 pan/tasks/encoder.cc:146
 msgid "Error initializing uulib"
 msgstr "Hiba az uulib előkészítésekor"
 
-#: pan/tasks/decoder.cc:168 pan/tasks/socket-impl-gio.cc:360
+#: pan/tasks/decoder.cc:166 pan/tasks/socket-impl-gio.cc:360
 #: pan/tasks/socket-impl-openssl.cc:641
 #, c-format
 msgid "Error reading from %s: %s"
 msgstr "Hiba a(z) %s olvasása közben: %s"
 
-#: pan/tasks/decoder.cc:208
+#: pan/tasks/decoder.cc:206
 #, c-format
 msgid "Saved \"%s\""
 msgstr "„%s” mentve"
 
-#: pan/tasks/decoder.cc:215
+#: pan/tasks/decoder.cc:213
 #, c-format
 msgid ""
 "Error saving \"%s\":\n"
@@ -3306,7 +3308,7 @@ msgstr ""
 "Hiba a következő mentésekor: „%s”:\n"
 "%s."
 
-#: pan/tasks/decoder.cc:328 pan/tasks/task-article.cc:351
+#: pan/tasks/decoder.cc:326 pan/tasks/task-article.cc:351
 #, c-format
 msgid "Decoding %s"
 msgstr "%s visszafejtése"
