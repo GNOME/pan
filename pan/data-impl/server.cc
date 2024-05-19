@@ -80,6 +80,13 @@ DataImpl :: add_new_server ()
   return new_server;
 }
 
+quarks_t DataImpl ::get_servers () const {
+  quarks_t servers;
+  foreach_const (servers_t, _servers, it)
+    servers.insert (it->first);
+  return servers;
+}
+
 Data ::Server *DataImpl ::find_server(Quark const &server)
 {
   Server * retval (nullptr);
