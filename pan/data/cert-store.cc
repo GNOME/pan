@@ -235,16 +235,14 @@ int CertStore::get_all_certs_from_disk() {
 	int ret(0);
 	GError* err(NULL);
 
-	foreach_const(quarks_t, servers, it){
-	if (import_from_file(*it))
-	{
-		++cnt;
-	}
-	else
-	{
-		Data::Server* s(_data.find_server(*it));
-		s->cert.clear();
-	}
+	foreach_const(quarks_t, servers, it) {
+    if (import_from_file(*it)) {
+      ++cnt;
+    }
+    else {
+      Data::Server* s(_data.find_server(*it));
+      s->cert.clear();
+    }
 }
 
 // get certs from ssl certs directory
