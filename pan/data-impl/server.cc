@@ -85,6 +85,43 @@ DataImpl :: add_new_server ()
   return new_server;
 }
 
+// Returns a Server pointer. Caller gets ownership of the pointer.
+Data ::Server *DataImpl ::read_server(Quark const &pan_id) const
+{
+  Server * retval = new Server;
+  read_server(pan_id, retval);
+  return retval;
+  }
+
+// Returns a Server id.
+void DataImpl ::read_server(Quark const &pan_id, Data::Server * retval) const
+{
+  try {
+    SQLite::Statement query (pan_db, "select * from 'server' where pan_id = ?;");
+    query.bind(1, pan_id.c_str());
+
+    // host is unique in schema so we should have only one line
+    while (query.executeStep()) {
+      retval->host = query.getColumn("host").getText();
+      retval->port = query.getColumn("port");
+      retval->password = query.getColumn("password").getText();
+      retval->username = query.getColumn("username").getText();
+      retval->article_expiration_age = query.getColumn("expiry_days");
+      retval->max_connections = query.getColumn("connection_limit");
+      retval->newsrc_filename = query.getColumn("newsrc_filename").getText();
+      retval->rank = query.getColumn("rank");
+      retval->ssl_support = query.getColumn("use_ssl");
+      retval->trust = query.getColumn("trust_certificate");
+      retval->compression_type = query.getColumn("compression_type");
+      retval->cert = query.getColumn("certificate").getText();
+    }
+  } catch (std::exception e) {
+    std::cout << "exception: " << e.what() << std::endl;
+  }
+
+  debug("read server " << retval->host << " from DB");
+}
+
 quarks_t DataImpl ::get_servers () const {
   quarks_t servers;
   foreach_const (servers_t, _servers, it)

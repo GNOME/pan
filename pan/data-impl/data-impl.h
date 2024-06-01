@@ -183,6 +183,8 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     Server *find_server(Quark const &server) override;
     bool find_server_by_host_name(std::string const &server,
                                   Quark &setme) const override;
+    Server *read_server(Quark const &pan_id) const;
+    void read_server(Quark const &pan_id, Server *server) const;
 
   public: // mutators
     void delete_server(Quark const &server) override;
