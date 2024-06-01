@@ -91,7 +91,7 @@ Data ::Server *DataImpl ::read_server(Quark const &pan_id) const
   Server * retval = new Server;
   read_server(pan_id, retval);
   return retval;
-  }
+}
 
 // Returns a Server id.
 void DataImpl ::read_server(Quark const &pan_id, Data::Server * retval) const
@@ -119,13 +119,31 @@ void DataImpl ::read_server(Quark const &pan_id, Data::Server * retval) const
     std::cout << "exception: " << e.what() << std::endl;
   }
 
-  debug("read server " << retval->host << " from DB");
+  debug("read server " << retval->host << " from DB using quark " << pan_id.c_str());
 }
 
 quarks_t DataImpl ::get_servers () const {
   quarks_t servers;
   foreach_const (servers_t, _servers, it)
     servers.insert (it->first);
+  return servers;
+}
+
+quarks_t DataImpl ::get_server_ids_from_db () const {
+  quarks_t servers;
+  try {
+    SQLite::Statement query (pan_db, "select pan_id from 'server' order by pan_id asc;");
+    while (query.executeStep()) {
+      const std::string pan_id = query.getColumn(0).getText();
+      Quark id (pan_id);
+      servers.insert(id);
+    }
+  } catch (std::exception e) {
+    std::cout << "exception: " << e.what() << std::endl;
+  }
+
+   debug("get_servers: got " << servers.size() << " servers from DB");
+
   return servers;
 }
 
@@ -534,7 +552,9 @@ namespace
     _servers.clear();
     foreach_const (key_to_keyvals_t, spc.data, it)
     {
+      // server id is used to construct quark which is used as key in _servers
       Server &s(_servers[it->first]);
+      debug("loading server id " << it->first << " from file");
       keyvals_t kv(it->second);
       s.host = kv["host"];
       s.username = kv["username"];
@@ -590,12 +610,14 @@ void DataImpl :: save_server_in_db(std::string pan_id, Server* s, Prefs& prefs)
   gchar* pass(NULL);
   get_server_auth(s, user, pass, prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT));
 
-  create_st << "insert into server (pan_id, host) values (?,?) on conflict do nothing; ";
+  // if needed, create a new entry with mandatory attributes
+  create_st << "insert into server (pan_id, host, newsrc_filename) values (?,?,?) on conflict do nothing; ";
   try {
     SQLite::Statement query1(pan_db,create_st.str());
     int i = 1;
     query1.bind(i++, pan_id);
     query1.bind(i++, s->host);
+    query1.bind(i++, s->newsrc_filename);
     int nb = query1.exec();
     if (nb > 0) {
       std::cout << "created server " << s->host << " in DB\n";
@@ -606,6 +628,7 @@ void DataImpl :: save_server_in_db(std::string pan_id, Server* s, Prefs& prefs)
   }
 
   std::stringstream update_st;
+  // update attributes of an existing entry
   update_st << "update server set port = ? , username = ? , password = ? , "
             << "expiry_days = ? , connection_limit = ? , newsrc_filename = ? , "
             << "rank = ? , use_ssl = ? , trust_certificate = ? , compression_type = ? , certificate = ? "

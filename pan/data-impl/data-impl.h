@@ -220,6 +220,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
   public: // accessors
     quarks_t get_servers() const override;
+    quarks_t get_server_ids_from_db () const;
 
     bool get_server_auth(Quark const &server,
                          std::string &setme_username,

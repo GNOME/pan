@@ -159,9 +159,24 @@ DataImpl :: rebuild_backend ()
     std::string sql_file = "01-server.sql";
     load_db_schema(sql_file.c_str());
 
-    // TODO: skip these 2 steps if DB already contains server info
-    load_server_properties (*_data_io);
-    save_server_properties (_prefs);
+    quarks_t server_list = get_server_ids_from_db();
+    if (server_list.empty()) {
+      // load servers from file only if SQL db is empty
+      load_server_properties (*_data_io);
+      save_server_properties (_prefs);
+      server_list = get_server_ids_from_db();
+    }
+
+    // populate the servers from database information. Which is a bit
+    // dumb since the DB should be the reference. This is duplicated
+    // information. But this cannot be removed until groups are also
+    // managed in DB.
+    _servers.clear();
+    foreach_const (quarks_t, server_list, it) {
+      debug("loading server with pan_id " << it->c_str() << " from DB");
+      Server &server(_servers[it->c_str()]);
+      read_server(it->c_str(), &server);
+    }
 
     load_newsrc_files (*_data_io);
     load_group_xovers (*_data_io);
