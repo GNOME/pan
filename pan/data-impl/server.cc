@@ -606,6 +606,8 @@ void DataImpl :: save_server_in_db(std::string pan_id, Server* s, Prefs& prefs)
 {
   std::stringstream create_st;
 
+  debug("saving data of server" << s->host << " in DB");
+
   std::string user;
   gchar* pass(NULL);
   get_server_auth(s, user, pass, prefs.get_flag("use-password-storage", USE_LIBSECRET_DEFAULT));
@@ -671,18 +673,10 @@ void DataImpl :: save_server_in_db(std::string pan_id, Server* s, Prefs& prefs)
 
 void DataImpl :: save_server_properties (Prefs& prefs)
 {
-  int depth (0);
-
-  // sort the servers by id
-  typedef std::set<Quark,AlphabeticalQuarkOrdering> alpha_quarks_t;
-  alpha_quarks_t servers;
-  foreach_const (servers_t, _servers, it)
-    servers.insert (it->first);
-
-  // write the servers to the ostream
-  foreach_const (alpha_quarks_t, servers, it) {
-    Server* s (find_server (*it));
-    save_server_in_db(it->to_string(), s, prefs);
+  // store the servers in DB
+  foreach_const (servers_t, _servers, it) {
+    Server s (it->second);
+    save_server_in_db(it->first.to_string(),&s, prefs);
   }
 }
 
