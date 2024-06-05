@@ -52,7 +52,7 @@ void DataImpl ::delete_server(Quark const &server_in)
 
   if (_servers.count (server))
   {
-    const std::string newsrc_filename (_servers[server].newsrc_filename);
+    const std::string newsrc_filename (file::absolute_fn("",_servers[server].newsrc_filename));
     _servers.erase (server);
     save_server_properties (*_data_io, _prefs);
     std::remove (newsrc_filename.c_str());
