@@ -181,7 +181,7 @@ int main(int argc, char **argv) {
 ")
 
 if(NOT COMPILED_LKSTRFTIME_TEST)
-  message("Warning: failed to compile test-strftime.c")
+  message(WARNING "failed to compile test-strftime.c")
 endif()
 
 set(PLATFORM_INFO ${CMAKE_HOST_SYSTEM})
