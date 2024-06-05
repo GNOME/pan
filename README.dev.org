@@ -4,9 +4,12 @@
 
 - Run =./mknews <old_version_tag>= and cut'n'paste the information you
   want in [[file:NEWS][NEWS]] file
-- update [[file:NEWS][NEWS]] file to feature the new version number and code name
-- update [[file:CMakeLists.txt][CMakeList.txt]] to update the new version (in line 9) and
-  codename (line 14) of the release
+- update [[file:NEWS][NEWS]] file to feature the new version number and code
+  name. Pan release number and title are extracted from this file, so
+  please make sure that the first line of the file is:
+  #+begin_example
+  <version number> "<title>" <whatever>
+  #+end_example
 - commit the changes
 - create a signed tag on master
 - push the modifications and tag

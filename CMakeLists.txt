@@ -4,13 +4,19 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
   message(FATAL_ERROR "Do not build in-source. Please remove CMakeCache.txt and the CMakeFiles/ directory. Then build out-of-source.")
 endif()
 
+file(STRINGS "NEWS" news LIMIT_COUNT 1)
+string(REGEX MATCH "[0-9.]+" pan_version ${news})
+string(REGEX MATCH "\"[a-zA-Z ]+\"" quoted_pan_title ${news})
+# remove quotes
+string(REGEX REPLACE "\"" "" VERSION_TITLE ${quoted_pan_title})
+message(STATUS "Building Pan version ${pan_version} (${VERSION_TITLE})")
+
 # https://cmake.org/cmake/help/latest/command/project.html
 project(Pan
-  VERSION 0.158
+  VERSION ${pan_version}
   DESCRIPTION "Pan usenet reader"
   HOMEPAGE_URL "https://gitlab.gnome.org/GNOME/pan"
 )
-set(VERSION_TITLE "Avdiivka")
 
 set(PAN_DBUS_SERVICE_NAME      "org.gnome.pan")
 set(PAN_DBUS_SERVICE_PATH      "/news/pan/NZB")
