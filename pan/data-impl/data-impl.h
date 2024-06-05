@@ -188,6 +188,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
   public: // mutators
     void delete_server(Quark const &server) override;
+    void delete_server_from_db(std::string host);
 
     Quark add_new_server() override;
 
