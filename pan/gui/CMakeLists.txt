@@ -41,8 +41,6 @@ add_library(pan-cc-gui STATIC ${SRC_CC_FILES})
 
 add_library(pan-c-gui STATIC ${SRC_C_FILES})
 
-message("gmime gui ${GMIME_INCLUDE_DIRS}")
-
 foreach (my_target "pan-cc-gui" "pan-c-gui")
   target_link_libraries(${my_target} PRIVATE tasks)
 
