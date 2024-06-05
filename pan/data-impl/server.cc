@@ -501,7 +501,7 @@ namespace
       if (s.newsrc_filename.empty())
       { // set a default filename
         std::ostringstream o;
-        o << file::get_pan_home() << G_DIR_SEPARATOR << "newsrc-" << it->first;
+        o << "newsrc-" << it->first;
         s.newsrc_filename = o.str();
       }
     }
