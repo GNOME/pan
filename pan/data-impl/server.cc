@@ -58,8 +58,9 @@ void DataImpl ::delete_server(Quark const &server_in)
   if (_servers.count (server))
   {
     const std::string newsrc_filename (file::absolute_fn("",_servers[server].newsrc_filename));
+    delete_server_from_db(_servers[server].host );
     _servers.erase (server);
-    save_server_properties (*_data_io, _prefs);
+    // remove file containing list of groups
     std::remove (newsrc_filename.c_str());
     rebuild_backend ();
   }
@@ -668,6 +669,25 @@ void DataImpl :: save_server_in_db(std::string pan_id, Server* s, Prefs& prefs)
   catch (std::exception& e) {
     std::cout << "SQLite exception while saving server " << s->host << ": " << e.what()
               << "\n" << update_st.str();
+  }
+}
+void DataImpl :: delete_server_from_db(std::string host)
+{
+  std::stringstream delete_st;
+
+  debug("deleting server" << host << " from DB");
+
+  delete_st << "delete from server where host = ? ;";
+  try {
+    SQLite::Statement query(pan_db,delete_st.str());
+    query.bind(1, host);
+    int nb = query.exec();
+    if (nb > 0) {
+      std::cout << "deleted server " << host << " from DB\n";
+    }
+  }
+  catch (std::exception& e) {
+    std::cout << "SQLite exception while deleting server " << host << ": " << e.what() << std::endl;
   }
 }
 
