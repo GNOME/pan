@@ -64,6 +64,17 @@ Pan is good at Binaries.
   Pan with support for that feature, and then enable it in Edit ->
   Preferences -> Miscellaneous -> 'Save passwords in password storage'.
 
+** SQLite migration
+
+SQLite is progressively introduced to replace files located in =~/.pan2=.
+
+With this release, a new =pan.db= file is added in =~/.pan2=. You can
+peek what's inside with =sqlite3= or =sqlitebrowser=.
+
+So far:
+- =servers.xml= is deprecated. Server information is now stored in
+  =server= table.
+
 ** Requirements
 
 Pan requires these libraries:
@@ -72,6 +83,7 @@ Pan requires these libraries:
   (optionally GLib 2.26.0 or higher to support multiple Pan instances)
 - [[http://www.gtk.org/][GTK]] 3.16.0 or higher
 - [[http://spruce.sourceforge.net/gmime/][GMime]] 3.0.0 or higher (optionally with PGP cryptography support)
+- [[https://github.com/SRombauts/SQLiteCpp/tree/master][SQLiteCpp]] 3.3.1 or higher
 
 The following libraries add extra features but are optional:
 
