@@ -18,14 +18,18 @@ GdkPixbuf *load_icon(gchar const *file_name)
 {
   // try local icon
   GdkPixbuf *pixbuf = load_icon_from_path(file_name, "pan/icons");
-
-  if (pixbuf != nullptr)
-  {
+  if (pixbuf != nullptr) {
     return pixbuf;
   }
 
   // try system icon
-  return load_icon_from_path(file_name, PAN_SYSTEM_ICON_PATH);
+  pixbuf = load_icon_from_path(file_name, PAN_SYSTEM_ICON_PATH);
+  if (pixbuf != nullptr) {
+    return pixbuf;
+  }
+
+  std::cerr << "Unable to load " << file_name << " icon. Use --debug flag for more details";
+  return nullptr;
 }
 
 GdkPixbuf *load_icon_from_path(const gchar *file_name, const gchar *icon_dir)
@@ -36,13 +40,8 @@ GdkPixbuf *load_icon_from_path(const gchar *file_name, const gchar *icon_dir)
 
   if (error != NULL)
   {
-      fprintf(stderr,
-           "Warning: Unable to load icon %s from %s: %s\n",
-           file_name,
-           icon_dir,
-           error->message);
-
-      g_error_free(error);
+    debug("Unable to load icon " << file_name << " from " << icon_dir << ": " << error->message);
+    g_error_free(error);
   }
 
   g_free(icon_path);
