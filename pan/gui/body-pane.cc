@@ -1539,8 +1539,11 @@ BodyPane :: populate_popup (GtkTextView *v G_GNUC_UNUSED, GtkMenu *m)
 
 namespace
 {
+  // This function can be triggered:
+  //  - read a post with an attachment
+  //  - in message body, bottom left, right click on the icon below "Attachments"
   static gboolean
-  attachment_clicked_cb (GtkWidget *w, GdkEventButton *event, gpointer p)
+  attachment_clicked_cb (GtkWidget *w, GdkEvent *event, gpointer p)
   {
     BodyPane * bp = static_cast<BodyPane*>(p);
     const gchar * fn = (char*)g_object_get_data (G_OBJECT(w), "filename");
@@ -1548,12 +1551,9 @@ namespace
 
     bp->_current_attachment = fn;
 
-    if (event->type == GDK_BUTTON_PRESS && event->button == 3)
+    if (event->type == GDK_BUTTON_PRESS && event->button.button == 3)
     {
-      gtk_menu_popup
-      (GTK_MENU(bp->_menu), nullptr, nullptr, nullptr, nullptr,
-      event->button,
-      event->time);
+      gtk_menu_popup_at_pointer(GTK_MENU(bp->_menu), event);
     }
 
     return TRUE;
