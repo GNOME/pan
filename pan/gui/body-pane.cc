@@ -1528,10 +1528,8 @@ BodyPane :: populate_popup (GtkTextView *v G_GNUC_UNUSED, GtkMenu *m)
 
   // then, on top of it, the suggestions menu.
   const bool copy_url_enabled = !_hover_url.empty();
-  GtkWidget * img = gtk_image_new_from_stock (GTK_STOCK_COPY, GTK_ICON_SIZE_MENU);
-  mi = gtk_image_menu_item_new_with_mnemonic (_("Copy _URL"));
+  mi = gtk_menu_item_new_with_mnemonic (_("Copy _URL"));
   g_signal_connect (mi, "activate", G_CALLBACK(copy_url_cb), this);
-  gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
   gtk_widget_set_sensitive (mi, copy_url_enabled);
   gtk_widget_show_all (mi);
   gtk_menu_shell_prepend (GTK_MENU_SHELL(m), mi);
