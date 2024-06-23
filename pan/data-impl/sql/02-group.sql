@@ -1,3 +1,6 @@
+pragma foreign_keys = on;
+
+
 create table if not exists `group` (
   id integer primary key asc autoincrement,
   name text not null,
@@ -9,8 +12,9 @@ create unique index if not exists group_name on `group` (name);
 
 create table if not exists server_group (
   id integer primary key asc autoincrement,
-  server_id integer references server (id) on delete cascade,
-  group_id integer references `group` (id) on delete cascade,
+  server_id integer not null references server (id) on delete cascade,
+  -- a group must not be deleted if it's still provided by a server
+  group_id integer not null references `group` (id) on delete restrict,
 
   -- From Thomas T: In theory these are denormalisations because if a
   -- server holds the group it should in general hold all the articles
@@ -31,6 +35,26 @@ create table if not exists server_group (
 create unique index if not exists server_group_idx on server_group (server_id, group_id);
 
 
+-- remove groups that are no longer attached to a server, i.e. its
+-- only remaining server was deleted by user
+-- create trigger if not exists delete_orphan_groups_server after delete on server
+--   begin
+--     delete from `group` where ( select count() from server_group
+--                                  where server_group.server_id == OLD.id) == 0;
+--   end;
+
+-- check and remove orphaned group, i.e. groups that are no longer
+-- attached to a server, i.e. either a server was removed by user, or
+-- a group was removed from all its server (when old groups are
+-- cleaned up after a refresh group list)
+create trigger if not exists delete_orphan_groups after delete on `server`
+  begin
+    delete from `group` where id in (
+      select distinct g.id from `group` as g
+        left outer join server_group as sg on g.id == sg.group_id
+        where sg.group_id is null
+    );
+  end;
 -- Local Variables:
 -- mode: sql
 -- sql-product: sqlite
