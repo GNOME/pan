@@ -393,6 +393,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
                      alpha_groups_t &);
     void load_newsrc_files(DataIO const &);
     void save_newsrc_files(DataIO &) const;
+    void save_group_in_db(Quark const &server_name);
 
   public: // mutators
     void add_groups(Quark const &server,
