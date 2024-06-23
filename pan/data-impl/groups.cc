@@ -53,31 +53,34 @@ using namespace pan;
 
 namespace
 {
-  bool
-  parse_newsrc_line (const StringView  & line,
-                     StringView        & setme_group_name,
-                     bool              & setme_subscribed,
-                     StringView        & setme_number_ranges)
+bool parse_newsrc_line(StringView const &line,
+                       StringView &setme_group_name,
+                       bool &setme_subscribed,
+                       StringView &setme_number_ranges)
+{
+  bool ok(false);
+  // since most groups will be unread, it's faster to test the end of the line
+  // before calling strpbrk
+  char const *delimiter(
+    (! line.empty() && (line.back() == '!' || line.back() == ':')) ?
+      &line.back() :
+      line.strpbrk("!:"));
+  if (delimiter)
   {
-    bool ok (false);
-    // since most groups will be unread, it's faster to test the end of the line before calling strpbrk
-    const char * delimiter ((!line.empty() && (line.back()=='!' || line.back()==':')) ? &line.back() : line.strpbrk("!:"));
-    if (delimiter)
-    {
-      StringView myline (line);
+    StringView myline(line);
 
-      setme_subscribed = *delimiter == ':';
+    setme_subscribed = *delimiter == ':';
 
-      myline.substr (NULL, delimiter, setme_group_name);
-      setme_group_name.trim ();
+    myline.substr(NULL, delimiter, setme_group_name);
+    setme_group_name.trim();
 
-      myline.substr (delimiter+1, NULL, setme_number_ranges);
-      setme_number_ranges.trim ();
+    myline.substr(delimiter + 1, NULL, setme_number_ranges);
+    setme_number_ranges.trim();
 
-      ok = !setme_group_name.empty();
-    }
+    ok = ! setme_group_name.empty();
+  }
 
-    return ok;
+  return ok;
   }
 }
 
@@ -91,11 +94,10 @@ namespace
 #include <ext/algorithm>
 #endif
 
-void
-DataImpl :: load_newsrc (const Quark       & server,
-                         LineReader        * in,
-                         alpha_groups_t    & sub,
-                         alpha_groups_t    & unsub)
+void DataImpl ::load_newsrc(Quark const &server,
+                            LineReader *in,
+                            alpha_groups_t &sub,
+                            alpha_groups_t &unsub)
 {
   Server * s = find_server (server);
   if (!s) {
@@ -117,7 +119,7 @@ DataImpl :: load_newsrc (const Quark       & server,
     bool subscribed;
     if (parse_newsrc_line (line, name, subscribed, numbers))
     {
-      const Quark& group (name);
+      Quark const &group(name);
 
       needs_sort |= (!prev.empty() && !o(prev,group));
       groups.push_back (group);
@@ -163,8 +165,7 @@ DataImpl :: load_newsrc (const Quark       & server,
   }
 }
 
-void
-DataImpl :: load_newsrc_files (const DataIO& data_io)
+void DataImpl ::load_newsrc_files(DataIO const &data_io)
 {
   alpha_groups_t& s(_subscribed);
   alpha_groups_t& u(_unsubscribed);
