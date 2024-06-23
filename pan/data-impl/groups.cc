@@ -21,11 +21,13 @@
 ***************
 **************/
 
+#include <SQLiteCpp/Statement.h>
 #include <config.h>
 #include <cassert>
 #include <iostream>
 #include <map>
 #include <set>
+#include <sstream>
 #include <vector>
 
 #include <glib.h>
@@ -200,6 +202,82 @@ void DataImpl ::load_newsrc_files(DataIO const &data_io)
   alpha_groups_t (u).swap(u);
   fire_grouplist_rebuilt ();
 }
+
+void DataImpl::save_group_in_db(Quark const &server_name) {
+  std::string newsrc_string;
+  alpha_groups_t::const_iterator sub_it(_subscribed.begin());
+  const alpha_groups_t::const_iterator sub_end(_subscribed.end());
+  Server const *server = find_server(server_name);
+
+  debug("saving groups of server " << server->host << " in DB");
+
+  // speed insert up -- from minutes to seconds
+  // see https://www.sqlite.org/pragma.html#pragma_synchronous
+  pan_db.exec("pragma synchronous = off");
+  SQLite::Statement get_id_q(pan_db, "select id from server where host = ?");
+  get_id_q.bind(1, server->host );
+  int server_id;
+  while (get_id_q.executeStep()) {
+    server_id = get_id_q.getColumn(0);
+  }
+
+  std::stringstream create_st;
+  create_st << "insert into `group` (name, subscribed, read_ranges) values (?,?,?) on conflict do nothing; ";
+  SQLite::Statement create_q(pan_db,create_st.str());
+
+  std::stringstream link_st;
+  link_st << "insert into `server_group` (server_id, group_id) "
+          << "select ?,`group`.id from `group` where `group`.`name` = ? on conflict do nothing;";
+  SQLite::Statement link_q(pan_db,link_st.str());
+  link_q.bind(1, server_id);
+
+  // overly-complex optimization: both sit->second.groups and _subscribed
+  // are both ordered by AlphabeticalQuarkOrdering.
+  // Where N==sit->second.groups.size() and M==_subscribed.size(),
+  // "bool subscribed = _subscribed.count (group)" is N*log(M),
+  // but a sorted set comparison is M+N comparisons.
+  AlphabeticalQuarkOrdering o;
+
+  // for the groups in this server...
+  foreach_const (Server::groups_t, server->groups, group_iter) {
+    Quark const &group(*group_iter);
+
+    while (sub_it!=sub_end && o (*sub_it, group)) ++sub_it; // see comment for 'o' above
+    bool const subscribed(sub_it != sub_end && *sub_it == group);
+
+    // if the group's been read, save its read number ranges...
+    ReadGroup::Server const *rgs(find_read_group_server(group, server_name));
+    newsrc_string.clear ();
+    if (rgs != nullptr) {
+      rgs->_read.to_string (newsrc_string);
+    }
+
+    try {
+      create_q.reset();
+      int i = 1;
+      create_q.bind(i++,group_iter->c_str());
+      create_q.bind(i++,subscribed);
+      create_q.bind(i++,newsrc_string);
+      create_q.exec();
+    }
+    catch (std::exception& e){
+      std::cout << "SQLite exception while creating group " << group_iter->c_str() << ": " << e.what() << std::endl;
+    }
+
+    try {
+      link_q.reset();
+      link_q.bind(2,group_iter->c_str());
+      link_q.exec();
+    }
+    catch (std::exception& e){
+      std::cout << "SQLite exception while creating server " << group_iter->c_str() << " group link: " << e.what() << std::endl;
+    }
+  }
+
+  debug("Saved " << server->groups.size() << " groups of server " << server->host << " in DB.");
+  pan_db.exec("pragma synchronous = normal");
+}
+
 
 void
 DataImpl :: save_newsrc_files (DataIO& data_io) const
