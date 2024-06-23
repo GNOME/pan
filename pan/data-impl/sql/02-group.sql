@@ -17,6 +17,13 @@ create unique index if not exists server_group_idx on server_group (server_id, g
 create view if not exists subscribed_group as
   select name from 'group' where subscribed = 1 order by name asc;
 
+-- remove groups that are no longer attached to a server, i.e. its
+-- only remaining server was deleted
+create trigger if not exists delete_orphan_groups after delete on server
+  begin
+    delete from `group` where ( select count() from server_group where server_group.server_id == OLD.id) == 0;
+  end
+
 -- Local Variables:
 -- mode: sql
 -- sql-product: sqlite
