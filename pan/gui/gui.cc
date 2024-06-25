@@ -1118,7 +1118,7 @@ void GUI ::  sec_dialog_destroyed_cb (GtkWidget * w, gpointer self)
 // were added while the server list dialog was up.
 void GUI :: server_list_dialog_destroyed (GtkWidget *)
 {
-  quarks_t empty_servers, all_servers (_data.get_servers());
+  quarks_t all_servers (_data.get_servers());
   foreach_const (quarks_t, all_servers, it) {
     quarks_t tmp;
     _data.server_get_groups (*it, tmp);
