@@ -4,6 +4,10 @@
 // Revised code--3/20/94
 // Converted to C++ class 5/96, Jim Conger
 
+#ifndef __Blowfish_h__
+#define __Blowfish_h__
+
+
 #define MAXKEYBYTES 	56		// 448 bits max
 #define NPASS           16		// SBox passes
 
@@ -81,3 +85,4 @@ public:
 };
 #endif
 
+#endif

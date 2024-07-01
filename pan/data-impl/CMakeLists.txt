@@ -15,6 +15,8 @@ add_library(data-impl
 find_package(SQLiteCpp REQUIRED)
 target_link_libraries(data-impl PRIVATE SQLiteCpp)
 
+target_link_libraries(data-impl PRIVATE data-migration)
+
 # Sanity checking
 # https://cmake.org/cmake/help/latest/command/add_compile_options.html
 target_compile_options(data-impl PRIVATE "${CXX_STD}" "-Wreorder" "-Wzero-as-null-pointer-constant")

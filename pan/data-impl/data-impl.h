@@ -20,6 +20,7 @@
 #ifndef __DataImpl_h__
 #define __DataImpl_h__
 
+#include "pan/data-migration/data-migration.h"
 #include <SQLiteCpp/Database.h>
 #include <deque>
 #include <iosfwd>
@@ -150,6 +151,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
     // database
   private:
     SQLiteDb pan_db;
+    DataMigration* migration;
 
   public:
 #ifdef HAVE_GKR

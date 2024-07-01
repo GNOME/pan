@@ -36,6 +36,7 @@
 #include <sstream>
 #include <string>
 #include "data-impl.h"
+#include "pan/data-migration/data-migration.h"
 
 #ifdef HAVE_GKR
   #define GCR_API_SUBJECT_TO_CHANGE
@@ -78,6 +79,11 @@ namespace
     SQLiteDb my_db(db_file.str(), SQLite::OPEN_READWRITE|SQLite::OPEN_CREATE);
     return my_db;
   }
+
+  DataMigration* create_migration(Prefs &prefs,int cache_megs) {
+    DataMigration* data = new DataMigration (prefs.get_string("cache-file-extension","msg"), prefs, false, cache_megs);
+    return data;
+  }
 }
 
 DataImpl ::DataImpl(StringView const &cache_ext,
@@ -91,6 +97,7 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   _certstore(*this),
   _queue(nullptr),
   pan_db(get_sqlite_db()),
+  migration(create_migration(prefs, cache_megs)),
   _unit_test(unit_test),
   _data_io(io),
   _prefs(prefs),
@@ -104,6 +111,7 @@ DataImpl ::DataImpl(StringView const &cache_ext,
 {
   rebuild_backend ();
 }
+
 
 void DataImpl ::load_db_schema(char const *file) {
   GError *error;
