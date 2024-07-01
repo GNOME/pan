@@ -30,7 +30,7 @@
 #include <pan/usenet-utils/mime-utils.h>
 #include <pan/usenet-utils/gnksa.h>
 #include <pan/data/article.h>
-#include "data-impl.h"
+#include "data-migration.h"
 
 using namespace pan;
 

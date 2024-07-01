@@ -22,7 +22,7 @@
 #include <pan/general/debug.h>
 #include <pan/general/macros.h>
 #include <pan/tasks/nzb.h>
-#include "data-impl.h"
+#include "data-migration.h"
 #include "data-io.h"
 
 void

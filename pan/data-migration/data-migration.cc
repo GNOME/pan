@@ -35,7 +35,7 @@
 #include <pan/general/time-elapsed.h>
 #include <sstream>
 #include <string>
-#include "data-impl.h"
+#include "data-migration.h"
 
 #ifdef HAVE_GKR
   #define GCR_API_SUBJECT_TO_CHANGE
@@ -111,7 +111,7 @@ void DataImpl ::load_db_schema(char const *file) {
   gsize length;
 
   // try local path
-  gchar *sql_path = g_build_filename((gchar*) "pan/data-impl/sql", file, NULL);
+  gchar *sql_path = g_build_filename((gchar*) "pan/data-migration/sql", file, NULL);
   GFile *sql_file = g_file_new_for_path((char*) sql_path);
 
   // does local path exists

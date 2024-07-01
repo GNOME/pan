@@ -39,7 +39,7 @@ extern "C" {
 #include <pan/usenet-utils/filter-info.h>
 #include <pan/data/article.h>
 #include "article-filter.h"
-#include "data-impl.h"
+#include "data-migration.h"
 
 using namespace pan;
 

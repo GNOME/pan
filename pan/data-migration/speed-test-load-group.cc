@@ -1,6 +1,6 @@
 #include <config.h>
 #include <pan/data/data.h>
-#include "data-impl.h"
+#include "data-migration.h"
 
 using namespace pan;
 

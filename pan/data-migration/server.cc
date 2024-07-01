@@ -37,7 +37,7 @@
 #include <pan/general/log.h>
 #include <pan/general/macros.h>
 #include <pan/general/messages.h>
-#include "data-impl.h"
+#include "data-migration.h"
 
 #ifdef HAVE_GKR
   #define USE_LIBSECRET_DEFAULT true

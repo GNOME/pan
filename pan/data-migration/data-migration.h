@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef __DataImpl_h__
-#define __DataImpl_h__
+#ifndef __DataMigration_h__
+#define __DataMigration_h__
 
 #include <SQLiteCpp/Database.h>
 #include <deque>
@@ -31,11 +31,11 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <SQLiteCpp/VariadicBind.h>
 
-#include <pan/data-impl/article-filter.h>
-#include <pan/data-impl/data-io.h>
-#include <pan/data-impl/memchunk.h>
-#include <pan/data-impl/profiles.h>
-#include <pan/data-impl/rules-filter.h>
+#include <pan/data-migration/article-filter.h>
+#include <pan/data-migration/data-io.h>
+#include <pan/data-migration/memchunk.h>
+#include <pan/data-migration/profiles.h>
+#include <pan/data-migration/rules-filter.h>
 #include <pan/data/article-cache.h>
 #include <pan/data/article.h>
 #include <pan/data/data.h>

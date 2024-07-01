@@ -45,7 +45,7 @@ extern "C" {
 
 #include <pan/usenet-utils/numbers.h>
 
-#include "data-impl.h"
+#include "data-migration.h"
 
 using namespace pan;
 
