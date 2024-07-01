@@ -36,7 +36,7 @@ using namespace pan;
 ****/
 
 void
-DataImpl :: MyTree :: get_children (const Quark& mid, articles_t & setme) const
+DataMigration :: MyTree :: get_children (const Quark& mid, articles_t & setme) const
 {
   if (mid.empty()) // get the roots
   {
@@ -57,7 +57,7 @@ DataImpl :: MyTree :: get_children (const Quark& mid, articles_t & setme) const
 }
 
 const Article*
-DataImpl :: MyTree :: get_parent (const Quark& mid) const
+DataMigration :: MyTree :: get_parent (const Quark& mid) const
 {
   const Article * parent (nullptr);
   const ArticleNode * parent_node (nullptr);
@@ -72,20 +72,20 @@ DataImpl :: MyTree :: get_parent (const Quark& mid) const
 }
 
 const Article*
-DataImpl :: MyTree :: get_article (const Quark& mid) const
+DataMigration :: MyTree :: get_article (const Quark& mid) const
 {
   nodes_t::const_iterator it (_nodes.find (mid));
   return it==_nodes.end() ? nullptr : it->second->_article;
 }
 
 size_t
-DataImpl :: MyTree :: size () const
+DataMigration :: MyTree :: size () const
 {
   return _nodes.size();
 }
 
 void
-DataImpl :: MyTree :: set_rules (const Data::ShowType    show_type,
+DataMigration :: MyTree :: set_rules (const Data::ShowType    show_type,
                                  const RulesInfo * rules )
 {
 
@@ -115,7 +115,7 @@ DataImpl :: MyTree :: set_rules (const Data::ShowType    show_type,
 }
 
 void
-DataImpl :: MyTree :: set_filter (const Data::ShowType    show_type,
+DataMigration :: MyTree :: set_filter (const Data::ShowType    show_type,
                                   const FilterInfo      * criteria)
 {
   // set the filter...
@@ -143,7 +143,7 @@ DataImpl :: MyTree :: set_filter (const Data::ShowType    show_type,
 *****  Life Cycle
 ****/
 
-DataImpl :: MyTree :: MyTree (DataImpl              & data_impl,
+DataMigration :: MyTree :: MyTree (DataMigration              & data_impl,
                               const Quark           & group,
                               const Quark           & save_path,
                               const Data::ShowType    show_type,
@@ -162,7 +162,7 @@ DataImpl :: MyTree :: MyTree (DataImpl              & data_impl,
 
 }
 
-DataImpl :: MyTree :: ~MyTree ()
+DataMigration :: MyTree :: ~MyTree ()
 {
   _nodes.clear ();
   _data._trees.erase (this);
@@ -174,9 +174,9 @@ DataImpl :: MyTree :: ~MyTree ()
 ****/
 
 struct
-DataImpl :: MyTree :: NodeMidCompare
+DataMigration :: MyTree :: NodeMidCompare
 {
-  typedef std::pair<const pan::Quark, pan::DataImpl::ArticleNode*> nodes_v_pair;
+  typedef std::pair<const pan::Quark, pan::DataMigration::ArticleNode*> nodes_v_pair;
 
   bool operator () (const ArticleNode* a, const nodes_v_pair& b) const
     { return a->_mid < b.first; }
@@ -193,7 +193,7 @@ DataImpl :: MyTree :: NodeMidCompare
 };
 
 void
-DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
+DataMigration :: MyTree :: apply_rules (const_nodes_v& candidates)
 {
 
 //  std::cerr<<"apply rules mytree\n";
@@ -250,7 +250,7 @@ DataImpl :: MyTree :: apply_rules (const_nodes_v& candidates)
 }
 
 void
-DataImpl :: MyTree :: cache_articles (std::set<const Article*> s)
+DataMigration :: MyTree :: cache_articles (std::set<const Article*> s)
 {
   Queue* queue (_data.get_queue());
   Prefs& prefs (_data.get_prefs());
@@ -267,7 +267,7 @@ DataImpl :: MyTree :: cache_articles (std::set<const Article*> s)
 }
 
 void
-DataImpl :: MyTree :: download_articles (std::set<const Article*> s)
+DataMigration :: MyTree :: download_articles (std::set<const Article*> s)
 {
   Queue* queue (_data.get_queue());
 
@@ -290,7 +290,7 @@ DataImpl :: MyTree :: download_articles (std::set<const Article*> s)
 // candidates holds GroupHeader's ArticleNodes pointers
 // candidates are sorted by Mid (see NodeMidCompare)
 void
-DataImpl :: MyTree :: apply_filter (const const_nodes_v& candidates)
+DataMigration :: MyTree :: apply_filter (const const_nodes_v& candidates)
 {
   NodeMidCompare compare;
 
@@ -376,7 +376,7 @@ DataImpl :: MyTree :: apply_filter (const const_nodes_v& candidates)
 }
 
 void
-DataImpl :: MyTree :: remove_articles (const quarks_t& mids)
+DataMigration :: MyTree :: remove_articles (const quarks_t& mids)
 {
   ArticleTree::Diffs diffs;
   std::set<ArticleNode*> parents;
@@ -445,7 +445,7 @@ DataImpl :: MyTree :: remove_articles (const quarks_t& mids)
 }
 
 void
-DataImpl :: MyTree :: accumulate_descendants (unique_nodes_t& descendants,
+DataMigration :: MyTree :: accumulate_descendants (unique_nodes_t& descendants,
                                               const ArticleNode* node) const
 {
   // if this node has an article and wasn't already in `descendants',
@@ -457,7 +457,7 @@ DataImpl :: MyTree :: accumulate_descendants (unique_nodes_t& descendants,
 }
 
 void
-DataImpl :: MyTree :: articles_changed (const quarks_t& mids, bool do_refilter)
+DataMigration :: MyTree :: articles_changed (const quarks_t& mids, bool do_refilter)
 {
 //  std::cerr<<"articles changed\n";
 
@@ -481,7 +481,7 @@ DataImpl :: MyTree :: articles_changed (const quarks_t& mids, bool do_refilter)
 }
 
 void
-DataImpl :: MyTree :: add_articles (const quarks_t& mids)
+DataMigration :: MyTree :: add_articles (const quarks_t& mids)
 {
 //  std::cerr<<"add articles\n";
 
@@ -494,7 +494,7 @@ DataImpl :: MyTree :: add_articles (const quarks_t& mids)
 
 
 struct
-DataImpl :: MyTree :: TwoNodes
+DataMigration :: MyTree :: TwoNodes
 {
   const ArticleNode * node;
   ArticleNode * tree_node;
@@ -502,7 +502,7 @@ DataImpl :: MyTree :: TwoNodes
 };
 
 void
-DataImpl :: MyTree :: add_articles (const const_nodes_v& nodes_in)
+DataMigration :: MyTree :: add_articles (const const_nodes_v& nodes_in)
 {
 //  std::cerr<<"add articles nodes\n";
 

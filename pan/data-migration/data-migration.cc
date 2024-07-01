@@ -80,7 +80,7 @@ namespace
   }
 }
 
-DataImpl ::DataImpl(StringView const &cache_ext,
+DataMigration ::DataMigration(StringView const &cache_ext,
                     Prefs &prefs,
                     bool unit_test,
                     int cache_megs,
@@ -105,7 +105,7 @@ DataImpl ::DataImpl(StringView const &cache_ext,
   rebuild_backend ();
 }
 
-void DataImpl ::load_db_schema(char const *file) {
+void DataMigration ::load_db_schema(char const *file) {
   GError *error;
   char* contents;
   gsize length;
@@ -142,7 +142,7 @@ void DataImpl ::load_db_schema(char const *file) {
 }
 
 void
-DataImpl :: rebuild_backend ()
+DataMigration :: rebuild_backend ()
 {
   if (_unit_test)
   {
@@ -197,13 +197,13 @@ DataImpl :: rebuild_backend ()
   }
 }
 
-DataImpl :: ~DataImpl ()
+DataMigration :: ~DataMigration ()
 {
   save_state ();
 }
 
 void
-DataImpl :: save_state ()
+DataMigration :: save_state ()
 {
   if (!_unit_test)
   {
@@ -214,14 +214,14 @@ DataImpl :: save_state ()
 }
 
 std::string
-DataImpl :: get_scorefile_name() const
+DataMigration :: get_scorefile_name() const
 {
   return _data_io->get_scorefile_name();
 }
 
 #ifdef HAVE_GKR
 gboolean
-DataImpl :: password_encrypt (const PasswordData& pw)
+DataMigration :: password_encrypt (const PasswordData& pw)
 {
 GError *error_c = nullptr;
 
@@ -240,7 +240,7 @@ GError *error_c = nullptr;
 }
 
 gchar*
-DataImpl :: password_decrypt (PasswordData& pw) const
+DataMigration :: password_decrypt (PasswordData& pw) const
 {
   GError *error_c = nullptr;
   gchar* pwd = nullptr;

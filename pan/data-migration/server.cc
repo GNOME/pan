@@ -51,7 +51,7 @@ using namespace pan;
 ***
 **/
 
-void DataImpl ::delete_server(Quark const &server_in)
+void DataMigration ::delete_server(Quark const &server_in)
 {
   const Quark server (server_in);
 
@@ -67,7 +67,7 @@ void DataImpl ::delete_server(Quark const &server_in)
 }
 
 Quark
-DataImpl :: add_new_server ()
+DataMigration :: add_new_server ()
 {
   // find a server ID that's not in use
   Quark new_server;
@@ -87,7 +87,7 @@ DataImpl :: add_new_server ()
 }
 
 // Returns a Server pointer. Caller gets ownership of the pointer.
-Data ::Server *DataImpl ::read_server(Quark const &pan_id) const
+Data ::Server *DataMigration ::read_server(Quark const &pan_id) const
 {
   Server * retval = new Server;
   read_server(pan_id, retval);
@@ -95,7 +95,7 @@ Data ::Server *DataImpl ::read_server(Quark const &pan_id) const
 }
 
 // Returns a Server id.
-void DataImpl ::read_server(Quark const &pan_id, Data::Server * retval) const
+void DataMigration ::read_server(Quark const &pan_id, Data::Server * retval) const
 {
   try {
     SQLite::Statement query (pan_db, "select * from 'server' where pan_id = ?;");
@@ -123,14 +123,14 @@ void DataImpl ::read_server(Quark const &pan_id, Data::Server * retval) const
   debug("read server " << retval->host << " from DB using quark " << pan_id.c_str());
 }
 
-quarks_t DataImpl ::get_servers () const {
+quarks_t DataMigration ::get_servers () const {
   quarks_t servers;
   foreach_const (servers_t, _servers, it)
     servers.insert (it->first);
   return servers;
 }
 
-quarks_t DataImpl ::get_server_ids_from_db () const {
+quarks_t DataMigration ::get_server_ids_from_db () const {
   quarks_t servers;
   try {
     SQLite::Statement query (pan_db, "select pan_id from 'server' order by pan_id asc;");
@@ -148,7 +148,7 @@ quarks_t DataImpl ::get_server_ids_from_db () const {
   return servers;
 }
 
-Data ::Server *DataImpl ::find_server(Quark const &server)
+Data ::Server *DataMigration ::find_server(Quark const &server)
 {
   Server * retval (nullptr);
 
@@ -158,7 +158,7 @@ Data ::Server *DataImpl ::find_server(Quark const &server)
   return retval;
 }
 
-Data ::Server const *DataImpl ::find_server(Quark const &server) const
+Data ::Server const *DataMigration ::find_server(Quark const &server) const
 {
   Server const *retval(nullptr);
 
@@ -168,7 +168,7 @@ Data ::Server const *DataImpl ::find_server(Quark const &server) const
   return retval;
 }
 
-bool DataImpl ::find_server_by_host_name(std::string const &server,
+bool DataMigration ::find_server_by_host_name(std::string const &server,
                                          Quark &setme) const
 {
   foreach_const(servers_t, _servers, it)
@@ -176,7 +176,7 @@ bool DataImpl ::find_server_by_host_name(std::string const &server,
   return false;
 }
 
-void DataImpl ::set_server_article_expiration_age(Quark const &server, int days)
+void DataMigration ::set_server_article_expiration_age(Quark const &server, int days)
 {
   Server * s (find_server (server));
   assert (s);
@@ -185,7 +185,7 @@ void DataImpl ::set_server_article_expiration_age(Quark const &server, int days)
 
 }
 
-void DataImpl ::set_server_auth(Quark const &server,
+void DataMigration ::set_server_auth(Quark const &server,
                                 StringView const &username,
                                 gchar *&password,
                                 bool use_gkr)
@@ -213,14 +213,14 @@ void DataImpl ::set_server_auth(Quark const &server,
 
 }
 
-void DataImpl ::set_server_trust(Quark const &server, int const setme)
+void DataMigration ::set_server_trust(Quark const &server, int const setme)
 {
   Server * s (find_server (server));
   assert (s);
   s->trust = setme;
 }
 
-void DataImpl ::set_server_compression_type(Quark const &server,
+void DataMigration ::set_server_compression_type(Quark const &server,
                                             int const setme)
 {
   Server * s (find_server (server));
@@ -228,7 +228,7 @@ void DataImpl ::set_server_compression_type(Quark const &server,
   s->compression_type = setme;
 }
 
-void DataImpl ::set_server_addr(Quark const &server,
+void DataMigration ::set_server_addr(Quark const &server,
                                 StringView const &host,
                                 int port)
 {
@@ -238,7 +238,7 @@ void DataImpl ::set_server_addr(Quark const &server,
   s->port = port;
 }
 
-void DataImpl ::set_server_limits(Quark const &server, int max_connections)
+void DataMigration ::set_server_limits(Quark const &server, int max_connections)
 {
   Server * s (find_server (server));
   assert (s);
@@ -246,7 +246,7 @@ void DataImpl ::set_server_limits(Quark const &server, int max_connections)
 
 }
 
-void DataImpl ::set_server_rank(Quark const &server, int rank)
+void DataMigration ::set_server_rank(Quark const &server, int rank)
 {
   Server * s (find_server (server));
   assert (s);
@@ -254,7 +254,7 @@ void DataImpl ::set_server_rank(Quark const &server, int rank)
 
 }
 
-void DataImpl ::set_server_ssl_support(Quark const &server, int ssl)
+void DataMigration ::set_server_ssl_support(Quark const &server, int ssl)
 {
   Server * s (find_server (server));
   assert (s);
@@ -262,7 +262,7 @@ void DataImpl ::set_server_ssl_support(Quark const &server, int ssl)
 
 }
 
-void DataImpl ::set_server_cert(Quark const &server, StringView const &cert)
+void DataMigration ::set_server_cert(Quark const &server, StringView const &cert)
 {
 
   Server * s (find_server (server));
@@ -271,7 +271,7 @@ void DataImpl ::set_server_cert(Quark const &server, StringView const &cert)
 
 }
 
-void DataImpl ::save_server_info(Quark const &server)
+void DataMigration ::save_server_info(Quark const &server)
 {
   Server * s (find_server (server));
   assert (s);
@@ -279,7 +279,7 @@ void DataImpl ::save_server_info(Quark const &server)
   save_server_in_db(server.to_string(), s , _prefs);
 }
 
-bool DataImpl ::get_server_auth(Quark const &server,
+bool DataMigration ::get_server_auth(Quark const &server,
                                 std::string &setme_username,
                                 gchar *&setme_password,
                                 bool use_gkr)
@@ -292,7 +292,7 @@ bool DataImpl ::get_server_auth(Quark const &server,
   return found;
 }
 
-void DataImpl ::get_server_auth(Server* s,
+void DataMigration ::get_server_auth(Server* s,
                            std::string &setme_username,
                            gchar *&setme_password,
                            bool use_gkr)
@@ -333,7 +333,7 @@ void DataImpl ::get_server_auth(Server* s,
 
 }
 
-bool DataImpl ::get_server_trust(Quark const &server, int &setme) const
+bool DataMigration ::get_server_trust(Quark const &server, int &setme) const
 {
   Server const *s(find_server(server));
   bool const found(s);
@@ -367,7 +367,7 @@ namespace
   }
 }
 
-bool DataImpl ::get_server_compression_type(Quark const &server,
+bool DataMigration ::get_server_compression_type(Quark const &server,
                                             CompressionType &setme) const
 {
     Server const *s(find_server(server));
@@ -378,7 +378,7 @@ bool DataImpl ::get_server_compression_type(Quark const &server,
     return found;
 }
 
-bool DataImpl ::get_server_addr(Quark const &server,
+bool DataMigration ::get_server_addr(Quark const &server,
                                 std::string &setme_host,
                                 int &setme_port) const
 {
@@ -394,7 +394,7 @@ bool DataImpl ::get_server_addr(Quark const &server,
 
 }
 
-std::string DataImpl ::get_server_address(Quark const &server) const
+std::string DataMigration ::get_server_address(Quark const &server) const
 {
   std::string str;
   Server const *s(find_server(server));
@@ -408,7 +408,7 @@ std::string DataImpl ::get_server_address(Quark const &server) const
 
 }
 
-bool DataImpl ::get_server_ssl_support(Quark const &server) const
+bool DataMigration ::get_server_ssl_support(Quark const &server) const
 {
   bool retval (false);
   Server const *s(find_server(server));
@@ -419,7 +419,7 @@ bool DataImpl ::get_server_ssl_support(Quark const &server) const
 
 }
 
-std::string DataImpl ::get_server_cert(Quark const &server) const
+std::string DataMigration ::get_server_cert(Quark const &server) const
 {
   std::string str;
   Server const *s(find_server(server));
@@ -430,7 +430,7 @@ std::string DataImpl ::get_server_cert(Quark const &server) const
 
 }
 
-int DataImpl ::get_server_limits(Quark const &server) const
+int DataMigration ::get_server_limits(Quark const &server) const
 {
   int retval (2);
   Server const *s(find_server(server));
@@ -441,7 +441,7 @@ int DataImpl ::get_server_limits(Quark const &server) const
 
 }
 
-int DataImpl ::get_server_rank(Quark const &server) const
+int DataMigration ::get_server_rank(Quark const &server) const
 {
   int retval (1);
   Server const *s(find_server(server));
@@ -452,7 +452,7 @@ int DataImpl ::get_server_rank(Quark const &server) const
 
 }
 
-int DataImpl ::get_server_article_expiration_age(Quark const &server) const
+int DataMigration ::get_server_article_expiration_age(Quark const &server) const
 {
   int retval (31);
   Server const *s(find_server(server));
@@ -522,7 +522,7 @@ namespace
   }
   }
 
-  void DataImpl ::load_server_properties(DataIO const &source)
+  void DataMigration ::load_server_properties(DataIO const &source)
   {
     const std::string filename(source.get_server_filename());
 
@@ -603,7 +603,7 @@ std::string escaped(std::string const &s)
   }
 }
 
-void DataImpl :: save_server_in_db(std::string pan_id, Server* s, Prefs& prefs)
+void DataMigration :: save_server_in_db(std::string pan_id, Server* s, Prefs& prefs)
 {
   std::stringstream create_st;
 
@@ -671,7 +671,7 @@ void DataImpl :: save_server_in_db(std::string pan_id, Server* s, Prefs& prefs)
               << "\n" << update_st.str();
   }
 }
-void DataImpl :: delete_server_from_db(std::string host)
+void DataMigration :: delete_server_from_db(std::string host)
 {
   std::stringstream delete_st;
 
@@ -691,7 +691,7 @@ void DataImpl :: delete_server_from_db(std::string host)
   }
 }
 
-void DataImpl :: save_server_properties (Prefs& prefs)
+void DataMigration :: save_server_properties (Prefs& prefs)
 {
   // store the servers in DB
   foreach_const (servers_t, _servers, it) {
@@ -701,7 +701,7 @@ void DataImpl :: save_server_properties (Prefs& prefs)
 }
 
 
-void DataImpl :: save_server_properties (DataIO& data_io, Prefs& prefs)
+void DataMigration :: save_server_properties (DataIO& data_io, Prefs& prefs)
 {
   int depth (0);
   std::ostream * out = data_io.write_server_properties ();

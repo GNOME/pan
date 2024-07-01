@@ -68,7 +68,7 @@ typedef SQLite::Database SQLiteDb;
  *
  * @ingroup data_impl
  */
-class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
+class DataMigration final : public Data, public TaskArchive, public ProfilesImpl
 {
 
     /**
@@ -77,12 +77,12 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
   public:
     /* The ProfilesImpl will own and destruct the DataIO object */
-    DataImpl(StringView const &cache_ext,
+    DataMigration(StringView const &cache_ext,
              Prefs &prefs,
              bool unit_test = false,
              int cache_megs = 10,
              DataIO *source = new DataIO());
-    virtual ~DataImpl();
+    virtual ~DataMigration();
     void save_state() override final;
 
   public:
@@ -569,10 +569,10 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
   private:
     class MyTree final : public Data::ArticleTree
     {
-        friend class DataImpl;
+        friend class DataMigration;
 
       public: // life cycle
-        MyTree(DataImpl &data_impl,
+        MyTree(DataMigration &data_impl,
                Quark const &group,
                Quark const &save_path, // for auto-download
                const Data::ShowType show_type,
@@ -597,7 +597,7 @@ class DataImpl final : public Data, public TaskArchive, public ProfilesImpl
 
       private: // implementation fields
         const Quark _group;
-        DataImpl &_data;
+        DataMigration &_data;
         const Quark _save_path; // for auto-download
         nodes_t _nodes;
         MemChunk<ArticleNode> _node_chunk;

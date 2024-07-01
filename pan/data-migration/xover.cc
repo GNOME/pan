@@ -137,7 +137,7 @@ namespace
 }
 
 void
-DataImpl :: xover_clear_workarea (const Quark& group)
+DataMigration :: xover_clear_workarea (const Quark& group)
 {
    debug ("Clearing the XOVER workearea for " << group);
 
@@ -148,8 +148,8 @@ DataImpl :: xover_clear_workarea (const Quark& group)
    }
 }
 
-DataImpl :: XOverEntry&
-DataImpl :: xover_get_workarea (const Quark& group)
+DataMigration :: XOverEntry&
+DataMigration :: xover_get_workarea (const Quark& group)
 {
    XOverEntry * entry (nullptr);
    if (group == _cached_xover_group)
@@ -162,7 +162,7 @@ DataImpl :: xover_get_workarea (const Quark& group)
 }
 
 void
-DataImpl :: xover_ref (const Quark& group)
+DataMigration :: xover_ref (const Quark& group)
 {
   // sanity clause
   pan_return_if_fail (!group.empty());
@@ -185,7 +185,7 @@ DataImpl :: xover_ref (const Quark& group)
 }
 
 void
-DataImpl :: xover_flush (const Quark& group)
+DataMigration :: xover_flush (const Quark& group)
 {
   XOverEntry& workarea (xover_get_workarea (group));
 
@@ -197,7 +197,7 @@ DataImpl :: xover_flush (const Quark& group)
 }
 
 void
-DataImpl :: xover_unref (const Quark& group)
+DataMigration :: xover_unref (const Quark& group)
 {
   XOverEntry& workarea (xover_get_workarea (group));
   if (!--workarea.refcount)
@@ -211,7 +211,7 @@ DataImpl :: xover_unref (const Quark& group)
 
 
 void
-DataImpl :: set_xover_low (const Quark   & group,
+DataMigration :: set_xover_low (const Quark   & group,
                            const Quark   & server,
                            const Article_Number   low)
 {
@@ -221,7 +221,7 @@ DataImpl :: set_xover_low (const Quark   & group,
 }
 
 const Article*
-DataImpl :: xover_add (const Quark         & server,
+DataMigration :: xover_add (const Quark         & server,
                        const Quark         & group,
                        const StringView    & subject,
                        const StringView    & author,

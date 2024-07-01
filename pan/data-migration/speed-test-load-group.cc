@@ -11,7 +11,7 @@ int main (int argc, char *argv[])
   else {
     const Quark group (argv[1]);
     for (int i=0; i<8; ++i) {
-      DataImpl data;
+      DataMigration data;
       Data::ArticleTree * tree (data.group_get_articles (group,Quark("")));
       delete tree;
     }

@@ -16,7 +16,7 @@ int main ()
   Data::ArticleTree::articles_t children;
   const Article * a;
 
-  DataImpl data (true);
+  DataMigration data (true);
 
   const Quark server ("w00tnewz");
   const Quark server2 ("l33tnews");
@@ -225,7 +225,7 @@ int main ()
 
 #if 0
    ScriptedDataSource * source_2 = new ScriptedDataSource (*data_source);
-   DataImpl data2 (source_2);
+   DataMigration data2 (source_2);
    check (data2 == data);
 #endif
 #endif

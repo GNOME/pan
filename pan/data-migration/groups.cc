@@ -96,7 +96,7 @@ bool parse_newsrc_line(StringView const &line,
 #include <ext/algorithm>
 #endif
 
-void DataImpl ::load_newsrc(Quark const &server,
+void DataMigration ::load_newsrc(Quark const &server,
                             LineReader *in,
                             alpha_groups_t &sub,
                             alpha_groups_t &unsub)
@@ -167,7 +167,7 @@ void DataImpl ::load_newsrc(Quark const &server,
   }
 }
 
-void DataImpl ::load_newsrc_files(DataIO const &data_io)
+void DataMigration ::load_newsrc_files(DataIO const &data_io)
 {
   alpha_groups_t& s(_subscribed);
   alpha_groups_t& u(_unsubscribed);
@@ -203,7 +203,7 @@ void DataImpl ::load_newsrc_files(DataIO const &data_io)
   fire_grouplist_rebuilt ();
 }
 
-void DataImpl::save_group_in_db(Quark const &server_name) {
+void DataMigration::save_group_in_db(Quark const &server_name) {
   std::string newsrc_string;
   alpha_groups_t::const_iterator sub_it(_subscribed.begin());
   const alpha_groups_t::const_iterator sub_end(_subscribed.end());
@@ -280,7 +280,7 @@ void DataImpl::save_group_in_db(Quark const &server_name) {
 
 
 void
-DataImpl :: save_newsrc_files (DataIO& data_io) const
+DataMigration :: save_newsrc_files (DataIO& data_io) const
 {
   if (newsrc_autosave_id) {
     g_source_remove( newsrc_autosave_id );
@@ -341,7 +341,7 @@ DataImpl :: save_newsrc_files (DataIO& data_io) const
 ***/
 
 void
-DataImpl :: load_group_permissions (const DataIO& data_io)
+DataMigration :: load_group_permissions (const DataIO& data_io)
 {
   std::vector<Quark> m, n;
 
@@ -378,7 +378,7 @@ DataImpl :: load_group_permissions (const DataIO& data_io)
 }
 
 void
-DataImpl :: save_group_permissions (DataIO& data_io) const
+DataMigration :: save_group_permissions (DataIO& data_io) const
 {
   if (_unit_test)
     return;
@@ -407,7 +407,7 @@ DataImpl :: save_group_permissions (DataIO& data_io) const
 ***/
 
 void
-DataImpl :: ensure_descriptions_are_loaded () const
+DataMigration :: ensure_descriptions_are_loaded () const
 {
   if (!_descriptions_loaded)
   {
@@ -417,7 +417,7 @@ DataImpl :: ensure_descriptions_are_loaded () const
 }
 
 void
-DataImpl :: load_group_descriptions (const DataIO& data_io) const
+DataMigration :: load_group_descriptions (const DataIO& data_io) const
 {
   _descriptions.clear ();
 
@@ -430,7 +430,7 @@ DataImpl :: load_group_descriptions (const DataIO& data_io) const
 }
 
 void
-DataImpl :: load_group_xovers (const DataIO& data_io)
+DataMigration :: load_group_xovers (const DataIO& data_io)
 {
   LineReader * in (data_io.read_group_xovers ());
   if (in && !in->fail())
@@ -463,7 +463,7 @@ DataImpl :: load_group_xovers (const DataIO& data_io)
 }
 
 void
-DataImpl :: save_group_descriptions (DataIO& data_io) const
+DataMigration :: save_group_descriptions (DataIO& data_io) const
 {
   if (_unit_test)
     return;
@@ -501,7 +501,7 @@ namespace
 }
 
 void
-DataImpl :: save_group_xovers (DataIO& data_io) const
+DataMigration :: save_group_xovers (DataIO& data_io) const
 {
   if (_unit_test)
     return;
@@ -553,7 +553,7 @@ DataImpl :: save_group_xovers (DataIO& data_io) const
 ****/
 
 Article_Number
-DataImpl :: get_xover_high (const Quark  & groupname,
+DataMigration :: get_xover_high (const Quark  & groupname,
                             const Quark  & servername) const
 {
   Article_Number high (0ul);
@@ -564,7 +564,7 @@ DataImpl :: get_xover_high (const Quark  & groupname,
 }
 
 void
-DataImpl :: set_xover_high (const Quark & group,
+DataMigration :: set_xover_high (const Quark & group,
                             const Quark & server,
                             const Article_Number high)
 {
@@ -574,7 +574,7 @@ DataImpl :: set_xover_high (const Quark & group,
 }
 
 void
-DataImpl :: add_groups (const Quark       & server,
+DataMigration :: add_groups (const Quark       & server,
                         const NewGroup    * newgroups,
                         size_t              count)
 {
@@ -661,7 +661,7 @@ DataImpl :: add_groups (const Quark       & server,
 }
 
 void
-DataImpl :: mark_group_read (const Quark& groupname)
+DataMigration :: mark_group_read (const Quark& groupname)
 {
   ReadGroup * rg (find_read_group (groupname));
   if (rg != nullptr) {
@@ -676,7 +676,7 @@ DataImpl :: mark_group_read (const Quark& groupname)
 }
 
 void
-DataImpl :: set_group_subscribed (const Quark& group, bool subscribed)
+DataMigration :: set_group_subscribed (const Quark& group, bool subscribed)
 {
   if (subscribed) {
     _unsubscribed.erase (group);
@@ -690,7 +690,7 @@ DataImpl :: set_group_subscribed (const Quark& group, bool subscribed)
 }
 
 const std::string&
-DataImpl :: get_group_description (const Quark& group) const
+DataMigration :: get_group_description (const Quark& group) const
 {
   ensure_descriptions_are_loaded ();
   static const std::string nil;
@@ -699,7 +699,7 @@ DataImpl :: get_group_description (const Quark& group) const
 }
 
 void
-DataImpl :: get_group_counts (const Quark   & groupname,
+DataMigration :: get_group_counts (const Quark   & groupname,
                               Article_Count & unread_count,
                               Article_Count & article_count) const
 {
@@ -713,7 +713,7 @@ DataImpl :: get_group_counts (const Quark   & groupname,
 }
 
 char
-DataImpl :: get_group_permission (const Quark & group) const
+DataMigration :: get_group_permission (const Quark & group) const
 {
   if (_moderated.count (group))
     return 'm';
@@ -725,7 +725,7 @@ DataImpl :: get_group_permission (const Quark & group) const
 
 
 void
-DataImpl :: group_get_servers (const Quark& groupname, quarks_t& addme) const
+DataMigration :: group_get_servers (const Quark& groupname, quarks_t& addme) const
 {
   foreach_const (servers_t, _servers, it)
     if (it->second.groups.count (groupname))
@@ -733,7 +733,7 @@ DataImpl :: group_get_servers (const Quark& groupname, quarks_t& addme) const
 }
 
 void
-DataImpl :: server_get_groups (const Quark& servername, quarks_t& addme) const
+DataMigration :: server_get_groups (const Quark& servername, quarks_t& addme) const
 {
   const Server * server (find_server (servername));
   if (server)
@@ -741,13 +741,13 @@ DataImpl :: server_get_groups (const Quark& servername, quarks_t& addme) const
 }
 
 void
-DataImpl :: get_subscribed_groups (std::vector<Quark>& setme) const
+DataMigration :: get_subscribed_groups (std::vector<Quark>& setme) const
 {
   setme.assign (_subscribed.begin(), _subscribed.end());
 }
 
 void
-DataImpl :: get_other_groups (std::vector<Quark>& setme) const
+DataMigration :: get_other_groups (std::vector<Quark>& setme) const
 {
   setme.assign (_unsubscribed.begin(), _unsubscribed.end());
 }

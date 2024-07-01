@@ -26,7 +26,7 @@
 #include "data-io.h"
 
 void
-DataImpl :: save_tasks (const std::vector<Task*>& tasks)
+DataMigration :: save_tasks (const std::vector<Task*>& tasks)
 {
   std::ostream * out (_data_io->write_tasks ());
   NZB :: nzb_to_xml (*out, tasks);
@@ -34,7 +34,7 @@ DataImpl :: save_tasks (const std::vector<Task*>& tasks)
 }
 
 void
-DataImpl :: load_tasks (std::vector<Task*>& setme)
+DataMigration :: load_tasks (std::vector<Task*>& setme)
 {
   typedef std::deque<std::string> lines_t;
   lines_t lines;

@@ -43,20 +43,20 @@ extern "C" {
 
 using namespace pan;
 
-DataImpl :: GroupHeaders :: GroupHeaders ():
+DataMigration :: GroupHeaders :: GroupHeaders ():
   _ref (0),
   _dirty (false)
 {
 
 }
 
-DataImpl :: GroupHeaders :: ~GroupHeaders ()
+DataMigration :: GroupHeaders :: ~GroupHeaders ()
 {
 
 }
 
-DataImpl :: ArticleNode*
-DataImpl :: GroupHeaders :: find_node (const Quark& mid)
+DataMigration :: ArticleNode*
+DataMigration :: GroupHeaders :: find_node (const Quark& mid)
 {
   ArticleNode * node (nullptr);
   nodes_t::iterator it (_nodes.find (mid));
@@ -65,8 +65,8 @@ DataImpl :: GroupHeaders :: find_node (const Quark& mid)
   return node;
 }
 
-const DataImpl :: ArticleNode*
-DataImpl :: GroupHeaders :: find_node (const Quark& mid) const
+const DataMigration :: ArticleNode*
+DataMigration :: GroupHeaders :: find_node (const Quark& mid) const
 {
   const ArticleNode * node (nullptr);
   nodes_t::const_iterator it (_nodes.find (mid));
@@ -76,7 +76,7 @@ DataImpl :: GroupHeaders :: find_node (const Quark& mid) const
 }
 
 const Quark&
-DataImpl :: GroupHeaders :: find_parent_message_id (const Quark& mid) const
+DataMigration :: GroupHeaders :: find_parent_message_id (const Quark& mid) const
 {
   const ArticleNode * node (find_node (mid));
   if (node && node->_parent)
@@ -87,7 +87,7 @@ DataImpl :: GroupHeaders :: find_parent_message_id (const Quark& mid) const
 }
 
 const Article*
-DataImpl :: GroupHeaders :: find_article (const Quark& message_id) const
+DataMigration :: GroupHeaders :: find_article (const Quark& message_id) const
 {
   Article *a (nullptr);
 
@@ -99,7 +99,7 @@ DataImpl :: GroupHeaders :: find_article (const Quark& message_id) const
 }
 
 Article*
-DataImpl :: GroupHeaders :: find_article (const Quark& message_id)
+DataMigration :: GroupHeaders :: find_article (const Quark& message_id)
 {
   Article *a(nullptr);
 
@@ -111,7 +111,7 @@ DataImpl :: GroupHeaders :: find_article (const Quark& message_id)
 }
 
 void
-DataImpl :: GroupHeaders :: remove_articles (const quarks_t& mids)
+DataMigration :: GroupHeaders :: remove_articles (const quarks_t& mids)
 {
   nodes_v nodes;
   find_nodes (mids, _nodes, nodes);
@@ -120,22 +120,22 @@ DataImpl :: GroupHeaders :: remove_articles (const quarks_t& mids)
   _dirty = true;
 }
 
-const DataImpl :: GroupHeaders*
-DataImpl :: get_group_headers (const Quark& group) const
+const DataMigration :: GroupHeaders*
+DataMigration :: get_group_headers (const Quark& group) const
 {
    group_to_headers_t::const_iterator it (_group_to_headers.find(group));
    return it==_group_to_headers.end() ? nullptr : it->second;
 }
 
-DataImpl :: GroupHeaders*
-DataImpl :: get_group_headers (const Quark& group)
+DataMigration :: GroupHeaders*
+DataMigration :: get_group_headers (const Quark& group)
 {
    group_to_headers_t::iterator it (_group_to_headers.find(group));
    return it==_group_to_headers.end() ? nullptr : it->second;
 }
 
 void
-DataImpl :: GroupHeaders :: build_references_header (const Article* article, std::string& setme) const
+DataMigration :: GroupHeaders :: build_references_header (const Article* article, std::string& setme) const
 {
   setme.clear ();
   const Quark& message_id (article->message_id);
@@ -149,7 +149,7 @@ DataImpl :: GroupHeaders :: build_references_header (const Article* article, std
   }
 }
 
-void DataImpl::GroupHeaders::reserve(Article_Count articles)
+void DataMigration::GroupHeaders::reserve(Article_Count articles)
 {
   _art_chunk.reserve(static_cast<Article_Count::type>(articles));
   //A note - the number of nodes is very rarely the same as the number of
@@ -159,7 +159,7 @@ void DataImpl::GroupHeaders::reserve(Article_Count articles)
 }
 
 void
-DataImpl :: get_article_references (const Quark& group, const Article* article, std::string& setme) const
+DataMigration :: get_article_references (const Quark& group, const Article* article, std::string& setme) const
 {
   const GroupHeaders * h (get_group_headers (group));
   if (!h)
@@ -169,7 +169,7 @@ DataImpl :: get_article_references (const Quark& group, const Article* article, 
 }
 
 void
-DataImpl :: free_group_headers_memory (const Quark& group)
+DataMigration :: free_group_headers_memory (const Quark& group)
 {
   group_to_headers_t::iterator it (_group_to_headers.find (group));
   if (it != _group_to_headers.end()) {
@@ -179,7 +179,7 @@ DataImpl :: free_group_headers_memory (const Quark& group)
 }
 
 void
-DataImpl :: ref_group (const Quark& group)
+DataMigration :: ref_group (const Quark& group)
 {
   GroupHeaders * h (get_group_headers (group));
   if (!h)
@@ -192,7 +192,7 @@ DataImpl :: ref_group (const Quark& group)
 }
 
 void
-DataImpl :: unref_group   (const Quark& group)
+DataMigration :: unref_group   (const Quark& group)
 {
   GroupHeaders * h (get_group_headers (group));
   pan_return_if_fail (h != nullptr);
@@ -209,7 +209,7 @@ DataImpl :: unref_group   (const Quark& group)
 }
 
 void
-DataImpl :: fire_article_flag_changed (articles_t& a, const Quark& group)
+DataMigration :: fire_article_flag_changed (articles_t& a, const Quark& group)
 {
   GroupHeaders * h (get_group_headers (group));
   h->_dirty = true;
@@ -217,7 +217,7 @@ DataImpl :: fire_article_flag_changed (articles_t& a, const Quark& group)
 }
 
 void
-DataImpl :: find_nodes (const quarks_t           & mids,
+DataMigration :: find_nodes (const quarks_t           & mids,
                         nodes_t                  & nodes,
                         nodes_v                  & setme)
 {
@@ -233,7 +233,7 @@ DataImpl :: find_nodes (const quarks_t           & mids,
 }
 
 void
-DataImpl :: find_nodes (const quarks_t           & mids,
+DataMigration :: find_nodes (const quarks_t           & mids,
                         const nodes_t            & nodes,
                         const_nodes_v            & setme)
 {
@@ -255,7 +255,7 @@ DataImpl :: find_nodes (const quarks_t           & mids,
 // 'article' must have been instantiated by
 // GroupHeaders::alloc_new_article()!!
 void
-DataImpl :: load_article (const Quark       & group,
+DataMigration :: load_article (const Quark       & group,
                           Article           * article,
                           const StringView  & references)
 
@@ -374,7 +374,7 @@ DataImpl :: load_article (const Quark       & group,
 
 #if 0
 std::string
-DataImpl :: get_references (const Quark& group, const Article& a) const
+DataMigration :: get_references (const Quark& group, const Article& a) const
 {
   std::string s;
 
@@ -397,7 +397,7 @@ DataImpl :: get_references (const Quark& group, const Article& a) const
 #endif
 
 void
-DataImpl :: load_part (const Quark          & group,
+DataMigration :: load_part (const Quark          & group,
                        const Quark          & mid,
                        int                    number,
                        const StringView     & part_mid,
@@ -428,7 +428,7 @@ namespace
 
 // load headers from internal file in ~/.pan2/groups
 void
-DataImpl :: load_headers (const DataIO   & data_io,
+DataMigration :: load_headers (const DataIO   & data_io,
                           const Quark    & group)
 {
   TimeElapsed timer;
@@ -704,7 +704,7 @@ namespace
 
 
 bool
-DataImpl :: save_headers (DataIO                       & data_io,
+DataMigration :: save_headers (DataIO                       & data_io,
                           const Quark                  & group,
                           const std::vector<Article*>  & articles,
                           unsigned long                & part_count,
@@ -843,7 +843,7 @@ DataImpl :: save_headers (DataIO                       & data_io,
 }
 
 void
-DataImpl :: save_headers (DataIO& data_io, const Quark& group) const
+DataMigration :: save_headers (DataIO& data_io, const Quark& group) const
 {
   if (_unit_test)
     return;
@@ -884,7 +884,7 @@ namespace
   /* autosave newsrc files */
   gboolean nrc_as_cb(gpointer ptr)
   {
-    DataImpl *data = static_cast<DataImpl*>(ptr);
+    DataMigration *data = static_cast<DataMigration*>(ptr);
     data->save_newsrc_files();
 
     return FALSE;
@@ -892,14 +892,14 @@ namespace
 }
 
 void
-DataImpl :: mark_read (const Article & a, bool read)
+DataMigration :: mark_read (const Article & a, bool read)
 {
   const Article * aptr (&a);
   mark_read (&aptr, 1, read);
 }
 
 void
-DataImpl :: mark_read (const Article  ** articles,
+DataMigration :: mark_read (const Article  ** articles,
                        unsigned long     article_count,
                        bool              read)
 {
@@ -935,7 +935,7 @@ DataImpl :: mark_read (const Article  ** articles,
 
 
 bool
-DataImpl :: is_read (const Article* a) const
+DataMigration :: is_read (const Article* a) const
 {
   // if it's read on any server, the whole thing is read.
   if (a != nullptr)  {
@@ -950,7 +950,7 @@ DataImpl :: is_read (const Article* a) const
 }
 
 void
-DataImpl :: get_article_scores (const Quark         & group,
+DataMigration :: get_article_scores (const Quark         & group,
                                 const Article       & article,
                                 Scorefile::items_t  & setme) const
 {
@@ -960,7 +960,7 @@ DataImpl :: get_article_scores (const Quark         & group,
 }
 
 void
-DataImpl :: rescore_articles (const Quark& group, const quarks_t mids)
+DataMigration :: rescore_articles (const Quark& group, const quarks_t mids)
 {
 
   GroupHeaders * gh (get_group_headers (group));
@@ -980,7 +980,7 @@ DataImpl :: rescore_articles (const Quark& group, const quarks_t mids)
 }
 
 void
-DataImpl :: rescore_group_articles (const Quark& group)
+DataMigration :: rescore_group_articles (const Quark& group)
 {
 
   GroupHeaders * gh (get_group_headers (group));
@@ -998,7 +998,7 @@ DataImpl :: rescore_group_articles (const Quark& group)
 }
 
 void
-DataImpl :: rescore ()
+DataMigration :: rescore ()
 {
   //std::cerr << LINE_ID << " rescoring... " << std::endl;
   const std::string filename (_data_io->get_scorefile_name());
@@ -1027,7 +1027,7 @@ DataImpl :: rescore ()
 }
 
 void
-DataImpl :: add_score (const StringView           & section_wildmat,
+DataMigration :: add_score (const StringView           & section_wildmat,
                        int                          score_value,
                        bool                         score_assign_flag,
                        int                          lifespan_days,
@@ -1055,7 +1055,7 @@ DataImpl :: add_score (const StringView           & section_wildmat,
 }
 
 void
-DataImpl :: comment_out_scorefile_line (const StringView    & filename,
+DataMigration :: comment_out_scorefile_line (const StringView    & filename,
                                         size_t                begin_line,
                                         size_t                end_line,
                                         bool                  do_rescore)
@@ -1104,7 +1104,7 @@ namespace
 }
 
 void
-DataImpl :: group_clear_articles (const Quark& group)
+DataMigration :: group_clear_articles (const Quark& group)
 {
   // if they're in memory, remove them from there too...
   GroupHeaders* headers (get_group_headers (group));
@@ -1132,7 +1132,7 @@ DataImpl :: group_clear_articles (const Quark& group)
 }
 
 void
-DataImpl :: delete_articles (const unique_articles_t& articles)
+DataMigration :: delete_articles (const unique_articles_t& articles)
 {
 
   quarks_t all_mids;
@@ -1177,14 +1177,14 @@ DataImpl :: delete_articles (const unique_articles_t& articles)
 }
 
 void
-DataImpl :: on_articles_removed (const quarks_t& mids) const
+DataMigration :: on_articles_removed (const quarks_t& mids) const
 {
   foreach (std::set<MyTree*>, _trees, it)
     (*it)->remove_articles (mids);
 }
 
 void
-DataImpl :: on_articles_changed (const Quark& group, const quarks_t& mids, bool do_refilter)
+DataMigration :: on_articles_changed (const Quark& group, const quarks_t& mids, bool do_refilter)
 {
   rescore_articles (group, mids);
 
@@ -1194,7 +1194,7 @@ DataImpl :: on_articles_changed (const Quark& group, const quarks_t& mids, bool 
 }
 
 void
-DataImpl :: on_articles_added (const Quark& group, const quarks_t& mids)
+DataMigration :: on_articles_added (const Quark& group, const quarks_t& mids)
 {
 
   if (!mids.empty())
@@ -1220,8 +1220,8 @@ DataImpl :: on_articles_added (const Quark& group, const quarks_t& mids)
 }
 
 
-DataImpl::ArticleNode*
-DataImpl :: find_ancestor (ArticleNode * node,
+DataMigration::ArticleNode*
+DataMigration :: find_ancestor (ArticleNode * node,
                            const Quark & ancestor_mid)
 {
   ArticleNode * parent_node (node->_parent);
@@ -1230,8 +1230,8 @@ DataImpl :: find_ancestor (ArticleNode * node,
   return parent_node;
 }
 
-DataImpl::ArticleNode*
-DataImpl :: find_closest_ancestor (ArticleNode                  * node,
+DataMigration::ArticleNode*
+DataMigration :: find_closest_ancestor (ArticleNode                  * node,
                                    const unique_sorted_quarks_t & mid_pool)
 {
   ArticleNode * parent_node (node->_parent);
@@ -1240,8 +1240,8 @@ DataImpl :: find_closest_ancestor (ArticleNode                  * node,
   return parent_node;
 }
 
-const DataImpl::ArticleNode*
-DataImpl :: find_closest_ancestor (const ArticleNode             * node,
+const DataMigration::ArticleNode*
+DataMigration :: find_closest_ancestor (const ArticleNode             * node,
                                    const unique_sorted_quarks_t  & mid_pool)
 {
   const ArticleNode * parent_node (node->_parent);
@@ -1251,12 +1251,12 @@ DataImpl :: find_closest_ancestor (const ArticleNode             * node,
 }
 
 Data::ArticleTree*
-DataImpl :: group_get_articles (const Quark       & group,
+DataMigration :: group_get_articles (const Quark       & group,
                                 const Quark       & save_path,
                                 const ShowType      show_type,
                                 const FilterInfo  * filter,
                                 const RulesInfo   * rules) const
 {
   // cast const away for group_ref()... consider _groups mutable
-  return new MyTree (*const_cast<DataImpl*>(this), group, save_path, show_type, filter, rules);
+  return new MyTree (*const_cast<DataMigration*>(this), group, save_path, show_type, filter, rules);
 }

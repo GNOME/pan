@@ -28,7 +28,7 @@
 namespace pan
 {
   /**
-   * Specifies the datafiles used by DataImpl.
+   * Specifies the datafiles used by DataMigration.
    * It's abstracted out so that unit tests can substitute in its own data.
    * This private class should only be used by code in the data-impl module.
    *
