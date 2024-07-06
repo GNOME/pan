@@ -144,11 +144,11 @@ DataMigration :: migrate_data ()
       save_group_in_db(it->to_string());
     }
 
-    load_group_xovers (*_data_io);
-    load_group_permissions (*_data_io);
+    // load_group_xovers (*_data_io);
+    // load_group_permissions (*_data_io);
 
-    _descriptions.clear ();
-    _descriptions_loaded = false;
+    // _descriptions.clear ();
+    // _descriptions_loaded = false;
 
     //load_group_descriptions (*_data_io);
     Log::add_info_va (_("Loaded data backend in %.1f seconds"), timer.get_seconds_elapsed());

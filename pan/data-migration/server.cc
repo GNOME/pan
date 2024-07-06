@@ -62,7 +62,7 @@ void DataMigration ::delete_server(Quark const &server_in)
     _servers.erase (server);
     // remove file containing list of groups
     std::remove (newsrc_filename.c_str());
-    rebuild_backend ();
+    migrate_data ();
   }
 }
 

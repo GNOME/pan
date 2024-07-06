@@ -86,6 +86,8 @@ class DataMigration final : public Data, public TaskArchive, public ProfilesImpl
     void save_state() override final;
 
   public:
+    void migrate_data();
+
     ArticleCache &get_cache() override
     {
       return _cache;

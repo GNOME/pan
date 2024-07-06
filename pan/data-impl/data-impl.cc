@@ -164,10 +164,14 @@ DataImpl :: rebuild_backend ()
     if (file :: file_exists (score_filename.c_str()))
       _scorefile.parse_file (score_filename);
 
+    // load DB schema
     std::vector<std::string> sql_files { "01-server.sql", "02-group.sql" };
     for (int i = 0; i < sql_files.size(); i++) {
       load_db_schema(sql_files[i].c_str());
     }
+
+    // If needed migrate data from legacy files into DB
+    migration->migrate_data();
 
     quarks_t server_list = get_server_ids_from_db();
     if (server_list.empty()) {
