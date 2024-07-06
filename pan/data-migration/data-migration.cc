@@ -127,10 +127,8 @@ DataMigration :: migrate_data ()
       server_list = get_server_ids_from_db();
     }
 
-    // populate the servers from database information. Which is a bit
-    // dumb since the DB should be the reference. This is duplicated
-    // information. But this cannot be removed until groups are also
-    // managed in DB.
+    // populate the servers from database information. This is
+    // required by load_news_rc
     _servers.clear();
     foreach_const (quarks_t, server_list, it) {
       debug("loading server with pan_id " << it->c_str() << " from DB");
@@ -138,11 +136,21 @@ DataMigration :: migrate_data ()
       read_server(it->c_str(), &server);
     }
 
-    load_newsrc_files (*_data_io);
-    foreach_const (quarks_t, server_list, it) {
-      Server &server(_servers[it->c_str()]);
-      save_group_in_db(it->to_string());
+    SQLite::Statement group_q(pan_db,"select count(name) from `group`;");
+    int group_count = 0;
+    while (group_q.executeStep()) {
+      group_count = group_q.getColumn(0);
     }
+
+    if (group_count == 0) {
+      load_newsrc_files (*_data_io);
+      foreach_const (quarks_t, server_list, it) {
+        Server &server(_servers[it->c_str()]);
+        save_group_in_db(it->to_string());
+      }
+    }
+
+    // these functions may required to load groups in data structures.
 
     // load_group_xovers (*_data_io);
     // load_group_permissions (*_data_io);
